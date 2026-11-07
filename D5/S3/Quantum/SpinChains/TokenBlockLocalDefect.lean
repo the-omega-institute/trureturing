@@ -61,10 +61,7 @@ def rankSplit (m s r : ℕ) (i : Fin m) :
     Rank m s r ≃ Σ R : Finset (Outside m s i), Fiber m s r i R :=
   ((subsetSplit m s i).subtypeEquiv
     (q := fun RA : Finset (Outside m s i) × Finset (Fin s) => RA.1.card + RA.2.card = r)
-    (fun S => by
-    change S.card = r ↔ (subsetSplit m s i S).1.card +
-      (subsetSplit m s i S).2.card = r
-    rw [subsetSplit_card])).trans
+    (fun S => by rw [subsetSplit_card])).trans
       (Equiv.subtypeProdEquivSigmaSubtype
         (fun (R : Finset (Outside m s i)) (A : Finset (Fin s)) => R.card + A.card = r))
 
@@ -73,10 +70,7 @@ def previousSplit (m s r : ℕ) (i : Fin m) :
     PreviousRank m s r ≃ Σ R : Finset (Outside m s i), PreviousFiber m s r i R :=
   ((subsetSplit m s i).subtypeEquiv
     (q := fun RA : Finset (Outside m s i) × Finset (Fin s) => RA.1.card + RA.2.card + 1 = r)
-    (fun S => by
-    change S.card + 1 = r ↔ (subsetSplit m s i S).1.card +
-      (subsetSplit m s i S).2.card + 1 = r
-    rw [subsetSplit_card])).trans
+    (fun S => by rw [subsetSplit_card])).trans
       (Equiv.subtypeProdEquivSigmaSubtype
         (fun (R : Finset (Outside m s i)) (A : Finset (Fin s)) => R.card + A.card + 1 = r))
 
@@ -101,7 +95,7 @@ def lower (m s r : ℕ) (i : Fin m) : Space m s r →ₗ[ℂ] PreviousSpace m s 
       f ⟨insert (i,a) T.val, by rw [Finset.card_insert_of_notMem ha]; exact T.property⟩
   map_add' f g := by
     ext T
-    simp only [PiLp.add_apply, PiLp.toLp_apply]
+    simp only [PiLp.add_apply]
     rw [← Finset.sum_add_distrib]
     apply Finset.sum_congr rfl
     intro a _
@@ -183,9 +177,8 @@ private lemma lower_slices (m s r : ℕ) (i : Fin m) (f : Space m s r)
       simpa only [assemble_mem_inside] using ha
     simp only [ha, hn, ↓reduceDIte]
     rw [split_apply]
-    congr 1
-    apply Subtype.ext
-    exact (assemble_insert_inside m s i R B.val a).symm
+    exact congrArg (fun S : Rank m s r => f S)
+      (Subtype.ext (assemble_insert_inside m s i R B.val a).symm)
 
 private def fiberNativeEquiv (m s r : ℕ) (i : Fin m) (R : Finset (Outside m s i))
     (hR : R.card ≤ r) : Fiber m s r i R ≃ NativeJohnsonCoercivity.Rank s (r-R.card) :=
@@ -210,11 +203,63 @@ private lemma lower_native (m s r : ℕ) (i : Fin m) (R : Finset (Outside m s i)
     nativePreviousSlice m s r i R hR (fiberLower m s r i R f) =
       NativeJohnsonCoercivity.lower s (r-R.card) (nativeSlice m s r i R hR f) := by
   ext B
-  change (∑ a : Fin s, _) = ∑ a : Fin s, _
-  apply Finset.sum_congr rfl
-  intro a _
-  split_ifs with ha
-  · rfl
-  · rfl
+  rfl
+
+/-- The actual within-block permutation of occupied subsets. -/
+def rankPermutation (m s r : ℕ) (i : Fin m) (π : Equiv.Perm (Fin s)) :
+    Equiv.Perm (Rank m s r) :=
+  ((Equiv.Perm.prodExtendRight i π).finsetCongr).subtypeEquiv (fun S => by simp)
+
+/-- Pullback by the inverse permutation, with the original counting norm. -/
+def permutationAction (m s r : ℕ) (i : Fin m) (π : Equiv.Perm (Fin s)) :
+    Space m s r ≃ₗᵢ[ℂ] Space m s r :=
+  LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ (rankPermutation m s r i π)
+
+/-- The independently specified invariant subspace on the full occupancy carrier. -/
+def invariantSubspace (m s r : ℕ) (i : Fin m) : Submodule ℂ (Space m s r) where
+  carrier := {f | ∀ π : Equiv.Perm (Fin s), permutationAction m s r i π f = f}
+  zero_mem' := by intro π; exact map_zero _
+  add_mem' := by
+    intro f g hf hg π
+    rw [map_add, hf π, hg π]
+  smul_mem' := by
+    intro c f hf π
+    rw [map_smul, hf π]
+
+/-- Orthogonal projection is specified before any arithmetic averaging formula. -/
+def projection (m s r : ℕ) (i : Fin m) : Module.End ℂ (Space m s r) :=
+  (invariantSubspace m s r i).starProjection.toLinearMap
+
+private lemma assemble_block_card (m s : ℕ) (i : Fin m)
+    (R : Finset (Outside m s i)) (A : Finset (Fin s)) :
+    ((assemble m s i R A).filter (fun u => u.1 = i)).card = A.card := by
+  let j : Fin s ↪ Sites m s := ⟨fun a => (i,a), fun a b h => (Prod.mk.inj h).2⟩
+  have he : (assemble m s i R A).filter (fun u => u.1 = i) = A.map j := by
+    ext u
+    rcases u with ⟨k,a⟩
+    by_cases h : k = i
+    · subst k
+      simp [assemble_mem_inside, j]
+    · simp [h, j, Ne.symm h]
+  rw [he, Finset.card_map]
+
+private lemma number_slices (m s r : ℕ) (i : Fin m) (f : Space m s r)
+    (R : Finset (Outside m s i)) (A : Fiber m s r i R) :
+    split m s r i (number m s r i f) R A = (A.val.card : ℂ) * split m s r i f R A := by
+  rw [split_apply, split_apply]
+  change (((assemble m s i R A.val).filter (fun u => u.1 = i)).card : ℂ) * _ = _
+  rw [assemble_block_card]
+
+private lemma output_only_zero (m s r : ℕ) (i : Fin m) (f : Space m s r)
+    (R : Finset (Outside m s i)) (hR : R.card + s + 1 = r) :
+    previousCountingSplit m s r i (lower m s r i f) R = 0 := by
+  rw [lower_slices]
+  have hz : split m s r i f R = 0 := by
+    ext A
+    have hc := Finset.card_le_univ A.val
+    have ha := A.property
+    simp only [Fintype.card_fin] at hc
+    omega
+  rw [hz, map_zero]
 
 end D5.S3.Quantum.SpinChains.TokenBlockLocalDefect

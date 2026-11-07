@@ -23,6 +23,12 @@ internal sealed class TokenBlockLocalDefectDocument : IScribeDocumentDefinition
             Node("lower", "The physical coefficient-one lowering map", Lower()),
             Node("number", "The physical block number", Number()),
             Node("defect", "The physical local defect", Defect()),
+            Node("rankPermutation", "The actual block permutation", Permutation()),
+            Node("permutationAction", "The inverse pullback action", Action()),
+            Node("invariantSubspace", "The independently defined fixed subspace", Invariants()),
+            Node("projection", "The invariant orthogonal projection", Params(Eq(Call("projection",M,S,Rk,I),
+                Call("starProjection",Call("invariantSubspace",M,S,Rk,I))))),
+            Paragraph(Text("For a permutation pi of Fin(s), rankPermutation maps each occupied subset by prodExtendRight(i,pi): it sends (i,a) to (i,pi(a)) and fixes every outside vertex. permutationAction is the counting linear isometry obtained by pulling coefficients back along the inverse of that subset permutation. invariantSubspace is the fixed subspace of all these actions, and projection is its orthogonal starProjection. This definition imposes no invariance hypothesis on f and uses no averaging formula.")),
             Paragraph(Text("The inverse subset map sends (R,A) to the disjoint union of the outside inclusion of R and {(i,a):a in A}. No coefficient or norm is rescaled. Hence the inner product of f and g is the sum, over all actual R, of the counting inner products of their restrictions; the same identity holds for squared norms. The predecessor decomposition includes the fibers card(R)+s+1=r even though they have no source states. A coefficient-one lowering map must have zero output on these fibers.")),
             Paragraph(Text("The intended local estimate on the complete carrier is s‖f−P_i f‖²≤Re⟨f,D_i f⟩. Here P_i is independently the orthogonal projection onto the vectors fixed by every permutation of block i. In these coordinates a block permutation fixes R and permutes A. Equal-cardinality subset transitivity makes its invariant vectors precisely the functions constant in A separately for each R. Orthogonality to the zero-sum functions identifies P_i with the counting average on each nonempty fiber.")),
             Paragraph(Text("For q=r−card(R) with card(R)≤r and q≤s, the fiber is exactly NativeJohnsonCoercivity.Rank(s,q). Insertion inside the block preserves R, so the physical lowering restricted to this fiber is NativeJohnsonCoercivity.lower(s,q), including its coefficient one. Counting inner products determine the corresponding adjoint. The block number is q on this fiber; consequently the physical defect restricts to NativeJohnsonCoercivity.defect(s,q). NativeJohnsonCoercivity.result then supplies the local estimate on that fiber. Summing uses the same f in every restriction and introduces no probability weights or binomial factors.")),
@@ -48,14 +54,22 @@ internal sealed class TokenBlockLocalDefectDocument : IScribeDocumentDefinition
         All(M, Call("Nat"), All(S, Call("Nat"), All(Rk, Call("Nat"), All(I, Call("Fin", M), body))));
     private static Formula Space(bool previous) => Call(previous ? "PreviousSpace" : "Space", M,S,Rk);
     private static Formula SiteSplit() => Params(Seq(Call("siteSplit", M,S,I), Colon, Sp,
-        Call("Outside", M,S,I), Sp, F.Id("⊕"), Sp, Call("Fin", S), Sp, F.Id("≃"), Sp, Call("Sites", M,S)));
+        Call("Equiv",Call("SumType",Call("Outside", M,S,I),Call("Fin", S)),Call("Sites", M,S))));
     private static Formula RankSplit(bool previous) => Params(Seq(Call(previous ? "previousSplit" : "rankSplit", M,S,Rk,I),
-        Colon, Sp, Call(previous ? "PreviousRank" : "Rank", M,S,Rk), Sp, F.Id("≃"), Sp,
-        new Formula.Subscript(F.Id("Σ"), Seq(R, Colon, Sp, Call("Finset", Call("Outside", M,S,I)))), Sp,
-        Call(previous ? "PreviousFiber" : "Fiber", M,S,Rk,I,R)));
+        Colon, Sp, Call("Equiv",Call(previous ? "PreviousRank" : "Rank", M,S,Rk),
+        Call("Sigma",Call("Finset",Call("Outside",M,S,I)),
+            Seq(R,Mapsto,Call(previous ? "PreviousFiber" : "Fiber", M,S,Rk,I,R))))));
     private static Formula Split(bool previous) => Params(Seq(Call(previous ? "previousCountingSplit" : "split", M,S,Rk,I),
-        Colon, Sp, Space(previous), Sp, F.Id("≃ₗᵢ[ℂ]"), Sp,
-        Call("PiLp", D(2), Seq(R, F.Id("↦"), Call(previous ? "PreviousFiberSpace" : "FiberSpace", M,S,Rk,I,R)))));
+        Colon, Sp, Call("LinearIsometryEquivC",Space(previous),
+        Call("PiLp", D(2), Seq(R, Mapsto, Call(previous ? "PreviousFiberSpace" : "FiberSpace", M,S,Rk,I,R))))));
+    private static Formula Permutation() => Params(All(F.Id("pi"),Call("Perm",Call("Fin",S)),
+        Seq(Call("rankPermutation",M,S,Rk,I,F.Id("pi")),Colon,Sp,Call("Perm",Call("Rank",M,S,Rk)))));
+    private static Formula Action() => Params(All(F.Id("pi"),Call("Perm",Call("Fin",S)),
+        Seq(Call("permutationAction",M,S,Rk,I,F.Id("pi")),Colon,Sp,
+            Call("LinearIsometryEquivC",Space(false),Space(false)))));
+    private static Formula Invariants() => Params(Eq(Call("invariantSubspace",M,S,Rk,I),
+        Seq(OpenBrace,V,Colon,Sp,Space(false),Sp,Mid,Sp,All(F.Id("pi"),Call("Perm",Call("Fin",S)),
+            Eq(Call("permutationAction",M,S,Rk,I,F.Id("pi"),V),V)),CloseBrace)));
     private static Formula Lower()
     {
         var t=F.Id("T"); var a=F.Id("a");
