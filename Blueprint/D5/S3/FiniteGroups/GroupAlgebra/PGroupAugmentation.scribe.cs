@@ -14,7 +14,7 @@ internal sealed class PGroupAugmentationDocument : IScribeDocumentDefinition
             DescribeId.Create("p-group-augmentation-cardinal-bound"),
             DeclarationHandle.Create("D5/S3/FiniteGroups/GroupAlgebra/PGroupAugmentation.augmentation_ideal_pow_card"),
             H("The group order bounds the nilpotence index"),
-            StatementSource.FromLean(),
+            StatementSource.WithoutFormula(),
             AssessedProvenance.FromLiterature(Webb),
             Blocks(
                 Paragraph(Text("Let p be prime, R any commutative ring of characteristic p, and G any finite p-group. The standard augmentation sends every group basis element to one. Its actual kernel I, regarded as a two-sided ideal in the possibly noncommutative group algebra R[G], satisfies I raised to the cardinality of G equals zero. The trivial group is included with exponent one. No finiteness or field assumption is imposed on R.")),

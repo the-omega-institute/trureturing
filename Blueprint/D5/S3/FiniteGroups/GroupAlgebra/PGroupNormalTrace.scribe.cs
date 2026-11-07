@@ -14,7 +14,7 @@ internal sealed class PGroupNormalTraceDocument : IScribeDocumentDefinition
             DescribeId.Create("p-group-normal-element-trace"),
             DeclarationHandle.Create("D5/S3/FiniteGroups/GroupAlgebra/PGroupNormalTrace.linearIndependent_conjugates_iff_trace_ne_zero"),
             H("Independent conjugates exactly when trace is nonzero"),
-            StatementSource.FromLean(),
+            StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(Webb),
             Blocks(
                 Paragraph(Text("For every finite Galois extension L/K in characteristic p whose full Galois group is a p-group, and every x in L, the family of all conjugates of x is K-linearly independent if and only if its field trace is nonzero. Since the Galois group has cardinality equal to the extension degree, this also says that the conjugates form a basis. The group need not be cyclic or abelian, and K need not be finite.")),
