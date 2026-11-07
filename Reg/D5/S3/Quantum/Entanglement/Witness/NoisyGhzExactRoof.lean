@@ -3,6 +3,9 @@ import D5.S3.Quantum.Entanglement.Witness.NoisyGhzExactRoof
 import Reg.Support.DependentFamily
 import Reg.Support.SingleDependentReadout
 
+/-! Source-bound escape evidence for the independent-phase sum and the actual
+finite-ensemble roof. Unfinished bindings retain their native diagnostics. -/
+
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.Quantum.Entanglement.Witness.NoisyGhzExactRoof
 open LeanInformationAudit
@@ -82,7 +85,7 @@ noncomputable def registration_phase :
 
 
 abbrev roofSignature : Signature :=
-  _root_.Reg.Support.SingleDependentReadout.signature (ℕ × ℕ)
+  _root_.Reg.Support.SingleDependentReadout.signature (Σ _ : ℕ, ℕ)
     (fun nd => Matrix (Word (Fin nd.2) nd.1) (Word (Fin nd.2) nd.1) ℂ) (fun _ => ℝ)
 
 def roofActual : Realization roofSignature :=
@@ -95,8 +98,8 @@ def roofArena : Arena where
   signature := roofSignature
   Law R := ∀ {n d : ℕ} (_hn : 3 ≤ n) (_hd : 3 ≤ d) {p : ℝ}
     (_hp : 0 ≤ p) (_hp1 : p ≤ 1),
-    R.readout () (n,d) (noisyGhz n d p) = twoMeanOptimum d (noisyF n d p) (noisyY n d p) ∧
-      R.readout () (n,d) (noisyGhz n d p) =
+    R.readout () ⟨n,d⟩ (noisyGhz n d p) = twoMeanOptimum d (noisyF n d p) (noisyY n d p) ∧
+      geometricMeasure (noisyGhz n d p) =
         (max (Real.sqrt ((d-1 : ℝ)*(1-p+p/(wordCount n d : ℝ)))-
           Real.sqrt (p*(supportRank n d-1 : ℝ)/(wordCount n d : ℝ))) 0)^2/d
 
@@ -115,7 +118,7 @@ def roofRegistration : Registration roofArena (roofArena.Law roofActual) where
   dependence := by
     change ObservationalDependence roofSignature roofActual
     intro i
-    refine ⟨(3,3),noisyGhz 3 3 0,noisyGhz 3 3 1,?_⟩
+    refine ⟨⟨3,3⟩,noisyGhz 3 3 0,noisyGhz 3 3 1,?_⟩
     change geometricMeasure (noisyGhz 3 3 0) ≠ geometricMeasure (noisyGhz 3 3 1)
     rw [(noisy_exact_roof (n := 3) (d := 3) (by norm_num) (by norm_num)
       (p := 0) (by norm_num) (by norm_num)).1,
@@ -149,12 +152,7 @@ noncomputable def registration_roof :
     coordinates := #[0,1]
     readouts := #[{
       path := #["body","body","body","body","body","body","body","fn","arg","fn","arg"]
-      stateBinder := 2
-      functionOperand := false
-      stateOperand := some #["arg"]
-      booleanPredicate := false }, {
-      path := #["body","body","body","body","body","body","body","arg","fn","arg"]
-      stateBinder := 2
+      stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]
       booleanPredicate := false }] }
