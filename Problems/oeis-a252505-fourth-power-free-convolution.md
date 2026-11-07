@@ -105,5 +105,11 @@ It assumes no multiplicativity of $b$ or $g$. The parity argument stays over
 the integers before passing to the finite ring of characteristic four.
 
 The proposed admission basis is `open-problem-resolution` under #27491.
-The source-family audit limitations are tracked in
+The retained public theorem targets are `unit_fraction_count`,
+`unit_fraction_divisor_formula` and `result`. The result has a validated source
+mirror. The two counting theorems retain unfinished source-family audits in
 https://github.com/the-omega-institute/trureturing/issues/27506.
+The exact inverse recursion and its positive-domain uniqueness are checked
+transiently; they are source-identification evidence, not separate retained
+mathematical endpoints. The parity bridge `g_gamma` is content on the live
+derivation path of `result`; no auxiliary claim of separate novelty is made.

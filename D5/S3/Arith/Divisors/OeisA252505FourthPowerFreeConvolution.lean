@@ -162,20 +162,6 @@ theorem unit_fraction_count (n : ℕ) (hn : 0 < n) :
   simpa only [b, Nat.card_eq_fintype_card, Fintype.card_coe] using
     congrArg (fun k : ℕ => (k : ℤ)) H
 
-private theorem c_recursion : InverseRecursion c := by
-  let : Invertible (gFunction 1) := gOneInvertible
-  have hi : ⅟(gFunction 1) = 1 := invOf_eq_iff_right.mpr (by
-    change g 1 * 1 = 1
-    rw [g_one, mul_one])
-  constructor
-  · change ArithmeticFunction.dirichletInverseFun gFunction gOneInvertible 1 = 1
-    rw [ArithmeticFunction.dirichletInverseFun_apply_one, hi]
-  · intro n hn
-    change ArithmeticFunction.dirichletInverseFun gFunction gOneInvertible n = _
-    rw [ArithmeticFunction.dirichletInverseFun_apply_ne (f := gFunction) (hf := gOneInvertible) (n := n) (by omega) (by omega), hi]
-    simp only [neg_mul, one_mul]
-    rfl
-
 private theorem factor_pair_balance (n : ℕ) (hn : 0 < n) :
     2 * ((factorPairs n).card : ℤ) = (tau (n ^ 2) : ℤ) + 1 := by
   let s := (n ^ 2).divisorsAntidiagonal
@@ -635,22 +621,6 @@ theorem result : claim := by
   change (if d = 0 then 0 else b d) * c (n / d) = _
   rw [ite_eq_right hd0]
 
-/-- The source recursion has a unique positive-domain solution. -/
-theorem inverse_recursion_unique (v : ℕ → ℤ) (hv : InverseRecursion v) :
-    ∀ n : ℕ, 0 < n → v n = c n := by
-  intro n
-  induction n using Nat.strong_induction_on with
-  | h n ih =>
-    intro hn
-    by_cases h1 : n = 1
-    · subst n
-      exact hv.1.trans c_recursion.1.symm
-    · rw [hv.2 n (by omega), c_recursion.2 n (by omega)]
-      congr 1
-      apply Finset.sum_congr rfl
-      intro d hd
-      rw [ih d (Nat.mem_properDivisors.mp hd).2
-        (Nat.pos_of_dvd_of_pos (Nat.mem_properDivisors.mp hd).1 hn)]
 
 
 end
