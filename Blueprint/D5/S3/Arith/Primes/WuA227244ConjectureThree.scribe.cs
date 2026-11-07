@@ -15,7 +15,7 @@ internal sealed class WuA227244ConjectureThreeDocument : IScribeDocumentDefiniti
         Blocks(
             Paragraph(Text("All indices and exponents are natural numbers. The outer arithmetic, including the final subtraction, is in the integers. The symbol G denotes the signed integer itself, without a natural subtraction or absolute value.")),
             Paragraph(Text("The symbol G is the public original-owner definition D5.S3.Arith.Primes.WuA227244ConjectureFour.G, used directly throughout the Lean proof. OEIS A227244, NAME: Smallest prime factor of (2^(2^n) + 1)*2^(2^(2^n)) - 1. The exponent of the second outer power is two raised to two raised to m.")),
-            Disp(All("m", Equal(Call("G", F.Id("m")), IntegerBody(F.Id("m"))))),
+            Paragraph(Math(Disp(All("m", Equal(Call("G", F.Id("m")), IntegerBody(F.Id("m"))))))),
             Node("reduced", "Finite residues of the nested powers", Disp(ReducedFormula()),
                 "This residue expression is in ZMod q. Its five natural parameters are q, d, p, L and r; L records the period used to choose r. The first exponent is reduced modulo d. For the second exponent, a tail of length p precedes reduction modulo p, and the resulting outer exponent is reduced modulo d. Periodicity of powers along 72*n+32 transfers this expression to every natural n.", DescribeRole.Definition, AssessedProvenance.FromRepo(Source)),
             Node("result", "The exact conditional least-prime assertion", Disp(Event()),
