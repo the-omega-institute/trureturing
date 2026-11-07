@@ -11,18 +11,15 @@ import D5.S3.Arith.Robin.PriceRecord.OwnClockFixedSupport
 import Mathlib.Analysis.SpecialFunctions.Log.Basic
 import Mathlib.Tactic
 
-/-! Source candidate only: no kernel compilation or Scribe acceptance is
-claimed. The real objective/domain/infimum, baseline, boundary and integerGap
-are imported literally from the immutable accepted23 source. integerInfimum
-below is the literal image infimum over admissible integer exponent vectors.
+/-! Source candidate awaiting native verification. The objective, real domain,
+real infimum, baseline, boundary and integer gap retain their imported meanings.
+The integer infimum is the literal image infimum on supported integer vectors.
 
-This overlays the finished, UNCOMPILED RealInfimumUniformDuality source
-(SHA256 eb48e4f2e25d27e0696d3c61781f0b94fb0019ab79390c0d8d61d40bcee2096d).
-Its public real_infimum_uniform_lower type is preserved verbatim; the private
-pointwise proof is shared with the new integer sandwich. The price is fixed
-at theta S. Only primewise fixed-price integer attainers are selected; a
-nonlinear global integer minimizer is neither assumed nor asserted.
-Every private helper is consumed. No limit or RH statement is encoded. -/
+At the fixed price g(theta S), the exact price-loss identity and the canonical
+quadratic logarithm inequality give a lower bound for every admissible vector.
+A sublevel argument controls the clock without restricting the infimum domain.
+Primewise integer price attainers give the integer upper bound; a global
+nonlinear minimizer is neither assumed nor asserted. -/
 
 noncomputable section
 

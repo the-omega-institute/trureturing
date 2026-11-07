@@ -11,12 +11,12 @@ import D5.S3.Arith.Robin.PriceRecord.RealInfimumUniformDuality
 import Mathlib.Analysis.SpecialFunctions.Log.Basic
 import Mathlib.Tactic
 
-/-! UNCOMPILED source-only repair of the immutable partial source.
-The accompanying RealInfimumUniformDuality overlay changes only the visibility
-of five exact suppliers. Its definitions, statements and proof scripts are
-unchanged. No infimum, domain, objective or previously accepted result is
-redefined here. The all-vector argument uses both monotonicity and the
-one-Lipschitz inequality; it requires neither attainment nor a clock cutoff. -/
+/-! Source candidate awaiting native verification. The exact fixed-price
+identity gives Q + sum priceLoss = w + U for every admissible vector, with
+w and U nonnegative. Monotonicity and the one-Lipschitz inequality for the
+nested logarithm yield the global envelope before passing to the image infima.
+The canonical quadratic logarithm supplier gives its explicit error bound.
+No objective, domain, infimum, clock cutoff or minimizer is substituted. -/
 
 noncomputable section
 
