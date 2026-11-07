@@ -1862,3 +1862,150 @@ $$
 其中连续部分为 $-\int_x^{x+h}G_g((t-x)/h)\,dt=-h\int_0^1s\,g(s)\,ds$，与 $F_{h,g}(x)=\int_0^1g(s)\bigl(\psi(x+sh)-\psi(x)-sh\bigr)ds$ 的漂移项一致；于是 $Q(g)=\|G_g\|_{L^2(0,1)}^2$ 是这一短窗线性统计在该协方差下的二次能量。本节只用到二阶结构；高阶混合矩、有限维高斯分布与紧性都不在本节结论之内，本节不给出随机过程意义下的收敛。
 
 **范围。** 比例窗与加法窗之间的方差转移另见 Bui–Keating–Smith [On the variance of sums of arithmetic functions over primes in short intervals and pair correlation for $L$-functions in the Selberg class, J. London Math. Soc. 94 (2016), 161–185] 定理 $C_1,C_2,D_1,D_2$，那里的定量结论要求幂次节省的误差。Leung 前引文定理 10.1 的移动窗结论在 RH、LI 与 QLI 下对对数取样 $x=e^u$ 成立，并要求 $\log(1/\delta)=o(\log U)$，不覆盖这里固定 $\theta<1$ 的普通二倍区间取样。定理 490.6 只控制 $|\mathcal T_{\theta,g}|$，不给出带符号的幂次 $\Omega_\pm$。
+
+## 追加锚（本行以下为增补区）
+
+## 491. 不同指数的移动剖面核的渐近正交
+
+沿用 §490 的 $E,D_u,V,\rho_x,\mathcal T_{\theta,g}$ 与 (490.2)。固定 $0<a<b<1$、实值 $g_1,g_2\in L^1(0,1)$，令
+
+$$
+h=X^a,\qquad k=X^b,\qquad A_X=(X\log X)^{1/2},\qquad N_X=X^{1-(a+b)/2}\log X,
+$$
+
+$$
+f_s(x)=D_{sx^a}(x),\qquad z_t(x)=D_{tx^b}(x)\qquad(s,t\in[0,1]).
+$$
+
+由 (490.1)，$\mathcal T_{\theta,g}(x)=x^{1/2-\theta}\int_0^1g(s)D_{sx^\theta}(x)\rho_x(sx^\theta)\,ds$；由定理 490.6，$\|\mathcal T_{a,g_1}\|_{L^2([X,2X],dx/x)}\|\mathcal T_{b,g_2}\|_{L^2([X,2X],dx/x)}\asymp N_X$（$g_1,g_2$ 非零时）。
+
+下面只用 (490.2) 推出的**上界**。称尺度 $R=R(X)$ 满足**可比长度上界**，若对每组固定的 $0<c_1\le c_2$ 与 $C\ge1$，对充分大的 $X$，
+
+$$
+V(CX,u)\ll XR\log X\qquad(c_1R\le u\le c_2R).
+\tag{491.1}
+$$
+
+若 (490.2) 在某个包含 $\rho$ 的开指数带上成立，则 $R=X^\rho$ 满足 (491.1)。全部范数取在 $[X,2X]$ 的固定放大区间（例如 $[X/2,4X]$）上；下面所有平移都是 $O(k)=o(X)$，故放大区间足够；所有常数对 $s,t\in[0,1]$ 与 $[X,2X]$ 的子区间一致。
+
+**引理 491.1（两端移动的增量）。** 设尺度 $R$ 满足 (491.1)。设 $p,q$ 是工作区间上递增的 $C^1$ 映射，导数有固定正下界，像落在固定放大区间内，且 $0\le q(x)-p(x)\le C_0R$。则 $\|E\circ q-E\circ p\|_2\ll A_X\sqrt R$。特别地（取 $p(x)=x$、$q(x)=x+u$），$\sup_{0\le u\le C_0R}\|D_u\|_2\ll A_X\sqrt R$。
+
+证明。令 $\delta=q-p$。对 $v\in[(C_0+1)R,(C_0+2)R]$ 有恒等式 $E(q(x))-E(p(x))=D_v(p(x))-D_{v-\delta(x)}(q(x))$，因为 $q+(v-\delta)=p+v$。平方后用 $(u-v)^2\le2u^2+2v^2$ 并对 $v$ 取平均。第一项经换元 $y=p(x)$（逆映射导数有界）至多 $\frac2R\int_{(C_0+1)R}^{(C_0+2)R}V(CX,v)\,dv\ll XR\log X$。第二项中先令 $w=v-\delta(x)$ 并把 $w$ 的范围放大到 $[R,(C_0+2)R]$（被积函数非负），再由 Tonelli 与换元 $y=q(x)$ 得同一界。证毕。
+
+当 $p(x)=x$、$q(x)=x+u$ 时，这正是引理 490.1(i) 所用的恒等式 $D_u(x)=D_{R+u}(x)-D_R(x+u)$ 的移动形式。
+
+**引理 491.2（移动短增量的平均）。** 设 $h$ 与 $M$ 满足 (491.1)，$h\ll M=o(X)$，令 $\mathscr A_Mu(x)=\frac1M\int_0^Mu(x+r)\,dr$。则对 $s\in[0,1]$ 一致地，
+
+$$
+\|\mathscr A_Mf_s\|_2\ll\frac hM\,A_X\sqrt M .
+$$
+
+证明。令 $L(x)=sx^a$、$\phi(x)=x+L(x)$、$\xi=\phi^{-1}$、$q=\xi'$。在放大区间上 $L\ll h$、$0\le L'\ll h/X$、$|q-1|\ll h/X$。固定 $x$，令 $P=\phi(x)$、$Q=\phi(x+M)$、$Q_0=x+M+L(x)$、$\delta=Q-Q_0$，则 $0\le\delta\ll hM/X$。由 $\int_0^ME(\phi(x+r))\,dr=\int_P^QE(y)q(y)\,dy$，得恒等式
+
+$$
+M\,\mathscr A_Mf_s(x)=\int_0^{L(x)}D_M(x+r)\,dr+\int_P^Q(q(y)-1)\bigl(E(y)-E(x)\bigr)\,dy+\int_{Q_0}^Q\bigl(E(y)-E(x)\bigr)\,dy ,
+$$
+
+其中减去 $E(x)$ 合法，因为 $\int_P^Q(q-1)\,dy+\delta=M-(M+\delta)+\delta=0$。第一项由 Minkowski 不等式与 (491.1) 的 $L^2$ 范数为 $O(hA_X\sqrt M)$。第二项中令 $y=x+u$，$u$ 的范围放大到 $[0,CM]$，由引理 491.1，其范数为 $O\bigl(\frac{hM}XA_X\sqrt M\bigr)$。第三项中令 $y=Q_0(x)+v$，插入示性函数 $\mathbf 1_{v\le\delta(x)}$ 并对 $0\le v\le ChM/X$ 积分；对每个固定的 $v$，端点映射 $x$ 与 $x+M+L(x)+v$ 满足引理 491.1 的条件，故由 Minkowski 不等式得同一界。除以 $M$ 并用 $M=o(X)$。证毕。
+
+**引理 491.3（四尺度分离）。** 设 $h,M,T,k$ 都满足 (491.1)，$h\ll M\ll T\ll k$。则对每个区间 $I\subset[X,2X]$ 与 $s,t\in[0,1]$，
+
+$$
+\Bigl|\int_If_s(x)z_t(x)\,dx\Bigr|\ll A_X^2\sqrt{hk}\Bigl(\sqrt{\frac hM}+\sqrt{\frac MT}+\sqrt{\frac Tk}\Bigr).
+$$
+
+证明。由引理 491.1，$\|f_s\|_2\ll A_X\sqrt h$、$\|z_t\|_2\ll A_X\sqrt k$。令 $\psi(x)=x+tx^b$。对 $0\le r\le R$（$R=M$ 或 $T$），$z_t(x+r)-z_t(x)=\bigl[E(\psi(x+r))-E(\psi(x))\bigr]-D_r(x)$；前一项的端点映射之差为 $O(R)$，由引理 491.1，
+
+$$
+\|z_t(\cdot+r)-z_t\|_2\ll A_X\sqrt R .
+\tag{491.2}
+$$
+
+对长度至多 $M$ 的区间 $J$，把 $z_t(x)^2\le2z_t(x+r)^2+2|z_t(x+r)-z_t(x)|^2$ 对 $r\in[0,T]$ 取平均再在 $J$ 上积分，由 Fubini 与 (491.2)，
+
+$$
+\int_Jz_t^2\ll\frac MT\|z_t\|_2^2+A_X^2T\ll A_X^2\Bigl(\frac{Mk}T+T\Bigr).
+\tag{491.3}
+$$
+
+现在比较 $\int_If_sz_t$ 与 $\int_I(\mathscr A_Mf_s)z_t$。后者由引理 491.2 至多 $\frac hMA_X\sqrt M\cdot A_X\sqrt k=A_X^2\sqrt{hk}\sqrt{h/M}$。对每个 $r\le M$，$\int_If_s(x+r)z_t(x)\,dx$ 经平移变为 $I+r$ 上 $f_s(y)z_t(y-r)$ 的积分；在 $I\cap(I+r)$ 上，与 $\int f_sz_t$ 之差由 (491.2) 与 Cauchy–Schwarz 至多 $A_X\sqrt h\cdot A_X\sqrt M\le A_X^2\sqrt{hk}\sqrt{M/T}\sqrt{T/k}$；其余是长度至多 $M$ 的端点条，由 Cauchy–Schwarz 与 (491.3) 至多 $A_X\sqrt h\cdot A_X\sqrt{Mk/T+T}=A_X^2\sqrt{hk}\sqrt{M/T+T/k}$。对 $r$ 取平均，并用 $\sqrt{M/k}=\sqrt{M/T}\sqrt{T/k}\le\sqrt{M/T}+\sqrt{T/k}$ 吸收重叠项，即得。$|I|<M$ 时同样成立。证毕。
+
+**引理 491.4（移动差的转移）。** 令 $\phi(x)=x+sx^a$，$I\subset[X,2X]$。对放大区间上的 $u\in L^2$ 与 $v\in C^1$，
+
+$$
+\Bigl|\int_I\bigl[u(\phi(x))-u(x)\bigr]v(x)\,dx\Bigr|\ll h\|u\|_2\|v'\|_2+\frac hX\|u\|_2\|v\|_2+\|v\|_\infty\int_{J}|u| ,
+$$
+
+其中 $J$ 是总长 $O(h)$ 的端点条；末项至多 $Ch\|u\|_\infty\|v\|_\infty$，也至多 $C\sqrt h\|u\|_2\|v\|_\infty$。又对 $u\in C^1$，$\|u\circ\phi-u\|_2\ll h\|u'\|_2$；对长映射 $\psi(x)=x+tx^b$（$1\le\psi'\le2$），$\|u\circ\psi-u\|_2\ll\|u\|_2$、$\|(u\circ\psi-u)'\|_2\ll\|u'\|_2$。
+
+证明。对第一项作换元 $y=\phi(x)$。在 $I\cap\phi(I)$ 上令 $\xi=\phi^{-1}$、$q=\xi'$，被积函数之差为 $u(y)\bigl\{v(\xi(y))-v(y)+(q(y)-1)v(\xi(y))\bigr\}$，其中 $0\le y-\xi(y)\ll h$、$|q-1|\ll h/X$，且 $|v(\xi(y))-v(y)|\le\int_{y-Ch}^y|v'|$；由 Fubini 与 Cauchy–Schwarz，后者的 $L^2$ 范数至多 $Ch\|v'\|_2$。$I\triangle\phi(I)$ 的测度为 $O(h)$，给出端点项。其余估计直接由同样的换元得到。证毕。
+
+**二重平均与二进分解。** 设 (490.2) 在一个指数带 $0<\alpha<a<b<\beta<1$ 上成立。令 $Z_R=\mathscr A_R^2E$、$B_R=Z_R-Z_{2R}$、$r_h=E-Z_h$。则 $Z_R\in C^1$ 且
+
+$$
+Z_R'=\frac1R\,\mathscr A_RD_RE ,
+\qquad
+B_R=-\tfrac12\mathscr A_R^2D_RE-\tfrac14\mathscr A_R^2D_{2R}E .
+\tag{491.4}
+$$
+
+前者因为 $\mathscr A_RE$ 局部绝对连续且导数为 $D_RE/R$，再作一次平均；后者由 $\mathscr A_{2R}=\frac12(I+T_R)\mathscr A_R$（$T_Ru=u(\cdot+R)$）展开 $Z_{2R}=\frac14(Z_R+2T_RZ_R+T_{2R}Z_R)$ 得到。由 (490.2) 得 $\|D_u\|_2\ll A_X\sqrt u$（$h\le u\le8k$）与 $\sup_{0\le u\le2h}\|D_u\|_2\ll A_X\sqrt h$（引理 491.1）。于是对 $h\le R\le2k$，由 (491.4)、Minkowski 不等式，以及 $|\mathscr A_Ru(x)|\le R^{-1/2}\|u\|_2$：
+
+$$
+\|B_R\|_2\ll A_X\sqrt R,\quad\|B_R'\|_2\ll\frac{A_X}{\sqrt R},\quad\|B_R\|_\infty\ll A_X,\quad\|Z_R'\|_2\ll\frac{A_X}{\sqrt R},\quad\|Z_R'\|_\infty\ll\frac{A_X}R ;
+\tag{491.5}
+$$
+
+又 $r_h$ 是长度至多 $2h$ 的增量的平均，故 $\|r_h\|_2\ll A_X\sqrt h$。取 $N$ 使 $K=2^Nh\in[k,2k)$，则 $N\ll1+\log(k/h)$ 且 $Z_h=Z_K+\sum_{j=0}^{N-1}B_{2^jh}$。
+
+**引理 491.5（共同指数带上的一致协方差界）。** 设 (490.2) 在 $0<\alpha<a<b<\beta<1$ 上成立。则对每个区间 $I\subset[X,2X]$ 与 $s,t\in[0,1]$，
+
+$$
+\Bigl|\int_If_s(x)z_t(x)\,dx\Bigr|\ll Xh\log X\,\bigl(1+\log(k/h)\bigr)^2 .
+$$
+
+证明。记 $U_au=u\circ\phi-u$、$U_bu=u\circ\psi-u$，则 $f_s=U_aE$、$z_t=U_bE$，$E=Z_h+r_h$。(i) $|\langle U_aE,U_br_h\rangle_I|\le\|f_s\|_2\|U_br_h\|_2\ll A_X^2h$。(ii) 令 $v=U_bZ_h$；由 (491.5) 与引理 491.4，$\|v'\|_2\ll A_X/\sqrt h$、$\|v\|_2\le\|z_t\|_2+\|U_br_h\|_2\ll A_X\sqrt k$，且 $\|v\|_\infty\le\sum_j\|U_bB_{2^jh}\|_\infty+k\|Z_K'\|_\infty\ll A_X(N+1)$。由引理 491.4（$u=r_h$，末项取 $L^2$ 形式），$|\langle U_ar_h,v\rangle_I|\ll A_X^2h(N+1)$，因为 $\frac hX\|r_h\|_2\|v\|_2\ll A_X^2h\sqrt{hk}/X\le A_X^2h$。(iii) 余下 $\langle U_aZ_h,U_bZ_h\rangle_I$，按二进分解展开两个因子。第一因子为 $Z_K$ 时，$\|U_aZ_K\|_2\ll h\|Z_K'\|_2\ll A_Xh/\sqrt k$，乘以 $\|U_bZ_h\|_2\ll A_X\sqrt k$ 得 $A_X^2h$。第一因子为 $B_R$、第二因子为 $Z_K$ 时，由引理 491.4（末项取上确界形式）与 $\|U_bZ_K\|_2\ll A_X\sqrt k$、$\|(U_bZ_K)'\|_2\ll A_X/\sqrt k$、$\|U_bZ_K\|_\infty\ll A_X$，得 $O(A_X^2h)$。两个因子为 $B_R,B_S$ 时：若 $S\le R$，$\|U_aB_R\|_2\|U_bB_S\|_2\ll\frac{A_Xh}{\sqrt R}A_X\sqrt S\le A_X^2h$；若 $S>R$，由引理 491.4，界为 $A_X^2h\bigl(\sqrt{R/S}+\sqrt{RS}/X+1\bigr)\ll A_X^2h$。共 $(N+1)^2$ 对，合计 $O\bigl(A_X^2h(N+1)^2\bigr)$。证毕。
+
+**定理 491.6（跨指数渐近正交）。** 设 $E$ 局部有界 Borel 可测，$0<a<b<1$，$g_1,g_2\in L^1(0,1)$ 实值。
+
+(i) **两条指数带。** 设 (490.2) 分别在 $0<\alpha_1<a<\beta_1<1$ 与 $0<\alpha_2<b<\beta_2<1$ 上成立。任取固定的 $a<\mu<\nu<\min(\beta_1,b)$，令 $\eta_0=\frac12\min\{\mu-a,\nu-\mu,b-\nu\}$。则
+
+$$
+\Bigl|\int_X^{2X}\mathcal T_{a,g_1}(x)\mathcal T_{b,g_2}(x)\,\frac{dx}x\Bigr|\ll\|g_1\|_1\|g_2\|_1\,N_X\,X^{-\eta_0}.
+\tag{491.6}
+$$
+
+(ii) **共同指数带。** 设 (490.2) 在 $0<\alpha<a<b<\beta<1$ 上成立。则
+
+$$
+\Bigl|\int_X^{2X}\mathcal T_{a,g_1}(x)\mathcal T_{b,g_2}(x)\,\frac{dx}x\Bigr|\ll\|g_1\|_1\|g_2\|_1\,X^{1-b}\log X\,\bigl(1+(b-a)\log X\bigr)^2 ,
+\tag{491.7}
+$$
+
+即相对于 $N_X$ 为 $O\bigl(\|g_1\|_1\|g_2\|_1X^{-(b-a)/2}(\log X)^2\bigr)$。
+
+两处常数只依赖 $E$、指数带与 $a,b$，对剖面的依赖只经 $\|g_1\|_1\|g_2\|_1$。
+
+证明。令 $r_{\theta,s}(x)=\rho_x(sx^\theta)$、$W_{s,t}(x)=x^{-a-b}r_{a,s}(x)r_{b,t}(x)$，则
+
+$$
+\int_X^{2X}\mathcal T_{a,g_1}\mathcal T_{b,g_2}\frac{dx}x=\int_0^1\!\!\int_0^1g_1(s)g_2(t)\int_X^{2X}W_{s,t}(x)f_s(x)z_t(x)\,dx\,ds\,dt ;
+$$
+
+对固定的 $X$，所用 $E$ 的值都在一个紧区间内，局部有界性给出对 $|g_1(s)g_2(t)|\,ds\,dt\,dx$ 的绝对可积性，Fubini 成立。令 $\ell=\log w$。由 §481 的显式公式，$\ell'(x)=O(x^{-1})$、$\ell''(x)=O(x^{-2})$；由 $\frac d{dx}\log r_{\theta,s}=\ell'(x+sx^\theta)(1+s\theta x^{\theta-1})-\ell'(x)$，对 $s\in[0,1]$ 一致地 $r_{\theta,s}=O(1)$、$r_{\theta,s}'=O(X^{\theta-2})$（$X\le x\le2X$）。于是 $|W_{s,t}(2X)|+\int_X^{2X}|W_{s,t}'|\ll X^{-a-b}$。令 $F_{s,t}(y)=\int_X^yf_sz_t$；分部积分给出
+
+$$
+\Bigl|\int_X^{2X}W_{s,t}f_sz_t\,dx\Bigr|\le\sup_{y\in[X,2X]}|F_{s,t}(y)|\Bigl(|W_{s,t}(2X)|+\int_X^{2X}|W_{s,t}'|\Bigr).
+$$
+
+(i) 取 $M=X^\mu$、$T=X^\nu$。尺度 $h,M,T$ 落在第一条带内，$k$ 落在第二条带内，故都满足 (491.1)。由引理 491.3，$\sup_y|F_{s,t}(y)|\ll A_X^2\sqrt{hk}\,X^{-\eta_0}$，乘以 $X^{-a-b}$ 得 $N_XX^{-\eta_0}$，再对 $|g_1(s)g_2(t)|$ 积分。(ii) 由引理 491.5，$\sup_y|F_{s,t}(y)|\ll Xh\log X(1+\log(k/h))^2$，乘以 $X^{-a-b}$ 得 $X^{1-b}\log X(1+(b-a)\log X)^2$。证毕。
+
+**推论 491.7（多尺度归一化）。** 设 $0<\theta_1<\dots<\theta_m<1$，$m$ 固定，(490.2) 在包含每个 $\theta_j$ 的开指数带上成立，$g_j\in L^1(0,1)$ 实值，$c_j\in\mathbb R$。则
+
+$$
+\int_X^{2X}\Bigl(\sum_{j=1}^mc_j\frac{\mathcal T_{\theta_j,g_j}(x)}{\sqrt{X^{1-\theta_j}\log X}}\Bigr)^2\frac{dx}x\longrightarrow\sum_{j=1}^mc_j^2\bigl(2^{1-\theta_j}-1\bigr)Q(g_j).
+$$
+
+证明。展开有限平方：对角项由定理 490.6 收敛；非对角项由定理 491.6(i) 趋于零。证毕。
+
+**范围。** 由普通方差经极化恢复两点相关，见 Leung [Joint distribution of primes in multiple short intervals, Adv. Math. 490 (2026), 110847, doi:10.1016/j.aim.2026.110847] 附注 2.3；该文命题 2.2 给出等长、互不相交的比例短区间的协方差，定理 10.1 的移动窗结论在 RH、LI 与 QLI 下对对数取样成立，要求 $\log(1/\delta)=o(\log U)$。增量关系 $D_k-D_h=D_{k-h}(\cdot+h)$ 也出现在 Bui–Keating–Smith [On the variance of sums of arithmetic functions over primes in short intervals and pair correlation for $L$-functions in the Selberg class, J. London Math. Soc. 94 (2016), 161–185, doi:10.1112/jlms/jdw030] §5.3 定理 $C_1$ 的证明中，那里用于长度 $H_1<H_2<2H_1$ 之间的方差转移。Montgomery–Soundararajan [Primes in short intervals, Comm. Math. Phys. 252 (2004), 589–617, doi:10.1007/s00220-004-1222-4] 处理单一长度的矩，Goldston–Yıldırım [Canad. J. Math. 50 (1998), 563–580] 处理单一长度在算术级数中的方差，Coppola–Laporta [Afrika Mat. 29 (2018), 1245–1263] 处理固定位移的相关；这些文献都不处理两个幂次分离长度 $x^a,x^b$（$a<b$）的增量之间的协方差。直接对 $\int D_hD_k$ 作极化只给出 $O(Xh\log X)+O(\varepsilon_XXk\log X)$，其中 $\varepsilon_X\to0$ 是 (490.2) 的一致误差；当 $k/h\to\infty$ 时，归一化后的第二项不必趋于零。定理 491.6 的证明采用引理 491.1–491.5 的平均与二进分解，仅依赖 (490.2) 推出的上界 (491.1)。定理 491.6 与推论 491.7 只涉及二阶量，不给出渐近独立、高斯性或随机过程意义下的收敛，也不给出带符号的幂次 $\Omega_\pm$。
