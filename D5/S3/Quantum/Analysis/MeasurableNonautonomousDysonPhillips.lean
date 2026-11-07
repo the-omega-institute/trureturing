@@ -226,11 +226,11 @@ private theorem term_continuous (n : ℕ) (x : E) :
     ContinuousOn (fun t => term S B n t r x) (Set.Icc r H) :=
   iterate_continuous S B hrH hB g hg hgn hBg (orbit_continuous S r x).continuousOn n
 
-private theorem term_integrable (n : ℕ) (x : E) {t : ℝ} (ht : t ∈ Set.Icc r H) :
+theorem term_integrable (n : ℕ) (x : E) {t : ℝ} (ht : t ∈ Set.Icc r H) :
     IntervalIntegrable (fun s => S.action (t-s) (B s (term S B n s r x))) volume r t :=
   (causal_regular S hB hg hBg (term_continuous S B hrH hB g hg hgn hBg n x)).2 t ht
 
-private theorem term_bound (n : ℕ) {t : ℝ} (ht : t ∈ Set.Icc r H) (x : E) :
+theorem term_bound (n : ℕ) {t : ℝ} (ht : t ∈ Set.Icc r H) (x : E) :
     ‖term S B n t r x‖ ≤ (∫ s in r..t, g s)^n / n ! * ‖x‖ := by
   simpa only [term, mul_comm] using measurable_causal_iterate_bound S B hrH hB g hg hgn hBg
     (fun s => S.action (s-r) x) (orbit_continuous S r x).continuousOn
@@ -414,7 +414,7 @@ noncomputable def measurableEvolution (S : Contraction E) (B : ℝ → E →L[�
   classical
   exact if h : ∃ A : E →L[ℂ] E, ∀ x, A x = sum S B t r x then h.choose else 0
 
-private theorem measurableEvolution_apply (S : Contraction E) (B : ℝ → E →L[ℂ] E)
+theorem measurableEvolution_apply (S : Contraction E) (B : ℝ → E →L[ℂ] E)
     {r H : ℝ} (hrH : r ≤ H)
     (hB : ∀ x : E, AEStronglyMeasurable (fun s => B s x) (volume.restrict (Set.Icc r H)))
     (g : ℝ → ℝ) (hg : IntegrableOn g (Set.Icc r H))
@@ -501,7 +501,7 @@ private theorem global_term_continuous (S : Contraction E) (B : ℝ → E →L[�
           (Eventually.of_forall fun s => mul_nonneg (hgn s) hK)
         _ = _ := by rw [MeasureTheory.integral_mul_const]; dsimp [K]; ring
 
-private theorem term_joint_continuous (S : Contraction E) (B : ℝ → E →L[ℂ] E)
+theorem term_joint_continuous (S : Contraction E) (B : ℝ → E →L[ℂ] E)
     {T : ℝ} (hT : 0 ≤ T)
     (hB : ∀ x : E, AEStronglyMeasurable (fun s => B s x) (volume.restrict (Set.Icc 0 T)))
     (g : ℝ → ℝ) (hg : IntegrableOn g (Set.Icc 0 T))
