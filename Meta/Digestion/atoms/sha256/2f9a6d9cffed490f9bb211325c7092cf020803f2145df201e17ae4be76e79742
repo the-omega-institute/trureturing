@@ -1,0 +1,87 @@
+### 52.4. Exact continuous-domain certificate
+
+The certificate is the finite pair of complete binary trees in
+[the exact-rational certificate](https://github.com/the-omega-institute/trureturing-experiments/blob/014b9c9e939cc6979ef80769c4ded6dec91eb1ff/experiments/auric/four-path/negative-attained-triangle/certificate.json).
+Their ordered root boxes, in coordinates $(t,a,b)$, are
+
+$$
+[0,11/100]\times[0,1]^2,\qquad
+[11/100,593/1000]\times[0,1]^2.
+\tag{52.29}
+$$
+
+The leaf symbol is the integer $1$. An internal node
+$[j,T_\ell,T_r]$, with $j\in\{0,1,2\}$, replaces the $j$th interval
+$[l_j,u_j]$ by $[l_j,(l_j+u_j)/2]$ and
+$[(l_j+u_j)/2,u_j]$, respectively. Induction on this definition proves
+that the leaves cover each entire closed root, including shared
+boundaries. The two trees have $2385$ leaves, $4768$ nodes and maximum
+depth $20$. The complete leaf data are the trees themselves, rather
+than a sample mesh or a list of numerical test points.
+
+Here is the arithmetic specification that turns those finite data into
+a proof on the continuous domain. All interval endpoints are exact
+rational numbers. For $[l,u]+[l',u']$ use $[l+l',u+u']$; negation
+reverses endpoints. A product uses the minimum and maximum of the four
+endpoint products. A reciprocal uses $[1/u,1/l]$ only when zero is
+excluded. An even power has lower endpoint zero if its interval
+contains zero, otherwise the smaller endpoint power; an odd power is
+monotone. To bracket the square root of a nonnegative rational $v$,
+put $S=10^{40}$ and
+
+$$
+k(v)=\left\lfloor\sqrt{\left\lfloor vS^2\right\rfloor}\right\rfloor.
+\tag{52.30}
+$$
+
+Its lower bracket is $k(v)/S$, and its upper bracket is the same
+number if its square equals $v$, otherwise $(k(v)+1)/S$. Squaring
+these rational endpoints proves inclusion. Apply this to interval
+endpoints and construct
+
+$$
+h=\sqrt{1/2},\qquad s=\sqrt{(1-h)/2},\qquad
+c=\sqrt{(1+h)/2},\qquad e^2=4(h+s)^2,\quad d^2=4(h+c)^2.
+\tag{52.31}
+$$
+
+Each enclosure contains the exact dependent constants; interval
+arithmetic permits their occurrences to vary independently only to
+enlarge the enclosure. It never asserts their independent realizability.
+
+On each leaf evaluate the four polynomials
+$(W,B_0,P_b,Q_b)$ from (52.21)--(52.22), (52.26). When their natural
+intervals are not all positive, intersect each natural enclosure with
+
+$$
+f(m)+\sum_{j=0}^2([l_j,u_j]-m_j)\,\partial_jf(\mathcal B),\qquad
+m_j=(l_j+u_j)/2,
+\tag{52.32}
+$$
+
+where $\mathcal B$ is that leaf box. Exact polynomial differentiation
+uses the sum, product and power rules. For each fixed choice of the
+true constants, the mean-value integral along the line from $m$ to a
+point of $\mathcal B$ proves (52.32). Its interval evaluation therefore
+contains all values of that polynomial on the entire leaf. Intersecting
+two enclosures preserves inclusion. The finite inequalities obtained
+for every leaf are
+
+$$
+(W,B_0,P_b,Q_b)>(12/5,49/5,1/10,3/500)
+\quad\hbox{coordinatewise}.
+\tag{52.33}
+$$
+
+The accompanying
+[exact arithmetic source and rational bounds](https://github.com/the-omega-institute/trureturing-experiments/tree/014b9c9e939cc6979ef80769c4ded6dec91eb1ff/experiments/auric/four-path/negative-attained-triangle)
+specify all operations and the achieved rational leaf bounds. The
+inequality $A_0>4$ follows by the same outward radical brackets and the
+monotonicity of $H_0=4t/25+2t^2/3$, evaluated at $t=593/1000$.
+The auxiliary evaluations are (52.17), $H(61/25)=1037/3000<2/5$,
+and the endpoint signs of (52.11). Thus the certificate-to-mathematics
+correspondence is precisely (52.20), the population chord (52.23),
+and the identities (52.25)--(52.27), with the two polynomial branches
+specified by (52.22). A finite continuous enclosure proves each sign;
+no optimizer output or failure to find a counterexample supplies one.
+

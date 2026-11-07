@@ -1,0 +1,5 @@
+source_id = "fib-entropy-harmonic-renewal-state-threshold"
+path = "docs/develop/theory/FIB_ENTROPY_HARMONIC_RENEWAL_STATE_THRESHOLD.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

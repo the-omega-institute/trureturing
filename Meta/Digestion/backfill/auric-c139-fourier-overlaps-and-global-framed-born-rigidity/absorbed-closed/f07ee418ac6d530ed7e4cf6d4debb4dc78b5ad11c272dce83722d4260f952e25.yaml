@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:f07ee418ac6d530ed7e4cf6d4debb4dc78b5ad11c272dce83722d4260f952e25
+  normalized_sha256: sha256:f07ee418ac6d530ed7e4cf6d4debb4dc78b5ad11c272dce83722d4260f952e25
+cas_ref: sha256:f07ee418ac6d530ed7e4cf6d4debb4dc78b5ad11c272dce83722d4260f952e25
+coverage_gids:
+  - gid: D5/S3/Fourier/ThreeWaySlotIdentity.slot_recovery
+    target_statement_id: sha256:00a42159d2ba34aa29cb3edbdca08581ba18d98e7c397b00fa881e5febf4529a
+receipts:
+  unresolved_subitems: []

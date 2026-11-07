@@ -1,0 +1,11 @@
+**Theorem 13.4 (Vacuum and squeezing).** For every positive real scalar triple, $V(0,x,y,z)=0$ and $k\mapsto V(k,x,y,z)$ is strictly decreasing on $[0,\infty)$. Consequently, for every positive integer physical tripartition, $\mathrm{GM}^{(3)}_3$ is zero at $a=1$, strictly decreasing on $[1,\infty)$, and strictly negative at every $a>1$. All positive tripartitions tie at vacuum.
+
+**Proof.** Write $r_x=x(y+z)$ and its two labelled companions. Then $r_x+r_y+r_z=2s$, and $0<r_i<s$ for each party. For $k>0$,
+
+$$
+12\,\frac{\partial V}{\partial k}
+=\frac{2s}{1+ks}-\sum_{i=A,B,C}\frac{r_i}{1+kr_i}<0,
+$$
+
+since each summand $r_i/(1+kr_i)$ strictly exceeds $r_i/(1+ks)$. The logarithm arguments stay positive on the closed nonnegative ray. Continuity at zero and the mean value theorem give strict decrease on that whole ray. Direct substitution gives the vacuum value. On the physical domain, $a\mapsto3(a^2-1)/(4(N-1))$ is strictly increasing on $[1,\infty)$, which transfers the conclusion to the actual integrals through Theorem 13.2. No negative derivative at vacuum is asserted. ∎
+

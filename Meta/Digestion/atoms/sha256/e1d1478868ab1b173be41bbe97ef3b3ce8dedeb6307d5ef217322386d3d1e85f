@@ -1,0 +1,122 @@
+**Lemma 45.1 (an integrated native remainder and its boundary estimate).**
+For the raw field set
+
+$$
+P_\kappa(q,D)=c_s\phi(k)F(D/r_s),
+\qquad -\pi\le D\le\pi,
+\tag{45.1}
+$$
+
+with periodic interpretation. Its values match at the seam; no
+regularity of its derivative at that seam is needed. Then
+
+$$
+\sup_{q\in B}\int_{\mathbb T}
+       |V_{\kappa,\tau_s}(q,D)-P_\kappa(q,D)|\,dD=o(r_s),
+\qquad
+\sup_q\int_{\mathbb T}V_{\kappa,\tau_s}(q,D)\,dD=O(r_s).
+\tag{45.2}
+$$
+
+If $C^P_\kappa(t)=J^*e^{-t(L_\kappa-gM_{P_\kappa})}J$, then,
+in operator norm on the whole base,
+
+$$
+\|C_{{\rm raw},\kappa}(t)-C^P_\kappa(t)\|=o(r_s).
+\tag{45.3}
+$$
+
+Proof. The exact marginal identity [G, (23.4)] sets $j=0$ in
+[G, (26.13)]. The zero visible mode is the scalar killed height
+kernel. Its sine expansion and the uniformly separated nonzero
+visible modes give, uniformly on $B$,
+
+$$
+\begin{aligned}
+\overline V_{\kappa,\tau_s}(q)
+ &=\frac{\phi(k_0)\phi(k)}{\lambda(2\pi)^2}
+       e^{-\lambda\tau_s}+o(e^{-\lambda\tau_s}),\\
+\frac1{r_s}\int_{\mathbb T}V_{\kappa,\tau_s}(q,D)\,dD
+ &\longrightarrow m_s\phi(k).
+\end{aligned}
+\tag{45.4}
+$$
+
+For the first line, (26.12) with $(n,m)\ne(0,0)$ and $j=0$
+has a summable bound $Ce^{-(\lambda+d)t}$ after decreasing a
+fixed $d>0$; the higher height modes decay at least as
+$e^{-4\lambda t}$. Time integration preserves these relative
+errors. The second line uses (32.14); its coefficient is
+$\phi(k_0)e^{-\lambda s}/((2\pi)^2\sqrt\lambda)
+ =c_s\sqrt{4\pi\beta}$.
+
+For each fixed $R$, (32.9) gives
+
+$$
+\sup_{q,\ |x|\le R}
+ |V_{\kappa,\tau_s}(q,r_sx)-c_s\phi(k)F(x)|\longrightarrow0.
+\tag{45.5}
+$$
+
+Both fields in (45.1)--(45.5) are nonnegative. Their total
+$D$ integrals divided by $r_s$ converge uniformly to the same
+$m_s\phi(k)$. Their integrals on $|D|\le Rr_s$, divided by
+$r_s$, also converge uniformly to the same
+$c_s\phi(k)\int_{-R}^R F(x)dx$. Subtracting gives
+
+$$
+\limsup_{\kappa\to0}\frac1{r_s}\sup_q
+ \int_{|D|>Rr_s}V_{\kappa,\tau_s}(q,D)\,dD
+ \le c_s\|\phi\|_\infty\int_{|x|>R}F(x)dx.
+\tag{45.6}
+$$
+
+The model has the same tail bound. On the inner interval (45.5)
+controls the absolute difference by $o(r_s)$ for fixed $R$.
+Taking the parameter limit and then $R\to\infty$ proves (45.2).
+This argument needs neither a rate in (32.9) nor an estimate
+obtained by dividing its uniform $o(1)$ by $r_s$.
+
+Here is the compression estimate used to pass from (45.2) to
+(45.3). The free semigroup $U_\kappa(t)=e^{-tL_\kappa}$ is positive,
+and exactly
+$U_\kappa(t)J=J\overline S_\kappa(t)$, where
+$\overline S_\kappa(t)=e^{-t\overline L_\kappa}$ on the complete
+base domain [G, (23.3)--(23.5)]. For bounded real fields
+$0\le W_1,W_2\le M$, Trotter's formula gives
+
+$$
+|e^{-t(L_\kappa-gM_{W_i})}Jh|
+ \le e^{gMt}J\overline S_\kappa(t)|h|.
+\tag{45.7}
+$$
+
+This is the bounded selfadjoint, semibounded case of Teschl's
+Theorem 5.11; bounded multiplication leaves the operator domain
+unchanged, so its hypotheses hold. Duhamel's formula, tested between
+$Jz$ and $Jh$, and (45.7) bound the compressed difference by
+
+$$
+\begin{aligned}
+&\left|\left\langle
+ J^*\bigl[e^{-t(L_\kappa-gM_{W_1})}
+          -e^{-t(L_\kappa-gM_{W_2})}\bigr]Jh,z
+ \right\rangle\right|\\
+&\quad\le\frac{g e^{gMt}}{2\pi}
+ \int_0^t\int_B
+   (\overline S_\kappa(u)|h|)(q)
+   (\overline S_\kappa(t-u)|z|)(q)
+   \left[\int_{\mathbb T}|W_1-W_2|(q,D)dD\right]d\nu_B\,du\\
+&\quad\le\frac{gt e^{gMt}}{2\pi}
+ \sup_q\int_{\mathbb T}|W_1-W_2|(q,D)dD\,\|h\|_2\|z\|_2.
+\end{aligned}
+\tag{45.8}
+$$
+
+The last step uses the base $L^2$ contraction and Cauchy--Schwarz.
+The common bound $M$ is supplied by (32.9). Taking the supremum
+over unit $h,z$ and using (45.2) proves (45.3). This controls the
+actual full field, including its nonzero visible frequencies, at
+the required native scale. The auxiliary field (45.1) has not
+been declared the original source. $\square$
+

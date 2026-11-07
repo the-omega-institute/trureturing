@@ -1,0 +1,28 @@
+**定义 15.1（Two neighborhood classes on the original carrier）。**
+Let $H$ be a finite connected simple unit-weight graph of even order
+$m\geq2$. For an integer $S\geq1$ use precisely the Boolean fibres
+$B_i$ of size $s=2S$, the whole complex space $\mathcal H_{mS}$,
+positive token adjacency $K=K_{mS}$ and original fibre-permutation
+projection $P_{\mathrm{sym}}$ of Definitions 1.1–1.2. Put
+
+$$
+E=\min\operatorname{spec}K,\qquad
+\mathcal N=\ker P_{\mathrm{sym}},\qquad
+G_p=H[N_H(p)].
+\tag{15.1}
+$$
+
+Consider the following two conditions on $H$:
+
+(a) For every $p$, $G_p$ is bipartite or isomorphic to $C_5$.
+
+(b) For every $p$, $G_p$ is bipartite, or it has at least one edge
+and, writing $a_p=A(G_p)$ and $\lambda_p=\min\operatorname{spec}a_p$,
+there is $z\in\mathbb C^{N_H(p)}$ with
+$a_pz=\lambda_pz$ and $|z_i|=1$ at every coordinate.
+
+No connectedness is imposed on $G_p$, and isolated vertices are
+allowed in the bipartite alternative. The modulus-one condition in
+(b) concerns the least eigenvalue of the whole induced neighborhood,
+not an independently chosen eigenvalue of each component.
+

@@ -108,10 +108,12 @@ class MaintenanceLogTests(unittest.TestCase):
         marker = self.root / "group-count"
         child = ("import signal,time; from pathlib import Path; count=[0]; "
                  f"signal.signal(signal.SIGTERM, lambda *_: (count.__setitem__(0,count[0]+1), "
-                 f"Path({str(marker)!r}).write_text(str(count[0])), exit(0))); time.sleep(60)")
+                 f"Path({str(marker)!r}).write_text(str(count[0])), exit(0))); "
+                 "print('ready',flush=True); time.sleep(60)")
         parent = ("import os,signal,subprocess,sys,time; "
-                  f"child=subprocess.Popen([sys.executable,'-c',{child!r}]); "
+                  f"child=subprocess.Popen([sys.executable,'-c',{child!r}], stdout=subprocess.PIPE, text=True); "
                   "signal.signal(signal.SIGTERM, lambda *_: (child.wait(), exit(0))); "
+                  "assert child.stdout.readline().strip() == 'ready'; "
                   "print(child.pid,flush=True); time.sleep(60)")
         for logged in (False, True):
             marker.unlink(missing_ok=True)
@@ -119,8 +121,7 @@ class MaintenanceLogTests(unittest.TestCase):
             with subprocess.Popen([sys.executable, "-c", command], cwd=self.main,
                                   env=self.environment, start_new_session=True,
                                   stdout=subprocess.PIPE, text=True) as job:
-                job.stdout.readline()
-                time.sleep(0.2)
+                self.assertGreater(int(job.stdout.readline()), 0)
                 os.killpg(job.pid, signal.SIGTERM)
                 self.assertEqual(0, job.wait(timeout=5))
             self.assertEqual("1", marker.read_text())
@@ -256,7 +257,10 @@ class MaintenanceLogTests(unittest.TestCase):
             escape(str(adapter)) + '" /></ItemGroup></Project>')
         (project / "Program.cs").write_text(
             'using StrataLint.Engine; Directory.SetCurrentDirectory(args[0]); '
-            'MaintenanceLogAdapter.Start(); using var data = new MemoryStream(); '
+            'MaintenanceLogAdapter.Start(); '
+            'MaintenanceLogAdapter.Record("fetch", "failed", "transfer", "timeout", "TimeoutError"); '
+            'MaintenanceLogAdapter.Record("ensure-cache", "present", "complete", null, null); '
+            'using var data = new MemoryStream(); '
             'Console.OpenStandardInput().CopyTo(data); '
             'Console.OpenStandardOutput().Write(data.ToArray()); '
             'Console.OpenStandardError().Write(data.ToArray()); '
@@ -277,8 +281,89 @@ class MaintenanceLogTests(unittest.TestCase):
         self.assertEqual(19, result.returncode)
         self.assertEqual(payload, result.stdout)
         self.assertEqual(payload, result.stderr)
-        self.assert_finished(19, owner_pid=self.rows()[0]['pid'])
-        self.assertGreaterEqual(self.rows()[-1]['duration_seconds'], 0.25)
+        rows = self.rows()
+        self.assertEqual(['run_started', 'operation_finished', 'operation_finished', 'run_finished'],
+                         [row['event'] for row in rows])
+        self.assertEqual(19, rows[-1]['exit_code'])
+        self.assertEqual('ensure-cache', rows[-1]['operation'])
+        self.assertEqual('present', rows[-1]['status'])
+        self.assertIsNone(rows[-1]['error_type'])
+        self.assertGreaterEqual(rows[-1]['duration_seconds'], 0.25)
+
+    def test_release_local_deadlines_and_final_diagnostics(self):
+        import io
+        from unittest.mock import patch
+        sys.path.insert(0, str(SOURCE / "tools/scripts/worktree"))
+        import lean_cache_release as release
+        import lean_cache_release_io as bounded
+        from maintenance_log import MaintenanceLog
+        material = self.root / "material"
+        material.write_bytes(b"x" * (2 * 1024 * 1024))
+        with patch.object(bounded.time, "monotonic", side_effect=[0, 0, 2]):
+            with self.assertRaises(TimeoutError):
+                bounded.archive_sha(material, 1)
+        class Input(io.BytesIO):
+            reads = 0
+            def read(self, size=-1):
+                self.reads += 1
+                return super().read(size)
+        source, output = Input(material.read_bytes()), io.BytesIO()
+        with patch.object(bounded.time, "monotonic", side_effect=[0, 2]):
+            with self.assertRaises(TimeoutError):
+                bounded.copy_chunks(source, output, 1)
+        self.assertEqual(1, source.reads)
+        self.assertEqual(1024 * 1024, len(output.getvalue()))
+        source = Input(b"compressed")
+        with patch.object(bounded.time, "monotonic", side_effect=[0, 2]):
+            with self.assertRaises(TimeoutError):
+                bounded.ArchiveInput(source, 1).read(4)
+        self.assertEqual(1, source.reads)
+        env = dict(self.environment, TRURETURING_MAINTENANCE_SCRIPT="fixture",
+                   TRURETURING_MAINTENANCE_REPOSITORY=str(self.main))
+        def completed():
+            release.CURRENT_OPERATION = "fetch"
+            release.CURRENT_MODE = "production"
+            release._observe("fetch", "miss", phase="transfer", error=TimeoutError("PRIVATE"))
+            release._observe("fetch", "unpacked", phase="install", validated_bytes=7)
+            return 0
+        with patch.dict(os.environ, env, clear=True), patch.object(release, "_main", side_effect=completed):
+            self.assertEqual(0, release.main())
+        rows = self.rows()
+        self.assertEqual("timeout", rows[1]["error_type"])
+        self.assertEqual("unpacked", rows[-1]["status"])
+        self.assertEqual("install", rows[-1]["stage"])
+        self.assertIsNone(rows[-1]["error_type"])
+        self.assertNotIn("PRIVATE", json.dumps(rows))
+        from contextlib import redirect_stdout
+        release.LOG = None
+        class DeferredCleanup:
+            name = str(self.root / "private-stage")
+            def cleanup(self):
+                raise OSError("private cleanup diagnostic")
+        def installed(*args, **kwargs):
+            release.receipt("fetch", "unpacked", _phase="install")
+        business = io.StringIO()
+        with patch.object(release, "release_key", return_value={}), \
+             patch.object(release, "snapshot_candidates", return_value=[("partition", "tag")]), \
+             patch.object(release, "fetch_staging_cleanup"), \
+             patch.object(release, "restore_snapshot", side_effect=installed), \
+             patch.object(release.tempfile, "TemporaryDirectory", return_value=DeferredCleanup()), \
+             redirect_stdout(business):
+            self.assertEqual(0, release.fetch_locked(self.main, "partition", time.monotonic() + 10))
+        self.assertIn('"status":"cleanup-deferred"', business.getvalue())
+        self.assertIn("private cleanup diagnostic", business.getvalue())
+        self.assertEqual("unpacked", release.LOG_LAST["status"])
+        self.assertNotIn("error_type", release.LOG_LAST)
+
+    def test_protocol_refusal_records_action_and_bounded_reason(self):
+        command = [sys.executable, "-B", str(SOURCE / "tools/scripts/worktree/worktree_protocol.py"),
+                   "--source", str(self.main), "with", "--path", str(self.main)]
+        result = subprocess.run(command, env=self.environment, capture_output=True, timeout=15)
+        self.assertEqual(73, result.returncode)
+        row = self.rows("worktree-protocol")[-1]
+        self.assertEqual("with", row["action"])
+        self.assertEqual("missing_command", row["reason_code"])
+        self.assertEqual("Refused", row["error_type"])
 
     def test_python_owner_children_have_immediate_parent(self):
         import importlib.util

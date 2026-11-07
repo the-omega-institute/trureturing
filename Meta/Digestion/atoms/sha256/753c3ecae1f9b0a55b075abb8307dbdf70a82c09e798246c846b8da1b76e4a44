@@ -1,0 +1,57 @@
+**定理 372.1（正输入相切的全实代数后果）。** 设
+
+$$
+E=\bigoplus_sH_{n_s}(\mathbb C),\qquad
+q(a,b)=\sum_sw_s\operatorname{Tr}(a_sb_s),\quad w_s>0,
+\tag{372.1}
+$$
+
+$D:E\times E\to E$ 实双线性，满足 $D(a,u)=0$ 和对全部 $a,b\ge0$ 的 (371.2)。则对全部实输入
+
+$$
+\begin{gathered}
+q(a,D(a,b))=q(b,D(a,b))=0,\\
+T(a,b,c):=q(c,D(a,b))\in\Lambda^3E^*,\\
+D(a,a)=0,\quad D(a,b)=-D(b,a),\quad D(u,a)=0,\quad
+D_a^{\dagger_q}=-D_a.
+\end{gathered}
+\tag{372.2}
+$$
+
+此外，每个完整 $E$ 中的有序正交 primitive 对满足整个输出 $D(e,p)=0$；所有有序 primitive 对均满足 $D(e,p)\in E_1(\operatorname{supp}(e+p))$，因而恢复整个 $\mathsf O,\mathsf H$。
+
+证明。先只用相切的标量部分。对固定正 $a,b$ 和每个 $t>0$，双线性给
+
+$$
+0=q(ta+b,D(ta,b))
+=t^2q(a,D(a,b))+tq(b,D(a,b)).
+\tag{372.3}
+$$
+
+两系数为零。它们分别是 $E\times E$ 上的实多项式；正定元对构成非空开集，所以两恒等式延伸到全部实输入，不要求负元被实际制备或操作。极化 $q(b,D(a,b))=0$ 得
+
+$$
+q(c,D(a,b))=-q(b,D(a,c)).
+\tag{372.4}
+$$
+
+特别地，$q(b,D(a,a))=-q(a,D(a,b))=0$；$q$ 非退化使 $D(a,a)=0$。再极化给 $D$ 交替，故 $T$ 的前两槽交替，(372.4) 给后两槽交替，合为全交替三形式。右单位与交替给左单位。此时只得到斜伴随与 SC，尚未以此断言导子律。
+
+任取正交 primitive $e,p$。若二者跨中心，支持部分使 $D(e,p)\in\mathbb Re\oplus\mathbb Rp$，与两输入的原 $q$ 正交使两个系数都为零。若二者同块，$E_1(e+p)$ 的 Hermitian 分解为
+
+$$
+E_1(e+p)=\mathbb Re\oplus\mathbb Rp\oplus V_{ep},\qquad
+V_{ep}=\{v:e\circ v=p\circ v=v/2\}.
+\tag{372.5}
+$$
+
+原 $q$ 为正 Frobenius 型，所以 (372.2) 消去两个对角分量，得 $D(e,p)\in V_{ep}$。把 $e=e_i$ 补为任意完整框架 $e_1,\ldots,e_N$。已证 SC 与原右单位使
+
+$$
+0=D(e_i,u)=\sum_{j\ne i}D(e_i,e_j),\qquad
+D(e_i,e_j)\in V_{e_i e_j}.
+\tag{372.6}
+$$
+
+跨中心项为零，同块不同 $j$ 的 Peirce 空间是直和：在该框架的矩阵坐标中分别只占 $(i,j)$ 与 $(j,i)$ 两位置。因此每项都为零。每个正交 primitive 对可补为这样的框架，故整个 $\mathsf O$ 成立。所有 primitive 本来为正，原支持入射直接给全部此类对的整支持，特别给 $\mathsf H$。没有只对角外分量求和，也没有把不同项的抵消当成逐项为零。∎
+
