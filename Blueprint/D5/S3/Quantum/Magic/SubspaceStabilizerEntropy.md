@@ -194,7 +194,21 @@ Lean statement: `D5/S3/Quantum/Magic/SubspaceStabilizerEntropy.symTwirl4`
 
 For a nonzero dimension d and a four-tensor operator X on (C^d)^{otimes 4}, symTwirl4(d, X) = tr(symProjector4(Z / dZ) X) A4(Z / dZ) projects X onto the scalar multiple of A4(Z / dZ) matching its trace on Sym^4(C^d).
 
-**Theorem 1.16 (Odd-dimension Weyl periodicity, phase cancellation, and Hermitian fourth-moment polynomial).**
+**Theorem 1.16 (Two-sided unitarity of a displacement).**
+
+$$\forall k: \mathbb{N}, [\operatorname{NeZero}\left(k\right)], \forall p: \operatorname{ZMod}\left(k\right), \forall q: \operatorname{ZMod}\left(k\right), (\operatorname{Matrix.conjTranspose}\left(\operatorname{displacement}\left(k, p, q\right)\right) \cdot \operatorname{displacement}\left(k, p, q\right) = 1) \land (\operatorname{displacement}\left(k, p, q\right) \cdot \operatorname{Matrix.conjTranspose}\left(\operatorname{displacement}\left(k, p, q\right)\right) = 1)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Magic/SubspaceStabilizerEntropy.displacement_unitary_pair` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* S. Cepollaro, G. Cuffaro, M. B. Weiss, S. Cusumano, A. Hamma, S. Lloyd (2025). *Stabilizer Entropy of Subspaces*. DOI: [10.48550/arXiv.2512.23013](https://doi.org/10.48550/arXiv.2512.23013). URL: <https://arxiv.org/abs/2512.23013v1>.
+
+*Commentary.*
+
+For every nonzero k and p q in ZMod k, the displacement has identity products with its conjugate transpose on both sides.
+
+**Theorem 1.17 (Odd-dimension Weyl periodicity, phase cancellation, and Hermitian fourth-moment polynomial).**
 
 Lean statement: `D5/S3/Quantum/Magic/SubspaceStabilizerEntropy.fourth_moment_cycle_and_hermitian_formula`
 
@@ -208,7 +222,7 @@ Lean statement: `D5/S3/Quantum/Magic/SubspaceStabilizerEntropy.fourth_moment_cyc
 
 When d is odd, tau(d) equals the (d + 1) / 2 power of the primitive d-th root of unity exp(2 pi i / d), so tau(d)^d = 1 and intPaperDisplacement(d, x, y) depends only on (x, y) modulo d, matching tau(d)^{x y} X^x Z^y for all natural x, y and paperDisplacement(d, (x mod d, y mod d)) for all integers x, y. Because unimodular scalar factors cancel between A and A^* in alt(A), labelFourthMoment(E, a) depends only on the unphased Weyl word X^{a_1} Z^{a_2} and extrinsicScore(E) equals d^{-1} sum_a labelFourthMoment(E, a). Furthermore, for every Hermitian matrix A on a finite index set H, evaluating tr(alt(A) T(H, sigma)) across the twenty-four permutations of S_4 grouped by cycle structure (1^4, 2 1^2, 2^2, 3 1, 4) yields |H|(|H| + 1)(|H| + 2)(|H| + 3) tr(alt(A) A4(H)) = (tr A)^4 + 6 (tr A)^2 tr(A^2) + 3 (tr(A^2))^2 + 8 (tr A) tr(A^3) + 6 tr(A^4).
 
-**Theorem 1.17 (Closed-form single-qudit intrinsic terms and one-dimensional pure-state entropy equality).**
+**Theorem 1.18 (Closed-form single-qudit intrinsic terms and one-dimensional pure-state entropy equality).**
 
 Lean statement: `D5/S3/Quantum/Magic/SubspaceStabilizerEntropy.intrinsic_term_and_rank_one_entropy`
 
@@ -222,7 +236,7 @@ Lean statement: `D5/S3/Quantum/Magic/SubspaceStabilizerEntropy.intrinsic_term_an
 
 For every nonzero natural dimension k, summing the twenty-four permutation cycle traces over (Z / kZ)^2 via Weyl trace orthogonality and two-torsion phase-space counting gives intrinsicTerm(k) = 3 / (k + 2) when k is odd and intrinsicTerm(k) = 3(k + 2) / ((k + 1)(k + 3)) when k is even; in particular intrinsicTerm(1) = 1. For every unit vector psi in C^d with rank-one density matrix rho = |psi><psi|, linearStabilizerEntropy(psi) equals both 1 - d^{-1} sum_a |tr(D_a^* rho)|^4 and 1 - d tr(Q(d) rho^{otimes 4}). Consequently, for every one-dimensional isometric frame E : C^S -> C^d with |S| = 1 and E^* E = I, aseGap(E) equals the pure-state linear stabilizer entropy of the unique basis column of E.
 
-**Theorem 1.18 (Basis independence of subspace moments and gaps, unitary label symmetry, and fourfold Schur twirl).**
+**Theorem 1.19 (Basis independence of subspace moments and gaps, unitary label symmetry, and fourfold Schur twirl).**
 
 Lean statement: `D5/S3/Quantum/Magic/SubspaceStabilizerEntropy.subspace_gap_isometry_invariance_and_twirl`
 
@@ -243,6 +257,7 @@ For any two isometric frames E_1 : C^{S_1} -> C^d and E_2 : C^{S_2} -> C^d satis
 - Truth anchor: `D5/S3/Quantum/Magic/SubspaceStabilizerEntropy.T`
 - Truth anchor: `D5/S3/Quantum/Magic/SubspaceStabilizerEntropy.alt`
 - Truth anchor: `D5/S3/Quantum/Magic/SubspaceStabilizerEntropy.aseGap`
+- Truth anchor: `D5/S3/Quantum/Magic/SubspaceStabilizerEntropy.displacement_unitary_pair`
 - Truth anchor: `D5/S3/Quantum/Magic/SubspaceStabilizerEntropy.extrinsicScore`
 - Truth anchor: `D5/S3/Quantum/Magic/SubspaceStabilizerEntropy.fourth_moment_cycle_and_hermitian_formula`
 - Truth anchor: `D5/S3/Quantum/Magic/SubspaceStabilizerEntropy.intPaperDisplacement`
@@ -256,6 +271,9 @@ For any two isometric frames E_1 : C^{S_1} -> C^d and E_2 : C^{S_2} -> C^d satis
 - Truth anchor: `D5/S3/Quantum/Magic/SubspaceStabilizerEntropy.symProjector4`
 - Truth anchor: `D5/S3/Quantum/Magic/SubspaceStabilizerEntropy.symTwirl4`
 - Truth anchor: `D5/S3/Quantum/Magic/SubspaceStabilizerEntropy.tau`
+- Dependency: [D5/S3/Observer/WindowRegister](../../Observer/WindowRegister.md)
+- Dependency: [D5/S3/Quantum/Algebra/WeylDisplacement](../Algebra/WeylDisplacement.md)
+- Dependency: [D5/S3/Quantum/Algebra/WeylDisplacementAdjoint](../Algebra/WeylDisplacementAdjoint.md)
 - Dependency: [D5/S3/Quantum/Algebra/WeylDisplacementTrace](../Algebra/WeylDisplacementTrace.md)
 - Dependency: [D5/S3/Quantum/Algebra/WeylDisplacementTwoTorsion](../Algebra/WeylDisplacementTwoTorsion.md)
 - Dependency: [D5/S3/Quantum/Algebra/WeylPhaseArithmetic](../Algebra/WeylPhaseArithmetic.md)

@@ -1,0 +1,74 @@
+**引理 388.2（逐对存在谱比的完整条件等价）。** 分别在上述完整 $B$ 与完整 $\mathsf B_{\rm cl}$ 中，同一原数据上有
+
+$$
+\begin{aligned}
+B_*+\mathsf G_{0h}+\mathsf T_{\exists\mathrm{ratio}}^{>}
+&\Longleftrightarrow B_*+\mathsf G_{0h}+\mathsf T_{\rm uneq}^{>}\\
+&\Longleftrightarrow B_*+\mathsf G_{0h}+\mathsf T_{\rm self}^{>}
+\Longleftrightarrow B_*+\mathrm I+\mathrm{SC}.
+\end{aligned}
+\tag{388.2}
+$$
+
+因而这些前件还使每个原对象的全部实输入满足 $D^X(a,a)=0$，特别是每对的两个读数对所有 $\lambda\in(0,1)$ 都为零。加入同一原 $\sigma_{t_0}$ 后，记左端完整条件为 $\mathsf C_{\exists\mathrm{ratio}}(B_*)$，则
+
+$$
+\mathsf C_{\exists\mathrm{ratio}}(B_*)
+\Longleftrightarrow\mathsf C_{\rm uneq}(B_*)
+\Longleftrightarrow\mathsf C_{\rm self}(B_*)
+\Longleftrightarrow\mathsf C_{\rm support}(B_*),
+\tag{388.3}
+$$
+
+361.1 的全部量子与过程消费者遂在同一原签名上适用，所有对应均为恒等。
+
+证明。新的方向只须在每个原选中对象中消掉径向泛函。完整 $B_*+\mathsf G_{0h}$ 已供应 343.1 的全源、全输出正常形以及 351.1 的原正权型，故直接沿用
+
+$$
+P_X(a)=\sum_sw_s\operatorname{Tr}(a_s^2)F_s(a),\qquad
+F_s(u_X)=0,\qquad w_s>0.
+\tag{388.4}
+$$
+
+这里的 $F_s$ 作用于整个 $E_X$，包含全部经典、二阶与跨中心来源；没有重新分类或预设其为零。任取完整 Jordan 框架 $e_1,\ldots,e_N$，$\sum_ie_i=u_X$，$N=\operatorname{rank}E_X>p_*\ge2$。沿用 359.1 的证明坐标 $A_{ij}=w_{s(i)}F_{s(i)}(e_j)$、$d_i=A_{ii}$、$S=\sum_i d_i$，原右单位给每行 $\sum_jA_{ij}=0$。对这个有限框架的每个无序对选取 (388.1) 的一个见证 $\lambda_{ij}=\lambda_{ji}$；这只是有限次存在消去，不要求全网一致的选择。
+
+精确应用 (359.5) 的同块／跨块统一展开，两个共同根方程为
+
+$$
+\begin{aligned}
+0&=d_i+\lambda_{ij}A_{ij}+\lambda_{ij}^2A_{ji}+\lambda_{ij}^3d_j,\\
+0&=d_j+\lambda_{ij}A_{ji}+\lambda_{ij}^2A_{ij}+\lambda_{ij}^3d_i.
+\end{aligned}
+\tag{388.5}
+$$
+
+同块时仍有 $A_{ij}=d_j$、$A_{ji}=d_i$，所以该式没有把同块原子误当独立中心。因 $0<\lambda_{ij}<1$，这对方程的 $A_{ij},A_{ji}$ 系数行列式为 $\lambda_{ij}^2(1-\lambda_{ij}^2)>0$，消元恰给
+
+$$
+\begin{gathered}
+A_{ij}=d_j-c_{ij}d_i,\qquad
+A_{ji}=d_i-c_{ij}d_j,\\
+c_{ij}:=\lambda_{ij}+\lambda_{ij}^{-1}
+=c_{ji}>2,\qquad
+k_i:=\sum_{j\ne i}c_{ij}>2(N-1),\\
+0=\sum_jA_{ij}=S-k_id_i.
+\end{gathered}
+\tag{388.6}
+$$
+
+各 $c_{ij}$、各 $k_i$ 不必相同。设 $M=\max_i|d_i|$；若 $M>0$，在取到最大值的行 $i$ 上，(388.6) 使
+
+$$
+|S|=k_iM>2(N-1)M\ge NM,
+\qquad |S|\le\sum_j|d_j|\le NM,
+\tag{388.7}
+$$
+
+矛盾。因此全部 $d_i=0$，再由 (388.6) 得全部 $A_{ij}=0$。这是有限矩阵严格对角占优的最大分量论证，不需要对 $\lambda_{ij}$ 作共同取值或极限处理。任意完整实输入 $b$ 都有自己的完整谱框架 $b=\sum_j\beta_je_j$；对每个目标中心 $s$，取该框架内属于 $s$ 的一颗 $e_i$，即得 $w_sF_s(e_j)=A_{ij}=0$ 对全部 $j$ 成立。正权与线性性给 $F_s(b)=0$。所以每个全源 $F_s=0$，所选对象上恢复整个逐块交换子和 $\mathsf T_{\rm self}^{>}$。
+
+现在直接应用 360.1，得到 (388.2) 的全原域结论。其下降仍消费 352.1、343.1 的原身份事件、完整 R 与实际充分大参考，以及原含幺 Jordan／同一 $D$ 单射：沿单射运输 SC 和整个 Jordan 导子缺陷，不运输 $q$，不假设 primitive 保持或共同参考指数；有限 EJA 内性在原条件下给 I。故所有小对象、经典中心、二阶块、原输出与零对象均由既有全域桥覆盖。反向 $\mathsf T_{\rm uneq}^{>}$ 直接以每对 $\lambda=1/2$ 供应 (388.1)，其与其余条件的等价已由 360.1 给出。两份背景各自应用这些定理，不把精确正生成与闭正生成合取。
+
+对 (388.3) 直接消费 361.1、353.1 及其原消费者。先在完整背景和全域 I+SC 下取得含零分支的共同曲率 $\kappa\ge0$，再由原菜单、$\mathcal K$、$t_0$ 和同一字面 sigma 以原正 $w_0$ 的 $(1-\kappa)w_0/4=0$ 固定 $\kappa=1$，不重标 $D,q$ 或任何返回数。因此原 $D$ 定向的复乘法与 Jordan–Lie 关系、两种正确 Riesz 运输及 Born 评价、保留全部中心对的实际普通复张量和所有相关输入，均按 (361.2)–(361.3) 保持。每个旧事件的完整 R 及原相关正锥给原 CP/TNI、完整设备事件和 TP；整个 AC、精确 $N_u$、X/Xs 与原合法连线给原所选精确平方根词及其全部相关执行、各占用失败方向的完整输出，实 Jordan F 则给同实现实际细口、原分组／遗忘、原具名同数两侧支持返回及同数反向资料。全部原准备、末端效果和原合法有限顺序／自适应／并行历史沿 (361.4)–(361.6) 保持；零、失败、返回和停止不删，只在原分母正时取条件概率。闭背景仍只对同一已固定原执行作连续正延拓。没有把数学效果、Kraus 分解或极限密度当作新供应的实际接口。
+
+完整非空满足族直接取 361.1、347.1、325.1 所引用的[框架卷 317.1](AURIC_C128_FRAME_CORNER_RELATIONS_CONTINUATION.md#317-非空完整满足族与准确角几何) 的全部 tagged-CP 族：任意原正定比较参数 $r_s$、不等正 $w_s$、不同块大小及经典中心、全部归一／次归一／零密度及联合纠缠密度、带原实现和记录标签的完整 CP 仪器及已安装细口、完整失败、原具名返回和全部合法有限历史均保留，原 $g^0$ 与 $q$ 及联合权不必因子化或相等。其同一 $D=\mathrm i[a,b]/2$ 使全部自输入为零，故直接满足 (388.1)，无需另造模型；原 $P=\mathbb C\oplus M_3$、无实际 $M_2$ 对象或简单块的子族亦保留。∎
+
