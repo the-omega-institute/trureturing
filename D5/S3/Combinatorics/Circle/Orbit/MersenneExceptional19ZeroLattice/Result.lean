@@ -41,7 +41,11 @@ def coordinateGenerator (r : ℕ) : Fin (3*degree r) → ℤ :=
 private theorem weighted_sum_row (r : ℕ) (S : Finset (Fin (3*degree r))) :
     integerWeightedSum r (row S)=total r S := by
   classical
-  simp [integerWeightedSum,row,total,degree,seed,ite_mul]
+  change (∑ i : Fin (3*degree r), row S i *
+    SourceWidth.actualSource (3*degree r) (seed r) i)=total r S
+  unfold total
+  simp only [row,ite_mul,one_mul,zero_mul]
+  rw [← Finset.sum_filter,Finset.filter_mem_eq_inter,Finset.univ_inter]
 
 /-- ALL-r integral relation-lattice theorem for the ORIGINAL exceptional19
 physical family. The generating family is ALL finsets with literal integer

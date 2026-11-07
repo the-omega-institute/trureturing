@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Circle.Orbit.MersenneE
 internal sealed class HighRowsDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Actual high-digit bridge for the upper-only exceptional19 presentation — UNCOMPILED source preparation.",
+        "Actual high-digit bridge for the upper-only exceptional19 presentation.",
         H("Actual high-digit bridge for the upper-only exceptional19 presentation"),
         Blocks(
             Describe.Lean(DescribeId.Create("actual-high-row-differences"),

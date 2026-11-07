@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Circle.Orbit.MersenneE
 internal sealed class InternalRowsDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Physical internal transport and an integral local inverse — UNCOMPILED source preparation.",
+        "Physical internal transport and an integral local inverse.",
         H("Physical internal transport and an integral local inverse"),
         Blocks(
             Describe.Lean(DescribeId.Create("actual-internal-bits"),
