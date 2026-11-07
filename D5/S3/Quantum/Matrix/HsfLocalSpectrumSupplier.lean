@@ -862,6 +862,73 @@ theorem finite_spectrum_local_supplier {d : ℕ} (p : Fin d → ℝ)
 
 #print axioms finite_spectrum_local_supplier
 
+/-- General ordered shifted identity for actual factorial CFC jets.
+This consumed bridge reuses the existing coordinate and trace-normalization
+proofs; it asserts no new supplier positivity. Its full dependent
+source-selection binding remains unfinished under
+https://github.com/the-omega-institute/trureturing/issues/23103. -/
+theorem actual_shifted_supplier_identity (p : n → ℝ) (hp : ∀ i, 0 < p i)
+    (S Z : Matrix n n ℂ) (hS : S.IsHermitian) :
+    let P : Matrix n n ℂ := diagonal (fun i => (p i : ℂ))
+    let F := fun t : ℝ => P⁻¹*CFC.rpow (P^3+t •
+      (CFC.rpow P (3/2 : ℝ)*S*CFC.rpow P (3/2 : ℝ))) (2/3 : ℝ)*P⁻¹
+    let B := fun j : ℕ => (j.factorial : ℝ)⁻¹ • iteratedDeriv j F 0
+    let X : Matrix n n ℂ := fun i j => (spectralTau (p i) (p j) : ℂ)*S i j
+    let Q : Matrix n n ℂ := fun i j => ∑ k,
+      (((2/3 : ℝ)*spectralTau (p i) (p k)*spectralTau (p k) (p j)+
+        3*spectralKernel (p i) (p j) (p k) : ℝ) : ℂ)*S i k*S k j
+    let W := Z+(1/3 : ℝ) • X
+    6*(B 3+(2 : ℝ) • (Z*B 2)+B 1*Z^2-(5/48 : ℝ) • (B 1)^3).trace.re =
+      (4*(S^3).trace.re-(X^3).trace.re)/3-
+        4*(Q*W).trace.re+4*(X*W*W).trace.re := by
+  let X := schurFirst p S
+  let D := quadraticDefect p S
+  let W := Z+(1/3 : ℝ) • X
+  have hc := actual_first_second hp hS
+  have hc₁ : actualCoeff p S 1 = (2/3 : ℝ) • X := hc.1
+  have hc₂ : actualCoeff p S 2 =
+      -(1/9 : ℝ) • (X*X)-(1/3 : ℝ) • D := by
+    rw [hc.2]
+    dsimp only [D, X]
+    rw [quadraticDefect_eq]
+    module
+  have ht := (balanced_trace_normalization hp hS).2
+  rw [hc₁, hc₂] at ht
+  have hpoly := allZ_polynomial X D Z (actualCoeff p S 3) (tr (S^3)) ht
+  have hcycle : tr (X*Z*X) = tr (X*X*Z) := by
+    rw [tr_cycle, tr_cycle]
+  have hcomm : tr (D*X) = tr (X*D) := tr_comm D X
+  have heq :
+      6*tr (actualCoeff p S 3+(2 : ℝ) • (Z*actualCoeff p S 2)+
+        actualCoeff p S 1*Z^2-(5/48 : ℝ) • (actualCoeff p S 1)^3) =
+      (4*tr (S^3)-tr (X^3))/3-4*tr ((X*X+D)*W)+4*tr (X*W*W) := by
+    rw [hc₁, hc₂]
+    dsimp only at hpoly
+    dsimp only [W]
+    simp only [mul_add, add_mul, mul_sub, sub_mul, Matrix.mul_smul,
+      Matrix.smul_mul, smul_smul, tr, Matrix.trace_add, Matrix.trace_sub,
+      Matrix.trace_smul, Complex.real_smul, smul_eq_mul, pow_succ,
+      pow_zero, mul_one, one_mul, ← mul_assoc] at hpoly ⊢
+    dsimp only [tr] at hcycle hcomm
+    rw [hcycle, hcomm] at hpoly ⊢
+    norm_num at hpoly ⊢
+    linear_combination (1/3 : ℂ)*hpoly
+  have hQ : (fun i j => ∑ k,
+      (((2/3 : ℝ)*spectralTau (p i) (p k)*spectralTau (p k) (p j)+
+        3*spectralKernel (p i) (p j) (p k) : ℝ) : ℂ)*S i k*S k j) = X*X+D := by
+    ext i j
+    simp only [X, D, schurFirst, quadraticDefect, Matrix.add_apply,
+      Matrix.mul_apply, mul_add, add_mul, ← Finset.sum_add_distrib]
+    apply Finset.sum_congr rfl
+    intro k _
+    push_cast
+    ring
+  rw [← hQ] at heq
+  have hre := congrArg Complex.re heq
+  norm_num [Complex.add_re, Complex.sub_re, Complex.mul_re, tr] at hre
+  simpa only [actualCoeff, RpowPencilTaylor.jetCoeff, pencilDirection,
+    balanceP_rpow hp, rootP, X, W] using hre
+
 end DiagonalJets
 
 section Uniform
