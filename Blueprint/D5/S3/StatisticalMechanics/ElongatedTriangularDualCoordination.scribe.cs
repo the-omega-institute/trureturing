@@ -8,7 +8,7 @@ internal sealed class ElongatedTriangularDualCoordinationDocument : IScribeDocum
 {
     private const string Module = "D5/S3/StatisticalMechanics/ElongatedTriangularDualCoordination";
     private static LibraryNoteRef Source =>
-        LibraryNoteRef.Create("D5/L/StatisticalMechanics/sloane2018a298022");
+        LibraryNoteRef.Create("D5/L/Geometry/sloane2018a298022");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The face adjacency graph of the elongated triangular tiling, centered at an upward triangle, "

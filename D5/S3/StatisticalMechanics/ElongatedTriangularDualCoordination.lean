@@ -6,9 +6,62 @@
    utility: none
    digest: Distances and coordination shells in the elongated triangular dual net. -/
 
+/-
+admission_basis: open-problem-resolution (#27565; Proved)
+escape_witness: geodesic (constructs an attaining walk for every vertex;
+  consumed by distance_formula and the shell and series identities).
+Direct frozen dependency:
+D5/S3/Combinatorics/PositionSets/VertexPositionRatioRefutation.potential_dist
+statement_id: sha256:2360c26ddcdab5109d1906cf2b6884cebb254549f8cf9a5078002397a1098f09
+frozen_module_statement_id: sha256:f8b677ea402e38581fbfa04887d18040684e7baa21f05cad6421d45525c0cd21
+Vertex: proof_shape=bind-only; consumers=graph, distance, a
+Vertex.S: proof_shape=bind-only; consumers=adjacent, decode
+Vertex.U: proof_shape=bind-only; consumers=adjacent, root, decode
+Vertex.D: proof_shape=bind-only; consumers=adjacent, decode
+adjacent: proof_shape=bind-only; consumers=graph, score_step, score_descent
+graph: proof_shape=bind-only; consumers=distance, geodesic, distance_formula
+root: proof_shape=bind-only; consumers=distance, score_zero, geodesic, distance_formula
+distance: proof_shape=bind-only; consumers=a, distance_formula, actualShell_mem
+a: proof_shape=bind-only; consumers=a_card, a_formula, shell_tail, coefficient_identity, result
+row: proof_shape=bind-only; consumers=score, rowShell_mem, strip_mem, decode_score
+score: proof_shape=bind-only; consumers=score_nonneg, score_zero, score_step, score_descent, geodesic
+score_nonneg: proof_shape=bind-only; consumers=geodesic, distance_formula, actualShell_mem
+score_zero: proof_shape=bind-only; consumers=geodesic
+score_step: proof_shape=bind-only; consumers=distance_formula
+score_descent: proof_shape=bind-only; consumers=geodesic
+geodesic: proof_shape=content; consumers=distance_formula
+distance_formula: proof_shape=content; consumers=actualShell_mem
+rowShell: proof_shape=bind-only; consumers=rowShell_mem, rowShell_card, strip
+rowShell_mem: proof_shape=bind-only; consumers=strip_mem
+rowShell_card: proof_shape=bind-only; consumers=strip_card
+strip: proof_shape=bind-only; consumers=strip_mem, strip_card, shellCoords
+strip_mem: proof_shape=bind-only; consumers=shellCoords_mem
+strip_card: proof_shape=bind-only; consumers=a_formula
+Coords: proof_shape=bind-only; consumers=decode, encode, coordinateEquiv, shellCoords
+decode: proof_shape=bind-only; consumers=coordinateEquiv, decode_score, centralShell_mem
+encode: proof_shape=bind-only; consumers=coordinateEquiv
+coordinateEquiv: proof_shape=bind-only; consumers=actualShell, actualShell_mem
+offset: proof_shape=bind-only; consumers=decode_score, shellCoords, a_formula
+width: proof_shape=bind-only; consumers=decode_score, shellCoords, a_formula
+decode_score: proof_shape=bind-only; consumers=shellCoords_mem
+centralShell: proof_shape=bind-only; consumers=centralShell_mem, centralShell_card, shellCoords
+centralShell_mem: proof_shape=bind-only; consumers=shellCoords_mem
+centralShell_card: proof_shape=bind-only; consumers=a_formula
+shellCoords: proof_shape=bind-only; consumers=shellCoords_mem, actualShell, a_formula
+shellCoords_mem: proof_shape=bind-only; consumers=actualShell_mem
+actualShell: proof_shape=bind-only; consumers=actualShell_mem, shell_finite, a_card
+actualShell_mem: proof_shape=content; consumers=shell_finite, a_card
+shell_finite: proof_shape=content; consumers=a_card
+a_card: proof_shape=content; consumers=a_formula
+stripCount: proof_shape=bind-only; consumers=a_formula, shell_tail, coefficient_identity
+a_formula: proof_shape=content; consumers=shell_tail, coefficient_identity
+shell_tail: proof_shape=content; consumers=coefficient_identity
+coefficient_identity: proof_shape=content; consumers=result
+result: proof_shape=content; consumers=terminal result
+-/
+
 import D5.S3.Combinatorics.PositionSets.VertexPositionRatioRefutation
 import Mathlib.RingTheory.PowerSeries.Basic
-import Mathlib.Algebra.BigOperators.Intervals
 import Mathlib.Tactic
 
 /-! The face adjacency graph of the elongated triangular tiling. -/
@@ -185,7 +238,10 @@ private lemma rowShell_card (c L n r : ℕ) (hL : 0 < L) :
       omega
     · have hn : 3*r+c < n := by omega
       have hne : -((n : ℤ)-3*r-c) ≠ (r+L : ℕ)-1+((n : ℤ)-3*r-c) := by omega
-      simp [rowShell, hlt, he, hn, hne]
+      simp only [rowShell, ite_eq_right hlt, ite_eq_right he, ite_eq_left hn,
+        Finset.card_insert_of_notMem (show -((n : ℤ)-3*r-c) ∉
+          {(r+L : ℕ)-1+((n : ℤ)-3*r-c)} by simpa only [Finset.mem_singleton] using hne),
+        Finset.card_singleton, add_zero]
 
 private def strip (c L n : ℕ) : Finset (ℕ × ℤ) :=
   (Finset.range (n+1)).biUnion fun r => (rowShell c L n r).image (r, ·)
@@ -230,7 +286,7 @@ private lemma strip_card (c L n : ℕ) (hc : 0 < c) (hL : 0 < L) :
     rw [← Finset.sum_filter, hs]
     simp [mul_comm]
   · by_cases h : c ≤ n ∧ (n-c)%3 = 0
-    · rw [if_pos h]
+    · rw [ite_eq_left h]
       have he : 3*((n-c)/3)+c = n := by omega
       rw [Finset.sum_eq_single ((n-c)/3)]
       · simp [he]
@@ -240,7 +296,7 @@ private lemma strip_card (c L n : ℕ) (hc : 0 < c) (hL : 0 < L) :
       · intro hn
         have : (n-c)/3 < n+1 := by omega
         exact False.elim (hn (Finset.mem_range.mpr this))
-    · rw [if_neg h]
+    · rw [ite_eq_right h]
       apply Finset.sum_eq_zero
       intro b _
       have : ¬ 3*b+c = n := by omega
@@ -273,7 +329,7 @@ private def coordinateEquiv : Coords ≃ Vertex where
   left_inv := by
     rintro (⟨t,r,k⟩ | ⟨b,k⟩)
     · fin_cases t <;> norm_num [decode, encode, Prod.ext_iff] <;>
-        first | omega | {congr 2 <;> omega}
+        split_ifs <;> (try simp_all only [Sum.inl.injEq, Prod.mk.injEq]) <;> omega
     · cases b <;> simp [decode, encode]
   right_inv := by
     intro v
@@ -351,7 +407,7 @@ private lemma a_card (n : ℕ) : a n = (actualShell n).card := by
   rw [a, Set.ncard_eq_toFinset_card _ (shell_finite n)]
   congr 1
   ext v
-  simp only [Set.Finite.mem_toFinset, Set.mem_setOf_eq, actualShell_mem]
+  simp only [Set.Finite.mem_toFinset, Set.mem_ofPred_eq, actualShell_mem]
 
 private def stripCount (c L n : ℕ) : ℕ :=
   2*((n+2-c)/3) + if c ≤ n ∧ (n-c)%3=0 then (n-c)/3+L else 0
@@ -367,7 +423,7 @@ private lemma a_formula (n : ℕ) : a n =
   simp only [actualShell, Finset.card_map, shellCoords, Finset.card_disjSum, Finset.card_sigma]
   simp_rw [strip_card _ _ n (hc _) (hw _), centralShell_card]
   norm_num [Fin.sum_univ_succ, Fintype.sum_bool, offset, width, stripCount]
-  omega
+  ring
 
 set_option maxHeartbeats 2000000 in
 private lemma shell_tail (n : ℕ) (hn : 5 ≤ n) :
@@ -375,7 +431,8 @@ private lemma shell_tail (n : ℕ) (hn : 5 ≤ n) :
   have hmod := Nat.mod_lt n (by omega : 0 < 3)
   rw [a_formula]
   simp (disch := omega) only [stripCount, ite_eq_left, ite_eq_right]
-  interval_cases hm : n%3 <;> split_ifs <;> omega
+  interval_cases hm : n%3 <;> norm_num only [hm]
+  all_goals split_ifs <;> simp_all <;> omega
 
 set_option maxHeartbeats 2000000 in
 private lemma coefficient_identity (n : ℕ) :
@@ -386,11 +443,19 @@ private lemma coefficient_identity (n : ℕ) :
       (if n=4 then 3 else 0) + (if n=5 then 2 else 0) - (if n=8 then 2 else 0) := by
   by_cases hn : n < 9
   · interval_cases n <;> norm_num [a_formula, stripCount]
-  · have h0 := shell_tail n (by omega)
-    have h1 := shell_tail (n-1) (by omega)
-    have h3 := shell_tail (n-3) (by omega)
-    have h4 := shell_tail (n-4) (by omega)
-    split_ifs at * <;> omega
+  · have hn9 : 9 ≤ n := by omega
+    simp (disch := omega) only [ite_eq_left, ite_eq_right]
+    have hm3 : (n-3)%3 = n%3 := by omega
+    have hm4 : (n-4)%3 = (n-1)%3 := by omega
+    have hq0 : n/3 = (n-3)/3+1 := by omega
+    have hq1 : (n-1)/3 = (n-4)/3+1 := by omega
+    have he0 : a n = a (n-3) + 14 := by
+      rw [shell_tail n (by omega), shell_tail (n-3) (by omega), hm3, hq0]
+      omega
+    have he1 : a (n-1) = a (n-4) + 14 := by
+      rw [shell_tail (n-1) (by omega), shell_tail (n-4) (by omega), hm4, hq1]
+      omega
+    omega
 
 /-- Barker's identity for the coordination sequence at a trivalent node of the cem-d net. -/
 theorem result :
@@ -402,9 +467,13 @@ theorem result :
       1 - PowerSeries.X - PowerSeries.X^3 + PowerSeries.X^4 := by ring
   rw [hd, add_mul, sub_mul, sub_mul, one_mul]
   ext n
-  simpa only [PowerSeries.coeff_add, PowerSeries.coeff_sub, PowerSeries.coeff_one,
-    PowerSeries.coeff_X, PowerSeries.coeff_mk, PowerSeries.coeff_X_pow_mul',
-    PowerSeries.coeff_natCast_mul, PowerSeries.coeff_X_pow, one_mul, mul_one,
-    ← pow_one (PowerSeries.X : PowerSeries ℤ), Nat.cast_ofNat] using coefficient_identity n
+  have hx (p : PowerSeries ℤ) :
+      PowerSeries.coeff n (PowerSeries.X * p) =
+        if 1 ≤ n then PowerSeries.coeff (n-1) p else 0 := by
+    simpa only [pow_one] using PowerSeries.coeff_X_pow_mul' p 1 n
+  simpa only [map_add, map_sub, PowerSeries.coeff_one,
+    PowerSeries.coeff_X, PowerSeries.coeff_mk, PowerSeries.coeff_X_pow_mul', hx,
+    PowerSeries.coeff_ofNat_mul, PowerSeries.coeff_X_pow,
+    mul_ite, mul_one, mul_zero] using coefficient_identity n
 
 end D5.S3.StatisticalMechanics.ElongatedTriangularDualCoordination
