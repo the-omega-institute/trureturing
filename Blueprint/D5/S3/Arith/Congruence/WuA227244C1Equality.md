@@ -25,3 +25,4 @@ For every natural n, including zero, the integer with index 20*n+16 is divisible
 ## References
 
 - Truth anchor: `D5/S3/Arith/Congruence/WuA227244C1Equality.result`
+- Dependency: [D5/S3/Arith/Primes/WuA227244ConjectureFour](../Primes/WuA227244ConjectureFour.md)

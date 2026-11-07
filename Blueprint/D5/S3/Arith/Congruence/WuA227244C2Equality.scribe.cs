@@ -14,7 +14,7 @@ internal sealed class WuA227244C2EqualityDocument : IScribeDocumentDefinition
             DeclarationHandle.Create("D5/S3/Arith/Congruence/WuA227244C2Equality.result"),
             H("The full equality for every natural index"),
             StatementSource.FromAuthor(Disp(Statement())),
-            AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Arith/wu2026a227244")),
+            AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Factorization/wu2026a227244")),
             Blocks(Paragraph(Text("For every natural n, including zero, the integer with index 220*n+8 is divisible by the prime 47, and every natural prime divisor is at least 47. The product and subtraction are in the integers and every exponent is natural. Periodicity reduces the modular powers to finite residue tables; the reduction identities apply at every natural index. The tables prove divisibility by 47 and exclude each smaller prime. Thus the finite certificates establish the entire unbounded equality, without an exclusion or an upper bound on n."))),
             DescribeRole.Theorem,
             new OpenProblemResolutionClaim(

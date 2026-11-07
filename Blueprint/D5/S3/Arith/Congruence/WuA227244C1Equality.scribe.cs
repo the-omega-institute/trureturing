@@ -14,7 +14,7 @@ internal sealed class WuA227244C1EqualityDocument : IScribeDocumentDefinition
             DeclarationHandle.Create("D5/S3/Arith/Congruence/WuA227244C1Equality.result"),
             H("The full equality for every natural index"),
             StatementSource.FromAuthor(Disp(Statement())),
-            AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Arith/wu2026a227244")),
+            AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Factorization/wu2026a227244")),
             Blocks(Paragraph(Text("For every natural n, including zero, the integer with index 20*n+16 is divisible by the prime 101, and every natural prime divisor is at least 101. The product and subtraction are in the integers and every exponent is natural. Periodicity reduces the modular powers to finite residue tables; the reduction identities apply at every natural index. The tables prove divisibility by 101 and exclude each smaller prime. Thus the finite certificates establish the entire unbounded equality, without an exclusion or an upper bound on n."))),
             DescribeRole.Theorem,
             new OpenProblemResolutionClaim(
