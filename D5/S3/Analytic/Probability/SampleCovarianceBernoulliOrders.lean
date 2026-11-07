@@ -286,25 +286,6 @@ private lemma pairDet_unitary (U V A C G K : Matrix (Fin n) (Fin n) R)
     _ = _ := by rw [hdet, one_mul]
 end
 end D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Unitary
-namespace D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Scalar
-noncomputable section
-variable {R : Type*} [CommRing R] [StarRing R] {n : ℕ}
-private lemma cross_smul (a : R) (A G : Matrix (Fin n) (Fin n) R) :
-    (a • A)*(a • G)ᴴ = (a*star a) • (A*Gᴴ) := by
-  simp only [Matrix.conjTranspose_smul, Matrix.smul_mul, Matrix.mul_smul, smul_smul, mul_comm (star a) a]
-private lemma affineGram_smul (a : R) (A G : Matrix (Fin n) (Fin n) R) :
-    D5.S3.Analytic.Probability.GaussianPolynomialLog.Covariance.affineGramPoly (a • A) (a • G) =
-      Polynomial.C (a*star a) • D5.S3.Analytic.Probability.GaussianPolynomialLog.Covariance.affineGramPoly A G := by
-  unfold D5.S3.Analytic.Probability.GaussianPolynomialLog.Covariance.affineGramPoly
-  simp only [cross_smul, ← smul_add]
-  apply Matrix.ext
-  intro i j
-  simp only [Matrix.add_apply, Matrix.smul_apply, Matrix.map_apply, smul_eq_mul, map_mul]
-  ring
-
-
-end
-end D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Scalar
 namespace D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.CommonOrder
 noncomputable section
 private lemma pairDet_common_lower (s : ℕ) (c : ℂ)

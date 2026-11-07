@@ -353,12 +353,8 @@ open MeasureTheory
 namespace D5.S3.Analytic.Probability.GaussianPolynomialLog
 
 lemma norm_eq_two_pos_sub (t : ℝ) : ‖t‖ = 2 * max t 0 - t := by
-  rw [Real.norm_eq_abs]
-  by_cases ht : 0 ≤ t
-  · rw [abs_of_nonneg ht, max_eq_left ht]
-    linarith
-  · rw [abs_of_nonpos (le_of_not_ge ht), max_eq_right (le_of_not_ge ht)]
-    linarith
+  simpa only [Real.norm_eq_abs, PosPart.posPart, nsmul_eq_mul, Nat.cast_ofNat] using
+    (eq_sub_of_add_eq (abs_add_eq_two_nsmul_posPart t))
 
 lemma integrable_prod_of_pos_and_fiber_lower
     {α β : Type*} [MeasurableSpace α] [MeasurableSpace β]
@@ -378,12 +374,8 @@ lemma integrable_prod_of_pos_and_fiber_lower
   rw [Real.norm_eq_abs, abs_of_nonneg (integral_nonneg (fun x => norm_nonneg _))]
   have he : (∫ x, ‖f (x,y)‖ ∂μ) =
       2 * (∫ x, max (f (x,y)) 0 ∂μ) - ∫ x, f (x,y) ∂μ := by
-    calc
-      _ = ∫ x, 2 * max (f (x,y)) 0 - f (x,y) ∂μ := by
-        apply integral_congr_ae
-        exact Filter.Eventually.of_forall (fun x => norm_eq_two_pos_sub _)
-      _ = _ := by
-        rw [integral_sub (hpy.const_mul 2) hy, integral_const_mul]
+    simpa only [Real.norm_eq_abs, PosPart.posPart] using
+      integral_abs_eq_two_mul_integral_posPart_sub_integral hy
   rw [he]
   exact sub_le_sub_left hly _
 

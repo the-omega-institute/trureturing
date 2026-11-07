@@ -215,10 +215,9 @@ private lemma pi_mixture {ι X : Type*} [Fintype ι] [DecidableEq ι] [Measurabl
   simp_rw [← Finset.prod_mul_distrib]
   have he := Fintype.prod_sum (fun i (b : Bool) => (if b then p else q) * ν i b (s i))
   simpa [Fintype.sum_bool, add_comm] using he.symm
-private def pack {n : ℕ} (x : (Bool × Bool × Fin n × Fin n) → ℝ) : (Bool × Fin n × Fin n) → ℝ × ℝ :=
-  fun i => (x (i.1,false,i.2), x (i.1,true,i.2))
 private lemma pack_preserving (n : ℕ) (v : ℝ≥0) :
-    MeasurePreserving (pack (n:=n)) ((fun n v => Measure.pi (fun _ : Bool × Bool × Fin n × Fin n => gaussianReal 0 v)) n v)
+    MeasurePreserving (fun x : (Bool × Bool × Fin n × Fin n) → ℝ =>
+      fun i : Bool × Fin n × Fin n => (x (i.1,false,i.2), x (i.1,true,i.2))) ((fun n v => Measure.pi (fun _ : Bool × Bool × Fin n × Fin n => gaussianReal 0 v)) n v)
       (Measure.pi (fun _ : (Bool × Fin n × Fin n) => (gaussianReal 0 v).prod (gaussianReal 0 v))) := by
   let e := MeasurableEquiv.sumPiEquivProdPi (fun _ : (Bool × Fin n × Fin n) ⊕ (Bool × Fin n × Fin n) => ℝ)
   have h1 := measurePreserving_piCongrLeft
