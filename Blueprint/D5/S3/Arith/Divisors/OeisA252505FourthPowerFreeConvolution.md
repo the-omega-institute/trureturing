@@ -116,7 +116,7 @@ $$\operatorname{c}\left(1\right) = 1 \land \left(\forall n \in Nat,\; 1 < n \Rig
 
 *Commentary.*
 
-The implementation directly reuses ArithmeticFunction.dirichletInverse over Int. Its value at one is one, and dirichletInverseFun_apply_ne supplies precisely this proper-divisor recursion. The private c_recursion proof verifies both clauses. The positive-domain uniqueness theorem below identifies it with the independently specified A378214; index zero is outside the target.
+The implementation directly reuses ArithmeticFunction.dirichletInverse over Int. Its value at one is one, and dirichletInverseFun_apply_ne supplies precisely this proper-divisor recursion. The source identification with A378214 uses this exact recursion and its positive-domain uniqueness by strong induction over positive proper divisors. No separate recursion or uniqueness theorem endpoint is retained, and no fresh transient verification is asserted here; index zero is outside the target.
 
 **Definition 1.9 (The independent recursive specification).**
 
@@ -188,21 +188,7 @@ $$\forall n \in Nat,\; 0 < n \Rightarrow 2 \cdot \operatorname{b}\left(n\right) 
 
 Swap the two factors. Each off-diagonal orbit has two entries; the unique fixed pair is (n,n). Thus 2b(n)=tau(n^2)+1. This derives the formula from the rational solution definition, including x=y=2n.
 
-**Theorem 1.14 (Uniqueness on the full positive domain).**
-
-$$\forall v \in Nat \to Int,\; \operatorname{InverseRecursion}\left(v\right) \Rightarrow \left(\forall n \in Nat,\; 0 < n \Rightarrow \operatorname{v}\left(n\right) = \operatorname{c}\left(n\right)\right)$$
-
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/Divisors/OeisA252505FourthPowerFreeConvolution.inverse_recursion_unique` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* The OEIS Foundation Inc. (2026). *OEIS A252505 and the linked unit-fraction and inverse sequences*. URL: <https://oeis.org/A252505>.
-
-*Commentary.*
-
-Strong induction uses only positive proper divisors, each strictly smaller than n. The n=1 clause comes directly from the specification. The arbitrary value v(0) is immaterial.
-
-**Theorem 1.15 (The complete convolution for every positive integer).**
+**Theorem 1.14 (The complete convolution for every positive integer).**
 
 $$\forall n \in Nat,\; 1 \le n \Rightarrow \operatorname{a}\left(n\right) = \operatorname{Finset}.\operatorname{sum}\left(\operatorname{Nat}.\operatorname{divisors}\left(n\right), (fun d \mapsto \operatorname{b}\left(d\right) \cdot \operatorname{c}\left(\operatorname{Nat}.\operatorname{div}\left(n, d\right)\right))\right)$$
 
@@ -232,7 +218,6 @@ Encode divisors by all exponent vectors below the factorization of n. The fourth
 - Truth anchor: `D5/S3/Arith/Divisors/OeisA252505FourthPowerFreeConvolution.factorPairs`
 - Truth anchor: `D5/S3/Arith/Divisors/OeisA252505FourthPowerFreeConvolution.g`
 - Truth anchor: `D5/S3/Arith/Divisors/OeisA252505FourthPowerFreeConvolution.h`
-- Truth anchor: `D5/S3/Arith/Divisors/OeisA252505FourthPowerFreeConvolution.inverse_recursion_unique`
 - Truth anchor: `D5/S3/Arith/Divisors/OeisA252505FourthPowerFreeConvolution.result`
 - Truth anchor: `D5/S3/Arith/Divisors/OeisA252505FourthPowerFreeConvolution.tau`
 - Truth anchor: `D5/S3/Arith/Divisors/OeisA252505FourthPowerFreeConvolution.unit_fraction_count`
