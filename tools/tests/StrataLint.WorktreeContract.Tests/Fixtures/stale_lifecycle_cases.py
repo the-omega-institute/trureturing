@@ -260,6 +260,23 @@ class LifecycleTests(unittest.TestCase):
         protocol.identity(self.main, tree)
         preservation.remove_registered(self.main, tree)
 
+    def test_make_explicit_removal_uses_shared_payload_owner(self):
+        self.prepare_make()
+        tree = self.root / "explicit-removal"
+        branch = "lane/governance/explicit-removal"
+        head = self.commit_branch(branch, tree, 60)
+        outside = self.root / "external-cache"
+        outside.mkdir()
+        sentinel = outside / "keep"
+        sentinel.write_text("external bytes")
+        (tree / ".lake").symlink_to(outside, target_is_directory=True)
+        result = self.make("worktree-remove", "NAMES=" + tree.name)
+        self.assertIn("WORKTREE_REMOVE_RESULT exit=0 removed=1 failed=0", result.stdout)
+        self.assertFalse(tree.exists())
+        self.assertFalse(any(Path(row["worktree"]) == tree for row in protocol.inventory(self.main)))
+        self.assertEqual(run(self.main, "rev-parse", branch).stdout.strip(), head)
+        self.assertEqual(sentinel.read_text(), "external bytes")
+
     def test_stale_reuse_is_immediate_and_new_commit_invalidates(self):
         candidate = self.root / "candidate"
         old_branch = "lane/governance/old"
