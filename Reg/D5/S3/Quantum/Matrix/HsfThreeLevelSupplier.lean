@@ -56,7 +56,8 @@ private theorem bridge :
 private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
   exact h (ULift.{u} (Fin 0)) (fun i => nomatch i.down)
-    (fun _ => 1) (by intro i; norm_num) 0 (by simp) 0 (by simp)
+    (fun _ => 1) (by intro i; norm_num) 0 Matrix.PosSemidef.zero
+    0 Matrix.isHermitian_zero
 
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
@@ -151,7 +152,9 @@ private theorem bridge :
 private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
   exact h (ULift.{u} (Fin 0)) (fun i => nomatch i.down)
-    (fun _ => 1) (by intro i; norm_num) 0 (by simp) 
+    (fun _ => 1) (by intro i; norm_num) 0
+    (Matrix.PosDef.of_dotProduct_mulVec_pos Matrix.isHermitian_zero
+      (by intro x hx; exact (hx (Subsingleton.elim _ _)).elim))
 
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
@@ -203,5 +206,7 @@ def audit : Contract.Registration
 #print axioms audit
 
 end PDSylvester
+
+end
 
 end Reg.D5.S3.Quantum.Matrix.HsfThreeLevelSupplier
