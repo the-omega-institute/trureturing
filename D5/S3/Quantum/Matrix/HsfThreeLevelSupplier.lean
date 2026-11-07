@@ -826,11 +826,11 @@ private theorem denominator_square (a b c : ℝ) :
   unfold kDenominator gapDen
   ring
 
+set_option maxHeartbeats 16000000 in
 /-- Exact degree-60 polynomial identity, with every signed and positive
 coefficient present in source. This is a kernel ring proof candidate; the
 source generator and its consistency check are not proof authority.
 The separate rational-clearing proof scripts follow this polynomial step. -/
-set_option maxHeartbeats 16000000 in
 private theorem polynomial_gap (a b c : ℝ) :
     tNumerator a b c-(kNumerator a b c)^2 =
       a*b*c*(a-b)^2*(a-c)^2*(b-c)^2*positiveCore a b c := by
@@ -860,14 +860,17 @@ private theorem detG_formula (p : Fin 3 → ℝ) (hp : ∀ i, 0 < p i) :
   unfold detG g q at *
   field_simp [h0, h1, h2, h01, h02, h12] <;> ring
 
+set_option maxHeartbeats 16000000 in
 /-- Rational denominator clearing against the signed degree-30 numerator.
 All facts used here are proved scalar facts or numerical coefficient data;
 there is no spectral, jet, or supplier hypothesis. This proof script awaits
 canonical elaboration and kernel checking. -/
-set_option maxHeartbeats 16000000 in
 private theorem canonicalK_clear (p : Fin 3 → ℝ) (hp : ∀ i, 0 < p i)
     (hinj : Function.Injective p) :
     canonicalK p*kDenominator (p 0) (p 1) (p 2) = kNumerator (p 0) (p 1) (p 2) := by
+  have hp0 := hp 0
+  have hp1 := hp 1
+  have hp2 := hp 2
   have h0 := (hp 0).ne'
   have h1 := (hp 1).ne'
   have h2 := (hp 2).ne'
@@ -1017,6 +1020,8 @@ private theorem baseG_posDef (p : Fin 3 → ℝ) (hp : ∀ i, 0 < p i)
       have hn2 := (hp 2).ne'
       have hn := hd1.ne'
       dsimp only [d1] at hn
+      field_simp [hn1] at hn
+      ring_nf at hn
       field_simp [hn0, hn1, hn2, hn] <;> ring
     rw [hid]
     have hn0 : 0 ≤ d0*y0^2 := mul_nonneg hd0.le (sq_nonneg _)
@@ -1049,6 +1054,8 @@ private theorem baseG_dual (p : Fin 3 → ℝ) (hp : ∀ i, 0 < p i)
   all_goals
     unfold detG at *
     try simp only [g_symm] at *
+    field_simp [hn0, hn1, hn2] at hd
+    ring_nf at hd
     field_simp [hd, hn0, hn1, hn2] <;> ring
 
 /-- The residual allocation works for every three positive budgets, for either
@@ -1060,6 +1067,7 @@ private theorem residual_allocation (A : Fin 3 → ℝ) (hA : ∀ j, 0 < A j)
   let T := ∑ j, A j
   have hT : 0 < T := Finset.sum_pos (fun j _ => hA j) Finset.univ_nonempty
   have hj (j : Fin 3) : A j < T := by
+    rw [show T = A 0+A 1+A 2 from Fin.sum_univ_three A]
     fin_cases j
     · change A 0 < A 0+A 1+A 2
       linarith [hA 1, hA 2]
@@ -1369,12 +1377,15 @@ private theorem v_m_projection (p : Fin 3 → ℝ) (hp : ∀ i, 0 < p i)
     rw [he, corrected_base p hp hinj]
     simp only [ite_true, ite_false, rowProjection, if_neg hkj]
 
+set_option maxHeartbeats 16000000 in
 /-- Twenty-seven compact rational identities, with arbitrary positive p.
 The case split is on the three finite indices, never on sampled labels. -/
-set_option maxHeartbeats 16000000 in
 private theorem rowProjection_balance (p : Fin 3 → ℝ) (hp : ∀ i, 0 < p i)
     (i j k : Fin 3) :
     rowProjection p i k j+rowProjection p j k i = 2*psi (p i) (p j) (p k) := by
+  have hp0 := hp 0
+  have hp1 := hp 1
+  have hp2 := hp 2
   have h0 := (hp 0).ne'
   have h1 := (hp 1).ne'
   have h2 := (hp 2).ne'
@@ -1418,9 +1429,9 @@ private theorem pairR_budget {a b : ℝ} (ha : 0 < a) (hb : 0 < b) :
   unfold pairR pairF lam mu psi g q aux at *
   field_simp [ha.ne', hb.ne', hq, hqa, hqb, hqr, hu] <;> ring
 
+set_option maxHeartbeats 16000000 in
 /-- The diagonal cofactor for the missing third level. Its proof uses the
 already supplied determinant formula, not another CFC computation. -/
-set_option maxHeartbeats 16000000 in
 private theorem dual_diagonal (p : Fin 3 → ℝ) (hp : ∀ i, 0 < p i)
     (hinj : Function.Injective p) (i j : Fin 3) (hij : i ≠ j) :
     dualG p (third i j) (third i j) =
@@ -1428,6 +1439,9 @@ private theorem dual_diagonal (p : Fin 3 → ℝ) (hp : ∀ i, 0 < p i)
         (q (p j) (p (third i j)))^2*aux (p i) (p j)/
       ((p i-p (third i j))^2*(p j-p (third i j))^2*
         hPoly (p i) (p j) (p (third i j))) := by
+  have hp0 := hp 0
+  have hp1 := hp 1
+  have hp2 := hp 2
   have h0 := (hp 0).ne'
   have h1 := (hp 1).ne'
   have h2 := (hp 2).ne'
@@ -1528,7 +1542,7 @@ private theorem same_column_gram (p : Fin 3 → ℝ) (hp : ∀ i, 0 < p i)
         intro a _
         by_cases hcol : col = j <;>
           by_cases hi : i = left j <;> by_cases hk : k = left j <;>
-          simp [m, hij, hkj, hcol, hi, hk, edgeResidual]
+          simp [m, hij, hkj, hcol, hi, hk, edgeResidual, (column_indices j).1]
       _ = _ := by rw [Finset.sum_comm]; simp
   rw [dot, Fintype.sum_sum_type, hbase, hres, edgeResidual_gram p hp hinj i k j hij hkj]
 
@@ -1645,10 +1659,11 @@ private theorem cyclic_moment (p : Fin 3 → ℝ) (hp : ∀ i, 0 < p i)
         nlinarith only [hr]
       · have hc := canonical_cycle p hp hinj
         fin_cases i <;> fin_cases j <;> fin_cases k <;>
-          norm_num at hij hik hjk
-        all_goals
-          simp only [dot_comm, tau_symm] at hc ⊢ <;>
-            linear_combination hc
+          first
+          | exact (hij rfl).elim
+          | exact (hik rfl).elim
+          | exact (hjk rfl).elim
+          | (simp only [dot_comm, tau_symm] at hc ⊢ <;> linear_combination hc)
 
 section OrderedSquares
 variable {n : Type u} [Fintype n] [DecidableEq n]
@@ -1702,6 +1717,9 @@ private theorem ordered_row_square {ι : Type*} [Fintype ι]
   simp_rw [one_ordered_square S W _ _ hW]
   simp only [Finset.sum_add_distrib, Finset.sum_sub_distrib,
     ← Finset.mul_sum, Finset.sum_mul, realTrace_sum]
+  simp only [add_mul, realTrace_add, Finset.sum_mul, realTrace_sum,
+    Finset.sum_add_distrib]
+  ring
 private theorem rowEnergy_nonneg {ι : Type*} [Fintype ι]
     (S W : Matrix n n ℂ) (M V : ι → Matrix n n ℂ) (hS : S.PosSemidef) :
     0 ≤ rowEnergy S W M V := by
@@ -2255,9 +2273,12 @@ private theorem coincidentLevel_proof : CoincidentLevelObligation := by
   have hroot_actual : CFC.rpow Y (1/3 : ℝ) = P := by
     rw [hY_actual, ← CFC.rpow_natCast P 3 hP_nonneg]
     change CFC.rpow (CFC.rpow P (3 : ℝ)) (1/3 : ℝ) = P
-    rw [CFC.rpow_rpow_of_exponent_nonneg P (3 : ℝ) (1/3 : ℝ)
-      (by norm_num) (by norm_num) hP_nonneg]
-    norm_num [CFC.rpow_one P hP_nonneg]
+    calc
+      CFC.rpow (CFC.rpow P (3 : ℝ)) (1/3 : ℝ) =
+          CFC.rpow P ((3 : ℝ)*(1/3 : ℝ)) :=
+        CFC.rpow_rpow_of_exponent_nonneg P (3 : ℝ) (1/3 : ℝ)
+          (by norm_num) (by norm_num) hP_nonneg
+      _ = P := by norm_num [CFC.rpow_one P hP_nonneg]
   have hr_half : r ^ (3/2 : ℝ) = r * Real.sqrt r := by
     rw [show (3/2 : ℝ) = 1 + 1/2 by norm_num,
       Real.rpow_add hr, Real.rpow_one, ← Real.sqrt_eq_rpow]
@@ -2553,7 +2574,7 @@ private theorem pd_sylvester_spectral (X D : Matrix n n ℂ)
     ext i j
     change star (E j i / ((l j : ℂ)+(l i : ℂ))) =
       E i j / ((l i : ℂ)+(l j : ℂ))
-    erw [star_div, hE.apply i j]
+    rw [star_div₀, hE.apply i j]
     congr 1
     simp [add_comm]
   have hsolve : L*T+T*L = E := by
