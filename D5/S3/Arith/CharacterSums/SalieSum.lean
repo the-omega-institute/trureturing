@@ -12,13 +12,19 @@ public import Mathlib.NumberTheory.LegendreSymbol.QuadraticChar.GaussSum
 public import Mathlib.Analysis.Normed.Ring.Finite
 
 /-!
-# Salié sums and quadratic stationary fibers
+# Salié sums and quadratic root fibers
 
 For an odd finite field, the quadratic character turns the reciprocal phase
 `a * x + b / x` into a sum over the quadratic fiber `y^2 = 4 * a * b`.
 Additive orthogonality and completion of the square identify this fiber with
 the reciprocal phase sum. The character is the multiplicative-translation
 eigencharacter in the Gauss-sum shift law.
+
+When `a * b ≠ 0`, the substitution `y = 2 * a * x` identifies this
+quadratic root fiber with `a * x ^ 2 = b` on the units, the stationary
+equation for the reciprocal phase. When `a = 0` and `b ≠ 0`, the
+quadratic root fiber is `{0}`, but the phase has no stationary point on
+the units. The exact evaluation includes this singular boundary.
 -/
 
 @[expose] public section
@@ -155,7 +161,7 @@ private theorem quadraticLinearPhase_sum_eq (hF : ringChar F ≠ 2) (ψ : AddCha
       exact Fintype.sum_equiv (Equiv.addRight (2 * (t : F))⁻¹) _ _ (fun _ ↦ rfl)
     _ = _ := by rw [quadraticPhase_sum_eq hF ψ hψ t]
 
-/-- Additive orthogonality expresses the stationary root fiber as a quadratic Fourier sum. -/
+/-- Additive orthogonality expresses the quadratic root fiber as a quadratic Fourier sum. -/
 private theorem quadraticRootPhase_fourier (ψ : AddChar F ℂ) (hψ : ψ ≠ 1) (a b : F) :
     (Fintype.card F : ℂ) * quadraticRootPhase ψ a b =
       ∑ t : F, ψ (-(4 * a * b) * t) * (∑ y : F, ψ (t * y ^ 2 + y)) := by
@@ -294,7 +300,7 @@ theorem salieSum_eq (hF : ringChar F ≠ 2) (ψ : AddChar F ℂ)
             quadraticCharacterComplex_sq hb]
           ring
 
-/-- A nonsquare product has no stationary root, so all reciprocal phases cancel. -/
+/-- A nonsquare product has an empty quadratic root fiber, so the sum vanishes. -/
 theorem salieSum_eq_zero_of_not_isSquare (hF : ringChar F ≠ 2) (ψ : AddChar F ℂ)
     (hψ : ψ ≠ 1) (a b : F) (hb : b ≠ 0) (hab : ¬IsSquare (a * b)) :
     salieSum ψ a b = 0 := by

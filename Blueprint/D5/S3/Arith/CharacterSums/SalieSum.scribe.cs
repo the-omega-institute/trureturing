@@ -6,6 +6,9 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.CharacterSums;
 
 internal sealed class SalieSumDocument : IScribeDocumentDefinition
 {
+    private static readonly LibraryNoteRef Source =
+        LibraryNoteRef.Create("D5/L/CharacterSums/kowalski2021exponentialsums");
+
     private static Formula All(string variable, Formula domain, Formula body) =>
         Seq(Forall, Sp, F.Id(variable), Colon, domain, Comma, Sp, body);
 
@@ -28,12 +31,14 @@ internal sealed class SalieSumDocument : IScribeDocumentDefinition
     private static Formula Salie => Call("S", F.Id("F"), F.Id("psi"), F.Id("a"), F.Id("b"));
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Salié reciprocal phases collapse to a quadratic stationary-root fiber, giving exact nonsquare cancellation and the uniform square-root bound over every odd finite field.",
-        H("Salié sums and quadratic stationary fibers"),
+        "Salié reciprocal phases collapse to a quadratic root fiber, giving exact nonsquare cancellation and the uniform square-root bound over every odd finite field.",
+        H("Salié sums and quadratic root fibers"),
         Blocks(
             Paragraph(Text("Let F be any finite field with a decidable equality, psi a complex additive character, and chi the integer-valued quadratic character transported to Complex. The notation chi(F,x), G(F,psi), R(F,psi,a,b), and S(F,psi,a,b) below denotes quadraticCharacterComplex x, quadraticGaussSum psi, quadraticRootPhase psi a b, and salieSum psi a b, respectively. The exact evaluation assumes odd characteristic, psi nontrivial, and b nonzero; a is unrestricted, including zero. The norm theorem also includes b zero.")),
-            Paragraph(Text("The mechanism connects two actions. Multiplication by a unit t acts on additive phases by mulShift; the Gauss sum transforms with inverse multiplicative eigencharacter chi(t). Counting the square-map fibers identifies a quadratic exponential sum with that Gauss eigenspace. Completion of the square then converts a linear perturbation into a reciprocal phase. Additive Fourier orthogonality selects the single equation y squared equals 4ab. Thus the reciprocal phase sum collapses to at most two stationary roots. Nonsquares have no roots and cancel exactly.")),
-            Paragraph(Text("This is the classical Salié evaluation, with no mathematical novelty claim. The proof reuses Mathlib's quadraticChar_card_sqrts, gaussSum_mulShift_eq, additive orthogonality sum_mulShift, gaussSum_sq, and nonvanishing of primitive Gauss sums. It constructs the Fourier-to-reciprocal reindexing in this module. No prime-field restriction, choice of a standard additive character, or extra nonzero assumption on a is imposed.")),
+            Paragraph(Text("The mechanism connects two actions. Multiplication by a unit t acts on additive phases by mulShift; the Gauss sum transforms with inverse multiplicative eigencharacter chi(t). Counting the square-map fibers identifies a quadratic exponential sum with that Gauss eigenspace. Completion of the square then converts a linear perturbation into a reciprocal phase. Additive Fourier orthogonality selects the single equation y squared equals 4ab. Thus the reciprocal phase sum collapses to a quadratic root fiber of size at most two. Nonsquares have no roots and cancel exactly.")),
+            Paragraph(Text("The stationary interpretation requires a*b nonzero: y=2*a*x identifies y squared equals 4ab with a*x squared equals b on the units, the derivative-zero equation for a*x+b/x. At the singular boundary a=0,b nonzero, the quadratic root fiber contains just zero, while the phase has no stationary point on the units. The exact formula still applies and gives S(F,psi,0,b)=chi(F,b)*G(F,psi).")),
+            Paragraph(Text("Kowalski, Exponential sums over finite fields: elementary methods, version of September 14, 2021, Definition 2.18 and Theorem 2.19, equations (2.12)-(2.13), printed page 26 (PDF page 28), give the classical Salié evaluation and bound for two nontrivial additive characters over every odd finite field. Definition 2.1 and Remark 2.2, printed page 17 (PDF page 19), use the same unnormalised Gauss sum. Remark 2.20, printed page 27 (PDF page 29), attributes the elementary additive Fourier method to Sarnak and cites Iwaniec-Kowalski, Analytic Number Theory, Lemma 12.4. The present normalization and the elementary a=0 and b=0 extensions are explained in the cited Library note. No mathematical novelty is claimed.")),
+            Paragraph(Text("The Lean proof reuses Mathlib's quadraticChar_card_sqrts, gaussSum_mulShift_eq, additive orthogonality sum_mulShift, gaussSum_sq, and nonvanishing of primitive Gauss sums. The Fourier-to-reciprocal reindexing uses a linear unit bijection and normalization. These steps do not establish a non-binding escape witness under the repository's admission rule. No prime-field restriction, choice of a standard additive character, or extra nonzero assumption on a is imposed.")),
             Describe.Lean(
                 DescribeId.Create("salie-complex-quadratic-character"),
                 DeclarationHandle.Create("D5/S3/Arith/CharacterSums/SalieSum.quadraticCharacterComplex"),
@@ -59,9 +64,9 @@ internal sealed class SalieSumDocument : IScribeDocumentDefinition
                 Blocks(Paragraph(Text("For every complex additive character psi, G(F,psi) is gaussSum quadraticCharacterComplex psi, the sum of chi(F,x)*psi(x) over x in F. In odd characteristic with psi nontrivial its square is chi(F,-1) times the field cardinality and its norm is the square root of that cardinality."))),
                 DescribeRole.Definition),
             Describe.Lean(
-                DescribeId.Create("salie-stationary-root-phase"),
+                DescribeId.Create("salie-quadratic-root-phase"),
                 DeclarationHandle.Create("D5/S3/Arith/CharacterSums/SalieSum.quadraticRootPhase"),
-                H("The stationary-root phase"),
+                H("The quadratic root phase"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("For every psi and a,b in F, R(F,psi,a,b) is the finite sum of psi(y) over exactly those y in F satisfying y squared equals 4*a*b. Roots are counted once each, so the singular zero fiber contains just zero."))),
@@ -77,7 +82,7 @@ internal sealed class SalieSumDocument : IScribeDocumentDefinition
             Describe.Lean(
                 DescribeId.Create("salie-quadratic-root-count"),
                 DeclarationHandle.Create("D5/S3/Arith/CharacterSums/SalieSum.quadraticRootFiber_card"),
-                H("Counting stationary roots"),
+                H("Counting quadratic roots"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("If ringChar F differs from two, then for every a,b in F the integer cast of the cardinality of the root set equals quadraticChar F (4*a*b)+1. This is a bind-only application of Mathlib's square-root count. The private root-phase norm estimate consumes it to obtain the cardinality bound two, and the final Salié norm theorem consumes that estimate."))),
@@ -85,7 +90,7 @@ internal sealed class SalieSumDocument : IScribeDocumentDefinition
             Describe.Lean(
                 DescribeId.Create("salie-empty-root-phase"),
                 DeclarationHandle.Create("D5/S3/Arith/CharacterSums/SalieSum.quadraticRootPhase_eq_zero_of_not_isSquare"),
-                H("An empty stationary fiber contributes zero"),
+                H("An empty quadratic root fiber contributes zero"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("For every psi,a,b, if 4*a*b is not a square, R(F,psi,a,b)=0. No odd-characteristic or nontrivial-character assumption is needed for this empty-sum statement. This bind-only helper is consumed by salieSum_eq_zero_of_not_isSquare."))),
@@ -103,8 +108,8 @@ internal sealed class SalieSumDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/Arith/CharacterSums/SalieSum.salieSum_zero_right"),
                 H("The boundary with zero reciprocal coefficient"),
                 StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For every odd finite field, every complex additive character psi, and every a, S(F,psi,a,0) is zero when a=0 and is chi(F,a)*G(F,psi) otherwise. This theorem does not require psi nontrivial. Nontriviality of the quadratic character handles a=0; the Gauss shift law handles a nonzero, and the character is its own inverse. This bind-only boundary calculation is consumed by salieSum_norm_le."))),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("For every odd finite field, every complex additive character psi, and every a, S(F,psi,a,0) is zero when a=0 and is chi(F,a)*G(F,psi) otherwise. This elementary extension of the cited formula does not require psi nontrivial. Nontriviality of the quadratic character handles a=0; the Gauss shift law handles a nonzero, and the character is its own inverse. This bind-only boundary calculation is consumed by salieSum_norm_le."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("salie-exact-evaluation"),
@@ -114,10 +119,10 @@ internal sealed class SalieSumDocument : IScribeDocumentDefinition
                     OddNontrivial, Sp, Land, Sp, F.Id("b"), Neq, Sp, D(0), Sp,
                     Implies, Sp, Salie, Eq, Chi(F.Id("b")), Cdot, Sp,
                     Gauss, Cdot, Sp, Root)))),
-                AssessedProvenance.FromRepo(),
+                AssessedProvenance.FromLiterature(Source),
                 Blocks(
                     Paragraph(Text("Additive orthogonality gives q*R as the sum over t of psi(-4abt) times Q(t), where Q(t) is the sum over y of psi(t*y squared+y). For t nonzero, translate y by the inverse of 2t and use quadraticPhase_sum_eq: Q(t)=chi(F,t) inverse times G times psi(-(4t) inverse). The t=0 term is explicitly zero because psi is nontrivial.")),
-                    Paragraph(Text("The unit bijection t maps to -4bt converts this Fourier sum into chi(F,-b)*G*S. The character coefficient follows from chi(F,4)=1 and chi(F,-b) squared equal to one. Combine this relation with G squared equal to chi(F,-1)*q and cancel the nonzero coefficient to obtain the displayed evaluation. The live intermediate Fourier-to-reciprocal identity is the content-bearing construction; the theorem is not merely a root-count wrapper. Its consumers are the nonsquare theorem and the square branch of the norm theorem."))),
+                    Paragraph(Text("The unit bijection t maps to -4bt converts this Fourier sum into chi(F,-b)*G*S. The character coefficient follows from chi(F,4)=1 and chi(F,-b) squared equal to one. Combine this relation with G squared equal to chi(F,-1)*q and cancel the nonzero coefficient to obtain the displayed evaluation. This chain combines existing identities, linear reindexing and normalization; it supplies no independently established escape witness. Its consumers are the nonsquare theorem and the square branch of the norm theorem."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("salie-nonsquare-cancellation"),
@@ -127,7 +132,7 @@ internal sealed class SalieSumDocument : IScribeDocumentDefinition
                     OddNontrivial, Sp, Land, Sp, F.Id("b"), Neq, Sp, D(0), Sp,
                     Land, Sp, Neg, Sp, Call("IsSquare", Seq(F.Id("a"), Cdot, Sp, F.Id("b"))), Sp,
                     Implies, Sp, Salie, Eq, D(0))))),
-                AssessedProvenance.FromRepo(),
+                AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text("If a*b is not a square and b is nonzero, the exact evaluation vanishes. A putative root of 4ab would yield a square root of ab after division by two. This bind-only consequence of the exact evaluation is consumed on the nonsquare branch of salieSum_norm_le."))),
                 DescribeRole.Theorem),
             Describe.Lean(
@@ -138,9 +143,9 @@ internal sealed class SalieSumDocument : IScribeDocumentDefinition
                     OddNontrivial, Sp, Implies, Sp,
                     Vert, Sp, Salie, Vert, Sp, Leq, Sp,
                     D(2), Cdot, Sp, Sqrt, Grp(Call("card", F.Id("F"))))))),
-                AssessedProvenance.FromRepo(),
+                AssessedProvenance.FromLiterature(Source),
                 Blocks(
-                    Paragraph(Text("For all a,b in every odd finite field and every nontrivial complex additive character, the complex norm of S is at most two times the real square root of the field cardinality. The Gauss-square identity and the unit norm of chi(-1) give norm G equal to square root q. Additive-character values have norm one, and the root-count formula bounds the stationary fiber by two. The triangle inequality then gives norm R at most two.")),
-                    Paragraph(Text("The proof uses the boundary theorem when b=0, exact nonsquare cancellation when ab is a nonsquare, and the exact evaluation plus the root-phase estimate in the remaining branch. The estimate chain is the content-bearing conclusion; the cardinality and boundary helpers have genuine consumers. This is a uniform finite-field bound, without a claim of asymptotic sharpness or a broader research objective being completed."))),
+                    Paragraph(Text("For all a,b in every odd finite field and every nontrivial complex additive character, the complex norm of S is at most two times the real square root of the field cardinality. The Gauss-square identity and the unit norm of chi(-1) give norm G equal to square root q. Additive-character values have norm one, and the root-count formula bounds the quadratic root fiber by two. The triangle inequality then gives norm R at most two.")),
+                    Paragraph(Text("The proof uses the boundary theorem when b=0, exact nonsquare cancellation when ab is a nonsquare, and the exact evaluation plus the root-phase estimate in the remaining branch. This is a bind-only consequence of the cited identities and triangle inequality. The cardinality and boundary helpers have genuine consumers, but this final bound has no downstream mathematical consumer in this module. Compilation does not establish its admission under the repository rule or complete the broader research objective."))),
                 DescribeRole.Theorem))));
 }
