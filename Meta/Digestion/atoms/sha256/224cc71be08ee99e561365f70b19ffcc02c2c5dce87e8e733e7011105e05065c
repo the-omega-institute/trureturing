@@ -1,0 +1,11 @@
+## 23. The complete fourth-order field at fixed original data
+
+Throughout §§23–28 fix one admitted original datum of Definitions 1.1–2.2 and retain every analytic antecedent of Theorem 22.1. In particular the signed nonzero $\kappa$, the jointly realized rational vector, both height faces, $a,\varepsilon$, the raw unit source and $j_0$ are fixed before $s\downarrow0$. The heat clock remains $B$, independently of $a$. All actual states have the full complex domains (1.5). The additional premise is $C_{\rm resp}=0$; its occurrence is not asserted. Write $\chi=\chi_c$ and
+
+$$
+v=\nu\Psi,\qquad t_s=p+sv,
+\tag{23.0}
+$$
+
+using exactly the particular real odd $\mathcal Q_E\cap L^2$ representative of R Theorem 16.2. No new representative of the first response is chosen.
+

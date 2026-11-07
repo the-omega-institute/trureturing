@@ -10,6 +10,7 @@
 admission_basis: open-problem-resolution (#18792; Proved)
 escape_witness: D5.S1.Recurrence.Invariants.HannaPrimeSubstitutionIntegrality.General.Lifting.approximation_spec; D5.S1.Recurrence.Invariants.HannaPrimeSubstitutionIntegrality.General.Lifting.approximation_stable; D5.S1.Recurrence.Invariants.HannaPrimeSubstitutionIntegrality.General.Lifting.exists_lifted; D5.S1.Recurrence.Invariants.HannaPrimeSubstitutionIntegrality.General.Lifting.limit_agree; D5.S1.Recurrence.Invariants.HannaPrimeSubstitutionIntegrality.General.solution_unique
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/19794.
+Published coefficient-order owners: https://github.com/the-omega-institute/trureturing/issues/22693.
 Published-owner audit targets: D5.S1.Recurrence.Invariants.AbsoluteReciprocalGeometricParity.agree_mul; D5.S1.Recurrence.Invariants.CubicFifteenSubstitutionParity.agree_iff; D5.S1.Recurrence.Invariants.CubicFifteenSubstitutionParity.agree_pow; D5.S1.Recurrence.Invariants.CubicFifteenSubstitutionParity.agree_subst_order; D5.S1.Recurrence.Invariants.CubicFifteenSubstitutionParity.power_two_one; https://github.com/the-omega-institute/trureturing/issues/19794.
 The source predicates retain the recorded coefficient rings and normalizations.
 The proof uses coefficient agreement and formal substitution over the displayed rings.
@@ -194,13 +195,13 @@ private theorem power_factor {n p : ℕ} (hp : 0 < p) {f g : PowerSeries R}
   rw [hn, pow_add]
   ring
 
-private theorem agree_power_order {n p : ℕ} (hp : 0 < p) {f g : PowerSeries R}
+theorem agree_power_order {n p : ℕ} (hp : 0 < p) {f g : PowerSeries R}
     (hf : constantCoeff f = 0) (hg : constantCoeff g = 0)
     (h : Agree n f g) : Agree (n + p - 1) (f ^ p) (g ^ p) := by
   obtain ⟨u, v, w, _, _, _, he⟩ := power_factor hp hf hg h
   exact (agree_iff _ _ _).mpr ⟨_, he⟩
 
-private theorem power_top {n p : ℕ} (hp : 0 < p) {f g : PowerSeries R}
+theorem power_top {n p : ℕ} (hp : 0 < p) {f g : PowerSeries R}
     (hf : constantCoeff f = 0) (hg : constantCoeff g = 0)
     (hf1 : coeff 1 f = 1) (hg1 : coeff 1 g = 1) (h : Agree n f g) :
     coeff (n + p - 1) (f ^ p) - coeff (n + p - 1) (g ^ p) =
@@ -392,7 +393,7 @@ namespace D5.S1.Recurrence.Invariants.HannaPrimeSubstitutionIntegrality.General
 section Ring
 variable {R : Type*} [CommRing R]
 
-private theorem normal_of_agree {f : PowerSeries R} (h : Agree 2 f X) :
+theorem normal_of_agree {f : PowerSeries R} (h : Agree 2 f X) :
     constantCoeff f = 0 ∧ coeff 1 f = 1 := by
   constructor
   · simpa using h 0 (by decide)

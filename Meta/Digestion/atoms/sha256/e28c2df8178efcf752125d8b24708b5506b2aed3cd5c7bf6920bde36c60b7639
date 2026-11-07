@@ -1,0 +1,187 @@
+## 96. 同一完整对角上的相干插值与凸屋顶 concurrence
+
+**定义 C-96.1（固定正交乘积基的相干族）。** 固定 C-95.1 构造中的
+$\nu,b_0,b_1,e_0,e_1$；非中心时用式 (C95.8)，中心时固定任意正交基。
+对 $0\le\gamma\le1$，定义
+
+$$
+\begin{aligned}
+\sigma_\gamma={}&(1-\nu)|e_0\rangle\langle e_0|+\nu|e_1\rangle\langle e_1|\\
+&+\gamma\sqrt{\nu(1-\nu)}
+\bigl(|e_0\rangle\langle e_1|+|e_1\rangle\langle e_0|\bigr),\\
+\rho_\gamma={}&(1-r)|2\rangle\langle2|+r\iota\sigma_\gamma\iota^\dagger.
+\end{aligned}
+\tag{C96.1}
+$$
+
+**定理 C-96.2（固定对角的完整插值读数）。** 这些算子都是密度算子，
+所有五个对角概率与两个约化态均不依赖 $\gamma$。
+置 $a=\nu(1-\nu)$、$h=r^2a=w(r-w)$，则
+
+$$
+\mathcal P_A=\mathcal P_B=1-2a,\qquad
+\mathcal P=1-2a(1-\gamma^2),
+\tag{C96.2}
+$$
+
+$$
+\begin{aligned}
+q_{--}&=\tfrac h2(1+\gamma^2),&
+q_{-+}=q_{+-}&=\tfrac h2(1-\gamma^2),\\
+q_{++}&=r^2-\tfrac h2(3-\gamma^2),&
+q_{\mathrm f}&=1-r^2.
+\end{aligned}
+\tag{C96.3}
+$$
+
+证明。在 $e_0,e_1$ 的支撑子空间中，矩阵是
+
+$$
+\begin{pmatrix}1-\nu&\gamma\sqrt a\\\gamma\sqrt a&\nu\end{pmatrix}.
+\tag{C96.4}
+$$
+
+其迹一、对角正、行列式 $a(1-\gamma^2)\ge0$，所以正半定；
+正交补上为零。$0\le\gamma<1$ 时秩二，$\gamma=1$ 时为 $|\Phi\rangle\langle\Phi|$。
+$\rho_\gamma$ 的正性和归一化由式 (C95.11) 得到。
+由于 $e_0,e_1$ 的 $A$ 基标签不同，它们交叉项在每个计算基向量上的对角元为零。
+非中心分支中，完整五概率明确为
+
+$$
+(p_0,p_1,p_2,p_3,p_{13})=
+\bigl(r(1-\nu)(1-u),\ r\nu u,\ 1-r,\ r(1-\nu)u,\ r\nu(1-u)\bigr).
+\tag{C96.5}
+$$
+
+其 $X=r\nu$、$Y=r[\nu+(1-2\nu)u]$，
+$\kappa=r\nu(1-u)$ 均固定。中心的 $b_0,b_1$ 可写成同样模平方参数
+$u=|\langle1|b_0\rangle|^2$，式 (C96.5) 仍成立。
+两个交叉项在任一侧的偏迹为零，理由与 C-95.1 相同，故
+
+$$
+\sigma_A=(1-\nu)|0\rangle\langle0|+\nu|1\rangle\langle1|,
+\quad
+\sigma_B=(1-\nu)|b_0\rangle\langle b_0|+\nu|b_1\rangle\langle b_1|.
+\tag{C96.6}
+$$
+
+正交性给两个局部纯度 $1-2a$。把式 (C96.4) 平方取迹，得到
+$(1-\nu)^2+\nu^2+2\gamma^2a=1-2a(1-\gamma^2)$。
+将三项纯度代入式 (C94.15)，逐项化简给式 (C96.3)；四项之和恰为 $r^2$。证毕。
+
+**定理 C-96.3（该族的凸屋顶精确值）。** 采用标准两二元因子 concurrence 的凸屋顶定义
+
+$$
+\mathcal C(\sigma)=\inf_{\sigma=\sum_jt_j|\phi_j\rangle\langle\phi_j|}
+\sum_jt_j\,2|\det B_j|,
+\quad t_j\ge0,\quad\sum_jt_j=1,\quad\|\phi_j\|=1,
+\tag{C96.7}
+$$
+
+其中 $B_j$ 是 $\phi_j$ 的标准 $2\times2$ 系数矩阵。则
+
+$$
+\mathcal C(\sigma_\gamma)=2\gamma\sqrt{\nu(1-\nu)},\qquad
+\mathcal C(\sigma_\gamma)^2=\frac8{r^2}
+\left(q_\Omega-\tfrac12w(r-w)\right).
+\tag{C96.8}
+$$
+
+定义及一般两量子位凸屋顶的经典来源为 Wootters，
+*Entanglement of Formation of an Arbitrary State of Two Qubits*，
+[quant-ph/9709029v2](https://arxiv.org/abs/quant-ph/9709029v2)，式 (7)、(10)、(19)–(22)
+及等 concurrence 分解的证明。此处对所给支撑另给上下界一致的直接计算，
+不把一般混态事件概率等同于 concurrence。
+
+证明。先以局部酉换基把 $b_0,b_1$ 送到 $|0\rangle,|1\rangle$，
+于是 $e_0,e_1$ 送到 $00,11$。
+纯态系数矩阵在局部酉下变为 $UBV^{\mathsf T}$，其行列式模不变；
+该变换双射地对应所有纯态分解，所以凸屋顶也不变。
+
+对任意分解及任意位于 $\operatorname{span}\{00,11\}$ 正交补内的 $v$，有
+
+$$
+0=\langle v|\sigma_\gamma|v\rangle
+=\sum_jt_j|\langle v|\phi_j\rangle|^2.
+\tag{C96.9}
+$$
+
+每项非负；取正交补的一组基，说明每个 $t_j>0$ 的纯成分都在该二维空间内。
+因此写成 $a_j|00\rangle+b_j|11\rangle$，$|a_j|^2+|b_j|^2=1$，
+纯态 concurrence 恰为 $2|a_jb_j|$。
+这个论证也适用于 $\gamma=1$ 的更小实际支撑。
+用交叉矩阵元及三角不等式，任意分解满足
+
+$$
+\sum_jt_j\,2|a_jb_j|
+\ge2\left|\sum_jt_ja_j\bar b_j\right|
+=2|(\sigma_\gamma)_{00,11}|=2\gamma\sqrt a.
+\tag{C96.10}
+$$
+
+另一方面，下面是含实际归一化纯成分的分解：
+
+$$
+\sigma_\gamma=
+\gamma|\Phi\rangle\langle\Phi|
++(1-\gamma)(1-\nu)|e_0\rangle\langle e_0|
++(1-\gamma)\nu|e_1\rangle\langle e_1|.
+\tag{C96.11}
+$$
+
+三个权重非负且和为一，展开给式 (C96.1)；两个 $e_i$ 是乘积态，
+而 $\Phi$ 的 concurrence 为 $2\sqrt a$。
+所以此分解的平均值是 $2\gamma\sqrt a$，达到下界。
+由式 (C96.3) 的 $q_{--}-h/2=h\gamma^2/2$ 得第二式。证毕。
+
+$\gamma=0$ 可分离，$\gamma>0$ 时任何纯乘积分解都会有零平均 concurrence，
+与式 (C96.10) 矛盾，所以条件态纠缠。
+$\gamma$ 描述密度矩阵中相干项的保留量；$\gamma<1$ 时的混态
+不具有一个由纯振幅唯一决定的 $\chi$。不同纯态分解也不能被指定为唯一隐藏纯相位。
+
+**命题 C-96.4（全五概率均匀且规范概率圆不变的家族）。** 取
+
+$$
+r=\frac45,\quad\nu=\frac12,\quad
+|b_0\rangle=|+\rangle=\frac{|0\rangle+|1\rangle}{\sqrt2},\quad
+|b_1\rangle=|-\rangle=\frac{|0\rangle-|1\rangle}{\sqrt2}.
+\tag{C96.12}
+$$
+
+则式 (C96.1) 给所有 $\gamma$ 下 $p_s=1/5$，
+$X=Y=2/5$、$\kappa=1/5$、$w=2/5$、$h=4/25$，且
+
+| $\gamma$ | 底面可分离 | $\mathcal C$ | $q_{--}$ | $q_{-+}$ | $q_{+-}$ | $q_{++}$ | $q_{\mathrm f}$ |
+| ---: | --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| $0$ | 是 | $0$ | $2/25$ | $2/25$ | $2/25$ | $2/5$ | $9/25$ |
+| $1/2$ | 否 | $1/2$ | $1/10$ | $3/50$ | $3/50$ | $21/50$ | $9/25$ |
+| $1$ | 否 | $1$ | $4/25$ | $0$ | $0$ | $12/25$ | $9/25$ |
+
+证明。每个底角条件概率为 $1/4$，乘 $4/5$ 后为 $1/5$，
+中模式同为 $1/5$；其余参数由定义计算。
+式 (C96.8) 在 $\nu=1/2$ 给 $\mathcal C=\gamma$，
+表中全部事件由式 (C96.3) 逐项代入。
+
+这里的“概率圆”准确消费 C-67.2、C-76.1、C-84.3 的规范定义：
+对底面正表 $H=\left(\begin{smallmatrix}p_0&p_3\\p_1&p_{13}\end{smallmatrix}\right)$
+作正行列平衡后取面积 $\pi$ 的带标记协方差椭圆，
+
+$$
+\eta=\frac18\log\frac{p_0p_{13}}{p_1p_3}=0,\qquad
+ e^{-2\eta}z_+^2+e^{2\eta}z_-^2=1.
+\tag{C96.13}
+$$
+
+所以该规范椭圆始终是单位圆。
+它不是全五态占位变量 $(B_L,B_R)$ 的无条件协方差椭圆：后者满足
+$\mathbb E B_L=\mathbb E B_R=2/5$、$\mathbb E B_LB_R=1/5$，故
+
+$$
+\operatorname{Cov}(B_L,B_R)=
+\begin{pmatrix}6/25&1/25\\1/25&6/25\end{pmatrix}.
+\tag{C96.14}
+$$
+
+特征值 $7/25,1/5$ 不等，那个椭圆并非圆。
+因此相同的五个顶点权重、隐藏高度和规范概率圆，仍容许表中不同的混态联合结构。证毕。
+

@@ -1,0 +1,76 @@
+**定理 353.1（自比较候选的完整恒等重构）。** 固定同一原菜单、同一预选 $t_0$、同一原 $D$ 和 $\sigma_{t_0}$，分别有
+
+$$
+\mathsf C_{\rm self}(B_*)\Longleftrightarrow
+\mathsf C_{\rm cen}(B_*)\Longleftrightarrow
+\mathsf C_{\rm bal}(B_*)\Longleftrightarrow
+\mathsf C_{\rm fin}(B_*)\Longleftrightarrow
+\mathsf C_Z(B_*)\Longleftrightarrow
+\mathsf C_{\rm support}(B_*).
+\tag{353.1}
+$$
+
+对应恒等地保留原对象、准备、实际有序联合、设备／记录／完整失败、具名返回和每条原合法有限历史。由同一 $D$ 定向的复代数及其乘法为
+
+$$
+\begin{gathered}
+\mathcal A_A=\bigoplus_sB(H_{A,s}),\quad
+E_A=(\mathcal A_A)_{\rm sa},\quad C_A=(\mathcal A_A)_+,\\
+a\cdot b=a\circ b-\mathrm iD_ab,\qquad
+D_ab=\tfrac{\mathrm i}{2}[a,b],\qquad
+[D_a,D_b]=-[L_a,L_b],\quad D_c^2=-P_c/4\quad(c^2=c).
+\end{gathered}
+\tag{353.2}
+$$
+
+概率仍须经两套原 Riesz 运输：
+
+$$
+\begin{aligned}
+g_A^0(x,y)&=\tau_A((B_Ax)y),&q_A(x,y)&=\tau_A((\mathcal W_Ax)y),\\
+\rho_\alpha&=B_Ax_\alpha,&\widehat x_\alpha&=\mathcal W_A^{-1}\rho_\alpha,\\
+\alpha(y)&=\tau_A(\rho_\alpha y),&
+\alpha(D_ab)&=q_A(\widehat x_\alpha,D_ab),\\
+\Phi_f&=B_BT_f^{\dagger_0}B_A^{-1}&&(f:A\to B).
+\end{aligned}
+\tag{353.3}
+$$
+
+所以 (350.1) 的 $q_A(a,\cdot)$ 不能未经运输就称为某份原准备的概率。一般 $x_\alpha\ne\widehat x_\alpha$；各实际联合各用自己的 $B,\mathcal W$。全部原经典中心、不等正权、零／奇异／次归一准备及全部相关准备保持，全部原实际联合为同一取向的普通复张量。
+
+全部原旧事件为 CP/TNI，原完整设备事件和为 TP。整个 AC、精确 $N_u$ 和 Xs 供应的每个原所选有限平方根词及其原相关执行保留完整映射
+
+$$
+\rho\longmapsto\sqrt e\rho\sqrt e,\qquad
+X\longmapsto(\sqrt e\otimes I)X(\sqrt e\otimes I).
+\tag{353.4}
+$$
+
+原占用方向 $p_1$ 的每个原失败 $\Psi_\ell$ 保留完整输出 $\sqrt{I-e}\rho\sqrt{I-e}\otimes\Psi_\ell(p_1)$，其他原方向和中心保留原映射。实 Jordan F 保留同一原实现的实际细口、原分组与遗忘；非零细支的具名资料仍是
+
+$$
+\begin{gathered}
+S_\ell=\operatorname{Ad}_{K_\ell},\quad
+\Phi_f=\sum_\ell S_\ell,\quad
+U_\ell=q_\ell\operatorname{Ad}_{K_\ell^+},\quad q_\ell>0,\\
+e_\ell=\operatorname{supp}(K_\ell^*K_\ell),\quad
+h_\ell=\operatorname{supp}(K_\ell K_\ell^*),\quad\mathsf C_e(X)=eXe,\\
+U_\ell=\mathsf C_{e_\ell}U_\ell\mathsf C_{h_\ell},\quad
+U_\ell S_\ell=q_\ell\mathsf C_{e_\ell},\quad
+S_\ell U_\ell=q_\ell\mathsf C_{h_\ell}.
+\end{gathered}
+\tag{353.5}
+$$
+
+原成功数 $q_\ell$ 及同数反向资料不归一掉。对每份原准备、原末端效果 $w$ 和每条原合法有限历史，仍有
+
+$$
+\alpha(T_{f_1}\cdots T_{f_r}w)
+=\tau_{A_r}\!\left(w\,\Phi_{f_r}\cdots\Phi_{f_1}(\rho_\alpha)\right).
+\tag{353.6}
+$$
+
+这包括全部原顺序、实际细记录的自适应分支、实际并行联合及其相关输入、细化、分组、实际遗忘、零／失败／返回／停止；仅在原分母正时取条件概率，不增加任意新连线或仪器。
+
+证明。352.1 给无标定的全域 I+SC 及与中心候选的等价。直接复用 345.1、338.1：先取得包含零分支的共同曲率 $\kappa\ge0$，再由同一原 $\sigma_{t_0}$ 和原正 $w_0$ 的 $(1-\kappa)w_0/4=0$ 得 $\kappa=1$。不重标原 $D$，不改选刻度。345.1 的全部原入口至此成立，其完整消费者给 (353.1)–(353.6)，不是只复用单载体或单成功事件。全事件 R 仍针对全部原相关准备；闭背景的连续正延拓只在同一原执行上进行。324.3 的物理时钟／Hamiltonian／共同作用量、独立成功支的共同完整仪器、旧同效果设备自己的完整输出校准仍各需原来源。∎
+

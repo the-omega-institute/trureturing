@@ -1,0 +1,75 @@
+## 九、现在剩余的 RH 目标可以精确写出来
+
+前面的推导已经建立：
+
+$$
+\boxed{
+\begin{aligned}
+\text{若 Robin 存在反例}
+\quad\Longrightarrow\quad
+\text{存在反例终点 }N,
+\end{aligned}
+}
+$$
+
+其中这个终点同时满足：
+
+- 所有单素数乘除都不能增加 $R$；
+- 在自身价格 $1/(\log N\log\log N)$ 下具有唯一整数最优性；
+- 严格曲率间隔；
+- $\operatorname{lcm}(1,\ldots,\lfloor\log N\rfloor)\mid N$；
+- 平方层质量约束与素数间隙约束。
+
+把终点完全写成一个尺度变量，定义
+
+$$
+a_p(T)
+=
+\#\left\{
+j\ge1:
+\log\left(1+\frac1{p+\cdots+p^j}\right)
+>
+\frac{\log p}{T\log T}
+\right\}.
+$$
+
+它必须满足自洽方程
+
+<a id="eq-37"></a>
+
+$$
+\boxed{
+T=\sum_p a_p(T)\log p.
+}
+\tag{37}
+$$
+
+<!-- editorial-note:start self-consistency-necessary -->
+**【编者局部说明：自洽只是必要条件】** 对每个固定 $T>1$，式 (5) 使 $a_p(T)$ 的非零集合及每个指数有限，故 (37)、(38) 的素数和实际只有有限个非零项。对上述终点，严格价格分界给出 $a_p(T)=v_p(N)$，才得到 (37)。反过来，仅有该尺度等式并未证明乘除边均非正，也未证明整数是反例；不得把自洽解类与实际反例终点类混同。
+<!-- editorial-note:end self-consistency-necessary -->
+
+需要继续证明的严格符号目标是
+
+<a id="eq-38"></a>
+
+$$
+\boxed{
+\sum_p
+\log\left(
+\frac{1-p^{-a_p(T)-1}}{1-p^{-1}}
+\right)
+<
+\gamma+\log\log T
+}
+\tag{38}
+$$
+
+对所有可能成为上述终点的 $T>\log5040$ 成立。
+
+**式 (38) 一旦在这类终点上完成，有限贪心归约就会把它提升为全部 $n>5040$ 的 Robin 不等式，从而得到 RH。**
+
+<!-- editorial-note:start unresolved-sign-target -->
+**【编者局部说明：尚未闭合的符号目标】** 式 (38) 在实际终点上的左边恰为 $\log Z(N)$，所以它若成立便与 $R(N)\ge1$ 矛盾，再由有限归约排除全部弱反例。目前 (30)、(31) 只是必要约束，(37) 只是必要自洽式；本文未给出它们推出 (38) 的统一严格余量。第八节的无限安全子族与辅助酉极限亦不填补这一缺口。下段“已经证明”仍是原稿对其纸面推导的归纳，不是 RH 的证明，也不是本次新增的 Lean 核验。
+<!-- editorial-note:end unresolved-sign-target -->
+
+本轮已经证明了“怎样遍历、怎样分类、哪一种贪心有全局支配保证、反例递归为什么有限终止、终点必须具有什么结构”，并完成了一类无限整数族的 Robin 与酉收敛证明。接下来的实质工作，是把式 (30)、式 (31) 的素数分布约束与项目中的实际整数 KL 缺陷结合，给式 (38) 提供统一的严格正余量。
