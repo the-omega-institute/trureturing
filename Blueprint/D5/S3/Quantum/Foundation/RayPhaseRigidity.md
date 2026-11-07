@@ -4,7 +4,7 @@
 
 A support-connected family of invariant rays determines a unitary global phase.
 
-Source: AURIC_EXISTENTIAL_QUANTIFIERS_CIRCUIT_SEMIRINGS_AND_QUANTUM_RECORDS_V14, Proposition 7.6, atom 3702db2486a73bbef7dfe05f2d409f45820b15e5114b6a8119c255462339f23a. The scope is finite complex coordinate spaces, including the empty index type. The theorem needs only the coordinate rays and a family of test rays whose supports connect the coordinates. No individual test vector must have full support. A scalar of norm one expresses the source's global phase. The commentary about CP branches and computational semantics is outside this theorem.
+Let iota be a finite decidable index type, possibly empty, let A be a complex matrix on iota, and let S be a set of complex vectors on iota. Ray preservation means that A x lies in the complex span of x. Support connectivity means that every pair of indices is linked by the reflexive-transitive closure of the relation that holds when some x in S is nonzero at both indices. If A is unitary, preserves the ray of single i 1 for every i, preserves the ray of every x in S, and S is support-connected, then there is c in C with norm(c) = 1 and A = c times the identity matrix. Sparse test supports are allowed; in the empty case c = 1. The statement makes no claim about CP maps, density supports, or computational semantics.
 
 **Definition 1.1 (Invariance of a complex line).**
 
