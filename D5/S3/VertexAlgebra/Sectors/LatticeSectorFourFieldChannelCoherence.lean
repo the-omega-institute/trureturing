@@ -4,9 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Actual finite middle-channel readout transported across four-field
-   FullIO reassociation.
--/
+   digest: Four-field finite middle-channel readout transport across FullIO reassociation. -/
 
 import D5.S3.VertexAlgebra.Sectors.LatticeSectorFourFieldFullIOReadout
 
