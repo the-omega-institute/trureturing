@@ -109,7 +109,7 @@ private theorem within_is_hit_probability (W : S → S → ℝ) (target : S)
     intro x
     change hitWithin W target 0 x =
       ∑ p : PUnit, futureMass W 0 x p * (if visits target 0 x p then (1 : ℝ) else 0)
-    simp [hitWithin, futureMass, visits]
+    by_cases hx : x = target <;> simp [hitWithin, futureMass, visits, hx]
   | succ n ih =>
     intro x
     by_cases hx : x = target
