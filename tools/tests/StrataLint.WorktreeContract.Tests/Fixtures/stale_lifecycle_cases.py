@@ -36,13 +36,17 @@ class LifecycleTests(unittest.TestCase):
         run(self.root, "init", "--initial-branch=dev", self.main)
         run(self.main, "config", "user.name", "Lifecycle Tests")
         run(self.main, "config", "user.email", "lifecycle@example.invalid")
-        (self.main / "lean-toolchain").write_text("leanprover/lean4:v4.34.1\n")
-        (self.main / "lake-manifest.json").write_text(json.dumps({"packages": [
-            {"name": "mathlib", "rev": "a" * 40}]}) + "\n")
+        for name in ("lean-toolchain", "lake-manifest.json", "Reg/lakefile.toml",
+                     "Reg/lake-manifest.json", "tools/lean-inspector-reg/lakefile.toml",
+                     "tools/lean-inspector-reg/lake-manifest.json"):
+            target = self.main / name
+            target.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(ROOT / name, target)
         run(self.main, "add", ".")
         run(self.main, "commit", "-m", "base")
         self.base = run(self.main, "rev-parse", "HEAD").stdout.strip()
         self.source = self.main
+        run(self.main, "update-ref", "refs/remotes/origin/dev", self.base)
 
     def tearDown(self):
         self.tmp.cleanup()
@@ -76,6 +80,7 @@ class LifecycleTests(unittest.TestCase):
         # built CLI. Every lifecycle action and native Git effect is real.
         scripts = self.main / "tools/scripts"
         shutil.copytree(ROOT / "tools/scripts/worktree", scripts / "worktree")
+        shutil.copytree(ROOT / "tools/scripts/report", scripts / "report")
         inspector = self.main / "tools/lean-inspector"
         inspector.mkdir()
         for module in (ROOT / "tools/lean-inspector").glob("*.py"):
@@ -290,8 +295,8 @@ class LifecycleTests(unittest.TestCase):
         self.assertNotEqual(failed.returncode, 0)
         self.assertIn("incompatible_base", failed.stderr)
 
-    def test_cli_continuation_retains_pin_schema_validation(self):
-        (self.main / "lake-manifest.json").write_text('{"packages":[]}\n')
+    def test_cli_continuation_retains_downstream_pin_validation(self):
+        (self.main / "Reg/lakefile.toml").unlink()
         run(self.main, "add", ".")
         run(self.main, "commit", "-m", "invalid fixture pin")
         self.base = run(self.main, "rev-parse", "HEAD").stdout.strip()
@@ -299,7 +304,7 @@ class LifecycleTests(unittest.TestCase):
         self.commit_branch("lane/governance/malformed", tree, 60)
         failed = self.create("malformed", self.root / "unused", reuse_any=True, check=False)
         self.assertNotEqual(failed.returncode, 0)
-        self.assertIn("manifest requires exactly one mathlib package", failed.stderr)
+        self.assertIn("REG-MANIFEST-INVALID", failed.stderr)
         self.assertTrue((tree / "payload").exists())
 
     def test_make_clean_all_expires_trees_even_when_artifact_mutex_is_held(self):
