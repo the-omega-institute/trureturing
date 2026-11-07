@@ -9,7 +9,7 @@ internal sealed class IntegerNewtonDocument : IScribeDocumentDefinition
         H("Integer Newton reconstruction and diagonal contact coefficients"),
         Blocks(
             Paragraph(Text("Mathlib supplies completion, normed operators, Fourier analysis, integer binomial identities and unconditional sum machinery under Apache 2.0. The additional arguments here concern the stated original objects and relations. No literature novelty or physical realization is asserted.")),
-            Describe.Lean(DescribeId.Create("integernewton-int-newton-of-fwdDiff-iter-eq-zero"),
+            Describe.Lean(DescribeId.Create("integernewton-int-newton-of-fwddiff-iter-eq-zero"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/Analysis/IntegerNewton.int_newton_of_fwdDiff_iter_eq_zero"),
                 H("Two-sided Newton reconstruction"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("For any additive commutative group V, sequence q:Z->V, and natural N with its Nth forward difference zero, every integer m satisfies q(m)=sum over 0<=j<N of choose(m,j) acting on the jth difference at zero. The binomial coefficient is the integer binomial, including negative m. At N=0 the hypothesis makes q identically zero and the sum is empty. The proof integrates the difference by Pascal recursion and uses induction in both directions on the integers."))), DescribeRole.Theorem),

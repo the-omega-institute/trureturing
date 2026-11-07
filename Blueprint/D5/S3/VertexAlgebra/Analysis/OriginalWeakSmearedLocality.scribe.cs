@@ -9,11 +9,11 @@ internal sealed class OriginalWeakSmearedLocalityDocument : IScribeDocumentDefin
         H("Original weak smeared locality on one smooth domain"),
         Blocks(
             Paragraph(Text("Mathlib supplies completion, normed operators, Fourier analysis, integer binomial identities and unconditional sum machinery under Apache 2.0. The additional arguments here concern the stated original objects and relations. No literature novelty or physical realization is asserted.")),
-            Describe.Lean(DescribeId.Create("originalweaksmearedlocality-smearComposition-eq-reverse-of-disjoint-tsupport"),
+            Describe.Lean(DescribeId.Create("originalweaksmearedlocality-smearcomposition-eq-reverse-of-disjoint-tsupport"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/Analysis/OriginalWeakSmearedLocality.smearComposition_eq_reverse_of_disjoint_tsupport"),
                 H("Commutation in every bounded Sobolev layer"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("For every original Model M, arbitrary original charges a,b, Tests f,g with disjoint closed quotient-circle supports, and every natural k, the literal bounded compositions coincide from H_(r+s+k) to H_k, r=order(a), s=order(b). Their actual double commutator series has polynomial growth, the transferred algebraic locality exponent N=(-bilinear(a,b)).toNat, and absolute convergence. Applying the finite contact theorem gives equality with no extra regularity or charge restriction."))), DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("originalweaksmearedlocality-smearFamily-comp-eq-of-disjoint-tsupport"),
+            Describe.Lean(DescribeId.Create("originalweaksmearedlocality-smearfamily-comp-eq-of-disjoint-tsupport"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/Analysis/OriginalWeakSmearedLocality.smearFamily_comp_eq_of_disjoint_tsupport"),
                 H("Commutation on the same compatible smooth families"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("The existing endomorphisms smearFamily(a,f) and smearFamily(b,g) of M.Smooth commute. Their kth components are the literal bounded compositions evaluated at the same family component of order r+s+k. Only equality transport of natural orders identifies s+(r+k) and r+(s+k) with this order."))), DescribeRole.Theorem),
