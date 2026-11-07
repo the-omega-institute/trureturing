@@ -352,40 +352,7 @@ def family : Registration arena.{u} (type_of% (@continuous_residual_eq_zero.{u})
     have hb : (1 : ULift.{u} ℂ) = 0 := Eq.mp (congrFun he 0) rfl
     exact one_ne_zero (congrArg ULift.down hb)
 
-def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@continuous_residual_eq_zero.{u}) (Realization signature) (Type (u+1)) Unit where
-  unitName := `D5.S3.Quantum.Analysis.MeasurableNonautonomousDysonPhillips.continuous_residual_eq_zeroUnit
-  realizationName := `Reg.D5.S3.Quantum.Analysis.MeasurableNonautonomousDysonPhillips.Residual.family
-  realizationSource := none
-  generated := false
-  arena := .source ⟨arena.{u}⟩
-  objectArena := .source ⟨arena.{u}⟩
-  catalog := Lean.Name.anonymous
-  localNames := false
-  realization := .source arena.{u} ⟨family.{u}⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ a b => a = b) (fun e => nomatch e))
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := some (Σ E : Type u, E)
-  sourceSelection := some {
-    owner := `D5.S3.Quantum.Analysis.MeasurableNonautonomousDysonPhillips
-    definition := none
-    coordinates := #[0]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "fn"]
-      stateBinder := 0
-      functionOperand := true
-      stateOperand := none
-      booleanPredicate := false }] }
-  continuation := .unknown
-  familyRecord := none
-  options := #[]
-
 #print axioms family
-#print axioms audit
 end Residual
 
 namespace Evolution
