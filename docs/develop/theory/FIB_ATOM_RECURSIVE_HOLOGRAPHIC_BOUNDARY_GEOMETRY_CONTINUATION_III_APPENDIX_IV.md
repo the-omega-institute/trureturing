@@ -2801,3 +2801,90 @@ while Proposition 191.2 gives $\dim\mathcal R_u=r_u-2$. Under (195.1), the two s
 *Proof.* If a saturated map has zero kernel, then (195.1) gives $r_u-2=0$, hence $r_u=2$. Proposition 191.2 then gives $\mathcal R_u=0$, and Corollary 179.3 supplies the common-first reduction. The final statement is the exclusion direction of Proposition 194.2. $\square$
 
 The saturated case supplies a concrete finite-dimensional route: first compute the two weighted kernels, then either identify the radical exactly or exclude the proposed rank. Saturation is not known for every candidate, so the unsaturated rank-three and rank-four branches, the nonlinear residual equations, arbitrary partition realization, $F_{64}$, $H43$, SRS\text{-}20, physical succession and Lean/kernel formalization remain open.
+
+## 196. The joint weighted map has a two-dimensional visible quotient
+
+Section 195 tests the two weighted mode maps separately. Their information can be combined before imposing either individual saturation hypothesis. The resulting map sees at most the two dimensions left after the radical has been removed.
+
+**Definition 196.1 (joint weighted mode map).** With the notation of Definition 194.1, define
+
+$$
+\mathsf J_u:
+\mathcal W_u\longrightarrow\mathbb R^{4r_u},
+\qquad
+\mathsf J_u(h)=\bigl(\mathsf L_u(h),\mathsf K_u(h)\bigr).
+\tag{196.1}
+$$
+
+Changing the basis of $\mathcal W_u$ changes the coordinate presentation of $\mathsf J_u$ by invertible transformations on its source and target, so its rank and kernel are intrinsic.
+
+**Proposition 196.2 (joint rank bound and exact-kernel criterion).** If $u$ is a full-zero bounded partition, then
+
+$$
+\mathcal R_u\subseteq\ker\mathsf J_u,
+\qquad
+\operatorname{rank}\mathsf J_u\le2.
+\tag{196.2}
+$$
+
+More precisely,
+
+$$
+\dim\bigl(\ker\mathsf J_u/\mathcal R_u\bigr)
+ =2-\operatorname{rank}\mathsf J_u,
+\tag{196.3}
+$$
+
+and therefore
+
+$$
+\operatorname{rank}\mathsf J_u=2
+\quad\Longleftrightarrow\quad
+\ker\mathsf J_u=\mathcal R_u.
+\tag{196.4}
+$$
+
+In particular, a rank-three candidate has a one-dimensional joint kernel at the saturation value $2$, and a rank-four candidate has a two-dimensional joint kernel at that value. A computed joint rank greater than $2$ rules out a full-zero partition before the nonlinear residual equations are solved.
+
+*Proof.* Proposition 194.2 gives
+
+$$
+\mathcal R_u\subseteq\ker\mathsf L_u
+\cap\ker\mathsf K_u
+=\ker\mathsf J_u.
+$$
+
+Proposition 191.2 gives $\dim\mathcal R_u=r_u-2$. Rank--nullity applied to $\mathsf J_u$ therefore yields
+
+$$
+\operatorname{rank}\mathsf J_u
+ =r_u-\dim\ker\mathsf J_u
+\le r_u-(r_u-2)=2,
+$$
+
+which is (196.2). Since $\mathcal R_u$ is a subspace of $\ker\mathsf J_u$, the quotient in (196.3) is defined, and
+
+$$
+\dim(\ker\mathsf J_u/\mathcal R_u)
+ =\dim\ker\mathsf J_u-\dim\mathcal R_u
+ =(r_u-\operatorname{rank}\mathsf J_u)-(r_u-2)
+ =2-\operatorname{rank}\mathsf J_u.
+$$
+
+This proves (196.3). The equality of kernels in (196.4) is equivalent to the quotient dimension being zero, which by (196.3) is equivalent to joint rank $2$. The rank-three and rank-four statements use $\dim\mathcal R_u=r_u-2$ from Proposition 191.2. The contrapositive of the rank bound gives the exclusion test. $\square$
+
+**Corollary 196.3 (the unsaturated residual boundary).** For a full-zero rank-three or rank-four candidate, the joint weighted probes have exactly three possible outcomes:
+
+$$
+\begin{array}{c|c}
+\operatorname{rank}\mathsf J_u & \dim(\ker\mathsf J_u/\mathcal R_u)\\
+\hline
+2&0\\
+1&1\\
+0&2
+\end{array}
+$$
+
+The first row identifies the radical without requiring $\mathsf L_u$ or $\mathsf K_u$ to be saturated separately. In the other two rows, the weighted equations leave respectively one or two quotient directions beyond the forced radical; those directions must still satisfy the original nonlinear residual equations. Thus individual unsaturation is not itself an escape, while joint rank at most one records the exact remaining finite-dimensional ambiguity.
+
+The joint rank test is a necessary filter for the unsaturated branches. It does not evaluate the rank for an actual arbitrary partition, construct a residual-zero rank-three or rank-four partition, settle $F_{64}$, $H43$, SRS\text{-}20, physical succession or Lean/kernel formalization.
