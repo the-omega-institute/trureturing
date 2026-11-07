@@ -4,20 +4,20 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: WIP: normalized countable power perturbations and every finite collapsed cutoff. -/
+   digest: Normalized countable power perturbations and every finite collapsed cutoff. -/
 
 import D5.S3.Divergence.ClassicalDPI
 import D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.ReadExecution.CriticalRenewalTable
 
 /-!
-WIP source for the E3 atom of
-`FIB_ENTROPY_HARMONIC_RENEWAL_STATE_THRESHOLD`.
+Normalized countable power perturbations and collapsed relative entropy.
 
-The target deliberately keeps the infinite normalizers and the complete
-`Option (Fin L)` carrier.  `none` is the whole tail `k > L`; a short index
-`r : Fin L` denotes the physical count `r.val + 1`.  The theorem is left open
-until the two-reference full-series energy estimate and the finite-to-countable
-tail Cauchy passage have a kernel proof.  This file is not frozen or deposited.
+The infinite normalizers retain the complete positive-integer laws. A short
+index `r : Fin L` denotes the physical count `r.val + 1`; `none` carries the
+entire tail `k > L`. The full-series estimate and the tail Cauchy inequality
+use the same reference law. For `s * L ≤ 1`, finite short sums and the
+factorial-normalizer bound control the signed collapsed-tail drift.
+
 -/
 
 /- Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/27700 -/
@@ -414,6 +414,13 @@ private lemma collapsed_kl_bounds
   rw [Fintype.sum_option] at hkl
   let S : ℝ := ∑ r : Fin L, E (r.val + 1)
   let π : ℝ := ∑ r : Fin L, q (r.val + 1)
+  have hkl' : klDivergence a b ≤ S + (a none - b none) ^ 2 / b none := by
+    change klDivergence a b ≤ (a none - b none) ^ 2 / b none + S at hkl
+    exact hkl.trans_eq (add_comm _ _)
+  have hps : Summable (fun k : ℕ => p (k + L + 1)) := by
+    simpa only [Nat.add_assoc] using (summable_nat_add_iff (L + 1)).2 hp.summable
+  have hqs : Summable (fun k : ℕ => q (k + L + 1)) := by
+    simpa only [Nat.add_assoc] using (summable_nat_add_iff (L + 1)).2 hq.summable
   have hSn : 0 ≤ S := sum_nonneg (fun r _ => div_nonneg (sq_nonneg _) (hqp _ (by omega)).le)
   have hsum : (∑ r : Fin L, (p (r.val + 1) - q (r.val + 1))) =
       (∑ r : Fin L, p (r.val + 1)) - π := by simp [π, sum_sub_distrib]
@@ -425,15 +432,13 @@ private lemma collapsed_kl_bounds
     (fun k => hqp _ (by omega)) ((summable_nat_add_iff (L + 1)).2 he)
   have htd : (a none - b none) ^ 2 / b none ≤ ∑' k, E (k + L + 1) := by
     apply (div_le_iff₀ hqt.2).2
-    rw [Summable.tsum_sub ((summable_nat_add_iff (L + 1)).2 hp.summable)
-      ((summable_nat_add_iff (L + 1)).2 hq.summable), ← hpt.1, ← hqt.1] at hc
+    rw [hps.tsum_sub hqs, ← hpt.1, ← hqt.1] at hc
     simpa only [a, b, mul_comm] using hc
   constructor
   · have hsplit := split_positive_series E he hE0 L
     calc
-      klDivergence a b ≤ S + (a none - b none) ^ 2 / b none := by
-        simpa only [a, b, E, S, add_comm] using hkl
-      _ ≤ S + ∑' k, E (k + L + 1) := add_le_add_left htd S
+      klDivergence a b ≤ S + (a none - b none) ^ 2 / b none := hkl'
+      _ ≤ S + ∑' k, E (k + L + 1) := add_le_add le_rfl htd
       _ = ∑' k, E k := hsplit
   · intro hπ
     have hc' := sum_sq_le_sum_mul_sum_of_sq_le_mul (s := univ)
@@ -453,8 +458,6 @@ private lemma collapsed_kl_bounds
       change _ ≤ S * (1 - π)
       have hπ' : π ≤ 1 / 2 := hπ
       nlinarith [mul_le_mul_of_nonneg_right hπ' hSn]
-    have hkl' : klDivergence a b ≤ S + (a none - b none) ^ 2 / b none := by
-      simpa only [a, b, E, S, add_comm] using hkl
     change klDivergence a b ≤ 2 * S
     linarith
 
@@ -521,10 +524,6 @@ private lemma normalized_short_bounds
   let Z : Bool → ℝ := fun i => ∑' k : ℕ, v i k
   let p : Bool → ℕ → ℝ := fun i k => v i k / Z i
   let w : ℕ → ℝ := fun k => p true k - p false k
-  have hvs (i : Bool) : Summable (v i) := by
-    cases i
-    · simpa [v] using summable_term m hs
-    · simpa [v] using (summable_term m hs).add hDs
   have hZeq : Z false = powerSum m s ∧ Z true = powerSum m s + A := by
     constructor
     · simp [Z, v, powerSum]
@@ -534,10 +533,6 @@ private lemma normalized_short_bounds
     · simpa [hZeq.1] using hZpos
     · rw [hZeq.2]
       positivity
-  have hvn (i : Bool) (k : ℕ) : 0 ≤ v i k := by
-    cases i <;> simp only [v, Bool.false_eq_true, ↓reduceIte, add_zero]
-    · exact term_nonneg _ _ _
-    · exact add_nonneg (term_nonneg _ _ _) (hD k).1
   have hvp (i : Bool) (k : ℕ) (hk : 0 < k) : 0 < v i k := by
     have ht : 0 < term m s k := by
       simp only [term, Nat.ne_of_gt hk, ↓reduceIte]
@@ -545,15 +540,6 @@ private lemma normalized_short_bounds
     cases i <;> simp only [v, Bool.false_eq_true, ↓reduceIte, add_zero]
     · exact ht
     · exact add_pos_of_pos_of_nonneg ht (hD k).1
-  have hprob (i : Bool) : HasSum (p i) 1 ∧ p i 0 = 0 ∧
-      ∀ k : ℕ, 0 < k → 0 < p i k := by
-    constructor
-    · convert (hvs i).hasSum.div_const (Z i) using 1
-      exact (div_self (hZp i).ne').symm
-    constructor
-    · cases i <;> simp [p, v, D, hd0, term]
-    · intro k hk
-      exact div_pos (hvp i k hk) (hZp i)
   let ε : ℝ := A / powerSum m s
   have hε0 : 0 ≤ ε := div_nonneg hA hZpos.le
   have hε : ε ≤ δ * (1 - Real.exp (-s)) := by
@@ -614,7 +600,8 @@ private lemma normalized_short_bounds
       apply (div_le_div_iff₀ (hZp j) hZpos).2
       nlinarith [mul_le_mul_of_nonneg_right (hv2 (r.val + 1) (by omega)) hZpos.le,
         mul_le_mul_of_nonneg_left (hZZ j).1
-          (mul_nonneg (by norm_num) (term_nonneg _ _ _))]
+          (show (0 : ℝ) ≤ 2 * term m s (r.val + 1) from
+            mul_nonneg (by norm_num) (term_nonneg m s (r.val + 1)))]
     calc
       (∑ r : Fin L, p j (r.val + 1)) ≤
           ∑ r : Fin L, 2 * term m s (r.val + 1) / powerSum m s := sum_le_sum (fun r _ => hp' r)
@@ -774,7 +761,9 @@ theorem normalized_power_perturbation_all_cutoff_kl
         · exact Or.inr ⟨(hEnergy.1 i).2.2 k (Nat.pos_of_ne_zero hk),
             (hEnergy.1 (!i)).2.2 k (Nat.pos_of_ne_zero hk)⟩) (hes i)
     simpa only [heq i] using h
-  · intro L hL i
+  · intro L hL
+    dsimp only
+    intro i
     have hc := collapsed_kl_bounds (p i) (p (!i)) (hEnergy.1 i).1 (hEnergy.1 (!i)).1
       (hEnergy.1 i).2.1 (hEnergy.1 (!i)).2.1 (hEnergy.1 i).2.2
       (hEnergy.1 (!i)).2.2 (hes i) L

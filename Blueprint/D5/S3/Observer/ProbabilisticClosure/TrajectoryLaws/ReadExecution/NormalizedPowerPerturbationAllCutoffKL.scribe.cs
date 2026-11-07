@@ -49,14 +49,25 @@ internal sealed class NormalizedPowerPerturbationAllCutoffKLDocument : IScribeDo
                         "tail Cauchy inequality give the other branch without a lower bound on " +
                         "the tail mass. The normalizers are never truncated.")),
                     Paragraph(Text(
+                        "For m>=4, m!>=24. In the short-cutoff branch the reference short mass " +
+                        "is at most 2 L^(m+1)/R_m and hence at most one half. The short square " +
+                        "energy is at most 4 delta^2 L^(m-1)/R_m, which is at most " +
+                        "2 delta^2 s^2 (sL)^(m-1). The signed short sum has square at most " +
+                        "the product of that same reference short mass and short energy, so " +
+                        "the collapsed energy is at most twice the short energy. For the other " +
+                        "branch, finite weighted Cauchy inequalities pass to the complete tail " +
+                        "series by convergence; the positive tail denominator may be arbitrarily small.")),
+                    Paragraph(Text(
                         "For the degree-nine source, delta=2749658638697/10^24 and " +
                         "d(k)=(55800726477138 k -224986136658885 k^2 +420664314485485 k^3 " +
                         "-540138133491075 k^4 +518234977000797 k^5 -254383031435085 k^6 " +
                         "+77668004560980 k^7 +43377331415040 k^8)/(35*10^24). " +
                         "The universal integer envelope 0<=d(k)<=delta k^8 is an explicit " +
                         "premise. The resulting estimate is 4 delta^2 s^2 min(1,(sL)^8). " +
-                        "The existing factorial limit for s^(m+1) R_m supplies a single positive " +
-                        "source neighborhood before any finite cutoff is selected. No restriction " +
-                        "on how a finite L depends on s or q is introduced."))))),
+                        "This specialization retains both the universal envelope and the " +
+                        "factorial-normalizer inequality as premises. The source-neighborhood " +
+                        "application of the existing scaled power-sum limit is a separate bridge. " +
+                        "Every finite cutoff is covered under the same stated premises, including " +
+                        "cutoffs depending on s or q."))))),
                 DescribeRole.Theorem))));
 }
