@@ -74,6 +74,10 @@ $$\forall f \in \mathbb{P} \to \mathbb{C},\; \begin{aligned}(\forall n \in \math
 
 *Proof.* Machine-checked in Lean as `D5/S3/ArithSums/SchulteArbitraryGcdQuotientConvolution.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a350900-schulte-arbitrary-function-convolution` (proved) by `D5/S3/ArithSums/SchulteArbitraryGcdQuotientConvolution.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a350900-schulte-arbitrary-function-convolution","declaration_gid":"D5/S3/ArithSums/SchulteArbitraryGcdQuotientConvolution.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Werner Schulte (2022). *OEIS A350900: gcd-quotient triangle, arbitrary arithmetic weights and row sums*. URL: <https://oeis.org/A350900>.
