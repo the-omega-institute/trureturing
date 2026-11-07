@@ -469,27 +469,6 @@ private theorem residualC_pos {a b c : ℝ}
   unfold residualC
   positivity
 
-/-- These endpoint/defect identities are actual rational algebra proof scripts;
-no sampling, decision oracle or imported numerical certificate is used. -/
-private theorem pair_endpoints {a b : ℝ} (ha : 0 < a) (hb : 0 < b) :
-    lam a b/a+mu a b*g a b = 2*psi a b a-g a b ∧
-      lam a b*g a b+mu a b/b = psi b b a := by
-  have hq := (q_pos ha hb).ne'
-  have hu := (aux_pos ha hb).ne'
-  constructor <;> unfold lam mu psi g q aux at * <;> field_simp <;> ring
-private theorem delta_identity {a b c : ℝ}
-    (ha : 0 < a) (hb : 0 < b) (hc : 0 < c) :
-    2*psi b c a - (lam a b*g c a+mu a b*g c b) -
-      (lam a c*g b a+mu a c*g b c) = delta a b c := by
-  have hq := (q_pos ha hb).ne'
-  have hr := (q_pos ha hc).ne'
-  have hs := (q_pos hb hc).ne'
-  have hu := (aux_pos ha hb).ne'
-  have hv := (aux_pos ha hc).ne'
-  unfold psi g lam mu delta q aux at *
-  field_simp
-  ring
-
 private def left (j : Fin 3) : Fin 3 := ![1,0,0] j
 private def right (j : Fin 3) : Fin 3 := ![2,2,1] j
 private def third (i j : Fin 3) : Fin 3 :=
@@ -1045,12 +1024,13 @@ private theorem baseG_dual (p : Fin 3 → ℝ) (hp : ∀ i, 0 < p i)
   have hn2 := (hp 2).ne'
   ext i j
   fin_cases i <;> fin_cases j <;>
-    simp [baseG, dualG, Matrix.mul_apply, Fin.sum_univ_three,
+    simp [Fin.mk_zero, Fin.mk_one, show (⟨2, by decide⟩ : Fin 3) = 2 from rfl,
+      baseG, dualG, Matrix.mul_apply, Fin.sum_univ_three,
       g_self (hp 0), g_self (hp 1), g_self (hp 2), g_symm]
   all_goals
     field_simp [hd, hn0, hn1, hn2]
     unfold detG
-    try simp only [g_symm]
+    try simp only [g_symm (p 1) (p 0), g_symm (p 2) (p 0), g_symm (p 2) (p 1)]
     field_simp [hn0, hn1, hn2] <;> ring
 
 /-- The residual allocation works for every three positive budgets, for either
@@ -1659,8 +1639,8 @@ private theorem cyclic_moment (p : Fin 3 → ℝ) (hp : ∀ i, 0 < p i)
           | exact (hik rfl).elim
           | exact (hjk rfl).elim
           | (simp only [Fin.mk_zero, Fin.mk_one,
-              show (⟨2, by decide⟩ : Fin 3) = 2 from rfl] at hc ⊢
-            simp only [dot_comm (m p 2 0) (m p 1 0),
+              show (⟨2, by decide⟩ : Fin 3) = 2 from rfl] at hc ⊢ <;>
+              simp only [dot_comm (m p 2 0) (m p 1 0),
               dot_comm (m p 2 1) (m p 0 1), dot_comm (m p 1 2) (m p 0 2),
               tau_symm (p 1) (p 0), tau_symm (p 2) (p 0),
               tau_symm (p 2) (p 1)] at hc ⊢ <;> linear_combination hc)
@@ -2088,10 +2068,6 @@ private def OrderedMomentObligation : Prop :=
     (∑ a, realTrace ((liftedM level p S a)ᴴ*S*liftedM level p S a)) =
       (4*realTrace (S^3)-realTrace ((firstMatrix level p S)^3))/3
 
-
-private theorem canonicalGram_proof : CanonicalGramObligation := by
-  intro p hp hinj
-  exact ⟨mixed_moment p hp hinj, cyclic_moment p hp hinj⟩
 
 private theorem orderedMoment_proof : OrderedMomentObligation.{u} := by
   intro n instFinite instDecEq level p hp hinj S hS
