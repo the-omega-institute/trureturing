@@ -423,12 +423,11 @@ private theorem orbitEval_pos (ts : List Term) (ht : ∀ t ∈ ts, 0 < t.1)
     exact mul_pos (by exact_mod_cast ht t htmem) (symMonomial_pos _ _ _ ha hb hc)
   · exact fun h => hne (List.map_eq_nil_iff.mp h)
 
-set_option maxHeartbeats 16000000 in
 private theorem positiveCore_pos {a b c : ℝ}
     (ha : 0 < a) (hb : 0 < b) (hc : 0 < c) : 0 < positiveCore a b c := by
   apply orbitEval_pos coreOrbits _ _ ha hb hc
-  · norm_num [coreOrbits]
-  · simp [coreOrbits]
+  · decide
+  · decide
 
 private def gapDen (a b c : ℝ) : ℝ :=
   64*(hPoly a b c)^2*(q a b)^4*(aux a b)^4*
@@ -835,7 +834,7 @@ set_option maxHeartbeats 16000000 in
 private theorem polynomial_gap (a b c : ℝ) :
     tNumerator a b c-(kNumerator a b c)^2 =
       a*b*c*(a-b)^2*(a-c)^2*(b-c)^2*positiveCore a b c := by
-  simp only [tNumerator, columnNumerator, vPoly, vTerms, evalTerms,
+  dsimp only [tNumerator, columnNumerator, vPoly, vTerms, evalTerms,
     kNumerator, kNumeratorTerms, positiveCore, orbitEval, coreOrbits,
     List.map_cons, List.map_nil, List.sum_cons, List.sum_nil, monomial,
     symMonomial, q, aux]
@@ -885,7 +884,7 @@ private theorem canonicalK_clear (p : Fin 3 → ℝ) (hp : ∀ i, 0 < p i)
   simp only [canonicalK, Fin.sum_univ_three, projectionCross]
   norm_num [left, right, third, dualG]
   rw [detG_formula p hp]
-  simp only [kDenominator, kNumerator, kNumeratorTerms,
+  dsimp only [kDenominator, kNumerator, kNumeratorTerms,
     List.map_cons, List.map_nil, List.sum_cons, List.sum_nil]
   simp only [hPoly_identity] at hH ⊢
   unfold lam mu delta g q aux at *
