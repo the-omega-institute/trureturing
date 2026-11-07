@@ -148,8 +148,8 @@ class LifecycleTests(unittest.TestCase):
             [sys.executable, "-c", "import os,time; os.chdir(os.environ['TREE']); open(os.path.join(os.environ['TREE'],'held'),'wb').close(); time.sleep(30)"],
             env={**os.environ, "TREE": str(candidate)})
         try:
-            result = pool.claim(self.options("lane/governance/reused"))
-            self.assertEqual(result["status"], "claimed", result)
+            result = self.create("reused", candidate)
+            self.assertEqual(json.loads(result.stdout)["status"], "claimed", result.stdout)
         finally:
             holder.terminate()
             holder.wait(timeout=10)
@@ -302,6 +302,44 @@ class LifecycleTests(unittest.TestCase):
         self.assertFalse(tree.exists(), result.stdout + result.stderr)
         self.assertEqual(run(self.main, "rev-parse", branch).stdout.strip(), head)
         self.assertEqual(run(self.main, "branch", "--show-current").stdout.strip(), "dev")
+
+    def test_explicit_cli_rejects_alias_foreign_and_main_without_reassignment(self):
+        tree = self.root / "candidate"
+        branch = "lane/governance/candidate"
+        head = self.commit_branch(branch, tree, 5 * 3600)
+        alias = self.root / "alias"
+        alias.symlink_to(tree, target_is_directory=True)
+        failed = self.create("new", alias, check=False)
+        self.assertNotEqual(failed.returncode, 0)
+        self.assertIn("missing_or_linked_tree", failed.stderr)
+        self.assertEqual(run(tree, "rev-parse", "HEAD").stdout.strip(), head)
+        foreign = self.root / "foreign"
+        run(self.root, "init", "--initial-branch=dev", foreign)
+        failed = self.create("new", foreign, check=False)
+        self.assertNotEqual(failed.returncode, 0)
+        self.assertIn("repository_identity", failed.stderr)
+        failed = self.create("new", self.main, check=False)
+        self.assertNotEqual(failed.returncode, 0)
+        self.assertIn("main_worktree", failed.stderr)
+        self.assertEqual(run(self.main, "branch", "--show-current").stdout.strip(), "dev")
+
+    def test_expiry_native_failure_reports_partial_effects_before_selection(self):
+        from worktree_protocol import GitFailure
+        good = self.root / "a-expired"
+        blocked = self.root / "z-expired"
+        for name, path in (("good", good), ("blocked", blocked)):
+            self.commit_branch("lane/governance/" + name, path, 7 * 3600)
+        remove = pool._remove_registered
+        def native_failure(source, path):
+            if path == blocked:
+                raise GitFailure("native removal error")
+            return remove(source, path)
+        with patch.object(pool, "_remove_registered", side_effect=native_failure):
+            with self.assertRaisesRegex(protocol.Refused, "expired_cleanup_failed:.*native removal error.*expired_worktrees_removed="):
+                pool.claim(self.options("lane/governance/new"))
+        self.assertFalse(good.exists())
+        self.assertTrue(blocked.exists())
+        self.assertNotEqual(run(self.main, "show-ref", "--verify", "refs/heads/lane/governance/new", check=False).returncode, 0)
 
     def test_pool_exact_six_hour_boundary_and_future_stale(self):
         tree = self.root / "boundary"

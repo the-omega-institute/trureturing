@@ -1,5 +1,4 @@
 """Age/stale worktree allocation and release."""
-import os
 from pathlib import Path
 import subprocess
 import time
@@ -98,17 +97,22 @@ def _allocate(source, path, options, base, expected, removed=False):
 def claim(options):
     rows = inventory(options.source)
     main = _main_path(rows)
+    if options.path is not None and (options.path.exists() or options.path.is_symlink()):
+        identity(options.source, options.path)
+        if _same(options.path, main):
+            raise Refused("main_worktree")
     base = value(options.source, "rev-parse", "--verify", options.base + "^{commit}")
     expected = _expected_pins(options.source, base)
     excluded = {Path(path).resolve() for path in getattr(options, "exclude_path", [])}
     now = time.time()
-    refusals, candidates, removed = [], [], []
+    refusals, candidates, removed, expiry_failures = [], [], [], []
     # Complete expiry for the whole inventory before returning any selection,
     # including a same-task continuation or an explicit destination.
     for item in rows[1:]:
         path = Path(item["worktree"]).absolute()
         if path.resolve() in excluded or _same(path, main):
             continue
+        expired = False
         try:
             current, _ = identity(options.source, path)
             age = _age(path, now)
@@ -120,13 +124,17 @@ def claim(options):
             candidates.append((path, _branch(current), head, age, expired))
         except (Refused, OSError, subprocess.SubprocessError) as error:
             refusals.append(dict(path=str(path), reason=str(error)))
-            if options.path is not None and _same(path, options.path):
-                raise
+            if expired:
+                expiry_failures.append(dict(path=str(path), reason=str(error)))
+            elif options.path is not None and _same(path, options.path):
+                raise Refused(str(error) + "; expired_worktrees_removed=" + repr(removed)) from error
 
     def finish(result):
-        return result | {"removed_worktrees": removed}
+        return result | {"removed_worktrees": removed, "candidate_refusals": refusals}
 
     try:
+        if expiry_failures:
+            raise Refused("expired_cleanup_failed:" + repr(expiry_failures))
         if options.path is not None:
             candidates = [row for row in candidates if _same(row[0], options.path)]
         # An unexpired attached task resumes regardless of allocation age.
