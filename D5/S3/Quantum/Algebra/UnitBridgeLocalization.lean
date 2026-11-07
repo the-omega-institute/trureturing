@@ -95,11 +95,6 @@ abbrev LocalVectors (E : Original T) (t : T) :=
 /-- The ordinary scalar ring localization, retaining zero-divisor saturation. -/
 abbrev LocalScalars (E : Original T) (t : T) := Localization (evaluationDenominators E t)
 
-/-- The ordinary scalar localization acts on the ordinary module localization. -/
-instance localVectorsModule (E : Original T) (t : T) :
-    Module (LocalScalars E t) (LocalVectors E t) :=
-  LocalizedModule.moduleOfIsLocalization _
-
 /-- Evaluation on the actual coefficient algebra. -/
 def coefficientEvaluation (E : Original T) (t : T) : scalarAlgebra E →+* ℝ where
   toFun f := f.val t
@@ -168,7 +163,7 @@ private theorem localH_mk (t : T) (x y : Vectors E)
     (s r : evaluationDenominators E t) :
     localH t (LocalizedModule.mk x s) (LocalizedModule.mk y r) =
       LocalizedModule.mk ((dotProduct x y) • x - (dotProduct x x) • y) (s^2*r) := by
-  simp only [localH, localDot_mk, Localization.mk_eq_mk', LocalizedModule.mk'_smul_mk]
+  simp only [localH, localDot_mk, LocalizedModule.mk_smul_mk]
   have hd : (s*r)*s = (s*s)*r := by ac_rfl
   rw [hd, local_mk_sub, pow_two]
 
@@ -209,10 +204,10 @@ private theorem scalar_localization (t : T) :
         change IsLocalization P.primeCompl (LocalScalars E t)
         rw [← hs]
         infer_instance
-      simpa [Localization.mk_eq_mk', P, Ideal.mem_primeCompl_iff,
-        RingHom.mem_ker, coefficientEvaluation] using
-        (IsLocalization.AtPrime.isUnit_mk'_iff (LocalScalars E t) P f
-          (⟨s.val,s.property⟩ : P.primeCompl))
+      have hu := IsLocalization.AtPrime.isUnit_mk'_iff (LocalScalars E t) P f
+        (⟨s.val,s.property⟩ : P.primeCompl)
+      change (IsUnit (IsLocalization.mk' (LocalScalars E t) f s) ↔ f.val t ≠ 0) at hu
+      simpa only [Localization.mk_eq_mk'] using hu
     · intro hf
       simpa only [Localization.mk_eq_mk'] using
         (IsLocalization.mk'_mul_mk'_eq_one (S := LocalScalars E t)
@@ -372,8 +367,8 @@ private theorem localizedK_geometry (R : Raw E) (cs : SquareCompatible R) (t : T
   · simp only [localDot_mk]
     rw [hg.2.2.1,cross_dot_cross,dotProduct_comm y x]
     simp only [pow_two, Localization.mk_mul]
-    rw [sub_eq_add_neg, Localization.neg_mk, Localization.add_mk_self]
-    rfl
+    simp only [sub_eq_add_neg]
+    rw [Localization.neg_mk, Localization.add_mk_self]
 
 private theorem localizedK_NN (R : Raw E) (cs : SquareCompatible R) (t : T)
     (a b : LocalVectors E t) :
@@ -418,6 +413,7 @@ theorem original_localization (R : Raw E) (cs : SquareCompatible R) (t : T) :
         ∃ (x y z : Vectors E) (q : evaluationDenominators E t),
           a = LocalizedModule.mk x (q^2) ∧ b = LocalizedModule.mk y (q^2) ∧
           c = LocalizedModule.mk z (q^2)) ∧
+      IsLocalRing (LocalScalars E t) ∧
       Function.Surjective (coefficientEvaluation E t) ∧
       Function.Surjective (localEvaluation E t) ∧
       (∀ (f : scalarAlgebra E) (s : evaluationDenominators E t),
@@ -436,7 +432,7 @@ theorem original_localization (R : Raw E) (cs : SquareCompatible R) (t : T) :
   obtain ⟨he,hl,hf,hker,hres⟩ := scalar_localization (E := E) t
   exact ⟨localizedK R cs t, localizedK_square R cs t,
     localizedK_nested R cs t, localizedK_kernel R cs t, common_square_representation t,
-    he, hl, hf, hker, hres, localizedK_skew R cs t, localizedK_real R cs t,
+    inferInstance, he, hl, hf, hker, hres, localizedK_skew R cs t, localizedK_real R cs t,
     localizedK_geometry R cs t, localizedK_NN R cs t, localizedK_kernel_total R cs t⟩
 
 end D5.S3.Quantum.Algebra.UnitBridgeRawGeometry

@@ -72,14 +72,17 @@ internal sealed class UnitBridgeLocalizationDocument : IScribeDocumentDefinition
         Formula Dot(Formula u,Formula v) => C("localDot",I("t"),u,v);
         Formula Hloc(Formula u,Formula v) => C("localH",I("t"),u,v);
         Formula LocalPair(Formula z) => All("a",local,All("b",local,z));
+        var inverseFact=All("hf",Ne(C("eval",f,I("t")),N(0)),
+            Eq(Mul(C("scalar_mk",f,den),C("scalar_mk",den,C("subtype",f,I("hf")))),N(1)));
+        var fractionFacts=All("f",coeff,All("s",S,Conj(
+            Eq(Ev(C("scalar_mk",f,den)),C("divide",C("eval",f,I("t")),C("eval",den,I("t")))),
+            Iff(C("IsUnit",C("scalar_mk",f,den)),Ne(C("eval",f,I("t")),N(0))),
+            inverseFact)));
         var scalarFacts=Conj(
+            C("IsLocalRing",scalars),
             C("Surjective",C("coefficientEvaluation",I("E"),I("t"))),
             C("Surjective",C("localEvaluation",I("E"),I("t"))),
-            All("f",coeff,All("s",S,Conj(
-                Eq(Ev(C("scalar_mk",f,den)),C("divide",C("eval",f,I("t")),C("eval",den,I("t")))),
-                Iff(C("IsUnit",C("scalar_mk",f,den)),Ne(C("eval",f,I("t")),N(0))),
-                All("hf",Ne(C("eval",f,I("t")),N(0)),
-                    Eq(Mul(C("scalar_mk",f,den),C("scalar_mk",den,C("subtype",f,I("hf")))),N(1))))))),
+            fractionFacts,
             Eq(C("ker",C("localEvaluation",I("E"),I("t"))),C("maximalIdeal",scalars)),
             C("Nonempty",C("RingEquivalences",C("ResidueField",scalars),I("Real"))));
         var skew=LocalPair(Eq(Apply(aa,bb),C("neg",Apply(bb,aa))));
