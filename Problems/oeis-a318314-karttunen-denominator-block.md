@@ -106,8 +106,8 @@ denominators; multiplicativity of rational values alone is not used to infer
 denominator multiplicativity. `auxiliary_structure` verifies the independently
 prescribed A317934, and `local_denominators` retains all integer-cast obligations.
 
-**Open:** Source-owner audit bindings and independent statement/form/mirror
-approval remain unfinished. Kernel compilation of the whole source is distinct
+**Open:** Source-owner audit bindings remain unfinished.
+Kernel compilation of the whole source is distinct
 from freeze, required-check success, protected delivery and resolution counting.
 
 **Audit boundary:** Source-owner four-slot registrations remain unfinished under
