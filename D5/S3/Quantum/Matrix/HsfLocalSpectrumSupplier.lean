@@ -1013,13 +1013,13 @@ private theorem cyclicGamma_bounds {a b c : ℝ}
   have hs₁ := Real.sq_sqrt ha.le
   have hs₂ := Real.sq_sqrt hb.le
   have hs₃ := Real.sq_sqrt hc.le
-  let Π := spectralDen a b*spectralDen b c*spectralDen c a
-  have hΠ : 0 < Π := mul_pos (mul_pos (spectralDen_pos ha hb) (spectralDen_pos hb hc))
+  let denomProduct := spectralDen a b*spectralDen b c*spectralDen c a
+  have hdenomProduct : 0 < denomProduct := mul_pos (mul_pos (spectralDen_pos ha hb) (spectralDen_pos hb hc))
     (spectralDen_pos hc ha)
-  have hformula : cyclicGamma a b c = 3*a*b*c/(8*Π^2)*
+  have hformula : cyclicGamma a b c = 3*a*b*c/(8*denomProduct^2)*
       ((a-b)^2*cyclicPolynomial a b c+(b-c)^2*cyclicPolynomial b c a+
         (c-a)^2*cyclicPolynomial c a b) := by
-    unfold cyclicGamma spectralTau spectralKernel Π
+    unfold cyclicGamma spectralTau spectralKernel denomProduct
     simp only [Real.sqrt_mul ha.le, Real.sqrt_mul hb.le, Real.sqrt_mul hc.le,
       show spectralDen b a = spectralDen a b from spectralDen_comm _ _,
       show spectralDen c b = spectralDen b c from spectralDen_comm _ _,
@@ -1030,13 +1030,13 @@ private theorem cyclicGamma_bounds {a b c : ℝ}
     unfold spectralDen cyclicPolynomial
     ring
   have hres : (3/4)*(spectralRho a b^2+spectralRho b c^2+spectralRho c a^2)-
-      cyclicGamma a b c = 3/(16*Π^2)*
+      cyclicGamma a b c = 3/(16*denomProduct^2)*
       ((a-b)^2*cyclicResidual a b c+(b-c)^2*cyclicResidual b c a+
         (c-a)^2*cyclicResidual c a b) := by
     rw [spectralRho_sq ha hb, spectralRho_sq hb hc, spectralRho_sq hc ha,
       spectralTau_gap ha hb, spectralTau_gap hb hc, spectralTau_gap hc ha, hformula]
     rw [← cyclicResidual_identity, ← cyclicResidual_identity, ← cyclicResidual_identity]
-    dsimp only [Π]
+    dsimp only [denomProduct]
     field_simp [hd, he, hf, hd', he', hf']
     unfold spectralDen
     ring
@@ -1069,7 +1069,7 @@ private theorem spectralRho_distance {a b : ℝ} (ha : 0 < a) (hb : 0 < b) :
         (4*(spectralDen a b)^2) := by
       rw [hid]
       exact hp
-    exact sub_nonneg.mp (nonneg_of_mul_nonneg_right hscaled hd)
+    exact sub_nonneg.mp (nonneg_of_mul_nonneg_left hscaled hd)
   have hn := mul_nonneg (spectralRho_nonneg a b) (add_pos ha hb).le
   apply (sq_le_sq₀ (abs_nonneg _) hn).mp
   simpa only [sq_abs, mul_pow] using hs
@@ -1081,14 +1081,14 @@ private theorem defect_kernel_uniform {a b c : ℝ}
     (ha : 0 < a) (hb : 0 < b) (hc : 0 < c) :
     |3*spectralKernel a b c-spectralTau a c*spectralTau c b/3| ≤
       (16/9)*(spectralRho a c+spectralRho c b) := by
-  let Π := spectralDen a b*spectralDen a c*spectralDen b c
+  let denomProduct := spectralDen a b*spectralDen a c*spectralDen b c
   let W := (a+b)*(a+c)*(b+c)
-  let f := 3*c*Real.sqrt (a*b)/(4*Π)
+  let f := 3*c*Real.sqrt (a*b)/(4*denomProduct)
   have hd := spectralDen_pos ha hb
   have he := spectralDen_pos ha hc
   have hf := spectralDen_pos hb hc
   have hf' := spectralDen_pos hc hb
-  have hΠ : 0 < Π := mul_pos (mul_pos hd he) hf
+  have hdenomProduct : 0 < denomProduct := mul_pos (mul_pos hd he) hf
   have hW : 0 < W := mul_pos (mul_pos (add_pos ha hb) (add_pos ha hc)) (add_pos hb hc)
   have hfn : 0 ≤ f := by dsimp [f]; positivity
   have hpoly (a b c : ℝ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c) :
@@ -1104,7 +1104,7 @@ private theorem defect_kernel_uniform {a b c : ℝ}
   have hB' := hpoly b a c hb ha hc
   have hid : 3*spectralKernel a b c-spectralTau a c*spectralTau c b/3 =
       f*((c-a)*linearPolynomial a b c+(c-b)*linearPolynomial b a c) := by
-    unfold spectralKernel spectralTau f Π
+    unfold spectralKernel spectralTau f denomProduct
     simp only [Real.sqrt_mul ha.le, Real.sqrt_mul hc.le,
       show spectralDen c b = spectralDen b c from spectralDen_comm _ _]
     have hs := Real.sq_sqrt hc.le
@@ -1115,11 +1115,11 @@ private theorem defect_kernel_uniform {a b c : ℝ}
     ring
   have hq (u v : ℝ) : (3/4)*(u+v)^2 ≤ spectralDen u v := by
     unfold spectralDen; nlinarith [sq_nonneg (u-v)]
-  have hprod : (27/64)*W^2 ≤ Π := by
+  have hprod : (27/64)*W^2 ≤ denomProduct := by
     have h := mul_le_mul (mul_le_mul (hq a b) (hq a c)
       (by positivity : 0 ≤ (3/4)*(a+c)^2) hd.le) (hq b c)
       (by positivity : 0 ≤ (3/4)*(b+c)^2) (mul_nonneg hd.le he.le)
-    dsimp [W, Π]
+    dsimp [W, denomProduct]
     nlinarith only [h]
   have hsqrt : 2*Real.sqrt (a*b) ≤ a+b := by
     have hs := Real.sq_sqrt (mul_pos ha hb).le
@@ -1130,10 +1130,10 @@ private theorem defect_kernel_uniform {a b c : ℝ}
     have hf₁ : f*(2*W) ≤ (16/9)*(a+b)*c/W := by
       dsimp only [f]
       apply (div_le_iff₀ hW).mpr
-      have hid : 3*c*Real.sqrt (a*b)/(4*Π)*(2*W)*W =
-          (3/2)*c*Real.sqrt (a*b)*W^2/Π := by field_simp [hΠ.ne']; ring
+      have hid : 3*c*Real.sqrt (a*b)/(4*denomProduct)*(2*W)*W =
+          (3/2)*c*Real.sqrt (a*b)*W^2/denomProduct := by field_simp [hdenomProduct.ne']; ring
       rw [hid]
-      apply (div_le_iff₀ hΠ).mpr
+      apply (div_le_iff₀ hdenomProduct).mpr
       have h₁ := mul_le_mul_of_nonneg_left hsqrt (by positivity : 0 ≤ (3/4)*c*W^2)
       have h₂ := mul_le_mul_of_nonneg_left hprod (by positivity : 0 ≤ (16/9)*(a+b)*c)
       nlinarith only [h₁, h₂]
@@ -1156,7 +1156,7 @@ private theorem defect_kernel_uniform {a b c : ℝ}
   have hd₂ := spectralRho_distance hb hc
   rw [hid, abs_mul, abs_of_nonneg hfn]
   calc
-    _ ≤ f*(|c-a|*linearPolynomial a b c+|c-b|*linearPolynomial b a c) := by
+    _ ≤ f*(|c-a| *linearPolynomial a b c+|c-b| *linearPolynomial b a c) := by
       apply mul_le_mul_of_nonneg_left _ hfn
       simpa only [abs_mul, abs_of_nonneg hB.1, abs_of_nonneg hB'.1] using
         abs_add_le ((c-a)*linearPolynomial a b c) ((c-b)*linearPolynomial b a c)
@@ -1175,6 +1175,7 @@ private theorem defect_kernel_uniform {a b c : ℝ}
       nlinarith only [h₁, h₂]
 
 
+section UniformFrobenius
 open scoped Matrix.Norms.Frobenius
 
 private def modulusMatrix (H : Matrix n n ℂ) : Matrix n n ℂ :=
@@ -1249,7 +1250,8 @@ private theorem quadraticDefect_uniform {p : n → ℝ} (hp : ∀ i, 0 < p i)
         mul_le_mul_of_nonneg_left (add_le_add (frob_mul W B) (frob_mul B W)) (by norm_num)
       _ = _ := by rw [show frob B = frob H from modulusMatrix_frob H]; ring
   have hs := (sq_le_sq₀ (frob_nonneg (quadraticDefect p H))
-    (by positivity : 0 ≤ (32/9)*frob W*frob H)).mpr hnorm
+    (mul_nonneg (mul_nonneg (by norm_num : (0 : ℝ) ≤ 32/9) (frob_nonneg W))
+      (frob_nonneg H))).mpr hnorm
   have hg : frob W^2 = frob H^2-frob (schurFirst p H)^2 := rhoMatrix_gap hp H
   calc
     _ ≤ ((32/9)*frob W*frob H)^2 := hs
@@ -1285,7 +1287,7 @@ private theorem phase_sum_cycle (f : n → n → n → ℝ) (H : Matrix n n ℂ)
 
 private theorem trace_cube_sum (M : Matrix n n ℂ) :
     tr (M^3) = ∑ i, ∑ j, ∑ k, phase M i j k := by
-  simp only [tr, pow_succ, pow_zero, mul_one, Matrix.trace, Matrix.diag,
+  simp only [tr, pow_succ, pow_zero, mul_one, one_mul, Matrix.trace, Matrix.diag,
     Matrix.mul_apply, Finset.sum_mul]
   apply Finset.sum_congr rfl
   intro i _
@@ -1337,7 +1339,7 @@ private theorem phase_norm (H : Matrix n n ℂ) (i j k : n) :
 
 private theorem phase_sum_bound (f : n → n → n → ℝ) (H : Matrix n n ℂ) :
     |(∑ i, ∑ j, ∑ k, (f i j k : ℂ)*phase H i j k).re| ≤
-      ∑ i, ∑ j, ∑ k, |f i j k|*‖H i j‖*‖H j k‖*‖H k i‖ := by
+      ∑ i, ∑ j, ∑ k, |f i j k| *‖H i j‖*‖H j k‖*‖H k i‖ := by
   calc
     _ ≤ ‖∑ i, ∑ j, ∑ k, (f i j k : ℂ)*phase H i j k‖ := Complex.abs_re_le_norm _
     _ ≤ ∑ i, ∑ j, ∑ k, ‖(f i j k : ℂ)*phase H i j k‖ :=
@@ -1616,6 +1618,8 @@ private theorem actual_uniform_supplier {d : ℕ} {p : Fin d → ℝ}
   change g/6 ≤ _
   norm_num [tr, Complex.add_re, Complex.sub_re, Complex.mul_re]
   linarith
+
+end UniformFrobenius
 
 section UniformActual
 open scoped Matrix.Norms.L2Operator
