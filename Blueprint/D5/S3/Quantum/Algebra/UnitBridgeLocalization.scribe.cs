@@ -73,10 +73,10 @@ internal sealed class UnitBridgeLocalizationDocument : IScribeDocumentDefinition
         Formula Hloc(Formula u,Formula v) => C("localH",I("t"),u,v);
         Formula LocalPair(Formula z) => All("a",local,All("b",local,z));
         var inverseFact=All("hf",Ne(C("eval",f,I("t")),N(0)),
-            Eq(Mul(C("scalar_mk",f,den),C("scalar_mk",den,C("subtype",f,I("hf")))),N(1)));
+            Eq(Mul(C("scalarMk",f,den),C("scalarMk",den,C("subtype",f,I("hf")))),N(1)));
         var fractionFacts=All("f",coeff,All("s",S,Conj(
-            Eq(Ev(C("scalar_mk",f,den)),C("divide",C("eval",f,I("t")),C("eval",den,I("t")))),
-            Iff(C("IsUnit",C("scalar_mk",f,den)),Ne(C("eval",f,I("t")),N(0))),
+            Eq(Ev(C("scalarMk",f,den)),C("divide",C("eval",f,I("t")),C("eval",den,I("t")))),
+            Iff(C("IsUnit",C("scalarMk",f,den)),Ne(C("eval",f,I("t")),N(0))),
             inverseFact)));
         var scalarFacts=Conj(
             C("IsLocalRing",scalars),
