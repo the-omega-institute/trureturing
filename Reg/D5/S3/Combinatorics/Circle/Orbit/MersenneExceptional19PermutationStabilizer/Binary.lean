@@ -20,12 +20,15 @@ abbrev signature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
+private def emptyAnchor : ∀ (_ : signature.{u}.Anchor) p, signature.{u}.State p :=
+  fun e => nomatch e
+
 def actual : Realization signature.{u} :=
   realize signature (fun _ p n => p.2 n)
-    (fun e => nomatch e)
+    emptyAnchor
 
 def rejected : Realization signature.{u} :=
-  realize signature (fun _ p n => p.2 (n+1)) (fun e => nomatch e)
+  realize signature (fun _ p n => p.2 (n+1)) emptyAnchor
 
 abbrev arena : Arena where
   signature := signature.{u}
@@ -73,7 +76,7 @@ def successor_audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨successor_family⟩
   correspondence := {stage := .evidence,objectStage := .evidence}
   bundleNonempty := .absent
-  readout := some actual
+  readout := some (realize signature.{u} (fun _ p n => p.2 n) emptyAnchor)
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none

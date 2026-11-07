@@ -4,9 +4,21 @@
 
 For every natural r, the exceptional19 physical integer-zero family has trivial cyclic rotational stabilizer: rotation by any natural a preserves every zero subset exactly when 3(18r+12) divides a.
 
+**Theorem 1.1 (Q exact).**
+
+Lean statement: `D5/S3/Combinatorics/Circle/Orbit/MersenneExceptional19Stabilizer.Q_exact`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Circle/Orbit/MersenneExceptional19Stabilizer.Q_exact` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Reducing B modulo 19 to 11 proves divisibility of B squared plus B plus one by 19 for every natural r. The integer division identity yields 19Q=B squared plus B plus one exactly. The actual terminal masks and primitive weights consume this equality.
+
 Set d=18r+12, B=2^d, g=B-1, H=B^2+B+1 and N=2^(3d)-1=gH. The original natural seed is t=(2^d-1)(2^(d+1)-3). Every subset of the original Fin(3d) labels is quantified, and its sum is the literal integer sum of SourceWidth.actualSource(3d,t). Rotation takes its image under finRotate(3d)^a. The statement includes r=0, a=0, and all a at least 3d; it imposes no unit, nonemptiness, distinct-value or profile premise.
 
-**Theorem 1.1 (Exact preservation for every r and every exponent).**
+**Theorem 1.2 (Exact preservation for every r and every exponent).**
 
 Lean statement: `D5/S3/Combinatorics/Circle/Orbit/MersenneExceptional19Stabilizer.actual_zero_family_rotation_iff`
 
@@ -32,6 +44,7 @@ The ordinary all-r proof supplied through GPT Pro informed this Codex implementa
 
 ## References
 
+- Truth anchor: `D5/S3/Combinatorics/Circle/Orbit/MersenneExceptional19Stabilizer.Q_exact`
 - Truth anchor: `D5/S3/Combinatorics/Circle/Orbit/MersenneExceptional19Stabilizer.actual_zero_family_rotation_iff`
 - Dependency: [D5/S3/Combinatorics/Circle/Orbit/MersenneExceptional19Stabilizer/Basic](MersenneExceptional19Stabilizer/Basic.md)
 - Dependency: [D5/S3/Combinatorics/Circle/Orbit/MersennePhaseRotationStabilizer](MersennePhaseRotationStabilizer.md)
