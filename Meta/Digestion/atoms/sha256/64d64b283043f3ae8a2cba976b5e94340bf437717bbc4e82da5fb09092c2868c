@@ -1,0 +1,17 @@
+**定义 75.1（同一 ready 边的局部资料）。** 始终取约定 69.1 的完整 $\mathfrak C_{\neg N_{\rm r}}$，保留全部 $89/235$、十一／十／四十五方程、原全迹二及唯一 ready。仅在证明中按[XII 定义 49.3][XII] 的**给定实际等距**识别 $s=\{1,3,7\}$ 与 $r=\{3,7\}$，沿用
+
+$$
+\begin{gathered}
+A=L_r,\quad C=T_{rs}L_sT_{sr},\quad
+F=\begin{pmatrix}aA&cA\\cC&bC\end{pmatrix},\quad
+S=e^{\alpha A},\quad R=e^{\alpha C},\\
+M=\operatorname{diag}(S,R),\quad E_0=\operatorname{diag}(S,R^2),\quad
+V_1=e^{\alpha F},\\
+a=1+x,\quad b=1+x^2=2-x,\quad c=x\sqrt x>0,\quad
+x=(\sqrt5-1)/2,\quad\alpha=3\pi/5.
+\end{gathered}
+\tag{75.1}
+$$
+
+原零／一／十限制仍给全部 [XII 式 (49.9)][XII]：$E_0V_1E_0=V_1E_0V_1$、$[M,V_1]=[M,E_0]=0$、三个端点十回返、$[F,V_1]=0$ 及 $e^{6\pi A}=e^{6\pi C}=e^{6\pi F}=I$。未供应 E1、连续守恒、$\ker A=0$、$[M,F]=0$ 或共同对数分解。
+
