@@ -107,9 +107,9 @@ private theorem within_is_hit_probability (W : S → S → ℝ) (target : S)
   induction n with
   | zero =>
     intro x
-    change (if x = target then (1 : ℝ) else 0) =
-      ∑ _ : PUnit, (1 : ℝ) * (if x = target then 1 else 0)
-    simp
+    change hitWithin W target 0 x =
+      ∑ p : PUnit, futureMass W 0 x p * (if visits target 0 x p then (1 : ℝ) else 0)
+    simp [hitWithin, futureMass, visits]
   | succ n ih =>
     intro x
     by_cases hx : x = target
