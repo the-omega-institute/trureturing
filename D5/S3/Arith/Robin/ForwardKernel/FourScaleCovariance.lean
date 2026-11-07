@@ -9,6 +9,7 @@
 import D5.S3.Arith.Robin.ForwardKernel.MovingShortAverage
 import D5.S3.Arith.Robin.ForwardKernel.TranslationStripBounds
 import D5.S3.Arith.Robin.ForwardKernel.AveragingBounds
+import D5.S3.Arith.Robin.ForwardKernel.AveragingRegularity
 
 /-! Four separated scales control covariance uniformly over dyadic subintervals. -/
 
@@ -53,17 +54,8 @@ private lemma average_memLp {E : ℝ → ℝ} (hE : LocallyBoundedMeasurable E)
     continuous_const.mul (Real.continuous_rpow_const ha.le)
   have hi (A B : ℝ) : IntervalIntegrable (movingIncrement E a s) volume A B :=
     (increment_comp_integrableOn hE isCompact_uIcc hu continuous_id).intervalIntegrable
-  have hp := intervalIntegral.continuous_primitive hi 0
-  have he (x : ℝ) : windowAverage M (movingIncrement E a s) x =
-      ((∫ y in (0 : ℝ)..(x + M), movingIncrement E a s y) -
-        ∫ y in (0 : ℝ)..x, movingIncrement E a s y) / M := by
-    rw [windowAverage, intervalIntegral.integral_comp_add_left]
-    simp only [add_zero]
-    rw [intervalIntegral.integral_interval_sub_left (hi 0 (x + M)) (hi 0 x)]
-  have hc : Continuous (windowAverage M (movingIncrement E a s)) := by
-    have heq : windowAverage M (movingIncrement E a s) = _ := funext he
-    rw [heq]
-    exact ((hp.comp (continuous_id.add continuous_const)).sub hp).div_const M
+  have hc : Continuous (windowAverage M (movingIncrement E a s)) :=
+    AveragingRegularity.windowAverage_continuous_of_intervalIntegrable hi M
   apply (memLp_two_iff_integrable_sq hc.aestronglyMeasurable).mpr
   exact ((hc.pow 2).integrableOn_Icc).mono_set Ioc_subset_Icc_self
 
