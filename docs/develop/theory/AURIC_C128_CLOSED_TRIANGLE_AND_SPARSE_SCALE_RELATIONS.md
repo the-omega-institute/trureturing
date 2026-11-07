@@ -1757,3 +1757,183 @@ $$
 恢复同一旧复乘法以后，七项量子对应才按完整原来源消费：数学表示给自伴可观测量，原质量正读数给 Born，实际复合和相关输入给复合结构，整台箭头递归同源参考给 CP，完整仪器输出失败及校准给更新，全部合法历史未来和真实遗忘返回保持原过程，物理钟能量与共同作用量才给动力学尺度。一般无限对象和 CountRead 的原完整合同不删，固定第二型有限因子也须先保有原平方背景、锥、范数、前对偶和迹。已有条件下降与 CP 成果继续成立，实际负提升活路的控制聚合、读后同一输出和全部未来的真实返回、具名分析词接到原菜单仍须构造。因此这里给的是同一原对象上的条件恢复和一个准确反例，没有把量子起源、全部来源接线或全局最简公理宣称为已经完成。
 
 ## 追加锚 C128ORIGINALHOLDER（本行以下为增补区）
+
+## 523. 含原零点或可比边的实三角候选
+
+**定义 523.1（严格缩小的三角标签域）。** 仍取同一个一般有限原有序空间
+$(E,K,u,mathcal P)$、同一个正有理数 $0<\theta\le1$，以及同一个原值总映射
+$S,D:E^2\to E$。这里
+
+$$
+a\preceq b\quad\Longleftrightarrow\quad b-a\in K
+$$
+
+是原序；它不是新标签上的辅助序，也不要求 $S$ 或 $D$ 先尊重它。定义
+
+$$
+\mathcal T_{0\vee\mathrm{cmp}}
+ =\bigl\{(a,b,c)\in E^3:\ a=0\ \text{or}\ b=0\ \text{or}\ c=0\bigr\}
+ \\
+ \cup\bigl\{(a,b,c):\text{某个 }i<j\text{ 满足 }a_i\preceq a_j\text{ 或 }a_j\preceq a_i\bigr\}.
+\tag{523.1}
+$$
+
+可比边允许相等，因而重复点和零边仍在量词内。令
+$g_\alpha(a,b)=\alpha(S(a,b))-\mathrm i\alpha(D(a,b))$，并令
+$G_\alpha(a_1,\ldots,a_k)=[g_\alpha(a_i,a_j)]$。有限候选
+$\mathsf C^{\mathrm{fin}}_{0\vee\mathrm{cmp},\mathbb R,\theta}$ 是以下条件的合取。
+
+1. 对每个原评价 $\alpha\in\mathcal P$、每个 $1\le k\le2$ 和所有原标签（包括零、重复、任意实平移、任意实缩放及不等质量标签），$G_\alpha$ 半正定；两条有向非对角项都用同一个旧 $D$ 的原值。
+2. 对每个 $(a,b,c)\in\mathcal T_{0\vee\mathrm{cmp}}$、每个 $\alpha\in\mathcal P$ 及每个 $x\in\mathbb R^3$ 满足 $x_1+x_2+x_3=0$，只要求
+   $$
+   x^{\mathsf T}\operatorname{Re}G_\alpha(a,b,c)x\ge0.
+   \tag{523.2}
+   $$
+3. 对所有原 $a,b$ 保留原相加表的零平方
+   $$
+   v^*G_\alpha(a+b,a,b)v=0,
+   \qquad v=(1,-1,-1),
+   \tag{523.3}
+   $$
+   对每个 $\alpha$；这是与 (523.2) 分开的相加零方向，不把 $v$ 当作实零和向量。
+4. 保留原固定点、小效果窗口和实部换括号式
+   $$
+   S(u,u)=u,\qquad 0\le e\le\theta u\Longrightarrow S(e,e)\le e,
+   $$
+   $$
+   S(S(a,b),c)-S(a,S(b,c))
+   =D(D(a,b),c)-D(a,D(b,c)).
+   \tag{523.4}
+   $$
+5. 在有限关系读数分支同时保留 R 卷定义 49.1 的全部量词：对每个
+   $\alpha\in P$、每个 $\eta>0$，存在一个有限的、对所有原输出
+   $p\in A_D=\operatorname{ran}D$ 同时有效的选择
+   $t_j\in A_D,\ \beta_j\in P,\ c_j\in\mathbb R$，使
+   $$
+   \left|\alpha(p)-\sum_{j=1}^m c_j\beta_j(D(p,t_j))\right|
+   \le\eta N(p).
+   \tag{523.5}
+   $$
+   这里选择可依赖 $\alpha,\eta$，但不依赖 $p$；允许空和与重复 $t_j$，且有限和不是一台新增实际仪器。
+
+条件 523.1–523.4 只把原三标签实闭合面的检查域换成
+$\mathcal T_{0\vee\mathrm{cmp}}$，没有把全部三标签从模型类中删除。原 $E,K,u,\mathcal P,N,m_\alpha,q$、原正有理 $\theta$、旧 $S,D$ 的总性及未预设的正则性均不变。
+
+**定义 523.2（未删去的原合同）。** 523.1 还逐项合取 C 卷定义 504.1 的有限有序空间、序单位、评价锥和全部原范数界，C 卷定义 500.1、476.1 的全部实际来源，以及 R 卷定义 8.2–8.4、§9 的全部类型化条件。可读地说，以下内容仍是同一候选的必要条件：
+
+- 全部原准备、原零/次归一/不等质量质量和 $q$ 权、native 与全词 $K/J$ 身份、跨评价配对、相关联合、经典中心和不等维块；
+- 每条完整实际箭头的全未来前接、真实未归一后上下文、同源二元参考递归、忠实交换两腿、共同真支持、三颗实际参考投影及支持内补，以及每个有限深度的真实参考链；
+- 每台仪器的全输入运输、完整 typed 输入输出菜单、所有失败和细记录、真实分组与 typed 遗忘、AC、精确 $N_u$、$X,X_s$、平方根词和接受归属；
+- 全部合法顺序、自适应、并行历史和仍合法未来、停止、拒绝、销毁、泄漏、同数两侧及同数逆向返回；
+- 连续物理钟、Hamiltonian 能量、共同作用量与 $\hbar$、独立支共同仪器、同一 $\sigma,t_0$、固定域、resolvent 及 $3s+r\le1$ 等动力学来源。
+
+这些条款没有由数学正泛函、卷积、有限矩阵角、辅助流或 (523.5) 所替代。无限原载体继续取 R 卷定义 46.1/55.1 的完整原合同；只有已经给出 II$_1$ 平方、锥、范数、前对偶和原正常评价的支才可使用 R 卷 49.2 的正常分支。一般无限载体和 CountRead 的全历史响应不截断、不取商、不用有限截面替换。
+
+## 524. 缩域确实严格，且有静态相容实例
+
+**命题 524.1（正交三维经典实例）。** 取
+$E=\mathbb R^3$、$K=\mathbb R_+^3$、$u=(1,1,1)$，取所有坐标非负的线性评价
+$\alpha_w(x)=w\cdot x$（$w_i\ge0$）作为 $\mathcal P$，并令
+
+$$
+S(a,b)=(a_1b_1,a_2b_2,a_3b_3),
+\qquad D(a,b)=0.
+\tag{524.1}
+$$
+
+则该实例满足 523.1–523.5 的全部静态条款，却不检查三标签
+$(e_1,e_2,e_3)$，其中 $e_i$ 是标准基向量。
+
+证明。任意至多二标签的表是
+$[\sum_iw_i a_{r,i}a_{s,i}]_{r,s}$，是向量列
+$(\sqrt{w_i}a_{r,i})_i$ 的 Gram 表，故半正定；零、重复、平移、缩放、零质量评价均同时包括。对相加标签，(523.3) 在每个坐标逐项为
+$(a_i+b_i-a_i-b_i)^2=0$。固定点为逐坐标 $1^2=1$；若 $0\le e_i\le\theta\le1$，则 $e_i^2\le e_i$。$D=0$ 时 (523.4) 两边均为零，因而保留了原 TR。关系读数的值域为 $A_D=\{0\}$，任意原读数 $\alpha(0)=0$ 由空和精确给出 (523.5)，所以全部 $\alpha,\eta$ 的量词也成立。
+
+三向量 $e_i,e_j$（$i\ne j$）互不可比：例如 $e_2-e_1$ 同时有正、负坐标；三者均非零。因此 $(e_1,e_2,e_3)\notin\mathcal T_{0\vee\mathrm{cmp}}$，域是严格缩小的。这个实例是经典静态模型，$D=0$，不承担非经典三维自旋结构，也不声称任何实际准备或完整 $\Omega$ 来源已经实现。∎
+
+## 525. 受限三角仍供应连续性和正零面运输
+
+**定理 525.1（从零锚与可比边得到的受限实接口）。** 在 523.1 的同一原资料上，对每个数学正泛函 $\beta\in K^*$ 置
+
+$$
+ b_\beta(x,y)=\beta(S(x,y)),\quad q_\beta(x)=b_\beta(x,x),\quad
+ p_\beta(x)=\sqrt{q_\beta(x)},
+$$
+$$
+ \ell_\beta(x,y)=q_\beta(x)+q_\beta(y)-2b_\beta(x,y),
+ \qquad d_\beta(x,y)=\sqrt{\ell_\beta(x,y)}.
+\tag{525.1}
+$$
+
+则以下结论成立。
+
+1. $q_\beta$ 连续，且 517.1 的全部预算、射线齐次和全域增长界仍成立：
+   $$
+   q_\beta(x)\le {16\over\theta}\beta(u)N(x)^2,
+   \quad N(S(x,y))\le {16\over\theta}N(x)N(y),
+   \quad q_\beta(tx)=t^2q_\beta(x).
+   \tag{525.2}
+   $$
+2. 若 $(x,y,z)\in\mathcal T_{0\vee\mathrm{cmp}}$，则实闭合条件给出以 $z$ 为中心的二阶压缩
+   $$
+   \begin{pmatrix}
+   \ell_\beta(x,z)&H_\beta^z(x,y)\\
+   H_\beta^z(x,y)&\ell_\beta(y,z)
+   \end{pmatrix}\succeq0,
+   \quad
+   H_\beta^z(x,y)=b_\beta(x,y)-b_\beta(x,z)-b_\beta(z,y)+q_\beta(z),
+   \tag{525.3}
+   $$
+   and hence
+   $|H_\beta^z(x,y)|^2\le\ell_\beta(x,z)\ell_\beta(y,z)$ and
+   $d_\beta(x,y)\le d_\beta(x,z)+d_\beta(y,z)$ for this allowed triple.
+3. The same old $S$ is jointly continuous in the finite-dimensional original topology.
+4. For $F_\beta=K\cap\ker\beta$,
+   $$
+   b_\beta(x+h,y)=b_\beta(x,y)
+   quad(x,y\in E, h\in\operatorname{span}_{\mathbb R}F_\beta).
+   \tag{525.4}
+   $$
+   In particular, for $h\in K$ with $\beta(h)=0$, the zero-face transport holds at every base point and against every third label.
+
+证明。先说明第 1 项的适用范围。517.1 的证明只使用至多二标签正性、相加零平方、固定点和小效果；它先在原评价下给出实部的偶性、二次预算、射线齐次与 $N(S(x,y))$ 的界，再由 $K^*$ 的分离和有限维双极性传给数学正泛函。它没有使用三标签实闭合面，所以在 523.1 下可逐字消费。零评价满足 $\beta(u)=0$ 时由序单位界在整个 $E$ 上恒为零，所有式子仍成立，不除以质量或 $q$。
+
+对第 2 项，取允许三标签 $(x,y,z)$。零和向量 $e_1-e_3$、$e_2-e_3$ 的实压缩正是 (525.3) 的矩阵；二阶行列式给 Cauchy–Schwarz，随后用
+$\ell(x,y)=\ell(x,z)+\ell(y,z)-2H^z(x,y)$ 得该三点的三角不等式。特别地，含零标签的三元组总是允许的；可比边则足以让同一压缩在任意第三点上使用。
+
+现在证明第 3 项，不能把缺失的任意三标签三角不等式偷加回来。固定 $a$，令 $h\to0$。由序单位定义，对任意 $\varepsilon>N(h)$ 有
+$k=h+\varepsilon u\in K$、$l=\varepsilon u\in K$ 和 $h=k-l$，且
+$N(k)\le2\varepsilon$、$N(l)\le\varepsilon$。相加零平方的准确展开给
+
+$$
+\ell_\beta(a+r,a)
+=2\{b_\beta(a+r,r)-b_\beta(a,r)\}-q_\beta(r)
+\le2p_\beta(r)\{p_\beta(a+r)+p_\beta(a)\}
+\tag{525.5}
+$$
+
+对任意 $r$，最后一步只用二标签 Cauchy–Schwarz 和 $q_\beta(r)\ge0$。由 (525.2)，当 $\varepsilon\to0$ 时，(525.5) 分别给
+$d_\beta(a+k,a)\to0$ 和 $d_\beta(a+h,a+k)\to0$。三元组
+$(a+k,a,y)$ 有可比边 $a\preceq a+k$，三元组
+$(a+h,a+k,y)$ 有可比边 $a+h\preceq a+k$；第 2 项的反三角不等式逐段给
+
+$$
+\bigl|d_\beta(a+h,y)-d_\beta(a,y)\bigr|
+\le d_\beta(a+h,a+k)+d_\beta(a+k,a)\longrightarrow0.
+\tag{525.6}
+$$
+
+因此 $\ell_\beta$ 对第一变量连续；对称性给第二变量连续，且
+$2b_\beta(x,y)=q_\beta(x)+q_\beta(y)-\ell_\beta(x,y)$，故 $b_\beta$ 联合连续。正对偶 $K^*$ 张成 $E^*$，从中取有限线性基；这些坐标的联合连续性给同一个原值 $S$ 的联合连续性。$E=0$、$h=0$、重复点及零质量情形均在上述式子的零边界中直接成立。
+
+最后证明第 4 项。取 $c\in F_\beta$。序单位性给某个 $r>0$ 使 $0\le c\le ru$；选 $0<\lambda\le\theta/r$，则 $0\le\lambda c\le\theta u$。小效果和 (525.2) 给
+$0\le q_\beta(\lambda c)\le\beta(\lambda c)=0$，故射线齐次使 $q_\beta(tc)=0$ 对所有 $t\in\mathbb R$ 成立。二标签 Cauchy–Schwarz 遂给
+$g_\beta(tc,y)=0$，从而 $b_\beta(tc,y)=0$。代入 (525.5) 的准确第一行得
+$\ell_\beta(x+tc,x)=0$；二表正性还给
+$p_\beta(x+tc)=p_\beta(x)$ 及
+$b_\beta(x+tc,x)=q_\beta(x)$。
+
+对任意 $y$，三标签 $(x+tc,y,x)$ 允许，因为 $x+tc$ 与 $x$ 可比（$t\ge0$ 时 $x\preceq x+tc$，$t<0$ 时反向可比）。在以 $x$ 为中心的压缩 (525.3) 中，第一对角为
+$\ell_\beta(x+tc,x)=0$，所以交叉项为零；结合
+$b_\beta(x+tc,x)=q_\beta(x)$ 得
+$b_\beta(x+tc,y)=b_\beta(x,y)$。把有限个 $tc$ 相加并逐次改变基点，得到对 $\operatorname{span}_{\mathbb R}F_\beta$ 的 (525.4)。这一步明确使用了可比边；若第三标签没有该边，(525.3) 不能被调用。∎
