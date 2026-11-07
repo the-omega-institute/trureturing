@@ -20,13 +20,17 @@ internal sealed class FoldedGridRectangleSeriesDocument : IScribeDocumentDefinit
             Node("claim", "The complete joint assertion", Disp(new Formula.Logic(F.Id("claim"), FormulaLogicOperator.Iff, Par(JointFormula()))),
                 "Barker's complete Start/End block asserts both the displayed generating function and the integer recurrence for n>3. The latter is precisely 4<=n on natural indices. Both conjuncts concern the same endpoint count. Integer casts precede the signed subtraction.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "Both identities hold", Disp(F.Id("claim")),
-                "Finset.card_product_filter_lt counts each ordered endpoint pair by a binomial coefficient. Nat.cast_choose_two gives the source's product of triangular numbers. Splitting the half exponents into their two parity cases proves the recurrence by polynomial normalization. Multiplication of A by the denominator gives numerator coefficients 1,-3,-9,24 at indices zero through three and zero thereafter, using that recurrence. The denominator has constant coefficient one and is therefore a unit in PowerSeries Rat; PowerSeries.eq_mul_inv_iff_mul_eq gives the formal quotient. In particular a(0)=1, a(1)=3, a(2)=9 and a(3)=30. The count formula, the conjectural quotient and recurrence, and their existing implementations are attributed in the source note.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                "Finset.card_product_filter_lt counts each ordered endpoint pair by a binomial coefficient. Nat.cast_choose_two gives the source's product of triangular numbers. Splitting the half exponents into their two parity cases proves the recurrence by polynomial normalization. Multiplication of A by the denominator gives numerator coefficients 1,-3,-9,24 at indices zero through three and zero thereafter, using that recurrence. The denominator has constant coefficient one and is therefore a unit in PowerSeries Rat; PowerSeries.eq_mul_inv_iff_mul_eq gives the formal quotient. In particular a(0)=1, a(1)=3, a(2)=9 and a(3)=30. The count formula, the conjectural quotient and recurrence, and their existing implementations are attributed in the source note.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("oeis-a096222-folded-grid-rectangles"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) =>
+        DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("folded-grid-" + (name == "A" ? "series" : name)),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
-            provenance, Blocks(Paragraph(Text(prose))), role);
+            provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
     private static Formula Q(string owner, string name) => Seq(Named(owner), Dot, Named(name));
