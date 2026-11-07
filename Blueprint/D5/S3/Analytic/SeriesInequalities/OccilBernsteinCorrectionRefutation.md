@@ -16,7 +16,7 @@ Lean statement: `D5/S3/Analytic/SeriesInequalities/OccilBernsteinCorrectionRefut
 
 *Commentary.*
 
-On [0,1], f(x) = (x − 1/2)² + 1/4 lies in (0,1], is convex, and is symmetric about 1/2. These interval-wide hypotheses are proved internally; no continuity hypothesis is needed.
+On [0,1], f(x) = (x − 1/2)² + 1/4 lies in (0,1], is convex, and is symmetric about 1/2. These hypotheses hold throughout the interval; no continuity hypothesis is needed.
 
 **Definition 1.2 (The original Bernstein sample operator).**
 
@@ -132,7 +132,7 @@ Lean statement: `D5/S3/Analytic/SeriesInequalities/OccilBernsteinCorrectionRefut
 
 For every admissible real function symmetric on [0,1], and every integer k >= 1, subtract the actual midpoint absolute errors from B at n = 2^k and 2n. The increment must have nonnegative normalized coefficients at representation degree exactly 2n. There is no maximum premise.
 
-**Definition 1.11 (The unchanged registered coefficient conjunction).**
+**Definition 1.11 (The conjunction of the two coefficient assertions).**
 
 $$claim \Leftrightarrow \left(maximumBranch \land midpointBranch\right)$$
 
@@ -142,7 +142,7 @@ $$claim \Leftrightarrow \left(maximumBranch \land midpointBranch\right)$$
 
 *Commentary.*
 
-Occil's first item after the final Prove or disprove in Other Questions asks for both correction prescriptions to converge from below with nonnegative Bernstein increment coefficients. The preregistered claim is precisely the conjunction of their universal coefficient requirements. Each is a necessary clause of the corresponding original branch, independently of the unspecified convergence topology. A positive coefficient result alone would not prove convergence.
+Occil's first item after the final Prove or disprove in Other Questions asks for both correction prescriptions to converge from below with nonnegative Bernstein increment coefficients. The claim is precisely the conjunction of their universal coefficient requirements. Each is a necessary clause of the corresponding original branch, independently of the unspecified convergence topology. A positive coefficient result alone would not prove convergence.
 
 **Theorem 1.12 (Both original prescriptions fail at n = 2).**
 
@@ -156,7 +156,7 @@ $$\neg claim$$
 
 *Commentary.*
 
-For f(x) = x²−x+1/2, B₂f = (X²−X)/2+1/2 and B₄f = 3(X²−X)/4+1/2. The errors are x(1−x)/2 and x(1−x)/4 on the entire interval, with actual maxima 1/8 and 1/16 attained at 1/2; these also equal the midpoint errors. Both increments are 1/16−X(1−X)/4 = (X−1/2)²/4. The exact degree-4 normalized coefficients are [1/16,0,−1/48,0,1/16]. Uniqueness excludes any nonnegative representation. The private branch_refutations proves each universal branch false, and result is literally Not claim. This refutes both full original conjunctions through their coefficient clauses without a claim against convergence itself. Existing complex Bernstein independence is reused; this external-problem resolution does not assert a new escape witness.
+For f(x) = x²−x+1/2, B₂f = (X²−X)/2+1/2 and B₄f = 3(X²−X)/4+1/2. The errors are x(1−x)/2 and x(1−x)/4 on the entire interval, with actual maxima 1/8 and 1/16 attained at 1/2; these also equal the midpoint errors. Both increments are 1/16−X(1−X)/4 = (X−1/2)²/4. The exact degree-4 normalized coefficients are [1/16,0,−1/48,0,1/16]. Uniqueness excludes any nonnegative representation. Each universal coefficient assertion is therefore false, so their conjunction is false. This refutes both full original conjunctions through their coefficient clauses without a claim against convergence itself. Uniqueness follows from complex Bernstein independence via the injective real embedding.
 
 ## References
 
