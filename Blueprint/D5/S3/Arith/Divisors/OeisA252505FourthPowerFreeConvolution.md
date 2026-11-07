@@ -188,35 +188,7 @@ $$\forall n \in Nat,\; 0 < n \Rightarrow 2 \cdot \operatorname{b}\left(n\right) 
 
 Swap the two factors. Each off-diagonal orbit has two entries; the unique fixed pair is (n,n). Thus 2b(n)=tau(n^2)+1. This derives the formula from the rational solution definition, including x=y=2n.
 
-**Theorem 1.14 (The complete capped exponent count).**
-
-$$\forall n \in Nat,\; 0 < n \Rightarrow \operatorname{a}\left(n\right) = (\operatorname{Finset}.\operatorname{prod}\left(\operatorname{Nat}.\operatorname{primeFactors}\left(n\right), (fun p \mapsto \operatorname{min}\left(\operatorname{Nat}.\operatorname{factorization}\left(n, p\right), 3\right) + 1)\right):Int)$$
-
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/Divisors/OeisA252505FourthPowerFreeConvolution.fourth_power_free_divisor_count` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* The OEIS Foundation Inc. (2026). *OEIS A252505 and the linked unit-fraction and inverse sequences*. URL: <https://oeis.org/A252505>.
-
-*Commentary.*
-
-The canonical divisor/factorization equivalence restricts to exactly those exponent vectors with each coordinate at most three. Counting their finite box gives the product. Empty prime support gives one.
-
-**Theorem 1.15 (The full ceiling staircase).**
-
-$$\forall n \in Nat,\; 0 < n \Rightarrow \operatorname{h}\left(n\right) = \operatorname{Finset}.\operatorname{sum}\left(\operatorname{Finset}.\operatorname{Iic}\left(\operatorname{Nat}.\operatorname{factorization}\left(n\right)\right), (fun f \mapsto (\operatorname{Nat}.\operatorname{ceil}\left(\frac{(\operatorname{Finset}.\operatorname{card}\left(\operatorname{Finset}.\operatorname{Iic}\left(f\right)\right):Rat)}{2}\right):Int))\right)$$
-
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/Divisors/OeisA252505FourthPowerFreeConvolution.ceiling_sum_exponent_box` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* The OEIS Foundation Inc. (2026). *OEIS A252505 and the linked unit-fraction and inverse sequences*. URL: <https://oeis.org/A252505>.
-
-*Commentary.*
-
-Every divisor corresponds to one exponent vector f bounded by the factorization of n; its own divisor count is the cardinality of Iic f. Both correspondences reuse the pinned Mathlib divisor-box map.
-
-**Theorem 1.16 (Uniqueness on the full positive domain).**
+**Theorem 1.14 (Uniqueness on the full positive domain).**
 
 $$\forall v \in Nat \to Int,\; \operatorname{InverseRecursion}\left(v\right) \Rightarrow \left(\forall n \in Nat,\; 0 < n \Rightarrow \operatorname{v}\left(n\right) = \operatorname{c}\left(n\right)\right)$$
 
@@ -230,7 +202,7 @@ $$\forall v \in Nat \to Int,\; \operatorname{InverseRecursion}\left(v\right) \Ri
 
 Strong induction uses only positive proper divisors, each strictly smaller than n. The n=1 clause comes directly from the specification. The arbitrary value v(0) is immaterial.
 
-The remaining whole gap is b=a*g for the independently defined functions. A finite-prime-support series proof must still encode divisor convolution, prove its series identities, prove the zero-or-one coefficient law, and descend the integral identity before reducing modulo two. Final inverse cancellation is then required. These missing steps are not certified by the native bridges above.
+The remaining whole gap is b=a*g for the independently defined functions. The remaining native fourth-power-free and ceiling exponent-box bridges require a real whole-proof consumer. A finite-prime-support series proof must then encode divisor convolution, prove its series identities, prove the zero-or-one coefficient law, and descend the integral identity before reducing modulo two. Final inverse cancellation is then required. These missing steps are not certified by the native bridges above.
 
 ## References
 
@@ -240,10 +212,8 @@ The remaining whole gap is b=a*g for the independently defined functions. A fini
 - Truth anchor: `D5/S3/Arith/Divisors/OeisA252505FourthPowerFreeConvolution.a`
 - Truth anchor: `D5/S3/Arith/Divisors/OeisA252505FourthPowerFreeConvolution.b`
 - Truth anchor: `D5/S3/Arith/Divisors/OeisA252505FourthPowerFreeConvolution.c`
-- Truth anchor: `D5/S3/Arith/Divisors/OeisA252505FourthPowerFreeConvolution.ceiling_sum_exponent_box`
 - Truth anchor: `D5/S3/Arith/Divisors/OeisA252505FourthPowerFreeConvolution.claim`
 - Truth anchor: `D5/S3/Arith/Divisors/OeisA252505FourthPowerFreeConvolution.factorPairs`
-- Truth anchor: `D5/S3/Arith/Divisors/OeisA252505FourthPowerFreeConvolution.fourth_power_free_divisor_count`
 - Truth anchor: `D5/S3/Arith/Divisors/OeisA252505FourthPowerFreeConvolution.g`
 - Truth anchor: `D5/S3/Arith/Divisors/OeisA252505FourthPowerFreeConvolution.h`
 - Truth anchor: `D5/S3/Arith/Divisors/OeisA252505FourthPowerFreeConvolution.inverse_recursion_unique`
