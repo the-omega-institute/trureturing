@@ -3085,3 +3085,79 @@ by (197.4). Thus every residual is zero. Conversely, any full-zero family in the
 **Corollary 198.3 (the residual search becomes a fibre-feasibility search).** For a rank-three or rank-four full-zero candidate, the nonlinear residual equations impose no additional conditions after the quotient identity: all remaining freedom is respectively a one- or two-dimensional radical correction subject to (198.4) and the pointwise simplex inequalities. In the rank-two branch, $\mathcal R_u=0$, so the normalized quotient section determines the label family uniquely inside its candidate span.
 
 This is an exact closure statement for a fixed candidate span, not an existence theorem. It does not produce a nonzero radical, guarantee that any correction satisfies the pointwise inequalities, or settle arbitrary partition realization, $F_{64}$, $H43$, SRS\text{-}20, physical succession or Lean/kernel formalization.
+
+## 199. The radical fibre has a finite coefficient feasibility body
+
+The affine description in Section 198 can be made finite-dimensional after choosing a basis of the radical. The residual equations disappear, while legality becomes an intersection of pointwise affine half-spaces in the coefficient matrix.
+
+**Definition 199.1 (radical coefficient set).** Let
+
+$$
+d_u=\dim\mathcal R_u=r_u-2,
+$$
+
+choose a basis $(r_1,\ldots,r_{d_u})$ of $\mathcal R_u$, and use the label order $(0,1,3,B)$. For a real $4\times d_u$ matrix $A=(a_{y\ell})$, set
+
+$$
+\rho_y(A)=\sum_{\ell=1}^{d_u}a_{y\ell}r_\ell,
+\qquad
+u_y(A)=S_u(f_y)+\rho_y(A).
+\tag{199.1}
+$$
+
+Define $\mathscr P_u$ to be the set of matrices satisfying
+
+$$
+\sum_{y\in\mathcal L}a_{y\ell}=0
+\quad(1\le\ell\le d_u),
+\tag{199.2}
+$$
+
+and for which the four bounded representatives $u_y(A)$ are pointwise nonnegative. The zero-column convention gives the rank-two case $d_u=0$.
+
+**Proposition 199.2 (convex feasibility and exact residual closure).** The set $\mathscr P_u$ is convex. Every $A\in\mathscr P_u$ gives a pointwise legal partition with
+
+$$
+\sum_yu_y(A)=1,
+\qquad
+T_u(u_y(A))=f_y,
+\qquad
+\Delta(u(A))_{yzk}=0
+\quad\text{for all }y,z,k.
+\tag{199.3}
+$$
+
+Conversely, every pointwise legal label family in $\mathcal W_u$ with quotient labels $T_u(\widetilde u_y)=f_y$ has a unique coefficient matrix $A\in\mathscr P_u$ and is given by (199.1). Its radical corrections span all of $\mathcal R_u$ exactly when
+
+$$
+\operatorname{rank}A=d_u.
+\tag{199.4}
+$$
+
+*Proof.* For each label $y$ and each point in the chosen representatives, the inequality
+
+$$
+S_u(f_y)+\sum_{\ell=1}^{d_u}a_{y\ell}r_\ell\ge0
+$$
+
+is an affine half-space condition on the entries of $A$. Intersecting these conditions with the affine linear subspace (199.2) proves convexity.
+
+Because $\sum_yf_y=1$ and $S_u(1)=1$, equation (199.2) gives
+
+$$
+\sum_yu_y(A)=S_u\left(\sum_yf_y\right)+\sum_y\rho_y(A)=1.
+$$
+
+Each $\rho_y(A)$ lies in $\mathcal R_u$, so Proposition 198.2 applies: the pointwise simplex conditions imply that all residuals vanish. The identity for $T_u$ follows from $T_uS_u=\operatorname{id}$ and $T_u(\mathcal R_u)=0$.
+
+Conversely, let $(\widetilde u_y)$ be as stated. Then
+
+$$
+\widetilde\rho_y=\widetilde u_y-S_u(f_y)\in\ker T_u=\mathcal R_u,
+$$
+
+and the basis of $\mathcal R_u$ gives unique coefficients $a_{y\ell}$. Summing the family and using $S_u(1)=1$ gives (199.2), while pointwise legality gives the defining inequalities of $\mathscr P_u$. The corrections span $\mathcal R_u$ exactly when their coefficient row vectors span $\mathbb R^{d_u}$, which is equivalent to the column-rank condition (199.4). $\square$
+
+**Corollary 199.3 (rank-three and rank-four search interfaces).** In the rank-three branch, $d_u=1$: the radical fibre is described by one zero-sum coefficient column, and a genuine rank-three correction requires that column to be nonzero. In the rank-four branch, $d_u=2$: it is described by two zero-sum columns, and a genuine rank-four correction requires them to be linearly independent. A proposed fixed quotient lift with no feasible matrix of the required column rank cannot realize that rank branch.
+
+The feasible set can be convex even when its full-rank stratum is empty; convex feasibility alone therefore does not produce a radical of the desired dimension. This reduction removes the nonlinear residual equations only after the quotient identity is established and leaves arbitrary partition realization, $F_{64}$, $H43$, SRS\text{-}20, physical succession and Lean/kernel formalization open.
