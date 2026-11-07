@@ -30,7 +30,7 @@ internal sealed class WuA227244ConjectureFourDocument : IScribeDocumentDefinitio
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
         DescribeRole role, AssessedProvenance provenance, OpenProblemResolutionClaim? resolution = null) =>
-        Describe.Lean(DescribeId.Create("a227244c4-" + name.ToLowerInvariant()),
+        Describe.Lean(DescribeId.Create("a227244c4-" + name.ToLowerInvariant().Replace('_', '-')),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
             provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
