@@ -92,7 +92,7 @@ branches; `result : Not claim` is its literal negation. The private consumed
 `realization_unique` identifies that representation with the displayed vector.
 All newly authored helpers are private and consumed. The sole public theorem
 is the designated refutation result, exempt from four-slot registration.
-Admission is `open-problem-resolution`, not a claim of a new escape witness;
+The proposed admission basis is `open-problem-resolution`, not a claim of a new escape witness;
 normalization and binding steps are not counted as new mathematical content.
 
 ## Triage

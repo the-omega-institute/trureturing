@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Analytic.SeriesInequalities;
 
@@ -29,8 +31,18 @@ internal sealed class OccilBernsteinCorrectionRefutationDocument : IScribeDocume
     private static DocumentBlock Entry(string name, string title, string prose,
         DescribeRole role = DescribeRole.Definition, OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("occil-" + name.ToLowerInvariant()),
-            DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromLean(),
+            DeclarationHandle.Create(Prefix + name), H(title), Statement(name),
             name is "B" or "admissible" or "maxError" or "midpointError" or "maximumBranch" or "midpointBranch" or "claim"
                 ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
             Blocks(Paragraph(Text(prose))), role, resolution);
+
+    private static StatementSource Statement(string name) => name switch
+    {
+        "claim" => StatementSource.FromAuthor(Disp(new Formula.Logic(
+            F.Id("claim"), FormulaLogicOperator.Iff,
+            new Formula.Logic(F.Id("maximumBranch"), FormulaLogicOperator.And, F.Id("midpointBranch"))))),
+        "result" => StatementSource.FromAuthor(Disp(new Formula.Not(F.Id("claim")))),
+        _ => StatementSource.WithoutFormula()
+    };
+
 }
