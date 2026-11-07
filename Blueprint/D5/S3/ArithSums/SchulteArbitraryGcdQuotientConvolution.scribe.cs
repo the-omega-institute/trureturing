@@ -60,7 +60,11 @@ internal sealed class SchulteArbitraryGcdQuotientConvolutionDocument
                 + "every zero-extension value z. In the last clause, idPositive "
                 + "is d |-> ofNat(d) on P, and rowSum is the natural-valued "
                 + "SchulteGcdQuotientRowSumConvolution.rowSum, cast into C.",
-                DescribeRole.Theorem),
+                DescribeRole.Theorem,
+                resolution: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create(
+                        "oeis-a350900-schulte-arbitrary-function-convolution"),
+                    ResolutionKind.Proved)),
             Paragraph(Text(
                 "To derive the identity, first replace each interval 1..n by "
                 + "0..n-1: the endpoint values agree. For fixed i put g=gcd(i,n). "
@@ -97,12 +101,13 @@ internal sealed class SchulteArbitraryGcdQuotientConvolutionDocument
                 + "whose contents cannot be inferred from bibliographic data.")))));
 
     private static DocumentBlock Node(string name, string title, Formula formula,
-        string prose, DescribeRole role, bool sourceDefinition = false) => Describe.Lean(
+        string prose, DescribeRole role, bool sourceDefinition = false,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create("a350900-arbitrary-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.FromAuthor(Disp(formula)),
             sourceDefinition ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula SquareFormula()
     {
