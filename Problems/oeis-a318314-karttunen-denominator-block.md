@@ -123,3 +123,14 @@ the other component statements. No `declared_validated` status is asserted.
 entire conjectured block a theorem about the actual recurrence. Consequences for unrelated
 OEIS claims, broader families and unread literature remain open; no neighboring
 claim is added to this question.
+
+## ASSUMED-UNVERIFIED
+
+The literature check is bounded to the Karttunen--Howroyd OEIS source, its
+corresponding source note, and the finite citation and repository scope recorded
+there; worldwide openness, novelty, and priority remain unverified. The four
+source-owner registration families and nine other targets remain unfinished
+under issue #27596, and no `declared_validated` status is asserted. Independent
+statement, form, mirror, and ordinary delivery review for this publication
+remain outstanding; the kernel result and existing scoped evidence do not settle
+those conditions.
