@@ -55,78 +55,86 @@ theorem quadratic_root_card {F : Type*} [Field F] [Fintype F] [DecidableEq F]
   rw [Fintype.card_congr (quadraticRootEquivSqrts hF a)]
   simpa [Fintype.card_subtype] using quadraticChar_card_sqrts hF (1 + 4 * a)
 
-private theorem generator_polynomial_factor {F : Type*} [Field F]
-    (hF : ringChar F ≠ 2) (a s : F) (hs : s ^ 2 = 1 + 4 * a) :
-    (X ^ 2 - X - C a : F[X]) =
-      (X - C ((1 + s) / 2)) * (X - C ((1 - s) / 2)) := by
+private theorem generator_polynomial_factor_general {F : Type*} [Field F]
+    (hF : ringChar F ≠ 2) (a b s : F) (hs : s ^ 2 = b ^ 2 + 4 * a) :
+    (X ^ 2 - C b * X - C a : F[X]) =
+      (X - C ((b + s) / 2)) * (X - C ((b - s) / 2)) := by
   have h4 : (4 : F) ≠ 0 := by
     convert mul_ne_zero (Ring.two_ne_zero hF) (Ring.two_ne_zero hF) using 1 <;> norm_num
-  have hsum : (1 + s) / 2 + (1 - s) / 2 = 1 := by
+  have hsum : (b + s) / 2 + (b - s) / 2 = b := by
     field_simp [Ring.two_ne_zero hF]
     ring
-  have hprod : ((1 + s) / 2) * ((1 - s) / 2) = -a := by
+  have hprod : ((b + s) / 2) * ((b - s) / 2) = -a := by
     calc
-      _ = (1 - s ^ 2) / 4 := by field_simp [Ring.two_ne_zero hF, h4]; ring
+      _ = (b ^ 2 - s ^ 2) / 4 := by field_simp [Ring.two_ne_zero hF, h4]; ring
       _ = -a := by rw [hs]; field_simp [h4]; ring
   calc
-    _ = X ^ 2 - C ((1 + s) / 2 + (1 - s) / 2) * X +
-        C (((1 + s) / 2) * ((1 - s) / 2)) := by rw [hsum, hprod]; simp [sub_eq_add_neg]
+    _ = X ^ 2 - C ((b + s) / 2 + (b - s) / 2) * X +
+        C (((b + s) / 2) * ((b - s) / 2)) := by rw [hsum, hprod]; simp only [map_neg, sub_eq_add_neg]
     _ = _ := by simp only [map_add, map_mul]; ring
 
 /-- The product over distinct irreducible factors is the local Euler polynomial.
 Repeated factors contribute only once, so this also handles ramified primes. -/
-theorem quadratic_euler_polynomial {F : Type*} [Field F] [Fintype F] [DecidableEq F]
-    (hF : ringChar F ≠ 2) (a : F) (z : ℂ) :
+theorem quadratic_euler_polynomial_general {F : Type*} [Field F] [Fintype F] [DecidableEq F]
+    (hF : ringChar F ≠ 2) (a b : F) (z : ℂ) :
     (∏ f ∈ (UniqueFactorizationMonoid.normalizedFactors
-      (X ^ 2 - X - C a : F[X])).toFinset, (1 - z ^ f.natDegree)) =
-        (1 - z) * (1 - (quadraticChar F (1 + 4 * a) : ℂ) * z) := by
+      (X ^ 2 - C b * X - C a : F[X])).toFinset, (1 - z ^ f.natDegree)) =
+        (1 - z) * (1 - (quadraticChar F (b ^ 2 + 4 * a) : ℂ) * z) := by
   classical
   have hnf (u : F) : normalizedFactors (X - C u : F[X]) = {X - C u} := by
     rw [normalizedFactors_irreducible (irreducible_X_sub_C u),
       (monic_X_sub_C u).normalize_eq_self]
-  by_cases hD : 1 + 4 * a = 0
-  · have hfac := generator_polynomial_factor hF a 0 (by simpa using hD.symm)
+  by_cases hD : b ^ 2 + 4 * a = 0
+  · have hfac := generator_polynomial_factor_general hF a b 0 (by simpa using hD.symm)
     simp only [add_zero, sub_zero] at hfac
     rw [hfac, normalizedFactors_mul (monic_X_sub_C _).ne_zero (monic_X_sub_C _).ne_zero]
     simp [hnf, hD]
   · rcases quadraticChar_dichotomy hD with hpos | hneg
     · have hsq := (quadraticChar_one_iff_isSquare hD).mp hpos
       obtain ⟨s, hs⟩ := hsq
-      have hss : s ^ 2 = 1 + 4 * a := by simpa only [sq] using hs.symm
+      have hss : s ^ 2 = b ^ 2 + 4 * a := by simpa only [sq] using hs.symm
       have hs0 : s ≠ 0 := by
         intro h
         apply hD
         rw [← hss, h, zero_pow two_ne_zero]
-      have huv : (1 + s) / 2 ≠ (1 - s) / 2 := by
+      have huv : (b + s) / 2 ≠ (b - s) / 2 := by
         intro h
-        have h' : 1 + s = 1 - s := (div_left_inj' (Ring.two_ne_zero hF)).mp h
+        have h' : b + s = b - s := (div_left_inj' (Ring.two_ne_zero hF)).mp h
         have hz : 2 * s = 0 := by linear_combination h'
         exact hs0 ((mul_eq_zero.mp hz).resolve_left (Ring.two_ne_zero hF))
-      have hfg : (X - C ((1 + s) / 2) : F[X]) ≠ X - C ((1 - s) / 2) := by
+      have hfg : (X - C ((b + s) / 2) : F[X]) ≠ X - C ((b - s) / 2) := by
         intro h
         have h' := congrArg (fun f : F[X] => f.coeff 0) h
         simp only [coeff_sub, coeff_X_zero, coeff_C_zero, zero_sub] at h'
         exact huv (neg_injective h')
-      rw [generator_polynomial_factor hF a s hss,
+      rw [generator_polynomial_factor_general hF a b s hss,
         normalizedFactors_mul (monic_X_sub_C _).ne_zero (monic_X_sub_C _).ne_zero]
       simp [hnf, hfg, hpos]
-    · have hmonic : (X ^ 2 - X - C a : F[X]).Monic := by
-        rw [show (X ^ 2 - X - C a : F[X]) = X ^ 2 - (X + C a) by ring]
+    · have hmonic : (X ^ 2 - C b * X - C a : F[X]).Monic := by
+        rw [show (X ^ 2 - C b * X - C a : F[X]) = X ^ 2 - (C b * X + C a) by ring]
         apply monic_X_pow_sub
-        simpa using! (degree_linear_lt (a := (1 : F)) (b := a))
-      have hdeg : (X ^ 2 - X - C a : F[X]).natDegree = 2 := by
-        simpa only [C_1, C_neg, one_mul, neg_one_mul, sub_eq_add_neg] using
-          (natDegree_quadratic (a := (1 : F)) (b := -1) (c := -a) one_ne_zero)
-      have hirr : Irreducible (X ^ 2 - X - C a : F[X]) := by
+        simpa using! (degree_linear_lt (a := b) (b := a))
+      have hdeg : (X ^ 2 - C b * X - C a : F[X]).natDegree = 2 := by
+        simpa only [C_1, C_neg, one_mul, neg_one_mul, neg_mul, sub_eq_add_neg] using
+          (natDegree_quadratic (a := (1 : F)) (b := -b) (c := -a) one_ne_zero)
+      have hirr : Irreducible (X ^ 2 - C b * X - C a : F[X]) := by
         apply irreducible_of_degree_le_three_of_not_isRoot (by rw [Finset.mem_Icc, hdeg]; norm_num)
         intro x hx
-        have hx' : x ^ 2 - x - a = 0 := by simpa [Polynomial.IsRoot] using hx
-        let y := quadraticRootEquivSqrts hF a ⟨x, hx'⟩
+        have hx' : x ^ 2 - b * x - a = 0 := by simpa [Polynomial.IsRoot] using hx
+        have hy : (2 * x - b) ^ 2 = b ^ 2 + 4 * a := by linear_combination 4 * hx'
         exact (quadraticChar_neg_one_iff_not_isSquare.mp hneg)
-          ⟨y.1, by simpa only [sq] using y.2.symm⟩
+          ⟨2 * x - b, by simpa only [sq] using hy.symm⟩
       rw [normalizedFactors_irreducible hirr, hmonic.normalize_eq_self]
       simp [hdeg, hneg]
       ring
+
+/-- The half-integral-generator specialization retains the existing public interface. -/
+theorem quadratic_euler_polynomial {F : Type*} [Field F] [Fintype F] [DecidableEq F]
+    (hF : ringChar F ≠ 2) (a : F) (z : ℂ) :
+    (∏ f ∈ (UniqueFactorizationMonoid.normalizedFactors
+      (X ^ 2 - X - C a : F[X])).toFinset, (1 - z ^ f.natDegree)) =
+        (1 - z) * (1 - (quadraticChar F (1 + 4 * a) : ℂ) * z) := by
+  simpa using quadratic_euler_polynomial_general hF a 1 z
 
 namespace PrimeImaginary
 
@@ -234,7 +242,7 @@ theorem integralGenerator_euler_polynomial_two (z : ℂ) :
       rw [legendreSym.at_two hp2, ZMod.χ₈_nat_mod_eight p, hp8]
       rfl
     have hdeg : (X ^ 2 - X - C (1 : ZMod 2)).natDegree = 2 := by
-      simpa only [C_1, C_neg, one_mul, neg_one_mul, sub_eq_add_neg] using
+      simpa only [C_1, C_neg, one_mul, neg_one_mul, neg_mul, sub_eq_add_neg] using
         (natDegree_quadratic (a := (1 : ZMod 2)) (b := -1) (c := -1) one_ne_zero)
     have hmonic : (X ^ 2 - X - C (1 : ZMod 2)).Monic := by
       rw [show (X ^ 2 - X - C (1 : ZMod 2)) = X ^ 2 - (X + C 1) by ring]
