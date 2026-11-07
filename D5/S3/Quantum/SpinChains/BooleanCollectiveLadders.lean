@@ -202,7 +202,7 @@ private lemma number_U (N : ℕ) : number N * U N - U N * number N = U N := by
 private lemma number_L (N : ℕ) : number N * L N - L N * number N = -L N := by
   simpa only [L, number, Matrix.toEuclideanLin, map_sub, map_neg, Matrix.toLpLin_mul_same, Module.End.mul_eq_comp] using
     congrArg Matrix.toEuclideanLin (number_lowering N)
-private lemma adjoint_U (N : ℕ) : (U N).adjoint = L N := by
+lemma adjoint_U (N : ℕ) : (U N).adjoint = L N := by
   rw [U, ← Matrix.toEuclideanLin_conjTranspose_eq_adjoint, minus_eq_adjoint]
   rfl
 private lemma inner_U (N : ℕ) (v w : Space N) :

@@ -30,6 +30,7 @@ internal sealed class BooleanCollectiveLaddersDocument : IScribeDocumentDefiniti
             Node("configurationEquiv", "All configurations as subsets", ConfigurationCoordinates(false), DescribeRole.Definition, AssessedProvenance.FromRepo(Feinsilver)),
             Node("rankConfigurationEquiv", "Fixed-rank configurations as subsets", ConfigurationCoordinates(true), DescribeRole.Definition, AssessedProvenance.FromRepo(Feinsilver)),
             Node("site_entry", "The original site matrix entries", SiteEntries(), DescribeRole.Theorem, AssessedProvenance.FromRepo(Feinsilver)),
+            Node("adjoint_U", "The original complex adjoint", OriginalPrerequisite("adjoint_U"), DescribeRole.Theorem, AssessedProvenance.FromRepo(Feinsilver)),
             Node("primitive_zero_eq", "Rank-zero primitive space", OriginalPrerequisite("primitive_zero_eq"), DescribeRole.Theorem, AssessedProvenance.FromLiterature(Feinsilver)),
             Node("rank_split", "Adjacent-rank primitive splitting", OriginalPrerequisite("rank_split"), DescribeRole.Theorem, AssessedProvenance.FromLiterature(Feinsilver)),
             Node("primitive_degree", "Arbitrary-size primitive cutoff", OriginalPrerequisite("primitive_degree"), DescribeRole.Theorem, AssessedProvenance.FromLiterature(Feinsilver)),
@@ -83,6 +84,7 @@ internal sealed class BooleanCollectiveLaddersDocument : IScribeDocumentDefiniti
                 "configurationEquiv" => "The original equivalence sends x to its zero-bit subset; its inverse puts zero at members and one elsewhere.",
                 "rankConfigurationEquiv" => "The original equivalence restricts to occupancy-t configurations and cardinality-t finsets, including empty fibers. Its subtype maps are the same configurationEquiv and inverse; it is an equivalence of counting indices, not a claim that an arbitrary linear equivalence preserves the norm.",
                 "site_entry" => "Each site entry is the chosen local matrix entry times the Kronecker equality factors at every other coordinate.",
+                "adjoint_U" => "The original collective raising and lowering maps are adjoints for the full complex counting inner product.",
                 "primitive_zero_eq" => "At rank zero, the original lowering map vanishes, so every rank-zero vector is primitive.",
                 "rank_split" => "Every rank t+1 vector is the sum of a raised rank t vector and a primitive rank t+1 vector, for every site count N.",
                 "primitive_degree" => "A nonzero primitive vector has twice its rank at most the site count; no parity assumption is used.",
@@ -205,6 +207,8 @@ internal sealed class BooleanCollectiveLaddersDocument : IScribeDocumentDefiniti
         var n=F.Id("N");var t=F.Id("t");var u=F.Id("u");
         var v=F.Id("v");var w=F.Id("w");var q=F.Id("q");var r=F.Id("r");
         Formula Hv(Formula body) => All("N",N(),All("t",N(),All("v",V(n),Imp(Mem(v,P(n,t)),body))));
+        if (name=="adjoint_U")
+            return All("N",N(),Eq(Call("adjoint",Call("U",n)),Call("L",n)));
         if (name=="primitive_zero_eq")
             return All("N",N(),Eq(P(n,D(0)),Call("rankSpace",n,D(0))));
         if (name=="rank_split")
