@@ -7,6 +7,7 @@
    digest: Uniform band variance controls comparable lengths and all shorter increments. -/
 
 import D5.S3.Arith.Robin.ForwardKernel.FixedLengthCovariance
+import D5.S3.Arith.Robin.ForwardKernel.MovingEndpointVariance
 
 /-! Uniform variance estimates at comparable lengths and below a fixed comparison length. -/
 
@@ -84,10 +85,10 @@ theorem shorter_increment_square_bound (hE : LocallyBoundedMeasurable E)
           C * X * fixedLength θ c X * lengthLog θ c X := by
   have hθ : θ < 1 := hB.2.2.1.trans hB.2.2.2
   obtain ⟨K, hK, hKv⟩ := comparable_length_variance_bound hE hB hV
-    (A := c) (B := 2 * c) (d := 3) hc (by linarith) (by norm_num)
+    (A := c) (B := 3 * c) (d := 3) hc (by linarith) (by norm_num)
   have hband := FixedLengthCovariance.shifted_band hB.2.1 hB.2.2.1 hθ
     (c := c) (d := 1) (q := 1) (r := 0) hc zero_lt_one zero_lt_one le_rfl
-  refine ⟨8 * K / (c * (1 - θ)), by positivity, ?_⟩
+  refine ⟨12 * K / (c * (1 - θ)), by positivity, ?_⟩
   filter_upwards [hKv, hband, eventually_ge_atTop (1 : ℝ),
     Real.tendsto_log_atTop.eventually (eventually_ge_atTop (2 * Real.log c / (1 - θ)))]
     with X hKv hband hX hlog
@@ -103,54 +104,36 @@ theorem shorter_increment_square_bound (hE : LocallyBoundedMeasurable E)
     have := (div_le_iff₀ (sub_pos.mpr hθ)).mp hlog
     linarith
   intro u hu
-  have hi (v a b : ℝ) : IntervalIntegrable (fun x => increment E v x ^ 2) volume a b := by
-    simpa only [pow_two, id_eq, Pi.add_apply] using
-      (increment_product_comp_integrableOn hE isCompact_uIcc
-        continuous_const continuous_id continuous_const continuous_id).intervalIntegrable
-  have hVh := hKv (fixedLength θ c X) (by
-    dsimp [fixedLength]; constructor <;> nlinarith [Real.rpow_pos_of_pos hX0 θ])
-  have hVhu := hKv (fixedLength θ c X + u) (by
-    dsimp [fixedLength] at *; constructor <;> linarith [hu.1, hu.2])
-  have hfirst : (∫ x in X..(2 * X), increment E (fixedLength θ c X + u) x ^ 2) ≤
-      cumulativeVariance E (3 * X) (fixedLength θ c X + u) :=
-    intervalIntegral.integral_mono_interval hX (by linarith) (by linarith)
-      (Eventually.of_forall (fun _ => sq_nonneg _)) (hi _ _ _)
-  have hsecond : (∫ x in X..(2 * X), increment E (fixedLength θ c X) (x + u) ^ 2) ≤
-      cumulativeVariance E (3 * X) (fixedLength θ c X) := by
-    rw [intervalIntegral.integral_comp_add_right
-      (fun x : ℝ => increment E (fixedLength θ c X) x ^ 2) u]
-    exact intervalIntegral.integral_mono_interval (by linarith [hu.1]) (by linarith)
-      (by linarith [hu.2]) (Eventually.of_forall (fun _ => sq_nonneg _)) (hi _ _ _)
-  have hshift : IntervalIntegrable
-      (fun x => increment E (fixedLength θ c X) (x + u) ^ 2) volume X (2 * X) := by
-    simpa only [pow_two, id_eq, Pi.add_apply] using
-      (increment_product_comp_integrableOn hE isCompact_uIcc continuous_const
-        (continuous_id.add continuous_const) continuous_const
-        (continuous_id.add continuous_const)).intervalIntegrable
-  calc
-    _ ≤ ∫ x in X..(2 * X),
-        2 * increment E (fixedLength θ c X + u) x ^ 2 +
-          2 * increment E (fixedLength θ c X) (x + u) ^ 2 := by
-      apply intervalIntegral.integral_mono_on (by linarith) (hi _ _ _)
-        (((hi _ _ _).const_mul 2).add (hshift.const_mul 2))
+  have hb := MovingEndpointVariance.two_endpoint_increment_square_le
+    (p := fun x => x) (q := fun x => x + u)
+    (p' := fun _ => 1) (q' := fun _ => 1)
+    (l := X) (r := 2 * X) (Y := 3 * X) (R := fixedLength θ c X) (C₀ := 1) (m := 1)
+    (K := K * X * X ^ θ * Real.log X)
+    hE (by linarith) hh (by norm_num) zero_lt_one
+    (by positivity [Real.log_nonneg hX])
+    continuous_id.continuousOn (continuous_id.add continuous_const).continuousOn
+    (fun x _ => (hasDerivAt_id x).hasDerivWithinAt)
+    (fun x _ => ((hasDerivAt_id x).add_const u).hasDerivWithinAt)
+    (fun _ _ => le_rfl) (fun _ _ => le_rfl)
+    (by
       intro x hx
-      have hid : increment E u x = increment E (fixedLength θ c X + u) x -
-          increment E (fixedLength θ c X) (x + u) := by
-        unfold increment
-        rw [show x + u + fixedLength θ c X = x + (fixedLength θ c X + u) by ring]
-        ring
-      rw [hid]
-      simpa only [sub_eq_add_neg, neg_sq, mul_add] using
-        (add_sq_le (a := increment E (fixedLength θ c X + u) x)
-          (b := -increment E (fixedLength θ c X) (x + u)))
-    _ = 2 * (∫ x in X..(2 * X), increment E (fixedLength θ c X + u) x ^ 2) +
-        2 * (∫ x in X..(2 * X), increment E (fixedLength θ c X) (x + u) ^ 2) := by
-      rw [intervalIntegral.integral_add ((hi _ _ _).const_mul 2) (hshift.const_mul 2)]
-      simp only [intervalIntegral.integral_const_mul]
-    _ ≤ 4 * K * X * X ^ θ * Real.log X := by linarith [hfirst.trans hVhu, hsecond.trans hVh]
+      exact ⟨⟨hX.trans hx.1, by linarith [hx.2]⟩,
+        ⟨by linarith [hx.1, hu.1], by linarith [hx.2, hu.2]⟩⟩)
+    (by intro x _; simpa only [add_sub_cancel_left, one_mul] using hu)
+    (by
+      intro v hv
+      apply hKv v
+      dsimp [fixedLength] at *
+      constructor <;> nlinarith [hv.1, hv.2])
+  have hb' : (∫ x in X..(2 * X), increment E u x ^ 2) ≤
+      6 * K * X * X ^ θ * Real.log X := by
+    simpa only [increment, show (2 * (1 + 2) / 1 : ℝ) = 6 by norm_num,
+      mul_assoc] using hb
+  calc
+    _ ≤ 6 * K * X * X ^ θ * Real.log X := hb'
     _ ≤ _ := by
       have hscale := mul_le_mul_of_nonneg_left hell
-        (show 0 ≤ 8 * K * X * X ^ θ / (1 - θ) by positivity)
+        (show 0 ≤ 12 * K * X * X ^ θ / (1 - θ) by positivity)
       dsimp [fixedLength]
       field_simp at hscale ⊢
       nlinarith
