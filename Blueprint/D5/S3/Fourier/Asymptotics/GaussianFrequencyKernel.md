@@ -382,21 +382,7 @@ $$\forall c \in Real,\; \forall kappa \in Real,\; \forall hc \in 0 \le c,\; \for
 
 The original second integral commutes with the integrable frequency quotient on every finite window. For every D and symmetric H, its image of H_s-H is (b_*+2s) times the centered original Y square, plus twice the same-W quadratic quotient integral, minus I2(H). This is an equality of actual L2(P) classes. Identifying the selected original R and E processes and their common paths requires the corresponding process version identification.
 
-**Theorem 1.28 (Two-sided logarithmic control).**
-
-$$\forall x \in Real,\; \forall hx \in 0 < x,\; \operatorname{log}\left(x\right)^{2} \le 16 \cdot \operatorname{rpow}\left(x, \frac{-1}{2}\right)+x^{2}$$
-
-*Proof.* Machine-checked in Lean as `D5/S3/Fourier/Asymptotics/GaussianFrequencyKernel.log_square_bound` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* David Nualart and Giovanni Peccati (2005). *Central limit theorems for sequences of multiple stochastic integrals*. DOI: [10.1214/009117904000000621](https://doi.org/10.1214/009117904000000621). URL: <https://arxiv.org/pdf/math/0503598v1>.
-
-*Commentary.*
-
-For every positive x, log(x)^2 <= 16 x^(-1/2)+x^2. Below one, the reciprocal power bound controls the logarithmic singularity; above one, log(x) <= x controls the tail. This estimate is consumed by Gaussian logarithmic integrability.
-
-**Theorem 1.29 (Gaussian integrability at the singularity).**
+**Theorem 1.28 (Gaussian integrability at the singularity).**
 
 $$\forall b \in Real,\; \forall hb \in 0 < b,\; \operatorname{Integrable}\left((x:Real\mapsto \operatorname{log}\left(\operatorname{abs}\left(x\right)\right)^{2} \cdot \operatorname{exp}\left(-b \cdot x^{2}\right)), volume\right)$$
 
@@ -408,9 +394,9 @@ $$\forall b \in Real,\; \forall hb \in 0 < b,\; \operatorname{Integrable}\left((
 
 *Commentary.*
 
-The actual function log(|x|)^2 exp(-b x^2) is Lebesgue integrable for every b>0. The previous bound is dominated by the pinned Gaussian power integrals with exponents -1/2 and 2 on the positive half-line; reflection covers the negative half-line. The assigned value at zero has no integral effect.
+The actual function log(|x|)^2 exp(-b x^2) is Lebesgue integrable for every b>0. The shared squared-logarithm bound is dominated by the Gaussian power integrals with exponents -1/2 and 2 on the positive half-line; reflection covers the negative half-line. The assigned value at zero has no integral effect.
 
-**Theorem 1.30 (Logarithmic moment of the actual Gaussian law).**
+**Theorem 1.29 (Logarithmic moment of the actual Gaussian law).**
 
 $$\forall v \in NNReal,\; \forall hv \in \operatorname{Not}\left(v = 0\right),\; \operatorname{Integrable}\left((x:Real\mapsto \operatorname{log}\left(\operatorname{abs}\left(x\right)\right)^{2}), \operatorname{gaussianReal}\left(0, v\right)\right)$$
 
@@ -424,7 +410,7 @@ $$\forall v \in NNReal,\; \forall hv \in \operatorname{Not}\left(v = 0\right),\;
 
 For every nonzero nonnegative variance v, log(|x|)^2 is integrable under gaussianReal(0,v). The Gaussian density identity directly consumes the proved weighted Lebesgue integrability. No logarithmic moment premise is supplied.
 
-**Theorem 1.31 (Singular H and its actual Ci remainder).**
+**Theorem 1.30 (Singular H and its actual Ci remainder).**
 
 $$\forall c \in Real,\; \forall kappa \in Real,\; \forall hc \in 0 \le c,\; \forall hkappa \in 0 < kappa,\; \forall D \in Real,\; \exists H \in \operatorname{symmetricKernel}\left(\operatorname{spatialMeasure}\left(c, kappa\right)\right),\; \operatorname{AEEq}\left(\operatorname{coeFn}\left(\operatorname{val}\left(H\right)\right), (z:\operatorname{Prod}\left(Real, Real\right)\mapsto 1+2 \cdot D-2 \cdot \operatorname{log}\left(\frac{\operatorname{pi}\left(\right)}{2} \cdot \operatorname{abs}\left((\operatorname{fst}\left(z\right)-\operatorname{snd}\left(z\right))\right)\right)), \operatorname{prod}\left(\operatorname{spatialMeasure}\left(c, kappa\right), \operatorname{spatialMeasure}\left(c, kappa\right)\right)\right) \land \left(\forall s \in Real,\; \operatorname{AEEq}\left(\operatorname{coeFn}\left(\operatorname{val}\left(\operatorname{regularKernel}\left(c, kappa, hc, hkappa, D, s\right)-H\right)\right), (z:\operatorname{Prod}\left(Real, Real\right)\mapsto 2 \cdot \operatorname{cosineIntegral}\left(\frac{\operatorname{pi}\left(\right)}{2} \cdot \operatorname{exp}\left(s\right) \cdot \operatorname{abs}\left((\operatorname{fst}\left(z\right)-\operatorname{snd}\left(z\right))\right)\right)), \operatorname{prod}\left(\operatorname{spatialMeasure}\left(c, kappa\right), \operatorname{spatialMeasure}\left(c, kappa\right)\right)\right)\right)$$
 
@@ -450,7 +436,6 @@ For every real D, nonnegative c and positive kappa, one H in the actual symmetri
 - Truth anchor: `D5/S3/Fourier/Asymptotics/GaussianFrequencyKernel.gaussian_difference_law`
 - Truth anchor: `D5/S3/Fourier/Asymptotics/GaussianFrequencyKernel.gaussian_fourth`
 - Truth anchor: `D5/S3/Fourier/Asymptotics/GaussianFrequencyKernel.gaussian_log_square_integrable`
-- Truth anchor: `D5/S3/Fourier/Asymptotics/GaussianFrequencyKernel.log_square_bound`
 - Truth anchor: `D5/S3/Fourier/Asymptotics/GaussianFrequencyKernel.log_square_gaussian_integrable`
 - Truth anchor: `D5/S3/Fourier/Asymptotics/GaussianFrequencyKernel.quadraticFrequency`
 - Truth anchor: `D5/S3/Fourier/Asymptotics/GaussianFrequencyKernel.quadraticFrequency_representation`
@@ -471,6 +456,7 @@ For every real D, nonnegative c and positive kappa, one H in the actual symmetri
 - Truth anchor: `D5/S3/Fourier/Asymptotics/GaussianFrequencyKernel.squareDifference`
 - Truth anchor: `D5/S3/Fourier/Asymptotics/GaussianFrequencyKernel.squareDifference_coe`
 - Truth anchor: `D5/S3/Fourier/Asymptotics/GaussianFrequencyKernel.squareDifference_norm`
+- Dependency: [D5/S3/Analytic/LogSquareBound](../../Analytic/LogSquareBound.md)
 - Dependency: [D5/S3/Fourier/Asymptotics/CosineNormalizedRemainder](CosineNormalizedRemainder.md)
 - Dependency: [D5/S3/Fourier/Asymptotics/L2ContinuousPrimitive](L2ContinuousPrimitive.md)
 - Dependency: [D5/S3/Fourier/Asymptotics/SameNoiseSecondChaos](SameNoiseSecondChaos.md)

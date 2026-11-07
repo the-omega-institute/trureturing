@@ -1,0 +1,58 @@
+## 固定来源与证据范围
+
+<a id="ref-head"></a>
+
+**[head]**
+
+[trureturing 固定提交：3f98ae45e29bd5fb6ef8dd7d1e5bf39c2723520e](https://github.com/the-omega-institute/trureturing/commit/3f98ae45e29bd5fb6ef8dd7d1e5bf39c2723520e)。 固定公开源码快照，2026-10-31 新加坡时间；非后续滚动分支。
+
+<a id="ref-foundation"></a>
+
+**[foundation]**
+
+[AURIC FIB ATOM 金字塔基础公式与关系](https://github.com/the-omega-institute/trureturing/blob/3f98ae45e29bd5fb6ef8dd7d1e5bf39c2723520e/docs/develop/theory/AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS.md)。 原五模式、三个占据读口及其经典概率关系。
+
+<a id="ref-v28"></a>
+
+**[v28]**
+
+[AURIC 二元读出、完整框架相容性与黄金门桥，v28](https://github.com/the-omega-institute/trureturing/blob/3f98ae45e29bd5fb6ef8dd7d1e5bf39c2723520e/docs/develop/theory/AURIC_BINARY_READOUT_FULL_FRAME_COMPATIBILITY_AND_E8_GOLDEN_GATE_BRIDGE_V28.md)。 使用范围：二阶正关系、内部仪器记录、原占据压缩的联合可测性及完整上下文边界。
+
+<a id="ref-golden"></a>
+
+**[golden]**
+
+[AURIC 固定黄金门与编织相容性](https://github.com/the-omega-institute/trureturing/blob/3f98ae45e29bd5fb6ef8dd7d1e5bf39c2723520e/docs/develop/theory/AURIC_FIXED_GOLDEN_GATE_AND_BRAID_COMPATIBILITY_ZH.md)，§§1–4。 矩阵与共同相位按原稿约定；早期编码桥条件由后续具体来源补足。
+
+<a id="ref-v15"></a>
+
+**[v15]**
+
+[AURIC 黄金门、NAND 通用性与算术边界，v15](https://github.com/the-omega-institute/trureturing/blob/3f98ae45e29bd5fb6ef8dd7d1e5bf39c2723520e/docs/develop/theory/AURIC_GOLDEN_GATE_NAND_UNIVERSALITY_AND_ARITHMETIC_LIMITS_V15.md)。 本轮具体读取和核对 §§1–4、6–7 的相关门、编码、误差与守恒结论； 不声称审计全文后续算术证明。
+
+<a id="ref-continuation"></a>
+
+**[continuation]**
+
+[AURIC FIB ATOM 与量子基本原则：相干重建续卷 II](https://github.com/the-omega-institute/trureturing/blob/3f98ae45e29bd5fb6ef8dd7d1e5bf39c2723520e/docs/develop/theory/AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_II.md)。 §77 的全十三维 Jones–Wenzl 对应与密度； 本轮新增 §§121–125 的同时效果覆盖、实际概率匹配及条件表示。 这些来源均为纸面论证；入库本身不构成独立认证。
+
+<a id="ref-effect"></a>
+
+**[effect]**
+
+[EffectProbabilityExtension：effect\_density\_representation](https://github.com/the-omega-institute/trureturing/blob/3f98ae45e29bd5fb6ef8dd7d1e5bf39c2723520e/D5/S3/Quantum/Foundation/EffectProbabilityExtension.lean)。 读取现有公开声明和相应源码；本轮未执行 Lean，也未声称新增应用已编译。
+
+<a id="ref-flw"></a>
+
+**[flw]**
+
+M. H. Freedman, M. Larsen, Z. Wang, [*The two-eigenvalue problem and density of Jones representation of braid groups*](https://arxiv.org/abs/math/0103200)。 使用 Theorem 0.1 及 §2 的明确 Jones–Wenzl 表示。
+
+<a id="ref-program"></a>
+
+**[program]**
+
+M. A. Nielsen, I. L. Chuang, [*Programmable quantum gate arrays*](https://arxiv.org/abs/quant-ph/9703032)。 固定等距处理器的精确程序正交性边界。
+
+<a id="editor-notes"></a>
+
