@@ -1,0 +1,784 @@
+/- GID: D5/S3/Quantum/Entanglement/EJM/Frontier/Cover/Part007/PreparedEJMCompleteFrontierCover0759
+   generality: I
+   mirror-B: D5/B/S3/Quantum/Entanglement/EJM/Frontier/Cover/Part007/PreparedEJMCompleteFrontierCover0759
+   mirror-E: none(waiver:exact-original-context-mathematical-source)
+   anchors: []
+   utility: kind=numeric-reduction; basis=consumer=D5/S3/Quantum/Entanglement/EJM/PreparedEJMCompleteFrontierRoot.original_score_lower_bound; premises=D5/S3/Quantum/Entanglement/EJM/Frontier/Cover/Part007/PreparedEJMCompleteFrontierCover0759.context_11_72175_965232,D5/S3/Quantum/Entanglement/EJM/Frontier/Cover/Part007/PreparedEJMCompleteFrontierCover0759.context_10_18043_965233,D5/S3/Quantum/Entanglement/EJM/Frontier/Cover/Part007/PreparedEJMCompleteFrontierCover0759.context_9_4510_965234,D5/S3/Quantum/Entanglement/EJM/Frontier/Cover/Part007/PreparedEJMCompleteFrontierCover0759.context_11_72176_965265,D5/S3/Quantum/Entanglement/EJM/Frontier/Cover/Part007/PreparedEJMCompleteFrontierCover0759.context_11_72177_965297,D5/S3/Quantum/Entanglement/EJM/Frontier/Cover/Part007/PreparedEJMCompleteFrontierCover0759.context_11_72178_965333,D5/S3/Quantum/Entanglement/EJM/Frontier/Cover/Part007/PreparedEJMCompleteFrontierCover0759.context_11_72179_965368,D5/S3/Quantum/Entanglement/EJM/Frontier/Cover/Part007/PreparedEJMCompleteFrontierCover0759.context_10_18044_965369,D5/S3/Quantum/Entanglement/EJM/Frontier/Cover/Part007/PreparedEJMCompleteFrontierCover0759.context_10_18045_965428,D5/S3/Quantum/Entanglement/EJM/Frontier/Cover/Part007/PreparedEJMCompleteFrontierCover0759.context_10_18046_965493,D5/S3/Quantum/Entanglement/EJM/Frontier/Cover/Part007/PreparedEJMCompleteFrontierCover0759.context_10_18047_965534,D5/S3/Quantum/Entanglement/EJM/Frontier/Cover/Part007/PreparedEJMCompleteFrontierCover0759.context_9_4511_965535,D5/S3/Quantum/Entanglement/EJM/Frontier/Cover/Part007/PreparedEJMCompleteFrontierCover0759.context_8_1127_965536,D5/S3/Quantum/Entanglement/EJM/Frontier/Cover/Part007/PreparedEJMCompleteFrontierCover0759.context_7_281_965537,D5/S3/Quantum/Entanglement/EJM/Frontier/Cover/Part007/PreparedEJMCompleteFrontierCover0759.context_8_1128_14300,D5/S3/Quantum/Entanglement/EJM/Frontier/Cover/Part007/PreparedEJMCompleteFrontierCover0759.context_8_1129_14300,D5/S3/Quantum/Entanglement/EJM/Frontier/Cover/Part007/PreparedEJMCompleteFrontierCover0759.context_12_289280_34034,D5/S3/Quantum/Entanglement/EJM/Frontier/Cover/Part007/PreparedEJMCompleteFrontierCover0759.context_12_289281_965599,D5/S3/Quantum/Entanglement/EJM/Frontier/Cover/Part007/PreparedEJMCompleteFrontierCover0759.context_12_289282_965660,D5/S3/Quantum/Entanglement/EJM/Frontier/Cover/Part007/PreparedEJMCompleteFrontierCover0759.context_13_1157132_965691,D5/S3/Quantum/Entanglement/EJM/Frontier/Cover/Part007/PreparedEJMCompleteFrontierCover0759.context_13_1157133_965709,D5/S3/Quantum/Entanglement/EJM/Frontier/Cover/Part007/PreparedEJMCompleteFrontierCover0759.context_13_1157134_965725,D5/S3/Quantum/Entanglement/EJM/Frontier/Cover/Part007/PreparedEJMCompleteFrontierCover0759.context_13_1157135_965734,D5/S3/Quantum/Entanglement/EJM/Frontier/Cover/Part007/PreparedEJMCompleteFrontierCover0759.context_12_289283_965735,D5/S3/Quantum/Entanglement/EJM/Frontier/Cover/Part007/PreparedEJMCompleteFrontierCover0759.context_11_72320_965736,D5/S3/Quantum/Entanglement/EJM/Frontier/Cover/Part007/PreparedEJMCompleteFrontierCover0759.context_12_289284_34034,D5/S3/Quantum/Entanglement/EJM/Frontier/Cover/Part007/PreparedEJMCompleteFrontierCover0759.context_12_289285_965806,D5/S3/Quantum/Entanglement/EJM/Frontier/Cover/Part007/PreparedEJMCompleteFrontierCover0759.context_12_289286_965860,D5/S3/Quantum/Entanglement/EJM/Frontier/Cover/Part007/PreparedEJMCompleteFrontierCover0759.context_13_1157148_965892,D5/S3/Quantum/Entanglement/EJM/Frontier/Cover/Part007/PreparedEJMCompleteFrontierCover0759.context_13_1157149_965904,D5/S3/Quantum/Entanglement/EJM/Frontier/Cover/Part007/PreparedEJMCompleteFrontierCover0759.context_13_1157150_965927,D5/S3/Quantum/Entanglement/EJM/Frontier/Cover/Part007/PreparedEJMCompleteFrontierCover0759.context_13_1157151_965938,D5/S3/Quantum/Entanglement/EJM/Frontier/Cover/Part007/PreparedEJMCompleteFrontierCover0759.context_12_289287_965939,D5/S3/Quantum/Entanglement/EJM/Frontier/Cover/Part007/PreparedEJMCompleteFrontierCover0759.context_11_72321_965940,D5/S3/Quantum/Entanglement/EJM/Frontier/Cover/Part007/PreparedEJMCompleteFrontierCover0759.context_12_289288_966039,D5/S3/Quantum/Entanglement/EJM/Frontier/Cover/Part007/PreparedEJMCompleteFrontierCover0759.context_12_289289_966113,D5/S3/Quantum/Entanglement/EJM/Frontier/Cover/Part007/PreparedEJMCompleteFrontierCover0759.context_12_289290_893903,D5/S3/Quantum/Entanglement/EJM/Frontier/Cover/Part007/PreparedEJMCompleteFrontierCover0759.context_13_1157164_966137,D5/S3/Quantum/Entanglement/EJM/Frontier/Cover/Part007/PreparedEJMCompleteFrontierCover0759.context_13_1157165_966159,D5/S3/Quantum/Entanglement/EJM/Frontier/Cover/Part007/PreparedEJMCompleteFrontierCover0759.context_13_1157166_966179,D5/S3/Quantum/Entanglement/EJM/Frontier/Cover/Part007/PreparedEJMCompleteFrontierCover0759.context_13_1157167_966191,D5/S3/Quantum/Entanglement/EJM/Frontier/Cover/Part007/PreparedEJMCompleteFrontierCover0759.context_12_289291_966192,D5/S3/Quantum/Entanglement/EJM/Frontier/Cover/Part007/PreparedEJMCompleteFrontierCover0759.context_11_72322_966193,D5/S3/Quantum/Entanglement/EJM/Frontier/Cover/Part007/PreparedEJMCompleteFrontierCover0759.context_12_289292_966255,D5/S3/Quantum/Entanglement/EJM/Frontier/Cover/Part007/PreparedEJMCompleteFrontierCover0759.context_12_289293_966319,D5/S3/Quantum/Entanglement/EJM/Frontier/Cover/Part007/PreparedEJMCompleteFrontierCover0759.context_12_289294_966378,D5/S3/Quantum/Entanglement/EJM/Frontier/Cover/Part007/PreparedEJMCompleteFrontierCover0759.context_12_289295_966448,D5/S3/Quantum/Entanglement/EJM/Frontier/Cover/Part007/PreparedEJMCompleteFrontierCover0759.context_11_72323_966449,D5/S3/Quantum/Entanglement/EJM/Frontier/Cover/Part007/PreparedEJMCompleteFrontierCover0759.context_10_18080_966450,D5/S3/Quantum/Entanglement/EJM/Frontier/Cover/Part007/PreparedEJMCompleteFrontierCover0759.context_12_289296_1738,D5/S3/Quantum/Entanglement/EJM/Frontier/Cover/Part007/PreparedEJMCompleteFrontierCover0759.context_12_289297_966505,D5/S3/Quantum/Entanglement/EJM/Frontier/Cover/Part007/PreparedEJMCompleteFrontierCover0759.context_12_289298_966570,D5/S3/Quantum/Entanglement/EJM/Frontier/Cover/Part007/PreparedEJMCompleteFrontierCover0759.context_12_289299_966643,D5/S3/Quantum/Entanglement/EJM/Frontier/Cover/Part007/PreparedEJMCompleteFrontierCover0759.context_11_72324_966644,D5/S3/Quantum/Entanglement/EJM/Frontier/Cover/Part007/PreparedEJMCompleteFrontierCover0759.context_12_289300_1738,D5/S3/Quantum/Entanglement/EJM/Frontier/Cover/Part007/PreparedEJMCompleteFrontierCover0759.context_12_289301_928104,D5/S3/Quantum/Entanglement/EJM/Frontier/Cover/Part007/PreparedEJMCompleteFrontierCover0759.context_12_289302_966701,D5/S3/Quantum/Entanglement/EJM/Frontier/Cover/Part007/PreparedEJMCompleteFrontierCover0759.context_12_289303_966768,D5/S3/Quantum/Entanglement/EJM/Frontier/Cover/Part007/PreparedEJMCompleteFrontierCover0759.context_11_72325_966769,D5/S3/Quantum/Entanglement/EJM/Frontier/Cover/Part007/PreparedEJMCompleteFrontierCover0759.context_12_289304_1738,D5/S3/Quantum/Entanglement/EJM/Frontier/Cover/Part007/PreparedEJMCompleteFrontierCover0759.context_12_289305_966820,D5/S3/Quantum/Entanglement/EJM/Frontier/Cover/Part007/PreparedEJMCompleteFrontierCover0759.context_12_289306_893903,D5/S3/Quantum/Entanglement/EJM/Frontier/Cover/Part007/PreparedEJMCompleteFrontierCover0759.context_12_289307_966887,D5/S3/Quantum/Entanglement/EJM/Frontier/Cover/Part007/PreparedEJMCompleteFrontierCover0759.context_11_72326_966888
+   digest: Actual original DAG occurrences retain their full depth, base-four code, node index, cache and partial assignment. -/
+
+/- Generated prepared source. Not compiled or kernel accepted.
+All original coordinates, four values, F1/F2, 32 blocks and scale are retained. -/
+import D5.S3.Quantum.Entanglement.EJM.PreparedEJMCompleteFrontierSelector
+import Mathlib.Tactic.FinCases
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Cover.Part007.PreparedEJMCompleteFrontierCover0758
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
+set_option maxHeartbeats 100000000
+set_option maxRecDepth 65536
+namespace D5.S3.Quantum.Entanglement.EJM.PreparedEJMCompleteFrontier
+open D5.S0.Certificates
+open EJMOriginalReplayAssembly (coordinate prefixCache prefixPartial)
+theorem selected_cut_36436 : selected 10 ⟨965232, by decide⟩
+    (prefixPartial 11 72175) = some ⟨11, 2, 0, 965232, 72175, 2217, 262144⟩ := by
+  decide +kernel
+
+theorem context_11_72175_965232 : TransientEJMOriginalAdaptiveFrontierBridge.Accepted
+    frontier 11 72175 ⟨965232, by decide⟩ :=
+  accepted_of_selected 11 72175 ⟨965232, by decide⟩ ⟨11, 2, 0, 965232, 72175, 2217, 262144⟩
+    (by decide) selected_cut_36436
+
+theorem unmarked_context_10_18043_965233 : frontier 11 ⟨965233, by decide⟩
+    (prefixCache 10 18043) (prefixPartial 10 18043) = false := by
+  decide +kernel
+
+theorem node_context_10_18043_965233 : EJMOriginalGlobalDAGData.nodes 11 ⟨965233, by decide⟩ =
+    .split (coordinate 10) (![⟨965082, by decide⟩,⟨965138, by decide⟩,⟨965194, by decide⟩,⟨965232, by decide⟩]) := by
+  apply FiniteCachedSymmetryDAGReplay.checked_split_node
+  decide +kernel
+
+theorem context_10_18043_965233 : TransientEJMOriginalAdaptiveFrontierBridge.Accepted
+    frontier 10 18043 ⟨965233, by decide⟩ := by
+  apply TransientEJMOriginalAdaptiveFrontierBridge.assemble frontier 10 18043
+    ⟨965233, by decide⟩ (by decide) (![⟨965082, by decide⟩,⟨965138, by decide⟩,⟨965194, by decide⟩,⟨965232, by decide⟩]) unmarked_context_10_18043_965233 node_context_10_18043_965233
+  intro a
+  fin_cases a
+  · exact context_11_72172_965082
+  · exact context_11_72173_965138
+  · exact context_11_72174_965194
+  · exact context_11_72175_965232
+
+theorem unmarked_context_9_4510_965234 : frontier 12 ⟨965234, by decide⟩
+    (prefixCache 9 4510) (prefixPartial 9 4510) = false := by
+  decide +kernel
+
+theorem node_context_9_4510_965234 : EJMOriginalGlobalDAGData.nodes 12 ⟨965234, by decide⟩ =
+    .split (coordinate 9) (![⟨964664, by decide⟩,⟨964847, by decide⟩,⟨964993, by decide⟩,⟨965233, by decide⟩]) := by
+  apply FiniteCachedSymmetryDAGReplay.checked_split_node
+  decide +kernel
+
+theorem context_9_4510_965234 : TransientEJMOriginalAdaptiveFrontierBridge.Accepted
+    frontier 9 4510 ⟨965234, by decide⟩ := by
+  apply TransientEJMOriginalAdaptiveFrontierBridge.assemble frontier 9 4510
+    ⟨965234, by decide⟩ (by decide) (![⟨964664, by decide⟩,⟨964847, by decide⟩,⟨964993, by decide⟩,⟨965233, by decide⟩]) unmarked_context_9_4510_965234 node_context_9_4510_965234
+  intro a
+  fin_cases a
+  · exact context_10_18040_964664
+  · exact context_10_18041_964847
+  · exact context_10_18042_964993
+  · exact context_10_18043_965233
+
+theorem selected_cut_36437 : selected 10 ⟨965265, by decide⟩
+    (prefixPartial 11 72176) = some ⟨11, 2, 0, 965265, 72176, 2165, 262144⟩ := by
+  decide +kernel
+
+theorem context_11_72176_965265 : TransientEJMOriginalAdaptiveFrontierBridge.Accepted
+    frontier 11 72176 ⟨965265, by decide⟩ :=
+  accepted_of_selected 11 72176 ⟨965265, by decide⟩ ⟨11, 2, 0, 965265, 72176, 2165, 262144⟩
+    (by decide) selected_cut_36437
+
+theorem selected_cut_36438 : selected 10 ⟨965297, by decide⟩
+    (prefixPartial 11 72177) = some ⟨11, 2, 0, 965297, 72177, 2057, 262144⟩ := by
+  decide +kernel
+
+theorem context_11_72177_965297 : TransientEJMOriginalAdaptiveFrontierBridge.Accepted
+    frontier 11 72177 ⟨965297, by decide⟩ :=
+  accepted_of_selected 11 72177 ⟨965297, by decide⟩ ⟨11, 2, 0, 965297, 72177, 2057, 262144⟩
+    (by decide) selected_cut_36438
+
+theorem selected_cut_36439 : selected 10 ⟨965333, by decide⟩
+    (prefixPartial 11 72178) = some ⟨11, 2, 0, 965333, 72178, 2149, 262144⟩ := by
+  decide +kernel
+
+theorem context_11_72178_965333 : TransientEJMOriginalAdaptiveFrontierBridge.Accepted
+    frontier 11 72178 ⟨965333, by decide⟩ :=
+  accepted_of_selected 11 72178 ⟨965333, by decide⟩ ⟨11, 2, 0, 965333, 72178, 2149, 262144⟩
+    (by decide) selected_cut_36439
+
+theorem selected_cut_36440 : selected 10 ⟨965368, by decide⟩
+    (prefixPartial 11 72179) = some ⟨11, 2, 0, 965368, 72179, 1461, 262144⟩ := by
+  decide +kernel
+
+theorem context_11_72179_965368 : TransientEJMOriginalAdaptiveFrontierBridge.Accepted
+    frontier 11 72179 ⟨965368, by decide⟩ :=
+  accepted_of_selected 11 72179 ⟨965368, by decide⟩ ⟨11, 2, 0, 965368, 72179, 1461, 262144⟩
+    (by decide) selected_cut_36440
+
+theorem unmarked_context_10_18044_965369 : frontier 11 ⟨965369, by decide⟩
+    (prefixCache 10 18044) (prefixPartial 10 18044) = false := by
+  decide +kernel
+
+theorem node_context_10_18044_965369 : EJMOriginalGlobalDAGData.nodes 11 ⟨965369, by decide⟩ =
+    .split (coordinate 10) (![⟨965265, by decide⟩,⟨965297, by decide⟩,⟨965333, by decide⟩,⟨965368, by decide⟩]) := by
+  apply FiniteCachedSymmetryDAGReplay.checked_split_node
+  decide +kernel
+
+theorem context_10_18044_965369 : TransientEJMOriginalAdaptiveFrontierBridge.Accepted
+    frontier 10 18044 ⟨965369, by decide⟩ := by
+  apply TransientEJMOriginalAdaptiveFrontierBridge.assemble frontier 10 18044
+    ⟨965369, by decide⟩ (by decide) (![⟨965265, by decide⟩,⟨965297, by decide⟩,⟨965333, by decide⟩,⟨965368, by decide⟩]) unmarked_context_10_18044_965369 node_context_10_18044_965369
+  intro a
+  fin_cases a
+  · exact context_11_72176_965265
+  · exact context_11_72177_965297
+  · exact context_11_72178_965333
+  · exact context_11_72179_965368
+
+theorem selected_cut_36441 : selected 11 ⟨965428, by decide⟩
+    (prefixPartial 10 18045) = some ⟨10, 2, 0, 965428, 18045, 3925, 1048576⟩ := by
+  decide +kernel
+
+theorem context_10_18045_965428 : TransientEJMOriginalAdaptiveFrontierBridge.Accepted
+    frontier 10 18045 ⟨965428, by decide⟩ :=
+  accepted_of_selected 10 18045 ⟨965428, by decide⟩ ⟨10, 2, 0, 965428, 18045, 3925, 1048576⟩
+    (by decide) selected_cut_36441
+
+theorem selected_cut_36442 : selected 11 ⟨965493, by decide⟩
+    (prefixPartial 10 18046) = some ⟨10, 2, 0, 965493, 18046, 3333, 1048576⟩ := by
+  decide +kernel
+
+theorem context_10_18046_965493 : TransientEJMOriginalAdaptiveFrontierBridge.Accepted
+    frontier 10 18046 ⟨965493, by decide⟩ :=
+  accepted_of_selected 10 18046 ⟨965493, by decide⟩ ⟨10, 2, 0, 965493, 18046, 3333, 1048576⟩
+    (by decide) selected_cut_36442
+
+theorem selected_cut_36443 : selected 11 ⟨965534, by decide⟩
+    (prefixPartial 10 18047) = some ⟨10, 2, 0, 965534, 18047, 677, 1048576⟩ := by
+  decide +kernel
+
+theorem context_10_18047_965534 : TransientEJMOriginalAdaptiveFrontierBridge.Accepted
+    frontier 10 18047 ⟨965534, by decide⟩ :=
+  accepted_of_selected 10 18047 ⟨965534, by decide⟩ ⟨10, 2, 0, 965534, 18047, 677, 1048576⟩
+    (by decide) selected_cut_36443
+
+theorem unmarked_context_9_4511_965535 : frontier 12 ⟨965535, by decide⟩
+    (prefixCache 9 4511) (prefixPartial 9 4511) = false := by
+  decide +kernel
+
+theorem node_context_9_4511_965535 : EJMOriginalGlobalDAGData.nodes 12 ⟨965535, by decide⟩ =
+    .split (coordinate 9) (![⟨965369, by decide⟩,⟨965428, by decide⟩,⟨965493, by decide⟩,⟨965534, by decide⟩]) := by
+  apply FiniteCachedSymmetryDAGReplay.checked_split_node
+  decide +kernel
+
+theorem context_9_4511_965535 : TransientEJMOriginalAdaptiveFrontierBridge.Accepted
+    frontier 9 4511 ⟨965535, by decide⟩ := by
+  apply TransientEJMOriginalAdaptiveFrontierBridge.assemble frontier 9 4511
+    ⟨965535, by decide⟩ (by decide) (![⟨965369, by decide⟩,⟨965428, by decide⟩,⟨965493, by decide⟩,⟨965534, by decide⟩]) unmarked_context_9_4511_965535 node_context_9_4511_965535
+  intro a
+  fin_cases a
+  · exact context_10_18044_965369
+  · exact context_10_18045_965428
+  · exact context_10_18046_965493
+  · exact context_10_18047_965534
+
+theorem unmarked_context_8_1127_965536 : frontier 13 ⟨965536, by decide⟩
+    (prefixCache 8 1127) (prefixPartial 8 1127) = false := by
+  decide +kernel
+
+theorem node_context_8_1127_965536 : EJMOriginalGlobalDAGData.nodes 13 ⟨965536, by decide⟩ =
+    .split (coordinate 8) (![⟨962899, by decide⟩,⟨964247, by decide⟩,⟨965234, by decide⟩,⟨965535, by decide⟩]) := by
+  apply FiniteCachedSymmetryDAGReplay.checked_split_node
+  decide +kernel
+
+theorem context_8_1127_965536 : TransientEJMOriginalAdaptiveFrontierBridge.Accepted
+    frontier 8 1127 ⟨965536, by decide⟩ := by
+  apply TransientEJMOriginalAdaptiveFrontierBridge.assemble frontier 8 1127
+    ⟨965536, by decide⟩ (by decide) (![⟨962899, by decide⟩,⟨964247, by decide⟩,⟨965234, by decide⟩,⟨965535, by decide⟩]) unmarked_context_8_1127_965536 node_context_8_1127_965536
+  intro a
+  fin_cases a
+  · exact context_9_4508_962899
+  · exact context_9_4509_964247
+  · exact context_9_4510_965234
+  · exact context_9_4511_965535
+
+theorem unmarked_context_7_281_965537 : frontier 14 ⟨965537, by decide⟩
+    (prefixCache 7 281) (prefixPartial 7 281) = false := by
+  decide +kernel
+
+theorem node_context_7_281_965537 : EJMOriginalGlobalDAGData.nodes 14 ⟨965537, by decide⟩ =
+    .split (coordinate 7) (![⟨14300, by decide⟩,⟨954489, by decide⟩,⟨959985, by decide⟩,⟨965536, by decide⟩]) := by
+  apply FiniteCachedSymmetryDAGReplay.checked_split_node
+  decide +kernel
+
+theorem context_7_281_965537 : TransientEJMOriginalAdaptiveFrontierBridge.Accepted
+    frontier 7 281 ⟨965537, by decide⟩ := by
+  apply TransientEJMOriginalAdaptiveFrontierBridge.assemble frontier 7 281
+    ⟨965537, by decide⟩ (by decide) (![⟨14300, by decide⟩,⟨954489, by decide⟩,⟨959985, by decide⟩,⟨965536, by decide⟩]) unmarked_context_7_281_965537 node_context_7_281_965537
+  intro a
+  fin_cases a
+  · exact context_8_1124_14300
+  · exact context_8_1125_954489
+  · exact context_8_1126_959985
+  · exact context_8_1127_965536
+
+theorem selected_cut_36444 : selected 13 ⟨14300, by decide⟩
+    (prefixPartial 8 1128) = some ⟨8, 1, 0, 14300, 1128, 1, 16777216⟩ := by
+  decide +kernel
+
+theorem context_8_1128_14300 : TransientEJMOriginalAdaptiveFrontierBridge.Accepted
+    frontier 8 1128 ⟨14300, by decide⟩ :=
+  accepted_of_selected 8 1128 ⟨14300, by decide⟩ ⟨8, 1, 0, 14300, 1128, 1, 16777216⟩
+    (by decide) selected_cut_36444
+
+theorem selected_cut_36445 : selected 13 ⟨14300, by decide⟩
+    (prefixPartial 8 1129) = some ⟨8, 1, 0, 14300, 1129, 1, 16777216⟩ := by
+  decide +kernel
+
+theorem context_8_1129_14300 : TransientEJMOriginalAdaptiveFrontierBridge.Accepted
+    frontier 8 1129 ⟨14300, by decide⟩ :=
+  accepted_of_selected 8 1129 ⟨14300, by decide⟩ ⟨8, 1, 0, 14300, 1129, 1, 16777216⟩
+    (by decide) selected_cut_36445
+
+theorem selected_cut_36446 : selected 9 ⟨34034, by decide⟩
+    (prefixPartial 12 289280) = some ⟨12, 1, 0, 34034, 289280, 1, 65536⟩ := by
+  decide +kernel
+
+theorem context_12_289280_34034 : TransientEJMOriginalAdaptiveFrontierBridge.Accepted
+    frontier 12 289280 ⟨34034, by decide⟩ :=
+  accepted_of_selected 12 289280 ⟨34034, by decide⟩ ⟨12, 1, 0, 34034, 289280, 1, 65536⟩
+    (by decide) selected_cut_36446
+
+theorem selected_cut_36447 : selected 9 ⟨965599, by decide⟩
+    (prefixPartial 12 289281) = some ⟨12, 2, 0, 965599, 289281, 3749, 65536⟩ := by
+  decide +kernel
+
+theorem context_12_289281_965599 : TransientEJMOriginalAdaptiveFrontierBridge.Accepted
+    frontier 12 289281 ⟨965599, by decide⟩ :=
+  accepted_of_selected 12 289281 ⟨965599, by decide⟩ ⟨12, 2, 0, 965599, 289281, 3749, 65536⟩
+    (by decide) selected_cut_36447
+
+theorem selected_cut_36448 : selected 9 ⟨965660, by decide⟩
+    (prefixPartial 12 289282) = some ⟨12, 2, 0, 965660, 289282, 3621, 65536⟩ := by
+  decide +kernel
+
+theorem context_12_289282_965660 : TransientEJMOriginalAdaptiveFrontierBridge.Accepted
+    frontier 12 289282 ⟨965660, by decide⟩ :=
+  accepted_of_selected 12 289282 ⟨965660, by decide⟩ ⟨12, 2, 0, 965660, 289282, 3621, 65536⟩
+    (by decide) selected_cut_36448
+
+theorem selected_cut_36449 : selected 8 ⟨965691, by decide⟩
+    (prefixPartial 13 1157132) = some ⟨13, 2, 0, 965691, 1157132, 1601, 16384⟩ := by
+  decide +kernel
+
+theorem context_13_1157132_965691 : TransientEJMOriginalAdaptiveFrontierBridge.Accepted
+    frontier 13 1157132 ⟨965691, by decide⟩ :=
+  accepted_of_selected 13 1157132 ⟨965691, by decide⟩ ⟨13, 2, 0, 965691, 1157132, 1601, 16384⟩
+    (by decide) selected_cut_36449
+
+theorem selected_cut_36450 : selected 8 ⟨965709, by decide⟩
+    (prefixPartial 13 1157133) = some ⟨13, 2, 0, 965709, 1157133, 853, 16384⟩ := by
+  decide +kernel
+
+theorem context_13_1157133_965709 : TransientEJMOriginalAdaptiveFrontierBridge.Accepted
+    frontier 13 1157133 ⟨965709, by decide⟩ :=
+  accepted_of_selected 13 1157133 ⟨965709, by decide⟩ ⟨13, 2, 0, 965709, 1157133, 853, 16384⟩
+    (by decide) selected_cut_36450
+
+theorem selected_cut_36451 : selected 8 ⟨965725, by decide⟩
+    (prefixPartial 13 1157134) = some ⟨13, 2, 0, 965725, 1157134, 1145, 16384⟩ := by
+  decide +kernel
+
+theorem context_13_1157134_965725 : TransientEJMOriginalAdaptiveFrontierBridge.Accepted
+    frontier 13 1157134 ⟨965725, by decide⟩ :=
+  accepted_of_selected 13 1157134 ⟨965725, by decide⟩ ⟨13, 2, 0, 965725, 1157134, 1145, 16384⟩
+    (by decide) selected_cut_36451
+
+theorem selected_cut_36452 : selected 8 ⟨965734, by decide⟩
+    (prefixPartial 13 1157135) = some ⟨13, 2, 0, 965734, 1157135, 725, 16384⟩ := by
+  decide +kernel
+
+theorem context_13_1157135_965734 : TransientEJMOriginalAdaptiveFrontierBridge.Accepted
+    frontier 13 1157135 ⟨965734, by decide⟩ :=
+  accepted_of_selected 13 1157135 ⟨965734, by decide⟩ ⟨13, 2, 0, 965734, 1157135, 725, 16384⟩
+    (by decide) selected_cut_36452
+
+theorem unmarked_context_12_289283_965735 : frontier 9 ⟨965735, by decide⟩
+    (prefixCache 12 289283) (prefixPartial 12 289283) = false := by
+  decide +kernel
+
+theorem node_context_12_289283_965735 : EJMOriginalGlobalDAGData.nodes 9 ⟨965735, by decide⟩ =
+    .split (coordinate 12) (![⟨965691, by decide⟩,⟨965709, by decide⟩,⟨965725, by decide⟩,⟨965734, by decide⟩]) := by
+  apply FiniteCachedSymmetryDAGReplay.checked_split_node
+  decide +kernel
+
+theorem context_12_289283_965735 : TransientEJMOriginalAdaptiveFrontierBridge.Accepted
+    frontier 12 289283 ⟨965735, by decide⟩ := by
+  apply TransientEJMOriginalAdaptiveFrontierBridge.assemble frontier 12 289283
+    ⟨965735, by decide⟩ (by decide) (![⟨965691, by decide⟩,⟨965709, by decide⟩,⟨965725, by decide⟩,⟨965734, by decide⟩]) unmarked_context_12_289283_965735 node_context_12_289283_965735
+  intro a
+  fin_cases a
+  · exact context_13_1157132_965691
+  · exact context_13_1157133_965709
+  · exact context_13_1157134_965725
+  · exact context_13_1157135_965734
+
+theorem unmarked_context_11_72320_965736 : frontier 10 ⟨965736, by decide⟩
+    (prefixCache 11 72320) (prefixPartial 11 72320) = false := by
+  decide +kernel
+
+theorem node_context_11_72320_965736 : EJMOriginalGlobalDAGData.nodes 10 ⟨965736, by decide⟩ =
+    .split (coordinate 11) (![⟨34034, by decide⟩,⟨965599, by decide⟩,⟨965660, by decide⟩,⟨965735, by decide⟩]) := by
+  apply FiniteCachedSymmetryDAGReplay.checked_split_node
+  decide +kernel
+
+theorem context_11_72320_965736 : TransientEJMOriginalAdaptiveFrontierBridge.Accepted
+    frontier 11 72320 ⟨965736, by decide⟩ := by
+  apply TransientEJMOriginalAdaptiveFrontierBridge.assemble frontier 11 72320
+    ⟨965736, by decide⟩ (by decide) (![⟨34034, by decide⟩,⟨965599, by decide⟩,⟨965660, by decide⟩,⟨965735, by decide⟩]) unmarked_context_11_72320_965736 node_context_11_72320_965736
+  intro a
+  fin_cases a
+  · exact context_12_289280_34034
+  · exact context_12_289281_965599
+  · exact context_12_289282_965660
+  · exact context_12_289283_965735
+
+theorem selected_cut_36453 : selected 9 ⟨34034, by decide⟩
+    (prefixPartial 12 289284) = some ⟨12, 1, 0, 34034, 289284, 1, 65536⟩ := by
+  decide +kernel
+
+theorem context_12_289284_34034 : TransientEJMOriginalAdaptiveFrontierBridge.Accepted
+    frontier 12 289284 ⟨34034, by decide⟩ :=
+  accepted_of_selected 12 289284 ⟨34034, by decide⟩ ⟨12, 1, 0, 34034, 289284, 1, 65536⟩
+    (by decide) selected_cut_36453
+
+theorem selected_cut_36454 : selected 9 ⟨965806, by decide⟩
+    (prefixPartial 12 289285) = some ⟨12, 2, 0, 965806, 289285, 3761, 65536⟩ := by
+  decide +kernel
+
+theorem context_12_289285_965806 : TransientEJMOriginalAdaptiveFrontierBridge.Accepted
+    frontier 12 289285 ⟨965806, by decide⟩ :=
+  accepted_of_selected 12 289285 ⟨965806, by decide⟩ ⟨12, 2, 0, 965806, 289285, 3761, 65536⟩
+    (by decide) selected_cut_36454
+
+theorem selected_cut_36455 : selected 9 ⟨965860, by decide⟩
+    (prefixPartial 12 289286) = some ⟨12, 2, 0, 965860, 289286, 3633, 65536⟩ := by
+  decide +kernel
+
+theorem context_12_289286_965860 : TransientEJMOriginalAdaptiveFrontierBridge.Accepted
+    frontier 12 289286 ⟨965860, by decide⟩ :=
+  accepted_of_selected 12 289286 ⟨965860, by decide⟩ ⟨12, 2, 0, 965860, 289286, 3633, 65536⟩
+    (by decide) selected_cut_36455
+
+theorem selected_cut_36456 : selected 8 ⟨965892, by decide⟩
+    (prefixPartial 13 1157148) = some ⟨13, 2, 0, 965892, 1157148, 1585, 16384⟩ := by
+  decide +kernel
+
+theorem context_13_1157148_965892 : TransientEJMOriginalAdaptiveFrontierBridge.Accepted
+    frontier 13 1157148 ⟨965892, by decide⟩ :=
+  accepted_of_selected 13 1157148 ⟨965892, by decide⟩ ⟨13, 2, 0, 965892, 1157148, 1585, 16384⟩
+    (by decide) selected_cut_36456
+
+theorem selected_cut_36457 : selected 8 ⟨965904, by decide⟩
+    (prefixPartial 13 1157149) = some ⟨13, 2, 0, 965904, 1157149, 785, 16384⟩ := by
+  decide +kernel
+
+theorem context_13_1157149_965904 : TransientEJMOriginalAdaptiveFrontierBridge.Accepted
+    frontier 13 1157149 ⟨965904, by decide⟩ :=
+  accepted_of_selected 13 1157149 ⟨965904, by decide⟩ ⟨13, 2, 0, 965904, 1157149, 785, 16384⟩
+    (by decide) selected_cut_36457
+
+theorem selected_cut_36458 : selected 8 ⟨965927, by decide⟩
+    (prefixPartial 13 1157150) = some ⟨13, 2, 0, 965927, 1157150, 1169, 16384⟩ := by
+  decide +kernel
+
+theorem context_13_1157150_965927 : TransientEJMOriginalAdaptiveFrontierBridge.Accepted
+    frontier 13 1157150 ⟨965927, by decide⟩ :=
+  accepted_of_selected 13 1157150 ⟨965927, by decide⟩ ⟨13, 2, 0, 965927, 1157150, 1169, 16384⟩
+    (by decide) selected_cut_36458
+
+theorem selected_cut_36459 : selected 8 ⟨965938, by decide⟩
+    (prefixPartial 13 1157151) = some ⟨13, 2, 0, 965938, 1157151, 737, 16384⟩ := by
+  decide +kernel
+
+theorem context_13_1157151_965938 : TransientEJMOriginalAdaptiveFrontierBridge.Accepted
+    frontier 13 1157151 ⟨965938, by decide⟩ :=
+  accepted_of_selected 13 1157151 ⟨965938, by decide⟩ ⟨13, 2, 0, 965938, 1157151, 737, 16384⟩
+    (by decide) selected_cut_36459
+
+theorem unmarked_context_12_289287_965939 : frontier 9 ⟨965939, by decide⟩
+    (prefixCache 12 289287) (prefixPartial 12 289287) = false := by
+  decide +kernel
+
+theorem node_context_12_289287_965939 : EJMOriginalGlobalDAGData.nodes 9 ⟨965939, by decide⟩ =
+    .split (coordinate 12) (![⟨965892, by decide⟩,⟨965904, by decide⟩,⟨965927, by decide⟩,⟨965938, by decide⟩]) := by
+  apply FiniteCachedSymmetryDAGReplay.checked_split_node
+  decide +kernel
+
+theorem context_12_289287_965939 : TransientEJMOriginalAdaptiveFrontierBridge.Accepted
+    frontier 12 289287 ⟨965939, by decide⟩ := by
+  apply TransientEJMOriginalAdaptiveFrontierBridge.assemble frontier 12 289287
+    ⟨965939, by decide⟩ (by decide) (![⟨965892, by decide⟩,⟨965904, by decide⟩,⟨965927, by decide⟩,⟨965938, by decide⟩]) unmarked_context_12_289287_965939 node_context_12_289287_965939
+  intro a
+  fin_cases a
+  · exact context_13_1157148_965892
+  · exact context_13_1157149_965904
+  · exact context_13_1157150_965927
+  · exact context_13_1157151_965938
+
+theorem unmarked_context_11_72321_965940 : frontier 10 ⟨965940, by decide⟩
+    (prefixCache 11 72321) (prefixPartial 11 72321) = false := by
+  decide +kernel
+
+theorem node_context_11_72321_965940 : EJMOriginalGlobalDAGData.nodes 10 ⟨965940, by decide⟩ =
+    .split (coordinate 11) (![⟨34034, by decide⟩,⟨965806, by decide⟩,⟨965860, by decide⟩,⟨965939, by decide⟩]) := by
+  apply FiniteCachedSymmetryDAGReplay.checked_split_node
+  decide +kernel
+
+theorem context_11_72321_965940 : TransientEJMOriginalAdaptiveFrontierBridge.Accepted
+    frontier 11 72321 ⟨965940, by decide⟩ := by
+  apply TransientEJMOriginalAdaptiveFrontierBridge.assemble frontier 11 72321
+    ⟨965940, by decide⟩ (by decide) (![⟨34034, by decide⟩,⟨965806, by decide⟩,⟨965860, by decide⟩,⟨965939, by decide⟩]) unmarked_context_11_72321_965940 node_context_11_72321_965940
+  intro a
+  fin_cases a
+  · exact context_12_289284_34034
+  · exact context_12_289285_965806
+  · exact context_12_289286_965860
+  · exact context_12_289287_965939
+
+theorem selected_cut_36460 : selected 9 ⟨966039, by decide⟩
+    (prefixPartial 12 289288) = some ⟨12, 2, 0, 966039, 289288, 3197, 65536⟩ := by
+  decide +kernel
+
+theorem context_12_289288_966039 : TransientEJMOriginalAdaptiveFrontierBridge.Accepted
+    frontier 12 289288 ⟨966039, by decide⟩ :=
+  accepted_of_selected 12 289288 ⟨966039, by decide⟩ ⟨12, 2, 0, 966039, 289288, 3197, 65536⟩
+    (by decide) selected_cut_36460
+
+theorem selected_cut_36461 : selected 9 ⟨966113, by decide⟩
+    (prefixPartial 12 289289) = some ⟨12, 2, 0, 966113, 289289, 3749, 65536⟩ := by
+  decide +kernel
+
+theorem context_12_289289_966113 : TransientEJMOriginalAdaptiveFrontierBridge.Accepted
+    frontier 12 289289 ⟨966113, by decide⟩ :=
+  accepted_of_selected 12 289289 ⟨966113, by decide⟩ ⟨12, 2, 0, 966113, 289289, 3749, 65536⟩
+    (by decide) selected_cut_36461
+
+theorem selected_cut_36462 : selected 9 ⟨893903, by decide⟩
+    (prefixPartial 12 289290) = some ⟨12, 1, 0, 893903, 289290, 1, 65536⟩ := by
+  decide +kernel
+
+theorem context_12_289290_893903 : TransientEJMOriginalAdaptiveFrontierBridge.Accepted
+    frontier 12 289290 ⟨893903, by decide⟩ :=
+  accepted_of_selected 12 289290 ⟨893903, by decide⟩ ⟨12, 1, 0, 893903, 289290, 1, 65536⟩
+    (by decide) selected_cut_36462
+
+theorem selected_cut_36463 : selected 8 ⟨966137, by decide⟩
+    (prefixPartial 13 1157164) = some ⟨13, 2, 0, 966137, 1157164, 1157, 16384⟩ := by
+  decide +kernel
+
+theorem context_13_1157164_966137 : TransientEJMOriginalAdaptiveFrontierBridge.Accepted
+    frontier 13 1157164 ⟨966137, by decide⟩ :=
+  accepted_of_selected 13 1157164 ⟨966137, by decide⟩ ⟨13, 2, 0, 966137, 1157164, 1157, 16384⟩
+    (by decide) selected_cut_36463
+
+theorem selected_cut_36464 : selected 8 ⟨966159, by decide⟩
+    (prefixPartial 13 1157165) = some ⟨13, 2, 0, 966159, 1157165, 949, 16384⟩ := by
+  decide +kernel
+
+theorem context_13_1157165_966159 : TransientEJMOriginalAdaptiveFrontierBridge.Accepted
+    frontier 13 1157165 ⟨966159, by decide⟩ :=
+  accepted_of_selected 13 1157165 ⟨966159, by decide⟩ ⟨13, 2, 0, 966159, 1157165, 949, 16384⟩
+    (by decide) selected_cut_36464
+
+theorem selected_cut_36465 : selected 8 ⟨966179, by decide⟩
+    (prefixPartial 13 1157166) = some ⟨13, 2, 0, 966179, 1157166, 1189, 16384⟩ := by
+  decide +kernel
+
+theorem context_13_1157166_966179 : TransientEJMOriginalAdaptiveFrontierBridge.Accepted
+    frontier 13 1157166 ⟨966179, by decide⟩ :=
+  accepted_of_selected 13 1157166 ⟨966179, by decide⟩ ⟨13, 2, 0, 966179, 1157166, 1189, 16384⟩
+    (by decide) selected_cut_36465
+
+theorem selected_cut_36466 : selected 8 ⟨966191, by decide⟩
+    (prefixPartial 13 1157167) = some ⟨13, 2, 0, 966191, 1157167, 837, 16384⟩ := by
+  decide +kernel
+
+theorem context_13_1157167_966191 : TransientEJMOriginalAdaptiveFrontierBridge.Accepted
+    frontier 13 1157167 ⟨966191, by decide⟩ :=
+  accepted_of_selected 13 1157167 ⟨966191, by decide⟩ ⟨13, 2, 0, 966191, 1157167, 837, 16384⟩
+    (by decide) selected_cut_36466
+
+theorem unmarked_context_12_289291_966192 : frontier 9 ⟨966192, by decide⟩
+    (prefixCache 12 289291) (prefixPartial 12 289291) = false := by
+  decide +kernel
+
+theorem node_context_12_289291_966192 : EJMOriginalGlobalDAGData.nodes 9 ⟨966192, by decide⟩ =
+    .split (coordinate 12) (![⟨966137, by decide⟩,⟨966159, by decide⟩,⟨966179, by decide⟩,⟨966191, by decide⟩]) := by
+  apply FiniteCachedSymmetryDAGReplay.checked_split_node
+  decide +kernel
+
+theorem context_12_289291_966192 : TransientEJMOriginalAdaptiveFrontierBridge.Accepted
+    frontier 12 289291 ⟨966192, by decide⟩ := by
+  apply TransientEJMOriginalAdaptiveFrontierBridge.assemble frontier 12 289291
+    ⟨966192, by decide⟩ (by decide) (![⟨966137, by decide⟩,⟨966159, by decide⟩,⟨966179, by decide⟩,⟨966191, by decide⟩]) unmarked_context_12_289291_966192 node_context_12_289291_966192
+  intro a
+  fin_cases a
+  · exact context_13_1157164_966137
+  · exact context_13_1157165_966159
+  · exact context_13_1157166_966179
+  · exact context_13_1157167_966191
+
+theorem unmarked_context_11_72322_966193 : frontier 10 ⟨966193, by decide⟩
+    (prefixCache 11 72322) (prefixPartial 11 72322) = false := by
+  decide +kernel
+
+theorem node_context_11_72322_966193 : EJMOriginalGlobalDAGData.nodes 10 ⟨966193, by decide⟩ =
+    .split (coordinate 11) (![⟨966039, by decide⟩,⟨966113, by decide⟩,⟨893903, by decide⟩,⟨966192, by decide⟩]) := by
+  apply FiniteCachedSymmetryDAGReplay.checked_split_node
+  decide +kernel
+
+theorem context_11_72322_966193 : TransientEJMOriginalAdaptiveFrontierBridge.Accepted
+    frontier 11 72322 ⟨966193, by decide⟩ := by
+  apply TransientEJMOriginalAdaptiveFrontierBridge.assemble frontier 11 72322
+    ⟨966193, by decide⟩ (by decide) (![⟨966039, by decide⟩,⟨966113, by decide⟩,⟨893903, by decide⟩,⟨966192, by decide⟩]) unmarked_context_11_72322_966193 node_context_11_72322_966193
+  intro a
+  fin_cases a
+  · exact context_12_289288_966039
+  · exact context_12_289289_966113
+  · exact context_12_289290_893903
+  · exact context_12_289291_966192
+
+theorem selected_cut_36467 : selected 9 ⟨966255, by decide⟩
+    (prefixPartial 12 289292) = some ⟨12, 2, 0, 966255, 289292, 2853, 65536⟩ := by
+  decide +kernel
+
+theorem context_12_289292_966255 : TransientEJMOriginalAdaptiveFrontierBridge.Accepted
+    frontier 12 289292 ⟨966255, by decide⟩ :=
+  accepted_of_selected 12 289292 ⟨966255, by decide⟩ ⟨12, 2, 0, 966255, 289292, 2853, 65536⟩
+    (by decide) selected_cut_36467
+
+theorem selected_cut_36468 : selected 9 ⟨966319, by decide⟩
+    (prefixPartial 12 289293) = some ⟨12, 2, 0, 966319, 289293, 3673, 65536⟩ := by
+  decide +kernel
+
+theorem context_12_289293_966319 : TransientEJMOriginalAdaptiveFrontierBridge.Accepted
+    frontier 12 289293 ⟨966319, by decide⟩ :=
+  accepted_of_selected 12 289293 ⟨966319, by decide⟩ ⟨12, 2, 0, 966319, 289293, 3673, 65536⟩
+    (by decide) selected_cut_36468
+
+theorem selected_cut_36469 : selected 9 ⟨966378, by decide⟩
+    (prefixPartial 12 289294) = some ⟨12, 2, 0, 966378, 289294, 3761, 65536⟩ := by
+  decide +kernel
+
+theorem context_12_289294_966378 : TransientEJMOriginalAdaptiveFrontierBridge.Accepted
+    frontier 12 289294 ⟨966378, by decide⟩ :=
+  accepted_of_selected 12 289294 ⟨966378, by decide⟩ ⟨12, 2, 0, 966378, 289294, 3761, 65536⟩
+    (by decide) selected_cut_36469
+
+theorem selected_cut_36470 : selected 9 ⟨966448, by decide⟩
+    (prefixPartial 12 289295) = some ⟨12, 2, 0, 966448, 289295, 3985, 65536⟩ := by
+  decide +kernel
+
+theorem context_12_289295_966448 : TransientEJMOriginalAdaptiveFrontierBridge.Accepted
+    frontier 12 289295 ⟨966448, by decide⟩ :=
+  accepted_of_selected 12 289295 ⟨966448, by decide⟩ ⟨12, 2, 0, 966448, 289295, 3985, 65536⟩
+    (by decide) selected_cut_36470
+
+theorem unmarked_context_11_72323_966449 : frontier 10 ⟨966449, by decide⟩
+    (prefixCache 11 72323) (prefixPartial 11 72323) = false := by
+  decide +kernel
+
+theorem node_context_11_72323_966449 : EJMOriginalGlobalDAGData.nodes 10 ⟨966449, by decide⟩ =
+    .split (coordinate 11) (![⟨966255, by decide⟩,⟨966319, by decide⟩,⟨966378, by decide⟩,⟨966448, by decide⟩]) := by
+  apply FiniteCachedSymmetryDAGReplay.checked_split_node
+  decide +kernel
+
+theorem context_11_72323_966449 : TransientEJMOriginalAdaptiveFrontierBridge.Accepted
+    frontier 11 72323 ⟨966449, by decide⟩ := by
+  apply TransientEJMOriginalAdaptiveFrontierBridge.assemble frontier 11 72323
+    ⟨966449, by decide⟩ (by decide) (![⟨966255, by decide⟩,⟨966319, by decide⟩,⟨966378, by decide⟩,⟨966448, by decide⟩]) unmarked_context_11_72323_966449 node_context_11_72323_966449
+  intro a
+  fin_cases a
+  · exact context_12_289292_966255
+  · exact context_12_289293_966319
+  · exact context_12_289294_966378
+  · exact context_12_289295_966448
+
+theorem unmarked_context_10_18080_966450 : frontier 11 ⟨966450, by decide⟩
+    (prefixCache 10 18080) (prefixPartial 10 18080) = false := by
+  decide +kernel
+
+theorem node_context_10_18080_966450 : EJMOriginalGlobalDAGData.nodes 11 ⟨966450, by decide⟩ =
+    .split (coordinate 10) (![⟨965736, by decide⟩,⟨965940, by decide⟩,⟨966193, by decide⟩,⟨966449, by decide⟩]) := by
+  apply FiniteCachedSymmetryDAGReplay.checked_split_node
+  decide +kernel
+
+theorem context_10_18080_966450 : TransientEJMOriginalAdaptiveFrontierBridge.Accepted
+    frontier 10 18080 ⟨966450, by decide⟩ := by
+  apply TransientEJMOriginalAdaptiveFrontierBridge.assemble frontier 10 18080
+    ⟨966450, by decide⟩ (by decide) (![⟨965736, by decide⟩,⟨965940, by decide⟩,⟨966193, by decide⟩,⟨966449, by decide⟩]) unmarked_context_10_18080_966450 node_context_10_18080_966450
+  intro a
+  fin_cases a
+  · exact context_11_72320_965736
+  · exact context_11_72321_965940
+  · exact context_11_72322_966193
+  · exact context_11_72323_966449
+
+theorem selected_cut_36471 : selected 9 ⟨1738, by decide⟩
+    (prefixPartial 12 289296) = some ⟨12, 1, 0, 1738, 289296, 1, 65536⟩ := by
+  decide +kernel
+
+theorem context_12_289296_1738 : TransientEJMOriginalAdaptiveFrontierBridge.Accepted
+    frontier 12 289296 ⟨1738, by decide⟩ :=
+  accepted_of_selected 12 289296 ⟨1738, by decide⟩ ⟨12, 1, 0, 1738, 289296, 1, 65536⟩
+    (by decide) selected_cut_36471
+
+theorem selected_cut_36472 : selected 9 ⟨966505, by decide⟩
+    (prefixPartial 12 289297) = some ⟨12, 2, 0, 966505, 289297, 2337, 65536⟩ := by
+  decide +kernel
+
+theorem context_12_289297_966505 : TransientEJMOriginalAdaptiveFrontierBridge.Accepted
+    frontier 12 289297 ⟨966505, by decide⟩ :=
+  accepted_of_selected 12 289297 ⟨966505, by decide⟩ ⟨12, 2, 0, 966505, 289297, 2337, 65536⟩
+    (by decide) selected_cut_36472
+
+theorem selected_cut_36473 : selected 9 ⟨966570, by decide⟩
+    (prefixPartial 12 289298) = some ⟨12, 2, 0, 966570, 289298, 3225, 65536⟩ := by
+  decide +kernel
+
+theorem context_12_289298_966570 : TransientEJMOriginalAdaptiveFrontierBridge.Accepted
+    frontier 12 289298 ⟨966570, by decide⟩ :=
+  accepted_of_selected 12 289298 ⟨966570, by decide⟩ ⟨12, 2, 0, 966570, 289298, 3225, 65536⟩
+    (by decide) selected_cut_36473
+
+theorem selected_cut_36474 : selected 9 ⟨966643, by decide⟩
+    (prefixPartial 12 289299) = some ⟨12, 2, 0, 966643, 289299, 3957, 65536⟩ := by
+  decide +kernel
+
+theorem context_12_289299_966643 : TransientEJMOriginalAdaptiveFrontierBridge.Accepted
+    frontier 12 289299 ⟨966643, by decide⟩ :=
+  accepted_of_selected 12 289299 ⟨966643, by decide⟩ ⟨12, 2, 0, 966643, 289299, 3957, 65536⟩
+    (by decide) selected_cut_36474
+
+theorem unmarked_context_11_72324_966644 : frontier 10 ⟨966644, by decide⟩
+    (prefixCache 11 72324) (prefixPartial 11 72324) = false := by
+  decide +kernel
+
+theorem node_context_11_72324_966644 : EJMOriginalGlobalDAGData.nodes 10 ⟨966644, by decide⟩ =
+    .split (coordinate 11) (![⟨1738, by decide⟩,⟨966505, by decide⟩,⟨966570, by decide⟩,⟨966643, by decide⟩]) := by
+  apply FiniteCachedSymmetryDAGReplay.checked_split_node
+  decide +kernel
+
+theorem context_11_72324_966644 : TransientEJMOriginalAdaptiveFrontierBridge.Accepted
+    frontier 11 72324 ⟨966644, by decide⟩ := by
+  apply TransientEJMOriginalAdaptiveFrontierBridge.assemble frontier 11 72324
+    ⟨966644, by decide⟩ (by decide) (![⟨1738, by decide⟩,⟨966505, by decide⟩,⟨966570, by decide⟩,⟨966643, by decide⟩]) unmarked_context_11_72324_966644 node_context_11_72324_966644
+  intro a
+  fin_cases a
+  · exact context_12_289296_1738
+  · exact context_12_289297_966505
+  · exact context_12_289298_966570
+  · exact context_12_289299_966643
+
+theorem selected_cut_36475 : selected 9 ⟨1738, by decide⟩
+    (prefixPartial 12 289300) = some ⟨12, 1, 0, 1738, 289300, 1, 65536⟩ := by
+  decide +kernel
+
+theorem context_12_289300_1738 : TransientEJMOriginalAdaptiveFrontierBridge.Accepted
+    frontier 12 289300 ⟨1738, by decide⟩ :=
+  accepted_of_selected 12 289300 ⟨1738, by decide⟩ ⟨12, 1, 0, 1738, 289300, 1, 65536⟩
+    (by decide) selected_cut_36475
+
+theorem selected_cut_36476 : selected 9 ⟨928104, by decide⟩
+    (prefixPartial 12 289301) = some ⟨12, 1, 0, 928104, 289301, 1, 65536⟩ := by
+  decide +kernel
+
+theorem context_12_289301_928104 : TransientEJMOriginalAdaptiveFrontierBridge.Accepted
+    frontier 12 289301 ⟨928104, by decide⟩ :=
+  accepted_of_selected 12 289301 ⟨928104, by decide⟩ ⟨12, 1, 0, 928104, 289301, 1, 65536⟩
+    (by decide) selected_cut_36476
+
+theorem selected_cut_36477 : selected 9 ⟨966701, by decide⟩
+    (prefixPartial 12 289302) = some ⟨12, 2, 0, 966701, 289302, 3081, 65536⟩ := by
+  decide +kernel
+
+theorem context_12_289302_966701 : TransientEJMOriginalAdaptiveFrontierBridge.Accepted
+    frontier 12 289302 ⟨966701, by decide⟩ :=
+  accepted_of_selected 12 289302 ⟨966701, by decide⟩ ⟨12, 2, 0, 966701, 289302, 3081, 65536⟩
+    (by decide) selected_cut_36477
+
+theorem selected_cut_36478 : selected 9 ⟨966768, by decide⟩
+    (prefixPartial 12 289303) = some ⟨12, 2, 0, 966768, 289303, 3649, 65536⟩ := by
+  decide +kernel
+
+theorem context_12_289303_966768 : TransientEJMOriginalAdaptiveFrontierBridge.Accepted
+    frontier 12 289303 ⟨966768, by decide⟩ :=
+  accepted_of_selected 12 289303 ⟨966768, by decide⟩ ⟨12, 2, 0, 966768, 289303, 3649, 65536⟩
+    (by decide) selected_cut_36478
+
+theorem unmarked_context_11_72325_966769 : frontier 10 ⟨966769, by decide⟩
+    (prefixCache 11 72325) (prefixPartial 11 72325) = false := by
+  decide +kernel
+
+theorem node_context_11_72325_966769 : EJMOriginalGlobalDAGData.nodes 10 ⟨966769, by decide⟩ =
+    .split (coordinate 11) (![⟨1738, by decide⟩,⟨928104, by decide⟩,⟨966701, by decide⟩,⟨966768, by decide⟩]) := by
+  apply FiniteCachedSymmetryDAGReplay.checked_split_node
+  decide +kernel
+
+theorem context_11_72325_966769 : TransientEJMOriginalAdaptiveFrontierBridge.Accepted
+    frontier 11 72325 ⟨966769, by decide⟩ := by
+  apply TransientEJMOriginalAdaptiveFrontierBridge.assemble frontier 11 72325
+    ⟨966769, by decide⟩ (by decide) (![⟨1738, by decide⟩,⟨928104, by decide⟩,⟨966701, by decide⟩,⟨966768, by decide⟩]) unmarked_context_11_72325_966769 node_context_11_72325_966769
+  intro a
+  fin_cases a
+  · exact context_12_289300_1738
+  · exact context_12_289301_928104
+  · exact context_12_289302_966701
+  · exact context_12_289303_966768
+
+theorem selected_cut_36479 : selected 9 ⟨1738, by decide⟩
+    (prefixPartial 12 289304) = some ⟨12, 1, 0, 1738, 289304, 1, 65536⟩ := by
+  decide +kernel
+
+theorem context_12_289304_1738 : TransientEJMOriginalAdaptiveFrontierBridge.Accepted
+    frontier 12 289304 ⟨1738, by decide⟩ :=
+  accepted_of_selected 12 289304 ⟨1738, by decide⟩ ⟨12, 1, 0, 1738, 289304, 1, 65536⟩
+    (by decide) selected_cut_36479
+
+theorem selected_cut_36480 : selected 9 ⟨966820, by decide⟩
+    (prefixPartial 12 289305) = some ⟨12, 2, 0, 966820, 289305, 2033, 65536⟩ := by
+  decide +kernel
+
+theorem context_12_289305_966820 : TransientEJMOriginalAdaptiveFrontierBridge.Accepted
+    frontier 12 289305 ⟨966820, by decide⟩ :=
+  accepted_of_selected 12 289305 ⟨966820, by decide⟩ ⟨12, 2, 0, 966820, 289305, 2033, 65536⟩
+    (by decide) selected_cut_36480
+
+theorem selected_cut_36481 : selected 9 ⟨893903, by decide⟩
+    (prefixPartial 12 289306) = some ⟨12, 1, 0, 893903, 289306, 1, 65536⟩ := by
+  decide +kernel
+
+theorem context_12_289306_893903 : TransientEJMOriginalAdaptiveFrontierBridge.Accepted
+    frontier 12 289306 ⟨893903, by decide⟩ :=
+  accepted_of_selected 12 289306 ⟨893903, by decide⟩ ⟨12, 1, 0, 893903, 289306, 1, 65536⟩
+    (by decide) selected_cut_36481
+
+theorem selected_cut_36482 : selected 9 ⟨966887, by decide⟩
+    (prefixPartial 12 289307) = some ⟨12, 2, 0, 966887, 289307, 3265, 65536⟩ := by
+  decide +kernel
+
+theorem context_12_289307_966887 : TransientEJMOriginalAdaptiveFrontierBridge.Accepted
+    frontier 12 289307 ⟨966887, by decide⟩ :=
+  accepted_of_selected 12 289307 ⟨966887, by decide⟩ ⟨12, 2, 0, 966887, 289307, 3265, 65536⟩
+    (by decide) selected_cut_36482
+
+theorem unmarked_context_11_72326_966888 : frontier 10 ⟨966888, by decide⟩
+    (prefixCache 11 72326) (prefixPartial 11 72326) = false := by
+  decide +kernel
+
+theorem node_context_11_72326_966888 : EJMOriginalGlobalDAGData.nodes 10 ⟨966888, by decide⟩ =
+    .split (coordinate 11) (![⟨1738, by decide⟩,⟨966820, by decide⟩,⟨893903, by decide⟩,⟨966887, by decide⟩]) := by
+  apply FiniteCachedSymmetryDAGReplay.checked_split_node
+  decide +kernel
+
+theorem context_11_72326_966888 : TransientEJMOriginalAdaptiveFrontierBridge.Accepted
+    frontier 11 72326 ⟨966888, by decide⟩ := by
+  apply TransientEJMOriginalAdaptiveFrontierBridge.assemble frontier 11 72326
+    ⟨966888, by decide⟩ (by decide) (![⟨1738, by decide⟩,⟨966820, by decide⟩,⟨893903, by decide⟩,⟨966887, by decide⟩]) unmarked_context_11_72326_966888 node_context_11_72326_966888
+  intro a
+  fin_cases a
+  · exact context_12_289304_1738
+  · exact context_12_289305_966820
+  · exact context_12_289306_893903
+  · exact context_12_289307_966887
+
+end D5.S3.Quantum.Entanglement.EJM.PreparedEJMCompleteFrontier
