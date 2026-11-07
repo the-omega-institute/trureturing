@@ -2306,3 +2306,289 @@ CP 仍由整台实际箭头连同环境、记录、失败和完整输出的递�
 几何上，一组结果之间的关系行如同一组带方向的坐标：若有限若干行以实系数相消，原结果也必须以同系数相消；这个保依赖条件使旧关系的加法缺陷无处隐藏。其取向仍来自原 $D$，原 $S,C,u$ 自身不区分乘法和相反乘法。已有有限 Pauli 三实维角、叉积和 54.1 的双轴图景只解释响应角，不选择物理三空间。非通勤可观测量不因此拥有一个共同经典联合谱；单个元素的谱演算不供应同时联合读出。将预测、尚未确定的关系、守恒和谱解释为同一原 $\Omega$ 中的量子起源，仍须给实际门序列、读数、共同实现和尺度的来源对应；自守恒 $\delta_xx=0$ 是已证的数学关系，额外本体解释不是它的结论。一般无限弱闭合三角的加法、这些数学前件如何由原源供应、完整仪器及全未来接头、正常／无限历史域和物理钟能量作用量，仍是具名困难，而非由完成或类比自动补齐。
 
 ## 追加锚（本行以下为增补区）
+
+## 78. 同一无限原载体上任意总关系的两个全局取向
+
+**定义 78.1（固定载体、实际二表与四个条件）。** 取同一个原复 Hilbert 空间 $\mathcal H=\ell^2(\mathbb N_0)$，内积第一槽共轭线性。原资料固定为
+
+$$
+E=B(\mathcal H)_{\rm sa},\qquad
+S(a,b)=\frac{ab+ba}{2},\qquad
+u=I,\qquad N(a)=\|a\|,\qquad C=B(\mathcal H)_+.
+\tag{78.1}
+$$
+
+此处 $ab$ 始终表示这些原有界算子的标准乘法。原评价族 $P$ 是 $E$ 上全部有界正实线性泛函，原质量 $m_\alpha=\alpha(I)$，包括零质量、不等质量及非正常评价。原 $q$ 不被任何迹、向量态或谱参数替代。同一个旧 $D:E^2\to E$ 初始为任意总映射；记标准参照关系
+
+$$
+Q(a,b)=\frac{\mathrm i}{2}[a,b],\qquad
+A_D=\{D(a,b):a,b\in E\}.
+\tag{78.2}
+$$
+
+$Q$ 只是已给原算子乘法的记号，不是另一个被采用的原 $D$。以下条件均在这些原对象上量化。
+
+$\mathsf A$：对每个原 $\alpha\in P$ 及任意至多两个原标签 $a_j$，实际有向表
+
+$$
+G^D_\alpha(a_1,\ldots,a_n)
+=\bigl[\alpha(S(a_j,a_k))-\mathrm i\alpha(D(a_j,a_k))\bigr]_{j,k=1}^n
+\succeq0,\qquad n\le2.
+\tag{78.3}
+$$
+
+两个方向均取旧 $D$ 的实际值；标签包含零、重复、全部原实缩放和平移。
+
+$\mathsf B$：对全部原 $a,b,c\in E$，要求原实部换括号式 (12.2)，即
+
+$$
+S(S(a,b),c)-S(a,S(b,c))
+=D(D(a,b),c)-D(a,D(b,c)).
+$$
+
+$\mathsf C$：原输出外延性 (40.1) 成立，准确地说，只对 $p,q\in A_D$，由 $D(p,t)=D(q,t)$ 对每个 $t\in A_D$ 成立推出 $p=q$。
+
+$\mathsf T$：对全部原 $a,b\in E,s\in\mathbb R$，$D(a+sI,b)=D(a,b)$。它只陈述原单位的标量平移；在没有旧 $D$ 线性时，不能从 $D(sI,b)=0$ 展开得到它。
+
+**定理 78.2（无需正则性或平移前件的全局分类）。** 在定义 78.1 的同一背景上，
+
+$$
+\boxed{\quad
+\mathsf A+\mathsf B
+\quad\Longleftrightarrow\quad
+\exists\varepsilon\in\{1,-1\}\ \forall a,b\in E,\quad
+D(a,b)=\varepsilon Q(a,b).
+\quad}
+\tag{78.4}
+$$
+
+符号是整个原载体上的同一个符号，不依赖输入、有限角或评价。没有预设旧 $D$ 的线性、连续性、正常性、中央平移、有限依赖反映或输出覆盖，也不把原输入限制为有限秩。特别地，$\mathsf A+\mathsf B+\mathsf T$ 与 (78.4) 的右侧同样等价；$\mathsf T$ 在这个固定载体上已是结论。
+
+证明。先设 $\mathsf A+\mathsf B$。实际表的 Hermitian 性及原评价分离给旧 $D$ 的反对称性、$D(a,a)=0$；标签 $(0,a)$ 的零对角再给 $D(0,a)=0$。直接复用 (13.2) 的维数无关三循环消元，即 (72.4)，得到
+
+$$
+D(D(a,b),t)=[L_b,L_a]t
+=-\frac14[[a,b],t]
+=Q(Q(a,b),t),\qquad L_a t=S(a,t).
+\tag{78.5}
+$$
+
+这里只消费已知的对称 $S$、旧 $D$ 反对称及 $\mathsf B$，没有展开未知 $D$ 的输入和。小窗口单位卷定理 7.2 在这里的完成就是原完备 $E$，其精确零行／零列为 $\mathbb RI$，并给 $D(sI,b)=0$。该卷定义 7.3 的边界仍保持：这一零输入结论本身不是 $\mathsf T$。下面直接识别全部旧值。
+
+先证明有限角确实对同一个旧 $D$ 封闭。令 $e$ 为任意非零有限秩正交投影，$a=eae,b=ebe$，置 $d=D(a,b)$。每个原向量泛函 $\alpha_v(x)=\langle v,xv\rangle$ 属于 $P$，其质量为 $\|v\|^2$。(78.3) 的行列式给
+
+$$
+|\langle v,dv\rangle|^2
+\le \|av\|^2\|bv\|^2-
+          \bigl(\Re\langle av,bv\rangle\bigr)^2
+\le \|av\|^2\|bv\|^2.
+\tag{78.6}
+$$
+
+对 $y\in(1-e)\mathcal H$，右边为零，故自伴算子 $(1-e)d(1-e)$ 的全部二次型为零，由复极化得 $(1-e)d(1-e)=0$。再对任意 $x\in e\mathcal H,y\in(1-e)\mathcal H$ 及 $z\in\mathbb C$ 取 $v=x+zy$。(78.6) 右边与 $z$ 无关，而左边的实二次型内部为
+
+$$
+\langle x,dx\rangle+2\Re\bigl(z\langle x,dy\rangle\bigr).
+\tag{78.7}
+$$
+
+它对全部复 $z$ 有界，故 $\langle x,dy\rangle=0$。于是 $ed(1-e)=(1-e)de=0$，即 $d=ede$。这一步对原无限载体中的实际输出成立，不把有限秩算子当作全 $E$ 的范数稠密集。
+
+记 $E_e=(eB(\mathcal H)e)_{\rm sa}$。有限角的任意正实线性泛函 $\beta$ 可按 $\widetilde\beta(x)=\beta(exe)$ 延为原 $P$ 中的有界正泛函。因此限制 $D_e=D|_{E_e^2}$ 是实际封闭的同一个映射，满足全部有限角正评价的 $\mathsf A$ 及全部角内三输入的 $\mathsf B$；$S$、平方锥和单位分别是原角乘法、原角正锥和 $e$。有限 EJA 定理 13.1 遂可直接应用，给 $D_e$ 的实交替双线性及 $D_e(e,x)=0$。这里只在已证明封闭的原角上消费有限定理，没有先假设全 $D$ 的正则性。
+
+为看清这个有限输入如何锁定取向，在任一秩二角内取标准 Pauli 基
+
+$$
+\sigma_1=\begin{pmatrix}0&1\\1&0\end{pmatrix},\quad
+\sigma_2=\begin{pmatrix}0&-\mathrm i\\\mathrm i&0\end{pmatrix},\quad
+\sigma_3=\begin{pmatrix}1&0\\0&-1\end{pmatrix},
+\qquad
+\sigma_j^2=e,\quad Q(\sigma_1,\sigma_2)=-\sigma_3
+\tag{78.8}
+$$
+
+及其循环式。这是 15.1、22.1 的成熟三实维自旋几何在该原角中的坐标。其局部结论也可直接从刚取得的双线性读出：对 $\sigma_1$ 的正、负单位本征向量，分别在 (78.6) 取首标签 $\sigma_1-e,\sigma_1+e$，另一个标签取 $\sigma_2$。首标签消灭该向量，且局部单位零使这两份输出都等于 $D_e(\sigma_1,\sigma_2)$，所以输出在 $\sigma_1$ 两个本征方向上的对角读数都为零。它的标量和 $\sigma_1$ 分量因此为零。交换两标签，对 $\sigma_2$ 本征方向作同样测试，又消去 $\sigma_2$ 分量。故可写
+
+$$
+D_e(\sigma_1,\sigma_2)=c_3\sigma_3,\quad
+D_e(\sigma_2,\sigma_3)=c_1\sigma_1,\quad
+D_e(\sigma_3,\sigma_1)=c_2\sigma_2.
+\tag{78.9}
+$$
+
+将这些实际值代入 (78.5)，例如 $D_e(D_e(\sigma_1,\sigma_2),\sigma_1)=\sigma_2$，用的只是已恢复的角内双线性，给 $c_3c_2=1$；循环得到另两式 $c_1c_3=c_2c_1=1$。所以三个系数都是同一个 $c\in\{1,-1\}$。令 $\varepsilon_e=-c$，角内单位零和双线性便给
+
+$$
+D_e(a,b)=\varepsilon_e Q(a,b),\qquad
+D_e(\mathbf v\cdot\boldsymbol\sigma,
+    \mathbf w\cdot\boldsymbol\sigma)
+=-\varepsilon_e(\mathbf v\times\mathbf w)\cdot\boldsymbol\sigma.
+\tag{78.10}
+$$
+
+特别是该角内每个无迹自伴 $h$ 都是单个实际旧输出。若 $h=\mathbf h\cdot\boldsymbol\sigma\ne0$，选单位 $\mathbf v\perp\mathbf h$，取 $\mathbf w=\varepsilon_e\mathbf v\times\mathbf h$ 即给 $h=D_e(\mathbf v\cdot\boldsymbol\sigma,\mathbf w\cdot\boldsymbol\sigma)$；零向量取零标签。此覆盖只对这些已证明的角内方向使用，不预设一般原输出覆盖。
+
+若 $h=D(x,y)$ 是这样的角内无迹元，(78.10) 给 $Q(x,y)=\varepsilon_e h$。(78.5) 因而对每个原 $t\in E$ 给
+
+$$
+D(h,t)=Q(Q(x,y),t)=\varepsilon_e Q(h,t).
+\tag{78.11}
+$$
+
+第二个输入已可有任意无限支撑；此式没有把标量移过未知的旧 $D$。若另一个秩二角 $f$ 内有无迹 $k$，旧反对称性及两份 (78.11) 给
+
+$$
+(\varepsilon_e-\varepsilon_f)Q(h,k)=0.
+\tag{78.12}
+$$
+
+两个角若共有一条复直线，取该线上的单位 $\xi$，并写 $e\mathcal H=\operatorname{span}\{\xi,\eta\}$、$f\mathcal H=\operatorname{span}\{\xi,\zeta\}$，其中两对分别正交归一。令 $h=P_\xi-P_\eta$，令 $k\xi=\zeta,k\zeta=\xi$ 且 $k=0$ 于 $f^\perp$；这里 $P_\xi v=\xi\langle\xi,v\rangle$。两者分别为相应角的无迹自伴实际输出，且不通勤：$h$ 的 $+1$ 本征空间恰为 $\mathbb C\xi$，$k\xi=\zeta\perp\xi$，故 $k$ 不保持该本征空间。(78.12) 迫使两角符号相等。任意两秩二平面可由一个中间秩二平面连接：分别从中选两条不重合的直线，取它们的张成，中间平面与两端各有公共直线。于是全部 $\varepsilon_e$ 等于一个全局 $\varepsilon\in\{1,-1\}$。取向的一致性来自这些实际输出的关系行，不来自任意有限截断上的独立选择。
+
+现在固定任意原 $a,b\in E$，不要求有限秩，令 $d=D(a,b)$。对每个秩二角无迹自伴 $h$，(78.5)、(78.11) 及反对称性给
+
+$$
+\varepsilon Q(d,h)=D(d,h)=Q(Q(a,b),h).
+\tag{78.13}
+$$
+
+因此自伴 $d-\varepsilon Q(a,b)$ 与全部这些 $h$ 通勤。其共同交换子代数在原 $B(\mathcal H)$ 内为 $\mathbb CI$：任意单位 $\xi$ 选单位 $\eta\perp\xi$，通勤于 $P_\xi-P_\eta$ 使算子保持其一维 $+1$ 本征空间 $\mathbb C\xi$；故每条直线不变，线性再使全部本征值相同。于是对每个原有序对都有一个实数 $r(a,b)$，使
+
+$$
+D(a,b)=\varepsilon Q(a,b)+r(a,b)I.
+\tag{78.14}
+$$
+
+此时没有假定 $r$ 的任何正则性，也未把这个差或任意中央元宣称为单个旧输出。
+
+最后在每个固定原有序对上消去 $r$。以下写 $r=r(a,b)$，对单位 $\psi\in\mathcal H$ 置
+
+$$
+\begin{aligned}
+c_\psi&=\langle\psi,\varepsilon Q(a,b)\psi\rangle
+       =-\varepsilon\Im\langle a\psi,b\psi\rangle,\\
+\Delta_\psi&=\|a\psi\|^2\|b\psi\|^2
+                 -\bigl(\Re\langle a\psi,b\psi\rangle\bigr)^2,\\
+(r+c_\psi)^2&\le\Delta_\psi,\qquad
+\Delta_\psi-c_\psi^2
+=\|a\psi\|^2\|b\psi\|^2-|\langle a\psi,b\psi\rangle|^2\ge0.
+\end{aligned}
+\tag{78.15}
+$$
+
+这些都是原向量评价对同一旧输出的 (78.3)。若自伴 $b$ 不可逆，有单位序列 $\psi_n$ 满足 $\|b\psi_n\|\to0$：否则存在 $\gamma>0$ 使 $\|b\psi\|\ge\gamma\|\psi\|$，故值域闭且核为零；自伴性又使值域稠密，从而 $b$ 有有界逆，矛盾。此序列上 $c_{\psi_n}\to0$、$\Delta_{\psi_n}\to0$，(78.15) 立即给 $r=0$。这包括没有零本征向量的连续谱端点。
+
+若 $b$ 可逆，考虑同一个原 Hilbert 空间上的有界复算子 $R=b^{-1}a$。有
+
+$$
+R^*=ab^{-1}=bRb^{-1},\qquad
+\sigma(R)=\overline{\sigma(R)}.
+\tag{78.16}
+$$
+
+有界复算子的谱非空且紧。其每个谱边界点 $\lambda$ 都有单位近似本征向量：取预解集中的 $\lambda_n\to\lambda$，由 Neumann 级数的预解圆盘估计，$\|(R-\lambda_n I)^{-1}\|\ge|\lambda_n-\lambda|^{-1}\to\infty$。选择单位 $y_n$ 使逆算子的像范数至少为该范数的一半，再将 $(R-\lambda_n I)^{-1}y_n$ 归一为 $\psi_n$，便得
+
+$$
+\|(R-\lambda I)\psi_n\|
+\le \frac{2}{\|(R-\lambda_n I)^{-1}\|}+|\lambda_n-\lambda|
+\longrightarrow0.
+\tag{78.17}
+$$
+
+这是成熟谱边界事实在本证明中的所需完整形式；不要求 $R$ 正常或谱点为本征值。乘以有界 $b$，得 $a\psi_n-\lambda b\psi_n\to0$。记 $k_n=\|b\psi_n\|^2$，则
+
+$$
+\begin{aligned}
+\|b^{-1}\|^{-2}\le k_n&\le\|b\|^2,\\
+c_{\psi_n}&=\varepsilon\Im(\lambda)k_n+o(1),\\
+0\le\Delta_{\psi_n}-c_{\psi_n}^2
+&\le\|a\psi_n-\lambda b\psi_n\|^2 k_n\longrightarrow0.
+\end{aligned}
+\tag{78.18}
+$$
+
+第二式的符号来自第一槽共轭线性：$\langle a\psi_n,b\psi_n\rangle=\overline\lambda k_n+o(1)$。第三式将 $a\psi_n=\lambda b\psi_n+(a\psi_n-\lambda b\psi_n)$ 代入 (78.15) 的 Gram 行列式，相关的 $\lambda b\psi_n$ 项恰好相消，再用 Cauchy–Schwarz；不需要 $k_n$ 收敛。
+
+若所取边界点 $\lambda$ 实，$c_{\psi_n}\to0$，(78.15) 再给 $r=0$。否则由 (78.16)，$\overline\lambda$ 也是谱边界点，两点各自有 (78.17) 的序列。若 $r\ne0$，选择其中满足 $r\varepsilon\Im(\lambda)>0$ 的一点；(78.18) 的正下界使该序列上 $rc_{\psi_n}>0$ 最终成立，而 (78.15) 要求
+
+$$
+r^2+2rc_{\psi_n}\le\Delta_{\psi_n}-c_{\psi_n}^2\longrightarrow0,
+\tag{78.19}
+$$
+
+与固定 $r^2>0$ 矛盾。故任意原有序对的 $r(a,b)=0$。这一步以原有界算子谱代替有限证明 (13.11)–(13.12) 的行列式根，不对未知 $D$ 取极限，也不使用 $\mathsf T$。
+
+反向令一个固定 $\varepsilon\in\{1,-1\}$ 给 $D=\varepsilon Q$。每个原正实线性 $\alpha$ 在原标准复算子代数上有复线性延拓 $\alpha_{\mathbb C}(x+\mathrm iy)=\alpha(x)+\mathrm i\alpha(y)$，$x,y\in E$。它满足 $\alpha_{\mathbb C}(w^*w)\ge0$，并保持伴随共轭。两个方向的实际条目准确为
+
+$$
+\begin{aligned}
+g^+_\alpha(a,b)&=\alpha_{\mathbb C}(ab),&
+g^+_\alpha(b,a)&=\alpha_{\mathbb C}(ba),\\
+g^-_\alpha(a,b)&=\alpha_{\mathbb C}(ba),&
+g^-_\alpha(b,a)&=\alpha_{\mathbb C}(ab).
+\end{aligned}
+\tag{78.20}
+$$
+
+对任意有限个原自伴标签 $a_j$ 及复系数 $z_j$，置 $Z=\sum_jz_ja_j$。不替换任意有向项，完整二次型分别为
+
+$$
+\begin{aligned}
+\sum_{j,k}\overline{z_j}z_k g^+_\alpha(a_j,a_k)
+ &=\alpha_{\mathbb C}(Z^*Z)\ge0,\\
+\sum_{j,k}\overline{z_j}z_k g^-_\alpha(a_j,a_k)
+ &=\alpha_{\mathbb C}(ZZ^*)\ge0.
+\end{aligned}
+\tag{78.21}
+$$
+
+第二式中 $\sum_{j,k}\overline{z_j}z_ka_ka_j=ZZ^*$，标量系数可交换而算子顺序没有交换。因此 $\mathsf A$ 对全部原正评价成立，包括奇异评价；还取得全部有限表正性。两次旧关系的符号相乘为 $\varepsilon^2=1$，由标准结合乘法的实部恒等式得 $\mathsf B$；$[I,b]=0$ 给 $\mathsf T$。全程不除以任何质量；若 $m_\alpha=0$，序界 $|\alpha(x)|\le m_\alpha\|x\|$ 使该评价及其整表为零。由具体公式还得旧 $D$ 的实双线性及 $\|D(a,b)\|\le\|a\|\|b\|$，这些均是结论。∎
+
+## 79. 两个实际输出之间的中央信息障碍
+
+**命题 79.1（输出外延性直接支付原标量平移）。** 在定义 78.1 的 $\mathsf A+\mathsf B$ 下，$\mathsf C$ 可直接推出 $\mathsf T$；这一推理只比较两个实际输出，不借全局分类或有限依赖反映。
+
+证明。固定任意原 $a,b,s$，令 $p_s=D(a+sI,b)$、$p=D(a,b)$，二者均在实际 $A_D$ 内。(78.5) 及 $[a+sI,b]=[a,b]$ 给
+
+$$
+D(p_s,t)=Q(Q(a+sI,b),t)=Q(Q(a,b),t)=D(p,t)
+\qquad(t\in E).
+\tag{79.1}
+$$
+
+限制到 $t\in A_D$ 即准确满足 $\mathsf C$ 的前件，故 $p_s=p$。这里没有把 $D(a+sI,b)$ 展开为两项，也没有要求 $p_s-p$ 是实际输出。∎
+
+**定理 79.2（固定原无限载体上的任意非线性关系不可能性）。** 在定义 78.1 的全部原资料上，不存在满足 $\mathsf A+\mathsf B+\mathsf C$ 的总映射 $D$。保留原式 (49.1) 的准确原义时，也不存在满足 $\mathsf A+\mathsf B$ 及 (49.1) 的总映射。此处的不可能性只约束这组固定载体、固定原评价和指定关系／读数条件的合取。
+
+证明。78.2 已将任意总映射化为一个全局 $D_\varepsilon=\varepsilon Q$，包括一切初始非线性候选。现在直接消费 76.1 的原等距算子、原标签及两个实际输出
+
+$$
+p=P_1,\qquad q=-P_0,\qquad
+p-q=I,\qquad \|p\|=\|q\|=1.
+\tag{79.2}
+$$
+
+正号时其实际输入见证正是 (76.1)–(76.2)；负号时把那两份见证各自的输入次序反转，得到同一个 $p,q$，所以二者仍是单个旧 $D_\varepsilon$ 输出。76.1 的 (76.3) 对两个全局符号及每个原 $t\in E$ 均给相同行，故 $\mathsf C$ 强迫 $p=q$，与 $p-q=I\ne0$ 矛盾。该既有例子本身不是新的任意总映射分类；新增合取结论来自先用 78.2 穷尽全部候选。
+
+原向量态 $\alpha_0(x)=\langle e_0,xe_0\rangle$ 仍属于全部原 $P$，它给 $\alpha_0(p)=0,\alpha_0(q)=-1$。因此这里的中央差是原读数可见的差，不能以关系行相同将它们认同。关于 (49.1)，直接应用 50.1 证明开头的无维数、无 $D$ 线性子论证：(49.1) 的同一有限公式作用于这两个实际输出便推出 $\mathsf C$，已经矛盾；亦可直接消费 76.1 的原范数估计，在 $\eta=1/4$ 时得到 $1\le2\eta=1/2$。没有重写 (49.1)，没有为每个输出另选公式，也没有断言 $I$ 本身是单个输出或有界算子的单个交换子。$I$ 在此仅是两个已经给出见证的实际输出之差。∎
+
+## 80. 静态取向、完整原消费者与适用边界
+
+**定理 80.1（分类的条件消费者及未支付的来源）。** 若同一原 $\Omega$ 的一个响应载体具有定义 78.1 的全部固定背景并满足 $\mathsf A+\mathsf B$，则其静态乘法 $S-\mathrm iD$ 为原标准乘法或其相反乘法。若指定共同网络另行满足定义 8.2–8.4 的全部相应原来源条件，则可按定理 8.5 消费同一静态接口；各消费者的域、质量与来源义务准确保持定理 77.2 所列的范围。该结论不供应这些来源，也不在这个载体上另行假定已被 79.2 排除的 (49.1)。
+
+证明。78.2 及 (78.20)–(78.21) 给同一个原 $S,D$ 的完整静态正表、结合乘法和正夹心，故给定义 5.1 的静态接口及 6.1 的辅助完整比较，再直接接定理 8.5。相反乘法具有同一原正锥、单位和范数；所需指定原网络的身份仍须独立满足，不能用辅助比较存在替代它。77.2 的消费者清单在这里作为准确来源范围复用，不以 $\mathsf A+\mathsf B$ 偷换该定理的 (49.1) 前件。
+
+原 Born 读数仍为 $\alpha(e)$，仅在原正质量上归一；原零、次归一和不等质量及原 $q$、中心、经典与不等维块、$\sigma,t_0$、$B,\mathsf B_{\rm cl}$ 均保持原域。每个数学效果或谱投影是否已绑定具名原菜单仍是来源义务。跨评价配对、同一全词 $K/J$、native 复合、共同网络、所有实际联合及真正相关正输入，仍需同一个原实现。CP 的原前件仍由整台实际箭头连同环境、记录、失败和完整输出的递归同源二元参考、忠实交换两腿、共同真支撑上的三个实际投影及支持内补事件，以及每个所需有限深度的真实链共同供应。
+
+完整类型化仪器仍保留所有原输入输出、失败、拒绝、停止、销毁、细记录、真正分组遗忘、AC、精确 $\Nu$、$X,X_s$、平方根词和接受端。密度、TP、Kraus 保留适用有限全矩阵域或指定正常表示／前对偶前件；Lüders 保留同一完整输出的射线校准；条件更新只在原正质量上除法。全部原合法顺序、自适应、并行历史及每个仍合法未来、实际返回、同数两侧和同数逆向返回都保持。CountRead 读后同一原活动输入及全部未来的真实返回、负提升两条活路的分别控制与相干聚合、具名分析词到 named-menu 实际事件的绑定，仍分别承担定义 9.2–9.4 的原义务。非离散记录、可数可加性、无限历史、原正常表示和前对偶仍各需来源；全部有界正评价没有被删为正常子族。
+
+最后，原物理钟、实际门序列、同一强连续一参数可逆群及其酉实现、Hamiltonian 的能量解释、生成元定义域和共同作用量单位 $\hbar>0$，仍需各自的原 producer；共同仪器、固定 $d$、resolvent 与 $3s+r\le1$ 的原来源范围保持。数学上取得取向、谱或指数，不构造时钟、能量和作用量尺度。以上条件链没有将静态诊断提升为完整原 $\Omega$、门序列或读数实现。∎
+
+**定义 80.2（几何、成熟前提与结论范围）。** 秩二角的去中心部分是三实维 Pauli 空间，(78.10) 是其带一项共同符号的叉积；原正锥固定无向平方几何，实际输出行在公共直线上迫使各角的取向相容。继而这些输出行只确定一般原值到中央余项，(78.15)–(78.19) 的原正二表将该余项消去；即使原乘法完全恢复，两个实际输出的行仍可相同而原读数不同，79.2 用的正是已给 76.1 的这一区别。这是原可观测值与其后续关系作用之间的信息边界，没有对原可观测量取商。
+
+有限 EJA 自动恢复直接取定理 13.1，三循环式取 (13.2)／(72.4)，中央零行的准确识别取小窗口单位卷定理 7.2 并保留其定义 7.3 的边界，标准符号反例直接取 76.1。Pauli 叉积、谱非空紧性、Neumann 预解估计和谱边界近似本征向量均是成熟中间工具。Alfsen–Shultz，[*Orientation in operator algebras*, PNAS 95, 6596–6601, DOI:10.1073/pnas.95.12.6596](https://pmc.ncbi.nlm.nih.gov/articles/PMC22571/)，定义动力对应为到斜顺序导子的线性映射；其 Theorem 1 给动力对应与相容复乘法的关系，Theorem 6 及因子讨论给取向与中央符号的关系。该原作者文章明确是带简要证明说明的综述，其完整证明另有所指。这里用它说明成熟取向背景，不从其线性前件推出未知旧 $D$ 的线性。Baez，[arXiv:2006.14741v5, §4 Theorem 12](https://arxiv.org/html/2006.14741v5)，给 $ab=a\circ b-\mathrm i\psi_a(b)$ 的准确规范化，明确要求线性动力对应，并归于 Alfsen–Shultz Theorem 23；这里只按已有 13.1 的完整有限结论复用该接口。两份文献都不被当成已经陈述 (78.4) 的任意总映射定理。
+
+本节 $\texttt{repo-derived}$ 的综合范围是：在原全部 $B(\ell^2(\mathbb N_0))_{\rm sa}$、原全部有界正实评价及任意旧总映射上，先证明有限角实际封闭，再以角内实际输出行取得一个全局符号，最后用原谱铅笔的共轭边界消去任意有序对的中央余项，并接回原输出外延性和未改动 (49.1) 的不可能性。有限角、标准符号反例及成熟谱工具不单列为新增成果。此范围不含历史优先权或穷尽文献的主张。
+
+一般无限弱闭合三角的原 $S$ 加法仍未由此取得：定义 78.1 已明确给定原全算子载体和标准双线性 $S$。小窗口单位桥的“已给对称实双线性 $S$”入口和“完整实相加三表”入口仍分别使用；弱闭合三角本身不被混入任一较强入口。79.2 不是一般 JB 不可能性，也不是所有量子模型都必须满足或违反同一输出辨识条件的命题。一般量子必要性、普遍最小公理、经验实现均不在其结论内；非通勤量不因此获得共同经典联合谱，Pauli 三坐标不决定物理空间维数。80.1 所列的完整源、共同网络、真正相关输入、仪器、全部合法历史／未来／返回以及物理钟能量作用量来源，仍各须原实现，不能由本固定载体的静态取向分类替代。
+
+## 追加锚（本行以下为增补区）
