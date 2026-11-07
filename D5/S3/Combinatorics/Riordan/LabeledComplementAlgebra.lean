@@ -112,7 +112,7 @@ private theorem three_column_extension {R : Type*} [CommRing R] (g r h f u t : R
     intro n
     simp [E, s, Fin.sum_univ_succ, pow_add]
     ring
-  have hz : E.IsSolution (fun _ => 0) := by intro n; simp
+  have hz : E.IsSolution (fun _ => 0) := E.solSpace.zero_mem
   have heq : s = fun _ => 0 := (E.eq_iff_eqOn_range_order s _ hs hz).mpr (by
     intro n hn
     have hn3 : n < 3 := Finset.mem_range.mp hn

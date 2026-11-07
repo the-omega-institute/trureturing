@@ -196,7 +196,7 @@ private theorem class_complement (N : ℕ) (c : Classified N) :
     simp only [hsz, add_zero, map_zero, mul_zero]
   · let k := N - d.val
     have hk : 1 ≤ k := by dsimp [k]; have h := d.isLt; omega
-    have hkN : k < N + 1 := by dsimp [k]; omega
+    have hkN : k < N + 1 := Nat.sub_lt_succ N d.val
     have hzero : ∀ i < k, PowerSeries.coeff i r = 0 := by
       intro i hi
       exact (seriesOfVector_coeff N rv.val ⟨i, by omega⟩).trans (rv.property.1 _ hi)
@@ -329,7 +329,7 @@ private theorem classToUnitParams_surjective (N : ℕ) : Function.Surjective (cl
       omega
     have hk : 1 ≤ k := by
       by_contra h
-      have he : k = 0 := by omega
+      have he : k = 0 := Nat.eq_zero_of_not_pos h
       apply hkn
       simpa only [he, PowerSeries.coeff_zero_eq_constantCoeff_apply] using hr0
     have hone : PowerSeries.coeff k rr = 1 := by
