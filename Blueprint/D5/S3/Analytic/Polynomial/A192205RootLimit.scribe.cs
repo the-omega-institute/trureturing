@@ -28,7 +28,7 @@ internal sealed class A192205RootLimitDocument : IScribeDocumentDefinition
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Entry("result", "The complete real root limit", LimitFormula(),
                 "Put M=16 sqrt(3)/9 and write u=Re(z) for a unit complex number z. The squared modulus of p(z) is "
-                + "8(1-u) squared times (1+u). Its difference from 256/27 is "
+                + "8(1-u) squared times (1+u). Subtracting this squared modulus from 256/27 gives "
                 + "8(3u+1) squared times (5-3u)/27, which is nonnegative since u is at most one. "
                 + "Thus the modulus is at most M. Equality holds at z=-1/3+(2 sqrt(2)/3)i, whose norm is one. "
                 + "The original CountableHankelNegativeWitness.eval_bound applied to the real image of p to power n at this z "
