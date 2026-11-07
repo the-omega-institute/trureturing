@@ -11,9 +11,15 @@ admission_basis: open-problem-resolution (#27077; Proved)
 escape_witness: none (open-problem-resolution; the settlement itself is the new content)
 Direct frozen dependencies (including transitive imports used directly in proofs):
 D5/S3/Combinatorics/PositionSets/VertexPositionRatioRefutation.potential_dist
+statement_id: sha256:2360c26ddcdab5109d1906cf2b6884cebb254549f8cf9a5078002397a1098f09
 frozen_module_statement_id: sha256:f8b677ea402e38581fbfa04887d18040684e7baa21f05cad6421d45525c0cd21
 D5/S3/StatisticalMechanics/TeaCoordinationSequence:
-residual, residual_le_iff, hexagon, hexagon_mem, hexagon_card.
+frozen_module_statement_id: sha256:886f643e2393ab5d0ec2bfbd5f269e91ce996087bea3391ad3cb3fe48bb73af2
+residual statement_id: sha256:10439493c286dd5db76f1c5be5de421b2b461858b90859c1ba556092626d04d8
+residual_le_iff statement_id: sha256:57baed1a2c570cf3428c24d0b4b36e5e44e5d3d621f85558e6a1a55adfac7674
+hexagon statement_id: sha256:10406e6679465af9e0057cfdddc0ca9bebb728f3934c6db508914a34bb5c344b
+hexagon_mem statement_id: sha256:534c4c21f599900fb04d783f72bbcc5885fc74fdef9573ca15d84b34b65b5961
+hexagon_card statement_id: sha256:0663bad74ac233c926156c61b5a35617087d050dedaec7aaa1a1f35135c8ffef
 The vertex and face slices apply the owner's hexagon count; the vertical and diagonal
 edge slices use bijections to the horizontal-edge slice. All declarations below are
 bind-only; the module's sole admission basis is the external open-problem resolution.
