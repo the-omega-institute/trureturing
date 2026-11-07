@@ -7,18 +7,16 @@
    digest: Integral exceptional19 UpperBasis LowRows on original physical labels. -/
 /- UNCOMPILED. The actual low upper rows, not an assumed boundary table.
    The d-bit readout is reduced by the proved corrected ladders. -/
-module
-public import D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19UpperBasis.InternalRows
-import all D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19UpperBasis.Readout
-import all D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19UpperBasis.HighRows
-import all D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19UpperBasis.InternalRows
-import all D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19PermutationStabilizer.CarryRows
-import all D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19PermutationStabilizer.NormalForm
+import D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19UpperBasis.InternalRows
+import D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19UpperBasis.Readout
+import D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19UpperBasis.HighRows
+import D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19PermutationStabilizer.CarryRows
+import D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19PermutationStabilizer.NormalForm
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-@[expose] public section
+noncomputable section
 namespace D5.S3.Combinatorics.Circle.MersenneExceptional19UpperBasis
 open scoped BigOperators
 open MersenneExceptional19Stabilizer (degree base)

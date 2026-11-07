@@ -7,21 +7,20 @@
    digest: Integral exceptional19 UpperBasis Result on original physical labels. -/
 /- UNCOMPILED source preparation. Selected-span quotient and exact basis.
    No Lean/kernel, registration, official acceptance or publication claim. -/
-module
-public import D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19UpperBasis.Reconstruction
-public import Mathlib.LinearAlgebra.Dimension.OrzechProperty
-public import Mathlib.LinearAlgebra.Dimension.RankNullity
-public import Mathlib.LinearAlgebra.Dimension.Localization
-public import Mathlib.LinearAlgebra.Dimension.Constructions
-public import Mathlib.LinearAlgebra.FreeModule.PID
-public import Mathlib.LinearAlgebra.Isomorphisms
-import all D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19ZeroLattice.Weights
-import all D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19ZeroLattice.Result
+import D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19UpperBasis.Reconstruction
+import Mathlib.LinearAlgebra.Dimension.OrzechProperty
+import Mathlib.LinearAlgebra.Dimension.RankNullity
+import Mathlib.LinearAlgebra.Dimension.Localization
+import Mathlib.LinearAlgebra.Dimension.Constructions
+import Mathlib.LinearAlgebra.FreeModule.PID
+import Mathlib.LinearAlgebra.Isomorphisms
+import D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19ZeroLattice.Weights
+import D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19ZeroLattice.Result
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-@[expose] public section
+noncomputable section
 namespace D5.S3.Combinatorics.Circle.MersenneExceptional19UpperBasis
 open scoped BigOperators
 open MersenneExceptional19Stabilizer (degree base seed place)

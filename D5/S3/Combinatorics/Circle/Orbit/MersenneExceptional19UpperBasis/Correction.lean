@@ -7,16 +7,13 @@
    digest: Integral exceptional19 UpperBasis Correction on original physical labels. -/
 /- UNCOMPILED. The C*theta correction is read in INTEGER coefficients first.
    Reuses the sealed general physical readout; no cancellation in A. -/
-module
-public import D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19UpperBasis.HighRows
-public import D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19ZeroLattice.Readings
-import all D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19UpperBasis.HighRows
-import all D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19ZeroLattice.Readings
+import D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19UpperBasis.HighRows
+import D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19ZeroLattice.Readings
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-@[expose] public section
+noncomputable section
 namespace D5.S3.Combinatorics.Circle.MersenneExceptional19UpperBasis
 open scoped BigOperators
 open MersenneExceptional19Stabilizer (degree base)

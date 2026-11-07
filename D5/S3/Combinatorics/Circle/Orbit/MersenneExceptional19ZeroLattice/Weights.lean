@@ -76,20 +76,21 @@ theorem source_eq_scale_primitive (r : ℕ) (i : Fin (3*degree r)) :
   obtain ⟨ha,hb,hs⟩ := parameter_exact r
   have hQ := Q_exact r
   dsimp [v0,v1,v2] at h0 h1 h2
-  fin_cases p <;> simp only [phaseWeight,ite_true,ite_false,
-    show (1 : Fin 3)≠0 by decide,show (2 : Fin 3)≠0 by decide,
-    show (2 : Fin 3)≠1 by decide]
+  fin_cases p <;> norm_num [phaseWeight]
   · simp only [place,Fin.val_mk,show (0 : Fin 3).val=0 from rfl,zero_mul,zero_add]
-    linear_combination h0-((base r : ℤ)-1)*2^j.val*ha+
+    linear_combination (norm := skip) h0-((base r : ℤ)-1)*2^j.val*ha+
       ((base r : ℤ)-1)*(if j.val=degree r-1 then 1 else 0)*hQ
+    split_ifs <;> ring
   · simp only [place,Fin.val_mk,show (1 : Fin 3).val=1 from rfl,one_mul]
-    linear_combination h1+((base r : ℤ)-1)*2^j.val*hs-
+    linear_combination (norm := skip) h1+((base r : ℤ)-1)*2^j.val*hs-
       ((base r : ℤ)-1)*((if j.val=degree r-3 then 1 else 0)+
         (if j.val=degree r-2 then 1 else 0)+2*(if j.val=degree r-1 then 1 else 0))*hQ
+    split_ifs <;> ring
   · simp only [place,Fin.val_mk,show (2 : Fin 3).val=2 from rfl]
-    linear_combination h2-((base r : ℤ)-1)*2^j.val*hb+
+    linear_combination (norm := skip) h2-((base r : ℤ)-1)*2^j.val*hb+
       ((base r : ℤ)-1)*((if j.val=degree r-2 then 1 else 0)+
         2*(if j.val=degree r-1 then 1 else 0))*hQ
+    split_ifs <;> ring
 
 variable {A : Type*} [AddCommGroup A]
 

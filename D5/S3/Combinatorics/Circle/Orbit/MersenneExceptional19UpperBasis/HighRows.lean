@@ -7,17 +7,16 @@
    digest: Integral exceptional19 UpperBasis HighRows on original physical labels. -/
 /- UNCOMPILED. Actual high-row bridge on the original Fin (3d) labels.
    No matrix-entry table or group equation is supplied as a hypothesis. -/
-module
-public import D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19UpperBasis.Readout
-import all D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19PermutationStabilizer.CarryRows
-import all D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19PermutationStabilizer.NormalForm
-import all D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19PermutationStabilizer.Physical
-import all D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19Stabilizer
+import D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19UpperBasis.Readout
+import D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19PermutationStabilizer.CarryRows
+import D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19PermutationStabilizer.NormalForm
+import D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19PermutationStabilizer.Physical
+import D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19Stabilizer
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-@[expose] public section
+noncomputable section
 namespace D5.S3.Combinatorics.Circle.MersenneExceptional19UpperBasis
 open scoped BigOperators
 open MersenneExceptional19Stabilizer (degree base place)

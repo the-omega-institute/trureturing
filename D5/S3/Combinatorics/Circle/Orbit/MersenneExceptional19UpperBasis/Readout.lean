@@ -7,14 +7,13 @@
    digest: Integral exceptional19 UpperBasis Readout on original physical labels. -/
 /- UNCOMPILED. Integer binary transport, consumed by the physical upper-row
    calculation. All coefficient divisions take place in Z, never in A. -/
-module
-public import D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19UpperBasis.Family
-import all D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19PermutationStabilizer.Binary
+import D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19UpperBasis.Family
+import D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19PermutationStabilizer.Binary
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-@[expose] public section
+noncomputable section
 namespace D5.S3.Combinatorics.Circle.MersenneExceptional19UpperBasis
 open scoped BigOperators
 open MersenneExceptional19PermutationStabilizer

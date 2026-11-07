@@ -7,16 +7,15 @@
    digest: Integral exceptional19 ZeroLattice Result on original physical labels. -/
 /- Source-only candidate: UNCOMPILED, no kernel or acceptance claim.
 Owning mathematical provenance and remaining verification are in Result.scribe.cs. -/
-module
-public import D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19ZeroLattice.Weights
-public import D5.S3.Combinatorics.Sequenceability.PositiveChargeIncidence
-public import Mathlib.Algebra.BigOperators.Pi
-public import Mathlib.LinearAlgebra.Quotient.Defs
+import D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19ZeroLattice.Weights
+import D5.S3.Combinatorics.Sequenceability.PositiveChargeIncidence
+import Mathlib.Algebra.BigOperators.Pi
+import Mathlib.LinearAlgebra.Quotient.Defs
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-@[expose] public section
+noncomputable section
 namespace D5.S3.Combinatorics.Circle.MersenneExceptional19ZeroLattice
 open scoped BigOperators
 open MersenneExceptional19Stabilizer (degree base seed place total)

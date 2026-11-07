@@ -8,18 +8,17 @@
 /- UNCOMPILED. Physical upper-to-upper bit transport and the integral inverse.
    The only group hypotheses below are induction invariants and annihilation
    of the ACTUAL selected masks. No proposed row formula is assumed. -/
-module
-public import D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19UpperBasis.Correction
-import all D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19UpperBasis.Readout
-import all D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19UpperBasis.HighRows
-import all D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19PermutationStabilizer.Binary
-import all D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19PermutationStabilizer.CarryRows
-import all D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19Stabilizer
+import D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19UpperBasis.Correction
+import D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19UpperBasis.Readout
+import D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19UpperBasis.HighRows
+import D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19PermutationStabilizer.Binary
+import D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19PermutationStabilizer.CarryRows
+import D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19Stabilizer
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-@[expose] public section
+noncomputable section
 namespace D5.S3.Combinatorics.Circle.MersenneExceptional19UpperBasis
 open scoped BigOperators
 open MersenneExceptional19Stabilizer (degree base)

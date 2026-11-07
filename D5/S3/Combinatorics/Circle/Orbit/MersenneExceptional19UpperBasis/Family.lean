@@ -7,18 +7,15 @@
    digest: Integral exceptional19 UpperBasis Family on original physical labels. -/
 /- UNCOMPILED source preparation. No basis theorem is asserted in this module.
    Requires the sealed additive-helper delta, with original declaration names. -/
-module
-public import D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19ZeroLattice.Result
-public import D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19PermutationStabilizer.NormalForm
-import all D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19PermutationStabilizer.Physical
-import all D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19PermutationStabilizer.CarryRows
-import all D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19PermutationStabilizer.NormalForm
-import all D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19ZeroLattice.Result
+import D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19ZeroLattice.Result
+import D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19PermutationStabilizer.NormalForm
+import D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19PermutationStabilizer.Physical
+import D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19PermutationStabilizer.CarryRows
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-@[expose] public section
+noncomputable section
 namespace D5.S3.Combinatorics.Circle.MersenneExceptional19UpperBasis
 open scoped BigOperators
 open MersenneExceptional19Stabilizer (degree base seed place total)

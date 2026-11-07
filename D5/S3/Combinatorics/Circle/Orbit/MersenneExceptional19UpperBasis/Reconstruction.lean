@@ -7,18 +7,16 @@
    digest: Integral exceptional19 UpperBasis Reconstruction on original physical labels. -/
 /- UNCOMPILED. Torsion-safe arbitrary-group reconstruction for the ACTUAL
    upper-only family. No determinant, span, rank or certificate premise. -/
-module
-public import D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19UpperBasis.LowRows
-import all D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19UpperBasis.HighRows
-import all D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19UpperBasis.LowRows
-import all D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19ZeroLattice.Weights
-import all D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19PermutationStabilizer.Physical
-import all D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19PermutationStabilizer.CarryRows
+import D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19UpperBasis.LowRows
+import D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19UpperBasis.HighRows
+import D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19ZeroLattice.Weights
+import D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19PermutationStabilizer.Physical
+import D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19PermutationStabilizer.CarryRows
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-@[expose] public section
+noncomputable section
 namespace D5.S3.Combinatorics.Circle.MersenneExceptional19UpperBasis
 open scoped BigOperators
 open MersenneExceptional19Stabilizer (degree base place Qmask)
@@ -120,8 +118,9 @@ private theorem selected_four_parameter_form (r : ℕ) (X : Fin (3*degree r) →
       simpa [middle,show (1 : ℕ)≠degree r-3 by omega,
         show (1 : ℕ)≠degree r-2 by omega,show (1 : ℕ)≠degree r-1 by omega] using hz
     have hp : (2 : ℤ)^j=(2 : ℤ)^(j-2)*4 := by
-      rw [show j=(j-2)+2 by omega,pow_add]
-      norm_num
+      calc
+        (2 : ℤ)^j=(2 : ℤ)^((j-2)+2) := by congr 1; omega
+        _=(2 : ℤ)^(j-2)*4 := by rw [pow_add]; norm_num
     rw [high 1 j (by omega) hjd,hG]
     simp only [correctionBlock,show (1 : Fin 3)≠0 by decide,ite_false,ite_true,
       middle,smul_zero,zero_add]
