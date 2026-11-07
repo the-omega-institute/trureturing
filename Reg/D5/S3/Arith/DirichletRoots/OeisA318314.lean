@@ -110,7 +110,7 @@ def squareFamily : Registration squareArena (type_of% (@root_square)) where
     refine ⟨(), 0, 1, ?_⟩
     change (root * root) 0 ≠ (root * root) 1
     rw [root_square, root_square]
-    norm_num [oddUnitaryCount, Nat.odd_iff]
+    decide
 def squareAudit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@root_square) (Realization signature) Type Unit where
   unitName := `D5.S3.Arith.DirichletRoots.OeisA318314.root_square.audit
