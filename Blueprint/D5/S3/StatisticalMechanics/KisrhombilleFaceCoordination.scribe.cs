@@ -52,7 +52,12 @@ internal sealed class KisrhombilleFaceCoordinationDocument : IScribeDocumentDefi
                     + "included and contains exactly the root."),
             Definition("polygon", "polygon", "Translated cut rectangles", PolygonFormula(),
                 "The natural rectangle 0≤u≤A, 0≤v≤B is cut by deleting u+v<l and "
-                    + "(A−u)+(B−v)<r. This finite set is cutRectangle(A,B,l,r). The image map "
+                    + "the reflected triangle obtained from natural pairs with sum less than r. "
+                    + "Finset.range(n) contains the naturals less than n; "
+                    + "Finset.HasAntidiagonal.antidiagonal(n) contains natural pairs summing to n. "
+                    + "Finset.biUnion forms their finite union, Finset.product forms the rectangle, "
+                    + "and Finset.sdiff removes the union of both corners. Subtraction in the "
+                    + "reflection is truncated natural subtraction. The outer image map "
                     + "casts each natural coordinate to an integer and translates by (i0,j0). "
                     + "The projections p.1 and p.2 are the first and second components."),
             SharedTheorem("polygon-mem", "polygon_mem", "Six inequalities for polygon membership",
@@ -183,8 +188,19 @@ internal sealed class KisrhombilleFaceCoordinationDocument : IScribeDocumentDefi
         var map = Seq(LambdaLower, Sp, p, Sp, Mapsto, Sp,
             Pair(Add(V("i0"), Cast(Projection(p, 1), Integers())),
                 Add(V("j0"), Cast(Projection(p, 2), Integers()))));
+        Formula Triangle(Formula n) => App(Q("Finset", "biUnion"),
+            App(Q("Finset", "range"), n), Q("Finset.HasAntidiagonal", "antidiagonal"));
+        var q = V("q");
+        var reflection = Seq(LambdaLower, Sp, q, Colon, Sp, Product(Naturals(), Naturals()),
+            Sp, Mapsto, Sp, Pair(Sub(V("A"), Projection(q, 1)), Sub(V("B"), Projection(q, 2))));
+        var rectangle = App(Q("Finset", "product"),
+            App(Q("Finset", "range"), Add(V("A"), D(1))),
+            App(Q("Finset", "range"), Add(V("B"), D(1))));
+        var corner = App(Q("Finset", "image"), Parenthesized(reflection), Triangle(V("r")));
+        var cutRectangle = App(Q("Finset", "sdiff"), rectangle,
+            App(Q("Finset", "union"), Triangle(V("l")), corner));
         return PolygonParameters(Eq(Polygon(), App(Q("Finset", "image"), Parenthesized(map),
-            Call("cutRectangle", V("A"), V("B"), V("l"), V("r")))));
+            cutRectangle)));
     }
 
     private static Formula PolygonMembershipFormula()

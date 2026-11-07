@@ -8,7 +8,8 @@
 
 /-
 admission_basis: open-problem-resolution (#27078; Proved)
-escape_witness: none (external open-problem resolution)
+escape_witness: geodesic (constructs an attaining walk; consumed by distance_formula
+  and the downstream ball, shell and generating-function identities)
 Direct frozen dependencies: KisrhombilleFaceCoordination (Simplex, support, graph,
 polygon, polygon_mem, polygon_card, root, distance, shell_finite);
 TeaCoordinationSequence (hexagon, hexagon_mem, hexagon_card);
@@ -37,7 +38,7 @@ score_zero: proof_shape=bind-only; consumers=geodesic, ball_zero
 score_step: proof_shape=bind-only; consumers=score_descent, distance_formula
 score_descent: proof_shape=bind-only; consumers=geodesic
 geodesic: proof_shape=content; consumers=distance_formula
-distance_formula: proof_shape=bind-only; consumers=ball_mem, ball_zero
+distance_formula: proof_shape=content; consumers=ball_mem, ball_zero
 shell_finite: proof_shape=bind-only; consumers=shell_succ
 slice: proof_shape=bind-only; consumers=slice_mem, slice_even_0, slice_even_2, slice_even_4,
   slice_odd_0, slice_odd_4, slice_odd_1, slice_even_1, slice_odd_2_pos, slice_faces, slice_edges,
@@ -59,18 +60,18 @@ slice_edges: proof_shape=bind-only; consumers=ball_even, ball_odd
 slice_odd_2: proof_shape=bind-only; consumers=ball_odd
 ball: proof_shape=bind-only; consumers=ball_mem, ball_card_sum, ball_zero, ball_even, ball_odd,
   shell_succ, shell_zero, shell_one
-ball_mem: proof_shape=bind-only; consumers=ball_zero, shell_succ, shell_zero
+ball_mem: proof_shape=content; consumers=ball_zero, shell_succ, shell_zero
 ball_card_sum: proof_shape=bind-only; consumers=ball_even, ball_odd
 ball_zero: proof_shape=bind-only; consumers=shell_zero, shell_one
 ball_even: proof_shape=bind-only; consumers=shell_even, shell_odd
 ball_odd: proof_shape=bind-only; consumers=shell_one, shell_even, shell_odd
-shell_succ: proof_shape=bind-only; consumers=shell_one, shell_even, shell_odd
+shell_succ: proof_shape=content; consumers=shell_one, shell_even, shell_odd
 shell_zero: proof_shape=bind-only; consumers=shell_formula
 shell_one: proof_shape=bind-only; consumers=shell_formula
-shell_even: proof_shape=bind-only; consumers=shell_formula
-shell_odd: proof_shape=bind-only; consumers=shell_formula
-shell_formula: proof_shape=bind-only; consumers=result
-result: proof_shape=bind-only; consumers=Reg.family
+shell_even: proof_shape=content; consumers=shell_formula
+shell_odd: proof_shape=content; consumers=shell_formula
+shell_formula: proof_shape=content; consumers=result
+result: proof_shape=content; consumers=Reg.family
 -/
 
 import D5.S3.StatisticalMechanics.KisrhombilleFaceCoordination
