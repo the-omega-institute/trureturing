@@ -4,8 +4,7 @@
    mirror-E: none(waiver:actual-brst-odd-bracket)
    anchors: []
    utility: none
-   digest: Actual odd derived-bracket identities on the full lattice BRST quotient.
--/
+   digest: Actual odd derived-bracket identities on the full lattice BRST quotient. -/
 
 import D5.S3.VertexAlgebra.Lattice.LatticeBRSTCohomologyBVSecondOrder
 

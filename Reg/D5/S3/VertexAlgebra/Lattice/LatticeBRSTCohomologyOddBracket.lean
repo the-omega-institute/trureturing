@@ -3,10 +3,10 @@ import Reg.Support.DependentFamily
 import Reg.Support.OriginalCriticalBRST
 import D5.S3.VertexAlgebra.Lattice.LatticeBRSTCohomologyOddBracket
 
-/-! Source-family audit candidates for shifted antisymmetry, current/Delta
-compatibility, bracket/Delta compatibility and Jacobi. Source selectors remain
-unresolved. These definitions preserve the full critical telescope; actual
-elaboration and binding acceptance still require a later audit attempt. -/
+/-! Full critical source families for shifted antisymmetry, current/Delta
+compatibility, bracket/Delta compatibility and Jacobi. The realization and
+intervention proofs retain the full telescope. Compiler-bound source selectors
+and escaping source types remain unspecified. -/
 
 set_option autoImplicit false
 open _root_.D5.S3.VertexAlgebra
