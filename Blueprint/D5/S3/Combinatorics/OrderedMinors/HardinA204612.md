@@ -58,6 +58,10 @@ $$\forall n: \mathbb{N}, (15 < n) \Rightarrow \operatorname{a}\left(n\right) = 1
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/OrderedMinors/HardinA204612.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/hardin-a204612` (proved) by `D5/S3/Combinatorics/OrderedMinors/HardinA204612.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hardin-a204612","declaration_gid":"D5/S3/Combinatorics/OrderedMinors/HardinA204612.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* R. H. Hardin (2012). *OEIS A204612: five-column arrays with ordered adjacent determinants*. URL: <https://oeis.org/A204612>.
