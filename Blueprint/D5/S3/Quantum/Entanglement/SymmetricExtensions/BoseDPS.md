@@ -90,53 +90,13 @@ Lean statement: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseDPS.ordinary
 
 For a convergent sequence of inputs, every positive lift has trace equal to its input trace. The existing PSD entry bound therefore bounds the lifts. A convergent lift subsequence preserves the leaf sandwich, prescribed marginal, and every cut inequality, proving closedness of the projected cone.
 
-**Theorem 1.8 (Leaf cut reduction by cardinality).**
+For the ordinary witness, permutations fixing the root carry any two leaf cuts of equal cardinality to one another. The leaf-projector sandwich supplies the required conjugation invariance, and positive semidefiniteness transports through the corresponding computational-basis submatrix.
 
-Lean statement: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseDPS.leaf_cut_pos_of_card`
+For registers 0 through t with root 0, choosing k equal to the cardinality of a leaf cut identifies every leaf-only positivity condition with the first k leaves. The prescribed ordered marginal and the unnormalized scale are unchanged.
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseDPS.leaf_cut_pos_of_card` (`✓ std3`). ∎
+For a full Bose-supported positive operator, arbitrary register permutations carry cuts of equal cardinality, including cuts containing the root. The complementary-cut transpose reduces the remaining cuts to the first k leaves for k at most floor((t+1)/2), while empty and full cuts remain explicit.
 
-*Source.* Repository-derived.
-
-*Commentary.*
-
-Under the actual Bose leaf sandwich, permutations fixing the root carry any leaf cut to another of equal cardinality. Positivity transports by the original computational-basis permutation.
-
-**Theorem 1.9 (Exact ordinary DPS prefix convention).**
-
-Lean statement: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseDPS.ordinary_iff_prefix`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseDPS.ordinary_iff_prefix` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-For registers 0 through t and root 0, all leaf subsets give exactly the same PSD requirements as the first k leaves for every k from zero through t. The support and prescribed unnormalized marginal are retained verbatim.
-
-**Theorem 1.10 (Full Bose cut reduction by cardinality).**
-
-Lean statement: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseDPS.bose_cut_pos_of_card`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseDPS.bose_cut_pos_of_card` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-For a positive operator supported by the full symmetric projector, arbitrary register permutations transport cut positivity between all subsets of the same cardinality, including subsets containing the root.
-
-**Theorem 1.11 (Exact adapted DPS half-prefix convention).**
-
-Lean statement: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseDPS.allCuts_iff_half_prefix`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseDPS.allCuts_iff_half_prefix` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-On a full Bose witness on registers 0 through t, positivity at every cut is equivalent to positivity after transposing the first k leaves, for zero through floor((t+1)/2). Permutations supply all small cuts and full transposition supplies their complements. Empty and full cuts are included.
+These cardinality transports are the complete ordinary and adapted DPS prefix conventions used by the application; they retain zero and singular matrices and impose no trace normalization.
 
 ## References
 
@@ -145,11 +105,7 @@ On a full Bose witness on registers 0 through t, positivity at every cut is equi
 - Truth anchor: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseDPS.adaptedDPS`
 - Truth anchor: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseDPS.adapted_eq_inter`
 - Truth anchor: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseDPS.adapted_iff_ordinary`
-- Truth anchor: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseDPS.allCuts_iff_half_prefix`
-- Truth anchor: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseDPS.bose_cut_pos_of_card`
-- Truth anchor: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseDPS.leaf_cut_pos_of_card`
 - Truth anchor: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseDPS.ordinaryDPS`
 - Truth anchor: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseDPS.ordinary_closed`
-- Truth anchor: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseDPS.ordinary_iff_prefix`
 - Dependency: [D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseRootTranspose](BoseRootTranspose.md)
 - Dependency: [D5/S3/Quantum/Measurement/IncoherentCone](../../Measurement/IncoherentCone.md)

@@ -122,55 +122,15 @@ Lean statement: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseOccupationTw
 
 The finite sum of actual diagonal conjugations is divided by the cardinality of its indexing type. Trace normalization of the input is never assumed.
 
-**Theorem 1.10 (diagonalAverage posSemidef).**
+The finite diagonal average preserves positivity term by term; this property is used by the retained occupation twirl application.
 
-Lean statement: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseOccupationTwirl.diagonalAverage_posSemidef`
+Each retained proper PPT cut is transported through the actual diagonal conjugations before averaging.
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseOccupationTwirl.diagonalAverage_posSemidef` (`✓ std3`). ∎
+The full symmetric-projector sandwich is preserved by the diagonal average whenever the input has it.
 
-*Source.* Repository-derived.
+A prescribed ordered marginal fixed by every local diagonal conjugation is preserved by the finite average, with its original unnormalized trace.
 
-*Commentary.*
-
-The average is positive semidefinite when the input is positive semidefinite.
-
-**Theorem 1.11 (diagonalAverage fullyPPT).**
-
-Lean statement: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseOccupationTwirl.diagonalAverage_fullyPPT`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseOccupationTwirl.diagonalAverage_fullyPPT` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-Every original proper PPT cut survives averaging.
-
-**Theorem 1.12 (diagonalAverage bose).**
-
-Lean statement: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseOccupationTwirl.diagonalAverage_bose`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseOccupationTwirl.diagonalAverage_bose` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The full symmetric-projector sandwich is retained by averaging a Bose-supported positive operator.
-
-**Theorem 1.13 (edgeMarginal diagonalAverage).**
-
-Lean statement: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseOccupationTwirl.edgeMarginal_diagonalAverage`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseOccupationTwirl.edgeMarginal_diagonalAverage` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-For a nonempty averaging type, any prescribed ordered marginal fixed by every local diagonal conjugation remains exactly the same marginal of the average.
-
-**Definition 1.14 (occupationPhase).**
+**Definition 1.10 (occupationPhase).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseOccupationTwirl.occupationPhase`
 
@@ -182,7 +142,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseOccupationTw
 
 Independent local phases are sampled from the (r+1)-st roots of unity. Counts in words of length r are strictly smaller than r+1, so occupation characters cannot alias.
 
-**Theorem 1.15 (occupation character orthogonality).**
+**Theorem 1.11 (occupation character orthogonality).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseOccupationTwirl.occupation_character_orthogonality`
 
@@ -194,7 +154,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseOccupationTw
 
 The finite character sum is the group cardinality for equal occupations and zero for distinct occupations. Separation is proved from actual occupation counts.
 
-**Definition 1.16 (occupationTwirl).**
+**Definition 1.12 (occupationTwirl).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseOccupationTwirl.occupationTwirl`
 
@@ -206,7 +166,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseOccupationTw
 
 The explicit finite diagonal-unitary average uses these independent root-of-unity phases on r actual tensor registers.
 
-**Theorem 1.17 (occupationTwirl apply).**
+**Theorem 1.13 (occupationTwirl apply).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseOccupationTwirl.occupationTwirl_apply`
 
@@ -218,41 +178,11 @@ Lean statement: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseOccupationTw
 
 An entry between words with equal occupations is unchanged; an entry between distinct occupations is exactly zero. This finite average has precisely the occupation dephasing action of the diagonal torus.
 
-**Theorem 1.18 (occupationTwirl occupation offdiag).**
+Entrywise occupation dephasing also makes distinct normalized uniform Dicke occupation vectors orthogonal under the averaged matrix.
 
-Lean statement: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseOccupationTwirl.occupationTwirl_occupation_offdiag`
+For a genuine no-PPT Dicke star witness, the explicit occupation twirl is diagonal in the occupation basis, preserves every ordered marginal fixed by the local action, and retains positivity and full Bose support. No inverse, strict positivity, coefficient-sum or trace-one premise is used; zero and singular witnesses remain in scope.
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseOccupationTwirl.occupationTwirl_occupation_offdiag` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-All off-diagonal entries between distinct normalized uniform Dicke occupation vectors vanish. These are the existing repository sectorVector definitions.
-
-**Theorem 1.19 (twirl star core).**
-
-Lean statement: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseOccupationTwirl.twirl_star_core`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseOccupationTwirl.twirl_star_core` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-Every genuine no-PPT star witness for the actual Dicke operator has a complete Bose witness given by this explicit average, diagonal in the occupation basis. All ordered prescribed marginals are retained. No inverse, strict positivity, coefficient sum, or trace-one assumption is used.
-
-**Theorem 1.20 (twirl star).**
-
-Lean statement: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseOccupationTwirl.twirl_star`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseOccupationTwirl.twirl_star` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The same construction retains every fully PPT cut as well. The existence conclusion follows from this witness construction; the averaged matrix need not equal the original matrix.
+The same finite average transports every fully PPT cut and supplies an existence witness; the averaged matrix need not equal the input.
 
 ## References
 
@@ -262,19 +192,12 @@ The same construction retains every fully PPT cut as well. The existence conclus
 - Truth anchor: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseOccupationTwirl.diagonalAction_fullyPPT`
 - Truth anchor: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseOccupationTwirl.diagonalAction_posSemidef`
 - Truth anchor: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseOccupationTwirl.diagonalAverage`
-- Truth anchor: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseOccupationTwirl.diagonalAverage_bose`
-- Truth anchor: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseOccupationTwirl.diagonalAverage_fullyPPT`
-- Truth anchor: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseOccupationTwirl.diagonalAverage_posSemidef`
 - Truth anchor: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseOccupationTwirl.edgeMarginal_diagonalAction`
-- Truth anchor: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseOccupationTwirl.edgeMarginal_diagonalAverage`
 - Truth anchor: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseOccupationTwirl.occupationPhase`
 - Truth anchor: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseOccupationTwirl.occupationTwirl`
 - Truth anchor: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseOccupationTwirl.occupationTwirl_apply`
-- Truth anchor: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseOccupationTwirl.occupationTwirl_occupation_offdiag`
 - Truth anchor: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseOccupationTwirl.occupation_character_orthogonality`
 - Truth anchor: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseOccupationTwirl.partialTranspose_diagonalAction`
 - Truth anchor: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseOccupationTwirl.tensorPhase`
-- Truth anchor: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseOccupationTwirl.twirl_star`
-- Truth anchor: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseOccupationTwirl.twirl_star_core`
 - Dependency: [D5/S3/Quantum/Entanglement/OccupancyWordSectors](../OccupancyWordSectors.md)
 - Dependency: [D5/S3/Quantum/Entanglement/SymmetricExtensions/DickeExtension](DickeExtension.md)

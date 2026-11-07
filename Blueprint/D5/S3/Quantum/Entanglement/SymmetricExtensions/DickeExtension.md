@@ -174,7 +174,7 @@ $$\pi_{G} = \operatorname{Average}\left(\operatorname{componentGroup}\left(G\rig
 
 *Commentary.*
 
-This is the uniform average of the actual tensor-register permutation matrices over componentGroup G. The tensor factorization into symmetric projectors on every connected component is proved in BoseComponentProjector.factorization. All singleton components remain present.
+This is the uniform average of the actual tensor-register permutation matrices over componentGroup G. The tensor factorization into symmetric projectors on every connected component is the component-wise finite average identity described in the component projector exposition. All singleton components remain present.
 
 **Theorem 1.15 (Support on every graph component).**
 
@@ -212,19 +212,9 @@ $$\operatorname{PSD}\left(E\right) \land \operatorname{BosePair}\left(\rho\right
 
 The register type is any finite type with a chosen root and the local alphabet is any finite type. For a positive semidefinite E, Bose-supported root marginals force full Bose support and equality of all ordered marginals. No leaf support, PPT, strict positivity, inverse, or trace normalization is assumed. The proof lifts zero antisymmetric marginal weight through the existing tensor trace duality and zero-weight support-face theorem, then uses star transpositions and the existing ordered-marginal covariance proof. The marginal-to-global support mechanism is prior work of Hansenne-Xu-Kraft-Guehne, main page 4 and Appendix D Lemma 8 of arXiv:2108.02732v1. This formal generalization is not a priority claim.
 
-**Theorem 1.18 (Conjugation invariance of leaves suffices).**
+For distinct root and leaf registers, positivity and invariance of E under every permutation fixing the root, together with Bose support of one root-leaf marginal, transport that supported marginal to every root edge. The existing root-support theorem then supplies the full symmetric-projector sandwich and equality of every ordered marginal. The argument keeps zero and singular matrices and uses no leaf-subspace premise.
 
-$$\operatorname{PSD}\left(E\right) \land \operatorname{LeafConjugationInvariant}\left(E\right) \land \operatorname{BosePair}\left(\operatorname{M}\left(root, leaf, E\right)\right) \implies \operatorname{Bose}\left(E\right) \land \operatorname{AllOrderedMarginalsEqual}\left(E\right)$$
-
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/SymmetricExtensions/DickeExtension.support_of_leaf_invariance` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-Choose distinct root and leaf registers. Assume only that conjugating E by every register permutation fixing the root leaves E invariant, together with positivity and Bose support of that one root-leaf marginal. Relabeling the complement trace gives the same supported marginal at every root edge. The root support theorem then gives full Bose support and every ordered marginal equal to the original one. Leaf-subspace support is not a premise.
-
-**Theorem 1.19 (The identical matrices without PPT).**
+**Theorem 1.18 (The identical matrices without PPT).**
 
 $$\operatorname{BosePair}\left(\rho\right) \implies ( \operatorname{StarExtensionCore}\left(root, \rho, E\right) \iff \operatorname{CompleteExtensionCore}\left(\rho, E\right) )$$
 
@@ -236,7 +226,7 @@ $$\operatorname{BosePair}\left(\rho\right) \implies ( \operatorname{StarExtensio
 
 For every individual E, on any finite register set with a chosen root and finite local alphabet, the two no-PPT predicates are equivalent whenever rho is supported by the actual pair symmetric projector. The forward direction obtains full support and all ordered marginals from the root marginals; the reverse uses inclusion of the full symmetric subspace in the root-times-symmetric-leaves subspace. The theorem does not assert existence of an extension for every rho. It includes zero and singular rho, local dimension one, exactly two registers and arbitrary unnormalized traces.
 
-**Theorem 1.20 (The identical matrices with fully PPT cuts).**
+**Theorem 1.19 (The identical matrices with fully PPT cuts).**
 
 $$\operatorname{BosePair}\left(\rho\right) \implies ( \operatorname{StarExtension}\left(root, \rho, E\right) \iff \operatorname{CompleteExtension}\left(\rho, E\right) )$$
 
@@ -248,7 +238,7 @@ $$\operatorname{BosePair}\left(\rho\right) \implies ( \operatorname{StarExtensio
 
 Under the same finite-type and actual Bose support hypotheses as same_matrix_core, the original fully PPT predicates select the same individual E. Every nonempty proper cut is retained on that E. This is a pointwise equality, so it preserves the witness, its trace and all singular boundary cases. It does not assert universal extendibility.
 
-**Theorem 1.21 (Equality of the extension cones).**
+**Theorem 1.20 (Equality of the extension cones).**
 
 $$\forall   n \geq 1 ,   \forall   r \geq 2 ,   \forall   Y ,   ( \forall   i , j ,   i \leq j \implies Y_{i j} \geq 0 ) \implies   ( ( \exists   E ,   \operatorname{StarExtension}\left(0, \rho, E\right) ) \iff ( \exists   E ,   \operatorname{CompleteExtension}\left(\rho, E\right) ) )$$
 
@@ -286,7 +276,6 @@ Here n and r are natural numbers, Y is an arbitrary real n by n array, and i and
 - Truth anchor: `D5/S3/Quantum/Entanglement/SymmetricExtensions/DickeExtension.same_matrix_core`
 - Truth anchor: `D5/S3/Quantum/Entanglement/SymmetricExtensions/DickeExtension.support_of_bose_root_marginals`
 - Truth anchor: `D5/S3/Quantum/Entanglement/SymmetricExtensions/DickeExtension.support_of_connected_graph`
-- Truth anchor: `D5/S3/Quantum/Entanglement/SymmetricExtensions/DickeExtension.support_of_leaf_invariance`
 - Dependency: [D5/S3/Quantum/Entanglement/AbsoluteSeparability/SymmetricAbsolutePPTPermutationFloor](../AbsoluteSeparability/SymmetricAbsolutePPTPermutationFloor.md)
 - Dependency: [D5/S3/Quantum/Information/PartialTraceMutualInformation](../../Information/PartialTraceMutualInformation.md)
 - Dependency: [D5/S3/QuantumStates/ZeroWeightSupportFace](../../../QuantumStates/ZeroWeightSupportFace.md)

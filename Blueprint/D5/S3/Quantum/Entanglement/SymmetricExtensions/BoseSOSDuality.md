@@ -28,7 +28,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseSOSDuality.d
 
 *Commentary.*
 
-For occupation-diagonal Hermitian operators with actual real symbol p(X squared), membership in the actual Bose-PPT dual is equivalent to the native SOS condition. This supplies the operator-polynomial step in Gulati-Nechita-Park Theorems 8.9 and 8.11; BoseHierarchy uses it to prove the complete marginal and Parrilo hierarchy characterization.
+For arbitrary r and n, an occupation-diagonal Hermitian operator with actual real symbol p(X squared), where p is homogeneous of degree r, membership in the actual Bose-PPT dual is equivalent to the native SOS condition. This supplies the operator-polynomial step in Gulati-Nechita-Park Theorems 8.9 and 8.11; BoseHierarchy uses it to prove the complete marginal and Parrilo hierarchy characterization.
 
 ## References
 

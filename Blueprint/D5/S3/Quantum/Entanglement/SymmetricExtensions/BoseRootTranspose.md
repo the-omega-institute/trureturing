@@ -18,19 +18,9 @@ Lean statement: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseRootTranspos
 
 Positivity is required at every subset, including the ordinary empty cut and full transpose. For a positive input this is equivalent to the existing FullyPPT predicate.
 
-**Theorem 1.2 (partialTranspose composition).**
+Product-basis partial transposes compose by symmetric difference for arbitrary matrices and all cuts. The root transpose commutes with each distinct root-leaf partial trace and transposes the first pair factor. Applying the transport twice restores the original matrix and witness, so the leaf sandwich and the ordinary and full-transpose positivity endpoints are retained for every finite register and local-label type.
 
-Lean statement: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseRootTranspose.partialTranspose_composition`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseRootTranspose.partialTranspose_composition` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-Composing product-basis partial transposes replaces the cut by its symmetric difference. The identity holds for arbitrary matrices and all cuts.
-
-**Definition 1.3 (pairRootTranspose).**
+**Definition 1.2 (pairRootTranspose).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseRootTranspose.pairRootTranspose`
 
@@ -42,7 +32,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseRootTranspos
 
 Transpose the first member of the actual ordered pair, keeping the second member unchanged.
 
-**Theorem 1.4 (marginal rootTranspose).**
+**Theorem 1.3 (marginal rootTranspose).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseRootTranspose.marginal_rootTranspose`
 
@@ -54,23 +44,11 @@ Lean statement: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseRootTranspos
 
 For distinct root and leaf, the actual root partial transpose commutes with the root-leaf partial trace and transposes the first factor of that marginal.
 
-**Theorem 1.5 (star rootTranspose iff).**
-
-Lean statement: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseRootTranspose.star_rootTranspose_iff`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseRootTranspose.star_rootTranspose_iff` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-Root partial transpose is an involutive bijection of fully PPT star witnesses for an arbitrary input and its first-factor transpose. The leaf sandwich is retained. Symmetric-difference cuts include ordinary and full-transpose endpoints, whose positivity is supplied explicitly.
+Root partial transpose is an involutive transport of fully PPT star witnesses for an arbitrary input and its first-factor transpose. The leaf sandwich is retained, and symmetric-difference cuts include the ordinary and full-transpose endpoints with their positive semidefinite witnesses.
 
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseRootTranspose.AllCutsPPT`
 - Truth anchor: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseRootTranspose.marginal_rootTranspose`
 - Truth anchor: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseRootTranspose.pairRootTranspose`
-- Truth anchor: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseRootTranspose.partialTranspose_composition`
-- Truth anchor: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseRootTranspose.star_rootTranspose_iff`
 - Dependency: [D5/S3/Quantum/Entanglement/SymmetricExtensions/DickeExtension](DickeExtension.md)
