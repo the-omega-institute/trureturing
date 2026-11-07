@@ -11,7 +11,7 @@ import Lean.Meta.Eval
 import Lean.Meta.Tactic.AuxLemma
 import Lean.Meta.Tactic.Cbv
 import Lean.Elab.Tactic.ElabTerm
-
+import Lean.Elab.Tactic.CbvSimproc
 /-!
 The literal coordinates and corner lists come from `king-coordinate-certificate.json`,
 SHA-256 `267ae600f78c5960f03ca942d86c9fda2c23a2a9e2752f8022eed266e355b24f`.
@@ -19,34 +19,26 @@ The original labels and edges come from `graph-construction.json`, SHA-256
 `ff9876310835eca475074719e41da20ea0d5056d76b996c3ea7d5b63fcaa0980`.
 These hashes identify scientific inputs, not proof premises. Every geometric
 success obligation is stated below as a proposition about the actual Lean data.
-
 This supplies the routing interface for Carnero Bravo, arXiv:2505.06457v2,
 Question 32. It supplies neither singular homology nor a sphere-wedge obstruction.
 The original seed is Adamaszek's and the graph-move route follows Barmak/Lozin;
 the coordinate certificate is a local construction with no originality claim.
 -/
-
 set_option autoImplicit false
 set_option maxHeartbeats 0
 set_option maxRecDepth 1000000
-
 open scoped BigOperators
-
 namespace D5.S3.Combinatorics.Graph.Products.CarneroBravoKingRoutes
-
 open PrescribedSubdivision LatticeRouting
 namespace Poly
 export IntegerPolyline (sample expand length axisAligned)
 end Poly
-
 structure RouteLiteral where
   left : ℕ
   right : ℕ
   k : ℕ
   corners : List Point
-
 def oldLabels : Finset ℕ := {11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 42, 43, 44, 45, 47, 48, 49, 50, 52, 53, 54, 55, 57, 58, 59, 60, 62, 63, 64, 65, 66, 67, 68, 70, 71, 72, 74, 75, 76, 77, 78, 79, 80, 82, 83, 84, 86, 87, 88, 90, 91, 92, 93, 94, 95, 96, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 138, 139, 140, 141, 142, 143, 144, 146, 147, 148, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164, 165}
-
 def oldCoordinates : List (ℕ × Point) := [
   (11, (4476, 960)), (12, (5280, 1308)),
   (13, (5148, 1248)), (14, (4668, 1620)),
@@ -120,188 +112,53 @@ def oldCoordinates : List (ℕ × Point) := [
   (163, (7452, 468)), (164, (7332, 444)),
   (165, (7200, 420))
 ]
-
 def constructionEdges : Finset (Sym2 ℕ) := {
-  s(11, 12),
-  s(11, 49),
-  s(11, 50),
-  s(12, 13),
-  s(13, 42),
-  s(13, 43),
-  s(14, 15),
-  s(14, 44),
-  s(14, 45),
-  s(15, 16),
-  s(16, 52),
-  s(16, 53),
-  s(17, 18),
-  s(17, 54),
-  s(17, 55),
-  s(18, 19),
-  s(19, 146),
-  s(20, 21),
-  s(20, 43),
-  s(20, 45),
-  s(21, 22),
-  s(22, 161),
-  s(23, 24),
-  s(23, 48),
-  s(23, 50),
-  s(24, 25),
-  s(25, 94),
-  s(26, 27),
-  s(26, 53),
-  s(26, 55),
-  s(27, 28),
-  s(28, 161),
-  s(29, 30),
-  s(29, 59),
-  s(29, 60),
-  s(30, 31),
-  s(31, 106),
-  s(32, 33),
-  s(32, 58),
-  s(32, 60),
-  s(33, 34),
-  s(34, 62),
-  s(34, 63),
-  s(35, 36),
-  s(35, 64),
-  s(35, 65),
-  s(36, 37),
-  s(37, 93),
-  s(38, 39),
-  s(38, 63),
-  s(38, 65),
-  s(39, 40),
-  s(40, 101),
-  s(42, 110),
-  s(42, 134),
-  s(43, 113),
-  s(44, 110),
-  s(44, 154),
-  s(45, 113),
-  s(47, 66),
-  s(47, 114),
-  s(47, 157),
-  s(48, 114),
-  s(48, 133),
-  s(49, 117),
-  s(49, 134),
-  s(50, 117),
-  s(52, 118),
-  s(52, 138),
-  s(53, 121),
-  s(54, 118),
-  s(54, 141),
-  s(55, 121),
-  s(57, 82),
-  s(57, 122),
-  s(57, 162),
-  s(58, 122),
-  s(58, 142),
-  s(59, 125),
-  s(59, 165),
-  s(60, 125),
-  s(62, 126),
-  s(62, 150),
-  s(63, 126),
-  s(64, 129),
-  s(64, 150),
-  s(65, 129),
-  s(66, 67),
-  s(66, 70),
-  s(67, 68),
-  s(68, 133),
-  s(70, 71),
-  s(70, 74),
-  s(71, 72),
-  s(72, 157),
-  s(74, 75),
-  s(74, 138),
-  s(75, 76),
-  s(76, 77),
-  s(77, 105),
-  s(77, 130),
-  s(78, 79),
-  s(78, 86),
-  s(78, 102),
-  s(79, 80),
-  s(80, 141),
-  s(82, 83),
-  s(82, 162),
-  s(83, 84),
-  s(84, 142),
-  s(86, 87),
-  s(86, 109),
-  s(87, 88),
-  s(88, 146),
-  s(90, 91),
-  s(90, 94),
-  s(90, 130),
-  s(91, 92),
-  s(92, 93),
-  s(93, 98),
-  s(94, 95),
-  s(95, 96),
-  s(96, 153),
-  s(98, 99),
-  s(98, 105),
-  s(99, 100),
-  s(100, 101),
-  s(101, 106),
-  s(102, 103),
-  s(102, 109),
-  s(103, 104),
-  s(104, 105),
-  s(106, 107),
-  s(107, 108),
-  s(108, 109),
-  s(110, 111),
-  s(111, 112),
-  s(112, 113),
-  s(114, 115),
-  s(115, 116),
-  s(116, 117),
-  s(118, 119),
-  s(119, 120),
-  s(120, 121),
-  s(122, 123),
-  s(123, 124),
-  s(124, 125),
-  s(126, 127),
-  s(127, 128),
-  s(128, 129),
-  s(130, 131),
-  s(131, 132),
-  s(132, 133),
-  s(134, 135),
-  s(135, 136),
-  s(136, 154),
-  s(138, 139),
-  s(139, 140),
-  s(140, 141),
-  s(142, 143),
-  s(143, 144),
-  s(144, 158),
-  s(146, 147),
-  s(147, 148),
-  s(148, 165),
-  s(150, 151),
-  s(151, 152),
-  s(152, 153),
-  s(153, 158),
-  s(154, 155),
-  s(155, 156),
-  s(156, 157),
-  s(158, 159),
-  s(159, 160),
-  s(160, 161),
-  s(162, 163),
-  s(163, 164),
-  s(164, 165)
+  s(11, 12), s(11, 49), s(11, 50), s(12, 13),
+  s(13, 42), s(13, 43), s(14, 15), s(14, 44),
+  s(14, 45), s(15, 16), s(16, 52), s(16, 53),
+  s(17, 18), s(17, 54), s(17, 55), s(18, 19),
+  s(19, 146), s(20, 21), s(20, 43), s(20, 45),
+  s(21, 22), s(22, 161), s(23, 24), s(23, 48),
+  s(23, 50), s(24, 25), s(25, 94), s(26, 27),
+  s(26, 53), s(26, 55), s(27, 28), s(28, 161),
+  s(29, 30), s(29, 59), s(29, 60), s(30, 31),
+  s(31, 106), s(32, 33), s(32, 58), s(32, 60),
+  s(33, 34), s(34, 62), s(34, 63), s(35, 36),
+  s(35, 64), s(35, 65), s(36, 37), s(37, 93),
+  s(38, 39), s(38, 63), s(38, 65), s(39, 40),
+  s(40, 101), s(42, 110), s(42, 134), s(43, 113),
+  s(44, 110), s(44, 154), s(45, 113), s(47, 66),
+  s(47, 114), s(47, 157), s(48, 114), s(48, 133),
+  s(49, 117), s(49, 134), s(50, 117), s(52, 118),
+  s(52, 138), s(53, 121), s(54, 118), s(54, 141),
+  s(55, 121), s(57, 82), s(57, 122), s(57, 162),
+  s(58, 122), s(58, 142), s(59, 125), s(59, 165),
+  s(60, 125), s(62, 126), s(62, 150), s(63, 126),
+  s(64, 129), s(64, 150), s(65, 129), s(66, 67),
+  s(66, 70), s(67, 68), s(68, 133), s(70, 71),
+  s(70, 74), s(71, 72), s(72, 157), s(74, 75),
+  s(74, 138), s(75, 76), s(76, 77), s(77, 105),
+  s(77, 130), s(78, 79), s(78, 86), s(78, 102),
+  s(79, 80), s(80, 141), s(82, 83), s(82, 162),
+  s(83, 84), s(84, 142), s(86, 87), s(86, 109),
+  s(87, 88), s(88, 146), s(90, 91), s(90, 94),
+  s(90, 130), s(91, 92), s(92, 93), s(93, 98),
+  s(94, 95), s(95, 96), s(96, 153), s(98, 99),
+  s(98, 105), s(99, 100), s(100, 101), s(101, 106),
+  s(102, 103), s(102, 109), s(103, 104), s(104, 105),
+  s(106, 107), s(107, 108), s(108, 109), s(110, 111),
+  s(111, 112), s(112, 113), s(114, 115), s(115, 116),
+  s(116, 117), s(118, 119), s(119, 120), s(120, 121),
+  s(122, 123), s(123, 124), s(124, 125), s(126, 127),
+  s(127, 128), s(128, 129), s(130, 131), s(131, 132),
+  s(132, 133), s(134, 135), s(135, 136), s(136, 154),
+  s(138, 139), s(139, 140), s(140, 141), s(142, 143),
+  s(143, 144), s(144, 158), s(146, 147), s(147, 148),
+  s(148, 165), s(150, 151), s(151, 152), s(152, 153),
+  s(153, 158), s(154, 155), s(155, 156), s(156, 157),
+  s(158, 159), s(159, 160), s(160, 161), s(162, 163),
+  s(163, 164), s(164, 165)
 }
-
 def routeData : Array RouteLiteral := #[
   ⟨11, 12, 465, [(4476, 960), (4478, 960), (4478, 962), (4480, 962), (4480, 960), (5400, 960), (5400, 1308), (5280, 1308)]⟩,
   ⟨11, 49, 101, [(4476, 960), (4474, 960), (4474, 958), (4472, 958), (4472, 960), (4284, 960), (4284, 864), (4272, 864)]⟩,
@@ -673,8 +530,16 @@ private theorem checked_all_append {α : Type} (f : α → Bool) (xs ys : List �
     (hx : xs.all f = true) (hy : ys.all f = true) : (xs ++ ys).all f = true := by
   simp only [List.all_append, hx, hy, Bool.true_and]
 open Lean Meta in
+private def kingReadReduction : Lean.Meta.Sym.Simp.Simproc := fun e => do
+  let v ← whnf e
+  if e == v then return .rfl
+  let v ← Lean.Meta.Sym.shareCommon v
+  return .step v (← Lean.Meta.Sym.mkEqRefl v)
+cbv_simproc_pattern% (@Occupancy.read _ _ _) => kingReadReduction
+attribute [local cbv_simproc ↓] kingReadReduction
+open Lean Meta in
 /-- Normalize both sides with checked proofs; stalled computations are not values. -/
-private def kingReductionProof (target : Expr) : MetaM Expr := do
+private def kingCbvProof (target : Expr) : MetaM Expr := do
   let target ← instantiateMVars target
   let some (_, lhs, rhs) := target.eq? | throwError "Expected a closed equality"
   if target.hasMVar || target.hasFVar then throwError "Expected a closed equality"
@@ -704,6 +569,141 @@ private def kingReductionProof (target : Expr) : MetaM Expr := do
     throwError "cbv produced different constructor values"
   let middle ← mkEqRefl lhsValue
   mkEqTrans lhsProof (← mkEqTrans middle (← mkEqSymm rhsProof))
+open Lean Meta in
+private def kingChecked (target proof : Expr) : MetaM Expr := do
+  return mkConst (← withOptions (Lean.Elab.async.set · false) <| mkAuxLemma [] target proof)
+open Lean Meta in
+private def kingListProof (target : Expr) : MetaM Expr := do
+  let some (_, lhs, rhs) := target.eq? | throwError "Expected list equality"
+  let ty ← whnf (← inferType lhs)
+  unless ty.isAppOfArity ``List 1 do throwError "Expected list type"
+  let elt := ty.appArg!
+  let expose (original : Expr) : MetaM (Expr × Expr × Nat × Expr) := do
+    let mut tail := original
+    let mut es := []
+    for _ in [:64] do
+      let value ← whnf tail
+      if value.isAppOfArity ``List.nil 1 then
+        tail := value
+        break
+      unless value.isAppOfArity ``List.cons 3 do throwError "Unfinished list spine"
+      es := value.getAppArgs[1]! :: es
+      tail := value.getAppArgs[2]!
+    let front ← mkListLit elt es.reverse
+    let joined ← mkAppM ``List.append #[front, tail]
+    let proof ← kingChecked (← mkEq original joined) (← mkEqRefl joined)
+    return (front, tail, es.length, proof)
+  let mut left := lhs
+  let mut right := rhs
+  let mut steps := #[]
+  repeat
+    let (lp, lt, ln, lh) ← expose left
+    let (rp, rt, rn, rh) ← expose right
+    unless ln == rn do throwError "Different list lengths"
+    if ln == 0 then break
+    let ph ← kingCbvProof (← mkEq lp rp)
+    steps := steps.push (left, right, lh, rh, ph)
+    left := lt
+    right := rt
+  let mut proof ← kingCbvProof (← mkEq left right)
+  let append := mkApp (mkConst ``List.append [.zero]) elt
+  for (l, r, lh, rh, ph) in steps.reverse do
+    let functions ← mkAppM ``congrArg #[append, ph]
+    let middle ← mkAppM ``congr #[functions, proof]
+    proof ← kingChecked (← mkEq l r)
+      (← mkEqTrans lh (← mkEqTrans middle (← mkEqSymm rh)))
+  return proof
+open Lean Meta in
+private def kingReductionProof (target : Expr) : MetaM Expr := do
+  let some (_, lhs, rhs) := target.eq? | throwError "Expected equality"
+  if lhs.isAppOfArity ``List.all 3 then
+    let args := lhs.getAppArgs
+    let some es := Lean.Meta.Tactic.Cbv.getListLitElems args[1]! |
+      throwError "Expected literal check block"
+    unless es.size ≤ 64 do throwError "Check block exceeds 64 entries"
+    let mut assembled ← mkListLit args[0]! []
+    let mut proof ← mkEqRefl rhs
+    for e in es.toList.reverse do
+      let singleton ← mkListLit args[0]! [e]
+      let leaf ← kingCbvProof (← mkEq (mkApp3 (mkConst ``List.all [.zero]) args[0]! singleton args[2]!) rhs)
+      proof ← mkAppM ``checked_all_append #[args[2]!, singleton, assembled, leaf, proof]
+      assembled ← mkAppM ``List.append #[singleton, assembled]
+    return proof
+  if (← whnf (← inferType lhs)).isAppOfArity ``List 1 then return ← kingListProof target
+  kingCbvProof target
+private theorem checked_fill_append (key : RawVertex → List Bool) (xs ys : List RawVertex)
+    (t u v : Occupancy RawVertex) (hx : Occupancy.fill key xs t = some u)
+    (hy : Occupancy.fill key ys u = some v) :
+    Occupancy.fill key (xs ++ ys) t = some v := by
+  induction xs generalizing t with
+  | nil =>
+    simp only [Occupancy.fill, Option.some.injEq] at hx
+    subst u
+    simpa only [List.nil_append] using hy
+  | cons a as ih =>
+    cases h : t.insert (key a) a with
+    | none => simp [Occupancy.fill, h] at hx
+    | some t' =>
+      simp only [Occupancy.fill, h, Option.bind_some] at hx
+      simpa only [List.cons_append, Occupancy.fill, h, Option.bind_some] using ih t' hx
+open Lean Meta in
+private unsafe def kingFillProof (target : Expr) : MetaM Expr := do
+  let some (_, lhs, rhs) := target.eq? | throwError "Expected fill equality"
+  let mut input := lhs
+  if !input.isAppOfArity ``Occupancy.fill 4 then
+    let some expanded ← unfoldDefinition? input | throwError "Expected fill definition"
+    input := expanded
+  unless input.isAppOfArity ``Occupancy.fill 4 do throwError "Expected fill application"
+  unless rhs.isAppOfArity ``Option.some 2 do throwError "Expected successful fill"
+  let args := input.getAppArgs
+  let rawTy := args[0]!
+  let key := args[1]!
+  let xs := args[2]!
+  let initial := args[3]!
+  let finalTree := rhs.getAppArgs[1]!
+  let nativeKey ← evalExpr (RawVertex → List Bool) (← inferType key) key
+  let nativeXs ← evalExpr (List RawVertex) (← inferType xs) xs
+  let cache ← IO.mkRef (mkPtrMap : PtrMap (Occupancy RawVertex) Expr)
+  let rec quoteTree (t : Occupancy RawVertex) : MetaM Expr := do
+    if let some e := (← cache.get).find? t then return e
+    let e ← match t with
+      | .empty => pure (mkApp (mkConst ``Occupancy.empty [.zero]) rawTy)
+      | .node v l r => do
+        let ve ← match v with
+          | none => pure (mkApp (mkConst ``Option.none [.zero]) rawTy)
+          | some a => pure (mkApp2 (mkConst ``Option.some [.zero]) rawTy (← quoteRawVertex a))
+        pure (mkApp4 (mkConst ``Occupancy.node [.zero]) rawTy ve (← quoteTree l) (← quoteTree r))
+    cache.modify (·.insert t e)
+    return e
+  let fill := mkApp2 (mkConst ``Occupancy.fill [.zero]) rawTy key
+  let someTree := mkApp (mkConst ``Option.some [.zero]) (← inferType initial)
+  let mut current := initial
+  let mut nativeTree ← evalExpr (Occupancy RawVertex) (← inferType initial) initial
+  let mut steps := #[]
+  let mut remaining := nativeXs
+  let mut blocks := []
+  while !remaining.isEmpty do
+    blocks := remaining.take 64 :: blocks
+    remaining := remaining.drop 64
+  for block in blocks.reverse do
+    let some next := Occupancy.fill nativeKey block nativeTree | throwError "Fill rejected an insertion"
+    let chunk ← mkListLit rawTy (← block.mapM quoteRawVertex)
+    let quoted ← quoteTree next
+    let nextExpr ← mkAuxDefinitionFor (← mkAuxDeclName (kind := `_kingFillState)) quoted (compile := false)
+    let result := mkApp someTree nextExpr
+    let eq ← mkEq (mkApp2 fill chunk current) result
+    let step ← kingChecked eq (← mkEqRefl result)
+    steps := steps.push (chunk, current, nextExpr, step)
+    current := nextExpr
+    nativeTree := next
+  let mut assembled ← mkListLit rawTy []
+  let mut proof ← kingChecked (← mkEq (mkApp2 fill assembled current) rhs) (← mkEqRefl rhs)
+  for (chunk, previous, next, step) in steps.reverse do
+    proof ← mkAppM ``checked_fill_append #[key, chunk, assembled, previous, next, finalTree, step, proof]
+    assembled ← mkAppM ``List.append #[chunk, assembled]
+  let listProof ← kingListProof (← mkEq xs assembled)
+  let mapper ← withLocalDeclD `l (← inferType xs) fun l => mkLambdaFVars #[l] (mkApp2 fill l initial)
+  mkEqTrans (← mkAppM ``congrArg #[mapper, listProof]) proof
 open Lean Meta in
 local elab "king_kernel_all" : tactic => do
   Lean.Elab.Tactic.closeMainGoalUsing `king_kernel_all fun expected _ => do
@@ -766,7 +766,7 @@ local elab "king_occupancy_value " t:term : tactic => do
   Lean.Elab.Tactic.closeMainGoalUsing `king_occupancy_value fun _ _ => pure e
 local elab "king_kernel_rfl" : tactic => do
   Lean.Elab.Tactic.closeMainGoalUsing `king_kernel_rfl fun expected _ => do
-    let pf ← kingReductionProof expected
+    let pf ← unsafe kingFillProof expected
     let name ← Lean.withOptions (Lean.Elab.async.set · false) <|
       Lean.Meta.mkAuxLemma [] expected pf
     return Lean.mkConst name
