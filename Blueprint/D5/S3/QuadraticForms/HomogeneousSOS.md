@@ -4,7 +4,7 @@
 
 Homogeneous and parity representatives for sums of squares
 
-These are polynomial prerequisites for the genuine all-level GNP characterization. They do not themselves establish the tensor-moment bridge or any extension-cone characterization. The full package remains incomplete until those proofs and the normal acceptance are present.
+These polynomial results supply the homogeneous and parity decompositions used by the all-level GNP characterization in BoseHierarchy. The tensor-operator bridge is constructed in BoseSOSCertificates and BoseSOSDuality.
 
 **Theorem 1.1 (Homogeneous square representatives).**
 
