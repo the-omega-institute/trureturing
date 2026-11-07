@@ -31,7 +31,10 @@ internal sealed class CStarTriangleEqualityPreserversDocument : IScribeDocumentD
                 H("result"),
                 StatementSource.FromAuthor(ClaimBody()),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/HilbertOperators/litsaiwangwong2026tea")),
-                Blocks(Paragraph(Text("A finite complex seminorm additive on original TEA pairs is a nonnegative scalar times the original norm. Applying this to a↦‖T(a)‖, injectivity gives a positive scale on a nonzero algebra and surjectivity gives the isometric equivalence. The zero-algebra case uses scalar one. The argument uses forward preservation; the displayed conclusion retains both directions as in Problem 1.1."))), DescribeRole.Theorem))));
+                Blocks(Paragraph(Text("A finite complex seminorm additive on original TEA pairs is a nonnegative scalar times the original norm. Applying this to a↦‖T(a)‖, injectivity gives a positive scale on a nonzero algebra and surjectivity gives the isometric equivalence. The zero-algebra case uses scalar one. The argument uses forward preservation; the displayed conclusion retains both directions as in Problem 1.1."))), DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("op-ltww2611tea"),
+                    ResolutionKind.Proved)))));
 
     private static Formula X(string name) => F.Id(name);
     private static Formula Ty => Call("Type");

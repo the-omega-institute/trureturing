@@ -46,6 +46,10 @@ $$\forall A \in \operatorname{Type}\left(\right),\; \forall B \in \operatorname{
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Analysis/CStarTriangleEqualityPreservers.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/op-ltww2611tea` (proved) by `D5/S3/Quantum/Analysis/CStarTriangleEqualityPreservers.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"op-ltww2611tea","declaration_gid":"D5/S3/Quantum/Analysis/CStarTriangleEqualityPreservers.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Chi-Kwong Li, Ming-Cheng Tsai, Ya-Shu Wang and Ngai-Ching Wong (2026). *Linear maps of C*-algebras preserving norm parallelism*. DOI: [10.48550/arXiv.2611.06187](https://doi.org/10.48550/arXiv.2611.06187). URL: <https://arxiv.org/abs/2611.06187v1>.
