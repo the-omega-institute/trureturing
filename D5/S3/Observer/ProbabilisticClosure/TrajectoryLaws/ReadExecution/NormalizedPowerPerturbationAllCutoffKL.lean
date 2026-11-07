@@ -20,6 +20,8 @@ until the two-reference full-series energy estimate and the finite-to-countable
 tail Cauchy passage have a kernel proof.  This file is not frozen or deposited.
 -/
 
+/- Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/27700 -/
+
 open scoped BigOperators
 
 namespace D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.ReadExecution
