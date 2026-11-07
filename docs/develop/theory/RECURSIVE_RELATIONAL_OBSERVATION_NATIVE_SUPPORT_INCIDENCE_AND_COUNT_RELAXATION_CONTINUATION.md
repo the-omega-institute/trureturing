@@ -2016,3 +2016,690 @@ The whole-table condition (SI.166), CP.28 and the unrestricted
 nine-input minimum remain outside the proved consequences. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 37. One-host concentration and the complete cut-capacity comparison
+
+**Definition 37.1 (the actual axis class of a fixed graph).** Fix any
+original positive increasing position tuple and any one graph satisfying
+Assumption 21.1 for that tuple, with $K\ge4$, $L\ge3$ and
+$n=K+L-1$. In particular, correctness and termination hold on every
+$\theta\in\{0,1\}^n$, and both original pointwise bounds
+$t_P(\theta)\le n$ and $J_P(\theta)\le W$ hold on that same input,
+with $c_i=s_i+4$. The graph may depend on the tuple. All installed
+states count; coordinate order is adaptive, labels and successors are
+fixed, certified repeats remain paid, and inconsistent paths and cycles
+in the union graph remain permitted.
+
+Write $(S_z^0,q_z)$ for the support and host of the unique actual
+zero-axis history at $(0,z)$, $0\le z\le L-1$, and retain
+$A_0=S_{L-1}^0$ from Definition 31.1. Let
+$\mathcal A$ be the complete class of actual pairs of Definition 29.1
+on this graph. For $e\in\mathcal A$, write its counts as
+$(0,z_e),(3,w_e)$, its supports and upper assignment as
+$S_e,T_e,\rho_e$, and put
+
+$$
+\begin{gathered}
+X_e=S_e\setminus T_e,\qquad Y_e=T_e\setminus S_e,\qquad
+I_e=S_e\cap T_e,\\
+\delta_e=3+w_e-z_e,\qquad
+D_e=\{j\in I_e:\rho_e(j)=1\}.
+\end{gathered}
+\tag{SI.221}
+$$
+
+Membership in $\mathcal A$ requires the two actual histories at one
+installed state, not just these numerical data. It is a finite class:
+each live prefix has at most $n-1$ fresh queries, and there are finitely
+many Boolean inputs and prefixes. Repeated copies of a demand do not
+change its transversal number.
+
+**Theorem 37.2 (actual zero-axis concentration).** Every pair
+$e\in\mathcal A$ extends by exactly $L-1-z_e$ common zero replies
+along the installed lower zero-axis path to $q_{L-1}$. Both histories
+remain actual and live throughout. Their final counts are
+
+$$
+(0,L-1),\qquad (3,L-4+\delta_e),\qquad
+\delta_e\in\{0,1\},
+\tag{SI.222}
+$$
+
+and their disagreement set is exactly $D_e$.
+
+If $\mathcal A\ne\varnothing$, there is one support $T^*$ for
+all actual live three-hit histories at $q_{L-1}$, and one value
+$\delta\in\{0,1\}$ common to all $\delta_e$. Define
+
+$$
+\begin{gathered}
+X^*=A_0\setminus T^*,\qquad Y^*=T^*\setminus A_0,\qquad
+J=A_0\cap T^*,\\
+\alpha=|X^*|,\qquad b=|Y^*|,\qquad
+\beta_e=|\{j\in Y_e:\rho_e(j)=1\}|.
+\end{gathered}
+\tag{SI.223}
+$$
+
+Here $\alpha$ denotes private cardinality; cut depths below are denoted
+by $s$. For every original pair, with $C_e=A_0\setminus S_e$,
+
+$$
+\begin{gathered}
+C_e\cap(S_e\cup T_e)=\varnothing,\qquad
+A_0=S_e\sqcup C_e,\qquad T^*=T_e\sqcup C_e,\\
+X_e=X^*,\qquad Y_e=Y^*,\qquad
+J=I_e\sqcup C_e,\qquad
+\varnothing\ne D_e\subseteq I_e\subseteq J.
+\end{gathered}
+\tag{SI.224}
+$$
+
+The extended upper assignment is zero on $C_e$. In particular,
+
+$$
+\begin{gathered}
+1\le\alpha\le b\le3,\qquad b-\alpha=\delta,\qquad
+C_{X^*}\le C_{Y^*},\qquad |T^*|=L-1+\delta,\\
+|J|=L-1-\alpha\le L-2,\qquad
+|D_e|=3-\beta_e,\qquad 0\le\beta_e\le\min\{b,2\},\\
+|[n]\setminus(A_0\cup T^*)|=K-b\ge K-3.
+\end{gathered}
+\tag{SI.225}
+$$
+
+For every actual common-support cut $T_s$ at a depth $s\le L-1$,
+
+$$
+T_s\subseteq J,\qquad
+|J\setminus T_s|=L-1-\alpha-s\le L-2-s.
+\tag{SI.226}
+$$
+
+Thus a nonempty axis class forces such a cut depth to satisfy
+$s\le L-2$. For an actual common-support depth $s>L-1$, both
+$A_0$ and $T^*$ are contained in $T_s$, so
+$J\setminus T_s=\varnothing$. These are conditional assertions about
+actual cuts; no support at the adjoined formal endpoint is used as an
+actual history.
+
+Proof. Fix an actual pair $e$ and abbreviate $z=z_e$, $w=w_e$.
+Theorem 29.2 gives $\delta_e\in\{0,1\}$. Put
+$r=L-1-z\ge0$. At the $t$-th step of the proposed common zero
+continuation, $0\le t\le r$, its intended counts are
+$(0,z+t)$ and $(3,w+t)$. The lower zero count is at most $L-1$,
+and
+
+$$
+w+t\le w+r=L-4+\delta_e\le L-3.
+$$
+
+The upper hit count is $3\le K-1$. All these counts are nonnegative:
+in particular the last upper zero count equals $w+r$, with $w,r\ge0$.
+Both histories and, for $t<r$, both zero children are live.
+
+Actuality follows inductively, not from treating a syntactic path as an
+input. Initially the histories end at $q_z$. Suppose their actual
+extensions share $q_{z+t}$. SI Theorem 2.2 makes its fixed queried
+coordinate fresh for each history, hence outside the union of their
+currently exposed supports. Giving it value zero is consistent separately
+with each exposed assignment. Each new assignment has a full Boolean
+completion following the corresponding prefix. Since both new count
+pairs are live, the installed zero successor is running, and that single
+successor is the next zero-axis host $q_{z+t+1}$. This proves the
+induction through $r$, including $r=0$ without any extra step.
+
+Let $C_e$ be the queried coordinates in this continuation. Freshness
+makes them distinct and disjoint from $S_e\cup T_e$. The lower
+extension is the unique zero-axis history of length $L-1$, so
+$C_e=A_0\setminus S_e$ and $A_0=S_e\sqcup C_e$. The final
+upper support is $T_e\sqcup C_e$. Both histories give every added
+coordinate value zero. Their old intersection assignments are unchanged;
+therefore their final disagreement set is exactly $D_e$, with no
+coordinate removed, added or relabelled. The two full input completions
+need not coincide: the incoming assignments can be incompatible.
+
+Suppose $\mathcal A$ is nonempty, and choose one of these final upper
+histories to define $T^*$. Apply the existing equal-hit support exclusion
+[PE, Lemma 4.1][PE] through its Boolean interface in SI Section 2.
+Every other final upper history has three hits at the same installed
+state $q_{L-1}$, so its support must be $T^*$. The same supplied
+exclusion applies to any other actual live three-hit history at that
+state, whether or not it arose from the selected continuation. There
+is no additional rigidity lemma here. Exact live depths from SI
+Theorem 2.2 now give
+$|T^*|=3+w_e+r=L-1+\delta_e$, fixing the single value $\delta$.
+
+Taking differences and intersections in
+$A_0=S_e\sqcup C_e$ and $T^*=T_e\sqcup C_e$, with
+$C_e$ disjoint from both old supports, proves (SI.224). Theorem 29.2
+on the original pairs supplies the private-size and cost inequalities
+in (SI.225). Its nonempty disagreement has size $3-\beta_e$;
+the upper private assignment is unchanged. Counting $A_0$ gives
+$|J|=L-1-\alpha$, and counting
+$A_0\cup T^*=A_0\sqcup Y^*$ gives the last equality in (SI.225).
+
+If $s\le L-1$ is an actual common-support depth, both final live
+histories have actual ancestors at depth $s$, since their depths are
+$L-1$ and $L-1+\delta$. SI Lemma 9.2 puts $T_s$ in each
+final support. Hence $T_s\subseteq J$; its cardinality $s$ proves
+(SI.226). For $s>L-1$, integrality and $\delta\le1$ give
+$s\ge L\ge L-1+\delta$. Extend both final histories live to
+that actual common depth by SI Lemma 9.2. Their old supports are
+contained in its common support $T_s$, proving the remaining claim.
+
+All feasible depths and private cardinalities are covered by this
+argument. An existing pair necessarily has
+$3-\delta\le z_e\le L-1$ and $w_e=z_e+\delta-3$.
+The necessary private-size candidates are
+$(\alpha,b)\in\{(1,1),(2,2),(3,3)\}$ for $\delta=0$ and
+$(\alpha,b)\in\{(1,2),(2,3)\}$ for $\delta=1$, additionally
+subject to $|J|\ge1$ and every actual-cut restriction above. This
+list asserts no realization of any candidate. If $\mathcal A$ is
+empty, no $T^*,X^*,Y^*,J,\alpha,b$ or $\delta$ is manufactured;
+all selected axis families have transversal zero. If only a selected
+family is empty, the graph-owned sets still exist when $\mathcal A$
+is nonempty. The argument modifies no installed state and removes no
+paid visit from any run. $\square$
+
+**Corollary 37.3 (the complete cut slice of an actual family).** Suppose
+$\mathcal A\ne\varnothing$, and let $T_s$ be an actual common
+support with $s\le L-1$. For any selected actual axis family
+$\mathcal E\subseteq\mathcal A$, define
+
+$$
+\begin{gathered}
+\mathcal C_s(\mathcal E)=
+ \{D_e:e\in\mathcal E,\ D_e\subseteq T_s\},\qquad
+ t_s(\mathcal E)=\tau(\mathcal C_s(\mathcal E)),\\
+\tau_3(\mathcal E)\le t_s(\mathcal E)+|J\setminus T_s|,
+\qquad \nu\ge t_s(\mathcal E).
+\end{gathered}
+\tag{SI.227}
+$$
+
+Here $\tau$ on a family of coordinate sets means its ordinary
+coordinate transversal, not a signed literal transversal. Empty slices
+have transversal zero.
+
+Proof. Choose a minimum hitting set $H_s$ for the full slice
+$\mathcal C_s(\mathcal E)$, inside $T_s$. Such a choice is
+possible because all its edges are subsets of $T_s$; for an empty
+slice take $H_s=\varnothing$. Every edge not in the slice contains
+a coordinate outside $T_s$, and every edge lies in $J$ by Theorem
+37.2. Consequently $H_s\cup(J\setminus T_s)$ meets every edge
+of $\mathcal E$, proving the first inequality. Also
+$s\le L-1\le n-3$ since $K\ge4$. Every edge retained in the
+slice is a whole actual demand, with its positive-short supplier from
+Theorem 29.2. Theorem 32.1 therefore gives $\nu\ge t_s(\mathcal E)$.
+No supplier is claimed for a truncated set $D_e\cap T_s$: such an
+intersection need not contain the supplied label. $\square$
+
+**Definition 37.4 (three complete cut comparisons).** Now specialize to
+one graph of Assumption 21.1 with $n=9$, $K=4$, $L=6$, and an
+actual consecutive terminal gap $B=(3,9)$. Retain its actual $T_3$,
+$|T_3|=3$, and $A_0$, $|A_0|=5$. Let $\mathcal A_B$ be all
+actual axis pairs with both incoming cells in $V_B$, and choose any
+$\mathcal E_3\subseteq\mathcal A_B$ with
+$t_3=\tau_3(\mathcal E_3)$. Define separately
+
+$$
+\begin{aligned}
+\mathcal C(\mathcal E_3)&=
+ \{D_e:e\in\mathcal E_3,\ D_e\subseteq T_3\},&
+ t_C(\mathcal E_3)&=\tau(\mathcal C(\mathcal E_3)),\\
+\mathcal C_{\rm all}&=
+ \{D_e:e\in\mathcal A_B,\ D_e\subseteq T_3\},&
+ t_C^{\rm all}&=\tau(\mathcal C_{\rm all}).
+\end{aligned}
+\tag{SI.228}
+$$
+
+The first is the complete cut slice of the chosen family: it omits none
+of that family's cut-contained demands. The second is the graph-complete
+actual axis cut slice in this gap. Both consist of actual whole demands,
+with the actual witnesses of Theorem 29.2.
+
+A third comparison uses all available positive-short labels, independently
+of whether an axis pair demands them. Put
+
+$$
+\begin{gathered}
+Z_+=\{j\in[9]:\text{an installed state with label }j
+                         \text{ has positive short exits}\},\\
+Z_{\rm cut}=Z_+\cap T_3,\qquad Z_A=Z_+\cap A_0,\qquad
+\mathcal C_{\rm av}=\{\{j\}:j\in Z_{\rm cut}\},\\
+c=\tau(\mathcal C_{\rm av})=|Z_{\rm cut}|.
+\end{gathered}
+\tag{SI.229}
+$$
+
+Every singleton in $\mathcal C_{\rm av}$ has its defining installed
+positive-short supplier. Thus it is a valid Theorem 32.1 demand at
+$T_3$, without an assertion that it is an actual axis disagreement.
+Equivalently one can take all nonempty $D\subseteq T_3$ satisfying
+$D\cap Z_{\rm cut}\ne\varnothing$; this larger valid cut family
+has the same transversal $c$ because it contains precisely those
+available singletons as singleton members.
+
+Retain an arbitrary optional cut family $\mathcal E_{\rm cut}$ of
+Definition 36.1 and its $t_{\rm cut}$. It need not be an axis
+subfamily. A cut subfamily of $\mathcal C_{\rm all}$ has transversal
+at most $t_C^{\rm all}$, but no ordering of a general optional
+$t_{\rm cut}$ and $t_C^{\rm all}$ is built into the definitions.
+Available labels in $Z_A\setminus J$, when $J$ exists, can come
+from other or unused installed states and are not deleted.
+
+**Theorem 37.5 (the single-exception cut lift).** In Definition 37.4,
+if any actual axis pair exists on the graph, its concentrated intersection
+satisfies
+
+$$
+T_3\subseteq J,\qquad |J|=5-\alpha,\qquad
+\varepsilon:=|J\setminus T_3|=2-\alpha\in\{0,1\}.
+\tag{SI.230}
+$$
+
+In particular $\alpha\in\{1,2\}$. If $\alpha=2$, then
+$J=T_3$ and all actual axis demands are cut-pinned, including any
+unequal-depth pairs with $(\alpha,b)=(2,3)$. Every such pair in
+$\mathcal A_B$ has lower depth $z_e=5$. If $\alpha=1$, there
+is one graph-owned coordinate $x$ with $J=T_3\sqcup\{x\}$.
+For every selected $\mathcal E_3$,
+
+$$
+\begin{gathered}
+t_C(\mathcal E_3)\le t_C^{\rm all}\le c\le3,
+\qquad \nu\ge c,\qquad t_{\rm cut}\le c,\\
+t_3\le t_C(\mathcal E_3)+\varepsilon
+     \le t_C^{\rm all}+\varepsilon
+     \le c+\varepsilon\le c+1,\qquad t_3\le |Z_A|.
+\end{gathered}
+\tag{SI.231}
+$$
+
+If no axis pair exists, set $\varepsilon=0$ for these numerical
+inequalities only; all axis slices are empty and $t_3=0$.
+No upper support is required in that case.
+
+Proof. Apply (SI.226) at the actual depth three. It gives
+$T_3\subseteq J$ and $|J\setminus T_3|=5-\alpha-3$.
+Since $\alpha\ge1$, its nonnegative value is zero or one, proving
+(SI.230). For a pair in $V_B$, its lower live depth is four or
+five. Actual ancestry at $T_3$ gives $T_3\subseteq I_e$.
+If $\alpha=2$, then $|I_e|=z_e-2\ge3$, so $z_e=5$;
+this argument does not require equal upper and lower depths.
+
+Corollary 37.3 at $s=3$ proves the first bound for $t_3$ using
+the complete chosen-family slice. Explicitly, every edge outside that
+slice contains the same $x$ if $\varepsilon=1$; if
+$\varepsilon=0$, no such edge exists. Add that one coordinate to a
+minimum hitting set of the slice. Inclusion of the two actual slices
+gives $t_C(\mathcal E_3)\le t_C^{\rm all}$. For each edge of
+$\mathcal C_{\rm all}$, Theorem 29.2 supplies a positive-short
+label in that whole edge, hence in $Z_{\rm cut}$. Thus
+$t_C^{\rm all}\le c$. Theorem 32.1 applies to every available
+singleton at $T_3$, giving $\nu\ge c$, and $c\le|T_3|=3$.
+The equality $\tau(\mathcal C_{\rm av})=c$ also follows directly:
+each singleton forces its own coordinate into a hitting set, and their
+union hits the entire family.
+
+For a general optional cut family in Definition 36.1, every applicable
+cut has depth at most six, hence at most three by consecutiveness of
+$B=(3,9)$. The actual common supports form a chain, so each of these
+supports lies in $T_3$. Each optional demand therefore has a supplier
+with label in that demand and in $Z_{\rm cut}$. The set
+$Z_{\rm cut}$ hits every optional demand, proving $t_{\rm cut}\le c$.
+It does not make that optional family an axis subfamily. Taking all the
+available singleton labels attains the maximum transversal over these
+allowed cut families.
+
+For every actual axis demand, Theorem 29.2 supplies a label in $D_e$,
+and Theorem 37.2 places $D_e$ in $J\subseteq A_0$. Thus
+$Z_+\cap J$ hits every selected axis edge, and $Z_A$ does too.
+More explicitly,
+
+$$
+t_3\le |Z_+\cap J|
+   =c+|(Z_+\cap J)\setminus T_3|
+   \le c+\varepsilon.
+$$
+
+This does not assert $|Z_A|\le c+1$: labels in $A_0\setminus J$
+need not belong to any axis demand. The empty cases follow from the
+zero transversal convention. If the chosen family is cut-pinned, then
+$t_3=t_C(\mathcal E_3)$, independent of an optional family's
+choice. For an arbitrary optional subfamily, (SI.231) supplies no
+replacement of $t_C(\mathcal E_3)$ or $c$ by its possibly smaller
+$t_{\rm cut}$. Such a replacement would discard the completeness
+premise; no actual-graph counterexample to it is asserted here.
+$\square$
+
+**Proposition 37.6 (paid private sizes and the one-hit-prefix restriction).**
+In Definition 37.4 every actual selected axis family satisfies
+
+$$
+t_3\le3.
+\tag{SI.232}
+$$
+
+More precisely, in the $\alpha=1$ case, $b\in\{1,2\}$.
+If $b=1$, every axis demand has size three and $t_3\le2$.
+If $b=2$, every axis demand has size at least two. If
+$\alpha=1$ and $t_3=3$, then every separated family
+$\mathcal E_\perp$ of Definition 36.1 on this same graph obeys
+
+$$
+t_\perp\le2.
+\tag{SI.233}
+$$
+
+Proof. The private-set bounds are those of Theorem 37.2. The paid
+supplier used here is the upper-private-one implication in
+[Support Barriers, Lemma 2.3][SB37], equivalently the Boolean
+instance of [PE, Theorem 3.1(2)--(3)][PE]. In its notation the
+correspondence is
+
+$$
+(k,h,g,S,T,X,Y,U,a,b)
+  =(4,0,3,S_e,T_e,X^*,Y^*,[9]\setminus(S_e\cup T_e),\alpha,b).
+$$
+
+The original $c_i$ are unchanged. The lower private bits are all zero,
+so the supplied lower-private-zero implication is already applicable.
+If all upper private bits are one, the other supplied implication gives
+$b\le\alpha$ and $C_{Y^*}\le C_{X^*}$; together the two give
+$b=\alpha$ and equality of the two private costs. These are the
+published one-sided exchanges, used as intermediate facts.
+
+The native/Boolean interface here does not identify arbitrary native
+histories by a count label. SI Convention 1.3 lifts this original
+Boolean graph unchanged to the selected literals after the paid profile
+front. Each of the present Boolean histories becomes an actual selected
+cube history there, with the same $S_e,T_e,\rho_e$, the same fixed
+selected successors, and original selected costs. The lift's simultaneous
+native bounds are $n+1,W+3$, with its profile charge included; PE
+Theorem 3.1 has $n=9,k=4$ in its permitted range. Support Barriers
+Lemma 2.3 states precisely the Boolean implications at bounds $n,W$.
+Thus the supplied conclusion concerns this graph and its actual
+completions, including the paid private repeats in the exchanged suffix.
+It assumes neither subset-sum nonresonance nor free certified traffic.
+
+If $\alpha=2$, then $J=T_3$ has size three, and $t_3\le3$
+follows immediately. Suppose $\alpha=1$. For $b=1$, an actual
+pair with $\beta_e=1$ would have all upper private bits one.
+The supplied exchanges would force $C_{X^*}=C_{Y^*}$ for two
+nonempty disjoint singletons. Their coordinates differ, while the
+individual original costs are distinct, a contradiction. Hence
+$\beta_e=0$ for every pair, and $|D_e|=3-\beta_e=3$.
+Every two-element subset of the four-element $J$ meets every such
+three-element edge, proving $t_3\le2$. Equality of general subset
+sums is not excluded or used in this singleton argument.
+
+For $b=2$, the case $\beta_e=2$ would instead have all upper
+private bits one and force $2=b\le\alpha=1$, another contradiction.
+Thus $\beta_e\le1$, so every actual edge has size at least two
+inside the four-element $J$. Every three-element subset of $J$
+meets every such edge. This proves (SI.232), including the empty
+family, and excludes precisely the indicated upper-private-one cases.
+
+Now assume $\alpha=1$ and $t_3=3$. The $b=1$ case is
+impossible, so $b=2$, $J=T_3\sqcup\{x\}$, and the selected
+actual edges all have size at least two. No two-element subset
+$H\subseteq J$ can hit every selected edge. Therefore some actual
+$D_e$ is disjoint from $H$, hence contained in the two-element
+$J\setminus H$. Its minimum size forces
+$D_e=J\setminus H$. As $H$ ranges over all two-element subsets,
+this proves that all six two-element subsets of $J$ occur as actual
+demands in $\mathcal E_3$. They are consequences of its assumed
+actual transversal value, not postulated formal patterns.
+
+In particular, for every $u\in T_3$ there is an actual pair with
+$D_e=\{x,u\}$. Extend it to $q_5$ by Theorem 37.2. Its upper
+assignment on $T_3$ is one at $u$ and zero at the other two
+coordinates: on $J$ the upper ones are exactly $D_e$, since the
+added coordinates $C_e$ are all zero. Its upper final support is
+$T^*$, with $|T^*|=6$. The actual depth-three ancestor of this
+upper history has support $T_3$ and that one-hit assignment.
+
+For each $u\in T_3$, let $r_u$ be the unique actual depth-three
+host with this assignment, as in the proof of Corollary 36.3.
+Its uniqueness is deterministic: two completions agreeing on $T_3$
+follow the same first three queries, each in their depth-three support
+$T_3$, with the same replies. Existence here is also witnessed by the
+actual upper history just obtained. Its next coordinate is fresh, and
+is read before that history's final depth six, so
+
+$$
+i(r_u)\in T^*\setminus T_3\qquad(u\in T_3).
+\tag{SI.234}
+$$
+
+Theorem 36.2 and Corollary 36.3 say that every separated singleton
+label is $i(r_u)\notin A_0$ for one of these three actual one-hit
+prefixes. Combining this fact with (SI.234) gives
+
+$$
+\{j_e:e\in\mathcal E_\perp\}
+ \subseteq\{i(r_u):u\in T_3\}\setminus A_0
+ \subseteq T^*\setminus A_0=Y^*.
+$$
+
+The last set has size $b=2$. The separated transversal equals the
+number of distinct such singleton labels by Corollary 36.3, proving
+(SI.233). Coincident hosts or labels only reduce that number. All
+prefixes, final supports and separated labels refer to this one actual
+graph. No existence of a graph with $t_3=3$ is asserted. $\square$
+
+**Corollary 37.7 (complete-cut redundancy and the exact capacity consumer).**
+Retain Definition 37.4 and the separated and literal families of
+Definition 36.1, with $\mathcal E_{\rm lit}$ containing
+$\mathcal E_\perp$. Write $p=t_\perp$, so
+$0\le p\le3$ and $t_{\rm lit}\ge p$. Use the same actual
+$\lambda,\gamma,C=\nu+\lambda+\gamma$ of (SI.213), with
+$\lambda\ge1$, $\gamma\ge1$, and define the comparisons using
+all available cut labels by
+
+$$
+\begin{gathered}
+M_0(c)=\max\{2,t_3,t_{\rm lit},c+2\},\qquad
+M_1(c)=\max\{M_0(c),c+p\},\\
+M_{\rm mix}=t_3+p-1.
+\end{gathered}
+\tag{SI.235}
+$$
+
+On this same graph the retained-diagonal bound is
+
+$$
+\begin{aligned}
+C&\ge\lambda+\max\{t_{\rm lit}-1,c+\gamma,c+p-1\}\\
+ &\ge\max\{t_{\rm lit},c+2,c+p\}
+   =M_1(c),\\
+M_0(c)&=\max\{t_{\rm lit},c+2\},\qquad
+M_1(c)=\max\{t_{\rm lit},c+\max\{2,p\}\},\\
+M_{\rm mix}&\le c+p\le M_1(c).
+\end{aligned}
+\tag{SI.236}
+$$
+
+Thus both the $t_3$ branch of the complete $M_0$ comparison and
+the extra mixed branch after the complete $M_1$ comparison are
+universally redundant. The same redundancy after $M_1$ holds when
+$c$ is replaced throughout by $t_C^{\rm all}$ or by
+$t_C(\mathcal E_3)$, using the corresponding complete valid cut
+family for its capacity bound.
+
+For comparison with $M_0(c)$ alone, the strongest restriction supplied
+by these relations and Proposition 37.6 is the exact conditional test
+
+$$
+\begin{gathered}
+M_{\rm mix}\le M_0(c)+1,\\
+M_{\rm mix}>M_0(c)
+\quad\Longleftrightarrow\quad
+(c,t_3,p,t_{\rm lit})=(1,2,3,3).
+\end{gathered}
+\tag{SI.237}
+$$
+
+This equivalence compares the expressions for actual graph/family data.
+It does not assert a graph realizing the displayed tuple. In that
+conditional tuple $M_0(c)=3$ and $M_{\rm mix}=M_1(c)=4$.
+Universal $M_{\rm mix}\le M_0(c)$ is not concluded.
+
+Proof. For each $j\in Z_{\rm cut}$ choose one installed
+positive-short state with fixed label $j$. Different labels require
+different states. Theorem 32.1 puts every chosen state globally in
+$Q\setminus Q_{\rm live}$, giving $\nu\ge c$.
+For each distinct singleton label demanded by $\mathcal E_\perp$,
+choose one supplying positive terminal literal gate from Theorem 25.3.
+There are $p$ such chosen gates by Theorem 36.2 and Corollary 36.3.
+Their fixed labels lie outside $A_0$, whereas the $c$ cut states
+have labels in $T_3\subseteq A_0$. These two chosen state sets
+are therefore disjoint.
+
+Every live occurrence of a chosen literal gate is at the corner
+$(3,5)$, by Theorem 25.3. Consequently their disjoint union is
+contained in $(Q\setminus Q_{\rm live})\cup F_{(3,5)}$.
+Its cardinality gives the actual same-graph inequality
+
+$$
+c+p\le\nu+b_{(3,5)}=\nu+\gamma+1.
+\tag{SI.238}
+$$
+
+A gate supplying several demands is chosen once per distinct required
+label; a state belongs to just one chosen set here. In particular a
+never-live gate is not charged again as a separate corner resource.
+The source literal-family bound is
+$t_{\rm lit}\le\nu+b_{(3,5)}=\nu+\gamma+1$ by Theorem 26.2.
+Together with $\nu\ge c$ and (SI.238), these give respectively
+
+$$
+C\ge t_{\rm lit}+\lambda-1,\qquad
+C\ge c+\lambda+\gamma,\qquad
+C\ge c+p+\lambda-1.
+$$
+
+Their maximum is the first line of (SI.236). These are three lower
+bounds on one pool; their transversal contributions have not been added.
+Using only $\lambda,\gamma\ge1$ gives its second line. By
+Theorem 37.5, $t_3\le c+1<c+2$, and $c+2\ge2$.
+The simplifications of $M_0(c)$ and $M_1(c)$ follow, as does
+$M_{\rm mix}\le c+p$. For either complete actual slice in
+(SI.228), Corollary 37.3 supplies $t_3\le t_C+1$, Theorem
+32.1 supplies $\nu\ge t_C$, and the identical disjoint union
+argument supplies $t_C+p\le\nu+b_{(3,5)}$. Thus the same
+$M_1$ domination holds without identifying either $t_C$ with $c$.
+
+For the strict $M_0(c)$ comparison, $p\le3$ and $t_3\le c+1$
+first give $M_{\rm mix}\le c+3\le M_0(c)+1$.
+Strictness over its $c+2$ branch requires
+$t_3+p\ge c+4$. The two upper bounds force $p=3$ and
+$t_3=c+1$. Strictness over $t_{\rm lit}$ is then exactly
+$t_{\rm lit}\le c+2$. Conversely these three integer conditions
+give $M_{\rm mix}=c+3>M_0(c)=c+2$.
+
+Now $t_{\rm lit}\ge p=3$ implies $c\ge1$, and
+$t_3\le3$ from Proposition 37.6 implies $c\le2$.
+If $c=2$, then $t_3=3$. The case $\alpha=2$ would be
+cut-pinned and give $t_3\le c$, impossible. Hence $\alpha=1$,
+and (SI.233) gives $p\le2$, also impossible. It follows that
+$c=1$, $t_3=2$ and
+$3=p\le t_{\rm lit}\le c+2=3$, proving the forward implication
+of (SI.237). Conversely the displayed tuple directly gives the stated
+values $3,4,4$, proving the reverse implication as a comparison of
+expressions. If the axis class is empty, $t_3=0$ and none of these
+strictness conditions can arise. If the selected axis family is
+cut-pinned, $t_3\le c$ and
+$M_{\rm mix}\le c+p-1\le c+2\le M_0(c)$ instead.
+
+For an arbitrary optional $t_{\rm cut}$, its $M_0$ or $M_1$
+can be smaller than the complete comparison. The proof neither replaces
+$c$ by every optional selection in $t_3\le c+1$, nor claims
+$M_{\rm mix}\le M_1(t_{\rm cut})$ for every such choice.
+It proves that the complete applicable cut bound on this same graph
+already absorbs the mixed term. Omitting available demands cannot
+establish a gain against all applicable capacity bounds. $\square$
+
+**Proposition 37.8 (unchanged unrestricted deficit and source boundaries).**
+In the scope of Corollary 37.7 the exact incidence identity is still
+
+$$
+\begin{gathered}
+m=24+R+E_B^{\setminus\Pi_4}-D_B+C,\qquad R\ge0,\\
+m\ge24\quad\Longleftrightarrow\quad
+R+E_B^{\setminus\Pi_4}+C\ge D_B.
+\end{gathered}
+\tag{SI.239}
+$$
+
+A sufficient substitution supplied by (SI.236) is
+
+$$
+R+E_B^{\setminus\Pi_4}
+ +\lambda+\max\{t_{\rm lit}-1,c+\gamma,c+p-1\}\ge D_B.
+\tag{SI.240}
+$$
+
+The weaker sufficient substitution uses
+$\max\{t_{\rm lit},c+\max\{2,p\}\}$ in place of the retained
+$\lambda,\gamma$ expression. None of the foregoing inequalities
+establishes either sufficient substitution uniformly for every permitted
+graph and original tuple.
+
+Proof and mathematical correspondence. Equation (SI.239) is Corollary
+33.1 with $\Pi=\Pi_4$, or (SI.214), on the same installed graph.
+Substitution of its actual capacity lower bound (SI.236) proves the
+sufficiency of (SI.240), without replacing any of the other incidence
+terms. In particular no new transversal equality or relation bounds the
+full unrestricted $D_B$ by these resources.
+
+The substantive composition in this section is the actual continuation
+to a single zero-axis host, preservation of both private sets, the
+resulting common intersection with at most one coordinate outside the
+actual cut, and its complete-cut capacity consumer. SI Theorem 2.2
+supplies exact live depths, actual fixed successors, freshness and the
+unique zero axis. Theorem 29.2 supplies the required depth slack,
+nonempty disagreements and actual short-exit witnesses. PE Lemma 4.1,
+through SI Section 2, supplies equal-hit support rigidity directly;
+it is not reproved as new content. SI Lemma 9.2 supplies the actual
+ancestors and common-cut support chain. The paid refinement uses the
+already published upper-private-one exchange in Support Barriers
+Lemma 2.3 and PE Theorem 3.1, with the parameter and source mapping
+in Proposition 37.6. Theorem 36.2 supplies the actual one-hit prefixes
+and their fixed fourth-query labels; the extra restriction (SI.233)
+uses those prefixes of actual edges forced by $t_3=3$. Sections
+26, 30--33 and 36 supply gate localization, cut pinning, diagonal
+excess and the finite same-graph capacity unions.
+
+These are repo-derived paper deductions from the cited suppliers.
+The overlap already supplied by equal-hit rigidity, one-sided exchanges,
+short-exit witnesses and cut-pinned counting is retained as such. The
+classical comparison remains bounded by [Bryant, Section 2, Definition
+1][Bryant] and [Cook, Edmonds, Medabalimi and Pitassi, Section
+2.1][CEMP]: strict increase of variable indices in the former and
+acyclicity with semantic read-once restrictions on consistent accepting
+paths in the latter are additional model hypotheses. Neither supplies
+this graph with a size-preserving normalization, and neither justifies
+removing paid certified queries. The concentration and prefix deductions
+use actual histories of the original graph throughout; ordinary
+hypergraph transversals and finite union bounds do not assert that every
+formal edge pattern or numerical capacity profile is realizable. No
+worldwide novelty or physical-memory conclusion is attached to these
+paper deductions.
+
+The remaining requirement is a uniform proof of the exact inequality
+in (SI.239), or another sufficient condition paying its full deficit.
+The whole-table condition (SI.166), [CP, (CP.28)][CP] and the
+unrestricted nine-input minimum $24$ remain unresolved by this section.
+The $T_3$ and prefix conclusions here are not transferred to terminal
+gaps $(1,9)$ or $(2,9)$, and the complete mixed comparison here uses
+$\Pi_4$, not the separate unequal-depth $\Pi_R$ consumer.
+Every assertion is quantified separately over every original position
+tuple and every permitted graph for that tuple. $\square$
+
+[SB37]: FIB_NATIVE_SUPPORT_BARRIERS_AND_SHORT_BLOCK_COMPENSATION.md
+
+## 追加锚（本行以下为增补区）
