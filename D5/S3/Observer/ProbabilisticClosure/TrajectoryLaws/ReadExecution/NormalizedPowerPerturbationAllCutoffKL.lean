@@ -123,6 +123,102 @@ theorem normalized_power_perturbation_all_cutoff_kl
     have he : m - 1 - 1 = m - 2 := by omega
     rw [he] at hAdj2
     nlinarith [mul_le_mul_of_nonneg_left hAdj hr.le]
-  sorry
+  let D : ℕ → ℝ := fun k => d k * Real.exp (-s * (k : ℝ))
+  have hD : ∀ k, 0 ≤ D k ∧ D k ≤ δ * term (m - 1) s k := by
+    intro k
+    by_cases hk : k = 0
+    · simp [D, hk, hd0, term]
+    · simpa [D, term, hk] using
+        ⟨mul_nonneg (hd k (Nat.pos_of_ne_zero hk)).1 (Real.exp_pos _).le,
+         mul_le_mul_of_nonneg_right (hd k (Nat.pos_of_ne_zero hk)).2
+           (Real.exp_pos (-s * (k : ℝ))).le⟩
+  have hDs : Summable D := by
+    apply ((summable_term (m - 1) hs).mul_left δ).of_norm_bounded
+    intro k
+    simpa [Real.norm_eq_abs, abs_of_nonneg (hD k).1] using (hD k).2
+  let A : ℝ := ∑' k : ℕ, D k
+  have hA : 0 ≤ A := tsum_nonneg (fun k => (hD k).1)
+  have hAb : A ≤ δ * powerSum (m - 1) s := by
+    simpa [A, powerSum, tsum_mul_left] using
+      hDs.tsum_le_tsum (fun k => (hD k).2) ((summable_term _ hs).mul_left δ)
+  let v : Bool → ℕ → ℝ := fun i k => term m s k + if i then D k else 0
+  let Z : Bool → ℝ := fun i => ∑' k : ℕ, v i k
+  let p : Bool → ℕ → ℝ := fun i k => v i k / Z i
+  let w : ℕ → ℝ := fun k => p true k - p false k
+  have hvs (i : Bool) : Summable (v i) := by
+    cases i
+    · simpa [v] using summable_term m hs
+    · simpa [v] using (summable_term m hs).add hDs
+  have hZeq : Z false = powerSum m s ∧ Z true = powerSum m s + A := by
+    constructor
+    · simp [Z, v, powerSum]
+    · simpa [Z, v, powerSum, A] using (summable_term m hs).tsum_add hDs
+  have hZp (i : Bool) : 0 < Z i := by
+    cases i
+    · simpa [hZeq.1] using hZpos
+    · rw [hZeq.2]
+      positivity
+  have hvn (i : Bool) (k : ℕ) : 0 ≤ v i k := by
+    cases i <;> simp only [v, Bool.false_eq_true, ↓reduceIte, add_zero]
+    · exact term_nonneg _ _ _
+    · exact add_nonneg (term_nonneg _ _ _) (hD k).1
+  have hvp (i : Bool) (k : ℕ) (hk : 0 < k) : 0 < v i k := by
+    have ht : 0 < term m s k := by
+      simp only [term, Nat.ne_of_gt hk, ↓reduceIte]
+      positivity
+    cases i <;> simp only [v, Bool.false_eq_true, ↓reduceIte, add_zero]
+    · exact ht
+    · exact add_pos_of_pos_of_nonneg ht (hD k).1
+  have hprob (i : Bool) : HasSum (p i) 1 ∧ p i 0 = 0 ∧
+      ∀ k : ℕ, 0 < k → 0 < p i k := by
+    constructor
+    · convert (hvs i).hasSum.div_const (Z i) using 1
+      exact (div_self (hZp i).ne').symm
+    constructor
+    · cases i <;> simp [p, v, D, hd0, term]
+    · intro k hk
+      exact div_pos (hvp i k hk) (hZp i)
+  let ε : ℝ := A / powerSum m s
+  have hε0 : 0 ≤ ε := div_nonneg hA hZpos.le
+  have hε : ε ≤ δ * (1 - Real.exp (-s)) := by
+    apply (div_le_iff₀ hZpos).2
+    exact hAb.trans (by nlinarith [mul_le_mul_of_nonneg_left hAdj hδ])
+  have hDrift (k : ℕ) :
+      w k = (D k - ε * term m s k) / Z true := by
+    have he : Z true = (1 + ε) * powerSum m s := by
+      dsimp [ε]
+      rw [hZeq.2]
+      field_simp
+      <;> ring
+    dsimp [w, p, v]
+    simp only [↓reduceIte, add_zero]
+    rw [hZeq.1]
+    dsimp [ε]
+    rw [hZeq.2]
+    field_simp
+    <;> ring
+  change (∀ i : Bool, HasSum (p i) 1 ∧ p i 0 = 0 ∧
+      ∀ k : ℕ, 0 < k → 0 < p i k) ∧
+    (∀ j : Bool, Summable (fun k : ℕ => (w k) ^ 2 / p j k) ∧
+      (∑' k : ℕ, (w k) ^ 2 / p j k) ≤
+        4 * δ ^ 2 * (1 - Real.exp (-s)) ^ 2) ∧
+    (∀ i : Bool,
+      Summable (fun k : ℕ => p i k * Real.log (p i k / p (!i) k)) ∧
+      (∑' k : ℕ, p i k * Real.log (p i k / p (!i) k)) ≤
+        ∑' k : ℕ, (w k) ^ 2 / p (!i) k) ∧
+    (∀ L : ℕ, 1 ≤ L →
+      let a : Bool → Option (Fin L) → ℝ := fun i z =>
+        match z with
+        | some r => p i (r.val + 1)
+        | none => 1 - ∑ r : Fin L, p i (r.val + 1)
+      ∀ i : Bool, klDivergence (a i) (a (!i)) ≤
+        4 * δ ^ 2 * s ^ 2 * min 1 ((s * (L : ℝ)) ^ (m - 1)))
+  refine ⟨hprob, ?_, ?_, ?_⟩
+  · intro j
+    sorry
+  · intro i
+    sorry
+  · intro L hL
+    sorry
 
 end D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.ReadExecution
