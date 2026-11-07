@@ -1,0 +1,129 @@
+/- GID: D5/S3/Quantum/Algebra/UnitBridgeLocalization
+   generality: G
+   mirror-B: D5/B/S3/Quantum/Algebra/UnitBridgeLocalization
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: [mathlib/module/Mathlib.Algebra.Module.LocalizedModule.Basic]
+   digest: Square-denominator localization of the same original total relation. -/
+
+import D5.S3.Quantum.Algebra.UnitBridgeRawGeometry
+import Mathlib.Algebra.Module.LocalizedModule.Basic
+
+/-! Evaluation localization with zero-divisor saturation and no linearity assumption on D. -/
+
+noncomputable section
+
+namespace D5.S3.Quantum.Algebra.UnitBridgeRawGeometry
+
+variable {T : Type*} [TopologicalSpace T] {E : Original T}
+
+/-- A central coefficient is an actual original input. -/
+def centralInput (E : Original T) (f : scalarAlgebra E) : E.Elem :=
+  ⟨central f.val, f.property⟩
+
+/-- Multiplication by a coefficient uses the known original Jordan product. -/
+def coefficientScale (f : scalarAlgebra E) (a : E.Elem) : E.Elem :=
+  E.product (centralInput E f) a
+
+/-- The source CS assumption on the same original total D. -/
+def SquareCompatible (R : Raw E) : Prop :=
+  ∀ (f : scalarAlgebra E) (a b : E.Elem),
+    R.D a (coefficientScale (f^2) b) = coefficientScale (f^2) (R.D a b)
+
+private theorem input_scale (f : scalarAlgebra E) (x : Vectors E) :
+    vectorInput E (f • x) = coefficientScale f (vectorInput E x) := by
+  apply Subtype.ext
+  ext i t
+  fin_cases i <;> simp [vectorInput, coefficientScale, centralInput, Original.product,
+    jordan, central]
+
+private theorem K_square_right (R : Raw E) (cs : SquareCompatible R)
+    (f : scalarAlgebra E) (x y : Vectors E) :
+    K R x ((f^2) • y) = (f^2) • K R x y := by
+  have h := cs f (vectorInput E x) (vectorInput E y)
+  rw [← input_scale] at h
+  funext i
+  apply Subtype.ext
+  ext t
+  have hi := congrArg (fun z : E.Elem => z.val i.succ t) h
+  fin_cases i <;> simpa [K, coefficientScale, centralInput, Original.product,
+    jordan, central] using hi
+
+private theorem K_skew (R : Raw E) (x y : Vectors E) : K R x y = -K R y x := by
+  funext i
+  apply Subtype.ext
+  exact congrArg (fun z : E.Elem => z.val i.succ) (R.skew _ _)
+
+private theorem K_square_left (R : Raw E) (cs : SquareCompatible R)
+    (f : scalarAlgebra E) (x y : Vectors E) :
+    K R ((f^2) • x) y = (f^2) • K R x y := by
+  rw [K_skew, K_square_right R cs, ← smul_neg, ← K_skew]
+
+private theorem saturated_left (R : Raw E) (cs : SquareCompatible R)
+    (u s s' : scalarAlgebra E) (x x' y : Vectors E)
+    (h : u • s' • x = u • s • x') :
+    (u*s')^2 • K R (s • x) y = (u*s)^2 • K R (s' • x') y := by
+  have he : (u*s')^2 • (s • x) = (u*s)^2 • (s' • x') := by
+    have hh := congrArg (fun z : Vectors E => (u*s*s') • z) h
+    simpa only [smul_smul, pow_two, mul_assoc, mul_comm, mul_left_comm] using hh
+  have hk := congrArg (fun z => K R z y) he
+  simpa only [K_square_left R cs] using hk
+
+private theorem saturated_right (R : Raw E) (cs : SquareCompatible R)
+    (u s s' : scalarAlgebra E) (x x' y : Vectors E)
+    (h : u • s' • x = u • s • x') :
+    (u*s')^2 • K R y (s • x) = (u*s)^2 • K R y (s' • x') := by
+  have he : (u*s')^2 • (s • x) = (u*s)^2 • (s' • x') := by
+    have hh := congrArg (fun z : Vectors E => (u*s*s') • z) h
+    simpa only [smul_smul, pow_two, mul_assoc, mul_comm, mul_left_comm] using hh
+  have hk := congrArg (fun z => K R y z) he
+  simpa only [K_square_right R cs] using hk
+
+/-- The actual multiplicative set of coefficients nonzero at the specified point. -/
+def evaluationDenominators (E : Original T) (t : T) : Submonoid (scalarAlgebra E) where
+  carrier := {f | f.val t ≠ 0}
+  one_mem' := by simp
+  mul_mem' := by intro f g hf hg; exact mul_ne_zero hf hg
+
+/-- Native module localization of the actual coefficient module. -/
+abbrev LocalVectors (E : Original T) (t : T) :=
+  LocalizedModule (evaluationDenominators E t) (Vectors E)
+
+private def representative (R : Raw E) (t : T)
+    (p q : Vectors E × evaluationDenominators E t) : LocalVectors E t :=
+  LocalizedModule.mk (K R (p.2.val • p.1) (q.2.val • q.1)) (p.2^2*q.2^2)
+
+private theorem representative_left (R : Raw E) (cs : SquareCompatible R) (t : T)
+    (p p' q : Vectors E × evaluationDenominators E t)
+    (h : LocalizedModule.r (evaluationDenominators E t) (Vectors E) p p') :
+    representative R t p q = representative R t p' q := by
+  obtain ⟨u, hu⟩ := h
+  apply LocalizedModule.mk_eq.mpr
+  refine ⟨u^2, ?_⟩
+  have hk := saturated_left R cs u.val p.2.val p'.2.val p.1 p'.1
+    (q.2.val • q.1) (by simpa only [Submonoid.smul_def] using hu)
+  have hh := congrArg (fun z : Vectors E => q.2.val^2 • z) hk
+  simpa only [Submonoid.smul_def, Submonoid.coe_mul, Submonoid.coe_pow,
+    smul_smul, pow_two, mul_assoc, mul_comm, mul_left_comm] using hh
+
+private theorem representative_right (R : Raw E) (cs : SquareCompatible R) (t : T)
+    (p q q' : Vectors E × evaluationDenominators E t)
+    (h : LocalizedModule.r (evaluationDenominators E t) (Vectors E) q q') :
+    representative R t p q = representative R t p q' := by
+  obtain ⟨u, hu⟩ := h
+  apply LocalizedModule.mk_eq.mpr
+  refine ⟨u^2, ?_⟩
+  have hk := saturated_right R cs u.val q.2.val q'.2.val q.1 q'.1
+    (p.2.val • p.1) (by simpa only [Submonoid.smul_def] using hu)
+  have hh := congrArg (fun z : Vectors E => p.2.val^2 • z) hk
+  simpa only [Submonoid.smul_def, Submonoid.coe_mul, Submonoid.coe_pow,
+    smul_smul, pow_two, mul_assoc, mul_comm, mul_left_comm] using hh
+
+/-- The nonlinear localized map is constructed from the original D and source CS. -/
+def localizedK (R : Raw E) (cs : SquareCompatible R) (t : T)
+    (x y : LocalVectors E t) : LocalVectors E t :=
+  LocalizedModule.liftOn₂ x y (representative R t) (by
+    intro p q p' q' hp hq
+    exact (representative_left R cs t p p' q hp).trans
+      (representative_right R cs t p' q q' hq))
+
+end D5.S3.Quantum.Algebra.UnitBridgeRawGeometry

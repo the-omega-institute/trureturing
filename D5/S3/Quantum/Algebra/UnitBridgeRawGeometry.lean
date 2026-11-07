@@ -240,9 +240,12 @@ private theorem h_formula {R : Type*} [CommRing R] (a b : Fin 4 → R) :
 
 private theorem energy_zero (p : Fin 4 → ℝ) (hp : energy p = 0) : p = 0 := by
   dsimp [energy, rho] at hp
+  have h0 : p 0 = 0 := by nlinarith [sq_nonneg (p 1), sq_nonneg (p 2), sq_nonneg (p 3)]
+  have h1 : p 1 = 0 := by nlinarith [sq_nonneg (p 0), sq_nonneg (p 2), sq_nonneg (p 3)]
+  have h2 : p 2 = 0 := by nlinarith [sq_nonneg (p 0), sq_nonneg (p 1), sq_nonneg (p 3)]
+  have h3 : p 3 = 0 := by nlinarith [sq_nonneg (p 0), sq_nonneg (p 1), sq_nonneg (p 2)]
   ext i
-  fin_cases i <;> simp only [Pi.zero_apply] <;>
-    nlinarith [sq_nonneg (p 0), sq_nonneg (p 1), sq_nonneg (p 2), sq_nonneg (p 3)]
+  fin_cases i <;> simpa using (by assumption)
 
 private theorem area_zero_of_rho (a b : Fin 4 → ℝ) (h : rho a = 0) :
     area a b = 0 := by
@@ -263,8 +266,7 @@ private theorem normal_h_injective (a p q : Fin 4 → ℝ)
   fin_cases i
   · exact hp0.trans hq0.symm
   all_goals
-    simp [hp, hq] at hi
-    exact (mul_left_cancel₀ hr hi)
+    simpa [hp, hq, hr] using hi
 
 private theorem h_commute {E : Original T} (R : Raw E) (a b : E.Elem) :
     E.H a (R.D a b) = R.D a (E.H a b) := by
@@ -283,7 +285,7 @@ theorem raw_h_fibre {E : Original T} (R : Raw E) (a b c : E.Elem)
       hOp (fun j => a.val j t) (fun j => (R.D a c).val j t) := by
     ext j
     have hj := congrArg (fun z : E.Elem => z.val j t) he
-    fin_cases j <;> simpa [Original.H, Original.product, hOp, jordan] using hj
+    fin_cases j <;> (convert hj using 1 <;> simp [Original.H, Original.product, hOp, jordan] <;> ring)
   have hh := normal_h_injective (fun j => a.val j t)
     (fun j => (R.D a b).val j t) (fun j => (R.D a c).val j t)
     hp.1 hq.1 hp.2.1 hq.2.1 (by
@@ -374,14 +376,13 @@ theorem raw_real_homogeneity {E : Original T} (R : Raw E)
         hOp (fun j => a.val j t) (fun j => (r • R.D a b).val j t) := by
       ext j
       have hj := congrArg (fun z : E.Elem => z.val j t) he
-      fin_cases j <;> simpa [Original.H, Original.product, hOp, jordan] using hj
+      fin_cases j <;> (convert hj using 1 <;> simp [Original.H, Original.product, hOp, jordan] <;> ring)
     have hn := normal_h_injective (fun j => a.val j t)
       (fun j => (R.D a (r • b)).val j t) (fun j => (r • R.D a b).val j t)
       hp.1 (by simp [hq.1]) hp.2.1 (by
         have hdq := hq.2.1
         dsimp [vdot] at hdq ⊢
-        simp only [SetLike.val_smul, Pi.smul_apply, ContinuousMap.smul_apply, smul_eq_mul]
-        nlinarith [hdq])
+        linear_combination r * hdq)
       (by
         intro hz
         have hb := energy_zero _ ((raw_energy R a (r • b) t).trans
@@ -392,5 +393,89 @@ theorem raw_real_homogeneity {E : Original T} (R : Raw E)
         simpa [hcj] using congrFun hb j) hv
     exact congrFun hn i
   exact ⟨right a b r, (transfer R a b r).trans (right a b r)⟩
+
+/-- The scalar-free part stays in the original carrier. -/
+def vectorPart (E : Original T) (a : E.Elem) : E.Elem :=
+  ⟨![0,a.val 1,a.val 2,a.val 3], by
+    apply (original_four_components E _).mpr
+    intro i
+    fin_cases i
+    · exact (scalarAlgebra E).zero_mem
+    all_goals exact (original_four_components E a.val).mp a.property _⟩
+
+/-- Both central scalar parts may be removed from the same original relation. -/
+theorem raw_scalar_independent {E : Original T} (R : Raw E) (a b : E.Elem) :
+    R.D a b = R.D (vectorPart E a) (vectorPart E b) := by
+  have right (a b : E.Elem) : R.D a b = R.D a (vectorPart E b) := by
+    apply raw_h_fibre
+    apply Subtype.ext
+    ext i t
+    fin_cases i <;> simp [Original.H, Original.product, jordan, vectorPart] <;> ring
+  rw [right a b, R.skew, right (vectorPart E b) a, ← R.skew]
+
+/-- The actual three-coordinate module over the actual coefficient algebra. -/
+abbrev Vectors (E : Original T) := Fin 3 → scalarAlgebra E
+
+/-- Include a scalar-free original vector, using the proved original-domain decomposition. -/
+def vectorInput (E : Original T) (x : Vectors E) : E.Elem :=
+  ⟨![0,(x 0).val,(x 1).val,(x 2).val], by
+    apply (original_four_components E _).mpr
+    intro i
+    fin_cases i
+    · exact (scalarAlgebra E).zero_mem
+    · exact (x 0).property
+    · exact (x 1).property
+    · exact (x 2).property⟩
+
+/-- The scalar-free restriction of the same original D, not a new relation with assumed laws. -/
+def K {E : Original T} (R : Raw E) (x y : Vectors E) : Vectors E :=
+  fun i => ⟨(R.D (vectorInput E x) (vectorInput E y)).val i.succ,
+    (original_four_components E _).mp (R.D (vectorInput E x) (vectorInput E y)).property _⟩
+
+private theorem vector_input_K {E : Original T} (R : Raw E) (x y : Vectors E) :
+    vectorInput E (K R x y) = R.D (vectorInput E x) (vectorInput E y) := by
+  apply Subtype.ext
+  ext i t
+  fin_cases i
+  · exact (raw_output_normal R (vectorInput E x) (vectorInput E y) t).1.symm
+  all_goals rfl
+
+/-- The original NN law becomes the nested K identity on the actual coefficient module. -/
+theorem raw_K_nested {E : Original T} (R : Raw E) (x y : Vectors E) :
+    K R x (K R x y) = (dotProduct x y) • x - (dotProduct x x) • y := by
+  have hn := R.nn (vectorInput E x) (vectorInput E y)
+  rw [← vector_input_K R x y] at hn
+  funext i
+  apply Subtype.ext
+  ext t
+  have hi := congrArg (fun z : E.Elem => z.val i.succ t) hn
+  fin_cases i <;>
+    (convert hi using 1 <;> simp [K, Original.H, Original.product, vectorInput, jordan,
+      dotProduct, Fin.sum_univ_succ, pow_two, sub_eq_add_neg] <;> ring)
+
+/-- The original output has the cross-product area and both orthogonalities. -/
+theorem raw_K_geometry {E : Original T} (R : Raw E) (x y : Vectors E) :
+    dotProduct (K R x y) x = 0 ∧ dotProduct (K R x y) y = 0 ∧
+    dotProduct (K R x y) (K R x y) = dotProduct (crossProduct x y) (crossProduct x y) := by
+  have dotx : dotProduct (K R x y) x = 0 := by
+    apply Subtype.ext
+    ext t
+    have h := (raw_output_normal R (vectorInput E x) (vectorInput E y) t).2.1
+    simpa [K, vectorInput, vdot, dotProduct, Fin.sum_univ_succ, mul_comm, add_assoc] using h
+  have doty : dotProduct (K R x y) y = 0 := by
+    apply Subtype.ext
+    ext t
+    have h := (raw_output_normal R (vectorInput E x) (vectorInput E y) t).2.2
+    simpa [K, vectorInput, vdot, dotProduct, Fin.sum_univ_succ, mul_comm, add_assoc] using h
+  refine ⟨dotx, doty, ?_⟩
+  rw [cross_dot_cross, dotProduct_comm y x]
+  apply Subtype.ext
+  ext t
+  have hp := raw_energy R (vectorInput E x) (vectorInput E y) t
+  have h0 := (raw_output_normal R (vectorInput E x) (vectorInput E y) t).1
+  dsimp only [energy] at hp
+  rw [h0] at hp
+  simpa [K, vectorInput, rho, area, vdot, dotProduct,
+    Fin.sum_univ_succ, pow_two, sub_eq_add_neg, add_assoc] using hp
 
 end D5.S3.Quantum.Algebra.UnitBridgeRawGeometry
