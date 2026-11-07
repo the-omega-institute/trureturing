@@ -52,7 +52,7 @@ internal sealed class OeisA252505FourthPowerFreeConvolutionDocument : IScribeDoc
                     Implies(Lt(D(1), N), Eq(Call("c", N), Neg(Sum(
                         App(Q("Nat", "properDivisors"), N), "d",
                         Multiply(Call("g", App(Q("Nat", "div"), N, Dv)), Call("c", Dv)))))))),
-                "The implementation directly reuses ArithmeticFunction.dirichletInverse over Int. Its value at one is one, and dirichletInverseFun_apply_ne supplies precisely this proper-divisor recursion. Transient compiled checks verify both recursion clauses and positive-domain uniqueness by strong induction over positive proper divisors. These checks identify the implementation with the independently specified A378214 without retaining a separate theorem endpoint; index zero is outside the target."),
+                "The implementation directly reuses ArithmeticFunction.dirichletInverse over Int. Its value at one is one, and dirichletInverseFun_apply_ne supplies precisely this proper-divisor recursion. The source identification with A378214 uses this exact recursion and its positive-domain uniqueness by strong induction over positive proper divisors. No separate recursion or uniqueness theorem endpoint is retained, and no fresh transient verification is asserted here; index zero is outside the target."),
             Def("InverseRecursion", "The independent recursive specification",
                 AllFunction("v", Eq(Call("InverseRecursion", F.Id("v")), And(Eq(Call("v", D(1)), D(1)),
                     All("n", Implies(Lt(D(1), N), Eq(Call("v", N),

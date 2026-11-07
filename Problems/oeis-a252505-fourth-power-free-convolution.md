@@ -109,7 +109,7 @@ The retained public theorem targets are `unit_fraction_count`,
 `unit_fraction_divisor_formula` and `result`. The result has a validated source
 mirror. The two counting theorems retain unfinished source-family audits in
 https://github.com/the-omega-institute/trureturing/issues/27506.
-The exact inverse recursion and its positive-domain uniqueness are checked
-transiently; they are source-identification evidence, not separate retained
-mathematical endpoints. The parity bridge `g_gamma` is content on the live
+The exact inverse recursion and its positive-domain uniqueness supply the
+source identification; neither is a separate retained mathematical endpoint.
+No fresh transient verification is asserted here. The parity bridge `g_gamma` is content on the live
 derivation path of `result`; no auxiliary claim of separate novelty is made.
