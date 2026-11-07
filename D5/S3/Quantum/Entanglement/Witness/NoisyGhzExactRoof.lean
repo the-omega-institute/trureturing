@@ -4,17 +4,16 @@
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
    utility: none
-   digest: Independent-coordinate phase character cancellation for the noisy-GHZ finite witness.
-
-   This module records the finite phase identity needed by the full matrix
-   ensemble.  The character is indexed by the whole phase vector
-   `(Fin d → ZMod 3)`, so equal scalar differences are never used to identify
-   distinct ordered pairs.
--/
+   digest: Independent-coordinate phase character cancellation for the noisy-GHZ finite witness. -/
 
 import Mathlib.Analysis.Fourier.ZMod
 import Mathlib.NumberTheory.LegendreSymbol.AddCharacter
 import Mathlib.Tactic
+
+/-! This module records the finite phase identity needed by the full matrix
+    ensemble. The character is indexed by the whole phase vector
+    `(Fin d → ZMod 3)`, so equal scalar differences are never used to identify
+    distinct ordered pairs. -/
 
 open scoped BigOperators
 
