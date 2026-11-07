@@ -1,0 +1,17 @@
+**定义 237.1（原块内的双锚坐标）。** 对秩 $n\ge4$ 的简单有限 EJA $T$，取一次固定的含幺实 Jordan 同构 $\phi:T\to H_n(\mathbb F)$，其中 $\mathbb F\in\{\mathbb R,\mathbb C,\mathbb H\}$。沿引理 230.1 中的有向 Hermitian 边记号，置
+
+$$
+\begin{aligned}
+A_n&=\operatorname{diag}(1,\ldots,n),\\
+B_{\mathbb F,n}&=\sum_{j=2}^nX_{1j}(1)
++\begin{cases}
+0,&\mathbb F=\mathbb R,\mathbb C,\\
+X_{23}(\mathbf i)+X_{24}(\mathbf j),&\mathbb F=\mathbb H,
+\end{cases}\\
+a_T&=\phi^{-1}(A_n),\qquad b_T=\phi^{-1}(B_{\mathbb F,n}).
+\end{aligned}
+\tag{237.1}
+$$
+
+双锚都是原 $T$ 内的元，不要求 primitive，也不赋予实际准备、效果或测量身份。整数只是原数学元的坐标系数，不是原动力的时间标尺。一次所选坐标同时决定两个锚点；坐标同构不被当成新实际嵌入或先验等距。
+

@@ -1,0 +1,19 @@
+**定义 14.1（A component condition on the original base）。** Let $H$
+be a finite connected simple unit-weight graph of even order $m\geq2$.
+Assume that, for every $p\in V(H)$, the induced open neighborhood
+$H[N_H(p)]$ has at least one bipartite connected component. A singleton
+component counts as bipartite; the other components are unrestricted.
+For any integer $S\geq1$, set $s=2S$, $k=mS$ and use the original
+fibres $B_i$, blow-up $H[\overline{K_{2S}}]$, entire complex Boolean
+carrier $\mathcal H_{mS}$, positive ordinary token adjacency $K=K_{mS}$
+and original within-fibre projection $P_{\mathrm{sym}}$ of Definitions
+1.1–1.2. Put
+
+$$
+E=\lambda_{\min}(K),\qquad \mathcal N=\ker P_{\mathrm{sym}}.
+\tag{14.1}
+$$
+
+Only the global token number $mS$ is fixed. In particular, no weight
+or occupancy is prescribed separately on a neighborhood component.
+

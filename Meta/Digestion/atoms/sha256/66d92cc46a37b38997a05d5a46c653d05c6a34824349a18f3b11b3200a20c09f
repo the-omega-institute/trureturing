@@ -1,0 +1,60 @@
+**Theorem 145.3 (one same sign cancels all three actual terminal forms).** For every original $\theta=(a,\eta,d,b)\in\Theta$, every fixed actual invariant coarse partition $E=(S,C,B)\in\mathscr E_\theta$, and every finite set $\Psi\subset L^1(G,m;\mathbb R)$, there is a bounded whole-$G$ Borel function $v$ such that
+
+$$
+\begin{gathered}
+v^2=\mathbf1_S\quad\text{everywhere},\qquad
+v\circ\mathscr R=-v\quad m\text{-a.e.},\\
+\int_G\psi v\,dm=0\quad(\psi\in\Psi),\\
+\mathcal C(v,v,\mathbf1_S)=\mathcal C(v,v,\mathbf1_C)
+=\mathcal C(v,v,\mathbf1_B)=0.
+\end{gathered}
+\tag{145.9}
+$$
+
+The three equalities use the same sign and the same actual cells and terminal heat images.
+
+*Proof.* Let $\mathcal V_{S,-}^{\Psi}$ be the subspace (145.2) with the moment equations in (145.9). Choose a basis of the finite-dimensional span of the three quadratic forms $Q_i(u,u)$. Proposition 145.2 and Lemma 125.3, applied to every real pencil in that basis, give a two-dimensional real subspace $U\subset\mathcal V_{S,-}^{\Psi}$ on which all three quadratic forms vanish identically. If the span is zero, any two-dimensional subspace of $\mathcal V_{S,-}^{\Psi}$ has this property. Choose a nonzero $u\in U$ and scale it so that $\|u\|_\infty\le1$.
+
+Let $\mathcal K$ be the set of real classes $w$ with support in $S$, $w\circ\mathscr R=-w$, $\|w\|_\infty\le1$, the moments in $\Psi$ equal to zero, and $Q_i(w,w)=0$ for $i=S,C,B$. It is nonempty by $u$. It is weak-star compact. Indeed the linear conditions are weak-star closed, and each quadratic form is weak-star continuous on the unit ball: its ordered kernel is
+
+$$
+a_i(x,y)=g(x)p_d(x,y)q_i(y)\ge0,\qquad
+\|a_i\|_{L^1(m^2)}=\int_GgPq_i\,dm\le1,
+\tag{145.10}
+$$
+
+so finite rectangular-tensor approximation in $L^1(m^2)$ reduces continuity to finitely many scalar pairings.
+
+Choose a Borel representative of $w$ which is odd on $S\setminus N$ by using the half-circle section and reflection. Choose a countable separating family $(\psi_n)$ in the real unit ball of $L^1(m)$ and maximize on $\mathcal K$ the strictly convex function
+
+$$
+J(w)=\sum_{n\ge1}2^{-n}\left(\int_G\psi_nw\,dm\right)^2.
+\tag{145.11}
+$$
+
+Let $w$ be a maximizer. Suppose the half-turn-invariant slack set
+
+$$
+A_n=S\cap\{|w|\le1-1/n\}
+\tag{145.12}
+$$
+
+has positive measure for some $n$. Replacing it by $A_n\cap\mathscr R A_n$ if necessary makes it exactly half-turn invariant without changing its positive measure. Use Proposition 145.2 on this invariant set with the finite constraints consisting of the moments $\int\psi\,\cdot\,dm$ and the three symmetric polar equations $Q_i^{\rm sym}(w,\cdot)=0$. Lemma 125.3 supplies a nonzero bounded $z$ supported in $A_n$ with
+
+$$
+Q_i(z,z)=Q_i^{\rm sym}(w,z)=0\qquad(i=S,C,B).
+\tag{145.13}
+$$
+
+For sufficiently small nonzero $\varepsilon$, both $w+\varepsilon z$ and $w-\varepsilon z$ remain in the unit ball, and (145.13) keeps them in $\mathcal K$. They are distinct, while strict convexity gives
+
+$$
+J(w)<\frac{J(w+\varepsilon z)+J(w-\varepsilon z)}2,
+$$
+
+contradicting maximality. Hence $|w|=1$ almost everywhere on $S$.
+
+Take a Borel representative, put $v=\operatorname{sgn}(w)$ on the full-measure set where $|w|=1$, assign either sign on the remaining null subset of $S$, and put $v=0$ off $S$. Then $v^2=\mathbf1_S$ pointwise, and all displayed integrals and quadratic values are unchanged. Since $Q_i(v,v)=\mathcal C(v,v,\mathbf1_{E_i})$, (145.9) follows. $\square$
+
+The signed-pencil step is source-specific because $q_\lambda=P(\lambda_S\mathbf1_S+\lambda_C\mathbf1_C+\lambda_B\mathbf1_B)$ is the actual terminal heat image in the original clock. Agler--Young is used only with the nonsingular odd heat kernel and the analytic uniqueness sets supplied in §137; Dvoretzky--Wald--Wolfowitz is not being used to turn nonlinear quadratic constraints into linear ones. The extremal argument instead uses the exact signed-pencil property on each half-turn-invariant slack set.
+

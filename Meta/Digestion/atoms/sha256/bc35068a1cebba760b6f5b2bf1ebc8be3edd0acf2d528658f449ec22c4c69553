@@ -1,0 +1,45 @@
+**【编者局部说明：希尔伯特空间与新因子】** 这里具体取相对于零真空的不完全无限张量积
+
+$$
+\mathcal H=\overline{\bigcup_{L\ge0}(\mathbb C^2)^{\otimes L}\otimes|0\rangle_{L+1}\otimes|0\rangle_{L+2}\otimes\cdots}.
+$$
+
+$U_j$ 仅作用于第 $j$ 个新因子，其余因子取恒等；不同 $j$ 的算子对易。下文“只涉及有限个寄存器的向量”指某个有限前缀中的任意向量（可以纠缠），其后各因子确为 $|0\rangle$；这些向量的并集稠密。上面定义的 $V_h$ 是该空间上的有限乘积酉算子。
+<!-- editorial-note:end incomplete-tensor-space -->
+
+式 (32) 自动给出
+
+$$
+\sum_jb_j
+\le
+\sum_j-\log(1-b_j)
+=
+-\log W<\infty.
+$$
+
+对于只涉及有限个寄存器的向量 $\xi$，当 $N>M$ 足够大时，
+
+$$
+\begin{aligned}
+\|V_N\xi-V_M\xi\|^2
+&=
+2\|\xi\|^2
+\left(
+1-\prod_{j=M+1}^{N}\sqrt{1-b_j}
+\right)\\
+&\le
+2\|\xi\|^2\sum_{j>M}b_j
+\longrightarrow0.
+\end{aligned}
+$$
+
+由稠密性与 $\|V_h\|=1$，得到强收敛。对伴随 $V_h^*$ 同样成立，因此极限 $V$ 满足
+
+<a id="eq-36"></a>
+
+$$
+\boxed{V^*V=VV^*=I.}
+\tag{36}
+$$
+
+<!-- editorial-note:start strong-adjoint-limit -->

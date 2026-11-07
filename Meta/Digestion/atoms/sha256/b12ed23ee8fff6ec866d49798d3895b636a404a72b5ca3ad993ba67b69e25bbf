@@ -1,0 +1,32 @@
+**Proposition 163.4 (the successor-factorization fibre test).** Let $X\subseteq\mathcal X$ be a linear source domain with $T(X)\subseteq X$, and let $S=\mathscr R(X)$. There exists a map
+
+$$
+\overline T:S\to S,
+\qquad
+\mathscr R\circ T=\overline T\circ\mathscr R\quad\text{on }X,
+\tag{163.6}
+$$
+
+if and only if
+
+$$
+\mathscr R(x)=\mathscr R(x')
+\ \Longrightarrow\
+\mathscr R(Tx)=\mathscr R(Tx')
+\qquad(x,x'\in X).
+\tag{163.7}
+$$
+
+*Proof.* The implication is immediate from (163.6). Conversely, define $\overline T(\mathscr R(x))=\mathscr R(Tx)$. Condition (163.7) makes this definition independent of the chosen representative, and $T(X)\subseteq X$ puts its value in $S$. $\square$
+
+When $X=V$ and $T(V)\subseteq V$, (163.7) is exactly the calibrated-kernel version of the R5-007 successor-closure criterion. If it fails, $x,x'$ are a same-current, different-successor witness. More concretely, it is enough to find
+
+$$
+ v\in V\cap\ker\mathscr R
+ \quad\text{with}\quad
+ \mathscr R(Tv)\ne0;
+\tag{163.8}
+$$
+
+then $0$ and $v$ have identical current readout and different next readout. If $T$ does not preserve $V$, the same witness still certifies failure of factorization on the calibrated domain, with the successor readout regarded as taking values in $\mathbb R^r$ rather than in $\mathscr R(V)$.
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1daad6fba8e77f5c9b9aaca1186521dfec18e82a4712516fc5ae651fac53b8d8
+  normalized_sha256: sha256:1daad6fba8e77f5c9b9aaca1186521dfec18e82a4712516fc5ae651fac53b8d8
+cas_ref: sha256:1daad6fba8e77f5c9b9aaca1186521dfec18e82a4712516fc5ae651fac53b8d8
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Pure pinned-upstream closure; no usable frozen repository GID. Mathlib at 56a005855ea17e0b0958f73ec801ae140b0a1679 supplies Relation.reflTransGen_le_of_le and SimpleGraph.reachable_iff_reflTransGen: instantiate the transported relation by r(i,j) := (a i = 0 -> a j = 0), with reflexivity by identity and transitivity by implication composition. The singleton-source exclusion bound supplies adjacency preservation, and connected reachability transports the one zero seed to every original vertex. SimpleGraph.isIndepSet_iff, Finset.sum_nonneg, Finset.single_le_sum, Finset.sum_le_sum, Finset.sum_add_distrib, Finset.sum_congr and finite-sum/linear normalization give the local bound and both same-bit transition bounds; compatibility gives every b=1. Subtype.ext, Finset.ext and Finset.sum_eq_single with the original column normalization give T(t|s)=delta(t,s) for all original t,s. The completed exact anonymous whole-statement application compiled with exit 0 without candidate theorem/helper premises; only the three source encodings were used. This retains the full finite connected nonempty graph, arbitrary independent-configuration family containing empty and every singleton, one original nonnegative normalized response, original binary laws, compatibility and one zero seed, including the connected singleton. No new Lean, first freeze, GID or coverage is asserted; physical seed supply and the separate PVM/physical-realization consumers are not inferred.'
+    previous_atom_id: 5df1786af5048fd2549f156d13988ae9b9faa026210b384582e151e7fd3cbadb
+    next_atom_id: f8148a37c3667544df00b3c471b6cc8916c5f280b73d44f4e90bd21680fd2a49

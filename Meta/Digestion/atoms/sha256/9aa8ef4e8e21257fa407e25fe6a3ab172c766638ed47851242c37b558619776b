@@ -1,0 +1,38 @@
+**Corollary 58.2 (actual-ground recentering in both conventions).**
+Let $\Lambda_{\sigma,1}$ be the actual full ground energy. Write
+$R_{{\rm unit},\kappa}(t)=C_{{\rm unit},\kappa}(t)$ and
+$R_{{\rm raw},\kappa}(t)=C_{{\rm raw},\kappa}(t)-F_\kappa(t)$.
+On the same compact positive $z$ intervals and whole-base norm scope,
+
+$$
+\frac{e^{z\Lambda_{\sigma,1}/h_{\sigma,\kappa}}}
+                    {w_{\sigma,\kappa}}
+ R_{\sigma,\kappa}(z/h_{\sigma,\kappa})
+ \longrightarrow e^{\omega_\sigma z}q_\sigma(z)\Pi_\sigma.
+\tag{58.7}
+$$
+
+For RAW this also holds with $S_t$ replacing $F_\kappa(t)$.
+The uncompensated RAW response under actual-ground centering still
+diverges; its norm is equivalent to
+$w^{-1}e^{-(\lambda-\Lambda_{{\rm raw},1})z/h}$.
+After taking the parameter limit, the explicit scalar functions obey
+
+$$
+q_\sigma(z)\sim(4\pi\omega_\sigma z)^{-1/2}\quad(z\downarrow0),
+\qquad
+e^{\omega_\sigma z}q_\sigma(z)\longrightarrow\pi^{-1/2}
+                                      \quad(z\to\infty).
+\tag{58.8}
+$$
+
+Proof. Theorem 41.1 gives
+$(\Lambda_{\sigma,1}-\xi_\kappa)/h\to\omega_\sigma$.
+Its exponential converges uniformly on every such compact interval;
+multiplication of (57.10) proves (58.7), and of (58.2), (58.6)
+proves the RAW comparisons. The elementary asymptotics of $\sinh$
+give (58.8). All primary limits retain the exact $\xi_\kappa$.
+No rate for $\xi_\kappa-e(c_\sigma)$, replacement by its limit in
+an exponential, joint $z$ endpoint uniformity, or extra parameter
+uniformity is used or asserted. $\square$
+

@@ -97,6 +97,18 @@ def indexed (head : Name) (value occurrence : Expr) : M Unit := do
   unless type.isAppOfArity head 2 && type.getAppArgs[1]!.equal occurrence do
     fail "fib.source_occurrence_mismatch"
 
+/-- Shared full native occurrence binding. The optional prediction adapter
+must pass the same reconstruction check as the existing single-window adapter. -/
+def bindNative (occurrence : Expr) (info : ConstantInfo) (source : Expr) : M Unit := do
+  indexed `LeanInformationAudit.AuricFib.Contract.NativeSource source occurrence
+  let proof ← projectField
+    `LeanInformationAudit.AuricFib.Contract.NativeSource.reconstruction source
+  let type ← projectType proof
+  unless type.isAppOfArity `LeanInformationAudit.Analysis.Reconstruction 2 do
+    fail "fib.native_reconstruction_type"
+  reconstruct info.type type.getAppArgs[0]!
+  reconstruct info.type type.getAppArgs[1]!
+
 structure Bound where
   source : Expr
   plan : Expr

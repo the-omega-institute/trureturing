@@ -1,0 +1,60 @@
+**Theorem 56.1 (entire-complex-domain equivalence and relative order).**
+For each fixed member and each $h>0$,
+
+$$
+k_d(h)\le C_*\ \Longleftrightarrow\ \epsilon_{c,d}(s)\ge-ah,
+\qquad
+k_d(h)>C_*\ \Longleftrightarrow\ \epsilon_{c,d}(s)<-ah.
+\tag{56.1}
+$$
+
+For the small separately fixed $b$ in Theorem 55.1, at either probe,
+$k_{\rm ref}(s^q)\le C_*$ implies $k_b(s^q)<C_*$ and
+$\epsilon_{c,b}(s)\ge-as^q$; while $k_b(s^q)>C_*$ implies
+$k_{\rm ref}(s^q)>C_*$ and $\epsilon_{c,\rm ref}(s)<-as^q$.
+An eventual strict crossing for any fixed member gives, respectively,
+
+$$
+\begin{array}{c|c|c}
+h&E_s&r_s\\ \hline
+s^6&E_s<-as^4&r_s>as^{-2}\\
+s^7&E_s<-as^5&r_s>a/s
+\end{array}
+\tag{56.2}
+$$
+
+In either eventual-crossing case P Theorem 105.1 gives
+$\operatorname{dist}_{L^2}(\mathcal U_s\psi_s,\mathbb Tp)\to0$
+for every prescribed sequence and every actual normalized complex
+ground-state choice of that fixed datum, with the original $\mathcal U_s$.
+
+Proof. On the entire transported complex form domain, exactly (2.2)
+and (2.5) give
+
+$$
+q_s^c[\mathcal T_s^{-1}f]+ah\|f\|_2^2
+=a\|(C_d+h)^{1/2}f\|_2^2-\chi_c\|U_d^{1/2}f\|_2^2.
+\tag{56.3}
+$$
+
+Since $C_d\ge0$ and $h>0$, its square root maps that form domain
+onto $L^2(\Omega_{s,d})$. The squared norm of
+$U_d^{1/2}(C_d+h)^{-1/2}$ is $k_d(h)$.
+Therefore nonnegativity of (56.3) for all complex $f$ is equivalent
+to $k_d(h)\le a/\chi_c=C_*$, and by the actual infimum in (2.2)
+is equivalent to $\epsilon_{c,d}\ge-ah$. Negation gives the strict
+ equivalence. Zero extension does not change this norm or infimum.
+Explicitly, for a unit top vector $z$ with $k>C_*$,
+$f=R_d(h)U_d^{1/2}z\in D(C_d)$ is nonzero and its shifted form
+is $a(k-\gamma k^2)<0$, $\gamma=\chi_c/a$.
+Normalization supplies a lawful trial for the actual infimum; it
+neither identifies a minimizer nor restricts actual states to be real.
+
+The relative implications use only the strict norm ordering.
+Using $\epsilon_c=s^2E_s=-r_ss^8$ gives (56.2).
+If a crossing holds eventually then $r_s\to\infty$, so apply P105.1
+directly to every prescribed actual sequence. A failure of the
+ every-choice conclusion would provide failing actual choices along a
+sequence and contradict that theorem. No new proof of P105 is required.
+$\square$
+
