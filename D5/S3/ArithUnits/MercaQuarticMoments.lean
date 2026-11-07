@@ -12,6 +12,8 @@ import Mathlib.Algebra.Ring.Int.Parity
 import Mathlib.SetTheory.Cardinal.NatCard
 import Mathlib.Tactic.Ring
 import Mathlib.Tactic.Linarith
+import Mathlib.GroupTheory.SpecificGroups.Cyclic
+import Mathlib.Algebra.Group.Prod
 
 /-!
 Least representatives of units are positive. Sums here are integer sums of
@@ -196,7 +198,7 @@ private lemma moment_four_cosets (r : ℕ) [Fact r.Prime] (hr : r % 8 = 5) :
         rw [← MulChar.pow_apply_coe, hfour, MulChar.one_apply_coe]
       rcases fourth_values _ hu with h | h | h | h <;>
         norm_num [f, mem_coset_iff, Units.val_neg, htwoU, hnegone, hnegtwo, h,
-          Complex.ext_iff] <;> ring
+          Complex.ext_iff]
     _ = _ := by
       simp only [Finset.sum_add_distrib, Finset.sum_sub_distrib, ← Finset.mul_sum, hf]
 
@@ -294,5 +296,352 @@ theorem bernoulli_coordinates (r : ℕ) [Fact r.Prime] (hr : r % 8 = 5)
   rw [D5.S3.Analytic.Zeta.CatalanPrimeOddMoment.LFunction_zero_eq_neg_weighted_sum
       r (character r hr) hχne, ← character_moment_eq_zmod_sum]
   simp only [bernoulli, neg_div]
+
+/-- The actual reduction preimage of the normalized character kernel. -/
+def liftedKernel (r : ℕ) [Fact r.Prime] (hr : r % 8 = 5) (q : ℕ) :
+    Subgroup (ZMod (r * q))ˣ :=
+  (kernel r hr).comap (reduceUnits r q)
+
+private def crtUnits (r q : ℕ) (h : Nat.Coprime r q) :
+    (ZMod (r * q))ˣ ≃* (ZMod r)ˣ × (ZMod q)ˣ :=
+  (Units.mapEquiv (ZMod.chineseRemainder h).toMulEquiv).trans MulEquiv.prodUnits
+
+private lemma crtUnits_fst (r q : ℕ) (h : Nat.Coprime r q)
+    (u : (ZMod (r * q))ˣ) : (crtUnits r q h u).1 = reduceUnits r q u := by
+  apply Units.ext
+  change (ZMod.cast (u : ZMod (r * q)) : ZMod r × ZMod q).1 = _
+  rw [Prod.fst_zmod_cast]
+  rfl
+
+/-- The actual CRT identification of H with the kernel times the full second
+unit group, with the first coordinate equal to reduction modulo r. -/
+def liftedKernelEquiv (r : ℕ) [Fact r.Prime] (hr : r % 8 = 5)
+    (q : ℕ) (h : Nat.Coprime r q) :
+    liftedKernel r hr q ≃* (kernel r hr) × (ZMod q)ˣ := by
+  let E := crtUnits r q h
+  have hfst (u : (ZMod (r * q))ˣ) : (E u).1 = reduceUnits r q u :=
+    crtUnits_fst r q h u
+  exact {
+    toFun := fun u => (⟨(E u.val).1, by rw [hfst]; exact u.property⟩, (E u.val).2)
+    invFun := fun v => ⟨E.symm (v.1.val, v.2), by
+      change reduceUnits r q (E.symm (v.1.val, v.2)) ∈ kernel r hr
+      rw [← hfst, E.apply_symm_apply]
+      exact v.1.property⟩
+    left_inv := fun u => by
+      apply Subtype.ext
+      exact E.symm_apply_apply u.val
+    right_inv := fun v => by
+      apply Prod.ext
+      · apply Subtype.ext
+        exact congrArg Prod.fst (E.apply_symm_apply (v.1.val, v.2))
+      · change (E (E.symm (v.1.val, v.2))).2 = v.2
+        exact congrArg Prod.snd (E.apply_symm_apply (v.1.val, v.2))
+    map_mul' := fun u v => by
+      apply Prod.ext
+      · apply Subtype.ext
+        exact congrArg Prod.fst (E.map_mul u.val v.val)
+      · change (E (u.val * v.val)).2 = (E u.val).2 * (E v.val).2
+        exact congrArg Prod.snd (E.map_mul u.val v.val) }
+
+/-- The complete MMZ structural domain: cyclicity is exactly the coprimality
+condition, and H has index four and omits minus one. -/
+theorem lifted_structure (r : ℕ) [Fact r.Prime] (hr : r % 8 = 5)
+    (q : ℕ) [Fact q.Prime] (hqr : q ≠ r) :
+    (IsCyclic (liftedKernel r hr q) ↔ Nat.Coprime ((r - 1) / 4) (q - 1)) ∧
+    (liftedKernel r hr q).index = 4 ∧
+    (-1 : (ZMod (r * q))ˣ) ∉ liftedKernel r hr q := by
+  have hcop : Nat.Coprime q r := (Fact.out : q.Prime).coprime_iff_not_dvd.mpr
+    (fun h => hqr ((Nat.prime_dvd_prime_iff_eq (Fact.out : q.Prime)
+      (Fact.out : r.Prime)).mp h))
+  have hcard : Nat.card (ZMod q)ˣ = q - 1 := by
+    rw [Nat.card_eq_fintype_card, Fintype.card_units, ZMod.card]
+  have hcyc := (liftedKernelEquiv r hr q hcop.symm).isCyclic
+  rw [Group.isCyclic_prod_iff, (kernel_structure r hr).2.2.2.2.2.1, hcard] at hcyc
+  have hcyc' : IsCyclic (liftedKernel r hr q) ↔ Nat.Coprime ((r - 1) / 4) (q - 1) := by
+    simpa only [show IsCyclic (kernel r hr) from inferInstance,
+      show IsCyclic (ZMod q)ˣ from inferInstance, true_and] using hcyc
+  refine ⟨hcyc', ?_, ?_⟩
+  · change ((kernel r hr).comap (reduceUnits r q)).index = 4
+    rw [Subgroup.index_comap_of_surjective]
+    · exact (kernel_structure r hr).2.2.2.2.2.2.1
+    · exact ZMod.unitsMap_surjective _
+  · intro hneg
+    have hreduce : reduceUnits r q (-1 : (ZMod (r * q))ˣ) = -1 := by
+      apply Units.ext
+      change (ZMod.castHom (show r ∣ r * q from ⟨q, rfl⟩) (ZMod r)) (-1) = -1
+      simp only [map_neg, map_one]
+    have h : (-1 : (ZMod r)ˣ) ∈ kernel r hr := by
+      change reduceUnits r q (-1) ∈ kernel r hr at hneg
+      rwa [hreduce] at hneg
+    exact (kernel_structure r hr).2.2.2.2.2.2.2 h
+
+/-- The literal centered first moment of the subgroup itself. -/
+def centered (r : ℕ) [Fact r.Prime] (hr : r % 8 = 5)
+    (q : ℕ) [Fact q.Prime] : Prop :=
+  2 * (∑ u ∈ cosetFinset (liftedKernel r hr q) 1,
+    ((u : ZMod (r * q)).val : ℤ)) =
+    (r : ℤ) * q * (((r - 1) / 4 : ℕ) : ℤ) * ((q - 1 : ℕ) : ℤ)
+
+private lemma sumRep_eq_of_character_eq (r : ℕ) [Fact r.Prime] (hr : r % 8 = 5)
+    (a b : (ZMod r)ˣ) (h : character r hr a = character r hr b) :
+    sumRep r hr a = sumRep r hr b := by
+  have hsets : cosetFinset (kernel r hr) a = cosetFinset (kernel r hr) b := by
+    ext u
+    rw [mem_coset_iff, mem_coset_iff, h]
+  simp only [sumRep, hsets]
+
+/-- The centered condition for the actual preimage subgroup, in the normalized
+coordinates. This finite-character step works for every distinct prime q;
+cyclic-generator eligibility imposes the additional MMZ hypotheses separately.
+In particular no q>3 or q>r boundary is introduced. -/
+theorem centered_coordinates (r : ℕ) [Fact r.Prime] (hr : r % 8 = 5)
+    (hr5 : 5 < r) (q : ℕ) [Fact q.Prime] (hqr : q ≠ r) :
+    Nat.card (liftedKernel r hr q) = (r - 1) / 4 * (q - 1) ∧
+    (∀ u : (ZMod (r * q))ˣ,
+      0 < (u : ZMod (r * q)).val ∧ (u : ZMod (r * q)).val < r * q) ∧
+    (centered r hr q ↔ character r hr (q : ZMod r) = 1 ∨
+      (realCoordinate r hr = imagCoordinate r hr ∧
+        character r hr (q : ZMod r) = -Complex.I) ∨
+      (realCoordinate r hr = -imagCoordinate r hr ∧
+        character r hr (q : ZMod r) = Complex.I)) := by
+  classical
+  haveI : Fact (1 < r * q) := ⟨by nlinarith [(Fact.out : r.Prime).two_le,
+    (Fact.out : q.Prime).two_le]⟩
+  have hcop : Nat.Coprime q r := (Fact.out : q.Prime).coprime_iff_not_dvd.mpr
+    (fun h => hqr ((Nat.prime_dvd_prime_iff_eq (Fact.out : q.Prime)
+      (Fact.out : r.Prime)).mp h))
+  let e : (ZMod r)ˣ := ZMod.unitOfCoprime q hcop
+  have he : character r hr (e : ZMod r) = character r hr (q : ZMod r) := by
+    simp [e]
+  have hL : liftedFinset r q (cosetFinset (kernel r hr) 1) =
+      cosetFinset (liftedKernel r hr q) 1 := by
+    ext u
+    simp [liftedFinset, cosetFinset, liftedKernel]
+  have hlift := MercaCosetFiberLift.result r q (by omega)
+    (Fact.out : q.Prime) hcop (kernel r hr) 1
+  dsimp only at hlift
+  have hc : Nat.card (liftedKernel r hr q) = (r - 1) / 4 * (q - 1) := by
+    simpa only [liftedKernel, (kernel_structure r hr).2.2.2.2.2.1] using hlift.1
+  have hcen : centered r hr q ↔ sumRep r hr 1 = sumRep r hr e⁻¹ := by
+    have hdev := hlift.2.2.2.2.2
+    change deviation (r * q) (liftedKernel r hr q)
+      (liftedFinset r q (cosetFinset (kernel r hr) 1)) =
+      (q : ℚ) * (moment r (cosetFinset (kernel r hr) 1) -
+        moment r (cosetFinset (kernel r hr) (e⁻¹ * 1))) at hdev
+    rw [hL, mul_one] at hdev
+    have hsum (c : (ZMod r)ˣ) :
+        moment r (cosetFinset (kernel r hr) c) = (sumRep r hr c : ℚ) := by
+      simp [moment, sumRep]
+    simp only [hsum] at hdev
+    have hzero : centered r hr q ↔
+        deviation (r * q) (liftedKernel r hr q)
+          (cosetFinset (liftedKernel r hr q) 1) = 0 := by
+      dsimp only [centered, deviation, moment]
+      rw [hc]
+      simp only [Nat.cast_mul]
+      constructor
+      · intro h
+        have hh := congrArg (fun z : ℤ => (z : ℚ)) h
+        simp only [Int.cast_mul, Int.cast_sum, Int.cast_natCast, Int.cast_ofNat] at hh
+        linarith
+      · intro h
+        have hh : ((2 * (∑ u ∈ cosetFinset (liftedKernel r hr q) 1,
+            ((u : ZMod (r * q)).val : ℤ))) : ℚ) =
+            (((r : ℤ) * q * (((r - 1) / 4 : ℕ) : ℤ) *
+              ((q - 1 : ℕ) : ℤ)) : ℚ) := by
+          simp only [Int.cast_mul, Int.cast_sum, Int.cast_natCast, Int.cast_ofNat]
+          linarith
+        exact_mod_cast hh
+    rw [hzero, hdev, mul_eq_zero]
+    have hq0 : (q : ℚ) ≠ 0 := Nat.cast_ne_zero.mpr (Fact.out : q.Prime).ne_zero
+    simp only [hq0, false_or, sub_eq_zero, Int.cast_inj]
+  have hchar : character r hr (e⁻¹ : (ZMod r)ˣ) *
+      character r hr (q : ZMod r) = 1 := by
+    have h := congrArg (fun u : (ZMod r)ˣ => character r hr (u : ZMod r))
+      (inv_mul_cancel e)
+    simpa only [Units.val_mul, map_mul, Units.val_one, map_one, he] using h
+  have hs (c : (ZMod r)ˣ) : sumRep r hr 1 = sumRep r hr c ↔
+      realCoordinate r hr = coordinate r hr c := by
+    have h1 := coordinate_scaled r hr hr5 1
+    have h2 := coordinate_scaled r hr hr5 c
+    have hp : (0 : ℤ) < r := Nat.cast_pos.mpr (Fact.out : r.Prime).pos
+    change sumRep r hr 1 = sumRep r hr c ↔
+      coordinate r hr 1 = coordinate r hr c
+    constructor
+    · intro h
+      dsimp only [coordinate]
+      rw [h]
+    · intro h
+      rw [h] at h1
+      linarith
+  have hneg (c : (ZMod r)ˣ) : coordinate r hr (-c) = -coordinate r hr c := by
+    have h1 := coordinate_scaled r hr hr5 (-c)
+    have h2 := coordinate_scaled r hr hr5 c
+    rw [sumRep_neg] at h1
+    have hp : (0 : ℤ) < r := Nat.cast_pos.mpr (Fact.out : r.Prime).pos
+    nlinarith
+  obtain ⟨horder, htwo, _, hodd, _, _, _, _⟩ := kernel_structure r hr
+  have hfour : character r hr ^ 4 = 1 := horder ▸ pow_orderOf_eq_one _
+  have hqfour : character r hr (q : ZMod r) ^ 4 = 1 := by
+    rw [← he, ← MulChar.pow_apply_coe, hfour, MulChar.one_apply_coe]
+  have htwoU : character r hr (twoUnit r hr) = Complex.I := by
+    simpa [twoUnit] using htwo
+  have hminus : character r hr (-1 : ZMod r) = -1 := hodd
+  have hminusTwo : character r hr (-twoUnit r hr : (ZMod r)ˣ) = -Complex.I := by
+    simp only [Units.val_neg, hodd.eval_neg, htwoU]
+  refine ⟨hc, ?_, ?_⟩
+  · intro u
+    have hu : (u : ZMod (r * q)).val ≠ 0 := by
+      intro h
+      exact Units.ne_zero u (by rw [← ZMod.natCast_zmod_val (u : ZMod (r * q)), h, Nat.cast_zero])
+    exact ⟨by omega, ZMod.val_lt _⟩
+  · rw [hcen]
+    rcases fourth_values _ hqfour with h | h | h | h
+    · have hei : character r hr (e⁻¹ : (ZMod r)ˣ) =
+          character r hr (1 : (ZMod r)ˣ) := by
+        rw [h, mul_one] at hchar
+        simpa only [Units.val_one, map_one] using hchar
+      have hsum := sumRep_eq_of_character_eq r hr e⁻¹ 1 hei
+      simp only [h, hsum, true_or]
+    · have hei : character r hr (e⁻¹ : (ZMod r)ˣ) =
+          character r hr (-twoUnit r hr : (ZMod r)ˣ) := by
+        rw [h] at hchar
+        rw [hminusTwo]
+        apply (mul_right_injective₀ Complex.I_ne_zero)
+        change _ * _ = _ * _
+        rw [mul_comm Complex.I, hchar]
+        norm_num
+      have hsum := sumRep_eq_of_character_eq r hr e⁻¹ (-twoUnit r hr) hei
+      rw [hsum, hs, hneg]
+      norm_num [h, Complex.ext_iff, imagCoordinate]
+    · have hei : character r hr (e⁻¹ : (ZMod r)ˣ) =
+          character r hr (-1 : (ZMod r)ˣ) := by
+        rw [h] at hchar
+        rw [show character r hr (-1 : (ZMod r)ˣ) = -1 from hminus]
+        linear_combination -hchar
+      have hsum := sumRep_eq_of_character_eq r hr e⁻¹ (-1) hei
+      rw [hsum, hs, hneg]
+      have hk := (bernoulli_coordinates r hr hr5).2.2.2.1
+      have hne : realCoordinate r hr ≠ -realCoordinate r hr := by
+        intro heq
+        exact hk (by omega)
+      norm_num [h, Complex.ext_iff]
+      exact hne
+    · have hei : character r hr (e⁻¹ : (ZMod r)ˣ) =
+          character r hr (twoUnit r hr) := by
+        rw [h] at hchar
+        rw [htwoU]
+        apply (mul_right_injective₀ (neg_ne_zero.mpr Complex.I_ne_zero))
+        change _ * _ = _ * _
+        rw [mul_comm (-Complex.I), hchar]
+        norm_num
+      have hsum := sumRep_eq_of_character_eq r hr e⁻¹ (twoUnit r hr) hei
+      rw [hsum, hs]
+      norm_num [h, imagCoordinate, Complex.ext_iff]
+
+/-- Every generator on the eligible MMZ domain has representative a with
+`gcd(a-1,r*q)=1`. Both local projection groups are genuinely nontrivial. -/
+theorem generator_eligible (r : ℕ) [Fact r.Prime] (hr : r % 8 = 5)
+    (hr5 : 5 < r) (q : ℕ) [Fact q.Prime] (hq2 : 2 < q) (hqr : q ≠ r)
+    (a : liftedKernel r hr q) (hgen : ∀ x, x ∈ Subgroup.zpowers a) :
+    Nat.Coprime ((a.val : ZMod (r * q)).val - 1) (r * q) := by
+  haveI : Fact (1 < r * q) := ⟨by nlinarith⟩
+  have hcop : Nat.Coprime q r := (Fact.out : q.Prime).coprime_iff_not_dvd.mpr
+    (fun h => hqr ((Nat.prime_dvd_prime_iff_eq (Fact.out : q.Prime)
+      (Fact.out : r.Prime)).mp h))
+  let E := liftedKernelEquiv r hr q hcop.symm
+  haveI : Nontrivial (kernel r hr) := Finite.one_lt_card_iff_nontrivial.mp (by
+    rw [(kernel_structure r hr).2.2.2.2.2.1]; omega)
+  haveI : Nontrivial (ZMod q)ˣ := Finite.one_lt_card_iff_nontrivial.mp (by
+    rw [Nat.card_eq_fintype_card, Fintype.card_units, ZMod.card]; omega)
+  have projection_ne {G : Type} [Group G] [Nontrivial G]
+      (f : liftedKernel r hr q →* G) (hf : Function.Surjective f) : f a ≠ 1 := by
+    intro ha
+    obtain ⟨b, hb⟩ := exists_ne (1 : G)
+    obtain ⟨x, hx⟩ := hf b
+    obtain ⟨j, hj⟩ := Subgroup.mem_zpowers_iff.mp (hgen x)
+    have h := congrArg f hj
+    rw [map_zpow, ha, one_zpow, hx] at h
+    exact hb h.symm
+  have hfirst := projection_ne ((MonoidHom.fst _ _).comp E.toMonoidHom)
+    (Prod.fst_surjective.comp E.surjective)
+  have hsecond := projection_ne ((MonoidHom.snd _ _).comp E.toMonoidHom)
+    (Prod.snd_surjective.comp E.surjective)
+  let A := (a.val : ZMod (r * q)).val
+  have hA : 1 ≤ A := ZMod.val_pos.mpr (Units.ne_zero a.val)
+  have hAr : (A : ZMod r) ≠ 1 := by
+    intro heq
+    apply hfirst
+    apply Subtype.ext
+    apply Units.ext
+    change ((crtUnits r q hcop.symm a.val).1 : ZMod r) = 1
+    rw [crtUnits_fst]
+    simpa only [reduceUnits, ZMod.unitsMap_val, ZMod.cast_eq_val] using heq
+  have hAq : (A : ZMod q) ≠ 1 := by
+    intro heq
+    apply hsecond
+    apply Units.ext
+    change (ZMod.cast (a.val : ZMod (r * q)) : ZMod r × ZMod q).2 = 1
+    rw [Prod.snd_zmod_cast, ZMod.cast_eq_val]
+    exact heq
+  have hru : IsUnit ((A - 1 : ℕ) : ZMod r) := by
+    rw [Nat.cast_sub hA, Nat.cast_one]
+    exact isUnit_iff_ne_zero.mpr (sub_ne_zero.mpr hAr)
+  have hqu : IsUnit ((A - 1 : ℕ) : ZMod q) := by
+    rw [Nat.cast_sub hA, Nat.cast_one]
+    exact isUnit_iff_ne_zero.mpr (sub_ne_zero.mpr hAq)
+  exact ((ZMod.isUnit_iff_coprime _ _).mp hru).mul_right
+    ((ZMod.isUnit_iff_coprime _ _).mp hqu)
+
+/-- Conjugation keeps the literal kernel and real coordinate, negates the
+imaginary coordinate, and reverses the two nonreal centered branches. The
+ordered cosets retain their representatives; their values become 1,-i,-1,i. -/
+theorem conjugate_coordinates (r : ℕ) [Fact r.Prime] (hr : r % 8 = 5)
+    (hr5 : 5 < r) :
+    let χminus := star (character r hr)
+    orderOf χminus = 4 ∧ χminus 2 = -Complex.I ∧
+    χminus.toUnitHom.ker = kernel r hr ∧
+    χminus (-1 : ZMod r) = -1 ∧
+    χminus (-twoUnit r hr : (ZMod r)ˣ) = Complex.I ∧
+    characterMoment r χminus / (r : ℂ) =
+      (realCoordinate r hr : ℂ) + (-imagCoordinate r hr : ℤ) * Complex.I ∧
+    ∀ (q : ℕ) [Fact q.Prime], q ≠ r →
+      (centered r hr q ↔ χminus (q : ZMod r) = 1 ∨
+        (realCoordinate r hr = imagCoordinate r hr ∧ χminus (q : ZMod r) = Complex.I) ∨
+        (realCoordinate r hr = -imagCoordinate r hr ∧ χminus (q : ZMod r) = -Complex.I)) := by
+  dsimp only
+  obtain ⟨ho, ht, _, hodd, _, _, _, _⟩ := kernel_structure r hr
+  have hker : (star (character r hr)).toUnitHom.ker = kernel r hr := by
+    ext u
+    simp only [kernel, MonoidHom.mem_ker, Units.ext_iff,
+      MulChar.coe_toUnitHom, Units.val_one, MulChar.star_apply]
+    exact ⟨fun h => by simpa only [star_star, star_one] using congrArg star h,
+      fun h => by rw [h, star_one]⟩
+  have hmoment : characterMoment r (star (character r hr)) / (r : ℂ) =
+      star (bernoulli r hr) := by
+    simp only [bernoulli, characterMoment, star_div₀, star_sum, star_mul,
+      star_natCast, MulChar.star_apply, mul_comm]
+  have hB := (bernoulli_coordinates r hr hr5).1
+  have htwo : character r hr (twoUnit r hr) = Complex.I := by simpa [twoUnit] using ht
+  refine ⟨?_, ?_, hker, ?_, ?_, ?_, ?_⟩
+  · rw [MulChar.star_eq_inv, orderOf_inv, ho]
+  · rw [MulChar.star_apply, ht]
+    exact Complex.conj_I
+  · rw [MulChar.star_apply, hodd]
+    simp only [star_neg, star_one]
+  · rw [MulChar.star_apply, Units.val_neg, hodd.eval_neg, htwo]
+    simp
+  · rw [hmoment, hB]
+    simp only [star_add, star_mul, star_intCast, RCLike.star_def, Complex.conj_I,
+      Int.cast_neg]
+    ring
+  · intro q _ hqr
+    have h := (centered_coordinates r hr hr5 q hqr).2.2
+    have hval (z : ℂ) : (star (character r hr)) (q : ZMod r) = star z ↔
+        character r hr (q : ZMod r) = z := by
+      rw [MulChar.star_apply]
+      exact star_injective.eq_iff
+    rw [← hval 1, ← hval (-Complex.I), ← hval Complex.I] at h
+    simpa only [star_one, star_neg, RCLike.star_def, Complex.conj_I, neg_neg] using h
 
 end D5.S3.ArithUnits.MercaQuarticMoments
