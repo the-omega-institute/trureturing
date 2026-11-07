@@ -1,5 +1,5 @@
 /- GID: D5/S3/Arith/Robin/PriceRecord/ActualInventoryTailBounds
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Arith/Robin/PriceRecord/ActualInventoryTailBounds
    mirror-E: none(waiver:uniform-real-clock-estimates)
    anchors: []
