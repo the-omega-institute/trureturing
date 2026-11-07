@@ -12,6 +12,8 @@ public import D5.S3.Topology.OrderUnitNorm
 public import Mathlib.Analysis.Normed.Module.Completion
 public import Mathlib.Analysis.Convex.Cone.Closure
 
+/-! Faithful order-unit data on the completion in the specified original norm. -/
+
 @[expose] public section
 noncomputable section
 set_option autoImplicit false
@@ -32,6 +34,7 @@ private lemma coe_mem_completedCone (a : E) :
   have h := (Completion.isUniformEmbedding_coe E).isEmbedding.closure_eq_preimage_closure_image
     (A.cone : Set E)
   rw [← Set.mem_preimage, ← h, A.closed.closure_eq]
+  rfl
 
 private lemma positive_difference_bound (hnorm : ∀ a : E, ‖a‖ = A.orderNorm a)
     {b c : E} (hb : b ∈ A.cone) (hc : c ∈ A.cone) : ‖b - c‖ ≤ ‖b + c‖ := by
@@ -39,8 +42,10 @@ private lemma positive_difference_bound (hnorm : ∀ a : E, ‖a‖ = A.orderNor
   apply (A.norm_le_iff _ _).mpr
   have h := (A.norm_le_iff (b + c) (A.orderNorm (b + c))).mp le_rfl
   refine ⟨h.1, ?_, ?_⟩
-  · convert A.cone.add_mem h.2.1 (A.cone.add_mem hc hc) using 1 <;> module
-  · convert A.cone.add_mem h.2.1 (A.cone.add_mem hb hb) using 1 <;> module
+  · convert A.cone.add_mem h.2.1 (A.cone.add_mem hc hc) using 1
+    module
+  · convert A.cone.add_mem h.2.1 (A.cone.add_mem hb hb) using 1
+    module
 
 private lemma completed_positive_difference_bound (hnorm : ∀ a : E, ‖a‖ = A.orderNorm a)
     {y z : Completion E} (hy : y ∈ A.completedCone) (hz : z ∈ A.completedCone) :
@@ -51,16 +56,19 @@ private lemma completed_positive_difference_bound (hnorm : ∀ a : E, ‖a‖ = 
     simpa only [← Completion.coe_sub, ← Completion.coe_add, Completion.norm_coe] using
       A.positive_difference_bound hnorm hb hc
   have hfirst : ∀ b ∈ s, ∀ c ∈ closure s, ‖b - c‖ ≤ ‖b + c‖ := by
-    intro b hb
-    exact closure_minimal (hbase b hb) (isClosed_le (by fun_prop) (by fun_prop))
-  exact (closure_minimal (fun b hb => hfirst b hb z hz)
-    (isClosed_le (by fun_prop) (by fun_prop))) hy
+    intro b hb c hc
+    have hclosed : IsClosed {c : Completion E | ‖b - c‖ ≤ ‖b + c‖} :=
+      isClosed_le (by fun_prop) (by fun_prop)
+    exact (closure_minimal (hbase b hb) hclosed) hc
+  have hclosed : IsClosed {b : Completion E | ‖b - z‖ ≤ ‖b + z‖} :=
+    isClosed_le (by fun_prop) (by fun_prop)
+  exact (closure_minimal (fun b hb => hfirst b hb z hz) hclosed) hy
 
 private lemma completed_norm_endpoints (hnorm : ∀ a : E, ‖a‖ = A.orderNorm a)
     (x : Completion E) :
     ‖x‖ • (A.unit : Completion E) - x ∈ A.completedCone ∧
       ‖x‖ • (A.unit : Completion E) + x ∈ A.completedCone := by
-  apply Completion.induction_on x
+  refine Completion.induction_on x ?_ ?_
   · exact (isClosed_closure.preimage (by fun_prop)).inter
       (isClosed_closure.preimage (by fun_prop))
   · intro a
@@ -86,8 +94,10 @@ private lemma completed_norm_le_iff (hnorm : ∀ a : E, ‖a‖ = A.orderNorm a)
       · exact A.completedCone.smul_mem he hu
     have hx := A.completed_norm_endpoints hnorm x
     refine ⟨(norm_nonneg x).trans hr, ?_, ?_⟩
-    · convert A.completedCone.add_mem hx.1 hd using 1 <;> module
-    · convert A.completedCone.add_mem hx.2 hd using 1 <;> module
+    · convert A.completedCone.add_mem hx.1 hd using 1
+      module
+    · convert A.completedCone.add_mem hx.2 hd using 1
+      module
   · rintro ⟨hr, hm, hp⟩
     have h := A.completed_positive_difference_bound hnorm hm hp
     have he₁ : (r • (A.unit : Completion E) - x) -
@@ -95,13 +105,15 @@ private lemma completed_norm_le_iff (hnorm : ∀ a : E, ‖a‖ = A.orderNorm a)
     have he₂ : (r • (A.unit : Completion E) - x) +
         (r • (A.unit : Completion E) + x) = (2 * r) • (A.unit : Completion E) := by module
     rw [he₁, he₂, norm_smul, norm_smul, Real.norm_eq_abs, Real.norm_eq_abs,
-      abs_neg, abs_of_nonneg (by norm_num : (0 : ℝ) ≤ 2), abs_of_nonneg (mul_nonneg (by norm_num) hr),
+      abs_neg, abs_of_nonneg (by norm_num : (0 : ℝ) ≤ 2),
+      abs_of_nonneg (mul_nonneg (by norm_num) hr),
       Completion.norm_coe] at h
     have hunit : ‖A.unit‖ ≤ 1 := by
       rw [hnorm]
       apply (A.norm_le_iff _ _).mpr
       exact ⟨zero_le_one, by simpa using A.zero_mem,
-        by simpa using A.cone.add_mem (interior_subset A.interior_unit) (interior_subset A.interior_unit)⟩
+        by simpa using (A.cone.add_mem
+          (interior_subset A.interior_unit) (interior_subset A.interior_unit))⟩
     have hh := mul_le_mul_of_nonneg_left hunit (mul_nonneg (by norm_num : (0 : ℝ) ≤ 2) hr)
     nlinarith
 
@@ -109,21 +121,23 @@ private lemma completed_norm_le_iff (hnorm : ∀ a : E, ‖a‖ = A.orderNorm a)
 def completedData (hnorm : ∀ a : E, ‖a‖ = A.orderNorm a) : OrderUnitNorm.Data (Completion E) where
   cone := A.completedCone
   unit := (A.unit : Completion E)
-  zero_mem := (A.coe_mem_completedCone 0).mpr A.zero_mem
+  zero_mem := by exact (coe_mem_completedCone A 0).mpr A.zero_mem
   closed := isClosed_closure
   salient := by
     intro x hx hne hn
-    have h := (A.completed_norm_le_iff hnorm x 0).mpr
+    have h := (completed_norm_le_iff A hnorm x 0).mpr
       ⟨le_rfl, by simpa using hn, by simpa using hx⟩
     exact hne (norm_eq_zero.mp (le_antisymm h (norm_nonneg x)))
   interior_unit := by
     apply mem_interior_iff_mem_nhds.mpr
     apply Filter.mem_of_superset (Metric.ball_mem_nhds (A.unit : Completion E) zero_lt_one)
     intro x hx
-    have hnormx : ‖x - (A.unit : Completion E)‖ ≤ 1 :=
-      (by simpa only [Metric.mem_ball, dist_eq_norm] using hx : ‖x - (A.unit : Completion E)‖ < 1).le
-    have h := (A.completed_norm_le_iff hnorm (x - (A.unit : Completion E)) 1).mp hnormx
-    simpa only [one_smul, add_sub_cancel] using h.2.2
+    have hnormx : ‖x - (A.unit : Completion E)‖ < 1 := by
+      simpa only [Metric.mem_ball, dist_eq_norm] using hx
+    have h := (completed_norm_le_iff A hnorm (x - (A.unit : Completion E)) 1).mp hnormx.le
+    change x ∈ A.completedCone
+    convert h.2.2 using 1
+    module
 
 /-- The exact completed order intervals, norm agreement and faithful pullback of the original cone.
 All real radii and the zero-dimensional space are included. -/
