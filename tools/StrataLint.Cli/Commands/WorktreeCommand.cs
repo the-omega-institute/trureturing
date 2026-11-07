@@ -106,6 +106,7 @@ internal static class WorktreeCommand
 
         WorktreeOptions? options = null;
         string? requestedBase = null;
+        string? invokingDirectory = null;
         string[] removedWorktrees = [];
         var worktreeCreated = false;
         string? branchOid = null;
@@ -127,12 +128,23 @@ internal static class WorktreeCommand
             if (symbolicBase.ExitCode != 0)
                 throw new InvalidOperationException(ProcessError(symbolicBase, "could not resolve base reference"));
             var baseReference = Encoding.UTF8.GetString(symbolicBase.StandardOutput).Trim();
-            var main = RegisteredWorktreeInventory.ReadWorktrees(options.Source, runner,
-                resolveGitDirectories: false).FirstOrDefault()?.Path
+            var worktrees = RegisteredWorktreeInventory.ReadWorktrees(options.Source, runner,
+                resolveGitDirectories: false);
+            var main = worktrees.FirstOrDefault()?.Path
                 ?? throw new InvalidOperationException("worktree_inventory_empty");
             // Expiry can remove the invoking source. Resolve its base first and
             // anchor every subsequent operation, including fresh fallback, to main.
             options = options with { Source = main, Base = baseReference.Length == 0 ? baseRevision : baseReference };
+            var currentDirectory = Directory.GetCurrentDirectory();
+            var physicalDirectory = LeanCacheGuard.PhysicalPath(currentDirectory);
+            var comparison = OperatingSystem.IsWindows() ? StringComparison.OrdinalIgnoreCase : StringComparison.Ordinal;
+            if (worktrees.Skip(1).Any(tree => string.Equals(physicalDirectory, tree.Path, comparison)
+                || physicalDirectory.StartsWith(Path.TrimEndingDirectorySeparator(tree.Path)
+                    + Path.DirectorySeparatorChar, comparison)))
+            {
+                invokingDirectory = currentDirectory;
+                Directory.SetCurrentDirectory(main);
+            }
             stage = "claim";
             var prepared = WorktreePoolCommand.PrepareAllocation(options with { Base = baseRevision }, runner);
             if (!prepared.Success)
@@ -255,6 +267,8 @@ internal static class WorktreeCommand
         }
         finally
         {
+            if (invokingDirectory is not null && Directory.Exists(invokingDirectory))
+                Directory.SetCurrentDirectory(invokingDirectory);
         }
 
         // The disk gate keeps its original output/error and exit code; its
