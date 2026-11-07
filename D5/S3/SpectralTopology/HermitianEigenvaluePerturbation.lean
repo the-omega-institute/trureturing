@@ -122,7 +122,7 @@ private theorem re_inner_apply_self_le_of_mem_spanIndices
   · exact mul_le_mul_of_nonneg_right (hc i hp) (sq_nonneg _)
   · rw [repr_zero_of_mem_span b hx hp]; simp
 
-private theorem le_re_inner_apply_self_of_mem_spanIndices
+theorem le_re_inner_apply_self_of_mem_spanIndices
     (hT : T.IsSymmetric) (hn : finrank ℂ E = n) {s : Set (Fin n)} {c : ℝ}
     (hc : ∀ i ∈ s, c ≤ hT.eigenvalues hn i)
     {x : E} (hx : x ∈ Submodule.span ℂ ((hT.eigenvectorBasis hn) '' s)) :
