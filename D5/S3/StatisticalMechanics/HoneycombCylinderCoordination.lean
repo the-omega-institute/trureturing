@@ -73,6 +73,7 @@ Reg below denotes Reg.D5.S3.StatisticalMechanics.HoneycombCylinderCoordination.
 result: proof_shape=content; consumers=Reg.initial_values, Reg.family
 -/
 
+import D5.S3.Combinatorics.PositionSets.VertexPositionRatioRefutation
 import D5.S3.StatisticalMechanics.TeaCoordinationSequence
 
 /-! Literal honeycomb graph distances and diagonal translation quotients. -/

@@ -8,20 +8,75 @@
 
 /-
 admission_basis: open-problem-resolution (#27218; Proved)
-escape_witness: odd-period strip normalization and the shell-card formulas feed result.
-Direct frozen dependencies:
-D5/S3/StatisticalMechanics/HoneycombCylinderCoordination.potential
-D5/S3/StatisticalMechanics/HoneycombCylinderCoordination.geodesic
-D5/S3/StatisticalMechanics/HoneycombCylinderCoordination.plane_distance
-D5/S3/StatisticalMechanics/TeaCoordinationSequence.residual
-name: proof_shape=bind-only; consumers=oddShift_zero, oddShift_add, translationSetoid, oddShift_adj, projectHom, normal, band_minimum
-name: proof_shape=bind-only; consumers=evenShellEquiv, oddShellEquiv, finite_shell, even_card, odd_card
-name: proof_shape=content; consumers=result
-result: proof_shape=content; consumers=Reg.family
+escape_witness: lift_walk constructs length-preserving lifts by concat induction;
+quotient_minimum, rep_distance, shellEquiv and count_formula use these lifts on the path to result.
+Direct frozen dependencies (declaration statement_ids):
+D5.S3.StatisticalMechanics.HoneycombCylinderCoordination.Vertex
+(statement_id sha256:73865296d52675aab46d3809da1047aa20b10437dced9a6330f7ecb2accaf21a).
+D5.S3.StatisticalMechanics.HoneycombCylinderCoordination.honeycombGraph
+(statement_id sha256:4289ffb3e7a546ef57b396b1cefb5216eff6515afdf1f153f8f189f625b5ffbb).
+D5.S3.StatisticalMechanics.HoneycombCylinderCoordination.potential
+(statement_id sha256:df0823df01c4af944ed35a4f314fe8b541342c44ee461bff9da8b3fd8ad2440a).
+D5.S3.StatisticalMechanics.HoneycombCylinderCoordination.geodesic
+(statement_id sha256:47f83d3d234b313960482defe853517b65953de047858b93a0f509060ecad5ef).
+D5.S3.StatisticalMechanics.HoneycombCylinderCoordination.plane_distance
+(statement_id sha256:8d81bfbb88b0def172bc25fc72eb5532b29a10424ca7a29d9eae8d6cc31f1f67).
+D5.S3.StatisticalMechanics.HoneycombCylinderCoordination.AFiber
+(statement_id sha256:b07819740bdd055aa4303c50a1ef964b9266a4923d87a857cbca9f1865ca5db5).
+D5.S3.StatisticalMechanics.HoneycombCylinderCoordination.BFiber
+(statement_id sha256:f92d4f86d0898e0b238005e298cee5a4835bfd74df3acb33d84463aa739f63d1).
+D5.S3.StatisticalMechanics.HoneycombCylinderCoordination.finiteAFiber
+(statement_id sha256:1a65d9cc03c3ccfc4a37ebb83aa25ff2f037e594533962a3e360574813ca750c).
+D5.S3.StatisticalMechanics.HoneycombCylinderCoordination.finiteBFiber
+(statement_id sha256:b1bee538290281c1396689f71d7ef6a52b2bba2793217d309321d6f0536ba611).
+D5.S3.StatisticalMechanics.HoneycombCylinderCoordination.a_fiber_card
+(statement_id sha256:7a242877af54aee0789a2c4863552f992ca8492761b6a5f697f5f6fcaccd4dc8).
+D5.S3.StatisticalMechanics.HoneycombCylinderCoordination.b_fiber_card
+(statement_id sha256:bfe86ef23d22f7f38071bb9faaceb3e38b139c41c8e63d4c45988fb86b74115b).
+D5.S3.StatisticalMechanics.HoneycombCylinderCoordination.interval_sum
+(statement_id sha256:f788e4f5b2b1012e3ad338dea950d6e2edf9f9d37b20f60b174be7a797ea351c).
+D5.S3.StatisticalMechanics.TeaCoordinationSequence.residual
+(statement_id sha256:10439493c286dd5db76f1c5be5de421b2b461858b90859c1ba556092626d04d8).
+oddShift: proof_shape=bind-only; consumers=oddShift_zero, oddShift_add, translationSetoid, oddShift_adj, lift_edge, normal, band_minimum
+oddShift_zero: proof_shape=bind-only; consumers=translationSetoid, band_unique, band_minimum
+oddShift_add: proof_shape=bind-only; consumers=translationSetoid
+translationSetoid: proof_shape=bind-only; consumers=Cylinder, cylinderGraph, origin, projectHom, lift_edge, repEquiv
+Cylinder: proof_shape=bind-only; consumers=cylinderGraph, origin, c, repEquiv
+cylinderGraph: proof_shape=bind-only; consumers=c, projectHom, quotient_reachable, quotient_upper, lift_edge, rep_distance
+origin: proof_shape=bind-only; consumers=c, quotient_reachable, quotient_upper, rep_distance, zero_card
+c: proof_shape=bind-only; consumers=even_card, odd_card, zero_card, count_formula, result
+oddShift_adj: proof_shape=bind-only; consumers=lift_edge
+projectHom: proof_shape=bind-only; consumers=quotient_reachable, quotient_upper, rep_distance
+quotient_reachable: proof_shape=bind-only; consumers=zero_card
+quotient_upper: proof_shape=bind-only; consumers=rep_distance
+lift_edge: proof_shape=bind-only; consumers=rep_distance
+lift_walk: proof_shape=content; consumers=quotient_minimum
+quotient_minimum: proof_shape=content; consumers=rep_distance
+lower: proof_shape=bind-only; consumers=inBand, normal, normal_band, band_unique, band_minimum, evenShellEquiv, oddShellEquiv
+inBand: proof_shape=bind-only; consumers=normal_band, band_unique, band_minimum, Rep
+normal: proof_shape=bind-only; consumers=normal_class, normal_band, repEquiv
+normal_class: proof_shape=bind-only; consumers=repEquiv
+normal_band: proof_shape=bind-only; consumers=repEquiv
+band_unique: proof_shape=bind-only; consumers=repEquiv
+band_minimum: proof_shape=bind-only; consumers=rep_distance
+Rep: proof_shape=bind-only; consumers=repEquiv, rep_distance, shellEquiv, evenShellEquiv, oddShellEquiv
+repEquiv: proof_shape=bind-only; consumers=shellEquiv
+rep_distance: proof_shape=content; consumers=shellEquiv
+shellEquiv: proof_shape=content; consumers=finite_shell, even_card, odd_card
+evenShellEquiv: proof_shape=bind-only; consumers=finite_shell, even_card
+oddShellEquiv: proof_shape=bind-only; consumers=finite_shell, odd_card
+finite_shell: proof_shape=content; consumers=zero_card
+even_card: proof_shape=content; consumers=count_formula
+odd_card: proof_shape=content; consumers=count_formula
+zero_card: proof_shape=content; consumers=count_formula
+count_formula: proof_shape=content; consumers=result
+result: proof_shape=content; consumers=Reg.initial_values, Reg.family
 -/
 
 import D5.S3.StatisticalMechanics.HoneycombCylinderCoordination
 import D5.S3.StatisticalMechanics.TeaCoordinationSequence
+
+/-! Literal graph quotients for the odd honeycomb circumference family. -/
 
 noncomputable section
 open scoped BigOperators
@@ -122,7 +177,7 @@ private lemma lift_walk {V W : Type} (G : SimpleGraph V) (H : SimpleGraph W)
   induction p using SimpleGraph.Walk.concatRec with
   | Hnil => exact ⟨v, hv, .nil, rfl⟩
   | @Hconcat q s r p hadj ih =>
-    obtain ⟨z, hz, p', hp'⟩ := ih
+    obtain ⟨z, hz, p', hp'⟩ := ih hv
     obtain ⟨w, hw, he⟩ := hlift z r (hz ▸ hadj)
     exact ⟨w, he, p'.concat hw, by simp only [SimpleGraph.Walk.length_concat, hp']⟩
 
@@ -222,6 +277,7 @@ private lemma rep_distance (n : ℕ) (v : Rep n) :
     (cylinderGraph n).dist (origin n) (Quotient.mk _ v.1) = potential v.1 := by
   obtain ⟨w, hw, hp⟩ := quotient_minimum (cylinderGraph n) (projectHom n) Quotient.mk_surjective
     (lift_edge n) (Quotient.mk _ v.1)
+  change potential w = (cylinderGraph n).dist (origin n) (Quotient.mk _ v.1) at hp
   obtain ⟨k, hk⟩ := Quotient.exact hw.symm
   apply le_antisymm (quotient_upper n v.1)
   rw [← hp, ← hk]
@@ -390,6 +446,7 @@ private lemma count_formula (n m : ℕ) :
     all_goals first | contradiction | omega
 
 set_option maxHeartbeats 2000000 in
+-- Symbolic second differences split on both the width and radius boundaries.
 /-- The registered identity for every odd cylinder width, with denominators cleared. -/
 theorem result : ∀ n : ℕ,
     (1 - X)^2 * (PowerSeries.mk fun m => (c n m : ℤ)) =

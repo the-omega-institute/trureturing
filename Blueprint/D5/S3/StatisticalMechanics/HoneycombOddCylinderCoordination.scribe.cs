@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.StatisticalMechanics;
 internal sealed class HoneycombOddCylinderCoordinationDocument : IScribeDocumentDefinition
 {
     private const string Module = "D5/S3/StatisticalMechanics/HoneycombOddCylinderCoordination";
-    private static LibraryNoteRef Source => LibraryNoteRef.Create("D5/L/StatisticalMechanics/sloane2019a329515");
+    private static LibraryNoteRef Source => LibraryNoteRef.Create("D5/L/Geometry/sloane2019a329515");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The coordination sequence of every odd-width honeycomb cylinder satisfies the generating-function identity in OEIS A329515.",
@@ -15,10 +15,7 @@ internal sealed class HoneycombOddCylinderCoordinationDocument : IScribeDocument
         Blocks(
             Paragraph(Text("OEIS A329515, revision 32, gives the odd-width family with the half-hexagon seam offset. "
                 + "The coordinate model identifies (i,j) with (i+n+1,j+n), so the translation changes i+j by 2n+1. "
-                + "False labels A vertices and true labels B vertices; the formulas display the edge relation and the offset translation explicitly.")),
-            Definition("vertex", "Vertex", "The labeled integer lattice",
-                Eq(V("Vertex"), Product(V("Bool"), Product(Integers(), Integers()))),
-                "The coordinates i and j range independently over all integers."),
+                + "The shared Vertex and honeycombGraph are those of HoneycombCylinderCoordination. False labels A vertices and true labels B vertices; A(i,j) is adjacent to B(i,j), B(i−1,j) and B(i,j−1).")),
             Definition("translation", "translationSetoid", "Integral powers of the offset translation",
                 TranslationFormula(),
                 "The integer k may have either sign or be zero. The Boolean label is fixed. The first coordinate receives n+1 and the second n."),
@@ -39,15 +36,15 @@ internal sealed class HoneycombOddCylinderCoordinationDocument : IScribeDocument
             Describe.Lean(DescribeId.Create("result"), DeclarationHandle.Create(Module + ".result"),
                 H("The all-width odd-cylinder formal series identity"),
                 StatementSource.FromAuthor(Disp(ResultFormula())),
-                AssessedProvenance.FromLiterature(Source),
+                AssessedProvenance.FromRepo(Source),
                 Blocks(
                     Paragraph(Text("The imported honeycomb distance is twice the TeaCoordinationSequence residual on A vertices and one plus twice that residual on B vertices. "
-                        + "The existing geodesic construction and plane-distance identity are reused directly.")),
+                        + "A geodesic of the potential length and the plane-distance identity give the quotient-distance bounds.")),
                     Paragraph(Text("The offset translation changes s=i+j by 2n+1. Euclidean division gives a unique A representative with −n≤s≤n and a unique B representative with −n−1≤s≤n−1. "
                         + "The potential inequalities show these representatives minimize distance in each quotient class, including n=0.")),
                     Paragraph(Text("At A-radius 2k with k>0, the shell count is 6k for k<n, 6n for k=n, and 4n+2 for k>n. At B-radius 2k+1 it is 6k+3 for k<n, 5n+2 for k=n, and 4n+2 for k>n; the radius-zero count is one. "
                         + "Thus positive radii are 3m before 2n+1, 5n+2 at 2n+1, and 4n+2 afterwards.")),
-                    Paragraph(Text("Comparing second differences of the integer-cast shell series gives exactly the displayed identity. No convergence or physical realization is asserted."))),
+                    Paragraph(Text("Comparing second differences of the integer-cast shell series gives exactly the displayed identity. C maps an integer to its constant power series; n−2 is formed after casting n to ℤ. Powers have natural exponents, and X lies in PowerSeries ℤ. At n=0 the source term x²x^(−1) is combined before clearing denominators. Since 1−X has constant coefficient one, it is a unit, so the displayed cleared identity is equivalent to the source expression. No convergence or physical realization is asserted."))),
                 DescribeRole.Theorem))));
 
     private static DocumentBlock Definition(string id, string name, string title, Formula formula, string commentary) =>
@@ -82,9 +79,9 @@ internal sealed class HoneycombOddCylinderCoordinationDocument : IScribeDocument
         var bracket = Sub(Sub(Add(D(1), Mul(D(2), x)),
             Mul(C(Sub(Cast(n, Integers()), D(2))), Pow(x, Add(Mul(D(2), n), D(1))))),
             Mul(C(Cast(n, Integers())), Pow(x, Add(Mul(D(2), n), D(2)))));
-        var rhs = Add(Add(Mul(Parenthesized(Sub(D(1), x)), Parenthesized(bracket)),
+        var rhs = Sub(Add(Mul(Parenthesized(Sub(D(1), x)), Parenthesized(bracket)),
             Mul(D(3), Pow(x, D(2)))),
-            Sub(D(0), Mul(D(3), Pow(x, Add(Mul(D(2), n), D(1))))));
+            Mul(D(3), Pow(x, Add(Mul(D(2), n), D(1)))));
         return All("n", Naturals(), Eq(Mul(Pow(Parenthesized(Sub(D(1), x)), D(2)), series), rhs));
     }
 
@@ -113,5 +110,4 @@ internal sealed class HoneycombOddCylinderCoordinationDocument : IScribeDocument
     private static Formula Lambda(string name, Formula t, Formula body) =>
         Seq(LambdaLower, Sp, V(name), Colon, Sp, t, Sp, Mapsto, Sp, Parenthesized(body));
     private static Formula Iff(Formula a, Formula b) => Seq(Parenthesized(a), Sp, F.Iff, Sp, Parenthesized(b));
-    private static Formula Product(Formula a, Formula b) => Seq(a, Sp, Times, Sp, Parenthesized(b));
 }
