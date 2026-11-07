@@ -2,6 +2,7 @@
 bibkey: occil2026bernreq
 authors: Peter Occil
 year: 2026
+doi: null
 title: "Open Questions on the Bernoulli Factory Problem"
 url: https://peteroupc.github.io/bernreq.html#Other_Questions
 claim: "The first convex correction question after the final Prove or disprove asks for nonnegative degree-2n Bernstein increment coefficients under maximum-error and symmetric midpoint-error corrections."
