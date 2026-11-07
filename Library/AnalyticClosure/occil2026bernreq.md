@@ -14,6 +14,10 @@ triage: anchor
 
 # Original convex Bernstein correction question
 
+## Verified locator
+
+Author-published page: https://peteroupc.github.io/bernreq.html#Other_Questions
+
 The author-published source is the first item after the final “Prove or disprove”
 in “Other Questions”. Its source version is 2026-10-17; the same assertion
 is present in the qualified 2025-04-29 version. First publication is unknown.
