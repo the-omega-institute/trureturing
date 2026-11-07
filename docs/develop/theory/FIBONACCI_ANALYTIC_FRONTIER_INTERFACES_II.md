@@ -2009,3 +2009,108 @@ $$
 证明。展开有限平方：对角项由定理 490.6 收敛；非对角项由定理 491.6(i) 趋于零。证毕。
 
 **范围。** 由普通方差经极化恢复两点相关，见 Leung [Joint distribution of primes in multiple short intervals, Adv. Math. 490 (2026), 110847, doi:10.1016/j.aim.2026.110847] 附注 2.3；该文命题 2.2 给出等长、互不相交的比例短区间的协方差，定理 10.1 的移动窗结论在 RH、LI 与 QLI 下对对数取样成立，要求 $\log(1/\delta)=o(\log U)$。增量关系 $D_k-D_h=D_{k-h}(\cdot+h)$ 也出现在 Bui–Keating–Smith [On the variance of sums of arithmetic functions over primes in short intervals and pair correlation for $L$-functions in the Selberg class, J. London Math. Soc. 94 (2016), 161–185, doi:10.1112/jlms/jdw030] §5.3 定理 $C_1$ 的证明中，那里用于长度 $H_1<H_2<2H_1$ 之间的方差转移。Montgomery–Soundararajan [Primes in short intervals, Comm. Math. Phys. 252 (2004), 589–617, doi:10.1007/s00220-004-1222-4] 处理单一长度的矩，Goldston–Yıldırım [Canad. J. Math. 50 (1998), 563–580] 处理单一长度在算术级数中的方差，Coppola–Laporta [Afrika Mat. 29 (2018), 1245–1263] 处理固定位移的相关；这些文献都不处理两个幂次分离长度 $x^a,x^b$（$a<b$）的增量之间的协方差。直接对 $\int D_hD_k$ 作极化只给出 $O(Xh\log X)+O(\varepsilon_XXk\log X)$，其中 $\varepsilon_X\to0$ 是 (490.2) 的一致误差；当 $k/h\to\infty$ 时，归一化后的第二项不必趋于零。定理 491.6 的证明采用引理 491.1–491.5 的平均与二进分解，仅依赖 (490.2) 推出的上界 (491.1)。定理 491.6 与推论 491.7 只涉及二阶量，不给出渐近独立、高斯性或随机过程意义下的收敛，也不给出带符号的幂次 $\Omega_\pm$。
+
+## 追加锚（本行以下为增补区）
+
+## 492. 共同指数带交叉界的近最优性：保持方差的端点对数尖峰
+
+沿用 §490 的 $w,\rho_x$。对局部有界 Borel 可测的 $E:[1,\infty)\to\mathbb R$，记 $D^E_u(x)=E(x+u)-E(x)$、$V_E(Y,u)=\int_1^Y(D^E_u)^2$，
+
+$$
+\mathcal T^E_{\theta,1}(x)=x^{1/2-\theta}\int_0^1D^E_{sx^\theta}(x)\,\rho_x(sx^\theta)\,ds .
+$$
+
+固定 $0<\alpha<a<b<\beta<1$。本节的假设恰为 (490.2) 在共同指数带上的形式：
+
+$$
+\sup_{Y^\alpha\le u\le Y^\beta}\left|\frac{V_E(Y,u)}{Yu\log(Y/u)}-1\right|\longrightarrow0 .
+\tag{492.1}
+$$
+
+令 $C_E(X)=\int_X^{2X}\mathcal T^E_{a,1}(x)\mathcal T^E_{b,1}(x)\,\frac{dx}x$ 与 $R_b(X)=X^{1-b}(\log X)^3/\log\log X$（$X>e$）。由定理 491.6(ii)，(492.1) 蕴含 $C_E(X)=O\bigl(X^{1-b}(\log X)^3\bigr)$。
+
+**引理 492.1（截断对数的平移能量）。** 对 $0<h<k$，令 $\ell_{h,k}(y)=\log\bigl(\min\{k,\max\{h,|y|\}\}/k\bigr)$。存在绝对常数 $C$，使对所有 $0<h<k$ 与 $u>0$，
+
+$$
+\int_{\mathbb R}\bigl|\ell_{h,k}(y+u)-\ell_{h,k}(y)\bigr|^2\,dy\le Cu .
+$$
+
+证明。$v\mapsto\min\{\log k,\max\{\log h,v\}\}$ 是 $1$-Lipschitz 的，故除 $y\in\{0,-u\}$ 外 $|\ell_{h,k}(y+u)-\ell_{h,k}(y)|\le|\log|y+u|-\log|y||$。换元 $y=uz$，右端的平方积分为 $u\int_{\mathbb R}(\log|z+1|-\log|z|)^2\,dz$；该积分有限，因为 $\log^2|z|$ 在 $0$、$-1$ 附近局部可积，而 $|z|\ge2$ 时被积函数为 $O(z^{-2})$。证毕。
+
+此界与尖峰深度 $\log(k/h)$ 无关。
+
+**引理 492.2（保持方差的全局扰动）。** 令 $X_n=10^n$、$h_n=X_n^a$、$k_n=X_n^b$、$A_n^2=X_n\log X_n/\log\log X_n$，取 $n_0$ 使 $n\ge n_0$ 时 $k_n\le X_n/10$，并令
+
+$$
+F(x)=\sum_{n\ge n_0}A_n\,\ell_{h_n,k_n}(x-X_n).
+\tag{492.2}
+$$
+
+则 $F$ 连续、局部有界；当 $Y\to\infty$ 时，对 $0<u\le Y^\beta$ 一致地 $V_F(Y,u)\ll Yu\log Y/\log\log Y$；并且 $F(x)\ll\sqrt x\,(\log x)^{3/2}/\sqrt{\log\log x}$。
+
+证明。第 $n$ 项的支撑为 $[X_n-k_n,X_n+k_n]$，诸支撑两两不交且趋于无穷，故和局部有限，$F$ 连续。充分大时 $Y+u\le2Y$；第 $n$ 项的支撑含于 $[0.9X_n,1.1X_n]$；若它对某个 $x\in[1,Y]$ 的 $F(x)$ 或 $F(x+u)$ 有贡献，则 $0.9X_n\le2Y$，于是 $X_n\le\frac{20}9Y<3Y$。由引理 492.1 与 $L^2$ 三角不等式，$\|D^F_u\|_{L^2[1,Y]}\le\sqrt{Cu}\sum_{X_n\le3Y}A_n$；令 $m=\max\{n:X_n\le3Y\}$，则 $0.3Y<X_m\le3Y$；因 $A_{n+1}/A_n\to\sqrt{10}>2$，充分大时 $\sum_{n_0\le n\le m}A_n\ll A_m$，故 $\sum_{X_n\le3Y}A_n\ll\sqrt{Y\log Y/\log\log Y}$。平方即得方差界。最后，在第 $n$ 项的支撑上 $x\asymp X_n$ 且 $|F(x)|\le A_n\log(k_n/h_n)=(b-a)\sqrt{X_n}(\log X_n)^{3/2}/\sqrt{\log\log X_n}$。证毕。
+
+由于在带内 $\log(Y/u)\ge(1-\beta)\log Y$，引理 492.2 给出 $\sup_{Y^\alpha\le u\le Y^\beta}V_F(Y,u)/(Yu\log(Y/u))\ll1/\log\log Y$。若 $E_0$ 满足 (492.1)，记 $M(Y,u)=Yu\log(Y/u)$、$\varepsilon_0(Y)=\sup_{Y^\alpha\le u\le Y^\beta}|V_{E_0}(Y,u)/M(Y,u)-1|$，则 $\varepsilon_0(Y)\to0$，且 $V_{E_0}/M$ 在带内最终一致有界。由 Cauchy–Schwarz，$|V_{E_0\pm F}-V_{E_0}|\le2\sqrt{V_{E_0}V_F}+V_F$，故
+
+$$
+\sup_{Y^\alpha\le u\le Y^\beta}\frac{|V_{E_0\pm F}(Y,u)-V_{E_0}(Y,u)|}{M(Y,u)}\ll(\log\log Y)^{-1/2},\qquad\sup_{Y^\alpha\le u\le Y^\beta}\Bigl|\frac{V_{E_0\pm F}(Y,u)}{M(Y,u)}-1\Bigr|\le\varepsilon_0(Y)+O\bigl((\log\log Y)^{-1/2}\bigr),
+$$
+
+于是 $E_0+F$ 与 $E_0-F$ 也满足 (492.1)。
+
+**引理 492.3（单个尖峰的交叉能量）。** 记 $\ell=\ell_{h,k}$、$L=\log(k/h)$，对 $y\ge0$、$q>0$ 令 $B_q(y)=\int_0^1\bigl(\ell(y+sq)-\ell(y)\bigr)\,ds$。当 $k\ge2h$ 时，
+
+$$
+\int_0^kB_h(y)B_k(y)\,dy=\frac h4L^2+O(hL),
+$$
+
+其中隐含常数绝对。
+
+证明。在 $[0,\infty)$ 上 $\ell$ 递增，故 $B_q\ge0$。在 $0\le y<h$ 上，$0\le B_h\le\log2$、$0\le B_k\le L$，贡献为 $O(hL)$。对 $h\le y\le k$，令 $c=y/k$，直接积分得
+
+$$
+B_k(y)=\log\frac ky-1+c\Bigl(1+\log\frac ky\Bigr),\qquad 0\le B_k(y)\le\log\frac ky .
+$$
+
+对 $h\le y\le k-h$，$B_h(y)=\int_0^1\log(1+sh/y)\,ds=\frac h{2y}+O(h^2/y^2)$；误差项的贡献至多 $O\bigl(h^2\int_h^k\log(k/y)\,y^{-2}\,dy\bigr)=O(hL)$。在 $[k-h,k]$ 上两个 $B$ 都是 $O(h/k)$，贡献为 $O(h^3/k^2)$；把近似主项 $\frac h{2y}B_k(y)$ 的积分延伸到这一段，代价同样是 $O(h^3/k^2)$。于是 $\int_0^kB_hB_k=\frac h2\int_h^kB_k(y)\,\frac{dy}y+O(hL)$；令 $v=\log(k/y)$，
+
+$$
+\int_h^k\frac{B_k(y)}y\,dy=\int_0^L\bigl(v-1+e^{-v}(1+v)\bigr)\,dv=\frac{L^2}2-L+2-(L+2)e^{-L}.
+$$
+
+代入即得。证毕。
+
+**引理 492.4（原移动长度与原价格权下的尖峰交叉项）。** 对引理 492.2 的 $F$，
+
+$$
+C_F(X_n)=\Bigl(\frac{(b-a)^2}4+o(1)\Bigr)\,R_b(X_n)\qquad(n\to\infty).
+$$
+
+证明。固定 $X=X_n$，记 $h=h_n$、$k=k_n$、$A=A_n$。对 $x\in[X,2X]$ 及长度至多 $2k$ 的前向增量，只有第 $n$ 个尖峰出现，且 $x\ge X+k$ 时两个前向增量都为零（$\ell$ 在 $[k,\infty)$ 上为零）。令 $y=x-X\ge0$，则 $\int_0^1D^F_{sq}(x)\,ds=A\,B_q(y)$。在 $0\le y\le2k$ 上，$x^a/h=1+O(k/X)$、$x^b/k=1+O(k/X)$、$x^{-a-b}=X^{-a-b}(1+O(k/X))$。对 $y\ge h$，$\ell$ 在 $[h,k]$ 上为 $\log(t/k)$（导数 $1/t$ 递减），在 $k$ 处导数降为零并此后保持常数，故 $f_y(t)=\ell(y+t)-\ell(y)$ 在 $[0,\infty)$ 上递增、凹且 $f_y(0)=0$；于是 $r\le q$ 时 $f_y(sr)\le f_y(sq)\le\frac qrf_y(sr)$，对 $s$ 积分得 $B_r(y)\le B_q(y)\le\frac qrB_r(y)$；这把移动长度 $x^a,x^b$ 换成 $h,k$，相对误差为 $O(k/X)$。在 $0\le y<h$ 上，充分大时 $x^a\le2h$，$B_{x^a}(y)\le\log3$、$B_{x^b}(y)\le L$，贡献为 $O(hL)$。对价格权，由引理 489.1 的证明 $1-4u/x\le\rho_x(u)\le1$；这里 $u\le2k$ 且两个前向增量非负，所以价格权在相对误差 $O(k/X)$ 内被夹住。由引理 492.3，
+
+$$
+C_F(X)=A^2X^{-a-b}\Bigl[\frac h4L^2+O(hL)+O\Bigl(\frac kXhL^2\Bigr)\Bigr],
+$$
+
+而 $A^2X^{-a-b}\cdot\frac h4L^2=\frac{(b-a)^2}4\,X^{1-b}(\log X)^3/\log\log X$。证毕。
+
+**定理 492.5（共同指数带交叉界的近最优性）。** 设 $E_0:[1,\infty)\to\mathbb R$ 局部有界、Borel 可测，满足 (492.1)。令 $F$ 为 (492.2)。则：
+
+(i) $E_0$、$E_0+F$、$E_0-F$ 都满足 (492.1)；
+
+(ii) $F(x)\ll\sqrt x\,(\log x)^{3/2}/\sqrt{\log\log x}$；特别地，若 $E_0(x)=O(\sqrt x\log^2x)$，则 $E_0\pm F$ 也满足 $O(\sqrt x\log^2x)$；
+
+(iii) 存在固定的 $\varepsilon_*\in\{-1,0,1\}$，使 $E_*=E_0+\varepsilon_*F$ 满足
+
+$$
+\limsup_{X\to\infty}\frac{|C_{E_*}(X)|}{R_b(X)}\ge\frac{(b-a)^2}8 ;
+\tag{492.3}
+$$
+
+从而对每个固定 $\eta>0$，$C_{E_*}(X)\ne O\bigl(X^{1-b}(\log X)^{3-\eta}\bigr)$。
+
+证明。(i)、(ii) 见引理 492.2 后的论证。映射 $E\mapsto\mathcal T^E_{\theta,1}$ 是线性的。令 $B_X(E,E')=\int_X^{2X}\mathcal T^E_{a,1}\mathcal T^{E'}_{b,1}\,\frac{dx}x$，它是双线性的（不必对称），$C_E(X)=B_X(E,E)$，且 $C_{E_0\pm F}=C_{E_0}\pm B_X(E_0,F)\pm B_X(F,E_0)+C_F$；两式相加得 $C_{E_0+F}+C_{E_0-F}-2C_{E_0}=2C_F$；因而 $\max\{|C_{E_0+F}(X)|,|C_{E_0-F}(X)|,|C_{E_0}(X)|\}\ge\frac12|C_F(X)|$。对序列 $X_n$ 应用有限集合上的抽屉原理，三者中有一个固定的函数在无穷多个 $n$ 上取到这个最大值。由引理 492.4 得 (492.3)。最后，$R_b(X)/\bigl(X^{1-b}(\log X)^{3-\eta}\bigr)=(\log X)^\eta/\log\log X\to\infty$。证毕。
+
+**推论 492.6。** 任给满足 (492.1) 的局部有界可测 $E_0$，$E_0,E_0\pm F$ 中有一个函数满足 (492.1)，而其交叉项不满足 $O\bigl(X^{1-b}(\log X)^{3-\eta}\bigr)$（任意固定 $\eta>0$），也不满足 $O(X^{1-b}\log X)$；若 $E_0$ 另满足 $E_0(x)=O(\sqrt x\log^2x)$，该函数也满足此界。因此在 (492.1) 的接口下，定理 491.6(ii) 的上界 $X^{1-b}(\log X)^3$ 中 $X$ 的幂次不能普遍改进，总对数幂 $3$ 不能降低任何固定正数，形如 $C_E(X)\sim c(a,b)\,X^{1-b}\log X$ 的交叉主项定律不能由 (492.1) 单独推出。
+
+**范围。** 定理 492.5 是关于抽象接口 (492.1) 的锐性结论，构造的 $E_*$ 一般不是 $\psi-\mathrm{id}$；它不给出算术情形 $E=\psi-\mathrm{id}$ 的交叉项下界，也不排除 $o\bigl(X^{1-b}(\log X)^3\bigr)$ 形式的非幂次改进。证明中的截断、Cauchy–Schwarz、凹性与二次恒等式都是标准工具，本节的新内容是三者的组合：保持整条指数带方差的扰动、端点尖峰的 $h\log^2(k/h)$ 交叉能量，以及它向原移动价格核的运输；由普通方差恢复协方差的极化方法见 Leung [Joint distribution of primes in multiple short intervals, Adv. Math. 490 (2026), 110847, doi:10.1016/j.aim.2026.110847] 附注 2.3。要对 $\psi-\mathrm{id}$ 得到交叉项主项，需要 (492.1) 之外能排除端点集中的信息，例如关于零点或素数分布的更细输入。
