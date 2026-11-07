@@ -11,8 +11,8 @@ namespace Reg.D5.S3.Combinatorics.Circle.MersenneExceptional19PermutationStabili
 universe u
 
 abbrev signature : Signature where
-  Params := Σ A : Type u, AddCommGroup A × ℕ × (ℕ → A)
-  State _ := ℤ
+  Params := Σ A : Type u, ℕ → A
+  State _ := ℕ
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
@@ -21,27 +21,27 @@ abbrev signature : Signature where
   finiteAnchor := inferInstance
 
 def actual : Realization signature.{u} :=
-  realize signature (fun _ p z => @read p.1 p.2.1 (p.2.2.1+1) p.2.2.2 z)
+  realize signature (fun _ p n => p.2 n)
     (fun e => nomatch e)
 
 def rejected : Realization signature.{u} :=
-  realize signature (fun _ p z => letI : AddCommGroup p.1 := p.2.1;
-    actual.readout () p z + p.2.2.2 0) (fun e => nomatch e)
+  realize signature (fun _ p n => p.2 (n+1)) (fun e => nomatch e)
 
 abbrev arena : Arena where
   signature := signature.{u}
   Law R := ∀ {A : Type u} [g : AddCommGroup A] (d : ℕ) (f : ℕ → A) (z : ℤ),
-    R.readout () ⟨A,g,d,f⟩ z = (z%2 : ℤ) • f 0 + read d (fun i => f (i+1)) (z/2)
+    read (d+1) (fun n => R.readout () ⟨A,f⟩ n) z = (z%2 : ℤ) • f 0 + read d (fun i => f (i+1)) (z/2)
 
 private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
-  have he := h (A := ULift.{u} ℤ) 0 (fun _ => ULift.up 1) 0
+  have he := h (A := ULift.{u} ℤ) 0
+    (fun n => ULift.up (if n=0 then (1 : ℤ) else 0)) 1
   have he' := congrArg ULift.down he
   norm_num [rejected,actual,realize,_root_.D5.S3.Combinatorics.Circle.MersenneExceptional19PermutationStabilizer.read,digit] at he'
 
 private theorem dependence : ObservationalDependence signature.{u} actual := by
   intro i
-  refine ⟨⟨ULift.{u} ℤ,inferInstance,0,fun _ => ULift.up 1⟩,0,1,?_⟩
+  refine ⟨⟨ULift.{u} ℤ,fun n => ULift.up (n : ℤ)⟩,0,1,?_⟩
   intro h
   have he := congrArg ULift.down h
   norm_num [actual,realize,_root_.D5.S3.Combinatorics.Circle.MersenneExceptional19PermutationStabilizer.read,digit] at he
@@ -73,8 +73,7 @@ def successor_audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨successor_family⟩
   correspondence := {stage := .evidence,objectStage := .evidence}
   bundleNonempty := .absent
-  readout := some (realize signature.{u}
-    (fun _ p z => @read p.1 p.2.1 (p.2.2.1+1) p.2.2.2 z) (fun e => nomatch e))
+  readout := some actual
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -82,12 +81,12 @@ def successor_audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sourceSelection := some {
     owner := `D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19PermutationStabilizer.Binary
     definition := none
-    coordinates := #[0,2,3]
+    coordinates := #[0,3]
     readouts := #[{
-      path := #["body","body","body","body","body","fn","arg"]
-      stateBinder := 4
-      functionOperand := false
-      stateOperand := some #["arg"]
+      path := #["body","body","body","body","body","fn","arg","fn","arg"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
