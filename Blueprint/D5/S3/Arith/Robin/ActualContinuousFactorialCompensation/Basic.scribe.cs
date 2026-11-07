@@ -15,7 +15,8 @@ internal sealed class ActualContinuousFactorialCompensationDocument : IScribeDoc
                 + "Set h=eta-L-B, h1=1+gamma-L, Z_h(x)=sum over 1<=k<=floor(x) of h(x/k), "
                 + "ceta=integral over y>1 of eta(y)/y^2, alpha=gamma^2+2*ceta-2, and "
                 + "G(x)=Z_h(x)-h1*floor(x)-alpha*(x-1). These are literal arithmetic objects; "
-                + "no supplier identity or regularity is a theorem hypothesis.")),
+                + "no supplier identity or regularity is a theorem hypothesis. The public G_formula "
+                + "is the exact arithmetic supplier consumed by SignedLaplace; it is not reproved there.")),
             Describe.Lean(
                 DescribeId.Create("actual-factorial-sharp-h-eq-harmonic"),
                 DeclarationHandle.Create("D5/S3/Arith/Robin/ActualContinuousFactorialCompensation/Basic.H_harmonic"),

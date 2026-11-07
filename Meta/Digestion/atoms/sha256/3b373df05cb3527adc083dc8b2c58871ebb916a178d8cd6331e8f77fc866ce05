@@ -1,0 +1,49 @@
+**Unresolved mathematical obligations 41.7.** The complete preceding-level
+comparison still requires
+
+$$
+ M_\sigma(w,\xi)\ge V(\xi)
+\tag{41.20}
+$$
+
+for every realizable $w\in\mathcal W$ and every admissible original
+sign on the required preceding levels, with the full attained equality
+preimage in actual $\operatorname{Dens}_2\times U(4)$.
+Equivalently, using the exact fixed-feedback profile, every
+$r\in[t_\sigma,\min\{\sqrt{t_\sigma},J_\sigma\}]$ must satisfy
+
+$$
+ \Delta_\sigma+b_\sigma r-2uv\sqrt{t_\sigma-r^2}
+                       \ge V(\xi),
+\tag{41.21}
+$$
+
+with the original zero-amplitude, zero-coherence, singular-endpoint,
+sign-tie and actual-lift cases retained. Theorem 41.4 uses
+$m=N_{\mathrm{geo}}$ on the existing prefix $(0,\beta]$; it does not
+certify that a proposed value is $\beta$. Using its purity conclusion
+to discard mixed strict competitors in a proof locating that prefix
+would be circular. The full all-effect comparison remains required.
+
+The exact evaluations of $\alpha$ and $\beta$, their general
+coincidence or separation, every actual boundary equality preimage,
+and inclusion or exclusion of the exhaustive-equality endpoint remain
+undetermined. If $\alpha<\beta$, the equality-only alternatives
+involve pure effects. Their actual separated ties, their coalescence
+with the selected graph, and the identities and exhaustion of the
+first competing global minimizing branches still require analysis.
+Mixed equality at $\beta$ remains possible on a separated feedback
+branch; its existence or exclusion and full endpoint preimage remain
+unresolved. Neither existence of such a mixed endpoint nor the absence
+of an earlier pure tie follows from the explicit right competitors.
+Those competitors need not minimize globally, so they do not exhaust
+the first competing minimizing branches.
+
+The determinant-zero phase-variation case still requires higher-order
+and global comparison. The geometric ordering beyond level four,
+any missing core-infimum attainment, and all previously conditional
+right-side branch-identification obligations retain their existing
+boundaries. No local curvature condition, unattained tie, or prefix
+purity theorem evaluates the first loss. The full original first-loss
+and equality problem remains unresolved.
+

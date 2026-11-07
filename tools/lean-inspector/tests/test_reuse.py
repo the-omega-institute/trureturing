@@ -771,11 +771,13 @@ class ReuseTests(unittest.TestCase):
                                  producer_stdout=None):
         # Exercise the actual shell entry and report receipt, replacing only the
         # external cache/build processes. No Lean compilation is needed here.
-        for relative in ('tools/lean-inspector/inspect.sh', 'tools/lean-inspector/reuse.py',
+        for relative in ('tools/lean-inspector/inspect.sh', 'tools/lean-inspector/native.py',
+                         'tools/lean-inspector/reuse.py',
                          'tools/lean-inspector/publication.py', 'tools/lean-inspector/materials.py',
                          'tools/lean-inspector/fib_analysis.py',
                          'tools/lean-inspector/build_work.py', 'tools/scripts/lib/resource-observation-lib.sh',
-                         'tools/scripts/worktree/lean_cache_release.py', 'tools/scripts/worktree/lean_cache_topology.py',
+                         'tools/scripts/worktree/lean_cache_release.py', 'tools/scripts/worktree/lean_cache_release_io.py',
+                     'tools/scripts/worktree/lean_cache_topology.py',
                          'tools/scripts/worktree/lean_cache.py', 'tools/scripts/worktree/cache_material.py'):
             target = self.root / relative
             target.parent.mkdir(parents=True, exist_ok=True)

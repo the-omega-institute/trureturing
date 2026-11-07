@@ -1,0 +1,80 @@
+### 定理 5.3（有限二元准备认证均匀参照）
+
+<a id="thm-c123-neutral-reference"></a>
+
+若全部条件错误均不超过 $0\le\varepsilon\le1/2$，则
+
+<a id="eq-c123-neutral-reference-error"></a>
+
+$$
+\boxed{\quad
+ \|\bar\sigma-\pi\|_1
+ \le\min\{2,\,2\sqrt{(d-1)\varepsilon(1-\varepsilon)}\}.
+ \quad}
+\tag{32}
+$$
+
+令 $\eta=2\sqrt{\varepsilon(1-\varepsilon)}$，还成立谱下界
+
+<a id="eq-c123-reference-faithful-gap"></a>
+
+$$
+\bar\sigma\succeq\frac{1-(d-1)\eta}{d}\,I_H.
+\tag{33}
+$$
+
+所以 $(d-1)\eta<1$ 时，已制备的 $\bar\sigma$ 被认证为忠实态。
+若 $\varepsilon=0$，各 $\rho_i$ 必为一组完整正交纯态投影，并且
+$\bar\sigma=\pi$。
+
+**证明。**
+记 $Y=\bar\sigma-I/d$。每个态满足 $\operatorname{Tr}\rho_i^2\le1$，上一引理则给
+$\operatorname{Tr}(\rho_i\rho_j)\le\eta^2$。因此
+
+$$
+\begin{aligned}
+\operatorname{Tr} Y^2
+ &=\frac1{d^2}\left(\sum_i\operatorname{Tr}\rho_i^2
+                 +\sum_{i\ne j}\operatorname{Tr}(\rho_i\rho_j)\right)-\frac1d\\
+ &\le\frac{d-1}{d}\eta^2.
+\end{aligned}
+$$
+
+由 $\|Y\|_1\le\sqrt d\,\|Y\|_2$，即得式
+[(32)](#eq-c123-neutral-reference-error)。
+又 $Y$ 为去迹 Hermitian 矩阵。对其任一特征值 $y_r$，
+
+$$
+y_r^2=\left(\sum_{s\ne r}y_s\right)^2
+ \le(d-1)\sum_{s\ne r}y_s^2,
+ \qquad
+ |y_r|\le\sqrt{\frac{d-1}{d}\operatorname{Tr} Y^2}
+ \le\frac{d-1}{d}\eta.
+$$
+
+这给出谱下界。
+
+当错误为零时，$\operatorname{Tr}(\rho_i\rho_j)=0$。
+正性意味着 $\rho_i^{1/2}\rho_j^{1/2}=0$，故 $d$ 个非零支持两两正交。
+它们在 $d$ 维空间中，因而每个支持恰为一维，且直和为整个 $H$。
+归一化迫使每个 $\rho_i$ 是对应秩一投影，和为 $I_H$。
+
+更一般地，每对有自己的括号上界 $\eta_{ij}=\eta_{ji}$ 时，同一证明给出
+
+$$
+\|\bar\sigma-\pi\|_1
+ \le\min\left\{2,\sqrt{\frac1d\sum_{i\ne j}\eta_{ij}^2}\right\}.
+$$
+
+这些是维数明确的充分保证；除后面的 qubit 取等号实例外，不宣称一般常数最优。
+若实际混合权重为 $q_i$，则只需再加
+$\sum_i|q_i-1/d|$，因为 $\|\sum_i(q_i-1/d)\rho_i\|_1$ 不超过这项。准备若在校准后漂移，也须把实际制备误差另行计入。
+
+准确的 $\pi$ 不需要给这些正交原子指定外部方向。任意共同酉变换都保持 $I/d$；其模流为标量共轭，所以前面的主定理给出
+
+$$
+\mathfrak F_\pi=\mathfrak A_N.
+$$
+
+这里得到的是该通道*能够准确保存的完整代数*，不是说任意通道都能恢复整个 $M_d$。混合标签仍可以作为记录留在 $\Omega$ 内；本定理只描述所声明来源上的边际态，没有声称它与所有内部记录独立。
+

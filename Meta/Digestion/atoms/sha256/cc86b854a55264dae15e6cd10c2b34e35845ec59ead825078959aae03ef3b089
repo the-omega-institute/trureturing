@@ -1,0 +1,165 @@
+**定理 126.2（原子三元测试恢复全部配平）。** 在任意有限 EJA、任意原正 Frobenius 型 $q$ 和任意原实双线性 $D$ 上，
+
+$$
+\mathsf F_{\rm primtri}\Longleftrightarrow
+\mathsf F_{\rm idem}\Longleftrightarrow
+\mathsf F_{\rm zero}\Longleftrightarrow
+\mathsf F_{\rm fib}\Longleftrightarrow\mathsf F_{\rm cut}.
+\tag{126.2}
+$$
+
+因此定理 107.2 的同一原 SC、双单位湮灭、全部 Jordan 导子律、原 $q$-斜伴随及全部 $D_c^2=-P_c/4$ 都保留。证明不预先借入这些结论或复矩阵分类。
+
+证明。以下只用成熟有限 EJA 谱论、共同 Peirce 分解及 Jordan 恒等式；恢复完整实输入以后，直接消费定理 110.2、118.2。若 $E=0$，没有 primitive 测试，唯一双线性作用为零，结论平凡。以下设 $E\ne0$。
+
+第一步，分离线性读回与原子长度。沿 (110.3) 记
+
+$$
+P_c=4(L_c-L_c^2),\qquad
+N_c=E_1(c)\oplus E_0(c)=\ker P_c,\qquad
+W_c(x)=\tfrac12\|P_cx\|_q^2.
+\tag{126.3}
+$$
+
+$P_c$ 是原 $q$-正交投影。先在 (126.1) 取 $r=0$，再与任意法向幂等元 $r$ 的等式相减，得到
+
+$$
+Q_c(p):=W_c(p)-W_c(2D_cp)=0,\qquad
+q(D_pc,r)=0.
+\tag{126.4}
+$$
+
+$N_c$ 是含原单位的 EJA 子代数：$E_1(c),E_0(c)$ 分别以 $c,u-c$ 为单位，且互相乘积为零。其内部幂等元都是原 $E$ 的幂等元，并由内部谱定理实线性张成 $N_c$。所以后一个线性读数延拓到全部 $n\in N_c$。整个 $E$ 的 primitive 幂等元又实线性张成 $E$，故再在第一槽延拓得到
+
+$$
+q(D_ac,n)=0\quad(a\in E,\ n\in N_c),\qquad
+D_ac\in E_{1/2}(c),\qquad D_ac=2c\circ D_ac.
+\tag{126.5}
+$$
+
+先延拓的是线性法向读回，未把含线性项的整个原等式当成二次式。
+
+第二步，取得导子和第二槽单位律。固定任意 $a$，令 $T=D_a$。由 (126.5)，每个幂等元 $e$ 满足 $Te=2e\circ Te$；取 $e=u$ 得 $Tu=0$。对正交幂等元 $e,f$，将该式用于 $e,f,e+f$ 并相减，得 $e\circ Tf+f\circ Te=0$。因此对任意谱分解 $x=\sum_i\lambda_i r_i$，
+
+$$
+2x\circ Tx
+=\sum_i2\lambda_i^2r_i\circ Tr_i
+ +2\sum_{i<j}\lambda_i\lambda_j(r_i\circ Tr_j+r_j\circ Tr_i)
+=\sum_i\lambda_i^2Tr_i=T(x^2).
+\tag{126.6}
+$$
+
+对 $x+y$ 实极化给完整导子律。又因 $Tr_i\in E_{1/2}(r_i)$，原 Peirce 正交性给全部 $q(Tr_i,r_j)=0$，所以 $q(Tx,x)=0$；再极化得原 $q$-斜伴随。这里直接复用定理 107.2 中已经说明的成熟谱方法，只使用其刚取得的前件，不用尚未恢复的 SC。此时已有 $D_au=0$，尚未交换两个槽。
+
+第三步，正交原子之和恢复全 SC。取 $c=p$，其中 $p$ primitive。由 (126.4)、(126.5)，$D_pp$ 切向且
+
+$$
+0=W_p(p)=W_p(2D_pp)=2\|D_pp\|_q^2,
+\qquad D_pp=0.
+\tag{126.7}
+$$
+
+令 $p,s$ 是正交 primitive，置 $v=D_sp$。对 $p\circ s=0$ 应用已经取得的导子 $D_s$，并用 $D_ss=0$，得 $v\circ s=0$。故
+
+$$
+v\in E_{1/2}(p)\cap E_0(s)\subseteq E_{1/2}(p+s).
+$$
+
+现在以 $c=p+s$ 为切口、以 primitive $p$ 为第一输入使用长度校准。$D_cp=D_pp+D_sp=v$，而 $W_c(p)=0$，所以 $0=W_c(2v)=2\|v\|_q^2$。于是 $D_sp=0$；交换 $p,s$ 同样得 $D_ps=0$。每个完整 primitive frame $(r_i)$ 因而满足
+
+$$
+D_{r_i}r_j=0\quad\text{对全部 }i,j.
+\tag{126.8}
+$$
+
+对任意 $x=\sum_i\lambda_i r_i$ 谱展开得 $D_xx=0$，双线性极化给 $D_ab=-D_ba$。此后才从 $D_au=0$ 得 $D_ua=0$。这一步仍使用全部切口，特别使用 $p+s$；没有把切口本身也限制为 primitive。
+
+第四步，在两原子之间固定长度。固定任意完整 primitive frame，记 $D_i=D_{r_i}$，共同 Peirce 空间记为 $V_{ij}$。由导子律和 (126.8)，
+
+$$
+[D_i,L_{r_j}]=L_{D_ir_j}=0.
+\tag{126.9}
+$$
+
+所以 $D_i$ 保持各 $V_{jk}$。若 $i\notin\{j,k\}$，则 $D_iv\in V_{jk}\subseteq E_0(r_i)$，同时由 SC、(126.5) 有 $D_iv=-D_vr_i\in E_{1/2}(r_i)$，故 $D_i|_{V_{jk}}=0$。又因 $D_u=0$，在 $V_{ij}$ 上 $D_i+D_j=0$。记 $A_{ij}=D_i|_{V_{ij}}$、$A_{ji}=-A_{ij}$；它们对原 $q$ 斜伴随。
+
+对 $0\ne v\in V_{ij}$，成熟 Peirce 规则给 $v^2=\alpha r_i+\beta r_j$。原 Frobenius 性给
+
+$$
+\alpha\|r_i\|_q^2=\beta\|r_j\|_q^2=\tfrac12\|v\|_q^2>0.
+$$
+
+将 Jordan 恒等式 $[L_v,L_{v^2}]=0$ 作用于 $r_i$，得 $0=(\alpha-\beta)v/4$。因此
+
+$$
+v^2=\gamma(r_i+r_j),\qquad
+\gamma=\frac{\|v\|_q^2}{2\|r_i\|_q^2}>0,\qquad
+\|r_i\|_q=\|r_j\|_q.
+\tag{126.10}
+$$
+
+等长只在 $V_{ij}\ne0$ 的这一对 primitive 之间推出；不同简单块之间 $V_{ij}=0$，没有统一不同块权。令 $e=r_i+r_j$，则
+
+$$
+p_v=\tfrac e2+\frac{v}{2\sqrt\gamma}
+\tag{126.11}
+$$
+
+与 $e-p_v$ 都是非零正交幂等元。它们在整个 $E$ 中都 primitive：$e$ 的 Jordan 秩为二；若 $p_v$ 还能分解，其各部分均被 $e$ 支持并位于 $E_1(e)$，连同 $e-p_v$ 会把 $e$ 分成至少三个非零正交幂等元，违反秩可加性。故 $p_v$ 属于原测试域。以切口 $r_i$、第一输入 $p_v$ 使用 (126.4)，由 $P_{r_i}p_v=v/(2\sqrt\gamma)$、$D_{r_i}p_v=A_{ij}v/(2\sqrt\gamma)$ 得
+
+$$
+\frac{\|v\|_q^2}{8\gamma}
+=W_{r_i}(p_v)=W_{r_i}(2D_{r_i}p_v)
+=\frac{\|A_{ij}v\|_q^2}{2\gamma},\qquad
+4\|A_{ij}v\|_q^2=\|v\|_q^2.
+\tag{126.12}
+$$
+
+零向量也满足最后一式。这段适用于一般 EJA，包括 spin 因子与 Albert 情形，未先使用复矩阵分类。
+
+第五步，补回纯二次校准的全部交叉项。固定任意幂等元 $c$，令 $H=D_c$。SC、(126.5) 和斜伴随给 $H=P_cH=HP_c$，所以确有纯二次式及其对称极化
+
+$$
+\begin{aligned}
+Q_c(x)&=\tfrac12\|P_cx\|_q^2-2\|Hx\|_q^2,\\
+\beta_c(x,y)&=\tfrac12q(P_cx,P_cy)-2q(Hx,Hy).
+\end{aligned}
+\tag{126.13}
+$$
+
+在前述任意 frame 写 $c=\sum_i c_i r_i+\sum_{i<j}c_{ij}$，其中 $c_{ij}\in V_{ij}$、$c_{ji}=c_{ij}$。由 SC 和 (126.8)–(126.9)，
+
+$$
+Hr_i=-D_ic=-\sum_{j\ne i}A_{ij}c_{ij}.
+$$
+
+当 $i\ne j$ 时，两者唯一共同的 Peirce 分量为 $V_{ij}$，其中分量互为相反数；(126.12) 因而给
+
+$$
+q(Hr_i,Hr_j)=-\|A_{ij}c_{ij}\|_q^2=-\tfrac14\|c_{ij}\|_q^2.
+\tag{126.14}
+$$
+
+另由 $P_c$ 正交、$r_i\circ r_j=0$ 和原 Frobenius 性，
+
+$$
+\begin{aligned}
+q(P_cr_i,P_cr_j)
+ &=q(r_i,P_cr_j)\\
+ &=4q(r_i,c\circ r_j)-4q(r_i,c\circ(c\circ r_j))\\
+ &=-4q(c\circ r_i,c\circ r_j)=-\|c_{ij}\|_q^2.
+\end{aligned}
+\tag{126.15}
+$$
+
+最后一步使用 $c\circ r_i=c_i r_i+\tfrac12\sum_{k\ne i}c_{ik}$ 和共同 Peirce 正交性。因此 (126.13) 的交叉项准确抵消：$\beta_c(r_i,r_j)=-\|c_{ij}\|_q^2/2+\|c_{ij}\|_q^2/2=0$。对角项则由原子校准给 $\beta_c(r_i,r_i)=Q_c(r_i)=0$。对任意 $a$ 选择它自己的谱框架，得
+
+$$
+Q_c(a)=\sum_{i,j}\lambda_i\lambda_j\beta_c(r_i,r_j)=0.
+\tag{126.16}
+$$
+
+这与 (126.5) 的完整法向读回一起恢复 $\mathsf F_{\rm zero}$。反向由 $\mathsf F_{\rm zero}$ 限制量词即得 (126.1)；其余等价直接消费定理 110.2、118.2。特别 $H^*H=P_c/4$ 与 $H^*=-H$ 给 $H^2=-P_c/4$，其余原结构沿定理 107.2。中央切口 $P_c=0$ 使 $D_c=0$，纯经典直和遂有 $D=0$。∎
+
+只在 primitive 上消失的任意二次式仍不能自动延拓；定理 118.2 末尾的迹二次式仍是那条捷径的反例。本证明增加的是从同一原关系取得导子、正交原子互不推动及两原子间的长度，再补回交叉项；没有推翻该既有边界。
+

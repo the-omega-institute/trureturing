@@ -1,0 +1,32 @@
+**定理 6.2（Uniform half-filled gap and arbitrary-state confinement）。**
+With Definition 6.1, for every even integer $s\geq4T$,
+
+$$
+g_s\geq\ell s-64\Delta T^{3/2}\sqrt{s/2}-64\Delta T^2.
+\tag{6.3}
+$$
+
+For every even integer $s\geq s_H$, one has the operator inequality
+
+$$
+\boxed{\quad K-EI\succeq c_Hs(I-P_{\mathrm{sym}}).\quad}
+\tag{6.4}
+$$
+
+Consequently, for every such $s$, every unit vector
+$\phi\in\mathcal H_{mS}$, and every real $\delta\geq0$ satisfying
+$\langle\phi,K\phi\rangle\leq E+\delta$,
+
+$$
+\|(I-P_{\mathrm{sym}})\phi\|^2\leq\frac{\delta}{c_Hs}
+=\frac{2\delta}{\ell s}.
+\tag{6.5}
+$$
+
+In particular, along every sequence of these even integers tending to
+infinity, $\delta_s=o(s)$ implies
+$\|(I-P_{\mathrm{sym}})\phi_s\|\to0$. Every ground state belongs to
+$\operatorname{ran}P_{\mathrm{sym}}$ when $s\geq s_H$.
+Disconnected $H$ and arbitrary multiplicity of its least eigenvalue are
+included.
+

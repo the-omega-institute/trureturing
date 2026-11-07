@@ -185,7 +185,7 @@ incompatible builds and builds with write side effects, first reuse a suitable l
 create one only when isolation is needed. Builds that write are not read-only.
 From your `dev` checkout, run `git worktree list --porcelain`; check registration,
 repository identity, branch/commit and pin compatibility, existing material and
-cooperative scopes under CLAUDE.md §6.1 before reuse. Reuse can cross sessions.
+the HEAD-age/stale-marker policy under CLAUDE.md §6.1 before reuse. Reuse can cross sessions.
 When isolation requires a new tree, replace `SESSION-ID` with your actual
 session ID and run the following, adding `upstream` only if absent:
 
@@ -196,7 +196,7 @@ make worktree KIND=governance NAME=first-docs BASE=upstream/dev DEST=../truretur
 cd ../trureturing-SESSION-ID
 ```
 
-This creates `lane/governance/first-docs` and restores locked .NET dependencies.
+This creates `lane/governance/first-docs` and restores the locked .NET dependencies.
 For later tasks, commit existing work, confirm a clean tree and switch to a
 validated branch in the same session worktree, following
 [§6.1](../CLAUDE.md#61-reusable-collaborative-worktrees-and-merged-delivery).

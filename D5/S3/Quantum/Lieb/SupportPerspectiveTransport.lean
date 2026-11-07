@@ -92,7 +92,7 @@ private theorem projection_complement_nonneg (P : Matrix n n ℂ)
 
 /-- Positivity and domination force support, without assuming complete
 positivity of any map. The scalar need not be strictly positive. -/
-private theorem support_of_nonneg_le_smul (C D P : Matrix n n ℂ)
+theorem support_of_nonneg_le_smul (C D P : Matrix n n ℂ)
     (hP : Pᴴ = P) (hPC : P * C = C) (hD : D.PosSemidef)
     (r : ℝ) (hDC : D ≤ r • C) : P * D = D ∧ D * P = D := by
   let H : Matrix n n ℂ := 1 - P

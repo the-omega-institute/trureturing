@@ -1,0 +1,42 @@
+**定理 C-90.2（同条件坐标下的精确缩放）。** 在各自全正内部，有
+
+$$
+\kappa_\pm=r\widehat\kappa_\pm,\qquad
+w=r\widehat w,\qquad
+\nu=\widehat w,\qquad
+\mathcal I=\frac{\widehat{\mathcal I}}r,
+$$
+
+$$
+F_r^*g_r=r\widehat g,\qquad
+F_r^*\omega_r=r\widehat\omega,\qquad
+\mathcal K_r\circ F_r=\frac{\widehat{\mathcal K}}r.
+\tag{C90.3}
+$$
+
+对应曲线长度及距离乘 $\sqrt r$，面积乘 $r$。
+条件 $\eta,\chi,\mathcal C,\nu$ 均不变，其中 $\eta,\chi$ 的坐标解释限于定义域；
+$\mathcal C$ 与谱可以用振幅延伸到闭端点。
+
+证明。因 $r>0$，乘 $r$ 与 $\min,\max$ 交换，得到两端及宽度关系。
+四底角每项都是 $r\widehat p_s$，故倒数和为 $\widehat{\mathcal I}/r$；
+此处只在每个 $r$ 固定的表面上微分，所以 $d\kappa=r\,d\widehat\kappa$。代入得
+
+$$
+F_r^*g_r
+=\frac{\widehat{\mathcal I}}{2r}r^2d\widehat\kappa^2
++\frac{2r}{\widehat{\mathcal I}}d\chi^2=r\widehat g,\qquad
+F_r^*\omega_r=r\,d\chi\wedge d\widehat\kappa.
+$$
+
+每条曲线的速度范数乘 $\sqrt r$，积分给长度缩放；
+对所有连接路径取下确界给距离缩放，进而也延伸到 Cauchy 完备化。
+二维度量行列式的平方根乘 $r$，给面积缩放。
+另置 $f_r=2/\mathcal I=r\widehat f(\widehat\kappa)$，
+对 $\kappa$ 求两次导数得 $f_r''=\widehat f''/r$，
+由 C-79.2 得曲率缩放；曲率在规则部分使用。
+
+四角比中的 $r^2$ 抵消，故 $\eta$ 不变，实际相位原已固定；
+条件系数除以 $\sqrt r$ 后恰为 $\phi$，所以 $\mathcal C$、谱不变，
+而 $w/r=\widehat w$。证毕。
+

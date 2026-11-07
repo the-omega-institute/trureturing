@@ -1,0 +1,9 @@
+An inactive slot at
+$q_j=R^{j-1}L$ is $C$. For insertion zero,
+$P_{q_jR},S_{q_jR}$ changes it through
+$\langle\beta,\beta\rangle$ to $D_0$; for insertion one,
+$S_{q_jL},P_{q_jR}$ changes it through
+$\langle C,\alpha\rangle$ to $D_1$. All guards hold, and different
+slots are disjoint, so every insertion order is legal and the asserted
+endpoint follows by induction.
+

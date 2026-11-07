@@ -311,7 +311,7 @@ private theorem leading_one_upper_boundary_pow_remainder_of_extension
     _ ≤ ell * ‖a - b‖ * (‖b‖ + E) ^ (ell - 1) := hpower
     _ ≤ ell * E * (‖b‖ + E) ^ (ell - 1) := by gcongr
 
-private theorem norm_neg_log_le_abs_log_norm_add_pi (w : ℂ) :
+theorem norm_neg_log_le_abs_log_norm_add_pi (w : ℂ) :
     ‖-Complex.log w‖ ≤ |Real.log ‖w‖| + Real.pi := by
   rw [norm_neg]
   calc

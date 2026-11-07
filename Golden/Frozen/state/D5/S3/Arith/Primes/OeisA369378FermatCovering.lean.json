@@ -1,0 +1,1 @@
+{"statement_id":"sha256:d6955ec14604a3a716396bd255d3f0a25714426008011624b5c70c1881f665e5","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),5:Arith),6:Primes),25:OeisA369378FermatCovering),5:claim)","kind":"def"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),5:Arith),6:Primes),25:OeisA369378FermatCovering),6:result)","kind":"theorem"}]}

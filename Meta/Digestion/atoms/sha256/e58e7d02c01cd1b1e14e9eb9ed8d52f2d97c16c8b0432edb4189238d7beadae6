@@ -1,0 +1,44 @@
+**一、标准三维块。** 由上引理，共同重标后可令 $-K^2-L^2=I+P_e$。本段省略重标记号。令
+
+$$
+E=e^\perp,\qquad v=Ke,\quad w=Le,
+$$
+
+并写成原正交分块
+
+$$
+K=\begin{pmatrix}0&-v^\flat\\v&D_1\end{pmatrix},\qquad
+L=\begin{pmatrix}0&-w^\flat\\w&D_2\end{pmatrix},
+$$
+
+其中 $D_1,D_2$ 在 $E$ 上反对称。来源分量与横向分量给
+
+$$
+\lVert v\rVert^2+\lVert w\rVert^2=2,
+\qquad T-D_1^2-D_2^2=I_E,
+\qquad T=v\otimes v^\flat+w\otimes w^\flat.
+$$
+
+所以 $0\preceq T\preceq I_E$、$\operatorname{rank}T\le2$，且 $\operatorname{Tr}T=2$。两个可能的非零特征值只能都为一，故 $T$ 是其二维像的正交投影。
+
+令 $V:\mathbb R^2\to E$ 的两列为 $v,w$。由 $T=VV^*$、$TV=V$ 和 $V$ 单射，得到 $V^*V=I_2$。所以 $v,w$ 正交归一。 对 $z\in\operatorname{span}\{v,w\}$，
+
+$$
+\lVert D_1z\rVert^2+\lVert D_2z\rVert^2=B(z,(I_E-T)z)=0.
+$$
+
+因此 $D_1,D_2$ 都消灭这张平面。于是
+
+$$
+U=\operatorname{span}\{e,v,w\}
+$$
+
+是共同不变的三维块，且
+
+$$
+Ke=v,\quad Kv=-e,\quad Kw=0;
+\qquad Le=w,\quad Lw=-e,\quad Lv=0.
+$$
+
+其正交补也共同不变，限制满足两个负平方之和为单位。
+

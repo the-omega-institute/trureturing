@@ -1,0 +1,25 @@
+### 定理 3.1（零差商、最小表示与唯一性）
+
+<a id="thm-c130-hilbert"></a>
+
+C130 成立后，构造自由复线性包络 $\mathcal F=\mathbb C^{(X)}$，在其中沿用有限和 $B$。令 $\mathcal N=\{f:Q(f)=0\}$。则 $\mathcal N$ 为根空间，$\mathcal F/\mathcal N$ 具有内积，其完成 $\mathcal H$ 满足
+
+$$
+\iota(h)=[\delta_h],\qquad
+ K(h,k)=\langle\iota(h),\iota(k)\rangle,
+ \qquad\overline{\operatorname{span}\iota(X)}=\mathcal H.
+$$
+
+保持同一历史核的最小表示唯一到酉等价，不要求 $\iota$ 单射。
+
+**证明。**
+前节已证明 $B$ Hermitian 正半定；半双线性来自有限和定义。若 $Q(f)=0$，则任意复数 $t$ 都给
+
+$$
+Q(f+tg)=2\Re(tB(f,g))+|t|^2Q(g)\ge0.
+$$
+
+若 $B(f,g)\ne0$，选反号相位和足够小的 $t$ 即矛盾，故 $B(f,g)=0$ 对所有 $g$ 成立。反向显然，所以零集合就是线性根空间，商内积良定义。完成与标签表示遂得。
+
+两份最小表示之间，将同系数有限组合互相对应；两边范数均由同一核计算，因此零向量也对应，映射良定义且等距。稠密性使它唯一延伸为酉算符。零核给零空间，也无例外。
+

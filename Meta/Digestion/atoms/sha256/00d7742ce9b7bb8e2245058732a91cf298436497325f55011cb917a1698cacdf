@@ -1,0 +1,56 @@
+**定理 118.2（双切口恢复全部实输入）。** 在任意有限 EJA、任意原正 Frobenius 型 $q$ 与任意原实双线性 $D$ 上，
+
+$$
+\mathsf F_{\rm idem}\Longleftrightarrow
+\mathsf F_{\rm zero}\Longleftrightarrow
+\mathsf F_{\rm fib}\Longleftrightarrow\mathsf F_{\rm cut}.
+\tag{118.2}
+$$
+
+因此定理 107.2 的同一原 SC、双单位湮灭、导子、原 $q$-斜伴随和 $D_c^2=-P_c/4$ 全部保留；从切口输入恢复任意输入本身不消费这些结论。
+
+证明。固定幂等元 $c$，沿 (110.3) 记 $N_c=\ker P_c$。在 (118.1) 先取 $n=0$，再与任意 $n\in N_c$ 的等式相减，得
+
+$$
+W_c(p)=W_c(2D_cp),\qquad
+q(D_pc,n)=0
+\quad(p^2=p,\ n\in N_c).
+\tag{118.3}
+$$
+
+固定 $c,n$，后一个读数对 $p$ 线性。任意 $a=\sum_i\lambda_i r_i$ 的原谱分解给
+
+$$
+q(D_ac,n)=\sum_i\lambda_i q(D_{r_i}c,n)=0
+\quad(a\in E,\ n\in N_c).
+\tag{118.4}
+$$
+
+再定义同一原第一输入上的齐次二次式及其对称极化
+
+$$
+Q_c(a)=W_c(a)-W_c(2D_ca),\qquad
+\beta_c(x,y)=\tfrac12\{Q_c(x+y)-Q_c(x)-Q_c(y)\}.
+\tag{118.5}
+$$
+
+在同一完整谱框架内，$r_i$ 及每个 $r_i+r_j$ 都是幂等元，故 (118.3) 给 $Q_c(r_i)=0$ 以及
+
+$$
+2\beta_c(r_i,r_j)
+=Q_c(r_i+r_j)-Q_c(r_i)-Q_c(r_j)=0.
+\tag{118.6}
+$$
+
+于是对任意原 $a=\sum_i\lambda_i r_i$，
+
+$$
+Q_c(a)=\sum_i\lambda_i^2Q_c(r_i)
+ +2\sum_{i<j}\lambda_i\lambda_j\beta_c(r_i,r_j)=0.
+\tag{118.7}
+$$
+
+(118.4) 与 (118.7) 正好恢复任意原 $a,n$ 的 $\mathsf F_{\rm zero}$。反向只需把其第一输入限制为幂等元。其余等价和全部原结构结论直接消费定理 110.2，不重作导子或重构证明。零对象平凡；零、单位、中央、任意秩及不等正块权均由原 Peirce 分解和同一谱论证覆盖。纯经典直和上所有余量为零，两槽的谱张成使 $D=0$。
+
+这里保留了正交和；不声称 primitive-only 测试足够。一个二次式只在秩一投影上为零并不保证恒零，例如 $(\operatorname{Tr}x)^2-\operatorname{Tr}(x^2)$ 在秩一投影上为零，在秩二投影上为二。这只是二次延拓捷径的边界，不是 primitive-only 整个候选的反例。∎
+

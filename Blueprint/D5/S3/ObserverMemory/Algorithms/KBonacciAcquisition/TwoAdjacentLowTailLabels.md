@@ -4,7 +4,31 @@
 
 The threshold-three immutable target has original adaptive and preset price Q+1 at odd width and Q+2 at even width.
 
-**Definition 1.1 (The immutable initial target).**
+**Theorem 1.1 (The first zero of a literal list).**
+
+$$(\forall (bits:\operatorname{List}\left(\operatorname{Bool}\right)), (bits = \operatorname{replicate}\left(\operatorname{length}\left(bits\right), \operatorname{true}\right) \lor \left(\exists a \in \mathbb{N},\; \exists rest \in \operatorname{List}\left(\operatorname{Bool}\right),\; bits = \operatorname{append}\left(\operatorname{replicate}\left(a, \operatorname{true}\right), \operatorname{cons}\left(\operatorname{false}, rest\right)\right)\right)))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/TwoAdjacentLowTailLabels.first_zero_form` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Every finite Boolean list is either all ones, or is a run of a leading ones followed by its first zero and a remaining literal suffix. The list can be empty, in which case the all-one alternative holds with length zero.
+
+**Theorem 1.2 (A first-tour window misses an INITIAL phase).**
+
+$$(\forall (Q:\mathbb{N}), ((\forall (m:\mathbb{N}), ((\forall (t:\mathbb{N}), ((\forall (j:\mathbb{N}), ((((2 \leq Q \land (4 \leq m \land (t < Q \land (j \leq Q \cdot m \land (j < t \cdot m \lor \left(t + 1\right) \cdot m < j)))))) \implies ((\forall (B:\operatorname{Fin}\left(m\right) \to \operatorname{Bool}), (\operatorname{wordIncrement}\left(Q \cdot m, -\operatorname{cast}\left(j\right) + \operatorname{cast}\left(t \cdot m\right), B\right) = 0))))))))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/TwoAdjacentLowTailLabels.response_off` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For an arbitrary literal m-bit block B, first-tour index t<Q, and INITIAL index j<=Qm, the response is zero if j<tm or (t+1)m<j. The phase expression is evaluated in ZMod(Qm+1). This applies to every controller's own block and requires no assumption about its root, labels or acquired tail.
+
+**Definition 1.3 (The immutable initial target).**
 
 $$(\forall (Y:\operatorname{Type}), ((\forall (Q:\mathbb{N}), ((\forall (m:\mathbb{N}), ((\forall (labels:\operatorname{Fin}\left(4\right) \to Y), ((\forall (bottom:Y), ((\operatorname{initialLabel}\left(Q, m, labels, bottom, \operatorname{none}\right) = bottom \land (\forall (v:\operatorname{ZMod}\left(2\right)), ((\forall (p:\operatorname{ZMod}\left(Q \cdot m + 1\right)), ((\forall (s:\mathbb{N}), (\operatorname{let} j=\operatorname{val}\left(-p\right) \operatorname{in} (\operatorname{initialLabel}\left(Q, m, labels, bottom, \operatorname{some}\left((v,p,s)\right)\right) = \operatorname{ifThenElse}\left(\operatorname{natSub}\left(Q \cdot m, 3\right) \leq s, labels\left(3\right), \operatorname{ifThenElse}\left(j = 1, labels\left(1\right), \operatorname{ifThenElse}\left(j = 2, labels\left(2\right), labels\left(0\right)\right)\right)\right)))))))))))))))))))$$
 
@@ -16,7 +40,7 @@ $$(\forall (Y:\operatorname{Type}), ((\forall (Q:\mathbb{N}), ((\forall (m:\math
 
 For k=Qm, the four entries of labels are A, B, C and R. Bottom is an arbitrary separately known label, without a distinctness condition. A legal INITIAL record with tail at least k-3 receives R. At smaller INITIAL tails its phase j=(-phase).val receives B at one, C at two and A elsewhere. The free scalar value is immaterial to this label map. The target of the updated record is never substituted for this INITIAL target.
 
-**Theorem 1.2 (The extra block at every even width).**
+**Theorem 1.4 (The extra block at every even width).**
 
 $$(\forall (Y:\operatorname{Type}), ((\forall (Q:\mathbb{N}), ((\forall (m:\mathbb{N}), ((((2 \leq Q \land (4 \leq m \land \operatorname{Even}\left(m\right)))) \implies ((\forall (labels:\operatorname{Fin}\left(4\right) \to Y), (((\operatorname{Injective}\left(labels\right)) \implies ((\forall (bottom:Y), ((\forall (alphabet:\operatorname{Bool}), ((\forall (d:\mathbb{N}), (((\operatorname{OriginalAdaptiveFeasible}\left(Q \cdot m, m, \operatorname{positivek}, alphabet, \operatorname{initialLabel}\left(Q, m, labels, bottom\right), d\right)) \implies (Q + 2 \leq d))))))))))))))))))))$$
 
@@ -38,7 +62,7 @@ That survivor, B and C traverse the same acquired archive, with the same scalar 
 
 The policy-dependent survivor is used on the actual lower-bound path; no fixed outside phase is assumed.
 
-**Definition 1.3 (The first final query).**
+**Definition 1.5 (The first final query).**
 
 $$(\forall (m:\mathbb{N}), ((\forall (i:\operatorname{Fin}\left(m\right)), (\operatorname{queryWord}\left(m, i\right) = \operatorname{decide}\left(\operatorname{val}\left(i\right) = 1\right)))))$$
 
@@ -50,7 +74,7 @@ $$(\forall (m:\mathbb{N}), ((\forall (i:\operatorname{Fin}\left(m\right)), (\ope
 
 The one is at local index one; all other bits are zero.
 
-**Definition 1.4 (The even-width final query).**
+**Definition 1.6 (The even-width final query).**
 
 $$(\forall (m:\mathbb{N}), ((\forall (i:\operatorname{Fin}\left(m\right)), (\operatorname{finalWord}\left(m, i\right) = \operatorname{decide}\left(\operatorname{val}\left(i\right) = 0\right)))))$$
 
@@ -62,7 +86,7 @@ $$(\forall (m:\mathbb{N}), ((\forall (i:\operatorname{Fin}\left(m\right)), (\ope
 
 The one is at local index zero; all other bits are zero.
 
-**Definition 1.5 (The literal attaining stream).**
+**Definition 1.7 (The literal attaining stream).**
 
 $$(\forall (Q:\mathbb{N}), ((\forall (m:\mathbb{N}), (\operatorname{attainingWords}\left(Q, m\right) = \operatorname{cons}\left(\operatorname{rootWord}\left(m\right), \operatorname{append}\left(\operatorname{replicate}\left(\operatorname{natSub}\left(Q, 1\right), \operatorname{middleWord}\left(m\right)\right), \operatorname{cons}\left(\operatorname{queryWord}\left(m\right), \operatorname{ifThenElse}\left(\operatorname{mod}\left(m, 2\right) = 0, \operatorname{list}\left(\operatorname{finalWord}\left(m\right)\right), \operatorname{nil}\right)\right)\right)\right)))))$$
 
@@ -74,7 +98,7 @@ $$(\forall (Q:\mathbb{N}), ((\forall (m:\mathbb{N}), (\operatorname{attainingWor
 
 For a local index i<m, rootWord is true exactly when i<3 or i is even. The middleWord bit is true exactly when i has parity one at even m and parity zero at odd m. The queryWord has its only one at index one; finalWord has its only one at index zero. Thus at odd m the stream is 111(01)^((m-3)/2), Q-1 copies of (10)^((m-1)/2)1, and 01 followed by m-2 zeros. At even m it is 1110(10)^((m-4)/2), Q-1 copies of (01)^(m/2), 01 followed by m-2 zeros, and 1 followed by m-1 zeros. Repetition exponents count literal pairs. Every displayed block is paid.
 
-**Definition 1.6 (Decode the acquired original archive).**
+**Definition 1.8 (Decode the acquired original archive).**
 
 $$(\forall (Y:\operatorname{Type}), ((\forall (Q:\mathbb{N}), ((\forall (m:\mathbb{N}), ((\forall (labels:\operatorname{Fin}\left(4\right) \to Y), ((\forall (bottom:Y), ((\forall (v:\operatorname{ZMod}\left(2\right)), ((\forall (ar:\operatorname{Archive}\left(m\right)), (\operatorname{archiveDecoder}\left(Q, m, labels, bottom, v, ar\right) = \operatorname{ifThenElse}\left(\operatorname{compatible}\left(Q, m, v, ar\right), \operatorname{initialLabel}\left(Q, m, labels, bottom, \operatorname{chosenRecord}\left(Q, m, v, ar\right)\right), bottom\right)))))))))))))))$$
 
@@ -86,7 +110,7 @@ $$(\forall (Y:\operatorname{Type}), ((\forall (Q:\mathbb{N}), ((\forall (m:\math
 
 Compatibility means that some original phase and tail s<Qm, with the given free value, produce exactly this scriptArchive. chosenRecord selects one such record. The decoder returns its INITIAL target; if no compatible record exists it returns bottom. Archive separation proves that all compatible records have the same INITIAL target. The choices use only the acquired chronological archive and the remembered free scalar.
 
-**Theorem 1.7 (Exact prices and the same-history paid trace).**
+**Theorem 1.9 (Exact prices and the same-history paid trace).**
 
 $$(\forall (Y:\operatorname{Type}), ((\forall (Q:\mathbb{N}), ((\forall (m:\mathbb{N}), ((((2 \leq Q \land 4 \leq m)) \implies ((\forall (labels:\operatorname{Fin}\left(4\right) \to Y), (((\operatorname{Injective}\left(labels\right)) \implies ((\forall (bottom:Y), ((\forall (alphabet:\operatorname{Bool}), ((\operatorname{GlobalAdaptivePrice}\left(Q \cdot m, m, \operatorname{positivek}, alphabet, \operatorname{initialLabel}\left(Q, m, labels, bottom\right)\right) = \operatorname{cast}\left(Q + 1 + \operatorname{ifThenElse}\left(\operatorname{mod}\left(m, 2\right) = 0, 1, 0\right), \operatorname{ENat}\right) \land (\operatorname{GlobalPresetPrice}\left(Q \cdot m, m, \operatorname{positivek}, alphabet, \operatorname{initialLabel}\left(Q, m, labels, bottom\right)\right) = \operatorname{cast}\left(Q + 1 + \operatorname{ifThenElse}\left(\operatorname{mod}\left(m, 2\right) = 0, 1, 0\right), \operatorname{ENat}\right) \land (\operatorname{length}\left(\operatorname{attainingWords}\left(Q, m\right)\right) = Q + 1 + \operatorname{ifThenElse}\left(\operatorname{mod}\left(m, 2\right) = 0, 1, 0\right) \land ((\forall (s:\mathbb{N}), ((\operatorname{tailAfter}\left(s, \operatorname{queryWord}\left(m\right)\right) = 0 \land \operatorname{tailAfter}\left(s, \operatorname{finalWord}\left(m\right)\right) = 0))) \land ((\operatorname{map}\left(\operatorname{ofFn}, \operatorname{attainingWords}\left(2, 4\right)\right) = \operatorname{list}\left(\operatorname{bits}\left(1110\right), \operatorname{bits}\left(0101\right), \operatorname{bits}\left(0100\right), \operatorname{bits}\left(1000\right)\right) \land \operatorname{map}\left(\operatorname{ofFn}, \operatorname{attainingWords}\left(2, 5\right)\right) = \operatorname{list}\left(\operatorname{bits}\left(11101\right), \operatorname{bits}\left(10101\right), \operatorname{bits}\left(01000\right)\right)) \land (\forall (history:\operatorname{List}\left(\operatorname{AllowedBlock}\left(Q \cdot m, m, alphabet\right)\right)), (\operatorname{let} w=\operatorname{flattenHistory}\left(history\right) \operatorname{in} (\operatorname{let} f=\operatorname{initialLabel}\left(Q, m, labels, bottom\right) \operatorname{in} (\operatorname{let} pi=\operatorname{policy}\left(Q, m, labels, bottom\right) \operatorname{in} (\operatorname{let} q=\operatorname{OriginalRecord}\left(Q \cdot m, \operatorname{positivek}, w\right) \operatorname{in} (\operatorname{let} issued=\operatorname{ifThenElse}\left(q = \operatorname{none}, \operatorname{nil}, \operatorname{scriptArchive}\left(\operatorname{attainingWords}\left(Q, m\right), q\right)\right) \operatorname{in} ((\operatorname{PaidTrace}\left(pi, \operatorname{output}\left(Q \cdot m, \operatorname{positivek}, w\right), q, \operatorname{nil}, issued, f\left(q\right)\right) \land (\operatorname{map}\left(\operatorname{fst}, issued\right) = \operatorname{ifThenElse}\left(q = \operatorname{none}, \operatorname{nil}, \operatorname{attainingWords}\left(Q, m\right)\right) \land (\operatorname{length}\left(issued\right) = \operatorname{ifThenElse}\left(q = \operatorname{none}, 0, Q + 1 + \operatorname{ifThenElse}\left(\operatorname{mod}\left(m, 2\right) = 0, 1, 0\right)\right) \land \operatorname{execute}\left(Q \cdot m, \operatorname{positivek}, pi, Q + 1 + \operatorname{ifThenElse}\left(\operatorname{mod}\left(m, 2\right) = 0, 1, 0\right), w, \operatorname{output}\left(Q \cdot m, \operatorname{positivek}, w\right), \operatorname{nil}\right) = \operatorname{some}\left((f\left(q\right),\operatorname{length}\left(issued\right))\right))))))))))))))))))))))))))))))))$$
 
@@ -112,7 +136,9 @@ For the baseline lower bound the existing original_cost_lower theorem is applied
 - Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/TwoAdjacentLowTailLabels.attainingWords`
 - Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/TwoAdjacentLowTailLabels.even_adaptive_lower`
 - Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/TwoAdjacentLowTailLabels.finalWord`
+- Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/TwoAdjacentLowTailLabels.first_zero_form`
 - Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/TwoAdjacentLowTailLabels.initialLabel`
 - Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/TwoAdjacentLowTailLabels.original_threshold_three`
 - Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/TwoAdjacentLowTailLabels.queryWord`
+- Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/TwoAdjacentLowTailLabels.response_off`
 - Dependency: [D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/DonorCorrection](DonorCorrection.md)

@@ -1,0 +1,57 @@
+**推论 13.3（Every equal even fibre size on connected even-order block
+graphs）。** Let $H$ be any finite connected simple unit-weight block
+graph of even order $m\geq2$. For every integer $S\geq1$, put
+$s=2S$, $k=mS$ and retain the entire original complex Boolean
+carrier $\mathcal H_{mS}$, positive token adjacency $K=K_{mS}$
+and original $P_{\mathrm{sym}}$. With
+$E=\lambda_{\min}(K)$ and $\mathcal N=\ker P_{\mathrm{sym}}$,
+
+$$
+\begin{aligned}
+\ker(K-EI)&\subseteq\operatorname{ran}P_{\mathrm{sym}},\\
+\mathcal N&\ne\{0\},\qquad K\mathcal N\subseteq\mathcal N,\\
+g:=\lambda_{\min}(K|_{\mathcal N})-E&>0,\qquad
+K-EI\succeq g(I-P_{\mathrm{sym}}),\\
+\|(I-P_{\mathrm{sym}})\phi\|^2
+&\leq\frac{\langle\phi,K\phi\rangle-E}{g}
+\qquad(\phi\in\mathcal H_{mS},\ \|\phi\|=1).
+\end{aligned}
+\tag{13.16}
+$$
+
+Proof. At $S=1$ these are Theorem 13.2 with exactly the original
+carrier, operator and entire-carrier minimum. For every integer
+$S\geq2$, the ground-vector assertion is precisely the supplied
+Theorem 12.2 under the same graph hypotheses and parameters
+$s=2S$, $k=mS$. Its orthogonal decomposition (6.12) includes all
+local spins $J_i=S-t_i$, their multiplicities $r_{2S}(t_i)$ and
+the full global-zero-weight slice, so its every-vector assertion
+also includes arbitrary complex entangled superpositions.
+
+For completeness the spectral implications use only that assertion.
+Original fibre permutations commute with $K$, hence
+$P_{\mathrm{sym}}$ and $\mathcal N$ reduce it. A nonconstant
+one-particle vector in one fibre, any occupancy-$2S-1$ vector in a
+second fibre, and occupancy-$S$ vectors in all others give a nonzero
+tensor in $\mathcal N$ with occupancy
+$1+(2S-1)+(m-2)S=mS$. This includes $m=2$ and $S=1$.
+Every eigenvector of $K|_{\mathcal N}$ is an eigenvector of the
+original $K$. Its eigenvalue is at least $E$, and equality is
+excluded by the ground-vector assertion. Finite dimension gives
+$g>0$. The quadratic forms on
+$\operatorname{ran}P_{\mathrm{sym}}$ and $\mathcal N$ are respectively
+at least zero and at least $g$ times squared norm after subtracting
+$E$. Adding them proves the operator inequality on the entire
+carrier, and evaluating at a unit $\phi$ proves the last line.
+
+The added range is $S=1$ at the all-$K_4$-incidence vertices;
+the $S\geq2$ assertion and its spectral consequences are consumed
+from Theorem 12.2 and Corollary 12.3. All graph-block sizes,
+articulation incidences and the boundary $m=2$ remain included.
+The conclusion is qualitative and supplies no exact $E$, exact
+$g$ or rate. It asserts no extension to arbitrary base graphs,
+disconnected bases with only global filling, other fillings,
+weighted edges, odd or unequal Boolean fibre sizes. The cited
+intermediates and this inference carry no worldwide priority
+assertion. $\square$
+

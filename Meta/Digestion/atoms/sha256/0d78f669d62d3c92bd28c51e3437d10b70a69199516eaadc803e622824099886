@@ -1,0 +1,32 @@
+#### 命题 6.5：有限横向读数可以隐藏压缩偏差
+
+设 $S$ 为有限维载体上的真子空间投影，$r=\operatorname{rank}S\ge1$。 取单位 $v$，$\alpha=\|Sv\|^2\in(0,1)$，置
+
+$$
+a=Sv,\quad b=(I-S)v,\quad X=ab^*+ba^*,\quad
+ H_\epsilon=S/r+\epsilon X.
+$$
+
+对任意给定的、含 $0,I,S,P_v,P_a$ 的有限锐利菜单，存在充分小的非零实数 $\epsilon$，使 $p_\epsilon(P)=\operatorname{Tr}(H_\epsilon P)$ 在菜单内非负、归一并尊重全部所列投影线性关系； 还能同时保持全部角内投影的 $\operatorname{Tr}P/r$ 和全部角外投影的零响应。 但
+
+$$
+p_\epsilon(P_v)=\alpha/r+2\epsilon\alpha(1-\alpha)
+ \ne\alpha p_\epsilon(P_a)=\alpha/r.
+\tag{26}
+$$
+
+**证明。**
+
+写 $p_0(P)=\operatorname{Tr}(SP)/r$、$\chi(P)=\operatorname{Tr}(XP)$。 若 $p_0(P)=0$，则 $PS=0$；若 $p_0(P)=1$，则 $PS=S$。 两种情形都使 $\chi(P)=0$。有限菜单中其余读数在 $(0,1)$ 内， 故可取共同的充分小 $|\epsilon|$ 保持非负及不超过一。 角内外投影的交叉迹统一为零，因而所有这些原数据也不动。 迹线性保留已列框架与粗粒化恒等式，而 $v^*Xv=2\alpha(1-\alpha)$ 给式 (26)。 在 $a/\sqrt\alpha,b/\sqrt{1-\alpha}$ 张成的平面上，$H_\epsilon$ 的矩阵为
+
+$$
+\begin{pmatrix}1/r&\epsilon\sqrt{\alpha(1-\alpha)}\\
+ \epsilon\sqrt{\alpha(1-\alpha)}&0\end{pmatrix},
+$$
+
+行列式严格为负。因此它是有限评价域的反例，并非全投影域的正状态。
+
+$\square$
+
+仓库二十七模叶的参数是 $r=3,\alpha=1/9$，偏差为 $16\epsilon/81$。 该量词是每个有限菜单各有一份足够小的扰动，未声称同一扰动通过全部无限门闭包。 它也没有否定原四射线另有直接 QC 约束。 主候选改善原读数的静态分类，仍须尊重这一已知的实际概率边界。
+

@@ -1,0 +1,24 @@
+**定理 3.2（每个有限倍数菜单都有准确反模型）。**对任意整数 $N\ge1$，存在连续忠实的权重 $q$ 与线性 $U$，使 (S) 对全部 $f,g$ 及 $0\le n\le N$ 成立，但 $D\ne0$，完整 (S) 不成立。
+
+**证明。**在实二维 $V=\mathbb C$ 上取 $q(z)=|z|^2$，$\zeta=e^{2\pi i/3}$，并令
+
+$$
+\delta=\frac1{1+3N^2},\qquad r=1-\delta,\qquad U=r\zeta.
+$$
+
+计算得
+
+$$
+D=1+r\zeta+r^2\zeta^2=\delta(1-r\zeta^2)\ne0,
+\qquad s=1+r+r^2,
+$$
+
+$$
+|A_n|^2=|r\zeta+n\delta(1-r\zeta^2)|^2
+=r^2+\delta^2(sn^2-rn)
+\le r^2+3N^2\delta^2=1-\delta<1.
+\tag{3.2}
+$$
+
+平行四边形给 (S) 左侧恰为 $q(f)+|A_n|^2q(g)$，故指定全部倍数通过。$D\ne0$ 使 $|A_n|\to\infty$，所以充分大的有限倍数必失败。这里每个 $f,g$ 都已检查，缺少的是无上限的重写倍数，不能用固定输入菜单掩盖。
+

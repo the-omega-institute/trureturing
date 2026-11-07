@@ -1,0 +1,20 @@
+**定义 1.2（原十一门与原支撑分量）。** 置
+
+$$
+\begin{gathered}
+\varphi=(1+\sqrt5)/2,\quad x=\varphi^{-1},\quad y=\sqrt x,\quad
+x+x^2=1,\quad \alpha=3\pi/5,\quad \zeta=e^{i\alpha},\\
+Q_*=\begin{pmatrix}x&xy\\xy&x^2\end{pmatrix},\qquad
+\mathcal P_j=n_{j-1}n_{j+1}
+ +(1-n_{j-1})(1-n_{j+1})(Q_*)_{b_j},\\
+H_j=-\alpha(I+\mathcal P_j),\qquad
+K_j=e^{-iH_j}=\zeta[I+(\zeta-1)\mathcal P_j],
+\qquad 0\le j\le10.
+\end{gathered}
+\tag{1.2}
+$$
+
+固定外位代入上式；$n_k$ 为占据投影。$\mathscr B_j$ 严格取原 $H_j$ 支撑图的全部分量。内部地址 $1\le j\le9$ 的活动对是：其它位固定、两邻位均为零、中心第 $j$ 位可翻转的两配置。至少一个邻位为一时，中心只能为零，构成阻塞单点；两邻位均为一与恰一为一时，其 $\mathcal P_j$ 值分别是 $1,0$。边界 $\mathcal P_0=n_1$、$\mathcal P_{10}=n_9$，两个地址各有全部 $89$ 个单点。分量不按完整门的谱重数另行合并。
+
+$Q_*^2=Q_*$，故每个 $K_j$ 仅有 $\zeta,\zeta^2$ 两种可能特征值，$K_j^{10}=I$、$K_j^{-1}=K_j^9$。这里的关系只约束完整 $K_j$ 的端点，不要求内部时刻守恒。
+

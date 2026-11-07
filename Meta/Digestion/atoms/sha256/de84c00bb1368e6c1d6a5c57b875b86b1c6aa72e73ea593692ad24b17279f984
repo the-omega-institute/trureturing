@@ -1,0 +1,48 @@
+## 四、核心定理：边界、体和关系矩阵中的缺陷维数精确相等
+
+现在定义两个计数，注意它们的重数规则不同。
+
+令
+
+$$
+\kappa
+=
+\#\{\rho:\Re\rho>\tfrac12\},
+$$
+
+按**不同 ζ 零点位置**计数。
+
+令
+
+$$
+q
+=
+\sum_{\substack{\eta:\Re\eta>0\\
+\eta\text{ 是 }C\text{ 的极点}}}
+\operatorname{ord}_{\eta}(C\text{ 的极点}),
+$$
+
+按**实际 Cayley 极点阶数**计数。
+
+允许它们为无穷。
+
+定义实际 Pick 核
+
+$$
+\boxed{
+\mathcal P_F(z,w)
+=
+\frac{F(z)+\overline{F(w)}}{z+\bar w}.
+}
+
+$$
+
+<a id="eq-4-1"></a>
+
+(4.1)
+
+其负指数 $\nu_-(\mathcal P_F)$ 是全部有限合法节点矩阵中，严格负特征值个数的上确界。
+
+<!-- editorial-note: n16 begin -->
+<a id="n16"></a>
+
