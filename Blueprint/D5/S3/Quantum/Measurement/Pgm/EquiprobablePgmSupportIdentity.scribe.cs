@@ -1,8 +1,8 @@
 using static StrataLint.Scribe.DefinitionDsl;
-namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Measurement;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Measurement.Pgm;
 internal sealed class EquiprobablePgmSupportIdentityDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S3/Quantum/Measurement/EquiprobablePgmSupportIdentity.";
+    private const string Prefix = "D5/S3/Quantum/Measurement/Pgm/EquiprobablePgmSupportIdentity.";
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Actual PGM support, valid bounds and minimality", H("Actual PGM support, valid bounds and minimality"), Blocks(
             Node("centered_frob_sum", "Finite Hermitian variance", DescribeRole.Theorem, "For any nonempty finite B and any Hermitian matrix family X_i, the sum of squared Frobenius distances to its arithmetic mean is sum_B ||X_i||_F^2-||sum_B X_i||_F^2/|B|. This proof helper is consumed by both the centered actual PGM identity and the actual discrimination bound; it is not a separate physical assumption.", "anonymous2026pgmmechanism"),
@@ -25,6 +25,6 @@ internal sealed class EquiprobablePgmSupportIdentityDocument : IScribeDocumentDe
     private static DocumentBlock Node(string name, string title, DescribeRole role, string prose, string? note) => Describe.Lean(
         DescribeId.Create("pgm-supportidentity-" + name.Replace('_', '-').ToLowerInvariant()),
         DeclarationHandle.Create(Prefix + name), H(title), StatementSource.WithoutFormula(),
-        note is null ? AssessedProvenance.FromRepo() : AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/QuantumBounds/" + note)),
+        note is null ? AssessedProvenance.FromRepo() : AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Estimation/" + note)),
         Blocks(Paragraph(Text(prose))), role);
 }

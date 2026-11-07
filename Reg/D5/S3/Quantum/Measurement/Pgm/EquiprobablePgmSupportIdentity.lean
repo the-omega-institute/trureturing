@@ -1,18 +1,18 @@
 import LeanInformationAuditInterface.Contract.Registration
-import D5.S3.Quantum.Measurement.EquiprobablePgmSupportIdentity
+import D5.S3.Quantum.Measurement.Pgm.EquiprobablePgmSupportIdentity
 import Reg.Support.DependentFamily
 
 /-! Faithful interventions in the actual PGM score, preserving every density and
 support hypothesis and the entire centered expression. -/
 
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
-open _root_.D5.S3.Quantum.Measurement.EquiprobablePgmSupportIdentity
+open _root_.D5.S3.Quantum.Measurement.Pgm.EquiprobablePgmSupportIdentity
 open _root_.D5.S3.Quantum.Measurement.EquiprobablePgmActiveSetRefutation (pgmScore)
 open LeanInformationAudit Matrix
 open scoped ComplexOrder MatrixOrder
 
 noncomputable section
-namespace Reg.D5.S3.Quantum.Measurement.EquiprobablePgmSupportIdentity
+namespace Reg.D5.S3.Quantum.Measurement.Pgm.EquiprobablePgmSupportIdentity
 
 abbrev signature : Signature where
   Params := Σ d : ℕ, Σ N : ℕ, Fin N → Matrix (Fin d) (Fin d) ℂ
@@ -32,7 +32,7 @@ private theorem observed_dependence (i : Unit) :
   refine ⟨⟨1, 1, fun _ => 1⟩, ∅, {0}, ?_⟩
   change pgmScore (fun _ : Fin 1 => (1 : Matrix (Fin 1) (Fin 1) ℂ)) ∅ ≠
     pgmScore (fun _ : Fin 1 => (1 : Matrix (Fin 1) (Fin 1) ℂ)) {0}
-  rw [D5.S3.Quantum.Measurement.EquiprobablePgmSupportIdentity.singleton_score _
+  rw [D5.S3.Quantum.Measurement.Pgm.EquiprobablePgmSupportIdentity.singleton_score _
     (by decide) (fun _ => Matrix.PosSemidef.one)
     (by intro i; norm_num [trace])]
   norm_num [pgmScore]
@@ -80,8 +80,8 @@ def family : Registration arena (type_of% (@centered_identity)) where
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@centered_identity) (Realization signature) Unit Unit where
-  unitName := `Reg.D5.S3.Quantum.Measurement.EquiprobablePgmSupportIdentity.Centered.unit
-  realizationName := `Reg.D5.S3.Quantum.Measurement.EquiprobablePgmSupportIdentity.Centered.family
+  unitName := `Reg.D5.S3.Quantum.Measurement.Pgm.EquiprobablePgmSupportIdentity.Centered.unit
+  realizationName := `Reg.D5.S3.Quantum.Measurement.Pgm.EquiprobablePgmSupportIdentity.Centered.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -97,7 +97,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Quantum.Measurement.EquiprobablePgmSupportIdentity
+    owner := `D5.S3.Quantum.Measurement.Pgm.EquiprobablePgmSupportIdentity
     definition := none
     coordinates := #[0, 1, 2]
     readouts := #[{
@@ -127,7 +127,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
     (by decide) (fun _ => Matrix.PosSemidef.one)
     (by intro i; norm_num [trace]) {0} (Finset.singleton_nonempty 0)
   dsimp only [rejected, realize] at hr
-  rw [D5.S3.Quantum.Measurement.EquiprobablePgmSupportIdentity.singleton_score _
+  rw [D5.S3.Quantum.Measurement.Pgm.EquiprobablePgmSupportIdentity.singleton_score _
     (by decide) (fun _ => Matrix.PosSemidef.one)
     (by intro i; norm_num [trace])] at hr
   norm_num at hr
@@ -148,8 +148,8 @@ def family : Registration arena (type_of% (@random_guessing_le)) where
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@random_guessing_le) (Realization signature) Unit Unit where
-  unitName := `Reg.D5.S3.Quantum.Measurement.EquiprobablePgmSupportIdentity.Nonnegative.unit
-  realizationName := `Reg.D5.S3.Quantum.Measurement.EquiprobablePgmSupportIdentity.Nonnegative.family
+  unitName := `Reg.D5.S3.Quantum.Measurement.Pgm.EquiprobablePgmSupportIdentity.Nonnegative.unit
+  realizationName := `Reg.D5.S3.Quantum.Measurement.Pgm.EquiprobablePgmSupportIdentity.Nonnegative.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -165,7 +165,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Quantum.Measurement.EquiprobablePgmSupportIdentity
+    owner := `D5.S3.Quantum.Measurement.Pgm.EquiprobablePgmSupportIdentity
     definition := none
     coordinates := #[0, 1, 2]
     readouts := #[{
@@ -177,4 +177,4 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   options := #[]
 
 end Nonnegative
-end Reg.D5.S3.Quantum.Measurement.EquiprobablePgmSupportIdentity
+end Reg.D5.S3.Quantum.Measurement.Pgm.EquiprobablePgmSupportIdentity

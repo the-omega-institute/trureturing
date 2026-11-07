@@ -6,9 +6,9 @@ Actual PGM support, valid bounds and minimality
 
 **Theorem 1.1 (Finite Hermitian variance).**
 
-Lean statement: `D5/S3/Quantum/Measurement/EquiprobablePgmSupportIdentity.centered_frob_sum`
+Lean statement: `D5/S3/Quantum/Measurement/Pgm/EquiprobablePgmSupportIdentity.centered_frob_sum`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/EquiprobablePgmSupportIdentity.centered_frob_sum` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/Pgm/EquiprobablePgmSupportIdentity.centered_frob_sum` (`✓ std3`). ∎
 
 *Citation.* Anonymous (2026). *Why the Active-Set PGM Comparison Can Fail: Mechanism, a minimal qubit family, and a classical model*. URL: <https://github.com/the-omega-institute/trureturing/blob/e766f6c09bc629e934d0b4d1de2162768da42dea/Library/QuantumBounds/anonymous2026pgmmechanism.md>.
 
@@ -18,9 +18,9 @@ For any nonempty finite B and any Hermitian matrix family X_i, the sum of square
 
 **Theorem 1.2 (Moore-Penrose quarter-power normalization).**
 
-Lean statement: `D5/S3/Quantum/Measurement/EquiprobablePgmSupportIdentity.support_quarter_normalization`
+Lean statement: `D5/S3/Quantum/Measurement/Pgm/EquiprobablePgmSupportIdentity.support_quarter_normalization`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/EquiprobablePgmSupportIdentity.support_quarter_normalization` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/Pgm/EquiprobablePgmSupportIdentity.support_quarter_normalization` (`✓ std3`). ∎
 
 *Citation.* Anonymous (2026). *Why the Active-Set PGM Comparison Can Fail: Mechanism, a minimal qubit family, and a classical model*. URL: <https://github.com/the-omega-institute/trureturing/blob/e766f6c09bc629e934d0b4d1de2162768da42dea/Library/QuantumBounds/anonymous2026pgmmechanism.md>.
 
@@ -30,9 +30,9 @@ For every finite index type n and every positive semidefinite complex n-by-n mat
 
 **Theorem 1.3 (The complete centered score identity).**
 
-Lean statement: `D5/S3/Quantum/Measurement/EquiprobablePgmSupportIdentity.centered_identity`
+Lean statement: `D5/S3/Quantum/Measurement/Pgm/EquiprobablePgmSupportIdentity.centered_identity`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/EquiprobablePgmSupportIdentity.centered_identity` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/Pgm/EquiprobablePgmSupportIdentity.centered_identity` (`✓ std3`). ∎
 
 *Citation.* Anonymous (2026). *Why the Active-Set PGM Comparison Can Fail: Mechanism, a minimal qubit family, and a classical model*. URL: <https://github.com/the-omega-institute/trureturing/blob/e766f6c09bc629e934d0b4d1de2162768da42dea/Library/QuantumBounds/anonymous2026pgmmechanism.md>.
 
@@ -42,9 +42,9 @@ Let N>0, let rho_i be positive semidefinite matrices on C^d with trace one, and 
 
 **Theorem 1.4 (The nonnegative original-prior advantage).**
 
-Lean statement: `D5/S3/Quantum/Measurement/EquiprobablePgmSupportIdentity.random_guessing_le`
+Lean statement: `D5/S3/Quantum/Measurement/Pgm/EquiprobablePgmSupportIdentity.random_guessing_le`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/EquiprobablePgmSupportIdentity.random_guessing_le` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/Pgm/EquiprobablePgmSupportIdentity.random_guessing_le` (`✓ std3`). ∎
 
 *Citation.* Anonymous (2026). *Why the Active-Set PGM Comparison Can Fail: Mechanism, a minimal qubit family, and a classical model*. URL: <https://github.com/the-omega-institute/trureturing/blob/e766f6c09bc629e934d0b4d1de2162768da42dea/Library/QuantumBounds/anonymous2026pgmmechanism.md>.
 
@@ -54,9 +54,9 @@ Under exactly the density and nonempty-label hypotheses of the centered identity
 
 **Theorem 1.5 (Shared diagonal support inverse square root).**
 
-Lean statement: `D5/S3/Quantum/Measurement/EquiprobablePgmSupportIdentity.diagonal_inverse_sqrt`
+Lean statement: `D5/S3/Quantum/Measurement/Pgm/EquiprobablePgmSupportIdentity.diagonal_inverse_sqrt`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/EquiprobablePgmSupportIdentity.diagonal_inverse_sqrt` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/Pgm/EquiprobablePgmSupportIdentity.diagonal_inverse_sqrt` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -66,9 +66,9 @@ For every finite real diagonal family s>=0, the actual CFC inverse square root i
 
 **Theorem 1.6 (The full diagonal support formula).**
 
-Lean statement: `D5/S3/Quantum/Measurement/EquiprobablePgmSupportIdentity.diagonal_score`
+Lean statement: `D5/S3/Quantum/Measurement/Pgm/EquiprobablePgmSupportIdentity.diagonal_score`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/EquiprobablePgmSupportIdentity.diagonal_score` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/Pgm/EquiprobablePgmSupportIdentity.diagonal_score` (`✓ std3`). ∎
 
 *Citation.* Haobo Ma, Wenlin Zhang (2026). *No universal factor compares centered PGM scores; Verification of the unbounded centered PGM ratio*. URL: <https://github.com/the-omega-institute/trureturing/blob/e766f6c09bc629e934d0b4d1de2162768da42dea/Library/QuantumBounds/mazhang2026pgmratio.md>.
 
@@ -78,9 +78,9 @@ For every d,N with N>0, every nonnegative real family p_i(x), and every label se
 
 **Theorem 1.7 (Joint support and actual effects).**
 
-Lean statement: `D5/S3/Quantum/Measurement/EquiprobablePgmSupportIdentity.pgm_support`
+Lean statement: `D5/S3/Quantum/Measurement/Pgm/EquiprobablePgmSupportIdentity.pgm_support`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/EquiprobablePgmSupportIdentity.pgm_support` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/Pgm/EquiprobablePgmSupportIdentity.pgm_support` (`✓ std3`). ∎
 
 *Citation.* Anonymous (2026). *Why the Active-Set PGM Comparison Can Fail: Mechanism, a minimal qubit family, and a classical model*. URL: <https://github.com/the-omega-institute/trureturing/blob/e766f6c09bc629e934d0b4d1de2162768da42dea/Library/QuantumBounds/anonymous2026pgmmechanism.md>.
 
@@ -90,9 +90,9 @@ For every finite-dimensional positive semidefinite ensemble, every finite label 
 
 **Theorem 1.8 (An actual POVM on singular support).**
 
-Lean statement: `D5/S3/Quantum/Measurement/EquiprobablePgmSupportIdentity.pgm_completion`
+Lean statement: `D5/S3/Quantum/Measurement/Pgm/EquiprobablePgmSupportIdentity.pgm_completion`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/EquiprobablePgmSupportIdentity.pgm_completion` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/Pgm/EquiprobablePgmSupportIdentity.pgm_completion` (`✓ std3`). ∎
 
 *Citation.* Anonymous (2026). *Why the Active-Set PGM Comparison Can Fail: Mechanism, a minimal qubit family, and a classical model*. URL: <https://github.com/the-omega-institute/trureturing/blob/e766f6c09bc629e934d0b4d1de2162768da42dea/Library/QuantumBounds/anonymous2026pgmmechanism.md>.
 
@@ -102,9 +102,9 @@ For every positive semidefinite ensemble on C^(k+1), every B and b in B, add I-P
 
 **Theorem 1.9 (Both valid bounds, with actual active labels).**
 
-Lean statement: `D5/S3/Quantum/Measurement/EquiprobablePgmSupportIdentity.actual_bounds`
+Lean statement: `D5/S3/Quantum/Measurement/Pgm/EquiprobablePgmSupportIdentity.actual_bounds`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/EquiprobablePgmSupportIdentity.actual_bounds` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/Pgm/EquiprobablePgmSupportIdentity.actual_bounds` (`✓ std3`). ∎
 
 *Citation.* Anonymous (2026). *Why the Active-Set PGM Comparison Can Fail: Mechanism, a minimal qubit family, and a classical model*. URL: <https://github.com/the-omega-institute/trureturing/blob/e766f6c09bc629e934d0b4d1de2162768da42dea/Library/QuantumBounds/anonymous2026pgmmechanism.md>.
 
@@ -114,9 +114,9 @@ For N>0, arbitrary positive semidefinite trace-one rho_i, and every actual finit
 
 **Theorem 1.10 (The singleton support endpoint).**
 
-Lean statement: `D5/S3/Quantum/Measurement/EquiprobablePgmSupportIdentity.singleton_score`
+Lean statement: `D5/S3/Quantum/Measurement/Pgm/EquiprobablePgmSupportIdentity.singleton_score`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/EquiprobablePgmSupportIdentity.singleton_score` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/Pgm/EquiprobablePgmSupportIdentity.singleton_score` (`✓ std3`). ∎
 
 *Citation.* Anonymous (2026). *Why the Active-Set PGM Comparison Can Fail: Mechanism, a minimal qubit family, and a classical model*. URL: <https://github.com/the-omega-institute/trureturing/blob/e766f6c09bc629e934d0b4d1de2162768da42dea/Library/QuantumBounds/anonymous2026pgmmechanism.md>.
 
@@ -126,9 +126,9 @@ For every positive N, every PSD trace-one family rho_i on C^d, and every label i
 
 **Theorem 1.11 (Every one-dimensional score).**
 
-Lean statement: `D5/S3/Quantum/Measurement/EquiprobablePgmSupportIdentity.dimension_one_score`
+Lean statement: `D5/S3/Quantum/Measurement/Pgm/EquiprobablePgmSupportIdentity.dimension_one_score`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/EquiprobablePgmSupportIdentity.dimension_one_score` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/Pgm/EquiprobablePgmSupportIdentity.dimension_one_score` (`✓ std3`). ∎
 
 *Citation.* Anonymous (2026). *Why the Active-Set PGM Comparison Can Fail: Mechanism, a minimal qubit family, and a classical model*. URL: <https://github.com/the-omega-institute/trureturing/blob/e766f6c09bc629e934d0b4d1de2162768da42dea/Library/QuantumBounds/anonymous2026pgmmechanism.md>.
 
@@ -138,9 +138,9 @@ For every N>0, every trace-one one-dimensional matrix family and every nonempty 
 
 **Theorem 1.12 (No violation with at most two labels).**
 
-Lean statement: `D5/S3/Quantum/Measurement/EquiprobablePgmSupportIdentity.at_most_two_labels`
+Lean statement: `D5/S3/Quantum/Measurement/Pgm/EquiprobablePgmSupportIdentity.at_most_two_labels`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/EquiprobablePgmSupportIdentity.at_most_two_labels` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/Pgm/EquiprobablePgmSupportIdentity.at_most_two_labels` (`✓ std3`). ∎
 
 *Citation.* Anonymous (2026). *Why the Active-Set PGM Comparison Can Fail: Mechanism, a minimal qubit family, and a classical model*. URL: <https://github.com/the-omega-institute/trureturing/blob/e766f6c09bc629e934d0b4d1de2162768da42dea/Library/QuantumBounds/anonymous2026pgmmechanism.md>.
 
@@ -150,9 +150,9 @@ For every 0<N<=2, every PSD trace-one ensemble in any finite dimension and every
 
 **Theorem 1.13 (The limited pure-pair geometric control).**
 
-Lean statement: `D5/S3/Quantum/Measurement/EquiprobablePgmSupportIdentity.pure_pair_population`
+Lean statement: `D5/S3/Quantum/Measurement/Pgm/EquiprobablePgmSupportIdentity.pure_pair_population`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/EquiprobablePgmSupportIdentity.pure_pair_population` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/Pgm/EquiprobablePgmSupportIdentity.pure_pair_population` (`✓ std3`). ∎
 
 *Citation.* Anonymous (2026). *Why the Active-Set PGM Comparison Can Fail: Mechanism, a minimal qubit family, and a classical model*. URL: <https://github.com/the-omega-institute/trureturing/blob/e766f6c09bc629e934d0b4d1de2162768da42dea/Library/QuantumBounds/anonymous2026pgmmechanism.md>.
 
@@ -162,9 +162,9 @@ For real 0<z<1 and a pure Bloch vector (x,y,w) with x^2+y^2+w^2=1, membership in
 
 **Theorem 1.14 (Actual active-ensemble reduction).**
 
-Lean statement: `D5/S3/Quantum/Measurement/EquiprobablePgmSupportIdentity.active_reduction`
+Lean statement: `D5/S3/Quantum/Measurement/Pgm/EquiprobablePgmSupportIdentity.active_reduction`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/EquiprobablePgmSupportIdentity.active_reduction` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/Pgm/EquiprobablePgmSupportIdentity.active_reduction` (`✓ std3`). ∎
 
 *Citation.* Anonymous (2026). *Why the Active-Set PGM Comparison Can Fail: Mechanism, a minimal qubit family, and a classical model*. URL: <https://github.com/the-omega-institute/trureturing/blob/e766f6c09bc629e934d0b4d1de2162768da42dea/Library/QuantumBounds/anonymous2026pgmmechanism.md>.
 
@@ -174,9 +174,9 @@ For arbitrary N>0, m>0 and actual density matrices, if E is an actual optimal fi
 
 **Theorem 1.15 (Limited control for an actual pure omitted state).**
 
-Lean statement: `D5/S3/Quantum/Measurement/EquiprobablePgmSupportIdentity.pure_density_control`
+Lean statement: `D5/S3/Quantum/Measurement/Pgm/EquiprobablePgmSupportIdentity.pure_density_control`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/EquiprobablePgmSupportIdentity.pure_density_control` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/Pgm/EquiprobablePgmSupportIdentity.pure_density_control` (`✓ std3`). ∎
 
 *Citation.* Anonymous (2026). *Why the Active-Set PGM Comparison Can Fail: Mechanism, a minimal qubit family, and a classical model*. URL: <https://github.com/the-omega-institute/trureturing/blob/e766f6c09bc629e934d0b4d1de2162768da42dea/Library/QuantumBounds/anonymous2026pgmmechanism.md>.
 
@@ -188,24 +188,24 @@ Source custody: the mechanism manuscript is anonymous (3 November 2026); no lice
 
 ## References
 
-- Truth anchor: `D5/S3/Quantum/Measurement/EquiprobablePgmSupportIdentity.active_reduction`
-- Truth anchor: `D5/S3/Quantum/Measurement/EquiprobablePgmSupportIdentity.actual_bounds`
-- Truth anchor: `D5/S3/Quantum/Measurement/EquiprobablePgmSupportIdentity.at_most_two_labels`
-- Truth anchor: `D5/S3/Quantum/Measurement/EquiprobablePgmSupportIdentity.centered_frob_sum`
-- Truth anchor: `D5/S3/Quantum/Measurement/EquiprobablePgmSupportIdentity.centered_identity`
-- Truth anchor: `D5/S3/Quantum/Measurement/EquiprobablePgmSupportIdentity.diagonal_inverse_sqrt`
-- Truth anchor: `D5/S3/Quantum/Measurement/EquiprobablePgmSupportIdentity.diagonal_score`
-- Truth anchor: `D5/S3/Quantum/Measurement/EquiprobablePgmSupportIdentity.dimension_one_score`
-- Truth anchor: `D5/S3/Quantum/Measurement/EquiprobablePgmSupportIdentity.pgm_completion`
-- Truth anchor: `D5/S3/Quantum/Measurement/EquiprobablePgmSupportIdentity.pgm_support`
-- Truth anchor: `D5/S3/Quantum/Measurement/EquiprobablePgmSupportIdentity.pure_density_control`
-- Truth anchor: `D5/S3/Quantum/Measurement/EquiprobablePgmSupportIdentity.pure_pair_population`
-- Truth anchor: `D5/S3/Quantum/Measurement/EquiprobablePgmSupportIdentity.random_guessing_le`
-- Truth anchor: `D5/S3/Quantum/Measurement/EquiprobablePgmSupportIdentity.singleton_score`
-- Truth anchor: `D5/S3/Quantum/Measurement/EquiprobablePgmSupportIdentity.support_quarter_normalization`
-- Dependency: [D5/S3/Quantum/Dynamics/EntropyProductionCoherenceDeletionIdentity](../Dynamics/EntropyProductionCoherenceDeletionIdentity.md)
-- Dependency: [D5/S3/Quantum/FiniteDimensional](../FiniteDimensional.md)
-- Dependency: [D5/S3/Quantum/Information/ActualPureQubitGeometry](../Information/ActualPureQubitGeometry.md)
-- Dependency: [D5/S3/Quantum/Lieb/SupportPerspectiveTransport](../Lieb/SupportPerspectiveTransport.md)
-- Dependency: [D5/S3/Quantum/Matrix/CartesianVariance](../Matrix/CartesianVariance.md)
-- Dependency: [D5/S3/Quantum/Measurement/EquiprobablePgmActiveSetRefutation](EquiprobablePgmActiveSetRefutation.md)
+- Truth anchor: `D5/S3/Quantum/Measurement/Pgm/EquiprobablePgmSupportIdentity.active_reduction`
+- Truth anchor: `D5/S3/Quantum/Measurement/Pgm/EquiprobablePgmSupportIdentity.actual_bounds`
+- Truth anchor: `D5/S3/Quantum/Measurement/Pgm/EquiprobablePgmSupportIdentity.at_most_two_labels`
+- Truth anchor: `D5/S3/Quantum/Measurement/Pgm/EquiprobablePgmSupportIdentity.centered_frob_sum`
+- Truth anchor: `D5/S3/Quantum/Measurement/Pgm/EquiprobablePgmSupportIdentity.centered_identity`
+- Truth anchor: `D5/S3/Quantum/Measurement/Pgm/EquiprobablePgmSupportIdentity.diagonal_inverse_sqrt`
+- Truth anchor: `D5/S3/Quantum/Measurement/Pgm/EquiprobablePgmSupportIdentity.diagonal_score`
+- Truth anchor: `D5/S3/Quantum/Measurement/Pgm/EquiprobablePgmSupportIdentity.dimension_one_score`
+- Truth anchor: `D5/S3/Quantum/Measurement/Pgm/EquiprobablePgmSupportIdentity.pgm_completion`
+- Truth anchor: `D5/S3/Quantum/Measurement/Pgm/EquiprobablePgmSupportIdentity.pgm_support`
+- Truth anchor: `D5/S3/Quantum/Measurement/Pgm/EquiprobablePgmSupportIdentity.pure_density_control`
+- Truth anchor: `D5/S3/Quantum/Measurement/Pgm/EquiprobablePgmSupportIdentity.pure_pair_population`
+- Truth anchor: `D5/S3/Quantum/Measurement/Pgm/EquiprobablePgmSupportIdentity.random_guessing_le`
+- Truth anchor: `D5/S3/Quantum/Measurement/Pgm/EquiprobablePgmSupportIdentity.singleton_score`
+- Truth anchor: `D5/S3/Quantum/Measurement/Pgm/EquiprobablePgmSupportIdentity.support_quarter_normalization`
+- Dependency: [D5/S3/Quantum/Dynamics/EntropyProductionCoherenceDeletionIdentity](../../Dynamics/EntropyProductionCoherenceDeletionIdentity.md)
+- Dependency: [D5/S3/Quantum/FiniteDimensional](../../FiniteDimensional.md)
+- Dependency: [D5/S3/Quantum/Information/ActualPureQubitGeometry](../../Information/ActualPureQubitGeometry.md)
+- Dependency: [D5/S3/Quantum/Lieb/SupportPerspectiveTransport](../../Lieb/SupportPerspectiveTransport.md)
+- Dependency: [D5/S3/Quantum/Matrix/CartesianVariance](../../Matrix/CartesianVariance.md)
+- Dependency: [D5/S3/Quantum/Measurement/EquiprobablePgmActiveSetRefutation](../EquiprobablePgmActiveSetRefutation.md)

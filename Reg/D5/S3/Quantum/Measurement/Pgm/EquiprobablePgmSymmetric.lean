@@ -1,11 +1,11 @@
 import LeanInformationAuditInterface.Contract.Registration
-import D5.S3.Quantum.Measurement.EquiprobablePgmSymmetric
+import D5.S3.Quantum.Measurement.Pgm.EquiprobablePgmSymmetric
 import Reg.Support.DependentFamily
 
 /-! Faithful actual-state and actual-POVM audit variations for the symmetric ensemble. -/
 
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
-open _root_.D5.S3.Quantum.Measurement.EquiprobablePgmSymmetric
+open _root_.D5.S3.Quantum.Measurement.Pgm.EquiprobablePgmSymmetric
 open _root_.D5.S3.Quantum.Measurement.EquiprobablePgmActiveSetRefutation (success)
 open _root_.D5.S3.Estimation.TransmissivityTwoPointProbeRefutation (finitePOVM)
 open _root_.D5.S3.Quantum.FiniteDimensional (QubitMatrix)
@@ -13,7 +13,7 @@ open LeanInformationAudit Matrix
 open scoped ComplexOrder MatrixOrder
 
 noncomputable section
-namespace Reg.D5.S3.Quantum.Measurement.EquiprobablePgmSymmetric
+namespace Reg.D5.S3.Quantum.Measurement.Pgm.EquiprobablePgmSymmetric
 namespace States
 
 abbrev signature : Signature where
@@ -65,8 +65,8 @@ def family : Registration arena (type_of% (@states_posDef)) where
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@states_posDef) (Realization signature) Unit Unit where
-  unitName := `Reg.D5.S3.Quantum.Measurement.EquiprobablePgmSymmetric.States.unit
-  realizationName := `Reg.D5.S3.Quantum.Measurement.EquiprobablePgmSymmetric.States.family
+  unitName := `Reg.D5.S3.Quantum.Measurement.Pgm.EquiprobablePgmSymmetric.States.unit
+  realizationName := `Reg.D5.S3.Quantum.Measurement.Pgm.EquiprobablePgmSymmetric.States.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -83,7 +83,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Quantum.Measurement.EquiprobablePgmSymmetric
+    owner := `D5.S3.Quantum.Measurement.Pgm.EquiprobablePgmSymmetric
     definition := none
     coordinates := #[0, 1, 2]
     readouts := #[
@@ -153,8 +153,8 @@ def family : Registration arena (type_of% (@pair_classification)) where
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@pair_classification) (Realization signature) Unit Unit where
-  unitName := `Reg.D5.S3.Quantum.Measurement.EquiprobablePgmSymmetric.Pair.unit
-  realizationName := `Reg.D5.S3.Quantum.Measurement.EquiprobablePgmSymmetric.Pair.family
+  unitName := `Reg.D5.S3.Quantum.Measurement.Pgm.EquiprobablePgmSymmetric.Pair.unit
+  realizationName := `Reg.D5.S3.Quantum.Measurement.Pgm.EquiprobablePgmSymmetric.Pair.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -170,7 +170,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Quantum.Measurement.EquiprobablePgmSymmetric
+    owner := `D5.S3.Quantum.Measurement.Pgm.EquiprobablePgmSymmetric
     definition := none
     coordinates := #[0, 1, 2]
     readouts := #[
@@ -183,4 +183,4 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   options := #[]
 
 end Pair
-end Reg.D5.S3.Quantum.Measurement.EquiprobablePgmSymmetric
+end Reg.D5.S3.Quantum.Measurement.Pgm.EquiprobablePgmSymmetric

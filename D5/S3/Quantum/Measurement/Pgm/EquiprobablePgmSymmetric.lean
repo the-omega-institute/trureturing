@@ -1,13 +1,14 @@
-/- GID: D5/S3/Quantum/Measurement/EquiprobablePgmSymmetric
+/- GID: D5/S3/Quantum/Measurement/Pgm/EquiprobablePgmSymmetric
    generality: I
-   mirror-B: D5/B/S3/Quantum/Measurement/EquiprobablePgmSymmetric
+   mirror-B: D5/B/S3/Quantum/Measurement/Pgm/EquiprobablePgmSymmetric
    mirror-E: none(waiver:universal-actual-object-proof)
    anchors: []
    utility: none
-   digest: Complete actual symmetric qubit classification, CFC scores and failure iff. -/
+   digest: Complete actual symmetric qubit optimizer classification and dual certificates. -/
 
-import D5.S3.Quantum.Measurement.EquiprobablePgmSupportIdentity
+import D5.S3.Quantum.Measurement.Pgm.EquiprobablePgmSupportIdentity
 import D5.S3.Quantum.Matrix.SpectralPower
+import D5.S3.Quantum.Measurement.FreeSpectrahedronFeasibilityWitness
 import D5.S3.Quantum.Measurements.FiniteMemoryHistoryCapacity
 
 /-!
@@ -22,7 +23,7 @@ paths; their presence is not an independent admission witness.
 noncomputable section
 open Matrix
 open scoped BigOperators MatrixOrder ComplexOrder
-namespace D5.S3.Quantum.Measurement.EquiprobablePgmSymmetric
+namespace D5.S3.Quantum.Measurement.Pgm.EquiprobablePgmSymmetric
 
 open D5.S3.Quantum.Measurement.EquiprobablePgmActiveSetRefutation (success pgmScore)
 open D5.S3.Estimation.TransmissivityTwoPointProbeRefutation (finitePOVM)
@@ -79,6 +80,32 @@ private theorem pair_povm : finitePOVM pairPovm := by
 private theorem rho_trace (a b c : ℝ) (i : Fin 3) : trace (rho a b c i) = 1 := by
   fin_cases i <;> simp [rho, trace, Fin.sum_univ_two]
 
+/-- The earlier closed determinant domain includes singular states of the pair.
+This density certificate is consumed by the strict-domain theorem below. -/
+theorem states_posSemidef (a b c : ℝ) (ha : 0 < a) (hc : 0 < c)
+    (hc1 : c < 1) (hd : 0 ≤ a * (1 - a) - b ^ 2) :
+    ∀ i, (rho a b c i).PosSemidef ∧ trace (rho a b c i) = 1 := by
+  have hm (u v w : ℝ) : ((!![u, v; v, w]).map (↑) : QubitMatrix) =
+      !![(u : ℂ), (v : ℂ); (v : ℂ), (w : ℂ)] := by
+    ext i j
+    fin_cases i <;> fin_cases j <;> rfl
+  intro i
+  refine ⟨?_, rho_trace a b c i⟩
+  fin_cases i
+  · have hp := D5.S3.Quantum.Measurement.FreeSpectrahedronFeasibilityWitness.posSemidef_of_trace_det
+      a b (1 - a) (by linarith) hd
+    rw [hm] at hp
+    simpa [rho] using hp
+  · have hp := D5.S3.Quantum.Measurement.FreeSpectrahedronFeasibilityWitness.posSemidef_of_trace_det
+      a (-b) (1 - a) (by linarith) (by nlinarith)
+    rw [hm] at hp
+    simpa [rho] using hp
+  · apply Matrix.PosSemidef.diagonal
+    intro j
+    fin_cases j
+    · change (0 : ℂ) ≤ (c : ℂ); exact_mod_cast hc.le
+    · change (0 : ℂ) ≤ ((1 - c : ℝ) : ℂ); exact_mod_cast (sub_pos.mpr hc1).le
+
 /-- The determinant domain certifies every actual state as strictly positive and normalized. -/
 theorem states_posDef (a b c : ℝ) (ha : 0 < a) (hc : 0 < c)
     (hc1 : c < 1) (hd : 0 < a * (1 - a) - b ^ 2) :
@@ -86,7 +113,10 @@ theorem states_posDef (a b c : ℝ) (ha : 0 < a) (hc : 0 < c)
   intro i
   refine ⟨?_, rho_trace a b c i⟩
   fin_cases i
-  · exact posDef_two a b (1 - a) ha hd
+  · apply ((states_posSemidef a b c ha hc hc1 hd.le 0).1).posDef_iff_det_ne_zero.mpr
+    change (rho a b c 0).det ≠ 0
+    simpa [rho, Matrix.det_fin_two, pow_two] using
+      (show ((a * (1 - a) - b ^ 2 : ℝ) : ℂ) ≠ 0 by exact_mod_cast hd.ne')
   · exact posDef_two a (-b) (1 - a) ha (by nlinarith)
   · apply Matrix.posDef_diagonal_iff.mpr
     intro j
@@ -507,107 +537,6 @@ theorem upper_classification (a b c : ℝ) (hb : 0 < b) (hδ : b < c - a) :
     exact (dual_bound (rho a b c) F (upperGamma a b c t) hF
       (upper_slacks a b c t hδ0 hb ht0 ht)).trans_eq (upperGamma_trace a b c t)
 
-open D5.S3.Quantum.Measurement.EquiprobablePgmSupportIdentity (diagonal_inverse_sqrt)
-
-/-- Diagonal inverse square-root helper consumed by actual score and effect calculations. -/
-theorem inverse_sqrt_two (u v : ℝ) (hu : 0 ≤ u) (hv : 0 ≤ v) :
-    (diagonal ![(u : ℂ), (v : ℂ)]) ^ (-(1 / 2) : ℝ) =
-      diagonal ![(((Real.sqrt u)⁻¹ : ℝ) : ℂ), (((Real.sqrt v)⁻¹ : ℝ) : ℂ)] := by
-  have h := diagonal_inverse_sqrt (![u, v] : Fin 2 → ℝ) (by
-    intro x; fin_cases x <;> assumption)
-  have he : (fun x : Fin 2 => (![u, v] x : ℂ)) = ![(u : ℂ), (v : ℂ)] := by
-    funext x; fin_cases x <;> rfl
-  rw [he] at h
-  convert h using 1 <;>
-    ext i j <;> fin_cases i <;> fin_cases j <;> simp
-
-private theorem quadratic_trace (a b c x y : ℝ) :
-    (trace (!![(a : ℂ), (b : ℂ); (b : ℂ), (c : ℂ)] *
-      (diagonal ![(x : ℂ), (y : ℂ)] * !![(a : ℂ), (b : ℂ); (b : ℂ), (c : ℂ)] *
-        diagonal ![(x : ℂ), (y : ℂ)]))).re =
-      a ^ 2 * x ^ 2 + 2 * b ^ 2 * (x * y) + c ^ 2 * y ^ 2 := by
-  have hd : diagonal ![(x : ℂ), (y : ℂ)] = !![(x : ℂ), 0; 0, (y : ℂ)] := by
-    ext i j; fin_cases i <;> fin_cases j <;> simp
-  rw [hd]
-  simp [Matrix.trace_fin_two, Complex.add_re, Complex.mul_re]
-  ring
-
-theorem sqrt_inverse_square (u : ℝ) (hu : 0 ≤ u) :
-    ((Real.sqrt u)⁻¹) ^ 2 = u⁻¹ := by rw [inv_pow, Real.sq_sqrt hu]
-
-theorem sqrt_inverse_product (u v : ℝ) (hu : 0 ≤ u) :
-    (Real.sqrt u)⁻¹ * (Real.sqrt v)⁻¹ = (Real.sqrt (u * v))⁻¹ := by
-  rw [← mul_inv, ← Real.sqrt_mul hu]
-
-/-- The actual original-prior pair and full PGM scores for every physical
-symmetric qubit ensemble. The pair determinant may vanish. -/
-theorem symmetric_scores (a b c : ℝ) (ha : 0 < a) (ha1 : a < 1)
-    (hc : 0 < c) (hc1 : c < 1) :
-    pgmScore (rho a b c) {0, 1} - 1 / 3 =
-        2 * b ^ 2 / (3 * Real.sqrt (a * (1 - a))) ∧
-      pgmScore (rho a b c) Finset.univ - 1 / 3 =
-        4 * b ^ 2 / (3 * Real.sqrt ((2 * a + c) * (3 - 2 * a - c))) +
-          2 * (c - a) ^ 2 / (3 * ((2 * a + c) * (3 - 2 * a - c))) := by
-  have hv : 0 < 1 - a := sub_pos.mpr ha1
-  have hu : 0 < 2 * a + c := by positivity
-  have hw : 0 < 3 - 2 * a - c := by linarith
-  have hSA : (∑ j ∈ ({0, 1} : Finset (Fin 3)), (1 / (3 : ℂ)) • rho a b c j) =
-      diagonal ![((2 * a / 3 : ℝ) : ℂ), ((2 * (1 - a) / 3 : ℝ) : ℂ)] := by
-    rw [Finset.sum_pair (by decide)]
-    ext i j
-    fin_cases i <;> fin_cases j <;> simp [rho] <;> push_cast <;> ring
-  have hS : (∑ j : Fin 3, (1 / (3 : ℂ)) • rho a b c j) =
-      diagonal ![(((2 * a + c) / 3 : ℝ) : ℂ), (((3 - 2 * a - c) / 3 : ℝ) : ℂ)] := by
-    rw [Fin.sum_univ_three]
-    ext i j
-    fin_cases i <;> fin_cases j <;> simp [rho] <;> push_cast <;> ring
-  have hσ (i : Fin 3) : (1 / (3 : ℂ)) • rho a b c i =
-      ![!![((a / 3 : ℝ) : ℂ), ((b / 3 : ℝ) : ℂ);
-          ((b / 3 : ℝ) : ℂ), (((1 - a) / 3 : ℝ) : ℂ)],
-        !![((a / 3 : ℝ) : ℂ), ((-b / 3 : ℝ) : ℂ);
-          ((-b / 3 : ℝ) : ℂ), (((1 - a) / 3 : ℝ) : ℂ)],
-        !![((c / 3 : ℝ) : ℂ), 0; 0, (((1 - c) / 3 : ℝ) : ℂ)]] i := by
-    fin_cases i <;> ext j k
-    all_goals fin_cases j <;> fin_cases k <;> simp [rho] <;> push_cast <;> ring
-  constructor
-  · unfold pgmScore
-    simp only [Nat.cast_ofNat]
-    rw [hSA, inverse_sqrt_two _ _ (by positivity) (by positivity),
-      Finset.sum_pair (by decide)]
-    simp only [Nat.cast_ofNat, hσ, Matrix.cons_val_zero, Matrix.cons_val_one,
-      Matrix.cons_val_fin_one]
-    rw [quadratic_trace, quadratic_trace]
-    rw [sqrt_inverse_square _ (by positivity), sqrt_inverse_square _ (by positivity),
-      sqrt_inverse_product _ _ (by positivity)]
-    have hprod : 2 * a / 3 * (2 * (1 - a) / 3) = (2 / 3 : ℝ) ^ 2 * (a * (1 - a)) := by ring
-    rw [hprod, Real.sqrt_mul (by positivity), Real.sqrt_sq (by norm_num : (0 : ℝ) ≤ 2 / 3)]
-    have hq : Real.sqrt (a * (1 - a)) ≠ 0 := (Real.sqrt_pos.mpr (mul_pos ha hv)).ne'
-    field_simp
-    ring
-  · unfold pgmScore
-    simp only [Nat.cast_ofNat]
-    rw [hS, inverse_sqrt_two _ _ (by positivity) (by positivity),
-      Fin.sum_univ_three]
-    simp only [Nat.cast_ofNat, hσ, Matrix.cons_val_zero, Matrix.cons_val_one,
-      Matrix.cons_val_fin_one, Matrix.cons_val_two, Matrix.head_cons, Matrix.tail_cons,
-      ← Complex.ofReal_zero]
-    rw [quadratic_trace, quadratic_trace, quadratic_trace]
-    rw [sqrt_inverse_square _ (by positivity), sqrt_inverse_square _ (by positivity),
-      sqrt_inverse_product _ _ (by positivity)]
-    have hprod : (2 * a + c) / 3 * ((3 - 2 * a - c) / 3) =
-        (1 / 3 : ℝ) ^ 2 * ((2 * a + c) * (3 - 2 * a - c)) := by ring
-    rw [hprod, Real.sqrt_mul (by positivity), Real.sqrt_sq (by norm_num : (0 : ℝ) ≤ 1 / 3)]
-    have hD : Real.sqrt ((2 * a + c) * (3 - 2 * a - c)) ≠ 0 :=
-      (Real.sqrt_pos.mpr (mul_pos hu hw)).ne'
-    field_simp [hu.ne', hw.ne', hD]
-    <;> ring_nf
-    <;> field_simp [show 3 - a * 2 - c ≠ 0 by linarith]
-    <;> ring
-
-open D5.S3.Quantum.FiniteDimensional (QubitMatrix)
-open D5.S3.Quantum.Measurement.EquiprobablePgmActiveSetRefutation (success pgmScore)
-open D5.S3.Estimation.TransmissivityTwoPointProbeRefutation (finitePOVM)
-
 /-- Exchange the two orthonormal basis vectors. -/
 def basisFlip (M : QubitMatrix) : QubitMatrix := M.submatrix Fin.rev Fin.rev
 
@@ -782,99 +711,128 @@ theorem complete_classification (a b c : ℝ) (hb : 0 < b) :
       ext i
       simp [hall i]
 
-open D5.S3.Quantum.Measurement.EquiprobablePgmActiveSetRefutation (pgmScore)
+/-- The sign-uniform three-active effects, using the existing Pauli owners. -/
+def blochPovm (b δ : ℝ) : Fin 3 → QubitMatrix :=
+  let d := |δ|
+  let s := δ / d
+  let R := (δ ^ 2 + b ^ 2) / d
+  let h := (δ ^ 2 - b ^ 2) / δ
+  let X := D5.S3.Quantum.FiniteDimensional.qubitX
+  let Z := D5.S3.Quantum.FiniteDimensional.qubitZ
+  ![(((d ^ 2 + b ^ 2) / (2 * d ^ 2) : ℝ) : ℂ) •
+       ((1 / 2 : ℂ) • (1 + ((2 * b / R : ℝ) : ℂ) • X - ((h / R : ℝ) : ℂ) • Z)),
+    (((d ^ 2 + b ^ 2) / (2 * d ^ 2) : ℝ) : ℂ) •
+       ((1 / 2 : ℂ) • (1 - ((2 * b / R : ℝ) : ℂ) • X - ((h / R : ℝ) : ℂ) • Z)),
+    (((d ^ 2 - b ^ 2) / d ^ 2 : ℝ) : ℂ) •
+       ((1 / 2 : ℂ) • (1 + (s : ℂ) • Z))]
 
-private theorem gap_criterion (q D b δ : ℝ) (hq : 0 < q) (hD : 0 < D) :
-    2 * (4 * b ^ 2 / (3 * Real.sqrt D) + 2 * δ ^ 2 / (3 * D)) <
-        2 * b ^ 2 / (3 * Real.sqrt q) ↔
-      16 * q < D ∧
-        2 * δ ^ 2 * Real.sqrt q /
-          (Real.sqrt D * (Real.sqrt D - 4 * Real.sqrt q)) < b ^ 2 := by
-  let Q := Real.sqrt q
-  let T := Real.sqrt D
-  have hQ : 0 < Q := Real.sqrt_pos.mpr hq
-  have hT : 0 < T := Real.sqrt_pos.mpr hD
-  have hQsq : Q ^ 2 = q := Real.sq_sqrt hq.le
-  have hTsq : T ^ 2 = D := Real.sq_sqrt hD.le
-  by_cases hbig : 16 * q < D
-  · have hdiff : 0 < T - 4 * Q := by nlinarith [sq_nonneg (T - 4 * Q)]
-    have hid : 2 * b ^ 2 / (3 * Q) -
-        2 * (4 * b ^ 2 / (3 * T) + 2 * δ ^ 2 / (3 * D)) =
-        (2 * (T - 4 * Q) / (3 * Q * T)) *
-          (b ^ 2 - 2 * δ ^ 2 * Q / (T * (T - 4 * Q))) := by
-      rw [← hTsq]
-      field_simp
-      ring_nf
-      field_simp [show T - Q * 4 ≠ 0 by linarith]
-      ring
-    have hfac : 0 < 2 * (T - 4 * Q) / (3 * Q * T) := by positivity
-    change _ ↔ 16 * q < D ∧ 2 * δ ^ 2 * Q / (T * (T - 4 * Q)) < b ^ 2
-    rw [and_iff_right hbig, ← sub_pos, hid, mul_pos_iff_of_pos_left hfac, sub_pos]
-  · have hle : T ≤ 4 * Q := by nlinarith [sq_nonneg (T - 4 * Q)]
-    have hcoh : 2 * b ^ 2 / (3 * Q) ≤ 8 * b ^ 2 / (3 * T) := by
-      apply (div_le_div_iff₀ (by positivity : 0 < 3 * Q)
-        (by positivity : 0 < 3 * T)).mpr
-      nlinarith [sq_nonneg b]
-    have hcoh' : 2 * b ^ 2 / (3 * Q) ≤ 2 * (4 * b ^ 2 / (3 * T)) := by
-      convert hcoh using 1 <;> ring
-    have hpop : 0 ≤ 2 * δ ^ 2 / (3 * D) := by positivity
-    have hn : ¬ 2 * (4 * b ^ 2 / (3 * T) + 2 * δ ^ 2 / (3 * D)) <
-        2 * b ^ 2 / (3 * Q) := by
-      intro h
-      linarith [hcoh']
-    exact iff_of_false hn (not_and_of_not_left _ hbig)
+/-- The common dual certificate [(1+R)I+(z+h)Z]/6. -/
+def blochGamma (a b δ : ℝ) : QubitMatrix :=
+  let R := (δ ^ 2 + b ^ 2) / |δ|
+  let h := (δ ^ 2 - b ^ 2) / δ
+  (1 / 6 : ℂ) • (((1 + R : ℝ) : ℂ) • 1 +
+    ((2 * a - 1 + h : ℝ) : ℂ) • D5.S3.Quantum.FiniteDimensional.qubitZ)
 
-/-- Exact failure in the closed two-active region; either threshold equality
-is nonfailure. The formulas remain actual matrix/CFC scores. -/
-theorem pair_failure_iff (a b c : ℝ) (ha : 0 < a) (ha1 : a < 1)
-    (hc : 0 < c) (hc1 : c < 1) :
-    2 * (pgmScore (rho a b c) Finset.univ - 1 / 3) <
-        pgmScore (rho a b c) {0, 1} - 1 / 3 ↔
-      16 * (a * (1 - a)) < (2 * a + c) * (3 - 2 * a - c) ∧
-        2 * (c - a) ^ 2 * Real.sqrt (a * (1 - a)) /
-          (Real.sqrt ((2 * a + c) * (3 - 2 * a - c)) *
-            (Real.sqrt ((2 * a + c) * (3 - 2 * a - c)) -
-              4 * Real.sqrt (a * (1 - a)))) < b ^ 2 := by
-  rw [(symmetric_scores a b c ha ha1 hc hc1).1,
-    (symmetric_scores a b c ha ha1 hc hc1).2]
-  exact gap_criterion _ _ _ _ (mul_pos ha (sub_pos.mpr ha1))
-    (mul_pos (by positivity) (by linarith))
+private theorem bloch_upper (b δ : ℝ) (hb : 0 < b) (hδ : 0 < δ) :
+    blochPovm b δ = upperPovm (b / δ) := by
+  have hδ0 : δ ≠ 0 := hδ.ne'
+  have hsum : δ ^ 2 + b ^ 2 ≠ 0 := by positivity
+  have hδC : (δ : ℂ) ≠ 0 := by exact_mod_cast hδ0
+  have hsumC : (δ : ℂ) ^ 2 + (b : ℂ) ^ 2 ≠ 0 := by exact_mod_cast hsum
+  funext i
+  ext j k
+  fin_cases i <;> fin_cases j <;> fin_cases k <;>
+    simp [blochPovm, upperPovm, abs_of_pos hδ,
+      D5.S3.Quantum.FiniteDimensional.qubitX,
+      D5.S3.Quantum.FiniteDimensional.qubitZ, vecMulVec, Matrix.one_apply] <;>
+    push_cast <;> field_simp [hδC, hsumC] <;> ring_nf <;> field_simp [hδC, hsumC] <;> ring
 
-/-- The full active-set failure iff. It includes the closed pair region as an
-essential conjunct; with three active effects the original comparison is equality. -/
-theorem active_failure_iff (a b c : ℝ) (ha : 0 < a) (ha1 : a < 1)
+private theorem bloch_lower (b δ : ℝ) (hb : 0 < b) (hδ : δ < 0) :
+    blochPovm b δ = lowerPovm (b / -δ) := by
+  have hδ0 : δ ≠ 0 := hδ.ne
+  have hsum : δ ^ 2 + b ^ 2 ≠ 0 := by positivity
+  have hδC : (δ : ℂ) ≠ 0 := by exact_mod_cast hδ0
+  have hsumC : (δ : ℂ) ^ 2 + (b : ℂ) ^ 2 ≠ 0 := by exact_mod_cast hsum
+  funext i
+  ext j k
+  fin_cases i <;> fin_cases j <;> fin_cases k <;>
+    simp [blochPovm, lowerPovm, basisFlip, upperPovm, abs_of_neg hδ,
+      D5.S3.Quantum.FiniteDimensional.qubitX,
+      D5.S3.Quantum.FiniteDimensional.qubitZ, vecMulVec, Matrix.one_apply, Fin.rev] <;>
+    push_cast <;> field_simp [hδC, hsumC] <;> ring_nf <;> field_simp [hδC, hsumC] <;> ring
+
+/-- Full sign-uniform equations and dual certificate for the strict-PD
+three-active region. Every complex competing POVM is included. -/
+theorem three_active_formula (a b c : ℝ) (ha : 0 < a) (ha1 : a < 1)
     (hb : 0 < b) (hc : 0 < c) (hc1 : c < 1)
-    (hd : 0 < a * (1 - a) - b ^ 2) :
+    (hdet : 0 < a * (1 - a) - b ^ 2) (hreg : b < |c - a|) :
     (∀ i, (rho a b c i).PosDef ∧ trace (rho a b c i) = 1) ∧
-      (let A := Finset.univ.filter (fun i => optimalPovm a b c i ≠ 0)
-       2 * (pgmScore (rho a b c) Finset.univ - 1 / 3) <
-           ((A.card : ℝ) - 1) * (pgmScore (rho a b c) A - 1 / 3) ↔
-        |c - a| ≤ b ∧
-          16 * (a * (1 - a)) < (2 * a + c) * (3 - 2 * a - c) ∧
-          2 * (c - a) ^ 2 * Real.sqrt (a * (1 - a)) /
-            (Real.sqrt ((2 * a + c) * (3 - 2 * a - c)) *
-              (Real.sqrt ((2 * a + c) * (3 - 2 * a - c)) -
-                4 * Real.sqrt (a * (1 - a)))) < b ^ 2) := by
-  refine ⟨states_posDef a b c ha hc hc1 hd, ?_⟩
-  dsimp only
-  rw [(complete_classification a b c hb).2.2]
-  by_cases hpair : |c - a| ≤ b
-  · rw [if_pos hpair, and_iff_right hpair]
-    norm_num only [Finset.card_pair (show (0 : Fin 3) ≠ 1 by decide),
-      Nat.cast_ofNat, sub_self, sub_zero, one_mul, show (2 : ℝ) - 1 = 1 by norm_num]
-    exact pair_failure_iff a b c ha ha1 hc hc1
-  · norm_num [hpair]
+    optimalPovm a b c = blochPovm b (c - a) ∧
+    finitePOVM (blochPovm b (c - a)) ∧
+    (∀ E, finitePOVM E →
+      ((∀ F, finitePOVM F → success (rho a b c) F ≤ success (rho a b c) E) ↔
+        E = blochPovm b (c - a))) ∧
+    success (rho a b c) (blochPovm b (c - a)) =
+      (1 + ((c - a) ^ 2 + b ^ 2) / |c - a|) / 3 ∧
+    (∀ i, (blochGamma a b (c - a) - (1 / (3 : ℂ)) • rho a b c i).PosSemidef) ∧
+    (trace (blochGamma a b (c - a))).re =
+      (1 + ((c - a) ^ 2 + b ^ 2) / |c - a|) / 3 := by
+  have hclass := complete_classification a b c hb
+  have hn : ¬ |c - a| ≤ b := not_le.mpr hreg
+  have hne : c - a ≠ 0 := by intro hz; simp [hz] at hreg; linarith
+  have hac : a - c ≠ 0 := by intro h; apply hne; linarith
+  have hcaC : (c : ℂ) - (a : ℂ) ≠ 0 := by exact_mod_cast hne
+  have hacC : (a : ℂ) - (c : ℂ) ≠ 0 := by exact_mod_cast hac
+  have he : optimalPovm a b c = blochPovm b (c - a) := by
+    by_cases hp : 0 < c - a
+    · rw [optimalPovm, if_neg hn, if_pos (by simpa [abs_of_pos hp] using hreg),
+        bloch_upper b (c - a) hb hp]
+    · have hm : c - a < 0 := lt_of_le_of_ne (le_of_not_gt hp) hne
+      have hneg : ¬ b < c - a := by linarith
+      rw [optimalPovm, if_neg hn, if_neg hneg, bloch_lower b (c - a) hb hm]
+      congr 1
+      congr 1
+      ring
+  refine ⟨states_posDef a b c ha hc hc1 hdet, he, he ▸ hclass.1,
+    (by simpa only [he] using hclass.2.1), ?_, ?_, ?_⟩
+  · by_cases hp : 0 < c - a
+    · rw [bloch_upper b (c - a) hb hp]
+      rw [(upper_classification a b c hb (by simpa [abs_of_pos hp] using hreg)).2.1,
+        abs_of_pos hp]
+      field_simp [hne, hac] <;> ring
+    · have hm : c - a < 0 := lt_of_le_of_ne (le_of_not_gt hp) hne
+      have hl : b < a - c := by simpa [abs_of_neg hm, neg_sub] using hreg
+      rw [bloch_lower b (c - a) hb hm]
+      have ht : b / -(c - a) = b / (a - c) := by congr 1; ring
+      rw [ht, (lower_classification a b c hb hl).2.1, abs_of_neg hm]
+      field_simp [hne, hac] <;> ring
+  · intro i
+    by_cases hp : 0 < c - a
+    · have heq : blochGamma a b (c - a) = upperGamma a b c (b / (c - a)) := by
+        ext j k
+        fin_cases j <;> fin_cases k <;>
+          simp [blochGamma, upperGamma, abs_of_pos hp,
+            D5.S3.Quantum.FiniteDimensional.qubitZ, Matrix.one_apply] <;>
+          push_cast <;> field_simp [hcaC, hacC] <;> ring_nf <;> field_simp [hcaC, hacC] <;> ring
+      rw [heq]
+      exact upper_slacks a b c (b / (c - a)) hp hb (div_pos hb hp)
+        (mul_div_cancel₀ b hp.ne') i
+    · have hm : c - a < 0 := lt_of_le_of_ne (le_of_not_gt hp) hne
+      have hpos : 0 < (1 - c) - (1 - a) := by linarith
+      have hs := upper_slacks (1 - a) b (1 - c) (b / ((1 - c) - (1 - a)))
+        hpos hb (div_pos hb hpos) (mul_div_cancel₀ b hpos.ne') i
+      have hs' := hs.submatrix Fin.rev
+      convert hs' using 1
+      ext j k
+      fin_cases i <;> fin_cases j <;> fin_cases k <;>
+        simp [blochGamma, upperGamma, rho, basisFlip, abs_of_neg hm,
+          D5.S3.Quantum.FiniteDimensional.qubitZ, Matrix.one_apply, Fin.rev] <;>
+        push_cast <;> field_simp [hcaC, hacC] <;> ring_nf <;> field_simp [hcaC, hacC] <;> ring
+  · simp [blochGamma, trace, Fin.sum_univ_two,
+      D5.S3.Quantum.FiniteDimensional.qubitZ, Matrix.one_apply, pow_two, Complex.mul_re]
+    ring
 
-theorem inverse_sqrt_residual (u : ℝ) (hu : 0 < 1 - u) :
-    1 / Real.sqrt (1 - u) - 1 =
-      u / (Real.sqrt (1 - u) * (1 + Real.sqrt (1 - u))) := by
-  have hs := Real.sqrt_pos.mpr hu
-  have he := Real.sq_sqrt hu.le
-  field_simp
-  nlinarith
-
-
-end D5.S3.Quantum.Measurement.EquiprobablePgmSymmetric
+end D5.S3.Quantum.Measurement.Pgm.EquiprobablePgmSymmetric
 
 /- Escape-audit delivery: four registrations for centered_identity, random_guessing_le,
 states_posDef and pair_classification have validated evidence. Remaining

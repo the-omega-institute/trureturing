@@ -1,6 +1,6 @@
-/- GID: D5/S3/Quantum/Measurement/EquiprobablePgmSupportIdentity
+/- GID: D5/S3/Quantum/Measurement/Pgm/EquiprobablePgmSupportIdentity
    generality: I
-   mirror-B: D5/B/S3/Quantum/Measurement/EquiprobablePgmSupportIdentity
+   mirror-B: D5/B/S3/Quantum/Measurement/Pgm/EquiprobablePgmSupportIdentity
    mirror-E: none(waiver:universal-actual-object-proof)
    anchors: []
    utility: none
@@ -25,7 +25,7 @@ paths; their presence is not an independent admission witness.
 noncomputable section
 open Matrix
 open scoped BigOperators MatrixOrder ComplexOrder
-namespace D5.S3.Quantum.Measurement.EquiprobablePgmSupportIdentity
+namespace D5.S3.Quantum.Measurement.Pgm.EquiprobablePgmSupportIdentity
 
 open D5.S3.Quantum.Measurement.EquiprobablePgmActiveSetRefutation
 
@@ -496,7 +496,7 @@ private theorem supported_upper_bound {k N : ℕ}
   have hsumX : ∑ i ∈ B, X i = L := by
     change (∑ i ∈ B, R * σ i * R) = L
     rw [← Finset.sum_mul, ← Finset.mul_sum]
-    exact (D5.S3.Quantum.Measurement.EquiprobablePgmSupportIdentity.support_quarter_normalization S hS).2
+    exact (D5.S3.Quantum.Measurement.Pgm.EquiprobablePgmSupportIdentity.support_quarter_normalization S hS).2
   have hsumE : ∑ i ∈ B, E i = 1 := by
     rw [Finset.sum_subset (Finset.subset_univ B) (fun i _ hi => hout i hi)]
     exact hE.2
@@ -533,7 +533,7 @@ private theorem supported_upper_bound {k N : ℕ}
   have hc : (B.card : ℝ) ≠ 0 := by exact_mod_cast hB.card_pos.ne'
   have hcancel : (1 / (B.card : ℝ)) * ((B.card : ℝ) / N) = 1 / N := by field_simp
   rw [hcancel] at hcenter
-  have hvarX := D5.S3.Quantum.Measurement.EquiprobablePgmSupportIdentity.centered_identity
+  have hvarX := D5.S3.Quantum.Measurement.Pgm.EquiprobablePgmSupportIdentity.centered_identity
     ρ hN hρ htr B hB
   dsimp only at hvarX
   change pgmScore ρ B - 1 / N =
@@ -554,7 +554,7 @@ private theorem supported_upper_bound {k N : ℕ}
         rw [← Complex.re_sum, ← Matrix.trace_sum, ← Finset.sum_mul, hsumY,
           RHLinalg.frobSq, hL, RCLike.re_eq_complex_re]
   have hvarY : (∑ i ∈ B, RHLinalg.frobSq (Y i - r • L)) ≤ ((B.card : ℝ) - 1) / N := by
-    have hv := D5.S3.Quantum.Measurement.EquiprobablePgmSupportIdentity.centered_frob_sum
+    have hv := D5.S3.Quantum.Measurement.Pgm.EquiprobablePgmSupportIdentity.centered_frob_sum
       B hB Y (fun i _ => (hY i).isHermitian)
     rw [hsumY, hfrobL, hcancel] at hv
     change (∑ i ∈ B, RHLinalg.frobSq (Y i - r • L)) = _ at hv
@@ -576,7 +576,7 @@ private theorem supported_upper_bound {k N : ℕ}
   change (∑ i ∈ B, (trace ((X i - r • L) * (Y i - r • L))).re) ^ 2 ≤ _ at hCS
   rw [hcenter, ← hvarX] at hCS
   have hnonneg := sub_nonneg.mpr
-    (D5.S3.Quantum.Measurement.EquiprobablePgmSupportIdentity.random_guessing_le ρ hN hρ htr B hB)
+    (D5.S3.Quantum.Measurement.Pgm.EquiprobablePgmSupportIdentity.random_guessing_le ρ hN hρ htr B hB)
   have hmul := mul_le_mul_of_nonneg_left hvarY hnonneg
   have hbound : (success ρ E - 1 / N) ^ 2 ≤
       ((B.card : ℝ) - 1) * (pgmScore ρ B - 1 / N) / N := by
@@ -819,7 +819,7 @@ theorem pure_density_control (z : ℝ) (hz : 0 < z) (hz1 : z < 1)
   simp only [trace, Fin.sum_univ_two, Complex.add_re, Matrix.diag, Complex.one_re] at ht
   linarith
 
-end D5.S3.Quantum.Measurement.EquiprobablePgmSupportIdentity
+end D5.S3.Quantum.Measurement.Pgm.EquiprobablePgmSupportIdentity
 
 /- Escape-audit delivery: four registrations for centered_identity, random_guessing_le,
 states_posDef and pair_classification have validated evidence. Remaining

@@ -1,14 +1,14 @@
-/- GID: D5/S3/Quantum/Measurement/EquiprobablePgmQubitSlice
+/- GID: D5/S3/Quantum/Measurement/Pgm/EquiprobablePgmQubitSlice
    generality: I
-   mirror-B: D5/B/S3/Quantum/Measurement/EquiprobablePgmQubitSlice
+   mirror-B: D5/B/S3/Quantum/Measurement/Pgm/EquiprobablePgmQubitSlice
    mirror-E: none(waiver:universal-slice-proof)
    anchors: []
    utility: none
    digest: A complete small-parameter mixed-qubit PGM failure interval. -/
 
-import D5.S3.Quantum.Measurement.EquiprobablePgmLoading
-import D5.S3.Quantum.Measurement.EquiprobablePgmSupportIdentity
-import D5.S3.Quantum.Measurement.EquiprobablePgmSymmetric
+import D5.S3.Quantum.Measurement.Pgm.EquiprobablePgmLoading
+import D5.S3.Quantum.Measurement.Pgm.EquiprobablePgmSupportIdentity
+import D5.S3.Quantum.Measurement.Pgm.EquiprobablePgmComparison
 
 /-!
 The qubit construction and symmetric calculations are credited to Hyunho Cha
@@ -20,10 +20,11 @@ sufficient, not asserted optimal; t=0 is excluded from the physical family.
 noncomputable section
 open Matrix
 open scoped BigOperators MatrixOrder ComplexOrder
-namespace D5.S3.Quantum.Measurement.EquiprobablePgmQubitSlice
-open D5.S3.Quantum.Measurement.EquiprobablePgmSymmetric
-open D5.S3.Quantum.Measurement.EquiprobablePgmSymmetric (symmetric_scores inverse_sqrt_two)
-open D5.S3.Quantum.Measurement.EquiprobablePgmSupportIdentity (pgmEffects pgm_support)
+namespace D5.S3.Quantum.Measurement.Pgm.EquiprobablePgmQubitSlice
+open D5.S3.Quantum.Measurement.Pgm.EquiprobablePgmSymmetric
+open D5.S3.Quantum.Measurement.Pgm.EquiprobablePgmComparison
+open D5.S3.Quantum.Measurement.Pgm.EquiprobablePgmComparison (symmetric_scores inverse_sqrt_two)
+open D5.S3.Quantum.Measurement.Pgm.EquiprobablePgmSupportIdentity (pgmEffects pgm_support)
 open D5.S3.Quantum.Measurement.EquiprobablePgmActiveSetRefutation (pgmScore success)
 open D5.S3.Estimation.TransmissivityTwoPointProbeRefutation (finitePOVM)
 
@@ -216,7 +217,113 @@ theorem asymptotics :
     apply Tendsto.congr' he
     convert hc.tendsto.mono_left nhdsWithin_le_nhds using 1 <;> norm_num [f]
 
-end D5.S3.Quantum.Measurement.EquiprobablePgmQubitSlice
+/-- The restricted original-prior PGM effects in the original qubit basis. -/
+def restrictedEffects (t : ℝ) : Fin 3 → Matrix (Fin 2) (Fin 2) ℂ :=
+  ![!![(1 / 2 : ℂ), ((1 / (4 * Real.sqrt (1 - t ^ 2)) : ℝ) : ℂ);
+       ((1 / (4 * Real.sqrt (1 - t ^ 2)) : ℝ) : ℂ), (1 / 2 : ℂ)],
+    !![(1 / 2 : ℂ), ((-1 / (4 * Real.sqrt (1 - t ^ 2)) : ℝ) : ℂ);
+       ((-1 / (4 * Real.sqrt (1 - t ^ 2)) : ℝ) : ℂ), (1 / 2 : ℂ)], 0]
+
+/-- The full actual PGM sends exactly five sixths of the weak basis direction
+into the third label, independently of the positive parameter. -/
+def fullEffects (t : ℝ) : Fin 3 → Matrix (Fin 2) (Fin 2) ℂ :=
+  ![!![(((1 - t ^ 2) / (3 * (1 - 4 * t ^ 2)) : ℝ) : ℂ),
+       ((1 / (12 * Real.sqrt (1 - 4 * t ^ 2)) : ℝ) : ℂ);
+       ((1 / (12 * Real.sqrt (1 - 4 * t ^ 2)) : ℝ) : ℂ), (1 / 12 : ℂ)],
+    !![(((1 - t ^ 2) / (3 * (1 - 4 * t ^ 2)) : ℝ) : ℂ),
+       ((-1 / (12 * Real.sqrt (1 - 4 * t ^ 2)) : ℝ) : ℂ);
+       ((-1 / (12 * Real.sqrt (1 - 4 * t ^ 2)) : ℝ) : ℂ), (1 / 12 : ℂ)],
+    diagonal ![(((1 - 10 * t ^ 2) / (3 * (1 - 4 * t ^ 2)) : ℝ) : ℂ), (5 / 6 : ℂ)]]
+
+private theorem sandwich_entries (a b c x y : ℝ) :
+    diagonal ![(x : ℂ), (y : ℂ)] *
+      ((1 / 3 : ℂ) • !![(a : ℂ), (b : ℂ); (b : ℂ), (c : ℂ)]) *
+      diagonal ![(x : ℂ), (y : ℂ)] =
+    !![((a * x ^ 2 / 3 : ℝ) : ℂ), ((b * (x * y) / 3 : ℝ) : ℂ);
+       ((b * (x * y) / 3 : ℝ) : ℂ), ((c * y ^ 2 / 3 : ℝ) : ℂ)] := by
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    simp [Matrix.mul_apply, Fin.sum_univ_two] <;> push_cast <;> ring
+
+set_option maxHeartbeats 800000 in
+-- Exact CFC evaluation expands both three-effect families and their matrix entries.
+/-- These displayed effects are equal to the actual CFC effects, and both
+families are actual POVMs. The zero third restricted effect is included. -/
+theorem pgm_effects (t : ℝ) (ht : 0 < t) (hhi : t ≤ 1 / 55) :
+    pgmEffects (states t) {0, 1} = restrictedEffects t ∧
+    pgmEffects (states t) Finset.univ = fullEffects t ∧
+    finitePOVM (restrictedEffects t) ∧ finitePOVM (fullEffects t) := by
+  obtain ⟨ha, ha1, hc, hc1, hd, hload, hv⟩ := domain t ht hhi
+  have hs2 : ((Real.sqrt 2 : ℝ) : ℂ) ^ 2 = 2 := by
+    exact_mod_cast Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2)
+  have hs3 : ((Real.sqrt 3 : ℝ) : ℂ) ^ 2 = 3 := by
+    exact_mod_cast Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 3)
+  have hsA : ((Real.sqrt (1 - t ^ 2) : ℝ) : ℂ) ^ 2 = 1 - (t : ℂ) ^ 2 := by
+    exact_mod_cast Real.sq_sqrt ha.le
+  have hsV : ((Real.sqrt (1 - 4 * t ^ 2) : ℝ) : ℂ) ^ 2 = 1 - 4 * (t : ℂ) ^ 2 := by
+    exact_mod_cast Real.sq_sqrt hv.le
+  have hnV : 1 - (t : ℂ) ^ 2 * 4 ≠ 0 := by
+    exact_mod_cast (show 1 - t ^ 2 * 4 ≠ 0 by nlinarith)
+  have htC : (t : ℂ) ≠ 0 := by exact_mod_cast ht.ne'
+  have hSA : (∑ j ∈ ({0, 1} : Finset (Fin 3)), (1 / (3 : ℂ)) • states t j) =
+      diagonal ![((2 * (1 - t ^ 2) / 3 : ℝ) : ℂ), ((2 * t ^ 2 / 3 : ℝ) : ℂ)] := by
+    rw [Finset.sum_pair (by decide)]
+    ext i j
+    fin_cases i <;> fin_cases j <;> simp [states, rho] <;> push_cast <;> ring
+  have hS : (∑ j : Fin 3, (1 / (3 : ℂ)) • states t j) =
+      diagonal ![((1 - 4 * t ^ 2 : ℝ) : ℂ), ((4 * t ^ 2 : ℝ) : ℂ)] := by
+    rw [Fin.sum_univ_three]
+    ext i j
+    fin_cases i <;> fin_cases j <;> simp [states, rho] <;> push_cast <;> ring
+  let aa : Fin 3 → ℝ := ![1 - t ^ 2, 1 - t ^ 2, 1 - 10 * t ^ 2]
+  let bb : Fin 3 → ℝ := ![t / 2, -t / 2, 0]
+  let cc : Fin 3 → ℝ := ![t ^ 2, t ^ 2, 10 * t ^ 2]
+  have hρ (i : Fin 3) : states t i =
+      !![(aa i : ℂ), (bb i : ℂ); (bb i : ℂ), (cc i : ℂ)] := by
+    fin_cases i <;> ext x y <;> fin_cases x <;> fin_cases y <;>
+      simp [states, rho, aa, bb, cc] <;> push_cast <;> ring
+  have hEA : pgmEffects (states t) {0, 1} = restrictedEffects t := by
+    funext i
+    fin_cases i
+    · unfold pgmEffects
+      norm_num only [Finset.mem_insert, Finset.mem_singleton, true_or, ↓reduceIte, Nat.cast_ofNat]
+      rw [hSA, inverse_sqrt_two _ _ (by positivity) (by positivity)]
+      change diagonal _ * ((1 / 3 : ℂ) • !![_, _; _, _]) * diagonal _ = _
+      rw [sandwich_entries]
+      ext x y
+      fin_cases x <;> fin_cases y <;> simp [restrictedEffects] <;> push_cast <;> field_simp [htC] <;>
+        simp only [hs2, hs3, hsA, hsV, Real.sqrt_sq ht.le] <;> push_cast <;> ring
+    · unfold pgmEffects
+      norm_num only [Finset.mem_insert, Finset.mem_singleton, false_or, ↓reduceIte, Nat.cast_ofNat]
+      rw [hSA, inverse_sqrt_two _ _ (by positivity) (by positivity)]
+      change diagonal _ * ((1 / 3 : ℂ) • !![_, _; _, _]) * diagonal _ = _
+      rw [sandwich_entries]
+      ext x y
+      fin_cases x <;> fin_cases y <;> simp [restrictedEffects] <;> push_cast <;> field_simp [htC] <;>
+        simp only [hs2, hs3, hsA, hsV, Real.sqrt_sq ht.le] <;> push_cast <;> ring
+    · norm_num [pgmEffects, restrictedEffects]
+  have hEP : pgmEffects (states t) Finset.univ = fullEffects t := by
+    funext i
+    unfold pgmEffects
+    simp only [Finset.mem_univ, if_true, Nat.cast_ofNat]
+    rw [hS, inverse_sqrt_two _ _ hv.le (by positivity), hρ i, sandwich_entries]
+    fin_cases i <;> ext x y <;> fin_cases x <;> fin_cases y <;>
+      simp [fullEffects, aa, bb, cc] <;> push_cast <;> field_simp [htC, hnV] <;>
+      simp only [hs2, hs3, hsA, hsV, Real.sqrt_sq ht.le] <;> push_cast <;> norm_num <;> ring_nf <;> simp
+  have hpsd : ∀ i, (states t i).PosSemidef := fun i => (family t ht hhi).1 i |>.1.posSemidef
+  have hPA := (pgm_support (states t) hpsd {0, 1}).2.2.1
+  have hPP := (pgm_support (states t) hpsd Finset.univ).2.2.1
+  rw [hEA] at hPA
+  rw [hEP] at hPP
+  refine ⟨hEA, hEP, ⟨hPA, ?_⟩, ⟨hPP, ?_⟩⟩
+  · ext i j
+    fin_cases i <;> fin_cases j <;> norm_num [restrictedEffects, Fin.sum_univ_three, Matrix.one_apply] <;> field_simp <;> ring
+  · ext i j
+    fin_cases i <;> fin_cases j <;> simp [fullEffects, Fin.sum_univ_three, Matrix.one_apply] <;>
+      push_cast <;> field_simp [hnV] <;> ring_nf <;> field_simp [hnV] <;> ring
+
+
+end D5.S3.Quantum.Measurement.Pgm.EquiprobablePgmQubitSlice
 
 /- Escape-audit delivery: four source-bound registrations are currently validated
 for SupportIdentity.centered_identity/random_guessing_le and

@@ -1,12 +1,12 @@
-/- GID: D5/S3/Quantum/Measurement/EquiprobablePgmUnbounded
+/- GID: D5/S3/Quantum/Measurement/Pgm/EquiprobablePgmUnbounded
    generality: I
-   mirror-B: D5/B/S3/Quantum/Measurement/EquiprobablePgmUnbounded
+   mirror-B: D5/B/S3/Quantum/Measurement/Pgm/EquiprobablePgmUnbounded
    mirror-E: none(waiver:universal-parameter-proof)
    anchors: []
    utility: none
    digest: Unbounded centered PGM ratio at fixed dimension and label count. -/
 
-import D5.S3.Quantum.Measurement.EquiprobablePgmSymmetric
+import D5.S3.Quantum.Measurement.Pgm.EquiprobablePgmComparison
 import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
 
 /-!
@@ -20,10 +20,10 @@ actual-state unboundedness, not another proof of the old negation.
 noncomputable section
 open Matrix
 open scoped BigOperators MatrixOrder ComplexOrder
-namespace D5.S3.Quantum.Measurement.EquiprobablePgmUnbounded
-open D5.S3.Quantum.Measurement.EquiprobablePgmSymmetric
-open D5.S3.Quantum.Measurement.EquiprobablePgmSymmetric (symmetric_scores)
-open D5.S3.Quantum.Measurement.EquiprobablePgmSymmetric
+namespace D5.S3.Quantum.Measurement.Pgm.EquiprobablePgmUnbounded
+open D5.S3.Quantum.Measurement.Pgm.EquiprobablePgmSymmetric
+open D5.S3.Quantum.Measurement.Pgm.EquiprobablePgmComparison
+open D5.S3.Quantum.Measurement.Pgm.EquiprobablePgmComparison (symmetric_scores)
 open D5.S3.Quantum.Measurement.EquiprobablePgmActiveSetRefutation (pgmScore success)
 open D5.S3.Estimation.TransmissivityTwoPointProbeRefutation (finitePOVM)
 
@@ -250,7 +250,81 @@ theorem score_limits :
       nlinarith
     exact le_trans (le_max_left C 1) (le_trans hcr.le (uniform_ratio ε hε.1 hε.2).2.2.le)
 
-end D5.S3.Quantum.Measurement.EquiprobablePgmUnbounded
+/-- Actual support averages have these least spectral values. They vanish in
+the limit, so this construction supplies no positive uniform spectral floor. -/
+theorem spectral_minima (ε : ℝ) (hε : 0 < ε) (hhi : ε ≤ 1 / 8) :
+    IsLeast (spectrum ℝ (∑ i ∈ ({0, 1} : Finset (Fin 3)),
+      (1 / (3 : ℂ)) • states ε i)) (2 * ε ^ 6 / 3) ∧
+    IsLeast (spectrum ℝ (∑ i : Fin 3, (1 / (3 : ℂ)) • states ε i))
+      ((ε ^ 4 + 2 * ε ^ 6) / 3) := by
+  have hA : (∑ i ∈ ({0, 1} : Finset (Fin 3)), (1 / (3 : ℂ)) • states ε i) =
+      diagonal ![(((2 * (1 - ε ^ 6) / 3 : ℝ)) : ℂ), ((2 * ε ^ 6 / 3 : ℝ) : ℂ)] := by
+    rw [Finset.sum_pair (by decide)]
+    ext i j
+    fin_cases i <;> fin_cases j <;> simp [states, rho] <;> push_cast <;> ring
+  have hP : (∑ i : Fin 3, (1 / (3 : ℂ)) • states ε i) =
+      diagonal ![(((3 - ε ^ 4 - 2 * ε ^ 6) / 3 : ℝ) : ℂ),
+        (((ε ^ 4 + 2 * ε ^ 6) / 3 : ℝ) : ℂ)] := by
+    rw [Fin.sum_univ_three]
+    ext i j
+    fin_cases i <;> fin_cases j <;> simp [states, rho] <;> push_cast <;> ring
+  have h6 := pow_le_pow_left₀ hε.le hhi 6
+  have h4 := pow_le_pow_left₀ hε.le hhi 4
+  norm_num at h6 h4
+  have hspectrum (u v r : ℝ) : r ∈ spectrum ℝ (diagonal ![(u : ℂ), (v : ℂ)]) ↔
+      r = u ∨ r = v := by
+    rw [← spectrum.algebraMap_mem_iff ℂ, spectrum_diagonal]
+    change (∃ i : Fin 2, ![(u : ℂ), (v : ℂ)] i = (r : ℂ)) ↔ _
+    constructor
+    · rintro ⟨i, hi⟩
+      fin_cases i
+      · left; change (u : ℂ) = (r : ℂ) at hi; exact_mod_cast hi.symm
+      · right; change (v : ℂ) = (r : ℂ) at hi; exact_mod_cast hi.symm
+    · rintro (rfl | rfl)
+      · exact ⟨0, rfl⟩
+      · exact ⟨1, rfl⟩
+  constructor
+  · rw [hA]
+    constructor
+    · exact (hspectrum _ _ _).mpr (Or.inr rfl)
+    · intro r hr
+      rcases (hspectrum _ _ _).mp hr with rfl | rfl <;> linarith
+  · rw [hP]
+    constructor
+    · exact (hspectrum _ _ _).mpr (Or.inr rfl)
+    · intro r hr
+      rcases (hspectrum _ _ _).mp hr with rfl | rfl <;> linarith
+
+open Filter Topology in
+/-- The infima of the actual two average spectra tend to zero. The IsLeast
+identities above identify them throughout the entire physical interval. -/
+theorem spectral_floor_limits :
+    Tendsto (fun ε : ℝ => sInf (spectrum ℝ
+      (∑ i ∈ ({0, 1} : Finset (Fin 3)), (1 / (3 : ℂ)) • states ε i)))
+      (𝓝[>] 0) (𝓝 0) ∧
+    Tendsto (fun ε : ℝ => sInf (spectrum ℝ
+      (∑ i : Fin 3, (1 / (3 : ℂ)) • states ε i))) (𝓝[>] 0) (𝓝 0) := by
+  have hA : (fun ε : ℝ => sInf (spectrum ℝ
+      (∑ i ∈ ({0, 1} : Finset (Fin 3)), (1 / (3 : ℂ)) • states ε i)))
+      =ᶠ[𝓝[>] 0] (fun ε => 2 * ε ^ 6 / 3) := by
+    filter_upwards [small_parameters] with ε hε
+    exact (spectral_minima ε hε.1 hε.2).1.csInf_eq
+  have hP : (fun ε : ℝ => sInf (spectrum ℝ
+      (∑ i : Fin 3, (1 / (3 : ℂ)) • states ε i)))
+      =ᶠ[𝓝[>] 0] (fun ε => (ε ^ 4 + 2 * ε ^ 6) / 3) := by
+    filter_upwards [small_parameters] with ε hε
+    exact (spectral_minima ε hε.1 hε.2).2.csInf_eq
+  constructor
+  · have hc : ContinuousAt (fun ε : ℝ => 2 * ε ^ 6 / 3) 0 := by fun_prop
+    apply (show Tendsto (fun ε : ℝ => 2 * ε ^ 6 / 3) (𝓝[>] 0) (𝓝 0) from by
+      simpa using hc.tendsto.mono_left nhdsWithin_le_nhds).congr'
+    exact hA.symm
+  · have hc : ContinuousAt (fun ε : ℝ => (ε ^ 4 + 2 * ε ^ 6) / 3) 0 := by fun_prop
+    apply (show Tendsto (fun ε : ℝ => (ε ^ 4 + 2 * ε ^ 6) / 3) (𝓝[>] 0) (𝓝 0) from by
+      simpa using hc.tendsto.mono_left nhdsWithin_le_nhds).congr'
+    exact hP.symm
+
+end D5.S3.Quantum.Measurement.Pgm.EquiprobablePgmUnbounded
 
 /- Escape-audit delivery: four source-bound registrations are currently validated
 for SupportIdentity.centered_identity/random_guessing_le and
