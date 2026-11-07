@@ -2603,3 +2603,83 @@ Substitution into (192.2) proves (192.3).
 By Lemma 169.1, the three vectors $Pq,P^2q,P^3q$ are linearly independent. Their Gram matrix in the positive $L^2(m)$ inner product is therefore positive definite. If $h\in\mathcal R_u\cap\mathcal S_q$, (192.3) says that $h$ is orthogonal to every vector in $\mathcal S_q$; taking the inner product with $h$ itself gives $\|h\|_2^2=0$. Thus $h=0$ as an $m$-class, proving (192.4). The dimension statements follow from (191.4). $\square$
 
 Hence any nontrivial rank-three or rank-four radical must be sought in the complement of the first three source-propagation modes. This is a necessary geometric condition, not a nonexistence proof: the out-of-plane radical, the remaining nonlinear common-first equations, arbitrary partitions beyond the rank trichotomy, $F_{64}$, $H43$, SRS\text{-}20, physical succession and Lean/kernel formalization remain open.
+
+## 193. The radical obeys a weighted candidate-span barrier
+
+The constant-label calculation in Section 192 is the first member of a larger family. Every candidate-span function can be inserted beside a radical element, producing two weighted mode-annihilation spaces. These spaces give an exact finite-dimensional barrier for any rank-three or rank-four escape.
+
+**Definition 193.1 (weighted candidate-span mode spaces).** For a bounded full-zero partition $u$, define
+
+$$
+\begin{aligned}
+\mathcal M_u
+  &=\operatorname{span}_{\mathbb R}
+    \{P(gw),P^2(gw):w\in\mathcal W_u\},\\
+\mathcal N_u
+  &=\operatorname{span}_{\mathbb R}
+    \{Pw,P^2w:w\in\mathcal W_u\}
+    \subset L^2(m;\mathbb R).
+\end{aligned}
+\tag{193.1}
+$$
+
+Here products such as $gw$ are pointwise products of bounded representatives, and the heat contraction places all displayed functions in $L^2(m)$.
+
+**Proposition 193.2 (weighted radical annihilation).** If $u$ has all sixty-four residuals equal to zero and $h\in\mathcal R_u$, then
+
+$$
+\langle h,\phi\rangle_m=0
+\quad(\phi\in\mathcal M_u),
+\qquad
+\langle gh,\psi\rangle_m=0
+\quad(\psi\in\mathcal N_u).
+\tag{193.2}
+$$
+
+Equivalently,
+
+$$
+\mathcal R_u\subseteq\mathcal M_u^{\perp_m},
+\qquad
+g\mathcal R_u\subseteq\mathcal N_u^{\perp_m}.
+\tag{193.3}
+$$
+
+In particular, since $1\in\mathcal W_u$, every radical element is orthogonal to $Pg$ and $P^2g$ and its $g$-weighted class is orthogonal to $P1=P^21=1$; together with Section 192 this gives the first three source-mode constraints for every radical direction.
+
+*Proof.* Let $w\in\mathcal W_u$. Because $h$ lies in the first, middle and terminal slot radicals, the four contractions with the constant candidate function $1\in\mathcal W_u$ vanish:
+
+$$
+\mathcal C(w,h,1)=0,
+\qquad
+\mathcal C(w,1,h)=0,
+\qquad
+\mathcal C(h,w,1)=0,
+\qquad
+\mathcal C(h,1,w)=0.
+\tag{193.4}
+$$
+
+Using $P1=1$ and self-adjointness of $P$, these equations become
+
+$$
+\begin{aligned}
+0=\mathcal C(w,h,1)
+  &=\int_Ggw\,P h\,dm
+   =\langle P(gw),h\rangle_m,\\
+0=\mathcal C(w,1,h)
+  &=\int_Ggw\,P^2h\,dm
+   =\langle P^2(gw),h\rangle_m,\\
+0=\mathcal C(h,w,1)
+  &=\int_Ggh\,Pw\,dm
+   =\langle gh,Pw\rangle_m,\\
+0=\mathcal C(h,1,w)
+  &=\int_Ggh\,P^2w\,dm
+   =\langle gh,P^2w\rangle_m.
+\end{aligned}
+\tag{193.5}
+$$
+
+As $w$ ranges over $\mathcal W_u$, (193.5) is exactly (193.2)--(193.3). Taking $w=1$ shows that $Pg$ and $P^2g$ belong to $\mathcal M_u$ and that $gh$ is orthogonal to $1$; the missing $g$ mode is supplied by $\mathcal C(h,1,1)=0$ in Section 192. $\square$
+
+Thus a rank-three radical must satisfy one weighted annihilation system and a rank-four radical must satisfy two independent directions in the same system, in addition to lying in $\mathcal S_q^{\perp_m}$. This is a necessary barrier for the remaining out-of-plane branches, not a nonexistence proof: the dimensions of $\mathcal M_u$ and $\mathcal N_u$ may collapse, and the residual-zero partition, $F_{64}$, $H43$, SRS\text{-}20, physical succession and Lean/kernel formalization remain open.
