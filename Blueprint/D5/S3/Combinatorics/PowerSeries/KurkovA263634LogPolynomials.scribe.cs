@@ -8,7 +8,7 @@ internal sealed class KurkovA263634LogPolynomialsDocument : IScribeDocumentDefin
 {
     private const string Prefix = "D5/S3/Combinatorics/PowerSeries/KurkovA263634LogPolynomials.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/RecurrenceComposition/kurkov2025a263634");
+        LibraryNoteRef.Create("D5/L/Certificates/kurkov2025a263634");
     private const string GeneratingQuote = "G.f.: Log(1 + Sum_{i >= 1} x_i*t^i/i!) =  Sum_{n >= 1} L_n(x_1, x_2, ...)*t^n/n!. [Comtet, p. 140, Eq. [5a]. - corrected by _Tom Copeland_, Sep 08 2016]";
     private const string RecursionQuote = "Conjecture: row polynomials are R(n,1) for n > 0 where R(n,k) = R(n-1,k+1) - Sum_{j=1..n-1} binomial(n-2,j-1)*R(j,k)*R(n-j,1) for n > 1, k > 0 with R(1,k) = x_k for k > 0. - _Mikhail Kurkov_, Mar 30 2025";
 
