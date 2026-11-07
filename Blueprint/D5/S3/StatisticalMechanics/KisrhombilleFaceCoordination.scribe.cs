@@ -50,6 +50,30 @@ internal sealed class KisrhombilleFaceCoordinationDocument : IScribeDocumentDefi
                 "Set.ncard is the natural cardinality of the displayed set. Every shell is "
                     + "proved finite by containment in a finite coordinate box. Radius zero is "
                     + "included and contains exactly the root."),
+            Definition("polygon", "polygon", "Translated cut rectangles", PolygonFormula(),
+                "The natural rectangle 0≤u≤A, 0≤v≤B is cut by deleting u+v<l and "
+                    + "the reflected triangle obtained from natural pairs with sum less than r. "
+                    + "Finset.range(n) contains the naturals less than n; "
+                    + "Finset.HasAntidiagonal.antidiagonal(n) contains natural pairs summing to n. "
+                    + "Finset.biUnion forms their finite union, Finset.product forms the rectangle, "
+                    + "and ∖ removes the union ∪ of both corners. Subtraction in the "
+                    + "reflection is truncated natural subtraction. The outer image map "
+                    + "casts each natural coordinate to an integer and translates by (i0,j0). "
+                    + "The projections p.1 and p.2 are the first and second components."),
+            SharedTheorem("polygon-mem", "polygon_mem", "Six inequalities for polygon membership",
+                PolygonMembershipFormula(), "Each corner fits in the rectangle when its size is "
+                    + "at most A+1 and B+1. Under these four natural inequalities, membership is "
+                    + "equivalent to the displayed six integer inequalities. The last two bounds "
+                    + "remove the two triangular corners."),
+            SharedTheorem("polygon-card", "polygon_card", "Polygon cardinality", PolygonCardFormula(),
+                "When l+r≤A+B+1, the removed corners are disjoint. Their doubled sizes are "
+                    + "l(l+1) and r(r+1). Subtracting them from twice the rectangle size gives "
+                    + "the formula. The cardinality is cast to an integer before multiplication."),
+            SharedTheorem("shell-finite", "shell_finite", "Finiteness of every distance shell",
+                All("n", Naturals(), App(Q("Set", "Finite"), SetOf("s", V("Simplex"),
+                    Eq(Call("distance", V("s")), V("n"))))),
+                "Every shell is contained in the finite coordinate ball of the same radius. "
+                    + "Here distance uses the upward-face root, and n is any natural number."),
             Describe.Lean(DescribeId.Create("result"), DeclarationHandle.Create(Module + ".result"),
                 H("Barker's generating-function identity"),
                 StatementSource.FromAuthor(Disp(ResultFormula())),
@@ -138,6 +162,73 @@ internal sealed class KisrhombilleFaceCoordinationDocument : IScribeDocumentDefi
                 Mul(D(6), Pow(x, D(3)))), Pow(x, D(4))));
     }
 
+    private static DocumentBlock SharedTheorem(string id, string name, string title, Formula formula, string prose) =>
+        Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Module + "." + name), H(title),
+            StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(Source),
+            Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
+
+    private static Formula PolygonParameters(Formula body)
+    {
+        foreach (var name in new[] { "j0", "i0" }) body = All(name, Integers(), body);
+        foreach (var name in new[] { "r", "l", "B", "A" }) body = All(name, Naturals(), body);
+        return body;
+    }
+
+    private static Formula PolygonHypotheses(Formula body, bool disjoint)
+    {
+        if (disjoint) body = Implies(Le(Add(V("l"), V("r")), Add(Add(V("A"), V("B")), D(1))), body);
+        foreach (var (c, bound) in new[] { ("r", "B"), ("r", "A"), ("l", "B"), ("l", "A") })
+            body = Implies(Le(V(c), Add(V(bound), D(1))), body);
+        return body;
+    }
+
+    private static Formula PolygonFormula()
+    {
+        var p = V("p");
+        var map = Seq(LambdaLower, Sp, p, Sp, Mapsto, Sp,
+            Pair(Add(V("i0"), Cast(Projection(p, 1), Integers())),
+                Add(V("j0"), Cast(Projection(p, 2), Integers()))));
+        var antidiagonal = Seq(Operatorname,
+            Grp(V("Finset"), Dot, V("HasAntidiagonal"), Dot, V("antidiagonal")));
+        Formula Triangle(Formula n) => App(Q("Finset", "biUnion"),
+            App(Q("Finset", "range"), n), antidiagonal);
+        var q = V("q");
+        var reflection = Seq(LambdaLower, Sp, q, Colon, Sp, Product(Naturals(), Naturals()),
+            Sp, Mapsto, Sp, Pair(Sub(V("A"), Projection(q, 1)), Sub(V("B"), Projection(q, 2))));
+        var rectangle = App(Q("Finset", "product"),
+            App(Q("Finset", "range"), Add(V("A"), D(1))),
+            App(Q("Finset", "range"), Add(V("B"), D(1))));
+        var corner = App(Q("Finset", "image"), Parenthesized(reflection), Triangle(V("r")));
+        var cutRectangle = Parenthesized(Seq(rectangle, Sp, Setminus, Sp,
+            Parenthesized(Seq(Triangle(V("l")), Sp, Cup, Sp, corner))));
+        return PolygonParameters(Eq(Polygon(), App(Q("Finset", "image"), Parenthesized(map),
+            cutRectangle)));
+    }
+
+    private static Formula PolygonMembershipFormula()
+    {
+        var i = Projection(V("p"), 1); var j = Projection(V("p"), 2);
+        var sum = Sub(Sub(Add(i, j), V("i0")), V("j0"));
+        var conditions = And(Le(V("i0"), i), And(Le(i, Add(V("i0"), Cast(V("A"), Integers()))),
+            And(Le(V("j0"), j), And(Le(j, Add(V("j0"), Cast(V("B"), Integers()))),
+            And(Le(Cast(V("l"), Integers()), sum),
+                Le(Add(sum, Cast(V("r"), Integers())), Add(Cast(V("A"), Integers()), Cast(V("B"), Integers()))))))));
+        return PolygonParameters(PolygonHypotheses(All("p", Product(Integers(), Integers()),
+            Iff(Seq(V("p"), Sp, InMacro, Sp, Polygon()), conditions)), false));
+    }
+
+    private static Formula PolygonCardFormula()
+    {
+        var a = Cast(V("A"), Integers()); var b = Cast(V("B"), Integers());
+        var l = Cast(V("l"), Integers()); var r = Cast(V("r"), Integers());
+        return PolygonParameters(PolygonHypotheses(Eq(Mul(D(2), Cast(App(Q("Finset", "card"), Polygon()), Integers())),
+            Sub(Sub(Mul(Mul(D(2), Add(a, D(1))), Add(b, D(1))), Mul(l, Add(l, D(1)))), Mul(r, Add(r, D(1))))), true));
+    }
+
+    private static Formula Polygon() => Call("polygon", V("A"), V("B"), V("l"), V("r"), V("i0"), V("j0"));
+    private static Formula Projection(Formula p, byte i) => Seq(p, Dot, D(i));
+    private static Formula Le(Formula a, Formula b) => Seq(a, Sp, Leq, Sp, b);
+    private static Formula Implies(Formula a, Formula b) => Seq(Parenthesized(a), Sp, Longrightarrow, Sp, Parenthesized(b));
     private static Formula Naturals() => Seq(Mathbb, Grp(V("N")));
     private static Formula Integers() => Seq(Mathbb, Grp(V("Z")));
     private static Formula V(string name) => F.Id(name);

@@ -90,7 +90,63 @@ $$\forall n: \mathbb{N}, (\operatorname{a}\left(n\right) = \operatorname{Set.nca
 
 Set.ncard is the natural cardinality of the displayed set. Every shell is proved finite by containment in a finite coordinate box. Radius zero is included and contains exactly the root.
 
-**Theorem 1.7 (Barker's generating-function identity).**
+**Definition 1.7 (Translated cut rectangles).**
+
+$$\forall A: \mathbb{N}, (\forall B: \mathbb{N}, (\forall l: \mathbb{N}, (\forall r: \mathbb{N}, (\forall i0: \mathbb{Z}, (\forall j0: \mathbb{Z}, (\operatorname{polygon}\left(A, B, l, r, i0, j0\right) = \operatorname{Finset.image}\left((\lambda p \mapsto (i0 + (p.1: \mathbb{Z}), j0 + (p.2: \mathbb{Z}))), (\operatorname{Finset.product}\left(\operatorname{Finset.range}\left(A + 1\right), \operatorname{Finset.range}\left(B + 1\right)\right) \setminus (\operatorname{Finset.biUnion}\left(\operatorname{Finset.range}\left(l\right), \operatorname{Finset.HasAntidiagonal.antidiagonal}\right) \cup \operatorname{Finset.image}\left((\lambda q: \mathbb{N} \times (\mathbb{N}) \mapsto (A - q.1, B - q.2)), \operatorname{Finset.biUnion}\left(\operatorname{Finset.range}\left(r\right), \operatorname{Finset.HasAntidiagonal.antidiagonal}\right)\right)))\right)))))))$$
+
+*Formalization.* `D5/S3/StatisticalMechanics/KisrhombilleFaceCoordination.polygon` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* N. J. A. Sloane, Colin Barker (2018). *OEIS A298038: coordination sequence of Dual(4.6.12) at a hexavalent node*. URL: <https://oeis.org/A298038>.
+
+*Commentary.*
+
+The natural rectangle 0≤u≤A, 0≤v≤B is cut by deleting u+v<l and the reflected triangle obtained from natural pairs with sum less than r. Finset.range(n) contains the naturals less than n; Finset.HasAntidiagonal.antidiagonal(n) contains natural pairs summing to n. Finset.biUnion forms their finite union, Finset.product forms the rectangle, and ∖ removes the union ∪ of both corners. Subtraction in the reflection is truncated natural subtraction. The outer image map casts each natural coordinate to an integer and translates by (i0,j0). The projections p.1 and p.2 are the first and second components.
+
+**Theorem 1.8 (Six inequalities for polygon membership).**
+
+$$\forall A: \mathbb{N}, (\forall B: \mathbb{N}, (\forall l: \mathbb{N}, (\forall r: \mathbb{N}, (\forall i0: \mathbb{Z}, (\forall j0: \mathbb{Z}, ((l \leq A + 1) \longrightarrow ((l \leq B + 1) \longrightarrow ((r \leq A + 1) \longrightarrow ((r \leq B + 1) \longrightarrow (\forall p: \mathbb{Z} \times (\mathbb{Z}), ((p \in \operatorname{polygon}\left(A, B, l, r, i0, j0\right)) \iff ((i0 \leq p.1) \land ((p.1 \leq i0 + (A: \mathbb{Z})) \land ((j0 \leq p.2) \land ((p.2 \leq j0 + (B: \mathbb{Z})) \land (((l: \mathbb{Z}) \leq p.1 + p.2 - i0 - j0) \land (p.1 + p.2 - i0 - j0 + (r: \mathbb{Z}) \leq (A: \mathbb{Z}) + (B: \mathbb{Z}))))))))))))))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/KisrhombilleFaceCoordination.polygon_mem` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* N. J. A. Sloane, Colin Barker (2018). *OEIS A298038: coordination sequence of Dual(4.6.12) at a hexavalent node*. URL: <https://oeis.org/A298038>.
+
+*Commentary.*
+
+Each corner fits in the rectangle when its size is at most A+1 and B+1. Under these four natural inequalities, membership is equivalent to the displayed six integer inequalities. The last two bounds remove the two triangular corners.
+
+**Theorem 1.9 (Polygon cardinality).**
+
+$$\forall A: \mathbb{N}, (\forall B: \mathbb{N}, (\forall l: \mathbb{N}, (\forall r: \mathbb{N}, (\forall i0: \mathbb{Z}, (\forall j0: \mathbb{Z}, ((l \leq A + 1) \longrightarrow ((l \leq B + 1) \longrightarrow ((r \leq A + 1) \longrightarrow ((r \leq B + 1) \longrightarrow ((l + r \leq A + B + 1) \longrightarrow (2 \cdot (\operatorname{Finset.card}\left(\operatorname{polygon}\left(A, B, l, r, i0, j0\right)\right): \mathbb{Z}) = 2 \cdot \left((A: \mathbb{Z}) + 1\right) \cdot \left((B: \mathbb{Z}) + 1\right) - (l: \mathbb{Z}) \cdot \left((l: \mathbb{Z}) + 1\right) - (r: \mathbb{Z}) \cdot \left((r: \mathbb{Z}) + 1\right))))))))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/KisrhombilleFaceCoordination.polygon_card` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* N. J. A. Sloane, Colin Barker (2018). *OEIS A298038: coordination sequence of Dual(4.6.12) at a hexavalent node*. URL: <https://oeis.org/A298038>.
+
+*Commentary.*
+
+When l+r≤A+B+1, the removed corners are disjoint. Their doubled sizes are l(l+1) and r(r+1). Subtracting them from twice the rectangle size gives the formula. The cardinality is cast to an integer before multiplication.
+
+**Theorem 1.10 (Finiteness of every distance shell).**
+
+$$\forall n: \mathbb{N}, (\operatorname{Set.Finite}\left(\{s: Simplex \mid \operatorname{distance}\left(s\right) = n\}\right))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/KisrhombilleFaceCoordination.shell_finite` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* N. J. A. Sloane, Colin Barker (2018). *OEIS A298038: coordination sequence of Dual(4.6.12) at a hexavalent node*. URL: <https://oeis.org/A298038>.
+
+*Commentary.*
+
+Every shell is contained in the finite coordinate ball of the same radius. Here distance uses the upward-face root, and n is any natural number.
+
+**Theorem 1.11 (Barker's generating-function identity).**
 
 $$(1 - (\operatorname{PowerSeries.X}: \operatorname{PowerSeries}\left(\mathbb{Z}\right))^{2})^{2} \cdot \operatorname{PowerSeries.mk}\left(\lambda n \mapsto (\operatorname{a}\left(n\right): \mathbb{Z})\right) = 1 + 6 \cdot \operatorname{PowerSeries.X} + 22 \cdot \operatorname{PowerSeries.X}^{2} + 6 \cdot \operatorname{PowerSeries.X}^{3} + \operatorname{PowerSeries.X}^{4}$$
 
@@ -122,8 +178,12 @@ Successive ball differences give a(0)=1, a(2k+1)=12k+6 and a(2k+2)=24(k+1). Comp
 - Truth anchor: `D5/S3/StatisticalMechanics/KisrhombilleFaceCoordination.a`
 - Truth anchor: `D5/S3/StatisticalMechanics/KisrhombilleFaceCoordination.distance`
 - Truth anchor: `D5/S3/StatisticalMechanics/KisrhombilleFaceCoordination.graph`
+- Truth anchor: `D5/S3/StatisticalMechanics/KisrhombilleFaceCoordination.polygon`
+- Truth anchor: `D5/S3/StatisticalMechanics/KisrhombilleFaceCoordination.polygon_card`
+- Truth anchor: `D5/S3/StatisticalMechanics/KisrhombilleFaceCoordination.polygon_mem`
 - Truth anchor: `D5/S3/StatisticalMechanics/KisrhombilleFaceCoordination.result`
 - Truth anchor: `D5/S3/StatisticalMechanics/KisrhombilleFaceCoordination.root`
+- Truth anchor: `D5/S3/StatisticalMechanics/KisrhombilleFaceCoordination.shell_finite`
 - Truth anchor: `D5/S3/StatisticalMechanics/KisrhombilleFaceCoordination.support`
 - Dependency: [D5/S3/Combinatorics/PositionSets/VertexPositionRatioRefutation](../Combinatorics/PositionSets/VertexPositionRatioRefutation.md)
 - Dependency: [D5/S3/StatisticalMechanics/TeaCoordinationSequence](TeaCoordinationSequence.md)
