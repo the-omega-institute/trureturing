@@ -9,7 +9,7 @@ internal sealed class OrderUnitNormDocument : IScribeDocumentDefinition
         "The original Archimedean order-unit cone gives an exact norm and a quantitative preparation criterion for the same positive unital exponential group.",
         H("The original order-unit norm"),
         Blocks(
-            Paragraph(Text("Let E be any finite-dimensional real normed vector space. Its auxiliary norm supplies the usual topology only. The data A consist of a convex cone C containing zero, a closedness proof, salience, and a specified vector u in its interior. Salience means that a vector and its negative can both belong to C only when the vector vanishes. No inner product, lattice, Jordan product, self-duality or nonzero-dimension assumption is used.")),
+            Paragraph(Text("Let E be any real normed vector space. Its auxiliary norm supplies the topology only. The exponential and generator statements below separately require finite dimension. The data A consist of a convex cone C containing zero, a closedness proof, salience, and a specified vector u in its interior. Salience means that a vector and its negative can both belong to C only when the vector vanishes. No inner product, lattice, Jordan product, self-duality or nonzero-dimension assumption is used.")),
             Paragraph(Text("Put B equal to the vectors v for which u-v and u+v belong to C. For each v, let S(v) be the nonnegative real radii r for which r u-v and r u+v belong to C, and let n(v) be inf S(v). In particular, zero is retained among the radii. The order relation is exactly w-v in C.")),
             Describe.Lean(
                 DescribeId.Create("constructed-order-norm-core"),

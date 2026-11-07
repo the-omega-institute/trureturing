@@ -729,18 +729,14 @@ theorem quantitative_generator_iff [FiniteDimensional ℝ E] (H : E →ₗ[ℝ] 
     · simpa only [min_eq_left h] using h1
     · simpa only [min_eq_right h] using h2
 
-
 private lemma positive_scaled_bound (T : E →ₗ[ℝ] E) (c : ℝ) (hc : 0 ≤ c)
     (hT : ∀ v ∈ A.cone, T v ∈ A.cone) (hu : T A.unit = c • A.unit) (v : E) :
     A.orderNorm (T v) ≤ c * A.orderNorm v := by
   apply (A.norm_le_iff _ _).mpr
   have hv := A.norm_attained v
   refine ⟨mul_nonneg hc hv.1, ?_, ?_⟩
-  · have h := hT _ hv.2.1
-    simpa only [map_sub, map_smul, hu, smul_smul, mul_comm] using h
-  · have h := hT _ hv.2.2
-    simpa only [map_add, map_smul, hu, smul_smul, mul_comm] using h
-
+  · simpa only [map_sub, map_smul, hu, smul_smul, mul_comm] using hT _ hv.2.1
+  · simpa only [map_add, map_smul, hu, smul_smul, mul_comm] using hT _ hv.2.2
 private lemma unit_scalar_nonneg (hu : A.unit ≠ 0) {r : ℝ}
     (hr : r • A.unit ∈ A.cone) : 0 ≤ r := by
   by_contra hn
@@ -752,7 +748,6 @@ private lemma unit_scalar_nonneg (hu : A.unit ≠ 0) {r : ℝ}
     have he : (-r)⁻¹ * r = -1 := by simp [inv_neg, mul_comm, hlt.ne]
     rw [he, neg_one_smul]
   exact A.salient A.unit A.unit_mem hu hneg
-
 private def bernsteinMap (P : E →ₗ[ℝ] E) (n k : ℕ) : E →ₗ[ℝ] E :=
   Polynomial.aeval P (bernsteinPolynomial ℝ n k)
 
@@ -763,7 +758,9 @@ private lemma bernsteinMap_formula (P : E →ₗ[ℝ] E) (n k : ℕ) :
 private lemma positive_pow (T : E →ₗ[ℝ] E)
     (hT : ∀ v ∈ A.cone, T v ∈ A.cone) (n : ℕ) :
     ∀ v ∈ A.cone, (T ^ n) v ∈ A.cone := by
-  simpa only [Module.End.pow_apply] using (show Set.MapsTo T A.cone A.cone from hT).iterate n
+  intro v hv
+  rw [Module.End.pow_apply]
+  exact (show Set.MapsTo T A.cone A.cone from hT).iterate n hv
 
 private lemma pow_unit (T : E →ₗ[ℝ] E) (c : ℝ) (hu : T A.unit = c • A.unit)
     (n : ℕ) : (T ^ n) A.unit = c ^ n • A.unit := by
@@ -777,8 +774,7 @@ private lemma bernsteinMap_bound (P : E →ₗ[ℝ] E) (c : ℝ)
     (hu : P A.unit = c • A.unit) (n k : ℕ) (v : E) :
     A.orderNorm (bernsteinMap P n k v) ≤
       bernstein n k ⟨c, hc⟩ * A.orderNorm v := by
-  have hQ : ∀ v ∈ A.cone, (1 - P) v ∈ A.cone := by
-    intro v hv
+  have hQ : ∀ v ∈ A.cone, (1 - P) v ∈ A.cone := fun v hv => by
     simpa using (hP v hv).2
   have hQu : (1 - P) A.unit = (1 - c) • A.unit := by simp [hu, sub_smul]
   have hp : ∀ v ∈ A.cone, bernsteinMap P n k v ∈ A.cone := by
@@ -871,10 +867,8 @@ theorem identity_dominated_scalar (P : E →ₗ[ℝ] E) (c : ℝ)
       simpa [hu, sub_smul] using (hP _ A.unit_mem).2
     linarith [A.unit_scalar_nonneg hunit h]
   intro v
-  apply sub_eq_zero.mp
-  apply (A.norm_zero_iff _).mp
-  apply le_antisymm _ (A.norm_nonneg _)
-  by_contra hnot
+  apply sub_eq_zero.mp; apply (A.norm_zero_iff _).mp
+  apply le_antisymm _ (A.norm_nonneg _); by_contra hnot
   have hd : 0 < A.orderNorm (P v - c • v) := lt_of_not_ge hnot
   let d := A.orderNorm (P v - c • v)
   let r := A.orderNorm v

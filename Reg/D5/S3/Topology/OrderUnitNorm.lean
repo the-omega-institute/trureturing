@@ -201,4 +201,5 @@ theorem rigidity_actual_positive.{u} : rigidityArena.{u}.Law rigidityActual.{u} 
 #print axioms rigidity_source_bridge
 #print axioms rigidity_actual_positive
 
+
 end Reg.D5.S3.Topology.OrderUnitNorm
