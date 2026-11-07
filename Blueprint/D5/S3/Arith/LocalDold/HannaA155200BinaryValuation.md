@@ -22,6 +22,10 @@ $$\forall n \in \mathbb{N},\; \exists z \in \mathbb{Z},\; \operatorname{Odd}\lef
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/LocalDold/HannaA155200BinaryValuation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/a155200-binaryvaluation` (proved) by `D5/S3/Arith/LocalDold/HannaA155200BinaryValuation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"a155200-binaryvaluation","declaration_gid":"D5/S3/Arith/LocalDold/HannaA155200BinaryValuation.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Paul D. Hanna (2009). *OEIS A155200 exact binary valuation conjecture*. URL: <https://oeis.org/A155200/internal>.

@@ -43,7 +43,10 @@ internal sealed class HannaA155200BinaryValuationDocument : IScribeDocumentDefin
                     + "and every other term has a factor divisible by four. "
                     + "Legendre's factorial digit-sum identity and coprime cancellation give the odd integer z. "
                     + "No convergence or truncation condition is used."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("a155200-binaryvaluation"),
+                    ResolutionKind.Proved)))));
 
     private static Formula ClaimBody()
     {
