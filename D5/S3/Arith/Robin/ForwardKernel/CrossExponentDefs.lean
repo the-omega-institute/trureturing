@@ -34,6 +34,14 @@ def movingShift (θ s x : ℝ) : ℝ :=
 def windowAverage (R : ℝ) (u : ℝ → ℝ) (x : ℝ) : ℝ :=
   (∫ r in (0 : ℝ)..R, u (x + r)) / R
 
+/-- Two successive forward averages at the same scale. -/
+def doubleAverage (R : ℝ) (E : ℝ → ℝ) : ℝ → ℝ :=
+  windowAverage R (windowAverage R E)
+
+/-- The difference between double averages at consecutive dyadic scales. -/
+def smoothingBlock (R : ℝ) (E : ℝ → ℝ) (x : ℝ) : ℝ :=
+  doubleAverage R E x - doubleAverage (2 * R) E x
+
 /-- Uniform cumulative variance bounds for lengths comparable to the scale `R`. -/
 def ComparableLengthVarianceUpperFor (E R : ℝ → ℝ) : Prop :=
   (∀ᶠ X : ℝ in atTop, 0 < R X) ∧

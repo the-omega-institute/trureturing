@@ -83,6 +83,15 @@ internal sealed class VarianceTransferDocument : IScribeDocumentDefinition
                     "On a finite rectangle, the square of an increment is integrable with respect to the product of the two restricted Lebesgue measures when the starting point is the first coordinate and the step is any continuous function of both coordinates."))),
                 DescribeRole.Theorem),
             Describe.Lean(
+                DescribeId.Create("lp-norm-two-eq-interval-l2"),
+                DeclarationHandle.Create(Prefix + "lpNorm_two_eq_intervalL2"),
+                H("Interval L2 and lpNorm conversion"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For an almost everywhere measurable real function on an ordered finite interval, its lpNorm at exponent two on the restricted interval measure equals the square-root interval L2 norm."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("interval-l2-reverse-triangle"),
                 DeclarationHandle.Create(Prefix + "interval_l2_reverse_triangle"),
                 H("The reverse triangle inequality"),

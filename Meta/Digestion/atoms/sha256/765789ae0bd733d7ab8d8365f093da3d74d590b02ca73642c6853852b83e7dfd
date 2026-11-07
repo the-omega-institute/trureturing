@@ -1,0 +1,19 @@
+**定义 6.1（带上下文的二元关系单元）。**
+
+在 $\mathbb C^2\otimes\mathcal K$ 上，按二元标签写
+
+$$
+\rho=\begin{pmatrix}A&C^*\\C&B\end{pmatrix}\succeq0,
+\qquad \operatorname{Tr}(A+B)=1.
+$$
+
+定义四个 Hermitian 上下文算子
+
+$$
+S=A+B,\qquad Z=A-B,\qquad X=C+C^*,\qquad Y=i(C^*-C).
+$$
+
+$S$ 是保留的上下文归一化算子，而 $X,Y,Z$ 是三个算子值关系轴。
+
+<a id="thm:operatoraxes"></a>
+
