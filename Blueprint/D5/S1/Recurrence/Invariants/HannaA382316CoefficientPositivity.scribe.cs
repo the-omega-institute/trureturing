@@ -29,7 +29,7 @@ internal sealed class HannaA382316CoefficientPositivityDocument : IScribeDocumen
             DocumentEdge.Dependency.Create(GidRef.Create("D5/S1/Recurrence/Invariants/UnitReversionSquareParity")),
             DocumentEdge.Dependency.Create(GidRef.Create("D5/S1/Recurrence/Invariants/AbsoluteReciprocalGeometricParity"))]));
 
-    private static LibraryNoteRef Note() => LibraryNoteRef.Create("D5/L/RecurrenceComposition/hanna2025a382316");
+    private static LibraryNoteRef Note() => LibraryNoteRef.Create("D5/L/Certificates/hanna2025a382316");
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
         DescribeRole role, AssessedProvenance provenance) =>
