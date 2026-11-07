@@ -71,35 +71,35 @@ internal sealed class RichWordTypeIIOccurrenceDocument : IScribeDocumentDefiniti
                 + "factor and return statements. It does not assert an output exponent bound "
                 + "or classify other bispecial factors.", DescribeRole.Theorem))));
 
-    private static ScribeNode Entry(string name, string id, string title, Formula formula,
+    private static DocumentBlock Entry(string name, string id, string title, Formula formula,
         string prose, DescribeRole role = DescribeRole.Definition) => Describe.Lean(
             DescribeId.Create(id), DeclarationHandle.Create(Prefix+name), H(title),
-            StatementSource.FromAuthor(formula), AssessedProvenance.FromRepo(),
+            StatementSource.FromAuthor(F.Disp(formula)), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(prose))), role);
     private static Formula PrefixFormula() => And(Eq(C("F", D(0)),C("nil")),
-        All("k",N(),Eq(C("F",Add(Id("k"),D(1))),C("sentinel",C("F",Id("k"))))));
-    private static Formula CutFormula() => All("i",N(),And(Eq(C("cut",D(0),Id("i")),Id("i")),
-        All("k",N(),Eq(C("cut",Add(Id("k"),D(1)),Id("i")),
-            C("boundary",C("cut",Id("k"),Id("i")))))));
+        All("k",N(),Eq(C("F",Add(F.Id("k"),D(1))),C("sentinel",C("F",F.Id("k"))))));
+    private static Formula CutFormula() => All("i",N(),And(Eq(C("cut",D(0),F.Id("i")),F.Id("i")),
+        All("k",N(),Eq(C("cut",Add(F.Id("k"),D(1)),F.Id("i")),
+            C("boundary",C("cut",F.Id("k"),F.Id("i")))))));
     private static Formula WordFormula() => And(Eq(C("typeII",D(0)),C("nil")),All("n",N(),
-        Eq(C("typeII",Add(Id("n"),D(1))),C("ite",Eq(C("mod",Id("n"),D(6)),D(5)),
-            C("terminal",C("typeII",Id("n"))),C("sentinel",C("typeII",Id("n")))))));
+        Eq(C("typeII",Add(F.Id("n"),D(1))),C("ite",Eq(C("mod",F.Id("n"),D(6)),D(5)),
+            C("terminal",C("typeII",F.Id("n"))),C("sentinel",C("typeII",F.Id("n")))))));
     private static Formula VectorFormula() => And(Eq(C("f",D(0)),D(0)),All("n",N(),
-        Eq(C("f",Add(Id("n"),D(1))),Add(C("mulVec",C("M"),C("f",Id("n"))),C("increment",Id("n"))))));
+        Eq(C("f",Add(F.Id("n"),D(1))),Add(C("mulVec",C("M"),C("f",F.Id("n"))),C("increment",F.Id("n"))))));
     private static Formula PositionFormula() => All("i",N(),And(
-        Eq(C("position",D(0),Id("i")),Sub(C("cut",D(6),Id("i")),D(1))),
-        All("k",N(),Eq(C("position",Add(Id("k"),D(1)),Id("i")),
-            C("occurrenceMap",Add(Id("k"),D(6)),C("position",Id("k"),Id("i")))))));
+        Eq(C("position",D(0),F.Id("i")),Sub(C("cut",D(6),F.Id("i")),D(1))),
+        All("k",N(),Eq(C("position",Add(F.Id("k"),D(1)),F.Id("i")),
+            C("occurrenceMap",Add(F.Id("k"),D(6)),C("position",F.Id("k"),F.Id("i")))))));
     private static Formula NativeFormula()
     {
-        Formula k=Id("k"), i=Id("i"), q=Id("q"), a=Id("a"), b=Id("b"), c=Id("c");
+        Formula k=F.Id("k"), i=F.Id("i"), q=F.Id("q"), a=F.Id("a"), b=F.Id("b"), c=F.Id("c");
         Formula n=Add(k,D(6)), w=C("typeII",n), phase=C("phase",n);
         Formula P(Formula x) => C("position",k,x);
         Formula R(Formula x) => C("returnWord",P(x),P(Add(x,D(1))));
         Formula V(Formula x) => C("mulVec",C("pow",C("M"),n),C("unit",x));
         Formula Ctx(Formula x) => C("ite",Eq(C("word",x),D(0)),phase,D(6));
         Formula Unique(System.Func<Formula,Formula> predicate) => Ex("i",N(),And(predicate(i),
-            All("j",N(),Imp(predicate(Id("j")),Eq(Id("j"),i)))));
+            All("j",N(),Imp(predicate(F.Id("j")),Eq(F.Id("j"),i)))));
         Formula[] fields = [
             Lt(D(0),C("length",w)), Eq(C("reverse",w),w), Eq(C("parikh",w),C("f",n)),
             C("StrictMono",C("position",k)), All("i",N(),Imp(Lt(D(0),i),Lt(D(0),P(i)))),
@@ -118,7 +118,7 @@ internal sealed class RichWordTypeIIOccurrenceDocument : IScribeDocumentDefiniti
                     C("cons",D(6),C("dropLast",C("subst",C("phi"),R(i)))),C("subst",C("phi"),R(i)))))),
             All("i",N(),Imp(Lt(D(0),i),Imp(Eq(C("mod",n,D(6)),D(5)),
                 Ex("y",C("List",C("Fin",D(7))),Eq(C("subst",C("phi"),R(i)),
-                    C("append",Id("y"),C("singleton",D(6)))))))),
+                    C("append",F.Id("y"),C("singleton",D(6)))))))),
             All("i",N(),Imp(Lt(D(0),i),Eq(C("factor",C("word"),P(i),
                 Add(Sub(P(Add(i,D(1))),P(i)),C("length",w))),C("append",R(i),w)))),
             All("i",N(),Imp(Lt(D(0),i),Eq(C("parikh",R(i)),V(C("word",i))))),
@@ -129,8 +129,8 @@ internal sealed class RichWordTypeIIOccurrenceDocument : IScribeDocumentDefiniti
                 All("a",N(),All("b",N(),Imp(C("Consecutive",w,a,b),C("le",V(D(0)),C("parikh",C("returnWord",a,b)))))))),
             All("v",C("Function",C("Fin",D(7)),N()),Iff(
                 Ex("a",N(),Ex("b",N(),And(C("Consecutive",w,a,b),
-                    Eq(C("parikh",C("returnWord",a,b)),Id("v"))))),
-                Ex("c",C("Fin",D(7)),Eq(V(c),Id("v"))))),
+                    Eq(C("parikh",C("returnWord",a,b)),F.Id("v"))))),
+                Ex("c",C("Fin",D(7)),Eq(V(c),F.Id("v"))))),
             SeedFormula()
         ];
         Formula body=fields[^1];
@@ -142,9 +142,9 @@ internal sealed class RichWordTypeIIOccurrenceDocument : IScribeDocumentDefiniti
             Eq(C("parikh",C("typeII",D(6))),C("vector",D(3,2),D(1,6),D(8),D(4),D(2),D(1),D(2))),
             And(Eq(C("position",D(0),D(2)),D(1,2,8)),And(Eq(C("position",D(0),D(3)),D(1,9,2)),
                 Eq(C("returnWord",C("position",D(0),D(2)),C("position",D(0),D(3))),C("cons",D(6),C("F",D(6)))))))));
-    private static Formula MainFormula() => All("n",N(),Imp(C("le",D(6),Id("n")),C("NativeData",Sub(Id("n"),D(6)))));
-    private static Formula N()=>Seq(Mathbb,Grp(Id("N")));
-    private static Formula C(string name,params Formula[] args)=>args.Length==0?Id(name):new Formula.Apply(Id(name),[..args]);
+    private static Formula MainFormula() => All("n",N(),Imp(C("le",D(6),F.Id("n")),C("NativeData",Sub(F.Id("n"),D(6)))));
+    private static Formula N()=>Seq(Mathbb,Grp(F.Id("N")));
+    private static Formula C(string name,params Formula[] args)=>args.Length==0?F.Id(name):new Formula.Apply(F.Id(name),[..args]);
     private static Formula All(string x,Formula domain,Formula body)=>new Formula.Bind(FormulaQuantifier.ForAll,FormulaIdentifier.Create(x),domain,body);
     private static Formula Ex(string x,Formula domain,Formula body)=>new Formula.Bind(FormulaQuantifier.Exists,FormulaIdentifier.Create(x),domain,body);
     private static Formula Eq(Formula x,Formula y)=>new Formula.Relation(x,FormulaRelationOperator.Equal,y);

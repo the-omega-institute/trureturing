@@ -1,10 +1,10 @@
 /- GID: D5/S1/Words/RichWordTypeIIOccurrence
    generality: I
-   mirror - B: D5/B/S1/Words/RichWordTypeIIOccurrence
-   mirror - E: none(waiver:source - word - combinatorics)
+   mirror-B: D5/B/S1/Words/RichWordTypeIIOccurrence
+   mirror-E: none(waiver:source-word-combinatorics)
    anchors: []
    utility: none
-   digest: Positive - cut Type-II factors and actual overlapping returns. -/
+   digest: Positive-cut Type-II factors and actual overlapping returns. -/
 import D5.S1.Words.RichWordTypeIOccurrence
 
 /-! Native Type-II factors, positive substitution cuts and overlapping return intervals. -/
@@ -560,7 +560,7 @@ private theorem seed_numerics :
     simp only [F]
     decide
 
-/-- Native words and their complete positive - cut occurrence and return data.
+/-- Native words and their complete positive-cut occurrence and return data.
 The offset k denotes source index k + 6, including the first overlapping pair. -/
 structure NativeData (k : ℕ) : Prop where
   nonempty : (typeII (k + 6)).length > 0
