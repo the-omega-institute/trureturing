@@ -9,6 +9,8 @@
 import Mathlib.NumberTheory.ArithmeticFunction.Misc
 import Mathlib.NumberTheory.Padics.PadicVal.Basic
 import Mathlib.RingTheory.PowerSeries.Binomial
+import Mathlib.RingTheory.PowerSeries.Expand
+import Mathlib.RingTheory.PowerSeries.NoZeroDivisors
 import Mathlib.Data.Nat.Choose.Central
 import Mathlib.Tactic
 
@@ -290,5 +292,258 @@ theorem local_denominators :
       norm_num
       refine ⟨hodd p e hp2, ?_⟩
       exact Nat.cast_sub (binaryWeight_le e)
+
+/-- Independently prescribed A317934, as its Euler product. -/
+def auxiliary (n : ℕ) : ℕ :=
+  n.factorization.prod fun _ e => 2 ^ (e - binaryWeight e)
+
+/-- A006519 on positive indices. -/
+def twoPart (n : ℕ) : ℕ := 2 ^ n.factorization 2
+
+/-- The denominator is taken from the rational recurrence, never defined by a formula. -/
+def a (n : ℕ) : ℕ := (f n).den
+
+/-- The full published block, including every endpoint and integer-exponent correspondence. -/
+def WholeBlock : Prop :=
+  SourceSpec f ∧
+  (∀ u : ℕ → ℚ, SourceSpec u → ∀ n, 0 < n → u n = f n) ∧
+  (∀ n, 0 < n → a n = twoPart n * auxiliary n) ∧
+  a 1 = 1 ∧
+  (∀ m n, 0 < m → 0 < n → Nat.Coprime m n → a (m * n) = a m * a n) ∧
+  (∀ e, a (2 ^ e) = 2 ^ halvingSum e) ∧
+  (∀ p e, Nat.Prime p → p ≠ 2 → a (p ^ e) = 2 ^ (e - binaryWeight e)) ∧
+  (∀ p e, Nat.Prime p →
+    a (p ^ e) = 2 ^ ((2 - p % 2) * e - binaryWeight e) ∧
+    (((2 - p % 2) * e - binaryWeight e : ℕ) : ℤ) =
+      (2 - (p : ℤ) % 2) * e - binaryWeight e)
+
+/-- A rational Euler product, independent of the source recurrence. -/
+def root : ArithmeticFunction ℚ where
+  toFun n := if n = 0 then 0 else n.factorization.prod localCoefficient
+  map_zero' := by simp
+
+private lemma localCoefficient_zero (p : ℕ) : localCoefficient p 0 = 1 := by
+  simp [localCoefficient, central]
+
+private lemma root_multiplicative : root.IsMultiplicative := by
+  rw [ArithmeticFunction.IsMultiplicative.iff_ne_zero]
+  constructor
+  · simp [root]
+  · intro m n hm hn hmn
+    change (if m * n = 0 then 0 else (m * n).factorization.prod localCoefficient) =
+      (if m = 0 then 0 else m.factorization.prod localCoefficient) *
+      (if n = 0 then 0 else n.factorization.prod localCoefficient)
+    rw [if_neg (mul_ne_zero hm hn), if_neg hm, if_neg hn,
+      Nat.factorization_mul_of_coprime hmn,
+      Finsupp.prod_add_index_of_disjoint hmn.disjoint_primeFactors]
+
+private lemma root_prime_power {p e : ℕ} (hp : Nat.Prime p) :
+    root (p ^ e) = localCoefficient p e := by
+  change (if p ^ e = 0 then 0 else (p ^ e).factorization.prod localCoefficient) = _
+  rw [if_neg (pow_ne_zero _ hp.ne_zero), hp.factorization_pow,
+    Finsupp.prod_single_index (localCoefficient_zero p)]
+
+private lemma root_positive {n : ℕ} (hn : 0 < n) : 0 < root n := by
+  change 0 < if n = 0 then 0 else n.factorization.prod localCoefficient
+  rw [if_neg (Nat.ne_of_gt hn)]
+  apply Finset.prod_pos
+  intro p _
+  dsimp [localCoefficient]
+  split_ifs
+  · exact (central_local_square _).1
+  · exact (central_local_square _).1
+
+/-- The independently constructed rational root is multiplicative and strictly positive. -/
+theorem root_structure : root.IsMultiplicative ∧
+    (∀ p e, Nat.Prime p → root (p ^ e) = localCoefficient p e) ∧
+    (∀ n, 0 < n → 0 < root n) := by
+  exact ⟨root_multiplicative, fun _ _ hp => root_prime_power hp,
+    fun _ hn => root_positive hn⟩
+
+private def localExponent (p e : ℕ) : ℕ :=
+  if p = 2 then 2 * e - binaryWeight e else e - binaryWeight e
+
+private lemma local_reduced (p e : ℕ) : ∃ q : ℕ, ¬ 2 ∣ q ∧
+    localCoefficient p e = (q : ℚ) / 2 ^ localExponent p e := by
+  by_cases hp : p = 2
+  · subst p
+    simpa [localCoefficient, localExponent] using central_reduced e
+  · simpa [localCoefficient, localExponent, hp, odd_exponent] using central_reduced (e / 2)
+
+private lemma product_reduced (s : Finset ℕ) (k : ℕ → ℕ) :
+    ∃ q : ℕ, ¬ 2 ∣ q ∧
+      (∏ p ∈ s, localCoefficient p (k p)) =
+        (q : ℚ) / 2 ^ (∑ p ∈ s, localExponent p (k p)) := by
+  induction s using Finset.induction_on with
+  | empty => exact ⟨1, by norm_num, by simp⟩
+  | @insert p s hp ih =>
+    obtain ⟨q, hq, hqr⟩ := ih
+    obtain ⟨r, hr, hrr⟩ := local_reduced p (k p)
+    refine ⟨r * q, ?_, ?_⟩
+    · intro h
+      exact (Nat.prime_two.dvd_mul.mp h).elim hr hq
+    · rw [Finset.prod_insert hp, Finset.sum_insert hp, hqr, hrr,
+        div_mul_div_comm, ← pow_add, Nat.cast_mul]
+
+private lemma product_denominator {n : ℕ} (hn : 0 < n) :
+    (root n).den = 2 ^ n.factorization.sum localExponent := by
+  obtain ⟨q, hq, hr⟩ := product_reduced n.factorization.support n.factorization
+  have hroot : root n = (q : ℚ) / 2 ^ n.factorization.sum localExponent := by
+    change (if n = 0 then 0 else n.factorization.prod localCoefficient) = _
+    rw [if_neg (Nat.ne_of_gt hn)]
+    exact hr
+  rw [hroot]
+  have hcop := Nat.prime_two.coprime_pow_of_not_dvd
+    (m := n.factorization.sum localExponent) hq
+  have hh := Rat.den_div_eq_of_coprime
+    (a := (q : ℤ)) (b := ((2 ^ n.factorization.sum localExponent : ℕ) : ℤ))
+    (by positivity) (by simpa using hcop)
+  have hcast : (((q : ℚ) / 2 ^ n.factorization.sum localExponent).den : ℤ) =
+      ((2 ^ n.factorization.sum localExponent : ℕ) : ℤ) := by
+    simpa only [Int.cast_natCast, Int.cast_pow, Int.cast_ofNat,
+      Nat.cast_pow, Nat.cast_ofNat] using hh
+  exact Int.ofNat_inj.mp hcast
+
+private lemma exponent_split (n : ℕ) :
+    n.factorization.sum localExponent = n.factorization 2 +
+      n.factorization.sum (fun _ e => e - binaryWeight e) := by
+  have hlocal (p e : ℕ) : localExponent p e =
+      (if p = 2 then e else 0) + (e - binaryWeight e) := by
+    dsimp [localExponent]
+    split_ifs <;> have := binaryWeight_le e <;> omega
+  simp_rw [Finsupp.sum, hlocal, Finset.sum_add_distrib]
+  congr 1
+  rw [Finset.sum_ite_eq']
+  split_ifs with h
+  · rfl
+  · exact (Finsupp.notMem_support_iff.mp h).symm
+
+/-- The global Euler product has no cross-cancellation of its dyadic denominators. -/
+theorem root_denominator {n : ℕ} (hn : 0 < n) :
+    (root n).den = twoPart n * auxiliary n := by
+  rw [product_denominator hn, exponent_split, pow_add]
+  congr 1
+  dsimp [auxiliary]
+  rw [Finsupp.prod, Finsupp.sum, Finset.prod_pow_eq_pow_sum]
+
+private noncomputable def centralSeries : PowerSeries ℚ := PowerSeries.mk central
+
+private noncomputable def oddSeries : PowerSeries ℚ :=
+  (1 + PowerSeries.X) * (PowerSeries.expand 2 (by decide) centralSeries)
+
+private lemma centralSeries_square : centralSeries * centralSeries =
+    PowerSeries.mk (fun _ => (1 : ℚ)) := by
+  ext e
+  simpa [centralSeries, PowerSeries.coeff_mul] using central_convolution e
+
+private lemma oddSeries_coeff (e : ℕ) :
+    PowerSeries.coeff e oddSeries = central (e / 2) := by
+  cases e with
+  | zero => simp [oddSeries, centralSeries, central]
+  | succ e =>
+    simp only [oddSeries, add_mul, one_mul, map_add, PowerSeries.coeff_succ_X_mul,
+      PowerSeries.coeff_expand, centralSeries, PowerSeries.coeff_mk]
+    by_cases he : 2 ∣ e
+    · have hn : ¬ 2 ∣ e + 1 := by omega
+      simp only [he, hn, ite_true, ite_false, zero_add]
+      exact congrArg central (by omega)
+    · have hn : 2 ∣ e + 1 := by omega
+      simp [he, hn]
+
+private lemma oddSeries_square : oddSeries * oddSeries =
+    1 + (2 : PowerSeries ℚ) * PowerSeries.X * PowerSeries.mk (fun _ => (1 : ℚ)) := by
+  let P : PowerSeries ℚ := PowerSeries.mk (fun _ => (1 : ℚ))
+  let Q := PowerSeries.expand 2 (by decide) P
+  have hp : P * (1 - PowerSeries.X) = 1 :=
+    PowerSeries.mk_one_mul_one_sub_eq_one ℚ
+  have hq : Q * (1 - PowerSeries.X ^ 2) = 1 := by
+    have hh := congrArg (PowerSeries.expand 2 (by decide)) hp
+    simpa [Q, map_mul, map_sub] using hh
+  have hx : (1 - PowerSeries.X : PowerSeries ℚ) ≠ 0 := by
+    intro h
+    have hh := congrArg PowerSeries.constantCoeff h
+    simpa using hh
+  have hy : (1 + PowerSeries.X : PowerSeries ℚ) ≠ 0 := by
+    intro h
+    have hh := congrArg PowerSeries.constantCoeff h
+    simpa using hh
+  have hs : oddSeries * oddSeries = (1 + PowerSeries.X) ^ 2 * Q := by
+    have hh := congrArg (PowerSeries.expand 2 (by decide)) centralSeries_square
+    dsimp [oddSeries]
+    rw [map_mul] at hh
+    change _ = Q at hh
+    rw [show (1 + PowerSeries.X) * PowerSeries.expand 2 (by decide) centralSeries *
+        ((1 + PowerSeries.X) * PowerSeries.expand 2 (by decide) centralSeries) =
+        (1 + PowerSeries.X) ^ 2 *
+        (PowerSeries.expand 2 (by decide) centralSeries *
+          PowerSeries.expand 2 (by decide) centralSeries) by ring, hh]
+  have hsx : (oddSeries * oddSeries) * (1 - PowerSeries.X) = 1 + PowerSeries.X := by
+    apply mul_left_cancel₀ hy
+    rw [hs]
+    calc
+      _ = (1 + PowerSeries.X) ^ 2 * (Q * (1 - PowerSeries.X ^ 2)) := by ring
+      _ = _ := by rw [hq]; ring
+  apply mul_right_cancel₀ hx
+  rw [hsx]
+  change 1 + PowerSeries.X = (1 + 2 * PowerSeries.X * P) * (1 - PowerSeries.X)
+  calc
+    _ = 1 - PowerSeries.X + 2 * PowerSeries.X * (P * (1 - PowerSeries.X)) := by rw [hp]; ring
+    _ = _ := by ring
+
+/-- The coefficients for odd primes square to one at zero and two thereafter. -/
+theorem odd_local_square (e : ℕ) :
+    (∑ ij ∈ Finset.antidiagonal e,
+      central (ij.1 / 2) * central (ij.2 / 2)) = if e = 0 then 1 else 2 := by
+  have h := congrArg (PowerSeries.coeff e) oddSeries_square
+  rw [PowerSeries.coeff_mul] at h
+  simp_rw [oddSeries_coeff] at h
+  rw [h]
+  cases e with
+  | zero => simp
+  | succ e => simp [PowerSeries.coeff_succ_X_mul, mul_assoc, mul_comm, mul_left_comm]
+
+private lemma interior_erase {n : ℕ} (hn : 1 < n) :
+    interior n = (n.divisors.erase 1).erase n := by
+  ext d
+  simp only [interior, Finset.mem_filter, Finset.mem_erase]
+  constructor
+  · rintro ⟨hd, hd1, hdn⟩
+    exact ⟨by omega, by omega, hd⟩
+  · rintro ⟨hdn, hd1, hd⟩
+    have hdiv := (Nat.mem_divisors.mp hd).1
+    have hdpos : 0 < d := Nat.pos_of_dvd_of_pos hdiv (by omega)
+    have hdle : d ≤ n := Nat.le_of_dvd (by omega) hdiv
+    exact ⟨hd, by omega, by omega⟩
+
+/-- The published proper-divisor recurrence is the full divisor-square equation. -/
+theorem source_convolution (n : ℕ) (hn : 0 < n) :
+    (∑ d ∈ n.divisors, f d * f (n / d)) = (oddUnitaryCount n : ℚ) := by
+  by_cases h1 : n = 1
+  · subst n
+    norm_num [oddUnitaryCount, Nat.odd_iff, source_solution_unique.1.1]
+  have hn1 : 1 < n := by omega
+  have htail := f_spec.2 n hn1
+  have hone : 1 ∈ n.divisors := Nat.one_mem_divisors.mpr (Nat.ne_of_gt hn)
+  have hself : n ∈ n.divisors.erase 1 :=
+    Finset.mem_erase.mpr ⟨h1, Nat.mem_divisors_self n (Nat.ne_of_gt hn)⟩
+  have hs1 := Finset.sum_erase_add (n.divisors)
+    (fun d => f d * f (n / d)) hone
+  have hs2 := Finset.sum_erase_add (n.divisors.erase 1)
+    (fun d => f d * f (n / d)) hself
+  rw [← interior_erase hn1] at hs2
+  simp only [Nat.div_one, Nat.div_self hn, f_spec.1, one_mul, mul_one] at hs1 hs2
+  linarith
+
+/-- A317934 has the independently prescribed multiplicative values. -/
+theorem auxiliary_structure : auxiliary 1 = 1 ∧
+    (∀ m n, Nat.Coprime m n → auxiliary (m * n) = auxiliary m * auxiliary n) ∧
+    (∀ p e, Nat.Prime p → auxiliary (p ^ e) = 2 ^ (e - binaryWeight e)) := by
+  refine ⟨by simp [auxiliary], ?_, ?_⟩
+  · intro m n hmn
+    unfold auxiliary
+    rw [Nat.factorization_mul_of_coprime hmn,
+      Finsupp.prod_add_index_of_disjoint hmn.disjoint_primeFactors]
+  · intro p e hp
+    simp [auxiliary, hp.factorization_pow, Finsupp.prod_single_index, binaryWeight]
 
 end D5.S3.Arith.DirichletRoots.OeisA318314
