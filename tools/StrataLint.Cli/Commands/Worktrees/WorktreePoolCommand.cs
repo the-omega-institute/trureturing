@@ -16,8 +16,11 @@ internal static class WorktreePoolCommand
         var result = WorktreeProtocolCommand.Run(options.Source, arguments, runner, Timeout.InfiniteTimeSpan);
         if (!result.Success) return result;
         using var receipt = JsonDocument.Parse(result.Output);
-        return receipt.RootElement.GetProperty("status").GetString() == "no_reusable"
-            ? null
-            : result;
+        if (receipt.RootElement.GetProperty("status").GetString() == "no_reusable") return null;
+        var path = receipt.RootElement.GetProperty("path").GetString()
+            ?? throw new InvalidOperationException("claimed worktree path is absent");
+        if (LeanPinSet.TryReadWorktree(path, out var reason) is null)
+            throw new InvalidOperationException(reason);
+        return result;
     }
 }

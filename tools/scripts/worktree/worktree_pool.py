@@ -4,7 +4,7 @@ import subprocess
 import time
 from types import SimpleNamespace
 
-from worktree_protocol import (Refused, clear_matching_stale, git, git_environment,
+from worktree_protocol import (GitFailure, Refused, clear_matching_stale, git, git_environment,
                                head_committer_time, head_oid, identity, inventory,
                                mark_stale, reuse, stale_head, value)
 
@@ -127,14 +127,15 @@ def claim(options):
             if expired:
                 expiry_failures.append(dict(path=str(path), reason=str(error)))
             elif options.path is not None and _same(path, options.path):
-                raise Refused(str(error) + "; expired_worktrees_removed=" + repr(removed)) from error
+                raise (GitFailure if isinstance(error, GitFailure) else Refused)(
+                    str(error) + "; expired_worktrees_removed=" + repr(removed)) from error
 
     def finish(result):
         return result | {"removed_worktrees": removed, "candidate_refusals": refusals}
 
     try:
         if expiry_failures:
-            raise Refused("expired_cleanup_failed:" + repr(expiry_failures))
+            raise GitFailure("expired_cleanup_failed:" + repr(expiry_failures))
         if options.path is not None:
             candidates = [row for row in candidates if _same(row[0], options.path)]
         # An unexpired attached task resumes regardless of allocation age.
@@ -170,7 +171,8 @@ def claim(options):
         return finish(result)
     except (Refused, OSError, subprocess.SubprocessError) as error:
         if removed:
-            raise Refused(str(error) + "; expired_worktrees_removed=" + repr(removed)) from error
+            raise (GitFailure if isinstance(error, GitFailure) else Refused)(
+                str(error) + "; expired_worktrees_removed=" + repr(removed)) from error
         raise
 
 

@@ -30,14 +30,15 @@ def run(cwd, *args, env=None, check=True):
 class LifecycleTests(unittest.TestCase):
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory(prefix="stale-lifecycle-")
-        self.root = Path(self.tmp.name)
+        self.root = Path(self.tmp.name).resolve()
         self.main = self.root / "main"
         run(self.root, "init", "--bare", self.root / "remote.git")
         run(self.root, "init", "--initial-branch=dev", self.main)
         run(self.main, "config", "user.name", "Lifecycle Tests")
         run(self.main, "config", "user.email", "lifecycle@example.invalid")
         (self.main / "lean-toolchain").write_text("leanprover/lean4:v4.34.1\n")
-        (self.main / "lake-manifest.json").write_text('{"packages":[]}\n')
+        (self.main / "lake-manifest.json").write_text(json.dumps({"packages": [
+            {"name": "mathlib", "rev": "a" * 40}]}) + "\n")
         run(self.main, "add", ".")
         run(self.main, "commit", "-m", "base")
         self.base = run(self.main, "rev-parse", "HEAD").stdout.strip()
@@ -75,6 +76,10 @@ class LifecycleTests(unittest.TestCase):
         # built CLI. Every lifecycle action and native Git effect is real.
         scripts = self.main / "tools/scripts"
         shutil.copytree(ROOT / "tools/scripts/worktree", scripts / "worktree")
+        inspector = self.main / "tools/lean-inspector"
+        inspector.mkdir()
+        for module in (ROOT / "tools/lean-inspector").glob("*.py"):
+            shutil.copy2(module, inspector / module.name)
         for name in ("host-cleanup.py", "worktree-init.sh", "clean-lanes.sh", "maintenance_log.py"):
             shutil.copy2(ROOT / "tools/scripts" / name, scripts / name)
         for name in ("Makefile", "tools/Makefile"):
@@ -285,6 +290,18 @@ class LifecycleTests(unittest.TestCase):
         self.assertNotEqual(failed.returncode, 0)
         self.assertIn("incompatible_base", failed.stderr)
 
+    def test_cli_continuation_retains_pin_schema_validation(self):
+        (self.main / "lake-manifest.json").write_text('{"packages":[]}\n')
+        run(self.main, "add", ".")
+        run(self.main, "commit", "-m", "invalid fixture pin")
+        self.base = run(self.main, "rev-parse", "HEAD").stdout.strip()
+        tree = self.root / "malformed pin"
+        self.commit_branch("lane/governance/malformed", tree, 60)
+        failed = self.create("malformed", self.root / "unused", reuse_any=True, check=False)
+        self.assertNotEqual(failed.returncode, 0)
+        self.assertIn("manifest requires exactly one mathlib package", failed.stderr)
+        self.assertTrue((tree / "payload").exists())
+
     def test_make_clean_all_expires_trees_even_when_artifact_mutex_is_held(self):
         self.prepare_make()
         tree = self.root / "expired"
@@ -331,11 +348,11 @@ class LifecycleTests(unittest.TestCase):
             self.commit_branch("lane/governance/" + name, path, 7 * 3600)
         remove = pool._remove_registered
         def native_failure(source, path):
-            if path == blocked:
+            if path.resolve() == blocked.resolve():
                 raise GitFailure("native removal error")
             return remove(source, path)
         with patch.object(pool, "_remove_registered", side_effect=native_failure):
-            with self.assertRaisesRegex(protocol.Refused, "expired_cleanup_failed:.*native removal error.*expired_worktrees_removed="):
+            with self.assertRaisesRegex(protocol.GitFailure, "expired_cleanup_failed:.*native removal error.*expired_worktrees_removed="):
                 pool.claim(self.options("lane/governance/new"))
         self.assertFalse(good.exists())
         self.assertTrue(blocked.exists())
