@@ -2398,3 +2398,119 @@ If $H_a=0$, then (190.3) is zero. The strictness of the same source energy for a
 For the inclusion from right to left in (190.5), Proposition 179.2 applies to every $a$ with $F_a=0$. Conversely, let $h$ belong to the common radical. Since $h\in\mathcal W_u$, choose $a$ with $h=H_a$. The anchor $Q_u$ belongs to $\mathcal W_u$, so the first radical condition gives $\mathcal C(h,h,Q_u)=0$. Equation (190.3) then forces $F_a=0$, placing $h$ in the right-hand side of (190.5). $\square$
 
 Thus the radical alternative is not an unstructured loss of rank: it is precisely the image, under the candidate label map, of the two baseline linear relations. Proposition 188.1 is recovered whenever $q$ itself belongs to $\mathcal W_u$, because the positive source form can then be evaluated with $q$ as the third radical argument. Without that span witness, (190.5) is the exact remaining algebraic boundary; arbitrary partitions, the out-of-span directions outside the source-mode plane, $F_{64}$, $H43$, SRS$\text{-}20$, physical succession and Lean/kernel formalization remain open.
+
+## 191. The candidate span has a rank--radical trichotomy
+
+The exact radical description in Section 190 also fixes the possible dimensions of the candidate span. The baseline labels have a two-dimensional image, and the candidate label map cannot identify more relations than the baseline map. Thus a full-zero partition can have only ranks two, three or four, with the radical dimension recording the excess rank.
+
+**Definition 191.1 (baseline and candidate label maps).** For a bounded partition $u$ as in Proposition 190.1, define
+
+$$
+\Phi_f:\mathbb R^{\mathcal L}\longrightarrow L^\infty(m;\mathbb R),
+\qquad
+\Phi_f(a)=F_a,
+$$
+
+and
+
+$$
+\Phi_u:\mathbb R^{\mathcal L}\longrightarrow \mathcal W_u,
+\qquad
+\Phi_u(a)=H_a.
+\tag{191.1}
+$$
+
+Write $r_u=\dim\mathcal W_u=\operatorname{rank}\Phi_u$, and let
+
+$$
+\mathcal R_u=\mathcal W_u\cap
+\operatorname{Rad}_1(\mathcal W_u)\cap
+\operatorname{Rad}_2(\mathcal W_u)\cap
+\operatorname{Rad}_3(\mathcal W_u).
+\tag{191.2}
+$$
+
+Here the intersection with $\mathcal W_u$ records the common radical inside the candidate span.
+
+**Proposition 191.2 (rank--radical trichotomy).** Suppose that $u$ is a bounded pointwise partition whose sixty-four residuals all vanish. Then
+
+$$
+\ker\Phi_u\subseteq\ker\Phi_f,
+\qquad
+\dim\ker\Phi_f=2,
+\qquad
+\mathcal R_u=\Phi_u(\ker\Phi_f),
+\tag{191.3}
+$$
+
+and therefore
+
+$$
+\dim\mathcal R_u
+=2-\dim\ker\Phi_u
+=r_u-2,
+\qquad
+r_u\in\{2,3,4\}.
+\tag{191.4}
+$$
+
+In particular,
+
+$$
+\begin{array}{c|c|c}
+ r_u & \dim\mathcal R_u & \text{equivalent condition}\\
+\hline
+ 2 & 0 & \ker\Phi_u=\ker\Phi_f\\
+ 3 & 1 & \dim\mathcal R_u=1\\
+ 4 & 2 & \dim\mathcal R_u=2
+\end{array}
+\tag{191.5}
+$$
+
+The rank-two case is exactly the radical-free case; hence it reduces to the common-first form of Corollary 179.3.
+
+*Proof.* The baseline identities are
+
+$$
+F_0=F_1=F,
+\qquad
+F_3=q,
+\qquad
+F_B=p,
+\qquad
+2F+q=3p.
+\tag{191.6}
+$$
+
+The source nonconstancy retained in Proposition 187.1 says that $q$ is nonconstant, while $p=1/4$ is constant and $F=(3/4-q)/2$. Hence
+
+$$
+\operatorname{im}\Phi_f=\operatorname{span}_{\mathbb R}\{1,q\}
+$$
+
+has dimension two. Since $\mathbb R^{\mathcal L}$ has dimension four,
+
+$$
+\dim\ker\Phi_f=2.
+\tag{191.7}
+$$
+
+The kernel inclusion in (191.3) is (190.4), and the radical identity in (191.3) is (190.5), with the ambient intersection in (191.2) made explicit. Rank--nullity gives
+
+$$
+\dim\ker\Phi_u=4-r_u.
+\tag{191.8}
+$$
+
+Because $\ker\Phi_u\subseteq\ker\Phi_f$ and the latter has dimension two, (191.8) gives $r_u\ge2$; the four labels give $r_u\le4$. Finally, restricting $\Phi_u$ to the two-dimensional space $\ker\Phi_f$ and using $\ker\Phi_u\subseteq\ker\Phi_f$ yields
+
+$$
+\dim\Phi_u(\ker\Phi_f)
+=\dim\ker\Phi_f-\dim\ker\Phi_u
+=2-(4-r_u)=r_u-2.
+\tag{191.9}
+$$
+
+This proves (191.4) and the table. If $r_u=2$, then $\dim\ker\Phi_u=2$ and the inclusion between two-dimensional kernels is equality, so $\mathcal R_u=0$. The converse follows from (191.4). Corollary 179.3 then supplies the common-first representation. $\square$
+
+Thus the radical alternative has no untracked intermediate size: rank three carries exactly one radical direction and rank four carries exactly two. The rank-two branch is the only branch on which the radical reduction is automatic, while rank-three and rank-four branches are the precise remaining arbitrary-partition cases. This classification does not rule out either of those branches, nor does it settle the out-of-span nonlinear equations, $F_{64}$, $H43$, SRS\text{-}20, physical succession or Lean/kernel formalization.
