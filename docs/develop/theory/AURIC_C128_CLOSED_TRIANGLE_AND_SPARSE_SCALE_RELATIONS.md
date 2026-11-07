@@ -1884,7 +1884,7 @@ $$
    H_\beta^z(x,y)=b_\beta(x,y)-b_\beta(x,z)-b_\beta(z,y)+q_\beta(z),
    \tag{525.3}
    $$
-   and hence
+   并且
    $|H_\beta^z(x,y)|^2\le\ell_\beta(x,z)\ell_\beta(y,z)$ and
    $d_\beta(x,y)\le d_\beta(x,z)+d_\beta(y,z)$ for this allowed triple.
 3. The same old $S$ is jointly continuous in the finite-dimensional original topology.
@@ -1898,7 +1898,8 @@ $$
 
 证明。先说明第 1 项的适用范围。517.1 的证明只使用至多二标签正性、相加零平方、固定点和小效果；它先在原评价下给出实部的偶性、二次预算、射线齐次与 $N(S(x,y))$ 的界，再由 $K^*$ 的分离和有限维双极性传给数学正泛函。它没有使用三标签实闭合面，所以在 523.1 下可逐字消费。零评价满足 $\beta(u)=0$ 时由序单位界在整个 $E$ 上恒为零，所有式子仍成立，不除以质量或 $q$。
 
-对第 2 项，取允许三标签 $(x,y,z)$。零和向量 $e_1-e_3$、$e_2-e_3$ 的实压缩正是 (525.3) 的矩阵；二阶行列式给 Cauchy–Schwarz，随后用
+对第 2 项，取允许三标签 $(x,y,z)$。对任意实零和系数，原值
+$\sum_{i,j}r_ir_jS(a_i,a_j)$ 被每个原评价读成非负，故属于 $K$；每个数学正泛函 $\beta\in K^*$ 也保持这个不等式。因此零和向量 $e_1-e_3$、$e_2-e_3$ 的实压缩正是 (525.3) 的矩阵；二阶行列式给 Cauchy–Schwarz，随后用
 $\ell(x,y)=\ell(x,z)+\ell(y,z)-2H^z(x,y)$ 得该三点的三角不等式。特别地，含零标签的三元组总是允许的；可比边则足以让同一压缩在任意第三点上使用。
 
 现在证明第 3 项，不能把缺失的任意三标签三角不等式偷加回来。固定 $a$，令 $h\to0$。由序单位定义，对任意 $\varepsilon>N(h)$ 有
@@ -1923,7 +1924,7 @@ $$
 \tag{525.6}
 $$
 
-因此 $\ell_\beta$ 对第一变量连续；对称性给第二变量连续，且
+由于 $\mathcal T_{0\vee\mathrm{cmp}}$ 在三标签置换下不变，以上反三角估计可在每个允许置换上使用。因此 $\ell_\beta$ 对第一变量连续；对称性给第二变量连续，且
 $2b_\beta(x,y)=q_\beta(x)+q_\beta(y)-\ell_\beta(x,y)$，故 $b_\beta$ 联合连续。正对偶 $K^*$ 张成 $E^*$，从中取有限线性基；这些坐标的联合连续性给同一个原值 $S$ 的联合连续性。$E=0$、$h=0$、重复点及零质量情形均在上述式子的零边界中直接成立。
 
 最后证明第 4 项。取 $c\in F_\beta$。序单位性给某个 $r>0$ 使 $0\le c\le ru$；选 $0<\lambda\le\theta/r$，则 $0\le\lambda c\le\theta u$。小效果和 (525.2) 给
