@@ -2,9 +2,9 @@
 
 ## Abstract
 
-Native counting and inverse definitions for the whole A252505 convolution.
+The whole A252505 fourth-power-free divisor convolution.
 
-The universal convolution is open in Lean. The statements below give the unchanged target and its native counting and recursion interfaces. No settling theorem or Proved open-problem resolution is asserted.
+The complete identity follows from the original counts, a finite prime-exponent-box convolution and an integer parity calculation. The positive domain includes one, arbitrary prime support and the diagonal unit-fraction solution.
 
 **Definition 1.1 (The prime fourth-power exclusion).**
 
@@ -144,7 +144,7 @@ $$claim = \left(\forall n \in Nat,\; 1 \le n \Rightarrow \operatorname{a}\left(n
 
 *Commentary.*
 
-OEIS A252505 FORMULA: a(n) = Sum_{d|n} A018892(d)*A378214(n/d). [Conjectured]. This definition includes n=1, arbitrary prime support and every exponent. It is an unproved proposition in this module.
+OEIS A252505 FORMULA: a(n) = Sum_{d|n} A018892(d)*A378214(n/d). [Conjectured]. This definition includes n=1, arbitrary prime support and every exponent. The result theorem proves this proposition with all its clauses.
 
 **Definition 1.11 (Finite ordered factor pairs).**
 
@@ -202,7 +202,23 @@ $$\forall v \in Nat \to Int,\; \operatorname{InverseRecursion}\left(v\right) \Ri
 
 Strong induction uses only positive proper divisors, each strictly smaller than n. The n=1 clause comes directly from the specification. The arbitrary value v(0) is immaterial.
 
-The remaining whole gap is b=a*g for the independently defined functions. The remaining native fourth-power-free and ceiling exponent-box bridges require a real whole-proof consumer. A finite-prime-support series proof must then encode divisor convolution, prove its series identities, prove the zero-or-one coefficient law, and descend the integral identity before reducing modulo two. Final inverse cancellation is then required. These missing steps are not certified by the native bridges above.
+**Theorem 1.15 (The complete convolution for every positive integer).**
+
+$$\forall n \in Nat,\; 1 \le n \Rightarrow \operatorname{a}\left(n\right) = \operatorname{Finset}.\operatorname{sum}\left(\operatorname{Nat}.\operatorname{divisors}\left(n\right), (fun d \mapsto \operatorname{b}\left(d\right) \cdot \operatorname{c}\left(\operatorname{Nat}.\operatorname{div}\left(n, d\right)\right))\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Divisors/OeisA252505FourthPowerFreeConvolution.result` (`✓ std3`). ∎
+
+*Resolves.* `Problems/oeis-a252505-fourth-power-free-convolution` (proved) by `D5/S3/Arith/Divisors/OeisA252505FourthPowerFreeConvolution.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a252505-fourth-power-free-convolution","declaration_gid":"D5/S3/Arith/Divisors/OeisA252505FourthPowerFreeConvolution.result","resolution_kind":"proved"} -->
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* The OEIS Foundation Inc. (2026). *OEIS A252505 and the linked unit-fraction and inverse sequences*. URL: <https://oeis.org/A252505>.
+
+*Commentary.*
+
+Encode divisors by all exponent vectors below the factorization of n. The fourth-power-free count is the product of min(e,3)+1. Write T(e) as the sum of k+1 for 0<=k<=e and U(e) as the number of even k in that range. Twice the native ceiling sum is the product of T plus the product of U. Define S(e)=1 on residues 0,1 modulo four and zero otherwise, and R(e)=1 on residue zero, -1 on residue one, and zero otherwise. An integer calculation modulo four gives product(T)+product(U) congruent to product(S)+product(R). The half-sum Gamma=(product(S)+product(R))/2 is zero or one, so h modulo two equals Gamma. The two local convolutions of min(e,3)+1 with S and R are respectively 2e+1 and one. Expanding finite box products therefore gives twice a*Gamma equal to tau(n^2)+1, hence b=a*g by the actual solution count. Associativity and the exact recursive Dirichlet inverse give a=b*c. Empty products retain n=1. All congruences are integral; no reduction from rational coefficients to characteristic two is used.
 
 ## References
 
@@ -217,6 +233,7 @@ The remaining whole gap is b=a*g for the independently defined functions. The re
 - Truth anchor: `D5/S3/Arith/Divisors/OeisA252505FourthPowerFreeConvolution.g`
 - Truth anchor: `D5/S3/Arith/Divisors/OeisA252505FourthPowerFreeConvolution.h`
 - Truth anchor: `D5/S3/Arith/Divisors/OeisA252505FourthPowerFreeConvolution.inverse_recursion_unique`
+- Truth anchor: `D5/S3/Arith/Divisors/OeisA252505FourthPowerFreeConvolution.result`
 - Truth anchor: `D5/S3/Arith/Divisors/OeisA252505FourthPowerFreeConvolution.tau`
 - Truth anchor: `D5/S3/Arith/Divisors/OeisA252505FourthPowerFreeConvolution.unit_fraction_count`
 - Truth anchor: `D5/S3/Arith/Divisors/OeisA252505FourthPowerFreeConvolution.unit_fraction_divisor_formula`

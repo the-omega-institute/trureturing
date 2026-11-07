@@ -18,6 +18,7 @@
 import Mathlib.NumberTheory.ArithmeticFunction.Misc
 import Mathlib.Data.Nat.Factorization.Divisors
 import Mathlib.Algebra.BigOperators.Ring.Finset
+import Mathlib.Algebra.BigOperators.Intervals
 import Mathlib.Data.Rat.Floor
 import Mathlib.Data.Finset.Card
 import Mathlib.SetTheory.Cardinal.Finite
@@ -363,9 +364,14 @@ private theorem eprod (s : Finset ℕ) (v : ℕ → ℕ) :
   rcases hprod with h|h <;> simpa [h] using H
 
 private theorem t_formula (e : ℕ) : 2*T e = ((e : ℤ)+1)*((e : ℤ)+2) := by
-  induction e with
-  | zero => norm_num [T]
-  | succ e ih => simp only [T, sum_range_succ, Nat.cast_add, Nat.cast_one] at *; nlinarith
+  have hn := Finset.sum_range_id_mul_two (e+1)
+  simp only [Nat.add_sub_cancel] at hn
+  have hz : (∑ k ∈ range (e+1), (k : ℤ))*2 = ((e : ℤ)+1)*e := by
+    exact_mod_cast hn
+  unfold T
+  rw [sum_add_distrib]
+  simp only [sum_const, card_range, nsmul_eq_mul, mul_one]
+  nlinarith
 
 private theorem u_formula (e : ℕ) : U e = ((e / 2 : ℕ) : ℤ) + 1 := by
   induction e using Nat.twoStepInduction with

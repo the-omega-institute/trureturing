@@ -34,10 +34,10 @@ private theorem free_two : FourthPowerFree 2 := by
   subst p
   norm_num at hh
 
-private theorem count_one : a 1 = 1 := by simp [a, free_one]
+private theorem count_one : a 1 = 1 := by simp [a, Finset.filter_singleton, free_one]
 private theorem count_two : a 2 = 2 := by
-  have hd : (2 : ℕ).divisors = {1,2} := Nat.divisors_prime (by decide)
-  simp [a, hd, free_one, free_two]
+  have hd : (2 : ℕ).divisors = {1,2} := Nat.Prime.divisors (by decide)
+  simp [a, hd, Finset.filter_insert, Finset.filter_singleton, free_one, free_two]
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
