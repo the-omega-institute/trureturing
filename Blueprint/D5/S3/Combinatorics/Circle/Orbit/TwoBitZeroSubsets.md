@@ -71,4 +71,4 @@ The result classifies exact zero subsets for the family q=1+2^a. It gives no new
 - Truth anchor: `D5/S3/Combinatorics/Circle/Orbit/TwoBitZeroSubsets.actual_zero_iff`
 - Truth anchor: `D5/S3/Combinatorics/Circle/Orbit/TwoBitZeroSubsets.actual_zero_iff_dvd`
 - Truth anchor: `D5/S3/Combinatorics/Circle/Orbit/TwoBitZeroSubsets.actual_zero_subsets_card`
-- Dependency: [D5/S3/Combinatorics/Circle/ZeroSumSubsets](ZeroSumSubsets.md)
+- Dependency: [D5/S3/Combinatorics/Circle/Orbit/ZeroSumSubsets](ZeroSumSubsets.md)

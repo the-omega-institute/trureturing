@@ -34,7 +34,7 @@ $$\forall k \in \mathrm{Nat},\; \forall a \in \mathrm{Nat},\; 0 < k \Rightarrow 
 
 Put d=gcd(t,2^k-1) and Q=(2^k-1)/d. The accepted zero_mask_dvd and quotient_dvd give exact zero implies Q divides mask(A). Conversely this divisibility gives the rotation-mask congruence. Empty and full have exact zero. For other subsets both masks are strictly below N, so the congruence forces equal natural masks, and the classification forces exact zero. Neither endpoint mask, 0 or N, is discarded.
 
-The finite mask-counting bijection is extracted once into private ZeroSumSubsets.divisible_mask_card and consumed by both the existing TwoBitZeroSubsets plus-seed count and this minus-seed count. It maps a divisible mask to mask(A)/Q in [0,d]. Multiplication by Q recovers the mask; mask_surjective provides the inverse for every Q*n. Thus there are d+1 subsets. Mathlib's unconditional Nat.pow_sub_one_gcd_pow_sub_one gives d=2^gcd(a,k)-1, hence exactly 2^gcd(a,k). The accepted plus-seed public types and their separate exact-zero bridge are preserved.
+The finite mask-counting bijection is extracted once into shared ZeroSumSubsets.divisible_mask_card and consumed by both the existing TwoBitZeroSubsets plus-seed count and this minus-seed count. It maps a divisible mask to mask(A)/Q in [0,d]. Multiplication by Q recovers the mask; mask_surjective provides the inverse for every Q*n. Thus there are d+1 subsets. Mathlib's unconditional Nat.pow_sub_one_gcd_pow_sub_one gives d=2^gcd(a,k)-1, hence exactly 2^gcd(a,k). The accepted plus-seed public types and their separate exact-zero bridge are preserved.
 
 The domain includes a=0, k=1, a>=k, a divisible by k, empty/full subsets, nonunit seeds and repeated source values at different labels. When a=0 the source is zero, rho is the identity and all 2^k subsets are counted; when k=1 both physical subsets are counted for every a. When k divides a, rho is again the identity. No extra endpoint premise or restriction 0<a<k is imposed.
 
@@ -44,5 +44,5 @@ This result concerns the Mersenne-difference seed family on full physical labels
 
 - Truth anchor: `D5/S3/Combinatorics/Circle/Orbit/MersenneDifferenceZeroSubsets.actual_zero_iff_rotation`
 - Truth anchor: `D5/S3/Combinatorics/Circle/Orbit/MersenneDifferenceZeroSubsets.actual_zero_subsets_card`
-- Dependency: [D5/S3/Combinatorics/Circle/TwoBitZeroSubsets](TwoBitZeroSubsets.md)
-- Dependency: [D5/S3/Combinatorics/Circle/ZeroSumSubsets](ZeroSumSubsets.md)
+- Dependency: [D5/S3/Combinatorics/Circle/Orbit/TwoBitZeroSubsets](TwoBitZeroSubsets.md)
+- Dependency: [D5/S3/Combinatorics/Circle/Orbit/ZeroSumSubsets](ZeroSumSubsets.md)

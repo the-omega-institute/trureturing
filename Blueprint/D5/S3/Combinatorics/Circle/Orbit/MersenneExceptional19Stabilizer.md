@@ -33,7 +33,8 @@ The ordinary all-r proof supplied through GPT Pro informed this Codex implementa
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/Circle/Orbit/MersenneExceptional19Stabilizer.actual_zero_family_rotation_iff`
-- Dependency: [D5/S3/Combinatorics/Circle/MersennePhaseRotationStabilizer](MersennePhaseRotationStabilizer.md)
-- Dependency: [D5/S3/Combinatorics/Circle/MersennePhaseThreeTrace](MersennePhaseThreeTrace.md)
-- Dependency: [D5/S3/Combinatorics/Circle/TwoBitZeroSubsets](TwoBitZeroSubsets.md)
-- Dependency: [D5/S3/Combinatorics/Circle/ZeroSumSubsets](ZeroSumSubsets.md)
+- Dependency: [D5/S3/Combinatorics/Circle/Orbit/MersenneExceptional19Stabilizer/Basic](MersenneExceptional19Stabilizer/Basic.md)
+- Dependency: [D5/S3/Combinatorics/Circle/Orbit/MersennePhaseRotationStabilizer](MersennePhaseRotationStabilizer.md)
+- Dependency: [D5/S3/Combinatorics/Circle/Orbit/MersennePhaseThreeTrace](MersennePhaseThreeTrace.md)
+- Dependency: [D5/S3/Combinatorics/Circle/Orbit/TwoBitZeroSubsets](TwoBitZeroSubsets.md)
+- Dependency: [D5/S3/Combinatorics/Circle/Orbit/ZeroSumSubsets](ZeroSumSubsets.md)

@@ -38,7 +38,7 @@ Empty and full subsets, nonunit seeds, repeated values, d=3, d=4 and arbitrary l
 
 - Truth anchor: `D5/S3/Combinatorics/Circle/Orbit/MersennePhaseNoncyclicFamily.actual_zero_iff_phase_pair`
 - Truth anchor: `D5/S3/Combinatorics/Circle/Orbit/MersennePhaseNoncyclicFamily.actual_zero_subsets_card`
-- Dependency: [D5/S3/Combinatorics/Circle/MersenneDifferenceZeroSubsets](MersenneDifferenceZeroSubsets.md)
-- Dependency: [D5/S3/Combinatorics/Circle/MersennePhaseThreeTrace](MersennePhaseThreeTrace.md)
-- Dependency: [D5/S3/Combinatorics/Circle/TernaryPhaseZeroCount](TernaryPhaseZeroCount.md)
-- Dependency: [D5/S3/Combinatorics/Circle/TwoBitZeroSubsets](TwoBitZeroSubsets.md)
+- Dependency: [D5/S3/Combinatorics/Circle/Orbit/MersenneDifferenceZeroSubsets](MersenneDifferenceZeroSubsets.md)
+- Dependency: [D5/S3/Combinatorics/Circle/Orbit/MersennePhaseThreeTrace](MersennePhaseThreeTrace.md)
+- Dependency: [D5/S3/Combinatorics/Circle/Orbit/TernaryPhaseZeroCount](TernaryPhaseZeroCount.md)
+- Dependency: [D5/S3/Combinatorics/Circle/Orbit/TwoBitZeroSubsets](TwoBitZeroSubsets.md)

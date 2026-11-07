@@ -92,4 +92,5 @@ The source motivation is Damasdi–Frankl–Pach–Palvolgyi, Monochromatic conf
 - Truth anchor: `D5/S3/Combinatorics/Circle/Orbit/ZeroSumSubsets.disjoint_zero_blocks_bound`
 - Truth anchor: `D5/S3/Combinatorics/Circle/Orbit/ZeroSumSubsets.neutral_carry_path`
 - Truth anchor: `D5/S3/Combinatorics/Circle/Orbit/ZeroSumSubsets.zero_subsets_card_le`
-- Dependency: [D5/S3/Combinatorics/Circle/SourceWidth](SourceWidth.md)
+- Dependency: [D5/S3/Combinatorics/Circle/Orbit/ZeroSumSubsets/Basic](ZeroSumSubsets/Basic.md)
+- Dependency: [D5/S3/Combinatorics/Circle/SourceWidth](../SourceWidth.md)

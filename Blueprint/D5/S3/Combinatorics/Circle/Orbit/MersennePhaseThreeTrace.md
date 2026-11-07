@@ -27,4 +27,4 @@ For the ongoing physical zero-algebra construction, this supplies the actual ari
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/Circle/Orbit/MersennePhaseThreeTrace.actual_phase_trace`
-- Dependency: [D5/S3/Combinatorics/Circle/SourceWidth](SourceWidth.md)
+- Dependency: [D5/S3/Combinatorics/Circle/SourceWidth](../SourceWidth.md)
