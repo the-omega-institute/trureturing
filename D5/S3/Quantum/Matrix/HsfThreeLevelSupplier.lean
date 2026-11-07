@@ -2547,8 +2547,8 @@ private theorem pd_sylvester_spectral (X D : Matrix n n ℂ)
   have hl (i : n) : 0 < l i := hX.eigenvalues_pos i
   have hden (i j : n) : (l i : ℂ)+(l j : ℂ) ≠ 0 := by
     exact_mod_cast (add_pos (hl i) (hl j)).ne'
-  let E : n → n → ℂ := φ.symm D
-  let T : n → n → ℂ := fun i j => E i j / ((l i : ℂ)+(l j : ℂ))
+  let E : Matrix n n ℂ := φ.symm D
+  let T : Matrix n n ℂ := fun i j => E i j / ((l i : ℂ)+(l j : ℂ))
   have hE : E.IsHermitian := by
     change star (φ.symm D) = φ.symm D
     rw [← map_star, Matrix.star_eq_conjTranspose, hD.eq]
@@ -2556,7 +2556,7 @@ private theorem pd_sylvester_spectral (X D : Matrix n n ℂ)
     ext i j
     change star (E j i / ((l j : ℂ)+(l i : ℂ))) =
       E i j / ((l i : ℂ)+(l j : ℂ))
-    rw [star_div, hE.apply i j]
+    erw [star_div, hE.apply i j]
     congr 1
     simp [add_comm]
   have hsolve : L*T+T*L = E := by
