@@ -27,10 +27,12 @@ Causalean source at a7085d88d2e4b30003db7097ca374f4718da0f01:
 Released under the Apache License, Version 2.0. Full license and NOTICE:
 `docs/reports/licenses/causalsmith-maximal-coupling/`.
 
-The transplanted declarations have private visibility, local namespace resolution,
-and imports adapted to the receiver. Their individual-law mathematics is upstream
-work. Retirement uses equivalent suppliers and checked consumer replacements at the
-receiver's actually pinned Mathlib revision, as specified in the source notice.
+The transplanted declarations `tvDist`, `tvDist_le_one`, `rnCommonPart`, and
+`rnCommonPart_mass_eq_one_sub_tvDist` are public; the remaining transplanted
+declarations are private. Namespace resolution and imports are adapted to the
+receiver. Their individual-law mathematics is upstream work. Retirement uses
+equivalent suppliers and checked consumer replacements at the receiver's actually
+pinned Mathlib revision, as specified in the source notice.
 -/
 
 noncomputable section

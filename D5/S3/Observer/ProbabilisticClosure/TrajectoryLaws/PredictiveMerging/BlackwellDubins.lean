@@ -16,6 +16,15 @@ import D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.JointConditionalDomina
 import D5.S3.Estimation.DataProcessing.MeasurableMaximalCoupling
 import Mathlib.Probability.Kernel.Composition.IntegralCompProd
 
+/-!
+# Blackwell–Dubins predictive merging
+
+For arbitrary measurable coordinate spaces, an absolutely continuous change of a
+history law induces predictive kernels on each infinite future after any chosen
+predictive kernel sequence for the original law. Their event-total-variation
+distance tends to zero on a common almost-everywhere set for the changed law.
+-/
+
 set_option autoImplicit false
 noncomputable section
 
@@ -338,16 +347,14 @@ private theorem full_prefix_filtration :
     (⨆ n : ℕ, Filtration.piLE (X := X) n) =
       (inferInstance : MeasurableSpace (History X)) := by
   apply le_antisymm (iSup_le fun n => Filtration.piLE.le n)
-  have hid : @Measurable (History X) (History X)
-      (⨆ n : ℕ, Filtration.piLE (X := X) n) inferInstance id := by
-    apply measurable_pi_iff.mpr
-    intro n
-    have hc : Measurable[Filtration.piLE (X := X) n]
-        (fun ω : History X => ω n) :=
-      (measurable_pi_apply (X := fun i : Iic n => X i.1) ⟨n, le_rfl⟩).comp
-        (comap_measurable (Preorder.restrictLe (π := X) n))
-    exact hc.mono (le_iSup (fun n : ℕ => Filtration.piLE (X := X) n) n) le_rfl
-  simpa only [MeasurableSpace.comap_id] using hid.comap_le
+  change (⨆ n : ℕ, (inferInstance : MeasurableSpace (X n)).comap
+    (fun ω : History X => ω n)) ≤ _
+  refine iSup_le fun n => ?_
+  have hc : Measurable[Filtration.piLE (X := X) n]
+      (fun ω : History X => ω n) :=
+    (measurable_pi_apply (X := fun i : Set.Iic n => X i.1) ⟨n, le_rfl⟩).comp
+      (comap_measurable (Preorder.restrictLe (π := X) n))
+  exact hc.comap_le.trans (le_iSup (fun n : ℕ => Filtration.piLE (X := X) n) n)
 
 /-- The supplied predictive law identifies scalar row integrals with conditional means.
 Only prefix-almost-everywhere integrability of the original rows is used. -/
@@ -444,9 +451,8 @@ private theorem overlap_limits
         (𝓝 (likelihood P Q ω)) := tendsto_const_nhds
     simpa only [min_self] using hconst.min hω
   have hjoint :=
-    D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.JointConditionalDominatedConvergence.
-      tendsto_condExp_of_dominated_convergence (Filtration.piLE (X := X))
-        y (likelihood P Q) (likelihood P Q) hym hqm hyLim hqi hyb
+    D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.JointConditionalDominatedConvergence.tendsto_condExp_of_dominated_convergence
+      (Filtration.piLE (X := X)) y (likelihood P Q) (likelihood P Q) hym hqm hyLim hqi hyb
   have hdiag : ∀ᵐ ω ∂P, Tendsto
       (fun n => P[y n | Filtration.piLE (X := X) n] ω) atTop (𝓝 (likelihood P Q ω)) := by
     have htop : P[likelihood P Q | ⨆ n, Filtration.piLE (X := X) n] = likelihood P Q := by
@@ -574,7 +580,7 @@ theorem blackwell_dubins_predictive_merging
         (rowMass (κ n) (splitDensity X P Q n) (past X n ω)).toReal)
       atTop (𝓝 0) := by
     have hconst : Tendsto (fun _ : ℕ => (1 : ℝ)) atTop (𝓝 1) := tendsto_const_nhds
-    simpa only [div_self hq.ne', sub_self] using hconst.sub hratio
+    simpa only [Pi.div_apply, div_self hq.ne', sub_self] using hconst.sub hratio
   exact hzero.congr' (Eventually.of_forall fun n => (heq n).symm)
 
 end PredictiveMerging
