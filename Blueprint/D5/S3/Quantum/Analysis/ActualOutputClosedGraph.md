@@ -1,0 +1,46 @@
+# Actual Outputs and the Original Norm Closed Graph
+
+## Abstract
+
+Uniform finite readback on actual outputs recovers the same total directed relation as a bounded real bilinear map on its original Banach space.
+
+**Definition 1.1 (One formula for every actual output).**
+
+Lean statement: `D5/S3/Quantum/Analysis/ActualOutputClosedGraph.UniformActualReadback`
+
+*Formalization.* `D5/S3/Quantum/Analysis/ActualOutputClosedGraph.UniformActualReadback` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For a total function D from E times E to E, its actual output set is the range of Function.uncurry D. For every original continuous real linear evaluation alpha in P and every real eta>0, choose one natural number m, tests t indexed by Fin m, evaluations beta in P and real coefficients c. Each test is an actual D output. The absolute difference between alpha(p) and the sum of c(j) times beta(j)(D(p,t(j))) is at most eta times norm(p), for every actual output p simultaneously. The choice precedes p. Fin 0 gives the empty sum; repeated tests and coefficients of either sign are allowed. No linearity or closedness of the output set is assumed.
+
+**Theorem 1.2 (The same raw relation is bounded bilinear).**
+
+Lean statement: `D5/S3/Quantum/Analysis/ActualOutputClosedGraph.raw_relation_bounded_bilinear`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Analysis/ActualOutputClosedGraph.raw_relation_bounded_bilinear` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Let E be any real Banach space in any universe, with its given norm. Let P be any separating set of continuous real linear functionals, S a bounded symmetric real bilinear multiplication on E and D an arbitrary total function on E times E. Assume that alpha(S(b,a))-i alpha(D(b,a)) is the conjugate of alpha(S(a,b))-i alpha(D(a,b)) for every alpha in P and every a,b. Assume the real associator identity S(S(a,b),c)-S(a,S(b,c))=D(D(a,b),c)-D(a,D(b,c)) for every triple, and UniformActualReadback P D. Then there exists a continuous real bilinear map B on the same E such that B(a,b)=D(a,b) for every a,b, and one real K>=0 with norm(D(a,b))<=K norm(a) norm(b) for all a,b. The existential B records bilinearity of the given D; it does not replace its values, norm or carrier.
+
+Actual evaluation conjugacy and separation first give antisymmetry. The three cyclic associator instances are vector equations and give D(D(a,b),c)=S(b,S(a,c))-S(a,S(b,c)). This elimination never expands an input sum inside unknown D. A finite signed combination of actual outputs whose relation rows vanish must itself vanish: apply the same finite readback formula to every term, sum the errors with absolute coefficient weights, and send eta to zero. Applying this reflection to the three outputs D(a+b,c), D(a,c), D(b,c), and to the two outputs D(r a,c), D(a,c), proves first-slot real linearity. Antisymmetry gives the second slot. Scalar zero is included in the same argument.
+
+The limit lemma also handles finitely many sequences of actual outputs with fixed real weights. Its hypotheses require norm convergence of the individual output sequences and convergence to zero of their weighted evaluated relation rows. Continuity of the original evaluations and of the norm passes the finite error inequality to the limit; only the sequence terms are passed to UniformActualReadback. Separation identifies the weighted vector limit. This remains valid for empty lists, zero weights, repeated outputs, zero output norms and empty separating families on the zero space.
+
+For a fixed a and any sequence b(n) converging to b with D(a,b(n)) converging to p in the original norm, apply the limit lemma to the actual outputs D(a,b(n)) and the constant actual output D(a,b), with weights 1 and -1. The cyclic identity expresses their row difference at each actual test t as S(b(n),S(a,t))-S(a,S(b(n),t)) minus the same expression at b. Bounded bilinearity of S and continuity of each beta make this difference converge to zero. Therefore p=D(a,b). The unknown norm limit p is never assumed actual and is never an argument of the readback hypothesis.
+
+Mathlib LinearMap.continuous_of_seq_closed_graph now applies directly to every full-domain linear row. For the family of these continuous rows indexed by norm(a)<=1, antisymmetry bounds each vector orbit by the operator norm of the row at that vector. Mathlib banach_steinhaus supplies one uniform operator bound. Replacing it by its maximum with zero and scaling nonzero a gives the joint norm bound; a=0 is handled by linearity. These are existing closed graph and uniform boundedness suppliers, not separate new mathematical results.
+
+This is the complete mathematical conclusion of the original small-window Theorem 12.2 with Definition 12.1 and the three-label Definition 49.1. Its original Archimedean normed order-unit carrier, original norm, positive separating evaluations and bounded symmetric S instantiate the displayed theorem without any added premise. Positivity, the order unit and Archimedeanity are not needed after supplying the original continuous evaluations. The finite-dependence and cyclic algebra match the subarguments in three-label 72.1 and 72.2, without importing their complex two-table hypothesis or determinant bound. The additional bridge concerns actual outputs converging in the original norm. This is a repository-derived synthesis, with no historical priority claim.
+
+There is no assumption that D is linear, additive, homogeneous, continuous, bounded, a derivation or closed graph. There is no finite-dimensionality, normalization, unit, scaling law, output-span, linear-range, closed-range, JB identity, complex positivity, normality, factor or trace hypothesis. The theorem includes the zero space. It does not prove a Jordan derivation law, a completion theorem, Theorem 12.4, Theorem 13.2 or a physical reconstruction. Incomplete carriers retain the missing Banach closed graph step. The real model S(a,b)=ab, D(a,b)=0 with the singleton positive identity evaluation satisfies the hypotheses using empty readback formulas; the carrier is nonzero.
+
+## References
+
+- Truth anchor: `D5/S3/Quantum/Analysis/ActualOutputClosedGraph.UniformActualReadback`
+- Truth anchor: `D5/S3/Quantum/Analysis/ActualOutputClosedGraph.raw_relation_bounded_bilinear`
