@@ -529,8 +529,7 @@ private def detPair {n : ℕ} (AC : Matrix (Fin n) (Fin n) ℂ × Matrix (Fin n)
     exact Finset.measurable_fun_sum _ (fun k hk => (hf i k).mul ((show Measurable (star : ℂ → ℂ) from continuous_star.measurable).comp (hf j k)))
   have h2 (i j : Fin n) : Measurable
       (fun AC : Matrix (Fin n) (Fin n) ℂ × Matrix (Fin n) (Fin n) ℂ => (AC.2*AC.2ᴴ) i j) := by
-    simp only [Matrix.mul_apply, Matrix.conjTranspose_apply]
-    exact Finset.measurable_fun_sum _ (fun k hk => (hs i k).mul ((show Measurable (star : ℂ → ℂ) from continuous_star.measurable).comp (hs j k)))
+    exact measurable_swap_iff.mp (h1 i j)
   have hm (i j : Fin n × Fin n) : Measurable
       (fun AC : Matrix (Fin n) (Fin n) ℂ × Matrix (Fin n) (Fin n) ℂ =>
         (AC.1*AC.1ᴴ) i.1 j.1 * (1 : Matrix (Fin n) (Fin n) ℂ) i.2 j.2 -

@@ -252,10 +252,7 @@ private lemma exists_unitary_common (s : ℕ) :
       field_simp
     nlinarith [norm_nonneg v]
   have horth : Orthonormal ℂ (({0} : Set (Fin (s+1))).domRestrict (fun _ => v)) := by
-    rw [orthonormal_iff_ite]
-    intro i j
-    have hij : i = j := Subtype.ext (by simpa using i.property.trans j.property.symm)
-    simp [hij, inner_self_eq_norm_sq_to_K, hv]
+    exact orthonormal_subsingleton_iff.mpr (fun _ => hv)
   obtain ⟨b,hb⟩ := Orthonormal.exists_orthonormalBasis_extension_of_card_eq
     (show Module.finrank ℂ (EuclideanSpace ℂ (Fin (s+1))) = Fintype.card (Fin (s+1)) by simp) horth
   let U : Matrix (Fin (s+1)) (Fin (s+1)) ℂ := Matrix.of (fun i j => b j i)
