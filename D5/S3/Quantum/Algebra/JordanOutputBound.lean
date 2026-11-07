@@ -14,6 +14,9 @@ public import Mathlib.Analysis.Real.Sqrt
 public import Mathlib.Tactic.Module
 public import Mathlib.Tactic.Linarith
 public import Mathlib.Tactic.Ring
+public import Mathlib.Algebra.Polynomial.AlgebraMap
+public import Mathlib.Algebra.Polynomial.Div
+public import Mathlib.RingTheory.Adjoin.Polynomial.Basic
 
 /-! Estimates on the original normed carrier; completeness is not required. -/
 
@@ -24,6 +27,23 @@ set_option autoImplicit false
 namespace D5.S3.Quantum.Algebra.JordanOutputBound
 
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
+
+private theorem square_identity (S : E →ₗ[ℝ] E →ₗ[ℝ] E) (D : E → E → E)
+    (hskew : ∀ a b, D a b = -D b a)
+    (hrow : ∀ a b c, D (D a b) c = S b (S a c) - S a (S b c))
+    (hR : ∀ a b c, S (S a b) c - S a (S b c) = D (D a b) c - D a (D b c))
+    (a b : E) : D a (D a b) = S a (S a b) - S (S a a) b := by
+  have haa : D a a = 0 := by
+    have ht : D a a + D a a = 0 := by
+      calc
+        D a a + D a a = -D a a + D a a := congrArg (· + D a a) (hskew a a)
+        _ = 0 := neg_add_cancel _
+    have ht' : (2 : ℝ) • D a a = 0 := by simpa only [two_smul] using ht
+    exact (smul_eq_zero.mp ht').resolve_left (by norm_num)
+  have hz : D 0 b = 0 := by simpa only [haa, sub_self] using hrow a a b
+  have hr := hR a a b
+  rw [haa, hz, zero_sub] at hr
+  simpa only [neg_neg, neg_sub] using (congrArg Neg.neg hr).symm
 
 private theorem inner_leibniz
     (S : E →ₗ[ℝ] E →ₗ[ℝ] E)
@@ -140,22 +160,67 @@ theorem actual_output_bound
     inner_leibniz S hcomm hjordan r s x y
   have hdelta (x : E) : δ (δ x) =
       S (D r s) (S (D r s) x) - S (S (D r s) (D r s)) x := by
-    have hsquare (a b : E) : D a (D a b) = S a (S a b) - S (S a a) b := by
-      have haa : D a a = 0 := by
-        have ht : D a a + D a a = 0 := by
-          calc
-            D a a + D a a = -D a a + D a a := congrArg (· + D a a) (hskew a a)
-            _ = 0 := neg_add_cancel _
-        have ht' : (2 : ℝ) • D a a = 0 := by simpa only [two_smul] using ht
-        exact (smul_eq_zero.mp ht').resolve_left (by norm_num)
-      have hz : D 0 b = 0 := by simpa only [haa, sub_self] using hrow a a b
-      have hr := hR a a b
-      rw [haa, hz, zero_sub] at hr
-      simpa only [neg_neg, neg_sub] using (congrArg Neg.neg hr).symm
-    rw [hδ, hδ, hsquare]
+    rw [hδ, hδ, square_identity S D hskew hrow hR]
   have h := norm_derivation_le S hnorm hsq δ (D r s) hder hdelta b
   rw [hδ] at h
   refine ⟨h, ?_⟩
   simpa only [hskew b (D r s), norm_neg] using h
+
+/-- A polynomial with constant term one leaves a single original nested output
+as its remainder. The estimate uses only that actual output, before any
+continuity or extension of the bilinear relation has been established. -/
+theorem polynomial_actual_output_control
+    (S D : E →ₗ[ℝ] E →ₗ[ℝ] E)
+    (hcomm : ∀ x y, S x y = S y x)
+    (hjordan : ∀ x y, S (S x y) (S x x) = S x (S y (S x x)))
+    (hnorm : ∀ x y : E, ‖S x y‖ ≤ ‖x‖ * ‖y‖)
+    (hsq : ∀ x : E, ‖S x x‖ = ‖x‖ ^ 2)
+    (hskew : ∀ a b, D a b = -D b a)
+    (hrow : ∀ a b c, D (D a b) c = S b (S a c) - S a (S b c))
+    (hR : ∀ a b c, S (S a b) c - S a (S b c) = D (D a b) c - D a (D b c))
+    (a b : E) (q : Polynomial ℝ) (hq : q.coeff 0 = 1) :
+    let H : Module.End ℝ E := (S a).comp (S a) - S (S a a)
+    let Q := Polynomial.aeval H q
+    ∃ r : Polynomial ℝ,
+      1 - q = Polynomial.X * r ∧
+      b - Q b = D a (D a ((Polynomial.aeval H r) b)) ∧
+      D a (Q b) = Q (D a b) ∧
+      b - Q b ∈ Set.range (fun p : E × E => D p.1 p.2) ∧
+      ‖D a b - Q (D a b)‖ ≤ Real.sqrt 3 * ‖a‖ * ‖b - Q b‖ := by
+  dsimp only
+  let H : Module.End ℝ E := (S a).comp (S a) - S (S a a)
+  let Q := Polynomial.aeval H q
+  have hH (x : E) : H x = D a (D a x) :=
+    (square_identity S (fun x y => D x y) hskew hrow hR a x).symm
+  have hc : Commute (D a) H := by
+    change (D a) * H = H * (D a)
+    ext x
+    change D a (H x) = H (D a x)
+    rw [hH, hH]
+  have hQmem : Q ∈ Algebra.adjoin ℝ ({H} : Set (Module.End ℝ E)) := by
+    rw [Algebra.adjoin_singleton_eq_range_aeval]
+    exact ⟨q, rfl⟩
+  have hQ : Commute (D a) Q :=
+    Algebra.commute_of_mem_adjoin_singleton_of_commute hQmem hc
+  have hcommQ (x : E) : D a (Q x) = Q (D a x) :=
+    congrArg (fun T : Module.End ℝ E => T x) hQ.eq
+  have hdiv : Polynomial.X ∣ (1 - q) :=
+    Polynomial.X_dvd_iff.mpr (by simp only [Polynomial.coeff_sub,
+      Polynomial.coeff_one_zero, hq, sub_self])
+  obtain ⟨r, hr⟩ := hdiv
+  have hrem : b - Q b = D a (D a ((Polynomial.aeval H r) b)) := by
+    have he := congrArg (fun T : Module.End ℝ E => T b)
+      (congrArg (Polynomial.aeval H) hr)
+    simpa only [map_sub, map_one, map_mul, Polynomial.aeval_X,
+      LinearMap.sub_apply, Module.End.one_apply, Module.End.mul_apply, hH] using he
+  have hx : b - Q b ∈ Set.range (fun p : E × E => D p.1 p.2) :=
+    ⟨(a, D a ((Polynomial.aeval H r) b)), hrem.symm⟩
+  refine ⟨r, hr, hrem, hcommQ b, hx, ?_⟩
+  have h := (actual_output_bound S hcomm hjordan hnorm hsq
+    (fun x y => D x y) hskew hrow hR hx a).2
+  rw [(D a).map_sub, hcommQ] at h
+  calc
+    ‖D a b - Q (D a b)‖ ≤ Real.sqrt 3 * ‖b - Q b‖ * ‖a‖ := h
+    _ = Real.sqrt 3 * ‖a‖ * ‖b - Q b‖ := by ring
 
 end D5.S3.Quantum.Algebra.JordanOutputBound
