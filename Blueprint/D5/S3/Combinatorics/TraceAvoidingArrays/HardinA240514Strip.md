@@ -108,6 +108,10 @@ $$\forall n: Nat, ((21 \leq n) \implies ((\operatorname{a}\left(n\right): Int) =
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA240514Strip.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/hardin240514` (proved) by `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA240514Strip.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hardin240514","declaration_gid":"D5/S3/Combinatorics/TraceAvoidingArrays/HardinA240514Strip.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* R. H. Hardin; OEIS Foundation Inc. (2014). *OEIS A240514: three-column binary strips with no exactly-two equal neighbors*. URL: <https://oeis.org/A240514>.

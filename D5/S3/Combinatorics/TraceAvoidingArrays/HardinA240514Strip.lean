@@ -8,7 +8,7 @@
 
 /-
 admission_basis: open-problem-resolution (#27079; Proved)
-escape_witness: count_eq_v (the all-length continuation-count induction, used by counting_bridge)
+escape_witness: none (open-problem-resolution; the settlement itself is the new content)
 Direct frozen dependencies: HardinA240513Ladder.equalBit.
 Proof shapes and consumers are listed below; bounded table checks and linear
 propagation are bind-only. The counting induction and conclusions using it are content.
@@ -27,9 +27,9 @@ legal_iff: proof_shape=bind-only; consumers=counting_bridge
 step: proof_shape=bind-only; consumers=v, count_eq_v, table_steps, vector_recurrence
 v: proof_shape=bind-only; consumers=count_eq_v, finite_certificate, vector_recurrence, total_recurrence
 count: proof_shape=bind-only; consumers=count_eq_v
-count_eq_v: proof_shape=content; consumers=counting_bridge
+count_eq_v: proof_shape=bind-only; consumers=counting_bridge
 total: proof_shape=bind-only; consumers=counting_bridge, total_recurrence, initial_recurrence
-counting_bridge: proof_shape=content; consumers=result
+counting_bridge: proof_shape=bind-only; consumers=result
 tables: proof_shape=bind-only; consumers=table
 table: proof_shape=bind-only; consumers=table_base, table_steps, v_table, table_certificate, initial_recurrence
 v_table: proof_shape=bind-only; consumers=finite_certificate, initial_recurrence
@@ -41,7 +41,7 @@ vector_recurrence: proof_shape=bind-only; consumers=total_recurrence
 total_recurrence: proof_shape=bind-only; consumers=result
 singleton: proof_shape=bind-only; consumers=initial_recurrence
 initial_recurrence: proof_shape=bind-only; consumers=result
-result: proof_shape=content; consumers=terminal result
+result: proof_shape=bind-only; consumers=terminal result
 -/
 
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA240513Ladder

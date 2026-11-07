@@ -61,7 +61,7 @@ internal sealed class HardinA240514StripDocument : IScribeDocumentDefinition
                 StatementSource.FromAuthor(Disp(ResultFormula())),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
                 Blocks(Paragraph(Text("The FORMULA field of OEIS A240514, revision 6, labels this twenty-term recurrence Empirical. All counts are cast from natural numbers to integers before multiplication or subtraction. The index is a natural number at least twenty-one, equivalently a positive integer in that range. Splitting a finite board into its initial two rows and remaining rows gives a continuation count. Induction on the remaining length identifies it with v. The first-row boundary and first-entry constraint define a weighted sum of v, which therefore equals a(k+2). The finite vector identity and linearity yield the recurrence for heights at least twenty-two. The same checked continuation table and the literal singleton count a(1)=3 give the height-twenty-one boundary case."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem, new OpenProblemResolutionClaim(ProblemSlugRef.Create("hardin240514"), ResolutionKind.Proved)))));
 
     private static Formula HorizontalFormula()
     {
