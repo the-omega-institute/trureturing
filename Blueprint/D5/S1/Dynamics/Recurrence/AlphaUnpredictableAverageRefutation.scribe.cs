@@ -141,7 +141,8 @@ internal sealed class AlphaUnpredictableAverageRefutationDocument : IScribeDocum
     private static Formula Sequences() => new Formula.TypeArrow(Naturals(), Reals());
     private static Formula Naturals() => Seq(Mathbb, Grp(X("N")));
     private static Formula Reals() => Seq(Mathbb, Grp(X("R")));
-    private static Formula Equal(Formula left, Formula right) => new Formula.Relation(left, FormulaRelationOperator.Equal, right);
+    private static Formula Equal(Formula left, Formula right) =>
+        new Formula.Relation(left, FormulaRelationOperator.Equal, Parenthesized(right));
     private static Formula Less(Formula left, Formula right) => new Formula.Relation(left, FormulaRelationOperator.LessThan, right);
     private static Formula LeqOf(Formula left, Formula right) => new Formula.Relation(left, FormulaRelationOperator.LessThanOrEqual, right);
     private static Formula Member(Formula left, Formula right) => new Formula.Relation(left, FormulaRelationOperator.MemberOf, right);

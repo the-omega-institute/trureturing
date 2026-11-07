@@ -16,30 +16,41 @@ the construction uses Mathlib's normalized bump, convolution, Nat.bodd and Bool.
 The average-existence question is in journal Remark 1, not in arXiv:2608.09809v2.
 The statement includes all real return and divergence sequences; integer shifts are witnesses.
 No claim is made about bounded primitives, bounded remainders or generalized invariant means.
-bounded_locally_integrable: proof_shape: bind-only; escape_witness: none; consumers: smooth_contDiff, smooth_uniformContinuous, smooth_integral_error.
-smooth_contDiff: proof_shape: bind-only; escape_witness: none; consumers: smooth_uniformContinuous, symmetric_mean_eq.
+bounded_locally_integrable: proof_shape: bind-only; escape_witness: none; consumers:
+  smooth_contDiff, smooth_uniformContinuous, smooth_integral_error, step_integral_endpoint.
+smooth_contDiff: proof_shape: bind-only; escape_witness: none; consumers:
+  smooth_uniformContinuous, symmetric_mean_eq.
 smooth_bound: proof_shape: bind-only; escape_witness: none; consumers: smooth_alpha.
 smooth_uniformContinuous: proof_shape: bind-only; escape_witness: none; consumers: smooth_alpha.
 smooth_local_return: proof_shape: bind-only; escape_witness: none; consumers: smooth_alpha.
 smooth_plateau: proof_shape: bind-only; escape_witness: none; consumers: smoothed_cell.
-shifted_interval_error: proof_shape: bind-only; escape_witness: none; consumers: smooth_integral_error.
+shifted_interval_error: proof_shape: bind-only; escape_witness: none; consumers:
+  smooth_integral_error.
 smooth_integral_error: proof_shape: bind-only; escape_witness: none; consumers: endpoint_error.
 words_prefix_succ: proof_shape: bind-only; escape_witness: none; consumers: words_prefix.
 words_prefix: proof_shape: content; escape_witness: none; consumers: bit_eq_word.
-words_length_ge: proof_shape: content; escape_witness: none; consumers: bit_eq_word, universal_word, endpoint_error, no_one_sided_mean.
+words_length_ge: proof_shape: bind-only; escape_witness: none; consumers: bit_eq_word,
+  universal_word, endpoint_error, no_one_sided_mean.
 prefix_getD: proof_shape: bind-only; escape_witness: none; consumers: bit_eq_word.
-bit_eq_word: proof_shape: content; escape_witness: none; consumers: universal_word, step_integral_endpoint.
+bit_eq_word: proof_shape: content; escape_witness: none; consumers: universal_word,
+  step_integral_endpoint.
 enumeration_infix: proof_shape: bind-only; escape_witness: none; consumers: universal_word.
-universal_word: proof_shape: content; escape_witness: none; consumers: central_return, zero_one_cells.
-occupation_bound: proof_shape: bind-only; escape_witness: none; consumers: endpoint_occupation_bound.
-endpoint_occupation_bound: proof_shape: bind-only; escape_witness: none; consumers: endpoint_error.
+universal_word: proof_shape: content; escape_witness: none; consumers: central_return,
+  zero_one_cells.
+occupation_bound: proof_shape: bind-only; escape_witness: none; consumers:
+  endpoint_occupation_bound.
+endpoint_occupation_bound: proof_shape: bind-only; escape_witness: none; consumers:
+  endpoint_error.
 intBit_nat: proof_shape: bind-only; escape_witness: none; consumers: central_return, cell_value.
 intBit_reflect: proof_shape: bind-only; escape_witness: none; consumers: step_even_ae.
-step_measurable: proof_shape: bind-only; escape_witness: none; consumers: step_integral_endpoint, smooth_alpha, endpoint_error, symmetric_mean_eq.
-step_bound: proof_shape: bind-only; escape_witness: none; consumers: step_integral_endpoint, smooth_alpha, endpoint_error, symmetric_mean_eq.
+step_measurable: proof_shape: bind-only; escape_witness: none; consumers:
+  step_integral_endpoint, smooth_alpha, endpoint_error, symmetric_mean_eq.
+step_bound: proof_shape: bind-only; escape_witness: none; consumers: step_integral_endpoint,
+  smooth_alpha, endpoint_error, symmetric_mean_eq.
 central_return: proof_shape: content; escape_witness: none; consumers: smooth_alpha.
 step_local_return: proof_shape: bind-only; escape_witness: none; consumers: smooth_alpha.
-cell_value: proof_shape: bind-only; escape_witness: none; consumers: step_integral_endpoint, smoothed_cell.
+cell_value: proof_shape: bind-only; escape_witness: none; consumers: step_integral_endpoint,
+  smoothed_cell.
 step_even_ae: proof_shape: bind-only; escape_witness: none; consumers: smooth_even.
 sum_realBit: proof_shape: bind-only; escape_witness: none; consumers: sum_getD_count.
 sum_getD_count: proof_shape: bind-only; escape_witness: none; consumers: step_integral_endpoint.
@@ -55,26 +66,10 @@ symmetric_mean_eq: proof_shape: bind-only; escape_witness: none; consumers: resu
 result: proof_shape: content; escape_witness: none; consumers: none (settling result).
 -/
 
-import Mathlib.Analysis.SpecificLimits.Basic
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Algebra.BigOperators.Fin
+
 import Mathlib.MeasureTheory.Function.Floor
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
-import Mathlib.Data.List.Infix
 import Mathlib.Data.List.GetD
-import Mathlib.Data.List.OfFn
-import Mathlib.Data.Fintype.Pi
-import Mathlib.Algebra.Order.BigOperators.Group.Finset
-import Mathlib.Basic.Real.Basic
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Common
 import Mathlib.Analysis.Calculus.BumpFunction.Convolution
-import Mathlib.Analysis.Calculus.ContDiff.Convolution
-import Mathlib.Analysis.Calculus.MeanValue
-import Mathlib.Tactic.Ring
-import Mathlib.Topology.UniformSpace.Defs
-import Mathlib.Data.Nat.Bits
 
 namespace D5.S1.Dynamics.Recurrence.AlphaUnpredictableAverageRefutation
 
@@ -296,13 +291,14 @@ private theorem words_prefix {n m : ℕ} (h : n ≤ m) : words n <+: words m := 
   | step h ih => exact ih.trans (words_prefix_succ _)
 
 private theorem words_length_ge (n : ℕ) : n ≤ (words n).length := by
-  induction n with
+  cases n with
   | zero => simp [words]
-  | succ n ih =>
-    have hsq : 1 ≤ (n + 1)^2 := by exact Nat.one_le_pow' 2 n
-    have hm := Nat.le_mul_of_pos_left ((words n ++ enumeration (n + 1)).length + 1) hsq
-    simp only [words, List.length_append, List.length_replicate] at *
-    omega
+  | succ n =>
+    have hmul : (n + 1)^2 ≤ (n + 1)^2 * ((words n ++ enumeration (n + 1)).length + 1) :=
+      Nat.le_mul_of_pos_right _ (Nat.succ_pos _)
+    simp only [words, List.length_append, List.length_replicate]
+    simp only [List.length_append] at hmul
+    nlinarith
 
 private theorem prefix_getD {u v : List Bool} (h : u <+: v) {k : ℕ} (hk : k < u.length) :
     v.getD k false = u.getD k false := by
@@ -473,11 +469,19 @@ private theorem step_even_ae : ∀ᵐ t : ℝ, stepFun (-t) = stepFun t := by
   rw [he, intBit_reflect]
 
 private theorem sum_realBit (w : List Bool) : (w.map (fun b : Bool => (b.toNat : ℝ))).sum = (w.count true : ℝ) := by
-  induction w with
-  | nil => simp
-  | cons b w ih =>
-    simp only [List.map_cons, List.sum_cons, ih]
-    cases b <;> simp [Nat.cast_add, add_comm]
+  have h : (w.map (fun b : Bool => if b then (1 : ℕ) else 0)).sum = w.count true := by
+    simpa only [List.flatMap_singleton', List.map_map, Function.comp_def,
+      List.count_singleton, beq_iff_eq] using
+      (List.count_flatMap (x := true) (l := w) (f := fun b => [b])).symm
+  have hR := congrArg (fun n : ℕ => (n : ℝ)) h
+  calc
+    _ = (w.map (fun b : Bool => ((if b then (1 : ℕ) else 0) : ℝ))).sum := by
+      congr 2
+      funext b
+      cases b <;> norm_num [Bool.toNat]
+    _ = _ := by
+      simpa only [Nat.cast_list_sum, List.map_map, Function.comp_def, apply_ite,
+        Nat.cast_one, Nat.cast_zero] using hR
 
 private theorem sum_getD_count (w : List Bool) :
     (∑ k ∈ Finset.range w.length, ((w.getD k false).toNat : ℝ)) =
@@ -490,10 +494,8 @@ private theorem sum_getD_count (w : List Bool) :
 private theorem step_integral_endpoint (n : ℕ) :
     (∫ t in (0:ℝ)..((words n).length : ℝ), stepFun t) = ((words n).count true : ℝ) := by
   have hi (a b : ℝ) : IntervalIntegrable stepFun volume a b := by
-    apply IntegrableOn.intervalIntegrable
-    exact IntegrableOn.of_bound isCompact_uIcc.measure_lt_top
-      step_measurable.aestronglyMeasurable.restrict 1
-      (Eventually.of_forall fun t => by simpa only [Real.norm_eq_abs] using step_bound t)
+    exact ((bounded_locally_integrable step_measurable step_bound).integrableOn_isCompact
+      isCompact_uIcc).intervalIntegrable
   have hcell (k : ℕ) : (∫ t in (k:ℝ)..((k:ℝ)+1), stepFun t) = ((bit k).toNat : ℝ) := by
     calc
       _ = ∫ t in (k:ℝ)..((k:ℝ)+1), ((bit k).toNat : ℝ) := by
