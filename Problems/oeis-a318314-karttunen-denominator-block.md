@@ -106,6 +106,11 @@ the actual source at every prime power, while leaving the global bridge open.
 `WholeBlock` for a(n)=den(f(n)). The full-block proposition has no result theorem.
 No global resolution is asserted by the proved local components.
 
+**Audit boundary:** Source-owner four-slot registrations remain unfinished under
+[issue #27596](https://github.com/the-omega-institute/trureturing/issues/27596).
+The typed recurrence family does not supply registration for the other component
+statements, and compilation alone does not establish their source bindings.
+
 **Computed:** No numerical experiment is used.
 
 **Source consequences:** The proposed mechanism would make the entire conjectured

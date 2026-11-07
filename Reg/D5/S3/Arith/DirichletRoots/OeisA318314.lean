@@ -2,6 +2,8 @@ import D5.S3.Arith.DirichletRoots.OeisA318314
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
 
+/-! Source-family registration for the rational recurrence and its uniqueness. -/
+
 namespace Reg.D5.S3.Arith.DirichletRoots.OeisA318314
 
 open _root_.D5.S3.Arith.DirichletRoots.OeisA318314
@@ -56,7 +58,7 @@ def family : Registration arena (type_of% (@source_solution_unique)) where
     norm_num
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-    (@source_solution_unique) (Realization signature) Unit Unit where
+    (@source_solution_unique) (Realization signature) Type Unit where
   unitName := `D5.S3.Arith.DirichletRoots.OeisA318314.source_solution_unique.audit
   realizationName := `Reg.D5.S3.Arith.DirichletRoots.OeisA318314.family
   realizationSource := none
