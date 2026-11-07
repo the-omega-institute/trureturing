@@ -295,6 +295,169 @@ private lemma normalized_power_perturbation_energy
     apply (div_le_iff₀ hZpos).2
     nlinarith [mul_le_mul_of_nonneg_left hTwo (by positivity : 0 ≤ 2 * δ ^ 2)]
 
+private lemma countable_kl_le_energy {ι : Type*}
+    (p q : ι → ℝ) (hp : HasSum p 1) (hq : HasSum q 1)
+    (hpos : ∀ k, (p k = 0 ∧ q k = 0) ∨ (0 < p k ∧ 0 < q k))
+    (he : Summable (fun k => (p k - q k) ^ 2 / q k)) :
+    Summable (fun k => p k * Real.log (p k / q k)) ∧
+      (∑' k, p k * Real.log (p k / q k)) ≤
+        ∑' k, (p k - q k) ^ 2 / q k := by
+  have hbounds (k : ι) :
+      p k - q k ≤ p k * Real.log (p k / q k) ∧
+      p k * Real.log (p k / q k) ≤
+        p k - q k + (p k - q k) ^ 2 / q k := by
+    rcases hpos k with h | h
+    · simp [h.1, h.2]
+    have hratio := div_pos h.1 h.2
+    have hu := mul_le_mul_of_nonneg_left
+      (Real.log_le_sub_one_of_pos hratio) h.1.le
+    have hl := mul_le_mul_of_nonneg_left
+      (Real.one_sub_inv_le_log_of_pos hratio) h.1.le
+    have hid : p k * (p k / q k - 1) =
+        p k - q k + (p k - q k) ^ 2 / q k := by
+      field_simp
+      <;> ring
+    have hid' : p k * (1 - (p k / q k)⁻¹) = p k - q k := by
+      field_simp
+    exact ⟨hid' ▸ hl, hid ▸ hu⟩
+  have hn (k : ι) : 0 ≤ p k ∧ 0 ≤ q k := by
+    rcases hpos k with h | h
+    · simp [h.1, h.2]
+    · exact ⟨h.1.le, h.2.le⟩
+  have hs : Summable (fun k => p k * Real.log (p k / q k)) := by
+    apply ((hp.summable.add hq.summable).add he).of_norm_bounded
+    intro k
+    rw [Real.norm_eq_abs, abs_le]
+    have he0 : 0 ≤ (p k - q k) ^ 2 / q k := div_nonneg (sq_nonneg _) (hn k).2
+    constructor <;> linarith [(hbounds k).1, (hbounds k).2, (hn k).1, (hn k).2]
+  refine ⟨hs, ?_⟩
+  have h := hs.tsum_le_tsum (fun k => (hbounds k).2)
+    ((hp.summable.sub hq.summable).add he)
+  simpa only [Summable.tsum_add (hp.summable.sub hq.summable) he,
+    (hp.sub hq).tsum_eq, sub_self, zero_add] using h
+
+private lemma countable_weighted_cauchy (f g : ℕ → ℝ)
+    (hf : Summable f) (hg : Summable g) (hgp : ∀ k, 0 < g k)
+    (he : Summable (fun k => (f k) ^ 2 / g k)) :
+    (∑' k, f k) ^ 2 ≤ (∑' k, g k) * ∑' k, (f k) ^ 2 / g k := by
+  apply le_of_tendsto_of_tendsto (hf.hasSum.tendsto_sum_nat.pow 2)
+    (hg.hasSum.tendsto_sum_nat.mul he.hasSum.tendsto_sum_nat)
+  exact Filter.Eventually.of_forall (fun n =>
+    sum_sq_le_sum_mul_sum_of_sq_le_mul (range n)
+      (fun k _ => (hgp k).le)
+      (fun k _ => div_nonneg (sq_nonneg _) (hgp k).le)
+      (fun k _ => by rw [mul_div_cancel₀ _ (hgp k).ne']))
+
+private lemma split_positive_series (f : ℕ → ℝ) (hf : Summable f)
+    (hf0 : f 0 = 0) (L : ℕ) :
+    (∑ r : Fin L, f (r.val + 1)) + (∑' k : ℕ, f (k + L + 1)) = ∑' k, f k := by
+  have h := ((summable_nat_add_iff 1).2 hf).sum_add_tsum_nat_add L
+  rw [hf.tsum_eq_zero_add, hf0, zero_add]
+  simpa only [Nat.add_assoc, Fin.sum_univ_eq_sum_range] using h
+
+private lemma collapsed_kl_bounds
+    (p q : ℕ → ℝ) (hp : HasSum p 1) (hq : HasSum q 1)
+    (hp0 : p 0 = 0) (hq0 : q 0 = 0)
+    (hpp : ∀ k, 0 < k → 0 < p k) (hqp : ∀ k, 0 < k → 0 < q k)
+    (he : Summable (fun k => (p k - q k) ^ 2 / q k)) (L : ℕ) :
+    let a : Option (Fin L) → ℝ := fun z => match z with
+      | some r => p (r.val + 1)
+      | none => 1 - ∑ r : Fin L, p (r.val + 1)
+    let b : Option (Fin L) → ℝ := fun z => match z with
+      | some r => q (r.val + 1)
+      | none => 1 - ∑ r : Fin L, q (r.val + 1)
+    klDivergence a b ≤ ∑' k, (p k - q k) ^ 2 / q k ∧
+    ((∑ r : Fin L, q (r.val + 1)) ≤ 1 / 2 →
+      klDivergence a b ≤ 2 * ∑ r : Fin L,
+        (p (r.val + 1) - q (r.val + 1)) ^ 2 / q (r.val + 1)) := by
+  classical
+  let a : Option (Fin L) → ℝ := fun z => match z with
+    | some r => p (r.val + 1)
+    | none => 1 - ∑ r : Fin L, p (r.val + 1)
+  let b : Option (Fin L) → ℝ := fun z => match z with
+    | some r => q (r.val + 1)
+    | none => 1 - ∑ r : Fin L, q (r.val + 1)
+  let E : ℕ → ℝ := fun k => (p k - q k) ^ 2 / q k
+  have hE0 : E 0 = 0 := by simp [E, hp0, hq0]
+  have htail (f : ℕ → ℝ) (hf : HasSum f 1) (hf0 : f 0 = 0)
+      (hfp : ∀ k, 0 < k → 0 < f k) :
+      (1 - ∑ r : Fin L, f (r.val + 1)) = ∑' k : ℕ, f (k + L + 1) ∧
+      0 < 1 - ∑ r : Fin L, f (r.val + 1) := by
+    have ht := split_positive_series f hf.summable hf0 L
+    rw [hf.tsum_eq] at ht
+    have hp' : 0 < ∑' k : ℕ, f (k + L + 1) :=
+      ((summable_nat_add_iff (L + 1)).2 hf.summable).tsum_pos
+        (fun k => (hfp _ (by omega)).le) 0 (hfp _ (by omega))
+    constructor <;> linarith
+  have hpt := htail p hp hp0 hpp
+  have hqt := htail q hq hq0 hqp
+  have hap (z : Option (Fin L)) : 0 < a z := by
+    cases z with
+    | none => exact hpt.2
+    | some r => exact hpp _ (by omega)
+  have hbp (z : Option (Fin L)) : 0 < b z := by
+    cases z with
+    | none => exact hqt.2
+    | some r => exact hqp _ (by omega)
+  have ha : HasSum a 1 := by
+    rw [hasSum_fintype]
+    simp only [Fintype.sum_option, a]
+    ring
+  have hb : HasSum b 1 := by
+    rw [hasSum_fintype]
+    simp only [Fintype.sum_option, b]
+    ring
+  have hkl := (countable_kl_le_energy a b ha hb
+    (fun z => Or.inr ⟨hap z, hbp z⟩) (summable_fintype _)).2
+  change klDivergence a b ≤ _ ∧ _
+  change klDivergence a b ≤ ∑' z, (a z - b z) ^ 2 / b z at hkl
+  rw [tsum_fintype, Fintype.sum_option] at hkl
+  let S : ℝ := ∑ r : Fin L, E (r.val + 1)
+  let π : ℝ := ∑ r : Fin L, q (r.val + 1)
+  have hSn : 0 ≤ S := sum_nonneg (fun r _ => div_nonneg (sq_nonneg _) (hqp _ (by omega)).le)
+  have hsum : (∑ r : Fin L, (p (r.val + 1) - q (r.val + 1))) =
+      (∑ r : Fin L, p (r.val + 1)) - π := by simp [π, sum_sub_distrib]
+  have hc := countable_weighted_cauchy
+    (fun k => p (k + L + 1) - q (k + L + 1)) (fun k => q (k + L + 1))
+    (((summable_nat_add_iff (L + 1)).2 hp.summable).sub
+      ((summable_nat_add_iff (L + 1)).2 hq.summable))
+    ((summable_nat_add_iff (L + 1)).2 hq.summable)
+    (fun k => hqp _ (by omega)) ((summable_nat_add_iff (L + 1)).2 he)
+  have htd : (a none - b none) ^ 2 / b none ≤ ∑' k, E (k + L + 1) := by
+    apply (div_le_iff₀ hqt.2).2
+    rw [Summable.tsum_sub ((summable_nat_add_iff (L + 1)).2 hp.summable)
+      ((summable_nat_add_iff (L + 1)).2 hq.summable), ← hpt.1, ← hqt.1] at hc
+    simpa only [a, b, mul_comm] using hc
+  constructor
+  · have hsplit := split_positive_series E he hE0 L
+    calc
+      klDivergence a b ≤ S + (a none - b none) ^ 2 / b none := by
+        simpa only [a, b, E, S, add_comm] using hkl
+      _ ≤ S + ∑' k, E (k + L + 1) := add_le_add_left htd S
+      _ = ∑' k, E k := hsplit
+  · intro hπ
+    have hc' := sum_sq_le_sum_mul_sum_of_sq_le_mul (s := univ)
+      (r := fun r : Fin L => p (r.val + 1) - q (r.val + 1))
+      (f := fun r : Fin L => q (r.val + 1))
+      (g := fun r : Fin L => E (r.val + 1))
+      (fun r _ => (hqp _ (by omega)).le)
+      (fun r _ => div_nonneg (sq_nonneg _) (hqp _ (by omega)).le)
+      (fun r _ => by dsimp [E]; rw [mul_div_cancel₀ _ (hqp _ (by omega)).ne'])
+    have hc'' : (a none - b none) ^ 2 ≤ π * S := by
+      dsimp only [a, b]
+      rw [hsum] at hc'
+      dsimp only [π, S] at *
+      nlinarith only [hc']
+    have htailbound : (a none - b none) ^ 2 / b none ≤ S := by
+      apply (div_le_iff₀ hqt.2).2
+      change _ ≤ S * (1 - π)
+      have hπ' : π ≤ 1 / 2 := hπ
+      nlinarith [mul_le_mul_of_nonneg_right hπ' hSn]
+    have hkl' : klDivergence a b ≤ S + (a none - b none) ^ 2 / b none := by
+      simpa only [a, b, E, S, add_comm] using hkl
+    change klDivergence a b ≤ 2 * S
+    linarith
+
 theorem normalized_power_perturbation_all_cutoff_kl
     (m : ℕ) (hm : 4 ≤ m)
     (d : ℕ → ℝ) (hd0 : d 0 = 0)
@@ -327,9 +490,37 @@ theorem normalized_power_perturbation_all_cutoff_kl
       ∀ i : Bool,
         klDivergence (a i) (a (!i)) ≤
           4 * δ ^ 2 * s ^ 2 * min 1 ((s * (L : ℝ)) ^ (m - 1))) := by
+  classical
+  let v : Bool → ℕ → ℝ := fun i k =>
+    term m s k + if i then d k * Real.exp (-s * (k : ℝ)) else 0
+  let Z : Bool → ℝ := fun i => ∑' k : ℕ, v i k
+  let p : Bool → ℕ → ℝ := fun i k => v i k / Z i
+  let w : ℕ → ℝ := fun k => p true k - p false k
+  change (∀ i : Bool, HasSum (p i) 1 ∧ p i 0 = 0 ∧
+      ∀ k : ℕ, 0 < k → 0 < p i k) ∧
+    (∀ j : Bool, Summable (fun k : ℕ => (w k) ^ 2 / p j k) ∧
+      (∑' k : ℕ, (w k) ^ 2 / p j k) ≤
+        4 * δ ^ 2 * (1 - Real.exp (-s)) ^ 2) ∧
+    (∀ i : Bool,
+      Summable (fun k : ℕ => p i k * Real.log (p i k / p (!i) k)) ∧
+      (∑' k : ℕ, p i k * Real.log (p i k / p (!i) k)) ≤
+        ∑' k : ℕ, (w k) ^ 2 / p (!i) k) ∧ _
   have hEnergy := normalized_power_perturbation_energy m hm d hd0 δ hδ hδ1 hd s hs hZ
-  exact ⟨hEnergy.1, hEnergy.2, by sorry, by sorry⟩
+  refine ⟨hEnergy.1, hEnergy.2, ?_, by sorry⟩
+  intro i
+  have heq : ∀ k : ℕ, (p i k - p (!i) k) ^ 2 = (w k) ^ 2 := by
+    intro k
+    cases i <;> simp only [Bool.not_false, Bool.not_true, w] <;> ring
+  have h := countable_kl_le_energy (p i) (p (!i)) (hEnergy.1 i).1 (hEnergy.1 (!i)).1
+    (fun k => by
+      by_cases hk : k = 0
+      · exact Or.inl ⟨hk ▸ (hEnergy.1 i).2.1, hk ▸ (hEnergy.1 (!i)).2.1⟩
+      · exact Or.inr ⟨(hEnergy.1 i).2.2 k (Nat.pos_of_ne_zero hk),
+          (hEnergy.1 (!i)).2.2 k (Nat.pos_of_ne_zero hk)⟩)
+    (by simpa only [heq] using (hEnergy.2 (!i)).1)
+  simpa only [heq] using h
 
+#print axioms countable_kl_le_energy
 #print axioms normalized_power_perturbation_energy
 
 end D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.ReadExecution
