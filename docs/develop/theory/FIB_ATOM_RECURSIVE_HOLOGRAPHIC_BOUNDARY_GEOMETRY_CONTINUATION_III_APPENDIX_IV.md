@@ -3362,3 +3362,164 @@ $$
 is nonzero; convexity then makes the midpoint itself a rank-four feasible lift. Conversely, if every feasible midpoint has all $2\times2$ minors zero, Proposition 201.2 places the entire body in one of the two rank-one rulings.
 
 This dichotomy sharpens the boundary interface without solving the pointwise inequalities: rank-three exclusion requires the one-column body to collapse to zero, while rank-four exclusion requires a fixed-factor identity across the whole convex body. It does not evaluate those identities for an arbitrary partition or settle $F_{64}$, $H43$, SRS\text{-}20, physical succession or Lean/kernel formalization.
+
+## 202. A transverse pair is a rank-four witness
+
+The ruling dichotomy of Section 201 can be tested pairwise. Two rank-one coefficient lifts generate a rank-two lift exactly when both their label directions and their radical-coordinate directions are independent.
+
+**Definition 202.1 (transverse rank-one pair).** Let $A$ and $B$ be nonzero rank-one $4\times2$ matrices in $\mathscr A_u$. Choose factorizations
+
+$$
+A=u v^{\mathsf T},
+\qquad
+B=s t^{\mathsf T},
+\qquad
+u,s\in\mathsf H,\quad v,t\in\mathbb R^2.
+\tag{202.1}
+$$
+
+Call $(A,B)$ transverse when
+
+$$
+ u\wedge s\ne0
+\quad\text{and}\quad
+ v\wedge t\ne0.
+\tag{202.2}
+$$
+
+The condition is independent of the nonzero rescalings in the two rank-one factorizations.
+
+**Proposition 202.2 (wedge formula for convex combinations).** For every $0<\theta<1$, every two-row set $I=\{i,k\}\subseteq\mathcal L$ and the two column indices $J=\{j,\ell\}\subseteq\{1,2\}$, one has
+
+$$
+\det\!\left(\bigl(\theta A+(1-\theta)B\bigr)_{I,J}\right)
+ =\theta(1-\theta)
+   (u_i s_k-u_k s_i)
+   (v_j t_\ell-v_\ell t_j).
+\tag{202.3}
+$$
+
+Consequently,
+
+$$
+\operatorname{rank}\bigl(\theta A+(1-\theta)B\bigr)=2
+\quad\Longleftrightarrow\quad
+(A,B)\text{ is transverse}.
+\tag{202.4}
+$$
+
+*Proof.* Expand the determinant of the $2\times2$ submatrix in (202.3). The terms quadratic in $A$ and in $B$ vanish because both matrices have rank one. The two cross terms factor as
+
+$$
+\theta(1-\theta)
+ (u_i s_k-u_k s_i)(v_j t_\ell-v_\ell t_j),
+$$
+
+which proves (202.3). All maximal minors of the convex combination vanish exactly when one of the two exterior products in (202.2) vanishes, proving (202.4). \(\square\)
+
+**Corollary 202.3 (pairwise search interface for rank four).** Assume $d_u=2$ and let $A,B\in\mathscr P_u$ be nonzero rank-one matrices. If $(A,B)$ is transverse, then every strict convex combination in (202.3) belongs to $\mathscr P_u$ and has column rank two. Hence a single transverse pair is a rank-four feasible witness.
+
+Assume every matrix in $\mathscr P_u$ has rank at most one. Then $\mathscr P_u$ contains a rank-two lift obtained from a strict convex combination exactly when it contains a transverse pair. If it contains no transverse pair, Proposition 201.2 puts the whole body in one of the two fixed-factor rulings. Thus the rank-four search can be organized as a pairwise test: either find two feasible rank-one lifts with both wedge factors nonzero, or certify a common ruling by showing that one wedge factor vanishes for every pair.
+
+*Proof.* Convexity gives the first assertion, and Proposition 202.2 gives its rank. The converse is Proposition 201.2 together with the definition of a transverse pair. \(\square\)
+
+The wedge formula makes the rank-four boundary computationally concrete while keeping the pointwise constraints unchanged: the only new data are one feasible pair and two nonvanishing $2\times2$ minors. It does not construct such a pair for an arbitrary partition, evaluate the ruling identities in a concrete candidate, or settle $F_{64}$, $H43$, SRS\text{-}20, physical succession or Lean/kernel formalization.
+
+## 203. Rank-one rulings scalarize the pointwise fibre
+
+The two fixed-factor alternatives of Section 201 have an exact pointwise description. They replace a $4\times2$ coefficient matrix by either one label profile or one radical profile, while retaining all simplex inequalities.
+
+**Definition 203.1 (the two scalarized ruling bodies).** Assume $d_u=2$, write
+
+$$
+ s_y=S_u(f_y),
+ \qquad
+ E_u=\operatorname{span}_{\mathbb R}\{r_1,r_2\},
+\tag{203.1}
+$$
+
+and retain the zero-sum space $\mathsf H$ from Definition 201.1. For a nonzero $c\in\mathsf H$ and $z=(z_1,z_2)\in\mathbb R^2$, put
+
+$$
+ h_z=z_1r_1+z_2r_2,
+ \qquad
+ \widetilde u_y^{\,c,z}=s_y+c_yh_z.
+\tag{203.2}
+$$
+
+Define
+
+$$
+ \mathscr Z_c
+ =\left\{z\in\mathbb R^2:
+   \widetilde u_y^{\,c,z}(x)\ge0
+   \text{ for every }y\in\mathcal L,\ x\in G\right\}.
+\tag{203.3}
+$$
+
+For a nonzero $w=(w_1,w_2)\in\mathbb R^2$, put
+
+$$
+ h_w=w_1r_1+w_2r_2,
+ \qquad
+ \widetilde u_y^{\,v,w}=s_y+v_yh_w
+\tag{203.4}
+$$
+
+for $v\in\mathsf H$, and define
+
+$$
+ \mathscr V_w
+ =\left\{v\in\mathsf H:
+   \widetilde u_y^{\,v,w}(x)\ge0
+   \text{ for every }y\in\mathcal L,\ x\in G\right\}.
+\tag{203.5}
+$$
+
+**Proposition 203.2 (exact scalarization of the two rulings).** With the notation above,
+
+$$
+ \mathscr P_u\cap
+ \{c z^{\mathsf T}:z\in\mathbb R^2\}
+ =\{c z^{\mathsf T}:z\in\mathscr Z_c\},
+\tag{203.6}
+$$
+
+and
+
+$$
+ \mathscr P_u\cap
+ \{v w^{\mathsf T}:v\in\mathsf H\}
+ =\{v w^{\mathsf T}:v\in\mathscr V_w\}.
+\tag{203.7}
+$$
+
+Both parameter sets are convex. For every parameter in either set, the corresponding family in (203.2) or (203.4) satisfies
+
+$$
+ \sum_{y\in\mathcal L}\widetilde u_y=1,
+ \qquad
+ T_u(\widetilde u_y)=f_y,
+ \qquad
+ \Delta(\widetilde u)_{yzk}=0
+ \quad(y,z,k\in\mathcal L).
+\tag{203.8}
+$$
+
+*Proof.* If $A=c z^{\mathsf T}$, then its $y$-th row is $(c_yz_1,c_yz_2)$, so (199.1) is exactly (203.2). The column-sum equations in (199.2) hold because $c\in\mathsf H$, and the remaining condition $A\in\mathscr P_u$ is precisely the pointwise inequality in (203.3). This proves (203.6), including uniqueness of $z$ because $c\ne0$. The proof of (203.7) is identical: the rows of $A=v w^{\mathsf T}$ give (203.4), and $v\in\mathsf H$ supplies the column-sum equations.
+
+The inequalities in (203.3) and (203.5) are affine in their parameters, so the two parameter sets are convex. Finally, the zero-sum condition gives the first identity in (203.8), the section identity and $T_u(r_\ell)=0$ give the second, and Proposition 199.2 gives the residual identity. \(\square\)
+
+**Corollary 203.3 (a ruling cannot realize candidate rank four).** Every family arising from either scalarized ruling satisfies
+
+$$
+ \operatorname{span}_{\mathbb R}\{\widetilde u_y:y\in\mathcal L\}
+ \subseteq S_u(E_f)+\mathbb R h
+\tag{203.9}
+$$
+
+for one radical function $h\in E_u$. Consequently its label span has dimension at most three. If $h=0$, the dimension is at most two. Thus a rank-four candidate family must escape both fixed-factor rulings, even though every point in those rulings already has all sixty-four residuals equal to zero.
+
+*Proof.* In the first ruling take $h=h_z$ and in the second take $h=h_w$. Equation (203.2) or (203.4) writes every label as an element of $S_u(E_f)+\mathbb Rh$. The section $S_u$ is injective on $E_f$ because $T_uS_u=\operatorname{id}_{E_f}$, so $\dim S_u(E_f)=2$. The dimension bound follows. \(\square\)
+
+The scalarization is an exact search interface for a fixed ruling: the column ruling leaves two radical coefficients and a fixed label profile, while the row ruling leaves a three-dimensional zero-sum label profile and a fixed radical direction. It removes the residual equations only after the quotient identity and pointwise inequalities are imposed; it does not show that either ruling is nonempty or settle arbitrary partition realization, $F_{64}$, $H43$, SRS\text{-}20, physical succession or Lean/kernel formalization.
