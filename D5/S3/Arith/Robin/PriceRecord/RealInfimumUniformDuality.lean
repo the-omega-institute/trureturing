@@ -112,7 +112,8 @@ lemma gap_identity_nonnegative {S : Finset ℕ} (hS : primeSupport S)
   · apply neg_nonneg.mpr
     apply sum_nonpos
     intro p hp
-    have hm := probability_mem (by exact_mod_cast (hS p hp).one_lt) (hx p hp)
+    have hm := probability_mem (p := (p : ℝ))
+      (by exact_mod_cast (hS p hp).one_lt) (hx p hp)
     have h := log_le_log (by linarith : 0 < 1 - probability p (x p))
       (show 1 - probability p (x p) ≤ 1 by linarith)
     simpa only [log_one] using h
