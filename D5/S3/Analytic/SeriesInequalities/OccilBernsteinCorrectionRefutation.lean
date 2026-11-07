@@ -46,8 +46,6 @@ private theorem f_admissible : admissible f := by
       dsimp [f]; ring
     linarith
 
-private theorem f_symmetric (x : ℝ) : f (1-x)=f x := by dsimp [f]; ring
-
 private theorem B_two : B 2 f = C (1/2) * (X^2-X) + C (1/2) := by
   apply Polynomial.funext
   intro x
@@ -81,12 +79,6 @@ private theorem max_four : maxError f 4 (1/16) := by
     nlinarith [sq_nonneg (x-1/2)]
   · refine ⟨1/2, by norm_num, ?_⟩
     rw [error_four]; norm_num
-
-private theorem mid_two : midpointError f 2 = 1/8 := by
-  unfold midpointError; rw [error_two]; norm_num
-
-private theorem mid_four : midpointError f 4 = 1/16 := by
-  unfold midpointError; rw [error_four]; norm_num
 
 private theorem representation : (B 4 f-C (1/16))-(B 2 f-C (1/8)) =
     ∑ j : Fin 5, C (coeff j) * bernsteinPolynomial ℝ 4 j := by
@@ -152,8 +144,15 @@ private theorem branch_refutations : ¬ maximumBranch ∧ ¬ midpointBranch := b
     have hp := h f f_admissible 1 (by norm_num) (1/8) (1/16) max_two max_four
     exact increment_negative (by simpa using hp)
   · intro h
-    have hp := h f f_admissible (fun x _ => f_symmetric x) 1 (by norm_num)
-    exact increment_negative (by simpa [mid_two, mid_four] using hp)
+    have hp := h f f_admissible (by intro x _; dsimp [f]; ring) 1 (by norm_num)
+    apply increment_negative
+    change nonnegativeCoefficients 4
+      ((B 4 f-C (midpointError f 4))-(B 2 f-C (midpointError f 2))) at hp
+    rw [show midpointError f 4 = 1/16 by
+      unfold midpointError; rw [error_four]; norm_num,
+      show midpointError f 2 = 1/8 by
+        unfold midpointError; rw [error_two]; norm_num] at hp
+    exact hp
 
 /-- The convex quadratic refutes both prescriptions and hence their conjunction. -/
 theorem result : ¬ claim := by
