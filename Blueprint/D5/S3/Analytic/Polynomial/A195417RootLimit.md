@@ -12,7 +12,7 @@ $$(p: \operatorname{Polynomial}\left(\mathbb{Z}\right)) = 1 + X - (X)^{3}$$
 
 *Formalization.* `D5/S3/Analytic/Polynomial/A195417RootLimit.p` (`✓ std3`).
 
-*Citation.* Paul D. Hanna and OEIS contributors (2011). *OEIS A195417, absolute coefficient sums of powers of 1+x-x^3*. URL: <https://oeis.org/A195417/internal>.
+*Citation.* Paul D. Hanna and The Online Encyclopedia of Integer Sequences contributors (2011). *OEIS A195417, absolute coefficient sums of powers of 1+x-x^3*. URL: <https://oeis.org/A195417/internal>.
 
 *Commentary.*
 
@@ -24,7 +24,7 @@ $$\forall n:\mathbb{N}, \operatorname{a}\left(n\right) = \sum_{i \in \operatorna
 
 *Formalization.* `D5/S3/Analytic/Polynomial/A195417RootLimit.a` (`✓ std3`).
 
-*Citation.* Paul D. Hanna and OEIS contributors (2011). *OEIS A195417, absolute coefficient sums of powers of 1+x-x^3*. URL: <https://oeis.org/A195417/internal>.
+*Citation.* Paul D. Hanna and The Online Encyclopedia of Integer Sequences contributors (2011). *OEIS A195417, absolute coefficient sums of powers of 1+x-x^3*. URL: <https://oeis.org/A195417/internal>.
 
 *Commentary.*
 
@@ -38,7 +38,7 @@ $$\operatorname{Tendsto}\left((fun (n:\mathbb{N}) \mapsto ((\operatorname{a}\lef
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Paul D. Hanna and OEIS contributors (2011). *OEIS A195417, absolute coefficient sums of powers of 1+x-x^3*. URL: <https://oeis.org/A195417/internal>.
+*Acknowledgement.* Paul D. Hanna and The Online Encyclopedia of Integer Sequences contributors (2011). *OEIS A195417, absolute coefficient sums of powers of 1+x-x^3*. URL: <https://oeis.org/A195417/internal>.
 
 *Commentary.*
 
