@@ -52,7 +52,31 @@ Lean statement: `D5/S3/Arith/Robin/ForwardKernel/CrossExponentDefs.windowAverage
 
 The forward window average of u at x is the integral of u(x+r) for r from zero to R, divided by R.
 
-**Definition 1.5 (Comparable-length variance bounds).**
+**Definition 1.5 (Double forward averages).**
+
+Lean statement: `D5/S3/Arith/Robin/ForwardKernel/CrossExponentDefs.doubleAverage`
+
+*Formalization.* `D5/S3/Arith/Robin/ForwardKernel/CrossExponentDefs.doubleAverage` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The double average at scale R applies the forward window average of length R twice.
+
+**Definition 1.6 (Dyadic smoothing blocks).**
+
+Lean statement: `D5/S3/Arith/Robin/ForwardKernel/CrossExponentDefs.smoothingBlock`
+
+*Formalization.* `D5/S3/Arith/Robin/ForwardKernel/CrossExponentDefs.smoothingBlock` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The smoothing block at scale R is the double average at scale R minus the double average at scale 2R.
+
+**Definition 1.7 (Comparable-length variance bounds).**
 
 Lean statement: `D5/S3/Arith/Robin/ForwardKernel/CrossExponentDefs.ComparableLengthVarianceUpperFor`
 
@@ -69,8 +93,10 @@ The quantifier covers every spatial factor d>0; for C>=1 this is the form suppli
 ## References
 
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/CrossExponentDefs.ComparableLengthVarianceUpperFor`
+- Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/CrossExponentDefs.doubleAverage`
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/CrossExponentDefs.intervalL2`
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/CrossExponentDefs.movingIncrement`
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/CrossExponentDefs.movingShift`
+- Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/CrossExponentDefs.smoothingBlock`
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/CrossExponentDefs.windowAverage`
 - Dependency: [D5/S3/Arith/Robin/ForwardKernel/VarianceTransferDefs](VarianceTransferDefs.md)

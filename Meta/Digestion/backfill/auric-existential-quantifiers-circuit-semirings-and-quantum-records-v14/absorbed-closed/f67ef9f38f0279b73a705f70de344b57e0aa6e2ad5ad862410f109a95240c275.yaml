@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:f67ef9f38f0279b73a705f70de344b57e0aa6e2ad5ad862410f109a95240c275
+  normalized_sha256: sha256:f67ef9f38f0279b73a705f70de344b57e0aa6e2ad5ad862410f109a95240c275
+cas_ref: sha256:f67ef9f38f0279b73a705f70de344b57e0aa6e2ad5ad862410f109a95240c275
+coverage_gids:
+  - gid: D5/S3/Quantum/Measurements/UnitaryOrthogonalWeight.unitary_orthogonal_weight_eq_norm_sq
+    target_statement_id: sha256:ef7b141b25440ccf691d1c516d0837fa0f7dd1718738b5847f4070f3567e1fa0
+receipts:
+  unresolved_subitems: []
