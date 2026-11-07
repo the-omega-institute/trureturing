@@ -30,29 +30,33 @@ $$claim = (\forall n \in \mathbb{N},\; (\operatorname{mod}\left(n, 55\right) \ne
 
 OEIS A227244, FORMULA, Chai Wah Wu: Conjecture 4: a(168*n+43) = 59 if n>=0 and n mod 55 <> 26. Least prime divisor means primality of 59, divisibility by 59, and a lower bound on every natural prime divisor of that same signed integer. The assertion includes n=0 and has no upper bound. It makes no assertion at residue 26 and does not assert that the exclusion is necessary.
 
-**Theorem 1.3 (Power reduction along an arithmetic progression).**
+**Theorem 1.3 (Powers along an arithmetic progression).**
 
-$$\forall M \in Type,\; \forall c \in \operatorname{CommMonoid}\left(M\right),\; \forall a \in M,\; \forall s \in \mathbb{N},\; \forall t \in \mathbb{N},\; \forall L \in \mathbb{N},\; \forall n \in \mathbb{N},\; (a^{s \cdot L + t} = a^{t}) \Rightarrow (a^{s \cdot n + t} = a^{s \cdot \operatorname{mod}\left(n, L\right) + t})$$
+$$\forall M \in Type*,\; \forall inst \in \operatorname{CommMonoid}\left(M\right),\; \forall a \in M,\; \forall s \in \mathbb{N},\; \forall t \in \mathbb{N},\; \forall L \in \mathbb{N},\; \forall n \in \mathbb{N},\; (a^{s \cdot L + t} = a^{t}) \Rightarrow (a^{s \cdot n + t} = a^{s \cdot \operatorname{mod}\left(n, L\right) + t})$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/Primes/WuA227244ConjectureFour.progression_reduce` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* Chai Wah Wu; OEIS Foundation Inc. (2026). *OEIS A227244, Conjecture 4 on the smallest prime factor*. URL: <https://oeis.org/A227244/internal>.
+
 *Commentary.*
 
-The original repository declaration D5.S3.Arith.Primes.WuA227244ConjectureFour.progression_reduce applies to every carrier M in any universe and every CommMonoid structure c on M. Powers use that structure. All four indices s, t, L and n are arbitrary natural numbers, including zero. The sole hypothesis is the displayed period equation. The proof uses Function.Periodic.map_mod_nat. This same declaration is used by formula_reduce here and by WuA227244ConjectureThree.formula_reduce; it is an existing helper, not a new general method.
+For every type M with a commutative monoid structure, a in M and natural s, t, L and n, the equation a^(s*L+t)=a^t implies a^(s*n+t)=a^(s*(n mod L)+t). There is no positivity hypothesis on L. This is the canonical reduction used by formula_reduce here and directly by the C1 and C2 formula_reduce proofs. It supplies no new mathematical content.
 
-**Theorem 1.4 (Power reduction after an initial tail).**
+**Theorem 1.4 (Powers after an initial tail).**
 
-$$\forall M \in Type,\; \forall c \in \operatorname{CommMonoid}\left(M\right),\; \forall a \in M,\; \forall p \in \mathbb{N},\; \forall e \in \mathbb{N},\; (a^{p + p} = a^{p}) \Rightarrow ((p \le e) \Rightarrow (a^{e} = a^{p + \operatorname{mod}\left(e, p\right)}))$$
+$$\forall M \in Type*,\; \forall inst \in \operatorname{CommMonoid}\left(M\right),\; \forall a \in M,\; \forall p \in \mathbb{N},\; \forall e \in \mathbb{N},\; (a^{p + p} = a^{p}) \Rightarrow ((p \le e) \Rightarrow (a^{e} = a^{p + \operatorname{mod}\left(e, p\right)}))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/Primes/WuA227244ConjectureFour.tail_reduce` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* Chai Wah Wu; OEIS Foundation Inc. (2026). *OEIS A227244, Conjecture 4 on the smallest prime factor*. URL: <https://oeis.org/A227244/internal>.
+
 *Commentary.*
 
-The original repository declaration D5.S3.Arith.Primes.WuA227244ConjectureFour.tail_reduce applies to every carrier M in any universe and every CommMonoid structure c on M. Powers use that structure. Both p and e range over all natural numbers, including zero. It requires both the displayed power equation and p at most e; no positivity assumption is added. The proof uses Function.Periodic.map_mod_nat and natural subtraction only inside the proof. This same declaration is used by formula_reduce here and by WuA227244ConjectureThree.formula_reduce; it is an existing helper, not a new general method.
+For every type M with a commutative monoid structure, a in M and natural p and e, the equation a^(p+p)=a^p together with p<=e implies a^e=a^(p+e mod p). There is no positivity hypothesis on p. This is the canonical tail reduction used by formula_reduce here and directly by the C1 and C2 formula_reduce proofs. It supplies no new mathematical content.
 
 **Definition 1.5 (Finite residues of the nested powers).**
 

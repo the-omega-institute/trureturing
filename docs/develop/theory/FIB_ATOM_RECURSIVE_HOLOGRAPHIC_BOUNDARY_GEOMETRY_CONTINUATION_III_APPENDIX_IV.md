@@ -3856,3 +3856,532 @@ and in the fixed-row ruling it is $2+\operatorname{rank}((\mathsf B^{\mathsf T}v
 All these conclusions presuppose the original full-zero seed and its fixed host. They neither establish pointwise legality of the algebraic examples (205.8) nor construct an original rank-three or rank-four seed. Arbitrary-partition realization, the concrete pointwise evaluation of the host bodies, $F_{64}$, $H43$, SRS$\text{-}20$ and physical succession retain their separate unresolved boundaries. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+
+## 208. Cellwise source-reversal variance budgets for hard partitions
+
+**Definition 208.1 (the original pair-calibrated hard fiber and its middle-cell laws).** Retain the entire original telescope of Definition 175.1 and [Appendix III Definition 155.1](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III_APPENDIX_III.md#155-positive-bb3-inputs-finite-coupled-improvement-and-source-ratio-selection). In particular, $\theta=(a,\eta,d,b)$ ranges over every original finite $a,\eta,d>0$ and every permitted representative $b$. The group $G=H^1\times\mathbb R$, its product and raw Haar measure $\mu$, source $e$, unit-source field $L\Gamma=\delta_e$, coefficient-one $w_*$, coefficient-positive normalized $h$, actual selector $A_{\rm src}=\rho C_{\rm src}$, full source-inclusive conservative self-adjoint $K$, measure $m=h^2\mu$, clock and epochs $2d,3d,4d$ remain unchanged. Keep $P=T_d$, $g=g_{2d}$, $q=f_3=cb$, $f_B=p=1/4$ and $f_0=f_1=(3/4-q)/2$. Let $D=(D_i)_{i\in\mathcal L}$ be one whole-$G$ deterministic Borel partition, with $u_i=\mathbf1_{D_i}$, satisfying
+
+$$
+\begin{gathered}
+\int_G(P^\ell g)u_i\,dm=\int_G(P^\ell g)f_i\,dm
+\quad(\ell=0,1,2;\ i\in\mathcal L),\\
+Q_r(u_i,u_k)=Q_r(f_i,f_k)
+\quad(r=12,13,23;\ i,k\in\mathcal L).
+\end{gathered}
+\tag{208.1}
+$$
+
+Here $Q_r$ are precisely the ordered pair forms of Appendix III (150.2). Thus (208.1) holds for every $D\in\mathscr F_{154}(\theta)$; no full-zero hypothesis is imposed. Write
+
+$$
+\begin{gathered}
+v=Pg=g_{3d},\qquad G_0=\|g\|_\infty<\infty,\\
+\pi_j=\int_{D_j}v\,dm=\int_Gvf_j\,dm>0,
+\qquad d\nu_j=\frac{u_jv}{\pi_j}\,dm
+\quad(j\in\mathcal L).
+\end{gathered}
+\tag{208.2}
+$$
+
+Positivity of $v$ and of each $f_j$ almost everywhere gives the strict inequality. The measure $\nu_j$ is the actual middle-time law conditioned on $Z_{3d}\in D_j$. All ratios and conditional expectations below are defined almost everywhere under the unchanged middle-time law $v\,m$; since $v>0$ almost everywhere, this has the same null sets as $m$. Put
+
+$$
+\begin{gathered}
+t=Pu_B,\qquad s=\frac{P(gu_B)}{v},\qquad
+\chi=\frac{P(g^2)}{v^2}-1,\\
+A_j=\mathbb E_{\nu_j}(t-p)^2,\qquad
+B_j=\mathbb E_{\nu_j}(s-p)^2,\qquad
+H_j=\mathbb E_{\nu_j}\bigl[\chi t(1-t)\bigr].
+\end{gathered}
+\tag{208.3}
+$$
+
+The functions $s$ and $t$ are, respectively, the conditional probabilities of the first and last $B$ labels given the original middle state. In particular, $t$ is this same partition's own propagated terminal indicator. For the conditional refinement only, write $k_j=\operatorname*{ess\,sup}_{D_j}\chi$ with respect to $v\,m$ and assume $k_j<\infty$.
+
+**Proposition 208.2 (a finite native-source budget for each $BjB$ residual).** Under Definition 208.1, all terms in (208.3) are finite, and
+
+$$
+0\le\chi,\qquad
+0\le v\chi\le G_0-v
+\quad\text{almost everywhere}.
+\tag{208.4}
+$$
+
+For every $j\in\mathcal L$ the exact residual identity and lower bound are
+
+$$
+\frac{\Delta(D)_{BjB}}{\pi_j}
+=\mathbb E_{\nu_j}\bigl[(s-p)(t-p)\bigr],
+\qquad
+\Delta(D)_{BjB}\ge\frac{\pi_j}{2}(A_j+B_j-H_j).
+\tag{208.5}
+$$
+
+If $k_j<\infty$, then also
+
+$$
+\Delta(D)_{BjB}\ge
+\frac{\pi_j}{2}\left[(1+k_j)A_j+B_j-\frac3{16}k_j\right].
+\tag{208.6}
+$$
+
+*Proof.* Let $\mathsf P(x,dy)$ be the actual gap-$d$ Markov kernel of $P$. Conservation gives $\mathsf P(x,G)=1$. Self-adjointness makes $m(dx)\mathsf P(x,dy)$ symmetric, so the original conditional law of $Z_{2d}$ given $Z_{3d}=x$ is
+
+$$
+\frac{g(y)}{v(x)}\mathsf P(x,dy).
+\tag{208.7}
+$$
+
+Its total mass is one. This is the reversal of the original source-start law, while the conditional law of $Z_{4d}$ given $Z_{3d}=x$ is $\mathsf P(x,dy)$. Both statements use the original $g$ and $P$.
+
+Cauchy–Schwarz for $\mathsf P(x,dy)$ gives $v^2=(Pg)^2\le P(g^2)$, and $g^2\le G_0g$ gives $P(g^2)\le G_0v$. These prove (208.4). Also $0\le s,t\le1$, and
+
+$$
+\pi_j\mathbb E_{\nu_j}\chi
+=\int_{D_j}v\chi\,dm
+\le G_0m(D_j)-\pi_j<\infty.
+\tag{208.8}
+$$
+
+Consequently $A_j,B_j$ are finite, and $0\le H_j\le\mathbb E_{\nu_j}\chi/4<\infty$. No lower bound on $v$ over $G$ is used.
+
+The pair calibrations give the two exact conditional means
+
+$$
+\begin{aligned}
+\pi_j\mathbb E_{\nu_j}s
+ &=Q_{12}(u_B,u_j)=Q_{12}(p,f_j)=p\pi_j,\\
+\pi_j\mathbb E_{\nu_j}t
+ &=Q_{23}(u_j,u_B)=Q_{23}(f_j,p)=p\pi_j.
+\end{aligned}
+\tag{208.9}
+$$
+
+Self-adjointness in the first step of the actual triple gives
+
+$$
+\mathcal C(u_B,u_j,u_B)
+=\int_G P(gu_B)u_jPu_B\,dm
+=\pi_j\mathbb E_{\nu_j}st.
+\tag{208.10}
+$$
+
+The baseline is $\mathcal C(p,f_j,p)=p^2\pi_j$. Subtraction and (208.9) prove the identity in (208.5).
+
+For almost every $x$, put $R_x(y)=g(y)/v(x)$. Its mean under $\mathsf P(x,dy)$ is one and its centered second moment is $\chi(x)$. The elementary covariance Cauchy–Schwarz estimate yields
+
+$$
+\begin{aligned}
+s(x)-t(x)
+ &=\int_G(R_x(y)-1)(u_B(y)-t(x))\,\mathsf P(x,dy),\\
+(s(x)-t(x))^2&\le\chi(x)t(x)(1-t(x)).
+\end{aligned}
+\tag{208.11}
+$$
+
+This classical conditional covariance inequality is an intermediate estimate. Combining it with the exact algebraic identity
+
+$$
+2\mathbb E_{\nu_j}[(s-p)(t-p)]
+=A_j+B_j-\mathbb E_{\nu_j}(s-t)^2
+\tag{208.12}
+$$
+
+proves the lower bound in (208.5). Finally (208.9) implies
+
+$$
+\mathbb E_{\nu_j}t(1-t)=p(1-p)-A_j=\frac3{16}-A_j.
+\tag{208.13}
+$$
+
+When $k_j<\infty$, this gives $H_j\le k_j(3/16-A_j)$, proving (208.6). The weighted estimate (208.8), rather than any global bounded likelihood ratio, supplies integrability. $\square$
+
+**Definition 208.3 (hard relation forms).** In the coefficient space $\mathbb R^{\mathcal L}$ put
+
+$$
+\begin{gathered}
+F_a=\sum_i a_if_i,\qquad K_{\rm rel}=\ker\Phi_f=\{a:F_a=0\},\\
+h_a=\sum_i a_iu_i,\qquad
+(a\odot b)_i=a_ib_i,\qquad
+h_ah_b=h_{a\odot b},\\
+s_a=\frac{P(gh_a)}v,\qquad t_a=Ph_a.
+\end{gathered}
+\tag{208.14}
+$$
+
+The product identity is the hard-indicator algebra of this actual partition. For $a,b\in K_{\rm rel}$ define the bilinear forms
+
+$$
+\begin{aligned}
+M_j(a,b)&=\mathbb E_{\nu_j}[s_at_b],\\
+G_j^+(a,b)&=\mathbb E_{\nu_j}[t_at_b],
+& G_j^-(a,b)&=\mathbb E_{\nu_j}[s_as_b],\\
+V_j(a,b)&=\mathbb E_{\nu_j}[P(h_ah_b)],\\
+H_{\chi,j}(a,b)&=\mathbb E_{\nu_j}
+ \bigl[\chi\bigl(P(h_ah_b)-t_at_b\bigr)\bigr].
+\end{aligned}
+\tag{208.15}
+$$
+
+Write $\operatorname{Sym}M_j(a,b)=(M_j(a,b)+M_j(b,a))/2$. The order $A\succeq B$ for symmetric forms on $K_{\rm rel}$ means $(A-B)(a,a)\ge0$ for every $a\in K_{\rm rel}$.
+
+**Proposition 208.4 (Loewner budgets with an exact hard-product consumer).** All forms in (208.15) are finite. Their exact pair-calibrated budget and residual contraction are
+
+$$
+V_j(a,b)=\frac{Q_{23}(f_j,F_{a\odot b})}{\pi_j},
+\qquad
+M_j(a,b)=\frac1{\pi_j}\sum_{i,k}a_ib_k\Delta(D)_{ijk}.
+\tag{208.16}
+$$
+
+They obey
+
+$$
+2\operatorname{Sym}M_j
+\succeq G_j^++G_j^- -H_{\chi,j}.
+\tag{208.17}
+$$
+
+If $k_j<\infty$, then also
+
+$$
+2\operatorname{Sym}M_j
+\succeq(1+k_j)G_j^++G_j^- -k_jV_j.
+\tag{208.18}
+$$
+
+In particular, full equality of the original sixty-four coordinates forces $M_j=0$ for every $j$ and hence the necessary budgets
+
+$$
+G_j^++G_j^-\preceq H_{\chi,j},\qquad
+(1+k_j)G_j^++G_j^-\preceq k_jV_j
+\quad\text{when }k_j<\infty.
+\tag{208.19}
+$$
+
+*Proof.* For each bounded real $h$, the same conditional covariance calculation as (208.11) gives
+
+$$
+\left(\frac{P(gh)}v-Ph\right)^2
+\le\chi\bigl(P(h^2)-(Ph)^2\bigr).
+\tag{208.20}
+$$
+
+Both conditional means have absolute value at most $\|h\|_\infty$. The unweighted conditional variance is nonnegative and at most $\|h\|_\infty^2$. Thus (208.8) proves finiteness of its $\chi$-weighted integral. Conditional covariance Cauchy–Schwarz also bounds the absolute cross covariance for $h_a,h_b$ by $\|h_a\|_\infty\|h_b\|_\infty$, proving finiteness of every entry of $H_{\chi,j}$. All other forms have bounded integrands.
+
+The hard product and the ordered pair calibration give
+
+$$
+\begin{aligned}
+\pi_jV_j(a,b)
+ &=Q_{23}(u_j,h_{a\odot b})\\
+ &=\sum_i a_ib_iQ_{23}(f_j,f_i)
+ =Q_{23}(f_j,F_{a\odot b}).
+\end{aligned}
+\tag{208.21}
+$$
+
+The baseline function here is $F_{a\odot b}$, not $F_aF_b$. It need not vanish when both $a$ and $b$ are baseline relations. Furthermore
+
+$$
+\begin{aligned}
+\pi_jM_j(a,b)
+ &=\mathcal C(h_a,u_j,h_b),\\
+\mathcal C(F_a,f_j,F_b)&=0.
+\end{aligned}
+\tag{208.22}
+$$
+
+Multilinearity and subtraction prove the residual contraction in (208.16). The pair equations also give $\mathbb E_{\nu_j}s_a=\mathbb E_{\nu_j}t_a=0$ on $K_{\rm rel}$, so $G_j^\pm$ are the actual conditional covariance forms there.
+
+Let $L_j(a,b)=\mathbb E_{\nu_j}[(s_a-t_a)(s_b-t_b)]$. The exact form identity and (208.20) give
+
+$$
+2\operatorname{Sym}M_j=G_j^++G_j^--L_j,
+\qquad L_j\preceq H_{\chi,j},
+\tag{208.23}
+$$
+
+which proves (208.17). If $k_j<\infty$, positivity of the conditional variance gives
+
+$$
+H_{\chi,j}\preceq k_j(V_j-G_j^+).
+\tag{208.24}
+$$
+
+Substitution in (208.17) proves (208.18). If $\Delta(D)=0$, (208.16) forces the whole form $M_j$ to vanish, which proves (208.19). This implication uses all required triple contractions; vanishing of the symmetric part alone would be weaker. $\square$
+
+**Corollary 208.5 (the unpaid $B3B$ direction and the full-zero boundary).** Let $\mathbf1_{\mathcal L}$ denote the all-one coefficient vector and set $\beta=e_B-p\mathbf1_{\mathcal L}$. Then $\beta\in K_{\rm rel}$ and
+
+$$
+\begin{gathered}
+h_\beta=u_B-p,\qquad s_\beta=s-p,\qquad t_\beta=t-p,\\
+G_j^+(\beta,\beta)=A_j,\qquad
+G_j^-(\beta,\beta)=B_j,\qquad
+H_{\chi,j}(\beta,\beta)=H_j,\\
+V_j(\beta,\beta)=\frac3{16},\qquad
+M_j(\beta,\beta)=\frac{\Delta(D)_{BjB}}{\pi_j}.
+\end{gathered}
+\tag{208.25}
+$$
+
+Thus every full-zero hard candidate must satisfy, for each $j$,
+
+$$
+A_j+B_j\le H_j,
+\qquad
+(1+k_j)A_j+B_j\le\frac3{16}k_j
+\quad\text{if }k_j<\infty.
+\tag{208.26}
+$$
+
+For $D\in\mathscr F_{154}(\theta)$ the case $j=B$ is already necessary from the imposed BBB equality. The case $j=3$ bounds the actual unpaid residual $\Delta(D)_{B3B}$, and a strict positive right-hand side in (208.5) or (208.6) excludes that particular $D$ from full-zero attainment. These are conditional exclusion criteria for a given partition; no positive margin over all original pair-calibrated partitions is asserted.
+
+*Proof.* Since $\sum_i f_i=1$ and $f_B=p$, one has $F_\beta=0$. Hard multiplication gives
+
+$$
+h_\beta^2=(1-2p)u_B+p^2,
+\qquad
+F_{\beta\odot\beta}=(1-2p)f_B+p^2=p(1-p)=\frac3{16}.
+\tag{208.27}
+$$
+
+Consequently (208.16) gives $V_j(\beta,\beta)=3/16$. Also
+$P(h_\beta^2)-(Ph_\beta)^2=t(1-t)$, proving the asserted equality for $H_{\chi,j}$. The other form identifications follow from (208.3), (208.5) and (208.14). In particular, the scalar bounds are precisely the $\beta$ direction of the hard-algebra matrix bounds, with the same original source and the same actual terminals.
+
+Appendix III (154.3), (154.32) and Definition 155.1 fix all ordered pairs, the six permutations of $013$ and BBB. They do not impose $B3B$. Pair-sum cancellation expresses that remaining coordinate as
+
+$$
+\Delta(D)_{B3B}=\sum_{i,k\in\{0,1,3\}}\Delta(D)_{i3k},
+\tag{208.28}
+$$
+
+which includes repeated-label entries not individually fixed by (154.32). The two contrast channels in Appendix III (157.2) include exactly $h_\beta=u_B-p$; (208.25) constrains its first-and-third-slot contraction with the actual middle indicator $u_3$. Hence the budget has a consumer beyond the already paid binary BBB coordinate. Applying (208.5) and (208.6) gives (208.26) and the exclusion criterion.
+
+The covariance estimate used in (208.11) and (208.20) is classical Cauchy–Schwarz. The source-specific deduction here combines it with the original reversed law (208.7), the finite weighted bound (208.8), the exact pair calibration and the hard product budget (208.21). Finite linear-moment purification, as in A. Dvoretzky, A. Wald and J. Wolfowitz, *Relations among certain ranges of vector measures*, [doi:10.2140/pjm.1951.1.59](https://doi.org/10.2140/pjm.1951.1.59), Theorem 4, does not by itself preserve the cubic same-partition law with its own propagated terminals.
+
+These necessary inequalities neither construct a full-zero partition nor give a fixed-start successor. They assume no globally bounded or small $\chi$, no source label $q$ in the hard label span, no ideal property of a tensor radical, no positivity of $\mathcal C(r,r,1)$ and no local forward Gram definiteness. Coefficient correction rank, coarse moment rank and actual label-span rank retain their separate meanings; none is identified by this budget. The universal original $F_{64}$ target and the original physical succession question remain unresolved. $\square$
+
+## 追加锚（本行以下为增补区）
+
+## 209. Strict asymptotic slack of the native-source hard-partition budgets
+
+**Definition 209.1 (a weak-star calibrated sequence).** Retain Definition 208.1, all of the original telescope of Appendix III Definitions 154.1 and 155.1, and the original source, clock, measure, operator and own-terminal convention. Fix one original $\theta$. Let $D_n=(D_{n,i})_{i\in\mathcal L}$ be deterministic whole-$G$ Borel partitions satisfying exactly (208.1), and write $u_{n,i}=\mathbf1_{D_{n,i}}$. Assume only
+
+$$
+u_{n,i}\overset{*}{\rightharpoonup}f_i\quad\text{in }L^\infty(G,m)
+\qquad(i\in\mathcal L).
+\tag{209.1}
+$$
+
+For $a\in\mathbb R^{\mathcal L}$ put
+
+$$
+h_{n,a}=\sum_i a_i u_{n,i},\qquad
+t_{n,a}=Ph_{n,a},\qquad
+s_{n,a}=\frac{P(gh_{n,a})}{v},
+\tag{209.2}
+$$
+
+and define $G_{j,n}^\pm$, $H_{\chi,j,n}$ and $M_{j,n}$ from (208.15) with $u_j$ replaced by $u_{n,j}$. Thus $\pi_j$ remains the fixed number in (208.2), because (208.1) preserves the middle marginal. Put
+
+$$
+w=v\chi,\qquad
+\xi_j=\frac1{\pi_j}\int_G f_jw\,dm,\qquad
+\Lambda_j(a,b)=\frac1{\pi_j}\int_G f_jw\,P(F_{a\odot b})\,dm
+\quad(a,b\in K_{\rm rel}).
+\tag{209.3}
+$$
+
+No bounded global likelihood ratio, compact $L^2$ heat operator, source-span witness or parameter-uniform constant is included in this definition.
+
+**Proposition 209.2 (the limiting relation budgets).** For every original $\theta$, the function $w$ is integrable and strictly positive almost everywhere. Each $\xi_j$ is finite and positive, each $\Lambda_j$ is a finite positive-definite symmetric form on $K_{\rm rel}$, and
+
+$$
+G_{j,n}^+\longrightarrow0,\qquad
+G_{j,n}^-\longrightarrow0,\qquad
+H_{\chi,j,n}\longrightarrow\Lambda_j
+\quad\text{in matrix norm on }K_{\rm rel}.
+\tag{209.4}
+$$
+
+Consequently, with
+
+$$
+S_{j,n}=G_{j,n}^++G_{j,n}^--H_{\chi,j,n},
+\tag{209.5}
+$$
+
+one has $S_{j,n}\to-\Lambda_j$. There is one index after which all four $S_{j,n}$ are strictly negative definite, simultaneously for every nonzero relation direction.
+
+*Proof.* The reversed conditional law (208.7) gives
+
+$$
+0\le w=v\chi=\frac{P(g^2)}{v}-v\le G_0-v,
+\tag{209.6}
+$$
+
+so $w\in L^1(m)$. The original positive heat kernel and the source-start nonconstancy supplier imply that the conditional variance of $g$ in (208.7) is strictly positive at almost every middle state; hence $w>0$ almost everywhere. Since every $f_j$ is positive and bounded, this proves $0<\xi_j<\infty$.
+
+For $a\in K_{\rm rel}$, (209.1) gives $h_{n,a}\overset{*}{\rightharpoonup}0$. The forward and reversed three-time kernels are integrable probability kernels: the forward one is the density used in Appendix II §123, and the reversed one is obtained from (208.7). Rectangular-tensor approximation in their respective $L^1$ spaces therefore makes their bounded multilinear integrals continuous under componentwise weak-star convergence. Applying this to (209.2) gives
+
+$$
+G_{j,n}^+(a,b)\to0,\qquad G_{j,n}^-(a,b)\to0
+\quad(a,b\in K_{\rm rel}).
+\tag{209.7}
+$$
+
+For the weighted term, $h_{n,a\odot b}\overset{*}{\rightharpoonup}F_{a\odot b}$, while $w\in L^1(m)$. The same two-variable tensor approximation, now for the kernel $w(x)P(x,dy)$, yields
+
+$$
+\frac1{\pi_j}\int_Gu_{n,j}wP(h_{n,a\odot b})\,dm
+\longrightarrow
+\frac1{\pi_j}\int_Gf_jwP(F_{a\odot b})\,dm.
+\tag{209.8}
+$$
+
+The subtracted term in $H_{\chi,j,n}$ is $\mathbb E_{\nu_{j,n}}[\chi t_{n,a}t_{n,b}]$. To control this weighted term, use the original transition density $p_d(x,y)$ of $P$ from Appendix II Definition 123.1. For almost every $x$, its row $p_d(x,\cdot)$ belongs to $L^1(m)$ and has integral one. Thus weak-star convergence gives, for every $a\in K_{\rm rel}$,
+
+$$
+t_{n,a}(x)=\int_Gp_d(x,y)h_{n,a}(y)\,m(dy)
+\longrightarrow\int_Gp_d(x,y)F_a(y)\,m(dy)=0
+\quad\text{for almost every }x.
+$$
+
+Because the $u_{n,i}$ form a hard partition, $|h_{n,a}|\le\|a\|_\infty$, and the Markov property gives $|t_{n,a}|\le\|a\|_\infty$. Since $0\le u_{n,j}\le1$ and $w\in L^1(m)$, dominated convergence with dominator $\|a\|_\infty\|b\|_\infty w$ yields
+
+$$
+\left|\mathbb E_{\nu_{j,n}}[\chi t_{n,a}t_{n,b}]\right|
+=\left|\frac1{\pi_j}\int_Gu_{n,j}w\,t_{n,a}t_{n,b}\,dm\right|
+\le\frac1{\pi_j}\int_Gw\,|t_{n,a}t_{n,b}|\,dm
+\longrightarrow0.
+$$
+
+Combining this with (209.8) and the exact definition (208.15) proves the third limit in (209.4). The coefficient space $K_{\rm rel}$ is finite-dimensional, hence entrywise convergence is matrix-norm convergence.
+
+For $a\ne0$,
+
+$$
+F_{a\odot a}=\sum_i a_i^2f_i>0\quad\text{almost everywhere}.
+\tag{209.9}
+$$
+
+Positivity improvement of $P$ gives $P(F_{a\odot a})>0$ almost everywhere. Thus (209.3) gives $\Lambda_j(a,a)>0$. Symmetry follows from $a\odot b=b\odot a$. Positive definiteness on the unit sphere of the finite-dimensional $K_{\rm rel}$ gives a positive minimum eigenvalue for each $j$; taking the minimum over the four labels and using (209.4) proves the final assertion. The only analytic inputs here are the original positive kernel, the bounded native source and the tensor-continuity mechanism already used for the actual path density; no global likelihood-ratio or compactness assumption has been added. $\square$
+
+**Proposition 209.3 (finite-$k$ refinement and its eventual sign).** Let
+
+$$
+k_{j,n}=\operatorname*{ess\,sup}_{D_{n,j}}\chi
+$$
+
+with respect to $v\,m$. Whenever $k_{j,n}<\infty$,
+
+$$
+k_{j,n}\ge\frac{\xi_j}{2}
+\tag{209.10}
+$$
+
+for all sufficiently large $n$. For those indices, the refined form
+
+$$
+R_{j,n}=\left(1+\frac1{k_{j,n}}\right)G_{j,n}^+
+       +\frac1{k_{j,n}}G_{j,n}^- -V_{j,n}
+\tag{209.11}
+$$
+
+is strictly negative definite on $K_{\rm rel}$ once $n$ is sufficiently large. If $k_{j,n}=\infty$, this refinement is inapplicable.
+
+*Proof.* Since $w\in L^1(m)$, (209.1) gives
+
+$$
+\frac1{\pi_j}\int_Gu_{n,j}w\,dm\longrightarrow\xi_j.
+\tag{209.12}
+$$
+
+The left side is the $\nu_{j,n}$-mean of $\chi$ and is at most $k_{j,n}$ whenever that essential supremum is finite. This proves (209.10). The conditional-variance estimate (208.24), with the current partition, gives
+
+$$
+H_{\chi,j,n}\preceq k_{j,n}(V_{j,n}-G_{j,n}^+).
+\tag{209.13}
+$$
+
+Rearranging (209.13) yields
+
+$$
+R_{j,n}\preceq\frac1{k_{j,n}}S_{j,n}.
+\tag{209.14}
+$$
+
+By Proposition 209.2, $S_{j,n}$ is eventually strictly negative definite, and (209.10) makes the scalar factor positive. Equation (209.14) therefore makes $R_{j,n}$ strictly negative definite as well. Infinite $k_{j,n}$ supplies no expression of the form (209.11). $\square$
+
+**Corollary 209.4 (the unpaid $B3B$ coordinate has zero actual limit).** Let $\beta=e_B-\frac14\mathbf1_{\mathcal L}$. For each $j\in\mathcal L$, the unrefined lower-bound expression from (208.5) satisfies
+
+$$
+\frac{\pi_j}{2}\bigl(A_{j,n}+B_{j,n}-H_{j,n}\bigr)
+\longrightarrow
+-\frac3{32}\int_G f_jv\chi\,dm<0,
+\tag{209.15}
+$$
+
+where $A_{j,n}=G_{j,n}^+(\beta,\beta)$, $B_{j,n}=G_{j,n}^-(\beta,\beta)$ and $H_{j,n}=H_{\chi,j,n}(\beta,\beta)$. At the same time,
+
+$$
+\Delta(D_n)_{BjB}\longrightarrow0,
+\qquad
+\|\Delta(D_n)\|_{\max}\longrightarrow0.
+\tag{209.16}
+$$
+
+*Proof.* The hard product identity in (208.27) gives $F_{\beta\odot\beta}=3/16$. Therefore (209.3) gives
+
+$$
+\Lambda_j(\beta,\beta)=\frac3{16\pi_j}\int_Gf_jv\chi\,dm.
+\tag{209.17}
+$$
+
+The first limit in (209.15) follows from Proposition 209.2 and (209.17), and its strict sign follows from $f_jw>0$ almost everywhere. The inequality (208.5) still holds for each $D_n$, but its right side has the negative limit (209.15).
+
+For (209.16), approximate the original three-time density by finite sums of rectangular $L^1(m^3)$ tensors as in Appendix II §123.2. Every coefficient
+
+$$
+\mathcal C(u_{n,y},u_{n,z},u_{n,k})
+$$
+
+then converges to $\mathcal C(f_y,f_z,f_k)$, with the third factor interpreted through the same partition's actual $P u_{n,k}$. Hence all sixty-four residuals converge to zero, including the displayed $BjB$ coordinate. The negative limit in (209.15) is therefore a lower-bound slack, not a residual obstruction. $\square$
+
+**Theorem 209.5 (a source-specific co-selected sequence realizing the slack).** For every original $\theta$, there exists a sequence of deterministic whole-$G$ Borel partitions
+
+$$
+D_n\in\mathscr F_{154}(\theta)
+$$
+
+whose own terminals are used in every coordinate, such that (208.1) holds, $u_{n,i}\overset{*}{\rightharpoonup}f_i$ for every $i$, and
+
+$$
+\Delta(D_n)_{BB3}>0,\qquad
+\|\Delta(D_n)\|_{\max}\longrightarrow0.
+\tag{209.18}
+$$
+
+*Proof.* Use the actual finite construction of Appendix III §§154.E and 155.2. For its fixed original $\theta$, write $\kappa=R_{BB3}>0$ and $J=\|R\|_\infty>0$ as in (155.4). Choose $t_n\downarrow0$ with $t_n<t_0$ and set, for example,
+
+$$
+\varepsilon=\frac12,\qquad
+\delta_n=\frac{t_n^2}{32}\min\{\kappa,J\}.
+\tag{209.19}
+$$
+
+Then the strict restriction in (155.5) holds for $(t,t',\delta)=(t_n,t_n/2,\delta_n)$. Theorem 155.2 supplies co-selected actual partitions $D_n,D_n'\in\mathscr F_{154}(\theta)$ from one common finite-cell quantile construction. Retain the first endpoint. Its estimates give
+
+$$
+\Delta(D_n)_{BB3}>t_n^2\kappa-\delta_n>0,\qquad
+\|\Delta(D_n)\|_{\max}\le t_n^2J+\delta_n\longrightarrow0.
+\tag{209.20}
+$$
+
+It remains to make the weak-star quantifier explicit. Fix a countable $L^1(m)$-dense family of tests. In the quantile construction of 154.E, refine the finite coordinate partition far enough at the $n$th step to match the center $u^{(t_n)}$ on the first $n$ tests to error $<1/n$; the cell-mass identities and density of the refining partitions give this uniformly for the finitely many tests. Since $u^{(t_n)}\to f$ in $L^\infty$ as $t_n\downarrow0$, choose $t_n$ recursively so that its first $n$ test pairings differ from those of $f$ by $<1/n$. The diagonal sequence of indicators therefore converges componentwise weak-star to $f$. The same refinement is allowed in the Brouwer step because the approximation estimates in (154.30) and (155.15) improve along the refining partitions. The exact $\mathcal H_{43}$ roots give (208.1), and every coefficient in (209.20) is evaluated with the corresponding partition's own propagated terminals. No endpoint is held fixed and no physical successor is asserted. $\square$
+
+Theorem 209.5 consumes the finite calibrated endpoints of §155.2 to realize the sequence hypothesis of Propositions 209.2–209.4 for every original parameter. It shows that the particular exclusion mechanism of Section 208 loses its sign margin on actual original hard approximants: the matrix budgets converge to the strictly negative source form $-\Lambda_j$, the refined finite-$k$ budgets are eventually negative where defined, and the unrefined $B3B$ lower bound converges to a negative number while the actual residual converges to zero. This does not construct an original $F_{64}$ witness, prove nonattainment, or provide a successor from an arbitrary fixed endpoint; the fixed-start summable chain of (155.31), the universal $F_{64}$ question and the physical succession question remain open.
+
+## 追加锚（本行以下为增补区）

@@ -18,10 +18,10 @@ internal sealed class WuA227244ConjectureFourDocument : IScribeDocumentDefinitio
                 "OEIS A227244, NAME: Smallest prime factor of (2^(2^n) + 1)*2^(2^(2^n)) - 1. The exponent of the second outer power is two raised to two raised to m.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("claim", "The least-prime assertion", Disp(Equal(F.Id("claim"), Parenthesized(Event()))),
                 "OEIS A227244, FORMULA, Chai Wah Wu: Conjecture 4: a(168*n+43) = 59 if n>=0 and n mod 55 <> 26. Least prime divisor means primality of 59, divisibility by 59, and a lower bound on every natural prime divisor of that same signed integer. The assertion includes n=0 and has no upper bound. It makes no assertion at residue 26 and does not assert that the exclusion is necessary.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
-            Node("progression_reduce", "Power reduction along an arithmetic progression", Disp(ProgressionFormula()),
-                "The original repository declaration D5.S3.Arith.Primes.WuA227244ConjectureFour.progression_reduce applies to every carrier M in any universe and every CommMonoid structure c on M. Powers use that structure. All four indices s, t, L and n are arbitrary natural numbers, including zero. The sole hypothesis is the displayed period equation. The proof uses Function.Periodic.map_mod_nat. This same declaration is used by formula_reduce here and by WuA227244ConjectureThree.formula_reduce; it is an existing helper, not a new general method.", DescribeRole.Theorem, AssessedProvenance.FromRepo()),
-            Node("tail_reduce", "Power reduction after an initial tail", Disp(TailFormula()),
-                "The original repository declaration D5.S3.Arith.Primes.WuA227244ConjectureFour.tail_reduce applies to every carrier M in any universe and every CommMonoid structure c on M. Powers use that structure. Both p and e range over all natural numbers, including zero. It requires both the displayed power equation and p at most e; no positivity assumption is added. The proof uses Function.Periodic.map_mod_nat and natural subtraction only inside the proof. This same declaration is used by formula_reduce here and by WuA227244ConjectureThree.formula_reduce; it is an existing helper, not a new general method.", DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("progression_reduce", "Powers along an arithmetic progression", Disp(ProgressionFormula()),
+                "For every type M with a commutative monoid structure, a in M and natural s, t, L and n, the equation a^(s*L+t)=a^t implies a^(s*n+t)=a^(s*(n mod L)+t). There is no positivity hypothesis on L. This is the canonical reduction used by formula_reduce here and directly by the C1 and C2 formula_reduce proofs. It supplies no new mathematical content.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
+            Node("tail_reduce", "Powers after an initial tail", Disp(TailFormula()),
+                "For every type M with a commutative monoid structure, a in M and natural p and e, the equation a^(p+p)=a^p together with p<=e implies a^e=a^(p+e mod p). There is no positivity hypothesis on p. This is the canonical tail reduction used by formula_reduce here and directly by the C1 and C2 formula_reduce proofs. It supplies no new mathematical content.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
             Node("reduced", "Finite residues of the nested powers", Disp(ReducedFormula()),
                 "This residue expression is in ZMod q. Its five natural parameters are q, d, p, L and r; L records the period used to choose r. The first exponent is reduced modulo d. For the second exponent, a tail of length p precedes reduction modulo p, and the resulting outer exponent is reduced modulo d. Periodicity of powers along 168*n+43 transfers this expression to every natural n.", DescribeRole.Definition, AssessedProvenance.FromRepo(Source)),
             Node("result", "The fourth conjecture holds", Disp(Event()),
@@ -38,23 +38,6 @@ internal sealed class WuA227244ConjectureFourDocument : IScribeDocumentDefinitio
     private static Formula Ints => Seq(Mathbb, Grp(F.Id("Z")));
     private static Formula Parenthesized(Formula x) => Seq(Open, x, Close);
     private static Formula All(string x, Formula body) => new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(x), Nat, body);
-    private static Formula AllOver(string x, Formula type, Formula body) => new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(x), type, body);
-    private static Formula MonoidContext(Formula body) => AllOver("M", F.Id("Type"),
-        AllOver("c", Call("CommMonoid", F.Id("M")), AllOver("a", F.Id("M"), body)));
-    private static Formula ProgressionFormula()
-    {
-        var a=F.Id("a"); var s=F.Id("s"); var t=F.Id("t"); var l=F.Id("L"); var n=F.Id("n");
-        return MonoidContext(All("s", All("t", All("L", All("n", Implies(
-            Equal(Pow(a, Add(Multiply(s,l),t)), Pow(a,t)),
-            Equal(Pow(a, Add(Multiply(s,n),t)), Pow(a, Add(Multiply(s,Mod(n,l)),t)))))))));
-    }
-    private static Formula TailFormula()
-    {
-        var a=F.Id("a"); var p=F.Id("p"); var e=F.Id("e");
-        return MonoidContext(All("p", All("e", Implies(Equal(Pow(a,Add(p,p)),Pow(a,p)),
-            Implies(new Formula.Relation(p,FormulaRelationOperator.LessThanOrEqual,e),
-                Equal(Pow(a,e),Pow(a,Add(p,Mod(e,p)))))))));
-    }
     private static Formula Pow(Formula x, Formula y) => new Formula.Power(x, y);
     private static Formula Mod(Formula x, Formula y) => Call("mod", x, y);
     private static Formula Cast(Formula x, Formula ty) => Parenthesized(Seq(x, Colon, Sp, ty));
@@ -74,6 +57,24 @@ internal sealed class WuA227244ConjectureFourDocument : IScribeDocumentDefinitio
         return All("n", Implies(exclusion, And(Prime(D(5,9)), And(
             Divides(Cast(D(5,9), Ints), g),
             All("q", Implies(Prime(q), Implies(Divides(Cast(q, Ints), g), lower)))))));
+    }
+    private static Formula MonoidAll(Formula body) =>
+        new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create("M"), Seq(F.Id("Type"), Star),
+            new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create("inst"), Call("CommMonoid", F.Id("M")),
+                new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create("a"), F.Id("M"), body)));
+    private static Formula ProgressionFormula()
+    {
+        var a=F.Id("a"); var s=F.Id("s"); var t=F.Id("t"); var l=F.Id("L"); var n=F.Id("n");
+        return MonoidAll(All("s", All("t", All("L", All("n", Implies(
+            Equal(Pow(a, Add(Multiply(s,l),t)), Pow(a,t)),
+            Equal(Pow(a, Add(Multiply(s,n),t)), Pow(a, Add(Multiply(s,Mod(n,l)),t)))))))));
+    }
+    private static Formula TailFormula()
+    {
+        var a=F.Id("a"); var p=F.Id("p"); var e=F.Id("e");
+        return MonoidAll(All("p", All("e", Implies(Equal(Pow(a,Add(p,p)),Pow(a,p)),
+            Implies(new Formula.Relation(p, FormulaRelationOperator.LessThanOrEqual,e),
+                Equal(Pow(a,e),Pow(a,Add(p,Mod(e,p)))))))));
     }
     private static Formula ReducedFormula()
     {
