@@ -32,7 +32,7 @@ namespace D5.S3.Quantum.Matrix.HsfThreeLevelSupplier
 
 universe u
 
-/-- Exact unproved target, retaining the actual CFC factorial derivatives.
+/-- Exact supplier proposition, retaining the actual CFC factorial derivatives.
 `level` need not be surjective and `p` need not be injective. The finite carrier
 is arbitrary and may be empty. This is a proposition definition, not a theorem. -/
 def ThreeLevelSupplierTarget : Prop :=
@@ -828,9 +828,8 @@ private theorem denominator_square (a b c : ℝ) :
 
 set_option maxHeartbeats 16000000 in
 /-- Exact degree-60 polynomial identity, with every signed and positive
-coefficient present in source. This is a kernel ring proof candidate; the
-source generator and its consistency check are not proof authority.
-The separate rational-clearing proof scripts follow this polynomial step. -/
+coefficient present in source. The source generator is not proof authority;
+the coefficient arithmetic is handled by the ring proof. -/
 private theorem polynomial_gap (a b c : ℝ) :
     tNumerator a b c-(kNumerator a b c)^2 =
       a*b*c*(a-b)^2*(a-c)^2*(b-c)^2*positiveCore a b c := by
@@ -862,9 +861,8 @@ private theorem detG_formula (p : Fin 3 → ℝ) (hp : ∀ i, 0 < p i) :
 
 set_option maxHeartbeats 16000000 in
 /-- Rational denominator clearing against the signed degree-30 numerator.
-All facts used here are proved scalar facts or numerical coefficient data;
-there is no spectral, jet, or supplier hypothesis. This proof script awaits
-canonical elaboration and kernel checking. -/
+All facts used here are scalar facts or numerical coefficient data;
+there is no spectral, jet, or supplier hypothesis. -/
 private theorem canonicalK_clear (p : Fin 3 → ℝ) (hp : ∀ i, 0 < p i)
     (hinj : Function.Injective p) :
     canonicalK p*kDenominator (p 0) (p 1) (p 2) = kNumerator (p 0) (p 1) (p 2) := by
@@ -887,7 +885,7 @@ private theorem canonicalK_clear (p : Fin 3 → ℝ) (hp : ∀ i, 0 < p i)
   simp only [canonicalK, Fin.sum_univ_three, projectionCross]
   norm_num [left, right, third, dualG]
   rw [detG_formula p hp]
-  dsimp only [kDenominator, kNumerator, kNumeratorTerms,
+  simp only [kDenominator, kNumerator, kNumeratorTerms,
     List.map_cons, List.map_nil, List.sum_cons, List.sum_nil]
   field_simp [h0, h1, h2, h01, h02, h12, hq01, hq02, hq12,
     hu01, hu02, hu12, hH]
@@ -922,9 +920,7 @@ private theorem residualT_clear (p : Fin 3 → ℝ) (hp : ∀ i, 0 < p i) :
   simp only [q_symm, aux_symm] at hq01 hq02 hq12 hu01 hu02 hu12 ⊢
   field_simp [hH, hq01, hq02, hq12, hu01, hu02, hu12] <;> ring
 
-/-- The positive core is linked to the original rational budgets at source
-level. Like every theorem in this preparation, this is an uncompiled proof
-candidate, not kernel evidence. -/
+/-- Exact identity linking the positive core to the original rational budgets. -/
 private theorem canonical_gap_identity (p : Fin 3 → ℝ) (hp : ∀ i, 0 < p i)
     (hinj : Function.Injective p) :
     residualT p-(canonicalK p)^2 = coreGap (p 0) (p 1) (p 2) := by
@@ -1018,7 +1014,7 @@ private theorem baseG_posDef (p : Fin 3 → ℝ) (hp : ∀ i, 0 < p i)
       field_simp [hd0.ne', hd1.ne']
       dsimp only [d0, d1]
       unfold detG
-      simp only [g_symm]
+      try simp only [g_symm]
       have hn0 := (hp 0).ne'
       have hn1 := (hp 1).ne'
       have hn2 := (hp 2).ne'
@@ -1054,7 +1050,7 @@ private theorem baseG_dual (p : Fin 3 → ℝ) (hp : ∀ i, 0 < p i)
   all_goals
     field_simp [hd, hn0, hn1, hn2]
     unfold detG
-    simp only [g_symm]
+    try simp only [g_symm]
     field_simp [hn0, hn1, hn2] <;> ring
 
 /-- The residual allocation works for every three positive budgets, for either
@@ -1662,7 +1658,9 @@ private theorem cyclic_moment (p : Fin 3 → ℝ) (hp : ∀ i, 0 < p i)
           | exact (hij rfl).elim
           | exact (hik rfl).elim
           | exact (hjk rfl).elim
-          | (simp only [dot_comm (m p 2 0) (m p 1 0),
+          | (simp only [Fin.mk_zero, Fin.mk_one,
+              show (⟨2, by decide⟩ : Fin 3) = 2 from rfl] at hc ⊢
+            simp only [dot_comm (m p 2 0) (m p 1 0),
               dot_comm (m p 2 1) (m p 0 1), dot_comm (m p 1 2) (m p 0 2),
               tau_symm (p 1) (p 0), tau_symm (p 2) (p 0),
               tau_symm (p 2) (p 1)] at hc ⊢ <;> linear_combination hc)
@@ -2187,7 +2185,7 @@ private theorem coincident_two_values (p : Fin 3 → ℝ) (hp : ∀ i, 0 < p i)
       intro i
       fin_cases i <;> simp_all
 
-/-- O4 for the unchanged actual factorial CFC supplier. UNCOMPILED. -/
+/-- Coincident labels in the unchanged actual factorial CFC supplier. -/
 private theorem coincidentLevel_proof : CoincidentLevelObligation := by
   classical
   intro n _ _ level p hp hn S hS Z hZ
@@ -2384,9 +2382,7 @@ Sylvester energy and rigidity below require a positive-definite direction. -/
 
 
 /-- Actual at-most-three-positive-level supplier, with the unchanged original
-factorial CFC jets, arbitrary finite complex matrices and all Hermitian Z.
-Closed source candidate only: no elaboration or kernel acceptance claimed.
-This asserts no PD Sylvester energy, rigidity, or unrestricted HSF theorem. -/
+factorial CFC jets, arbitrary finite complex matrices and all Hermitian Z. -/
 theorem actual_threeLevel_supplier : ThreeLevelSupplierTarget.{u} := by
   classical
   intro n _ _ level p hp S hS Z hZ
@@ -2887,7 +2883,7 @@ end PDContinuation
 
 /-- Original Hermitian Sylvester energy and exact rigidity for at most three
 positive spectral levels, arbitrary finite complex PD directions, including
-empty carriers and repeated labels. Source candidate only: UNCOMPILED. -/
+empty carriers and repeated labels. -/
 theorem actual_threeLevel_PD_sylvester
     (n : Type u) [Fintype n] [DecidableEq n]
     (level : n → Fin 3) (p : Fin 3 → ℝ) (hp : ∀ i, 0 < p i)
