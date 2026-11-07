@@ -1,19 +1,23 @@
 # Geometric Scale Rigidity
 
-For a continuous profile \(h : \mathbb{R}\to\mathbb{R}\), a nonnegative contraction ratio \(\rho<1\), and a fixed \(M\), constancy along the geometric orbit \(\rho^nM\) forces the profile value at \(M\) to equal its value at zero:
+## Abstract
 
-$$
-\begin{aligned}
-&h:\mathbb{R}\to\mathbb{R},
-\quad \operatorname{ContinuousAt}(h,0),
-\quad 0\le\rho<1,\\
-&\qquad\left(\forall n\in\mathbb N,\ h(\rho^nM)=h(M)\right)
-\quad\Longrightarrow\quad h(M)=h(0).
-\end{aligned}
-$$
+A continuous profile constant on a shrinking geometric orbit takes its value at zero.
 
-*Proof.* The powers \(\rho^n\) tend to zero. Multiplication by \(M\) preserves this limit, and continuity at zero sends \(h(\rho^nM)\) to \(h(0)\). The orbit is constant at \(h(M)\), so uniqueness of limits gives the conclusion. ∎
+**Theorem 1.1 (Geometric-orbit rigidity at the limiting point).**
 
-The kernel-checked truth anchor is `D5/S0/Asymptotics/GeometricScaleRigidity.geometric_scale_rigidity`.
+$$\forall (h : (\mathbb{R} \to \mathbb{R})), \forall (rho : \mathbb{R}), \forall (M : \mathbb{R}), ((\operatorname{ContinuousAt}\left(h, 0\right)) \land (0 \le rho) \land (rho < 1) \land (\forall (n : \mathbb{N}), \operatorname{h}\left(rho^{n} \times M\right) = \operatorname{h}\left(M\right))) \Rightarrow \operatorname{h}\left(M\right) = \operatorname{h}\left(0\right)$$
 
-This is the shrinking-scale step in Continuation XII, §2, equation (2.17). It formalizes only that step; the surrounding quantum orbit, rate, and response hypotheses remain separate obligations.
+*Proof.* Machine-checked in Lean as `D5/S0/Asymptotics/GeometricScaleRigidity.geometric_scale_rigidity` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The powers of rho converge to zero because rho is nonnegative and less than one. Multiplication by the fixed M preserves this limit, and continuity of h at zero sends the geometric orbit to h(0).
+
+The orbit is also constant at h(M) by the stated hypothesis. Uniqueness of limits identifies the two values. This is the shrinking-scale step used in the Continuation XII argument; the surrounding quantum orbit, rate, and response hypotheses remain separate.
+
+## References
+
+- Truth anchor: `D5/S0/Asymptotics/GeometricScaleRigidity.geometric_scale_rigidity`
