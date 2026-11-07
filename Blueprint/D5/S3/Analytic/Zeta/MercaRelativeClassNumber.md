@@ -64,7 +64,7 @@ Lean statement: `D5/S3/Analytic/Zeta/MercaRelativeClassNumber.relative_class_num
 
 The genuine ideal-class-number quotient is a nonnegative integer, proved from the norm identity and the odd integer coordinates. It is defined as a rational quotient and is never rounded by natural division.
 
-Source-owner four-slot audits remain unfinished at https://github.com/the-omega-institute/trureturing/issues/27629. These author proofs are not independent whole-result acceptance. The signed conductor-4r class-number bridge and the remaining complete sign/MMZ application are separate obligations.
+Source-owner four-slot audits remain unfinished at https://github.com/the-omega-institute/trureturing/issues/27629. These author proofs are not independent whole-result acceptance. The signed conductor-4r bridge is established in MercaImaginaryClassNumber and the full sign/MMZ composition in MercaClassNumberCriterion.
 
 Historical credit: Haobo Ma and Wenlin Zhang, CC BY 4.0; Joseph S. Farland criterion/sign attribution; joint Ma-Merca-Zhang application; Louboutin, Hudson and classical class-number sources. Existing Yao Xu/catalan-lean4 Apache-2.0 notices remain intact. No novelty, priority, consent or publication claim is made.
 

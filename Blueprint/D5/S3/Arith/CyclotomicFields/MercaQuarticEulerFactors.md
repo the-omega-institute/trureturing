@@ -28,7 +28,7 @@ Lean statement: `D5/S3/Arith/CyclotomicFields/MercaQuarticEulerFactors.euler_pol
 
 For every rational prime p, including two and the ramified conductor r, the product of one minus z to the actual inertia degrees is the product of the four character factors. The ramified factor is one minus z; the other factors follow from actual residue degrees and the number-field fundamental identity.
 
-Source-owner four-slot audits remain unfinished at https://github.com/the-omega-institute/trureturing/issues/27629. These author proofs are not independent whole-result acceptance. The signed conductor-4r class-number bridge and the remaining complete sign/MMZ application are separate obligations.
+Source-owner four-slot audits remain unfinished at https://github.com/the-omega-institute/trureturing/issues/27629. These author proofs are not independent whole-result acceptance. The signed conductor-4r bridge is established in MercaImaginaryClassNumber and the full sign/MMZ composition in MercaClassNumberCriterion.
 
 Historical credit: Haobo Ma and Wenlin Zhang, CC BY 4.0; Joseph S. Farland criterion/sign attribution; joint Ma-Merca-Zhang application; Louboutin, Hudson and classical class-number sources. Existing Yao Xu/catalan-lean4 Apache-2.0 notices remain intact. No novelty, priority, consent or publication claim is made.
 

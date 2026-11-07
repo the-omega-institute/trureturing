@@ -52,7 +52,7 @@ Lean statement: `D5/S3/Analytic/Zeta/MercaImaginaryClassNumber.class_number_quar
 
 The genuine ideal class number is twice the literal Legendre quarter sum. Its integer half is exact, with evenness proved before any sign interpretation.
 
-Source-owner four-slot audits remain unfinished at https://github.com/the-omega-institute/trureturing/issues/27629. Author kernel checks and this application exposition do not replace independent whole-result acceptance. The full signed class-number/sign/MMZ composition remains an explicit separate obligation until checked.
+Source-owner four-slot audits remain unfinished at https://github.com/the-omega-institute/trureturing/issues/27629. Author kernel checks and this application exposition do not replace independent whole-result acceptance. MercaClassNumberCriterion separately combines these suppliers into the full class-number and sign criterion; independent whole-result acceptance remains pending.
 
 Historical credit: Haobo Ma and Wenlin Zhang, CC BY 4.0; Joseph S. Farland criterion/sign attribution and OEIS terms; joint Ma-Merca-Zhang application; Louboutin, Hudson and classical class-number sources. Existing Yao Xu/catalan-lean4 Apache-2.0 notices remain intact. No novelty, priority, consent or publication claim is made.
 

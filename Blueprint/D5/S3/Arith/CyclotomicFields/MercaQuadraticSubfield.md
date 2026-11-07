@@ -66,7 +66,7 @@ Lean statement: `D5/S3/Arith/CyclotomicFields/MercaQuadraticSubfield.real_discri
 
 Both the square-root number field and the maximal real subfield of the quartic fixed field have genuine number-field discriminant r. The maximal-order theorem supplies the first discriminant; the Gauss-root equivalence transports it to the actual maximal real subfield. The four-slot author audit remains unfinished at https://github.com/the-omega-institute/trureturing/issues/27629.
 
-The historical Ma–Zhang note and its CC BY 4.0 credit, Farland's criterion attribution, the joint Ma–Merca–Zhang application, and the classical, Louboutin and Hudson sources remain recorded in the Library entry. This field identification does not yet prove the analytic relative-class-number formula or the signed imaginary-quadratic class-number formula.
+The historical Ma–Zhang note and its CC BY 4.0 credit, Farland's criterion attribution, the joint Ma–Merca–Zhang application, and the classical, Louboutin and Hudson sources remain recorded in the Library entry. This field identification feeds MercaRelativeClassNumber; the signed imaginary-quadratic formula is proved separately in MercaImaginaryClassNumber.
 
 ## References
 

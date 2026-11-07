@@ -6,6 +6,8 @@ The normalized quartic character's actual first Bernoulli value has odd nonzero 
 
 Throughout, r is prime, r mod 8 is 5, chi is the unique character with order four and chi(2)=i, K is its actual unit kernel, and m=(r-1)/4. All representatives are ZMod.val. Every unit has representative strictly between zero and r, so these are precisely the source's least-positive representatives. The coordinate theorem and divisibility require r>5. This excludes the singleton kernel at r=5.
 
+For the MMZ source notation, choose any primitive unit g with chi(g)=i. Such a g exists: a generator has character value i or -i, since a value of order at most two would force chi squared to be principal; invert the generator in the second case. Equality of character values identifies gK with 2K, so the source coordinate v equals the present t. This uses no primitive-root assumption on two. The correspondence is a transient exact application of the character and coset results, not an additional retained mathematical declaration.
+
 **Definition 1.1 (The unit two).**
 
 Lean statement: `D5/S3/ArithUnits/MercaQuarticMoments.twoUnit`
@@ -172,7 +174,7 @@ Lean statement: `D5/S3/ArithUnits/MercaQuarticMoments.centered_coordinates`
 
 *Commentary.*
 
-For every prime r>5 congruent to five modulo eight and every distinct prime q, H has order m(q-1), all its native unit representatives are strictly between zero and r q, and its literal sum is centered if and only if chi(q)=1, or k=t and chi(q)=-i, or k=-t and chi(q)=i. The existing coset-fiber lift gives deviation equal to q times s(K)-s(q inverse K). The four values of chi(q) identify the inverse coset. The complement identities give the three branches and k nonzero excludes chi(q)=-1. This finite first-moment identity needs neither q>3 nor q>r; it applies in particular to every admissible odd prime in the MMZ domain. The subsequent class-number and sign bridges remain separate proof obligations.
+For every prime r>5 congruent to five modulo eight and every distinct prime q, H has order m(q-1), all its native unit representatives are strictly between zero and r q, and its literal sum is centered if and only if chi(q)=1, or k=t and chi(q)=-i, or k=-t and chi(q)=i. The existing coset-fiber lift gives deviation equal to q times s(K)-s(q inverse K). The four values of chi(q) identify the inverse coset. The complement identities give the three branches and k nonzero excludes chi(q)=-1. This finite first-moment identity needs neither q>3 nor q>r; it applies in particular to every admissible odd prime in the MMZ domain. The subsequent class-number and sign bridges are established separately in MercaRelativeClassNumber, MercaImaginaryClassNumber and MercaClassNumberCriterion.
 
 **Theorem 1.15 (The eligible source generators).**
 
@@ -232,7 +234,7 @@ Lean statement: `D5/S3/ArithUnits/MercaQuarticMoments.interval_identities`
 
 *Commentary.*
 
-For every prime r>5 congruent to five modulo eight, let S be the literal half-interval sum and Q the literal quarter-interval sum. Then S=(-2-i)B, S=(1+i)Q and 2Q=(-3+i)B. Consequently 2 Re(Q)=-3k-t and 2 Im(Q)=k-3t. The nonprincipal doubling formula supplies S, and the permutation a maps to 2a below the quarter endpoint and r-2a above it supplies the relation with Q. These are universal literal character sums, independent of the still open signed class-number formula.
+For every prime r>5 congruent to five modulo eight, let S be the literal half-interval sum and Q the literal quarter-interval sum. Then S=(-2-i)B, S=(1+i)Q and 2Q=(-3+i)B. Consequently 2 Re(Q)=-3k-t and 2 Im(Q)=k-3t. The nonprincipal doubling formula supplies S, and the permutation a maps to 2a below the quarter endpoint and r-2a above it supplies the relation with Q. These are universal literal character sums, independent of the signed class-number formula established in MercaImaginaryClassNumber.
 
 ## References
 

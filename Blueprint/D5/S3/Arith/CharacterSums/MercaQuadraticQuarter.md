@@ -52,7 +52,7 @@ Lean statement: `D5/S3/Arith/CharacterSums/MercaQuadraticQuarter.LFunction_zero_
 
 Four exact representative blocks, reflection of the quadratic character, and multiplication by four identify the actual conductor-four-r L-function at zero with twice the literal Legendre quarter sum. No class-number premise occurs.
 
-Source-owner four-slot audits remain unfinished at https://github.com/the-omega-institute/trureturing/issues/27629. Author kernel checks and this application exposition do not replace independent whole-result acceptance. The full signed class-number/sign/MMZ composition remains an explicit separate obligation until checked.
+Source-owner four-slot audits remain unfinished at https://github.com/the-omega-institute/trureturing/issues/27629. Author kernel checks and this application exposition do not replace independent whole-result acceptance. MercaClassNumberCriterion separately combines these suppliers into the full class-number and sign criterion; independent whole-result acceptance remains pending.
 
 Historical credit: Haobo Ma and Wenlin Zhang, CC BY 4.0; Joseph S. Farland criterion/sign attribution and OEIS terms; joint Ma-Merca-Zhang application; Louboutin, Hudson and classical class-number sources. Existing Yao Xu/catalan-lean4 Apache-2.0 notices remain intact. No novelty, priority, consent or publication claim is made.
 

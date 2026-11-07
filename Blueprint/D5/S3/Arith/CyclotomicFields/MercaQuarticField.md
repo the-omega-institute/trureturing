@@ -4,7 +4,7 @@
 
 The actual fixed field of the normalized quartic character kernel is cyclic quartic and CM. For conductor r greater than five its roots of unity have order two and its Hasse unit index is one.
 
-This is the actual-object field construction needed by the historical Ma–Zhang theorem. It does not define a field through its desired class number. Identification of the maximal real field with Q(sqrt(r)) and the analytic relative-class-number formula remain separate obligations. The historical note's CC BY 4.0 attribution, Farland's sign criterion, the joint Ma–Merca–Zhang application and Louboutin, Hudson and classical class-number sources are retained in the Library entry. Four-slot author audits remain unfinished at https://github.com/the-omega-institute/trureturing/issues/27629; this document claims no validated registration.
+This is the actual-object field construction needed by the historical Ma–Zhang theorem. It does not define a field through its desired class number. Identification of the maximal real field with Q(sqrt(r)) and the analytic relative-class-number formula are supplied by MercaQuadraticSubfield and MercaRelativeClassNumber. The historical note's CC BY 4.0 attribution, Farland's sign criterion, the joint Ma–Merca–Zhang application and Louboutin, Hudson and classical class-number sources are retained in the Library entry. Four-slot author audits remain unfinished at https://github.com/the-omega-institute/trureturing/issues/27629; this document claims no validated registration.
 
 **Definition 1.1 (The kernel-fixed intermediate field).**
 
