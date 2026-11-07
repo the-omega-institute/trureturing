@@ -186,11 +186,7 @@ private lemma log_root_lower_point (x : ℝ) (z : ℂ) (hx : x ≠ z.re) :
   rw [Real.log_mul (by positivity : max 1 d ≠ 0)
     (by positivity : 1+|x| ≠ 0)] at hlog
   have he : Real.log (max 1 d) = max (Real.log d) 0 := by
-    by_cases hd1 : d ≤ 1
-    · rw [max_eq_left hd1, Real.log_one,
-        max_eq_right (Real.log_nonpos hd.le hd1)]
-    · rw [max_eq_right (le_of_not_ge hd1),
-        max_eq_left (Real.log_nonneg (le_of_not_ge hd1))]
+    simpa only [Real.posLog, max_comm] using (Real.posLog_eq_log_max_one hd.le).symm
   have hm : max (Real.log d) 0 ≤ Real.log d + (fun t : ℝ => max (-Real.log |t|) 0) (x-z.re) := by
     apply max_le
     · linarith [le_max_right (-Real.log |x-z.re|) 0]
