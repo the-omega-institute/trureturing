@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:4b4cffcb6ab2be22f9a76a7f3502d82ffdc336104ce47e9853e32f6c0af0438a
   normalized_sha256: sha256:4b4cffcb6ab2be22f9a76a7f3502d82ffdc336104ce47e9853e32f6c0af0438a
 cas_ref: sha256:4b4cffcb6ab2be22f9a76a7f3502d82ffdc336104ce47e9853e32f6c0af0438a
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Topology/JBAlgebra.generated_algebra
+    target_statement_id: sha256:20aea2cd7bc73d64d6d59809bf87a0d8436916bf7d1fbfc35bb66e5d3e1787f5
 receipts:
   unresolved_subitems: []
