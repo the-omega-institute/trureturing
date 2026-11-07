@@ -100,7 +100,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some ℝ
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Quantum.Analysis.NonautonomousEvolutionStability
     definition := none
@@ -185,7 +185,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some ℝ
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Quantum.Analysis.NonautonomousEvolutionStability
     definition := none
@@ -270,7 +270,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some ℝ
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Quantum.Analysis.NonautonomousEvolutionStability
     definition := none

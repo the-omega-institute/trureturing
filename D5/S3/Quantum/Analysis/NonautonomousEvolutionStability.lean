@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Strong L1 coefficient convergence along compact families of vector paths. -/
+   digest: Strong L1 coefficient stability of the original measurable Banach evolution. -/
 
 import D5.S3.Quantum.Analysis.MeasurableNonautonomousDysonPhillips
 
