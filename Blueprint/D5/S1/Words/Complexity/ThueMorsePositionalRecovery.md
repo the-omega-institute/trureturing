@@ -122,9 +122,7 @@ $$\forall (\operatorname{k} : \mathbb{N}), \{\operatorname{n} | \operatorname{bi
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/Complexity/ThueMorsePositionalRecovery.core_last_strict` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Michel Rigo; Manon Stipulanti; Markus A. Whiteland (2022). *Characterizations of families of morphisms and words via binomial complexities*. DOI: [10.1016/j.ejc.2024.103932](https://doi.org/10.1016/j.ejc.2024.103932). URL: <https://arxiv.org/abs/2201.04603v2>.
+*Citation.* Michel Rigo; Manon Stipulanti; Markus A. Whiteland (2022). *Characterizations of families of morphisms and words via binomial complexities*. DOI: [10.1016/j.ejc.2024.103932](https://doi.org/10.1016/j.ejc.2024.103932). URL: <https://arxiv.org/abs/2201.04603v2>.
 
 *Commentary.*
 
@@ -132,7 +130,7 @@ Signed positional polynomials transport moments through Thue–Morse substitutio
 
 **Theorem 1.10 (expanded aligned factor).**
 
-$$\forall (\operatorname{w} : \operatorname{Nat} \to \operatorname{Bool}) (\operatorname{r} \operatorname{n} \operatorname{s} : \operatorname{Nat}), \operatorname{List}.\operatorname{ofFn} (\operatorname{wordFactor} (\operatorname{uniformExpansion} (2 ^{\operatorname{r}}) (\operatorname{by} \operatorname{positivity}) (\operatorname{fun} \operatorname{a} \operatorname{i} \mapsto \operatorname{Bool}.\operatorname{xor} \operatorname{a} (\operatorname{thueMorse} \operatorname{i})) \operatorname{w}) (2 ^{\operatorname{r}} * \operatorname{n}) (2 ^{\operatorname{r}} * \operatorname{s})) = \operatorname{thueWord} \operatorname{r} (\operatorname{List}.\operatorname{ofFn} (\operatorname{wordFactor} \operatorname{w} \operatorname{n} \operatorname{s}))$$
+$$\forall (\operatorname{w} : \operatorname{Nat} \to \operatorname{Bool}) (\operatorname{r} \operatorname{n} \operatorname{s} : \operatorname{Nat}), \operatorname{List}.\operatorname{ofFn} (\operatorname{wordFactor} (\operatorname{uniformExpansion} (2 ^{\operatorname{r}}) (Nat.two_{pow_{pos}} r) (\operatorname{fun} \operatorname{a} \operatorname{i} \mapsto \operatorname{Bool}.\operatorname{xor} \operatorname{a} (\operatorname{thueMorse} \operatorname{val}\left(i\right))) \operatorname{w}) (2 ^{\operatorname{r}} * \operatorname{n}) (2 ^{\operatorname{r}} * \operatorname{s})) = \operatorname{thueWord} \operatorname{r} (\operatorname{List}.\operatorname{ofFn} (\operatorname{wordFactor} \operatorname{w} \operatorname{n} \operatorname{s}))$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/Complexity/ThueMorsePositionalRecovery.expanded_aligned_factor` (`✓ std3`). ∎
 
@@ -142,11 +140,11 @@ $$\forall (\operatorname{w} : \operatorname{Nat} \to \operatorname{Bool}) (\oper
 
 *Commentary.*
 
-Signed positional polynomials transport moments through Thue–Morse substitution. Golden factors then yield strict inequalities between successive binomial complexities.
+The expansion uses the Fin-to-Nat value of each block index. The subscripted positivity proof spells the Lean constant Nat.two_pow_pos and introduces no new abbreviation.
 
 **Theorem 1.11 (core as expansion).**
 
-$$\forall (\operatorname{r} \operatorname{k} : \operatorname{Nat}), \operatorname{core} (\operatorname{r} + \operatorname{k}) = \operatorname{uniformExpansion} (2 ^{\operatorname{r}}) (\operatorname{by} \operatorname{positivity}) (\operatorname{fun} \operatorname{a} \operatorname{i} \mapsto \operatorname{Bool}.\operatorname{xor} \operatorname{a} (\operatorname{thueMorse} \operatorname{i})) (\operatorname{core} \operatorname{k})$$
+$$\forall (\operatorname{r} \operatorname{k} : \operatorname{Nat}), \operatorname{core} (\operatorname{r} + \operatorname{k}) = \operatorname{uniformExpansion} (2 ^{\operatorname{r}}) (Nat.two_{pow_{pos}} r) (\operatorname{fun} \operatorname{a} \operatorname{i} \mapsto \operatorname{Bool}.\operatorname{xor} \operatorname{a} (\operatorname{thueMorse} \operatorname{val}\left(i\right))) (\operatorname{core} \operatorname{k})$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/Complexity/ThueMorsePositionalRecovery.core_as_expansion` (`✓ std3`). ∎
 
@@ -156,7 +154,7 @@ $$\forall (\operatorname{r} \operatorname{k} : \operatorname{Nat}), \operatornam
 
 *Commentary.*
 
-Signed positional polynomials transport moments through Thue–Morse substitution. Golden factors then yield strict inequalities between successive binomial complexities.
+The expansion uses the Fin-to-Nat value of each block index. The subscripted positivity proof spells the Lean constant Nat.two_pow_pos and introduces no new abbreviation.
 
 **Theorem 1.12 (core middle strict).**
 
@@ -164,9 +162,7 @@ $$\forall (\operatorname{k} \operatorname{j} : \mathbb{N}), 2 \leq \operatorname
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/Complexity/ThueMorsePositionalRecovery.core_middle_strict` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Michel Rigo; Manon Stipulanti; Markus A. Whiteland (2022). *Characterizations of families of morphisms and words via binomial complexities*. DOI: [10.1016/j.ejc.2024.103932](https://doi.org/10.1016/j.ejc.2024.103932). URL: <https://arxiv.org/abs/2201.04603v2>.
+*Citation.* Michel Rigo; Manon Stipulanti; Markus A. Whiteland (2022). *Characterizations of families of morphisms and words via binomial complexities*. DOI: [10.1016/j.ejc.2024.103932](https://doi.org/10.1016/j.ejc.2024.103932). URL: <https://arxiv.org/abs/2201.04603v2>.
 
 *Commentary.*
 
@@ -202,7 +198,7 @@ Signed positional polynomials transport moments through Thue–Morse substitutio
 
 **Definition 1.15 (mu).**
 
-$$\forall (\operatorname{w} : \operatorname{Nat} \to \operatorname{Bool}) (\operatorname{n} : \operatorname{Nat}), \operatorname{mu} \operatorname{w} \operatorname{n} = \operatorname{Bool}.\operatorname{xor} (\operatorname{w} (\operatorname{n} / 2)) (\operatorname{thueMorse} (\operatorname{n} \operatorname{mod} 2))$$
+$$\forall (w : Nat \to Bool), mu w = uniformExpansion 2 (Nat.zero_{lt_{two}}) (fun a i \mapsto Bool.xor a (thueMorse \operatorname{val}\left(i\right))) w$$
 
 *Formalization.* `D5/S1/Words/Complexity/ThueMorsePositionalRecovery.mu` (`✓ std3`).
 
@@ -212,7 +208,7 @@ $$\forall (\operatorname{w} : \operatorname{Nat} \to \operatorname{Bool}) (\oper
 
 *Commentary.*
 
-The displayed expression defines mu. The operator / denotes natural-number floor division; mod denotes Nat.mod.
+The displayed expression defines mu. By proof irrelevance, the positivity argument is displayed as the existing Lean proof Nat.zero_lt_two.
 
 **Theorem 1.16 (factor frame).**
 
@@ -234,9 +230,7 @@ $$\forall (\operatorname{k} \operatorname{n} : \operatorname{Nat}), \operatornam
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/Complexity/ThueMorsePositionalRecovery.top_profile_injectivity` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Michel Rigo; Manon Stipulanti; Markus A. Whiteland (2022). *Characterizations of families of morphisms and words via binomial complexities*. DOI: [10.1016/j.ejc.2024.103932](https://doi.org/10.1016/j.ejc.2024.103932). URL: <https://arxiv.org/abs/2201.04603v2>.
+*Citation.* Michel Rigo; Manon Stipulanti; Markus A. Whiteland (2022). *Characterizations of families of morphisms and words via binomial complexities*. DOI: [10.1016/j.ejc.2024.103932](https://doi.org/10.1016/j.ejc.2024.103932). URL: <https://arxiv.org/abs/2201.04603v2>.
 
 *Commentary.*
 

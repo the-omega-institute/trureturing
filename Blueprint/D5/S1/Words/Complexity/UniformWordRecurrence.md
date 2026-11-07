@@ -18,7 +18,7 @@ The displayed expression defines Recurrent.
 
 **Definition 1.2 (uniformExpansion).**
 
-$$\forall (\operatorname{A} \operatorname{B} : \operatorname{Type}) (\operatorname{q} : \operatorname{Nat}) (\operatorname{hq} : 0 < \operatorname{q}) (\operatorname{block} : \operatorname{A} \to \operatorname{Fin} \operatorname{q} \to \operatorname{B}) (\operatorname{x} : \operatorname{Nat} \to \operatorname{A}) (\operatorname{n} : \operatorname{Nat}), \operatorname{uniformExpansion} \operatorname{q} \operatorname{hq} \operatorname{block} \operatorname{x} \operatorname{n} = \operatorname{block} (\operatorname{x} (\operatorname{n} / \operatorname{q})) \langle \operatorname{n} \operatorname{mod} \operatorname{q}, \operatorname{by} \operatorname{omega}\rangle $$
+$$\forall (\operatorname{A} \operatorname{B} : \operatorname{Type}) (\operatorname{q} : \operatorname{Nat}) (\operatorname{hq} : 0 < \operatorname{q}) (\operatorname{block} : \operatorname{A} \to \operatorname{Fin} \operatorname{q} \to \operatorname{B}) (\operatorname{x} : \operatorname{Nat} \to \operatorname{A}) (\operatorname{n} : \operatorname{Nat}), \operatorname{uniformExpansion} \operatorname{q} \operatorname{hq} \operatorname{block} \operatorname{x} \operatorname{n} = \operatorname{block} (\operatorname{x} (\operatorname{n} / \operatorname{q})) \langle \operatorname{n} \operatorname{mod} \operatorname{q}, Nat.mod_{lt} n hq\rangle $$
 
 *Formalization.* `D5/S1/Words/Complexity/UniformWordRecurrence.uniformExpansion` (`✓ std3`).
 
@@ -28,11 +28,11 @@ $$\forall (\operatorname{A} \operatorname{B} : \operatorname{Type}) (\operatorna
 
 *Commentary.*
 
-The displayed expression defines uniformExpansion. The operator / denotes natural-number floor division; mod denotes Nat.mod.
+The displayed expression defines uniformExpansion. The operator / denotes natural-number floor division; mod denotes Nat.mod. The subscripted proof term spells the Lean constant Nat.mod_lt and introduces no new abbreviation.
 
 **Definition 1.3 (thueBlock).**
 
-$$\forall (\operatorname{k} : \operatorname{Nat}) (\operatorname{a} : \operatorname{Bool}), \operatorname{thueBlock} \operatorname{k} \operatorname{a} = \operatorname{List}.\operatorname{ofFn} (\operatorname{fun} \operatorname{j} : \operatorname{Fin} (2 ^{\operatorname{k}}) \mapsto \operatorname{Bool}.\operatorname{xor} \operatorname{a} (\operatorname{thueMorse} \operatorname{j}))$$
+$$\forall (\operatorname{k} : \operatorname{Nat}) (\operatorname{a} : \operatorname{Bool}), \operatorname{thueBlock} \operatorname{k} \operatorname{a} = \operatorname{List}.\operatorname{ofFn} (\operatorname{fun} \operatorname{j} : \operatorname{Fin} (2 ^{\operatorname{k}}) \mapsto \operatorname{Bool}.\operatorname{xor} \operatorname{a} (\operatorname{thueMorse} \operatorname{val}\left(j\right)))$$
 
 *Formalization.* `D5/S1/Words/Complexity/UniformWordRecurrence.thueBlock` (`✓ std3`).
 
@@ -72,17 +72,15 @@ Uniform substitutions preserve recurrence. Dyadic Thue–Morse blocks have equal
 
 **Definition 1.6 (core).**
 
-$$\forall (\operatorname{k} \operatorname{n} : \operatorname{Nat}), \operatorname{core} \operatorname{k} \operatorname{n} = \operatorname{Bool}.\operatorname{xor} (!(\operatorname{goldenWord} (\operatorname{n} / (2 ^{\operatorname{k}})))) (\operatorname{thueMorse} (\operatorname{n} \operatorname{mod} (2 ^{\operatorname{k}})))$$
+$$\forall (k : Nat), core k = uniformExpansion (2^{k}) (Nat.two_{pow_{pos}} k) (fun a j \mapsto Bool.xor (!a) (thueMorse \operatorname{val}\left(j\right))) goldenWord$$
 
 *Formalization.* `D5/S1/Words/Complexity/UniformWordRecurrence.core` (`✓ std3`).
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Michel Rigo; Manon Stipulanti; Markus A. Whiteland (2022). *Characterizations of families of morphisms and words via binomial complexities*. DOI: [10.1016/j.ejc.2024.103932](https://doi.org/10.1016/j.ejc.2024.103932). URL: <https://arxiv.org/abs/2201.04603v2>.
+*Citation.* Michel Rigo; Manon Stipulanti; Markus A. Whiteland (2022). *Characterizations of families of morphisms and words via binomial complexities*. DOI: [10.1016/j.ejc.2024.103932](https://doi.org/10.1016/j.ejc.2024.103932). URL: <https://arxiv.org/abs/2201.04603v2>.
 
 *Commentary.*
 
-The displayed expression defines core. The operator / denotes natural-number floor division; mod denotes Nat.mod.
+The displayed expression defines core as the Boolean-coded Fibonacci instance of the Thue–Morse images in Theorem 7.2. The subscripted positivity proof spells the Lean constant Nat.two_pow_pos and introduces no new abbreviation.
 
 **Theorem 1.7 (core recurrent).**
 
@@ -198,9 +196,7 @@ $$\forall (\operatorname{k} : \mathbb{N}), 1 \leq \operatorname{k} \to \{\operat
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/Complexity/UniformWordRecurrence.core_first_strict` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Michel Rigo; Manon Stipulanti; Markus A. Whiteland (2022). *Characterizations of families of morphisms and words via binomial complexities*. DOI: [10.1016/j.ejc.2024.103932](https://doi.org/10.1016/j.ejc.2024.103932). URL: <https://arxiv.org/abs/2201.04603v2>.
+*Citation.* Michel Rigo; Manon Stipulanti; Markus A. Whiteland (2022). *Characterizations of families of morphisms and words via binomial complexities*. DOI: [10.1016/j.ejc.2024.103932](https://doi.org/10.1016/j.ejc.2024.103932). URL: <https://arxiv.org/abs/2201.04603v2>.
 
 *Commentary.*
 
