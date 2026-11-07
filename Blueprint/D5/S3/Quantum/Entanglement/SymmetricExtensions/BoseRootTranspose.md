@@ -32,6 +32,8 @@ Lean statement: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseRootTranspos
 
 Transpose the first member of the actual ordered pair, keeping the second member unchanged.
 
+For distinct root and leaf, the actual root partial transpose commutes with the root-leaf marginal and transposes the first factor of that marginal.
+
 Root partial transpose is an involutive transport of fully PPT star witnesses for an arbitrary input and its first-factor transpose. The leaf sandwich is retained, and symmetric-difference cuts include the ordinary and full-transpose endpoints with their positive semidefinite witnesses.
 
 ## References
