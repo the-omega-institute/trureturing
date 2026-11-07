@@ -758,3 +758,206 @@ $$
 **定义 503.1（完整直观说明）。** 原世界、实数比例、准备、质量、两张二元关系、真实联合与全部设备历史都留下。先看两份响应其实沿同一条线的情形：原相加没有剩余长度，二点比较又有上限，小效果把每份响应的平方压在原尺度预算内。这个预算先保证对角读数不会在实数比例逼近时突然跳变，因而任意实比例的自身长度都准确。若同向两份响应的比较仍少了一点，就不断从长的一份减去短的一份；原相加关系迫使缺额无法缩小，两份长度的乘积却趋向零，二点预算最终装不下这份非零缺额。反向两份响应也一样，所以一条直线内的比较只能完全对齐，有向读数自动为零，整条线的任意比较表只剩一个方向。一维世界由此直接得到通常乘法。新的相加要求只需放在原来确有两个独立方向的输入上：给 $b$ 加一份 $a$，只能多出 $a$ 自身那份比较，不能凭空增加扭转。它与已经自行成立的共线情形合起来，补齐全部相加律；自身相加三角先锁定实部，闭合三角再用边长与面积的缩小速度差消掉有向部的加法缺陷，于是同一原关系长出实双线性和全部有限复正性，再接回复结合星代数、自伴表示与原质量的 Born 读数。几何因此从“每对输入都补一条律”退到“直线自动一致，只约束交叉方向”。交叉方向这条律为何还能从其余原关系内生，以及真实复合、参考、仪器更新与失败、历史遗忘返回、物理钟能量和共同作用量，仍有明确原合同；直线的秩一图景不能替它们作答。
 
 ## 追加锚 C128RAYSATURATION（本行以下为增补区）
+
+## 504. 闭合三角给同一原关系的差分预算
+
+**定义 504.1（原范数中的差分量）。** 原资料和完整候选严格取 476.1、481.1 的 $\mathsf C_{\Delta,\theta}$：同一个原实空间 $E$、分离实线性评价族 $\mathcal P$、原锥、原序单位 $u$、质量 $m_\alpha$、原范数 $N$ 和同一个总映射 $S,D:E^2\to E$ 均不替换。全部二标签复 PSD（含零及重复标签）、相加零平方、全部三标签复零和面正性、固定点、小效果收缩和实部换括号式完整保留。对原 $\alpha$ 定义
+
+$$
+\begin{aligned}
+q_\alpha(x)&=g_\alpha(x,x),\qquad p_\alpha(x)=\sqrt{q_\alpha(x)},\\
+d_\alpha(x,y)&=\sqrt{q_\alpha(x)+q_\alpha(y)-2\operatorname{Re}g_\alpha(x,y)},\\
+\kappa&=16/\theta,\\
+H(x,y;z)&=(N(z)+2N(y))
+\sqrt{2\bigl(N(x)+N(y)\bigr)N(x-y)}.
+\end{aligned}
+\tag{504.1}
+$$
+
+二表正性使这些平方根有定义；此处不预称 $p_\alpha$ 为半范数，不预称 $d_\alpha$ 为原差的长度。全部原来源、准备、参考、真实联合、仪器完整输出与失败、合法历史与未来、native 身份、物理钟、能量及共同作用量条件均保持 476.1、483.1 的原义与量词。不增加实际准备，不假设有限维、完备性、线性、辅助可加嵌入或新的物理校准。
+
+**定理 504.2（原标签差分与零平方方向）。** 在定义 504.1 的完整原合同下，对每个原 $\alpha\in\mathcal P$ 和所有 $x,y,z\in E$，
+
+$$
+|g_\alpha(x,z)-g_\alpha(y,z)|
+\le \kappa m_\alpha H(x,y;z).
+\tag{504.2}
+$$
+
+还成立逐评价的零方向结论
+
+$$
+q_\alpha(x-y)=0
+\quad\Longrightarrow\quad
+g_\alpha(x,z)=g_\alpha(y,z)\qquad(z\in E).
+\tag{504.3}
+$$
+
+证明。固定 $\alpha$，暂略下标。二标签 PSD 给 Hermitian 性、$q\ge0$ 和 $|g(x,y)|\le p(x)p(y)$，从而
+
+$$
+\begin{aligned}
+0\le(p(x)-p(y))^2
+&\le d(x,y)^2\le(p(x)+p(y))^2,\\
+|g(x,y)-q(y)|^2
+&=|g(x,y)|^2-2q(y)\operatorname{Re}g(x,y)+q(y)^2\\
+&\le q(y)\bigl(q(x)+q(y)-2\operatorname{Re}g(x,y)\bigr)
+=p(y)^2d(x,y)^2.
+\end{aligned}
+\tag{504.4}
+$$
+
+只取同一原三标签 $(x,y,z)$ 的表 $G$。向量 $v=e_1-e_2$ 和 $w=e_3-e_2$ 都是零和向量；任意复线性组合仍是零和向量。故已保留的闭合面正性准确给
+
+$$
+\begin{pmatrix}
+v^*Gv&v^*Gw\\
+w^*Gv&w^*Gw
+\end{pmatrix}
+=\begin{pmatrix}
+d(x,y)^2&F\\
+\overline F&d(z,y)^2
+\end{pmatrix}\succeq0,
+\qquad
+F=g(x,z)-g(x,y)-g(y,z)+q(y).
+\tag{504.5}
+$$
+
+其二阶行列式给 $|F|\le d(x,y)d(z,y)$，零对角情形也包括在内。把 $g(x,z)-g(y,z)=F+g(x,y)-q(y)$ 与 (504.4) 合并，得到
+
+$$
+\begin{aligned}
+|g(x,z)-g(y,z)|
+&\le d(x,y)\bigl(d(z,y)+p(y)\bigr)\\
+&\le d(x,y)\bigl(p(z)+2p(y)\bigr).
+\end{aligned}
+\tag{504.6}
+$$
+
+这里仅压缩三表的零和面，没有使用完整三标签 PSD，也没有增加第四标签。
+
+现在令 $h=x-y$，所以 $x=y+h$ 是原 $E$ 中的准确等式。在原标签 $(x,y,h)$ 上展开已保留的相加零平方 (476.2)，得
+
+$$
+\begin{aligned}
+0&=q(x)+q(y)+q(h)-2\operatorname{Re}g(x,y)
+-2\operatorname{Re}g(x,h)+2\operatorname{Re}g(y,h),\\
+d(x,y)^2
+&=2\operatorname{Re}\bigl(g(x,h)-g(y,h)\bigr)-q(h)\\
+&\le2\bigl(p(x)+p(y)\bigr)p(h).
+\end{aligned}
+\tag{504.7}
+$$
+
+最后一步仅用二表 Cauchy–Schwarz 和 $q(h)\ge0$。因此
+
+$$
+|g(x,z)-g(y,z)|
+\le\bigl(p(z)+2p(y)\bigr)
+\sqrt{2\bigl(p(x)+p(y)\bigr)p(x-y)}.
+\tag{504.8}
+$$
+
+若 $q(x-y)=0$，则 $p(x-y)=0$，(504.7) 先给 $d(x,y)=0$，(504.6) 再给 (504.3)；没有除以任何可能退化的平方。
+
+直接复用 481.2 在双可加性之前已取得的原小效果预算
+
+$$
+p_\alpha(t)\le\sqrt{\kappa m_\alpha}\,N(t).
+\tag{504.9}
+$$
+
+将其代入 (504.8)，两个 $\sqrt{\kappa m_\alpha}$ 因子相乘，恰得 (504.2)。当 $m_\alpha=0$，原序单位界已使 $\alpha$ 在整个 $E$ 上恒零，故两端均为零；也可直接由 (504.9) 处理。全部证明不除以质量。实部换括号式不参与此证明；固定点及全部原来源仍完整保留，预算所需的原序资料和小效果条件仅按 481.2 的实际前件复用。∎
+
+## 505. 两个原值总映射的联合局部正则性
+
+**定理 505.1（原 $S,D$ 的局部 $1/2$-Hölder 界）。** 在定义 504.1 的同一完整原合同下，对 $T=S$ 和 $T=D$ 分别成立
+
+$$
+N\bigl(T(x,z)-T(y,z)\bigr)\le\kappa H(x,y;z)
+\qquad(x,y,z\in E).
+\tag{505.1}
+$$
+
+对任意 $R\ge0$ 和满足 $N(x),N(y),N(z),N(w)\le R$ 的全部原输入，两个原映射分别满足
+
+$$
+\begin{aligned}
+N\bigl(T(x,z)-T(y,w)\bigr)
+\le6\kappa R^{3/2}
+\left(\sqrt{N(x-y)}+\sqrt{N(z-w)}\right).
+\end{aligned}
+\tag{505.2}
+$$
+
+因此同一个 $S,D:E\times E\to E$ 在原范数中联合局部 $1/2$-Hölder 连续；此结论先于双线性，不要求原空间完备。$E=0$、$R=0$、零输入、零质量及退化 $q_\alpha$ 均在陈述内。
+
+证明。原序结构单独给[正交迹续卷 (425.2)](AURIC_C128_ORTHOGONAL_TRACE_AND_CORNER_RELATIONS_CONTINUATION.md) 的恒等式。为明确其不消费乘法线性，先由每个 $v\in E$ 的界 $-ru\le v\le ru$ 得
+
+$$
+|\alpha(v)|\le r m_\alpha.
+\tag{505.3}
+$$
+
+这使零质量评价在整个 $E$ 上恒零。若 $E\ne0$，分离性保证至少有一个正质量评价，且
+
+$$
+N(v)=\sup_{m_\alpha>0}\frac{|\alpha(v)|}{m_\alpha}.
+\tag{505.4}
+$$
+
+确实，任一原序界都控制右侧；反之，任意严格大于右侧的 $r$ 使所有原评价满足 $-r m_\alpha\le\alpha(v)\le r m_\alpha$，零质量也已包括。由原锥的定义得 $-ru\le v\le ru$，再取下确界即得等式。这同时给原 $N$ 的三角不等式与实齐次性，不涉及 $S,D$。
+
+对 $m_\alpha>0$，(504.2) 的实部、虚部分别给
+
+$$
+\begin{aligned}
+|\alpha(S(x,z)-S(y,z))|&\le\kappa m_\alpha H(x,y;z),\\
+|\alpha(D(x,z)-D(y,z))|&\le\kappa m_\alpha H(x,y;z).
+\end{aligned}
+\tag{505.5}
+$$
+
+虚部按原约定为第二行评价的负数，绝对值不变。对原评价取 (505.4) 的上确界，就得到两个原 $E$ 值输出的 (505.1)；没有增加或实现新的实际准备。若 $E=0$，两个总映射都只能取零，所有结论直接成立，无需对空的正质量集合取上确界。
+
+二表 Hermitian 性及原评价分离给 $S(x,z)=S(z,x)$、$D(x,z)=-D(z,x)$。所以交换两槽后，(505.1) 对第二槽也成立。若各输入范数至多 $R$，则
+
+$$
+\begin{aligned}
+H(x,y;z)&\le6R^{3/2}\sqrt{N(x-y)},\\
+H(z,w;y)&\le6R^{3/2}\sqrt{N(z-w)}.
+\end{aligned}
+\tag{505.6}
+$$
+
+这只用 $N(z)+2N(y)\le3R$ 和 $2(N(x)+N(y))\le4R$ 及其换槽版本。沿同一原输出作分解
+
+$$
+T(x,z)-T(y,w)
+=\bigl(T(x,z)-T(y,z)\bigr)
++\bigl(T(y,z)-T(y,w)\bigr),
+\tag{505.7}
+$$
+
+用原范数三角不等式、两槽估计及 (505.6)，得 (505.2)。若在 $E\times E$ 上取乘积范数 $N_\times(x,z)=N(x)+N(z)$，则括号中的两项至多为 $\sqrt{2}\sqrt{N_\times(x-y,z-w)}$；每个点的某个邻域都落在有限 $R$ 的球内，故确有联合局部 $1/2$-Hölder 连续性。$R=0$ 时输入全为零，差也为零。证明未取完成、未预设可加性或替换任一原总映射。∎
+
+## 506. 正则性之后仍保留的相加桥梁
+
+**定义 506.1（未决关系与条件消费者）。** 504.2、505.1 在不改变 $\mathsf C_{\Delta,\theta}$ 的情况下给出跨标签的原范数正则性，补充 498.1 的对角连续性与同线饱和；不把 498.1 中尚未取得两槽连续性的范围说明当作本节结论的否定。完整相加桥梁仍是对全部原 $\alpha,a,b$ 取得
+
+$$
+g_\alpha(a,a+b)=q_\alpha(a)+g_\alpha(a,b),
+\qquad\text{等价地}\qquad
+G_\alpha(a+b,a,b)(1,-1,-1)^{\mathsf T}=0.
+\tag{506.1}
+$$
+
+等价只复用 492.2；498.1、499.2 已将真正未决输入限制到原线性无关的 $a,b$。504.3 处理的是原元 $x-y\in E$ 的 $q_\alpha$ 为零，不能把三坐标系数向量 $(1,-1,-1)$ 的零二次值识别成这种原元，再用未证的聚合或可加性跨越 (506.1)。本节没有推出 (506.1)、完整三表正性或其否定；完整正向证明或保留每项原合同的同一原值反模型仍缺。
+
+505.1 排除了以不连续的原 $S,D$ 作为完整反模型的路线，给继续研究原实部换括号式提供范数正则性，但不使 493–494、494.2 及 483.1 的缺失相加前件成立。[三标签刚性卷 §§18–24](AURIC_C128_THREE_LABEL_POSITIVITY_AND_ORIGINAL_RELATION_RIGIDITY.md) 的有限原平方恢复另要求原相加三表的完整实 PSD；该额外前件不属于这里的 $\mathsf C_{\Delta,\theta}$，也未由范数估计推出。局部正则性不供应物理时间连续性、合法控制、实际取得、仪器失败或历史保留；同一 $\Omega$、原门序列读出及全部真实来源仍须各自满足原合同。
+
+**定义 506.2（差分方法与原接口综合的归属）。** [Buescu–Paixão–Oliveira，*Propagation of regularity and positive definiteness: a constructive approach*，arXiv:1802.07092v1，Definition 1.1、Lemma 2.2、Theorem 2.3](https://arxiv.org/html/1802.07092v1) 提供成熟的正型差分估计与连续性方法；Definition 1.1 要求全部有限复表正性，Lemma 2.2 的证明使用完整三表，其 Theorem 2.3 仍以正定核为前件。这里不直接应用该连续性定理，而在 (504.5) 从原零和面重建所需的二阶正压缩，得到 (504.6) 的差分界。[Moslehian，*Conditionally positive definite kernels in Hilbert $C^*$-modules*，arXiv:1611.08382v1，Definition 2.3、Theorem 2.4](https://arxiv.org/html/1611.08382v1) 的全部有限阶条件正定与增添锚点的条件继续按 484.1 保留；同一原三标签的两向量压缩不能借该全阶定理提升为全部有限正性。
+
+这里的 $\texttt{repo-derived}$ 增量是把闭合三角的差分压缩、同一原相加零平方和已证 481.2 预算接成 (504.2)–(504.3)，再用原序范数上确界恢复两个原值总映射的 (505.1)–(505.2)。Cauchy–Schwarz、二阶正压缩及范数差分方法仅是证明中的成熟工具，不单列为新一般正核定理，不主张历史优先权。480.1、495.1 的连续面积核仍仅是核层反例；484.1 所引 Măntoiu–Purice–Richard 的闭连续磁二形式与函数代数条件也不供应同一原值总映射、实部换括号式或实际来源合同，不能据连续性把这些核层例子升级为完整反模型。完整量子起源与 (506.1) 均未由这份局部正则性补足。
+
+## 追加锚 C128ORIGINALHOLDER（本行以下为增补区）
