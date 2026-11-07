@@ -887,7 +887,10 @@ private theorem spectralRho_comm (a b : ℝ) : spectralRho a b = spectralRho b a
 private theorem spectralRho_sq {a b : ℝ} (ha : 0 < a) (hb : 0 < b) :
     spectralRho a b^2 = 1-spectralTau a b^2 := by
   have ht := spectralTau_bounds ha hb
-  exact Real.sq_sqrt (by nlinarith [ht.1, ht.2])
+  have hs : spectralTau a b^2 ≤ 1 := by
+    simpa only [one_pow] using
+      (sq_le_sq₀ ht.1.le (by norm_num : (0 : ℝ) ≤ 1)).mpr ht.2
+  exact Real.sq_sqrt (sub_nonneg.mpr hs)
 
 private def gramPolynomial (a b c : ℝ) : ℝ :=
   4*a^4*b^2+7*a^4*b*c+4*a^4*c^2+7*a^3*b^3+26*a^3*b^2*c+
