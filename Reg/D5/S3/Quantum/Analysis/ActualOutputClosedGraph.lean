@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Analysis.ActualOutputClosedGraph
 import Reg.Support.DependentFamily
 
+/-! Source-bound joint-norm readout retaining the full raw-relation telescope. -/
+
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.Quantum.Analysis.ActualOutputClosedGraph
 open LeanInformationAudit
@@ -53,7 +55,7 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected := by
     · intro j
       exact Fin.elim0 j
     · rintro p ⟨⟨a,b⟩,rfl⟩
-      simp [D]
+      simp [D] <;> positivity
   obtain ⟨B, hB, K, hK, hb⟩ := h P S D
     (fun x y _ => Subsingleton.elim x y)
     (by intro a b; simp [S])
