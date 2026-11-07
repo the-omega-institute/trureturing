@@ -98,7 +98,7 @@ $$\forall G \in Type,\; [Fintype\left(G\right)] [AddGroup\left(G\right)] , \fora
 
 *Commentary.*
 
-Equation (1.10), p. 578: “∀ x,x′ ∈ G,  m(x,x′) := 1/(|G||S|)” if x′ − x ∈ S, and “0” otherwise. The gap is computed on G × {v : G // v ∈ S}, with the uniform weights and the position–speed matrix. The displayed expression expands the gap and its mean-zero eigenvalue set. A finite instance on this subtype is supplied by Fintype.ofFinite.
+Equation (1.10), p. 578: “∀ x,x′ ∈ G,  m(x,x′) := 1/(|G| |S|)” if x′ − x ∈ S, and “0” otherwise. The gap is computed on G × {v : G // v ∈ S}, with the uniform weights and the position–speed matrix. The displayed expression expands the gap and its mean-zero eigenvalue set. A finite instance on this subtype is supplied by Fintype.ofFinite.
 
 **Definition 1.9 (The underlying first-order gap).**
 
@@ -122,7 +122,7 @@ $$claim = \left(\forall G \in Type,\; [Fintype\left(G\right)] [AddCommGroup\left
 
 *Commentary.*
 
-Conjecture 1.3, p. 580, verbatim: “Let G be a finite Abelian group and S be a generating set of G with |S| ≥ 2. Let K⁽¹⁾ be the identity S × S matrix (seen as a speed transfer kernel, it forces the chain to keep going always in the same direction) and consider again the interpolating kernels given in (1.9), as well as the associated second order Markov kernels M⁽ᵃ⁾ for a ∈ [0,1], which are also trajectorially reversible with respect to the probability measure m defined in (1.10). There exists a₀ ∈ [0,1] such that λ(M⁽ᵃ⁾) is nondecreasing for a ∈ [0,a₀] and nonincreasing on [a₀,1]. Furthermore there exists two values 0 < c₁ < c₂ (perhaps depending on |S|), such that c₁ √λ(L) ≤ λ(M⁽ᵃ⁰⁾) ≤ c₂ √λ(L).” The additive finite group G and symmetric generating finset S carry the stated construction. Both clauses use the same turning point. The result concerns Type at universe zero, which contains ZMod 11.
+Conjecture 1.3, p. 580, verbatim: “Let G be a finite Abelian group and S be a generating set of G with |S| ≥ 2. Let K⁽¹⁾ be the identity S × S matrix (seen as a speed transfer kernel, it forces the chain to keep going always in the same direction) and consider again the interpolating kernels given in (1.9), as well as the associated second order Markov kernels M⁽ᵃ⁾ for a ∈ [0,1], which are also trajectorially reversible with respect to the probability measure m defined in (1.10). There exists a₀ ∈ [0,1] such that λ(M⁽ᵃ⁾) is nondecreasing for a ∈ [0,a₀] and nonincreasing on [a₀,1]. Furthermore there exists two values 0 < c₁ < c₂ (perhaps depending on |S|), such that c₁ √λ(L) ≤ λ(M⁽ᵃ⁰⁾) ≤ c₂ √λ(L).” The additive finite group G and symmetric generating finset S carry the stated construction. Both clauses use the same turning point. The claim quantifies G : Type at universe zero, which contains ZMod 11, and the result is its closed negation.
 
 **Theorem 1.11 (The conjecture is false).**
 

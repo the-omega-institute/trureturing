@@ -134,7 +134,7 @@ noncomputable def lambdaL {G : Type*} [Fintype G] [AddGroup G]
 
 
 def claim : Prop :=
-  ∀ (G : Type*) [Fintype G] [AddCommGroup G] (S : Finset G),
+  ∀ (G : Type) [Fintype G] [AddCommGroup G] (S : Finset G),
     2 ≤ S.card →
     (∀ v, v ∈ S → -v ∈ S) →
     AddSubgroup.closure (S : Set G) = ⊤ →
@@ -921,7 +921,7 @@ private theorem speeds_generate : AddSubgroup.closure (speeds : Set (ZMod 11))=�
   have hh := AddSubgroup.nsmul_mem (AddSubgroup.closure (speeds : Set (ZMod 11))) h1 x.val
   simpa only [nsmul_eq_mul,mul_one,ZMod.natCast_zmod_val] using hh
 
-theorem result : ¬ claim.{0} := by
+theorem result : ¬ claim := by
   intro hclaim
   obtain ⟨a₀,h0,h1,hm,ha,_⟩ := hclaim (ZMod 11) speeds (by decide) (by decide) speeds_generate
   have hleft := endpoint_gap (1/5) (Or.inl rfl)
