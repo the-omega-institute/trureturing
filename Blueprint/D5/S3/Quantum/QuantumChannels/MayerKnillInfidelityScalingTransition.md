@@ -164,6 +164,10 @@ $$\forall d \in \mathbb{N}, N \in \mathbb{N}, psi \in \operatorname{Fin}\left(N\
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/QuantumChannels/MayerKnillInfidelityScalingTransition.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/mayer-knill-infidelity-scaling` (proved) by `D5/S3/Quantum/QuantumChannels/MayerKnillInfidelityScalingTransition.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"mayer-knill-infidelity-scaling","declaration_gid":"D5/S3/Quantum/QuantumChannels/MayerKnillInfidelityScalingTransition.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Karl Mayer and Emanuel Knill (2018). *Quantum process fidelity bounds from sets of input states*. DOI: [10.1103/PhysRevA.98.052326](https://doi.org/10.1103/PhysRevA.98.052326). URL: <https://arxiv.org/html/1805.04491v1>.

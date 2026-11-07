@@ -11,9 +11,11 @@ internal sealed class MayerKnillInfidelityScalingTransitionDocument : IScribeDoc
     private static AssessedProvenance Literature => AssessedProvenance.FromLiterature(Source);
     private static AssessedProvenance Derived => AssessedProvenance.FromRepo(Source);
     private static DocumentBlock Node(string id, string name, Formula formula, string prose,
-        AssessedProvenance provenance, DescribeRole role = DescribeRole.Definition) =>
+        AssessedProvenance provenance, DescribeRole role = DescribeRole.Definition,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + name), H(name),
-            StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(prose))), role);
+            StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(prose))), role,
+            openProblemResolutionClaim: resolution);
 
     private static DocumentBlock InputNode(string id, string name, Formula formula, string encoding) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + name), H(name),
@@ -66,7 +68,9 @@ internal sealed class MayerKnillInfidelityScalingTransitionDocument : IScribeDoc
             Node("transition-claim", "claim", Eq(V("claim"), ClaimBody()),
                 "Mayer and Knill, arXiv:1805.04491v1, p. 4: “First, note that the lowest order term in the lower bound is of order √ε. This scaling behavior matches our empirical observations from numerically solving the SDP given by Eq. (5). However, we find that for many sets of input states containing more than d states, the O(√ε) term vanishes and the process infidelity becomes linear in ε for small error. Examples include the basis states plus the totally rotated state, as well as the symmetric POVM states defined in the next section. The transition from sub-linear to linear scaling is not explained by the proof of Thm. 2 and thus remains an open question.” The proposition quantifies over all finite unit spanning input families in dimensions at least two whose nonorthogonality graph is connected. It characterizes the two possible rates by the line-preserving obstruction space.", Derived),
             Node("transition-result", "result", ClaimBody(),
-                "The traceless Kraus squared norms sum to d times process infidelity, and the tested orthogonal residual squared norms sum to each input error. Scalar obstruction makes the finite-dimensional detection map injective, giving the linear upper estimate; an identity/reset mixture supplies a positive linear lower estimate. A traceless nonscalar obstruction admits a positive square-root Kraus completion and produces a square-root lower estimate. Stinespring overlap defects propagate along the finite connected graph, and spanning evaluation controls the whole matrix, giving the matching square-root upper estimate. The two local rates cannot both hold. Constants may depend on the spanning condition and the nonzero overlaps; no uniform estimate for degenerating families is asserted.", Derived, DescribeRole.Theorem))));
+                "The traceless Kraus squared norms sum to d times process infidelity, and the tested orthogonal residual squared norms sum to each input error. Scalar obstruction makes the finite-dimensional detection map injective, giving the linear upper estimate; an identity/reset mixture supplies a positive linear lower estimate. A traceless nonscalar obstruction admits a positive square-root Kraus completion and produces a square-root lower estimate. Stinespring overlap defects propagate along the finite connected graph, and spanning evaluation controls the whole matrix, giving the matching square-root upper estimate. The two local rates cannot both hold. Constants may depend on the spanning condition and the nonzero overlaps; no uniform estimate for degenerating families is asserted.", Derived, DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("mayer-knill-infidelity-scaling"), ResolutionKind.Proved)))));
 
     private static Formula V(string name) => F.Id(name);
     private static Formula N => Seq(Mathbb, Grp(V("N")));
