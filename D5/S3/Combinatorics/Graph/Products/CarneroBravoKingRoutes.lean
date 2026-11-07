@@ -488,7 +488,6 @@ bucket, including when the query crosses a partition boundary. -/
 def routingBucket (p : Point) : ℕ := (p.1 + p.2).toNat % 16
 
 def routingBuckets : List ℕ := List.range 16
-
 theorem routing_bucket_mem (q : Point) : routingBucket q ∈ routingBuckets :=
   List.mem_range.mpr (Nat.mod_lt _ (by decide))
 
@@ -689,7 +688,8 @@ private unsafe def kingFillProof (target : Expr) : MetaM Expr := do
     let some next := Occupancy.fill nativeKey block nativeTree | throwError "Fill rejected an insertion"
     let chunk ← mkListLit rawTy (← block.mapM quoteRawVertex)
     let quoted ← quoteTree next
-    let nextExpr ← mkAuxDefinitionFor (← mkAuxDeclName (kind := `_kingFillState)) quoted (compile := false)
+    if quoted.hasMVar || quoted.hasFVar then throwError "Expected a closed occupancy value"
+    let nextExpr ← mkAuxDefinitionFor (← mkAuxDeclName (kind := `_kingFillState)) quoted (zetaDelta := true) (compile := false)
     let result := mkApp someTree nextExpr
     let eq ← mkEq (mkApp2 fill chunk current) result
     let step ← kingChecked eq (← mkEqRefl result)
