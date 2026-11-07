@@ -6,16 +6,14 @@
    utility: none
    digest: Arbitrary complex weights on the A350900 gcd quotient give a totient convolution. -/
 
-module
 
-public import D5.S3.Arith.RoldanCirculantEnergyP2Q3
-public import D5.S3.ArithSums.SchulteGcdQuotientRowSumConvolution
-public import Mathlib.NumberTheory.ArithmeticFunction.Misc
-public import Mathlib.Data.PNat.Basic
+import D5.S3.Arith.RoldanCirculantEnergyP2Q3
+import D5.S3.ArithSums.SchulteGcdQuotientRowSumConvolution
+import Mathlib.NumberTheory.ArithmeticFunction.Misc
+import Mathlib.Data.PNat.Basic
 
 /-! Arbitrary complex weights on Schulte's full ordered-square gcd quotient. -/
 
-public section
 
 open scoped BigOperators
 open ArithmeticFunction

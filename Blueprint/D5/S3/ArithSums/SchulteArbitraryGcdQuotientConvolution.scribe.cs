@@ -141,7 +141,7 @@ internal sealed class SchulteArbitraryGcdQuotientConvolutionDocument
         var closure = Imp(Call("PositiveMultiplicative", f),
             Both(Eqn(Call("A", f, D(1)), D(1)), All("a", N(), All("b", N(),
                 Imp(Positive(a), Imp(Positive(b), Imp(Eqn(Call("gcd", a, b), D(1)),
-                    Eqn(Call("A", f, Mul(a, b)), Mul(Call("A", f, a), Call("A", f, b)))))))));
+                    Eqn(Call("A", f, Mul(a, b)), Mul(Call("A", f, a), Call("A", f, b))))))))));
         var extension = All("z", C(), All("n", N(), Imp(Positive(n),
             Eqn(Call("square", Call("extension", f, V("z")), n), Call("A", f, n)))));
         var row = All("n", N(), Eqn(Call("A", V("idPositive"), n), Cast(Call("rowSum", n))));
