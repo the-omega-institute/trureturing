@@ -28,14 +28,12 @@ noncomputable section
 private def realNoise {n : ℕ} (x : Fin ((Fintype.card (Bool × Bool × Fin n × Fin n))) → ℝ) (side : Bool) : Matrix (Fin n) (Fin n) ℂ :=
   Matrix.of (fun i j => (x ((Fintype.equivFin (Bool × Bool × Fin n × Fin n)) (side,false,i,j)) : ℂ) +
     Complex.I * (x ((Fintype.equivFin (Bool × Bool × Fin n × Fin n)) (side,true,i,j)) : ℂ))
-private def renamed {n : ℕ} (p : (MvPolynomial (Bool × Bool × Fin n × Fin n) ℂ)) : MvPolynomial (Fin ((Fintype.card (Bool × Bool × Fin n × Fin n)))) ℂ :=
-  MvPolynomial.rename ((Fintype.equivFin (Bool × Bool × Fin n × Fin n))) p
-private lemma renamed_ne_zero {n : ℕ} {p : (MvPolynomial (Bool × Bool × Fin n × Fin n) ℂ)} (hp : p ≠ 0) : renamed p ≠ 0 :=
+private lemma renamed_ne_zero {n : ℕ} {p : (MvPolynomial (Bool × Bool × Fin n × Fin n) ℂ)} (hp : p ≠ 0) : (MvPolynomial.rename (Fintype.equivFin (Bool × Bool × Fin n × Fin n))) p ≠ 0 :=
   (MvPolynomial.rename_eq_zero_iff_of_injective p ((Fintype.equivFin (Bool × Bool × Fin n × Fin n))).injective).not.mpr hp
 private lemma eval_renamed {n : ℕ} (p : (MvPolynomial (Bool × Bool × Fin n × Fin n) ℂ)) (x : Fin ((Fintype.card (Bool × Bool × Fin n × Fin n))) → ℝ) :
-    D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Gaussian.realEval (renamed p) x =
+    (fun {n : ℕ} (p : MvPolynomial (Fin n) ℂ) (x : Fin n → ℝ) => MvPolynomial.eval (fun i => (x i : ℂ)) p) ((MvPolynomial.rename (Fintype.equivFin (Bool × Bool × Fin n × Fin n))) p) x =
       D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Noise.evalNoise (realNoise x false) (realNoise x true) p := by
-  unfold D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Gaussian.realEval renamed
+  dsimp only
   rw [MvPolynomial.eval_rename]
   have he : MvPolynomial.eval (fun i : (Bool × Bool × Fin n × Fin n) => (x ((Fintype.equivFin (Bool × Bool × Fin n × Fin n)) i) : ℂ)) =
       D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Noise.evalNoise (realNoise x false) (realNoise x true) := by
@@ -49,7 +47,7 @@ private lemma eval_renamed {n : ℕ} (p : (MvPolynomial (Bool × Bool × Fin n �
 private lemma gaussian_det_nonzero_integrable {n : ℕ}
     (A C : Matrix (Fin n) (Fin n) ℂ) (ε : ℝ) (hε : ε ≠ 0)
     (m : ℝ) (v : ℝ≥0) (hv : v ≠ 0) :
-    (∀ᵐ x ∂D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Gaussian.gaussianPi ((Fintype.card (Bool × Bool × Fin n × Fin n))) m v,
+    (∀ᵐ x ∂(fun n m v => Measure.pi (fun _ : Fin n => gaussianReal m v)) ((Fintype.card (Bool × Bool × Fin n × Fin n))) m v,
       Matrix.det (((A+(ε:ℂ) • realNoise x false)*(A+(ε:ℂ) • realNoise x false)ᴴ) ⊗ₖ
         (1 : Matrix (Fin n) (Fin n) ℂ) - (1 : Matrix (Fin n) (Fin n) ℂ) ⊗ₖ
         ((C+(ε:ℂ) • realNoise x true)*(C+(ε:ℂ) • realNoise x true)ᴴ)) ≠ 0) ∧
@@ -57,16 +55,16 @@ private lemma gaussian_det_nonzero_integrable {n : ℕ}
       (((A+(ε:ℂ) • realNoise x false)*(A+(ε:ℂ) • realNoise x false)ᴴ) ⊗ₖ
         (1 : Matrix (Fin n) (Fin n) ℂ) - (1 : Matrix (Fin n) (Fin n) ℂ) ⊗ₖ
         ((C+(ε:ℂ) • realNoise x true)*(C+(ε:ℂ) • realNoise x true)ᴴ))‖)
-      (D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Gaussian.gaussianPi ((Fintype.card (Bool × Bool × Fin n × Fin n))) m v) := by
+      ((fun n m v => Measure.pi (fun _ : Fin n => gaussianReal m v)) ((Fintype.card (Bool × Bool × Fin n × Fin n))) m v) := by
   have h := D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Gaussian.gaussian_mv_log_integrable m v hv
-    (renamed (D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Noise.polyAt A C ε)) (renamed_ne_zero (D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Noise.polyAt_ne_zero A C ε hε))
+    ((MvPolynomial.rename (Fintype.equivFin (Bool × Bool × Fin n × Fin n))) (D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Noise.polyAt A C ε)) (renamed_ne_zero (D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Noise.polyAt_ne_zero A C ε hε))
   simpa only [eval_renamed, D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Noise.evalNoise_polyAt, D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Noise.eval_pairDet] using h
 
 private lemma polynomial_log_order {d : ℕ} (m : ℝ) (v : ℝ≥0) (hv : v ≠ 0)
     (P : Polynomial (MvPolynomial (Fin d) ℂ)) (k : ℕ)
     (hlo : ∀ j < k, P.coeff j = 0) (hk : P.coeff k ≠ 0) :
-    Tendsto (fun ε : ℝ => -(∫ x, Real.log ‖D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Gaussian.realEval
-      (P.eval (MvPolynomial.C (ε:ℂ))) x‖ ∂D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Gaussian.gaussianPi d m v) /
+    Tendsto (fun ε : ℝ => -(∫ x, Real.log ‖(fun {n : ℕ} (p : MvPolynomial (Fin n) ℂ) (x : Fin n → ℝ) => MvPolynomial.eval (fun i => (x i : ℂ)) p)
+      (P.eval (MvPolynomial.C (ε:ℂ))) x‖ ∂(fun n m v => Measure.pi (fun _ : Fin n => gaussianReal m v)) d m v) /
         Real.log (1/ε)) (𝓝[>] 0) (𝓝 (k:ℝ)) := by
   obtain ⟨Q,hQ⟩ := Polynomial.X_pow_dvd_iff.mpr hlo
   have hq0 : Q.coeff 0 ≠ 0 := by
@@ -84,23 +82,23 @@ private lemma polynomial_log_order {d : ℕ} (m : ℝ) (v : ℝ≥0) (hv : v ≠
     simp only [D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Gaussian.noiseFamily, q, ← map_pow, mul_comm]
   have h := D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Gaussian.gaussian_noiseFamily_log_order m v hv q a ha k
   simpa only [hQ, Polynomial.eval_mul, Polynomial.eval_pow, Polynomial.eval_X, he,
-    D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Gaussian.realEval, map_mul, map_pow, MvPolynomial.eval_C] using h
+    map_mul, map_pow, MvPolynomial.eval_C] using h
 private def finPoly {n : ℕ} (A C : Matrix (Fin n) (Fin n) ℂ) :
     Polynomial (MvPolynomial (Fin ((Fintype.card (Bool × Bool × Fin n × Fin n)))) ℂ) :=
   Polynomial.map (MvPolynomial.rename ((Fintype.equivFin (Bool × Bool × Fin n × Fin n)))).toRingHom (D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Noise.poly A C)
 private lemma finPoly_coeff {n : ℕ} (A C : Matrix (Fin n) (Fin n) ℂ) (j : ℕ) :
-    (finPoly A C).coeff j = renamed ((D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Noise.poly A C).coeff j) := by
-  simp [finPoly, renamed]
+    (finPoly A C).coeff j = (MvPolynomial.rename (Fintype.equivFin (Bool × Bool × Fin n × Fin n))) ((D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Noise.poly A C).coeff j) := by
+  simp [finPoly]
 private lemma finPoly_eval {n : ℕ} (A C : Matrix (Fin n) (Fin n) ℂ) (ε : ℝ) :
-    (finPoly A C).eval (MvPolynomial.C (ε:ℂ)) = renamed (D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Noise.polyAt A C ε) := by
-  simpa [finPoly, renamed, D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Noise.polyAt] using
+    (finPoly A C).eval (MvPolynomial.C (ε:ℂ)) = (MvPolynomial.rename (Fintype.equivFin (Bool × Bool × Fin n × Fin n))) (D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Noise.polyAt A C ε) := by
+  simpa [finPoly, D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Noise.polyAt] using
     Polynomial.eval_map_apply (f:=(MvPolynomial.rename ((Fintype.equivFin (Bool × Bool × Fin n × Fin n)))).toRingHom)
       (p:=D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Noise.poly A C) (MvPolynomial.C (ε:ℂ))
 private lemma gaussian_pairDet_log_order {n : ℕ} (A C : Matrix (Fin n) (Fin n) ℂ)
     (m : ℝ) (v : ℝ≥0) (hv : v ≠ 0) :
     Tendsto (fun ε : ℝ => -(∫ x, Real.log ‖
       (D5.S3.Analytic.Probability.GaussianPolynomialLog.Covariance.pairDet A C (realNoise x false) (realNoise x true)).eval (ε:ℂ)‖
-      ∂D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Gaussian.gaussianPi ((Fintype.card (Bool × Bool × Fin n × Fin n))) m v) / Real.log (1/ε))
+      ∂(fun n m v => Measure.pi (fun _ : Fin n => gaussianReal m v)) ((Fintype.card (Bool × Bool × Fin n × Fin n))) m v) / Real.log (1/ε))
       (𝓝[>] 0) (𝓝 ((D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Noise.poly A C).natTrailingDegree:ℝ)) := by
   have hp := D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Noise.poly_ne_zero A C
   have hlo : ∀ j < (D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Noise.poly A C).natTrailingDegree, (finPoly A C).coeff j = 0 := by
@@ -125,9 +123,9 @@ private lemma gramEigenvalue_sum (n : ℕ) (A : Matrix (Fin n) (Fin n) ℂ) :
     (∑ i, gramEigenvalue n A i) = ∑ i, ∑ j, ‖A i j‖^2 := by
   have h := congrArg Complex.re (gramHermitian n A).trace_eq_sum_eigenvalues
   simp only [map_sum, Complex.re_sum, Complex.ofReal_re] at h
-  change (Matrix.trace (D5.S3.Analytic.Probability.SampleCovarianceSpectralAndSmooth.gram n A)).re = ∑ i, gramEigenvalue n A i at h
+  change (Matrix.trace ((A * Aᴴ))).re = ∑ i, gramEigenvalue n A i at h
   rw [← h]
-  simp only [D5.S3.Analytic.Probability.SampleCovarianceSpectralAndSmooth.gram, Matrix.trace, Matrix.diag, Matrix.mul_apply, Matrix.conjTranspose_apply,
+  simp only [ Matrix.trace, Matrix.diag, Matrix.mul_apply, Matrix.conjTranspose_apply,
     Complex.re_sum]
   apply Finset.sum_congr rfl
   intro i hi
@@ -219,24 +217,14 @@ private lemma pi_mixture {ι X : Type*} [Fintype ι] [DecidableEq ι] [Measurabl
   simp_rw [← Finset.prod_mul_distrib]
   have he := Fintype.prod_sum (fun i (b : Bool) => (if b then p else q) * ν i b (s i))
   simpa [Fintype.sum_bool, add_comm] using he.symm
-private def coordSplit (n : ℕ) : (Bool × Bool × Fin n × Fin n) ≃ (Bool × Fin n × Fin n) ⊕ (Bool × Fin n × Fin n) where
-  toFun z := if z.2.1 then Sum.inr (z.1,z.2.2) else Sum.inl (z.1,z.2.2)
-  invFun z := z.elim (fun z => (z.1,false,z.2)) (fun z => (z.1,true,z.2))
-  left_inv := by rintro ⟨b,im,i,j⟩; cases im <;> rfl
-  right_inv := by rintro (⟨b,i,j⟩|⟨b,i,j⟩) <;> rfl
-private def realCoords (n : ℕ) (v : ℝ≥0) : Measure ((Bool × Bool × Fin n × Fin n) → ℝ) :=
-  Measure.pi (fun _ => gaussianReal 0 v)
-private instance realCoordsProbability (n : ℕ) (v : ℝ≥0) : IsProbabilityMeasure (realCoords n v) := by
-  unfold realCoords
-  infer_instance
 private def pack {n : ℕ} (x : (Bool × Bool × Fin n × Fin n) → ℝ) : (Bool × Fin n × Fin n) → ℝ × ℝ :=
   fun i => (x (i.1,false,i.2), x (i.1,true,i.2))
 private lemma pack_preserving (n : ℕ) (v : ℝ≥0) :
-    MeasurePreserving (pack (n:=n)) (realCoords n v)
+    MeasurePreserving (pack (n:=n)) ((fun n v => Measure.pi (fun _ : Bool × Bool × Fin n × Fin n => gaussianReal 0 v)) n v)
       (Measure.pi (fun _ : (Bool × Fin n × Fin n) => (gaussianReal 0 v).prod (gaussianReal 0 v))) := by
   let e := MeasurableEquiv.sumPiEquivProdPi (fun _ : (Bool × Fin n × Fin n) ⊕ (Bool × Fin n × Fin n) => ℝ)
   have h1 := measurePreserving_piCongrLeft
-    (fun _ : (Bool × Fin n × Fin n) ⊕ (Bool × Fin n × Fin n) => gaussianReal 0 v) (coordSplit n)
+    (fun _ : (Bool × Fin n × Fin n) ⊕ (Bool × Fin n × Fin n) => gaussianReal 0 v) ((((Equiv.prodAssoc Bool Bool (Fin n × Fin n)).symm.trans ((Equiv.prodComm Bool Bool).prodCongr (Equiv.refl (Fin n × Fin n)))).trans (Equiv.prodAssoc Bool Bool (Fin n × Fin n))).trans (Equiv.boolProdEquivSum (Bool × Fin n × Fin n)))
   have h2 := MeasurePreserving.symm e.symm
     (measurePreserving_sumPiEquivProdPi_symm (fun _ : (Bool × Fin n × Fin n) ⊕ (Bool × Fin n × Fin n) => gaussianReal 0 v))
   let a := MeasurableEquiv.arrowProdEquivProdArrow ℝ ℝ ((Bool × Fin n × Fin n))
@@ -247,7 +235,6 @@ private lemma pack_preserving (n : ℕ) (v : ℝ≥0) :
   · funext x i
     rcases i with ⟨b,i,j⟩
     rfl
-  · rfl
 private lemma complexGaussian_scaled (m σ : ℝ) (v : ℝ≥0) :
     Measure.map (fun xy : ℝ × ℝ => ((m+σ*xy.1 : ℝ):ℂ) + (σ*xy.2:ℝ)*Complex.I)
       ((gaussianReal 0 v).prod (gaussianReal 0 v)) =
@@ -267,7 +254,7 @@ private lemma affine_entries_preserving (n : ℕ) (m : (Bool × Fin n × Fin n) 
     MeasurePreserving
       (fun x : (Bool × Bool × Fin n × Fin n) → ℝ => fun i : (Bool × Fin n × Fin n) =>
         ((m i+σ*x (i.1,false,i.2):ℝ):ℂ) + (σ*x (i.1,true,i.2):ℝ)*Complex.I)
-      (realCoords n v)
+      ((fun n v => Measure.pi (fun _ : Bool × Bool × Fin n × Fin n => gaussianReal 0 v)) n v)
       (Measure.pi (fun i : (Bool × Fin n × Fin n) => D5.S3.Analytic.Probability.SampleCovarianceSpectralAndSmooth.Smooth.complexGaussian (m i)
         (NNReal.mk (σ^2) (sq_nonneg σ)*v))) := by
   have h := measurePreserving_pi
@@ -328,7 +315,7 @@ private lemma scale_variance (ε : ℝ) :
   field_simp
   <;> ring
 private lemma affinePair_law (n : ℕ) (b : ((Bool × Fin n × Fin n) → Bool)) (ε : ℝ) :
-    Measure.map (affinePair b ε) (realCoords n (1/2)) =
+    Measure.map (affinePair b ε) ((fun n v => Measure.pi (fun _ : Bool × Bool × Fin n × Fin n => gaussianReal 0 v)) n (1/2)) =
       Measure.map splitEntries (Measure.pi (fun i : (Bool × Fin n × Fin n) =>
         D5.S3.Analytic.Probability.SampleCovarianceSpectralAndSmooth.Smooth.complexGaussian (meanB b ε i) (D5.S3.Analytic.Probability.SampleCovarianceSpectralAndSmooth.Smooth.noiseVariance ε))) := by
   have h := affine_entries_preserving n (meanB b ε) (scale ε) (1/2)
@@ -340,7 +327,7 @@ private lemma smooth_pair_law (n : ℕ) (ε : ℝ) :
       (D5.S3.Analytic.Probability.SampleCovarianceSpectralAndSmooth.matrixLaw n (D5.S3.Analytic.Probability.SampleCovarianceSpectralAndSmooth.Smooth.smoothLaw ε)) =
     ∑ b : ((Bool × Fin n × Fin n) → Bool),
       (∏ i : (Bool × Fin n × Fin n), if b i then (1/256:ℝ≥0∞) else 255/256) •
-        Measure.map (affinePair b ε) (realCoords n (1/2)) := by
+        Measure.map (affinePair b ε) ((fun n v => Measure.pi (fun _ : Bool × Bool × Fin n × Fin n => gaussianReal 0 v)) n (1/2)) := by
   let ν : (Bool × Fin n × Fin n) → Bool → Measure ℂ := fun _ b =>
     D5.S3.Analytic.Probability.SampleCovarianceSpectralAndSmooth.Smooth.complexGaussian
       (if b then Real.sqrt 255/Real.sqrt (1+ε^2) else -1/(Real.sqrt 255*Real.sqrt (1+ε^2)))
@@ -369,7 +356,7 @@ private def negativeLogAverage (n : ℕ) (ε : ℝ) : ℝ :=
     (-(∫ x, Real.log ‖(D5.S3.Analytic.Probability.GaussianPolynomialLog.Covariance.pairDet (D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Events.bmat b false)
       (D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Events.bmat b true) (D5.S3.Analytic.Probability.SampleCovarianceLogEnergyRefutation.Analytic.realNoise x false)
       (D5.S3.Analytic.Probability.SampleCovarianceLogEnergyRefutation.Analytic.realNoise x true)).eval (ε:ℂ)‖
-      ∂D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Gaussian.gaussianPi ((Fintype.card (Bool × Bool × Fin n × Fin n))) 0 (1/2)))
+      ∂(fun n m v => Measure.pi (fun _ : Fin n => gaussianReal m v)) ((Fintype.card (Bool × Bool × Fin n × Fin n))) 0 (1/2)))
 private def E (n : ℕ) (ε : ℝ) : ℝ :=
   1+Real.log n+Real.log (1+ε^2)+negativeLogAverage n ε/(n:ℝ)^2
 private lemma negativeLogAverage_limit (n : ℕ) :
@@ -429,8 +416,8 @@ private def toCoords {n : ℕ} (x : Fin ((Fintype.card (Bool × Bool × Fin n ×
 @[fun_prop] private lemma measurable_toCoords {n : ℕ} : Measurable (toCoords (n:=n)) := by
   exact Measurable.of_eval (fun i => measurable_pi_apply _)
 private lemma toCoords_preserving (n : ℕ) (v : ℝ≥0) :
-    MeasurePreserving (toCoords (n:=n)) (D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Gaussian.gaussianPi ((Fintype.card (Bool × Bool × Fin n × Fin n))) 0 v)
-      (realCoords n v) := by
+    MeasurePreserving (toCoords (n:=n)) ((fun n m v => Measure.pi (fun _ : Fin n => gaussianReal m v)) ((Fintype.card (Bool × Bool × Fin n × Fin n))) 0 v)
+      ((fun n v => Measure.pi (fun _ : Bool × Bool × Fin n × Fin n => gaussianReal 0 v)) n v) := by
   have h := measurePreserving_piCongrLeft (fun _ : (Bool × Bool × Fin n × Fin n) => gaussianReal 0 v)
     ((Fintype.equivFin (Bool × Bool × Fin n × Fin n))).symm
   convert h using 1
@@ -450,7 +437,7 @@ private lemma smooth_pair_law_finite (n : ℕ) (ε : ℝ) :
       (D5.S3.Analytic.Probability.SampleCovarianceSpectralAndSmooth.matrixLaw n (D5.S3.Analytic.Probability.SampleCovarianceSpectralAndSmooth.Smooth.smoothLaw ε)) =
     ∑ b : ((Bool × Fin n × Fin n) → Bool),
       (∏ i : (Bool × Fin n × Fin n), if b i then (1/256:ℝ≥0∞) else 255/256) •
-        Measure.map (finitePair b ε) (D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Gaussian.gaussianPi ((Fintype.card (Bool × Bool × Fin n × Fin n))) 0 (1/2)) := by
+        Measure.map (finitePair b ε) ((fun n m v => Measure.pi (fun _ : Fin n => gaussianReal m v)) ((Fintype.card (Bool × Bool × Fin n × Fin n))) 0 (1/2)) := by
   rw [smooth_pair_law]
   apply Finset.sum_congr rfl
   intro b hb
@@ -472,8 +459,8 @@ private lemma finitePair_eq {n : ℕ} (b : ((Bool × Fin n × Fin n) → Bool)) 
     split_ifs <;> push_cast <;> field_simp <;> ring
 
 private def detPair {n : ℕ} (AC : Matrix (Fin n) (Fin n) ℂ × Matrix (Fin n) (Fin n) ℂ) : ℂ :=
-  Matrix.det (D5.S3.Analytic.Probability.SampleCovarianceSpectralAndSmooth.gram n AC.1 ⊗ₖ (1 : Matrix (Fin n) (Fin n) ℂ) -
-    (1 : Matrix (Fin n) (Fin n) ℂ) ⊗ₖ D5.S3.Analytic.Probability.SampleCovarianceSpectralAndSmooth.gram n AC.2)
+  Matrix.det ((AC.1 * AC.1ᴴ) ⊗ₖ (1 : Matrix (Fin n) (Fin n) ℂ) -
+    (1 : Matrix (Fin n) (Fin n) ℂ) ⊗ₖ (AC.2 * AC.2ᴴ))
 @[fun_prop] private lemma measurable_detPair {n : ℕ} : Measurable (detPair (n:=n)) := by
   have hf (i j : Fin n) : Measurable
       (fun AC : Matrix (Fin n) (Fin n) ℂ × Matrix (Fin n) (Fin n) ℂ => AC.1 i j) :=
@@ -494,7 +481,7 @@ private def detPair {n : ℕ} (AC : Matrix (Fin n) (Fin n) ℂ × Matrix (Fin n)
         (AC.1*AC.1ᴴ) i.1 j.1 * (1 : Matrix (Fin n) (Fin n) ℂ) i.2 j.2 -
           (1 : Matrix (Fin n) (Fin n) ℂ) i.1 j.1 * (AC.2*AC.2ᴴ) i.2 j.2) :=
     ((h1 i.1 j.1).mul_const _).sub ((h2 i.2 j.2).const_mul _)
-  unfold detPair D5.S3.Analytic.Probability.SampleCovarianceSpectralAndSmooth.gram
+  unfold detPair
   simp only [Matrix.det_apply]
   apply Finset.measurable_fun_sum
   intro σ hσ
@@ -508,10 +495,10 @@ private lemma measurable_logdetPair {n : ℕ} : Measurable (fun AC => Real.log �
   Real.measurable_log.comp measurable_detPair.norm
 private lemma conditional_det_nonzero_integrable {n : ℕ} (b : ((Bool × Fin n × Fin n) → Bool))
     (ε : ℝ) (hε : ε ≠ 0) :
-    (∀ᵐ x ∂D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Gaussian.gaussianPi ((Fintype.card (Bool × Bool × Fin n × Fin n))) 0 (1/2),
+    (∀ᵐ x ∂(fun n m v => Measure.pi (fun _ : Fin n => gaussianReal m v)) ((Fintype.card (Bool × Bool × Fin n × Fin n))) 0 (1/2),
       detPair (finitePair b ε x) ≠ 0) ∧
     Integrable (fun x => Real.log ‖detPair (finitePair b ε x)‖)
-      (D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Gaussian.gaussianPi ((Fintype.card (Bool × Bool × Fin n × Fin n))) 0 (1/2)) := by
+      ((fun n m v => Measure.pi (fun _ : Fin n => gaussianReal m v)) ((Fintype.card (Bool × Bool × Fin n × Fin n))) 0 (1/2)) := by
   have hσ : scale ε ≠ 0 := div_ne_zero hε (Real.sqrt_ne_zero'.mpr (by positivity))
   have h := D5.S3.Analytic.Probability.SampleCovarianceLogEnergyRefutation.Analytic.gaussian_det_nonzero_integrable
     (((1/Real.sqrt (1+ε^2):ℝ):ℂ) • D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Events.bmat b false)
@@ -528,7 +515,7 @@ private lemma conditional_det_nonzero_integrable {n : ℕ} (b : ((Bool × Fin n 
         (scale ε:ℂ) • D5.S3.Analytic.Probability.SampleCovarianceLogEnergyRefutation.Analytic.realNoise x true) *
        (((1/Real.sqrt (1+ε^2):ℝ):ℂ) • D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Events.bmat b true +
         (scale ε:ℂ) • D5.S3.Analytic.Probability.SampleCovarianceLogEnergyRefutation.Analytic.realNoise x true)ᴴ)) := by
-    unfold detPair D5.S3.Analytic.Probability.SampleCovarianceSpectralAndSmooth.gram
+    unfold detPair
     rw [← finitePair_eq b ε x false, ← finitePair_eq b ε x true]
     rfl
   simpa only [hf] using h
@@ -577,7 +564,7 @@ namespace D5.S3.Analytic.Probability.SampleCovarianceLogEnergyRefutation.Transpo
 noncomputable section
 private lemma detPair_smul {n : ℕ} (a : ℂ) (A C : Matrix (Fin n) (Fin n) ℂ) :
     detPair (a • A,a • C) = (a*star a)^(n*n) * detPair (A,C) := by
-  unfold detPair D5.S3.Analytic.Probability.SampleCovarianceSpectralAndSmooth.gram
+  unfold detPair
   simp only [Matrix.conjTranspose_smul, Matrix.smul_mul, Matrix.mul_smul,
     smul_smul, mul_comm (star a) a]
   rw [Matrix.smul_kronecker,
@@ -609,11 +596,11 @@ private lemma finitePair_raw {n : ℕ} (b : ((Bool × Fin n × Fin n) → Bool))
     ring
 private lemma conditional_log_integral {n : ℕ} (b : ((Bool × Fin n × Fin n) → Bool)) (ε : ℝ) (hε : ε ≠ 0) :
     (∫ x, Real.log ‖detPair (finitePair b ε x)‖
-      ∂D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Gaussian.gaussianPi ((Fintype.card (Bool × Bool × Fin n × Fin n))) 0 (1/2)) =
+      ∂(fun n m v => Measure.pi (fun _ : Fin n => gaussianReal m v)) ((Fintype.card (Bool × Bool × Fin n × Fin n))) 0 (1/2)) =
       -(n:ℝ)^2*Real.log (1+ε^2) +
       ∫ x, Real.log ‖(D5.S3.Analytic.Probability.GaussianPolynomialLog.Covariance.pairDet (D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Events.bmat b false) (D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Events.bmat b true)
         (D5.S3.Analytic.Probability.SampleCovarianceLogEnergyRefutation.Analytic.realNoise x false) (D5.S3.Analytic.Probability.SampleCovarianceLogEnergyRefutation.Analytic.realNoise x true)).eval (ε:ℂ)‖
-      ∂D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Gaussian.gaussianPi ((Fintype.card (Bool × Bool × Fin n × Fin n))) 0 (1/2) := by
+      ∂(fun n m v => Measure.pi (fun _ : Fin n => gaussianReal m v)) ((Fintype.card (Bool × Bool × Fin n × Fin n))) 0 (1/2) := by
   have hp : 0 < 1+ε^2 := by positivity
   have hs := Real.sq_sqrt hp.le
   have hsne : Real.sqrt (1+ε^2) ≠ 0 := Real.sqrt_ne_zero'.mpr hp
@@ -625,7 +612,7 @@ private lemma conditional_log_integral {n : ℕ} (b : ((Bool × Fin n × Fin n) 
   have hi := D5.S3.Analytic.Probability.SampleCovarianceLogEnergyRefutation.Analytic.gaussian_det_nonzero_integrable
     (D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Events.bmat b false) (D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Events.bmat b true) ε hε 0 (1/2) (by norm_num)
   have heq : (fun x => Real.log ‖detPair (finitePair b ε x)‖) =ᵐ[
-      D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Gaussian.gaussianPi ((Fintype.card (Bool × Bool × Fin n × Fin n))) 0 (1/2)]
+      (fun n m v => Measure.pi (fun _ : Fin n => gaussianReal m v)) ((Fintype.card (Bool × Bool × Fin n × Fin n))) 0 (1/2)]
       (fun x => -(n:ℝ)^2*Real.log (1+ε^2) +
         Real.log ‖(D5.S3.Analytic.Probability.GaussianPolynomialLog.Covariance.pairDet (D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Events.bmat b false) (D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Events.bmat b true)
           (D5.S3.Analytic.Probability.SampleCovarianceLogEnergyRefutation.Analytic.realNoise x false) (D5.S3.Analytic.Probability.SampleCovarianceLogEnergyRefutation.Analytic.realNoise x true)).eval (ε:ℂ)‖) := by
@@ -664,9 +651,9 @@ private lemma smooth_log_integral (n : ℕ) (ε : ℝ) (hε : ε ≠ 0) :
       -(n:ℝ)^2*Real.log (1+ε^2)-D5.S3.Analytic.Probability.SampleCovarianceLogEnergyRefutation.Energy.negativeLogAverage n ε := by
   have hmap (b : ((Bool × Fin n × Fin n) → Bool)) :
       (∫ AC, Real.log ‖detPair AC‖ ∂Measure.map (finitePair b ε)
-        (D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Gaussian.gaussianPi ((Fintype.card (Bool × Bool × Fin n × Fin n))) 0 (1/2))) =
+        ((fun n m v => Measure.pi (fun _ : Fin n => gaussianReal m v)) ((Fintype.card (Bool × Bool × Fin n × Fin n))) 0 (1/2))) =
       ∫ x, Real.log ‖detPair (finitePair b ε x)‖
-        ∂D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Gaussian.gaussianPi ((Fintype.card (Bool × Bool × Fin n × Fin n))) 0 (1/2) :=
+        ∂(fun n m v => Measure.pi (fun _ : Fin n => gaussianReal m v)) ((Fintype.card (Bool × Bool × Fin n × Fin n))) 0 (1/2) :=
     integral_map (measurable_finitePair b ε).aemeasurable measurable_logdetPair.aestronglyMeasurable
   rw [smooth_pair_law_finite]
   rw [integral_finsetSum_measure]

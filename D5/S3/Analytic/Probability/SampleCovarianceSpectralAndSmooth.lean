@@ -10,6 +10,7 @@ proof_shape: pending per-declaration verification.
 escape_witness: none claimed before the upstream-only tests.
 admission_basis: pending escape-witness verification
 Direct frozen dependencies: pending compiled-constant extraction.
+Unfinished escape audit: https://github.com/the-omega-institute/trureturing/issues/27612
 -/
 import Mathlib.Probability.Distributions.Gaussian.Real
 import Mathlib.MeasureTheory.Integral.Bochner.ContinuousLinearMap
@@ -46,11 +47,8 @@ namespace D5.S3.Analytic.Probability.SampleCovarianceSpectralAndSmooth
 open MeasureTheory Filter
 open scoped BigOperators ENNReal Matrix
 
-noncomputable def gram (n : ℕ) (A : Matrix (Fin n) (Fin n) ℂ) :
-    Matrix (Fin n) (Fin n) ℂ := A * Aᴴ
-
 theorem gramHermitian (n : ℕ) (A : Matrix (Fin n) (Fin n) ℂ) :
-    (gram n A).IsHermitian := by
+    ((A * Aᴴ)).IsHermitian := by
   exact Matrix.isHermitian_mul_conjTranspose_self A
 
 noncomputable def gramEigenvalue (n : ℕ) (A : Matrix (Fin n) (Fin n) ℂ)
@@ -111,8 +109,7 @@ noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.isDefEq.respectTransparency.types false
 private lemma continuous_gram (n : ℕ) :
-    Continuous (gram n : Matrix (Fin n) (Fin n) ℂ → Matrix (Fin n) (Fin n) ℂ) := by
-  unfold gram
+    Continuous ((fun A => A * Aᴴ) : Matrix (Fin n) (Fin n) ℂ → Matrix (Fin n) (Fin n) ℂ) := by
   fun_prop
 private lemma continuous_gramEigenvalue (n : ℕ) (i : Fin n) :
     Continuous (fun A : Matrix (Fin n) (Fin n) ℂ => gramEigenvalue n A i) := by
@@ -124,16 +121,16 @@ private lemma continuous_gramEigenvalue (n : ℕ) (i : Fin n) :
   apply tendsto_iff_dist_tendsto_zero.mpr
   have hb : ∀ B : Matrix (Fin n) (Fin n) ℂ,
       dist (gramEigenvalue n B i) (gramEigenvalue n A i) ≤
-        ‖T (gram n B - gram n A)‖ := by
+        ‖T ((B * Bᴴ) - (A * Aᴴ))‖ := by
     intro B
     simpa only [gramEigenvalue, Matrix.IsHermitian.eigenvalues, Real.dist_eq] using
       D5.S3.SpectralTopology.HermitianEigenvaluePerturbation.abs_eigenvalues0_sub_le_norm
         (gramHermitian n B) (gramHermitian n A)
         ((Fintype.equivOfCardEq (Fintype.card_fin (Fintype.card (Fin n)))).symm i)
   have ht : Tendsto (fun B : Matrix (Fin n) (Fin n) ℂ =>
-      ‖T (gram n B - gram n A)‖) (𝓝 A) (𝓝 0) := by
+      ‖T ((B * Bᴴ) - (A * Aᴴ))‖) (𝓝 A) (𝓝 0) := by
     have hc : Continuous (fun B : Matrix (Fin n) (Fin n) ℂ =>
-        T (gram n B - gram n A)) := hT.comp ((continuous_gram n).sub continuous_const)
+        T ((B * Bᴴ) - (A * Aᴴ))) := hT.comp ((continuous_gram n).sub continuous_const)
     simpa only [sub_self, map_zero, norm_zero] using hc.norm.tendsto A
   exact squeeze_zero (fun _ => dist_nonneg) hb ht
 lemma measurable_gramEigenvalue (n : ℕ) (i : Fin n) :
@@ -217,8 +214,8 @@ private lemma two_copy_det_hermitian {n m : ℕ}
   rw [cancel] at hh
   simpa only [Fintype.prod_prod_type] using hh
 private lemma two_copy_gram_det (n : ℕ) (A C : Matrix (Fin n) (Fin n) ℂ) :
-    Matrix.det (gram n A ⊗ₖ (1 : Matrix (Fin n) (Fin n) ℂ) -
-      (1 : Matrix (Fin n) (Fin n) ℂ) ⊗ₖ gram n C) =
+    Matrix.det ((A * Aᴴ) ⊗ₖ (1 : Matrix (Fin n) (Fin n) ℂ) -
+      (1 : Matrix (Fin n) (Fin n) ℂ) ⊗ₖ (C * Cᴴ)) =
       ∏ i : Fin n, ∏ j : Fin n,
         ((gramEigenvalue n A i : ℂ) - (gramEigenvalue n C j : ℂ)) :=
   two_copy_det_hermitian (gramHermitian n A) (gramHermitian n C)
@@ -262,8 +259,8 @@ open MeasureTheory Filter Matrix
 open scoped BigOperators ENNReal Topology Kronecker
 noncomputable section
 lemma two_copy_gram_det_nonzero_iff (n : ℕ) (A C : Matrix (Fin n) (Fin n) ℂ) :
-    Matrix.det (gram n A ⊗ₖ (1 : Matrix (Fin n) (Fin n) ℂ) -
-      (1 : Matrix (Fin n) (Fin n) ℂ) ⊗ₖ gram n C) ≠ 0 ↔
+    Matrix.det ((A * Aᴴ) ⊗ₖ (1 : Matrix (Fin n) (Fin n) ℂ) -
+      (1 : Matrix (Fin n) (Fin n) ℂ) ⊗ₖ (C * Cᴴ)) ≠ 0 ↔
       ∀ i j : Fin n, gramEigenvalue n A i ≠ gramEigenvalue n C j := by
   rw [two_copy_gram_det]
   simp only [Finset.prod_ne_zero_iff, Finset.mem_univ, forall_const, sub_ne_zero]
@@ -276,8 +273,8 @@ lemma two_copy_gram_det_nonzero_iff (n : ℕ) (A C : Matrix (Fin n) (Fin n) ℂ)
     exact Complex.ofReal_injective he
 private lemma log_two_copy_gram_det (n : ℕ) (A C : Matrix (Fin n) (Fin n) ℂ)
     (h : ∀ i j : Fin n, gramEigenvalue n A i ≠ gramEigenvalue n C j) :
-    Real.log ‖Matrix.det (gram n A ⊗ₖ (1 : Matrix (Fin n) (Fin n) ℂ) -
-      (1 : Matrix (Fin n) (Fin n) ℂ) ⊗ₖ gram n C)‖ =
+    Real.log ‖Matrix.det ((A * Aᴴ) ⊗ₖ (1 : Matrix (Fin n) (Fin n) ℂ) -
+      (1 : Matrix (Fin n) (Fin n) ℂ) ⊗ₖ (C * Cᴴ))‖ =
       ∑ i : Fin n, ∑ j : Fin n, Real.log |gramEigenvalue n A i - gramEigenvalue n C j| := by
   rw [two_copy_gram_det]
   simp_rw [norm_prod]
@@ -486,8 +483,8 @@ set_option backward.isDefEq.respectTransparency.types false
 private lemma log_two_copy_normalized_gram_det (n : ℕ) (hn : 0 < n)
     (A C : Matrix (Fin n) (Fin n) ℂ)
     (h : ∀ i j : Fin n, gramEigenvalue n A i ≠ gramEigenvalue n C j) :
-    Real.log ‖Matrix.det (gram n A ⊗ₖ (1 : Matrix (Fin n) (Fin n) ℂ) -
-      (1 : Matrix (Fin n) (Fin n) ℂ) ⊗ₖ gram n C)‖ =
+    Real.log ‖Matrix.det ((A * Aᴴ) ⊗ₖ (1 : Matrix (Fin n) (Fin n) ℂ) -
+      (1 : Matrix (Fin n) (Fin n) ℂ) ⊗ₖ (C * Cᴴ))‖ =
       (∑ ij : Fin n × Fin n,
         Real.log |gramEigenvalue n A ij.1 / n - gramEigenvalue n C ij.2 / n|) +
         (n : ℝ)^2 * Real.log n := by
@@ -515,16 +512,16 @@ private lemma logarithmicEnergy_mean_eq_log_det (n : ℕ) (hn : 0 < n)
     logarithmicEnergy (meanSpectralMeasure n hn μ) =
       (Real.log n - (n : ℝ)⁻¹^2 *
         ∫ AC : Matrix (Fin n) (Fin n) ℂ × Matrix (Fin n) (Fin n) ℂ,
-          Real.log ‖Matrix.det (gram n AC.1 ⊗ₖ (1 : Matrix (Fin n) (Fin n) ℂ) -
-            (1 : Matrix (Fin n) (Fin n) ℂ) ⊗ₖ gram n AC.2)‖
+          Real.log ‖Matrix.det ((AC.1 * AC.1ᴴ) ⊗ₖ (1 : Matrix (Fin n) (Fin n) ℂ) -
+            (1 : Matrix (Fin n) (Fin n) ℂ) ⊗ₖ (AC.2 * AC.2ᴴ))‖
           ∂(matrixLaw n μ).prod (matrixLaw n μ) : ℝ) := by
   have hf : Measurable (fun p : ℝ × ℝ => Real.log |p.1-p.2|) := by fun_prop
   have hint := integrable_two_copy_meanSpectralMeasure n hn μ _ hf hi
   rw [logarithmicEnergy_eq_real_integral _ (ae_noncollision_meanSpectralMeasure n hn μ h) hint,
     integral_two_copy_meanSpectralMeasure n hn μ _ hf hi]
   have hdet : (∫ AC : Matrix (Fin n) (Fin n) ℂ × Matrix (Fin n) (Fin n) ℂ,
-          Real.log ‖Matrix.det (gram n AC.1 ⊗ₖ (1 : Matrix (Fin n) (Fin n) ℂ) -
-            (1 : Matrix (Fin n) (Fin n) ℂ) ⊗ₖ gram n AC.2)‖
+          Real.log ‖Matrix.det ((AC.1 * AC.1ᴴ) ⊗ₖ (1 : Matrix (Fin n) (Fin n) ℂ) -
+            (1 : Matrix (Fin n) (Fin n) ℂ) ⊗ₖ (AC.2 * AC.2ᴴ))‖
           ∂(matrixLaw n μ).prod (matrixLaw n μ)) =
       (∑ ij : Fin n × Fin n,
         ∫ AC : Matrix (Fin n) (Fin n) ℂ × Matrix (Fin n) (Fin n) ℂ,
@@ -601,8 +598,8 @@ private lemma pairwise_log_integrable_of_log_det (n : ℕ) (μ : Measure ℂ) [I
         ∂(matrixLaw n μ).prod (matrixLaw n μ),
       ∀ i j, gramEigenvalue n AC.1 i ≠ gramEigenvalue n AC.2 j)
     (hd : Integrable (fun AC : Matrix (Fin n) (Fin n) ℂ × Matrix (Fin n) (Fin n) ℂ =>
-      Real.log ‖Matrix.det (gram n AC.1 ⊗ₖ (1 : Matrix (Fin n) (Fin n) ℂ) -
-        (1 : Matrix (Fin n) (Fin n) ℂ) ⊗ₖ gram n AC.2)‖)
+      Real.log ‖Matrix.det ((AC.1 * AC.1ᴴ) ⊗ₖ (1 : Matrix (Fin n) (Fin n) ℂ) -
+        (1 : Matrix (Fin n) (Fin n) ℂ) ⊗ₖ (AC.2 * AC.2ᴴ))‖)
       ((matrixLaw n μ).prod (matrixLaw n μ))) :
     ∀ ij : Fin n × Fin n, Integrable
       (fun AC : Matrix (Fin n) (Fin n) ℂ × Matrix (Fin n) (Fin n) ℂ =>
@@ -637,14 +634,14 @@ lemma logarithmicEnergy_mean_eq_log_det_of_moments (n : ℕ) (hn : 0 < n)
         ∂(matrixLaw n μ).prod (matrixLaw n μ),
       ∀ i j, gramEigenvalue n AC.1 i ≠ gramEigenvalue n AC.2 j)
     (hd : Integrable (fun AC : Matrix (Fin n) (Fin n) ℂ × Matrix (Fin n) (Fin n) ℂ =>
-      Real.log ‖Matrix.det (gram n AC.1 ⊗ₖ (1 : Matrix (Fin n) (Fin n) ℂ) -
-        (1 : Matrix (Fin n) (Fin n) ℂ) ⊗ₖ gram n AC.2)‖)
+      Real.log ‖Matrix.det ((AC.1 * AC.1ᴴ) ⊗ₖ (1 : Matrix (Fin n) (Fin n) ℂ) -
+        (1 : Matrix (Fin n) (Fin n) ℂ) ⊗ₖ (AC.2 * AC.2ᴴ))‖)
       ((matrixLaw n μ).prod (matrixLaw n μ))) :
     logarithmicEnergy (meanSpectralMeasure n hn μ) =
       (Real.log n - (n : ℝ)⁻¹^2 *
         ∫ AC : Matrix (Fin n) (Fin n) ℂ × Matrix (Fin n) (Fin n) ℂ,
-          Real.log ‖Matrix.det (gram n AC.1 ⊗ₖ (1 : Matrix (Fin n) (Fin n) ℂ) -
-            (1 : Matrix (Fin n) (Fin n) ℂ) ⊗ₖ gram n AC.2)‖
+          Real.log ‖Matrix.det ((AC.1 * AC.1ᴴ) ⊗ₖ (1 : Matrix (Fin n) (Fin n) ℂ) -
+            (1 : Matrix (Fin n) (Fin n) ℂ) ⊗ₖ (AC.2 * AC.2ᴴ))‖
           ∂(matrixLaw n μ).prod (matrixLaw n μ) : ℝ) := by
   have hr := pairwise_log_integrable_of_log_det n μ he h hd
   apply logarithmicEnergy_mean_eq_log_det n hn μ h

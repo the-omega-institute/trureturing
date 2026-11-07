@@ -10,6 +10,7 @@ proof_shape: pending per-declaration verification.
 escape_witness: none claimed before the upstream-only tests.
 admission_basis: pending escape-witness verification
 Direct frozen dependencies: pending compiled-constant extraction.
+Unfinished escape audit: https://github.com/the-omega-institute/trureturing/issues/27612
 -/
 import Mathlib.Topology.Algebra.Polynomial
 import Mathlib.MeasureTheory.Function.UniformIntegrable
@@ -471,8 +472,6 @@ noncomputable def affineGramPoly {n : ℕ} (A G : Matrix (Fin n) (Fin n) R) :
 noncomputable def pairDet {n : ℕ} (A C G K : Matrix (Fin n) (Fin n) R) : Polynomial R :=
   Matrix.det (affineGramPoly A G ⊗ₖ (1 : Matrix (Fin n) (Fin n) (Polynomial R)) -
     (1 : Matrix (Fin n) (Fin n) (Polynomial R)) ⊗ₖ affineGramPoly C K)
-noncomputable def rankOneBase {s : ℕ} (a : R) : Matrix (Fin (s+1)) (Fin (s+1)) R :=
-  Matrix.diagonal (fun i => if i=0 then a else 0)
 private noncomputable def rankOneGramPoly {s : ℕ} (a : R)
     (G : Matrix (Fin (s+1)) (Fin (s+1)) R) :
     Matrix (Fin (s+1)) (Fin (s+1)) (Polynomial R) := fun i j =>
@@ -482,10 +481,10 @@ private noncomputable def rankOneGramPoly {s : ℕ} (a : R)
     Polynomial.X^2 * Polynomial.C (∑ k, G i k * star (G j k))
 private lemma affineGramPoly_rankOneBase {s : ℕ} (a : R)
     (G : Matrix (Fin (s+1)) (Fin (s+1)) R) :
-    affineGramPoly (rankOneBase a) G = rankOneGramPoly a G := by
+    affineGramPoly (Matrix.single 0 0 a) G = rankOneGramPoly a G := by
   apply Matrix.ext
   intro i j
-  simp only [affineGramPoly, rankOneBase, rankOneGramPoly,
+  simp only [affineGramPoly, ← Matrix.diagonal_single, Pi.single_apply, eq_comm, rankOneGramPoly,
     Matrix.add_apply, Matrix.map_apply, Matrix.smul_apply, smul_eq_mul,
     Matrix.diagonal_conjTranspose, Matrix.diagonal_mul, Matrix.mul_diagonal,
     Matrix.conjTranspose_apply, Matrix.mul_apply]
@@ -528,7 +527,7 @@ private lemma colWeight_sum (s : ℕ) : (∑ ij : Fin (s+1) × Fin (s+1), colWei
 lemma rankOne_order_lower {s : ℕ} (a : R)
     (G K : Matrix (Fin (s+1)) (Fin (s+1)) R) :
     (Polynomial.X : Polynomial R)^(2*s*s+1) ∣
-      pairDet (rankOneBase a) (rankOneBase a) G K := by
+      pairDet (Matrix.single 0 0 a) (Matrix.single 0 0 a) G K := by
   have h := X_pow_dvd_det_of_entry_weights
     (rankOneGramPoly a G ⊗ₖ (1 : Matrix (Fin (s+1)) (Fin (s+1)) (Polynomial R)) -
       (1 : Matrix (Fin (s+1)) (Fin (s+1)) (Polynomial R)) ⊗ₖ rankOneGramPoly a K)
@@ -550,7 +549,7 @@ private lemma rankOneGramPoly_one {s : ℕ} (a : R) :
   apply Matrix.ext
   intro i j
   simp only [affineGramPoly, Matrix.conjTranspose_one, Matrix.mul_one, Matrix.one_mul,
-    rankOneBase, Matrix.diagonal_conjTranspose, Matrix.add_apply, Matrix.smul_apply,
+    ← Matrix.diagonal_single, Pi.single_apply, eq_comm, Matrix.diagonal_conjTranspose, Matrix.add_apply, Matrix.smul_apply,
     Matrix.map_apply, smul_eq_mul, Matrix.mul_apply, Matrix.diagonal_apply]
   by_cases hij : i=j <;> by_cases hi : i=0 <;> by_cases hj : j=0 <;>
     simp_all [Matrix.one_apply]
@@ -562,7 +561,7 @@ private lemma rankOneGramPoly_zero {s : ℕ} (a : R) :
   by_cases hij : i=j <;> by_cases hi : i=0 <;> by_cases hj : j=0 <;>
     simp_all [rankOneGramPoly, Matrix.diagonal_apply]
 private lemma pairDet_rankOne_witness {s : ℕ} (a : R) :
-    pairDet (rankOneBase a) (rankOneBase a)
+    pairDet (Matrix.single 0 0 a) (Matrix.single 0 0 a)
       (1 : Matrix (Fin (s+1)) (Fin (s+1)) R) 0 =
       Polynomial.X^(2*s*s+1) *
         (Polynomial.C (a+star a)+Polynomial.X) *
@@ -697,7 +696,7 @@ namespace D5.S3.Analytic.Probability.GaussianPolynomialLog.Covariance
 noncomputable section
 
 lemma pairDet_rankOne_witness_order {s : ℕ} (a : ℝ) (ha : a ≠ 0) :
-    (pairDet (rankOneBase (a : ℂ)) (rankOneBase (a : ℂ))
+    (pairDet (Matrix.single 0 0 (a : ℂ)) (Matrix.single 0 0 (a : ℂ))
       (1 : Matrix (Fin (s+1)) (Fin (s+1)) ℂ) 0).natTrailingDegree = 2*s*s+1 := by
   rw [pairDet_rankOne_witness]
   let Q : Polynomial ℂ :=
