@@ -201,12 +201,13 @@ private theorem common_square_representation (t : T) (a b c : LocalVectors E t) 
   obtain ⟨y,r,rfl⟩ := square_representation t b
   obtain ⟨z,v,rfl⟩ := square_representation t c
   refine ⟨((r*v)^2).val • x, ((s*v)^2).val • y, ((s*r)^2).val • z, s*r*v, ?_, ?_, ?_⟩
-  · simpa only [pow_two, mul_assoc, mul_left_comm, mul_comm, Submonoid.smul_def]
-      using (LocalizedModule.mk_cancel_common_left ((r*v)^2) (s^2) x).symm
-  · simpa only [pow_two, mul_assoc, mul_left_comm, mul_comm, Submonoid.smul_def]
-      using (LocalizedModule.mk_cancel_common_left ((s*v)^2) (r^2) y).symm
-  · simpa only [pow_two, mul_assoc, mul_left_comm, mul_comm, Submonoid.smul_def]
-      using (LocalizedModule.mk_cancel_common_left ((s*r)^2) (v^2) z).symm
+  all_goals
+    apply LocalizedModule.mk_eq.mpr
+    refine ⟨1, ?_⟩
+    simp only [one_smul, Submonoid.smul_def, Submonoid.coe_mul,
+      SubmonoidClass.coe_pow, smul_smul]
+    congr 1
+    ring
 
 /-- One same-original nonlinear localization has the square formula, nested NN,
 and the separate saturated local H-kernel translation law. -/

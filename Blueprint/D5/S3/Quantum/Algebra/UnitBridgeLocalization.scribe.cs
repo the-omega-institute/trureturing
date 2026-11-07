@@ -54,7 +54,7 @@ internal sealed class UnitBridgeLocalizationDocument : IScribeDocumentDefinition
         var common=All("a",local,All("b",local,All("c",local,
             Exists("x",V,Exists("y",V,Exists("z",V,Exists("q",S,
                 And(Eq(I("a"),Frac(I("x"),q,2)),And(Eq(I("b"),Frac(I("y"),q,2)),
-                    Eq(I("c"),Frac(I("z"),q,2))))))))));
+                    Eq(I("c"),Frac(I("z"),q,2)))))))))));
         var body=new Formula.Bind(FormulaQuantifier.Exists,FormulaIdentifier.Create("k"),
             C("TotalBinaryMaps",local),And(first,And(nested,And(kernel,common))));
         return All("T",I("TopologicalSpaces"),All("E",C("Original",I("T")),
