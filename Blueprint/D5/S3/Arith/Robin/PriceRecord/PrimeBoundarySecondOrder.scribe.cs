@@ -11,11 +11,11 @@ internal sealed class PrimeBoundarySecondOrderDocument : IScribeDocumentDefiniti
         H("Finite endpoints and normalization"),
         Blocks(
             Paragraph(Text("The finite-prefix Q is the original objective plus its tangent remainder. Original phi, baseline, realValues and realInfimum are imported without redefinition. This asymptotic does not assert integer Robin or RH.")),
-            Describe.Lean(DescribeId.Create("primeboundarysecondorder-eventual-Q-exact"),
+            Describe.Lean(DescribeId.Create("primeboundarysecondorder-eventual-q-exact"),
                 DeclarationHandle.Create(Prefix + "eventual_Q_exact"), H("The exact endpoint and tie identity for canonical Q"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("Eventually C=1+H*ell=r^2 and the actual supported boundary is b(p)=max(1,log(C)/log(p)-1). Original prefixQ equals 2*(pi(r)*log r-theta(r))/(r^2-1)+pi(r)*[-log(1-r^-2)]+logarithmicTail(r,P). Consume the existing prime_prefix_boundary_formulas and fixed_price_Q_identity; r<P has already been proved from H/P->1. Tied primes p=r are counted in the inclusive head and have zero clock contribution. There is no assumption theta(P)<=P."))), DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("primeboundarysecondorder-calibrated-Q-second-order"),
+            Describe.Lean(DescribeId.Create("primeboundarysecondorder-calibrated-q-second-order"),
                 DeclarationHandle.Create(Prefix + "calibrated_Q_second_order"), H("Coefficients four, four, sixteen in the genuine r scale"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("The literal conclusion is log(r)^2*(r*log(r)*prefixQ-4-4/log(r))->16. Equivalently Q=4/(r*l)*(1+1/l+4/l^2+o(l^-2)). The clock component contributes 2,4,12; the head contributes 1,1,2; and the tail contributes 1,-1,2 at the three successive powers. The four-term pi residual and theta_error_log_power 3 supply the errors at the moving r. C/(C-1) is retained and its log(r)^2 correction tends to zero. The first head/tail corrections cancel, leaving the requested second-order coefficient."))), DescribeRole.Theorem),

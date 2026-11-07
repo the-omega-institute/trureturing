@@ -80,7 +80,7 @@ theorem eventual_Q_exact :
         logarithmicTail (prefixY P) (P : ℝ) := by
   filter_upwards [eventual_prefix_domains, eventual_scale_positivity] with P hdom hpos
   try simp only [Pi.div_apply, Pi.mul_apply, Function.comp_def]
-  rcases hpos with ⟨hH, he, hC, hr, hl, _, hP, _⟩
+  rcases hpos with ⟨hH, he, hC, hr, hl, hP, _⟩
   have hsq : prefixY P ^ 2 = prefixC P := sq_sqrt hC.le
   have hform := prime_prefix_boundary_formulas P hdom.2.2.2.1
   dsimp only at hform
@@ -159,7 +159,7 @@ private lemma finite_endpoint_separation :
   apply h.congr'
   filter_upwards [eventual_scale_positivity] with P hP
   try simp only [Pi.div_apply, Pi.mul_apply, Function.comp_def]
-  rcases hP with ⟨hH, he, hC, hr, hl, _, hp, _⟩
+  rcases hP with ⟨hH, he, hC, hr, hl, hp, _⟩
   have hs : prefixY P ^ 2 = prefixC P := sq_sqrt hC.le
   have hid : prefixC P / (prefixH P * prefixEll P) *
       (log (prefixY P) / prefixEll P) ^ 6 * (log (prefixH P) ^ 7 / prefixH P) *

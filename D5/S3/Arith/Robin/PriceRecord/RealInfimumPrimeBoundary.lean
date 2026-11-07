@@ -389,8 +389,6 @@ def prefixPrice (P : ℕ) : ℝ :=
 def prefixC (P : ℕ) : ℝ := cutoff (prefixPrice P)
 def prefixY (P : ℕ) : ℝ := sqrt (prefixC P)
 def prefixBoundary (P : ℕ) : ℕ → ℝ := fun p => boundary p (prefixPrice P)
-def prefixEps (P : ℕ) : ℝ :=
-  1 / (sqrt (prefixH P) * prefixEll P * sqrt (prefixEll P))
 def prefixQ (P : ℕ) : ℝ :=
   phi (Nat.primesLE P) (prefixBoundary P) - baseline (Nat.primesLE P) +
     tangentRemainder (prefixH P) (clock (Nat.primesLE P) (prefixBoundary P))
@@ -489,7 +487,7 @@ private lemma prefix_H_ell_atTop :
 theorem eventual_scale_positivity :
     ∀ᶠ P : ℕ in atTop,
       0 < prefixH P ∧ 0 < prefixEll P ∧ 0 < prefixC P ∧
-      0 < prefixY P ∧ 0 < log (prefixY P) ∧ 0 < prefixEps P ∧
+      0 < prefixY P ∧ 0 < log (prefixY P) ∧
       0 < (P : ℝ) ∧ 0 < log (P : ℝ) := by
   filter_upwards [eventual_prefix_domains, eventually_gt_atTop (1 : ℕ)] with P h hP
   have hH : 0 < prefixH P := lt_trans zero_lt_one (theta_gt_one h.1 h.2.1)
@@ -497,11 +495,8 @@ theorem eventual_scale_positivity :
   have hC : 0 < prefixC P := by rw [prefixC_identity]; positivity
   have hy : 1 < prefixY P := lt_trans (by norm_num) h.2.2.2.2.1
   have hp : (1 : ℝ) < P := by exact_mod_cast hP
-  refine ⟨hH, he, hC, lt_trans zero_lt_one hy, log_pos hy, ?_,
+  exact ⟨hH, he, hC, lt_trans zero_lt_one hy, log_pos hy,
     lt_trans zero_lt_one hp, log_pos hp⟩
-  dsimp only [prefixEps]
-  exact one_div_pos.mpr
-    (mul_pos (mul_pos (sqrt_pos.mpr hH) he) (sqrt_pos.mpr he))
 
 /-- The additive one in the actual cutoff is negligible. -/
 theorem prefix_C_div_H_ell :
@@ -511,7 +506,7 @@ theorem prefix_C_div_H_ell :
   simp only [add_zero] at h
   apply h.congr'
   filter_upwards [eventual_scale_positivity] with P hP
-  rcases hP with ⟨hH, he, hC, hy, hly, heps, hp, hlp⟩
+  rcases hP with ⟨hH, he, hC, hy, hly, hp, hlp⟩
   rw [prefixC_identity]
   field_simp [hH.ne', he.ne']
   <;> ring
@@ -522,7 +517,7 @@ theorem eventual_log_C_identity :
       log (prefixC P) = prefixEll P + log (prefixEll P) +
         log (prefixC P / (prefixH P * prefixEll P)) := by
   filter_upwards [eventual_scale_positivity] with P hP
-  rcases hP with ⟨hH, he, hC, hy, hly, heps, hp, hlp⟩
+  rcases hP with ⟨hH, he, hC, hy, hly, hp, hlp⟩
   rw [log_div hC.ne' (mul_ne_zero hH.ne' he.ne'), log_mul hH.ne' he.ne']
   change log (prefixC P) = log (prefixH P) + log (prefixEll P) +
     (log (prefixC P) - (log (prefixH P) + log (prefixEll P)))
@@ -547,14 +542,14 @@ theorem prefix_log_Y_div_ell :
     norm_num only [add_zero] at h
     apply h.congr'
     filter_upwards [eventual_log_C_identity, eventual_scale_positivity] with P hC hP
-    rcases hP with ⟨hH, he, hCp, hy, hly, heps, hp, hlp⟩
+    rcases hP with ⟨hH, he, hCp, hy, hly, hp, hlp⟩
     rw [hC]
     field_simp [he.ne']
     <;> ring
   have h := hc.div_const 2
   apply h.congr'
   filter_upwards [eventual_scale_positivity] with P hP
-  rcases hP with ⟨hH, he, hC, hy, hly, heps, hp, hlp⟩
+  rcases hP with ⟨hH, he, hC, hy, hly, hp, hlp⟩
   dsimp only [prefixY]
   rw [log_sqrt hC.le]
   ring
@@ -567,7 +562,7 @@ theorem prefix_Y_div_sqrt_H_ell :
   simp only [sqrt_one] at h
   apply h.congr'
   filter_upwards [eventual_scale_positivity] with P hP
-  rcases hP with ⟨hH, he, hC, hy, hly, heps, hp, hlp⟩
+  rcases hP with ⟨hH, he, hC, hy, hly, hp, hlp⟩
   rw [sqrt_div hC.le]
   rfl
 

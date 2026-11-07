@@ -77,7 +77,7 @@ private lemma calibrated_normalization :
     norm_num at h
     apply h.congr'
     filter_upwards [eventual_scale_positivity] with P hP
-    rcases hP with ⟨hH, hL, hC, hr, hl, _, hP, _⟩
+    rcases hP with ⟨hH, hL, hC, hr, hl, hP, _⟩
     have hs1 : sqrt (prefixH P * L P) ^ 2 = prefixH P * L P := sq_sqrt (by positivity)
     have hs2 : prefixY P ^ 2 = prefixC P := sq_sqrt hC.le
     have hkpos : 0 < k P := div_pos (sqrt_pos.mpr (by positivity)) hr
@@ -137,7 +137,7 @@ private lemma calibrated_normalization :
   norm_num at h
   apply h.congr'
   filter_upwards [eventual_scale_positivity] with P hP
-  rcases hP with ⟨hH, hL, hC, hr, hl, _, hp, hlp⟩
+  rcases hP with ⟨hH, hL, hC, hr, hl, hp, hlp⟩
   dsimp only [k, A, l, L, q]
   rw [sqrt_mul hH.le]
   field_simp [hr.ne', hl.ne']
