@@ -1,0 +1,22 @@
+**定义 13.1（固定门和三个目标）。** 使用 §7.2 未交换逻辑基时的投影 $P=|1\rangle\langle1|$，固定
+
+$$
+U_\star=K_P=\zeta[I+(\zeta-1)P]
+=\operatorname{diag}(\zeta,\zeta^2),\quad
+\theta=\frac{3\pi}{5},\quad c=\cos\theta=\frac{1-\sqrt5}{4},\quad s=\sin\theta>0.
+\tag{13.1}
+$$
+
+这是本卷的黄金相对相位门；整体因子 $\zeta$ 不改变密度矩阵共轭。其 Bloch 作用为绕 $z$ 轴旋转 $+\theta$。置
+
+$$
+m=R_{U_\star}^{-1}n_B
+=\frac{(3c+s,c-3s,1)}{\sqrt{11}},\qquad
+\rho_0=\frac{I+\sigma_z}{2},\quad
+\rho_1=\frac{I-\sigma_z}{2},\quad
+\rho_d=\frac{I-m\cdot\sigma}{2}.
+\tag{13.2}
+$$
+
+$|m|=1$，故三者均为指定的已知纯目标；下标 $d$ 表示黄金门后效果 $2$ 的暗态。它不表示一个额外探测器。以下只用这三个输入，不假定任意未知输入的实际接入，也不增加混态准备源。
+

@@ -1,0 +1,14 @@
+#### 定义 4.1：原标签接口与三相参照
+
+设 $X$ 是原输入历史标签集，输入表示 $a:X\to H$，其中 $1\le d=\dim_{\mathbb C}H<\infty$。同一实际完整输出给 $b:X\to K$，$K$ 是共同复 Hilbert 输出空间。**不预设** $b$ 只由 $a(x)$ 决定，也不预设输出线性、连续或齐次。
+
+取 $d$ 个实际参照标签 $\alpha_j$，使 $a_j=a(\alpha_j)$ 线性无关并张成 $H$。令 $\zeta=e^{2\pi i/3}$。同一内部相位参考供应标签 $\alpha_{jr}$，$r=0,1,2$，其中 $\alpha_{j0}=\alpha_j$，且
+
+$$
+a(\alpha_{jr})=\zeta^r a_j,\qquad
+b(\alpha_{jr})=\zeta^r b_j,\quad b_j=b(\alpha_j).
+\tag{C}
+$$
+
+这只校准有限参照，不预设全部输入上的相位协变。种子参照无须正交或归一。
+

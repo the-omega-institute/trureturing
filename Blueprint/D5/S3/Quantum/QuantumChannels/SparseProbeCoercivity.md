@@ -52,7 +52,19 @@ $$\forall d \in \mathbb{N}, M \in \operatorname{Matrix}\left(\operatorname{Fin}\
 
 The coordinate losses sum to offSq. The additional probe contributes survivalLoss, so there are d+1 survival events.
 
-**Lemma 1.5 (hs_split).**
+**Lemma 1.5 (residual_identity).**
+
+$$\forall d \in \mathbb{N}, x \in \operatorname{Fin}\left(d\right) \to \mathbb{C}, v \in \operatorname{Fin}\left(d\right) \to \mathbb{C},\; \sum_{i : \operatorname{Fin}\left(d\right)} \operatorname{normSq}\left(v (i)\right) = 1 \Rightarrow \operatorname{let} c := \sum_{i : \operatorname{Fin}\left(d\right)} \operatorname{conj}\left(v (i)\right) \cdot x (i); \sum_{i : \operatorname{Fin}\left(d\right)} \operatorname{normSq}\left(x (i) - c \cdot v (i)\right) = \sum_{i : \operatorname{Fin}\left(d\right)} \operatorname{normSq}\left(x (i)\right) - \operatorname{normSq}\left(c\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/QuantumChannels/SparseProbeCoercivity.residual_identity` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For a unit vector v, subtracting the orthogonal projection of x onto v reduces its squared norm by exactly the squared modulus of their complex inner product.
+
+**Lemma 1.6 (hs_split).**
 
 $$\forall d \in \mathbb{N}, M \in \operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right),\; \operatorname{hsSq}\left(M\right) = \operatorname{offSq}\left(M\right) + \sum_{i : \operatorname{Fin}\left(d\right)} \operatorname{normSq}\left(M (i, i)\right)$$
 
@@ -64,7 +76,7 @@ $$\forall d \in \mathbb{N}, M \in \operatorname{Matrix}\left(\operatorname{Fin}\
 
 Separating the diagonal entries gives the Hilbert--Schmidt decomposition.
 
-**Theorem 1.6 (sparse_probe_coercivity).**
+**Theorem 1.7 (sparse_probe_coercivity).**
 
 $$\forall d \in \mathbb{N}, M \in \operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right), v \in \operatorname{Fin}\left(d\right) \to \mathbb{C}, mu \in \mathbb{R},\; \left(0 < d \land \left(\sum_{i : \operatorname{Fin}\left(d\right)} \operatorname{normSq}\left(v (i)\right) = 1 \land \left(0 < mu \land \left(\forall i \in \operatorname{Fin}\left(d\right),\; mu \le \operatorname{normSq}\left(v (i)\right)\right)\right)\right)\right) \Rightarrow \frac{mu}{2 + mu} \cdot \left(\operatorname{hsSq}\left(M\right) - \frac{\operatorname{normSq}\left(\operatorname{trace}\left(M\right)\right)}{d}\right) \le \operatorname{probeLoss}\left(M, v\right)$$
 
@@ -82,6 +94,6 @@ Let c be the complex inner product of v with Cv, and let B be the off-diagonal p
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/SparseProbeCoercivity.hs_split`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/SparseProbeCoercivity.offSq`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/SparseProbeCoercivity.probeLoss`
+- Truth anchor: `D5/S3/Quantum/QuantumChannels/SparseProbeCoercivity.residual_identity`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/SparseProbeCoercivity.sparse_probe_coercivity`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/SparseProbeCoercivity.survivalLoss`
-- Dependency: [D5/S3/Quantum/QuantumChannels/TomiyamaDiagonalKPositivity](TomiyamaDiagonalKPositivity.md)
