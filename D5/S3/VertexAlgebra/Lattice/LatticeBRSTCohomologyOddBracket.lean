@@ -316,7 +316,13 @@ theorem cohomologyCurrent_delta (a b : Cohomology D H h26 hHG hGH) :
           (parity D H h26 hHG hGH (Delta D H h26 hHG hGH a))
           (Delta D H h26 hHG hGH b) := by
     have h := h1
-    change _ - 0 - _ = _ at h
+    have hz : product D H h26 hHG hGH
+        (0 : Cohomology D H h26 hHG hGH) =
+        (0 : Module.End ℂ (Cohomology D H h26 hHG hGH)) :=
+      (product D H h26 hHG hGH).map_zero
+    rw [hz] at h
+    change _ - (0 : Cohomology D H h26 hHG hGH) - _ = _ at h
+    rw [sub_zero] at h
     exact sub_eq_iff_eq_add.mp h
   have h2' : Delta D H h26 hHG hGH
         (product D H h26 hHG hGH (parity D H h26 hHG hGH a)
@@ -327,16 +333,69 @@ theorem cohomologyCurrent_delta (a b : Cohomology D H h26 hHG hGH) :
           (Delta D H h26 hHG hGH (parity D H h26 hHG hGH a))
           (Delta D H h26 hHG hGH b) := by
     have h := h2
-    change _ - _ - 0 = _ at h
+    rw [parity_involution] at h
+    have hz : product D H h26 hHG hGH a
+        (0 : Cohomology D H h26 hHG hGH) = 0 :=
+      (product D H h26 hHG hGH a).map_zero
+    rw [hz, sub_zero] at h
     exact sub_eq_iff_eq_add.mp h
   have hpa : Delta D H h26 hHG hGH (parity D H h26 hHG hGH a) =
       -parity D H h26 hHG hGH (Delta D H h26 hHG hGH a) := by
     have h := Delta_parity D H h26 hHG hGH a
-    exact neg_eq_iff_eq_neg.mp h.symm
-  rw [← h0]
-  simp only [map_sub, LinearMap.sub_apply]
-  rw [Delta_square D H h26 hHG hGH (product D H h26 hHG hGH a b), h1', h2', hpa,
-    parity_involution]
+    have h' := congrArg
+      (fun z : Cohomology D H h26 hHG hGH => -z) h
+    exact (neg_neg
+      (Delta D H h26 hHG hGH (parity D H h26 hHG hGH a))).symm.trans h'.symm
+  have h0d : Delta D H h26 hHG hGH (cohomologyCurrent D H h26 hHG hGH a b) =
+      Delta D H h26 hHG hGH
+        ((Delta D H h26 hHG hGH (product D H h26 hHG hGH a b) -
+          product D H h26 hHG hGH (Delta D H h26 hHG hGH a) b) -
+        product D H h26 hHG hGH
+          (parity D H h26 hHG hGH a) (Delta D H h26 hHG hGH b)) := by
+    exact (congrArg (fun z : Cohomology D H h26 hHG hGH =>
+      Delta D H h26 hHG hGH z) h0).symm
+  have h1d : Delta D H h26 hHG hGH (product D H h26 hHG hGH
+        (Delta D H h26 hHG hGH a) b) =
+      cohomologyCurrent D H h26 hHG hGH (Delta D H h26 hHG hGH a) b +
+        product D H h26 hHG hGH
+          (parity D H h26 hHG hGH (Delta D H h26 hHG hGH a))
+          (Delta D H h26 hHG hGH b) := by
+    exact h1'
+  have h2d : Delta D H h26 hHG hGH (product D H h26 hHG hGH
+        (parity D H h26 hHG hGH a) (Delta D H h26 hHG hGH b)) =
+      cohomologyCurrent D H h26 hHG hGH
+          (parity D H h26 hHG hGH a) (Delta D H h26 hHG hGH b) +
+        product D H h26 hHG hGH
+          (Delta D H h26 hHG hGH (parity D H h26 hHG hGH a))
+          (Delta D H h26 hHG hGH b) := by
+    exact h2'
+  have hdd : Delta D H h26 hHG hGH
+      (Delta D H h26 hHG hGH (product D H h26 hHG hGH a b)) = 0 := by
+    exact Delta_square D H h26 hHG hGH (product D H h26 hHG hGH a b)
+  let x : Cohomology D H h26 hHG hGH :=
+    Delta D H h26 hHG hGH (product D H h26 hHG hGH a b) -
+      product D H h26 hHG hGH (Delta D H h26 hHG hGH a) b
+  let y : Cohomology D H h26 hHG hGH :=
+    product D H h26 hHG hGH
+      (parity D H h26 hHG hGH a) (Delta D H h26 hHG hGH b)
+  rw [h0d]
+  change Delta D H h26 hHG hGH (x - y) = _
+  have hdouter : Delta D H h26 hHG hGH (x - y) =
+      Delta D H h26 hHG hGH x - Delta D H h26 hHG hGH y :=
+    by exact LinearMap.map_sub (Delta D H h26 hHG hGH) x y
+  have hdinner : Delta D H h26 hHG hGH
+      (Delta D H h26 hHG hGH (product D H h26 hHG hGH a b) -
+      product D H h26 hHG hGH (Delta D H h26 hHG hGH a) b) =
+      Delta D H h26 hHG hGH
+          (Delta D H h26 hHG hGH (product D H h26 hHG hGH a b)) -
+        Delta D H h26 hHG hGH
+          (product D H h26 hHG hGH (Delta D H h26 hHG hGH a) b) :=
+    by
+      exact LinearMap.map_sub (Delta D H h26 hHG hGH)
+        (Delta D H h26 hHG hGH (product D H h26 hHG hGH a b))
+        (product D H h26 hHG hGH (Delta D H h26 hHG hGH a) b)
+  rw [hdouter, hdinner]
+  rw [hdd, h1d, h2d, hpa]
   simp only [map_zero, LinearMap.zero_apply, map_neg, LinearMap.neg_apply,
     neg_neg]
   abel
@@ -428,8 +487,20 @@ private theorem delta_leftOperator (b : Cohomology D H h26 hHG hGH) (q : ℕ)
   have hs : (-1 : ℂ)^q * (-1 : ℂ)^q = 1 := by
     rw [← mul_pow]
     norm_num
-  rw [hs, one_smul] at h ⊢
-  abel
+  rw [hs, one_smul]
+  calc
+    Delta D H h26 hHG hGH (product D H h26 hHG hGH b c) -
+          (-1 : ℂ)^q • product D H h26 hHG hGH b
+            (Delta D H h26 hHG hGH c) =
+        (Delta D H h26 hHG hGH (product D H h26 hHG hGH b c) -
+            product D H h26 hHG hGH (Delta D H h26 hHG hGH b) c -
+          (-1 : ℂ)^q • product D H h26 hHG hGH b
+            (Delta D H h26 hHG hGH c)) +
+          product D H h26 hHG hGH (Delta D H h26 hHG hGH b) c := by abel
+    _ = (cohomologyCurrent D H h26 hHG hGH b c) +
+          product D H h26 hHG hGH (Delta D H h26 hHG hGH b) c := by rw [h]
+    _ = product D H h26 hHG hGH (Delta D H h26 hHG hGH b) c +
+          (cohomologyCurrent D H h26 hHG hGH b c) := by abel
 
 private theorem delta_commutator_identity
     {V : Type*} [AddCommGroup V] [Module ℂ V]
@@ -491,12 +562,12 @@ private theorem bracketOperator_jacobi_operator
       (-1 : ℂ)^((p + 2) * q) := by
     rw [← pow_add]
     congr 1
-    omega
+    ring
   have hrt : (-1 : ℂ)^(p + 1) * (-1 : ℂ)^((p + 1) * q) =
       (-1 : ℂ)^((p + 1) * (q + 1)) := by
     rw [← pow_add]
     congr 1
-    omega
+    ring
   have hsp : (-1 : ℂ)^p = -(-1 : ℂ)^(p + 1) := by
     rw [pow_succ]
     ring
@@ -538,20 +609,85 @@ private theorem bracketOperator_jacobi_operator
     rw [Delta_bracket, ha, map_smul]
     simp only [LinearMap.smul_apply]
   have hLDelta :
-      leftOperator D H h26 hHG hGH
+      L D H h26 hHG hGH
           (Delta D H h26 hHG hGH (oddBracket D H h26 hHG hGH a b)) =
-        leftOperator D H h26 hHG hGH
+        L D H h26 hHG hGH
             (oddBracket D H h26 hHG hGH (Delta D H h26 hHG hGH a) b) -
-          (-1 : ℂ)^p • leftOperator D H h26 hHG hGH
+          (-1 : ℂ)^p • L D H h26 hHG hGH
             (oddBracket D H h26 hHG hGH a
               (Delta D H h26 hHG hGH b)) := by
     rw [hDParity]
     simp only [leftOperator, map_sub, map_smul, LinearMap.smul_apply]
   rw [hLDelta, hsp] at hid
   apply sub_eq_zero.mp
-  rw [← hid]
-  simp only [smul_sub, smul_add, smul_smul]
-  module
+  have hcancel := congrArg
+    (fun z : Module.End ℂ (Cohomology D H h26 hHG hGH) =>
+      z - (L D H h26 hHG hGH
+          (oddBracket D H h26 hHG hGH
+            (Delta D H h26 hHG hGH a) b) +
+        (-1 : ℂ)^(p + 1) • L D H h26 hHG hGH
+          (oddBracket D H h26 hHG hGH a
+            (Delta D H h26 hHG hGH b)))) hid
+  simp only [neg_smul, smul_sub, smul_add, smul_smul] at hcancel
+  abel_nf at hcancel
+  have hbase : (-1 : ℤ) • (1 : ℂ) = -1 := by norm_num
+  rw [hbase] at hcancel
+  have hleft : (-1 : ℂ)^(p + (1 + q)) =
+      (-1 : ℂ)^(p + 1) * (-1 : ℂ)^q := by
+    rw [show p + (1 + q) = (p + 1) + q by omega, ← pow_add]
+  have hu : (-1 : ℂ)^((p + 1) * (1 + q)) =
+      (-1 : ℂ)^((p + 1) * (q + 1)) := by
+    congr 1
+    ring
+  have hrsq' : ((-1 : ℂ)^(p + 1) * (-1 : ℂ)^q) *
+      ((-1 : ℂ)^(p + 1) * (-1 : ℂ)^q) = 1 := by
+    calc
+      ((-1 : ℂ)^(p + 1) * (-1 : ℂ)^q) *
+          ((-1 : ℂ)^(p + 1) * (-1 : ℂ)^q) =
+        ((-1 : ℂ)^(p + 1) * (-1 : ℂ)^(p + 1)) *
+          ((-1 : ℂ)^q * (-1 : ℂ)^q) := by ring
+      _ = 1 := by rw [hrsq, hssq]; ring
+  have hcoef :
+      ((-1 : ℂ)^(p + 1) * (-1 : ℂ)^q) * (-1) *
+          ((-1 : ℂ)^(p + 1) *
+            ((-1 : ℂ)^q * (-1 : ℂ)^((p + 1) * (q + 1)))) =
+        -(-1 : ℂ)^((p + 1) * (q + 1)) := by
+    calc
+      ((-1 : ℂ)^(p + 1) * (-1 : ℂ)^q) * (-1) *
+          ((-1 : ℂ)^(p + 1) *
+            ((-1 : ℂ)^q * (-1 : ℂ)^((p + 1) * (q + 1)))) =
+        -(((-1 : ℂ)^(p + 1) * (-1 : ℂ)^(p + 1)) *
+          ((-1 : ℂ)^q * (-1 : ℂ)^q)) *
+            (-1 : ℂ)^((p + 1) * (q + 1)) := by ring
+      _ = -(-1 : ℂ)^((p + 1) * (q + 1)) := by rw [hrsq, hssq]; ring
+  have hcoef' :
+      ((-1 : ℂ)^(p + 1) * (-1 : ℂ)^q) *
+          ((-1 : ℂ)^(p + 1) *
+            ((-1 : ℂ)^q * (-1 : ℂ)^((p + 1) * (q + 1)))) =
+        (-1 : ℂ)^((p + 1) * (q + 1)) := by
+    calc
+      ((-1 : ℂ)^(p + 1) * (-1 : ℂ)^q) *
+          ((-1 : ℂ)^(p + 1) *
+            ((-1 : ℂ)^q * (-1 : ℂ)^((p + 1) * (q + 1)))) =
+        ((-1 : ℂ)^(p + 1) * (-1 : ℂ)^(p + 1)) *
+          ((-1 : ℂ)^q * (-1 : ℂ)^q) *
+            (-1 : ℂ)^((p + 1) * (q + 1)) := by ring
+      _ = (-1 : ℂ)^((p + 1) * (q + 1)) := by rw [hrsq, hssq]; ring
+  rw [hleft, hu] at hcancel
+  have hcancel2 := congrArg
+    (fun z : Module.End ℂ (Cohomology D H h26 hHG hGH) =>
+      ((-1 : ℂ)^(p + 1) * (-1 : ℂ)^q) • z) hcancel
+  simp only [smul_add, smul_sub, smul_smul, hrsq', one_smul,
+    neg_smul, smul_neg] at hcancel2
+  rw [hcoef'] at hcancel2
+  have hEq : T D H h26 hHG hGH (oddBracket D H h26 hHG hGH a b) =
+      T D H h26 hHG hGH a * T D H h26 hHG hGH b -
+        (-1 : ℂ)^((p + 1) * (q + 1)) •
+          (T D H h26 hHG hGH b * T D H h26 hHG hGH a) := by
+    simpa only [T, bracketOperator, sub_eq_add_neg, neg_smul, smul_sub,
+      smul_smul] using hcancel2
+  rw [hEq]
+  abel
 
 theorem oddBracket_jacobi (a b c : Cohomology D H h26 hHG hGH) (p q : ℕ)
     (ha : parity D H h26 hHG hGH a = (-1 : ℂ)^p • a)
