@@ -25,4 +25,3 @@ This node records only that verified skew boundary. It does not claim additivity
 ## References
 
 - Truth anchor: `D5/S3/QuadraticForms/OriginalDRigidity.three_label_skew`
-- Dependency: [D5/S3/QuadraticForms/ParallelogramConstruction](ParallelogramConstruction.md)

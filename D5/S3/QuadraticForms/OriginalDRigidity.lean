@@ -17,7 +17,6 @@
 
 module
 
-public import D5.S3.QuadraticForms.ParallelogramConstruction
 public import Mathlib.Basic.Complex.Basic
 public import Mathlib.LinearAlgebra.Matrix.PosDef
 import Mathlib.Tactic
