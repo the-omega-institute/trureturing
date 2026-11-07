@@ -146,7 +146,7 @@ private lemma radii_upward {v : E} {r s : ℝ} (hr : r ∈ A.radii v) (hrs : r �
     rw [he]
     exact A.cone.add_mem hr.2.2 hd
 
-lemma norm_le_iff (v : E) (r : ℝ) :
+private lemma norm_le_iff (v : E) (r : ℝ) :
     A.orderNorm v ≤ r ↔ r ∈ A.radii v := by
   constructor
   · exact A.radii_upward (A.norm_attained v)
