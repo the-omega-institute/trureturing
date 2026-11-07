@@ -150,6 +150,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/SeriesInequalities/OccilBernsteinCorrectionRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/occil-convex-bernstein-corrections` (refuted) by `D5/S3/Analytic/SeriesInequalities/OccilBernsteinCorrectionRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"occil-convex-bernstein-corrections","declaration_gid":"D5/S3/Analytic/SeriesInequalities/OccilBernsteinCorrectionRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Peter Occil (2026). *Open Questions on the Bernoulli Factory Problem*. URL: <https://peteroupc.github.io/bernreq.html#Other_Questions>.
