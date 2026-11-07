@@ -1,0 +1,68 @@
+# Literal objective and quantifiers
+
+## Abstract
+
+Finite uniform fixed-price bounds for the genuine real and integer infima.
+
+The finite uniform bounds use the literal OwnClockFixedSupport definitions: admissible S x means x_p>=1 for every p in S; theta S=sum_S log p; clock S x=sum_S x_p log p; terminalCost T=log(log T); phi retains EulerGamma and every BoundaryPrimePrice benefit; realValues is the image of this phi on this domain; realInfimum=sInf(realValues). The baseline is the same EulerGamma+log(log(theta S))+sum_S log(1-p^-1). No objective, support, baseline or infimum is replaced.
+
+Let S be any finite set of genuine natural primes with card S>=3. Assume ell=log H>=1, where H=theta S, and choose any real r>0. Fix lambda=ActualRobinClockCovariance.g H=1/(H log H), b_p=boundary p lambda=max(1,log(1+lambda^-1)/log p-1), Q=phi S b-baseline S+tangentRemainder H (clock S b), and A=exp(ell*(exp r-1))-1. The real theorem retains its literal public type min(r,Q-A^2/ell)<=realInfimum S-baseline S. The private proof is factored so the same quantitative argument also pays the exact fixed-price integer gap.
+
+**Theorem 1.1 (Uniform finite lower bound without an attained optimizer).**
+
+Lean statement: `D5/S3/Arith/Robin/PriceRecord/RealInfimumUniformDuality.real_infimum_uniform_lower`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/PriceRecord/RealInfimumUniformDuality.real_infimum_uniform_lower` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Domain accounting: theta_gt_one gives H>1. theta_le_clock gives T=clock S x>=H for every admissible real x, so T>1, H>0 and log T, ell>0. Each prime base p>1, and probability_mem gives 0<q_p(x_p)=p^(-x_p-1)<1. Hence 0<1-q_p(x_p)<=1 and log(1-q_p(x_p))<=0. The baseline factors have 1-p^-1>0. The boundary vector is admissible because b_p>=1, so its clock also exceeds one; cutoff and critical logarithms have positive arguments because lambda>0 and p>1. Both nested logarithms used below have arguments at least one. There are no unpaid logarithm domains.
+
+Exact Euler-factor cancellation: benefit_log, summed over S, gives delta(x)=phi S x-baseline S=F(T)-F(H)+U(x), with F=terminalCost and U(x)=-sum_S log(1-q_p(x_p))>=0. No bound on U or delta is assumed. At the fixed positive price lambda, boundary_maximum compares every admissible x_p with the same b_p. Summation gives sum benefit(x)-lambda*T<=sum benefit(b)-lambda*T_b, equivalently U(x)+lambda*T>=U(b)+lambda*T_b. From the literal tangentRemainder definition, Q=U(b)+lambda*(T_b-H). Thus delta(x)>=Q-[lambda*(T-H)-(F(T)-F(H))].
+
+Elementary quadratic estimate: the original canonical CurvatureCorrectedArithmeticSurplus.log_one_add_quadratic gives z-z^2/2<=log(1+z) for z>=0. Its unchanged proof uses Mathlib Real.le_log_one_add_of_nonneg and multiplication by z+2>0; no duplicate scalar theorem is retained. Put u=(T-H)/H>=0, w=log(1+u), v=w/ell. The canonical logarithm upper bound gives 0<=w<=u, and ell>=1 gives 0<=v<=w<=u. Since ell*v=w, ell*v^2=w*v<=u^2. The two quadratic bounds yield ell*log(1+v)>=w-ell*v^2/2>=u-u^2. The exact positive-domain logarithm identities give F(T)-F(H)=log(1+log(1+u)/ell). Consequently F(T)-F(H)>=u/ell-u^2/ell. Also lambda*(T-H)=u/ell, so delta(x)>=Q-u^2/ell.
+
+Global cutoff argument: if delta(x)>=r, then min(r,Q-A^2/ell)<=r<=delta(x). Otherwise U(x)>=0 gives F(T)-F(H)<r. The positive-domain equivalence log y<z iff y<exp z, applied twice, gives log(1+u)<ell*(exp r-1) and u<A. Since u,A>=0 and ell>0, u^2/ell<=A^2/ell. Thus delta(x)>=Q-A^2/ell in this branch. The same bound by the minimum therefore holds for every function x:N->R satisfying admissible S x.
+
+Passing to the actual infimum: the accepted real_values_nonempty_bdd_below proves nonemptiness and boundedness below of this exact realValues set. Each value in the set has an admissible witness, so the pointwise result makes min(r,Q-A^2/ell)+baseline S a lower bound of realValues S. le_csInf with the accepted nonempty proof yields the displayed result for the literal realInfimum. No selected optimizer, attainment, stationarity, uniqueness, assumed uniform lower bound, RH premise, PNT premise or convergence premise occurs in the theorem.
+
+Define integerInfimum S literally as sInf {v:R | there exists a:N->Z, (for every p in S, 1<=a_p) and phi S (fun p => (a_p:R))=v}. The admissibility constraint is only on the same finite prime S. The actual phi uses the cast integer vector, its own nonlinear clock and every original Euler factor. There is no bounded search box, real relaxation, shifted baseline, changed prime support or assumed global integer optimizer. Off-support coordinates do not occur in this phi.
+
+Set G=sum_{p in S} BoundaryPrimePrice.integerGap p lambda at the same fixed lambda=g(H). The imported integerGap is exactly min(priceLoss at floor b_p, priceLoss at ceil b_p); priceLoss=priceObjective(b_p)-priceObjective(t), with priceObjective=benefit-lambda*t*log p. All coincident candidates, ties, boundary cases and inactive primes retain the accepted meanings. Neither G nor a surrogate rounding function is supplied as an extra hypothesis.
+
+**Theorem 1.2 (The exact integer gap enters both sides of a finite infimum sandwich).**
+
+Lean statement: `D5/S3/Arith/Robin/PriceRecord/RealInfimumUniformDuality.integer_infimum_uniform_sandwich`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/PriceRecord/RealInfimumUniformDuality.integer_infimum_uniform_sandwich` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every finite prime support S with card S>=3, ell=log(theta S)>=1 and every real r>0, the source theorem states min(r,Q+G-A^2/ell)<=integerInfimum S-baseline S and integerInfimum S-baseline S<=Q+G. H, ell, lambda, b, Q and A are exactly those of the real theorem above. The literal source telescope contains only S, primality, cardinality, the logarithm bound and positive r; it contains no global integer minimizer, desired lower or upper bound, clock approximation, stationarity, convergence, PNT or RH premise.
+
+Conditional-completeness obligations are proved for this exact integer image in a consumed helper. The integer vector a_p=1 everywhere witnesses nonemptiness. Any admissible integer vector casts to an admissible real vector. The accepted real_infimum_bounds gives baseline S<=realInfimum S<=phi S a, so baseline S bounds every value in the literal integer image below. This derives BddBelow without assuming an integer optimum or the sandwich. The lower passage uses le_csInf and this actual image's nonemptiness; the upper passage uses csInf_le and its established BddBelow.
+
+One shared algebraic identity drives both bounds. Let F(T)=log(log T), T=clock S x, T_b=clock S b and J_p(t)=priceLoss p lambda t. Summing the literal priceObjective difference gives sum_S J_p(x_p)=sum_S benefit(b_p)-sum_S benefit(x_p)+lambda*(T-T_b). Cancellation in phi and the literal tangentRemainder R(H,T)=F(H)+lambda*(T-H)-F(T) then gives delta(x)=phi S x-baseline S=Q+sum_S J_p(x_p)-R(H,T). This identity needs no minimizer and is shared with the real proof. In the private pointwise lemma, a scalar C is required to be bounded by this actual loss sum. The real theorem derives C=0 from boundary_maximum; the integer theorem derives C=G for each arbitrary admissible integer vector. C is not an assumed objective or infimum estimate.
+
+Uniform integer lower bound: take any a:N->Z with a_p>=1 on S, not merely a selected price maximizer. integer_gap_bounds gives integerGap p lambda<=J_p(a_p) for every p in S, hence G<=sum_S J_p(a_p). With u=(T-H)/H>=0 and ell>=1, the same proved-in-source elementary nested-log estimate F(T)-F(H)>=u/ell-u^2/ell and the exact equality lambda*(T-H)=u/ell give delta(a)>=Q+G-u^2/ell. If delta(a)>=r, the desired minimum is bounded by delta(a). Otherwise the exact Euler-factor cancellation delta(a)=F(T)-F(H)+U(a), U(a)=-sum_S log(1-p^(-a_p-1))>=0, implies F(T)-F(H)<r. Inverting the two logarithms at their positive arguments gives u<A. As u,A>=0 and ell>0, delta(a)>=Q+G-A^2/ell. The minimum bound therefore holds for every admissible integer vector. Applying le_csInf to the literal integer image yields the lower sandwich inequality.
+
+Constructed integer upper bound: for each p in the finite subtype {p:N | p in S}, apply the accepted integer_gap_attained at p>1 and lambda>0. It gives an integer k_p>=1 with integerGap p lambda=J_p(k_p), together with a fixed-price objective maximum. The implementation consumes the attained gap equality and admissibility; it does not need an assumed global nonlinear maximum or minimum. Choose these local k_p on S and set a_p=1 outside S. This single vector is admissible, and sum_S J_p(a_p)=G exactly. The shared identity becomes phi S a-baseline S=Q+G-R(H,T_a). theta_gt_one and clock_gt_one pay H,T_a>1, so the accepted tangent_remainder_nonnegative gives R(H,T_a)>=0, with no approximation of T_a-H. Finally csInf_le puts integerInfimum S below this actual admissible phi value, yielding integerInfimum S-baseline S<=Q+G.
+
+Proof scope and reuse: log_one_add_quadratic is imported directly from CurvatureCorrectedArithmeticSurplus after removing only its private modifier. The local nested_log_quadratic and nested_log_lt_clock_bound estimates feed the shared private pointwise proof. terminal_cost_increment, gap_identity_nonnegative, integer_values_nonempty_bdd_below and fixed_price_identity are visible because ExactInfimumDuality consumes them. The literal integerInfimum definition and both public theorem types retain their original meanings. No scalar duplicate, redundant infimum wrapper or unused proof helper is retained.
+
+Future mathematical use only: for initial prime supports S(P), the supplied research route proposes an ordinary-PNT explicit-boundary estimate Q~8/(sqrt H*(log H)^(3/2))=o(1/(sqrt H*log H)) and an actual full rounding-gap estimate G~2sqrt(2)/(sqrt H*log H). The latter requires the genuine full prime-gap limit and equality between this same supported gap and the full gap, using the accepted inactive-tail fact integerGap p lambda=0 when 1+lambda^-1<=p^2. This source stage has neither implemented nor natively checked those suppliers, the required support equality, or a fine PNT witness. It does not import or inspect another live rounding-gap source and does not treat a supplied asymptotic as accepted mathematics.
+
+The intended later choice is r=4/(sqrt H*log H). Elementary limit work would give A^2/ell=o(1/(sqrt H*log H)), while 4>2sqrt(2) eventually selects the Q+G-A^2/ell branch of the minimum. With the missing suppliers and H~P, the finite sandwich is designed to yield integerInfimum S(P)=baseline S(P)+(2sqrt(2)+o(1))/(sqrt P*log P). This is a description of the future mathematical use, not a Lean theorem, an assumed convergence theorem, or a completed limit result. The finite source alone does not control the signed Nicolas baseline, Robin's inequality above 5040, or RH; those targets remain open.
+
+These are finite bounds on the full admissible real and supported-integer images. BoundaryPrimePrice supplies the genuine local price losses and integer attainers; OwnClockFixedSupport supplies the unchanged objective, baseline, real infimum and tangent remainder. Escape registration, canonical admission, freeze and integration remain separate obligations. No RH conclusion or asymptotic theorem is asserted.
+
+## References
+
+- Truth anchor: `D5/S3/Arith/Robin/PriceRecord/RealInfimumUniformDuality.integer_infimum_uniform_sandwich`
+- Truth anchor: `D5/S3/Arith/Robin/PriceRecord/RealInfimumUniformDuality.real_infimum_uniform_lower`
+- Dependency: [D5/S3/Arith/Robin/PriceRecord/CurvatureCorrectedArithmeticSurplus](CurvatureCorrectedArithmeticSurplus.md)
+- Dependency: [D5/S3/Arith/Robin/PriceRecord/OwnClockFixedSupport](OwnClockFixedSupport.md)
