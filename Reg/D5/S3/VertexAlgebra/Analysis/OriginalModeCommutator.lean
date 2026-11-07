@@ -83,7 +83,13 @@ private theorem series_dependence : ObservationalDependence seriesSignature seri
   refine ⟨(),0,(fun _ => 1),?_⟩
   change decide (Summable (0 : (ℤ × ℤ) → ℝ)) ≠
     decide (Summable (fun _ : ℤ × ℤ => (1 : ℝ)))
-  simpa [summable_const_iff] using (summable_zero : Summable (0 : (ℤ × ℤ) → ℝ))
+  intro h
+  have hz : decide (Summable (0 : (ℤ × ℤ) → ℝ)) = true := by
+    rw [decide_eq_true_eq]
+    exact summable_zero
+  have hh : decide (Summable (fun _ : (ℤ × ℤ) => (1 : ℝ))) = true := h.symm.trans hz
+  have hc := of_decide_eq_true hh
+  norm_num [summable_const_iff] at hc
 
 namespace modeProduct_embed
 def arena : Arena where
