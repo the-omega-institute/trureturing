@@ -27,13 +27,16 @@ internal sealed class DirectSumHeredityRefutationDocument : IScribeDocumentDefin
                 AssessedProvenance.FromLiterature(Source), DescribeRole.Definition),
             Node("result", Seq(Neg, Sp, Parenthesized(ClaimBody())),
                 "Over ℚ take dimensions four and three, with symmetric forms diag(1,−1,1,−1) and diag(1,−1,1). Multiply each scalar output by (1,1,0,0) and (1,1,0), respectively. The orthogonal-basis theorem applied on every closed subspace makes both factors hereditary. In their direct sum impose a₀ = a₁, b₀ = b₁ and b₂ = a₂ + a₃. Zero mixed products in a natural basis would force the sum and difference coordinate functionals to be proportional. The vectors ((0,0,1,0),(0,0,1)) and ((0,0,0,1),(0,0,1)) contradict that proportionality. Thus direct-sum preservation fails. Graph detection, tensor products, ideals, characteristic two, minimal dimensions and the full characterization remain separate questions.",
-                AssessedProvenance.FromRepo(Source), DescribeRole.Theorem))));
+                AssessedProvenance.FromRepo(Source), DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("kmvq12"), ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string name, Formula formula, string prose,
-        AssessedProvenance provenance, DescribeRole role) => Describe.Lean(
+        AssessedProvenance provenance, DescribeRole role,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create(name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name), H(name),
             StatementSource.FromAuthor(Disp(formula)), provenance,
-            Blocks(Paragraph(DefinitionDsl.Text(prose))), role);
+            Blocks(Paragraph(DefinitionDsl.Text(prose))), role,
+            openProblemResolutionClaim: resolution);
 
     private static Formula X(string name) => F.Id(name);
     private static Formula Name(string name) => Seq(Operatorname, Grp(X(name)));
