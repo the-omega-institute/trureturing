@@ -10,7 +10,7 @@ The Type-I sequence starts with W(0)=[6]. At ordinary phases W(n+1)=phi(W(n))[0]
 
 **Theorem 1.1 (Actual limit and exact block semantics).**
 
-$$\left(\forall k \in \mathbb{N},\; factor\left(word\left(\right), 0, length\left(image\left(phi\left(\right), k, 0\right)\right)\right) = image\left(phi\left(\right), k, 0\right)\right) \land \left(StrictMono\left(boundary\left(\right)\right) \land \left(boundary\left(0\right) = 0 \land \left(\left(\forall i \in \mathbb{N},\; boundary\left(i\right) = prefixImageLengthSum\left(i\right)\right) \land \left(\left(\forall i \in \mathbb{N},\; \forall n \in \mathbb{N},\; factor\left(word\left(\right), boundary\left(i\right), length\left(subst\left(phi\left(\right), factor\left(word\left(\right), i, n\right)\right)\right)\right) = subst\left(phi\left(\right), factor\left(word\left(\right), i, n\right)\right)\right) \land \left(\forall q \in \mathbb{N},\; word\left(q\right) = 0 \Leftrightarrow \left(\exists i \in \mathbb{N},\; q = boundary\left(i\right) \land \left(\forall j \in \mathbb{N},\; q = boundary\left(j\right) \Rightarrow j = i\right)\right)\right)\right)\right)\right)\right)$$
+$$\left(\forall k \in \mathbb{N},\; factor\left(word, 0, length\left(image\left(phi, k, 0\right)\right)\right) = image\left(phi, k, 0\right)\right) \land \left(StrictMono\left(boundary\right) \land \left(boundary\left(0\right) = 0 \land \left(\left(\forall i \in \mathbb{N},\; boundary\left(i\right) = \sum_{j \in Finset.range\left(i\right)} length\left(phi\left(word\left(j\right)\right)\right)\right) \land \left(\left(\forall i \in \mathbb{N},\; \forall n \in \mathbb{N},\; factor\left(word, boundary\left(i\right), length\left(subst\left(phi, factor\left(word, i, n\right)\right)\right)\right) = subst\left(phi, factor\left(word, i, n\right)\right)\right) \land \left(\forall q \in \mathbb{N},\; word\left(q\right) = 0 \Leftrightarrow \left(\exists i \in \mathbb{N},\; q = boundary\left(i\right) \land \left(\forall j \in \mathbb{N},\; q = boundary\left(j\right) \Rightarrow j = i\right)\right)\right)\right)\right)\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/RichWordTypeIOccurrence.actual_fixed_point` (`✓ std3`). ∎
 
@@ -18,11 +18,11 @@ $$\left(\forall k \in \mathbb{N},\; factor\left(word\left(\right), 0, length\lef
 
 *Commentary.*
 
-All finite iterates are prefixes of u. Prefix compatibility follows by writing the next iterate on 0 as the current iterate followed by the same iterate on 1; the latter is nonempty. Unbounded lengths make the pointwise definition total. Substituting arbitrary prefix windows gives the fixed-point block equation. Every image starts with zero and has no other zero, so the zeros are precisely the unique true boundaries, including B(0)=0. The displayed prefixImageLengthSum(i) denotes the sum of |phi(u(j))| over j<i.
+All finite iterates are prefixes of u. Prefix compatibility follows by writing the next iterate on 0 as the current iterate followed by the same iterate on 1; the latter is nonempty. Unbounded lengths make the pointwise definition total. Substituting arbitrary prefix windows gives the fixed-point block equation. Every image starts with zero and has no other zero, so the zeros are precisely the unique true boundaries, including B(0)=0. The boundary formula sums the lengths of the actual letter images over Finset.range(i).
 
 **Theorem 1.2 (Final-six deletion on actual return intervals).**
 
-$$\forall a \in \mathbb{N},\; \forall b \in \mathbb{N},\; 0 < a \Rightarrow \left(a < b \Rightarrow \left(\left(word\left(a - 1\right) = 5 \lor word\left(a - 1\right) = 6\right) \Rightarrow \left(\left(word\left(b - 1\right) = 5 \lor word\left(b - 1\right) = 6\right) \Rightarrow returnWord\left(boundary\left(a\right) - 1, boundary\left(b\right) - 1\right) = append\left(singleton\left(6\right), dropLast\left(subst\left(phi\left(\right), returnWord\left(a, b\right)\right)\right)\right)\right)\right)\right)$$
+$$\forall a \in \mathbb{N},\; \forall b \in \mathbb{N},\; 0 < a \Rightarrow \left(a < b \Rightarrow \left(\left(word\left(a - 1\right) = 5 \lor word\left(a - 1\right) = 6\right) \Rightarrow \left(\left(word\left(b - 1\right) = 5 \lor word\left(b - 1\right) = 6\right) \Rightarrow returnWord\left(boundary\left(a\right) - 1, boundary\left(b\right) - 1\right) = append\left(singleton\left(6\right), dropLast\left(subst\left(phi, returnWord\left(a, b\right)\right)\right)\right)\right)\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/RichWordTypeIOccurrence.terminal_interval_cancellation` (`✓ std3`). ∎
 
@@ -46,7 +46,7 @@ For every native finite word s and every natural q, phi(s) followed by zero occu
 
 **Theorem 1.4 (No Type-I occurrence at the origin).**
 
-$$\forall n \in \mathbb{N},\; Occ\left(typeI\left(n\right), 0\right) \Rightarrow False\left(\right)$$
+$$\forall n \in \mathbb{N},\; Occ\left(typeI\left(n\right), 0\right) \Rightarrow False$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/RichWordTypeIOccurrence.typeI_not_at_origin` (`✓ std3`). ∎
 
@@ -82,7 +82,7 @@ Strict boundary monotonicity and the all-position occurrence equivalence transfe
 
 **Theorem 1.7 (All seven counts survive endpoint cancellation).**
 
-$$\forall a \in \mathbb{N},\; \forall b \in \mathbb{N},\; 0 < a \Rightarrow \left(a < b \Rightarrow \left(\left(word\left(a - 1\right) = 5 \lor word\left(a - 1\right) = 6\right) \Rightarrow \left(\left(word\left(b - 1\right) = 5 \lor word\left(b - 1\right) = 6\right) \Rightarrow parikh\left(returnWord\left(boundary\left(a\right) - 1, boundary\left(b\right) - 1\right)\right) = mulVec\left(M\left(\right), parikh\left(returnWord\left(a, b\right)\right)\right)\right)\right)\right)$$
+$$\forall a \in \mathbb{N},\; \forall b \in \mathbb{N},\; 0 < a \Rightarrow \left(a < b \Rightarrow \left(\left(word\left(a - 1\right) = 5 \lor word\left(a - 1\right) = 6\right) \Rightarrow \left(\left(word\left(b - 1\right) = 5 \lor word\left(b - 1\right) = 6\right) \Rightarrow parikh\left(returnWord\left(boundary\left(a\right) - 1, boundary\left(b\right) - 1\right)\right) = mulVec\left(M, parikh\left(returnWord\left(a, b\right)\right)\right)\right)\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/RichWordTypeIOccurrence.terminal_return_parikh` (`✓ std3`). ∎
 
@@ -106,7 +106,7 @@ The sixth iterate on zero has a 6 at position 63. Its substituted block gives an
 
 **Theorem 1.9 (Complete factor Parikh recurrence).**
 
-$$\left(\forall n \in \mathbb{N},\; parikh\left(typeI\left(n + 1\right)\right) = mulVec\left(M\left(\right), parikh\left(typeI\left(n\right)\right)\right) + increment\left(n\right)\right) \land \left(\left(\forall n \in \mathbb{N},\; parikh\left(typeI\left(n\right)\right) = mulVec\left(matrixPower\left(M\left(\right), n\right), unit\left(6\right)\right) + parikhCorrectionSum\left(n\right)\right) \land \left(\forall n \in \mathbb{N},\; \forall c \in Fin\left(7\right),\; parikh\left(image\left(phi\left(\right), n, c\right)\right) = mulVec\left(matrixPower\left(M\left(\right), n\right), unit\left(c\right)\right)\right)\right)$$
+$$\left(\forall n \in \mathbb{N},\; parikh\left(typeI\left(n + 1\right)\right) = mulVec\left(M, parikh\left(typeI\left(n\right)\right)\right) + increment\left(n\right)\right) \land \left(\left(\forall n \in \mathbb{N},\; parikh\left(typeI\left(n\right)\right) = mulVec\left(M^{n}, unit\left(6\right)\right) + \sum_{k \in Finset.range\left(n\right)} mulVec\left(M^{n - 1 - k}, increment\left(k\right)\right)\right) \land \left(\forall n \in \mathbb{N},\; \forall c \in Fin\left(7\right),\; parikh\left(image\left(phi, n, c\right)\right) = mulVec\left(M^{n}, unit\left(c\right)\right)\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/RichWordTypeIOccurrence.typeI_parikh_formula` (`✓ std3`). ∎
 
@@ -114,7 +114,7 @@ $$\left(\forall n \in \mathbb{N},\; parikh\left(typeI\left(n + 1\right)\right) =
 
 *Commentary.*
 
-Write e(c) for unit(c), and increment(n)=e(0) at ordinary phases and e(0)+2e(6) at phase 5. The correction sum at n is the sum of M raised to n-1-k times increment(k), over 0<=k<n. The displayed parikhCorrectionSum denotes exactly this finite sum. Induction proves both its equality with the actual factor counts and the matrix formula for actual iterated letter images.
+Write e(c) for unit(c), and increment(n)=e(0) at ordinary phases and e(0)+2e(6) at phase 5. The correction sum at n is the sum of M raised to n-1-k times increment(k), over 0<=k<n. Induction proves both its equality with the actual factor counts and the matrix formula for actual iterated letter images.
 
 **Theorem 1.10 (Exact actual left and right extension sets).**
 
@@ -154,7 +154,7 @@ The occurrence map is strictly increasing even at the origin, since every image 
 
 **Theorem 1.13 (Parikh transport of every actual return).**
 
-$$\forall n \in \mathbb{N},\; \forall a \in \mathbb{N},\; \forall b \in \mathbb{N},\; Consecutive\left(typeI\left(n\right), a, b\right) \Rightarrow parikh\left(returnWord\left(occurrenceMap\left(n, a\right), occurrenceMap\left(n, b\right)\right)\right) = mulVec\left(M\left(\right), parikh\left(returnWord\left(a, b\right)\right)\right)$$
+$$\forall n \in \mathbb{N},\; \forall a \in \mathbb{N},\; \forall b \in \mathbb{N},\; Consecutive\left(typeI\left(n\right), a, b\right) \Rightarrow parikh\left(returnWord\left(occurrenceMap\left(n, a\right), occurrenceMap\left(n, b\right)\right)\right) = mulVec\left(M, parikh\left(returnWord\left(a, b\right)\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/RichWordTypeIOccurrence.typeI_return_parikh` (`✓ std3`). ∎
 
@@ -166,7 +166,7 @@ At an ordinary step the actual interval is phi(R). At phase 5 it is 6 followed b
 
 **Theorem 1.14 (Realized minimum and universal componentwise bound).**
 
-$$\forall n \in \mathbb{N},\; \left(\exists a \in \mathbb{N},\; \exists b \in \mathbb{N},\; Consecutive\left(typeI\left(n\right), a, b\right) \land parikh\left(returnWord\left(a, b\right)\right) = mulVec\left(matrixPower\left(M\left(\right), n\right), unit\left(6\right)\right)\right) \land \left(\forall a \in \mathbb{N},\; \forall b \in \mathbb{N},\; Consecutive\left(typeI\left(n\right), a, b\right) \Rightarrow mulVec\left(matrixPower\left(M\left(\right), n\right), unit\left(6\right)\right) \le parikh\left(returnWord\left(a, b\right)\right)\right)$$
+$$\forall n \in \mathbb{N},\; \left(\exists a \in \mathbb{N},\; \exists b \in \mathbb{N},\; Consecutive\left(typeI\left(n\right), a, b\right) \land parikh\left(returnWord\left(a, b\right)\right) = mulVec\left(M^{n}, unit\left(6\right)\right)\right) \land \left(\forall a \in \mathbb{N},\; \forall b \in \mathbb{N},\; Consecutive\left(typeI\left(n\right), a, b\right) \Rightarrow mulVec\left(M^{n}, unit\left(6\right)\right) \le parikh\left(returnWord\left(a, b\right)\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/RichWordTypeIOccurrence.typeI_return_minimum` (`✓ std3`). ∎
 
