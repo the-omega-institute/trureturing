@@ -88,7 +88,10 @@ private theorem future_mass_sum (W : S → S → ℝ)
     ∀ n x, ∑ p, futureMass W n x p = 1 := by
   intro n
   induction n with
-  | zero => intro x; simp [Future, futureMass]
+  | zero =>
+    intro x
+    change (∑ _ : PUnit, (1 : ℝ)) = 1
+    simp
   | succ n ih =>
     intro x
     change (∑ p : S × Future S n, W x p.1 * futureMass W n p.1 p.2) = 1
@@ -100,10 +103,13 @@ private theorem within_is_hit_probability (W : S → S → ℝ) (target : S)
     (hfix : ∀ y, W target y = if y = target then 1 else 0) :
     ∀ n x, hitWithin W target n x =
       ∑ p, futureMass W n x p * (if visits target n x p then (1 : ℝ) else 0) := by
-  classical
   intro n
   induction n with
-  | zero => intro x; simp [hitWithin, Future, futureMass, visits]
+  | zero =>
+    intro x
+    change (if x = target then (1 : ℝ) else 0) =
+      ∑ _ : PUnit, (1 : ℝ) * (if x = target then 1 else 0)
+    simp
   | succ n ih =>
     intro x
     by_cases hx : x = target
@@ -112,8 +118,10 @@ private theorem within_is_hit_probability (W : S → S → ℝ) (target : S)
       simpa [visits] using (future_mass_sum W hW1 (n + 1) target).symm
     · change (∑ y, W x y * hitWithin W target n y) =
         ∑ p : S × Future S n, (W x p.1 * futureMass W n p.1 p.2) *
-          (if x = target ∨ visits target n p.1 p.2 then (1 : ℝ) else 0)
-      simp only [hx, false_or, Fintype.sum_prod_type, mul_assoc, ← Finset.mul_sum, ← ih]
+          (if visits target (n + 1) x p then (1 : ℝ) else 0)
+      simp_rw [visits, hx, false_or, Fintype.sum_prod_type, mul_assoc,
+        ← Finset.mul_sum, ← ih]
+
 
 /-- Finite-step hitting probabilities converge to the least nonnegative harmonic
 function equal to one at the target. A second absorbing label has value zero.
