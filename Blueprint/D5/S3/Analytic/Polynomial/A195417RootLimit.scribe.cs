@@ -40,7 +40,7 @@ internal sealed class A195417RootLimitDocument : IScribeDocumentDefinition
                 + "The original degree_root_limit in A192205RootLimit makes that extra factor tend to one. "
                 + "The squeeze theorem proves the full natural-index limit. This result answers only the first root-limit question; "
                 + "it makes no assertion about successive ratios or their attractors.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
 
     private static DocumentBlock Entry(string name, string title, Formula formula, string prose,
         DescribeRole role, AssessedProvenance provenance) =>
