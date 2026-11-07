@@ -4446,3 +4446,458 @@ Freedman–Larsen–Wang，[*The two-eigenvalue problem and density of Jones rep
 [RCY-IV]: https://github.com/the-omega-institute/trureturing/blob/5ace7ec37be44b8f0e4f0de39c58b23500395fe3/docs/develop/theory/AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_IV.md
 
 ## 追加锚 62（本行以下为增补区）
+
+## 62. 同一原实单位球上的响应与待证相位下降
+
+**定义 62.1（原实来源及其已经支付的坐标）。** 固定 [XII49.1–49.5、53.3–54.1][SPD-XII] 的同一个来源，使用其原实空间 $V=\bigoplus_{q\in E}V_q$、正定 $g=\bigoplus g_q$、固定 $L_q$、实际逆等距 $T_{qt}$ 和严格左加权 $A_j=\alpha\mathcal L(I+B_j)$。原全部 $89$ 标签、$235$ 边、固定外位、黄金系数及十一端点不变。这里把原 ready 统一记为 $\rho=\{3,7\}$，把单报告配置记为 $r=\{8\}$，两者不混用。来源前件逐项为：
+
+$$
+\begin{gathered}
+E=\{q\subseteq\{1,\ldots,9\}:q\text{ 无相邻占据}\},\quad
+b_{-1}b_0=10,\quad b_{10}b_{11}b_{12}=010,\quad \dim_{\mathbb R}V_q=d<\infty,\\
+T_{tq}=T_{qt}^{-1}=T_{qt}^{\dagger},\qquad
+x=(\sqrt5-1)/2,\quad c=x\sqrt x,\quad\alpha=3\pi/5,\\
+B_j|_{(q_0,q_1)}=
+\begin{pmatrix}xI&cT_{q_0q_1}\\cT_{q_1q_0}&x^2I\end{pmatrix},\quad
+B_j|_{V_q}=b_{j-1}b_{j+1}I\ \text{（阻塞内点）},\\
+B_0|_{V_q}=b_1I,\quad B_{10}|_{V_q}=b_9I,\quad
+A_j=\alpha\mathcal L(I+B_j),\quad \mathsf K_j=e^{A_j},\\
+\mathsf K_j^{10}=I,\quad
+\mathsf K_j\mathsf K_{j+1}\mathsf K_j=\mathsf K_{j+1}\mathsf K_j\mathsf K_{j+1},\quad
+[\mathsf K_j,\mathsf K_\ell]=0\ (|j-\ell|\ge2),\\
+u_*\in V_\rho,\quad\|u_*\|_g=1,\quad
+\operatorname{tr}_{V_\rho}(L_\rho^\dagger L_\rho)=2,\quad
+\ker L_\rho=0.
+\end{gathered}
+\tag{62.1}
+$$
+
+迹取整个原纤维，不除以 $d$；仅 ready 可逆是明确前件。没有预给 E1、共同容量二、全点可逆、反自伴、平坦性、共同复结构或换过的度量。先消费 XII53.3 在未知共同有限 $d$ 内的容量结论，才消费 XII54.1 的全图装配：$d=2$，$J=\mathcal L$，$J^2=-I$、$J^\dagger=-J$，运输平坦，并有保标签的实等距双射
+
+$$
+\begin{gathered}
+\mathscr C_9:V\longrightarrow\mathbb C^E,\qquad
+\mathscr C_9u_*=e_\rho,\qquad
+\mathscr C_9J\mathscr C_9^{-1}=iI,\\
+\mathscr C_9e^{tA_j}\mathscr C_9^{-1}
+=U_j(t)=e^{i\alpha t}[I+(e^{i\alpha t}-1)\mathcal P_j],\qquad
+K_j=U_j(1),\qquad
+\mathscr C_9e^{\vartheta J}v=e^{i\vartheta}\mathscr C_9v.
+\end{gathered}
+\tag{62.2}
+$$
+
+单位内部区间的等式是 XII54.1；任意实 $t,\vartheta$ 的数学等式由固定生成元的共轭和指数幂级数延伸，不增加实际时间控制。$\mathscr C_9$ 是同一个原 $V,g,L,T,u_*$ 的导出坐标，不是独立复／GNS 载体，也不将额外零方向商掉。III144 的闭包用于这里导出的整个 $\mathbb C^{89}$；§§55–59 的正字实循环性不充当球面密度。
+
+**定义 62.2（严格较宽的响应域）。** 唯一替换 XII46.1 中的响应域，取
+
+$$
+S_g(V)=\{v:g(v,v)=1\},\qquad p:S_g(V)\longrightarrow\Delta(E)
+\quad\text{连续},\qquad
+p_+(v)=p(v/\|v\|_g)\quad(v\ne0).
+\tag{62.3}
+$$
+
+对非零 $z\in\mathbb C^E$ 定义 $P_q(z)=p_q(\mathscr C_9^{-1}(z/\|z\|))$。起初只有 $P(az)=P(z)$（实数 $a>0$）；$p(-v)=p(v)$、$P(e^{i\vartheta}z)=P(z)$ 以及所有复缩放不变性都不是定义。$p$ 和 $P$ 均非负、归一；不输入 N、严格支持、其它坐标径向性、正赔率、B、$h(s)=s$ 或 $h(1)=1$。
+
+完整保留 XII46.1 的 $A_{1:9}$，只是把响应评价解释为原归一向量上的 $p$。有序局部射线仍用导出 $J$ 定义；在复坐标为 $[a:b]$，非节点域 $D=\{[a:b]:ab\ne0\}$。所有原活动对仍共用同一对连续、有限、非负 $\gamma_\pm:D\to[0,\infty)$。给定完整实际隐藏过去，强度仍只依当前有序局部射线，不依地址、块号、块范数、旁观幅度、调用年龄或其它隐藏记忆；局部率对共同相位及非零复缩放的盲性始终是保留前件。无跨块运动、阻塞单点保持、适定因果纯跳 Markov 族、节点合法接续、原积分风险／补偿子解释全部保留。从每个非零数学输入的 $P(z)$ 出发，每个内部数学时刻的边缘为 $P(U_j(t)z)$；同地址连续整数调用按同一演化接续、不重抽、不复位。这里只对 $j=1,\ldots,9$ 输入全域过程等变合同；地址 $0,10$ 的全输入／全时过程合同没有增加。
+
+完整保留同一实际概率空间、唯一确定初配置 $Q_0=\rho$ 和唯一实际准备 $u_*$、真实接缝、两切口、可读滤过 $\mathcal G$ 与完整隐藏滤过 $\mathcal F^{\rm hid}$。每个原调用接缝／终端及合同所列实际可读细档案上的配置条件律，由同一 $p$ 在该处实际单位向量上给出。对全部 $a\in\mathsf W_{11}=\{0,\ldots,10\}^{<\infty}$，含空字，置 $\chi_a=K_ae_\rho$；保留
+
+$$
+\Pr(Q=q\mid\mathcal G_{\rm term})=P_q(\chi_a),\qquad
+W=(b_{-1},b_0,b_1,\ldots,b_8)(Q).
+\tag{62.4}
+$$
+
+$\mathcal G_{\rm term}$ 不含当前隐藏配置；完整隐藏过去的率自主性不是把其配置条件律设为 $P$。同一真实前缀在未来请求前共同实现，未来不重选旧核。调用字不同的历史即使向量相同也不被识别。正分支实际纯更新在这里取当前实际向量的原投影再作正实归一化，即 $z\mapsto M_i z/\|M_i z\|$，实坐标为其 $\mathscr C_9^{-1}$ 像，不另选相位；配置保留、读后更细档案充分性及原标准 Borel 因果档案核仍按 XII46.1、47.2／XI6.1 分别承担；条件核只要求实际几乎处处，不为零质量档案点指定条件态。实际 ready 只校准所给 $u_*$，不再为 $e^{\vartheta J}u_*$ 安装确定性初态。
+
+保留唯一的共同单事件关系
+
+$$
+\begin{gathered}
+r=\{8\},\quad w_*=1000000001,\quad
+s_r(z)=|z_r|^2/\|z\|^2,\\
+h:[0,1]\longrightarrow[0,1]\ \text{连续},\quad h\not\equiv0,\qquad
+\Pr_{\mathsf T(a)}(W=w_*)=h(s_r(\chi_a))
+\quad(a\in\mathsf W_{11},\ \epsilon\text{ 在内}).
+\end{gathered}
+\tag{62.5}
+$$
+
+所有全输入、全内部时间、完整过去、原顺序／自适应／并行历史和资源量词保留原范围。后读 $f$ 仍在原七地址外生字域中；已有其它合法历史也各守其权限，不能凭全历史量词为这个程序新增反馈。原相干、误差及理想零失败合同各按原域使用。
+
+**定理 62.3（同一原实球面响应的条件下降应用）。** 在定义 62.1–62.2 的完整条件下，
+
+$$
+\begin{gathered}
+p(e^{\vartheta J}v)=p(v)\qquad(v\in S_g(V),\ \vartheta\in\mathbb R),\\
+\pi([z]):=P(z)\quad\text{是 }\mathbb{CP}^{88}\text{ 上良定义的连续响应},\\
+h(s)=s\quad(0\le s\le1),\qquad
+p_q(v)=g_q(v_q,v_q)\quad(v\in S_g(V),\ q\in E).
+\end{gathered}
+\tag{62.6}
+$$
+
+B、N、双向严格支持、数学 $m_i=t_i$ 和全部原有限前字上的 R 随之成立。证明的六个接口依次为绝对向量密度、单坐标全域延拓、正活动、球面弱边关系、严格赔率与响应下降、既有 Born／记录消费者；下文逐项给出。实际报告、档案和规范路径身份各按 §67 的附加原前件消费，不能由最后一行的数学权重直接替代。此定理是既有工具的原来源应用，不另立一般相位／Born 定理。
+
+## 63. 从原正字的精确相位提升到全单位球面单坐标关系
+
+原 [III (144.8)–(144.12)][SPD-III] 使用 [II (77.7)–(77.10)][SPD-II] 的整条路径／可容许表对应，在全 $V_{12}^{\mathbf1}$ 取 $(k,r,n)=(2,5,12)$、$\lambda=[6,6]$。九个内部位的全部合法配置与高度 $0\le h_j\le3$、首尾零的全部 $89$ 个表对应；十一生成元，包括 $n_1,n_9$ 两边界，同一个酉对应 $\mathcal U$ 满足
+
+$$
+\mathcal U K_j\mathcal U^{-1}
+=c_0\rho_{[6,6]}^{(2,5)}(\sigma_{j+1}),\qquad
+c_0=e^{\pi i/5},\qquad 0\le j\le10.
+\tag{63.1}
+$$
+
+这里 $c_0$ 与黄金非对角系数 $c$ 不同。对应依 FLW §2 的表公式及 $\rho(\sigma_i)=qI-(1+q)E_i$、$q=e^{2\pi i/5}$；其三类投影块为 $1,0,Q$，不是只匹配特征值或维数，也不使用 FLW §6 的非酉印刷融合矩阵。$[6,6]$ 满足行差 $0\le5-2$，$r=5,n=12$ 满足 [FLW Theorem 0.1][SPD-FLW]，故 $C_\rho=\overline{\rho(B_{12})}$ 包含该扇区的 $SU(89)$。
+
+必须再消去共同标量，而不能把 II (121.7) 的“逼近到一个相位”当作绝对向量密度。令 $\ell:B_{12}\to\mathbb Z$ 为指数和，$\Gamma=\ker(\ell\bmod10)$，$L=\overline{\rho(\Gamma)}$。$\Gamma$ 正规且指数十；$C_\rho$ 是至多十个 $L$ 的闭陪集之并。各不同陪集的补集仍为有限闭并，所以陪集也开。包含单位元的连通子集只能落在 $L$；特别地 $SU(89)\subset L$。对每个 $\beta\in\Gamma$，$c_0^{\ell(\beta)}=1$，(63.1) 对整个辫字的标量于是恰好消失。
+
+原 $K_j^{10}=I$ 又给 $K_j^{-1}=K_j^9$，任意负字母均可换成原字母表中的九次正调用，矩阵完全相等。因此在原路径坐标的算子范数拓扑中，
+
+$$
+SU(89)\subseteq G_{11}:=
+\overline{\{K_a:a\in\mathsf W_{11}\}}.
+\tag{63.2}
+$$
+
+酉共轭不改变全空间特殊酉群，故没有遗留表基规范。这里既未要求 $G_{11}=U(89)$，也未要求全部标量矩阵本身可达。$SU(89)$ 对绝对单位向量球面传递：先选 $T\in U(89)$ 送 $e_\rho$ 到任一单位 $z$，再在 $z$ 的一个正交方向乘 $\det(T)^{-1}$，保持 $z$ 不动并把行列式调到一。于是 (63.2) 中有一列原有限正字矩阵趋于这个特殊酉矩阵，因而
+
+$$
+\overline{\{K_ae_\rho:a\in\mathsf W_{11}\}}
+=S(\mathbb C^E),\qquad
+\overline{\{\mathsf K_au_*:a\in\mathsf W_{11}\}}=S_g(V).
+\tag{63.3}
+$$
+
+特别是任一绝对相位的目标向量都被逼近，不仅是它的射线。这是 III144 有限指数论证在整个 $89$ 维扇区的直接消费，比单独引用其 (144.12) 的射影表述多付了中心相位桥。极限只用于连续数学函数的延拓；实际仍只有有限正字，不取得自由 $SU$ 控制、极限制备、逆时间或内部停止。
+
+原字面 $w_*$ 要求 $b_1=\cdots=b_7=0,b_8=1$，合法性再迫使 $b_9=0$，故全部 $89$ 配置中 $W=w_*$ 当且仅当 $Q=r$。其原投影为 $N_{w_*}=|e_r\rangle\langle e_r|$；这个 $r$ 在原 $63$ 维代码补空间，未被代码投影删去。将 (62.4) 对实际档案积分，再用 (62.5)，给
+
+$$
+P_r(\chi_a)=h(|(\chi_a)_r|^2).
+$$
+
+两个函数都在绝对单位球面连续，(63.3) 因而给
+
+$$
+P_r(z)=h(|z_r|^2/\|z\|^2)\qquad(z\ne0).
+\tag{63.4}
+$$
+
+这里仅用正实归一化。实际确定 ready 和同响应 ready 接缝给 $P_q(e_\rho)=\delta_{q\rho}$；空字给 $h(0)=0$。连续、非恒零遂保证某个 $s\in(0,1)$ 有 $h(s)>0$。没有校准其它相位的 ready，也没有输入 $h(1)$。
+
+## 64. 下降之前的内部零集与全部安全轨道正活动
+
+本节在球面函数 $P$ 上展开 XII47 的零传播和缩放，不使用其射影响应前件或 Born 结论。取原地址八的 $u=\varnothing\to r=\{8\}$，有序局部块为原 $Q$。对任意 $s\in(0,1)$，取 $\phi\in(0,\pi)$ 使
+
+$$
+\begin{gathered}
+v_s=\sqrt{1-s}\,e_u+e^{i\phi}\sqrt s\,e_r,\\
+\langle v_s,\mathcal P_8v_s\rangle
+=x(1-s)+x^2s+2c\sqrt{s(1-s)}\cos\phi\notin\{x,x^2\}.
+\end{gathered}
+\tag{64.1}
+$$
+
+余弦项严格单调，至多排除两个相位，所以选择存在。[III 引理 177.5][SPD-III] 的安全判据给该轨道全十调用避开两节点；$\phi\in(0,\pi)$ 又给非恒模。若 $b(t)=|(U_8(t)v_s)_r|^2$，则
+
+$$
+b(0)=s,\qquad b'(0)=2\alpha c\sqrt{s(1-s)}\sin\phi>0,
+\qquad U_8(10)v_s=v_s.
+\tag{64.2}
+$$
+
+无跨块与全时等变性给守恒 $m=P_u(v_s)+P_r(v_s)\in[0,1]$。不设该质量为一、为正，亦不设其余响应为零。沿安全紧轨道令 $a(t)=\gamma_+(\ell(t))$、$d(t)=\gamma_-(\ell(t))$、$L(t)=\int_0^t(a+d)$。率连续有界；原补偿子／未归一主方程（[DGTZ §2.3 (15)][SPD-DGTZ]）给
+
+$$
+\begin{aligned}
+Y(t)&=P_r(U_8(t)v_s)=h(b(t)),\\
+Y'&=ma-(a+d)Y,\\
+Y(t)&=e^{-L(t)}Y(0)+m\int_0^ta(v)e^{-[L(t)-L(v)]}\,dv.
+\end{aligned}
+\tag{64.3}
+$$
+
+可微的是过程给出的 $Y$，不要求 $h$ 或全域 $P$ 可微。只对选定安全块使用有界补偿子；其它块碰节点或整块幅度为零不妨碍它，整个过程的合法接续仍是存在前件。
+
+若 $h(s)=0$，十次正调用的完整向量回返、不复位及全时等变给 $Y(10)=Y(0)=0$。$m>0$ 时非负积分为零使 $a\equiv0$，从而 $Y\equiv0$；$m=0$ 时强迫项已经为零，同样 $Y\equiv0$，但不推断 $a=0$。由 $b'(0)>0$，零时右邻覆盖 $s$ 上侧；周期性给 $b'(10)=b'(0)$，十时左邻覆盖 $s$ 下侧。故 $h$ 的内部零集既开又闭于 $(0,1)$。它若非空便是整个区间，与 §63 的一个内部正值矛盾，故
+
+$$
+h(s)>0\qquad(0<s<1).
+\tag{64.4}
+$$
+
+再反设任一原安全非恒模局部轨道的总活动积分为零。非负连续性使两率沿全十调用都为零。归一局部向量记作 $(a_0,b_0)$，同一原局部 $U(t)$ 下 $b_*(t)=|b(t)|^2$ 满足
+
+$$
+0<b_-:=\min b_*(t)<b_+:=\max b_*(t)<1.
+\tag{64.5}
+$$
+
+任意原活动对有相同有序 $Q$，共同率不依地址、块范数、旁观幅度或完整隐藏过去，所以可把这一射线轨道放到原地址八的 $(u,r)$ 块。原 $d_*=\{7\}$ 是地址八的 $\mathcal P_8=0$ 阻塞单点。对每个 $0<\lambda\le1$ 取全输入域内的单位数学向量
+
+$$
+z_\lambda=\sqrt\lambda(a_0e_u+b_0e_r)
+                 +\sqrt{1-\lambda}\,e_{d_*}.
+\tag{64.6}
+$$
+
+旁观单点只带原相位，所选局部射线及零率不变，$s_r(U_8(t)z_\lambda)=\lambda b_*(t)$。未归一主方程给该坐标响应恒定，不论响应块质量是多少。由 (63.4)，$h(\lambda b_+)=h(\lambda b_-)$。置 $\eta=b_-/b_+\in(0,1)$，依次取 $\lambda=\eta^n$ 得 $h(b_+)=h(\eta^nb_+)$；连续趋零与 $h(0)=0$ 矛盾于 (64.4)。所以原每条安全非恒模轨道都有
+
+$$
+\int_0^{10}(\gamma_++\gamma_-)(\ell(t))\,dt>0.
+\tag{64.7}
+$$
+
+这就是原 B；没有统一正下界，不要求两个方向分别正。全输入与局部率相位盲性使 (64.6) 合法适用同一两率，响应的全局相位盲性没有参与。没有增加相位 ready 准备或边界过程合同。
+
+## 65. 只用局部率射线的球面弱边关系与全域延拓
+
+原图边定向为 $s\to t=s\cup\{j\}\in E$，$1\le j\le9$，共 $235$ 条；删除占据位连到空配置，故无向图连通、无孤立点。[III 引理 177.5][SPD-III]给安全非恒模起点的稠密集 $D_*\subset D$ 及全向量 $U_j(10)=I$。在一个 $\ell\in D_*$ 上，令 $a_\ell=\gamma_+(\ell(t))$、$b_\ell=\gamma_-(\ell(t))$、$\lambda_\ell=a_\ell+b_\ell$。§64 的 B 及安全紧性给
+
+$$
+\begin{gathered}
+R_\ell=e^{-\int_0^{10}\lambda_\ell(t)dt}\in(0,1),\qquad
+C_\ell=\int_0^{10}a_\ell(v)e^{-\int_v^{10}\lambda_\ell(t)dt}\,dv,\\
+0\le C_\ell\le1-R_\ell,\qquad
+\theta(\ell)=C_\ell/(1-R_\ell)\in[0,1].
+\end{gathered}
+\tag{65.1}
+$$
+
+对任意含该射线的完整输入，块响应质量 $m=P_s(z)+P_t(z)$ 守恒。未归一方程给 $Y(10)=R_\ell Y(0)+mC_\ell$；完整向量回返给 $Y(10)=Y(0)$，所以
+
+$$
+(1-\theta([z_s:z_t]))P_t(z)
+=\theta([z_s:z_t])P_s(z).
+\tag{65.2}
+$$
+
+$m=0$、任一端点响应为零、$\theta=0$ 或 $1$ 均合法，不曾除响应概率。这个计算是 XII9.2 的同一个积分因子计算在球面提升上的解释；它只需全向量回返，未用响应的复缩放不变性。共同率只看有序局部射线，因此 $\theta$ 对所有原边、范数、旁观背景和全局相位相同，包括替换 $z$ 为 $e^{i\vartheta}z$。率的这个不变性是前件，(65.2) 并未预设 $P$ 有同一性质。
+
+把 $D_*$ 通过 $\ell\mapsto[1:\ell]$ 记为稠密 $S\subset\mathbb C^*$。为取得全域连续系数，沿 XII9.3 的原构造取完整数学向量 $g(\ell)_q=\ell^{|q|}$，在 $P$ 中只做正实归一化，置
+
+$$
+\begin{aligned}
+D_G(\ell)&=\sum_{s\to t}[P_s(g(\ell))+P_t(g(\ell))]
+=\sum_q\deg_G(q)P_q(g(\ell))\ge1,\\
+\Theta(\ell)&=\frac{\sum_{s\to t}P_t(g(\ell))}{D_G(\ell)}.
+\end{aligned}
+\tag{65.3}
+$$
+
+每点至少有一条边和响应归一化给分母下界；不需要挑一条正质量边。$\Theta:\mathbb C^*\to[0,1]$ 连续，在 $S$ 上将 (65.2) 沿所有边求和给 $\Theta(\ell)=\theta([1:\ell])$。因此它是该稠密系数的唯一连续延拓。固定任一 $z_sz_t\ne0$，取 $\ell_n\in S$ 趋于 $z_t/z_s$，仅将 $z_t$ 替成 $\ell_nz_s$；完整输入非零并收敛。$P$ 与 $\Theta$ 连续给
+
+$$
+(1-\Theta(z_t/z_s))P_t(z)
+=\Theta(z_t/z_s)P_s(z)
+\quad(s\to t,\ z_sz_t\ne0).
+\tag{65.4}
+$$
+
+其余坐标可以任意为零：这已经是每个支撑层上两端非零边的关系，非仅全支撑域。两端之一为零时不评价比值，整块为零时不评价局部射线或率；其响应由 §66 的连续性统一处理。安全集本身不必连通。
+
+## 66. 严格赔率分支、全部支撑层与响应下降
+
+此处逐步解释 XII9.3 的原全图计算为何适用于尚未下降的 $P$。令 $I=\{\ell:0<\Theta(\ell)<1\}$。若 $r_0\in I$，在同一 $g(r_0)$ 上，(65.4) 使相邻响应同时为零或同时为正；连通、归一化遂使所有 $89$ 项都正。有限性与连续性给这个输入的一个全正幅度邻域。仅在该邻域消去概率，令 $o=\Theta/(1-\Theta)$，起初只定义在 $I$。在原方形 $\varnothing,\{1\},\{3\},\{1,3\}$ 中，把四个坐标取为
+
+$$
+z_\varnothing=1,\quad z_{\{1\}}=r_0a,\quad
+z_{\{3\}}=r_0,\quad z_{\{1,3\}}=r_0^2ab,
+\tag{66.1}
+$$
+
+其余坐标保持 $g(r_0)$，$a,b$ 充分接近一。输入落在该全正邻域，四个比值为 $r_0a,r_0b,r_0,r_0ab$；沿同一完整输入的两条路径消去已证正的根响应，得
+
+$$
+o(r_0a)o(r_0b)=o(r_0)o(r_0ab).
+\tag{66.2}
+$$
+
+不能在此直接假定 $I=\mathbb C^*$。在实二维覆盖 $(u,v)\mapsto e^{u+iv}$ 上，令 $\widetilde I$ 为 $I$ 的原像，$F(u,v)=\log o(e^{u+iv})$。每个 $p\in\widetilde I$ 和充分小 $\eta,\xi\in\mathbb R^2$ 满足
+
+$$
+F(p+\eta)+F(p+\xi)=F(p)+F(p+\eta+\xi).
+\tag{66.3}
+$$
+
+在小球中 $G_p(\eta)=F(p+\eta)-F(p)$ 局部可加。沿坐标轴做整数细分，先得有理分点线性；负向用 $G_p(-\eta)=-G_p(\eta)$，连续性延至实分点。缩球使两个轴向分量及其和都在定义域，可加式遂给 $G_p(\eta)=A_p\eta_1+B_p\eta_2$。相交开球上的仿射表达相同，系数唯一，因此任一连通分支 $C\subset\widetilde I$ 上有有限常数
+
+$$
+F(u,v)=A_Cu+B_Cv+D_C.
+\tag{66.4}
+$$
+
+若非空 $C$ 有有限边界点 $p_*=(u_*,v_*)$，沿 $C$ 内序列趋向它，(66.4) 及全域连续性给
+
+$$
+\Theta(e^{u_*+iv_*})=
+\frac{e^{A_Cu_*+B_Cv_*+D_C}}
+     {1+e^{A_Cu_*+B_Cv_*+D_C}}\in(0,1).
+\tag{66.5}
+$$
+
+所以 $p_*\in\widetilde I$；其内一个小球与 $C$ 相交，连通性使球属于同一分支，矛盾于边界。开集在平面的连通分支是开的，故 $C$ 无有限边界便同时闭；非空的 $C$ 必为整个 $\mathbb R^2$。因此 $I$ 只要非空就等于 $\mathbb C^*$，不以“稠密正性取极限”代替严格内点证明。现在 $F(u,v+2\pi)=F(u,v)$ 只是同一复数的重复参数表示，迫使 $B_C=0$，并非响应的相位不变性。取 $k=e^{D_C}>0,\beta=A_C\in\mathbb R$，得
+
+$$
+o(\ell)=k|\ell|^\beta\qquad(\ell\in\mathbb C^*).
+\tag{66.6}
+$$
+
+若 $I$ 为空，连续 $\Theta$ 把连通的 $\mathbb C^*$ 映到 $\{0,1\}$，故有两个冻结分支。恒零时，每个非空 $t$ 选一条删除前驱边，(65.4) 在两端幅度非零的稠密域上给 $P_t=0$，连续性延到全部非零输入，归一化只留 $\delta_\varnothing$。恒一时，每个非极大 $s$ 选一条合法后继边，同理先在稠密域、后在全部输入上得 $P_s=0$，响应只能支撑于极大独立集。这里极大是不再能添加一位，不是基数最大。$\rho=\{3,7\}$ 非空且有出边到 $\{1,3,7\}$，所以两分支都使 $P_\rho(e_\rho)=0$，违背唯一实际 ready 的 $P_\rho(e_\rho)=1$。这已在基向量、两端同时零和每个低支撑层排除冻结分支，不需要额外相位校准。
+
+故严格分支必成立。在所有坐标非零的输入上，(65.4)、(66.6) 与连通性给 $P_q(z)/(k^{|q|}|z_q|^\beta)$ 沿边相同，归一化给
+
+$$
+P_q(z)=\frac{k^{|q|}|z_q|^\beta}
+             {\sum_{t\in E}k^{|t|}|z_t|^\beta}.
+\tag{66.7}
+$$
+
+这里未选择 $\beta=2,k=1$。为把全部支撑层也直接写出，沿 XII9.4 中仅用归一化与 ready 连续性的步骤，取 $z(\varepsilon)=e_\rho+\varepsilon\sum_{t\ne\rho}e_t$、$\varepsilon>0$，$A_k=\sum_{t\ne\rho}k^{|t|}>0$。由 (66.7)，
+
+$$
+P_{\{9\}}(z(\varepsilon))
+=\frac{k\varepsilon^\beta}{k^2+A_k\varepsilon^\beta}.
+\tag{66.8}
+$$
+
+ready 处此项为零。若 $\beta=0$，右侧恒正；若 $\beta<0$，极限为 $k/A_k>0$；均与连续性矛盾。因此 $\beta>0$。以 $0^\beta=0$ 解释 (66.7)，其右端在每个非零输入分母为正、连续；全支撑域稠密，故与 $P$ 全域相同。于是单坐标支撑、断开的非零幅度支撑图、零活动幅度块、特征射线和未来碰节点的起点全部共享这一公式，没有额外支撑分支常数，不给零块指定射线或条件分布。这只是既有幂族的球面解释，不是提前应用射影 Born 定理。
+
+(66.7) 的全域式只依模长，终于给每个非零 $z$ 和每个实 $\vartheta$ 的 $P(e^{i\vartheta}z)=P(z)$。也可先在全支撑域比较，再固定 $\vartheta$ 取全支撑序列趋向任意 $z$，连续性给同一结论；不需对不可数相位取概率例外集。由 (62.2)，
+
+$$
+p(e^{\vartheta J}v)=p(v)\quad(v\in S_g(V),\ \vartheta\in\mathbb R),
+\qquad p(-v)=p(v)\quad(\vartheta=\pi).
+\tag{66.9}
+$$
+
+结合起初的正实齐次性，$P(az)=P(z)$ 对全部 $a\in\mathbb C^*$ 才到此成立。单位球到 $\mathbb{CP}^{88}$ 的标准商映射具有商拓扑，故连续 $P$ 唯一因子化为连续 $\pi([z])=P(z)$。这是响应下降的支付点；此前只用原球面上的函数与局部率的射线依赖。
+
+## 67. 下降之后的 Born、记录、档案与规范路径消费者
+
+**推论 67.1（精确交回既有响应消费者）。** 用 $\mathscr C_9$ 保持全部配置、范数和实际门，将 (66.9) 得到的 $\pi$ 放回 [XII46.1–46.2][SPD-XII]。其全 $\mathbb{CP}^{88}$ 连续域与复缩放不变提升现已证明；$A_{1:9}$ 的全输入／全内部时间和完整过去条款、唯一实际 ready、实际接缝与 $\mathrm F_h$ 全部保持。相同向量、相同概率空间和条件核没有被替换。于是 XII47.1 的前件逐项齐备，现在直接应用它，得
+
+$$
+h(s)=s,\qquad
+\pi_q([z])=|z_q|^2/\|z\|^2,\qquad
+p_q(v)=g_q(v_q,v_q)\quad(\|v\|_g=1).
+\tag{67.1}
+$$
+
+其内部原 $j=1$ 混合与阻塞 $\{2\}$ 选择、XII9.4 的 $\beta=2,k=1$ 和 XII9.5 的全支撑消费者按已有证明复用，不重建一般等距或 Born 分类。$h(1)=1$ 是此时的结论；数学 B 已在下降前取得。定理 62.3 得证。
+
+对原 $E_i=\{q:b_9(q)=i\}$、$M_i=\sum_{q\in E_i}|e_q\rangle\langle e_q|$，令数学 $m_i(z)=\sum_{q\in E_i}P_q(z)$。XII47.2／9.5 给
+
+$$
+\begin{gathered}
+P_q(z)>0\ \Longleftrightarrow\ z_q\ne0,\qquad
+m_i(z)=t_i(z)=\|M_i z\|^2/\|z\|^2,\\
+P_q(z)=m_i(z)P_q(M_i z)\quad(q\in E_i).
+\end{gathered}
+\tag{67.2}
+$$
+
+$M_i z=0$ 时整个乘积按原约定为零，不评价 $P(0)$，不安装条件纯态。这是 N、双向严格支持及 R，涵盖所有原有限十一地址正向前字，包括空字。所有 $j=0,\ldots,10$ 的响应分量守恒也由 Born 与原约化子空间的范数守恒得到；它不是未假设的边界过程存在或完整隐藏过去补偿子合同。
+
+**定义 67.2（实际记录与档案公式的精确前件）。** 数学 $m_i$ 只有在原同源读取合同下才是实际记录概率。具体消费 XII47.2 与 [XI6.1–6.2][SPD-XI] 时，另保留同一因果配置过程、$\Pr(Q_-=q\mid\mathcal G_-)=P_q(\chi_a)$、字面 $I=b_9(Q_-)$、$Q_+=Q_-$、正质量分支归一纯后继 $M_I\chi_a/\|M_I\chi_a\|$，以及每个读后实际可读细档案上同一 $P$ 的条件充分性。细档案为原标准 Borel 因果核，只依已发生可读过去和到达请求，以独立新档案种子实现，不反馈源；时点、次数和缺席同样不得泄露额外隐藏配置或跳时。其它档案必须各供其所需充分性。这里不把完整隐藏轨迹当作可读过去。
+
+在这些原合同及理想零失败范围内，对全部原 $a\in\mathsf W_{11},f\in\mathsf W_7,i,w$，已有 XI (6.3)–(6.5) 恰给
+
+$$
+\begin{aligned}
+\Pr_{\mathsf T(a)}(W=w)&=\|N_wK_ae_\rho\|^2,\\
+\Pr_{\mathsf R(a,f)}(I=i)&=t_i(\chi_a),\\
+\Pr_{\mathsf R(a,f)}(I=i,W=w)&=\|N_wK_fM_iK_ae_\rho\|^2,\\
+\Pr_{\mathsf R(a,f)}(I=i,A\in B,W=w)
+&=\nu_{a,i,f}(B)\|N_wK_fM_iK_ae_\rho\|^2.
+\end{aligned}
+\tag{67.3}
+$$
+
+最后一式的 $\nu_{a,i,f}$ 是该正质量记录分支全部终端前实际细档案的真实归一条件核，不是由 Born 选定的档案律。零质量记录块整体为零，不为它指定 $\nu$。分阶段档案用原核逐次积分；终端后档案依已发生结果接原因果核，不能放进终端前独立乘积。$1024$ 终端、$2048$ 形式联合标签及无路径零投影均参与；无成功后选择。原十三维 $H$ 上事件签名仍为 XI (6.5) 的 $R_0^*K_a^*N_wK_aR_0$、$R_0^*K_a^*M_iK_f^*N_wK_fM_iK_aR_0$，只有在上述实际合同下于原 $v=e_{00100}$ 评价才是这些概率；签名相等不识别不同真实历史或细档案。
+
+**定义 67.3（规范路径身份不能由响应代付）。** 本响应结论保留 III180.2 的对称交通自由，不选择最小率、C、全跳时路径律或跨程序耦合。已有精确路径／档案身份的消费条件分别为：
+
+| 既有消费者 | 必须另行支付的原精确条件及所得范围 |
+| --- | --- |
+| III180.1–181.2 的规范最小过程与逐程序完整律 | 在其原供应域取得完整 A+B+C；C 是每个原纯输入、每个单位脉冲跳数的有限本质上界，非有限期望或非爆炸的替代。另保留 III181.1 的完整配置路径核及节点接续、门外不动、实际接缝、报告、纯更新、原因果档案和共同调用索引下独立源驱动／独立档案驱动。才有原 $\mu_a^T,\mu_{a,f}^{\rm proj}$ 的完整律；逐样本身份还要同一指定驱动耦合及索引。这里只输入的 $A_{1:9}$ 不被偷换成原完整 A，尤其不补进地址 $0,10$ 的全输入过程合同。 |
+| III145.4、148.6、174.1–174.2 与 XI6.1 的档案身份 | 需完整的原可读条件充分性和原因果独立核，含发射时间、次数、缺席；数学 R 只给即时粗 Bayes 相容性，不给更细条件充分性或完整档案核。泄露隐藏路径的档案须用完整路径积分或另证其合同。 |
+| III181.3 的 $610$ 载体确定性读器联合身份 | 还要原源侧提升、真空／乘积接口、固定辅助波函数、支撑相容且与旧驱动独立的实际辅助初配置、十五调用、确定性零幅律、报告与档案因果拉回、互逆编码及时间平移；$89$ 标签上的响应下降不自动外推这些条件。 |
+| IV212.2 的实／复完整历史及 (212.4) | 还要 IV211.1 的同一 $m=13$ 实来源和接口、IV212.1 的原最小源律／驱动、正守卫、固定读器常数及参数域、闭命中与接缝优先顺序、原十五调用与七地址未来、同一独立档案类和种子。才可用其保留实际／比较向量分列、垃圾、微历史、跳时及全部物理调用时间的可测双射；本 $m=9$ 定理不供应这些前件。 |
+
+表中第一行的完整路径结论准确写为 $\mathcal L(H_a^T)=\mu_a^T$、$\mathcal L(H_{a,f}^R)=\mu_{a,f}^{\rm proj}$，其中 $H$ 保留全部隐藏配置、跳时、出入口、内部向量、调用、记录、档案及失败坐标；不是只对 (67.3) 的边缘作比较。第二行的档案合同只确定其给定实际核下的接合，不从响应唯一性选出 $\kappa$。第三行在其支撑相容的 $u,\nu$ 及指定源耦合下，原精确联合为
+
+$$
+(F^{\rm N}_{a,f})_*\widehat\mu^{\rm N,u,\nu}_{a,f}
+=\mu_{a,f}^{\rm proj}(dh)
+  \sum_{s:\nu_s>0}\nu_s\delta_s(ds')
+     \delta_{\rho_{I(h)}^{u,s}}(dr),
+\tag{67.4}
+$$
+
+并由 III181.3 的 $\mathcal B^{\rm N}_{a,f}$ 反向推回；$s'$ 记输出辅助初配置，$s$ 是求和指标。无读器时是 $\mu_a^T(dh)\nu(ds')$。这里仍保留十五个物理调用、全部微历史和垃圾，旧时刻的未来部分平移十五，不从一条终端等式省去这些坐标。
+
+第四行须在同一个满足 IV209.3 的 $m=13$ 来源上取 $|\lambda-\alpha|<\eta$、$\vartheta=m_*/16$，其中 $m_*,\eta,N$ 恰为 IV (206.2) 的原固定读器常数；源侧仍是 IV (212.1) 的最小律，辅助侧是 IV212.1 的完整闭守卫及优先顺序。在这些前件下，原 (212.3) 的互逆可测映射给
+
+$$
+\begin{aligned}
+(\mathcal F^{\mathbb R,\lambda}_{a,f})_*
+\widehat\mu^{\mathbb R,\mathrm G}_{a,f,\lambda}
+&=\Lambda_{a,f}^{\mathbb R,\lambda},\\
+\Lambda_{a,f}^{\mathbb R,\lambda}
+&=\mu_{a,f}^{\mathbb R,\rm proj}(dh)\,
+\delta_0(dR)\,\delta_{r_{I(h)}^\lambda}(dr)\,
+\delta_{\mathcal A_{a,f}^{\mathbb R,\lambda}(h)}(d\mathcal A),\\
+\widehat\mu^{\mathbb R,\mathrm G}_{a,f,\lambda}
+&=(\mathcal B^{\mathbb R,\lambda}_{a,f})_*
+\Lambda_{a,f}^{\mathbb R,\lambda}.
+\end{aligned}
+\tag{67.5}
+$$
+
+若共同源／档案种子保留为外部坐标，映射及其逆在这些坐标上取恒等；联合是种子与其所生成历史的图测度，不能错误写为二者独立乘积。实际全局无投影向量和投影比较向量仍分列；原时间、接缝与出门优先次序也未被商掉。
+
+分布唯一性不指定所有反事实程序的唯一联合；报告边缘相同也不建立参考／副本、相关／乘积输入、独立复合或并行历史的共同实现。以上是各已有条件身份的接口说明，不是为定理 62.3 增加新的过程前件。
+
+## 68. 相位前件会计、公开来源及完整实际目标边界
+
+**定义 68.1（前件与结论的分离）。** 本应用从全局响应类中移除了预给复相位／复缩放不变性；局部率射线依赖一直保留。其几何是同一个原实球面 $S_g(V)\simeq S^{177}$ 上的响应最终沿 $e^{\vartheta J}$ 圆纤维恒定，再下降到实维 $176$ 的 $\mathbb{CP}^{88}$。两个原配置的局部率仍在 $\mathbb{CP}^1\simeq S^2$，其三个 Bloch 坐标只有两个独立实自由度；本处没有从这些截面推出物理空间三维。
+
+| 类别 | 精确内容 |
+| --- | --- |
+| 保留的算子前件 | 原正定 $g$、逆等距运输、黄金与左响应、完整十一回返／十个 Artin／四十五远关系、全迹二和仅 ready 非退化；先有 XII53.3 的 $d=2$，再有 XII54.1 的 $J,\mathscr C_9$。 |
+| 保留的概率与过程前件 | 球面连续归一 $p$、完整 $A_{1:9}$、共同局部率的相位／范数／背景／年龄／完整过去自主性、因果存在、节点、无跨块、阻塞单点、不复位、同一实际接缝／准备／报告／纯更新／档案合同、全部前字的共同连续非零 $h$。 |
+| 导出的桥 | 正字绝对单位球面密度、全域 $P_r=h\circ s_r$、$h>0$ 于内部、B、全域弱边系数、两个冻结分支排除、严格赔率及全部支撑层、全实 $\vartheta$ 响应不变性、合法下降后原 Born 与记录消费者。 |
+| 没有增加的输入 | 相位轨道 ready 校准、边界 $0,10$ 全输入过程、额外率条件、独立复／GNS 源、任意 $SU$ 操作、极限制备、内部停止、负时间、后选择、有限字截断或删除静止方向。 |
+
+**定义 68.2（承重供应与文献归属）。** 这里的 **repo-derived** 内容是同一原实球面候选到已有射影消费者的来源特定组合，尤其是绝对相位桥与下降之前的弱边／严格分支解释；不重报已覆盖的一般定理，不作全球原创或优先权主张。
+
+| 公开、固定的供应 | 精确对应和适用边界 |
+| --- | --- |
+| [XII49–54，固定版本 `02327df1c2b5c4325568e2051abadfb3a687a55d`][SPD-XII]；[IV209–210，固定版本 `5ace7ec37be44b8f0e4f0de39c58b23500395fe3`][SPD-IV] | 原 $V,g,L,T$ 与未知容量、ready-only 可逆、全迹二；XII53.3 先支付容量，XII54.1 再消费无 E1 全图供应及 IV210.1 的平坦／坐标装配。没有把 IV 原全输入守恒反向当作新候选输入。 |
+| [II77 的路径／表对应、II121.7][SPD-II]；[III144.8–144.12][SPD-III] | $n=12,[6,6],(2,5)$ 整个 $89$ 扇区、同一标量 $c_0$；III 的模十指数核和正字逆替换给 (63.2)–(63.3)。II121.7 单独仅有共同相位的近似，不能独自完成本球面桥。 |
+| Freedman–Larsen–Wang，*The two-eigenvalue problem and density of Jones representation of braid groups*，[math/0103200v1][SPD-FLW]，Theorem 0.1（页2）、§2 Lemma 2.1、Definitions 1–2、(1)–(3)（页11–12） | **literature-attested**：可容许 Jones 扇区闭像中的特殊酉因子及表表示；参数如 §63。仅用于数学矩阵闭包，不供应实际概率、准备或自由控制。 |
+| [III177.1–177.3、引理177.5][SPD-III]；[XII9.2–9.5、46–47][SPD-XII] | 原有序 $Q$、安全集、十调用全向量回返、未归一弱边、全图系数、局部 Cauchy 与有限边界排除。§§64–66 展开这些计算的球面适用性；XII47.1 整体只在 (66.9) 之后调用。安全稠密供应准确是 III177.5。 |
+| Dürr–Goldstein–Tumulka–Zanghì，*Bell-Type Quantum Field Theories*，[quant-ph/0407116v1][SPD-DGTZ]，§2.3 (15)（页7） | **literature-attested**：一般纯跳增益减损失主方程，用于未知非负响应质量；其 §2.7 的平方目标最小率设计不是本处 Born 推导的输入。 |
+| [XI6.1–6.3、11.3][SPD-XI]；[III145、174、180–181][SPD-III]；[IV211–213][SPD-IV] | 分别保有实际报告／充分性、交通及最小率的额外选择、档案核、指定驱动、源侧提升和全历史身份的原精确条件；按 §67 分层消费，不从响应唯一性推出物理采用。 |
+
+**定义 68.3（未缩减的实际目标）。** 完整目标仍是同一实际 $\Omega$：原全部 $89$ 配置和 $235$ 实际边、$26+63$ 扇区、唯一 $\{3,7\}$ ready、十一前读／七后读菜单、两个切口、全部 $1024$ 终端和 $2048$ 形式联合标签。零质量、无路径零标签、失败、拒绝、停止、销毁、泄漏、告警、返回、双向／逆向返回、参考、副本、更新及可读档案坐标仍在各自原完整律中；不删除、不条件化为成功，零质量分支不指定条件态。所有原合法有限顺序、自适应和并行历史及其联合共同实现义务均不截短。
+
+由唯一 $\omega$、归一化二元关系和有限结构的定义，取得实际 $\Omega$ 的整个原实来源、精确门、正度量、黄金参数、ready 非退化、全数学输入／全内部时间过程合同、共同单报告因子及真实接缝／档案充分性，仍是 **ASSUMED-UNVERIFIED** 的来源采用桥。物理采用未取得不是本条件数学的反例；本证明也不把数学兼容性或原门字的闭包称为采用证据。裸起源前件到这些合同的关系仍为 **open**。
+
+原驱动／创新、真正遗忘、档案独立、一般复合／张量、相关输入和独立参考、CP／仪器、完整路径及跨程序耦合，各保有其独立桥梁。$m=13$ 的全 $610$ 来源、真空接口、十五调用读器和接口外方向不从本 $m=9$ 响应推导。物理连续钟、共同作用量尺度、可靠准备与控制、实际误差／失败、有限取得、噪声稳定性、采样／认证成本及无界历史资源预算仍按原合同计量。闭包只给逐目标数学逼近；没有统一字长、容噪或有限认证结论。本文是普通条件数学，未声称 Lean/kernel 验证、经验认证或完整量子起源完成。
+
+[SPD-XII]: https://github.com/the-omega-institute/trureturing/blob/02327df1c2b5c4325568e2051abadfb3a687a55d/docs/develop/theory/AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_XII.md
+[SPD-III]: https://github.com/the-omega-institute/trureturing/blob/5ace7ec37be44b8f0e4f0de39c58b23500395fe3/docs/develop/theory/AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_III.md
+[SPD-II]: https://github.com/the-omega-institute/trureturing/blob/5ace7ec37be44b8f0e4f0de39c58b23500395fe3/docs/develop/theory/AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_II.md
+[SPD-IV]: https://github.com/the-omega-institute/trureturing/blob/5ace7ec37be44b8f0e4f0de39c58b23500395fe3/docs/develop/theory/AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_IV.md
+[SPD-XI]: https://github.com/the-omega-institute/trureturing/blob/02327df1c2b5c4325568e2051abadfb3a687a55d/docs/develop/theory/AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_XI.md
+[SPD-FLW]: https://arxiv.org/pdf/math/0103200v1
+[SPD-DGTZ]: https://arxiv.org/pdf/quant-ph/0407116v1
+
+## 追加锚 69（本行以下为增补区）
