@@ -37,7 +37,7 @@ have central roots of unity beyond `±1`). -/
 def scalarReturn (γ : ZMod c) : Matrix (Fin 2) (Fin 2) (ZMod c) :=
   !![γ, 0; 0, γ]
 
-/-- The four-coordinate completion fiber after the two middle coordinates are fixed. -/
+/-- The two-coordinate completion fiber with `h₂`, `h₃`, `h₅`, and `h₆` fixed. -/
 def completionFiber (a₁ a₂ γ h₂ h₃ h₅ h₆ : ZMod c) : Set (ZMod c × ZMod c) :=
   {p | (1 - a₁ * a₂ * h₂ * h₃) * p.1 = γ * h₅ - h₃ ∧
     (1 - a₁ * a₂ * h₂ * h₃) * p.2 = γ * h₆ - h₂}
