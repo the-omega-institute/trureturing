@@ -6,7 +6,7 @@
    utility: none
    digest: Exact finite real-image residual enclosure for the canonical own-clock objective. -/
 
-/- UNCOMPILED SOURCE CANDIDATE. This module consumes the repaired
+/- Implementation candidate. This module consumes the repaired
 OwnClockContraction/Attainment/UniqueMinimum chain. The infimum is the
 unchanged realInfimum of OwnClockFixedSupport; the certificate uses an actual
 attained minimizer and never replaces the image infimum by a stationary-clock

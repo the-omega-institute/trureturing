@@ -6,7 +6,7 @@
    utility: none
    digest: Exact own-clock existence and uniqueness for distinct natural support p>=2, theta>1. -/
 
-/- UNCOMPILED SOURCE CANDIDATE. The definitions logCutoff and responseClock
+/- Implementation candidate. The definitions logCutoff and responseClock
 are the literal cutoff and max response used by the upstream fixed-support
 objective. The old theta>=4*card contraction is deliberately removed. The
 active coordinates are counted by the integer support itself; the right

@@ -6,7 +6,7 @@
    utility: none
    digest: Genuine boundary KKT and unique minimum of the actual fixed-support Robin interpolation. -/
 
-/- UNCOMPILED SOURCE CANDIDATE. Read OwnClockAttainment first: its compact
+/- Implementation candidate. Read OwnClockAttainment first: its compact
 sublevel argument proves existence without KKT. Here the derivative is
 calculated for that SAME phi, the boundary conditions are consequences
 of an actual minimum, and the scalar fixed point is CONSTRUCTED by the

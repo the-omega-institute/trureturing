@@ -6,7 +6,7 @@
    utility: none
    digest: Compact sublevels and attained minimum for the literal Robin interpolation on any finite p>=2 support with theta>1. -/
 
-/- UNCOMPILED SOURCE CANDIDATE. The finite Pi-space is only a coordinate chart
+/- Implementation candidate. The finite Pi-space is only a coordinate chart
 for the EXACT upstream phi. No new objective or infimum is defined. Functions
 on all naturals cannot have a unique minimizer as functions: values outside S
 are invisible. The finite chart removes that redundancy. Existence is proved
@@ -91,12 +91,16 @@ theorem phi_continuousOn {S : Finset ℕ} (hS : naturalSupport S) (hθ : 1 < the
       exact_mod_cast lt_of_lt_of_le (by norm_num : (1 : ℕ) < 2) (hS p p.property)
     have hc : ContinuousAt (fun t : ℝ => benefit (p : ℝ) t) (a p) :=
       (continuous_prime_hasDerivAt (x := a p) hp (by linarith [ha p])).continuousAt
-    exact (hc.comp (continuous_apply p).continuousAt).continuousWithinAt
+    exact (hc.comp (f := fun b : S → ℝ => b p) (x := a)
+      (continuous_apply p).continuousAt).continuousWithinAt
   have hsum (a : S → ℝ) : (∑ p ∈ S, benefit p (extend a p)) =
       ∑ p : S, benefit p (a p) := by
     rw [← sum_coe_sort S]
     simp only [extend_apply]
-  simpa only [phi, hsum, Pi.add_apply, Pi.sub_apply] using (continuousOn_const.add hcost).sub hbenefit
+  convert! ((continuousOn_const : ContinuousOn
+    (fun _ : S → ℝ => eulerMascheroniConstant) (orthant S)).add hcost).sub hbenefit using 1
+  funext a
+  simp only [phi, hsum, Pi.add_apply, Pi.sub_apply]
 
 /-- The benefits are bounded above, while the SAME terminal cost grows. -/
 theorem coercive_lower {S : Finset ℕ} (hS : naturalSupport S)
@@ -123,7 +127,8 @@ private lemma coordinate_mass_le {S : Finset ℕ} (hS : naturalSupport S)
     {a : S → ℝ} (ha : a ∈ orthant S) (p : S) :
     a p * log (p : ℝ) ≤ clock S (extend a) := by
   rw [clock_coordinates]
-  apply single_le_sum (s := Finset.univ)
+  apply Finset.single_le_sum (s := Finset.univ)
+    (f := fun q : S => a q * log (q : ℝ)) (a := p)
   · intro q _
     have hq : (1 : ℝ) < (q : ℕ) := by
       exact_mod_cast (lt_of_lt_of_le (by norm_num : (1 : ℕ) < 2) (hS q q.property))
