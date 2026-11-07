@@ -947,9 +947,12 @@ private theorem spectralRho_triangle {a b c : ℝ}
   · have huv : x*y ≤ u*v := by
       have hid : (u*v)^2-(x*y)^2 = u^2+v^2-1 := by rw [mul_pow, mul_pow, hx₂, hy₂]; ring
       have hp : 0 ≤ u*v := mul_nonneg hu.1.le hv.1.le
-      nlinarith
+      apply (sq_le_sq₀ hxy hp).mp
+      nlinarith only [hid, h]
     have hsq : (w-u*v)^2 ≤ (x*y)^2 := by rw [mul_pow, hx₂, hy₂]; nlinarith only [hg]
-    have hwlow : u*v-x*y ≤ w := by nlinarith
+    have hwlow : u*v-x*y ≤ w := by
+      have habs : |w-u*v| ≤ x*y := (sq_le_sq₀ (abs_nonneg _) hxy).mp (by simpa using hsq)
+      linarith only [(abs_le.mp habs).1]
     have hlow : 0 ≤ u*v-x*y := sub_nonneg.mpr huv
     have hbound : (u*v-x*y)^2 ≤ w^2 :=
       (sq_le_sq₀ hlow hw.1.le).mpr hwlow
@@ -960,7 +963,9 @@ private theorem spectralRho_triangle {a b c : ℝ}
           _ = 1 := by rw [hx₂, hy₂]; ring
       linarith only [heq]
     have hnonneg : 0 ≤ u*y+v*x := add_nonneg (mul_nonneg hu.1.le hy) (mul_nonneg hv.1.le hx)
-    have hzbound : z ≤ u*y+v*x := by nlinarith only [hz₂, hbound, hid, hz, hnonneg]
+    have hzbound : z ≤ u*y+v*x := by
+      apply (sq_le_sq₀ hz hnonneg).mp
+      linarith only [hz₂, hbound, hid]
     have hu' : u*y ≤ y := by nlinarith [mul_le_mul_of_nonneg_right hu.2 hy]
     have hv' : v*x ≤ x := by nlinarith [mul_le_mul_of_nonneg_right hv.2 hx]
     linarith
@@ -1057,7 +1062,8 @@ private theorem spectralRho_distance {a b : ℝ} (ha : 0 < a) (hb : 0 < b) :
     linear_combination (a+b)^2*hm
   have hs : (a-b)^2 ≤ spectralRho a b^2*(a+b)^2 := by nlinarith only [hp, hid, hd]
   have hn := mul_nonneg (spectralRho_nonneg a b) (add_pos ha hb).le
-  nlinarith only [hs, hn, abs_nonneg (a-b), sq_abs (a-b)]
+  apply (sq_le_sq₀ (abs_nonneg _) hn).mp
+  simpa only [sq_abs, mul_pow] using hs
 
 private def linearPolynomial (a b c : ℝ) : ℝ :=
   a^2*b+a*b^2/2+a^2*c+(7/2)*a*b*c+2*a*c^2+2*b*c^2
