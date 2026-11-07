@@ -3523,3 +3523,336 @@ for one radical function $h\in E_u$. Consequently its label span has dimension a
 *Proof.* In the first ruling take $h=h_z$ and in the second take $h=h_w$. Equation (203.2) or (203.4) writes every label as an element of $S_u(E_f)+\mathbb Rh$. The section $S_u$ is injective on $E_f$ because $T_uS_u=\operatorname{id}_{E_f}$, so $\dim S_u(E_f)=2$. The dimension bound follows. \(\square\)
 
 The scalarization is an exact search interface for a fixed ruling: the column ruling leaves two radical coefficients and a fixed label profile, while the row ruling leaves a three-dimensional zero-sum label profile and a fixed radical direction. It removes the residual equations only after the quotient identity and pointwise inequalities are imposed; it does not show that either ruling is nonempty or settle arbitrary partition realization, $F_{64}$, $H43$, SRS\text{-}20, physical succession or Lean/kernel formalization.
+
+## 204. Pointwise envelopes decide ruling feasibility
+
+The scalarized bodies of Section 203 can be tested without carrying all label inequalities separately. For a fixed ruling factor, the pointwise simplex constraints become upper and lower envelopes for one scalar function or one scalar label coordinate.
+
+**Definition 204.1 (the fixed-column envelope).** Retain $s_y=S_u(f_y)$ and let $0\ne c\in\mathsf H$. Since $c$ is nonzero and has zero sum, both sign sets
+
+$$
+\mathcal L_c^+=\{y:c_y>0\},
+\qquad
+\mathcal L_c^- =\{y:c_y<0\}
+\tag{204.1}
+$$
+
+are nonempty. Define the pointwise envelopes
+
+$$
+ L_c(x)=\max_{y\in\mathcal L_c^+}\frac{-s_y(x)}{c_y},
+\qquad
+ U_c(x)=\min_{y\in\mathcal L_c^-}\frac{-s_y(x)}{c_y}.
+\tag{204.2}
+$$
+
+Put
+
+$$
+\mathscr Z_c^{\mathrm{env}}
+ =\left\{z\in\mathbb R^2:
+ \begin{array}{l}
+ s_y(x)\ge0\text{ for every }y\text{ with }c_y=0\text{ and every }x,\\[2pt]
+ L_c(x)\le h_z(x)\le U_c(x)\text{ for every }x
+ \end{array}\right\}.
+\tag{204.3}
+$$
+
+**Definition 204.2 (the fixed-row interval body).** Let $0\ne w\in\mathbb R^2$ and write $h=h_w$. For each label $y$, define extended-real bounds
+
+$$
+ \ell_y(h)=\sup_{x:h(x)>0}\frac{-s_y(x)}{h(x)},
+ \qquad
+ u_y(h)=\inf_{x:h(x)<0}\frac{-s_y(x)}{h(x)},
+\tag{204.4}
+$$
+
+with the conventions $\sup\varnothing=-\infty$ and $\inf\varnothing=+\infty$. Define
+
+$$
+\mathscr V_w^{\mathrm{env}}
+ =\left\{v\in\mathsf H:
+ \begin{array}{l}
+ s_y(x)\ge0\text{ whenever }h(x)=0,\\[2pt]
+ \ell_y(h)\le v_y\le u_y(h)\text{ for every }y\in\mathcal L
+ \end{array}\right\}.
+\tag{204.5}
+$$
+
+All pointwise quantifiers range over the fixed representative domain $G$. The bounds in (204.4) lie in $[-\infty,+\infty]$, whereas every $v_y$ is real. Thus $\ell_y(h)=+\infty$ or $u_y(h)=-\infty$ excludes every real value of that coordinate, even if the two extended bounds are equal. No quotient is taken where its denominator is zero, and no subtraction of infinite bounds is used.
+
+**Proposition 204.3 (exact envelope characterizations).** The parameter bodies of Section 203 satisfy
+
+$$
+\mathscr Z_c=\mathscr Z_c^{\mathrm{env}},
+\tag{204.6}
+$$
+
+and
+
+$$
+\mathscr V_w=\mathscr V_w^{\mathrm{env}}.
+\tag{204.7}
+$$
+
+Consequently, a fixed-column ruling is feasible exactly when its two-dimensional coefficient vector $z$ satisfies the envelope inequalities (204.3), and a fixed-row ruling is feasible exactly when the interval box (204.5) intersects the zero-sum hyperplane $\mathsf H$.
+
+*Proof.* For the fixed-column ruling, the inequality in (203.2) is
+
+$$
+ s_y(x)+c_yh_z(x)\ge0.
+$$
+
+If $c_y>0$, division by $c_y$ gives $h_z(x)\ge-s_y(x)/c_y$; if $c_y<0$, it gives $h_z(x)\le-s_y(x)/c_y$; and if $c_y=0$, it gives $s_y(x)\ge0$. Taking the maximum over the positive labels and the minimum over the negative labels gives exactly (204.3). For the fixed-row ruling, the same inequality is
+
+$$
+ s_y(x)+v_yh(x)\ge0.
+$$
+
+On the set where $h>0$ it gives $v_y\ge-s_y/h$, on the set where $h<0$ it gives $v_y\le-s_y/h$, and on the zero set it gives $s_y\ge0$. Taking the supremum and infimum over the corresponding point sets gives (204.4)--(204.5), with the stated empty-set conventions. \(\square\)
+
+**Corollary 204.4 (the remaining ruling search is an envelope problem).** After the quotient identity is fixed, the fixed-column branch requires only the intersection of the two-dimensional plane $\{h_z:z\in\mathbb R^2\}$ with the pointwise strip
+
+$$
+L_c\le h\le U_c,
+\tag{204.8}
+$$
+
+along with the zero-profile conditions. The fixed-row branch requires only an interval-box intersection with $\mathsf H$. Every point found by either test yields a legal full-zero family by Proposition 203.2, while failure of the corresponding envelope intersection rules out that entire ruling factor. These are characterizations of fixed coefficient rulings; the label-span rank of their families is determined by Proposition 205.2. Neither characterization supplies an original full-zero seed in a prescribed rank branch.
+
+## 追加锚（本行以下为增补区）
+
+## 205. Baseline relations determine the actual lifted label rank
+
+**Definition 205.1 (the relation-restricted coefficient matrix).** Fix one original full-zero partition $u$, its host space $\mathcal W_u$, quotient $T_u$, normalized section $S_u$ and radical basis as in Sections 197--199. All spans below are spans of real $m$-classes. Use one coherent linear choice of bounded Borel representatives on $\mathcal W_u$, with $1$ represented by the constant one and the seed represented by a pointwise legal partition; a common $m$-null-set adjustment is allowed in choosing these representatives. Keep this choice fixed for all pointwise inequalities. Write $d=d_u$ and let
+
+$$
+j:\mathbb R^d\longrightarrow\mathcal R_u,
+\qquad j(z)=\sum_{\ell=1}^d z_\ell r_\ell.
+$$
+
+In label order $(0,1,3,B)$, put
+
+$$
+b_1=(1,-1,0,0)^{\mathsf T},\qquad
+b_2=(1,1,1,-3)^{\mathsf T},\qquad
+\mathsf B=(b_1\ b_2),\qquad K=\ker\Phi_f.
+\tag{205.1}
+$$
+
+The baseline identities (191.6), together with $\dim K=2$, give $K=\operatorname{im}\mathsf B$. For $A\in\mathscr A_u$, define
+
+$$
+M(A)=\mathsf B^{\mathsf T}A
+=\begin{pmatrix}
+a_{0\bullet}-a_{1\bullet}\\
+a_{0\bullet}+a_{1\bullet}+a_{3\bullet}-3a_{B\bullet}
+\end{pmatrix},
+\qquad
+W(A)=\operatorname{span}_{\mathbb R}\{u_y(A):y\in\mathcal L\}.
+\tag{205.2}
+$$
+
+Here $M(A)$ is $2\times d$, including the zero-column matrix when $d=0$.
+
+**Proposition 205.2 (exact FIB label-rank criterion).** For every feasible $A\in\mathscr P_u$,
+
+$$
+\begin{aligned}
+W(A)\cap\mathcal R_u&=j\bigl(\operatorname{im}M(A)^{\mathsf T}\bigr),\\
+\ker(a\mapsto\textstyle\sum_y a_yu_y(A))&=K\cap\ker A^{\mathsf T},\\
+\dim W(A)&=2+\operatorname{rank}M(A).
+\end{aligned}
+\tag{205.3}
+$$
+
+The first space in (205.3) is also the common radical of the tensor restricted to $W(A)$. In particular,
+
+$$
+W(A)=\mathcal W_u
+\quad\Longleftrightarrow\quad
+\operatorname{rank}M(A)=d.
+\tag{205.4}
+$$
+
+Thus $\operatorname{rank}A=d$ in (199.4) is necessary for (205.4), but measures the span of the corrections, rather than the actual excess label rank. If $d=0$, both ranks are zero and every feasible family has label rank two.
+
+*Proof.* Such coherent representatives exist: choose bounded representatives of a host basis containing $1$. Outside a common null set the seed's finitely many linear identities hold. On that null set assign every basis function its value at one fixed point outside it. Extending linearly then preserves $1$ and represents the seed by a legal partition everywhere. For these fixed representatives the lifted label map is
+
+$$
+\Phi_A(a)=S_u(\Phi_f(a))+j(A^{\mathsf T}a),
+\qquad T_u\Phi_A=\Phi_f.
+\tag{205.5}
+$$
+
+Consequently $T_u:W(A)\to E_f$ is onto, and a label combination belongs to its kernel exactly when its coefficient vector is in $K$. Writing that vector as $\mathsf Bz$ gives
+
+$$
+\ker(T_u|_{W(A)})=\Phi_A(K)
+=j\bigl(\operatorname{im}(A^{\mathsf T}\mathsf B)\bigr).
+$$
+
+Injectivity of $j$ also gives the second identity in (205.3). Since $\ker T_u=\mathcal R_u$ and $\dim E_f=2$, rank--nullity gives the last identity. The standard principle used here is Axler, *Linear Algebra Done Right*, fourth edition, [Theorem 3.21](https://LADR.plus/x3nullspace.html#x3nullspace-4); its application is to the lifted FIB label map and its baseline relation restriction. The family is full-zero by Proposition 199.2, so Proposition 190.1 identifies $\Phi_A(K)$ with its common radical. Finally $W(A)\subseteq\mathcal W_u$ and $\dim\mathcal W_u=2+d$, proving (205.4). The inequality $\operatorname{rank}M(A)\le\operatorname{rank}A$ proves necessity. $\square$
+
+**Proposition 205.3 (section and basis invariance for the same family).** Let $S'_u=S_u+jL$ be another normalized section, where $L:E_f\to\mathbb R^d$ is linear and $L(1)=0$. Let $D_L$ be the matrix whose $y$-th row is $L(f_y)^{\mathsf T}$. The same lifted functions have coefficient matrix
+
+$$
+A'=A-D_L,\qquad \mathsf B^{\mathsf T}D_L=0,
+\qquad M(A')=M(A).
+\tag{205.6}
+$$
+
+If the relation basis becomes $\mathsf BQ$ with $Q\in\operatorname{GL}_2(\mathbb R)$, and the radical coordinate map becomes $j'=jC$ with $C\in\operatorname{GL}_d(\mathbb R)$, then the matrix for this same restriction becomes
+
+$$
+Q^{\mathsf T}M(A)C^{-\mathsf T}.
+\tag{205.7}
+$$
+
+Hence the actual rank criterion is independent of all three choices. Pointwise feasibility is also preserved when the new representatives are chosen to give the same lifted functions.
+
+*Proof.* Substituting $S'_u$ into (205.5) gives $A'=A-D_L$. For each $b\in K$,
+
+$$
+D_L^{\mathsf T}b=L\left(\sum_y b_yf_y\right)=0,
+$$
+
+which proves (205.6). A change $j'=jC$ changes the coefficient matrix to $A'C^{-\mathsf T}$; a relation basis change multiplies its restriction on the left by $Q^{\mathsf T}$. These factors are invertible, giving (205.7), including the empty-coordinate convention for $d=0$. The equalities of functions give the assertion about pointwise inequalities. This compares representations of the same lifted family, with its section and coefficients changed together. $\square$
+
+**Proposition 205.4 (algebraic failures of the unrestricted rank inference).** The zero-sum column and two-column matrix
+
+$$
+\kappa=(-1,-1,2,0)^{\mathsf T},\qquad
+A_2=\begin{pmatrix}1&0\\1&0\\0&1\\-2&-1\end{pmatrix}
+\tag{205.8}
+$$
+
+satisfy
+
+$$
+\operatorname{rank}\kappa=1,\quad M(\kappa)=0,
+\qquad
+\operatorname{rank}A_2=2,\quad
+M(A_2)=\begin{pmatrix}0&0\\8&4\end{pmatrix}.
+\tag{205.9}
+$$
+
+Thus a feasible occurrence of the first matrix would have actual label rank two, and a feasible occurrence of the second would have actual label rank three. Unrestricted coefficient transversality likewise does not suffice for actual rank four. These examples assert algebraic ranks only; membership in an original FIB feasibility body is an additional hypothesis.
+
+*Proof.* Each displayed column sums to zero, and direct multiplication by $\mathsf B^{\mathsf T}$ gives (205.9). The vector $\kappa$ is nonzero, and the rows $(1,0)$ and $(0,1)$ of $A_2$ prove its rank two. Write its columns as $c=(1,1,0,-2)^{\mathsf T}$ and $e=(0,0,1,-1)^{\mathsf T}$. The rank-one endpoints $c(2,0)$ and $e(0,2)$ are transverse in Definition 202.1 and have midpoint $A_2$, but their restricted column factors $(0,8)^{\mathsf T}$ and $(0,4)^{\mathsf T}$ are dependent. Finally, for $d=1$, a section change with $L(q)=2$ and $L(1)=0$ gives $D_L=\kappa$ because $f_0=f_1=3/8-q/2$, $f_3=q$ and $f_B=1/4$. It changes the coefficient representation $\kappa$ into zero for the same family. This also shows why coefficient correction rank itself is not a section invariant. $\square$
+
+## 206. The projected feasibility body and its boundary consequences
+
+**Proposition 206.1 (exact projected-body interpretation and the seed point).** Put
+
+$$
+\mathscr Q_u=M(\mathscr P_u)\subseteq\mathbb R^{2\times d},
+\qquad
+N=\mathsf B(\mathsf B^{\mathsf T}\mathsf B)^{-1}
+=\left(\frac{b_1}{2}\ \frac{b_2}{12}\right).
+\tag{206.1}
+$$
+
+Every zero-sum coefficient matrix has a unique decomposition
+
+$$
+A=NM(A)+\kappa z^{\mathsf T},\qquad z\in\mathbb R^d.
+\tag{206.2}
+$$
+
+Consequently $M_0\in\mathscr Q_u$ exactly when some $z\in\mathbb R^d$ makes $NM_0+\kappa z^{\mathsf T}$ satisfy all the pointwise inequalities of Definition 199.1. The body $\mathscr Q_u$ is convex, and it records actual label ranks by
+
+$$
+\mathscr P_u^{\mathrm{act}}
+:=\{A\in\mathscr P_u:W(A)=\mathcal W_u\}
+=\{A\in\mathscr P_u:\operatorname{rank}M(A)=d\}.
+\tag{206.3}
+$$
+
+For the fixed full-zero seed $u$ assumed in Definition 205.1, this set is nonempty: the coefficient matrix $A_*$ representing $u$ itself belongs to it. This is a conditional statement about the seed's own body, without an existence assertion for an original seed of rank three or four.
+
+*Proof.* Both $b_1,b_2$ have zero sum, are orthogonal, and have squared norms $2,12$. Thus $\mathsf B^{\mathsf T}N=I_2$, so the map $M:\mathscr A_u\to\mathbb R^{2\times d}$ is onto. Its kernel consists of columns in $\mathsf H\cap K^\perp=\mathbb R\kappa$: this intersection has dimension one and contains the nonzero vector $\kappa$. Subtracting $NM(A)$ proves (206.2) and uniqueness. Substitution into the defining inequalities proves the membership characterization. Linear images preserve convexity, and Proposition 205.2 proves (206.3). Proposition 199.2 supplies $A_*$, and $W(A_*)=\mathcal W_u$ by definition of the seed, so $\operatorname{rank}M(A_*)=d$. Projection retains the relation-image data needed for rank; distinct matrices in a fibre of $M$ can still give distinct lifted families. $\square$
+
+**Proposition 206.2 (corrected interior and persistent-boundary criteria).** A uniformly interior point of $\mathscr P_u$ has feasible matrices of actual label rank $2+d$ arbitrarily close to it. Consequently, if $\mathscr P_u^{\mathrm{act}}=\varnothing$, then
+
+$$
+\inf_{y,x}\lambda_{y,x}(A)=0\qquad(A\in\mathscr P_u).
+\tag{206.4}
+$$
+
+For $A_0\in\mathscr P_u$, retain the persistent direction space $\mathscr V_u$ of (200.7). Then
+
+$$
+\mathscr Q_u\subseteq M(A_0)+M(\mathscr V_u).
+\tag{206.5}
+$$
+
+If all $d\times d$ minors vanish throughout the affine space on the right, there is no feasible family of actual rank $2+d$. A nonzero such minor somewhere on that affine space is necessary for such a family, but does not by itself establish pointwise feasibility. For $d=0$, the empty minor equals one and every feasible family already has the required rank.
+
+*Proof.* The perturbation bound in Proposition 200.2 applies to every zero-sum direction. For $d=1$, take $D=N(1,0)^{\mathsf T}$; the first entry of $M(A_0+tD)$ has nonzero linear coefficient. For $d=2$, take $D=N$; then $M(A_0+tD)=M(A_0)+tI_2$, whose determinant is a monic quadratic in $t$. Avoiding the finitely many roots gives arbitrarily small feasible perturbations of full restricted rank, and (205.3) gives their actual label rank. The case $d=0$ needs no perturbation. This proves (206.4) by contraposition, since a positive infimum is uniform interior. Applying $M$ to (200.8) gives (206.5); maximal minors and (206.3) give the remaining assertions. For an actual host fixed by a spanning seed, Proposition 206.1 makes the emptiness premise impossible. Thus these obstruction criteria constrain proposed host or boundary data; they do not construct a missing seed. $\square$
+
+## 207. Corrected rank consumers and the scope of ruling searches
+
+**Proposition 207.1 (the ruling test belongs to the projected body).** For $d=1$, a feasible family of actual rank three exists exactly when $\mathscr Q_u\not\subseteq\{0\}$. For $d=2$, absence of a feasible family of actual rank four is equivalent to at least one of
+
+$$
+\mathscr Q_u\subseteq\{\alpha v^{\mathsf T}:v\in\mathbb R^2\}
+\quad\text{for some }0\ne\alpha\in\mathbb R^2,
+\tag{207.1}
+$$
+
+or
+
+$$
+\mathscr Q_u\subseteq\{v\beta^{\mathsf T}:v\in\mathbb R^2\}
+\quad\text{for some }0\ne\beta\in\mathbb R^2.
+\tag{207.2}
+$$
+
+In particular, actual rank four requires escape from both kinds of projected ruling, rather than only from the coefficient rulings (201.3)--(201.4).
+
+*Proof.* Proposition 205.2 proves the one-column assertion. In the two-column case the failure condition is $\det M=0$ for all $M\in\mathscr Q_u$. A nonempty convex set has a nonempty relative interior in its affine hull, so this polynomial then vanishes on the entire affine hull. Apply the classification of real affine spaces of rank at most one in de Seguins Pazzis, *Large spaces of bounded rank matrices revisited*, [Proposition 2.3](https://arxiv.org/html/1507.05375v2): all nonzero matrices have a common image or a common kernel. Over $\mathbb R$ its exceptional two-element-field alternative is excluded. In $2\times2$ dimensions these are precisely (207.1) and (207.2); for the zero space either containment holds. Conversely either containment forces rank at most one. $\square$
+
+**Proposition 207.2 (valid transverse-pair scope).** Suppose $d=2$ and $A,D\in\mathscr P_u$ have nonzero rank-one restrictions
+
+$$
+M(A)=\alpha v^{\mathsf T},\qquad M(D)=\gamma t^{\mathsf T}.
+$$
+
+For $0<\theta<1$, their feasible mixture has actual label rank four exactly when
+
+$$
+\det(\alpha\ \gamma)\det(v\ t)\ne0,
+\tag{207.3}
+$$
+
+because
+
+$$
+\det M\bigl(\theta A+(1-\theta)D\bigr)
+=\theta(1-\theta)\det(\alpha\ \gamma)\det(v\ t).
+\tag{207.4}
+$$
+
+For rank-one coefficient endpoints $A=c v^{\mathsf T}$ and $D=e t^{\mathsf T}$, the column factors to use are $\alpha=\mathsf B^{\mathsf T}c$ and $\gamma=\mathsf B^{\mathsf T}e$. If either is zero, the mixture cannot have actual rank four. Independence of $c,e$ alone does not suffice.
+
+*Proof.* Apply the determinant expansion of Proposition 202.2 to the two restricted $2\times2$ matrices. Convexity gives feasibility, and Proposition 205.2 converts determinant nonvanishing into actual label rank four. The endpoint formula follows by multiplying the coefficient factorizations by $\mathsf B^{\mathsf T}$. In particular, the premise that every matrix of the whole feasible body has coefficient rank at most one forbids a rank-two coefficient mixture; the premise that every projected matrix has rank at most one forbids (207.3). Neither global premise supplies a route to a rank-four family.
+
+Convexity alone also gives no converse requiring rank-one endpoints: the abstract convex matrix body $\{I_2\}$ has full-rank points and no rank-one points. This is not asserted to be a realizable FIB body. It shows that a rank-one endpoint search requires an additional property of the particular body to be exhaustive. $\square$
+
+**Proposition 207.3 (retained statements and replaced candidate-rank conclusions).** Under the fixed-host hypotheses of Definition 205.1, the quotient and fibre descriptions in Sections 197--198, the feasibility and residual closure in Proposition 199.2, and its correction-span equality (199.4) are retained. The coefficient-rank requirements in Corollary 199.3 remain necessary; the exact actual-rank requirement is (205.4). The literal coefficient-rank strata and certificates of Section 200 and Proposition 201.2 retain their coefficient meaning; their candidate-rank interpretations use Propositions 206.2 and 207.1. The candidate-rank sufficiency claims of Corollaries 201.3 and 202.3 are replaced respectively by Propositions 207.1 and 207.2. Proposition 202.2 remains a coefficient-minor identity.
+
+The scalarized feasibility equalities (203.6)--(203.8), the dimension bound of Corollary 203.3, and the envelope equivalences (204.6)--(204.7) are retained. More precisely, in the fixed-column ruling the actual rank is
+
+$$
+2+\operatorname{rank}\bigl((\mathsf B^{\mathsf T}c)z^{\mathsf T}\bigr),
+\tag{207.5}
+$$
+
+and in the fixed-row ruling it is $2+\operatorname{rank}((\mathsf B^{\mathsf T}v)w^{\mathsf T})$. Each is at most three. A projected ruling in (207.1) or (207.2) means its entire inverse image in $\mathscr P_u$; it need not be one of the fixed coefficient rulings tested by Sections 203--204.
+
+*Proof.* Feasibility and tensor closure do not require the lifted labels to span their host, so Proposition 199.2 retains precisely those conclusions. Proposition 205.2 separates its correction-span assertion from the actual rank. Propositions 206.2, 207.1 and 207.2 give the stated replacements, including the impossibility of the global rank-at-most-one route in Corollary 202.3. Substituting $A=c z^{\mathsf T}$ or $A=v w^{\mathsf T}$ into (205.3) proves the ruling ranks, while Sections 203--204 solve exactly their original pointwise inequalities. Finally (206.2) exhibits the additional kernel freedom in a projected ruling's inverse image; (205.9) shows algebraically that this freedom can coexist with coefficient rank two.
+
+All these conclusions presuppose the original full-zero seed and its fixed host. They neither establish pointwise legality of the algebraic examples (205.8) nor construct an original rank-three or rank-four seed. Arbitrary-partition realization, the concrete pointwise evaluation of the host bodies, $F_{64}$, $H43$, SRS$\text{-}20$ and physical succession retain their separate unresolved boundaries. $\square$
+
+## 追加锚（本行以下为增补区）
