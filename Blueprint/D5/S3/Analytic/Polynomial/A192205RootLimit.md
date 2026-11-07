@@ -36,6 +36,10 @@ $$\operatorname{Tendsto}\left((fun (n:\mathbb{N}) \mapsto ((\operatorname{a}\lef
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/Polynomial/A192205RootLimit.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a192205-absolute-coefficient-root-limit` (proved) by `D5/S3/Analytic/Polynomial/A192205RootLimit.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a192205-absolute-coefficient-root-limit","declaration_gid":"D5/S3/Analytic/Polynomial/A192205RootLimit.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Paul D. Hanna and OEIS contributors (2011). *OEIS A192205, absolute coefficient sums of powers of 1-x-x^2+x^3*. URL: <https://oeis.org/A192205/internal>.
