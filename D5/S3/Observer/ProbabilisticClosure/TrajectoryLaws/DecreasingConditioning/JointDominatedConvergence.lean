@@ -9,6 +9,14 @@
 import D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.JointConditionalDominatedConvergence
 import D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.DecreasingConditioning.LevyDownward
 
+/-!
+# Joint dominated convergence for decreasing conditioning
+
+Dominated real inputs converging almost everywhere have conditional expectations that
+converge jointly almost everywhere and in L1 along an antitone family to the conditional
+expectation of the limit at the raw infimum of the conditioning sigma-algebras.
+-/
+
 set_option autoImplicit false
 noncomputable section
 open MeasureTheory Filter Set
@@ -80,9 +88,11 @@ theorem tendsto_condExp_of_dominated_convergence [IsProbabilityMeasure μ]
       (by simpa only [Pi.zero_apply, integral_zero] using hq_integrals) hqa (ae_all_iff.mpr hq0)
   have hbdown : ∀ᵐ ω ∂μ, ∀ N, Tendsto (fun j => μ[b N | ℱ j] ω) atTop (𝓝 (q N ω)) :=
     ae_all_iff.mpr fun N =>
-      (MeasureTheory.tendsto_ae_and_eLpNorm_condExp_iInf (μ := μ) hℱ (h_le 0) (b N)).1
+      (@MeasureTheory.tendsto_ae_and_eLpNorm_condExp_iInf Ω m0 μ inferInstance
+        ℱ hℱ (h_le 0) (b N)).1
   have hydown :=
-    MeasureTheory.tendsto_ae_and_eLpNorm_condExp_iInf (μ := μ) hℱ (h_le 0) yLim
+    @MeasureTheory.tendsto_ae_and_eLpNorm_condExp_iInf Ω m0 μ inferInstance
+      ℱ hℱ (h_le 0) yLim
   have hce (N n j : ℕ) : ∀ᵐ ω ∂μ, N ≤ n →
       |μ[y n | ℱ j] ω - μ[yLim | ℱ j] ω| ≤ μ[b N | ℱ j] ω := by
     by_cases hn : N ≤ n
