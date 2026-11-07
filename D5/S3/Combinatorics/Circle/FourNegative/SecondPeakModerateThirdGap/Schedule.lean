@@ -44,6 +44,7 @@ private theorem source_terminal_table (a b c d : ℕ)
     2*newValue a b c d j=nextNewBase a b c d i-(2*sourceMod a b c d+1) :=
   native_masses a b c d ha (by omega) (by omega) (by omega) i
 
+set_option maxHeartbeats 1600000 in
 private theorem joint_construction (a b c d : ℕ)
     (ha : 2≤a) (had : a<d) (hdc : d<c) (hcb : c<b) (hmoder : c≤a+d) :
     ∃ l : List ℕ, l.Perm (List.range (size a b c d)) ∧
@@ -84,7 +85,7 @@ private theorem joint_construction (a b c d : ℕ)
   have b3 : base a b c d 3=KK := by dsimp [base,KK,K,y,z,t]; ring
   have n0 : newBase a b c d 0=2*AA := by simp [newBase,charge,b0]
   have n1 : newBase a b c d 1=SU := by simp [newBase,charge,b1,SU]
-  have n2 : newBase a b c d 2=SV := by simp only [newBase,charge,b2,SV,z]; ring
+  have n2 : newBase a b c d 2=SV := by simp [newBase,charge,b2,SV,z] <;> ring
   have n3 : newBase a b c d 3=SW := by simp [newBase,charge,b3,SW,DD,D,y,z]
   have hNN : NN=N (x a) (y b) (z c) (t d) := by dsimp [NN,sourceMod,N,x,y,z,t]
   have hb := (chain_values a b c d ha (by omega) (by omega) (by omega)).1
@@ -107,19 +108,29 @@ private theorem joint_construction (a b c d : ℕ)
     exact hs.2.le
   have negold (j : Fin 4) : f (T j)≤0 := by
     have hs := source_signs a b c d ha (by omega) (by omega) (by omega) (T j)
-      (by dsimp [T,terminal,k,size]; fin_cases j <;> omega)
-    rw [if_pos (by dsimp [T,terminal,negatives,size]; fin_cases j <;> simp <;> omega)] at hs
+      (by fin_cases j <;> dsimp [T,terminal,k,size] <;> omega)
+    rw [if_pos (by fin_cases j <;> simp [T,terminal,negatives,size])] at hs
     exact hs.1.le
   have negnew (j : Fin 4) : g (T j)≤0 := by
     have hs := source_signs a b c d ha (by omega) (by omega) (by omega) (T j)
-      (by dsimp [T,terminal,k,size]; fin_cases j <;> omega)
-    rw [if_pos (by dsimp [T,terminal,negatives,size]; fin_cases j <;> simp <;> omega)] at hs
+      (by fin_cases j <;> dsimp [T,terminal,k,size] <;> omega)
+    rw [if_pos (by fin_cases j <;> simp [T,terminal,negatives,size])] at hs
     exact hs.2.le
   have mo := bank_double_masses a b c d u H ha had hdc hcb hu hH false
   have mn := bank_double_masses a b c d u H ha had hdc hcb hu hH true
-  dsimp only at mo mn
+  simp only [Bool.false_eq_true,ite_false,ite_true] at mo mn
   rw [b0,b1,b2,b3] at mo
   rw [n0,n1,n2,n3] at mn
+  change 2*((P 0).map f).sum=(t d-2-2*(u:ℤ))*AA ∧
+    2*((P 1).map f).sum=2*lam b c*(H:ℤ)*LL ∧
+    2*((P 2).map f).sum=2*lam b c*(z c-1-(H:ℤ))*LL+
+      (x a-2)*KK+2*(u:ℤ)*AA ∧
+    2*((P 3).map f).sum=(z c-2)*BB+2*(lam b c-1)*LL at mo
+  change 2*((P 0).map g).sum=(t d-2-2*(u:ℤ))*(2*AA) ∧
+    2*((P 1).map g).sum=2*lam b c*(H:ℤ)*SV ∧
+    2*((P 2).map g).sum=2*lam b c*(z c-1-(H:ℤ))*SV+
+      (x a-2)*SW+2*(u:ℤ)*(2*AA) ∧
+    2*((P 3).map g).sum=(z c-2)*SU+2*(lam b c-1)*SV at mn
   have term0 := source_terminal_table a b c d ha had hdc hcb 2
   have term1 := source_terminal_table a b c d ha had hdc hcb 3
   have term2 := source_terminal_table a b c d ha had hdc hcb 0
@@ -133,7 +144,9 @@ private theorem joint_construction (a b c d : ℕ)
     have ht1 : d+c+b+(a-1)=a+b+c+d-1 := by omega
     have ht2 : 0+(d-1)=d-1 := by omega
     have ht3 : d+(c-1)=d+c-1 := by omega
-    simpa only [chainStart,chainLength,nextBase,nextNewBase,ht0,ht1,ht2,ht3,
+    dsimp [chainStart,chainLength,nextBase,nextNewBase] at term0 term1 term2 term3
+    dsimp [f,g,T,terminal,NN]
+    simpa only [ht0,ht1,ht2,ht3,
       b0,b1,b2,b3,n0,n1,n2,n3] using
       (show (_ ∧ _) ∧ (_ ∧ _) ∧ (_ ∧ _) ∧ (_ ∧ _) from
         ⟨term0.2.2,term1.2.2,term2.2.2,term3.2.2⟩)
@@ -144,7 +157,7 @@ private theorem joint_construction (a b c d : ℕ)
   have so2 : 2*(((P 0).map f).sum+f (T 0)+((P 1).map f).sum+f (T 1))=S2 := by
     calc
       _=S1+2*lam b c*(H:ℤ)*LL+AA-NN := by linarith only [so1,mo.2.1,negs.2.1.1]
-      _=S2 := by dsimp [S1,S2,AA,BB,KK,CC,sAt,C,E,N,A,B,K,L,NN,sourceMod,lam,x,y,z,t]; ring
+      _=S2 := by dsimp [S1,S2,AA,BB,KK,CC,LL,sAt,C,E,N,A,B,K,L,NN,sourceMod,lam,x,y,z,t]; ring
   have so3 : 2*(((P 0).map f).sum+f (T 0)+((P 1).map f).sum+f (T 1)+
       ((P 2).map f).sum+f (T 2))=S3 := by
     calc
@@ -168,7 +181,8 @@ private theorem joint_construction (a b c d : ℕ)
   have s1range : 0<S1 ∧ S1≤KK-1 := seams.1
   have t1range : 0<T1 ∧ T1≤SW-1 := seams.2.1
   have s3range : 0<S3 ∧ S3≤BB-1 := seams.2.2.1
-  have t3range : 0<T3 ∧ T3≤SU-1 := seams.2.2.2
+  have t3range : 0<T3 ∧ T3≤SU-1 := by
+    simpa [T3,SU,BB,SV,LL,sub_sub] using seams.2.2.2
   have s2range : 0<S2 ∧ S2≤AA-1 := ⟨(Selected.slo q),(Selected.shi q)⟩
   have t2range : 0<T2 ∧ T2≤AA-1 := ⟨(Selected.second_lo q),(Selected.second_hi q)⟩
   have oldChecks : packetChecks f (NN/2) 0
@@ -178,19 +192,30 @@ private theorem joint_construction (a b c d : ℕ)
     all_goals first
       | trivial
       | (apply (Int.le_ediv_iff_mul_le (by norm_num : (0:ℤ)<2)).mpr
-         nlinarith only [so1,so2,so3,so4,negs.1.1,negs.2.1.1,negs.2.2.1.1,
+         linarith only [so1,so2,so3,so4,negs.1.1,negs.2.1.1,negs.2.2.1.1,
            negs.2.2.2.1,s1range.2,s2range.2,s3range.2,hLL])
-      | nlinarith only [so1,so2,so3,so4,s1range.1,s2range.1,s3range.1]
+      | linarith only [so1,so2,so3,so4,s1range.1,s2range.1,s3range.1]
   have oldstrip : InStrip f (NN/2) 0 l := by
-    change InStrip f (NN/2) 0 (blocksWord [(P 0,T 0),(P 1,T 1),(P 2,T 2),(P 3,T 3)])
-    apply (strip_iff_packetChecks f (NN/2) 0 _
+    have wordblocks : l=blocksWord [(P 0,T 0),(P 1,T 1),(P 2,T 2),(P 3,T 3)] := by
+      simp [l,word,P,T,blocksWord,List.append_assoc]
+    rw [wordblocks]
+    apply (strip_iff_packetChecks f (NN/2) 0
+      [(P 0,T 0),(P 1,T 1),(P 2,T 2),(P 3,T 3)]
       ⟨by omega,Int.ediv_nonneg (by omega) (by norm_num)⟩ ?_ ?_).mpr oldChecks
     · intro b hb i hi
-      simp only [List.mem_cons,List.mem_singleton] at hb
-      rcases hb with rfl|rfl|rfl|rfl <;> exact posold _ i hi
+      simp only [List.mem_cons,List.mem_singleton,List.mem_nil_iff,or_false] at hb
+      rcases hb with rfl|rfl|rfl|rfl
+      · exact posold 0 i hi
+      · exact posold 1 i hi
+      · exact posold 2 i hi
+      · exact posold 3 i hi
     · intro b hb
-      simp only [List.mem_cons,List.mem_singleton] at hb
-      rcases hb with rfl|rfl|rfl|rfl <;> exact negold _
+      simp only [List.mem_cons,List.mem_singleton,List.mem_nil_iff,or_false] at hb
+      rcases hb with rfl|rfl|rfl|rfl
+      · exact negold 0
+      · exact negold 1
+      · exact negold 2
+      · exact negold 3
   /- The new label starts bank 1 or bank 2.  This is the literal timing,
      rather than the right-normalized withEar timing at a bank's end. -/
   let Pe : Fin 4 → List ℕ := fun j =>
@@ -219,9 +244,10 @@ private theorem joint_construction (a b c d : ℕ)
         linarith only [sn1,mn.2.1,negs.2.1.2]
       _=T2 := by
         simp only [hNN]
-        dsimp [T1,S1,T2,AA,BB,KK,DD,CC,SV,FAt,sAt,ZAt,A,B,C,D,E,N,K,L]
+        dsimp [T1,S1,T2,AA,BB,KK,DD,CC,SV,LL,FAt,sAt,ZAt,A,B,C,D,E,N,K,L]
         simp only [(PowerData.y_eq p)]
-        cases he : (Selected.early q) <;> simp only [delta,he,ite_true,ite_false] <;> ring
+        cases he : (Selected.early q) <;>
+          simp only [delta,he,Bool.false_eq_true,ite_true,ite_false] <;> ring
   have sn3 : 2*(((Pe 0).map g).sum+g (T 0)+((Pe 1).map g).sum+g (T 1)+
       ((Pe 2).map g).sum+g (T 2))=T3 := by
     rw [pe1,pe2]
@@ -232,7 +258,7 @@ private theorem joint_construction (a b c d : ℕ)
         linarith only [sn1,mn.2.1,mn.2.2.1,negs.2.1.2,negs.2.2.1.2]
       _=T3 := by
         simp only [hNN]
-        dsimp [T1,S1,T3,AA,BB,KK,DD,SV,SW,SU,N,A,B,K,D,L]
+        dsimp [T1,S1,T3,AA,BB,KK,DD,SV,SW,SU,LL,N,A,B,K,D,L]
         simp only [(PowerData.y_eq p)]
         ring
   have sn4 : ((Pe 0).map g).sum+g (T 0)+((Pe 1).map g).sum+g (T 1)+
@@ -241,14 +267,14 @@ private theorem joint_construction (a b c d : ℕ)
         ((P 2).map g).sum+g (T 2)+((P 3).map g).sum+g (T 3)=-AA := by
       simpa [l,word,P,T,List.map_append,List.sum_append,add_assoc] using sharedzero
     rw [pe0,pe1,pe2,pe3]
-    nlinarith only [hs]
+    linarith only [hs]
   have newChecks : packetChecks g NN 0
       [(Pe 0,T 0),(Pe 1,T 1),(Pe 2,T 2),(Pe 3,T 3)] := by
     simp only [packetChecks,zero_add]
     repeat' constructor
     all_goals first
       | trivial
-      | nlinarith only [sn1,sn2,sn3,sn4,negs.1.2,negs.2.1.2,negs.2.2.1.2,
+      | linarith only [sn1,sn2,sn3,sn4,negs.1.2,negs.2.1.2,negs.2.2.1.2,
           negs.2.2.2.2,t1range.1,t1range.2,t2range.1,t2range.2,t3range.1,t3range.2,
           hSV]
   have pePositive (j : Fin 4) (i : ℕ) (hi : i∈Pe j) : 0≤g i := by
@@ -260,13 +286,22 @@ private theorem joint_construction (a b c d : ℕ)
     · exact posnew j i hi
   have markedstrip : InStrip g NN 0
       (blocksWord [(Pe 0,T 0),(Pe 1,T 1),(Pe 2,T 2),(Pe 3,T 3)]) := by
-    apply (strip_iff_packetChecks g NN 0 _ ⟨by omega,by omega⟩ ?_ ?_).mpr newChecks
+    apply (strip_iff_packetChecks g NN 0
+      [(Pe 0,T 0),(Pe 1,T 1),(Pe 2,T 2),(Pe 3,T 3)] ⟨by omega,by omega⟩ ?_ ?_).mpr newChecks
     · intro b hb i hi
-      simp only [List.mem_cons,List.mem_singleton] at hb
-      rcases hb with rfl|rfl|rfl|rfl <;> exact pePositive _ i hi
+      simp only [List.mem_cons,List.mem_singleton,List.mem_nil_iff,or_false] at hb
+      rcases hb with rfl|rfl|rfl|rfl
+      · exact pePositive 0 i hi
+      · exact pePositive 1 i hi
+      · exact pePositive 2 i hi
+      · exact pePositive 3 i hi
     · intro b hb
-      simp only [List.mem_cons,List.mem_singleton] at hb
-      rcases hb with rfl|rfl|rfl|rfl <;> exact negnew _
+      simp only [List.mem_cons,List.mem_singleton,List.mem_nil_iff,or_false] at hb
+      rcases hb with rfl|rfl|rfl|rfl
+      · exact negnew 0
+      · exact negnew 1
+      · exact negnew 2
+      · exact negnew 3
   let pre := if (Selected.early q) then P 0 ++ [T 0]
     else P 0 ++ [T 0] ++ P 1 ++ [T 1]
   let post := if (Selected.early q) then P 1 ++ T 1 :: P 2 ++ T 2 :: P 3 ++ [T 3]
