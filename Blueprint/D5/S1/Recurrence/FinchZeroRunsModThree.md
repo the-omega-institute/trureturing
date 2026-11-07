@@ -10,7 +10,7 @@ $$claim \Leftrightarrow (\forall k \in \mathbb{N},\; 2 \le k \Rightarrow ((\exis
 
 *Formalization.* `D5/S1/Recurrence/FinchZeroRunsModThree.claim` (`✓ std3`).
 
-*Citation.* Steven Finch (2026). *Three Quadratic Recurrences Modulo 3: What We Can Prove and What We Can Guess*. DOI: [10.48550/arXiv.2610.34300](https://doi.org/10.48550/arXiv.2610.34300). URL: <https://arxiv.org/abs/2610.34300v1>.
+*Citation.* Steven Finch (2026). *Three Quadratic Recurrences Modulo 3: What We Can Prove and What We Can Guess*. URL: <https://arxiv.org/abs/2610.34300v1>.
 
 *Commentary.*
 
@@ -28,7 +28,7 @@ $$\neg (\forall k \in \mathbb{N},\; 2 \le k \Rightarrow ((\exists x \in \mathbb{
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Steven Finch (2026). *Three Quadratic Recurrences Modulo 3: What We Can Prove and What We Can Guess*. DOI: [10.48550/arXiv.2610.34300](https://doi.org/10.48550/arXiv.2610.34300). URL: <https://arxiv.org/abs/2610.34300v1>.
+*Acknowledgement.* Steven Finch (2026). *Three Quadratic Recurrences Modulo 3: What We Can Prove and What We Can Guess*. URL: <https://arxiv.org/abs/2610.34300v1>.
 
 *Commentary.*
 
