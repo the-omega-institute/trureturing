@@ -78,9 +78,9 @@ private theorem terminal_zero (r : ℕ) (k : Fin 8) :
     rw [triple_total]
     simp [h3,h1]
   fin_cases k
-  · exact triple_zero ⟨0,by omega⟩ (by omega) (by omega)
-  · exact triple_zero ⟨1,by omega⟩ (by omega) (by omega)
-  · exact triple_zero ⟨degree r-2,by omega⟩ (by omega) (by omega)
+  · exact triple_zero ⟨0,by omega⟩ (by change (0 : ℕ)≠degree r-3; omega) (by change (0 : ℕ)≠degree r-1; omega)
+  · exact triple_zero ⟨1,by omega⟩ (by change (1 : ℕ)≠degree r-3; omega) (by change (1 : ℕ)≠degree r-1; omega)
+  · exact triple_zero ⟨degree r-2,by omega⟩ (by change degree r-2≠degree r-3; omega) (by change degree r-2≠degree r-1; omega)
   · let j : Fin (degree r) := ⟨degree r-3,by omega⟩
     let k : Fin (degree r) := ⟨degree r-1,by omega⟩
     have hjk : j≠k := by

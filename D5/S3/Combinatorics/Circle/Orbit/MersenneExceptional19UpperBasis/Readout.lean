@@ -30,8 +30,9 @@ private theorem digit_period (n i : ℕ) (z k : ℤ) (hi : i<n) :
   have he : (2 : ℤ)^n*k=((2 : ℤ)^(n-i)*k)*(2 : ℤ)^i := by
     rw [mul_right_comm,← pow_add,Nat.sub_add_cancel (by omega : i≤n)]
   have hp : (2 : ℤ)^(n-i)*k=2*((2 : ℤ)^(n-i-1)*k) := by
-    rw [show n-i=(n-i-1)+1 by omega,pow_succ]
-    ring
+    calc
+      (2 : ℤ)^(n-i)*k=(2 : ℤ)^((n-i-1)+1)*k := by congr 2; omega
+      _=2*((2 : ℤ)^(n-i-1)*k) := by rw [pow_succ]; ring
   unfold digit
   rw [he,Int.add_mul_ediv_right _ _ (by positivity),hp]
   omega
@@ -48,7 +49,10 @@ private theorem read_split (n k : ℕ) (f : ℕ → A) (z : ℤ) :
     read (n+k) f z=read n f z+
       read k (fun i => f (n+i)) (z/(2 : ℤ)^n) := by
   induction n generalizing f z with
-  | zero => simp [MersenneExceptional19PermutationStabilizer.read]
+  | zero =>
+    simp only [Nat.zero_add,pow_zero,Int.ediv_one]
+    have hz : read 0 f z=0 := by simp [MersenneExceptional19PermutationStabilizer.read]
+    rw [hz,zero_add]
   | succ n ih =>
     rw [show n+1+k=(n+k)+1 by omega,read_succ,ih,read_succ]
     have hq : (z/2)/(2 : ℤ)^n=z/(2 : ℤ)^(n+1) := by
@@ -88,7 +92,7 @@ The endpoint j+1<d is explicit: no implicit out-of-range coordinate is used.
 Naturals provide the required 0≤j. This lemma applies to arbitrary torsion. -/
 theorem read_add_power (d j : ℕ) (f : ℕ → A) (m : ℤ)
     (hj : j+1<d) (hm : 0≤m ∧ m+(2 : ℤ)^j<(2 : ℤ)^d)
-    (hdbl : ∀ i, j<i → i<d → f i=(2 : ℤ)^(i-j-1) • f (j+1)) :
+    (hdbl : ∀ i, j < i → i < d → f i=(2 : ℤ)^(i-j-1) • f (j+1)) :
     read d f (m+(2 : ℤ)^j)-read d f m=
       (1-2*digit m j) • f j+digit m j • f (j+1) := by
   induction j generalizing d f m with
@@ -112,16 +116,17 @@ theorem read_add_power (d j : ℕ) (f : ℕ → A) (m : ℤ)
           intro i hi
           simpa using hdbl (i+1) (by omega) (by omega)
         _=z • f 1 := read_geom_smul _ _ _ hz
-    rw [pow_zero,read_succ,read_succ,tail _ ⟨hq0',hq1'⟩,tail _ ⟨hq0,hq1⟩]
+    rw [pow_zero,read_succ (k+1) f (m+1),read_succ (k+1) f m,
+      tail _ ⟨hq0',hq1'⟩,tail _ ⟨hq0,hq1⟩]
     rcases digit_cases m 0 with he | he
     · have hp : m%2=0 := by simpa [digit] using he
       have hp' : (m+1)%2=1 := by omega
       have hq : (m+1)/2=m/2 := by omega
-      simp [he,hp,hp',hq]
+      simp [digit,hp,hp',hq]
     · have hp : m%2=1 := by simpa [digit] using he
       have hp' : (m+1)%2=0 := by omega
       have hq : (m+1)/2=m/2+1 := by omega
-      simp only [he,hp,hp',hq,zero_smul,one_smul,zero_add]
+      simp only [digit,pow_zero,Int.ediv_one,hp,hp',hq,Nat.zero_add,zero_smul,one_smul,zero_add]
       module
   | succ j ih =>
     obtain ⟨n,rfl⟩ := Nat.exists_eq_succ_of_ne_zero (by omega : d≠0)
@@ -131,11 +136,11 @@ theorem read_add_power (d j : ℕ) (f : ℕ → A) (m : ℤ)
     have hm' : 0≤m/2 ∧ m/2+(2 : ℤ)^j<(2 : ℤ)^n := by
       rw [hp,pow_succ] at hm
       omega
-    have hh : ∀ i, j<i → i<n →
+    have hh : ∀ i, j < i → i < n →
         f (i+1)=(2 : ℤ)^(i-j-1) • f (j+1+1) := by
       intro i hi hin
       have ht := hdbl (i+1) (by omega) (by omega)
-      convert ht using 1 <;> congr 1 <;> omega
+      simpa only [show i+1-(j+1)-1=i-j-1 by omega] using ht
     have hc := ih n (fun i => f (i+1)) (m/2) (by omega) hm' hh
     have hdigit : digit m (j+1)=digit (m/2) j := by
       unfold digit

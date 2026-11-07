@@ -45,9 +45,9 @@ private theorem selected_four_parameter_form (r : ℕ) (X : Fin (3*degree r) →
     let x := block X 0 1
     let y := block X 1 0
     let θ := highTheta r X
-    (∀ j, j<degree r → block X 0 j=first (degree r) u x 0 θ j) ∧
-    (∀ j, j<degree r → block X 1 j=middle (degree r) y θ j) ∧
-    (∀ j, j<degree r → block X 2 j=last (degree r) u x y 0 θ j) ∧
+    (∀ j, j < degree r → block X 0 j=first (degree r) u x 0 θ j) ∧
+    (∀ j, j < degree r → block X 1 j=middle (degree r) y θ j) ∧
+    (∀ j, j < degree r → block X 2 j=last (degree r) u x y 0 θ j) ∧
     (ss r/2) • x+aa r • y=0 := by
   have hd : 12≤degree r := by dsimp [degree]; omega
   obtain ⟨eb,ef,ea⟩ := actual_low_row_table r X hX
@@ -87,7 +87,7 @@ private theorem selected_four_parameter_form (r : ℕ) (X : Fin (3*degree r) →
       corrected_low r X (highTheta r X) 1 2 le_rfl,
       corrected_low r X (highTheta r X) 2 2 le_rfl,hF,hG] at h
     linear_combination (norm := module) h
-  have high (p : Fin 3) (j : ℕ) (hj : 2≤j) (hjd : j<degree r) :
+  have high (p : Fin 3) (j : ℕ) (hj : 2≤j) (hjd : j < degree r) :
       block X p j=(2 : ℤ)^(j-2) • block X p 2+
         correctionBlock r (highTheta r X) p j := by
     have h := hl p j hj hjd

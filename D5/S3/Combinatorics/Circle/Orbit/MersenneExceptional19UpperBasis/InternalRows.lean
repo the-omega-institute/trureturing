@@ -132,7 +132,7 @@ def wordRead (r : ℕ) (Y : Fin 3 → ℕ → A) (M : ℤ) : A :=
 valid d-bit endpoints proved from the sealed physical ranges. -/
 theorem actual_internal_readouts (r j : ℕ) (Y : Fin 3 → ℕ → A)
     (hj : 2≤j ∧ j≤degree r-4)
-    (hdbl : ∀ p i, j<i → i<degree r →
+    (hdbl : ∀ p i, j < i → i < degree r →
       Y p i=(2 : ℤ)^(i-j-1) • Y p (j+1))
     (hsum : Y 0 (j+1)+Y 1 (j+1)+Y 2 (j+1)=0) :
     let α := digit (aa r) j
@@ -280,7 +280,7 @@ private theorem invert_internal (α β σ : ℤ) (T F G rG rF rH : A)
 are derived above, and the inverse is applied to the actual vanishing rows. -/
 theorem selected_internal_step (r j : ℕ) (X : Fin (3*degree r) → A) (θ : A)
     (hX : SelectedAnnihilates r X) (hj : 2≤j ∧ j≤degree r-4)
-    (hdbl : ∀ p i, j<i → i<degree r →
+    (hdbl : ∀ p i, j < i → i < degree r →
       correctedBlock r X θ p i=(2 : ℤ)^(i-j-1) • correctedBlock r X θ p (j+1))
     (hsum : correctedBlock r X θ 0 (j+1)+correctedBlock r X θ 1 (j+1)+
       correctedBlock r X θ 2 (j+1)=0) :
@@ -332,14 +332,14 @@ triple at these levels sums to zero. This descent uses only selected uppers. -/
 theorem selected_corrected_ladders (r : ℕ) (X : Fin (3*degree r) → A)
     (hX : SelectedAnnihilates r X) :
     let Y := correctedBlock r X (highTheta r X)
-    (∀ p j, 2≤j → j<degree r → Y p j=(2 : ℤ)^(j-2) • Y p 2) ∧
-    (∀ j, 2≤j → j<degree r → Y 0 j+Y 1 j+Y 2 j=0) := by
+    (∀ p j, 2≤j → j < degree r → Y p j=(2 : ℤ)^(j-2) • Y p 2) ∧
+    (∀ j, 2≤j → j < degree r → Y 0 j+Y 1 j+Y 2 j=0) := by
   have hd : 12≤degree r := by dsimp [degree]; omega
   let Y := correctedBlock r X (highTheta r X)
   obtain ⟨b1,b2,bT⟩ := selected_corrected_high r X hX
   have descent (v : ℕ) : ∀ j, 2≤j → j≤degree r-3 → degree r-3-j=v →
-      (∀ p i, j≤i → i<degree r → Y p i=(2 : ℤ)^(i-j) • Y p j) ∧
-      (∀ i, j≤i → i<degree r → Y 0 i+Y 1 i+Y 2 i=0) := by
+      (∀ p i, j≤i → i < degree r → Y p i=(2 : ℤ)^(i-j) • Y p j) ∧
+      (∀ i, j≤i → i < degree r → Y 0 i+Y 1 i+Y 2 i=0) := by
     induction v using Nat.strong_induction_on with
     | h v ih =>
       intro j hj hjtop heq

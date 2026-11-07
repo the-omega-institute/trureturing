@@ -53,7 +53,7 @@ private theorem corrected_low (r : ℕ) (X : Fin (3*degree r) → A) (θ : A)
 
 private theorem read_two_low (d : ℕ) (hd : 2≤d) (f : ℕ → A) (z : ℤ)
     (hz : 0≤z ∧ z<(2 : ℤ)^d)
-    (hf : ∀ j, 2≤j → j<d → f j=(2 : ℤ)^(j-2) • f 2) :
+    (hf : ∀ j, 2≤j → j < d → f j=(2 : ℤ)^(j-2) • f 2) :
     read d f z=(z%2) • f 0+(z/2%2) • f 1+(z/4) • f 2 := by
   have he : d=2+(d-2) := by omega
   conv_lhs => rw [he]
@@ -130,7 +130,7 @@ private theorem selected_f2 (r : ℕ) (X : Fin (3*degree r) → A)
   let θ := highTheta r X
   let Y := correctedBlock r X θ
   obtain ⟨hl,hT⟩ := selected_corrected_ladders r X hX
-  have hdouble (p : Fin 3) (i : ℕ) (hi : 1<i) (hid : i<degree r) :
+  have hdouble (p : Fin 3) (i : ℕ) (hi : 1<i) (hid : i < degree r) :
       Y p i=(2 : ℤ)^(i-1-1) • Y p 2 := by
     simpa only [show i-1-1=i-2 by omega] using hl p i (by omega) hid
   have hbase : affineRange r (4*eighth r) := by
