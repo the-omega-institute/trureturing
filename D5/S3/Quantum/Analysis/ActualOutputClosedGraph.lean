@@ -10,8 +10,10 @@ import Mathlib.Analysis.Normed.Operator.Banach
 import Mathlib.Analysis.Normed.Operator.BanachSteinhaus
 import Mathlib.Analysis.Normed.Operator.Bilinear
 import Mathlib.Analysis.Normed.Operator.Mul
-import Mathlib.Data.Complex.Basic
+import Mathlib.Basic.Complex.Basic
 import Mathlib.Tactic
+
+/-! Automatic bounded bilinearity from uniform readback on actual outputs. -/
 
 namespace D5.S3.Quantum.Analysis.ActualOutputClosedGraph
 
@@ -38,7 +40,7 @@ private theorem small_bound_zero {x C : ℝ} (hC : 0 ≤ C)
   have hd : 0 < C + 1 := by linarith
   have he : 0 < |x| / (C + 1) / 2 := by positivity
   have hh := h _ he
-  have hm : |x| / (C + 1) / 2 * (C + 1) = |x| / 2 := by field_simp; ring
+  have hm : |x| / (C + 1) / 2 * (C + 1) = |x| / 2 := by field_simp
   have hh' : |x| ≤ |x| / (C + 1) / 2 * (C + 1) :=
     hh.trans (mul_le_mul_of_nonneg_left (by linarith) he.le)
   rw [hm] at hh'
@@ -59,7 +61,8 @@ private theorem actual_output_limit (P : Set (E →L[ℝ] ℝ)) (D : E → E →
   intro α
   rw [map_zero, map_sum]
   simp only [map_smul, smul_eq_mul]
-  apply small_bound_zero (Finset.sum_nonneg fun i _ => mul_nonneg (abs_nonneg _) (norm_nonneg _))
+  apply small_bound_zero (C := ∑ i, |r i| * ‖z i‖)
+    (Finset.sum_nonneg fun i _ => mul_nonneg (abs_nonneg _) (norm_nonneg _))
   intro η hη
   obtain ⟨m, t, β, c, ht, ha⟩ := hr α η hη
   have heq (n : ℕ) :
@@ -93,9 +96,9 @@ private theorem actual_output_limit (P : Set (E →L[ℝ] ℝ)) (D : E → E →
       ∑ j, c j * (∑ i, r i * (β j).val (D (p i n) (t j)))) atTop
       (𝓝 (∑ i, r i * α.val (z i))) := by
     have h1 := tendsto_finsetSum Finset.univ (fun i _ =>
-      (tendsto_const_nhds.mul ((α.val.continuous.tendsto _).comp (hz i))))
+      ((tendsto_const_nhds (x := r i)).mul ((α.val.continuous.tendsto _).comp (hz i))))
     have h2 := tendsto_finsetSum Finset.univ (fun j _ =>
-      tendsto_const_nhds.mul (hrow (t j) (ht j) (β j)))
+      (tendsto_const_nhds (x := c j)).mul (hrow (t j) (ht j) (β j)))
     simpa using h1.sub h2
   have hu : Tendsto (fun n => η * ∑ i, |r i| * ‖p i n‖) atTop
       (𝓝 (η * ∑ i, |r i| * ‖z i‖)) :=
@@ -168,7 +171,10 @@ theorem raw_relation_bounded_bilinear [CompleteSpace E]
         simp only [hc, map_add, ContinuousLinearMap.add_apply]
         abel)
     simp [Fin.sum_univ_succ] at hh
-    exact sub_eq_zero.mp (by simpa [sub_eq_add_neg, neg_add] using hh)
+    apply sub_eq_zero.mp
+    calc
+      D (a + b) c - (D a c + D b c) = D (a + b) c + (-D a c + -D b c) := by abel
+      _ = 0 := hh
   have hsmul (r : ℝ) (a c : E) : D (r • a) c = r • D a c := by
     have hh := reflect_actual_relation P D hsep hr (![1, -r] : Fin 2 → ℝ)
       ![D (r • a) c, D a c] (by
@@ -209,7 +215,14 @@ theorem raw_relation_bounded_bilinear [CompleteSpace E]
             (((S a).continuous.tendsto _).comp (((S.flip t).continuous.tendsto _).comp hx))
         have hw := ((β.val.continuous.tendsto _).comp hv).sub
           (tendsto_const_nhds (x := β.val (S x (S a t) - S a (S x t))))
-        simpa [Fin.sum_univ_succ, hc, map_sub] using hw)
+        have hw0 : Tendsto (fun n =>
+            β.val (S (b n) (S a t) - S a (S (b n) t)) -
+              β.val (S x (S a t) - S a (S x t))) atTop (𝓝 0) := by
+          simpa using hw
+        convert hw0 using 1
+        funext n
+        simp [Fin.sum_univ_succ, hc, map_sub]
+        <;> ring)
     have hz : y - D a x = 0 := by simpa [Fin.sum_univ_succ, sub_eq_add_neg] using hh
     exact sub_eq_zero.mp hz
   let A (a : E) : E →L[ℝ] E := ⟨L a, hclosed a⟩
@@ -246,6 +259,7 @@ theorem raw_relation_bounded_bilinear [CompleteSpace E]
 
 #print axioms raw_relation_bounded_bilinear
 
+end
 end D5.S3.Quantum.Analysis.ActualOutputClosedGraph
 
 -- Transient exact applications; removed after their governed compilation.
@@ -290,4 +304,5 @@ example : ∃ B : ℝ →L[ℝ] ℝ →L[ℝ] ℝ, ∀ a b, B a b = 0 := by
     (by intro α a b; simp [mul_comm])
     (by intro a b c; simp [mul_assoc]) hr
   exact ⟨B,hB⟩
+end
 end D5.S3.Quantum.Analysis.ActualOutputClosedGraph
