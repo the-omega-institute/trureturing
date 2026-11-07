@@ -23,7 +23,7 @@ import Mathlib.Tactic
 noncomputable section
 namespace D5.S3.Arith.Robin.PriceRecord.OwnClockResidualCertificate
 
-open Real Set Finset
+open Real Set Finset MeasureTheory
 open scoped Topology
 open D5.S3.Arith.Robin.PriceRecord.OwnClockFixedSupport
 open D5.S3.Arith.Robin.PriceRecord.OwnClockContraction
@@ -117,17 +117,19 @@ private lemma tangent_integral_forward {H L T : ℝ} (hH : 1 < H)
     intro u hu
     exact terminalCost_hasDerivAt (hH.trans_le (hHL.trans hu.1.le))
   have hint : IntervalIntegrable reciprocalClock volume L T := by
-    exact (reciprocalClock_continuousOn hH).mono_set
+    exact (reciprocalClock_continuousOn hH).mono
       (Icc_subset_Ici_self.trans (Ici_subset_Ici.mpr hHL))
       |>.intervalIntegrable_of_Icc hLT
   have hftc := intervalIntegral.integral_eq_sub_of_hasDerivAt_of_le hLT hcont hderiv hint
-  dsimp [residualJ, tangentRemainder]
+  change terminalCost L + reciprocalClock L * (T - L) - terminalCost T = _
   have hrewrite : terminalCost L + reciprocalClock L * (T - L) - terminalCost T =
       reciprocalClock L * (T - L) - (∫ u in L..T, reciprocalClock u) := by
     rw [hftc]
     ring
   rw [hrewrite]
-  simp only [intervalIntegral.integral_sub, intervalIntegral.integral_const]
+  rw [intervalIntegral.integral_sub intervalIntegrable_const hint,
+    intervalIntegral.integral_const]
+  simp only [smul_eq_mul]
   ring
 
 private lemma tangent_integral_backward {H T L : ℝ} (hH : 1 < H)
@@ -141,11 +143,11 @@ private lemma tangent_integral_backward {H T L : ℝ} (hH : 1 < H)
     intro u hu
     exact terminalCost_hasDerivAt (hH.trans_le (hHT.trans hu.1.le))
   have hint : IntervalIntegrable reciprocalClock volume T L := by
-    exact (reciprocalClock_continuousOn hH).mono_set
+    exact (reciprocalClock_continuousOn hH).mono
       (Icc_subset_Ici_self.trans (Ici_subset_Ici.mpr hHT))
       |>.intervalIntegrable_of_Icc hTL
   have hftc := intervalIntegral.integral_eq_sub_of_hasDerivAt_of_le hTL hcont hderiv hint
-  dsimp [residualJ, tangentRemainder]
+  change terminalCost L + reciprocalClock L * (T - L) - terminalCost T = _
   have hrewrite : terminalCost L + reciprocalClock L * (T - L) - terminalCost T =
       (∫ u in T..L, reciprocalClock u) + reciprocalClock L * (T - L) := by
     calc
@@ -153,7 +155,9 @@ private lemma tangent_integral_backward {H T L : ℝ} (hH : 1 < H)
           (terminalCost L - terminalCost T) + reciprocalClock L * (T - L) := by ring
       _ = (∫ u in T..L, reciprocalClock u) + reciprocalClock L * (T - L) := by rw [hftc]
   rw [hrewrite]
-  simp only [intervalIntegral.integral_sub, intervalIntegral.integral_const]
+  rw [intervalIntegral.integral_sub hint intervalIntegrable_const,
+    intervalIntegral.integral_const]
+  simp only [smul_eq_mul]
   ring
 
 private lemma tangent_remainder_quadratic_forward {H L T : ℝ} (hH : 1 < H)
@@ -166,16 +170,17 @@ private lemma tangent_remainder_quadratic_forward {H L T : ℝ} (hH : 1 < H)
     have hinner := reciprocal_gap_forward hH hHL hu.1
     have hbound : ∀ v ∈ Ioo L u, curvatureWeight v ≤ curvatureWeight H := by
       intro v hv
-      exact hmono (hHL.trans hv.1.le) le_rfl
+      exact hmono (Set.mem_Ici.mpr le_rfl) (hHL.trans hv.1.le)
+        (hHL.trans hv.1.le)
     have hint₁ : IntervalIntegrable curvatureWeight volume L u := by
-      exact (curvatureWeight_continuousOn hH).mono_set
+      exact (curvatureWeight_continuousOn hH).mono
         (Icc_subset_Ici_self.trans (Ici_subset_Ici.mpr hHL))
-        |>.intervalIntegrable_of_Icc hu.1.le
+        |>.intervalIntegrable_of_Icc hu.1
     have hint₂ : IntervalIntegrable (fun _ : ℝ => curvatureWeight H) volume L u :=
-      continuousOn_const.intervalIntegrable_of_Icc hu.1.le
-    have hint := intervalIntegral.integral_mono_on_of_le_Ioo hbound
-      hint₁ hint₂
+      continuousOn_const.intervalIntegrable_of_Icc hu.1
+    have hint := intervalIntegral.integral_mono_on_of_le_Ioo hu.1 hint₁ hint₂ hbound
     rw [intervalIntegral.integral_const] at hint
+    simp only [smul_eq_mul] at hint
     rw [hinner]
     nlinarith
   have hJ := tangent_integral_forward hH hHL hLT
@@ -185,19 +190,21 @@ private lemma tangent_remainder_quadratic_forward {H L T : ℝ} (hH : 1 < H)
     exact hgap u ⟨hu.1.le, hu.2.le⟩
   have hleft : IntervalIntegrable (fun u => reciprocalClock L - reciprocalClock u) volume L T := by
     exact ((continuousOn_const.sub
-      (reciprocalClock_continuousOn hH).mono_set
+      (reciprocalClock_continuousOn hH).mono
         (Icc_subset_Ici_self.trans (Ici_subset_Ici.mpr hHL))).
         intervalIntegrable_of_Icc hLT)
   have hright : IntervalIntegrable (fun u => curvatureWeight H * (u - L)) volume L T := by
     exact (continuousOn_const.mul (continuousOn_id.sub continuousOn_const)).
       intervalIntegrable_of_Icc hLT
-  have houter := intervalIntegral.integral_mono_on_of_le_Ioo hbound hleft hright
+  have houter := intervalIntegral.integral_mono_on_of_le_Ioo hLT hleft hright hbound
   have houterJ : residualJ L T ≤
       ∫ u in L..T, curvatureWeight H * (u - L) := by
     rw [hJ]
     exact houter
-  rw [intervalIntegral.integral_const_mul, intervalIntegral.integral_sub,
+  rw [intervalIntegral.integral_const_mul,
+    intervalIntegral.integral_sub (continuous_id.intervalIntegrable L T) intervalIntegrable_const,
     intervalIntegral.integral_id, intervalIntegral.integral_const] at houterJ
+  simp only [smul_eq_mul] at houterJ
   constructor
   · exact (tangent_remainder_nonnegative (hH.trans_le hHL)
       (hH.trans_le (hHL.trans hLT))).1
@@ -213,16 +220,17 @@ private lemma tangent_remainder_quadratic_backward {H T L : ℝ} (hH : 1 < H)
     have hinner := reciprocal_gap_backward hH hHT hu.2
     have hbound : ∀ v ∈ Ioo u L, curvatureWeight v ≤ curvatureWeight H := by
       intro v hv
-      exact hmono (hHT.trans (hu.1.trans hv.1.le)) le_rfl
+      exact hmono (Set.mem_Ici.mpr le_rfl) (hHT.trans (hu.1.trans hv.1.le))
+        (hHT.trans (hu.1.trans hv.1.le))
     have hint₁ : IntervalIntegrable curvatureWeight volume u L := by
-      exact (curvatureWeight_continuousOn hH).mono_set
+      exact (curvatureWeight_continuousOn hH).mono
         (Icc_subset_Ici_self.trans (Ici_subset_Ici.mpr hHT))
-        |>.intervalIntegrable_of_Icc hu.2.le
+        |>.intervalIntegrable_of_Icc hu.2
     have hint₂ : IntervalIntegrable (fun _ : ℝ => curvatureWeight H) volume u L :=
-      continuousOn_const.intervalIntegrable_of_Icc hu.2.le
-    have hint := intervalIntegral.integral_mono_on_of_le_Ioo hbound
-      hint₁ hint₂
+      continuousOn_const.intervalIntegrable_of_Icc hu.2
+    have hint := intervalIntegral.integral_mono_on_of_le_Ioo hu.2 hint₁ hint₂ hbound
     rw [intervalIntegral.integral_const] at hint
+    simp only [smul_eq_mul] at hint
     rw [hinner]
     nlinarith
   have hJ := tangent_integral_backward hH hHT hTL
@@ -231,19 +239,21 @@ private lemma tangent_remainder_quadratic_backward {H T L : ℝ} (hH : 1 < H)
     intro u hu
     exact hgap u ⟨hu.1.le, hu.2.le⟩
   have hleft : IntervalIntegrable (fun u => reciprocalClock u - reciprocalClock L) volume T L := by
-    exact (((reciprocalClock_continuousOn hH).mono_set
+    exact (((reciprocalClock_continuousOn hH).mono
       (Icc_subset_Ici_self.trans (Ici_subset_Ici.mpr hHT))).sub
       continuousOn_const).intervalIntegrable_of_Icc hTL
   have hright : IntervalIntegrable (fun u => curvatureWeight H * (L - u)) volume T L := by
     exact (continuousOn_const.mul (continuousOn_const.sub continuousOn_id)).
       intervalIntegrable_of_Icc hTL
-  have houter := intervalIntegral.integral_mono_on_of_le_Ioo hbound hleft hright
+  have houter := intervalIntegral.integral_mono_on_of_le_Ioo hTL hleft hright hbound
   have houterJ : residualJ L T ≤
       ∫ u in T..L, curvatureWeight H * (L - u) := by
     rw [hJ]
     exact houter
-  rw [intervalIntegral.integral_const_mul, intervalIntegral.integral_sub,
+  rw [intervalIntegral.integral_const_mul,
+    intervalIntegral.integral_sub intervalIntegrable_const (continuous_id.intervalIntegrable T L),
     intervalIntegral.integral_const, intervalIntegral.integral_id] at houterJ
+  simp only [smul_eq_mul] at houterJ
   constructor
   · exact (tangent_remainder_nonnegative (hH.trans_le (hHT.trans hTL))
       (hH.trans_le hHT)).1
@@ -392,7 +402,7 @@ theorem real_infimum_residual_enclosure {S : Finset ℕ} (hS : naturalSupport S)
         curvatureWeight (theta S) / 2 *
           ((36 / 11 : ℝ) * (responseClock S L - L)) ^ 2 :=
       hQ.trans (mul_le_mul_of_nonneg_left hres_sq
-        (by positivity : 0 ≤ curvatureWeight (theta S) / 2))
+        (div_nonneg (curvatureWeight_pos hθ).le (by norm_num)))
     have hQ'' := hQ'
     rw [hcoeff] at hQ''
     linarith [hQnonneg]

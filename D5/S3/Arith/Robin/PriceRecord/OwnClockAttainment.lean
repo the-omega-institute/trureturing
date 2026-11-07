@@ -42,7 +42,7 @@ def eulerNormalization (S : Finset ℕ) : ℝ :=
 lemma extend_admissible {S : Finset ℕ} {a : S → ℝ} (ha : a ∈ orthant S) :
     admissible S (extend a) := by
   intro p hp
-  simpa using ha (⟨p, hp⟩ : S)
+  simpa [extend, hp] using ha (⟨p, hp⟩ : S)
 
 lemma clock_coordinates {S : Finset ℕ} (a : S → ℝ) :
     clock S (extend a) = ∑ p : S, a p * log (p : ℝ) := by
@@ -89,13 +89,14 @@ theorem phi_continuousOn {S : Finset ℕ} (hS : naturalSupport S) (hθ : 1 < the
     intro p _ a ha
     have hp : (1 : ℝ) < (p : ℕ) := by
       exact_mod_cast lt_of_lt_of_le (by norm_num : (1 : ℕ) < 2) (hS p p.property)
-    exact ((continuous_prime_hasDerivAt (x := a p) hp (by linarith [ha p])).continuousAt.comp
-      (continuous_apply p).continuousAt).continuousWithinAt
+    have hc : ContinuousAt (fun t : ℝ => benefit (p : ℝ) t) (a p) :=
+      (continuous_prime_hasDerivAt (x := a p) hp (by linarith [ha p])).continuousAt
+    exact (hc.comp (continuous_apply p).continuousAt).continuousWithinAt
   have hsum (a : S → ℝ) : (∑ p ∈ S, benefit p (extend a p)) =
       ∑ p : S, benefit p (a p) := by
     rw [← sum_coe_sort S]
     simp only [extend_apply]
-  simpa only [phi, hsum] using (continuousOn_const.add hcost).sub hbenefit
+  simpa only [phi, hsum, Pi.add_apply, Pi.sub_apply] using (continuousOn_const.add hcost).sub hbenefit
 
 /-- The benefits are bounded above, while the SAME terminal cost grows. -/
 theorem coercive_lower {S : Finset ℕ} (hS : naturalSupport S)
@@ -122,9 +123,13 @@ private lemma coordinate_mass_le {S : Finset ℕ} (hS : naturalSupport S)
     {a : S → ℝ} (ha : a ∈ orthant S) (p : S) :
     a p * log (p : ℝ) ≤ clock S (extend a) := by
   rw [clock_coordinates]
-  exact single_le_sum (fun q _ => mul_nonneg (by linarith [ha q])
-    (log_pos (by exact_mod_cast lt_of_lt_of_le (by norm_num : (1 : ℕ) < 2)
-      (hS q q.property))).le) (mem_univ p)
+  apply single_le_sum (s := Finset.univ)
+  · intro q _
+    have hq : (1 : ℝ) < (q : ℕ) := by
+      exact_mod_cast (lt_of_lt_of_le (by norm_num : (1 : ℕ) < 2) (hS q q.property))
+    exact mul_nonneg (by linarith [ha q]) (log_pos hq).le
+  · exact mem_univ p
+
 
 /-- An explicit finite box for every sublevel. -/
 theorem sublevel_box {S : Finset ℕ} (hS : naturalSupport S) (hθ : 1 < theta S)
@@ -147,8 +152,9 @@ theorem sublevel_box {S : Finset ℕ} (hS : naturalSupport S) (hθ : 1 < theta S
   have hbound := (log_le_iff_le_exp h0).mp hlog
   refine ⟨hbound, ha, ?_⟩
   intro p
-  apply (le_div_iff₀ (log_pos (by exact_mod_cast lt_of_lt_of_le (by norm_num : (1 : ℕ) < 2)
-    (hS p p.property)))).mpr
+  have hpR : (1 : ℝ) < (p : ℕ) := by
+    exact_mod_cast (lt_of_lt_of_le (by norm_num : (1 : ℕ) < 2) (hS p p.property))
+  apply (le_div_iff₀ (log_pos hpR)).mpr
   exact (coordinate_mass_le hS ha p).trans hbound
 
 /-- Concrete coercivity in the finite-Pi sup norm. -/
