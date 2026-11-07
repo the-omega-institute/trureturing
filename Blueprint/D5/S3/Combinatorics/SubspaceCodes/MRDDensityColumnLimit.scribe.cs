@@ -20,17 +20,13 @@ internal sealed class MRDDensityColumnLimitDocument : IScribeDocumentDefinition
                 Question + " The field is a finite carrier K, q is Fintype.card K, n is the row count and m is the column count. The distance d satisfies 1 ≤ d ≤ n and n ≥ 2. The density uses the cardinalities of matrix subspaces; gaussian is the finite product of q-binomial factors and P is the infinite product. The assertion answers the fixed-field column-growth part of the question and includes d = 1."),
             Node("result", "The fixed-field MRD density formula", ClaimBody(),
                 DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
-                "Uniform sampling of image subspaces reduces the density to injectivity of a finite family of tensor restrictions. For distinct equal-dimensional left subspaces, every dependent tuple of frames has a strict tensor dimension surplus. Its contribution vanishes as the columns grow. Mixed Gaussian moments and finite multivariate Möbius truncation give the joint zero-kernel probability. Conditioning on injectivity then gives the density limit. When d = 1 the density equals one.",
-                openProblemResolutionClaim: new OpenProblemResolutionClaim(
-                    ProblemSlugRef.Create("op-grsz2023mrd"), ResolutionKind.Proved)))));
+                "Uniform sampling of image subspaces reduces the density to injectivity of a finite family of tensor restrictions. For distinct equal-dimensional left subspaces, every dependent tuple of frames has a strict tensor dimension surplus. Its contribution vanishes as the columns grow. Mixed Gaussian moments and finite multivariate Möbius truncation give the joint zero-kernel probability. Conditioning on injectivity then gives the density limit. When d = 1 the density equals one."))));
 
     private static DocumentBlock Node(string name, string title, Formula formula,
-        DescribeRole role, AssessedProvenance provenance, string prose,
-        OpenProblemResolutionClaim? openProblemResolutionClaim = null) =>
+        DescribeRole role, AssessedProvenance provenance, string prose) =>
         Describe.Lean(DescribeId.Create("mrd-column-limit-" + name),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(Disp(formula)),
-            provenance, Blocks(Paragraph(Text(prose))), role,
-            openProblemResolutionClaim: openProblemResolutionClaim);
+            provenance, Blocks(Paragraph(Text(prose))), role);
 
     private static Formula ClaimBody()
     {
