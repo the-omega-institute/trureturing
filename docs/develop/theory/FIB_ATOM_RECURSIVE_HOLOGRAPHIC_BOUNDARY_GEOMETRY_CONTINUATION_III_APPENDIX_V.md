@@ -348,3 +348,102 @@ The actual three-pair separation (212.3)–(212.13), its sixty-three-direction c
 The radius restriction in (212.23) excludes the origin from the asserted residual neighborhood. Thus this theorem supplies actual local residual freedom and a positive H51 witness, while leaving universal $F_{64}$ attainment or exclusion, origin enclosure, compatible choices across amplitudes, fixed-start summable label motion and physical succession unresolved. The full original source and analytic suppliers remain inherited premises, rather than new certifications of those premises. $\square$
 
 ## 追加锚（本行以下为增补区）
+## 213. Anchored radial H51 descent and the exact motion bridge
+
+**Theorem 213.1 (anchored actual radial H51 descent).** Under exactly Definition 211.1, fix an original $\theta$ and the functions $X$, number $t_0$ and tensor $R$ supplied by Theorem 212.1. For every fixed $0<t<t_0$, there are, chosen before any requested decrease, one deterministic pointwise Borel partition $D_0$ of the whole original $G$ and a number $\rho>0$ such that
+
+$$
+\mathcal H_{51}(\mathbf1_{D_0})=\mathcal H_{51}(f),
+\qquad
+\Delta(D_0)=t^2R,
+\qquad
+R\in\mathcal W_{13}\cap\ker L,
+\qquad R_{BB3}=\kappa>0.
+\tag{213.1}
+$$
+
+For every
+
+$$
+0<\varepsilon<\min\left\{\frac12,
+ \frac{\rho}{2t^2\|R\|_\infty}\right\},
+\qquad
+S_\varepsilon=(1-\varepsilon)^2t^2R,
+\tag{213.2}
+$$
+
+there is a deterministic pointwise Borel partition $D_\varepsilon$ of the same whole original $G$ for which
+
+$$
+\begin{gathered}
+\mathcal H_{51}(\mathbf1_{D_\varepsilon})=\mathcal H_{51}(f),
+\qquad
+\Delta(D_\varepsilon)_{yzw}=(S_\varepsilon)_{yzw}
+\quad\text{for every }(y,z,w)\in\mathcal L^3,\\
+\Delta(D_\varepsilon)_{BB3}=(1-\varepsilon)^2t^2\kappa>0,
+\qquad
+\|\Delta(D_\varepsilon)\|_\infty
+ =(1-\varepsilon)^2\|\Delta(D_0)\|_\infty
+ <\|\Delta(D_0)\|_\infty.
+\end{gathered}
+\tag{213.3}
+$$
+
+Every coefficient in (213.1) and (213.3) is evaluated with the corresponding partition's own propagated terminal $P\mathbf1_{D_w}$.
+
+*Proof.* In the proof of Theorem 212.1, all source choices, the invariant slack set, the protected carriers, the sixty-three legal directions and the finite quantile refinement are fixed for the selected positive amplitude $t$ before a target tensor is supplied. Put $\rho$ equal to the radius $\epsilon(\theta,t)$ in (212.2). The center tensor $t^2R$ belongs to the relative neighborhood in (212.2); choose its realizing partition and call it $D_0$. The first equality in (213.1) follows from Proposition 211.2, and the second is the center equality in (212.2), with all sixty-four coordinates recovered there by the injectivity of the restriction to $I^3$.
+
+Since $R_{BB3}=\kappa>0$, $\|R\|_\infty>0$. For (213.2), $S_\varepsilon$ remains in $\mathcal W_{13}\cap\ker L$ and
+
+$$
+\|S_\varepsilon-t^2R\|_\infty
+ =(2\varepsilon-\varepsilon^2)t^2\|R\|_\infty
+ <\rho.
+\tag{213.4}
+$$
+
+The implication (212.2) therefore supplies $D_\varepsilon$ on the same original space. Proposition 211.2 gives the H51 equality because $L(S_\varepsilon)=0$. Its BB3 coordinate is positive, and homogeneity gives
+
+$$
+\|\Delta(D_\varepsilon)\|_\infty
+ =\|S_\varepsilon\|_\infty
+ =(1-\varepsilon)^2t^2\|R\|_\infty
+ <t^2\|R\|_\infty
+ =\|\Delta(D_0)\|_\infty.
+$$
+
+The stipulated terminal convention is part of (212.2) for each realizing partition. $\square$
+
+**Proposition 213.2 (the finite motion estimate is a metric-selection statement).** For fixed $\theta$ and $t$, put $S_0=t^2R$ and let
+
+$$
+\mathscr R_\theta(S)=\left\{D:\ D\text{ is a deterministic whole-}G\text{ Borel partition},\quad
+\mathcal H_{51}(\mathbf1_D)=\mathcal H_{51}(f),\quad\Delta(D)=S\right\}.
+\tag{213.5}
+$$
+
+The anchored conclusion with a finite constant $C$ is equivalent to the existence of $D_0\in\mathscr R_\theta(S_0)$, $\rho>0$, and a map $\sigma$ on
+$\{S\in\mathcal W_{13}\cap\ker L:\|S-S_0\|_\infty<\rho\}$ such that
+
+$$
+\sigma(S)\in\mathscr R_\theta(S),
+\qquad
+\sigma(S_0)=D_0,
+\qquad
+m\bigl(A(D_0,\sigma(S))\bigr)\le C\|S-S_0\|_\infty.
+\tag{213.6}
+$$
+
+In particular, the radial partitions in Theorem 213.1 have the corresponding label-motion estimate exactly when such a section is available, in which case
+
+$$
+ m\bigl(A(D_0,D_\varepsilon)\bigr)
+ \le C(2\varepsilon-\varepsilon^2)t^2\|R\|_\infty.
+\tag{213.7}
+$$
+
+*Proof.* If (213.6) holds, take $D_S=\sigma(S)$ in the anchored statement. Conversely, an anchored statement with $D_S$ and $C$ defines $\sigma(S)=D_S$ and gives (213.6); at $S=S_0$ its bound is zero, so the selected realizing partition is $D_0$. Substitution of (213.4) into (213.6) gives (213.7). $\square$
+
+Theorem 212.1 proves that every fiber in (213.5) is nonempty in a relative neighborhood of $S_0$, and Theorem 213.1 fixes one center fiber element before all radial requests. Its finite-cell argument supplies continuity of the realized-coordinate maps and a Brouwer root for each target. It does not supply the section (213.6), a uniform inverse estimate for the actual indicator realization, or a donor-capacity estimate at the selected center. Consequently (213.6), and hence the finite label-motion bound, remains an additional source-specific obligation. The fixed-start strict radial descent (213.3) does not by itself imply a summable chain or a physical successor.
+
+## 追加锚（本行以下为增补区）
