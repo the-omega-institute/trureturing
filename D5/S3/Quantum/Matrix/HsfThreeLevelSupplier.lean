@@ -2548,9 +2548,7 @@ private theorem pd_sylvester_spectral (X D : Matrix n n ℂ)
     exact_mod_cast (add_pos (hl i) (hl j)).ne'
   let E : Matrix n n ℂ := φ.symm D
   let T : Matrix n n ℂ := fun i j => E i j / ((l i : ℂ)+(l j : ℂ))
-  have hE : E.IsHermitian := by
-    change star (φ.symm D) = φ.symm D
-    rw [← map_star, Matrix.star_eq_conjTranspose, hD.eq]
+  have hE : E.IsHermitian := (hD.isSelfAdjoint.map φ.symm).isHermitian
   have hT : T.IsHermitian := by
     ext i j
     change star (E j i / ((l j : ℂ)+(l i : ℂ))) =
@@ -2563,8 +2561,7 @@ private theorem pd_sylvester_spectral (X D : Matrix n n ℂ)
     simp only [Matrix.add_apply, L, Matrix.diagonal_mul, Matrix.mul_diagonal, T]
     field_simp [hden i j] <;> ring
   refine ⟨φ T, ?_, ?_, ?_⟩
-  · change star (φ T) = φ T
-    rw [← map_star, Matrix.star_eq_conjTranspose, hT.eq]
+  · exact (hT.isSelfAdjoint.map φ).isHermitian
   · calc
       X*φ T+φ T*X = φ (L*T+T*L) := by
         rw [map_add, map_mul, map_mul, ← hspec]
