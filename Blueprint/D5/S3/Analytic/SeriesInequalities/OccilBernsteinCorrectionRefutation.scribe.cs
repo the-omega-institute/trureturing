@@ -25,16 +25,15 @@ internal sealed class OccilBernsteinCorrectionRefutationDocument : IScribeDocume
             Entry("midpointBranch", "The full universal symmetric midpoint coefficient assertion", "For every admissible real function symmetric on [0,1], and every integer k >= 1, subtract the actual midpoint absolute errors from B at n = 2^k and 2n. The increment must have nonnegative normalized coefficients at representation degree exactly 2n. There is no maximum premise."),
             Entry("claim", "The unchanged registered coefficient conjunction", "Occil's first item after the final Prove or disprove in Other Questions asks for both correction prescriptions to converge from below with nonnegative Bernstein increment coefficients. The preregistered claim is precisely the conjunction of their universal coefficient requirements. Each is a necessary clause of the corresponding original branch, independently of the unspecified convergence topology. A positive coefficient result alone would not prove convergence."),
             Entry("result", "Both original prescriptions fail at n = 2", "For f(x) = x²−x+1/2, B₂f = (X²−X)/2+1/2 and B₄f = 3(X²−X)/4+1/2. The errors are x(1−x)/2 and x(1−x)/4 on the entire interval, with actual maxima 1/8 and 1/16 attained at 1/2; these also equal the midpoint errors. Both increments are 1/16−X(1−X)/4 = (X−1/2)²/4. The exact degree-4 normalized coefficients are [1/16,0,−1/48,0,1/16]. Uniqueness excludes any nonnegative representation. The private branch_refutations proves each universal branch false, and result is literally Not claim. This refutes both full original conjunctions through their coefficient clauses without a claim against convergence itself. Existing complex Bernstein independence is reused; this external-problem resolution does not assert a new escape witness.",
-                DescribeRole.Theorem,
-                new OpenProblemResolutionClaim(ProblemSlugRef.Create("occil-convex-bernstein-corrections"), ResolutionKind.Refuted)))));
+                DescribeRole.Theorem))));
 
     private static DocumentBlock Entry(string name, string title, string prose,
-        DescribeRole role = DescribeRole.Definition, OpenProblemResolutionClaim? resolution = null) =>
+        DescribeRole role = DescribeRole.Definition) =>
         Describe.Lean(DescribeId.Create("occil-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), Statement(name),
             name is "B" or "admissible" or "maxError" or "midpointError" or "maximumBranch" or "midpointBranch" or "claim"
                 ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
-            Blocks(Paragraph(Text(prose))), role, resolution);
+            Blocks(Paragraph(Text(prose))), role);
 
     private static StatementSource Statement(string name) => name switch
     {
