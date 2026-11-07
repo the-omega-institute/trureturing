@@ -154,32 +154,6 @@ private def responseEnvelope (L : ℝ) : ℝ :=
   let R := Real.sqrt (1 + L * log L)
   (R - 1) * (1 + log L) / (1 + L * log L)
 
-private lemma log_lt_response_radius {L : ℝ} (hL : 1 < L) :
-    log L < Real.sqrt (1 + L * log L) := by
-  have hu : 0 < log L := log_pos hL
-  have hlt : log L < L := by
-    have := Real.log_lt_sub_one_of_pos (show 0 < L by linarith) (ne_of_gt hL)
-    linarith
-  have hmul := mul_lt_mul_of_pos_right hlt hu
-  have hsq : (log L) ^ 2 < 1 + L * log L := by nlinarith
-  exact Real.lt_sqrt_of_sq_lt hsq
-
-private lemma response_envelope_lt_one {L : ℝ} (hL : 1 < L) :
-    responseEnvelope L < 1 := by
-  have hL0 : 0 < L := by linarith
-  have hlogL : 0 < log L := log_pos hL
-  have hR : 1 < Real.sqrt (1 + L * log L) := by
-    apply (Real.lt_sqrt (by norm_num : (0 : ℝ) ≤ 1)).mpr
-    nlinarith [mul_pos hL0 hlogL]
-  have hlog := log_lt_response_radius hL
-  dsimp [responseEnvelope]
-  have hden : 0 < 1 + L * log L := by positivity
-  apply (div_lt_iff₀ hden).mpr
-  have hmul := mul_lt_mul_of_pos_left
-    (show 1 + log L < 1 + Real.sqrt (1 + L * log L) by linarith)
-    (show 0 < Real.sqrt (1 + L * log L) - 1 by linarith)
-  nlinarith [Real.sq_sqrt hden.le]
-
 private lemma response_continuousOn {S : Finset ℕ} {u v : ℝ} (hu : 1 < u)
     (huv : u ≤ v) : ContinuousOn (responseClock S) (Icc u v) := by
   have hcut : ContinuousOn logCutoff (Icc u v) := by

@@ -48,22 +48,22 @@ private def curvatureWeight (t : ℝ) : ℝ :=
 
 private lemma clockLambda_pos {L : ℝ} (hL : 1 < L) : 0 < clockLambda L := by
   dsimp [clockLambda]
-  positivity
+  exact one_div_pos.mpr (mul_pos (by linarith) (log_pos hL))
 
 private lemma terminalCost_hasDerivAt {t : ℝ} (ht : 1 < t) :
     HasDerivAt terminalCost (reciprocalClock t) t := by
   have ht0 : 0 < t := by linarith
   have hlog : log t ≠ 0 := (log_pos ht).ne'
   have hd := (Real.hasDerivAt_log ht0.ne').log hlog
-  convert hd using 1 <;> dsimp [terminalCost, reciprocalClock] <;>
-    field_simp [ht0.ne', hlog] <;> ring
+  change HasDerivAt (fun u : ℝ => log (log u)) (1 / (t * log t)) t
+  convert hd using 1 <;> field_simp [ht0.ne', hlog] <;> ring
 
 private lemma reciprocalClock_hasDerivAt {t : ℝ} (ht : 1 < t) :
     HasDerivAt reciprocalClock (-curvatureWeight t) t := by
-  simpa only [reciprocalClock, curvatureWeight,
+  convert! D5.S3.Arith.Robin.ActualRobinClockCovariance.g_has_deriv_at ht using 1 <;>
+    simp only [reciprocalClock, curvatureWeight,
     D5.S3.Arith.Robin.ActualRobinClockCovariance.g,
-    D5.S3.Arith.Robin.ActualRobinClockCovariance.activationDensity, add_comm] using
-      D5.S3.Arith.Robin.ActualRobinClockCovariance.g_has_deriv_at ht
+    D5.S3.Arith.Robin.ActualRobinClockCovariance.activationDensity, add_comm]
 
 private lemma curvatureWeight_continuousOn {H : ℝ} (hH : 1 < H) :
     ContinuousOn curvatureWeight (Ici H) := by
@@ -189,20 +189,20 @@ private lemma tangent_remainder_quadratic_forward {H L T : ℝ} (hH : 1 < H)
     intro u hu
     exact hgap u ⟨hu.1.le, hu.2.le⟩
   have hleft : IntervalIntegrable (fun u => reciprocalClock L - reciprocalClock u) volume L T := by
-    exact ((continuousOn_const.sub
-      (reciprocalClock_continuousOn hH).mono
-        (Icc_subset_Ici_self.trans (Ici_subset_Ici.mpr hHL))).
-        intervalIntegrable_of_Icc hLT)
+    have hc : ContinuousOn (fun u => reciprocalClock L - reciprocalClock u) (Icc L T) :=
+      continuousOn_const.sub ((reciprocalClock_continuousOn hH).mono
+        (Icc_subset_Ici_self.trans (Ici_subset_Ici.mpr hHL)))
+    exact hc.intervalIntegrable_of_Icc hLT
   have hright : IntervalIntegrable (fun u => curvatureWeight H * (u - L)) volume L T := by
-    exact (continuousOn_const.mul (continuousOn_id.sub continuousOn_const)).
-      intervalIntegrable_of_Icc hLT
+    exact (continuousOn_const.mul (continuousOn_id.sub continuousOn_const)).intervalIntegrable_of_Icc hLT
   have houter := intervalIntegral.integral_mono_on_of_le_Ioo hLT hleft hright hbound
   have houterJ : residualJ L T ≤
       ∫ u in L..T, curvatureWeight H * (u - L) := by
     rw [hJ]
     exact houter
   rw [intervalIntegral.integral_const_mul,
-    intervalIntegral.integral_sub (continuous_id.intervalIntegrable L T) intervalIntegrable_const,
+    intervalIntegral.integral_sub (f := fun u : ℝ => u) (g := fun _ : ℝ => L)
+      (continuous_id.intervalIntegrable L T) intervalIntegrable_const,
     intervalIntegral.integral_id, intervalIntegral.integral_const] at houterJ
   simp only [smul_eq_mul] at houterJ
   constructor
@@ -217,14 +217,14 @@ private lemma tangent_remainder_quadratic_backward {H T L : ℝ} (hH : 1 < H)
   have hmono := curvatureWeight_antitoneOn hH
   have hgap (u : ℝ) (hu : u ∈ Icc T L) :
       reciprocalClock u - reciprocalClock L ≤ curvatureWeight H * (L - u) := by
-    have hinner := reciprocal_gap_backward hH hHT hu.2
+    have hinner := reciprocal_gap_backward hH (hHT.trans hu.1) hu.2
     have hbound : ∀ v ∈ Ioo u L, curvatureWeight v ≤ curvatureWeight H := by
       intro v hv
       exact hmono (Set.mem_Ici.mpr le_rfl) (hHT.trans (hu.1.trans hv.1.le))
         (hHT.trans (hu.1.trans hv.1.le))
     have hint₁ : IntervalIntegrable curvatureWeight volume u L := by
       exact (curvatureWeight_continuousOn hH).mono
-        (Icc_subset_Ici_self.trans (Ici_subset_Ici.mpr hHT))
+        (Icc_subset_Ici_self.trans (Ici_subset_Ici.mpr (hHT.trans hu.1)))
         |>.intervalIntegrable_of_Icc hu.2
     have hint₂ : IntervalIntegrable (fun _ : ℝ => curvatureWeight H) volume u L :=
       continuousOn_const.intervalIntegrable_of_Icc hu.2
@@ -243,15 +243,15 @@ private lemma tangent_remainder_quadratic_backward {H T L : ℝ} (hH : 1 < H)
       (Icc_subset_Ici_self.trans (Ici_subset_Ici.mpr hHT))).sub
       continuousOn_const).intervalIntegrable_of_Icc hTL
   have hright : IntervalIntegrable (fun u => curvatureWeight H * (L - u)) volume T L := by
-    exact (continuousOn_const.mul (continuousOn_const.sub continuousOn_id)).
-      intervalIntegrable_of_Icc hTL
+    exact (continuousOn_const.mul (continuousOn_const.sub continuousOn_id)).intervalIntegrable_of_Icc hTL
   have houter := intervalIntegral.integral_mono_on_of_le_Ioo hTL hleft hright hbound
   have houterJ : residualJ L T ≤
       ∫ u in T..L, curvatureWeight H * (L - u) := by
     rw [hJ]
     exact houter
   rw [intervalIntegral.integral_const_mul,
-    intervalIntegral.integral_sub intervalIntegrable_const (continuous_id.intervalIntegrable T L),
+    intervalIntegral.integral_sub (f := fun _ : ℝ => L) (g := fun u : ℝ => u)
+      intervalIntegrable_const (continuous_id.intervalIntegrable T L),
     intervalIntegral.integral_const, intervalIntegral.integral_id] at houterJ
   simp only [smul_eq_mul] at houterJ
   constructor
@@ -290,8 +290,8 @@ lemma boundary_clock_eq_response {S : Finset ℕ} (hS : naturalSupport S)
       rw [hcut, max_mul_of_nonneg _ _ hw.le, one_mul]
       congr 1
       field_simp [hw.ne']
-      ring
-    _ = responseClock S L := (sum_coe_sort S _).trans rfl
+    _ = responseClock S L := by
+      exact sum_coe_sort S (fun p => max (log (p : ℝ)) (logCutoff L - log (p : ℝ)))
 
 
 private lemma finite_price_identity {S : Finset ℕ} (hS : naturalSupport S)
@@ -304,8 +304,7 @@ private lemma finite_price_identity {S : Finset ℕ} (hS : naturalSupport S)
       (∑ p : S, priceObjective (p : ℝ) (clockLambda L) (y p)) =
         (∑ p : S, benefit (p : ℝ) (y p)) -
           clockLambda L * (∑ p : S, y p * log (p : ℝ)) := by
-    simp only [priceObjective, sum_sub_distrib, Finset.mul_sum]
-    ring
+    simp only [priceObjective, sum_sub_distrib, mul_assoc, Finset.mul_sum]
   have hloss :
       (∑ p : S, priceLoss (p : ℝ) (clockLambda L) (x p)) =
         (∑ p : S, benefit (p : ℝ) (boundaryCoordinates L p)) -
@@ -313,7 +312,7 @@ private lemma finite_price_identity {S : Finset ℕ} (hS : naturalSupport S)
           clockLambda L * (clock S (extend x) -
             clock S (extend (S := S) (boundaryCoordinates L))) := by
     change (∑ p : S, (priceObjective (p : ℝ) (clockLambda L)
-      (boundaryCoordinates L p) - priceObjective (p : ℝ) (x p))) = _
+      (boundaryCoordinates L p) - priceObjective (p : ℝ) (clockLambda L) (x p))) = _
     rw [sum_sub_distrib, hsum, hsum, clock_coordinates, clock_coordinates]
     ring
   rw [residualQ, hloss, phi_coordinates, phi_coordinates]
@@ -343,8 +342,8 @@ lemma fixed_clock_residual {S : Finset ℕ} (hS : naturalSupport S)
       _ =
           |(responseClock S τ - responseClock S L) +
             (responseClock S L - L)| := by ring_nf
-      _ ≤ _ := abs_add _ _
-  rw [hτfix] at hLips
+      _ ≤ _ := abs_add_le _ _
+  rw [hτfix] at hLips htri
   nlinarith [abs_nonneg (τ - L), abs_nonneg (responseClock S L - L), htri, hLips]
 
 theorem real_infimum_residual_enclosure {S : Finset ℕ} (hS : naturalSupport S)
@@ -373,11 +372,12 @@ theorem real_infimum_residual_enclosure {S : Finset ℕ} (hS : naturalSupport S)
       priceLoss (p : ℝ) (clockLambda L) (astar p) := by
     exact sum_nonneg (fun p _ => price_losses_nonneg hS hθ hL hastar p)
   have hupper : residualQ S L - realInfimum S ≤ residualJ L τ := by
-    rw [hinf, hclock_eq] at hidentity
+    rw [← hinf, hclock_eq] at hidentity
     linarith [hidentity, hloss_nonneg]
   have hmin_b : realInfimum S ≤ phi S (extend (S := S) (boundaryCoordinates L)) := by
     rw [hinf]
-    exact hmin (boundaryCoordinates L) (by intro p; exact le_max_left _ _)
+    exact (isMinOn_iff.mp hmin) (boundaryCoordinates L)
+      (by intro p; exact le_max_left _ _)
   have hlowerJ : residualJ L (responseClock S L) ≤ residualQ S L - realInfimum S := by
     dsimp [residualQ]
     linarith [hmin_b]
@@ -407,6 +407,7 @@ theorem real_infimum_residual_enclosure {S : Finset ℕ} (hS : naturalSupport S)
         (div_nonneg (curvatureWeight_pos hθ).le (by norm_num)))
     have hQ'' := hQ'
     rw [hcoeff] at hQ''
+    dsimp only [curvatureWeight] at hQ''
     linarith [hQnonneg]
   · exact hmin_b
 

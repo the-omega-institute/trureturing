@@ -194,7 +194,9 @@ lemma response_clock_identity {S : Finset ℕ} (hS : naturalSupport S)
       congr 1
       field_simp [hw.ne']
       <;> ring
-    _ = responseClock S (clock S (extend a)) := (sum_coe_sort S _).trans rfl
+    _ = responseClock S (clock S (extend a)) := by
+      exact sum_coe_sort S (fun p => max (log (p : ℝ))
+        (logCutoff (clock S (extend a)) - log (p : ℝ)))
 
 /-- General, non-numeric unique-minimum theorem for the SAME literal Phi.
 The scalar clock is obtained by the IVT and the kink-safe right-derivative fence; the vector minimum is first
