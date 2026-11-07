@@ -242,7 +242,7 @@ Copyright (c) 2026 Kitware, Inc. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jon Crall, Claude Opus 4.8
 -/
-private theorem sum_norm_le_sqrt_card_mul_norm {ι : Type*} [Fintype ι]
+theorem sum_norm_le_sqrt_card_mul_norm {ι : Type*} [Fintype ι]
     (x : EuclideanSpace ℂ ι) :
     ∑ i, ‖x i‖ ≤ Real.sqrt (Fintype.card ι) * ‖x‖ := by
   have hcs : (∑ i, ‖x i‖) ^ 2 ≤ (Fintype.card ι : ℝ) * ∑ i, ‖x i‖ ^ 2 := by
