@@ -25,12 +25,14 @@ strata_touched:
   - D5/S3/Analytic/Zeta/MercaImaginaryCharacter
   - D5/S3/Analytic/Zeta/MercaImaginaryClassNumber
   - D5/S3/Analytic/Zeta/MercaSufficientCondition
-  - D5/S0/Certificates/MercaSquareClassNumberRefutation
+  - D5/S3/ArithUnits/MercaSquareClassNumberRefutation
 license: "CC-BY-4.0 for the Ma–Zhang note; external references retain their own terms."
 triage: anchor
 ---
 <!-- GID: D5/L/ArithUnits/mazhang2026quartic -->
 # The historical quartic equality criterion
+
+## Verified locator
 
 The proof source is the supplied three-page note by **Haobo Ma and Wenlin
 Zhang**, dated 4 November 2026, titled *A class-number criterion for the

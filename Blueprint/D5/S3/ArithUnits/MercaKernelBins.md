@@ -34,4 +34,4 @@ Historical source credit: Haobo Ma and Wenlin Zhang, CC BY 4.0, including the un
 
 - Truth anchor: `D5/S3/ArithUnits/MercaKernelBins.binCount`
 - Truth anchor: `D5/S3/ArithUnits/MercaKernelBins.bin_identities`
-- Dependency: [D5/S3/ArithUnits/MercaClassNumberCriterion](MercaClassNumberCriterion.md)
+- Dependency: [D5/S3/ArithUnits/MercaQuarticMoments](MercaQuarticMoments.md)

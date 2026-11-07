@@ -6,7 +6,7 @@
    utility: none
    digest: Universal interval-bin identities for the actual normalized quartic kernel. -/
 
-import D5.S3.ArithUnits.MercaClassNumberCriterion
+import D5.S3.ArithUnits.MercaQuarticMoments
 
 /-! The checker's bin identities are proved for every stated conductor, with
 literal counts in the actual kernel, independently of the finite census. -/

@@ -1,10 +1,10 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S0.Certificates;
+namespace StrataLint.Scribe.Blueprint.D5.S3.ArithUnits;
 
 internal sealed class MercaSquareClassNumberRefutationDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S0/Certificates/MercaSquareClassNumberRefutation.";
+    private const string Prefix = "D5/S3/ArithUnits/MercaSquareClassNumberRefutation.";
     private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/ArithUnits/mazhang2026quartic");
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The Historical Square-but-Unequal Counterexample",

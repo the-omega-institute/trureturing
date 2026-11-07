@@ -1,9 +1,9 @@
-/- GID: D5/S0/Certificates/MercaSquareClassNumberRefutation
+/- GID: D5/S3/ArithUnits/MercaSquareClassNumberRefutation
    generality: I
-   mirror-B: D5/B/S0/Certificates/MercaSquareClassNumberRefutation
+   mirror-B: D5/B/S3/ArithUnits/MercaSquareClassNumberRefutation
    mirror-E: none(waiver:kernel-checked-refutation)
    anchors: []
-   utility: kind=certified-instance; basis=refutes=gid:D5/S0/Certificates/MercaSquareClassNumberRefutation.claim; result=D5/S0/Certificates/MercaSquareClassNumberRefutation.result; claim=D5/S0/Certificates/MercaSquareClassNumberRefutation.claim
+   utility: kind=certified-instance; basis=refutes=gid:D5/S3/ArithUnits/MercaSquareClassNumberRefutation.claim; result=D5/S3/ArithUnits/MercaSquareClassNumberRefutation.result; claim=D5/S3/ArithUnits/MercaSquareClassNumberRefutation.claim
    digest: The genuine relative class number can be square without equal quartic coordinates. -/
 
 import D5.S3.ArithUnits.MercaClassNumberCriterion
@@ -18,7 +18,7 @@ set_option maxHeartbeats 4000000
 noncomputable section
 open scoped BigOperators
 
-namespace D5.S0.Certificates.MercaSquareClassNumberRefutation
+namespace D5.S3.ArithUnits.MercaSquareClassNumberRefutation
 open D5.S3.ArithUnits MercaQuarticCharacter MercaQuarticMoments MercaCosetFiberLift
 open D5.S3.Analytic.Zeta MercaRelativeClassNumber
 
@@ -96,4 +96,4 @@ theorem result : ¬ claim := by
   norm_num [coordinates.1, coordinates.2] at he
 
 
-end D5.S0.Certificates.MercaSquareClassNumberRefutation
+end D5.S3.ArithUnits.MercaSquareClassNumberRefutation

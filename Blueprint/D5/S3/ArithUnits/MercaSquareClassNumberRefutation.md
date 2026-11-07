@@ -6,9 +6,9 @@ The Historical Square-but-Unequal Counterexample
 
 **Definition 1.1 (The square-only replacement).**
 
-Lean statement: `D5/S0/Certificates/MercaSquareClassNumberRefutation.claim`
+Lean statement: `D5/S3/ArithUnits/MercaSquareClassNumberRefutation.claim`
 
-*Formalization.* `D5/S0/Certificates/MercaSquareClassNumberRefutation.claim` (`✓ std3`).
+*Formalization.* `D5/S3/ArithUnits/MercaSquareClassNumberRefutation.claim` (`✓ std3`).
 
 *Citation.* Haobo Ma; Wenlin Zhang (2026). *A class-number criterion for the quartic equality after Theorem 5.5*. URL: <https://oeis.org/A392984>.
 
@@ -18,9 +18,9 @@ The refuted claim says that every prime r greater than five congruent to five mo
 
 **Theorem 1.2 (The actual r181 refutation).**
 
-Lean statement: `D5/S0/Certificates/MercaSquareClassNumberRefutation.result`
+Lean statement: `D5/S3/ArithUnits/MercaSquareClassNumberRefutation.result`
 
-*Proof.* Machine-checked in Lean as `D5/S0/Certificates/MercaSquareClassNumberRefutation.result` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/ArithUnits/MercaSquareClassNumberRefutation.result` (`✓ std3`). ∎
 
 *Citation.* Haobo Ma; Wenlin Zhang (2026). *A class-number criterion for the quartic equality after Theorem 5.5*. URL: <https://oeis.org/A392984>.
 
@@ -34,6 +34,6 @@ The original 313-prime census, first-ten signs and r13 reduced-form example rema
 
 ## References
 
-- Truth anchor: `D5/S0/Certificates/MercaSquareClassNumberRefutation.claim`
-- Truth anchor: `D5/S0/Certificates/MercaSquareClassNumberRefutation.result`
-- Dependency: [D5/S3/ArithUnits/MercaClassNumberCriterion](../../S3/ArithUnits/MercaClassNumberCriterion.md)
+- Truth anchor: `D5/S3/ArithUnits/MercaSquareClassNumberRefutation.claim`
+- Truth anchor: `D5/S3/ArithUnits/MercaSquareClassNumberRefutation.result`
+- Dependency: [D5/S3/ArithUnits/MercaClassNumberCriterion](MercaClassNumberCriterion.md)
