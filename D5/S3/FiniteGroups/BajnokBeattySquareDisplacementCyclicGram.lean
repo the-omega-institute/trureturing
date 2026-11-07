@@ -87,32 +87,8 @@ private theorem gcd_toNat (p r : Params) :
 
 private theorem card_H_of_dvd (S : Finset Params) (d : ℕ) (hd : d ∣ modulus S) :
     Nat.card (H S d) = d := by
-  have hdpos : 0 < d := Nat.pos_of_dvd_of_pos hd (modulus_pos S)
-  let g : G S := (modulus S / d : ℕ)
-  have horder : addOrderOf g = d := by
-    dsimp only [g]
-    rw [ZMod.addOrderOf_coe _ (modulus_ne_zero S)]
-    have hL : modulus S / d ∣ modulus S := Nat.div_dvd_of_dvd hd
-    rw [Nat.gcd_eq_right hL, Nat.div_div_self hd (modulus_ne_zero S)]
-  have hKsub : AddSubgroup.zmultiples g ≤ H S d := by
-    apply AddSubgroup.zmultiples_le.mpr
-    change d • g = 0
-    rw [nsmul_eq_mul, ← Nat.cast_mul, Nat.mul_div_cancel' hd, ZMod.natCast_self]
-  have hcard_lower : d ≤ Nat.card (H S d) := by
-    have hcard_z : Nat.card (AddSubgroup.zmultiples g) = d := by
-      rw [Nat.card_zmultiples g, horder]
-    exact hcard_z.symm.le.trans (Nat.card_le_card_of_injective
-      (fun x : AddSubgroup.zmultiples g =>
-        (⟨(x : G S), hKsub x.property⟩ : H S d))
-      (by
-        intro x y hxy
-        apply Subtype.ext
-        exact congrArg (fun z : H S d => (z : G S)) hxy))
-  have hcard_upper : Nat.card (H S d) ≤ d := by
-    rw [Nat.card_eq_fintype_card, Fintype.card_subtype]
-    simpa [H] using
-      (IsAddCyclic.card_nsmul_eq_zero_le (α := G S) hdpos)
-  exact Nat.le_antisymm hcard_upper hcard_lower
+  simpa only [H, Nat.card_zmod, Nat.gcd_eq_right hd] using
+    (IsAddCyclic.card_nsmulAddMonoidHom_ker (G := G S) d)
 
 private theorem H_intersection (S : Finset Params) (p r : ℕ) :
     H S p ⊓ H S r = H S (Nat.gcd p r) := by
