@@ -12,6 +12,10 @@ $$\forall n \in \mathbb{N},\; 0 < n \Rightarrow \operatorname{den}\left(\sum_{1 
 
 *Proof.* Machine-checked in Lean as `D5/S3/ArithSums/GrouxA120069Denominator.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/groux-2010-a120069-catalan-denominators` (proved) by `D5/S3/ArithSums/GrouxA120069Denominator.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"groux-2010-a120069-catalan-denominators","declaration_gid":"D5/S3/ArithSums/GrouxA120069Denominator.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Groux Roland; Pieter Mostert; OEIS Foundation (2010). *OEIS A120069: Catalan partial-sum denominators*. URL: <https://oeis.org/A120069>.
