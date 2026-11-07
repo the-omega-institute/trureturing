@@ -2076,3 +2076,995 @@ no new Lean verification is asserted.
 [EDMD]: https://arxiv.org/pdf/1408.4408v1
 
 ## 追加锚（本行以下为增补区）
+
+## 10. Finite constant initialization and unmarked continuation
+
+### 10.1. A confidence enclosure for the original constant
+
+**Definition 10.1 (the same-record marker certificate).** Retain
+Definitions 9.1--9.8 and the unchanged source of Assumption 1.1.
+Thus $a,\eta,d>0$, the unit-source field, the full conservative
+endpoint $H$ with $A=\rho C$, the distinct killed/Friedrichs endpoint
+$F$, the normalized positive $h$, the $e$-start, first read at $2d$,
+subsequent gaps $d$, the four original emissions, every permitted
+Borel representative, and the original clock are all fixed. No new
+read, stationary preparation, reset, or capacity experiment is
+introduced. Use one of the independently preselected packets of
+Definition 9.1 with $N\ge1$ and put
+
+$$
+ \widehat c=\frac ZN,\qquad
+ c_-=[\widehat c-t]_+,\qquad
+ c_+=[\widehat c+t]_{[0,1]},
+ \tag{10.1}
+$$
+
+where $[x]_+=\max\{0,x\}$ and
+$[x]_{[0,1]}=\min\{1,\max\{0,x\}\}$.
+The number $\widehat c$ is a statistic of this record, not a new
+source constant. If $N=0$, or if $\widehat c\le t$, the packet
+returns an inconclusive normalization branch.
+
+Let $\Delta$ be the full-source frequency discrepancy used in the
+proof of (9.5), so that
+
+$$
+ \Delta=\sum_{v\in\mathcal L^T}
+ \left|\frac{A(3v)}N-cp(v)\right|.
+ \tag{10.2}
+$$
+
+Write $\mathcal E$ for the same $\Delta\le t$ capacity event
+underlying (9.5). Since
+$\sum_vp(v)=1$ and $\sum_vA(3v)/N=Z/N$, this gives
+
+$$
+ \mathcal E\Longrightarrow c\in[c_-,c_+].
+ \tag{10.3}
+$$
+
+This is a finite confidence enclosure for the original $c$ on the
+same event that supplies (9.5); it is not a claim of a sharp or exact
+numerical value.
+
+For an integer $n\ge0$ with $2n+1\le T$, define
+
+$$
+ \widehat s_n=4^{2n}\widehat p(B^{2n}3),\qquad
+ \eta_n=4^{2n}e_p,\qquad
+ \rho_n=\sqrt{\max\{0,\widehat s_n+\eta_n-c_-\}}.
+ \tag{10.4}
+$$
+
+The marked identity (2.5) gives the exact source quantity
+
+$$
+ s_n:=\|P^nv_*\|_m^2
+      =4^{2n}p(B^{2n}3),\qquad v_*:=v_\varnothing=U[\varnothing].
+ \tag{10.5}
+$$
+
+Consequently, on $\mathcal E$,
+$|\widehat s_n-s_n|\le\eta_n$. Theorem 2.3 gives
+$U\Omega=1$, $\|\Omega\|=1$ and
+$\langle\Omega,v_*\rangle=\sqrt c$. Since
+$P1=1$ (equivalently $\widehat P\Omega=\Omega$), (10.5) therefore
+has the exact geometric
+identity
+
+$$
+ s_n-c=\|P^nv_*-\sqrt c\,\Omega\|^2
+       =\|P^nv_*-\sqrt c\,1\|_m^2.
+ \tag{10.6}
+$$
+
+The quantity $\rho_n$ is thus an observable upper radius for the
+heat-averaged distance to the source constant; no spectral gap or
+mixing rate is used.
+
+**Theorem 10.2 (a finite carrier vector for the constant).** Use the
+finite maps and residuals of Definitions 9.2--9.4. Starting with the
+empty-word coordinate $e_*$, set
+
+$$
+ a^{(0)}=e_*,\qquad a^{(j+1)}=A_Ba^{(j)},\qquad a_n=a^{(n)},
+ \tag{10.7}
+$$
+
+and compute $E_n^B$ from (9.17) with $O_j=R_B$ and
+$\widetilde O_j=A_B$. If $\widehat c>t$, define
+
+$$
+ \bar a_n=\frac{a_n}{\sqrt{\widehat c}},\qquad
+ r_{\mathbf1}(n)=
+ \frac{E_n^B+\rho_n}{\sqrt{\widehat c}}+\frac{t}{\widehat c}.
+ \tag{10.8}
+$$
+
+On $\mathcal E$,
+
+$$
+ \|V\bar a_n-1\|_m\le r_{\mathbf1}(n).
+ \tag{10.9}
+$$
+
+The vector $V\bar a_n$ is a finite source-bound carrier vector. It
+is not an actual stationary preparation.
+
+*Proof.* Theorem 9.4 and (10.7) give
+$\|Va_n-P^nv_*\|_m\le E_n^B$. Equations (10.4)--(10.6) give
+$\|P^nv_*-\sqrt c\,1\|_m\le\rho_n$. Divide these two bounds by
+$\sqrt{\widehat c}$. Finally, (10.3) implies
+
+$$
+ \left|\frac{\sqrt c}{\sqrt{\widehat c}}-1\right|
+ =\frac{|c-\widehat c|}
+ {\sqrt{\widehat c}(\sqrt c+\sqrt{\widehat c})}
+ \le\frac{t}{\widehat c}.
+$$
+
+The triangle inequality proves (10.9). The argument uses the same
+event as (9.5), so no confidence factor is multiplied for the
+normalization. $\square$
+
+### 10.2. A finite unmarked continuation consumer
+
+**Definition 10.3 (unmarked menu and its fixed readout).** Let
+$\mathcal M\subset\mathcal L^*$ be a declared finite menu, with the
+empty word allowed, and write $w=w_1\cdots w_h$. Let $C_z,F_z$ be
+the source and finite letter maps in (9.15), and put
+
+$$
+ \Phi_w=C_3C_{w_1}\cdots C_{w_h},\qquad
+ \widetilde\Phi_w=F_3F_{w_1}\cdots F_{w_h}.
+ \tag{10.10}
+$$
+
+The residual $E_w$ is the value of (9.17) for the reverse application
+sequence
+
+$$
+ C_{w_h},\ldots,C_{w_1},C_3
+ \quad\hbox{and}\quad
+ F_{w_h},\ldots,F_{w_1},F_3,
+ \tag{10.11}
+$$
+
+started at $\bar a_n$; its final finite vector is
+$b_w=\widetilde\Phi_w\bar a_n$. Put
+
+$$
+ \kappa_f=6\delta+\lambda,\qquad
+ \nu_w=\|C_3\|\prod_{j=1}^h\|C_{w_j}\|
+ \le\frac14\prod_{j=1}^h\kappa_{w_j},
+ \tag{10.12}
+$$
+
+where $\kappa_z$ is the row bound in (9.15), and define the finite
+outward-rounded radius
+
+$$
+ \rho_w^{\rm out}=
+ \|\bar a_n\|_fE_w
+ +\frac{\kappa_f}{2}
+   \bigl(\|\bar a_n\|_2^2+\|b_w\|_2^2\bigr)
+ +\nu_w\bigl(2r_{\mathbf1}(n)+r_{\mathbf1}(n)^2\bigr)+\tau_w.
+ \tag{10.13}
+$$
+
+Here $\tau_w\ge0$ is a predeclared allowance for outward rounding
+of the displayed radicals and finite arithmetic. All quantities in
+(10.13) are obtained from the packet matrices and rational
+coefficient vectors; no rank, path, or terminal-marker oracle is
+used.
+
+**Theorem 10.4 (finite unmarked word readout).** Assume
+$N\ge1$, $\widehat c>t$, and that the order tests of Definition 9.2
+pass. For every $w\in\mathcal M$, define
+
+$$
+ \widehat q_w=\bar a_n^{\mathsf T}S_f b_w,\qquad
+ \widehat p_w=\left[\frac{\widehat q_w}{\widehat c}\right]_{[0,1]},\qquad
+ R_w=\min\left\{1,\frac{\rho_w^{\rm out}+t}{\widehat c}\right\}.
+ \tag{10.14}
+$$
+
+Then, on $\mathcal E$,
+
+$$
+ |\widehat p_w-p(w)|\le R_w.
+ \tag{10.15}
+$$
+
+The word $w$ is unmarked: it may end in any of $0,1,3,B$ and no
+terminal $3$ is appended to the menu. The fixed $C_3$ in (10.10) is
+the canonical readout in Theorems 3.1 and 3.2, not an additional
+chronological emission.
+
+For a finite collection of fixed histories and continuations, use the
+same estimate for $h$ and $hw$. If $\widehat p_h>R_h$, then
+
+$$
+ \widehat r_{h,w}=\left[\frac{\widehat p_{hw}}{\widehat p_h}\right]_{[0,1]},\qquad
+ |\widehat r_{h,w}-p(hw)/p(h)|
+ \le\min\left\{1,\frac{R_{hw}+R_h}{\widehat p_h}\right\}.
+ \tag{10.16}
+$$
+
+If the displayed denominator guard fails, the conditional output is
+inconclusive. Theorem 3.3 supplies $p(h)>0$ for every fixed finite
+history, but it supplies no uniform lower bound for a growing or rare
+history.
+
+*Proof.* Theorem 3.1 and (3.2) identify
+
+$$
+ q_w:=\langle1,\Phi_w1\rangle_m=c\,p(w).
+ \tag{10.17}
+$$
+
+By (9.17), (10.11) and the residual induction,
+$\|\Phi_wV\bar a_n-Vb_w\|_m\le E_w$. The metric defect in (9.11),
+polarized, gives for any $a,b$
+
+$$
+ \left|a^{\mathsf T}S_fb-\langle Va,Vb\rangle_m\right|
+ \le\frac{\kappa_f}{2}(\|a\|_2^2+\|b\|_2^2).
+ \tag{10.18}
+$$
+
+Since $\|V\bar a_n\|_m\le\|\bar a_n\|_f$, (10.13), before its
+outward allowance, bounds the difference between $\widehat q_w$ and
+$\langle V\bar a_n,\Phi_wV\bar a_n\rangle_m$. Writing
+$V\bar a_n=1+\xi$ and using $\|\Phi_w\|\le\nu_w$ bounds the latter
+quantity's difference from $q_w$ by
+$\nu_w(2\|\xi\|+\|\xi\|^2)$. Equation (10.9) gives (10.13), hence
+$|\widehat q_w-q_w|\le\rho_w^{\rm out}$ on $\mathcal E$.
+Because $0\le p(w)\le1$ and $|c-\widehat c|\le t$,
+
+$$
+ \left|\frac{\widehat q_w}{\widehat c}-p(w)\right|
+ \le\frac{\rho_w^{\rm out}+t}{\widehat c}.
+$$
+
+Clipping proves (10.15). If $\widehat p_h>R_h$, the same event gives
+$p(h)>0$ and $|p(h)-\widehat p_h|\le R_h$; the elementary ratio
+inequality used in (9.28) proves (10.16). $\square$
+
+The readout in (10.14) is a finite consumer of the initialized
+carrier and of the existing letter/residual transport. It uses the
+original chronological word law through (10.17), while its requested
+menu contains no marked terminal. It does not make the finite maps a
+normalized all-future law: different menu products may be clipped
+individually, and no fitted multiplication algebra or current-cut
+filter is inferred.
+
+### 10.3. Stopping and the paid finite task
+
+**Proposition 10.5 (predeclared finite stopping).** Fix one original
+source, a finite menu $\mathcal M$, finitely many fixed history pairs
+$(h,w)$, and positive tolerances $\tau_{\mathbf1},\tau_p$.
+Choose a countable predeclared packet schedule with failure allowances
+$\alpha_s$ satisfying $\sum_s\alpha_s\le\alpha_*$, nested initial
+records, and a dovetailed list of finite choices
+
+$$
+ n_s,\ L_s,\ S_s=\{3,B\}^{\le L_s},\quad
+ T_s=2L_s+3,\quad N_s,\ t_s,\ D_{0,s}^-,D_{N,s}^-,
+ \lambda_s,\ \zeta_s,\ \tau_{w,s}.
+ \tag{10.19}
+$$
+
+The list is required to contain every finite $n,L$ and every positive
+rational refinement of the displayed error and confidence allowances.
+Each packet's defect certificates are chosen so that its (9.4) failure
+bound is at most $\alpha_s$, as required by Definition 9.8.
+At stage $s$, stop at the first packet for which the order tests pass,
+$\widehat c_s>t_s$, $r_{\mathbf1}(n_s)\le\tau_{\mathbf1}$,
+$R_{w,s}\le\tau_p$ for every requested menu word, and all guards in
+(10.16) pass.
+
+For every fixed source and the declared finite task, this stopping
+rule terminates on the common event
+$\bigcap_s\mathcal E_s$, whose probability is at least
+$1-\alpha_*$. The assertion is source- and menu-specific; it gives
+no uniform rate over sources, menus, rare histories, or future
+normalizations.
+
+*Proof.* Theorem 2.3 and the spectral convergence in Theorem 3.2 give
+$P^nv_*\to\sqrt c\,1$ in the source norm. Hence some finite $n$
+makes the exact term in (10.6) smaller than any prescribed positive
+part of $\tau_{\mathbf1}$. For that finite $n$ and menu, expand
+each $C_0$ and $C_1$ into the $C_B,C_3$ words in (2.9). A finite
+$L$ therefore contains every intermediate source vector in the
+corresponding finite trajectories. Proposition 9.7 then supplies
+finite packet precision choices with vanishing metric and residual
+allowances; Definition 9.8 supplies the same-record confidence union
+and the capacity refinement $e_p\to0$ for this fixed task. The
+dovetailed list (10.19) contains such a finite choice. Since $c>0$
+and every fixed history has positive probability by Theorem 3.3,
+sufficiently refined packets also satisfy the positive denominator and
+history guards. At that stage (10.9), (10.15) and (10.16) meet the
+declared tolerances, so the first successful stage is finite. $\square$
+
+The stage bill retains the original access costs. It acquires exactly
+$N_s+T_s$ labels, ending at time $(N_s+T_s+1)d$, keeps the
+$4^{T_s+1}$ full counters and the buffer of Definition 9.1, and pays
+the validated capacity construction or certification cost
+$C_{\rm cap}$. It also pays the existing fit and query bounds in
+(9.29), with $q_s=2^{L_s+1}-1$. The new finite work consists of
+$n_s$ applications of $A_B$, the reverse applications in (10.11) for
+the declared menu, their quadratic residual evaluations, outward
+radical bounds, and retention of the $q_s$-vectors and finite outputs.
+Its arithmetic cost is $O((n_s+\sum_{w\in\mathcal M}|w|)q_s^2)$
+apart from the already charged matrix fits and counter extraction.
+No independent path samples, selected emissions, extra read/preparation
+port, or sharp $N d$ oracle is charged or assumed.
+
+## 11. Scope, suppliers and the positive-state boundary
+
+**Definition 11.1 (literature and source status).** The
+repo-derived result is the finite composition of (10.1)--(10.18):
+the existing dependent-record confidence event supplies a reliable
+interval for the original $c$, (2.5) and Theorem 2.3 turn it into a
+measurable heat-averaged constant-vector radius, and (9.14)--(9.20)
+transport that vector through a finite unmarked menu. Theorem 3.1 and
+(3.2) supply the fixed marker readout; Theorem 3.3 supplies the
+fixed-history positivity used only by the guards. The source sampler,
+capacity defects and full-source chronology are reused from [R,
+Definitions 8.1 and 8.3, Theorem 8.2, Proposition 8.5 and
+Proposition 8.6], not re-proved or replaced. Strong convergence of the
+positive self-adjoint semigroup is the spectral supplier already used
+in [T, §3.1]; finite positive-form and residual transport are the
+existing tools recorded in §9.7. No general priority claim is made.
+
+The finite vector in (10.9) is a certified mathematical element of
+$L^2(G,m)$ relative to the original constant $1$. It is not a
+stationary preparation, a positive state for each actual history, or
+a physical operation on the source. The supplied DEV C128375--378
+direct chronological positive-state binding result states that such a
+binding on the same prefix multiplication exists exactly when the
+prediction vector is constant and excludes the empty and all-finite-$B$
+histories. The present certificate cannot overturn that source
+obstruction.
+
+This unit does not claim a physical multiplication algebra, a
+current-cut filter, a normalized all-future fitted law, a full C139
+backend, old $D$ or Jordan data, an actual $A$, a joint/reference
+interface, physical instruments, exact global sharp calibration, a
+complete quantum origin, or a uniform source/menu/rare-history rate.
+It also does not supply an exact numerical $c$, a sharp $N d$ oracle,
+a stationary reset, or growing all-future normalization. All claims
+remain conditional on the original full-source endpoint and capacity
+contract, with no Lean or executable mathematical verification
+asserted.
+
+## 追加锚（本行以下为增补区）
+
+## 12. Actual local-energy multiplication from the exact word tuple
+
+**Definition 12.1 (intrinsic inputs and the local source dictionary).**
+Retain Assumptions 1.1–1.3, the full complex endpoint (1.3), the
+original clock and the exact tuple (3.1). For local regularity use the
+same-source suppliers [S, (120.5)–(120.8), (122.9)]: on
+$M=G\setminus\{e\}$ the density $h^2$ is smooth and strictly positive,
+and the original divergence expression is
+
+$$
+\begin{gathered}
+K_{\rm loc}u=-h^{-2}\operatorname{div}
+                    (h^2\mathsf A\nabla u),\\
+\langle\mathsf A\zeta,\zeta\rangle
+ =a\left[\zeta_x^2+(\zeta_y+x\zeta_w)^2+\zeta_z^2\right]
+       +\eta\zeta_w^2.
+\end{gathered}
+\tag{12.1}
+$$
+
+These are assertions about the actual $K=J_h^{-1}HJ_h$ and its
+local expression, not a choice of another self-adjoint extension.
+Positive-time smoothing gives a unique smooth representative of
+$b=g_d$ on $M$: indeed $g_d=T_{d/2}g_{d/2}$ and the cited estimates
+apply to $g_{d/2}\in L^2(m)$. Essential boundedness and full local
+support of $m$ imply that this representative is bounded on $M$.
+Put, only in the source dictionary,
+
+$$
+\begin{gathered}
+\mathcal D=C_c^\infty(M;\mathbb C),\qquad
+\mathfrak a(v,u)=a\sum_{j=1}^3(X_jv)(X_ju)
+                          +\eta(\partial_wv)(\partial_wu),\\
+E=\mathfrak a(b,b),\qquad \gamma=dE,\qquad
+r=(1+\gamma)^{-1}.
+\end{gathered}
+\tag{12.2}
+$$
+
+The bilinear notation $\mathfrak a$ has no complex conjugation;
+$b$ is real and $E\ge0$. Both $E$ and $\gamma$ are smooth and
+finite on $M$, without any asserted global boundedness or
+integrability. Values at $e$ may be assigned arbitrarily when
+taking $m$-classes. Permitted Borel repairs of the actual emission
+do not change $M_b$, its spectral phases, or the unique smooth
+representative of its class on $M$.
+
+The recovered inputs for the construction below are just
+
+$$
+\mathsf B=N_3/c,\qquad \Lambda=-\log\widehat P,\qquad
+U\mathsf B U^{-1}=M_b|_{\mathcal O},\quad
+U\Lambda U^{-1}=dK|_{\mathcal O},
+\tag{12.3}
+$$
+
+with $c$ recovered by Theorem 2.3. Coordinates, $h$, derivatives
+and compactly supported functions in (12.1)–(12.2) are proof
+objects in the source realization, not additional inputs.
+
+**Theorem 12.2 (source-bound phase limit and the actual energy
+domain).** For each integer $n\ge1$ define the nonnegative
+self-adjoint operator and its bounded resolvent
+
+$$
+\begin{gathered}
+V_n=e^{in\mathsf B},\qquad
+\mathsf L_n=n^{-2}V_n^*\Lambda V_n,\qquad
+D(\mathsf L_n)=V_n^*D(\Lambda),\\
+\mathsf R_n=(\mathsf L_n+I)^{-1}
+ =V_n^*q_n(\widehat P)V_n,\\
+q_n(x)=\frac{n^2}{n^2-\log x}\quad(0<x\le1),\qquad q_n(0)=0.
+\end{gathered}
+\tag{12.4}
+$$
+
+The exact tuple determines the strong limit
+
+$$
+\mathsf R=\operatorname*{s-lim}_{n\to\infty}\mathsf R_n,\qquad
+U\mathsf R U^{-1}=M_r|_{\mathcal O}.
+\tag{12.5}
+$$
+
+It is a positive contraction with zero kernel and dense range.
+Consequently it determines a unique nonnegative self-adjoint operator
+
+$$
+\begin{gathered}
+\mathsf G=\mathsf R^{-1}-I,\qquad
+D(\mathsf G)=\operatorname{Ran}\mathsf R,\\
+UD(\mathsf G)=
+ \{u\in\mathcal O:\gamma u\in L^2(m)\},\qquad
+U\mathsf G U^{-1}u=\gamma u.
+\end{gathered}
+\tag{12.6}
+$$
+
+In particular $\mathcal O$ reduces the maximal source multiplication
+operator $M_\gamma$. This is reduction with its maximal restricted
+domain, rather than an unqualified compression of an unbounded
+expression. The associated closed nonnegative form is
+
+$$
+\begin{gathered}
+UD(\mathsf G^{1/2})=
+ \{u\in\mathcal O:\sqrt\gamma\,u\in L^2(m)\},\\
+\langle\mathsf G^{1/2}v,\mathsf G^{1/2}w\rangle
+       =\int_G\gamma\,\overline{Uv}\,Uw\,dm.
+\end{gathered}
+\tag{12.7}
+$$
+
+The operator $\mathsf G$ is in sample-step units: it is multiplication
+by $dE$. With an independently calibrated numerical $d$, $\mathsf G/d$
+is multiplication by the original physical energy $E$. No new clock
+or physical phase control is assumed.
+
+*Proof.* Work first on the full $\mathcal H=L^2(m)$, before making
+any restriction to $\mathcal O$. Every $\psi\in\mathcal D$ belongs
+to $D(K)$. In fact $h\psi\in\mathcal D_0\subset D(H)$, since
+$h$ is smooth off $e$ and the support is compact there. Ground-state
+conjugation identifies $K\psi$ with (12.1). The same statement holds
+for $e^{inb}\psi\in\mathcal D$ for every finite $n$. Thus the full
+operators
+
+$$
+\begin{gathered}
+L_n=n^{-2}M_{e^{-inb}}(dK)M_{e^{inb}},\\
+D(L_n)=M_{e^{-inb}}D(K),\qquad L_n\ge0
+\end{gathered}
+\tag{12.8}
+$$
+
+are self-adjoint, and $\mathcal D\subset D(L_n)$ for all $n$.
+This specifies the entire moving domain; no global invariance of
+$D(K)$ under $M_b$ or its phases is used.
+
+The local product rule from (12.1), on exactly these compact
+punctured vectors, gives
+
+$$
+L_n\psi=\gamma\psi+
+ \frac{id}{n}\left[(K_{\rm loc}b)\psi
+                              -2\mathfrak a(b,\psi)\right]
+                  +\frac d{n^2}K\psi.
+\tag{12.9}
+$$
+
+Indeed $K_{\rm loc}(e^{inb})=e^{inb}(inK_{\rm loc}b+n^2E)$.
+This fixes both the sign and the absence of a factor $1/2$ in
+(12.2). Every coefficient and derivative in the remainder of
+(12.9) is bounded on the fixed support of $\psi$. Therefore
+
+$$
+\|L_n\psi-M_\gamma\psi\|_2\longrightarrow0
+                  \quad(\psi\in\mathcal D).
+\tag{12.10}
+$$
+
+Here $K_{\rm loc}b$ is only a local differential expression.
+Equation (12.9) asserts neither $b\in D(K)$ nor global integrability
+of $K_{\rm loc}b$.
+
+We verify the relevant limit domain. The maximal real multiplier
+
+$$
+D(M_\gamma)=\{u\in L^2(m):\gamma u\in L^2(m)\}
+\tag{12.11}
+$$
+
+is nonnegative and self-adjoint. Its resolvents are the bounded
+multipliers $(\gamma-z)^{-1}$ for nonreal $z$, and
+$(M_\gamma+I)^{-1}=M_r$. Its graph norm is the $L^2$ norm for
+the measure $(1+\gamma^2)m$. On $M$ this measure has smooth
+strictly positive locally finite density. Exhaust $M$ by compact
+subsets and apply smooth compact cutoffs to a function in (12.11).
+Dominated convergence in this weighted norm gives graph convergence.
+On each resulting compact neighborhood the weighted norm is
+equivalent to ordinary Lebesgue $L^2$, so compactly supported
+mollification gives approximation by $\mathcal D$. The missing
+point has zero $m$-measure. Hence $\mathcal D$ is an operator core
+for $M_\gamma$. These cutoffs prove density in the source space;
+they supply no observer cutoff operation.
+
+For completeness, the core-to-resolvent argument in this instance
+uses only bounded resolvents. For $\psi\in\mathcal D$,
+
+$$
+\begin{aligned}
+&(L_n+I)^{-1}(M_\gamma+I)\psi-\psi\\
+&\hspace{2em}=(L_n+I)^{-1}(M_\gamma-L_n)\psi
+                      \longrightarrow0.
+\end{aligned}
+\tag{12.12}
+$$
+
+Both $(L_n+I)^{-1}$ and $(M_\gamma+I)^{-1}$ have norm at most
+one. The set $(M_\gamma+I)\mathcal D$ is dense: approximate
+$(M_\gamma+I)^{-1}v$ in the graph norm for any $v\in\mathcal H$.
+Equation (12.12) and that uniform bound prove
+
+$$
+\operatorname*{s-lim}_{n\to\infty}(L_n+I)^{-1}=M_r
+                          \quad\text{on }\mathcal H.
+\tag{12.13}
+$$
+
+This is the usual core criterion for strong resolvent convergence,
+[T, §6.6, Lemma 6.36], here with its shifted-resolvent proof and
+actual multiplication core supplied. In particular
+$L_n\to M_\gamma$ in strong resolvent topology. No operator-norm
+convergence or uniform error bound is asserted. Crucially,
+$\mathcal D$ is a core for the *limit multiplier*; it has not
+been declared a core for the full, non-Friedrichs $K$.
+
+Let $Q$ be the orthogonal projection onto $\mathcal O$. Theorem 2.2
+shows that $Q$ commutes with the bounded $P$ and $M_b$.
+The injective spectral inverse in Theorem 3.2 then shows that it
+reduces $K$ and preserves its domain. It also commutes with
+$M_{e^{inb}}$. Thus it preserves the full domains in (12.8),
+commutes with every $(L_n+I)^{-1}$, and by (12.13) commutes with
+$M_r$. This proves reduction before any limit is restricted.
+
+Since $0<r\le1$ almost everywhere, $M_r$ has zero kernel. Its
+restriction to the reducing subspace $\mathcal O$ is self-adjoint
+and injective, and so has dense range there. Moreover
+
+$$
+\operatorname{Ran}(M_r|_{\mathcal O})
+       =D(M_\gamma)\cap\mathcal O.
+\tag{12.14}
+$$
+
+For one inclusion, if $u=M_rv$ with $v\in\mathcal O$, then
+$\gamma u=(1-r)v\in\mathcal O$. Conversely, if
+$u\in D(M_\gamma)\cap\mathcal O$, apply $Q$ to
+$u=M_r(M_\gamma+I)u$. Injectivity gives
+$Q(M_\gamma+I)u=(M_\gamma+I)u$, proving the other inclusion.
+This also shows that $Q$ preserves (12.11) and commutes with
+$M_\gamma$ there.
+
+Restrict (12.8) and (12.13) to $\mathcal O$ and transport by $U$.
+The unitary and spectral identities in (12.3) give precisely
+(12.4)–(12.6). In (12.4), $q_n$ is bounded and continuous on
+$[0,1]$, so the displayed resolvent formula uses no unbounded
+inverse heat on an arbitrary vector.
+
+More explicitly, if $E_{\mathsf R}$ is the spectral resolution
+of $\mathsf R$ and
+$\sigma_v^{\mathsf R}(A)=\langle v,E_{\mathsf R}(A)v\rangle$,
+the inverse domain is
+
+$$
+D(\mathsf G)=
+ \left\{v:\int_{(0,1]}(s^{-1}-1)^2
+                                 d\sigma_v^{\mathsf R}(s)<\infty\right\}.
+\tag{12.15}
+$$
+
+There is no zero spectral atom, although zero may lie in the
+spectrum. This condition is equivalent to square integrability
+of $s^{-1}$, hence to $v\in\operatorname{Ran}\mathsf R$.
+It gives the maximal domain in (12.6), with a closed self-adjoint
+operator, not merely a closable formal commutator. The square-root
+calculus gives (12.7); closedness follows from self-adjointness.
+Finally (12.9) identifies the multiplier with $dE$ for the
+original $dK$, proving the clock assertion. $\square$
+
+## 13. The generated commutative algebra and a strict measured factor
+
+**Theorem 13.1 (only the actual generated spatial algebra).** Let
+$\mathsf R,\mathsf G$ be the operators of Theorem 12.2. The bounded
+self-adjoint operators $\mathsf B,\mathsf R$ commute. Their generated
+von Neumann algebra and its constant-cyclic subspace are
+
+$$
+\mathcal A=W^*(\mathsf B,\mathsf R)
+                \subset\mathcal B(\widehat{\mathcal H}),\qquad
+\mathcal H_{\rm rel}=\overline{\mathcal A\Omega}.
+\tag{13.1}
+$$
+
+The exact word law determines a joint probability measure $\nu$ on
+$\mathbb R\times[0,\infty)$ by
+
+$$
+\nu(A\times D)=
+ \langle\Omega,\mathbf1_A(\mathsf B)
+                    \mathbf1_D(\mathsf G)\Omega\rangle.
+\tag{13.2}
+$$
+
+It is exactly the original joint measure
+
+$$
+\nu=(b,\gamma)_*m.
+\tag{13.3}
+$$
+
+For bounded Borel $\varphi$ write
+$\Phi_\varphi=\varphi(\mathsf B,\mathsf G)$. Joint Borel calculus
+is defined here by the bounded commuting pair
+$(\mathsf B,\mathsf R)$ and the inverse $\gamma=r^{-1}-1$ on
+$r>0$. Then
+
+$$
+\begin{gathered}
+U\Phi_\varphi U^{-1}=M_{\varphi(b,\gamma)}|_{\mathcal O},\\
+\mathcal A=\{\Phi_\varphi:\varphi\in L^\infty(\nu)\},\qquad
+\|\Phi_\varphi\|=\|\varphi\|_{L^\infty(\nu)}.
+\end{gathered}
+\tag{13.4}
+$$
+
+There is a unitary, determined by the exact tuple,
+
+$$
+\begin{gathered}
+W:L^2(\nu)\longrightarrow\mathcal H_{\rm rel},\qquad
+W\varphi=\Phi_\varphi\Omega
+                 \quad(\varphi\text{ bounded}),\\
+UW\varphi=\varphi(b,\gamma),\qquad
+U\mathcal H_{\rm rel}
+     =L^2\!\left(\overline{\sigma(b,\gamma)}^{\,m},m\right)
+                   \subseteq\mathcal O.
+\end{gathered}
+\tag{13.5}
+$$
+
+Thus $\mathcal A$ has the faithful cyclic measured realization
+$L^\infty(\nu)$ on $\mathcal H_{\rm rel}$, with reference measure
+the original $m$, pushed forward as in (13.3). There is no assertion
+that $\mathcal H_{\rm rel}=\widehat{\mathcal H}$.
+
+*Proof.* In the source realization (12.3) and (12.5) are the
+restrictions of the commuting actual multipliers $M_b,M_r$.
+They therefore commute, and bounded Borel functional calculus
+on the reducing sector gives
+
+$$
+U\mathbf1_A(\mathsf B)\mathbf1_D(\mathsf G)U^{-1}
+             =M_{\mathbf1_{\{b\in A,\,\gamma\in D\}}}|_{\mathcal O}.
+\tag{13.6}
+$$
+
+Together with $U\Omega=1$, this proves (13.2)–(13.3), first on
+rectangles and then on their generated Borel sigma algebra. The
+measure is a probability since $m(G)=1$. The point $r=0$ has zero
+spectral projection, so the Borel inverse causes no missing part.
+
+Simple functions of rectangles and bounded monotone limits show
+that every bounded Borel $\varphi(b,\gamma)$ acts as in (13.4) and
+belongs to the generated algebra. Conversely the bounded joint
+spectral calculus of two commuting self-adjoint operators is a
+von Neumann algebra and is the one they generate. This is the
+classical spectral-algebra intermediate, not an assumed spatial
+algebra. Its actual-source identification is (13.6).
+
+No joint null set hidden from $\Omega$ changes that conclusion.
+If $\Phi_\varphi\Omega=0$, then $\int|\varphi|^2d\nu=0$, so
+$M_{\varphi(b,\gamma)}=0$ on the full source space, hence
+$\Phi_\varphi=0$. Thus $\Omega$ is separating for $\mathcal A$.
+Also
+
+$$
+\|\Phi_\varphi\Omega\|^2=\int|\varphi|^2d\nu,
+\tag{13.7}
+$$
+
+which extends $W$ isometrically from bounded functions. They are
+dense in $L^2(\nu)$, and their images have closure
+$\mathcal H_{\rm rel}$ by (13.1), giving surjectivity. On this
+cyclic subspace $\Phi_\varphi$ is ordinary multiplication by
+$\varphi$, so its norm is at least $\|\varphi\|_\infty$;
+the source multiplier bound gives the reverse inequality.
+Every completed-measurable bounded class has a Borel version
+modulo $\nu$, proving the $L^\infty$ formulation of (13.4).
+
+Finally the pullbacks of bounded Borel functions of $(b,\gamma)$
+are dense in the right side of (13.5): simple functions and
+completion modulo $m$ suffice, or equivalently the measurable
+factorization for the standard Borel map $(b,\gamma)$ does so.
+All these pullbacks belong to $\mathcal O$ because their
+multipliers reduce it and $1\in\mathcal O$. This proves (13.5).
+The spectral and cyclic representation steps are the usual
+multiplication representation [T, §§3.1–3.2]; they apply to this
+proved algebra and its cyclic subspace, without imposing spatial
+multiplier cyclicity on the whole visible sector. $\square$
+
+**Theorem 13.2 (strict original-source gain beyond the readout
+algebra).** In addition retain the analytic-source hypotheses of
+[original energy fibre geometry, Assumption 1.1 and Definition
+2.1][EF]. For every original finite $a,\eta,d>0$, the measured
+factor (13.3) has the joint absolute continuity asserted in
+[EF, Theorem 4.1], and
+
+$$
+\begin{gathered}
+W^*(\mathsf B)\subsetneq\mathcal A,\\
+\mathcal H_b:=\overline{W^*(\mathsf B)\Omega}
+                  \subsetneq\mathcal H_{\rm rel},\\
+\overline{\sigma(b)}^{\,m}
+                  \subsetneq\overline{\sigma(b,\gamma)}^{\,m}.
+\end{gathered}
+\tag{13.8}
+$$
+
+Let $E_b$ denote the orthogonal projection in
+$\widehat{\mathcal H}$ onto $\mathcal H_b$. A strictly positive
+intrinsic witness is
+
+$$
+\begin{aligned}
+\Delta_p&=\|(I-E_b)\mathsf R\Omega\|^2\\
+ &=\int_G\left|r-\mathbb E_m[r\mid
+                      \overline{\sigma(b)}^{\,m}]\right|^2dm>0.
+\end{aligned}
+\tag{13.9}
+$$
+
+No numerical value or effective lower bound for $\Delta_p$ is
+part of this assertion.
+
+*Proof.* First check the source correspondence needed for the
+cited fibre theorem. Its $G,e,\mu,X_j$ are (1.1), with the same
+unit-source $\Gamma$, positive normalized $h$, full complex
+$A=\rho C$ endpoint and $m=h^2\mu$ of (1.2)–(1.4).
+Its $b$ is the smooth representative of this same $g_d$; the
+positive-time smoothing in Definition 12.1 is exactly its
+Definition 2.1. Its Definition 1.2 sets
+$E=a\sum_j(X_jb)^2+\eta(\partial_wb)^2$ and $\gamma=dE$,
+which agree with (12.2), including the original sampling interval
+and no factor $1/2$. Theorem 12.2 has identified the recovered
+operator with this very $M_\gamma$ on its maximal observable
+domain before any fibre result is invoked. Finally (13.3) uses
+the same normalized measure, rather than the source-start law at
+one read time or a product replacement. Hence [EF, Theorems 3.1
+and 4.1] apply to exactly this pair and give
+
+$$
+\nu\ll\operatorname{Leb}_2,\qquad
+m\{\gamma=F(b)\}=0
+                  \quad\text{for every Borel }F:\mathbb R\to\mathbb R.
+\tag{13.10}
+$$
+
+In particular $\gamma$ is not measurable for the completed
+$\sigma(b)$, by the completed-sigma conclusion of that theorem.
+Since $r>0$ and $\gamma=r^{-1}-1$ almost everywhere, $r$ is not
+measurable for that completed sigma algebra either. It is bounded,
+so its $L^2$ class lies in the right side of (13.5) but outside
+$L^2(\overline{\sigma(b)}^{\,m},m)$. Under $U$, the latter space
+is exactly $\mathcal H_b$, by the same cyclic calculation with
+$\mathsf B$ alone. Thus $\mathsf R\Omega\notin\mathcal H_b$,
+proving the strict cyclic inclusion and (13.9). In particular
+$\mathsf R\notin W^*(\mathsf B)$, proving the strict algebra
+inclusion. The strict sigma inclusion is (13.10)'s cited
+completed-measurability consequence. This proof uses actual-source
+fibre separation, rather than inferring strictness from $E\ne0$
+or nonconstancy of a multiplier. $\square$
+
+[EF]: RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_ENERGY_FIBRE_GEOMETRY.md
+
+## 14. The same source path and the remaining autonomous-factor condition
+
+**Theorem 14.1 (the original positive-time joint factor laws).**
+Use the hypotheses of Theorem 12.2, without needing the extra
+analytic hypotheses for strictness. In sample-step units let
+$0<r_1<\cdots<r_k$ and let $\varphi_1,\ldots,\varphi_k$ be
+bounded Borel functions on $\mathbb R\times[0,\infty)$.
+Use $\gamma_r$ for the entrance vector already defined in (4.1),
+distinguished from the spatial scalar $\gamma$ of (12.2). Then
+
+$$
+\begin{aligned}
+&\mathbb E_e\!\left[\prod_{j=1}^k
+      \varphi_j\bigl(b(Z_{r_jd}),\gamma(Z_{r_jd})\bigr)\right]\\
+&\quad=\left\langle\gamma_{r_1},
+       \Phi_{\varphi_1}\widehat P^{\,r_2-r_1}
+       \Phi_{\varphi_2}\cdots
+       \widehat P^{\,r_k-r_{k-1}}
+       \Phi_{\varphi_k}\Omega\right\rangle.
+\end{aligned}
+\tag{14.1}
+$$
+
+For $k=1$ the right side means
+$\langle\gamma_{r_1},\Phi_{\varphi_1}\Omega\rangle$.
+Consequently the exact original word law determines all these
+finite-dimensional factor distributions at named sample-step times.
+For every $r>0$ their one-time distribution $\nu_r$ is equivalent
+to the reference measure $\nu$ of (13.3), with
+
+$$
+\nu_r(D)=\langle\gamma_r,\Phi_{\mathbf1_D}\Omega\rangle
+      =\int_G g_{rd}\,\mathbf1_{\{(b,\gamma)\in D\}}\,dm.
+\tag{14.2}
+$$
+
+There is also a joint correspondence with the unchanged noisy
+labels. For $y_0,\ldots,y_\ell\in\mathcal L$ and bounded Borel
+$\varphi_0,\ldots,\varphi_\ell$, write
+$D_j=\Phi_{\varphi_j}N_{y_j}$. Then
+
+$$
+\begin{aligned}
+&\mathbb E_e\!\left[\prod_{j=0}^{\ell}
+   \varphi_j\bigl(b(X_j),\gamma(X_j)\bigr)
+                 \mathbf1_{\{Y_j=y_j\}}\right]\\
+&\hspace{3em}=\langle\gamma_2,
+          D_0\widehat P D_1\cdots\widehat P D_\ell\Omega\rangle,
+\qquad X_j=Z_{(j+2)d}.
+\end{aligned}
+\tag{14.3}
+$$
+
+These are laws of functions of the same original source path.
+They do not assert that their values on a realized path can be
+read from its realized label sequence.
+
+*Proof.* Theorem 4.1 gives $U\gamma_r=g_{rd}$, with its exact
+inverse spectral domain even when $0<r<1$. At the first positive
+time $r_1d$ the actual source law has density $g_{r_1d}$ with
+respect to $m$. Apply the original Markov property forward at
+the finitely many times, conditioning from the last one backwards.
+This gives the bounded-function expression
+
+$$
+\left\langle g_{r_1d},
+ M_{\varphi_1(b,\gamma)}T_{(r_2-r_1)d}
+ M_{\varphi_2(b,\gamma)}\cdots
+ T_{(r_k-r_{k-1})d}M_{\varphi_k(b,\gamma)}1\right\rangle_m.
+\tag{14.4}
+$$
+
+Every multiplier in (14.4) reduces $\mathcal O$ by (13.4),
+and every heat factor reduces it by Theorem 3.2. All products
+are bounded; all vectors beginning with $1$ remain in
+$\mathcal O$. Transporting by $U$ proves (14.1). Taking
+indicators proves (14.2), and $g_{rd}>0$ almost everywhere proves
+both directions of absolute continuity with respect to $\nu$.
+
+At the original read times, condition on the one undisturbed
+path. Fresh conditional reading noise turns the product of the
+label indicators in (14.3) into $\prod_j f_{y_j}(X_j)$.
+Each emission is a bounded function of $b$ by (1.6), so the
+result is (14.4) with first time $2d$, gaps $d$, and multipliers
+$M_{\varphi_j(b,\gamma)f_{y_j}}$. Their transports are exactly
+$D_j$, proving (14.3). Null-repaired versions cause no ambiguity:
+at each of these finitely many positive deterministic times
+the source law is absolutely continuous with respect to $m$.
+The same argument handles countably many original read times
+by a countable union of null events. No value at time zero or
+at $e$ is required for the energy variable. $\square$
+
+**Definition 14.2 (scope of the recovered relation factor).**
+The recoverable spatial relation here is the measured map
+$x\mapsto(b(x),\gamma(x))$ through its generated completed sigma
+algebra, joint law and multiplication on the cyclic subspace
+(13.5). It is strictly finer than the one-readout measured factor
+under Theorem 13.2's analytic-source premises. It is not an
+identification of the full raw coordinates or of all
+rotation-invariant functions. Both $b$ and $\gamma$ are invariant
+under the original rotations: the rotations preserve the full
+source, $b$ and the principal metric in (12.1). They are also
+invariant under the original $z$ reflection. Thus the invisible
+directions and the same-source path obstruction of §6 remain.
+
+An autonomous heat factor on (13.5) would additionally require
+$T_tL^2(\overline{\sigma(b,\gamma)}^{\,m},m)$ to lie in that
+same subspace for every $t\ge0$. If $E_{\rm rel}$ denotes the
+orthogonal projection onto $\mathcal H_{\rm rel}$, this condition
+is equivalent, by self-adjointness and the injective time
+calculus, to
+
+$$
+E_{\rm rel}\widehat P=\widehat P E_{\rm rel}.
+\tag{14.5}
+$$
+
+No such commutation is proved by (12.5) or (13.5). Those
+statements show that the whole visible sector reduces heat
+and the recovered multipliers, not that its smaller multiplier
+cyclic subspace reduces heat. Formula (14.1) is valid without
+(14.5), because its intermediate vectors are allowed to range
+over the whole visible sector. A compression to
+$\mathcal H_{\rm rel}$ alone therefore supplies no asserted
+Markov semigroup or local generator on the two-variable factor.
+
+The intrinsic construction (12.4)–(12.6) is set-theoretic exact
+recovery. It gives no effective modulus for its strong limit,
+no finite-record energy evaluator and no new emission or physical
+instrument. In particular the finite constant-vector and finite
+unmarked-menu conclusions of §§9–11 retain exactly their own
+capacity and same-event premises; they do not control the
+unbounded-domain or large-$n$ limit in §12. The recovered
+nonnegative form (12.7) is a multiplication form, distinct from
+the diffusion form (1.4). Membership of its functions in
+$D(K^{1/2})$, recursive energy closure, full spatial multiplier
+cyclicity and general mutual recovery of space, time,
+boundary and memory are not supplied by this two-variable factor.
+
+**Definition 14.3 (mathematical attribution).** The source-specific
+deduction in §§12–14 is repo-derived: it is the composition of the original marked
+tuple and calibrated $b$ from §§2–4 with the actual full-domain
+phase calculation (12.8)–(12.13), the reduction (12.14), and the
+same-source measured and path correspondences (13.3), (14.1) and
+(14.3). The strictness premise is exactly [EF, Theorems 3.1 and
+4.1], consumed with the dictionary in the proof of Theorem 13.2.
+It is not re-proved or replaced by a generic nonzero-energy test.
+These are conditional mathematical deductions from the cited
+analytic-source suppliers.
+
+Maximal real multiplication operators, their graph cores and
+spectral representations are literature-attested intermediates [T,
+§§2.2, 3.1–3.2]; the common-limit-core resolvent criterion is
+[T, §6.6, Lemma 6.36]. Their use here is within the source-specific
+proofs. The local commutator mechanism is already present in
+[S, §129.D], on actual compact punctured vectors. No global
+boundedness of that commutator, no common global multiplication
+domain for $K$, and no identification with unrelated FIB
+$\alpha,\beta$ syntax is part of this deduction. The asserted
+scope is ordinary conditional mathematics, with no additional
+formal-verification or general priority assertion.
+
+## 追加锚（本行以下为增补区）
