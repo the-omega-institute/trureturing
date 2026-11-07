@@ -575,10 +575,10 @@ private lemma cut_card (A B l r : ℕ) (hlA : l ≤ A + 1) (hlB : l ≤ B + 1)
   push_cast at hc' hl' hr'
   nlinarith
 
-private def polygon (A B l r : ℕ) (i0 j0 : ℤ) : Finset (ℤ × ℤ) :=
+def polygon (A B l r : ℕ) (i0 j0 : ℤ) : Finset (ℤ × ℤ) :=
   (cutRectangle A B l r).image (fun p => (i0 + p.1, j0 + p.2))
 
-private lemma polygon_mem (A B l r : ℕ) (i0 j0 : ℤ)
+lemma polygon_mem (A B l r : ℕ) (i0 j0 : ℤ)
     (hlA : l ≤ A + 1) (hlB : l ≤ B + 1) (hrA : r ≤ A + 1) (hrB : r ≤ B + 1)
     (p : ℤ × ℤ) : p ∈ polygon A B l r i0 j0 ↔
       i0 ≤ p.1 ∧ p.1 ≤ i0 + A ∧ j0 ≤ p.2 ∧ p.2 ≤ j0 + B ∧
@@ -594,7 +594,7 @@ private lemma polygon_mem (A B l r : ℕ) (i0 j0 : ℤ)
       omega
     · apply Prod.ext <;> dsimp <;> omega
 
-private lemma polygon_card (A B l r : ℕ) (i0 j0 : ℤ)
+lemma polygon_card (A B l r : ℕ) (i0 j0 : ℤ)
     (hlA : l ≤ A + 1) (hlB : l ≤ B + 1) (hrA : r ≤ A + 1) (hrB : r ≤ B + 1)
     (hdis : l + r ≤ A + B + 1) :
     2 * ((polygon A B l r i0 j0).card : ℤ) =
@@ -845,7 +845,7 @@ private lemma ball_mem (n : ℕ) (s : Simplex) :
   rw [he]
   simp [ball, slice_mem]
 
-private lemma shell_finite (n : ℕ) : {s : Simplex | distance s = n}.Finite := by
+lemma shell_finite (n : ℕ) : {s : Simplex | distance s = n}.Finite := by
   apply (ball n).finite_toSet.subset
   intro s hs
   exact (ball_mem n s).mpr (le_of_eq hs)
