@@ -287,7 +287,7 @@ def family : Registration arena.{u} (type_of% (@actual_shifted_supplier_identity
 
 /-- The full identity telescope is retained. Source selection and escape
 evidence remain unfinished under issue 23103. -/
-def audit : Contract.Registration
+def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@actual_shifted_supplier_identity.{u}) (Realization signature) Type Unit where
   unitName := `Reg.D5.S3.Quantum.Matrix.HsfLocalSpectrumSupplier.ShiftedIdentity.unit
   realizationName := `Reg.D5.S3.Quantum.Matrix.HsfLocalSpectrumSupplier.ShiftedIdentity.family

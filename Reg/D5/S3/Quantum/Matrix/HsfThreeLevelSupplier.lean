@@ -82,7 +82,7 @@ def family : Registration arena.{u} (type_of% (@actual_threeLevel_supplier.{u}))
   sensitivity := sensitivity
   dependence := dependence
 
-def audit : Contract.Registration
+def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@actual_threeLevel_supplier.{u}) (Realization signature) Type Unit where
   unitName := `Reg.D5.S3.Quantum.Matrix.HsfThreeLevelSupplier.Supplier.unit
   realizationName := `Reg.D5.S3.Quantum.Matrix.HsfThreeLevelSupplier.Supplier.family
@@ -179,7 +179,7 @@ def family : Registration arena.{u} (type_of% (@actual_threeLevel_PD_sylvester.{
   sensitivity := sensitivity
   dependence := dependence
 
-def audit : Contract.Registration
+def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@actual_threeLevel_PD_sylvester.{u}) (Realization signature) Type Unit where
   unitName := `Reg.D5.S3.Quantum.Matrix.HsfThreeLevelSupplier.PDSylvester.unit
   realizationName := `Reg.D5.S3.Quantum.Matrix.HsfThreeLevelSupplier.PDSylvester.family
