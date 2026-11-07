@@ -2514,3 +2514,290 @@ $$
 This proves (191.4) and the table. If $r_u=2$, then $\dim\ker\Phi_u=2$ and the inclusion between two-dimensional kernels is equality, so $\mathcal R_u=0$. The converse follows from (191.4). Corollary 179.3 then supplies the common-first representation. $\square$
 
 Thus the radical alternative has no untracked intermediate size: rank three carries exactly one radical direction and rank four carries exactly two. The rank-two branch is the only branch on which the radical reduction is automatic, while rank-three and rank-four branches are the precise remaining arbitrary-partition cases. This classification does not rule out either of those branches, nor does it settle the out-of-span nonlinear equations, $F_{64}$, $H43$, SRS\text{-}20, physical succession or Lean/kernel formalization.
+
+## 192. The radical is transverse to the first three source modes
+
+The rank-three and rank-four branches from Section 191 cannot hide their radical directions inside the source orbit already controlled by the constant label. The partition identity puts $1$ in the candidate span, and the three radical slots with that constant label force orthogonality to the first three propagated source modes.
+
+**Definition 192.1 (the three-mode source plane).** Retain the source operator $P$ and source label $q$ of Definition 175.1, and set
+
+$$
+\mathcal S_q=\operatorname{span}_{\mathbb R}\{Pq,P^2q,P^3q\}
+\subset L^2(m;\mathbb R).
+\tag{192.1}
+$$
+
+For a full-zero partition, let $\mathcal R_u$ be the common radical inside $\mathcal W_u$ from Definition 191.1.
+
+**Proposition 192.2 (source-mode transversality).** If $u$ is a bounded pointwise partition whose sixty-four residuals all vanish, then every $h\in\mathcal R_u$ satisfies
+
+$$
+\langle g,h\rangle_m
+=\langle Pg,h\rangle_m
+=\langle P^2g,h\rangle_m
+=0,
+\tag{192.2}
+$$
+
+and therefore
+
+$$
+\langle Pq,h\rangle_m
+=\langle P^2q,h\rangle_m
+=\langle P^3q,h\rangle_m
+=0.
+\tag{192.3}
+$$
+
+Consequently,
+
+$$
+\mathcal R_u\cap\mathcal S_q=\{0\},
+\qquad
+\mathcal R_u\subseteq\mathcal S_q^{\perp_m}.
+\tag{192.4}
+$$
+
+Combined with Proposition 191.2, a rank-three full-zero partition has a one-dimensional radical outside $\mathcal S_q$, and a rank-four full-zero partition has a two-dimensional radical outside $\mathcal S_q$.
+
+*Proof.* The partition identity gives
+
+$$
+1=u_0+u_1+u_3+u_B\in\mathcal W_u.
+\tag{192.5}
+$$
+
+Let $h\in\mathcal R_u$. Since $h$ lies in each of the three slot radicals and $1$ is an allowed argument in $\mathcal W_u$, the three choices of the slot occupied by $h$ give
+
+$$
+\mathcal C(h,1,1)=0,
+\qquad
+\mathcal C(1,h,1)=0,
+\qquad
+\mathcal C(1,1,h)=0.
+\tag{192.6}
+$$
+
+Using $P1=1$ and self-adjointness of $P$, these identities are respectively
+
+$$
+\langle g,h\rangle_m=0,
+\qquad
+\langle Pg,h\rangle_m=0,
+\qquad
+\langle P^2g,h\rangle_m=0,
+$$
+
+which proves (192.2). The source propagation identity $Pq=cg$ with $c>0$ gives
+
+$$
+Pq=cg,
+\qquad
+P^2q=cPg,
+\qquad
+P^3q=cP^2g.
+$$
+
+Substitution into (192.2) proves (192.3).
+
+By Lemma 169.1, the three vectors $Pq,P^2q,P^3q$ are linearly independent. Their Gram matrix in the positive $L^2(m)$ inner product is therefore positive definite. If $h\in\mathcal R_u\cap\mathcal S_q$, (192.3) says that $h$ is orthogonal to every vector in $\mathcal S_q$; taking the inner product with $h$ itself gives $\|h\|_2^2=0$. Thus $h=0$ as an $m$-class, proving (192.4). The dimension statements follow from (191.4). $\square$
+
+Hence any nontrivial rank-three or rank-four radical must be sought in the complement of the first three source-propagation modes. This is a necessary geometric condition, not a nonexistence proof: the out-of-plane radical, the remaining nonlinear common-first equations, arbitrary partitions beyond the rank trichotomy, $F_{64}$, $H43$, SRS\text{-}20, physical succession and Lean/kernel formalization remain open.
+
+## 193. The radical obeys a weighted candidate-span barrier
+
+The constant-label calculation in Section 192 is the first member of a larger family. Every candidate-span function can be inserted beside a radical element, producing two weighted mode-annihilation spaces. These spaces give an exact finite-dimensional barrier for any rank-three or rank-four escape.
+
+**Definition 193.1 (weighted candidate-span mode spaces).** For a bounded full-zero partition $u$, define
+
+$$
+\begin{aligned}
+\mathcal M_u
+  &=\operatorname{span}_{\mathbb R}
+    \{P(gw),P^2(gw):w\in\mathcal W_u\},\\
+\mathcal N_u
+  &=\operatorname{span}_{\mathbb R}
+    \{Pw,P^2w:w\in\mathcal W_u\}
+    \subset L^2(m;\mathbb R).
+\end{aligned}
+\tag{193.1}
+$$
+
+Here products such as $gw$ are pointwise products of bounded representatives, and the heat contraction places all displayed functions in $L^2(m)$.
+
+**Proposition 193.2 (weighted radical annihilation).** If $u$ has all sixty-four residuals equal to zero and $h\in\mathcal R_u$, then
+
+$$
+\langle h,\phi\rangle_m=0
+\quad(\phi\in\mathcal M_u),
+\qquad
+\langle gh,\psi\rangle_m=0
+\quad(\psi\in\mathcal N_u).
+\tag{193.2}
+$$
+
+Equivalently,
+
+$$
+\mathcal R_u\subseteq\mathcal M_u^{\perp_m},
+\qquad
+g\mathcal R_u\subseteq\mathcal N_u^{\perp_m}.
+\tag{193.3}
+$$
+
+In particular, since $1\in\mathcal W_u$, every radical element is orthogonal to $Pg$ and $P^2g$ and its $g$-weighted class is orthogonal to $P1=P^21=1$; together with Section 192 this gives the first three source-mode constraints for every radical direction.
+
+*Proof.* Let $w\in\mathcal W_u$. Because $h$ lies in the first, middle and terminal slot radicals, the four contractions with the constant candidate function $1\in\mathcal W_u$ vanish:
+
+$$
+\mathcal C(w,h,1)=0,
+\qquad
+\mathcal C(w,1,h)=0,
+\qquad
+\mathcal C(h,w,1)=0,
+\qquad
+\mathcal C(h,1,w)=0.
+\tag{193.4}
+$$
+
+Using $P1=1$ and self-adjointness of $P$, these equations become
+
+$$
+\begin{aligned}
+0=\mathcal C(w,h,1)
+  &=\int_Ggw\,P h\,dm
+   =\langle P(gw),h\rangle_m,\\
+0=\mathcal C(w,1,h)
+  &=\int_Ggw\,P^2h\,dm
+   =\langle P^2(gw),h\rangle_m,\\
+0=\mathcal C(h,w,1)
+  &=\int_Ggh\,Pw\,dm
+   =\langle gh,Pw\rangle_m,\\
+0=\mathcal C(h,1,w)
+  &=\int_Ggh\,P^2w\,dm
+   =\langle gh,P^2w\rangle_m.
+\end{aligned}
+\tag{193.5}
+$$
+
+As $w$ ranges over $\mathcal W_u$, (193.5) is exactly (193.2)--(193.3). Taking $w=1$ shows that $Pg$ and $P^2g$ belong to $\mathcal M_u$ and that $gh$ is orthogonal to $1$; the missing $g$ mode is supplied by $\mathcal C(h,1,1)=0$ in Section 192. $\square$
+
+Thus a rank-three radical must satisfy one weighted annihilation system and a rank-four radical must satisfy two independent directions in the same system, in addition to lying in $\mathcal S_q^{\perp_m}$. This is a necessary barrier for the remaining out-of-plane branches, not a nonexistence proof: the dimensions of $\mathcal M_u$ and $\mathcal N_u$ may collapse, and the residual-zero partition, $F_{64}$, $H43$, SRS\text{-}20, physical succession and Lean/kernel formalization remain open.
+
+## 194. A rank-deficit detector for the radical branches
+
+The annihilation spaces of Section 193 give a finite-dimensional test before solving the remaining nonlinear equations. Their left nullities must be large enough to contain the radical dimensions forced by the rank trichotomy.
+
+**Definition 194.1 (weighted mode matrices).** Let $u$ be a full-zero bounded partition, put $r_u=\dim\mathcal W_u$, and choose a basis $(w_1,\ldots,w_{r_u})$ of $\mathcal W_u$. Define linear maps
+
+$$
+\begin{aligned}
+\mathsf L_u:\mathcal W_u&\longrightarrow\mathbb R^{2r_u},
+&\mathsf L_u(h)
+  &=\bigl(\langle h,P(gw_j)\rangle_m,
+          \langle h,P^2(gw_j)\rangle_m\bigr)_{j=1}^{r_u},\\
+\mathsf K_u:\mathcal W_u&\longrightarrow\mathbb R^{2r_u},
+&\mathsf K_u(h)
+  &=\bigl(\langle gh,Pw_j\rangle_m,
+          \langle gh,P^2w_j\rangle_m\bigr)_{j=1}^{r_u}.
+\end{aligned}
+\tag{194.1}
+$$
+
+Changing the basis of $\mathcal W_u$ only applies an invertible change of coordinates to the displayed families, so their kernels are intrinsic.
+
+**Proposition 194.2 (forced nullity).** If all sixty-four residuals of $u$ vanish, then
+
+$$
+\mathcal R_u\subseteq\ker\mathsf L_u\cap\ker\mathsf K_u,
+\tag{194.2}
+$$
+
+and consequently
+
+$$
+\dim\ker\mathsf L_u\ge r_u-2,
+\qquad
+\dim\ker\mathsf K_u\ge r_u-2.
+\tag{194.3}
+$$
+
+Thus a rank-three full-zero partition requires each map in (194.1) to have a nonzero kernel, while a rank-four full-zero partition requires each to have nullity at least two. If either nullity is smaller than $r_u-2$, that rank branch is impossible.
+
+*Proof.* Proposition 193.2 gives, for every $h\in\mathcal R_u$ and every basis element $w_j$,
+
+$$
+\langle h,P(gw_j)\rangle_m
+=\langle h,P^2(gw_j)\rangle_m
+=0,
+$$
+
+and
+
+$$
+\langle gh,Pw_j\rangle_m
+=\langle gh,P^2w_j\rangle_m
+=0.
+$$
+
+These are exactly the two coordinate families in (194.1), proving (194.2). Proposition 191.2 gives
+
+$$
+\dim\mathcal R_u=r_u-2.
+$$
+
+The inclusion (194.2) then gives both nullity inequalities in (194.3). The final exclusion statement is the contrapositive of either inequality. $\square$
+
+The test is finite-dimensional and basis-independent: a proposed rank-three or rank-four fibre must first exhibit the required nullity in both weighted mode matrices before its nonlinear residual equations can be solved. This is a necessary filter, not a nonexistence theorem; nullity may occur accidentally, and arbitrary partition realization, $F_{64}$, $H43$, SRS\text{-}20, physical succession and Lean/kernel formalization remain open.
+
+## 195. Saturated weighted kernels identify the radical
+
+The nullity inequalities of Section 194 become an exact identification whenever one of the weighted mode maps is saturated. This separates the finite-dimensional radical calculation from the remaining nonlinear residual equations.
+
+**Proposition 195.1 (saturated-kernel identification).** Let $u$ be a full-zero bounded partition and put $r_u=\dim\mathcal W_u$. If
+
+$$
+\dim\ker\mathsf L_u=r_u-2,
+\tag{195.1}
+$$
+
+then
+
+$$
+\ker\mathsf L_u=\mathcal R_u.
+\tag{195.2}
+$$
+
+Likewise,
+
+$$
+\dim\ker\mathsf K_u=r_u-2
+\quad\Longrightarrow\quad
+\ker\mathsf K_u=\mathcal R_u.
+\tag{195.3}
+$$
+
+If both equalities in (195.1) and (195.3) hold, then
+
+$$
+\ker\mathsf L_u=\ker\mathsf K_u=\mathcal R_u,
+\tag{195.4}
+$$
+
+so the common radical is obtained by solving either finite-dimensional weighted kernel system.
+
+*Proof.* Proposition 194.2 gives the inclusions
+
+$$
+\mathcal R_u\subseteq\ker\mathsf L_u,
+\qquad
+\mathcal R_u\subseteq\ker\mathsf K_u,
+$$
+
+while Proposition 191.2 gives $\dim\mathcal R_u=r_u-2$. Under (195.1), the two subspaces $\mathcal R_u$ and $\ker\mathsf L_u$ have the same finite dimension, so the first inclusion is equality. The proof for $\mathsf K_u$ is identical, and (195.4) follows when both maps are saturated. $\square$
+
+**Corollary 195.2 (conditional closure of the radical branch).** Under the hypotheses of Proposition 195.1, if either weighted map is saturated and its kernel is zero, then $r_u=2$ and the partition lies in the radical-free common-first branch of Corollary 179.3. More generally, for a rank-three or rank-four candidate, any additional independent weighted-mode equation that reduces the corresponding kernel below $r_u-2$ rules out that rank immediately.
+
+*Proof.* If a saturated map has zero kernel, then (195.1) gives $r_u-2=0$, hence $r_u=2$. Proposition 191.2 then gives $\mathcal R_u=0$, and Corollary 179.3 supplies the common-first reduction. The final statement is the exclusion direction of Proposition 194.2. $\square$
+
+The saturated case supplies a concrete finite-dimensional route: first compute the two weighted kernels, then either identify the radical exactly or exclude the proposed rank. Saturation is not known for every candidate, so the unsaturated rank-three and rank-four branches, the nonlinear residual equations, arbitrary partition realization, $F_{64}$, $H43$, SRS\text{-}20, physical succession and Lean/kernel formalization remain open.

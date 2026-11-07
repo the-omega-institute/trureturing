@@ -19,7 +19,7 @@ cd "$ROOT"
 disk_arguments=(check-disk --path "$ROOT" --path "$TARGET")
 if [[ "$ALLOW_LOW_DISK" == 1 ]]; then disk_arguments+=(--allow-low-disk); fi
 unset WORKTREE_REQUIRE_DISK_CHECK
-if [[ "$ALLOW_LOW_DISK" == 0 && ( "${WORKTREE_PREFER_IDLE:-0}" == 1 || -d "$TARGET" ) ]]; then
+if [[ "$ALLOW_LOW_DISK" == 0 && ( "${WORKTREE_REUSE_ANY:-0}" == 1 || -d "$TARGET" ) ]]; then
   # Reusing an existing directory needs no new checkout allocation.
   # The creator checks disk space after the reuse and recovery paths.
   export WORKTREE_REQUIRE_DISK_CHECK=1
@@ -28,7 +28,7 @@ else
 fi
 
 creation_arguments=()
-if [[ "${WORKTREE_PREFER_IDLE:-0}" == 1 ]]; then creation_arguments+=(--prefer-idle); fi
+if [[ "${WORKTREE_REUSE_ANY:-0}" == 1 ]]; then creation_arguments+=(--reuse-any); fi
 
 if [[ -f "$ROOT/tools/scripts/maintenance_log.py" ]]; then
   if [[ -n "${TRURETURING_MAINTENANCE_RUN_ID:-}" ]]; then
