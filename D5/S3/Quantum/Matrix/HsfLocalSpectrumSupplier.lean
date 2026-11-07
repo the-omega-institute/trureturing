@@ -927,10 +927,11 @@ theorem actual_shifted_supplier_identity (p : n → ℝ) (hp : ∀ i, 0 < p i)
   have hre := congrArg Complex.re heq
   norm_num [Complex.add_re, Complex.sub_re, Complex.mul_re, tr] at hre
   dsimp only [X, W, schurFirst] at hre
-  simpa [actualCoeff, RpowPencilTaylor.jetCoeff, pencilDirection,
+  convert hre using 1 <;>
+    norm_num [actualCoeff, RpowPencilTaylor.jetCoeff, pencilDirection,
     balanceP_rpow hp, rootP, X, W, schurFirst, Matrix.trace_add,
     Matrix.trace_sub, Matrix.trace_smul, Complex.real_smul,
-    Complex.add_re, Complex.sub_re, Complex.mul_re] using hre
+    Complex.add_re, Complex.sub_re, Complex.mul_re]
 
 #print axioms actual_shifted_supplier_identity
 
