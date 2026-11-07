@@ -86,7 +86,7 @@ private theorem word_mode_grade (a : Charge D) (ω : List (Index D)) (E n : ℤ)
   | smul c x hx ih =>
     simpa only [map_smul] using (grade D _).smul_mem c ih
 
-private theorem negative_grade_eq_zero (hD : (gramReal D).PosDef) (E : ℤ)
+theorem negative_grade_eq_zero (hD : (gramReal D).PosDef) (E : ℤ)
     (hE : E < 0) (v : Carrier D) (hv : v ∈ grade D E) : v = 0 := by
   apply (carrierCoeffEquiv D).injective
   ext a

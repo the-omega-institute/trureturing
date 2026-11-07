@@ -137,10 +137,10 @@ private theorem heat_coeff (e : HilbertBasis ι ℂ H) (h : ι → ℝ) (hh : �
     e.repr (heat e h hh t x) i = (Real.exp (-(t : ℝ) * h i) : ℂ) * e.repr x i :=
   multiplier_coeff e _ _ _ x i
 
-private theorem heat_basis (e : HilbertBasis ι ℂ H) (h : ι → ℝ) (hh : ∀ i, 0 ≤ h i)
+theorem heat_basis (e : HilbertBasis ι ℂ H) (h : ι → ℝ) (hh : ∀ i, 0 ≤ h i)
     (t : ℝ≥0) (i : ι) : heat e h hh t (e i) = Real.exp (-(t : ℝ) * h i) • e i :=
   multiplier_basis e _ _ _ i
-private theorem heat_contraction {ι H : Type*} [NormedAddCommGroup H]
+theorem heat_contraction {ι H : Type*} [NormedAddCommGroup H]
     [InnerProductSpace ℂ H] [CompleteSpace H] (e : HilbertBasis ι ℂ H)
     (E : ι → ℝ) (hE : ∀ i, 0 ≤ E i) (t : ℝ≥0) (f : H) :
     ‖heat e E hE t f‖ ≤ ‖f‖ := by
@@ -151,7 +151,7 @@ private theorem heat_contraction {ι H : Type*} [NormedAddCommGroup H]
     abs_of_pos (Real.exp_pos _)]
   exact mul_le_of_le_one_left (norm_nonneg _) (Real.exp_le_one_iff.mpr (mul_nonpos_of_nonpos_of_nonneg (neg_nonpos.mpr t.coe_nonneg) (hE i)))
 
-private theorem heat_continuous {ι H : Type*} [NormedAddCommGroup H]
+theorem heat_continuous {ι H : Type*} [NormedAddCommGroup H]
     [InnerProductSpace ℂ H] [CompleteSpace H] (e : HilbertBasis ι ℂ H)
     (E : ι → ℝ) (hE : ∀ i, 0 ≤ E i) (f : H) :
     Continuous (fun t : ℝ≥0 => heat e E hE t f) := by

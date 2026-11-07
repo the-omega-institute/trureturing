@@ -39,9 +39,7 @@ variable {D : LatticeData}
 open private normD_sq original_current_energy_le originalCore normD_add_le normD_smul normD_sum_le from
   D5.S3.VertexAlgebra.Energy.OriginalCurrentEnergy
 
-open private wordWeight wordOrder wordConstant wordConstant_nonneg
-  wordOrder_le occurrence_weight word_mode_grade negative_grade_eq_zero
-  derivative_zero_strip word_cons_finite seeded_word_energy_le from
+open private wordWeight wordOrder wordConstant wordConstant_nonneg wordOrder_le occurrence_weight word_mode_grade derivative_zero_strip word_cons_finite seeded_word_energy_le from
   D5.S3.VertexAlgebra.Energy.OriginalWordEnergy
 
 /-- The existing neutral prerequisite is the zero-charge identity-seed
@@ -129,7 +127,7 @@ private theorem Hm_cauchy_schwarz (hD : (gramReal D).PosDef) (u v : Carrier D) :
   letI := originalCore hD
   exact InnerProductSpace.Core.norm_inner_le_norm (𝕜 := ℂ) u v
 
-private theorem Hm_grade_orthogonal
+theorem Hm_grade_orthogonal
     (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
     (hHG : H*gramComplex D=1) (hGH : gramComplex D*H=1)
     (E F : ℤ) (hEF : E ≠ F) (u v : Carrier D)
@@ -142,7 +140,7 @@ private theorem Hm_grade_orthogonal
   have hz : ((E : ℂ)-(F : ℂ))*Hm u v=0 := by linear_combination hh
   exact (mul_eq_zero.mp hz).resolve_left (sub_ne_zero.mpr (by exact_mod_cast hEF))
 
-private theorem normD_orthogonal_sum (hD : (gramReal D).PosDef)
+theorem normD_orthogonal_sum (hD : (gramReal D).PosDef)
     {ι : Type} (s : Finset ι) (f : ι → Carrier D)
     (hf : ∀ i ∈ s, ∀ j ∈ s, i ≠ j → Hm (f i) (f j) = 0) :
     normD (∑ i ∈ s, f i)^2 = ∑ i ∈ s, normD (f i)^2 := by
@@ -157,7 +155,7 @@ private theorem normD_orthogonal_sum (hD : (gramReal D).PosDef)
     exact hf i hi j hj (Ne.symm hji)
   · exact fun hn => (hn hi).elim
 
-private theorem energy_power_grade
+theorem energy_power_grade
     (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
     (hHG : H*gramComplex D=1) (hGH : gramComplex D*H=1)
     (E : ℤ) (v : Carrier D) (hv : v ∈ grade D E) (N : ℕ) :
@@ -173,7 +171,7 @@ private theorem energy_power_grade
     congr 1
     exact mul_comm _ _
 
-private theorem stateEnergies_nonneg (hD : (gramReal D).PosDef)
+theorem stateEnergies_nonneg (hD : (gramReal D).PosDef)
     (v : Carrier D) (E : ℤ) (hE : E ∈ stateEnergies D v) : 0 ≤ E := by
   obtain ⟨a,ha,rfl⟩ := Finset.mem_image.mp hE
   have hn := chargeEnergy_nonneg D hD a.1

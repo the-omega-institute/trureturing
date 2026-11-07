@@ -29,10 +29,9 @@ open LatticeGeneratingFieldLocality LatticePositiveEnergy LatticeSugawaraCurrent
 open Lattice.OriginalChargedEnergy OriginalGram SourceBPZ.OriginalMatterHermitian
 open private originalCore original_positive original_nonnegative normD_sq normD_smul from
   D5.S3.VertexAlgebra.Energy.OriginalCurrentEnergy
-open private Hm_grade_orthogonal energy_power_grade energy_bound_of_grades
-  stateEnergies_nonneg from
+open private energy_bound_of_grades from
   D5.S3.VertexAlgebra.Energy.OriginalNeutralEnergy
-open private negative_grade_eq_zero from D5.S3.VertexAlgebra.Energy.OriginalWordEnergy
+
 
 /-- The literal original data; the inverse is supplied with both equations. -/
 structure Model where
@@ -123,20 +122,20 @@ abbrev Model.Hilbert := M.Sobolev 0
 def Model.embed (k : ℕ) : Carrier M.D →ₗ[ℂ] M.Sobolev k :=
   (UniformSpace.Completion.toComplₗᵢ : M.Finite k →ₗᵢ[ℂ] M.Sobolev k).toLinearMap
 
-private theorem embed_norm (k : ℕ) (v : Carrier M.D) :
+theorem embed_norm (k : ℕ) (v : Carrier M.D) :
     ‖M.embed k v‖ = normD ((M.energyOperator ^ k) v) := by
   exact UniformSpace.Completion.norm_coe _
 
-private theorem embed_inner (v w : Carrier M.D) :
+theorem embed_inner (v w : Carrier M.D) :
     ⟪M.embed 0 v, M.embed 0 w⟫_ℂ = Hm v w := by
   change ⟪((v : M.Finite 0) : M.Sobolev 0), ((w : M.Finite 0) : M.Sobolev 0)⟫_ℂ = _
   rw [UniformSpace.Completion.inner_coe (E := M.Finite 0) (𝕜 := ℂ)]
   rfl
 
-private theorem embed_injective (k : ℕ) : Function.Injective (M.embed k) :=
+theorem embed_injective (k : ℕ) : Function.Injective (M.embed k) :=
   UniformSpace.Completion.coe_injective (M.Finite k)
 
-private theorem embed_dense (k : ℕ) : DenseRange (M.embed k) :=
+theorem embed_dense (k : ℕ) : DenseRange (M.embed k) :=
   UniformSpace.Completion.denseRange_coe (α := M.Finite k)
 
 /-- Embedded *algebraic* grade. Its closedness is proved, not assumed. -/
@@ -161,7 +160,7 @@ instance (k : ℕ) (n : ℤ) : CompleteSpace (M.completedGrade k n) :=
 def Model.projection (k : ℕ) (n : ℤ) : M.Sobolev k →L[ℂ] M.Sobolev k :=
   (M.completedGrade k n).starProjection
 
-private theorem projection_grade (k : ℕ) (E n : ℤ) (v : Carrier M.D)
+theorem projection_grade (k : ℕ) (E n : ℤ) (v : Carrier M.D)
     (hv : v ∈ grade M.D E) :
     M.projection k n (M.embed k v) = if E = n then M.embed k v else 0 := by
   classical
@@ -219,7 +218,7 @@ private theorem truncation_algebraic (k : ℕ) (F : Finset ℤ) (x : M.Sobolev k
   refine ⟨∑ n ∈ F, (v n : Carrier M.D), ?_⟩
   simp only [truncation, ContinuousLinearMap.sum_apply, map_sum, hv]
 
-private theorem sobolev_grade_norm (k : ℕ) (E : ℕ) (v : Carrier M.D)
+theorem sobolev_grade_norm (k : ℕ) (E : ℕ) (v : Carrier M.D)
     (hv : v ∈ grade M.D (E : ℤ)) :
     normD ((M.energyOperator ^ k) v) = ((E : ℝ)+1)^k * normD v := by
   rw [energy_power_grade M.inverse M.inverse_left M.inverse_right _ v hv k,
@@ -243,7 +242,7 @@ private theorem norm_order_mono (j k : ℕ) (hjk : j ≤ k) (v : Carrier M.D) :
 def Model.inclusion (j k : ℕ) (hjk : j ≤ k) : M.Sobolev k →L[ℂ] M.Sobolev j :=
   (M.embed j).extendOfNorm (M.embed k)
 
-private theorem inclusion_embed (j k : ℕ) (hjk : j ≤ k) (v : Carrier M.D) :
+theorem inclusion_embed (j k : ℕ) (hjk : j ≤ k) (v : Carrier M.D) :
     M.inclusion j k hjk (M.embed k v) = M.embed j v := by
   apply LinearMap.extendOfNorm_eq (embed_dense M k)
   refine ⟨1, fun u => ?_⟩
@@ -329,14 +328,14 @@ private theorem projection_truncation (k : ℕ) (F : Finset ℤ) (n : ℤ) (hn :
   simp only [truncation, ContinuousLinearMap.sum_apply, map_sum, projection_comp]
   simp [Finset.sum_ite_eq', hn]
 
-private theorem truncation_grade (k : ℕ) (F : Finset ℤ) (E : ℤ) (v : Carrier M.D)
+theorem truncation_grade (k : ℕ) (F : Finset ℤ) (E : ℤ) (v : Carrier M.D)
     (hv : v ∈ grade M.D E) :
     M.truncation k F (M.embed k v) = if E ∈ F then M.embed k v else 0 := by
   classical
   simp only [truncation, ContinuousLinearMap.sum_apply, projection_grade M k E _ v hv]
   simp [Finset.sum_ite_eq]
 
-private theorem truncation_norm (k : ℕ) (F : Finset ℤ) (x : M.Sobolev k) :
+theorem truncation_norm (k : ℕ) (F : Finset ℤ) (x : M.Sobolev k) :
     ‖M.truncation k F x‖ ≤ ‖x‖ := by
   classical
   have ho : ⟪M.truncation k F x, x - M.truncation k F x⟫_ℂ = 0 := by
@@ -358,7 +357,7 @@ private theorem truncation_norm (k : ℕ) (F : Finset ℤ) (x : M.Sobolev k) :
   apply (sq_le_sq₀ (norm_nonneg _) (norm_nonneg _)).mp
   nlinarith [sq_nonneg ‖x - M.truncation k F x‖]
 
-private theorem truncation_embed_of_subset (k : ℕ) (F : Finset ℤ) (v : Carrier M.D)
+theorem truncation_embed_of_subset (k : ℕ) (F : Finset ℤ) (v : Carrier M.D)
     (hF : stateEnergies M.D v ⊆ F) :
     M.truncation k F (M.embed k v) = M.embed k v := by
   classical

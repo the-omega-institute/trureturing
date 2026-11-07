@@ -25,12 +25,12 @@ open LatticeGeneratingFieldLocality LatticePositiveEnergy LatticeSugawaraCurrent
 open Lattice.OriginalChargedEnergy OriginalGram LatticeAllStateField
 open SourceBPZ.OriginalMatterHermitian
 open private normD_smul from D5.S3.VertexAlgebra.Energy.OriginalCurrentEnergy
-open private energy_power_grade energy_bound_of_grades from
+open private energy_bound_of_grades from
   D5.S3.VertexAlgebra.Energy.OriginalNeutralEnergy
-open private negative_grade_eq_zero from D5.S3.VertexAlgebra.Energy.OriginalWordEnergy
+
 open private charged_mode_grade Hm_charged_circle actual_phase from
   D5.S3.VertexAlgebra.Lattice.OriginalChargedEnergy
-open private embed_norm embed_dense sobolev_grade_norm norm_order_mono inclusion_embed from
+open private norm_order_mono from
   D5.S3.VertexAlgebra.Analysis.OriginalSobolev
 
 open Model
