@@ -9,38 +9,13 @@
 import Mathlib.Data.ZMod.Basic
 import Mathlib.Data.Nat.Periodic
 import Mathlib.Tactic
+import D5.S3.Arith.Primes.WuA227244ConjectureFour
 
 set_option maxRecDepth 20000
 set_option maxHeartbeats 2000000
 namespace D5.S3.Arith.Primes.WuA227244ConjectureThree
 
 def G (m : ℕ) : ℤ := ((2 : ℤ) ^ (2 ^ m) + 1) * 2 ^ (2 ^ (2 ^ m)) - 1
-
-private theorem progression_reduce {M : Type*} [CommMonoid M] (a : M) (s t L n : ℕ)
-    (h : a ^ (s*L+t) = a^t) :
-    a^(s*n+t) = a^(s*(n%L)+t) := by
-  have hp : Function.Periodic (fun k : ℕ => a^(s*k+t)) L := by
-    intro k
-    calc
-      a^(s*(k+L)+t) = a^(s*k) * a^(s*L+t) := by
-        rw [← pow_add]; congr 1 <;> ring
-      _ = a^(s*k+t) := by rw [h, ← pow_add]
-  exact (hp.map_mod_nat n).symm
-
-private theorem tail_reduce {M : Type*} [CommMonoid M] (a : M) (p e : ℕ)
-    (h : a^(p+p)=a^p) (he : p ≤ e) : a^e = a^(p+e%p) := by
-  have hp : Function.Periodic (fun k : ℕ => a^(k+p)) p := by
-    intro k
-    calc
-      a^(k+p+p) = a^k * a^(p+p) := by rw [← pow_add]; congr 1 <;> omega
-      _ = a^(k+p) := by rw [h, ← pow_add]
-  have hr : (e-p)%p=e%p := by
-    conv_rhs => rw [← Nat.sub_add_cancel he]
-    simp
-  calc
-    a^e = a^((e-p)+p) := by rw [Nat.sub_add_cancel he]
-    _ = a^(((e-p)%p)+p) := (hp.map_mod_nat (e-p)).symm
-    _ = a^(p+e%p) := by rw [hr, Nat.add_comm]
 
 def reduced (q d p L r : ℕ) : ZMod q :=
   ((2 : ZMod q) ^ (2^(72*r+32)%d) + 1) *
@@ -58,18 +33,18 @@ private theorem formula_reduce (q d p L n : ℕ)
   have hD : 2^m%d=2^mr%d := by
     apply (ZMod.natCast_eq_natCast_iff' _ _ d).mp
     simpa only [Nat.cast_pow, Nat.cast_ofNat] using
-      progression_reduce (2 : ZMod d) 72 32 L n hd
+      D5.S3.Arith.Primes.WuA227244ConjectureFour.progression_reduce (2 : ZMod d) 72 32 L n hd
   have hP : 2^m%p=2^mr%p := by
     apply (ZMod.natCast_eq_natCast_iff' _ _ p).mp
     simpa only [Nat.cast_pow, Nat.cast_ofNat] using
-      progression_reduce (2 : ZMod p) 72 32 L n hp
+      D5.S3.Arith.Primes.WuA227244ConjectureFour.progression_reduce (2 : ZMod p) 72 32 L n hp
   have he : p ≤ 2^m := by
     have hm : 32 ≤ m := by dsimp [m]; omega
     exact hsmall.trans (Nat.pow_le_pow_right (by decide) hm)
   have hB : 2^(2^m)%d=2^(p+2^mr%p)%d := by
     apply (ZMod.natCast_eq_natCast_iff' _ _ d).mp
     push_cast
-    rw [tail_reduce (2 : ZMod d) p (2^m) ht he, hP]
+    rw [D5.S3.Arith.Primes.WuA227244ConjectureFour.tail_reduce (2 : ZMod d) p (2^m) ht he, hP]
   have hA : (2 : ZMod q)^(2^m)=(2 : ZMod q)^(2^mr%d) := by
     rw [pow_eq_pow_mod (2^m) hq, hD]
   change (((((2 : ℤ)^(2^m)+1)*2^(2^(2^m))-1) : ℤ) : ZMod q) = _

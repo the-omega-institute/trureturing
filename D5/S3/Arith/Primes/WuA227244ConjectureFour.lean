@@ -20,7 +20,7 @@ def claim : Prop := ∀ n : ℕ, n % 55 ≠ 26 →
   Nat.Prime 59 ∧ (59 : ℤ) ∣ G (168*n+43) ∧
   ∀ q : ℕ, Nat.Prime q → (q : ℤ) ∣ G (168*n+43) → 59 ≤ q
 
-private theorem progression_reduce {M : Type*} [CommMonoid M] (a : M) (s t L n : ℕ)
+theorem progression_reduce {M : Type*} [CommMonoid M] (a : M) (s t L n : ℕ)
     (h : a ^ (s*L+t) = a^t) :
     a^(s*n+t) = a^(s*(n%L)+t) := by
   have hp : Function.Periodic (fun k : ℕ => a^(s*k+t)) L := by
@@ -31,7 +31,7 @@ private theorem progression_reduce {M : Type*} [CommMonoid M] (a : M) (s t L n :
       _ = a^(s*k+t) := by rw [h, ← pow_add]
   exact (hp.map_mod_nat n).symm
 
-private theorem tail_reduce {M : Type*} [CommMonoid M] (a : M) (p e : ℕ)
+theorem tail_reduce {M : Type*} [CommMonoid M] (a : M) (p e : ℕ)
     (h : a^(p+p)=a^p) (he : p ≤ e) : a^e = a^(p+e%p) := by
   have hp : Function.Periodic (fun k : ℕ => a^(k+p)) p := by
     intro k
