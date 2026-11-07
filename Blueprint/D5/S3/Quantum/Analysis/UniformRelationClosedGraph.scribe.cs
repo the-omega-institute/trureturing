@@ -38,8 +38,8 @@ internal sealed class UniformRelationClosedGraphDocument : IScribeDocumentDefini
         var E=Id("E"); var P=Id("P"); var D=Id("D"); var eta=Id("eta");
         var p=Id("p"); var j=Id("j"); var t=Id("t"); var beta=Id("beta"); var c=Id("c");
         var A=Call("outputs",D); var m=Id("m"); var alpha=Id("alpha");
-        var sum=Call("sum",Call("Fin",m),Call("lambda",j,
-            Mul(At(c,j),At(At(beta,j),At(D,p,At(t,j))))));
+        var sum=Seq(new Formula.Subscript(F.Sum, Seq(j,F.InMacro,Sp,Call("Fin",m))),Sp,
+            Mul(At(c,j),At(At(beta,j),At(D,p,At(t,j)))));
         var law=All("alpha",P,All("eta",Call("PositiveReals"),
             Exists("m",Call("Naturals"),Exists("t",Call("Functions",Call("Fin",m),A),
             Exists("beta",Call("Functions",Call("Fin",m),P),
