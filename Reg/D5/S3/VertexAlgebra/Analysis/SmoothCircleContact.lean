@@ -1,6 +1,8 @@
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.UniverseSingleReadout
 import D5.S3.VertexAlgebra.Analysis.SmoothCircleContact
+/-! Full-telescope source realizations and single-readout sensitivity evidence. -/
+
 set_option autoImplicit false
 noncomputable section
 open scoped BigOperators Topology
@@ -108,11 +110,16 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := none
-  sourceSelection := some {owner := `D5.S3.VertexAlgebra.Analysis.SmoothCircleContact
+  sourceSelection := some {
+    owner := `D5.S3.VertexAlgebra.Analysis.SmoothCircleContact
     definition := none
     coordinates := #[]
-    readouts := #[{path := #["body", "body", "body", "fn", "fn"],
-      stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false}]}
+    readouts := #[{
+      path := #["body", "body", "body", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false}] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -151,11 +158,16 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := none
-  sourceSelection := some {owner := `D5.S3.VertexAlgebra.Analysis.SmoothCircleContact
+  sourceSelection := some {
+    owner := `D5.S3.VertexAlgebra.Analysis.SmoothCircleContact
     definition := none
     coordinates := #[]
-    readouts := #[{path := #["body", "body", "body", "body", "body", "fn", "fn"],
-      stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false}]}
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false}] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -194,11 +206,16 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := none
-  sourceSelection := some {owner := `D5.S3.VertexAlgebra.Analysis.SmoothCircleContact
+  sourceSelection := some {
+    owner := `D5.S3.VertexAlgebra.Analysis.SmoothCircleContact
     definition := none
     coordinates := #[]
-    readouts := #[{path := #["body", "body", "body", "body", "fn", "fn"],
-      stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false}]}
+    readouts := #[{
+      path := #["body", "body", "body", "body", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false}] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -241,11 +258,16 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := none
-  sourceSelection := some {owner := `D5.S3.VertexAlgebra.Analysis.SmoothCircleContact
+  sourceSelection := some {
+    owner := `D5.S3.VertexAlgebra.Analysis.SmoothCircleContact
     definition := none
     coordinates := #[]
-    readouts := #[{path := #["body", "body", "body", "body", "body", "body", "fn", "arg", "fn", "fn"],
-      stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false}]}
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "fn", "arg", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false}] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -262,7 +284,7 @@ def arena : Arena where
     (f g : Test),
     ρ.readout () () (fun mn : ℤ × ℤ =>
       ‖(f.coefficient mn.1 * g.coefficient mn.2) • C mn.1 mn.2‖)
-private theorem rejected_bad : ¬ arena.Law (seriesRejected (ℤ × ℤ)) := by
+private theorem rejected_bad : ¬ arena.{u}.Law (seriesRejected (ℤ × ℤ)) := by
   intro h
   exact h (ULift.{u} ℂ) (fun _ _ => 0) 0 0 (by norm_num) (by intro m n; simp) zeroTest zeroTest
 def evidence : Registration arena (type_of% (@FiniteDeltaContact.double_smear_absolute.{u})) where
@@ -289,11 +311,16 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := none
-  sourceSelection := some {owner := `D5.S3.VertexAlgebra.Analysis.SmoothCircleContact
+  sourceSelection := some {
+    owner := `D5.S3.VertexAlgebra.Analysis.SmoothCircleContact
     definition := none
     coordinates := #[]
-    readouts := #[{path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn"],
-      stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false}]}
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false}] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -310,7 +337,7 @@ def arena : Arena where
     (f g : Test) (j : ℕ),
     ρ.readout () () (fun t : ℤ =>
       ‖(((f.frequencyBinomial j).product g).coefficient t) • contactCoefficient C j t‖)
-private theorem rejected_bad : ¬ arena.Law (seriesRejected ℤ) := by
+private theorem rejected_bad : ¬ arena.{u}.Law (seriesRejected ℤ) := by
   intro h
   exact h (ULift.{u} ℂ) (fun _ _ => 0) 0 0 (by norm_num) (by intro m n; simp) zeroTest zeroTest 0
 def evidence : Registration arena (type_of% (@FiniteDeltaContact.contact_series_absolute.{u})) where
@@ -337,11 +364,16 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := none
-  sourceSelection := some {owner := `D5.S3.VertexAlgebra.Analysis.SmoothCircleContact
+  sourceSelection := some {
+    owner := `D5.S3.VertexAlgebra.Analysis.SmoothCircleContact
     definition := none
     coordinates := #[]
-    readouts := #[{path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn"],
-      stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false}]}
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false}] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -363,7 +395,7 @@ def arena : Arena where
     (∑' mn : ℤ × ℤ, (f.coefficient mn.1 * g.coefficient mn.2) • C mn.1 mn.2) =
       ∑ j ∈ range N, ∑' t : ℤ,
         (((f.frequencyBinomial j).product g).coefficient t) • contactCoefficient C j t
-private theorem rejected_bad : ¬ arena.Law (seriesRejected (ℤ × ℤ)) := by
+private theorem rejected_bad : ¬ arena.{u}.Law (seriesRejected (ℤ × ℤ)) := by
   intro h
   exact (h (ULift.{u} ℂ) (fun _ _ => 0) 0 0 0 (by norm_num) (by intro m n; simp) rfl zeroTest zeroTest).1
 def evidence : Registration arena (type_of% (@FiniteDeltaContact.delta_smooth_contact_formula.{u})) where
@@ -390,11 +422,16 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := none
-  sourceSelection := some {owner := `D5.S3.VertexAlgebra.Analysis.SmoothCircleContact
+  sourceSelection := some {
+    owner := `D5.S3.VertexAlgebra.Analysis.SmoothCircleContact
     definition := none
     coordinates := #[]
-    readouts := #[{path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "fn"],
-      stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false}]}
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false}] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -411,7 +448,7 @@ def arena : Arena where
     (hdelta : delta^[N] C = 0) (f g : Test)
     (hfg : ∀ x : ℝ, f.lift x * g.lift x = 0),
     ρ.readout () E ((∑' mn : ℤ × ℤ, (f.coefficient mn.1 * g.coefficient mn.2) • C mn.1 mn.2)) (0)
-private theorem rejected_bad : ¬ arena.Law (equalityRejected) := by
+private theorem rejected_bad : ¬ arena.{u}.Law (equalityRejected) := by
   intro h
   exact h (ULift.{u} ℂ) (fun _ _ => 0) 0 0 0 (by norm_num) (by intro m n; simp) rfl zeroTest zeroTest (by intro x; simp [zeroTest])
 def evidence : Registration arena (type_of% (@FiniteDeltaContact.double_smear_eq_zero_of_product_zero.{u})) where
@@ -438,11 +475,16 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := none
-  sourceSelection := some {owner := `D5.S3.VertexAlgebra.Analysis.SmoothCircleContact
+  sourceSelection := some {
+    owner := `D5.S3.VertexAlgebra.Analysis.SmoothCircleContact
     definition := none
     coordinates := #[0]
-    readouts := #[{path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "fn"],
-      stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false}]}
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false}] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -458,7 +500,7 @@ def arena : Arena where
     (hdelta : delta^[N] C = 0) (f g : Test)
     (hfg : Disjoint (tsupport f.periodic.lift) (tsupport g.periodic.lift)),
     ρ.readout () E ((∑' mn : ℤ × ℤ, (f.coefficient mn.1 * g.coefficient mn.2) • C mn.1 mn.2)) (0)
-private theorem rejected_bad : ¬ arena.Law (equalityRejected) := by
+private theorem rejected_bad : ¬ arena.{u}.Law (equalityRejected) := by
   intro h
   exact h (ULift.{u} ℂ) (fun _ _ => 0) 0 0 0 (by norm_num) (by intro m n; simp) rfl zeroTest zeroTest zero_disjoint
 def evidence : Registration arena (type_of% (@FiniteDeltaContact.double_smear_eq_zero_of_disjoint_tsupport.{u})) where
@@ -485,11 +527,16 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := none
-  sourceSelection := some {owner := `D5.S3.VertexAlgebra.Analysis.SmoothCircleContact
+  sourceSelection := some {
+    owner := `D5.S3.VertexAlgebra.Analysis.SmoothCircleContact
     definition := none
     coordinates := #[0]
-    readouts := #[{path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "fn"],
-      stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false}]}
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false}] }
   continuation := .unknown
   familyRecord := none
   options := #[]

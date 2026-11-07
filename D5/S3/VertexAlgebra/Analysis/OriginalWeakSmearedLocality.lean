@@ -28,8 +28,6 @@ products on the existing invariant domain and give opposite-charge pairings.
 -/
 
 set_option autoImplicit false
-set_option maxHeartbeats 1000000
-set_option linter.style.setOption false
 set_option backward.isDefEq.respectTransparency false
 noncomputable section
 open scoped BigOperators InnerProductSpace Topology ComplexConjugate
@@ -40,9 +38,10 @@ open LatticeGeneratingFieldLocality SmoothCircleFourier Model
 
 variable (M : Model)
 
+set_option maxHeartbeats 1000000 in
 /-- Every Sobolev layer, on the common source H_(order a + order b + k).
 The exponent N may be zero and the charges and lattice rank may be zero. -/
-lemma smearComposition_eq_reverse_of_disjoint_tsupport
+theorem smearComposition_eq_reverse_of_disjoint_tsupport
     (a b : Charge M.D) (f g : Test)
     (hfg : Disjoint (tsupport f.periodic.lift) (tsupport g.periodic.lift)) (k : ℕ) :
     M.smearComposition a b f g k = M.reverseSmearComposition a b f g k := by

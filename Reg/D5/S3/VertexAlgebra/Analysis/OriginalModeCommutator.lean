@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.UniverseSingleReadout
 import Reg.D5.S3.VertexAlgebra.Analysis.OriginalWeakSmearedLocality
 import D5.S3.VertexAlgebra.Analysis.OriginalModeCommutator
+/-! Full-telescope source realizations and single-readout sensitivity evidence. -/
+
 set_option autoImplicit false
 set_option maxHeartbeats 1000000
 set_option backward.isDefEq.respectTransparency false
@@ -13,6 +15,7 @@ open _root_.D5.S3.VertexAlgebra.Analysis.OriginalSmearing
 open _root_.D5.S3.VertexAlgebra.Analysis.SmoothCircleFourier
 open _root_.D5.S3.VertexAlgebra.LatticeGeneratingFieldLocality
 open _root_.D5.S3.VertexAlgebra.LatticePositiveEnergy
+open _root_.D5.S3.VertexAlgebra.LatticeAllStateField
 open _root_.D5.S3.VertexAlgebra.FieldNormalProductLocality
 namespace Reg.D5.S3.VertexAlgebra.Analysis.OriginalModeCommutator
 open _root_.Reg.D5.S3.VertexAlgebra.Analysis.OriginalWeakSmearedLocality
@@ -112,11 +115,16 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := none
-  sourceSelection := some {owner := `D5.S3.VertexAlgebra.Analysis.OriginalModeCommutator
+  sourceSelection := some {
+    owner := `D5.S3.VertexAlgebra.Analysis.OriginalModeCommutator
     definition := none
     coordinates := #[]
-    readouts := #[{path := #["body", "body", "body", "body", "body", "body", "body", "fn", "fn"], stateBinder := 0,
-      functionOperand := true, stateOperand := none, booleanPredicate := false}]}
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false}] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -156,11 +164,16 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := none
-  sourceSelection := some {owner := `D5.S3.VertexAlgebra.Analysis.OriginalModeCommutator
+  sourceSelection := some {
+    owner := `D5.S3.VertexAlgebra.Analysis.OriginalModeCommutator
     definition := none
     coordinates := #[]
-    readouts := #[{path := #["body", "body", "body", "body", "body", "body", "body", "fn", "fn"], stateBinder := 0,
-      functionOperand := true, stateOperand := none, booleanPredicate := false}]}
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false}] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -199,11 +212,16 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := none
-  sourceSelection := some {owner := `D5.S3.VertexAlgebra.Analysis.OriginalModeCommutator
+  sourceSelection := some {
+    owner := `D5.S3.VertexAlgebra.Analysis.OriginalModeCommutator
     definition := none
     coordinates := #[]
-    readouts := #[{path := #["body", "body", "body", "body", "body", "body", "body", "fn", "fn"], stateBinder := 0,
-      functionOperand := true, stateOperand := none, booleanPredicate := false}]}
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false}] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -213,10 +231,10 @@ namespace modeCommutator_iterate_embed
 def arena : Arena where
   signature := vecSignature
   Law R := ∀ (M : Model) (a b : Charge M.D) (k j : ℕ) (m n : ℤ)
-    (v : Carrier M.D) , R.readout () ⟨M,k⟩ ((FieldNormalProductLocality.delta^[j] (M.modeCommutator a b k)) m n
+    (v : Carrier M.D) , R.readout () ⟨M,k⟩ ((_root_.D5.S3.VertexAlgebra.FieldNormalProductLocality.delta^[j] (M.modeCommutator a b k)) m n
         (M.embed (M.order a + M.order b + k) v)) (M.embed k
-        (((FieldNormalProductLocality.delta^[j]
-          (FieldNormalProductLocality.commutator
+        (((_root_.D5.S3.VertexAlgebra.FieldNormalProductLocality.delta^[j]
+          (_root_.D5.S3.VertexAlgebra.FieldNormalProductLocality.commutator
             (LatticeGeneratingFieldLocality.actualField M.D a)
             (LatticeGeneratingFieldLocality.actualField M.D b)))
           (m + chargeEnergy M.D a - 1) (n + chargeEnergy M.D b - 1)) v))
@@ -248,11 +266,16 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := none
-  sourceSelection := some {owner := `D5.S3.VertexAlgebra.Analysis.OriginalModeCommutator
+  sourceSelection := some {
+    owner := `D5.S3.VertexAlgebra.Analysis.OriginalModeCommutator
     definition := none
     coordinates := #[]
-    readouts := #[{path := #["body", "body", "body", "body", "body", "body", "body", "body", "fn", "fn"], stateBinder := 0,
-      functionOperand := true, stateOperand := none, booleanPredicate := false}]}
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false}] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -261,7 +284,7 @@ end modeCommutator_iterate_embed
 namespace modeCommutator_delta
 def arena : Arena where
   signature := deltaSignature
-  Law R := ∀ (M : Model) (a b : Charge M.D) (k : ℕ) , R.readout () ⟨M,a,b,k⟩ (FieldNormalProductLocality.delta^[(-bilinear M.D a b).toNat]
+  Law R := ∀ (M : Model) (a b : Charge M.D) (k : ℕ) , R.readout () ⟨M,a,b,k⟩ (_root_.D5.S3.VertexAlgebra.FieldNormalProductLocality.delta^[(-bilinear M.D a b).toNat]
       (M.modeCommutator a b k)) (0)
 private theorem rejected_bad : ¬ arena.Law deltaRejected := by
   intro h
@@ -291,11 +314,16 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := none
-  sourceSelection := some {owner := `D5.S3.VertexAlgebra.Analysis.OriginalModeCommutator
+  sourceSelection := some {
+    owner := `D5.S3.VertexAlgebra.Analysis.OriginalModeCommutator
     definition := none
     coordinates := #[]
-    readouts := #[{path := #["body", "body", "body", "body", "fn", "fn"], stateBinder := 0,
-      functionOperand := true, stateOperand := none, booleanPredicate := false}]}
+    readouts := #[{
+      path := #["body", "body", "body", "body", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false}] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -335,11 +363,16 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := none
-  sourceSelection := some {owner := `D5.S3.VertexAlgebra.Analysis.OriginalModeCommutator
+  sourceSelection := some {
+    owner := `D5.S3.VertexAlgebra.Analysis.OriginalModeCommutator
     definition := none
     coordinates := #[]
-    readouts := #[{path := #["body", "body", "body", "body", "body", "body", "fn", "fn"], stateBinder := 0,
-      functionOperand := true, stateOperand := none, booleanPredicate := false}]}
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false}] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -379,11 +412,16 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := none
-  sourceSelection := some {owner := `D5.S3.VertexAlgebra.Analysis.OriginalModeCommutator
+  sourceSelection := some {
+    owner := `D5.S3.VertexAlgebra.Analysis.OriginalModeCommutator
     definition := none
     coordinates := #[]
-    readouts := #[{path := #["body", "body", "body", "body", "body", "body", "fn", "fn"], stateBinder := 0,
-      functionOperand := true, stateOperand := none, booleanPredicate := false}]}
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false}] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -423,11 +461,16 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := none
-  sourceSelection := some {owner := `D5.S3.VertexAlgebra.Analysis.OriginalModeCommutator
+  sourceSelection := some {
+    owner := `D5.S3.VertexAlgebra.Analysis.OriginalModeCommutator
     definition := none
     coordinates := #[]
-    readouts := #[{path := #["body", "body", "body", "body", "body", "body", "fn", "fn"], stateBinder := 0,
-      functionOperand := true, stateOperand := none, booleanPredicate := false}]}
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false}] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -467,11 +510,16 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := none
-  sourceSelection := some {owner := `D5.S3.VertexAlgebra.Analysis.OriginalModeCommutator
+  sourceSelection := some {
+    owner := `D5.S3.VertexAlgebra.Analysis.OriginalModeCommutator
     definition := none
     coordinates := #[]
-    readouts := #[{path := #["body", "body", "body", "body", "body", "body", "body", "fn", "fn"], stateBinder := 0,
-      functionOperand := true, stateOperand := none, booleanPredicate := false}]}
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false}] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -512,11 +560,16 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := none
-  sourceSelection := some {owner := `D5.S3.VertexAlgebra.Analysis.OriginalModeCommutator
+  sourceSelection := some {
+    owner := `D5.S3.VertexAlgebra.Analysis.OriginalModeCommutator
     definition := none
     coordinates := #[]
-    readouts := #[{path := #["body", "body", "body", "body", "body", "body", "body", "fn", "fn"], stateBinder := 0,
-      functionOperand := true, stateOperand := none, booleanPredicate := false}]}
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false}] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -554,11 +607,16 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := none
-  sourceSelection := some {owner := `D5.S3.VertexAlgebra.Analysis.OriginalModeCommutator
+  sourceSelection := some {
+    owner := `D5.S3.VertexAlgebra.Analysis.OriginalModeCommutator
     definition := none
     coordinates := #[]
-    readouts := #[{path := #["body", "body", "body", "body", "body", "body", "fn"], stateBinder := 0,
-      functionOperand := true, stateOperand := none, booleanPredicate := false}]}
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false}] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -596,11 +654,16 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := none
-  sourceSelection := some {owner := `D5.S3.VertexAlgebra.Analysis.OriginalModeCommutator
+  sourceSelection := some {
+    owner := `D5.S3.VertexAlgebra.Analysis.OriginalModeCommutator
     definition := none
     coordinates := #[]
-    readouts := #[{path := #["body", "body", "body", "body", "body", "body", "fn"], stateBinder := 0,
-      functionOperand := true, stateOperand := none, booleanPredicate := false}]}
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false}] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -638,11 +701,16 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := none
-  sourceSelection := some {owner := `D5.S3.VertexAlgebra.Analysis.OriginalModeCommutator
+  sourceSelection := some {
+    owner := `D5.S3.VertexAlgebra.Analysis.OriginalModeCommutator
     definition := none
     coordinates := #[]
-    readouts := #[{path := #["body", "body", "body", "body", "body", "body", "fn"], stateBinder := 0,
-      functionOperand := true, stateOperand := none, booleanPredicate := false}]}
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false}] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -680,11 +748,16 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := none
-  sourceSelection := some {owner := `D5.S3.VertexAlgebra.Analysis.OriginalModeCommutator
+  sourceSelection := some {
+    owner := `D5.S3.VertexAlgebra.Analysis.OriginalModeCommutator
     definition := none
     coordinates := #[]
-    readouts := #[{path := #["body", "body", "body", "body", "body", "body", "fn", "fn"], stateBinder := 0,
-      functionOperand := true, stateOperand := none, booleanPredicate := false}]}
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false}] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -722,11 +795,16 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := none
-  sourceSelection := some {owner := `D5.S3.VertexAlgebra.Analysis.OriginalModeCommutator
+  sourceSelection := some {
+    owner := `D5.S3.VertexAlgebra.Analysis.OriginalModeCommutator
     definition := none
     coordinates := #[]
-    readouts := #[{path := #["body", "body", "body", "body", "body", "body", "fn", "fn"], stateBinder := 0,
-      functionOperand := true, stateOperand := none, booleanPredicate := false}]}
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false}] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -770,11 +848,16 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := none
-  sourceSelection := some {owner := `D5.S3.VertexAlgebra.Analysis.OriginalModeCommutator
+  sourceSelection := some {
+    owner := `D5.S3.VertexAlgebra.Analysis.OriginalModeCommutator
     definition := none
     coordinates := #[]
-    readouts := #[{path := #["body", "body", "body", "body", "body", "body", "fn", "fn"], stateBinder := 0,
-      functionOperand := true, stateOperand := none, booleanPredicate := false}]}
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false}] }
   continuation := .unknown
   familyRecord := none
   options := #[]

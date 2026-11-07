@@ -1,6 +1,8 @@
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.UniverseSingleReadout
 import D5.S3.VertexAlgebra.Analysis.OriginalWeakSmearedLocality
+/-! Full-telescope source realizations and single-readout sensitivity evidence. -/
+
 set_option autoImplicit false
 noncomputable section
 open scoped BigOperators InnerProductSpace Topology ComplexConjugate
@@ -146,11 +148,16 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := none
-  sourceSelection := some {owner := `D5.S3.VertexAlgebra.Analysis.OriginalWeakSmearedLocality
+  sourceSelection := some {
+    owner := `D5.S3.VertexAlgebra.Analysis.OriginalWeakSmearedLocality
     definition := none
     coordinates := #[0,1,2,6]
-    readouts := #[{path := #["body", "body", "body", "body", "body", "body", "body", "fn", "fn"],
-      stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false}]}
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false}] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -189,11 +196,16 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := none
-  sourceSelection := some {owner := `D5.S3.VertexAlgebra.Analysis.OriginalWeakSmearedLocality
+  sourceSelection := some {
+    owner := `D5.S3.VertexAlgebra.Analysis.OriginalWeakSmearedLocality
     definition := none
     coordinates := #[0]
-    readouts := #[{path := #["body", "body", "body", "body", "body", "body", "fn", "fn"],
-      stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false}]}
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false}] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -234,11 +246,16 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := none
-  sourceSelection := some {owner := `D5.S3.VertexAlgebra.Analysis.OriginalWeakSmearedLocality
+  sourceSelection := some {
+    owner := `D5.S3.VertexAlgebra.Analysis.OriginalWeakSmearedLocality
     definition := none
     coordinates := #[0]
-    readouts := #[{path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "fn"],
-      stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false}]}
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false}] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -290,11 +307,16 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := none
-  sourceSelection := some {owner := `D5.S3.VertexAlgebra.Analysis.OriginalWeakSmearedLocality
+  sourceSelection := some {
+    owner := `D5.S3.VertexAlgebra.Analysis.OriginalWeakSmearedLocality
     definition := none
     coordinates := #[0,1,2,6]
-    readouts := #[{path := #["body", "body", "body", "body", "body", "body", "fn", "arg", "body", "fn", "fn"],
-      stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false}]}
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "fn", "arg", "body", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false}] }
   continuation := .unknown
   familyRecord := none
   options := #[]

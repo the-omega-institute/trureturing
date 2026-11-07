@@ -1,6 +1,9 @@
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.UniverseSingleReadout
+import Mathlib.Algebra.Field.ULift
 import D5.S3.VertexAlgebra.Analysis.IntegerNewton
+/-! Full-telescope source realizations and single-readout sensitivity evidence. -/
+
 set_option autoImplicit false
 noncomputable section
 open scoped BigOperators
@@ -22,7 +25,6 @@ private theorem equality_dependence :
   refine ⟨ULift.{u} Bool, ⟨false⟩, ⟨true⟩, ?_⟩
   intro h
   have hh := congrFun h (⟨false⟩ : ULift.{u} Bool)
-  change ((⟨false⟩ : ULift.{u} Bool) = ⟨false⟩) = (⟨true⟩ = ⟨false⟩) at hh
   have hz : (⟨true⟩ : ULift.{u} Bool) = ⟨false⟩ := Eq.mp hh rfl
   cases hz
 
@@ -33,7 +35,7 @@ def arena : Arena where
     (fwdDiff (1 : ℤ))^[N] q = 0 → ∀ m : ℤ,
       R.readout () V (q m)
         (∑ j ∈ range N, (Ring.choose m j : ℤ) • ((fwdDiff (1 : ℤ))^[j] q) 0)
-private theorem rejected_bad : ¬ arena.Law equalityRejected := by
+private theorem rejected_bad : ¬ arena.{u}.Law equalityRejected := by
   intro h
   exact h (ULift.{u} ℤ) (fun _ => 0) 0 rfl 0
 def evidence : Registration arena (type_of% (@int_newton_of_fwdDiff_iter_eq_zero.{u})) where
@@ -61,11 +63,16 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := none
-  sourceSelection := some {owner := `D5.S3.VertexAlgebra.Analysis.IntegerNewton
+  sourceSelection := some {
+    owner := `D5.S3.VertexAlgebra.Analysis.IntegerNewton
     definition := none
     coordinates := #[0]
-    readouts := #[{path := #["body", "body", "body", "body", "body", "body", "fn", "fn"], stateBinder := 0, functionOperand := true,
-      stateOperand := none, booleanPredicate := false}]}
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false}] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -78,7 +85,7 @@ def arena : Arena where
     delta^[N] C = 0 → ∀ m n : ℤ,
       R.readout () V (C m n)
         (∑ j ∈ range N, (Ring.choose m j : ℤ) • contactCoefficient C j (m+n))
-private theorem rejected_bad : ¬ arena.Law equalityRejected := by
+private theorem rejected_bad : ¬ arena.{u}.Law equalityRejected := by
   intro h
   exact h (ULift.{u} ℤ) (fun _ _ => 0) 0 rfl 0 0
 def evidence : Registration arena (type_of% (@delta_newton.{u})) where
@@ -106,11 +113,16 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := none
-  sourceSelection := some {owner := `D5.S3.VertexAlgebra.Analysis.IntegerNewton
+  sourceSelection := some {
+    owner := `D5.S3.VertexAlgebra.Analysis.IntegerNewton
     definition := none
     coordinates := #[0]
-    readouts := #[{path := #["body", "body", "body", "body", "body", "body", "body", "fn", "fn"], stateBinder := 0, functionOperand := true,
-      stateOperand := none, booleanPredicate := false}]}
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false}] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -121,8 +133,11 @@ def arena : Arena where
   signature := equalitySignature.{u}
   Law R := ∀ (K : Type u) [Field K] [CharZero K] (x : K) (j : ℕ),
     R.readout () K ((j+1 : K) * Ring.choose x (j+1)) ((x-j) * Ring.choose x j)
-private theorem rejected_bad : ¬ arena.Law equalityRejected := by
+private theorem rejected_bad : ¬ arena.{u}.Law equalityRejected := by
   intro h
+  letI : CharZero (ULift.{u} ℚ) := ⟨by
+    intro m n hmn
+    exact Nat.cast_injective (congrArg ULift.down hmn : (m : ℚ) = (n : ℚ))⟩
   exact h (ULift.{u} ℚ) 0 0
 def evidence : Registration arena (type_of% (@choose_succ_mul.{u})) where
   actual := equalityActual
@@ -149,11 +164,16 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := none
-  sourceSelection := some {owner := `D5.S3.VertexAlgebra.Analysis.IntegerNewton
+  sourceSelection := some {
+    owner := `D5.S3.VertexAlgebra.Analysis.IntegerNewton
     definition := none
     coordinates := #[0]
-    readouts := #[{path := #["body", "body", "body", "body", "body", "fn", "fn"], stateBinder := 0, functionOperand := true,
-      stateOperand := none, booleanPredicate := false}]}
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false}] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -171,11 +191,13 @@ def arena : Arena where
 private theorem rejected_bad : ¬ arena.Law rejected := by
   intro h
   have hh := h 0 0
-  norm_num [rejected] at hh
+  change (2 : ℝ) ≤ 1 at hh
+  norm_num at hh
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨(), 0, 1, ?_⟩
-  norm_num [actual]
+  change ‖(0 : ℂ)‖ ≠ ‖(1 : ℂ)‖
+  norm_num
 def evidence : Registration arena (type_of% (@norm_int_choose_le_pow)) where
   actual := actual
   bridge := Iff.rfl
@@ -201,11 +223,16 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := none
-  sourceSelection := some {owner := `D5.S3.VertexAlgebra.Analysis.IntegerNewton
+  sourceSelection := some {
+    owner := `D5.S3.VertexAlgebra.Analysis.IntegerNewton
     definition := none
     coordinates := #[]
-    readouts := #[{path := #["body", "body", "fn", "arg", "fn"], stateBinder := 0, functionOperand := true,
-      stateOperand := none, booleanPredicate := false}]}
+    readouts := #[{
+      path := #["body", "body", "fn", "arg", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false}] }
   continuation := .unknown
   familyRecord := none
   options := #[]
