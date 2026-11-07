@@ -8,9 +8,9 @@ internal sealed class PrimeBoundarySecondOrderDocument : IScribeDocumentDefiniti
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Second-order expansion of the original finite calibrated prime-prefix quantity.",
-        H("Source-only scope"),
+        H("Finite endpoints and normalization"),
         Blocks(
-            Paragraph(Text("SOURCE_ONLY_UNCOMPILED. These are proof-script candidates. No Lean elaboration, kernel or axiom-closure verification, Scribe compilation/emission, escape registration, freeze, review approval or official acceptance has run. The user expressly forbids those operations in this flight. Original phi, baseline, realValues and realInfimum are imported without redefinition. FullRH, finite5040, original global and physical goals remain unfinished; no novelty or priority claim is made.")),
+            Paragraph(Text("The finite-prefix Q is the original objective plus its tangent remainder. Original phi, baseline, realValues and realInfimum are imported without redefinition. This asymptotic does not assert integer Robin or RH.")),
             Describe.Lean(DescribeId.Create("primeboundarysecondorder-eventual-Q-exact"),
                 DeclarationHandle.Create(Prefix + "eventual_Q_exact"), H("The exact endpoint and tie identity for canonical Q"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
@@ -20,6 +20,6 @@ internal sealed class PrimeBoundarySecondOrderDocument : IScribeDocumentDefiniti
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("The literal conclusion is log(r)^2*(r*log(r)*prefixQ-4-4/log(r))->16. Equivalently Q=4/(r*l)*(1+1/l+4/l^2+o(l^-2)). The clock component contributes 2,4,12; the head contributes 1,1,2; and the tail contributes 1,-1,2 at the three successive powers. The four-term pi residual and theta_error_log_power 3 supply the errors at the moving r. C/(C-1) is retained and its log(r)^2 correction tends to zero. The first head/tail corrections cancel, leaving the requested second-order coefficient."))), DescribeRole.Theorem),
             Paragraph(Text("All higher Euler powers are controlled together by the existing frozen PrimeSquareTail.prime_square_tail_logarithmic_refinements supplier. Its second conjunct has the same strict (floor(y),floor(z)] prime sum and finite upper endpoint, with error 6/(y*log(y)^4)+5/(y*log(y)^9); the consumer keeps tailPolynomial as a private local abbreviation and converts this bound to 130/(y*log(y)^4) using log(y)>=1. No FinitePrimeTailSecondOrder package or public tail wrapper is part of this consumer closure.")),
-            Paragraph(Text("The finite endpoint is paid explicitly: prove r*log(r)^3/P->0 by squaring and using C/(H*ell)->1, log r/ell->1/2, H/P->1 and ell^7/H->0. Then r*log(r)^3*T(P)->0. The remaining source obligations are the uncompiled QuantitativePrimeAbel prime_counting_four_terms/theta_error_log_power/countingPolynomial APIs and the imported RealInfimumPrimeLimit suppliers; this repair makes no kernel or native-flight claim.")),
-            Paragraph(Text("The source has full candidate scripts for these suppliers and the final algebraic telescope. Every assertion remains unverified until actual elaboration and kernel checks.")))));
+            Paragraph(Text("The finite endpoint is paid explicitly: prove r*log(r)^3/P->0 by squaring and using C/(H*ell)->1, log r/ell->1/2, H/P->1 and ell^7/H->0. Then r*log(r)^3*T(P)->0. The quantitative prime-counting and theta remainders come from QuantitativePrimeAbel; the prefix scales come from RealInfimumPrimeBoundary.")),
+            Paragraph(Text("The complete three-coefficient expansion retains the finite endpoint correction before passing to the prefix limit.")))));
 }

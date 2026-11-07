@@ -5,8 +5,8 @@
    anchors: []
    utility: none
    digest: Exact sixteen for the original real IMAGE infimum on prime prefixes. -/
-/- SOURCE_ONLY_UNCOMPILED. This file contains source scripts, not a native
-acceptance claim. No target-limit, minimizer, RH or distribution hypotheses.
+/- The original real-image objective has no target-limit, minimizer, RH or
+distribution hypotheses.
 The final16 transfer uses the original all-vector finite sublevel squeeze
 at r=1/sqrt(H), with both exponential divided differences paid explicitly.
 The canonical prefix boundary proves its finite squeeze directly from the

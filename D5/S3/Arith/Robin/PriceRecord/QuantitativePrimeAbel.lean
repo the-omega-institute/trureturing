@@ -22,7 +22,7 @@ open scoped Topology
 def primeCount (t : ℝ) : ℝ := (Nat.primeCounting ⌊t⌋₊ : ℝ)
 
 def primeInterval (y z : ℝ) : Finset ℕ :=
-  (Ioc ⌊y⌋₊ ⌊z⌋₊).filter Nat.Prime
+  (Finset.Ioc ⌊y⌋₊ ⌊z⌋₊).filter Nat.Prime
 
 def squareSum (y z : ℝ) : ℝ :=
   ∑ p ∈ primeInterval y z, 1 / (p : ℝ) ^ 2
@@ -348,7 +348,7 @@ theorem finite_logarithmic_tail_squeeze {y z : ℝ} (hy : 1 < y) :
       logarithmicTail y z ≤ ∑ p ∈ primeInterval y z,
           (1 / (p : ℝ) ^ 2) / (1 - 1 / y ^ 2) :=
         sum_le_sum (fun p hp => (hpbound p hp).2)
-      _ = squareSum y z / (1 - 1 / y ^ 2) := by rw [sum_div]; rfl
+      _ = squareSum y z / (1 - 1 / y ^ 2) := by simp only [squareSum, sum_div]
 
 
 end D5.S3.Arith.Robin.PriceRecord.QuantitativePrimeAbel

@@ -11,8 +11,8 @@ import D5.S3.Arith.Robin.PriceRecord.QuantitativePrimeAbel
 import Mathlib.Analysis.Calculus.Deriv.Slope
 import Mathlib.Analysis.SpecialFunctions.ExpDeriv
 
-/-! UNCOMPILED SOURCE CANDIDATE. All objective and infimum definitions are
-the byte-identical accepted inputs; no attainment or asymptotic premise is
+/-! All objective and infimum definitions retain the canonical input semantics;
+no attainment or asymptotic premise is
 introduced. The finite squeeze is proved here on the full real image.
 
 The active side includes equality p^2 = cutoff lam. At equality its clock
@@ -89,7 +89,7 @@ private lemma boundary_probability {p lam : ℝ} (hp : 1 < p) (hlam : 0 < lam) :
 theorem or limiting assumption is involved. Equality belongs to the head. -/
 theorem finite_boundary_sums {S : Finset ℕ} (hS : primeSupport S)
     {lam : ℝ} (hlam : 0 < lam) :
-    let A := S.filter (fun p => (p : ℝ) ^ 2 ≤ cutoff lam)
+    let A := S.filter (fun p : ℕ => (p : ℝ) ^ 2 ≤ cutoff lam)
     let b : ℕ → ℝ := fun p => boundary p lam
     (clock S b - theta S =
       (A.card : ℝ) * log (cutoff lam) - 2 * theta A) ∧
@@ -97,7 +97,7 @@ theorem finite_boundary_sums {S : Finset ℕ} (hS : primeSupport S)
       ∑ p ∈ S \ A, -log (1 - 1 / (p : ℝ) ^ 2)) := by
   classical
   dsimp only
-  let A := S.filter (fun p => (p : ℝ) ^ 2 ≤ cutoff lam)
+  let A := S.filter (fun p : ℕ => (p : ℝ) ^ 2 ≤ cutoff lam)
   let b : ℕ → ℝ := fun p => boundary p lam
   change (clock S b - theta S =
       (A.card : ℝ) * log (cutoff lam) - 2 * theta A) ∧
@@ -120,7 +120,7 @@ theorem finite_boundary_sums {S : Finset ℕ} (hS : primeSupport S)
       _ = (A.card : ℝ) * log (cutoff lam) - 2 * theta A := by
         rw [sum_sub_distrib]
         simp only [sum_const, nsmul_eq_mul, theta, mul_sum]
-  · have hsplit := sum_sdiff hAsub (f := fun p => -log (1 - probability p (b p)))
+  · have hsplit := sum_sdiff hAsub (f := fun p : ℕ => -log (1 - probability p (b p)))
     have hhead : (∑ p ∈ A, -log (1 - probability p (b p))) =
         (A.card : ℝ) * (-log (1 - 1 / cutoff lam)) := by
       calc
@@ -146,7 +146,7 @@ theorem finite_boundary_sums {S : Finset ℕ} (hS : primeSupport S)
     linarith only [hsplit, hhead, htail]
 
 private lemma active_prefix {P : ℕ} {lam : ℝ} (hlam : 0 < lam) :
-    (Nat.primesLE P).filter (fun p => (p : ℝ) ^ 2 ≤ cutoff lam) =
+    (Nat.primesLE P).filter (fun p : ℕ => (p : ℝ) ^ 2 ≤ cutoff lam) =
       Nat.primesLE ⌊min (P : ℝ) (sqrt (cutoff lam))⌋₊ := by
   classical
   have hx0 : 0 ≤ min (P : ℝ) (sqrt (cutoff lam)) :=
@@ -165,7 +165,7 @@ private lemma active_prefix {P : ℕ} {lam : ℝ} (hlam : 0 < lam) :
       (le_sqrt (Nat.cast_nonneg _) (cutoff_pos hlam).le).mp (le_min_iff.mp hreal).2⟩
 
 private lemma prefix_sdiff {P n : ℕ} :
-    Nat.primesLE P \ Nat.primesLE n = (Ioc n P).filter Nat.Prime := by
+    Nat.primesLE P \ Nat.primesLE n = (Finset.Ioc n P).filter Nat.Prime := by
   classical
   ext p
   by_cases hp : p.Prime <;>
@@ -180,7 +180,7 @@ theorem prime_prefix_boundary_formulas (P : ℕ) {lam : ℝ} (hlam : 0 < lam) :
       (Nat.primeCounting ⌊x⌋₊ : ℝ) * log (cutoff lam) - 2 * θ x) ∧
     (deficiency (Nat.primesLE P) b =
       (Nat.primeCounting ⌊x⌋₊ : ℝ) * (-log (1 - 1 / cutoff lam)) +
-      ∑ p ∈ (Ioc ⌊x⌋₊ P).filter Nat.Prime, -log (1 - 1 / (p : ℝ) ^ 2)) := by
+      ∑ p ∈ (Finset.Ioc ⌊x⌋₊ P).filter Nat.Prime, -log (1 - 1 / (p : ℝ) ^ 2)) := by
   have hS : primeSupport (Nat.primesLE P) := fun p hp => (Nat.mem_primesLE.mp hp).2
   have h := finite_boundary_sums hS hlam
   dsimp only at h ⊢
@@ -327,15 +327,17 @@ theorem real_infimum_fixed_price_squeeze {S : Finset ℕ} (hS : primeSupport S)
         apply neg_nonneg.mpr
         apply sum_nonpos
         intro p hp
-        have hprob := probability_mem (by exact_mod_cast (hS p hp).one_lt) (hx p hp)
+        have hprob := probability_mem (p := (p : ℝ)) (by exact_mod_cast (hS p hp).one_lt) (hx p hp)
         have h := log_le_log (by linarith : 0 < 1 - probability p (x p))
           (show 1 - probability p (x p) ≤ 1 by linarith)
-        simpa only [log_one] using h
+        simpa only [Function.comp_def, log_one] using h
       have hprice : (∑ p ∈ S, priceObjective p lam (x p)) ≤
           ∑ p ∈ S, priceObjective p lam (b p) :=
         sum_le_sum (fun p hp => boundary_maximum
           (by exact_mod_cast (hS p hp).one_lt) hlam (hx p hp))
-      simp only [priceObjective, clock, sum_sub_distrib, mul_sum, mul_assoc] at hprice
+      simp only [priceObjective, sum_sub_distrib, mul_assoc, ← mul_sum] at hprice
+      change (∑ p ∈ S, benefit p (x p)) - lam * clock S x ≤
+        (∑ p ∈ S, benefit p (b p)) - lam * clock S b at hprice
       have hpricecost : lam * (T - H) = u / ell := by
         dsimp only [lam, D5.S3.Arith.Robin.ActualRobinClockCovariance.g, u, ell]
         field_simp [hH0.ne', (log_pos hH).ne']
@@ -471,27 +473,16 @@ theorem eventual_prefix_domains :
     exact one_div_pos.mpr (mul_pos (by linarith) (log_pos hH))
   refine ⟨(fun p hp => (Nat.mem_primesLE.mp hp).2), ?_, hell, hprice, hy, ?_⟩
   · simpa only [Nat.primesLE_card_eq_primeCounting] using hc
-  · exact (div_lt_iff₀ (show (0 : ℝ) < P by exact_mod_cast hP)).mp hr
+  · simpa only [one_mul] using
+      (div_lt_iff₀ (show (0 : ℝ) < P by exact_mod_cast hP)).mp hr
 
 
 
--- The supplier's corresponding facts are private. These local, consumed
--- facts are derived from its public H/P limit and transparent definitions;
--- no immutable input is edited or given a replacement public type.
-private lemma actual_C (P : ℕ) : prefixC P = 1 + prefixH P * prefixEll P := by
-  simp only [prefixC, prefixPrice, cutoff,
-    D5.S3.Arith.Robin.ActualRobinClockCovariance.g, one_div, inv_inv, prefixEll]
-
-private lemma H_atTop : Tendsto prefixH atTop atTop := prefixH_atTop
-
-private lemma ell_atTop : Tendsto prefixEll atTop atTop :=
-  Real.tendsto_log_atTop.comp H_atTop
-
-private lemma H_ell_atTop :
+private lemma prefix_H_ell_atTop :
     Tendsto (fun P : ℕ => prefixH P * prefixEll P) atTop atTop := by
-  apply tendsto_atTop_mono' atTop ?_ H_atTop
-  filter_upwards [H_atTop.eventually (eventually_ge_atTop (0 : ℝ)),
-    ell_atTop.eventually (eventually_ge_atTop (1 : ℝ))] with P hH he
+  apply tendsto_atTop_mono' atTop ?_ prefixH_atTop
+  filter_upwards [prefixH_atTop.eventually (eventually_ge_atTop (0 : ℝ)),
+    prefixEll_atTop.eventually (eventually_ge_atTop (1 : ℝ))] with P hH he
   nlinarith only [hH, he]
 
 /-- Every denominator used below is eventually strictly positive. -/
@@ -503,7 +494,7 @@ theorem eventual_scale_positivity :
   filter_upwards [eventual_prefix_domains, eventually_gt_atTop (1 : ℕ)] with P h hP
   have hH : 0 < prefixH P := lt_trans zero_lt_one (theta_gt_one h.1 h.2.1)
   have he : 0 < prefixEll P := lt_of_lt_of_le zero_lt_one h.2.2.1
-  have hC : 0 < prefixC P := by rw [actual_C]; positivity
+  have hC : 0 < prefixC P := by rw [prefixC_identity]; positivity
   have hy : 1 < prefixY P := lt_trans (by norm_num) h.2.2.2.2.1
   have hp : (1 : ℝ) < P := by exact_mod_cast hP
   refine ⟨hH, he, hC, lt_trans zero_lt_one hy, log_pos hy, ?_,
@@ -516,12 +507,12 @@ theorem eventual_scale_positivity :
 theorem prefix_C_div_H_ell :
     Tendsto (fun P : ℕ => prefixC P / (prefixH P * prefixEll P))
       atTop (𝓝 (1 : ℝ)) := by
-  have h := (tendsto_const_nhds (x := (1 : ℝ))).add (H_ell_atTop.const_div_atTop 1)
+  have h := (tendsto_const_nhds (x := (1 : ℝ))).add (prefix_H_ell_atTop.const_div_atTop 1)
   simp only [add_zero] at h
   apply h.congr'
   filter_upwards [eventual_scale_positivity] with P hP
   rcases hP with ⟨hH, he, hC, hy, hly, heps, hp, hlp⟩
-  rw [actual_C]
+  rw [prefixC_identity]
   field_simp [hH.ne', he.ne']
   <;> ring
 
@@ -543,16 +534,16 @@ theorem prefix_log_Y_div_ell :
       atTop (𝓝 (1 / 2 : ℝ)) := by
   have hsmall : Tendsto (fun P : ℕ => log (prefixEll P) / prefixEll P)
       atTop (𝓝 (0 : ℝ)) :=
-    Real.isLittleO_log_id_atTop.tendsto_div_nhds_zero.comp ell_atTop
+    Real.isLittleO_log_id_atTop.tendsto_div_nhds_zero.comp prefixEll_atTop
   have hlog : Tendsto
       (fun P : ℕ => log (prefixC P / (prefixH P * prefixEll P)))
       atTop (𝓝 (0 : ℝ)) := by
-    simpa only [log_one] using
+    simpa only [Function.comp_def, log_one] using
       (Real.continuousAt_log (by norm_num : (1 : ℝ) ≠ 0)).tendsto.comp prefix_C_div_H_ell
   have hc : Tendsto (fun P : ℕ => log (prefixC P) / prefixEll P)
       atTop (𝓝 (1 : ℝ)) := by
     have h := ((tendsto_const_nhds (x := (1 : ℝ))).add hsmall).add
-      (hlog.div_atTop ell_atTop)
+      (hlog.div_atTop prefixEll_atTop)
     norm_num only [add_zero] at h
     apply h.congr'
     filter_upwards [eventual_log_C_identity, eventual_scale_positivity] with P hC hP
