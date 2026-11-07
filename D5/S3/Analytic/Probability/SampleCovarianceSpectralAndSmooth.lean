@@ -12,44 +12,21 @@ admission_basis: pending escape-witness verification
 Direct frozen dependencies: pending compiled-constant extraction.
 Unfinished escape audit: https://github.com/the-omega-institute/trureturing/issues/27612
 -/
-import Mathlib.Probability.Distributions.Gaussian.Real
-import Mathlib.MeasureTheory.Integral.Bochner.ContinuousLinearMap
-import Mathlib.MeasureTheory.Function.L2Space
-import Mathlib.MeasureTheory.Integral.Prod
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Ring
-import Mathlib.MeasureTheory.Constructions.Pi
-import Mathlib.MeasureTheory.Measure.GiryMonad
-import Mathlib.MeasureTheory.Measure.WithDensity
-import Mathlib.MeasureTheory.Integral.Bochner.Basic
-import Mathlib.MeasureTheory.Integral.Lebesgue.Basic
-import Mathlib.Data.EReal.Basic
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
-import Mathlib.Analysis.SpecialFunctions.Pow.Integral
-import Mathlib.LinearAlgebra.Matrix.Hermitian
-import D5.S3.Quantum.Schatten.SingularValueOrder
-import Mathlib.Algebra.Order.Ring.Pow
-import Mathlib.Tactic.Linarith
-import Mathlib.LinearAlgebra.Matrix.Polynomial
-import Mathlib.Algebra.Polynomial.Div
-import Mathlib.Algebra.Polynomial.Degree.TrailingDegree
-import Mathlib.Analysis.Complex.Basic
-import Mathlib.Tactic.IntervalCases
-import Mathlib.Tactic.FinCases
-import Mathlib.Tactic.NormNum
-import Mathlib.Data.EReal.Operations
-import Mathlib.LinearAlgebra.Matrix.Kronecker
-import Mathlib.MeasureTheory.Measure.Prod
+import D5.S3.Analytic.Probability.GaussianPolynomialLog
 import D5.S3.SpectralTopology.HermitianEigenvaluePerturbation
+import D5.S3.Quantum.Recovery.PurifiedLocalPath
+import Mathlib.Analysis.Matrix.MeasurableSpace
 namespace D5.S3.Analytic.Probability.SampleCovarianceSpectralAndSmooth
 
 open MeasureTheory Filter
 open scoped BigOperators ENNReal Matrix
 
 theorem gramHermitian (n : ℕ) (A : Matrix (Fin n) (Fin n) ℂ) :
-    ((A * Aᴴ)).IsHermitian := by
-  exact Matrix.isHermitian_mul_conjTranspose_self A
+    (A * Aᴴ).IsHermitian := by
+  have h : (D5.S3.Quantum.Recovery.ProductPrefixRigidity.gram Aᴴ).IsHermitian :=
+    Matrix.isHermitian_conjTranspose_mul_self Aᴴ
+  simpa only [D5.S3.Quantum.Recovery.ProductPrefixRigidity.gram,
+    Matrix.conjTranspose_conjTranspose] using h
 
 noncomputable def gramEigenvalue (n : ℕ) (A : Matrix (Fin n) (Fin n) ℂ)
     (i : Fin n) : ℝ := (gramHermitian n A).eigenvalues i
@@ -227,15 +204,12 @@ open scoped BigOperators ENNReal Topology Kronecker
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.isDefEq.respectTransparency.types false
-instance matrixLaw_isProbabilityMeasure (n : ℕ) (μ : Measure ℂ) [IsProbabilityMeasure μ] :
+private instance matrixLaw_isProbabilityMeasure (n : ℕ) (μ : Measure ℂ) [IsProbabilityMeasure μ] :
     IsProbabilityMeasure (matrixLaw n μ) := by
   unfold matrixLaw
   infer_instance
-instance empiricalSpectralMeasure_isProbabilityMeasure (n : ℕ) (hn : 0 < n)
-    (A : Matrix (Fin n) (Fin n) ℂ) :
-    IsProbabilityMeasure (empiricalSpectralMeasure n hn A) :=
-  ⟨empiricalSpectralMeasure_univ n hn A⟩
-instance meanSpectralMeasure_isProbabilityMeasure (n : ℕ) (hn : 0 < n)
+
+private instance meanSpectralMeasure_isProbabilityMeasure (n : ℕ) (hn : 0 < n)
     (μ : Measure ℂ) [IsProbabilityMeasure μ] :
     IsProbabilityMeasure (meanSpectralMeasure n hn μ) := by
   constructor
@@ -799,3 +773,161 @@ lemma smoothLaw_EntryLaw (ε : ℝ) : D5.S3.Analytic.Probability.SampleCovarianc
     <;> ring
 end
 end D5.S3.Analytic.Probability.SampleCovarianceSpectralAndSmooth.Smooth
+
+namespace D5.S3.Analytic.Probability.SampleCovarianceSpectralAndSmooth.Gaussian
+open MeasureTheory Set ProbabilityTheory Filter
+open scoped ENNReal NNReal Topology BigOperators
+noncomputable section
+
+private lemma realEval_continuous {n : ℕ} (p : MvPolynomial (Fin n) ℂ) :
+    Continuous ((fun {n : ℕ} (p : MvPolynomial (Fin n) ℂ) (x : Fin n → ℝ) => MvPolynomial.eval (fun i => (x i : ℂ)) p) p) := by
+  exact p.continuous_eval.comp (continuous_pi (fun i =>
+    Complex.continuous_ofReal.comp (continuous_apply i)))
+
+lemma gaussian_mv_eval_integrable {n : ℕ} (m : ℝ) (v : ℝ≥0)
+    (p : MvPolynomial (Fin n) ℂ) :
+    Integrable ((fun {n : ℕ} (p : MvPolynomial (Fin n) ℂ) (x : Fin n → ℝ) => MvPolynomial.eval (fun i => (x i : ℂ)) p) p) ((fun n m v => Measure.pi (fun _ : Fin n => gaussianReal m v)) n m v) := by
+  simp_rw [MvPolynomial.eval_eq']
+  apply integrable_finsetSum
+  intro d hd
+  exact (Integrable.fintype_prod (fun i => D5.S3.Analytic.Probability.GaussianPolynomialLog.gaussian_complex_pow_integrable m v (d i))).const_mul _
+
+private lemma gaussian_polynomial_ae_nonzero (m : ℝ) (v : ℝ≥0) (hv : v ≠ 0)
+    (p : Polynomial ℂ) (hp : p ≠ 0) :
+    ∀ᵐ x : ℝ ∂gaussianReal m v, p.eval (x : ℂ) ≠ 0 := by
+  filter_upwards [D5.S3.Analytic.Probability.GaussianPolynomialLog.gaussian_roots_nonzero m v hv p.roots] with x hx
+  rw [(IsAlgClosed.splits p).eval_eq_prod_roots (x : ℂ)]
+  exact mul_ne_zero (Polynomial.leadingCoeff_ne_zero.mpr hp) hx
+
+private lemma realConsEquiv_apply (n : ℕ) (z : ℝ × (Fin n → ℝ)) :
+    ((MeasurableEquiv.piFinSuccAbove (fun _ : Fin (n+1) => ℝ) 0).symm) z = Fin.cons z.1 z.2 := by
+  simp [ MeasurableEquiv.piFinSuccAbove_symm_apply,
+    Fin.insertNthEquiv, Fin.insertNth_zero]
+
+private lemma realConsEquiv_preserving (n : ℕ) (m : ℝ) (v : ℝ≥0) :
+    MeasurePreserving (((MeasurableEquiv.piFinSuccAbove (fun _ : Fin (n+1) => ℝ) 0).symm))
+      ((gaussianReal m v).prod ((fun n m v => Measure.pi (fun _ : Fin n => gaussianReal m v)) n m v)) ((fun n m v => Measure.pi (fun _ : Fin n => gaussianReal m v)) (n+1) m v) := by
+  simpa only [ Fin.zero_succAbove] using
+    (measurePreserving_piFinSuccAbove (fun _ : Fin (n+1) => gaussianReal m v) 0).symm
+
+lemma gaussian_mv_log_coeff_lower (m : ℝ) (v : ℝ≥0) (hv : v ≠ 0) (n : ℕ)
+    (p : MvPolynomial (Fin n) ℂ) (d : Fin n →₀ ℕ) (D : ℕ)
+    (hd : p.coeff d ≠ 0) (hD : ∀ i, p.degreeOf i ≤ D) :
+    (∀ᵐ x ∂(fun n m v => Measure.pi (fun _ : Fin n => gaussianReal m v)) n m v, (fun {n : ℕ} (p : MvPolynomial (Fin n) ℂ) (x : Fin n → ℝ) => MvPolynomial.eval (fun i => (x i : ℂ)) p) p x ≠ 0) ∧
+    Integrable (fun x => Real.log ‖(fun {n : ℕ} (p : MvPolynomial (Fin n) ℂ) (x : Fin n → ℝ) => MvPolynomial.eval (fun i => (x i : ℂ)) p) p x‖) ((fun n m v => Measure.pi (fun _ : Fin n => gaussianReal m v)) n m v) ∧
+    Real.log ‖p.coeff d‖ - (n : ℝ)*D*(Real.log 2 + D5.S3.Analytic.Probability.GaussianPolynomialLog.rootLogCost m v) ≤
+      ∫ x, Real.log ‖(fun {n : ℕ} (p : MvPolynomial (Fin n) ℂ) (x : Fin n → ℝ) => MvPolynomial.eval (fun i => (x i : ℂ)) p) p x‖ ∂(fun n m v => Measure.pi (fun _ : Fin n => gaussianReal m v)) n m v := by
+  induction n with
+  | zero =>
+    have hd0 : d = 0 := Subsingleton.elim _ _
+    subst d
+    have hpe : p = MvPolynomial.C (p.coeff 0) := p.eq_C_of_isEmpty
+    have hev (x : Fin 0 → ℝ) : (fun {n : ℕ} (p : MvPolynomial (Fin n) ℂ) (x : Fin n → ℝ) => MvPolynomial.eval (fun i => (x i : ℂ)) p) p x = p.coeff 0 := by
+      conv_lhs => rw [hpe]
+      simp []
+    simp only [hev]
+    exact ⟨Filter.Eventually.of_forall (fun _ => hd), integrable_const _, by simp⟩
+  | succ n ih =>
+    let P := MvPolynomial.finSuccEquiv ℂ n p
+    let q := P.coeff (d 0)
+    have hqcoeff : q.coeff d.tail = p.coeff d := by
+      dsimp only [q, P]
+      rw [MvPolynomial.finSuccEquiv_coeff_coeff, Finsupp.cons_tail]
+    have hqD : ∀ i, q.degreeOf i ≤ D := fun i =>
+      (MvPolynomial.degreeOf_coeff_finSuccEquiv p i (d 0)).trans (hD i.succ)
+    obtain ⟨hqae, hqi, hql⟩ := ih q d.tail (by rwa [hqcoeff]) hqD
+    let e := ((MeasurableEquiv.piFinSuccAbove (fun _ : Fin (n+1) => ℝ) 0).symm)
+    have he := realConsEquiv_preserving n m v
+    let f : ℝ × (Fin n → ℝ) → ℝ := fun z => Real.log ‖(fun {n : ℕ} (p : MvPolynomial (Fin n) ℂ) (x : Fin n → ℝ) => MvPolynomial.eval (fun i => (x i : ℂ)) p) p (e z)‖
+    have hfmeas : AEStronglyMeasurable f
+        ((gaussianReal m v).prod ((fun n m v => Measure.pi (fun _ : Fin n => gaussianReal m v)) n m v)) := by
+      exact ((Real.measurable_log.comp ((realEval_continuous p).measurable.comp
+        e.measurable).norm)).aestronglyMeasurable
+    have hfiPos : Integrable (fun z => max (f z) 0)
+        ((gaussianReal m v).prod ((fun n m v => Measure.pi (fun _ : Fin n => gaussianReal m v)) n m v)) := by
+      have hint := he.integrable_comp_emb e.measurableEmbedding |>.mpr
+        (gaussian_mv_eval_integrable m v p).norm
+      apply hint.mono' (hfmeas.sup aestronglyMeasurable_const)
+      filter_upwards [] with z
+      rw [Real.norm_eq_abs, abs_of_nonneg (le_max_right _ _)]
+      change max (Real.log ‖(MvPolynomial.eval (fun i => (e z i : ℂ))) p‖) 0 ≤
+        ‖(MvPolynomial.eval (fun i => (e z i : ℂ))) p‖
+      simpa only [Real.posLog, max_comm, abs_norm] using
+        Real.posLog_le_abs ‖(MvPolynomial.eval (fun i => (e z i : ℂ))) p‖
+    let py (y : Fin n → ℝ) := P.map (MvPolynomial.eval (fun i => (y i : ℂ)))
+    have hcoeff (y : Fin n → ℝ) : (py y).coeff (d 0) = (fun {n : ℕ} (p : MvPolynomial (Fin n) ℂ) (x : Fin n → ℝ) => MvPolynomial.eval (fun i => (x i : ℂ)) p) q y := by
+      simp only [py, Polynomial.coeff_map, q]
+    have hevalRaw (x : ℝ) (y : Fin n → ℝ) :
+        MvPolynomial.eval (fun i : Fin (n+1) => ((Fin.cons (α := fun _ => ℝ) x y i : ℝ) : ℂ)) p =
+          (py y).eval (x : ℂ) := by
+      have he : (fun i : Fin (n+1) => ((Fin.cons (α := fun _ => ℝ) x y i : ℝ) : ℂ)) =
+          Fin.cons (α := fun _ => ℂ) (x : ℂ) (fun i => (y i : ℂ)) := by
+        funext i
+        exact Fin.cases rfl (fun j => rfl) i
+      rw [he]
+      exact MvPolynomial.eval_eq_eval_mv_eval' (fun i => (y i : ℂ)) (x : ℂ) p
+    have heval (x : ℝ) (y : Fin n → ℝ) :
+        f (x,y) = Real.log ‖(py y).eval (x : ℂ)‖ := by
+      dsimp only [f, e]
+      rw [realConsEquiv_apply]
+      exact congrArg (fun z : ℂ => Real.log ‖z‖) (hevalRaw x y)
+    have hnonzero : ∀ᵐ y ∂(fun n m v => Measure.pi (fun _ : Fin n => gaussianReal m v)) n m v, py y ≠ 0 := by
+      filter_upwards [hqae] with y hy
+      intro hz
+      have hc := hcoeff y
+      rw [hz, Polynomial.coeff_zero] at hc
+      exact hy hc.symm
+    have hsections : ∀ᵐ y ∂(fun n m v => Measure.pi (fun _ : Fin n => gaussianReal m v)) n m v,
+        Integrable (fun x => f (x,y)) (gaussianReal m v) := by
+      filter_upwards [hnonzero] with y hy
+      simp_rw [heval]
+      exact D5.S3.Analytic.Probability.GaussianPolynomialLog.gaussian_polynomial_log_integrable m v hv (py y) hy
+    have hcost : 0 ≤ Real.log 2 + D5.S3.Analytic.Probability.GaussianPolynomialLog.rootLogCost m v :=
+      add_nonneg (Real.log_nonneg (by norm_num)) (D5.S3.Analytic.Probability.GaussianPolynomialLog.rootLogCost_nonneg m v)
+    have hdegrees (y : Fin n → ℝ) : (py y).natDegree ≤ D := by
+      apply Polynomial.natDegree_map_le.trans
+      rw [MvPolynomial.natDegree_finSuccEquiv]
+      exact hD 0
+    let g : (Fin n → ℝ) → ℝ := fun y => Real.log ‖(fun {n : ℕ} (p : MvPolynomial (Fin n) ℂ) (x : Fin n → ℝ) => MvPolynomial.eval (fun i => (x i : ℂ)) p) q y‖ - D*(Real.log 2 + D5.S3.Analytic.Probability.GaussianPolynomialLog.rootLogCost m v)
+    have hgi : Integrable g ((fun n m v => Measure.pi (fun _ : Fin n => gaussianReal m v)) n m v) := hqi.sub (integrable_const _)
+    have hlower : ∀ᵐ y ∂(fun n m v => Measure.pi (fun _ : Fin n => gaussianReal m v)) n m v,
+        g y ≤ ∫ x, f (x,y) ∂gaussianReal m v := by
+      filter_upwards [hqae] with y hy
+      have hc : (py y).coeff (d 0) ≠ 0 := by rwa [hcoeff]
+      have hh := D5.S3.Analytic.Probability.GaussianPolynomialLog.gaussian_polynomial_log_coeff_lower m v hv (py y) (d 0) hc
+      rw [hcoeff] at hh
+      simp_rw [heval]
+      exact (sub_le_sub_left (mul_le_mul_of_nonneg_right (by exact_mod_cast hdegrees y) hcost) _).trans hh
+    have hfi : Integrable f ((gaussianReal m v).prod ((fun n m v => Measure.pi (fun _ : Fin n => gaussianReal m v)) n m v)) :=
+      D5.S3.Analytic.Probability.GaussianPolynomialLog.integrable_prod_of_pos_and_fiber_lower _ _ f hfmeas hfiPos hsections g hgi hlower
+    have hpi : Integrable (fun x => Real.log ‖(fun {n : ℕ} (p : MvPolynomial (Fin n) ℂ) (x : Fin n → ℝ) => MvPolynomial.eval (fun i => (x i : ℂ)) p) p x‖) ((fun n m v => Measure.pi (fun _ : Fin n => gaussianReal m v)) (n+1) m v) :=
+      (he.integrable_comp_emb e.measurableEmbedding).mp hfi
+    have hpnonzero : ∀ᵐ z ∂(gaussianReal m v).prod ((fun n m v => Measure.pi (fun _ : Fin n => gaussianReal m v)) n m v),
+        (fun {n : ℕ} (p : MvPolynomial (Fin n) ℂ) (x : Fin n → ℝ) => MvPolynomial.eval (fun i => (x i : ℂ)) p) p (e z) ≠ 0 := by
+      have hset : MeasurableSet {z : ℝ × (Fin n → ℝ) | (fun {n : ℕ} (p : MvPolynomial (Fin n) ℂ) (x : Fin n → ℝ) => MvPolynomial.eval (fun i => (x i : ℂ)) p) p (e z) ≠ 0} := by
+        exact ((realEval_continuous p).measurable.comp e.measurable)
+          (measurableSet_singleton 0).compl
+      apply (Measure.ae_prod_iff_ae_ae hset).mpr
+      apply (Measure.ae_ae_comm hset).mpr
+      filter_upwards [hnonzero] with y hy
+      have hh := gaussian_polynomial_ae_nonzero m v hv (py y) hy
+      simpa only [e, realConsEquiv_apply, hevalRaw] using hh
+    refine ⟨?_, hpi, ?_⟩
+    · rw [← he.map_eq, ← e.map_ae]
+      exact hpnonzero
+    · have hb := integral_mono_ae hgi hfi.integral_prod_right hlower
+      have hei : (∫ x, Real.log ‖(fun {n : ℕ} (p : MvPolynomial (Fin n) ℂ) (x : Fin n → ℝ) => MvPolynomial.eval (fun i => (x i : ℂ)) p) p x‖ ∂(fun n m v => Measure.pi (fun _ : Fin n => gaussianReal m v)) (n+1) m v) =
+          ∫ y, ∫ x, f (x,y) ∂gaussianReal m v ∂(fun n m v => Measure.pi (fun _ : Fin n => gaussianReal m v)) n m v := by
+        rw [← he.integral_comp' (fun x => Real.log ‖(fun {n : ℕ} (p : MvPolynomial (Fin n) ℂ) (x : Fin n → ℝ) => MvPolynomial.eval (fun i => (x i : ℂ)) p) p x‖), integral_prod_symm _ hfi]
+      rw [hei]
+      have hgint : (∫ y, g y ∂(fun n m v => Measure.pi (fun _ : Fin n => gaussianReal m v)) n m v) =
+          (∫ y, Real.log ‖(fun {n : ℕ} (p : MvPolynomial (Fin n) ℂ) (x : Fin n → ℝ) => MvPolynomial.eval (fun i => (x i : ℂ)) p) q y‖ ∂(fun n m v => Measure.pi (fun _ : Fin n => gaussianReal m v)) n m v) - D*(Real.log 2 + D5.S3.Analytic.Probability.GaussianPolynomialLog.rootLogCost m v) := by
+        rw [integral_sub hqi (integrable_const _), integral_const]
+        simp only [probReal_univ, one_smul]
+      rw [hgint] at hb
+      rw [hqcoeff] at hql
+      push_cast
+      nlinarith
+
+end
+end D5.S3.Analytic.Probability.SampleCovarianceSpectralAndSmooth.Gaussian

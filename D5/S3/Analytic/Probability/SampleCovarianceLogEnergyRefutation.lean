@@ -14,9 +14,7 @@ Direct frozen dependencies: pending compiled-constant extraction.
 import D5.S3.Analytic.Probability.GaussianPolynomialLog
 import D5.S3.Analytic.Probability.SampleCovarianceSpectralAndSmooth
 import D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders
-import Mathlib.Algebra.Polynomial.Eval.Degree
-import Mathlib.MeasureTheory.Integral.Pi
-import Mathlib.Analysis.Matrix.MeasurableSpace
+import D5.S3.StatisticalMechanics.ParticleProcesses.ExclusionMovingParticleOptimality
 open D5.S3.Analytic.Probability.SampleCovarianceSpectralAndSmooth
 open MeasureTheory Filter Set ProbabilityTheory Matrix Polynomial
 open scoped ENNReal NNReal Topology BigOperators Kronecker
@@ -74,12 +72,12 @@ private lemma polynomial_log_order {d : ℕ} (m : ℝ) (v : ℝ≥0) (hv : v ≠
     simpa only [Nat.zero_add] using (Polynomial.coeff_X_pow_mul Q k 0).trans h
   let q : Fin (Q.natDegree+1) → MvPolynomial (Fin d) ℂ := fun j => Q.coeff j
   obtain ⟨a,ha⟩ := MvPolynomial.exists_coeff_ne_zero hq0
-  have he (ε : ℝ) : Q.eval (MvPolynomial.C (ε:ℂ)) = D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Gaussian.noiseFamily q ε := by
+  have he (ε : ℝ) : Q.eval (MvPolynomial.C (ε:ℂ)) = (∑ j : Fin (Q.natDegree+1), MvPolynomial.C ((ε : ℂ)^(j : ℕ)) * q j) := by
     rw [Polynomial.eval_eq_sum_range]
     rw [← Fin.sum_univ_eq_sum_range]
     apply Finset.sum_congr rfl
     intro j hj
-    simp only [D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Gaussian.noiseFamily, q, ← map_pow, mul_comm]
+    simp only [q, ← map_pow, mul_comm]
   have h := D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Gaussian.gaussian_noiseFamily_log_order m v hv q a ha k
   simpa only [hQ, Polynomial.eval_mul, Polynomial.eval_pow, Polynomial.eval_X, he,
     map_mul, map_pow, MvPolynomial.eval_C] using h
@@ -352,7 +350,7 @@ set_option maxHeartbeats 2500000
 namespace D5.S3.Analytic.Probability.SampleCovarianceLogEnergyRefutation.Energy
 noncomputable section
 private def negativeLogAverage (n : ℕ) (ε : ℝ) : ℝ :=
-  ∑ b : ((Bool × Fin n × Fin n) → Bool), D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Events.w b *
+  ∑ b : ((Bool × Fin n × Fin n) → Bool), D5.S3.StatisticalMechanics.ParticleProcesses.ExclusionMovingParticleOptimality.bernoulli (1/256) (fun i => finTwoEquiv.symm (b i)) *
     (-(∫ x, Real.log ‖(D5.S3.Analytic.Probability.GaussianPolynomialLog.Covariance.pairDet (D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Events.bmat b false)
       (D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Events.bmat b true) (D5.S3.Analytic.Probability.SampleCovarianceLogEnergyRefutation.Analytic.realNoise x false)
       (D5.S3.Analytic.Probability.SampleCovarianceLogEnergyRefutation.Analytic.realNoise x true)).eval (ε:ℂ)‖
@@ -361,10 +359,10 @@ private def E (n : ℕ) (ε : ℝ) : ℝ :=
   1+Real.log n+Real.log (1+ε^2)+negativeLogAverage n ε/(n:ℝ)^2
 private lemma negativeLogAverage_limit (n : ℕ) :
     Tendsto (fun ε : ℝ => negativeLogAverage n ε/Real.log (1/ε))
-      (𝓝[>] 0) (𝓝 (∑ b : ((Bool × Fin n × Fin n) → Bool), D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Events.w b*(D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Events.k b:ℝ))) := by
+      (𝓝[>] 0) (𝓝 (∑ b : ((Bool × Fin n × Fin n) → Bool), D5.S3.StatisticalMechanics.ParticleProcesses.ExclusionMovingParticleOptimality.bernoulli (1/256) (fun i => finTwoEquiv.symm (b i))*(D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Events.k b:ℝ))) := by
   have h (b : ((Bool × Fin n × Fin n) → Bool)) :=
     (D5.S3.Analytic.Probability.SampleCovarianceLogEnergyRefutation.Analytic.gaussian_pairDet_log_order (D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Events.bmat b false)
-      (D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Events.bmat b true) 0 (1/2) (by norm_num)).const_mul (D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Events.w b)
+      (D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Events.bmat b true) 0 (1/2) (by norm_num)).const_mul (D5.S3.StatisticalMechanics.ParticleProcesses.ExclusionMovingParticleOptimality.bernoulli (1/256) (fun i => finTwoEquiv.symm (b i)))
   have hs := tendsto_finset_sum Finset.univ (fun b _ => h b)
   convert hs using 1
   · funext ε
@@ -411,27 +409,18 @@ set_option backward.isDefEq.respectTransparency.types false
 set_option maxHeartbeats 2500000
 namespace D5.S3.Analytic.Probability.SampleCovarianceLogEnergyRefutation.Transport
 noncomputable section
-private def toCoords {n : ℕ} (x : Fin ((Fintype.card (Bool × Bool × Fin n × Fin n))) → ℝ) : (Bool × Bool × Fin n × Fin n) → ℝ :=
-  fun i => x ((Fintype.equivFin (Bool × Bool × Fin n × Fin n)) i)
-@[fun_prop] private lemma measurable_toCoords {n : ℕ} : Measurable (toCoords (n:=n)) := by
-  exact Measurable.of_eval (fun i => measurable_pi_apply _)
+
+
 private lemma toCoords_preserving (n : ℕ) (v : ℝ≥0) :
-    MeasurePreserving (toCoords (n:=n)) ((fun n m v => Measure.pi (fun _ : Fin n => gaussianReal m v)) ((Fintype.card (Bool × Bool × Fin n × Fin n))) 0 v)
+    MeasurePreserving (MeasurableEquiv.piCongrLeft (fun _ : Bool × Bool × Fin n × Fin n => ℝ) (Fintype.equivFin (Bool × Bool × Fin n × Fin n)).symm) ((fun n m v => Measure.pi (fun _ : Fin n => gaussianReal m v)) ((Fintype.card (Bool × Bool × Fin n × Fin n))) 0 v)
       ((fun n v => Measure.pi (fun _ : Bool × Bool × Fin n × Fin n => gaussianReal 0 v)) n v) := by
-  have h := measurePreserving_piCongrLeft (fun _ : (Bool × Bool × Fin n × Fin n) => gaussianReal 0 v)
-    ((Fintype.equivFin (Bool × Bool × Fin n × Fin n))).symm
-  convert h using 1
-  · funext x i
-    simpa only [toCoords, Equiv.symm_apply_apply] using
-      (MeasurableEquiv.piCongrLeft_apply_apply
-        (β:=fun _ : (Bool × Bool × Fin n × Fin n) => ℝ) ((Fintype.equivFin (Bool × Bool × Fin n × Fin n))).symm
-        x ((Fintype.equivFin (Bool × Bool × Fin n × Fin n)) i)).symm
-  all_goals rfl
+  exact measurePreserving_piCongrLeft (fun _ : Bool × Bool × Fin n × Fin n => gaussianReal 0 v)
+    (Fintype.equivFin (Bool × Bool × Fin n × Fin n)).symm
 
 private def finitePair {n : ℕ} (b : ((Bool × Fin n × Fin n) → Bool)) (ε : ℝ) (x : Fin ((Fintype.card (Bool × Bool × Fin n × Fin n))) → ℝ) :=
-  affinePair b ε (toCoords x)
+  affinePair b ε ((MeasurableEquiv.piCongrLeft (fun _ : Bool × Bool × Fin n × Fin n => ℝ) (Fintype.equivFin (Bool × Bool × Fin n × Fin n)).symm) x)
 @[fun_prop] private lemma measurable_finitePair {n : ℕ} (b : ((Bool × Fin n × Fin n) → Bool)) (ε : ℝ) :
-    Measurable (finitePair b ε) := (measurable_affinePair b ε).comp measurable_toCoords
+    Measurable (finitePair b ε) := (measurable_affinePair b ε).comp (MeasurableEquiv.piCongrLeft (fun _ : Bool × Bool × Fin n × Fin n => ℝ) (Fintype.equivFin (Bool × Bool × Fin n × Fin n)).symm).measurable
 private lemma smooth_pair_law_finite (n : ℕ) (ε : ℝ) :
     (D5.S3.Analytic.Probability.SampleCovarianceSpectralAndSmooth.matrixLaw n (D5.S3.Analytic.Probability.SampleCovarianceSpectralAndSmooth.Smooth.smoothLaw ε)).prod
       (D5.S3.Analytic.Probability.SampleCovarianceSpectralAndSmooth.matrixLaw n (D5.S3.Analytic.Probability.SampleCovarianceSpectralAndSmooth.Smooth.smoothLaw ε)) =
@@ -453,9 +442,18 @@ private lemma finitePair_eq {n : ℕ} (b : ((Bool × Fin n × Fin n) → Bool)) 
   intro i j
   have hs : Real.sqrt (255:ℝ) ≠ 0 := Real.sqrt_ne_zero'.mpr (by norm_num)
   have ht : Real.sqrt (1+ε^2) ≠ 0 := Real.sqrt_ne_zero'.mpr (by positivity)
+  have hc (z : Bool × Bool × Fin n × Fin n) :
+      (MeasurableEquiv.piCongrLeft (fun _ : Bool × Bool × Fin n × Fin n => ℝ)
+        (Fintype.equivFin (Bool × Bool × Fin n × Fin n)).symm x) z =
+        x ((Fintype.equivFin (Bool × Bool × Fin n × Fin n)) z) := by
+    simpa only [Equiv.symm_apply_apply] using
+      (MeasurableEquiv.piCongrLeft_apply_apply
+        (β := fun _ : Bool × Bool × Fin n × Fin n => ℝ)
+        (Fintype.equivFin (Bool × Bool × Fin n × Fin n)).symm x
+        ((Fintype.equivFin (Bool × Bool × Fin n × Fin n)) z))
   cases side <;> simp only [Bool.false_eq_true, ite_false, ite_true, finitePair, affinePair,
     splitEntries, Matrix.of_apply, meanB, scale, D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Events.bmat, D5.S3.Analytic.Probability.SampleCovarianceLogEnergyRefutation.Analytic.realNoise,
-    toCoords, Matrix.add_apply, Matrix.smul_apply, smul_eq_mul] <;>
+    hc, Matrix.add_apply, Matrix.smul_apply, smul_eq_mul] <;>
     split_ifs <;> push_cast <;> field_simp <;> ring
 
 private def detPair {n : ℕ} (AC : Matrix (Fin n) (Fin n) ℂ × Matrix (Fin n) (Fin n) ℂ) : ℂ :=
@@ -639,11 +637,12 @@ private lemma conditional_log_integral {n : ℕ} (b : ((Bool × Fin n × Fin n) 
   · simp
   · simpa only [D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Noise.eval_pairDet] using hi.2
 private lemma weight_toReal {n : ℕ} (b : ((Bool × Fin n × Fin n) → Bool)) :
-    (∏ i : (Bool × Fin n × Fin n), if b i then (1/256:ℝ≥0∞) else 255/256).toReal = D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Events.w b := by
+    (∏ i : (Bool × Fin n × Fin n), if b i then (1/256:ℝ≥0∞) else 255/256).toReal = D5.S3.StatisticalMechanics.ParticleProcesses.ExclusionMovingParticleOptimality.bernoulli (1/256) (fun i => finTwoEquiv.symm (b i)) := by
   rw [ENNReal.toReal_prod]
+  unfold D5.S3.StatisticalMechanics.ParticleProcesses.ExclusionMovingParticleOptimality.bernoulli
   apply Finset.prod_congr rfl
   intro i hi
-  split <;> norm_num
+  cases hbi : b i <;> norm_num [hbi, finTwoEquiv]
 private lemma smooth_log_integral (n : ℕ) (ε : ℝ) (hε : ε ≠ 0) :
     (∫ AC, Real.log ‖detPair AC‖
       ∂(D5.S3.Analytic.Probability.SampleCovarianceSpectralAndSmooth.matrixLaw n (D5.S3.Analytic.Probability.SampleCovarianceSpectralAndSmooth.Smooth.smoothLaw ε)).prod

@@ -13,37 +13,8 @@ Direct frozen dependencies: pending compiled-constant extraction.
 Unfinished escape audit: https://github.com/the-omega-institute/trureturing/issues/27612
 -/
 import D5.S3.Analytic.Probability.GaussianPolynomialLog
-import Mathlib.Algebra.Order.Ring.Pow
-import Mathlib.Tactic.Linarith
-import Mathlib.LinearAlgebra.Matrix.Polynomial
-import Mathlib.Algebra.Polynomial.Div
-import Mathlib.Algebra.Polynomial.Degree.TrailingDegree
-import Mathlib.Analysis.Complex.Basic
-import Mathlib.Tactic.IntervalCases
-import Mathlib.Tactic.FinCases
-import Mathlib.Tactic.Ring
-import Mathlib.Tactic.NormNum
-import Mathlib.Data.EReal.Operations
-import Mathlib.LinearAlgebra.Matrix.Kronecker
-import Mathlib.MeasureTheory.Measure.Prod
-import Mathlib.MeasureTheory.Constructions.Pi
-import Mathlib.MeasureTheory.Measure.GiryMonad
-import Mathlib.MeasureTheory.Measure.WithDensity
-import Mathlib.MeasureTheory.Integral.Bochner.Basic
-import Mathlib.MeasureTheory.Integral.Lebesgue.Basic
-import Mathlib.Data.EReal.Basic
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
-import Mathlib.Analysis.SpecialFunctions.Pow.Integral
-import Mathlib.LinearAlgebra.Matrix.Hermitian
-import Mathlib.MeasureTheory.Measure.Dirac.Basic
-import Mathlib.Algebra.MvPolynomial.Funext
-import Mathlib.Algebra.MvPolynomial.CommRing
-import Mathlib.Algebra.Star.Basic
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.Analysis.SpecialFunctions.Sqrt
-import Mathlib.Tactic.NoncommRing
-import Mathlib.Algebra.BigOperators.Ring.Finset
-import Mathlib.Tactic.Abel
+import D5.S3.Analytic.Probability.SampleCovarianceSpectralAndSmooth
+import D5.S3.StatisticalMechanics.ParticleProcesses.ExclusionMovingParticleOptimality
 
 set_option maxHeartbeats 2500000
 set_option linter.unusedSimpArgs false
@@ -330,20 +301,8 @@ private lemma affineGram_smul (a : R) (A G : Matrix (Fin n) (Fin n) R) :
   intro i j
   simp only [Matrix.add_apply, Matrix.smul_apply, Matrix.map_apply, smul_eq_mul, map_mul]
   ring
-private lemma pairDet_smul (a : R) (A C G K : Matrix (Fin n) (Fin n) R) :
-    D5.S3.Analytic.Probability.GaussianPolynomialLog.Covariance.pairDet (a • A) (a • C) (a • G) (a • K) =
-      Polynomial.C (a*star a)^(n*n) * D5.S3.Analytic.Probability.GaussianPolynomialLog.Covariance.pairDet A C G K := by
-  unfold D5.S3.Analytic.Probability.GaussianPolynomialLog.Covariance.pairDet
-  rw [affineGram_smul, affineGram_smul, Matrix.smul_kronecker, Matrix.kronecker_smul,
-    ← smul_sub, Matrix.det_smul]
-  simp [Fintype.card_prod]
-private lemma rankOneBase_smul {s : ℕ} (a : R) :
-    (Matrix.single 0 0 a : Matrix (Fin (s+1)) (Fin (s+1)) R) =
-      a • Matrix.single 0 0 1 := by
-  apply Matrix.ext
-  intro i j
-  by_cases hi : i=0 <;> by_cases hj : j=0 <;> by_cases hij : i=j <;>
-    simp [← Matrix.diagonal_single, Pi.single_apply, eq_comm, Matrix.diagonal_apply, hi,hj,hij]
+
+
 end
 end D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Scalar
 namespace D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.CommonOrder
@@ -460,27 +419,33 @@ end D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.FiniteBounds
 namespace D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Events
 open D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Noise
 noncomputable section
-def w {n : ℕ} (b : ((Bool × Fin n × Fin n) → Bool)) : ℝ := ∏ i, if b i then (1/256 : ℝ) else 255/256
 def bmat {n : ℕ} (b : ((Bool × Fin n × Fin n) → Bool)) (side : Bool) : Matrix (Fin n) (Fin n) ℂ :=
   Matrix.of (fun i j => if b (side,i,j) then (Real.sqrt 255 : ℂ) else (-1/Real.sqrt 255 : ℝ))
 def k {n : ℕ} (b : ((Bool × Fin n × Fin n) → Bool)) : ℕ := (poly (bmat b false) (bmat b true)).natTrailingDegree
-def L (n : ℕ) : ℝ := (∑ b : ((Bool × Fin n × Fin n) → Bool), w b * k b) / (n:ℝ)^2
-private lemma w_nonneg {n : ℕ} (b : ((Bool × Fin n × Fin n) → Bool)) : 0 ≤ w b := by
+def L (n : ℕ) : ℝ := (∑ b : ((Bool × Fin n × Fin n) → Bool), D5.S3.StatisticalMechanics.ParticleProcesses.ExclusionMovingParticleOptimality.bernoulli (1/256) (fun i => finTwoEquiv.symm (b i)) * k b) / (n:ℝ)^2
+private lemma w_nonneg {n : ℕ} (b : ((Bool × Fin n × Fin n) → Bool)) : 0 ≤ D5.S3.StatisticalMechanics.ParticleProcesses.ExclusionMovingParticleOptimality.bernoulli (1/256) (fun i => finTwoEquiv.symm (b i)) := by
+  unfold D5.S3.StatisticalMechanics.ParticleProcesses.ExclusionMovingParticleOptimality.bernoulli
   apply Finset.prod_nonneg
   intro i hi
   split <;> norm_num
-lemma w_sum (n : ℕ) : ∑ b : ((Bool × Fin n × Fin n) → Bool), w b = 1 := by
-  unfold w
+lemma w_sum (n : ℕ) : ∑ b : ((Bool × Fin n × Fin n) → Bool), D5.S3.StatisticalMechanics.ParticleProcesses.ExclusionMovingParticleOptimality.bernoulli (1/256) (fun i => finTwoEquiv.symm (b i)) = 1 := by
+  simp only [D5.S3.StatisticalMechanics.ParticleProcesses.ExclusionMovingParticleOptimality.bernoulli]
+  have h (b : (Bool × Fin n × Fin n) → Bool) :
+      (∏ i, if finTwoEquiv.symm (b i) = 1 then (1/256 : ℝ) else 1-1/256) =
+      ∏ i, if b i then (1/256 : ℝ) else 255/256 := by
+    apply Finset.prod_congr rfl
+    intro i hi
+    cases hbi : b i <;> norm_num [hbi, finTwoEquiv]
+  simp_rw [h]
   have he := Fintype.prod_sum (fun (_ : (Bool × Fin n × Fin n)) (b : Bool) =>
     if b then (1/256 : ℝ) else 255/256)
   calc
     _ = ∏ i : (Bool × Fin n × Fin n), ∑ b : Bool, if b then (1/256 : ℝ) else 255/256 := he.symm
     _ = 1 := by norm_num [Fintype.sum_bool]
-private lemma w_common (n : ℕ) : w (fun _ : (Bool × Fin n × Fin n) => false) = (255/256 : ℝ)^(2*n*n) := by
-  simp only [w, Bool.false_eq_true, ite_false, Finset.prod_const, Finset.card_univ,
-    Fintype.card_prod, Fintype.card_bool, Fintype.card_fin]
-  congr 1
-  ring
+private lemma w_common (n : ℕ) : D5.S3.StatisticalMechanics.ParticleProcesses.ExclusionMovingParticleOptimality.bernoulli (1/256) (fun _ : Bool × Fin n × Fin n => finTwoEquiv.symm false) = (255/256 : ℝ)^(2*n*n) := by
+  norm_num [D5.S3.StatisticalMechanics.ParticleProcesses.ExclusionMovingParticleOptimality.bernoulli,
+    finTwoEquiv, div_pow] <;> congr 1 <;> ring
+
 private lemma k_le {n : ℕ} (b : ((Bool × Fin n × Fin n) → Bool)) : k b ≤ 2*n*n := poly_order_le _ _
 private lemma k_common (s : ℕ) : k (fun _ : (Bool × Fin (s+1) × Fin (s+1)) => false) = 2*s*s+1 := by
   have hc : (-1/Real.sqrt 255 : ℝ) ≠ 0 := by
@@ -488,21 +453,21 @@ private lemma k_common (s : ℕ) : k (fun _ : (Bool × Fin (s+1) × Fin (s+1)) =
     exact Real.sqrt_ne_zero'.mpr (by norm_num)
   exact D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.CommonOrder.poly_common_order s (-1/Real.sqrt 255) hc
 private lemma L_bounds : L 2 ≤ 2-(5/4:ℝ)*(255/256:ℝ)^8 ∧ (255/256:ℝ)^18 ≤ L 3 := by
-  have hu := D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.FiniteBounds.weighted_order_upper (w (n:=2)) (fun b => (k b : ℝ))
+  have hu := D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.FiniteBounds.weighted_order_upper (fun b : (Bool × Fin 2 × Fin 2) → Bool => D5.S3.StatisticalMechanics.ParticleProcesses.ExclusionMovingParticleOptimality.bernoulli (1/256) (fun i => finTwoEquiv.symm (b i))) (fun b => (k b : ℝ))
     (fun _ => false) 3 8 w_nonneg (w_sum 2)
     (fun b => by exact_mod_cast k_le b) (by exact_mod_cast k_common 1)
-  have hl := D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.FiniteBounds.weighted_order_lower (w (n:=3)) (fun b => (k b : ℝ))
+  have hl := D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.FiniteBounds.weighted_order_lower (fun b : (Bool × Fin 3 × Fin 3) → Bool => D5.S3.StatisticalMechanics.ParticleProcesses.ExclusionMovingParticleOptimality.bernoulli (1/256) (fun i => finTwoEquiv.symm (b i))) (fun b => (k b : ℝ))
     (fun _ => false) 9 w_nonneg (fun b => Nat.cast_nonneg _)
     (by exact_mod_cast (k_common 2).ge)
   rw [w_common] at hu hl
   constructor
   · unfold L
     norm_num only [Nat.cast_ofNat, OfNat.ofNat, pow_two]
-    change (∑ b : ((Bool × Fin 2 × Fin 2) → Bool), w b * (k b : ℝ)) ≤ 8 - (8-3)*(255/256:ℝ)^8 at hu
+    change (∑ b : ((Bool × Fin 2 × Fin 2) → Bool), D5.S3.StatisticalMechanics.ParticleProcesses.ExclusionMovingParticleOptimality.bernoulli (1/256) (fun i => finTwoEquiv.symm (b i)) * (k b : ℝ)) ≤ 8 - (8-3)*(255/256:ℝ)^8 at hu
     nlinarith
   · unfold L
     norm_num only [Nat.cast_ofNat, OfNat.ofNat, pow_two]
-    change 9*(255/256:ℝ)^18 ≤ (∑ b : ((Bool × Fin 3 × Fin 3) → Bool), w b * (k b : ℝ)) at hl
+    change 9*(255/256:ℝ)^18 ≤ (∑ b : ((Bool × Fin 3 × Fin 3) → Bool), D5.S3.StatisticalMechanics.ParticleProcesses.ExclusionMovingParticleOptimality.bernoulli (1/256) (fun i => finTwoEquiv.symm (b i)) * (k b : ℝ)) at hl
     nlinarith
 lemma L_gap : L 2 < L 3 := by
   have h := D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.FiniteBounds.coarse_bounds_at_one_over_256 (L 2) (L 3)
@@ -581,165 +546,7 @@ end D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Noise
 
 open MeasureTheory Set ProbabilityTheory
 open scoped ENNReal NNReal BigOperators
-namespace D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Gaussian
-noncomputable section
 
-private lemma realEval_continuous {n : ℕ} (p : MvPolynomial (Fin n) ℂ) :
-    Continuous ((fun {n : ℕ} (p : MvPolynomial (Fin n) ℂ) (x : Fin n → ℝ) => MvPolynomial.eval (fun i => (x i : ℂ)) p) p) := by
-  exact p.continuous_eval.comp (continuous_pi (fun i =>
-    Complex.continuous_ofReal.comp (continuous_apply i)))
-
-private lemma gaussian_mv_eval_integrable {n : ℕ} (m : ℝ) (v : ℝ≥0)
-    (p : MvPolynomial (Fin n) ℂ) :
-    Integrable ((fun {n : ℕ} (p : MvPolynomial (Fin n) ℂ) (x : Fin n → ℝ) => MvPolynomial.eval (fun i => (x i : ℂ)) p) p) ((fun n m v => Measure.pi (fun _ : Fin n => gaussianReal m v)) n m v) := by
-  simp_rw [MvPolynomial.eval_eq']
-  apply integrable_finsetSum
-  intro d hd
-  exact (Integrable.fintype_prod (fun i => D5.S3.Analytic.Probability.GaussianPolynomialLog.gaussian_complex_pow_integrable m v (d i))).const_mul _
-
-private lemma gaussian_polynomial_ae_nonzero (m : ℝ) (v : ℝ≥0) (hv : v ≠ 0)
-    (p : Polynomial ℂ) (hp : p ≠ 0) :
-    ∀ᵐ x : ℝ ∂gaussianReal m v, p.eval (x : ℂ) ≠ 0 := by
-  filter_upwards [D5.S3.Analytic.Probability.GaussianPolynomialLog.gaussian_roots_nonzero m v hv p.roots] with x hx
-  rw [(IsAlgClosed.splits p).eval_eq_prod_roots (x : ℂ)]
-  exact mul_ne_zero (Polynomial.leadingCoeff_ne_zero.mpr hp) hx
-
-private lemma realConsEquiv_apply (n : ℕ) (z : ℝ × (Fin n → ℝ)) :
-    ((MeasurableEquiv.piFinSuccAbove (fun _ : Fin (n+1) => ℝ) 0).symm) z = Fin.cons z.1 z.2 := by
-  simp [ MeasurableEquiv.piFinSuccAbove_symm_apply,
-    Fin.insertNthEquiv, Fin.insertNth_zero]
-
-private lemma realConsEquiv_preserving (n : ℕ) (m : ℝ) (v : ℝ≥0) :
-    MeasurePreserving (((MeasurableEquiv.piFinSuccAbove (fun _ : Fin (n+1) => ℝ) 0).symm))
-      ((gaussianReal m v).prod ((fun n m v => Measure.pi (fun _ : Fin n => gaussianReal m v)) n m v)) ((fun n m v => Measure.pi (fun _ : Fin n => gaussianReal m v)) (n+1) m v) := by
-  simpa only [ Fin.zero_succAbove] using
-    (measurePreserving_piFinSuccAbove (fun _ : Fin (n+1) => gaussianReal m v) 0).symm
-
-private lemma posLog_le_norm (z : ℂ) : max (Real.log ‖z‖) 0 ≤ ‖z‖ := by
-  apply max_le _ (norm_nonneg _)
-  by_cases hz : z = 0
-  · simp [hz]
-  · have h := Real.log_le_sub_one_of_pos (norm_pos_iff.mpr hz)
-    linarith
-
-private lemma gaussian_mv_log_coeff_lower (m : ℝ) (v : ℝ≥0) (hv : v ≠ 0) (n : ℕ)
-    (p : MvPolynomial (Fin n) ℂ) (d : Fin n →₀ ℕ) (D : ℕ)
-    (hd : p.coeff d ≠ 0) (hD : ∀ i, p.degreeOf i ≤ D) :
-    (∀ᵐ x ∂(fun n m v => Measure.pi (fun _ : Fin n => gaussianReal m v)) n m v, (fun {n : ℕ} (p : MvPolynomial (Fin n) ℂ) (x : Fin n → ℝ) => MvPolynomial.eval (fun i => (x i : ℂ)) p) p x ≠ 0) ∧
-    Integrable (fun x => Real.log ‖(fun {n : ℕ} (p : MvPolynomial (Fin n) ℂ) (x : Fin n → ℝ) => MvPolynomial.eval (fun i => (x i : ℂ)) p) p x‖) ((fun n m v => Measure.pi (fun _ : Fin n => gaussianReal m v)) n m v) ∧
-    Real.log ‖p.coeff d‖ - (n : ℝ)*D*(Real.log 2 + D5.S3.Analytic.Probability.GaussianPolynomialLog.rootLogCost m v) ≤
-      ∫ x, Real.log ‖(fun {n : ℕ} (p : MvPolynomial (Fin n) ℂ) (x : Fin n → ℝ) => MvPolynomial.eval (fun i => (x i : ℂ)) p) p x‖ ∂(fun n m v => Measure.pi (fun _ : Fin n => gaussianReal m v)) n m v := by
-  induction n with
-  | zero =>
-    have hd0 : d = 0 := Subsingleton.elim _ _
-    subst d
-    have hpe : p = MvPolynomial.C (p.coeff 0) := p.eq_C_of_isEmpty
-    have hev (x : Fin 0 → ℝ) : (fun {n : ℕ} (p : MvPolynomial (Fin n) ℂ) (x : Fin n → ℝ) => MvPolynomial.eval (fun i => (x i : ℂ)) p) p x = p.coeff 0 := by
-      conv_lhs => rw [hpe]
-      simp []
-    simp only [hev]
-    exact ⟨Filter.Eventually.of_forall (fun _ => hd), integrable_const _, by simp⟩
-  | succ n ih =>
-    let P := MvPolynomial.finSuccEquiv ℂ n p
-    let q := P.coeff (d 0)
-    have hqcoeff : q.coeff d.tail = p.coeff d := by
-      dsimp only [q, P]
-      rw [MvPolynomial.finSuccEquiv_coeff_coeff, Finsupp.cons_tail]
-    have hqD : ∀ i, q.degreeOf i ≤ D := fun i =>
-      (MvPolynomial.degreeOf_coeff_finSuccEquiv p i (d 0)).trans (hD i.succ)
-    obtain ⟨hqae, hqi, hql⟩ := ih q d.tail (by rwa [hqcoeff]) hqD
-    let e := ((MeasurableEquiv.piFinSuccAbove (fun _ : Fin (n+1) => ℝ) 0).symm)
-    have he := realConsEquiv_preserving n m v
-    let f : ℝ × (Fin n → ℝ) → ℝ := fun z => Real.log ‖(fun {n : ℕ} (p : MvPolynomial (Fin n) ℂ) (x : Fin n → ℝ) => MvPolynomial.eval (fun i => (x i : ℂ)) p) p (e z)‖
-    have hfmeas : AEStronglyMeasurable f
-        ((gaussianReal m v).prod ((fun n m v => Measure.pi (fun _ : Fin n => gaussianReal m v)) n m v)) := by
-      exact ((Real.measurable_log.comp ((realEval_continuous p).measurable.comp
-        e.measurable).norm)).aestronglyMeasurable
-    have hfiPos : Integrable (fun z => max (f z) 0)
-        ((gaussianReal m v).prod ((fun n m v => Measure.pi (fun _ : Fin n => gaussianReal m v)) n m v)) := by
-      have hint := he.integrable_comp_emb e.measurableEmbedding |>.mpr
-        (gaussian_mv_eval_integrable m v p).norm
-      apply hint.mono' (hfmeas.sup aestronglyMeasurable_const)
-      filter_upwards [] with z
-      rw [Real.norm_eq_abs, abs_of_nonneg (le_max_right _ _)]
-      exact posLog_le_norm _
-    let py (y : Fin n → ℝ) := P.map (MvPolynomial.eval (fun i => (y i : ℂ)))
-    have hcoeff (y : Fin n → ℝ) : (py y).coeff (d 0) = (fun {n : ℕ} (p : MvPolynomial (Fin n) ℂ) (x : Fin n → ℝ) => MvPolynomial.eval (fun i => (x i : ℂ)) p) q y := by
-      simp only [py, Polynomial.coeff_map, q]
-    have hevalRaw (x : ℝ) (y : Fin n → ℝ) :
-        MvPolynomial.eval (fun i : Fin (n+1) => ((Fin.cons (α := fun _ => ℝ) x y i : ℝ) : ℂ)) p =
-          (py y).eval (x : ℂ) := by
-      have he : (fun i : Fin (n+1) => ((Fin.cons (α := fun _ => ℝ) x y i : ℝ) : ℂ)) =
-          Fin.cons (α := fun _ => ℂ) (x : ℂ) (fun i => (y i : ℂ)) := by
-        funext i
-        exact Fin.cases rfl (fun j => rfl) i
-      rw [he]
-      exact MvPolynomial.eval_eq_eval_mv_eval' (fun i => (y i : ℂ)) (x : ℂ) p
-    have heval (x : ℝ) (y : Fin n → ℝ) :
-        f (x,y) = Real.log ‖(py y).eval (x : ℂ)‖ := by
-      dsimp only [f, e]
-      rw [realConsEquiv_apply]
-      exact congrArg (fun z : ℂ => Real.log ‖z‖) (hevalRaw x y)
-    have hnonzero : ∀ᵐ y ∂(fun n m v => Measure.pi (fun _ : Fin n => gaussianReal m v)) n m v, py y ≠ 0 := by
-      filter_upwards [hqae] with y hy
-      intro hz
-      have hc := hcoeff y
-      rw [hz, Polynomial.coeff_zero] at hc
-      exact hy hc.symm
-    have hsections : ∀ᵐ y ∂(fun n m v => Measure.pi (fun _ : Fin n => gaussianReal m v)) n m v,
-        Integrable (fun x => f (x,y)) (gaussianReal m v) := by
-      filter_upwards [hnonzero] with y hy
-      simp_rw [heval]
-      exact D5.S3.Analytic.Probability.GaussianPolynomialLog.gaussian_polynomial_log_integrable m v hv (py y) hy
-    have hcost : 0 ≤ Real.log 2 + D5.S3.Analytic.Probability.GaussianPolynomialLog.rootLogCost m v :=
-      add_nonneg (Real.log_nonneg (by norm_num)) (D5.S3.Analytic.Probability.GaussianPolynomialLog.rootLogCost_nonneg m v)
-    have hdegrees (y : Fin n → ℝ) : (py y).natDegree ≤ D := by
-      apply Polynomial.natDegree_map_le.trans
-      rw [MvPolynomial.natDegree_finSuccEquiv]
-      exact hD 0
-    let g : (Fin n → ℝ) → ℝ := fun y => Real.log ‖(fun {n : ℕ} (p : MvPolynomial (Fin n) ℂ) (x : Fin n → ℝ) => MvPolynomial.eval (fun i => (x i : ℂ)) p) q y‖ - D*(Real.log 2 + D5.S3.Analytic.Probability.GaussianPolynomialLog.rootLogCost m v)
-    have hgi : Integrable g ((fun n m v => Measure.pi (fun _ : Fin n => gaussianReal m v)) n m v) := hqi.sub (integrable_const _)
-    have hlower : ∀ᵐ y ∂(fun n m v => Measure.pi (fun _ : Fin n => gaussianReal m v)) n m v,
-        g y ≤ ∫ x, f (x,y) ∂gaussianReal m v := by
-      filter_upwards [hqae] with y hy
-      have hc : (py y).coeff (d 0) ≠ 0 := by rwa [hcoeff]
-      have hh := D5.S3.Analytic.Probability.GaussianPolynomialLog.gaussian_polynomial_log_coeff_lower m v hv (py y) (d 0) hc
-      rw [hcoeff] at hh
-      simp_rw [heval]
-      exact (sub_le_sub_left (mul_le_mul_of_nonneg_right (by exact_mod_cast hdegrees y) hcost) _).trans hh
-    have hfi : Integrable f ((gaussianReal m v).prod ((fun n m v => Measure.pi (fun _ : Fin n => gaussianReal m v)) n m v)) :=
-      D5.S3.Analytic.Probability.GaussianPolynomialLog.integrable_prod_of_pos_and_fiber_lower _ _ f hfmeas hfiPos hsections g hgi hlower
-    have hpi : Integrable (fun x => Real.log ‖(fun {n : ℕ} (p : MvPolynomial (Fin n) ℂ) (x : Fin n → ℝ) => MvPolynomial.eval (fun i => (x i : ℂ)) p) p x‖) ((fun n m v => Measure.pi (fun _ : Fin n => gaussianReal m v)) (n+1) m v) :=
-      (he.integrable_comp_emb e.measurableEmbedding).mp hfi
-    have hpnonzero : ∀ᵐ z ∂(gaussianReal m v).prod ((fun n m v => Measure.pi (fun _ : Fin n => gaussianReal m v)) n m v),
-        (fun {n : ℕ} (p : MvPolynomial (Fin n) ℂ) (x : Fin n → ℝ) => MvPolynomial.eval (fun i => (x i : ℂ)) p) p (e z) ≠ 0 := by
-      have hset : MeasurableSet {z : ℝ × (Fin n → ℝ) | (fun {n : ℕ} (p : MvPolynomial (Fin n) ℂ) (x : Fin n → ℝ) => MvPolynomial.eval (fun i => (x i : ℂ)) p) p (e z) ≠ 0} := by
-        exact ((realEval_continuous p).measurable.comp e.measurable)
-          (measurableSet_singleton 0).compl
-      apply (Measure.ae_prod_iff_ae_ae hset).mpr
-      apply (Measure.ae_ae_comm hset).mpr
-      filter_upwards [hnonzero] with y hy
-      have hh := gaussian_polynomial_ae_nonzero m v hv (py y) hy
-      simpa only [e, realConsEquiv_apply, hevalRaw] using hh
-    refine ⟨?_, hpi, ?_⟩
-    · rw [← he.map_eq, ← e.map_ae]
-      exact hpnonzero
-    · have hb := integral_mono_ae hgi hfi.integral_prod_right hlower
-      have hei : (∫ x, Real.log ‖(fun {n : ℕ} (p : MvPolynomial (Fin n) ℂ) (x : Fin n → ℝ) => MvPolynomial.eval (fun i => (x i : ℂ)) p) p x‖ ∂(fun n m v => Measure.pi (fun _ : Fin n => gaussianReal m v)) (n+1) m v) =
-          ∫ y, ∫ x, f (x,y) ∂gaussianReal m v ∂(fun n m v => Measure.pi (fun _ : Fin n => gaussianReal m v)) n m v := by
-        rw [← he.integral_comp' (fun x => Real.log ‖(fun {n : ℕ} (p : MvPolynomial (Fin n) ℂ) (x : Fin n → ℝ) => MvPolynomial.eval (fun i => (x i : ℂ)) p) p x‖), integral_prod_symm _ hfi]
-      rw [hei]
-      have hgint : (∫ y, g y ∂(fun n m v => Measure.pi (fun _ : Fin n => gaussianReal m v)) n m v) =
-          (∫ y, Real.log ‖(fun {n : ℕ} (p : MvPolynomial (Fin n) ℂ) (x : Fin n → ℝ) => MvPolynomial.eval (fun i => (x i : ℂ)) p) q y‖ ∂(fun n m v => Measure.pi (fun _ : Fin n => gaussianReal m v)) n m v) - D*(Real.log 2 + D5.S3.Analytic.Probability.GaussianPolynomialLog.rootLogCost m v) := by
-        rw [integral_sub hqi (integrable_const _), integral_const]
-        simp only [probReal_univ, one_smul]
-      rw [hgint] at hb
-      rw [hqcoeff] at hql
-      push_cast
-      nlinarith
-
-end
-end D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Gaussian
 
 open MeasureTheory Filter Set ProbabilityTheory
 open scoped ENNReal NNReal Topology BigOperators
@@ -752,8 +559,8 @@ private lemma gaussian_mv_abs_log_bound (m : ℝ) (v : ℝ≥0) (hv : v ≠ 0) (
     (∫ x, |Real.log ‖(fun {n : ℕ} (p : MvPolynomial (Fin n) ℂ) (x : Fin n → ℝ) => MvPolynomial.eval (fun i => (x i : ℂ)) p) p x‖| ∂(fun n m v => Measure.pi (fun _ : Fin n => gaussianReal m v)) n m v) ≤
       2*(∫ x, ‖(fun {n : ℕ} (p : MvPolynomial (Fin n) ℂ) (x : Fin n → ℝ) => MvPolynomial.eval (fun i => (x i : ℂ)) p) p x‖ ∂(fun n m v => Measure.pi (fun _ : Fin n => gaussianReal m v)) n m v) - Real.log ‖p.coeff d‖ +
         (n : ℝ)*D*(Real.log 2 + D5.S3.Analytic.Probability.GaussianPolynomialLog.rootLogCost m v) := by
-  obtain ⟨_, hl, hc⟩ := gaussian_mv_log_coeff_lower m v hv n p d D hd hD
-  have hn := (gaussian_mv_eval_integrable m v p).norm
+  obtain ⟨_, hl, hc⟩ := D5.S3.Analytic.Probability.SampleCovarianceSpectralAndSmooth.Gaussian.gaussian_mv_log_coeff_lower m v hv n p d D hd hD
+  have hn := (D5.S3.Analytic.Probability.SampleCovarianceSpectralAndSmooth.Gaussian.gaussian_mv_eval_integrable m v p).norm
   have hb : (∫ x, |Real.log ‖(fun {n : ℕ} (p : MvPolynomial (Fin n) ℂ) (x : Fin n → ℝ) => MvPolynomial.eval (fun i => (x i : ℂ)) p) p x‖| ∂(fun n m v => Measure.pi (fun _ : Fin n => gaussianReal m v)) n m v) ≤
       2*(∫ x, ‖(fun {n : ℕ} (p : MvPolynomial (Fin n) ℂ) (x : Fin n → ℝ) => MvPolynomial.eval (fun i => (x i : ℂ)) p) p x‖ ∂(fun n m v => Measure.pi (fun _ : Fin n => gaussianReal m v)) n m v) -
         ∫ x, Real.log ‖(fun {n : ℕ} (p : MvPolynomial (Fin n) ℂ) (x : Fin n → ℝ) => MvPolynomial.eval (fun i => (x i : ℂ)) p) p x‖ ∂(fun n m v => Measure.pi (fun _ : Fin n => gaussianReal m v)) n m v := by
@@ -761,7 +568,8 @@ private lemma gaussian_mv_abs_log_bound (m : ℝ) (v : ℝ≥0) (hv : v ≠ 0) (
     apply integral_mono_ae hl.abs ((hn.const_mul 2).sub hl)
     filter_upwards [] with x
     rw [← Real.norm_eq_abs, D5.S3.Analytic.Probability.GaussianPolynomialLog.norm_eq_two_pos_sub]
-    exact sub_le_sub_right (mul_le_mul_of_nonneg_left (posLog_le_norm _) (by norm_num)) _
+    exact sub_le_sub_right (mul_le_mul_of_nonneg_left (by simpa only [Real.posLog, max_comm, abs_norm] using
+      (Real.posLog_le_abs ‖(MvPolynomial.eval (fun i => (x i : ℂ))) p‖)) (by norm_num)) _
   linarith
 
 private lemma gaussian_mv_uniform_abs_log_bound (m : ℝ) (v : ℝ≥0) (hv : v ≠ 0) (n D : ℕ)
@@ -773,7 +581,7 @@ private lemma gaussian_mv_uniform_abs_log_bound (m : ℝ) (v : ℝ≥0) (hv : v 
     (∫ x, |Real.log ‖(fun {n : ℕ} (p : MvPolynomial (Fin n) ℂ) (x : Fin n → ℝ) => MvPolynomial.eval (fun i => (x i : ℂ)) p) p x‖| ∂(fun n m v => Measure.pi (fun _ : Fin n => gaussianReal m v)) n m v) ≤
       2*M - Real.log c + (n : ℝ)*D*(Real.log 2 + D5.S3.Analytic.Probability.GaussianPolynomialLog.rootLogCost m v) := by
   have hd : p.coeff d ≠ 0 := norm_pos_iff.mp (hc.trans_le hcoeff)
-  refine ⟨(gaussian_mv_log_coeff_lower m v hv n p d D hd hD).2.1, ?_⟩
+  refine ⟨(D5.S3.Analytic.Probability.SampleCovarianceSpectralAndSmooth.Gaussian.gaussian_mv_log_coeff_lower m v hv n p d D hd hD).2.1, ?_⟩
   have hb := gaussian_mv_abs_log_bound m v hv n p d D hd hD
   have hlog := Real.log_le_log hc hcoeff
   linarith
@@ -784,29 +592,24 @@ end D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Gaussian
 namespace D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Gaussian
 noncomputable section
 
-def noiseFamily {n N : ℕ} (q : Fin (N+1) → MvPolynomial (Fin n) ℂ) (ε : ℝ) :
-    MvPolynomial (Fin n) ℂ :=
-  ∑ k : Fin (N+1), MvPolynomial.C ((ε : ℂ)^(k : ℕ)) * q k
-
 private lemma noiseFamily_zero {n N : ℕ} (q : Fin (N+1) → MvPolynomial (Fin n) ℂ) :
-    noiseFamily q 0 = q 0 := by
-  simp [noiseFamily, Fin.sum_univ_succ]
+    (∑ j : Fin (N+1), MvPolynomial.C ((0 : ℂ)^(j : ℕ)) * q j) = q 0 := by
+  simp [Fin.sum_univ_succ]
 
 private lemma noiseFamily_eval {n N : ℕ} (q : Fin (N+1) → MvPolynomial (Fin n) ℂ)
     (ε : ℝ) (x : Fin n → ℝ) :
-    (fun {n : ℕ} (p : MvPolynomial (Fin n) ℂ) (x : Fin n → ℝ) => MvPolynomial.eval (fun i => (x i : ℂ)) p) (noiseFamily q ε) x = ∑ k : Fin (N+1), (ε : ℂ)^(k : ℕ) * (fun {n : ℕ} (p : MvPolynomial (Fin n) ℂ) (x : Fin n → ℝ) => MvPolynomial.eval (fun i => (x i : ℂ)) p) (q k) x := by
-  simp only [noiseFamily, map_sum, map_mul, MvPolynomial.eval_C]
+    (fun {n : ℕ} (p : MvPolynomial (Fin n) ℂ) (x : Fin n → ℝ) => MvPolynomial.eval (fun i => (x i : ℂ)) p) ((∑ j : Fin (N+1), MvPolynomial.C ((ε : ℂ)^(j : ℕ)) * q j)) x = ∑ k : Fin (N+1), (ε : ℂ)^(k : ℕ) * (fun {n : ℕ} (p : MvPolynomial (Fin n) ℂ) (x : Fin n → ℝ) => MvPolynomial.eval (fun i => (x i : ℂ)) p) (q k) x := by
+  simp only [map_sum, map_mul, MvPolynomial.eval_C]
 
 private lemma noiseFamily_coeff_continuous {n N : ℕ}
     (q : Fin (N+1) → MvPolynomial (Fin n) ℂ) (d : Fin n →₀ ℕ) :
-    Continuous (fun ε : ℝ => (noiseFamily q ε).coeff d) := by
-  simp only [noiseFamily, MvPolynomial.coeff_sum, MvPolynomial.coeff_C_mul]
+    Continuous (fun ε : ℝ => ((∑ j : Fin (N+1), MvPolynomial.C ((ε : ℂ)^(j : ℕ)) * q j)).coeff d) := by
+  simp only [MvPolynomial.coeff_sum, MvPolynomial.coeff_C_mul]
   fun_prop
 
 private lemma noiseFamily_degree_bound {n N : ℕ}
     (q : Fin (N+1) → MvPolynomial (Fin n) ℂ) (ε : ℝ) (i : Fin n) :
-    (noiseFamily q ε).degreeOf i ≤ Finset.univ.sup (fun k => (q k).totalDegree) := by
-  unfold noiseFamily
+    ((∑ j : Fin (N+1), MvPolynomial.C ((ε : ℂ)^(j : ℕ)) * q j)).degreeOf i ≤ Finset.univ.sup (fun k => (q k).totalDegree) := by
   apply (MvPolynomial.degreeOf_sum_le i _ _).trans
   apply Finset.sup_le
   intro k hk
@@ -815,14 +618,14 @@ private lemma noiseFamily_degree_bound {n N : ℕ}
 
 private lemma noiseFamily_integral_norm_bound {n N : ℕ} (m : ℝ) (v : ℝ≥0)
     (q : Fin (N+1) → MvPolynomial (Fin n) ℂ) (ε : ℝ) (hε : |ε| ≤ 1) :
-    (∫ x, ‖(fun {n : ℕ} (p : MvPolynomial (Fin n) ℂ) (x : Fin n → ℝ) => MvPolynomial.eval (fun i => (x i : ℂ)) p) (noiseFamily q ε) x‖ ∂(fun n m v => Measure.pi (fun _ : Fin n => gaussianReal m v)) n m v) ≤
+    (∫ x, ‖(fun {n : ℕ} (p : MvPolynomial (Fin n) ℂ) (x : Fin n → ℝ) => MvPolynomial.eval (fun i => (x i : ℂ)) p) ((∑ j : Fin (N+1), MvPolynomial.C ((ε : ℂ)^(j : ℕ)) * q j)) x‖ ∂(fun n m v => Measure.pi (fun _ : Fin n => gaussianReal m v)) n m v) ≤
       ∑ k, ∫ x, ‖(fun {n : ℕ} (p : MvPolynomial (Fin n) ℂ) (x : Fin n → ℝ) => MvPolynomial.eval (fun i => (x i : ℂ)) p) (q k) x‖ ∂(fun n m v => Measure.pi (fun _ : Fin n => gaussianReal m v)) n m v := by
-  have hi (k : Fin (N+1)) := (gaussian_mv_eval_integrable m v (q k)).norm
+  have hi (k : Fin (N+1)) := (D5.S3.Analytic.Probability.SampleCovarianceSpectralAndSmooth.Gaussian.gaussian_mv_eval_integrable m v (q k)).norm
   rw [← integral_finsetSum _ (fun k _ => hi k)]
-  apply integral_mono (gaussian_mv_eval_integrable m v _).norm
+  apply integral_mono (D5.S3.Analytic.Probability.SampleCovarianceSpectralAndSmooth.Gaussian.gaussian_mv_eval_integrable m v _).norm
     (integrable_finsetSum _ (fun k _ => hi k))
   intro x
-  change ‖(fun {n : ℕ} (p : MvPolynomial (Fin n) ℂ) (x : Fin n → ℝ) => MvPolynomial.eval (fun i => (x i : ℂ)) p) (noiseFamily q ε) x‖ ≤ ∑ k : Fin (N+1), ‖(fun {n : ℕ} (p : MvPolynomial (Fin n) ℂ) (x : Fin n → ℝ) => MvPolynomial.eval (fun i => (x i : ℂ)) p) (q k) x‖
+  change ‖(fun {n : ℕ} (p : MvPolynomial (Fin n) ℂ) (x : Fin n → ℝ) => MvPolynomial.eval (fun i => (x i : ℂ)) p) ((∑ j : Fin (N+1), MvPolynomial.C ((ε : ℂ)^(j : ℕ)) * q j)) x‖ ≤ ∑ k : Fin (N+1), ‖(fun {n : ℕ} (p : MvPolynomial (Fin n) ℂ) (x : Fin n → ℝ) => MvPolynomial.eval (fun i => (x i : ℂ)) p) (q k) x‖
   rw [noiseFamily_eval]
   apply (norm_sum_le _ _).trans
   apply Finset.sum_le_sum
@@ -834,14 +637,14 @@ private lemma gaussian_noiseFamily_uniform_log {n N : ℕ} (m : ℝ) (v : ℝ≥
     (q : Fin (N+1) → MvPolynomial (Fin n) ℂ) (d : Fin n →₀ ℕ)
     (hd : (q 0).coeff d ≠ 0) :
     ∃ δ C : ℝ, 0 < δ ∧ 0 ≤ C ∧ ∀ ε : ℝ, |ε| < δ →
-      Integrable (fun x => Real.log ‖(fun {n : ℕ} (p : MvPolynomial (Fin n) ℂ) (x : Fin n → ℝ) => MvPolynomial.eval (fun i => (x i : ℂ)) p) (noiseFamily q ε) x‖) ((fun n m v => Measure.pi (fun _ : Fin n => gaussianReal m v)) n m v) ∧
-      (∫ x, |Real.log ‖(fun {n : ℕ} (p : MvPolynomial (Fin n) ℂ) (x : Fin n → ℝ) => MvPolynomial.eval (fun i => (x i : ℂ)) p) (noiseFamily q ε) x‖| ∂(fun n m v => Measure.pi (fun _ : Fin n => gaussianReal m v)) n m v) ≤ C := by
+      Integrable (fun x => Real.log ‖(fun {n : ℕ} (p : MvPolynomial (Fin n) ℂ) (x : Fin n → ℝ) => MvPolynomial.eval (fun i => (x i : ℂ)) p) ((∑ j : Fin (N+1), MvPolynomial.C ((ε : ℂ)^(j : ℕ)) * q j)) x‖) ((fun n m v => Measure.pi (fun _ : Fin n => gaussianReal m v)) n m v) ∧
+      (∫ x, |Real.log ‖(fun {n : ℕ} (p : MvPolynomial (Fin n) ℂ) (x : Fin n → ℝ) => MvPolynomial.eval (fun i => (x i : ℂ)) p) ((∑ j : Fin (N+1), MvPolynomial.C ((ε : ℂ)^(j : ℕ)) * q j)) x‖| ∂(fun n m v => Measure.pi (fun _ : Fin n => gaussianReal m v)) n m v) ≤ C := by
   let c : ℝ := ‖(q 0).coeff d‖ / 2
   have hc : 0 < c := by dsimp [c]; exact half_pos (norm_pos_iff.mpr hd)
-  have ht : Tendsto (fun ε : ℝ => ‖(noiseFamily q ε).coeff d‖)
+  have ht : Tendsto (fun ε : ℝ => ‖((∑ j : Fin (N+1), MvPolynomial.C ((ε : ℂ)^(j : ℕ)) * q j)).coeff d‖)
       (𝓝 0) (𝓝 ‖(q 0).coeff d‖) := by
-    simpa only [noiseFamily_zero] using (noiseFamily_coeff_continuous q d).norm.tendsto 0
-  have hev : ∀ᶠ ε : ℝ in 𝓝 0, c < ‖(noiseFamily q ε).coeff d‖ :=
+    simpa only [Complex.ofReal_zero, noiseFamily_zero] using (noiseFamily_coeff_continuous q d).norm.tendsto 0
+  have hev : ∀ᶠ ε : ℝ in 𝓝 0, c < ‖((∑ j : Fin (N+1), MvPolynomial.C ((ε : ℂ)^(j : ℕ)) * q j)).coeff d‖ :=
     ht.eventually (eventually_gt_nhds (by dsimp [c]; linarith [norm_pos_iff.mpr hd]))
   obtain ⟨δ, hδ, hδbound⟩ := Metric.eventually_nhds_iff.mp hev
   let D := Finset.univ.sup (fun k => (q k).totalDegree)
@@ -850,10 +653,10 @@ private lemma gaussian_noiseFamily_uniform_log {n N : ℕ} (m : ℝ) (v : ℝ≥
   refine ⟨min δ 1, C, lt_min hδ (by norm_num), le_max_right _ _, ?_⟩
   intro ε hε
   have hε1 : |ε| ≤ 1 := (hε.trans_le (min_le_right _ _)).le
-  have hcoeff : c ≤ ‖(noiseFamily q ε).coeff d‖ :=
+  have hcoeff : c ≤ ‖((∑ j : Fin (N+1), MvPolynomial.C ((ε : ℂ)^(j : ℕ)) * q j)).coeff d‖ :=
     (hδbound (by simpa [Real.dist_eq] using hε.trans_le (min_le_left _ _))).le
   obtain ⟨hi, hb⟩ := gaussian_mv_uniform_abs_log_bound m v hv n D
-    (noiseFamily q ε) d c M hc hcoeff (noiseFamily_degree_bound q ε)
+    ((∑ j : Fin (N+1), MvPolynomial.C ((ε : ℂ)^(j : ℕ)) * q j)) d c M hc hcoeff (noiseFamily_degree_bound q ε)
     (noiseFamily_integral_norm_bound m v q ε hε1)
   exact ⟨hi, hb.trans (le_max_left _ _)⟩
 
@@ -868,7 +671,7 @@ lemma gaussian_mv_log_integrable (m : ℝ) (v : ℝ≥0) (hv : v ≠ 0) {n : ℕ
     (∀ᵐ x ∂(fun n m v => Measure.pi (fun _ : Fin n => gaussianReal m v)) n m v, (fun {n : ℕ} (p : MvPolynomial (Fin n) ℂ) (x : Fin n → ℝ) => MvPolynomial.eval (fun i => (x i : ℂ)) p) p x ≠ 0) ∧
     Integrable (fun x => Real.log ‖(fun {n : ℕ} (p : MvPolynomial (Fin n) ℂ) (x : Fin n → ℝ) => MvPolynomial.eval (fun i => (x i : ℂ)) p) p x‖) ((fun n m v => Measure.pi (fun _ : Fin n => gaussianReal m v)) n m v) := by
   obtain ⟨d, hd⟩ := MvPolynomial.exists_coeff_ne_zero hp
-  obtain ⟨hae, hi, _⟩ := gaussian_mv_log_coeff_lower m v hv n p d p.totalDegree hd
+  obtain ⟨hae, hi, _⟩ := D5.S3.Analytic.Probability.SampleCovarianceSpectralAndSmooth.Gaussian.gaussian_mv_log_coeff_lower m v hv n p d p.totalDegree hd
     (fun i => MvPolynomial.degreeOf_le_totalDegree p i)
   exact ⟨hae, hi⟩
 
@@ -887,20 +690,20 @@ private lemma gaussian_mv_log_scalar (m : ℝ) (v : ℝ≥0) (hv : v ≠ 0) {n :
 private lemma gaussian_noiseFamily_log_remainder_tendsto {n N : ℕ} (m : ℝ) (v : ℝ≥0) (hv : v ≠ 0)
     (q : Fin (N+1) → MvPolynomial (Fin n) ℂ) (d : Fin n →₀ ℕ)
     (hd : (q 0).coeff d ≠ 0) :
-    Tendsto (fun ε : ℝ => (∫ x, Real.log ‖(fun {n : ℕ} (p : MvPolynomial (Fin n) ℂ) (x : Fin n → ℝ) => MvPolynomial.eval (fun i => (x i : ℂ)) p) (noiseFamily q ε) x‖ ∂(fun n m v => Measure.pi (fun _ : Fin n => gaussianReal m v)) n m v) /
+    Tendsto (fun ε : ℝ => (∫ x, Real.log ‖(fun {n : ℕ} (p : MvPolynomial (Fin n) ℂ) (x : Fin n → ℝ) => MvPolynomial.eval (fun i => (x i : ℂ)) p) ((∑ j : Fin (N+1), MvPolynomial.C ((ε : ℂ)^(j : ℕ)) * q j)) x‖ ∂(fun n m v => Measure.pi (fun _ : Fin n => gaussianReal m v)) n m v) /
       Real.log (1/ε)) (𝓝[>] 0) (𝓝 0) := by
   obtain ⟨δ, C, hδ, hC, hb⟩ := gaussian_noiseFamily_uniform_log m v hv q d hd
   have hsmall : ∀ᶠ ε : ℝ in 𝓝[>] 0, |ε| < δ := by
     apply Filter.Eventually.filter_mono nhdsWithin_le_nhds
     exact (isOpen_lt continuous_abs continuous_const).mem_nhds (by simpa using hδ)
   have hbound : ∀ᶠ ε : ℝ in 𝓝[>] 0,
-      |∫ x, Real.log ‖(fun {n : ℕ} (p : MvPolynomial (Fin n) ℂ) (x : Fin n → ℝ) => MvPolynomial.eval (fun i => (x i : ℂ)) p) (noiseFamily q ε) x‖ ∂(fun n m v => Measure.pi (fun _ : Fin n => gaussianReal m v)) n m v| ≤ C := by
+      |∫ x, Real.log ‖(fun {n : ℕ} (p : MvPolynomial (Fin n) ℂ) (x : Fin n → ℝ) => MvPolynomial.eval (fun i => (x i : ℂ)) p) ((∑ j : Fin (N+1), MvPolynomial.C ((ε : ℂ)^(j : ℕ)) * q j)) x‖ ∂(fun n m v => Measure.pi (fun _ : Fin n => gaussianReal m v)) n m v| ≤ C := by
     filter_upwards [hsmall] with ε hε
     have hi := hb ε hε
-    have hh : |∫ x, Real.log ‖(fun {n : ℕ} (p : MvPolynomial (Fin n) ℂ) (x : Fin n → ℝ) => MvPolynomial.eval (fun i => (x i : ℂ)) p) (noiseFamily q ε) x‖ ∂(fun n m v => Measure.pi (fun _ : Fin n => gaussianReal m v)) n m v| ≤
-        ∫ x, |Real.log ‖(fun {n : ℕ} (p : MvPolynomial (Fin n) ℂ) (x : Fin n → ℝ) => MvPolynomial.eval (fun i => (x i : ℂ)) p) (noiseFamily q ε) x‖| ∂(fun n m v => Measure.pi (fun _ : Fin n => gaussianReal m v)) n m v := by
+    have hh : |∫ x, Real.log ‖(fun {n : ℕ} (p : MvPolynomial (Fin n) ℂ) (x : Fin n → ℝ) => MvPolynomial.eval (fun i => (x i : ℂ)) p) ((∑ j : Fin (N+1), MvPolynomial.C ((ε : ℂ)^(j : ℕ)) * q j)) x‖ ∂(fun n m v => Measure.pi (fun _ : Fin n => gaussianReal m v)) n m v| ≤
+        ∫ x, |Real.log ‖(fun {n : ℕ} (p : MvPolynomial (Fin n) ℂ) (x : Fin n → ℝ) => MvPolynomial.eval (fun i => (x i : ℂ)) p) ((∑ j : Fin (N+1), MvPolynomial.C ((ε : ℂ)^(j : ℕ)) * q j)) x‖| ∂(fun n m v => Measure.pi (fun _ : Fin n => gaussianReal m v)) n m v := by
       simpa only [Real.norm_eq_abs] using norm_integral_le_integral_norm
-        (fun x => Real.log ‖(fun {n : ℕ} (p : MvPolynomial (Fin n) ℂ) (x : Fin n → ℝ) => MvPolynomial.eval (fun i => (x i : ℂ)) p) (noiseFamily q ε) x‖)
+        (fun x => Real.log ‖(fun {n : ℕ} (p : MvPolynomial (Fin n) ℂ) (x : Fin n → ℝ) => MvPolynomial.eval (fun i => (x i : ℂ)) p) ((∑ j : Fin (N+1), MvPolynomial.C ((ε : ℂ)^(j : ℕ)) * q j)) x‖)
     exact hh.trans hi.2
   have hden : Tendsto (fun ε : ℝ => Real.log (1/ε)) (𝓝[>] 0) atTop := by
     simpa only [one_div, Real.log_inv, Function.comp_def] using tendsto_neg_atBot_atTop.comp Real.tendsto_log_nhdsGT_zero
@@ -911,22 +714,22 @@ private lemma gaussian_noiseFamily_log_remainder_tendsto {n N : ℕ} (m : ℝ) (
 lemma gaussian_noiseFamily_log_order {n N : ℕ} (m : ℝ) (v : ℝ≥0) (hv : v ≠ 0)
     (q : Fin (N+1) → MvPolynomial (Fin n) ℂ) (d : Fin n →₀ ℕ)
     (hd : (q 0).coeff d ≠ 0) (k : ℕ) :
-    Tendsto (fun ε : ℝ => -(∫ x, Real.log ‖(ε : ℂ)^k * (fun {n : ℕ} (p : MvPolynomial (Fin n) ℂ) (x : Fin n → ℝ) => MvPolynomial.eval (fun i => (x i : ℂ)) p) (noiseFamily q ε) x‖
+    Tendsto (fun ε : ℝ => -(∫ x, Real.log ‖(ε : ℂ)^k * (fun {n : ℕ} (p : MvPolynomial (Fin n) ℂ) (x : Fin n → ℝ) => MvPolynomial.eval (fun i => (x i : ℂ)) p) ((∑ j : Fin (N+1), MvPolynomial.C ((ε : ℂ)^(j : ℕ)) * q j)) x‖
       ∂(fun n m v => Measure.pi (fun _ : Fin n => gaussianReal m v)) n m v) / Real.log (1/ε)) (𝓝[>] 0) (𝓝 (k : ℝ)) := by
   have hrem := gaussian_noiseFamily_log_remainder_tendsto m v hv q d hd
-  have ht : Tendsto (fun ε : ℝ => ‖(noiseFamily q ε).coeff d‖)
+  have ht : Tendsto (fun ε : ℝ => ‖((∑ j : Fin (N+1), MvPolynomial.C ((ε : ℂ)^(j : ℕ)) * q j)).coeff d‖)
       (𝓝 0) (𝓝 ‖(q 0).coeff d‖) := by
-    simpa only [noiseFamily_zero] using (noiseFamily_coeff_continuous q d).norm.tendsto 0
-  have hne : ∀ᶠ ε : ℝ in 𝓝[>] 0, noiseFamily q ε ≠ 0 := by
+    simpa only [Complex.ofReal_zero, noiseFamily_zero] using (noiseFamily_coeff_continuous q d).norm.tendsto 0
+  have hne : ∀ᶠ ε : ℝ in 𝓝[>] 0, (∑ j : Fin (N+1), MvPolynomial.C ((ε : ℂ)^(j : ℕ)) * q j) ≠ 0 := by
     have hh := ht.eventually (eventually_gt_nhds (norm_pos_iff.mpr hd))
     apply Filter.Eventually.filter_mono nhdsWithin_le_nhds
     filter_upwards [hh] with ε hε
     exact MvPolynomial.ne_zero_iff.mpr ⟨d, norm_pos_iff.mp hε⟩
   have hden : Tendsto (fun ε : ℝ => Real.log (1/ε)) (𝓝[>] 0) atTop := by
     simpa only [one_div, Real.log_inv, Function.comp_def] using tendsto_neg_atBot_atTop.comp Real.tendsto_log_nhdsGT_zero
-  have heq : (fun ε : ℝ => -(∫ x, Real.log ‖(ε : ℂ)^k * (fun {n : ℕ} (p : MvPolynomial (Fin n) ℂ) (x : Fin n → ℝ) => MvPolynomial.eval (fun i => (x i : ℂ)) p) (noiseFamily q ε) x‖
+  have heq : (fun ε : ℝ => -(∫ x, Real.log ‖(ε : ℂ)^k * (fun {n : ℕ} (p : MvPolynomial (Fin n) ℂ) (x : Fin n → ℝ) => MvPolynomial.eval (fun i => (x i : ℂ)) p) ((∑ j : Fin (N+1), MvPolynomial.C ((ε : ℂ)^(j : ℕ)) * q j)) x‖
         ∂(fun n m v => Measure.pi (fun _ : Fin n => gaussianReal m v)) n m v) / Real.log (1/ε)) =ᶠ[𝓝[>] 0]
-      (fun ε => (k : ℝ) - (∫ x, Real.log ‖(fun {n : ℕ} (p : MvPolynomial (Fin n) ℂ) (x : Fin n → ℝ) => MvPolynomial.eval (fun i => (x i : ℂ)) p) (noiseFamily q ε) x‖
+      (fun ε => (k : ℝ) - (∫ x, Real.log ‖(fun {n : ℕ} (p : MvPolynomial (Fin n) ℂ) (x : Fin n → ℝ) => MvPolynomial.eval (fun i => (x i : ℂ)) p) ((∑ j : Fin (N+1), MvPolynomial.C ((ε : ℂ)^(j : ℕ)) * q j)) x‖
         ∂(fun n m v => Measure.pi (fun _ : Fin n => gaussianReal m v)) n m v) / Real.log (1/ε)) := by
     filter_upwards [hne, self_mem_nhdsWithin, hden.eventually (eventually_gt_atTop 0)]
       with ε hε hεpos hdenpos

@@ -12,50 +12,12 @@ admission_basis: pending escape-witness verification
 Direct frozen dependencies: pending compiled-constant extraction.
 Unfinished escape audit: https://github.com/the-omega-institute/trureturing/issues/27612
 -/
-import Mathlib.Topology.Algebra.Polynomial
-import Mathlib.MeasureTheory.Function.UniformIntegrable
-import Mathlib.Topology.Algebra.Order.Field
-import Mathlib.Algebra.MvPolynomial.Equiv
 import Mathlib.Topology.Algebra.MvPolynomial
-import Mathlib.MeasureTheory.Integral.Pi
 import Mathlib.Analysis.Polynomial.MahlerMeasure
-import Mathlib.Data.Nat.Choose.Bounds
-import Mathlib.Analysis.SpecialFunctions.Integrability.Basic
-import Mathlib.MeasureTheory.Integral.Bochner.Basic
-import Mathlib.MeasureTheory.Group.Integral
 import Mathlib.Probability.Distributions.Gaussian.Real
-import Mathlib.Analysis.Complex.Basic
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Positivity
-import Mathlib.MeasureTheory.Integral.Prod
-import Mathlib.Algebra.Order.Ring.Pow
-import Mathlib.LinearAlgebra.Matrix.Polynomial
-import Mathlib.Algebra.Polynomial.Div
-import Mathlib.Algebra.Polynomial.Degree.TrailingDegree
-import Mathlib.Tactic.IntervalCases
-import Mathlib.Tactic.FinCases
-import Mathlib.Tactic.Ring
-import Mathlib.Data.EReal.Operations
-import Mathlib.LinearAlgebra.Matrix.Kronecker
-import Mathlib.MeasureTheory.Measure.Prod
-import Mathlib.MeasureTheory.Constructions.Pi
-import Mathlib.MeasureTheory.Measure.GiryMonad
-import Mathlib.MeasureTheory.Measure.WithDensity
-import Mathlib.MeasureTheory.Integral.Lebesgue.Basic
-import Mathlib.Data.EReal.Basic
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
 import Mathlib.Analysis.SpecialFunctions.Pow.Integral
-import Mathlib.LinearAlgebra.Matrix.Hermitian
-import Mathlib.MeasureTheory.Measure.Dirac.Basic
 import Mathlib.Algebra.MvPolynomial.Funext
 import Mathlib.Algebra.MvPolynomial.CommRing
-import Mathlib.Algebra.Star.Basic
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.Analysis.SpecialFunctions.Sqrt
-import Mathlib.Tactic.NoncommRing
-import Mathlib.Algebra.BigOperators.Ring.Finset
-import Mathlib.Tactic.Abel
 open MeasureTheory Set ProbabilityTheory
 open scoped ENNReal NNReal
 set_option maxHeartbeats 2500000
@@ -64,15 +26,13 @@ set_option backward.isDefEq.respectTransparency.types false
 namespace D5.S3.Analytic.Probability.GaussianPolynomialLog
 noncomputable section
 
-def negLog (x : ℝ) : ℝ := max (-Real.log |x|) 0
 
-private lemma negLog_nonneg (x : ℝ) : 0 ≤ negLog x := le_max_right _ _
 
-private lemma negLog_zero_of_one_le {x : ℝ} (hx : 1 ≤ |x|) : negLog x = 0 := by
+private lemma negLog_zero_of_one_le {x : ℝ} (hx : 1 ≤ |x|) : (fun t : ℝ => max (-Real.log |t|) 0) x = 0 := by
   exact max_eq_right (neg_nonpos.mpr (Real.log_nonneg hx))
 
-private lemma negLog_integrable : Integrable negLog (volume : Measure ℝ) := by
-  have hi : IntegrableOn negLog (Icc (-1) 1) := by
+private lemma negLog_integrable : Integrable (fun t : ℝ => max (-Real.log |t|) 0) (volume : Measure ℝ) := by
+  have hi : IntegrableOn (fun t : ℝ => max (-Real.log |t|) 0) (Icc (-1) 1) := by
     have hlog : IntegrableOn Real.log (Icc (-1) 1) :=
       (intervalIntegrable_iff_integrableOn_Icc_of_le (by norm_num : (-1 : ℝ) ≤ 1)).mp
         intervalIntegral.intervalIntegrable_log'
@@ -95,31 +55,32 @@ private lemma negLog_integrable : Integrable negLog (volume : Measure ℝ) := by
       · exact le_trans (by linarith) (le_abs_self x))).symm
 
 private lemma negLog_integrable_shift (a : ℝ) :
-    Integrable (fun x => negLog (x-a)) (volume : Measure ℝ) :=
+    Integrable (fun x => (fun t : ℝ => max (-Real.log |t|) 0) (x-a)) (volume : Measure ℝ) :=
   negLog_integrable.comp_sub_right a
 
 private lemma bounded_density_negLog (ρ : ℝ → ℝ≥0∞) (M : ℝ) (hM : 0 ≤ M)
     (hρ : ∀ x, ρ x ≤ ENNReal.ofReal M) (a : ℝ) :
-    Integrable (fun x => negLog (x-a)) (volume.withDensity ρ) ∧
-      (∫ x, negLog (x-a) ∂volume.withDensity ρ) ≤
-        M * ∫ x, negLog x := by
+    Integrable (fun x => (fun t : ℝ => max (-Real.log |t|) 0) (x-a)) (volume.withDensity ρ) ∧
+      (∫ x, (fun t : ℝ => max (-Real.log |t|) 0) (x-a) ∂volume.withDensity ρ) ≤
+        M * ∫ x, (fun t : ℝ => max (-Real.log |t|) 0) x := by
   have hle : (volume : Measure ℝ).withDensity ρ ≤ ENNReal.ofReal M • volume := by
     rw [← withDensity_const]
     exact withDensity_mono (Filter.Eventually.of_forall hρ)
-  have hi : Integrable (fun x => negLog (x-a)) (ENNReal.ofReal M • volume) :=
+  have hi : Integrable (fun x => (fun t : ℝ => max (-Real.log |t|) 0) (x-a)) (ENNReal.ofReal M • volume) :=
     (negLog_integrable_shift a).smul_measure (by simp)
   refine ⟨hi.mono_measure hle, ?_⟩
   calc
-    _ ≤ ∫ x, negLog (x-a) ∂(ENNReal.ofReal M • volume) :=
-      integral_mono_measure hle (Filter.Eventually.of_forall (fun x => negLog_nonneg _)) hi
+    _ ≤ ∫ x, (fun t : ℝ => max (-Real.log |t|) 0) (x-a) ∂(ENNReal.ofReal M • volume) :=
+      integral_mono_measure hle (Filter.Eventually.of_forall (fun x => le_max_right _ _)) hi
     _ = _ := by
-      simp only [integral_smul_measure, ENNReal.toReal_ofReal hM,
-        integral_sub_right_eq_self, smul_eq_mul]
+      simp only [integral_smul_measure, ENNReal.toReal_ofReal hM, smul_eq_mul]
+      congr 1
+      exact integral_sub_right_eq_self (fun t : ℝ => max (-Real.log |t|) 0) a
 
 private lemma gaussian_negLog (m : ℝ) (v : ℝ≥0) (hv : v ≠ 0) (a : ℝ) :
-    Integrable (fun x => negLog (x-a)) (gaussianReal m v) ∧
-      (∫ x, negLog (x-a) ∂gaussianReal m v) ≤
-        (Real.sqrt (2 * Real.pi * v))⁻¹ * ∫ x, negLog x := by
+    Integrable (fun x => (fun t : ℝ => max (-Real.log |t|) 0) (x-a)) (gaussianReal m v) ∧
+      (∫ x, (fun t : ℝ => max (-Real.log |t|) 0) (x-a) ∂gaussianReal m v) ≤
+        (Real.sqrt (2 * Real.pi * v))⁻¹ * ∫ x, (fun t : ℝ => max (-Real.log |t|) 0) x := by
   rw [gaussianReal_of_var_ne_zero m hv]
   apply bounded_density_negLog
   · positivity
@@ -133,7 +94,7 @@ private lemma gaussian_negLog (m : ℝ) (v : ℝ≥0) (hv : v ≠ 0) (a : ℝ) :
     · positivity
 
 private lemma log_norm_sub_bound (x : ℝ) (z : ℂ) (hx : x ≠ z.re) :
-    |Real.log ‖(x : ℂ) - z‖| ≤ |x| + ‖z‖ + negLog (x-z.re) := by
+    |Real.log ‖(x : ℂ) - z‖| ≤ |x| + ‖z‖ + (fun t : ℝ => max (-Real.log |t|) 0) (x-z.re) := by
   have hp : 0 < |x-z.re| := abs_pos.mpr (sub_ne_zero.mpr hx)
   have hdist : |x-z.re| ≤ ‖(x : ℂ)-z‖ := by
     simpa only [Complex.sub_re, Complex.ofReal_re] using
@@ -146,12 +107,12 @@ private lemma log_norm_sub_bound (x : ℝ) (z : ℂ) (hx : x ≠ z.re) :
     have hn := norm_sub_le (x : ℂ) z
     rw [Complex.norm_real, Real.norm_eq_abs] at hn
     linarith
-  have hneg : -Real.log ‖(x : ℂ)-z‖ ≤ negLog (x-z.re) :=
+  have hneg : -Real.log ‖(x : ℂ)-z‖ ≤ (fun t : ℝ => max (-Real.log |t|) 0) (x-z.re) :=
     (neg_le_neg hlog).trans (le_max_left _ _)
   apply abs_le.mpr
   constructor
   · linarith [abs_nonneg x, norm_nonneg z]
-  · linarith [negLog_nonneg (x-z.re)]
+  · linarith [le_max_right (-Real.log |x-z.re|) 0]
 
 private lemma gaussian_root_log_integrable (m : ℝ) (v : ℝ≥0) (hv : v ≠ 0) (z : ℂ) :
     Integrable (fun x : ℝ => Real.log ‖(x : ℂ)-z‖) (gaussianReal m v) := by
@@ -166,7 +127,7 @@ private lemma gaussian_root_log_integrable (m : ℝ) (v : ℝ≥0) (hv : v ≠ 0
   exact log_norm_sub_bound x z hx
 
 private lemma log_root_lower_point (x : ℝ) (z : ℂ) (hx : x ≠ z.re) :
-    Real.log (max 1 ‖z‖) - |x| - negLog (x-z.re) ≤
+    Real.log (max 1 ‖z‖) - |x| - (fun t : ℝ => max (-Real.log |t|) 0) (x-z.re) ≤
       Real.log ‖(x : ℂ)-z‖ := by
   let d := ‖(x : ℂ)-z‖
   have hp : 0 < |x-z.re| := abs_pos.mpr (sub_ne_zero.mpr hx)
@@ -192,11 +153,11 @@ private lemma log_root_lower_point (x : ℝ) (z : ℂ) (hx : x ≠ z.re) :
         max_eq_right (Real.log_nonpos hd.le hd1)]
     · rw [max_eq_right (le_of_not_ge hd1),
         max_eq_left (Real.log_nonneg (le_of_not_ge hd1))]
-  have hm : max (Real.log d) 0 ≤ Real.log d + negLog (x-z.re) := by
+  have hm : max (Real.log d) 0 ≤ Real.log d + (fun t : ℝ => max (-Real.log |t|) 0) (x-z.re) := by
     apply max_le
-    · linarith [negLog_nonneg (x-z.re)]
+    · linarith [le_max_right (-Real.log |x-z.re|) 0]
     · have hh := Real.log_le_log hp hdist
-      have hn : -Real.log |x-z.re| ≤ negLog (x-z.re) := le_max_left _ _
+      have hn : -Real.log |x-z.re| ≤ (fun t : ℝ => max (-Real.log |t|) 0) (x-z.re) := le_max_left _ _
       linarith
   have ht := Real.log_le_sub_one_of_pos (show 0 < 1+|x| by positivity)
   rw [he] at hlog
@@ -205,7 +166,7 @@ private lemma log_root_lower_point (x : ℝ) (z : ℂ) (hx : x ≠ z.re) :
 
 private lemma gaussian_root_log_lower (m : ℝ) (v : ℝ≥0) (hv : v ≠ 0) (z : ℂ) :
     Real.log (max 1 ‖z‖) - (∫ x : ℝ, |x| ∂gaussianReal m v) -
-      (Real.sqrt (2 * Real.pi * v))⁻¹ * (∫ x, negLog x) ≤
+      (Real.sqrt (2 * Real.pi * v))⁻¹ * (∫ x, (fun t : ℝ => max (-Real.log |t|) 0) x) ≤
         ∫ x : ℝ, Real.log ‖(x : ℂ)-z‖ ∂gaussianReal m v := by
   letI := nullSingletonClass_gaussianReal (μ := m) hv
   have hid : Integrable (fun x : ℝ => |x|) (gaussianReal m v) := by
@@ -220,12 +181,12 @@ private lemma gaussian_root_log_lower (m : ℝ) (v : ℝ≥0) (hv : v ≠ 0) (z 
     integrable_const _
   calc
     _ ≤ Real.log (max 1 ‖z‖) - (∫ x : ℝ, |x| ∂gaussianReal m v) -
-        (∫ x : ℝ, negLog (x-z.re) ∂gaussianReal m v) := sub_le_sub_left hn.2 _
-    _ = ∫ x : ℝ, Real.log (max 1 ‖z‖) - |x| - negLog (x-z.re) ∂gaussianReal m v := by
+        (∫ x : ℝ, (fun t : ℝ => max (-Real.log |t|) 0) (x-z.re) ∂gaussianReal m v) := sub_le_sub_left hn.2 _
+    _ = ∫ x : ℝ, Real.log (max 1 ‖z‖) - |x| - (fun t : ℝ => max (-Real.log |t|) 0) (x-z.re) ∂gaussianReal m v := by
       symm
       calc
         _ = (∫ x : ℝ, Real.log (max 1 ‖z‖) - |x| ∂gaussianReal m v) -
-            (∫ x : ℝ, negLog (x-z.re) ∂gaussianReal m v) :=
+            (∫ x : ℝ, (fun t : ℝ => max (-Real.log |t|) 0) (x-z.re) ∂gaussianReal m v) :=
           integral_sub (hconst.sub hid) hn.1
         _ = _ := by
           rw [integral_sub hconst hid, integral_const]
@@ -319,14 +280,14 @@ private lemma gaussian_polynomial_log_integral (m : ℝ) (v : ℝ≥0) (hv : v �
 
 noncomputable def rootLogCost (m : ℝ) (v : ℝ≥0) : ℝ :=
   (∫ x : ℝ, |x| ∂gaussianReal m v) +
-    (Real.sqrt (2 * Real.pi * v))⁻¹ * (∫ x, negLog x)
+    (Real.sqrt (2 * Real.pi * v))⁻¹ * (∫ x : ℝ, Real.posLog x⁻¹)
 
 lemma rootLogCost_nonneg (m : ℝ) (v : ℝ≥0) : 0 ≤ rootLogCost m v := by
   unfold rootLogCost
   apply add_nonneg
   · exact integral_nonneg (fun x => abs_nonneg x)
   · apply mul_nonneg (by positivity)
-    exact integral_nonneg negLog_nonneg
+    exact integral_nonneg (fun x => Real.posLog_nonneg)
 
 private lemma gaussian_polynomial_log_mahler_lower (m : ℝ) (v : ℝ≥0) (hv : v ≠ 0)
     (p : Polynomial ℂ) (hp : p ≠ 0) :
@@ -343,6 +304,7 @@ private lemma gaussian_polynomial_log_mahler_lower (m : ℝ) (v : ℝ≥0) (hv :
       simp only [Multiset.map_cons, Multiset.sum_cons, Multiset.card_cons,
         Nat.cast_add, Nat.cast_one]
       unfold rootLogCost at *
+      simp only [Real.posLog, Real.log_inv, Real.log_abs, max_comm] at *
       linarith
   have hr := hsum p.roots
   rw [Polynomial.logMahlerMeasure_eq_log_leadingCoeff_add_sum_log_roots,
@@ -645,7 +607,7 @@ private lemma affineGramPoly_coeff_two {n : ℕ} (A G : Matrix (Fin n) (Fin n) R
   change (Polynomial.C ((A*Aᴴ) i j) + Polynomial.X * Polynomial.C ((A*Gᴴ+G*Aᴴ) i j) +
     Polynomial.X^2 * Polynomial.C ((G*Gᴴ) i j)).coeff 2 = _
   simp [Polynomial.coeff_mul_C]
-lemma pairDet_identity_noise_topCoeff {n : ℕ} (A C : Matrix (Fin n) (Fin n) R) :
+private lemma pairDet_identity_noise_topCoeff {n : ℕ} (A C : Matrix (Fin n) (Fin n) R) :
     (pairDet A C 1 0).coeff (2*n*n) = 1 := by
   let M : Matrix (Fin n × Fin n) (Fin n × Fin n) (Polynomial R) :=
     affineGramPoly A 1 ⊗ₖ (1 : Matrix (Fin n) (Fin n) (Polynomial R)) -
