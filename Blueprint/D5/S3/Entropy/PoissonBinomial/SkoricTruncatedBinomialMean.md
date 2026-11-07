@@ -38,6 +38,10 @@ $$\forall x \in \mathbb{N},\; 2 \le x \Rightarrow \left(\forall r \in \mathbb{N}
 
 *Proof.* Machine-checked in Lean as `D5/S3/Entropy/PoissonBinomial/SkoricTruncatedBinomialMean.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/skoric-truncated-binomial-mean` (proved) by `D5/S3/Entropy/PoissonBinomial/SkoricTruncatedBinomialMean.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"skoric-truncated-binomial-mean","declaration_gid":"D5/S3/Entropy/PoissonBinomial/SkoricTruncatedBinomialMean.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Boris Škorić (2021). *Quantum digital signatures with smaller public keys*. DOI: [10.26421/QIC21.11-12-4](https://doi.org/10.26421/QIC21.11-12-4). URL: <https://arxiv.org/abs/2012.15493v2>.

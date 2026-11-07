@@ -42,7 +42,11 @@ internal sealed class SkoricTruncatedBinomialMeanDocument : IScribeDocumentDefin
             DeclarationHandle.Create(Prefix + name), H(name), StatementSource.FromAuthor(formula),
             provenance, role == DescribeRole.Definition
                 ? Blocks(SourceQuotation(), Paragraph(Text(prose)))
-                : Blocks(Paragraph(Text(prose))), role);
+                : Blocks(Paragraph(Text(prose))), role,
+            openProblemResolutionClaim: name == "result"
+                ? new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("skoric-truncated-binomial-mean"), ResolutionKind.Proved)
+                : null);
 
     private static DocumentBlock SourceQuotation() => Paragraph(
         Text("Conjecture 1: “Let "), Math(In(Call("f", F.Id("x"), F.Id("r")))),
