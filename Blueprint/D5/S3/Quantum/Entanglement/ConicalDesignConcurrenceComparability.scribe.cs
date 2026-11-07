@@ -20,6 +20,15 @@ internal sealed class ConicalDesignConcurrenceComparabilityDocument : IScribeDoc
             Node("traceNorm_isometry", "Rectangular isometries preserve the trace norm", TraceNormIsometryFormula(),
                 "For finite index types M and N, a complex rectangular matrix V with adjoint times V equal to the identity preserves the trace norm under X mapped to V X V adjoint. The square matrix X is arbitrary. This invariance is used in the normal form of the concurrence bound and in the projection dilation.",
                 DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("Q", "The normalized trace-vector projector", QFormula(),
+                "For every natural dimension d, Q is the reciprocal complex dimension times the outer product of Matrix.vec of the identity with its conjugate vector. At d equal to zero the same expression is defined.",
+                DescribeRole.Definition, AssessedProvenance.FromRepo()),
+            Node("Q_square", "Idempotence of the trace-vector projector", QSquareFormula(),
+                "In positive dimension, multiplying Q by itself leaves Q unchanged.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("Q_hermitian", "Self-adjointness of the trace-vector projector", QHermitianFormula(),
+                "In every natural dimension, the conjugate transpose of Q equals Q.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo()),
             Node("swap", "The literal tensor swap", SwapFormula(),
                 "The flip F in Siudzinska's Section 2, Eq. (9), p. 2, sends the computational-basis pair (a,b) to (b,a). The identity matrix is reindexed in its columns by Prod.swap, so its (p,q) entry is 1 exactly when p=(q.2,q.1). Scalars are complex.",
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Siudzinska)),
@@ -244,6 +253,25 @@ internal sealed class ConicalDesignConcurrenceComparabilityDocument : IScribeDoc
     private static Formula MatrixInputs(Formula body) => DesignInputs(All("rho", MatrixType(Pairs(F.Id("d"))), body));
     private static Formula SumOver(Formula i, Formula type, Formula body) =>
         Seq(new Formula.Subscript(Sum, Seq(i, Sp, InMacro, Sp, type)), Sp, body);
+
+    private static Formula QFormula()
+    {
+        Formula d = F.Id("d");
+        Formula v = Qualified("Matrix", "vec", Cast(D(1), MatrixType(Fin(d))));
+        Formula scalar = new Formula.Power(Cast(d, ComplexType()), Seq(Minus, D(1)));
+        Formula outer = Qualified("Matrix", "vecMulVec", v, Call("star", v));
+        return Disp(Dim(Eqn(Call("Q", d), Qualified("HSMul", "hSMul", scalar, outer))));
+    }
+    private static Formula QSquareFormula()
+    {
+        Formula d = F.Id("d"), q = Call("Q", d);
+        return Disp(Dim(Imp(Lt(D(0), d), Eqn(Mul(q, q), q))));
+    }
+    private static Formula QHermitianFormula()
+    {
+        Formula d = F.Id("d"), q = Call("Q", d);
+        return Disp(Dim(Eqn(Qualified("Matrix", "conjTranspose", q), q)));
+    }
 
     private static Formula TraceNormSmulFormula()
     {
