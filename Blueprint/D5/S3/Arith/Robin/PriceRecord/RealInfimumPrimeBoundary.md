@@ -152,19 +152,7 @@ Lean statement: `D5/S3/Arith/Robin/PriceRecord/RealInfimumPrimeBoundary.prefixBo
 
 The real boundary vector evaluates the existing pointwise price boundary at the canonical price, without asserting that it attains the original infimum.
 
-**Definition 1.13 (prefixEps).**
-
-Lean statement: `D5/S3/Arith/Robin/PriceRecord/RealInfimumPrimeBoundary.prefixEps`
-
-*Formalization.* `D5/S3/Arith/Robin/PriceRecord/RealInfimumPrimeBoundary.prefixEps` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The first-order reciprocal scale is 1/(sqrt(H)*ell*sqrt(ell)); its denominator is positive eventually.
-
-**Definition 1.14 (prefixQ).**
+**Definition 1.13 (prefixQ).**
 
 Lean statement: `D5/S3/Arith/Robin/PriceRecord/RealInfimumPrimeBoundary.prefixQ`
 
@@ -176,7 +164,7 @@ Lean statement: `D5/S3/Arith/Robin/PriceRecord/RealInfimumPrimeBoundary.prefixQ`
 
 Q is the boundary objective minus the original baseline, plus the exact nonlinear tangent remainder. Its finite formula joins the head and the finite Euler tail.
 
-**Theorem 1.15 (prefix H ratio).**
+**Theorem 1.14 (prefix H ratio).**
 
 Lean statement: `D5/S3/Arith/Robin/PriceRecord/RealInfimumPrimeBoundary.prefix_H_ratio`
 
@@ -188,7 +176,7 @@ Lean statement: `D5/S3/Arith/Robin/PriceRecord/RealInfimumPrimeBoundary.prefix_H
 
 The pinned theta prime-number theorem yields H/P tending to one for natural prime prefixes.
 
-**Theorem 1.16 (prefixH atTop).**
+**Theorem 1.15 (prefixH atTop).**
 
 Lean statement: `D5/S3/Arith/Robin/PriceRecord/RealInfimumPrimeBoundary.prefixH_atTop`
 
@@ -200,7 +188,7 @@ Lean statement: `D5/S3/Arith/Robin/PriceRecord/RealInfimumPrimeBoundary.prefixH_
 
 The actual clock H tends to infinity by multiplying H/P tending to one by the natural-cast sequence tending to infinity.
 
-**Theorem 1.17 (prefix Y atTop).**
+**Theorem 1.16 (prefix Y atTop).**
 
 Lean statement: `D5/S3/Arith/Robin/PriceRecord/RealInfimumPrimeBoundary.prefix_Y_atTop`
 
@@ -212,7 +200,7 @@ Lean statement: `D5/S3/Arith/Robin/PriceRecord/RealInfimumPrimeBoundary.prefix_Y
 
 The actual cutoff Y tends to infinity, using C=1+H*ell and the square root limit.
 
-**Theorem 1.18 (prefix Y div cutoff).**
+**Theorem 1.17 (prefix Y div cutoff).**
 
 Lean statement: `D5/S3/Arith/Robin/PriceRecord/RealInfimumPrimeBoundary.prefix_Y_div_cutoff`
 
@@ -224,7 +212,7 @@ Lean statement: `D5/S3/Arith/Robin/PriceRecord/RealInfimumPrimeBoundary.prefix_Y
 
 The endpoint separation Y/P tends to zero. This proves that the finite prime tail has lower endpoint below its original upper endpoint eventually.
 
-**Theorem 1.19 (eventual prefix domains).**
+**Theorem 1.18 (eventual prefix domains).**
 
 Lean statement: `D5/S3/Arith/Robin/PriceRecord/RealInfimumPrimeBoundary.eventual_prefix_domains`
 
@@ -236,7 +224,7 @@ Lean statement: `D5/S3/Arith/Robin/PriceRecord/RealInfimumPrimeBoundary.eventual
 
 Eventually the support is prime, has at least three members, ell is at least one, the price is positive, and 2<Y<P. These jointly pay the finite identities and full-image squeeze.
 
-**Theorem 1.20 (eventual scale positivity).**
+**Theorem 1.19 (eventual scale positivity).**
 
 Lean statement: `D5/S3/Arith/Robin/PriceRecord/RealInfimumPrimeBoundary.eventual_scale_positivity`
 
@@ -246,9 +234,9 @@ Lean statement: `D5/S3/Arith/Robin/PriceRecord/RealInfimumPrimeBoundary.eventual
 
 *Commentary.*
 
-The actual H, ell, C, Y, log(Y), reciprocal scale, P and log(P) are all positive eventually; every later denominator uses these paid domains.
+The actual H, ell, C, Y, log(Y), P and log(P) are all positive eventually; every later denominator uses these paid domains.
 
-**Theorem 1.21 (prefix C div H ell).**
+**Theorem 1.20 (prefix C div H ell).**
 
 Lean statement: `D5/S3/Arith/Robin/PriceRecord/RealInfimumPrimeBoundary.prefix_C_div_H_ell`
 
@@ -260,7 +248,7 @@ Lean statement: `D5/S3/Arith/Robin/PriceRecord/RealInfimumPrimeBoundary.prefix_C
 
 The retained cutoff correction C/(H*ell) tends to one because C=1+H*ell and H*ell tends to infinity.
 
-**Theorem 1.22 (eventual log C identity).**
+**Theorem 1.21 (eventual log C identity).**
 
 Lean statement: `D5/S3/Arith/Robin/PriceRecord/RealInfimumPrimeBoundary.eventual_log_C_identity`
 
@@ -272,7 +260,7 @@ Lean statement: `D5/S3/Arith/Robin/PriceRecord/RealInfimumPrimeBoundary.eventual
 
 On the positive eventual domain, log(C)=ell+log(ell)+log(C/(H*ell)); the exact correction is retained.
 
-**Theorem 1.23 (prefix log Y div ell).**
+**Theorem 1.22 (prefix log Y div ell).**
 
 Lean statement: `D5/S3/Arith/Robin/PriceRecord/RealInfimumPrimeBoundary.prefix_log_Y_div_ell`
 
@@ -284,7 +272,7 @@ Lean statement: `D5/S3/Arith/Robin/PriceRecord/RealInfimumPrimeBoundary.prefix_l
 
 The cutoff logarithm obeys log(Y)/ell tending to one-half, using the exact logarithmic identity and the vanishing log(ell)/ell correction.
 
-**Theorem 1.24 (prefix Y div sqrt H ell).**
+**Theorem 1.23 (prefix Y div sqrt H ell).**
 
 Lean statement: `D5/S3/Arith/Robin/PriceRecord/RealInfimumPrimeBoundary.prefix_Y_div_sqrt_H_ell`
 
@@ -296,7 +284,7 @@ Lean statement: `D5/S3/Arith/Robin/PriceRecord/RealInfimumPrimeBoundary.prefix_Y
 
 The actual square-root scale Y/sqrt(H*ell) tends to one; the additive cutoff correction is kept until taking the limit.
 
-**Theorem 1.25 (exp difference quotient).**
+**Theorem 1.24 (exp difference quotient).**
 
 Lean statement: `D5/S3/Arith/Robin/PriceRecord/RealInfimumPrimeBoundary.exp_difference_quotient`
 
@@ -323,7 +311,6 @@ The consumed prefix domains, scales and exponential divided difference are conso
 - Truth anchor: `D5/S3/Arith/Robin/PriceRecord/RealInfimumPrimeBoundary.prefixBoundary`
 - Truth anchor: `D5/S3/Arith/Robin/PriceRecord/RealInfimumPrimeBoundary.prefixC`
 - Truth anchor: `D5/S3/Arith/Robin/PriceRecord/RealInfimumPrimeBoundary.prefixEll`
-- Truth anchor: `D5/S3/Arith/Robin/PriceRecord/RealInfimumPrimeBoundary.prefixEps`
 - Truth anchor: `D5/S3/Arith/Robin/PriceRecord/RealInfimumPrimeBoundary.prefixH`
 - Truth anchor: `D5/S3/Arith/Robin/PriceRecord/RealInfimumPrimeBoundary.prefixH_atTop`
 - Truth anchor: `D5/S3/Arith/Robin/PriceRecord/RealInfimumPrimeBoundary.prefixPrice`
