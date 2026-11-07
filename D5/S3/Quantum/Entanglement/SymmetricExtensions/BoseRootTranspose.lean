@@ -116,30 +116,5 @@ def pairRootTranspose (ρ : Matrix (L × L) (L × L) ℂ) :
     Matrix (L × L) (L × L) ℂ :=
   fun x y => ρ (y.1, x.2) (x.1, y.2)
 
-private lemma root_split (root leaf : I) (hne : root ≠ leaf)
-    (v w : L × L) (c : {i : I // i ≠ root ∧ i ≠ leaf} → L) :
-    ({root} : Finset I).piecewise ((edgeSplit root leaf hne).symm (w,c))
-      ((edgeSplit root leaf hne).symm (v,c)) =
-        (edgeSplit root leaf hne).symm ((w.1,v.2),c) := by
-  funext i
-  by_cases hr : i = root
-  · subst i
-    simp [Finset.piecewise, edgeSplit]
-  by_cases hl : i = leaf
-  · subst i
-    simp [Finset.piecewise, edgeSplit, hne.symm]
-  · simp [Finset.piecewise, edgeSplit, hr, hl]
-
-/-- Root transposition commutes with every root--leaf marginal. -/
-theorem marginal_rootTranspose (root leaf : I) (hne : root ≠ leaf)
-    (E : Matrix (I → L) (I → L) ℂ) :
-    edgeMarginal root leaf hne (partialTransposeOn {root} E) =
-      pairRootTranspose (edgeMarginal root leaf hne E) := by
-  ext v w
-  simp only [edgeMarginal,
-    D5.S3.Quantum.Information.PartialTraceMutualInformation.partialTraceRight,
-    Matrix.submatrix_apply, partialTransposeOn, pairRootTranspose,
-    root_split]
-
 end
 end D5.S3.Quantum.Entanglement.SymmetricExtensions.BoseRootTranspose

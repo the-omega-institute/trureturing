@@ -23,11 +23,5 @@ internal sealed class BoseRootTransposeDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("Transpose the first member of the actual ordered pair, keeping the second member unchanged."))),
                 DescribeRole.Definition),
-            Describe.Lean(DescribeId.Create("boseroottranspose-marginal-roottranspose"),
-                DeclarationHandle.Create(Prefix + "marginal_rootTranspose"),
-                H("marginal rootTranspose"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For distinct root and leaf, the actual root partial transpose commutes with the root-leaf partial trace and transposes the first factor of that marginal."))),
-                DescribeRole.Theorem),
             Paragraph(Text("Root partial transpose is an involutive transport of fully PPT star witnesses for an arbitrary input and its first-factor transpose. The leaf sandwich is retained, and symmetric-difference cuts include the ordinary and full-transpose endpoints with their positive semidefinite witnesses.")))));
 }

@@ -32,23 +32,10 @@ Lean statement: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseRootTranspos
 
 Transpose the first member of the actual ordered pair, keeping the second member unchanged.
 
-**Theorem 1.3 (marginal rootTranspose).**
-
-Lean statement: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseRootTranspose.marginal_rootTranspose`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseRootTranspose.marginal_rootTranspose` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-For distinct root and leaf, the actual root partial transpose commutes with the root-leaf partial trace and transposes the first factor of that marginal.
-
 Root partial transpose is an involutive transport of fully PPT star witnesses for an arbitrary input and its first-factor transpose. The leaf sandwich is retained, and symmetric-difference cuts include the ordinary and full-transpose endpoints with their positive semidefinite witnesses.
 
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseRootTranspose.AllCutsPPT`
-- Truth anchor: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseRootTranspose.marginal_rootTranspose`
 - Truth anchor: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseRootTranspose.pairRootTranspose`
 - Dependency: [D5/S3/Quantum/Entanglement/SymmetricExtensions/DickeExtension](DickeExtension.md)
