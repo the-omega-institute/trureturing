@@ -395,10 +395,11 @@ theorem computational_biseparable {n d : ℕ} (hn : 2 ≤ n) (w : Word (Fin d) n
     rw [← Set.eqOn_univ x w, ← Set.union_compl_self (↑a : Set (Fin n)), Set.eqOn_union]
     simp only [Set.EqOn, Finset.mem_coe, Subtype.forall,
       Finset.mem_compl, Set.mem_compl_iff]
+  simp only [Pi.single_apply]
   change (if x = w then (1 : ℂ) else 0) =
     (if ∀ i : a, x i = w i then 1 else 0) *
       (if ∀ i : ↥aᶜ, x i = w i then 1 else 0)
-  rw [he]
+  simp only [he]
   split_ifs <;> simp_all
 
 private lemma overlap_values_nonempty {n d : ℕ} (hn : 2 ≤ n) (hd : 0 < d)
@@ -564,7 +565,7 @@ private lemma metric_inverse {n d : ℕ} (hn : 0 < n) (hd : 0 < d)
   simp only [metric, metricInverse, complementProjector,
     add_mul, mul_add, sub_mul, mul_sub, Matrix.smul_mul, Matrix.mul_smul,
     smul_smul, one_mul, mul_one, hpp, hpg, hgp, hgg]
-  module <;> simp [ha, hb]
+  match_scalars <;> field_simp <;> ring
 
 private lemma metric_weighted_cs {n d : ℕ} (hn : 0 < n) (hd : 0 < d)
     {a b : ℝ} (ha : 0 < a) (ha1 : a ≤ 1) (hab : a ≤ b)
@@ -770,14 +771,733 @@ theorem affine_certificate {n d : ℕ} (hn : 3 ≤ n) (hd : 3 ≤ d)
   have hdR : (3 : ℝ) ≤ d := by exact_mod_cast hd
   have hd0 : (d : ℝ) ≠ 0 := by linarith
   have hd2 : (d - 2 : ℝ) ≠ 0 := by linarith
+  have hd1 : (d - 1 : ℝ) ≠ 0 := by linarith
   have ht : (1 : ℝ) ≤ (d - 1 : ℝ) / (d - 2) := by
     apply (le_div_iff₀ (by linarith)).mpr
     linarith
   have h := supporting_line (by omega : 2 ≤ n) (by omega : 2 ≤ d) ht ρ
   convert h using 1
   simp only [witnessOp, complementProjector, mean_sub, mean_smul, mean_one]
+  field_simp [hd0, hd1, hd2]
+  <;> ring
+
+/-- The complete two-observable value, with its zero region retained. The
+older `twoMeanValue` denotes only the radical branch. -/
+def twoMeanOptimum (d : ℕ) (f y : ℝ) : ℝ :=
+  if (d : ℝ) * f ≤ y then 0 else twoMeanValue d f y
+
+private lemma supporting_envelope {d : ℕ} (hd : 2 ≤ d) {f y E : ℝ}
+    (hf : 0 ≤ f) (hfy : f ≤ y) (hE : 0 ≤ E)
+    (hline : ∀ t : ℝ, 1 ≤ t →
+      (y + (d - 2 : ℝ) * f - t * (y - f) - (d - 1 : ℝ) * f / t) / d ≤ E) :
+    twoMeanOptimum d f y ≤ E := by
+  have hdR : (2 : ℝ) ≤ d := by exact_mod_cast hd
+  have hdpos : (0 : ℝ) < d := by linarith
+  have hdne : (d : ℝ) ≠ 0 := hdpos.ne'
+  unfold twoMeanOptimum
+  split_ifs with hlow
+  · exact hE
+  by_cases heq : f = y
+  · subst y
+    have hB : twoMeanValue d f f = (d - 1 : ℝ) * f / d := by
+      simp only [twoMeanValue, sub_self, mul_zero, Real.sqrt_zero, sub_zero]
+      ring
+    rw [hB]
+    let c : ℝ := (d - 1 : ℝ) * f / d
+    change c ≤ E
+    by_contra h
+    have hδ : 0 < c - E := sub_pos.mpr (lt_of_not_ge h)
+    have hc : 0 ≤ c := div_nonneg (mul_nonneg (by linarith) hf) hdpos.le
+    let t : ℝ := 1 + c / (c - E)
+    have ht : 1 ≤ t := by dsimp [t]; exact le_add_of_nonneg_right (div_nonneg hc hδ.le)
+    have htpos : 0 < t := zero_lt_one.trans_le ht
+    have hdt : (c - E) * t = (c - E) + c := by
+      dsimp [t]
+      field_simp
+      <;> ring
+    have hct : c / t < c - E := (div_lt_iff₀ htpos).mpr (by rw [hdt]; linarith)
+    have hb := hline t ht
+    have hform :
+        (f + (d - 2 : ℝ) * f - t * (f - f) - (d - 1 : ℝ) * f / t) / d = c - c / t := by
+      dsimp [c]
+      field_simp
+      <;> ring
+    rw [hform] at hb
+    linarith
+  · have hlt : f < y := lt_of_le_of_ne hfy heq
+    have hfpos : 0 < f := by nlinarith
+    let X := Real.sqrt ((d - 1 : ℝ) * f)
+    let Y := Real.sqrt (y - f)
+    have hX : 0 < X := Real.sqrt_pos.mpr (mul_pos (by linarith) hfpos)
+    have hY : 0 < Y := Real.sqrt_pos.mpr (sub_pos.mpr hlt)
+    have hXs : X ^ 2 = (d - 1 : ℝ) * f := Real.sq_sqrt (mul_nonneg (by linarith) hf)
+    have hYs : Y ^ 2 = y - f := Real.sq_sqrt (sub_nonneg.mpr hfy)
+    have hXY : Y ≤ X := by nlinarith
+    let t := X / Y
+    have ht : 1 ≤ t := (le_div_iff₀ hY).mpr (by simpa using hXY)
+    have hfirst : t * (y - f) = X * Y := by
+      rw [← hYs]
+      dsimp [t]
+      field_simp
+      <;> ring
+    have hsecond : (d - 1 : ℝ) * f / t = X * Y := by
+      rw [← hXs]
+      dsimp [t]
+      field_simp
+      <;> ring
+    have hroot : Real.sqrt ((d - 1 : ℝ) * f * (y - f)) = X * Y :=
+      Real.sqrt_mul (mul_nonneg (by linarith) hf) _
+    have hb := hline t ht
+    rw [hfirst, hsecond] at hb
+    unfold twoMeanValue
+    rw [hroot]
+    convert hb using 1 <;> ring
+
+private lemma mean_positive {n d : ℕ}
+    (ρ : D5.S3.Quantum.Foundation.FiniteStateChannel.DensityState (Word (Fin d) n))
+    (A : Matrix (Word (Fin d) n) (Word (Fin d) n) ℂ) (hA : A.PosSemidef) :
+    0 ≤ observableMean (CStarMatrix.ofMatrix.symm ρ.1) A := by
+  classical
+  obtain ⟨_, k, p, ψ, hp, hs, hu, he, hv⟩ := ensemble_values_nonempty ρ
+  rw [he, trace_average]
+  exact Finset.sum_nonneg (fun i _ =>
+    mul_nonneg (hp i) (RHLinalg.hermForm_nonneg_of_posSemidef hA (ψ i)))
+
+/-- The measured means of every density state lie in the required triangle. -/
+theorem means_triangle {n d : ℕ} (hn : 0 < n) (hd : 0 < d)
+    (ρ : D5.S3.Quantum.Foundation.FiniteStateChannel.DensityState (Word (Fin d) n)) :
+    0 ≤ observableMean (CStarMatrix.ofMatrix.symm ρ.1) (rankOneDensity (ghz n d)) ∧
+    observableMean (CStarMatrix.ofMatrix.symm ρ.1) (rankOneDensity (ghz n d)) ≤
+      observableMean (CStarMatrix.ofMatrix.symm ρ.1) (supportProjector n d) ∧
+    observableMean (CStarMatrix.ofMatrix.symm ρ.1) (supportProjector n d) ≤ 1 := by
+  have hf := mean_positive ρ _ (posSemidef_vecMulVec_self_star (ghz n d))
+  have hfy := mean_positive ρ _ (orthogonal_positive hn hd).1
+  have hy := mean_positive ρ _ (orthogonal_positive hn hd).2
+  simp only [complementProjector, mean_sub, mean_one] at hfy hy
+  exact ⟨hf, by linarith, by linarith⟩
+
+/-- The universal two-mean lower bound in actual density and finite-ensemble
+semantics, including both coincident means and the complete zero region. -/
+theorem two_mean_lower {n d : ℕ} (hn : 3 ≤ n) (hd : 3 ≤ d)
+    (ρ : D5.S3.Quantum.Foundation.FiniteStateChannel.DensityState (Word (Fin d) n)) :
+    twoMeanOptimum d
+      (observableMean (CStarMatrix.ofMatrix.symm ρ.1) (rankOneDensity (ghz n d)))
+      (observableMean (CStarMatrix.ofMatrix.symm ρ.1) (supportProjector n d)) ≤
+      geometricMeasure (CStarMatrix.ofMatrix.symm ρ.1) := by
+  obtain ⟨hf, hfy, _⟩ := means_triangle (by omega : 0 < n) (by omega : 0 < d) ρ
+  exact supporting_envelope (by omega) hf hfy (density_measure_nonneg (by omega) (by omega) ρ)
+    (fun t ht => supporting_line (by omega) (by omega) ht ρ)
+
+private lemma pure_means_triangle {n d : ℕ} (hn : 0 < n) (hd : 0 < d)
+    (ψ : Word (Fin d) n → ℂ) (hψ : IsUnitState ψ) :
+    0 ≤ readout (rankOneDensity (ghz n d)) ψ ∧
+    readout (rankOneDensity (ghz n d)) ψ ≤ readout (supportProjector n d) ψ ∧
+    readout (supportProjector n d) ψ ≤ 1 := by
+  have hf := RHLinalg.hermForm_nonneg_of_posSemidef
+    (posSemidef_vecMulVec_self_star (ghz n d)) ψ
+  have hfy := RHLinalg.hermForm_nonneg_of_posSemidef (orthogonal_positive hn hd).1 ψ
+  have hy := RHLinalg.hermForm_nonneg_of_posSemidef (orthogonal_positive hn hd).2 ψ
+  change 0 ≤ readout (rankOneDensity (ghz n d)) ψ at hf
+  change 0 ≤ readout (supportProjector n d - rankOneDensity (ghz n d)) ψ at hfy
+  change 0 ≤ readout (complementProjector n d) ψ at hy
+  have hu : readout 1 ψ = 1 := by rw [expectation_one]; exact hψ
+  simp only [complementProjector, expectation_sub, hu] at hfy hy
+  exact ⟨hf, by linarith, by linarith⟩
+
+private lemma pure_supporting_line {n d : ℕ} (hn : 2 ≤ n) (hd : 2 ≤ d)
+    {t : ℝ} (ht : 1 ≤ t) (ψ : Word (Fin d) n → ℂ) (hψ : IsUnitState ψ) :
+    (readout (supportProjector n d) ψ + (d - 2 : ℝ) *
+        readout (rankOneDensity (ghz n d)) ψ -
+      t * (readout (supportProjector n d) ψ - readout (rankOneDensity (ghz n d)) ψ) -
+      (d - 1 : ℝ) * readout (rankOneDensity (ghz n d)) ψ / t) / d ≤
+      geometricMeasurePure ψ := by
+  obtain ⟨ha, ha1, hab, he⟩ := metric_parameters hd ht
+  have h := pure_metric_lower hn (by omega) ha ha1 hab he ψ hψ
+  convert h using 1
+  unfold metricA metricB
   field_simp
   <;> ring
+
+/-- The same two-mean bound holds for every normalized pure vector and its
+actual supremum over all biseparable cuts. -/
+theorem pure_two_mean_lower {n d : ℕ} (hn : 3 ≤ n) (hd : 3 ≤ d)
+    (ψ : Word (Fin d) n → ℂ) (hψ : IsUnitState ψ) :
+    twoMeanOptimum d (readout (rankOneDensity (ghz n d)) ψ)
+      (readout (supportProjector n d) ψ) ≤ geometricMeasurePure ψ := by
+  obtain ⟨hf, hfy, _⟩ := pure_means_triangle (by omega : 0 < n) (by omega : 0 < d) ψ hψ
+  exact supporting_envelope (by omega) hf hfy (pure_measure_bounds (by omega) (by omega) ψ hψ).1
+    (fun t ht => pure_supporting_line (by omega) (by omega) ht ψ hψ)
+
+private lemma biseparable_measure_zero {n d : ℕ} (hn : 2 ≤ n) (hd : 0 < d)
+    (φ : Word (Fin d) n → ℂ) (hφ : IsBiseparable φ) : geometricMeasurePure φ = 0 := by
+  have hu : star φ ⬝ᵥ φ = 1 :=
+    (D5.S3.Quantum.Information.MultiEntropyPositivityRefutation.unit_norm_iff φ).mpr hφ.1
+  have hself : (1 : ℝ) ∈ {t : ℝ | ∃ ψ, IsBiseparable ψ ∧
+      t = Complex.normSq (star ψ ⬝ᵥ φ)} := by
+    refine ⟨φ, hφ, ?_⟩
+    simp [hu]
+  have hl := le_csSup (overlap_values_bdd φ hφ.1) hself
+  have hz := (pure_measure_bounds hn hd φ hφ.1).1
+  unfold geometricMeasurePure at *
+  linarith
+
+/-- A finite normalized family is an actual competitor in the original roof,
+with any finite index type, by explicit reindexing to `Fin`. -/
+theorem finite_ensemble_upper {n d : ℕ} (hn : 2 ≤ n) (hd : 0 < d)
+    {ι : Type*} [Fintype ι] (p : ι → ℝ) (ψ : ι → Word (Fin d) n → ℂ)
+    (hp : ∀ i, 0 ≤ p i) (hs : ∑ i, p i = 1) (hu : ∀ i, IsUnitState (ψ i)) :
+    geometricMeasure (∑ i, p i • rankOneDensity (ψ i)) ≤
+      ∑ i, p i * geometricMeasurePure (ψ i) := by
+  classical
+  let e := (Fintype.equivFin ι).symm
+  apply csInf_le (ensemble_values_bdd hn hd _)
+  refine ⟨Fintype.card ι, p ∘ e, ψ ∘ e, ?_, ?_, ?_, ?_, ?_⟩
+  · exact fun i => hp (e i)
+  · simpa only [Function.comp_apply, Equiv.sum_comp] using hs
+  · exact fun i => hu (e i)
+  · exact (Equiv.sum_comp e (fun i => p i • rankOneDensity (ψ i))).symm
+  · exact (Equiv.sum_comp e (fun i => p i * geometricMeasurePure (ψ i))).symm
+
+private lemma trace_rank_one {n d : ℕ} (ψ : Word (Fin d) n → ℂ) :
+    trace (rankOneDensity ψ) = ((∑ x, Complex.normSq (ψ x) : ℝ) : ℂ) := by
+  simpa only [rankOneDensity, trace_vecMulVec, dotProduct_comm, Complex.normSq_eq_norm_sq] using
+    D5.S3.Quantum.Entanglement.AbsoluteSeparability.LowRankRays.dot_star_self ψ
+
+/-- The density operator represented by a concrete normalized finite ensemble. -/
+def ensembleDensity {n d : ℕ} {ι : Type*} [Fintype ι]
+    (p : ι → ℝ) (ψ : ι → Word (Fin d) n → ℂ)
+    (hp : ∀ i, 0 ≤ p i) (hs : ∑ i, p i = 1) (hu : ∀ i, IsUnitState (ψ i)) :
+    D5.S3.Quantum.Foundation.FiniteStateChannel.DensityState (Word (Fin d) n) := by
+  classical
+  refine ⟨CStarMatrix.ofMatrix (∑ i, p i • rankOneDensity (ψ i)), ?_, ?_⟩
+  · apply map_nonneg CStarMatrix.ofMatrixStarAlgEquiv
+    exact Finset.sum_nonneg (fun i _ =>
+      ((posSemidef_vecMulVec_self_star (ψ i)).smul (hp i)).nonneg)
+  · change trace (∑ i, p i • rankOneDensity (ψ i)) = 1
+    have hu' : ∀ i, ∑ x, Complex.normSq (ψ i x) = 1 := hu
+    simp only [trace_sum, trace_smul, trace_rank_one, hu', Complex.real_smul,
+      mul_one, ← Complex.ofReal_sum, hs, Complex.ofReal_one]
+
+/-- A concrete biseparable finite ensemble has zero actual convex roof. -/
+theorem biseparable_ensemble_zero {n d : ℕ} (hn : 2 ≤ n) (hd : 0 < d)
+    {ι : Type*} [Fintype ι] (p : ι → ℝ) (φ : ι → Word (Fin d) n → ℂ)
+    (hp : ∀ i, 0 ≤ p i) (hs : ∑ i, p i = 1) (hφ : ∀ i, IsBiseparable (φ i)) :
+    geometricMeasure (∑ i, p i • rankOneDensity (φ i)) = 0 := by
+  have hl := density_measure_nonneg hn hd (ensembleDensity p φ hp hs (fun i => (hφ i).1))
+  have hh := finite_ensemble_upper hn hd p φ hp hs (fun i => (hφ i).1)
+  simp only [biseparable_measure_zero hn hd _ (hφ _), mul_zero, Finset.sum_const_zero] at hh
+  exact le_antisymm hh hl
+
+/-- A vector supported on constant computational words, with specified amplitudes. -/
+def constantVector {n d : ℕ} (hn : 0 < n) (c : Fin d → ℂ) : Word (Fin d) n → ℂ := by
+  classical
+  exact fun x => if ∀ i, x i = x ⟨0, hn⟩ then c (x ⟨0, hn⟩) else 0
+
+private lemma constantVector_apply {n d : ℕ} (hn : 0 < n) (c : Fin d → ℂ)
+    (j : Fin d) : constantVector hn c (fun _ => j) = c j := by
+  simp [constantVector]
+
+private lemma constantVector_off {n d : ℕ} (hn : 0 < n) (c : Fin d → ℂ)
+    (x : Word (Fin d) n) (hx : ¬ ∃ j : Fin d, ∀ i, x i = j) : constantVector hn c x = 0 := by
+  have h : ¬ ∀ i, x i = x ⟨0, hn⟩ := by
+    intro h; exact hx ⟨_, h⟩
+  simp [constantVector, h]
+
+private lemma constantVector_norm {n d : ℕ} (hn : 0 < n) (c : Fin d → ℂ) :
+    ∑ x, Complex.normSq (constantVector hn c x) = ∑ j, Complex.normSq (c j) := by
+  rw [sum_supported_constants hn _ (by
+    intro x hx; rw [constantVector_off hn c x hx]; exact Complex.normSq_zero)]
+  simp only [constantVector_apply]
+
+private lemma constantVector_support {n d : ℕ} (hn : 0 < n) (c : Fin d → ℂ) :
+    readout (supportProjector n d) (constantVector hn c) = ∑ j, Complex.normSq (c j) := by
+  rw [support_expectation, Finset.sum_filter]
+  rw [sum_supported_constants hn _ (by
+    intro x hx; rw [constantVector_off hn c x hx]; simp)]
+  apply Finset.sum_congr rfl
+  intro j hj
+  haveI : Nonempty (Fin n) := ⟨⟨0, hn⟩⟩
+  simp [constantVector_apply, Finset.image_const]
+
+private lemma basis_overlap {n d : ℕ} (x : Word (Fin d) n) (ψ : Word (Fin d) n → ℂ) :
+    Complex.normSq (star (Pi.single x (1 : ℂ)) ⬝ᵥ ψ) = Complex.normSq (ψ x) := by
+  classical
+  simp [dotProduct, Pi.single_apply, Pi.star_apply]
+
+private lemma constantVector_ghz {n d : ℕ} (hn : 0 < n) (hd : 0 < d) (c : Fin d → ℂ) :
+    readout (rankOneDensity (ghz n d)) (constantVector hn c) =
+      Complex.normSq (∑ j, c j) / d := by
+  have h := ghz_expectation hn hd (constantVector hn c)
+  simp only [constantVector_apply] at h
+  exact (eq_div_iff (by exact_mod_cast hd.ne')).mpr (by linarith)
+
+/-- The distinguished source vector has one amplitude `α` and `d-1` amplitudes `β`. -/
+def chiVector {n d : ℕ} (hn : 0 < n) (j : Fin d) (α β : ℝ) : Word (Fin d) n → ℂ :=
+  constantVector hn (fun i => if i = j then (α : ℂ) else (β : ℂ))
+
+private lemma chi_norm {n d : ℕ} (hn : 0 < n) (j : Fin d) (α β : ℝ) :
+    ∑ x, Complex.normSq (chiVector hn j α β x) = α^2 + (d - 1 : ℝ) * β^2 := by
+  classical
+  rw [chiVector, constantVector_norm]
+  simp only [apply_ite Complex.normSq, Complex.normSq_ofReal, ← pow_two]
+  calc
+    (∑ i : Fin d, if i = j then α^2 else β^2) =
+        ∑ i : Fin d, (β^2 + if i = j then α^2 - β^2 else 0) := by
+      apply Finset.sum_congr rfl
+      intro i hi
+      split_ifs <;> ring
+    _ = α^2 + (d - 1 : ℝ) * β^2 := by
+      simp only [Finset.sum_add_distrib, Finset.sum_const, Finset.card_univ,
+        Fintype.card_fin, nsmul_eq_mul, Finset.sum_ite_eq', Finset.mem_univ, ite_true]
+      ring
+
+/-- Source amplitudes, expressed with a single nonnegative cross radical. -/
+def optimalAlpha (d : ℕ) (F : ℝ) : ℝ :=
+  (Real.sqrt F + Real.sqrt ((d - 1 : ℝ) * (1 - F))) / Real.sqrt d
+
+def optimalBeta (d : ℕ) (F : ℝ) : ℝ :=
+  (Real.sqrt F - Real.sqrt ((d - 1 : ℝ) * (1 - F)) / (d - 1 : ℝ)) / Real.sqrt d
+
+private lemma optimal_amplitudes {d : ℕ} (hd : 2 ≤ d) {F : ℝ}
+    (hF : 1 / (d : ℝ) ≤ F) (hF1 : F ≤ 1) :
+    0 ≤ optimalBeta d F ∧ optimalBeta d F ≤ optimalAlpha d F ∧
+      (optimalAlpha d F)^2 + (d - 1 : ℝ) * (optimalBeta d F)^2 = 1 ∧
+      (optimalAlpha d F + (d - 1 : ℝ) * optimalBeta d F)^2 / d = F ∧
+      twoMeanValue d F 1 = 1 - (optimalAlpha d F)^2 := by
+  have hdR : (2 : ℝ) ≤ d := by exact_mod_cast hd
+  have hdpos : (0 : ℝ) < d := by linarith
+  have hd1 : 0 < (d - 1 : ℝ) := by linarith
+  have hf0 : 0 ≤ F := (one_div_nonneg.mpr hdpos.le).trans hF
+  have hcross : 0 ≤ (d - 1 : ℝ) * (1 - F) := mul_nonneg hd1.le (sub_nonneg.mpr hF1)
+  have hS := Real.sq_sqrt hf0
+  have hC := Real.sq_sqrt hcross
+  have hD := Real.sq_sqrt hdpos.le
+  have hDpos := Real.sqrt_pos.mpr hdpos
+  have hbeta : Real.sqrt ((d - 1 : ℝ) * (1 - F)) / (d - 1 : ℝ) ≤ Real.sqrt F := by
+    apply (div_le_iff₀ hd1).mpr
+    have hm : 1 ≤ (d : ℝ) * F := by simpa only [mul_comm] using (div_le_iff₀ hdpos).mp hF
+    have hs0 := Real.sqrt_nonneg F
+    have hc0 := Real.sqrt_nonneg ((d - 1 : ℝ) * (1 - F))
+    have hsquare : (Real.sqrt F * (d - 1 : ℝ))^2 -
+        (Real.sqrt ((d - 1 : ℝ) * (1 - F)))^2 = (d - 1 : ℝ) * ((d : ℝ) * F - 1) := by
+      rw [mul_pow, hS, hC]
+      ring
+    apply (sq_le_sq₀ hc0 (mul_nonneg hs0 hd1.le)).mp
+    apply sub_nonneg.mp
+    rw [hsquare]
+    exact mul_nonneg hd1.le (sub_nonneg.mpr hm)
+  refine ⟨div_nonneg (sub_nonneg.mpr hbeta) hDpos.le, ?_, ?_, ?_, ?_⟩
+  · unfold optimalBeta optimalAlpha
+    apply div_le_div_of_nonneg_right _ hDpos.le
+    have hc := Real.sqrt_nonneg ((d - 1 : ℝ) * (1 - F))
+    have hq := div_nonneg hc hd1.le
+    linarith
+  · unfold optimalAlpha optimalBeta
+    field_simp [hdpos.ne', hd1.ne', hDpos.ne']
+    linear_combination (d : ℝ) * (d - 1) * hS + (d : ℝ) * hC - (d - 1 : ℝ) * hD
+  · unfold optimalAlpha optimalBeta
+    field_simp [hdpos.ne', hd1.ne', hDpos.ne']
+    linear_combination (d : ℝ)^2 * hS - (d : ℝ) * F * hD
+  · unfold twoMeanValue optimalAlpha
+    have hmul : Real.sqrt ((d - 1 : ℝ) * F * (1 - F)) =
+        Real.sqrt F * Real.sqrt ((d - 1 : ℝ) * (1 - F)) := by
+      rw [← Real.sqrt_mul hf0]
+      congr 1
+      ring
+    rw [hmul]
+    field_simp [hdpos.ne', hd1.ne', hDpos.ne']
+    <;> nlinarith
+
+/-- The original single-witness conjugate with an arbitrary feasible mean. -/
+def epsilonWitness (n d : ℕ) (w : ℝ) : ℝ :=
+  sSup {t : ℝ | ∃ r : ℝ, t = r * w - hatE n d r}
+
+private lemma epsilonO_bridge (n d : ℕ) (p : ℝ) :
+    epsilonO n d p = epsilonWitness n d (witnessValue n d p) := rfl
+
+private lemma witness_pure_bounds {n d : ℕ} (hn : 0 < n) (hd : 1 ≤ d)
+    (ψ : Word (Fin d) n → ℂ) (hψ : IsUnitState ψ) :
+    -(1 : ℝ) ≤ readout (witnessOp n d) ψ ∧ readout (witnessOp n d) ψ ≤ 1 := by
+  obtain ⟨hf, hfy, hy⟩ := pure_means_triangle hn (by omega) ψ hψ
+  have hdR : (1 : ℝ) ≤ d := by exact_mod_cast hd
+  have hden : 0 ≤ 1 / (d : ℝ) := one_div_nonneg.mpr (by linarith)
+  have hden1 : 1 / (d : ℝ) ≤ 1 := (div_le_one (by linarith)).mpr hdR
+  simp only [witnessOp, expectation_sub, expectation_smul]
+  have hprod := mul_le_mul_of_nonneg_left hy hden
+  have hy0 : 0 ≤ readout (supportProjector n d) ψ := hf.trans hfy
+  have hz := mul_nonneg hden hy0
+  constructor <;> nlinarith
+
+private lemma hat_values_nonempty {n d : ℕ} (hn : 2 ≤ n) (hd : 0 < d) (r : ℝ) :
+    {t : ℝ | ∃ ψ φ, IsUnitState ψ ∧ IsBiseparable φ ∧
+      t = readout (r • witnessOp n d + rankOneDensity φ) ψ - 1}.Nonempty := by
+  let φ : Word (Fin d) n → ℂ := Pi.single (fun _ => (⟨0, hd⟩ : Fin d)) (1 : ℂ)
+  exact ⟨_, φ, φ, basis_unit _, computational_biseparable hn _, rfl⟩
+
+private lemma hat_values_bdd {n d : ℕ} (hn : 2 ≤ n) (hd : 0 < d) (r : ℝ) :
+    BddAbove {t : ℝ | ∃ ψ φ, IsUnitState ψ ∧ IsBiseparable φ ∧
+      t = readout (r • witnessOp n d + rankOneDensity φ) ψ - 1} := by
+  refine ⟨|r|, ?_⟩
+  rintro t ⟨ψ, φ, hψ, hφ, rfl⟩
+  obtain ⟨hw0, hw1⟩ := witness_pure_bounds (by omega : 0 < n) (by omega : 1 ≤ d) ψ hψ
+  have habs : |readout (witnessOp n d) ψ| ≤ 1 := abs_le.mpr ⟨hw0, hw1⟩
+  have hmul : r * readout (witnessOp n d) ψ ≤ |r| := by
+    calc
+      _ ≤ |r * readout (witnessOp n d) ψ| := le_abs_self _
+      _ = |r| * |readout (witnessOp n d) ψ| := abs_mul _ _
+      _ ≤ |r| := by nlinarith [mul_le_mul_of_nonneg_left habs (abs_nonneg r)]
+  have hov := cs φ ψ
+  rw [hφ.1, hψ, mul_one] at hov
+  simp only [expectation_add, expectation_smul, expectation_rank_one]
+  linarith
+
+private lemma pure_conjugate_bound {n d : ℕ} (hn : 2 ≤ n) (hd : 0 < d)
+    (r : ℝ) (ψ : Word (Fin d) n → ℂ) (hψ : IsUnitState ψ) :
+    r * readout (witnessOp n d) ψ - hatE n d r ≤ geometricMeasurePure ψ := by
+  have hs : sSup {t : ℝ | ∃ φ, IsBiseparable φ ∧
+      t = Complex.normSq (star φ ⬝ᵥ ψ)} ≤ 1 + hatE n d r - r * readout (witnessOp n d) ψ := by
+    apply csSup_le (overlap_values_nonempty hn hd ψ)
+    rintro t ⟨φ, hφ, rfl⟩
+    have h := le_csSup (hat_values_bdd hn hd r)
+      (show readout (r • witnessOp n d + rankOneDensity φ) ψ - 1 ∈
+        {t : ℝ | ∃ ψ φ, IsUnitState ψ ∧ IsBiseparable φ ∧
+          t = readout (r • witnessOp n d + rankOneDensity φ) ψ - 1} from
+        ⟨ψ, φ, hψ, hφ, rfl⟩)
+    change _ ≤ hatE n d r at h
+    simp only [expectation_add, expectation_smul, expectation_rank_one] at h
+    linarith
+  unfold geometricMeasurePure
+  linarith
+
+private lemma hat_zero {n d : ℕ} (hn : 2 ≤ n) (hd : 0 < d) : hatE n d 0 = 0 := by
+  apply le_antisymm
+  · apply csSup_le (hat_values_nonempty hn hd 0)
+    rintro t ⟨ψ, φ, hψ, hφ, rfl⟩
+    have hov := cs φ ψ
+    rw [hφ.1, hψ, mul_one] at hov
+    simp only [zero_smul, zero_add, expectation_rank_one]
+    linarith
+  · let φ : Word (Fin d) n → ℂ := Pi.single (fun _ => (⟨0, hd⟩ : Fin d)) (1 : ℂ)
+    have hφ := computational_biseparable hn (fun _ => (⟨0, hd⟩ : Fin d))
+    have hu : star φ ⬝ᵥ φ = 1 :=
+      (D5.S3.Quantum.Information.MultiEntropyPositivityRefutation.unit_norm_iff φ).mpr hφ.1
+    apply le_csSup (hat_values_bdd hn hd 0)
+    refine ⟨φ, φ, hφ.1, hφ, ?_⟩
+    simp [zero_smul, expectation_rank_one, hu]
+
+private lemma conjugate_ensemble_bound {n d : ℕ} (hn : 2 ≤ n) (hd : 0 < d)
+    {ι : Type*} [Fintype ι] (p : ι → ℝ) (ψ : ι → Word (Fin d) n → ℂ)
+    (hp : ∀ i, 0 ≤ p i) (hs : ∑ i, p i = 1) (hu : ∀ i, IsUnitState (ψ i)) (r : ℝ) :
+    r * (∑ i, p i * readout (witnessOp n d) (ψ i)) - hatE n d r ≤
+      ∑ i, p i * geometricMeasurePure (ψ i) := by
+  have h := Finset.sum_le_sum (fun i (_ : i ∈ Finset.univ) =>
+    mul_le_mul_of_nonneg_left (pure_conjugate_bound hn hd r (ψ i) (hu i)) (hp i))
+  convert h using 1
+  simp only [mul_sub, Finset.sum_sub_distrib, ← Finset.sum_mul]
+  rw [hs]
+  simp only [one_mul, Finset.mul_sum]
+  congr 1
+  apply Finset.sum_congr rfl
+  intro i hi
+  ring
+
+private lemma sum_distinguished {d : ℕ} {R : Type*} [CommRing R]
+    (j : Fin d) (a b : R) : (∑ i : Fin d, if i = j then a else b) = a + (d - 1 : R) * b := by
+  classical
+  calc
+    _ = ∑ i : Fin d, (b + if i = j then a - b else 0) := by
+      apply Finset.sum_congr rfl
+      intro i hi
+      split_ifs <;> ring
+    _ = _ := by
+      simp only [Finset.sum_add_distrib, Finset.sum_const, Finset.card_univ,
+        Fintype.card_fin, nsmul_eq_mul, Finset.sum_ite_eq', Finset.mem_univ, ite_true]
+      ring
+
+/-- The canonical source pure vector really has the stated norm, two means,
+and all-cut entanglement, including F=1/d and F=1. -/
+theorem chi_attainment {n d : ℕ} (hn : 3 ≤ n) (hd : 3 ≤ d)
+    (j : Fin d) {F : ℝ} (hF : 1 / (d : ℝ) ≤ F) (hF1 : F ≤ 1) :
+    IsUnitState (chiVector (by omega : 0 < n) j (optimalAlpha d F) (optimalBeta d F)) ∧
+      readout (supportProjector n d)
+        (chiVector (by omega : 0 < n) j (optimalAlpha d F) (optimalBeta d F)) = 1 ∧
+      readout (rankOneDensity (ghz n d))
+        (chiVector (by omega : 0 < n) j (optimalAlpha d F) (optimalBeta d F)) = F ∧
+      geometricMeasurePure (chiVector (by omega : 0 < n) j (optimalAlpha d F) (optimalBeta d F)) =
+        twoMeanOptimum d F 1 := by
+  classical
+  have hdR : (3 : ℝ) ≤ d := by exact_mod_cast hd
+  obtain ⟨hb, hba, hnorm, hmean, hvalue⟩ := optimal_amplitudes (by omega : 2 ≤ d) hF hF1
+  let ψ := chiVector (by omega : 0 < n) j (optimalAlpha d F) (optimalBeta d F)
+  have hψ : IsUnitState ψ := by
+    change ∑ x, Complex.normSq (chiVector _ _ _ _ x) = 1
+    rw [chi_norm, hnorm]
+  have hy : readout (supportProjector n d) ψ = 1 := by
+    change readout (supportProjector n d) (constantVector _ _) = 1
+    rw [constantVector_support]
+    have hnorm' := chi_norm (by omega : 0 < n) j (optimalAlpha d F) (optimalBeta d F)
+    rw [chiVector, constantVector_norm] at hnorm'
+    exact hnorm'.trans hnorm
+  have hf : readout (rankOneDensity (ghz n d)) ψ = F := by
+    change readout (rankOneDensity (ghz n d)) (constantVector _ _) = F
+    rw [constantVector_ghz (by omega) (by omega), sum_distinguished]
+    have he : (optimalAlpha d F : ℂ) + (d - 1 : ℂ) * optimalBeta d F =
+        ((optimalAlpha d F + (d - 1 : ℝ) * optimalBeta d F : ℝ) : ℂ) := by push_cast; rfl
+    rw [he, Complex.normSq_ofReal]
+    simpa only [pow_two] using hmean
+  have hl := pure_two_mean_lower hn hd ψ hψ
+  rw [hf, hy] at hl
+  have hβ : twoMeanOptimum d F 1 = 1 - (optimalAlpha d F)^2 := by
+    unfold twoMeanOptimum
+    split_ifs with h
+    · have hF' : 1 ≤ (d : ℝ) * F := by
+        simpa only [mul_comm] using (div_le_iff₀ (by positivity : (0 : ℝ) < d)).mp hF
+      have hFeq : F = 1 / (d : ℝ) := by
+        apply (eq_div_iff (by positivity : (d : ℝ) ≠ 0)).mpr
+        nlinarith
+      have hh : twoMeanValue d F 1 = 0 := by
+        unfold twoMeanValue
+        have he : (d - 1 : ℝ) * F * (1 - F) = ((d - 1 : ℝ) / d)^2 := by
+          rw [hFeq]
+          field_simp
+          <;> ring
+        rw [he, Real.sqrt_sq (div_nonneg (by linarith) (by linarith))]
+        rw [hFeq]
+        field_simp
+        <;> ring
+      linarith
+    · exact hvalue
+  have hupper : geometricMeasurePure ψ ≤ 1 - (optimalAlpha d F)^2 := by
+    have hs := le_csSup (overlap_values_bdd ψ hψ)
+      (show Complex.normSq (star (Pi.single (fun _ => j) (1 : ℂ)) ⬝ᵥ ψ) ∈
+        {t : ℝ | ∃ φ, IsBiseparable φ ∧ t = Complex.normSq (star φ ⬝ᵥ ψ)} from
+        ⟨_, computational_biseparable (by omega) _, rfl⟩)
+    rw [basis_overlap] at hs
+    have hc : ψ (fun _ => j) = (optimalAlpha d F : ℂ) := by
+      simp [ψ, chiVector, constantVector_apply]
+    rw [hc, Complex.normSq_ofReal] at hs
+    unfold geometricMeasurePure
+    nlinarith
+  exact ⟨hψ, hy, hf, le_antisymm (hupper.trans_eq hβ.symm) hl⟩
+
+private lemma basis_readout {n d : ℕ} (x : Word (Fin d) n)
+    (A : Matrix (Word (Fin d) n) (Word (Fin d) n) ℂ) :
+    readout A (Pi.single x 1) = (A x x).re := by
+  classical
+  simp [readout, dotProduct, mulVec, Pi.single_apply, Pi.star_apply]
+
+private lemma basis_support_mean {n d : ℕ} (x : Word (Fin d) n) :
+    readout (supportProjector n d) (Pi.single x 1) =
+      if (Finset.univ.image x).card ≤ 2 then 1 else 0 := by
+  classical
+  rw [basis_readout]
+  by_cases h : (Finset.univ.image x).card ≤ 2 <;> simp [supportProjector, h]
+
+private lemma basis_ghz_mean {n d : ℕ} (hn : 0 < n) (hd : 0 < d) (x : Word (Fin d) n) :
+    readout (rankOneDensity (ghz n d)) (Pi.single x 1) =
+      if ∃ j : Fin d, ∀ i, x i = j then 1 / (d : ℝ) else 0 := by
+  classical
+  rw [expectation_rank_one,
+    D5.S3.Quantum.Entanglement.GHZ.OddGhzTenSettingWitness.normSq_overlap_comm,
+    basis_overlap]
+  have hdR : (d : ℝ) ≠ 0 := by exact_mod_cast hd.ne'
+  split_ifs with h
+  · simp [ghz, h, Complex.normSq_ofReal, Real.sq_sqrt (Nat.cast_nonneg d), hdR]
+  · simp [ghz, h]
+
+/-- The source computational Q-vector |0,1,2,0,...>. -/
+def qWord {n d : ℕ} (hd : 3 ≤ d) : Word (Fin d) n :=
+  fun k => if k.val = 1 then ⟨1, by omega⟩ else if k.val = 2 then ⟨2, by omega⟩ else ⟨0, by omega⟩
+
+/-- A nonconstant two-symbol computational product word. -/
+def twoSymbolWord {n d : ℕ} (hd : 2 ≤ d) : Word (Fin d) n :=
+  fun k => if k.val = 0 then ⟨0, by omega⟩ else ⟨1, by omega⟩
+
+private lemma qWord_outside {n d : ℕ} (hn : 3 ≤ n) (hd : 3 ≤ d) :
+    ¬ (Finset.univ.image (qWord (n := n) hd)).card ≤ 2 := by
+  classical
+  let s : Finset (Fin d) := {⟨0, by omega⟩, ⟨1, by omega⟩, ⟨2, by omega⟩}
+  have hs : s.card = 3 := by simp [s, Fin.ext_iff]
+  have hsub : s ⊆ Finset.univ.image (qWord (n := n) hd) := by
+    intro x hx
+    simp only [s, Finset.mem_insert, Finset.mem_singleton] at hx
+    rcases hx with rfl | rfl | rfl
+    · exact Finset.mem_image.mpr ⟨⟨0, by omega⟩, Finset.mem_univ _, by simp [qWord]⟩
+    · exact Finset.mem_image.mpr ⟨⟨1, by omega⟩, Finset.mem_univ _, by simp [qWord]⟩
+    · exact Finset.mem_image.mpr ⟨⟨2, by omega⟩, Finset.mem_univ _, by simp [qWord]⟩
+  have h := Finset.card_le_card hsub
+  omega
+
+private lemma qWord_nonconstant {n d : ℕ} (hn : 3 ≤ n) (hd : 3 ≤ d) :
+    ¬ ∃ j : Fin d, ∀ i, qWord (n := n) hd i = j := by
+  rintro ⟨j, hj⟩
+  have h := (hj ⟨0, by omega⟩).trans (hj ⟨1, by omega⟩).symm
+  have hh := congrArg Fin.val h
+  norm_num [qWord] at hh
+
+private lemma twoSymbolWord_data {n d : ℕ} (hn : 2 ≤ n) (hd : 2 ≤ d) :
+    (Finset.univ.image (twoSymbolWord (n := n) hd)).card ≤ 2 ∧
+      ¬ ∃ j : Fin d, ∀ i, twoSymbolWord (n := n) hd i = j := by
+  classical
+  constructor
+  · have hsub : Finset.univ.image (twoSymbolWord (n := n) hd) ⊆
+        {⟨0, by omega⟩, ⟨1, by omega⟩} := by
+      intro x hx
+      obtain ⟨i, _, rfl⟩ := Finset.mem_image.mp hx
+      simp only [twoSymbolWord]
+      split_ifs <;> simp
+    exact (Finset.card_le_card hsub).trans Finset.card_le_two
+  · rintro ⟨j, hj⟩
+    have h := (hj ⟨0, by omega⟩).trans (hj ⟨1, by omega⟩).symm
+    have hh := congrArg Fin.val h
+    norm_num [twoSymbolWord] at hh
+
+private lemma twoMean_scaling {d : ℕ} {f y : ℝ} (hy : 0 < y) :
+    twoMeanOptimum d f y = y * twoMeanOptimum d (f / y) 1 := by
+  have he : (d : ℝ) * (f / y) ≤ 1 ↔ (d : ℝ) * f ≤ y := by
+    rw [← mul_div_assoc, div_le_one hy]
+  unfold twoMeanOptimum
+  simp only [he]
+  by_cases h : (d : ℝ) * f ≤ y
+  · simp [h]
+  · simp only [h, ite_false]
+    unfold twoMeanValue
+    have hrad : (d - 1 : ℝ) * f * (y - f) =
+        y^2 * ((d - 1 : ℝ) * (f / y) * (1 - f / y)) := by
+      field_simp
+      <;> ring
+    rw [hrad, Real.sqrt_mul (sq_nonneg y), Real.sqrt_sq hy.le]
+    field_simp
+    <;> ring
+
+/-- The means W,Q and the means G,P determine one another on every density state. -/
+theorem observable_correspondence {n d : ℕ}
+    (ρ : D5.S3.Quantum.Foundation.FiniteStateChannel.DensityState (Word (Fin d) n)) :
+    observableMean (CStarMatrix.ofMatrix.symm ρ.1) (supportProjector n d) =
+      1 - observableMean (CStarMatrix.ofMatrix.symm ρ.1) (complementProjector n d) ∧
+    observableMean (CStarMatrix.ofMatrix.symm ρ.1) (rankOneDensity (ghz n d)) =
+      (1 - observableMean (CStarMatrix.ofMatrix.symm ρ.1) (complementProjector n d)) / d -
+        observableMean (CStarMatrix.ofMatrix.symm ρ.1) (witnessOp n d) := by
+  simp only [complementProjector, witnessOp, mean_sub, mean_smul, mean_one]
+  constructor <;> ring
+
+/-- The three weights of a concrete optimizer for every feasible pair of means. -/
+def twoMeanWeights (d : ℕ) (f y : ℝ) : Fin 3 → ℝ := by
+  classical
+  exact if (d : ℝ) * f ≤ y then ![(d : ℝ) * f, y - (d : ℝ) * f, 1 - y] else ![y, 1 - y, 0]
+
+/-- The actual computational or constant-sector vectors in the optimizer. -/
+def twoMeanStates {n d : ℕ} (hn : 3 ≤ n) (hd : 3 ≤ d) (f y : ℝ) :
+    Fin 3 → Word (Fin d) n → ℂ := by
+  classical
+  exact if (d : ℝ) * f ≤ y then
+    ![Pi.single (fun _ => (⟨0, by omega⟩ : Fin d)) 1,
+      Pi.single (twoSymbolWord (show 2 ≤ d by omega)) 1, Pi.single (qWord hd) 1]
+  else ![chiVector (show 0 < n by omega) ⟨0, by omega⟩ (optimalAlpha d (f / y)) (optimalBeta d (f / y)),
+    Pi.single (qWord hd) 1, Pi.single (qWord hd) 1]
+
+private lemma two_mean_ensemble_data {n d : ℕ} (hn : 3 ≤ n) (hd : 3 ≤ d)
+    {f y : ℝ} (hf : 0 ≤ f) (hfy : f ≤ y) (hy : y ≤ 1) :
+    (∀ i, 0 ≤ twoMeanWeights d f y i) ∧ (∑ i, twoMeanWeights d f y i) = 1 ∧
+      (∀ i, IsUnitState (twoMeanStates hn hd f y i)) ∧
+      (∑ i, twoMeanWeights d f y i * readout (rankOneDensity (ghz n d))
+        (twoMeanStates hn hd f y i)) = f ∧
+      (∑ i, twoMeanWeights d f y i * readout (supportProjector n d)
+        (twoMeanStates hn hd f y i)) = y ∧
+      (∑ i, twoMeanWeights d f y i * geometricMeasurePure (twoMeanStates hn hd f y i)) =
+        twoMeanOptimum d f y := by
+  classical
+  have hn0 : 0 < n := by omega
+  have hd0 : 0 < d := by omega
+  have hdR : (3 : ℝ) ≤ d := by exact_mod_cast hd
+  let j : Fin d := ⟨0, by omega⟩
+  have hcG : readout (rankOneDensity (ghz n d)) (Pi.single (fun _ => j) 1) = 1 / d := by
+    rw [basis_ghz_mean hn0 hd0]
+    simp only [exists_const, forall_const, dite_true, ite_true]
+    simp
+  have hcP : readout (supportProjector n d) (Pi.single (fun _ => j) 1) = 1 := by
+    rw [basis_support_mean]
+    haveI : Nonempty (Fin n) := ⟨⟨0, hn0⟩⟩
+    simp [Finset.image_const]
+  obtain ⟨h2P, h2c⟩ := twoSymbolWord_data (by omega : 2 ≤ n) (by omega : 2 ≤ d)
+  have h2G : readout (rankOneDensity (ghz n d))
+      (Pi.single (twoSymbolWord (n := n) (show 2 ≤ d by omega)) 1) = 0 := by
+    rw [basis_ghz_mean hn0 hd0]
+    simp [h2c]
+  have h2P' : readout (supportProjector n d)
+      (Pi.single (twoSymbolWord (n := n) (show 2 ≤ d by omega)) 1) = 1 := by
+    rw [basis_support_mean]; simp [h2P]
+  have hqG : readout (rankOneDensity (ghz n d)) (Pi.single (qWord (n := n) hd) 1) = 0 := by
+    rw [basis_ghz_mean hn0 hd0]; simp [qWord_nonconstant hn hd]
+  have hqP : readout (supportProjector n d) (Pi.single (qWord (n := n) hd) 1) = 0 := by
+    rw [basis_support_mean]; simp [qWord_outside hn hd]
+  have hzero (w : Word (Fin d) n) : geometricMeasurePure (Pi.single w 1) = 0 :=
+    biseparable_measure_zero (by omega) hd0 _ (computational_biseparable (by omega) w)
+  by_cases hlow : (d : ℝ) * f ≤ y
+  · refine ⟨?_, ?_, ?_, ?_, ?_, ?_⟩
+    · intro i; fin_cases i <;> simp only [twoMeanWeights, hlow, ite_true, Matrix.cons_val_zero,
+        Matrix.cons_val_one, Matrix.cons_val_succ, Matrix.cons_val_fin_one] <;> nlinarith
+    · simp [twoMeanWeights, hlow, Fin.sum_univ_succ]; ring
+    · intro i; fin_cases i <;> simp only [twoMeanStates, hlow, ite_true, Matrix.cons_val_zero,
+        Matrix.cons_val_one, Matrix.cons_val_succ, Matrix.cons_val_fin_one] <;> apply basis_unit
+    · simp only [twoMeanWeights, twoMeanStates, hlow, ite_true, Fin.sum_univ_succ,
+        Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_succ, Matrix.cons_val_fin_one, Fin.sum_univ_zero,
+        add_zero, hcG, h2G, hqG, mul_zero]
+      field_simp
+    · simp [twoMeanWeights, twoMeanStates, hlow, Fin.sum_univ_succ, hcP, h2P', hqP]
+    · simp [twoMeanWeights, twoMeanStates, hlow, Fin.sum_univ_succ, hzero, twoMeanOptimum]
+  · have hy0 : 0 < y := by nlinarith
+    have hF0 : 1 / (d : ℝ) ≤ f / y := by
+      apply (div_le_div_iff₀ (by linarith) hy0).mpr
+      nlinarith
+    have hF1 : f / y ≤ 1 := (div_le_one hy0).mpr hfy
+    obtain ⟨hunit, hP, hG, hE⟩ := chi_attainment hn hd j hF0 hF1
+    refine ⟨?_, ?_, ?_, ?_, ?_, ?_⟩
+    · intro i; fin_cases i <;> simp [twoMeanWeights, hlow] <;> linarith
+    · simp [twoMeanWeights, hlow, Fin.sum_univ_succ]
+    · intro i; fin_cases i
+      · simpa only [twoMeanStates, hlow, ite_false, Matrix.cons_val_zero] using hunit
+      · simp only [twoMeanStates, hlow, ite_false, Matrix.cons_val_one]; apply basis_unit
+      · simp only [twoMeanStates, hlow, ite_false, Matrix.cons_val_fin_one]; apply basis_unit
+    · simp only [twoMeanWeights, twoMeanStates, hlow, ite_false, Fin.sum_univ_succ,
+        Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_succ, Matrix.cons_val_fin_one, Fin.sum_univ_zero,
+        add_zero, hG, hqG, mul_zero, zero_mul]
+      field_simp
+    · simp [twoMeanWeights, twoMeanStates, hlow, Fin.sum_univ_succ, hP, hqP]
+    · simp only [twoMeanWeights, twoMeanStates, hlow, ite_false, Fin.sum_univ_succ,
+        Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_succ, Matrix.cons_val_fin_one, Fin.sum_univ_zero,
+        add_zero, hE, hzero, mul_zero, zero_mul]
+      exact (twoMean_scaling hy0).symm
+
+/-- Every feasible pair of means is realized by an actual density operator
+and the explicit finite normalized ensemble above, with roof equal to the
+universal lower bound. This is an attained all-state minimum. -/
+theorem two_mean_attainment {n d : ℕ} (hn : 3 ≤ n) (hd : 3 ≤ d)
+    {f y : ℝ} (hf : 0 ≤ f) (hfy : f ≤ y) (hy : y ≤ 1) :
+    ∃ σ : D5.S3.Quantum.Foundation.FiniteStateChannel.DensityState (Word (Fin d) n),
+      CStarMatrix.ofMatrix.symm σ.1 = ∑ i, twoMeanWeights d f y i •
+        rankOneDensity (twoMeanStates hn hd f y i) ∧
+      observableMean (CStarMatrix.ofMatrix.symm σ.1) (rankOneDensity (ghz n d)) = f ∧
+      observableMean (CStarMatrix.ofMatrix.symm σ.1) (supportProjector n d) = y ∧
+      geometricMeasure (CStarMatrix.ofMatrix.symm σ.1) = twoMeanOptimum d f y ∧
+      (∀ i, 0 ≤ twoMeanWeights d f y i) ∧ (∑ i, twoMeanWeights d f y i) = 1 ∧
+      (∀ i, IsUnitState (twoMeanStates hn hd f y i)) ∧
+      (∑ i, twoMeanWeights d f y i * geometricMeasurePure (twoMeanStates hn hd f y i)) =
+        twoMeanOptimum d f y := by
+  obtain ⟨hp, hs, hu, hG, hP, hE⟩ := two_mean_ensemble_data hn hd hf hfy hy
+  let σ := ensembleDensity (twoMeanWeights d f y) (twoMeanStates hn hd f y) hp hs hu
+  have he : CStarMatrix.ofMatrix.symm σ.1 = ∑ i, twoMeanWeights d f y i •
+      rankOneDensity (twoMeanStates hn hd f y i) := rfl
+  have hfσ : observableMean (CStarMatrix.ofMatrix.symm σ.1) (rankOneDensity (ghz n d)) = f := by
+    rw [he, trace_average]; exact hG
+  have hyσ : observableMean (CStarMatrix.ofMatrix.symm σ.1) (supportProjector n d) = y := by
+    rw [he, trace_average]; exact hP
+  refine ⟨σ, he, hfσ, hyσ, ?_, hp, hs, hu, hE⟩
+  apply le_antisymm
+  · rw [he]
+    exact (finite_ensemble_upper (by omega) (by omega) _ _ hp hs hu).trans_eq hE
+  · have h := two_mean_lower hn hd σ
+    rwa [hfσ, hyσ] at h
 
 end
 end D5.S3.Quantum.Entanglement.Witness.NoisyGhzExactRoof
