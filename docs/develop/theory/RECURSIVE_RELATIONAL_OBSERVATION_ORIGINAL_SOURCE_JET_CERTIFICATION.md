@@ -1167,3 +1167,807 @@ long-term mutual-recovery programme.
 [ML]: https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/Analysis/Distribution/Sobolev.lean
 
 ## 追加锚（本行以下为增补区）
+
+## 8. All-parameter source correspondence and local suppliers
+
+**Definition 8.1 (original inputs and the defects).** For §§8–14,
+allow every finite original $a,\eta,d>0$ with total rational interval
+names. Retain the analytic source of [FG, Assumption 1.1] and the
+numerical suppliers of [R, §§11–12] and [SRO, Definitions 1.1–1.2].
+These are the parameter-dependent versions of (1.1)–(1.3):
+
+$$
+\begin{gathered}
+S_{a,\eta}=(aL-\eta\partial_w^2-16\sqrt{a\eta}\,\Gamma)
+ |_{C_c^\infty(G\setminus\{e\};\mathbb C)},\\
+C(w_*)=1,\quad h=w_*/\|w_*\|_2,\quad
+D(H)=\{v\in D(S_{a,\eta}^*):A(v)=\rho C(v)\}
+ =D(\overline S_{a,\eta})\dotplus\mathbb Ch,\\
+H\ge0,\quad\ker H=\mathbb Ch,\quad m=h^2\mu,\quad
+K=J_h^{-1}HJ_h,\quad T_t=e^{-tK},\quad P=T_d,\\
+b=g_d,\quad\beta=Pb=g_{2d},\quad
+\gamma=d\left[a\sum_{j=1}^3(X_jb)^2+
+                         \eta(\partial_wb)^2\right],\\
+u=\frac b{1+b},\quad \chi=\frac1{1+\gamma},\quad
+\Phi=(u,\chi),\quad
+\mathcal S=\overline{\sigma(\Phi)}^{\,m}
+          =\overline{\sigma(b,\gamma)}^{\,m},\\
+\mathcal H_{\rm rel}=L^2(\mathcal S,m),\quad
+E=\mathbb E_m[\,\cdot\mid\mathcal S],\quad
+\Delta(z)=\|(I-E)z\|_{L^2(m)}^2,\quad
+\Delta_{\rm next}=\Delta(\beta).
+\end{gathered}
+\tag{8.1}
+$$
+
+The letter $u$ in $\Phi$ denotes the bounded scalar coordinate in
+(8.1). All fields use their original smooth representatives on
+$G\setminus\{e\}$; arbitrary finite assignments on omitted null
+sets do not change these definitions. The inverse scalar maps
+$b=u/(1-u)$ and $\gamma=\chi^{-1}-1$ prove the equality of completed
+sigma algebras, since $0\le u<1$ and $0<\chi\le1$ almost everywhere.
+These coordinates are mathematical functions of the original pair,
+with no change to the physical emissions.
+
+Keep the entire complex endpoint, raw Haar measure, full form
+$\mathscr V_0\dotplus\mathbb C1$ and continuous source trace, the
+$e$-start, first read $2d$, gaps $d$, exact calibration
+$c=1/[4(1+N_d)]$, $N_d=\|g_d\|_\infty$, and four original labels
+with conditionally fresh noise on one undisturbed path. In particular
+$N_d=s_d=\operatorname{tr}g_d$ is not an assumption. The original
+marked unitary $U$ identifies
+
+$$
+U(\widehat P B\Omega_{\rm cyc})=\beta,\qquad
+\Delta_{\rm next}
+ =\|(I-E_{\rm rel})\widehat P B\Omega_{\rm cyc}\|^2.
+\tag{8.2}
+$$
+
+Here $E$ acts on full $L^2(m)$, whereas $E_{\rm rel}$ acts on the
+recovered visible Hilbert space; their restrictions correspond under
+$U$, since $\mathcal H_{\rm rel}\subset\mathcal O$. No equality
+$\mathcal H_{\rm rel}=\mathcal O$ is assumed.
+
+[SRO]: RECURSIVE_RELATIONAL_OBSERVATION_SOURCE_RELATIVE_ORDER.md
+
+**Theorem 8.2 (transport of the entire certification problem).**
+The scalar defects in (8.1), their completed factor, and the original
+heat-reduction condition transport to the actual reference member
+$a'=\eta'=1$ at the named time $\tau=a^2d/\eta$. The reference
+local precision construction extends to this arbitrary $\tau>0$.
+It gives rational-point jets through order three and computed local
+$C^4$ bounds for $h,g_\tau,g_{2\tau}$ on every compact rational box
+in $\Omega=\{x^2+y^2>0\}$. Consequently $\Phi$ has a computed local
+$C^2$ bound. No new pointwise or derivative supplier is required.
+
+*Proof: full-domain transport.* Use exactly [W, Theorem 5.2] and
+[FQ, Theorem 2.1], with
+
+$$
+\begin{gathered}
+s^2=\eta/a,\qquad \kappa=\eta/a^2,\qquad
+\mathcal U_sv=s^{5/2}v\circ\delta_s,\quad
+\mathcal W_sf=f\circ\delta_s,\qquad d'=d/\kappa=\tau,\\
+C'(\mathcal U_sv)=sC(v),\quad
+A'(\mathcal U_sv)=s\{A(v)-(\log s)C(v)\},\quad
+\rho'=\rho-\log s,\\
+h'=\mathcal U_sh,\quad D(H')=\mathcal U_sD(H),\quad
+H'=\kappa\mathcal U_sH\mathcal U_s^{-1},\quad
+m'=(\delta_{1/s})_*m,\\
+K'=\kappa\mathcal W_sK\mathcal W_s^{-1},\quad
+T'_{d'}\mathcal W_s=\mathcal W_sT_d,\quad
+b'=\mathcal W_sb,\quad\beta'=\mathcal W_s\beta.
+\end{gathered}
+\tag{8.3}
+$$
+
+These identities transport maximal domains, graph closures, both
+boundary coefficients and the full form and trace. The derivative
+identities $X_j\mathcal W_s=s\mathcal W_sX_j$ and
+$\partial_w\mathcal W_s=s^2\mathcal W_s\partial_w$ give
+$\gamma'=\mathcal W_s\gamma$. Thus $\Phi'=\Phi\circ\delta_s$,
+$E'\mathcal W_s=\mathcal W_sE$, and all defects are unchanged.
+The same theorem transports the original entrance, clock, calibration
+and words. This compares models by a proved unitary; it replaces no
+physical clock or source. Positive finite parameter names compute
+$s,\kappa,\tau$ by interval arithmetic with certified positive
+denominators. Reference coefficient/global services are the existing
+services at the exact coefficients $(1,1)$ and named time $\tau$.
+
+*Proof: arbitrary positive reference time.* In the remainder of this
+proof and in §§9–12, use the reference member, omitting primes.
+Find a rational $0<L\le\tau$ from its positive name. Equations
+(4.2)–(4.7) and [R, Theorem 12.4] provide the raw global names and
+
+$$
+\begin{gathered}
+v_t=hg_t=(H+1)e^{-tH}\xi_{\rm src},\qquad
+\|\xi_{\rm src}\|_2\le\ell^{-1},\qquad 0<\ell<D_0,\\
+M_L=\ell^{-1}\sum_{j=0}^4
+       \left[j!L^{-j}+(j+1)!L^{-j-1}\right],\qquad
+\sum_{j=0}^4\|H^jv_t\|_2\le M_L\quad(t=\tau,2\tau).
+\end{gathered}
+\tag{8.4}
+$$
+
+The positive $\ell$ is obtained by the terminating refinement in
+Theorem 4.1. Theorem 3.2 applies to every actual $D(H^4)$ vector;
+its rational $C_Q$ is independent of $t$. Hence the local $C^4$
+bounds are $C_Q$ for $h$ and $C_QM_L$ for $v_t$. Theorem 5.2
+and (5.7) produce the claimed third jets. Corollary 5.4 computes a
+strictly positive rational lower bound $l_Q$ for $h$ on any fixed
+compact inner box. To expose also the quotient modulus, let rational
+$M_h,M_v$ bound all derivatives through order four of $h,v_t$ there.
+Define
+
+$$
+Q_0=M_v/l_Q,\qquad
+Q_k=\max\left\{Q_{k-1},\frac{M_v+
+ M_h\sum_{j=1}^k\binom kjQ_{k-j}}{l_Q}\right\}
+       \quad(1\le k\le4).
+\tag{8.5}
+$$
+
+Leibniz' rule in $v_t=hg_t$ proves that $Q_k$ bounds every quotient
+derivative of order at most $k$. This is a bound on the actual
+fourth derivatives; their point evaluation is not required. The
+polynomial raw formula for $\gamma$, with a rational upper bracket
+for $\tau$, and the denominators $1+b\ge1$, $1+\gamma\ge1$ give
+local $C^2$ bounds and rational-point jets for $\Phi$. Every such
+constant is a finite product, sum and quotient with a certified
+positive denominator. Bounds on a larger fixed box supply moduli
+while inner boxes are refined. At a computable, nonrational point,
+rational-point evaluation plus these Lipschitz bounds gives the
+same value precision by rational approximation inside the larger
+box. No $H$ or derivative is applied to a raw box-step approximant.
+$\square$
+
+**Corollary 8.3 (the actual bounded successor target).** A rational
+$L_\beta>0$ with $0\le\beta\le L_\beta$ almost everywhere can be
+computed from the original names, without changing the calibration.
+Indeed [SRO, Theorem 16.2] supplies a finite accepted global upper
+certificate $U\ge N_d$ after a terminating fair search; take
+$L_\beta=U+1$. Positivity and $L^\infty$ contraction of the same
+original $P$ give $0\le Pb\le N_d<L_\beta$. Under (8.3) this
+bound is unchanged. [SRO, Definition 17.2] additionally supplies the
+exact scalar name of $N_d$, but the defect computation needs only
+the accepted upper bound. Its loose $L_\beta$ is never substituted
+for $1+N_d$ in an emission.
+
+## 9. Certified original charts and effective mass exhaustion
+
+**Lemma 9.1 (enumerated charts and a total inverse).** There is an
+effective enumeration of certified rational boxes and cutoffs whose
+inner boxes cover the rank-two set of $\Phi$ in $\Omega$. Each chart
+has an injective coordinate map $\Psi=(\Phi,\pi):Q\to\mathbb R^4$,
+where $\pi$ selects the two raw coordinates complementary to a
+nonzero two-column minor of $D\Phi$. It has a computed determinant
+lower bound and a total computable extension of its inverse.
+
+*Proof.* All vector norms in this section are maximum norms and
+matrix norms are induced row-sum norms. Enumerate closed rational
+boxes $Q$ inside larger rational boxes compactly contained in
+$\Omega$, rational invertible $4\times4$ matrices $A$, rational
+$0<q_0<1/2$, the six choices of $\pi$, and finite precision requests.
+Let $c_Q$ be the rational center, $r_Q$ its maximum half-side, and
+let rational $M_2$ bound every second partial derivative of $\Psi$
+on the larger box, using Theorem 8.2. Center derivative intervals
+give a rational upper bound $\eta_Q$ for
+$\|A^{-1}D\Psi(c_Q)-I\|_\infty$. Accept when
+
+$$
+\eta_Q+16\|A^{-1}\|_\infty M_2r_Q<q_0<1/2.
+\tag{9.1}
+$$
+
+There are four entries per row and four coordinate increments, so
+(9.1) certifies $\sup_Q\|A^{-1}D\Psi-I\|_\infty<q_0$.
+Every test is finite. At any regular point choose a nonzero minor,
+a rational matrix close enough to the derivative, and a sufficiently
+small rational box containing that point in its interior. Bounds
+from a fixed larger box stay fixed while the inner box shrinks.
+Sufficient center precision then certifies (9.1). Thus accepted
+boxes cover the regular set, without deciding any zero minor.
+
+Set $R_Q(x)=A^{-1}\Psi(x)-x$ on $Q$. It is $q_0$-Lipschitz,
+by integration on line segments in this convex box. Consequently
+$\Psi$ is injective there. For every $x\in Q$,
+
+$$
+|\det D\Psi(x)|\ge d_Q:=|\det A|(1-q_0)^4>0.
+\tag{9.2}
+$$
+
+For example, all eigenvalues of $A^{-1}D\Psi-I$ have modulus at
+most $q_0$, and the determinant is their shifted product. Let
+$C_Q^{\rm box}$ denote coordinatewise clamping to $Q$, and put
+
+$$
+\Lambda_Q(x)=A\{x+R_Q(C_Q^{\rm box}x)\}\quad(x\in\mathbb R^4).
+\tag{9.3}
+$$
+
+For each $y$, the equation
+$x=A^{-1}y-R_Q(C_Q^{\rm box}x)$ is a contraction on all
+$\mathbb R^4$ with ratio $q_0$. It has a unique solution, and
+$\Lambda_Q$ is a homeomorphism agreeing with $\Psi$ on $Q$.
+Its inverse is Lipschitz with bound
+$\|A^{-1}\|_\infty/(1-q_0)$. Starting at $x_0=0$, the exact
+iterates have error at most
+$q_0^n\|x_1-x_0\|_\infty/(1-q_0)$. A rational upper bound on
+$\|x_1\|_\infty$ follows from one finite value enclosure.
+If each evaluated update has error at most $\delta$, the additional
+error is at most $\delta/(1-q_0)$, by the same contraction
+recurrence. These explicit bounds give any requested inverse
+precision in finite computation. Clamping is exactly computable;
+the local evaluation it requests is supplied by Theorem 8.2.
+The extension need not be differentiable across the clamping faces;
+only its agreement with the smooth chart on the interior is used.
+
+Within each accepted $Q$, enumerate rational inner boxes and
+piecewise polynomial cutoffs $0\le\psi\le1$, equal to one on the
+inner box and vanishing on a collar of $\partial Q$. The coordinate
+construction (3.2) gives such $C^{10}$ cutoffs, with rational
+coefficients, breakpoints and derivative bounds. Enumerating all
+inner boxes makes their interiors cover each chart interior.
+This proves the assertion. $\square$
+
+**Theorem 9.2 (a terminating original mass cutoff).** The charts of
+Lemma 9.1 give a sequence of rational piecewise polynomial weights
+$w_j\ge0$, each supported inside its own chart, such that for any
+rational $\rho>0$ one can find a finite $J$ and a rational upper
+bound $\overline\rho_J<\rho$ for
+
+$$
+s_J=\sum_{j=1}^Jw_j\le1,\qquad
+\rho_J=1-\int s_J\,dm.
+\tag{9.4}
+$$
+
+This procedure supplies no assumed mass modulus for critical sets,
+the axis, the source or infinity.
+
+*Proof.* Enumerate the accepted chart/cutoff pairs as $\psi_j$ and
+set
+
+$$
+w_j=\psi_j\prod_{i<j}(1-\psi_i),\qquad
+s_J=1-\prod_{j\le J}(1-\psi_j).
+\tag{9.5}
+$$
+
+All weights remain rational piecewise polynomials, with compact
+support in their indicated chart. [FG, Theorem 4.1 and its proof]
+gives rank $(b,\gamma)=2$ $m$-almost everywhere. The scalar
+changes in (8.1) have nonzero derivatives at every finite pair,
+so the same holds for $\Phi$. Also $m(\Omega)=1$. Every regular
+point eventually belongs to an inner box on which some $\psi_j=1$.
+Thus $s_J\uparrow1$ almost everywhere and $\rho_J\downarrow0$.
+This reuses the actual-source analytic rank theorem, rather than
+inferring full rank from dimensions.
+
+The residual itself has a scalar name. If a raw approximant $H_0$
+satisfies $\|H_0-h\|_2\le\delta$, then
+
+$$
+\left|\int s_J(|H_0|^2-h^2)\,d\mu\right|
+ \le\delta(2+\delta),
+\tag{9.6}
+$$
+
+since $0\le s_J\le1$ and $\|h\|_2=1$. Partition the finitely
+many rational step boxes and polynomial pieces. The approximating
+integral is exact rational polynomial integration, including complex
+steps through $|H_0|^2$. A fair search over finite enumeration
+prefixes and raw precisions tests whether the outward upper bound
+for $1-\int s_Jh^2d\mu$ is less than $\rho$. Every finite test
+terminates. Dominated convergence gives a finite successful prefix
+with strict slack, and sufficient precision detects it. This proves
+termination without assuming an effective rate for the qualitative
+rank theorem. In particular no independently selected chart sheet
+or conditional law is used. $\square$
+
+## 10. Computed joint densities from the same original realization
+
+**Definition 10.1 (targets used below).** A target $z$ in this section
+is a real function with a computed rational bound $0\le z\le L_z$,
+a raw global name of $hz$, and computed local $C^1$ bounds and value
+precision maps on rational compact boxes in $\Omega$. These
+conditions will be established for $z=\beta$ by §§8–9 and for the
+actual bounded heat images by Theorem 12.1. They are not an extra
+observation instrument or a general conditional-density oracle.
+
+**Theorem 10.2 (total $L^1$ names of the original pair and moment
+laws).** Under Definition 8.1, each target in Definition 10.1 has
+jointly constructed global $L^1(\mathbb R^2,dy)$ density names
+$f,q_z$ satisfying
+
+$$
+\Phi_*m=f(y)\,dy,\qquad
+\Phi_*(zm)=q_z(y)\,dy,\qquad 0\le q_z\le L_z f.
+\tag{10.1}
+$$
+
+The names are finite rational box steps with certified $L^1$ errors.
+All contributions with the same $y$ are summed before division.
+
+*Proof: local zero extensions and their constants.* For chart $j$
+write $J_j(x)=|\det D\Psi_j(x)|$. On its closed box $Q_j$ form
+
+$$
+a_j^0(x)=\frac{w_j(x)h(x)^2}{J_j(x)},\qquad
+c_j^0(x)=\frac{w_j(x)h(x)^2z(x)}{J_j(x)}.
+\tag{10.2}
+$$
+
+They vanish on a collar of the boundary. Their zero extensions to
+$\mathbb R^4$ are computable compactly supported Lipschitz functions
+with computable rational bounds. Here are finite bounds sufficient
+to make this assertion numerical. If every entry of $D\Psi_j$ is
+bounded by rational $M_1\ge1$ and each second derivative by $M_2$,
+Leibniz' determinant expansion gives
+$|\partial_k J_j|\le96M_1^3M_2$; the determinant has constant sign
+on the box. Together with (9.2),
+$J_j^{-1}\le d_{Q_j}^{-1}$ and
+$|\partial_k J_j^{-1}|\le96M_1^3M_2d_{Q_j}^{-2}$.
+
+Bounds for $w_j$ and its first derivatives come from the finite
+polynomial products (9.5). Bounds for $h,z$ and their first
+derivatives were constructed in §8 or stipulated in Definition
+10.1 and are established in Theorem 12.1 for its targets. Applying
+the product rule in (10.2) now gives a rational bound $D_j$ for
+each first derivative and a value bound. The zero extensions are
+$4D_j$-Lipschitz in maximum norm: along any line their restriction
+is absolutely continuous, with zero boundary traces, and the
+interior derivative bound applies. For computation outside the box,
+evaluate (10.2) at its clamped point; the boundary value is exactly
+zero. This avoids an undecidable test of membership on a face.
+
+For $Y=(y,t)\in\mathbb R^2\times\mathbb R^2$, put
+
+$$
+a_j(Y)=a_j^0(\Lambda_{Q_j}^{-1}Y),\qquad
+c_j(Y)=c_j^0(\Lambda_{Q_j}^{-1}Y),
+\tag{10.3}
+$$
+
+using the zero extensions. Lemma 9.1 gives total value precision
+and a Lipschitz bound multiplied by
+$\|A_j^{-1}\|_\infty/(1-q_{0,j})$. Support lies in the image
+of the compact support of $w_j$ under the actual $\Psi_j$.
+A rational product box containing that support is computed from
+the original box bounds and local value bounds of $\Phi$; its
+last two coordinates are the selected raw coordinates. No smooth
+Jacobian for the global clamping extension is asserted or needed.
+Where the density is nonzero, that extension agrees with the
+original smooth chart.
+
+*Proof: integration and sheet assembly.* Ordinary change of variables
+on the interior of $Q_j$ gives
+
+$$
+f_j(y)=\int_{\mathbb R^2}a_j(y,t)\,dt,\qquad
+q_{z,j}(y)=\int_{\mathbb R^2}c_j(y,t)\,dt
+\tag{10.4}
+$$
+
+as densities of $\Phi_*(w_jm)$ and $\Phi_*(w_jzm)$. These
+integrals have total $L^1$ names by explicit finite grid quadrature.
+Indeed choose a rational support product $Y_j\times Z_j$, grid
+maximum cell diameter $h_0$ and value precision $e_0$.
+For a Lipschitz bound $L_0$, replacement by rational cell values
+has uniform error at most $L_0h_0+e_0$ on the product. Integrating
+the step function in the last two coordinates gives a finite
+rational step function of $y$, with $L^1$ error at most
+$|Y_j||Z_j|(L_0h_0+e_0)$. Outside the product both true and
+approximating functions are zero. Choosing both mesh and precision
+from this displayed bound yields any prescribed error in finitely
+many operations. This constructs the integrals; it does not call
+an unspecified quadrature service.
+
+Set $f_J=\sum_{j\le J}f_j$, $q_{z,J}=\sum_{j\le J}q_{z,j}$.
+Monotone limits $f=\sum_jf_j$ and $q_z=\sum_jq_{z,j}$ are the
+full densities, because $s_J\uparrow1$ $m$-almost everywhere.
+They concern exactly the same weighted original realization:
+
+$$
+\begin{gathered}
+0\le q_{z,J}\le L_zf_J,\qquad
+0\le q_z-q_{z,J}\le L_z(f-f_J),\\
+\|f-f_J\|_1=\rho_J,\qquad
+\|q_z-q_{z,J}\|_1\le L_z\rho_J.
+\end{gathered}
+\tag{10.5}
+$$
+
+Theorem 9.2 computes a sufficient $J$ for every requested tail
+error; (10.4) computes the finite sums to the remaining error.
+This proves total $L^1$ names. Overlapping source charts have been
+weighted by (9.5), so no source mass is counted twice. Different
+source sheets with equal $\Phi$ values contribute to the same
+$f_J(y),q_{z,J}(y)$. They are not conditioned separately and then
+averaged using an unrelated law. $\square$
+
+## 11. Two-sided scalar certificates for the actual defect
+
+**Theorem 11.1 (projection identity with a finite error budget).**
+For every target of Definition 10.1 the scalar $\Delta(z)$ has a
+total two-sided rational interval name. In particular, every
+rational $\varepsilon>0$ gives a terminating construction of an
+interval of width at most $\varepsilon$ containing the actual
+$\Delta_{\rm next}$ for every finite positive named original
+triple. This does not decide its sign.
+
+*Proof: the completed conditional projection.* On
+$\mathcal C_L=\{(f,q):f\ge0,\ 0\le q\le Lf\}$, define
+
+$$
+\mathcal P(f,q)=\begin{cases}q^2/f&f>0,\\0&f=q=0.\end{cases}
+\qquad
+I_z=\int_{\mathbb R^2}\mathcal P(f,q_z)\,dy.
+\tag{11.1}
+$$
+
+The function $F_z=q_z/f$ where $f>0$, extended by zero elsewhere,
+has a Borel version with $0\le F_z\le L_z$. For every bounded
+Borel $v$ the same-source laws (10.1) give
+
+$$
+\int v(\Phi)z\,dm=\int v(y)q_z(y)\,dy
+ =\int v(\Phi)F_z(\Phi)\,dm.
+\tag{11.2}
+$$
+
+It follows that $Ez=F_z(\Phi)$ almost everywhere. Completion adds
+only null modifications and does not change this $L^2$ class.
+Orthogonal projection and the raw unitary $J_h$ give
+
+$$
+\Delta(z)=\|hz\|_2^2-I_z.
+\tag{11.3}
+$$
+
+No pointwise computability of $F_z$ at zeros of $f$ is claimed.
+
+*Proof: stability including the vertex.* On $\mathcal C_L$,
+
+$$
+|\mathcal P(f,q)-\mathcal P(g,r)|
+ \le L^2|f-g|+2L|q-r|.
+\tag{11.4}
+$$
+
+For positive first coordinates, integrate the derivatives
+$\partial_f\mathcal P=-(q/f)^2$ and
+$\partial_q\mathcal P=2q/f$ along the cone segment. Their bounds
+are $L^2,2L$. If an endpoint is the vertex, take the segment limit;
+$0\le\mathcal P(f,q)\le L^2f$ proves continuity there.
+
+There is a sharper bound for the common tail (10.5):
+
+$$
+\left|I_z-\int\mathcal P(f_J,q_{z,J})\,dy\right|
+ \le L_z^2\rho_J.
+\tag{11.5}
+$$
+
+To verify both directions pointwise, write $(f,q)=(g,r)+(t,s)$
+with $0\le r\le Lg$ and $0\le s\le Lt$. Weighted
+Cauchy–Schwarz gives
+$\mathcal P(g+t,r+s)\le\mathcal P(g,r)+\mathcal P(t,s)
+\le\mathcal P(g,r)+L^2t$. For the other direction use
+$r+s\ge r$ and, if $g>0$,
+
+$$
+\frac{r^2}{g+t}\ge\frac{r^2}{g}-L^2t.
+\tag{11.6}
+$$
+
+The difference is $r^2t/[g(g+t)]\le L^2t$; if $g=0$, the
+required lower bound is immediate. These arguments include zero
+tails by continuity. Integrate with $\int t=\rho_J$.
+
+*Proof: rational output and termination.* Compute finite rational
+step approximants $\widehat f_0,\widehat q_0$ of $f_J,q_{z,J}$
+with respective $L^1$ errors $e_f,e_q$, on a common finite rational
+box partition. Put
+
+$$
+\widehat f=(\widehat f_0)_+,\qquad
+\widehat q=\min\{\max(\widehat q_0,0),L_z\widehat f\},\qquad
+\widehat I=\sum_C|C|\mathcal P(\widehat f_C,\widehat q_C).
+\tag{11.7}
+$$
+
+This last number is rational, with zero summands when
+$\widehat f_C=0$. Positive-part replacement does not increase
+$e_f$. Clipping a number to $[0,L_z\widehat f]$ moves its error
+relative to a point in $[0,L_zf_J]$ by at most the upper-endpoint
+displacement. Thus the new moment error is at most $e_q+L_ze_f$.
+Equations (11.4)–(11.5) give the explicit certificate
+
+$$
+|I_z-\widehat I|
+ \le L_z^2\overline\rho_J+3L_z^2e_f+2L_ze_q=:e_I.
+\tag{11.8}
+$$
+
+Every constant on the right is rational and available. For example,
+choose $\overline\rho_J<\varepsilon/[24(1+L_z^2)]$,
+$e_f<\varepsilon/[72(1+L_z^2)]$ and
+$e_q<\varepsilon/[48(1+L_z)]$. Then $e_I<\varepsilon/8$.
+The searches and finite sums producing these bounds terminate by
+Theorems 9.2 and 10.2.
+
+A raw step $V$ of error $\delta$ for $hz$ gives a rational
+squared-norm enclosure centered at $\|V\|_2^2$, with radius
+$\delta(2Q_V+\delta)$ for any computed rational
+$Q_V\ge\|V\|_2$. Its width tends to zero as $\delta\to0$,
+because the true norm is finite; rational upper bounds $Q_V$ may
+be chosen within one of the computed norm. Refine until this
+width is less than $\varepsilon/2$. Subtract $\widehat I$ and
+enlarge both endpoints by $e_I$. The resulting interval contains
+(11.3) and has width less than $\varepsilon$; intersecting with
+$[0,L_z^2]$ is optional. Every test here is on finite rational
+data and finitely many total-name replies.
+
+For $z=\beta$, its raw name and local bounds are supplied by
+Theorem 8.2 and its global bound by Corollary 8.3. Apply the
+construction in the reference member and transport the scalar
+by (8.3). This proves the stated all-parameter successor result.
+No conditional density, lower bound for $f$, critical-set rate,
+global bound on $\gamma$ or membership $\gamma\in D(K)$ was
+supplied or assumed. $\square$
+
+## 12. Complete positive certificates for original heat-factor failure
+
+**Theorem 12.1 (total names for actual bounded continuation defects).**
+For integers $p,q\ge0$ define, in the original member,
+
+$$
+\varphi_{p,q}=u^p\chi^q,\qquad
+z_{p,q}=T_d\varphi_{p,q},\qquad
+\delta_{p,q}=\Delta(z_{p,q}).
+\tag{12.1}
+$$
+
+Every $\delta_{p,q}$ has a total two-sided scalar interval name
+under Definition 8.1. The targets use the unchanged original heat,
+and satisfy $0\le\varphi_{p,q},z_{p,q}\le1$.
+
+*Proof.* Transport to the reference member at time $\tau$ by
+(8.3). Theorem 8.2 gives local bounds and values for $\varphi$
+from finite products; exponent zero means the constant one.
+We first construct a global raw name for $h\varphi$, rather than
+assuming multiplication by an unknown bounded field is an effective
+operation on a raw name.
+
+Use Theorem 9.2 to make $\rho_J$ as small as needed. On each of the
+finitely many chart boxes supporting $s_J$, approximate
+$\varphi$ uniformly by rational grid values with error at most
+$\alpha$, clipping these values to $[0,1]$. The local derivative
+bounds give a finite sufficient grid mesh and precision. Resolve
+overlaps by a finite rational box partition; each selected grid
+value approximates the same actual $\varphi$ on its cell. Call the
+result $\varphi_0$ on this union. The compact piecewise polynomial
+function $\theta=s_J\varphi_0$, zero elsewhere, satisfies
+$0\le\theta\le1$ and
+
+$$
+\|h(\varphi-\theta)\|_2
+ \le\alpha+\sqrt{\rho_J},
+\tag{12.2}
+$$
+
+since $\varphi-s_J\varphi_0=s_J(\varphi-\varphi_0)
+ +(1-s_J)\varphi$ and $(1-s_J)^2\le1-s_J$.
+Multiplying a raw approximation $H_0$ for $h$ by $\theta$ adds
+at most $\|H_0-h\|_2$. The finite product $H_0\theta$ is a
+compact rational piecewise polynomial. Subdivide its rational cells
+and approximate the polynomials uniformly there; their coefficient
+sums on the bounded cells give finite derivative bounds. This
+returns rational box steps with any desired further $L^2$ error.
+Choose, for example, $\rho_J$ below the square of the allotted
+error and $\alpha$, raw error and subdivision error below their
+allotments. This is a total raw name of $h\varphi$.
+
+[R, Theorem 12.4] now computes
+$v=e^{-\tau H}(h\varphi)=h z_{p,q}$ globally. With
+$0<L\le\tau$ as in (8.4), $\|h\varphi\|_2\le1$ gives
+
+$$
+v\in D(H^4),\qquad
+\sum_{j=0}^4\|H^jv\|_2
+ \le\sum_{j=0}^4j!L^{-j}.
+\tag{12.3}
+$$
+
+Theorem 3.2 supplies a computed local $C^4$ bound for this actual
+vector. Theorem 5.2, Corollary 5.4 and the quotient recurrence
+(8.5) therefore supply local values and $C^1$ bounds for $v/h=z$.
+Markov positivity and preservation of one supply its global bound
+$L_z=1$. All hypotheses of Definition 10.1 have now been constructed
+for these targets. Theorem 11.1 gives their scalar names, and (8.3)
+returns the original defects. This argument never applies $H$ to
+$h\varphi$ or to an approximant before spectral smoothing; no input
+generator-domain hypothesis has been added. $\square$
+
+**Theorem 12.2 (sound and complete positive-certificate
+semidecision for OWG14.5 failure).** For each fixed original finite
+positive named triple,
+
+$$
+E_{\rm rel}\widehat P\ne\widehat P E_{\rm rel}
+\quad\Longleftrightarrow\quad
+\exists p,q\ge0:\ \delta_{p,q}>0.
+\tag{12.4}
+$$
+
+A fair enumeration of the scalar precision queries of Theorem 12.1,
+accepting only an interval with strictly positive rational lower
+endpoint, halts exactly when the left side holds. This is complete
+for the full reference-space heat-factor condition, including a
+failure for which $\Delta_{\rm next}=0$ or all local successor
+minors vanish. It is a one-sided search, not a total zero decision.
+
+*Proof.* The law $\nu=\Phi_*m$ is a probability on $[0,1]^2$.
+Polynomials in its two coordinates are uniformly dense in
+$C([0,1]^2)$ by Stone–Weierstrass, and continuous functions are
+$L^2(\nu)$-dense for this finite Borel measure. Pullback by $\Phi$
+identifies $L^2(\nu)$ with the actual completed-factor space,
+modulo null sets. Thus the complex span of the monomials
+$\varphi_{p,q}$ is dense in $\mathcal H_{\rm rel}$.
+
+If every $\delta_{p,q}=0$, $P$ maps this dense span into the
+closed subspace $\mathcal H_{\rm rel}$. Contractivity extends this
+inclusion to all $\mathcal H_{\rm rel}$. Self-adjointness of the
+original $P$ then makes its orthogonal complement invariant as
+well: $\langle Px,y\rangle=\langle x,Py\rangle=0$ for
+$x\perp\mathcal H_{\rm rel}$ and $y\in\mathcal H_{\rm rel}$.
+Hence $EP=PE$. Conversely that commutation makes every defect
+zero. Restricting to the reducing visible space gives exactly
+[W, (14.5)]; since $\mathcal H_{\rm rel}\subset\mathcal O$,
+invariance tested there is the same inclusion in full $L^2(m)$.
+Injectivity of $\lambda\mapsto e^{-d\lambda}$ and its Borel
+inverse, with the spectral domains in [W, Theorem 3.2], identifies
+this condition with reduction by every original $T_t$. No inferred
+local quotient generator or punctured core is used.
+
+Enumerate all $(p,q,n)$ and compute the total interval for
+$\delta_{p,q}$ with width at most $2^{-n}$. Each query terminates.
+An accepted positive lower endpoint is sound. If a defect is
+strictly positive, sufficiently small width forces such an endpoint,
+so fair enumeration accepts. If all are zero, no interval can be
+accepted and the search may continue indefinitely. A finite timeout
+has no implication in either direction. $\square$
+
+**Corollary 12.3 (intrinsic vector and necessary enlargement
+consumer).** Under the published marked correspondence,
+
+$$
+Uz^o_{p,q}=z_{p,q},\qquad
+z^o_{p,q}=\widehat P\left(\frac B{1+B}\right)^p
+                     \mathsf R^q\Omega_{\rm cyc},\qquad
+\delta_{p,q}=\|(I-E_{\rm rel})z^o_{p,q}\|^2.
+\tag{12.5}
+$$
+
+The joint bounded functional calculus is legitimate because the
+actual multipliers $B$ and $\mathsf R$ commute; this reuses the
+published $\mathcal A_{\rm rel}=W^*(B,\mathsf R)$.
+If a particular positive interval is obtained, every heat-reducing
+completed sigma algebra containing $\mathcal S$ must contain the
+actual $z_{p,q}$ modulo null sets, while $\mathcal S$ does not.
+Indeed it contains $\varphi_{p,q}$ and must contain its original
+heat image. The certified lower endpoint gives a positive rational
+lower bound for its squared projection loss. This specifies a
+necessary additional source relation for that certificate. It does
+not supply a multiplication operator $M_{z_{p,q}}$ intrinsically
+from the vector, a minimal enlargement, or a finite passive method
+of acquiring that relation.
+
+## 13. Numerical access, domains and unresolved signs
+
+**Definition 13.1 (termination and charged operations).** The scalar
+names in Theorems 11.1 and 12.1 are total relative to the original
+parameter, coefficient and global norm names, including the full
+resolvent/heat services constructed in [R]. Their finite work
+includes all original supplier work, positive scalar refinements,
+the general-time spectral polynomial degrees and action errors,
+local graph constants and quotient bounds, chart precision tests,
+cutoff products and rational partitions, raw mass integrations,
+contraction iterations and their certified evaluation errors,
+transformed density grids, common-cell assembly, clipping and the
+norm and rational error arithmetic in (11.7)–(11.8).
+
+The number of chart candidates, the size of the successful finite
+cover, its mass precision, determinant bounds, inverse iterations,
+box counts, bit lengths, degrees and grid sizes depend on the fixed
+names and requested error. The proof gives termination separately
+for each finite positive triple and precision; it gives no measured
+runtime, parameter-uniform complexity, sample bound, total-resource
+advantage or fixed finite memory bound. A positive-certificate
+search in Theorem 12.2 has finite work only when it halts. Zero
+compatible intervals never certify equality.
+
+**Definition 13.2 (scope of the source result).** The new interface
+removes a specific missing premise of a defect-based route: it
+constructs same-source $L^1$ names and the two-sided scalar defect,
+rather than assuming that qualitative regularity, a computable joint
+law or an unevaluated local minor already computes conditional
+projection. It covers all source sheets and all bounded dense-family
+heat images. The calibration result supplies a target bound; the
+jet result supplies local computed moduli; neither one separately
+supplies this projection precision.
+
+No scalar defect or successor minor has been numerically evaluated
+here. No positive certificate, affirmative pair relation, exceptional
+parameter set or actual parameter persistence interval is supplied.
+Theorem 12.2 preserves both signs: if the original pair reduces heat,
+all its tests are zero; if it fails, some positive test is eventually
+certified relative to the stated names. Proving just
+$\Delta_{\rm next}=0$ would concern $g_{2d}$ alone and would not
+settle all the tests. These statements are ordinary conditional
+mathematics under the inherited analytic suppliers, without fresh
+Lean verification.
+
+Every local differential estimate was restricted from the actual
+full endpoint before use. Compact chart weights are integration
+weights, not an asserted full graph or form core. The complete
+source trace, $D(H)$, $D(K)$ and $D(K^{1/2})$ remain their original
+domains; $\gamma$ need belong to none of these operator domains.
+A globally bounded $\gamma$, full positive-cone recovery,
+$\mathcal H_{\rm rel}=\mathcal O$, all invariant functions or raw
+coordinate recovery have not been assumed. The omitted null sets
+in chart integration do not remove the nonpolar source from its
+form or process. No Friedrichs endpoint replaces $H$.
+
+The exact entire word law supplies the published tuple and the
+vector interpretation (12.5). It does not furnish the numerical
+model names through a finite record. Chart evaluation, raw norm
+requests and convolution are mathematical computations, not passive
+point or derivative sensors. Every original history, memory, action,
+clock, calibration and joint provenance remains unchanged, including
+all four labels and the initial $2d$ lead-in. No reset, source pause,
+new preparation or readout is introduced. Full source-family mutual
+recovery of spatial structure, time/continuation, boundary and memory,
+its lawful composition, intrinsic multiplier recovery, finite
+acquisition and their costs remain unresolved.
+
+## 14. Reused mathematics and the source-specific deduction
+
+**Definition 14.1 (provenance and literature boundary).** The result
+of §§8–12 is a `repo-derived` conditional composition: original
+full-domain transport and general-time graph estimates construct
+local chart data; the actual rank theorem and computed raw masses
+make their exhaustion effective; summing the same-source chart
+moment densities before division gives (11.8), consumed by the
+successor and the complete bounded heat-test family. The projection,
+contraction, change-of-variables, perspective and polynomial-density
+facts are mature intermediates. No worldwide novelty is asserted.
+
+| Reused source | Exact use and boundary |
+| --- | --- |
+| [W, Theorems 3.2, 5.2, 13.1 and Definition 14.2] | Original visible heat with its spectral domains, full maximal-domain/trace/clock transport, actual multiplier factor and the unpaid heat-reduction condition. The finite joint laws alone give no heat closure. |
+| [FQ, Theorem 2.1], [FG, Theorem 4.1 and its proof] | Exact transport of the original $\gamma$, and rank two almost everywhere for this actual family. These facts do not name a conditional density or prove successor nonfactorization. |
+| [R, Theorems 12.2–12.4], [SRO, Theorem 16.2 and Definition 17.2] | Full-resolvent, arbitrary named-time raw heat/source names, global upper certificates and exact original calibration. Neither supplies free passive access or assumes $N_d=s_d$. |
+| This volume, Theorem 3.2, (4.7), Theorem 5.2 and Corollary 5.4 | A computed full-domain local graph constant, general positive-time graph bounds, finite jet extraction and a derived compact positive denominator. These are reused rather than recounted as new regularity results. |
+| `D5/S3/ConceptDynamics/Prediction/ConditionalExpectationOptimality.lean`, `conditional_expectation_minimizes_mean_square_error`; `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalErasureComparison.lean`, private `norm_square_integral` and `projection_square_bound` | Existing projection optimality and squared-error foundations, including private results. They do not construct the original-source density or precision name. No duplicate Lean statement is added. |
+| Pinned mathlib revision `56a005855ea17e0b0958f73ec801ae140b0a1679`, `MeasureTheory/Function/ConditionalExpectation/CondexpL2.lean` and `Basic.lean` [MLCE] | `condExpL2`, its norm contraction, self-adjoint inner-product identity and `MemLp.condExpL2_ae_eq_condExp'` are noncomputable conditional-projection foundations. Reading them supplies no executable disintegration or fresh kernel verification. |
+| Ackerman–Freer–Roy, *On the computability of conditional probability*, arXiv:1005.3014v2, introduction and §8 [AFR] | `literature-attested`: a computable joint law alone need not supply computable conditional distributions. The explicit charts, $L^1$ names and bounded-cone error proof here are the additional construction; no unrestricted conditioning algorithm is invoked. |
+| Boyd–Vandenberghe, *Convex Optimization*, §3.1.5 and §3.2.6 [BV] | `literature-attested`: quadratic-over-linear convexity and the perspective construction. The two-sided restricted-cone and common-tail bounds needed for this precision map are proved in (11.4)–(11.8), with every numerical error shown. |
+
+The source-specific claim is the proved precision/certificate
+interface under these hypotheses, not an end-to-end numerical
+producer or a performed query. Bounded immutable-source and library
+reuse checks identify the above dependencies; they establish no
+external priority. The actual successor sign and the original
+full heat-factor answer remain the unresolved source relations of
+Definition 13.2.
+
+[MLCE]: https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/MeasureTheory/Function/ConditionalExpectation/CondexpL2.lean
+[AFR]: https://arxiv.org/html/1005.3014v2
+[BV]: https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf
+
+## 追加锚（本行以下为增补区）

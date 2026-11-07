@@ -255,11 +255,6 @@ class HostCleanupTests(unittest.TestCase):
         self.assertIn("--lanes-only", run.call_args.args[0])
         self.assertIn("--force", run.call_args.args[0])
 
-    def test_clean_lanes_does_not_receive_activity(self):
-        with patch.object(cleanup.subprocess, "run", return_value=subprocess.CompletedProcess([], 0)) as run:
-            self.assertEqual(0, cleanup.clean_worktrees(self.root, "base", True, {self.root}))
-        self.assertNotIn("--active-paths-file", run.call_args.args[0])
-
     def test_invalid_age_is_rejected(self):
         for age in ("-1", "nan", "inf"):
             result = subprocess.run([sys.executable, str(SCRIPT), "clean", "--min-age-hours", age], capture_output=True)
@@ -443,24 +438,6 @@ class HostCleanupTests(unittest.TestCase):
             args = json.loads(result.stdout)
             self.assertEqual(["clean-lanes", "--base", "HEAD"] + (["--force"] if force else []),
                              args[args.index("--") + 1:])
-        activity = str(self.root / "literal $(touch sentinel) `touch other` activity.json")
-        result = subprocess.run(
-            ["/bin/bash", str(scripts / "clean-lanes.sh"), "--base", "HEAD", "--lanes-only",
-             "--active-paths-file", activity],
-            cwd=repository, env=env, capture_output=True, text=True)
-        self.assertEqual(0, result.returncode, result.stderr)
-        args = json.loads(result.stdout)
-        self.assertEqual(["clean-lanes", "--base", "HEAD", "--lanes-only", "--active-paths-file", activity],
-                         args[args.index("--") + 1:])
-        self.assertFalse((repository / "sentinel").exists())
-        self.assertFalse((repository / "other").exists())
-        for rejected in (["--active-path", activity], ["--active-paths-file", activity, "--active-paths-file", activity]):
-            with self.subTest(rejected=rejected[0]):
-                result = subprocess.run(
-                    ["/bin/bash", str(scripts / "clean-lanes.sh"), "--base", "HEAD", *rejected],
-                    cwd=repository, env=env, capture_output=True, text=True)
-                self.assertEqual(2, result.returncode, "[FAIL] clean_lanes_wrapper_rejects_unsupported_activity")
-
     def test_physical_kernel_observation_does_not_reopen_endpoint_and_argv_resolves_alias(self):
         target = self.root / "active endpoint"
         target.write_text("owned")

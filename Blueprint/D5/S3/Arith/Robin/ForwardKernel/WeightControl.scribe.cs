@@ -16,13 +16,26 @@ internal sealed class WeightControlDocument : IScribeDocumentDefinition
                 + "let A(x,u)=w(x+u*H(x))/w(x). The center in the denominator "
                 + "moves together with the center in the numerator.")),
             Describe.Lean(
+                DescribeId.Create("price-ratio-sub-one"),
+                DeclarationHandle.Create(Prefix + "priceRatio_sub_one"),
+                H("Displacement bound for the price ratio"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For x>=4 and u>=0, the price ratio rho(x,u)=w(x+u)/w(x) "
+                    + "satisfies 0<=1-rho(x,u)<=4*u/x. Monotonicity gives the "
+                    + "first inequality; the lower power bound "
+                    + "rho(x,u)>=(x/(x+u))^4 and the tangent inequality "
+                    + "(1+v)^(-4)>=1-4*v give the second."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("forward-weight-ratio-value"),
                 DeclarationHandle.Create(Prefix + "weightRatio_sub_one"),
                 H("Value of the original ratio"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "The exact monotonicity and lower power bound for w give "
+                    "Applying the displacement bound at u*H(x) gives "
                     + "|A(x,u)-1|<=4*x^(-1/5). The lower bound uses "
                     + "(x/(x+u*H(x)))^4 rather than replacing the weight "
                     + "by a different window."))),
