@@ -111,11 +111,26 @@ internal sealed class MercaQuarticMomentsDocument : IScribeDocumentDefinition
                     + "uses the conjugate q-value i, and k=-t uses -i. This is an "
                     + "explicit simultaneous transformation of character values and "
                     + "imaginary coordinate; the normalized sign formula is not reused "
-                    + "unchanged.")),
+                    + "unchanged."),
+            Node("interval-sum", "Literal positive interval sums", "intervalSum",
+                DescribeRole.Definition,
+                "intervalSum r chi n is the sum of the actual normalized character "
+                    + "at the positive integers from one through n, reduced modulo r."),
+            Node("interval-identities", "The half and quarter identities", "interval_identities",
+                DescribeRole.Theorem,
+                "For every prime r>5 congruent to five modulo eight, let S be the "
+                    + "literal half-interval sum and Q the literal quarter-interval sum. "
+                    + "Then S=(-2-i)B, S=(1+i)Q and 2Q=(-3+i)B. Consequently "
+                    + "2 Re(Q)=-3k-t and 2 Im(Q)=k-3t. The nonprincipal doubling "
+                    + "formula supplies S, and the permutation a maps to 2a below "
+                    + "the quarter endpoint and r-2a above it supplies the relation "
+                    + "with Q. These are universal literal character sums, independent "
+                    + "of the still open signed class-number formula.")),
         edges: [
             DocumentEdge.Dependency.Create(GidRef.Create("D5/S3/ArithUnits/MercaQuarticCharacter")),
             DocumentEdge.Dependency.Create(GidRef.Create("D5/S3/ArithUnits/MercaPrimeCharacterMoment")),
-            DocumentEdge.Dependency.Create(GidRef.Create("D5/S3/ArithUnits/MercaCosetFiberLift"))]));
+            DocumentEdge.Dependency.Create(GidRef.Create("D5/S3/ArithUnits/MercaCosetFiberLift")),
+            DocumentEdge.Dependency.Create(GidRef.Create("D5/S3/Analytic/Zeta/PrimeQuadraticLValues"))]));
 
     private static DocumentBlock Node(string id, string title, string declaration,
         DescribeRole role, string prose, AssessedProvenance? provenance = null) =>

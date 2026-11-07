@@ -186,6 +186,30 @@ Lean statement: `D5/S3/ArithUnits/MercaQuarticMoments.conjugate_coordinates`
 
 The conjugate character has order four, value -i at two, the identical native kernel, value -1 at minus one and value i on -2K. Its actual Bernoulli sum is k+i(-t). Thus the same ordered cosets K,2K,-K,-2K now have values 1,-i,-1,i. The centered branch k=t uses the conjugate q-value i, and k=-t uses -i. This is an explicit simultaneous transformation of character values and imaginary coordinate; the normalized sign formula is not reused unchanged.
 
+**Definition 1.16 (Literal positive interval sums).**
+
+Lean statement: `D5/S3/ArithUnits/MercaQuarticMoments.intervalSum`
+
+*Formalization.* `D5/S3/ArithUnits/MercaQuarticMoments.intervalSum` (`✓ std3`).
+
+*Citation.* Haobo Ma; Wenlin Zhang (2026). *A class-number criterion for the quartic equality after Theorem 5.5*. URL: <https://oeis.org/A392984>.
+
+*Commentary.*
+
+intervalSum r chi n is the sum of the actual normalized character at the positive integers from one through n, reduced modulo r.
+
+**Theorem 1.17 (The half and quarter identities).**
+
+Lean statement: `D5/S3/ArithUnits/MercaQuarticMoments.interval_identities`
+
+*Proof.* Machine-checked in Lean as `D5/S3/ArithUnits/MercaQuarticMoments.interval_identities` (`✓ std3`). ∎
+
+*Citation.* Haobo Ma; Wenlin Zhang (2026). *A class-number criterion for the quartic equality after Theorem 5.5*. URL: <https://oeis.org/A392984>.
+
+*Commentary.*
+
+For every prime r>5 congruent to five modulo eight, let S be the literal half-interval sum and Q the literal quarter-interval sum. Then S=(-2-i)B, S=(1+i)Q and 2Q=(-3+i)B. Consequently 2 Re(Q)=-3k-t and 2 Im(Q)=k-3t. The nonprincipal doubling formula supplies S, and the permutation a maps to 2a below the quarter endpoint and r-2a above it supplies the relation with Q. These are universal literal character sums, independent of the still open signed class-number formula.
+
 ## References
 
 - Truth anchor: `D5/S3/ArithUnits/MercaQuarticMoments.bernoulli`
@@ -196,6 +220,8 @@ The conjugate character has order four, value -i at two, the identical native ke
 - Truth anchor: `D5/S3/ArithUnits/MercaQuarticMoments.coordinate`
 - Truth anchor: `D5/S3/ArithUnits/MercaQuarticMoments.generator_eligible`
 - Truth anchor: `D5/S3/ArithUnits/MercaQuarticMoments.imagCoordinate`
+- Truth anchor: `D5/S3/ArithUnits/MercaQuarticMoments.intervalSum`
+- Truth anchor: `D5/S3/ArithUnits/MercaQuarticMoments.interval_identities`
 - Truth anchor: `D5/S3/ArithUnits/MercaQuarticMoments.liftedKernel`
 - Truth anchor: `D5/S3/ArithUnits/MercaQuarticMoments.liftedKernelEquiv`
 - Truth anchor: `D5/S3/ArithUnits/MercaQuarticMoments.lifted_structure`
@@ -203,6 +229,7 @@ The conjugate character has order four, value -i at two, the identical native ke
 - Truth anchor: `D5/S3/ArithUnits/MercaQuarticMoments.representative_properties`
 - Truth anchor: `D5/S3/ArithUnits/MercaQuarticMoments.sumRep`
 - Truth anchor: `D5/S3/ArithUnits/MercaQuarticMoments.twoUnit`
+- Dependency: [D5/S3/Analytic/Zeta/PrimeQuadraticLValues](../Analytic/Zeta/PrimeQuadraticLValues.md)
 - Dependency: [D5/S3/ArithUnits/MercaCosetFiberLift](MercaCosetFiberLift.md)
 - Dependency: [D5/S3/ArithUnits/MercaPrimeCharacterMoment](MercaPrimeCharacterMoment.md)
 - Dependency: [D5/S3/ArithUnits/MercaQuarticCharacter](MercaQuarticCharacter.md)

@@ -8,6 +8,7 @@
 
 import D5.S3.ArithUnits.MercaQuarticCharacter
 import D5.S3.ArithUnits.MercaPrimeCharacterMoment
+import D5.S3.Analytic.Zeta.PrimeQuadraticLValues
 import Mathlib.Algebra.Ring.Int.Parity
 import Mathlib.SetTheory.Cardinal.NatCard
 import Mathlib.Tactic.Ring
@@ -643,5 +644,166 @@ theorem conjugate_coordinates (r : ℕ) [Fact r.Prime] (hr : r % 8 = 5)
       exact star_injective.eq_iff
     rw [← hval 1, ← hval (-Complex.I), ← hval Complex.I] at h
     simpa only [star_one, star_neg, RCLike.star_def, Complex.conj_I, neg_neg] using h
+
+
+/-- The literal unweighted sum over the positive interval from one to `n`. -/
+def intervalSum (r : ℕ) [Fact r.Prime] (hr : r % 8 = 5) (n : ℕ) : ℂ :=
+  ∑ a ∈ Finset.Icc 1 n, character r hr (a : ZMod r)
+
+private lemma intervalSum_eq_zmod (r : ℕ) [Fact r.Prime] (hr : r % 8 = 5)
+    (n : ℕ) (hn : n < r) :
+    intervalSum r hr n =
+      ∑ x : ZMod r, if x.val ≤ n then character r hr x else 0 := by
+  classical
+  symm
+  rw [← Finset.sum_filter]
+  have heq : (∑ x ∈ Finset.univ.filter (fun x : ZMod r => x.val ≤ n),
+      character r hr x) =
+      ∑ a ∈ Finset.range (n + 1), character r hr (a : ZMod r) := by
+    apply Finset.sum_bij (fun x _ => x.val)
+    · intro x hx
+      simp only [Finset.mem_filter, Finset.mem_univ, true_and] at hx
+      exact Finset.mem_range.mpr (by omega)
+    · intro x _ y _ h
+      exact ZMod.val_injective r h
+    · intro a ha
+      have har : a < r := by have := Finset.mem_range.mp ha; omega
+      refine ⟨(a : ZMod r), ?_, ZMod.val_natCast_of_lt har⟩
+      simp only [Finset.mem_filter, Finset.mem_univ, true_and, ZMod.val_natCast_of_lt har]
+      have := Finset.mem_range.mp ha
+      omega
+    · intro x _
+      rw [ZMod.natCast_zmod_val]
+  rw [heq]
+  have hset : Finset.range (n + 1) = insert 0 (Finset.Icc 1 n) := by
+    ext a
+    simp only [Finset.mem_range, Finset.mem_insert, Finset.mem_Icc]
+    omega
+  rw [hset, Finset.sum_insert (by simp)]
+  simp [intervalSum, (character r hr).map_zero' (by omega)]
+
+private lemma half_interval (r : ℕ) [Fact r.Prime] (hr : r % 8 = 5)
+    (hr5 : 5 < r) :
+    intervalSum r hr ((r - 1) / 2) = (-2 - Complex.I) * bernoulli r hr := by
+  have hne : character r hr ≠ 1 := by
+    intro h
+    have ho := (kernel_structure r hr).1
+    rw [h, orderOf_one] at ho
+    norm_num at ho
+  have h := D5.S3.Analytic.Zeta.PrimeQuadraticLValues.half_sum_eq_LFunction_zero_of_ne_one
+    r (by omega) (character r hr) hne
+  rw [← intervalSum_eq_zmod r hr _ (by omega), (kernel_structure r hr).2.1,
+    (bernoulli_coordinates r hr hr5).2.2.2.2.2.2.2.2] at h
+  rw [h]
+  have hI : Complex.I⁻¹ = -Complex.I := by
+    apply inv_eq_of_mul_eq_one_left
+    simp [Complex.I_sq]
+  rw [hI]
+  ring
+
+private lemma quarter_interval (r : ℕ) [Fact r.Prime] (hr : r % 8 = 5) :
+    intervalSum r hr ((r - 1) / 2) =
+      (1 + Complex.I) * intervalSum r hr ((r - 1) / 4) := by
+  classical
+  let m := (r - 1) / 4
+  have hrm : r = 4 * m + 1 := by dsimp [m]; omega
+  have hhalf : (r - 1) / 2 = 2 * m := by omega
+  let S := Finset.Icc 1 (2 * m)
+  let f : ℕ → ℕ := fun a => if a ≤ m then 2 * a else r - 2 * a
+  have hf : (∑ a ∈ S, character r hr (a : ZMod r)) =
+      ∑ a ∈ S, character r hr (f a : ZMod r) := by
+    symm
+    apply Finset.sum_bij (fun a _ => f a)
+    · intro a ha
+      simp only [S, Finset.mem_Icc] at ha ⊢
+      dsimp [f]
+      split_ifs <;> omega
+    · intro a ha b hb hab
+      simp only [S, Finset.mem_Icc] at ha hb
+      dsimp [f] at hab
+      split_ifs at hab <;> omega
+    · intro a ha
+      simp only [S, Finset.mem_Icc] at ha
+      by_cases he : a % 2 = 0
+      · refine ⟨a / 2, ?_, ?_⟩
+        · simp only [S, Finset.mem_Icc]; omega
+        · dsimp [f]; rw [if_pos (by omega)]; omega
+      · refine ⟨(r - a) / 2, ?_, ?_⟩
+        · simp only [S, Finset.mem_Icc]; omega
+        · dsimp [f]; rw [if_neg (by omega)]; omega
+    · intro a _
+      rfl
+  have hterm (a : ℕ) (ha : a ∈ S) :
+      character r hr (f a : ZMod r) =
+        2 * Complex.I * (if a ≤ m then character r hr (a : ZMod r) else 0) -
+          Complex.I * character r hr (a : ZMod r) := by
+    have ha' := Finset.mem_Icc.mp ha
+    by_cases ham : a ≤ m
+    · simp only [f, if_pos ham, Nat.cast_mul, Nat.cast_ofNat, map_mul,
+        (kernel_structure r hr).2.1]
+      ring
+    · have h2ar : 2 * a ≤ r := by omega
+      have heq : ((r - 2 * a : ℕ) : ZMod r) = -(2 * (a : ZMod r)) := by
+        rw [Nat.cast_sub h2ar, ZMod.natCast_self, Nat.cast_mul, Nat.cast_ofNat]
+        ring
+      simp only [f, if_neg ham, heq,
+        DirichletCharacter.Odd.eval_neg (ψ := character r hr) _
+          (kernel_structure r hr).2.2.2.1,
+        map_mul, (kernel_structure r hr).2.1, mul_zero, zero_sub]
+  have hlow : (∑ a ∈ S, if a ≤ m then character r hr (a : ZMod r) else 0) =
+      intervalSum r hr m := by
+    rw [← Finset.sum_filter]
+    have hset : S.filter (fun a => a ≤ m) = Finset.Icc 1 m := by
+      ext a
+      simp only [S, Finset.mem_filter, Finset.mem_Icc]
+      omega
+    rw [hset]
+    rfl
+  have hrel : intervalSum r hr (2 * m) =
+      2 * Complex.I * intervalSum r hr m - Complex.I * intervalSum r hr (2 * m) := by
+    change (∑ a ∈ S, character r hr (a : ZMod r)) = _
+    rw [hf]
+    calc
+      _ = ∑ a ∈ S,
+          (2 * Complex.I * (if a ≤ m then character r hr (a : ZMod r) else 0) -
+            Complex.I * character r hr (a : ZMod r)) := Finset.sum_congr rfl hterm
+      _ = _ := by rw [Finset.sum_sub_distrib, ← Finset.mul_sum,
+        ← Finset.mul_sum, hlow]; rfl
+  rw [hhalf]
+  have hre := congrArg Complex.re hrel
+  have him := congrArg Complex.im hrel
+  apply Complex.ext <;>
+    simp [Complex.mul_re, Complex.mul_im] at hre him ⊢ <;> linarith
+
+/-- The weighted/half/quarter identities of the historical note are identities
+of the actual normalized character and its literal positive interval sums. -/
+theorem interval_identities (r : ℕ) [Fact r.Prime] (hr : r % 8 = 5) (hr5 : 5 < r) :
+    let Q := intervalSum r hr ((r - 1) / 4)
+    let S := intervalSum r hr ((r - 1) / 2)
+    let k := realCoordinate r hr
+    let t := imagCoordinate r hr
+    S = (-2 - Complex.I) * bernoulli r hr ∧ S = (1 + Complex.I) * Q ∧
+    2 * Q = (-3 + Complex.I) * bernoulli r hr ∧
+    2 * Q.re = -3 * (k : ℝ) - (t : ℝ) ∧
+    2 * Q.im = (k : ℝ) - 3 * (t : ℝ) := by
+  dsimp only
+  have hS := half_interval r hr hr5
+  have hQ := quarter_interval r hr
+  have hB := (bernoulli_coordinates r hr hr5).1
+  have h2Q : 2 * intervalSum r hr ((r - 1) / 4) =
+      (-3 + Complex.I) * bernoulli r hr := by
+    calc
+      _ = (1 - Complex.I) * intervalSum r hr ((r - 1) / 2) := by
+        rw [hQ]
+        ring_nf <;> norm_num [Complex.I_sq] <;> ring
+      _ = _ := by rw [hS]; ring_nf <;> norm_num [Complex.I_sq] <;> ring
+  refine ⟨hS, hQ, h2Q, ?_, ?_⟩
+  · have h := congrArg Complex.re h2Q
+    rw [hB] at h
+    simpa [Complex.mul_re, Complex.mul_im] using h
+  · have h := congrArg Complex.im h2Q
+    rw [hB] at h
+    simp [Complex.mul_re, Complex.mul_im] at h
+    linarith
 
 end D5.S3.ArithUnits.MercaQuarticMoments
