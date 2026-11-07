@@ -72,7 +72,7 @@ private theorem iterate_growth (k : ℕ) : k+1 ≤ (image phi k 0).length := by
 def word (n : ℕ) : Letter :=
   (image phi (n+1) 0)[n]'(by have := iterate_growth (n+1); omega)
 
-private theorem word_eq_iterate (k n : ℕ) (hn : n < (image phi k 0).length) :
+theorem word_eq_iterate (k n : ℕ) (hn : n < (image phi k 0).length) :
     word n = (image phi k 0)[n] := by
   have hk := iterate_prefix (Nat.le_max_left k (n+1))
   have hn' := iterate_prefix (Nat.le_max_right k (n+1))
@@ -110,7 +110,7 @@ private theorem substituted_prefix (i : ℕ) :
 
 private theorem boundary_zero : boundary 0 = 0 := by simp [boundary, factor, subst]
 
-private theorem boundary_succ (i : ℕ) :
+theorem boundary_succ (i : ℕ) :
     boundary (i+1) = boundary i + (phi (word i)).length := by
   simp only [boundary, factor_add, subst_append, List.length_append]
   simp [factor, subst]
@@ -211,7 +211,7 @@ def typeI : ℕ → Word
 def Lext (s : Word) : Set Letter := {c | ∃ q, Occ (c :: s) q}
 def Rext (s : Word) : Set Letter := {c | ∃ q, Occ (s ++ [c]) q}
 
-private theorem occ_append (s t : Word) (q : ℕ) :
+theorem occ_append (s t : Word) (q : ℕ) :
     Occ (s++t) q ↔ Occ s q ∧ Occ t (q+s.length) := by
   unfold Occ
   rw [List.length_append, factor_add]
@@ -225,7 +225,7 @@ private theorem occ_append (s t : Word) (q : ℕ) :
 private theorem occ_singleton (a : Letter) (q : ℕ) : Occ [a] q ↔ word q = a := by
   simp [Occ, factor]
 
-private theorem occ_cons (a : Letter) (s : Word) (q : ℕ) :
+theorem occ_cons (a : Letter) (s : Word) (q : ℕ) :
     Occ (a::s) q ↔ word q = a ∧ Occ s (q+1) := by
   simpa [occ_singleton] using occ_append [a] s q
 
@@ -321,7 +321,7 @@ private theorem occ_prefix {s t : Word} {q : ℕ} (hp : s <+: t) (ho : Occ t q) 
   rw [he, ← List.prefix_iff_eq_take.mp hp] at ht
   exact ht
 
-private theorem boundary_occ {s : Word} {a : ℕ} (h : Occ s a) :
+theorem boundary_occ {s : Word} {a : ℕ} (h : Occ s a) :
     boundary (a+s.length) = boundary a+(subst phi s).length := by
   rw [boundary_add,h]
 
@@ -409,18 +409,18 @@ theorem typeI_not_at_origin (n : ℕ) : ¬ Occ (typeI n) 0 := by
       have he : i = 0 := boundary_strict.injective (hi.symm.trans boundary_zero.symm)
       exact ih (he ▸ ho)
 
-private def next (a : Letter) : Letter :=
+def next (a : Letter) : Letter :=
   if h : a.val < 6 then ⟨a.val+1,by omega⟩ else 6
 
 private theorem next_eq_six (a : Letter) : next a = 6 ↔ a = 5 ∨ a = 6 := by
   fin_cases a <;> norm_num [next]
 
-private theorem after_boundary (i : ℕ) : word (boundary i+1) = next (word i) := by
+theorem after_boundary (i : ℕ) : word (boundary i+1) = next (word i) := by
   have h := block_letter i 1 (by unfold phi; split <;> simp)
   unfold phi next at *
   split_ifs at * <;> simpa using h
 
-private theorem before_boundary {i : ℕ} (hi : 0 < i) :
+theorem before_boundary {i : ℕ} (hi : 0 < i) :
     word (boundary i-1) = next (word (i - 1)) := by
   have he : i-1+1 = i := by omega
   have hb := boundary_succ (i - 1)
@@ -503,19 +503,19 @@ def M : Matrix Letter Letter ℕ := fun a b => letterCount (phi b) a
 def parikh (s : Word) : Letter → ℕ := letterCount s
 def unit (c : Letter) : Letter → ℕ := Pi.single c 1
 
-private theorem parikh_append (s t : Word) : parikh (s++t) = parikh s+parikh t := by
+theorem parikh_append (s t : Word) : parikh (s++t) = parikh s+parikh t := by
   ext c
   simp [parikh,letterCount]
 
-private theorem parikh_singleton (c : Letter) : parikh [c] = unit c := by
+theorem parikh_singleton (c : Letter) : parikh [c] = unit c := by
   ext a
   fin_cases a <;> fin_cases c <;> rfl
 
-private theorem parikh_cons (c : Letter) (s : Word) :
+theorem parikh_cons (c : Letter) (s : Word) :
     parikh (c::s) = unit c+parikh s := by
   simpa only [List.singleton_append,parikh_singleton] using parikh_append [c] s
 
-private theorem parikh_subst (s : Word) : parikh (subst phi s) = M.mulVec (parikh s) := by
+theorem parikh_subst (s : Word) : parikh (subst phi s) = M.mulVec (parikh s) := by
   induction s with
   | nil =>
     ext c
@@ -655,7 +655,7 @@ theorem typeI_parikh_formula :
     simp only [show n+1-1-n = 0 by omega,pow_zero,Matrix.one_mulVec]
     abel
 
-private theorem lext_iff (s : Word) (c : Letter) :
+theorem lext_iff (s : Word) (c : Letter) :
     c ∈ Lext s ↔ ∃ a, 0 < a ∧ Occ s a ∧ word (a - 1) = c := by
   constructor
   · rintro ⟨q,hq⟩
@@ -664,7 +664,7 @@ private theorem lext_iff (s : Word) (c : Letter) :
   · rintro ⟨a,ha,hs,hc⟩
     exact ⟨a-1,(occ_cons _ _ _).mpr ⟨hc,by simpa [Nat.sub_add_cancel ha] using hs⟩⟩
 
-private theorem rext_iff (s : Word) (c : Letter) :
+theorem rext_iff (s : Word) (c : Letter) :
     c ∈ Rext s ↔ ∃ a, Occ s a ∧ word (a+s.length) = c := by
   constructor
   · rintro ⟨a,ha⟩
@@ -706,9 +706,9 @@ private theorem sentinel_rext (s : Word) : Rext (sentinel s) = next '' Rext s :=
       rw [boundary_occ ho]; simp [sentinel]; omega
     exact ⟨boundary a,sentinel_transport ho,by rw [he,after_boundary,hc]⟩
 
-private def wrap (c : Letter) : Letter := if c = 6 then 6 else 0
+def wrap (c : Letter) : Letter := if c = 6 then 6 else 0
 
-private theorem two_before_boundary {a : ℕ} (ha : 0 < a)
+theorem two_before_boundary {a : ℕ} (ha : 0 < a)
     (hc : word (a - 1) = 5 ∨ word (a - 1) = 6) :
     word (boundary a-2) = wrap (word (a - 1)) := by
   have hb := boundary_succ (a - 1)
@@ -719,7 +719,7 @@ private theorem two_before_boundary {a : ℕ} (ha : 0 < a)
   · have hh := block_letter (a - 1) 1 (by simp [hc,phi])
     simpa [hb,hc,phi,wrap] using hh
 
-private theorem two_after_boundary {a : ℕ}
+theorem two_after_boundary {a : ℕ}
     (hc : word a = 5 ∨ word a = 6) :
     word (boundary a+2) = wrap (word a) := by
   rcases hc with hc | hc
@@ -896,7 +896,7 @@ theorem typeI_extensions (n : ℕ) :
 def occurrenceMap (n a : ℕ) : ℕ :=
   if n % 6 = 5 then boundary a-1 else boundary a
 
-private theorem occurrenceMap_strict (n : ℕ) : StrictMono (occurrenceMap n) := by
+theorem occurrenceMap_strict (n : ℕ) : StrictMono (occurrenceMap n) := by
   unfold occurrenceMap
   split
   · apply strictMono_nat_of_lt_succ
@@ -951,7 +951,7 @@ theorem typeI_consecutive_iff (n a b : ℕ) :
       Consecutive (typeI n) a b :=
   consecutive_transport _ _ _ (occurrenceMap_strict n) (typeI_occurrence_iff n) a b
 
-private theorem ordinary_return_word {a b : ℕ} (hab : a < b) :
+theorem ordinary_return_word {a b : ℕ} (hab : a < b) :
     returnWord (boundary a) (boundary b) = subst phi (returnWord a b) := by
   have h := boundary_add a (b-a)
   rw [Nat.add_sub_of_le (Nat.le_of_lt hab)] at h
