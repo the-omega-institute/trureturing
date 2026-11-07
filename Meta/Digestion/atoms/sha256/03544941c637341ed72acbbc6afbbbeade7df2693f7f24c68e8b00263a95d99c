@@ -1,0 +1,25 @@
+**定义 37.1（完整实几何背景）。** 保持 27.1 的原来源与全部消费者合同。指定非空紧 Hausdorff 空间 $T$，令
+
+$$
+X=C(T,\mathbb Ru\oplus\mathbb R^3),\qquad
+(\alpha u+x)\circ(\beta u+y)
+=(\alpha\beta+\langle x,y\rangle)u+\alpha y+\beta x,
+$$
+
+逐点取范数 $N(\alpha u+x)=\sup_{\xi\in T}(|\alpha(\xi)|+\|x(\xi)\|)$ 与正锥 $\alpha(\xi)\ge\|x(\xi)\|$。这里的三轴为响应纤维，不是物理空间维数；此处指定该实 Jordan 几何，不把它作为一般 JB 来源的结论。原 $E\subseteq X$ 是含全部常数元的实 Jordan 子代数，可以不完备；下列静态恢复甚至不要求稠密。旧 $D:E^2\to E$ 只为反对称总映射，保持全原 PY 与 NN。令
+
+$$
+\mathcal A=\{f\in C(T,\mathbb R):fu\in E\},\quad
+F_a(b)=D(a,b),\quad H_a=L_a^2-L_{a^2}.
+$$
+
+本分支以一项原中央平方刻度相容代替全部循环：
+
+$$
+\mathrm{CS}:\quad D(a,f^2b)=f^2D(a,b),
+\qquad f\in\mathcal A,\quad a,b\in E.
+\tag{37.1}
+$$
+
+$f^2b$ 是同一已知中央 Jordan 乘法；第一槽同式由反对称性跟随。CS 不预付旧 $D$ 的加性、一般系数线性、连续性、商上良定义或原域倒数与平方根闭合。一般 JB 候选仍保持 27.1 的 PY+R。
+
