@@ -1,0 +1,14 @@
+**定义 C-96.1（固定正交乘积基的相干族）。** 固定 C-95.1 构造中的
+$\nu,b_0,b_1,e_0,e_1$；非中心时用式 (C95.8)，中心时固定任意正交基。
+对 $0\le\gamma\le1$，定义
+
+$$
+\begin{aligned}
+\sigma_\gamma={}&(1-\nu)|e_0\rangle\langle e_0|+\nu|e_1\rangle\langle e_1|\\
+&+\gamma\sqrt{\nu(1-\nu)}
+\bigl(|e_0\rangle\langle e_1|+|e_1\rangle\langle e_0|\bigr),\\
+\rho_\gamma={}&(1-r)|2\rangle\langle2|+r\iota\sigma_\gamma\iota^\dagger.
+\end{aligned}
+\tag{C96.1}
+$$
+

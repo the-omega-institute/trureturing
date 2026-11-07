@@ -1,0 +1,71 @@
+**定理 338.1（完整候选的恒等重构）。** 对同一原菜单、$t_0$ 及 $\sigma_{t_0}$，分别在完整 $B$ 与完整 $\mathsf B_{\rm cl}$ 中有
+
+$$
+\mathsf C_{\rm bal}(B_*)\Longleftrightarrow
+\mathsf C_{\rm fin}(B_*)\Longleftrightarrow
+\mathsf C_Z(B_*)\Longleftrightarrow\mathsf C_{\rm support}(B_*).
+\tag{338.1}
+$$
+
+全部对应对原对象、原准备、设备／记录／失败及每条原合法有限历史都是恒等。由同一原 $D$ 定向的复表示满足
+
+$$
+\begin{gathered}
+\mathcal A_A=\bigoplus_s B(H_{A,s}),\quad
+E_A=(\mathcal A_A)_{\rm sa},\quad C_A=(\mathcal A_A)_+,\\
+a\cdot b=a\circ b-\mathrm iD_ab,\qquad D_ab=\tfrac{\mathrm i}{2}[a,b],\\
+D_aa=D_au=D_ua=0,\qquad D_ab=-D_ba,\qquad
+[D_a,D_b]=-[L_a,L_b],\quad D_c^2=-P_c/4\quad(c^2=c).
+\end{gathered}
+\tag{338.2}
+$$
+
+全部原实际联合具有同一取向的普通复张量，全部原经典中心及相关输入保持。原比较 $g_A^0$ 和原 $q_A$ 的两套运输保持区分：
+
+$$
+\begin{aligned}
+g_A^0(x,y)&=\tau_A((B_Ax)y),&q_A(x,y)&=\tau_A((\mathcal W_Ax)y),\\
+\rho_\alpha&=B_Ax_\alpha,&\widehat x_\alpha&=\mathcal W_A^{-1}\rho_\alpha,\\
+\alpha(y)&=\tau_A(\rho_\alpha y),&\alpha(D_ab)&=q_A(\widehat x_\alpha,D_ab),\\
+\Phi_f&=B_BT_f^{\dagger_0}B_A^{-1}&&(f:A\to B).
+\end{aligned}
+\tag{338.3}
+$$
+
+一般 $x_\alpha\ne\widehat x_\alpha$；各联合各取自己的 $B_A,\mathcal W_A$，不等正权和非因子化比较均保留。原准备含零、奇异和次归一质量；全部旧事件 $\Phi_f$ 为 CP/TNI，原完整设备的事件和为 TP。对每个数学效果 $0\le e\le u_A$，原所选精确有限平方根词和原许可相关执行满足
+
+$$
+\Phi_{W_e}(\rho)=\sqrt e\rho\sqrt e,\qquad
+\Phi_{W_e\mid R}(X)=(\sqrt e\otimes I_R)X(\sqrt e\otimes I_R).
+\tag{338.4}
+$$
+
+原占用失败方向 $p_1$ 的每个原失败 $\Psi_\ell:P\to B_\ell$ 保持完整输出 $\sqrt{I-e}\rho\sqrt{I-e}\otimes\Psi_\ell(p_1)$；其他原方向和中心取原映射。原 F 供应同一实现的实际细口及原分组／遗忘；非零细支的具名原资料仍满足
+
+$$
+\begin{gathered}
+S_\ell=\operatorname{Ad}_{K_\ell},\quad \Phi_f=\sum_\ell S_\ell,
+\quad U_\ell=q_\ell\operatorname{Ad}_{K_\ell^+},\quad q_\ell>0,\\
+e_\ell=\operatorname{supp}(K_\ell^*K_\ell),\quad
+h_\ell=\operatorname{supp}(K_\ell K_\ell^*),\quad \mathsf C_e(X)=eXe,\\
+U_\ell=\mathsf C_{e_\ell}U_\ell\mathsf C_{h_\ell},\quad
+U_\ell S_\ell=q_\ell\mathsf C_{e_\ell},\quad
+S_\ell U_\ell=q_\ell\mathsf C_{h_\ell}.
+\end{gathered}
+\tag{338.5}
+$$
+
+原 $q_\ell$ 与同数反向资料不归一掉。每份原准备、每条原合法有限历史 $(f_1,\ldots,f_r)$ 及原末端效果 $w$ 都有
+
+$$
+\alpha(T_{f_1}\cdots T_{f_r}w)
+=\tau_{A_r}\!\left(w\,\Phi_{f_r}\cdots\Phi_{f_1}(\rho_\alpha)\right).
+\tag{338.6}
+$$
+
+原顺序、自适应记录分支、实际并行联合与完整相关输入、细化、分组、实际遗忘、零／失败／返回／停止逐项保持；条件概率仅在原分母正时取比值。
+
+证明。337.1 先恢复全域 I+SC，前卷 275–276 和本卷 324.1、330.1 再给含零分支的共同曲率 $\kappa\ge0$。现在才使用同一预选 $\sigma_{t_0}$，由原正 $w_0$ 的 $(1-\kappa)w_0/4=0$ 得 $\kappa=1$。不重标 $D$，不重选标签。此后 330.1 的全部原入口成立，逐项复用其概率双运输、原实际张量、全事件 R、整个 AC、精确 $N_u$、Xs、实 Jordan F 和逐原箭头迭代，得到 (338.2)–(338.6)。没有由单支的数学表示补造共同仪器或新细记录。
+
+324.3 的三类物理来源继续分别保留：连续可逆器件及物理时钟／Hamiltonian／共同作用量标定；独立成功支的共同完整仪器；旧同效果设备自己的理想完整输出校准。∎
+

@@ -16,6 +16,14 @@ internal sealed class OeisA386655LambertWEgfModSix_Document : IScribeDocumentDef
             Node("a", "OEIS A386655", Disp(Seq(Bind("m", Nat()), Eqn(Call("a", F.Id("m")), Call("egf", D(2), F.Id("m"))))), "The entry NAME reads verbatim: E.g.f.: Sum_{n>=0} (2^n*x + LambertW(x))^n / n!. Here egf is the rational coefficient function of OeisA386655LambertWEgfModSix.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("claim", "The proposed six-term pattern", Disp(Eqn(Named("claim"), Parenthesized(ClaimBody()))), "Conjecture: for n >= 6, a(n) (mod 6) equals [1, 0, 3, 0, 3, 2] repeating. This is the COMMENTS sentence of OEIS A386655 (unpaginated). The integer z has rational cast a(n); getD uses the zero-based index (n-6) mod 6 and default zero. Both remainder operations and natural subtraction are Lean integer or natural operations, respectively.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("closedZ", "An integral closed form", ClosedFormula(), "The FORMULA field of OEIS A386655 (unpaginated) reads verbatim: a(n) = Sum_{k=0..n} binomial(n,k) * 2^(k*(k+1)) * (2^k - (n-k))^(n-k-1). Replace 2 by the natural parameter q. Separate the last summand, whose exponent in the source formula is negative, as q^(n*n). Every remaining exponent is a natural number. Subtractions in exponents and in n-k are natural subtraction, followed by the displayed integer cast.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
+            Node("lagrange_subst", "Lagrange inversion for a substituted series", LagrangeFormula(),
+                "For rational formal power series root, factor and F, suppose root has zero constant "
+                + "coefficient and root=X*PowerSeries.subst root factor. The coefficient of degree n+1 "
+                + "in PowerSeries.subst root F, multiplied by the rational cast of n+1, equals the "
+                + "degree n coefficient of PowerSeries.derivative F times factor^(n+1). This is the "
+                + "general coefficient form of Gessel's Theorem 2.1.1, equation (2.1.1).",
+                DescribeRole.Theorem, AssessedProvenance.FromLiterature(
+                    LibraryNoteRef.Create("D5/L/PermutationPatterns/gessel2016lagrange"))),
             Node("egf_closed", "Integrality for every q and n", ClosedIdentity(), "Lagrange inversion evaluates the coefficients of exp(y W). Binomial expansion and triangular reindexing then give the integral finite sum. This identity also supplies the integer z for each of the four coefficient sequences.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
             Node("closedZ_reduce", "Period six after the sixth index", ReductionFormula(), "In ZMod(6), x cubed equals x. The binomial transform satisfies B(n+9)=B(n+3), and its endpoint corrections depend only on n modulo six. Casting the resulting identity back to integer remainders gives the displayed formula for every q.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
             Node("result", "Hanna's congruence", Disp(ClaimBody()), "The integral closed form and its six-term periodicity reduce the assertion to the six indices from six through eleven, which give the displayed pattern.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source), new OpenProblemResolutionClaim(ProblemSlugRef.Create("oeis-a386655-hanna-lambert-w-egf-mod-six"), ResolutionKind.Proved)))));
@@ -50,6 +58,17 @@ internal sealed class OeisA386655LambertWEgfModSix_Document : IScribeDocumentDef
     private static Formula Fact(Formula a) => Seq(a, Bang);
     private static Formula Sum(string name, Formula upper, Formula body) => Seq(
         new Formula.Subscript(F.Sum, Seq(F.Id(name), Sp, InMacro, Sp, Call("range", upper))), Sp, Parenthesized(body));
+    private static Formula LagrangeFormula()
+    {
+        var root = F.Id("root"); var factor = F.Id("factor"); var f = F.Id("F"); var n = F.Id("n");
+        var series = Call("PowerSeries", Rat());
+        var body = Impl(Eqn(Call("constantCoeff", root), D(0)),
+            Impl(Eqn(root, Mul(F.Id("X"), Call("subst", root, factor))),
+                Seq(Bind("n", Nat()), Eqn(
+                    Mul(Cast(Add(n, D(1)), Rat()), Call("coeff", Add(n, D(1)), Call("subst", root, f))),
+                    Call("coeff", n, Mul(Call("derivative", f), Pow(factor, Add(n, D(1)))))))));
+        return Disp(Seq(Bind("root", series), Bind("factor", series), Bind("F", series), body));
+    }
     private static Formula WFormula() => Disp(Eqn(Named("W"), Call("mk", Parenthesized(Seq(
         F.Id("m"), Colon, Sp, Nat(), Sp, Mapsto, Sp, Named("if"), Sp,
         Parenthesized(Eqn(F.Id("m"), D(0))), Sp, Named("then"), Sp, D(0), Sp,

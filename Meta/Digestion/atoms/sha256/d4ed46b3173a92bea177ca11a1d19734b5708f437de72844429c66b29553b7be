@@ -1,0 +1,23 @@
+**命题 83.4（不同的衰减加权证书）。** 在定义 83.1 的同一空间、闭准备锥和独立 $Hu=0$ 条件下，改为给定带指标的实际衰减对应 $(e_\lambda,p_\lambda,x_\lambda)$，其中 $e_\lambda=p_\lambda x_\lambda\in\mathcal A$、$0<p_\lambda\le1$、$0\le x_\lambda\le u$。若一个统一有限 $K$ 满足
+
+$$
+|\alpha(He_\lambda)|^2
+\le Kp_\lambda\alpha(e_\lambda)\alpha(u)
+\quad(\alpha\in\mathcal P,\ \text{全部 }\lambda),
+\tag{83.8}
+$$
+
+且每个 $x\in[0,u]$ 都有一列这些 $x_{\lambda_n}\to x$，则全数学区间直接满足系数为 $K$ 的 (67.2) 型估计，因而达到同一保单位序导子端点；不需 (83.2) 的相对速率。
+
+证明。先在固定 $\lambda$ 用 (83.4) 的正和及闭包运输，其中额外 $p_\lambda$ 固定，与准备无关。准确消去 $p_\lambda^2$ 给
+
+$$
+p_\lambda^2|\beta(Hx_\lambda)|^2
+\le Kp_\lambda^2\beta(x_\lambda)\beta(u),
+\qquad
+|\beta(Hx_\lambda)|^2\le K\beta(x_\lambda)\beta(u).
+\tag{83.9}
+$$
+
+沿 $x_{\lambda_n}\to x$ 连续取极限，得到每个效果和全部正泛函的估计。定理 68.1 适用。(83.8) 比同一带指标族上的普通估计多一个 $p_\lambda$，二者不能混淆；$p_\lambda\le1$ 只说明它蕴含该族上的普通估计，反向没有保证。不同的原程序即使有同一数学效果，也保留各自原校准和记录，不能在不等式中任选有利的 $p_\lambda$。∎
+

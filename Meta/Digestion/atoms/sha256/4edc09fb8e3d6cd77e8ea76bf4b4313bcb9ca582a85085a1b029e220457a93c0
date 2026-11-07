@@ -1,0 +1,69 @@
+**约定 C-67.1（五态、底面与两种比较）。** 沿用 C-59.4、C-60.2、C-61.3 的同一五模式次序
+
+$$
+\Sigma=(0,1,2,3,13)
+=\bigl(F[\mathrm{null}],F[1],F[2],F[3],F[1,3]\bigr),
+$$
+
+对应占位词 $(000,100,010,001,101)$。设 $p_s>0$ 且 $\sum_s p_s=1$，定义
+
+$$
+X=p_1+p_{13},\qquad Y=p_3+p_{13},\qquad Z=p_2,
+\qquad r=1-Z,\qquad\kappa=p_{13}.
+$$
+
+这里 $Y$ 始终是右端占位均值；经典 Yule's Y 另记作 $\rho_*$，不以同一个字母表示两个对象。已有的概率反演为
+
+$$
+p_\kappa=(r-X-Y+\kappa,\ X-\kappa,\ Z,\ Y-\kappa,\ \kappa).
+\tag{C67.1}
+$$
+
+底面表的行索引是左端，列索引是右端，各按 $0,1$ 排列：
+
+$$
+H=\begin{pmatrix}p_0&p_3\\p_1&p_{13}\end{pmatrix},
+\qquad
+Q=\frac Hr
+=\mathcal L(B_L,B_R\mid B_C=0).
+\tag{C67.2}
+$$
+
+$H$ 的总质量是 $r$。复用 C-59.4 的四角残差，直接代入亦得
+
+$$
+\det H=(r-X-Y+\kappa)\kappa-(X-\kappa)(Y-\kappa)
+=r\kappa-XY.
+\tag{C67.3}
+$$
+
+“正矩阵”在以下各章只指四个元素严格正，不指对称或正定；$H$ 本身不是协方差矩阵。
+
+对任意这样的矩阵 $H=\left(\begin{smallmatrix}a&b\\c&d\end{smallmatrix}\right)$，另行声明比较规则
+
+$$
+H\sim\widetilde H
+\quad\Longleftrightarrow\quad
+\widetilde H=D_LHD_R,
+\qquad D_L,D_R\text{ 为正对角矩阵}.
+\tag{C67.4}
+$$
+
+允许总质量变化；若要概率表，可在重加权后再归一化。定义
+
+$$
+\Omega(H)=\frac{ad}{bc},\qquad J(H)=\log\Omega(H),
+\qquad\eta(H)=\frac18J(H).
+\tag{C67.5}
+$$
+
+式 (C67.4) 消去两端各自的权重偏好，一般改变边缘，不能作为固定 $(X,Y,Z)$ 纤维内的移动。对 C-60.2 的实际外部响应 $H_i$，局部底面表为
+
+$$
+H=\mathcal Z^{-1}\operatorname{diag}(1,\lambda_L)
+H_i\operatorname{diag}(1,\lambda_R).
+\tag{C67.6}
+$$
+
+因此 C-61.2 给出的同一个外部四角比恰是式 (C67.5) 的输入，$J(H)=\mathscr J_i$。这项对应固定外部时成立，不要求局部边缘固定。
+
