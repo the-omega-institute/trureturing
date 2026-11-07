@@ -1179,13 +1179,15 @@ private theorem modulusMatrix_frob (H : Matrix n n ℂ) : frob (modulusMatrix H)
 
 private theorem rhoMatrix_gap {p : n → ℝ} (hp : ∀ i, 0 < p i) (H : Matrix n n ℂ) :
     frob (rhoMatrix p H)^2 = frob H^2-frob (schurFirst p H)^2 := by
-  simp only [frob_sq_sum, rhoMatrix, schurFirst, norm_mul, Complex.norm_real,
-    Real.norm_eq_abs, abs_of_nonneg (mul_nonneg (spectralRho_nonneg _ _) (norm_nonneg _)),
-    sq_abs, mul_pow, spectralRho_sq (hp _) (hp _), ← Finset.sum_sub_distrib]
-  congr 1
-  funext i
-  congr 1
-  funext j
+  rw [frob_sq_sum, frob_sq_sum, frob_sq_sum, ← Finset.sum_sub_distrib]
+  apply Finset.sum_congr rfl
+  intro i _
+  rw [← Finset.sum_sub_distrib]
+  apply Finset.sum_congr rfl
+  intro j _
+  simp only [rhoMatrix, schurFirst, norm_mul, Complex.norm_real,
+    Real.norm_eq_abs, sq_abs, mul_pow]
+  rw [spectralRho_sq (hp i) (hp j)]
   ring
 
 private theorem quadraticDefect_uniform {p : n → ℝ} (hp : ∀ i, 0 < p i)
@@ -1199,8 +1201,8 @@ private theorem quadraticDefect_uniform {p : n → ℝ} (hp : ∀ i, 0 < p i)
     have he : (W*B+B*W) i j = ((∑ k,
         (spectralRho (p i) (p k)+spectralRho (p k) (p j))*‖H i k‖*‖H k j‖ : ℝ) : ℂ) := by
       simp only [W, B, rhoMatrix, modulusMatrix, Matrix.add_apply, Matrix.mul_apply,
-        ← Finset.sum_add_distrib, ← Complex.ofReal_mul, ← Complex.ofReal_sum]
-      congr 1
+        Complex.ofReal_mul, Complex.ofReal_sum, Complex.ofReal_add,
+        ← Finset.sum_add_distrib]
       apply Finset.sum_congr rfl
       intro k _
       ring
@@ -1343,23 +1345,42 @@ private theorem cyclicMass_bound {d : ℕ} {p : Fin d → ℝ} (hp : ∀ i, 0 < 
   let W := rhoMatrix p H
   let t := fun i j k => spectralRho (p i) (p j)^2*‖H i j‖*‖H j k‖*‖H k i‖
   let u := fun i j k => spectralRho (p i) (p j)*spectralRho (p j) (p k)*‖H i j‖*‖H j k‖*‖H k i‖
-  have hs (i j : Fin d) : ‖H j i‖ = ‖H i j‖ := by
-    have hh := hH.apply i j
-    rw [← norm_star (H j i), hh]
-  have hr (i j : Fin d) : spectralRho (p j) (p i) = spectralRho (p i) (p j) := spectralRho_comm _ _
   have ht₁ := sum_cycle t
   have ht₂ := sum_cycle (fun i j k => t j k i)
   have ht₃ : (∑ i, ∑ j, ∑ k, t k i j) = ∑ i, ∑ j, ∑ k, t i j k := (ht₁.trans ht₂).symm
   have hmass : cyclicMass p H = 3*∑ i, ∑ j, ∑ k, t i j k := by
-    dsimp [cyclicMass, t] at *
-    simp only [add_mul, Finset.sum_add_distrib]
     have he₁ : (∑ i, ∑ j, ∑ k, spectralRho (p j) (p k)^2*‖H i j‖*‖H j k‖*‖H k i‖) =
-        ∑ i, ∑ j, ∑ k, spectralRho (p i) (p j)^2*‖H i j‖*‖H j k‖*‖H k i‖ := by
-      convert ht₁.symm using 1 <;> congr 1 <;> ext i <;> congr 1 <;> ext j <;> congr 1 <;> ext k <;> ring
+        ∑ i, ∑ j, ∑ k, t i j k := by
+      calc
+        _ = ∑ i, ∑ j, ∑ k, t j k i := by
+          apply Finset.sum_congr rfl
+          intro i _
+          apply Finset.sum_congr rfl
+          intro j _
+          apply Finset.sum_congr rfl
+          intro k _
+          dsimp only [t]
+          ring
+        _ = _ := ht₁.symm
     have he₂ : (∑ i, ∑ j, ∑ k, spectralRho (p k) (p i)^2*‖H i j‖*‖H j k‖*‖H k i‖) =
-        ∑ i, ∑ j, ∑ k, spectralRho (p i) (p j)^2*‖H i j‖*‖H j k‖*‖H k i‖ := by
-      convert ht₃ using 1 <;> congr 1 <;> ext i <;> congr 1 <;> ext j <;> congr 1 <;> ext k <;> ring
-    rw [he₁, he₂]; ring
+        ∑ i, ∑ j, ∑ k, t i j k := by
+      calc
+        _ = ∑ i, ∑ j, ∑ k, t k i j := by
+          apply Finset.sum_congr rfl
+          intro i _
+          apply Finset.sum_congr rfl
+          intro j _
+          apply Finset.sum_congr rfl
+          intro k _
+          dsimp only [t]
+          ring
+        _ = _ := ht₃
+    dsimp only [cyclicMass]
+    simp only [add_mul, Finset.sum_add_distrib]
+    rw [he₁, he₂]
+    change (∑ i, ∑ j, ∑ k, t i j k)+(∑ i, ∑ j, ∑ k, t i j k)+
+      (∑ i, ∑ j, ∑ k, t i j k) = _
+    ring
   have htbound : (∑ i, ∑ j, ∑ k, t i j k) ≤ 2*∑ i, ∑ j, ∑ k, u i j k := by
     have hm : (∑ i, ∑ j, ∑ k, t i j k) ≤
         (∑ i, ∑ j, ∑ k, u i j k)+(∑ i, ∑ j, ∑ k, u k i j) := by
@@ -1373,7 +1394,7 @@ private theorem cyclicMass_bound {d : ℕ} {p : Fin d → ℝ} (hp : ∀ i, 0 < 
       have htri := spectralRho_triangle (hp i) (hp k) (hp j)
       rw [spectralRho_comm (p k) (p j)] at htri
       have h := mul_le_mul_of_nonneg_right htri
-        (mul_nonneg (mul_nonneg (mul_nonneg (spectralRho_nonneg _ _) (norm_nonneg (H i j)))
+        (mul_nonneg (mul_nonneg (mul_nonneg (spectralRho_nonneg (p i) (p j)) (norm_nonneg (H i j)))
           (norm_nonneg (H j k))) (norm_nonneg (H k i)))
       dsimp [t, u]
       rw [spectralRho_comm (p k) (p i)]
