@@ -70,7 +70,49 @@ $$\forall (i: \mathbb{Z}), (\forall (j: \mathbb{Z}), (\forall (p: \mathbb{Z}), (
 
 For arbitrary integers i, j, p, q and d, the horizontal excess is at most d exactly when d is nonnegative and each of i, j and i+j lies between −q−d and p+d. No sign assumptions on p or q are needed.
 
-**Theorem 1.6 (The coordination formulas hold at every positive radius).**
+**Definition 1.6 (The finite hexagonal lattice region).**
+
+$$\forall (p: \mathbb{Z}), (\forall (q: \mathbb{Z}), (\operatorname{D5.S3.StatisticalMechanics.TeaCoordinationSequence.hexagon}\left(p, q\right) = \operatorname{Finset.filter}\left(((z: \mathbb{Z} \times \mathbb{Z}) \mapsto ((-q \le z.1 + z.2) \land (z.1 + z.2 \le p))), \operatorname{Finset.product}\left(\operatorname{Finset.Icc}\left(-q, p\right), \operatorname{Finset.Icc}\left(-q, p\right)\right)\right)))$$
+
+*Formalization.* `D5/S3/StatisticalMechanics/TeaCoordinationSequence.hexagon` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* N. J. A. Sloane, Colin Barker, Stefano Spezia (2018). *OEIS A299285, coordination sequence for the tea 3D uniform tiling*. URL: <https://oeis.org/A299285>.
+
+*Commentary.*
+
+For arbitrary integer endpoints p and q, filter the square interval [−q,p] squared by −q≤i+j≤p. This finite region is also used for the face-rooted simplex-inclusion graph of the triangular lattice.
+
+**Theorem 1.7 (The six inequalities defining membership).**
+
+$$\forall (p: \mathbb{Z}), (\forall (q: \mathbb{Z}), (\forall (i: \mathbb{Z}), (\forall (j: \mathbb{Z}), (((i, j) \in \operatorname{D5.S3.StatisticalMechanics.TeaCoordinationSequence.hexagon}\left(p, q\right)) \Leftrightarrow ((-q \le i) \land ((i \le p) \land ((-q \le j) \land ((j \le p) \land ((-q \le i + j) \land (i + j \le p))))))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/TeaCoordinationSequence.hexagon_mem` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* N. J. A. Sloane, Colin Barker, Stefano Spezia (2018). *OEIS A299285, coordination sequence for the tea 3D uniform tiling*. URL: <https://oeis.org/A299285>.
+
+*Commentary.*
+
+For all integers p, q, i and j, membership means that i, j and i+j each lie between −q and p. No sign conditions are required.
+
+**Theorem 1.8 (The exact hexagonal lattice count).**
+
+$$\forall (p: \mathbb{Z}), (\forall (q: \mathbb{Z}), ((0 \le p) \to ((0 \le q) \to (2 \cdot (\operatorname{Nat.cast}\left(\operatorname{Finset.card}\left(\operatorname{D5.S3.StatisticalMechanics.TeaCoordinationSequence.hexagon}\left(p, q\right)\right)\right): \mathbb{Z}) = p^{2} + 4 \cdot p \cdot q + q^{2} + 3 \cdot p + 3 \cdot q + 2))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/TeaCoordinationSequence.hexagon_card` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* N. J. A. Sloane, Colin Barker, Stefano Spezia (2018). *OEIS A299285, coordination sequence for the tea 3D uniform tiling*. URL: <https://oeis.org/A299285>.
+
+*Commentary.*
+
+For nonnegative integer p and q, twice the integer cast of the region's cardinality is p²+4pq+q²+3p+3q+2. This is the shared counting statement for the tea regions and the vertex and face slices of the kisrhombille ball.
+
+**Theorem 1.9 (The coordination formulas hold at every positive radius).**
 
 $$\forall (n: \mathbb{N}), ((0 < n) \to (((\operatorname{Nat.mod}\left(n, 4\right) = 0) \to (8 \cdot \operatorname{D5.S3.StatisticalMechanics.TeaCoordinationSequence.shell}\left(n\right) = 63 \cdot n^{2} + 16)) \land (((\operatorname{Nat.mod}\left(n, 4\right) = 1) \to (8 \cdot \operatorname{D5.S3.StatisticalMechanics.TeaCoordinationSequence.shell}\left(n\right) = 63 \cdot n^{2} + 17)) \land (((\operatorname{Nat.mod}\left(n, 4\right) = 2) \to (8 \cdot \operatorname{D5.S3.StatisticalMechanics.TeaCoordinationSequence.shell}\left(n\right) = 63 \cdot n^{2} + 12)) \land ((\operatorname{Nat.mod}\left(n, 4\right) = 3) \to (8 \cdot \operatorname{D5.S3.StatisticalMechanics.TeaCoordinationSequence.shell}\left(n\right) = 63 \cdot n^{2} + 17))))))$$
 
@@ -99,7 +141,7 @@ $$
 Next fix nonnegative integer counts p and q. The zero-excess region consists of the integer pairs with all three of i, j and i+j between −q and p. Count its points by vertical slices. For each first coordinate i from −q through p, the second coordinate ranges from max(−q,−q−i) to min(p,p−i). Split the first coordinate into −q through −1 and zero through p; the slice lengths are p+q+1+i and p+q+1−i respectively. The half-open interval sum identity for complex casts gives, after casting back to integers, twice the sum of an integer interval as the sum of its endpoints times its cardinality. Summing the slice lengths therefore gives the following count. Nat.cast explicitly includes the natural cardinality in the integers:
 
 $$
-\forall (p: \mathbb{Z}), (\forall (q: \mathbb{Z}), ((0 \le p) \to ((0 \le q) \to (2 \cdot (\operatorname{Nat.cast}\left(\operatorname{Finset.card}\left(\operatorname{Finset.filter}\left(((z: \mathbb{Z} \times \mathbb{Z}) \mapsto ((-q \le z.1 + z.2) \land (z.1 + z.2 \le p))), \operatorname{Finset.product}\left(\operatorname{Finset.Icc}\left(-q, p\right), \operatorname{Finset.Icc}\left(-q, p\right)\right)\right)\right)\right): \mathbb{Z}) = p^{2} + 4 \cdot p \cdot q + q^{2} + 3 \cdot p + 3 \cdot q + 2))))
+\forall (p: \mathbb{Z}), (\forall (q: \mathbb{Z}), ((0 \le p) \to ((0 \le q) \to (2 \cdot (\operatorname{Nat.cast}\left(\operatorname{Finset.card}\left(\operatorname{D5.S3.StatisticalMechanics.TeaCoordinationSequence.hexagon}\left(p, q\right)\right)\right): \mathbb{Z}) = p^{2} + 4 \cdot p \cdot q + q^{2} + 3 \cdot p + 3 \cdot q + 2))))
 $$
 
 At excess d greater than zero, the pairs form the difference of two nested hexagonal regions: the outer endpoints are −q−d and p+d, and the inner endpoints are −q−d+1 and p+d−1. Subtracting their cardinalities gives 3(p+q)+6d, as an integer count. At excess zero use the hexagonal count just established.
@@ -113,6 +155,9 @@ Finally split n into its four remainders modulo four and use the integer quotien
 ## References
 
 - Truth anchor: `D5/S3/StatisticalMechanics/TeaCoordinationSequence.claim`
+- Truth anchor: `D5/S3/StatisticalMechanics/TeaCoordinationSequence.hexagon`
+- Truth anchor: `D5/S3/StatisticalMechanics/TeaCoordinationSequence.hexagon_card`
+- Truth anchor: `D5/S3/StatisticalMechanics/TeaCoordinationSequence.hexagon_mem`
 - Truth anchor: `D5/S3/StatisticalMechanics/TeaCoordinationSequence.residual`
 - Truth anchor: `D5/S3/StatisticalMechanics/TeaCoordinationSequence.residual_le_iff`
 - Truth anchor: `D5/S3/StatisticalMechanics/TeaCoordinationSequence.result`
