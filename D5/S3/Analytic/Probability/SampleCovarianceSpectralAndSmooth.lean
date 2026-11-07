@@ -8,7 +8,6 @@
 /-
 admission_basis: escape-witness
 escape_witness: D5.S3.Analytic.Probability.SampleCovarianceSpectralAndSmooth.Gaussian.gaussian_mv_log_coeff_lower
-Proof-shape assessments: ASSUMED-UNVERIFIED until the complete reuse searches finish.
 Declaration proof shapes (names relative to this module):
   gramHermitian; proof_shape: bind-only; escape_witness: none; consumer: D5.S3.Analytic.Probability.SampleCovarianceLogEnergyRefutation.gramEigenvalue_sum
   gramEigenvalue; proof_shape: bind-only; escape_witness: none; consumer: D5.S3.Analytic.Probability.SampleCovarianceLogEnergyRefutation.firstMoment_mean_eq_one

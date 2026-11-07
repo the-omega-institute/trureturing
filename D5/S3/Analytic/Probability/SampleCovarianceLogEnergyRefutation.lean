@@ -8,7 +8,6 @@
 /-
 admission_basis: open-problem-resolution (#27294; Refuted)
 escape_witness: none (designated refutation result)
-Proof-shape assessments: ASSUMED-UNVERIFIED until the complete reuse searches finish.
 Declaration proof shapes (names relative to this module):
   Analytic.realNoise; proof_shape: bind-only; escape_witness: none; consumer: Analytic.eval_renamed
   Analytic.renamed_ne_zero; proof_shape: bind-only; escape_witness: none; consumer: Analytic.gaussian_det_nonzero_integrable
@@ -511,7 +510,7 @@ private lemma finitePair_eq {n : ℕ} (b : ((Bool × Fin n × Fin n) → Bool)) 
         (Fintype.equivFin (Bool × Bool × Fin n × Fin n)).symm x
         ((Fintype.equivFin (Bool × Bool × Fin n × Fin n)) z))
   cases side <;> simp only [Bool.false_eq_true, ite_false, ite_true, finitePair, affinePair,
-    splitEntries, Matrix.of_apply, meanB, scale, D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Events.bmat, D5.S3.Analytic.Probability.SampleCovarianceLogEnergyRefutation.Analytic.realNoise,
+    splitEntries, Matrix.of_apply, meanB, D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Events.bmat, D5.S3.Analytic.Probability.SampleCovarianceLogEnergyRefutation.Analytic.realNoise,
     hc, Matrix.add_apply, Matrix.smul_apply, smul_eq_mul] <;>
     split_ifs <;> push_cast <;> field_simp <;> ring
 
