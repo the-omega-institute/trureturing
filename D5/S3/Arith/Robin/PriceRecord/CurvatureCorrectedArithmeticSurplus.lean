@@ -20,7 +20,7 @@ namespace D5.S3.Arith.Robin.PriceRecord.CurvatureCorrectedArithmeticSurplus
 open D5.S3.Arith.Robin.PriceRecord.FullPrimePowerArithmeticSurplus
   (fullPrimePowerResidual full_prime_power_arithmetic_surplus)
 
-private theorem log_one_add_quadratic {u : ℝ} (hu : 0 ≤ u) :
+theorem log_one_add_quadratic {u : ℝ} (hu : 0 ≤ u) :
     u - u ^ 2 / 2 ≤ Real.log (1 + u) := by
   refine le_trans ?_ (Real.le_log_one_add_of_nonneg hu)
   apply (le_div_iff₀ (show 0 < u + 2 by linarith)).mpr
