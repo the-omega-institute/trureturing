@@ -48,7 +48,7 @@ section PortedIndividualLaws
 variable {Ω : Type*} {mΩ : MeasurableSpace Ω} {μ ν : Measure Ω}
 variable [IsProbabilityMeasure μ] [IsProbabilityMeasure ν]
 
-private noncomputable def tvDist (μ ν : Measure Ω) : ℝ :=
+noncomputable def tvDist (μ ν : Measure Ω) : ℝ :=
   ⨆ A : {A : Set Ω // MeasurableSet A}, |μ.real A.1 - ν.real A.1|
 
 private theorem abs_measureReal_sub_le_one (A : Set Ω) : |μ.real A - ν.real A| ≤ 1 := by
@@ -77,7 +77,7 @@ private theorem tvDist_nonneg : 0 ≤ tvDist μ ν := by
   have := abs_measureReal_sub_le_tvDist (μ := μ) (ν := ν) MeasurableSet.empty
   simpa using (abs_nonneg _).trans this
 
-private theorem tvDist_le_one : tvDist μ ν ≤ 1 :=
+theorem tvDist_le_one : tvDist μ ν ≤ 1 :=
   ciSup_le fun A => abs_measureReal_sub_le_one A.1
 
 omit [IsProbabilityMeasure μ] [IsProbabilityMeasure ν] in
@@ -191,7 +191,7 @@ private lemma tvDist_eq_half_integral_abs_rnDeriv_sub
     rw [hgap, abs_of_nonneg hpos] at htv
     linarith
 
-private noncomputable def rnCommonPart
+noncomputable def rnCommonPart
     {X : Type*} [MeasurableSpace X]
     (mu nu xi : Measure X) : Measure X :=
   xi.withDensity fun x => min (mu.rnDeriv xi x) (nu.rnDeriv xi x)
@@ -216,7 +216,7 @@ private lemma rnCommonPart_le_right
       exact Filter.Eventually.of_forall fun x => min_le_right _ _
     _ = nu := Measure.withDensity_rnDeriv_eq nu xi hnu
 
-private lemma rnCommonPart_mass_eq_one_sub_tvDist
+lemma rnCommonPart_mass_eq_one_sub_tvDist
     {X : Type*} [MeasurableSpace X]
     (mu nu xi : Measure X) [IsProbabilityMeasure mu] [IsProbabilityMeasure nu]
     [IsFiniteMeasure xi] (hmu : mu ≪ xi) (hnu : nu ≪ xi) :

@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Absolute continuity transports predictive kernels by totalized row normalization. -/
+   digest: Absolutely continuous predictive opinions merge on the full infinite future. -/
 
 import Mathlib.Probability.Kernel.IonescuTulcea.Maps
 import Mathlib.Probability.Kernel.Composition.WithDensity
@@ -12,6 +12,9 @@ import Mathlib.MeasureTheory.Measure.Decomposition.IntegralRNDeriv
 import Mathlib.MeasureTheory.Integral.Lebesgue.Markov
 import Mathlib.MeasureTheory.Function.ConditionalExpectation.RadonNikodym
 import Mathlib.Probability.Process.Filtration
+import D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.JointConditionalDominatedConvergence
+import D5.S3.Estimation.DataProcessing.MeasurableMaximalCoupling
+import Mathlib.Probability.Kernel.Composition.IntegralCompProd
 
 set_option autoImplicit false
 noncomputable section
@@ -326,5 +329,254 @@ theorem predictive_change_of_measure
       exact ⟨ha, hb⟩
 
 end PredictiveChangeOfMeasure
+
+section ConditionalOverlap
+
+variable (X : ℕ → Type u) [∀ i, MeasurableSpace (X i)]
+
+private theorem full_prefix_filtration :
+    (⨆ n : ℕ, Filtration.piLE (X := X) n) =
+      (inferInstance : MeasurableSpace (History X)) := by
+  apply le_antisymm (iSup_le fun n => Filtration.piLE.le n)
+  have hid : @Measurable (History X) (History X)
+      (⨆ n : ℕ, Filtration.piLE (X := X) n) inferInstance id := by
+    apply measurable_pi_iff.mpr
+    intro n
+    have hc : Measurable[Filtration.piLE (X := X) n]
+        (fun ω : History X => ω n) :=
+      (measurable_pi_apply (X := fun i : Iic n => X i.1) ⟨n, le_rfl⟩).comp
+        (comap_measurable (Preorder.restrictLe (π := X) n))
+    exact hc.mono (le_iSup (fun n : ℕ => Filtration.piLE (X := X) n) n) le_rfl
+  simpa only [MeasurableSpace.comap_id] using hid.comap_le
+
+/-- The supplied predictive law identifies scalar row integrals with conditional means.
+Only prefix-almost-everywhere integrability of the original rows is used. -/
+private theorem conditional_row_integral
+    (P : Measure (History X)) [IsProbabilityMeasure P] (n : ℕ)
+    (κ : Kernel (Past X n) (Future X n)) [IsMarkovKernel κ]
+    (hκ : P.map (split X n) = (P.map (past X n)) ⊗ₘ κ)
+    (f : History X → ℝ) (hfm : Measurable f) (hf0 : ∀ ω, 0 ≤ f ω)
+    (hfi : Integrable f P) :
+    (fun ω => ∫ v, f ((split X n).symm (past X n ω, v)) ∂κ (past X n ω))
+      =ᵐ[P] P[f | Filtration.piLE (X := X) n] := by
+  let μ := P.map (past X n)
+  let z : Past X n × Future X n → ℝ := fun p => f ((split X n).symm p)
+  let a : Past X n → ℝ := fun u => ∫ v, z (u, v) ∂κ u
+  have hzm : Measurable z := hfm.comp (split X n).symm.measurable
+  have hzi : Integrable z (μ ⊗ₘ κ) := by
+    rw [← hκ]
+    apply (split X n).measurableEmbedding.integrable_map_iff.mpr
+    simpa only [z, Function.comp_def, (split X n).symm_apply_apply] using hfi
+  have ham : StronglyMeasurable a := hzm.stronglyMeasurable.integral_kernel_prod_right'
+  have hai : Integrable a μ := by
+    have hi := ((Measure.integrable_compProd_iff hzm.aestronglyMeasurable).mp hzi).2
+    have heq : (fun u => ∫ v, ‖z (u, v)‖ ∂κ u) = a := by
+      funext u
+      apply integral_congr_ae
+      exact ae_of_all _ fun v => Real.norm_of_nonneg (hf0 _)
+    rwa [heq] at hi
+  have hp := past_measurable X n
+  have hpi : Filtration.piLE (X := X) n =
+      (inferInstance : MeasurableSpace (Past X n)).comap (past X n) := rfl
+  rw [hpi]
+  refine ae_eq_condExp_of_forall_setIntegral_eq hp.comap_le hfi
+    (fun _ _ _ => (hai.comp_measurable hp).integrableOn) ?_
+    (ham.comp_measurable (comap_measurable (past X n))).aestronglyMeasurable
+  intro s hs _
+  obtain ⟨t, ht, rfl⟩ := MeasurableSpace.measurableSet_comap.mp hs
+  calc
+    (∫ ω in (past X n) ⁻¹' t, a (past X n ω) ∂P) = ∫ u in t, a u ∂μ :=
+      (setIntegral_map ht ham.aestronglyMeasurable hp.aemeasurable).symm
+    _ = ∫ p in t ×ˢ univ, z p ∂(μ ⊗ₘ κ) := by
+      simpa only [a, Measure.restrict_univ] using
+        (Measure.setIntegral_compProd ht MeasurableSet.univ hzi.integrableOn).symm
+    _ = ∫ p in t ×ˢ univ, z p ∂P.map (split X n) := by rw [hκ]
+    _ = ∫ ω in (past X n) ⁻¹' t, f ω ∂P := by
+      rw [setIntegral_map_equiv]
+      have hs : (split X n) ⁻¹' (t ×ˢ univ) = (past X n) ⁻¹' t := by
+        ext ω
+        simp only [Set.mem_preimage, Set.mem_prod, Set.mem_univ, and_true] <;> rfl
+      simp only [hs, z, (split X n).symm_apply_apply]
+
+/-- The scalar overlap numerator in the actual infinite-future row. -/
+def overlapNumerator (P Q : Measure (History X)) (n : ℕ)
+    (κ : Kernel (Past X n) (Future X n)) (u : Past X n) : ℝ :=
+  ∫ v, min (likelihood P Q ((split X n).symm (u, v)))
+    (rowMass κ (splitDensity X P Q n) u).toReal ∂κ u
+
+private theorem overlap_limits
+    (P Q : Measure (History X)) [IsProbabilityMeasure P] [IsProbabilityMeasure Q]
+    (hQP : Q ≪ P)
+    (κ : (n : ℕ) → Kernel (Past X n) (Future X n)) [∀ n, IsMarkovKernel (κ n)]
+    (hκ : ∀ n, P.map (split X n) = (P.map (past X n)) ⊗ₘ κ n) :
+    ∀ᵐ ω ∂P,
+      Tendsto (fun n => (rowMass (κ n) (splitDensity X P Q n) (past X n ω)).toReal)
+        atTop (𝓝 (likelihood P Q ω)) ∧
+      Tendsto (fun n => overlapNumerator X P Q n (κ n) (past X n ω))
+        atTop (𝓝 (likelihood P Q ω)) := by
+  obtain ⟨hqm, hq0, hqi, _, _, _, hn⟩ :=
+    predictive_change_of_measure X P Q hQP κ hκ
+  let c : (n : ℕ) → Past X n → ℝ :=
+    fun n u => (rowMass (κ n) (splitDensity X P Q n) u).toReal
+  have hcm (n : ℕ) : Measurable (c n) := (hn n).1.ennreal_toReal
+  have hc0 (n : ℕ) (u : Past X n) : 0 ≤ c n u := ENNReal.toReal_nonneg
+  have hce (n : ℕ) : (fun ω => c n (past X n ω))
+      =ᵐ[P] P[likelihood P Q | Filtration.piLE (X := X) n] :=
+    (hn n).2.2.2.2.2.2.2.2.1
+  have hfull := full_prefix_filtration X
+  have hqs : StronglyMeasurable[⨆ n, Filtration.piLE (X := X) n] (likelihood P Q) := by
+    rw [hfull]
+    exact hqm.stronglyMeasurable
+  have hcLim : ∀ᵐ ω ∂P, Tendsto (fun n => c n (past X n ω))
+      atTop (𝓝 (likelihood P Q ω)) := by
+    filter_upwards [hqi.tendsto_ae_condExp hqs, ae_all_iff.mpr hce] with ω hl he
+    exact hl.congr' (Eventually.of_forall fun n => (he n).symm)
+  let y : ℕ → History X → ℝ := fun n ω => min (likelihood P Q ω) (c n (past X n ω))
+  have hym (n : ℕ) : Measurable (y n) := hqm.min ((hcm n).comp (past_measurable X n))
+  have hy0 (n : ℕ) (ω : History X) : 0 ≤ y n ω := le_min (hq0 ω) (hc0 n _)
+  have hyb (n : ℕ) : ∀ᵐ ω ∂P, |y n ω| ≤ likelihood P Q ω :=
+    ae_of_all _ fun ω => by rw [abs_of_nonneg (hy0 n ω)]; exact min_le_left _ _
+  have hyi (n : ℕ) : Integrable (y n) P :=
+    hqi.mono' (hym n).aestronglyMeasurable (by simpa only [Real.norm_eq_abs] using hyb n)
+  have hyLim : ∀ᵐ ω ∂P, Tendsto (fun n => y n ω) atTop (𝓝 (likelihood P Q ω)) := by
+    filter_upwards [hcLim] with ω hω
+    have hconst : Tendsto (fun _ : ℕ => likelihood P Q ω) atTop
+        (𝓝 (likelihood P Q ω)) := tendsto_const_nhds
+    simpa only [min_self] using hconst.min hω
+  have hjoint :=
+    D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.JointConditionalDominatedConvergence.
+      tendsto_condExp_of_dominated_convergence (Filtration.piLE (X := X))
+        y (likelihood P Q) (likelihood P Q) hym hqm hyLim hqi hyb
+  have hdiag : ∀ᵐ ω ∂P, Tendsto
+      (fun n => P[y n | Filtration.piLE (X := X) n] ω) atTop (𝓝 (likelihood P Q ω)) := by
+    have htop : P[likelihood P Q | ⨆ n, Filtration.piLE (X := X) n] = likelihood P Q := by
+      rw [hfull]
+      exact condExp_of_stronglyMeasurable le_rfl hqm.stronglyMeasurable hqi
+    filter_upwards [hjoint.1] with ω hω
+    simpa only [htop] using hω.comp tendsto_atTop_diagonal
+  have ha (n : ℕ) : (fun ω => overlapNumerator X P Q n (κ n) (past X n ω))
+      =ᵐ[P] P[y n | Filtration.piLE (X := X) n] := by
+    have he := conditional_row_integral X P n (κ n) (hκ n) (y n) (hym n) (hy0 n) (hyi n)
+    have hcoord (u : Past X n) (v : Future X n) :
+        past X n ((split X n).symm (u, v)) = u := by
+      have hh := congrArg Prod.fst ((split X n).apply_symm_apply (u, v))
+      exact hh
+    simpa only [y, overlapNumerator, hcoord, c] using he
+  filter_upwards [hcLim, hdiag, ae_all_iff.mpr ha] with ω hc ha he
+  exact ⟨hc, ha.congr' (Eventually.of_forall fun n => (he n).symm)⟩
+
+end ConditionalOverlap
+
+section EventOverlap
+
+open D5.S3.Estimation.DataProcessing.MeasurableMaximalCoupling
+
+/-- The existing individual-law common-part identity, evaluated at a normalized row. -/
+private theorem row_overlap_identity
+    {Y : Type v} [MeasurableSpace Y]
+    (μ ν : Measure Y) [IsProbabilityMeasure μ] [IsProbabilityMeasure ν]
+    (g : Y → ℝ) (hgm : Measurable g) (hg0 : ∀ v, 0 ≤ g v)
+    (r : ℝ≥0∞) (hr0 : r ≠ 0) (hrt : r ≠ ∞)
+    (hν : ν = μ.withDensity (fun v => ENNReal.ofReal (g v) / r)) :
+    D5.S3.Estimation.DataProcessing.MeasurableMaximalCoupling.tvDist μ ν =
+      1 - (∫ v, min (g v) r.toReal ∂μ) / r.toReal := by
+  let d : Y → ℝ≥0∞ := fun v => ENNReal.ofReal (g v) / r
+  have hdm : Measurable d := hgm.ennreal_ofReal.div_const r
+  have hdf (v : Y) : d v ≠ ∞ := ENNReal.div_ne_top ENNReal.ofReal_ne_top hr0
+  have hac : ν ≪ μ := by
+    rw [hν]
+    exact withDensity_absolutelyContinuous _ _
+  have hrn : ν.rnDeriv μ =ᵐ[μ] d := by
+    rw [hν]
+    exact Measure.rnDeriv_withDensity μ hdm
+  have hcommon : rnCommonPart μ ν μ = μ.withDensity (fun v => min 1 (d v)) := by
+    apply withDensity_congr_ae
+    filter_upwards [Measure.rnDeriv_self μ, hrn] with v hμ hν
+    simp only [hμ, hν]
+  have hmass := congrArg ENNReal.toReal
+    (rnCommonPart_mass_eq_one_sub_tvDist μ ν μ Measure.AbsolutelyContinuous.rfl hac)
+  rw [ENNReal.toReal_ofReal (sub_nonneg.mpr (tvDist_le_one (μ := μ) (ν := ν))),
+    hcommon, withDensity_apply _ MeasurableSet.univ, Measure.restrict_univ] at hmass
+  have hc : 0 < r.toReal := ENNReal.toReal_pos hr0 hrt
+  have hreal : (∫⁻ v, min 1 (d v) ∂μ).toReal =
+      (∫ v, min (g v) r.toReal ∂μ) / r.toReal := by
+    rw [← integral_toReal (measurable_const.min hdm).aemeasurable
+      (ae_of_all _ fun v => (min_le_left 1 (d v)).trans_lt ENNReal.one_lt_top),
+      ← integral_div]
+    apply integral_congr_ae
+    exact ae_of_all _ fun v => by
+      dsimp only [d]
+      rw [ENNReal.toReal_min ENNReal.one_ne_top (hdf v), ENNReal.toReal_one,
+        ENNReal.toReal_div, ENNReal.toReal_ofReal (hg0 v), min_comm]
+      simpa only [div_self hc.ne'] using min_div_div_right hc.le (g v) r.toReal
+  rw [hreal] at hmass
+  linarith
+
+end EventOverlap
+
+section PredictiveMerging
+
+variable (X : ℕ → Type u) [∀ i, MeasurableSpace (X i)]
+
+/-- Blackwell–Dubins merging for every chosen predictive P-kernel sequence.
+The existential Q kernels use exactly the same prefix and infinite-future spaces.
+The supremum over all measurable future events converges on one Q-full set of histories. -/
+theorem blackwell_dubins_predictive_merging
+    (P Q : Measure (History X)) [IsProbabilityMeasure P] [IsProbabilityMeasure Q]
+    (hQP : Q ≪ P)
+    (κ : (n : ℕ) → Kernel (Past X n) (Future X n)) [∀ n, IsMarkovKernel (κ n)]
+    (hκ : ∀ n, P.map (split X n) = (P.map (past X n)) ⊗ₘ κ n) :
+    ∃ eta : (n : ℕ) → Kernel (Past X n) (Future X n),
+      (∀ n, IsMarkovKernel (eta n)) ∧
+      (∀ n, Q.map (split X n) = (Q.map (past X n)) ⊗ₘ eta n) ∧
+      ∀ᵐ ω ∂Q, Tendsto
+        (fun n => sSup (Set.range (fun C : {C : Set (Future X n) // MeasurableSet C} =>
+          |(κ n (past X n ω)).real C.val - (eta n (past X n ω)).real C.val|)))
+        atTop (𝓝 0) := by
+  obtain ⟨_, _, _, _, _, hpos, hn⟩ := predictive_change_of_measure X P Q hQP κ hκ
+  let eta : (n : ℕ) → Kernel (Past X n) (Future X n) :=
+    fun n => changedKernel X P Q n (κ n)
+  have heta (n : ℕ) : IsMarkovKernel (eta n) := (hn n).2.2.2.2.1
+  refine ⟨eta, heta, fun n => (hn n).2.2.2.2.2.2.2.1, ?_⟩
+  have hgood : ∀ᵐ ω ∂Q, ∀ n,
+      past X n ω ∈ goodRows (κ n) (splitDensity X P Q n) :=
+    ae_all_iff.mpr fun n => ae_of_ae_map (past_measurable X n).aemeasurable
+      (hn n).2.2.2.2.2.2.2.2.2
+  have hlimits := hQP.ae_le (overlap_limits X P Q hQP κ hκ)
+  filter_upwards [hpos, hgood, hlimits] with ω hq hg hl
+  have heq (n : ℕ) :
+      sSup (Set.range (fun C : {C : Set (Future X n) // MeasurableSet C} =>
+        |(κ n (past X n ω)).real C.val - (eta n (past X n ω)).real C.val|)) =
+      1 - overlapNumerator X P Q n (κ n) (past X n ω) /
+        (rowMass (κ n) (splitDensity X P Q n) (past X n ω)).toReal := by
+    letI : IsMarkovKernel (eta n) := heta n
+    have hh : Measurable (splitDensity X P Q n) :=
+      (finite_density_measurable P Q).comp (split X n).symm.measurable
+    have hrow : eta n (past X n ω) = (κ n (past X n ω)).withDensity
+        (fun v => ENNReal.ofReal (likelihood P Q ((split X n).symm (past X n ω, v))) /
+          rowMass (κ n) (splitDensity X P Q n) (past X n ω)) := by
+      change ((κ n).withDensity (rowDensity (κ n) (splitDensity X P Q n))) _ = _
+      rw [Kernel.withDensity_apply _ (row_density_measurable (κ n) hh)]
+      congr 1
+      funext v
+      exact if_pos (hg n)
+    have hid := row_overlap_identity (κ n (past X n ω)) (eta n (past X n ω))
+      (fun v => likelihood P Q ((split X n).symm (past X n ω, v)))
+      (((Measure.measurable_rnDeriv Q P).ennreal_toReal.comp
+        (split X n).symm.measurable).comp measurable_prodMk_left)
+      (fun _ => ENNReal.toReal_nonneg)
+      (rowMass (κ n) (splitDensity X P Q n) (past X n ω))
+      (hg n).1.ne' (hg n).2.ne hrow
+    exact hid
+  have hratio := hl.2.div hl.1 hq.ne'
+  have hzero : Tendsto
+      (fun n => 1 - overlapNumerator X P Q n (κ n) (past X n ω) /
+        (rowMass (κ n) (splitDensity X P Q n) (past X n ω)).toReal)
+      atTop (𝓝 0) := by
+    have hconst : Tendsto (fun _ : ℕ => (1 : ℝ)) atTop (𝓝 1) := tendsto_const_nhds
+    simpa only [div_self hq.ne', sub_self] using hconst.sub hratio
+  exact hzero.congr' (Eventually.of_forall fun n => (heq n).symm)
+
+end PredictiveMerging
 
 end D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.PredictiveMerging.BlackwellDubins
