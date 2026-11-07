@@ -15,13 +15,13 @@ import Mathlib.Tactic
 /-! Three-level balanced CFC supplier and positive-definite Sylvester rigidity.
 The coefficient construction has three base coordinates and six residual
 coordinates, independent of the finite matrix dimension. Positive labels may
-coincide and level fibers may be empty. The proof scripts are undergoing
-canonical kernel repair; no kernel acceptance is asserted by this source note.
-Source-selection binding remains unfinished under
+coincide and level fibers may be empty. Source-selection binding remains unfinished under
 https://github.com/the-omega-institute/trureturing/issues/23103. -/
 
 noncomputable section
 set_option autoImplicit false
+set_option maxHeartbeats 2000000
+set_option maxRecDepth 8192
 set_option backward.isDefEq.respectTransparency false
 set_option backward.isDefEq.respectTransparency.types false
 
@@ -101,7 +101,7 @@ private theorem evalTerms_pos (ts : List Term) (ht : ∀ t ∈ ts, 0 < t.1)
   · intro x hx
     obtain ⟨t, htmem, rfl⟩ := List.mem_map.mp hx
     exact monomial_pos t (ht t htmem) ha hb hc
-  · simpa only [List.map_eq_nil_iff] using hne
+  · exact fun h => hne (List.map_eq_nil_iff.mp h)
 
 private def hTerms : List Term :=
 [
@@ -421,8 +421,9 @@ private theorem orbitEval_pos (ts : List Term) (ht : ∀ t ∈ ts, 0 < t.1)
   · intro x hx
     obtain ⟨t, htmem, rfl⟩ := List.mem_map.mp hx
     exact mul_pos (by exact_mod_cast ht t htmem) (symMonomial_pos _ _ _ ha hb hc)
-  · simpa only [List.map_eq_nil_iff] using hne
+  · exact fun h => hne (List.map_eq_nil_iff.mp h)
 
+set_option maxHeartbeats 16000000 in
 private theorem positiveCore_pos {a b c : ℝ}
     (ha : 0 < a) (hb : 0 < b) (hc : 0 < c) : 0 < positiveCore a b c := by
   apply orbitEval_pos coreOrbits _ _ ha hb hc
@@ -830,6 +831,7 @@ private theorem denominator_square (a b c : ℝ) :
 coefficient present in source. This is a kernel ring proof candidate; the
 source generator and its consistency check are not proof authority.
 The separate rational-clearing proof scripts follow this polynomial step. -/
+set_option maxHeartbeats 16000000 in
 private theorem polynomial_gap (a b c : ℝ) :
     tNumerator a b c-(kNumerator a b c)^2 =
       a*b*c*(a-b)^2*(a-c)^2*(b-c)^2*positiveCore a b c := by
@@ -846,6 +848,9 @@ private theorem aux_symm (a b : ℝ) : aux a b = aux b a := by unfold aux; ring
 private theorem detG_formula (p : Fin 3 → ℝ) (hp : ∀ i, 0 < p i) :
     detG p = (p 0-p 1)^2*(p 0-p 2)^2*(p 1-p 2)^2*hPoly (p 0) (p 1) (p 2)/
       (4*p 0*p 1*p 2*(q (p 0) (p 1))^2*(q (p 0) (p 2))^2*(q (p 1) (p 2))^2) := by
+  have hp0 := hp 0
+  have hp1 := hp 1
+  have hp2 := hp 2
   have h0 := (hp 0).ne'
   have h1 := (hp 1).ne'
   have h2 := (hp 2).ne'
@@ -860,6 +865,7 @@ private theorem detG_formula (p : Fin 3 → ℝ) (hp : ∀ i, 0 < p i) :
 All facts used here are proved scalar facts or numerical coefficient data;
 there is no spectral, jet, or supplier hypothesis. This proof script awaits
 canonical elaboration and kernel checking. -/
+set_option maxHeartbeats 16000000 in
 private theorem canonicalK_clear (p : Fin 3 → ℝ) (hp : ∀ i, 0 < p i)
     (hinj : Function.Injective p) :
     canonicalK p*kDenominator (p 0) (p 1) (p 2) = kNumerator (p 0) (p 1) (p 2) := by
@@ -953,6 +959,9 @@ private theorem canonical_gap_pos (p : Fin 3 → ℝ) (hp : ∀ i, 0 < p i)
 
 private theorem detG_pos (p : Fin 3 → ℝ) (hp : ∀ i, 0 < p i)
     (hinj : Function.Injective p) : 0 < detG p := by
+  have hp0 := hp 0
+  have hp1 := hp 1
+  have hp2 := hp 2
   have h01 : p 0-p 1 ≠ 0 := sub_ne_zero.mpr (fun h => (by decide : (0 : Fin 3) ≠ 1) (hinj h))
   have h02 : p 0-p 2 ≠ 0 := sub_ne_zero.mpr (fun h => (by decide : (0 : Fin 3) ≠ 2) (hinj h))
   have h12 : p 1-p 2 ≠ 0 := sub_ne_zero.mpr (fun h => (by decide : (1 : Fin 3) ≠ 2) (hinj h))
@@ -1003,7 +1012,7 @@ private theorem baseG_posDef (p : Fin 3 → ℝ) (hp : ∀ i, 0 < p i)
       simp only [g_self (hp 0), g_self (hp 1), g_self (hp 2), g_symm]
       dsimp only [y0, y1, d0, d1, d2]
       unfold detG
-      simp only [g_symm]
+      try simp only [g_symm]
       have hn0 := (hp 0).ne'
       have hn1 := (hp 1).ne'
       have hn2 := (hp 2).ne'
@@ -1040,7 +1049,7 @@ private theorem baseG_dual (p : Fin 3 → ℝ) (hp : ∀ i, 0 < p i)
       g_self (hp 0), g_self (hp 1), g_self (hp 2), g_symm]
   all_goals
     unfold detG at *
-    simp only [g_symm] at *
+    try simp only [g_symm] at *
     field_simp [hd, hn0, hn1, hn2] <;> ring
 
 /-- The residual allocation works for every three positive budgets, for either
@@ -1052,8 +1061,13 @@ private theorem residual_allocation (A : Fin 3 → ℝ) (hA : ∀ j, 0 < A j)
   let T := ∑ j, A j
   have hT : 0 < T := Finset.sum_pos (fun j _ => hA j) Finset.univ_nonempty
   have hj (j : Fin 3) : A j < T := by
-    fin_cases j <;> simp only [T, Fin.sum_univ_three] <;>
-      linarith [hA 0, hA 1, hA 2]
+    fin_cases j
+    · change A 0 < A 0+A 1+A 2
+      linarith [hA 1, hA 2]
+    · change A 1 < A 0+A 1+A 2
+      linarith [hA 0, hA 2]
+    · change A 2 < A 0+A 1+A 2
+      linarith [hA 0, hA 1]
   constructor
   · rw [← Finset.sum_div, ← Finset.mul_sum]
     exact mul_div_cancel_right₀ K hT.ne'
@@ -1097,8 +1111,7 @@ private theorem residual_pair (r s y : ℝ) (hr : 0 < r) (hdet : 0 < r*s-y^2) :
   refine ⟨?_, ?_, ?_⟩
   · nlinarith only [hsquare]
   · field_simp [hsqrt.ne']
-  · change (y/Real.sqrt r)^2+(Real.sqrt (s-y^2/r))^2 = s
-    rw [div_pow, hsquare, hradSquare]
+  · rw [← pow_two, ← pow_two, div_pow, hsquare, hradSquare]
     field_simp [hr.ne'] <;> ring
 
 /-- Standard finite PSD Gram realization, reusing CFC.sqrt rather than
@@ -1344,21 +1357,22 @@ private theorem v_m_projection (p : Fin 3 → ℝ) (hp : ∀ i, 0 < p i)
   by_cases hkj : k = j
   · subst k
     rw [m_diagonal, v_gram p hp hinj]
-    simp only [rowProjection, if_pos rfl, tau, Real.sqrt_mul (hp i).le]
+    simp only [ite_true, ite_false, rowProjection, if_pos rfl, tau, Real.sqrt_mul (hp i).le]
   · have he : dot (v p i) (m p k j) =
         Real.sqrt (p i)*Real.sqrt (p j)*
           dot3 (baseCoordinates p i) (correctedCoordinates p k j) := by
-      simp only [dot, Fintype.sum_sum_type, v, m, if_neg hkj, zero_mul,
+      simp only [ite_true, ite_false, dot, Fintype.sum_sum_type, v, m, if_neg hkj, zero_mul,
         Finset.sum_const_zero, add_zero, dot3]
       rw [Finset.mul_sum]
       apply Finset.sum_congr rfl
       intro a _
       ring
     rw [he, corrected_base p hp hinj]
-    simp only [rowProjection, if_neg hkj]
+    simp only [ite_true, ite_false, rowProjection, if_neg hkj]
 
 /-- Twenty-seven compact rational identities, with arbitrary positive p.
 The case split is on the three finite indices, never on sampled labels. -/
+set_option maxHeartbeats 16000000 in
 private theorem rowProjection_balance (p : Fin 3 → ℝ) (hp : ∀ i, 0 < p i)
     (i j k : Fin 3) :
     rowProjection p i k j+rowProjection p j k i = 2*psi (p i) (p j) (p k) := by
@@ -1407,6 +1421,7 @@ private theorem pairR_budget {a b : ℝ} (ha : 0 < a) (hb : 0 < b) :
 
 /-- The diagonal cofactor for the missing third level. Its proof uses the
 already supplied determinant formula, not another CFC computation. -/
+set_option maxHeartbeats 16000000 in
 private theorem dual_diagonal (p : Fin 3 → ℝ) (hp : ∀ i, 0 < p i)
     (hinj : Function.Injective p) (i j : Fin 3) (hij : i ≠ j) :
     dualG p (third i j) (third i j) =
@@ -1471,10 +1486,10 @@ private theorem edgeResidual_gram (p : Fin 3 → ℝ) (hp : ∀ i, 0 < p i)
     ((canonical_residual_blocks p hp hinj).2 j)
   rcases off_column_cases i j hij with rfl | rfl <;>
     rcases off_column_cases k j hkj with rfl | rfl
-  · simpa only [edgeResidual, if_pos rfl] using hpair.1
-  · simpa only [edgeResidual, if_pos rfl, if_neg hidx.2.2.1,
+  · simpa only [ite_true, ite_false, edgeResidual, if_pos rfl] using hpair.1
+  · simpa only [ite_true, ite_false, edgeResidual, if_pos rfl, if_neg hidx.2.2.1,
       if_neg (Ne.symm hidx.2.2.1)] using hpair.2.1
-  · simp only [edgeResidual, if_pos rfl, if_neg hidx.2.2.1,
+  · simp only [ite_true, ite_false, edgeResidual, if_pos rfl, if_neg hidx.2.2.1,
       if_neg (Ne.symm hidx.2.2.1)]
     calc
       _ = ∑ a, residualFirst (residualE p (left j) j) a*
@@ -1484,7 +1499,7 @@ private theorem edgeResidual_gram (p : Fin 3 → ℝ) (hp : ∀ i, 0 < p i)
         intro a _
         ring
       _ = _ := hpair.2.1
-  · simpa only [edgeResidual, if_neg (Ne.symm hidx.2.2.1), if_pos rfl]
+  · simpa only [ite_true, ite_false, edgeResidual, if_neg (Ne.symm hidx.2.2.1), if_pos rfl]
       using hpair.2.2
 
 private theorem same_column_gram (p : Fin 3 → ℝ) (hp : ∀ i, 0 < p i)
@@ -1494,7 +1509,7 @@ private theorem same_column_gram (p : Fin 3 → ℝ) (hp : ∀ i, 0 < p i)
         (if i = k then residualE p i j else residualY p j) := by
   have hbase : (∑ a : Fin 3, m p i j (.inl a)*m p k j (.inl a)) =
       p j*dot3 (correctedCoordinates p i j) (correctedCoordinates p k j) := by
-    simp only [m, if_neg hij, if_neg hkj, dot3]
+    simp only [ite_true, ite_false, m, if_neg hij, if_neg hkj, dot3]
     rw [Finset.mul_sum]
     apply Finset.sum_congr rfl
     intro a _
@@ -1512,7 +1527,9 @@ private theorem same_column_gram (p : Fin 3 → ℝ) (hp : ∀ i, 0 < p i)
         intro col _
         apply Finset.sum_congr rfl
         intro a _
-        by_cases hcol : col = j <;> simp [m, hij, hkj, hcol, edgeResidual]
+        by_cases hcol : col = j <;>
+          by_cases hi : i = left j <;> by_cases hk : k = left j <;>
+          simp [m, hij, hkj, hcol, hi, hk, edgeResidual]
       _ = _ := by rw [Finset.sum_comm]; simp
   rw [dot, Fintype.sum_sum_type, hbase, hres, edgeResidual_gram p hp hinj i k j hij hkj]
 
@@ -1535,8 +1552,8 @@ private theorem m_norm (p : Fin 3 → ℝ) (hp : ∀ i, 0 < p i)
       (delta (p i) (p j) (p (third i j)))^2/4*
         dualG p (third i j) (third i j) := by
     rw [corrected_pair p hp hinj]
-    simp only [if_neg ht.1, if_neg ht.2, if_neg (Ne.symm ht.1),
-      if_neg (Ne.symm ht.2), g_self (hp i), g_self (hp j),
+    simp only [ite_true, ite_false, if_neg ht.1, if_neg ht.2.1, if_neg (Ne.symm ht.1),
+      if_neg (Ne.symm ht.2.1), g_self (hp i), g_self (hp j),
       mul_zero, zero_mul, add_zero, zero_add]
     rw [g_symm (p j) (p i)]
     ring
@@ -1545,7 +1562,7 @@ private theorem m_norm (p : Fin 3 → ℝ) (hp : ∀ i, 0 < p i)
         dualG p (third i j) (third i j) = pairR (p i) (p j) := by
     rw [dual_diagonal p hp hinj i j hij]
     exact residualC_budget (hp i) (hp j) (hp (third i j))
-      (fun h => ht.1 (hinj h).symm) (fun h => ht.2 (hinj h).symm)
+      (fun h => ht.1 (hinj h).symm) (fun h => ht.2.1 (hinj h).symm)
   have hb := pairR_budget (hp i) (hp j)
   rw [same_column_gram p hp hinj i i j hij hij, if_pos rfl, hcorr,
     tau_square (hp i) (hp j), beta_diagonal (hp i)]
@@ -1560,7 +1577,7 @@ private theorem corrected_cross (p : Fin 3 → ℝ) (hp : ∀ i, 0 < p i)
   have ht := third_eq i j k hij hik hjk
   have ht' := third_eq k j i (Ne.symm hjk) (Ne.symm hik) (Ne.symm hij)
   rw [corrected_pair p hp hinj, ht, ht']
-  simp only [if_pos rfl, if_neg hij, if_neg (Ne.symm hij),
+  simp only [ite_true, ite_false, if_pos rfl, if_neg hij, if_neg (Ne.symm hij),
     if_neg hjk, if_neg (Ne.symm hjk), g_self (hp j),
     mul_zero, zero_mul, mul_one, add_zero, zero_add]
   rw [dualG_symm p k i]
@@ -1631,8 +1648,8 @@ private theorem cyclic_moment (p : Fin 3 → ℝ) (hp : ∀ i, 0 < p i)
         fin_cases i <;> fin_cases j <;> fin_cases k <;>
           norm_num at hij hik hjk
         all_goals
-          simp only [dot_comm, tau_symm] at hc ⊢
-          linear_combination hc
+          simp only [dot_comm, tau_symm] at hc ⊢ <;>
+            linear_combination hc
 
 section OrderedSquares
 variable {n : Type u} [Fintype n] [DecidableEq n]
@@ -1680,7 +1697,7 @@ private theorem ordered_row_square {ι : Type*} [Fintype ι]
     (S W : Matrix n n ℂ) (M V : ι → Matrix n n ℂ) (hW : W.IsHermitian) :
     rowEnergy S W M V =
       (∑ a, realTrace ((M a)ᴴ*S*M a))-
-        2*realTrace ((∑ a, (V a)ᴴ*S*M a+(M a)ᴴ*S*V a)*W)+
+        2*realTrace ((∑ a, ((V a)ᴴ*S*M a+(M a)ᴴ*S*V a))*W)+
         4*realTrace ((∑ a, (V a)ᴴ*S*V a)*W*W) := by
   unfold rowEnergy
   simp_rw [one_ordered_square S W _ _ hW]
@@ -1759,7 +1776,7 @@ private theorem ordered_first_moment (level : n → Fin 3) (p : Fin 3 → ℝ)
   ext i j
   calc
     _ = ∑ a, ((v p (level i) a*v p (level j) a : ℝ) : ℂ)*S i j := by
-      simp only [Finset.sum_apply]
+      simp only [Matrix.sum_apply]
       apply Finset.sum_congr rfl
       intro a _
       rw [liftedV_hermitian]
@@ -1808,14 +1825,14 @@ private theorem lifted_cross_entry (level : n → Fin 3) (p : Fin 3 → ℝ)
 private theorem ordered_mixed_moment (level : n → Fin 3) (p : Fin 3 → ℝ)
     (hp : ∀ i, 0 < p i) (hinj : Function.Injective p)
     (S : Matrix n n ℂ) (hS : S.IsHermitian) :
-    (∑ a, (liftedV level p a)ᴴ*S*liftedM level p S a+
-      (liftedM level p S a)ᴴ*S*liftedV level p a) =
+    (∑ a, ((liftedV level p a)ᴴ*S*liftedM level p S a+
+      (liftedM level p S a)ᴴ*S*liftedV level p a)) =
       (2 : ℝ) • qMatrix level p S := by
   ext i j
   calc
     _ = ∑ k, ((dot (v p (level i)) (m p (level k) (level j))+
         dot (m p (level k) (level i)) (v p (level j)) : ℝ) : ℂ)*S i k*S k j := by
-      simp only [Finset.sum_apply, lifted_cross_entry level p S hS]
+      simp only [Matrix.sum_apply, lifted_cross_entry level p S hS]
       rw [Finset.sum_comm]
       apply Finset.sum_congr rfl
       intro k _
@@ -2049,8 +2066,8 @@ private def OrderedMomentObligation : Prop :=
     (∀ i, 0 < p i) → Function.Injective p →
     ∀ (S : Matrix n n ℂ), S.IsHermitian →
     (∑ a, (liftedV level p a)ᴴ*S*liftedV level p a) = firstMatrix level p S ∧
-    (∑ a, (liftedV level p a)ᴴ*S*liftedM level p S a+
-      (liftedM level p S a)ᴴ*S*liftedV level p a) =
+    (∑ a, ((liftedV level p a)ᴴ*S*liftedM level p S a+
+      (liftedM level p S a)ᴴ*S*liftedV level p a)) =
       (2 : ℝ) • qMatrix level p S ∧
     (∑ a, realTrace ((liftedM level p S a)ᴴ*S*liftedM level p S a)) =
       (4*realTrace (S^3)-realTrace ((firstMatrix level p S)^3))/3
@@ -2113,6 +2130,7 @@ private theorem coincident_diagonal_rpow {ι : Type*} [Fintype ι] [DecidableEq 
       apply Matrix.PosSemidef.nonneg
       apply Matrix.PosSemidef.diagonal
       intro i
+      change (0 : ℂ) ≤ (d i : ℂ)
       exact_mod_cast hd i
     have hmap := φ.map_cfc (p := IsSelfAdjoint) (q := IsSelfAdjoint)
       (fun x : ℝ => x ^ s) (fun i => (d i : ℂ))
@@ -2233,10 +2251,11 @@ private theorem coincidentLevel_proof : CoincidentLevelObligation := by
     apply Matrix.PosSemidef.nonneg
     apply Matrix.PosSemidef.diagonal
     intro i
+    change (0 : ℂ) ≤ (p (level i) : ℂ)
     exact_mod_cast (hp (level i)).le
   have hroot_actual : CFC.rpow Y (1/3 : ℝ) = P := by
     rw [hY_actual, ← CFC.rpow_natCast P 3 hP_nonneg]
-    simp only [CFC.rpow_eq_pow]
+    change CFC.rpow (CFC.rpow P (3 : ℝ)) (1/3 : ℝ) = P
     rw [CFC.rpow_rpow_of_exponent_nonneg P (3 : ℝ) (1/3 : ℝ)
       (by norm_num) (by norm_num) hP_nonneg]
     norm_num [CFC.rpow_one P hP_nonneg]
@@ -2375,7 +2394,8 @@ theorem actual_threeLevel_supplier : ThreeLevelSupplierTarget.{u} := by
     -- The mixed moment is 2 • Q; the square contributes -2 times its
     -- real trace. Thus the ordered cross term is -4 Re tr(Q*W).
     simp only [realTrace, Matrix.smul_mul, Matrix.trace_smul,
-      RCLike.smul_re] at henergy
+      Complex.real_smul, Complex.mul_re, Complex.ofReal_re,
+      Complex.ofReal_im, zero_mul, sub_zero] at henergy
     change rowEnergy S W (liftedM level p S) (liftedV level p) =
       (4*(S^3).trace.re-(X^3).trace.re)/3-
         2*(2*(Q*W).trace.re)+4*(X*W*W).trace.re at henergy
@@ -2408,7 +2428,8 @@ variable {n : Type u} [Fintype n] [DecidableEq n]
 
 private theorem pd_realTrace_smul (r : ℝ) (A : Matrix n n ℂ) :
     realTrace (r • A) = r * realTrace A := by
-  simp only [realTrace, Matrix.trace_smul, RCLike.smul_re, smul_eq_mul]
+  simp only [realTrace, Matrix.trace_smul, Complex.real_smul, Complex.mul_re, Complex.ofReal_re,
+      Complex.ofReal_im, zero_mul, sub_zero, smul_eq_mul]
 
 /-- A weighted square has zero real trace precisely when its row matrix
 vanishes. This uses strict positivity of S, not entrywise positivity. -/
@@ -2496,8 +2517,8 @@ private theorem pd_first_posDef (level : n → Fin 3) (p : Fin 3 → ℝ)
 private theorem pd_q_hermitian (level : n → Fin 3) (p : Fin 3 → ℝ)
     (hp : ∀ i, 0 < p i) (hinj : Function.Injective p)
     (S : Matrix n n ℂ) (hS : S.IsHermitian) : (qMatrix level p S).IsHermitian := by
-  let A := ∑ a, (liftedV level p a)ᴴ*S*liftedM level p S a+
-    (liftedM level p S a)ᴴ*S*liftedV level p a
+  let A := ∑ a, ((liftedV level p a)ᴴ*S*liftedM level p S a+
+    (liftedM level p S a)ᴴ*S*liftedV level p a)
   have hA : A.IsHermitian := by
     change Aᴴ = A
     dsimp only [A]
@@ -2526,11 +2547,11 @@ private theorem pd_sylvester_spectral (X D : Matrix n n ℂ)
   have hl (i : n) : 0 < l i := hX.eigenvalues_pos i
   have hden (i j : n) : (l i : ℂ)+(l j : ℂ) ≠ 0 := by
     exact_mod_cast (add_pos (hl i) (hl j)).ne'
-  let E : Matrix n n ℂ := φ.symm D
-  let T : Matrix n n ℂ := fun i j => E i j / ((l i : ℂ)+(l j : ℂ))
+  let E : n → n → ℂ := φ.symm D
+  let T : n → n → ℂ := fun i j => E i j / ((l i : ℂ)+(l j : ℂ))
   have hE : E.IsHermitian := by
     change star (φ.symm D) = φ.symm D
-    rw [← map_star, hD.eq]
+    rw [← map_star, Matrix.star_eq_conjTranspose, hD.eq]
   have hT : T.IsHermitian := by
     ext i j
     change star (E j i / ((l j : ℂ)+(l i : ℂ))) =
@@ -2544,7 +2565,7 @@ private theorem pd_sylvester_spectral (X D : Matrix n n ℂ)
     field_simp [hden i j] <;> ring
   refine ⟨φ T, ?_, ?_, ?_⟩
   · change star (φ T) = φ T
-    rw [← map_star, hT.eq]
+    rw [← map_star, Matrix.star_eq_conjTranspose, hT.eq]
   · calc
       X*φ T+φ T*X = φ (L*T+T*L) := by
         rw [map_add, map_mul, map_mul, ← hspec]
@@ -2584,7 +2605,7 @@ private theorem pd_energy_identity (S X D Y : Matrix n n ℂ)
     realTrace_add, realTrace_sub, pd_realTrace_smul, smul_smul,
     pow_succ, pow_zero, mul_one, one_mul, ← mul_assoc]
   rw [hxyx]
-  linarith only [hdy]
+  linarith only [hdy, realTrace_comm D X]
 
 private theorem pd_residual_nonzero (p : Fin 3 → ℝ) (hp : ∀ i, 0 < p i)
     (hinj : Function.Injective p) (i j : Fin 3) (hij : i ≠ j) :
@@ -2599,11 +2620,11 @@ private theorem pd_residual_nonzero (p : Fin 3 → ℝ) (hp : ∀ i, 0 < p i)
   rcases off_column_cases i j hij with hleft | hright
   · subst i
     refine ⟨0, ?_⟩
-    simpa only [m, if_neg hi.1, ite_true, residualFirst,
+    simpa only [ite_true, ite_false, m, if_neg hi.1, ite_true, residualFirst,
       Matrix.cons_val_zero] using (Real.sqrt_pos.mpr hr).ne'
   · subst i
     refine ⟨1, ?_⟩
-    simpa only [m, if_neg hi.2.1, ite_true, if_neg hi.2.2.1.symm,
+    simpa only [ite_true, ite_false, m, if_neg hi.2.1, ite_true, if_neg hi.2.2.1.symm,
       residualSecond, Matrix.cons_val_one, Matrix.cons_val_zero]
       using (Real.sqrt_pos.mpr hrad).ne'
 
@@ -2682,8 +2703,8 @@ private theorem pd_commuting_moments (level : n → Fin 3) (p : Fin 3 → ℝ)
   have hfirst := ordered_first_moment level p hp hinj S
   have hmixed := ordered_mixed_moment level p hp hinj S hS
   have hcross :
-      (∑ a, (liftedV level p a)ᴴ*S*liftedM level p S a+
-        (liftedM level p S a)ᴴ*S*liftedV level p a) =
+      (∑ a, ((liftedV level p a)ᴴ*S*liftedM level p S a+
+        (liftedM level p S a)ᴴ*S*liftedV level p a)) =
       firstMatrix level p S*S+S*firstMatrix level p S := by
     have ha (a : Coeff) :
         (liftedV level p a)ᴴ*S*liftedM level p S a+
@@ -2779,7 +2800,7 @@ private theorem pd_two_slot_completion (a b : ℝ) (ha : 0 < a) (hb : 0 < b)
       linarith
   · intro i j h
     fin_cases i <;> fin_cases j <;>
-      simp only [Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two] at h
+      norm_num at h
     all_goals first | rfl | exact False.elim (hab h) |
       exact False.elim (hab h.symm) | linarith
 
@@ -2837,7 +2858,14 @@ private theorem pdSylvester_proof : PDSylvesterObligation.{u} := by
   intro n _ _ level p hp S hS
   obtain ⟨q, r, hq, hqi, hr⟩ := pd_faithful_relabel p hp
   have ht := pd_sylvester_injective (r ∘ level) q hq hqi S hS
-  simpa only [firstMatrix, qMatrix, Function.comp_apply, hr] using ht
+  have hX : firstMatrix (r ∘ level) q S = firstMatrix level p S := by
+    ext i j
+    simp only [firstMatrix, Function.comp_apply, hr]
+  have hQ : qMatrix (r ∘ level) q S = qMatrix level p S := by
+    ext i j
+    simp only [qMatrix, Function.comp_apply, hr]
+  rw [hX, hQ] at ht
+  simpa only [Function.comp_apply, hr] using ht
 
 end PDContinuation
 
