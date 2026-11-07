@@ -135,7 +135,7 @@ internal sealed class HoneycombCylinderCoordinationDocument : IScribeDocumentDef
     private static Formula PotentialFormula()
     {
         var v = V("v");
-        Formula Radius(int q) => App(Q("Int", "toNat"), App(Q("TeaCoordinationSequence", "residual"),
+        Formula Radius(byte q) => App(Q("Int", "toNat"), App(Q("TeaCoordinationSequence", "residual"),
             I(v), J(v), D(0), D(q)));
         return All("v", V("Vertex"), Eq(Call("potential", v),
             Ite(Eq(Color(v), V("true")), Add(Mul(D(2), Radius(1)), D(1)), Mul(D(2), Radius(0)))));

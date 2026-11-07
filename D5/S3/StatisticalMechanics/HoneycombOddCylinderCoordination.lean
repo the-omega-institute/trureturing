@@ -68,7 +68,7 @@ oddShellEquiv: proof_shape=bind-only; consumers=finite_shell, odd_card
 finite_shell: proof_shape=content; consumers=zero_card
 even_card: proof_shape=content; consumers=count_formula
 odd_card: proof_shape=content; consumers=count_formula
-zero_card: proof_shape=content; consumers=count_formula
+zero_card: proof_shape=bind-only; consumers=count_formula
 count_formula: proof_shape=content; consumers=result
 result: proof_shape=content; consumers=Reg.initial_values, Reg.family
 -/

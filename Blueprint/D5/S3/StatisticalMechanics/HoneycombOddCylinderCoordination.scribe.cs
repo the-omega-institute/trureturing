@@ -29,7 +29,7 @@ internal sealed class HoneycombOddCylinderCoordinationDocument : IScribeDocument
                 "SimpleGraph.map puts an edge between distinct quotient vertices when adjacent representatives exist."),
             Definition("origin", "origin", "The specified center",
                 All("n", Naturals(), Eq(Call("origin", V("n")),
-                    App(Projection(V("n")), Pair(V("false"), Pair(D(0), D(0))))),
+                    App(Projection(V("n")), Pair(V("false"), Pair(D(0), D(0)))))),
                 "The center is the class of A(0,0)."),
             Definition("shell-count", "c", "The literal finite shell cardinality", CountFormula(),
                 "SimpleGraph.dist is the minimum walk length. Every quotient shell is finite, and c counts the subtype at the displayed distance."),
