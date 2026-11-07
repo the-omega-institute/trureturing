@@ -594,3 +594,777 @@ of space, time, boundary and memory require their own corresponding
 relations.
 
 ## 追加锚（本行以下为增补区）
+
+## 6. Higher energies on the unchanged source
+
+**Definition 6.1 (the source map and its reduced principal metric).**
+Retain Assumption 1.1 and the actual regularity, symmetry and decay
+suppliers of Definition 2.1 and Theorem 3.1. To distinguish the
+cylindrical radius in (2.1) from the recovered resolvent symbol of
+[W, §12], write
+
+$$
+\begin{gathered}
+v=(x^2+y^2)^{1/2},\qquad
+\mathcal U=\{v>0\}=\Omega\text{ of (2.1)},\qquad
+r=(1+\gamma)^{-1},\\
+\Gamma_d(f,g)=d\left(a\sum_{j=1}^3X_jfX_jg
+                         +\eta f_wg_w\right),\\
+\mathcal C=\Gamma_d(b,\gamma),\qquad
+\mathcal D=\Gamma_d(\gamma,\gamma),\qquad
+\mathcal F=(b,\gamma).
+\end{gathered}
+\tag{6.1}
+$$
+
+The higher energies $\mathcal C,\mathcal D$ are the quantities
+called $C,D$ in the higher-energy factorization question; neither
+denotes the endpoint coefficient $C$ of (1.2). They are finite
+smooth real functions on $M$, analytic on $\mathcal U$. No global
+boundedness, global generator domain or multiplication action on
+$\mathcal O$ is assumed for either of them.
+
+For rotation-invariant functions, the symmetric-coordinate fields
+are $X_1=\partial_x-(y/2)\partial_s$ and
+$X_2=\partial_y+(x/2)\partial_s$. Substitution, with cancellation
+of the mixed radial-central terms, gives the exact identity
+
+$$
+\frac1d\Gamma_d(f,g)
+ =a(f_vg_v+f_zg_z)
+       +\left(\eta+\frac{av^2}{4}\right)f_sg_s.
+\tag{6.2}
+$$
+
+Set
+
+$$
+u=v/\sqrt a,\qquad \zeta=z/\sqrt a,\qquad
+\lambda=a^2/4>0,\qquad k(u)=\eta+\lambda u^2,
+\qquad
+\overline{\mathsf g}=du^2+\frac{ds^2}{k(u)}+d\zeta^2.
+\tag{6.3}
+$$
+
+Thus (6.2) is exactly the cotangent metric of
+$\overline{\mathsf g}$. This metric expresses the original
+principal energy on invariant functions. It is not the induced
+metric on a constant-angle surface, and no quotient diffusion,
+replacement heat kernel or new endpoint is introduced. All source
+functions below are still the original $b=g_d$ and its energies.
+The full source drift and the singular domain are retained through
+Assumption 1.1; they are not inferred from (6.3).
+
+The reflection in $z$ makes $b$ and $\gamma$ even in $\zeta$.
+Consequently $\partial_\zeta\mathcal F(u,s,0)=0$. Write
+$\mathcal F_0=\mathcal F|_{\zeta=0}$. The next lemma locates
+rank two on this particular slice, rather than merely somewhere
+in the full source.
+
+## 7. Rank two on the original reflection slice
+
+**Lemma 7.1 (a regular two-variable source section).** For every
+finite $a,\eta,d>0$ under Assumption 1.1 there is a point with
+$v>0,z=0$ at which
+
+$$
+\det D_{(v,s)}\bigl(b(v,0,s),\gamma(v,0,s)\bigr)\ne0.
+\tag{7.1}
+$$
+
+In particular $\mathcal F_0$ is an analytic local diffeomorphism
+at some point of the actual reflection slice.
+
+*Proof.* Put $\beta(v,s)=b(v,0,s)$ on
+$\Sigma=(0,\infty)\times\mathbb R$ and use the metric
+
+$$
+\mathsf g_\Sigma=\frac{dv^2}{a}
+       +\frac{ds^2}{\eta+av^2/4},\qquad
+E_\Sigma=|\nabla_\Sigma\beta|^2
+       =a\beta_v^2+(\eta+av^2/4)\beta_s^2.
+\tag{7.2}
+$$
+
+By the actual $z$ reflection, $b_z(v,0,s)=0$, so
+$\gamma(v,0,s)=dE_\Sigma(v,s)$. Suppose that
+$\mathrm d\beta\wedge\mathrm dE_\Sigma$ vanished identically
+on $\Sigma$. Positivity (3.2) and decay (2.3) give $v_0>0$ with
+$\beta_v(v_0,0)<0$. The central reflection (3.4) gives
+$\beta_s(v_0,0)=0$. Write
+
+$$
+q_0=(v_0,0),\quad c_0=\beta(q_0),\quad
+E_0=a\beta_v(q_0)^2>0.
+\tag{7.3}
+$$
+
+Analytic submersion coordinates near $q_0$ give
+$E_\Sigma=F(\beta)$ for an analytic $F$, positive on a smaller
+neighborhood. Exactly the local Hessian calculation (3.7), now
+for $\mathsf g_\Sigma$, shows that
+$n=-\nabla_\Sigma\beta/\sqrt{E_\Sigma}$ has unit-speed geodesic
+integral curves in the regular tube. The small level curve
+$\Lambda=\{\beta=c_0\}$ is an analytic graph $v=V(s)$ through
+$q_0$, and its normal geodesics all have the same initial scalar
+profile, solving $y'=-\sqrt{F(y)}$, $y(0)=c_0$.
+
+The analytic germ $\beta_s|_\Lambda$ is nonzero. Indeed,
+$\beta_s$ cannot vanish identically on $\Sigma$: at any fixed
+$v>0$, the actual positive function $\beta(v,s)$ tends to zero
+as $|s|\to\infty$. If $\beta_s$ vanished on a level-curve
+neighborhood, each normal geodesic there would start with
+$p_s=-\beta_s/\sqrt{E_0}=0$. The metric in (7.2) is independent
+of $s$, so $p_s$ is conserved. On the short regular normal tube
+this gives $p_s=-\beta_s/\sqrt{E_\Sigma}=0$. That tube is open
+in $\Sigma$, by the local normal-flow diffeomorphism. Analytic
+uniqueness on connected $\Sigma$ would make $\beta_s$ vanish
+everywhere, a contradiction.
+
+The nonzero one-variable analytic germ on $v=V(s)$ is nonzero
+for all sufficiently small $s=\epsilon>0$. Thus, shrinking the
+interval of $\epsilon$, the points
+$q_\epsilon=(V(\epsilon),\epsilon)$ satisfy
+
+$$
+\begin{gathered}
+R_\epsilon=V(\epsilon)>0,\qquad
+B_\epsilon=\beta_v(q_\epsilon)<0,\qquad
+S_\epsilon=\beta_s(q_\epsilon)\ne0,\\
+E_\Sigma(q_\epsilon)=E_0,\qquad
+q_\epsilon\longrightarrow q_0,\quad S_\epsilon\longrightarrow0.
+\end{gathered}
+\tag{7.4}
+$$
+
+Let $c_\epsilon(t)$ be the geodesic of (7.2) with initial
+velocity $n(q_\epsilon)$. Its conserved central momentum and
+radial equation are
+
+$$
+\nu_\epsilon=-S_\epsilon/\sqrt{E_0},\qquad
+\ddot v+\frac{a^2\nu_\epsilon^2}{4}v=0,
+\qquad \dot s=\nu_\epsilon(\eta+av^2/4).
+\tag{7.5}
+$$
+
+These follow directly from the Hamiltonian of (7.2), and are the
+same radial-central equations as (2.6). With
+$\omega_\epsilon=a|S_\epsilon|/(2\sqrt{E_0})$, their solution
+up to the first crossing of $v=0$ is
+
+$$
+\begin{gathered}
+v(c_\epsilon(t))=R_\epsilon\cos(\omega_\epsilon t)
+       -\frac{2B_\epsilon}{|S_\epsilon|}\sin(\omega_\epsilon t),\\
+\alpha_\epsilon
+ =\pi-\arctan\frac{R_\epsilon|S_\epsilon|}{-2B_\epsilon}
+ \in(\pi/2,\pi),\qquad
+T_\epsilon=\frac{2\sqrt{E_0}\alpha_\epsilon}
+                         {a|S_\epsilon|}.
+\end{gathered}
+\tag{7.6}
+$$
+
+The radius is positive before $T_\epsilon$ and has a simple zero
+there. The times $T_\epsilon$ are continuous in $\epsilon>0$
+and tend to infinity as $\epsilon\downarrow0$. Moreover
+
+$$
+|s(c_\epsilon(T_\epsilon))-\epsilon|
+ \ge\eta|\nu_\epsilon|T_\epsilon
+ =2\eta\alpha_\epsilon/a>\pi\eta/a.
+\tag{7.7}
+$$
+
+For sufficiently small $\epsilon$, the crossing therefore has
+$|s|>\pi\eta/(2a)$ and is off the original singular source.
+The radius and central coordinate have finite limits at each
+such finite crossing time.
+
+The reference geodesic from $q_0$ is the outward radial ray.
+Define the analytic function
+
+$$
+f(t)=\beta(v_0+\sqrt a\,t,0),\qquad
+t>-v_0/\sqrt a,\qquad f'(0)=-\sqrt{E_0}<0.
+\tag{7.8}
+$$
+
+Initially the common normal scalar profile and gradient identity
+give
+
+$$
+\beta(c_\epsilon(t))=f(t),\qquad
+\nabla_\Sigma\beta(c_\epsilon(t))
+                    =f'(t)\dot c_\epsilon(t).
+\tag{7.9}
+$$
+
+For each fixed $\epsilon$, these are identities between analytic
+functions on $0<t<T_\epsilon$. The one-variable identity theorem,
+applied also to the two coordinate components of the vector
+identity, extends them over that whole interval. This is the
+analytic synchronization used in (3.14); it continues identities
+along fixed geodesics, including critical times, without assuming
+that $F$ or the normalized gradient field extends through critical
+levels.
+
+At the off-source crossing, actual smooth rotational invariance
+gives $\beta_v(0,s)=0$, as a one-sided radial derivative of the
+original smooth $b$. The $v$ component of
+$\nabla_\Sigma\beta$ therefore tends to zero. Passing to the
+limit in the $v$ component of (7.9), and using the simple radial
+zero in (7.6), gives $f'(T_\epsilon)=0$. For any fixed small
+$\epsilon_*>0$, continuity and divergence of $T_\epsilon$ imply
+that its values on $(0,\epsilon_*)$ include every
+$t>T_{\epsilon_*}$. Hence $f'$ vanishes on a tail interval.
+Analytic uniqueness contradicts (7.8).
+
+Thus $\mathrm d\beta\wedge\mathrm dE_\Sigma$ is nonzero
+somewhere. Since $d>0$, this proves (7.1). The proof used only
+the original slice, smooth off-source axis limits and the actual
+value decay; no global transnormal-foliation theorem or derivative
+tail estimate was used. $\square$
+
+## 8. Analytic rigidity of a local metric retraction
+
+**Lemma 8.1 (the quadratic-central metric admits no bending
+retraction).** Let $\eta,\lambda>0$,
+$k(u)=\eta+\lambda u^2$, and let $V$ be an open rectangle in
+$(0,\infty)\times\mathbb R$. Suppose that an analytic map
+$\pi=(X,Y)$, defined on a neighborhood of $V\times\{0\}$, obeys
+
+$$
+\pi(u,s,0)=(u,s),\qquad \pi_\zeta(u,s,0)=0
+\tag{8.1}
+$$
+
+and the cotangent isometry equations from
+$du^2+ds^2/k(u)+d\zeta^2$ to $dX^2+dY^2/k(X)$:
+
+$$
+\begin{aligned}
+X_u^2+k(u)X_s^2+X_\zeta^2&=1,\\
+X_uY_u+k(u)X_sY_s+X_\zeta Y_\zeta&=0,\\
+Y_u^2+k(u)Y_s^2+Y_\zeta^2&=k(X).
+\end{aligned}
+\tag{8.2}
+$$
+
+Then $\pi(u,s,\zeta)=(u,s)$ locally along $V\times\{0\}$.
+The equations already imply submersion; no harmonicity, diffusion
+drift condition or global fibre hypothesis is part of the lemma.
+
+*Proof.* First write
+
+$$
+X=u+\tfrac12\zeta^2p(u,s)+O(\zeta^3),\qquad
+Y=s+\tfrac12\zeta^2q(u,s)+O(\zeta^3).
+$$
+
+The coefficients of $\zeta^2$ in (8.2) are exactly
+
+$$
+p_u=-p^2,\qquad q_u+kp_s=-2pq,\qquad
+kq_s-\lambda u p=-q^2.
+\tag{8.3}
+$$
+
+If $p$ were nonzero at any point, restrict to a smaller rectangle
+where $p\ne0$. The first equation gives
+$p=1/(u+c(s))$ with analytic $c$. Put
+$J(u)=\eta u+\lambda u^3/3$, so $J'=k$. The second equation
+then integrates to
+
+$$
+q=\frac{c'(s)J(u)+j(s)}{(u+c(s))^2}
+\tag{8.4}
+$$
+
+for an analytic $j$. Substitute in the third equation and
+multiply by $(u+c)^4$. The resulting polynomial identity in $u$
+is
+
+$$
+\begin{aligned}
+0={}&k\left[(c''J+j')(u+c)^2
+             -2c'(c'J+j)(u+c)\right]\\
+   &-\lambda u(u+c)^3+(c'J+j)^2.
+\end{aligned}
+\tag{8.5}
+$$
+
+An identity on an open $u$ interval is a polynomial identity,
+even though the interval need not contain zero or infinity.
+Its degree-seven coefficient is $\lambda^2c''/3$, so $c''=0$.
+With this relation imposed, the degree-six coefficient is
+$-5\lambda^2(c')^2/9$, so $c'=0$. Equation (8.5) reduces to
+
+$$
+k j'(u+c)^2-\lambda u(u+c)^3+j^2=0.
+\tag{8.6}
+$$
+
+Its degree-four coefficient gives $j'=1$, and its degree-three
+coefficient then gives $c=0$. The degree-two coefficient is now
+$\eta$, contrary to $\eta>0$. This excludes every nonzero point
+of $p$. Hence $p=0$. Equations (8.3) give $q_u=0$ and
+$kq_s=-q^2$. Varying $u$ on an open interval, where $k$ is
+nonconstant, first gives $q_s=0$ and then $q=0$. The entire
+quadratic coefficient vanishes.
+
+For completeness, higher analytic orders cannot evade this
+quadratic obstruction. If $\pi$ were not the identity as a germ,
+let $n>2$ be the least order with a nonzero coefficient function:
+
+$$
+X=u+\zeta^n p_n+\cdots,\qquad
+Y=s+\zeta^n q_n+\cdots.
+\tag{8.7}
+$$
+
+For every order $j$ from $n$ through $2n-3$, products of
+perturbations in the $u,s$ derivatives have order at least $2n$,
+and products of $\zeta$ derivatives have order at least $2n-2$.
+Thus its coefficient pair $(p_j,q_j)$ satisfies the homogeneous
+linear equations
+
+$$
+(p_j)_u=0,\qquad (q_j)_u+k(p_j)_s=0,\qquad
+k(q_j)_s-\lambda u p_j=0.
+\tag{8.8}
+$$
+
+Every solution of these equations is $(0,c_j)$ for a constant
+$c_j$. Indeed, the first two equations give
+$p_j=p_j(s)$ and $q_j=-p_j'(s)J(u)+j_j(s)$. The third becomes
+
+$$
+k(-p_j''J+j_j')-\lambda u p_j=0.
+\tag{8.9}
+$$
+
+The coefficients of degrees five, two and one, in that order,
+give $p_j''=0$, $j_j'=0$ and $p_j=0$. Thus $q_j$ is constant.
+In particular $(p_n,q_n)=(0,c)$ with $c\ne0$.
+
+At order $2n-2$ the only nonlinear contribution is
+$n^2c^2\zeta^{2n-2}$ from $Y_\zeta^2$ in the last equation
+of (8.2). Earlier coefficient pairs are constant translations
+in $Y$, so they contribute no $u,s$ derivatives, and only the
+pair of order $n$ can contribute at this order through
+$\zeta$ derivatives. If $(p_*,q_*)$ is the coefficient pair
+of order $2n-2$, it therefore satisfies
+
+$$
+(p_*)_u=0,\qquad (q_*)_u+k(p_*)_s=0,\qquad
+k(q_*)_s-\lambda u p_*=-n^2c^2/2.
+\tag{8.10}
+$$
+
+As before, write $q_*=-p_*'J+j_*$. The degree-five, degree-two
+and degree-one coefficients force $p_*''=0$, $j_*'=0$ and
+$p_*=0$. The left side of the last equation is then zero;
+its constant term forces $c=0$, a contradiction. There is no
+first nonzero Taylor coefficient. Analyticity implies the
+asserted local identity. Both $\lambda>0$ and $\eta>0$ have
+been used explicitly. $\square$
+
+## 9. Actual third rank and completed-measure separation
+
+**Theorem 9.1 (a higher original energy separates every positive
+parameter source).** Under Assumption 1.1, for every original
+finite $a,\eta,d>0$, at least one of
+
+$$
+\mathrm d_{\rm sp}b\wedge\mathrm d_{\rm sp}\gamma
+                         \wedge\mathrm d_{\rm sp}\mathcal C,
+\qquad
+\mathrm d_{\rm sp}b\wedge\mathrm d_{\rm sp}\gamma
+                         \wedge\mathrm d_{\rm sp}\mathcal D
+\tag{9.1}
+$$
+
+is nonzero at an actual source point in $\mathcal U$. For at
+least one fixed choice $\kappa\in\{\mathcal C,\mathcal D\}$,
+depending on the positive triple, the law
+$ (b,\gamma,\kappa)_*m$ is absolutely continuous with respect
+to three-dimensional Lebesgue measure. In particular
+
+$$
+\kappa\notin L^0\!\left(\overline{\sigma(b,\gamma)}^{\,m};
+                                      \mathbb R\right),
+\qquad
+m\{\kappa=H(b,\gamma)\}=0
+\quad\text{for every Borel }H:\mathbb R^2\to\mathbb R.
+\tag{9.2}
+$$
+
+*Proof.* Suppose that both three-forms in (9.1) vanished
+identically on $\mathcal U$. Work in the reduced coordinates
+of (6.3). Lemma 7.1 supplies a point on $\zeta=0$ where
+$\mathcal F_0$ is an analytic local diffeomorphism. Near that
+point, $(\mathcal F,\zeta)$ is an analytic coordinate system.
+The vanishing three-forms say that the derivatives of
+$\mathcal C,\mathcal D$ in the remaining coordinate at fixed
+$\mathcal F$ are zero. After restricting to a product coordinate
+neighborhood, there are analytic functions $c_*,d_*$ with
+
+$$
+\mathcal C=c_*(\mathcal F),\qquad
+\mathcal D=d_*(\mathcal F).
+\tag{9.3}
+$$
+
+This is local differential descent. It assumes no agreement
+between disconnected pieces of a distant fibre.
+
+The energy matrix of $\mathcal F$ for
+$\overline{\mathsf g}$ is
+
+$$
+\left(\langle\mathrm d\mathcal F_i,
+                 \mathrm d\mathcal F_j\rangle_{
+                        \overline{\mathsf g}^{-1}}\right)_{ij}
+ =\frac1d
+   \begin{pmatrix}\gamma&\mathcal C\\\mathcal C&\mathcal D\end{pmatrix}.
+\tag{9.4}
+$$
+
+It is positive definite on a smaller neighborhood because
+$\mathcal F$ has rank two there. By (9.3), (9.4) depends only
+on the target value $\mathcal F$. It defines a positive target
+cometric. On $\zeta=0$, the normal derivatives of both
+components of $\mathcal F$ vanish. Thus (9.4) restricted to
+that slice is exactly the pushforward under $\mathcal F_0$
+of the cometric of $du^2+ds^2/k(u)$.
+
+Shrink so that the image of $\mathcal F$ lies in the inverse
+chart of $\mathcal F_0$, and put
+$\pi=\mathcal F_0^{-1}\circ\mathcal F=(X,Y)$. The chain rule
+for this target cometric gives precisely (8.2): the squared
+cotangent norms and cross product of $\mathrm dX,\mathrm dY$ are
+$1,k(X),0$. Also $\pi(u,s,0)=(u,s)$ and
+$\pi_\zeta(u,s,0)=0$. Lemma 8.1 applies with
+$\lambda=a^2/4$ and the original $\eta$. It forces
+$\mathcal F(u,s,\zeta)=\mathcal F_0(u,s)$ locally.
+In particular $b_z=0$ on an open subset of the actual reduced
+source. Analytic uniqueness on connected
+$(0,\infty)\times\mathbb R^2$ gives $b_z=0$ everywhere there.
+For fixed $v>0,s$, this contradicts the actual positivity of
+$b(v,z,s)$ and its decay to zero as $|z|\to\infty$ in (2.3).
+Consequently at least one of (9.1) is nonzero somewhere.
+
+Choose the corresponding $\kappa$. Rotation invariance makes
+
+$$
+J_\kappa(v,z,s)=\det D_{(v,z,s)}(b,\gamma,\kappa)
+\tag{9.5}
+$$
+
+a nontrivial analytic function on the connected reduced domain.
+Mityagin's Proposition 0 [M] applies: this is a real analytic
+function on a connected open subset of $\mathbb R^3$, and it
+is not identically zero. Its zero set is Lebesgue-null there.
+In original cylindrical coordinates
+$d\mu=v\,dv\,d\theta\,dz\,ds$, and the original $h^2$ is
+smooth and strictly positive on $\mathcal U$. Fubini transfers
+this null set to $m$; the omitted axis is also $m$-null. Thus
+$(b,\gamma,\kappa)$ has rank three $m$-almost everywhere.
+
+Countably many submersion charts cover that full-rank set.
+Their coordinates can be written $(b,\gamma,\kappa,y)$,
+and $m$ has a positive smooth local density in each chart.
+Fubini in these coordinates shows that the inverse image of
+any three-dimensional Lebesgue-null Borel set is $m$-null.
+The rank-deficient complement is already null, proving the
+asserted absolute continuity. More locally, a compactly contained
+coordinate rectangle $I\times J\times L\times Q$ gives a
+positive smooth restricted density
+$q(t_1,t_2,t_3)=\int_Q j(t_1,t_2,t_3,y)\,dy$ on
+$I\times J\times L$, exactly as in (4.4).
+
+Every Borel graph $\{(t_1,t_2,H(t_1,t_2))\}$ is
+three-dimensional Lebesgue-null. Absolute continuity proves the
+second assertion of (9.2). The completion and Doob–Dynkin
+argument in Theorem 4.1 applies to the real-valued pair
+$(b,\gamma)$ just as to $b$: completed measurability would give
+a Borel version $H(b,\gamma)$ almost everywhere, contrary to
+that graph calculation. This proves (9.2). Arbitrary finite
+assignments at $e$ and permitted null repairs of the original
+readout do not affect any conclusion. $\square$
+
+## 10. Strict recovered energy enlargement and failure of old heat closure
+
+**Definition 10.1 (the exact-law and packet correspondence).**
+For the operator conclusions additionally retain the original
+word-law recovery hypotheses of [W, §§1–4, 12–13, 22–23],
+including the same-source all-angle limit and compact-domain
+suppliers of [W, Definition 22.1 and Lemma 22.2]. Under their
+source unitary $U$ the marked data obey
+
+$$
+\begin{gathered}
+U\Omega=1,\qquad U\mathsf B U^{-1}=M_b|_{\mathcal O},\qquad
+U\mathsf R U^{-1}=M_r|_{\mathcal O},\\
+\widehat P=e^{-\Lambda},\qquad
+U\widehat P U^{-1}=T_d|_{\mathcal O},\qquad
+U\Lambda U^{-1}=dK|_{\mathcal O},\\
+\mathcal A_{\rm rel}=W^*(\mathsf B,\mathsf R),\qquad
+H_{\rm rel}=L^2\!\left(\overline{\sigma(b,\gamma)}^{\,m},m\right)
+           =U\overline{\mathcal A_{\rm rel}\Omega}
+           \subseteq\mathcal O.
+\end{gathered}
+\tag{10.1}
+$$
+
+Here $\Omega$ is the marked reference vector, not the cylindrical
+set called $\Omega$ in (2.1). For a scalar packet of [W,
+Definition 22.1], its outer interval avoids both $0$ and
+
+$$
+s_d=\|\widehat P^{-1/2}b_o\|^2=\operatorname{tr}b>0.
+\tag{10.2}
+$$
+
+This is the source trace, distinct from the calibration
+$N_d=\|g_d\|_\infty$. The packet functions are
+$f_1=\phi(b)b$, $f_2=\phi(b)r$. By [W, Theorem 22.3] the
+intrinsically determined bounded operators
+
+$$
+\mathsf E_{ij}
+ =\overline{-\tfrac12[[\Lambda,\mathsf F_i],\mathsf F_j]},
+\qquad e_{ij}=\Gamma_d(f_i,f_j),\qquad
+U\mathsf E_{ij}U^{-1}=M_{e_{ij}}|_{\mathcal O}
+\tag{10.3}
+$$
+
+are actual multipliers on all $\mathcal O$, with
+$e_{ij}\in C_c^\infty(M)$. These are reused recovery, reduction
+and domain statements, not new conclusions from the rank proof.
+
+**Theorem 10.2 (strict compact-energy information gain).** Under
+the source and recovery hypotheses just stated, for every original
+finite positive triple there is a scalar packet for which at
+least one of $e_{12},e_{22}$ is not measurable for
+$\overline{\sigma(b,\gamma)}^{\,m}$. For that packet,
+
+$$
+\mathcal A_{\rm rel}
+ \subsetneq W^*(\mathsf B,\mathsf R,\mathsf E_{12},\mathsf E_{22}),
+\qquad H_{\rm rel}\subsetneq\mathcal O.
+\tag{10.4}
+$$
+
+All displayed operators act in the same exact-law realization;
+the enlargement is a commutative multiplication algebra on that
+sector.
+
+*Proof.* Take a rank-three point from Theorem 9.1 for its chosen
+$\kappa$. Within its open rank-three set, $\mathrm d b\ne0$,
+so $b$ takes an open interval of values. Choose a point there
+whose value avoids $0$ and $s_d$, and choose nested packet
+intervals around that value as in [W, Definition 22.1]. On a
+neighborhood of the point, $\phi(b)=1$. Hence the chain rule
+and $r=(1+\gamma)^{-1}$ give
+
+$$
+e_{12}=-r^2\mathcal C,\qquad e_{22}=r^4\mathcal D,
+\tag{10.5}
+$$
+
+and therefore
+
+$$
+\begin{aligned}
+\mathrm d b\wedge\mathrm d\gamma\wedge\mathrm d e_{12}
+   &=-r^2\mathrm d b\wedge\mathrm d\gamma\wedge\mathrm d\mathcal C,\\
+\mathrm d b\wedge\mathrm d\gamma\wedge\mathrm d e_{22}
+   &=r^4\mathrm d b\wedge\mathrm d\gamma\wedge\mathrm d\mathcal D.
+\end{aligned}
+\tag{10.6}
+$$
+
+All differentials in (10.6) are spatial. Since $r>0$, the
+corresponding packet symbol has a rank-three chart of positive
+original $m$-measure. The restricted positive-density argument in
+Theorem 9.1 excludes $e_{ij}=H(b,\gamma)$ almost everywhere on
+that chart for every Borel $H$. The completion argument then
+excludes old-factor measurability. Only a local chart is needed
+here: the global joint law of a compact packet symbol need not
+be absolutely continuous, since the symbol vanishes off its
+compact support.
+
+For this separating entry, (10.3) gives
+$U\mathsf E_{ij}\Omega=e_{ij}\in\mathcal O$. If
+$\mathsf E_{ij}\in\mathcal A_{\rm rel}$, this vector would lie
+in $H_{\rm rel}$ by (10.1), contrary to nonmeasurability.
+This proves both strict inclusions in (10.4). The operators
+commute because they are restrictions of reducing actual
+multipliers on the full source. $\square$
+
+**Corollary 10.3 (the old factor is not an autonomous heat
+factor).** Let $E_{\rm rel}$ be the conditional-expectation
+orthogonal projection from $L^2(m)$ onto $H_{\rm rel}$. Under
+the hypotheses of Theorem 10.2,
+
+$$
+E_{\rm rel}T_d\ne T_dE_{\rm rel}.
+\tag{10.7}
+$$
+
+Equivalently, the corresponding projection in the marked space
+does not commute with $\widehat P$. Thus the old factor does
+not reduce the original full heat semigroup or its generator.
+
+*Proof.* Suppose instead that the projection commuted with
+$T_d=e^{-dK}$. The injective spectral calculus for
+$x\mapsto e^{-dx}$ on $[0,\infty)$ makes it commute with every
+spectral projection of $K$. In particular $H_{\rm rel}$ would
+reduce $K$: its domain intersection would be preserved by $K$.
+For the packet in Theorem 10.2, each $f_i$ and $f_if_j$ is
+bounded, old-factor measurable and in the actual $D(K)$.
+Indeed they are compact smooth on $M$ by [W, Lemma 22.2];
+their $h$-multiples are in $\mathcal D_0\subset D(H)$.
+Therefore $Kf_i$ and $K(f_if_j)$ would belong to $H_{\rm rel}$.
+Multiplication by the bounded old-factor functions $f_i$
+preserves that subspace. The actual product identity on $M$
+then gives, as an $L^2(m)$ identity,
+
+$$
+e_{ij}=\frac d2\left(f_iKf_j+f_jKf_i-K(f_if_j)\right)
+       \in H_{\rm rel}.
+\tag{10.8}
+$$
+
+This contradicts the separating entry in Theorem 10.2. The
+generator and compact domains here are the full original ones;
+no replacement Friedrichs operator or factor generator was used.
+Finally $\mathcal O$ reduces $T_d$ by [W, Theorem 3.2] and
+$H_{\rm rel}\subseteq\mathcal O$. The full projection is zero
+on $\mathcal O^\perp$, so its commutation on the full source
+is equivalent to commutation on $\mathcal O$, and then under
+$U$ to the marked-space statement. $\square$
+
+**Proposition 10.4 (lawful finite products on the original
+observable sector).** The additional operators in Theorem 10.2
+are determined from the same entire exact word law through the
+marked tuple and (10.3). They require no extra observer input.
+For any finite ordered list of packet entries $\iota_j$ and
+numbers $\tau_j\ge0$,
+
+$$
+U\left(\mathsf E_{\iota_1}\widehat P^{\tau_1}\cdots
+          \mathsf E_{\iota_n}\widehat P^{\tau_n}\right)U^{-1}
+ =\left(M_{e_{\iota_1}}T_{d\tau_1}\cdots
+          M_{e_{\iota_n}}T_{d\tau_n}\right)|_{\mathcal O}.
+\tag{10.9}
+$$
+
+The same composition is valid with any finite set of the
+already-recovered bounded multipliers and transports of [W,
+§§22–23], in the written order. Their matrix coefficients,
+including those with original word vectors, are consequently
+determined as exact mathematical quantities.
+
+*Proof.* Full-source reduction of every $M_{e_{ij}}$ is already
+part of [W, Theorem 22.3]; full heat reduction is [W, Theorem
+3.2]. Thus every intermediate vector in (10.9) stays in
+$\mathcal O$. All factors are bounded, and conjugating each
+one by $U$ proves the ordered product. The same argument uses
+the actual transport correspondence of [W, Theorem 23.1] when
+transports are included. No commutation with heat or between
+distinct transport groups is asserted. Compact multiplier
+domains retain the original endpoint: [W, Lemma 22.2] gives
+$he_{ij}u\in D(\overline S)$ and
+$A(he_{ij}u)=C(he_{ij}u)=0$ for $u\in D(K)$. The transport
+factors retain the full domain, form domain and source trace
+as specified in [W, (22.12)]. These are the existing domain
+suppliers; neither the composition nor strictness proof changes
+them. $\square$
+
+## 11. Attribution, access and the remaining recovery boundaries
+
+**Definition 11.1 (the precise conditional increment).** Lemma
+7.1 strengthens the location of the source rank-two result to
+the actual $z=0$ slice. Lemma 8.1 proves the needed local
+analytic rigidity directly from the exact quadratic-central
+metric. Their composition in Theorem 9.1 excludes simultaneous
+local descent of both higher energies everywhere on the source,
+and proves an actual original-measure distinction. Theorem 10.2
+consumes that distinction through already-recovered compact
+energy multipliers. Corollary 10.3 settles the noncommutation
+of the old conditional-expectation factor with the full original
+heat step, under the same stated source and recovery suppliers.
+
+These are `repo-derived` ordinary mathematical deductions
+conditional on the published source theory, not fresh
+Lean/kernel-verified results. The positivity, analyticity,
+symmetries, off-source smoothness and value decay are the
+suppliers of §§1–3. The oscillator and critical-time
+synchronization mechanism are those of Theorem 3.1, restricted
+and justified on the actual slice in Lemma 7.1. The analytic
+zero-set, submersion, Fubini and completion intermediates are
+the ones used in Theorem 4.1. In particular [M, Proposition 0]
+has exactly the connected-open-domain and nontrivial-analytic
+function hypotheses checked in (9.5). The compact localization,
+signed energy recovery, full-source reduction and finite ordered
+multiplication are supplied by [W, §§22–23]. None is recounted
+as a new recovery construction.
+
+The global transnormal theorem [TR, Theorem 1.3] assumes a
+connected compact analytic Finsler manifold, connected levels
+and only the two endpoint singular values. Those global
+hypotheses are not supplied here. Lemma 7.1 uses only the
+proved local normal identity and analytic continuation along
+fixed curves. Lemma 8.1 uses the explicit cotangent equations,
+not a harmonic or biharmonic submersion classification. No
+worldwide novelty or exhaustive literature-search claim is made.
+
+**Definition 11.2 (what the separation does and does not
+recover).** The result is existential and disjunctive: for each
+finite positive triple, some $\mathcal C$ or $\mathcal D$ and
+some compact packet separate the old factor. It supplies neither
+a numerical source point, a predetermined separating entry,
+a uniform quantitative bound nor an effective packet-selection
+rate. Its parameter scope is every $a,\eta,d>0$, hence every
+$a^2d/\eta>0$; no limit substitutes for a finite source member.
+
+The new distinctions are generated by energy and generator
+operations on recovered relations. They do not add primitive
+emission symbols or identify $b,\gamma$ with the two atomic
+syntax generators $\alpha,\beta$ in the separate FIB theory.
+The finite triangle, holonomy and radical results retain their
+own objects, operations, domains and source hypotheses; no
+correspondence into this singular diffusion is established by
+shared terminology or a count of ranks. Nor does third rank
+identify all invariant functions, a full positive module on
+$\mathcal O$, or a globally injective spatial coordinate map.
+
+Strict enlargement by these compact energies does not prove
+strict enlargement by a specified transported
+$q_\beta=r\circ\Theta_\beta$. The particular heat image
+$T_dr$ is already the recovered vector
+$U\widehat P\mathsf R\Omega$. Its old-factor membership,
+reduction of its multiplication operator to $\mathcal O$,
+intrinsic recovery of that multiplication and its word products
+are separate questions not settled here. Noncommutation in
+(10.7) does not select $r$ as a witnessing vector.
+
+The original $e$-start, first passive read at $2d$, later gaps
+$d$, labels $0,1,3,B$ and conditionally fresh noise on one
+undisturbed path remain those of (1.6). The coordinates,
+geodesics, local section and source density in these proofs
+are representations, not freely supplied observation inputs.
+Exact-law multiplication and the matrix coefficients in (10.9)
+are not inserted readouts acquired on a realized path or native
+physical controls. No reset, new instrument, reference,
+physical clock or source is introduced. Finite noisy/passive
+acquisition, control implementation and resource bounds remain
+unproved. Economical mutual recovery of space, time or lawful
+continuation, boundary and memory remains the full programme;
+the strict relational increment here does not complete it.
+
+## 追加锚（本行以下为增补区）

@@ -1,0 +1,108 @@
+**定理 19.1（有限原总映射自动取得平方背景）。** 定义 18.2 的前三项已使同一个旧 $S$ 成为以原 $u$ 为单位的 Euclidean Jordan 乘法，且原 $C$ 恰为其平方锥。不消费 (18.5)，也不消费旧 $D$ 的加法、齐次性、连续性或导子律。
+
+证明。$E=0$ 时平凡。以下设 $n=\dim E>0$。实际二表的 Hermitian 性及原评价分离先给 $S$ 对称、$D$ 反对称且 $D(a,a)=0$；所有旧平方 $a^2:=S(a,a)$ 属于 $C$。
+
+固定原 $\alpha$，记 $b(a,c)=\alpha(S(a,c))$、$q(a)=b(a,a)$。相加 $(0,0,0)$ 的零平方给 $q(0)=0$，二表零对角给 $g_\alpha(0,c)=0$。在 (18.3) 的实半正定型内，实零方向与同表每个实坐标正交；仅这一实正交已给
+
+$$
+\begin{aligned}
+q(a+b)&=q(a)+q(b)+2b(a,b),\\
+b(a+b,a)&=q(a)+b(a,b),\\
+q(2a+b)&=2q(a+b)+2q(a)-q(b).
+\end{aligned}
+\tag{19.1}
+$$
+
+相加 $(0,a,-a)$ 同时给 $q(-a)=q(a)$。在末式取 $x=a+b,y=a$，得到平行四边形恒等式；所以原词卷 420.1 证明内的成熟代数极化直接给 $b$ 对称双可加及有理双线性。这里复用[闭三角卷](AURIC_C128_CLOSED_TRIANGLE_AND_SPARSE_SCALE_RELATIONS.md) 487.2 的实部子论证，只需要 (19.1)，不借用其虚系数或离散缩放前件。全部原评价分离，使结论属于同一个旧 $S$。没有由实正交推断旧 $D$ 可加，也没有把三坐标零方向同外部第四标签配对。
+
+置 $M_\theta=2/\theta-1$。对 $N(x)\le1$ 取原数学效果 $e_\pm=\theta(u\pm x)/2$；$\theta$ 有理，故已得有理双线性足以计算
+
+$$
+0\le x^2,\qquad
+\frac{\theta^2}{2}(u+x^2)=e_+^2+e_-^2
+\le e_++e_-=\theta u,
+\qquad x^2\le M_\theta u.
+\tag{19.2}
+$$
+
+以有理数从上逼近 $N(a)$，再用二表 Cauchy–Schwarz，得到正交迹续卷 435.1、469.1 证明中的原有限界
+
+$$
+N(S(a,b)),\ N(D(a,b))\le M_\theta N(a)N(b).
+\tag{19.3}
+$$
+
+这里 $N(c)=\sup_{\alpha:m_\alpha>0}|\alpha(c)|/m_\alpha$，零质量评价由原序界在整个 $E$ 上恒零。对已双可加的 $S$，有理逼近与 (19.3) 才给原实双线性和连续性；对尚未知可加的 $D$，只保留逐点界，不据此宣称连续。
+
+接着仅从原锥边界恢复所有 $L_a c=S(a,c)$ 的保锥流。有限维双极定理给 $C^*=\overline{\operatorname{cone}\mathcal P}$；固定二表关于评价线性，故原二表正性延到每个数学正泛函 $\varphi\in C^*$，并未增加实际准备。若 $c\in C$、$\varphi(c)=0$，取 $\varepsilon>0$ 使 $\varepsilon c\le\theta u$。由 (18.4) 得 $0\le\varphi(c^2)\le\varepsilon^{-1}\varphi(c)=0$。而对全部实 $t$，$\varphi((c+ta)^2)\ge0$，这个二次式的常数项为零，故
+
+$$
+\varphi(L_a c)=0
+\quad(c\in C,\ \varphi\in C^*,\ \varphi(c)=0).
+\tag{19.4}
+$$
+
+成熟顺序导子边界判据因此给 $\exp(tL_a)C=C$ 对全部实 $t$ 成立；准确采用 Niestegge，[arXiv:1402.0158v2，§4 Lemma 3](https://arxiv.org/html/1402.0158v2#S4) 的有限维序单位实例，不借入该文其他事件假设。以下只在数学自同构群中工作。
+
+在原锥对偶取任意 Lebesgue 测度，使用成熟 Koszul–Vinberg 特征函数作为证明内工具：
+
+$$
+\chi(x)=\int_{C^*}e^{-\beta(x)}\,d\beta,
+\qquad F(x)=\log\chi(x),\qquad
+\tau=-dF_u,\qquad H=d^2F_u.
+\tag{19.5}
+$$
+
+积分在 $\operatorname{int}C$ 上有限且光滑：在任一内部点附近，$\beta(x)\ge c\|\beta\|$ 对 $\beta\in C^*$ 及某个统一 $c>0$ 成立，故各阶矩可由指数衰减控制。归一化密度 $e^{-\beta(u)}/\chi(u)$ 把 $\tau(a)$ 写成 $\beta(a)$ 的均值，把 $H(a,b)$ 写成其协方差。$C^*$ 有非空内部，非零线性函数不能在该开集恒定，因此 $H$ 正定；对 $0\ne c\in C$ 有 $\tau(c)>0$。测度乘正常数只给 $F$ 加常数，不改变这些导数；$\tau(u)=n$ 来自 $\chi(su)=s^{-n}\chi(u)$。$\tau$ 不是原 $q$ 权，也不是新增实际准备。
+
+若 $gC=C$，对偶变量代换给 $F(gx)=F(x)-\log|\det g|$。任一顺序导子 $T$ 因而满足
+
+$$
+H(Tu,b)=\tau(Tb),\qquad
+Ku=0\ \Longrightarrow\ H(Ka,b)+H(a,Kb)=0
+\quad(K\text{ 为顺序导子}).
+\tag{19.6}
+$$
+
+第一式先沿 $\exp(tT)$ 对 $F$ 微分，再对 $x$ 在 $u$ 处沿 $b$ 微分；第二式来自保 $u$ 的流对 Hessian 的不变性。令 $A=L_u$；$Au=u$ 由 (18.4)，$L_a u=Aa$ 由 $S$ 对称。故
+
+$$
+H(Aa,b)=\tau(S(a,b))=H(a,Ab).
+\tag{19.7}
+$$
+
+$K=A-I$ 也是顺序导子，因为 $\exp(tK)=e^{-t}\exp(tA)$，且 $Ku=0$。它由 (19.7) 对 $H$ 自伴，又由 (19.6) 对同一个 $H$ 反自伴，故 $K=0$。因此恢复的是原单位关系 $S(u,a)=a$，并同时有
+
+$$
+H(a,b)=\tau(S(a,b)).
+\tag{19.8}
+$$
+
+有限维锥自同构群的顺序导子构成实 Lie 代数。对 $[L_c,L_b]$，恢复的单位给 $[L_c,L_b]u=0$，所以 (19.6) 给 $\tau([L_c,L_b]a)=0$。连同 (19.8) 和对称性，这正是 $H(S(a,b),c)=H(b,S(a,c))$；所有 $L_a$ 对同一 $H$ 自伴。
+
+还须取得 Jordan 恒等式，不能把正定相容型直接称作 Jordan。对任一顺序导子 $K$ 且 $Ku=0$，置
+
+$$
+B_K(a,b)=K S(a,b)-S(Ka,b)-S(a,Kb).
+\tag{19.9}
+$$
+
+它对称双线性；固定 $a$ 的算子为 $[K,L_a]-L_{Ka}$，是消灭 $u$ 的顺序导子，因此对 $H$ 反自伴。三阶张量 $T(a,b,c)=H(B_K(a,b),c)$ 遂对前两槽对称、后两槽反对称。交换这两类相邻槽各三次得到 $T=-T$，故 $T=0$；$H$ 非退化给 $B_K=0$。特别是每个 $[L_x,L_a]$ 都保持 $S$。把其 Leibniz 式用于 $x^2$，并仅在本段用连写表示旧 $S$，得到
+
+$$
+2((ax)x)x+a((xx)x)=3(a(xx))x.
+\tag{19.10}
+$$
+
+又 $a^2=0$ 蕴涵 $H(a,a)=\tau(a^2)=0$，所以 $a=0$；任何平方为零的理想均为零，代数半素。此时准确调用 Hentzel–Peresi，*Almost Jordan Rings*，最终未编号定理，p.348：交换半素环在可消去 $2,3$ 且满足 (19.10) 时是 Jordan 环；原实标量满足这些消去条件。这是成熟工具的应用，不把 almost-Jordan 条件直接冒充 Jordan 恒等式。由已得正定相容 $H$，同一个 $S$ 于是成为有限 EJA。
+
+最后识别原锥，不能只识别一个新平方锥。所有旧平方本来就在 $C$。对任意 $c\in C$，用这个 EJA 的成熟谱定理写 $c=\sum_i\lambda_i e_i$。每个 $e_i=e_i^2\in C$，而
+
+$$
+e^{-t}\exp(tL_{e_i})c\longrightarrow\lambda_i e_i\in C
+\quad(t\to+\infty).
+\tag{19.11}
+$$
+
+因为原保锥流在同一 $C$ 上，且 $C$ 闭尖，$\lambda_i<0$ 会使 $e_i,-e_i$ 同属 $C$，故不可能。因此全部 $\lambda_i\ge0$，$c=(\sum_i\sqrt{\lambda_i}e_i)^2$。原 $C$ 恰是旧平方锥，原 $N$ 恰是其谱范数。全过程未用 (18.5)。∎
+
