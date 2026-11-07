@@ -10,6 +10,7 @@ import Mathlib.NumberTheory.ArithmeticFunction.Defs
 import Mathlib.NumberTheory.ArithmeticFunction.Misc
 import Mathlib.Data.Rat.Floor
 import Mathlib.Data.Finset.Card
+import Mathlib.SetTheory.Cardinal.Finite
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -45,7 +46,8 @@ def h (n : ℕ) : ℤ := ∑ d ∈ n.divisors, (⌈(tau d : ℚ) / 2⌉₊ : ℤ
 def g (n : ℕ) : ℤ := h n % 2
 
 private theorem g_one : g 1 = 1 := by
-  norm_num [g, h, tau]
+  have hc : ⌈(1 : ℚ) / 2⌉₊ = 1 := (Nat.ceil_eq_iff (by decide)).mpr (by norm_num)
+  norm_num [g, h, tau, hc]
 
 private def gFunction : ArithmeticFunction ℤ :=
   ⟨g, by simp [g, h]⟩
@@ -53,7 +55,7 @@ private def gFunction : ArithmeticFunction ℤ :=
 private def gOneInvertible : Invertible (gFunction 1) := by
   have he : gFunction 1 = 1 := g_one
   rw [he]
-  infer_instance
+  exact invertibleOne
 
 /-- A378214, the canonical recursive Dirichlet inverse of the independently defined g. -/
 def c (n : ℕ) : ℤ := ArithmeticFunction.dirichletInverse gFunction gOneInvertible n
@@ -105,6 +107,77 @@ private theorem unit_fraction_iff_factor {n x y : ℕ}
     have hxn : x = n + (x - n) := by omega
     have hyn : y = n + (y - n) := by omega
     nlinarith
+
+
+/-- Positive factor pairs, ordered by size; the diagonal is retained. -/
+def factorPairs (n : ℕ) : Finset (ℕ × ℕ) :=
+  (n ^ 2).divisorsAntidiagonal.filter (fun uv => uv.1 ≤ uv.2)
+
+private def unitFractionEquiv (n : ℕ) (hn : 0 < n) :
+    {xy : ℕ × ℕ // UnitFractionPair n xy} ≃ ↥(factorPairs n) where
+  toFun xy := by
+    have H := (unit_fraction_iff_factor hn xy.property.1 xy.property.2.1).mp
+      xy.property.2.2.2
+    exact ⟨(xy.val.1 - n, xy.val.2 - n),
+      Finset.mem_filter.mpr ⟨Nat.mem_divisorsAntidiagonal.mpr
+        ⟨H.2.2, pow_ne_zero _ hn.ne'⟩,
+        Nat.sub_le_sub_right xy.property.2.2.1 n⟩⟩
+  invFun uv := by
+    have H := Finset.mem_filter.mp uv.property
+    have hu := Nat.left_ne_zero_of_mem_divisorsAntidiagonal H.1
+    have hv := Nat.right_ne_zero_of_mem_divisorsAntidiagonal H.1
+    refine ⟨(n + uv.val.1, n + uv.val.2), ?_⟩
+    refine ⟨by omega, by omega, by simpa using H.2, ?_⟩
+    apply (unit_fraction_iff_factor hn (by omega) (by omega)).mpr
+    refine ⟨by omega, by omega, ?_⟩
+    simpa using (Nat.mem_divisorsAntidiagonal.mp H.1).1
+  left_inv xy := by
+    apply Subtype.ext
+    have H := (unit_fraction_iff_factor hn xy.property.1 xy.property.2.1).mp
+      xy.property.2.2.2
+    exact Prod.ext (by dsimp; omega) (by dsimp; omega)
+  right_inv uv := by
+    apply Subtype.ext
+    simp
+
+/-- The actual rational solutions are counted by the ordered positive factor pairs. -/
+theorem unit_fraction_count (n : ℕ) (hn : 0 < n) :
+    b n = ((factorPairs n).card : ℤ) := by
+  have H := Nat.card_congr (unitFractionEquiv n hn)
+  simpa only [b, Nat.card_eq_fintype_card, Fintype.card_coe] using
+    congrArg (fun k : ℕ => (k : ℤ)) H
+
+private theorem c_recursion : InverseRecursion c := by
+  letI : Invertible (gFunction 1) := gOneInvertible
+  have hi : ⅟(gFunction 1) = 1 := invOf_eq_iff_right.mpr (by
+    change g 1 * 1 = 1
+    rw [g_one, mul_one])
+  constructor
+  · change ArithmeticFunction.dirichletInverseFun gFunction gOneInvertible 1 = 1
+    rw [ArithmeticFunction.dirichletInverseFun_apply_one, hi]
+  · intro n hn
+    change ArithmeticFunction.dirichletInverseFun gFunction gOneInvertible n = _
+    rw [ArithmeticFunction.dirichletInverseFun_apply_ne (by omega) (by omega), hi]
+    simp only [neg_mul, one_mul]
+    rfl
+
+/-- The source recursion has a unique positive-domain solution. -/
+theorem inverse_recursion_unique (v : ℕ → ℤ) (hv : InverseRecursion v) :
+    ∀ n : ℕ, 0 < n → v n = c n := by
+  intro n
+  induction n using Nat.strong_induction_on with
+  | h n ih =>
+    intro hn
+    by_cases h1 : n = 1
+    · subst n
+      exact hv.1.trans c_recursion.1.symm
+    · rw [hv.2 n (by omega), c_recursion.2 n (by omega)]
+      congr 1
+      apply Finset.sum_congr rfl
+      intro d hd
+      rw [ih d (Nat.mem_properDivisors.mp hd).2
+        (Nat.pos_of_dvd_of_pos (Nat.mem_properDivisors.mp hd).1 hn)]
+
 
 end
 end D5.S3.Arith.Divisors.OeisA252505FourthPowerFreeConvolution
