@@ -6,10 +6,16 @@
    utility: none
    digest: Arbitrary complex weights on the A350900 gcd quotient give a totient convolution. -/
 
-import D5.S3.Arith.RoldanCirculantEnergyP2Q3
-import D5.S3.ArithSums.SchulteGcdQuotientRowSumConvolution
-import Mathlib.NumberTheory.ArithmeticFunction.Misc
-import Mathlib.Data.PNat.Basic
+module
+
+public import D5.S3.Arith.RoldanCirculantEnergyP2Q3
+public import D5.S3.ArithSums.SchulteGcdQuotientRowSumConvolution
+public import Mathlib.NumberTheory.ArithmeticFunction.Misc
+public import Mathlib.Data.PNat.Basic
+
+/-! Arbitrary complex weights on Schulte's full ordered-square gcd quotient. -/
+
+public section
 
 open scoped BigOperators
 open ArithmeticFunction
@@ -95,15 +101,16 @@ private theorem square_range (f : ℕ → ℂ) (n : ℕ) :
       intro k hk
       simp [Nat.gcd_comm, Nat.gcd_left_comm]
 
-noncomputable private def lift (f : ℕ → ℂ) : ArithmeticFunction ℂ :=
+private noncomputable def lift (f : ℕ → ℂ) : ArithmeticFunction ℂ :=
   ⟨fun n => if n = 0 then 0 else f n, by simp⟩
 
 private def phi : ArithmeticFunction ℕ := ⟨Nat.totient, Nat.totient_zero⟩
-noncomputable private def G (f : ℕ → ℂ) : ArithmeticFunction ℂ :=
+private noncomputable def G (f : ℕ → ℂ) : ArithmeticFunction ℂ :=
   (lift f).pmul (phi : ArithmeticFunction ℂ)
-noncomputable private def B : ArithmeticFunction ℂ :=
+private noncomputable def B : ArithmeticFunction ℂ :=
   ((ArithmeticFunction.id.pmul phi : ArithmeticFunction ℕ) : ArithmeticFunction ℂ)
-noncomputable private def Z : ArithmeticFunction ℂ := (ArithmeticFunction.zeta : ArithmeticFunction ℕ)
+private noncomputable def Z : ArithmeticFunction ℂ :=
+  (ArithmeticFunction.zeta : ArithmeticFunction ℕ)
 
 private theorem G_apply_pos (f : ℕ → ℂ) (n : ℕ) (hn : 0 < n) :
     G f n = f n * (Nat.totient n : ℂ) := by
@@ -141,7 +148,8 @@ private theorem square_AF (f : ℕ → ℂ) (n : ℕ) (hn : 0 < n) :
       simp_rw [inner_AF]
       exact gcd_sum n hn (fun g => ((n / g : ℕ) : ℂ) * (Z * G f) g)
     _ = (B * (Z * G f)) n := by
-      rw [ArithmeticFunction.mul_apply, Nat.sum_divisorsAntidiagonal' (fun a b => B a * (Z * G f) b)]
+      rw [ArithmeticFunction.mul_apply,
+        Nat.sum_divisorsAntidiagonal' (fun a b => B a * (Z * G f) b)]
       apply Finset.sum_congr rfl
       intro g hg
       rw [B_apply]
@@ -222,7 +230,6 @@ def PositiveMultiplicative (f : ℕ+ → ℂ) : Prop :=
   f 1 = 1 ∧ ∀ a b : ℕ+, Nat.Coprime a.val b.val → f (a*b) = f a * f b
 
 set_option backward.isDefEq.respectTransparency false in
-
 private theorem positive_closure (f : ℕ+ → ℂ) (hf : PositiveMultiplicative f) :
     A f 1 = 1 ∧ ∀ a b : ℕ, 0 < a → 0 < b → a.Coprime b →
       A f (a*b) = A f a * A f b := by
@@ -234,7 +241,8 @@ private theorem positive_closure (f : ℕ+ → ℂ) (hf : PositiveMultiplicative
       apply PNat.coe_injective
       exact PNat.mul_coe _ _
     rw [he] at hm
-    simpa only [positiveLift, dite_eq_left ha, dite_eq_left hb, dite_eq_left (Nat.mul_pos ha hb)] using hm
+    simpa only [positiveLift, dite_eq_left ha, dite_eq_left hb,
+      dite_eq_left (Nat.mul_pos ha hb)] using hm
 
 private theorem positive_extension (f : ℕ+ → ℂ) (z : ℂ) (n : ℕ) (hn : 0 < n) :
     square (fun d => if hd : 0 < d then f ⟨d, hd⟩ else z) n = A f n := by
