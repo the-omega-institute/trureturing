@@ -133,7 +133,9 @@ internal sealed class OeisA318314Document : IScribeDocumentDefinition
                 Eq(Den(Call("L", P, E)), Pow(D(2), ParityExponent())), IntegerExponent()))))));
 
     private static Formula WholeFormula() => And(Call("SourceSpec", F.Id("f")),
-        And(Call("PositiveIndexUnique", F.Id("f")), And(
+        And(new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create("u"),
+            new Formula.Power(Rationals(), Naturals()), Imp(Call("SourceSpec", U),
+                All("n", Imp(Lt(D(0), N), Eq(Call("u", N), Call("f", N)))))), And(
             All("n", Imp(Lt(D(0), N), Eq(Call("a", N), Mul(Call("twoPart", N), Call("b", N))))),
             And(Eq(Call("a", D(1)), D(1)), And(
                 All("m", All("n", Imp(And(Lt(D(0), F.Id("m")), And(Lt(D(0), N), Call("Coprime", F.Id("m"), N))),

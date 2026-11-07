@@ -8,29 +8,18 @@
 
 
 /-
-The external question is the whole proposition WholeBlock, preregistered in
+The external question is exactly WholeBlock, preregistered in
 https://github.com/the-omega-institute/trureturing/issues/27584#issuecomment-6703336229.
-Admission basis for a completed whole result: open-problem-resolution.
-The current component declarations do not constitute that result.
+The theorem whole_block proves this full proposition for the actual recurrence.
+Its admission basis is open-problem-resolution under CLAUDE.md §3.2.
 
-Provisional proof_shape and actual consumers:
-source_solution_unique: content; source_convolution (unit head).
-central_local_square: content; root_positive (positivity).
-central_denominator: bind-only; local_denominators.
-local_denominators: bind-only; whole-block assembly remains unfinished.
-root_structure: bind-only; whole-block assembly remains unfinished.
-root_denominator: content; whole-block assembly remains unfinished.
-odd_local_square: content; root_square_prime_power.
-source_convolution: bind-only; global source identification remains unfinished.
-auxiliary_structure: bind-only; whole-block assembly remains unfinished.
-root_square_prime_power: content; global source identification remains unfinished.
-The unfinished assembly does not grant admission to unconsumed bind-only components.
-
-Direct pre-existing suppliers are pinned Mathlib declarations; no D5 frozen
-mathematical declaration is imported. The new induction identifying central
-coefficients with generalized binomial coefficients and the finite-product
-odd-numerator invariant are candidate live content; no independent form approval
-or whole-result escape witness is asserted.
+All mathematical statements are uniform on their full displayed domains; none
+is a bounded enumeration, checker, numerical reduction or certified finite
+instance. The computational-content classification is therefore utility: none.
+Direct pre-existing suppliers are pinned Mathlib declarations; no frozen D5
+mathematical declaration is imported. The actual odd-unitary-divisor filter,
+rational Euler product and recurrence-defined denominator remain independent
+objects until the global square and source-uniqueness bridges identify them.
 -/
 
 import Mathlib.NumberTheory.ArithmeticFunction.Misc

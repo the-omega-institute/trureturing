@@ -3,7 +3,7 @@ slug: oeis-a318314-karttunen-denominator-block
 bibkey: oeis2018a318314
 doi: null
 url: https://oeis.org/A318314/internal
-triage: open
+triage: theorem
 motivation_gids:
   - D5/S3/Arith/DirichletRoots/OeisA318314
 ---
@@ -40,12 +40,14 @@ does not establish multiplicativity of denominators.
 
 ## Gap
 
-The Lean candidate separates the recurrence-defined f from an independently
-constructed positive rational Euler product R. The remaining central bridge is
-that the divisor convolution R*R equals the actual odd unitary divisor count
-at every positive n, and therefore R satisfies the original recurrence.
-Until that bridge is proved, the denominator formula for R is not a formula
-for the actual a(n). The whole proposition `WholeBlock` remains unproved.
+The recurrence-defined f is separate from the independently constructed rational
+Euler product R. The theorem `root_square` identifies its full Dirichlet square
+with the actual odd-unitary-divisor count, and `root_source` proves SourceSpec R
+and R(n)=f(n) for every positive n. The theorem `whole_block : WholeBlock`
+then establishes the entire original event for a(n)=den(f(n)).
+
+This source result does not assert worldwide novelty, completed audit
+registration, independent prefreeze approval or delivered Frozen membership.
 
 ## Route
 
@@ -84,36 +86,40 @@ unverified. The source note names the unread and bounded literature windows.
 
 ## Triage
 
-Tier 1 external OEIS conjecture; the full Lean realization remains open.
+Tier 1 external OEIS question, with the whole Lean source result `whole_block`.
 This is one whole question, with no additional harder variant or second count.
 
 ### What the settlement shows
 
-**Proved components:** `source_solution_unique` constructs the actual rational
-recurrence and proves uniqueness at every positive index. `central_local_square`
-and `central_denominator` establish the central local square and exact dyadic
-reduction, with integer-subtraction correspondence. `local_denominators` includes
-the halving recurrence, odd-prime exponent and all-prime parity formula for the
-local factors. `root_structure` constructs a positive multiplicative rational
-Euler product. `root_denominator` proves its global denominator product through
-an odd-numerator invariant, not rational multiplicativity alone.
-`odd_local_square` gives the odd-prime convolution; `source_convolution` identifies
-the source recurrence with its full divisor-square equation. `auxiliary_structure`
-verifies the independent A317934 prescription. `root_square_prime_power` matches
-the actual source at every prime power, while leaving the global bridge open.
+**Proved:** `whole_block : WholeBlock` covers the source specification and
+positive-index uniqueness, the product identity at every positive integer,
+a(1)=1, multiplicativity at every positive coprime pair, both prime-power types
+and the all-prime parity/digit-sum formula with its ordinary-integer subtraction
+identity. All exponents include zero. No premise assumes multiplicativity of a.
 
-**Open:** Identifying R with the source recurrence, then concluding the entire
-`WholeBlock` for a(n)=den(f(n)). The full-block proposition has no result theorem.
-No global resolution is asserted by the proved local components.
+The live bridges are `root_square`, identifying the global Dirichlet square
+with the actual filtered divisor count, and `root_source`, identifying the
+independent product with the recurrence. The helper `source_convolution` is an
+equivalence for every rational function u, with no constraint at zero. The
+no-cancellation proof `root_denominator` uses odd reduced numerators over dyadic
+denominators; multiplicativity of rational values alone is not used to infer
+denominator multiplicativity. `auxiliary_structure` verifies the independently
+prescribed A317934, and `local_denominators` retains all integer-cast obligations.
+
+**Open:** Source-owner audit bindings and independent statement/form/mirror
+approval remain unfinished. Kernel compilation of the whole source is distinct
+from freeze, required-check success, protected delivery and resolution counting.
 
 **Audit boundary:** Source-owner four-slot registrations remain unfinished under
 [issue #27596](https://github.com/the-omega-institute/trureturing/issues/27596).
-The typed recurrence family does not supply registration for the other component
-statements, and compilation alone does not establish their source bindings.
+The typed recurrence, global-square, source-identification and whole-block
+families are statement-specific registration attempts; their source selectors
+and binding evidence remain unfinished. They do not provide registration for
+the other component statements. No `declared_validated` status is asserted.
 
 **Computed:** No numerical experiment is used.
 
-**Source consequences:** The proposed mechanism would make the entire conjectured
-block a consequence of one global convolution bridge. Consequences for unrelated
+**Source consequences:** The global convolution and uniqueness bridges make the
+entire conjectured block a theorem about the actual recurrence. Consequences for unrelated
 OEIS claims, broader families and unread literature remain open; no neighboring
 claim is added to this question.
