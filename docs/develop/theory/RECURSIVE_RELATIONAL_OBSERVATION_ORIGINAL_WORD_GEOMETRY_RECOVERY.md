@@ -3068,3 +3068,1173 @@ scope is ordinary conditional mathematics, with no additional
 formal-verification or general priority assertion.
 
 ## 追加锚（本行以下为增补区）
+
+## 15. Original B-conditioned futures, shifted records and coordinate moments
+
+**Definition 15.1 (one source and three future laws).** Retain the
+entire source of Assumption 1.1 and Definition 1.2, for every original
+finite $a,\eta,d>0$ and every permitted Borel repair. In particular
+$b=g_d$ as an $m$-class, $P=T_d$, $f_3=cb$, $f_B=1/4$, all four
+labels, the $e$-start, $2d$ first read, $d$ spacing and original
+independent conditional read noise are unchanged. Put
+
+$$
+\begin{gathered}
+\mathsf Y=\mathcal L^{\mathbb N},\qquad
+\mathscr Y=\bigotimes_{j\ge0}2^{\mathcal L},\qquad
+(\theta y)_j=y_{j+1},\\
+Q_0=\operatorname{Law}_{\mathbb P_e}((Y_j)_{j\ge0}),\qquad
+H_r=\{Y_0\cdots Y_{r-1}=B^r\},\qquad H_0=\mathsf Y,\\
+R_B^r(E)=\mathbb P_e((Y_{r+j})_{j\ge0}\in E\mid H_r),\qquad
+Q_r=(\theta^r)_*Q_0,\qquad r\in\mathbb Z_{\ge0},\ E\in\mathscr Y.
+\end{gathered}
+\tag{15.1}
+$$
+
+Let $Q_*$ be the stationary mathematical comparison $Q_m$ of
+[R, Definition 8.1], made with initial hidden law $m$, the same
+transition kernel $P$ and the same emissions. Thus
+$Q_*([w])=\langle1,F_w\rangle_m=\langle1,C_w1\rangle_m$.
+This defines a comparison measure, not an additional preparation.
+Set $\operatorname{TV}(\mu,\nu)=\sup_{E\in\mathscr Y}|\mu(E)-\nu(E)|$.
+
+Use the actual common future kernel $\mathcal K(x,E)$: starting at
+hidden state $x$ at a read epoch, it emits the current label by $f$,
+then repeats transition $P$ and the original read noise. The original
+standard Borel state space and the iterated kernels give this kernel
+on the complete product sigma algebra. Its cylinder values are
+$\mathcal K(x,[w])=F_w(x)$ almost everywhere. The construction and
+monotone-class extension are the common-kernel machinery of
+[R, (8.11)]. Kernel versions on exceptional $m$-null sets do not
+change any measure here. For a probability density $v$ relative to
+$m$, write $\mathcal Q(v)(E)=\int v(x)\mathcal K(x,E)m(dx)$.
+
+**Theorem 15.2 (the B-wait/shift correspondence with a source moment
+bound).** Under Definition 15.1, on the whole $\mathscr Y$,
+
+$$
+\begin{gathered}
+\mathbb P_e(H_r)=4^{-r},\qquad
+R_B^r=Q_r=\mathcal Q(\varrho_r),\qquad
+\varrho_r=P^{r+1}b=g_{(r+2)d},\qquad Q_*=\mathcal Q(1),\\
+R_B^r([w])=4^rp(B^rw)
+ =\sum_{u\in\mathcal L^r}p(uw)
+ =\langle P^{r+1}b,F_w\rangle_m.
+\end{gathered}
+\tag{15.2}
+$$
+
+Here $\varrho_r$ is the actual next-read density at time $(r+2)d$.
+It is distinct from the half-step representation vector
+$z_{B^r}=P^{r+1/2}b$ in [C128, (376.6)][C128S]. Define
+
+$$
+ m_j=Q_0\{Y_j=3\},\qquad
+ \Delta_r=m_r-m_{r+1},\qquad
+ V_r=\operatorname{TV}(Q_r,Q_*).
+ \tag{15.3}
+$$
+
+Then
+
+$$
+\begin{gathered}
+m_j=c\langle b,P^{j+1}b\rangle_m,\qquad
+m_j\downarrow c,\qquad m_j>c,\qquad \Delta_r>0,\\
+\|\varrho_r-1\|_2^2=\frac{m_{2r+1}-c}{c},\\
+0<m_r-c\le V_r\le
+ \min\left\{1,\frac12\sqrt{\frac{m_{2r+1}-c}{c}}\right\},\qquad
+V_{r+1}\le V_r,\qquad V_r\longrightarrow0.
+\end{gathered}
+\tag{15.4}
+$$
+
+In particular this is a bound for all measurable future events,
+with no bound on the number of retained future coordinates.
+
+*Proof.* Given the hidden path, the probability of the first $r$
+labels all being $B$ is the constant $4^{-r}$. Fresh conditional
+read noise makes that past event independent of the later labels
+conditional on the path. For a finite cylinder of future hidden
+states and future labels, integrating the past read factors therefore
+gives $4^{-r}$ times its unconditional probability. Equality of
+finite measures extends from these cylinders to the full joint
+hidden/read product sigma algebra. Projecting to future labels and
+dividing by $4^{-r}$ proves $R_B^r=Q_r$ on $\mathscr Y$. This
+uses the constant original B emission and the actual common source;
+it is stronger than equality of one-coordinate marginals.
+
+The hidden state at the first reindexed future read is
+$X_r=Z_{(r+2)d}$, with density $P^{r+1}b$. The Markov/read
+contract gives the same $\mathcal K$ after that read epoch under
+both laws. Integration proves the first line of (15.2). On cylinders,
+$F_{B^rw}=4^{-r}P^rF_w$ and self-adjointness give its last
+pairing. Partitioning by the first $r$ labels gives the sum in
+(15.2). These are also the actual density updates of
+[MEM, Theorem 2.1]; no fractional physical read is used.
+
+In (15.2) take the first future event to be $\{y_0=3\}$ and
+use $f_3=cb$. This proves the formula for $m_j$. For the finite
+spectral measure $\sigma_b^K(A)=\langle b,\mathbf1_A(K)b\rangle_m$,
+the constant component of $b$ is $1$, so
+
+$$
+\begin{aligned}
+m_j-c&=c\int_{(0,\infty)}e^{-(j+1)d\lambda}\,d\sigma_b^K(\lambda),\\
+\Delta_r&=c\int_{(0,\infty)}e^{-(r+1)d\lambda}
+                    (1-e^{-d\lambda})\,d\sigma_b^K(\lambda).
+\end{aligned}
+\tag{15.5}
+$$
+
+The positive-energy mass is nonzero by the original-source
+nonconstancy in Theorem 5.3, also used in [C128, (376.7)]. Thus
+both integrals are strictly positive at every finite index. Bounded
+convergence gives $m_j\to c$. Self-adjointness and conservation give
+
+$$
+\|P^{r+1}b-1\|_2^2
+ =\langle b,P^{2r+2}b\rangle_m-1
+ =(m_{2r+1}-c)/c.
+\tag{15.6}
+$$
+
+For every $E\in\mathscr Y$, the common-kernel integral is
+
+$$
+ Q_r(E)-Q_*(E)
+ =\int(\varrho_r-1)\mathcal K(x,E)m(dx).
+ \tag{15.7}
+$$
+
+Since $0\le\mathcal K(x,E)\le1$ and $\int(\varrho_r-1)dm=0$,
+its absolute value is at most $\tfrac12\|\varrho_r-1\|_1$.
+Cauchy--Schwarz on the probability space $(G,m)$ and (15.6) give
+the upper bound in (15.4). The event $\{y_0=3\}$ gives its lower
+bound. Finally $Q_{r+1}=\theta_*Q_r$ and $\theta_*Q_*=Q_*$,
+so taking preimages in the definition of TV gives monotonicity.
+The upper bound tends to zero. The integral proof uses the original
+complete future kernel; one-point marginal equality alone would
+not justify any of these complete-future upper bounds. $\square$
+
+[C128S]: AURIC_C128_ORIGINAL_WORD_CALIBRATION_AND_FIXED_RELATION.md
+
+## 16. One original finite packet certifying a square and every future event
+
+**Definition 16.1 (coordinate events of the existing packet).**
+Use exactly Definition 9.1 and Definition 10.1, with
+$T=2\ell+3$ and the same marked-discrepancy event
+$\mathcal E=\{\Delta\le t\}$ of (10.2). For $0\le j<T$ set
+
+$$
+ E_j^{(T)}=\{v\in\mathcal L^T:v_j=3\},\qquad
+ \widehat m_j=\widehat\nu(E_j^{(T)})
+ =\sum_{v:v_j=3}\frac{A(3v)+1}{Z+4^T}.
+ \tag{16.1}
+$$
+
+These are marginals of the acquired length-$T$ original-law
+estimate. They are not the raw label frequency, whose long-record
+limit is the stationary marker mass $c$. Retain the same rational
+$e_p$, $c_-=[Z/N-t]_+$ and $c_+$ of (9.4) and (10.1).
+Choose an integer $r\ge0$ with $\ell\ge r$, so
+$r+1<T$ and $2r+1<T$, and declare rational $0<\epsilon<1$.
+Define the rational lower gap
+
+$$
+ L_r=\widehat m_r-\widehat m_{r+1}-2e_p.
+ \tag{16.2}
+$$
+
+The declaration can be part of a predeclared packet family as in
+Definition 9.8. Within one packet the TV event controls all its
+coordinate events simultaneously, including a selection of $r$
+from the finite allowed set.
+
+**Theorem 16.2 (the source-specific dual certificate).** On the
+same event $\mathcal E$ already used in §§9--10,
+
+$$
+ |\widehat m_j-m_j|\le e_p\quad(0\le j<T),\qquad
+ c\in[c_-,c_+].
+ \tag{16.3}
+$$
+
+Use the existing prefix algebra $\mathscr C_0$, functional
+$\ell_{B^r}$, $D_0=I-P$ and $S=C_3$ of
+[C128, Definitions 375.1 and (376.2)]. If $L_r>0$, the rational
+coefficient $\tau=8L_r$ gives the specified self-adjoint square
+
+$$
+ A=D_0-\tau S\in\mathscr C_0,\qquad
+ \ell_{B^r}(A^*A)\le-4L_r^2<0.
+ \tag{16.4}
+$$
+
+If the additional rational guards
+
+$$
+ c_->0,\qquad
+ \widehat m_{2r+1}+e_p\le c_-(1+4\epsilon^2)
+ \tag{16.5}
+$$
+
+hold, then simultaneously
+
+$$
+ \sup_{E\in\mathscr Y}|R_B^r(E)-Q_*(E)|=V_r\le\epsilon.
+ \tag{16.6}
+$$
+
+The probability, under the original acquisition law, of a packet
+passing these guards while either conclusion is false is at most
+its original failure allowance $\alpha$. No second confidence
+event is introduced.
+
+*Proof.* Equation (9.5) is a whole length-$T$ TV bound. Apply
+it directly to each $E_j^{(T)}$, whose true probability is $m_j$.
+This proves all coordinate inequalities on that single event;
+there is no sum of individual word errors. Equation (10.3) gives
+the same-event enclosure of $c$.
+
+By (15.2), the existing gap
+$R_r(3)-4R_r(B3)$ of [C128, (376.2)] equals
+$m_r-m_{r+1}=\Delta_r$. Thus (16.3) gives $\Delta_r\ge L_r$.
+The existing arbitrary-coefficient expansion [C128, (376.8)] is
+
+$$
+ \ell_{B^r}((D_0-\tau S)^2)
+ =-\tau\Delta_r+\tau^2a_r,\qquad a_r=R_B^r([33]).
+ \tag{16.7}
+$$
+
+Both original $3$ emissions are bounded by $1/4$, so conditioning
+on the source path gives $0<a_r\le1/16$. With $\tau=8L_r>0$,
+the right side of (16.7) is at most
+$-8L_r^2+64L_r^2/16=-4L_r^2$. This is the old square obstruction
+with a certified rational coefficient; its existence and algebraic
+expansion are reused, not new positive-state or square theorems.
+No estimate of $a_r$ or optimization over squares is required.
+
+For (16.6), (16.3)--(16.5) imply
+
+$$
+ m_{2r+1}\le\widehat m_{2r+1}+e_p
+ \le c_-(1+4\epsilon^2)\le c(1+4\epsilon^2).
+ \tag{16.8}
+$$
+
+Apply (15.4). Only rational inequalities are needed for this guard;
+no numerical square root is needed. Both conclusions hold on
+$\mathcal E$, whose complement has original probability at most
+$\alpha$. A failed guard is inconclusive. In particular failure of
+$L_r>0$ does not overturn the exact finite-$r$ obstruction of
+[C128, Theorem 376.1]. $\square$
+
+**Proposition 16.3 (tail comparison and the retained original past).**
+For fixed $r$, confidence in Theorem 16.2 concerns the specified
+mathematical conditional law $R_B^r$, whether or not the acquired
+record begins with $B^r$. Conditional on the acquired record actually
+satisfying $H_r$, its failure probability is bounded by
+$\min\{1,4^r\alpha\}$, rather than by $\alpha$ in general.
+For a predeclared family with total allowance $\alpha_*$ the same
+statement holds with $\alpha_*$ for each fixed $H_r$.
+
+Let $\overline Q_r=Q_0(\,\cdot\mid H_r)$ on the original indexed
+record space $\mathsf Y$, retaining the first $r$ coordinates.
+Then
+
+$$
+ \operatorname{TV}(Q_0,\overline Q_r)=1-4^{-r}.
+ \tag{16.9}
+$$
+
+Let $J_r(y)=B^ry$ concatenate that fixed past with a future
+sequence. Although $\overline Q_r=(J_r)_*R_B^r$ and
+$\operatorname{TV}(\overline Q_r,(J_r)_*Q_*)=V_r\to0$,
+
+$$
+ \operatorname{TV}(Q_0,(J_r)_*Q_*)\ge1-4^{-r}.
+ \tag{16.10}
+$$
+
+The same lower obstruction holds on every finite original record
+containing its first $r$ coordinates. Hence discarding and
+reindexing the past is essential to (16.6).
+
+*Proof.* For any packet-failure event $F$ with
+$Q_0(F)\le\alpha$, division by $Q_0(H_r)=4^{-r}$ gives the
+conditional failure bound; the union event gives its family version.
+The Radon--Nikodym derivative of $\overline Q_r$ relative to
+$Q_0$ is $4^r\mathbf1_{H_r}$, whose half $L^1(Q_0)$ distance
+from $1$ is $1-4^{-r}$. The finite-record version has the same
+derivative for any length at least $r$. The concatenation map
+identifies the future space measurably with $H_r$, so it preserves
+TV between the two concatenated future laws. Finally $(J_r)_*Q_*$
+assigns probability one to $H_r$, while $Q_0(H_r)=4^{-r}$;
+this event proves (16.10). None of these conditional mathematical
+measures supplies a forced B outcome or a change of preparation.
+$\square$
+
+## 17. Fixed-source stopping, paid horizons and mathematical scope
+
+**Assumption 17.1 (predeclared refinement with the original services).**
+Fix one original source and a declared rational $0<\epsilon<1$.
+Retain the original coefficient/clock and capacity-certificate
+services of Definition 9.1 and [R, §11]. Declare a countable
+schedule of pairs $(r_s,k_s)$ such that for every fixed integer
+$r\ge0$, stages with $r_s=r$ occur at arbitrarily large refinement
+levels $k_s$. Set $\ell_s=r_s$, $T_s=2r_s+3$, and declare positive
+rational failure allowances $\beta_s$ with
+$\sum_s\beta_s\le\alpha_*<1$. Each packet is chosen without
+consulting its label record. Its validated defects make its (9.4)
+failure bound at most $\beta_s$.
+
+Require, along the stages for every fixed $r$,
+
+$$
+ t_s\longrightarrow0,\qquad 4^{T_s}/N_s\longrightarrow0.
+ \tag{17.1}
+$$
+
+The initial record lengths $L_s^{\rm rec}=N_s+T_s$ are
+nondecreasing. They are obtained by retaining and extending the
+same original trajectory from $e$. Earlier labels needed for a
+new longer-window count remain available through paid retention
+and recounting; a later segment is not a fresh $e$-start.
+
+Such numerical schedules are permitted by the original services:
+choose the refinement targets for $t_s$ and $4^{T_s}/N_s$ first,
+then enlarge $N_s$ and refine the validated defect enclosures until
+the positive allowance $\beta_s$ is met. For each fixed finite
+$T_s,t_s$, the facts $d_{1/(N_sd)}\to1$ and positivity of the
+fixed defect in (9.3) supply finite termination, as in Definition
+9.6. Increasing $N_s$ can also enforce the record-length constraint.
+This uses the stated numerical services, not label-only access.
+
+**Theorem 17.2 (finite stopping for both certificates).** Under
+Assumption 17.1, stop at the first stage for which $L_{r_s}>0$
+and both guards (16.5) hold. On the common event
+$\mathcal E_*:=\bigcap_s\mathcal E_s$, this stage is finite and
+its two conclusions (16.4) and (16.6) are valid. The common event
+has original probability at least $1-\alpha_*$. The assertion
+has no source-uniform sample or physical-time bound.
+
+*Proof.* On every $\mathcal E_s$, (10.2) gives
+$|Z_s/N_s-c|\le t_s$. Along a fixed $r$ subsequence, (17.1)
+therefore yields
+
+$$
+\begin{gathered}
+c_{-,s}\longrightarrow c>0,\qquad
+e_{p,s}\le
+ \min\left\{1,\frac{t_s+4^{T_s}/N_s}
+                         {c-t_s+4^{T_s}/N_s}\right\}
+ \longrightarrow0,\\
+|\widehat m_{j,s}-m_j|\le e_{p,s}\quad(0\le j<T_s),
+\end{gathered}
+\tag{17.2}
+$$
+
+where the displayed fraction is used once $t_s<c$. By (15.4)
+there is a finite fixed $r$ for which
+
+$$
+ \kappa:=c(1+4\epsilon^2)-m_{2r+1}>0.
+ \tag{17.3}
+$$
+
+This strict slack in the sufficient bound is what the stopping
+proof needs. At this same fixed $r$, $\Delta_r>0$. On its
+refining subsequence, (16.3) gives
+$L_r\ge\Delta_r-4e_{p,s}$, so the square guard eventually passes.
+Also $c_{-,s}\ge c-2t_s$ and
+$\widehat m_{2r+1,s}+e_{p,s}\le m_{2r+1}+2e_{p,s}$.
+Thus $t_s<c/2$ and
+
+$$
+ 2e_{p,s}+2t_s(1+4\epsilon^2)<\kappa
+ \tag{17.4}
+$$
+
+suffice for both guards (16.5), and hold eventually at that fixed
+$r$. Its successful stage has a finite index in the predeclared
+schedule. The union bound gives $Q_0(\mathcal E_*)\ge1-\alpha_*$,
+and Theorem 16.2 gives both conclusions there. Merely increasing
+$r$ would not prove this stopping claim: $\Delta_r\to0$, so a
+shrinking absolute gap still requires adequate fixed-$r$
+refinement. $\square$
+
+**Definition 17.3 (the full cost of the nested-record route).**
+Every tested stage $s$ keeps the original $4^{T_s+1}$ integer
+counters, a $T_s+1$ label buffer, and the packet's validated
+certificate inputs. It uses the original $N_s+T_s$ initial labels
+through read time $(N_s+T_s+1)d$, with counter/buffer storage
+
+$$
+ O\bigl(4^{T_s+1}\log_2(N_s+2)+T_s\bigr)
+ \quad\text{bits},
+ \tag{17.5}
+$$
+
+and pays $C_{{\rm cap},s}$ for constructing or validating its
+capacity and clock inputs. These are the costs of Definitions 9.1
+and 9.6. The coordinate numerators in (16.1) are sums from the
+same marked row: a direct extraction of all coordinates costs
+$O(T_s4^{T_s})$ integer additions, with a common denominator
+$Z_s+4^{T_s}$. Each numerator is at most $Z_s+4^{T_s}$.
+The finitely many rational guards and $\tau=8L_r$ have finite
+integer-arithmetic cost in their displayed input bit lengths.
+No fitted matrix or additional rare-prefix division is required
+by this particular consumer; this statement does not remove any
+cost incurred for other outputs of §§9--10.
+
+If $s_*$ is the stopping stage, retaining all initial labels permits
+recounting each tested horizon correctly and adds
+$2L_{s_*}^{\rm rec}$ bits for the four-symbol record. A direct
+recount at stage $s$ has
+$O((N_s+T_s)(T_s+1))$ elementary symbol work, as in Definition
+9.6. Total numerical work includes the sum of these recount,
+extraction, guard and $C_{{\rm cap},s}$ expenses over every
+$s\le s_*$. Peak workspace includes the retained record, current
+full counters and buffer, and certificate/guard arithmetic; a
+route retaining several histograms pays for each retained one.
+The nested physical acquisition uses $L_{s_*}^{\rm rec}$ actual
+labels and ends at $(L_{s_*}^{\rm rec}+1)d$; counts from earlier
+stages do not create additional independent trajectories. If old
+labels and adequate window information were discarded, these
+initial longer-window histograms would require an additional
+retention/recount service; shorter-horizon histograms alone do
+not supply them. The certificate gives no decrease in total
+resources, no Pareto dominance, and no source-uniform stopping
+bound. In particular the unchanged full-counter cost is
+exponential in the declared horizon.
+
+**Definition 17.4 (source correspondence and limits).** The
+source-specific deduction is the combination of (15.2),
+(15.4), (16.3)--(16.8) and Theorem 17.2: coordinate events of
+one original marked-law packet control the actual B-conditioned
+reindexed complete future and certify the existing square
+obstruction at the same specified finite history. Sections 9--11
+supply the packet, same-event $c$ interval, finite-menu machinery
+and costs; their rare B-prefix half-step moments are distinct from
+the coordinate moments (16.1). Sections 12--14 recover energy
+multiplication and richer factors from exact law; their exact-law
+premise does not furnish this finite-record certificate.
+
+The common hidden/read future kernel and its product-sigma
+extension are reused from [R, (8.11)]. The actual density update,
+fixed-word convergence and exact infinite predictive-memory
+boundary are reused from [MEM, Theorems 2.1, 4.1 and 5.1]. The
+same-prefix-multiplication boundary, strict finite B gap and
+arbitrary-coefficient square expansion are reused from [C128,
+§§375--378]. Its §§379--384 concern original label mass and
+Jordan units, not the coordinate-event future-law interface.
+[O, Definition 175.1 and Proposition 187.1] fixes the same
+propagation $q=cb$, $g=Pb$, $Pq=cg$ and already excludes its
+in-span exceptional ordered gap; that question remains settled.
+[Synthesis, §§25.33--25.36][SYN15] concerns native89 finite-rate
+and seam-output contracts, with different operations, states and
+history quantifiers, and supplies no identification with this
+passive diffusion.
+
+Spectral convergence and bounded multiplier identities are the
+mature tools of [T, §3.1], already used in [R, (8.9)]. Common
+stochastic-kernel contraction is a mature intermediate here,
+proved in the event integral (15.7); a related general treatment
+is [Abate--Redig--Tkachev, arXiv:1311.3066v1, Proposition 2 and
+Lemma 1][ART15], whose total-variation norm is twice the
+probability-distance convention in Definition 15.1. No general
+kernel, spectral or interval theorem is asserted as new, and no
+global literature priority is claimed for this source application.
+
+All statements retain every original finite history, all four
+emissions and their original noise, every allowed Borel repair,
+the same full endpoint and original acquisition clock. Conditional
+laws and $Q_*$ are mathematical comparison objects. A negative
+value in (16.4) is the failure of the specified algebraic positive
+state binding, not a negative physical probability. The complete
+future comparison is for the specified $B^r$ conditional suffix,
+not all histories or the retained original past. It supplies
+neither a finite exact all-history predictor, stationary physical
+preparation, reset, copy, new port, source-free confidence,
+complete quantum origin, nor a formal-verification claim.
+
+[SYN15]: FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_SYNTHESIS.md
+[ART15]: https://arxiv.org/abs/1311.3066v1
+
+## 追加锚（本行以下为增补区）
+
+## 18. Four original marker counts in place of a word table
+
+**Definition 18.1 (the sparse chronological statistic).** Retain
+Assumption 1.1 and Definition 1.2, for all their finite positive
+$a,\eta,d$ and permitted repairs. In particular $H$ is the full
+complex endpoint, $b=g_d$, $P=T_d$, and the actual initial hidden
+read density is $Pb=g_{2d}$. Put $I_i=\mathbf1\{Y_i=3\}$.
+For a fixed integer $r\ge0$, define the three positive lags
+
+$$
+ h_1=r+1,\qquad h_2=r+2,\qquad h_3=2r+2,
+ \qquad \lambda_r=2r+2.
+ \tag{18.1}
+$$
+
+For $N\ge1$ use exactly the initial chronological label segment
+$Y_0,\ldots,Y_{N+\lambda_r-1}$ of the one original trajectory.
+The four integer fields are
+
+$$
+ Z=\sum_{i=0}^{N-1}I_i,\qquad
+ A_j=\sum_{i=0}^{N-1}I_i I_{i+h_j}\quad(1\le j\le3),
+ \qquad z=Z/N,\quad a_j=A_j/N.
+ \tag{18.2}
+$$
+
+Thus $0\le A_j\le Z\le N$. If $r=0$, $A_2=A_3$ and those two
+fields may share one value. All intermediate labels are the original
+four-label reads; the statistic subsequently uses their marker bits.
+No conditioning, selected marker, restart, new read epoch or
+independent trajectory is involved. In particular a marker at
+index $i$ is an ordinary observed label, not a new source entrance.
+
+Under the invariant mathematical comparison $Q_*$ of Definition
+15.1 set $q=f_3=cb$ and, for positive integer $h$, set
+
+$$
+ \mu_h=\langle q,P^h q\rangle_m.
+ \tag{18.3}
+$$
+
+This comparison is used only to calculate errors of (18.2) under
+$Q_0$, the actual $e$-start law. It is not an available preparation.
+
+**Definition 18.2 (the sparse numerical packet and its guards).**
+In addition to $r,N$, declare an integer $v\ge1$, rational
+$t>0$, $0<\epsilon<1$, and validated rational lower bounds
+
+$$
+ 0<D_0^-\le d_{1/(4d)},\qquad
+ 0<D_v^-\le d_{1/(vd)},\qquad D_0^-,D_v^-\le1.
+ \tag{18.4}
+$$
+
+Here $d_\xi$ is exactly the original full-source capacity divided
+by $\xi$ in [R, Definition 9.1], not the killed capacity. These
+are the same coefficient/clock and capacity services as Definition
+9.1 and [R, §11]. Their construction, validation and encoding are
+paid inputs. Neither a numerical supremum of $b$, a hidden
+coordinate, a new clock nor a value of $c$ is supplied. The packet
+is selected without consulting its label segment. Put
+
+$$
+ \begin{gathered}
+ \overline V_{N,v}=
+ \min\left\{\frac14,\frac{6v-3}{4N}
+                   +6\frac{1-D_v^-}{D_v^-}\right\},\qquad
+ \alpha_{N,v,t}=
+ \min\left\{1,\frac2t\sqrt{\frac{\overline V_{N,v}}{D_0^-}}\right\},\\
+ c_-=[z-t]_+,\qquad c_+=\min\{1,z+t\},\\
+ (\widetilde m_r,\widetilde m_{r+1},\widetilde m_{2r+1})
+ =\begin{cases}(A_1/Z,A_2/Z,A_3/Z),&Z>0,\\(0,0,0),&Z=0,\end{cases}\\
+ e=\begin{cases}\min\{1,2Nt/Z\},&Z>0,\\1,&Z=0,\end{cases}
+ \qquad
+ L=\widetilde m_r-\widetilde m_{r+1}-2e.
+ \end{gathered}
+ \tag{18.5}
+$$
+
+The repeated coordinate at $r=0$ has a single meaning since its
+counts agree. There are no pseudocounts and no word histogram.
+For a declared rational failure allowance $0<\beta<1$, the wholly
+rational input condition
+
+$$
+ 4\overline V_{N,v}\le\beta^2t^2D_0^-
+ \tag{18.6}
+$$
+
+suffices for $\alpha_{N,v,t}\le\beta$. The output guards are
+
+$$
+ L>0,\qquad c_->0,\qquad
+ \widetilde m_{2r+1}+e\le c_-(1+4\epsilon^2).
+ \tag{18.7}
+$$
+
+## 19. Sparse simultaneous confidence for the original dual consumer
+
+**Theorem 19.1 (lag-uniform original acquisition of the two
+certificates).** Under Definitions 18.1–18.2, the exact original
+source correspondence is
+
+$$
+ \mathbb E_*z=c,\qquad
+ \mathbb E_*a_j=\mu_{h_j}=c\,m_{h_j-1}\quad(1\le j\le3).
+ \tag{19.1}
+$$
+
+There is a simultaneous event, defined directly from the four raw
+counts,
+
+$$
+ \mathcal F_{N,r,t}=
+ \left\{|z-c|\le t,\quad
+       |a_j-cm_{h_j-1}|\le t\ (1\le j\le3)\right\},
+ \qquad Q_0(\mathcal F_{N,r,t})\ge1-\alpha_{N,v,t}.
+ \tag{19.2}
+$$
+
+On this event $c\in[c_-,c_+]$ and
+
+$$
+ |\widetilde m_j-m_j|\le e
+ \quad(j\in\{r,r+1,2r+1\}).
+ \tag{19.3}
+$$
+
+If (18.7) passes, set $\tau=8L$ and use the same $D_0=I-P$,
+$S=C_3$, prefix algebra $\mathscr C_0$ and functional $\ell_{B^r}$
+as in Theorem 16.2. On $\mathcal F_{N,r,t}$ the two conclusions are
+exactly
+
+$$
+ \begin{gathered}
+ A=D_0-\tau S\in\mathscr C_0,\qquad
+ \ell_{B^r}(A^*A)\le-4L^2<0,\\
+ \sup_{E\in\mathscr Y}|R_B^r(E)-Q_*(E)|\le\epsilon.
+ \end{gathered}
+ \tag{19.4}
+$$
+
+Consequently the original probability of passing the guards while
+either conclusion is false is at most $\alpha_{N,v,t}$. The bound
+(18.5) contains no lag $h_j$, word-span or word-cardinality factor.
+The record length and retention still depend on $\lambda_r$.
+This is confidence for a new sparse event (19.2), not an assertion
+that the full-word event of Definition 9.1 was already sparse.
+
+*Proof.* First, $\int q\,dm=c$ since $\int b\,dm=1$.
+Stationarity of the comparison hidden chain and conditional
+independence of distinct original read noises give
+$\mathbb E_*I_iI_{i+h}=\langle q,P^h q\rangle_m$ for $h\ge1$.
+The actual source identity of (15.4), with index $h-1$, gives
+
+$$
+ \langle q,P^h q\rangle_m
+ =c^2\langle b,P^h b\rangle_m=c\,m_{h-1}.
+ \tag{19.5}
+$$
+
+This proves (19.1). The extra read after the first marker is why
+coordinate $m_j$ uses lag $j+1$, rather than lag $j$. The hidden
+initial density in $m_j$ remains $Pb$, not $b$ or $1$.
+
+We next bound the variances of these actual pair counts, including
+interlaced pairs. Write
+
+$$
+ \theta_n=\Theta(1/(nd)),\qquad u=q-c,\qquad
+ \gamma_n=\langle u,P^n u\rangle_m\quad(n\ge1).
+ \tag{19.6}
+$$
+
+Here $\Theta$ is the source defect of [R, (9.1)]. Its monotonicity
+needed below follows from its original killed-resolvent definition:
+if $\nu$ is the spectral measure of $F$ at $h$ in raw $L^2(\mu)$,
+then
+
+$$
+ 1-d_\xi=\int_{[0,\infty)}\frac{\xi}{x+\xi}\,d\nu(x).
+ \tag{19.7}
+$$
+
+The right side is nondecreasing in $\xi$. Since $0<d_\xi<1$,
+$\Theta(\xi)=(1-d_\xi)/d_\xi$ is nondecreasing as well.
+Thus $\theta_n$ is nonincreasing in $n$, and $\theta_n\to0$.
+This uses the killed operator only inside the existing full-source
+rank-one defect formula; it does not change the process endpoint.
+
+The positive-form Cauchy–Schwarz argument in [R, (9.3), (9.15)]
+implies, for centered real $f,g$ with sup norms at most one,
+
+$$
+ |\langle f,P^n g\rangle_m|\le\theta_n.
+ \tag{19.8}
+$$
+
+Indeed $P^n=e^{-ndK}$ is positive self-adjoint, and each diagonal
+positive form is at most $\theta_n$ by [R, (9.3)]. In particular
+$0\le\gamma_n\le\theta_n$, and $\gamma_n$ is nonincreasing by
+spectral calculus. All functions used below are bounded real
+$m$-classes, so permitted null-set repairs do not affect the
+pairings or actual positive-time read laws.
+
+Fix any positive lag $h$ and let $J_i=I_iI_{i+h}$.
+For $k>h$, reversing the first pair by self-adjointness gives
+
+$$
+ \operatorname{Cov}_*(J_0,J_k)=
+ \langle qP^h q-\mu_h,
+         P^{k-h}(qP^h q-\mu_h)\rangle_m,
+ \qquad
+ |\operatorname{Cov}_*(J_0,J_k)|\le\theta_{k-h}.
+ \tag{19.9}
+$$
+
+The centered factor has sup norm at most one since
+$0\le qP^h q\le1$. For $0<k<h$, all four read epochs are distinct
+and chronological conditioning gives instead
+
+$$
+ \mathbb E_*(J_0J_k)
+ =\langle qP^k q,P^{h-k}(qP^k q)\rangle_m.
+ \tag{19.10}
+$$
+
+This identity includes the interlacing $0,k,h,h+k$; treating these
+pairs as disjoint windows would not give it. Put
+$w_k=qP^k u$ and $v_k=qP^{h-k}q$. Expanding
+$qP^kq=cq+w_k$ inside (19.10) yields
+
+$$
+ \mathbb E_*(J_0J_k)
+ =c^4+c^2\gamma_{h-k}
+       +2c\langle v_k,P^k u\rangle_m
+       +\langle w_k,P^{h-k}w_k\rangle_m.
+ \tag{19.11}
+$$
+
+Since $u$ is centered, $v_k$ may be centered in its pairing with
+$P^k u$. Both centered sup norms are at most one, so (19.8)
+bounds the absolute value of that pairing by $\theta_k$.
+Contraction and $0\le q\le1$ also give
+
+$$
+ 0\le\langle w_k,P^{h-k}w_k\rangle_m
+ \le\|w_k\|_2^2\le\|P^k u\|_2^2
+ =\gamma_{2k}\le\theta_k.
+ \tag{19.12}
+$$
+
+Finally $\mu_h=c^2+\gamma_h$, $\mu_h+c^2\le2$, and
+$\gamma_h\le\gamma_k$ for $k<h$. Subtracting $\mu_h^2$ from
+(19.11), and bounding its four resulting terms, gives
+
+$$
+ |\operatorname{Cov}_*(J_0,J_k)|
+ \le\theta_{h-k}+5\theta_k\qquad(0<k<h).
+ \tag{19.13}
+$$
+
+The shared-read case $k=h$ uses $I_h^2=I_h$, not two independent
+read noises. For that case, and for any other exceptional lag,
+Cauchy–Schwarz and the Bernoulli variance bound give
+$|\operatorname{Cov}_*(J_0,J_k)|\le1/4$.
+
+For a chosen separation $v\ge1$, call a covariance index
+$1\le k<N$ exceptional when
+
+$$
+ k<v\quad\hbox{or}\quad |k-h|<v.
+ \tag{19.14}
+$$
+
+There are at most $(v-1)+(2v-1)=3v-2$ such indices, independently
+of $h$. For every other index, (19.9), (19.13) and monotonicity
+of $\theta_n$ bound the absolute covariance by $6\theta_v$.
+The usual covariance expansion for the stationary average of the
+$J_i$ therefore gives
+
+$$
+ \begin{aligned}
+ \operatorname{Var}_*\left(\frac1N\sum_{i=0}^{N-1}J_i\right)
+ &=\frac{N\operatorname{Var}_*(J_0)
+      +2\sum_{k=1}^{N-1}(N-k)\operatorname{Cov}_*(J_0,J_k)}{N^2}\\
+ &\le\frac1{4N}+\frac{3v-2}{2N}+6\theta_v
+ =\frac{6v-3}{4N}+6\theta_v.
+ \end{aligned}
+ \tag{19.15}
+$$
+
+The good-lag term uses
+$2N^{-2}\sum_{k=1}^{N-1}(N-k)\le1$; an empty good or exceptional
+set causes no difficulty. An average of Bernoulli variables is
+in $[0,1]$, so its variance is also at most $1/4$.
+For the marker average $z$ alone,
+$\operatorname{Cov}_*(I_0,I_k)=\gamma_k$. Its at most $v-1$
+short indices and remaining bound $\theta_v$ give the same
+conservative envelope. The lower certificate $D_v^-$ in (18.4)
+thus proves simultaneously, without a lag restriction,
+
+$$
+ \operatorname{Var}_*(z)\le\overline V_{N,v},\qquad
+ \operatorname{Var}_*(a_j)\le\overline V_{N,v}\quad(1\le j\le3).
+ \tag{19.16}
+$$
+
+The covariance identities and summation here are mature second-moment
+methods, used inside this source-specific acquisition proof. No
+positive spectral gap, geometric ergodicity or independent-window
+assumption was used. The separation parameter $v$ is an integer in
+the proof and numerical packet; it does not change any physical gap.
+For example, $v=\lfloor\sqrt N\rfloor$ makes the exact envelope in
+(19.15) tend to zero for each fixed source, uniformly over the pair
+lag. No source-uniform rate for $\theta_v$ follows.
+
+Chebyshev's inequality and a union bound over the four fields give
+$Q_*(\mathcal F_{N,r,t}^c)\le4\overline V_{N,v}/t^2$.
+On the full hidden-and-read record starting at the first read, the
+actual initial-law derivative relative to the invariant comparison
+is $g_{2d}(X_0)$. The future kernels, including fresh read noise,
+are identical. As in [R, (9.18)], the full-source defect gives
+$\|g_{2d}\|_2^2\le d_{1/(4d)}^{-1}\le(D_0^-)^{-1}$.
+Cauchy–Schwarz on this common path space consequently yields
+
+$$
+ Q_0(\mathcal F_{N,r,t}^c)
+ \le(D_0^-)^{-1/2}Q_*(\mathcal F_{N,r,t}^c)^{1/2}
+ \le\frac2t\sqrt{\frac{\overline V_{N,v}}{D_0^-}}.
+ \tag{19.17}
+$$
+
+This is the standard $L^2$ initial-law event transfer; see Daniel
+Paulin, *Concentration inequalities for Markov chains by Marton
+couplings and spectral methods*, arXiv:1212.2015v3, Proposition
+3.14, (3.25) [PS18]. Its hypotheses are a common time-homogeneous
+transition, invariant comparison and square-integrable initial
+Radon–Nikodym density. Here the displayed direct path-space proof
+also incorporates the same conditional read kernel. No burn-in or
+stationary preparation is substituted. Paulin's positive-gap
+variance bounds are not premises. Clipping (19.17) at one proves
+(19.2); (18.6) is precisely its squared sufficient condition.
+
+On $\mathcal F_{N,r,t}$, $c\in[c_-,c_+]$. If $Z>0$, (19.5)
+gives, for each of the three coordinates,
+
+$$
+ \left|\frac{a_j}{z}-m_{h_j-1}\right|
+ =\frac{|(a_j-cm_{h_j-1})-m_{h_j-1}(z-c)|}{z}
+ \le\frac{2t}{z}.
+ \tag{19.18}
+$$
+
+Both the ratio and the true probability are in $[0,1]$, justifying
+the cap at one in $e$. If $Z=0$, the declared error $e=1$ is valid
+and $L>0$ cannot pass. This proves (19.3) without any division by
+a rare $B^r$ frequency. In particular these ratios estimate original
+nonstationary coordinates; raw marker frequency $z$ estimates $c$.
+
+The deterministic part of Theorem 16.2 uses only the three
+coordinate error bounds and the enclosure of $c$. Equations
+(19.3), (18.7) supply exactly those hypotheses, with $e$ in place
+of $e_p$. Thus $\Delta_r\ge L>0$, and the already established
+expansion (16.7), with $0<a_r\le1/16$, gives the first conclusion
+of (19.4) at $\tau=8L$. Also
+$m_{2r+1}\le\widetilde m_{2r+1}+e\le c(1+4\epsilon^2)$,
+so the existing complete-kernel bound (15.4) gives the second.
+The exact square expansion and complete-future theorem are reused;
+the additional assertion is that (18.2) actually supplies their
+simultaneous finite inputs with the original-start error (19.17).
+$\square$
+
+[PS18]: https://arxiv.org/html/1212.2015v3
+
+## 20. Fair sparse refinement on one retained original record
+
+**Assumption 20.1 (a declared summable schedule).** Fix one original
+source, rational $0<\epsilon<1$ and $0<\alpha_*<1$, and retain
+the numerical services of Definition 18.2. Before inspecting labels,
+declare a countable schedule $(r_s,k_s)_{s\ge1}$ with every fixed
+$r\ge0$ occurring at arbitrarily large refinement levels $k_s$.
+For example, concatenate the blocks $r=0,\ldots,n$, with $k=n$,
+for $n=0,1,\ldots$. Declare rational $t_s>0$, $0<\beta_s<1$
+such that $\sum_s\beta_s\le\alpha_*$ and $t_s\to0$ along each
+fixed-$r$ subsequence. The choices $t_s=2^{-k_s-3}$ and
+$\beta_s=\alpha_*2^{-s}$ suffice.
+
+Choose $v_s,N_s$ and validated defects, without label feedback,
+so that (18.6) holds with allowance $\beta_s$ and
+$R_s=N_s+\lambda_{r_s}$ is nondecreasing. These choices may use
+the original numerical source/clock services. All stages use the
+initial $R_s$ labels of the same retained and extended trajectory
+from $e$. A later segment is never treated as a new $e$-start.
+New lags are counted by a paid scan of that retained prefix.
+
+**Theorem 20.2 (sourcewise finite stopping with strict fixed-lag
+slack).** The services in Assumption 20.1 permit all of its finite
+packet choices. On the event
+
+$$
+ \mathcal F_*:=\bigcap_{s\ge1}\mathcal F_{N_s,r_s,t_s},
+ \qquad Q_0(\mathcal F_*)\ge1-\alpha_*,
+ \tag{20.1}
+$$
+
+the first stage passing (18.7) is finite and both conclusions
+(19.4) hold at that stage. No source-uniform stopping index,
+physical time, resource rate or finite total bill is asserted
+off this event.
+
+*Proof.* First fix a validated $D_0^->0$ once. For a given stage
+let $\delta_s=\beta_s^2t_s^2D_0^-/4>0$. Since
+$d_{1/(vd)}\to1$ as $v\to\infty$, the numerical services permit
+finite selection of $v_s$ and a sufficiently refined $D_{v_s}^-$
+with
+
+$$
+ 6\frac{1-D_{v_s}^-}{D_{v_s}^-}<\delta_s/2.
+ \tag{20.2}
+$$
+
+A search over increasing integers and improving validated lower
+enclosures terminates by this strict inequality and convergence.
+For example one may also enforce $v_s\ge2^{k_s}$. At this fixed
+$v_s$, choose $N_s$ large enough that
+$(6v_s-3)/(4N_s)\le\delta_s/2$ and $R_s\ge R_{s-1}$.
+One may also enforce $N_s\ge2^{k_s}v_s$. These are finite integer
+inequalities. Then $\overline V_{N_s,v_s}\le\delta_s$, proving
+(18.6). The construction needs no rate for the convergence of the
+capacity defect. Refining its enclosures is essential: fixed
+coarse lower bounds need not permit (20.2).
+
+Theorem 19.1 and countable subadditivity give (20.1), despite the
+shared and nested data. On this event, for every fixed $r$ and its
+refining subsequence, once $t_s<c$,
+
+$$
+ z_s\ge c-t_s>0,\qquad
+ c_{-,s}\ge c-2t_s,\qquad
+ e_s\le\frac{2t_s}{c-t_s}\longrightarrow0.
+ \tag{20.3}
+$$
+
+By (15.4) choose a finite fixed $r$ with
+$\kappa=c(1+4\epsilon^2)-m_{2r+1}>0$. At this very same $r$,
+$\Delta_r>0$. Along its refining subsequence,
+
+$$
+ L_s\ge\Delta_r-4e_s,\qquad
+ \widetilde m_{2r+1,s}+e_s\le m_{2r+1}+2e_s.
+ \tag{20.4}
+$$
+
+Eventually $4e_s<\Delta_r$, $t_s<c/2$, and
+$2e_s+2t_s(1+4\epsilon^2)<\kappa$. These inequalities imply all
+of (18.7). Their stage index is finite in the declared schedule,
+and Theorem 19.1 applies there on $\mathcal F_*$. Merely letting
+$r$ increase is not the argument: $\Delta_r$ shrinks, while the
+proof refines at a fixed $r$ having both positive margins.
+$\square$
+
+**Proposition 20.3 (selection, conditioning and the retained past).**
+The first successful stage in Theorem 20.2 is a stopping rule for
+the successively available original label prefixes and declared
+numerical packets. The probability of issuing a false certificate
+at any stage is at most $\alpha_*$. For any fixed $r$, conditional
+on the actual acquired record beginning with $B^r$, that probability
+is at most $\min\{1,4^r\alpha_*\}$. The result certifies the
+specified mathematical conditional law $R_B^r$ on its complete
+renumbered future, and does not force that conditioning event.
+It makes no comparison including the retained original past beyond
+the distinctions of Proposition 16.3.
+
+*Proof.* Every guard is a finite rational function or comparison of
+an available prefix and its declared packet; the event of first
+success by stage $s$ is measurable from that prefix. A false
+certificate belongs to $\mathcal F_*^c$, proving the unconditional
+claim. The original probability of the fixed event $H_r$ is
+$4^{-r}$ by (15.2), so division gives the conditional bound.
+This does not give the same bound for a random selected $r$
+conditioned on its own selected event. Proposition 16.3 continues
+to give the full-past obstruction, in particular
+$\operatorname{TV}(Q_0,(J_r)_*Q_*)\ge1-4^{-r}$.
+$\square$
+
+## 21. Paid representation, chronological work and the scope of reuse
+
+**Definition 21.1 (a finite bit and arithmetic model).** Encode each
+original label by two bits. A marker bit is obtained by comparing
+that label with $3$. For one packet write
+
+$$
+ R=N+\lambda_r,\qquad b_N=\lceil\log_2(N+1)\rceil,
+ \qquad w=\lceil\log_2(R+2)\rceil.
+ \tag{21.1}
+$$
+
+Use unsigned bounded integers, explicit bit arrays and exact rational
+arithmetic. A word operation acts on at most $w$ bits and may read
+or write a bit, compare, add, subtract, or take an integer remainder.
+A word operation is not a constant-cost real operation: the
+schoolbook bit cost is at most $O(w^2)$, including remainder.
+Numerical-service bit work and its own peak space are separate
+charges $C_{\rm cap}$ and $M_{\rm cap}$. Names have the total
+query-function meaning of [R, Definition 11.1]; a finite packet
+uses only finitely many precision queries. Their answer costs,
+as well as construction and validation, belong to $C_{\rm cap}$.
+Let $B_{\rm cap}$ count the finite retained name representations,
+query replies, validated capacity certificates and rational packet.
+An infinite name is not treated as a finite string; oracle access
+and its costs remain the stated conditional service. No bound for
+these three quantities is implicit in a count of labels.
+
+**Proposition 21.2 (an explicit realization and its bill).** The
+statistic (18.2) has a chronological realization with exactly four
+count fields of $b_N$ bits, a circular array of $\lambda_r$ marker
+bits, a two-bit current label, one current marker bit, and sixteen
+$w$-bit control registers. Hence this allocated counting workspace
+has exactly
+
+$$
+ 4b_N+\lambda_r+3+16w
+ \tag{21.2}
+$$
+
+bits, apart from the separately encoded numerical packet. A
+shared field can reduce it when $r=0$; no minimality is asserted.
+The exact observation bill is $R$ labels, with final original read
+at $(R+1)d$ from the $e$-start. The count fields each lie in
+$\{0,\ldots,N\}$. At most $4N$ count increments and
+$64(R+\lambda_r+1)$ word operations suffice, including initial
+array writes, index work and marker extraction. Thus schoolbook
+bit work is $O((R+\lambda_r+1)w^2+Nb_N)$ in addition to the
+numerical-service and rational-guard work.
+
+If $U$ is the total bit length of the rational inputs and the
+integers appearing in (18.1)–(18.7), straight-line evaluation of
+those displayed rational expressions and cross-multiplied guards
+has $O(U^2)$ schoolbook bit cost, denoted $C_{\rm rat}$, and
+$O(U)$ additional working bits. This charge includes producing
+$\tau=8L$ and checking (18.6); square roots need not be computed.
+Without retaining the full label prefix, the four counts, their
+integer parameters and numerical packet suffice for these guards.
+If the original label segment is retained as well, its additional
+payload is exactly $2R$ bits, with its index and length already
+covered by the stated control registers.
+
+For the nested-record route through a finite successful stage $S$,
+retaining all original labels pays exactly $2R_S$ payload bits and
+$R_S$ physical reads in total. Recounting all prefixes pays
+
+$$
+ \begin{gathered}
+ \sum_{s=1}^S64(R_s+\lambda_{r_s}+1)
+       \quad\hbox{word operations at their respective widths }w_s,\\
+ \sum_{s=1}^S4N_s\quad\hbox{as an upper bound on count increments},
+ \qquad
+ \sum_{s=1}^S(C_{{\rm cap},s}+C_{{\rm rat},s})
+       \quad\hbox{additional bit work}.
+ \end{gathered}
+ \tag{21.3}
+$$
+
+The last required indexed read is at $(R_S+1)d$, not a sum of
+restarted clocks. With service scratch released between stages,
+peak space for these prefixes is bounded by $2R_S$ plus the
+maximum, over $s\le S$, of (21.2), $B_{{\rm cap},s}$, the guard
+working space and $M_{{\rm cap},s}$ added together. Source names
+retained for reuse are included in $B_{{\rm cap},s}$. Every term
+is finite on the stopping event; no expectation or source-uniform
+bound for their sum is inferred.
+
+Indexed read horizons are not wall-clock decision deadlines. This
+bit model assumes no operation rate relative to $d$. If continuing
+passive capture retains $J\ge0$ additional labels while numerical
+work or guard evaluation finishes, the total bill adds $J$ reads,
+$2J$ payload bits, an overrun index of
+$w_J=\lceil\log_2(R_S+J+2)\rceil$ bits, and at most
+$64(J+1)$ capture/index word operations of width $w_J$. The last
+retained read is then at $(R_S+J+1)d$; peak payload is
+$2(R_S+J)$ bits. The guards still use only their declared prefixes.
+No source pause, delayed read gap or free overrun retention is
+implicit, and no wall-clock latency bound is claimed.
+
+*Proof.* Initialize the circular array and count fields to zero.
+At label index $k=0,\ldots,R-1$, extract $I_k$. If $k<N$, add it
+to $Z$. For each of the three ordered lags $h_j$, if $k\ge h_j$
+and $i_j=k-h_j<N$, retrieve $I_{i_j}$ from its circular position
+and add $I_{i_j}I_k$ to $A_j$. Perform these reads before writing
+$I_k$ in position $k\bmod\lambda_r$. A required old bit is still
+in the array since $1\le h_j\le\lambda_r$; the equality case is
+why the write comes last. Only initialized past positions are
+read. Each pair origin $i=0,\ldots,N-1$ is counted exactly once,
+at index $i+h_j\le R-1$. This proves (18.2) as an actual consumer
+of the chronological original segment, including its endpoint.
+
+One allocation of the control registers is
+$N,r,\lambda_r,h_1,h_2,h_3,R,k,p,p_1,p_2,p_3,i_1,i_2,i_3$
+and one temporary register, where $p=k\bmod\lambda_r$ and
+$p_j=i_j\bmod\lambda_r$ are used only when their origins are
+eligible. All register values fit in $w$ bits; negative origins
+are avoided by the first test. Range tests, subtractions,
+remainders, bit accesses, products of two bits and increments
+require fewer than sixty-four of the declared word operations
+per label. Initialization and final extraction fit the remaining
+$64(\lambda_r+1)$ allowance. Each count has $N$ possible unit
+increments, proving the separate $4N$ bound. The loop index and
+ring positions are included in (21.2), rather than hidden in a
+unit-memory convention.
+
+The rational formulas have a fixed finite number of operations
+and bounded algebraic degree in their encoded inputs. They may
+be evaluated with unreduced fractions and positive denominators,
+using cross products for comparisons. Their intermediate bit
+lengths are $O(U)$; schoolbook multiplication gives $O(U^2)$ bit
+work and $O(U)$ space. The $Z=0$ branch is tested before division.
+This accounts for deterministic arithmetic without assuming
+constant-cost access to exact real source parameters.
+
+For the nested route, store the two-bit labels once as the source
+continues. At each stage scan its complete retained prefix using
+the same counter construction, then release its counting scratch
+after deciding the guards. Original physical reads are not repeated;
+record accesses and computations are repeated and charged in
+(21.3). Numerical packets are constructed or validated at their
+stated costs. Summing the finite scans and taking the maximum of
+simultaneously held workspaces gives the asserted bill. $\square$
+
+**Definition 21.3 (source correspondence and mathematical scope).**
+The additional result of Theorem 19.1 is the following
+`repo-derived` acquisition/interface deduction: the original marker
+and three homogeneous lag pairs (18.2) produce the same square and
+specified complete conditional-future certificates as §16, with
+the new original-start event (19.2), capacity confidence independent
+of the pair lag, and the actual representation and costs (21.2)–(21.3).
+The exact marked-source relation is (19.5), not an identification
+based solely on a shared model-family name. The original full-source
+suppliers are [R, §8] for the marked identity, [R, §9] for the
+capacity resolvent, bounded centered covariance and initial-density
+estimate, and [R, §11] for the numerical defects. Equations
+(15.4), (16.7) and the deterministic part of Theorem 16.2 supply
+the two consumers. Theorem 20.2 adds only sourcewise stopping under
+its explicitly stated fair refinement and numerical services.
+
+The standard covariance expansion, positive-form Cauchy–Schwarz,
+Chebyshev and union bounds, initial-law transfer [PS18, Proposition
+3.14, (3.25)] and rational interval propagation are
+`literature-attested` intermediates inside this deduction. They
+are not new general concentration or spectral theorems. Paulin's
+spectral-gap bounds require an additional positive-gap hypothesis;
+none is supplied or inferred here. The comparison is conditional
+ordinary mathematics under the analytic suppliers of Assumption
+1.1, without a claim of formal verification or worldwide priority.
+
+At matched $r,N$, the four bounded count values replace the
+$4^{2r+4}$ fields of the full length-$2r+4$ word table in Definition
+9.1; the sparse final lag is $2r+2$, so its endpoint uses
+$N+2r+2$ labels. Its confidence is derived directly, rather than
+by summing the old word errors. The old full table has additional
+consumers that these four counts do not serve. Defect refinement,
+record retention, arithmetic, final time and all numerical services
+remain on the bill. There is no claim of optimal counters,
+source-uniform convergence, or dominance of every total-resource
+coordinate. Exact laws, finite-confidence certificates, actual
+reachability, full-past prediction and uniform rates are distinct:
+the B-conditioned suffix theorem does not prepare stationarity,
+force $B^r$, discard its paid past for free, or compare the retained
+full record with a stationary one. The negative square remains
+failure of the specified algebraic positive-state binding, not a
+negative physical probability.
+
+## 追加锚（本行以下为增补区）
