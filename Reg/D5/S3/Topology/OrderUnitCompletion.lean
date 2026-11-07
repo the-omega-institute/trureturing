@@ -60,14 +60,16 @@ private theorem zeroNorm : ∀ a : PUnit.{u+1}, ‖a‖ = zeroData.orderNorm a :
   have hz : zeroData.orderNorm a ≤ 0 :=
     (zeroData.norm_le_iff a 0).mpr ⟨le_rfl, by trivial, by trivial⟩
   have ha : a = 0 := Subsingleton.elim _ _
-  rw [ha, norm_zero]
-  exact (le_antisymm hz h.1).symm
+  calc
+    ‖a‖ = 0 := by simp [ha]
+    _ = zeroData.orderNorm a := (le_antisymm hz h.1).symm
 
 private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
   have hh := (h zeroData zeroNorm).1 (0 : Completion PUnit.{u+1}) 0
-  apply hh.mpr
-  refine ⟨le_rfl, ?_, ?_⟩ <;> simpa using (zeroData.completedData zeroNorm).zero_mem
+  have hz : (0 : Completion PUnit.{u+1}) ∈
+      (zeroData.{u}.completedData zeroNorm.{u}).cone := Data.zero_mem _
+  exact hh.mpr ⟨le_rfl, by simpa using hz, by simpa using hz⟩
 
 def family : Registration arena.{u} (type_of% (@Data.faithful_completion.{u})) where
   actual := actual
@@ -78,7 +80,7 @@ def family : Registration arena.{u} (type_of% (@Data.faithful_completion.{u})) w
     · intro i
       refine ⟨rejected, ?_, rfl, rejected_law⟩
       intro j hji
-      exact (hji (Subsingleton.elim _ _)).elim
+      exact (hji (show j = i from @Subsingleton.elim Unit _ j i)).elim
     · intro e
       exact nomatch e
   dependence := by
