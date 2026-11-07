@@ -32,6 +32,9 @@ internal sealed class LeeLiuThreeRowIntegerDominationDocument : IScribeDocumentD
             Node("ColumnA", "The middle-column inequalities", ColumnFormula(),
                 "For every row i, the value in the middle column b, its vertical neighbours, and the two horizontal values a(i) and c(i) sum to at least 2. The path graph on Fin m supplies precisely the vertical neighbours, including the endpoint cases.",
                 DescribeRole.Definition, AssessedProvenance.FromRepo(Source)),
+            Node("path_neighbor_sum", "Weighted path neighbours", PathNeighborSumFormula(),
+                "The sum of a natural-valued function over a path vertex's neighbours is the sum of its predecessor and successor values whenever those vertices exist.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
             Node("column_reduction", "Domination as column inequalities", ReductionFormula(),
                 "For every row count m and width n, a function bounded by 2 is integer {2}-dominating exactly when each middle column satisfies ColumnA with its two zero-padded neighbours. Splitting the Cartesian-product neighbour set gives the equivalence. The three-row lower bound and the alternating upper construction both use this equivalence.",
                 DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
@@ -142,6 +145,26 @@ internal sealed class LeeLiuThreeRowIntegerDominationDocument : IScribeDocumentD
             App(a, i)), App(c, i));
         return Disp(All("m", Nat, All("a", column, All("b", column, All("c", column,
             Iff(Call("ColumnA", m, a, b, c), All("i", Fin(m), Le(D(2), total))))))));
+    }
+
+    private static Formula PathNeighborSumFormula()
+    {
+        Formula n = X("n"), f = X("f"), j = X("j"), h = X("h");
+        Formula Index(Formula value, Formula proof) => Parenthesized(Seq(
+            Langle, Sp, value, Comma, Sp, proof, Sp, Rangle, Sp, Colon, Sp, Fin(n)));
+        Formula Conditional(Formula condition, Formula value) => Parenthesized(Seq(
+            Operatorname, Grp(X("if")), Sp, h, Sp, Colon, Sp, condition, Sp,
+            Operatorname, Grp(X("then")), Sp, value, Sp,
+            Operatorname, Grp(X("else")), Sp, D(0)));
+        Formula previous = new Formula.Binary(Value(j), FormulaBinaryOperator.Subtract, D(1));
+        Formula next = Add(Value(j), D(1));
+        Formula byOmega = Seq(Operatorname, Grp(X("by")), Sp, Operatorname, Grp(X("omega")));
+        return Disp(All("n", Nat, All("f", FunctionType(Fin(n), Nat), All("j", Fin(n),
+            Eq(Sum("k", Neighbours(Path(n), j), App(f, X("k"))), Add(
+                Conditional(Rel(D(0), FormulaRelationOperator.LessThan, Value(j)),
+                    App(f, Index(previous, byOmega))),
+                Conditional(Rel(next, FormulaRelationOperator.LessThan, n),
+                    App(f, Index(next, h)))))))));
     }
 
     private static Formula ReductionFormula()
