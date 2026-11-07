@@ -6,16 +6,19 @@
    utility: none
    digest: Uniform finite readouts on actual outputs recover bilinearity and Banach graph bounds. -/
 
-import Mathlib.Analysis.Normed.Operator.Banach
-import Mathlib.Analysis.Normed.Operator.BanachSteinhaus
-import Mathlib.Analysis.Normed.Operator.Bilinear
-import Mathlib.Data.Complex.Basic
-import Mathlib.Tactic
+module
+
+public import Mathlib.Analysis.Normed.Operator.Banach
+public import Mathlib.Analysis.Normed.Operator.BanachSteinhaus
+public import Mathlib.Analysis.Normed.Operator.Bilinear
+public import Mathlib.Basic.Complex.Basic
+public import Mathlib.Tactic
 
 /-! A uniform approximation on the actual range of a total relation controls graph limits
 without applying the approximation to a limit outside that range. No regularity of the
 relation is assumed. The cone and unit of an order-unit application are not needed. -/
 
+@[expose] public section
 noncomputable section
 open Filter Topology
 open scoped BigOperators
@@ -35,6 +38,7 @@ def UniformReadout (P : Set (E →L[ℝ] ℝ)) (D : E → E → E) : Prop :=
     (∀ j, t j ∈ outputs D) ∧ (∀ j, β j ∈ P) ∧
     ∀ p ∈ outputs D, |α p - ∑ j, c j * β j (D p (t j))| ≤ η * ‖p‖
 
+omit [NormedAddCommGroup E] [NormedSpace ℝ E] in
 private lemma actual (D : E → E → E) (a b : E) : D a b ∈ outputs D :=
   ⟨(a,b), rfl⟩
 
@@ -99,7 +103,8 @@ private lemma finite_reflection {P : Set (E →L[ℝ] ℝ)} (D : E → E → E)
   apply hs
   intro α hα
   simp only [map_sum, map_smul, smul_eq_mul]
-  apply small_error_zero (Finset.sum_nonneg fun i _ => mul_nonneg (abs_nonneg _) (norm_nonneg _))
+  apply small_error_zero (show 0 ≤ ∑ i, |r i| * ‖p i‖ from
+    Finset.sum_nonneg fun i _ => mul_nonneg (abs_nonneg _) (norm_nonneg _))
   intro η hη
   obtain ⟨m,t,β,c,ht,hβ,happrox⟩ := hr α hα η hη
   have hz' (j : Fin m) : ∑ i, r i * β j (D (p i) (t j)) = 0 := by
@@ -128,7 +133,7 @@ private lemma finite_reflection {P : Set (E →L[ℝ] ℝ)} (D : E → E → E)
 
 private lemma recover_linear {P : Set (E →L[ℝ] ℝ)} (S : E →L[ℝ] E →L[ℝ] E)
     (D : E → E → E) (hs : ∀ x : E, (∀ α ∈ P, α x = 0) → x = 0)
-    (hr : UniformReadout P D) (hD : ∀ a b, D a b = -D b a)
+    (hr : UniformReadout P D)
     (hn : ∀ a b c, D (D a b) c = S b (S a c) - S a (S b c)) :
     (∀ a b c, D (a+b) c = D a c + D b c) ∧
     (∀ (r : ℝ) a b, D (r • a) b = r • D a b) := by
@@ -138,18 +143,18 @@ private lemma recover_linear {P : Set (E →L[ℝ] ℝ)} (S : E →L[ℝ] E →L
       ![(1:ℝ),-1,-1] (by intro i; fin_cases i <;> exact actual D _ _) (by
         intro t ht
         simp only [Fin.sum_univ_succ, Matrix.cons_val_zero, Matrix.cons_val_succ,
-          Matrix.cons_val_fin_one, Finset.sum_empty, add_zero, one_smul, neg_smul]
-        simp only [hn, map_add, ContinuousLinearMap.add_apply]
+          Matrix.cons_val_fin_one, Fin.sum_univ_zero, add_zero, one_smul, neg_smul]
+        simp only [hn, map_add, add_apply]
         module)
-    simpa [Fin.sum_univ_succ, sub_eq_add_neg] using eq_add_of_sub_eq
-      (show D (a+b) c - (D a c + D b c) = 0 by simpa [Fin.sum_univ_succ] using h)
+    exact sub_eq_zero.mp (by
+      simpa [Fin.sum_univ_succ, sub_eq_add_neg, neg_add, add_assoc, add_comm, add_left_comm] using h)
   · intro r a b
     have h := finite_reflection D hs hr ![D (r • a) b, D a b]
       ![(1:ℝ),-r] (by intro i; fin_cases i <;> exact actual D _ _) (by
         intro t ht
         simp only [Fin.sum_univ_succ, Matrix.cons_val_zero, Matrix.cons_val_succ,
-          Matrix.cons_val_fin_one, Finset.sum_empty, add_zero, one_smul, neg_smul]
-        simp only [hn, map_smul, ContinuousLinearMap.smul_apply]
+          Matrix.cons_val_fin_one, Fin.sum_univ_zero, add_zero, one_smul, neg_smul]
+        simp only [hn, map_smul, smul_apply]
         module)
     exact sub_eq_zero.mp (by simpa [Fin.sum_univ_succ, sub_eq_add_neg] using h)
 
@@ -158,8 +163,10 @@ private def row (D : E → E → E)
     (hm : ∀ (r : ℝ) a b, D (r • a) b = r • D a b)
     (hD : ∀ a b, D a b = -D b a) (a : E) : E →ₗ[ℝ] E where
   toFun := D a
-  map_add' b c := by rw [hD a (b+c), ha, neg_add, ← hD b a, ← hD c a]
-  map_smul' r b := by rw [hD a (r • b), hm, smul_neg, ← hD b a]
+  map_add' b c := by rw [hD a (b+c), ha, neg_add, ← hD a b, ← hD a c]
+  map_smul' r b := by
+    change D a (r • b) = r • D a b
+    rw [hD a (r • b), hm, ← smul_neg, ← hD a b]
 
 private lemma graph_limit {P : Set (E →L[ℝ] ℝ)} (S : E →L[ℝ] E →L[ℝ] E)
     (D : E → E → E) (hs : ∀ x : E, (∀ α ∈ P, α x = 0) → x = 0)
@@ -176,7 +183,7 @@ private lemma graph_limit {P : Set (E →L[ℝ] ℝ)} (S : E →L[ℝ] E →L[�
   obtain ⟨m,t,β,c,ht,hβ,happrox⟩ := hr α hα η hη
   let f : E → ℝ := fun z => ∑ j, c j * β j (S z (S a (t j)) - S a (S z (t j)))
   have hf : Continuous f := by
-    apply continuous_finset_sum
+    apply continuous_finsetSum
     intro j hj
     exact continuous_const.mul ((β j).continuous.comp
       (((S.flip (S a (t j))).continuous).sub
@@ -190,7 +197,9 @@ private lemma graph_limit {P : Set (E →L[ℝ] ℝ)} (S : E →L[ℝ] E →L[�
       ((hf.tendsto x).comp hb)).abs (tendsto_const_nhds.mul hy.norm)
       (Filter.Eventually.of_forall hpn)
   calc
-    |α y - α (D a x)| ≤ |α y - f x| + |α (D a x) - f x| := abs_sub_le _ _ _
+    |α y - α (D a x)| ≤ |α y - f x| + |α (D a x) - f x| := by
+      simpa only [abs_sub_comm (f x) (α (D a x))] using
+        abs_sub_le (α y) (f x) (α (D a x))
     _ ≤ η * ‖y‖ + η * ‖D a x‖ := add_le_add hlim hq
     _ = η * (‖y‖ + ‖D a x‖) := by ring
 
@@ -209,7 +218,7 @@ theorem bilinear_bounded [CompleteSpace E] (P : Set (E →L[ℝ] ℝ))
       ∃ K : ℝ, 0 ≤ K ∧ ∀ a b, ‖D a b‖ ≤ K * ‖a‖ * ‖b‖ := by
   have hD := skew S D hs hc
   have hn := nested S D hs hS hD hR
-  obtain ⟨ha,hm⟩ := recover_linear S D hs hr hD hn
+  obtain ⟨ha,hm⟩ := recover_linear S D hs hr hn
   let R : E → E →L[ℝ] E := fun a =>
     ⟨row D ha hm hD a, (row D ha hm hD a).continuous_of_seq_closed_graph
       (fun b x y hb hy => graph_limit S D hs hr hn a b x y hb hy)⟩
@@ -234,7 +243,8 @@ theorem bilinear_bounded [CompleteSpace E] (P : Set (E →L[ℝ] ℝ))
     calc
       ‖F a‖ = ‖F (‖a‖ • (v : E))‖ := by rw [hv]
       _ = ‖a‖ * ‖F (v : E)‖ := by rw [map_smul, norm_smul, norm_norm]
-      _ ≤ ‖a‖ * max K 0 := mul_le_mul_of_nonneg_left ((hK v).trans (le_max_left _ _)) (norm_nonneg _)
+      _ ≤ ‖a‖ * max K 0 :=
+        mul_le_mul_of_nonneg_left ((hK v).trans (le_max_left _ _)) (norm_nonneg _)
       _ = max K 0 * ‖a‖ := mul_comm _ _
   let B := F.mkContinuous (max K 0) hFb
   refine ⟨B, fun a b => rfl, max K 0, le_max_right _ _, fun a b => ?_⟩
