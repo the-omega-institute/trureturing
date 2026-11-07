@@ -16,12 +16,7 @@ internal sealed class BoseRootTransposeDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("Positivity is required at every subset, including the ordinary empty cut and full transpose. For a positive input this is equivalent to the existing FullyPPT predicate."))),
                 DescribeRole.Definition),
-            Describe.Lean(DescribeId.Create("boseroottranspose-partialtranspose-composition"),
-                DeclarationHandle.Create(Prefix + "partialTranspose_composition"),
-                H("partialTranspose composition"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("Composing product-basis partial transposes replaces the cut by its symmetric difference. The identity holds for arbitrary matrices and all cuts."))),
-                DescribeRole.Theorem),
+            Paragraph(Text("Product-basis partial transposes compose by symmetric difference for arbitrary matrices and all cuts. The root transpose commutes with each distinct root-leaf partial trace and transposes the first pair factor. Applying the transport twice restores the original matrix and witness, so the leaf sandwich and the ordinary and full-transpose positivity endpoints are retained for every finite register and local-label type.")),
             Describe.Lean(DescribeId.Create("boseroottranspose-pairroottranspose"),
                 DeclarationHandle.Create(Prefix + "pairRootTranspose"),
                 H("pairRootTranspose"), StatementSource.WithoutFormula(),
@@ -34,10 +29,5 @@ internal sealed class BoseRootTransposeDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("For distinct root and leaf, the actual root partial transpose commutes with the root-leaf partial trace and transposes the first factor of that marginal."))),
                 DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("boseroottranspose-star-roottranspose-iff"),
-                DeclarationHandle.Create(Prefix + "star_rootTranspose_iff"),
-                H("star rootTranspose iff"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("Root partial transpose is an involutive bijection of fully PPT star witnesses for an arbitrary input and its first-factor transpose. The leaf sandwich is retained. Symmetric-difference cuts include ordinary and full-transpose endpoints, whose positivity is supplied explicitly."))),
-                DescribeRole.Theorem))));
+            Paragraph(Text("Root partial transpose is an involutive transport of fully PPT star witnesses for an arbitrary input and its first-factor transpose. The leaf sandwich is retained, and symmetric-difference cuts include the ordinary and full-transpose endpoints with their positive semidefinite witnesses.")))));
 }

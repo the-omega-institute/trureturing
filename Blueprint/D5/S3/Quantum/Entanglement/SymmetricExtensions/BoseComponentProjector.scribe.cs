@@ -16,35 +16,8 @@ internal sealed class BoseComponentProjectorDocument : IScribeDocumentDefinition
             Paragraph(Text("The register type I and local alphabet L are finite. G is any simple graph "
                 + "on I. All matrices below use computational tensor words I to L. The construction "
                 + "keeps every connected component, including isolated vertices.")),
-            Describe.Lean(DescribeId.Create("bose-component-tensor-projector"),
-                DeclarationHandle.Create(Prefix + "tensorProjector"),
-                H("The tensor product over connected components"),
-                StatementSource.FromAuthor(Disp(F.Seq(
-                    Call("tensorProjector", F.Id("G"), F.Id("x"), F.Id("y")), Eq,
-                    Call("ProductOverComponents", F.Id("G"), F.Id("P"), F.Id("x"), F.Id("y"))))),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For each connected component C, restrict x and y to its vertex "
-                    + "set and evaluate the existing symmetric projector P on those restricted words. "
-                    + "The matrix entry is the product of these entries over all C. This is the tensor "
-                    + "product transported back to the original register basis. No reordering or "
-                    + "normalization factor is inserted. A singleton component contributes the identity "
-                    + "on its local register; the empty product is one."))),
-                DescribeRole.Definition),
-            Describe.Lean(DescribeId.Create("bose-component-factorization"),
-                DeclarationHandle.Create(Prefix + "factorization"),
-                H("The component average equals the tensor product"),
-                StatementSource.FromAuthor(Disp(F.Seq(
-                    Call("componentProjector", F.Id("G")), Eq,
-                    Call("tensorProjector", F.Id("G"))))),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For every finite graph, the actual component-preserving "
-                    + "permutation average is exactly this tensor-product matrix. The proof constructs "
-                    + "the equivalence between component-preserving permutations and independent "
-                    + "permutations of each component, factors the permutation-matrix entries, and "
-                    + "reindexes the finite average. The cardinality factor is the product of the "
-                    + "component permutation cardinalities. The theorem assumes neither connectedness "
-                    + "nor a nonempty vertex set."))),
-                DescribeRole.Theorem),
+            Paragraph(Text("For each connected component C, restrict the computational words x and y to C and take the existing symmetric-projector entry P on those restrictions. Multiplying over all components, including singleton components and the empty product, gives the component tensor expression in the original register basis. No reordering or normalization factor is inserted.")),
+            Paragraph(Text("The component-preserving permutation average is reindexed by the product of the component permutation groups; entrywise factorization and the product cardinality identity give the same expression for every finite graph, without connectedness or nonemptiness assumptions.")),
             Describe.Lean(DescribeId.Create("bosecomponentprojector-disconnected-counterexample"),
                 DeclarationHandle.Create(Prefix + "disconnected_counterexample"),
                 H("Disconnected components admit a rank-one boundary"), StatementSource.WithoutFormula(),

@@ -17,5 +17,5 @@ internal sealed class BoseSOSDualityDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(Prefix + "diagonal_dual_iff_sos"),
                 H("Exact diagonal operator SOS equivalence"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Quantum/gnp2025dickeextensions")),
-                Blocks(Paragraph(Text("For occupation-diagonal Hermitian operators with actual real symbol p(X squared), membership in the actual Bose-PPT dual is equivalent to the native SOS condition. This supplies the operator-polynomial step in Gulati-Nechita-Park Theorems 8.9 and 8.11; BoseHierarchy uses it to prove the complete marginal and Parrilo hierarchy characterization."))), DescribeRole.Theorem))));
+                Blocks(Paragraph(Text("For arbitrary r and n, an occupation-diagonal Hermitian operator with actual real symbol p(X squared), where p is homogeneous of degree r, membership in the actual Bose-PPT dual is equivalent to the native SOS condition. This supplies the operator-polynomial step in Gulati-Nechita-Park Theorems 8.9 and 8.11; BoseHierarchy uses it to prove the complete marginal and Parrilo hierarchy characterization."))), DescribeRole.Theorem))));
 }

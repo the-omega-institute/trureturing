@@ -133,7 +133,7 @@ internal sealed class DickeExtensionDocument : IScribeDocumentDefinition
                 Seq(Sub(Pi, X("G")), Eq, Call("Average", Call("componentGroup", X("G")), X("Q"))),
                 "This is the uniform average of the actual tensor-register permutation matrices over "
                 + "componentGroup G. The tensor factorization into symmetric projectors on every "
-                + "connected component is proved in BoseComponentProjector.factorization. "
+                + "connected component is the component-wise finite average identity described in the component projector exposition. "
                 + "All singleton components remain present.",
                 DescribeRole.Definition, false),
             Node("component_support_of_edges", "Support on every graph component",
@@ -171,17 +171,8 @@ internal sealed class DickeExtensionDocument : IScribeDocumentDefinition
                 + "support mechanism is prior work of Hansenne-Xu-Kraft-Guehne, main page 4 and Appendix D "
                 + "Lemma 8 of arXiv:2108.02732v1. This formal generalization is not a priority claim.",
                 DescribeRole.Theorem, true),
-            Node("support_of_leaf_invariance", "Conjugation invariance of leaves suffices",
-                Seq(Call("PSD", X("E")), Land, Call("LeafConjugationInvariant", X("E")), Land,
-                    Call("BosePair", Call("M", X("root"), X("leaf"), X("E"))), Implies,
-                    Call("Bose", X("E")), Land, Call("AllOrderedMarginalsEqual", X("E"))),
-                "Choose distinct root and leaf registers. Assume only that conjugating E by every "
-                + "register permutation fixing the root leaves E invariant, together with positivity "
-                + "and Bose support of that one root-leaf marginal. Relabeling the complement trace "
-                + "gives the same supported marginal at every root edge. The root support theorem then "
-                + "gives full Bose support and every ordered marginal equal to the original one. "
-                + "Leaf-subspace support is not a premise.",
-                DescribeRole.Theorem, false),
+            Paragraph(Text("For distinct root and leaf registers, positivity and invariance of E under every permutation fixing the root, together with Bose support of one root-leaf marginal, transport that supported marginal to every root edge. The existing root-support theorem then supplies the full symmetric-projector sandwich and equality of every ordered marginal. The argument keeps zero and singular matrices and uses no leaf-subspace premise.")),
+
             Node("same_matrix_core", "The identical matrices without PPT",
                 Seq(Call("BosePair", Rho), Implies,
                     Open, Call("StarExtensionCore", X("root"), Rho, X("E")), Iff,

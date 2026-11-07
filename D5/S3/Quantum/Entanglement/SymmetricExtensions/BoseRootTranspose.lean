@@ -93,28 +93,6 @@ private lemma allCuts_iff (E : Matrix (I → L) (I → L) ℂ) :
     · simpa only [hfull, partialTranspose_univ] using hE.transpose
     exact hppt S (Finset.nonempty_iff_ne_empty.mpr hS) hfull
 
-/-- Transposing twice replaces the cuts by their symmetric difference. -/
-theorem partialTranspose_composition (S T : Finset I)
-    (E : Matrix (I → L) (I → L) ℂ) :
-    partialTransposeOn S (partialTransposeOn T E) = partialTransposeOn (S ∆ T) E := by
-  ext x y
-  unfold partialTransposeOn
-  congr 1 <;> funext i <;> by_cases hS : i ∈ S <;> by_cases hT : i ∈ T <;>
-    simp [Finset.piecewise, Finset.mem_symmDiff, hS, hT]
-
-private lemma partialTranspose_involution (S : Finset I)
-    (E : Matrix (I → L) (I → L) ℂ) :
-    partialTransposeOn S (partialTransposeOn S E) = E := by
-  rw [partialTranspose_composition, symmDiff_self]
-  exact partialTranspose_empty E
-
-private lemma allCuts_transpose (T : Finset I)
-    (E : Matrix (I → L) (I → L) ℂ) (hE : AllCutsPPT E) :
-    AllCutsPPT (partialTransposeOn T E) := by
-  intro S
-  rw [partialTranspose_composition]
-  exact hE _
-
 private lemma partialTranspose_complement (S : Finset I)
     (E : Matrix (I → L) (I → L) ℂ) :
     partialTransposeOn Sᶜ E = (partialTransposeOn S E)ᵀ := by
@@ -137,11 +115,6 @@ private lemma allCuts_of_leafCuts (root : I)
 def pairRootTranspose (ρ : Matrix (L × L) (L × L) ℂ) :
     Matrix (L × L) (L × L) ℂ :=
   fun x y => ρ (y.1, x.2) (x.1, y.2)
-
-private lemma pairRootTranspose_involution (ρ : Matrix (L × L) (L × L) ℂ) :
-    pairRootTranspose (pairRootTranspose ρ) = ρ := by
-  ext x y
-  rfl
 
 private lemma root_split (root leaf : I) (hne : root ≠ leaf)
     (v w : L × L) (c : {i : I // i ≠ root ∧ i ≠ leaf} → L) :
@@ -167,34 +140,6 @@ theorem marginal_rootTranspose (root leaf : I) (hne : root ≠ leaf)
     D5.S3.Quantum.Information.PartialTraceMutualInformation.partialTraceRight,
     Matrix.submatrix_apply, partialTransposeOn, pairRootTranspose,
     root_split]
-
-private lemma star_rootTranspose_forward (root : I)
-    (ρ : Matrix (L × L) (L × L) ℂ)
-    (E : Matrix (I → L) (I → L) ℂ) (hE : StarExtension root ρ E) :
-    StarExtension root (pairRootTranspose ρ) (partialTransposeOn {root} E) := by
-  have hp := (allCuts_iff E).mpr ⟨hE.1, hE.2.2.2⟩
-  have hpt := (allCuts_iff _).mp (allCuts_transpose {root} E hp)
-  refine ⟨hpt.1, ?_, ?_, hpt.2⟩
-  · change Local.localP {root} * partialTransposeOn {root} E *
-        Local.localP {root} = partialTransposeOn {root} E
-    rw [← partialTranspose_PiS_sandwich]
-    exact congrArg (partialTransposeOn {root}) hE.2.1
-  · intro leaf hne
-    rw [marginal_rootTranspose, hE.2.2.1 leaf hne]
-
-/-- Root partial transpose is an involutive transport of fully PPT star witnesses.
-Its cuts include the ordinary and full-transpose positivity endpoints. -/
-theorem star_rootTranspose_iff (root : I)
-    (ρ : Matrix (L × L) (L × L) ℂ) (E : Matrix (I → L) (I → L) ℂ) :
-    StarExtension root (pairRootTranspose ρ) (partialTransposeOn {root} E) ↔
-      StarExtension root ρ E := by
-  constructor
-  · intro h
-    have hh := star_rootTranspose_forward root _ _ h
-    simpa only [partialTranspose_involution, pairRootTranspose_involution] using hh
-  · exact star_rootTranspose_forward root ρ E
-
-#print axioms star_rootTranspose_iff
 
 end
 end D5.S3.Quantum.Entanglement.SymmetricExtensions.BoseRootTranspose

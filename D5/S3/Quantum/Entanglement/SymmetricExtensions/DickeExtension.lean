@@ -643,34 +643,6 @@ theorem support_of_bose_root_marginals (root : I)
   · rw [all_edges_equal E hE.isHermitian hcol root a a b ha hab]
     exact hm a ha
 
-/-- Mere conjugation invariance of the leaves and one Bose-supported root marginal
-force full Bose support on the same operator, including every ordered marginal. -/
-theorem support_of_leaf_invariance (root leaf : I) (hne : root ≠ leaf)
-    (E : Matrix (I → L) (I → L) ℂ) (hE : E.PosSemidef)
-    (hinv : ∀ σ : Equiv.Perm I, σ root = root →
-      ∀ x y, E (x ∘ σ) (y ∘ σ) = E x y)
-    (hpair : pairSymmetricProjector * edgeMarginal root leaf hne E *
-      pairSymmetricProjector = edgeMarginal root leaf hne E) :
-    P I L * E * P I L = E ∧
-      ∀ a b (hab : a ≠ b), edgeMarginal a b hab E = edgeMarginal root leaf hne E := by
-  apply support_of_bose_root_marginals root _ hpair E hE
-  intro i hi
-  let σ : Equiv.Perm I := Equiv.swap leaf i
-  have hroot : σ root = root := Equiv.swap_apply_of_ne_of_ne hne hi
-  have hleaf : σ leaf = i := Equiv.swap_apply_left leaf i
-  have h := edge_covariance_of_conjugation E σ root leaf hne (hinv σ hroot)
-  have transport (a b : I) (hab : a ≠ b) (ha : a = root) (hb : b = i)
-      (hh : edgeMarginal a b hab E = edgeMarginal root leaf hne E) :
-      edgeMarginal root i hi E = edgeMarginal root leaf hne E := by
-    subst a
-    subst b
-    exact hh
-  exact transport (σ root) (σ leaf) (σ.injective.ne hne) hroot hleaf h
-
-#print axioms support_of_leaf_invariance
-
-/-- Star and complete no-PPT predicates select exactly the same individual matrices.
-This includes zero and singular matrices and arbitrary unnormalized traces. -/
 theorem same_matrix_core (root : I)
     (ρ : Matrix (L × L) (L × L) ℂ)
     (hρ : pairSymmetricProjector * ρ * pairSymmetricProjector = ρ)
