@@ -1512,3 +1512,507 @@ remain unresolved; no physical-memory consequence or Lean-kernel
 verification is asserted. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 36. Exact separated histories and the cut-pinned obstruction
+
+**Definition 36.1 (separated demands in one actual terminal gap).**
+Fix one graph of Assumption 21.1 with $n=9$, $K=4$, $L=6$,
+and an actual consecutive common-support gap $B=(3,9)$.
+Let $T_3$ be its actual depth-three common support, and let $A_0$
+be its unique zero-axis support at $(0,5)$, as in Definition 31.1.
+Thus $|T_3|=3$, $|A_0|=5$, and $T_3\subseteq A_0$.
+Put
+
+$$
+\Omega_\perp=([9]\times\{-\})\ \cup\
+                  (([9]\setminus A_0)\times\{+\}).
+\tag{SI.208}
+$$
+
+Let $\mathcal E_\perp$ be a finite family of Definition 26.1
+whose incoming cells lie in $V_B$ and for which
+$\mathcal D_e\subseteq\Omega_\perp$ for every member. Write
+$t_\perp=\tau(\mathcal E_\perp)$. Independently choose an actual
+axis family $\mathcal E_3$ of Definition 31.1 with incoming cells
+in $V_B$, and write $t_3=\tau_3(\mathcal E_3)$.
+An axis family is called cut-pinned here when all its $D_e$ lie
+in $T_3$; Theorem 32.1 then applies to this very family.
+Corollary 32.2 supplies this property when its equal-depth and
+two-private-coordinate hypotheses hold.
+
+For comparison also choose a signed family $\mathcal E_{\rm lit}$
+with incoming cells in $V_B$ containing $\mathcal E_\perp$,
+and a family $\mathcal E_{\rm cut}$ of Theorem 32.1 on this graph.
+Write their transversal numbers as $t_{\rm lit}$ and $t_{\rm cut}$.
+Different members of the cut family may use different actual common
+cuts of depth at most six. All these cuts have depth at most three
+because $B$ is consecutive, so their supports lie in $T_3$.
+The conclusion of Theorem 32.1 still holds for their union:
+its proof places every supplying state globally in the never-live
+pool. Empty families are allowed, with transversal number zero.
+
+The comparison with every available literal or cut family can be made
+by taking all qualifying actual literal pairs with incoming cells in
+$V_B$, and the singleton sets $\{j\}$ for every label $j\in T_3$
+of an installed state with positive short exits, respectively.
+The first choice is finite by SI Lemma 11.3. The second is a family
+of Theorem 32.1 at $T_3$; its transversal is the number of these
+labels. It dominates any other cut-family transversal because those
+same labels meet every such demand. In particular
+$t_{\rm lit}\ge t_\perp$ and $0\le t_{\rm cut}\le3$.
+These choices concern one installed graph, without identifying
+histories, states or independently chosen inputs.
+
+**Theorem 36.2 (complete local classification and the two paid patterns).**
+For an actual qualifying pair with incoming cells in $V_B$,
+the condition $\mathcal D_e\subseteq\Omega_\perp$ holds if and only
+if its data have the following form. Its incoming depth and cells are
+
+$$
+d=6,\qquad (h,z)=(1,5),\qquad (g,w)=(3,3),
+\tag{SI.209}
+$$
+
+and, with the notation of Definition 25.1,
+
+$$
+\begin{gathered}
+I=T_3\sqcup\{j\},\qquad j\notin A_0,\qquad
+\sigma|_{T_3}=\rho|_{T_3},\qquad
+(\sigma_j,\rho_j)=(0,1),\\
+\mathcal D_e=\{(j,+)\},\qquad
+U=\{u_0\},\qquad \eta=1,\qquad
+|\sigma^{-1}(1)\cap T_3|=1 .
+\end{gathered}
+\tag{SI.210}
+$$
+
+Both actual incoming histories query $j$ at their fourth query.
+The private assignments are necessarily $X\equiv0$ on the lower
+history and $Y=\{y_0,y_1\}$ with upper values $0,1$.
+
+More generally, to distinguish the two private-one alternatives,
+consider an actual qualifying pair satisfying (SI.209) with
+$I=T_3\sqcup\{j\}$, equal assignments on $T_3$ and
+$(\sigma_j,\rho_j)=(0,1)$, without imposing $j\notin A_0$.
+There are two possible count patterns. In pattern A the common
+assignment on $T_3$ is all zero, $X=\{x,x_0\}$ has lower values
+$1,0$, and $Y$ has upper values $1,1$. In pattern B the common
+assignment on $T_3$ has one one, $X$ has lower values $0,0$,
+and $Y=\{y_0,y_1\}$ has upper values $0,1$.
+Pattern A forces $j\in A_0$ and is therefore excluded from the
+separated family. Pattern B is the only retained separated pattern;
+its actual existence is not asserted.
+
+For any actual pair of this broader form, in pattern A the only
+assignment permitted by (SI.168) is $u_0=0$.
+On the two particular inputs (SI.171), the common suffix queries
+$u_0,x,j$, in this order, with replies $(0,1,0)$ and $(0,1,1)$.
+In pattern B that assignment is $u_0=1$, and the common suffix
+queries $u_0,y_0,j$, in this order, with replies $(1,0,0)$ and
+$(1,0,1)$. In both patterns these inputs have weights three and
+four, use exactly nine queries, and finish at a positive terminal
+literal gate labelled $j$. Their original letter caps are equivalent
+to the respective inequalities
+
+$$
+\begin{array}{ll}
+\mathrm A:&c_x+c_j\le\min(C_X,C_Y),\\
+\mathrm B:&c_{y_0}+c_j\le\min(C_X,C_Y).
+\end{array}
+\tag{SI.211}
+$$
+
+The original all-input caps also require the one-sided exchange
+conditions
+
+$$
+\begin{array}{ll}
+\mathrm A:&C_Y\le C_X,\qquad c_x+c_j\le C_Y,\\
+\mathrm B:&C_X\le C_Y,\qquad c_{y_0}+c_j\le C_X .
+\end{array}
+\tag{SI.212}
+$$
+
+Consequently $c_j<c_{x_0}$ in pattern A and $c_j<c_{y_1}$ in
+pattern B. None of these cost conditions is asserted sufficient
+for an entire graph or for all completions of the incoming histories.
+
+Proof. First exclude lower hit row zero. Such a lower history has
+an all-zero support $S$ contained in $A_0$, by the unique zero axis
+and liveness. Every disagreement in $I\subseteq S$ is then positive
+and lies in $A_0$. The disagreement set is nonempty by
+$\eta>0$, contradicting (SI.208). The only other possible hit rows
+are $h=1$, $g=3$, since $g=h+2\le3$. Liveness gives
+$d-1=z\le5$, so $d\le6$.
+
+Both incoming depths are greater than three. Actual ancestry at the
+common cut, SI Lemma 9.2, gives $T_3\subseteq I$. Since
+$|I|=d-2$, depth four is impossible. At depth five one has
+$I=T_3\subseteq A_0$, where separation forbids positive
+disagreements. But
+
+$$
+\sum_{i\in I}(\rho_i-\sigma_i)
+       =(3-\beta)-(1-\alpha)=2+\alpha-\beta=\eta>0
+$$
+
+requires a positive disagreement. This excludes depth five as well.
+Thus $d=6$, giving (SI.209), $|I|=4$ and $|U|=1$.
+Write $I=T_3\sqcup\{j\}$. The required positive disagreement
+must be at $j$, and separation forces $j\notin A_0$.
+Its contribution to the displayed sum is one. Every contribution
+on $T_3$ is nonpositive; positivity of the integer sum therefore
+forces all of them to vanish. This proves all assertions of
+(SI.210) except the last one.
+
+Let $r$ be the common number of ones on $T_3$. The lower total is
+one and its $j$ value is zero, so $r\in\{0,1\}$. The private
+one counts are
+
+$$
+\alpha=1-r,\qquad \beta=2-r .
+$$
+
+For $r=0$ these give pattern A; for $r=1$ they give pattern B,
+including all choices of the common one and of the private
+coordinates. These same equations classify the broader actual pairs
+in the statement, whose intersection assignments have been specified.
+
+The actual common prefix now decides which pattern can be separated.
+The two incoming histories have identical exposed assignments on
+$T_3$. Every actual live depth-three history has support $T_3$.
+Complete the two incoming assignments to full inputs. From the fixed
+start these inputs follow identical first three queries: each query
+belongs to $T_3$, and they give it the same reply. Hence they reach
+the same depth-three state. Its next coordinate lies in both incoming
+supports, because both histories continue to depth six. Freshness
+places it outside $T_3$, so it must be the sole element $j$ of
+$I\setminus T_3$. Thus $j$ is query four on both histories.
+If $r=0$, the first three replies are all zero. Query four is then
+the fourth coordinate of the actual all-zero axis, and lies in $A_0$.
+This contradicts separation. Therefore $r=1$, proving the last
+assertion of (SI.210) and excluding pattern A in that scope.
+For the broader pairs the same argument proves the asserted
+implication from pattern A to $j\in A_0$. Conversely, the stated
+separated data of pattern B have exactly the disagreement $(j,+)$
+with $j\notin A_0$, proving the equivalence for actual qualifying
+pairs. This does not construct their incoming paths.
+
+Here $u=v=1$. Substitution into (SI.168) gives
+$\mathcal J=\{r\}$. Substitution into (SI.171) gives weights
+$1+\beta+r=3$ and $3+\alpha+r=4$. Apply Theorem 25.3
+to precisely these inputs. Its equality (SI.169) requires one new
+zero for the lower certificate and one new one for the upper
+certificate before the discriminator, using exactly two queries.
+In pattern A there is no old zero in $Y$ and $u_0=0$,
+so those two coordinates must be $u_0$ and $x$. In pattern B
+there is no old one in $X$ and $u_0=1$, so they must be
+$y_0$ and $u_0$. The first query at the common live state must
+be fresh for both incoming histories; their common unread set is
+exactly $\{u_0\}$. This fixes the orders asserted above.
+The unique differing coordinate is $j$, so Theorem 25.3 makes it
+the final query, with positive sign.
+
+Write $v_0=x$ in pattern A and $v_0=y_0$ in pattern B.
+The complete charges on the two actual paired inputs are exactly
+
+$$
+C_S+c_{u_0}+c_{v_0}+c_j,\qquad
+C_T+c_{u_0}+c_{v_0}+c_j .
+$$
+
+As $W-C_S=C_Y+c_{u_0}$ and
+$W-C_T=C_X+c_{u_0}$, their separate caps are equivalent to
+$c_{v_0}+c_j\le C_Y$ and $c_{v_0}+c_j\le C_X$.
+This is (SI.211). The certificates are the joint certificates of
+this fixed shared suffix, not independently minimized witnesses.
+
+For completeness, the one-sided replay of PE Theorem 3.1 gives
+the additional inequalities in (SI.212) directly on actual Boolean
+inputs. In pattern A complete the lower history by setting all of
+$Y\cup U$ to one. It starts at $(1,5)$ and stays live until
+all three unread coordinates have been queried once. Freshness and
+correctness force these queries; the nine-query cap forces immediate
+termination afterwards. Replay this same suffix from the upper
+history, setting $u_0=1$ and retaining its old all-one $Y$.
+It queries only $Y\cup U$, so arbitrary values on $X$ extend
+it to an actual upper input following those fixed successors.
+Its full charge is
+
+$$
+C_T+C_Y+c_{u_0}=W+C_Y-C_X .
+$$
+
+The letter cap on that very input proves $C_Y\le C_X$.
+In pattern B complete the upper history by setting all of $X\cup U$
+to zero. Starting at $(3,3)$, it stays live until those three
+fresh zeros have all been read, and then halts by the query cap.
+Replay the suffix from the lower history with its old all-zero $X$
+and $u_0=0$. Any assignment on $Y$ completes this actual run;
+its charge is $C_S+C_X+c_{u_0}=W+C_X-C_Y$.
+Its own letter cap gives $C_X\le C_Y$. Combining these replays
+with (SI.211) yields (SI.212). They pay for the old $Y$ or $X$
+queries on the replayed input, including certified traffic.
+Finally $c_x+c_j\le C_X=c_x+c_{x_0}$ in pattern A, and
+$c_{y_0}+c_j\le C_Y=c_{y_0}+c_{y_1}$ in pattern B.
+The coordinates are distinct and individual costs are strictly
+increasing, so the resulting weak inequalities are strict.
+
+The source correspondence is SI Theorem 2.2 for actual depths,
+zero-axis uniqueness and live freshness; SI Lemma 9.2 for containment
+of $T_3$; and Definition 25.1 for the private sizes and $\eta$.
+PE Theorem 7.2 has parameters
+$(p,y,V,Q)=(\alpha,\beta,1,3)$ here; its paired vectors and
+joint certificates are the ones specialized in Theorem 25.3.
+Equations (SI.169) and (SI.174) supply the exact suffix and the
+two original-cost charges, while the last replays are PE's one-sided
+exchange argument. This is a repo-derived restriction of the original
+model, not a claim that threshold certificates or replay arguments
+are new. $\square$
+
+**Corollary 36.3 (same-graph strictness test and cut-pinned exclusion).**
+Retain Definition 36.1 and the choice $\Pi=\Pi_4$ in
+Corollary 33.1. On this same graph put
+
+$$
+\begin{gathered}
+\lambda=(b_{(2,4)}-1)+(b_{(2,5)}-1)+(b_{(3,4)}-1),\qquad
+\gamma=b_{(3,5)}-1,\\
+C=C_{\Pi_4}=\nu+\lambda+\gamma,\qquad
+M_{\rm mix}=t_3+t_\perp-1,\\
+M_0=\max\{2,t_3,t_{\rm lit},t_{\rm cut}+2\},\qquad
+M_1=\max\{M_0,t_{\rm cut}+t_\perp\}.
+\end{gathered}
+\tag{SI.213}
+$$
+
+Then $\lambda\ge1$, $\gamma\ge1$, and
+
+$$
+\begin{gathered}
+t_\perp=|\{j_e:e\in\mathcal E_\perp\}|\le3,\qquad
+C\ge\max\{M_1,M_{\rm mix}\},\\
+m=24+R+E_B^{\setminus\Pi_4}-D_B+C .
+\end{gathered}
+\tag{SI.214}
+$$
+
+The numerical comparison $M_{\rm mix}>M_0$ is equivalent to
+
+$$
+t_\perp\ge2,\qquad
+t_3+t_\perp\ge t_{\rm cut}+4,\qquad
+t_{\rm lit}\le t_3+t_\perp-2 .
+\tag{SI.215}
+$$
+
+In particular it requires $t_3\ge2$. After also including the
+joint cut bound in $M_1$, the exact comparison is
+
+$$
+M_{\rm mix}>M_1
+\quad\Longleftrightarrow\quad
+t_\perp\ge2,\qquad t_3\ge t_{\rm cut}+2,\qquad
+t_{\rm lit}\le t_3+t_\perp-2 .
+\tag{SI.216}
+$$
+
+These are necessary and sufficient conditions for comparison of the
+specified expressions, conditional on their actual graph and families.
+They are necessary conditions for a strict consumer of these bounds,
+without sufficient conditions for realizing that graph. Any strict
+profile has $t_\perp\in\{2,3\}$ and must supply that many distinct
+fourth-query labels from actual depth-three histories with one one
+on $T_3$, each with the surviving paid pattern of Theorem 36.2.
+
+If $\mathcal E_3$ is cut-pinned, there is instead the stronger bound
+
+$$
+C\ge t_3+t_\perp .
+\tag{SI.217}
+$$
+
+Thus its proposed mixed expression is never a strict improvement once
+this applicable cut bound is included. If the cut comparison includes
+this axis family, or uses the complete-cut choice of Definition 36.1,
+then $t_3\le t_{\rm cut}\le3$, and already
+
+$$
+M_{\rm mix}=t_3+t_\perp-1\le t_{\rm cut}+2\le M_0 .
+\tag{SI.218}
+$$
+
+In particular, in the additional scope of Corollary 32.2 the proposed
+mixed expression cannot beat even $M_0$. Four coordinates outside
+$A_0$ do not supply four possible separated singleton labels:
+the actual depth-three prefixes restrict their number to three.
+
+Proof. Depth seven is internal to the consecutive gap and is
+noncommon. Its live cells are precisely $(2,5),(3,4)$. The diagonal
+criterion of SI Definition 9.1 and Theorem 4.1 gives support
+multiplicity at least two in one of these cells; SI Theorem 2.2
+therefore gives
+
+$$
+(b_{(2,5)}-1)+(b_{(3,4)}-1)\ge1 .
+$$
+
+Depth eight is also noncommon, with unique live cell $(3,5)$,
+so $\gamma\ge1$ by the same criterion. This proves $\lambda\ge1$.
+Theorem 36.2 makes every separated disagreement set a positive
+singleton outside the five-element $A_0$, so its transversal is
+exactly its number of distinct labels. For each $a\in T_3$ there
+is a unique actual depth-three history with assignment one at $a$
+and zero on $T_3\setminus\{a\}$. To see existence, complete that
+assignment arbitrarily and run the graph: all depth-three prefixes
+are live and have support $T_3$. Uniqueness follows by deterministic
+induction on its three fresh queries. Denote its host by $r_a$.
+Theorem 36.2 shows that every separated pair with common one at $a$
+has
+
+$$
+j_e=i(r_a)\notin A_0,\qquad
+\{j_e:e\in\mathcal E_\perp\}
+      \subseteq\{i(r_a):a\in T_3\}\setminus A_0 .
+$$
+
+There are only three such histories; their hosts or labels can
+coincide, which can only decrease the number of distinct labels.
+This proves $t_\perp\le3$. Distinct demanded labels require distinct
+actual depth-three hosts as well as the distinct final gates.
+
+Reuse Theorems 26.2, 31.2 and 32.1. They give, respectively,
+$\nu+b_{(3,5)}\ge t_{\rm lit}$, $C\ge t_3$ and
+$\nu\ge t_{\rm cut}$. Consequently
+
+$$
+C\ge2,\qquad
+C\ge t_{\rm lit}+\lambda-1\ge t_{\rm lit},\qquad
+C\ge t_{\rm cut}+\lambda+\gamma\ge t_{\rm cut}+2 .
+\tag{SI.219}
+$$
+
+Together these give $C\ge M_0$. In particular comparing only with
+$\max\{1,t_3,t_{\rm lit}-1,t_{\rm cut}+1\}$ from (SI.198)
+does not test strictness against these source-derived diagonal bounds.
+
+Here is the finite union argument for the separated demands.
+Let $\mathcal P_3$ consist of all installed states with positive
+short exits and labels in $A_0$. The proof of Theorem 31.2 gives
+$|\mathcal P_3|\ge t_3$ and places it in the never-live pool
+together with $F_p\setminus\{q_p\}$ for $p\in\Pi_4$,
+where $q_p$ are its actual natural representatives.
+Let $\mathcal G_\perp$ be all installed terminal literal gates with
+signed labels in $\Omega_\perp$. Theorem 25.3 makes their labels
+meet every $\mathcal D_e$, so $|\mathcal G_\perp|\ge t_\perp$.
+In the present scope the positive gates with labels outside $A_0$
+already suffice, by Theorem 36.2.
+
+The state sets $\mathcal P_3$ and $\mathcal G_\perp$ are disjoint.
+A negative terminal literal gate cannot have positive short exits:
+its zero edge already ends at terminal one. A positive gate in
+$\mathcal G_\perp$ has label outside $A_0$.
+By Theorem 25.3 all live occurrences of any literal gate are at the
+corner. Thus their union is contained in
+
+$$
+(Q\setminus Q_{\rm live})\ \cup\ F_{(3,5)}\
+\cup\!\!\bigcup_{p\in\Pi_4\setminus\{(3,5)\}}
+                       (F_p\setminus\{q_p\}).
+$$
+
+The sum of the displayed pool sizes is $C+1$, even if some pools
+intersect. The union bound gives
+$t_3+t_\perp\le C+1$, proving $C\ge M_{\rm mix}$.
+This is ordinary separated-set counting, not an injection from
+histories or completion vectors to installed states.
+
+There is a further applicable count when a cut family is present.
+Let $\mathcal P_{\rm cut}$ consist of the positive-short states with
+labels in $T_3$. The common-cut argument of Theorem 32.1 puts
+every such state globally in $Q\setminus Q_{\rm live}$.
+Their labels meet the cut family, so
+$|\mathcal P_{\rm cut}|\ge t_{\rm cut}$. Their labels lie in
+$A_0$, hence $\mathcal P_{\rm cut}$ is disjoint from
+$\mathcal G_\perp$. The union is now contained just in
+$(Q\setminus Q_{\rm live})\cup F_{(3,5)}$, giving
+
+$$
+\nu+b_{(3,5)}\ge t_{\rm cut}+t_\perp,\qquad
+C\ge t_{\rm cut}+t_\perp+\lambda-1
+                       \ge t_{\rm cut}+t_\perp .
+\tag{SI.220}
+$$
+
+This proves $C\ge M_1$. If the axis family itself is cut-pinned,
+the same $\mathcal P_{\rm cut}$ meets all its $D_e$ by
+Theorems 29.2 and 32.1, so its size is at least $t_3$.
+Replacing $t_{\rm cut}$ by $t_3$ in that very union count proves
+(SI.217), irrespective of the optional cut family's choice.
+It follows directly that $M_{\rm mix}$ is smaller than this valid
+bound by one. With a cut family containing the axis family,
+monotonicity of transversals gives $t_{\rm cut}\ge t_3$;
+the complete-cut choice also gives this inequality by its hitting
+set of available labels in $T_3$.
+
+All transversal numbers are integers. The comparison with the $t_3$
+branch of $M_0$ gives $t_\perp\ge2$; comparison with
+$t_{\rm cut}+2$ gives $t_3+t_\perp\ge t_{\rm cut}+4$;
+comparison with $t_{\rm lit}$ gives the last inequality of
+(SI.215). The middle inequality also beats the constant branch two.
+These implications reverse, proving (SI.215).
+As $t_{\rm lit}\ge t_\perp$, its last inequality forces $t_3\ge2$.
+Adding comparison with $t_{\rm cut}+t_\perp$ requires exactly
+$t_3\ge t_{\rm cut}+2$. Together with $t_\perp\ge2$
+this already implies the middle inequality of (SI.215), proving
+the equivalence (SI.216).
+
+In the cut-pinned scope, $t_3\le t_{\rm cut}\le3$ and
+$t_\perp\le3$ give (SI.218) directly. Equivalently
+$t_3+t_\perp\le t_{\rm cut}+3$, contradicting the middle
+condition of (SI.215). Equation (SI.217) supplies a further
+valid bound larger than $M_{\rm mix}$ by one without needing
+to select the optional cut family. Thus omitting applicable cut
+demands cannot certify a gain, and one axis demand cannot suffice
+even for the general numerical strictness test.
+
+Finally the equality for $m$ in (SI.214) is exactly (SI.198),
+using SI Theorem 9.3 on this graph; $R\ge0$ is supplied by
+Corollary 33.1. Thus
+$R+E_B^{\setminus\Pi_4}+\max\{M_1,M_{\rm mix}\}\ge D_B$
+is a sufficient condition for $m\ge24$, whereas (SI.199) with
+the actual $C$ remains the exact condition. For a proposed mixed
+term to make this substitution strict, its actual families must
+first satisfy (SI.216), and any further available graph-specific
+bound, including the versions with $\lambda,\gamma$ retained in
+(SI.219)--(SI.220), must also be beaten. Selecting smaller comparison
+families cannot establish strictness against the complete choices.
+The proof supplies no graph realizing (SI.216) and no uniform
+inequality covering the full deficit $D_B$.
+
+The new model restriction is Theorem 36.2 and its cut-pinned
+strictness obstruction; the finite unions, diagonal excess and exact
+incidence arithmetic above reuse Sections 25--33 and SI's diagonal
+criterion as intermediate facts. This is a repo-derived consequence
+of the stated suppliers. The bounded classical comparisons remain
+those with Bryant Section 2, Definition 1 and Cook, Edmonds,
+Medabalimi and Pitassi Section 2.1: their ordered or acyclic and
+semantic read-once hypotheses supply no normalization of the present
+graph. No literature priority assertion is needed.
+
+The classification (SI.209)--(SI.212) uses the actual cut $T_3$;
+it is not transferred to gaps $(1,9)$ or $(2,9)$.
+The mixed consumer here uses $\Pi_4$, not the unequal-depth
+$\Pi_R$ axis consumer. The general axis family in Definition 36.1
+need not satisfy Corollary 32.2; (SI.217) is conditional on
+cut-pinning and is not an exclusion of every general-axis realization.
+All assertions hold separately for each original positive increasing
+position tuple and each permitted graph for that tuple. They retain
+fixed successors, actual histories and cuts, both pointwise caps,
+adaptive orders, paid certified traffic and union cycles.
+Neither actual graph existence nor nonexistence is concluded.
+The whole-table condition (SI.166), CP.28 and the unrestricted
+nine-input minimum remain outside the proved consequences. $\square$
+
+## 追加锚（本行以下为增补区）

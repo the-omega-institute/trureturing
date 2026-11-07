@@ -1,0 +1,10 @@
+**定义 32.3（仅供证明使用的实作用空间）。** 对旧总映射 $S$ 定义
+
+$$
+W_S=\operatorname{span}_{\mathbb R}
+\{S(b,S(a,c))-S(a,S(b,c)):a,b,c\in E\}.
+\tag{32.2}
+$$
+
+在已经恢复 $S$ 实双线性以后，它才写成 $\operatorname{span}\{[L_b,L_a]c\}$。$W_S$ 是证明接口，不是 32.2 中另一条独立范围公理。
+
