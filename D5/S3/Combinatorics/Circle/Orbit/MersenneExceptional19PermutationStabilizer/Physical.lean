@@ -116,45 +116,52 @@ theorem affine_digits (r : ℕ) (M : ℤ) (hM : affineRange r M) :
   obtain ⟨hB,hq,hmod⟩ := eighth_facts r
   obtain ⟨ha0,ha1,hb0,hb1,hs0,hs1⟩ := parameter_margins r
   have hs : ss r=aa r+bb r := rfl
-  have hBp : (0 : ℤ)<base r := by omega
+  dsimp only [affineRange] at hM
+  generalize hbase : (base r : ℤ) = B at *
+  generalize haa : aa r = a at *
+  generalize hbb : bb r = b at *
+  generalize hss : ss r = s at *
+  generalize heighth : eighth r = E at *
+  clear hbase haa hbb hss heighth
+  have hBp : (0 : ℤ)<B := by omega
   rcases hM with hM | hM | hM
   · subst M
-    have f0 : 2*(aa r+bb r)/(base r : ℤ)=0 := by
+    have f0 : 2*(a+b)/B=0 := by
       apply floor_unique hBp <;> omega
-    have f1 : 8*aa r/(base r : ℤ)=0 := by
+    have f1 : 8*a/B=0 := by
       apply floor_unique hBp <;> omega
-    have f2 : 4*aa r/(base r : ℤ)=0 := by
+    have f2 : 4*a/B=0 := by
       apply floor_unique hBp <;> omega
     refine ⟨⟨by omega,by omega⟩,⟨by omega,by omega⟩,
       ⟨by omega,by omega⟩,?_⟩
     simp [correction, f0, f1, f2]
-  · have f0 : 2*(M+bb r)/(base r : ℤ)=1 := by
+  · have f0 : 2*(M+b)/B=1 := by
       apply floor_unique hBp <;> omega
-    have f2 : 4*(M-aa r)/(base r : ℤ)=1 := by
+    have f2 : 4*(M-a)/B=1 := by
       apply floor_unique hBp <;> omega
-    have f1 : 8*M/(base r : ℤ)-4*M/(base r : ℤ)=2 := by
-      by_cases hm : M<4*eighth r
-      · have f8 : 8*M/(base r : ℤ)=3 := by apply floor_unique hBp <;> omega
-        have f4 : 4*M/(base r : ℤ)=1 := by apply floor_unique hBp <;> omega
+    have f1 : 8*M/B-4*M/B=2 := by
+      by_cases hm : M<4*E
+      · have f8 : 8*M/B=3 := by apply floor_unique hBp <;> omega
+        have f4 : 4*M/B=1 := by apply floor_unique hBp <;> omega
         omega
-      · have f8 : 8*M/(base r : ℤ)=4 := by apply floor_unique hBp <;> omega
-        have f4 : 4*M/(base r : ℤ)=2 := by apply floor_unique hBp <;> omega
+      · have f8 : 8*M/B=4 := by apply floor_unique hBp <;> omega
+        have f4 : 4*M/B=2 := by apply floor_unique hBp <;> omega
         omega
     refine ⟨⟨by omega,by omega⟩,⟨by omega,by omega⟩,
       ⟨by omega,by omega⟩,?_⟩
     dsimp [correction]
     omega
-  · have f0 : 2*(M+bb r)/(base r : ℤ)=1 := by
+  · have f0 : 2*(M+b)/B=1 := by
       apply floor_unique hBp <;> omega
-    have f2 : 4*(M-aa r)/(base r : ℤ)=2 := by
+    have f2 : 4*(M-a)/B=2 := by
       apply floor_unique hBp <;> omega
-    have f1 : 8*M/(base r : ℤ)-4*M/(base r : ℤ)=3 := by
-      by_cases hm : M<6*eighth r
-      · have f8 : 8*M/(base r : ℤ)=5 := by apply floor_unique hBp <;> omega
-        have f4 : 4*M/(base r : ℤ)=2 := by apply floor_unique hBp <;> omega
+    have f1 : 8*M/B-4*M/B=3 := by
+      by_cases hm : M<6*E
+      · have f8 : 8*M/B=5 := by apply floor_unique hBp <;> omega
+        have f4 : 4*M/B=2 := by apply floor_unique hBp <;> omega
         omega
-      · have f8 : 8*M/(base r : ℤ)=6 := by apply floor_unique hBp <;> omega
-        have f4 : 4*M/(base r : ℤ)=3 := by apply floor_unique hBp <;> omega
+      · have f8 : 8*M/B=6 := by apply floor_unique hBp <;> omega
+        have f4 : 4*M/B=3 := by apply floor_unique hBp <;> omega
         omega
     refine ⟨⟨by omega,by omega⟩,⟨by omega,by omega⟩,
       ⟨by omega,by omega⟩,?_⟩
@@ -211,13 +218,18 @@ theorem q_readings (r : ℕ) :
   generalize hmid8 : q8Mid r = M8 at *
   generalize hqm : (Qmask r : ℤ) = Q at *
   clear hlow hmid hlow8 hmid8 hqm
-  have hBp : (0 : ℤ)<base r := by omega
-  have f0 : 2*L/B=1 := by apply floor_unique hBp <;> omega
-  have f1 : 8*M/B=0 := by apply floor_unique hBp <;> omega
-  have f2 : 4*M/B=0 := by apply floor_unique hBp <;> omega
-  have g0 : 2*L8/B=0 := by apply floor_unique hBp <;> omega
-  have g1 : 8*M8/B=3 := by apply floor_unique hBp <;> omega
-  have g2 : 4*M8/B=1 := by apply floor_unique hBp <;> omega
+  have hBp : (0 : ℤ)<B := by omega
+  have f0 : 2*L/B=1 := by apply floor_unique hBp <;> linarith only [h0,h1,h2,h3,hB,hq]
+  have f1 : 8*M/B=0 := by apply floor_unique hBp <;> linarith only [h0,h1,h2,h3,hB,hq]
+  have f2 : 4*M/B=0 := by apply floor_unique hBp <;> linarith only [h0,h1,h2,h3,hB,hq]
+  have g0 : 2*L8/B=0 := by apply floor_unique hBp <;> linarith only [h0,h1,h2,h3,hB,hq]
+  have g1 : 8*M8/B=3 := by apply floor_unique hBp <;> linarith only [h0,h1,h2,h3,hB,hq]
+  have g2 : 4*M8/B=1 := by apply floor_unique hBp <;> linarith only [h0,h1,h2,h3,hB,hq]
+  have ranges : (0 ≤ L ∧ L < B) ∧ (0 ≤ M ∧ M < B) ∧
+      (0 ≤ L8 ∧ L8 < B) ∧ (0 ≤ M8 ∧ M8 < B) ∧ L % 2 = 1 ∧ L8 % 2 = 0 := by
+    clear ha hb hs hQ
+    omega
+  obtain ⟨hL,hM,hL8,hM8,hp,hp8⟩ := ranges
   have e0 : a*L-s*M=Q := by
     have he : 361*(a*L-s*M-Q)=0 := by
       linear_combination
@@ -230,9 +242,7 @@ theorem q_readings (r : ℕ) :
         (19*L8)*ha-(19*M8)*hs+(2*B-3)*h2-
         (5*B+2)*h3+38*hQ
     nlinarith only [he]
-  refine ⟨⟨by omega,by omega⟩,⟨by omega,by omega⟩,
-    ⟨by omega,by omega⟩,⟨by omega,by omega⟩,
-    by omega,by omega,?_,?_,e0,e1⟩
+  refine ⟨hL,hM,hL8,hM8,hp,hp8,?_,?_,e0,e1⟩
   · simp [correction, f0, f1, f2]
   · simp [correction, g0, g1, g2]
 

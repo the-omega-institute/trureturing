@@ -46,7 +46,9 @@ theorem affine_annihilates {A : Type*} [AddCommGroup A] (r : ℕ) (x : Fin (3*de
       read (degree r) (block x 1) M+
       read (degree r) (block x 2) (M-aa r)=0 := by
   have h := hx (affine r M) (affine_zero r M hM)
-  simpa only [affine, physical_read (by dsimp [degree]; omega)] using h
+  dsimp only [affine] at h
+  rw [physical_read (d := degree r) (by dsimp [degree]; omega) x] at h
+  exact h
 
 private theorem consecutive_equation {A : Type*} [AddCommGroup A] (r : ℕ) (x : Fin (3*degree r) → A)
     (hx : Annihilates r x) (M : ℤ) (j0 j1 j2 : ℕ)
@@ -96,7 +98,9 @@ private theorem sub_power_mod (z : ℤ) (j : ℕ)
       nlinarith only [hp]
   have hm := Int.emod_add_mul_ediv (-(2 : ℤ)^j) ((2 : ℤ)^(j+1))
   rw [hf, pow_succ] at hm
-  have hn : (-(2 : ℤ)^j)%(2 : ℤ)^(j+1)=(2 : ℤ)^j := by omega
+  have hn : (-(2 : ℤ)^j)%(2 : ℤ)^(j+1)=(2 : ℤ)^j := by
+    rw [pow_succ]
+    omega
   have hrem : (2 : ℤ)^j%(2 : ℤ)^(j+1)=(2 : ℤ)^j := by
     apply Int.emod_eq_of_lt (by positivity)
     rw [pow_succ]
@@ -199,10 +203,18 @@ private theorem fPoint_data (r j : ℕ) (hj : 2≤j ∧ j≤degree r-2) :
   have hpmod : (2 : ℤ)^j%4=0 := by simpa using power_mod_zero j 2 hj.1
   by_cases hn : j=degree r-2
   · subst j
+    have h6 := six_eighth_mod r
     simp only [fPoint, if_pos]
+    dsimp only [affineRange]
+    generalize hbase : (base r : ℤ) = B at *
+    generalize haa : aa r = a at *
+    generalize hbb : bb r = b at *
+    generalize hss : ss r = s at *
+    generalize heighth : eighth r = E at *
+    clear hbase haa hbb hss heighth
     refine ⟨Or.inr (Or.inl ⟨by omega,by omega⟩),
       Or.inr (Or.inl ⟨by omega,by omega⟩),?_,by omega,by omega⟩
-    simpa only [sub_add_cancel] using six_eighth_mod r
+    simpa only [sub_add_cancel] using h6
   have hj3 : j≤degree r-3 := by omega
   have hp : (2 : ℤ)^j≤eighth r := by
     rw [eighth_power]
@@ -215,9 +227,16 @@ private theorem fPoint_data (r j : ℕ) (hj : 2≤j ∧ j≤degree r-2) :
     rw [show (base r : ℤ)=(2 : ℤ)^degree r by simp [base]]
     exact power_mod_zero _ _ (by omega)
   simp only [fPoint, if_neg hn]
+  dsimp only [affineRange]
+  generalize hbase : (base r : ℤ) = B at *
+  generalize haa : aa r = a at *
+  generalize hbb : bb r = b at *
+  generalize hss : ss r = s at *
+  generalize heighth : eighth r = E at *
+  clear hbase haa hbb hss heighth
   refine ⟨Or.inr (Or.inr ⟨by omega,by omega⟩),
     Or.inr (Or.inr ⟨by omega,by omega⟩),?_,by omega,by omega⟩
-  convert sub_power_mod (8*eighth r) j hm using 1 <;> congr 1 <;> ring
+  convert sub_power_mod (8*E) j hm using 1 <;> congr 1 <;> ring
 
 private theorem hPoint_data (r j : ℕ) (hj : 2≤j ∧ j≤degree r-3) :
     affineRange r (hPoint r j) ∧ affineRange r (hPoint r j-1) ∧
@@ -237,10 +256,16 @@ private theorem hPoint_data (r j : ℕ) (hj : 2≤j ∧ j≤degree r-3) :
   have hm : (4*eighth r)%(2 : ℤ)^(j+1)=0 := by
     rw [four_eighth_power]
     exact power_mod_zero _ _ (by omega)
-  dsimp [hPoint]
+  dsimp only [hPoint, affineRange]
+  generalize hbase : (base r : ℤ) = B at *
+  generalize haa : aa r = a at *
+  generalize hbb : bb r = b at *
+  generalize hss : ss r = s at *
+  generalize heighth : eighth r = E at *
+  clear hbase haa hbb hss heighth
   refine ⟨Or.inr (Or.inl ⟨by omega,by omega⟩),
     Or.inr (Or.inl ⟨by omega,by omega⟩),by omega,by omega,?_⟩
-  convert sub_power_mod (4*eighth r) j hm using 1 <;> congr 1 <;> ring
+  convert sub_power_mod (4*E) j hm using 1 <;> congr 1 <;> ring
 
 theorem g_equation {A : Type*} [AddCommGroup A] (r : ℕ) (x : Fin (3*degree r) → A)
     (hx : Annihilates r x) (j : ℕ)
