@@ -36,6 +36,10 @@ $$\operatorname{Tendsto}\left((fun (n:\mathbb{N}) \mapsto ((\operatorname{a}\lef
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/Polynomial/A195417RootLimit.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a195417-absolute-coefficient-root-limit` (proved) by `D5/S3/Analytic/Polynomial/A195417RootLimit.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a195417-absolute-coefficient-root-limit","declaration_gid":"D5/S3/Analytic/Polynomial/A195417RootLimit.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Paul D. Hanna and The Online Encyclopedia of Integer Sequences contributors (2011). *OEIS A195417, absolute coefficient sums of powers of 1+x-x^3*. URL: <https://oeis.org/A195417/internal>.
