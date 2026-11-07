@@ -2801,3 +2801,183 @@ while Proposition 191.2 gives $\dim\mathcal R_u=r_u-2$. Under (195.1), the two s
 *Proof.* If a saturated map has zero kernel, then (195.1) gives $r_u-2=0$, hence $r_u=2$. Proposition 191.2 then gives $\mathcal R_u=0$, and Corollary 179.3 supplies the common-first reduction. The final statement is the exclusion direction of Proposition 194.2. $\square$
 
 The saturated case supplies a concrete finite-dimensional route: first compute the two weighted kernels, then either identify the radical exactly or exclude the proposed rank. Saturation is not known for every candidate, so the unsaturated rank-three and rank-four branches, the nonlinear residual equations, arbitrary partition realization, $F_{64}$, $H43$, SRS\text{-}20, physical succession and Lean/kernel formalization remain open.
+
+## 196. The joint weighted map has a two-dimensional visible quotient
+
+Section 195 tests the two weighted mode maps separately. Their information can be combined before imposing either individual saturation hypothesis. The resulting map sees at most the two dimensions left after the radical has been removed.
+
+**Definition 196.1 (joint weighted mode map).** With the notation of Definition 194.1, define
+
+$$
+\mathsf J_u:
+\mathcal W_u\longrightarrow\mathbb R^{4r_u},
+\qquad
+\mathsf J_u(h)=\bigl(\mathsf L_u(h),\mathsf K_u(h)\bigr).
+\tag{196.1}
+$$
+
+Changing the basis of $\mathcal W_u$ changes the coordinate presentation of $\mathsf J_u$ by invertible transformations on its source and target, so its rank and kernel are intrinsic.
+
+**Proposition 196.2 (joint rank bound and exact-kernel criterion).** If $u$ is a full-zero bounded partition, then
+
+$$
+\mathcal R_u\subseteq\ker\mathsf J_u,
+\qquad
+\operatorname{rank}\mathsf J_u\le2.
+\tag{196.2}
+$$
+
+More precisely,
+
+$$
+\dim\bigl(\ker\mathsf J_u/\mathcal R_u\bigr)
+ =2-\operatorname{rank}\mathsf J_u,
+\tag{196.3}
+$$
+
+and therefore
+
+$$
+\operatorname{rank}\mathsf J_u=2
+\quad\Longleftrightarrow\quad
+\ker\mathsf J_u=\mathcal R_u.
+\tag{196.4}
+$$
+
+In particular, a rank-three candidate has a one-dimensional joint kernel at the saturation value $2$, and a rank-four candidate has a two-dimensional joint kernel at that value. A computed joint rank greater than $2$ rules out a full-zero partition before the nonlinear residual equations are solved.
+
+*Proof.* Proposition 194.2 gives
+
+$$
+\mathcal R_u\subseteq\ker\mathsf L_u
+\cap\ker\mathsf K_u
+=\ker\mathsf J_u.
+$$
+
+Proposition 191.2 gives $\dim\mathcal R_u=r_u-2$. Rank--nullity applied to $\mathsf J_u$ therefore yields
+
+$$
+\operatorname{rank}\mathsf J_u
+ =r_u-\dim\ker\mathsf J_u
+\le r_u-(r_u-2)=2,
+$$
+
+which is (196.2). Since $\mathcal R_u$ is a subspace of $\ker\mathsf J_u$, the quotient in (196.3) is defined, and
+
+$$
+\dim(\ker\mathsf J_u/\mathcal R_u)
+ =\dim\ker\mathsf J_u-\dim\mathcal R_u
+ =(r_u-\operatorname{rank}\mathsf J_u)-(r_u-2)
+ =2-\operatorname{rank}\mathsf J_u.
+$$
+
+This proves (196.3). The equality of kernels in (196.4) is equivalent to the quotient dimension being zero, which by (196.3) is equivalent to joint rank $2$. The rank-three and rank-four statements use $\dim\mathcal R_u=r_u-2$ from Proposition 191.2. The contrapositive of the rank bound gives the exclusion test. $\square$
+
+**Corollary 196.3 (the unsaturated residual boundary).** For a full-zero rank-three or rank-four candidate, the joint weighted probes have exactly three possible outcomes:
+
+$$
+\begin{array}{c|c}
+\operatorname{rank}\mathsf J_u & \dim(\ker\mathsf J_u/\mathcal R_u)\\
+\hline
+2&0\\
+1&1\\
+0&2
+\end{array}
+$$
+
+The first row identifies the radical without requiring $\mathsf L_u$ or $\mathsf K_u$ to be saturated separately. In the other two rows, the weighted equations leave respectively one or two quotient directions beyond the forced radical; those directions must still satisfy the original nonlinear residual equations. Thus individual unsaturation is not itself an escape, while joint rank at most one records the exact remaining finite-dimensional ambiguity.
+
+The joint rank test is a necessary filter for the unsaturated branches. It does not evaluate the rank for an actual arbitrary partition, construct a residual-zero rank-three or rank-four partition, settle $F_{64}$, $H43$, SRS\text{-}20, physical succession or Lean/kernel formalization.
+
+## 197. The radical quotient is canonically the baseline tensor
+
+The rank bound in Section 196 can be sharpened from a dimension statement to a canonical quotient construction. Every full-zero candidate has a linear projection onto the two-dimensional baseline span, and the only directions lost by that projection are exactly the common radical directions.
+
+**Definition 197.1 (the baseline target and the quotient map).** Let
+
+$$
+E_f=\operatorname{im}\Phi_f
+ =\operatorname{span}_{\mathbb R}\{p,q\}
+$$
+
+for the baseline label map of Definition 191.1. For a full-zero bounded partition $u$, define on the candidate span
+
+$$
+T_u:\mathcal W_u\longrightarrow E_f,
+\qquad
+T_u(H_a)=F_a.
+\tag{197.1}
+$$
+
+Here $a$ is any real label vector with $H_a\in\mathcal W_u$.
+
+**Proposition 197.2 (canonical quotient reconstruction).** If all sixty-four residuals of $u$ vanish, then $T_u$ is a well-defined surjective linear map and
+
+$$
+\ker T_u=\mathcal R_u,
+\qquad
+\mathcal W_u/\mathcal R_u\ \cong\ E_f.
+\tag{197.2}
+$$
+
+More precisely, the induced map
+
+$$
+\overline T_u:\mathcal W_u/\mathcal R_u\longrightarrow E_f,
+\qquad
+\overline T_u([x])=T_u(x),
+\tag{197.3}
+$$
+
+is an isomorphism, and for every $x,y,z\in\mathcal W_u$,
+
+$$
+\mathcal C(x,y,z)
+ =\mathcal C\bigl(T_u x,T_u y,T_u z\bigr).
+\tag{197.4}
+$$
+
+Thus the trilinear form induced by $\mathcal C$ on the quotient is exactly the restriction of the baseline form to $E_f$.
+
+*Proof.* Suppose that $H_a=H_b$. Then $a-b\in\ker\Phi_u$, and Proposition 191.2 gives $\ker\Phi_u\subseteq\ker\Phi_f$. Hence $F_a=F_b$, so (197.1) is independent of the representing label vector. Linearity is immediate from the definitions of $H_a$ and $F_a$.
+
+For every $F_a\in E_f$, the element $H_a\in\mathcal W_u$ satisfies $T_u(H_a)=F_a$, proving surjectivity. Moreover,
+
+$$
+T_u(H_a)=0
+\quad\Longleftrightarrow\quad
+F_a=0.
+$$
+
+Proposition 190.1 identifies the set of such $H_a$ with the common radical, so $\ker T_u=\mathcal R_u$. The first isomorphism theorem gives (197.2)--(197.3).
+
+For $x=H_a$, $y=H_b$ and $z=H_c$, the full-zero residual identity gives
+
+$$
+\mathcal C(x,y,z)
+ =\mathcal C(F_a,F_b,F_c)
+ =\mathcal C(T_ux,T_uy,T_uz).
+$$
+
+Every element of $\mathcal W_u$ has this form, so (197.4) follows. Since each element of $\mathcal R_u$ is a radical in every slot, the left-hand side of (197.4) is independent of the representatives of the quotient classes; consequently it is precisely the quotient trilinear form, and (197.4) identifies that form with the baseline restriction. $\square$
+
+**Corollary 197.3 (what the rank branches mean).** For a full-zero partition,
+
+$$
+\dim(\mathcal W_u/\mathcal R_u)=2,
+$$
+
+and the three rank branches have the following canonical interpretation:
+
+$$
+\begin{array}{c|c|c}
+\dim\mathcal W_u & \dim\mathcal R_u & \text{quotient description}\\
+\hline
+2&0& T_u\text{ is an isomorphism},\\
+3&1& \text{one invisible radical extension of }E_f,\\
+4&2& \text{two invisible radical extensions of }E_f.
+\end{array}
+\tag{197.5}
+$$
+
+Any linear complement of $\mathcal R_u$ in $\mathcal W_u$ therefore carries a copy of the baseline tensor through $T_u$, but the complement is not canonical and need not respect the pointwise simplex constraints. In particular, (197.5) does not construct a rank-three or rank-four partition and does not eliminate the out-of-plane lift problem. The arbitrary-partition realization, the residual-zero search beyond the quotient, $F_{64}$, $H43$, SRS\text{-}20, physical succession and Lean/kernel formalization remain open.
