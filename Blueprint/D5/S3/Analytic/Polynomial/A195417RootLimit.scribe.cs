@@ -40,12 +40,13 @@ internal sealed class A195417RootLimitDocument : IScribeDocumentDefinition
                 + "The original degree_root_limit in A192205RootLimit makes that extra factor tend to one. "
                 + "The squeeze theorem proves the full natural-index limit. This result answers only the first root-limit question; "
                 + "it makes no assertion about successive ratios or their attractors.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("oeis-a195417-absolute-coefficient-root-limit"), ResolutionKind.Proved)))));
 
     private static DocumentBlock Entry(string name, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) =>
+        DescribeRole role, AssessedProvenance provenance, OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("a195417-root-limit-" + name), DeclarationHandle.Create(Prefix + name),
-            H(title), StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(prose))), role);
+            H(title), StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(prose))), role, resolution);
     private static Formula V(string name) => F.Id(name);
     private static Formula Call(string name, params Formula[] args) => new Formula.Apply(Seq(Operatorname, Grp(V(name))), [.. args]);
     private static Formula Par(Formula f) => Seq(Open, f, Close);
