@@ -37,13 +37,15 @@ internal sealed class KurkovA263634LogPolynomialsDocument : IScribeDocumentDefin
                 AssessedProvenance.FromLiterature(Source)),
             Node("result", "The recursion gives the logarithmic polynomials", ClaimBody(),
                 "Put Q k = ((PowerSeries.derivative)^[k] sourceSeries) * PowerSeries.invOfUnit sourceSeries 1 inside the proof. Differentiating its product with sourceSeries gives D(Q k) = Q (k + 1) - Q k * Q 1. The iterated product rule produces exactly the binomial convolution in R. Simultaneous induction over all positive columns identifies R (n + 1) k with the constant coefficient of D^[n](Q k). The formal logarithmic derivative then identifies the first column. Coefficient comparison proves the assertion for every source family, and also constructs such a family.",
-                AssessedProvenance.FromRepo(Source), theorem: true))));
+                AssessedProvenance.FromRepo(Source), theorem: true, resolution: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("kurkov-a263634-log-polynomials"), ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        AssessedProvenance provenance, bool theorem = false) => Describe.Lean(
+        AssessedProvenance provenance, bool theorem = false,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
         DescribeId.Create("kurkov263634-" + name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
         H(title), StatementSource.FromAuthor(Disp(formula)), provenance,
-        Blocks(Paragraph(Text(prose))), theorem ? DescribeRole.Theorem : DescribeRole.Definition);
+        Blocks(Paragraph(Text(prose))), theorem ? DescribeRole.Theorem : DescribeRole.Definition, resolution);
 
     private static Formula V(string name) => F.Id(name);
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);

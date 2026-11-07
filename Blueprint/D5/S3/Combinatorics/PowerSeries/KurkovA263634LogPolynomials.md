@@ -60,6 +60,10 @@ $$(\exists L \in \mathbb{N} \to \operatorname{MvPolynomial}\left(\mathbb{N}, \ma
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/PowerSeries/KurkovA263634LogPolynomials.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/kurkov-a263634-log-polynomials` (proved) by `D5/S3/Combinatorics/PowerSeries/KurkovA263634LogPolynomials.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"kurkov-a263634-log-polynomials","declaration_gid":"D5/S3/Combinatorics/PowerSeries/KurkovA263634LogPolynomials.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Mikhail Kurkov (2025). *OEIS A263634: the logarithmic-polynomial recursion*. URL: <https://oeis.org/A263634>.
