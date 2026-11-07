@@ -1,0 +1,24 @@
+**定义 84.1（互易、半程与归一化输出返回）。** 沿用定义 77.1 的全部有限对象、所选框架、实际成功分支与有限接续供应，仍用通常迹之和 $\tau$。本节只保留精确 S、H，不先假设 R。对非零效果 $E$，写 $P=P_E$、$q=q_E$、$E^\vee=qE^\dagger$、$\mathcal C=P\mathcal AP$。定义
+
+$$
+\begin{aligned}
+\beta(E,F)&=\sup_{\rho\in\mathcal C,\ \rho\ge0,\ \tau(\rho)=1}
+ \bigl\|q^{-1}T_{E^\vee,F}T_{E,F}(\rho)-\rho\bigr\|_1,\\
+d(E,F)&=\frac{\|T_{E,F}-\mathcal L_E\|_\diamond}{\|E\|},
+\qquad \beta_* =\sup_{E\ne0,F}\beta(E,F),\qquad D=\sup_{E\ne0,F}d(E,F).
+\end{aligned}
+\tag{84.1}
+$$
+
+上确界跨全部已有对象；$\mathcal L_E$ 和未除以二的任意输入 diamond 范数仍按定义 79.1 的公式。$\rho$ 是数学正锥中的归一元，$\beta$ 不含参考系统。它比较原实际分支及原实际补偿分支的完整输出；除以 $q$ 是比较规则，不另外供应一个可执行的放大过程。正锥全称量词也不供应全部实际准备、层析或误差证书。
+
+候选 C109 定义为 S、H 及一个统一关系
+
+$$
+\mathrm U:\qquad \exists c\in[0,1)\quad
+ \forall E\ne0,F,\qquad \beta(E,F)\le c.
+\tag{84.2}
+$$
+
+因此 U 是滤波与实际倒数补偿这两个元之间的输出约束，并由同一半程接续关系在不同效果间联结。它不把平方根公式写入定义，也不把每个效果各有一个小于一的界误写成统一的 $c$。
+

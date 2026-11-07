@@ -192,9 +192,9 @@ end D5.S3.Arith.FactorialRatio.OeisA347854BalaHalfIndexIntegral
 set_option autoImplicit false
 namespace D5.S3.Arith.FactorialRatio.OeisA347854BalaHalfIndexIntegral
 
-private def h854 (n q : ℕ) : ℤ := ((12*n/q : ℕ) : ℤ) + ((1*n/q : ℕ) : ℤ) - (((6*n/q : ℕ) : ℤ) + ((4*n/q : ℕ) : ℤ) + ((3*n/q : ℕ) : ℤ))
+def h854 (n q : ℕ) : ℤ := ((12*n/q : ℕ) : ℤ) + ((1*n/q : ℕ) : ℤ) - (((6*n/q : ℕ) : ℤ) + ((4*n/q : ℕ) : ℤ) + ((3*n/q : ℕ) : ℤ))
 
-private lemma h854_nonneg (n q : ℕ) (hq : 0 < q) : 0 ≤ h854 n q := by
+lemma h854_nonneg (n q : ℕ) (hq : 0 < q) : 0 ≤ h854 n q := by
     let r := n % q
     have hr : r < q := Nat.mod_lt n hq
     have split (c : ℕ) : c*n/q = c*(n/q)+c*r/q := mul_div_reduce c n q hq

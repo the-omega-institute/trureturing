@@ -1504,3 +1504,147 @@ $\zeta(\rho)=0$、$\rho\ne1$ 且 $\rho\notin\{-2(n+1):n\in\mathbb N\}$ 的 $\rho
 
 本定理将有界输入推广为上述全速率指数主控，并以解析微分方程给出反向桥接。它没有证明实际算术核满足该增长条件，也没有证明定理 6 的全窗口矩阵条件或其 RH 到正性方向。
 ## 追加锚（本行以下为增补区）
+
+## 9. 完整正核的有限原子粗格强制性
+
+**定义 9.1（有限原子前缀与角频率读数）。** 沿用第一节的完整正核 $P$ 和式 (1) 的乘子 $m$，即
+
+$$
+P(t)=\sum_{j\geq1}c_j e^{-\lambda_j|t|},\qquad
+c_j=\frac{1}{2j(2j+1)},\qquad
+\lambda_j=2j+\frac12,
+$$
+
+$$
+m(\xi)=\sum_{j\geq1}\frac{2c_j\lambda_j\xi^2}{\lambda_j^2+\xi^2}.
+$$
+
+对任意有限指标集 $I$、位置 $x:I\to\mathbb R$ 和复系数 $a:I\to\mathbb C$，记
+
+$$
+\mu=\sum_{i\in I}a_i\delta_{x_i},\qquad
+F_{x,a}(u)=\sum_{\substack{i\in I\\x_i\leq u}}a_i,
+$$
+
+$$
+E(x,a)=\int_{\mathbb R}|F_{x,a}(u)|^2\,du,\qquad
+Q_P(x,a)=\sum_{i,j\in I}\overline{a_i}a_jP(x_i-x_j).
+$$
+
+前缀采用包含等号的约定。指标集可以为空，位置可以重复，也可以落在窗口端点。系数不要求为实数或非负数。若所有位置属于 $[0,D]$ 且 $\sum_i a_i=0$，则 $F_{x,a}$ 在窗口外为零，是属于 $L^1(\mathbb R)\cap L^2(\mathbb R)$ 的有限阶梯函数，其分布导数为 $\mu$。
+
+对这样的前缀采用角频率归一化
+
+$$
+\widehat F(\xi)=\int_{\mathbb R}F(u)e^{-i\xi u}\,du,\qquad
+d\rho_F(\xi)=\frac{|\widehat F(\xi)|^2}{2\pi}\,d\xi.
+$$
+
+这里 $\rho_F$ 是非负有限测度；不要求它关于原点对称。
+
+**定理 9.2（任意强的有限原子粗格下界）。** 对每个 $D>0$ 和每个 $\beta>0$，存在整数 $N\geq1$ 以及严格递增函数 $g:\mathbb N\to\mathbb R$，满足 $g(0)=0$、$g(N)=D$，使得下述结论同时适用于所有有限指标集 $I$ 及所有 $x:I\to\mathbb R$、$a:I\to\mathbb C$：若
+
+$$
+\forall i\in I,\quad 0\leq x_i\leq D,\qquad
+\sum_{i\in I}a_i=0,
+$$
+
+且每个粗格上的复积分确实为零，亦即
+
+$$
+\forall k\in\{0,\ldots,N-1\},\qquad
+\int_{g(k)}^{g(k+1)}F_{x,a}(u)\,du=0,
+$$
+
+则
+
+$$
+\boxed{\beta E(x,a)\leq\operatorname{Re}Q_P(x,a).}
+$$
+
+网格在指标集、位置和系数之前选定；实际使用的是 $g$ 在 $\{0,\ldots,N\}$ 上的有限限制。结论包含 $E(x,a)=0$ 的情形。
+
+证明。先固定 $D>0$ 和 $\beta>0$。沿用完整正核的谱恒等式与角频率 Plancherel 等式：对任意满足上述支撑及零总质量条件的有限原子前缀，
+
+$$
+\operatorname{Re}Q_P(x,a)=\int_{\mathbb R}m(\xi)\,d\rho_F(\xi),\qquad
+\rho_F(\mathbb R)=E(x,a).
+$$
+
+其中 $m$ 对 $\rho_F$ 可积。这里使用的是全部 $j\geq1$ 的正核级数。该乘子满足
+
+$$
+m(\xi)\geq0,\qquad
+m(\xi)\geq\log(2+|\xi|)-\frac12\log13.
+$$
+
+这些谱恒等式和乘子估计作为本证明的工具使用。取
+
+$$
+R=\exp\!\left(2\beta+\frac12\log13\right)+1.
+$$
+
+于是 $R>0$，并且 $|\xi|>R$ 时 $m(\xi)\geq2\beta$。再取整数 $N\geq1$ 足够大，使
+
+$$
+\kappa:=\frac{DR^3}{\pi}\left(\frac{D}{N}\right)^2<\frac12.
+$$
+
+这是可能的，因为 $D$ 和 $R$ 此时均已固定。令 $h=D/N>0$，并对所有自然数 $k$ 令 $g(k)=kh$。这样 $g$ 严格递增，且具有所需端点；$R,N,h,g$ 均与随后给出的原子族无关。
+
+现在任取满足定理假设的有限原子族，并简记 $F=F_{x,a}$、$E=E(x,a)$。每格零复均值允许减去该格左端点的相位：
+
+$$
+\int_{kh}^{(k+1)h}F(u)e^{-i\xi u}\,du
+=\int_{kh}^{(k+1)h}F(u)\bigl(e^{-i\xi u}-e^{-i\xi kh}\bigr)\,du.
+$$
+
+由实相位的估计 $|e^{is}-e^{it}|\leq|s-t|$，右端的模不超过
+
+$$
+|\xi|h\int_{kh}^{(k+1)h}|F(u)|\,du.
+$$
+
+把所有粗格相加，并使用 $F$ 在窗口外为零，得到
+
+$$
+|\widehat F(\xi)|\leq |\xi|h\int_0^D|F(u)|\,du.
+$$
+
+窗口上的 Cauchy–Schwarz 不等式给出
+
+$$
+\left(\int_0^D|F(u)|\,du\right)^2\leq D E.
+$$
+
+因此，当 $\xi\in[-R,R]$ 时，$|\widehat F(\xi)|^2\leq R^2h^2DE$。对这个长度为 $2R$ 的频带积分，得到
+
+$$
+\rho_F([-R,R])
+=\frac1{2\pi}\int_{-R}^R|\widehat F(\xi)|^2\,d\xi
+\leq\frac{DR^3h^2}{\pi}E
+=\kappa E
+\leq\frac12E.
+$$
+
+由 $\rho_F(\mathbb R)=E$，频带外的质量至少为 $E/2$。再利用 $m$ 在整个实轴上非负、在频带外不小于 $2\beta$，可得
+
+$$
+\begin{aligned}
+\operatorname{Re}Q_P(x,a)
+&=\int_{\mathbb R}m(\xi)\,d\rho_F(\xi)\\
+&\geq2\beta\,\rho_F\bigl(\mathbb R\setminus[-R,R]\bigr)\\
+&=2\beta\bigl(E-\rho_F([-R,R])\bigr)\\
+&\geq\beta E.
+\end{aligned}
+$$
+
+整个论证只使用 $E\geq0$，没有除以 $E$，所以空指标集、重复位置的抵消以及其他零能量情形均被保留。证毕。
+
+**注记 9.3（与完成细节空间的关系及推导来源）。** 定理 9.2 是式 (4) 的有限原子、逐格积分版本。它的假设直接作用于包含端点的前缀及每格复积分，不以帽函数读出或完成空间为前提。要得到式 (4) 在 $Z=\ker C$ 上的完成空间陈述，还须给出具体完成空间与其能量形式，建立帽函数约束和逐格积分约束的对应，并证明满足约束的有限原子族在目标细节空间中的适当稠密性与不等式的连续延拓。
+
+式 (5) 还需要在同一空间上实现 $K-P$ 的余项双线性形式、证明所用截断及二阶导数全变差估计所给出的算子界，并构造相应的有界自伴算子。这些是独立于定理 9.2 的桥接义务；有限原子下界本身不提供完成空间上的算子表示。
+
+这里的完整正核、频率权重和粗格消去机制取自本卷第一、二节；角频率 Plancherel 等式与 Cauchy–Schwarz 不等式作为经典工具使用。定理 9.2 所述有限原子组合推导归属本仓，不据此提出新的文献原创性主张。
+
+## 追加锚（本行以下为增补区）

@@ -1,0 +1,14 @@
+### 定义 2.1（二元内容、内生中点与共同支撑）
+
+给定同一有限载体上的两个密度矩阵
+$\rho_0,\rho_1\ge0$、$\operatorname{Tr}\rho_0=\operatorname{Tr}\rho_1=1$，定义
+
+$$
+\sigma=\frac{\rho_0+\rho_1}{2},\qquad
+ \delta=\frac{\rho_0-\rho_1}{2}=\rho_0-\sigma,
+ \qquad S=\operatorname{supp}\sigma.
+$$
+
+所有输入算符先限制在 $S$ 上。给定 CPTP 内部转换 $\mathcal N$，
+令 $\tau=\mathcal N(\sigma)$，输出限制在 $\operatorname{supp}\tau$ 上。
+

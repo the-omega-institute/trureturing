@@ -1,0 +1,6 @@
+The entry records the following three conjectural clauses:
+
+1. every member of $T$ is odd;
+2. every member of $T$ greater than $7$ is composite;
+3. every member of $T$ greater than $1$ is divisible by $3$ or by $5$ or by $7$, with the disjunction inclusive.
+

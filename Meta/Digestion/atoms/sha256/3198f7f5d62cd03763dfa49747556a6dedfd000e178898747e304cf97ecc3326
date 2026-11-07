@@ -1,0 +1,12 @@
+### 命题 3.2（相邻三层恢复相对速率与带向曲率）
+
+对每个已定义层，$n_k\cdot n_{k+2}<0$，并有
+
+$$
+\boxed{
+ \frac{v_{k+1}}{v_k}=-\frac1{n_k\cdot n_{k+2}},\qquad
+ \kappa_k=-\frac{(n_k\times n_{k+1})\cdot n_{k+2}}{n_k\cdot n_{k+2}}.}
+$$
+
+**证明。**对 $n_k\cdot n_{k+1}=0$ 求导，得 $v_k+v_{k+1}(n_k\cdot n_{k+2})=0$。又由框架递推，$n_k\cdot n_{k+2}=-1/q_k$ 且 $(n_k\times n_{k+1})\cdot n_{k+2}=\kappa_k/q_k$。
+

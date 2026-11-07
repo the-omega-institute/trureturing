@@ -20,6 +20,8 @@ proof_shape: kernel_coordinates_dvd: bind-only; consumer: arbitrary_pair_upper_b
 proof_shape: large_index_square_lift: content.
 escape_witness: the hole-induced scaled cover has radius q-1 and contradicts
 the actual quotient-index threshold, with the radius-two exception excluded.
+proof_shape: lattice_upper_bound: content.
+consumer: arbitrary_pair_upper_bound and BajnokBeattyFiniteUpper.finite_noncyclic_upper_dichotomy.
 proof_shape: arbitrary_pair_upper_bound: content.
 escape_witness: residue_rectangle yields the shortest progression bound for the
 actual relation lattice of every covering pair; integer parity sharpens the order.
@@ -37,7 +39,7 @@ open NearSquareLatticeRigidity BajnokBeattyCayleyNecessity
 def SquareCovers (L : Submodule ℤ Plane) (s : ℤ) : Prop :=
   ∀ z : Plane, ∃ r : Plane, (|r 0| ≤ s ∧ |r 1| ≤ s) ∧ z - r ∈ L
 
-private theorem lee_iff_square (x y s : ℤ) :
+theorem lee_iff_square (x y s : ℤ) :
     |x| + |y| ≤ s ↔ |x+y| ≤ s ∧ |x-y| ≤ s := by
   simp only [abs_le]
   rcases le_total 0 x with hx | hx <;> rcases le_total 0 y with hy | hy
@@ -178,14 +180,14 @@ private theorem kernel_index {c k : ℕ} (f : Plane →+ Target c k)
   simp [Target, Nat.card_prod, Nat.card_zmod]
   ring
 
-private abbrev LeeCode (r : ℕ) :=
+abbrev LeeCode (r : ℕ) :=
   (Fin (r+1) × Fin (r+1)) ⊕ (Fin r × Fin r)
 
-private def decodeLee (r : ℕ) : LeeCode r → Plane
+def decodeLee (r : ℕ) : LeeCode r → Plane
   | .inl (a,b) => ![(a : ℤ)+(b : ℤ)-r, (a : ℤ)-(b : ℤ)]
   | .inr (a,b) => ![(a : ℤ)+(b : ℤ)+1-r, (a : ℤ)-(b : ℤ)]
 
-private theorem leeCode_complete {r : ℕ} {z : Plane}
+theorem leeCode_complete {r : ℕ} {z : Plane}
     (hz : |z 0| + |z 1| ≤ (r : ℤ)) : ∃ a : LeeCode r, decodeLee r a = z := by
   have hs := (lee_iff_square _ _ _).mp hz
   have h0 := abs_le.mp hs.1
@@ -208,7 +210,7 @@ private theorem leeCode_complete {r : ℕ} {z : Plane}
     ext i
     fin_cases i <;> simp [decodeLee, a, b] <;> dsimp [u,v] at * <;> omega
 
-private def dilation (c : ℤ) : Plane →ₗ[ℤ] Plane := c • LinearMap.id
+def dilation (c : ℤ) : Plane →ₗ[ℤ] Plane := c • LinearMap.id
 
 private theorem scaled_cover (K : Submodule ℤ Plane) {c q : ℤ} (hc : 0 < c)
     (hdiv : ∀ z ∈ K, c ∣ z 0 ∧ c ∣ z 1)
@@ -276,7 +278,7 @@ private theorem dilation_index (c : ℤ) (hc : c ≠ 0) :
   simpa only [dilation, LinearMap.det_smul, LinearMap.det_id, Module.finrank_pi,
     Fintype.card_fin, mul_one, Int.natAbs_pow] using h.symm
 
-private theorem scaled_index (K : Submodule ℤ Plane) {c : ℤ} (hc : c ≠ 0)
+theorem scaled_index (K : Submodule ℤ Plane) {c : ℤ} (hc : c ≠ 0)
     (hdiv : ∀ z ∈ K, c ∣ z 0 ∧ c ∣ z 1) :
     K.toAddSubgroup.index =
       (K.comap (dilation c)).toAddSubgroup.index*c.natAbs^2 := by
@@ -368,7 +370,7 @@ private theorem rectangle_index_bound (L : Submodule ℤ Plane) {m : ℤ}
   change (Nat.card (Plane ⧸ L) : ℤ) ≤ _
   nlinarith
 
-private theorem residue_rectangle (M : Submodule ℤ Plane) {c s : ℤ} (hc : 0 < c)
+theorem residue_rectangle (M : Submodule ℤ Plane) {c s : ℤ} (hc : 0 < c)
     (hdiv : ∀ z ∈ M, c ∣ z 0 ∧ c ∣ z 1)
     (hcover : ∀ z : Plane, ∃ r : Plane, (|r 0| ≤ s ∧ |r 1| ≤ s) ∧
       (![(-s+(2*s+1)%c),(-s+(2*s+1)%c)] + c • z)-r ∈ M) :
@@ -406,7 +408,7 @@ private theorem residue_rectangle (M : Submodule ℤ Plane) {c s : ℤ} (hc : 0 
     dsimp [a] at hy
     nlinarith
 
-private theorem mapped_index (K : Submodule ℤ Plane) :
+theorem mapped_index (K : Submodule ℤ Plane) :
     (K.map sumDiff).toAddSubgroup.index = K.toAddSubgroup.index*2 := by
   have hi := AddSubgroup.index_map_of_injective
     (H := K.toAddSubgroup) (f := sumDiff.toAddMonoidHom) sumDiff_injective
@@ -449,6 +451,61 @@ private theorem lattice_compression_bound (K : Submodule ℤ Plane) {c s : ℤ}
   change (M.toAddSubgroup.index : ℤ) = _ at hmap
   nlinarith
 
+/-- Uniform lattice-index upper bound, without choosing a product normal form.
+The actual kernel index is used throughout; `scaled_index` supplies the integral
+multiple of the square of the common coordinate divisor needed for parity. -/
+theorem lattice_upper_bound (K : Submodule ℤ Plane) {c s : ℤ}
+    (hc : 2 ≤ c) (hs : 3 ≤ s)
+    (hdiv : ∀ z ∈ K, c ∣ z 0 ∧ c ∣ z 1)
+    (hcover : ∀ z : Plane, ∃ r : Plane, |r 0| + |r 1| ≤ s ∧ z-r ∈ K) :
+    (K.toAddSubgroup.index : ℤ) ≤ 2*s^2 ∨
+      (Odd c ∧ c ∣ 2*s+1 ∧
+        2*(K.toAddSubgroup.index : ℤ) ≤ (2*s+1)^2-c^2) := by
+  by_cases hlow : (K.toAddSubgroup.index : ℤ) ≤ 2*s^2
+  · exact Or.inl hlow
+  right
+  have hcomp := lattice_compression_bound K hc hs hdiv hcover (by omega)
+  let m := (2*s+1)/c
+  let r := (2*s+1)%c
+  have hm : 0 ≤ m := Int.ediv_nonneg (by omega) (by omega)
+  have hr0 : 0 ≤ r := Int.emod_nonneg _ (by omega)
+  have hrc : r < c := Int.emod_lt_of_pos _ (by omega)
+  have hn : c*m+r = 2*s+1 := Int.mul_ediv_add_emod _ _
+  have hr : r = 0 := by
+    by_contra hne
+    have hr1 : 1 ≤ r := by omega
+    have ht : 0 ≤ c*m := mul_nonneg (by omega) hm
+    have hu : c*m ≤ 2*s := by omega
+    have hprod := mul_nonneg (show 0 ≤ 2*s-c*m by omega)
+      (show 0 ≤ 2*s+c*m by positivity)
+    change 2*(K.toAddSubgroup.index : ℤ) ≤ (c*m)^2 at hcomp
+    nlinarith
+  have hn' : c*m = 2*s+1 := by omega
+  have hoddprod : Odd (c*m) := by rw [hn']; exact ⟨s, by ring⟩
+  have hcodd := (Int.odd_mul.mp hoddprod).1
+  have hmodd := (Int.odd_mul.mp hoddprod).2
+  refine ⟨hcodd, ⟨m, hn'.symm⟩, ?_⟩
+  let k := (K.comap (dilation c)).toAddSubgroup.index
+  have hi : (K.toAddSubgroup.index : ℤ) = (k : ℤ)*c^2 := by
+    have hh := congrArg (fun n : ℕ => (n : ℤ))
+      (scaled_index K (c := c) (by omega) hdiv)
+    simpa [k, Int.natCast_natAbs, abs_of_pos (show 0 < c by omega)] using hh
+  have hkbound : 2*(k : ℤ) ≤ m^2 := by
+    apply (mul_le_mul_iff_right₀ (sq_pos_of_pos (show 0 < c by omega))).mp
+    change 2*(K.toAddSubgroup.index : ℤ) ≤ (c*m)^2 at hcomp
+    nlinarith only [hcomp, hi]
+  have hround : 2*(k : ℤ) ≤ m^2-1 := by
+    obtain ⟨d,hd⟩ := hmodd
+    have heven : Even (m^2-1) := by
+      refine ⟨2*d*(d+1),?_⟩
+      rw [hd]
+      ring
+    obtain ⟨e,he⟩ := heven
+    omega
+  have hbound := mul_le_mul_of_nonneg_left hround (sq_nonneg c)
+  have hsq := congrArg (fun x : ℤ => x^2) hn'
+  nlinarith only [hbound, hsq, hi]
+
 /-- Uniform upper bound for every signed covering pair in the invariant-factor
 target, including the exceptional odd-divisor constraint above the baseline. -/
 theorem arbitrary_pair_upper_bound {c k : ℕ} {s : ℤ}
@@ -485,47 +542,7 @@ theorem arbitrary_pair_upper_bound {c k : ℕ} {s : ℤ}
     rw [he, sub_self]
   have hi : (K.toAddSubgroup.index : ℤ) = (c : ℤ)^2*k := by
     exact_mod_cast kernel_index f hf
-  by_cases hlow : (c : ℤ)^2*k ≤ 2*s^2
-  · exact Or.inl hlow
-  right
-  have hcomp := lattice_compression_bound K (c := c) (by exact_mod_cast hc) hs
-    hKdiv hKcover (by omega)
-  rw [hi] at hcomp
-  let m := (2*s+1)/(c : ℤ)
-  let r := (2*s+1)%(c : ℤ)
-  have hcZ : 2 ≤ (c : ℤ) := by exact_mod_cast hc
-  have hm : 0 ≤ m := Int.ediv_nonneg (by omega) (by omega)
-  have hr0 : 0 ≤ r := Int.emod_nonneg _ (by omega)
-  have hrc : r < c := Int.emod_lt_of_pos _ (by omega)
-  have hn : (c : ℤ)*m+r = 2*s+1 := Int.mul_ediv_add_emod _ _
-  have hr : r = 0 := by
-    by_contra hne
-    have hr1 : 1 ≤ r := by omega
-    have ht : 0 ≤ (c : ℤ)*m := mul_nonneg (by omega) hm
-    have hu : (c : ℤ)*m ≤ 2*s := by omega
-    have hprod := mul_nonneg (show 0 ≤ 2*s-(c : ℤ)*m by omega)
-      (show 0 ≤ 2*s+(c : ℤ)*m by positivity)
-    change 2*((c : ℤ)^2*k) ≤ ((c : ℤ)*m)^2 at hcomp
-    nlinarith
-  have hn' : (c : ℤ)*m = 2*s+1 := by omega
-  have hoddprod : Odd ((c : ℤ)*m) := by rw [hn']; exact ⟨s, by ring⟩
-  have hcodd := (Int.odd_mul.mp hoddprod).1
-  have hmodd := (Int.odd_mul.mp hoddprod).2
-  refine ⟨hcodd, ⟨m, hn'.symm⟩, ?_⟩
-  have hkbound : 2*(k : ℤ) ≤ m^2 := by
-    apply (mul_le_mul_iff_right₀ (sq_pos_of_pos (show 0 < (c : ℤ) by omega))).mp
-    change 2*((c : ℤ)^2*k) ≤ ((c : ℤ)*m)^2 at hcomp
-    nlinarith only [hcomp]
-  have hround : 2*(k : ℤ) ≤ m^2-1 := by
-    obtain ⟨d,hd⟩ := hmodd
-    have heven : Even (m^2-1) := by
-      refine ⟨2*d*(d+1),?_⟩
-      rw [hd]
-      ring
-    obtain ⟨e,he⟩ := heven
-    omega
-  have hbound := mul_le_mul_of_nonneg_left hround (sq_nonneg (c : ℤ))
-  have hsq := congrArg (fun x : ℤ => x^2) hn'
-  nlinarith only [hbound, hsq]
+  simpa only [hi] using
+    (lattice_upper_bound K (c := (c : ℤ)) (by exact_mod_cast hc) hs hKdiv hKcover)
 
 end D5.S3.FiniteGroups.LeeSquareCompression

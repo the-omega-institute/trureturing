@@ -1,0 +1,103 @@
+**Lemma 4.1 (The integer price minimum over all connected
+competitors).** Fix a winning cap and its partition, and let
+$G\in\mathfrak G_N(a,h)$ be any graph, without a neighborhood
+restriction. Then
+
+$$
+\mathcal P_j(G)\ge nb_j+d_{j,N}c_j.
+\tag{4.1}
+$$
+
+Equality holds if and only if the source types are precisely
+those in Theorem 1.3 for this partition. In particular each tail
+has its own single core--tail connector. This assertion concerns
+the price sum, not an exact finite formula for $W$.
+
+**Proof.** For a source with counts $L,B$ set
+
+$$
+q(L,B)=
+\begin{cases}
+B,&L>0,\ B>0,\\
+B-1,&L=0,\ B>0,\\
+0,&B=0.
+\end{cases}
+\tag{4.2}
+$$
+
+Connectedness implies
+
+$$
+\sum_{u\in S}q(L_u,B_u)\ge n.
+\tag{4.3}
+$$
+
+To verify this, identify all core sinks as one vertex. For each
+source replace its distinct adjacent sink vertices after the
+identification by any tree spanning them, and remove the source.
+A single adjacent sink needs no tree edge. The resulting
+multigraph on the $n$ tail vertices and the core vertex is
+connected, because each replacement preserves connectivity
+between that source's adjacent sinks. Its number of edges is
+exactly the left side of (4.3), so it is at least $n$. This
+argument permits arbitrary original neighborhoods, including
+tail-only sources and sources meeting all sinks.
+
+Call a type meeting the tail bad if it is neither a tail singleton
+nor a two-element core--tail connector. By Lemma 2.2 every type
+has price at least $q(L,B)b_j$, and any bad type has price
+strictly greater than $q(L,B)b_j+rc_j$. If a bad source exists,
+(4.3) yields
+
+$$
+\mathcal P_j(G)>nb_j+rc_j
+                  >nb_j+d_{j,N}c_j.
+\tag{4.4}
+$$
+
+There can be no equality in this case, and (4.1) holds.
+
+Otherwise let $b$ be the number of core--tail connectors and put
+
+$$
+D_0=\sum_{u:B_u=0}(m-L_u).
+\tag{4.5}
+$$
+
+Now (4.3) is $b\ge n$. Using (2.3) gives
+
+$$
+\mathcal P_j(G)=bb_j+D_0c_j
+ +\sum_{u:B_u=0}
+   \frac{(m-L_u)(r-L_u)(m+r+L_u)}{\alpha^2}.
+\tag{4.6}
+$$
+
+Every term in the last sum is nonnegative. If $b\ge n+1$,
+$b_j>rc_j$ in (2.2) makes (4.6) strictly greater than the right
+side of (4.1). It remains to consider $b=n$.
+
+The original edge budget, after subtracting one from every source
+degree, is
+
+$$
+(a-1)N=\sum_{u\in S}(K_u-1)
+\equiv b-D_0\pmod r.
+\tag{4.7}
+$$
+
+Here a core-only source contributes
+$L_u-1=r-(m-L_u)$, a connector contributes one, and a tail
+singleton contributes zero. Hence for $b=n$,
+$D_0\equiv d_{j,N}\pmod r$, so $D_0\ge d_{j,N}$. Formula
+(4.6) proves (4.1). Equality requires $D_0=d_{j,N}$ and
+vanishing of every term in the last sum. For a nonempty core-only
+type those zeros are exactly $L=m$ and $L=r$. Thus there are
+exactly $d_{j,N}$ missing-one-core sources, and every other
+core-only source is full-core. Only $n$ connectors and tail
+singletons remain. Each tail must occur in at least one connector,
+since otherwise it and its singleton sources form a separate
+component. There are $n$ tails and $n$ connectors, so each tail
+occurs exactly once. Conversely these source types give equality
+by (2.1) and (1.8). ∎
+

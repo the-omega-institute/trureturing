@@ -1,0 +1,36 @@
+### 22.5. The Section 18 feedback coefficient
+
+The Section 18 feedback coefficient, for $\lambda=17000$, $\delta=1/16$ and the negative-branch coordinate lower bound $m_-^2=s^2$, is exactly
+
+$$
+K=\frac{2(17000+2)}{s^2(1-1/16)}
+ =\frac{1088128}{15}(2+\sqrt2).
+$$
+
+It satisfies
+
+$$
+247673.4250131940<K<247673.4250131941.
+$$
+
+An exact rational certificate is obtained by setting
+$L_K=2476734250131940/10^{10}$ and $U_K=2476734250131941/10^{10}$: the positive rational numbers
+$15L_K/1088128-2$ and $15U_K/1088128-2$ have squares respectively below and above $2$. Consequently the four-decimal display of this coefficient in Section 18 is $247673.4250$, replacing the displayed $247673.4251\ldots$.
+
+The tighter intermediate upper fraction in that section has the following explicit witness. Let
+
+$$
+q_0=\frac{1767767}{1250000},\qquad
+q_0^2-2=\frac{166289}{1562500000000}>0.
+$$
+
+Then
+
+$$
+K<\frac{1088128}{15}(2+q_0)
+ =\frac{96747432712}{390625}
+ <\frac{58048466428}{234375}<255616,
+$$
+
+where the difference between the middle two fractions is exactly $34004/1171875>0$. This supplies the witness for the earlier intermediate fraction. The correction concerns the displayed decimal and the exposition of this rational witness; the Section 18 integer bound and its other rational certificate retain their conclusions.
+

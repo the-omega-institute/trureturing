@@ -21,10 +21,10 @@ namespace D5.S3.AnalyticClosure.Polylogarithm.CompositionBanksSourceInduction
 open D5.S3.AnalyticClosure.Polylogarithm
 open CompositionBoundary CompositionContinuation
 
-private def sourceWeight : List ℕ+ → ℕ := fun ks ↦
+def sourceWeight : List ℕ+ → ℕ := fun ks ↦
   List.sum (List.map (fun entry : ℕ+ ↦ (entry : ℕ)) ks)
 
-private def admissibleRemainder : ℕ+ → List ℕ+ → Prop := fun first suffix ↦
+def admissibleRemainder : ℕ+ → List ℕ+ → Prop := fun first suffix ↦
   1 < (first : ℕ) ∧
     ∃ ρ C : ℝ, ∃ M : ℕ,
       0 < ρ ∧ ρ < 1 ∧ 0 ≤ C ∧
@@ -37,7 +37,7 @@ private def suffixConstant : List ℕ+ → ℝ
   | [] => 1
   | first :: suffix => CompositionBoundary.zeta first suffix
 
-private def leadingOneRemainder : ℕ → List ℕ+ → Prop := fun q suffix ↦
+def leadingOneRemainder : ℕ → List ℕ+ → Prop := fun q suffix ↦
   (suffix = [] ∨ ∃ first rest, suffix = first :: rest ∧ 1 < (first : ℕ)) ∧
     ∃ ρ C : ℝ, ∃ M : ℕ, ∃ P : Polynomial ℝ,
       0 < ρ ∧ ρ < 1 ∧ 0 ≤ C ∧
@@ -528,7 +528,7 @@ private theorem actual_upper_bank_atlas :
   exact ⟨actualUpperBank, actual_upper_local_extension_with_limit,
     actual_upper_bank_local_trace, actual_upper_ordinary_pair⟩
 
-private theorem composition_remainder_cases_of_controls
+theorem composition_remainder_cases_of_controls
     (head : ℕ+) (tail : List ℕ+)
     (composition_continued_norm_bound : ∀ ks : List ℕ+,
       (∀ (first : ℕ+) (rest : List ℕ+),

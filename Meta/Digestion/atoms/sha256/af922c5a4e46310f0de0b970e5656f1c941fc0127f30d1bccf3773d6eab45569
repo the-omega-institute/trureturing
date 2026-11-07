@@ -1,0 +1,47 @@
+### 定理 8.1（有限词的成对缺额界）
+
+令 $A_1,\ldots,A_\ell$ 为 Hermitian 字母，记
+
+$$
+M_j=\|A_j\|_{\rm op},\qquad \epsilon_j=\|D(A_j)\|_{\rm op}=\sqrt{\|\Delta_\Phi(A_j)\|_{\rm op}}.
+$$
+
+则
+
+$$
+\boxed{\left\|\Phi(A_1\cdots A_\ell)-\Phi(A_1)\cdots\Phi(A_\ell)\right\|_{\rm op}
+\le\sum_{1\le i<j\le\ell}\epsilon_i\epsilon_j\prod_{k\ne i,j}M_k.}
+$$
+
+特别地，若所有字母从两个 Hermitian 收缩 $A,B$ 中选取，且 $\|\Delta_\Phi(A)\|_{\rm op},\|\Delta_\Phi(B)\|_{\rm op}\le\delta$，则每个长度为 $\ell$ 的词满足
+
+$$
+\boxed{\left\|\Phi(w)-w(\Phi(A),\Phi(B))\right\|_{\rm op}\le\binom\ell2\delta.}
+$$
+
+**证明。**UCP 映射在算符范数下收缩；有限表示中 $\|V\|=1$、$\|\pi(x)\|=\|x\|$ 也直接给出这一点。定义交织残差
+
+$$
+R(w)=\pi(A_1\cdots A_\ell)V-V\Phi(A_1)\cdots\Phi(A_\ell).
+$$
+
+由 $\pi(A_j)V-V\Phi(A_j)=D(A_j)$ 逐项相消，得到
+
+$$
+R(w)=\sum_{j=1}^{\ell}\pi(A_1\cdots A_{j-1})D(A_j)\Phi(A_{j+1})\cdots\Phi(A_\ell),
+$$
+
+从而
+
+$$
+\|D(w)\|_{\rm op}\le\sum_{j=1}^{\ell}\epsilon_j\prod_{k\ne j}M_k.
+$$
+
+令 $w'=A_2\cdots A_\ell$。首字母 Hermitian，故
+
+$$
+\Phi(A_1w')-\Phi(A_1)\Phi(w')=D(A_1)^\dagger D(w').
+$$
+
+将整体乘积误差写成这一项加上 $\Phi(A_1)[\Phi(w')-\Phi(A_2)\cdots\Phi(A_\ell)]$。第一项给出所有含指标 $1$ 的成对项，第二项通过归纳给出其余成对项，并补上因子 $M_1$。长度一时误差为零，归纳证明通式。令每个 $M_j\le1$、$\epsilon_j\le\sqrt\delta$ 即得二项式界。
+

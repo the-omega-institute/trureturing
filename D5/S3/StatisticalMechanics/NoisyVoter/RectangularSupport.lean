@@ -79,7 +79,7 @@ private theorem K_spec (hG : G.Connected) :
             simp only [SimpleGraph.Walk.length_cons] at hp
             omega
 
-private theorem vertices_countable (hG : G.Connected) (u : V) : Countable V := by
+theorem vertices_countable (hG : G.Connected) (u : V) : Countable V := by
   have hc := Set.countable_iUnion (fun N => (K G u N).countable_toSet)
   have he : (⋃ N, (↑(K G u N) : Set V)) = Set.univ := by
     apply Set.eq_univ_of_forall

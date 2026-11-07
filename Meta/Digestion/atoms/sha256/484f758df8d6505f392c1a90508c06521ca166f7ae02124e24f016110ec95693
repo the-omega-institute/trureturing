@@ -1,0 +1,61 @@
+**定理 3.2（两条有限见证达到受限范数与尖锐最优标定）。** 任意维数下有精确因子化
+
+$$
+\boxed{\mathcal L_A(\lambda)=\beta_B\Delta_A(\lambda).}\tag{3.1}
+$$
+
+当双方三维时，记 $a=|c_A|>0,b=|c_B|>0$，则
+
+$$
+\boxed{\mathcal L(\lambda)
+=\max\{b|1-\lambda a^2|,\ a|1-\lambda b^2|\},}\tag{3.2}
+$$
+
+并有唯一最优参数及精确剩余障碍
+
+$$
+\boxed{\inf_{\lambda\in\mathbb R}\mathcal L(\lambda)=|a-b|,
+\qquad \lambda_*=(ab)^{-1}.}\tag{3.3}
+$$
+
+设
+
+$$
+A_i=e_i\otimes1,\quad B_j=1\otimes e_j,\quad C_{ij}=e_i\otimes e_j.
+$$
+
+以下两个单位范数三元输入已分别达到式 (3.2) 中的两项：
+
+$$
+\begin{aligned}
+R_\lambda(C_{11},A_2,C_{22})&=c_B(1-\lambda c_A^2)C_{13},\\
+R_\lambda(C_{11},B_2,C_{22})&=c_A(1-\lambda c_B^2)C_{31}.
+\end{aligned}\tag{3.4}
+$$
+
+证明。式 (2.1) 的两组变量彼此独立，张量范数相乘，有限维单位球紧，故两个最大值可同时取到，得到 (3.1)。三维时
+
+$$
+[L_u,L_v]+\lambda[D_u,D_v]=(1-\lambda c_A^2)K_{u,v}
+$$
+
+在向量部分成立，标量部分为零。$\|K_{u,v}\|_{\rm op}\le\|u\|\|v\|$，正交单位 $u,v$ 达到 $1$，故 $\Delta_A=|1-\lambda c_A^2|$、$\beta_B=|c_B|$；另一边同理。
+
+第一条有限见证的非零项为
+
+$$
+M_\lambda(A_2,C_{22})=B_2,\quad
+T(C_{11},B_2)=c_BC_{13},\quad
+T(C_{11},A_2)=c_AC_{31},
+$$
+
+以及 $M_\lambda(c_AC_{31},C_{22})=\lambda c_A^2c_BC_{13}$；$T(C_{11},C_{22})=0$。这给出 (3.4) 第一式。交换两边得到第二式。
+
+令 $r_A=b(1-\lambda a^2)$、$r_B=a(1-\lambda b^2)$，恒等式
+
+$$
+a r_B-b r_A=a^2-b^2
+$$
+
+给出 $|a^2-b^2|\le(a+b)\mathcal L(\lambda)$，故下界为 $|a-b|$。在 $\lambda=(ab)^{-1}$ 时，$r_A=b-a$、$r_B=a-b$，达到下界。若 $a\ne b$，等号条件连同恒等式固定这两个残差，进而固定 $\lambda$；若 $a=b$，目标为 $a|1-\lambda a^2|$，也有唯一零点。∎
+

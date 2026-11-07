@@ -1,0 +1,21 @@
+## 17. 内部等距实现：局部融合没有删除整个 $\Omega$ 的区别
+
+<a id="sec-c94-internal-dilation"></a>
+
+采用式 [(9.2)](#eq-c94-reset) 的有限块形式，在本节记
+
+$$
+H=\bigoplus_\alpha(V_\alpha\otimes W_\alpha),\qquad
+ \mathcal A=\bigoplus_\alpha(B(V_\alpha)\otimes I_{W_\alpha}),
+$$
+
+并将隐藏因子的忠实重置态记为 $\eta_\alpha$。
+于是
+
+$$
+R(\rho)=\bigoplus_\alpha
+ \operatorname{Tr}_{W_\alpha}(P_\alpha\rho P_\alpha)\otimes\eta_\alpha.
+$$
+
+该式描述局部可见输出。要理解完整内部过程，还应把产生这个输出的记录一起保留。
+

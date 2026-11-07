@@ -1,0 +1,157 @@
+**Theorem 143.2 (one jointly approximating sequence with exact rank two).** For every original $\theta\in\Theta$ there is one sequence of whole-$G$ pointwise Borel partitions $D_n=(D_{n,y})_{y\in\mathcal L}$ such that
+
+$$
+\begin{gathered}
+D_n\in\mathscr D_{12}(\theta),\qquad
+\operatorname{rank}A^{D_n}=2\quad(n\ge1),\\
+\mathbf1_{D_{n,y}}\ \overset{*}{\rightharpoonup}\ f_y
+\quad\text{in }L^\infty(m)\quad(y\in\mathcal L),\\
+\|\nu_{D_n}^{(3)}-\nu_f^{(3)}\|_{\rm TV}
+=\frac12\sum_{y,z,w\in\mathcal L}
+\left|\mathcal C(\mathbf1_{D_{n,y}},\mathbf1_{D_{n,z}},\mathbf1_{D_{n,w}})
+-\mathcal C(f_y,f_z,f_w)\right|\longrightarrow0.
+\end{gathered}
+\tag{143.4}
+$$
+
+Consequently, for every $\varepsilon>0$, the same single partition can satisfy all twelve exact marginal equations, exact rank two, and total-variation error below $\varepsilon$ in the full $64$-coordinate law. Every member is one deterministic common readout at all three original epochs. Its actual terminal factor in a coefficient with last label $w$ is always $P\mathbf1_{D_{n,w}}$; in $A^{D_n}$ it is $P\mathbf1_{D_{n,3}}$.
+
+*Proof.* We first produce exact singular coarse partitions converging to (143.2). Both determinant signs occur arbitrarily close to $u^0$ in the product $L^\infty$ norm. For the positive sign, use the invariant bounded test of (139.5), with its three zero source moments and outside $\operatorname{span}\{1,\beta\}$. The tuples
+
+$$
+u^+=(3/4-c\beta-\epsilon v_+,\ c\beta,\ 1/4+\epsilon v_+)
+\tag{143.5}
+$$
+
+are admissible for all sufficiently small $\epsilon>0$ and tend uniformly to $u^0$. Their actual terminal factor is $cP\beta=cg$, so (139.6) is a strictly positive weighted heat Gram matrix of three independent components. Thus $\det A(u^+)>0$ for every such nonzero $\epsilon$.
+
+For the negative sign, choose the reflection-even $w$ of Proposition 141.1 and take a sufficiently small nonzero $\tau$, so that $k=c\beta+\tau w$ has the original three terminal marginals and $\Delta_k>0$. Theorem 141.2 gives a bounded invariant $v_-$ satisfying exactly the three source moments and four ordered equations in (141.3), with $Q_k(v_-,v_-)<0$. Theorem 140.2 then gives
+
+$$
+\begin{gathered}
+u^-=(3/4-k-\epsilon v_-,\ k,\ 1/4+\epsilon v_-),\\
+\det A(u^-)=\epsilon^2\Delta_k Q_k(v_-,v_-)<0.
+\end{gathered}
+\tag{143.6}
+$$
+
+Given any $\rho>0$, first choose $\tau\ne0$ sufficiently small that $\|k-c\beta\|_\infty<\rho/2$, retaining all the conclusions of Proposition 141.1. After obtaining its bounded $v_-$, choose $\epsilon>0$ sufficiently small that $\epsilon\|v_-\|_\infty<\rho/2$ and that Theorem 140.2 applies. Then $\|u^--u^0\|_\infty<\rho$, while its determinant is strictly negative. No uniform bound on $v_-$ as $\tau\to0$ is required. Likewise (143.5) gives $\|u^+-u^0\|_\infty<\rho$ with positive determinant. These statements use the source-specific suppliers of §§139–141; a dimension count or nonconstant ratio alone is not substituted for their negative-vector conclusion.
+
+Choose a countable dense family $(\psi_l)_{l\ge1}$ in the real $L^1(m)$ unit ball. For each $n$, choose admissible invariant $u_n^+,u_n^-$ of the preceding forms with
+
+$$
+\|u_n^\pm-u^0\|_\infty<1/n,\qquad
+\det A(u_n^+)>0>\det A(u_n^-).
+\tag{143.7}
+$$
+
+Theorem 139.1 supplies actual invariant partitions $E_n^+,E_n^-\in\mathscr E_\theta$ of these respective determinant signs and satisfying
+
+$$
+\left|\int_G\psi_l(\mathbf1_{E_{n,i}^\pm}-u_{n,i}^\pm)\,dm\right|<1/n
+\quad(l\le n,\ i\in\{S,C,B\}).
+\tag{143.8}
+$$
+
+Indeed, for each fixed stochastic tuple its approximating actual determinants converge to a nonzero value, so sufficiently far terms retain that sign and satisfy the finitely many tests simultaneously. Combining (143.7)–(143.8) gives
+
+$$
+\left|\int_G\psi_l(\mathbf1_{E_{n,i}^\pm}-u_i^0)\,dm\right|<2/n
+\quad(l\le n).
+\tag{143.9}
+$$
+
+We join these two endpoints with the finite tests controlled throughout. For invariant cells, pairing with $\psi_l$ reduces on $X$ to pairing with its angular average $\bar\psi_l\in L^1(\bar m)$. On each quotient mismatch block $H_{ij}=E_{n,i}^+\cap E_{n,j}^-$, $i\ne j$, use the finite vector of measures
+
+$$
+\bar m,\quad\bar\nu_2,\bar\nu_3,\bar\nu_4,\quad
+(\bar\psi_l)_+\bar m,\ (\bar\psi_l)_-\bar m
+\quad(l\le n),
+\tag{143.10}
+$$
+
+restricted to that block. These are finite atomless measures on the original quotient, with its actual measure (136.5). Recursive proportional subdivision by Dvoretzky–Wald–Wolfowitz Lemma 2 gives nested Borel $T_{ij,t}\subset H_{ij}$ proportional to $t$ for every measure in (143.10), as in (142.9). Switch the label from $i$ to $j$ on $T_{ij,t}$. The lifted whole-$G$ partitions $E_n(t)$ are invariant and remain in $\mathscr E_\theta$. Assign the null axis to $S$ throughout. For every tested $l\le n$ and every coarse label $i$, the exact switching formula is
+
+$$
+\int_G\psi_l\mathbf1_{E_{n,i}(t)}\,dm
+=(1-t)\int_G\psi_l\mathbf1_{E_{n,i}^+}\,dm
++t\int_G\psi_l\mathbf1_{E_{n,i}^-}\,dm.
+\tag{143.11}
+$$
+
+This follows by adding the incoming blocks and subtracting the outgoing blocks; proportionality for the positive and negative parts gives it also for signed tests. The same formula for the three source measures proves the exact nine marginal equations along the entire path. Thus (143.9) holds at every $t$, even though the endpoint test values need not equal one another.
+
+The actual determinant is continuous along this path. Between parameters $s<t$, the changed set has $\nu_j$-measure at most $t-s$ for each $j=2,3,4$, since the mismatch blocks are disjoint and their subdivisions are proportional for $\bar\nu_j$. Each actual coefficient can change only when one of the three original states lies in that set. The union bound gives an entrywise difference at most $3|t-s|$, including the change in the terminal cell, exactly as in (139.9). The determinant polynomial is therefore continuous. Its endpoint signs in (143.8) yield a parameter $t_n$ with
+
+$$
+E_n=E_n(t_n)\in\mathscr E_\theta,\qquad
+\det A_{E_n}=0.
+\tag{143.12}
+$$
+
+Equations (143.9)–(143.11), the density of the $\psi_l$, and the uniform bound of the indicators imply
+
+$$
+\mathbf1_{E_{n,i}}\ \overset{*}{\rightharpoonup}\ u_i^0
+\quad(i\in\{S,C,B\}).
+\tag{143.13}
+$$
+
+Write $E_n=(S_n,C_n,B_n)$. The actual common three-time density is still
+
+$$
+W(x_1,x_2,x_3)=g(x_1)p_d(x_1,x_2)p_d(x_2,x_3),\qquad
+W\ge0,\quad\|W\|_{L^1(m^3)}=1.
+\tag{143.14}
+$$
+
+Finite rectangular-tensor approximation in $L^1(m^3)$, as in §123 and (139.3), makes every trilinear coefficient continuous under componentwise bounded weak-star convergence. In particular (143.13) gives $A_{E_n}\to A(u^0)$, with the actual $P\mathbf1_{C_n}$ used in every $A_{E_n}$.
+
+The limiting coarse matrix has rank two and a strictly positive principal minor on its $C,B$ indices. Indeed $Pu_C^0=cg$, and hence
+
+$$
+A(u^0)_{ij}=c\langle gu_i^0,P(gu_j^0)\rangle_m.
+\tag{143.15}
+$$
+
+Its components span $\operatorname{span}\{1,\beta\}$; the functions $u_C^0=c\beta$ and $u_B^0=1/4$ are independent because $\beta$ is nonconstant by Proposition 135.2. Strict positivity of $g$ and injectivity of $T_{d/2}$ make their two-by-two weighted heat Gram matrix positive definite. That principal minor remains positive in $A_{E_n}$ for all sufficiently large $n$. Together with (143.12), this proves $\operatorname{rank}A_{E_n}=2$ for all sufficiently large $n$.
+
+Apply Theorem 142.1 to each $E_n$ with $\Psi_n=\{\psi_1,\ldots,\psi_n\}$. It gives a whole-$G$ Borel $v_n$ with
+
+$$
+\begin{gathered}
+v_n^2=\mathbf1_{S_n}\quad\text{everywhere},\qquad
+v_n\circ R_\pi=-v_n\quad m\text{-a.e.},\\
+Q_{E_n}(v_n,v_n)=0,\qquad
+\int_G\psi_l v_n\,dm=0\quad(l\le n).
+\end{gathered}
+\tag{143.16}
+$$
+
+Since $\|v_n\|_\infty\le1$, the growing exact test family implies $v_n\overset{*}{\rightharpoonup}0$. Define
+
+$$
+D_{n,0}=\{v_n=1\},\quad D_{n,1}=\{v_n=-1\},\quad
+D_{n,3}=C_n,\quad D_{n,B}=B_n.
+\tag{143.17}
+$$
+
+These are disjoint pointwise Borel partitions of the whole $G$. Invariance of each source density under $R_\pi$ and oddness of $v_n$ give its three zero source moments. Together with the nine coarse marginals this proves all twelve original equations for $D_n$. The ordered congruence (138.7), using the same matrix of (138.6), applies with the actual terminal factor $P\mathbf1_{C_n}$ and gives
+
+$$
+\operatorname{rank}A^{D_n}=\operatorname{rank}A_{E_n}.
+\tag{143.18}
+$$
+
+Discard finitely many initial terms and relabel to obtain exact rank two for every member. This leaves all the convergence statements intact. Pointwise,
+
+$$
+\mathbf1_{D_{n,0}}=(\mathbf1_{S_n}+v_n)/2,\qquad
+\mathbf1_{D_{n,1}}=(\mathbf1_{S_n}-v_n)/2.
+\tag{143.19}
+$$
+
+Equations (143.13), (143.16) and (143.19) now give weak-star convergence of all four indicators to the original $f$ classes of (143.1). Applying the actual density (143.14) to each of the $64$ triples gives coordinatewise convergence. The finite sum defining total variation tends to zero, proving (143.4).
+
+The source-specific composition in this theorem is `repo-derived`: the arbitrary-smallness consequence of the reflection construction, interpolation controlling a growing finite test family, exact coarse singularity with a surviving positive minor, and the consumed finite-moment signs yield the same jointly approximating sequence. Dvoretzky–Wald–Wolfowitz supplies only finite linear subdivisions; the weighted Gram identity supplies the positive minor; the actual path density supplies continuity. None alone asserts this same-witness result or exact full-law attainment. $\square$
+

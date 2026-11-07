@@ -1,0 +1,17 @@
+**定理 232.2（两个完整原背景的量子恢复）。** 同一原签名上，
+
+$$
+\begin{aligned}
+B_*+\mathsf F_{\rm gen}
+&\Longleftrightarrow B_*+\mathsf F_{\rm rec}
+\Longleftrightarrow B_*+\mathsf F_{\rm cut},\\
+\mathsf C_{\rm gen}(B)
+&\Longleftrightarrow B+\mathrm Z+\mathrm{SC}+\mathrm{SJ},\\
+\mathsf C_{\rm gen}(\mathsf B_{\rm cl})
+&\Longleftrightarrow\mathsf B_{\rm cl}+\mathsf Q+\mathrm{SC}+\mathrm{SJ}.
+\end{aligned}
+\tag{232.1}
+$$
+
+证明。每个选中目标都秩至少四，定理 232.1 给目标逐块等价。定理 223.1 的旋转角外桥随后恢复全部奇部；定理 214.1 在同一原 $J,i,j_0,\mathcal V_N$ 上以交叉零和分离族恢复全域 SC；定理 215.1 才消去局部径向及跨块余量、恢复全部幂等元平方和完整配平。其余两个接口直接消费定理 224.1；$\mathsf Q$ 的全部原量词沿母卷定义 67.2。反向按同一目标等价和原接口，不重选原世界。∎
+

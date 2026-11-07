@@ -1,0 +1,18 @@
+**Theorem 153.2 (conditional coattainment of all ordered pairs and three ordered triples).** Under exactly the retained suppliers of Definition 153.1, for every original $\theta=(a,\eta,d,b)\in\Theta$ there exists one pointwise whole-$G$ Borel partition $D=(D_0,D_1,D_3,D_B)$ such that
+
+$$
+\begin{gathered}
+D\in\mathscr D_{12}(\theta),\\
+Q_r(\mathbf1_{D_y},\mathbf1_{D_z})=Q_r(f_y,f_z)
+ \quad(r\in\mathcal R,\ y,z\in\mathcal L),\\
+\mathcal C(\mathbf1_{D_y},\mathbf1_{D_z},\mathbf1_{D_w})
+ =\mathcal C(f_y,f_z,f_w)
+ \quad(yzw\in\mathcal T).
+\end{gathered}
+\tag{153.4}
+$$
+
+Every terminal factor in these equalities is the same partition's own $P\mathbf1_{D_w}$. For this $D$ the triple residual belongs to $H_0^{\otimes3}$, with $H_0=\{v\in\mathbb R^{\mathcal L}:\sum_yv_y=0\}$, and its coordinates $013,103,031$ vanish. Its other twenty-four ambient $I^3$ coordinates are not prescribed by (153.4).
+
+*Proof.* Fix an arbitrary original $\theta$. All function spaces below consist of real bounded Borel $m$-classes unless complex character sectors or a Hilbert space are specified.
+

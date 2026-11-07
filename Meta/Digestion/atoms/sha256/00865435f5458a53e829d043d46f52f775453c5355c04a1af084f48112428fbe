@@ -1,0 +1,26 @@
+**Definition 49.2 (unresolved comparison problems).** Equation (48.19) identifies
+all actual minimizers with the still unevaluated phase endpoint set, but it
+does not evaluate $a_\xi$ or that set. The universal preceding-level phase
+inequality remains the supplied same-realization comparison over every
+population, both signs, every attained $(X,Y)$ triangle point and every
+coherence/alignment phase. In particular the positive unstable sector, the
+negative canonical and interior sectors, and their coupled ordering against
+$V(\xi)$ remain open.
+
+The exact $\alpha$ and $\beta$, whether they coincide, the maximal exhaustive
+geometric-equality prefix, endpoint inclusion or exclusion, and every first
+actual competing branch remain undetermined. Pure phase coalescence,
+separated pure contact and simultaneous contact remain possible, including at
+selected determinant zero; (48.19) removes nonphase lifts but does not turn a
+stationary or fixed-slice equality into a global branch certificate. The full
+zero set of the phase comparison and the order and attainment of all earliest
+branches still require proof.
+
+The statements stop at $0<\xi\le13/4$. No purity, transport or equality
+extension beyond that interval is asserted. The zero level retains its
+existing optimizer classes. Singular and mixed nonminimizing inputs, zero
+coherence, zero individual recoveries, inactive zero trace, repeated
+feedback eigenvalues and all common scalar representatives remain in the
+original domain. No physical-acquisition or whole-POVM extension is asserted; the full
+comparison problem remains unresolved.
+

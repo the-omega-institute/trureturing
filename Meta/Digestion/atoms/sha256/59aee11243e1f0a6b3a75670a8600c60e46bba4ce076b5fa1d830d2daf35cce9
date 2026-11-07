@@ -1,0 +1,16 @@
+### 定理 7.3（主定理前三项的解析证明）
+
+右序相容推出保持伴随。将左比较用于 $x^\dagger$ 并取复共轭，得
+
+$$
+\phi_\rho(E(x^\dagger)^\dagger a)=\phi_\rho(xa).
+$$
+
+若右比较也成立，令 $z=E(x)-E(x^\dagger)^\dagger\in A$，便有 $\phi_\rho(za)=0$ 对全部 $a$ 成立，取 $a=z^\dagger$ 并用忠实性得 $z=0$。反过来，保持伴随时上式的取共轭直接给出右比较。
+
+保持伴随与左模性结合给出右模性：
+
+$$
+E(xb)=E((b^\dagger x^\dagger)^\dagger)=E(b^\dagger x^\dagger)^\dagger=E(x)b.
+$$
+

@@ -1,0 +1,10 @@
+**定义 40.1（中间工具、既有成果与本候选增量）。** 下表限定上述推导的数学归属；成熟来源不作为本文新发现。
+
+| 来源与固定版本 | 本文实际消费及新增内容边界 |
+| --- | --- |
+| Niestegge, *Dynamical Correspondence in a Generalized Quantum Theory*, [arXiv:1402.0158v2](https://arxiv.org/html/1402.0158v2), §4 Lemma 3，DOI 10.1007/s10701-015-9881-x | 有界算子的全状态/全正元零接触与双向保正指数等价。文中归于 Connes 及 Evans–Hanche-Olsen, *The generators of positive semigroups*, J. Funct. Anal. 32, 207–212；此处按 Niestegge 的明确陈述使用，不另以 Evans–Hanche-Olsen 原证明承担未列明的附加结论。原实际准备到全正对偶的 (36.3)–(36.4)、实际参考强制单位消去的 (36.2) 及指定原 $\mathfrak k$ 的接回才是这里必须完成的原范围桥。 |
+| Barnum–Graydon–Wilce, *Composites and Categories of Euclidean Jordan Algebras*, [arXiv:1606.09331v3](https://arxiv.org/pdf/1606.09331v3), §3.1–3.2，尤其 pp. 14–15 的 “Order-automorphisms”；Appendix E | 使用一般 EJA 的保单位序同构/Jordan 自同构对应。Appendix E 的延拓部分以 EJC 为范围，未用它把例外 EJA 嵌入复矩阵；(36.6)–(36.7) 在原有限正 Frobenius 空间内统一核定内导子归属。未采用该文完整复合/独立动力学条件替代原 X。 |
+| V95 定义 1.1、定理 2.1；本卷定理 3.1 的 P/G 部分、定理 22.1 | P/G 给同一原 EJA 与固定 $q/L$；任意导子的斜伴随结论只用有限正 Frobenius 前件。复结合、反对称、自守恒和中心零只在恢复完整原 D 之后消费，不能倒用为 Z 的前提。 |
+| C125 §§21–28；C126 §§29–34，特别是定理 30.1、31.1、32.1、33.1–33.4 | 原全范围参考与分离、I/II 正常形、单效果 S 到全对象曲率、唯一几何扩张和所有过程消费者均复用。本候选用 Z 等价替换 I；(37.2)–(37.14) 则将原来只局部的 I 删除诊断推进为完整非删背景反模型，并额外保留每个原 $D_a^2$。没有把 (33.6) 直接放到联合对象。 |
+| [共同尺度 V96](AURIC_COMPOSITE_COMPARISON_FINITE_WITNESSES_COMMON_QUANTUM_SCALE_V96.md), §§4–6、8–9，尤其定义 8.1–8.4、定理 9.1 | 共同尺度、内部 $\lambda_*$、$\Gamma=0$、有限探针及其量子端点已有归属。其一般正场定义 8.1 已输入逐元导子，联合模板也明确输入；本文不以该结果补出尚未得到的 I，不把 $\sqrt{\lambda_*}D$ 的表示当作原归一 D。原 S 在 C127 中完全保留。 |
+| 本卷命题 11.1–11.3、定理 12.1、命题 12.2、13.1–13.2、15.1、25.2 及定理 32.1 的来源范围 | Born 双运输、实际张量、全事件 CP/TNI、精确有限平方根词、原输出/细记录/返回和全部历史均按既有条件继承；CP 判据、有限膨胀及支持返回不是本候选重新证明的成熟定理。 |

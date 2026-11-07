@@ -6,6 +6,9 @@
    utility: none
    digest: Arbitrary spanning probe families force component-scalar Kraus operators under universal probability preservation. -/
 
+/- Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/25592. -/
+
+import D5.S3.Quantum.Foundation.FiniteStateChannel
 import D5.S3.Quantum.Foundation.FiniteKrausRepresentation
 import D5.S3.Quantum.Foundation.FiniteDiamondDistance
 import D5.S3.Quantum.Recovery.KrausLeftInverseNecessity
@@ -286,7 +289,7 @@ theorem connected_probability_preserving_identity (K : s → Matrix d d ℂ)
   refine ⟨hi, ?_⟩
   exact D5.S3.Quantum.Recovery.KrausLeftInverseNecessity.identity_kraus_scalar K hi i₀
 
-private theorem kraus_inner (K : s → Matrix d d ℂ)
+theorem kraus_inner (K : s → Matrix d d ℂ)
     (hTP : (∑ a, (K a)ᴴ * K a) = 1) (x y : d → ℂ) :
     (∑ a, star (K a *ᵥ x) ⬝ᵥ (K a *ᵥ y)) = star x ⬝ᵥ y := by
   have hp (a) : star (K a *ᵥ x) ⬝ᵥ (K a *ᵥ y) =
@@ -345,10 +348,4 @@ theorem component_stinespring_form (K : s → Matrix d d ℂ)
     change (K a *ᵥ x) i = x i * probeScalar (K a) (v j)
     simp only [hs a j x hx, Pi.smul_apply, smul_eq_mul, mul_comm]
 
-#print axioms connected_probability_preserving_identity
-#print axioms component_stinespring_form
-#print axioms probability_preserving_kraus_commute
-#print axioms kraus_scalar_on_component
-#print axioms channel_component_scalar
-#print axioms kraus_normalized_of_channel
 end D5.S3.Quantum.Reduction.ProbeComponentRigidity

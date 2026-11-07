@@ -1,0 +1,97 @@
+**Theorem 37.3 (effective finite thresholds for every current source).**
+From the finite data (AA.113) one can compute, for each $(q,r)\in Q^2$,
+a finite set $B_{q,r}\subseteq\mathbb N^{H\times\{\alpha,\beta\}}$ such that,
+for every finite LAB source $t$,
+
+$$
+q\not\equiv_t r
+\quad\Longleftrightarrow\quad
+\exists v\in B_{q,r}:v\le m(t).
+\tag{AA.115}
+$$
+
+The computation terminates without a bound on the number of future
+events, leaves, addresses or selected entries. Consequently equality
+of all legal future $Q_C$ behavior of any two actually attained cuts
+is decidable: compare their finite sources and selected identity words,
+then apply (AA.115) to their actual current controls. The same finite
+threshold family works for all current finite sources of the declared
+presentation, rather than being a set of finite-depth observations.
+
+Proof. Apply the standard backward coverability construction to the
+paired system of Definition 37.1. Here is its complete finite-data form,
+so that the decision is specified independently of a symbolic quotient.
+For a nonnegative vector $v$ and event type $(k,h)$ put
+
+$$
+\operatorname{pre}_{k,h}(v)
+       =i_{k,h}+(v-o_{k,h})^+,
+\tag{AA.116}
+$$
+
+where positive part and order are componentwise. This is exactly the
+usual covering-predecessor formula: the event is enabled at $m$ and
+its successor covers $v$ if and only if
+$m\ge\operatorname{pre}_{k,h}(v)$. Use the finite antichain
+of minimal elements whenever representing an upward-closed set.
+
+Initially set $B^0_{q,r}$ to the minimal elements of
+
+$$
+\{i_{k,h}:\lambda(q,k,h)\ne\lambda(r,k,h)\}.
+$$
+
+These are precisely the counters allowing an immediate unequal bit.
+Given all $B^n$, form $B^{n+1}_{q,r}$ as the minimal elements of the union
+of $B^n_{q,r}$ with
+
+$$
+\bigcup_{\substack{k\in\{P,S\},\ h\in H\\
+                  \lambda(q,k,h)=\lambda(r,k,h)}}
+\{\operatorname{pre}_{k,h}(v):
+ v\in B^n_{\delta(q,k,h),\delta(r,k,h)}\}.
+\tag{AA.117}
+$$
+
+An empty union is allowed. Each step consists of finite table lookups,
+natural-number operations and componentwise comparisons. Stop when every
+antichain is unchanged. This is the ordinary finite-basis backward
+algorithm, with no pruning invariant beyond the whole counter space.
+The Petri-net coverability supplier in §40 gives its termination: finite
+control with equality times componentwise order on a fixed finite
+power of $\mathbb N$ is well quasi ordered; the ascending upward-closed
+predecessor sets stabilize. Equivalently one may encode the finite control
+by the one-hot control places already specified and use that supplier's
+finite-place algorithm. The construction does not assume that a bounded
+forward state space has been explored.
+
+By the covering-predecessor equation, $\uparrow B^n_{q,r}$ is exactly the
+set of counters from which an unequal bit can first be reached within
+at most $n+1$ events. This induction uses good-bit transitions in (AA.117)
+and the immediate bad-bit transitions in the seed. At stabilization the
+union therefore contains exactly the counters permitting some finite
+first disagreement. Conversely every member of a computed predecessor
+set has such a finite path; no limit configuration or infinite accepting
+run is added. Taking the stable antichains as $B_{q,r}$ and using
+Lemma 37.2 proves (AA.115) on every actual $t$.
+
+For two attained cuts, finite traversal compares their full source terms.
+Theorem 31.2 gives finite decoding and equality comparison of their
+acquired selected words; one may instead compare their source-indexed
+marks and tapes at equal source. A source or word inequality is already
+a distinguishing request by Proposition 36.2. At equality, (AA.115)
+and that proposition decide exactly the remaining condition. The
+antichains are computable once from $C,d$ before any source schedule;
+this last equality test only traverses the present finite data and
+compares finite vectors. $\square$
+
+The finite-basis algorithm, its termination and Petri coverability are
+credited suppliers, not additional numbered discoveries here. The
+source-specific deduction is that this particular counter abstraction
+has the exact actual-source lifting of Lemma 37.2 and the full-task
+interpretation of Proposition 36.2. Keeping only a finite alphabet of
+event classes without the leaf counters would admit impossible receipts.
+Keeping only the counters as service memory would erase source addresses,
+Tag replies, selected identity and the operands consumed by NextSelected.
+Neither replacement is used in (AA.115).
+

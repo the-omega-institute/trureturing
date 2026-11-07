@@ -1,0 +1,58 @@
+For Rado's classical criterion [Rado; AZ, Theorem 3.6], let $P$ be a finite
+matroid on $E$, and let $(F_i)_{i\in I}$ be a finite indexed family of
+subsets of $E$. There exist distinct $e_i\in F_i$ whose set is
+independent in $P$ if and only if
+
+$$
+\rho_P\left(\bigcup_{i\in J}F_i\right)\ge |J|
+\qquad(J\subseteq I).
+$$
+
+Here is the full finite induction argument. Necessity follows by
+considering the selected representatives
+for $J$. For sufficiency induct on $k=|I|$. The case $k=0$ is empty;
+for $k=1$ the rank inequality provides a nonloop in the sole set.
+Assume $k\ge2$ and abbreviate $D_J=\bigcup_{i\in J}F_i$.
+
+First suppose some nonempty proper $J\subset I$ is tight:
+$\rho_P(D_J)=|J|$. The induction hypothesis gives independent
+representatives for $J$, forming a set $Q\subseteq D_J$ of size $|J|$.
+Thus $Q$ is a basis of $D_J$ and
+$\operatorname{cl}_P(Q)=\operatorname{cl}_P(D_J)$.
+Contract $Q$. For clarity, contraction by an independent set has rank
+
+$$
+\rho_{P/Q}(Z)=\rho_P(Z\cup Q)-|Q|\qquad(Z\subseteq E\setminus Q).
+$$
+
+This follows directly by extending $Q$ to a maximal independent subset
+of $Z\cup Q$; independent subsets in the contraction are precisely sets
+that can be adjoined to $Q$ independently. For $K\subseteq I\setminus J$,
+closure equality and the original rank condition give
+
+$$
+\begin{aligned}
+\rho_{P/Q}(D_K\setminus Q)
+&=\rho_P(D_K\cup Q)-|J|\\
+&=\rho_P(D_K\cup D_J)-|J|\\
+&\ge |K|.
+\end{aligned}
+$$
+
+Induction in $P/Q$, for the family $(F_i\setminus Q)_{i\notin J}$,
+gives representatives independent after contraction. Together with $Q$
+they are distinct independent representatives for all of $I$.
+
+If there is no nonempty proper tight $J$, all those $J$ satisfy
+$\rho_P(D_J)\ge |J|+1$. Fix $i_0\in I$ and a nonloop
+$e\in F_{i_0}$. For every nonempty $K\subseteq I\setminus\{i_0\}$,
+
+$$
+\rho_{P/e}(D_K\setminus\{e\})
+=\rho_P(D_K\cup\{e\})-1
+\ge\rho_P(D_K)-1\ge |K|.
+$$
+
+The empty $K$ causes no condition. Induction in $P/e$ supplies the
+remaining representatives; adjoining $e$ completes the proof.
+

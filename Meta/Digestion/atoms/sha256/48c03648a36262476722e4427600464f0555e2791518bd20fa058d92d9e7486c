@@ -1,0 +1,34 @@
+#### 定理 16.2（实际结果产生 POVM 与二次概率）
+
+令 $`E_e=M_e^*M_e`$，则
+
+$$
+0\le E_e\le I,\qquad \sum_eE_e=I,
+$$
+
+且在已有同根强度--概率标定下，非零输入 $x$ 的结果概率为
+
+<a id="eq-born"></a>
+
+$$
+\boxed{p(e\mid x)=\frac{\left\lVert M_ex\right\rVert ^2}{\left\lVert x\right\rVert ^2}
+=\frac{\langle x,E_ex\rangle }{\left\lVert x\right\rVert ^2}.}\tag{16.1}
+$$
+
+对任意数学效果族 $E_e\ge0$、$\sum_eE_e=I$，
+$Vx=\bigoplus_e\sqrt{E_e}x$ 给一个满足 v81 的完整等距实现。
+
+**证明。**
+
+$E_e$ 的正性来自平方范数，求和为 $`V^*V=I`$，故单项不超过 $I$。
+式[(16.1)](#eq-born)是实际分支强度与根强度之比。
+反向构造的范数平方为 $\sum_e\langle x,E_ex\rangle =\left\lVert x\right\rVert ^2$，
+并且复线性，故满足完整共享等号和方向校准。
+
+□
+
+这表明完整矩阵模型中的效果结构恰为正收缩区间；
+并不宣称每个效果已经可由指定原生门菜单实施。
+概率的平方依赖由实际复线性和既有强度标定共同得到，
+不是从一个没有任何读出含义的抽象范数单独创造概率。
+

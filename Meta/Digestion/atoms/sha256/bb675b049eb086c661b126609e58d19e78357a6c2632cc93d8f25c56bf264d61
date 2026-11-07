@@ -1,0 +1,9 @@
+在每个中心块任选一个单位向量 $e_\alpha$，置 $c_{j,\alpha}=\langle e_\alpha,h_je_\alpha\rangle$，$c_j=\bigoplus_\alpha c_{j,\alpha}I_\alpha$、$\ell_j=h_j-c_j$。对任意实单位系数向量 $u$，Cauchy--Schwarz 给 $\operatorname{Var}_\psi(\sum_ju_jh_j)\le\delta$，其中心块压缩的方差也不超过此值。测试压缩矩阵最大、最小特征向量的等权叠加，得谱直径至多 $2\sqrt\delta$。于是对同一块中的 $\psi$，对 $u$ 取上确界得到
+
+$$
+\sum_j\bigl(\langle\psi,h_j\psi\rangle-c_{j,\alpha}\bigr)^2\le4\delta,
+\qquad
+\sum_j\|\ell_j\psi\|^2\le5\delta.
+\tag{86.4}
+$$
+

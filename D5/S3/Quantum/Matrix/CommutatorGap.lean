@@ -49,6 +49,7 @@ Direct frozen dependencies:
     declaration statement_id: sha256:accd04d85421c0847456ddb52626f272e79ea98e568dcf9dfeddc5035a1f2013
   Other lane imports are same-delivery prerequisites, not baseline-frozen dependencies.
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/15730.
+Escape audit unfinished for rectNorm_sq and rectNorm_sq_square: https://github.com/the-omega-institute/trureturing/issues/26905.
 DTR reading: DTR-Unregistered for the public theorem targets in this module.
 Registration gap: exact dependent source-family reconstruction, lawful template readout,
 selection coordinates, whole-family variation, slot sensitivity and observational dependence
@@ -58,6 +59,9 @@ are not all established by the retained registration evidence.
 import D5.S3.Quantum.Matrix.CartesianVariance
 import D5.S3.Quantum.GNSMatrix
 import D5.S3.Quantum.Algebra.GramUnitaryExtension
+import D5.S3.Weil.ZetaLinear.PosIndex
+import D5.S3.Quantum.BlockNorm.EssentiallyHermitian
+import D5.S3.Observer.HiddenFlow.ProjectionCommutatorIdentity
 
 noncomputable section
 open Matrix Set Unitary
@@ -101,13 +105,13 @@ private theorem mulVec_rectNorm_bound {m n : ℕ} (A : Matrix (Fin m) (Fin n) �
   rw [he,Matrix.frobenius_norm_replicateCol,Matrix.frobenius_norm_replicateCol] at h
   exact h
 
-private theorem rectNorm_sq {m n : ℕ} (A : Matrix (Fin m) (Fin n) ℂ) :
+theorem rectNorm_sq {m n : ℕ} (A : Matrix (Fin m) (Fin n) ℂ) :
     ((@norm (Matrix _ _ ℂ) Matrix.frobeniusSeminormedAddCommGroup.toNorm) A)^2 = ∑ i, ∑ j, ‖A i j‖^2  := by
   open scoped Matrix.Norms.Frobenius in
     simp only [Matrix.frobenius_norm_def, Real.rpow_two, ← Real.sqrt_eq_rpow]
     exact Real.sq_sqrt (by positivity)
 
-private theorem rectNorm_sq_square {n : ℕ} (A : (Matrix (Fin n) (Fin n) ℂ)) : ((@norm (Matrix _ _ ℂ) Matrix.frobeniusSeminormedAddCommGroup.toNorm) A)^2 = RHLinalg.frobSq A := by
+theorem rectNorm_sq_square {n : ℕ} (A : (Matrix (Fin n) (Fin n) ℂ)) : ((@norm (Matrix _ _ ℂ) Matrix.frobeniusSeminormedAddCommGroup.toNorm) A)^2 = RHLinalg.frobSq A := by
   have h := congrArg Complex.re (D5.S3.Quantum.GNSMatrix.frobenius_norm_sq_eq_trace A)
   simpa only [Complex.ofReal_re, RHLinalg.frobSq, RCLike.re_eq_complex_re] using h
 

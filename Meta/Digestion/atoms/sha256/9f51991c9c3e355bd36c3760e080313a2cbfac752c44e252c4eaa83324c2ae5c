@@ -1,0 +1,68 @@
+**Corollary 46.5 (all actual original equality lifts in the nonnegative
+slices).** Suppose $0<\xi\le R_\star$, the active sign is $\sigma$, and
+$\mathfrak D_\sigma(x,q)\ge0$. The lower bound (46.27) and its equality set
+hold for every actual $U\in U(4)$ with the stated pure effect, active trace
+and distance. The complete original equality lifts are as follows.
+
+1. If $0<q<1$, the two effects in (46.28) are distinct. A source42
+spectral/Birkhoff decomposition of the given $U$ has the same effect, the same
+complex active trace and positive weights. Equality in the source42 identity
+(42.16) forces every positive-weight phase replacement to be one of the same
+canonical orientation. The effect selects one $\tau$, and the nonzero trace
+$2L\lambda$ fixes the same common scalar in every replacement. Their averaged
+diagonal therefore has four entries of modulus one. Row norms of the actual
+unitary $UU_\sigma^\dagger$ force all off-diagonal entries to vanish, so
+
+$$
+ U=\lambda\operatorname{diag}(v_\sigma^\tau)U_\sigma.
+\tag{46.32}
+$$
+
+2. If $q=1$, the two orientations represent the same singleton effect, but
+their nonzero scalar recoveries are opposite: they are
+$2\tau i\ell y\lambda$ on the positive row and $2\tau\ell y\lambda$ on
+the negative row. The variance term in (42.16) permits only one orientation
+with positive weight. The same row-norm argument gives (46.32), with either
+orientation allowed for this singleton effect.
+
+3. If $q=0$, the equality family is larger. In the fixed pair order of
+(46.2), every equality lift and only an equality lift has
+
+$$
+ UU_\sigma^\dagger=\lambda\,(W_2\oplus I_2),
+ \qquad W_2\in U(2),\qquad \operatorname{Tr}W_2=2x.
+\tag{46.33}
+$$
+
+Here $W_2$ acts on the active pair $J$ and $I_2$ on $K$. In the original
+coordinate order this is $\lambda(W_2\oplus I_2)$ for $\sigma=+$ and
+$\lambda(I_2\oplus W_2)$ for $\sigma=-$; the fixed pair order in (46.2)
+only records which block is active. Equivalently,
+
+$$
+ W_2=Z_2\begin{pmatrix}x+iy&0\\0&x-iy\end{pmatrix}Z_2^\dagger,
+ \qquad Z_2\in U(2).
+\tag{46.34}
+$$
+
+Indeed the two entries on $K$ are $\lambda$ in every phase replacement,
+so unitarity isolates that two-dimensional block. Their active trace is
+$2x\lambda$, giving (46.33). The two unit eigenvalues of $W_2$ have positive real
+sum $2x$, so they are $x+iy$ and $x-iy$; the unitary spectral theorem
+gives exactly (46.34). Conversely (46.33) has the required active
+trace and main recovery, and therefore attains (46.27). This is the required
+larger $q=0$ block lift; it is a fixed-slice equality family, not an assertion
+that all such points minimize the unrestricted level.
+
+*Proof.* Theorem 42.3 supplies actual phase replacements with the same complex
+trace, same effect, same active sign and the exact variance identity. Apply
+Theorem 46.4 to each replacement. Equality in the weighted sum is equivalent
+to equality in every positive-weight phase term and to zero variance. The
+three cases above then follow from the displayed recoveries and the unitary
+row norms. Conversely, the listed matrices have the same trace and the same
+recovery data, so the original formula (23.12) and the active distance formula
+(23.11) give equality. The argument retains singular effects, zero coherence,
+zero recoveries, repeated eigenvalues and nonunique Birkhoff decompositions in
+the source transport; no phase formula is applied directly to a nonphase
+unitary diagonal. $\square$
+

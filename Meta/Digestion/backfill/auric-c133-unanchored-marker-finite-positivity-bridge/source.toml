@@ -1,0 +1,5 @@
+source_id = "auric-c133-unanchored-marker-finite-positivity-bridge"
+path = "docs/develop/theory/AURIC_C133_UNANCHORED_MARKER_FINITE_POSITIVITY_BRIDGE.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

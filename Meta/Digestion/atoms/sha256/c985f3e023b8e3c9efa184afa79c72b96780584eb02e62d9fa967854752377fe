@@ -1,0 +1,21 @@
+### 152.D. An exact stochastic point in the prescribed fiber
+
+For sufficiently small $t>0$ put
+
+$$
+u_a^*=f_a+t x_a\quad(a\in I),\qquad
+u_B^*=f_B-t(x_0+x_1+x_3).
+\tag{152.32}
+$$
+
+The four functions sum to one. On $E$ all four original components have a fixed positive lower bound, and outside $E$ they are unchanged. Choose $t$ so that all four components retain positive slack on $E$. All source marginals are unchanged by oddness. In each ordered pair, its two first-order terms vanish because the $f_a$ and weights are invariant; the second-order term vanishes by (152.31) for equal labels and by disjoint sectors for distinct labels.
+
+Expand $\mathcal C(u_0^*,u_1^*,u_3^*)$. Each term with one $x_a$ vanishes by oddness. Each term with two distinct $x_a$ vanishes by angular separation: the third factor is invariant, and multiplication by invariant functions and application of $P$ preserve every character. The term with three $x_a$ is odd under the half-turn and also vanishes. Hence
+
+$$
+\mathcal H(u^*)=\mathcal H(f).
+\tag{152.33}
+$$
+
+This identity is exact; no small-residual argument is used to obtain it.
+

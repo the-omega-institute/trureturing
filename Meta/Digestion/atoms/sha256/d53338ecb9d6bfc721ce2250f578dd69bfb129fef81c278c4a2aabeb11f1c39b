@@ -1,0 +1,26 @@
+### 12.3 测量、仪器与连续运动
+
+C113 给所选滤波的完整条件更新
+
+$$
+\rho\longmapsto\frac{\sqrt E\rho\sqrt E}{\operatorname{Tr}(\rho E)}
+\quad\text{当 }\operatorname{Tr}(\rho E)>0.
+$$
+
+投影效果 $E=P$ 即给 Lüders 更新。若一整个标签仪器已供应且各分支都是所选滤波，$\sum_kE_k=I$，则
+
+$$
+\rho\longmapsto\sum_k\sqrt{E_k}\rho\sqrt{E_k}
+$$
+
+为非选择性输出。一般仪器的 Kraus 更新仍可不同，效果不唯一决定所有可能仪器。
+
+连续可逆动力学须另给同一个对象上的实际确定性、迹保持连续可逆群；在 Heisenberg 方向它是保单位群。C102 使映射与其逆都完全正，保单位性允许应用双向 Schwarz 不等式，从而迫出乘法保持，故为 $*$ 自同构。在有限矩阵块中，连续群不能置换离散中心，生成元为内导子。因此状态方向有
+
+$$
+\rho(t)=e^{-itH/\hbar}\rho(0)e^{itH/\hbar},\qquad
+i\hbar\dot\psi=H\psi.
+$$
+
+时间参数、$H$ 的具体数值及中心能量零点不由 C113 单独确定。
+

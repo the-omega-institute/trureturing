@@ -1,0 +1,14 @@
+## 29. 中心关系表、四角循环与精确三次型盲核
+
+令
+
+$$
+\begin{aligned}
+K&=Z_A\otimes Z_B,\\
+E&=Z_A\otimes1+1\otimes Z_B,\\
+V_G&=K\cap E^{\perp_G},\\
+U&=Z_A^{\perp_{g_A}}\otimes J_B
+       +J_A\otimes Z_B^{\perp_{g_B}}.
+\end{aligned}\tag{29.1}
+$$
+

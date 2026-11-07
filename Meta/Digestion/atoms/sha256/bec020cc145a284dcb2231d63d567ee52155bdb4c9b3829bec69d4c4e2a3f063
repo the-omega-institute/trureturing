@@ -1,0 +1,87 @@
+**定理 32.2（忠实且效果独立的小缺陷族）。** 存在定义 32.1 的显式族，参数范围为 $0<\theta\le1/8192$，满足定义 25.1 的全部前件，且同时可取 $\delta_j=2\theta$。其实际 (25.8) 证书满足 $t_j<1$ 及 $\Delta(\theta)\to0$，而第 33 节选定的同仪器有限 $5\times5$ 共同前缀／后缀响应表，对每个这样的 $\theta$ 都有准确实秩五。因此，任何实现该合法族的共同实线性预测载体都至少五维；这些小缺陷前件不蕴含准确的共同四维实线性载体。
+
+证明。先取成熟的 qubit 四面体测量作为中间构件，使用以下固定坐标：
+
+$$
+\begin{aligned}
+\zeta&=e^{2\pi i/3},&
+|\psi_0\rangle&=(1,0)^{\mathsf T},&
+|\psi_k\rangle&=(1/\sqrt3,\sqrt{2/3}\,\zeta^{k-1})^{\mathsf T}
+\quad(1\le k\le3),\\
+P_j&=|\psi_j\rangle\langle\psi_j|,&
+K_j&=P_j/\sqrt2,&
+E_j&=K_j^*K_j=P_j/2,&
+\mathcal A_j&=\operatorname{Ad}_{K_j}.
+\end{aligned}
+\tag{32.1}
+$$
+
+这些是本反例模型的数学数据，不是新增原生准备或相位参考端口。由所给向量，
+$\operatorname{Tr}(P_jP_\ell)=1/3$ 对 $j\ne\ell$ 成立，$\sum_jP_j=2I_H$。因此 $\sum_jE_j=I_H$，四个目标都非零。定义 25.1 的效果对偶可取
+
+$$
+F_j=3P_j-I_H=6E_j-I_H,\qquad
+\operatorname{Tr}(F_jE_\ell)=\delta_{j\ell},\qquad
+\kappa_j=\|F_j\|_1=3.
+\tag{32.2}
+$$
+
+最后一个等式来自 $F_j$ 的本征值 $2,-1$；对偶配对直接证明四个目标效果实线性独立。四面体 SIC 本身是成熟构件，来源范围见定义 35.1，不作为本定理的新内容。
+
+令 $U_b(\theta)=e^{-ib\theta\sigma_y}$，即实矩阵
+$\left(\begin{smallmatrix}\cos(b\theta)&-\sin(b\theta)\\
+\sin(b\theta)&\cos(b\theta)\end{smallmatrix}\right)$。定义每次调用都相同的原联合支
+
+$$
+V_j^\theta(X)=\sum_{b=1}^2
+(K_jU_b(\theta)\otimes Q_b)\,X\,
+(K_jU_b(\theta)\otimes Q_b)^* .
+\tag{32.3}
+$$
+
+每支 CP；全部原记录的联合效果之和为
+
+$$
+\sum_{j,b}(U_b^*E_jU_b)\otimes Q_b
+=\sum_b I_H\otimes Q_b=I_{H\otimes M}.
+\tag{32.4}
+$$
+
+所以完整仪器保迹，未遗漏任何失败补全。$b$ 是原私有记忆的数学基指标，不是添加的原可访问标签。仪器对任意联合输入也由 (32.3) 定义；在本节的对角初始记忆下，$b$ 会持续保留，而不是每轮重新抽样。
+
+校准采用同一个与探针独立的 $\tau$，故 $\lambda=1/2$，并且对于全部系统矩阵 $X$，
+
+$$
+T_j^\theta(X):=\operatorname{Tr}_M V_j^\theta(X\otimes\tau)
+=\frac12\sum_{b=1}^2K_jU_bXU_b^*K_j^* .
+\tag{32.5}
+$$
+
+目标 (32.1)、实际映射 (32.5) 和所有标签在整组校准中固定。以下误差估计只是 (25.15) 所用成熟乘子估计的直接应用。任意数学参考及任意矩阵输入都满足
+
+$$
+\begin{aligned}
+\|\operatorname{Ad}_{K_jU_b}-\operatorname{Ad}_{K_j}\|_\diamond
+&\le2\|K_j\|_{\mathrm{op}}^2\|U_b-I\|_{\mathrm{op}}
+=\|U_b-I\|_{\mathrm{op}}
+=2|\sin(b\theta/2)|\le b\theta,\\
+\|T_j^\theta-\mathcal A_j\|_\diamond
+&\le\frac12(\theta+2\theta)\le2\theta.
+\end{aligned}
+\tag{32.6}
+$$
+
+同一个不等式同时覆盖四个原 $j$，不是将分别拟合的仪器拼起来。若将误差写回第 23 节的有限校准读数，可在每支使用第 4 节同一六方向设计，精确准备及指定读回 $J=I$，名义效果为 $E_j$。因为 $\sqrt{E_j}=K_j$，它恰是定义 27.2 所需的相同目标。实际效果为 $E_j^{\rm act}=\frac12\sum_bU_b^*E_jU_b$，由 (32.6) 有 $\|E_j^{\rm act}-E_j\|_{\mathrm{op}}\le2\theta$。以精确联合读数作 $\widehat R_j$ 时，准备、读回及读数预算可取 $a=b=\nu=0$，而 $|Q(E_j)-\widehat R_j|\le2\theta$。第 23 节的 $u_j=Q(E_j)-\widehat R_j+\omega_2(2\theta)$ 非负且趋零，其 $\beta_0$ 亦趋零；此处在 (25.5) 中使用的是已直接证明的预算 $\delta_j=2\theta$，没有将得分缺口与映射误差混作同一个量。
+
+严格代入本卷 (25.6)，记 $h=\sqrt{8\theta}$、$g=(2+h)h$，则
+
+$$
+h_j=h,\quad e_j=g,\quad e=4g,\quad t_j=12g,\qquad
+\Delta(\theta)=\min\{2,\ 4g+2f(12g)\},
+\quad
+f(t)=\frac{(\sqrt{1+t}+1)t}{1+\sqrt{1-t}}.
+\tag{32.7}
+$$
+
+$\theta\le1/8192$ 给 $h\le1/32$、$12g\le195/256<1$，所以 (25.8) 确有定义，且四个 $t_j$ 同时小于一。$g\to0$ 及 $f(t)\to0$ 给 $\Delta(\theta)\to0$。这就是原证书自身的取值，不以单次系统误差代替联合证书，也没有去掉 $d,\lambda,\kappa_j$ 或任何原效果范数。对每个指定的正容差，都可选足够小的非零 $\theta$ 同时满足它和上述严格前件。剩余的精确容量结论由下节同一 (32.3) 的计算给出。$\square$
+

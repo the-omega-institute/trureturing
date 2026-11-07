@@ -1,0 +1,14 @@
+fingerprints:
+  raw_sha256: sha256:e05f53ff8c2d9ae27f7abc79ea999ac2e4af8b9cd49aa58c98f23127a3d4cf75
+  normalized_sha256: sha256:e05f53ff8c2d9ae27f7abc79ea999ac2e4af8b9cd49aa58c98f23127a3d4cf75
+cas_ref: sha256:e05f53ff8c2d9ae27f7abc79ea999ac2e4af8b9cd49aa58c98f23127a3d4cf75
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Pure upstream bind-only reuse of source FT.1-FT.3 and Proposition 18.1; no repository frozen GID covers the complete claim, and no new Lean declaration or first freeze is needed. For every n>=2, the actual legal paths on Fin(n+1) are p_tau(k)=decide(0<k.val) and p_1(k)=decide(0<k.val and k.val<n); their fixed endpoints and absence of adjacent 00 follow by normalization of the source transition rule. Both actual endpoint blocks are therefore nonzero. Matrix.blockDiagonal'RingHom and Matrix.blockDiagonal'_injective realize the original algebra as the finite product over c of Matrix(P_n(c),P_n(c),Complex); this is the upstream construction used by the existing frozen RecordFixedAlgebraDecomposition.blockDiagonalAlgHom, not an added wrapper. Algebra.TensorProduct.piRight, Algebra.TensorProduct.comm, Algebra.TensorProduct.congr and Matrix.kroneckerAlgEquiv give the original tensor algebra on actual path pairs, not an assumed replacement algebra. Set.center_pi and Matrix.center_eq_range identify the endpoint scalar units. For q=z_1 tensor z_tau and r=z_tau tensor z_1, the (p_1,p_tau) diagonal coefficients are respectively 1 and 0, while the reverse pair gives the converse; Matrix.kronecker_apply and Algebra.TensorProduct.tmul_mul_tmul give nonzero orthogonal central projections. Algebra.TensorProduct.comm_tmul sends q to r. Semigroup.mem_center_iff gives commutation with every same-window unitary, and commute_unitary_iff_star_right_conjugate fixes q under its inner conjugation, contradicting q!=r. These are instantiation, projection and normalization of existing pinned Mathlib declarations (lake-manifest.json mathlib 56a005855ea17e0b0958f73ec801ae140b0a1679), with no additional mathematical content. The conclusion excludes only direct Flip in this same window. It does not exclude wider-window or multilayer implementations, establish DHR product compatibility or settle the infinite-tail obstruction. This parent contains exactly the proposition and proof child chain; its own justification is the complete upstream application above, independently of child closure.
+    previous_atom_id: 0216c3861467dc748e9d88f4c49c1dbd45967a3eb221141e166997c56c000023
+    next_atom_id: d52a36850f014e8b23b209bb9ad8750e4212c8f2f484fe5d9fe2a0f841ad5319
+  chain_atoms:
+    - b14b123b39399a5d06e52590c63030f765270a76c17b1ff2d3a49fc6065d8695
+    - e1fd5e9dbc81b150d49a561d8e92f57d7e38fcfbd3cd61cc7c9ce7c6ec930479

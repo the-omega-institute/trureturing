@@ -1,0 +1,60 @@
+**Theorem 27.6 (equivalent residual on the full realizable radial boundary).**
+Put
+
+$$
+\mathcal B_{\mathcal O}
+=\{z\in\mathcal W:m(z)=1,\ A(z)<A_0,\ B(z)<23/6,\ A(z)+B(z)>4\}.
+\tag{27.13}
+$$
+
+The original global endpoint $g\ge\kappa\rho$ for all normalized effects
+and actual shared feedback, equivalently $C_{\rm opt}=R_*$, holds if
+and only if $\nu_\kappa(z)\ge0$ for every $z\in\mathcal B_{\mathcal O}$.
+Every original strict endpoint violation yields an original strict
+violation at a realizable datum in $\mathcal B_{\mathcal O}$.
+
+Proof. Necessity follows from Theorems 23.2–23.4. For sufficiency,
+Corollary 26.6 already gives $\nu_\kappa\ge0$ outside $\mathcal O$.
+Assume the boundary assertion. For any $w\ne0$ in $\mathcal W$, write
+$w=tz$ as in Lemma 27.2. If $z\notin\mathcal O$, use Corollary 26.6;
+otherwise $z\in\mathcal B_{\mathcal O}$ and use the assumption.
+Thus $\nu_\kappa(z)\ge0$ in either case. Since
+$e^2-10\kappa>4-10/25>0$, (27.3) proves $\nu_\kappa(w)\ge0$,
+and is strict for $t<1$. At $w=0$ it is strictly positive by the
+$t=0$ case. Theorem 23.4 proves the original endpoint, including mixed
+effects. These interior strictness conclusions are conditional on the
+boundary assertion; (27.7)–(27.10) have no such assumption.
+
+More explicitly, suppose an original $E,U$ has $g(E,U)-\kappa\rho(E,U)<0$.
+At its actual population, (23.14) forces $G(w,p)-\kappa r(w,p)<0$.
+Corollary 26.6 forces $w\in\mathcal O$, and $w\ne0$ by Theorem 27.4.
+Let $t=m(w)>0$ and $z=w/t$. Inequality (27.6), with its positive
+constant $e^2-10\kappa$, forces $G(z,p)-\kappa r(z,p)<0$.
+It follows that $\nu_\kappa(z)<0$ and hence $z\in\mathcal O$ by
+Corollary 26.6. In particular radial expansion cannot take a violation
+into either already proved cap; $z$ satisfies all of (27.13).
+Theorem 23.2 supplies an actual unitary $U_z$ with this diagonal.
+For that one $U_z$ and the same population, choose the original pure
+effect (23.13), with its attaining relative phase, including arbitrary
+phase when $P$ or $Q$ vanishes. Equations (23.6) give the strict
+original violation; Lemma 11.2 then ensures $g>0$, $\rho>0$ and
+$\rho/g>R_*$. This also covers $t=1$, without any radial division at zero.
+
+The comparison is between different realizable data, not a protocol
+operation: $U_z$ is a new unitary realization, not $U/m(w)$. All
+calculations within each original effect use one actual shared unitary,
+the ordinary transpose, all populations and singular or mixed normalized
+effects. The joint optimizer sign and the one common scalar phase
+quotient are those of Section 23; neither is independently optimized
+with an amplitude. Arbitrary nondiagonal lifts remain included.
+The remaining assertion on (27.13) is unresolved on both boundary types
+of (27.2), with their overlap retained. Failure of the sufficient
+certificate (27.8) does not produce a counterexample. The radial
+comparison and margin are repo-derived consequences of (23.1)–(23.3),
+the exact realization/population bridge and Sections 24–26. The
+homogeneity in Section 8 concerns refinement of effect columns and
+does not supply this feedback-diagonal comparison. The global endpoint
+still requires a uniform proof on (27.13) or an original feasible
+violation; this reduction makes no complete quantum reconstruction or
+literature-priority assertion. $\square$
+
