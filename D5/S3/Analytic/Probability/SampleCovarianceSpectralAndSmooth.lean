@@ -352,14 +352,7 @@ private lemma logarithmicEnergy_eq_real_integral (ν : Measure ℝ) [SFinite ν]
     integral_nonneg (fun p => le_max_right _ _)
   have hsplit : (∫ p, max (f p) 0 ∂ν.prod ν) -
       (∫ p, max (-f p) 0 ∂ν.prod ν) = ∫ p, f p ∂ν.prod ν := by
-    rw [← integral_sub hpi hni]
-    apply integral_congr_ae
-    filter_upwards [] with p
-    change max (f p) 0 - max (-f p) 0 = f p
-    by_cases hf : 0 ≤ f p
-    · rw [max_eq_left hf, max_eq_right (neg_nonpos.mpr hf), sub_zero]
-    · rw [max_eq_right (le_of_not_ge hf), max_eq_left (neg_nonneg.mpr (le_of_not_ge hf))]
-      ring
+    exact (integral_eq_integral_pos_part_sub_integral_neg_part hfi).symm
   unfold logarithmicEnergy
   rw [← lintegral_prod _ measurable_logPositiveKernel.aemeasurable,
     ← lintegral_prod _ measurable_logNegativeKernel.aemeasurable,
