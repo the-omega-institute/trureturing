@@ -80,7 +80,7 @@ private theorem inner_leibniz
   change s * (r * (x * y)) - r * (s * (x * y)) =
     (s * (r * x) - r * (s * x)) * y +
       x * (s * (r * y) - r * (s * y))
-  simp only [mul_sub, sub_mul] 
+  simp only [mul_sub, sub_mul]
   simp only [mul_comm] at h1 h2 ⊢
   linear_combination (norm := abel) h1 - h2
 

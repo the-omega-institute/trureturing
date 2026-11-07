@@ -65,7 +65,7 @@ theorem raw_source_bridge : rawSourceScope.{u} ↔ rawArena.{u}.Law rawActual :=
     exact h P.S P.comm P.jordan P.productNorm P.squareNorm
       P.D P.skew P.row P.associator z.1.property z.2
   · intro h E normed space S hc hj hn hs D hd hr hR q hq b
-    exact h ⟨E, normed, space, S, hc, hj, hn, hs, D, hd, hr, hR⟩ (⟨q, hq⟩, b)
+    exact h ⟨E, S, hc, hj, hn, hs, D, hd, hr, hR⟩ (⟨q, hq⟩, b)
 
 theorem raw_actual_positive : rawArena.{u}.Law rawActual :=
   raw_source_bridge.mp (@actual_output_bound.{u})
