@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/FiniteGroups/GroupAlgebra/PGroupNormalTrace
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/FiniteGroups/GroupAlgebra/PGroupAugmentation]
+   anchors: []
    utility: none
    digest: Nonzero trace detects normal elements for arbitrary Galois p-groups. -/
 
