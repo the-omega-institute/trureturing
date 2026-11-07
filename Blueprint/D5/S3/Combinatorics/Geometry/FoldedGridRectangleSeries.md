@@ -48,6 +48,10 @@ $$claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Geometry/FoldedGridRectangleSeries.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a096222-folded-grid-rectangles` (proved) by `D5/S3/Combinatorics/Geometry/FoldedGridRectangleSeries.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a096222-folded-grid-rectangles","declaration_gid":"D5/S3/Combinatorics/Geometry/FoldedGridRectangleSeries.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Colin Barker; Bill Liebeskind (2020). *OEIS A096222: rectangles in an alternately folded grid*. URL: <https://oeis.org/A096222/internal?rev=13>.
