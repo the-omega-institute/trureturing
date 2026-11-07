@@ -21,16 +21,6 @@ internal sealed class TriangleFourSymbolNecessityDocument : IScribeDocumentDefin
                 + "The record law is the actual marginal of the first output and all three sources. "
                 + "The source cost is KL(nu || mu1 times mu2 times mu3), where each mui is "
                 + "the marginal of that same source law. Entropy uses natural logarithms.")),
-            Node("original_law_recoverability", "Agreement forces the active original rows",
-                "Assume agreement. At each positive source cell, the product response law and agreement force "
-                + "all three response vectors to be point masses at one common symbol. "
-                + "Every positive incident-pair marginal has a positive extension. Thus its "
-                + "fixed kernel row is a point mass. The incident readouts agree on every "
-                + "positive source cell, and the record-cell identity also covers zero source cells."),
-            Node("original_law_common_record", "The common record belongs to the same law",
-                "Assume agreement. Summing the six-variable law over the other two outputs gives recordLaw. "
-                + "The output weights are a probability vector. Replacing the first response "
-                + "by either other incident response gives the same record/source joint law."),
             Node("original_equality_fibers", "The KL equality forces source-pair and fiber products",
                 "Assume agreement and sourceCost = H(outputLaw)/2. Then all three unconditional source pairs "
                 + "are products of the original marginals. For each positive original output "
