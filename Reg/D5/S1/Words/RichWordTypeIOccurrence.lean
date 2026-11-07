@@ -2,6 +2,8 @@ import D5.S1.Words.RichWordTypeIOccurrence
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
 
+/-! Source-bound observation of ordinary native occurrence parsing. -/
+
 open _root_.D5.S1.Words.RichWordTypeIOccurrence
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
@@ -34,7 +36,7 @@ abbrev arena : Arena where
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  exact (h [] 0).mpr ⟨0, by decide, by decide⟩
+  exact (h [] 0).mpr ⟨0, by decide, by unfold Occ; decide⟩
 
 def family : Registration arena
     (type_of% (@_root_.D5.S1.Words.RichWordTypeIOccurrence.ordinary_occurrence_iff)) where
@@ -55,7 +57,8 @@ def family : Registration arena
     refine ⟨[], 0, 1, ?_⟩
     change Occ (sentinel []) 0 ≠ Occ (sentinel []) 1
     intro h
-    exact (by decide : ¬ Occ (sentinel []) 1) (Eq.mp h (by decide))
+    exact (by unfold Occ; decide : ¬ Occ (sentinel []) 1)
+      (Eq.mp h (by unfold Occ; decide))
 
 noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S1.Words.RichWordTypeIOccurrence.ordinary_occurrence_iff)
