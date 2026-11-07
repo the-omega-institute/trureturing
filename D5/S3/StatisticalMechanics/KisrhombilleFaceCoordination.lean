@@ -77,11 +77,7 @@ shell_formula: proof_shape=bind-only; consumers=result
 result: proof_shape=bind-only; consumers=Reg.family
 -/
 
-import D5.S3.Combinatorics.PositionSets.VertexPositionRatioRefutation
 import D5.S3.StatisticalMechanics.TeaCoordinationSequence
-import Mathlib.RingTheory.PowerSeries.Basic
-import Mathlib.Data.Int.Interval
-import Mathlib.Tactic.IntervalCases
 
 /-! The simplex-inclusion graph of the triangular lattice. -/
 
@@ -634,15 +630,17 @@ private lemma slice_card_from_polygon (t : Fin 6) (n A B l r : ℕ) (i0 j0 : ℤ
 
 private lemma slice_even_0 (k : ℕ) :
     ((slice 0 (2 * (k + 1))).card : ℤ) = 3 * (k + 1) ^ 2 := by
-  have h := slice_card_from_polygon 0 (2 * (k + 1)) (2 * k + 1) (2 * k + 1) (k) (k + 1)
-    (-(k : ℤ)) (-(k : ℤ)) (by omega) (by omega) (by omega) (by omega) (by omega) (by
-      rintro ⟨i, j⟩
-      simp only [score, ← le_sub_iff_add_le', twice_le_iff,
-      TeaCoordinationSequence.residual_le_iff]
-      push_cast
-      omega)
+  have he : slice 0 (2 * (k + 1)) = TeaCoordinationSequence.hexagon ((k : ℤ) + 1) ((k : ℤ)) := by
+    ext ⟨i, j⟩
+    simp only [slice_mem, score, ← le_sub_iff_add_le', twice_le_iff,
+      TeaCoordinationSequence.residual_le_iff, TeaCoordinationSequence.hexagon_mem]
+    push_cast
+    omega
+  have h := TeaCoordinationSequence.hexagon_card ((k : ℤ) + 1) ((k : ℤ)) (by omega) (by omega)
+  rw [← he] at h
   push_cast at h ⊢
   nlinarith
+
 
 private lemma slice_even_1 (k : ℕ) :
     ((slice 1 (2 * (k + 1))).card : ℤ) = 3 * (k + 1) ^ 2 + 2 * (k + 1) := by
@@ -658,63 +656,101 @@ private lemma slice_even_1 (k : ℕ) :
 
 private lemma slice_even_2 (k : ℕ) :
     ((slice 2 (2 * (k + 1))).card : ℤ) = 3 * (k + 1) ^ 2 + 2 * (k + 1) := by
-  have h := slice_card_from_polygon 2 (2 * (k + 1)) (2 * k + 1) (2 * k + 2) (k) (k + 1)
-    (-(k : ℤ)) (-(k : ℤ) - 1) (by omega) (by omega) (by omega) (by omega) (by omega) (by
-      rintro ⟨i, j⟩
-      simp only [score, hex_le, ← le_sub_iff_add_le', twice_le_iff,
-      TeaCoordinationSequence.residual_le_iff]
-      push_cast
-      omega)
-  push_cast at h ⊢
-  nlinarith
+  have he : (slice 2 (2 * (k + 1))).card = (slice 1 (2 * (k + 1))).card := by
+    apply Finset.card_bij (fun z _ => (z.2, z.1))
+    · rintro ⟨i, j⟩ hz
+      simp only [slice_mem, score, hex_le] at hz ⊢
+      dsimp at hz ⊢
+      omega
+    · rintro ⟨i, j⟩ _ ⟨u, v⟩ _ h
+      simp only [Prod.mk.injEq] at h ⊢
+      omega
+    · rintro ⟨i, j⟩ hz
+      refine ⟨(j, i), ?_, ?_⟩
+      · simp only [slice_mem, score, hex_le] at hz ⊢
+        dsimp at hz ⊢
+        omega
+      · simp
+  rw [he, slice_even_1]
+
 
 private lemma slice_even_3 (k : ℕ) :
     ((slice 3 (2 * (k + 1))).card : ℤ) = 3 * (k + 1) ^ 2 + 2 * (k + 1) := by
-  have h := slice_card_from_polygon 3 (2 * (k + 1)) (2 * k + 2) (2 * k + 2) (k + 1) (k + 2)
-    (-(k : ℤ) - 1) (-(k : ℤ) - 1) (by omega) (by omega) (by omega) (by omega) (by omega) (by
-      rintro ⟨i, j⟩
-      simp only [score, hex_le, ← le_sub_iff_add_le', twice_le_iff,
-      TeaCoordinationSequence.residual_le_iff]
-      push_cast
-      omega)
-  push_cast at h ⊢
-  nlinarith
+  have he : (slice 3 (2 * (k + 1))).card = (slice 1 (2 * (k + 1))).card := by
+    apply Finset.card_bij (fun z _ => (z.1, -z.1 - z.2))
+    · rintro ⟨i, j⟩ hz
+      simp only [slice_mem, score, hex_le] at hz ⊢
+      dsimp at hz ⊢
+      omega
+    · rintro ⟨i, j⟩ _ ⟨u, v⟩ _ h
+      simp only [Prod.mk.injEq] at h ⊢
+      omega
+    · rintro ⟨i, j⟩ hz
+      refine ⟨(i, -i - j), ?_, ?_⟩
+      · simp only [slice_mem, score, hex_le] at hz ⊢
+        dsimp at hz ⊢
+        omega
+      · simp
+  rw [he, slice_even_1]
+
 
 private lemma slice_even_4 (k : ℕ) :
     ((slice 4 (2 * (k + 1))).card : ℤ) = 3 * (k + 1) ^ 2 + 3 * (k + 1) + 1 := by
-  have h := slice_card_from_polygon 4 (2 * (k + 1)) (2 * k + 2) (2 * k + 2) (k + 1) (k + 1)
-    (-(k : ℤ) - 1) (-(k : ℤ) - 1) (by omega) (by omega) (by omega) (by omega) (by omega) (by
-      rintro ⟨i, j⟩
-      simp only [score, ← le_sub_iff_add_le', twice_le_iff,
-      TeaCoordinationSequence.residual_le_iff]
-      push_cast
-      omega)
+  have he : slice 4 (2 * (k + 1)) = TeaCoordinationSequence.hexagon ((k : ℤ) + 1) ((k : ℤ) + 1) := by
+    ext ⟨i, j⟩
+    simp only [slice_mem, score, ← le_sub_iff_add_le', twice_le_iff,
+      TeaCoordinationSequence.residual_le_iff, TeaCoordinationSequence.hexagon_mem]
+    push_cast
+    omega
+  have h := TeaCoordinationSequence.hexagon_card ((k : ℤ) + 1) ((k : ℤ) + 1) (by omega) (by omega)
+  rw [← he] at h
   push_cast at h ⊢
   nlinarith
+
 
 private lemma slice_even_5 (k : ℕ) :
     ((slice 5 (2 * (k + 1))).card : ℤ) = 3 * (k + 1) ^ 2 + 3 * (k + 1) := by
-  have h := slice_card_from_polygon 5 (2 * (k + 1)) (2 * k + 2) (2 * k + 2) (k) (k + 2)
-    (-(k : ℤ) - 1) (-(k : ℤ) - 1) (by omega) (by omega) (by omega) (by omega) (by omega) (by
-      rintro ⟨i, j⟩
-      simp only [score, ← le_sub_iff_add_le', twice_le_iff,
-      TeaCoordinationSequence.residual_le_iff]
-      push_cast
-      omega)
+  have he : (slice 5 (2 * (k + 1))).card =
+      (TeaCoordinationSequence.hexagon ((k : ℤ) + 2) ((k : ℤ))).card := by
+    apply Finset.card_bij (fun z _ => (z.1 + 1, z.2 + 1))
+    · rintro ⟨i, j⟩ hz
+      simp only [slice_mem, score, ← le_sub_iff_add_le', twice_le_iff,
+        TeaCoordinationSequence.residual_le_iff] at hz
+      rw [TeaCoordinationSequence.hexagon_mem]
+      push_cast at hz
+      dsimp
+      omega
+    · rintro ⟨i, j⟩ _ ⟨u, v⟩ _ h
+      simp only [Prod.mk.injEq] at h ⊢
+      omega
+    · rintro ⟨i, j⟩ hz
+      rw [TeaCoordinationSequence.hexagon_mem] at hz
+      refine ⟨(i - 1, j - 1), ?_, ?_⟩
+      · simp only [slice_mem, score, ← le_sub_iff_add_le', twice_le_iff,
+          TeaCoordinationSequence.residual_le_iff]
+        push_cast
+        dsimp
+        omega
+      · simp
+  have h := TeaCoordinationSequence.hexagon_card ((k : ℤ) + 2) ((k : ℤ)) (by omega) (by omega)
+  rw [← he] at h
   push_cast at h ⊢
   nlinarith
 
+
 private lemma slice_odd_0 (k : ℕ) :
     ((slice 0 (2 * (k + 1) + 1)).card : ℤ) = 3 * (k + 2) ^ 2 := by
-  have h := slice_card_from_polygon 0 (2 * (k + 1) + 1) (2 * k + 3) (2 * k + 3) (k + 1) (k + 2)
-    (-(k : ℤ) - 1) (-(k : ℤ) - 1) (by omega) (by omega) (by omega) (by omega) (by omega) (by
-      rintro ⟨i, j⟩
-      simp only [score, ← le_sub_iff_add_le', twice_le_iff,
-      TeaCoordinationSequence.residual_le_iff]
-      push_cast
-      omega)
+  have he : slice 0 (2 * (k + 1) + 1) = TeaCoordinationSequence.hexagon ((k : ℤ) + 2) ((k : ℤ) + 1) := by
+    ext ⟨i, j⟩
+    simp only [slice_mem, score, ← le_sub_iff_add_le', twice_le_iff,
+      TeaCoordinationSequence.residual_le_iff, TeaCoordinationSequence.hexagon_mem]
+    push_cast
+    omega
+  have h := TeaCoordinationSequence.hexagon_card ((k : ℤ) + 2) ((k : ℤ) + 1) (by omega) (by omega)
+  rw [← he] at h
   push_cast at h ⊢
   nlinarith
+
 
 private lemma slice_odd_1 (k : ℕ) :
     ((slice 1 (2 * (k + 1) + 1)).card : ℤ) = 3 * (k + 1) ^ 2 + 4 * (k + 1) + 1 := by
@@ -730,49 +766,84 @@ private lemma slice_odd_1 (k : ℕ) :
 
 private lemma slice_odd_2 (k : ℕ) :
     ((slice 2 (2 * (k + 1) + 1)).card : ℤ) = 3 * (k + 1) ^ 2 + 4 * (k + 1) + 1 := by
-  have h := slice_card_from_polygon 2 (2 * (k + 1) + 1) (2 * k + 3) (2 * k + 2) (k + 1) (k + 2)
-    (-(k : ℤ) - 1) (-(k : ℤ) - 1) (by omega) (by omega) (by omega) (by omega) (by omega) (by
-      rintro ⟨i, j⟩
-      simp only [score, hex_le, ← le_sub_iff_add_le', twice_le_iff,
-      TeaCoordinationSequence.residual_le_iff]
-      push_cast
-      omega)
-  push_cast at h ⊢
-  nlinarith
+  have he : (slice 2 (2 * (k + 1) + 1)).card = (slice 1 (2 * (k + 1) + 1)).card := by
+    apply Finset.card_bij (fun z _ => (z.2, z.1))
+    · rintro ⟨i, j⟩ hz
+      simp only [slice_mem, score, hex_le] at hz ⊢
+      dsimp at hz ⊢
+      omega
+    · rintro ⟨i, j⟩ _ ⟨u, v⟩ _ h
+      simp only [Prod.mk.injEq] at h ⊢
+      omega
+    · rintro ⟨i, j⟩ hz
+      refine ⟨(j, i), ?_, ?_⟩
+      · simp only [slice_mem, score, hex_le] at hz ⊢
+        dsimp at hz ⊢
+        omega
+      · simp
+  rw [he, slice_odd_1]
+
 
 private lemma slice_odd_3 (k : ℕ) :
     ((slice 3 (2 * (k + 1) + 1)).card : ℤ) = 3 * (k + 1) ^ 2 + 4 * (k + 1) + 1 := by
-  have h := slice_card_from_polygon 3 (2 * (k + 1) + 1) (2 * k + 2) (2 * k + 2) (k) (k + 1)
-    (-(k : ℤ) - 1) (-(k : ℤ) - 1) (by omega) (by omega) (by omega) (by omega) (by omega) (by
-      rintro ⟨i, j⟩
-      simp only [score, hex_le, ← le_sub_iff_add_le', twice_le_iff,
-      TeaCoordinationSequence.residual_le_iff]
-      push_cast
-      omega)
-  push_cast at h ⊢
-  nlinarith
+  have he : (slice 3 (2 * (k + 1) + 1)).card = (slice 1 (2 * (k + 1) + 1)).card := by
+    apply Finset.card_bij (fun z _ => (z.1, -z.1 - z.2))
+    · rintro ⟨i, j⟩ hz
+      simp only [slice_mem, score, hex_le] at hz ⊢
+      dsimp at hz ⊢
+      omega
+    · rintro ⟨i, j⟩ _ ⟨u, v⟩ _ h
+      simp only [Prod.mk.injEq] at h ⊢
+      omega
+    · rintro ⟨i, j⟩ hz
+      refine ⟨(i, -i - j), ?_, ?_⟩
+      · simp only [slice_mem, score, hex_le] at hz ⊢
+        dsimp at hz ⊢
+        omega
+      · simp
+  rw [he, slice_odd_1]
+
 
 private lemma slice_odd_4 (k : ℕ) :
     ((slice 4 (2 * (k + 1) + 1)).card : ℤ) = 3 * (k + 1) ^ 2 + 3 * (k + 1) + 1 := by
-  have h := slice_card_from_polygon 4 (2 * (k + 1) + 1) (2 * k + 2) (2 * k + 2) (k + 1) (k + 1)
-    (-(k : ℤ) - 1) (-(k : ℤ) - 1) (by omega) (by omega) (by omega) (by omega) (by omega) (by
-      rintro ⟨i, j⟩
-      simp only [score, ← le_sub_iff_add_le', twice_le_iff,
-      TeaCoordinationSequence.residual_le_iff]
-      push_cast
-      omega)
+  have he : slice 4 (2 * (k + 1) + 1) = TeaCoordinationSequence.hexagon ((k : ℤ) + 1) ((k : ℤ) + 1) := by
+    ext ⟨i, j⟩
+    simp only [slice_mem, score, ← le_sub_iff_add_le', twice_le_iff,
+      TeaCoordinationSequence.residual_le_iff, TeaCoordinationSequence.hexagon_mem]
+    push_cast
+    omega
+  have h := TeaCoordinationSequence.hexagon_card ((k : ℤ) + 1) ((k : ℤ) + 1) (by omega) (by omega)
+  rw [← he] at h
   push_cast at h ⊢
   nlinarith
 
+
 private lemma slice_odd_5 (k : ℕ) :
     ((slice 5 (2 * (k + 1) + 1)).card : ℤ) = 3 * (k + 1) ^ 2 + 3 * (k + 1) := by
-  have h := slice_card_from_polygon 5 (2 * (k + 1) + 1) (2 * k + 2) (2 * k + 2) (k) (k + 2)
-    (-(k : ℤ) - 1) (-(k : ℤ) - 1) (by omega) (by omega) (by omega) (by omega) (by omega) (by
-      rintro ⟨i, j⟩
-      simp only [score, ← le_sub_iff_add_le', twice_le_iff,
-      TeaCoordinationSequence.residual_le_iff]
-      push_cast
-      omega)
+  have he : (slice 5 (2 * (k + 1) + 1)).card =
+      (TeaCoordinationSequence.hexagon ((k : ℤ) + 2) ((k : ℤ))).card := by
+    apply Finset.card_bij (fun z _ => (z.1 + 1, z.2 + 1))
+    · rintro ⟨i, j⟩ hz
+      simp only [slice_mem, score, ← le_sub_iff_add_le', twice_le_iff,
+        TeaCoordinationSequence.residual_le_iff] at hz
+      rw [TeaCoordinationSequence.hexagon_mem]
+      push_cast at hz
+      dsimp
+      omega
+    · rintro ⟨i, j⟩ _ ⟨u, v⟩ _ h
+      simp only [Prod.mk.injEq] at h ⊢
+      omega
+    · rintro ⟨i, j⟩ hz
+      rw [TeaCoordinationSequence.hexagon_mem] at hz
+      refine ⟨(i - 1, j - 1), ?_, ?_⟩
+      · simp only [slice_mem, score, ← le_sub_iff_add_le', twice_le_iff,
+          TeaCoordinationSequence.residual_le_iff]
+        push_cast
+        dsimp
+        omega
+      · simp
+  have h := TeaCoordinationSequence.hexagon_card ((k : ℤ) + 2) ((k : ℤ)) (by omega) (by omega)
+  rw [← he] at h
   push_cast at h ⊢
   nlinarith
 
