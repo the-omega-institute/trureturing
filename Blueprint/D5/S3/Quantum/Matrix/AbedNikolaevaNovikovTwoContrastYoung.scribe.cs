@@ -50,12 +50,15 @@ internal sealed class AbedNikolaevaNovikovTwoContrastYoungDocument : IScribeDocu
                 + "construction of Proposition 5.22. The denominator is (1 - eta)² + 2 eta (1 - delta), "
                 + "which is strictly positive on the stated domain. Evenness is needed only for attainment. "
                 + "No sharp interior odd-dimensional envelope or singular-density extension is asserted.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("ann2610i8"), ResolutionKind.Proved)))));
 
     private static DocumentBlock Entry(string id, string name, string title, Formula formula,
-        string prose, DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        string prose, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create(id), DeclarationHandle.Create(Prefix + name), H(title),
-            StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role);
+            StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula V(string name) => F.Id(name);
     private static Formula Call(string name, params Formula[] args) =>
