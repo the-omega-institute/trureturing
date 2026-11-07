@@ -148,13 +148,13 @@ theorem centered_parameters (r : ℕ) :
     norm_num
   omega
 
-private def v0 (d : ℕ) (B x : ℤ) (j : ℕ) : ℤ :=
+def v0 (d : ℕ) (B x : ℤ) (j : ℕ) : ℤ :=
   (2 * B - 3) * x - (B ^ 2 + B + 1) * (if j = d - 1 then 1 else 0)
-private def v1 (d : ℕ) (B x : ℤ) (j : ℕ) : ℤ :=
+def v1 (d : ℕ) (B x : ℤ) (j : ℕ) : ℤ :=
   -(5 * B + 2) * x + (B ^ 2 + B + 1) *
     ((if j = d - 3 then 1 else 0) + (if j = d - 2 then 1 else 0) +
       2 * (if j = d - 1 then 1 else 0))
-private def v2 (d : ℕ) (B x : ℤ) (j : ℕ) : ℤ :=
+def v2 (d : ℕ) (B x : ℤ) (j : ℕ) : ℤ :=
   (3 * B + 5) * x - (B ^ 2 + B + 1) *
     ((if j = d - 2 then 1 else 0) + 2 * (if j = d - 1 then 1 else 0))
 
@@ -232,7 +232,7 @@ private theorem phase_bounds (r j : ℕ) (hj : j < degree r) :
       · constructor <;> nlinarith [sq_nonneg ((2 : ℤ) ^ j - 1)]
       · constructor <;> constructor <;> nlinarith [sq_nonneg ((2 : ℤ) ^ j - 1)]
 
-private theorem source_phases (r : ℕ) (j : Fin (degree r)) :
+theorem source_phases (r : ℕ) (j : Fin (degree r)) :
     let B : ℤ := base r
     let g := B - 1
     let x : ℤ := 2 ^ j.val
@@ -282,8 +282,8 @@ def place {d : ℕ} (p : Fin 3) (j : Fin d) : Fin (3 * d) :=
 def slice {d : ℕ} (p : Fin 3) (A : Finset (Fin (3 * d))) : Finset (Fin d) :=
   Finset.univ.filter (fun j => place p j ∈ A)
 
-private theorem sum_slices {d : ℕ} (hd : 0 < d) (A : Finset (Fin (3 * d)))
-    (f : Fin (3 * d) → ℤ) :
+theorem sum_slices {R : Type*} [AddCommMonoid R] {d : ℕ} (hd : 0 < d) (A : Finset (Fin (3 * d)))
+    (f : Fin (3 * d) → R) :
     (∑ i ∈ A, f i) =
       (∑ j ∈ slice 0 A, f (place 0 j)) +
       (∑ j ∈ slice 1 A, f (place 1 j)) +

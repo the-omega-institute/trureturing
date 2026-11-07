@@ -79,9 +79,9 @@ private theorem residue_data (j : ℕ) :
 private def Lblock (r j : ℕ) : ℤ := (z19 j * base r + (2 : ℤ)^j)/19
 private def Mblock (r j : ℕ) : ℤ := (s19 j * base r + (2 : ℤ)^j-z19 j)/19
 private def Ublock (r j : ℕ) : ℤ := ((2 : ℤ)^j-s19 j)/19
-private def Qmask (r : ℕ) : ℕ := (base r ^ 2 + base r + 1)/19
+def Qmask (r : ℕ) : ℕ := (base r ^ 2 + base r + 1)/19
 
-private theorem Q_exact (r : ℕ) :
+theorem Q_exact (r : ℕ) :
     (19 : ℤ) * Qmask r = (base r : ℤ)^2 + base r + 1 := by
   have hb := (base_facts r).2.1
   have hm : (base r^2+base r+1)%19 = 0 := by
