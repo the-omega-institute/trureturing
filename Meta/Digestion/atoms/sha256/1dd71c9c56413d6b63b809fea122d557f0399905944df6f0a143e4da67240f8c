@@ -1,0 +1,39 @@
+#### 命题 8.1：来源稳定比较的精确含义
+
+设 $n=\dim W\ge2$，并由同一 $B,e$ 定义几何稳定子
+
+$$
+H_e=\{h\in O(W,B):he=e\},\qquad
+\mathcal E(z)=\lVert Kz\rVert_B^2+\lVert Lz\rVert_B^2.
+$$
+
+以下三项等价：
+
+1.  $M(K,L)\in\operatorname{span}\{I_W,P_e\}$；
+
+2.  对全部 $h\in H_e,z\in W$，$\mathcal E(hz)=\mathcal E(z)$；
+
+3.  若 $\lVert z\rVert=\lVert z'\rVert$ 且 $B(e,z)^2=B(e,z')^2$，则 $\mathcal E(z)=\mathcal E(z')$。
+
+**证明。**
+
+第一项给 $\mathcal E(z)=\alpha\lVert z\rVert^2+\gamma B(e,z)^2$，故推出第三项；第三项立即推出第二项。 第二项经实极化给 $h^*Mh=M$。稳定子中的 $P_e-(I-P_e)$ 使 $M$ 的来源–横向交叉块为零。 而 $H_e$ 在 $E=e^\perp$ 上包含全部 $O(E)$，故 $B(z,Mz)$ 在 $E$ 的单位球上为常数。再由极化，$M|_E=\alpha I_E$。来源块是一维标量，于是 $M=\alpha I+\gamma P_e$。
+
+$\square$
+
+$H_e$ 是由比较与来源定义的数学对称群；此处没有宣称原菜单已供应其中每个变换。候选只要求原二元平方总量在这些比较下没有另一个偏向。非标量条件再要求来源确实与其余方向不同。
+
+仅检查 $e^\perp$ 内的等长方向仍不够。例如在标准 $\mathbb R^3$ 中取
+
+$$
+e=e_1,\qquad K=J_{12},\qquad L=J_{13}+cJ_{23},\qquad c\ne0,
+$$
+
+其中 $J_{ij}e_i=e_j,J_{ij}e_j=-e_i$。直接计算
+
+$$
+M=\begin{pmatrix}2&c&0\\c&1+c^2&0\\0&0&1+c^2\end{pmatrix}.
+$$
+
+横向压缩为 $(1+c^2)I_{e^\perp}$，但来源–横向交叉块非零；$e+e_2$ 与 $e-e_2$ 的长度及来源平方投影相同，作用量却相差 $4c$。所以必须比较完整向量，不能只保留一个横截面。这是当前见证对的反例；同一个三维模型仍可重选另一对合格见证。
+

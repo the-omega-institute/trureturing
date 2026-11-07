@@ -1,0 +1,30 @@
+### 12.2　原 $W,Z_2,R_2,\tau,V$ 的精确分解与条件性来源桥
+
+沿用原二十七模载体和原固定 $S$。在坐标 $0,1,2$ 上置
+
+$$
+\zeta=e^{2\pi i/3},\qquad \eta=1-\zeta,\qquad C_i=e_ie_i^*,
+$$
+
+$$
+W=\left(\eta^{-1}\zeta^{ab}\right)_{a,b=0}^2\oplus I_{24},\qquad
+\tau=(1\ 2),
+$$
+
+并在坐标 $(1,2)$ 上置
+
+$$
+R=\frac12
+\begin{pmatrix}1&-\bar\eta\\ \eta&1\end{pmatrix},\qquad
+Z_2=\operatorname{diag}_2(\zeta),\qquad
+U=Z_2R,\qquad V=WU.
+$$
+
+令
+
+$$
+q=\frac{e_1+\eta\zeta e_2}{2},\qquad
+p=Wq,\qquad p'=W\tau q,\qquad
+P=pp^*,\qquad P'=p'p'^*,\qquad D_i=WC_iW^*.
+$$
+

@@ -1,0 +1,35 @@
+#### 定理 5.2：二阶块的完整局部分类
+
+在 $E=\operatorname{Herm}(\mathbb C^2)$、$g_E=w\operatorname{Tr}(AB)$、$w>0$ 上，实双线性 $D$ 满足 $D(A,I)=0$ 和全部正输入的球面相切条件，当且仅当
+
+$$
+D(A,B)=\gamma i[A,B]
+$$
+
+对某个实常数 $\gamma$ 成立。此时共同支持条件也成立。
+
+**证明。**
+
+上面的推导给全交替 $T$。右单位及交替使 $T$ 任一槽为 $I$ 时为零，且 $D$ 输出无迹。因此 $T$ 降到三实维空间 $V=\operatorname{Herm}(\mathbb C^2)^0$。其三形式空间一维。
+
+取 Pauli 基 $X,Y,Z$，三轴彼此正交，各轴的平方长度均为 $2w$。设 $\theta=T(X,Y,Z)/(2w)$，配对唯一性给
+
+$$
+D(X,Y)=\theta Z,\qquad D(Y,Z)=\theta X,
+\qquad D(Z,X)=\theta Y.
+$$
+
+而 $i[X,Y]=-2Z$，故 $\gamma=-\theta/2$。双线性与单位槽为零将结论推广到整个 $E$。反向由迹循环直接得到两式 (13)。对正 $A,B$，$\ker(A+B)=\ker A\cap\ker B$，所以两者及其交换子都位于共同支持内。
+
+$\square$
+
+写 $A=a_0I+\boldsymbol a\cdot\boldsymbol\sigma$、$B=b_0I+\boldsymbol b\cdot\boldsymbol\sigma$，便有
+
+$$
+D(A,B)=-2\gamma(\boldsymbol a\times\boldsymbol b)\cdot\boldsymbol\sigma.
+$$
+
+三轴在该块的原比较尺下各向同性。两读出限定平面，关系输出垂直于两者；但 $\gamma$ 的大小和符号仍需校准，$\gamma=0$ 也满足裸局部条件。这幅图容许转动，不强迫非零运动。
+
+高阶与多中心的全部分类，项目定理 373.1 在其明确条件下给逐块 $\gamma_s i[A_s,B_s]$，使用既有定理 274.1；本轮未完整重审该高阶依赖链。本文上面的二阶证明自足。最新定理本身允许各块独立尺度；完整原背景及同一 $\sigma$ 才将它们统一。项目 $D=i[A,B]/2$ 的代数刻度，也不能直接当成物理 $\hbar$ 或时间单位。[\[4\]](#ref-c128)
+

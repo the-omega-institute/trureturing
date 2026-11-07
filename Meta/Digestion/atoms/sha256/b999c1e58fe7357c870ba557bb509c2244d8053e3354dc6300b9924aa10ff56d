@@ -1,0 +1,90 @@
+**Theorem 18.1 (core and free-column reconstruction before the long field).** Under (17.1), put $D_s=W_{s^2}-W_1$ and
+
+$$
+w_s=\frac{g_s}{a}(S+m_s)^{-1}D_s\psi_s.
+\tag{18.1}
+$$
+
+Then, in the complete zero-extended $L^2(\mathbb R^4)$ norm,
+
+$$
+\|\mathcal U_sw_s-cp-c\mathcal M_s(QY_t)\|_2\longrightarrow0.
+\tag{18.2}
+$$
+
+Proof. Use $V_s=U_s^{<}=s^5D_s\circ\Xi_s$, zero extended. P (104.6) gives $V_s\to V$ in $L^2$ and a uniform supremum bound. P Theorem 90.1, only in its necessity and local-compactness directions for actual states of zero excess, gives $F_s\to cp$ in $L^2(K)$ on every fixed compact $K$. Consequently
+
+$$
+V_sF_s\longrightarrow cVp\text{ in }L^1,\qquad
+\mu_s:=\phi_sV_sF_s\longrightarrow c\phi(k_0)Vp\text{ in }L^1.
+\tag{18.3}
+$$
+
+For the first claim, bound $(V_s-V)F_s$ by $\|V_s-V\|_2$, use local strong convergence for $V(F_s-cp)$ on a compact box, and bound its complement by $(1+|c|)\|V\mathbf1_{K^c}\|_2$. For the second, $\phi_s$ is uniformly bounded, converges pointwise to $\phi(k_0)$, and $Vp\in L^1$. Dominated convergence completes the argument. These are convergences of complex products, without taking moduli of the actual states. The exact Jacobian also gives
+
+$$
+\|D_s\psi_s\|_1=\sqrt{j_0}s^{-3/2}\|V_sF_s\|_1\le Cs^{-3/2}.
+\tag{18.4}
+$$
+
+At each fixed $s$, the source is also in $L^2$, since $D_s$ is a bounded multiplier. The resolvent integral in (18.1) is thus legitimate on the whole complex native Hilbert space.
+
+Split its native free heat time $T$ at $T=1$. For $0<T<1$ set $T=s^2u$ and retain $Q_s(u)=e^{-uC_s}$ of (10.4). Exact conjugacy gives the early output
+
+$$
+\mathcal U_sw_s^{\rm early}
+ =\frac\chi a\int_0^{s^{-2}}e^{-h_su}Q_s(u)V_sF_sdu.
+\tag{18.5}
+$$
+
+P (104.9)–(104.10) bound its difference from $(\chi/a)K_{\rm rec}F_s$ by $C(d_s+h_s^{3/4})\to0$. The compact operator $K_{\rm rec}$ sends $F_s\rightharpoonup cp$ to strong convergence, and $(\chi/a)K_{\rm rec}p=p$ by (2.7) and the supplied reconstruction. Therefore (18.5) converges strongly to $cp$ in the full output norm.
+
+For the remaining native time define $G_T$ by its kernel
+
+$$
+G_T((k,q),(k',q'))=\phi(k)\phi(k')\Gamma_{M,T}(q-q'),
+\qquad \mathscr E_T=e^{-TS}-G_T.
+\tag{18.6}
+$$
+
+The spatial factor of L (41.2), with both height factors intact, yields
+
+$$
+\|\mathscr E_T(\cdot,(k',q'))\|_2\le C\phi(k')T^{-7/4},
+\qquad \|\mathscr E_T\|_{1\to2}\le CT^{-7/4}\quad(T\ge1).
+\tag{18.7}
+$$
+
+In detail, the squared kernel bound is $C\phi(k)^2\phi(k')^2T^{-5}$ times $\exp[-2c\min(|q-q'|^2/T,|q-q'|)]$. Its phase integral is at most $CT^{3/2}$: on $|q-q'|\le T$ use the Gaussian integral, and on the complement use the exponential in $|q-q'|$. Integrate $\phi(k)^2$ to one, take the square root and then apply Minkowski to get (18.7). Thus (18.4) gives
+
+$$
+\left\|\frac{g_s}{a}\int_1^\infty
+ e^{-m_sT}\mathscr E_TD_s\psi_s\,dT\right\|_2
+ \le Cg_ss^{-3/2}\int_1^\infty T^{-7/4}dT=O(s^{3/2})\longrightarrow0.
+\tag{18.8}
+$$
+
+This bound is over all output heights and all phase points; no output compact restriction precedes it.
+
+The Gaussian part can be evaluated exactly. Substitute $\mathbf z=g_sq$, $u=g_s^2T$, and then $Y'=\Xi_s\xi$ in its input integral. Since $\Gamma_{M,T}(\mathbf z/g_s-q')=g_s^3\Gamma_{M,u}(\mathbf z-g_sq')$, (18.4)'s Jacobian calculation gives
+
+$$
+\mathcal D_{g_s}w_s^{\rm late,G}(k,\mathbf z)
+ =\phi(k)\sqrt{j_0\chi}
+ \int_{\mathbb R^4}\mu_s(\xi)
+ Y_{t_s}^{[g_s^2]}(\mathbf z-g_s\mathbf q_s(\xi))d\xi.
+\tag{18.9}
+$$
+
+In particular the prefactor before the $u$ integral is $g_s^{1/2}\sqrt{j_0}s^{-3/2}/a=\sqrt{j_0\chi}/a$; the $1/a$ is exactly the one in (17.6). This keeps the raw source density and field clock unchanged.
+
+The Gaussian $L^2$ norm is $\|\Gamma_{M,u}\|_2=C_Mu^{-3/4}$. It follows that $\|Y_b-Y_b^{[g_s^2]}\|_2\le Cg_s^{1/2}$ for $b>0$. Also $Y_{t_s}\to Y_t$ in $L^2$ by dominated Bochner integration, since $t_s\to t>0$, using $u^{-3/4}$ near zero and exponential decay at infinity. These columns have uniformly bounded $L^2$ norms for small $s$. For every fixed $\xi$, $g_s\mathbf q_s(\xi)\to0$, so translation continuity in $L^2$ gives
+
+$$
+Y_{t_s}^{[g_s^2]}(\cdot-g_s\mathbf q_s(\xi))\longrightarrow Y_t
+\quad\text{in }L^2(\mathbb R^3).
+\tag{18.10}
+$$
+
+Replace $\mu_s$ in (18.9) by $c\phi(k_0)Vp$ using (18.3) and the uniform column norm. For this fixed integrable density, (18.10) and dominated integration give convergence in full $L^2(dk\,d\mathbf z)$ to $c\iota(QY_t)$. The two changes of coordinates are isometries, so (18.8), (18.5) and this last convergence prove (18.2). In particular neither local kernel convergence alone nor weak convergence of the sources has been substituted for a complete-output estimate. $\square$
+

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:bf74e3bebb4fd02f5cbdd8eaaa4b4ac6411f6a7ff208741ea0d8f6f5064872e9
+  normalized_sha256: sha256:bf74e3bebb4fd02f5cbdd8eaaa4b4ac6411f6a7ff208741ea0d8f6f5064872e9
+cas_ref: sha256:bf74e3bebb4fd02f5cbdd8eaaa4b4ac6411f6a7ff208741ea0d8f6f5064872e9
+coverage_gids:
+  - gid: D5/S3/Quantum/Completion/RawAnchoredRadicalDescent.raw_hilbert_characterization
+    target_statement_id: sha256:5dc0f6fceee7961f273f9aa09eccd317c70673c7d605a95d752a08cb29b2423e
+receipts:
+  unresolved_subitems: []

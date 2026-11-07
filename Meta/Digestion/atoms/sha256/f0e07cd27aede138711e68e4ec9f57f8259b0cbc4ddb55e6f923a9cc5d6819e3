@@ -1,0 +1,32 @@
+**命题 C-78.1（保持五概率的指定相位操作）。** 对实际五模式基施加
+
+$$
+U_\tau=\operatorname{diag}(1,1,1,1,e^{-i\omega\tau}),
+\qquad \omega\in\mathbb R.
+\tag{C78.1}
+$$
+
+则各概率、三个可见均值及 $\kappa$ 不变，而
+$\chi(\tau)=\chi(0)+\omega\tau\bmod2\pi$。
+对式 (C77.2) 中 $\chi(0)=0$ 的均匀初态，
+
+$$
+\mathcal C(\tau)=|\sin(\omega\tau/2)|.
+\tag{C78.2}
+$$
+
+证明。最后一个振幅乘 $e^{-i\omega\tau}$，在 $\psi_s=\sqrt{p_s}e^{-i\theta_s}$ 的约定下
+正是 $\theta_{13}$ 增加 $\omega\tau$。模平方不变，四角交替和只增加同一项。
+代入式 (C77.3) 得 concurrence。与[《辛预测完成》§35.8](SYMPLECTIC_PREDICTIVE_COMPLETION.md#358-目标的四角差与隐藏角的-hamilton-响应)的精确对应为
+
+$$
+(f_0,f_1,f_2,f_3,f_{13})=(0,0,0,0,\omega),\quad
+H_f=\omega\kappa,\quad J_f=\omega,\quad
+\iota_{X_H}\omega_{\rm red}=dH.
+$$
+
+该约定下 $\omega_{\rm red}=d\chi\wedge d\kappa$，故
+$\dot\chi=\partial_\kappa H=\omega$、$\dot\kappa=-\partial_\chi H=0$。
+$\omega$ 在此为实参数，$\omega_{\rm red}$ 为二形式；$\tau$ 是操作参数，未自动指定为物理时间。
+式 (C78.2) 的正弦简式只对所述均匀初态成立，一般初态应将变化后的 $\chi$ 代入式 (C77.1)。证毕。
+

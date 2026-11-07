@@ -1,0 +1,47 @@
+**命题 C-67.3（Yule、条件 Pearson 与无条件 Pearson 的具体区分）。** 式 (C67.8) 的 $\rho_*$ 是 Yule's Y；Yule's Q 则为
+
+$$
+Q_{\rm Yule}=\frac{\Omega-1}{\Omega+1}=\tanh\frac J2.
+\tag{C67.9}
+$$
+
+对任意正表归一化得到的二元律，Pearson 系数是
+
+$$
+\operatorname{Corr}(B_L,B_R)
+=\frac{ad-bc}{\sqrt{(a+b)(c+d)(a+c)(b+d)}}.
+\tag{C67.10}
+$$
+
+它在平衡代表 $Q_*(H)$ 上等于 $\rho_*$，一般表上则不同；“在平衡代表上相等”不表示“只有平衡代表才能相等”。此外，五态律的底面条件 Pearson 和全五态的无条件 Pearson 也不同。
+
+证明。式 (C67.9) 是上述 Hasenclever–Scholz §3.1 的经典命名，代入 $\Omega=e^J$ 即给双曲正切式。令 $T=a+b+c+d$，二元律的两个占位均值为 $(c+d)/T$、$(b+d)/T$，交叉矩为 $d/T$。其协方差是 $(ad-bc)/T^2$，两个方差的乘积是 $(a+b)(c+d)(a+c)(b+d)/T^4$，所以式 (C67.10) 成立。将式 (C67.8) 代入即得 $\rho_*$。
+
+具体取偏置表
+
+$$
+Q_{\rm bias}=\frac1{16}\begin{pmatrix}9&1\\3&3\end{pmatrix}.
+$$
+
+它的两个占位均值为 $3/8,1/4$，协方差为 $3/32$，方差分别为 $15/64,3/16$，故
+
+$$
+\Omega=9,\qquad\rho_*=\frac12,\qquad
+\operatorname{Corr}_{Q_{\rm bias}}(B_L,B_R)
+=\frac{24}{\sqrt{10\cdot6\cdot12\cdot4}}
+=\frac1{\sqrt5}\ne\frac12.
+\tag{C67.11}
+$$
+
+此表可作为任意 $0<Z<1$ 下底面质量 $r=1-Z$ 的条件律，故确属当前五态模型的可用实例。另一方面，取
+
+$$
+Q_{\rm ind}=\frac1{15}\begin{pmatrix}2&3\\4&6\end{pmatrix}
+=\begin{pmatrix}1/3\\2/3\end{pmatrix}
+\begin{pmatrix}2/5&3/5\end{pmatrix}.
+$$
+
+两边缘均不平衡，但 $ad=bc$，所以 $\rho_*=0$ 且 Pearson 也为零。这已排除上述“只有”读法。
+
+最后取五态均匀律 $p_s=1/5$。此时 $r=4/5$、$X=Y=2/5$、$\kappa=1/5$，底面条件表四格均为 $1/4$，所以 $\eta=\rho_*=0$ 且条件 Pearson 为零。全五态律中 $B_LB_R$ 的均值是 $1/5$，协方差为 $1/5-4/25=1/25$，两个方差均为 $6/25$，无条件 Pearson 因而为 $1/6$。这就是 C-59.4 的 $\kappa-XY=\Delta+Z\kappa$ 与 $\Delta/r^2$ 的实际区别。证毕。
+

@@ -1,0 +1,10 @@
+**定义 C-62.1（第二个实际切点）。** 固定 $j\notin\{i-1,i,i+1\}$，令 $T=B_j$。在 $B_i=0$ 的条件律中，写
+
+$$
+\pi_c=\mathbb P(T=c\mid B_i=0),\qquad
+m_L(c)=\mathbb E(B_L\mid B_i=0,T=c),\quad
+m_R(c)=\mathbb E(B_R\mid B_i=0,T=c).
+$$
+
+全零配置和只有 $j$ 被占的配置分别说明 $\pi_0,\pi_1>0$。再固定 $T=c$ 后，删去 $i,j$ 留下两条互不相交的路径，各含一个局部端点 $L$ 或 $R$；路径可只有一个顶点。
+

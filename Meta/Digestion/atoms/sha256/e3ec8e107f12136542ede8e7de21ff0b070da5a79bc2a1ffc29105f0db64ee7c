@@ -1,0 +1,53 @@
+## 参考文献
+
+<a id="ref-c139current"></a>
+
+\[1\] The-Omega-Institute, trureturing. *互为探针与平方几何的内生恢复（AURIC C139）*， 固定提交 `00e86d6353be562f0aa7caa23f7544e0fb65e69f`，重点第 7–9、12–21 节。 [不可变原文](https://github.com/the-omega-institute/trureturing/blob/00e86d6353be562f0aa7caa23f7544e0fb65e69f/docs/develop/theory/AURIC_C139_MUTUAL_PROBES_AND_INTRINSIC_RECOVERY_OF_SQUARE_GEOMETRY.md)。 本稿正文所有“当前 C139”均指此快照，而非只指前一轮聊天。
+
+<a id="ref-fixedword"></a>
+
+\[2\] 同一仓库、同一快照。 *固定原门字的连续射线比较障碍（AURIC C139 续卷）*，定理 1.2–命题 1.4。 [不可变原文](https://github.com/the-omega-institute/trureturing/blob/00e86d6353be562f0aa7caa23f7544e0fb65e69f/docs/develop/theory/AURIC_C139_FIXED_WORD_COMPARATOR_OBSTRUCTION.md)。
+
+<a id="ref-v78"></a>
+
+\[3\] 同一仓库、同一快照。 *内生闭合、有限根证书与结果核递归 V78 续篇*，第 6 节。 [不可变原文](https://github.com/the-omega-institute/trureturing/blob/00e86d6353be562f0aa7caa23f7544e0fb65e69f/docs/develop/theory/AURIC_ENDOGENOUS_CLOSURE_FINITE_ROOT_CERTIFICATES_AND_OUTCOME_KERNEL_RECURSION_V78_CONTINUATION.md)。
+
+<a id="ref-c133v"></a>
+
+\[4\] 同一仓库、同一快照。 *三读闭合与可见复几何 C133 续篇 V*，定义 1.1、假设 1.2、定理 1.3。 [不可变原文](https://github.com/the-omega-institute/trureturing/blob/00e86d6353be562f0aa7caa23f7544e0fb65e69f/docs/develop/theory/AURIC_C133_THREE_READ_CLOSURE_VISIBLE_COMPLEX_GEOMETRY_CONTINUATION_V.md)。
+
+<a id="ref-c135"></a>
+
+\[5\] 同一仓库、同一快照。 *配平关系、有限规则与内生相位（C135）*，第 1–5 节。 [不可变原文](https://github.com/the-omega-institute/trureturing/blob/00e86d6353be562f0aa7caa23f7544e0fb65e69f/docs/develop/theory/AURIC_C135_BALANCED_RELATIONS_FINITE_RULES_AND_INTRINSIC_PHASE.md)。
+
+<a id="ref-c136"></a>
+
+\[6\] 同一仓库、同一快照。 *二次闭合、关系包络与观察者粘合（C136）*。 [不可变原文](https://github.com/the-omega-institute/trureturing/blob/00e86d6353be562f0aa7caa23f7544e0fb65e69f/docs/develop/theory/AURIC_C136_QUADRATIC_CLOSURE_RELATIONAL_ENVELOPE_AND_OBSERVER_GLUING.md)。
+
+<a id="ref-v90"></a>
+
+\[7\] 同一仓库、同一快照。 *二元内生中点、平方可恢复性与共享量子结构（V90）*，定义 2.1–2.4。 [不可变原文](https://github.com/the-omega-institute/trureturing/blob/00e86d6353be562f0aa7caa23f7544e0fb65e69f/docs/develop/theory/AURIC_BINARY_INTERNAL_MIDPOINT_SQUARE_RECOVERY_SHARED_QUANTUM_STRUCTURE_V90.md)。
+
+<a id="ref-rro"></a>
+
+\[8\] 同一仓库、同一快照。 *递归关系的观察商、严格拼接与相容完备化*，第 121、126 节。 [不可变原文](https://github.com/the-omega-institute/trureturing/blob/00e86d6353be562f0aa7caa23f7544e0fb65e69f/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)。
+
+<a id="ref-deficit"></a>
+
+\[9\] 同一仓库、同一快照。 [`DeficitInteger.lean`](https://github.com/the-omega-institute/trureturing/blob/00e86d6353be562f0aa7caa23f7544e0fb65e69f/D5/S1/Deficit/DeficitInteger.lean) 及 [`DeficitThreeValued.lean`](https://github.com/the-omega-institute/trureturing/blob/00e86d6353be562f0aa7caa23f7544e0fb65e69f/D5/S1/Deficit/DeficitThreeValued.lean)。 读数、共轭面与整数进位定义，以及 `deficit_three_valued` 的声明与源码证明；未在本轮重跑 Lean。
+
+<a id="ref-cocycle"></a>
+
+\[10\] 同一仓库、同一快照。 [`AdditiveCarryCocycle.lean`](https://github.com/the-omega-institute/trureturing/blob/00e86d6353be562f0aa7caa23f7544e0fb65e69f/D5/S1/Deficit/Cocycles/AdditiveCarryCocycle.lean) 及 [`ExtensionSectionCoboundary.lean`](https://github.com/the-omega-institute/trureturing/blob/00e86d6353be562f0aa7caa23f7544e0fb65e69f/D5/S1/Deficit/Cocycles/ExtensionSectionCoboundary.lean)。 使用范围为加法商截面、核值修正和进位相容。
+
+<a id="ref-patel"></a>
+
+\[11\] B. M. Patel and A. B. Patel. *Stability of Quadratic Functional Equations in 2-Banach Space*. General Mathematics Notes 15(2), 2013, 1–13。 [原文](https://ftp.gwdg.de/pub/EMIS/journals/GMN/yahoo_site_admin/assets/docs/1_GMN-2942-V15N2.120121316.pdf)， 第 2 页式 (2)、Theorem 1.1；使用既有二次方程的双可加分类，不把它认领为新发现。
+
+<a id="ref-busch"></a>
+
+\[12\] P. Busch. *Quantum states and generalized observables: a simple proof of Gleason’s theorem*. Physical Review Letters 91, 120403 (2003). [原文](https://arxiv.org/pdf/quant-ph/9909073)。 完整效果评价到密度矩阵，包括复二维；本稿只使用有限维版本。
+
+<a id="ref-watrous"></a>
+
+\[13\] J. Watrous. *The Theory of Quantum Information*, Chapter 2. [作者原稿](https://cs.uwaterloo.ca/~watrous/TQI/TQI.2.pdf)。 有限维状态、效果、完全正映射与 Kraus 表示，尤其 Theorem 2.22。

@@ -1,0 +1,28 @@
+**命题 C-79.2（四角信息控制的曲率表达）。** 令 $f=2/\mathcal I$，则
+
+$$
+g=\frac{d\kappa^2}{f(\kappa)}+f(\kappa)d\chi^2,\qquad
+\mathcal K=-\frac12 f''(\kappa)
+=\frac{\mathcal I\mathcal I''-2(\mathcal I')^2}{\mathcal I^3}.
+\tag{C79.3}
+$$
+
+证明。在内部引入径向弧长 $s$，$ds=d\kappa/\sqrt f$，并令
+$h(s)=\sqrt{f(\kappa(s))}$。于是 $g=ds^2+h(s)^2d\chi^2$。
+旋转对称度量的经典曲率公式在这里可由连接直接核定：
+非零 Christoffel 符号为
+$\Gamma^s_{\chi\chi}=-hh'$、
+$\Gamma^\chi_{s\chi}=\Gamma^\chi_{\chi s}=h'/h$，
+所以 $R_{s\chi s\chi}=-hh''$，除以度量行列式 $h^2$ 得
+$\mathcal K=-h''/h$。此处 $h'$ 为对 $s$ 求导。链式法则给
+
+$$
+\frac{dh}{ds}=\frac{f'}2,\qquad
+\frac{d^2h}{ds^2}=\frac{f''\sqrt f}{2}.
+$$
+
+故 $\mathcal K=-f''/2$。再由
+$f'=-2\mathcal I'/\mathcal I^2$、
+$f''=-2\mathcal I''/\mathcal I^2+4(\mathcal I')^2/\mathcal I^3$
+得到第二式。曲率计算使用整个度量，不能仅从某个椭圆外形或坐标中的双曲函数判断符号。证毕。
+

@@ -1,0 +1,85 @@
+**Theorem 26.4 (the endpoint on the entire trace triangle).** For every
+normalized effect $E\in\operatorname{Dens}_2$ and every actual shared
+feedback $U\in U(4)$ with
+$w=\operatorname{diag}(UU_+^\dagger)\in\mathcal T$,
+
+$$
+g(E,U)\ge\kappa\rho(E,U).
+\tag{26.19}
+$$
+
+On the whole newly covered set $\mathcal T_{\rm new}$ there is the
+stronger strict inequality
+
+$$
+g(E,U)>\frac1{25}\rho(E,U).
+\tag{26.20}
+$$
+
+Equality in (26.19) holds exactly at the two original optimizer
+classes $(E_\sigma,\lambda U_\sigma)$, $\sigma\in\{+,-\}$,
+$|\lambda|=1$.
+
+Proof. If $A\ge A_0$, apply Theorem 24.4. If $B\ge23/6$, apply
+Theorem 25.3 and $0<\kappa<\gamma$. These establish (26.19),
+with the stated equality cases, on both old caps.
+
+Otherwise $w\in\mathcal T_{\rm new}$. If $A\ge1/2$, then
+$A<A_0<11/3$, so the first line of (26.7) proves
+$G(w,p)>\gamma r(w,p)$ for every $p$. Here $A_0<11/3$ follows
+from $8/3<25/9$. If $A<1/2$ but $B\ge1/2$, then
+$B<23/6$, so the second line proves the same conclusion.
+
+In the remaining case $A,B<1/2$, (26.2) and (22.13) give
+
+$$
+0\le u<2c-\tfrac32h<1,\qquad
+0\le v<2h-\tfrac32s<1.
+\tag{26.21}
+$$
+
+Since $d^2>9$ and $e^2>4$, ordinary Cauchy–Schwarz implies,
+for every $p\in[0,1]$,
+
+$$
+\begin{aligned}
+G(w,p)
+&\ge4-(u^2+v^2)>2,\\
+r(w,p)&\le r_+(w,p)\le10,\\
+G(w,p)-\gamma r(w,p)&>2-\frac{10}{25}=\frac85>0.
+\end{aligned}
+\tag{26.22}
+$$
+
+Thus all of $\mathcal T_{\rm new}$ has been covered, including its
+boundary $A+B=4$. For the actual original effect use precisely
+
+$$
+p=b_+^\dagger E^{\mathsf T}b_+,\qquad
+\epsilon(E)=1-\operatorname{Tr}(E^2)\ge0.
+\tag{26.23}
+$$
+
+The same-feedback transfer (23.14), now with $\gamma=1/25$, gives
+
+$$
+g(E,U)-\gamma\rho(E,U)
+\ge G(w,p)-\gamma r(w,p)+\gamma\epsilon(E)>0.
+\tag{26.24}
+$$
+
+This proves (26.20). Since $\rho\ge0$ and $\gamma>\kappa$,
+it also proves strictness of (26.19) on $\mathcal T_{\rm new}$.
+On the caps, Theorems 24.4 and 25.3 supply exactly the equality
+cases already stated. Conversely both original optimizer classes
+belong to $\mathcal T$, with trace pairs $(A,B)=(4,0)$ and $(0,4)$,
+and have $g=\rho=0$ by Lemma 11.2.
+
+The transfer retains the ordinary transpose, the joint optimizer-sign
+minimum and the common scalar phase quotient of Definition 11.1.
+It uses the same actual $U$ for both amplitude estimates and for
+(26.24). No effect is inverted and no feedback is assigned to an
+individual spectral piece, so arbitrary mixed and singular normalized
+effects, every population and arbitrary nondiagonal lifts are included.
+$\square$
+

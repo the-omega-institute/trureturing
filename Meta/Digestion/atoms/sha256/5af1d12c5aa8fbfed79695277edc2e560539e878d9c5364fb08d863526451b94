@@ -1,0 +1,24 @@
+**Proposition 140.3 (the remaining quantified alternatives).** The preceding conclusions preserve the original unresolved event and its exact negation:
+
+$$
+\begin{aligned}
+\mathcal R&:\quad
+\exists\theta\in\Theta\ \forall D\in\mathscr D_{12}(\theta),
+\quad\operatorname{rank}A^D\ge3,\\
+\neg\mathcal R&:\quad
+\forall\theta\in\Theta\ \exists D\in\mathscr D_{12}(\theta),
+\quad\operatorname{rank}A^D\le2.
+\end{aligned}
+\tag{140.10}
+$$
+
+For every $\theta$ there is an original rank-exactly-three partition. An invariant coarse singularity for that $\theta$ is sufficient for an original rank-at-most-two partition, but the converse for arbitrary original partitions is not asserted. The existence of the invariant constrained negative vector (140.4) remains an antecedent, rather than a conclusion. Neither alternative in (140.10), nor full $64$-coordinate attainment, follows from the established determinant interval and its zero closure.
+
+*Proof.* The rank-three assertion is Theorem 139.2. The sufficient route is (138.8) and Theorem 140.1. It only concerns partitions obtained by splitting an invariant coarse $S$ while fixing $C$. It imposes no such structure on every member of $\mathscr D_{12}(\theta)$.
+
+If $0\notin I_\theta$, its interval property and positive value force $I_\theta\subset(0,\infty)$; otherwise a negative member and the positive member would enclose zero. Since $0\in\overline{I_\theta}$, in this case $\inf I_\theta=0$. No assertion above excludes this possibility. Thus closure is insufficient for an exact coarse zero. Conversely a strictly negative admissible stochastic value supplies an exact zero by Theorem 140.1; this is a sufficient condition, not an assumption silently imposed on every tuple.
+
+Theorem 137.1 uses nonzero odd angular characters. An invariant $v$ in (140.4) has character zero, so that theorem supplies no negative index on its required space. On the invariant bounded space the seven displayed equations are bounded linear functionals: the source densities are integrable, and in each $Q_k$ pairing the bounded fixed factors and the Markov contraction make the remaining coefficient integrable. Eight negative dimensions on that space would suffice by the finite-codimension argument, but no such eight-dimensional subspace, or even the single vector in (140.4), is established here. Nonconstancy of $q_k/g$ is not substituted for this missing assertion.
+
+Finally negating the original existential-universal statement gives the universal-existential statement in (140.10), since rank is an integer and the negation of rank at least three is rank at most two. A constructed rank three is compatible with both quantified alternatives. Proposition 135.3 proves only the forward implication from full $64$-coordinate attainment to $A^D=A^f$ and rank two. Neither rank two nor the coarse-zero route proves those additional equalities. The endpoint and source hypotheses throughout are precisely the inherited ones of Definition 135.1; these ordinary conditional mathematical deductions assert no further realization of the source or readout. $\square$
+

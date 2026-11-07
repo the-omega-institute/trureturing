@@ -1,0 +1,19 @@
+**定义 358.1（唯一新增候选与固定测试形状）。** 分别固定 350.1–350.2 的完整 $B$ 与完整 $\mathsf B_{\rm cl}$，任一记为 $B_*$。同一原 $\Omega,q,D,L,\circ$、同一原菜单和预选 $t_0$、整个原 $\mathsf G_{0h}$ 与同一原 $\sigma_{t_0}$ 均保持。将整个效果区间上的新增自比较关系缩到
+
+$$
+\boxed{\mathsf T_{\rm uneq}^{>}:\quad
+q_X\bigl(a_{ep},D^X(a_{ep},a_{ep})\bigr)=0,
+\qquad a_{ep}=e+\tfrac12p,}
+\tag{358.1}
+$$
+
+其中 $X$ 遍历原选中域 $\operatorname{rank}E_X>p_*$，$(e,p)$ 遍历整个 $E_X$ 中全部有序正交 primitive 对。唯一完整候选为
+
+$$
+\mathsf C_{\rm uneq}(B_*)
+:=B_*+\mathsf G_{0h}+\mathsf T_{\rm uneq}^{>}+\sigma_{t_0}.
+\tag{358.2}
+$$
+
+$e+\tfrac12p$ 是原数学效果，且交换次序的 $p+\tfrac12e$ 也在同一量词内。不另加 primitive 自测试、全单位自测试、中心迹、自由比例、所选框架或补偿作为公理资料。$\tfrac12$ 在此是两个正交谱方向的固定权重，不是半重叠；原 $\mathsf G_{0h}$ 仍含全部零及半重叠有序对的整个输出支持，不能据 (358.1) 删除后者。
+

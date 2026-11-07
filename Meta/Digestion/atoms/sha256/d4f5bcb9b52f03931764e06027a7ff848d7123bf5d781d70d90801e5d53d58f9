@@ -1,0 +1,80 @@
+**定理 21.9（保留全部角内 Born 数据的有限横向扰动）。**设 $S$ 是有限维复载体上的真子空间投影，$1\le r=\operatorname{rank}S<\dim H$。取单位向量 $v$，满足
+
+$$
+0<\alpha=\|Sv\|^2<1,\qquad a=Sv,\qquad b=(I-S)v,
+\qquad X=ab^*+ba^*,\qquad H_\epsilon=S/r+\epsilon X.
+\tag{21.15}
+$$
+
+令 $\Gamma$ 为任意有限族锐利投影，含 $0,I,S,P_v,P_a$，其中 $P_a=aa^*/\alpha$；可另含任意有限个框架、粗事件、门回拉及其所需补投影。则存在充分小的非零实数 $\epsilon$，使
+
+$$
+p_\epsilon(P)=\operatorname{Tr}(H_\epsilon P)\qquad(P\in\Gamma)
+\tag{21.16}
+$$
+
+均在 $[0,1]$，对同一投影单值，并满足全部已列入的正交框架归一及粗粒化恒等式。还可同时保留所有角内及角外投影的固定响应
+
+$$
+\begin{aligned}
+p_\epsilon(Q)&=\operatorname{Tr}Q/r&& (Q\le S),\\
+p_\epsilon(Q)&=0&& (Q\le I-S),\\
+p_\epsilon(S)&=p_\epsilon(I)=1,
+\end{aligned}
+\tag{21.17}
+$$
+
+但精确压缩概率律失败：
+
+$$
+p_\epsilon(P_v)=\alpha/r+2\epsilon\alpha(1-\alpha)
+ \ne\alpha p_\epsilon(P_a)=\alpha/r.
+\tag{21.18}
+$$
+
+$H_\epsilon$ 不是正密度矩阵；这是有限评价域及全部原角数据上的见证，不是整个无限锐利域上的状态。
+
+**证明。**$a\perp b$，$\|a\|^2=\alpha$、$\|b\|^2=1-\alpha$，所以 $X$ Hermitian、$\operatorname{Tr}X=0$、$\operatorname{Tr}H_\epsilon=1$。对 $Q\le S$ 或 $Q\le I-S$，交叉项迹为零，直接给 (21.17)。特别地，全部角内投影都维持同一个最大混合 Born 响应，而不只是有限角内菜单。
+
+对任意锐利投影 $P$，置
+
+$$
+p_0(P)=\operatorname{Tr}(SP)/r
+       =\|PS\|_{\rm HS}^2/r\in[0,1],\qquad
+\chi(P)=\operatorname{Tr}(XP)=2\operatorname{Re}(b^*Pa).
+$$
+
+若 $p_0(P)=0$，则 $PS=0$，因而 $Pa=0$、$\chi(P)=0$。若 $p_0(P)=1$，则 $\|(I-P)S\|_{\rm HS}^2=0$，故 $PS=S$、$Pa=a$，仍有 $\chi(P)=0$。因此位于概率端点的全部投影对本扰动完全不动；无需从有限数据推定正性。
+
+只需处理 $\Gamma$ 中 $0<p_0(P)<1$ 且 $\chi(P)\ne0$ 的投影。该集合非空，因为它含 $P_v$。取
+
+$$
+\epsilon_0=\min_{\substack{P\in\Gamma\\0<p_0(P)<1,\ \chi(P)\ne0}}
+ \frac{\min\{p_0(P),1-p_0(P)\}}{2|\chi(P)|}>0.
+\tag{21.19}
+$$
+
+任取 $0<|\epsilon|<\epsilon_0$，所有这些 $p_0(P)+\epsilon\chi(P)$ 仍在 $(0,1)$；其余投影已由零交叉项处理。全部角内和角外投影虽可无限多，却统一有 $\chi=0$，故同时加入 (21.17) 不改变这个有限余量选择。
+
+迹配对对矩阵线性，所以凡列入评价域的正交和、粗事件及共同投影身份，都保持其等式；完整框架和为 $I$，概率和因此为一。它实际上保持评价域中所有矩阵线性依赖，而不只正交关系。
+
+最后，$v=a+b$ 给
+
+$$
+v^*Xv=(v^*a)(b^*v)+(v^*b)(a^*v)
+      =2\alpha(1-\alpha),\qquad
+\operatorname{Tr}(SP_v)/r=\alpha/r,
+$$
+
+故得 (21.18)。在正交单位向量 $a/\sqrt\alpha,b/\sqrt{1-\alpha}$ 张成的二维子空间上，$H_\epsilon$ 的矩阵为
+
+$$
+\begin{pmatrix}
+1/r&\epsilon\sqrt{\alpha(1-\alpha)}\\
+\epsilon\sqrt{\alpha(1-\alpha)}&0
+\end{pmatrix}.
+\tag{21.20}
+$$
+
+其行列式为 $-\epsilon^2\alpha(1-\alpha)<0$，故有负特征值。对应混合射线不在本次非负有限菜单内；不能把 $H_\epsilon$ 延称为全投影态。$\square$
+

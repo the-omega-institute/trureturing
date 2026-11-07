@@ -1,0 +1,52 @@
+**Proposition 164.2 (finite-prefix diagonal escape).** Let $B_n\subset G$ be Borel sets with $m(B_n)>0$ and
+
+$$
+\int_{B_n}g^2\,dm\longrightarrow0.
+\tag{164.2}
+$$
+
+Then there are bounded real Borel functions $v_n$ such that
+
+$$
+\begin{gathered}
+v_n\in W_{\le n},
+\qquad \|v_n\|_\infty=1,
+\qquad \operatorname{supp}(v_n)\subset B_n,\\
+0<q(v_n)\le c\int_{B_n}g^2\,dm\longrightarrow0.
+\end{gathered}
+\tag{164.3}
+$$
+
+Moreover, for every fixed $j$, $\mathscr R_j(v_n)=0$ for all $n\ge j$. If $m(B_n)\to0$, the sequence is weak-star null in $L^\infty(m)$.
+
+*Proof.* Put
+
+$$
+N_n=64+\sum_{j=0}^{n}r_j+1
+$$
+
+and choose $N_n$ pairwise disjoint Borel subsets $A_{n,1},\ldots,A_{n,N_n}$ of positive measure inside $B_n$. Their indicators span an $N_n$-dimensional subspace $F_n$ of $\mathcal X$. The combined map
+
+$$
+\Phi_n=(\Lambda_{134},\mathscr R_0,\ldots,\mathscr R_n):
+F_n\longrightarrow
+\mathbb R^{64+\sum_{j=0}^{n}r_j}
+$$
+
+has a nonzero kernel by rank-nullity. Choose a nonzero $v_n$ in that kernel and scale its indicator coefficients so that their maximum absolute value is one. Disjointness gives $\|v_n\|_\infty=1$ and $\operatorname{supp}(v_n)\subset B_n$; the kernel equations give $v_n\in W_{\le n}$ and the eventual vanishing of each fixed coordinate. Proposition 134.2 gives $q(v_n)>0$. Since $|v_n|\le1$, the Markov $L^2$ contraction gives
+
+$$
+0<q(v_n)=c\|T_{d/2}(gv_n)\|_2^2
+\le c\|gv_n\|_2^2
+\le c\int_{B_n}g^2\,dm,
+$$
+
+which proves (164.3). When $m(B_n)\to0$, for every $h\in L^1(m)$,
+
+$$
+\left|\int_G h v_n\,dm\right|
+\le\int_{B_n}|h|\,dm\longrightarrow0
+$$
+
+by absolute continuity of the integral. $\square$
+

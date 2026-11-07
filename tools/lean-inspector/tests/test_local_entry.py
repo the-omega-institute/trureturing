@@ -76,7 +76,8 @@ class LocalEntryFixture:
                      'tools/lean-inspector/fib_analysis.py',
                      'tools/lean-inspector/native.py',
                      'tools/lean-inspector/build_work.py', 'tools/scripts/lib/resource-observation-lib.sh',
-                     'tools/scripts/worktree/lean_cache_release.py', 'tools/scripts/worktree/lean_cache_topology.py',
+                     'tools/scripts/worktree/lean_cache_release.py', 'tools/scripts/worktree/lean_cache_release_io.py',
+                     'tools/scripts/worktree/lean_cache_topology.py',
                      'tools/scripts/worktree/lean_cache.py', 'tools/scripts/worktree/cache_material.py'):
             target = self.root / name
             target.parent.mkdir(parents=True, exist_ok=True)
