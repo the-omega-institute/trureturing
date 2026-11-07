@@ -8,7 +8,7 @@ internal sealed class TokenBlockLocalDefectDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Quantum/SpinChains/TokenBlockLocalDefect.";
     private static readonly Formula M = F.Id("m"), S = F.Id("s"), Rk = F.Id("r"),
-        I = F.Id("i"), R = F.Id("R"), A = F.Id("A"), V = F.Id("f");
+        I = F.Id("i"), R = F.Id("R"), V = F.Id("f");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The original complex subset carrier splits by actual outside occupied sets, with additive source and predecessor rank equations and coefficient-one block lowering.",
