@@ -126,6 +126,20 @@ private theorem affine_low_read (r : ℕ) (X : Fin (3*degree r) → A)
   rw [lo 0 _ hL,lo 1 _ hM',lo 2 _ hU] at hcorr
   linear_combination (norm := module) -hcorr+((M-aa r)/4) • hsum
 
+private theorem selected_low_bits (r : ℕ) :
+    aa r%4=3 ∧ bb r%4=3 ∧
+    digit (4*eighth r+bb r) 1=1 ∧ digit (4*eighth r) 1=0 ∧
+    digit (4*eighth r-aa r) 1=0 := by
+  obtain ⟨ha,hb,hs⟩ := parameter_exact r
+  obtain ⟨hB,hE,hm⟩ := eighth_facts r
+  simp only [digit,pow_one]
+  generalize hBA : (base r : ℤ) = B at ha hb hB
+  generalize hEA : eighth r = E at hB hm ⊢
+  generalize hAA : aa r = a at ha ⊢
+  generalize hBB : bb r = b at hb ⊢
+  clear * - ha hb hB hm
+  omega
+
 /-- The j=1 G upper difference reads F2-2*f1 after T1. This supplies F2=2*f1
 without cancelling 2 in the group. -/
 private theorem selected_f2 (r : ℕ) (X : Fin (3*degree r) → A)
@@ -157,13 +171,7 @@ private theorem selected_f2 (r : ℕ) (X : Fin (3*degree r) → A)
   have c0 := step 0 _ _ (by rw [eg]; ring) b0 u0
   have c1 := step 1 _ _ eg b1 u1
   have c2 := step 2 _ _ (by rw [eg]; ring) b2 u2
-  obtain ⟨hae,hbe,hse⟩ := parameter_exact r
-  obtain ⟨hB,hE,hemod⟩ := eighth_facts r
-  have ha4 : aa r%4=3 := by omega
-  have hb4 : bb r%4=3 := by omega
-  have bit0 : digit (4*eighth r+bb r) 1=1 := by dsimp [digit]; omega
-  have bit1 : digit (4*eighth r) 1=0 := by dsimp [digit]; omega
-  have bit2 : digit (4*eighth r-aa r) 1=0 := by dsimp [digit]; omega
+  obtain ⟨ha4,hb4,bit0,bit1,bit2⟩ := selected_low_bits r
   rw [bit0] at c0
   rw [bit1] at c1
   rw [bit2] at c2
@@ -195,8 +203,7 @@ theorem actual_low_row_table (r : ℕ) (X : Fin (3*degree r) → A)
   have hd : 12≤degree r := by dsimp [degree]; omega
   obtain ⟨hB,hE,hemod⟩ := eighth_facts r
   obtain ⟨hae,hbe,hse⟩ := parameter_exact r
-  have ha4 : aa r%4=3 := by omega
-  have hb4 : bb r%4=3 := by omega
+  obtain ⟨ha4,hb4,_,_,_⟩ := selected_low_bits r
   have hs4 : ss r%4=2 := by omega
   have hs : ss r=aa r+bb r := rfl
   have rb : affineRange r (4*eighth r) := by
