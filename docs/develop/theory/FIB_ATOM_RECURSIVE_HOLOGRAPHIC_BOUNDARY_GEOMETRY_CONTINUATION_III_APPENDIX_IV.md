@@ -2332,3 +2332,69 @@ $$
 The three vectors in (189.2) are linearly independent. Indeed, a linear relation among them would, after substituting $Pq=cg$, give a nonzero polynomial relation $r(P)g=0$ of degree at most two, contradicting Lemma 169.1. Since $v$ lies in their span and is orthogonal to each of them, its Gram matrix is positive definite and $[v]=0$. $\square$
 
 This excludes every common-first displacement in the three-mode source orbit, including any such displacement outside $\operatorname{span}\{p,F\}$. The remaining out-of-span directions lie outside this finite source-mode plane and still require the full nonlinear common-first equations; the radical alternative without a source-span witness, arbitrary partitions, $F_{64}$, $H43$, SRS$\text{-}20$, physical succession and Lean/kernel formalization remain open.
+
+## 190. The candidate source anchor identifies the radical image
+
+Even when the candidate span does not contain the original source label $q$, the full-zero tensor transports a canonical source anchor into that span. Its positive quadratic form gives an exact description of the radical alternative.
+
+**Proposition 190.1 (candidate source anchor and radical exactness).** Retain Definition 175.1 and Definition 179.1. Let $u$ be a bounded pointwise partition whose sixty-four residuals all vanish. For a real label vector $a=(a_y)_{y\in\mathcal L}$ write
+
+$$
+F_a=\sum_{y\in\mathcal L}a_yf_y,
+\qquad
+H_a=\sum_{y\in\mathcal L}a_yu_y,
+$$
+
+and define the candidate source anchor
+
+$$
+Q_u=-2u_0+3u_B.
+\tag{190.1}
+$$
+
+Then, for all real label vectors $a,b$,
+
+$$
+\mathcal C(H_a,H_b,Q_u)
+=\mathcal C(F_a,F_b,q),
+\tag{190.2}
+$$
+
+and in particular
+
+$$
+\mathcal C(H_a,H_a,Q_u)
+=c\,\|T_{d/2}(gF_a)\|_2^2.
+\tag{190.3}
+$$
+
+Consequently,
+
+$$
+\ker(a\mapsto H_a)\subseteq\ker(a\mapsto F_a),
+\tag{190.4}
+$$
+
+and the common radical is exactly the image of the baseline relation space:
+
+$$
+\operatorname{Rad}_1(\mathcal W_u)
+\cap\operatorname{Rad}_2(\mathcal W_u)
+\cap\operatorname{Rad}_3(\mathcal W_u)
+=\{H_a:F_a=0\}.
+\tag{190.5}
+$$
+
+*Proof.* The baseline coefficient vector $\gamma=(-2,0,0,3)$ satisfies
+
+$$
+F_\gamma=-2F+3p=q,
+$$
+
+so $H_\gamma=Q_u$. Contracting the zero residual tensor with the three coefficient vectors $a,b,\gamma$ gives (190.2). Taking $a=b$ and applying the source-specific identity in (175.4) to the bounded class $F_a$ gives (190.3).
+
+If $H_a=0$, then (190.3) is zero. The strictness of the same source energy for a nonzero $m$-class forces $F_a=0$, proving (190.4).
+
+For the inclusion from right to left in (190.5), Proposition 179.2 applies to every $a$ with $F_a=0$. Conversely, let $h$ belong to the common radical. Since $h\in\mathcal W_u$, choose $a$ with $h=H_a$. The anchor $Q_u$ belongs to $\mathcal W_u$, so the first radical condition gives $\mathcal C(h,h,Q_u)=0$. Equation (190.3) then forces $F_a=0$, placing $h$ in the right-hand side of (190.5). $\square$
+
+Thus the radical alternative is not an unstructured loss of rank: it is precisely the image, under the candidate label map, of the two baseline linear relations. Proposition 188.1 is recovered whenever $q$ itself belongs to $\mathcal W_u$, because the positive source form can then be evaluated with $q$ as the third radical argument. Without that span witness, (190.5) is the exact remaining algebraic boundary; arbitrary partitions, the out-of-span directions outside the source-mode plane, $F_{64}$, $H43$, SRS$\text{-}20$, physical succession and Lean/kernel formalization remain open.
