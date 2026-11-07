@@ -264,7 +264,8 @@ theorem f_equation {A : Type*} [AddCommGroup A] (r : ℕ) (x : Fin (3*degree r) 
 theorem h_equation {A : Type*} [AddCommGroup A] (r : ℕ) (x : Fin (3*degree r) → A)
     (hx : Annihilates r x) (j : ℕ) (hj : 2≤j ∧ j≤degree r-3) :
     carry (block x 0) 1+block x 1 0+carry (block x 2) j=0 := by
-  obtain ⟨hM,hM',h0,h1,h2⟩ := hPoint_data r j hj  have h := consecutive_equation r x hx (hPoint r j) 1 0 j hM hM'
+  obtain ⟨hM,hM',h0,h1,h2⟩ := hPoint_data r j hj
+  have h := consecutive_equation r x hx (hPoint r j) 1 0 j hM hM'
     (by dsimp [degree]; omega) (by dsimp [degree]; omega)
     (by dsimp [degree] at *; omega) (by simpa using h0)
     (by simpa using h1) h2

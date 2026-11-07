@@ -47,7 +47,8 @@ private theorem digit_succ (z : ℤ) (j : ℕ) :
 theorem read_succ {A : Type*} [AddCommGroup A] (d : ℕ) (f : ℕ → A) (z : ℤ) :
     read (d+1) f z = (z%2 : ℤ) • f 0 + read d (fun i => f (i+1)) (z/2) := by
   simp only [read, Fin.sum_univ_succ, Fin.val_zero, Fin.val_succ,
-    digit_succ, digit, pow_zero, Int.ediv_one]
+    digit_succ]
+  simp only [digit, pow_zero, Int.ediv_one]
 
 theorem read_congr {A : Type*} [AddCommGroup A] (d : ℕ) (f g : ℕ → A) (z : ℤ)
     (h : ∀ j, j<d → f j=g j) : read d f z=read d g z := by
@@ -136,13 +137,14 @@ private theorem read_carry_mod {A : Type*} [AddCommGroup A] (d j : ℕ) (f : ℕ
   let k : ℤ := z/(2 : ℤ)^(j+1)
   have he : z=(2 : ℤ)^j*(2*k+1) := by
     have h := Int.emod_add_mul_ediv z ((2 : ℤ)^(j+1))
-    rw [hz, pow_succ] at h
-    dsimp [k]
-    nlinarith only [h]
+    rw [hz] at h
+    calc
+      z = (2 : ℤ)^j + (2 : ℤ)^(j+1)*k := h.symm
+      _ = (2 : ℤ)^j*(2*k+1) := by rw [pow_succ]; ring
   rw [he]
   exact read_carry d j f k hj
 
-private def word (d : ℕ) (z : ℤ) : Finset (Fin d) :=
+def word (d : ℕ) (z : ℤ) : Finset (Fin d) :=
   Finset.univ.filter (fun j => digit z j.val=1)
 
 private theorem read_word {A : Type*} [AddCommGroup A] (d : ℕ) (f : ℕ → A) (z : ℤ) :
@@ -218,7 +220,8 @@ theorem physical_read {A : Type*} [AddCommGroup A] {d : ℕ} (hd : 0<d)
   rw [sum_slices hd, (physical_slices d hd L M U).1,
     (physical_slices d hd L M U).2.1, (physical_slices d hd L M U).2.2]
   have hb (h : Fin 3) (z : ℤ) :
-      (∑ j ∈ word d z, x (place h j))=read d (block x h) z := by    rw [← read_word]
+      (∑ j ∈ word d z, x (place h j))=read d (block x h) z := by
+    rw [← read_word]
     apply Finset.sum_congr rfl
     intro j _
     simp [block, j.isLt]

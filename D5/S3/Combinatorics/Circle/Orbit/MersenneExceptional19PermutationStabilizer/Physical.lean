@@ -63,12 +63,24 @@ theorem parameter_margins (r : ℕ) :
     2*eighth r+1<ss r ∧ ss r+1<3*eighth r := by
   obtain ⟨ha,hb,hs⟩ := parameter_exact r
   obtain ⟨hB,hq,hmod⟩ := eighth_facts r
+  generalize hbase : (base r : ℤ) = B at *
+  generalize haa : aa r = a at *
+  generalize hbb : bb r = b at *
+  generalize hss : ss r = s at *
+  generalize heighth : eighth r = E at *
+  clear hbase haa hbb hss heighth
   omega
 
 theorem parameter_parities (r : ℕ) :
     aa r%2=1 ∧ bb r%2=1 ∧ ss r%4=2 := by
   obtain ⟨ha,hb,hs⟩ := parameter_exact r
   obtain ⟨hB,hq,hmod⟩ := eighth_facts r
+  generalize hbase : (base r : ℤ) = B at *
+  generalize haa : aa r = a at *
+  generalize hbb : bb r = b at *
+  generalize hss : ss r = s at *
+  generalize heighth : eighth r = E at *
+  clear hbase haa hbb hss heighth
   omega
 
 private theorem physical_total (r : ℕ) (L M U : ℤ)
@@ -186,25 +198,37 @@ theorem q_readings (r : ℕ) :
   obtain ⟨h0,h1,h2,h3⟩ := q_digits_exact r
   obtain ⟨ha,hb,hs⟩ := parameter_exact r
   obtain ⟨hB,hq,hmod⟩ := eighth_facts r
-  have hBp : (0 : ℤ)<base r := by omega
-  have f0 : 2*qLow r/(base r : ℤ)=1 := by apply floor_unique hBp <;> omega
-  have f1 : 8*qMid r/(base r : ℤ)=0 := by apply floor_unique hBp <;> omega
-  have f2 : 4*qMid r/(base r : ℤ)=0 := by apply floor_unique hBp <;> omega
-  have g0 : 2*q8Low r/(base r : ℤ)=0 := by apply floor_unique hBp <;> omega
-  have g1 : 8*q8Mid r/(base r : ℤ)=3 := by apply floor_unique hBp <;> omega
-  have g2 : 4*q8Mid r/(base r : ℤ)=1 := by apply floor_unique hBp <;> omega
   have hQ := Q_exact r
-  have e0 : aa r*qLow r-ss r*qMid r=(Qmask r : ℤ) := by
-    have he : 361*(aa r*qLow r-ss r*qMid r-(Qmask r : ℤ))=0 := by
+  generalize hbase : (base r : ℤ) = B at *
+  generalize haa : aa r = a at *
+  generalize hbb : bb r = b at *
+  generalize hss : ss r = s at *
+  generalize heighth : eighth r = E at *
+  clear hbase haa hbb hss heighth
+  generalize hlow : qLow r = L at *
+  generalize hmid : qMid r = M at *
+  generalize hlow8 : q8Low r = L8 at *
+  generalize hmid8 : q8Mid r = M8 at *
+  generalize hqm : (Qmask r : ℤ) = Q at *
+  clear hlow hmid hlow8 hmid8 hqm
+  have hBp : (0 : ℤ)<base r := by omega
+  have f0 : 2*L/B=1 := by apply floor_unique hBp <;> omega
+  have f1 : 8*M/B=0 := by apply floor_unique hBp <;> omega
+  have f2 : 4*M/B=0 := by apply floor_unique hBp <;> omega
+  have g0 : 2*L8/B=0 := by apply floor_unique hBp <;> omega
+  have g1 : 8*M8/B=3 := by apply floor_unique hBp <;> omega
+  have g2 : 4*M8/B=1 := by apply floor_unique hBp <;> omega
+  have e0 : a*L-s*M=Q := by
+    have he : 361*(a*L-s*M-Q)=0 := by
       linear_combination
-        (19*qLow r)*ha-(19*qMid r)*hs+(2*(base r : ℤ)-3)*h0-
-        (5*(base r : ℤ)+2)*h1-19*hQ
+        (19*L)*ha-(19*M)*hs+(2*B-3)*h0-
+        (5*B+2)*h1-19*hQ
     nlinarith only [he]
-  have e1 : aa r*q8Low r-ss r*q8Mid r= -2*(Qmask r : ℤ) := by
-    have he : 361*(aa r*q8Low r-ss r*q8Mid r+2*(Qmask r : ℤ))=0 := by
+  have e1 : a*L8-s*M8= -2*Q := by
+    have he : 361*(a*L8-s*M8+2*Q)=0 := by
       linear_combination
-        (19*q8Low r)*ha-(19*q8Mid r)*hs+(2*(base r : ℤ)-3)*h2-
-        (5*(base r : ℤ)+2)*h3+38*hQ
+        (19*L8)*ha-(19*M8)*hs+(2*B-3)*h2-
+        (5*B+2)*h3+38*hQ
     nlinarith only [he]
   refine ⟨⟨by omega,by omega⟩,⟨by omega,by omega⟩,
     ⟨by omega,by omega⟩,⟨by omega,by omega⟩,
@@ -215,7 +239,8 @@ theorem q_readings (r : ℕ) :
 theorem q_zero (r : ℕ) :
     total r (physical (degree r) (qLow r) (qMid r) 0)=0 ∧
     total r (physical (degree r) (q8Low r) (q8Mid r) 0)=0 := by
-  obtain ⟨hL,hM,hL8,hM8,hp,hp8,hC,hC8,hG,hG8⟩ := q_readings r  have hU : (0 : ℤ)≤0 ∧ (0 : ℤ)<base r := by
+  obtain ⟨hL,hM,hL8,hM8,hp,hp8,hC,hC8,hG,hG8⟩ := q_readings r
+  have hU : (0 : ℤ)≤0 ∧ (0 : ℤ)<base r := by
     have := (eighth_facts r).1
     have := (eighth_facts r).2.1
     omega

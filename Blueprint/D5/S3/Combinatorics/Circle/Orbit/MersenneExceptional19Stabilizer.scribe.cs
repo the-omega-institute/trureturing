@@ -8,6 +8,8 @@ internal sealed class MersenneExceptional19StabilizerDocument : IScribeDocumentD
         "For every natural r, the exceptional19 physical integer-zero family has trivial cyclic rotational stabilizer: rotation by any natural a preserves every zero subset exactly when 3(18r+12) divides a.",
         H("The exceptional19 full physical rotational stabilizer"),
         Blocks(
+            Describe.Lean(DescribeId.Create("Q-exact"), DeclarationHandle.Create("D5/S3/Combinatorics/Circle/Orbit/MersenneExceptional19Stabilizer.Q_exact"), H("Q exact"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("Reducing B modulo 19 to 11 proves divisibility of B squared plus B plus one by 19 for every natural r. The integer division identity yields 19Q=B squared plus B plus one exactly. The actual terminal masks and primitive weights consume this equality."))), DescribeRole.Theorem),
+            
             Paragraph(Text("Set d=18r+12, B=2^d, g=B-1, H=B^2+B+1 and N=2^(3d)-1=gH. The original natural seed is t=(2^d-1)(2^(d+1)-3). Every subset of the original Fin(3d) labels is quantified, and its sum is the literal integer sum of SourceWidth.actualSource(3d,t). Rotation takes its image under finRotate(3d)^a. The statement includes r=0, a=0, and all a at least 3d; it imposes no unit, nonemptiness, distinct-value or profile premise.")),
             Describe.Lean(DescribeId.Create("actual-zero-family-rotation-iff"),
                 DeclarationHandle.Create("D5/S3/Combinatorics/Circle/Orbit/MersenneExceptional19Stabilizer.actual_zero_family_rotation_iff"),
