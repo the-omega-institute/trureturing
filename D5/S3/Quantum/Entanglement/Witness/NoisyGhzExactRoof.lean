@@ -1413,8 +1413,7 @@ private lemma two_mean_ensemble_data {n d : ℕ} (hn : 3 ≤ n) (hd : 3 ≤ d)
   let j : Fin d := ⟨0, by omega⟩
   have hcG : readout (rankOneDensity (ghz n d)) (Pi.single (fun _ => j) 1) = 1 / d := by
     rw [basis_ghz_mean hn0 hd0]
-    simp only [exists_const, forall_const, dite_true, ite_true]
-    simp
+    exact if_pos ⟨j, fun _ => rfl⟩
   have hcP : readout (supportProjector n d) (Pi.single (fun _ => j) 1) = 1 := by
     rw [basis_support_mean]
     haveI : Nonempty (Fin n) := ⟨⟨0, hn0⟩⟩
@@ -1433,11 +1432,11 @@ private lemma two_mean_ensemble_data {n d : ℕ} (hn : 3 ≤ n) (hd : 3 ≤ d)
     rw [basis_support_mean]; simp [qWord_outside hn hd]
   have hzero (w : Word (Fin d) n) : geometricMeasurePure (Pi.single w 1) = 0 :=
     biseparable_measure_zero (by omega) hd0 _ (computational_biseparable (by omega) w)
+  dsimp [j] at hcG hcP
   by_cases hlow : (d : ℝ) * f ≤ y
   · refine ⟨?_, ?_, ?_, ?_, ?_, ?_⟩
-    · intro i; fin_cases i <;> simp only [twoMeanWeights, hlow, ite_true, Matrix.cons_val_zero,
-        Matrix.cons_val_one, Matrix.cons_val_succ, Matrix.cons_val_fin_one] <;> nlinarith
-    · simp [twoMeanWeights, hlow, Fin.sum_univ_succ]; ring
+    · intro i; fin_cases i <;> norm_num [twoMeanWeights, hlow] <;> nlinarith
+    · simp [twoMeanWeights, hlow, Fin.sum_univ_succ] <;> ring
     · intro i; fin_cases i <;> simp only [twoMeanStates, hlow, ite_true, Matrix.cons_val_zero,
         Matrix.cons_val_one, Matrix.cons_val_succ, Matrix.cons_val_fin_one] <;> apply basis_unit
     · simp only [twoMeanWeights, twoMeanStates, hlow, ite_true, Fin.sum_univ_succ,
@@ -1452,11 +1451,12 @@ private lemma two_mean_ensemble_data {n d : ℕ} (hn : 3 ≤ n) (hd : 3 ≤ d)
       nlinarith
     have hF1 : f / y ≤ 1 := (div_le_one hy0).mpr hfy
     obtain ⟨hunit, hP, hG, hE⟩ := chi_attainment hn hd j hF0 hF1
+    dsimp [j] at hunit hP hG hE
     refine ⟨?_, ?_, ?_, ?_, ?_, ?_⟩
     · intro i; fin_cases i <;> simp [twoMeanWeights, hlow] <;> linarith
     · simp [twoMeanWeights, hlow, Fin.sum_univ_succ]
     · intro i; fin_cases i
-      · simpa only [twoMeanStates, hlow, ite_false, Matrix.cons_val_zero] using hunit
+      · simpa [twoMeanStates, hlow] using hunit
       · simp only [twoMeanStates, hlow, ite_false, Matrix.cons_val_one]; apply basis_unit
       · simp only [twoMeanStates, hlow, ite_false, Matrix.cons_val_fin_one]; apply basis_unit
     · simp only [twoMeanWeights, twoMeanStates, hlow, ite_false, Fin.sum_univ_succ,
@@ -1498,6 +1498,119 @@ theorem two_mean_attainment {n d : ℕ} (hn : 3 ≤ n) (hd : 3 ≤ d)
     exact (finite_ensemble_upper (by omega) (by omega) _ _ hp hs hu).trans_eq hE
   · have h := two_mean_lower hn hd σ
     rwa [hfσ, hyσ] at h
+
+private lemma metric_intercept_nonpos {d : ℕ} (hd : 2 ≤ d) {t : ℝ} (ht : 1 ≤ t) :
+    1 - metricB d t + (metricB d t - metricA d t) / d ≤ 0 := by
+  have hdR : (2 : ℝ) ≤ d := by exact_mod_cast hd
+  have hd0 : (d : ℝ) ≠ 0 := by linarith
+  have ht0 : 0 < t := by linarith
+  have he : 1 - metricB d t + (metricB d t - metricA d t) / d =
+      -((d - 1 : ℝ) * (t - 1)^2) / ((d : ℝ)^2 * t) := by
+    unfold metricA metricB
+    field_simp
+    <;> ring
+  rw [he]
+  apply div_nonpos_of_nonpos_of_nonneg
+  · exact neg_nonpos.mpr (mul_nonneg (by linarith) (sq_nonneg _))
+  · positivity
+
+private lemma hat_supporting {n d : ℕ} (hn : 2 ≤ n) (hd : 2 ≤ d)
+    {t : ℝ} (ht : 1 ≤ t) :
+    hatE n d (metricA d t - metricB d t) ≤
+      -(1 - metricB d t + (metricB d t - metricA d t) / d) := by
+  obtain ⟨ha, ha1, hab, he⟩ := metric_parameters hd ht
+  apply csSup_le (hat_values_nonempty hn (by omega) _)
+  rintro v ⟨ψ, φ, hψ, hφ, rfl⟩
+  have hm := pure_metric_lower hn (by omega) ha ha1 hab he ψ hψ
+  obtain ⟨_, _, hy⟩ := pure_means_triangle (by omega : 0 < n) (by omega : 0 < d) ψ hψ
+  have hc := metric_intercept_nonpos hd ht
+  have hcy := mul_le_mul_of_nonpos_left hy hc
+  have hov := le_csSup (overlap_values_bdd ψ hψ)
+    (show Complex.normSq (star φ ⬝ᵥ ψ) ∈ {v : ℝ | ∃ φ, IsBiseparable φ ∧
+      v = Complex.normSq (star φ ⬝ᵥ ψ)} from ⟨φ, hφ, rfl⟩)
+  have hov' : Complex.normSq (star φ ⬝ᵥ ψ) ≤ 1 - geometricMeasurePure ψ := by
+    unfold geometricMeasurePure
+    linarith only [hov]
+  simp only [expectation_add, expectation_smul, expectation_rank_one,
+    witnessOp, expectation_sub]
+  rw [expectation_rank_one] at hm
+  have hh :
+      (metricA d t - metricB d t) *
+          (1 / (d : ℝ) * readout (supportProjector n d) ψ -
+            Complex.normSq (star (ghz n d) ⬝ᵥ ψ)) +
+        (1 - metricB d t + (metricB d t - metricA d t) / d) ≤ geometricMeasurePure ψ := by
+    calc
+      _ ≤ (metricA d t - metricB d t) *
+          (1 / (d : ℝ) * readout (supportProjector n d) ψ -
+            Complex.normSq (star (ghz n d) ⬝ᵥ ψ)) +
+        (1 - metricB d t + (metricB d t - metricA d t) / d) *
+          readout (supportProjector n d) ψ :=
+        by linarith only [hcy]
+      _ = (1 - metricB d t) * readout (supportProjector n d) ψ +
+          (metricB d t - metricA d t) * Complex.normSq (star (ghz n d) ⬝ᵥ ψ) := by ring
+      _ ≤ _ := hm
+  linarith only [hh, hov']
+
+/-- The complete optimum for the original two-vector single-witness
+conjugate on the entire feasible interval. No all-real-slope supplier formula
+is assumed, and all limiting endpoints follow from finite supporting lines. -/
+theorem witness_optimum {n d : ℕ} (hn : 3 ≤ n) (hd : 3 ≤ d) {w : ℝ}
+    (hw0 : -(d - 1 : ℝ) / d ≤ w) (hw1 : w ≤ 1 / (d : ℝ)) :
+    epsilonWitness n d w = twoMeanOptimum d (1 / (d : ℝ) - w) 1 := by
+  have hdR : (3 : ℝ) ≤ d := by exact_mod_cast hd
+  have hdpos : (0 : ℝ) < d := by linarith
+  let F : ℝ := 1 / (d : ℝ) - w
+  have hf : 0 ≤ F := sub_nonneg.mpr hw1
+  have hf1 : F ≤ 1 := by
+    have he : -(d - 1 : ℝ) / d = 1 / (d : ℝ) - 1 := by field_simp; ring
+    rw [he] at hw0
+    dsimp [F]; linarith
+  obtain ⟨hp, hs, hu, hG, hP, hE⟩ := two_mean_ensemble_data hn hd hf hf1 (le_refl 1)
+  let p := twoMeanWeights d F 1
+  let ψ := twoMeanStates hn hd F 1
+  have hw : (∑ i, p i * readout (witnessOp n d) (ψ i)) = w := by
+    simp only [witnessOp, expectation_sub, expectation_smul]
+    have hterm (i : Fin 3) : p i * ((1 / (d : ℝ)) * readout (supportProjector n d) (ψ i) -
+        readout (rankOneDensity (ghz n d)) (ψ i)) =
+        (1 / (d : ℝ)) * (p i * readout (supportProjector n d) (ψ i)) -
+          p i * readout (rankOneDensity (ghz n d)) (ψ i) := by ring
+    simp_rw [hterm]
+    rw [Finset.sum_sub_distrib, ← Finset.mul_sum, hP, hG]
+    dsimp [F]
+    ring
+  have hb : BddAbove {v : ℝ | ∃ r : ℝ, v = r * w - hatE n d r} := by
+    refine ⟨twoMeanOptimum d F 1, ?_⟩
+    rintro v ⟨r, rfl⟩
+    have h := conjugate_ensemble_bound (by omega : 2 ≤ n) (by omega : 0 < d) p ψ hp hs hu r
+    rw [hw] at h
+    exact h.trans_eq hE
+  have hs0 : {v : ℝ | ∃ r : ℝ, v = r * w - hatE n d r}.Nonempty := ⟨_, 0, rfl⟩
+  have hnonneg : 0 ≤ epsilonWitness n d w := by
+    apply le_csSup hb
+    refine ⟨0, ?_⟩
+    rw [zero_mul, hat_zero (by omega : 2 ≤ n) (by omega : 0 < d), sub_self]
+  apply le_antisymm
+  · apply csSup_le hs0
+    rintro v ⟨r, rfl⟩
+    have h := conjugate_ensemble_bound (by omega : 2 ≤ n) (by omega : 0 < d) p ψ hp hs hu r
+    rw [hw] at h
+    exact h.trans_eq hE
+  · apply supporting_envelope (by omega : 2 ≤ d) hf hf1 hnonneg
+    intro t ht
+    have hhat := hat_supporting (by omega : 2 ≤ n) (by omega : 2 ≤ d) ht
+    have hslope := le_csSup hb
+      (show (metricA d t - metricB d t) * w - hatE n d (metricA d t - metricB d t) ∈
+        {v : ℝ | ∃ r : ℝ, v = r * w - hatE n d r} from ⟨_, rfl⟩)
+    change _ ≤ epsilonWitness n d w at hslope
+    have he :
+        (1 + (d - 2 : ℝ) * F - t * (1 - F) - (d - 1 : ℝ) * F / t) / d =
+        (metricA d t - metricB d t) * w +
+          (1 - metricB d t + (metricB d t - metricA d t) / d) := by
+      dsimp [F, metricA, metricB]
+      field_simp
+      <;> ring
+    rw [he]
+    linarith
 
 end
 end D5.S3.Quantum.Entanglement.Witness.NoisyGhzExactRoof
