@@ -911,7 +911,7 @@ private theorem spectralTau_gram {a b c : ℝ}
         (4*(spectralDen a b)^2*(spectralDen a c)^2*(spectralDen b c)^2) := by
     unfold spectralTau
     rw [Real.sqrt_mul ha.le, Real.sqrt_mul hb.le, Real.sqrt_mul ha.le]
-    field_simp
+    field_simp [hd, he, hf]
     ring_nf
     rw [hs₁, hs₂, hs₃]
     unfold spectralDen gramPolynomial
@@ -1020,7 +1020,7 @@ private theorem cyclicGamma_bounds {a b c : ℝ}
       show spectralDen b a = spectralDen a b from spectralDen_comm _ _,
       show spectralDen c b = spectralDen b c from spectralDen_comm _ _,
       show spectralDen a c = spectralDen c a from spectralDen_comm _ _]
-    field_simp
+    field_simp [hd, he, hf, hd', he', hf']
     ring_nf
     rw [hs₁, hs₂, hs₃]
     unfold spectralDen cyclicPolynomial
@@ -1033,7 +1033,7 @@ private theorem cyclicGamma_bounds {a b c : ℝ}
       spectralTau_gap ha hb, spectralTau_gap hb hc, spectralTau_gap hc ha, hformula]
     rw [← cyclicResidual_identity, ← cyclicResidual_identity, ← cyclicResidual_identity]
     dsimp only [Π]
-    field_simp
+    field_simp [hd, he, hf, hd', he', hf']
     unfold spectralDen
     ring
   constructor
@@ -1104,7 +1104,7 @@ private theorem defect_kernel_uniform {a b c : ℝ}
     simp only [Real.sqrt_mul ha.le, Real.sqrt_mul hc.le,
       show spectralDen c b = spectralDen b c from spectralDen_comm _ _]
     have hs := Real.sq_sqrt hc.le
-    field_simp
+    field_simp [hd.ne', he.ne', hf.ne', hf'.ne']
     ring_nf
     rw [hs]
     unfold spectralDen linearPolynomial
@@ -1126,7 +1126,7 @@ private theorem defect_kernel_uniform {a b c : ℝ}
       dsimp only [f]
       apply (div_le_iff₀ hW).mpr
       have hid : 3*c*Real.sqrt (a*b)/(4*Π)*(2*W)*W =
-          (3/2)*c*Real.sqrt (a*b)*W^2/Π := by field_simp; ring
+          (3/2)*c*Real.sqrt (a*b)*W^2/Π := by field_simp [hΠ.ne']; ring
       rw [hid]
       apply (div_le_iff₀ hΠ).mpr
       have h₁ := mul_le_mul_of_nonneg_left hsqrt (by positivity : 0 ≤ (3/4)*c*W^2)
@@ -1134,11 +1134,17 @@ private theorem defect_kernel_uniform {a b c : ℝ}
       nlinarith only [h₁, h₂]
     constructor
     · have h := mul_le_mul_of_nonneg_right hf₁ (add_pos ha hc).le
-      have hid : ((16/9)*(a+b)*c/W)*(a+c) = (16/9)*c/(b+c) := by dsimp [W]; field_simp; ring
+      have hid : ((16/9)*(a+b)*c/W)*(a+c) = (16/9)*c/(b+c) := by
+        dsimp only [W]
+        field_simp [(add_pos ha hb).ne', (add_pos ha hc).ne', (add_pos hb hc).ne']
+        ring
       rw [hid] at h
       exact h.trans ((div_le_iff₀ (add_pos hb hc)).mpr (by linarith))
     · have h := mul_le_mul_of_nonneg_right hf₁ (add_pos hb hc).le
-      have hid : ((16/9)*(a+b)*c/W)*(b+c) = (16/9)*c/(a+c) := by dsimp [W]; field_simp; ring
+      have hid : ((16/9)*(a+b)*c/W)*(b+c) = (16/9)*c/(a+c) := by
+        dsimp only [W]
+        field_simp [(add_pos ha hb).ne', (add_pos ha hc).ne', (add_pos hb hc).ne']
+        ring
       rw [hid] at h
       exact h.trans ((div_le_iff₀ (add_pos ha hc)).mpr (by linarith))
   have hd₁ := spectralRho_distance ha hc
