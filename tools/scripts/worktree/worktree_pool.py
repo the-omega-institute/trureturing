@@ -97,6 +97,9 @@ def _allocate(source, path, options, base, expected, removed=False):
 def claim(options):
     rows = inventory(options.source)
     main = _main_path(rows)
+    # The requested source may itself expire or be reassigned. Shared refs and
+    # later native operations stay anchored to the protected main checkout.
+    options = SimpleNamespace(**(vars(options) | {"source": main}))
     if options.path is not None and (options.path.exists() or options.path.is_symlink()):
         identity(options.source, options.path)
         if _same(options.path, main):
@@ -186,6 +189,7 @@ def sweep(source, dev, force=False, exclude_paths=()):
     del dev
     rows = inventory(source)
     main = _main_path(rows)
+    source = main
     excluded = {Path(path).resolve() for path in exclude_paths}
     items = []
     status = "succeeded"

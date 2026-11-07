@@ -66,10 +66,10 @@ class LifecycleTests(unittest.TestCase):
             self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
         return result
 
-    def create(self, name, path, reuse_any=False, check=True):
+    def create(self, name, path, reuse_any=False, check=True, cwd=None):
         return self.cli("worktree", "--kind", "governance", "--name", name,
                         "--path", path, "--base", self.base, "--skip-restore",
-                        *(["--reuse-any"] if reuse_any else []), check=check)
+                        *(["--reuse-any"] if reuse_any else []), check=check, cwd=cwd)
 
     def prepare_make(self):
         # This launcher only replaces dotnet run's build with this test's freshly
@@ -232,7 +232,7 @@ class LifecycleTests(unittest.TestCase):
                 if reason == "stale":
                     self.make("worktree-return", cwd=tree)
                 result = self.make("worktree", "KIND=governance", "NAME=new-" + reason,
-                                   "DEST=" + str(tree), "BASE=" + self.base, "ALLOW_LOW_DISK=1")
+                                   "DEST=" + str(tree), "BASE=" + self.base, "ALLOW_LOW_DISK=1", cwd=tree)
                 self.assertIn('"status": "claimed"', result.stdout)
                 self.assertEqual(run(tree, "branch", "--show-current").stdout.strip(),
                                  "lane/governance/new-" + reason)
@@ -264,7 +264,7 @@ class LifecycleTests(unittest.TestCase):
         head = self.commit_branch(branch, tree, 7 * 3600)
         (tree / "payload").write_text("ordinary tracked edit")
         (tree / "untracked").write_text("ordinary untracked bytes")
-        failed = self.create("expired-task", tree, reuse_any=True, check=False)
+        failed = self.create("expired-task", tree, reuse_any=True, check=False, cwd=tree)
         self.assertNotEqual(failed.returncode, 0)
         self.assertIn("branch_already_exists", failed.stderr)
         self.assertIn("expired_worktrees_removed=", failed.stderr)
@@ -313,7 +313,7 @@ class LifecycleTests(unittest.TestCase):
         with lock_path.open("w") as lock:
             fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
             result = self.make("-C", "tools", "clean-all", "FORCE=1", "BASE=" + self.base,
-                               "CLEAN_TMP_ROOT=" + str(self.root / "artifacts"), check=False)
+                               "CLEAN_TMP_ROOT=" + str(self.root / "artifacts"), check=False, cwd=tree)
         self.assertNotEqual(result.returncode, 0)  # Artifact owner retains its native refusal.
         self.assertIn("HOST_CLEANUP_FAILED", result.stderr)
         self.assertFalse(tree.exists(), result.stdout + result.stderr)
