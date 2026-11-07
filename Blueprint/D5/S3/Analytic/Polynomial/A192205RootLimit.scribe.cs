@@ -39,8 +39,7 @@ internal sealed class A192205RootLimitDocument : IScribeDocumentDefinition
                 + "the root between M and (3n+1) to power 1/n times M. That extra factor tends to one. "
                 + "The squeeze theorem proves the stated full limit, with no sign assumption on the coefficients. "
                 + "The squared-coefficient binomial observation in the source is not assumed or asserted here.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
-                new OpenProblemResolutionClaim(ProblemSlugRef.Create("oeis-a192205-absolute-coefficient-root-limit"), ResolutionKind.Proved)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
 
     private static DocumentBlock Entry(string name, string title, Formula formula, string prose,
         DescribeRole role, AssessedProvenance provenance, OpenProblemResolutionClaim? resolution = null) =>
