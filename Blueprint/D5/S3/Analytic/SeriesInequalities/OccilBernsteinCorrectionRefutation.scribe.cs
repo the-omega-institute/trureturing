@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Analytic.SeriesInequalities;
 internal sealed class OccilBernsteinCorrectionRefutationDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Analytic/SeriesInequalities/OccilBernsteinCorrectionRefutation.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Analytic/occil2026bernreq");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/AnalyticClosure/occil2026bernreq");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The convex symmetric quadratic x² − x + 1/2 refutes both original Bernstein correction prescriptions at n = 2: their shared degree-4 normalized coefficient vector has middle entry −1/48.",

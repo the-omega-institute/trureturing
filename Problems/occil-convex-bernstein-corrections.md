@@ -17,7 +17,7 @@ first item after the final “Prove or disprove”, asks:
 
 > Given that $f:[0,1]\to (0,1]$ is convex, the polynomials $(g_n) = (B_n(f) - \max\lbrace\text{abs}(B_n(f)(\lambda)-f(\lambda))) : 0\le\lambda\le 1\rbrace$ (where $n$ is a positive integer power of 2) are in Bernstein form of degree $n$, converge to $f$ from below, and satisfy: $(g_{2n}-g_{n})$ is a polynomial with nonnegative Bernstein coefficients once it's rewritten to a polynomial in Bernstein form of degree exactly $2n$. The same is true for the polynomials $(g_n) = (B_n(f) - \text{abs}(B_n(f)(1/2)-f(1/2)))$, if $f$ is also symmetric about 1/2.
 
-The [Library source note](../Library/Analytic/occil2026bernreq.md) pins the
+The [Library source note](../Library/AnalyticClosure/occil2026bernreq.md) pins the
 original text and basis convention. The unchanged coefficient conjunction,
 its exact quantifiers and strict preregistration are
 [issue #27489](https://github.com/the-omega-institute/trureturing/issues/27489#issuecomment-6698804052).
