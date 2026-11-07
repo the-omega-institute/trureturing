@@ -56,7 +56,7 @@ internal sealed class KisrhombilleFaceCoordinationDocument : IScribeDocumentDefi
                     + "Finset.range(n) contains the naturals less than n; "
                     + "Finset.HasAntidiagonal.antidiagonal(n) contains natural pairs summing to n. "
                     + "Finset.biUnion forms their finite union, Finset.product forms the rectangle, "
-                    + "and Finset.sdiff removes the union of both corners. Subtraction in the "
+                    + "and ∖ removes the union ∪ of both corners. Subtraction in the "
                     + "reflection is truncated natural subtraction. The outer image map "
                     + "casts each natural coordinate to an integer and translates by (i0,j0). "
                     + "The projections p.1 and p.2 are the first and second components."),
@@ -199,8 +199,8 @@ internal sealed class KisrhombilleFaceCoordinationDocument : IScribeDocumentDefi
             App(Q("Finset", "range"), Add(V("A"), D(1))),
             App(Q("Finset", "range"), Add(V("B"), D(1))));
         var corner = App(Q("Finset", "image"), Parenthesized(reflection), Triangle(V("r")));
-        var cutRectangle = App(Q("Finset", "sdiff"), rectangle,
-            App(Q("Finset", "union"), Triangle(V("l")), corner));
+        var cutRectangle = Parenthesized(Seq(rectangle, Sp, Setminus, Sp,
+            Parenthesized(Seq(Triangle(V("l")), Sp, Cup, Sp, corner))));
         return PolygonParameters(Eq(Polygon(), App(Q("Finset", "image"), Parenthesized(map),
             cutRectangle)));
     }
