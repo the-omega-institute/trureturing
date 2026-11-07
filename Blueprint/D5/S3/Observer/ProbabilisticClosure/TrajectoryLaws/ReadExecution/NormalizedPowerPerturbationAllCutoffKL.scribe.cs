@@ -68,6 +68,6 @@ internal sealed class NormalizedPowerPerturbationAllCutoffKLDocument : IScribeDo
                         "factorial-normalizer inequality as premises. The source-neighborhood " +
                         "application of the existing scaled power-sum limit is a separate bridge. " +
                         "Every finite cutoff is covered under the same stated premises, including " +
-                        "cutoffs depending on s or q."))))),
+                        "cutoffs depending on s or q."))),
                 DescribeRole.Theorem))));
 }
