@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:0a2481e9227838a3481c82d62604a093c1a87a21c9743caef112da6d46274799
   normalized_sha256: sha256:0a2481e9227838a3481c82d62604a093c1a87a21c9743caef112da6d46274799
 cas_ref: sha256:0a2481e9227838a3481c82d62604a093c1a87a21c9743caef112da6d46274799
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Quantum/Foundation/RayPhaseRigidity.unitary_phase_of_connected_ray_tests
+    target_statement_id: sha256:896bea26844019931ef3a7db3130474e85e5e6ca2385e988eaa6b8371ca17aac
 receipts:
   unresolved_subitems: []
