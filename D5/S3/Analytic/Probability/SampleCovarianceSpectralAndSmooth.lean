@@ -71,9 +71,7 @@ Declaration proof shapes (names relative to this module):
   Gaussian.realConsEquiv_preserving; proof_shape: bind-only; escape_witness: none; consumer: Gaussian.gaussian_mv_log_coeff_lower
   Gaussian.gaussian_mv_log_coeff_lower; proof_shape: content; escape_witness: D5.S3.Analytic.Probability.SampleCovarianceSpectralAndSmooth.Gaussian.gaussian_mv_log_coeff_lower; consumer: D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Gaussian.gaussian_mv_abs_log_bound
 Direct frozen dependencies:
-  D5.S3.Quantum.Recovery.ProductPrefixRigidity.gram: sha256:0d9f33a80e1ac7a06b318c665f644b5f59c6a7e2165b62fda1db1cf395ea82e7
   D5.S3.SpectralTopology.HermitianEigenvaluePerturbation.abs_eigenvalues0_sub_le_norm: ASSUMED-UNVERIFIED declaration identity; fresh Stage-B report required
-The Gram expressions remain literal; proofs use ProductPrefixRigidity.gram.
 Unfinished escape audit: https://github.com/the-omega-institute/trureturing/issues/27612
 -/
 import D5.S3.Analytic.Probability.GaussianPolynomialLog

@@ -28,7 +28,7 @@ Declaration proof shapes (names relative to this module):
   gaussian_polynomial_log_mahler_lower; proof_shape: content; escape_witness: D5.S3.Analytic.Probability.GaussianPolynomialLog.log_root_lower_point; consumer: gaussian_polynomial_log_coeff_lower
   gaussian_polynomial_log_coeff_lower; proof_shape: content; escape_witness: D5.S3.Analytic.Probability.GaussianPolynomialLog.log_root_lower_point; consumer: D5.S3.Analytic.Probability.SampleCovarianceSpectralAndSmooth.Gaussian.gaussian_mv_log_coeff_lower
   gaussian_complex_pow_integrable; proof_shape: bind-only; escape_witness: none; consumer: D5.S3.Analytic.Probability.SampleCovarianceSpectralAndSmooth.Gaussian.gaussian_mv_eval_integrable
-  norm_eq_two_pos_sub; proof_shape: bind-only; escape_witness: none; consumer: integrable_prod_of_pos_and_fiber_lower
+  norm_eq_two_pos_sub; proof_shape: bind-only; escape_witness: none; consumer: D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Gaussian.gaussian_mv_abs_log_bound
   integrable_prod_of_pos_and_fiber_lower; proof_shape: bind-only; escape_witness: none; consumer: D5.S3.Analytic.Probability.SampleCovarianceSpectralAndSmooth.Gaussian.gaussian_mv_log_coeff_lower
   Covariance.X_pow_dvd_det_of_entry_weights; proof_shape: bind-only; escape_witness: none; consumer: Covariance.rankOne_order_lower
   Covariance.natDegree_det_le_of_entries; proof_shape: bind-only; escape_witness: none; consumer: Covariance.pairDet_degree_le
