@@ -14,6 +14,7 @@ strata_touched:
   - D5/S3/Analytic/Probability/ConditionalMeanAtoms
   - D5/S3/Analytic/Probability/ConditionalMeanApproximation
   - D5/S3/Analytic/Probability/CompactStrassen
+  - D5/S3/Analytic/Probability/NoncompactQuantile
 license: citation-only
 triage: anchor
 ---
@@ -31,3 +32,12 @@ The exact host result quantifies over all real endpoints and both Borel probabil
 The construction passes through generalized quantiles and stop-loss inequalities, finite majorization and Birkhoff, genuine finite-Dirac joint laws, conditional-mean quantile-bin approximation preserving convex order, compact weak-limit extraction preserving both marginals, and extension from continuous to bounded Borel martingale tests. The native conditional-expectation bridge consumes coordinate integrability derived from the compact marginal laws.
 
 Historical background is Volker Strassen, *The existence of probability measures with given marginals*, Annals of Mathematical Statistics 36 (1965), 423–439, DOI https://doi.org/10.1214/aoms/1177700153; institutional copy: https://www1.cmc.edu/pages/faculty/MONeill/Math%20138/papers138/Strassen.pdf. Printed pages 433–435 (PDF pages 11–13) contain the sequence/global-concavity Theorem 8 and the two-marginal conditional-expectation existence argument with bounded-continuous test equations. That passage is not a verbatim statement of the interval-local native host theorem, and the full original proof is not claimed to have been audited. Hirsch and Roynette (2012), DOI https://doi.org/10.1051/ps/2011164, is additional background. The Lean source above supplies the ported proof.
+
+The integrable extension reuses the original quantile-bin definitions,
+exact mean preservation and finite martingale-law constructor. Bin
+integrability, monotonicity, prefix integrals and weak convergence are
+extended from compact support to finite first moments. The positive and
+negative weighted-measure proof of the test extension is shared by the
+compact and integrable theorems, with only coordinate integrability in
+its general statement. The original compact statements retain their
+support premises and use this same argument.
