@@ -534,7 +534,7 @@ V=\bigoplus_s\ker\operatorname{tr}_s,\qquad E=Z\oplus V.
 \tag{13.3}
 $$
 
-使用谱与 Peirce 几何中的如下成熟事实，并给出所需零对角接口。简单秩至少二的 EJA 的 primitive 流形路径连通，primitive 的 Peirce 零角仍为简单秩少一的 EJA。若 $x_s$ 谱迹零且非零，其谱框架中有正、负特征值。沿连接相应两颗 primitive 的路径，连续函数 $p\mapsto\operatorname{tr}_s(x_s\circ p)$ 取到零。取这样的 $p$，其 Peirce 零压缩仍谱迹零；在该角归纳，得到框架 $(e_i)$，使 $x_s$ 的每个对角系数均零。秩一时 $x_s=0$。这是标准谱与连通性工具的应用，非另立的零对角一般定理。
+使用谱与 Peirce 几何中的如下成熟事实，并给出所需零对角接口。简单秩至少二的 EJA 的 primitive 流形路径连通，primitive 的 Peirce 零角仍为简单秩少一的 EJA。若 $x_s$ 谱迹零且非零，其谱框架中有正、负特征值。沿连接相应两颗 primitive 的路径，连续函数 $p\mapsto\operatorname{tr}_s(x_s\circ p)$ 取到零。取这样的 $p$，写 $x_s=x_1+x_{1/2}+x_0$：$x_1=0$，半层谱迹零，故零角中的 $x_0$ 谱迹仍零。在零角归纳取得框架 $(e_2,\ldots,e_r)$，再添 $e_1=p$。半层与零角正交，故这些 $e_j$ 对原 $x_s$ 的对角读数也均为零；不要求原 $x_s$ 属于零角，保留的半层正是新框架的非对角部分。秩一时 $x_s=0$。这是标准谱与连通性工具的应用，非另立的零对角一般定理。
 
 在这个框架写 $x_s=\sum_{i<j}x_{ij}$。取互异实数 $\lambda_i$，置
 
@@ -562,7 +562,7 @@ $$
 
 $p$ 无须先在 $V$。这里取得的是逐元素的实际值域覆盖，而非 $V\subseteq\operatorname{span}\operatorname{ran}D$；后一个较弱陈述不能供应本步骤。
 
-由 (13.6)，$D(x,\cdot)$ 对 $x\in V$ 是保持 $V$、消灭 $Z$ 的实线性 Jordan 导子。反对称性先使 $D|_{V\times V}$ 两槽线性；再由 $D(x,c)=D(x,c_V)$，这给出 $x\mapsto D(x,\cdot)$ 在 $V$ 上的实线性。定义辅助算子
+由 (13.6)，$D(x,\cdot)$ 对 $x\in V$ 是保持 $V$、消灭 $Z$ 的实线性 Jordan 导子。反对称性先使 $D|_{V\times V}$ 两槽线性：例如 $D(x+y,v)=-D(v,x+y)=-D(v,x)-D(v,y)$，其中 $v,x,y\in V$，右侧只消费已经线性的左作用 $D(v,\cdot)$；齐次同理。再由 $D(x,c)=D(x,c_V)$，这给出 $x\mapsto D(x,\cdot)$ 在 $V$ 上的实线性。定义辅助算子
 
 $$
 \delta_a(c)=D(a_V,c),\qquad a=a_Z+a_V.
@@ -576,7 +576,7 @@ $$
 \tag{13.8}
 $$
 
-于是准确满足 Alfsen–Shultz 动力对应的两个条件，才调用 Baez 所述 Theorem 12：$E\oplus\mathrm iE$ 有唯一乘法 $a\mathbin{\widetilde\mu}b=S(a,b)-\mathrm i\delta_a(b)$ 的复 $C^*$ 结构。有限维结构定理将它写成 $\bigoplus_sM_{n_s}(\mathbb C)$，其中 $E$ 是整个自伴部，$\delta_a(b)=\mathrm i[a,b]/2$。到这里仍须识别同一个旧 $D$，不能以辅助 $\delta$ 替换它。
+有限 EJA 的谱范数使它成为含单位 JB 代数；由 (12.1)，这也是原序单位范数。于是准确满足 Alfsen–Shultz 动力对应的两个条件，才调用 Baez 所述 Theorem 12：$E\oplus\mathrm iE$ 有唯一乘法 $a\mathbin{\widetilde\mu}b=S(a,b)-\mathrm i\delta_a(b)$ 的复 $C^*$ 结构。有限维结构定理将它写成 $\bigoplus_sM_{n_s}(\mathbb C)$，其中 $E$ 是整个自伴部，$\delta_a(b)=\mathrm i[a,b]/2$。到这里仍须识别同一个旧 $D$，不能以辅助 $\delta$ 替换它。
 
 任取原 $a,b$。对每个 $c\in V$，反对称性及 (13.7) 给 $D(D(a,b),c)=-\delta_c(D(a,b))=\delta_{D(a,b)}c$。将 (13.2) 与辅助结合代数的同一恒等式相减，得 $\delta_{D(a,b)-\delta_a(b)}c=0$。在每个矩阵块，通勤于全部无迹 Hermitian 元的 Hermitian 元是标量，所以
 
