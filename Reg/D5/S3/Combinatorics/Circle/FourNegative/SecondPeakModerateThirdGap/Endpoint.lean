@@ -159,7 +159,23 @@ def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := none
-  sourceSelection := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.Circle.FourNegative.SecondPeakModerateThirdGap.Endpoint
+    definition := none
+    coordinates := #[0,1,2,3]
+    readouts := #[{
+      path := #["body","body","body","body","body","body","body","body","body",
+        "arg","body","arg","body","arg","arg","fn","arg","fn"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := false }, {
+      path := #["body","body","body","body","body","body","body","body","body",
+        "arg","body","arg","body","arg","fn","arg","fn"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[] }
