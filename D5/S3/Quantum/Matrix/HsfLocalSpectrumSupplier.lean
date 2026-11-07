@@ -943,7 +943,8 @@ private theorem spectralRho_triangle {a b c : ℝ}
   change z ≤ x+y
   have hxy : 0 ≤ x*y := mul_nonneg hx hy
   by_cases h : u^2+v^2 ≤ 1
-  · nlinarith [sq_nonneg w]
+  · apply (sq_le_sq₀ hz (add_nonneg hx hy)).mp
+    nlinarith only [hx₂, hy₂, hz₂, h, hxy, sq_nonneg w]
   · have huv : x*y ≤ u*v := by
       have hid : (u*v)^2-(x*y)^2 = u^2+v^2-1 := by rw [mul_pow, mul_pow, hx₂, hy₂]; ring
       have hp : 0 ≤ u*v := mul_nonneg hu.1.le hv.1.le
@@ -1120,7 +1121,8 @@ private theorem defect_kernel_uniform {a b c : ℝ}
   have hsqrt : 2*Real.sqrt (a*b) ≤ a+b := by
     have hs := Real.sq_sqrt (mul_pos ha hb).le
     have hn := Real.sqrt_nonneg (a*b)
-    nlinarith [sq_nonneg (a-b)]
+    apply (sq_le_sq₀ (mul_nonneg (by norm_num) hn) (add_pos ha hb).le).mp
+    nlinarith only [hs, sq_nonneg (a-b)]
   have hfW : f*(2*W)*(a+c) ≤ 16/9 ∧ f*(2*W)*(b+c) ≤ 16/9 := by
     have hf₁ : f*(2*W) ≤ (16/9)*(a+b)*c/W := by
       dsimp only [f]
