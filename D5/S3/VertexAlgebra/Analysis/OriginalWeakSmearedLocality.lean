@@ -28,6 +28,8 @@ products on the existing invariant domain and give opposite-charge pairings.
 -/
 
 set_option autoImplicit false
+set_option maxHeartbeats 1000000
+set_option linter.style.setOption false
 set_option backward.isDefEq.respectTransparency false
 noncomputable section
 open scoped BigOperators InnerProductSpace Topology ComplexConjugate
@@ -40,23 +42,26 @@ variable (M : Model)
 
 /-- Every Sobolev layer, on the common source H_(order a + order b + k).
 The exponent N may be zero and the charges and lattice rank may be zero. -/
-theorem smearComposition_eq_reverse_of_disjoint_tsupport
+lemma smearComposition_eq_reverse_of_disjoint_tsupport
     (a b : Charge M.D) (f g : Test)
     (hfg : Disjoint (tsupport f.periodic.lift) (tsupport g.periodic.lift)) (k : ℕ) :
     M.smearComposition a b f g k = M.reverseSmearComposition a b f g k := by
   have hK : 0 ≤ 2 * M.modeConstant a * M.modeConstant b :=
     mul_nonneg (mul_nonneg (by norm_num) (modeConstant_pos M a).le)
       (modeConstant_pos M b).le
+  apply ContinuousLinearMap.ext
+  intro x
   apply sub_eq_zero.mp
-  calc
-    M.smearComposition a b f g k - M.reverseSmearComposition a b f g k =
-        ∑' p : ℤ × ℤ, (f.coefficient p.1 * g.coefficient p.2) •
-          M.modeCommutator a b k p.1 p.2 :=
-      smear_comp_eq_double_tsum M a b f g k
-    _ = 0 := FiniteDeltaContact.double_smear_eq_zero_of_disjoint_tsupport
+  rw [← sub_apply]
+  simp only [Model.smearComposition, Model.reverseSmearComposition]
+  have hdiff := congrArg (fun T => T x)
+    (smear_comp_eq_double_tsum M a b f g k)
+  rw [hdiff]
+  rw [FiniteDeltaContact.double_smear_eq_zero_of_disjoint_tsupport
       (M.modeCommutator a b k) (2 * M.modeConstant a * M.modeConstant b)
       (M.order a + M.order b + k) (-bilinear M.D a b).toNat hK
-      (modeCommutator_norm M a b k) (modeCommutator_delta M a b k) f g hfg
+      (modeCommutator_norm M a b k) (modeCommutator_delta M a b k) f g hfg]
+  simp
 
 /-- Dependent family evaluation commutes with source equality transport.
 This uses equality of orders, rather than treating them as definitionally equal. -/
