@@ -47,12 +47,14 @@ internal sealed class BalaEvenStepFibonacciPolynomialIntegralityDocument : IScri
                 + "This gives denominator*H=numerator without cancellation, over every commutative ring. "
                 + "The last summand has uniquely greatest degree and coefficient one for m>=2. "
                 + "Thus the denominator is nonzero and the multiplication identity gives the rational-function equality.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("bala-a349272"), ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        DescribeRole role, AssessedProvenance provenance, OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create("bala-a349272-" + name), DeclarationHandle.Create(Prefix + name),
-            H(title), StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role);
+            H(title), StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula ProductFormula() => Disp(All("m", Nat(), All("n", Nat(),
         Equal(Call("numerator", F.Id("m"), F.Id("n")), Range(F.Prod)))));

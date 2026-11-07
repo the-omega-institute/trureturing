@@ -52,6 +52,10 @@ $$\forall m \in \mathrm{Nat},\; \forall n \in \mathrm{Nat},\; 2 \le m \Rightarro
 
 *Proof.* Machine-checked in Lean as `D5/S3/ArithSums/BalaEvenStepFibonacciPolynomialIntegrality.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/bala-a349272` (proved) by `D5/S3/ArithSums/BalaEvenStepFibonacciPolynomialIntegrality.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"bala-a349272","declaration_gid":"D5/S3/ArithSums/BalaEvenStepFibonacciPolynomialIntegrality.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Peter Bala (2021). *OEIS A349272, COMMENT 2: even-step Fibonacci-polynomial integrality*. URL: <https://oeis.org/A349272/internal>.
