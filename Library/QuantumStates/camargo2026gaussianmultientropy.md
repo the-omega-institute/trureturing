@@ -4,7 +4,7 @@ authors: H. A. Camargo, M. Nishida
 year: 2026
 title: "Genuine Multi-Entropy of Fully Symmetric Gaussian States"
 doi: 10.48550/arXiv.2609.30754
-url: https://arxiv.org/abs/2609.30754v1
+url: https://arxiv.org/abs/2609.30754v2
 claim: "For fully symmetric pure Gaussian states with diagonal a ≥ 1, the tripartite genuine Rényi multi-entropy is conjectured to satisfy GM^{(3)}_n ∼ ((2−n)/(2n)) log a as a → ∞ for every replica index n and every number of modes N; GM^{(3)}_2 = 0 is proved for every pure bosonic Gaussian state."
 strata_touched:
   - D5/S3/Quantum/Entanglement/GaussianMultiEntropyAsymptotic
@@ -20,7 +20,10 @@ arXiv:2609.30754v1 (25 September 2026; hep-th, cross-listed quant-ph and cond-ma
 ## Verified locator
 
 DOI: 10.48550/arXiv.2609.30754.
-Primary version: https://arxiv.org/abs/2609.30754v1 (the only arXiv version).
+Current primary version: https://arxiv.org/abs/2609.30754v2 (12 October 2026;
+the arXiv version history describes updated discussion and references).
+The original preregistration and quotations below used v1 of 25 September 2026;
+they remain historical v1 locators rather than quotations newly verified in v2.
 The TeX source `draftv1.tex` of v1 supplies §2.1 (the multi-entropy, the twists $g_A,g_B,g_C$,
 the replica contraction and the genuine multi-entropy), §2.3 (the pure Gaussian state and its
 density kernel), §3.1 (the fully symmetric state and its off-diagonal entry), §3.2 (Table 1 and the

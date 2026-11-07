@@ -2888,3 +2888,276 @@ $$
 The first row identifies the radical without requiring $\mathsf L_u$ or $\mathsf K_u$ to be saturated separately. In the other two rows, the weighted equations leave respectively one or two quotient directions beyond the forced radical; those directions must still satisfy the original nonlinear residual equations. Thus individual unsaturation is not itself an escape, while joint rank at most one records the exact remaining finite-dimensional ambiguity.
 
 The joint rank test is a necessary filter for the unsaturated branches. It does not evaluate the rank for an actual arbitrary partition, construct a residual-zero rank-three or rank-four partition, settle $F_{64}$, $H43$, SRS\text{-}20, physical succession or Lean/kernel formalization.
+
+## 197. The radical quotient is canonically the baseline tensor
+
+The rank bound in Section 196 can be sharpened from a dimension statement to a canonical quotient construction. Every full-zero candidate has a linear projection onto the two-dimensional baseline span, and the only directions lost by that projection are exactly the common radical directions.
+
+**Definition 197.1 (the baseline target and the quotient map).** Let
+
+$$
+E_f=\operatorname{im}\Phi_f
+ =\operatorname{span}_{\mathbb R}\{p,q\}
+$$
+
+for the baseline label map of Definition 191.1. For a full-zero bounded partition $u$, define on the candidate span
+
+$$
+T_u:\mathcal W_u\longrightarrow E_f,
+\qquad
+T_u(H_a)=F_a.
+\tag{197.1}
+$$
+
+Here $a$ is any real label vector with $H_a\in\mathcal W_u$.
+
+**Proposition 197.2 (canonical quotient reconstruction).** If all sixty-four residuals of $u$ vanish, then $T_u$ is a well-defined surjective linear map and
+
+$$
+\ker T_u=\mathcal R_u,
+\qquad
+\mathcal W_u/\mathcal R_u\ \cong\ E_f.
+\tag{197.2}
+$$
+
+More precisely, the induced map
+
+$$
+\overline T_u:\mathcal W_u/\mathcal R_u\longrightarrow E_f,
+\qquad
+\overline T_u([x])=T_u(x),
+\tag{197.3}
+$$
+
+is an isomorphism, and for every $x,y,z\in\mathcal W_u$,
+
+$$
+\mathcal C(x,y,z)
+ =\mathcal C\bigl(T_u x,T_u y,T_u z\bigr).
+\tag{197.4}
+$$
+
+Thus the trilinear form induced by $\mathcal C$ on the quotient is exactly the restriction of the baseline form to $E_f$.
+
+*Proof.* Suppose that $H_a=H_b$. Then $a-b\in\ker\Phi_u$, and Proposition 191.2 gives $\ker\Phi_u\subseteq\ker\Phi_f$. Hence $F_a=F_b$, so (197.1) is independent of the representing label vector. Linearity is immediate from the definitions of $H_a$ and $F_a$.
+
+For every $F_a\in E_f$, the element $H_a\in\mathcal W_u$ satisfies $T_u(H_a)=F_a$, proving surjectivity. Moreover,
+
+$$
+T_u(H_a)=0
+\quad\Longleftrightarrow\quad
+F_a=0.
+$$
+
+Proposition 190.1 identifies the set of such $H_a$ with the common radical, so $\ker T_u=\mathcal R_u$. The first isomorphism theorem gives (197.2)--(197.3).
+
+For $x=H_a$, $y=H_b$ and $z=H_c$, the full-zero residual identity gives
+
+$$
+\mathcal C(x,y,z)
+ =\mathcal C(F_a,F_b,F_c)
+ =\mathcal C(T_ux,T_uy,T_uz).
+$$
+
+Every element of $\mathcal W_u$ has this form, so (197.4) follows. Since each element of $\mathcal R_u$ is a radical in every slot, the left-hand side of (197.4) is independent of the representatives of the quotient classes; consequently it is precisely the quotient trilinear form, and (197.4) identifies that form with the baseline restriction. $\square$
+
+**Corollary 197.3 (what the rank branches mean).** For a full-zero partition,
+
+$$
+\dim(\mathcal W_u/\mathcal R_u)=2,
+$$
+
+and the three rank branches have the following canonical interpretation:
+
+$$
+\begin{array}{c|c|c}
+\dim\mathcal W_u & \dim\mathcal R_u & \text{quotient description}\\
+\hline
+2&0& T_u\text{ is an isomorphism},\\
+3&1& \text{one invisible radical extension of }E_f,\\
+4&2& \text{two invisible radical extensions of }E_f.
+\end{array}
+\tag{197.5}
+$$
+
+Any linear complement of $\mathcal R_u$ in $\mathcal W_u$ therefore carries a copy of the baseline tensor through $T_u$, but the complement is not canonical and need not respect the pointwise simplex constraints. In particular, (197.5) does not construct a rank-three or rank-four partition and does not eliminate the out-of-plane lift problem. The arbitrary-partition realization, the residual-zero search beyond the quotient, $F_{64}$, $H43$, SRS\text{-}20, physical succession and Lean/kernel formalization remain open.
+
+## 198. The full-zero fibre is an affine radical lift
+
+The quotient reconstruction makes the remaining radical freedom explicit. Once one full-zero candidate is fixed, every other legal label family in the same candidate span with the same quotient labels differs from it by finitely many common-radical functions, and the residual tensor cannot see those differences.
+
+**Definition 198.1 (a normalized quotient section).** Retain the notation of Section 197 for a full-zero bounded partition $u$. Since
+
+$$
+1=u_0+u_1+u_3+u_B\in\mathcal W_u,
+\qquad
+T_u(1)=1,
+$$
+
+choose a linear section
+
+$$
+S_u:E_f\longrightarrow\mathcal W_u,
+\qquad
+T_u\circ S_u=\operatorname{id}_{E_f},
+\qquad
+S_u(1)=1.
+\tag{198.1}
+$$
+
+For each label $y\in\mathcal L$, put
+
+$$
+\rho_y=u_y-S_u(f_y).
+\tag{198.2}
+$$
+
+**Proposition 198.2 (radical-fibre normal form).** The corrections in (198.2) satisfy
+
+$$
+\rho_y\in\mathcal R_u,
+\qquad
+\sum_{y\in\mathcal L}\rho_y=0,
+\qquad
+\mathcal R_u=\operatorname{span}_{\mathbb R}\{\rho_y:y\in\mathcal L\}.
+\tag{198.3}
+$$
+
+Let $(\widetilde\rho_y)_{y\in\mathcal L}$ be any family of elements of $\mathcal R_u$ with
+
+$$
+\sum_{y\in\mathcal L}\widetilde\rho_y=0,
+\tag{198.4}
+$$
+
+and define
+
+$$
+\widetilde u_y=S_u(f_y)+\widetilde\rho_y.
+\tag{198.5}
+$$
+
+If the four functions in (198.5) are pointwise nonnegative and sum to one, then their sixty-four residuals vanish. Consequently, inside the fixed span and quotient data, the full-zero families are exactly the intersection of the affine radical fibre
+
+$$
+\left\{\bigl(S_u(f_y)+\widetilde\rho_y\bigr)_{y\in\mathcal L}:
+\widetilde\rho_y\in\mathcal R_u,\ \sum_y\widetilde\rho_y=0\right\}
+\tag{198.6}
+$$
+
+with the pointwise simplex constraints.
+
+*Proof.* By (197.1),
+
+$$
+T_u(\rho_y)=T_u(u_y)-T_u(S_u(f_y))=f_y-f_y=0,
+$$
+
+so $\rho_y\in\ker T_u=\mathcal R_u$ by Proposition 197.2. The baseline labels satisfy $\sum_yf_y=1$, and (198.1) gives
+
+$$
+\sum_y\rho_y=\sum_yu_y-S_u\left(\sum_yf_y\right)=1-S_u(1)=0.
+$$
+
+To prove the spanning assertion, let $r\in\mathcal R_u$. Choose $x\in\mathcal W_u$ with $T_u(x)=0$ and write $x=\sum_y a_yu_y$. Then
+
+$$
+r=x-S_u(T_u x)=\sum_y a_y\bigl(u_y-S_u(f_y)\bigr)=\sum_y a_y\rho_y,
+$$
+
+which proves (198.3).
+
+For the converse, every $\widetilde u_y$ belongs to $\mathcal W_u$, and (198.4) together with (198.1) gives $\sum_y\widetilde u_y=1$. The pointwise hypotheses therefore make it a legal bounded partition. Since each $\widetilde\rho_y$ is in the common radical, multilinearity removes every term containing a correction from
+
+$$
+\mathcal C(\widetilde u_y,\widetilde u_z,\widetilde u_k).
+$$
+
+The remaining term is
+
+$$
+\mathcal C(S_u(f_y),S_u(f_z),S_u(f_k))
+ =\mathcal C(f_y,f_z,f_k)
+$$
+
+by (197.4). Thus every residual is zero. Conversely, any full-zero family in the fixed $\mathcal W_u$ with the same quotient labels is recovered by (198.2), so it lies in (198.6). $\square$
+
+**Corollary 198.3 (the residual search becomes a fibre-feasibility search).** For a rank-three or rank-four full-zero candidate, the nonlinear residual equations impose no additional conditions after the quotient identity: all remaining freedom is respectively a one- or two-dimensional radical correction subject to (198.4) and the pointwise simplex inequalities. In the rank-two branch, $\mathcal R_u=0$, so the normalized quotient section determines the label family uniquely inside its candidate span.
+
+This is an exact closure statement for a fixed candidate span, not an existence theorem. It does not produce a nonzero radical, guarantee that any correction satisfies the pointwise inequalities, or settle arbitrary partition realization, $F_{64}$, $H43$, SRS\text{-}20, physical succession or Lean/kernel formalization.
+
+## 199. The radical fibre has a finite coefficient feasibility body
+
+The affine description in Section 198 can be made finite-dimensional after choosing a basis of the radical. The residual equations disappear, while legality becomes an intersection of pointwise affine half-spaces in the coefficient matrix.
+
+**Definition 199.1 (radical coefficient set).** Let
+
+$$
+d_u=\dim\mathcal R_u=r_u-2,
+$$
+
+choose a basis $(r_1,\ldots,r_{d_u})$ of $\mathcal R_u$, and use the label order $(0,1,3,B)$. For a real $4\times d_u$ matrix $A=(a_{y\ell})$, set
+
+$$
+\rho_y(A)=\sum_{\ell=1}^{d_u}a_{y\ell}r_\ell,
+\qquad
+u_y(A)=S_u(f_y)+\rho_y(A).
+\tag{199.1}
+$$
+
+Define $\mathscr P_u$ to be the set of matrices satisfying
+
+$$
+\sum_{y\in\mathcal L}a_{y\ell}=0
+\quad(1\le\ell\le d_u),
+\tag{199.2}
+$$
+
+and for which the four bounded representatives $u_y(A)$ are pointwise nonnegative. The zero-column convention gives the rank-two case $d_u=0$.
+
+**Proposition 199.2 (convex feasibility and exact residual closure).** The set $\mathscr P_u$ is convex. Every $A\in\mathscr P_u$ gives a pointwise legal partition with
+
+$$
+\sum_yu_y(A)=1,
+\qquad
+T_u(u_y(A))=f_y,
+\qquad
+\Delta(u(A))_{yzk}=0
+\quad\text{for all }y,z,k.
+\tag{199.3}
+$$
+
+Conversely, every pointwise legal label family in $\mathcal W_u$ with quotient labels $T_u(\widetilde u_y)=f_y$ has a unique coefficient matrix $A\in\mathscr P_u$ and is given by (199.1). Its radical corrections span all of $\mathcal R_u$ exactly when
+
+$$
+\operatorname{rank}A=d_u.
+\tag{199.4}
+$$
+
+*Proof.* For each label $y$ and each point in the chosen representatives, the inequality
+
+$$
+S_u(f_y)+\sum_{\ell=1}^{d_u}a_{y\ell}r_\ell\ge0
+$$
+
+is an affine half-space condition on the entries of $A$. Intersecting these conditions with the affine linear subspace (199.2) proves convexity.
+
+Because $\sum_yf_y=1$ and $S_u(1)=1$, equation (199.2) gives
+
+$$
+\sum_yu_y(A)=S_u\left(\sum_yf_y\right)+\sum_y\rho_y(A)=1.
+$$
+
+Each $\rho_y(A)$ lies in $\mathcal R_u$, so Proposition 198.2 applies: the pointwise simplex conditions imply that all residuals vanish. The identity for $T_u$ follows from $T_uS_u=\operatorname{id}$ and $T_u(\mathcal R_u)=0$.
+
+Conversely, let $(\widetilde u_y)$ be as stated. Then
+
+$$
+\widetilde\rho_y=\widetilde u_y-S_u(f_y)\in\ker T_u=\mathcal R_u,
+$$
+
+and the basis of $\mathcal R_u$ gives unique coefficients $a_{y\ell}$. Summing the family and using $S_u(1)=1$ gives (199.2), while pointwise legality gives the defining inequalities of $\mathscr P_u$. The corrections span $\mathcal R_u$ exactly when their coefficient row vectors span $\mathbb R^{d_u}$, which is equivalent to the column-rank condition (199.4). $\square$
+
+**Corollary 199.3 (rank-three and rank-four search interfaces).** In the rank-three branch, $d_u=1$: the radical fibre is described by one zero-sum coefficient column, and a genuine rank-three correction requires that column to be nonzero. In the rank-four branch, $d_u=2$: it is described by two zero-sum columns, and a genuine rank-four correction requires them to be linearly independent. A proposed fixed quotient lift with no feasible matrix of the required column rank cannot realize that rank branch.
+
+The feasible set can be convex even when its full-rank stratum is empty; convex feasibility alone therefore does not produce a radical of the desired dimension. This reduction removes the nonlinear residual equations only after the quotient identity is established and leaves arbitrary partition realization, $F_{64}$, $H43$, SRS\text{-}20, physical succession and Lean/kernel formalization open.

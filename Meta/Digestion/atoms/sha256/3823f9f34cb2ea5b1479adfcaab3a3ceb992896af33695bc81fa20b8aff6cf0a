@@ -1,0 +1,9 @@
+**Convention 13.1 (Physical and scalar domains).** The physical family is the real $e^-$ fully symmetric pure bosonic Gaussian family of Definition 6.1, with positive integer party sizes $x,y,z$, $N=x+y+z\ge3$, and $a\ge1$. All logarithms are natural. Put
+
+$$
+\kappa=\frac{3(a^2-1)}{4(N-1)},\qquad s=xy+xz+yz,\qquad
+D_x=1+\kappa x(y+z),\quad D_y=1+\kappa y(x+z),\quad D_z=1+\kappa z(x+y).
+$$
+
+The Fourier squeezing parameter is $(a^2-1)/(N-1)$; $\kappa$ is three quarters of it. The scalar expression $V(k,x,y,z)=[2\log(1+ks)-\log D_x-\log D_y-\log D_z]/12$, with $D_x=1+kx(y+z)$ and its labelled companions, also makes sense for nonnegative real $k,x,y,z$. This scalar extension does not assert fractional physical mode counts. The three cut terms retain their multiplicity when party sizes tie.
+
