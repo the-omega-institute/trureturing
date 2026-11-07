@@ -1,4 +1,5 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Geometry.CoefficientBodies;
 
@@ -38,7 +39,7 @@ internal sealed class ConvexRankOneRulingsDocument : IScribeDocumentDefinition
                 DescribeId.Create("convex-coefficient-body-complete-ruling-and-transverse-interface"),
                 DeclarationHandle.Create(Owner + "result"),
                 H("The complete one-column, whole-family and transverse-pair interface"),
-                StatementSource.FromLean(),
+                StatementSource.FromAuthor(F.Disp(CompleteStatement())),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text("Let X be any point type, b any four real functions on X, r1 any one-coordinate radical family and r2 any two-coordinate radical family. The result includes convexity for both literal bodies. All conclusions below are conjuncts of one statement. In particular, the arbitrary-family classification is also stated for every convex C of real 4 by 2 matrices satisfying the zero-column-sum equations, independently of the coefficient-body specialization.")),
@@ -56,12 +57,124 @@ internal sealed class ConvexRankOneRulingsDocument : IScribeDocumentDefinition
                     Paragraph(Text("The mathematical ingredients used directly are finrank_le_one_iff from Mathlib.LinearAlgebra.Dimension.FreeAndStrongRankCondition and Matrix.rank_vecMulVec_le, Matrix.rank_le_card_width, Matrix.rank_submatrix_le, Matrix.rank_of_det_ne_zero from Mathlib.LinearAlgebra.Matrix.Rank, together with the ordinary two-by-two determinant and convexity definitions. Their versions are fixed by the repository manifest. The common-factor passage across an arbitrary convex family is the repository-derived content candidate; neither novelty nor its admission is established by exposition. The source does not assert existence of a feasible transverse pair for an arbitrary partition, evaluate candidate pointwise inequalities, or settle F64, H43, SRS-20 or physical succession."))),
                 DescribeRole.Theorem))));
 
+    private static Formula CompleteStatement()
+    {
+        var labels = V("Label");
+        var real = F.Seq(F.Mathbb, F.Grp(V("R")));
+        var one = Call("Fin", F.D(1));
+        var two = Call("Fin", F.D(2));
+        var left = Arrow(labels, real);
+        var right = Arrow(two, real);
+        var c1 = Call("Coeff", F.D(1));
+        var c2 = Call("Coeff", F.D(2));
+        var b1 = Call("body", V("b"), V("r1"));
+        var b2 = Call("body", V("b"), V("r2"));
+        var half = new Formula.Fraction(F.D(1), F.D(2));
+        Formula Rank(Formula a) => Call("rank", a);
+        Formula Blend(Formula theta, Formula a, Formula b) => Call("blend", theta, a, b);
+        Formula Outer(string u, string v) => Call("vecMulVec", V(u), V(v));
+        Formula Minor(Formula a) => Call("minor", a, V("i"), V("k"), V("j"), V("l"));
+        Formula Rule(Formula c) => Call("Rulings", c);
+        Formula Pair() => Call("TransversePair", V("A"), V("B"));
+        Formula Trans(string u, string s, string v, string t) =>
+            Call("Transverse", V(u), V(s), V(v), V(t));
+        Formula Strict(Formula body) => Im(Lt(F.D(0), V("theta")),
+            Im(Lt(V("theta"), F.D(1)), body));
+        Formula Rows(Formula body) => All("i", labels, All("k", labels,
+            All("j", two, All("l", two, body))));
+        Formula SomeMinor(Formula a) => Ex("i", labels, Ex("k", labels,
+            Ex("j", two, Ex("l", two, Ne(Minor(a), F.D(0))))));
+        Formula ForA(Formula c, Formula body) => All("A", c2, Im(Member(V("A"), c), body));
+        Formula ForAB(Formula c, Formula body) => ForA(c,
+            All("B", c2, Im(Member(V("B"), c), body)));
+        Formula SomeA(Formula c, Formula body) => Ex("A", c2, And(Member(V("A"), c), body));
+        Formula SomeAB(Formula c, Formula body) => SomeA(c,
+            Ex("B", c2, And(Member(V("B"), c), body)));
+        Formula Factors(Formula body) => All("u", left, All("s", left,
+            All("v", right, All("t", right, body))));
+        Formula Full() => SomeA(b2, Eq(Rank(V("A")), F.D(2)));
+        Formula ExistsStrict() => SomeAB(b2, Ex("theta", real,
+            And(Lt(F.D(0), V("theta")), Lt(V("theta"), F.D(1)),
+                Eq(Rank(Blend(V("theta"), V("A"), V("B"))), F.D(2)))));
+        Formula ExistsPair() => SomeAB(b2, Pair());
+        var midpoint = Blend(half, V("A"), V("B"));
+        var productBlend = Blend(V("theta"), Outer("u", "v"), Outer("s", "t"));
+        var coefficients = And(
+            Call("Convex", real, b1),
+            Call("Convex", real, b2),
+            Iff(Ex("A", c1, And(Member(V("A"), b1), Eq(Rank(V("A")), F.D(1)))),
+                Not(new Formula.Relation(b1, FormulaRelationOperator.SubsetOf,
+                    new Formula.SetLiteral([F.D(0)])))),
+            Iff(Not(Full()), Rule(b2)),
+            Iff(Full(), Not(Rule(b2))),
+            Iff(Full(), SomeAB(b2, SomeMinor(midpoint))),
+            Im(ForAB(b2, Rows(Eq(Minor(midpoint), F.D(0)))), Rule(b2)),
+            All("A", c2, Im(Call("ZeroSum", V("A")), Im(Ne(V("A"), F.D(0)),
+                Im(Eq(Rank(V("A")), F.D(1)),
+                    Ex("u", left, And(Member(V("u"), V("H")), Ex("v", right,
+                        And(Ne(V("u"), F.D(0)), Ne(V("v"), F.D(0)),
+                            Eq(V("A"), Outer("u", "v")))))))))),
+            Factors(All("theta", real, Rows(Eq(Minor(productBlend),
+                Product(V("theta"), Sub(F.D(1), V("theta")),
+                    Call("wedge", V("u"), V("s"), V("i"), V("k")),
+                    Call("wedge", V("v"), V("t"), V("j"), V("l"))))))),
+            Factors(All("theta", real, Strict(Iff(Eq(Rank(productBlend), F.D(2)),
+                Trans("u", "s", "v", "t"))))),
+            All("u", left, All("s", left, All("u2", left, All("s2", left,
+                All("v", right, All("t", right, All("v2", right, All("t2", right,
+                    Im(Eq(Outer("u", "v"), Outer("u2", "v2")),
+                        Im(Eq(Outer("s", "t"), Outer("s2", "t2")),
+                            Iff(Trans("u", "s", "v", "t"),
+                                Trans("u2", "s2", "v2", "t2")))))))))))),
+            ForAB(b2, All("theta", real, Strict(And(
+                Member(Blend(V("theta"), V("A"), V("B")), b2),
+                Im(Ne(V("A"), F.D(0)), Im(Ne(V("B"), F.D(0)),
+                    Im(Eq(Rank(V("A")), F.D(1)), Im(Eq(Rank(V("B")), F.D(1)),
+                        Iff(Eq(Rank(Blend(V("theta"), V("A"), V("B"))), F.D(2)), Pair()))))))))),
+            Im(ForA(b2, Le(Rank(V("A")), F.D(1))),
+                And(Not(ExistsStrict()), Not(ExistsPair()), Iff(ExistsStrict(), ExistsPair()),
+                    Rule(b2))),
+            All("C", Call("Set", c2), Im(Call("Convex", real, V("C")),
+                Im(ForA(V("C"), Call("ZeroSum", V("A"))),
+                    Iff(ForA(V("C"), Le(Rank(V("A")), F.D(1))), Rule(V("C")))))),
+            All("A", c2, Iff(Eq(Rank(V("A")), F.D(2)), SomeMinor(V("A")))));
+        return All("X", V("Type"), All("b", Arrow(labels, Arrow(V("X"), real)),
+            All("r1", Arrow(one, Arrow(V("X"), real)),
+                All("r2", Arrow(two, Arrow(V("X"), real)), coefficients))));
+    }
+
+    private static Formula V(string name) => F.Id(name);
+    private static Formula Arrow(Formula a, Formula b) => new Formula.TypeArrow(a, b);
+    private static Formula All(string name, Formula type, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), type, body);
+    private static Formula Ex(string name, Formula type, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create(name), type, body);
+    private static Formula Eq(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.Equal, b);
+    private static Formula Ne(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.NotEqual, b);
+    private static Formula Lt(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThan, b);
+    private static Formula Le(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
+    private static Formula Member(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.MemberOf, b);
+    private static Formula Im(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.Implies, b);
+    private static Formula Iff(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.Iff, b);
+    private static Formula Not(Formula a) => new Formula.Not(a);
+    private static Formula Sub(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Subtract, b);
+    private static Formula Product(params Formula[] xs) => Fold(xs, (a, b) =>
+        new Formula.Binary(a, FormulaBinaryOperator.Multiply, b));
+    private static Formula And(params Formula[] xs) => Fold(xs, (a, b) =>
+        new Formula.Logic(a, FormulaLogicOperator.And, b));
+    private static Formula Fold(Formula[] xs, System.Func<Formula, Formula, Formula> combine)
+    {
+        var value = xs[^1];
+        for (var i = xs.Length - 2; i >= 0; i--) value = combine(xs[i], value);
+        return value;
+    }
+
     private static DocumentBlock Entry(string name, string title, DescribeRole role, string text) =>
         Describe.Lean(
             DescribeId.Create("convex-coefficient-body-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Owner + name),
             H(title),
-            StatementSource.FromLean(),
+            StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(text))),
             role);
