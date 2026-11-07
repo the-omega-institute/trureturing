@@ -7,9 +7,90 @@ internal sealed class VarianceTransferDefsDocument : IScribeDocumentDefinition
     private const string Prefix = "D5/S3/Arith/Robin/ForwardKernel/VarianceTransferDefs.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Increments, triangular averages, and the uniform short-interval variance hypotheses.",
+        "Increments, profile averages, and parameterized short-interval variance hypotheses.",
         H("Variance transfer definitions"),
         Blocks(
+            Describe.Lean(
+                DescribeId.Create("unit-measure"),
+                DeclarationHandle.Create(Prefix + "unitMeasure"),
+                H("Unit interval measure"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "Lebesgue measure restricted to the interval (0,1]."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("profile-integrable"),
+                DeclarationHandle.Create(Prefix + "ProfileIntegrable"),
+                H("Integrable profiles"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "A profile is a measurable real function whose absolute value is integrable for unit interval measure. Choose a global Borel representative; its values outside [0,1] do not affect the conclusions."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("valid-band"),
+                DeclarationHandle.Create(Prefix + "ValidBand"),
+                H("Admissible exponents"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The exponents satisfy 0<alpha<theta<beta<1."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("profile-primitive"),
+                DeclarationHandle.Create(Prefix + "profilePrimitive"),
+                H("Profile primitives"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The primitive at length h and center x is the oriented integral from 0 to h of g(u/h)*D_u(x)."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("profile-average"),
+                DeclarationHandle.Create(Prefix + "profileAverage"),
+                H("Profile averages"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The profile average is the profile primitive divided by h^2."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("moving-average"),
+                DeclarationHandle.Create(Prefix + "movingAverage"),
+                H("Moving profile averages"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The moving average uses length x^theta in the profile average."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("profile-l1"),
+                DeclarationHandle.Create(Prefix + "profileL1"),
+                H("Profile absolute integral"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The profile L1 size is the integral of abs(g) for unit interval measure."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("tail-profile"),
+                DeclarationHandle.Create(Prefix + "tailProfile"),
+                H("Tail profiles"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The tail profile at r is the oriented integral of g from r to 1."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("q"),
+                DeclarationHandle.Create(Prefix + "Q"),
+                H("Profile quadratic energy"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "Q(g) is the iterated integral on the unit square of g(s)*g(t)*min(s,t)."))),
+                DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("increment"),
                 DeclarationHandle.Create(Prefix + "increment"),
@@ -29,31 +110,13 @@ internal sealed class VarianceTransferDefsDocument : IScribeDocumentDefinition
                     "V(Y,h) is the oriented integral of D_h(x)^2 from 1 to Y."))),
                 DescribeRole.Definition),
             Describe.Lean(
-                DescribeId.Create("triangular-primitive"),
-                DeclarationHandle.Create(Prefix + "triangularPrimitive"),
-                H("Triangular primitives"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text(
-                    "B_h(x) is the oriented integral of D_u(x) with respect to u from 0 to h."))),
-                DescribeRole.Definition),
-            Describe.Lean(
-                DescribeId.Create("triangular-average"),
-                DeclarationHandle.Create(Prefix + "triangularAverage"),
-                H("Triangular averages"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text(
-                    "P_h(x) is B_h(x)/h^2."))),
-                DescribeRole.Definition),
-            Describe.Lean(
                 DescribeId.Create("fixed-length"),
                 DeclarationHandle.Create(Prefix + "fixedLength"),
                 H("The fixed comparison length"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "The comparison length is c*X^(4/5)."))),
+                    "The comparison length is c*X^theta."))),
                 DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("length-log"),
@@ -62,7 +125,7 @@ internal sealed class VarianceTransferDefsDocument : IScribeDocumentDefinition
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "The length logarithm is log(X/(c*X^(4/5)))."))),
+                    "The length logarithm is log(X/(c*X^theta))."))),
                 DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("mean-square-scale"),
@@ -71,7 +134,7 @@ internal sealed class VarianceTransferDefsDocument : IScribeDocumentDefinition
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "The normalization of the moving-length mean square is X^(1/5)*log(X)."))),
+                    "The normalization of the moving-length mean square is X^(1-theta)*log(X)."))),
                 DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("locally-bounded-measurable"),
@@ -89,7 +152,7 @@ internal sealed class VarianceTransferDefsDocument : IScribeDocumentDefinition
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "For each positive epsilon and all sufficiently large Y, uniformly for Y^(3/4)<=h<=Y^(7/8), the absolute difference between V(Y,h)/(Y*h*log(Y/h)) and 1 is at most epsilon. The threshold for Y precedes the choice of h."))),
+                    "For each positive epsilon and all sufficiently large Y, uniformly for Y^alpha<=h<=Y^beta, the absolute difference between V(Y,h)/(Y*h*log(Y/h)) and 1 is at most epsilon. The threshold for Y precedes the choice of h."))),
                 DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("short-interval-mean-square-bound-for"),
