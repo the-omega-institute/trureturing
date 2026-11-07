@@ -7,6 +7,7 @@ from types import SimpleNamespace
 from worktree_protocol import (GitFailure, Refused, clear_matching_stale, git, git_environment,
                                head_committer_time, head_oid, identity, inventory,
                                mark_stale, reuse, stale_head, value)
+from worktree_preservation import remove_registered
 
 FOUR_HOURS = 4 * 60 * 60
 SIX_HOURS = 6 * 60 * 60
@@ -49,9 +50,7 @@ def _remove_registered(source, path):
         raise Refused("main_worktree")
     if not any(_same(path, row["worktree"]) for row in rows):
         raise Refused("path_not_registered")
-    # Two native force flags make legacy Git lock markers irrelevant to the
-    # lifecycle policy without adding an application lock or unlock stage.
-    git(source, "worktree", "remove", "--force", "--force", "--", str(path))
+    remove_registered(main, path)
 
 
 def _make_scaffold(path):
