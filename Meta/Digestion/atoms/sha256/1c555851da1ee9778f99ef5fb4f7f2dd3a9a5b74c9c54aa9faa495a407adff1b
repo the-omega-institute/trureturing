@@ -1,0 +1,43 @@
+**引理 3.2（实际输出行核与中央缺陷的复用接口）。** 记 $\mathcal A_D=\operatorname{ran}D$、$W=\operatorname{span}_{\mathbb R}\mathcal A_D$、$Z_E=E\cap Z(X)$，其中 $Z(X)=\{z\in X:[L_z,L_x]=0\ (x\in X)\}$。取有限支撑形式空间 $F=\mathbb R^{(\mathcal A_D)}$ 和实线性映射 $T:F\to W$、$R:F\to\mathbb R^{\mathcal A_D\times\mathcal P}$，定义为
+
+$$
+T\Bigl(\sum_jr_j[p_j]\Bigr)=\sum_jr_jp_j,\qquad
+R\Bigl(\sum_jr_j[p_j]\Bigr)_{t,\beta}
+ =\sum_jr_j\beta(D(p_j,t)),
+\quad t\in\mathcal A_D,\ \beta\in\mathcal P.
+$$
+
+单位桥定理 18.2 准确给
+
+$$
+\ker R=T^{-1}(Z_E),\qquad
+\operatorname{im}R\cong W/(W\cap Z_E).
+\tag{3.3}
+$$
+
+定理 19.1 准确给每个原差值
+
+$$
+\delta_+(a,b;c)=D(a+b,c)-D(a,c)-D(b,c),
+$$
+
+$$
+\delta_\lambda(a;c)=D(\lambda a,c)-\lambda D(a,c),
+$$
+
+其中 $\lambda\in\mathbb R$，连同 $\delta_z(a;b)=D(a+z,b)-D(a,b)$（$z\in Z_E$）及相应第二槽缺陷，均满足
+
+$$
+\delta\in W\cap Z_E.
+\tag{3.4}
+$$
+
+其证明中的逐点界 (19.6) 也在尚未取得原 $D$ 双线性时给出
+
+$$
+N(D(a,b))\le N(a)N(b)\qquad(a,b\in E).
+\tag{3.5}
+$$
+
+复用说明。定义 2.3 已逐项支付两个定理共同的定义 7.1。其定义 18.1 中的 $A,W,Z_E,F,T,R$ 分别取本文 $\mathcal A_D,W,Z_E,F,T,R$，每个 $p_j,t$ 都仍为单个实际原输出，$\beta$ 遍历同一原评价族。定理 19.1 的 $(a,a',b)$ 取本文 $(a,b,c)$ 即给 $\delta_+$，其 $(a,b,r)$ 取本文 $(a,c,\lambda)$ 即给 $\delta_\lambda$；中央平移和第二槽量词亦完全相同。故 (3.3)–(3.5) 直接引用，不在本文重证中心判据或缺陷定位。形式行的线性不是未知 $D$ 的线性，逐点范数界也不是连续性证明。定理 19.2 的 $W\cap Z_E=\{0\}$ 是额外有限列表条件，本卷不采用；定理 19.1 的商值延拓也不替代原 $D$。下文必须真正消去 (3.4) 的原差值。∎
+
