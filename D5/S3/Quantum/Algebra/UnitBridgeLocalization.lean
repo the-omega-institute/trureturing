@@ -184,6 +184,30 @@ private theorem localizedK_kernel (R : Raw E) (cs : SquareCompatible R) (t : T)
   simpa only [Submonoid.smul_def, Submonoid.coe_mul, SubmonoidClass.coe_pow,
     smul_smul, mul_assoc, mul_comm, mul_left_comm] using hh
 
+private theorem square_representation (t : T) (z : LocalVectors E t) :
+    ∃ (x : Vectors E) (s : evaluationDenominators E t),
+      z = LocalizedModule.mk x (s^2) := by
+  induction z using LocalizedModule.induction_on with
+  | h x s =>
+    exact ⟨s.val • x, s, by
+      simpa only [pow_two, Submonoid.smul_def] using
+        (LocalizedModule.mk_cancel_common_left s s x).symm⟩
+
+private theorem common_square_representation (t : T) (a b c : LocalVectors E t) :
+    ∃ (x y z : Vectors E) (q : evaluationDenominators E t),
+      a = LocalizedModule.mk x (q^2) ∧ b = LocalizedModule.mk y (q^2) ∧
+      c = LocalizedModule.mk z (q^2) := by
+  obtain ⟨x,s,rfl⟩ := square_representation t a
+  obtain ⟨y,r,rfl⟩ := square_representation t b
+  obtain ⟨z,v,rfl⟩ := square_representation t c
+  refine ⟨((r*v)^2).val • x, ((s*v)^2).val • y, ((s*r)^2).val • z, s*r*v, ?_, ?_, ?_⟩
+  · simpa only [pow_two, mul_assoc, mul_left_comm, mul_comm, Submonoid.smul_def]
+      using (LocalizedModule.mk_cancel_common_left ((r*v)^2) (s^2) x).symm
+  · simpa only [pow_two, mul_assoc, mul_left_comm, mul_comm, Submonoid.smul_def]
+      using (LocalizedModule.mk_cancel_common_left ((s*v)^2) (r^2) y).symm
+  · simpa only [pow_two, mul_assoc, mul_left_comm, mul_comm, Submonoid.smul_def]
+      using (LocalizedModule.mk_cancel_common_left ((s*r)^2) (v^2) z).symm
+
 /-- One same-original nonlinear localization has the square formula, nested NN,
 and the separate saturated local H-kernel translation law. -/
 theorem original_localization (R : Raw E) (cs : SquareCompatible R) (t : T) :
@@ -199,8 +223,12 @@ theorem original_localization (R : Raw E) (cs : SquareCompatible R) (t : T) :
         LocalizedModule.mk ((dotProduct x c) • x - (dotProduct x x) • c) (q^6) =
           (0 : LocalVectors E t) →
         k (LocalizedModule.mk x (q^2)) (LocalizedModule.mk (y+c) (q^2)) =
-          k (LocalizedModule.mk x (q^2)) (LocalizedModule.mk y (q^2))) := by
+          k (LocalizedModule.mk x (q^2)) (LocalizedModule.mk y (q^2))) ∧
+      (∀ a b c : LocalVectors E t,
+        ∃ (x y z : Vectors E) (q : evaluationDenominators E t),
+          a = LocalizedModule.mk x (q^2) ∧ b = LocalizedModule.mk y (q^2) ∧
+          c = LocalizedModule.mk z (q^2)) := by
   exact ⟨localizedK R cs t, localizedK_square R cs t,
-    localizedK_nested R cs t, localizedK_kernel R cs t⟩
+    localizedK_nested R cs t, localizedK_kernel R cs t, common_square_representation t⟩
 
 end D5.S3.Quantum.Algebra.UnitBridgeRawGeometry
