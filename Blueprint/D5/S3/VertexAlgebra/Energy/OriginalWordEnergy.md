@@ -4,6 +4,18 @@
 
 The one seed-parametrized normal-word recurrence on the original lattice carrier.
 
+**Theorem 1.1 (negative grade eq zero).**
+
+Lean statement: `D5/S3/VertexAlgebra/Energy/OriginalWordEnergy.negative_grade_eq_zero`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Energy/OriginalWordEnergy.negative_grade_eq_zero` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every original D with positive real Gram form, integer E<0 and original v in grade E, v=0. Each original coefficient has nonnegative actual charge-plus-oscillator energy, so membership in the negative grade forces every coefficient to vanish. Arbitrary rank, including zero, remains in scope.
+
 This support module contains private consumed proof components. A numerical seed bounds the actualField(D,a) coefficient between nonnegative grades E,F<=M by K*(M+1)^B times the literal original norm. The conclusion for wordField(D,a,omega) is K*wordConstant(omega)*(M+1)^(B+wordWeight(omega)+length(omega)). This seed is discharged by actual_zero and identity_modes in the neutral prerequisite, and by the shared pre-relaxation charged estimate in the all-state consumer. It is not a hypothesis of either public endpoint.
 
 word_charge and word_off_energy, together with the existing charge_energy_add identity, give the genuine total output grade E+chargeEnergy(D,a)+wordWeight(omega)-n-1. The left intermediate grade is F-q-r-1 and vanishes when negative. The right derivative coefficient is zero strictly for q<r; q=r is retained. Only after removing that strip is the right intermediate grade E-q+r converted to a natural grade, with 0<=E-q+r<=E. Thus every surviving recursive endpoint stays <=M. The exact finite ranges are F+1 and E+r+1.
@@ -12,4 +24,5 @@ The existing derivative coefficient bound A(r)*(M+1)^r, original mixed-state cur
 
 ## References
 
+- Truth anchor: `D5/S3/VertexAlgebra/Energy/OriginalWordEnergy.negative_grade_eq_zero`
 - Dependency: [D5/S3/VertexAlgebra/Energy/OriginalCurrentEnergy](OriginalCurrentEnergy.md)

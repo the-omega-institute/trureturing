@@ -4,7 +4,43 @@
 
 The actual algebraic diagonal operator has a self-adjoint closure and a positive whole-space heat with precisely its full negative generator graph.
 
-**Definition 1.1 (The finite algebraic operator).**
+**Theorem 1.1 (Heat on an actual basis vector).**
+
+Lean statement: `D5/S3/Quantum/Analysis/DiagonalHeat.heat_basis`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Analysis/DiagonalHeat.heat_basis` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every full complex Hilbert basis e, nonnegative real energy family h, nonnegative-real time t and index i, heat e h t maps e(i) to exp(-t*h(i)) times e(i). This is the direct bounded multiplier action.
+
+**Theorem 1.2 (Whole-space heat contraction).**
+
+Lean statement: `D5/S3/Quantum/Analysis/DiagonalHeat.heat_contraction`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Analysis/DiagonalHeat.heat_contraction` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every full complex Hilbert basis e of a complete inner product space, nonnegative real energy family E, nonnegative-real time t and arbitrary input f, the norm of heat e E t f is at most the norm of f. Coordinatewise exponential bounds are transported by the isometric basis representation.
+
+**Theorem 1.3 (Continuous heat orbit).**
+
+Lean statement: `D5/S3/Quantum/Analysis/DiagonalHeat.heat_continuous`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Analysis/DiagonalHeat.heat_continuous` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every full complex Hilbert basis e of a complete inner product space, nonnegative real energy family E and arbitrary input f, the entire nonnegative-time orbit of heat e E t f is continuous, including at zero. Finite basis approximations and uniform contraction give the result.
+
+**Definition 1.4 (The finite algebraic operator).**
 
 Lean statement: `D5/S3/Quantum/Analysis/DiagonalHeat.finiteOperator`
 
@@ -16,7 +52,7 @@ Lean statement: `D5/S3/Quantum/Analysis/DiagonalHeat.finiteOperator`
 
 For every full complex Hilbert basis e of a complete Hilbert space and every real family h, this partial complex linear map has domain exactly the algebraic span of the range of e. LinearIndependent.repr supplies its finite coefficients; Finsupp.linearCombination synthesizes the basis vectors weighted by h.
 
-**Definition 1.2 (The actual closure).**
+**Definition 1.5 (The actual closure).**
 
 Lean statement: `D5/S3/Quantum/Analysis/DiagonalHeat.hamiltonian`
 
@@ -28,7 +64,7 @@ Lean statement: `D5/S3/Quantum/Analysis/DiagonalHeat.hamiltonian`
 
 For the same arbitrary full basis e and real family h, the Hamiltonian is the actual LinearPMap closure of finiteOperator e h. The main theorem proves self-adjointness for nonnegative h and identifies the entire graph and weighted-l2 domain.
 
-**Definition 1.3 (The bounded full-space multiplier).**
+**Definition 1.6 (The bounded full-space multiplier).**
 
 Lean statement: `D5/S3/Quantum/Analysis/DiagonalHeat.multiplier`
 
@@ -40,7 +76,7 @@ Lean statement: `D5/S3/Quantum/Analysis/DiagonalHeat.multiplier`
 
 For an arbitrary full basis e, real coefficients a, nonnegative real M and a proof that every absolute coefficient is at most M, transport the actual bounded l2 diagonal multiplier through e.repr. The resulting map is a bounded complex linear endomorphism of the entire ambient Hilbert space.
 
-**Definition 1.4 (The whole-space heat).**
+**Definition 1.7 (The whole-space heat).**
 
 Lean statement: `D5/S3/Quantum/Analysis/DiagonalHeat.heat`
 
@@ -52,7 +88,7 @@ Lean statement: `D5/S3/Quantum/Analysis/DiagonalHeat.heat`
 
 For an arbitrary full basis e and nonnegative real family h, at each nonnegative-real time t take the full-space multiplier with coefficient exp(-t*h(i)) and bound one. Zero eigenvalues give coefficient one and zero time gives the identity.
 
-**Theorem 1.5 (The exact finite-span basis action).**
+**Theorem 1.8 (The exact finite-span basis action).**
 
 Lean statement: `D5/S3/Quantum/Analysis/DiagonalHeat.finite_basis`
 
@@ -64,7 +100,7 @@ Lean statement: `D5/S3/Quantum/Analysis/DiagonalHeat.finite_basis`
 
 For every actual full complex Hilbert basis e, arbitrary real coefficient family h and index i, finiteOperator e h maps the genuine domain vector e(i) to h(i) times e(i). The finite representation of e(i) is the single coefficient one at i. This exact action supplies both the self-adjoint closure theorem and the finite graph approximants used for the lower quadratic-form bound.
 
-**Theorem 1.6 (Actual bounded coordinate action).**
+**Theorem 1.9 (Actual bounded coordinate action).**
 
 Lean statement: `D5/S3/Quantum/Analysis/DiagonalHeat.multiplier_coeff`
 
@@ -76,7 +112,7 @@ Lean statement: `D5/S3/Quantum/Analysis/DiagonalHeat.multiplier_coeff`
 
 Let H be a complete complex Hilbert space and e an actual full Hilbert basis indexed by any type I. Let a be a real family with absolute value at most the nonnegative real M. Transport multiplication by a through the isometric coefficient map from H to l2(I,Complex). This defines a bounded complex linear operator on all of H. For every vector x and every i, its i-th coefficient is a(i) times the coefficient of x. The bound is proved on the actual l2 multiplier before extending the action to H.
 
-**Theorem 1.7 (Basis vectors remain genuine eigenvectors).**
+**Theorem 1.10 (Basis vectors remain genuine eigenvectors).**
 
 Lean statement: `D5/S3/Quantum/Analysis/DiagonalHeat.multiplier_basis`
 
@@ -88,7 +124,7 @@ Lean statement: `D5/S3/Quantum/Analysis/DiagonalHeat.multiplier_basis`
 
 Under the same assumptions, the actual multiplier sends e(i) to a(i) times e(i). Coordinate injectivity and the single-coordinate expansion prove the equality, including zero and repeated coefficients. These coordinate and vector identities also determine the heat and resolvent operators.
 
-**Theorem 1.8 (Positivity on the whole Hilbert space).**
+**Theorem 1.11 (Positivity on the whole Hilbert space).**
 
 Lean statement: `D5/S3/Quantum/Analysis/DiagonalHeat.multiplier_positive`
 
@@ -100,7 +136,7 @@ Lean statement: `D5/S3/Quantum/Analysis/DiagonalHeat.multiplier_positive`
 
 If all a(i) are nonnegative, the actual bounded multiplier is positive. Parseval expresses its quadratic form as the genuinely convergent sum of a(i) times the squared modulus of the coefficient of x. Each term is real and nonnegative. This proves positivity and self-adjointness on the entire space, without a finite-dimensional hypothesis.
 
-**Theorem 1.9 (The real exponential right derivative).**
+**Theorem 1.12 (The real exponential right derivative).**
 
 Lean statement: `D5/S3/Quantum/Analysis/DiagonalHeat.scalar_derivative`
 
@@ -112,7 +148,7 @@ Lean statement: `D5/S3/Quantum/Analysis/DiagonalHeat.scalar_derivative`
 
 For every real normed vector space V, every real scalar a and every vector z, the right limit at zero through nonnegative real times of t inverse times (exp(-t*a) times z minus z) equals minus a times z. No complex scalar structure, completeness or sign condition on a is required. The ordinary real exponential derivative and the right-slope limit give the result. It supplies finite-mode derivatives and coordinate derivatives in the full generator argument.
 
-**Theorem 1.10 (The same closure has the full strong heat generator).**
+**Theorem 1.13 (The same closure has the full strong heat generator).**
 
 Lean statement: `D5/S3/Quantum/Analysis/DiagonalHeat.diagonal_heat`
 
@@ -137,6 +173,9 @@ All basis index types, empty and finite cases, repeated coefficients and zero ei
 - Truth anchor: `D5/S3/Quantum/Analysis/DiagonalHeat.finite_basis`
 - Truth anchor: `D5/S3/Quantum/Analysis/DiagonalHeat.hamiltonian`
 - Truth anchor: `D5/S3/Quantum/Analysis/DiagonalHeat.heat`
+- Truth anchor: `D5/S3/Quantum/Analysis/DiagonalHeat.heat_basis`
+- Truth anchor: `D5/S3/Quantum/Analysis/DiagonalHeat.heat_continuous`
+- Truth anchor: `D5/S3/Quantum/Analysis/DiagonalHeat.heat_contraction`
 - Truth anchor: `D5/S3/Quantum/Analysis/DiagonalHeat.multiplier`
 - Truth anchor: `D5/S3/Quantum/Analysis/DiagonalHeat.multiplier_basis`
 - Truth anchor: `D5/S3/Quantum/Analysis/DiagonalHeat.multiplier_coeff`
