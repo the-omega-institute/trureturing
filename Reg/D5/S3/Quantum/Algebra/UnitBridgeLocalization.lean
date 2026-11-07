@@ -4,7 +4,9 @@ import Reg.Support.DependentFamily
 
 /-! Full-telescope source application for the original nonlinear localization.
 This application supplies no whole-family intervention, sensitivity,
-observational dependence or enrolled-template realization bridge. -/
+observational dependence or enrolled-template realization bridge.
+The unfinished registration is tracked at
+https://github.com/the-omega-institute/trureturing/issues/27883. -/
 
 set_option autoImplicit false
 noncomputable section

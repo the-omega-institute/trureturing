@@ -6,7 +6,9 @@ import Reg.Support.DependentFamily
 The dependent family includes the whole topological space, original subalgebra,
 raw relation, both original inputs and the point of observation.
 Whole-family intervention, sensitivity and observational-dependence evidence
-are separate obligations; no validated registration is asserted here. -/
+are separate obligations; no validated registration is asserted here.
+The unfinished registration is tracked at
+https://github.com/the-omega-institute/trureturing/issues/27883. -/
 
 set_option autoImplicit false
 noncomputable section
