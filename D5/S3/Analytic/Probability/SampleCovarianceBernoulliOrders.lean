@@ -8,6 +8,7 @@
 /-
 admission_basis: escape-witness
 escape_witness: D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Gaussian.gaussian_noiseFamily_uniform_log
+Proof-shape assessments: ASSUMED-UNVERIFIED until the complete reuse searches finish.
 Declaration proof shapes (names relative to this module):
   Noise.coeffStar; proof_shape: bind-only; escape_witness: none; consumer: Noise.coeffStarRing
   Noise.coeffStarRing; proof_shape: bind-only; escape_witness: none; consumer: Noise.evalNoise_poly

@@ -8,6 +8,7 @@
 /-
 admission_basis: escape-witness
 escape_witness: D5.S3.Analytic.Probability.GaussianPolynomialLog.log_root_lower_point
+Proof-shape assessments: ASSUMED-UNVERIFIED until the complete reuse searches finish.
 Declaration proof shapes (names relative to this module):
   negLog_zero_of_one_le; proof_shape: bind-only; escape_witness: none; consumer: negLog_integrable
   negLog_integrable; proof_shape: bind-only; escape_witness: none; consumer: negLog_integrable_shift

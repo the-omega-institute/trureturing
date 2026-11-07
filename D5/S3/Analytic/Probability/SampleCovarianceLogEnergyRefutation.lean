@@ -8,6 +8,7 @@
 /-
 admission_basis: open-problem-resolution (#27294; Refuted)
 escape_witness: none (designated refutation result)
+Proof-shape assessments: ASSUMED-UNVERIFIED until the complete reuse searches finish.
 Declaration proof shapes (names relative to this module):
   Analytic.realNoise; proof_shape: bind-only; escape_witness: none; consumer: Analytic.eval_renamed
   Analytic.renamed_ne_zero; proof_shape: bind-only; escape_witness: none; consumer: Analytic.gaussian_det_nonzero_integrable
