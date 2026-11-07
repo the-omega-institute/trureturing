@@ -6,6 +6,11 @@
    utility: none
    digest: The ordered qubit Bargmann trace is the Bloch scalar-plus-oriented-volume formula. -/
 
+/- Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/27571.
+The current Reg four-slot templates do not faithfully register this multi-input
+matrix identity without adding an audit-only wrapper. The Lean theorem and its
+explicit consumers remain kernel-checked in this delivery. -/
+
 import Mathlib
 import D5.S3.Quantum.PureState.PureStateHandshake
 
