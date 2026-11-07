@@ -48,6 +48,10 @@ $$\forall n \in \mathrm{Nat},\; (1 \le n) \Rightarrow ((\operatorname{antiharmon
 
 *Proof.* Machine-checked in Lean as `D5/S3/ArithSums/EldarAntiharmonicAdjacency.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/a179875-antiharmonic-adjacency` (proved) by `D5/S3/ArithSums/EldarAntiharmonicAdjacency.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"a179875-antiharmonic-adjacency","declaration_gid":"D5/S3/ArithSums/EldarAntiharmonicAdjacency.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Amiram Eldar; Jaroslav Krizek; OEIS Foundation Inc. (2021). *OEIS A179875: equal adjacent totative antiharmonic means*. URL: <https://oeis.org/A179875>.

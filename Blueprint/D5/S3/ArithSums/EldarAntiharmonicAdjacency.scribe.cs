@@ -57,14 +57,18 @@ internal sealed class EldarAntiharmonicAdjacencyDocument : IScribeDocumentDefini
                 + "the same endpoint identities prove the converse. Direct evaluation "
                 + "includes n=1. The argument makes no assertion about infinitely many "
                 + "equal pairs, integral means, or higher moments.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source, Moments)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source, Moments),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("a179875-antiharmonic-adjacency"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula,
-        string prose, DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        string prose, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create("eldar-a179875-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.FromAuthor(formula), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula MomentFormula()
     {
