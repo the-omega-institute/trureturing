@@ -32,11 +32,14 @@ abbrev arena : Arena where
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  have hb := h 21 (by decide)
-  have ha := result 21 (by decide)
-  change ((a 21 + 1 : ℕ) : ℤ) = _ at hb
-  push_cast at hb
-  linarith
+  have impossible (n : ℕ) (hn : 21 ≤ n) : False := by
+    have hb := h n hn
+    have ha := result n hn
+    change ((a n + 1 : ℕ) : ℤ) = _ at hb
+    rw [Nat.cast_add, Nat.cast_one] at hb
+    have incompatible (x y : ℤ) (hx : x = y) (hy : x + 1 = y) : False := by omega
+    exact incompatible _ _ ha hb
+  exact impossible 21 (by decide)
 
 def family : Registration arena (type_of% @result) where
   actual := actual
@@ -88,7 +91,7 @@ namespace FiniteCertificate
 
 abbrev signature : Signature :=
   _root_.Reg.Support.SingleDependentReadout.signature (Fin 3 → Bool)
-    (fun _ => Fin 2 → Bool) (fun _ => ℤ)
+    (fun _ => Fin 3 → Bool) (fun _ => ℤ)
 
 def actual : Realization signature :=
   realize signature (fun _ r s => v 0 r s) (fun e => nomatch e)
@@ -100,15 +103,21 @@ abbrev arena : Arena where
   signature := signature
   Law R := ∀ r s : Fin 3 → Bool,
     v 20 r s =
-      4 * v 19 r s - 3 * v 18 r s - 2 * v 17 r s + 2 * v 16 r s + 2 * v 15 r s - 7 * v 14 r s - 8 * v 13 r s + 15 * v 12 r s + 4 * v 11 r s - 8 * v 10 r s - 4 * v 9 r s + 15 * v 8 r s + 8 * v 7 r s - 7 * v 6 r s - 2 * v 5 r s + 2 * v 4 r s + 2 * v 3 r s - 3 * v 2 r s - 4 * v 1 r s - R.readout () r s
+      4 * v 19 r s - 3 * v 18 r s - 2 * v 17 r s + 2 * v 16 r s + 2 * v 15 r s - 7 * v 14 r s
+        - 8 * v 13 r s + 15 * v 12 r s + 4 * v 11 r s - 8 * v 10 r s - 4 * v 9 r s + 15 * v 8 r s
+        + 8 * v 7 r s - 7 * v 6 r s - 2 * v 5 r s + 2 * v 4 r s + 2 * v 3 r s - 3 * v 2 r s
+        - 4 * v 1 r s - R.readout () r s
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  have hb := h (fun _ => false) (fun _ => false)
-  have ha := finite_certificate (fun _ => false) (fun _ => false)
-  change v 20 (fun _ => false) (fun _ => false) = _ at hb
-  change v 20 (fun _ => false) (fun _ => false) = _ at ha
-  linarith
+  have impossible (r s : Fin 3 → Bool) : False := by
+    have hb := h r s
+    have ha := finite_certificate r s
+    change v 20 r s = _ at hb
+    have incompatible (x y z : ℤ) (hx : x = y - z) (hy : x = y - (z + 1)) :
+        False := by omega
+    exact incompatible _ _ _ ha hb
+  exact impossible (fun _ => false) (fun _ => false)
 
 def family : Registration arena (type_of% @finite_certificate) where
   actual := actual

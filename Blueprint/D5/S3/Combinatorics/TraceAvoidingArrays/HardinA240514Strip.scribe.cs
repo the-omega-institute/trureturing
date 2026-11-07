@@ -7,19 +7,13 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.TraceAvoidingArrays;
 internal sealed class HardinA240514StripDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/TraceAvoidingArrays/HardinA240514Strip.";
-    private const string Note = "D5/L/RecurrenceComposition/hardin2014a240514";
+    private const string Note = "D5/L/Automata/hardin2014a240514";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The literal three-column binary strip count and Hardin's order-twenty recurrence.",
         H("Hardin's three-column binary strips"),
         Blocks(
             Paragraph(Text("OEIS A240514, revision 6, NAME: \"Number of nX3 0..1 arrays with no element equal to exactly two horizontal and vertical neighbors, with new values 0..1 introduced in row major order.\" The entry has no page numbers. Rows and columns are labeled. All four orthogonal neighbors are counted when in the board; the boundaries are open and there are no diagonals. For a binary alphabet the row-major introduction convention is equivalent to a false first entry. The value true need not occur.")),
-            Describe.Lean(DescribeId.Create("row"), DeclarationHandle.Create(Prefix + "Row"),
-                H("A three-bit row"),
-                StatementSource.FromAuthor(Disp(Eq(V("Row"), Arrow(Call("Fin", D(3)), V("Bool"))))),
-                AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
-                Blocks(Paragraph(Text("A row has three labeled columns. Eight rows give sixty-four ordered row pairs."))),
-                DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("horizontal"), DeclarationHandle.Create(Prefix + "horizontal"),
                 H("Horizontal neighbors"),
                 StatementSource.FromAuthor(Disp(HorizontalFormula())),
@@ -77,14 +71,14 @@ internal sealed class HardinA240514StripDocument : IScribeDocumentDefinition
             Call("equalBit", App(r, Sub(jv, D(1))), App(r, j)), D(0));
         var right = Conditional(Seq(Add(jv, D(1)), Sp, Lt, Sp, D(3)),
             Call("equalBit", App(r, Add(jv, D(1))), App(r, j)), D(0));
-        return All("r", V("Row"), All("j", Call("Fin", D(3)),
+        return All("r", RowType(), All("j", Call("Fin", D(3)),
             Eq(Call("horizontal", r, j), Add(left, right))));
     }
 
     private static Formula BoundaryFormula()
     {
         var r = V("r"); var s = V("s"); var j = V("j");
-        return All("r", V("Row"), All("s", V("Row"),
+        return All("r", RowType(), All("s", RowType(),
             Seq(Call("Boundary", r, s), Sp, F.Iff, Sp, Parenthesized(
                 All("j", Call("Fin", D(3)), DifferentTwo(Add(Call("horizontal", r, j),
                     Call("equalBit", App(s, j), App(r, j))))))));
@@ -95,7 +89,7 @@ internal sealed class HardinA240514StripDocument : IScribeDocumentDefinition
         var r = V("r"); var s = V("s"); var t = V("t"); var j = V("j");
         var neighbors = Add(Add(Call("horizontal", s, j), Call("equalBit", App(r, j), App(s, j))),
             Call("equalBit", App(t, j), App(s, j)));
-        return All("r", V("Row"), All("s", V("Row"), All("t", V("Row"),
+        return All("r", RowType(), All("s", RowType(), All("t", RowType(),
             Seq(Call("Interior", r, s, t), Sp, F.Iff, Sp,
                 Parenthesized(All("j", Call("Fin", D(3)), DifferentTwo(neighbors)))))));
     }
@@ -123,19 +117,19 @@ internal sealed class HardinA240514StripDocument : IScribeDocumentDefinition
     private static Formula StepFormula()
     {
         var w = V("w"); var r = V("r"); var s = V("s"); var t = V("t");
-        var sum = Seq(Sum, Underscore, Grp(t, Colon, Sp, V("Row")), Sp,
+        var sum = Seq(Sum, Underscore, Grp(t, Colon, Sp, RowType()), Sp,
             Parenthesized(Conditional(Call("Interior", r, s, t), App(w, s, t), D(0))));
-        return All("w", Arrow(V("Row"), Arrow(V("Row"), V("Int"))),
-            All("r", V("Row"), All("s", V("Row"), Eq(Call("step", w, r, s), sum))));
+        return All("w", Arrow(RowType(), Arrow(RowType(), V("Int"))),
+            All("r", RowType(), All("s", RowType(), Eq(Call("step", w, r, s), sum))));
     }
 
     private static Formula VectorFormula()
     {
         var k = V("k"); var r = V("r"); var s = V("s");
         return new Formula.Aligned([
-            All("r", V("Row"), All("s", V("Row"),
+            All("r", RowType(), All("s", RowType(),
                 Eq(Call("v", D(0), r, s), Conditional(Call("Boundary", s, r), D(1), D(0))))),
-            All("k", V("Nat"), All("r", V("Row"), All("s", V("Row"),
+            All("k", V("Nat"), All("r", RowType(), All("s", RowType(),
                 Eq(Call("v", Add(k, D(1)), r, s), Call("step", Call("v", k), r, s)))))
         ]);
     }
@@ -170,6 +164,7 @@ internal sealed class HardinA240514StripDocument : IScribeDocumentDefinition
             Eq(Cast(Call("a", n)), Recurrence(j => Cast(Call("a", Sub(n, D(j))))))));
     }
 
+    private static Formula RowType() => Arrow(Call("Fin", D(3)), V("Bool"));
     private static Formula V(string name) => F.Id(name);
     private static Formula App(Formula f, params Formula[] args) => new Formula.Apply(f, [.. args]);
     private static Formula Call(string name, params Formula[] args) => App(Seq(Operatorname, Grp(V(name))), args);

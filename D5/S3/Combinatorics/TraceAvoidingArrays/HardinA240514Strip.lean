@@ -12,7 +12,6 @@ escape_witness: count_eq_v (the all-length continuation-count induction, used by
 Direct frozen dependencies: HardinA240513Ladder.equalBit.
 Proof shapes and consumers are listed below; bounded table checks and linear
 propagation are bind-only. The counting induction and conclusions using it are content.
-Row: proof_shape=bind-only; consumers=horizontal, Boundary, Interior, step, v
 horizontal: proof_shape=bind-only; consumers=Legal, Boundary, Interior
 Legal: proof_shape=bind-only; consumers=a, legal_iff
 instDecidableLegal: proof_shape=bind-only; consumers=a
@@ -57,10 +56,8 @@ namespace D5.S3.Combinatorics.TraceAvoidingArrays.HardinA240514Strip
 
 open HardinA240513Ladder (equalBit)
 
-abbrev Row := Fin 3 → Bool
-
 /-- Equal-valued horizontal neighbours, with open left and right boundaries. -/
-def horizontal (r : Row) (j : Fin 3) : ℕ :=
+def horizontal (r : (Fin 3 → Bool)) (j : Fin 3) : ℕ :=
   (if h : 0 < j.val then equalBit (r ⟨j.val - 1, by omega⟩) (r j) else 0) +
   (if h : j.val + 1 < 3 then equalBit (r ⟨j.val + 1, h⟩) (r j) else 0)
 
@@ -81,27 +78,27 @@ private instance instDecidableLegal {n : ℕ} (A : Fin n × Fin 3 → Bool) :
 def a (n : ℕ) : ℕ :=
   (Finset.univ.filter (fun A : Fin n × Fin 3 → Bool => Legal A)).card
 
-def Boundary (r s : Row) : Prop :=
+def Boundary (r s : (Fin 3 → Bool)) : Prop :=
   ∀ j, horizontal r j + equalBit (s j) (r j) ≠ 2
 
-def Interior (r s t : Row) : Prop :=
+def Interior (r s t : (Fin 3 → Bool)) : Prop :=
   ∀ j, horizontal s j + equalBit (r j) (s j) + equalBit (t j) (s j) ≠ 2
 
-private instance instDecidableBoundary (r s : Row) : Decidable (Boundary r s) :=
+private instance instDecidableBoundary (r s : (Fin 3 → Bool)) : Decidable (Boundary r s) :=
   inferInstanceAs (Decidable (∀ _ : Fin 3, (_ : ℕ) ≠ 2))
 
-private instance instDecidableInterior (r s t : Row) : Decidable (Interior r s t) :=
+private instance instDecidableInterior (r s t : (Fin 3 → Bool)) : Decidable (Interior r s t) :=
   inferInstanceAs (Decidable (∀ _ : Fin 3, (_ : ℕ) ≠ 2))
 
-private def TailGood (k : ℕ) (f : Fin (k + 2) → Row) : Prop :=
+private def TailGood (k : ℕ) (f : Fin (k + 2) → (Fin 3 → Bool)) : Prop :=
   Boundary (f (Fin.last (k + 1))) (f (Fin.last k).castSucc) ∧
   ∀ i : Fin k, Interior (f i.castSucc.castSucc) (f i.castSucc.succ) (f i.succ.succ)
 
-private instance instDecidableTailGood (k : ℕ) (f : Fin (k + 2) → Row) :
+private instance instDecidableTailGood (k : ℕ) (f : Fin (k + 2) → (Fin 3 → Bool)) :
     Decidable (TailGood k f) :=
   inferInstanceAs (Decidable ((_ : Prop) ∧ ∀ _ : Fin k, (_ : Prop)))
 
-private theorem tailGood_cons (k : ℕ) (r : Row) (f : Fin (k + 2) → Row) :
+private theorem tailGood_cons (k : ℕ) (r : (Fin 3 → Bool)) (f : Fin (k + 2) → (Fin 3 → Bool)) :
     TailGood (k + 1) (Fin.cons r f) ↔ Interior r (f 0) (f 1) ∧ TailGood k f := by
   simp only [TailGood, Fin.forall_fin_succ, Fin.castSucc_zero, Fin.cons_zero,
     Fin.succ_zero_eq_one, Fin.cons_succ, Fin.castSucc_succ, Fin.cons_last]
@@ -152,24 +149,24 @@ private theorem legal_iff (k : ℕ) (A : Fin (k + 2) × Fin 3 → Bool) :
           dite_eq_left (show 0 < i.val by omega),
           dite_eq_left (show i.val + 1 < k + 2 by omega)] using hm p j
 
-def step (w : Row → Row → ℤ) (r s : Row) : ℤ :=
-  ∑ t : Row, if Interior r s t then w s t else 0
+def step (w : (Fin 3 → Bool) → (Fin 3 → Bool) → ℤ) (r s : (Fin 3 → Bool)) : ℤ :=
+  ∑ t : (Fin 3 → Bool), if Interior r s t then w s t else 0
 
-def v : ℕ → Row → Row → ℤ
+def v : ℕ → (Fin 3 → Bool) → (Fin 3 → Bool) → ℤ
   | 0, r, s => if Boundary s r then 1 else 0
   | k + 1, r, s => step (v k) r s
 
-private def count (k : ℕ) (r s : Row) : ℤ :=
-  ∑ f : Fin k → Row, if TailGood k (Fin.cons r (Fin.cons s f)) then 1 else 0
+private def count (k : ℕ) (r s : (Fin 3 → Bool)) : ℤ :=
+  ∑ f : Fin k → (Fin 3 → Bool), if TailGood k (Fin.cons r (Fin.cons s f)) then 1 else 0
 
 private theorem count_eq_v (k : ℕ) : count k = v k := by
   induction k with
   | zero => funext r s; simp [count, v, TailGood]
   | succ k ih =>
     funext r s
-    rw [count, ← (Fin.consEquiv (fun _ : Fin (k + 1) => Row)).sum_comp]
+    rw [count, ← (Fin.consEquiv (fun _ : Fin (k + 1) => (Fin 3 → Bool))).sum_comp]
     rw [Fintype.sum_prod_type]
-    change (∑ t : Row, ∑ f : Fin k → Row,
+    change (∑ t : (Fin 3 → Bool), ∑ f : Fin k → (Fin 3 → Bool),
       if TailGood (k + 1) (Fin.cons r (Fin.cons s (Fin.cons t f))) then (1 : ℤ) else 0) = _
     change _ = step (v k) r s
     rw [← ih]
@@ -178,29 +175,29 @@ private theorem count_eq_v (k : ℕ) : count k = v k := by
     intro t _
     by_cases h : Interior r s t <;> simp [tailGood_cons, h]
 
-private def total (w : Row → Row → ℤ) : ℤ :=
-  ∑ r : Row, ∑ s : Row, if r 0 = false ∧ Boundary r s then w r s else 0
+private def total (w : (Fin 3 → Bool) → (Fin 3 → Bool) → ℤ) : ℤ :=
+  ∑ r : (Fin 3 → Bool), ∑ s : (Fin 3 → Bool), if r 0 = false ∧ Boundary r s then w r s else 0
 
 private theorem counting_bridge (k : ℕ) : (a (k + 2) : ℤ) = total (v k) := by
   rw [a, Finset.natCast_card_filter]
-  let e : (Fin (k + 2) × Fin 3 → Bool) ≃ (Fin (k + 2) → Row) := Equiv.curry _ _ _
-  trans ∑ f : Fin (k + 2) → Row,
+  let e : (Fin (k + 2) × Fin 3 → Bool) ≃ (Fin (k + 2) → (Fin 3 → Bool)) := Equiv.curry _ _ _
+  trans ∑ f : Fin (k + 2) → (Fin 3 → Bool),
     if f 0 0 = false ∧ Boundary (f 0) (f 1) ∧ TailGood k f then (1 : ℤ) else 0
   · rw [← e.sum_comp]
     apply Finset.sum_congr rfl
     intro A _
     simp only [e, Equiv.curry_apply, Function.curry, legal_iff]
     rfl
-  · rw [← (Fin.consEquiv (fun _ : Fin (k + 2) => Row)).sum_comp,
+  · rw [← (Fin.consEquiv (fun _ : Fin (k + 2) => (Fin 3 → Bool))).sum_comp,
       Fintype.sum_prod_type]
     unfold total
     apply Finset.sum_congr rfl
     intro r _
-    rw [← (Fin.consEquiv (fun _ : Fin (k + 1) => Row)).sum_comp,
+    rw [← (Fin.consEquiv (fun _ : Fin (k + 1) => (Fin 3 → Bool))).sum_comp,
       Fintype.sum_prod_type]
     apply Finset.sum_congr rfl
     intro s _
-    change (∑ f : Fin k → Row,
+    change (∑ f : Fin k → (Fin 3 → Bool),
       if r 0 = false ∧ Boundary r s ∧ TailGood k (Fin.cons r (Fin.cons s f))
         then (1 : ℤ) else 0) = _
     by_cases h : r 0 = false ∧ Boundary r s
@@ -292,7 +289,7 @@ private def tables : Array (Array ℤ) := #[
     106652270,3648,287766433,5904,3648,216108614,5904,127259378]
 ]
 
-private def table (k : ℕ) (r s : Row) : ℤ :=
+private def table (k : ℕ) (r s : (Fin 3 → Bool)) : ℤ :=
   (tables[k]!)[32 * (r 0).toNat + 16 * (r 1).toNat + 8 * (r 2).toNat +
     4 * (s 0).toNat + 2 * (s 1).toNat + (s 2).toNat]!
 
@@ -300,14 +297,14 @@ set_option maxRecDepth 8192 in
 set_option trace.profiler true in
 set_option maxHeartbeats 8000000 in
 -- Kernel reduction checks the finite continuation table.
-private theorem table_base : ∀ r s : Row, v 0 r s = table 0 r s := by
+private theorem table_base : ∀ r s : (Fin 3 → Bool), v 0 r s = table 0 r s := by
   decide +kernel
 
 set_option maxRecDepth 8192 in
 set_option trace.profiler true in
 set_option maxHeartbeats 8000000 in
 -- Kernel reduction checks the finite continuation table.
-private theorem table_steps : ∀ k : Fin 20, ∀ r s : Row,
+private theorem table_steps : ∀ k : Fin 20, ∀ r s : (Fin 3 → Bool),
     step (table k.val) r s = table (k.val + 1) r s := by
   decide +kernel
 
@@ -325,23 +322,23 @@ set_option maxRecDepth 8192 in
 set_option trace.profiler true in
 set_option maxHeartbeats 8000000 in
 -- Kernel reduction checks the finite continuation table.
-private theorem table_certificate : ∀ r s : Row,
+private theorem table_certificate : ∀ r s : (Fin 3 → Bool),
     table 20 r s =
-      4 * table 19 r s - 3 * table 18 r s - 2 * table 17 r s + 2 * table 16 r s + 2 * table 15 r
-        s - 7 * table 14 r s - 8 * table 13 r s + 15 * table 12 r s + 4 * table 11 r s - 8 *
-        table 10 r s - 4 * table 9 r s + 15 * table 8 r s + 8 * table 7 r s - 7 * table 6 r s - 2
-        * table 5 r s + 2 * table 4 r s + 2 * table 3 r s - 3 * table 2 r s - 4 * table 1 r s -
-        table 0 r s := by
+      4 * table 19 r s - 3 * table 18 r s - 2 * table 17 r s + 2 * table 16 r s
+        + 2 * table 15 r s - 7 * table 14 r s - 8 * table 13 r s + 15 * table 12 r s
+        + 4 * table 11 r s - 8 * table 10 r s - 4 * table 9 r s + 15 * table 8 r s
+        + 8 * table 7 r s - 7 * table 6 r s - 2 * table 5 r s + 2 * table 4 r s + 2 * table 3 r s
+        - 3 * table 2 r s - 4 * table 1 r s - table 0 r s := by
   decide +kernel
 
 set_option trace.profiler true in
 /-- The order-twenty identity holds on the entire continuation vector. -/
-theorem finite_certificate : ∀ r s : Row,
+theorem finite_certificate : ∀ r s : (Fin 3 → Bool),
     v 20 r s =
-      4 * v 19 r s - 3 * v 18 r s - 2 * v 17 r s + 2 * v 16 r s + 2 * v 15 r s - 7 * v 14 r s - 8
-        * v 13 r s + 15 * v 12 r s + 4 * v 11 r s - 8 * v 10 r s - 4 * v 9 r s + 15 * v 8 r s + 8
-        * v 7 r s - 7 * v 6 r s - 2 * v 5 r s + 2 * v 4 r s + 2 * v 3 r s - 3 * v 2 r s - 4 * v 1
-        r s - v 0 r s := by
+      4 * v 19 r s - 3 * v 18 r s - 2 * v 17 r s + 2 * v 16 r s + 2 * v 15 r s - 7 * v 14 r s
+        - 8 * v 13 r s + 15 * v 12 r s + 4 * v 11 r s - 8 * v 10 r s - 4 * v 9 r s + 15 * v 8 r s
+        + 8 * v 7 r s - 7 * v 6 r s - 2 * v 5 r s + 2 * v 4 r s + 2 * v 3 r s - 3 * v 2 r s
+        - 4 * v 1 r s - v 0 r s := by
   simp only [v_table 0 (by decide), v_table 1 (by decide), v_table 2 (by decide),
     v_table 3 (by decide), v_table 4 (by decide), v_table 5 (by decide), v_table 6 (by decide),
     v_table 7 (by decide), v_table 8 (by decide), v_table 9 (by decide), v_table 10 (by decide),
@@ -352,25 +349,25 @@ theorem finite_certificate : ∀ r s : Row,
   exact table_certificate
 
 
-private theorem vector_recurrence (k : ℕ) : ∀ r s : Row,
+private theorem vector_recurrence (k : ℕ) : ∀ r s : (Fin 3 → Bool),
     v (k + 20) r s =
-      4 * v (k + 19) r s - 3 * v (k + 18) r s - 2 * v (k + 17) r s + 2 * v (k + 16) r s + 2 * v
-        (k + 15) r s - 7 * v (k + 14) r s - 8 * v (k + 13) r s + 15 * v (k + 12) r s + 4 * v (k +
-        11) r s - 8 * v (k + 10) r s - 4 * v (k + 9) r s + 15 * v (k + 8) r s + 8 * v (k + 7) r s
-        - 7 * v (k + 6) r s - 2 * v (k + 5) r s + 2 * v (k + 4) r s + 2 * v (k + 3) r s - 3 * v
-        (k + 2) r s - 4 * v (k + 1) r s - v k r s := by
+      4 * v (k + 19) r s - 3 * v (k + 18) r s - 2 * v (k + 17) r s + 2 * v (k + 16) r s
+        + 2 * v (k + 15) r s - 7 * v (k + 14) r s - 8 * v (k + 13) r s + 15 * v (k + 12) r s
+        + 4 * v (k + 11) r s - 8 * v (k + 10) r s - 4 * v (k + 9) r s + 15 * v (k + 8) r s
+        + 8 * v (k + 7) r s - 7 * v (k + 6) r s - 2 * v (k + 5) r s + 2 * v (k + 4) r s
+        + 2 * v (k + 3) r s - 3 * v (k + 2) r s - 4 * v (k + 1) r s - v k r s := by
   induction k with
   | zero => exact finite_certificate
   | succ k ih =>
     intro r s
     change step (v (k + 20)) r s =
-      4 * step (v (k + 19)) r s - 3 * step (v (k + 18)) r s - 2 * step (v (k + 17)) r s + 2 *
-        step (v (k + 16)) r s + 2 * step (v (k + 15)) r s - 7 * step (v (k + 14)) r s - 8 * step
-        (v (k + 13)) r s + 15 * step (v (k + 12)) r s + 4 * step (v (k + 11)) r s - 8 * step (v
-        (k + 10)) r s - 4 * step (v (k + 9)) r s + 15 * step (v (k + 8)) r s + 8 * step (v (k +
-        7)) r s - 7 * step (v (k + 6)) r s - 2 * step (v (k + 5)) r s + 2 * step (v (k + 4)) r s
-        + 2 * step (v (k + 3)) r s - 3 * step (v (k + 2)) r s - 4 * step (v (k + 1)) r s - step
-        (v k) r s
+      4 * step (v (k + 19)) r s - 3 * step (v (k + 18)) r s - 2 * step (v (k + 17)) r s
+        + 2 * step (v (k + 16)) r s + 2 * step (v (k + 15)) r s - 7 * step (v (k + 14)) r s
+        - 8 * step (v (k + 13)) r s + 15 * step (v (k + 12)) r s + 4 * step (v (k + 11)) r s
+        - 8 * step (v (k + 10)) r s - 4 * step (v (k + 9)) r s + 15 * step (v (k + 8)) r s
+        + 8 * step (v (k + 7)) r s - 7 * step (v (k + 6)) r s - 2 * step (v (k + 5)) r s
+        + 2 * step (v (k + 4)) r s + 2 * step (v (k + 3)) r s - 3 * step (v (k + 2)) r s
+        - 4 * step (v (k + 1)) r s - step (v k) r s
     unfold step
     simp only [Finset.mul_sum, ← Finset.sum_add_distrib, ← Finset.sum_sub_distrib]
     apply Finset.sum_congr rfl
@@ -381,12 +378,13 @@ private theorem vector_recurrence (k : ℕ) : ∀ r s : Row,
 
 private theorem total_recurrence (k : ℕ) :
     total (v (k + 20)) =
-      4 * total (v (k + 19)) - 3 * total (v (k + 18)) - 2 * total (v (k + 17)) + 2 * total (v (k
-        + 16)) + 2 * total (v (k + 15)) - 7 * total (v (k + 14)) - 8 * total (v (k + 13)) + 15 *
-        total (v (k + 12)) + 4 * total (v (k + 11)) - 8 * total (v (k + 10)) - 4 * total (v (k +
-        9)) + 15 * total (v (k + 8)) + 8 * total (v (k + 7)) - 7 * total (v (k + 6)) - 2 * total
-        (v (k + 5)) + 2 * total (v (k + 4)) + 2 * total (v (k + 3)) - 3 * total (v (k + 2)) - 4 *
-        total (v (k + 1)) - total (v k) := by
+      4 * total (v (k + 19)) - 3 * total (v (k + 18)) - 2 * total (v (k + 17))
+        + 2 * total (v (k + 16)) + 2 * total (v (k + 15)) - 7 * total (v (k + 14))
+        - 8 * total (v (k + 13)) + 15 * total (v (k + 12)) + 4 * total (v (k + 11))
+        - 8 * total (v (k + 10)) - 4 * total (v (k + 9)) + 15 * total (v (k + 8))
+        + 8 * total (v (k + 7)) - 7 * total (v (k + 6)) - 2 * total (v (k + 5))
+        + 2 * total (v (k + 4)) + 2 * total (v (k + 3)) - 3 * total (v (k + 2))
+        - 4 * total (v (k + 1)) - total (v k) := by
   unfold total
   simp only [Finset.mul_sum, ← Finset.sum_add_distrib, ← Finset.sum_sub_distrib]
   apply Finset.sum_congr rfl
@@ -405,11 +403,11 @@ set_option maxHeartbeats 8000000 in
 -- Kernel reduction checks the finite continuation table.
 private theorem initial_recurrence :
     total (v 19) =
-      4 * total (v 18) - 3 * total (v 17) - 2 * total (v 16) + 2 * total (v 15) + 2 * total (v
-        14) - 7 * total (v 13) - 8 * total (v 12) + 15 * total (v 11) + 4 * total (v 10) - 8 *
-        total (v 9) - 4 * total (v 8) + 15 * total (v 7) + 8 * total (v 6) - 7 * total (v 5) - 2
-        * total (v 4) + 2 * total (v 3) + 2 * total (v 2) - 3 * total (v 1) - 4 * total (v 0) -
-        (a 1 : ℤ) := by
+      4 * total (v 18) - 3 * total (v 17) - 2 * total (v 16) + 2 * total (v 15)
+        + 2 * total (v 14) - 7 * total (v 13) - 8 * total (v 12) + 15 * total (v 11)
+        + 4 * total (v 10) - 8 * total (v 9) - 4 * total (v 8) + 15 * total (v 7)
+        + 8 * total (v 6) - 7 * total (v 5) - 2 * total (v 4) + 2 * total (v 3) + 2 * total (v 2)
+        - 3 * total (v 1) - 4 * total (v 0) - (a 1 : ℤ) := by
   simp only [singleton, v_table 0 (by decide), v_table 1 (by decide), v_table 2 (by decide),
     v_table 3 (by decide), v_table 4 (by decide), v_table 5 (by decide), v_table 6 (by decide),
     v_table 7 (by decide), v_table 8 (by decide), v_table 9 (by decide), v_table 10 (by decide),
@@ -421,12 +419,12 @@ private theorem initial_recurrence :
 /-- Hardin's empirical recurrence for the literal three-column board count. -/
 theorem result : ∀ n : ℕ, 21 ≤ n →
     (a n : ℤ) =
-      4 * (a (n - 1) : ℤ) - 3 * (a (n - 2) : ℤ) - 2 * (a (n - 3) : ℤ) + 2 * (a (n - 4) : ℤ) + 2 *
-        (a (n - 5) : ℤ) - 7 * (a (n - 6) : ℤ) - 8 * (a (n - 7) : ℤ) + 15 * (a (n - 8) : ℤ) + 4 *
-        (a (n - 9) : ℤ) - 8 * (a (n - 10) : ℤ) - 4 * (a (n - 11) : ℤ) + 15 * (a (n - 12) : ℤ) + 8
-        * (a (n - 13) : ℤ) - 7 * (a (n - 14) : ℤ) - 2 * (a (n - 15) : ℤ) + 2 * (a (n - 16) : ℤ) +
-        2 * (a (n - 17) : ℤ) - 3 * (a (n - 18) : ℤ) - 4 * (a (n - 19) : ℤ) - (a (n - 20) : ℤ) :=
-        by
+      4 * (a (n - 1) : ℤ) - 3 * (a (n - 2) : ℤ) - 2 * (a (n - 3) : ℤ) + 2 * (a (n - 4) : ℤ)
+        + 2 * (a (n - 5) : ℤ) - 7 * (a (n - 6) : ℤ) - 8 * (a (n - 7) : ℤ) + 15 * (a (n - 8) : ℤ)
+        + 4 * (a (n - 9) : ℤ) - 8 * (a (n - 10) : ℤ) - 4 * (a (n - 11) : ℤ)
+        + 15 * (a (n - 12) : ℤ) + 8 * (a (n - 13) : ℤ) - 7 * (a (n - 14) : ℤ)
+        - 2 * (a (n - 15) : ℤ) + 2 * (a (n - 16) : ℤ) + 2 * (a (n - 17) : ℤ)
+        - 3 * (a (n - 18) : ℤ) - 4 * (a (n - 19) : ℤ) - (a (n - 20) : ℤ) := by
   intro n hn
   by_cases he : n = 21
   · subst n
