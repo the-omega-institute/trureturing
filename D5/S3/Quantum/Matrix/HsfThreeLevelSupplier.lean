@@ -12,28 +12,13 @@ import Mathlib.Analysis.CStarAlgebra.ContinuousFunctionalCalculus.Pi
 import Mathlib.Analysis.Matrix.Order
 import Mathlib.Tactic
 
-/- ASSEMBLY SOURCE STATUS: all source below remains UNCOMPILED.
-The historical preparation/status comments are preserved verbatim as input
-provenance; their references to missing O2--O5 source are superseded by the
-inserted proof candidates and actual_threeLevel_supplier at the end.
-ThreeLevelSupplierTarget and every original obligation remain unchanged.
-The consumed OwnerActualShiftBridge.lean.fragment is retained separately for
-owner integration into HsfLocalSpectrumSupplier; it is not an assumption.
-PDSylvesterObligation, its energy/equality consequence, and more than three
-levels are outside this supplier assembly and remain unproved. -/
-
-/-! PREPARATION ONLY: no build or kernel acceptance has been performed.
-No theorem asserting ThreeLevelSupplierTarget is declared in this file.
-The exact remaining propositions are recorded at the bottom, without axioms,
-missing proof terms, or hypotheses added to the intended public theorem.
-
-This module is to be applied together with application.patch after the owner
-writer has joined. That patch adds one consumed general trace identity to the
-permitted pre-existing local-spectrum source. No active uniform source was read.
-The two-level endpoint is reused for the collision branch; it is not reproved.
-Source-selection binding remains unfinished under issue 23103:
-https://github.com/the-omega-institute/trureturing/issues/23103.
-No full HSF or more-than-three-level assertion is made. -/
+/-! Three-level balanced CFC supplier and positive-definite Sylvester rigidity.
+The coefficient construction has three base coordinates and six residual
+coordinates, independent of the finite matrix dimension. Positive labels may
+coincide and level fibers may be empty. The proof scripts are undergoing
+canonical kernel repair; no kernel acceptance is asserted by this source note.
+Source-selection binding remains unfinished under
+https://github.com/the-omega-institute/trureturing/issues/23103. -/
 
 noncomputable section
 set_option autoImplicit false
@@ -2042,12 +2027,9 @@ private theorem actual_shifted_identity (p : n → ℝ) (hp : ∀ i, 0 < p i)
 
 end OrderedSquares
 
-/- EXACT UNRESOLVED PROPOSITIONS. These definitions do not supply proofs.
-No axiom is introduced and no conditional public supplier is exported. -/
+/- Auxiliary propositions keep the exact coefficient and ordered-moment laws. -/
 
-/- O1 has a complete uncompiled proof attempt above:
-polynomial_gap, canonicalK_clear, residualT_clear, canonical_gap_identity.
-No elaboration or kernel success is claimed. -/
+
 
 /-- O2. Complete the coefficient Gram laws from the rational formulas and
 CFC.sqrt realization, including all 27 triples, not only distinct triples. -/
@@ -2073,10 +2055,7 @@ private def OrderedMomentObligation : Prop :=
     (∑ a, realTrace ((liftedM level p S a)ᴴ*S*liftedM level p S a)) =
       (4*realTrace (S^3)-realTrace ((firstMatrix level p S)^3))/3
 
-/- O2 and O3 retain their exact baseline propositions above. The following
-are closed proof candidates, not extra assumptions in a supplier theorem.
-All declarations, including these, remain uncompiled. The baseline's O4,
-O5 and PD descriptions below are retained without supplying their proofs. -/
+
 private theorem canonicalGram_proof : CanonicalGramObligation := by
   intro p hp hinj
   exact ⟨mixed_moment p hp hinj, cyclic_moment p hp hinj⟩
@@ -2102,10 +2081,7 @@ private def CoincidentLevelObligation : Prop :=
     let B := fun j : ℕ => (j.factorial : ℝ)⁻¹ • iteratedDeriv j F 0
     0 ≤ (B 3+(2 : ℝ) • (Z*B 2)+B 1*Z^2-(5/48 : ℝ) • (B 1)^3).trace.re
 
-/- UNCOMPILED: insert immediately after CoincidentLevelObligation.
-The integration patch also imports the public CFC Pi API. No standalone module,
-additional hypothesis, private bridge transport lemma, or derivative premise.
-All helpers below are consumed by coincidentLevel_proof. -/
+
 
 /-- Elementary diagonal CFC calculation, including the empty matrix algebra. -/
 private theorem coincident_diagonal_rpow {ι : Type*} [Fintype ι] [DecidableEq ι]
@@ -2362,29 +2338,10 @@ private def PDSylvesterObligation : Prop :=
       0 ≤ 4*(S^3-X^3).trace.re-6*(X*D).trace.re-6*(D*Y).trace.re ∧
       ((4*(S^3-X^3).trace.re-6*(X*D).trace.re-6*(D*Y).trace.re = 0) ↔ P*S = S*P)
 
-/- O5 (assembly): after O2--O4 have proof terms, derive the one intended
-public theorem `actual_threeLevel_supplier : ThreeLevelSupplierTarget` by:
-  * injective p: canonical_gap_identity + coreGap_pos -> residual_allocation;
-    O2 -> O3 -> ordered_row_square + rowEnergy_nonneg;
-    actual_shifted_identity then identifies 6 times the ACTUAL supplier;
-  * noninjective p: CoincidentLevelObligation via actual_twoLevel_supplier.
-No theorem with these obligations as extra hypotheses is retained.
+/- Singular PSD directions receive the supplier statement. The additional
+Sylvester energy and rigidity below require a positive-definite direction. -/
 
-PD ENERGY / EQUALITY REMAINS A SEPARATE UNPROVED CONSEQUENCE:
-For X=firstMatrix level p S and D=qMatrix level p S-X^2, prove X.PosDef
-for S.PosDef; solve the ORIGINAL Sylvester equation X*Y+Y*X=D, and show
-4 Re tr(S^3-X^3)-6 Re tr(X*D)-6 Re tr(D*Y) >= 0, with equality iff
-P*S=S*P. The six residual directions have V=0, so their strict positive
-budget provides the W-uniform coercive bound. This consequence cannot be
-inferred solely from pointwise all-Z positivity without that bound. Singular
-PSD S receives only the supplier statement, no ordinary inverse/equality
-claim. More than three levels and full HSF remain open. -/
 
-/- O5: source closure for the exact original all-Z supplier.
-O2 is consumed transitively through mixed_moment and cyclic_moment in the
-three O3 moment proofs. canonicalGram_proof packages the same O2 terms;
-no Gram or moment law is added as a hypothesis here. The noninjective branch
-consumes the complete O4 source candidate. All of this remains UNCOMPILED. -/
 
 /-- Actual at-most-three-positive-level supplier, with the unchanged original
 factorial CFC jets, arbitrary finite complex matrices and all Hermitian Z.
@@ -2444,11 +2401,7 @@ theorem actual_threeLevel_supplier : ThreeLevelSupplierTarget.{u} := by
   · exact coincidentLevel_proof n level p hp hinj S hS Z hZ
 
 
-/- PD CONTINUATION, source preparation only (2026-11-08).
-The complete 2446-line supplier input and all its statements are retained.
-The historical comments above describing the PD statement as unproved are
-superseded by the closed proof scripts below, subject to actual elaboration
-and kernel checking. No such checking is claimed or performed here. -/
+
 
 section PDContinuation
 variable {n : Type u} [Fintype n] [DecidableEq n]
