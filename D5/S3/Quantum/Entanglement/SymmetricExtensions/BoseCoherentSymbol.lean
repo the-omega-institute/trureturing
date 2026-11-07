@@ -265,15 +265,7 @@ theorem occupationTwirl_decomposition
         exact if_neg hx
       simp only [hz,zero_mul,smul_zero]
 
-/-- For a positive input every actual occupation eigenvalue is nonnegative. -/
-theorem occupationCoefficient_nonneg
-    (E : Matrix (Fin r → Fin n) (Fin r → Fin n) ℂ) (hE : E.PosSemidef)
-    (a : Sym (Fin n) r) : 0 ≤ occupationCoefficient E a := by
-  apply mul_nonneg (Nat.cast_nonneg _)
-  exact (Complex.nonneg_iff.mp hE.diag_nonneg).1
-
 #print axioms occupationTwirl_decomposition
-#print axioms occupationCoefficient_nonneg
 
 section Cuts
 

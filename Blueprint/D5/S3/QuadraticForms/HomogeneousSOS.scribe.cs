@@ -19,7 +19,9 @@ internal sealed class HomogeneousSOSDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(Prefix + "homogeneous_parity_sos_iff"),
                 H("Parity square representatives"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("In a finite grading group with a+a=0, a polynomial in the zero sector has an SOS representation whose half-degree forms each lie in an individual sector. Projecting a square to sector zero cancels all cross-sector products. The predicate remains the native unrestricted sum of squares."))),
+                Blocks(
+                    Paragraph(Text("Let sigma be any variable type, Gamma a finite additive commutative group satisfying a+a=0 for every a, and w : sigma to Gamma any grading. For every real polynomial p : MvPolynomial sigma Real and natural number d, assume p.IsHomogeneous (2*d) and p.IsWeightedHomogeneous w 0. Then the native unrestricted IsSumSq p holds if and only if there exist a natural number m and q : Fin m to Gamma to MvPolynomial sigma Real such that, for every i and a, q(i,a) is homogeneous of degree d and weighted-homogeneous for w in sector a, and p is the finite sum over i : Fin m and a : Gamma of q(i,a) times q(i,a).")),
+                    Paragraph(Text("Projecting each homogeneous square to sector zero cancels all cross-sector products; conversely the displayed finite sum is a native sum of squares. The zero polynomial, d=0 and an empty square family m=0 remain in scope."))),
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("even-form-sos-iff"),
                 DeclarationHandle.Create(Prefix + "even_form_sos_iff"),
