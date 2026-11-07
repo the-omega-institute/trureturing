@@ -85,10 +85,13 @@ source functions are invariant under the simultaneous conjugation.
 At alpha=r=1/2, z=2 and q=1, the bound values are unchanged and
 Tsallis is exactly 48/125, strictly below B2, which is strictly below B1.
 
-The accompanying formal source is
-`D5/S3/Divergence/MaityFuruichiDuttaNondiagonalSupplement.lean`.
-This extends the presentation and the exact individual-bound checks of
-the existing refutation; it is not another conjecture resolution.
+The complete application, including the common-basis transformation, general
+functional-calculus covariance, source parameter correspondence, exact
+individual-bound and Tsallis calculations, and restricted comparison, is in
+`Blueprint/D5/S3/Divergence/MaityFuruichiDuttaOrderingRefutation.scribe.cs`.
+It reuses `D5/S3/Divergence/MaityFuruichiDuttaOrderingRefutation.lean` and
+the pinned Mathlib functional calculus; it is not another conjecture resolution
+or a separately frozen theorem module.
 Nondiagonality is basis dependent, whereas noncommutation and these values
 are invariant. The source note's written proof and arithmetic script alone
 are not Lean evidence.
