@@ -22,6 +22,10 @@ internal sealed class HardinA233175PairStripDocument : IScribeDocumentDefinition
                 "The two implications impose exactly the required earlier occurrences."),
             Def("advance", "advance", "Updating the flags", AdvanceFormula(),
                 "A flag changes to true when its colour occurs and otherwise retains its value."),
+            Def("good", "good", "Scanning a word", GoodFormula(),
+                "The empty word is accepted. A nonempty word is accepted exactly when its first colour is allowed and its tail is accepted with the updated flags."),
+            Def("finish", "finish", "Final flags of a word", FinishFormula(),
+                "The empty word retains its initial flags. For a nonempty word the first colour updates the flags before the tail is scanned."),
             Def("pair", "pair", "Complementary-pair labels", PairFormula(),
                 "The three labels have fibres {0,5}, {1,4} and {2,3}. A legal bond joins different fibres."),
             Def("pairs", "pairs", "The two boundary labels", PairsFormula(),
@@ -37,7 +41,7 @@ internal sealed class HardinA233175PairStripDocument : IScribeDocumentDefinition
             Thm("finite-certificate", "finite_certificate", "A finite continuation identity", CertificateFormula(),
                 "The seven-step identity holds on all 576 states. The listed scalar values concern continuation lengths zero through six. Linearity propagates the identity to every continuation length."),
             Thm("result", "result", "Barker's generating function", ResultFormula(),
-                "The literal filtered count equals total(v(n-1)) at every positive width, by decomposition into the first column and its tail. The seven-step identity has polynomial z^2*(z^3-12*z^2+128)*(z^2-4*z-16). The listed initial values eliminate the extra factor for the scalar count and yield a(n)=12*a(n-1)-128*a(n-3) for n at least five. Comparing every power-series coefficient gives the identity. The cast from natural counts to integers is taken before forming the series.")))));
+                "The literal filtered count equals total(v(n-1)) at every positive width, by decomposition into the first column and its tail. The seven-step identity has polynomial z^2*(z^3-12*z^2+128)*(z^2-4*z-16). The listed initial values eliminate the extra factor for the scalar count and yield a(n)=12*a(n-1)-128*a(n-3) for n at least five. Comparing every power-series coefficient gives the identity. The cast from natural counts to integers is taken before forming the series."))));
 
     private static DocumentBlock Def(string id, string name, string title, Formula formula, string prose) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + name), H(title),
@@ -72,6 +76,30 @@ internal sealed class HardinA233175PairStripDocument : IScribeDocumentDefinition
         return All("c", Fin(6), Eq(Call("pair", c), App(vector, c)));
     }
 
+    private static Formula GoodFormula()
+    {
+        var s = V("s"); var f = V("f"); var n = V("n");
+        return new Formula.Aligned([
+            All("s", V("Seen"), All("f", Arrow(Fin(0), Fin(6)),
+                Iff(Call("good", s, f), V("True")))),
+            All("n", V("Nat"), All("s", V("Seen"),
+                All("f", Arrow(Call("Fin", Add(n, D(1))), Fin(6)),
+                    Iff(Call("good", s, f), And(Call("allowed", s, App(f, D(0))),
+                        Call("good", Call("advance", s, App(f, D(0))), Call("Fintail", f)))))))]);
+    }
+
+    private static Formula FinishFormula()
+    {
+        var s = V("s"); var f = V("f"); var n = V("n");
+        return new Formula.Aligned([
+            All("s", V("Seen"), All("f", Arrow(Fin(0), Fin(6)),
+                Eq(Call("finish", s, f), s))),
+            All("n", V("Nat"), All("s", V("Seen"),
+                All("f", Arrow(Call("Fin", Add(n, D(1))), Fin(6)),
+                    Eq(Call("finish", s, f),
+                        Call("finish", Call("advance", s, App(f, D(0))), Call("Fintail", f))))))]);
+    }
+
     private static Formula PairsFormula()
     {
         var c = V("c");
@@ -98,9 +126,10 @@ internal sealed class HardinA233175PairStripDocument : IScribeDocumentDefinition
         var normal = All("p", cells, And(
             Imp(Or(Eq(App(a, p), D(2)), Or(Eq(App(a, p), D(3)), Eq(App(a, p), D(4)))), Earlier(1)),
             Imp(Eq(App(a, p), D(3)), Earlier(2))));
-        var boards = Seq(OpenBrace, a, Colon, Sp, Arrow(cells, Fin(6)), Sp, Mid, Sp,
-            And(first, And(bonds, normal)), CloseBrace);
-        return All("n", V("Nat"), Eq(Call("a", n), Call("card", boards)));
+        var predicate = Seq(LambdaLower, Sp, a, Colon, Sp, Arrow(cells, Fin(6)), Sp,
+            Mapsto, Sp, Parenthesized(And(first, And(bonds, normal))));
+        var boards = Call("Finsetfilter", predicate, V("Finsetuniv"));
+        return All("n", V("Nat"), Eq(Call("a", n), Call("Finsetcard", boards)));
     }
 
     private static Formula StateFunction() => Arrow(V("Seen"), Arrow(V("Seen"),
@@ -165,7 +194,7 @@ internal sealed class HardinA233175PairStripDocument : IScribeDocumentDefinition
 
     private static Formula States(Formula body) => All("q", V("Seen"), All("t", V("Seen"),
         All("b", V("Seen"), All("p", Product(Fin(3), Fin(3)), body))));
-    private static Formula Number(int n) => Seq(n.ToString().Select(c => D((byte)(c-'0'))).ToArray());
+    private static Formula Number(int n) => Seq(n.ToString(System.Globalization.CultureInfo.InvariantCulture).Select(c => D((byte)(c-'0'))).ToArray());
     private static Formula TextFormula(string s) => Seq(Operatorname, Grp(V(s)));
     private static Formula V(string name) => F.Id(name);
     private static Formula Fin(byte n) => Call("Fin", D(n));
