@@ -1,0 +1,2 @@
+**定义 12.1（完备原域中的准确前件）。** 原 $E$ 为实 Banach Archimedean 序单位空间，原范数为 $N$，原 $P\subset E^*_+$ 分离 $E$；原 $S$ 已是有界对称双线性乘法。旧总映射 $D:E^2\to E$ 保持实际共轭，即 $g_\alpha(a,b)=\alpha(S(a,b))-\mathrm i\alpha(D(a,b))$ 在全部原评价下满足 $g_\alpha(b,a)=\overline{g_\alpha(a,b)}$，并满足三标签卷 (12.2) 的原实部换括号式 $S(S(a,b),c)-S(a,S(b,c))=D(D(a,b),c)-D(a,D(b,c))$ 及该卷 (49.1)。后者量词是：对每个原 $\alpha$ 和每个 $\eta>0$，一套有限原输出 $t_j$、原正评价 $\beta_j$ 和实系数 $c_j$ 同时逼近全部原输出，而非逐输出另选公式。不要求 $D$ 的连续性或复正表。$A_D=\operatorname{ran}D$ 始终指实际值集合，不先假定线性或闭合。
+
