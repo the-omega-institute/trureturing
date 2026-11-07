@@ -22,7 +22,7 @@ structure Parameters where
   g : Ω → ℝ
 
 abbrev signature : Signature where
-  Params := Parameters
+  Params := Parameters.{u}
   State p := p.Ω
   Role := Unit
   finiteRole := inferInstance
@@ -31,16 +31,16 @@ abbrev signature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def actual : Realization signature :=
+def actual : Realization signature.{u} :=
   realize signature (fun _ p => by
     letI := p.ambient
     exact fun ω k => p.μ[p.y k.1 | p.ℱ k.2] ω) (fun e => nomatch e)
 
-def rejected : Realization signature :=
+def rejected : Realization signature.{u} :=
   realize signature (fun _ _ _ => 1) (fun e => nomatch e)
 
 abbrev arena : Arena where
-  signature := signature
+  signature := signature.{u}
   Law R := ∀ {Ω : Type u} {m0 : MeasurableSpace Ω} {μ : Measure Ω}
     [IsProbabilityMeasure μ]
     (ℱ : ℕ → MeasurableSpace Ω) (hℱ : Antitone ℱ)
@@ -56,29 +56,32 @@ abbrev arena : Arena where
       |μ[y k.1 | ℱ k.2] ω - μ[yLim | ⨅ j, ℱ j] ω| ∂μ)
       atTop (𝓝 0)
 
-private theorem actual_law : arena.Law actual :=
+private theorem actual_law : arena.{u}.Law actual :=
   @tendsto_condExp_of_dominated_convergence.{u}
 
-private theorem rejected_law : ¬ arena.Law rejected := by
+private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
   letI : MeasurableSpace (ULift.{u} Unit) := ⊤
   let μ : Measure (ULift.{u} Unit) := Measure.dirac (ULift.up ())
   let ℱ : ℕ → MeasurableSpace (ULift.{u} Unit) := fun _ => ⊤
   have hanti : Antitone ℱ := fun _ _ _ => le_rfl
-  have ht := h ℱ hanti (fun _ => le_rfl)
+  have ht := h (μ := μ) ℱ hanti (fun _ => le_rfl)
     (fun _ _ => 0) (fun _ => 0) (fun _ => 0)
     (fun _ => measurable_const) measurable_const
     (Eventually.of_forall fun _ => tendsto_const_nhds)
     (integrable_zero _ _ _) (fun _ => Eventually.of_forall fun _ => by simp)
-  simpa [rejected, realize, condExp_zero, ℱ, μ] using ht.1
+  have ht' : Tendsto (1 : (ℕ × ℕ) → ℝ) atTop (𝓝 0) := by
+    simpa [rejected, realize, condExp_zero, ℱ, μ] using ht.1
+  have hc : (1 : ℝ) = 0 := tendsto_nhds_unique tendsto_const_nhds ht'
+  norm_num at hc
 
-private theorem dependence : ObservationalDependence signature actual := by
+private theorem dependence : ObservationalDependence signature.{u} actual := by
   intro i
   letI : MeasurableSpace (ULift.{u} Bool) := ⊤
   let μ : Measure (ULift.{u} Bool) := Measure.dirac (ULift.up false)
   let f : ULift.{u} Bool → ℝ := fun x => if x.down then 1 else 0
   let ℱ : ℕ → MeasurableSpace (ULift.{u} Bool) := fun _ => ⊤
-  let p : Parameters := ⟨ULift.{u} Bool, ⊤, μ, ℱ, (fun _ => f), f, (fun _ => 1)⟩
+  let p : Parameters.{u} := ⟨ULift.{u} Bool, ⊤, μ, ℱ, (fun _ => f), f, (fun _ => 1)⟩
   refine ⟨p, ULift.up false, ULift.up true, ?_⟩
   have hf : StronglyMeasurable f := (measurable_of_countable f).stronglyMeasurable
   have hfi : Integrable f μ := by
@@ -91,7 +94,7 @@ private theorem dependence : ObservationalDependence signature actual := by
   rw [he] at hh
   norm_num [f] at hh
 
-def familyRegistration : Registration arena (type_of% (@tendsto_condExp_of_dominated_convergence.{u})) where
+def familyRegistration : Registration arena.{u} (type_of% (@tendsto_condExp_of_dominated_convergence.{u})) where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨actual_law, rejected, rejected_law⟩
@@ -103,7 +106,7 @@ def familyRegistration : Registration arena (type_of% (@tendsto_condExp_of_domin
 def registration :
     Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
       (@tendsto_condExp_of_dominated_convergence.{u})
-      (Realization signature) Unit Unit where
+      (Realization signature.{u}) Unit Unit where
   unitName := `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.DecreasingConditioning.JointDominatedConvergence.unit
   realizationName := `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.DecreasingConditioning.JointDominatedConvergence.familyRegistration
   realizationSource := none

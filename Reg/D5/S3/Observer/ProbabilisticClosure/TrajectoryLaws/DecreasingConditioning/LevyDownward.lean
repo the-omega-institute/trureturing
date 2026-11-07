@@ -9,7 +9,6 @@ universe u
 namespace Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.DecreasingConditioning.LevyDownward
 open MeasureTheory Filter LeanInformationAudit
 open scoped Topology ENNReal ProbabilityTheory
-open _root_.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.DecreasingConditioning
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 
 structure Parameters where
@@ -20,7 +19,7 @@ structure Parameters where
   f : Ω → ℝ
 
 abbrev signature : Signature where
-  Params := Parameters
+  Params := Parameters.{u}
   State p := p.Ω
   Role := Unit
   finiteRole := inferInstance
@@ -29,16 +28,16 @@ abbrev signature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def actual : Realization signature :=
+def actual : Realization signature.{u} :=
   realize signature (fun _ p => by
     letI := p.ambient
     exact fun ω n => p.μ[p.f | p.𝔽 n] ω) (fun e => nomatch e)
 
-def rejected : Realization signature :=
+def rejected : Realization signature.{u} :=
   realize signature (fun _ _ _ => fun _ => 1) (fun e => nomatch e)
 
 abbrev arena : Arena where
-  signature := signature
+  signature := signature.{u}
   Law R := ∀ {Ω : Type u} {m0 : MeasurableSpace Ω} {μ : Measure Ω}
     [IsFiniteMeasure μ] {𝔽 : ℕ → MeasurableSpace Ω}
     (h_filtration : Antitone 𝔽)
@@ -49,25 +48,25 @@ abbrev arena : Arena where
       Tendsto (fun n => eLpNorm (μ[f | 𝔽 n] - μ[f | ⨅ n, 𝔽 n]) 1 μ)
         atTop (𝓝 0)
 
-private theorem actual_law : arena.Law actual :=
+private theorem actual_law : arena.{u}.Law actual :=
   @tendsto_ae_and_eLpNorm_condExp_iInf.{u}
 
-private theorem rejected_law : ¬ arena.Law rejected := by
+private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
   letI : MeasurableSpace (ULift.{u} Unit) := ⊤
   let μ : Measure (ULift.{u} Unit) := Measure.dirac (ULift.up ())
   let 𝔽 : ℕ → MeasurableSpace (ULift.{u} Unit) := fun _ => ⊤
   have hanti : Antitone 𝔽 := fun _ _ _ => le_rfl
-  have ht := h hanti (by exact le_rfl) (fun _ => 0)
+  have ht := h (μ := μ) hanti (by exact le_rfl) (fun _ => 0)
   simpa [rejected, realize, condExp_zero, 𝔽, μ] using ht.1
 
-private theorem dependence : ObservationalDependence signature actual := by
+private theorem dependence : ObservationalDependence signature.{u} actual := by
   intro i
   letI : MeasurableSpace (ULift.{u} Bool) := ⊤
   let μ : Measure (ULift.{u} Bool) := Measure.dirac (ULift.up false)
   let f : ULift.{u} Bool → ℝ := fun x => if x.down then 1 else 0
   let 𝔽 : ℕ → MeasurableSpace (ULift.{u} Bool) := fun _ => ⊤
-  let p : Parameters := ⟨ULift.{u} Bool, ⊤, μ, 𝔽, f⟩
+  let p : Parameters.{u} := ⟨ULift.{u} Bool, ⊤, μ, 𝔽, f⟩
   refine ⟨p, ULift.up false, ULift.up true, ?_⟩
   have hf : StronglyMeasurable f := (measurable_of_countable f).stronglyMeasurable
   have hfi : Integrable f μ := by
@@ -80,7 +79,7 @@ private theorem dependence : ObservationalDependence signature actual := by
   rw [he] at hh
   norm_num [f] at hh
 
-def familyRegistration : Registration arena
+def familyRegistration : Registration arena.{u}
     (type_of% (@tendsto_ae_and_eLpNorm_condExp_iInf.{u})) where
   actual := actual
   bridge := Iff.rfl
@@ -93,7 +92,7 @@ def familyRegistration : Registration arena
 def registration :
     Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
       (@tendsto_ae_and_eLpNorm_condExp_iInf.{u})
-      (Realization signature) Unit Unit where
+      (Realization signature.{u}) Unit Unit where
   unitName := `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.DecreasingConditioning.LevyDownward.unit
   realizationName := `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.DecreasingConditioning.LevyDownward.familyRegistration
   realizationSource := none
@@ -118,7 +117,7 @@ def registration :
     coordinates := #[0,1,2,4]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body",
-        "fn", "arg", "fn", "arg", "body"]
+        "fn", "arg", "fn", "arg", "body", "fn", "fn", "arg"]
       stateBinder := 8
       functionOperand := false
       stateOperand := none

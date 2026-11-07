@@ -1,4 +1,6 @@
 import D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.DecreasingConditioning.ReverseCrossings
+import Mathlib.Probability.Martingale.Convergence
+import Mathlib.Order.Filter.AtTopBot.ModEq
 import Reg.Support.DependentFamily
 import Reg.Support.SourceSelection
 import LeanInformationAuditInterface.Contract.Registration
@@ -9,7 +11,6 @@ universe u
 namespace Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.DecreasingConditioning.ReverseCrossings
 open MeasureTheory Filter LeanInformationAudit
 open scoped ENNReal
-open _root_.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.DecreasingConditioning
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 
 structure Parameters where
@@ -18,66 +19,70 @@ structure Parameters where
   μ : @Measure Ω ambient
   𝔽 : ℕ → MeasurableSpace Ω
   f : Ω → ℝ
-  a b : ℝ
+  a : ℝ
+  b : ℝ
+  n : ℕ
 
 abbrev signature : Signature where
-  Params := Parameters
+  Params := Parameters.{u}
   State p := p.Ω
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ _ := ℕ → ℝ
+  Output _ _ := ℝ
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def actual : Realization signature :=
+def actual : Realization signature.{u} :=
   realize signature (fun _ p => by
     letI := p.ambient
-    exact fun ω n => p.μ[p.f | p.𝔽 n] ω) (fun e => nomatch e)
+    exact p.μ[p.f | p.𝔽 p.n]) (fun e => nomatch e)
 
-def rejected : Realization signature :=
-  realize signature (fun _ _ _ n => if Even n then (-1 : ℝ) else 1) (fun e => nomatch e)
+def rejected : Realization signature.{u} :=
+  realize signature (fun _ p _ => if Even p.n then (-1 : ℝ) else 1) (fun e => nomatch e)
 
 abbrev arena : Arena where
-  signature := signature
+  signature := signature.{u}
   Law R := ∀ {Ω : Type u} {m0 : MeasurableSpace Ω} {μ : Measure Ω}
-    [IsFiniteMeasure μ] {𝔽 : ℕ → MeasurableSpace Ω}
+    {𝔽 : ℕ → MeasurableSpace Ω} [IsFiniteMeasure μ]
     (h_antitone : Antitone 𝔽)
     (h_le : ∀ n, 𝔽 n ≤ (inferInstance : MeasurableSpace Ω))
     (f : Ω → ℝ) (hf : Integrable f μ) (a b : ℝ) (hab : a < b),
     ∃ C : ENNReal, C < ⊤ ∧
       ∫⁻ ω, upcrossings (↑a) (↑b)
-        (R.readout () (@Parameters.mk Ω m0 μ 𝔽 f a b)) ω ∂μ ≤ C
+        (fun n ω => R.readout () (@Parameters.mk Ω m0 μ 𝔽 f a b n) ω) ω ∂μ ≤ C
 
-private theorem actual_law : arena.Law actual :=
+private theorem actual_law : arena.{u}.Law actual :=
   @exists_lintegral_upcrossings_condExp_le.{u}
 
-private theorem rejected_law : ¬ arena.Law rejected := by
+private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
   letI : MeasurableSpace (ULift.{u} Unit) := ⊤
   let μ : Measure (ULift.{u} Unit) := Measure.dirac (ULift.up ())
   let 𝔽 : ℕ → MeasurableSpace (ULift.{u} Unit) := fun _ => ⊤
   have hanti : Antitone 𝔽 := fun _ _ _ => le_rfl
-  let bad : ℕ → ℝ := fun n => if Even n then (-1 : ℝ) else 1
-  have hlow : ∃ᶠ n in atTop, bad n < (-1 / 2 : ℝ) := by
-    exact frequently_even.mono fun n hn => by simp [bad, hn]
-  have hupp : ∃ᶠ n in atTop, (1 / 2 : ℝ) < bad n := by
-    exact frequently_odd.mono fun n hn => by simp [bad, hn]
+  let bad : ℕ → ULift.{u} Unit → ℝ := fun n _ => if Even n then (-1 : ℝ) else 1
+  have hlow : ∃ᶠ n in atTop, bad n (ULift.up ()) < (-1 / 2 : ℝ) := by
+    exact Nat.frequently_even.mono fun n hn => by norm_num [bad, hn]
+  have hupp : ∃ᶠ n in atTop, (1 / 2 : ℝ) < bad n (ULift.up ()) := by
+    exact Nat.frequently_odd.mono fun n hn => by norm_num [bad, Nat.not_even_iff_odd.mpr hn]
   have htop : upcrossings (-1 / 2 : ℝ) (1 / 2 : ℝ) bad (ULift.up ()) = ⊤ :=
     upcrossings_eq_top_of_frequently_lt (by norm_num) hlow hupp
-  obtain ⟨C, hC, hbound⟩ := h hanti (fun _ => le_rfl) (fun _ => 0)
+  obtain ⟨C, hC, hbound⟩ := h (μ := μ) hanti (fun _ => le_rfl) (fun _ => 0)
     (integrable_zero _ _ _) (-1 / 2 : ℝ) (1 / 2 : ℝ) (by norm_num)
-  have htop_le : (⊤ : ENNReal) ≤ C := by
-    simpa [rejected, realize, bad, μ, htop] using hbound
+  change (∫⁻ ω, upcrossings (-1 / 2 : ℝ) (1 / 2 : ℝ) bad ω ∂μ) ≤ C at hbound
+  have htop_le : upcrossings (-1 / 2 : ℝ) (1 / 2 : ℝ) bad (ULift.up ()) ≤ C := by
+    simpa [μ] using hbound
+  rw [htop] at htop_le
   exact (not_lt_of_ge htop_le) hC
 
-private theorem dependence : ObservationalDependence signature actual := by
+private theorem dependence : ObservationalDependence signature.{u} actual := by
   intro i
   letI : MeasurableSpace (ULift.{u} Bool) := ⊤
   let μ : Measure (ULift.{u} Bool) := Measure.dirac (ULift.up false)
   let f : ULift.{u} Bool → ℝ := fun x => if x.down then 1 else 0
   let 𝔽 : ℕ → MeasurableSpace (ULift.{u} Bool) := fun _ => ⊤
-  let p : Parameters := ⟨ULift.{u} Bool, ⊤, μ, 𝔽, f, 0, 1⟩
+  let p : Parameters.{u} := ⟨ULift.{u} Bool, ⊤, μ, 𝔽, f, 0, 1, 0⟩
   refine ⟨p, ULift.up false, ULift.up true, ?_⟩
   have hf : StronglyMeasurable f := (measurable_of_countable f).stronglyMeasurable
   have hfi : Integrable f μ := by
@@ -85,12 +90,11 @@ private theorem dependence : ObservationalDependence signature actual := by
     exact Eventually.of_forall fun x => by dsimp [f]; split <;> norm_num
   have he : μ[f | ⊤] = f := condExp_of_stronglyMeasurable le_rfl hf hfi
   intro hc
-  have hh := congrArg (fun a : ℕ → ℝ => a 0) hc
-  change μ[f | ⊤] (ULift.up false) = μ[f | ⊤] (ULift.up true) at hh
-  rw [he] at hh
-  norm_num [f] at hh
+  change μ[f | ⊤] (ULift.up false) = μ[f | ⊤] (ULift.up true) at hc
+  rw [he] at hc
+  norm_num [f] at hc
 
-def familyRegistration : Registration arena
+def familyRegistration : Registration arena.{u}
     (type_of% (@exists_lintegral_upcrossings_condExp_le.{u})) where
   actual := actual
   bridge := Iff.rfl
@@ -103,7 +107,7 @@ def familyRegistration : Registration arena
 def registration :
     Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
       (@exists_lintegral_upcrossings_condExp_le.{u})
-      (Realization signature) Unit Unit where
+      (Realization signature.{u}) Unit Unit where
   unitName := `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.DecreasingConditioning.ReverseCrossings.unit
   realizationName := `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.DecreasingConditioning.ReverseCrossings.familyRegistration
   realizationSource := none
@@ -117,7 +121,7 @@ def registration :
   bundleNonempty := .absent
   readout := some (realize signature (fun _ p => by
     letI := p.ambient
-    exact fun ω n => p.μ[p.f | p.𝔽 n] ω) (fun e => nomatch e))
+    exact p.μ[p.f | p.𝔽 p.n]) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -125,12 +129,13 @@ def registration :
   sourceSelection := some {
     owner := `D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.DecreasingConditioning.ReverseCrossings
     definition := none
-    coordinates := #[0,1,2,4,7,8,9]
+    coordinates := #[0,1,2,3,7,9,10,14]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body",
-        "fn", "arg", "fn", "arg", "body"]
-      stateBinder := 10
-      functionOperand := false
+      path := #["body", "body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "body", "arg", "body", "arg", "fn", "arg",
+        "arg", "body", "fn", "arg", "body"]
+      stateBinder := 0
+      functionOperand := true
       stateOperand := none
       booleanPredicate := false }] }
   continuation := .unknown
