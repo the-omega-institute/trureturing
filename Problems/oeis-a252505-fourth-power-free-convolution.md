@@ -31,16 +31,19 @@ The exact unchanged Lean proposition is 'claim'. Its quantifier is
 'all n : Nat, 1 <= n -> ...'; no restriction on prime support or exponents
 and no multiplicativity of $b$ or $g$ is assumed.
 
-## Source and literature boundary
+## Motivation
 
-The primary conjecture is the A252505 FORMULA line quoted in
-Library/PrimeForms/oeis2026a252505.md. Preregistration:
-https://github.com/the-omega-institute/trureturing/issues/27491.
-The accepted bounded source and literature screen supplies the attribution
-and unproved-in-searched-scope premise. Worldwide openness and originality
-outside that screen are ASSUMED-UNVERIFIED.
+The target connects the fourth-power-free divisor count with the native rational
+unit-fraction count and the specified Dirichlet inverse on every positive index.
 
-## Native bridges
+## Gap
+
+The two counting theorems retain unfinished source-family audits in
+https://github.com/the-omega-institute/trureturing/issues/27506.
+
+## Route
+
+### Native bridges
 
 The actual rational solutions biject with the positive factor pairs
 $(x-n)(y-n)=n^2$, ordered by size. The swap involution has precisely the
@@ -50,7 +53,7 @@ $(x,y)=(2n,2n)$.
 The canonical Mathlib Dirichlet inverse satisfies the stated recursion, whose
 positive-domain solution is unique. No value at zero occurs in 'claim'.
 
-## Finite exponent-box proof
+### Finite exponent-box proof
 
 Write $f(p)=v_p(n)$. Positive divisors correspond to the complete finite box
 $0\le v\le f$, and fourth-power-free divisors impose $v(p)\le3$. Hence
@@ -99,17 +102,42 @@ Therefore $b=a*g$ on every positive index. The exact inverse recursion then
 cancels $g$ and gives $a=b*c$, the unchanged complete conjecture. Empty
 support gives $n=1$; the original unit-fraction count retains $(2n,2n)$.
 
+## Falsifier
+
+A positive integer at which the two sides of the displayed convolution differ,
+with the exact counts and inverse recursion above, would falsify the conjecture.
+
+## Evidence
+
+### Source and literature boundary
+
+The primary conjecture is the A252505 FORMULA line quoted in
+Library/PrimeForms/oeis2026a252505.md. Preregistration:
+https://github.com/the-omega-institute/trureturing/issues/27491.
+The accepted bounded source and literature screen supplies the attribution
+and unproved-in-searched-scope premise.
+The attribution is The OEIS Foundation Inc.; the source is cited under the
+`citation-only` license recorded in Library/PrimeForms/oeis2026a252505.md.
+
 The resolving declaration is
 `D5.S3.Arith.Divisors.OeisA252505FourthPowerFreeConvolution.result : claim`.
 It assumes no multiplicativity of $b$ or $g$. The parity argument stays over
 the integers before passing to the finite ring of characteristic four.
 
+The exact inverse recursion and its positive-domain uniqueness supply the
+source identification; neither is a separate retained mathematical endpoint.
+No fresh transient verification is asserted here.
+
+## Triage
+
 The proposed admission basis is `open-problem-resolution` under #27491.
 The retained public theorem targets are `unit_fraction_count`,
 `unit_fraction_divisor_formula` and `result`. The result has a validated source
-mirror. The two counting theorems retain unfinished source-family audits in
-https://github.com/the-omega-institute/trureturing/issues/27506.
-The exact inverse recursion and its positive-domain uniqueness supply the
-source identification; neither is a separate retained mathematical endpoint.
-No fresh transient verification is asserted here. The parity bridge `g_gamma` is content on the live
+mirror.
+The parity bridge `g_gamma` is content on the live
 derivation path of `result`; no auxiliary claim of separate novelty is made.
+
+## ASSUMED-UNVERIFIED
+
+Worldwide openness and originality outside the accepted bounded source and
+literature screen are ASSUMED-UNVERIFIED.
