@@ -931,7 +931,7 @@ theorem actual_shifted_supplier_identity (p : n → ℝ) (hp : ∀ i, 0 < p i)
     norm_num [actualCoeff, RpowPencilTaylor.jetCoeff, pencilDirection,
     balanceP_rpow hp, rootP, X, W, schurFirst, Matrix.trace_add,
     Matrix.trace_sub, Matrix.trace_smul, Complex.real_smul,
-    Complex.add_re, Complex.sub_re, Complex.mul_re]
+    Complex.add_re, Complex.sub_re, Complex.mul_re] <;> rfl
 
 #print axioms actual_shifted_supplier_identity
 
