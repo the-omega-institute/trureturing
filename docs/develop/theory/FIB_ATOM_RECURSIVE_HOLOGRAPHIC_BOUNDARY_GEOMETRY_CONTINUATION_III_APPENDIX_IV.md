@@ -2227,3 +2227,174 @@ $$
 because the nonconstant $q$ has nonzero spectral mass on $(0,\infty)$ and the displayed multiplier is strictly positive there. This proves the strict inequality in (187.1). The final claim follows from Proposition 185.1: its alternative $d\ne b$ forces $r=0$ and $s=1$, hence $[v]=0$. $\square$
 
 The common-first in-span slice is therefore fully rigid for the retained source: its only exact tensor-preserving displacement is the baseline class. Out-of-span tensor-preserving lifts, the radical alternative, arbitrary partitions, $F_{64}$, $H43$, SRS$\text{-}20$, physical succession and Lean/kernel formalization remain open.
+
+## 188. A source-span witness removes the radical alternative
+
+The radical alternative of Section 179 can be tested using the source label itself. This requires no pointwise preservation of the terminal pair and no chosen representation of the candidate partition beyond its span.
+
+**Proposition 188.1 (source-span radical triviality).** Retain Definition 175.1 and Definition 179.1. Let $u$ be a bounded pointwise partition whose sixty-four residuals all vanish. Suppose that there are real coefficients $(\gamma_y)_{y\in\mathcal L}$ such that
+
+$$
+q=\sum_{y\in\mathcal L}\gamma_yu_y
+$$
+
+as an $m$-class. Then
+
+$$
+\operatorname{Rad}_1(\mathcal W_u)
+\cap\operatorname{Rad}_2(\mathcal W_u)
+\cap\operatorname{Rad}_3(\mathcal W_u)=\{0\}
+$$
+
+as $m$-classes. Consequently, every such full-zero partition has the common-first form
+
+$$
+u_0=u_1=F+v,
+\qquad
+u_3=q-2v,
+\qquad
+u_B=p
+$$
+
+for a bounded real Borel $m$-class $v$ satisfying the pointwise simplex inequalities.
+
+*Proof.* Let $h$ belong to the displayed intersection. By the coefficient hypothesis, both $h$ and $q$ belong to $\mathcal W_u$. The first radical condition, with its two arguments chosen as $h$ and $q$, gives
+
+$$
+0=\mathcal C(h,h,q)=q_{003}(h).
+$$
+
+The source-specific energy identity retained in (175.4) gives
+
+$$
+q_{003}(h)=c\,\|T_{d/2}(gh)\|_2^2.
+$$
+
+Since $c>0$, this vanishes only when $h=0$ as an $m$-class. The common intersection is therefore trivial, and Corollary 179.3 gives the stated common-first representation. $\square$
+
+The span hypothesis is weaker than a prescribed pointwise identity for $u_3+u_B$: the latter, together with the partition sum, supplies $q$ in $\mathcal W_u$, while Proposition 188.1 uses only the resulting $m$-class witness. Thus any full-zero partition with a source-span witness has no radical escape, even when its terminal labels have no retained affine channel.
+
+## 189. Three source-propagation modes exclude a class of out-of-span lifts
+
+Once the source-span witness has reduced a full-zero partition to the common-first slice, the three slots containing two constant labels impose orthogonality to the first three source-propagation modes. The source density lemma makes those modes linearly independent.
+
+**Proposition 189.1 (three-mode source-orbit exclusion).** Retain Definition 175.1. Let
+
+$$
+u_0=u_1=F+v,
+\qquad
+u_3=q-2v,
+\qquad
+u_B=p
+$$
+
+be a pointwise legal common-first tuple with bounded real Borel representative $v$. If all sixty-four residuals vanish and
+
+$$
+[v]\in
+\operatorname{span}_{\mathbb R}
+\{Pq,P^2q,P^3q\}
+$$
+
+as an $m$-class, then $[v]=0$.
+
+*Proof.* The three residuals with two $B$ labels give
+
+$$
+\begin{aligned}
+0=\Delta(u)_{0BB}&=\mathcal C(v,p,p),\\
+0=\Delta(u)_{B0B}&=\mathcal C(p,v,p),\\
+0=\Delta(u)_{BB0}&=\mathcal C(p,p,v).
+\end{aligned}
+$$
+
+Because $p$ is constant and $Pp=p$, self-adjointness of $P$ rewrites these equations as
+
+$$
+\langle g,v\rangle_m=0,
+\qquad
+\langle Pg,v\rangle_m=0,
+\qquad
+\langle P^2g,v\rangle_m=0.
+\tag{189.1}
+$$
+
+The source propagation identity $Pq=cg$ changes (189.1) into
+
+$$
+\langle Pq,v\rangle_m
+=\langle P^2q,v\rangle_m
+=\langle P^3q,v\rangle_m
+=0.
+\tag{189.2}
+$$
+
+The three vectors in (189.2) are linearly independent. Indeed, a linear relation among them would, after substituting $Pq=cg$, give a nonzero polynomial relation $r(P)g=0$ of degree at most two, contradicting Lemma 169.1. Since $v$ lies in their span and is orthogonal to each of them, its Gram matrix is positive definite and $[v]=0$. $\square$
+
+This excludes every common-first displacement in the three-mode source orbit, including any such displacement outside $\operatorname{span}\{p,F\}$. The remaining out-of-span directions lie outside this finite source-mode plane and still require the full nonlinear common-first equations; the radical alternative without a source-span witness, arbitrary partitions, $F_{64}$, $H43$, SRS$\text{-}20$, physical succession and Lean/kernel formalization remain open.
+
+## 190. The candidate source anchor identifies the radical image
+
+Even when the candidate span does not contain the original source label $q$, the full-zero tensor transports a canonical source anchor into that span. Its positive quadratic form gives an exact description of the radical alternative.
+
+**Proposition 190.1 (candidate source anchor and radical exactness).** Retain Definition 175.1 and Definition 179.1. Let $u$ be a bounded pointwise partition whose sixty-four residuals all vanish. For a real label vector $a=(a_y)_{y\in\mathcal L}$ write
+
+$$
+F_a=\sum_{y\in\mathcal L}a_yf_y,
+\qquad
+H_a=\sum_{y\in\mathcal L}a_yu_y,
+$$
+
+and define the candidate source anchor
+
+$$
+Q_u=-2u_0+3u_B.
+\tag{190.1}
+$$
+
+Then, for all real label vectors $a,b$,
+
+$$
+\mathcal C(H_a,H_b,Q_u)
+=\mathcal C(F_a,F_b,q),
+\tag{190.2}
+$$
+
+and in particular
+
+$$
+\mathcal C(H_a,H_a,Q_u)
+=c\,\|T_{d/2}(gF_a)\|_2^2.
+\tag{190.3}
+$$
+
+Consequently,
+
+$$
+\ker(a\mapsto H_a)\subseteq\ker(a\mapsto F_a),
+\tag{190.4}
+$$
+
+and the common radical is exactly the image of the baseline relation space:
+
+$$
+\operatorname{Rad}_1(\mathcal W_u)
+\cap\operatorname{Rad}_2(\mathcal W_u)
+\cap\operatorname{Rad}_3(\mathcal W_u)
+=\{H_a:F_a=0\}.
+\tag{190.5}
+$$
+
+*Proof.* The baseline coefficient vector $\gamma=(-2,0,0,3)$ satisfies
+
+$$
+F_\gamma=-2F+3p=q,
+$$
+
+so $H_\gamma=Q_u$. Contracting the zero residual tensor with the three coefficient vectors $a,b,\gamma$ gives (190.2). Taking $a=b$ and applying the source-specific identity in (175.4) to the bounded class $F_a$ gives (190.3).
+
+If $H_a=0$, then (190.3) is zero. The strictness of the same source energy for a nonzero $m$-class forces $F_a=0$, proving (190.4).
+
+For the inclusion from right to left in (190.5), Proposition 179.2 applies to every $a$ with $F_a=0$. Conversely, let $h$ belong to the common radical. Since $h\in\mathcal W_u$, choose $a$ with $h=H_a$. The anchor $Q_u$ belongs to $\mathcal W_u$, so the first radical condition gives $\mathcal C(h,h,Q_u)=0$. Equation (190.3) then forces $F_a=0$, placing $h$ in the right-hand side of (190.5). $\square$
+
+Thus the radical alternative is not an unstructured loss of rank: it is precisely the image, under the candidate label map, of the two baseline linear relations. Proposition 188.1 is recovered whenever $q$ itself belongs to $\mathcal W_u$, because the positive source form can then be evaluated with $q$ as the third radical argument. Without that span witness, (190.5) is the exact remaining algebraic boundary; arbitrary partitions, the out-of-span directions outside the source-mode plane, $F_{64}$, $H43$, SRS$\text{-}20$, physical succession and Lean/kernel formalization remain open.
