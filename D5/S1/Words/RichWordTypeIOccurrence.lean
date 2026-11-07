@@ -107,38 +107,31 @@ private theorem substituted_prefix (i : ℕ) :
       List.take_range, Nat.min_eq_left hg]
   exact factor_of_prefix (show subst phi (factor word 0 i) <+: image phi (i+2) 0 from
     hp.flatMap phi)
-
 private theorem boundary_zero : boundary 0 = 0 := by simp [boundary, factor, subst]
-
 private theorem boundary_succ (i : ℕ) :
     boundary (i+1) = boundary i + (phi (word i)).length := by
   simp only [boundary, factor_add, subst_append, List.length_append]
   simp [factor, subst]
-
 private theorem boundary_strict : StrictMono boundary := by
   apply strictMono_nat_of_lt_succ
   intro i
   rw [boundary_succ]
   have := phi_pos (word i)
   omega
-
 private theorem block_factor (i : ℕ) :
     factor word (boundary i) (phi (word i)).length = phi (word i) := by
   have h := substituted_prefix (i+1)
   rw [boundary_succ, factor_add, substituted_prefix i] at h
   rw [factor_add, subst_append] at h
   simpa [factor, subst] using List.append_cancel_left h
-
 private theorem block_letter (i j : ℕ) (hj : j < (phi (word i)).length) :
     word (boundary i+j) = (phi (word i))[j] := by
   have h := congrArg (fun s : Word => s[j]?) (block_factor i)
   simpa [List.getElem?_eq_getElem, factor_get, factor_len, hj] using h
-
 private theorem at_boundary (i : ℕ) : word (boundary i) = 0 := by
   have h := block_letter i 0 (phi_pos _)
   unfold phi at h
   split_ifs at h <;> simpa using h
-
 private theorem boundary_window (q : ℕ) : ∃ i, boundary i ≤ q ∧ q < boundary (i+1) := by
   induction q with
   | zero =>
@@ -152,7 +145,6 @@ private theorem boundary_window (q : ℕ) : ∃ i, boundary i ≤ q ∧ q < boun
     · exact ⟨i, by omega, h⟩
     · have := boundary_strict (show i+1 < i+1+1 by omega)
       exact ⟨i+1, by omega, by omega⟩
-
 private theorem zero_boundary (q : ℕ) : word q = 0 ↔ ∃ i, q = boundary i := by
   constructor
   · intro hz
@@ -177,11 +169,9 @@ private theorem zero_boundary (q : ℕ) : word q = 0 ↔ ∃ i, q = boundary i :
         rw [hq, hb] at hz
         norm_num [phi, ha] at hz
   · rintro ⟨i, rfl⟩; exact at_boundary i
-
 private theorem boundary_add (i n : ℕ) :
     boundary (i+n) = boundary i + (subst phi (factor word i n)).length := by
   simp only [boundary, factor_add, zero_add, subst_append, List.length_append]
-
 private theorem factor_subst (i n : ℕ) :
     factor word (boundary i) (subst phi (factor word i n)).length =
       subst phi (factor word i n) := by
@@ -190,7 +180,6 @@ private theorem factor_subst (i n : ℕ) :
   rw [factor_add, subst_append] at h
   simp only [zero_add] at h
   exact List.append_cancel_left h
-
 /-- Actual occurrence, including position zero and overlapping windows. -/
 def Occ (s : Word) (q : ℕ) : Prop := factor word q s.length = s
 
