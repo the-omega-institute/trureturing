@@ -84,6 +84,10 @@ $$\forall \alpha: \operatorname{Type}, [\operatorname{Fintype}\left(\alpha\right
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/Complexity/SahasrabudheEvenAdditiveComplexityMorphism.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/sahas2015` (proved) by `D5/S1/Words/Complexity/SahasrabudheEvenAdditiveComplexityMorphism.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"sahas2015","declaration_gid":"D5/S1/Words/Complexity/SahasrabudheEvenAdditiveComplexityMorphism.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Julian Sahasrabudhe (2015). *Sturmian Words and Constant Additive Complexity*. DOI: [10.5281/zenodo.10456215](https://doi.org/10.5281/zenodo.10456215). URL: <https://math.colgate.edu/~integers/p30/p30.pdf>.
