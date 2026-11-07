@@ -246,7 +246,7 @@ The canonical mathematical source is
 Its retained source unit has base
 `5f96fce7d1fb35e25954e40160c2be097126744c` and accepted tip
 `3d569f7e3b970b3d5fcfc2455c1864beff1dbe13`. The public delivery integrates
-dev `223bb43c96ad823b21d910d5d2cb77aa8bfe53ed`; the complete publication tip
+dev `85dab17712f6bfa756241985ccd1ea01a31e46f5`; the complete publication tip
 and cumulative diff are identified by the delivery PR. The frozen module is
 addressed by
 `Golden/Frozen/state/D5/S3/ArithSums/SchulteArbitraryGcdQuotientConvolution.lean.json`.
