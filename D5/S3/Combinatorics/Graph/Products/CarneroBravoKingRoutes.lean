@@ -339,24 +339,18 @@ def routeData : Array RouteLiteral := #[
   ⟨163, 164, 49, [(7452, 468), (7452, 466), (7454, 466), (7454, 464), (7452, 464), (7452, 444), (7332, 444)]⟩,
   ⟨164, 165, 53, [(7332, 444), (7332, 442), (7334, 442), (7334, 440), (7332, 440), (7332, 420), (7200, 420)]⟩
 ]
-
 abbrev Original := ↥oldLabels
 abbrev Edge := Fin routeData.size
-
 def route (e : Edge) : RouteLiteral := routeData[e.val]
-
 theorem original_card : Fintype.card Original = 141 := by decide
 theorem edge_card : Fintype.card Edge = 178 := by decide
-
 theorem endpoint_labels (e : Edge) :
     (route e).left ∈ oldLabels ∧ (route e).right ∈ oldLabels := by
   have h : ∀ e : Edge, (route e).left ∈ oldLabels ∧ (route e).right ∈ oldLabels := by decide
   exact h e
-
 theorem positive_k (e : Edge) : 0 < (route e).k := by
   have h : ∀ e : Edge, 0 < (route e).k := by decide
   exact h e
-
 theorem distinct_endpoints (e : Edge) : (route e).left ≠ (route e).right := by
   have h : ∀ e : Edge, (route e).left ≠ (route e).right := by decide
   exact h e
@@ -574,6 +568,8 @@ private def kingChecked (target proof : Expr) : MetaM Expr := do
   return mkConst (← withOptions (Lean.Elab.async.set · false) <| mkAuxLemma [] target proof)
 open Lean Meta in
 private def kingListProof (target : Expr) : MetaM Expr := do
+  let target ← instantiateMVars target
+  if target.hasMVar || target.hasFVar then throwError "Expected a closed equality"
   let some (_, lhs, rhs) := target.eq? | throwError "Expected list equality"
   let ty ← whnf (← inferType lhs)
   unless ty.isAppOfArity ``List 1 do throwError "Expected list type"
@@ -615,6 +611,8 @@ private def kingListProof (target : Expr) : MetaM Expr := do
   return proof
 open Lean Meta in
 private def kingReductionProof (target : Expr) : MetaM Expr := do
+  let target ← instantiateMVars target
+  if target.hasMVar || target.hasFVar then throwError "Expected a closed equality"
   let some (_, lhs, rhs) := target.eq? | throwError "Expected equality"
   if lhs.isAppOfArity ``List.all 3 then
     let args := lhs.getAppArgs
@@ -648,6 +646,8 @@ private theorem checked_fill_append (key : RawVertex → List Bool) (xs ys : Lis
       simpa only [List.cons_append, Occupancy.fill, h, Option.bind_some] using ih t' hx
 open Lean Meta in
 private unsafe def kingFillProof (target : Expr) : MetaM Expr := do
+  let target ← instantiateMVars target
+  if target.hasMVar || target.hasFVar then throwError "Expected a closed equality"
   let some (_, lhs, rhs) := target.eq? | throwError "Expected fill equality"
   let mut input := lhs
   if !input.isAppOfArity ``Occupancy.fill 4 then
