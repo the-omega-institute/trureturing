@@ -1,0 +1,17 @@
+**Theorem 15.2 (actual energy, microscopic and full-mass macroscopic equivalence).** For every prescribed sequence $s_n\downarrow0$, and for every actual normalized complex ground-state choice in the unchanged $D(S)$, the following three assertions are equivalent along that same sequence:
+
+$$
+\begin{aligned}
+&r_{s_n}\longrightarrow r_C;\\
+&F_{s_n}\rightharpoonup0\quad\text{in }L^2(\mathbb R^4);\\
+&\inf_{\theta\in\mathbb R}
+ \|\mathcal D_{g_{s_n}}\psi_{s_n}-e^{i\theta}\phi h_C\|_2
+ \longrightarrow0.
+\end{aligned}
+\tag{15.6}
+$$
+
+Whenever they hold, $F_{s_n}\to0$ in $L^2(K)$ for every compact $K$, and the energy limits in (10.3) hold. These are sequencewise equivalences, without a response-sign hypothesis or an assertion that any of the three occurs at a given response-zero datum.
+
+Proof. Suppose $r_{s_n}\to r_C$. Equations (13.3) and (15.5) make the energy defect tend to zero. Every subsequence of the unit vectors $F_{s_n}$ has a weakly convergent further subsequence; P Theorem 90.1 identifies its limit as $cp$. Theorem 15.1 forces $c=0$. Thus all weak cluster points are zero, and the full sequence converges weakly to zero: otherwise some fixed $L^2$ test has a pairing bounded away from zero on a subsequence, contradicting a further weak limit zero. This proves the new first-to-second implication using the quantitative finite-$s$ comparison. The second assertion implies the first and third by Theorem 10.2; the third implies the second by Theorem 11.1. The local conclusion is P Theorem 90.1, or Theorem 11.1 after the macroscopic implication. No form convergence is deduced from an $L^2$ norm comparison. $\square$
+

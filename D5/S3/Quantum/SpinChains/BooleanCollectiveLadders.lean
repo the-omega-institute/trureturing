@@ -58,7 +58,7 @@ private lemma site_commute {N : ℕ} (i j : Fin N) (h : i ≠ j)
   congr 1
   funext k
   by_cases hi : k = i <;> by_cases hj : k = j <;> simp_all
-private lemma site_entry {N : ℕ} (j : Fin N) (A : Matrix (Fin 2) (Fin 2) ℂ)
+lemma site_entry {N : ℕ} (j : Fin N) (A : Matrix (Fin 2) (Fin 2) ℂ)
     (x y : Configuration N) :
     site N j A x y = A (x j) (y j) * ∏ i ∈ Finset.univ.erase j,
       (if x i = y i then (1 : ℂ) else 0) := by
@@ -524,12 +524,12 @@ theorem result (S : ℕ) :
   · intro t t' v w hv hw
     exact ⟨primitive_orthogonal hv hw, fun hzero q r =>
       inner_power_orthogonal hv hw hzero q r⟩
-private def occupiedSet {N : ℕ} (x : Configuration N) : Finset (Fin N) :=
+def occupiedSet {N : ℕ} (x : Configuration N) : Finset (Fin N) :=
   Finset.univ.filter fun i => x i = 0
-private lemma occupiedSet_card {N : ℕ} (x : Configuration N) :
+lemma occupiedSet_card {N : ℕ} (x : Configuration N) :
     (occupiedSet x).card = occupancy x := by
   simp only [occupiedSet, occupancy, Finset.card_filter]
-private def configurationEquiv (N : ℕ) : Configuration N ≃ Finset (Fin N) where
+def configurationEquiv (N : ℕ) : Configuration N ≃ Finset (Fin N) where
   toFun := occupiedSet
   invFun s i := if i ∈ s then 0 else 1
   left_inv x := by
@@ -540,7 +540,7 @@ private def configurationEquiv (N : ℕ) : Configuration N ≃ Finset (Fin N) wh
   right_inv s := by
     ext i
     simp [occupiedSet]
-private def rankConfigurationEquiv (N t : ℕ) :
+def rankConfigurationEquiv (N t : ℕ) :
     {x : Configuration N // occupancy x = t} ≃ {s : Finset (Fin N) // s.card = t} where
   toFun x := ⟨configurationEquiv N x, by simpa [configurationEquiv, occupiedSet_card] using x.property⟩
   invFun s := ⟨(configurationEquiv N).symm s, by

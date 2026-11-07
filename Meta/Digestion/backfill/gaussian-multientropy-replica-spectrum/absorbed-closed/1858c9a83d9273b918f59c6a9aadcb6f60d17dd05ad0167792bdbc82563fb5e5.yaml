@@ -1,0 +1,12 @@
+fingerprints:
+  raw_sha256: sha256:1858c9a83d9273b918f59c6a9aadcb6f60d17dd05ad0167792bdbc82563fb5e5
+  normalized_sha256: sha256:1858c9a83d9273b918f59c6a9aadcb6f60d17dd05ad0167792bdbc82563fb5e5
+cas_ref: sha256:1858c9a83d9273b918f59c6a9aadcb6f60d17dd05ad0167792bdbc82563fb5e5
+coverage_gids:
+  - gid: D5/S3/Quantum/Entanglement/GaussianMultiEntropy/ReplicaThreeMajorization.schur_comparison
+    target_statement_id: sha256:7ddf9490d05ee65354006a8cd12ebafd0e7dd6e3168c9a5e7f78de400c8f9197
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - 4381d2c5ead71a6ab92276749e4601bc8fffe0758c9accf3fd8ef8843123a916
+    - 7039e5139c24b31c86d53e6a49559151a3209736b450f327c1eb748059d17e5c

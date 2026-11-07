@@ -4848,3 +4848,153 @@ The unrestricted-budget $H_{\min}$ remains a separate open optimum.
 [KN15]: https://doi.org/10.3233/FI-2012-695
 
 ## 追加锚（本行以下为增补区）
+
+## 19. The first nine-position late-gap skeleton
+
+**Proposition 19.1 (the central first late-gap pair skeleton).** Let
+$K=4$, $L=6$, and $n=K+L-1=9$. Suppose a consecutive
+common-support gap is $B=(2,7)$. If an installed state $q\in Q_B$
+hosts two distinct cells of $V_B$, orient the cells as
+$p=(h,z)$ and $p'=(g,w)$ with $h<g$. Then
+
+$$
+(h,g)=(0,3),\qquad z\in\{3,4,5\},\qquad
+w\in\{0,1,2\},\qquad z-w\ge3.
+$$
+
+Consequently the possible unordered pairs are exactly
+
+$$
+\begin{gathered}
+(0,3)\!\sim\!(3,0),\qquad
+(0,4)\!\sim\!(3,0),\ (0,4)\!\sim\!(3,1),\\
+(0,5)\!\sim\!(3,0),\ (0,5)\!\sim\!(3,1),\ (0,5)\!\sim\!(3,2).
+\end{gathered}
+\tag{SI.151}
+$$
+
+No such state can host three cells. The simple graph of the six
+allowed pairs has a unique cycle, the four-cycle on
+
+$$
+(0,4),\ (0,5),\ (3,0),\ (3,1).
+\tag{SI.152}
+$$
+
+**Proof.** Apply the right-cut separation (SI.41) with $b=7$:
+for two cells in this gap,
+
+$$
+ g-h\ge \max(2,9-7+1)=3,
+ \qquad z-w\ge3.
+$$
+
+Since $0\le h<g\le3$, the first inequality forces
+$h=0$ and $g=3$. The interior condition $2<h+z<7$ then gives
+$z\in\{3,4,5\}$, while $2<g+w<7$ gives $w\in\{0,1,2,3\}$.
+The second separation inequality excludes $w=3$ and leaves exactly the
+six pairs in (SI.151).
+
+A third cell at the same host would have to differ by at least three
+in the hit coordinate from each of the two displayed cells, by (SI.7)
+and (SI.41). There are only the hit rows $0$ and $3$ available, and
+two distinct cells in one row have hit difference zero. Hence a host
+contains at most one cell from each row and therefore at most two cells.
+
+Write $A_j=(0,j)$ for $j=3,4,5$ and $B_j=(3,j)$ for $j=0,1,2$.
+The allowed-pair graph has edges
+$A_3B_0$, $A_4B_0$, $A_4B_1$, $A_5B_0$,
+$A_5B_1$, and $A_5B_2$. The vertices $A_3$ and $B_2$ have degree one;
+the remaining four vertices induce the single cycle
+$A_4B_0A_5B_1A_4$. No other cycle is possible. \(\square\)
+
+This proposition is a finite specialization of the necessary sharing
+separations; it does not realize any of the six pairs by a stationary
+graph. In particular, the surviving four-cycle leaves open the
+possibility of duplicate pair hosts, and the fixed-successor law
+(SI.8), all-history cross intersections, and the other late gaps
+remain to be combined before (SI.59) can be settled for the exact
+$n=9,k=4$ successor.
+
+## 追加锚（本行以下为增补区）
+
+## 20. Strict compensation at the first late endpoint
+
+**Theorem 20.1 (parameter-uniform first-late-endpoint margin).** Retain
+one complete graph of Definitions 1.2 and 9.1, with the original distinct
+costs $c_i=s_i+4$, $W=\sum_i c_i$, correct termination on every Boolean
+input and both pointwise caps $t_P(\theta)\le n$, $J_P(\theta)\le W$.
+Let $n=K+L-1$, $3\le K\le L$, and let $B=(a,L+1)$ be a gap
+between consecutive depths in the complete cut list (SI.28), of span
+$L+1-a\ge5$. Then, on this same installed graph,
+
+$$
+D_B\le L-\max(a+1,K-1),\qquad
+E_B-D_B\ge\max(1,K-1-a)>0.
+\tag{SI.153}
+$$
+
+**Proof.** For any distinct cells $(h,z),(g,w)\in V_B$ sharing a
+host, orient them by $h<g$. Lemma 10.2, (SI.41), gives
+$g-h,z-w\ge\max(2,n-(L+1)+1)=K-1$.
+Since $0\le h<g\le K-1$, necessarily $h=0$ and $g=K-1$.
+Only rows $0,K-1$ can participate in sharing, and no two distinct
+cells in one row share a host. Every host therefore has at most two
+cell incidences, so each shared state contributes exactly one to $D_B$.
+
+Its lower-hit endpoint is an axis cell $(0,z)$. Since $w\ge0$ and
+$z-w\ge K-1$, while membership in $V_B$ requires $a<z<L+1$,
+its integer zero count lies in
+$\{\max(a+1,K-1),\ldots,L-1\}$.
+Theorem 2.2 gives exactly one host at each such axis cell. Mapping a
+shared state to its lower-hit endpoint is therefore injective, even
+when several abstract sharing pairs have that endpoint. There are
+$L-\max(a+1,K-1)$ possible endpoints, proving the first bound.
+
+Every depth $a+1,\ldots,L$ is internal to the consecutive gap and
+hence is not common-support. Definition 9.1 and the diagonal argument
+of Theorem 4.1 give a cell with $a_p\ge2$ on each such diagonal;
+Theorem 2.2 gives $b_p\ge a_p$, so each contributes at least one
+to $E_B$. Thus $E_B\ge L-a$, and
+
+$$
+E_B-D_B\ge (L-a)-\bigl(L-\max(a+1,K-1)\bigr)
+=\max(1,K-1-a)\ge1.
+$$
+
+All incidences used are actual live incidences of the original graph;
+no abstract pair is assumed realizable. $\square$
+
+**Corollary 20.2 (transposition and remaining deficit endpoints).**
+For $3\le L<K$ and a consecutive gap $B=(a,K+1)$ of span at least
+five in the same model,
+
+$$
+D_B\le K-\max(a+1,L-1),\qquad
+E_B-D_B\ge\max(1,L-1-a)>0.
+\tag{SI.154}
+$$
+
+For arbitrary $K,L\ge3$, every positive-deficit long gap has
+$b\ge\max(K,L)+2$. In particular, if $m<KL$, some consecutive
+gap satisfies $b-a\ge5$, $D_B>E_B$ and this stronger endpoint bound.
+
+**Proof.** Complement inputs and interchange both reply labels and
+output terminals. The resulting complete threshold graph has parameters
+$(L,K)$, the same installed states and costs, and exactly the same run
+charges under the input bijection. Supports and cuts are unchanged;
+count cells transpose, preserving $D_B,E_B$. Theorem 20.1 proves
+(SI.154). Lemma 10.2 excludes every endpoint $b\le\max(K,L)$;
+(SI.153) and (SI.154) exclude $b=\max(K,L)+1$ for long gaps.
+Proposition 10.9 supplies a positive-deficit long gap when $m<KL$.
+$\square$
+
+**Proposition 20.3 (the nine-position first-endpoint pool).** In
+Proposition 19.1, $D_{(2,7)}\le3$, $E_{(2,7)}-D_{(2,7)}\ge1$.
+Proof. Substitute $K=4,L=6,a=2$ in (SI.153). $\square$
+
+Theorem 20.1 extends the axis-host argument of [Critical Eight Input Lower Bound, Lemma 3.2](RECURSIVE_RELATIONAL_OBSERVATION_CRITICAL_EIGHT_INPUT_LOWER_BOUND.md) uniformly in the parameters (repo-derived).
+The incidence and cut suppliers are Theorems 2.2, 4.1 and 9.3 and
+Lemma 10.2; the remaining collective comparison is Definition 18.2.
+
+## 追加锚（本行以下为增补区）
