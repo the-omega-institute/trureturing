@@ -124,7 +124,11 @@ theorem actual_selected_image_zero_perm_iff (r : ℕ)
   · intro hp
     subst p
     intro k
-    simpa only [Equiv.Perm.coe_one,Finset.image_id] using selected_literal_zero r k
+    have hm : (selectedMask r k).image (1 : Equiv.Perm (Fin (3*(18*r+12)))) =
+        selectedMask r k := by
+      exact Finset.image_id
+    rw [hm]
+    exact selected_literal_zero r k
 
 /-- The full literal integer-zero family on the original physical labels has
 trivial permutation stabilizer for all r, including r=0. -/

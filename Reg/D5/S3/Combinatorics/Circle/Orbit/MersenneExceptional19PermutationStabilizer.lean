@@ -2,6 +2,8 @@ import D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19PermutationStabiliz
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
 
+/-! # Full-telescope source-bound audits of physical permutation rigidity -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
@@ -49,7 +51,8 @@ private theorem dependence : ObservationalDependence signature actual := by
   refine ⟨⟨0,Equiv.swap (⟨0,by decide⟩ : Fin 36) ⟨1,by decide⟩⟩,
     Sum.inr (Sum.inr (Sum.inr 0)), Sum.inr (Sum.inr (Sum.inr 2)),?_⟩
   norm_num [actual,realize,selectedMask,terminalMask,triple,place,degree,
-    Equiv.swap_apply_def,actualSource,centered,modulus]
+    Finset.image_insert,Finset.image_empty,Equiv.swap_apply_def,
+    actualSource,centered,modulus]
 def family : Registration arena (type_of% (@actual_selected_image_zero_perm_iff)) where
   actual := actual
   bridge := Iff.rfl
