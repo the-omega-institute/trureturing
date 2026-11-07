@@ -2,11 +2,11 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S1.Dynamics.Shadowing;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Topology.Shadowing;
 
 internal sealed class FreeFibreBoundaryDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S1/Dynamics/Shadowing/FreeFibreBoundary.";
+    private const string Prefix = "D5/S3/Topology/Shadowing/FreeFibreBoundary.";
     private static readonly LibraryNoteRef Source =
         LibraryNoteRef.Create("D5/L/Dynamics/peng2026shadowing");
 

@@ -32,7 +32,7 @@ below.
 
 ## Repository formal status
 
-`D5/S1/Dynamics/Shadowing/FreeFibreBoundary` defines the literal universal
+`D5/S3/Topology/Shadowing/FreeFibreBoundary` defines the literal universal
 claim as `claim` and proves `result : ¬ claim`. The witness is a compact
 Hausdorff forward-shadowing source built from the supplied compact open map
 with no zero-dimensional open resolution, a first-disagreement pullback, and
@@ -89,7 +89,7 @@ convergent section are in
 shadowing, and the finite-control one-step extension theorem are in
 `D5/S1/Dynamics/Shadowing/OpenCoreShadowing`. Their declarations retain the
 `D5.S1.Dynamics.Shadowing.FreeFibreBoundary` Lean namespace.
-`D5/S1/Dynamics/Shadowing/FreeFibreBoundary` combines these with marked
+`D5/S3/Topology/Shadowing/FreeFibreBoundary` combines these with marked
 complete graph languages to derive the open resolution contradiction;
 its source-shadowing theorem, resolution-transfer theorem, literal `claim`,
 and `result` remain in that endpoint module.

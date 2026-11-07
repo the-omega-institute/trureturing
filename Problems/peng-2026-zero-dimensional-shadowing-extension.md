@@ -17,7 +17,7 @@ Peng's Question 5.1 asks whether every compact Hausdorff shadowing system
 shadowing system (Y,g). Time is natural, including zero. Neither f nor g is
 assumed invertible or onto; no metrizability or countable-weight condition
 is imposed. Empty X has the solution Y empty. The general assertion is
-refuted by `D5/S1/Dynamics/Shadowing/FreeFibreBoundary.result`.
+refuted by `D5/S3/Topology/Shadowing/FreeFibreBoundary.result`.
 
 ## Motivation
 
@@ -120,7 +120,7 @@ it does not supply the symbolic construction required for a positive answer.
 
 ### Full unrestricted counterexample
 
-`D5/S1/Dynamics/Shadowing/FreeFibreBoundary` defines the original universal
+`D5/S3/Topology/Shadowing/FreeFibreBoundary` defines the original universal
 claim and proves `result : Not claim`. The exported claim quantifies types
 in universe zero with arbitrary topologies and no cardinal bound. The
 resolution-transfer theorem is separately universe-polymorphic.

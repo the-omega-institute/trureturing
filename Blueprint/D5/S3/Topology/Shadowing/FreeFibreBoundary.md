@@ -6,9 +6,9 @@ A generic binary-shift source refutes the unrestricted compact Hausdorff zero-di
 
 **Theorem 1.1 (Finite initial graph presentation).**
 
-Lean statement: `D5/S1/Dynamics/Shadowing/FreeFibreBoundary.finite_initial_presentation_to_graphLanguage`
+Lean statement: `D5/S3/Topology/Shadowing/FreeFibreBoundary.finite_initial_presentation_to_graphLanguage`
 
-*Proof.* Machine-checked in Lean as `D5/S1/Dynamics/Shadowing/FreeFibreBoundary.finite_initial_presentation_to_graphLanguage` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Topology/Shadowing/FreeFibreBoundary.finite_initial_presentation_to_graphLanguage` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -20,9 +20,9 @@ Every set of binary names presented by a finite directed graph, a vertex label, 
 
 **Theorem 1.2 (Marked clopen image language).**
 
-Lean statement: `D5/S1/Dynamics/Shadowing/FreeFibreBoundary.semiconj_clopen_image_is_finiteGraphLanguage`
+Lean statement: `D5/S3/Topology/Shadowing/FreeFibreBoundary.semiconj_clopen_image_is_finiteGraphLanguage`
 
-*Proof.* Machine-checked in Lean as `D5/S1/Dynamics/Shadowing/FreeFibreBoundary.semiconj_clopen_image_is_finiteGraphLanguage` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Topology/Shadowing/FreeFibreBoundary.semiconj_clopen_image_is_finiteGraphLanguage` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -34,9 +34,9 @@ If T shadows and phi is a continuous shift semiconjugacy into binary names, then
 
 **Theorem 1.3 (Convergent section restriction).**
 
-Lean statement: `D5/S1/Dynamics/Shadowing/FreeFibreBoundary.finiteGraphLanguage_section_isClopen`
+Lean statement: `D5/S3/Topology/Shadowing/FreeFibreBoundary.finiteGraphLanguage_section_isClopen`
 
-*Proof.* Machine-checked in Lean as `D5/S1/Dynamics/Shadowing/FreeFibreBoundary.finiteGraphLanguage_section_isClopen` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Topology/Shadowing/FreeFibreBoundary.finiteGraphLanguage_section_isClopen` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -48,9 +48,9 @@ For the first-disagreement convergent section S0 consisting of the generic name 
 
 **Theorem 1.4 (Free-fibre source shadowing).**
 
-Lean statement: `D5/S1/Dynamics/Shadowing/FreeFibreBoundary.freeFibreSource_hasShadowing`
+Lean statement: `D5/S3/Topology/Shadowing/FreeFibreBoundary.freeFibreSource_hasShadowing`
 
-*Proof.* Machine-checked in Lean as `D5/S1/Dynamics/Shadowing/FreeFibreBoundary.freeFibreSource_hasShadowing` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Topology/Shadowing/FreeFibreBoundary.freeFibreSource_hasShadowing` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -62,9 +62,9 @@ Given a compact Hausdorff continuous open onto map p:T to the one-point compacti
 
 **Theorem 1.5 (A hypothetical cover forces an open resolution).**
 
-Lean statement: `D5/S1/Dynamics/Shadowing/FreeFibreBoundary.freeFibre_cover_forces_resolution`
+Lean statement: `D5/S3/Topology/Shadowing/FreeFibreBoundary.freeFibre_cover_forces_resolution`
 
-*Proof.* Machine-checked in Lean as `D5/S1/Dynamics/Shadowing/FreeFibreBoundary.freeFibre_cover_forces_resolution` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Topology/Shadowing/FreeFibreBoundary.freeFibre_cover_forces_resolution` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -76,9 +76,9 @@ For every compact Hausdorff zero-dimensional shadowing system (Y,tau), every con
 
 **Definition 1.6 (Peng's unrestricted Question 5.1).**
 
-Lean statement: `D5/S1/Dynamics/Shadowing/FreeFibreBoundary.claim`
+Lean statement: `D5/S3/Topology/Shadowing/FreeFibreBoundary.claim`
 
-*Formalization.* `D5/S1/Dynamics/Shadowing/FreeFibreBoundary.claim` (`✓ std3`).
+*Formalization.* `D5/S3/Topology/Shadowing/FreeFibreBoundary.claim` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -92,11 +92,11 @@ For every compact Hausdorff space X with a continuous forward map f and finite-o
 
 $$\neg claim$$
 
-*Proof.* Machine-checked in Lean as `D5/S1/Dynamics/Shadowing/FreeFibreBoundary.result` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Topology/Shadowing/FreeFibreBoundary.result` (`✓ std3`). ∎
 
-*Resolves.* `Problems/peng-2026-zero-dimensional-shadowing-extension` (refuted) by `D5/S1/Dynamics/Shadowing/FreeFibreBoundary.result`.
+*Resolves.* `Problems/peng-2026-zero-dimensional-shadowing-extension` (refuted) by `D5/S3/Topology/Shadowing/FreeFibreBoundary.result`.
 
-<!-- scribe-open-problem-resolution-v1 {"problem_slug":"peng-2026-zero-dimensional-shadowing-extension","declaration_gid":"D5/S1/Dynamics/Shadowing/FreeFibreBoundary.result","resolution_kind":"refuted"} -->
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"peng-2026-zero-dimensional-shadowing-extension","declaration_gid":"D5/S3/Topology/Shadowing/FreeFibreBoundary.result","resolution_kind":"refuted"} -->
 
 *Source.* Repository-derived.
 
@@ -108,13 +108,13 @@ Use the supplied compact Hausdorff continuous open surjection p:T to the one-poi
 
 ## References
 
-- Truth anchor: `D5/S1/Dynamics/Shadowing/FreeFibreBoundary.claim`
-- Truth anchor: `D5/S1/Dynamics/Shadowing/FreeFibreBoundary.finiteGraphLanguage_section_isClopen`
-- Truth anchor: `D5/S1/Dynamics/Shadowing/FreeFibreBoundary.finite_initial_presentation_to_graphLanguage`
-- Truth anchor: `D5/S1/Dynamics/Shadowing/FreeFibreBoundary.freeFibreSource_hasShadowing`
-- Truth anchor: `D5/S1/Dynamics/Shadowing/FreeFibreBoundary.freeFibre_cover_forces_resolution`
-- Truth anchor: `D5/S1/Dynamics/Shadowing/FreeFibreBoundary.result`
-- Truth anchor: `D5/S1/Dynamics/Shadowing/FreeFibreBoundary.semiconj_clopen_image_is_finiteGraphLanguage`
-- Dependency: [D5/S1/Dynamics/Shadowing/FiniteObservationSofic](FiniteObservationSofic.md)
-- Dependency: [D5/S1/Dynamics/Shadowing/OpenCoreShadowing](OpenCoreShadowing.md)
-- Dependency: [D5/S3/Topology/AlmostDisjoint/AdaptiveRefinementCounterexample](../../../S3/Topology/AlmostDisjoint/AdaptiveRefinementCounterexample.md)
+- Truth anchor: `D5/S3/Topology/Shadowing/FreeFibreBoundary.claim`
+- Truth anchor: `D5/S3/Topology/Shadowing/FreeFibreBoundary.finiteGraphLanguage_section_isClopen`
+- Truth anchor: `D5/S3/Topology/Shadowing/FreeFibreBoundary.finite_initial_presentation_to_graphLanguage`
+- Truth anchor: `D5/S3/Topology/Shadowing/FreeFibreBoundary.freeFibreSource_hasShadowing`
+- Truth anchor: `D5/S3/Topology/Shadowing/FreeFibreBoundary.freeFibre_cover_forces_resolution`
+- Truth anchor: `D5/S3/Topology/Shadowing/FreeFibreBoundary.result`
+- Truth anchor: `D5/S3/Topology/Shadowing/FreeFibreBoundary.semiconj_clopen_image_is_finiteGraphLanguage`
+- Dependency: [D5/S1/Dynamics/Shadowing/FiniteObservationSofic](../../../S1/Dynamics/Shadowing/FiniteObservationSofic.md)
+- Dependency: [D5/S1/Dynamics/Shadowing/OpenCoreShadowing](../../../S1/Dynamics/Shadowing/OpenCoreShadowing.md)
+- Dependency: [D5/S3/Topology/AlmostDisjoint/AdaptiveRefinementCounterexample](../AlmostDisjoint/AdaptiveRefinementCounterexample.md)
