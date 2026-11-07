@@ -1,0 +1,77 @@
+**定理 11.2（实际路径交集、有限证书与泄漏下界）。**固定一份原输入 $\xi\in\mathfrak C_{\rm menu}\cap\mathfrak C_S$ 及一份实际参考／记录闭合。由定理 1.5、1.6 得
+
+$$
+\Sigma=\Sigma_\xi\succeq0,\qquad \Sigma=S\Sigma S,\qquad
+\operatorname{Tr}\Sigma=w\ge0.
+\tag{11.3}
+$$
+
+在此输入和闭合上，考虑所有实际合法、已由实际事件接口校准的酉路径。路径保留程序、类型和历史，不能只按可见矩阵取商。具体地，实际供应定义 9.6–9.8 的路径由定理 9.10、9.11 取得下式；若使用命题 10.2 的源校准，须已将同一路径的全部所用探针、实际完整坐标分区及源到模式接口按同一标尺绑定，并只在该命题已覆盖的实际向量／实际混合准备域使用相应结论。未经实际接口证明的矩阵路径不计为校准路径。按物理顺序置
+
+$$
+K_v=k_{\gamma_m}\cdots k_{\gamma_1},\qquad
+\Sigma_v=K_v\Sigma K_v^\ast,\qquad
+\operatorname{Tr}\Sigma_v=w.
+\tag{11.4}
+$$
+
+$\Sigma_v$ 表示该输出实际探针及坐标分区的质量；若端口另有原全菜单，其矩阵由同一实际探针的分离性与此矩阵一致。令 $\mathcal F_\xi$ 为上述**全部**实际合法、已校准且满足 $I_S(\xi,v)$ 的路径，不选择替代域。置
+
+$$
+L=\mathcal S\cap\bigcap_{v\in\mathcal F_\xi}K_v^\ast\mathcal S.
+\tag{11.5}
+$$
+
+则这些实际输出的全部原固定 $S$ 全质量条件同时成立，当且仅当 $\operatorname{ran}\Sigma\subseteq L$。与这些支撑条件相容的正矩阵恰为面
+
+$$
+\mathcal Q_L=\{A\succeq0:\operatorname{ran}A\subseteq L\}.
+\tag{11.6}
+$$
+
+存在一个实际子族 $\mathcal F_0=\{v_1,\ldots,v_m\}\subseteq\mathcal F_\xi$，其中 $m\le3-\dim L$，使 (11.5) 的交集已由此子族确定。在 $\mathcal S$ 上定义
+
+$$
+B=\left.\sum_{j=1}^m S K_{v_j}^\ast(I_{27}-S)K_{v_j}S\right|_{\mathcal S}.
+\tag{11.7}
+$$
+
+有 $\ker B=L$。若 $L=\{0\}$，则 $B$ 在 $\mathcal S$ 上正定，且
+
+$$
+\sum_{j=1}^m\ell_{v_j}
+=\operatorname{Tr}_{\mathcal S}(\Sigma B)
+\ge\lambda_{\min}(B)w,\qquad
+\ell_v=\operatorname{Tr}((I_{27}-S)\Sigma_v).
+\tag{11.8}
+$$
+
+因此全部这些输出若都满足原固定支撑，必有 $w=0$。
+
+**证明。**实际坐标分区及 $I_S$ 中的原粗事件对应，使每个受约束输出的固定角条件等价于 $\ell_v=0$。式 (11.4) 是已证明接口的后果；它不由酉矩阵标签取得。复用 (9.16) 的正性恒等式，
+
+$$
+\ell_v=\operatorname{Tr}(\Sigma K_v^\ast(I_{27}-S)K_v)
+=\|(I_{27}-S)K_v\Sigma^{1/2}\|_{\rm HS}^2.
+\tag{11.9}
+$$
+
+它为零当且仅当 $K_v\operatorname{ran}\Sigma\subseteq\mathcal S$，因为有限维正矩阵与其平方根有相同的像。逐一相交并用输入支撑，即得 (11.5) 的充要性。反向只证明这些支撑等式，不构造实际来源。
+
+从 $L_0=\mathcal S$ 开始；若当前有限交集 $L_j$ 严格大于 $L$，则必有某条 $v\in\mathcal F_\xi$ 使 $L_j\cap K_v^\ast\mathcal S$ 严格小于 $L_j$，否则 $L_j$ 已包含于每个定义子空间，从而 $L_j\subseteq L$。每次严格切割至少降低一维，故不超过 $3-\dim L$ 次便到达 $L$。这证明子族存在；它不删除其余原义务，也不提供发现实际路径的算法或实际资源上界。
+
+对 $z\in\mathcal S$，有
+
+$$
+z^\ast Bz=\sum_{j=1}^m\|(I_{27}-S)K_{v_j}z\|^2.
+\tag{11.10}
+$$
+
+故其核恰为上述交集。$L=0$ 时最小特征值严格正，$B\succeq\lambda_{\min}(B)I_{\mathcal S}$，与 $\Sigma\succeq0$ 取迹即得 (11.8)。面性质也可直接验证：若 $A_1,A_2\succeq0$ 且 $A_1+A_2\in\mathcal Q_L$，则对 $z\perp L$，两项非负的 $z^\ast A_jz$ 之和为零，因而 $A_j^{1/2}z=0$。所以各 $A_j$ 都支撑在 $L$，即都属于 $\mathcal Q_L$。若 $L\ne0$，任取其单位向量 $z$，$wzz^\ast$ 对任意 $w>0$ 都是数学相容矩阵；这不证明原 $\Omega$ 能准备它。$\square$
+
+对于原目标 $g$，定义 9.12 首先实际执行 $g^\ast$，故这一阶段的 $K_v=g^\ast$，(11.5) 中回拉的支撑约束是 $g\mathcal S$；只有把 $g$ 改指实际前向矩阵时才写 $g^\ast\mathcal S$。各中间阶段仍分别判断 $I_S$，不能只检查最终端口。
+
+一般带类型和历史的 $\mathcal F_\xi$ 不给 $L$ 不变子空间的意义。只有在同一齐次实际接口上，已证明全部生成元有限字均合法、已校准、端点均有 $I_S$，且 $\mathcal F_\xi$ 正是该完整字族时，$L$ 才是 $\mathcal S$ 中的最大共同不变子空间：对 $z\in L$，把任一生成元 $\gamma$ 接在任一字 $v$ 前面，得到 $K_vk_\gamma z\in\mathcal S$，故 $k_\gamma z\in L$；有限维酉性使包含成为相等。任何包含于 $\mathcal S$ 的共同不变子空间都满足所有字约束，故包含于 $L$。原门表和矩阵群闭包本身未证明这份实际齐次闭包。
+
+Baumgartner–Narnhofer《The structures of state space concerning Quantum Dynamical Semigroups》[arXiv:1101.3914v2，§4.1，定义 8、命题 9](https://arxiv.org/html/1101.3914v2#S4.SS1) 以所有后续时间保持态支撑定义 enclosure，并证明平稳态的像是 enclosure。其背景是有限维线性、保正、保迹半群；该文定义 1 还列出完全正性，部分支撑结论不消费它。这里的实际路径族未获半群或平稳态条件，故只直接使用上面的交集证明，不把任意 $L$ 称为 enclosure，也不从该文取得原准备、路径校准或 $I_S$。
+

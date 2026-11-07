@@ -1,0 +1,63 @@
+**命题 C-63.3（只有统一上界的非齐次衰减）。** 若对完整环有
+
+$$
+0<\lambda_j\le\Lambda<\infty\quad(j\in V),\qquad
+q_\Lambda=\frac{\Lambda}{1+\Lambda}<1,
+$$
+
+则
+
+$$
+\begin{aligned}
+\bigl|\operatorname{Corr}_{Q_i}(B_L,B_R)\bigr|
+&\le q_\Lambda^{n-2},\\
+|\Delta_i|&\le\frac{(1-Z)^2}{4}q_\Lambda^{n-2}.
+\end{aligned}
+\tag{C63.6}
+$$
+
+该界不要求活动有统一正下界，并覆盖外部路径的两条边界边。
+
+证明。固定一个边 $k,k+1$。由式 (C63.4)，
+
+$$
+\mathbb P(V_{k+1}=1\mid V_k=0)
+=\frac{\alpha_{k+1}R_{k+1}(1)}
+{R_{k+1}(0)+\alpha_{k+1}R_{k+1}(1)}.
+\tag{C63.7}
+$$
+
+若 $k+1<\ell$，固定 $V_{k+1}=1$ 强制下一位为零，允许的后缀集合是固定 $V_{k+1}=0$ 所允许集合的子集，且各后缀权相同。因此 $0<R_{k+1}(1)\le R_{k+1}(0)$。若 $k+1=\ell$，两者均为一，仍成立。于是式 (C63.7) 不超过 $\alpha_{k+1}/(1+\alpha_{k+1})\le q_\Lambda$。
+
+从左侧定义同样的过去总权，完全相同的子集论证给反向条件概率
+
+$$
+\mathbb P(V_k=1\mid V_{k+1}=0)\le\frac{\alpha_k}{1+\alpha_k}\le q_\Lambda.
+$$
+
+没有依赖某一边必须远离端点；终端空后缀总权一已包含端点情形。
+
+对这条排斥边，$\mathbb P(11)=0$，所以
+
+$$
+\begin{aligned}
+\bigl|\operatorname{Corr}(V_k,V_{k+1})\bigr|^2
+&=\frac{\mu_k\mu_{k+1}}{(1-\mu_k)(1-\mu_{k+1})}\\
+&=\mathbb P(V_{k+1}=1\mid V_k=0)
+\mathbb P(V_k=1\mid V_{k+1}=0)
+\le q_\Lambda^2.
+\end{aligned}
+\tag{C63.8}
+$$
+
+式 (C63.3) 给相关系数界。再由二值方差不超过 $1/4$，有 $s_0s_\ell\le1/4$，并由式 (C59.3) 得
+
+$$
+|\Delta_i|=r^2\bigl|\operatorname{Cov}_{Q_i}(B_L,B_R)\bigr|
+=r^2s_0s_\ell\bigl|\operatorname{Corr}_{Q_i}(B_L,B_R)\bigr|,
+$$
+
+从而得到第二界。所有步骤只用活动的上界和逐点严格正性；当某些活动趋零时，界保持一致，但极限上的相关系数仍须另查方差是否为零。证毕。
+
+这个 $q_\Lambda$ 是上述有限路径的直接估计。Sinclair–Srivastava–Yin v2 的强空间混合定理需要统一活动及连接常数阈值，不供应式 (C63.6)。本界也不宣称是齐次模型的最优谱速率。
+

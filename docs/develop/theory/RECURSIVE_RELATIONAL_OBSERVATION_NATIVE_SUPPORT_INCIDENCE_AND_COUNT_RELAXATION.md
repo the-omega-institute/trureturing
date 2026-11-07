@@ -4848,3 +4848,72 @@ The unrestricted-budget $H_{\min}$ remains a separate open optimum.
 [KN15]: https://doi.org/10.3233/FI-2012-695
 
 ## 追加锚（本行以下为增补区）
+
+## 19. The first nine-position late-gap skeleton
+
+**Proposition 19.1 (the central first late-gap pair skeleton).** Let
+$K=4$, $L=6$, and $n=K+L-1=9$. Suppose a consecutive
+common-support gap is $B=(2,7)$. If an installed state $q\in Q_B$
+hosts two distinct cells of $V_B$, orient the cells as
+$p=(h,z)$ and $p'=(g,w)$ with $h<g$. Then
+
+$$
+(h,g)=(0,3),\qquad z\in\{3,4,5\},\qquad
+w\in\{0,1,2\},\qquad z-w\ge3.
+$$
+
+Consequently the possible unordered pairs are exactly
+
+$$
+\begin{gathered}
+(0,3)\!\sim\!(3,0),\qquad
+(0,4)\!\sim\!(3,0),\ (0,4)\!\sim\!(3,1),\\
+(0,5)\!\sim\!(3,0),\ (0,5)\!\sim\!(3,1),\ (0,5)\!\sim\!(3,2).
+\end{gathered}
+\tag{SI.151}
+$$
+
+No such state can host three cells. The simple graph of the six
+allowed pairs has a unique cycle, the four-cycle on
+
+$$
+(0,4),\ (0,5),\ (3,0),\ (3,1).
+\tag{SI.152}
+$$
+
+**Proof.** Apply the right-cut separation (SI.41) with $b=7$:
+for two cells in this gap,
+
+$$
+ g-h\ge \max(2,9-7+1)=3,
+ \qquad z-w\ge3.
+$$
+
+Since $0\le h<g\le3$, the first inequality forces
+$h=0$ and $g=3$. The interior condition $2<h+z<7$ then gives
+$z\in\{3,4,5\}$, while $2<g+w<7$ gives $w\in\{0,1,2,3\}$.
+The second separation inequality excludes $w=3$ and leaves exactly the
+six pairs in (SI.151).
+
+A third cell at the same host would have to differ by at least three
+in the hit coordinate from each of the two displayed cells, by (SI.7)
+and (SI.41). There are only the hit rows $0$ and $3$ available, and
+two distinct cells in one row have hit difference zero. Hence a host
+contains at most one cell from each row and therefore at most two cells.
+
+Write $A_j=(0,j)$ for $j=3,4,5$ and $B_j=(3,j)$ for $j=0,1,2$.
+The allowed-pair graph has edges
+$A_3B_0$, $A_4B_0$, $A_4B_1$, $A_5B_0$,
+$A_5B_1$, and $A_5B_2$. The vertices $A_3$ and $B_2$ have degree one;
+the remaining four vertices induce the single cycle
+$A_4B_0A_5B_1A_4$. No other cycle is possible. \(\square\)
+
+This proposition is a finite specialization of the necessary sharing
+separations; it does not realize any of the six pairs by a stationary
+graph. In particular, the surviving four-cycle leaves open the
+possibility of duplicate pair hosts, and the fixed-successor law
+(SI.8), all-history cross intersections, and the other late gaps
+remain to be combined before (SI.59) can be settled for the exact
+$n=9,k=4$ successor.
+
+## 追加锚（本行以下为增补区）
