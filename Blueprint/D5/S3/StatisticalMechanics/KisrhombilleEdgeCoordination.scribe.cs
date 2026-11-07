@@ -64,7 +64,7 @@ internal sealed class KisrhombilleEdgeCoordinationDocument : IScribeDocumentDefi
                         + "of indices. X denotes the formal indeterminate, and the cast on its first "
                         + "occurrence specifies PowerSeries ℤ. No convergence assumption is needed. "
                         + "OEIS A298040 revision 36 names the tetravalent-root sequence and attributes "
-                        + "the rational generating-function conjecture to Colin Barker."))), DescribeRole.Theorem))));
+                        + "the rational generating-function conjecture to Colin Barker."))), DescribeRole.Theorem, new OpenProblemResolutionClaim(ProblemSlugRef.Create("sloane298040"), ResolutionKind.Proved)))));
 
     private static DocumentBlock Definition(string id, string name, string title, Formula formula, string prose) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Module + "." + name), H(title),
