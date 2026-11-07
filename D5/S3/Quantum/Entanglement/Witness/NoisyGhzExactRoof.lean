@@ -4,7 +4,7 @@
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
    utility: none
-   digest: Independent-coordinate phase character cancellation for the noisy-GHZ finite witness. -/
+   digest: Actual all-cut two-mean minima, the full original single-witness optimum, and finite noisy-GHZ matrix constituents. -/
 
 import Mathlib.Analysis.Fourier.ZMod
 import Mathlib.NumberTheory.LegendreSymbol.AddCharacter
@@ -1562,7 +1562,7 @@ theorem witness_optimum {n d : ℕ} (hn : 3 ≤ n) (hd : 3 ≤ d) {w : ℝ}
   let F : ℝ := 1 / (d : ℝ) - w
   have hf : 0 ≤ F := sub_nonneg.mpr hw1
   have hf1 : F ≤ 1 := by
-    have he : -(d - 1 : ℝ) / d = 1 / (d : ℝ) - 1 := by field_simp; ring
+    have he : -(d - 1 : ℝ) / d = 1 / (d : ℝ) - 1 := by field_simp <;> ring
     rw [he] at hw0
     dsimp [F]; linarith
   obtain ⟨hp, hs, hu, hG, hP, hE⟩ := two_mean_ensemble_data hn hd hf hf1 (le_refl 1)
@@ -1611,6 +1611,1153 @@ theorem witness_optimum {n d : ℕ} (hn : 3 ≤ n) (hd : 3 ≤ d) {w : ℝ}
       <;> ring
     rw [he]
     linarith
+
+private lemma sum_on_embedding {ι κ α : Type*} [Fintype ι] [Fintype κ]
+    [AddCommMonoid α] (e : ι ↪ κ) (f : κ → α)
+    (hf : ∀ x, (¬ ∃ i, e i = x) → f x = 0) : ∑ x, f x = ∑ i, f (e i) := by
+  classical
+  have hs : (∑ x ∈ Finset.univ.image e, f x) = ∑ x, f x := by
+    apply Finset.sum_subset (Finset.subset_univ _)
+    intro x _ hx
+    apply hf x
+    intro h
+    exact hx (Finset.mem_image.mpr (by obtain ⟨i, hi⟩ := h; exact ⟨i, Finset.mem_univ _, hi⟩))
+  rw [← hs]
+  exact Finset.sum_image (fun i _ j _ h => e.injective h)
+
+private def pushVector {ι κ : Type*} [Fintype ι] (e : ι ↪ κ) (c : ι → ℂ) : κ → ℂ := by
+  classical
+  exact fun x => ∑ i, if e i = x then c i else 0
+
+private lemma pushVector_apply {ι κ : Type*} [Fintype ι] (e : ι ↪ κ) (c : ι → ℂ) (i : ι) :
+    pushVector e c (e i) = c i := by
+  classical
+  simp [pushVector, e.injective.eq_iff]
+
+private lemma pushVector_off {ι κ : Type*} [Fintype ι] (e : ι ↪ κ) (c : ι → ℂ) (x : κ)
+    (hx : ¬ ∃ i, e i = x) : pushVector e c x = 0 := by
+  classical
+  unfold pushVector
+  apply Finset.sum_eq_zero
+  intro i hi
+  exact if_neg (not_exists.mp hx i)
+
+private lemma pushVector_norm {ι κ : Type*} [Fintype ι] [Fintype κ]
+    (e : ι ↪ κ) (c : ι → ℂ) :
+    ∑ x, Complex.normSq (pushVector e c x) = ∑ i, Complex.normSq (c i) := by
+  rw [sum_on_embedding e _ (by intro x hx; rw [pushVector_off e c x hx]; simp)]
+  simp only [pushVector_apply]
+
+private lemma pushVector_inner {ι κ : Type*} [Fintype ι] [Fintype κ]
+    (e : ι ↪ κ) (c v : ι → ℂ) :
+    star (pushVector e c) ⬝ᵥ pushVector e v = star c ⬝ᵥ v := by
+  unfold dotProduct
+  simp only [Pi.star_apply]
+  rw [sum_on_embedding e _ (by intro x hx; rw [pushVector_off e c x hx]; simp)]
+  simp only [Pi.star_apply, pushVector_apply]
+
+/-- The actual embedding of the d×d cut sector into computational words. -/
+def cutEmbedding {n d : ℕ} (a : Finset (Fin n)) (ha : a.Nonempty) (hc : aᶜ.Nonempty) :
+    (Fin d × Fin d) ↪ Word (Fin d) n := ⟨_, join_injective a ha hc⟩
+
+/-- The source product vector u on A and conjugate(u) on the complementary cut. -/
+def cutProduct {n d : ℕ} (a : Finset (Fin n)) (ha : a.Nonempty) (hc : aᶜ.Nonempty)
+    (u : Fin d → ℂ) : Word (Fin d) n → ℂ :=
+  pushVector (cutEmbedding a ha hc) (fun ij => u ij.1 * star (u ij.2))
+
+private lemma cutProduct_unit {n d : ℕ} (a : Finset (Fin n)) (ha : a.Nonempty) (hc : aᶜ.Nonempty)
+    (u : Fin d → ℂ) (hu : ∑ i, Complex.normSq (u i) = 1) : IsUnitState (cutProduct a ha hc u) := by
+  classical
+  unfold IsUnitState cutProduct
+  rw [pushVector_norm]
+  simp only [Fintype.sum_prod_type, Complex.normSq_mul, Complex.star_def, Complex.normSq_conj,
+    ← Finset.mul_sum, hu, mul_one]
+
+private lemma cutEmbedding_eq {n d : ℕ} (a : Finset (Fin n)) (ha : a.Nonempty) (hc : aᶜ.Nonempty)
+    (i j : Fin d) (x : Word (Fin d) n) :
+    cutEmbedding a ha hc (i,j) = x ↔
+      (∀ k : a, x k = i) ∧ (∀ k : ↥aᶜ, x k = j) := by
+  classical
+  constructor
+  · intro h
+    constructor
+    · intro k
+      simpa [cutEmbedding, k.property] using (congrFun h k).symm
+    · intro k
+      simpa [cutEmbedding, Finset.mem_compl.mp k.property] using (congrFun h k).symm
+  · rintro ⟨hA, hB⟩
+    funext k
+    by_cases hk : k ∈ a
+    · simpa [cutEmbedding, hk] using (hA ⟨k,hk⟩).symm
+    · simpa [cutEmbedding, hk] using (hB ⟨k,Finset.mem_compl.mpr hk⟩).symm
+
+/-- The cut product is genuinely biseparable in the original factorization
+predicate, not a fully-separable replacement. -/
+theorem cutProduct_biseparable {n d : ℕ} (a : Finset (Fin n)) (ha : a.Nonempty) (hc : aᶜ.Nonempty)
+    (u : Fin d → ℂ) (hu : ∑ i, Complex.normSq (u i) = 1) : IsBiseparable (cutProduct a ha hc u) := by
+  classical
+  refine ⟨cutProduct_unit a ha hc u hu, a, ha, hc,
+    fun x => ∑ i, if ∀ k, x k = i then u i else 0,
+    fun x => ∑ j, if ∀ k, x k = j then star (u j) else 0, ?_⟩
+  intro x
+  simp only [cutProduct, pushVector, Fintype.sum_prod_type]
+  change (∑ i, ∑ j, if cutEmbedding a ha hc (i,j) = x then u i * star (u j) else 0) = _
+  rw [Finset.sum_mul]
+  apply Finset.sum_congr rfl
+  intro i hi
+  rw [Finset.mul_sum]
+  apply Finset.sum_congr rfl
+  intro j hj
+  simp only [cutEmbedding_eq]
+  by_cases hA : ∀ k : a, x k = i <;> by_cases hB : ∀ k : ↥aᶜ, x k = j <;>
+    simp only [hA, hB, and_self, and_false, false_and, ite_true, ite_false, mul_zero, zero_mul, forall_const, true_and]
+  all_goals simp
+
+private lemma phaseCharacter_normSq {d : ℕ} (v θ : Fin d → ZMod 3) :
+    Complex.normSq (phaseCharacter v θ) = 1 := by
+  simp [phaseCharacter, ZMod.stdAddChar_apply]
+
+private lemma pairCharacter_apply {d : ℕ} (i j : Fin d) (θ : Fin d → ZMod 3) :
+    phaseCharacter (pairCoefficient i j) θ = ZMod.stdAddChar (θ i - θ j) := by
+  unfold phaseCharacter pairCoefficient
+  congr 1
+  simp [sub_mul, Finset.sum_sub_distrib, Finset.sum_ite_eq', Finset.sum_ite_eq]
+
+/-- The finite source phase vectors, on all independent cubic phases. -/
+def phaseVector {d : ℕ} (θ : Fin d → ZMod 3) : Fin d → ℂ :=
+  fun j => (Real.sqrt d : ℂ)⁻¹ * ZMod.stdAddChar (θ j)
+
+private lemma phaseVector_unit {d : ℕ} (hd : 0 < d) (θ : Fin d → ZMod 3) :
+    ∑ j, Complex.normSq (phaseVector θ j) = 1 := by
+  have hdR : (d : ℝ) ≠ 0 := by exact_mod_cast hd.ne'
+  simp [phaseVector, Complex.normSq_mul, ZMod.stdAddChar_apply,
+    Complex.normSq_ofReal, Real.sq_sqrt (Nat.cast_nonneg d), hdR]
+
+private lemma phaseVector_pair {d : ℕ} (hd : 0 < d) (θ : Fin d → ZMod 3) (i j : Fin d) :
+    phaseVector θ i * star (phaseVector θ j) =
+      (1 / (d : ℂ)) * phaseCharacter (pairCoefficient i j) θ := by
+  rw [pairCharacter_apply, AddChar.map_sub_eq_div]
+  have hs (a : ZMod 3) : star (ZMod.stdAddChar a) = (ZMod.stdAddChar a)⁻¹ := by
+    simpa only [starRingEnd_apply, AddChar.inv_apply'] using
+      (AddChar.starComp_apply (R := ZMod 3) (by rw [ZMod.ringChar_zmod_n]; norm_num)
+        (φ := ZMod.stdAddChar) a)
+  have hroot : (Real.sqrt d : ℂ)^2 = (d : ℂ) := by
+    exact_mod_cast Real.sq_sqrt (Nat.cast_nonneg d)
+  have hroot0 : (Real.sqrt d : ℂ) ≠ 0 := by
+    exact_mod_cast (Real.sqrt_pos.mpr (show (0 : ℝ) < d by exact_mod_cast hd)).ne'
+  unfold phaseVector
+  rw [star_mul, hs]
+  have hr : star ((Real.sqrt d : ℂ)⁻¹) = (Real.sqrt d : ℂ)⁻¹ := by simp
+  rw [hr]
+  calc
+    _ = ((Real.sqrt d : ℂ)^2)⁻¹ *
+        (ZMod.stdAddChar (θ i) / ZMod.stdAddChar (θ j)) := by
+      rw [pow_two, mul_inv]
+      ring
+    _ = _ := by rw [hroot]; simp
+
+/-- The source finite constituent in one cut sector. -/
+def cutState {n d : ℕ} (a : Finset (Fin n)) (ha : a.Nonempty) (hc : aᶜ.Nonempty)
+    (α β : ℝ) (u : Fin d → ℂ) : Word (Fin d) n → ℂ := by
+  classical
+  exact pushVector (cutEmbedding a ha hc)
+    (fun ij => (if ij.1 = ij.2 then (β : ℂ) else 0) +
+      ((α - β : ℝ) : ℂ) * u ij.1 * star (u ij.2))
+
+private lemma cut_coefficient_norm {d : ℕ} (β τ : ℝ) (u : Fin d → ℂ)
+    (hu : ∑ i, Complex.normSq (u i) = 1) :
+    (∑ ij : Fin d × Fin d, Complex.normSq
+      ((if ij.1 = ij.2 then (β : ℂ) else 0) + (τ : ℂ) * u ij.1 * star (u ij.2))) =
+      (d : ℝ) * β^2 + 2 * β * τ + τ^2 := by
+  classical
+  have hd : (∑ ij : Fin d × Fin d, Complex.normSq
+      (if ij.1 = ij.2 then (β : ℂ) else 0)) = (d : ℝ) * β^2 := by
+    simp [Fintype.sum_prod_type, apply_ite Complex.normSq, Complex.normSq_ofReal, pow_two]
+  have hr : (∑ ij : Fin d × Fin d, Complex.normSq
+      ((τ : ℂ) * u ij.1 * star (u ij.2))) = τ^2 := by
+    simp only [Fintype.sum_prod_type, Complex.normSq_mul, Complex.normSq_ofReal,
+      Complex.star_def, Complex.normSq_conj, mul_assoc, ← Finset.mul_sum, hu, mul_one]
+    ring
+  have hcross (i j : Fin d) :
+      ((if i = j then (β : ℂ) else 0) *
+        star ((τ : ℂ) * u i * star (u j))).re =
+          if i = j then β * τ * Complex.normSq (u i) else 0 := by
+    by_cases hij : i = j
+    · subst j
+      have he : (τ : ℂ) * u i * star (u i) = ((τ * Complex.normSq (u i) : ℝ) : ℂ) := by
+        rw [mul_assoc, Complex.star_def, Complex.mul_conj]
+        push_cast
+        rfl
+      simp only [ite_true]
+      rw [he]
+      simp
+      <;> ring
+    · simp [hij]
+  have hx : (∑ ij : Fin d × Fin d, 2 *
+      ((if ij.1 = ij.2 then (β : ℂ) else 0) *
+        star ((τ : ℂ) * u ij.1 * star (u ij.2))).re) = 2 * β * τ := by
+    simp only [Fintype.sum_prod_type, hcross]
+    simp [Finset.mul_sum, ← Finset.mul_sum, hu, mul_assoc]
+  simp_rw [Complex.normSq_add, ← Complex.star_def]
+  rw [Finset.sum_add_distrib, Finset.sum_add_distrib, hd, hr, hx]
+  ring
+
+/-- Normalization of each source cut constituent, independent of the cut
+and of the chosen unit vector u. -/
+theorem cutState_unit {n d : ℕ} (a : Finset (Fin n)) (ha : a.Nonempty) (hc : aᶜ.Nonempty)
+    (α β : ℝ) (u : Fin d → ℂ) (hu : ∑ i, Complex.normSq (u i) = 1)
+    (hαβ : α^2 + (d - 1 : ℝ) * β^2 = 1) : IsUnitState (cutState a ha hc α β u) := by
+  unfold IsUnitState cutState
+  rw [pushVector_norm, cut_coefficient_norm β (α - β) u hu]
+  nlinarith
+
+private lemma cutState_supported {n d : ℕ} (a : Finset (Fin n)) (ha : a.Nonempty) (hc : aᶜ.Nonempty)
+    (α β : ℝ) (u : Fin d → ℂ) :
+    supportProjector n d *ᵥ cutState a ha hc α β u = cutState a ha hc α β u := by
+  classical
+  ext x
+  simp only [supportProjector, mulVec_diagonal]
+  by_cases hx : (Finset.univ.image x).card ≤ 2
+  · simp [hx]
+  · have hz : cutState a ha hc α β u x = 0 := by
+      apply pushVector_off
+      rintro ⟨ij, hij⟩
+      apply hx
+      rw [← hij]
+      exact join_support a ij.1 ij.2
+    simp [hx, hz]
+
+private lemma cutState_constant {n d : ℕ} (a : Finset (Fin n)) (ha : a.Nonempty) (hc : aᶜ.Nonempty)
+    (α β : ℝ) (u : Fin d → ℂ) (j : Fin d) :
+    cutState a ha hc α β u (fun _ => j) =
+      (β : ℂ) + ((α - β : ℝ) : ℂ) * ((Complex.normSq (u j) : ℝ) : ℂ) := by
+  have he : cutEmbedding a ha hc (j,j) = (fun _ => j) := by
+    ext k
+    simp [cutEmbedding, Finset.piecewise]
+  rw [← he, cutState, pushVector_apply]
+  simp only [ite_true, mul_assoc, Complex.star_def, Complex.mul_conj]
+
+private lemma cutProduct_overlap {n d : ℕ} (a : Finset (Fin n)) (ha : a.Nonempty) (hc : aᶜ.Nonempty)
+    (α β : ℝ) (u : Fin d → ℂ) (hu : ∑ i, Complex.normSq (u i) = 1) :
+    star (cutProduct a ha hc u) ⬝ᵥ cutState a ha hc α β u = (α : ℂ) := by
+  classical
+  have hsum : (∑ i, (Complex.normSq (u i) : ℂ)) = 1 := by
+    rw [← Complex.ofReal_sum, hu, Complex.ofReal_one]
+  have hterm (i j : Fin d) :
+      star (u i * star (u j)) *
+        ((if i = j then (β : ℂ) else 0) + ((α - β : ℝ) : ℂ) * u i * star (u j)) =
+      (if i = j then (β : ℂ) * Complex.normSq (u i) else 0) +
+        ((α - β : ℝ) : ℂ) * Complex.normSq (u i) * Complex.normSq (u j) := by
+    rw [star_mul, star_star, mul_add]
+    congr 1
+    · by_cases hij : i = j
+      · subst j
+        simp only [ite_true]
+        rw [show u i * star (u i) = (Complex.normSq (u i) : ℂ) by
+          rw [Complex.star_def, Complex.mul_conj]]
+        ring
+      · simp [hij]
+    · have hi : star (u i) * u i = (Complex.normSq (u i) : ℂ) := by
+        rw [mul_comm, Complex.star_def, Complex.mul_conj]
+      have hj : u j * star (u j) = (Complex.normSq (u j) : ℂ) := by
+        rw [Complex.star_def, Complex.mul_conj]
+      calc
+        _ = ((α - β : ℝ) : ℂ) * (star (u i) * u i) * (u j * star (u j)) := by ring
+        _ = _ := by rw [hi, hj]
+  unfold cutProduct cutState
+  rw [pushVector_inner]
+  simp only [dotProduct, Pi.star_apply, Fintype.sum_prod_type, hterm,
+    Finset.sum_add_distrib, Finset.sum_ite_eq, Finset.sum_ite_eq', Finset.mem_univ, ite_true,
+    ← Finset.mul_sum, hsum, mul_one]
+  push_cast
+  ring
+
+private lemma cutState_means {n d : ℕ} (hn : 0 < n) (hd : 0 < d)
+    (a : Finset (Fin n)) (ha : a.Nonempty) (hc : aᶜ.Nonempty)
+    (α β : ℝ) (u : Fin d → ℂ) (hu : ∑ i, Complex.normSq (u i) = 1)
+    (hαβ : α^2 + (d - 1 : ℝ) * β^2 = 1) :
+    readout (supportProjector n d) (cutState a ha hc α β u) = 1 ∧
+      readout (rankOneDensity (ghz n d)) (cutState a ha hc α β u) =
+        (α + (d - 1 : ℝ) * β)^2 / d := by
+  have hunit := cutState_unit a ha hc α β u hu hαβ
+  constructor
+  · change (star _ ⬝ᵥ (supportProjector n d *ᵥ _)).re = 1
+    rw [cutState_supported]
+    have he := expectation_one (cutState a ha hc α β u)
+    simp only [readout, one_mulVec] at he
+    exact he.trans hunit
+  · have hsum : (∑ i, (Complex.normSq (u i) : ℂ)) = 1 := by
+      rw [← Complex.ofReal_sum, hu, Complex.ofReal_one]
+    have h : (∑ j, cutState a ha hc α β u (fun _ => j)) =
+        ((α + (d - 1 : ℝ) * β : ℝ) : ℂ) := by
+      simp only [cutState_constant, Finset.sum_add_distrib, Finset.sum_const,
+        Finset.card_univ, Fintype.card_fin, nsmul_eq_mul, ← Finset.mul_sum, hsum, mul_one]
+      push_cast
+      ring
+    apply (eq_div_iff (show (d : ℝ) ≠ 0 by exact_mod_cast hd.ne')).mpr
+    rw [mul_comm, ghz_expectation hn hd, h, Complex.normSq_ofReal]
+    ring
+
+/-- Every unit-vector cut constituent has the genuine all-cut pure measure
+specified by the source, including both endpoint values of F. -/
+theorem cutState_attainment {n d : ℕ} (hn : 3 ≤ n) (hd : 3 ≤ d)
+    (a : Finset (Fin n)) (ha : a.Nonempty) (hc : aᶜ.Nonempty)
+    (u : Fin d → ℂ) (hu : ∑ i, Complex.normSq (u i) = 1)
+    {F : ℝ} (hF : 1 / (d : ℝ) ≤ F) (hF1 : F ≤ 1) :
+    IsUnitState (cutState a ha hc (optimalAlpha d F) (optimalBeta d F) u) ∧
+      readout (supportProjector n d) (cutState a ha hc (optimalAlpha d F) (optimalBeta d F) u) = 1 ∧
+      readout (rankOneDensity (ghz n d)) (cutState a ha hc (optimalAlpha d F) (optimalBeta d F) u) = F ∧
+      geometricMeasurePure (cutState a ha hc (optimalAlpha d F) (optimalBeta d F) u) =
+        twoMeanOptimum d F 1 := by
+  classical
+  have hdR : (3 : ℝ) ≤ d := by exact_mod_cast hd
+  obtain ⟨hb, hba, hnorm, hmean, hvalue⟩ := optimal_amplitudes (by omega : 2 ≤ d) hF hF1
+  let ψ := cutState a ha hc (optimalAlpha d F) (optimalBeta d F) u
+  have hψ : IsUnitState ψ := cutState_unit a ha hc _ _ u hu hnorm
+  obtain ⟨hy,hf⟩ := cutState_means (by omega : 0 < n) (by omega : 0 < d) a ha hc _ _ u hu hnorm
+  rw [hmean] at hf
+  have hβ : twoMeanOptimum d F 1 = 1 - (optimalAlpha d F)^2 := by
+    unfold twoMeanOptimum
+    split_ifs with h
+    · have hF' : 1 ≤ (d : ℝ) * F := by
+        simpa only [mul_comm] using (div_le_iff₀ (by positivity : (0 : ℝ) < d)).mp hF
+      have hFeq : F = 1 / (d : ℝ) := by
+        apply (eq_div_iff (by positivity : (d : ℝ) ≠ 0)).mpr
+        nlinarith
+      have hh : twoMeanValue d F 1 = 0 := by
+        unfold twoMeanValue
+        have he : (d - 1 : ℝ) * F * (1 - F) = ((d - 1 : ℝ) / d)^2 := by
+          rw [hFeq]
+          field_simp
+          <;> ring
+        rw [he, Real.sqrt_sq (div_nonneg (by linarith) (by positivity))]
+        rw [hFeq]
+        field_simp
+        <;> ring
+      linarith
+    · exact hvalue
+  have hl := pure_two_mean_lower hn hd ψ hψ
+  change twoMeanOptimum d _ _ ≤ _ at hl
+  rw [hf, hy] at hl
+  have hupp : geometricMeasurePure ψ ≤ 1 - (optimalAlpha d F)^2 := by
+    have hs := le_csSup (overlap_values_bdd ψ hψ)
+      (show Complex.normSq (star (cutProduct a ha hc u) ⬝ᵥ ψ) ∈
+        {t : ℝ | ∃ φ, IsBiseparable φ ∧ t = Complex.normSq (star φ ⬝ᵥ ψ)} from
+        ⟨_, cutProduct_biseparable a ha hc u hu, rfl⟩)
+    change Complex.normSq (star (cutProduct a ha hc u) ⬝ᵥ cutState a ha hc _ _ u) ≤ _ at hs
+    rw [cutProduct_overlap a ha hc _ _ u hu, Complex.normSq_ofReal] at hs
+    unfold geometricMeasurePure
+    nlinarith
+  exact ⟨hψ,hy,hf,le_antisymm (hupp.trans_eq hβ.symm) hl⟩
+
+/-- Nonempty cuts excluding the first party; their complements are the
+anchored representatives of nontrivial unordered bipartitions. -/
+def SourceCut (n : ℕ) (hn : 0 < n) :=
+  {s : Finset (Fin n) // s ∈ ((Finset.univ.erase ⟨0,hn⟩).powerset.erase ∅)}
+
+private lemma sourceCut_nonempty {n : ℕ} (hn : 0 < n) (s : SourceCut n hn) : s.1.Nonempty := by
+  have h : s.1 ≠ ∅ := (Finset.mem_erase.mp s.2).1
+  exact Finset.nonempty_iff_ne_empty.mpr h
+
+private lemma sourceCut_first {n : ℕ} (hn : 0 < n) (s : SourceCut n hn) :
+    (⟨0,hn⟩ : Fin n) ∉ s.1 := by
+  have hsub := Finset.mem_powerset.mp (Finset.mem_erase.mp s.2).2
+  intro h
+  exact (Finset.mem_erase.mp (hsub h)).1 rfl
+
+private lemma sourceCut_complement {n : ℕ} (hn : 0 < n) (s : SourceCut n hn) : s.1ᶜ.Nonempty :=
+  ⟨⟨0,hn⟩, Finset.mem_compl.mpr (sourceCut_first hn s)⟩
+
+instance sourceCutFintype (n : ℕ) (hn : 0 < n) : Fintype (SourceCut n hn) := by
+  classical
+  unfold SourceCut
+  infer_instance
+
+/-- Exactly one anchored representative for each nontrivial unordered cut. -/
+theorem sourceCut_card {n : ℕ} (hn : 0 < n) : Fintype.card (SourceCut n hn) = cutCount n := by
+  classical
+  change Fintype.card ↥((Finset.univ.erase (⟨0,hn⟩ : Fin n)).powerset.erase ∅) = _
+  rw [Fintype.card_coe, Finset.card_erase_of_mem]
+  · simp [cutCount, Finset.card_powerset]
+  · simp
+
+/-- Distinct ordered local symbols for a nonconstant cut word. -/
+def OffPair (d : ℕ) := {ij : Fin d × Fin d // ij.1 ≠ ij.2}
+
+instance offPairFintype (d : ℕ) : Fintype (OffPair d) := by
+  classical
+  unfold OffPair
+  infer_instance
+
+private lemma offPair_card (d : ℕ) : Fintype.card (OffPair d) = d * (d - 1) := by
+  classical
+  let e : OffPair d ≃ (i : Fin d) × {j : Fin d // i ≠ j} :=
+    { toFun := fun x => ⟨x.1.1, x.1.2, x.2⟩
+      invFun := fun x => ⟨(x.1,x.2.1), x.2.2⟩
+      left_inv := by intro x; rfl
+      right_inv := by intro x; rfl }
+  rw [Fintype.card_congr e, Fintype.card_sigma]
+  have h (i : Fin d) : Fintype.card {j : Fin d // i ≠ j} = d - 1 := by
+    rw [Fintype.card_subtype_compl (fun j : Fin d => i = j)]
+    simp
+  simp [h]
+
+/-- The word corresponding to one anchored cut and one distinct symbol pair. -/
+def sourceCutWord {n d : ℕ} (hn : 0 < n) (s : SourceCut n hn) (ij : OffPair d) : Word (Fin d) n :=
+  s.1.piecewise (fun _ => ij.1.2) (fun _ => ij.1.1)
+
+private lemma sourceCutWord_first {n d : ℕ} (hn : 0 < n) (s : SourceCut n hn) (ij : OffPair d) :
+    sourceCutWord hn s ij ⟨0,hn⟩ = ij.1.1 := by
+  classical
+  simp [sourceCutWord, sourceCut_first hn s]
+
+private lemma sourceCutWord_nonconstant {n d : ℕ} (hn : 0 < n) (s : SourceCut n hn) (ij : OffPair d) :
+    ¬ ∃ j : Fin d, ∀ i, sourceCutWord hn s ij i = j := by
+  classical
+  rintro ⟨j,hj⟩
+  have hfirst := hj ⟨0,hn⟩
+  rw [sourceCutWord_first] at hfirst
+  obtain ⟨k,hk⟩ := sourceCut_nonempty hn s
+  have hsecond := hj k
+  simp only [sourceCutWord, Finset.piecewise, hk, ite_true] at hsecond
+  exact ij.2 (hfirst.trans hsecond.symm)
+
+private lemma sourceCutWord_supported {n d : ℕ} (hn : 0 < n) (s : SourceCut n hn) (ij : OffPair d) :
+    (Finset.univ.image (sourceCutWord hn s ij)).card ≤ 2 :=
+  join_support s.1 ij.1.2 ij.1.1
+
+private lemma sourceCutWord_mem {n d : ℕ} (hn : 0 < n) (s : SourceCut n hn) (ij : OffPair d)
+    (k : Fin n) : k ∈ s.1 ↔ sourceCutWord hn s ij k ≠ sourceCutWord hn s ij ⟨0,hn⟩ := by
+  classical
+  rw [sourceCutWord_first]
+  by_cases hk : k ∈ s.1 <;> simp [sourceCutWord, hk, ij.2, Ne.symm ij.2]
+
+/-- Constant words and uniquely anchored nonconstant two-symbol cut words. -/
+def SupportIndex (n d : ℕ) (hn : 0 < n) := Fin d ⊕ (SourceCut n hn × OffPair d)
+
+instance supportIndexFintype (n d : ℕ) (hn : 0 < n) : Fintype (SupportIndex n d hn) := by
+  unfold SupportIndex
+  infer_instance
+
+private def supportIndexWord {n d : ℕ} (hn : 0 < n) : SupportIndex n d hn → Word (Fin d) n
+  | .inl j => fun _ => j
+  | .inr x => sourceCutWord hn x.1 x.2
+
+private lemma supportIndexWord_injective {n d : ℕ} (hn : 0 < n) :
+    Function.Injective (supportIndexWord (d := d) hn) := by
+  classical
+  intro x y h
+  cases x with
+  | inl i =>
+    cases y with
+    | inl j => exact congrArg Sum.inl (constant_word_injective hn h)
+    | inr y =>
+      exact (sourceCutWord_nonconstant hn y.1 y.2 ⟨i, fun k => (congrFun h k).symm⟩).elim
+  | inr x =>
+    cases y with
+    | inl j =>
+      exact (sourceCutWord_nonconstant hn x.1 x.2 ⟨j, fun k => congrFun h k⟩).elim
+    | inr y =>
+      have hs : x.1 = y.1 := by
+        apply Subtype.ext
+        ext k
+        rw [sourceCutWord_mem hn x.1 x.2 k, sourceCutWord_mem hn y.1 y.2 k]
+        change sourceCutWord hn x.1 x.2 k ≠ sourceCutWord hn x.1 x.2 ⟨0,hn⟩ ↔
+          sourceCutWord hn y.1 y.2 k ≠ sourceCutWord hn y.1 y.2 ⟨0,hn⟩
+        exact iff_of_eq (congrArg (fun z => z k ≠ z ⟨0,hn⟩) h)
+      have hij : x.2 = y.2 := by
+        apply Subtype.ext
+        apply Prod.ext
+        · simpa only [supportIndexWord, sourceCutWord_first] using congrFun h ⟨0,hn⟩
+        · obtain ⟨k,hk⟩ := sourceCut_nonempty hn x.1
+          have hky : k ∈ y.1.1 := hs ▸ hk
+          simpa [supportIndexWord, sourceCutWord, hk, hky] using congrFun h k
+      exact congrArg Sum.inr (Prod.ext hs hij)
+
+private lemma supportIndexWord_supported {n d : ℕ} (hn : 0 < n) (z : SupportIndex n d hn) :
+    (Finset.univ.image (supportIndexWord hn z)).card ≤ 2 := by
+  classical
+  cases z with
+  | inl j =>
+    haveI : Nonempty (Fin n) := ⟨⟨0,hn⟩⟩
+    simp [supportIndexWord, Finset.image_const]
+  | inr x => exact sourceCutWord_supported hn x.1 x.2
+
+private lemma supportIndexWord_surjective {n d : ℕ} (hn : 0 < n) (x : Word (Fin d) n)
+    (hx : (Finset.univ.image x).card ≤ 2) : ∃ z : SupportIndex n d hn, supportIndexWord hn z = x := by
+  classical
+  by_cases hc : ∃ j : Fin d, ∀ k, x k = j
+  · obtain ⟨j,hj⟩ := hc
+    exact ⟨.inl j, (funext hj).symm⟩
+  · let i := x ⟨0,hn⟩
+    obtain ⟨k,hki⟩ : ∃ k, x k ≠ i := by
+      by_contra h
+      apply hc
+      refine ⟨i, ?_⟩
+      intro k
+      exact not_ne_iff.mp (not_exists.mp h k)
+    let j := x k
+    have hij : i ≠ j := Ne.symm hki
+    have hsub : ({i,j} : Finset (Fin d)) ⊆ Finset.univ.image x := by
+      intro l hl
+      simp only [Finset.mem_insert, Finset.mem_singleton] at hl
+      rcases hl with rfl | rfl
+      · exact Finset.mem_image.mpr ⟨⟨0,hn⟩, Finset.mem_univ _, rfl⟩
+      · exact Finset.mem_image.mpr ⟨k, Finset.mem_univ _, rfl⟩
+    have himage : Finset.univ.image x = {i,j} :=
+      (Finset.eq_of_subset_of_card_le hsub (by simpa [hij] using hx)).symm
+    let s : Finset (Fin n) := Finset.univ.filter (fun k => x k ≠ i)
+    have hs0 : s ≠ ∅ := by
+      exact Finset.nonempty_iff_ne_empty.mp ⟨k, Finset.mem_filter.mpr ⟨Finset.mem_univ _,hki⟩⟩
+    have hss : s ⊆ Finset.univ.erase ⟨0,hn⟩ := by
+      intro l hl
+      obtain ⟨_,hl⟩ := Finset.mem_filter.mp hl
+      apply Finset.mem_erase.mpr
+      refine ⟨?_, Finset.mem_univ _⟩
+      intro h
+      exact hl (congrArg x h)
+    let c : SourceCut n hn := ⟨s, Finset.mem_erase.mpr ⟨hs0,Finset.mem_powerset.mpr hss⟩⟩
+    refine ⟨.inr (c,⟨(i,j),hij⟩), ?_⟩
+    funext l
+    have hl : x l ∈ ({i,j} : Finset (Fin d)) := by
+      rw [← himage]
+      exact Finset.mem_image.mpr ⟨l,Finset.mem_univ _,rfl⟩
+    simp only [Finset.mem_insert, Finset.mem_singleton] at hl
+    rcases hl with hl | hl <;> simp [supportIndexWord, sourceCutWord, Finset.piecewise, c, s, hl, hij, Ne.symm hij]
+
+/-- Exact disjoint enumeration of the computational support of P. -/
+def supportIndexEquiv {n d : ℕ} (hn : 0 < n) :
+    SupportIndex n d hn ≃ {x : Word (Fin d) n // (Finset.univ.image x).card ≤ 2} :=
+  Equiv.ofBijective (fun z => ⟨supportIndexWord hn z, supportIndexWord_supported hn z⟩)
+    ⟨fun _ _ h => supportIndexWord_injective hn (congrArg Subtype.val h), by
+      rintro ⟨x,hx⟩
+      obtain ⟨z,hz⟩ := supportIndexWord_surjective hn x hx
+      exact ⟨z,Subtype.ext hz⟩⟩
+
+/-- The support rank is the source formula d+K d(d-1), in every dimension. -/
+theorem support_rank_card {n d : ℕ} (hn : 0 < n) :
+    Fintype.card {x : Word (Fin d) n // (Finset.univ.image x).card ≤ 2} = supportRank n d := by
+  rw [← Fintype.card_congr (supportIndexEquiv (d := d) hn)]
+  simp [SupportIndex, Fintype.card_sum, Fintype.card_prod, sourceCut_card hn,
+    offPair_card, supportRank]
+  ring
+
+/-- The actual support-projector trace, with the full arbitrary-parameter
+combinatorial rank. -/
+theorem support_trace {n d : ℕ} (hn : 0 < n) :
+    trace (supportProjector n d) = (supportRank n d : ℂ) := by
+  classical
+  have hcard := support_rank_card (d := d) hn
+  have h : (∑ x : Word (Fin d) n,
+      if (Finset.univ.image x).card ≤ 2 then (1 : ℂ) else 0) =
+      (Fintype.card {x : Word (Fin d) n // (Finset.univ.image x).card ≤ 2} : ℂ) := by
+    simp [Fintype.card_subtype, Finset.sum_boole]
+  simpa only [supportProjector, trace_diagonal, hcard] using h
+
+/-- Strict rank inequalities use the actual missing computational Q-vector. -/
+theorem support_rank_bounds {n d : ℕ} (hn : 3 ≤ n) (hd : 3 ≤ d) :
+    d < supportRank n d ∧ supportRank n d < wordCount n d := by
+  have hp : 1 < 2 ^ (n - 1) := by
+    have he : n - 1 ≠ 0 := by omega
+    exact Nat.one_lt_pow he (by norm_num)
+  have hk : 0 < cutCount n := by unfold cutCount; omega
+  constructor
+  · unfold supportRank
+    have hh : 0 < cutCount n * d * (d - 1) := Nat.mul_pos (Nat.mul_pos hk (by omega)) (by omega)
+    omega
+  · have h := Fintype.card_lt_of_injective_of_notMem
+      (fun x : {x : Word (Fin d) n // (Finset.univ.image x).card ≤ 2} => x.1)
+      Subtype.val_injective (b := qWord (n := n) hd) (by
+        rintro ⟨x,hx⟩
+        exact (qWord_outside hn hd) (hx ▸ x.2))
+    rw [support_rank_card (by omega)] at h
+    simpa [wordCount, Word] using h
+
+private lemma basis_projector_sum {ι : Type*} [Fintype ι] [DecidableEq ι] :
+    (∑ x : ι, rankOneDensity (Pi.single x (1 : ℂ))) = (1 : Matrix ι ι ℂ) := by
+  ext i j
+  simp only [Matrix.sum_apply, rankOneDensity, vecMulVec_apply, Pi.star_apply]
+  simp [Pi.single_apply, Matrix.one_apply]
+
+/-- An explicit finite computational-basis/GHZ ensemble for the noisy state.
+This also proves density and roof nonvacuity before any optimizing ensemble
+is used. -/
+def noisyWeights (n d : ℕ) (p : ℝ) : Unit ⊕ Word (Fin d) n → ℝ
+  | .inl _ => 1 - p
+  | .inr _ => p / (wordCount n d : ℝ)
+
+def noisyStates (n d : ℕ) : Unit ⊕ Word (Fin d) n → Word (Fin d) n → ℂ
+  | .inl _ => ghz n d
+  | .inr x => Pi.single x 1
+
+private lemma noisy_ensemble_data {n d : ℕ} (hn : 0 < n) (hd : 0 < d)
+    {p : ℝ} (hp : 0 ≤ p) (hp1 : p ≤ 1) :
+    (∀ i, 0 ≤ noisyWeights n d p i) ∧
+      (∑ i, noisyWeights n d p i) = 1 ∧
+      (∀ i, IsUnitState (noisyStates n d i)) ∧
+      noisyGhz n d p = ∑ i, noisyWeights n d p i • rankOneDensity (noisyStates n d i) := by
+  classical
+  have hM : (0 : ℝ) < wordCount n d := by
+    unfold wordCount
+    exact_mod_cast (pow_pos hd n)
+  refine ⟨?_, ?_, ?_, ?_⟩
+  · intro i
+    cases i <;> simp only [noisyWeights]
+    · exact sub_nonneg.mpr hp1
+    · exact div_nonneg hp hM.le
+  · simp only [Fintype.sum_sum_type, noisyWeights, Finset.sum_const, Finset.card_univ,
+      Fintype.card_unit, Fintype.card_fun, Fintype.card_fin, one_nsmul, nsmul_eq_mul]
+    simp only [Nat.cast_one, one_mul]
+    change 1 - p + (wordCount n d : ℝ) * (p / wordCount n d) = 1
+    field_simp
+    <;> ring
+  · intro i
+    cases i with
+    | inl _ => exact ghz_unit hn hd
+    | inr x => exact basis_unit x
+  · simp only [Fintype.sum_sum_type, noisyWeights, noisyStates, Fintype.sum_unique,
+      ← Finset.smul_sum, basis_projector_sum]
+    unfold noisyGhz wordCount
+    push_cast
+    exact add_comm _ _
+
+def noisyDensity {n d : ℕ} (hn : 0 < n) (hd : 0 < d)
+    (p : ℝ) (hp : 0 ≤ p) (hp1 : p ≤ 1) :
+    D5.S3.Quantum.Foundation.FiniteStateChannel.DensityState (Word (Fin d) n) :=
+  ensembleDensity (noisyWeights n d p) (noisyStates n d)
+    (noisy_ensemble_data hn hd hp hp1).1
+    (noisy_ensemble_data hn hd hp hp1).2.1
+    (noisy_ensemble_data hn hd hp hp1).2.2.1
+
+private lemma noisyDensity_matrix {n d : ℕ} (hn : 0 < n) (hd : 0 < d)
+    (p : ℝ) (hp : 0 ≤ p) (hp1 : p ≤ 1) :
+    CStarMatrix.ofMatrix.symm (noisyDensity hn hd p hp hp1).1 = noisyGhz n d p := by
+  exact (noisy_ensemble_data hn hd hp hp1).2.2.2.symm
+
+private def pushMatrix {ι κ : Type*} (e : ι ↪ κ) (m : Matrix ι ι ℂ) : Matrix κ κ ℂ := by
+  classical
+  exact fun x y => if hx : ∃ i, e i = x then
+    if hy : ∃ j, e j = y then m hx.choose hy.choose else 0 else 0
+
+private lemma pushMatrix_apply {ι κ : Type*} (e : ι ↪ κ) (m : Matrix ι ι ℂ) (i j : ι) :
+    pushMatrix e m (e i) (e j) = m i j := by
+  classical
+  have hi : ∃ k, e k = e i := ⟨i,rfl⟩
+  have hj : ∃ k, e k = e j := ⟨j,rfl⟩
+  have hi' : hi.choose = i := e.injective hi.choose_spec
+  have hj' : hj.choose = j := e.injective hj.choose_spec
+  simp only [pushMatrix, dif_pos hi, dif_pos hj, hi', hj']
+
+private lemma pushMatrix_off_left {ι κ : Type*} (e : ι ↪ κ) (m : Matrix ι ι ℂ) (x y : κ)
+    (hx : ¬ ∃ i, e i = x) : pushMatrix e m x y = 0 := by
+  classical
+  simp [pushMatrix,hx]
+
+private lemma pushMatrix_off_right {ι κ : Type*} (e : ι ↪ κ) (m : Matrix ι ι ℂ) (x y : κ)
+    (hy : ¬ ∃ j, e j = y) : pushMatrix e m x y = 0 := by
+  classical
+  simp [pushMatrix,hy]
+
+private lemma pushMatrix_add {ι κ : Type*} (e : ι ↪ κ) (a b : Matrix ι ι ℂ) :
+    pushMatrix e (a+b) = pushMatrix e a + pushMatrix e b := by
+  classical
+  ext x y
+  simp only [pushMatrix, Matrix.add_apply]
+  split_ifs <;> simp_all [pushMatrix]
+
+private lemma pushMatrix_smul {ι κ : Type*} (e : ι ↪ κ) (r : ℝ) (m : Matrix ι ι ℂ) :
+    pushMatrix e (r • m) = r • pushMatrix e m := by
+  classical
+  ext x y
+  simp only [pushMatrix, Matrix.smul_apply, smul_eq_mul, Complex.real_smul]
+  split_ifs <;> simp_all [pushMatrix]
+
+private lemma pushMatrix_sum {ι κ σ : Type*} [Fintype σ] (e : ι ↪ κ)
+    (m : σ → Matrix ι ι ℂ) : pushMatrix e (∑ t, m t) = ∑ t, pushMatrix e (m t) := by
+  classical
+  ext x y
+  by_cases hx : ∃ i, e i = x
+  · obtain ⟨i,rfl⟩ := hx
+    by_cases hy : ∃ j, e j = y
+    · obtain ⟨j,rfl⟩ := hy
+      simp only [Matrix.sum_apply, pushMatrix_apply]
+    · simp only [Matrix.sum_apply, pushMatrix_off_right e _ _ _ hy, Finset.sum_const_zero]
+  · simp only [Matrix.sum_apply, pushMatrix_off_left e _ _ _ hx, Finset.sum_const_zero]
+
+private lemma pushMatrix_projector {ι κ : Type*} [Fintype ι] (e : ι ↪ κ) (c : ι → ℂ) :
+    pushMatrix e (rankOneDensity c) = rankOneDensity (pushVector e c) := by
+  classical
+  ext x y
+  by_cases hx : ∃ i, e i = x
+  · obtain ⟨i,rfl⟩ := hx
+    by_cases hy : ∃ j, e j = y
+    · obtain ⟨j,rfl⟩ := hy
+      simp only [pushMatrix_apply, rankOneDensity, vecMulVec_apply, Pi.star_apply, pushVector_apply]
+    · rw [pushMatrix_off_right e _ _ _ hy]
+      simp [rankOneDensity, vecMulVec_apply, Pi.star_apply, pushVector_off e c y hy]
+  · rw [pushMatrix_off_left e _ _ _ hx]
+    simp [rankOneDensity, vecMulVec_apply, Pi.star_apply, pushVector_off e c x hx]
+
+private def phaseCutCoefficient {d : ℕ} (α β : ℝ) (θ : Fin d → ZMod 3) (ij : Fin d × Fin d) : ℂ :=
+  if ij.1 = ij.2 then ((β + (α - β) / d : ℝ) : ℂ)
+  else (((α - β) / d : ℝ) : ℂ) * phaseCharacter (pairCoefficient ij.1 ij.2) θ
+
+private lemma phaseCutCoefficient_eq {d : ℕ} (hd : 0 < d) (α β : ℝ)
+    (θ : Fin d → ZMod 3) (ij : Fin d × Fin d) :
+    phaseCutCoefficient α β θ ij =
+      (if ij.1 = ij.2 then (β : ℂ) else 0) +
+        ((α - β : ℝ) : ℂ) * phaseVector θ ij.1 * star (phaseVector θ ij.2) := by
+  rw [mul_assoc,phaseVector_pair hd]
+  by_cases hij : ij.1 = ij.2
+  · have hz : pairCoefficient ij.1 ij.2 = 0 := (pairCoefficient_eq_zero_iff _ _).mpr hij
+    simp [phaseCutCoefficient,hij,pairCoefficient,phaseCharacter]
+    push_cast
+    ring
+  · simp only [phaseCutCoefficient,hij,ite_false,zero_add]
+    push_cast
+    ring
+
+private lemma phase_coefficient_gram {d : ℕ} (α β : ℝ) (ij kl : Fin d × Fin d) :
+    (∑ θ : Fin d → ZMod 3, phaseCutCoefficient α β θ ij *
+      star (phaseCutCoefficient α β θ kl)) =
+      if ij.1 = ij.2 ∧ kl.1 = kl.2 then
+        ((3 ^ d : ℕ) : ℂ) * (((β + (α - β) / d)^2 : ℝ) : ℂ)
+      else if ij = kl then ((3 ^ d : ℕ) : ℂ) * ((((α - β) / d)^2 : ℝ) : ℂ) else 0 := by
+  classical
+  let γ : ℂ := ((β + (α - β) / d : ℝ) : ℂ)
+  let δ : ℂ := (((α - β) / d : ℝ) : ℂ)
+  have hγ : star γ = γ := by simp [γ]
+  have hδ : star δ = δ := by simp [δ]
+  have hstar (r : ℝ) (z : ℂ) : star ((r : ℂ) * z) = (r : ℂ) * star z := by
+    simp only [star_mul]
+    simp
+    <;> ring
+  by_cases hij : ij.1 = ij.2
+  · by_cases hkl : kl.1 = kl.2
+    · simp [phaseCutCoefficient,hij,hkl,pow_two]
+    · have hne : ij ≠ kl := by intro h; exact hkl (h ▸ hij)
+      simp only [phaseCutCoefficient,hij,hkl,ite_true,ite_false,true_and,and_false,
+        if_neg hne,hstar]
+      change (∑ θ, γ * (δ * star (phaseCharacter (pairCoefficient kl.1 kl.2) θ))) = 0
+      simp only [← mul_assoc, ← Finset.mul_sum, ← star_sum, pair_phase_sum, if_neg hkl,
+        Nat.cast_zero, star_zero, mul_zero]
+  · by_cases hkl : kl.1 = kl.2
+    · have hne : ij ≠ kl := by intro h; exact hij (h.symm ▸ hkl)
+      simp only [phaseCutCoefficient,hij,hkl,ite_true,ite_false,false_and,
+        if_neg hne]
+      change (∑ θ, δ * phaseCharacter (pairCoefficient ij.1 ij.2) θ * star γ) = 0
+      rw [hγ, ← Finset.sum_mul, ← Finset.mul_sum, pair_phase_sum, if_neg hij]
+      simp
+    · have he : ((ij.1 = kl.1 ∧ ij.2 = kl.2) ↔ ij = kl) := Prod.ext_iff.symm
+      simp only [phaseCutCoefficient,hij,hkl,ite_false,false_and,hstar]
+      change (∑ θ, (δ * phaseCharacter (pairCoefficient ij.1 ij.2) θ) *
+        (δ * star (phaseCharacter (pairCoefficient kl.1 kl.2) θ))) = _
+      have hterm (θ : Fin d → ZMod 3) :
+          (δ * phaseCharacter (pairCoefficient ij.1 ij.2) θ) *
+            (δ * star (phaseCharacter (pairCoefficient kl.1 kl.2) θ)) =
+          δ^2 * (phaseCharacter (pairCoefficient ij.1 ij.2) θ *
+            star (phaseCharacter (pairCoefficient kl.1 kl.2) θ)) := by ring
+      simp only [hterm, ← Finset.mul_sum, pair_cross_phase_sum, hij, false_and, false_or, he]
+      by_cases h : ij = kl <;> simp [h,δ,pow_two,mul_comm]
+
+private lemma basis_coefficient_gram {d : ℕ} (α β : ℝ) (i k : Fin d) :
+    (∑ j : Fin d, (if i = j then (α : ℂ) else β) *
+      star (if k = j then (α : ℂ) else β)) =
+      (((d : ℝ) * β^2 + 2 * β * (α - β) +
+        (if i = k then (α - β)^2 else 0) : ℝ) : ℂ) := by
+  classical
+  have he (i j : Fin d) : (if i = j then (α : ℂ) else β) =
+      (β : ℂ) + (if i = j then ((α - β : ℝ) : ℂ) else 0) := by
+    by_cases h : i = j <;> simp [h] <;> push_cast <;> ring
+  have ht (j : Fin d) :
+      (if i = j then (α : ℂ) else β) * star (if k = j then (α : ℂ) else β) =
+      (β^2 : ℝ) + (if i = j then ((β * (α - β) : ℝ) : ℂ) else 0) +
+        (if k = j then ((β * (α - β) : ℝ) : ℂ) else 0) +
+        (if i = j ∧ k = j then (((α - β)^2 : ℝ) : ℂ) else 0) := by
+    by_cases hi : i = j <;> by_cases hk : k = j <;> simp [hi,hk] <;> push_cast <;> ring
+  simp only [ht, Finset.sum_add_distrib, Finset.sum_const, Finset.card_univ,
+    Fintype.card_fin, nsmul_eq_mul, Finset.sum_ite_eq, Finset.mem_univ, ite_true]
+  have hlast : (∑ j : Fin d, if i = j ∧ k = j then (((α - β)^2 : ℝ) : ℂ) else 0) =
+      if i = k then (((α - β)^2 : ℝ) : ℂ) else 0 := by
+    by_cases hik : i = k
+    · subst k
+      simp
+    · rw [if_neg hik]
+      apply Finset.sum_eq_zero
+      intro j hj
+      have hh : ¬ (i = j ∧ k = j) := by rintro ⟨rfl,rfl⟩; exact hik rfl
+      simp [hh,hik]
+  rw [hlast]
+  split_ifs <;> push_cast <;> ring
+
+/-- The piecewise optimum is exactly the source's truncated radical on the
+entire closed triangle, including the zero and fidelity boundaries. -/
+theorem twoMeanOptimum_max {d : ℕ} (hd : 2 ≤ d) {f y : ℝ}
+    (hf : 0 ≤ f) (hfy : f ≤ y) :
+    twoMeanOptimum d f y =
+      (max (Real.sqrt ((d - 1 : ℝ) * f) - Real.sqrt (y - f)) 0)^2 / d := by
+  have hdR : (2 : ℝ) ≤ d := by exact_mod_cast hd
+  have hA : 0 ≤ (d - 1 : ℝ) * f := mul_nonneg (by linarith) hf
+  have hB : 0 ≤ y - f := sub_nonneg.mpr hfy
+  by_cases h : (d : ℝ) * f ≤ y
+  · have hr : Real.sqrt ((d - 1 : ℝ) * f) ≤ Real.sqrt (y - f) :=
+      Real.sqrt_le_sqrt (by nlinarith)
+    simp [twoMeanOptimum,h,max_eq_right (sub_nonpos.mpr hr)]
+  · have hr : Real.sqrt (y - f) ≤ Real.sqrt ((d - 1 : ℝ) * f) :=
+      Real.sqrt_le_sqrt (by nlinarith)
+    rw [twoMeanOptimum,if_neg h,max_eq_left (sub_nonneg.mpr hr)]
+    unfold twoMeanValue
+    rw [Real.sqrt_mul hA]
+    have hS := Real.sq_sqrt hA
+    have hT := Real.sq_sqrt hB
+    congr 1
+    nlinarith
+
+private lemma twoMeanOptimum_nonneg {d : ℕ} (hd : 2 ≤ d) {f y : ℝ}
+    (hf : 0 ≤ f) (hfy : f ≤ y) : 0 ≤ twoMeanOptimum d f y := by
+  rw [twoMeanOptimum_max hd hf hfy]
+  positivity
+
+/-- The diagonal projector onto the constant computational words. -/
+def constantProjector (n d : ℕ) : Matrix (Word (Fin d) n) (Word (Fin d) n) ℂ := by
+  classical
+  exact diagonal (fun x => if ∃ j : Fin d, ∀ k, x k = j then 1 else 0)
+
+/-- The off-constant sector belonging to one actual bipartition. -/
+def cutOffProjector {n d : ℕ} (a : Finset (Fin n)) (ha : a.Nonempty) (hc : aᶜ.Nonempty) :
+    Matrix (Word (Fin d) n) (Word (Fin d) n) ℂ := by
+  classical
+  exact pushMatrix (cutEmbedding a ha hc) (diagonal (fun ij => if ij.1 ≠ ij.2 then 1 else 0))
+
+private lemma cutEmbedding_diagonal {n d : ℕ} (a : Finset (Fin n)) (ha : a.Nonempty)
+    (hc : aᶜ.Nonempty) (j : Fin d) : cutEmbedding a ha hc (j,j) = (fun _ => j) := by
+  funext k
+  simp [cutEmbedding,Finset.piecewise]
+
+private lemma cutEmbedding_isConstant {n d : ℕ} (a : Finset (Fin n)) (ha : a.Nonempty)
+    (hc : aᶜ.Nonempty) (ij : Fin d × Fin d) :
+    (∃ j : Fin d, ∀ k, cutEmbedding a ha hc ij k = j) ↔ ij.1 = ij.2 := by
+  constructor
+  · rintro ⟨j,hj⟩
+    obtain ⟨k,hk⟩ := ha
+    obtain ⟨l,hl⟩ := hc
+    have h1 := hj k
+    have h2 := hj l
+    simp [cutEmbedding,hk] at h1
+    simp [cutEmbedding,Finset.mem_compl.mp hl] at h2
+    exact h1.trans h2.symm
+  · intro h
+    refine ⟨ij.1,?_⟩
+    intro k
+    simp [cutEmbedding,Finset.piecewise,h]
+
+private lemma ghz_cutEmbedding {n d : ℕ} (a : Finset (Fin n)) (ha : a.Nonempty)
+    (hc : aᶜ.Nonempty) (ij : Fin d × Fin d) :
+    ghz n d (cutEmbedding a ha hc ij) =
+      if ij.1 = ij.2 then (Real.sqrt d : ℂ)⁻¹ else 0 := by
+  simp only [ghz,cutEmbedding_isConstant]
+
+private lemma ghz_off_cutEmbedding {n d : ℕ} (a : Finset (Fin n)) (ha : a.Nonempty)
+    (hc : aᶜ.Nonempty) (x : Word (Fin d) n) (hx : ¬ ∃ ij, cutEmbedding a ha hc ij = x) :
+    ghz n d x = 0 := by
+  have h : ¬ ∃ j : Fin d, ∀ k, x k = j := by
+    rintro ⟨j,hj⟩
+    exact hx ⟨(j,j),(cutEmbedding_diagonal a ha hc j).trans (funext hj).symm⟩
+  simp [ghz,h]
+
+private lemma cut_coherent_matrix {n d : ℕ} (hd : 0 < d)
+    (a : Finset (Fin n)) (ha : a.Nonempty) (hc : aᶜ.Nonempty) :
+    pushMatrix (cutEmbedding a ha hc)
+      (Matrix.of fun ij kl => if ij.1 = ij.2 ∧ kl.1 = kl.2 then 1 else 0) =
+      (d : ℝ) • rankOneDensity (ghz n d) := by
+  classical
+  have hroot : (Real.sqrt d : ℂ)^2 = (d : ℂ) := by
+    exact_mod_cast Real.sq_sqrt (Nat.cast_nonneg d)
+  have hroot0 : (Real.sqrt d : ℂ) ≠ 0 := by
+    exact_mod_cast (Real.sqrt_pos.mpr (show (0 : ℝ) < d by exact_mod_cast hd)).ne'
+  have hscalar : (d : ℂ) * (Real.sqrt d : ℂ)⁻¹ * (Real.sqrt d : ℂ)⁻¹ = 1 := by
+    rw [← hroot]
+    field_simp
+  ext x y
+  by_cases hx : ∃ ij, cutEmbedding a ha hc ij = x
+  · obtain ⟨ij,rfl⟩ := hx
+    by_cases hy : ∃ kl, cutEmbedding a ha hc kl = y
+    · obtain ⟨kl,rfl⟩ := hy
+      rw [pushMatrix_apply]
+      simp only [Matrix.smul_apply,rankOneDensity,vecMulVec_apply,Pi.star_apply,ghz_cutEmbedding,
+        Complex.real_smul,Matrix.of_apply]
+      by_cases hij : ij.1 = ij.2 <;> by_cases hkl : kl.1 = kl.2 <;>
+        simp [hij,hkl,← mul_assoc,hscalar]
+    · rw [pushMatrix_off_right _ _ _ _ hy]
+      simp [rankOneDensity,vecMulVec_apply,Pi.star_apply,ghz_off_cutEmbedding a ha hc y hy]
+  · rw [pushMatrix_off_left _ _ _ _ hx]
+    simp [rankOneDensity,vecMulVec_apply,Pi.star_apply,ghz_off_cutEmbedding a ha hc x hx]
+
+private lemma phase_raw_matrix {n d : ℕ} (hd : 0 < d)
+    (a : Finset (Fin n)) (ha : a.Nonempty) (hc : aᶜ.Nonempty) (α β : ℝ) :
+    (∑ θ : Fin d → ZMod 3, rankOneDensity (cutState a ha hc α β (phaseVector θ))) =
+      ((3 ^ d : ℕ) * (β + (α - β) / d)^2 * d : ℝ) • rankOneDensity (ghz n d) +
+        ((3 ^ d : ℕ) * ((α - β) / d)^2 : ℝ) • cutOffProjector a ha hc := by
+  classical
+  have he (θ : Fin d → ZMod 3) :
+      cutState a ha hc α β (phaseVector θ) =
+        pushVector (cutEmbedding a ha hc) (phaseCutCoefficient α β θ) := by
+    unfold cutState
+    congr 1
+    funext ij
+    exact (phaseCutCoefficient_eq hd α β θ ij).symm
+  simp_rw [he, ← pushMatrix_projector]
+  rw [← pushMatrix_sum]
+  have hm : (∑ θ : Fin d → ZMod 3, rankOneDensity (phaseCutCoefficient α β θ)) =
+      ((3 ^ d : ℕ) * (β + (α - β) / d)^2 : ℝ) •
+        (Matrix.of fun ij kl => if ij.1 = ij.2 ∧ kl.1 = kl.2 then (1 : ℂ) else 0) +
+      ((3 ^ d : ℕ) * ((α - β) / d)^2 : ℝ) •
+        diagonal (fun ij : Fin d × Fin d => if ij.1 ≠ ij.2 then (1 : ℂ) else 0) := by
+    ext ij kl
+    simp only [Matrix.sum_apply,rankOneDensity,vecMulVec_apply,Pi.star_apply,phase_coefficient_gram,
+      Matrix.add_apply,Matrix.smul_apply,Complex.real_smul,diagonal_apply,Matrix.of_apply]
+    by_cases hij : ij.1 = ij.2 <;> by_cases hkl : kl.1 = kl.2 <;>
+      by_cases heq : ij = kl <;> simp_all <;> push_cast <;> ring
+  rw [hm,pushMatrix_add,pushMatrix_smul,pushMatrix_smul,cut_coherent_matrix hd a ha hc]
+  rw [smul_smul]
+  rfl
+
+private lemma ghz_constant_matrix {n d : ℕ} (hd : 0 < d) (i j : Fin d) :
+    rankOneDensity (ghz n d) (fun _ => i) (fun _ => j) = (1 / (d : ℂ)) := by
+  have hroot : (Real.sqrt d : ℂ)^2 = (d : ℂ) := by
+    exact_mod_cast Real.sq_sqrt (Nat.cast_nonneg d)
+  have hinv : (Real.sqrt d : ℂ)⁻¹ * (Real.sqrt d : ℂ)⁻¹ = (d : ℂ)⁻¹ := by
+    rw [← mul_inv,← pow_two,hroot]
+  have hi : ∃ a : Fin d, ∀ _k : Fin n, i = a := ⟨i,fun _ => rfl⟩
+  have hj : ∃ a : Fin d, ∀ _k : Fin n, j = a := ⟨j,fun _ => rfl⟩
+  simpa [rankOneDensity,vecMulVec_apply,Pi.star_apply,ghz,hi,hj] using hinv
+
+private lemma constantProjector_constant {n d : ℕ} (hn : 0 < n) (i j : Fin d) :
+    constantProjector n d (fun _ => i) (fun _ => j) = if i = j then 1 else 0 := by
+  classical
+  have he : ((fun _ : Fin n => i) = fun _ : Fin n => j) ↔ i = j :=
+    ⟨fun h => constant_word_injective hn h,fun h => h ▸ rfl⟩
+  have hi : ∃ a : Fin d, ∀ _k : Fin n, i = a := ⟨i,fun _ => rfl⟩
+  simp [constantProjector,diagonal_apply,he,hi]
+
+private lemma constantProjector_off {n d : ℕ} (x y : Word (Fin d) n)
+    (hx : ¬ ∃ j : Fin d, ∀ k, x k = j) : constantProjector n d x y = 0 := by
+  classical
+  simp [constantProjector,diagonal_apply,hx]
+
+private lemma basis_raw_matrix {n d : ℕ} (hn : 0 < n) (hd : 0 < d) (α β : ℝ) :
+    (∑ j : Fin d, rankOneDensity (chiVector hn j α β)) =
+      ((d : ℝ)*((d : ℝ)*β^2+2*β*(α-β))) • rankOneDensity (ghz n d) +
+        (α-β)^2 • constantProjector n d := by
+  classical
+  have hgoff (x : Word (Fin d) n) (hx : ¬ ∃ j : Fin d, ∀ k, x k = j) : ghz n d x = 0 := by
+    simp [ghz,hx]
+  have hcoff (j : Fin d) (x : Word (Fin d) n) (hx : ¬ ∃ j : Fin d, ∀ k, x k = j) :
+      chiVector hn j α β x = 0 := constantVector_off hn _ _ hx
+  have hdC : (d : ℂ) ≠ 0 := by exact_mod_cast hd.ne'
+  ext x y
+  by_cases hx : ∃ i : Fin d, ∀ k, x k = i
+  · obtain ⟨i,hi⟩ := hx
+    have hxi := funext hi
+    subst x
+    by_cases hy : ∃ k : Fin d, ∀ l, y l = k
+    · obtain ⟨k,hk⟩ := hy
+      have hyk := funext hk
+      subst y
+      simp only [Matrix.sum_apply,chiVector,constantVector_apply,rankOneDensity,vecMulVec_apply,
+        Pi.star_apply]
+      rw [basis_coefficient_gram]
+      change _ = (((d : ℝ)*((d : ℝ)*β^2+2*β*(α-β))) • rankOneDensity (ghz n d))
+        (fun _ => i) (fun _ => k) + ((α-β)^2 • constantProjector n d) (fun _ => i) (fun _ => k)
+      rw [Matrix.smul_apply,Matrix.smul_apply,ghz_constant_matrix hd,constantProjector_constant hn]
+      split_ifs <;> simp only [Complex.real_smul,mul_one,mul_zero,add_zero] <;>
+        push_cast <;> field_simp <;> ring
+    · have hne : (fun _ : Fin n => i) ≠ y := by
+        intro h
+        exact hy ⟨i,fun k => (congrFun h k).symm⟩
+      simp [Matrix.sum_apply,rankOneDensity,vecMulVec_apply,Pi.star_apply,hcoff _ y hy,
+        hgoff y hy,constantProjector,diagonal_apply,hne]
+  · simp [Matrix.sum_apply,rankOneDensity,vecMulVec_apply,Pi.star_apply,hcoff _ x hx,
+      hgoff x hx,constantProjector_off x y hx]
+
+private lemma pushVector_single {ι κ : Type*} [Fintype ι] [DecidableEq ι] [DecidableEq κ]
+    (e : ι ↪ κ) (i : ι) : pushVector e (Pi.single i (1 : ℂ)) = Pi.single (e i) 1 := by
+  ext x
+  by_cases hx : ∃ j, e j = x
+  · obtain ⟨j,rfl⟩ := hx
+    rw [pushVector_apply]
+    simp [Pi.single_apply,e.injective.eq_iff]
+  · rw [pushVector_off e _ x hx]
+    have hi : e i ≠ x := fun h => hx ⟨i,h⟩
+    simp [Pi.single_apply,hi,Ne.symm hi]
+
+private lemma diagonal_projector_sum {ι : Type*} [Fintype ι] [DecidableEq ι] (p : ι → Prop)
+    [DecidablePred p] :
+    diagonal (fun i => if p i then (1 : ℂ) else 0) =
+      ∑ i : ι, if p i then rankOneDensity (Pi.single i (1 : ℂ)) else 0 := by
+  rw [← Matrix.sum_single_eq_diagonal]
+  apply Finset.sum_congr rfl
+  intro c hc
+  by_cases hp : p c
+  · simp only [hp,ite_true]
+    ext i j
+    by_cases hi : i = c <;> by_cases hj : j = c <;>
+      simp [Matrix.single,rankOneDensity,vecMulVec_apply,Pi.star_apply,
+        Pi.single_apply,hi,hj,eq_comm] <;> aesop
+  · simp [hp]
+
+private lemma pushMatrix_diagonal_projector {ι κ : Type*} [Fintype ι]
+    [DecidableEq ι] [DecidableEq κ] (e : ι ↪ κ) (p : ι → Prop) [DecidablePred p] :
+    pushMatrix e (diagonal (fun i => if p i then (1 : ℂ) else 0)) =
+      ∑ i : ι, if p i then rankOneDensity (Pi.single (e i) (1 : ℂ)) else 0 := by
+  rw [diagonal_projector_sum,pushMatrix_sum]
+  apply Finset.sum_congr rfl
+  intro i hi
+  by_cases h : p i
+  · simp only [h,ite_true,pushMatrix_projector,pushVector_single]
+  · simp only [h,ite_false]
+    ext x y
+    simp [pushMatrix]
+
+private lemma cutOffProjector_basis {n d : ℕ} (a : Finset (Fin n)) (ha : a.Nonempty)
+    (hc : aᶜ.Nonempty) :
+    cutOffProjector a ha hc =
+      ∑ ij : OffPair d, rankOneDensity (Pi.single (cutEmbedding a ha hc ij.1) (1 : ℂ)) := by
+  classical
+  rw [cutOffProjector,pushMatrix_diagonal_projector]
+  rw [← Finset.sum_filter]
+  exact Finset.sum_subtype _ (by simp) _
+
+private lemma constantProjector_basis {n d : ℕ} (hn : 0 < n) :
+    constantProjector n d = ∑ j : Fin d, rankOneDensity (Pi.single (fun _ : Fin n => j) (1 : ℂ)) := by
+  classical
+  have he : (∑ x : Word (Fin d) n,
+      if ∃ j : Fin d, ∀ k, x k = j then rankOneDensity (Pi.single x (1 : ℂ)) else 0) =
+      ∑ j : Fin d, rankOneDensity (Pi.single (fun _ : Fin n => j) (1 : ℂ)) := by
+    rw [sum_supported_constants hn _ (by intro x hx; simp [hx])]
+    apply Finset.sum_congr rfl
+    intro j hj
+    rw [if_pos ⟨j,fun _ => rfl⟩]
+  simpa only [constantProjector,diagonal_projector_sum] using he
+
+private lemma sourceSector_eq {n d : ℕ} (hn : 0 < n) (s : SourceCut n hn) (ij : OffPair d) :
+    cutEmbedding s.1ᶜ (sourceCut_complement hn s)
+      (by simpa only [compl_compl] using sourceCut_nonempty hn s) ij.1 =
+      sourceCutWord hn s ij := by
+  classical
+  funext k
+  by_cases hk : k ∈ s.1 <;> simp [cutEmbedding,sourceCutWord,Finset.piecewise,hk]
+
+/-- The source's full disjoint projector decomposition, as actual complex
+matrices rather than a scalar rank count. -/
+theorem support_projector_decomposition {n d : ℕ} (hn : 0 < n) :
+    supportProjector n d = constantProjector n d +
+      ∑ s : SourceCut n hn, cutOffProjector s.1ᶜ (sourceCut_complement hn s)
+        (by simpa only [compl_compl] using sourceCut_nonempty hn s) := by
+  classical
+  have hfull : supportProjector n d =
+      ∑ z : SupportIndex n d hn, rankOneDensity (Pi.single (supportIndexWord hn z) (1 : ℂ)) := by
+    rw [supportProjector,diagonal_projector_sum]
+    rw [sum_on_embedding ⟨supportIndexWord hn,supportIndexWord_injective hn⟩ _ (by
+      intro x hx
+      have hnot : ¬ (Finset.univ.image x).card ≤ 2 := by
+        intro hs
+        exact hx (supportIndexWord_surjective hn x hs)
+      simp [hnot])]
+    apply Finset.sum_congr rfl
+    intro z hz
+    simp [supportIndexWord_supported hn z]
+  rw [hfull]
+  change (∑ z : Fin d ⊕ (SourceCut n hn × OffPair d), _) = _
+  rw [Fintype.sum_sum_type,Fintype.sum_prod_type,constantProjector_basis hn]
+  congr 1
+  apply Finset.sum_congr rfl
+  intro s hs
+  rw [cutOffProjector_basis]
+  apply Finset.sum_congr rfl
+  intro ij hij
+  rw [sourceSector_eq]
+  rfl
+
+private lemma optimal_matrix_parameters {d : ℕ} (hd : 2 ≤ d) {F : ℝ}
+    (hF : 1/(d : ℝ) ≤ F) (hF1 : F ≤ 1) :
+    (optimalAlpha d F-optimalBeta d F)^2/d = (1-F)/(d-1 : ℝ) ∧
+      (d : ℝ)*(optimalBeta d F+(optimalAlpha d F-optimalBeta d F)/d)^2 = F ∧
+      (d : ℝ)*(optimalBeta d F)^2+2*optimalBeta d F*(optimalAlpha d F-optimalBeta d F) =
+        F-(1-F)/(d-1 : ℝ) := by
+  have hdR : (2 : ℝ) ≤ d := by exact_mod_cast hd
+  have hd0 : (d : ℝ) ≠ 0 := by linarith
+  have hd1 : (d-1 : ℝ) ≠ 0 := by linarith
+  obtain ⟨_,_,hnorm,hmean,_⟩ := optimal_amplitudes hd hF hF1
+  have hm : (optimalAlpha d F+(d-1 : ℝ)*optimalBeta d F)^2 = F*d :=
+    (div_eq_iff hd0).mp hmean
+  have ht : (d-1 : ℝ)*(optimalAlpha d F-optimalBeta d F)^2 = (d : ℝ)*(1-F) := by
+    linear_combination (d : ℝ)*hnorm-hm
+  have ht' : (optimalAlpha d F-optimalBeta d F)^2/d = (1-F)/(d-1 : ℝ) := by
+    field_simp
+    linear_combination ht
+  have hg : (d : ℝ)*(optimalBeta d F+(optimalAlpha d F-optimalBeta d F)/d)^2 = F := by
+    field_simp
+    linear_combination hm
+  refine ⟨ht',hg,?_⟩
+  calc
+    _ = (d : ℝ)*(optimalBeta d F+(optimalAlpha d F-optimalBeta d F)/d)^2-
+        (optimalAlpha d F-optimalBeta d F)^2/d := by field_simp <;> ring
+    _ = _ := by rw [hg,ht']
+
+/-- The actual finite d-component basis average from the source. -/
+def basisAverage {n d : ℕ} (hn : 0 < n) (F : ℝ) : Matrix (Word (Fin d) n) (Word (Fin d) n) ℂ :=
+  (1/(d : ℝ)) • ∑ j : Fin d, rankOneDensity (chiVector hn j (optimalAlpha d F) (optimalBeta d F))
+
+/-- The actual finite 3^d-component independent-phase average from one cut. -/
+def phaseAverage {n d : ℕ} (a : Finset (Fin n)) (ha : a.Nonempty) (hc : aᶜ.Nonempty)
+    (F : ℝ) : Matrix (Word (Fin d) n) (Word (Fin d) n) ℂ :=
+  (1/((3^d : ℕ) : ℝ)) • ∑ θ : Fin d → ZMod 3,
+    rankOneDensity (cutState a ha hc (optimalAlpha d F) (optimalBeta d F) (phaseVector θ))
+
+/-- The full actual basis-average matrix J_F. -/
+theorem basis_average_matrix {n d : ℕ} (hn : 0 < n) (hd : 3 ≤ d)
+    {F : ℝ} (hF : 1/(d : ℝ) ≤ F) (hF1 : F ≤ 1) :
+    basisAverage hn F = F • rankOneDensity (ghz n d) +
+      ((1-F)/(d-1 : ℝ)) • (constantProjector n d-rankOneDensity (ghz n d)) := by
+  obtain ⟨ht,hg,hb⟩ := optimal_matrix_parameters (by omega : 2 ≤ d) hF hF1
+  have hd0 : (d : ℝ) ≠ 0 := by positivity
+  rw [basisAverage,basis_raw_matrix hn (by omega : 0 < d),smul_add,smul_smul,smul_smul]
+  have h1 : (1/(d : ℝ))*((d : ℝ)*((d : ℝ)*(optimalBeta d F)^2+
+      2*optimalBeta d F*(optimalAlpha d F-optimalBeta d F))) = F-(1-F)/(d-1 : ℝ) := by
+    calc
+      _ = (d : ℝ)*(optimalBeta d F)^2+2*optimalBeta d F*(optimalAlpha d F-optimalBeta d F) := by
+        field_simp
+      _ = _ := hb
+  have h2 : (1/(d : ℝ))*(optimalAlpha d F-optimalBeta d F)^2 = (1-F)/(d-1 : ℝ) := by
+    simpa [div_eq_mul_inv,mul_comm] using ht
+  rw [h1,h2,sub_smul,smul_sub]
+  abel
+
+/-- The full actual phase-average matrix H_{A,F}. Every off-diagonal entry
+is controlled by the independent-coordinate Gram identity in arbitrary d. -/
+theorem phase_average_matrix {n d : ℕ} (hd : 3 ≤ d)
+    (a : Finset (Fin n)) (ha : a.Nonempty) (hc : aᶜ.Nonempty)
+    {F : ℝ} (hF : 1/(d : ℝ) ≤ F) (hF1 : F ≤ 1) :
+    phaseAverage a ha hc F = F • rankOneDensity (ghz n d) +
+      ((1-F)/((d : ℝ)*(d-1 : ℝ))) • cutOffProjector a ha hc := by
+  obtain ⟨ht,hg,_⟩ := optimal_matrix_parameters (by omega : 2 ≤ d) hF hF1
+  have hd0 : (d : ℝ) ≠ 0 := by positivity
+  have hN : ((3^d : ℕ) : ℝ) ≠ 0 := by positivity
+  rw [phaseAverage,phase_raw_matrix (by omega : 0 < d) a ha hc,smul_add,smul_smul,smul_smul]
+  have h1 : (1/((3^d : ℕ) : ℝ))*(((3^d : ℕ) : ℝ)*
+      (optimalBeta d F+(optimalAlpha d F-optimalBeta d F)/d)^2*d) = F := by
+    calc
+      _ = (d : ℝ)*(optimalBeta d F+(optimalAlpha d F-optimalBeta d F)/d)^2 := by
+        field_simp
+        <;> ring
+      _ = _ := hg
+  have h2 : (1/((3^d : ℕ) : ℝ))*(((3^d : ℕ) : ℝ)*
+      ((optimalAlpha d F-optimalBeta d F)/d)^2) = (1-F)/((d : ℝ)*(d-1 : ℝ)) := by
+    calc
+      _ = ((optimalAlpha d F-optimalBeta d F)^2/d)/d := by field_simp <;> ring
+      _ = _ := by rw [ht]; field_simp <;> ring
+  rw [h1,h2]
 
 end
 end D5.S3.Quantum.Entanglement.Witness.NoisyGhzExactRoof
