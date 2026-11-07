@@ -1130,3 +1130,255 @@ Niestegge，[*Dynamical Correspondence in a Generalized Quantum Theory*，arXiv:
 相对 499.1，这在相同一般有限原资料上同时去掉额外相加和三表虚相位。相邻路线只查相加表但查所有实方向，这里查所有三标签但只查实闭合面，故不能把原始检查域说成全面更省。原无限载体仍用既有完整合同，同一个对象不换成有限截面，CountRead 也不删。完整条件量子理论的七项消费者逐一接回：原质量给 Born，原响应给可观测量和效果，原实际复合给相关性，整台箭头的同源参考给 CP，每台仪器的完整输出失败与校准给更新，全部合法历史未来及真实遗忘返回保持同一过程，物理钟能量与共同作用量才给动力学尺度。静态数学推导不能替这些来源付账，也不把数学三维角当成物理空间或实际量子控制。
 
 ## 追加锚 C128RAYSATURATION（本行以下为增补区）
+
+## 513. 纯实闭合几何与原输出外延性的完整入口
+
+**定义 513.1（一般有限原资料与纯实共同合同）。** 固定 504.1 的同一个有限原有序空间 $(E,K,u,N,\mathcal P)$、质量 $m_\alpha=\alpha(u)$、原实数作用及同一个正有理 $0<\theta\le1$。全部原对象和三标签续卷定义 8.2–8.4 的实际来源量词保留。旧 $S,D:E^2\to E$ 起初仅为总映射；不预设 EJA、齐性、自对偶、对称锥，也不预设旧关系的线性、连续性或有界性。仍置
+
+$$
+b_\alpha(a,b)=\alpha(S(a,b)),\quad
+q_\alpha(a)=b_\alpha(a,a),\quad
+B_\alpha(a_1,\ldots,a_k)=[b_\alpha(a_i,a_j)],\quad
+g_\alpha(a,b)=b_\alpha(a,b)-\mathrm i\alpha(D(a,b)).
+\tag{513.1}
+$$
+
+记 $\mathsf R^{\rm fin}_{\Delta,\theta}$ 为以下五项的合取，均对全部原输入和原评价量化。
+
+1. 实际共轭对称 $g_\alpha(a,b)=\overline{g_\alpha(b,a)}$。这只要求两份旧值的对称关系，不要求复二表正。
+2. 全部至多二标签的实表 $B_\alpha$ 半正定，包含零、重复、全部原实平移及缩放。
+3. 任意原三标签满足实闭合面正性，全部原相加标签满足相加零平方：
+
+   $$
+   x^{\mathsf T}B_\alpha(a_1,a_2,a_3)x\ge0
+   \quad(x\in\mathbb R^3,\ \textstyle\sum_i x_i=0),\qquad
+   v^{\mathsf T}B_\alpha(a+b,a,b)v=0,
+   \quad v=(1,-1,-1).
+   \tag{513.2}
+   $$
+
+4. $S(u,u)=u$，且 $0\le e\le\theta u$ 时 $S(e,e)\le e$。
+5. 只保留唯一实部换括号式，记为 $\mathsf{TR}$：
+
+   $$
+   S(S(a,b),c)-S(a,S(b,c))
+   =D(D(a,b),c)-D(a,D(b,c)).
+   \tag{513.3}
+   $$
+
+这里没有复二表预算、三表虚相位、额外相加兼容、中央平移或外加输出张成条件。相加向量 $v$ 的系数和不是零，不把它当作闭合面中的零向量。
+
+**定义 513.2（只在原实际输出上的完整行外延性）。** 为避免把集合与行映射混记，写
+
+$$
+\mathcal O_D=\operatorname{ran}D=\{D(a,b):a,b\in E\},\qquad
+\mathcal A_D(p)=(c\mapsto D(p,c))\in E^E.
+\tag{513.4}
+$$
+
+完整行规则与输出内规则分别为
+
+$$
+\begin{aligned}
+\mathsf{Ext}_E(D):\quad &p,q\in\mathcal O_D,\quad
+(\forall c\in E)\ D(p,c)=D(q,c)\ \Longrightarrow\ p=q,\\
+\mathsf{Ext}_{\rm out}(D):\quad &p,q\in\mathcal O_D,\quad
+(\forall t\in\mathcal O_D)\ D(p,t)=D(q,t)\ \Longrightarrow\ p=q.
+\end{aligned}
+\tag{513.5}
+$$
+
+第一条准确说 $\mathcal A_D|_{\mathcal O_D}$ 单射；第二条就是[三标签续卷](AURIC_C128_THREE_LABEL_POSITIVITY_AND_ORIGINAL_RELATION_RIGIDITY.md)定义 40.1，那里把 $\mathcal O_D$ 记为 $A_D$。比较的是完整 $E$ 值函数的逐点相等，不是成比例的行，也不是行的值域相同。不要求整个 $E$ 上作用单射；原对象、原读数及质量均不取商。“实际输出”仅指同一个旧数学映射的值，不自动指物理可制备结果。
+
+完整有限候选定义为
+
+$$
+\mathsf C^{\rm fin}_{\Delta,\mathrm{ext},\mathbb R,\theta}
+=\mathsf R^{\rm fin}_{\Delta,\theta}\ \wedge\ \mathsf{Ext}_E(D),
+\tag{513.6}
+$$
+
+并逐项合取 513.1 中全部实际来源；其输出内形式把最后一项换为 $\mathsf{Ext}_{\rm out}(D)$。
+
+**命题 513.3（等价的显式零锚入口）。** 在 513.1 的其余条件下，实二表条款可等价替换为同一个旧 $S$ 的显式零锚
+
+$$
+S(0,a)=S(a,0)=0\quad(a\in E),
+\tag{513.7}
+$$
+
+同时仍保留任意原三标签的全部实闭合面。故零锚、实闭合三角、相加零平方、固定点、小效果、实际共轭、$\mathsf{TR}$ 和输出外延性给同一完整候选。没有缩小三角标签域。
+
+证明。实际共轭与原评价分离先给 $S$ 对称、$D$ 反对称。实二表及 $(0,0,0)$ 的相加零平方给 $q_\alpha(0)=0$，实 Cauchy–Schwarz 给 $b_\alpha(0,a)=0$，分离性给 (513.7)。反向，零锚使原三标签 $(a,b,0)$ 的闭合向量 $(r,s,-r-s)$ 平方准确等于 $(r,s)B_\alpha(a,b)(r,s)^{\mathsf T}$；任意实 $r,s$ 给二表正性，一标签是其限制。这个零锚只谈 $S$；没有顺带取得 $D(0,a)=0$。∎
+
+## 514. 旧实部的证明接口完全不消费复预算
+
+**定理 514.1（纯实粗界、连续对角与射线饱和）。** 只取 513.1 的前四项，甚至暂不用实闭合三角。对每个数学正泛函 $\beta\in K^*$，记 $b=\beta\circ S,q(a)=b(a,a),p=\sqrt q$、$m=\beta(u)$。则
+
+$$
+\begin{gathered}
+q(0)=0,\quad b(0,a)=0,\quad q(-a)=q(a),\quad b(a,-a)=-q(a),\\
+q(a)\le\frac{16m}{\theta}N(a)^2,\qquad
+|b(a,c)|\le\frac{16m}{\theta}N(a)N(c),\qquad
+N(S(a,c))\le\frac{16}{\theta}N(a)N(c),\\
+q(sv)=s^2q(v),\qquad b(sv,tv)=stq(v)\quad(s,t\in\mathbb R),
+\end{gathered}
+\tag{514.1}
+$$
+
+且每个 $q$ 连续，同一个旧 $S(sv,tv)=stS(v,v)$。这些是 481.2、498.1 中实部子论证在纯实前件下的结论；不包含它们关于 $g$ 或 $D$ 的结论。
+
+证明。先在原评价下论证。实二表只给 $q\ge0$、$|b(a,c)|\le p(a)p(c)$；实际共轭只用于 $S$ 对称。相加 $(0,0,0)$ 给 $q(0)=0$，实二表零行给 $b(0,a)=0$。相加 $(0,a,-a)$ 的平方零给
+
+$$
+0=q(a)+q(-a)+2b(a,-a)\ge(p(a)-p(-a))^2,
+\tag{514.2}
+$$
+
+故对角偶性及反向配对成立。相加 $((n+1)a,na,a)$、实二表界及归纳中已有的 $b(na,a)=nq(a)$ 给
+
+$$
+0\ge\bigl(p((n+1)a)-(n+1)p(a)\bigr)^2.
+\tag{514.3}
+$$
+
+归纳各步中达到上界的实配对也同时饱和；负号与整数除法遂给有理对角齐次。没有利用复模长界迫使任何虚部消失。
+
+对一般相加三元组置 $A=p(a),B=p(b),C=p(a+b)$，逐项只用实二表界，得到
+
+$$
+0\ge(C-A-B)^2-4AB,\qquad
+p(a+b)\le(\sqrt{p(a)}+\sqrt{p(b)})^2.
+\tag{514.4}
+$$
+
+对正有理 $r>N(a)$，原效果 $e_\pm=\theta(u\pm a/r)/2$ 在原窗口内。小效果给 $p(e_\pm)\le\sqrt{\theta m}$，有理对角齐次和 (514.4) 给
+
+$$
+p(a)=\frac r\theta p(e_+-e_-)\le4r\sqrt{m/\theta}.
+\tag{514.5}
+$$
+
+令有理 $r\downarrow N(a)$ 得对角粗界，再用实 Cauchy–Schwarz 得 $b$ 的界。这正是 481.2 所需的实预算；固定点与序资料保持原义，没有对尚未知可加的 $S$ 展开效果平方。
+
+置 $f=q^{1/4}$。弱三角与偶性给
+
+$$
+|f(a)-f(b)|\le f(a-b)
+\le(16m/\theta)^{1/4}N(a-b)^{1/2}.
+\tag{514.6}
+$$
+
+因此 $q$ 连续，有理逼近只对原实数作用及 $q$ 取极限，给全部实对角齐次。令 $Q=q(v)$；对 $s,t>0$ 定义
+
+$$
+\begin{aligned}
+d(s,t)&=stQ-b(sv,tv),&0\le d(s,t)\le2stQ,\\
+h(s,t)&=b(sv,-tv)+stQ,&0\le h(s,t)\le2stQ.
+\end{aligned}
+\tag{514.7}
+$$
+
+相加零平方的实展开准确给
+
+$$
+\begin{gathered}
+d(s,t)=d(s+t,s)+d(s+t,t),\qquad d(s,s)=0,\\
+h(s,t)=h(s-t,t)\ (s>t),\quad
+h(s,t)=h(s,t-s)\ (t>s),\quad h(s,s)=0.
+\tag{514.8}
+\end{gathered}
+$$
+
+后两递推使用先恢复的同号配对。对同号缺额，第一式及非负性使从较大坐标减去较小坐标时缺额不减；对异号缺额，相减时保持。若过程停止，末端为零；否则正坐标积趋零：最大坐标始终不超过初始最大值 $M$，若乘积有正下界 $L$，每步坐标和至少减少 $L/M$，矛盾。于是 (514.7) 使初始缺额也为零。两个负参数以 $-v$ 为方向，零参数用实零锚；$Q=0$ 直接由实二表界处理。这完整保留了 498.1 的实配对证明，删去了其中最后“复模长饱和迫使虚部零”的步骤；没有推出旧 $D(sv,tv)=0$。
+
+上述实不等式也全部传给数学 $\beta\in K^*$：对已检查实方向 $r$，原值 $X_r=\sum_{i,j}r_ir_jS(a_i,a_j)$ 被全部原评价读为非负，故 $X_r\in K$；相加零平方由分离性给 $X_v=0$。每个正 $\beta$ 保持它们及原小效果不等式。因此重用同一实证明即得 (514.1)。这不新增实际评价或准备；等价的有限维对偶表述仍是 $K^*=\overline{\operatorname{cone}\mathcal P}$。用原评价的 $|\alpha(S(a,c))|\le(16/\theta)m_\alpha N(a)N(c)$ 及原锥定义给原范数界，分离性给原值射线结论。零质量正泛函在整个 $E$ 上为零，整个证明不除以质量、平方或缺额。∎
+
+**定理 514.2（纯实连续性与零面运输）。** 在 513.1 前四项下，同一个旧 $S$ 联合连续；对 $F_\beta=K\cap\ker\beta$ 有
+
+$$
+\beta(S(x+z,y))=\beta(S(x,y))
+\quad(z\in\operatorname{span}_{\mathbb R}F_\beta).
+\tag{514.9}
+$$
+
+这是 505–506 所用的全部实部结论，仍不使用 $\mathsf{TR}$、输出外延性或旧 $D$ 的零行、界和正则性。
+
+证明。对每个正 $\beta$，只用 $b=\beta\circ S$ 定义 505.4 的 $\ell,d,H^c$。实闭合三角 $(x,y,c)$ 在 $(r,s,-r-s)$ 上的平方给
+
+$$
+\begin{pmatrix}\ell(x,c)&H^c(x,y)\\H^c(x,y)&\ell(y,c)\end{pmatrix}\ge0,
+\qquad |H^c(x,y)|^2\le\ell(x,c)\ell(y,c).
+\tag{514.10}
+$$
+
+实二表给 $\ell\ge0$，此实压缩给三角不等式，故 $d=\sqrt\ell$ 是伪度量，$d(x,0)=p(x)$。相加零平方的准确实展开仍为
+
+$$
+\ell(a+h,a)=2[b(a+h,h)-b(a,h)]-q(h)
+\le2p(h)[p(a+h)+p(a)].
+\tag{514.11}
+$$
+
+514.1 给 $p(h)\to0$ 及局部有界性，因此 $d(a+h,a)\to0$。伪度量反三角及 $2b(x,y)=q(x)+q(y)-d(x,y)^2$ 给 $b$ 的联合连续性。正对偶张成 $E^*$，选取其中一个有限线性基，得到原值 $S$ 联合连续。这里张成的是对偶空间 $E^*$，不是声称正泛函张成 $E$；也没有把中心化 $H^c$ 当作未知 $S$ 的双线性差分。
+
+若 $c\in F_\beta$，取 $\lambda>0$ 使 $0\le\lambda c\le\theta u$。实对角齐次与小效果给 $0\le\lambda^2q(c)\le\lambda\beta(c)=0$。所以全部 $q(tc)=0$，实 Cauchy–Schwarz 只给 $b(tc,y)=0$。把 $h=tc$ 代入 (514.11) 第一等式即得 $d(x+tc,x)=0$；伪度量使 $d(x+tc,y)=d(x,y)$ 及 $q(x+tc)=q(x)$，故 $b(x+tc,y)=b(x,y)$。有限次复合取得 (514.9)。505.1–506.1 中含 $g$ 的零行和 $D$ 的范数界在这里均未取得，也均未被消费。∎
+
+**定理 514.3（一般有限原锥上的纯实闭合恢复）。** 513.1 的前四项已使同一个旧 $S$ 实对称双线性；不要求任何旧 $D$ 的正则性。
+
+证明。507.1 是只关于原有限闭尖生成锥的分解，不含 $D$，可直接使用。对每个输出因子的正泛函，延为其他因子上零的正泛函；其他正因子属于其零面并张成相应输入因子。514.2 先删除第一输入的其他分量，$S$ 对称再删除第二输入的其他分量。因此 507.2 的因子依赖证明仍成立，未给旧 $D$ 分块。各独立一维因子上以 $w_i=\lambda_i(u)r_i$ 为原单位分量，514.1 的同线配对与 $S(u,u)=u$ 给 $\pi_iS(tw_i,rw_i)=trw_i$，没有先假设 $S(u,a)=a$。
+
+剩余 engaged 因子 $E_e$ 上固定 $b_e$，置 $F(x)=\pi_eS(x,b_e)$。514.1–514.2 给连续性、$F(0)=0$、全域线性增长，以及 507.3 的全部零面平移前件。该引理本身是一般映射定理，不含复表或 $D$，故可直接应用：全空间卷积保留零面恒等式；光滑化的每个导数满足 Niestegge §4 Lemma 3 的正零面判据，产生双向保锥指数；线性增长给正负全时间流，沿变分方程及线段取得全空间序同构。闭锥给 Archimedean、生成性给 directed，有限维紧底及 engaged 极射线的有限和给 Lemmens–van Gaans–van Imhoff Theorem 1.1 的 inf-sup hull 前件，于是每个流仿射。零时微分及去光滑化给 $F$ 仿射，$F(0)=0$ 才消去常量。所有这些条件均由纯实接口供应；不从缺失的复二表补借任何界。故 $F$ 实线性，再由 $S$ 对称得到双线性。全经典、无一维因子、零空间分别沿 507.1 的原边界处理。∎
+
+## 515. 接齐既有实入口后识别同一个旧复乘法
+
+**命题 515.1（共同实前件与输出规则的准确消费）。** 在 513.1 的同一一般有限原模型类和同一窗口中，513.6、其输出内形式、三标签续卷 32.2 与 40.2 的完整静态候选等价；并且在共同实合同上以下条件等价：
+
+$$
+\begin{aligned}
+\mathsf{Ext}_E(D)
+&\Longleftrightarrow\mathsf{Ext}_{\rm out}(D)
+\Longleftrightarrow\mathsf{Reg}(D)\\
+&\Longleftrightarrow\text{两槽的全部中央平移中性}
+\Longleftrightarrow\text{同一个旧 }S-\mathrm iD\text{ 的完整原复 }C^*\text{ 结构}.
+\end{aligned}
+\tag{515.1}
+$$
+
+中央集合准确用该卷 (25.1) 的旧 $S$ 定义；全部中央平移指 $D(a+z,b+w)=D(a,b)$ 对所有 $z,w\in Z_S$，不是仅 $D(z,b)=0$。完整原结构保持整个 $E,K,u,N$，包含全部有限原复 Gram 正性、虚部换括号、完整效果及正夹心。本命题是既有分类与恢复链在纯实闭合入口的消费接头，不另认领该分类或输出测试定理。
+
+证明。先不使用任一输出规则。514.3 后，对任意有限原实系数 $r_i$ 才可聚合为
+
+$$
+r^{\mathsf T}B_\alpha(a_1,\ldots,a_k)r
+=\alpha\!\left(S\!\left(\sum_i r_i a_i,\sum_i r_i a_i\right)\right)\ge0.
+\tag{515.2}
+$$
+
+特别是全部相加三表及其排列的实部现在整个 PSD；相加零平方仍是原前件。实际共轭、固定点、小窗口和 $\mathsf{TR}$ 均逐项是 32.2 的原条件。因此准确补齐“32.2 只删 $\mathsf{Reg}$”的共同实入口，而不是调用仍要求复二表的 19.1／20.1 来填缺口。直接消费 33.1：先由其 26.1 第一实部子证明恢复原 EJA、真正单位和准确原平方锥，再由循环 $\mathsf{TR}$ 及逐元素真实二层输出覆盖取得
+
+$$
+\begin{gathered}
+E=Z\oplus V,\quad Z=Z_S,\quad V_D=V,\quad V\subseteq\mathcal O_D,\\
+\delta_a(c)=D(a_V,c),\qquad D(a,b)=\delta_a b+r(a,b),\quad r(a,b)\in Z,\\
+r(V,E)=0,\qquad r(D(a,b),c)=0,\qquad\ker(a\mapsto\delta_a)=Z.
+\tag{515.3}
+\end{gathered}
+$$
+
+辅助 $\delta$ 已是原平方背景上的实双线性动力对应，$S-\mathrm i\delta$ 已是辅助复 $C^*$ 乘法。这里先有逐个 $v=D(D(x,y),z)$ 的实际覆盖，才认定每个 $V$ 行线性；不能用 $V_D$ 的线性张成代替这一步。旧 $D(0,c)=0$、输出行线性及辅助核结论都在这时由 33.1 得到，没有从纯实二表提前借出。
+
+对任意 $p,q\in\mathcal O_D$，(515.3) 给 $D(p,c)=\delta_p c$、$D(q,c)=\delta_qc$。这些辅助行消灭 $Z$，且 $V\subseteq\mathcal O_D$，所以两行在全部输出上相等，当且仅当在全 $E$ 上相等；在共同实模型类内两个量词版本已等价。特别地，对每个原 $a,b$ 取
+
+$$
+p=D(a,b),\qquad q=\delta_a b=D(a_V,b_V)\in\mathcal O_D\cap V.
+\tag{515.4}
+$$
+
+由 $p-q\in Z$，它们的全部旧后续行相同；$\mathsf{Ext}_E$ 便给 $p=q$。这就是 41.1 中原值识别步骤的全第三元形式，因而直接取得 32.2 和 41.1 的其余结论。反向及输出内形式直接复用 41.1：恢复后 $\mathcal O_D=V$，若两输出行在输出上相等，$\delta_{p-q}$ 在 $V$ 及 $Z$ 上均零，故 $p-q\in V\cap Z=0$。
+
+此外 (515.3) 给 $\mathsf{Reg}(D)\Longleftrightarrow r=0$；全部中央平移使 $D(a,b)=D(a_V,b)\in V$，也给 $r=0$，反向由恢复后的双线性和消灭 $Z$ 给出。其与完整原复结构的等价直接消费 34.1–34.2、26.2 和 41.1，而非重做中心余项分类；原复乘法的全部正表来自 $\varphi_\alpha(z^*z)\ge0$，其中 $z=\sum_jz_ja_j$，正平方是 $z^*z$。完整结构反向供应全部实闭合表、原相加、各窗口、$\mathsf{TR}$ 及原输出规则，故两个完整候选同类等价。不同正有理窗口亦由完整效果结论等价。
+
+42.2 的有限非经典情形恰好两个数学输出测试、全经典与零空间零测试，均按原结论直接使用；不把它们重列为新定理或两台物理设备。全 $E$ 的作用仍容许中央核，故从未要求整个 $E$ 忠实。∎
+
+## 追加锚 C128RAYSATURATION（本行以下为增补区）
