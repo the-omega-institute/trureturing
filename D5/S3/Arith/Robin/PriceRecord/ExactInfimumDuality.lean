@@ -53,7 +53,7 @@ private lemma nested_log_mono {ell q₁ q₂ : ℝ} (hell : 0 < ell)
   have ha₁ : 0 ≤ log (1 + ell * q₁) / ell :=
     div_nonneg (log_nonneg (by linarith)) hell.le
   exact log_le_log (by linarith)
-    (add_le_add_left (div_le_div_of_nonneg_right hinner hell.le) 1)
+    (by linarith only [div_le_div_of_nonneg_right hinner hell.le])
 
 private lemma nested_log_one_lipschitz {ell q₁ q₂ : ℝ} (hell : 1 ≤ ell)
     (hq₁ : 0 ≤ q₁) (hq₂ : q₁ ≤ q₂) :
