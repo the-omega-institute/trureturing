@@ -10,14 +10,74 @@
 admission_basis: open-problem-resolution (#27078; Proved)
 escape_witness: none (external open-problem resolution)
 Direct frozen dependencies: KisrhombilleFaceCoordination (Simplex, support, graph,
-polygon, polygon_mem, polygon_card, distance, shell_finite);
+polygon, polygon_mem, polygon_card, root, distance, shell_finite);
 TeaCoordinationSequence (hexagon, hexagon_mem, hexagon_card);
 VertexPositionRatioRefutation (potential_dist).
+root: proof_shape=bind-only; consumers=distance, score_zero, geodesic, distance_formula,
+  shell_finite, ball_zero
+distance: proof_shape=bind-only; consumers=a, distance_formula, shell_finite, ball_mem, shell_zero
+a: proof_shape=bind-only; consumers=shell_succ, shell_zero, shell_one, shell_even, shell_odd,
+  shell_formula, result
+vertexScore: proof_shape=bind-only; consumers=score, score_nonneg, score_zero, score_step,
+  score_descent, slice_mem, slice_even_0, slice_even_2, slice_even_4, slice_odd_0, slice_odd_4,
+  slice_odd_1, slice_even_1, slice_odd_2_pos, slice_edges, slice_odd_2
+upScore: proof_shape=bind-only; consumers=score, score_nonneg, score_zero, score_step,
+  score_descent, slice_mem, slice_even_0, slice_even_2, slice_even_4, slice_odd_0, slice_odd_4,
+  slice_odd_1, slice_even_1, slice_odd_2_pos, slice_faces, slice_edges, slice_odd_2
+downScore: proof_shape=bind-only; consumers=score, score_nonneg, score_zero, score_step,
+  score_descent, slice_mem, slice_even_0, slice_even_2, slice_even_4, slice_odd_0, slice_odd_4,
+  slice_odd_1, slice_even_1, slice_odd_2_pos, slice_faces, slice_edges, slice_odd_2
+score: proof_shape=bind-only; consumers=score_nonneg, score_zero, score_step, score_descent,
+  geodesic, distance_formula, slice, slice_mem, slice_even_0, slice_even_2, slice_even_4,
+  slice_odd_0, slice_odd_4, slice_odd_1, slice_even_1, slice_odd_2_pos, slice_faces, slice_edges,
+  slice_odd_2, ball_mem, ball_zero
+score_nonneg: proof_shape=bind-only; consumers=score_step, geodesic, distance_formula, ball_mem,
+  ball_zero
+score_zero: proof_shape=bind-only; consumers=geodesic, ball_zero
+score_step: proof_shape=bind-only; consumers=score_descent, distance_formula
+score_descent: proof_shape=bind-only; consumers=geodesic
+geodesic: proof_shape=content; consumers=distance_formula
+distance_formula: proof_shape=bind-only; consumers=ball_mem, ball_zero
+shell_finite: proof_shape=bind-only; consumers=shell_succ
+slice: proof_shape=bind-only; consumers=slice_mem, slice_even_0, slice_even_2, slice_even_4,
+  slice_odd_0, slice_odd_4, slice_odd_1, slice_even_1, slice_odd_2_pos, slice_faces, slice_edges,
+  slice_odd_2, ball, ball_card_sum, ball_even, ball_odd
+slice_mem: proof_shape=bind-only; consumers=slice_even_0, slice_even_2, slice_even_4, slice_odd_0,
+  slice_odd_4, slice_odd_1, slice_even_1, slice_odd_2_pos, slice_faces, slice_edges, slice_odd_2,
+  ball_mem
+adjoin_rows_card: proof_shape=bind-only; consumers=slice_even_1, slice_odd_2_pos
+slice_even_0: proof_shape=bind-only; consumers=ball_even
+slice_even_2: proof_shape=bind-only; consumers=ball_even
+slice_even_4: proof_shape=bind-only; consumers=ball_even
+slice_odd_0: proof_shape=bind-only; consumers=ball_odd
+slice_odd_4: proof_shape=bind-only; consumers=ball_odd
+slice_odd_1: proof_shape=bind-only; consumers=ball_odd
+slice_even_1: proof_shape=bind-only; consumers=ball_even
+slice_odd_2_pos: proof_shape=bind-only; consumers=slice_odd_2
+slice_faces: proof_shape=bind-only; consumers=ball_even, ball_odd
+slice_edges: proof_shape=bind-only; consumers=ball_even, ball_odd
+slice_odd_2: proof_shape=bind-only; consumers=ball_odd
+ball: proof_shape=bind-only; consumers=ball_mem, ball_card_sum, ball_zero, ball_even, ball_odd,
+  shell_succ, shell_zero, shell_one
+ball_mem: proof_shape=bind-only; consumers=ball_zero, shell_succ, shell_zero
+ball_card_sum: proof_shape=bind-only; consumers=ball_even, ball_odd
+ball_zero: proof_shape=bind-only; consumers=shell_zero, shell_one
+ball_even: proof_shape=bind-only; consumers=shell_even, shell_odd
+ball_odd: proof_shape=bind-only; consumers=shell_one, shell_even, shell_odd
+shell_succ: proof_shape=bind-only; consumers=shell_one, shell_even, shell_odd
+shell_zero: proof_shape=bind-only; consumers=shell_formula
+shell_one: proof_shape=bind-only; consumers=shell_formula
+shell_even: proof_shape=bind-only; consumers=shell_formula
+shell_odd: proof_shape=bind-only; consumers=shell_formula
+shell_formula: proof_shape=bind-only; consumers=result
+result: proof_shape=bind-only; consumers=Reg.family
 -/
 
 import D5.S3.StatisticalMechanics.KisrhombilleFaceCoordination
 import D5.S3.StatisticalMechanics.TeaCoordinationSequence
 import D5.S3.Combinatorics.PositionSets.VertexPositionRatioRefutation
+
+/-! Coordination at an edge of the shared triangular-lattice inclusion graph. -/
 
 noncomputable section
 open scoped BigOperators
@@ -84,26 +144,166 @@ private lemma score_zero (s : Simplex) : score s = 0 ↔ s = root := by
   · rintro rfl
     norm_num [score, root]
 
-set_option maxHeartbeats 4000000 in
+set_option maxHeartbeats 2000000 in
+-- Inclusion cases compare the seven affine bounds at each simplex type.
 private lemma score_step (s t : Simplex) (h : graph.Adj s t) : score s ≤ score t + 1 := by
-  rcases s with ⟨s, i, j⟩
-  rcases t with ⟨t, p, q⟩
-  generalize hn : score (t, p, q) = n
-  have hb : score (t, p, q) ≤ n := hn.le
-  clear hn
-  fin_cases s <;> fin_cases t
-  all_goals
-    simp only [graph, support, Finset.insert_subset_iff, Finset.singleton_subset_iff,
-      Finset.mem_insert, Finset.mem_singleton, ne_eq, Prod.ext_iff, Fin.reduceEq] at h
-    simp only [score] at hb ⊢
-    try split_ifs at hb ⊢
+  have hscalar (s t : Simplex) (h : graph.Adj s t)
+      (hk : s.1 = 0 ∨ s.1 = 4 ∨ s.1 = 5) : score s ≤ score t + 1 := by
+    rcases s with ⟨s,i,j⟩
+    rcases t with ⟨t,p,q⟩
+    generalize hn : score (t,p,q) = n
+    have hb : score (t,p,q) ≤ n := hn.le
+    clear hn
+    change s = 0 ∨ s = 4 ∨ s = 5 at hk
+    rcases hk with rfl | rfl | rfl <;> fin_cases t
     all_goals
-      simp only [← le_sub_iff_add_le', min_le_iff, vertexScore, upScore, downScore,
-        max_le_iff] at hb ⊢
-      omega (config := {splitMinMax := false})
+      simp only [graph, support, Finset.insert_subset_iff, Finset.singleton_subset_iff,
+        Finset.mem_insert, Finset.mem_singleton, ne_eq, Prod.ext_iff, Fin.reduceEq] at h
+      simp only [score] at hb ⊢
+      try split_ifs at hb ⊢
+      all_goals
+        try simp only [← le_sub_iff_add_le', min_le_iff, vertexScore, upScore, downScore,
+          max_le_iff] at hb ⊢
+        omega (config := {splitMinMax := false})
+  rcases s with ⟨s,i,j⟩
+  rcases t with ⟨t,p,q⟩
+  fin_cases s
+  · exact hscalar _ _ h (by simp)
+  · fin_cases t
+    · have hn := score_nonneg (0,p,q)
+      have he : (p = i ∧ q = j) ∨ (p = i+1 ∧ q = j) := by
+        simp only [graph, support, Finset.insert_subset_iff, Finset.singleton_subset_iff,
+          Finset.mem_insert, Finset.mem_singleton, ne_eq, Prod.ext_iff, Fin.reduceEq] at h
+        omega
+      rcases he with ⟨rfl,rfl⟩ | ⟨rfl,rfl⟩
+      all_goals
+        simp only [score] at hn ⊢
+        try split_ifs
+        all_goals omega
+    · have hn := score_nonneg (1,p,q)
+      simp only [graph, support, Finset.insert_subset_iff, Finset.singleton_subset_iff,
+        Finset.mem_insert, Finset.mem_singleton, ne_eq, Prod.ext_iff, Fin.reduceEq] at h
+      norm_num at h <;> omega
+    · have hn := score_nonneg (2,p,q)
+      simp only [graph, support, Finset.insert_subset_iff, Finset.singleton_subset_iff,
+        Finset.mem_insert, Finset.mem_singleton, ne_eq, Prod.ext_iff, Fin.reduceEq] at h
+      norm_num at h <;> omega
+    · have hn := score_nonneg (3,p,q)
+      simp only [graph, support, Finset.insert_subset_iff, Finset.singleton_subset_iff,
+        Finset.mem_insert, Finset.mem_singleton, ne_eq, Prod.ext_iff, Fin.reduceEq] at h
+      norm_num at h <;> omega
+    · have hn := score_nonneg (4,p,q)
+      have he : (p = i ∧ q = j) := by
+        simp only [graph, support, Finset.insert_subset_iff, Finset.singleton_subset_iff,
+          Finset.mem_insert, Finset.mem_singleton, ne_eq, Prod.ext_iff, Fin.reduceEq] at h
+        omega
+      rcases he with ⟨rfl,rfl⟩
+      all_goals
+        simp only [score] at hn ⊢
+        try split_ifs
+        all_goals omega
+    · have hn := score_nonneg (5,p,q)
+      have he : (p = i ∧ q = j-1) := by
+        simp only [graph, support, Finset.insert_subset_iff, Finset.singleton_subset_iff,
+          Finset.mem_insert, Finset.mem_singleton, ne_eq, Prod.ext_iff, Fin.reduceEq] at h
+        omega
+      rcases he with ⟨rfl,rfl⟩
+      all_goals
+        simp only [score] at hn ⊢
+        try split_ifs
+        all_goals omega
+  · fin_cases t
+    · have hn := score_nonneg (0,p,q)
+      have he : (p = i ∧ q = j) ∨ (p = i ∧ q = j+1) := by
+        simp only [graph, support, Finset.insert_subset_iff, Finset.singleton_subset_iff,
+          Finset.mem_insert, Finset.mem_singleton, ne_eq, Prod.ext_iff, Fin.reduceEq] at h
+        omega
+      rcases he with ⟨rfl,rfl⟩ | ⟨rfl,rfl⟩
+      all_goals
+        simp only [score] at hn ⊢
+        try split_ifs
+        all_goals omega
+    · have hn := score_nonneg (1,p,q)
+      simp only [graph, support, Finset.insert_subset_iff, Finset.singleton_subset_iff,
+        Finset.mem_insert, Finset.mem_singleton, ne_eq, Prod.ext_iff, Fin.reduceEq] at h
+      norm_num at h <;> omega
+    · have hn := score_nonneg (2,p,q)
+      simp only [graph, support, Finset.insert_subset_iff, Finset.singleton_subset_iff,
+        Finset.mem_insert, Finset.mem_singleton, ne_eq, Prod.ext_iff, Fin.reduceEq] at h
+      norm_num at h <;> omega
+    · have hn := score_nonneg (3,p,q)
+      simp only [graph, support, Finset.insert_subset_iff, Finset.singleton_subset_iff,
+        Finset.mem_insert, Finset.mem_singleton, ne_eq, Prod.ext_iff, Fin.reduceEq] at h
+      norm_num at h <;> omega
+    · have hn := score_nonneg (4,p,q)
+      have he : (p = i ∧ q = j) := by
+        simp only [graph, support, Finset.insert_subset_iff, Finset.singleton_subset_iff,
+          Finset.mem_insert, Finset.mem_singleton, ne_eq, Prod.ext_iff, Fin.reduceEq] at h
+        omega
+      rcases he with ⟨rfl,rfl⟩
+      all_goals
+        simp only [score] at hn ⊢
+        try split_ifs
+        all_goals omega
+    · have hn := score_nonneg (5,p,q)
+      have he : (p = i-1 ∧ q = j) := by
+        simp only [graph, support, Finset.insert_subset_iff, Finset.singleton_subset_iff,
+          Finset.mem_insert, Finset.mem_singleton, ne_eq, Prod.ext_iff, Fin.reduceEq] at h
+        omega
+      rcases he with ⟨rfl,rfl⟩
+      all_goals
+        simp only [score] at hn ⊢
+        try split_ifs
+        all_goals omega
+  · fin_cases t
+    · have hn := score_nonneg (0,p,q)
+      have he : (p = i+1 ∧ q = j) ∨ (p = i ∧ q = j+1) := by
+        simp only [graph, support, Finset.insert_subset_iff, Finset.singleton_subset_iff,
+          Finset.mem_insert, Finset.mem_singleton, ne_eq, Prod.ext_iff, Fin.reduceEq] at h
+        omega
+      rcases he with ⟨rfl,rfl⟩ | ⟨rfl,rfl⟩
+      all_goals
+        simp only [score] at hn ⊢
+        try split_ifs
+        all_goals omega
+    · have hn := score_nonneg (1,p,q)
+      simp only [graph, support, Finset.insert_subset_iff, Finset.singleton_subset_iff,
+        Finset.mem_insert, Finset.mem_singleton, ne_eq, Prod.ext_iff, Fin.reduceEq] at h
+      norm_num at h <;> omega
+    · have hn := score_nonneg (2,p,q)
+      simp only [graph, support, Finset.insert_subset_iff, Finset.singleton_subset_iff,
+        Finset.mem_insert, Finset.mem_singleton, ne_eq, Prod.ext_iff, Fin.reduceEq] at h
+      norm_num at h <;> omega
+    · have hn := score_nonneg (3,p,q)
+      simp only [graph, support, Finset.insert_subset_iff, Finset.singleton_subset_iff,
+        Finset.mem_insert, Finset.mem_singleton, ne_eq, Prod.ext_iff, Fin.reduceEq] at h
+      norm_num at h <;> omega
+    · have hn := score_nonneg (4,p,q)
+      have he : (p = i ∧ q = j) := by
+        simp only [graph, support, Finset.insert_subset_iff, Finset.singleton_subset_iff,
+          Finset.mem_insert, Finset.mem_singleton, ne_eq, Prod.ext_iff, Fin.reduceEq] at h
+        omega
+      rcases he with ⟨rfl,rfl⟩
+      all_goals
+        simp only [score] at hn ⊢
+        try split_ifs
+        all_goals omega
+    · have hn := score_nonneg (5,p,q)
+      have he : (p = i ∧ q = j) := by
+        simp only [graph, support, Finset.insert_subset_iff, Finset.singleton_subset_iff,
+          Finset.mem_insert, Finset.mem_singleton, ne_eq, Prod.ext_iff, Fin.reduceEq] at h
+        omega
+      rcases he with ⟨rfl,rfl⟩
+      all_goals
+        simp only [score] at hn ⊢
+        try split_ifs
+        all_goals omega
+  · exact hscalar _ _ h (by simp)
+  · exact hscalar _ _ h (by simp)
 
 
 set_option maxHeartbeats 4000000 in
+-- Each positive affine maximum supplies a descent among the incident simplices.
 private lemma score_descent (s : Simplex) (hs : 0 < score s) :
     ∃ t : Simplex, graph.Adj s t ∧ score t + 1 = score s := by
   rcases s with ⟨t, i, j⟩
@@ -168,7 +368,8 @@ private lemma score_descent (s : Simplex) (hs : 0 < score s) :
       all_goals
         simp only [graph, support, Finset.insert_subset_iff, Finset.singleton_subset_iff,
           Finset.mem_insert, Finset.mem_singleton, ne_eq, Prod.ext_iff, Fin.reduceEq, score]
-        simp only [← le_sub_iff_add_le', min_le_iff] at hb
+        try simp only [← le_sub_iff_add_le', min_le_iff] at hb
+        norm_num
         omega (config := {splitMinMax := false})
     rcases he with h0 | h1 | h2 | h3
     · refine ⟨(0, i, j), h0.1, ?_⟩
@@ -200,7 +401,8 @@ private lemma score_descent (s : Simplex) (hs : 0 < score s) :
       all_goals
         simp only [graph, support, Finset.insert_subset_iff, Finset.singleton_subset_iff,
           Finset.mem_insert, Finset.mem_singleton, ne_eq, Prod.ext_iff, Fin.reduceEq, score]
-        simp only [← le_sub_iff_add_le', min_le_iff] at hb
+        try simp only [← le_sub_iff_add_le', min_le_iff] at hb
+        norm_num
         omega (config := {splitMinMax := false})
     rcases he with h0 | h1 | h2 | h3
     · refine ⟨(0, i, j), h0.1, ?_⟩
@@ -232,7 +434,8 @@ private lemma score_descent (s : Simplex) (hs : 0 < score s) :
       all_goals
         simp only [graph, support, Finset.insert_subset_iff, Finset.singleton_subset_iff,
           Finset.mem_insert, Finset.mem_singleton, ne_eq, Prod.ext_iff, Fin.reduceEq, score]
-        simp only [← le_sub_iff_add_le', min_le_iff] at hb
+        try simp only [← le_sub_iff_add_le', min_le_iff] at hb
+        norm_num
         omega (config := {splitMinMax := false})
     rcases he with h0 | h1 | h2 | h3
     · refine ⟨(0, i+1, j), h0.1, ?_⟩
@@ -355,7 +558,6 @@ private lemma shell_finite (n : ℕ) : {s : Simplex | distance s = n}.Finite := 
     KisrhombilleFaceCoordination.shell_finite r.val)
   apply hf.subset
   intro s hs
-  obtain ⟨w, _⟩ := geodesic s
   have ha : graph.Adj KisrhombilleFaceCoordination.root root := by
     simp [graph, support, KisrhombilleFaceCoordination.root, root, Prod.ext_iff]
   have ht := ha.reachable.dist_triangle_left s
@@ -385,9 +587,9 @@ private lemma slice_mem (t : Fin 6) (n : ℕ) (p : ℤ × ℤ) :
     all_goals
       try split_ifs at h
       all_goals
-        simp only [← le_sub_iff_add_le', min_le_iff, vertexScore, upScore, downScore,
+        try simp only [← le_sub_iff_add_le', min_le_iff, vertexScore, upScore, downScore,
           max_le_iff] at h
-        dsimp
+        try dsimp
         omega (config := {splitMinMax := false})
 
 private lemma adjoin_rows_card (S : Finset (ℤ × ℤ)) (k : ℕ) (lo hi c d : ℤ)
@@ -492,7 +694,7 @@ private lemma slice_odd_1 (k : ℕ) :
     simp only [score]
     split_ifs
     all_goals
-      simp only [← le_sub_iff_add_le', min_le_iff, vertexScore, upScore, downScore,
+      try simp only [← le_sub_iff_add_le', min_le_iff, vertexScore, upScore, downScore,
         max_le_iff]
       omega (config := {splitMinMax := false})
   rw [he]
@@ -517,7 +719,7 @@ private lemma slice_even_1 (k : ℕ) :
       Finset.mem_singleton, hS, score]
     try split_ifs
     all_goals
-      simp only [← le_sub_iff_add_le', min_le_iff, vertexScore, upScore, downScore,
+      try simp only [← le_sub_iff_add_le', min_le_iff, vertexScore, upScore, downScore,
         max_le_iff]
       push_cast
       omega (config := {splitMinMax := false})
@@ -525,6 +727,7 @@ private lemma slice_even_1 (k : ℕ) :
     (by intro ⟨i,j⟩ h; have := (hS i j).mp h; dsimp; push_cast at this ⊢; omega)
     (by intro ⟨i,j⟩ h; have := (hS i j).mp h; dsimp; push_cast at this ⊢; omega)
     (by omega)
+  push_cast at hc
   rw [he, hc]
   have hp := polygon_card (2*k+2) (2*k) (k) (k) (-(k:ℤ)-1) (-(k:ℤ)) (by omega) (by omega) (by omega) (by omega) (by omega)
   change 2 * (S.card : ℤ) = _ at hp
@@ -548,7 +751,7 @@ private lemma slice_odd_2_pos (k : ℕ) :
       Finset.mem_singleton, hS, score]
     try split_ifs
     all_goals
-      simp only [← le_sub_iff_add_le', min_le_iff, vertexScore, upScore, downScore,
+      try simp only [← le_sub_iff_add_le', min_le_iff, vertexScore, upScore, downScore,
         max_le_iff]
       push_cast
       omega (config := {splitMinMax := false})
@@ -556,6 +759,7 @@ private lemma slice_odd_2_pos (k : ℕ) :
     (by intro ⟨i,j⟩ h; have := (hS i j).mp h; dsimp; push_cast at this ⊢; omega)
     (by intro ⟨i,j⟩ h; have := (hS i j).mp h; dsimp; push_cast at this ⊢; omega)
     (by omega)
+  push_cast at hc
   rw [he, hc]
   have hp := polygon_card (2*k+3) (2*k+1) (k+1) (k+1) (-(k:ℤ)-1) (-(k:ℤ)-1) (by omega) (by omega) (by omega) (by omega) (by omega)
   change 2 * (S.card : ℤ) = _ at hp
@@ -567,7 +771,7 @@ private lemma slice_faces (n : ℕ) : (slice 5 n).card = (slice 4 n).card := by
   · rintro ⟨i,j⟩ h
     rw [slice_mem] at h ⊢
     simp only [score, upScore, downScore, max_le_iff] at h ⊢
-    dsimp
+    try dsimp
     omega
   · rintro ⟨i,j⟩ h ⟨p,q⟩ h' he
     simp only [Prod.mk.injEq] at he ⊢
@@ -576,17 +780,19 @@ private lemma slice_faces (n : ℕ) : (slice 5 n).card = (slice 4 n).card := by
     refine ⟨(-i,-j-1), ?_, ?_⟩
     · rw [slice_mem] at h ⊢
       simp only [score, upScore, downScore, max_le_iff] at h ⊢
-      dsimp
+      try dsimp
       omega
     · simp
 
+set_option maxHeartbeats 1000000 in
+-- The affine bijection compares four disjunctive systems of seven inequalities.
 private lemma slice_edges (n : ℕ) : (slice 3 n).card = (slice 2 n).card := by
   apply Finset.card_bij (fun p _ => (p.1+p.2+1,-p.2-1))
   · rintro ⟨i,j⟩ h
     rw [slice_mem] at h ⊢
     simp only [score, ← le_sub_iff_add_le', min_le_iff, vertexScore, upScore, downScore,
       max_le_iff] at h ⊢
-    dsimp
+    try dsimp
     omega (config := {splitMinMax := false})
   · rintro ⟨i,j⟩ h ⟨p,q⟩ h' he
     simp only [Prod.mk.injEq] at he ⊢
@@ -596,7 +802,7 @@ private lemma slice_edges (n : ℕ) : (slice 3 n).card = (slice 2 n).card := by
     · rw [slice_mem] at h ⊢
       simp only [score, ← le_sub_iff_add_le', min_le_iff, vertexScore, upScore, downScore,
         max_le_iff] at h ⊢
-      dsimp
+      try dsimp
       omega (config := {splitMinMax := false})
     · apply Prod.ext <;> dsimp <;> omega
 
@@ -689,6 +895,7 @@ private lemma shell_zero : a 0 = 1 := by
 private lemma shell_one : a 1 = 4 := by
   have h := shell_succ 0
   rw [ball_zero, Finset.card_singleton] at h
+  change a 1 + 1 = (ball 1).card at h
   have hb := ball_odd 0
   norm_num at hb
   omega
@@ -714,14 +921,14 @@ private lemma shell_formula (n : ℕ) : (a n : ℤ) =
   · subst n; simp [shell_zero]
   by_cases h1 : n = 1
   · subst n; simp [shell_one]
-  simp only [if_neg h0, if_neg h1]
+  simp only [ite_eq_right h0, ite_eq_right h1]
   by_cases he : n % 2 = 0
   · have hx : n = 2*(n/2-1+1) := by omega
-    rw [if_pos he, hx, shell_even]
+    rw [ite_eq_left he, hx, shell_even]
     push_cast
     ring
   · have hx : n = 2*(n/2-1+1)+1 := by omega
-    rw [if_neg he, hx, shell_odd]
+    rw [ite_eq_right he, hx, shell_odd]
     push_cast
     ring
 
@@ -746,12 +953,12 @@ theorem result :
     have hn4 : 4 ≤ n := by omega
     have hm2 : (n-2)%2 = n%2 := by omega
     have hm4 : (n-4)%2 = n%2 := by omega
-    simp only [if_pos hn2, if_pos hn4, hm2, hm4,
-      if_neg (show n ≠ 0 by omega), if_neg (show n ≠ 1 by omega),
-      if_neg (show n ≠ 2 by omega), if_neg (show n ≠ 3 by omega),
-      if_neg (show n ≠ 4 by omega), if_neg (show n ≠ 5 by omega),
-      if_neg (show n-2 ≠ 0 by omega), if_neg (show n-2 ≠ 1 by omega),
-      if_neg (show n-4 ≠ 0 by omega), if_neg (show n-4 ≠ 1 by omega)]
+    simp only [ite_eq_left hn2, ite_eq_left hn4, hm2, hm4,
+      ite_eq_right (show n ≠ 0 by omega), ite_eq_right (show n ≠ 1 by omega),
+      ite_eq_right (show n ≠ 2 by omega), ite_eq_right (show n ≠ 3 by omega),
+      ite_eq_right (show n ≠ 4 by omega), ite_eq_right (show n ≠ 5 by omega),
+      ite_eq_right (show n-2 ≠ 0 by omega), ite_eq_right (show n-2 ≠ 1 by omega),
+      ite_eq_right (show n-4 ≠ 0 by omega), ite_eq_right (show n-4 ≠ 1 by omega)]
     split_ifs <;> omega
 
 end D5.S3.StatisticalMechanics.KisrhombilleEdgeCoordination

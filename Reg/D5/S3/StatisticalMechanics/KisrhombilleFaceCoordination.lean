@@ -1,4 +1,5 @@
 import D5.S3.StatisticalMechanics.KisrhombilleFaceCoordination
+import D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 import Reg.Support.SingleDependentReadout
 import LeanInformationAuditInterface.Contract.Registration
 
@@ -91,36 +92,37 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 namespace PolygonMembership
 
 abbrev signature : Signature := _root_.Reg.Support.SingleDependentReadout.signature
-  (ℕ × ℕ × ℕ × ℕ × ℤ × ℤ) (fun _ => ℤ × ℤ) (fun _ => Prop)
+  (Σ _ : ℕ, Σ _ : ℕ, Σ _ : ℕ, Σ _ : ℕ, Σ _ : ℤ, ℤ)
+  (fun _ => ℤ × ℤ) (fun _ => Bool)
 def actual : Realization signature := realize signature
-  (fun _ p z => z ∈ polygon p.1 p.2.1 p.2.2.1 p.2.2.2.1 p.2.2.2.2.1 p.2.2.2.2.2)
+  (fun _ p z => decide (z ∈ polygon p.1 p.2.1 p.2.2.1 p.2.2.2.1 p.2.2.2.2.1 p.2.2.2.2.2))
   (fun e => nomatch e)
-def rejected : Realization signature := realize signature (fun _ _ _ => False) (fun e => nomatch e)
+def rejected : Realization signature := realize signature (fun _ _ _ => false) (fun e => nomatch e)
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ (A B l r : ℕ) (i0 j0 : ℤ),
     l ≤ A+1 → l ≤ B+1 → r ≤ A+1 → r ≤ B+1 → ∀ p : ℤ × ℤ,
-    R.readout () (A,B,l,r,i0,j0) p ↔
+    R.readout () ⟨A,B,l,r,i0,j0⟩ p = true ↔
       i0 ≤ p.1 ∧ p.1 ≤ i0+A ∧ j0 ≤ p.2 ∧ p.2 ≤ j0+B ∧
       (l:ℤ) ≤ p.1+p.2-i0-j0 ∧ p.1+p.2-i0-j0+r ≤ (A:ℤ)+B
 private theorem bad : ¬ arena.Law rejected := by
   intro h
-  exact (h 0 0 0 0 0 0 (by omega) (by omega) (by omega) (by omega) (0,0)).mpr
+  have hb := (h 0 0 0 0 0 0 (by omega) (by omega) (by omega) (by omega) (0,0)).mpr
     (by norm_num)
+  simpa [rejected, realize] using hb
 def family : Registration arena (type_of% @polygon_mem) where
   actual := actual
-  bridge := Iff.rfl
-  variation := ⟨@polygon_mem, rejected, bad⟩
+  bridge := by simp only [arena, actual, realize, decide_eq_true_eq]
+  variation := ⟨by simpa only [arena, actual, realize, decide_eq_true_eq] using @polygon_mem,
+    rejected, bad⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity _ _ _ bad
   dependence := by
     intro role
-    refine ⟨(0,0,0,0,0,0), (0,0), (1,0), ?_⟩
-    change ((0,0) ∈ polygon 0 0 0 0 0 0) ≠ ((1,0) ∈ polygon 0 0 0 0 0 0)
+    refine ⟨⟨0,0,0,0,0,0⟩, (0,0), (1,0), ?_⟩
     have h0 := polygon_mem 0 0 0 0 0 0 (by omega) (by omega) (by omega) (by omega) (0,0)
     have h1 := polygon_mem 0 0 0 0 0 0 (by omega) (by omega) (by omega) (by omega) (1,0)
     norm_num at h0 h1
-    intro he
-    exact h1 (Eq.mp he h0)
+    simp [actual, realize, h0, h1]
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@polygon_mem) (Realization signature) Type Unit where
@@ -135,7 +137,9 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ p z => z ∈ polygon p.1 p.2.1 p.2.2.1 p.2.2.2.1 p.2.2.2.2.1 p.2.2.2.2.2) (fun e => nomatch e))
+  readout := some (realize signature
+    (fun _ p z => decide (z ∈ polygon p.1 p.2.1 p.2.2.1 p.2.2.2.1 p.2.2.2.2.1 p.2.2.2.2.2))
+    (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -146,10 +150,10 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     coordinates := #[0, 1, 2, 3, 4, 5]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg"]
-      stateBinder := 10
+      stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]
-      booleanPredicate := false }] }
+      booleanPredicate := true }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -159,7 +163,7 @@ end PolygonMembership
 namespace PolygonCount
 
 abbrev signature : Signature := _root_.Reg.Support.SingleDependentReadout.signature
-  (ℕ × ℕ × ℕ × ℤ × ℤ) (fun _ => ℕ) (fun _ => ℕ)
+  (Σ _ : ℕ, Σ _ : ℕ, Σ _ : ℕ, Σ _ : ℤ, ℤ) (fun _ => ℕ) (fun _ => ℕ)
 def actual : Realization signature := realize signature
   (fun _ p A => (polygon A p.1 p.2.1 p.2.2.1 p.2.2.2.1 p.2.2.2.2).card) (fun e => nomatch e)
 def rejected : Realization signature := realize signature
@@ -168,15 +172,15 @@ abbrev arena : Arena where
   signature := signature
   Law R := ∀ (A B l r : ℕ) (i0 j0 : ℤ),
     l ≤ A+1 → l ≤ B+1 → r ≤ A+1 → r ≤ B+1 → l+r ≤ A+B+1 →
-    2*(R.readout () (B,l,r,i0,j0) A : ℤ) =
+    2*(R.readout () ⟨B,l,r,i0,j0⟩ A : ℤ) =
       2*(A+1)*(B+1)-(l:ℤ)*(l+1)-(r:ℤ)*(r+1)
 private theorem bad : ¬ arena.Law rejected := by
   intro h
   have hb := h 0 0 0 0 0 0 (by omega) (by omega) (by omega) (by omega) (by omega)
   have hc := polygon_card 0 0 0 0 0 0 (by omega) (by omega) (by omega) (by omega) (by omega)
   change 2*((polygon 0 0 0 0 0 0).card + 1 : ℤ) = _ at hb
-  norm_num at hb hc
-  omega
+  push_cast at hb
+  nlinarith [hc]
 def family : Registration arena (type_of% @polygon_card) where
   actual := actual
   bridge := Iff.rfl
@@ -184,7 +188,7 @@ def family : Registration arena (type_of% @polygon_card) where
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity _ _ _ bad
   dependence := by
     intro role
-    refine ⟨(0,0,0,0,0), 0, 1, ?_⟩
+    refine ⟨⟨0,0,0,0,0⟩, 0, 1, ?_⟩
     change (polygon 0 0 0 0 0 0).card ≠ (polygon 1 0 0 0 0 0).card
     have h0 := polygon_card 0 0 0 0 0 0 (by omega) (by omega) (by omega) (by omega) (by omega)
     have h1 := polygon_card 1 0 0 0 0 0 (by omega) (by omega) (by omega) (by omega) (by omega)
@@ -276,10 +280,10 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "arg", "body", "fn", "arg"]
+      path := #["body", "arg", "arg", "body", "fn", "arg"]
       stateBinder := 1
       functionOperand := false
-      stateOperand := some #["arg"]
+      stateOperand := none
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
