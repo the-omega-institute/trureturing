@@ -1,10 +1,8 @@
 # Original finite-record acquisition of bounded local-energy pairings
 
 > Reference theory with ordinary conditional proofs. The cited source and
-> endpoint results are premises, not freshly verified Lean statements. This
-> volume uses the `consensus-rnd:sshx` context and an independent `codex-cli`
-> implementation carrier. Independent review and publication belong to the
-> calling workflow. No kernel verification or worldwide novelty is asserted.
+> endpoint results are premises, not freshly verified Lean statements.
+> No kernel verification or worldwide novelty is asserted.
 > After incorporation, corrections and further results belong after the final
 > append anchor; existing text remains unchanged.
 
@@ -845,9 +843,7 @@ of the active RRO programme; this finite result does not settle it.
 
 **Definition 8.1 (reuse and the additional source-specific result).**
 All suppliers retain their hypotheses and are fallible ordinary
-mathematics. Formal-code references report source lookup, not fresh
-compiled application. This volume adds no Lean, Blueprint or
-digestion artifact.
+mathematics.
 
 | Source and range | Exact use and boundary |
 | --- | --- |
