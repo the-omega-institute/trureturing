@@ -106,7 +106,9 @@ private theorem actual_dependence : ObservationalDependence signature actual := 
         funext i; fin_cases i <;> norm_num [actualSource,centered,modulus]
       refine ⟨List.Perm.refl _,?_,?_⟩
       · simp [hf]
-      · intro n; simp [hf,modulus]
+      · intro n
+        simp only [hf,List.map_const',List.sum_replicate,nsmul_zero,Set.mem_Icc]
+        norm_num [modulus]
     exact bad_old (hp.mp hz)
   · refine ⟨⟨2,5,4,3⟩,0,2,?_⟩
     intro he
@@ -118,7 +120,9 @@ private theorem actual_dependence : ObservationalDependence signature actual := 
         funext i; fin_cases i <;> norm_num [actualSource,centered,modulus]
       refine ⟨List.Perm.refl _,?_,?_⟩
       · simp [hf]
-      · intro n; simp [hf,modulus]
+      · intro n
+        simp only [hf,List.map_const',List.sum_replicate,nsmul_zero,Set.mem_Icc]
+        norm_num [modulus]
     exact bad_new (hp.mp hz)
 
 def source_registration : Registration arena
