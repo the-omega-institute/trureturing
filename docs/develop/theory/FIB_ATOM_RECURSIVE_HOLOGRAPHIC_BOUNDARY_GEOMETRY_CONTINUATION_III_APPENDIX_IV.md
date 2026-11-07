@@ -2125,4 +2125,105 @@ $$
 
 which is the first equation in (185.2) after substituting $F+v=rp+sF$. Evaluating at $(p,F,p)$ gives the second equation, using the definition of $b$. Subtracting yields (185.3). If $d\ne b$, then $s=1$, and either equation in (185.2) gives $ra=0$; since $a>0$, $r=0$, hence $v=0$. When $d=b$, both equations reduce to the stated single relation, and no conclusion about the other tensor components follows from these two slots alone. $\square$
 
-The scalar $d-b=p^2\langle F,(I-P)g\rangle_m$ is an actual ordered-source coefficient; its vanishing is a concrete exceptional case, not an automatic symmetry. This proposition only treats displacements inside the baseline span. Tensor-preserving lifts with an out-of-span component, the exceptional case $d=b$, the radical alternative, arbitrary partitions, $F_{64}$, $H43$, SRS$\text{-}20$, physical succession and Lean/kernel formalization remain open.
+The scalar $d-b=p^2\langle F,(I-P)g\rangle_m$ is an actual ordered-source coefficient; its vanishing is a concrete exceptional case, not an automatic symmetry. This proposition only treats displacements inside the baseline span. Tensor-preserving lifts with an out-of-span component, the radical alternative, arbitrary partitions, $F_{64}$, $H43$, SRS$\text{-}20$, physical succession and Lean/kernel formalization remain open.
+
+## 186. The exceptional in-span branch is a one-parameter shear test
+
+When the ordered coefficient in Section 185 is exceptional, the first tensor slots determine the direction of every possible in-span lift. The remaining slots then reduce to four polynomial equations in one scalar amplitude.
+
+**Proposition 186.1 (exceptional shear criterion).** Retain the notation and hypotheses of Proposition 185.1, and assume $d=b$. Set
+
+$$
+\kappa=\frac{b}{a},
+\qquad
+w=F-\kappa p,
+\qquad
+\alpha=s-1.
+\tag{186.1}
+$$
+
+Then $w$ is nonzero as an $m$-class. An in-span tensor-preserving lift with parameter $(r,s)$ is either the baseline $(r,s)=(0,1)$, or it has
+
+$$
+r=-\alpha\kappa,
+\qquad
+[v]=\alpha[w],
+\qquad
+S_vF=F+\alpha w,
+\tag{186.2}
+$$
+
+with $\alpha\ne0$ satisfying all four equations
+
+$$
+\begin{aligned}
+0={}&\alpha\bigl[\mathcal C(p,w,F)+\mathcal C(p,F,w)\bigr]
+      +\alpha^2\mathcal C(p,w,w),\\
+0={}&\alpha\bigl[\mathcal C(w,p,F)+\mathcal C(F,p,w)\bigr]
+      +\alpha^2\mathcal C(w,p,w),\\
+0={}&\alpha\bigl[\mathcal C(w,F,p)+\mathcal C(F,w,p)\bigr]
+      +\alpha^2\mathcal C(w,w,p),\\
+0={}&\alpha\bigl[\mathcal C(w,F,F)+\mathcal C(F,w,F)+\mathcal C(F,F,w)\bigr]\\
+&+\alpha^2\bigl[\mathcal C(w,w,F)+\mathcal C(w,F,w)+\mathcal C(F,w,w)\bigr]
+      +\alpha^3\mathcal C(w,w,w).
+\end{aligned}
+\tag{186.3}
+$$
+
+Conversely, if a nonzero $\alpha$ satisfies (186.3) and the resulting $F+\alpha w$ and $q-2\alpha w$ obey the pointwise legality inequalities, then the corresponding in-span lift preserves the full common-first tensor.
+
+*Proof.* The first two equations of (185.2), with $d=b$, give $ra+(s-1)b=0$. Hence $r=-\alpha\kappa$, and
+
+$$
+[v]=r[p]+\alpha[F]=\alpha[F-\kappa p]=\alpha[w].
+$$
+
+Linear independence of $[p]$ and $[F]$ makes $[w]\ne0$. The lift fixes $p$ and sends $F$ to $F+\alpha w$. The tensor slots containing at most one copy of $F$ are already preserved by the defining relation $\mathcal C(p,p,w)=\mathcal C(p,w,p)=\mathcal C(w,p,p)=0$. Expanding the slots $(p,F,F)$, $(F,p,F)$, $(F,F,p)$ and $(F,F,F)$ by trilinearity gives exactly (186.3). These four slots, together with the slots containing at most one $F$, form all of the two-dimensional tensor basis, so they are necessary and sufficient for tensor preservation. The legality conditions are precisely the pointwise simplex conditions for the resulting common-first tuple. $\square$
+
+Thus the exceptional scalar branch is a shear problem along the fixed nonzero class $[w]$, with no remaining freedom in the direction. Equation (186.3) does not by itself rule out a nonzero amplitude: it supplies the exact compatibility test for that case. Out-of-span tensor-preserving lifts, the radical alternative, arbitrary partitions, $F_{64}$, $H43$, SRS$\text{-}20$, physical succession and Lean/kernel formalization remain open.
+
+## 187. The ordered source makes the exceptional scalar impossible
+
+The source propagation identity gives a strict sign to the scalar that remained exceptional in Section 185. This removes the $d=b$ branch for the retained heat source.
+
+**Proposition 187.1 (strict ordered coefficient gap).** Retain Definition 175.1 and the coefficient notation of Proposition 185.1. Then
+
+$$
+d-b
+=-\frac{p^2}{2}\,\langle q,(I-P)g\rangle_m
+=-\frac{p^2}{2c}\,\langle q,(P-P^2)q\rangle_m
+<0.
+\tag{187.1}
+$$
+
+Consequently, the exceptional condition $d=b$ cannot occur for any allowed original source parameters or permitted representative, and every in-span common-first tensor-preserving lift is the baseline $v=0$ as an $m$-class.
+
+*Proof.* From $Pp=p$ and the definition of the ordered form,
+
+$$
+a=p^3\int_Gg\,dm=p^3,
+\qquad
+b=p^2\langle Pg,F\rangle_m,
+\qquad
+d=p^2\langle g,F\rangle_m.
+$$
+
+Since $P1=1$ and $P$ is self-adjoint, $\langle1,(I-P)g\rangle_m=0$. Using $F=(3/4-q)/2$ therefore gives the first equality in (187.1). The source propagation identity is $Pq=cg$. Hence $g=c^{-1}Pq$, and self-adjointness gives
+
+$$
+\langle q,(I-P)g\rangle_m
+=\frac1c\langle q,(P-P^2)q\rangle_m,
+$$
+
+which proves the second equality.
+
+Write $b_{\mathrm{src}}$ for the representative called $b$ in (175.1), so $q=cb_{\mathrm{src}}$. The retained source-start nonconstancy result makes $b_{\mathrm{src}}$, and hence $q$, nonconstant. The full conservative generator has $\ker K=\mathbb C1$, while $P=T_d=e^{-dK}$. Spectral calculus thus yields
+
+$$
+\langle q,(P-P^2)q\rangle_m
+=\int_{[0,\infty)}e^{-d\lambda}(1-e^{-d\lambda})\,d\langle q,E_K(\lambda)q\rangle_m>0,
+$$
+
+because the nonconstant $q$ has nonzero spectral mass on $(0,\infty)$ and the displayed multiplier is strictly positive there. This proves the strict inequality in (187.1). The final claim follows from Proposition 185.1: its alternative $d\ne b$ forces $r=0$ and $s=1$, hence $[v]=0$. $\square$
+
+The common-first in-span slice is therefore fully rigid for the retained source: its only exact tensor-preserving displacement is the baseline class. Out-of-span tensor-preserving lifts, the radical alternative, arbitrary partitions, $F_{64}$, $H43$, SRS$\text{-}20$, physical succession and Lean/kernel formalization remain open.
