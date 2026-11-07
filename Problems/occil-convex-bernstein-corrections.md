@@ -52,8 +52,8 @@ The native proof checks the convexity inequality for every permitted pair
 and weight. Direct polynomial identities give
 
 $$
-B_2f(X)=	frac12(X^2-X)+	frac12,\qquad
-B_4f(X)=	frac34(X^2-X)+	frac12.
+B_2f(X)=\frac12(X^2-X)+\frac12,\qquad
+B_4f(X)=\frac34(X^2-X)+\frac12.
 $$
 
 For every $x\in[0,1]$, the two errors are $x(1-x)/2$ and $x(1-x)/4$.
@@ -62,8 +62,8 @@ These are also the two midpoint absolute errors. Thus both prescriptions
 have the identical increment
 
 $$
-p(X)=	frac1{16}-	frac14X(1-X)
-     =	frac14(X-1/2)^2.
+p(X)=\frac1{16}-\frac14X(1-X)
+     =\frac14(X-1/2)^2.
 $$
 
 Its exact degree-4 normalized Bernstein representation is
