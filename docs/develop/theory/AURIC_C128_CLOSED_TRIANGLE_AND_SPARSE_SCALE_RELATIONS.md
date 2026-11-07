@@ -2264,3 +2264,349 @@ flowchart TD
 于是原正质量读数仍接 Born，零、次归一、不等质量和 q 权全部保留；同一 native 与全词 K/J、中心经典及不等维块和实际相关联合仍接复合；完整 typed 仪器的全输入输出、失败细记录、真正分组遗忘、AC、精确 Nu、X 与 Xs、平方根词和接受端仍接测量更新，TP、Kraus 与 Lüders 各守自己的表示、前对偶和输出校准条件；全部顺序、自适应、并行历史、停止、拒绝、销毁、同数两侧、逆向返回及仍合法未来都留下；物理钟、能量、作用量与 hbar、sigma 和预选时刻、共同仪器、固定域与 resolvent 仍须原来源。正常密度属于指定原前对偶，不自动变成另一物理表示的迹类态。有限中央理想支的已给全域平方和复二表成果、C139 的全部条件回溯与 CP 成果继续成立；其余一般无限和 CountRead 保持完整合同。FIB 固定算子类的全边核与二维活动商是另一项有自己前件的结果，不替这里造原 S、完整仪器或实际世界。一般无限原 S 到 JB、一般因子乘积以及两条负提升活路的分别控制和相干聚合、CountRead 同一旧输出连同全未来的真实返回、具名分析词到原菜单的接线仍须补足。整张图因此把有限原几何与指定无限分支的正常性后果接在一起，保留原世界的每个读口、失败、未来和物理尺度。
 
 ## 追加锚（本行以下为增补区）
+
+## 537. 原弱闭合三角的忠实完成与可分局部化
+
+**定义 537.1（不加强原入口的约定）。** 原资料严格取 476.1、481.1、513.1 的同一个 $\mathsf C_{\Delta,\theta}$，其中 $0<\theta\le1$ 仍是原指定正有理数。原 $E$ 不限维数，不要求完备或可分，原 $S,D:E^2\to E$ 起初仅为总映射。二标签复 PSD、相加零平方、全部原三标签的复零和面正性、固定点、小效果窗口和原实部换括号式均不改变。不加入完整实相加三表 PSD、读数律 R49.1、反射、预给乘法、有限正收缩回缩或原关系的线性；R 指[三标签刚性卷](AURIC_C128_THREE_LABEL_POSITIVITY_AND_ORIGINAL_RELATION_RIGIDITY.md)。
+
+**命题 537.2（每份有限原输入所在的辅助闭空间）。** 若 $E\ne0$，原序单位范数的完成 $X$ 有闭尖生成锥 $C_X$、同一序单位 $u$ 和原评价的连续延拓，满足
+
+$$
+C_X=\overline{E_+}^{\,X}
+=\{x\in X:\bar\alpha(x)\ge0\ (\alpha\in\mathcal P)\},\qquad
+C_X\cap E=E_+,
+\tag{537.1}
+$$
+
+且原 $N$ 的延拓仍为 $u$ 的序单位范数。原 $S,D$ 有唯一联合连续延拓到 $X^2$；它们保留定义 537.1 的全部数学关系。对每个有限集 $F\subset E$，存在含 $F\cup\{u\}$ 的可分闭实子空间 $Y\subset X$，在延拓后的 $S,D$ 下封闭，且 $C_Y=C_X\cap Y$ 与 $u$、限制范数使 $Y$ 为 Banach Archimedean 序单位空间。每个连续数学正泛函 $\beta\in C_Y^*$ 都满足相同的二标签、闭合三标签、相加零平方和小效果不等式。这些空间、泛函及其归一化只用于证明。
+
+证明。直接复用 481.2、498.1、513.2、514.1，置 $\kappa=16/\theta$。原范数的 norming 恒等式 (514.4) 给每个原评价的连续性，零质量评价恒零。归一的正质量原评价把 $E$ 等距嵌入一个 $\ell^\infty$ 空间；延到完成后仍等距，故
+
+$$
+\bar N(x)=\sup_{m_\alpha>0}\frac{|\bar\alpha(x)|}{m_\alpha}
+\quad(x\in X).
+\tag{537.2}
+$$
+
+以右端评价定义 $C_X$，它闭且尖，$-\bar N(x)u\le x\le\bar N(x)u$，所以生成，且其序单位范数正是 $\bar N$。若 $x\in C_X$，取 $a_n\in E$、$\bar N(a_n-x)\le\epsilon_n\downarrow0$，则 $a_n+\epsilon_nu\in E_+$ 并趋于 $x$，证明 (537.1)；原域的锥身份直接由原评价定义。以下简记延拓范数仍为 $N$。
+
+(514.2) 在每个有界球上给两个原映射的一致连续性；完备性遂给唯一延拓，且
+
+$$
+N(S(x,y)),\ N(D(x,y))\le\kappa N(x)N(y)
+\quad(x,y\in X).
+\tag{537.3}
+$$
+
+二标签 Hermitian 性和分离性给 $S$ 对称、$D$ 反对称及两者的零标签为零；这些关系、(498.1)、固定点、相加零平方和实部换括号式均由联合连续性传到完成。固定有限标签和系数的正性也传递，因为它是原值有限和属于闭锥的条件。对完成中的 $0\le e\le\theta u$，同上述 $a_n,\epsilon_n$ 置
+
+$$
+e_n=\frac{a_n+\epsilon_nu}{1+2\epsilon_n/\theta}.
+\tag{537.4}
+$$
+
+分子在 $0$ 与 $(\theta+2\epsilon_n)u$ 之间，故 $e_n\in[0,\theta u]\cap E$ 且 $e_n\to e$。原窗口经连续性给 $S(e,e)\le e$。这一步不以未知可加性展开平方。
+
+令 $V_0=\operatorname{span}_{\mathbb Q}(F\cup\{u\})$，递归定义可数集
+
+$$
+V_{n+1}=\operatorname{span}_{\mathbb Q}
+\bigl(V_n\cup S(V_n,V_n)\cup D(V_n,V_n)\bigr),\qquad
+Y=\overline{\bigcup_{n\ge0}V_n}^{\,X}.
+\tag{537.5}
+$$
+
+它是可分闭实子空间；联合连续性给 $S(Y,Y),D(Y,Y)\subset Y$。$u\in Y$ 使限制序仍生成，限制范数仍准确为其序单位范数，闭锥给 Archimedean 性。没有断言某个有限维子空间在原关系下封闭，也没有构造投影或回缩。
+
+最后，对任一已检查标签与复系数取实际输出有限和
+
+$$
+X_z=\sum_{i,j}\left[
+\operatorname{Re}(\overline z_i z_j)S(a_i,a_j)
++\operatorname{Im}(\overline z_i z_j)D(a_i,a_j)\right]\in Y.
+\tag{537.6}
+$$
+
+对称／反对称性给 $\bar\alpha(X_z)=z^*G_{\bar\alpha}z$。原二标签或闭合面正性因此准确表示 $X_z\in C_Y$；原相加零平方表示 $X_v=0$，由延拓原评价的分离性取得。每个正 $\beta$ 都保持这些关系。小效果本来就是原值序不等式，亦被 $\beta$ 保持。此处不要求 $\beta$ 延为实际原准备。∎
+
+**命题 537.3（同一原关系的正零面恒等式）。** 在 537.2 的每个 $Y$ 中，若 $h\in C_Y$、$\beta\in C_Y^*$、$\beta(h)=0$，则对 $T=S,D$ 都有
+
+$$
+\beta\bigl(T(x+th,b)-T(x,b)\bigr)=0
+\quad(x,b\in Y,\ t\in\mathbb R).
+\tag{537.7}
+$$
+
+证明。取 $\lambda>0$ 使 $0\le\lambda h\le\theta u$。537.2 使原射线饱和与原窗口适用于 $\beta$，从而
+$0\le\lambda^2q_\beta(h)\le\lambda\beta(h)=0$。所以 $q_\beta(th)=0$ 对全部实 $t$ 成立。直接复用 513.2 证明中的 (513.4)–(513.8)：这些步骤只需二表、闭合面和相加零平方，已由 537.2 传给 $\beta$。其零方向结论给 $g_\beta(x+th,b)=g_\beta(x,b)$，实部和虚部分别给 (537.7)。原值增长界为 (537.3)，不预设任何行线性。∎
+
+## 538. 一条已定单位射线使原单位行变直
+
+**定理 538.1（单位行的有界线性与真正单位）。** 在定义 537.1 下，每个 537.2 的 $Y$ 中，同一延拓关系满足
+
+$$
+S(ru,x)=rx,\qquad D(ru,x)=0
+\quad(r\in\mathbb R,\ x\in Y).
+\tag{538.1}
+$$
+
+证明。先在此证明内建立所需的分析步骤。设连续 $F:Y\to Y$ 满足 $N(F(x))\le A N(x)+B$、$A,B\ge0$，并具有 (537.7) 的正零面恒等式，即
+$\beta(F(x+th)-F(x))=0$。另设
+
+$$
+F(su)=c s u\quad(s\in\mathbb R),\qquad c\in\mathbb R.
+\tag{538.2}
+$$
+
+下面证明这样的 $F$ 有界实线性；仅在此内部步骤使用这个一般映射。
+
+取非负偶函数 $\eta_\varepsilon\in C_c^\infty(\mathbb R)$，积分为一，支撑含于 $[-\varepsilon,\varepsilon]$，定义 Bochner 积分
+
+$$
+F_\varepsilon(x)=\int_{\mathbb R}\eta_\varepsilon(s)F(x+su)\,ds.
+\tag{538.3}
+$$
+
+它连续，仍有正零面恒等式，且 $N(F_\varepsilon(x))\le A N(x)+B+A\varepsilon$。只沿 $u$ 方向微分即可：换元后把导数放到光滑核上，得
+
+$$
+\partial_u F_\varepsilon(x)
+=-\int\eta_\varepsilon'(s)F(x+su)\,ds,\qquad
+N(\partial_u F_\varepsilon(x))
+\le\|\eta_\varepsilon'\|_1\,[A(R+\varepsilon)+B]
+\quad(N(x)\le R).
+\tag{538.4}
+$$
+
+这不是全空间的 Fréchet 可微性。偶性使积分的一阶矩为零，所以 $F_\varepsilon(su)=c s u$，特别 $F_\varepsilon(0)=0$。
+
+令 $\Sigma=\{\beta\in C_Y^*: \beta(u)=1\}$ 为全部数学态。它弱星紧，且 $N(v)=\max_{\beta\in\Sigma}|\beta(v)|$。对 $d\ne0$、$r=N(d)$，范数的右方向导数为
+
+$$
+m_+(d,k):=\lim_{t\downarrow0}\frac{N(d+tk)-N(d)}t
+=\max_{\substack{\beta\in\Sigma,\ \sigma\in\{-1,1\}\\\sigma\beta(d)=r}}
+\sigma\beta(k).
+\tag{538.5}
+$$
+
+该式是紧集上仿射函数上确界的方向导数公式：每个活跃的 $(\beta,\sigma)$ 给下界；沿 $t\downarrow0$ 取最大化态的弱星聚点，极限态在 $d$ 上仍活跃，给反向不等式。正泛函有界性和 $\|\beta\|=\beta(u)$ 仅用序单位；原评价的 norming 子族已足以保证上面的范数等式。
+
+取 $N(x),N(y)\le R$、$d=y-x$。若 $\beta(d)=r$，则 $h=x+ru-y\in C_Y$ 且 $\beta(h)=0$，因此
+
+$$
+\beta(F_\varepsilon(y)-F_\varepsilon(x))
+=\beta(F_\varepsilon(x+ru)-F_\varepsilon(x)).
+\tag{538.6}
+$$
+
+若 $\beta(d)=-r$，改用 $h=y+ru-x$，同理控制这个增量的负号。由于 $r\le2R$，沿上述单位线段只经过半径 $3R$ 的球。(538.4)–(538.5) 遂给某个有限 $L_{\varepsilon,R}\ge0$，使
+
+$$
+m_+\bigl(y-x,\ \pm(F_\varepsilon(y)-F_\varepsilon(x))\bigr)
+\le L_{\varepsilon,R}N(y-x)
+\quad(N(x),N(y)\le R).
+\tag{538.7}
+$$
+
+$x=y$ 时两端为零。这是局部单侧 Lipschitz 估计，不要求全空间导数或有限维紧球。
+
+为准确取得解，取 Lipschitz 标量截断 $0\le\chi\le1$，在 $[0,R_0]$ 等于一，在 $[R_0+1,\infty)$ 等于零，置
+$K(x)=\chi(N(x))F_\varepsilon(x)$。它连续且有界，并且全局单侧 Lipschitz。确实，两点都在半径 $R_0+1$ 球内时，写
+
+$$
+K(y)-K(x)=\chi(N(y))[F_\varepsilon(y)-F_\varepsilon(x)]
++[\chi(N(y))-\chi(N(x))]F_\varepsilon(x).
+\tag{538.8}
+$$
+
+$m_+(d,\cdot)$ 的次可加和非负齐次性、(538.7) 以及第二项的范数界给全局常数
+$L_{\varepsilon,R_0+1}+\operatorname{Lip}(\chi)M$，其中
+$M=A(R_0+1+\varepsilon)+B$。两点都在球外时 $K$ 均零；仅一点在球内时，另一点的截断值为零，故
+$N(K(y)-K(x))\le\operatorname{Lip}(\chi)M N(y-x)$。同样结论适用于 $-K$。
+
+此时使用 Herzog，[*Quasimonotone embedding of one-sided Lipschitz continuous functions*, Math. Scand. 101 (2007), 238–248，Theorem 4，p.245](https://journals.msp.org/mscand/article/download/655/654/686)，DOI [10.7146/math.scand.a-15042](https://doi.org/10.7146/math.scand.a-15042)。其准确前件是：实 Banach 空间上的连续全域场、至多线性增长及 $m_+$ 意义的全局单侧 Lipschitz 条件，时间系数 $\mu\in C([0,T],\mathbb R)$；结论是每个初值在 $[0,T]$ 上有唯一解。这里 $K,-K$ 有界，$\mu$ 取上述常数，故条件齐备；该定理不要求本题原锥为 regular。截断等于一的邻域给 $\dot x=\pm F_\varepsilon(x)$ 的局部解和唯一性。
+
+未截断场的线性增长经 Gronwall 控制每个有限正负时间段的范数。若最大解的有限端点为 $T$，该范数界又给速度一致有界，故 $x(t)$ 在 $t\to T$ 时为 Cauchy；$Y$ 完备给终值，局部存在性在终值处接续，排除有限端点。因此未截断场具有全实时间流 $\Phi_{\varepsilon,t}$，逆为 $\Phi_{\varepsilon,-t}$。沿两个有界轨道对范数差使用 (538.7) 与 Gronwall，得
+$N(\Phi_{\varepsilon,t}(y)-\Phi_{\varepsilon,t}(x))\le e^{L|t|}N(y-x)$，其中 $L$ 取覆盖该段轨道的球的常数；对有界初值可由增长界选同一球。因此流及逆连续。
+
+还须证明未截断流保序。由正零面恒等式，$F_\varepsilon$ 和 $-F_\varepsilon$ 都 quasimonotone increasing。固定有限正时间段上的两个解 $x(t),y(t)$，$x(0)\le y(0)$。取包含这两条轨道和 $y(t)+s u$、$0\le s\le1$ 的球，并令 $L$ 为其单位方向导数界。对充分小的 $\delta>0$，令
+
+$$
+y_\delta(t)=y(t)+\delta e^{(L+1)t}u,
+\qquad0\le\delta e^{(L+1)t}\le1.
+\tag{538.9}
+$$
+
+若 $y_\delta(t)-x(t)$ 首次在 $t_0$ 触到 $C_Y$ 的边界，闭凸锥的支撑分离给 $\beta\in\Sigma$，满足
+$\beta(y_\delta(t_0)-x(t_0))=0$。先前该标量非负，故其左导数不大于零。但在 $t_0$，正零面恒等式给
+$\beta(F_\varepsilon(y_\delta)-F_\varepsilon(x))=0$，而 (538.4) 给
+$|\beta(F_\varepsilon(y_\delta)-F_\varepsilon(y))|\le L\delta e^{(L+1)t_0}$。于是
+
+$$
+\beta(y_\delta'(t_0)-x'(t_0))
+\ge\delta e^{(L+1)t_0}>0,
+\tag{538.10}
+$$
+
+矛盾。令 $\delta\downarrow0$ 得正向保序；对 $-F_\varepsilon$ 同证逆流保序。截断场仅用于存在性，没有把其可能丧失的序性质移给原场。
+
+由 (538.2) 及唯一性，$\Phi_{\varepsilon,t}(su)=a_t s u$，其中 $a_t=e^{ct}>0$。固定 $t$ 和任意 $R>0$，在 $C_Y^\circ$ 上置
+
+$$
+\Psi_R(y)=\Phi_{\varepsilon,t}(y-Ru)+a_t R u.
+\tag{538.11}
+$$
+
+这是 $C_Y^\circ$ 到自身的序同构。具体地，$y\in C_Y^\circ$ 当且仅当存在 $s>0$ 使 $y\ge su$；保序及单位线上公式把这个条件送到 $\Psi_R(y)\ge a_t s u$，逆流给满射及逆向条件。且
+$\Psi_R(\lambda u)=a_t\lambda u=\lambda\Psi_R(u)$ 对所有 $\lambda>0$ 成立，零点连续延拓亦为零。
+
+现在只用单条内部射线的成熟刚性定理：两个 Archimedean 序单位空间的锥内部之间的序同构，若沿一条内部射线正齐次，且至少一边的序单位范数空间可分并完备，则是线性的限制。所用版本为 Lemmens–van Gaans–van Imhoff，[*On the Linearity of Order-isomorphisms*, Canadian J. Math. 73 (2021), 399–416，p.414，Theorem 5.4 前的陈述及其证明中的应用](https://www.cambridge.org/core/services/aop-cambridge-core/content/view/S0008414X1900066X)，DOI [10.4153/S0008414X1900066X](https://doi.org/10.4153/S0008414X1900066X)，该处引用 Schäffer，[*Orders, gauge, and distance in faceless linear cones. II*, Corollary A1](https://doi.org/10.1007/BF00247661)。此处只消费其单射线陈述，不套用另外要求 engaged 射线 inf-sup hull 的 Theorem 5.4。$Y$ 的可分性、完备性、Archimedean 性和内部单位都由 537.2 供应，$\Psi_R$ 的全域、满射及单射线关系已如上证明。
+
+所以 $\Phi_{\varepsilon,t}$ 在 $-Ru+C_Y^\circ$ 上仿射。这些集合随 $R>0$ 增大而覆盖 $Y$，每个都含零的邻域，且 $\Phi_{\varepsilon,t}(0)=0$。相应线性延拓在共同开邻域上一致，因而在整个 $Y$ 一致，得到全局实线性流。在 $t=0$ 微分其加法及实齐次恒等式，得 $F_\varepsilon$ 实线性。由 $F_\varepsilon(x)\to F(x)$，逐点取极限保留这些恒等式，$F$ 实线性；原增长界使这个线性映射有界。这完成证明内的分析步骤，没有对光滑化场使用原关联式或原窗口。
+
+回到原关系，对每个实 $r$ 定义
+
+$$
+A_r x=S(ru,x),\qquad B_r x=D(ru,x),\qquad H=A_1.
+\tag{538.12}
+$$
+
+537.3、对称／反对称性和 (537.3) 的增长界供应上述分析前件。498.1 及固定点准确给
+$A_r(su)=rsu$、$B_r(su)=0$；故所有 $A_r,B_r$ 已是有界实线性算子。这时尚未断言 $H=I$，也未断言任意 $S$ 行线性。
+
+对 $r\ne1$、$x\in Y$、任意实 $t$，只在原三标签 $(u,ru,tx)$ 上取闭合实系数 $(r,-1,1-r)$。单位射线内部的第一块平方为零，行线性及实对角齐次使所余不等式恰为
+
+$$
+2t(1-r)\,\beta((rH-A_r)x)
++t^2(1-r)^2q_\beta(x)\ge0.
+\tag{538.13}
+$$
+
+它对正负任意 $t$ 成立，故一次项为零。正泛函分离 $Y$，得到 $A_r=rH$；$r=1$ 本来成立。
+
+令 $J=H-I$。对 $h\in C_Y$、$\beta(h)=0$，537.3 和零标签给
+$\beta(Jh)=\beta(B_rh)=0$。有界线性场 $J,B_r$ 因而产生双向保锥指数；这也可直接用上面的严格比较证明，因为线性场的单位方向导数全局有界。它是 Niestegge [arXiv:1402.0158v2，§4 Lemma 3](https://arxiv.org/html/1402.0158v2#S4) 的有界线性正零面判据在此的实例，不使用该文的事件或条件概率结构。由 $Ju=B_ru=0$，这些指数还保持 $u$，所以是序单位范数的等距群。
+
+原实部换括号式此时第一次用于单位行，代入 $(u,u,x)$，准确给
+
+$$
+H^2-H=B_1^2,\qquad J+J^2=B_1^2.
+\tag{538.14}
+$$
+
+此处可准确复用正交迹续卷 455.1 证明中 (455.3)–(455.4) 的有界算子谱子论证：其所需前件仅为 $J,B_1$ 有界实线性、双向等距指数及 (538.14)，均已取得。具体地，复化范数
+$N_{\mathbb C}(x+\mathrm iy)=\sup_sN(x\cos s-y\sin s)$ 保持这些等距群；Laplace resolvent 给两谱位于 $\mathrm i\mathbb R$。多项式谱映射给
+
+$$
+\{\lambda+\lambda^2:\lambda\in\operatorname{Sp}(J)\}
+=\operatorname{Sp}(B_1^2)\subset(-\infty,0].
+\tag{538.15}
+$$
+
+$\lambda=\mathrm is$ 时虚部为 $s$，故 $\operatorname{Sp}(J)=\{0\}$。455.1 所用的成熟 Gelfand 双向有界幂定理作用于每个 $e^{tJ}$，给 $e^{tJ}=I$，所以 $J=0$。继而 $B_1^2=0$，等距的 $e^{tB_1}=I+tB_1$ 对全部实 $t$ 有界，迫使 $B_1=0$。故 $A_r=rI$。再把原关联式用于 $(ru,ru,x)$，由 $S(ru,ru)=r^2u$ 取得
+
+$$
+B_r^2=A_r^2-A_{r^2}=0.
+\tag{538.16}
+$$
+
+同一等距指数论证给每个 $B_r=0$，证明 (538.1)。这只借用了 455.1 的实际谱子证明，没有借其尚未供应的全局双线性前件。∎
+
+## 539. 任意维原相加三表的实际整列零关系
+
+**定理 539.1（完整原域上的 C515.1）。** 定义 537.1 的未加强 $\mathsf C_{\Delta,\theta}$ 已使每个原 $\alpha\in\mathcal P$、每个原 $a,b\in E$ 满足
+
+$$
+\boxed{g_\alpha(a,a+b)=q_\alpha(a)+g_\alpha(a,b),\qquad
+G_\alpha(a+b,a,b)(1,-1,-1)^{\mathsf T}=0.}
+\tag{539.1}
+$$
+
+原空间可以任意维、不完备、不可分；包含 $E=0$、全部零及退化标签、零、次归一与不等质量。一般无限原域的这一结论补足 515.1 的相加前件；其有限域结论仍可直接由 508.1–508.2 取得。
+
+证明。$E=0$ 时原两个总映射只能为零，结论直接成立。否则任取原 $a,b$，在 537.2 中选含它们的 $Y$。对任意固定 $y\in Y$，场 $F(x)=D(x,y)$ 满足 537.3、(537.3) 的线性增长和由 538.1 取得的 $F(su)=0$。因此 538.1 证明内的单射线分析步骤使它有界实线性。反对称性给另一槽线性，同一个延拓 $D$ 因而实双线性；这不是预先给定的括号。
+
+对任意实 $r$，把原实部换括号式用于 $(ru,x,y)$，538.1 使含 $D(ru,\cdot)$ 的两项均零，准确留下
+
+$$
+S(rx,y)=rS(x,y).
+\tag{539.2}
+$$
+
+对称性给第二槽实齐次。于是同一个 $g_\beta$ 已分别实齐次，尚未使用 $S$ 可加或完整三表 PSD。
+
+现在只复用 478.1 证明中的三实坐标重标定步骤 (478.3)–(478.5)，其原先需由额外模板取得的齐次性已由上面内部推导供应。为明确其全部量词，固定任意 $x_1,x_2,x_3\in Y$ 及任意 $z\in\mathbb C^3$。映射
+$t\mapsto\sum_i t_i z_i$ 从 $\mathbb R^3$ 到 $\mathbb C\simeq\mathbb R^2$ 有非零核元 $t$；取 $j$ 使 $t_j\ne0$。选各坐标非零的实向量 $t^{(n)}\to t$，并置
+
+$$
+z_i^{(n)}=z_i\ (i\ne j),\qquad
+z_j^{(n)}=-\frac{\sum_{i\ne j}t_i^{(n)}z_i}{t_j^{(n)}},\qquad
+w_i^{(n)}=t_i^{(n)}z_i^{(n)}.
+\tag{539.3}
+$$
+
+则 $z^{(n)}\to z$、$\sum_iw_i^{(n)}=0$。仅在三标签 $x_i/t_i^{(n)}$ 上用原闭合面正性，分别实齐次性给
+
+$$
+0\le\sum_{i,k}\overline{w_i^{(n)}}w_k^{(n)}
+g_\beta(x_i/t_i^{(n)},x_k/t_k^{(n)})
+=(z^{(n)})^*G_\beta(x_1,x_2,x_3)z^{(n)}.
+\tag{539.4}
+$$
+
+对固定矩阵的系数取极限，取得其全部复方向 PSD。重标定标签不必收敛，零标签、重合标签和奇异表均可使用；没有把三维系数空间当作原载体，亦未增加第四标签。
+
+最后取实际相加表 $G=G_\beta(a+b,a,b)$、$v=(1,-1,-1)^{\mathsf T}$。原前件只给 $v^*Gv=0$，现在已取得的完整 PSD 才允许消去其所有配对。逐坐标地，对 $e_j$ 和任意实 $s$，
+
+$$
+\begin{aligned}
+0\le(v+s e_j)^*G(v+s e_j)
+&=2s\operatorname{Re}(e_j^*Gv)+s^2G_{jj},\\
+0\le(v+\mathrm is e_j)^*G(v+\mathrm is e_j)
+&=2s\operatorname{Im}(e_j^*Gv)+s^2G_{jj}.
+\end{aligned}
+\tag{539.5}
+$$
+
+正负任意 $s$ 使每个实、虚一次项均为零，即得到实际整列
+
+$$
+Gv=
+\begin{pmatrix}
+q_\beta(a+b)-g_\beta(a+b,a)-g_\beta(a+b,b)\\
+g_\beta(a,a+b)-q_\beta(a)-g_\beta(a,b)\\
+g_\beta(b,a+b)-g_\beta(b,a)-q_\beta(b)
+\end{pmatrix}=0.
+\tag{539.6}
+$$
+
+第二行就是所需相加律；第一、第三行亦已实际证出，未仅重述零二次值。将原 $\bar\alpha$ 限制到 $Y$，所有输出在原输入上仍是原 $S,D$，故 (539.1) 在同一原 $E$ 成立。每份 $a,b$ 都可如此选择 $Y$，不要求共同可数覆盖全部原域。零质量原评价恒零；证明没有除以原质量、退化 $q$ 或零距离。∎
+
+## 540. 弱入口接回原消费者的准确范围
+
+**定理 540.1（同一原资料上的弱入口等价）。** 在 476.1 的全部相同原资料、同一 $\theta$ 与全部相同实际来源上，
+
+$$
+\mathsf C_{\Delta,\theta}
+\Longleftrightarrow\mathsf C_{\mathrm A,\theta}
+\Longleftrightarrow\mathsf C_{R,\theta}.
+\tag{540.1}
+$$
+
+因此同一个原 $S,D$ 实双线性，$S$ 对称、$D$ 交替，全部有限复纯表正性及 493–494 的原乘法／消费者链在其准确原域成立。原不完备载体不被完成替换。
+
+证明。539.1 供应定义 492.1 唯一额外相加律，故正向准确得到 $\mathsf C_{\mathrm A,\theta}$。直接消费 493.1 的同一映射恢复及 494.1 的完整等价，不另重证其代数极化、跨平面有向恢复或原乘法。反向由这些既有结论的完整三表正性限制到闭合面，其余原条件均相同。原锥、全部效果、有符号夹心、同一旧复结合星乘法及有界忠实自伴表示依 494.1 所接 454–456 和 483.1、494.2 的实际前件消费。数学完成中的谱、平方根或表示不保证这些元素属于原不完备 $E$ 或实际菜单。∎
+
+**定义 540.2（来源合同与量子几何的边界）。** (540.1) 的新内容是一般原域的弱相加接口；七项消费者仍准确取 483.1、494.2，其全部对象、量词和校准均保持。原 $\Omega$、原实数作用、原 $P$ 定义的锥、$u,N$、全部原 $q$ 与零／次归一／不等质量、原准备和接受归属不变。原 native 与 common composition、跨评价配对及同一 native／全词 $K/J$ 身份、原局部乘法与交叉零、生成分离、经典中心及不等维块、实际非零联合和全部相关输入仍共同承重。整台箭头连同环境、完整输出、失败及细记录的全未来自然性、合法前接和真实未归一后上下文、递归同源二元参考、忠实通勤两腿、共同真支撑上的三个实际投影及支持内补、全部相关正输入和每个完整有限参考链继续是 CP 的原前件。
+
+完整 typed 仪器的全输入运输、所有输出与失败细记录、真分组和 typed 遗忘、AC、精确 $\Nu$、$X,X_s$、平方根词及接受端不删；TP、Kraus、密度、指定正常前对偶与 Lüders 同一完整输出校准各守其原域。全部合法顺序、自适应、并行历史、全部仍合法未来与返回、停止、拒绝、销毁、泄漏、同数两侧及逆向返回均保持；$B$ 与 $\mathsf B_{\rm cl}$、非离散记录、可数可加性和无限历史不合并。物理钟、相位实现、Hamiltonian 定义域与能量、共同作用量与 $\hbar$、同一 $\sigma,t_0$、独立支共同仪器、固定 $d$、固定域、resolvent 和 $3s+r\le1$ 均依原来源。
+
+R49.1 在另有该条件的下游分支仍是其原来对全部原实际输出同时成立的有限统一读数律；(539.1) 与 (540.1) 不以它为前提，也不重写其量词或断言它对每个恢复后的无限量子载体自动成立。指定因子的正常性及其他已有条件支仍各依原前件。已有 C139 的条件回溯、下降与完整参考链 CP 成果继续适用；负提升两条活路的分别控制及相干聚合、CountRead 读后同一原活动输出连同全部仍合法未来的真实返回、具名分析词到原菜单和接受事件的接线，仍须满足原全历史／未来推前律、质量、时钟、参考及记录相容。
+
+这里的简单几何是正零面上的读数不能随平移变化，单位方向的光滑化把它转成双向序流；原单位射线上的准确比例锁住该流，原换括号式再把单位行的线性传给缺失伸缩。之后才使用 $\mathbb R^3\to\mathbb R^2$ 的核关系，把任意三份复系数重标成闭合系数。有限三坐标在此属于系数关系；482.2 的中心化球和 530.1 的 Pauli 响应角仍是各自条件下的辅助数学几何，不指物理三空间、实际 qubit 或可取得控制。数学正泛函、积分、可分局部空间、序流和流参数不增加原准备、设备、物理时间或物理尺度。
+
+**定义 540.3（成熟来源与综合范围）。** 481.2、498.1、513–514 的预算、射线及联合正则性直接复用；一般有限原锥的结论继续由 504–508 承担。538.1 内使用的成熟存在定理准确为 Herzog (2007) Theorem 4；其 $m_+$、全域连续、全局单侧 Lipschitz、增长及 Banach 条件由截断逐项供应，局部单侧估计则由 (538.4)–(538.7) 直接证明。单内部射线刚性的引用版本为 Lemmens–van Gaans–van Imhoff (2021) p.414 对 Schäffer Corollary A1 的陈述与应用；可分和完备仅施于辅助 $Y$，没有施于原 $E$。Niestegge Lemma 3 仅在有界线性单位行已经取得后作正零面判据使用；538.1 已给其所需的保序比较。谱步骤准确复用正交迹续卷 455.1 的有界算子子证明，三系数重标定准确复用 478.1 的已获齐次性子证明，最终消费者准确复用 493–494。
+
+$\texttt{repo-derived}$ 的综合在于把这些前置接为未加强原 $\mathsf C_{\Delta,\theta}$ 的一般维相加恢复。538.1 的分析步骤使用 (538.2) 的单位射线前件；其在每个实际单位行上的成立由 498.1 和原固定点供应，在任意有向行上的成立则由已经取得的 (538.1) 供应，不将有限 engaged 射线定理外推。成熟存在、序同构及谱定理仅是证明内工具，不单列为新增一般定理；此处不主张历史优先权、统一有限或含噪认证、实际资源界或全部原量子来源的无条件实现。
+
+## 追加锚（本行以下为增补区）

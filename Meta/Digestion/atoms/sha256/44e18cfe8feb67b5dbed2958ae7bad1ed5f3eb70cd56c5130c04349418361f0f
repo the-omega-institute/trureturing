@@ -1,0 +1,6 @@
+**命题 65.1（关系读数的共同盲网与奇异读数）。** 在已经恢复的同一个原因子中，若存在原正评价 $\alpha$ 的奇异质量 $m=\alpha_{\rm s}(1)>0$，则存在共同网 $p_\lambda\in A_D$，$\|p_\lambda\|\le1$，使每个固定 $\beta\in M^*$ 和每个固定 $t\in M_{\rm sa}$ 都有 $\beta(D(p_\lambda,t))\to0$，而 $\alpha(p_\lambda)\to m$。同一个网实际上对每个有界正评价 $\gamma$ 都有 $\gamma(p_\lambda)\to\gamma_{\rm s}(1)$。
+
+证明。消费成熟 Goldstine 闭单位球密度，参 [Math 7321 公开讲义，Theorem 2.47](https://www.math.uh.edu/~bgb/biostats/Math7321S17/Math7321-20170209.pdf)。在 $V^{**}$ 中以有限 $F\subset V^*$ 及精度 $\delta>0$ 定向；每项选择同一个 $p_{F,\delta}\in B_V$，使 $|f(p_{F,\delta})-f^{\sim}(s)|<\delta$ 对全部 $f\in F$ 成立。得到 $p_\lambda\to s$ 于 $\sigma(V^{**},V^*)$。对一般复 $\beta$ 分别取其实虚部作为实泛函，再代入 (64.2) 及 $\widetilde\gamma(s)=\gamma_{\rm s}(1)$ 即得全部结论。$A_D=V$ 保证每个 $p_\lambda$ 是一个真正旧输出，具有原 $D$ 输入见证；这不是用双对偶投影 $s$ 冒充原输出。∎
+
+原 $M$ 中，$p_\lambda\to0$ 于超弱拓扑；每个固定 $t$ 的 $D(p_\lambda,t)\to0$ 于 Banach 弱拓扑。若 $m>0$，$p_\lambda$ 在 Banach 弱拓扑中没有极限：任何该极限由全部正常读数必为零，却与原 $\alpha$ 的极限 $m$ 冲突。由于 $s$ 是非零投影，弱星范数下半连续性还给 $\|p_\lambda\|\to1$。这些 $p_\lambda$ 无迹且不要求正，不是下降投影列；一般必须使用网，不能据可分前对偶换成序列。共同数学输入见证也不提供一台实际仪器来生成整个网。
+
