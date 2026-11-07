@@ -4129,13 +4129,26 @@ $$
  \tag{21.3}
 $$
 
-The physical final time is $(R_S+1)d$, not a sum of restarted
-clocks. With service scratch released between stages, peak space
-is bounded by $2R_S$ plus the maximum, over $s\le S$, of (21.2),
-$B_{{\rm cap},s}$, the guard working space and $M_{{\rm cap},s}$
-added together. Source names retained for reuse are included in
-$B_{{\rm cap},s}$. Every term is finite on the stopping event;
-no expectation or source-uniform bound for their sum is inferred.
+The last required indexed read is at $(R_S+1)d$, not a sum of
+restarted clocks. With service scratch released between stages,
+peak space for these prefixes is bounded by $2R_S$ plus the
+maximum, over $s\le S$, of (21.2), $B_{{\rm cap},s}$, the guard
+working space and $M_{{\rm cap},s}$ added together. Source names
+retained for reuse are included in $B_{{\rm cap},s}$. Every term
+is finite on the stopping event; no expectation or source-uniform
+bound for their sum is inferred.
+
+Indexed read horizons are not wall-clock decision deadlines. This
+bit model assumes no operation rate relative to $d$. If continuing
+passive capture retains $J\ge0$ additional labels while numerical
+work or guard evaluation finishes, the total bill adds $J$ reads,
+$2J$ payload bits, an overrun index of
+$w_J=\lceil\log_2(R_S+J+2)\rceil$ bits, and at most
+$64(J+1)$ capture/index word operations of width $w_J$. The last
+retained read is then at $(R_S+J+1)d$; peak payload is
+$2(R_S+J)$ bits. The guards still use only their declared prefixes.
+No source pause, delayed read gap or free overrun retention is
+implicit, and no wall-clock latency bound is claimed.
 
 *Proof.* Initialize the circular array and count fields to zero.
 At label index $k=0,\ldots,R-1$, extract $I_k$. If $k<N$, add it
