@@ -9,13 +9,14 @@
 /-
 admission_basis: open-problem-resolution (#27077; Proved)
 escape_witness: none (open-problem-resolution; the settlement itself is the new content)
-Direct frozen dependencies:
+Direct frozen dependencies (including transitive imports used directly in proofs):
 D5/S3/Combinatorics/PositionSets/VertexPositionRatioRefutation.potential_dist
-statement_id: sha256:2360c26ddcdab5109d1906cf2b6884cebb254549f8cf9a5078002397a1098f09
 frozen_module_statement_id: sha256:f8b677ea402e38581fbfa04887d18040684e7baa21f05cad6421d45525c0cd21
-D5/S3/StatisticalMechanics/TeaCoordinationSequence.residual
-statement_id: sha256:10439493c286dd5db76f1c5be5de421b2b461858b90859c1ba556092626d04d8
-D5/S3/StatisticalMechanics/TeaCoordinationSequence.residual_le_iff
+D5/S3/StatisticalMechanics/TeaCoordinationSequence:
+residual, residual_le_iff, hexagon, hexagon_mem, hexagon_card.
+The vertex and face slices apply the owner's hexagon count; the vertical and diagonal
+edge slices use bijections to the horizontal-edge slice. All declarations below are
+bind-only; the module's sole admission basis is the external open-problem resolution.
 Simplex: proof_shape=bind-only; consumers=graph
 support: proof_shape=bind-only; consumers=graph
 graph: proof_shape=bind-only; consumers=distance
@@ -48,15 +49,15 @@ polygon_mem: proof_shape=bind-only; consumers=slice_card_from_polygon
 polygon_card: proof_shape=bind-only; consumers=slice_card_from_polygon
 slice: proof_shape=bind-only; consumers=ball
 slice_mem: proof_shape=bind-only; consumers=ball_mem
-slice_card_from_polygon: proof_shape=bind-only; consumers=slice_even_0
+slice_card_from_polygon: proof_shape=bind-only; consumers=slice_even_1, slice_odd_1
 slice_even_0: proof_shape=bind-only; consumers=ball_even
-slice_even_1: proof_shape=bind-only; consumers=ball_even
+slice_even_1: proof_shape=bind-only; consumers=slice_even_2, slice_even_3, ball_even
 slice_even_2: proof_shape=bind-only; consumers=ball_even
 slice_even_3: proof_shape=bind-only; consumers=ball_even
-slice_even_4: proof_shape=bind-only; consumers=ball_even
-slice_even_5: proof_shape=bind-only; consumers=ball_even
+slice_even_4: proof_shape=bind-only; consumers=slice_odd_4, ball_even
+slice_even_5: proof_shape=bind-only; consumers=slice_odd_5, ball_even
 slice_odd_0: proof_shape=bind-only; consumers=ball_odd
-slice_odd_1: proof_shape=bind-only; consumers=ball_odd
+slice_odd_1: proof_shape=bind-only; consumers=slice_odd_2, slice_odd_3, ball_odd
 slice_odd_2: proof_shape=bind-only; consumers=ball_odd
 slice_odd_3: proof_shape=bind-only; consumers=ball_odd
 slice_odd_4: proof_shape=bind-only; consumers=ball_odd
@@ -729,7 +730,6 @@ private lemma slice_even_5 (k : ℕ) :
       · simp only [slice_mem, score, ← le_sub_iff_add_le', twice_le_iff,
           TeaCoordinationSequence.residual_le_iff]
         push_cast
-        dsimp
         omega
       · simp
   have h := TeaCoordinationSequence.hexagon_card ((k : ℤ) + 2) ((k : ℤ)) (by omega) (by omega)
@@ -806,46 +806,24 @@ private lemma slice_odd_3 (k : ℕ) :
 
 private lemma slice_odd_4 (k : ℕ) :
     ((slice 4 (2 * (k + 1) + 1)).card : ℤ) = 3 * (k + 1) ^ 2 + 3 * (k + 1) + 1 := by
-  have he : slice 4 (2 * (k + 1) + 1) = TeaCoordinationSequence.hexagon ((k : ℤ) + 1) ((k : ℤ) + 1) := by
+  have he : slice 4 (2 * (k + 1) + 1) = slice 4 (2 * (k + 1)) := by
     ext ⟨i, j⟩
     simp only [slice_mem, score, ← le_sub_iff_add_le', twice_le_iff,
-      TeaCoordinationSequence.residual_le_iff, TeaCoordinationSequence.hexagon_mem]
+      TeaCoordinationSequence.residual_le_iff]
     push_cast
     omega
-  have h := TeaCoordinationSequence.hexagon_card ((k : ℤ) + 1) ((k : ℤ) + 1) (by omega) (by omega)
-  rw [← he] at h
-  push_cast at h ⊢
-  nlinarith
+  rw [he, slice_even_4]
 
 
 private lemma slice_odd_5 (k : ℕ) :
     ((slice 5 (2 * (k + 1) + 1)).card : ℤ) = 3 * (k + 1) ^ 2 + 3 * (k + 1) := by
-  have he : (slice 5 (2 * (k + 1) + 1)).card =
-      (TeaCoordinationSequence.hexagon ((k : ℤ) + 2) ((k : ℤ))).card := by
-    apply Finset.card_bij (fun z _ => (z.1 + 1, z.2 + 1))
-    · rintro ⟨i, j⟩ hz
-      simp only [slice_mem, score, ← le_sub_iff_add_le', twice_le_iff,
-        TeaCoordinationSequence.residual_le_iff] at hz
-      rw [TeaCoordinationSequence.hexagon_mem]
-      push_cast at hz
-      dsimp
-      omega
-    · rintro ⟨i, j⟩ _ ⟨u, v⟩ _ h
-      simp only [Prod.mk.injEq] at h ⊢
-      omega
-    · rintro ⟨i, j⟩ hz
-      rw [TeaCoordinationSequence.hexagon_mem] at hz
-      refine ⟨(i - 1, j - 1), ?_, ?_⟩
-      · simp only [slice_mem, score, ← le_sub_iff_add_le', twice_le_iff,
-          TeaCoordinationSequence.residual_le_iff]
-        push_cast
-        dsimp
-        omega
-      · simp
-  have h := TeaCoordinationSequence.hexagon_card ((k : ℤ) + 2) ((k : ℤ)) (by omega) (by omega)
-  rw [← he] at h
-  push_cast at h ⊢
-  nlinarith
+  have he : slice 5 (2 * (k + 1) + 1) = slice 5 (2 * (k + 1)) := by
+    ext ⟨i, j⟩
+    simp only [slice_mem, score, ← le_sub_iff_add_le', twice_le_iff,
+      TeaCoordinationSequence.residual_le_iff]
+    push_cast
+    omega
+  rw [he, slice_even_5]
 
 
 private def ball (n : ℕ) : Finset Simplex :=

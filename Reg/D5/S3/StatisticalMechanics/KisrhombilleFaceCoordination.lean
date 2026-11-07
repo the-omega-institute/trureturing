@@ -2,7 +2,7 @@ import D5.S3.StatisticalMechanics.KisrhombilleFaceCoordination
 import Reg.Support.SingleDependentReadout
 import LeanInformationAuditInterface.Contract.Registration
 
-/-! The infinite coordination readout and its formal generating-function constraint. -/
+/-! The infinite coordination readout, with Tea hexagon counts reused by the source proof. -/
 
 namespace Reg.D5.S3.StatisticalMechanics.KisrhombilleFaceCoordination
 
