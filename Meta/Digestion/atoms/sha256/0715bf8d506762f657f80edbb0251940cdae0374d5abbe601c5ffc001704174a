@@ -1,0 +1,44 @@
+**定理 323.1（两份背景分别的完整无标定桥）。** 分别有
+
+$$
+\begin{aligned}
+B+\mathsf G_{0h}+\mathsf Z_0
+&\Longleftrightarrow B+\mathrm I+\mathrm{SC}
+\Longleftrightarrow B+\mathsf G^0_{0h},\\
+\mathsf B_{\rm cl}+\mathsf G_{0h}+\mathsf Z_0
+&\Longleftrightarrow\mathsf B_{\rm cl}+\mathrm I+\mathrm{SC}
+\Longleftrightarrow\mathsf B_{\rm cl}+\mathsf G^0_{0h}.
+\end{aligned}
+\tag{323.1}
+$$
+
+左端的几何只在原选中域要求。结论中的 I、SC、LU、交替、原导子律和原 $q$ 斜伴随覆盖全部原对象和实际联合，包括全部经典／低秩来源、目标和旧输出。原半角输出无迹成为结论。
+
+证明。对左端，原右单位和静态结构分别由母卷 30.1／67.3、前卷 246.1 给出。固定任意非零原 $A$，用前卷 202.1 取 $N\ge\max\{3,p_*\}$，取得同一个实际 $J$、原含幺 Jordan/$D$ 单射 $i:E_A\to E_J$ 及目标族 $\mathcal V_N$，使
+
+$$
+n_T>N\quad(T\in\mathcal V_N),\qquad
+\bigcap_{T\in\mathcal V_N}\ker(\pi_Ti)=\{0\}.
+\tag{323.2}
+$$
+
+再取 $J$ 自己由原身份事件和全事件 R 已供应的一份实际 $K=JR$，$R=P^{\otimes k}$、$k\ge1$，及原第一槽嵌入 $k_J$。整个 AC、原指针幂与静态全部中心对给 $R$ 一个非经典块 $V$。每个 $U_T=(T,V)$ 都是该同一实际 $K$ 的高秩目标，故整个 $K$ 在选中域，(319.1) 确实可用；不要求每个源块都高秩。
+
+在 $K$ 上用定理 322.1 的全部来源式。对每个经典源 $s=(r,d)$，用原有序交叉零 $D^K(k_J(z_r),l(z_d))=0$；高目标两个坐标均为零，经典坐标乘积只在 $s$ 处为一，故恰得 $\ell_{U_Ts}=0$。这一步与前卷 313.2 的参数相同，其所需完整来源式在此已由仅零角迹证明。于是
+
+$$
+\pi_{U_T}D^K(x,y)=\alpha_{U_T}\,\mathrm i[x_{U_T},y_{U_T}]
+\qquad(x,y\in E_K).
+\tag{323.3}
+$$
+
+静态逐中心对表示给单射 $\theta_T$，满足 $\pi_{U_T}k_J(x)=\theta_T(x_T)$，在所选坐标中为 $x_T\mapsto x_T\otimes I_V$，允许相应转置。故 $h=k_Ji$ 的这些目标共同分离整个原 $E_A$。对原任意 $a,b,c$，把
+
+$$
+r_A=D^A_a(b\circ c)-(D^A_ab)\circ c-b\circ(D^A_ac)
+$$
+
+和 $D^A_aa$ 沿 $h$ 运输；原 $h$ 保持同一 Jordan 乘法和同一 $D$，(323.3) 逐目标给两者投影为零。共同分离使两者在整个 $E_A$ 为零。因此原 $D_a$ 是 Jordan 导子，且 SC 成立。有限 EJA 导子内性使原 $D_a\in\mathfrak k_A$，即 I；原 $L_a$ 对不等权 $q_A$ 自伴随，内导子便对同一 $q_A$ 斜伴随。$A$ 任意，故所有原对象和接口覆盖。
+
+从 I+SC 返回其余两端，只复用前卷 275.2、314.1：在各自完整准备背景上，它们已给原 II 和含零分支的共同 $\kappa\ge0$，逐块原 $D$ 为标量交换子，经典和跨块为零。因此全部双单位、O、H 与零／半角无迹均成立。这里在取得 I+SC 以后才消费该共同尺度定理，未拿其结论提前消去径向项。∎
+

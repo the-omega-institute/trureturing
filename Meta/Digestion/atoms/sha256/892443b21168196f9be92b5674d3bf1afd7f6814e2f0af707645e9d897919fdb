@@ -1,0 +1,58 @@
+**Definition 31.1 (inherited native contract and critical parameters).**
+Let [G] denote
+[Native two-control Green stability](FIB_NATIVE_TWO_CONTROL_GREEN_STABILITY.md).
+Retain exactly [G, Definition 25.1], its fixed data, pole, raw measure,
+original clock, both absorbing height faces, complete form domain and
+two interaction conventions. In particular, every phase has period
+$2\pi$, $a=|\kappa|$, and the sign of $\kappa$ is unrestricted.
+The symbols $I,B,\Omega,\phi,\lambda,A_\kappa,B_\kappa,b_\kappa,
+S,V,W_\sigma,T_\kappa,\mathcal F_\kappa,E_\sigma$ have precisely their
+meanings in [G, (23.3), (25.3)--(25.9)]. Set
+
+$$
+\begin{aligned}
+J_\phi&=\int_I\phi(k)\,dk,&
+b_0(k)&=\frac{H-k}{Hk},&
+\beta&=\int_I b_0(k)^2\phi(k)^2\,dk>0,\\
+G_t(D)&=\frac1{2\pi}\sum_{j\in\mathbb Z}e^{-tj^2}e^{ijD}
+\quad(t>0),&
+\rho(D)&=\operatorname{dist}_{\mathbb T}(D,0),\\
+L_a&=\log(1/a),&
+\tau_s&=\frac{L_a-\frac12\log L_a}{\lambda}+s,
+\qquad s\in\mathbb R,\\
+\tau_b&=b/a^2,\qquad b>0,&
+r_s&=a\sqrt{\tau_s},\\
+c_0&=\frac1{\lambda J_\phi(2\pi)^2},&
+c_s&=\frac{\phi(k_0)e^{-\lambda s}}
+                 {(2\pi)^2\sqrt{4\pi\beta\lambda}}.
+\end{aligned}
+\tag{31.1}
+$$
+
+The two times exceed $\tau_{\min}$ for all sufficiently small $a$.
+$G_t$ is a density relative to raw $dD$, so $\int_{\mathbb T}G_t\,dD=1$.
+For $c\ge0$ let $e(c)$ and $u_c$ be the lowest eigenvalue and positive
+$L^2(dk)$-normalized eigenfunction of the scalar Dirichlet operator
+
+$$
+H_c=-\varepsilon^2\partial_k^2-c\phi(k),
+\qquad Q(H_c)=H_0^1(I).
+\tag{31.2}
+$$
+
+Thus $e(0)=\lambda$ and $u_0=\phi$. All limits below fix the original
+$s,b,g$ and every datum in [G, (25.1)]; none is an
+$\varepsilon\to0$ or shrinking-coupling assertion.
+The native statements below are repository-derived consequences of the
+exact suppliers [G, §§23,25--29]. The classical tools used inside their
+proofs are bounded selfadjoint form perturbation, the min-max principle,
+and the bounded-potential Trotter formula, in the scopes of G. Teschl,
+*Mathematical Methods in Quantum Mechanics*, GSM 99, author text,
+[Theorems 6.24, 4.10 and 5.11](https://www.mat.univie.ac.at/~gerald/ftp/book-schroe/schroe.pdf)
+(printed pp.150, 119 and 132), respectively. These are
+literature-attested tools, not suppliers of a
+native critical limit. The unsmoothed restricted theorem in
+[Observation quotient, Theorem 11.1](FIB_NATIVE_OBSERVATION_QUOTIENT_GREEN_ESCAPE.md)
+has a strict small-coupling hypothesis and a different field; it is not
+used as a critical-cutoff convergence theorem here.
+

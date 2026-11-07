@@ -35,7 +35,7 @@ internal sealed class AdamsonSternFareyInverseDocument : IScribeDocumentDefiniti
                 H("Stern's diatomic sequence"),
                 StatementSource.FromAuthor(SternFormula()),
                 AssessedProvenance.FromLiterature(
-                    LibraryNoteRef.Create("D5/L/Recurrence/adamson2023a002487")),
+                    LibraryNoteRef.Create("D5/L/ArithUnits/adamson2023a002487")),
                 Blocks(Paragraph(Text(
                     "The initial values are 0 and 1. At a larger even index the value "
                         + "is copied from half the index; at an odd index the two "
@@ -78,7 +78,7 @@ internal sealed class AdamsonSternFareyInverseDocument : IScribeDocumentDefiniti
                 H("Farey-tree numerators"),
                 StatementSource.FromAuthor(ProjectionFormula("fareyNum", 1)),
                 AssessedProvenance.FromLiterature(
-                    LibraryNoteRef.Create("D5/L/Recurrence/adamson2023a002487")),
+                    LibraryNoteRef.Create("D5/L/ArithUnits/adamson2023a002487")),
                 Blocks(Paragraph(Text(
                     "The first coordinate gives the A007305 numerator at the same index."))),
                 DescribeRole.Definition),
@@ -88,7 +88,7 @@ internal sealed class AdamsonSternFareyInverseDocument : IScribeDocumentDefiniti
                 H("Farey-tree denominators"),
                 StatementSource.FromAuthor(ProjectionFormula("fareyDen", 2)),
                 AssessedProvenance.FromLiterature(
-                    LibraryNoteRef.Create("D5/L/Recurrence/adamson2023a002487")),
+                    LibraryNoteRef.Create("D5/L/ArithUnits/adamson2023a002487")),
                 Blocks(Paragraph(Text(
                     "The second coordinate gives the A007306 denominator at the same index."))),
                 DescribeRole.Definition),
@@ -98,7 +98,7 @@ internal sealed class AdamsonSternFareyInverseDocument : IScribeDocumentDefiniti
                 H("Adamson's modular inverse relation"),
                 StatementSource.FromAuthor(ResultFormula()),
                 AssessedProvenance.FromLiterature(
-                    LibraryNoteRef.Create("D5/L/Recurrence/adamson2023a002487")),
+                    LibraryNoteRef.Create("D5/L/ArithUnits/adamson2023a002487")),
                 Blocks(Paragraph(Text(
                     "The coordinates of each mediant row are Stern values. The "
                         + "adjacent-column determinant identity then writes the product "

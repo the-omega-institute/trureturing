@@ -1,0 +1,56 @@
+### 定理 7：所有满足 $p^j\le T$ 的素数幂层都必须出现
+
+第一层已由定理 6 处理。
+
+若 $j\ge2$、$p^j\le T$，则
+
+$$
+1+p+\cdots+p^j<2p^j\le2T.
+$$
+
+因此
+
+$$
+\begin{aligned}
+\lambda_{p,j}
+&>
+\frac1{1+p+\cdots+p^j}\\
+&>
+\frac1{2T}
+\ge
+\frac{\log p}{T\log T}
+=\eta\log p.
+\end{aligned}
+$$
+
+这一层具有严格正价格增益，必须被终点取入。证毕。
+
+令
+
+$$
+\psi(x)=\sum_{p^j\le x}\log p.
+$$
+
+于是
+
+<a id="eq-27"></a>
+
+$$
+\boxed{
+\operatorname{lcm}(1,2,\ldots,\lfloor T\rfloor)\mid N,
+\qquad T=\log N,
+}
+\tag{27}
+$$
+
+并且
+
+<a id="eq-28"></a>
+
+$$
+\boxed{\psi(T)\le T.}
+\tag{28}
+$$
+
+这里的最小公倍数尺度已经达到 $\log N$。
+

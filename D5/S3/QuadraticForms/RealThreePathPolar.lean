@@ -152,7 +152,7 @@ private theorem even_quadratic (Q : V → ℝ) (hz : Q 0 = 0)
 omit [Module ℝ V] in
 -- proof_shape: content; live consumer: raw_even_data.
 -- admission_basis: escape-witness; live raw lower-bound/Archimedean scalar construction.
-private theorem quadratic_nonneg (E : QuadraticMap ℤ V ℝ) (c : ℝ)
+theorem quadratic_nonneg (E : QuadraticMap ℤ V ℝ) (c : ℝ)
     (hb : ∀ x, -c ≤ E x) : ∀ x, 0 ≤ E x := by
   intro x
   by_contra hn
@@ -215,7 +215,7 @@ private theorem positive_additive_scalar (f : ℝ →+ ℝ)
 
 -- proof_shape: content; live consumer: raw_even_data.
 -- admission_basis: escape-witness; live raw lower-bound/Archimedean scalar construction.
-private theorem real_polar (E : QuadraticMap ℤ V ℝ)
+theorem real_polar (E : QuadraticMap ℤ V ℝ)
     (hp : ∀ x, 0 ≤ E x)
     (hs : ∀ (x y : V) (t : ℝ), E (x + t • y) - E (t • x + y) =
       E x - E y - E (t • x) + E (t • y)) :
