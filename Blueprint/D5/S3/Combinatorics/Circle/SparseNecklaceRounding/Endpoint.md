@@ -4,25 +4,7 @@
 
 Uniform physical sparse-necklace rounding
 
-**Definition 1.1 (Full physical proposition).**
-
-Lean statement: `D5/S3/Combinatorics/Circle/SparseNecklaceRounding/Endpoint.UniformSparseNecklaceRounding`
-
-*Formalization.* `D5/S3/Combinatorics/Circle/SparseNecklaceRounding/Endpoint.UniformSparseNecklaceRounding` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-This defines a proposition. For all natural p>=1 and gaps:Fin(p)->Nat with every gap at least two, let k=sum gaps and e=sum_j 2^(sum_{q<j} gaps(q)). Set N=2^k-1 and H=N/2, the integer (N-1)/2. The old coordinate is actualSource(k,e); the new coordinate is actualSource(k+1,2e), whose fresh label k must have value e.
-
-The proposition asks for two permutations wp,wm of Fin(k). Their literal fresh-first ear words must be permutations of Fin(k+1), starting with k. Both separate coordinate totals must be zero. At every natural physical prefix q, the old sum uses wp.take(q-1) or wm.take(q-1), and the new sum uses earWord.take(q). All plus sums must be nonnegative; all minus sums must be at most H,N. Natural subtraction covers q=0, and overlength takes saturate.
-
-It also asks for a list of at most p-1 corner records with distinct prefix lengths and pairwise disjoint physical positive/terminal labels. Every record is a strict crossing of its specified native demand threshold inside the positive label interval. It displays wp=u++[i,j]++v and wm=u'++[j,i]++v' at physical prefix length length(u)+2=length(u')+2. Folding the literal label swaps gives wm. Every plus upper-bound failure and every minus lower-bound failure must occur at one of these positions; each finite error set over Fin(k+2) has cardinality at most the number of records. Thus the possible-corner list has exactly that many entries while actual failures may be fewer.
-
-The construction lists positive labels in reverse chain order and terminals in that same order. A terminal threshold strictly inside a positive interval produces a cut block. Equality produces a completed positive label followed by the terminal in both words. The expression defining the proposition includes p=1, repeated gaps and repeated coordinate values, and assumes no path feasibility, certificate, primitivity or coprimality.
-
-**Theorem 1.2 (Uniform p minus one physical rounding theorem).**
+**Theorem 1.1 (Uniform p minus one physical rounding theorem).**
 
 Lean statement: `D5/S3/Combinatorics/Circle/SparseNecklaceRounding/Endpoint.uniform_sparse_necklace_rounding`
 
@@ -32,7 +14,11 @@ Lean statement: `D5/S3/Combinatorics/Circle/SparseNecklaceRounding/Endpoint.unif
 
 *Commentary.*
 
-For every natural p>=1 and every gaps:Fin(p)->Nat with gaps(j)>=2, the complete physical proposition above holds. This includes p=1, nonprimitive necklaces, repeated gaps and repeated coordinate values. No fractional feasibility, arithmetic certificate or further hypothesis is assumed.
+For every natural p>=1 and every gaps:Fin(p)->Nat with gaps(j)>=2, the complete PhysicalRounding conclusion holds. This includes p=1, nonprimitive necklaces, repeated gaps and repeated coordinate values. No fractional feasibility, arithmetic certificate or further hypothesis is assumed.
+
+Put k=sum gaps, e=sum_j 2^(sum_{q<j} gaps(q)), N=2^k-1 and H=N/2. The old coordinates are actualSource(k,e); new coordinates are actualSource(k+1,2e). There are two permutations of Fin(k), each giving a literal fresh-first permutation of Fin(k+1), with the fresh label k valued e. The old and new totals are separately zero for both words. For every natural prefix q, plus old/new sums are nonnegative and minus old/new sums are at most H,N, including q=0 and saturated prefixes.
+
+A list of at most p-1 records has distinct prefix lengths and disjoint positive-terminal physical labels, strict native threshold crossings and the exact adjacent positions in both words. Folding the specified literal swaps gives the minus word. Every plus upper-bound failure and every minus lower-bound failure occurs at one recorded position; both error sets over Fin(k+2) have cardinality at most the record count.
 
 The proof identifies every physical positive and terminal label, and proves that their disjoint streams exhaust Fin(k). Native chain masses telescope to the terminal demands, and chain charges telescope to the necklace seed. Threshold separation prevents a positive interval from crossing two successive demands; the final demand is the total positive mass and therefore cannot be a strict split. There are at most p-1 strict splits.
 
@@ -42,8 +28,5 @@ The simultaneous rounding theorem is then applied to this proved fractional path
 
 ## References
 
-- Truth anchor: `D5/S3/Combinatorics/Circle/SparseNecklaceRounding/Endpoint.UniformSparseNecklaceRounding`
 - Truth anchor: `D5/S3/Combinatorics/Circle/SparseNecklaceRounding/Endpoint.uniform_sparse_necklace_rounding`
-- Dependency: [D5/S3/Combinatorics/Circle/Orbit/ZeroSumSubsets](../Orbit/ZeroSumSubsets.md)
-- Dependency: [D5/S3/Combinatorics/Circle/SparseNecklaceRounding/Arithmetic](Arithmetic.md)
-- Dependency: [D5/S3/Combinatorics/Circle/SparseNecklaceRounding/Rounding](Rounding.md)
+- Dependency: [D5/S3/Combinatorics/Circle/SparseNecklaceRounding/PhysicalStreams](PhysicalStreams.md)
