@@ -57,7 +57,7 @@ internal sealed class TriangleFourSymbolFoundationDocument : IScribeDocumentDefi
                 "Under agreement, either other incident response gives the same record/source cell as the first response. Zero source cells are included."))));
 
     private static DocumentBlock Node(string name, string title, string prose) => Describe.Lean(
-        DescribeId.Create("triangle-foundation-" + name.Replace('_', '-')),
+        DescribeId.Create("triangle-foundation-" + name.Replace('_', '-').ToLowerInvariant()),
         DeclarationHandle.Create(Module + name), H(title), StatementSource.WithoutFormula(),
         AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
 }
