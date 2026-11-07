@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/Quantum/Algebra/UnitBridgeLocalization
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Algebra.Module.LocalizedModule.Basic]
+   utility: kind=none
    digest: Square-denominator localization of the same original total relation. -/
 
 import D5.S3.Quantum.Algebra.UnitBridgeRawGeometry
@@ -102,7 +103,7 @@ private theorem representative_left (R : Raw E) (cs : SquareCompatible R) (t : T
   have hk := saturated_left R cs u.val p.2.val p'.2.val p.1 p'.1
     (q.2.val • q.1) (by simpa only [Submonoid.smul_def] using hu)
   have hh := congrArg (fun z : Vectors E => q.2.val^2 • z) hk
-  simpa only [Submonoid.smul_def, Submonoid.coe_mul, Submonoid.coe_pow,
+  simpa only [Submonoid.smul_def, Submonoid.coe_mul, SubmonoidClass.coe_pow,
     smul_smul, pow_two, mul_assoc, mul_comm, mul_left_comm] using hh
 
 private theorem representative_right (R : Raw E) (cs : SquareCompatible R) (t : T)
@@ -115,7 +116,7 @@ private theorem representative_right (R : Raw E) (cs : SquareCompatible R) (t : 
   have hk := saturated_right R cs u.val q.2.val q'.2.val q.1 q'.1
     (p.2.val • p.1) (by simpa only [Submonoid.smul_def] using hu)
   have hh := congrArg (fun z : Vectors E => p.2.val^2 • z) hk
-  simpa only [Submonoid.smul_def, Submonoid.coe_mul, Submonoid.coe_pow,
+  simpa only [Submonoid.smul_def, Submonoid.coe_mul, SubmonoidClass.coe_pow,
     smul_smul, pow_two, mul_assoc, mul_comm, mul_left_comm] using hh
 
 /-- The nonlinear localized map is constructed from the original D and source CS. -/
@@ -125,5 +126,81 @@ def localizedK (R : Raw E) (cs : SquareCompatible R) (t : T)
     intro p q p' q' hp hq
     exact (representative_left R cs t p p' q hp).trans
       (representative_right R cs t p' q q' hq))
+
+private theorem localizedK_mk (R : Raw E) (cs : SquareCompatible R) (t : T)
+    (x y : Vectors E) (s r : evaluationDenominators E t) :
+    localizedK R cs t (LocalizedModule.mk x s) (LocalizedModule.mk y r) =
+      representative R t (x,s) (y,r) := by
+  simp only [localizedK, LocalizedModule.liftOn₂_mk]
+
+private theorem localizedK_square (R : Raw E) (cs : SquareCompatible R) (t : T)
+    (x y : Vectors E) (s r : evaluationDenominators E t) :
+    localizedK R cs t (LocalizedModule.mk x (s^2)) (LocalizedModule.mk y (r^2)) =
+      LocalizedModule.mk (K R x y) (s^2*r^2) := by
+  rw [localizedK_mk]
+  change LocalizedModule.mk (K R ((s^2).val • x) ((r^2).val • y)) _ = _
+  simp only [SubmonoidClass.coe_pow, K_square_left R cs, K_square_right R cs]
+  apply LocalizedModule.mk_eq.mpr
+  refine ⟨1, ?_⟩
+  simp only [one_smul, Submonoid.smul_def, Submonoid.coe_mul, SubmonoidClass.coe_pow, smul_smul]
+  congr 1
+  ring
+
+private theorem localizedK_nested (R : Raw E) (cs : SquareCompatible R) (t : T)
+    (x y : Vectors E) (s r : evaluationDenominators E t) :
+    localizedK R cs t (LocalizedModule.mk x (s^2))
+      (localizedK R cs t (LocalizedModule.mk x (s^2)) (LocalizedModule.mk y (r^2))) =
+      LocalizedModule.mk ((dotProduct x y) • x - (dotProduct x x) • y) (s^4*r^2) := by
+  rw [localizedK_square]
+  have hd : s^2*r^2 = (s*r)^2 := (mul_pow s r 2).symm
+  rw [hd, localizedK_square, raw_K_nested]
+  congr 1
+  simp [mul_pow, pow_succ, mul_assoc, mul_left_comm, mul_comm]
+
+private theorem localizedK_kernel (R : Raw E) (cs : SquareCompatible R) (t : T)
+    (x y c : Vectors E) (q : evaluationDenominators E t)
+    (h : LocalizedModule.mk ((dotProduct x c) • x - (dotProduct x x) • c) (q^6) =
+      (0 : LocalVectors E t)) :
+    localizedK R cs t (LocalizedModule.mk x (q^2)) (LocalizedModule.mk (y+c) (q^2)) =
+      localizedK R cs t (LocalizedModule.mk x (q^2)) (LocalizedModule.mk y (q^2)) := by
+  rw [← LocalizedModule.zero_mk (1 : evaluationDenominators E t),
+    LocalizedModule.mk_eq] at h
+  obtain ⟨u, hu⟩ := h
+  have hu0 : u.val • ((dotProduct x c) • x - (dotProduct x x) • c) = 0 := by
+    simpa only [one_smul, smul_zero, Submonoid.smul_def] using hu
+  have hs : (dotProduct x ((u.val^2) • c)) • x -
+      (dotProduct x x) • ((u.val^2) • c) = 0 := by
+    have hh := congrArg (fun z : Vectors E => u.val • z) hu0
+    funext i
+    have hi := congrFun hh i
+    simp [dotProduct, Fin.sum_univ_succ, pow_two] at hi ⊢
+    linear_combination hi
+  have hk := raw_K_kernel_translation R x ((u.val^2) • y) ((u.val^2) • c) hs
+  rw [← smul_add, K_square_right R cs, K_square_right R cs] at hk
+  rw [localizedK_square, localizedK_square]
+  apply LocalizedModule.mk_eq.mpr
+  refine ⟨u^2, ?_⟩
+  have hh := congrArg (fun z : Vectors E => (q.val^2*q.val^2) • z) hk
+  simpa only [Submonoid.smul_def, Submonoid.coe_mul, SubmonoidClass.coe_pow,
+    smul_smul, mul_assoc, mul_comm, mul_left_comm] using hh
+
+/-- One same-original nonlinear localization has the square formula, nested NN,
+and the separate saturated local H-kernel translation law. -/
+theorem original_localization (R : Raw E) (cs : SquareCompatible R) (t : T) :
+    ∃ k : LocalVectors E t → LocalVectors E t → LocalVectors E t,
+      (∀ (x y : Vectors E) (s r : evaluationDenominators E t),
+        k (LocalizedModule.mk x (s^2)) (LocalizedModule.mk y (r^2)) =
+          LocalizedModule.mk (K R x y) (s^2*r^2)) ∧
+      (∀ (x y : Vectors E) (s r : evaluationDenominators E t),
+        k (LocalizedModule.mk x (s^2))
+          (k (LocalizedModule.mk x (s^2)) (LocalizedModule.mk y (r^2))) =
+          LocalizedModule.mk ((dotProduct x y) • x - (dotProduct x x) • y) (s^4*r^2)) ∧
+      (∀ (x y c : Vectors E) (q : evaluationDenominators E t),
+        LocalizedModule.mk ((dotProduct x c) • x - (dotProduct x x) • c) (q^6) =
+          (0 : LocalVectors E t) →
+        k (LocalizedModule.mk x (q^2)) (LocalizedModule.mk (y+c) (q^2)) =
+          k (LocalizedModule.mk x (q^2)) (LocalizedModule.mk y (q^2))) := by
+  exact ⟨localizedK R cs t, localizedK_square R cs t,
+    localizedK_nested R cs t, localizedK_kernel R cs t⟩
 
 end D5.S3.Quantum.Algebra.UnitBridgeRawGeometry

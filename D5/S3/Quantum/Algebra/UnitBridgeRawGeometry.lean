@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/Quantum/Algebra/UnitBridgeRawGeometry
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Topology.ContinuousMap.Algebra, mathlib/module/Mathlib.LinearAlgebra.CrossProduct]
+   utility: kind=none
    digest: Original continuous spin sections and the two raw moment identities. -/
 
 import Mathlib.Topology.ContinuousMap.Algebra
@@ -453,10 +454,39 @@ theorem raw_K_nested {E : Original T} (R : Raw E) (x y : Vectors E) :
     (convert hi using 1 <;> simp [K, Original.H, Original.product, vectorInput, jordan,
       dotProduct, Fin.sum_univ_succ, pow_two, sub_eq_add_neg] <;> ring)
 
+/-- Original H-kernel translation for the actual restricted K. -/
+theorem raw_K_kernel_translation {E : Original T} (R : Raw E) (x y c : Vectors E)
+    (h : (dotProduct x c) • x - (dotProduct x x) • c = 0) :
+    K R x (y+c) = K R x y := by
+  have he : E.H (vectorInput E x) (vectorInput E (y+c)) =
+      E.H (vectorInput E x) (vectorInput E y) := by
+    apply Subtype.ext
+    ext i t
+    fin_cases i
+    · simp [Original.H, Original.product, jordan, vectorInput] <;> ring
+    · have hh := congrArg (fun v : Vectors E => (v 0).val t) h
+      simp [dotProduct, Fin.sum_univ_succ] at hh
+      simp [Original.H, Original.product, jordan, vectorInput]
+      linear_combination hh
+    · have hh := congrArg (fun v : Vectors E => (v 1).val t) h
+      simp [dotProduct, Fin.sum_univ_succ] at hh
+      simp [Original.H, Original.product, jordan, vectorInput]
+      linear_combination hh
+    · have hh := congrArg (fun v : Vectors E => (v 2).val t) h
+      simp [dotProduct, Fin.sum_univ_succ] at hh
+      simp [Original.H, Original.product, jordan, vectorInput]
+      linear_combination hh
+  have hd := raw_h_fibre R (vectorInput E x) (vectorInput E (y+c))
+    (vectorInput E y) he
+  funext i
+  apply Subtype.ext
+  exact congrArg (fun z : E.Elem => z.val i.succ) hd
+
 /-- The original output has the cross-product area and both orthogonalities. -/
 theorem raw_K_geometry {E : Original T} (R : Raw E) (x y : Vectors E) :
     dotProduct (K R x y) x = 0 ∧ dotProduct (K R x y) y = 0 ∧
-    dotProduct (K R x y) (K R x y) = dotProduct (crossProduct x y) (crossProduct x y) := by
+    dotProduct (K R x y) (K R x y) = dotProduct (crossProduct x y) (crossProduct x y) ∧
+    ∀ r : ℝ, K R x (r • y) = r • K R x y ∧ K R (r • x) y = r • K R x y := by
   have dotx : dotProduct (K R x y) x = 0 := by
     apply Subtype.ext
     ext t
@@ -467,15 +497,30 @@ theorem raw_K_geometry {E : Original T} (R : Raw E) (x y : Vectors E) :
     ext t
     have h := (raw_output_normal R (vectorInput E x) (vectorInput E y) t).2.2
     simpa [K, vectorInput, vdot, dotProduct, Fin.sum_univ_succ, mul_comm, add_assoc] using h
-  refine ⟨dotx, doty, ?_⟩
-  rw [cross_dot_cross, dotProduct_comm y x]
-  apply Subtype.ext
-  ext t
-  have hp := raw_energy R (vectorInput E x) (vectorInput E y) t
-  have h0 := (raw_output_normal R (vectorInput E x) (vectorInput E y) t).1
-  dsimp only [energy] at hp
-  rw [h0] at hp
-  simpa [K, vectorInput, rho, area, vdot, dotProduct,
-    Fin.sum_univ_succ, pow_two, sub_eq_add_neg, add_assoc] using hp
+  refine ⟨dotx, doty, ?_, ?_⟩
+  · rw [cross_dot_cross, dotProduct_comm y x]
+    apply Subtype.ext
+    ext t
+    have hp := raw_energy R (vectorInput E x) (vectorInput E y) t
+    have h0 := (raw_output_normal R (vectorInput E x) (vectorInput E y) t).1
+    dsimp only [energy] at hp
+    rw [h0] at hp
+    simpa [K, vectorInput, rho, area, vdot, dotProduct,
+      Fin.sum_univ_succ, pow_two, sub_eq_add_neg, add_assoc] using hp
+  · intro r
+    have he (z : Vectors E) : vectorInput E (r • z) = r • vectorInput E z := by
+      apply Subtype.ext
+      ext i t
+      fin_cases i <;> simp [vectorInput]
+    have hh := raw_real_homogeneity R (vectorInput E x) (vectorInput E y) r
+    constructor
+    · funext i
+      apply Subtype.ext
+      have h := congrArg (fun z : E.Elem => z.val i.succ) hh.1
+      simpa [K, he] using h
+    · funext i
+      apply Subtype.ext
+      have h := congrArg (fun z : E.Elem => z.val i.succ) hh.2
+      simpa [K, he] using h
 
 end D5.S3.Quantum.Algebra.UnitBridgeRawGeometry

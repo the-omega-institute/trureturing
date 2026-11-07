@@ -71,4 +71,14 @@ theorem fibre_source_application : type_of% (@raw_h_fibre.{u}) := @raw_h_fibre.{
 theorem homogeneity_source_application : type_of% (@raw_real_homogeneity.{u}) :=
   @raw_real_homogeneity.{u}
 
+theorem scalar_source_application : type_of% (@raw_scalar_independent.{u}) :=
+  @raw_scalar_independent.{u}
+
+theorem nested_source_application : type_of% (@raw_K_nested.{u}) := @raw_K_nested.{u}
+
+theorem geometry_source_application : type_of% (@raw_K_geometry.{u}) := @raw_K_geometry.{u}
+
+theorem kernel_source_application : type_of% (@raw_K_kernel_translation.{u}) :=
+  @raw_K_kernel_translation.{u}
+
 end Reg.D5.S3.Quantum.Algebra.UnitBridgeRawGeometry
