@@ -1,9 +1,6 @@
-module
-public import D5.S3.Combinatorics.Circle.SparseNecklaceRounding.Rounding
-public import LeanInformationAuditInterface.Contract.Registration
-public import Reg.Support.DependentFamily
-
-@[expose] public section
+import D5.S3.Combinatorics.Circle.SparseNecklaceRounding.Rounding
+import LeanInformationAuditInterface.Contract.Registration
+import Reg.Support.DependentFamily
 
 /-! Full-telescope source-family audit attempts for the mathematical target. -/
 set_option autoImplicit false
