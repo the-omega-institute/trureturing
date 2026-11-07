@@ -40,7 +40,7 @@ abbrev Future (n : ℕ) := ∀ j : ℕ, X (n + 1 + j)
 
 /-- The actual dependent tail reindexing. -/
 def tailIndex (n : ℕ) : ℕ ≃ Ioi n where
-  toFun j := ⟨n + 1 + j, by omega⟩
+  toFun j := ⟨n + 1 + j, by change n < n + 1 + j; omega⟩
   invFun i := i.1 - (n + 1)
   left_inv j := by omega
   right_inv i := by
@@ -54,22 +54,30 @@ def tailIndex (n : ℕ) : ℕ ≃ Ioi n where
 def tailReindex (n : ℕ) : (∀ i : Ioi n, X i) ≃ᵐ Future X n :=
   (MeasurableEquiv.piCongrLeft (fun i : Ioi n => X i) (tailIndex n)).symm
 
+/-- Reindex the finite prefix by the identical set of natural coordinates. -/
+private def prefixReindex (n : ℕ) : (∀ i : Finset.Iic n, X i) ≃ᵐ Past X n :=
+  (MeasurableEquiv.piCongrLeft (fun i : Finset.Iic n => X i)
+    (Equiv.IicFinsetSet n).symm).symm
+
 /-- Split a history into its actual prefix and the reindexed infinite tail. -/
 def split (n : ℕ) : History X ≃ᵐ Past X n × Future X n :=
   (MeasurableEquiv.IicProdIoi (X := X) n).symm.trans
-    ((MeasurableEquiv.refl (Past X n)).prodCongr (tailReindex X n))
+    ((prefixReindex X n).prodCongr (tailReindex X n))
 
 /-- Prefix projection on histories. -/
 def past (n : ℕ) (ω : History X) : Past X n := fun i => ω i
 
 private theorem past_measurable (n : ℕ) : Measurable (past X n) := by
-  exact Measurable.of_eval fun i => measurable_pi_apply i
+  exact Measurable.of_eval fun i => measurable_pi_apply (i : ℕ)
 
 private theorem split_fst_map (n : ℕ) (R : Measure (History X)) :
     (R.map (split X n)).fst = R.map (past X n) := by
   change (R.map (split X n)).map Prod.fst = R.map (past X n)
   rw [Measure.map_map measurable_fst (split X n).measurable]
-  rfl
+  have hfst : Prod.fst ∘ split X n = past X n := by
+    funext ω i
+    rfl
+  rw [hfst]
 
 end Coordinates
 
@@ -114,7 +122,7 @@ private theorem row_density_ne_top (κ : Kernel A B)
     rowDensity κ h a b ≠ ∞ := by
   classical
   by_cases ha : a ∈ goodRows κ h
-  · simp only [rowDensity, ha, if_true]
+  · simp only [rowDensity, ha, ite_true]
     exact ENNReal.div_ne_top (hfinite (a, b)) ha.1.ne'
   · simp [rowDensity, ha]
 
@@ -123,9 +131,10 @@ private theorem row_density_integral (κ : Kernel A B) [IsMarkovKernel κ]
     (∫⁻ b, rowDensity κ h a b ∂κ a) = 1 := by
   classical
   by_cases ha : a ∈ goodRows κ h
-  · simp only [rowDensity, ha, if_true, div_eq_mul_inv]
-    rw [lintegral_mul_const _ (hh.comp measurable_prodMk_left)]
-    exact ENNReal.mul_inv_cancel ha.1.ne' ha.2.ne
+  · simp only [rowDensity, ha, ite_true, div_eq_mul_inv]
+    exact (lintegral_mul_const (μ := κ a) (f := fun b : B => h (a, b))
+      (rowMass κ h a)⁻¹ (hh.comp measurable_prodMk_left)).trans
+      (ENNReal.mul_inv_cancel ha.1.ne' ha.2.ne)
   · simp [rowDensity, ha]
 
 private theorem normalized_is_markov (κ : Kernel A B) [IsMarkovKernel κ]
@@ -147,7 +156,7 @@ private theorem normalized_comp_prod (μ : Measure A) [SFinite μ]
   classical
   have hm := row_mass_measurable κ hh
   have hd := row_density_measurable κ hh
-  letI : IsSFiniteKernel (normalizedKernel κ h) :=
+  letI : IsSFiniteKernel (κ.withDensity (rowDensity κ h)) :=
     Kernel.IsSFiniteKernel.withDensity κ (row_density_ne_top κ hfinite)
   have hfin : ∀ᵐ a ∂μ, rowMass κ h a < ∞ := by
     apply ae_lt_top hm
@@ -157,17 +166,19 @@ private theorem normalized_comp_prod (μ : Measure A) [SFinite μ]
     apply (Measure.ae_compProd_iff
       (measurableSet_eq_fun ((hm.comp measurable_fst).mul hd) hh)).mpr
     filter_upwards [hfin] with a ha
+    change ∀ᵐ b ∂κ a, rowMass κ h a * rowDensity κ h a b = h (a, b)
     by_cases hz : rowMass κ h a = 0
     · have hzero : (fun b => h (a, b)) =ᵐ[κ a] 0 :=
         (lintegral_eq_zero_iff (hh.comp measurable_prodMk_left)).mp hz
       filter_upwards [hzero] with b hb
-      simp only [hz, zero_mul, Pi.zero_apply] at hb ⊢
-      exact hb.symm
+      simpa only [hz, zero_mul, Pi.zero_apply] using hb.symm
     · have hg : a ∈ goodRows κ h := ⟨pos_iff_ne_zero.mpr hz, ha⟩
       exact ae_of_all _ fun b => by
-        simp only [rowDensity, hg, if_true]
+        simp only [rowDensity, hg, ite_true]
         exact ENNReal.mul_div_cancel hz ha.ne
-  rw [normalizedKernel, Measure.withDensity_compProd_withDensity hm hd]
+  change (μ.withDensity (rowMass κ h)) ⊗ₘ κ.withDensity (rowDensity κ h) = _
+  rw [Measure.withDensity_compProd_withDensity (μ := μ) (κ := κ)
+    (f := rowMass κ h) (g := rowDensity κ h) hm hd]
   exact withDensity_congr_ae hfactor
 
 end RowNormalization
