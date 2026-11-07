@@ -84,6 +84,7 @@ shell_formula: proof_shape=bind-only; consumers=result
 result: proof_shape=bind-only; consumers=Reg.family
 -/
 
+import D5.S3.Combinatorics.PositionSets.VertexPositionRatioRefutation
 import D5.S3.StatisticalMechanics.TeaCoordinationSequence
 
 /-! The simplex-inclusion graph of the triangular lattice. -/

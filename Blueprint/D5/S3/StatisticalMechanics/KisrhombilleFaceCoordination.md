@@ -125,4 +125,5 @@ Successive ball differences give a(0)=1, a(2k+1)=12k+6 and a(2k+2)=24(k+1). Comp
 - Truth anchor: `D5/S3/StatisticalMechanics/KisrhombilleFaceCoordination.result`
 - Truth anchor: `D5/S3/StatisticalMechanics/KisrhombilleFaceCoordination.root`
 - Truth anchor: `D5/S3/StatisticalMechanics/KisrhombilleFaceCoordination.support`
+- Dependency: [D5/S3/Combinatorics/PositionSets/VertexPositionRatioRefutation](../Combinatorics/PositionSets/VertexPositionRatioRefutation.md)
 - Dependency: [D5/S3/StatisticalMechanics/TeaCoordinationSequence](TeaCoordinationSequence.md)
