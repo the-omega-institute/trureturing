@@ -35,3 +35,9 @@ entrywise compatibility equations for a fixed central scalar return and proves t
 fixed-middle completion fiber is periodic with period
 `c / gcd c (1 - a₁*a₂*h₂*h₃).val`. This is a structural counting lemma toward the
 six-letter case, not a claim that Conjecture 6.1 has been settled.
+
+## Verified locator
+
+Source: <https://arxiv.org/abs/2511.08445v2>, Section 6: Conjecture 6.1,
+bound (6.2), and Proposition 6.2, weaker $q=6$ bound (6.3), including the
+following remark on the parameter ranges where the conjecture follows.
