@@ -29,16 +29,56 @@ open D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.CriticalRenewalSource
 
 set_option autoImplicit false
 
-/-
-  Admission record (WIP, therefore no validated status is claimed).
-  proof_shape: content (the intended live witness is the two-reference
-    countable normalized square-energy estimate).
-  escape_witness: the countable bound
-    `sum_k (p₁ k - p₀ k)^2 / pⱼ k ≤ 4 δ^2 (1-exp(-s))^2`.
-  admission_basis: open pending the kernel proof of that witness.
-  Direct frozen dependencies: CriticalRenewalSource.term and powerSum;
-    ClassicalDPI.klDivergence.
--/
+open Filter Finset
+open scoped Topology
+
+private lemma power_increment (m k : ℕ) (hm : 1 ≤ m) :
+    ((k + 1 : ℕ) : ℝ) ^ (m - 1) ≤
+      ((k + 1 : ℕ) : ℝ) ^ m - (k : ℝ) ^ m := by
+  have he : m = (m - 1) + 1 := by omega
+  have hp : (k : ℝ) ^ (m - 1) ≤ ((k + 1 : ℕ) : ℝ) ^ (m - 1) :=
+    pow_le_pow_left₀ (by positivity) (by exact_mod_cast Nat.le_succ k) _
+  have hh := mul_le_mul_of_nonneg_left hp (Nat.cast_nonneg (α := ℝ) k)
+  rw [he, pow_succ, pow_succ]
+  push_cast
+  nlinarith
+
+private lemma adjacent_power_sum (m : ℕ) (hm : 1 ≤ m)
+    (s : ℝ) (hs : 0 < s) :
+    powerSum (m - 1) s ≤ (1 - Real.exp (-s)) * powerSum m s := by
+  have ha := summable_term m hs
+  have hb := summable_term (m - 1) hs
+  have hc : Summable (fun k : ℕ => term m s (k + 1)) :=
+    (summable_nat_add_iff 1).2 ha
+  have hsum : (∑' k : ℕ, term m s (k + 1)) = powerSum m s := by
+    simpa [powerSum, term] using ha.tsum_eq_zero_add
+  have hshift : ∀ k : ℕ,
+      Real.exp (-s) * term m s k =
+        (k : ℝ) ^ m * Real.exp (-s * ((k + 1 : ℕ) : ℝ)) := by
+    intro k
+    by_cases hk : k = 0
+    · subst k
+      simp [term, Nat.ne_of_gt hm]
+    · simp only [term, hk, ↓reduceIte]
+      rw [mul_left_comm, ← Real.exp_add]
+      congr 1
+      push_cast
+      ring
+  have hle : ∀ k : ℕ, term (m - 1) s (k + 1) ≤
+      term m s (k + 1) - Real.exp (-s) * term m s k := by
+    intro k
+    rw [hshift]
+    simpa [term, Nat.succ_ne_zero, sub_mul] using
+      mul_le_mul_of_nonneg_right (power_increment m k hm)
+        (Real.exp_pos (-s * ((k + 1 : ℕ) : ℝ))).le
+  have hb' : Summable (fun k : ℕ => term (m - 1) s (k + 1)) :=
+    (summable_nat_add_iff 1).2 hb
+  have h := hb'.tsum_le_tsum hle (hc.sub (ha.mul_left (Real.exp (-s))))
+  have hsum' : (∑' k : ℕ, term (m - 1) s (k + 1)) = powerSum (m - 1) s := by
+    simpa [powerSum, term] using hb.tsum_eq_zero_add
+  rw [hsum', Summable.tsum_sub hc (ha.mul_left _), hsum, tsum_mul_left] at h
+  change powerSum (m - 1) s ≤ powerSum m s - Real.exp (-s) * powerSum m s at h
+  nlinarith
 
 theorem normalized_power_perturbation_all_cutoff_kl
     (m : ℕ) (hm : 4 ≤ m)
@@ -72,6 +112,17 @@ theorem normalized_power_perturbation_all_cutoff_kl
       ∀ i : Bool,
         klDivergence (a i) (a (!i)) ≤
           4 * δ ^ 2 * s ^ 2 * min 1 ((s * (L : ℝ)) ^ (m - 1))) := by
+  have hAdj := adjacent_power_sum m (by omega) s hs
+  have hAdj2 := adjacent_power_sum (m - 1) (by omega) s hs
+  have hZpos := powerSum_pos m hs
+  have hr : 0 < 1 - Real.exp (-s) := by
+    have := Real.exp_lt_one_iff.mpr (by linarith : -s < 0)
+    linarith
+  have hTwo : powerSum (m - 2) s ≤
+      (1 - Real.exp (-s)) ^ 2 * powerSum m s := by
+    have he : m - 1 - 1 = m - 2 := by omega
+    rw [he] at hAdj2
+    nlinarith [mul_le_mul_of_nonneg_left hAdj hr.le]
   sorry
 
 end D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.ReadExecution
