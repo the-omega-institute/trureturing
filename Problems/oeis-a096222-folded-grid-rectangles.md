@@ -105,9 +105,10 @@ and MathDB content access encountered HTTP 403; those failures are not
 negative search results. No complete joint proof was observed within the
 inspected bodies. This does not establish worldwide absence or originality.
 
-The current dev additions HardinA204612 and DirectSumHeredityRefutation concern
-ordered binary-array minors and evolution-algebra heredity respectively;
-neither supplies this endpoint-count identity. Source/shape searches found
+The inspected dev additions HardinA204612, HardinA240514Strip and
+DirectSumHeredityRefutation concern ordered binary-array minors,
+three-column binary-strip neighbour constraints and evolution-algebra
+heredity respectively; none supplies this endpoint-count identity. Source/shape searches found
 no corresponding theory volume or digestion atom. This unit therefore uses
 the uncovered freeze route without inventing a theory prerequisite.
 
