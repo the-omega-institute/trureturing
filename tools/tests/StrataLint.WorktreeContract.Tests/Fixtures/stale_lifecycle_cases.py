@@ -16,6 +16,7 @@ ROOT = Path(sys.argv.pop(1)).resolve()
 sys.path.insert(0, str(ROOT / "tools/scripts/worktree"))
 import worktree_protocol as protocol
 import worktree_pool as pool
+import worktree_preservation as preservation
 
 
 def run(cwd, *args, env=None, check=True):
@@ -126,6 +127,138 @@ class LifecycleTests(unittest.TestCase):
     def options(self, branch, path=None):
         return SimpleNamespace(source=self.source, path=Path(path).resolve() if path else None,
                                branch=branch, base=self.base, skip_restore=True, exclude_path=[])
+
+    def test_partial_payload_failure_preserves_identity_and_claim_retry(self):
+        for fault in ("error", "timeout", "interrupt"):
+            with self.subTest(fault=fault):
+                tree = self.root / ("expired " + fault)
+                branch = "lane/governance/old-" + fault
+                head = self.commit_branch(branch, tree, 7 * 3600)
+                destination = self.root / ("new " + fault)
+                requested = "lane/governance/new-" + fault
+                original = subprocess.run
+
+                def partial(command, *args, **kwargs):
+                    if command[0] != "/bin/rm":
+                        return original(command, *args, **kwargs)
+                    original(["/bin/rm", "-f", "--", "./payload"],
+                             cwd=tree, check=True)
+                    self.assertFalse((tree / "payload").exists())
+                    if fault == "interrupt":
+                        raise KeyboardInterrupt()
+                    if fault == "timeout":
+                        raise subprocess.TimeoutExpired(command, kwargs["timeout"],
+                                                        stderr=b"partial timeout diagnostic")
+                    raise subprocess.CalledProcessError(1, command, stderr=b"partial payload diagnostic")
+
+                with patch.object(preservation.subprocess, "run", side_effect=partial):
+                    with self.assertRaisesRegex(protocol.GitFailure, "removal_payload_failed:") as failed:
+                        pool.claim(self.options(requested, destination))
+                if fault != "interrupt":
+                    self.assertIn("diagnostic", str(failed.exception))
+                self.assertIn("pointer=True, registered=True", str(failed.exception))
+                self.assertFalse(destination.exists())
+                self.assertNotEqual(run(self.main, "show-ref", "--verify", "refs/heads/" + requested,
+                                        check=False).returncode, 0)
+                protocol.identity(self.main, tree)
+                self.assertEqual(run(tree, "rev-parse", "HEAD").stdout.strip(), head)
+                result = pool.claim(self.options(requested, destination))
+                self.assertIn(str(tree), result["removed_worktrees"])
+                self.assertFalse(tree.exists())
+                self.assertEqual(run(self.main, "rev-parse", branch).stdout.strip(), head)
+
+    @unittest.skipUnless(hasattr(os, "chflags"), "requires native immutable flags")
+    def test_actual_payload_error_and_retry(self):
+        import stat
+        tree = self.root / "expired immutable payload"
+        branch = "lane/governance/immutable-payload"
+        head = self.commit_branch(branch, tree, 7 * 3600)
+        blocked = tree / "blocked"
+        blocked.write_text("retained on failure")
+        os.chflags(blocked, stat.UF_IMMUTABLE)
+        try:
+            failed = pool.sweep(self.main, self.base, force=True)
+            self.assertEqual(failed["status"], "failed")
+            self.assertIn("removal_payload_failed:CalledProcessError", failed["items"][0]["reason"])
+            self.assertIn("Operation not permitted", failed["items"][0]["reason"])
+            self.assertFalse((tree / "payload").exists())
+            protocol.identity(self.main, tree)
+        finally:
+            os.chflags(blocked, 0)
+        result = pool.sweep(self.main, self.base, force=True)
+        self.assertEqual(result["status"], "succeeded")
+        self.assertFalse(tree.exists())
+        self.assertEqual(run(self.main, "rev-parse", branch).stdout.strip(), head)
+
+    @unittest.skipUnless(hasattr(os, "chflags"), "requires native immutable flags")
+    def test_actual_final_native_failure_reports_observed_effects_without_orphan_retry(self):
+        import stat
+        tree = self.root / "immutable pointer"
+        branch = "lane/governance/immutable-pointer"
+        head = self.commit_branch(branch, tree, 7 * 3600)
+        pointer = tree / ".git"
+        os.chflags(pointer, stat.UF_IMMUTABLE)
+        try:
+            result = preservation.remove(SimpleNamespace(source=self.main, names="", path=[tree], preview=False))
+            self.assertEqual(result["status"], "failed", result)
+            reason = result["items"][0]["reason"]
+            self.assertIn("removal_final-native_failed:CalledProcessError", reason)
+            self.assertIn("Operation not permitted", reason)
+            self.assertIn("pointer=True, registered=False", reason)
+            self.assertEqual(list(tree.iterdir()), [pointer])
+            with self.assertRaises(protocol.Refused):
+                preservation.remove_registered(self.main, tree)
+            self.assertTrue(pointer.exists())
+            self.assertEqual(run(self.main, "rev-parse", branch).stdout.strip(), head)
+        finally:
+            os.chflags(pointer, 0)
+
+    def test_payload_symlinks_dotfiles_batching_and_containment(self):
+        tree = self.root / "payload links"
+        branch = "lane/governance/links"
+        head = self.commit_branch(branch, tree, 7 * 3600)
+        outside = self.root / "outside"
+        outside.mkdir()
+        sentinel = outside / "keep"
+        sentinel.write_text("external bytes")
+        (tree / ".lake").symlink_to(outside, target_is_directory=True)
+        (tree / ".hidden").write_text("remove")
+        # More than one argv batch, including shell metacharacters and options.
+        for index in range(400):
+            (tree / (f"-- {index:04}-" + "x" * 100)).write_bytes(b"")
+        alias = self.root / "alias"
+        alias.symlink_to(tree, target_is_directory=True)
+        with self.assertRaisesRegex(protocol.Refused, "missing_or_linked_tree"):
+            preservation.remove_registered(self.main, alias)
+        nested = tree / "nested"
+        self.commit_branch("lane/governance/nested", nested, 60)
+        with self.assertRaisesRegex(protocol.Refused, "nested_worktree"):
+            preservation.remove_registered(self.main, tree)
+        preservation.remove_registered(self.main, nested)
+        preservation.remove_registered(self.main, tree)
+        self.assertFalse(tree.exists())
+        self.assertEqual(sentinel.read_text(), "external bytes")
+        self.assertEqual(run(self.main, "rev-parse", branch).stdout.strip(), head)
+
+    def test_removal_shares_unchanged_deadline_and_exposes_timeout_stderr(self):
+        tree = self.root / "deadline"
+        self.commit_branch("lane/governance/deadline", tree, 7 * 3600)
+        original = subprocess.run
+        budgets = []
+        def final_timeout(command, *args, **kwargs):
+            if command[0] == "/bin/rm":
+                budgets.append(kwargs["timeout"])
+            if "remove" in command and "worktree" in command:
+                budgets.append(kwargs["timeout"])
+                raise subprocess.TimeoutExpired(command, kwargs["timeout"], stderr=b"native timeout diagnostic")
+            return original(command, *args, **kwargs)
+        with patch.object(preservation.subprocess, "run", side_effect=final_timeout), \
+                patch.object(preservation, "time", SimpleNamespace(monotonic=iter([0, 10, 40]).__next__)):
+            with self.assertRaisesRegex(protocol.GitFailure, "final-native.*native timeout diagnostic"):
+                preservation.remove_registered(self.main, tree)
+        self.assertEqual(budgets, [290, 260])
+        protocol.identity(self.main, tree)
+        preservation.remove_registered(self.main, tree)
 
     def test_stale_reuse_is_immediate_and_new_commit_invalidates(self):
         candidate = self.root / "candidate"
