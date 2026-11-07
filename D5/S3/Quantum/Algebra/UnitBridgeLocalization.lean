@@ -8,6 +8,9 @@
 
 import D5.S3.Quantum.Algebra.UnitBridgeRawGeometry
 import Mathlib.Algebra.Module.LocalizedModule.Basic
+import Mathlib.RingTheory.Localization.AtPrime.Basic
+import Mathlib.RingTheory.LocalRing.ResidueField.Basic
+import Mathlib.RingTheory.Ideal.Quotient.Operations
 
 /-! Evaluation localization with zero-divisor saturation and no linearity assumption on D. -/
 
@@ -88,6 +91,98 @@ def evaluationDenominators (E : Original T) (t : T) : Submonoid (scalarAlgebra E
 /-- Native module localization of the actual coefficient module. -/
 abbrev LocalVectors (E : Original T) (t : T) :=
   LocalizedModule (evaluationDenominators E t) (Vectors E)
+
+/-- The ordinary scalar ring localization, retaining zero-divisor saturation. -/
+abbrev LocalScalars (E : Original T) (t : T) := Localization (evaluationDenominators E t)
+
+/-- Evaluation on the actual coefficient algebra. -/
+def coefficientEvaluation (E : Original T) (t : T) : scalarAlgebra E →+* ℝ where
+  toFun f := f.val t
+  map_one' := rfl
+  map_mul' _ _ := rfl
+  map_zero' := rfl
+  map_add' _ _ := rfl
+
+/-- Evaluation on ordinary scalar fractions. -/
+def localEvaluation (E : Original T) (t : T) : LocalScalars E t →+* ℝ :=
+  IsLocalization.lift (g := coefficientEvaluation E t)
+    (fun s => isUnit_iff_ne_zero.mpr s.property)
+
+instance localScalarsLocalRing (E : Original T) (t : T) : IsLocalRing (LocalScalars E t) := by
+  let P := RingHom.ker (coefficientEvaluation E t)
+  letI : P.IsPrime := RingHom.ker_isPrime _
+  have hs : evaluationDenominators E t = P.primeCompl := by rfl
+  letI : IsLocalization.AtPrime (LocalScalars E t) P := by
+    change IsLocalization P.primeCompl (LocalScalars E t)
+    rw [← hs]
+    infer_instance
+  exact IsLocalization.AtPrime.isLocalRing _ P
+
+/-- Actual coordinates in the localized coefficient ring, not a point fibre quotient. -/
+def localCoordinates (t : T) (z : LocalVectors E t) : Fin 3 → LocalScalars E t :=
+  LocalizedModule.liftOn z (fun p i => Localization.mk (p.1 i) p.2) (by
+    intro p q h
+    obtain ⟨u, hu⟩ := h
+    funext i
+    apply Localization.mk_eq_mk_iff.mpr
+    rw [Localization.r_iff_exists]
+    refine ⟨u, ?_⟩
+    simpa only [Submonoid.smul_def, Pi.smul_apply, smul_eq_mul, mul_assoc,
+      mul_comm, mul_left_comm] using congrFun hu i)
+
+/-- The dot product over the actual local scalar ring. -/
+def localDot (t : T) (x y : LocalVectors E t) : LocalScalars E t :=
+  dotProduct (localCoordinates t x) (localCoordinates t y)
+
+private theorem localDot_mk (t : T) (x y : Vectors E)
+    (s r : evaluationDenominators E t) :
+    localDot t (LocalizedModule.mk x s) (LocalizedModule.mk y r) =
+      Localization.mk (dotProduct x y) (s*r) := by
+  simp only [localDot, localCoordinates, LocalizedModule.liftOn_mk, dotProduct,
+    ← Localization.mk_mul, ← Localization.mk_sum]
+
+private theorem scalar_localization (t : T) :
+    Function.Surjective (coefficientEvaluation E t) ∧
+    Function.Surjective (localEvaluation E t) ∧
+    (∀ (f : scalarAlgebra E) (s : evaluationDenominators E t),
+      localEvaluation E t (Localization.mk f s) = f.val t / s.val.val t ∧
+      (IsUnit (Localization.mk f s) ↔ f.val t ≠ 0) ∧
+      ∀ hf : f.val t ≠ 0,
+        (Localization.mk f s : LocalScalars E t) * Localization.mk s.val ⟨f,hf⟩ = 1) ∧
+    RingHom.ker (localEvaluation E t) = IsLocalRing.maximalIdeal (LocalScalars E t) ∧
+    Nonempty (IsLocalRing.ResidueField (LocalScalars E t) ≃+* ℝ) := by
+  have he : Function.Surjective (coefficientEvaluation E t) := by
+    intro r
+    exact ⟨algebraMap ℝ (scalarAlgebra E) r, rfl⟩
+  have hl : Function.Surjective (localEvaluation E t) := by
+    intro r
+    obtain ⟨f,hf⟩ := he r
+    refine ⟨algebraMap (scalarAlgebra E) (LocalScalars E t) f, ?_⟩
+    simpa only [localEvaluation, IsLocalization.lift_eq] using hf
+  have hk : RingHom.ker (localEvaluation E t) =
+      IsLocalRing.maximalIdeal (LocalScalars E t) :=
+    IsLocalRing.eq_maximalIdeal (RingHom.ker_isMaximal_of_surjective _ hl)
+  refine ⟨he, hl, ?_, hk, ?_⟩
+  · intro f s
+    have hv : localEvaluation E t (Localization.mk f s) = f.val t / s.val.val t := by
+      apply (IsLocalization.lift_mk'_spec _ _ _ _).mpr
+      change f.val t = s.val.val t * (f.val t / s.val.val t)
+      field_simp [s.property]
+    refine ⟨hv, ?_, ?_⟩
+    · constructor
+      · intro h
+        have hn := isUnit_iff_ne_zero.mp (h.map (localEvaluation E t))
+        rw [hv] at hn
+        exact fun hf => hn (by rw [hf, zero_div])
+      · intro hf
+        apply isUnit_iff_exists_inv.mpr
+        exact ⟨Localization.mk s.val ⟨f,hf⟩,
+          IsLocalization.mk'_mul_mk'_eq_one (S := LocalScalars E t) ⟨f,hf⟩ s⟩
+    · intro hf
+      exact IsLocalization.mk'_mul_mk'_eq_one (S := LocalScalars E t) ⟨f,hf⟩ s
+  · change Nonempty ((LocalScalars E t ⧸ IsLocalRing.maximalIdeal (LocalScalars E t)) ≃+* ℝ)
+    rw [← hk]
+    exact ⟨RingHom.quotientKerEquivOfSurjective hl⟩
 
 private def representative (R : Raw E) (t : T)
     (p q : Vectors E × evaluationDenominators E t) : LocalVectors E t :=
