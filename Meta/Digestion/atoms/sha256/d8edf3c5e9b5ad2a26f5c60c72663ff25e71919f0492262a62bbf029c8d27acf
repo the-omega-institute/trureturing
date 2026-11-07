@@ -1,0 +1,4 @@
+## 166. The finite $L^2$ representer bridge for the calibrated kernel
+
+Section 165 treats the original first-order kernel $V$ as a bounded-function constraint while the successor orbit is described in $L^2(m)$. For the actual equal-gap readout of Appendix III, the first-order constraints have explicit $L^2(m)$ representers. This identifies the finite calibration plane that must be added to any later successor orbit, without asserting that the orbit preserves $V$ or that a physical successor exists.
+

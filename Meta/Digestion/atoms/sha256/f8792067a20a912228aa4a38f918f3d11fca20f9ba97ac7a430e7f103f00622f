@@ -1,0 +1,62 @@
+## 来源与证明范围
+
+<a id="ref-repo"></a>
+
+\[1\] the-omega-institute/trureturing，[固定源码树](https://github.com/the-omega-institute/trureturing/tree/64aca186adddfb598703f3e96be1f62ffed3dc49)，提交 `64aca186adddfb598703f3e96be1f62ffed3dc49`。提交 2026-11-06 22:56:58，核对 23:03:13，Asia/Singapore。相对 R5-010 的四棵子树作完整 Git 对象比较；未运行 Lean 编译。
+
+<a id="ref-c129"></a>
+
+\[2\] [C129：History Kernel Extension Quantum Relations](https://github.com/the-omega-institute/trureturing/blob/64aca186adddfb598703f3e96be1f62ffed3dc49/docs/develop/theory/AURIC_C129_HISTORY_KERNEL_EXTENSION_QUANTUM_RELATIONS.md)，§§1–4，尤其定理2.3、2.4及命题3.1。旧表续接、单余量、Hilbert 表示、零余量边界均为项目既有内容；正文提供直接有限证明。
+
+<a id="ref-c130"></a>
+
+\[3\] [C130：Mutual Readout Bound Quantum Relations](https://github.com/the-omega-institute/trureturing/blob/64aca186adddfb598703f3e96be1f62ffed3dc49/docs/develop/theory/AURIC_C130_MUTUAL_READOUT_BOUND_QUANTUM_RELATIONS.md)，定理2.3。无序相互读出不等式等价于全有限 Hermitian 正核；该证明已核读。
+
+<a id="ref-v80"></a>
+
+\[4\] [V80：All-Outcome Binary Difference Nonexpansion](https://github.com/the-omega-institute/trureturing/blob/64aca186adddfb598703f3e96be1f62ffed3dc49/docs/develop/theory/AURIC_ALL_OUTCOME_BINARY_DIFFERENCE_NONEXPANSION_FINITE_ORIENTED_ANCHORS_AND_ENDOGENOUS_QUANTUM_PROCESSES_V80.md)，§§2–5、6、9–16。四相实际参照接口、星形比较与余量证明及近似稳定性是本轮直接先例；本文三相变式另行证明。
+
+<a id="ref-v72"></a>
+
+\[5\] [V72：Unique Source, Orthogonal Residuals and Recursive Gates](https://github.com/the-omega-institute/trureturing/blob/64aca186adddfb598703f3e96be1f62ffed3dc49/docs/develop/theory/AURIC_UNIQUE_SOURCE_ORTHOGONAL_RESIDUALS_AND_RECURSIVE_GATES_V72.md)，正核、任意有限复合二元检验与完整分支核等距链。所用全复合量词段已核读，勿与仅坐标二三主块检验混同。
+
+<a id="ref-v63"></a>
+
+\[6\] [V63：Native Complex Structure, Stable Assembly and Finite Born Readout Certificates](https://github.com/the-omega-institute/trureturing/blob/64aca186adddfb598703f3e96be1f62ffed3dc49/docs/develop/theory/AURIC_NATIVE_COMPLEX_STRUCTURE_STABLE_ASSEMBLY_AND_FINITE_BORN_READOUT_CERTIFICATES_V63.md)，§5 共同参照、Schur 稳定及有限张成锚界。本稿误差式为精确参照 Gram 情形的直接推论。
+
+<a id="ref-c136"></a>
+
+\[7\] [C136：Quadratic Closure, Relational Envelope and Observer Gluing](https://github.com/the-omega-institute/trureturing/blob/64aca186adddfb598703f3e96be1f62ffed3dc49/docs/develop/theory/AURIC_C136_QUADRATIC_CLOSURE_RELATIONAL_ENVELOPE_AND_OBSERVER_GLUING.md)，§§5–5.2、6.3。观察窗口全部保旧关系拼接及同源过程表示；不是本轮新定理。
+
+<a id="ref-c139"></a>
+
+\[8\] [C139：Mutual Probes and Intrinsic Recovery of Square Geometry](https://github.com/the-omega-institute/trureturing/blob/64aca186adddfb598703f3e96be1f62ffed3dc49/docs/develop/theory/AURIC_C139_MUTUAL_PROBES_AND_INTRINSIC_RECOVERY_OF_SQUARE_GEOMETRY.md)，§9.1 全原输入对的单标记过程条件，§§28.1–28.4 相容窗口与四维反例。两种有限性不可混同。
+
+<a id="ref-c140"></a>
+
+\[9\] [C140：Common-Source Three-Path Balance and Quantum Geometry](https://github.com/the-omega-institute/trureturing/blob/64aca186adddfb598703f3e96be1f62ffed3dc49/docs/develop/theory/AURIC_C140_COMMON_SOURCE_THREE_PATH_BALANCE_AND_QUANTUM_GEOMETRY.md)，§§6.1–6.2，复用全原输入对的 P9 过程条件；未把其三相标记误认作本文固定三相参照协议。
+
+<a id="ref-c115"></a>
+
+\[10\] [C115：Binary Square, Two-Component Composition and Internal Complex Structure](https://github.com/the-omega-institute/trureturing/blob/64aca186adddfb598703f3e96be1f62ffed3dc49/docs/develop/theory/AURIC_BINARY_SQUARE_TWO_COMPONENT_COMPOSITION_AND_INTERNAL_COMPLEX_STRUCTURE_C115.md)，原子分类、共同中央相位、复合扇区及效果表示。本稿第8节复述 R5-010 的正自比较压缩并给证明，不作本轮首创声明。
+
+<a id="ref-c128"></a>
+
+\[11\] [C128：Orthogonal Trace and Corner Relations Continuation](https://github.com/the-omega-institute/trureturing/blob/64aca186adddfb598703f3e96be1f62ffed3dc49/docs/develop/theory/AURIC_C128_ORTHOGONAL_TRACE_AND_CORNER_RELATIONS_CONTINUATION.md)，本快照新增 §§389–397，235 行完整核读。高维分类使用既有定理382.1及[FrameCorner 续卷](https://github.com/the-omega-institute/trureturing/blob/64aca186adddfb598703f3e96be1f62ffed3dc49/docs/develop/theory/AURIC_C128_FRAME_CORNER_RELATIONS_CONTINUATION.md)定理274.1；本文未重新审证所有依赖，qubit 证明自足。
+
+<a id="ref-v62"></a>
+
+\[12\] [V62：Real Three-Axis Positive Refinements and Complex Quantum Interface](https://github.com/the-omega-institute/trureturing/blob/64aca186adddfb598703f3e96be1f62ffed3dc49/docs/develop/theory/AURIC_REAL_THREE_AXIS_POSITIVE_REFINEMENTS_AND_COMPLEX_QUANTUM_INTERFACE_V62.md)，§4，二三菜单共同细化到正线性读出。
+
+<a id="ref-birkhoff"></a>
+
+\[13\] [BirkhoffSharpContraction.lean](https://github.com/the-omega-institute/trureturing/blob/64aca186adddfb598703f3e96be1f62ffed3dc49/D5/S3/Analytic/Convexity/BirkhoffSharpContraction.lean)，严格正有限实矩阵的 Hilbert 射影像直径与尖锐收缩。核读头部、定义与终结定理，以及对应说明，未本地构建，也未逐行审查全部内部引理。
+
+<a id="ref-busch"></a>
+
+\[14\] P. Busch, *Quantum states and generalized observables: a simple proof of Gleason’s theorem*, Physical Review Letters 91, 120403 (2003)。[作者论文 arXiv 版本](https://arxiv.org/abs/quant-ph/9909073)。本文自行证明有限维全效果概率表示，包含 qubit；不把只有锐二元菜单当作全部前件。
+
+<a id="ref-watrous"></a>
+
+\[15\] J. Watrous,  *The Theory of Quantum Information* , Chapter 2，Theorem 2.22。[作者公开章节](https://cs.uwaterloo.ca/~watrous/TQI/TQI.2.pdf)。有限 CP、Choi 与 Kraus 等价；本文实际后继等距和 Kraus 到 CP 的方向另给直接证明。
+

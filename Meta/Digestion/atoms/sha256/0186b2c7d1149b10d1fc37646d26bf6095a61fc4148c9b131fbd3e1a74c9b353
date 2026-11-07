@@ -1,0 +1,179 @@
+**Theorem 155.2 (coupled actual endpoints with positive BB3 and controlled full-residual improvement).** Under exactly Definition 155.1, for every original $\theta$ there exist bounded Borel functions $X_y$, a number $t_0>0$, and a vector $R\in\mathbb R^{64}$ such that, with
+
+$$
+\mathfrak M=\sum_{y\in\mathcal L}\|X_y\|_1,\qquad
+\kappa=R_{BB3}>0,\qquad J=\|R\|_\infty>0,
+\tag{155.4}
+$$
+
+the following quantifiers hold. Here $t$ and $t'$ are readout amplitudes. For every $0<t<t_0$, every $0<\varepsilon<1$, and every
+
+$$
+t'=(1-\varepsilon)t,\qquad q_\varepsilon=2\varepsilon-\varepsilon^2,
+\qquad
+0<\delta<\tfrac14\min\{(t')^2\kappa,
+                              q_\varepsilon t^2J\},
+\tag{155.5}
+$$
+
+there exist actual $D,D'\in\mathscr F_{154}(\theta)$, co-selected by the same finite-cell quantile construction on the original $G$, satisfying
+
+$$
+\begin{gathered}
+\|\Delta(D)-t^2R\|_\infty<\delta,\qquad
+\|\Delta(D')-(t')^2R\|_\infty<\delta,\\
+r(D)>t^2\kappa-\delta>0,\qquad
+r(D')>(t')^2\kappa-\delta>0,\\
+m(A(D,D'))\le3\varepsilon t\mathfrak M+\delta,\\
+\|\Delta(D')\|_\infty
+ \le\|\Delta(D)\|_\infty-q_\varepsilon t^2J+2\delta
+ <\|\Delta(D)\|_\infty-\tfrac12q_\varepsilon t^2J.
+\end{gathered}
+\tag{155.6}
+$$
+
+In particular, the improvement concerns the norm of the complete sixty-four-coordinate residual. More precisely,
+
+$$
+\|\Delta(D')-(1-\varepsilon)^2\Delta(D)\|_\infty
+ <\bigl(1+(1-\varepsilon)^2\bigr)\delta.
+\tag{155.7}
+$$
+
+All constants may depend on $\theta$ and the selected original-space functions. No parameter-uniform inverse estimate is part of the assertion.
+
+*Proof.* Use the actual corrected functions $x_0,x_1,x_3$ from (154.19)–(154.21), with their invariant slack set $E$ and invariant representative $f^0$. They are bounded Borel, supported in $E$, odd under the original half-turn, and have disjoint positive angular spectra. They satisfy
+
+$$
+q_r(x_a)=0,\qquad Q_r(x_a,x_b)=0\quad(a\ne b),
+\qquad r\in\{12,13,23\}.
+\tag{155.8}
+$$
+
+Retain also the seven-column Gram nonsingularity in (154.21) and the thirty-six lower directions of 154.D. Define
+
+$$
+s=x_0+x_1+x_3,\qquad
+X_a=x_a\ (a=0,1,3),\quad X_B=-s,\qquad
+u^{(\tau)}=f^0+\tau X.
+\tag{155.9}
+$$
+
+Choose $t_0>0$ small enough that every $0\le\tau\le t_0$ gives a pointwise simplex tuple, with a common positive lower bound for its components $0,1,B$ on $G$ and for component $3$ on $E$. This follows from (154.4), boundedness, and the support of the $X_y$ in $E$. All identities of classes may be made pointwise on a common Borel conull set and repaired on its complement as in 154.D.
+
+For every coordinate, expansion of the original trilinear form has zero linear term: each such term contains one odd function and otherwise invariant factors. Its cubic term also vanishes, since all three $X$ factors are odd and the original measure, $g$ and $P$ are half-turn invariant. Consequently
+
+$$
+\Delta(u^{(\tau)})=\tau^2R,\qquad
+R_{yzw}=\mathcal C(X_y,X_z,f_w^0)
+       +\mathcal C(X_y,f_z^0,X_w)
+       +\mathcal C(f_y^0,X_z,X_w).
+\tag{155.10}
+$$
+
+The marginal, pair, six distinct-label and BBB equalities in (154.20), (154.23)–(154.24) hold for every such $\tau$. Thus $\mathcal H_{43}(u^{(\tau)})=\mathcal H_{43}(f)$. The invariance and disjoint-spectrum cancellations used there do not select a single value of $\tau$.
+
+Here $s\ne0$: its frequency-$n_0$ component is the nonzero low-frequency input $v_0$ of (154.8), which occurs in neither of the other two functions or their high corrections. Source propagation gives $Pf_3^0=cg$. Hence (155.8) gives the following actual stochastic coefficient, before any partition approximation:
+
+$$
+\begin{aligned}
+R_{BB3}
+ &=\mathcal C(s,s,f_3^0)
+       -p\mathcal C(s,1,x_3)-p\mathcal C(1,s,x_3)\\
+ &=c\langle gs,P(gs)\rangle_m
+       -pQ_{13}(s,x_3)-pQ_{23}(s,x_3)\\
+ &=c\|T_{d/2}(gs)\|_2^2=:\kappa>0.
+\end{aligned}
+\tag{155.11}
+$$
+
+The last inequality uses $g>0$ almost everywhere, $s\ne0$, and the injective full self-adjoint heat operator of (134.17)–(134.18). The two ordered pair terms vanish because each summand is either a diagonal term or a disjoint-spectrum term in (155.8). This is the source-specific positive coefficient of §134 applied to $s$; it asserts no coercive lower bound.
+
+Fix $t,\varepsilon,\delta$ as in the statement. The forty-three bounded directions $e_k$ of (154.25)–(154.28) can be chosen once from these fixed $x_a$, independently of $\tau>0$. For
+
+$$
+u_\tau(z)=u^{(\tau)}+\sum_{k=1}^{43}z_ke_k,\qquad
+F_\tau(z)=\mathcal H_{43}(u_\tau(z))-\mathcal H_{43}(f),\qquad
+A_\tau=DF_\tau(0),
+\tag{155.12}
+$$
+
+$A_\tau$ is invertible for every $0<\tau<t_0$. Indeed the marginal block is the same invertible source Gram block, the twenty-seven pair-direction block is $\tau$ times its fixed invertible block, and the final seven-direction block is $\tau^2\mathsf G$. The off-diagonal blocks do not alter the block triangular argument of 154.D. Component-$3$ directions remain supported in $E$, so each center has a legal closed ball in these directions.
+
+Use Euclidean norm on $\mathbb R^{43}$ and choose a finite $B>0$ with
+
+$$
+\sum_y\left\|\sum_kz_ke_{k,y}\right\|_1\le B\|z\|.
+\tag{155.13}
+$$
+
+Choose one sufficiently small radius $r>0$ for both centers $\tau=t,t'$ such that their closed balls are legal,
+
+$$
+6Br<\delta,\qquad 3G_0Br<\delta/2,\qquad
+\sup_{\|z\|\le r}\|z-A_\tau^{-1}F_\tau(z)\|<r/3
+ \quad(\tau=t,t').
+\tag{155.14}
+$$
+
+The last inequalities follow from $F_\tau(0)=0$ and its invertible derivative at each of the two fixed positive centers. No common lower bound as $t'$ tends to zero has been assumed.
+
+Apply exactly the common coordinate-quantile construction of 154.E, using the same finite partitions $\mathcal P_n$, the same nested cuts in each cell, and the same order $0,1,3,B$ for both balls. Denote this common rounding map by $\mathcal D_n(u)$. It satisfies
+
+$$
+\begin{gathered}
+m(A(\mathcal D_n(u),\mathcal D_n(v)))
+ =\tfrac12\sum_y m(\mathcal D_{n,y}(u)\mathbin\triangle
+                                      \mathcal D_{n,y}(v))
+ \le3\sum_y\|u_y-v_y\|_1,\\
+\|\Phi_3(\mathbf1_{\mathcal D_n(u)})-\Phi_3(u)\|_\infty
+ \le2\|W-W_n\|_1,\\
+\|\mathcal H_{43}(\mathbf1_{\mathcal D_n(u)})
+                         -\mathcal H_{43}(u)\|_2
+ \le2\sqrt{43}\,\|W-W_n\|_1.
+\end{gathered}
+\tag{155.15}
+$$
+
+The first estimate is (154.29) divided by two. For the other two estimates, with the original path density $W$ and its cellwise conditional expectation $W_n$, the integrals against $W_n$ agree by the four cell masses, for every slot product in question. Replacing $W_n$ by $W$ costs at most $2\|W-W_n\|_1$ per coordinate. This applies to all sixty-four triple coordinates, as well as the forty-three calibrated coordinates. These bounds are uniform over both balls, and $\|W-W_n\|_1\to0$.
+
+Choose one finite $n$ so large that
+
+$$
+2\|W-W_n\|_1<\delta/2,\qquad
+2\sqrt{43}\max_{\tau=t,t'}\|A_\tau^{-1}\|\,
+                     \|W-W_n\|_1<r/3.
+\tag{155.16}
+$$
+
+For each center let $F_{n,\tau}(z)=\mathcal H_{43}(\mathbf1_{\mathcal D_n(u_\tau(z))})-\mathcal H_{43}(f)$. The same continuity argument as in 154.E makes these actual maps continuous. By (155.14)–(155.16), $z\mapsto z-A_\tau^{-1}F_{n,\tau}(z)$ maps the closed radius-$r$ ball into itself. Brouwer supplies roots $z_t,z_{t'}$ in that ball. Put
+
+$$
+D=\mathcal D_n(u_t(z_t)),\qquad
+D'=\mathcal D_n(u_{t'}(z_{t'})).
+\tag{155.17}
+$$
+
+They are pointwise Borel partitions of all of the original $G$, exact for $\mathcal H_{43}$. Each is evaluated against the original $W$, hence with its own propagated terminal indicators.
+
+For any two legal simplex tuples, telescoping the three factors against $W$ bounds one coefficient difference by
+
+$$
+\int g_0|u_y-v_y|\,dm+
+\int g_1|u_z-v_z|\,dm+
+\int g_2|u_w-v_w|\,dm
+ \le3G_0\sum_a\|u_a-v_a\|_1.
+\tag{155.18}
+$$
+
+Equations (155.13)–(155.16) and (155.18) give the two residual approximations in (155.6). The first line of (155.15) gives
+
+$$
+m(A(D,D'))\le3\bigl(\varepsilon t\mathfrak M
+                         +B\|z_t\|+B\|z_{t'}\|\bigr)
+ <3\varepsilon t\mathfrak M+\delta.
+\tag{155.19}
+$$
+
+The positive BB3 bounds and (155.7) follow from (155.10)–(155.11) and these approximations. Finally $\|\Delta(D)\|_\infty\ge t^2J-\delta$ and $\|\Delta(D')\|_\infty\le(t')^2J+\delta$ prove the improvement in (155.6). Restoring the originally given representative $b$ changes no target integral, by the original positive-time absolute continuity. $\square$
+

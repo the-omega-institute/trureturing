@@ -1,0 +1,21 @@
+**Theorem 42.2 (finite-row actual compatibility and positive-quartic endpoint).** Under Definition 42.1, for every prescribed sequence $s_n\downarrow0$ along which the actual spectral bottom satisfies $\epsilon_c(s_n)=o(s_n^4)$, choose any actual normalized complex ground state $\psi_{s_n}\in D(S)$ at each $s_n$. Every microscopic weak limit
+
+$$
+\mathcal U_{s_n}\psi_{s_n}\rightharpoonup cp
+\quad\text{satisfies}\quad cC_4=0.
+\tag{42.5}
+$$
+
+Both premises $C_{\rm resp}=0$ and $\epsilon_c=o(s^4)$ are part of this assertion. If the fixed datum additionally has $C_4>0$, every actual choice has weak microscopic limit zero, and
+
+$$
+E_s=\chi_c^2e_Cs^6+o(s^6),\qquad
+r_s\longrightarrow-\chi_c^2e_C,\qquad
+\operatorname{dist}_{L^2}\!
+ \left(\mathcal D_{g_s}\psi_s,\mathbb T\,\phi h_C\right)
+ \longrightarrow0 .
+\tag{42.6}
+$$
+
+The endpoint has full unit mass and the original fixed-cutoff Coulomb normalization of Theorem 10.2. The proof is given in §§43–49, including every consumed row and scalar pairing. Neither zero-response nor positive-$C_4$ occurrence is asserted.
+

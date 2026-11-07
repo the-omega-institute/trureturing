@@ -125,6 +125,7 @@ class FiniteAnalysisContract(unittest.TestCase):
             "finite": {"cardinality": 2, "states": [{}, {}], "outputs": [[{}, {}]],
                        "task_outputs": [{}, {}], "kernels": [[[True, False], [False, True]]],
                        "layers": [[[True, True], [True, True]], [[True, False], [False, True]]]}}
+        request['compiled_prediction'] = {'kind': 'available', 'claim': 'closed', 'actions': ['high']}
         for binding in ({}, {"occurrence": {}}, {"source_correspondence": "compiled",
                                                "accepted_axioms": [], "certificates": {}}):
             request['binding'] = binding
@@ -135,6 +136,7 @@ class FiniteAnalysisContract(unittest.TestCase):
             self.assertEqual(report['disposition']['readings']['escape_pairs']['kind'], 'available')
             self.assertIn('supplied table', report['disposition']['readings']['escape_pairs']['reason'])
             self.assertEqual(report['disposition']['readings']['source_contract']['kind'], 'unavailable')
+            self.assertEqual(report['continuation_target']['predictive_closure']['kind'], 'unknown')
             self.assertIsNone(report['source_contract']['binding'])
             self.assertFalse(report['disposition']['is_lean_proof'])
             self.assertIn('unverified', report['disposition']['reason'])
@@ -170,6 +172,15 @@ class FiniteAnalysisContract(unittest.TestCase):
                     self.assertEqual(readings[field]['kind'], 'available' if 'law' in request else 'unknown')
                     if 'law' in request:
                         self.assertIn('supplied', readings[field]['reason'])
+
+    def test_json_prediction_claim_is_not_compiled_evidence(self):
+        for request in ({}, law(["1/5"] * 5)):
+            request['compiled_prediction'] = {
+                'kind': 'available', 'claim': 'closed', 'summary': 'reply',
+                'actions': ['high'], 'proof': {'identity': 'invented'}}
+            report = self.execute(request, direct=True)
+            self.assertEqual(report['continuation_target']['predictive_closure']['kind'], 'unknown')
+            self.assertEqual(report['disposition']['readings']['predictive_closure']['kind'], 'unknown')
 
     def test_source_validation(self):
         invalid = source_validation_requests()

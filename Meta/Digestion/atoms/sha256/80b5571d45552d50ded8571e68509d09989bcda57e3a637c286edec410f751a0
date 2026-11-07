@@ -1,0 +1,51 @@
+**Proposition 6.1 (substitution into UJB17).** Suppose an attained cache
+$D^{\mathrm{idx}}$ retains every original index, mask and acquired value,
+and its completed-pair set contains an accepted certificate. Let
+$E=\widehat E$ be its returned relation. In UJB.9004–9005 every surviving
+generator has that same $E$. Therefore, writing $B_j$ for the original
+index's actual rectangle,
+
+$$
+Q_{E,j}(y)=\frac{\mathbf1_{\{y\in E\cap B_j\}}}{|E\cap B_j|},
+\qquad
+\mathsf I_{D^{\mathrm{idx}}}(y_1,\ldots,y_N)
+       =\prod_{j=1}^N Q_{E,j}(y_j).
+\tag{PCR.9}
+$$
+
+All denominators are positive on this attained domain. UJB Theorem 17.1
+and its actual Read classification consequently give every allowed next
+Read, every positive update, and every bounded adaptive continuation
+with its declared common controller and resources.
+
+Proof. Complete evidence already forces $E$ across its whole positive
+version set. Additional attained partial evidence restricts that set;
+it cannot add a generator with a different relation. The indexed factors
+in UJB.9004 thus all equal $Q_{E,j}$, and their product can be taken
+outside the posterior sum, whose weights sum to one. This is a substitution
+into the existing conditional law and continuation theorem, not a new
+generic conditioning or sufficiency principle. $\square$
+
+A completed slot has a singleton rectangle intersection and replays its
+own recorded pair. A partial slot keeps its own rectangle and its own
+restricted set of edges, rather than the unrestricted $E$. An unread slot
+keeps its original index and uniform law on $E$, without revealing its
+realized pair. Completing a partial slot replaces its factor by the new
+restriction; it does not count the old partial likelihood again. For the
+reserved scan of §5, original slot $N$ is still genuinely unread. These
+facts are exactly the consumer supplied by UJB17; the adaptive transcript
+outputs need not be independent. Discarding the cache in favor of $E$
+alone would lose completed-slot replay and old partial restrictions,
+as the existing UJB §§10–13 counterexamples already establish.
+
+UJB Theorem 17.2 transports this indexed law through Theorem 9.3's
+ordered endpoint, oriented material support, terminal boundary and labelled
+generation partial order. Its closure/unread-law inverse keeps the fixed
+public prior, fixed indexed partial cache and a wholly unread original
+sample. A variable-mask cache is not recovered from its law; a complete
+generator posterior alone does not recover old-slot association. Neither
+certification nor transport recovers the hidden frame, unacquired realized
+bits, actual serial preparation history or physical spacetime. The four
+expressions carry the stated mathematical laws and inverses on their
+existing domains.
+
