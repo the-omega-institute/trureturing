@@ -26,10 +26,11 @@ Lean statement: `D5/S3/Arith/Robin/ForwardKernel/MovingLengthVariance.shorter_in
 
 *Commentary.*
 
-Under the same hypotheses, for every c>0 there is C>0 such that, for all sufficiently large X and every 0<=u<=h=c*X^theta, the integral of D_u(x)^2 over [X,2X] is at most C*X*h*log(X/h). The identity D_u(x)=D_(h+u)(x)-D_h(x+u) bounds this square integral by 2*V(3X,h+u)+2*V(3X,h). The comparable-length estimate controls both terms uniformly in u, and log(X/h)=(1-theta)*log(X)-log(c).
+Under the same hypotheses, for every c>0 there is C>0 such that, for all sufficiently large X and every 0<=u<=h=c*X^theta, the integral of D_u(x)^2 over [X,2X] is at most C*X*h*log(X/h). Apply the two-endpoint square estimate with p(x)=x, q(x)=x+u, R=h, C0=1, and m=1. The comparable-length estimate controls V(3X,v) uniformly for h<=v<=3h, and log(X/h)=(1-theta)*log(X)-log(c).
 
 ## References
 
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/MovingLengthVariance.comparable_length_variance_bound`
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/MovingLengthVariance.shorter_increment_square_bound`
 - Dependency: [D5/S3/Arith/Robin/ForwardKernel/FixedLengthCovariance](FixedLengthCovariance.md)
+- Dependency: [D5/S3/Arith/Robin/ForwardKernel/MovingEndpointVariance](MovingEndpointVariance.md)

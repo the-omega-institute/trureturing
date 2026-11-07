@@ -11,6 +11,15 @@ internal sealed class ProfileLengthComparisonDocument : IScribeDocumentDefinitio
         H("Frozen-length profile comparison"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("bounded-factor-square-le"),
+                DeclarationHandle.Create(Prefix + "bounded_factor_square_le"),
+                H("Square bound for a bounded factor"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "If a measurable factor k is bounded in absolute value by C on an interval [a,b], then the square of the integral of k times f is at most C^2 times the interval length times the integral of f^2. The estimate uses the integral triangle inequality followed by Cauchy-Schwarz."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("variable-profile-square-error-le"),
                 DeclarationHandle.Create(Prefix + "variable_profile_square_error_le"),
                 H("The square error from freezing a profile length"),
