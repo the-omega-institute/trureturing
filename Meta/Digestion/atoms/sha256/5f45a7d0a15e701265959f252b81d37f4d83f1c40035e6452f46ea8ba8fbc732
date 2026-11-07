@@ -1,0 +1,35 @@
+**Lemma 5.1 (Common stationary first-row estimate).** For the actual rows in (3.2), define
+
+$$
+R_m(q)=\sum_{k\ge1}k^mq^k,
+\qquad r_H(q)=\delta\frac{R_9(q)+R_8(q)}{R_{10}(q)+R_9(q)}.
+\tag{5.1}
+$$
+
+With $\|u-v\|_{\rm TV}=\tfrac12\sum_x|u(x)-v(x)|$,
+
+$$
+\|\nu_0-\nu_1\|_{\rm TV}\le r_H(q)\le\frac{2\delta}{\mu_0(q)}.
+\tag{5.2}
+$$
+
+Proof. Use unnormalized first-wait weights
+
+$$
+G_i(u)=\sum_{k\ge\max(1,u)}F_i(k)q^k,
+\qquad \mathcal W_i=Z_i\mu_i=\sum_{k\ge1}(k+1)F_i(k)q^k.
+\tag{5.3}
+$$
+
+Nonnegative summation gives $\sum_uG_i(u)=\mathcal W_i$; the exact first-wait law is $G_i/\mathcal W_i$. The envelope gives $G_1\ge G_0$ and
+
+$$
+0\le\mathcal W_1-\mathcal W_0\le\delta(R_9+R_8),
+\qquad\mathcal W_0=R_{10}+R_9.
+\tag{5.4}
+$$
+
+When the difference is positive, normalize $G_1-G_0$ to a probability law $v$. Then $G_1/\mathcal W_1$ is the mixture of $G_0/\mathcal W_0$ and $v$ with respective weights $\mathcal W_0/\mathcal W_1$ and $(\mathcal W_1-\mathcal W_0)/\mathcal W_1$. Its variation from the first law is at most the latter weight, hence at most $r_H$. If the difference is zero the laws agree.
+
+The common stochastic map $u\mapsto\eta A^uC$ contracts variation: for every state event its conditional probability lies in $[0,1]$, so the difference of its averages is at most input variation. This proves the first inequality. Since $R_8\le R_9$ and $\mu_0=(R_{10}+R_9)/R_9$, the second follows. This is the uniform companion's Lemma 5.1 and the growing-budget source's Lemma 6.1. It remains uniform over arbitrary common initialization and retuning. $\square$
+
