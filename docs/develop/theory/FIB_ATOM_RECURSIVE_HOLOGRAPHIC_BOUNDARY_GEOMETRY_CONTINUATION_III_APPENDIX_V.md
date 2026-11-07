@@ -593,3 +593,230 @@ All coefficients use their own actual partition terminals, as in Theorem 213.1. 
 The radius in (213.14) keeps every target in this family at positive BB3. The result concerns a selected starting partition and its nearby targets. It does not establish control from an arbitrary prescribed hard partition, extension to zero residual, uniform carrier capacity across amplitudes or along an iteration, a summable-to-zero chain, universal $F_{64}$ attainment or exclusion, or physical succession. The original source and analytic suppliers remain inherited premises. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 214. Refined exact H51 sections and the cost of returning to the soft target
+
+**Theorem 214.1 (prescribed refinements of the actual nonlinear sections).** Retain exactly Definition 211.1, with every original $\theta$, every admitted representative $b$ and all inherited source and analytic suppliers. Use precisely $X,t_0,R,\kappa$ of Theorem 212.1, and write
+
+$$
+\|v\|_{\oplus1}=\sum_{y\in\mathcal L}\|v_y\|_{L^1(m)},
+\qquad \Lambda=\|X\|_{\oplus1},\qquad u^{(t)}=f^0+tX.
+\tag{214.1}
+$$
+
+Let $(\mathcal P_j)$ be any increasing sequence of finite Borel partitions generating the original Borel sigma algebra modulo $m$-null sets, and let $Q_j$ denote conditional expectation on $\mathcal P_j$. Prescribe any $0<t_j<t_0$ and any $\varepsilon_j>0$ tending to zero. There exist increasing finite Borel carriers $\mathcal R_j$, each refining $\mathcal P_j$, and, for each $j$, numbers $\rho_j,C_j>0$, soft tuples $u_{j,S}$ and deterministic pointwise whole-$G$ Borel partitions $D_{j,S}$, indexed by
+
+$$
+S_j^0=t_j^2R,\qquad
+\mathcal U_j=\{S\in\mathcal W_{13}\cap\ker L:
+                    \|S-S_j^0\|_\infty<\rho_j\},\qquad
+0<\rho_j<\min\{t_j^2\kappa/2,\varepsilon_j\},
+\tag{214.2}
+$$
+
+with the following simultaneous properties:
+
+$$
+\begin{gathered}
+\mathcal H_{51}(\mathbf1_{D_{j,S}})=\mathcal H_{51}(f),\qquad
+\Delta(D_{j,S})=S\quad\hbox{in all sixty-four coordinates},\\
+m(A(D_{j,S},D_{j,T}))\le C_j\|S-T\|_\infty
+       \quad(S,T\in\mathcal U_j),\\
+\int_A\mathbf1_{D_{j,S,y}}\,dm=\int_Au_{j,S,y}\,dm
+       \quad(A\in\mathcal R_j,\ y\in\mathcal L),\\
+Q_j(\mathbf1_{D_{j,S,y}})=Q_j u_{j,S,y},\\
+\sup_{S\in\mathcal U_j}\|u_{j,S}-u^{(t_j)}\|_{\oplus1}
+ \le\varepsilon_j,\qquad
+\sup_{S\in\mathcal U_j}\|u_{j,S}-f\|_{\oplus1}
+ \le t_j\Lambda+\varepsilon_j.
+\end{gathered}
+\tag{214.3}
+$$
+
+The carrier and constants precede the target quantifier, and $D_{j,S_j^0}$ is the actual central partition of its own section, pointwise. The soft tuples are preimages for finite cell masses; their exact nonlinear coefficients need not equal those of their hard images. Cell-mass matching here is to $u_{j,S}$, not an added requirement of exact cell-mass matching to $f$. All residual equalities use the same original operator, source, measure, units, clock and each displayed partition's own propagated terminals. No compatibility between the central partitions for different $j$ is assumed.
+
+*Proof.* Fix the original $\theta$. For each $t_j$, use the actual compact localization of the sixty-three directions in 213.A. Denote its compact subset of $E\cap\Omega$ by $K_j$, its directions by $v_{j,k}$, its invertible differential by $A_j$, and the positive constant in (213.3) by $B_j$. These are supplied by 212.C and 213.A, not rank or inverse hypotheses on a hard partition. Choose the legal ball radius $r_j>0$ small enough that (213.4) holds and
+
+$$
+u_j(z)=u^{(t_j)}+\sum_{k=1}^{63}z_kv_{j,k},\qquad
+B_jr_j\le\varepsilon_j\quad(\|z\|_2\le r_j).
+\tag{214.4}
+$$
+
+Shrinking a legal ball preserves its pointwise simplex property and the differential estimate. The product-$L^1$ bound follows from Cauchy--Schwarz exactly as in (213.4).
+
+At index $j$, join $\mathcal P_j$, the preceding carrier $\mathcal R_{j-1}$ when $j>1$, and $\{K_j,G\setminus K_j\}$ with increasing finite coordinate grids on expanding boxes. This produces, for this fixed $j$, a generating sequence of finite Borel refinements. Its cells inside $K_j$ have maximum diameter tending to zero, even when the prescribed cells have irregular boundaries. Consequently the proof of (213.7)--(213.8) applies unchanged: conditional expectation in the two free slots converges uniformly on the three compact families of fixed-slot densities, and averaging inside a cell of $K_j$ adds only their modulus of continuity at its diameter. Both the fixed-slot error and the global $L^1$ error of $W$ tend to zero. Finite joins impose no additional regularity assumption on $\mathcal P_j$.
+
+Apply the same coordinate-quantile rule as in 212.D and 213.C, with order $0,1,3,B$ and fixed endpoint and null-cell assignments. For every parameter in the legal ball it matches all four soft masses on every carrier cell. The first coordinate has no atoms on any such cell, because $m\ll\mu$ and coordinate hyperplanes have zero Haar measure. The slice estimate (213.10) and both errors in (213.12) therefore hold along this refined sequence. Choose one finite carrier $\mathcal R_j$ far enough that
+
+$$
+\|A_j^{-1}\|\operatorname{Lip}(E_{j,n})\le\tfrac14,
+\qquad \|A_j^{-1}E_{j,n}(0)\|_2<r_j/8,
+\tag{214.5}
+$$
+
+where $E_{j,n}$ is the hard-minus-soft error map (213.9) on this ball. Then choose
+
+$$
+0<\rho_j<\min\left\{t_j^2\kappa/2,\varepsilon_j,
+             \frac{r_j}{8\sqrt{27}\|A_j^{-1}\|}\right\}.
+\tag{214.6}
+$$
+
+The contraction (213.15) now has, for every $S\in\mathcal U_j$, a unique root $z_{j,S}$ in that ball. Set $u_{j,S}=u_j(z_{j,S})$ and use exactly its quantile partition for $D_{j,S}$. All choices of roots inside the designated balls obey (214.4); uniqueness in particular fixes the center pointwise. Equations (213.16)--(213.17) give the finite constant $C_j=6\sqrt{27}B_j\|A_j^{-1}\|$. Equation (213.11) gives the exact cell masses, and summing over the refinement of each $\mathcal P_j$ cell proves the $Q_j$ identity. Since $f^0=f$ almost everywhere, (214.4) proves both norm bounds in (214.3).
+
+The root equations give the original thirty-six lower laws and the twenty-seven coordinates on $I^3$. Zero contractions and injectivity of restriction from $H^{\otimes3}$ recover all sixty-four coordinates, as in 213.E. Membership in $\mathcal W_{13}\cap\ker L$ gives exactly H51 by (157.8) and Proposition 211.2. In particular every target still has $S_{BB3}>t_j^2\kappa/2>0$. The common null repairs affect no original positive-time law and do not restrict the admitted $b$.
+
+The finite cell-mass step is a linear intermediate, consistent with the classical finite atomless-measure purification of A. Dvoretzky, A. Wald and J. Wolfowitz, *Relations among certain ranges of vector measures*, Pacific J. Math. 1 (1951), 59--74, [doi:10.2140/pjm.1951.1.59](https://msp.org/pjm/1951/1-1/pjm-v1-n1-p06-s.pdf), Theorem 4 and Lemma 2, pp. 66--67. That theorem alone supplies no common-partition cubic equation or continuous section. Here exact nonlinear equality is supplied by the source-specific rank and fixed-slot contraction of 212.C and 213.A--E. The refinement with uniformly small soft preimages is a repo-derived consequence of those original suppliers, not a new linear purification theorem. $\square$
+
+**Corollary 214.2 (quantitative cell defect and the obstruction to summable soft resets).** In Theorem 214.1 suppose $t_j\to0$. For any whole-$G$ Borel partition $D$ and any fixed whole-$G$ Borel partition $E$, put
+
+$$
+\begin{gathered}
+\beta_j(D)=\sum_y\|Q_j(\mathbf1_{D_y}-f_y)\|_1,\qquad
+\alpha_f(E)=1-\sum_y\int_{E_y}f_y\,dm,\\
+\xi_j(E)=\sum_y\|\mathbf1_{E_y}-Q_j\mathbf1_{E_y}\|_1,
+\qquad a_\theta=\tfrac58+\tfrac c2.
+\end{gathered}
+\tag{214.7}
+$$
+
+The following quantitative estimates and uniform limits hold:
+
+$$
+\begin{gathered}
+|m(A(D,E))-\alpha_f(E)|\le\xi_j(E)+\tfrac12\beta_j(D),\\
+\tfrac58+\tfrac c2\le\alpha_f(E)\le1-c,\qquad
+\xi_j(E)\longrightarrow0,\\
+\sup_{S\in\mathcal U_j}\beta_j(D_{j,S})
+ \le t_j\Lambda+\varepsilon_j\longrightarrow0,\\
+\sup_{S\in\mathcal U_j}
+ |m(A(D_{j,S},E))-\alpha_f(E)|\longrightarrow0.
+\end{gathered}
+\tag{214.8}
+$$
+
+Thus every diagonal choice $S_j\in\mathcal U_j$ and every legal-root realization of these sections has exactly H51, exactly the requested full residual $S_j\to0$, and componentwise weak-star limit $f$, while remaining positively separated from every fixed hard anchor. No such sequence, or subsequence with indices tending to infinity, can have summable total label motion.
+
+More precisely, for every sequence of actual whole-$G$ Borel partitions $E_j$ satisfying $\sum_jm(A(E_j,E_{j+1}))<\infty$, there is an eventual-label partition $E_\infty$. With
+
+$$
+\tau_j=\sum_{k=j}^\infty m(A(E_k,E_{k+1})),\qquad
+\zeta_j(E_\infty)=\sum_y
+ \|(I-Q_j)(\mathbf1_{E_{\infty,y}}-f_y)\|_1,
+\tag{214.9}
+$$
+
+one necessarily has
+
+$$
+\begin{gathered}
+|\beta_j(E_j)-2\alpha_f(E_\infty)|
+ \le2\tau_j+\zeta_j(E_\infty),\qquad
+\zeta_j(E_\infty)\longrightarrow0,\\
+\lim_{j\to\infty}\beta_j(E_j)
+ =2\alpha_f(E_\infty)\ge\tfrac54+c>0.
+\end{gathered}
+\tag{214.10}
+$$
+
+These necessary nonzero defects do not exclude a different compatible continuation. If such a summable chain also has full residual tending to zero, its endpoint still attains the original law by (155.31)--(155.33).
+
+*Proof.* The mass-one density in (134.4) and $[b]=g_d$ give $\int b\,dm=1$ and $0<c\le1/8$. From the pointwise source normalization in (211.1),
+
+$$
+0<f_3=cb\le\tfrac14=f_B\le f_0=f_1\le\tfrac38,
+\qquad
+\int f_3\,dm=c,\quad \int f_0\,dm=\tfrac38-\tfrac c2.
+\tag{214.11}
+$$
+
+For each point the selected $f_y$ lies between $f_3$ and $f_0$. Integration proves the two bounds for $\alpha_f$, including the source-dependent $c/2$ term. For unrestricted hard anchors they are attained by assigning all of $G$ to $0$ or to $3$, respectively; sharpness here asserts no calibration of those anchors.
+
+Write $e_y=\mathbf1_{E_y}$, $d_y=\mathbf1_{D_y}$, $a_y=Q_je_y$ and $h_y=Q_j(d_y-f_y)$. Conditional expectation gives
+
+$$
+\sum_y\int e_y(d_y-f_y)\,dm
+ =\sum_y\int(e_y-a_y)(d_y-f_y)\,dm
+                  +\int\sum_y a_yh_y\,dm.
+\tag{214.12}
+$$
+
+The first term has absolute value at most $\xi_j(E)$. Pointwise, $0\le a_y\le1$ and $\sum_yh_y=0$, so $|\sum_ya_yh_y|\le\frac12\sum_y|h_y|$. Also $m(A(D,E))=1-\sum_y\int e_yd_y\,dm$. This proves the first estimate in (214.8) with its factor $1/2$.
+
+On a generating increasing finite algebra, $Q_jv\to v$ in $L^1$ for every $v\in L^1(m)$: approximate $v$ in $L^1$ by a simple function measurable on some finite algebra, and use the contraction of $Q_j$ for the two approximation errors. Such simple functions are dense because these algebras generate modulo null sets. This proves $\xi_j(E)\to0$ and later $\zeta_j(E_\infty)\to0$. The exact cell identity in (214.3) and the same contraction give $\beta_j(D_{j,S})\le\|u_{j,S}-f\|_{\oplus1}$. The remaining bounds and the uniform fixed-anchor limit follow. They hold for all allowed targets and roots, with no relation between choices at different indices.
+
+For completeness, for a bounded Borel test $h$ and a single label, the cell identity gives uniformly in $S$
+
+$$
+\left|\int h(\mathbf1_{D_{j,S,y}}-f_y)\,dm\right|
+ \le\|h-Q_jh\|_1+\|h\|_\infty\beta_j(D_{j,S}).
+\tag{214.13}
+$$
+
+The right side tends to zero. Truncation extends this to every $L^1$ test, using $|\mathbf1_{D_{j,S,y}}-f_y|\le1$. Thus the weak-star limit is $f$. Equation (214.2) also gives $\|S_j\|_\infty\le t_j^2(\|R\|_\infty+\kappa/2)\to0$, with exact H51 and full-coordinate equality at each finite index.
+
+For a summable chain, the union of change sets from index $j$ onward has measure at most $\tau_j$. Outside their null limsup the labels are eventually constant. Assign $B$ on that Borel exceptional set; the resulting $E_\infty$ satisfies $m(A(E_j,E_\infty))\le\tau_j$, as in (155.32). Contractivity and $\|\mathbf1_E-\mathbf1_F\|_{\oplus1}=2m(A(E,F))$ give
+
+$$
+|\beta_j(E_j)-\beta_j(E_\infty)|\le2\tau_j,\qquad
+\left|\beta_j(E_\infty)
+ -\|\mathbf1_{E_\infty}-f\|_{\oplus1}\right|
+ \le\zeta_j(E_\infty).
+\tag{214.14}
+$$
+
+For a hard partition and a simplex tuple, the last unconditioned norm is exactly $2\alpha_f(E_\infty)$. This proves (214.10), contradicting the vanishing-defect limit for every diagonal sequence above. Applying the same argument to any subsequence uses the corresponding generating subsequence of $\mathcal P_j$, and gives the same contradiction.
+
+The consumer is the summable endpoint criterion (155.31): repeated independent selections from these increasingly refined, near-$f$ soft families cannot meet it, even with exact H51 and arbitrarily small prescribed full residuals. The assertion does not give a positive lower bound on consecutive step sizes; the anchor is fixed before its limit is taken. It does not restrict sections or chains with nonvanishing cell defect, solve a finite-carrier origin equation, settle universal $F_{64}$ attainment or exclusion, or provide physical succession. $\square$
+
+**Corollary 214.3 (separation inside one exact positive full-residual H51 fiber).** For every original $\theta$ and every fixed $0<t<t_0$, the exact fiber
+
+$$
+\mathscr F_t=\{D:\ D\text{ is a deterministic pointwise whole-}G
+ \text{ Borel partition},\quad
+ \mathcal H_{51}(\mathbf1_D)=\mathcal H_{51}(f),\quad
+ \Delta(D)=t^2R\text{ in all sixty-four coordinates}\}
+\tag{214.15}
+$$
+
+contains a sequence $D_j$ obtained from Theorem 214.1 with $t_j=t$ and $S=S_j^0=t^2R$, such that $\mathbf1_{D_{j,y}}\overset{*}{\rightharpoonup}u_y^{(t)}$ for every label. Put
+
+$$
+a_t=1-\mathop{\rm ess\,sup}_{x\in G}\max_yu_y^{(t)}(x).
+\tag{214.16}
+$$
+
+Then $a_t>0$, and for every fixed whole-$G$ hard partition $E$,
+
+$$
+m(A(D_j,E))\longrightarrow
+ \alpha_{u^{(t)}}(E):=1-\sum_y\int_{E_y}u_y^{(t)}\,dm
+ \ge a_t>0.
+\tag{214.17}
+$$
+
+The fiber $\mathscr F_t$, modulo null changes and with label-motion distance $m(A(\cdot,\cdot))$, contains an infinite $a_t/2$-separated subset. Its indicator tuples are not relatively compact in product $L^1$. The full residual in this conclusion is fixed, equal for every member, and has BB3 exactly $t^2\kappa>0$.
+
+*Proof.* Use any prescribed generating refinements and $\varepsilon_j\downarrow0$ in Theorem 214.1, keeping this one $t$. At the centers, (214.3) gives $\Delta(D_j)=t^2R$ and exact H51, and
+
+$$
+\sum_y\|Q_j(\mathbf1_{D_{j,y}}-u_y^{(t)})\|_1
+ \le\varepsilon_j\longrightarrow0.
+\tag{214.18}
+$$
+
+The test argument (214.13), now with $u^{(t)}$ in place of $f$, proves the claimed weak-star limit. Pairing it with the fixed indicators of $E$ proves the limit (214.17). Equivalently, (214.12) gives its quantitative error at most $\xi_j(E)+\varepsilon_j/2$.
+
+Denote the invariant slack set $E$ of 212.A--C by $E_{\rm sl}$ in this paragraph, to distinguish it from the fixed hard anchor. The supplier 212.C gives a uniform $\sigma_t>0$ such that all four components of $u^{(t)}$ are at least $\sigma_t$ on $E_{\rm sl}$. Consequently their maximum there is at most $1-3\sigma_t$. Outside $E_{\rm sl}$ one has $X=0$ and $f^0=f$ almost everywhere, so (214.11) bounds the maximum by $3/8$. Thus
+
+$$
+a_t\ge\min\{3\sigma_t,5/8\}>0.
+\tag{214.19}
+$$
+
+For each fixed $D_i$, (214.17) makes $m(A(D_j,D_i))>a_t/2$ for every sufficiently large $j$. Recursively choose an increasing subsequence whose next index is beyond the finitely many thresholds for all preceding choices. This gives the infinite separated subset, and hence failure of relative compactness in product $L^1$, whose distance is twice the label-motion distance. In fact the displayed $D_j$ has no product-$L^1$ convergent subsequence: a product-$L^1$ limit of finite-label indicator tuples is again a hard tuple modulo null sets, by passage to an almost-everywhere convergent subsequence; such a limit would contradict (214.17) for that fixed hard anchor.
+
+This is separation within one exact nonlinear full-residual fiber, obtained by retaining the section roots through arbitrary finite refinements. It does not infer nonattainment at residual zero. The approximate-zero noncompactness of Appendix III Proposition 144.1 and the weak-star construction of Appendix IV Theorem 209.5 concern different, varying residuals; neither supplies the equalities defining (214.15). Here those equalities and H51 persist at every refinement by Theorem 214.1. The universal zero-residual and physical succession questions retain exactly their original scope. $\square$
+
+## 追加锚（本行以下为增补区）
