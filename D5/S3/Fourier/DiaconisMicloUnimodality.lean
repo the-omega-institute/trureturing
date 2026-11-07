@@ -59,6 +59,9 @@ lambdaM_sSup: endpoint_gap, middle_gap.
 endpoint_gap: result.
 middle_gap: result.
 speeds_generate: result.
+Proposition-valued private definitions (classified as bind-only declarations):
+RootWindow: proof_shape: bind-only; escape_witness: none; consumer: cyclotomic_root_windows, endpoint_schur_one_fifth, endpoint_schur_three_tenths.
+Schur4: proof_shape: bind-only; escape_witness: none; consumers: schur4_outside, endpoint_schur_one_fifth, endpoint_schur_three_tenths, block_roots_inside.
 The source position-speed and absolute-gap expressions are retained with subtype carriers written in full.
 The uniform weight is inlined in lambdaM; proofs use the closed uniformWeight owner through its one-letter specialization.
 The public result is the designated refutation result (`basis=refutes`) and is exempt from four-slot escape registration (CLAUDE.md §3.9).
@@ -67,6 +70,8 @@ The public result is the designated refutation result (`basis=refutes`) and is e
 import D5.S3.Fourier.FullBispectrumStability
 import D5.S3.Arith.Congruence.RestrictedSpineConstantPotential
 import Mathlib.Algebra.Polynomial.OfFn
+import Mathlib.RingTheory.Complex
+import Mathlib.LinearAlgebra.Matrix.ToLinearEquiv
 
 set_option maxRecDepth 100000
 set_option maxHeartbeats 4000000
@@ -374,18 +379,19 @@ private theorem literal_characteristic_polynomial (a q z : ℂ) (hq : q ≠ 0) :
   field_simp [hq]
   ring
 
-private def realTrace (k : (ZMod 11)) : ℝ := 2 * (ZMod.stdAddChar k).re
-
 private theorem char_trace_real (k : (ZMod 11)) :
-    ZMod.stdAddChar k + (ZMod.stdAddChar k)⁻¹ = (realTrace k : ℂ) := by
+    ZMod.stdAddChar k + (ZMod.stdAddChar k)⁻¹ =
+      (Algebra.trace ℝ ℂ (ZMod.stdAddChar k) : ℂ) := by
   have hc : (ZMod.stdAddChar k)⁻¹ = star (ZMod.stdAddChar k) :=
     Circle.coe_inv_eq_conj (ZMod.toCircle k)
   rw [hc]
-  apply Complex.ext <;> simp [realTrace] <;> ring
+  simpa only [Algebra.trace_complex_apply, starRingEnd_apply] using
+    Complex.add_conj (ZMod.stdAddChar k)
 
 
 private theorem fourier_characteristic_polynomial (a : ℝ) (k : (ZMod 11)) (z : ℂ) :
-    (fourierBlock a k).charpoly.eval z = blockPolynomial (a : ℂ) (realTrace k) z := by
+    (fourierBlock a k).charpoly.eval z =
+      blockPolynomial (a : ℂ) (Algebra.trace ℝ ℂ (ZMod.stdAddChar k)) z := by
   classical
   rw [Matrix.eval_charpoly]
   rw [← Matrix.det_submatrix_equiv_self speedEquiv (Matrix.scalar {v : ZMod 11 // v ∈ speeds} z-fourierBlock a k)]
@@ -418,30 +424,22 @@ private theorem eigen_det_zero {n : Type*} [Fintype n] [DecidableEq n]
 private theorem det_zero_eigenvector {n : Type*} [Fintype n] [DecidableEq n]
     (A : Matrix n n ℂ) (θ : ℂ) (hd : (Matrix.scalar n θ-A).det=0) :
     ∃ h : n → ℂ, h ≠ 0 ∧ ∀ i, ∑ j, A i j*h j=θ*h i := by
-  have hn : ¬ Function.Injective (Matrix.scalar n θ-A).mulVec := by
-    rw [Matrix.mulVec_injective_iff_isUnit,Matrix.isUnit_iff_isUnit_det,hd]
-    simp
-  obtain ⟨f,g,hfg,hne⟩ := Function.not_injective_iff.mp hn
-  refine ⟨f-g,sub_ne_zero.mpr hne,?_⟩
-  have hh : (Matrix.scalar n θ-A).mulVec (f-g)=0 := by
-    rw [Matrix.mulVec_sub,hfg,sub_self]
-  rw [Matrix.sub_mulVec,Matrix.scalar_apply] at hh
+  obtain ⟨h, hn, he⟩ := Matrix.exists_mulVec_eq_zero_iff.mpr hd
+  refine ⟨h, hn, ?_⟩
+  rw [Matrix.sub_mulVec,Matrix.scalar_apply] at he
   intro i
-  have hi := congrFun hh i
-  have hi' : θ*(f i-g i)-A.mulVec (f-g) i=0 := by
-    simpa only [Pi.sub_apply,Matrix.mulVec_diagonal,Pi.smul_apply,smul_eq_mul,Pi.zero_apply] using hi
-  have heq := (sub_eq_zero.mp hi').symm
-  simpa only [Matrix.mulVec,dotProduct,Pi.sub_apply] using heq
+  have hi := congrFun he i
+  have hz : θ * h i - A.mulVec h i = 0 := by
+    simpa only [Pi.sub_apply, Matrix.mulVec_diagonal, Pi.smul_apply,
+      smul_eq_mul, Pi.zero_apply] using hi
+  simpa only [Matrix.mulVec, dotProduct] using (sub_eq_zero.mp hz).symm
 
 private theorem finite_mean_zero_eigenvalues {n : Type*} [Fintype n] [DecidableEq n]
     (A : Matrix n n ℝ) (w : n → ℝ) : (eigenvaluesMeanZero A w).Finite := by
   let B : Matrix n n ℂ := fun i j => (A i j : ℂ)
   apply (Polynomial.finite_setOfPred_isRoot B.charpoly_monic.ne_zero).subset
   rintro θ ⟨f,hf,_,he⟩
-  have hn : f ≠ 0 := by
-    obtain ⟨i,hi⟩ := hf
-    intro hh
-    exact hi (congrFun hh i)
+  have hn : f ≠ 0 := Function.ne_iff.mpr hf
   change B.charpoly.eval θ=0
   rw [Matrix.eval_charpoly]
   exact eigen_det_zero B θ f hn he
@@ -512,7 +510,7 @@ private theorem cyclotomic_trace_identity (q : ℂ) (hq : q ≠ 0) :
   ring
 
 private theorem char_trace_cyclotomic (k : (ZMod 11)) (hk : k ≠ 0) :
-    realCyclotomic.eval (realTrace k) = 0 := by
+    realCyclotomic.eval (Algebra.trace ℝ ℂ (ZMod.stdAddChar k)) = 0 := by
   have hq := char_ne_zero k
   have hq1 : ZMod.stdAddChar k ≠ 1 := by
     intro he
@@ -708,7 +706,9 @@ namespace D5.S3.Fourier.DiaconisMicloUnimodality
 noncomputable section
 open scoped BigOperators
 
-private theorem trace_fiber (k l : (ZMod 11)) (h : realTrace k = realTrace l) : k = l ∨ k = -l := by
+private theorem trace_fiber (k l : (ZMod 11))
+    (h : Algebra.trace ℝ ℂ (ZMod.stdAddChar k) = Algebra.trace ℝ ℂ (ZMod.stdAddChar l)) :
+    k = l ∨ k = -l := by
   let q := ZMod.stdAddChar k
   let r := ZMod.stdAddChar l
   have hq : q ≠ 0 := char_ne_zero k
@@ -731,7 +731,8 @@ private def modeIndex (i : Fin 5) : (ZMod 11) := ![1,2,3,4,5] i
 private theorem modeIndex_ne_zero (i : Fin 5) : modeIndex i ≠ 0 := by
   fin_cases i <;> decide
 
-private theorem trace_mode_injective : Function.Injective (fun i : Fin 5 => realTrace (modeIndex i)) := by
+private theorem trace_mode_injective :
+    Function.Injective (fun i : Fin 5 => Algebra.trace ℝ ℂ (ZMod.stdAddChar (modeIndex i))) := by
   intro i j h
   have hh := trace_fiber _ _ h
   have hcomb : ∀ i j : Fin 5,
@@ -739,9 +740,10 @@ private theorem trace_mode_injective : Function.Injective (fun i : Fin 5 => real
   exact hcomb i j hh
 
 private theorem cyclotomic_trace_exhaustive (t : ℝ) (ht : realCyclotomic.eval t=0) :
-    ∃ i : Fin 5, realTrace (modeIndex i)=t := by
+    ∃ i : Fin 5, Algebra.trace ℝ ℂ (ZMod.stdAddChar (modeIndex i)) = t := by
   classical
-  let rs : Finset ℝ := Finset.univ.image (fun i => realTrace (modeIndex i))
+  let rs : Finset ℝ :=
+    Finset.univ.image (fun i => Algebra.trace ℝ ℂ (ZMod.stdAddChar (modeIndex i)))
   have hrscard : rs.card=5 := by
     simp [rs,Finset.card_image_of_injective,trace_mode_injective]
   have hdeg : realCyclotomic.natDegree ≤ 5 := by unfold realCyclotomic; compute_degree
@@ -818,12 +820,9 @@ open scoped BigOperators
 
 private theorem fourier_root (a : ℝ) (k : (ZMod 11)) (θ : ℂ) (h : {v : ZMod 11 // v ∈ speeds} → ℂ)
     (hn : ∃ v,h v≠0) (he : ∀ v,∑ w,fourierBlock a k v w*h w=θ*h v) :
-    blockPolynomial (a : ℂ) (realTrace k) θ=0 := by
+    blockPolynomial (a : ℂ) (Algebra.trace ℝ ℂ (ZMod.stdAddChar k)) θ=0 := by
   classical
-  have hn' : h ≠ 0 := by
-    obtain ⟨v,hv⟩ := hn
-    intro hh
-    exact hv (congrFun hh v)
+  have hn' : h ≠ 0 := Function.ne_iff.mpr hn
   have hd := eigen_det_zero (fourierBlock a k) θ h hn' he
   rw [← Matrix.eval_charpoly, fourier_characteristic_polynomial] at hd
   exact hd
@@ -834,7 +833,7 @@ private theorem endpoint_eigenvalue_bound (a : ℝ) (ha : a=1/5 ∨ a=3/10)
   · subst θ
     rcases ha with rfl | rfl <;> norm_num [R]
   · have ht := cyclotomic_root_windows _ (char_trace_cyclotomic k hk)
-    have hc : Schur4 (blockCoefficients a (realTrace k)) := by
+    have hc : Schur4 (blockCoefficients a (Algebra.trace ℝ ℂ (ZMod.stdAddChar k))) := by
       rcases ha with rfl | rfl
       · exact endpoint_schur_one_fifth _ ht
       · exact endpoint_schur_three_tenths _ ht
@@ -855,7 +854,8 @@ private theorem middle_eigenvalue : ∃ θ : ℂ,
   let k := modeIndex i
   have hk : k≠0 := modeIndex_ne_zero i
   obtain ⟨z,hz0,hz1,hpz⟩ := middle_real_root t ht
-  have hp : blockPolynomial (1/4 : ℂ) (realTrace k) (z:ℂ)=0 := by
+  have hp : blockPolynomial (1/4 : ℂ)
+      (Algebra.trace ℝ ℂ (ZMod.stdAddChar k)) (z:ℂ)=0 := by
     rw [hi]
     simpa [blockPolynomial] using congrArg Complex.ofReal hpz
   have hd : (Matrix.scalar (Fin 4) (z:ℂ)-literalBlock (1/4) (ZMod.stdAddChar k)).det=0 := by
