@@ -6,7 +6,7 @@
    utility: none
    digest: The endpoint rectangle count has Barker's joint generating function and recurrence. -/
 
-/-!
+/-
 Source: OEIS A096222 revision 13, Colin Barker's complete conjecture block.
 The cardinality below counts placements, rather than a recurrence-defined sequence.
 The natural divisions in the side lengths implement floor and ceiling respectively.
