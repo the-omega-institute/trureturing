@@ -52,11 +52,11 @@ private noncomputable def realSemigroup (S : Contraction E) :
 noncomputable def action (S : Contraction E) (t : ℝ) : E →L[ℂ] E :=
   S.operator (Real.toNNReal t)
 
-private theorem action_bound (S : Contraction E) (t : ℝ) (x : E) :
+theorem action_bound (S : Contraction E) (t : ℝ) (x : E) :
     ‖S.action t x‖ ≤ ‖x‖ :=
   S.realSemigroup.norm_apply_le (Real.toNNReal t) x
 
-private theorem action_continuous (S : Contraction E) :
+theorem action_continuous (S : Contraction E) :
     Continuous fun p : ℝ × E => S.action p.1 p.2 :=
   S.realSemigroup.continuous_operator_apply
     (continuous_real_toNNReal.comp continuous_fst) continuous_snd
@@ -74,14 +74,14 @@ noncomputable def causalIterate (r : ℝ) (v : ℝ → E) : ℕ → ℝ → E
   | 0 => v
   | n + 1 => causal S B r (causalIterate r v n)
 
-private noncomputable def extend {F : Type*} (f : ℝ → F) {r T : ℝ} (h : r ≤ T) : ℝ → F :=
+noncomputable def extend {F : Type*} (f : ℝ → F) {r T : ℝ} (h : r ≤ T) : ℝ → F :=
   fun s => f (Set.projIcc r T h s)
 
-private theorem extend_eq {F : Type*} (f : ℝ → F) {r T : ℝ} (h : r ≤ T)
+theorem extend_eq {F : Type*} (f : ℝ → F) {r T : ℝ} (h : r ≤ T)
     {s : ℝ} (hs : s ∈ Set.Icc r T) : extend f h s = f s := by
   simp only [extend, Set.projIcc_of_mem h hs]
 
-private theorem continuous_extend {F : Type*} [TopologicalSpace F] {f : ℝ → F}
+theorem continuous_extend {F : Type*} [TopologicalSpace F] {f : ℝ → F}
     {r T : ℝ} (h : r ≤ T) (hf : ContinuousOn f (Set.Icc r T)) :
     Continuous (extend f h) :=
   (continuousOn_iff_continuous_domRestrict.mp hf).comp continuous_projIcc
@@ -167,13 +167,13 @@ theorem causal_iterate_bound {r T M C : ℝ} (hrT : r ≤ T)
 noncomputable def term (n : ℕ) (t r : ℝ) (x : E) : E :=
   causalIterate S B r (fun s => S.action (s - r) x) n t
 
-private theorem term_zero (t r : ℝ) (x : E) :
+theorem term_zero (t r : ℝ) (x : E) :
     term S B 0 t r x = S.action (t - r) x := rfl
 
-private theorem term_succ (n : ℕ) (t r : ℝ) (x : E) :
+theorem term_succ (n : ℕ) (t r : ℝ) (x : E) :
     term S B (n + 1) t r x = ∫ s in r..t, S.action (t - s) (B s (term S B n s r x)) := rfl
 
-private theorem orbit_continuous (r : ℝ) (x : E) :
+theorem orbit_continuous (r : ℝ) (x : E) :
     Continuous fun s => S.action (s - r) x :=
   S.action_continuous.comp ((continuous_id.sub continuous_const).prodMk continuous_const)
 
@@ -190,7 +190,7 @@ private theorem term_bound {r T M : ℝ} (hrT : r ≤ T)
   simpa only [term, mul_comm] using causal_iterate_bound S B hrT hB hM hBM
     (orbit_continuous S r x).continuousOn (fun s _ => S.action_bound (s - r) x) n ht
 
-private theorem term_locality {B' : ℝ → E →L[ℂ] E} {r T : ℝ}
+theorem term_locality {B' : ℝ → E →L[ℂ] E} {r T : ℝ}
     (hBB : Set.EqOn B B' (Set.Icc r T)) (n : ℕ) {t : ℝ}
     (ht : t ∈ Set.Icc r T) (x : E) : term S B n t r x = term S B' n t r x := by
   induction n generalizing t with
@@ -259,7 +259,7 @@ private theorem term_add {r T : ℝ} (hrT : r ≤ T)
         ((causal_integrand_continuous S B hB (term_continuous S B hrT hB n y) ht)
           |>.intervalIntegrable_of_Icc ht.1)
 
-private theorem term_smul (n : ℕ) (t r : ℝ) (c : ℂ) (x : E) :
+theorem term_smul (n : ℕ) (t r : ℝ) (c : ℂ) (x : E) :
     term S B n t r (c • x) = c • term S B n t r x := by
   induction n generalizing t with
   | zero => exact map_smul _ _ _
@@ -380,7 +380,7 @@ private theorem sum_mild {r T M : ℝ} (hrT : r ≤ T)
   simpa only [term_succ] using hi.tsum_eq
 
 omit [CompleteSpace E] in
-private theorem sum_diagonal (r : ℝ) (x : E) : sum S B r r x = x := by
+theorem sum_diagonal (r : ℝ) (x : E) : sum S B r r x = x := by
   have h : ∀ n, term S B n r r x = if n = 0 then x else 0 := by
     intro n
     cases n with
@@ -448,7 +448,7 @@ private theorem sum_unique {T M r : ℝ} (hT : 0 ≤ T)
   exact sub_eq_zero.mp hz
 
 omit [CompleteSpace E] in
-private theorem action_add {a b : ℝ} (ha : 0 ≤ a) (hb : 0 ≤ b) :
+theorem action_add {a b : ℝ} (ha : 0 ≤ a) (hb : 0 ≤ b) :
     S.action (a + b) = (S.action a).comp (S.action b) := by
   simp only [Contraction.action, Real.toNNReal_add ha hb, S.add]
 
@@ -509,7 +509,7 @@ private theorem evolution_locality {B' : ℝ → E →L[ℂ] E} {r t : ℝ}
   exact tsum_congr fun n => term_locality S B hBB n ⟨hrt, le_rfl⟩ x
 
 omit [CompleteSpace E] in
-private theorem term_constant (Bzero : E →L[ℂ] E) (n : ℕ) (t r : ℝ) (x : E) :
+theorem term_constant (Bzero : E →L[ℂ] E) (n : ℕ) (t r : ℝ) (x : E) :
     term S (fun _ => Bzero) n t r x =
       DysonPhillipsPerturbation.dysonTerm S.action Bzero n (t - r) x := by
   induction n generalizing t with
@@ -532,7 +532,7 @@ private theorem term_constant (Bzero : E →L[ℂ] E) (n : ℕ) (t r : ℝ) (x :
     ring
 
 omit [CompleteSpace E] in
-private theorem sum_zero_coefficient (t r : ℝ) (x : E) :
+theorem sum_zero_coefficient (t r : ℝ) (x : E) :
     sum S (fun _ => 0) t r x = S.action (t - r) x := by
   have h : ∀ n, term S (fun _ => 0) n t r x =
       if n = 0 then S.action (t - r) x else 0 := by

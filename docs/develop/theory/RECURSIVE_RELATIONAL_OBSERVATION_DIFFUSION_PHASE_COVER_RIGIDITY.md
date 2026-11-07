@@ -4675,3 +4675,226 @@ The exact original $N_d$ upper enumeration, source maximum relation
 and finite-record confidence remain separate mathematical obligations.
 
 ## 追加锚（本行以下为增补区）
+
+## 14. Gaussian exterior decay for the original source quotient
+
+**Definition 14.1 (full-source hypotheses and propagation gauge).** Retain the analytic suppliers of Definition 12.1: [E, §§109–112] and [S, §§115–117, 133], with their hypotheses. For arbitrary original $a,\eta,d>0$, the group is $G=H^1\times\mathbb R$, with $e=0$, product $pp'=(x+x',y+y',z+z',w+w'+xy')$, raw Haar measure $\mu=dx\,dy\,dz\,dw$, and fields $X_1=\partial_x$, $X_2=\partial_y+x\partial_w$, $X_3=\partial_z$. Write
+
+$$
+P=aL-\eta\partial_w^2,\quad L=-\sum_{i=1}^3X_i^2,\quad
+V=16\sqrt{a\eta}\,\Gamma,\quad L\Gamma=\delta_e.
+\tag{14.1}
+$$
+
+Here $\Gamma$ is the original unit-source Green field of $L$, not that of $P$. Retain the full nonnegative endpoint $H$ with $A=\rho C$, its coefficient-positive normalized zero state $h=w_*/\|w_*\|_2$, $C(w_*)=1$, $m=h^2\mu$, $J_hu=hu$, $K=J_h^{-1}HJ_h$, and $T_t=e^{-tK}$. Thus $\|h\|_2=1$, $m(G)=1$, and $h$ is smooth and strictly positive on $G\setminus\{e\}$, where $(P-V)h=0$. The full regular strongly local form is
+
+$$
+\mathscr E[u]=\int_G\left(a\sum_{i=1}^3|X_i u|^2+\eta|\partial_wu|^2\right)dm,
+\qquad \mathscr V=\mathscr V_0\dotplus\mathbb C1.
+\tag{14.2}
+$$
+
+Its source trace $\operatorname{tr}$ is quasi-continuous evaluation at the nonpolar $e$. For the original deterministic-time source density $g_t$, put $v_t=hg_t$. The suppliers give
+
+$$
+\operatorname{tr}(T_tf)=\int_Gg_tf\,dm,\qquad
+|\operatorname{tr}u|^2\le\frac{\mathscr E[u]+\|u\|_{L^2(m)}^2}{D},\qquad
+D=\langle h,h-(F+1)^{-1}h\rangle=d_1>0.
+\tag{14.3}
+$$
+
+The scalar $D$ has the name constructed in §12. In symmetric coordinates $\xi=(x,y,z)$ and $s=w-xy/2$, set
+
+$$
+\varrho=(|\xi|^4+s^2)^{1/4},\quad
+q=(1+|\xi|^4+s^2)^{1/4},\quad
+\psi=(q-1)/\beta,\quad \tau=\min(d/4,1),
+\tag{14.4}
+$$
+
+where $\beta>0$ is rational and $\beta^2\ge a+\eta/4$. Such a $\beta$ is obtained from positive rational coefficient enclosures. The original bound from §10 is $0<\Gamma(p)\le32\varrho(p)^{-3}$. All times and coordinates retain the original units.
+
+**Theorem 14.2 (computed global source-vector Gaussian tail).** For every $t,r>0$,
+
+$$
+\|1_{\{\psi\ge r\}}v_t\|_{L^2(\mu)}
+\le\frac{2(1+t/r)}{\sqrt{\pi tD}}e^{-r^2/(4t)}.
+\tag{14.5}
+$$
+
+Consequently, for $R>1$,
+
+$$
+\|1_{\{\varrho\ge R\}}v_t\|_2
+\le\frac{2(1+\beta t/(R-1))}{\sqrt{\pi tD}}
+\exp\left(-\frac{(R-1)^2}{4\beta^2t}\right).
+\tag{14.6}
+$$
+
+The right side is computable from the permitted coefficient/time names and $D$. This is a norm-tail bound; it is not an exterior pointwise order certificate.
+
+Proof. Let $d_A$ be the length distance for velocities $\sum_i u_iX_i+u_4\partial_w$, with length integrand $\sqrt{\sum_i u_i^2/a+u_4^2/\eta}$. It is a complete smooth left-invariant Riemannian distance. Its energy density is exactly (14.2), relative to $m$; multiplication by $h$ does not alter the principal symbol.
+
+Compact Lipschitz tests belong to the local full form also at $e$. To see this, subtract the source value using a fixed local cutoff, and cut the remainder off on an Euclidean $\epsilon$-ball. There $|f-f(e)|\le C\epsilon$ and $|D\chi_\epsilon|\le C/\epsilon$, so the cutoff energy error is bounded by a constant times $m(B_{2\epsilon})\to0$. The gradient and norm errors also tend to zero. The subtracted cutoff is a full-form vector: locally it is the constant $1$, with its remaining part supported away from $e$. Punctured local smoothing and the full form core finish the approximation. Here $m=h^2\mu$ has no atom at $e$. The argument applies to Lipschitz distance cutoffs. Thus $d_A$ is the full form's intrinsic metric, with the original topology and source coordinate retained.
+
+For bounded Lipschitz $\phi$ with $a\sum_i|X_i\phi|^2+\eta|\partial_w\phi|^2\le1$, the full-form product rule and weighted energy estimate give
+
+$$
+\|e^{\alpha\phi}T_te^{-\alpha\phi}\|_{2\to2}\le e^{\alpha^2t}.
+\tag{14.7}
+$$
+
+Optimizing $\alpha$ between separated supports gives the Davies–Gaffney bound $\exp[-\operatorname{dist}_A(U,W)^2/(4t)]$. For this nonnegative self-adjoint $K$, the Davies–Gaffney/finite-wave equivalence [GT-CS, Theorem 3.4] therefore says that $\cos(u\sqrt K)$ propagates supports by at most $|u|$ in $d_A$. No global doubling or global $A_2$ property is assumed.
+
+In symmetric coordinates the horizontal fields are $Y_1=\partial_x-(y/2)\partial_s$, $Y_2=\partial_y+(x/2)\partial_s$, $Y_3=\partial_z$. Writing $F_0=1+|\xi|^4+s^2$, direct differentiation gives
+
+$$
+\sum_i|Y_iq|^2=
+\frac{16|\xi|^6+(x^2+y^2)s^2}{16F_0^{3/2}}\le1,
+\qquad |\partial_sq|^2=\frac{s^2}{4F_0^{3/2}}\le\frac14.
+\tag{14.8}
+$$
+
+Hence $\psi$ is $1$-Lipschitz in $d_A$ and $\psi(e)=0$. If $f\in\mathscr V$ is supported in $\{\psi>r\}$, finite propagation gives $\operatorname{tr}(\cos(u\sqrt K)f)=0$ for $0\le u<r$. Indeed the wave vector stays in the form domain and vanishes on a source neighborhood, so its actual quasi-continuous trace is zero.
+
+Define the bounded spectral multiplier
+
+$$
+m_{r,t}(\lambda)=\frac1{\sqrt{\pi t}}\int_r^\infty e^{-u^2/(4t)}\cos(u\sqrt\lambda)\,du.
+\tag{14.9}
+$$
+
+Heat transmutation [GT-CS, (3.8)] and the preceding trace vanishing give $\operatorname{tr}(T_tf)=\operatorname{tr}(m_{r,t}(K)f)$. For form inputs the transmutation integral converges in form norm, so this trace operation is legitimate. One integration by parts yields
+
+$$
+\begin{aligned}
+|m_{r,t}(\lambda)|&\le\frac1{\sqrt{\pi t}}\int_r^\infty e^{-u^2/(4t)}du
+ \le\frac{2t}{r\sqrt{\pi t}}e^{-r^2/(4t)},\\
+\sqrt\lambda|m_{r,t}(\lambda)|&\le\frac2{\sqrt{\pi t}}e^{-r^2/(4t)}.
+\end{aligned}
+\tag{14.10}
+$$
+
+For the second bound, the boundary term and the integral of the absolute Gaussian derivative are each $e^{-r^2/(4t)}$; $\lambda=0$ is immediate. Since $\sqrt{1+\lambda}\le1+\sqrt\lambda$,
+
+$$
+\|(K+1)^{1/2}m_{r,t}(K)\|
+\le\frac{2(1+t/r)}{\sqrt{\pi t}}e^{-r^2/(4t)}.
+\tag{14.11}
+$$
+
+Applying the exact trace bound (14.3) gives the same right side divided by $\sqrt D$, times $\|f\|_{L^2(m)}$. Punctured smooth tests are dense in $L^2(\{\psi>r\},m)$. To include $\{\psi\ge r\}$, apply the bound first with $r'<r$ and then let $r'\uparrow r$. Duality proves the $L^2(m)$ tail of $g_t$, equal to the raw tail of $v_t$. Since $q\ge\varrho$, using $r=(R-1)/\beta$ gives (14.6). At no point is the source delta treated as an $L^2$ vector. $\square$
+
+**Theorem 14.3 (exterior order decay of the actual quotient).** For every original $a,\eta,d>0$, there exist finite $C_d,R_d>0$ such that the smooth punctured representative satisfies
+
+$$
+0\le g_d(p)\le C_d\exp\left(-\frac{\varrho(p)^2}{32d\beta^2}\right)
+\quad(\varrho(p)\ge R_d).
+\tag{14.12}
+$$
+
+In particular $\lim_{R\to\infty}\operatorname{ess\,sup}_{\varrho\ge R}g_d=0$. Equivalently, for every $\epsilon>0$, $v_d\le\epsilon h$ outside a sufficiently large original coordinate box. The constants specified in the proof exist mathematically; no total coefficient-name algorithm for them or for these exterior radii is asserted.
+
+Proof. Use left-translate charts $pQ$, with $Q=(-1/4,1/4)^4$, and the nested cube $Q'=(-1/8,1/8)^4$, in original coordinates. The principal symbol in a chart is
+
+$$
+a[\zeta_x^2+(\zeta_y+u_x\zeta_w)^2+\zeta_z^2]+\eta\zeta_w^2,
+\qquad |u_x|\le1/4.
+\tag{14.13}
+$$
+
+It has uniform ellipticity bounds $\lambda_0=\min(a,\eta)/3$ and $\Lambda_0=3\max(a,\eta)$. The gauge satisfies $\varrho(u)<1$ on $Q$ and $\varrho(pu)\ge\varrho(p)/2-\varrho(u)$. Thus, if $\varrho(p)\ge4$, the whole chart has $\varrho\ge1$, and
+
+$$
+0\le V(pu)\le V_0:=512\sqrt{a\eta}.
+\tag{14.14}
+$$
+
+Bounded-potential local elliptic Harnack supplies a finite $H_0\ge2$ comparing any two values of a positive solution on $pQ'$, uniformly over these $p$. Its dependencies are dimension four, the fixed nested cubes, $\lambda_0,\Lambda_0,V_0$. This is the local Harnack intermediate used for the same $h$ in [S, §§115, 130]. In the Stummel formulation of [GT-CFG, Theorem 2.5], the dimension-four modulus of the bounded potential is at most $\pi^2V_0\sigma^2$ at radius $\sigma$, uniformly on these charts. No Harnack estimate across $e$ is used, and $H_0$ is not a supplied numerical name.
+
+Set $m_4=\min_{\varrho=4}h>0$. A horizontal path from $e$ to $p$ consists of the $X_1,X_2,X_3$ segments, followed by a horizontal commutator rectangle of central area $w-xy$. Its length is bounded by
+
+$$
+|x|+|y|+|z|+4\sqrt{|w-xy|}<8\varrho(p),\qquad
+|w-xy|\le|s|+|xy|/2\le5\varrho(p)^2/4.
+\tag{14.15}
+$$
+
+For $\varrho(p)\ge8$, keep the path after its last exit from $\{\varrho<4\}$. Subdivide each of its at most seven horizontal segments into pieces of length at most $1/32$. At most $300(1+\varrho(p))$ links suffice. Each consecutive pair lies in a translated $Q'$, with chart center of gauge at least $4$. Harnack iteration gives
+
+$$
+h(p)\ge m_4H_0^{-300(1+\varrho(p))}=c_0e^{-c_1\varrho(p)},\quad
+c_0=m_4H_0^{-300}>0,\quad c_1=300\log H_0.
+\tag{14.16}
+$$
+
+For $t>0$, the actual source vector is $v_t=(H+1)e^{-tH}z$, with $z$ as in (12.4). Spectral smoothing and punctured local elliptic/parabolic regularity make it smooth on punctured compact space-time cylinders; it is nonnegative and satisfies $\partial_tv=\operatorname{div}(A\nabla v)+Vv$ there. Haar measure and the operator are preserved by the left charts. Ordinary uniformly elliptic parabolic Moser iteration supplies a finite uniform constant $A_d$ such that
+
+$$
+v_d(p)\le A_d\left(\int_{d-2\tau}^d\int_{pQ}|v_t|^2d\mu\,dt\right)^{1/2},
+\qquad \varrho(p)\ge8.
+\tag{14.17}
+$$
+
+Its dependencies are only $\lambda_0,\Lambda_0,Q,Q',\tau,V_0$. One may take $e^{2V_0\tau}$ times the zero-potential subsolution constant: apply that estimate to $e^{-V_0(t-d+2\tau)}v_t$. Only exterior unweighted local regularity is needed here.
+
+For $u\in Q$, the straight coordinate path from $e$ to $u$ has $d_A$-length at most
+
+$$
+L=\sqrt{\frac3{16a}+\frac{25}{256\eta}},\qquad
+|\psi(pu)-\psi(p)|\le L.
+\tag{14.18}
+$$
+
+Put $r_p=\psi(p)-L$. If $r_p>0$, then (14.5), $d-2\tau\ge d/2$ and $t\le d$ imply
+
+$$
+\begin{aligned}
+\|1_{pQ}v_t\|_2
+&\le\frac{2\sqrt2(1+d/r_p)}{\sqrt{\pi dD}}e^{-r_p^2/(4d)},\\
+v_d(p)&\le4A_d\sqrt{\frac\tau{\pi dD}}(1+d/r_p)e^{-r_p^2/(4d)}.
+\end{aligned}
+\tag{14.19}
+$$
+
+The second inequality integrates over an interval of length $2\tau$. Write $b=1+\beta L$ and $r(\rho')=(\rho'-b)/\beta$, using $\rho'$ only as a scalar gauge variable, distinct from the endpoint selector $\rho$. Since $q\ge\varrho$, $r_p\ge r(\varrho(p))$. Dividing by the lower bound for this same actual $h$ in (14.16) gives, when $\varrho(p)\ge8$ and $r(\varrho(p))>0$,
+
+$$
+g_d(p)\le\frac{4A_d}{c_0}\sqrt{\frac\tau{\pi dD}}
+\left(1+\frac d{r(\varrho(p))}\right)
+\exp\left(c_1\varrho(p)-\frac{r(\varrho(p))^2}{4d}\right).
+\tag{14.20}
+$$
+
+Take
+
+$$
+\begin{gathered}
+R_d=\max(8,2b,b+\beta,32d\beta^2c_1),\\
+C_d=\frac{4A_d}{c_0}(1+d)\sqrt{\frac\tau{\pi dD}}.
+\end{gathered}
+\tag{14.21}
+$$
+
+For $\rho'\ge R_d$, $r(\rho')\ge\rho'/(2\beta)$, $r(\rho')\ge1$, and $c_1\rho'-r(\rho')^2/(4d)\le-(\rho')^2/(32d\beta^2)$. This proves (14.12) and the exterior essential-supremum limit. Finally $\varrho(p)\le r$ implies $|x|,|y|,|z|\le r$ and $|w|\le|s|+|xy|/2\le5r^2/4$. The gauge ball lies in the original coordinate box of radius $\max(r,5r^2/4)$, proving the asserted exterior box statement. $\square$
+
+**Corollary 14.4 (qualitative compact localization and its numerical boundary).** Some finite compact gauge ball contains the full essential supremum $N_d$. Also one finite exterior radius suffices for $v_d\le(B_d+2^{-k})h$ simultaneously for all $k\ge0$, where $B_d=\|v_{d/2}\|_2^2$. These are existence assertions, without an algorithm producing that radius.
+
+Proof. The original source law has mass one, so $N_d\ge1$. Choose an exterior bound in (14.12) below $1/2$. The essential supremum is then carried by the remaining compact ball. Cauchy–Schwarz and $m(G)=1$ give $B_d=\|g_{d/2}\|_{L^2(m)}^2\ge(\int g_{d/2}dm)^2=1$, so the same exterior bound is below every $B_d+2^{-k}$. This does not locate a maximum at the source trace. $\square$
+
+The scalars $\beta,D$, (14.6), and the elementary geometry are available from the allowed names. The constants $H_0,A_d$ and the positive normalized anchor $m_4$ have been identified mathematically, but a fully specified total rational extraction of them from those names is not supplied. Nor is sharp certified compact upper approximation of $g_d$ including the nonpolar source supplied. Punctured smoothness and compact localization do not provide that source-inclusive modulus. These are sufficient obligations of this regional route, not necessary conditions for every possible solution of (12.31).
+
+The global cofinal-upper-certificate producer in (12.31) remains unresolved: neither its construction nor its negation follows. The consumer remains exactly $M=1+N_d$, $P=T_d$, $f_3=g_d/(4M)$, $f_B=1/4$, $f_0=f_1=(3/4-f_3)/2$, with the original $e$-start, first read at $2d$, gaps $d$, all labels and finite word laws. A loose upper bound cannot replace this $M$.
+
+**Definition 14.5 (mathematical sources and scope).** The source-specific deductions (14.5) and (14.12) are `repo-derived` conditional on the stated analytic suppliers. Finite propagation, transmutation, spectral calculus, elliptic Harnack and parabolic Moser estimates are `literature-attested` intermediates, not new generic results.
+
+| Mathematical source | Correspondence and scope |
+| --- | --- |
+| This volume, §§10–12, especially (10.12), (12.2), (12.4)–(12.10), Proposition 12.7 and Definition 12.8 | Original unit Green bound, normalized full endpoint, scalar $D$, deterministic source vector and unchanged calibration consumer. The tail-to-order deduction retains these inputs. |
+| [S, §§115–117, 130–133](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III_APPENDIX_II.md) | Positivity and punctured smoothness of $h$, full strongly local form, nonpolar trace and actual deterministic-time law. The extension weight of §131 is not substituted for the actual global $m$; Theorem 133.2 remains the source-neighborhood boundedness supplier. |
+| [GT-CS] T. Coulhon and A. Sikora, [Gaussian heat kernel upper bounds via Phragmén–Lindelöf theorem](https://arxiv.org/html/math/0609429v1), §3.2, Theorem 3.4 and (3.8) | Nonnegative self-adjoint Davies–Gaffney/finite-wave equivalence and heat transmutation, applied to $K$ after (14.7). Gaussian kernel results needing extra on-diagonal or doubling assumptions are not used. |
+| [GT-CFG] F. Chiarenza, E. Fabes and N. Garofalo, [Harnack's inequality for Schrödinger operators and the continuity of solutions](https://doi.org/10.1090/S0002-9939-1986-0857933-4), Proc. Amer. Math. Soc. 98, 415–425, Theorem 2.5; correspondence in [S, §130] | Only local signed-potential Harnack on the exterior charts, with ellipticity (14.13) and bounded Stummel modulus. No effective numerical constant is imported. |
+
+The parabolic step (14.17) uses ordinary local Moser iteration for the displayed uniformly elliptic divergence-form equation with bounded potential; its analytic hypotheses and constant dependencies are given explicitly above. It supplies existence of $A_d$, not a coefficient-name numerical service. The conclusions are ordinary conditional mathematical deductions within those boundaries.
+
+## 追加锚（本行以下为增补区）

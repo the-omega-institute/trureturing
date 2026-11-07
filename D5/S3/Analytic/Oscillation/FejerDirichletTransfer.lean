@@ -135,16 +135,6 @@ private lemma positive_spectral (S : Spectrum) {b U y : ℝ}
   · rw [phi_eq_zero hb (le_of_not_gt hjwin)]
     simp
 
-private lemma count_upper (S : Spectrum) (hN : CountAsymptotic S) :
-    ∃ B : ℝ, 0 < B ∧ ∀ᶠ M : ℝ in atTop,
-      (S.N M : ℝ) ≤ B * (M * Real.log M) := by
-  let B : ℝ := 1 / (2 * Real.pi) + 1
-  have hB : 0 < B := by dsimp [B]; positivity
-  refine ⟨B, hB, ?_⟩
-  filter_upwards [hN.eventually (gt_mem_nhds (by change 1 / (2 * Real.pi) < 1 / (2 * Real.pi) + 1; linarith)),
-    eventually_gt_atTop (1 : ℝ)] with M hM hM1
-  exact (div_le_iff₀ (mul_pos (by linarith) (Real.log_pos hM1))).mp hM.le
-
 private lemma lower_mass_eventually (S : Spectrum) (hN : CountAsymptotic S) :
     ∃ a : ℝ, 0 < a ∧ ∀ᶠ M : ℝ in atTop,
       a * (M * Real.log M) ≤ Wminus S M := by
