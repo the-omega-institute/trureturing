@@ -81,7 +81,7 @@ internal sealed class ElongatedTriangularDualCoordinationDocument : IScribeDocum
                         + "according as n modulo three is zero, one or two. The first nine "
                         + "coefficients and this all-radius formula give the coefficient identity "
                         + "for (1−X)(1−X³), equal to (1−X)²(1+X+X²). Equality of coefficients "
-                        + "proves the displayed identity in integer formal power series.")))))));
+                        + "proves the displayed identity in integer formal power series."))), DescribeRole.Theorem, new OpenProblemResolutionClaim(ProblemSlugRef.Create("sloane298022"), ResolutionKind.Proved)))));
 
     private static Formula VertexFormula() => Eq(V("Vertex"),
         Seq(OpenBrace, Face("S", V("m"), V("k")), Comma, Sp,

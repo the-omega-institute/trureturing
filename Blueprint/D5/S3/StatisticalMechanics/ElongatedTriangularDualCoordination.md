@@ -122,6 +122,10 @@ $$(1 - \operatorname{PowerSeries.X})^{2} \cdot (1 + \operatorname{PowerSeries.X}
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/ElongatedTriangularDualCoordination.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/sloane298022` (proved) by `D5/S3/StatisticalMechanics/ElongatedTriangularDualCoordination.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"sloane298022","declaration_gid":"D5/S3/StatisticalMechanics/ElongatedTriangularDualCoordination.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* N. J. A. Sloane, Colin Barker (2018). *OEIS A298022: coordination sequence of Dual(3^3.4^2) at a trivalent node*. URL: <https://oeis.org/A298022>.
