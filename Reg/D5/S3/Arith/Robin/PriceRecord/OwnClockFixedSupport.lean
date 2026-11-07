@@ -8,7 +8,7 @@ The exact source bridge and actual-positive law below are kernel obligations.
 Whole-family variation, fixed-other-readout sensitivity, actual observational
 dependence, lawful sourceSelection and current binding evidence remain unpaid.
 No Contract.Registration or declared_validated result is asserted. Continuation
-is unknown. The delivery links the specific unfinished audit issue. -/
+is unknown. Unfinished audit: https://github.com/the-omega-institute/trureturing/issues/27696. -/
 
 noncomputable section
 set_option autoImplicit false
