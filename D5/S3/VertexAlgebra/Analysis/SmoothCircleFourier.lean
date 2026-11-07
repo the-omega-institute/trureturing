@@ -55,7 +55,7 @@ private theorem jet_hasDerivAt (s : ℕ) (x : ℝ) :
   exact (hs.differentiable_iteratedDeriv' s x).hasDerivAt
 
 /-- Endpoint cancellation is derived from global periodicity at every derivative. -/
-private theorem jet_periodic (s : ℕ) : Function.Periodic (f.jet s) period := by
+theorem jet_periodic (s : ℕ) : Function.Periodic (f.jet s) period := by
   induction s with
   | zero => simpa [jet] using f.periodic
   | succ s ih =>
@@ -85,7 +85,7 @@ def coeffJet (s : ℕ) (m : ℤ) : ℂ :=
 
 def coefficient (m : ℤ) : ℂ := f.coeffJet 0 m
 
-private theorem coefficient_circle (m : ℤ) :
+theorem coefficient_circle (m : ℤ) :
     f.coefficient m = fourierCoeff f.periodic.lift m := by
   rw [coefficient, coeffJet, fourierCoeffOn_eq_integral,
     fourierCoeff_eq_intervalIntegral _ _ 0]
@@ -113,7 +113,7 @@ private theorem coeffJet_norm (s : ℕ) (m : ℤ) : ‖f.coeffJet s m‖ ≤ f.j
       rw [sub_zero, abs_of_pos (by positivity : 0 < 1/period)]
       field_simp
 
-private theorem coeffJet_step (s : ℕ) (m : ℤ) (hm : m ≠ 0) :
+theorem coeffJet_step (s : ℕ) (m : ℤ) (hm : m ≠ 0) :
     f.coeffJet s m = (Complex.I * (m : ℂ))⁻¹ * f.coeffJet (s+1) m := by
   have hh := fourierCoeffOn_of_hasDerivAt period_pos hm
     (fun x _ => jet_hasDerivAt f s x)
@@ -151,7 +151,7 @@ def weight (r : ℕ) (m : ℤ) : ℝ := ‖f.coefficient m‖ * (1+|(m : ℝ)|)^
 
 def W (r : ℕ) : ℝ := ∑' m : ℤ, f.weight r m
 
-private theorem weight_nonneg (r : ℕ) (m : ℤ) : 0 ≤ f.weight r m := by
+theorem weight_nonneg (r : ℕ) (m : ℤ) : 0 ≤ f.weight r m := by
   dsimp [weight]; positivity
 
 private theorem weight_majorant (r : ℕ) (m : ℤ) :
@@ -177,7 +177,7 @@ private theorem weight_majorant (r : ℕ) (m : ℤ) :
         rw [mul_pow, pow_add, sq_abs]
         field_simp [hmR, ha.ne']
 
-private theorem weighted_summable (r : ℕ) : Summable (f.weight r) := by
+theorem weighted_summable (r : ℕ) : Summable (f.weight r) := by
   classical
   have hsingle : Summable (fun m : ℤ => if m = 0 then f.jetNorm 0 else 0) :=
     summable_of_ne_finset_zero (s := {0}) (by intro m hm; simp at hm; simp [hm])
