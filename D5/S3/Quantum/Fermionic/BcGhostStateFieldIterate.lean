@@ -43,7 +43,7 @@ open private signedComm signedTriple signedTriple_coefficients signedPair_low
   D5.S3.Quantum.Fermionic.BcGhostStateFieldLocality
 open private shiftsCommute discrepancyXY residueXY residueYZ intertwiningPowers
   cancellationBound from D5.S3.VertexAlgebra.FieldNormalProductLocality
-open private parity_ket from D5.S3.Quantum.Fermionic.CountableOccupationFock
+open D5.S3.Quantum.Fermionic.CountableOccupationFock (parity_ket)
 
 noncomputable section
 namespace D5.S3.Quantum.Fermionic.BcGhostStateFieldIterate

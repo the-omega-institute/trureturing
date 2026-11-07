@@ -632,7 +632,7 @@ private theorem localSum (s : ℂ) {Index : Type} (indices : Finset Index) (fiel
     rw [Finset.sum_insert absent]
     exact localAdd s _ _ _ (locality index (Finset.mem_insert_self _ _))
       (inductionHypothesis (fun other member => locality other (Finset.mem_insert_of_mem member)))
-open private parity_ket from D5.S3.Quantum.Fermionic.CountableOccupationFock
+open D5.S3.Quantum.Fermionic.CountableOccupationFock (parity_ket)
 
 private theorem parity_coefficient (a : Fock) (S : Finset ℕ) :
     parity a S = (-1 : ℂ) ^ S.card * a S := by

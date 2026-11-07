@@ -54,7 +54,7 @@ open LatticeGeneratingFieldLocality LatticeMatterGhostCoupling
 open D5.S3.Quantum.Fermionic
 open FieldNormalProductLocality
 open StateFieldResidueReconstruction (deltaEnd_iterate_apply)
-open private parity_ket from D5.S3.Quantum.Fermionic.CountableOccupationFock
+open D5.S3.Quantum.Fermionic.CountableOccupationFock (parity_ket)
 
 noncomputable section
 

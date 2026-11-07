@@ -37,7 +37,7 @@ open D5.S3.Quantum.Fermionic.BcGhostFock
 open D5.S3.Quantum.Fermionic.BcGhostStateField
 open D5.S3.Quantum.Fermionic.BcGhostStateFieldIterate
 open D5.S3.VertexAlgebra.FieldNormalProduct
-open private parity_ket from D5.S3.Quantum.Fermionic.CountableOccupationFock
+open D5.S3.Quantum.Fermionic.CountableOccupationFock (parity_ket)
 open private signedNormalMinusOne generatingField generatingMode generating_modes
   derivative_modes from D5.S3.Quantum.Fermionic.BcGhostStateField
 open private residueClosure negativeResidue from

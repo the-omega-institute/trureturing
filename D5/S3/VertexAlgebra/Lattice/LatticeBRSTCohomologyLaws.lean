@@ -25,7 +25,7 @@ open LatticeMatterGhostCoupling (State)
 open FieldNormalProductLocality (delta)
 open private identity_modes delta_evaluate from
   D5.S3.VertexAlgebra.Lattice.LatticeMatterGhostStateField
-open private parity_ket from D5.S3.Quantum.Fermionic.CountableOccupationFock
+open D5.S3.Quantum.Fermionic.CountableOccupationFock (parity_ket)
 
 noncomputable section
 
