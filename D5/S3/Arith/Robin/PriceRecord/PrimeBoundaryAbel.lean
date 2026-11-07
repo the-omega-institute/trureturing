@@ -73,6 +73,7 @@ theorem finite_prime_square_abel {y z : ℝ} (hy : 0 < y) (hyz : y ≤ z) :
         apply intervalIntegral.integral_congr
         intro t ht
         rw [Set.uIcc_of_le hyz] at ht
+        change deriv f t * primeCount t = _
         rw [(hd t ht).deriv]
         ring
       _ = _ := intervalIntegral.integral_const_mul _ _

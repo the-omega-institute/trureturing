@@ -5,7 +5,7 @@
    anchors: []
    utility: none
    digest: Finite Abel tail with three logarithmic coefficients and both endpoints. -/
-/-! Native finite real-endpoint prime-square tail estimate. No infinite tail is used; both finite endpoints remain explicit. -/
+/- Native finite real-endpoint prime-square tail estimate. No infinite tail is used; both finite endpoints remain explicit. -/
 import D5.S3.Arith.Robin.PriceRecord.QuantitativePrimeAbel
 
 set_option autoImplicit false
@@ -13,7 +13,7 @@ set_option relaxedAutoImplicit false
 
 noncomputable section
 namespace D5.S3.Arith.Robin.PriceRecord.FinitePrimeTailSecondOrder
-open Real Set Filter MeasureTheory Asymptotics
+open Real Set Filter MeasureTheory Asymptotics Finset
 open scoped Topology
 open PrimeBoundaryAbel QuantitativePrimeAbel
 
@@ -43,7 +43,12 @@ private lemma K_continuous {y z : ℝ} (hy : 1 < y) (k : ℕ) :
   intro t ht
   have ht0 : t ≠ 0 := ne_of_gt (by linarith [ht.1])
   have hlt : log t ≠ 0 := (log_pos (hy.trans_le ht.1)).ne'
-  exact ContinuousAt.continuousWithinAt (by dsimp only [K]; fun_prop)
+  have hlog : ContinuousAt Real.log t := (hasDerivAt_log ht0).continuousAt
+  apply ContinuousAt.continuousWithinAt
+  change ContinuousAt (fun u : ℝ => 1 / (u ^ 2 * log u ^ k)) t
+  exact continuousAt_const.div
+    ((continuousAt_id.pow 2).mul (hlog.pow k))
+    (mul_ne_zero (pow_ne_zero 2 ht0) (pow_ne_zero k hlt))
 
 private lemma E_deriv {x : ℝ} (hx : 1 < x) (k : ℕ) :
     HasDerivAt (E k) (-K k x - (k : ℝ) * K (k + 1) x) x := by
@@ -52,11 +57,16 @@ private lemma E_deriv {x : ℝ} (hx : 1 < x) (k : ℕ) :
   have h := (hasDerivAt_const x (1 : ℝ)).div
     ((hasDerivAt_id x).mul ((hasDerivAt_log hx0).pow k))
     (mul_ne_zero hx0 (pow_ne_zero k hl))
-  convert h using 1 <;> dsimp only [E, K]
-  cases k with
-  | zero => simp; field_simp [hx0, hl]; ring
-  | succ k => simp only [Nat.succ_sub_one, Nat.cast_add, Nat.cast_one, pow_succ]
-              field_simp [hx0, hl]; ring
+  convert h using 1
+  · funext u
+    rfl
+  · dsimp only [K]
+    cases k with
+    | zero => simp [hx0, hl]; ring
+    | succ k =>
+        simp at h ⊢
+        field_simp [hx0, hl] at h ⊢
+        ring_nf at h ⊢
 
 private lemma E_mono {y z : ℝ} (hy : 1 < y) (hyz : y ≤ z) (k : ℕ) :
     E k z ≤ E k y := by
@@ -80,11 +90,40 @@ private lemma kernel_integral_bounds {y z : ℝ} (hy : 1 < y) (hyz : y ≤ z)
   have hFTC := intervalIntegral.integral_eq_sub_of_hasDerivAt
     (fun t ht => E_deriv (by rw [uIcc_of_le hyz] at ht; exact hy.trans_le ht.1) k)
     (hi.neg.sub (hj.const_mul (k : ℝ)))
-  rw [intervalIntegral.integral_sub hi.neg (hj.const_mul (k : ℝ)),
-    intervalIntegral.integral_neg, intervalIntegral.integral_const_mul] at hFTC
+  have hFTC' :
+      -(∫ t in y..z, K k t) - (k : ℝ) * (∫ t in y..z, K (k + 1) t) =
+        E k z - E k y := by
+    calc
+      _ = (∫ t in y..z, -K k t) - (k : ℝ) * (∫ t in y..z, K (k + 1) t) := by
+        rw [intervalIntegral.integral_neg]
+      _ = (∫ t in y..z, -K k t) -
+          (∫ t in y..z, (k : ℝ) * K (k + 1) t) := by
+        rw [intervalIntegral.integral_const_mul]
+      _ = (∫ t in y..z, (-K k t) - (k : ℝ) * K (k + 1) t) :=
+        (intervalIntegral.integral_sub hi.neg (hj.const_mul (k : ℝ))).symm
+      _ = _ := hFTC
   have hEz : 0 ≤ E k z := by
-    dsimp only [E]; positivity [log_pos (hy.trans_le hyz)]
-  exact ⟨hI, by nlinarith [Nat.cast_nonneg (α := ℝ) k]⟩
+    dsimp only [E]
+    exact (one_div_pos.mpr (mul_pos (by linarith)
+      (pow_pos (log_pos (hy.trans_le hyz)) k))).le
+  exact ⟨hI, by nlinarith [Nat.cast_nonneg (α := ℝ) k, hFTC']⟩
+
+private lemma countingPolynomial_div_continuousAt {t : ℝ} (ht0 : t ≠ 0)
+    (hl : log t ≠ 0) :
+    ContinuousAt (fun u : ℝ => countingPolynomial u / u ^ 3) t := by
+  have hlog : ContinuousAt Real.log t := (hasDerivAt_log ht0).continuousAt
+  have hterm (c : ℝ) (k : ℕ) : ContinuousAt (fun u : ℝ => c / log u ^ k) t :=
+    continuousAt_const.div (hlog.pow k) (pow_ne_zero k hl)
+  have hpoly : ContinuousAt (fun u : ℝ =>
+      u * (1 / log u + 1 / log u ^ 2 + 2 / log u ^ 3 + 6 / log u ^ 4)) t := by
+    change ContinuousAt (id * (fun u : ℝ =>
+      1 / log u + 1 / log u ^ 2 + 2 / log u ^ 3 + 6 / log u ^ 4)) t
+    have hsum := continuousAt_id.mul
+      ((hterm 1 1).add ((hterm 1 2).add ((hterm 2 3).add (hterm 6 4))))
+    convert hsum using 1
+    funext u
+    simp [pow_one, add_assoc]
+  exact hpoly.div (continuousAt_id.pow 3) (pow_ne_zero 3 ht0)
 
 private lemma model_tail_identity {y z : ℝ} (hy : 1 < y) (hyz : y ≤ z) :
     countingPolynomial z / z ^ 2 - countingPolynomial y / y ^ 2 +
@@ -101,16 +140,23 @@ private lemma model_tail_identity {y z : ℝ} (hy : 1 < y) (hyz : y ≤ z) :
     have hd (k : ℕ) (c : ℝ) : HasDerivAt (fun u : ℝ => c / log u ^ k)
         (-(c * (k : ℝ) * log t ^ (k - 1) * t⁻¹) / (log t ^ k) ^ 2) t := by
       convert (hasDerivAt_const t c).div ((hasDerivAt_log ht0).pow k)
-        (pow_ne_zero k hl) using 1 <;> ring
+        (pow_ne_zero k hl) using 1 <;>
+        field_simp [ht0, hl] <;> simp <;> ring
     have h := (((hd 1 2).add (hd 3 4)).add (hd 4 6)).div
       (hasDerivAt_id t) ht0
-    convert h using 1 <;> dsimp only [W, K, countingPolynomial] <;> norm_num <;>
+    convert h using 1
+    · funext u
+      dsimp [W]
+      ring
+    · dsimp [K, countingPolynomial]
+      norm_num
       field_simp [ht0, hl] <;> ring
   have hc : ContinuousOn (fun t : ℝ => countingPolynomial t / t ^ 3) (Icc y z) := by
     intro t ht
     have ht0 : t ≠ 0 := ne_of_gt (by linarith [ht.1])
     have hl : log t ≠ 0 := (log_pos (hy.trans_le ht.1)).ne'
-    exact ContinuousAt.continuousWithinAt (by dsimp only [countingPolynomial]; fun_prop)
+    exact ContinuousAt.continuousWithinAt
+      (countingPolynomial_div_continuousAt ht0 hl)
   have hi := ContinuousOn.intervalIntegrable_of_Icc (μ := volume) hyz hc
   have h4 := ContinuousOn.intervalIntegrable_of_Icc (μ := volume) hyz (K_continuous hy 4)
   have h5 := ContinuousOn.intervalIntegrable_of_Icc (μ := volume) hyz (K_continuous hy 5)
@@ -153,7 +199,8 @@ theorem finite_square_three_terms :
     intro t ht
     have ht0 : t ≠ 0 := ne_of_gt (hy0.trans_le ht.1)
     have hl : log t ≠ 0 := (hlt t ht).ne'
-    exact ContinuousAt.continuousWithinAt (by dsimp only [countingPolynomial]; fun_prop)
+    exact ContinuousAt.continuousWithinAt
+      (countingPolynomial_div_continuousAt ht0 hl)
   have hcount := count_weight_integrable hy0.le hyz
     (f := fun t => 1 / t ^ 3)
     (continuousOn_const.div (continuousOn_id.pow 3)
@@ -169,7 +216,7 @@ theorem finite_square_three_terms :
     calc
       _ ≤ (25 * t / log t ^ 5) / t ^ 3 :=
         div_le_div_of_nonneg_right (hcp t ht) (pow_nonneg ht0.le 3)
-      _ = _ := by dsimp only [K]; field_simp [ht0.ne', (hlt t ht).ne']; ring
+      _ = _ := by dsimp only [K]; field_simp [ht0.ne', (hlt t ht).ne']
   have hIe : |(∫ t in y..z, primeCount t / t ^ 3) -
       (∫ t in y..z, countingPolynomial t / t ^ 3)| ≤ 25 * E 5 y := by
     rw [← intervalIntegral.integral_sub hi hj]
@@ -187,7 +234,7 @@ theorem finite_square_three_terms :
     calc
       _ ≤ (25 * t / log t ^ 5) / t ^ 2 :=
         div_le_div_of_nonneg_right (hcp t ht) (sq_nonneg t)
-      _ = 25 * E 5 t := by dsimp only [E]; field_simp [ht0.ne', (hlt t ht).ne']; ring
+      _ = 25 * E 5 t := by dsimp only [E]; field_simp [ht0.ne', (hlt t ht).ne']
       _ ≤ 25 * E 5 y := mul_le_mul_of_nonneg_left (E_mono hy ht.1 5) (by norm_num)
   have h4 := kernel_integral_bounds hy hyz 4
   have h5 := kernel_integral_bounds hy hyz 5
@@ -210,19 +257,10 @@ theorem finite_square_three_terms :
       (primeCount y / y ^ 2 - countingPolynomial y / y ^ 2))
     (2 * ((∫ t in y..z, primeCount t / t ^ 3) -
       (∫ t in y..z, countingPolynomial t / t ^ 3)))
-  have htri2 := abs_sub_le
-    (primeCount z / z ^ 2 - countingPolynomial z / z ^ 2)
-    (primeCount y / y ^ 2 - countingPolynomial y / y ^ 2)
   have hcorr : |6 * (∫ t in y..z, K 4 t) + 24 * (∫ t in y..z, K 5 t)| ≤
       6 * E 4 y + 24 * E 5 y := by
     rw [abs_of_nonneg (by positivity)]
     linarith only [h4.2, h5.2]
-  have hfinal := abs_sub_le
-    ((primeCount z / z ^ 2 - countingPolynomial z / z ^ 2) -
-      (primeCount y / y ^ 2 - countingPolynomial y / y ^ 2) +
-      2 * ((∫ t in y..z, primeCount t / t ^ 3) -
-        (∫ t in y..z, countingPolynomial t / t ^ 3)))
-    (6 * (∫ t in y..z, K 4 t) + 24 * (∫ t in y..z, K 5 t))
   have hid : squareSum y z - (tailPolynomial y - tailPolynomial z) =
       (primeCount z / z ^ 2 - countingPolynomial z / z ^ 2) -
       (primeCount y / y ^ 2 - countingPolynomial y / y ^ 2) +
@@ -232,14 +270,63 @@ theorem finite_square_three_terms :
     linarith only [habel, hmodel]
   rw [hid]
   rw [abs_mul, abs_of_pos (by norm_num : (0 : ℝ) < 2)] at htri
+  have hA :
+      |(primeCount z / z ^ 2 - countingPolynomial z / z ^ 2) -
+        (primeCount y / y ^ 2 - countingPolynomial y / y ^ 2)| ≤ 50 * E 5 y := by
+    calc
+      _ ≤ |primeCount z / z ^ 2 - countingPolynomial z / z ^ 2 - 0| +
+          |0 - (primeCount y / y ^ 2 - countingPolynomial y / y ^ 2)| :=
+        abs_sub_le _ _ _
+      _ = |primeCount z / z ^ 2 - countingPolynomial z / z ^ 2| +
+          |primeCount y / y ^ 2 - countingPolynomial y / y ^ 2| := by
+        rw [sub_zero, zero_sub, abs_neg]
+      _ ≤ 25 * E 5 y + 25 * E 5 y := add_le_add
+        (endpoint_error z ⟨hyz, le_rfl⟩) (endpoint_error y ⟨le_rfl, hyz⟩)
+      _ = 50 * E 5 y := by ring
+  have hab :
+      |(primeCount z / z ^ 2 - countingPolynomial z / z ^ 2) -
+        (primeCount y / y ^ 2 - countingPolynomial y / y ^ 2) +
+        2 * ((∫ t in y..z, primeCount t / t ^ 3) -
+          (∫ t in y..z, countingPolynomial t / t ^ 3))| ≤ 100 * E 5 y := by
+    calc
+      _ ≤ |(primeCount z / z ^ 2 - countingPolynomial z / z ^ 2) -
+          (primeCount y / y ^ 2 - countingPolynomial y / y ^ 2)| +
+          2 * |(∫ t in y..z, primeCount t / t ^ 3) -
+            (∫ t in y..z, countingPolynomial t / t ^ 3)| := htri
+      _ ≤ 100 * E 5 y := by nlinarith [hA, hIe]
   have hh :
       |(primeCount z / z ^ 2 - countingPolynomial z / z ^ 2) -
         (primeCount y / y ^ 2 - countingPolynomial y / y ^ 2) +
         2 * ((∫ t in y..z, primeCount t / t ^ 3) -
           (∫ t in y..z, countingPolynomial t / t ^ 3)) -
         (6 * (∫ t in y..z, K 4 t) + 24 * (∫ t in y..z, K 5 t))| ≤ 130 * E 4 y := by
-    linarith only [hfinal, htri, htri2, endpoint_error z ⟨hyz, le_rfl⟩,
-      endpoint_error y ⟨le_rfl, hyz⟩, hIe, hcorr, hE54]
-  simpa only [E, one_div, div_eq_mul_inv] using hh
+    have hsub :
+        |(primeCount z / z ^ 2 - countingPolynomial z / z ^ 2) -
+          (primeCount y / y ^ 2 - countingPolynomial y / y ^ 2) +
+          2 * ((∫ t in y..z, primeCount t / t ^ 3) -
+            (∫ t in y..z, countingPolynomial t / t ^ 3)) -
+          (6 * (∫ t in y..z, K 4 t) + 24 * (∫ t in y..z, K 5 t))| ≤
+        |(primeCount z / z ^ 2 - countingPolynomial z / z ^ 2) -
+          (primeCount y / y ^ 2 - countingPolynomial y / y ^ 2) +
+          2 * ((∫ t in y..z, primeCount t / t ^ 3) -
+            (∫ t in y..z, countingPolynomial t / t ^ 3))| +
+          |6 * (∫ t in y..z, K 4 t) + 24 * (∫ t in y..z, K 5 t)| := by
+      simpa only [sub_zero, zero_sub, abs_neg] using
+        (abs_sub_le
+          ((primeCount z / z ^ 2 - countingPolynomial z / z ^ 2) -
+            (primeCount y / y ^ 2 - countingPolynomial y / y ^ 2) +
+            2 * ((∫ t in y..z, primeCount t / t ^ 3) -
+              (∫ t in y..z, countingPolynomial t / t ^ 3)))
+          0
+          (6 * (∫ t in y..z, K 4 t) + 24 * (∫ t in y..z, K 5 t)))
+    calc
+      _ ≤ |(primeCount z / z ^ 2 - countingPolynomial z / z ^ 2) -
+          (primeCount y / y ^ 2 - countingPolynomial y / y ^ 2) +
+          2 * ((∫ t in y..z, primeCount t / t ^ 3) -
+            (∫ t in y..z, countingPolynomial t / t ^ 3))| +
+          |6 * (∫ t in y..z, K 4 t) + 24 * (∫ t in y..z, K 5 t)| := hsub
+      _ ≤ 100 * E 5 y + (6 * E 4 y + 24 * E 5 y) := add_le_add hab hcorr
+      _ ≤ 130 * E 4 y := by nlinarith [hE54]
+  simpa only [E, one_div, div_eq_mul_inv, one_mul] using hh
 
 end D5.S3.Arith.Robin.PriceRecord.FinitePrimeTailSecondOrder
