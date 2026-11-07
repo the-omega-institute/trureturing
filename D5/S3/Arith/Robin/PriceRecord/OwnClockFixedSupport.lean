@@ -6,14 +6,12 @@
    utility: none
    digest: Exact fixed-support nonlinear own-clock loss relative to the real infimum. -/
 
-/- UNCOMPILED SOURCE CANDIDATE. No kernel or axiom-closure acceptance claimed.
-The infimum below is taken over the same fixed support and exponent domain
-as the nonlinear objective. It is not an assumed lower bound, an attained
-minimum parameter, or a variable-support exponent-zero relaxation.
-No claim of uniqueness, attainment, a six-band estimate or RH is made. -/
-
 import D5.S3.Arith.Robin.PriceRecord.BoundaryPrimePrice
 import D5.S3.Arith.Robin.LogarithmBounds
+
+/-! The infimum is taken over the same fixed support and exponent domain as
+the nonlinear objective. No attainment, uniqueness, six-band estimate or RH
+conclusion is asserted. -/
 
 noncomputable section
 

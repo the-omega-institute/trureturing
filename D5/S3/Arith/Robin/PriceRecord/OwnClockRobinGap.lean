@@ -6,14 +6,13 @@
    utility: none
    digest: Fixed-support own-clock decomposition for the original sigma/n Robin margin. -/
 
-/- UNCOMPILED SOURCE CANDIDATE. No kernel or axiom-closure acceptance claimed.
-The exact GoldenResource sigma identity and support factorization are reused.
-Every supported integer exponent is at least one, and no support completion
-or 5040-domain reduction is smuggled into the statement. -/
-
 import D5.S3.Arith.Robin.PriceRecord.OwnClockFixedSupport
 import D5.S3.Arith.GoldenResourceObjectiveFactorization
 import D5.S3.Weil.GronwallLowerEnvelope
+
+/-! The exact GoldenResource sigma identity and support factorization are
+reused. Every supported integer exponent is at least one. Support completion
+and the reduction of the full 5040 domain remain separate obligations. -/
 
 noncomputable section
 

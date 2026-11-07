@@ -6,15 +6,14 @@
    utility: none
    digest: Boundary-one real price maximization, Bernoulli loss and integer rounding. -/
 
-/- UNCOMPILED SOURCE CANDIDATE. No kernel or axiom-closure acceptance claimed.
-The exponent domain is [1,infinity); no excluded-prime relaxation is used.
-The derivative and decreasing slope are reused from ContinuousPrimeMaximum.
-All auxiliary declarations below are consumed by the loss or rounding results. -/
-
 import D5.S3.Arith.GoldenResource.ContinuousPrimeMaximum
 import D5.S0.Diagonal.MarginBound
 import Mathlib.Algebra.Order.Floor.Ring
 import Mathlib.Tactic
+
+/-! The exponent domain is [1,infinity). The derivative and decreasing slope
+are reused from ContinuousPrimeMaximum. The loss and rounding results consume
+the auxiliary declarations below. -/
 
 noncomputable section
 
@@ -72,7 +71,7 @@ private lemma critical_power {p lam : ℝ} (hp : 1 < p) (hlam : 0 < lam) :
   have hc0 : 0 < cutoff lam := by linarith [cutoff_gt_one hlam]
   rw [critical, sub_add_cancel, rpow_def_of_pos hp0]
   rw [show log p * (log (cutoff lam) / log p) = log (cutoff lam) by
-    field_simp [(log_pos hp).ne'] <;> ring]
+    field_simp [(log_pos hp).ne']]
   exact exp_log hc0
 
 private lemma critical_gt_one_iff {p lam : ℝ} (hp : 1 < p) (hlam : 0 < lam) :
@@ -82,6 +81,7 @@ private lemma critical_gt_one_iff {p lam : ℝ} (hp : 1 < p) (hlam : 0 < lam) :
   have hlog : log (p ^ (2 : ℕ)) < log (cutoff lam) ↔
       p ^ (2 : ℕ) < cutoff lam := log_lt_log_iff (pow_pos hp0 _) hc0
   rw [log_pow] at hlog
+  norm_num only [Nat.cast_ofNat] at hlog
   dsimp [critical]
   constructor
   · intro h
@@ -97,14 +97,15 @@ private lemma price_hasDerivAt {p lam t : ℝ} (hp : 1 < p) (ht : 1 ≤ t) :
       (log p / (p ^ (t + 1) - 1) - lam * log p) t := by
   have h := D5.S3.Arith.GoldenResource.ContinuousPrimeMaximum.continuous_prime_hasDerivAt
     hp (by linarith : 0 ≤ t)
-  convert h.sub ((((hasDerivAt_id t).const_mul lam).mul_const (log p))) using 1 <;>
-    simp [priceObjective, benefit]
+  convert! h.sub ((((hasDerivAt_id t).const_mul lam).mul_const (log p))) using 1
+  simp only [mul_one]
 
 private lemma critical_slope {p lam : ℝ} (hp : 1 < p) (hlam : 0 < lam) :
     log p / (p ^ (critical p lam + 1) - 1) = lam * log p := by
   rw [critical_power hp hlam]
   dsimp [cutoff]
-  field_simp [hlam.ne'] <;> ring
+  field_simp [hlam.ne']
+  ring
 
 private lemma boundary_slope_le {p lam : ℝ} (hp : 1 < p) (hlam : 0 < lam) :
     log p / (p ^ (boundary p lam + 1) - 1) ≤ lam * log p := by
@@ -125,7 +126,7 @@ private lemma price_monotonicity {p lam : ℝ} (hp : 1 < p) (hlam : 0 < lam) :
     MonotoneOn (priceObjective p lam) (Icc 1 (boundary p lam)) ∧
       AntitoneOn (priceObjective p lam) (Ici (boundary p lam)) := by
   have hb : 1 ≤ boundary p lam := le_max_left _ _
-  have hd := fun t ht => price_hasDerivAt (lam := lam) hp ht
+  have hd (t : ℝ) (ht : 1 ≤ t) := price_hasDerivAt (t := t) (lam := lam) hp ht
   have hq := D5.S3.Arith.GoldenResource.ContinuousPrimeMaximum.continuous_prime_slope_strictAntiOn hp
   constructor
   · apply monotoneOn_of_deriv_nonneg (convex_Icc _ _)
@@ -142,7 +143,8 @@ private lemma price_monotonicity {p lam : ℝ} (hp : 1 < p) (hlam : 0 < lam) :
         · exact (lt_irrefl _ h).elim
         · exact h.le
       rw [(hd t ht.1.le).deriv, ← critical_slope hp hlam, ← hbc]
-      exact sub_nonneg.mpr (hq (by linarith) (by linarith) ht.2).le
+      exact sub_nonneg.mpr (hq ((by norm_num : (0 : ℝ) ≤ 1).trans ht.1.le)
+        ((by norm_num : (0 : ℝ) ≤ 1).trans hb) ht.2).le
   · apply antitoneOn_of_deriv_nonpos (convex_Ici _)
       (fun t ht => (hd t (hb.trans ht)).continuousAt.continuousWithinAt)
     · intro t ht
@@ -152,7 +154,9 @@ private lemma price_monotonicity {p lam : ℝ} (hp : 1 < p) (hlam : 0 < lam) :
       rw [interior_Ici] at ht
       rw [(hd t (hb.trans ht.le)).deriv]
       exact sub_nonpos.mpr
-        ((hq (by linarith) (by linarith) ht).le.trans (boundary_slope_le hp hlam))
+        ((hq ((by norm_num : (0 : ℝ) ≤ 1).trans hb)
+          (((by norm_num : (0 : ℝ) ≤ 1).trans hb).trans ht.le) ht).le.trans
+            (boundary_slope_le hp hlam))
 
 /-- The boundary-one real optimizer is derived from the actual decreasing slope. -/
 theorem boundary_maximum {p lam t : ℝ} (hp : 1 < p) (hlam : 0 < lam) (ht : 1 ≤ t) :
@@ -161,7 +165,7 @@ theorem boundary_maximum {p lam t : ℝ} (hp : 1 < p) (hlam : 0 < lam) (ht : 1 �
   have hm := price_monotonicity hp hlam
   rcases le_total t (boundary p lam) with h | h
   · exact hm.1 ⟨ht, h⟩ ⟨hb, le_rfl⟩ h
-  · exact hm.2 (by exact le_rfl) h h
+  · exact hm.2 (by change boundary p lam ≤ boundary p lam; exact le_rfl) h h
 
 /-- Every integer is dominated by one of the two adjacent integer candidates. -/
 theorem integer_candidates {p lam : ℝ} (hp : 1 < p) (hlam : 0 < lam)
@@ -180,7 +184,8 @@ theorem integer_candidates {p lam : ℝ} (hp : 1 < p) (hlam : 0 < lam)
     exact (hm.1 ⟨hkR, h⟩ ⟨hfloorR, Int.floor_le _⟩ hkfR).trans (le_max_left _ _)
   · have hck : ⌈boundary p lam⌉ ≤ k := Int.ceil_le.mpr h
     have hckR : ((⌈boundary p lam⌉ : ℤ) : ℝ) ≤ k := by exact_mod_cast hck
-    exact (hm.2 (Int.le_ceil _) h hckR).trans (le_max_right _ _)
+    exact (hm.2 (show ((⌈boundary p lam⌉ : ℤ) : ℝ) ∈ Ici (boundary p lam) from
+      Int.le_ceil (boundary p lam)) h hckR).trans (le_max_right _ _)
 
 /-- Nonnegative finite rounding loss, bounded by the loss at EVERY integer. -/
 theorem integer_gap_bounds {p lam : ℝ} (hp : 1 < p) (hlam : 0 < lam)
@@ -231,7 +236,7 @@ private lemma bernoulli_scaled {v u : ℝ} (hv : 0 < v) (hv1 : v < 1)
   dsimp [bernoulliKL]
   rw [log_div hv.ne' hu.ne', log_div (by linarith) (by linarith)]
   field_simp [show 1 - v ≠ 0 by linarith]
-  <;> ring
+  ring
 
 private lemma probability_odds {p x : ℝ} (hp : 1 < p) (hx : 1 ≤ x) :
     probability p x / (1 - probability p x) = 1 / (p ^ (x + 1) - 1) := by
@@ -240,7 +245,6 @@ private lemma probability_odds {p x : ℝ} (hp : 1 < p) (hx : 1 ≤ x) :
   dsimp [probability]
   rw [rpow_neg hp0.le]
   field_simp [(rpow_pos_of_pos hp0 (x + 1)).ne', show p ^ (x + 1) - 1 ≠ 0 by linarith]
-  <;> ring
 
 /-- The exact KL remainder at ANY real reference exponent; its linear term
 vanishes at an interior critical point and survives at the boundary. -/
@@ -279,7 +283,7 @@ theorem active_loss {p lam t : ℝ} (hp : 1 < p) (hlam : 0 < lam)
   rw [hv] at hvmem
   have hprice : 1 / (p ^ (critical p lam + 1) - 1) = lam := by
     rw [critical_power hp hlam]
-    simp [cutoff, hlam.ne']
+    simp [cutoff]
   have hlogc : log (cutoff lam) = (critical p lam + 1) * log p := by
     rw [← critical_power hp hlam, log_rpow hp0]
   have hu := probability_mem hp ht
@@ -315,7 +319,7 @@ theorem inactive_loss {p lam t : ℝ} (hp : 1 < p) (hlam : 0 < lam)
     apply sub_nonneg.mpr
     exact (div_le_iff₀ hden).mpr (by nlinarith)
   have hv : 0 < p ^ (-2 : ℝ) ∧ p ^ (-2 : ℝ) < 1 := by
-    simpa [probability] using probability_mem hp (le_refl (1 : ℝ))
+    convert probability_mem hp (le_refl (1 : ℝ)) using 1 <;> norm_num [probability]
   have hu := probability_mem hp ht
   refine ⟨hb, ?_, hprice, ?_, ?_⟩
   · simp [integerGap, priceLoss, hb]

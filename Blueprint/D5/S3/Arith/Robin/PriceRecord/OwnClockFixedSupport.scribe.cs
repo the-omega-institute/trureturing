@@ -7,10 +7,10 @@ internal sealed class OwnClockFixedSupportDocument : IScribeDocumentDefinition
     private const string Prefix = "D5/S3/Arith/Robin/PriceRecord/OwnClockFixedSupport.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Uncompiled source candidate: the exact nonlinear own-clock gap on a fixed prime support.",
-        H("Fixed support and own clock: uncompiled candidate"),
+        "The exact nonlinear own-clock gap on a fixed prime support.",
+        H("Fixed support and own clock"),
         Blocks(
-            Paragraph(Text("Let S be any finite set of natural primes with cardinal at least three. Real vectors satisfy x_p>=1 on S. Define theta=sum_S log p, L(x)=sum_S x_p log p, g(L)=log(log L), and Phi(x)=EulerGamma+g(L(x))-sum_S f_p(x_p), with the literal Euler factors of BoundaryPrimePrice. R_S is sInf of the image of this same Phi on this same domain; attainment and uniqueness are not asserted. The canonical reciprocal-log kernel gives lambda=1/(L log L), b_p=max(1,log(1+lambda^-1)/log p-1), T=L(b). T need not equal L. All declarations here remain uncompiled candidates.")),
+            Paragraph(Text("Let S be any finite set of natural primes with cardinal at least three. Real vectors satisfy x_p>=1 on S. Define theta=sum_S log p, L(x)=sum_S x_p log p, g(L)=log(log L), and Phi(x)=EulerGamma+g(L(x))-sum_S f_p(x_p), with the literal Euler factors of BoundaryPrimePrice. R_S is sInf of the image of this same Phi on this same domain; attainment and uniqueness are not asserted. The canonical reciprocal-log kernel gives lambda=1/(L log L), b_p=max(1,log(1+lambda^-1)/log p-1), T=L(b). T need not equal L.")),
             Describe.Lean(DescribeId.Create("own-clock-theta-domain"),
                 DeclarationHandle.Create(Prefix + "theta_gt_one"), H("The fixed-support clock domain"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),

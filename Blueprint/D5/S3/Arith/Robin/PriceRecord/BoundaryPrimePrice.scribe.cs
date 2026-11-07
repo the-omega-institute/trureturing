@@ -7,10 +7,10 @@ internal sealed class BoundaryPrimePriceDocument : IScribeDocumentDefinition
     private const string Prefix = "D5/S3/Arith/Robin/PriceRecord/BoundaryPrimePrice.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Uncompiled source candidate: boundary-one prime price loss and exact integer rounding.",
-        H("Boundary-one price loss: uncompiled candidate"),
+        "Boundary-one prime price loss and exact integer rounding.",
+        H("Boundary-one price loss"),
         Blocks(
-            Paragraph(Text("All scalar parameters are real. Assume p>1, lambda>0 and t>=1. Set f_p(t)=log((1-p^(-t-1))/(1-p^-1)), F_p(t)=f_p(t)-lambda*t*log p, C=1+lambda^-1, c=log C/log p-1 and b=max(1,c). The domain is fixed at exponent at least one. Bernoulli KL is the existing D5/S0/Diagonal/MarginBound.bernoulliKL, with its existing nonnegativity theorem; it is not redefined here. Every statement in this document is a source candidate awaiting canonical kernel and Scribe checks.")),
+            Paragraph(Text("All scalar parameters are real. Assume p>1, lambda>0 and t>=1. Set f_p(t)=log((1-p^(-t-1))/(1-p^-1)), F_p(t)=f_p(t)-lambda*t*log p, C=1+lambda^-1, c=log C/log p-1 and b=max(1,c). The domain is fixed at exponent at least one. Bernoulli KL is the existing D5/S0/Diagonal/MarginBound.bernoulliKL, with its existing nonnegativity theorem; it is not redefined here.")),
             Describe.Lean(DescribeId.Create("boundary-price-probability-domain"),
                 DeclarationHandle.Create(Prefix + "probability_mem"), H("Euler probabilities lie in the open unit interval"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
@@ -50,5 +50,5 @@ internal sealed class BoundaryPrimePriceDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("boundary-price-active-integer-gap"),
                 DeclarationHandle.Create(Prefix + "active_integer_gap"), H("The explicit active two-KL minimum"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For p^2<C, d_p is exactly the minimum of D_Ber(C^-1||p^(-k-1))/(1-C^-1) at k=floor c and k=ceil c. The scalar formulas and two-candidate comparison are inputs to OwnClockRobinGap.original_margin_own_clock_gap. The derivation is repository mathematics informed by the supplied terminal paper and independent mathematical review; neither paper evidence nor this uncompiled source is Lean acceptance. No classical constant, six-band estimate or RH assertion is claimed here."))), DescribeRole.Theorem))));
+                Blocks(Paragraph(Text("For p^2<C, d_p is exactly the minimum of D_Ber(C^-1||p^(-k-1))/(1-C^-1) at k=floor c and k=ceil c. The scalar formulas and two-candidate comparison are inputs to OwnClockRobinGap.original_margin_own_clock_gap. The derivation is repository mathematics informed by the supplied terminal paper and independent mathematical review; the paper and its review provide mathematical context rather than formal verification. No classical constant, six-band estimate or RH assertion is claimed here."))), DescribeRole.Theorem))));
 }
