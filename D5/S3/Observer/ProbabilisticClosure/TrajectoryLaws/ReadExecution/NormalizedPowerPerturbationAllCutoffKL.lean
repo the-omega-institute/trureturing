@@ -40,8 +40,8 @@ private lemma power_increment (m k : ℕ) (hm : 1 ≤ m) :
     pow_le_pow_left₀ (by positivity) (by exact_mod_cast Nat.le_succ k) _
   have hh := mul_le_mul_of_nonneg_left hp (Nat.cast_nonneg (α := ℝ) k)
   rw [he, pow_succ, pow_succ]
-  push_cast
-  nlinarith
+  push_cast at hp hh ⊢
+  nlinarith only [hh]
 
 private lemma adjacent_power_sum (m : ℕ) (hm : 1 ≤ m)
     (s : ℝ) (hs : 0 < s) :
@@ -51,7 +51,7 @@ private lemma adjacent_power_sum (m : ℕ) (hm : 1 ≤ m)
   have hc : Summable (fun k : ℕ => term m s (k + 1)) :=
     (summable_nat_add_iff 1).2 ha
   have hsum : (∑' k : ℕ, term m s (k + 1)) = powerSum m s := by
-    simpa [powerSum, term] using ha.tsum_eq_zero_add
+    simpa [powerSum, term] using ha.tsum_eq_zero_add.symm
   have hshift : ∀ k : ℕ,
       Real.exp (-s) * term m s k =
         (k : ℝ) ^ m * Real.exp (-s * ((k + 1 : ℕ) : ℝ)) := by
@@ -60,9 +60,9 @@ private lemma adjacent_power_sum (m : ℕ) (hm : 1 ≤ m)
     · subst k
       simp [term, Nat.ne_of_gt hm]
     · simp only [term, hk, ↓reduceIte]
-      rw [mul_left_comm, ← Real.exp_add]
-      congr 1
-      push_cast
+      rw [show -s * ((k + 1 : ℕ) : ℝ) = -s + -s * (k : ℝ) by
+        push_cast
+        ring, Real.exp_add]
       ring
   have hle : ∀ k : ℕ, term (m - 1) s (k + 1) ≤
       term m s (k + 1) - Real.exp (-s) * term m s k := by
@@ -75,7 +75,7 @@ private lemma adjacent_power_sum (m : ℕ) (hm : 1 ≤ m)
     (summable_nat_add_iff 1).2 hb
   have h := hb'.tsum_le_tsum hle (hc.sub (ha.mul_left (Real.exp (-s))))
   have hsum' : (∑' k : ℕ, term (m - 1) s (k + 1)) = powerSum (m - 1) s := by
-    simpa [powerSum, term] using hb.tsum_eq_zero_add
+    simpa [powerSum, term] using hb.tsum_eq_zero_add.symm
   rw [hsum', Summable.tsum_sub hc (ha.mul_left _), hsum, tsum_mul_left] at h
   change powerSum (m - 1) s ≤ powerSum m s - Real.exp (-s) * powerSum m s at h
   nlinarith
@@ -116,7 +116,7 @@ private lemma normalized_power_perturbation_energy
     intro k
     by_cases hk : k = 0
     · simp [D, hk, hd0, term]
-    · simpa [D, term, hk] using
+    · simpa [D, term, hk, mul_assoc] using
         ⟨mul_nonneg (hd k (Nat.pos_of_ne_zero hk)).1 (Real.exp_pos _).le,
          mul_le_mul_of_nonneg_right (hd k (Nat.pos_of_ne_zero hk)).2
            (Real.exp_pos (-s * (k : ℝ))).le⟩
@@ -229,26 +229,36 @@ private lemma normalized_power_perturbation_energy
           powerSum m s * term m s k * Z j ≤
               Z true * term m s k * Z true :=
             mul_le_mul (mul_le_mul_of_nonneg_right hZ01 ht.le) hZZ
-              (hZp j).le (by positivity)
+              (hZp j).le (mul_nonneg (hZp true).le ht.le)
           _ ≤ Z true ^ 2 * v j k := by
             nlinarith [mul_le_mul_of_nonneg_left hvle (sq_nonneg (Z true))]
       have hNorm : (w k) ^ 2 / p j k ≤
           (D k - ε * term m s k) ^ 2 / (powerSum m s * term m s k) := by
-        rw [hDrift]
-        dsimp only [p]
-        apply (div_le_div_iff₀ (div_pos (hvp j k (Nat.pos_of_ne_zero hk)) (hZp j))
-          (mul_pos hZpos ht)).2
-        apply (div_le_iff₀ (hZp j)).2
-        rw [div_pow]
-        apply (div_le_iff₀ (sq_pos_of_pos (hZp true))).2
-        nlinarith [mul_le_mul_of_nonneg_left hDen
-          (sq_nonneg (D k - ε * term m s k))]
+        calc
+          (w k) ^ 2 / p j k =
+              (D k - ε * term m s k) ^ 2 * Z j / (Z true ^ 2 * v j k) := by
+            rw [hDrift]
+            dsimp only [p]
+            field_simp
+          _ ≤ (D k - ε * term m s k) ^ 2 /
+              (powerSum m s * term m s k) := by
+            apply (div_le_div_iff₀
+              (mul_pos (sq_pos_of_pos (hZp true)) (hvp j k (Nat.pos_of_ne_zero hk)))
+              (mul_pos hZpos ht)).2
+            nlinarith only [mul_le_mul_of_nonneg_left hDen
+              (sq_nonneg (D k - ε * term m s k))]
       have hId : (δ * term (m - 1) s k) ^ 2 =
           δ ^ 2 * term (m - 2) s k * term m s k := by
         have he : m = (m - 2) + 2 := by omega
         have he' : m - 1 = (m - 2) + 1 := by omega
         simp only [term, hk, ↓reduceIte]
-        rw [he', he]
+        have hp1 : (k : ℝ) ^ (m - 1) = (k : ℝ) ^ (m - 2) * (k : ℝ) := by
+          rw [he', pow_succ]
+        have hp2 : (k : ℝ) ^ m = (k : ℝ) ^ (m - 2) * (k : ℝ) ^ 2 := by
+          calc
+            (k : ℝ) ^ m = (k : ℝ) ^ ((m - 2) + 2) := congrArg (fun n => (k : ℝ) ^ n) he
+            _ = _ := pow_add _ _ _
+        rw [hp1, hp2]
         ring
       have hDsq : (D k) ^ 2 ≤ δ ^ 2 * term (m - 2) s k * term m s k := by
         rw [← hId]
@@ -267,7 +277,7 @@ private lemma normalized_power_perturbation_energy
       apply hEs.of_norm_bounded
       intro k
       have hp : 0 ≤ p j k := div_nonneg (hvn j k) (hZp j).le
-      simpa [Real.norm_eq_abs, abs_of_nonneg (div_nonneg (sq_nonneg _) hp)] using hPoint k
+      simpa only [Real.norm_eq_abs, abs_of_nonneg (div_nonneg (sq_nonneg _) hp)] using hPoint k
     refine ⟨hEnergySummable, (hEnergySummable.tsum_le_tsum hPoint hEs).trans ?_⟩
     have hSumE : (∑' k : ℕ, E k) =
         (2 * δ ^ 2 * powerSum (m - 2) s +
@@ -315,5 +325,7 @@ theorem normalized_power_perturbation_all_cutoff_kl
           4 * δ ^ 2 * s ^ 2 * min 1 ((s * (L : ℝ)) ^ (m - 1))) := by
   have hEnergy := normalized_power_perturbation_energy m hm d hd0 δ hδ hδ1 hd s hs hZ
   exact ⟨hEnergy.1, hEnergy.2, by sorry, by sorry⟩
+
+#print axioms normalized_power_perturbation_energy
 
 end D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.ReadExecution
