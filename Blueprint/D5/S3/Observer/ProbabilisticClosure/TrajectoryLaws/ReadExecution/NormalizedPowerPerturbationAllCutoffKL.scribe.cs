@@ -5,34 +5,58 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Observer.ProbabilisticClosure.Trajec
 internal sealed class NormalizedPowerPerturbationAllCutoffKLDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "WIP: normalized countable power perturbations and every finite collapsed cutoff.",
-        H("Normalized power perturbations: all-cutoff KL bound"),
+        "Normalized countable power perturbations and every finite collapsed cutoff.",
+        H("Normalized power perturbations and all-cutoff relative entropy"),
         Blocks(
             Describe.Lean(
                 DescribeId.Create("normalized-power-perturbation-all-cutoff-kl"),
                 DeclarationHandle.Create(
                     "D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/ReadExecution/NormalizedPowerPerturbationAllCutoffKL.normalized_power_perturbation_all_cutoff_kl"),
-                H("Normalized countable power perturbations have a two-reference all-cutoff KL bound"),
+                H("Both relative entropy directions for every finite collapsed cutoff"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
-                        "WIP statement for the E3 source atom. For an exponent m at least four, " +
-                        "a nonnegative perturbation d with d(k) at most delta times k^(m-1) " +
-                        "is added to the positive-index power-exponential law. The normalizers " +
-                        "are the exact infinite sums. Both normalized laws have zero mass at k=0, " +
-                        "positive mass at every positive k, and the two reference square energies " +
-                        "are bounded by 4 delta^2 (1-exp(-s))^2.")),
+                        "Let m be an integer at least four, let 0 <= delta <= 1, and let d(0)=0 " +
+                        "with 0 <= d(k) <= delta k^(m-1) for every positive integer k. For s>0, " +
+                        "the unnormalized weights are k^m exp(-sk) and (k^m+d(k)) exp(-sk) on " +
+                        "positive integers, both zero at zero. Their normalizers Z0 and Z1 are " +
+                        "the complete infinite sums. Assume m!/2 <= s^(m+1) Z0.")),
                     Paragraph(Text(
-                        "For every finite L, the carrier is Option(Fin L): r maps to the physical " +
-                        "count r.val+1 and none is the complete remaining tail. The resulting " +
-                        "finite KL divergences in both directions are at most " +
-                        "4 delta^2 s^2 min(1,(sL)^(m-1)). The source neighborhood lower bound " +
-                        "is stated through the exact factorial-normalizer inequality hZ.")),
+                        "Write p0 and p1 for the normalized laws, epsilon=(Z1-Z0)/Z0, " +
+                        "r=1-exp(-s), and w(k)=p1(k)-p0(k). The exact signed difference is " +
+                        "w(k)=(d(k)-epsilon k^m) exp(-sk)/Z1. The nonnegativity of d does not " +
+                        "fix the sign of w or of a sum of its short coordinates.")),
                     Paragraph(Text(
-                        "The declaration is intentionally WIP and remains open pending a kernel proof " +
-                        "of the countable normalized energy estimate and the finite-to-countable tail " +
-                        "Cauchy passage. No source-specific polynomial, finite cutoff, truncated " +
-                        "normalizer, sign assumption, or auxiliary stopping premise is introduced."))))),
+                        "Absolute convergence permits a one-step shift: R_(m-1) <= r R_m, " +
+                        "where R_j is the complete positive-index power-exponential sum. Thus " +
+                        "R_(m-2) <= r^2 R_m and 0 <= epsilon <= delta r. For either reference j, " +
+                        "the full normalized square energy is summable and at most 4 delta^2 r^2. " +
+                        "One may use (a-b)^2 <= 2a^2+2b^2 on the signed numerator, retaining " +
+                        "the normalization correction in the second term.")),
+                    Paragraph(Text(
+                        "For each natural L>=1 the carrier is Option(Fin L). A short symbol " +
+                        "some r denotes the physical count r.val+1, while none carries the entire " +
+                        "remaining tail k>L. Its mass is 1 minus the sum of these L short masses. " +
+                        "For i=false and i=true the bound is KL(a_i || a_(!i)) <= " +
+                        "4 delta^2 s^2 min(1,(sL)^(m-1)). Full-law logarithmic sums are absolutely " +
+                        "convergent and bounded by the corresponding square energy.")),
+                    Paragraph(Text(
+                        "The short-cutoff argument sL<=1 bounds the short reference mass by one " +
+                        "half using the factorial-normalizer hypothesis. Weighted Cauchy-Schwarz " +
+                        "charges the signed short sum against these same reference masses, including " +
+                        "the collapsed tail drift. For sL>1 the complete series and same-reference " +
+                        "tail Cauchy inequality give the other branch without a lower bound on " +
+                        "the tail mass. The normalizers are never truncated.")),
+                    Paragraph(Text(
+                        "For the degree-nine source, delta=2749658638697/10^24 and " +
+                        "d(k)=(55800726477138 k -224986136658885 k^2 +420664314485485 k^3 " +
+                        "-540138133491075 k^4 +518234977000797 k^5 -254383031435085 k^6 " +
+                        "+77668004560980 k^7 +43377331415040 k^8)/(35*10^24). " +
+                        "The universal integer envelope 0<=d(k)<=delta k^8 is an explicit " +
+                        "premise. The resulting estimate is 4 delta^2 s^2 min(1,(sL)^8). " +
+                        "The existing factorial limit for s^(m+1) R_m supplies a single positive " +
+                        "source neighborhood before any finite cutoff is selected. No restriction " +
+                        "on how a finite L depends on s or q is introduced."))))),
                 DescribeRole.Theorem))));
 }

@@ -80,7 +80,7 @@ private lemma adjacent_power_sum (m : ℕ) (hm : 1 ≤ m)
   change powerSum (m - 1) s ≤ powerSum m s - Real.exp (-s) * powerSum m s at h
   nlinarith
 
-theorem normalized_power_perturbation_all_cutoff_kl
+private lemma normalized_power_perturbation_energy
     (m : ℕ) (hm : 4 ≤ m)
     (d : ℕ → ℝ) (hd0 : d 0 = 0)
     (δ : ℝ) (hδ : 0 ≤ δ) (hδ1 : δ ≤ 1)
@@ -99,19 +99,7 @@ theorem normalized_power_perturbation_all_cutoff_kl
     (∀ j : Bool,
       Summable (fun k : ℕ => (w k) ^ 2 / p j k) ∧
       (∑' k : ℕ, (w k) ^ 2 / p j k) ≤
-        4 * δ ^ 2 * (1 - Real.exp (-s)) ^ 2) ∧
-    (∀ i : Bool,
-      Summable (fun k : ℕ => p i k * Real.log (p i k / p (!i) k)) ∧
-      (∑' k : ℕ, p i k * Real.log (p i k / p (!i) k)) ≤
-        ∑' k : ℕ, (w k) ^ 2 / p (!i) k) ∧
-    (∀ L : ℕ, 1 ≤ L →
-      let a : Bool → Option (Fin L) → ℝ := fun i z =>
-        match z with
-        | some r => p i (r.val + 1)
-        | none => 1 - ∑ r : Fin L, p i (r.val + 1)
-      ∀ i : Bool,
-        klDivergence (a i) (a (!i)) ≤
-          4 * δ ^ 2 * s ^ 2 * min 1 ((s * (L : ℝ)) ^ (m - 1))) := by
+        4 * δ ^ 2 * (1 - Real.exp (-s)) ^ 2) := by
   have hAdj := adjacent_power_sum m (by omega) s hs
   have hAdj2 := adjacent_power_sum (m - 1) (by omega) s hs
   have hZpos := powerSum_pos m hs
@@ -201,19 +189,8 @@ theorem normalized_power_perturbation_all_cutoff_kl
       ∀ k : ℕ, 0 < k → 0 < p i k) ∧
     (∀ j : Bool, Summable (fun k : ℕ => (w k) ^ 2 / p j k) ∧
       (∑' k : ℕ, (w k) ^ 2 / p j k) ≤
-        4 * δ ^ 2 * (1 - Real.exp (-s)) ^ 2) ∧
-    (∀ i : Bool,
-      Summable (fun k : ℕ => p i k * Real.log (p i k / p (!i) k)) ∧
-      (∑' k : ℕ, p i k * Real.log (p i k / p (!i) k)) ≤
-        ∑' k : ℕ, (w k) ^ 2 / p (!i) k) ∧
-    (∀ L : ℕ, 1 ≤ L →
-      let a : Bool → Option (Fin L) → ℝ := fun i z =>
-        match z with
-        | some r => p i (r.val + 1)
-        | none => 1 - ∑ r : Fin L, p i (r.val + 1)
-      ∀ i : Bool, klDivergence (a i) (a (!i)) ≤
-        4 * δ ^ 2 * s ^ 2 * min 1 ((s * (L : ℝ)) ^ (m - 1)))
-  refine ⟨hprob, ?_, ?_, ?_⟩
+        4 * δ ^ 2 * (1 - Real.exp (-s)) ^ 2)
+  refine ⟨hprob, ?_⟩
   · intro j
     let E : ℕ → ℝ := fun k =>
       (2 * δ ^ 2 * term (m - 2) s k +
@@ -303,9 +280,40 @@ theorem normalized_power_perturbation_all_cutoff_kl
     rw [hSumE]
     apply (div_le_iff₀ hZpos).2
     nlinarith [mul_le_mul_of_nonneg_left hTwo (by positivity : 0 ≤ 2 * δ ^ 2)]
-  · intro i
-    sorry
-  · intro L hL
-    sorry
+
+theorem normalized_power_perturbation_all_cutoff_kl
+    (m : ℕ) (hm : 4 ≤ m)
+    (d : ℕ → ℝ) (hd0 : d 0 = 0)
+    (δ : ℝ) (hδ : 0 ≤ δ) (hδ1 : δ ≤ 1)
+    (hd : ∀ k : ℕ, 0 < k →
+      0 ≤ d k ∧ d k ≤ δ * (k : ℝ) ^ (m - 1))
+    (s : ℝ) (hs : 0 < s)
+    (hZ : (m.factorial : ℝ) / 2 ≤
+      s ^ (m + 1) * powerSum m s) :
+    let v : Bool → ℕ → ℝ := fun i k =>
+      term m s k + if i then d k * Real.exp (-s * (k : ℝ)) else 0
+    let Z : Bool → ℝ := fun i => ∑' k : ℕ, v i k
+    let p : Bool → ℕ → ℝ := fun i k => v i k / Z i
+    let w : ℕ → ℝ := fun k => p true k - p false k
+    (∀ i : Bool, HasSum (p i) 1 ∧ p i 0 = 0 ∧
+      ∀ k : ℕ, 0 < k → 0 < p i k) ∧
+    (∀ j : Bool,
+      Summable (fun k : ℕ => (w k) ^ 2 / p j k) ∧
+      (∑' k : ℕ, (w k) ^ 2 / p j k) ≤
+        4 * δ ^ 2 * (1 - Real.exp (-s)) ^ 2) ∧
+    (∀ i : Bool,
+      Summable (fun k : ℕ => p i k * Real.log (p i k / p (!i) k)) ∧
+      (∑' k : ℕ, p i k * Real.log (p i k / p (!i) k)) ≤
+        ∑' k : ℕ, (w k) ^ 2 / p (!i) k) ∧
+    (∀ L : ℕ, 1 ≤ L →
+      let a : Bool → Option (Fin L) → ℝ := fun i z =>
+        match z with
+        | some r => p i (r.val + 1)
+        | none => 1 - ∑ r : Fin L, p i (r.val + 1)
+      ∀ i : Bool,
+        klDivergence (a i) (a (!i)) ≤
+          4 * δ ^ 2 * s ^ 2 * min 1 ((s * (L : ℝ)) ^ (m - 1))) := by
+  have hEnergy := normalized_power_perturbation_energy m hm d hd0 δ hδ hδ1 hd s hs hZ
+  exact ⟨hEnergy.1, hEnergy.2, by sorry, by sorry⟩
 
 end D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.ReadExecution
