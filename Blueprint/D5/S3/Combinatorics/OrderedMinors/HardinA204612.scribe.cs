@@ -8,7 +8,7 @@ internal sealed class HardinA204612Document : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/OrderedMinors/HardinA204612.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/RecurrenceComposition/hardin2012a204612");
+        LibraryNoteRef.Create("D5/L/Certificates/hardin2012a204612");
     private const string NameQuote = "OEIS A204612, NAME (unpaginated): \"Number of (n+1)X5 0..1 arrays with the determinants of 2X2 subblocks nondecreasing rightwards and downwards.\"";
     private const string FormulaQuote = "OEIS A204612, FORMULA (unpaginated): \"Empirical: a(n) = 18*a(n-1) -73*a(n-2) -256*a(n-3) +2060*a(n-4) -1216*a(n-5) -12612*a(n-6) +18224*a(n-7) +20992*a(n-8) -40064*a(n-9) -9984*a(n-10) +24576*a(n-11) for n>15\"";
 

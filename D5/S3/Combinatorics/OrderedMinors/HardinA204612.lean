@@ -42,6 +42,7 @@ Its proof identifies literal arrays with labeled paths by structural induction a
 propagates a polynomial residual in a zero-total invariant subspace.
 -/
 
+import Mathlib.Algebra.Notation.Indicator
 import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
 import D5.S3.Combinatorics.NarayanaStrip.CiglerCycleWalkTransfer
 import Mathlib.LinearAlgebra.Matrix.Action
@@ -266,7 +267,7 @@ private def p : Fin 12 → ℤ := ![-24576, 9984, 40064, -20992, -18224, 12612, 
 
 private def q : Fin 11 → ℤ := ![565248, 327936, 284288, 329600, 329600, 118656, 6144, 6144, -832, -832, -832]
 
-private def residual : (Fin 68 → ℤ) := fun s => ∑ j : Fin 12, p j * values ⟨4 + j.val, by omega⟩ s
+private def residual : Fin 68 → ℤ := fun s => dotProduct p (fun j : Fin 12 => values ⟨4 + j.val, by omega⟩ s)
 
 private theorem values_zero : values 0 = initial := by exact List.ofFn_inj.mp rfl
 end D5.S3.Combinatorics.OrderedMinors.HardinA204612
@@ -302,10 +303,9 @@ namespace D5.S3.Combinatorics.OrderedMinors.HardinA204612
 open scoped BigOperators
 open D5.S3.Combinatorics.NarayanaStrip.CiglerCycleWalkTransfer
 
-private def cost (s : (Fin 68)) (c : (Fin 32)) : ℤ := if valid s c then 1 else 0
+private noncomputable def cost (s : Fin 68) (c : Fin 32) : ℤ := Set.indicator {c : Fin 32 | valid s c} (fun _ => (1 : ℤ)) c
 
-private def pathCount (k : ℕ) (s : (Fin 68)) : ℤ :=
-  ∑ f : Fin k → (Fin 32), if PathGood s f then 1 else 0
+private def pathCount (k : ℕ) (s : Fin 68) : ℤ := (Fintype.card {f : Fin k → Fin 32 // PathGood s f} : ℤ)
 
 private theorem aggregate_transition (s t : (Fin 68)) :
     (∑ c : (Fin 32), if (fun s c => stateOf (stateRow s) c) s c = t then cost s c else 0) = T t s := by
@@ -338,7 +338,13 @@ private theorem contribution_sum {k : ℕ} (s : (Fin 68)) (f : Fin k → (Fin 32
 
 private theorem pathCount_eq_power (k : ℕ) (s : (Fin 68)) :
     pathCount k s = ∑ t : (Fin 68), (T ^ k) t s := by
-  unfold pathCount
+  have hcard : pathCount k s =
+      ∑ f : Fin k → (Fin 32), if PathGood s f then 1 else 0 := by
+    unfold pathCount
+    rw [Fintype.card_subtype]
+    rw [Finset.card_eq_sum_ones]
+    simp
+  rw [hcard]
   simp_rw [← contribution_sum]
   rw [Finset.sum_comm]
   simp_rw [weighted_walks_eq_pow]
@@ -407,7 +413,15 @@ private theorem count_rows (k : ℕ) :
   intro b _
   apply Finset.sum_congr rfl
   intro c _
-  by_cases h : Monotone (delta b c) <;> simp [h, pathCount]
+  by_cases h : Monotone (delta b c)
+  · rw [if_pos h]
+    simp only [h, true_and]
+    unfold pathCount
+    symm
+    rw [Fintype.card_subtype]
+    rw [Finset.card_eq_sum_ones]
+    simp
+  · simp [h]
 
 private def seedEquiv (b : (Fin 32)) :
     {c : (Fin 32) // Monotone (delta b c)} ≃
