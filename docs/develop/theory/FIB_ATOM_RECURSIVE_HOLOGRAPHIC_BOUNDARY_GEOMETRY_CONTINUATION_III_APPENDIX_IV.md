@@ -3523,3 +3523,97 @@ for one radical function $h\in E_u$. Consequently its label span has dimension a
 *Proof.* In the first ruling take $h=h_z$ and in the second take $h=h_w$. Equation (203.2) or (203.4) writes every label as an element of $S_u(E_f)+\mathbb Rh$. The section $S_u$ is injective on $E_f$ because $T_uS_u=\operatorname{id}_{E_f}$, so $\dim S_u(E_f)=2$. The dimension bound follows. \(\square\)
 
 The scalarization is an exact search interface for a fixed ruling: the column ruling leaves two radical coefficients and a fixed label profile, while the row ruling leaves a three-dimensional zero-sum label profile and a fixed radical direction. It removes the residual equations only after the quotient identity and pointwise inequalities are imposed; it does not show that either ruling is nonempty or settle arbitrary partition realization, $F_{64}$, $H43$, SRS\text{-}20, physical succession or Lean/kernel formalization.
+
+## 204. Pointwise envelopes decide ruling feasibility
+
+The scalarized bodies of Section 203 can be tested without carrying all label inequalities separately. For a fixed ruling factor, the pointwise simplex constraints become upper and lower envelopes for one scalar function or one scalar label coordinate.
+
+**Definition 204.1 (the fixed-column envelope).** Retain $s_y=S_u(f_y)$ and let $0\ne c\in\mathsf H$. Since $c$ is nonzero and has zero sum, both sign sets
+
+$$
+\mathcal L_c^+=\{y:c_y>0\},
+\qquad
+\mathcal L_c^- =\{y:c_y<0\}
+\tag{204.1}
+$$
+
+are nonempty. Define the pointwise envelopes
+
+$$
+ L_c(x)=\max_{y\in\mathcal L_c^+}\frac{-s_y(x)}{c_y},
+\qquad
+ U_c(x)=\min_{y\in\mathcal L_c^-}\frac{-s_y(x)}{c_y}.
+\tag{204.2}
+$$
+
+Put
+
+$$
+\mathscr Z_c^{\mathrm{env}}
+ =\left\{z\in\mathbb R^2:
+ \begin{array}{l}
+ s_y(x)\ge0\text{ for every }y\text{ with }c_y=0\text{ and every }x,\\[2pt]
+ L_c(x)\le h_z(x)\le U_c(x)\text{ for every }x
+ \end{array}\right\}.
+\tag{204.3}
+$$
+
+**Definition 204.2 (the fixed-row interval body).** Let $0\ne w\in\mathbb R^2$ and write $h=h_w$. For each label $y$, define extended-real bounds
+
+$$
+ \ell_y(h)=\sup_{x:h(x)>0}\frac{-s_y(x)}{h(x)},
+ \qquad
+ u_y(h)=\inf_{x:h(x)<0}\frac{-s_y(x)}{h(x)},
+\tag{204.4}
+$$
+
+with the conventions $\sup\varnothing=-\infty$ and $\inf\varnothing=+\infty$. Define
+
+$$
+\mathscr V_w^{\mathrm{env}}
+ =\left\{v\in\mathsf H:
+ \begin{array}{l}
+ s_y(x)\ge0\text{ whenever }h(x)=0,\\[2pt]
+ \ell_y(h)\le v_y\le u_y(h)\text{ for every }y\in\mathcal L
+ \end{array}\right\}.
+\tag{204.5}
+$$
+
+**Proposition 204.3 (exact envelope characterizations).** The parameter bodies of Section 203 satisfy
+
+$$
+\mathscr Z_c=\mathscr Z_c^{\mathrm{env}},
+\tag{204.6}
+$$
+
+and
+
+$$
+\mathscr V_w=\mathscr V_w^{\mathrm{env}}.
+\tag{204.7}
+$$
+
+Consequently, a fixed-column ruling is feasible exactly when its two-dimensional coefficient vector $z$ satisfies the envelope inequalities (204.3), and a fixed-row ruling is feasible exactly when the interval box (204.5) intersects the zero-sum hyperplane $\mathsf H$.
+
+*Proof.* For the fixed-column ruling, the inequality in (203.2) is
+
+$$
+ s_y(x)+c_yh_z(x)\ge0.
+$$
+
+If $c_y>0$, division by $c_y$ gives $h_z(x)\ge-s_y(x)/c_y$; if $c_y<0$, it gives $h_z(x)\le-s_y(x)/c_y$; and if $c_y=0$, it gives $s_y(x)\ge0$. Taking the maximum over the positive labels and the minimum over the negative labels gives exactly (204.3). For the fixed-row ruling, the same inequality is
+
+$$
+ s_y(x)+v_yh(x)\ge0.
+$$
+
+On the set where $h>0$ it gives $v_y\ge-s_y/h$, on the set where $h<0$ it gives $v_y\le-s_y/h$, and on the zero set it gives $s_y\ge0$. Taking the supremum and infimum over the corresponding point sets gives (204.4)--(204.5), with the stated empty-set conventions. \(\square\)
+
+**Corollary 204.4 (the remaining ruling search is an envelope problem).** After the quotient identity is fixed, the fixed-column branch requires only the intersection of the two-dimensional plane $\{h_z:z\in\mathbb R^2\}$ with the pointwise strip
+
+$$
+L_c\le h\le U_c,
+\tag{204.8}
+$$
+
+along with the zero-profile conditions. The fixed-row branch requires only an interval-box intersection with $\mathsf H$. Every point found by either test yields a legal full-zero family by Proposition 203.2, while failure of the corresponding envelope intersection rules out that entire ruling factor. These tests still do not decide whether a rank-four transverse pair exists, nor do they settle arbitrary partition realization, $F_{64}$, $H43$, SRS\text{-}20, physical succession or Lean/kernel formalization.
