@@ -4238,3 +4238,573 @@ failure of the specified algebraic positive-state binding, not a
 negative physical probability.
 
 ## 追加锚（本行以下为增补区）
+
+## 22. Compact source transport with the entire original endpoint
+
+**Definition 22.1 (scalar localization data).** Retain Assumptions
+1.1–1.3, the entire complex domain (1.3), the full form (1.4), and
+the source dictionary (12.1)–(12.3). Write $L_d=dK$ on the full
+$\mathcal H=L^2(m)$, and let $Q$ project onto $\mathcal O$.
+The marked tuple and Theorems 4.1 and 12.2 supply
+
+$$
+\mathsf B=N_3/c,\qquad U\mathsf R U^{-1}=M_r|_{\mathcal O},\qquad
+s=\|\widehat P^{-1/2}b_o\|^2=s_d=\operatorname{tr}b>0.
+\tag{22.1}
+$$
+
+The inverse in (22.1) is only on its proved entrance-vector
+domain: it corresponds to $g_{d/2}$. The trace identity is
+[SRO, (SRO.3)], since $\|hg_{d/2}\|_{L^2(\mu)}^2
+=\|g_{d/2}\|_{L^2(m)}^2$. The notation $s$ denotes the source
+trace; the global calibration is $N_d=\|g_d\|_\infty$.
+No equality between them is assumed.
+
+A scalar packet consists of bounded open intervals
+$I_0\Subset I_1\Subset I_2$ with
+$\overline I_2\cap\{0,s\}=\varnothing$, real
+$\phi\in C_c^\infty(I_2)$ equal to one near $\overline I_1$,
+and $\sigma\in C_c^\infty(I_1)$ with $0\le\sigma\le1$ and
+$\sigma=1$ on $I_0$. Define source functions and intrinsic operators
+
+$$
+\begin{gathered}
+f_1=\phi(b)b,\qquad f_2=\phi(b)r,\qquad
+\mathsf F_1=\phi(\mathsf B)\mathsf B,\qquad
+\mathsf F_2=\phi(\mathsf B)\mathsf R,\\
+\Gamma_d(f,g)=d\,\mathfrak a(f,g)
+             =d\,\nabla f^{\mathsf T}\mathsf A\nabla g.
+\end{gathered}
+\tag{22.2}
+$$
+
+These are choices in recovered scalar functional calculus.
+Coordinates, $h$, derivatives and source flows used below are
+proof representations, not additional observation inputs.
+In addition to Assumption 1.1 use the same-source all-angle limit
+[SRO, Theorem 4.1, (SRO.39)], exterior decay [R, Theorem 14.3,
+(14.12)], and, only for nonidentity, [EF, Theorem 3.1].
+
+**Lemma 22.2 (actual compact localization and multiplier domains).**
+For every compact scalar set $C\subset\mathbb R\setminus\{0,s\}$,
+$b^{-1}(C)$ is compact in $M=G\setminus\{e\}$. In particular
+$f_1,f_2,\sigma(b)\in C_c^\infty(M)$.
+For every $c_0\in C_c^\infty(M)$, multiplication preserves the
+entire complex $D(K)$, and more precisely
+
+$$
+\begin{gathered}
+hc_0u\in D(\overline S_{a,\eta}),\qquad
+ A(hc_0u)=C(hc_0u)=0\quad(u\in D(K)),\\
+[L_d,M_{c_0}]:D(K)\longrightarrow\mathcal H
+\quad\text{is bounded for the graph norm of }K.
+\end{gathered}
+\tag{22.3}
+$$
+
+Every compactly supported $H^1$ function on $M$ belongs to
+$\mathscr V_0$. These claims do not identify punctured tests with
+a core for the full $K$ or its full form domain.
+
+*Proof.* The source chart in (SRO.39) exhausts a neighborhood of
+$e$ and gives $b\to s$ uniformly in angle. The proper exterior
+gauge in [R, (14.12)] gives $b\to0$ uniformly at infinity.
+A compact $C$ avoiding both limits therefore excludes an entire
+source neighborhood and the exterior of a sufficiently large
+original coordinate box. Continuity of the smooth $b$ makes its
+inverse image closed in the remaining punctured compact set.
+This proves compactness and the assertions about (22.2).
+
+For $u\in D(K)\subset\mathscr V$, [S, (115.14)–(115.15)] gives
+$u\in H^1_{\rm loc}(M)$, and the actual weak equation is
+
+$$
+-\operatorname{div}(h^2\mathsf A\nabla u)=h^2Ku
+\quad\text{on }M.
+\tag{22.4}
+$$
+
+This is [S, (120.6)] for $D(K)$, not a weak equation asserted for
+all $\mathscr V$. On nested relatively compact punctured
+neighborhoods, $h^2\mathsf A$ is smooth and uniformly elliptic,
+$h,h^{-1}$ are bounded, and $h^2Ku$ is locally $L^2$.
+Hunter's interior theorem [HUN, Theorem 4.27] applies separately
+to the real and imaginary parts. Thus for each such compact
+$C_0$ there is a finite constant with
+
+$$
+\|u\|_{H^2(C_0)}
+ \le C_{C_0}(\|Ku\|_{L^2(m)}+\|u\|_{L^2(m)}).
+\tag{22.5}
+$$
+
+Here restriction is taken from a slightly larger punctured
+neighborhood. The principal matrix is exactly (12.1); its
+determinant is $a^3\eta>0$, so no horizontal or central term
+has been deleted.
+
+Consequently $hc_0u$ is compactly supported $H^2$ away from $e$.
+Mollify within a fixed punctured neighborhood of its support.
+The raw expression $aL-\eta\partial_w^2-16\sqrt{a\eta}\Gamma$
+is continuous from $H^2$ to $L^2(\mu)$ there, since its
+coefficients and potential are smooth and bounded there.
+The mollifications converge in its graph norm and belong to
+$\mathcal D_0$. Hence $hc_0u\in D(\overline S_{a,\eta})$.
+The actual endpoint theorem [E, Theorem 112.2, (112.5)] says
+that both coefficients of this minimal-domain vector vanish.
+It also places that vector inside the original $D(H)$, proving
+(22.3). The product rule and (22.5) give the graph bound for the
+commutator. For compact $H^1$ functions the analogous
+mollification uses local equivalence of the weighted form norm
+and the ordinary $H^1$ norm; its limit lies in $\mathscr V_0$.
+Neither argument approximates the source summand by punctured
+vectors in the full diffusion graph or form norm. $\square$
+
+**Theorem 22.3 (intrinsically determined compact transport on the
+actual source).** For every scalar packet define bounded extensions
+from the dense domain $D(\Lambda)$ by
+
+$$
+\mathsf E_{ij}
+ =\overline{-\tfrac12[[\Lambda,\mathsf F_i],\mathsf F_j]},
+\qquad i,j\in\{1,2\}.
+\tag{22.6}
+$$
+
+They exist, commute with one another and with $\mathsf B,\mathsf R$,
+and correspond under $U$ to the actual multipliers by
+$e_{ij}=\Gamma_d(f_i,f_j)$. Put
+
+$$
+\begin{gathered}
+\Delta=e_{11}e_{22}-e_{12}^2\ge0,\qquad
+(\alpha_{\ell j})_{\ell,j=1}^2
+ =\sigma(b)\begin{pmatrix}e_{22}&-e_{12}\\-e_{12}&e_{11}\end{pmatrix},\\
+\mathsf A_{\ell j}
+ =\sigma(\mathsf B)(\operatorname{adj}\mathsf E)_{\ell j},\qquad
+v_j=d\mathsf A\nabla f_j,\qquad
+Y_\ell=\sum_{j=1}^2\alpha_{\ell j}v_j,\qquad
+\chi=\sigma(b)\Delta.
+\end{gathered}
+\tag{22.7}
+$$
+
+The adjugate means the displayed polynomial matrix; there is no
+determinant inverse. Every $e_{ij},\alpha_{\ell j}$ and $Y_\ell$
+is smooth and compactly supported in $M$. On all of $M$,
+
+$$
+Y_1b=\chi,\qquad Y_1r=0,\qquad
+Y_2b=0,\qquad Y_2r=\chi.
+\tag{22.8}
+$$
+
+On exactly $D(\Lambda)$ define
+
+$$
+\mathsf S_{\ell,0}
+ =-\frac i4\sum_{j=1}^2
+ \left(\mathsf A_{\ell j}[\Lambda,\mathsf F_j]
+       +[\Lambda,\mathsf F_j]\mathsf A_{\ell j}\right).
+\tag{22.9}
+$$
+
+All products have this full domain. This symmetric operator has
+a self-adjoint graph closure $\mathsf S_\ell$. Its source realization
+is the actual restriction of the following maximal operator:
+
+$$
+\begin{gathered}
+D_Yu=Y\cdot\nabla u+\tfrac12(\operatorname{div}_mY)u,
+\qquad \operatorname{div}_mY=h^{-2}\operatorname{div}(h^2Y),\\
+D(S_\ell)=\{u\in L^2(m):D_{Y_\ell}u\in L^2(m)
+                         \text{ distributionally on }M\},
+\qquad S_\ell u=iD_{Y_\ell}u,\\
+UD(\mathsf S_\ell)=D(S_\ell)\cap\mathcal O,\qquad
+U\mathsf S_\ell U^{-1}=S_\ell|_{\mathcal O}.
+\end{gathered}
+\tag{22.10}
+$$
+
+Let $\Phi_{\ell,t}$ be the complete source flow of $Y_\ell$.
+The intrinsic group $\mathsf W_\ell(t)=e^{-it\mathsf S_\ell}$
+corresponds to the restriction of
+
+$$
+\begin{gathered}
+j_{\ell,t}(x)
+ =\frac{h(\Phi_{\ell,t}(x))^2}{h(x)^2}
+                   |\det D\Phi_{\ell,t}(x)|,\\
+W_\ell(t)u=\sqrt{j_{\ell,t}}\,u\circ\Phi_{\ell,t},
+\qquad W_\ell(t)=e^{-itS_\ell}
+\quad\text{on the full }\mathcal H.
+\end{gathered}
+\tag{22.11}
+$$
+
+The full group reduces $\mathcal O$ before restriction and satisfies
+
+$$
+\begin{gathered}
+W_\ell(t)D(K)=D(K),\qquad W_\ell(t)\mathscr V=\mathscr V,\\
+A(hW_\ell(t)u)=A(hu),\quad C(hW_\ell(t)u)=C(hu)
+                                      \quad(u\in D(K)),\\
+\operatorname{tr}(W_\ell(t)u)=\operatorname{tr}u
+                                      \quad(u\in\mathscr V).
+\end{gathered}
+\tag{22.12}
+$$
+
+These are preservation of domains and source data, with no claim
+of equality of diffusion energy values. All transport parameters
+$t\in\mathbb R$ are mathematical parameters distinct from the
+original physical clock and read gaps.
+
+*Proof.* First work on the full source. Lemma 22.2 makes
+$[L_d,M_{f_i}]M_{f_j}$ and its reversed product legitimate on
+$D(L_d)=D(K)$. The local product rule, already used in Theorem
+12.2 and [S, §129.D], gives on precisely that domain
+
+$$
+\begin{gathered}
+[L_d,M_f]=-2D_{v_f},\qquad v_f=d\mathsf A\nabla f,\\
+[[L_d,M_{f_i}],M_{f_j}]=-2M_{e_{ij}}.
+\end{gathered}
+\tag{22.13}
+$$
+
+Local $H^2$ regularity justifies the weak derivatives in these
+identities. Their rightmost multipliers are bounded, smooth and
+compactly supported. Since $Q$ reduces $L_d$ and the $M_{f_i}$,
+it commutes on $D(L_d)$ with the double commutators, and hence
+with their bounded extensions. Restriction and transport by $U$
+prove (22.6). This is the compact-domain form of the existing
+energy-recovery mechanism in Theorem 12.2, retaining the sign of
+$e_{12}$; it requires no new global energy-domain premise for $r$
+or $\gamma$ and no repetition of a phase-limit theorem.
+
+The real Gram matrix is positive semidefinite pointwise.
+Polynomial multiplier calculus proves (22.7), including reduction
+by $Q$ and compact smoothness of all coefficients. Wherever
+$\sigma(b)$ is supported, $\phi(b)=1$ on a neighborhood, so
+$f_1=b$, $f_2=r$ there. Multiplying the Gram matrix by its
+adjugate gives (22.8). Elsewhere the coefficients and $\chi$
+vanish. Lemma 22.2 applies to all these coefficient multipliers.
+Thus the full-source version $S_{\ell,0}$ of (22.9) is defined
+on all $D(L_d)$, not just on compact tests.
+
+For a real compact coefficient $\alpha$,
+$M_\alpha D_v+D_vM_\alpha=2D_{\alpha v}$.
+Together with (22.13), this fixes both the sign and factor in
+(22.9): $S_{\ell,0}=iD_{Y_\ell}$. Integration by parts on a
+fixed punctured compact neighborhood proves symmetry for all
+its domain vectors, which are locally $H^2$. There is no source
+boundary term.
+
+Extend $Y_\ell$ by zero through $e$ in the original underlying
+$\mathbb R^4$. It is a globally smooth compact vector field with
+bounded derivative. Its ODE has a unique complete smooth flow
+for both signs of time. Every flow map is the identity near $e$
+and off one fixed compact subset of $M$. Uniqueness also makes
+that compact set invariant: a point outside is fixed and cannot
+be reached from a different point by a diffeomorphism.
+The density in (22.11) is smooth and positive on $M$ and equals
+one in these identity regions. Change of variables in the fixed
+measure $m$ proves unitarity; the Jacobian cocycle proves the
+group law. Continuity on $C_c^\infty(M)$ followed by density and
+unitarity proves strong continuity on $\mathcal H$.
+Differentiation at zero on these tests gives $D_{Y_\ell}$.
+
+By Stone's theorem [T, Theorem 5.2] this group has a self-adjoint
+generator agreeing with $iD_{Y_\ell}$ on the tests. They are
+dense, contained in its domain and invariant under every group
+member. The invariant-domain criterion [T, Corollary 5.3] makes
+them a core for this first-order generator. Testing the adjoint
+against these same compact functions identifies its domain with
+the distributional maximal domain in (22.10): the weighted formal
+adjoint of $D_Y$ is $-D_Y$. All distributions are tested on $M$,
+where the density is smooth and positive, and $Y$ vanishes near
+both ends. Thus the compact-test operator is essentially
+self-adjoint with exactly that maximal domain. The symmetric
+$S_{\ell,0}$ contains this core and lies in its maximal adjoint,
+so its graph closure is the same $S_\ell$. The core is a
+transport core; no core for the non-Friedrichs diffusion is
+being asserted.
+
+Reduction is established on the full source: $Q$ preserves
+$D(L_d)$ and commutes there with $L_d$ and every coefficient
+in (22.9), so $QS_{\ell,0}=S_{\ell,0}Q$. Passing to graph
+limits shows $Q D(S_\ell)\subset D(S_\ell)$ and
+$QS_\ell=S_\ell Q$. The complementary projection has the same
+property; hence $Q$ reduces $S_\ell$ and its unitary group.
+Since $D(L_d)$ contains the transport core, it is also a core
+for $S_\ell$. For a vector in $D(S_\ell)\cap\mathcal O$, project
+such a graph-approximating sequence by $Q$. The new sequence lies
+in $D(L_d)\cap\mathcal O$ and has the same graph limit. This
+proves precisely the intrinsic closure and domain in (22.10).
+It does not assume that punctured compact vectors inside
+$\mathcal O$ are dense, nor that $Q$ is a Markov projection.
+
+For $u\in D(K)$, (22.5) and smoothness of the flow and weight
+make $W_\ell(t)u-u$ compactly supported $H^2$ away from $e$.
+The graph-mollification argument of Lemma 22.2 puts its $h$-multiple
+in $D(\overline S_{a,\eta})$. Both raw coefficients of that
+difference vanish by [E, (112.5)]. Thus $W_\ell(t)u$ belongs to
+the same entire complex $D(K)$ with both coefficients unchanged.
+The inverse group gives equality of domains. Equivalently the
+raw action is the half-density pullback
+
+$$
+J_hW_\ell(t)J_h^{-1}v
+ =|\det D\Phi_{\ell,t}|^{1/2}\,v\circ\Phi_{\ell,t},
+\tag{22.14}
+$$
+
+which is the identity in a whole neighborhood of the singular
+source. For $u\in\mathscr V$, the difference is instead compact
+$H^1$ on $M$, hence belongs to $\mathscr V_0$ by Lemma 22.2.
+Its trace is zero. Applying the inverse again proves the full
+form-domain and trace assertions. In particular the nonpolar
+source summand has been retained. $\square$
+
+## 23. Ordered multiplication and original-word continuation
+
+**Theorem 23.1 (actual pullback multiplication and compact next
+actions).** Let $M_k$ be any bounded actual source multiplier
+reducing $\mathcal O$, whose restriction $\mathsf C_k$ is already
+determined in the recovered space. For any finite ordered list
+$\beta=((\ell_1,t_1),\ldots,(\ell_n,t_n))$ of transports from
+Theorem 22.3, allowing different scalar packets, put
+
+$$
+\begin{gathered}
+\mathsf W_\beta=\mathsf W_{\ell_1}(t_1)\cdots
+                       \mathsf W_{\ell_n}(t_n),\qquad
+\Theta_\beta=\Phi_{\ell_n,t_n}\circ\cdots\circ\Phi_{\ell_1,t_1},\\
+\mathsf C_{k,\beta}
+  =\mathsf W_\beta\mathsf C_k\mathsf W_\beta^*,\qquad
+U\mathsf C_{k,\beta}U^{-1}=M_{k\circ\Theta_\beta}|_{\mathcal O}.
+\end{gathered}
+\tag{23.1}
+$$
+
+The last operator is actual bounded multiplication on all
+$\mathcal O$. Every finite group product preserves $D(K)$,
+$\mathscr V$, both raw endpoint coefficients and trace in the
+sense of (22.12). For $k=r$ write $q_\beta=r\circ\Theta_\beta$
+and $\mathsf Q_\beta=\mathsf C_{r,\beta}$. Then
+
+$$
+\begin{gathered}
+q_\beta-r\in C_c^\infty(M),\qquad
+v_\beta=(\mathsf Q_\beta-\mathsf R)\Omega\in D(\Lambda),\\
+Uv_\beta=q_\beta-r,\qquad
+U\Lambda v_\beta=dK(q_\beta-r),\qquad \tau(v_\beta)=0,\\
+U\widehat P^zv_\beta=T_{zd}(q_\beta-r)\quad(z\ge0),\qquad
+\lim_{z\downarrow0}\frac{\widehat P^zv_\beta-v_\beta}{z}
+                       =-\Lambda v_\beta.
+\end{gathered}
+\tag{23.2}
+$$
+
+*Proof.* Direct cancellation of the two density weights gives
+$W_\ell(t)M_kW_\ell(t)^*=M_{k\circ\Phi_{\ell,t}}$ on the full
+source. These diffeomorphisms are nonsingular for $m$: on $M$
+its density is strictly positive and smooth, while $e$ is a
+fixed null point. Pullback therefore respects completed measurable
+classes and permitted null repairs. Reduction of both factors
+proves reduction of the conjugate before restriction. For two
+factors the symbol is $k\circ\Phi_{\ell_2,t_2}\circ
+\Phi_{\ell_1,t_1}$; induction gives exactly (23.1), without any
+commutation of fields. Domain and source-data preservation compose
+in the written operator order.
+
+The finite source composite is smooth and the identity near $e$
+and off a punctured compact set. Since $r$ is smooth on $M$,
+$q_\beta-r$ is compact smooth there. It belongs to $D(K)$ by
+(22.3), or directly because its $h$-multiple is in $\mathcal D_0$.
+Both multipliers reduce $\mathcal O$, so their difference applied
+to $1$ lies in $\mathcal O$. Theorem 3.2 now proves every domain
+and action in (23.2); the last limit is the generator derivative
+on this vector. These are genuine next heat actions on a compact
+difference, with no global $r\in D(K)$ premise. All constructions
+in (22.6), (22.9) and (23.1) commute with marked-tuple unitary
+intertwiners: bounded functional calculus, graph closure and the
+self-adjoint group calculus are intrinsic. $\square$
+
+**Theorem 23.2 (a nonidentity witness for every positive triple).**
+For each original finite $a,\eta,d>0$ there is a scalar packet
+for which the second flow has, for all $t\ge0$,
+
+$$
+\begin{gathered}
+b\circ\Phi_{2,t}=b,\qquad
+q_t=r\circ\Phi_{2,t},\qquad
+q_t-r=\int_0^t\chi(\Phi_{2,v}(\,\cdot\,))\,dv,\\
+0<r\le q_t\le1.
+\end{gathered}
+\tag{23.3}
+$$
+
+There is a nonempty open source set on which $q_t>r$ for every
+$t>0$. Thus $\mathsf Q_t\ne\mathsf R$, with the difference
+detected on $\Omega$. Such a packet can be selected from the exact
+tuple without adding source coordinates as input.
+
+*Proof.* [EF, Theorem 3.1] supplies an actual open rank-two region
+for $(b,\gamma)$ for each positive triple. Since
+$dr=-r^2d\gamma$, the pair $(b,r)$ has rank two there as well.
+In that region $db\ne0$, so there is a point with
+$b\notin\{0,s\}$. Choose the scalar intervals around its $b$-value.
+On the plateau the Gram matrix in (22.7) is the Gram of $db,dr$
+for the positive definite $d\mathsf A$. Its determinant is
+positive at that point and on a smaller open neighborhood.
+There $\sigma(b)=1$ and $\chi>0$. This proves existence using
+only the actual source rank supplier, not a dimension count or a
+hypothesis that two gradients span the full tangent space.
+
+For an intrinsic selection, fix a countable enumeration of rational
+nested interval packets and fixed smooth cutoff recipes for their
+endpoints, retaining those with $s\notin\overline I_2$ and
+$0\notin\overline I_2$. Their recovered determinants are
+$\mathsf\Delta=\mathsf E_{11}\mathsf E_{22}-\mathsf E_{12}^2$.
+The preceding open neighborhood guarantees a packet with
+
+$$
+\left\|\mathbf1_{I_0}(\mathsf B)
+           \mathbf1_{(0,\infty)}(\mathsf\Delta)\Omega\right\|^2>0.
+\tag{23.4}
+$$
+
+Select the first such packet. This is an exact set-theoretic test
+of spectral mass, with no finite comparison algorithm or passive
+stopping rule asserted. Smoothness also makes its set
+$\{b\in I_0,\Delta>0\}$ open and nonempty. Equations (22.8) and
+the ODE give (23.3). The integrand is nonnegative everywhere and
+strictly positive initially on that set. Continuity gives a
+positive initial integral, and nonnegativity keeps it positive
+for every later $t>0$. Every nonempty open subset of $M$ has
+positive original $m$-measure, so $(\mathsf Q_t-\mathsf R)\Omega
+\ne0$.
+
+This witness also separates domain preservation from diffusion
+symmetry. For $t>0$, $\int q_t\,dm>\int r\,dm$. If $W_2(t)1=1$,
+then (22.11) forces $j_{2,t}=1$, and change of variables would
+force equality of these integrals. Hence $W_2(t)1\ne1$.
+It has norm one and trace one, so it cannot be another constant.
+By $\ker K=\mathbb C1$ its full diffusion energy is strictly
+positive, whereas $\mathscr E[1]=0$. Thus this transport does
+not preserve the diffusion form values or commute with the heat
+operator. These assertions concern this mathematical transport,
+not an applied change to the source process. $\square$
+
+**Theorem 23.3 (the unchanged original word and B3 consumers).**
+For any $\beta$ in Theorem 23.1 and every original word $u$,
+
+$$
+\mathbb E_e\!\left[q_\beta(Z_{2d})
+      \mathbf1_{\{Y_0\cdots Y_{|u|-1}=u\}}\right]
+ =\langle\widehat P b_o,\mathsf Q_\beta F_u^o\rangle.
+\tag{23.5}
+$$
+
+For the original word $B3$, this is the concrete multiplication
+action and moment
+
+$$
+\begin{gathered}
+F_{B3}^o=\frac c4\widehat P b_o,\qquad
+U\mathsf Q_\beta\widehat P b_o=q_\beta g_{2d},\\
+\mathbb E_e[q_\beta(Z_{2d})\mathbf1_{\{Y_0=B,Y_1=3\}}]
+ =\frac c4\langle\widehat P b_o,
+                         \mathsf Q_\beta\widehat P b_o\rangle.
+\end{gathered}
+\tag{23.6}
+$$
+
+For a nonidentity packet of Theorem 23.2 and every $t>0$, (23.6)
+strictly exceeds the same expression with $\mathsf R$ in place
+of $\mathsf Q_t$. More generally let $\mathsf C_j$ be finitely
+many bounded recovered pullback multipliers from (23.1), with
+source symbols $k_j$, and let $y_0,\ldots,y_\ell\in\mathcal L$.
+With $D_j=\mathsf C_jN_{y_j}$ one has
+
+$$
+\mathbb E_e\!\left[\prod_{j=0}^{\ell}
+       k_j(Z_{(j+2)d})\mathbf1_{\{Y_j=y_j\}}\right]
+ =\langle\widehat P b_o,
+             D_0\widehat P D_1\cdots\widehat P D_\ell\Omega\rangle.
+\tag{23.7}
+$$
+
+*Proof.* The first read has exactly the original density
+$g_{2d}=Pb$, represented by $\widehat P b_o$. Conditional on the
+one undisturbed path, the original fresh label noise gives the
+product of the original $f_{y_j}$, with no additional emission.
+Backward Markov conditioning at the original gaps $d$ gives
+(23.5) and (23.7), as in Theorem 14.1. Every displayed multiplier
+acts on all $\mathcal O$ by (23.1), so all intermediate vectors
+remain in that actual sector. No compression to
+$\mathcal H_{\rm rel}$ is used. The recursion (3.3),
+$N_B=I/4$, and $N_3\Omega=cb_o$ give (23.6).
+Its difference from the $r$ expression is
+$(c/4)\int g_{2d}^2(q_t-r)\,dm>0$, since $g_{2d}>0$ almost
+everywhere. All integrands are bounded except this integrable
+square, and $q_t-r$ is positive on a set of positive measure.
+Null repairs do not matter at these finitely many positive read
+times. This proves exact original-path insertion moments, not
+observation of an inserted value on a realized path. $\square$
+
+**Definition 23.4 (attribution and remaining recovery boundary).**
+The source-specific correspondence in §§22–23 is `repo-derived`
+conditional mathematics: recovered scalar properness pays actual
+compact domains; the full-source commutator closure and its
+reduction pay actual transported multiplication; the original
+entrance and word recursion consume it. Theorem 12.2 and
+[S, §129.D] already supply the energy/commutator mechanism.
+Bounded double commutators, Gram cofactors, complete compact
+flows, weighted change of variables, Stone's theorem and the
+invariant-domain core criterion [T, Theorem 5.2, Corollary 5.3]
+are reused ingredients. Hunter's theorem [HUN, Theorem 4.27]
+is used only in the punctured interior with its actual $H^1$
+weak solution, smooth elliptic coefficients and $L^2$ forcing.
+The full endpoint is [E, Theorem 112.2]; the full form and trace
+are [S, (115.14)–(115.20)].
+
+Inverse energy-Gram differentiation and its chain rule are prior
+art in Hino [HIN, Theorem 3.4, (3.16), Remark 3.5, (3.19)].
+His regular strongly local form, minimal energy-dominant measure,
+finite index and full-index coordinate hypotheses are not inferred
+from two observed functions here. Cofactors suffice for (23.3);
+no normalized inverse frame or claim of full spatial coordinates
+is required. No general phase, Gram or flow fact is claimed as
+new, and no fresh formal verification or worldwide priority is
+asserted.
+
+Nonidentity of $\mathsf Q_t$ and $\mathsf R$ does not prove
+strict enlargement of $W^*(\mathsf B,\mathsf R)$, nonmeasurability
+of $q_t$ for $\overline{\sigma(b,\gamma)}^{\,m}$, minimality,
+spatial completeness or $\mathcal H_{\rm rel}=\mathcal O$.
+The already recovered vector $\widehat P\mathsf R\Omega$
+corresponds to $T_dr$ [JET, Corollary 12.3]; no identity here
+promotes it to the actual multiplier $M_{T_dr}|_{\mathcal O}$.
+That multiplier's reduction and intrinsic action remain unpaid,
+as do both signs of the full-reference heat-factor condition
+(14.5). A compact difference in (23.2) does not establish global
+$r$ or $\gamma$ membership in $\mathscr V$ or $D(K)$.
+
+The source, raw Haar measure, entire complex endpoint, normalized
+$h$, reference $m$, original positive parameters, $e$-start,
+calibration, physical clock, labels, read history and retained
+memory are unchanged in (23.5)–(23.7). Exact tuple constructions
+supply neither native physical controls nor a finite passive
+evaluator, effective group/closure moduli or a cost advantage.
+The all-positive-parameter mutual recovery of space, time,
+boundary and memory remains a further problem.
+
+[SRO]: RECURSIVE_RELATIONAL_OBSERVATION_SOURCE_RELATIVE_ORDER.md
+[HUN]: https://www.math.ucdavis.edu/~hunter/pdes/ch4.pdf
+[HIN]: https://arxiv.org/html/1212.6166v1
+[JET]: RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_SOURCE_JET_CERTIFICATION.md
+
+## 追加锚（本行以下为增补区）

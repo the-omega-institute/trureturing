@@ -35,7 +35,7 @@ computations of the paper extend to every number of modes and every replica orde
 
 ## Gap
 
-Issue #13990 records the literature check before any Lean: one arXiv version; arXiv abstract
+Issue #13990 records the historical literature check before any Lean: then one arXiv version; arXiv abstract
 searches for multi-entropy with Gaussian states and for genuine multi-entropy found no proof of
 Eq. (3.8); Zenodo had no record; the repository had no result on Gaussian multi-entropy.
 `not-found-in-searched-scope`.
@@ -117,18 +117,34 @@ eventually zero.
   $\det H_{AB:C}\det H_{BC:A}\det H_{CA:B}=\varepsilon^2\det H_3$ at $n=2$, which is the
   fully symmetric case of the paper's §4 theorem $\mathrm{GM}^{(3)}_2=0$.
 
-**Argued, not formalized.**
+**Subsequent formal coverage.**
 
 - *Mechanism.* The coefficient of $\log\varepsilon$ is fixed by the replica counts alone
   ($n^2-1$ for the tripartite term, $n-1$ for each bipartite term), because the eigenvalue $1$ is
   simple in every term; the remaining spectrum contributes only the constant
   $\frac{\log D_3(0)}{2n(n-1)}-\sum_R\frac{\log D_R(0)}{4(n-1)}$.
-- *The subleading constant.* $\mathrm{GM}^{(3)}_n-\frac{2-n}{2n}\log a$ converges to
+- *The subleading constant.* The later
+  `GaussianMultiEntropy.ResidualLimit.residual_determinant_limit` proves, for every
+  $n\ge2$ and positive integer tripartition, convergence of
+  $\mathrm{GM}^{(3)}_n-\frac{2-n}{2n}\log a$ to the explicit finite-product
+  `residualConstant`. In the determinant notation above this is
   $\frac{n-2}{4n}\log\frac{N-1}{N^2}+\frac{\log D_3(0)}{2n(n-1)}-\sum_R\frac{\log D_R(0)}{4(n-1)}$;
-  numerically the limits lie between $0.044$ and $0.239$ for the configurations of #13990.
+  The numerical range $0.044$ to $0.239$ in #13990 is historical supporting evidence,
+  not the proof. The same module's `GM3_eq_fourierGM` identifies the actual integral
+  with the all-replica Fourier product; its `tripartiteResidual` and `cutResidual`
+  give explicit finite products for the residual determinants.
 
-**Open.** A closed form of $D_R(0)$ in terms of $n$ and the party fractions, and the corresponding
-statement for the $\mathtt q\ge4$ multi-entropy, are not settled here.
+`GaussianMultiEntropy.ReplicaFour.tripartiteProduct_four` further gives the general
+order-four product, while that module's specialized closed form, constants and
+uniform remainders concern $(m,1,1)$. These are prior formal results, not new
+order-three balancing proofs. arXiv v2 appeared on 12 October 2026; the quotations
+and original preregistration above continue to refer to v1.
+
+**Open/separate.** A further simplification of the general finite residual products,
+the corresponding $\mathtt q\ge4$ multi-entropy, higher-replica balancing, physical
+replica-one continuation and other Gaussian branches are not settled by these
+results. The fixed-$a$ Page/large-$N$ preregistration in issue #22644 is a separate
+line with its existing owner and range.
 
 **Effect on the paper.** Eq. (3.8) holds for every $n$ and every tripartition with positive
 party sizes.
