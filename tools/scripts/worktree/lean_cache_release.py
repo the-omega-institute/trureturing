@@ -123,19 +123,12 @@ def interrupt_release(signum, _frame):
 
 
 def checked_run(command, deadline):
-    timeout = remaining(deadline)
-    with subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True) as child:
-        try:
-            stdout, stderr = child.communicate(timeout=timeout)
-        except BaseException:
-            # Only this command's child is owned here. Do not let an interrupted
-            # transport retain pipes or continue after the cache guard is released.
-            child.kill()
-            child.communicate()
-            raise
-        if child.returncode:
-            raise GitHubCommandError(child.returncode, command, output=stdout, stderr=stderr)
-        return subprocess.CompletedProcess(command, child.returncode, stdout, stderr)
+    try:
+        return subprocess.run(command, check=True, capture_output=True, text=True,
+                              timeout=remaining(deadline))
+    except subprocess.CalledProcessError as error:
+        raise GitHubCommandError(error.returncode, error.cmd,
+                                 output=error.output, stderr=error.stderr) from error
 
 
 def gh(deadline, *args):
