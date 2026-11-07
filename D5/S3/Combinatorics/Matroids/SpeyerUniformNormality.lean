@@ -138,7 +138,7 @@ def g (n d : ℕ) : ℝ[X] := ∑ i ∈ Finset.Icc 1 (min d (n - d)),
     ((d - i).factorial * (n - d - i).factorial * (i - 1).factorial)) * X ^ i
 
 
-private def qAB (a b : ℕ) : ℝ[X] := ∑ j ∈ range (a+1), C ((a.choose j * b.choose j : ℕ) : ℝ) * (X+1)^j
+def qAB (a b : ℕ) : ℝ[X] := ∑ j ∈ range (a+1), C ((a.choose j * b.choose j : ℕ) : ℝ) * (X+1)^j
 
 
 private lemma choose_triple_sum (a b k : ℕ) (hab : a ≤ b) (hk : k ≤ a) :
