@@ -9,6 +9,7 @@
 /-
 admission_basis: open-problem-resolution (#18668; Proved)
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/19849
+Publication audit for lagrange_subst: https://github.com/the-omega-institute/trureturing/issues/26904
 Every theorem below has proof_shape: bind-only and escape_witness: none.
 forward_unit: proof_shape: bind-only; escape_witness: none; consumers: T, T_inverse.
 T_zero: proof_shape: bind-only; escape_witness: none; consumers: T_equation, T_eq_W, coeff_exp_W.
@@ -18,7 +19,8 @@ E_mul: proof_shape: bind-only; escape_witness: none; consumers: coeff_exp_W.
 E_pow: proof_shape: bind-only; escape_witness: none; consumers: T_eq_W, coeff_exp_W.
 E_coeff: proof_shape: bind-only; escape_witness: none; consumers: T_eq_W, derivative_E, coeff_exp_W, egf_rearranged, egf_closed.
 T_eq_W: proof_shape: bind-only; escape_witness: none; consumers: coeff_exp_W.
-lagrange_subst: proof_shape: bind-only; escape_witness: none; consumers: coeff_exp_W.
+lagrange_subst: proof_shape: bind-only; escape_witness: none; consumers: coeff_exp_W,
+  D5.S3.Combinatorics.PowerSeries.BalaA337389Diagonal.diagonal_coefficient.
 derivative_E: proof_shape: bind-only; escape_witness: none; consumers: coeff_exp_W.
 coeff_exp_W: proof_shape: bind-only; escape_witness: none; consumers: egf_closed.
 sum_triangle: proof_shape: bind-only; escape_witness: none; consumers: egf_rearranged.
@@ -142,7 +144,7 @@ private theorem T_eq_W : T = W := by
     apply (eq_div_iff (mul_ne_zero hn (by positivity))).2
     linear_combination (norm := (field_simp; ring)) (n.factorial : ℚ) * h
 
-private theorem lagrange_subst (root factor F : (PowerSeries ℚ)) (hzero : constantCoeff root = 0)
+theorem lagrange_subst (root factor F : (PowerSeries ℚ)) (hzero : constantCoeff root = 0)
     (heq : root = X * subst root factor) (n : ℕ) :
     ((n+1 : ℕ) : ℚ) * coeff (n+1) (subst root F) =
       coeff n (PowerSeries.derivative F * factor^(n+1)) := by
