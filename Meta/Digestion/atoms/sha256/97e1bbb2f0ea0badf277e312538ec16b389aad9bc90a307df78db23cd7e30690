@@ -1,0 +1,27 @@
+**Proposition 40.3 (exact-rational and static-coding boundaries).**
+The empty-word conclusion fails for a positive-real codomain. Also an
+injective coding of pair states into positive rationals need not satisfy
+(40.3), even when all codes are positive integers.
+
+Proof. Put $\varphi=(1+\sqrt5)/2$ and let $\iota$ be the constant
+$\varphi$. The nonempty chronological word $LR$ acts by
+$x\mapsto(1+2x)/(1+x)$ and fixes $\varphi$, since
+$\varphi^2=\varphi+1$. Thus $u=w=LR$ satisfies the real version of
+(40.3). This example refutes the claim that both words must be empty
+over all positive reals; it asserts no nonconstant real representation.
+For every real anchor whose evaluation map is free, the proof of
+Theorem 40.2 still works. Section 20 distinguishes such anchors from
+cyclic quadratic anchors.
+
+For a static injective code take $j(a,b)=2^a(2b-1)$. The power of two
+and odd factor uniquely recover $a,b$. If this code admitted fixed
+compiled words on $V$, the two successors of $(0,1)$ both have code
+$2$, while its code is $1$. The unique rooted word taking $1$ to $2$
+is $R$, forcing $u=w=R$. But $j(0,2)=3$ and
+$j(\mathsf R(0,2))=j(2,2)=12$, whereas $R(3)=4$.
+The code is injective and fails the action condition. The same logical
+distinction applies to the injective syntax code of
+[FARG §9](FIBONACCI_ATOMIC_RELATION_GENERATION.md): unique parsing
+does not establish (40.3). Neither construction acquires a code from an
+opaque source or supplies a right to act on it. $\square$
+

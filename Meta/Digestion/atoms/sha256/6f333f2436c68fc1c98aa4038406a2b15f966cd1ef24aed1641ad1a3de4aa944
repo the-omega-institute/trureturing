@@ -1,0 +1,17 @@
+**定义 160.2（保留初配置的局部全微历史核）。** 对固定 $u$ 和 $i$，令 $\theta_i^{u}(\tau)\in L_i$ 为按原十五次实际脉冲演化的局部向量，初值 $u_B$，末值 $\eta_i^{u}$。在原路径空间 $\mathscr R$ 中明确保留 $r(0)$、全部十五个单位调用、每次跳动及其时间、全部接缝值和末端垃圾 $r(15)$。局部最小率由这个同一个 $\theta_i^{u}$ 和原局部 Hamiltonian 计算。
+
+记平方初配置 $p_r^u=|u_r|^2$ 的局部参考路径律为 $\mathcal R_i^{u,\mathrm{eq}}$。当 $u_s\ne0$ 时，定义 $\mathcal R_i^{(u,\delta_s)}$ 为该参考律给定 $r(0)=z^{(s)}$ 的条件律，等价于原向量 $u_B$ 下从这个确定配置开始的同一积分风险构造。不是改以 $|z^{(s)}\rangle$ 为演化向量。置
+
+$$
+\mathcal R_i^{(u,\nu)}
+ =\sum_{s:\nu_s>0}\nu_s\mathcal R_i^{(u,\delta_s)},
+\qquad
+\frac{d\mathcal R_i^{(u,\nu)}}
+ {d\mathcal R_i^{u,\mathrm{eq}}}(r)
+ =g_u^\nu(r(0)),
+\quad g_u^\nu(z^{(s)})=\frac{\nu_s}{|u_s|^2}.
+\tag{160.3}
+$$
+
+在 $u_s=0$ 的初配置上将 $g$ 置零；不定义或调用该零支撑初配置的条件核。每个 $\mathcal R_i^{(u,\nu)}$ 是局部完整历史律，不只是末端报告核。
+

@@ -1,0 +1,58 @@
+**Definition 45.1 (pure levels and the unchanged effect arcs).** Retain
+exactly the original domain $\mathcal K=\operatorname{Dens}_2\times U(4)$,
+the ordinary transpose, the joint Frobenius distance (39.1), its two
+optimizer signs, and its one common scalar quotient. Keep $g$, $f=g-\kappa\rho$,
+$N=N_{\mathrm{geo}}$, $V=N+\kappa\xi$, $\mathcal G_\xi$, and the original
+and phase minimizing sets of Definitions 39.1 and 42.1. Put
+
+$$
+\begin{aligned}
+ R&=13/4,& c_0&=e^2/4,\\
+ \mathcal K_{\mathrm p}&=\{(E,U)\in\mathcal K:\operatorname{rank}E=1\},\\
+ \mathcal L_{\mathrm p,\xi}
+   &=\{X\in\mathcal K_{\mathrm p}:\rho(X)=\xi\},&
+ \mathcal P_{\mathrm p,\xi}
+   &=\mathcal P_\xi\cap\mathcal K_{\mathrm p},\\
+ m_{\mathrm p}(\xi)&=\min_{X\in\mathcal L_{\mathrm p,\xi}}f(X),&
+ m_{\mathrm{ph,p}}(\xi)&=\min_{X\in\mathcal P_{\mathrm p,\xi}}f(X).
+\end{aligned}
+\tag{45.1}
+$$
+
+Write $\mathcal A_{\mathrm p,\xi}$ and $\mathcal A_{\mathrm{ph,p},\xi}$
+for the respective minimizing sets. For $0<\xi\le R$ these pure levels
+are nonempty because they contain $\mathcal G_\xi$. They are compact:
+the rank-one condition on a normalized positive two-by-two effect is
+$\epsilon(E)=1-\operatorname{Tr}(E^2)=0$, a closed condition. Their
+minima are therefore attained, as are the full original and phase
+minima in Theorem 35.2 and Definition 42.1.
+
+For an actual $U$, all of $w,A,B,P,Q,u,v,\Delta_\pm,S_\pm,t_\sigma,
+J_\sigma,b_\sigma,I_\sigma,Q_\sigma$ retain exactly the definitions
+(23.2) and (36.1)--(36.3). Here $v=|Q|$ and $Q_\sigma$ is a real arc
+endpoint, distinct from the complex amplitude $Q$. For an admissible
+sign define its full effect arc by
+
+$$
+ \mathfrak E_\sigma(U,\xi)=
+ \left\{\bigl(TF_\sigma(q,z)T^\dagger\bigr)^{\mathsf T}:
+       q\in I_\sigma,\quad |z|^2=t_\sigma-q^2\right\},
+\tag{45.2}
+$$
+
+where $F_\pm(q,z)$ are exactly the two matrices in (36.7). No coherence
+phase condition is imposed in (45.2). Equations (36.10)--(36.13) say
+that this is precisely the nonempty compact set of original effects
+at level $\xi$ for which $\sigma$ attains the original joint distance.
+Every point on it has
+
+$$
+ \epsilon(E)=2(q-t_\sigma),\qquad
+ t_\sigma\le q\le\min\{\sqrt{t_\sigma},J_\sigma\}.
+\tag{45.3}
+$$
+
+In particular its pure effects have exactly $q=t_\sigma$; a mixed
+point has $0<t_\sigma<q<1$. The quantities in this arc always come
+from the one fixed whole feedback $U$.
+

@@ -419,7 +419,7 @@ theorem order_control_marginal (ω tPlus tMinus : ℝ) :
     rw [hP]
     norm_num [sigma, Matrix.trace]
 
-private lemma phase_unit (θ : ℝ) :
+lemma phase_unit (θ : ℝ) :
     star (Complex.exp (-Complex.I * (θ : ℂ))) * Complex.exp (-Complex.I * θ) = 1 := by
   change (starRingEnd ℂ) _ * _ = _
   rw [← Complex.exp_conj, ← Complex.exp_add]

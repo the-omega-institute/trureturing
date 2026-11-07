@@ -1,0 +1,42 @@
+**Theorem 53.1 (global value and exhaustive equality through the first zero).**
+On the unchanged original domain, for every $0<\xi\le\xi_*$,
+
+$$
+\min_{\rho(E,U)=\xi}g(E,U)=V(\xi),\qquad m(\xi)=N(\xi),\qquad
+\mathcal A_\xi=\mathcal G_\xi.
+\tag{53.1}
+$$
+
+The equality set consists exactly of (51.9), with both orientations
+and every common scalar representative. Thus every original pair on
+that level obeys $g\ge V$, or equivalently $f\ge N$, and equality
+occurs precisely in that set. All mixed inputs, arbitrary whole
+unitaries and the endpoint $\xi=\xi_*$ are included.
+
+*Proof.* The level is nonempty by the actual geometric attainment in
+Theorem 37.5. It is a closed subset of the compact original domain,
+and $f,g,\rho$ are continuous, so a global minimizer exists. Since
+$\xi\le\xi_*<239/100<13/4$, Theorem 48.5 of Continuation III applies
+to this attained minimizer: it is pure and phase, with the actual
+minimizing sign and the original common scalar. This is a statement
+about a global minimizer; it has not changed an arbitrary mixed pair
+or its distance.
+
+If its sign were negative, (52.6) would give $g>V$, whereas the
+selected positive geometric pair at the same true level has $g=V$.
+This contradicts minimality. The minimizer is therefore positive-active.
+Theorem 51.2 gives $g\ge V$, and the same selected pair gives the
+reverse inequality for the minimum. Hence its value is exactly $V$,
+and $f=g-\kappa\xi$ gives $m=N$. Theorem 51.2 now identifies every
+minimizer with (51.9). Conversely every such pair attains this value
+at true distance $\xi$. The effects in (51.9) equal those in (39.2),
+since $(\psi\psi^\dagger)^{\mathsf T}
+=\overline\psi\,\overline\psi^{\dagger}$ and $\psi=T\beta_\tau$.
+Thus the set is exactly $\mathcal G_\xi$.
+
+Finally any original pair with $g=V$ is itself a global minimizer and
+is subject to the preceding argument. Every pair outside that set has
+strictly larger value, including every mixed effect. This proves the
+all-input conclusion without a pointwise purification inequality.
+$\square$
+

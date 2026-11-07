@@ -1,0 +1,24 @@
+**定理 5.4（固定态中的不确定性关系）。**
+
+对有界自伴 $A,B$，
+
+$$
+(\Delta_\omega A)^2(\Delta_\omega B)^2
+\ge|\omega((A-\omega(A)I)(B-\omega(B)I))|^2
+\ge\tfrac14|\omega([A,B])|^2.
+$$
+
+**证明。**
+
+第一式是正线性泛函的 Cauchy--Schwarz；
+中心化乘积的虚部为 $\omega([A,B])/(2i)$，给第二式。
+
+□
+
+固定二维态 $\lvert +y \rangle=(\lvert 0 \rangle+i\lvert 1 \rangle)/\sqrt2$ 与固定 $X,Z$
+已给 $\Delta X\Delta Z=1=|\omega([X,Z])|/2$。
+因而不确定性可以在有限维、固定门和固定读口下存在。
+反之，理想重复 $Z$ 测量可持续得到同一标签。
+更准确的概括是：固定非交换关系限制同时尖锐的读出，
+而不是每次结果必须变化。
+

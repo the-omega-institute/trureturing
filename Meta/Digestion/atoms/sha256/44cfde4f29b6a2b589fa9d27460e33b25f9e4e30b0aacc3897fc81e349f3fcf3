@@ -1,0 +1,39 @@
+**命题 B-28.3（正、负、零敏感度及全部仿射界）。** 当 &#x1D43D;<sub>&#x1D453;</sub>&#x2265;&#x30; 时
+
+```math
+\begin{aligned}
+\underline f&=\ell_f+J_f\kappa_-
+=\max\{\ell_f,\ell_f+J_f(X+Y+Z-1)\},
+\\\overline f&=\ell_f+J_f\kappa_+
+=\min\{\ell_f+J_fX,\ell_f+J_fY\}.
+\end{aligned}
+```
+
+当 &#x1D43D;<sub>&#x1D453;</sub>&#x3C;&#x30; 时
+
+```math
+\begin{aligned}
+\underline f&=\ell_f+J_f\kappa_+
+=\max\{\ell_f+J_fX,\ell_f+J_fY\},
+\\\overline f&=\ell_f+J_f\kappa_-
+=\min\{\ell_f,\ell_f+J_f(X+Y+Z-1)\}.
+\end{aligned}
+```
+
+特别，&#x1D43D;<sub>&#x1D453;</sub>&#x3D;&#x30; 时两边等于 &#x2113;<sub>&#x1D453;</sub>。对所有符号都有
+
+```math
+\overline f-\underline f=|J_f|w.
+```
+
+令 &#x1D49C;<sub>&#x1D453;</sub><sup>&#x2212;</sup> 是全部满足 &#x1D44E;&#x28;&#x1D463;<sub>&#x1D43C;</sub>&#x29;&#x2264;&#x1D453;<sub>&#x1D43C;</sub> 的实仿射函数，&#x1D49C;<sub>&#x1D453;</sub><sup>&#x2B;</sup> 是全部满足 &#x1D44E;&#x28;&#x1D463;<sub>&#x1D43C;</sub>&#x29;&#x2265;&#x1D453;<sub>&#x1D43C;</sub> 的实仿射函数，则还精确有
+
+```math
+\underline f(m)=\max_{a\in\mathscr A_f^-}a(m),\qquad
+\overline f(m)=\min_{a\in\mathscr A_f^+}a(m).
+```
+
+证明。&#x1D53C;<sub>&#x1D45D;</sub>&#x1D453;&#x3D;&#x2113;<sub>&#x1D453;</sub>&#x2B;&#x1D43D;<sub>&#x1D453;</sub>&#x3BA; 在端点区间上按 &#x1D43D;<sub>&#x1D453;</sub> 的符号单调或恒定，命题B-28.2给全部端点实现，得到两个符号情形及宽度。四个仿射候选分别来自四条逐点不等式乘以 &#x1D43D;<sub>&#x1D453;</sub> 并加上 &#x2113;<sub>&#x1D453;</sub>；负号时不等式方向反转。它们在全部纯模式上是相应次函数或上函数，因此取任意相容律的平均也保持相应界。
+
+更一般，任意 &#x1D44E;&#x2208;&#x1D49C;<sub>&#x1D453;</sub><sup>&#x2212;</sup> 都满足 &#x1D44E;&#x28;&#x1D45A;&#x29;&#x3D;&#x2211;<sub>&#x1D43C;</sub>&#x1D45D;<sub>&#x1D43C;</sub>&#x1D44E;&#x28;&#x1D463;<sub>&#x1D43C;</sub>&#x29;&#x2264;&#x1D53C;<sub>&#x1D45D;</sub>&#x1D453;，对全部相容律取最小值得 $`a(m)\le\underline f(m)`$。刚列出的两个次函数中，总有一个在 &#x1D45A; 取得端点实现的准确值，因此全体次函数的最大值存在并等于下界。上函数同理，得到最小值等式。这里直接用来源平均及端点律证明了来源优化与约束证书的相等，不依赖额外的线性规划定理或默认来源先验。∎
+

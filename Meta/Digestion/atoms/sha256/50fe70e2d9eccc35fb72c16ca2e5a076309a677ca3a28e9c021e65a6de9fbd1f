@@ -1,0 +1,68 @@
+**Theorem 43.4 (noncoalescence off zero determinant and the simple
+reduced null mode).** Let $0<\xi_0<4$ and
+$D_{\mathrm{sel}}(\xi_0)\ne0$. If $\xi_n\to\xi_0$ and
+$X_n=(E_n,U_n)$ minimizes $f$ on the actual phase level
+$\mathcal P_{\xi_n}$, with $d_U(U_n,\xi_n)\to0$, then
+$X_n\in\mathcal G_{\xi_n}$ for all sufficiently large $n$.
+Thus a sequence of nongeometric phase global minimizers coalescing
+with the selected graph at a positive interior level requires
+$D_{\mathrm{sel}}(\xi_0)=0$.
+
+If $D_{\mathrm{sel}}(\xi_0)=0$, the reduced Hessian in (43.14)
+is positive semidefinite with exactly one null direction, in the
+coordinate order $(\delta,a,b)$:
+
+$$
+ \ker\nabla^2_{(\delta,a,b)}\Psi
+    =\operatorname{span}_{\mathbb R}
+           \left\{\left(0,\frac{s\sqrt{q_{\xi_0}}}{L_a},1\right)\right\}.
+\tag{43.17}
+$$
+
+The coefficients in (43.17) are evaluated at $\xi_0$.
+This is the Hessian after the same-level effect minimum and the
+single common scalar quotient. It asserts no Hessian statement for
+the full positive-effect boundary, and no higher-order sign,
+existence of a new branch, or global sufficiency at determinant zero.
+
+*Proof.* The chart and analytic objective in the proof of Theorem
+43.3 exist irrespective of the determinant sign. The Hessian
+(43.14) is invertible when $D_{\mathrm{sel}}\ne0$. Apply the
+implicit function theorem to the three equations
+$\nabla_{(\delta,a,b)}\Psi=0$, with $t$ as parameter.
+It gives a unique stationary solution near the selected point for
+each nearby $t$. The selected analytic scalar solution already
+satisfies those equations, so it is that unique solution.
+
+By Theorem 40.4, every sufficiently late $X_n$ has the unique
+fixed-feedback minimizing effect $\widehat E_n$. Indeed phase
+minimality implies fixed-feedback minimality, since varying only
+$E$ keeps the feedback in the phase domain. After choosing the
+nearby selected orientation and its common scalar representative,
+the local inverse chart puts its coordinates near
+$(\delta_{\xi_0},0,0)$. The reduced point must be stationary:
+every nearby chart feedback with its effect (43.8) is an actual
+phase pair at this same original level. Local variation is open
+in all three coordinates. The unique stationary solution therefore
+forces $U_n\in\mathscr U_{\xi_n}$, and fixed-feedback uniqueness
+forces $X_n\in\mathcal G_{\xi_n}$. The two orientation charts
+and their compact scalar orbits give the assertion for the whole
+sequence. In the negative-determinant case the selected stationary
+point has a decreasing direction, so a global minimizer cannot
+actually occur there; the stated noncoalescence conclusion still
+holds.
+
+At zero determinant, $L_a>0$ gives $L_b=s^2q/L_a>0$, and
+
+$$
+             (a,b)K(a,b)^{\mathsf T}
+                   =L_a\left(a-\frac{s\sqrt q}{L_a}b\right)^2.
+\tag{43.18}
+$$
+
+The scalar block $h_t$ is strictly positive and $S_0>0$.
+Hence the only reduced null direction is (43.17), and both
+remaining reduced eigenvalues are positive. The common phase was
+already quotiented out; it is not an additional null coordinate
+in this statement. $\square$
+

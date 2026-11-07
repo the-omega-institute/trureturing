@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:003a17b8f264d3036ba7566745df05b14312d111753cfcbf605908f086a89a3f
+  normalized_sha256: sha256:003a17b8f264d3036ba7566745df05b14312d111753cfcbf605908f086a89a3f
+cas_ref: sha256:003a17b8f264d3036ba7566745df05b14312d111753cfcbf605908f086a89a3f
+coverage_gids:
+  - gid: D5/S3/Combinatorics/Matroids/SparsePavingMatchingObstruction.basiswise_obstruction
+    target_statement_id: sha256:458dde02d8103b2fd49c4a0934b4434ff5cdb0d25b6f64dd1ac597537b82e4d9
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,94 @@
+**Theorem 9.4 (exact support rigidity and unique optimizer channel).** Put
+
+$$
+E_\sigma=\bar b_\sigma\bar b_\sigma^\dagger=D_\sigma,
+\qquad E_\sigma^{\mathsf T}=b_\sigma b_\sigma^\dagger,
+\qquad \sigma\in\{+,-\},
+\tag{9.19}
+$$
+
+using exactly $b_\sigma,D_\sigma,U_\sigma$ from (6.7), (6.2), and (6.3). Define the two disjoint compact sets
+
+$$
+\mathcal S_\sigma
+ =\{(E_\sigma,e^{i\varphi}U_\sigma):\varphi\in\mathbb R\},
+\qquad \mathcal S=\mathcal S_+\cup\mathcal S_-.
+\tag{9.20}
+$$
+
+For $\mu\in\mathcal M$, the following are equivalent: its error is $q$; its support is contained in $\mathcal S$; and its channel is $\Phi_*$. In the optimizing case $\mu(\mathcal S_+)=\mu(\mathcal S_-)=1$. Consequently the exact optimizer channel is unique in the original finite protocol class, although its implementing measures and instruments need not be unique.
+
+Proof. Suppose the error is $q$ and take $(E,U)\in\operatorname{supp}\mu$. Lemma 9.3 makes every individual nonnegative summand in (9.12) zero. The equality characterization of Theorem 8.2 therefore puts every nonzero column $b_\ell(E)$ on one of the two complex $T$-coordinate rays. Such a column has the form $z b_\sigma$ for some $z\ne0$ and $\sigma\in\{+,-\}$. By (6.9),
+
+$$
+R_0b_+=\begin{pmatrix}
+h\\\alpha h\\e^{-i\theta}c\\e^{i\theta}c
+\end{pmatrix},\qquad
+R_0b_-=\begin{pmatrix}
+h\\-\alpha h\\i e^{-i\theta}s\\-i e^{i\theta}s
+\end{pmatrix},
+\qquad h,c,s>0.
+\tag{9.21}
+$$
+
+Every coordinate of both vectors is nonzero. Thus $v=R_0b_\ell(E)$ also has no zero coordinate. The zero trace defect for this column forces equality throughout
+
+$$
+\left|\operatorname{Tr}(U\operatorname{diag}(v))\right|
+ =\left|\sum_{i=1}^4U_{ii}v_i\right|
+ \le\sum_{i=1}^4|U_{ii}|\,|v_i|
+ \le\sum_{i=1}^4|v_i|.
+\tag{9.22}
+$$
+
+In the last inequality every $|v_i|$ is strictly positive and every $|U_{ii}|\le1$, so equality gives $|U_{ii}|=1$ for every $i$. The norm-one condition on each column of the unitary $U$ then makes every off-diagonal entry zero. Equality in the triangle inequality in (9.22) says that the four nonzero numbers $U_{ii}v_i$ have a common phase. Hence
+
+$$
+U=e^{i\psi}\operatorname{diag}
+ \left(\frac{\overline{v_i}}{|v_i|}\right)_{i=1}^4
+   =e^{i\varphi}U_\sigma
+\tag{9.23}
+$$
+
+for some phases $\psi,\varphi$; the phase of the scalar $z$ is absorbed into $e^{i\varphi}$. The last equality uses the polar corrections already displayed in (6.3) and (6.9).
+
+One original $U$ cannot satisfy (9.23) for nonzero columns on both rays, because
+
+$$
+U_+^\dagger U_-
+ =\operatorname{diag}(1,-1,-i,i)
+\tag{9.24}
+$$
+
+is not scalar. At least one column is nonzero since $\operatorname{Tr}E=1$. All nonzero columns must therefore belong to the same ray. Equation (9.17) and the trace-one normalization imply
+
+$$
+E^{\mathsf T}
+ =\left(\sum_\ell|z_\ell|^2\right)b_\sigma b_\sigma^\dagger
+ =b_\sigma b_\sigma^\dagger,
+\qquad E=\bar b_\sigma\bar b_\sigma^\dagger=E_\sigma.
+\tag{9.25}
+$$
+
+Together with (9.23), this proves $\operatorname{supp}\mu\subseteq\mathcal S$. In particular it keeps the transpose explicit: the normalized measured effect is the projection onto $\bar b_\sigma$, while the vectors acted on by $R_0$ lie on the $b_\sigma$ ray.
+
+Conversely, suppose a feasible measure is supported in $\mathcal S$. Write $m_\sigma=\mu(\mathcal S_\sigma)$. Its moment is
+
+$$
+m_+E_++m_-E_-=I_2.
+\tag{9.26}
+$$
+
+The two $E_\sigma$ are orthogonal rank-one projections summing to $I_2$. Multiplying (9.26) by either projection and taking trace yields $m_+=m_-=1$. Scalar feedback phases cancel from $G_{(E,U)}$, so (6.4) gives
+
+$$
+\Phi_\mu
+ =m_+G_{(E_+,U_+)}+m_-G_{(E_-,U_-)}
+ =\Phi_*.
+\tag{9.27}
+$$
+
+Theorem 6.2 gives its error $q$, completing all implications. The displayed atoms themselves have zero certificate and trace defects by Theorem 8.2 and (6.11), so $\mathcal S$ is precisely the set of atoms eligible for optimizing support, subject to the moment masses in (9.26).
+
+For a finite original optimizer, every nonzero effect consequently has the form $D_y=t_yE_{\sigma(y)}$, its actual feedback is $e^{i\varphi_y}U_{\sigma(y)}$, and the total $t_y$ for each sign is one. Zero effects remain harmless. Outcomes may be split or relabelled, and scalar phases may vary, giving different measures and instruments with the same channel. The uniqueness assertion concerns the implemented channel, not these presentations or measurement realizations. $\square$
+

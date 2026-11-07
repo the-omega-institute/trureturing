@@ -61,6 +61,9 @@ class HostReclaimTests(unittest.TestCase):
         self.git(self.main, "init", "--initial-branch=dev")
         self.git(self.main, "config", "user.name", "Reclaim Tests")
         self.git(self.main, "config", "user.email", "reclaim@example.invalid")
+        self.git(self.main, "config", "maintenance.auto", "false")
+        self.git(self.main, "config", "gc.auto", "0")
+        self.git(self.main, "config", "gc.autoDetach", "false")
         (self.main / "source").write_text("retained\n")
         (self.main / ".gitignore").write_text(".lake/\n")
         self.git(self.main, "add", ".")
@@ -75,6 +78,9 @@ class HostReclaimTests(unittest.TestCase):
         self.git(self.main, "clone", "--no-hardlinks", self.main, target)
         self.git(target, "config", "user.name", "Reclaim Tests")
         self.git(target, "config", "user.email", "reclaim@example.invalid")
+        self.git(target, "config", "maintenance.auto", "false")
+        self.git(target, "config", "gc.auto", "0")
+        self.git(target, "config", "gc.autoDetach", "false")
         return target
 
     def age(self, root):
@@ -246,7 +252,7 @@ class HostReclaimTests(unittest.TestCase):
         self.assertTrue((lake / ".release-backup-token/source").exists())
         self.assertTrue((lake / "packages/source").exists())
 
-    def test_partial_removal_reports_failed_summary(self):
+    def test_partial_removal_warns_and_continues_with_successful_summary(self):
         target = self.root / "artifacts/ordinary"
         target.mkdir(parents=True)
         (target / "first").write_text("artifact")
@@ -260,9 +266,24 @@ class HostReclaimTests(unittest.TestCase):
         self.assertEqual("vanished", result["reason"], result)
         (target / "first").write_text("artifact")
         self.age(target)
-        with patch.object(cleanup, "remove_tree", side_effect=partial):
-            rows = self.run_sweep(expected_exit=1)
-        self.assertEqual("failed", rows[-1]["status"], rows)
+        healthy = target.with_name("z-healthy")
+        healthy.mkdir()
+        self.age(healthy)
+        native_remove = cleanup.remove_tree
+        def remove(path):
+            return partial(path) if path == target else native_remove(path)
+        warnings = io.StringIO()
+        with patch.object(cleanup, "remove_tree", side_effect=remove), contextlib.redirect_stderr(warnings):
+            rows = self.run_sweep()
+        self.assertEqual("succeeded", rows[-1]["status"], rows)
+        self.assertTrue(target.exists())
+        self.assertFalse(healthy.exists())
+        warning, = map(json.loads, warnings.getvalue().splitlines())
+        self.assertEqual("host_cleanup_warning", warning["event"])
+        self.assertEqual(str(target), warning["path"])
+        self.assertEqual("failed", warning["action"])
+        self.assertEqual("vanished", warning["reason"])
+        self.assertIn("a later child vanished", warning["diagnostic"])
 
     def test_staging_inventory_shape_age_lock_and_backup_exclusion(self):
         lake = self.main / ".lake"

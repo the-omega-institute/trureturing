@@ -1,0 +1,58 @@
+**Lemma 4.1 (Actual socket descent; `lem:glue`).**
+For $g,h\geq1$, gluing a singleton ordinary socket color on each
+factor defines a bilinear map
+
+$$
+\#:\mathcal{P}_{g,(1,\boldsymbol v)}\times\mathcal{P}_{h,(1,\boldsymbol k)}
+       \longrightarrow\mathcal{P}_{g+h,\boldsymbol v+\boldsymbol k}.
+$$
+
+The sockets remain commuting ordinary legs throughout the construction.
+
+**Proof.**
+This is [Kuperberg, Lemma `l:consum`](../../../Library/Topology/kuperberg2026oddvas.md), §3.2, in the positive-genus setting. The socket CL calculation is included in full. On disjoint flag sets let the socket leaf flags be $l_1,l_2$ and their
+paired flags $h_1,h_2$. Delete $l_1,l_2$ and their leaf vertices and
+replace the pairings by $h_1\leftrightarrow h_2$. All vertex three-cycles
+are retained. This is a connected genus-$g+h$ graph. AS and IHX commute
+with this raw operation, even when the socket is an external flag of
+the IHX neighborhood. CL not involving the socket also commutes with it.
+
+For socket CL, in [(2.2)](#eq-cherry) replace $x$ by the socket $s$ and
+glue the other factor $E$ there. Before taking quotients, the actual
+IHX gives
+
+$$
+D_{s,c}\#E-D_{c,s}\#E=-Y_{s,c}\#E.
+$$
+
+On the right, the two formerly cherry leaves become respectively the
+entire second factor and the ordinary leg $c$. The cherry stem leads
+to the rest of the first factor. These two sides both still have positive
+genus. Their unique connecting path is therefore retained by pruning,
+and the $c$ attachment lies on that path, which consists of absolute
+bridges. If a further branching ordinary tree is present, the graph is
+already zero; otherwise the $c$ insertion represents the cochain of
+this absolute skeleton bridge and is zero by Proposition
+[2.4](#prop-local). Thus the displayed defect is zero. This proves
+socket CL, including raw factors with socket-containing trees, since
+the two positive-genus sides still survive in that case. There are no
+anchors in the defect graph. This proves descent in each argument and
+bilinearity. No injectivity or extension of functionals is asserted.
+
+For an explicit flag instance, take the first factor with cycles
+$(1,2,3)$ and $(-1,-3,4)$, socket leaf $-2$, and ordinary leaf $-4$.
+Take the second factor with cycle $(5,6,-6)$ and socket leaf $-5$.
+Here signed integers denote literal flags and the edge involution is
+$j\leftrightarrow -j$. Gluing replaces flag $5$ by $-2$.
+The $X$ defect has cycles $(1,2,4)$, $(-1,3,-3)$,
+$(-2,6,-6)$ and ordinary leaf $-4$.
+Pruning retains edges $1,2,3,6$; the ordinary leg is at the bivalent
+point of the path made from bridges $1$ and $2$, each separating two
+genus-one parts. There are no anchors. This is the defect geometry
+in the preceding argument.
+
+$\square$
+
+<a id="lem-small"></a>
+<a id="lem:small"></a>
+

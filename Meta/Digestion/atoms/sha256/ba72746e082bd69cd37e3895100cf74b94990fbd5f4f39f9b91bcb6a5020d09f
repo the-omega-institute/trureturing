@@ -1,0 +1,23 @@
+### 证明
+反身性显然。对任意 \(\omega\)，总变差的三角不等式与推前映射的收缩性给出
+\[
+\operatorname{TV}
+(K^A_\omega,
+(G_{AB})_*K^B_{\theta_{AB}\omega})
+\le\varepsilon_1,
+\]
+以及
+\[
+\operatorname{TV}
+((G_{AB})_*K^B_{\theta_{AB}\omega},
+(G_{AC})_*K^C_{\theta_{BC}\theta_{AB}\omega})
+\le\varepsilon_2.
+\]
+两式相加得到误差界。成本满足
+\[
+c_C(\theta_{BC}\theta_{AB}\omega)
+\le\lambda_2c_B(\theta_{AB}\omega)
+\le\lambda_2\lambda_1c_A(\omega).
+\]
+证毕。
+

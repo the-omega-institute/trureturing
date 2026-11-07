@@ -1,0 +1,43 @@
+**Proposition 24.3 (genuine quotient and all history fibres).** The complete-response quotient of Definition 24.2 is exactly $X$, with $|V|=31$. Every vertex is reachable from the fixed root, and all legal quotient words lift to actual executions. The entire legal root language is the following table; a row with a restricted index contributes histories only in its stated range.
+
+| Endpoint | All histories ending there | Length |
+| --- | --- | --- |
+| $o$ | $\varepsilon$ | $0$ |
+| $w$ | $b$ | $1$ |
+| $t_j$, $1\le j\le5$ | $ba^{6-j}$ | $7-j$ |
+| $t_j$, $1\le j\le13$ | $bba^{13-j}$ | $15-j$ |
+| $v$ | $p_i$, $i\in\{0,1,2\}$ | $n_i$ |
+| $s$ | $p_i b$, $i\in\{0,1,2\}$ | $n_i+1$ |
+| $c_{m,j}$ | $p_i\rho_m W_m^k W_m[0:j]$, $i\in\{0,1,2\}$, $k\ge0$ | $n_i+r_m+mk+j$ |
+
+Every fibre of the joint record $F(u)=(z(u),|u|)$ has size at most two, and some fibre has size exactly two. At a cycle endpoint, a fibre can contain two different entry indices only as follows:
+
+$$
+\begin{array}{c|c|c}
+ m&\text{entry indices }(i,\ell),\ i<\ell&n_\ell-n_i\\ \hline
+ 3&(0,1)&6=2m\\
+ 7&(0,2)&14=2m\\
+ 4&(1,2)&8=2m
+\end{array}
+\tag{24.5}
+$$
+
+When both histories occur in such a fibre, their lap counts satisfy $k_i=k_\ell+2$.
+
+Proof. Following the complete transition table gives every row. Before reaching $v$, the initial choice is either $a$, or $b$ followed by $a$ and the remaining chain, or $bb$ followed by the remaining chain. These give exactly $p_0,p_1,p_2$ at $v$ and the displayed stopping cuts at the chain states. After $v$, one takes exactly one of the three routes $\rho_m$, with the cut at $s$ included, and then follows the unique periodic stream on that cycle. There is no cycle exit or route back to a transient state. This proves exhaustiveness, including all prefixes, without restricting an already given language. Every $t_j$ is reached along the long chain, and each cycle phase is reached by its route and a proper cycle prefix. Thus all $4+13+3+7+4=31$ states are root reachable.
+
+For the quotient, the constant readout and minimal records have exactly the same response meaning as in Proposition 23.2: equality of future legal-word sets gives the same maximal legal prefix of every attempted word, the same ordered records and readouts, and the same first illegal attempt when present. Conversely a word legal on just one side distinguishes complete responses. Here no two distinct states have equal future legal-word sets, as the following distinctions show.
+
+A cycle state has exactly one possible next name at every future cut and never reaches a vertex with two legal names. Its legal words are precisely the prefixes of the corresponding rotation of $W_m^\infty$. All rotations within each cycle are distinct. Indeed, a nonzero rotational symmetry would partition its $m$ positions into orbits of a common size greater than one, dividing both $m$ and the number $B_m$ of $b$'s. But
+
+$$
+(B_3,B_7,B_4)=(1,2,1),\qquad \gcd(m,B_m)=1.
+\tag{24.6}
+$$
+
+Cycles of different lengths also have different streams: in any $84$ successive symbols their $b$-counts are respectively $28,24,21$, independent of the phase. Thus all fourteen cycle states have distinct future languages.
+
+Every transient state has a legal continuation reaching a vertex with both names legal. This separates it from every cycle state. For $t_j$ the shortest such continuation has length $j$, so these thirteen states are distinct from one another and from the four states having both names legal immediately. Among those four, the numbers of legal names at the $a$- and $b$-successors are $(2,2)$ at $o$, $(1,2)$ at $v$, and $(1,1)$ at $w$ and $s$. Finally $wa^6=v$ in execution notation, so $w$ can reach a later branching vertex, whereas every nonempty legal continuation from $s$ lies on a cycle and never branches. This separates $w$ from $s$. These distinctions are all tests of actual future legality, with no readout tags added. Consequently complete-response equivalence is equality on $X$. Actual-image closure and Definition 1.2 then supply the stipulated quotient-word lifting; the constant unit duration descends to it.
+
+At a noncycle endpoint, distinct histories in the table have different lengths: the two chain lengths differ by eight, and the three lengths at $v$ or $s$ are distinct. At a fixed $c_{m,j}$, each entry index supplies at most one word of a prescribed length. Two indices $i<\ell$ can agree in length exactly when $m$ divides $n_\ell-n_i$, subject to nonnegative lap counts. The three differences are $6,14,8$, yielding precisely (24.5), with no third index in any such congruence class. Equality of lengths then gives $k_i-k_\ell=2$. This proves the upper fibre bound. The distinct words $p_0\rho_3W_3^2$ and $p_1\rho_3$ both have length eight and endpoint $c_{3,0}$, proving attainment of two. $\square$
+

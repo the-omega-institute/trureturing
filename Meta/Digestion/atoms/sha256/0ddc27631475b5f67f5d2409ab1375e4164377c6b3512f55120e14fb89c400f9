@@ -1,0 +1,24 @@
+## 14. 共享部分怎样产生圆、椭圆与周期
+
+这一节把用户的图景变成一个有明确条件的完整消费者。
+设已供应正交分解
+
+$$
+x=q+r,\qquad q\perp r,\qquad
+\left\lVert q\right\rVert ^2=p\in(0,1),\qquad \left\lVert r\right\rVert ^2=1-p.
+$$
+
+若声明的内部控制可以让剩余部分改变相位，定义
+
+<a id="eq-phasecircle"></a>
+
+$$
+\boxed{x(\theta)=q+e^{i\theta}r.}\tag{14.1}
+$$
+
+一个数学酉实现是
+$U_\theta=P_{\mathbb C  q}+e^{i\theta}(I-P_{\mathbb C  q})$。
+实际原生菜单能否供应该连续族，须遵守此前的控制条件。
+
+<a id="statement-14-1"></a>
+

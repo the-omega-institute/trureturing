@@ -1,0 +1,25 @@
+### 引理 2.1（Schwarz 等号的可检验形式）
+
+<a id="lem-c123-schwarz"></a>
+
+设 $\Phi(Y)=W^*(Y\otimes I)W$ 为含幺完全正映射，$W^*W=I$。
+则
+
+$$
+\Phi(Y^*Y)-\Phi(Y)^*\Phi(Y)
+ =W^*(Y^*\otimes I)(I-WW^*)(Y\otimes I)W\ge0.
+$$
+
+等号等价于 $(Y\otimes I)W=W\Phi(Y)$。
+若对 $Y$ 和 $Y^*$ 均取等号，则对任意 $Z$，
+
+$$
+\Phi(YZ)=\Phi(Y)\Phi(Z),\qquad
+ \Phi(ZY)=\Phi(Z)\Phi(Y).
+$$
+
+**证明。**
+展开右侧即得差式；该式是
+$((I-WW^*)(Y\otimes I)W)^*((I-WW^*)(Y\otimes I)W)$。
+其为零当且仅当相应向量映射为零。再对 $Y^*$ 使用同一结论并取伴随，即可在 $\Phi(YZ)$ 和 $\Phi(ZY)$ 中插入 $WW^*$，得到乘法等式。
+

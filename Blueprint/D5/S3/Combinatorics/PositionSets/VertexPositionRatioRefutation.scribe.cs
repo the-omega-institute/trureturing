@@ -52,6 +52,11 @@ internal sealed class VertexPositionRatioRefutationDocument : IScribeDocumentDef
                     + "are coerced from naturals to reals. A singleton is an x-position set, so vpMinus is positive "
                     + "on these carriers; multiplication by it faithfully expresses ratio boundedness. "
                     + "No bound on graph order or restriction to a subclass is imposed.", true),
+            Node("potential-dist", "A graph potential is bounded by distance", "potential_dist", PotentialDistFormula(),
+                "If a natural-valued potential increases by at most one across every edge, then its value at "
+                    + "the start of a reachable pair is at most its value at the endpoint plus the graph distance. "
+                    + "Summing the edge inequalities along a shortest walk gives the bound.", false,
+                DescribeRole.Theorem),
             Node("result", "A family refutes the proposed boundedness", "result", Seq(Neg, Sp, Call("claim")),
                 "For each integer m ≥ 2, take one hub y and 2m+1 paths meeting only at y: "
                     + "H of length 4m, m paths Pᵢ of length 4m, and m paths Qⱼ of length aⱼ = 2m+2j "
@@ -126,8 +131,28 @@ internal sealed class VertexPositionRatioRefutationDocument : IScribeDocumentDef
         return IffFormula(Call("claim"), ExistsFormula(c, Reals,
             FiniteCarrier(All(G, Call("SimpleGraph", V),
                 Instance(Call("DecidableRel", Field(G, "Adj")),
-                    ImpliesFormula(Field(G, "Connected"),
-                        Rel(realVp, Le, Seq(c, Sp, Cdot, Sp, realMin))))), true)));
+                        ImpliesFormula(Field(G, "Connected"),
+                            Rel(realVp, Le, Seq(c, Sp, Cdot, Sp, realMin))))), true)));
+    }
+
+    private static Formula PotentialDistFormula()
+    {
+        var f = F.Id("f");
+        var u = F.Id("u");
+        var v = F.Id("v");
+        var edgeBound = All(u, V, All(v, V,
+            ImpliesFormula(
+                App(Field(G, "Adj"), u, v),
+                Rel(App(f, u), Le, Add(App(f, v), D(1))))));
+        var reachableBound = All(u, V, All(v, V,
+            ImpliesFormula(
+                App(Field(G, "Reachable"), u, v),
+                Rel(App(f, u), Le,
+                    Add(App(f, v), App(Field(G, "dist"), u, v))))));
+        return All(V, Named("Type"),
+            All(G, Call("SimpleGraph", V),
+                All(f, Arrow(V, NatType()),
+                    ImpliesFormula(edgeBound, reachableBound))));
     }
 
     private static Formula Reals => Seq(Mathbb, Sp, F.Id("R"));
@@ -153,6 +178,11 @@ internal sealed class VertexPositionRatioRefutationDocument : IScribeDocumentDef
         Rel(Parenthesized(a), Iff, Parenthesized(b));
     private static Formula AndFormula(Formula a, Formula b) =>
         Rel(Parenthesized(a), Land, Parenthesized(b));
+    private static Formula Add(Formula a, Formula b) =>
+        new Formula.Binary(a, FormulaBinaryOperator.Add, b);
+    private static Formula Arrow(Formula a, Formula b) =>
+        new Formula.TypeArrow(Parenthesized(a), Parenthesized(b));
+    private static Formula NatType() => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula ImpliesFormula(Formula a, Formula b) =>
         Rel(Parenthesized(a), Longrightarrow, Parenthesized(b));
 }

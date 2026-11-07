@@ -177,6 +177,10 @@ internal sealed class PositivePauliClockOrderDocument : IScribeDocumentDefinitio
                 Equal(Call("zminus",LambdaLower),Call("exp",Mul(Seq(Minus,Imag),W,Tm,Call("nminus",LambdaLower)))),
                 Equal(Call("c",LambdaLower),Mul(StarOf(Mul(Call("zplus",LambdaLower),Call("zminus",LambdaLower))),
                     Call("zminus",LambdaLower),Call("zplus",LambdaLower)))))),
+            Theorem("phase_unit", "Unit modulus of a scalar phase",
+                ForReal(T, Equal(Mul(Seq(Parenthesized(Call("exp", Mul(Seq(Minus, Imag), OfReal(T)))),
+                    Caret, Grp(Star)), Call("exp", Mul(Seq(Minus, Imag), OfReal(T)))), D(1))),
+                "The conjugate of exp minus i theta times the same phase is one for every real theta."),
             Theorem("fixed_scalar_clock_order", "Fixed-label scalar order", ScalarOrder(),
                 "These scalar phases commute and have unit modulus. The relative coefficient is one, so it cannot be minus one."),
             Theorem("averaged_fixed_scalar_clock_order", "Arbitrary probability averaging", Average(),
@@ -194,6 +198,8 @@ internal sealed class PositivePauliClockOrderDocument : IScribeDocumentDefinitio
                 + "The response coefficients are clock-response operators, not a claimed complete quantum spacetime metric.")))));
 
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
+    private static Formula OfReal(Formula value) => new Formula.Apply(
+        Seq(Operatorname, Grp(F.Id("Complex"), Dot, F.Id("ofReal"))), [value]);
     private static Formula QualifiedName(string name)
     {
         var items = new List<Formula>();

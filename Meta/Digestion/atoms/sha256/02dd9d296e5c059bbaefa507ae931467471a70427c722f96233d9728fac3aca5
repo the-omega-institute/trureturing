@@ -1,0 +1,18 @@
+#### 命题 8.2（全相位加性与真正正交）
+
+对所有实数 $\theta$，
+
+$$
+\left\lVert u+e^{i\theta}v\right\rVert ^2= \left\lVert u\right\rVert ^2+ \left\lVert v\right\rVert ^2
+$$
+
+当且仅当 $\langle u,v\rangle=0$。只在一个相位成立，仅能推出相应实交叉项为零。
+
+<a id="proof-8-2"></a>
+
+**证明。** 
+取 $\theta=0,\pi/2$，分别令内积的实部、虚部为零。反向直接展开。
+ ∎
+
+<a id="statement-8-3"></a>
+

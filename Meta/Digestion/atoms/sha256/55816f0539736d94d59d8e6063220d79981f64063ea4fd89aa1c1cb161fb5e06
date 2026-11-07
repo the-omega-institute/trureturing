@@ -1,0 +1,26 @@
+**Theorem 154.2 (conditional same-partition coattainment of the six orderings and BBB).** Under exactly Definition 154.1, for every original $\theta$ there exists one pointwise Borel partition $D=(D_0,D_1,D_3,D_B)$ of the whole original $G$ such that
+
+$$
+\begin{gathered}
+D\in\mathscr D_{12}(\theta),\\
+Q_r(\mathbf1_{D_y},\mathbf1_{D_z})=Q_r(f_y,f_z)
+ \quad(r\in\mathcal R;\ y,z\in\mathcal L),\\
+\mathcal C(\mathbf1_{D_y},\mathbf1_{D_z},\mathbf1_{D_w})
+ =\mathcal C(f_y,f_z,f_w)
+ \quad(yzw\in\mathcal T_6),\\
+\mathcal C(\mathbf1_{D_B},\mathbf1_{D_B},\mathbf1_{D_B})=\frac1{64}.
+\end{gathered}
+\tag{154.3}
+$$
+
+The quantifiers are $\forall\theta\ \exists D$, and every terminal factor is this same partition's own $P\mathbf1_{D_w}$. The full equation (153.3) retains all its sixty-four coordinates; the repeated-label ambient $I^3$ coordinates are not individually specified by (154.3).
+
+*Proof.* Fix an arbitrary original $\theta$. All bounded function spaces below consist of real Borel $m$-classes, with representatives specified at the end. Use the original quotient $\mathcal Q$, angular coordinate, measure $\nu$, orbit point $p_\circ=(q_\circ,0)$, invariant slack set $E$, neighborhood $U$, invariant representative $b^0$ and simplex tuple $f^0$ of (153.5)–(153.6). In particular, $g_\circ=g(q_\circ)>0$, $U\Subset\mathcal Q$, $\beta>\tau>0$ on $U$, and
+
+$$
+f_3^0\ge c\tau\text{ on }E,\qquad
+ f_0^0,f_1^0,f_B^0\ge\tfrac14\text{ on }G,\qquad
+ [f_y^0]=[f_y].
+\tag{154.4}
+$$
+

@@ -1,0 +1,11 @@
+**定义 52.1（原关系到既有量子消费者的参数对应）。** 使用定义 46.1 的原数据与 [C127] 的同一运输，不改变原概率：
+
+| 原参数或关系 | 既有消费者中的对应 |
+| --- | --- |
+| $E_A,C_A,u_A,g_A^0,q_A,L_A,D^A$ | 保持同一完整响应空间及原比较；复重构后 $\mathcal A_A=\bigoplus_sM_{n_s}(\mathbb C)$，$a\cdot b=a\circ b-iD_ab$，中心仍全部保留。 |
+| 原准备 Riesz 向量 $x_\alpha$ | (11.1)、(29.4) 的 $\rho_\alpha=B_Ax_\alpha$；$\alpha(e)=\tau_A(\rho_\alpha e)$，$\tau_A(\rho_\alpha)=\alpha(u_A)$。 |
+| 原事件 $T_f:E_B\to E_A$ | 状态方向 $\Phi_f=B_BT_f^{\dagger_0}B_A^{-1}$；在复重构后 $S^J=\Phi_S$、$\tau_A^J=\sum_s\operatorname{Tr}_{n_s}$，不能混淆原伴随、迹对偶与实际返回。 |
+| 原支持、归一化和三量 $(e,h,g_S,Q_z,\Theta_S,\chi)$ | $(e,h,g_S)$ 对应支持正规形的 $(P,Q_S,G)$；$Q_z(x)=zxz$、$\Theta_S=\beta_S$，且 $\chi_A(a,b,c)=(i/2)\tau_A(a[b,c])$。 |
+| 原 $(S,U,q_{\rm ret})$ 与实际细记录 | [C114/118] 的同一支持角、同数双返回、联合细记录及原遗忘；$O_3$ 只在既定 D 下选择保乘法方向，不重新选块取向。 |
+| 原 AC 的 $(\alpha,m,(r_\ell)_\ell,P)$ | 定理 11.2 的同一单位纯准备和破坏性原端点；精确 $N_u$、指定联合群和原 Xs 才供应定理 12.1 的有限平方根词。 |
+| $\Omega_*$ 的特例 | $g_A^0=q_A=\tau_A(xy)$，故 $B_A=\operatorname{id}$，$\rho_\alpha=x_\alpha$，所有原质量和 $q_K$ 原样保留。 |

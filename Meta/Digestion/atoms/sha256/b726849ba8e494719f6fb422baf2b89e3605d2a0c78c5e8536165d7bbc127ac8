@@ -1,0 +1,53 @@
+### 命题 14.1（往返过程供应一个保态的关系接口）
+
+$\Phi_\sigma$ 含单位、完全正，并保持
+$\phi_\sigma(X)=\operatorname{Tr}(\sigma X)$。在本轮 Petz 往返情形，还有
+$\Phi_\sigma=\mathcal T^*$。其不动空间
+$\mathcal F=\operatorname{Fix}\Phi_\sigma$ 是含单位 $*$-子代数，且
+
+$$
+E_n=\frac1n\sum_{r=0}^{n-1}\Phi_\sigma^r
+\longrightarrow E
+$$
+
+收敛到保持 $\phi_\sigma$ 的完全正条件期望，值域为 $\mathcal F$。
+
+**证明。**
+共轭映射 $\Gamma_\sigma$ 及其逆都完全正，故 $\Phi_\sigma$ 完全正。
+$\mathcal T(\sigma)=\sigma$ 给 $\Phi_\sigma(I)=I$，保迹性给
+
+$$
+\operatorname{Tr}(\sigma\Phi_\sigma(X))
+=\operatorname{Tr}(\mathcal T(\Gamma_\sigma(X)))=\operatorname{Tr}(\sigma X).
+$$
+
+又由 $\mathcal R=\Gamma_\sigma\mathcal N^*\Gamma_\tau^{-1}$，
+
+$$
+\Phi_\sigma=\mathcal N^*\Gamma_\tau^{-1}\mathcal N\Gamma_\sigma
+=\mathcal T^*.
+$$
+
+现可应用 v89 的保忠实态固定点定理。其关键一步是：若 $X$ 不动，
+正平方缺额的 $\sigma$ 期望为零；忠实性使它及 $X^\dagger$ 的缺额都为零。
+故不动元位于乘法域，乘积仍不动。GNS 收缩使幂一致有界，
+有限维 Cesàro 平均留下特征值一的空间；乘法域同时给极限的双模性。
+这正是 v89 已证的机制，不把其一般结构重新认领为本轮发现 [9](#ref-v89)。
+
+由 $\mathcal T^r=\Gamma_\sigma\Phi_\sigma^r\Gamma_\sigma^{-1}$，
+状态端平均也收敛，极限为
+
+$$
+E_*=\Gamma_\sigma E\Gamma_\sigma^{-1}.
+$$
+
+这里 $E_*$ 是普通迹对偶；$E$ 是含单位的关系粗化，$E_*$ 是保迹的状态粗化。
+本节只需这一平均结论，不把它当作免费可执行的无限重复协议。
+
+**白话图景。**把内容送出去，再用同一内部参照接回来，会形成一个往返过程。
+能够原样返回的内容，对应一套稳定关系；这些关系继续组合也仍然稳定。
+于是本轮的恢复接口接到了 v89 的不动代数，再接到 v88 的相容分辨率。
+三轮讨论的是同一条链上的不同问题。
+
+<a id="section-15"></a>
+

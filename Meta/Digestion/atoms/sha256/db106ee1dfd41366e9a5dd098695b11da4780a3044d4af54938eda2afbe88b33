@@ -1,0 +1,4 @@
+## 1. Scope
+
+For an odd qudit dimension $d\ge3$ the parity operator $P|j\rangle=|-j\rangle$ splits $\mathbb C^d$ into an even sector of dimension $(d+1)/2$ and an odd sector of dimension $(d-1)/2$. This volume computes in closed form the extrinsic term of the average linear stabilizer entropy of each sector with respect to the single-qudit Weyl–Heisenberg group of $\mathbb C^d$, and from it the average stabilizer-entropy gap of each sector embedding. The extrinsic term of either sector equals $4/(d+3)$ when $3\nmid d$ and differs from it by an explicit rational correction when $3\mid d$; the gap is positive for every odd $d\ge3$. The proof holds for every odd $d$, prime or composite.
+

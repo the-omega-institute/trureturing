@@ -1,0 +1,52 @@
+**Definition 40.2 (adjacent source comparisons).** [NASF §§1,6,9](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ADAPTIVE_SELECTION_FIBERS.md)
+concerns an unknown invocation tree, an independent writer's global
+$\rho$, Read/Return histories and possible-source fibres after cleanup.
+Its fixed total producer and its source/count characterization already
+give a concrete undecidability result in that model. Its Problem 9.3
+leaves restricted selectors open in that source/task domain. The present
+finite classifier governs event *addresses*, not a bottom-up predicate
+on an acquired Native tree. LAB has a known seed, local owned $P/S$,
+no independent writer, retained selected identities and NextSelected.
+No source/operation/initialization/task isomorphism between these
+installations is supplied or assumed, so this appendix does not settle
+NASF Problem 9.3.
+
+[PCA Theorem 15.2 and §§19–20](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_PRESCRIBED_CODE_ACQUISITION.md)
+already distinguish supplied finite determining data from its extraction
+from a total program. They prove no uniform extractor even with finite
+preparability promised, and give stronger index classifications for their
+explicit code syntax. Those are suppliers for the general distinction,
+not newly claimed impossibilities here. Their prescribed complete reader
+entries and stationary unknown-source native menus are different from
+the same-current-source LAB residual task. Section 39 keeps its evaluator
+fixed and encodes the machine in the attained cut's source prerequisites;
+its reset gates are what exclude every unrelated future test before the
+control difference can be observed. Removing that argument would leave
+only a halting wrapper and would not prove (AA.122).
+
+[Native regular-frontier selection, Definitions 1.1–1.3 and Theorem 2.2](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_REGULAR_FRONTIER_SELECTION.md)
+uses a bottom-up finite tree automaton to choose the first accepting
+subtrees and characterizes its complete-row fillings and original-source
+fibres under global substitution. Its finite state interface supplies
+neither (AA.114)'s local birth-typed leaf transitions nor LAB selected
+receipts. [Native mixed-screen completion, §§1–7](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_MIXED_SCREEN_COMPLETION.md)
+concerns the original prescribed stationary paid Boolean reader graph,
+its actually retained fragment, arbitrary complete extensions and the
+whole original consumer. Its state/fragment bounds are not a minimization
+of a LAB selector and are not transported to (AA.118).
+
+The separately published [*Adaptive Selected Retrieval*, fixed revision
+`fcfbfe128d98e94c79e9c318aa36ce10b8fb96ac`](https://github.com/the-omega-institute/trureturing/blob/fcfbfe128d98e94c79e9c318aa36ce10b8fb96ac/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ADAPTIVE_SELECTED_RETRIEVAL.md),
+uses this volume's same LAB but one fixed identity predicate
+$\chi(P,p)=0$, $\chi(S,p)=\mathbf1_{p\in L^*R}$ and the endpoint family
+of §25. Its common baseline star, exact adaptive whole-old-coordinate
+query count $n+1$, zero-error expectation bound and bounded-error
+$(1-2\epsilon)(n+1)$ tradeoff retain their own query model. Its §§7–8
+already connect exact retrieval to an acquired selected handoff and
+real NextSelected successors. Those acquisition and consumption methods
+are credited through §§20,26,32 here. The new result does not reassert
+a query lower bound or a new journal capability. That retrieval source
+has no varying residual $q$ and no criterion for its source-legal future
+reduction; its random passive-word error allowance is not adopted by
+the exact seven-request task in this appendix.
+

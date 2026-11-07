@@ -1,0 +1,26 @@
+**定义 28.1（Class $\mathcal C_{\mathrm{mp}}$）。** In the common
+domain of finite connected simple unit-weight graphs $H$ of even
+order $m\geq2$, let $H\in\mathcal C_{\mathrm{mp}}$ mean that
+for each vertex $p$, at least one actual connected component of
+$H[N_H(p)]$ is either a singleton or a connected complete
+multipartite graph with at least two positive parts. The other
+actual components and every attachment outside the selected
+component are unrestricted.
+For every integer $S\geq1$ put $s=2S$ and retain exactly the
+original objects (19.1)–(19.2):
+
+$$
+\begin{aligned}
+\Omega_s&=V(H)\times[2S],&
+\mathcal H_{mS}&=\operatorname{span}_{\mathbb C}
+ \{|T\rangle:T\subseteq\Omega_s,\ |T|=mS\},\\
+K_s&=A(F_{mS}(H[\overline{K_{2S}}])),&
+P_s&=\prod_iP_i,& E_s&=\min\operatorname{spec}K_s.
+\end{aligned}
+\tag{28.1}
+$$
+
+In particular $E_s$ is the actual entire-carrier minimum,
+without a symmetry restriction, and every allowed token move
+has coefficient one. Only global half filling is prescribed.
+

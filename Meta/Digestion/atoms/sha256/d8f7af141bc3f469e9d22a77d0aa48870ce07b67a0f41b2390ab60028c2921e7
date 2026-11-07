@@ -1,0 +1,30 @@
+**Assumption 5.1 (acquired bindings, progress and resource context).**
+Use exactly AA Assumption 20.1 and AAII Definitions 75.1 and 83.1's
+finite-service context. There is an actually allocated known-alpha root,
+current exclusive source and auxiliary record rights, genuine bindings
+returned by allocation, licensed field reads/writes and reference tests,
+backed finite work, finite supplied bit-input/output progress and the
+supplied local acknowledgement. Each asserted finite completion has
+sufficient actual finite backing. There is no concurrent writer,
+revocation, crash, interrupt, reset, source deletion or observable
+quota/exhaustion branch. Missing rights or the wrong phase disable a
+primitive; they do not produce new refusal answers.
+
+The driver, source-independent program, root binding and input/output
+connections are supplied before an arbitrary finite schedule. The source
+has its original parent, left, right and auxiliary-reference fields.
+As permitted by AA Proposition 22.2's alternative-record principle, replace
+the routing tapes by the word record below while retaining the whole
+original task. Current source traversal uses only the already licensed
+field operations. No stationary Native read port, arbitrary reference
+cast, automatic grant, free traversal, erased old archive or unknown
+late-history initialization is added.
+
+Task observations are exactly AA Definition 21.1's semantic service
+observations, with the word replacing tapes. Raw fresh-name spellings,
+allocator/control chronology, unexposed capacity, cleared scratch and
+primitive duration are excluded. Any additional observable varying serial
+information must instead be included as side information in a different
+conditioning. This is an observation restriction, not a consequence of
+paying for that information.
+

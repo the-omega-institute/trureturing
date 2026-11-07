@@ -1,0 +1,112 @@
+### 1. 精确分解
+
+令
+
+$$
+q=\frac1{T\log T},
+\qquad
+z_p=q\log p,
+$$
+
+$$
+\lambda_{p,j}
+=
+\log\frac{1-p^{-j-1}}{1-p^{-j}},
+\qquad
+\nu_{p,j}=\frac1{jp^j}.
+$$
+
+定义
+
+$$
+P(q)=\sum_{p,j}(\lambda_{p,j}-z_p)_+,
+$$
+
+$$
+\mathcal D(n)
+=
+P(q)
+-\left(\log\frac{\sigma(n)}n-qT\right)
+\ge0,
+$$
+
+以及
+
+$$
+\mathcal B(T)
+=
+\sum_p\mathcal B_p(T),
+$$
+
+$$
+\mathcal B_p(T)
+=
+\sum_{j\ge1}
+\left[
+\min(z_p,\lambda_{p,j})
+-\min(z_p,\nu_{p,j})
+\right].
+$$
+
+再定义
+
+$$
+I_\psi(T)
+=
+q\bigl(\psi(T)-T\bigr)
++\gamma+\log\log T
+-\sum_{p^j\le T}\frac1{jp^j}.
+$$
+
+则有精确恒等式
+
+<a id="eq-29"></a>
+
+$$
+\boxed{
+-\log R(n)
+=
+\mathcal D(n)+I_\psi(T)+\mathcal B(T).
+}
+\tag{29}
+$$
+
+其代数依据是
+
+$$
+P(q)+\mathcal B(T)
+=
+\sum_{p^j\le T}\frac1{jp^j}
+-q\psi(T).
+$$
+
+素数幂恰落在端点 $p^j=T$ 时，对应正部为零，所以端点取法不会改变该恒等式。
+
+每素数预算都满足
+
+$$
+\mathcal B_p(T)\ge0.
+$$
+
+一种证明是注意到两组边际的总和相同，而
+
+$$
+\lambda_{p,1}<\nu_{p,1},
+\qquad
+\lambda_{p,j}>\nu_{p,j}\quad(j\ge2).
+$$
+
+因此对每个有限 $a\ge1$，
+
+$$
+e_p(a)
+:=
+\sum_{j\le a}\nu_{p,j}
+-\sum_{j\le a}\lambda_{p,j}
+=
+\sum_{j>a}(\lambda_{p,j}-\nu_{p,j})
+>0.
+$$
+
+比较两组前缀的最大收益，便得到预算非负性。
+

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:2f5aa74e2ff00a1da9383f592a7b4e4c6583ebf3f635c3467b37126dded5e177
+  normalized_sha256: sha256:2f5aa74e2ff00a1da9383f592a7b4e4c6583ebf3f635c3467b37126dded5e177
+cas_ref: sha256:2f5aa74e2ff00a1da9383f592a7b4e4c6583ebf3f635c3467b37126dded5e177
+coverage_gids:
+  - gid: D5/S3/Arith/Lattices/CubeSimplexDeterminant.separately_affine_cube_vertex
+    target_statement_id: sha256:c5e163dfe6a324f053f67b29dd469d0170eff4bd1b252090c039d0709bfaa0bc
+receipts:
+  unresolved_subitems: []

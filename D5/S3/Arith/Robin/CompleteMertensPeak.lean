@@ -1,5 +1,5 @@
 /- GID: D5/S3/Arith/Robin/CompleteMertensPeak
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Arith/Robin/CompleteMertensPeak
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
@@ -7,6 +7,9 @@
    digest: A complete Mertens cumulative peak locates an actual finite Robin violation. -/
 
 import D5.S3.Weil.Mertens.Gamma
+import D5.S3.Weil.Mertens.WeightedPrimeLimit
+import D5.S3.Weil.Mertens.WeightedTailTransport
+import D5.S3.Weil.Mertens.IntegratedExplicit.TrivialZeroLaplace
 import D5.S3.Arith.Robin.QuotientIntegralBudget
 import D5.S3.Arith.Robin.OriginalMovingWindowMoment
 import D5.S3.Arith.Robin.LcmRobinResponse
@@ -192,19 +195,24 @@ private lemma tail_log_integral {t : ℝ} (ht : 2 ≤ t)
   rw [heq, integral_sub (hf.div_const _) hlog, integral_div]
   rfl
 
-/-- Johnston--Yang decay and Lay's complete identity give the weighted Mertens ledger. -/
-private theorem complete_mertens_ledger
-    (hJY : ∀ u : ℝ, 2 ≤ u → |Chebyshev.psi u - u| ≤
-      (939 / 100) * u * (log u) ^ (303 / 200 : ℝ) *
-        exp (-(4137 / 5000) * sqrt (log u)))
-    (hLay : ∀ t : ℝ, 2 ≤ t → Q t = Chebyshev.psi t / t -
-      (∑ n ∈ Finset.Ioc 0 ⌊t⌋₊, ArithmeticFunction.vonMangoldt n / (n : ℝ)) +
-        log t - 1 - eulerMascheroniConstant)
-    {t : ℝ} (ht : 2 ≤ t) :
+/-- Actual absolute integrability and the complete identity give the weighted Mertens ledger. -/
+theorem complete_mertens_ledger {t : ℝ} (ht : 2 ≤ t) :
     IntegrableOn psiErrorKernel (Ioi t) ∧
-      IntegrableOn (fun u => psiErrorKernel u * r u) (Ioi t) ∧
-        Mertens.E₂Λ t = (Chebyshev.psi t - t) / (t * log t) - I t := by
-  have hf := kernel_integrable hJY ht
+      IntegrableOn (fun u => psiErrorKernel u *
+        D5.S3.Weil.Mertens.WeightedTailTransport.r u) (Ioi t) ∧
+        Mertens.E₂Λ t = (Chebyshev.psi t - t) / (t * log t) -
+          D5.S3.Weil.Mertens.WeightedTailTransport.weightedTail psiErrorKernel t := by
+  change IntegrableOn psiErrorKernel (Ioi t) ∧
+    IntegrableOn (fun u => psiErrorKernel u * r u) (Ioi t) ∧
+      Mertens.E₂Λ t = (Chebyshev.psi t - t) / (t * log t) - I t
+  have hLay (u : ℝ) (hu : 2 ≤ u) : Q u = Chebyshev.psi u / u -
+      (∑ n ∈ Finset.Ioc 0 ⌊u⌋₊, ArithmeticFunction.vonMangoldt n / (n : ℝ)) +
+        log u - 1 - eulerMascheroniConstant :=
+    D5.S3.Weil.Mertens.CompleteChebyshevTailIdentity.complete_chebyshev_tail_identity
+      D5.S3.Weil.Mertens.WeightedPrimeLimit.chebyshev_error_kernel_integrable hu
+  have hf : IntegrableOn psiErrorKernel (Ioi t) :=
+    D5.S3.Weil.Mertens.WeightedPrimeLimit.chebyshev_error_kernel_integrable.mono_set
+      (Ioi_subset_Ioi (by linarith : (1 : ℝ) ≤ t))
   refine ⟨hf, weighted_kernel_integrable ht hf, ?_⟩
   have hlog1 : IntegrableOn (fun u => psiErrorKernel u / log u) (Ioi t) := by
     simpa only [pow_one] using inv_log_pow_integrable ht hf 1
@@ -692,37 +700,108 @@ private lemma finite_lower_bound {a b : ℝ} (ha : 10000 ≤ a) (hab : a ≤ b)
   simp only [div_eq_mul_inv] at hmono hsb ⊢
   linarith only [hmono, hsb]
 
-theorem complete_mertens_peak
-    (hJY : ∀ u : ℝ, 2 ≤ u → |Chebyshev.psi u - u| ≤
-      (939 / 100) * u * (Real.log u) ^ (303 / 200 : ℝ) *
-        Real.exp (-(4137 / 5000) * Real.sqrt (Real.log u)))
+/-- The signed endpoint pays for a strict finite Mertens peak at the same B. -/
+theorem finite_mertens_peak_of_signed_endpoint
     (hLay : ∀ t : ℝ, 2 ≤ t → Q t = Chebyshev.psi t / t -
       (∑ n ∈ Finset.Ioc 0 ⌊t⌋₊, ArithmeticFunction.vonMangoldt n / (n : ℝ)) +
-        Real.log t - 1 - Real.eulerMascheroniConstant)
-    {A : ℝ} (hA : 10000 ≤ A)
-    (hpeak : Real.sqrt A * (4 * (Real.log A) ^ 2 / (1 + Real.log A) + 9) < U A) :
-    ∃ t ∈ Set.Icc A (Real.exp (4 * (Real.log A + 20) ^ 2)),
+        log t - 1 - eulerMascheroniConstant)
+    {A B : ℝ} (hA : 10000 ≤ A) (hAB : A ≤ B)
+    (htailLower : -(1 / (2 * sqrt A)) < Q B -
+      (∫ u in Ioi B, psiErrorKernel u * QuotientIntegralBudget.weightEnvelope u) /
+        QuotientIntegralBudget.weightEnvelope B)
+    (hpeak : sqrt A * (4 * (log A) ^ 2 / (1 + log A) + 9) < U A) :
+    ∃ t ∈ Icc A B,
       let N := Nat.lcmUpto ⌊t⌋₊
-      5040 < N ∧ (N : ℝ) ≤ Real.exp
-        (Real.exp (4 * (Real.log A + 20) ^ 2) *
-          Real.log (Real.exp (4 * (Real.log A + 20) ^ 2))) ∧
-        divisorRatio N > Real.exp Real.eulerMascheroniConstant * Real.log (Real.log N) := by
-  let B := exp (4 * (log A + 20) ^ 2)
+      5040 < N ∧ (N : ℝ) ≤ exp (B * log B) ∧
+        divisorRatio N > exp eulerMascheroniConstant * log (log N) := by
+  change -(1 / (2 * sqrt A)) < Q B - I B / r B at htailLower
   have hA2 : 2 ≤ A := by linarith
   have hA0 : 0 < A := by linarith
-  have hlogA : 0 ≤ log A := log_nonneg (by linarith)
   have hsA : 0 < sqrt A := sqrt_pos.2 hA0
-  have hAB : A ≤ B := by
-    rw [← exp_log hA0]
-    apply exp_le_exp.mpr
-    nlinarith [sq_nonneg (log A)]
+  have hledger (t : ℝ) (ht : 2 ≤ t) :
+      IntegrableOn psiErrorKernel (Ioi t) ∧
+      IntegrableOn (fun u => psiErrorKernel u * r u) (Ioi t) ∧
+        Mertens.E₂Λ t = (Chebyshev.psi t - t) / (t * log t) - I t :=
+    complete_mertens_ledger ht
+  have hex : ∃ t ∈ Icc A B, Mertens.E₃ t <
+      -4 / sqrt t - (Chebyshev.psi t - t) / (t * log t) := by
+    by_contra hnone
+    have hI : ∀ t ∈ Icc A B, -4 / sqrt t ≤ I t := by
+      intro t ht
+      have ht2 : 2 ≤ t := hA2.trans ht.1
+      have hE : -4 / sqrt t - (Chebyshev.psi t - t) / (t * log t) ≤ Mertens.E₃ t := by
+        apply not_lt.mp
+        intro h
+        exact hnone ⟨t, ht, h⟩
+      have hcmp := complete_mangoldt_le_neg_E3 ht2
+      rw [(hledger t ht2).2.2] at hcmp
+      linarith
+    have hAf := hledger A hA2
+    have hchange := finite_kernel_change hA2 hAB hAf.1 hAf.2.1
+    have hfinite := finite_lower_bound hA hAB hchange.1 hI
+    have hfirst := div_le_div_of_nonneg_right (hI A ⟨le_rfl, hAB⟩)
+      (r_pos (show 1 < A by linarith)).le
+    have hQlow : -(4 / r A + 17 / 2) / sqrt A < Q A := by
+      have heq : (-4 / sqrt A) / r A - 8 / sqrt A - 1 / (2 * sqrt A) =
+          -(4 / r A + 17 / 2) / sqrt A := by ring
+      rw [← heq]
+      have hchg := hchange.2
+      simp only [div_eq_mul_inv] at hfirst hfinite htailLower hchg ⊢
+      linarith only [hfirst, hfinite, htailLower, hchg]
+    have hU : U A = -A * Q A := by
+      unfold U
+      rw [hLay A hA2]
+      field_simp [hA0.ne']
+      ring
+    have hr : 4 / r A = 4 * (log A) ^ 2 / (1 + log A) := by
+      simp only [r, QuotientIntegralBudget.weightEnvelope, div_div_eq_mul_div]
+    have hpeak' : sqrt A * (4 / r A + 9) < -A * Q A := by
+      rw [hr, ← hU]
+      exact hpeak
+    have hp : 4 / r A + 9 < -sqrt A * Q A := by
+      have hmul : -A * Q A = sqrt A * (-sqrt A * Q A) := by
+        calc
+          -A * Q A = -(sqrt A * sqrt A) * Q A := by
+            rw [Real.mul_self_sqrt hA0.le]
+          _ = sqrt A * (-sqrt A * Q A) := by ring
+      have hh : sqrt A * (4 / r A + 9) < sqrt A * (-sqrt A * Q A) := by
+        exact hmul ▸ hpeak'
+      exact (mul_lt_mul_iff_right₀ hsA).mp hh
+    have hq := (div_lt_iff₀ hsA).mp hQlow
+    nlinarith
+  obtain ⟨t, ht, hE⟩ := hex
+  have ht10000 : 10000 ≤ t := hA.trans ht.1
+  have hresponse := LcmRobinResponse.common_robin_response ht10000 hE
+  have ht0 : 0 < t := by linarith
+  have hB0 : 0 ≤ B := (hA0.le.trans hAB)
+  have hlogt : 0 ≤ log t := log_nonneg (by linarith)
+  have hscale : t * log t ≤ B * log B :=
+    mul_le_mul ht.2 (log_le_log ht0 ht.2) hlogt hB0
+  refine ⟨t, ht, ?_⟩
+  dsimp only
+  exact ⟨hresponse.2.1, hresponse.2.2.2.trans (exp_le_exp.mpr hscale), hresponse.1⟩
+
+/-- The shared finite-window argument uses only a sufficiently small actual far tail. -/
+private theorem finite_mertens_peak
+    (hLay : ∀ t : ℝ, 2 ≤ t → Q t = Chebyshev.psi t / t -
+      (∑ n ∈ Finset.Ioc 0 ⌊t⌋₊, ArithmeticFunction.vonMangoldt n / (n : ℝ)) +
+        log t - 1 - eulerMascheroniConstant)
+    {A B : ℝ} (hA : 10000 ≤ A) (hAB : A ≤ B)
+    (htailSmall : 2 * (∫ u in Ioi B, |psiErrorKernel u|) < 1 / (2 * sqrt A))
+    (hpeak : sqrt A * (4 * (log A) ^ 2 / (1 + log A) + 9) < U A) :
+    ∃ t ∈ Icc A B,
+      let N := Nat.lcmUpto ⌊t⌋₊
+      5040 < N ∧ (N : ℝ) ≤ exp (B * log B) ∧
+        divisorRatio N > exp eulerMascheroniConstant * log (log N) := by
+  have hA2 : 2 ≤ A := by linarith
+  have hA0 : 0 < A := by linarith
+  have hsA : 0 < sqrt A := sqrt_pos.2 hA0
   have hB2 : 2 ≤ B := hA2.trans hAB
-  have hz : sqrt (log B) = 2 * (log A + 20) := by
-    dsimp [B]
-    rw [log_exp, show 4 * (log A + 20) ^ 2 = (2 * (log A + 20)) ^ 2 by ring]
-    exact sqrt_sq (by linarith)
-  have hz16 : 16 ≤ sqrt (log B) := by rw [hz]; linarith
-  have hledger (t : ℝ) (ht : 2 ≤ t) := complete_mertens_ledger hJY hLay ht
+  have hledger (t : ℝ) (ht : 2 ≤ t) :
+      IntegrableOn psiErrorKernel (Ioi t) ∧
+      IntegrableOn (fun u => psiErrorKernel u * r u) (Ioi t) ∧
+        Mertens.E₂Λ t = (Chebyshev.psi t - t) / (t * log t) - I t :=
+    complete_mertens_ledger ht
   have hex : ∃ t ∈ Icc A B, Mertens.E₃ t <
       -4 / sqrt t - (Chebyshev.psi t - t) / (t * log t) := by
     by_contra hnone
@@ -746,10 +825,7 @@ theorem complete_mertens_peak
       calc
         _ ≤ 2 * ∫ u in Ioi B, |psiErrorKernel u| :=
           tail_difference_bound hB2 hBf.1 hBf.2.1
-        _ ≤ 2 * (50 * (sqrt (log B)) ^ 5 * exp (-(4 / 5) * sqrt (log B))) :=
-          mul_le_mul_of_nonneg_left (jy_tail_bound hJY hB2 hz16 hBf.1) (by norm_num)
-        _ = 100 * (sqrt (log B)) ^ 5 * exp (-(4 / 5) * sqrt (log B)) := by ring
-        _ < 1 / (2 * sqrt A) := far_tail_small hA
+        _ < 1 / (2 * sqrt A) := htailSmall
     have htailLower := (abs_lt.mp htail).1
     have hQlow : -(4 / r A + 17 / 2) / sqrt A < Q A := by
       have heq : (-4 / sqrt A) / r A - 8 / sqrt A - 1 / (2 * sqrt A) =
@@ -790,6 +866,107 @@ theorem complete_mertens_peak
   refine ⟨t, ht, ?_⟩
   dsimp only
   exact ⟨hresponse.2.1, hresponse.2.2.2.trans (exp_le_exp.mpr hscale), hresponse.1⟩
+
+theorem complete_mertens_peak
+    (hJY : ∀ u : ℝ, 2 ≤ u → |Chebyshev.psi u - u| ≤
+      (939 / 100) * u * (Real.log u) ^ (303 / 200 : ℝ) *
+        Real.exp (-(4137 / 5000) * Real.sqrt (Real.log u)))
+    (hLay : ∀ t : ℝ, 2 ≤ t → Q t = Chebyshev.psi t / t -
+      (∑ n ∈ Finset.Ioc 0 ⌊t⌋₊, ArithmeticFunction.vonMangoldt n / (n : ℝ)) +
+        Real.log t - 1 - Real.eulerMascheroniConstant)
+    {A : ℝ} (hA : 10000 ≤ A)
+    (hpeak : Real.sqrt A * (4 * (Real.log A) ^ 2 / (1 + Real.log A) + 9) < U A) :
+    ∃ t ∈ Set.Icc A (Real.exp (4 * (Real.log A + 20) ^ 2)),
+      let N := Nat.lcmUpto ⌊t⌋₊
+      5040 < N ∧ (N : ℝ) ≤ Real.exp
+        (Real.exp (4 * (Real.log A + 20) ^ 2) *
+          Real.log (Real.exp (4 * (Real.log A + 20) ^ 2))) ∧
+        divisorRatio N > Real.exp Real.eulerMascheroniConstant * Real.log (Real.log N) := by
+  let B := exp (4 * (log A + 20) ^ 2)
+  have hA2 : 2 ≤ A := by linarith
+  have hA0 : 0 < A := by linarith
+  have hlogA : 0 ≤ log A := log_nonneg (by linarith)
+  have hsA : 0 < sqrt A := sqrt_pos.2 hA0
+  have hAB : A ≤ B := by
+    rw [← exp_log hA0]
+    apply exp_le_exp.mpr
+    nlinarith [sq_nonneg (log A)]
+  have hB2 : 2 ≤ B := hA2.trans hAB
+  have hz : sqrt (log B) = 2 * (log A + 20) := by
+    dsimp [B]
+    rw [log_exp, show 4 * (log A + 20) ^ 2 = (2 * (log A + 20)) ^ 2 by ring]
+    exact sqrt_sq (by linarith)
+  have hz16 : 16 ≤ sqrt (log B) := by rw [hz]; linarith
+  apply finite_mertens_peak hLay hA hAB ?_ hpeak
+  calc
+    2 * (∫ u in Ioi B, |psiErrorKernel u|) ≤
+        2 * (50 * (sqrt (log B)) ^ 5 * exp (-(4 / 5) * sqrt (log B))) :=
+      mul_le_mul_of_nonneg_left
+        (jy_tail_bound hJY hB2 hz16 (kernel_integrable hJY hB2)) (by norm_num)
+    _ = 100 * (sqrt (log B)) ^ 5 * exp (-(4 / 5) * sqrt (log B)) := by ring
+    _ < 1 / (2 * sqrt A) := far_tail_small hA
+
+/-- Absolute-tail convergence chooses a finite window without a quantitative cutoff. -/
+private theorem qualitative_mertens_peak
+    {A : ℝ} (hA : 10000 ≤ A)
+    (hpeak : sqrt A * (4 * (log A) ^ 2 / (1 + log A) + 9) < U A) :
+    ∃ t : ℝ, A ≤ t ∧
+      let N := Nat.lcmUpto ⌊t⌋₊
+      5040 < N ∧ divisorRatio N > exp eulerMascheroniConstant * log (log N) := by
+  have hzero : Tendsto (fun B : ℝ => 2 * ∫ u in Ioi B, |psiErrorKernel u|)
+      atTop (𝓝 0) := by
+    simpa using (tendsto_integral_Ioi_zero
+      (f := fun u : ℝ => |psiErrorKernel u|) tendsto_id).const_mul 2
+  have hsmall : ∀ᶠ B : ℝ in atTop,
+      2 * (∫ u in Ioi B, |psiErrorKernel u|) < 1 / (2 * sqrt A) :=
+    hzero.eventually (gt_mem_nhds (by positivity : (0 : ℝ) < 1 / (2 * sqrt A)))
+  obtain ⟨B, hAB, hB⟩ := ((eventually_ge_atTop A).and hsmall).exists
+  have hLay (t : ℝ) (ht : 2 ≤ t) : Q t = Chebyshev.psi t / t -
+      (∑ n ∈ Finset.Ioc 0 ⌊t⌋₊, ArithmeticFunction.vonMangoldt n / (n : ℝ)) +
+        log t - 1 - eulerMascheroniConstant :=
+    D5.S3.Weil.Mertens.CompleteChebyshevTailIdentity.complete_chebyshev_tail_identity
+      D5.S3.Weil.Mertens.WeightedPrimeLimit.chebyshev_error_kernel_integrable ht
+  obtain ⟨t, ht, hN⟩ := finite_mertens_peak hLay hA hAB hB hpeak
+  exact ⟨t, ht.1, hN.1, hN.2.2⟩
+
+/-- A peak of the literal complete arithmetic kernel gives an actual finite
+Robin violation. All tail and normalization inputs are unconditional. -/
+theorem actual_kernel_peak_robin_violation
+    {y : ℝ} (hy : log 10000 ≤ y)
+    (hpeak : 4 * y + 9 < exp (-y / 2) *
+      (U (exp y) - log (2 * Real.pi) +
+        D5.S3.Weil.Mertens.IntegratedExplicit.trivialT y)) :
+    ∃ t : ℝ, exp y ≤ t ∧
+      let N := Nat.lcmUpto ⌊t⌋₊
+      5040 < N ∧ divisorRatio N > exp eulerMascheroniConstant * log (log N) := by
+  have hy0 : 0 ≤ y := (log_nonneg (by norm_num : (1 : ℝ) ≤ 10000)).trans hy
+  have hA : (10000 : ℝ) ≤ exp y := by
+    calc
+      10000 = exp (log 10000) := (exp_log (by norm_num)).symm
+      _ ≤ exp y := exp_le_exp.mpr hy
+  have hcorrection : 0 < log (2 * Real.pi) -
+      D5.S3.Weil.Mertens.IntegratedExplicit.trivialT y := by
+    have ht := D5.S3.Weil.Mertens.IntegratedExplicit.trivialT_le_mass hy0
+    have hl : log (2 : ℝ) ≤ log (2 * Real.pi) :=
+      log_le_log (by norm_num) (by nlinarith [Real.pi_gt_three])
+    linarith [Real.log_two_gt_d9]
+  have hroot : sqrt (exp y) = exp (y / 2) := by
+    rw [sqrt_eq_rpow, Real.rpow_def_of_pos (exp_pos y), log_exp]
+    congr 1
+    ring
+  have hcancel : exp (y / 2) * exp (-y / 2) = 1 := by
+    rw [← exp_add]
+    ring_nf
+    exact exp_zero
+  have hscaled := mul_lt_mul_of_pos_left hpeak (exp_pos (y / 2))
+  rw [← mul_assoc, hcancel, one_mul] at hscaled
+  have hthreshold : 4 * y ^ 2 / (1 + y) ≤ 4 * y := by
+    apply (div_le_iff₀ (by positivity : (0 : ℝ) < 1 + y)).2
+    nlinarith
+  apply qualitative_mertens_peak hA
+  rw [log_exp, hroot]
+  have hm := mul_le_mul_of_nonneg_left (add_le_add_right hthreshold 9) (exp_pos (y / 2)).le
+  nlinarith only [hm, hscaled, hcorrection]
 
 end
 end D5.S3.Arith.Robin.CompleteMertensPeak

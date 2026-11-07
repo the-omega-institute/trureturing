@@ -1,0 +1,28 @@
+**Theorem 4.1 (Extrinsic term of the parity sectors).** For every odd $d\ge3$:
+
+$$
+X(E_d)=\begin{cases}\dfrac4{d+3},&3\nmid d,\\ \dfrac4{d+3}+\dfrac{64}{(d+1)(d+3)(d+5)(d+7)},&3\mid d,\end{cases}
+\qquad
+X(O_d)=\begin{cases}\dfrac4{d+3},&3\nmid d,\\ \dfrac4{d+3}-\dfrac{64}{(d-1)(d+1)(d+3)(d+5)},&3\mid d.\end{cases}
+$$
+
+In particular $X(E_3)=7/10$ and $X(O_3)=1/2$. Stance: suspected-novel (see §5).
+
+**Proof.** The labels $\mathbf a\in\mathbb Z_d^2$ of order dividing $3$ form the subgroup $(d/3)\mathbb Z_d^2$ of order $9$ when $3\mid d$ and the trivial subgroup otherwise, so the number $N_3$ of labels of order exactly $3$ is $8$ if $3\mid d$ and $0$ otherwise. Write $G=3/((d+1)(d+3))$ and $G_V^{(3)}$ for the order-$3$ value of Proposition 3.3. By Lemma 3.1 and Proposition 3.3,
+
+$$
+X(V)=\frac1d\Big(1+(d^2-1-N_3)\,G+N_3\,G_V^{(3)}\Big).
+$$
+
+If $3\nmid d$ this is $\frac1d\big(1+\frac{3(d-1)}{d+3}\big)=\frac1d\cdot\frac{4d}{d+3}=\frac4{d+3}$. If $3\mid d$ it is $\frac4{d+3}+\frac8d\big(G_V^{(3)}-G\big)$, and
+
+$$
+G_{E_d}^{(3)}-G=\frac{(3d+35)(d+3)-3(d+5)(d+7)}{(d+1)(d+3)(d+5)(d+7)}=\frac{8d}{(d+1)(d+3)(d+5)(d+7)},
+$$
+
+$$
+G_{O_d}^{(3)}-G=\frac{(3d-5)(d+3)-3(d-1)(d+5)}{(d-1)(d+1)(d+3)(d+5)}=\frac{-8d}{(d-1)(d+1)(d+3)(d+5)} .
+$$
+
+Multiplying by $8/d$ gives the corrections $\pm64/(\cdots)$. At $d=3$: $\frac46+\frac{64}{4\cdot6\cdot8\cdot10}=\frac7{10}$ and $\frac46-\frac{64}{2\cdot4\cdot6\cdot8}=\frac12$. ∎
+

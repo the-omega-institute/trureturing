@@ -1,0 +1,86 @@
+### 定理 5.1（单点一阶刚性）
+
+在非平凡有限实空间 $W$ 的紧有效矩阵群 $G$ 下，$Q8$ 等价于
+
+$$
+\dim_\mathbb R W=\dim_\mathbb R\mathfrak g=3,\qquad
+\mathfrak g=\mathfrak{so}(W,B_0).
+$$
+
+并且
+
+$$
+G^\circ=SO(W,B_0),\qquad G=SO(W,B_0)\text{ 或 }O(W,B_0).
+$$
+
+**证明。**
+**第一步：仅在见证点恢复两个一维核。**
+命题 [3.2](#prop-rank) 已给
+
+$$
+\ker A=\mathbb R x,\qquad\mathfrak g_x=\mathbb R A,\qquad m=n.
+\tag{5.1}
+$$
+
+由 Haar 平均取证明用正内积 $B_0$。它暂时不作为额外原比较输入。
+
+**第二步：这个 $A$ 的中心化子只有一维。**
+若 $[A,K]=0$，则
+
+$$
+A(Kx)=K(Ax)=0,
+$$
+
+所以 $Kx\in\mathbb R x$。斜对称性又给 $B_0(Kx,x)=0$，故 $Kx=0$，继而 $K\in\mathbb R A$。即
+
+$$
+Z_\mathfrak g(A)=\mathbb R A.
+\tag{5.2}
+$$
+
+此处没有假设其它生成元也具有这一性质。
+
+**第三步：一个伴随轨道填满转向球面。**
+在 $\mathfrak g$ 上定义
+
+$$
+\kappa(K,L)=-\tfrac12\operatorname{Tr}_W(KL).
+$$
+
+有效斜对称矩阵使它正定，迹循环性使它伴随不变。归一化 $A$ 后，$G^\circ$ 的伴随轨道位于 $S^{m-1}$ 中；由 (5.2)，轨道维数为 $m-1$。紧群轨道是紧嵌入子流形，且与球面同维，故既开又闭。
+
+若 $m=1$，则 $n=1$ 而 $\mathfrak g\subseteq\mathfrak{so}(1)=0$，与 $A\ne0$ 矛盾。因此 $m>1$，球面连通，整个球面就是这个轨道。
+
+**第四步：这张球面只能是二维。**
+在轨道上定义
+
+$$
+\omega_B([K,B],[L,B])=\kappa(B,[K,L]).
+\tag{5.3}
+$$
+
+若改变 $K$ 的代表元，差与 $B$ 交换，迹不变性使右侧不变。若左侧对所有 $L$ 为零，同一不变性给 $[B,K]=0$，所以切向量为零；故 $\omega$ 非退化。
+
+为说明闭性，令 $p(g)=\operatorname{Ad}_gA$，在群上取左不变一形式
+$\eta_g(v)=\kappa(A,g^{-1}v)$。在单位元，
+
+$$
+d\eta(K,L)=-\kappa(A,[K,L])=-p^*\omega(K,L).
+$$
+
+$\kappa$ 的不变性与括号协变直接给 $\omega$ 的伴随不变性，所以两侧都左不变，等式全群成立；于是 $p^*d\omega=0$。$p$ 是满射下沉，得到 $d\omega=0$。这就是共伴随轨道的 KKS 辛形式。
+
+非退化交替形式要求 $m-1=2r$。若 $r>1$，球面上 $H^2(S^{2r};\mathbb R)=0$，故 $\omega=d\alpha$。于是 Stokes 定理给
+
+$$
+\int_{S^{2r}}\omega^r
+=\int_{S^{2r}}d(\alpha\wedge\omega^{r-1})=0,
+$$
+
+而辛体积在其自身取向下积分严格为正，矛盾。因此 $r=1$，即 $m=3$。这里用到的球面上同调可由两个可缩半球的 Mayer–Vietoris 序列直接得到：当球面维数大于二时，相交赤道的 $H^1$ 为零，故 $H^2$ 为零。紧秩一的同一辛球面论证也见 Donaldson 命题 15。 [4](#ref-donaldson)
+
+**第五步：三维传回完整内容。**
+由 $m=n$，得到 $n=3$。现在 $\mathfrak g\subseteq\mathfrak{so}(W,B_0)$ 两边都是三维，必相等。群的单位连通分支因此是 $SO(3)$；完整紧群包含它并包含于 $O(3)$，只能是所列两种。
+
+反向，在标准三维旋转作用中，任一非零 $A$ 固定一条轴 $\mathbb R x$，$\mathfrak g_x=\mathbb R A$ 且 $m=n=3$。命题 [3.2](#prop-rank) 给 $Q8$。证毕。
+

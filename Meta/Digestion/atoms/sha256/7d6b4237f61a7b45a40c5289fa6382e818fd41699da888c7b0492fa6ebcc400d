@@ -1,0 +1,47 @@
+**Definition 3.2 (response and all complete terms).** Forms and inner products are conjugate linear in their first slot. R Theorems 4.1, 5.1 and 5.3 supply
+
+$$
+\begin{gathered}
+V_1^2\le K_1V,\quad V_2^2\le K_2V,\quad V_{\rm t}^2\le K_{\rm t}V,
+\qquad \int V^{1/2}|u|^2\le\Gamma b[u]\quad(u\in\mathcal Q_E),\\
+h[v]\ge a\theta b[v]\quad\text{when }b(p,v)=0,\qquad\theta>0.
+\end{gathered}
+\tag{3.4}
+$$
+
+The latter is a horizontal-energy gap, not a positive $L^2$ spectral gap. Let $\dot{\mathcal H}_-$ be the completion of the real $\sigma$-odd compact smooth core in $\sqrt b$. Define
+
+$$
+\ell(u)=2a\int r(Yp)(Yu)+\chi\int V_1pu,
+\qquad h(\Psi,u)=\ell(u),\qquad
+D_{\rm resp}=h[\Psi]=\ell(\Psi).
+\tag{3.5}
+$$
+
+R's unique real Riesz vector $\Psi\in\dot{\mathcal H}_-$ has no asserted $L^2$, canonical form-domain or native-domain representative. For complex pairings use the complexification and extend $\ell$ complex linearly. The odd part of a canonical vector belongs to that completion by parity averaging core approximants. The even part is annihilated by $\ell$ and is $h$-orthogonal to the odd part.
+
+For completeness, the continuity needed below follows directly from (3.4): for $L\in\{V_1,V_2,V_{\rm t}\}$,
+
+$$
+\left|\int Lp v\right|
+ \le\left(\int (L^2/V)p^2\right)^{1/2}
+          \left(\int V|v|^2\right)^{1/2}
+ \le C\sqrt{b[v]},\qquad
+\left|\int r(Yp)(Yv)\right|\le\sqrt A\sqrt{b[v]}.
+\tag{3.6}
+$$
+
+The full coefficients are
+
+$$
+\begin{aligned}
+A&=\int r^2|Yp|^2,&B_1&=\int rV_1p^2,&C_2&=\int V_2p^2,&T&=\int V_{\rm t}p^2>0,\\
+K_{\rm base}&=3aA-\chi C_2,&D_{\rm clock}&=a+\chi T,\\
+C_{\rm resp}&=\nu^2(K_{\rm base}-D_{\rm resp})-\lambda D_{\rm clock},\\
+C_{108}&=\nu^2\{a(1-A)-\chi(C_2+2B_1)\}-\lambda(a+\chi T).
+\end{aligned}
+\tag{3.7}
+$$
+
+Thus $A=A_2$, $C_2+2B_1=J_2$ and $T=J_{\rm t}$ of P §108. Every kinetic, $V_1$, $V_2$, raw-source, time-weighted field and threshold term is present. These are quantities of one realization, not separately optimized extrema.
+

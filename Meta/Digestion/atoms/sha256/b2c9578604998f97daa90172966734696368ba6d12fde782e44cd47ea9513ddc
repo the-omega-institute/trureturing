@@ -1,0 +1,34 @@
+**Definition 23.1 (the minimal-record source and its acquisition).** For each $k\ge1$, retain exactly Definition 22.2's carrier $X_N$, fixed actual root $x_0=v_{0,0}$, two partial successor maps (22.7), and notation $N=2^k$, $L=N-1$, $P=\binom N2$, $\rho$, $J_i$, $B_i$ and $p_i$. Define a different actual source $X_N^{\min}$ on those same vertices and maps by declaring
+
+$$
+q_X(x)=\ast\quad(x\in X_N),\qquad
+\ell_c(x)=(c,1,\mathrm{ok})\quad(x\in D_c,\ c\in\{a,b\}).
+\tag{23.1}
+$$
+
+There is exactly one type $\iota$. The two tokens $a,b:\iota\to\iota$ have no parameters, aliases or timing variants. The outcome tag $\mathrm{ok}$ is identical on every legal edge, including an edge entering a terminal vertex. There are no other record fields, readouts or executed failure edges. In particular neither a successor nor a source, edge, pair or terminal identifier occurs in (23.1). Termination means that the future legal menu is empty; it has no additional event or distinguished recorded outcome. An unlisted operation is an illegal attempt, not an executed failure. The indices in (22.7) describe the installed partial maps and are not operation-name or record data.
+
+Use the complete responses of Definitions 1.1–1.2 with these declarations, and let $\pi_{\min}$ denote their actual response quotient. Write $o=\pi_{\min}(x_0)$. Retain the whole root language, empty word and every stopping prefix of Definitions 11.1 and 16.1. Fix the native and acquisition law (22.1) once across this family, so that
+
+$$
+z(u)=\pi_{\min}(x_0\cdot u),\qquad
+T(u)=|u|,\qquad
+\mathcal O(u)=\{z(u)\}\times[\,|u|-1/4,\ |u|+1/4\,].
+\tag{23.2}
+$$
+
+Every error in this entire closed interval is allowed for every legal word. Exact final acquisition of this genuine quotient endpoint, together with the final supplement, remains an explicit assumption. The supplement contracts and capacities are precisely Definition 22.1's: static labels may depend on the whole history, while the complete online state has one fixed initialization and one total update receiving only the next actually executed name. The final decoder receives only endpoint, supplement and final $y$. No live quotient, readout, response, clock, increment, event index, parser mode, stop signal or future input is supplied to the update.
+
+For a set $H$ of binary words, write $\operatorname{Pref}(H)$ for all its prefixes, including the empty word. For a nonempty finite $A\subseteq\mathbb N_0$, put
+
+$$
+\begin{aligned}
+\mathcal B(A)
+ &=\operatorname{Pref}\{b^s a:s\in A\}\\
+ &=\{b^h:0\le h\le\max A\}\ \cup\ \{b^s a:s\in A\}.
+\end{aligned}
+\tag{23.3}
+$$
+
+Thus $A=\{s:b^s a\in\mathcal B(A)\}$. These finite languages describe complete future legality; they are not additional acquired fields.
+

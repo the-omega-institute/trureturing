@@ -1,0 +1,18 @@
+**定义 2.1（闭合的整体关系模型）。**
+
+<a id="def-ontology"></a>
+
+给定含单位的复 $C^*$ 代数 $\mathcal A$ 及正归一线性泛函
+$\omega:\mathcal A\to\mathbb C$：
+
+$$
+\omega(I)=1,\qquad \omega(a^*a)\ge0.
+$$
+
+全部物理角色由同一 $\mathcal A$ 的元素、子代数和关系表示。
+内部观察情境包括一个可读交换子代数 $\mathcal D$、
+允许的内部控制及保留记录条件。
+不预先指定外部观察者、外部时间或本体外的辅助空间。
+若采用向量表示，则 $\omega(a)=\langle\Omega,a\Omega\rangle$，
+$\|\Omega\|=1$，并把无限维作为可选的整体容量假设。
+

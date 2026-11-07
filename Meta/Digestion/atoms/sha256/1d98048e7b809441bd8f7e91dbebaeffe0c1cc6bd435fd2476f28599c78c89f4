@@ -1,0 +1,8 @@
+**定理 303.2（共享 Blackwell 支配的鲁棒单调性）。** 若 $E\succeq_{\mathfrak M}F$，则
+
+$$
+\boxed{
+R_{\mathcal B}^*(E)\le R_{\mathcal B}^*(F).
+}
+$$
+

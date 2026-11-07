@@ -1,0 +1,15 @@
+### 定理 4：全矩阵谱隙下界
+
+当 $m\ge2$ 时，
+
+<a id="eq-21"></a>
+
+$$
+\boxed{
+\lambda_{\min}(H)
+\ge
+\frac r4\min\{h_{\min},L-\delta\}.
+}
+\tag{21}
+$$
+

@@ -1,0 +1,22 @@
+**Theorem 2.1 (All but one singleton separator; repo-derived).** Let $B$ be a finite alphabet with $|B|\ge2$, let $S\subseteq B$ have $|S|=|B|-1$, and let $p\in B^*$ be a palindrome with $|p|\ge2$. Let $x$ be an infinite word over $B$. Suppose that $pp$ is a factor of $x$ and that $pcp$ is a factor of $x$ for every $c\in S$. Then
+
+$$
+E(x)\ge\frac52.
+$$
+
+More precisely, write $a,b$ for the first two letters of $p$. If $a\in S$, then $a^3$ is a factor of $x$. If $a\notin S$ and $b=a$, then $a^4$ is a factor of $x$. If $a\notin S$ and $b\ne a$, then $babab$ is a factor of $x$.
+
+*Proof.* Since $p$ is a palindrome, its last letter is $a$ and its last two letters are $ba$.
+
+If $a\in S$, the factor $pap$ contains the three consecutive letters consisting of the last letter of the first $p$, the separator $a$, and the first letter of the second $p$. These letters form $a^3$, whose least period is one and whose exponent is three.
+
+Suppose $a\notin S$. Since $S$ omits exactly one letter of $B$, it follows that $S=B\setminus\{a\}$. If $b=a$, the last two letters of the first $p$ and first two letters of the second $p$ in $pp$ form $a^4$. Its exponent is four.
+
+If $b\ne a$, then $b\in S$, so $pbp$ is a factor of $x$. The last two letters of its first copy of $p$, its separator, and the first two letters of its second copy of $p$ form
+
+$$
+ba\,b\,ab=babab.
+$$
+
+This word has period two and does not have period one because $a\ne b$. Its least positive period is therefore two and its exponent is $5/2$. Each of the three cases supplies an actual finite factor of $x$ with exponent at least $5/2$, as required. $\square$
+

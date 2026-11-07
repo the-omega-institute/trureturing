@@ -1,0 +1,24 @@
+**Definition 36.1 (one fixed rational presentation).** Using just the integers $b_j=4^j-j$ for $j\ge1$, specify the single prior
+
+$$
+\begin{aligned}
+\mathcal Q_j&=\{1/b_j\}\cup
+ \{1/b_j-1/n:n\in\mathbb Z,\ n\ge2b_j\},\\
+\mathcal Q&=\bigcup_{j\ge1}\mathcal Q_j.
+\end{aligned}
+\tag{36.1}
+$$
+
+This is one finite source-independent code using exponentiation, rational arithmetic and integer tests. It supplies no unknown index or rational as input to the acquisition controller. Each member is the response of a unique finite original $L/R$ history by Theorem 6.2.
+
+Membership in $\mathcal Q$ is decidable on finite rational inputs. Reject nonpositive inputs. For a positive input $y$, iterate $j=1,2,\ldots$, computing $b_j$ and $c_j=1/b_j$. Accept $y=c_j$; when $0<y<c_j$, accept exactly if $1/(c_j-y)$ is an integer at least $2b_j$. If neither condition succeeds, continue, except that as soon as $c_j<y$ reject: all later endpoints and their lower sequences are smaller. The endpoints strictly decrease to zero, so this loop halts on every positive rational input. This input convention is for the public membership decider; the acquisition program below is given only reports from its unknown original.
+
+For effective identification of the band without source motion, use the disjoint open dyadic intervals
+
+$$
+J_j=(2^{-(2j+1)},2^{-(2j-1)})\qquad(j\ge1).
+\tag{36.2}
+$$
+
+Since $4^j/2<b_j<4^j$, every member of $\mathcal Q_j$ lies in $[1/(2b_j),1/b_j]\subset J_j$. Adjacent $J_j$ share just a boundary in their closures, and no such boundary belongs to a band. Hence the actual band is unique.
+

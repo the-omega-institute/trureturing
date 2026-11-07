@@ -1,0 +1,39 @@
+#### 推论 8.10（仿射读尺保维数，有限误差限制可辨识尺度）
+
+<a id="cor:readoutscale"></a>
+
+若上述新联合读口另已取得固定响应关系
+
+$$
+R(b)=c\,p^s(b)+d,\qquad 0<c\le1,\quad d\ge0,\quad\sum_w d_w=1-c,
+$$
+
+其中四概率可在其余完整标签上补零，$c,d$ 与未知后缀无关，
+则 $R$ 仍为柱集上的双 Lipschitz 注入，具有同一 Hausdorff 维数。
+若还对全部 $b\in[s]$ 证明了实际近似的完整终端误差
+$\operatorname{TV}(\widehat R(b),R(b))\le\varepsilon$，则
+
+$$
+\operatorname{TV}(\widehat R(b),\widehat R(b'))
+ \ge c\,m_\delta\frac{5-11r}{3}\,d_r(b,b')-2\varepsilon.
+$$
+
+因此在右侧严格为正的尺度上，实际概率律必可区分。
+
+**证明。**
+
+公共偏置抵消，给
+$\operatorname{TV}(R(b),R(b'))=c\,\operatorname{TV}(p^s(b),p^s(b'))$。
+结合定理 [8.9](#thm:classicalfractal) 与定理 [7.4](#thm:goldencantor)
+得双 Lipschitz 界；三角不等式再扣除两个 $\varepsilon$ 即得实际误差界。
+
+∎
+
+未知 $c,d$ 会妨碍观察者实施反演，但不改变固定响应族的上述数学注入性。
+固定非零误差不能证明无限细尾仍然注入，也不能证明实际近似像保留精确分形维数。
+本推论明确要求新联合读口具有所列响应与误差合同；
+旧 $J$ 接口上的源分类并不自动把合同转移给任意新编码与新测量。
+这正是把项目的未知读尺、理想黄金几何和有限原生取得接起来时需要补齐的接口。
+
+<a id="sec-9"></a>
+

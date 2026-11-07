@@ -1,0 +1,18 @@
+**Corollary 45.6 (pure boundary contacts and pure right branches).**
+At each of $b=\alpha$ and $b=\beta$, every original and phase global
+minimizer is pure. Every global minimizing branch whose positive levels
+remain in $(0,R]$ is pointwise pure. In particular the actual analytic
+phase branches and their attained boundary limits in (42.32) are pure
+on their sufficiently short right intervals. Separated contact at
+$\beta$ and competing global branches inside this interval can therefore
+only be pure.
+
+*Proof.* Theorem 42.2 gives $0<\alpha\le\beta<R$. Apply Theorem 45.5
+to these boundary levels and to every level of the branches. The
+endpoint limit in (42.32) is already an attained boundary global
+minimizer by Corollary 42.6, so it is pure as well. The mixed-global-contact
+implications of Corollaries 41.5 and 42.6 retain their conditional
+validity; their mixed-minimizer antecedents have no instance at these
+levels. This conclusion neither identifies a pure contact nor orders
+a competing branch. $\square$
+

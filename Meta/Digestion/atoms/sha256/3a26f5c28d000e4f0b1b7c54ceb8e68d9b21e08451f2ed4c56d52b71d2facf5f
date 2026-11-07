@@ -1,0 +1,78 @@
+**Theorem 10.2 (sharp precision for original-history acquisition, including a fixed probe).** Under Definition 10.1, fix a chronological word $u$ that must be executed before any read, without any earlier source-dependent record. Set
+
+$$
+\begin{aligned}
+\alpha&=\min(c,d),&\beta&=\max(c,d),\\
+A&=F_n\alpha+F_{n+1}\beta,
+&B&=F_{n+1}\alpha+F_{n+2}\beta,
+\end{aligned}
+$$
+
+where $F_0=0$, $F_1=1$ and $F_{k+2}=F_{k+1}+F_k$. Then
+
+$$
+\min_{\substack{x,z\in Q_n\\x\ne z}}|f_u(x)-f_u(z)|=\frac1{AB}.
+\tag{10.1}
+$$
+
+For a fixed rational report radius $\epsilon\ge0$, exact original-word acquisition after this required probe, with arbitrary subsequent adaptive forward actions and repeated reads, is possible if and only if
+
+$$
+2\epsilon<\frac1{AB}.
+\tag{10.2}
+$$
+
+One read immediately after $u$ suffices when (10.2) holds. In particular, with no required probe, $u=\varepsilon$, this gives the sharp condition
+
+$$
+2\epsilon<\delta_n,\qquad
+\delta_n=\frac1{F_{n+1}F_{n+2}}.
+\tag{10.3}
+$$
+
+Thus one read **before** probing suffices below (10.3), and no adaptive forward probing or repeated-reading policy at that fixed radius can recover all original words at or above the threshold. The impossibility also holds if the policy may request coarser radii $\epsilon_i\ge\epsilon$.
+
+Proof. First establish the actual candidate gap, keeping the ordering conventions separate. Start with the ordered endpoint row $0/1,1/0$ and insert the mediant in every adjacent interval, repeatedly. After $k$ such refinements call the full ordered row $\mathcal P_k$. By the Stern–Brocot chart of Definition 6.4, the positive finite interior of $\mathcal P_{n+1}$ is exactly $Q_n$: the mediants first inserted at refinement $j+1$ have Stern–Brocot path length $j$, and reversal is a bijection on words of each length. This identifies the sets, not the chronological prefix orders. The endpoint construction, its adjacency determinant and its relation to the Calkin–Wilf children are classical supporting arithmetic; see Glasby, *Enumerating the rationals from left to right*, [arXiv:1011.2823](https://arxiv.org/abs/1011.2823), introduction.
+
+Write adjacent fractions in this row as $p/q<r/s$, including the auxiliary endpoints. Their determinant is $rq-ps=1$. It holds initially and survives each mediant insertion, since
+
+$$
+(p+r)q-p(q+s)=rq-ps=r(q+s)-(p+r)s.
+$$
+
+Consequently all inserted fractions are reduced. For finite interior neighbors, the determinant-one transformation gives
+
+$$
+f_u(r/s)-f_u(p/q)
+=\frac1{(cp+dq)(cr+ds)}.
+\tag{10.4}
+$$
+
+The weights $cp+dq$ of the two initial endpoints $0/1,1/0$ are $d,c$. Mediant insertion replaces an interval's weight pair $(s,t)$ by either $(s,s+t)$ or $(s+t,t)$. Sort its pair increasingly. If $s\le t$, either sorted child is coordinatewise at most $(t,s+t)$; this upper bound is attained by retaining the endpoint of larger weight and replacing the other by the mediant. Starting at $(\alpha,\beta)$, induction therefore bounds every sorted pair after $k\ge1$ refinements by the single pair
+
+$$
+\left(F_{k-1}\alpha+F_k\beta,\quad
+F_k\alpha+F_{k+1}\beta\right).
+\tag{10.5}
+$$
+
+Indeed the bound is $(\beta,\alpha+\beta)$ at $k=1$, and applying $(s,t)\mapsto(t,s+t)$ produces the next displayed pair. Monotonicity of both coordinates gives the bound for every branch, not just for a chosen extremizer.
+
+The two bounds in (10.5) are attained **together** along an actual nested sequence of intervals: at every step retain an endpoint of maximal weight. At the first step retain an original endpoint with weight $\beta$; the new mediant has weight $\alpha+\beta\ge\beta$. At the second step retain that mediant and replace the surviving original endpoint, choosing this option also in the tie case $\alpha=0$. Both endpoints are then inserted positive finite fractions, and subsequent refinements keep them positive and finite. This works also when $c=0$ or $c=d$. Since $k=n+1\ge2$, an actual pair of interior neighbors attains the product $AB$. No maximum from one candidate has been multiplied by an independently attained maximum from another.
+
+All interior neighbor gaps are at least $1/(AB)$ by (10.4)–(10.5), and the constructed interior pair attains it. The function $f_u$ is strictly increasing on positive inputs. A nonneighbor gap is a sum of positive neighbor gaps, so cannot be smaller. This proves (10.1). For $u=\varepsilon$ the initial weights are $(d,c)=(1,0)$, yielding $A=F_{n+1}$, $B=F_{n+2}$. This unprobed Fibonacci arithmetic is literature-attested, rather than a new minimum-gap result: Kesseböhmer–Stratmann, *A multifractal analysis for Stern–Brocot intervals, continued fractions and Diophantine growth rates*, [DOI:10.1515/crelle.2007.029](https://doi.org/10.1515/crelle.2007.029), [arXiv:math/0509603v2](https://arxiv.org/abs/math/0509603v2), gives the smallest length $(F_{n+1}F_{n+2})^{-1}$ for its order-$n$ partition of $[0,1)$. Its initial row is $0/1,1/1$, so it is the part of $\mathcal P_{n+1}$ between $0$ and $1$. The interior attainment above additionally checks that the extremal gap belongs to the actual positive candidates and supplies the required weighted post-probe version.
+
+For sufficiency, enumerate the finitely many original candidates $z\in Q_n$ and their $f_u(z)$. On receiving $y$, retain exactly those with $|y-f_u(z)|\le\epsilon$. The true candidate remains. Two retained candidates would have separation at most $2\epsilon$, contradicting (10.1) and (10.2). All comparisons are computations on specified rationals, so this terminates without a source equality oracle. Decode the unique original rational by Definition 6.3. The enumeration is computed from the supplied root and bound; it is not an archive of the unknown execution.
+
+For necessity, each allowed forward action is nonexpansive in the absolute response metric on positive rationals:
+
+$$
+|f_R(x)-f_R(z)|=|x-z|,\qquad
+|f_L(x)-f_L(z)|=\frac{|x-z|}{(1+x)(1+z)}\le|x-z|.
+\tag{10.6}
+$$
+
+Take two actual original candidates attaining (10.1). If $2\epsilon\ge1/(AB)$, their post-$u$ responses differ by at most $2\epsilon$. Before the first read, the deterministic controller has the same source-independent transcript in the two executions and hence takes the same forward actions. By (10.6), the two current responses stay within $2\epsilon$ after any such common word. At each requested read supply the rational midpoint of the two current responses, which is permitted for both sources, including for any requested radius at least $\epsilon$. Induction preserves the identical transcript, the same next actions and radius requests, and the separation bound. The rectangular channel admits these successive choices conditional on the common transcript. Name-only labels and total enabledness give no additional distinction.
+
+If the policy does not stop on this admissible common path, it violates the finite-stopping requirement. If it does stop, its identical output cannot be the two different original words. This proves necessity for all such adaptive policies. At equality, the closed error intervals touch at the rational midpoint, which is still admissible; the inequality must therefore be strict. $\square$
+

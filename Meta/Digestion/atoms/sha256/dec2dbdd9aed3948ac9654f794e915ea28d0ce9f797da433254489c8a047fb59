@@ -1,0 +1,49 @@
+**推论 32.3（Every-ground confinement on $\mathcal D$）。**
+For every $H\in\mathcal D$ and integer $S\geq1$,
+
+$$
+\ker(K_s-E_sI)\subseteq\operatorname{ran}P_s.
+\tag{32.19}
+$$
+
+With $\mathcal N_s=\ker P_s\subseteq\mathcal H_{mS}$, put
+$g_s=\min\operatorname{spec}(K_s|_{\mathcal N_s})-E_s$.
+Then $g_s>0$ and
+
+$$
+K_s-E_sI\succeq g_s(I-P_s),\qquad
+\|(I-P_s)\phi\|^2\leq\frac{\delta}{g_s}
+\tag{32.20}
+$$
+
+for every unit complex $\phi$ with
+$\langle\phi,K_s\phi\rangle\leq E_s+\delta$, $\delta\geq0$.
+No value or scale-uniform estimate of $g_s$ is asserted.
+
+Proof. By the exact reduction in Definition 31.1 and its proof,
+$g_s=\min_p\Delta_p$. Explicitly, any deficient summand in
+(32.3) has some $J_p\leq S-1$. Increase this spin to $S-1$
+and all other spins to $S$ using the supplied nonstrict
+fixed-zero-weight comparison. Its minimum is at least
+$\mu_p(S-1)$. Conversely each of the latter sectors is an
+actual deficient summand, so the two minima agree.
+Theorem 32.2 makes each of the finitely many $\Delta_p$
+strictly positive.
+
+The space $\mathcal N_s$ is nonzero: take a nonconstant
+one-particle vector in one original fibre, an occupancy-$(2S-1)$
+vector in a second fibre and occupancy-$S$ vectors in the other
+fibres. Their tensor has occupancy $mS$ and is killed by $P_s$.
+This construction includes $m=2,S=1$.
+The operator $K_s$ commutes with each fibre permutation,
+hence with $P_s$; both projection ranges reduce it.
+Its form is at least $E_s$ on the symmetric range and at
+least $E_s+g_s$ on $\mathcal N_s$. Adding these reducing
+forms gives the operator inequality and then its expectation
+bound. A ground vector has zero expectation on the left and
+therefore no nonsymmetric component. Equivalently, decomposing
+any complex ground vector into (32.3) cannot leave a nonzero
+deficient component. Orthogonal sums across weights, sectors
+and multiplicities, and all entanglement within them, are
+included in this argument. $\square$
+

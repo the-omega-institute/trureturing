@@ -1,0 +1,11 @@
+#### 定义 7.1（带权黄金均值语言）
+
+合法二进制串禁止相邻 $11$。每个 $1$ 赋权 $\lambda>0$，长度 $n$ 的配分函数记为 $Z_n$。设
+
+$$
+A_\lambda=\begin{pmatrix}1&\lambda\\1&0\end{pmatrix},\quad
+\rho=\frac{1+\sqrt{1+4\lambda}}{2},\quad s=1-\rho.
+$$
+
+<a id="statement-7-2"></a>
+

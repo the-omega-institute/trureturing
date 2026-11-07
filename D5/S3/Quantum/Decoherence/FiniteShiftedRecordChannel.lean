@@ -212,7 +212,7 @@ theorem diagonal_kraus_complete
   · simp [Matrix.sum_apply, Matrix.diagonal_conjTranspose, Matrix.diagonal_mul_diagonal,
       hij]
 
-private theorem diagonal_kraus_entry
+theorem diagonal_kraus_entry
     {ι ε : Type*} [Fintype ι] [DecidableEq ι] [Fintype ε]
     (record : ι → ε → ℂ) (rho : Matrix ι ι ℂ) (i j : ι) :
     (∑ a, Matrix.diagonal (fun i => record i a) * rho *

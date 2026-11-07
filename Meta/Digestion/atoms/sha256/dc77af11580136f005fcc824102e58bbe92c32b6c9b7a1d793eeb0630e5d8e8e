@@ -1,0 +1,60 @@
+## 来源、版本与核读范围
+
+<a id="ref-v67"></a>
+
+1. trureturing 项目，V67：历史脚本、内容寻址与同一整体中的量子纠缠。固定提交原文，核读 §9.3、定理 9.5 的全实细化与平方权重证明。
+<a id="ref-v78"></a>
+
+2. trureturing 项目，V78 continuation：内生闭合、有限根证书与结果核递归。固定提交原文，沿用有限结果树、实际记录和闭合范围的既有区分。
+<a id="ref-v79"></a>
+
+3. trureturing 项目，V79：二元反向相容、有限相位证书与量子读出重构。固定提交原文，核读 §§2–5 与 §9.1。
+<a id="ref-foundations"></a>
+
+4. trureturing 项目，*ContextualSpacetimeQuantum: Foundations and Records*。固定提交原文，核读 §4 的有限未来观察闭包、§8.4 的 Schur 不动代数、§§11.2–11.3 的精确稳定条件。
+<a id="ref-atlas"></a>
+
+5. trureturing 项目，*Quantum Origin: Endogenous Cut Atlas and Discrete Reconstruction Boundaries III*。固定提交原文，核读 §§12–13 的 Heisenberg 自治与逐仪器分支闭合。
+<a id="ref-record"></a>
+
+6. trureturing 项目，*Recursive Relational Observation: Minimal Record Dilations*。固定提交原文，核读 §5：一步概率、实际中间记录与多步路径律不能混同。
+<a id="ref-v88"></a>
+
+7. 本对话研究稿，*AURIC v88: Recursive Spheres and Relative Resolution Fields*，2026。沿用双向有序相容、保忠实态条件期望、条件方差及分辨率塔；本轮不是它们的重新发现。
+<a id="ref-choi"></a>
+
+8. M.-D. Choi， “A Schwarz inequality for positive linear maps on $C^*$-algebras,” *Illinois Journal of Mathematics* 18(4), 565–574 (1974)，https://doi.org/10.1215/ijm/1256051007。为平方等式与乘法相容的经典来源。
+<a id="ref-mdqec"></a>
+
+9. M.-D. Choi, N. Johnston and D. W. Kribs， “The Multiplicative Domain in Quantum Error Correction,” *Journal of Physics A* 42, 245303 (2009)，https://arxiv.org/html/0811.0947v1，https://doi.org/10.1088/1751-8113/42/24/245303。正文给出完整有限证明。
+<a id="ref-nsannouncement"></a>
+
+10. OpenAI， “A solution to the Navier–Stokes Millennium Prize Problem,” 2026-09-08，https://openai.com/index/navier-stokes-solution/。公告层级与实际定理范围分开核查。
+<a id="ref-nspaper"></a>
+
+11. OpenAI，*Finite Time Blowup for Navier–Stokes*，2026，公开稿 166 页，https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf。核读摘要、定理 1.1、引言及相关物理说明；没有独立复核全部证明或运行 Lean。
+<a id="ref-clayns"></a>
+
+12. Clay Mathematics Institute， “Navier–Stokes Announcement,” 2026-09-11，https://www.claymath.org/news/navier-stokes-announcement/。
+<a id="ref-openai1026"></a>
+
+13. OpenAI， “Working with academic communities to build scientific understanding,” 2026-10-26，https://openai.com/index/building-scientific-understanding-with-academic-communities/。核读 QCD／Yang–Mills 存在性与 ETH 两节，不据此假定未公开证明已被本稿验证。
+<a id="ref-ymcommittee"></a>
+
+14. M. R. Douglas, D. J. Gross, A. Jaffe, I. R. Klebanov and N. Nekrasov，*Proof by OpenAI of the Existence of Quantum Yang–Mills Theory*，October 2026，https://www.kitp.ucsb.edu/sites/default/files/YM_working_group.pdf。核读存在性材料发布与审核安排、证明尚待公开，以及质量隙与禁闭仍开放的边界。
+<a id="ref-clayym"></a>
+
+15. A. Jaffe and E. Witten，*Quantum Yang–Mills Theory*，Clay Millennium problem description，https://www.claymath.org/wp-content/uploads/2022/06/yangmills.pdf。核读场公理、反射正性、存在性及正质量隙要求。
+<a id="ref-gluon"></a>
+
+16. *Single-minus gluon tree amplitudes are nonzero*，arXiv:2602.12176，首稿 2026-02-12，核读 v2（2026-03-09），https://arxiv.org/html/2602.12176v2。核读 Klein 半共线范围、分布支撑、特殊区域闭式与递归证明。
+<a id="ref-deepmindfluids"></a>
+
+17. *Discovery of Unstable Singularities*，arXiv:2509.14185，2025-09-17，https://arxiv.org/html/2509.14185v1。核读 PINN／Gauss–Newton 方法、CCF／IPM／Boussinesq 结果和残差验证范围。
+<a id="ref-alphaevolve"></a>
+
+18. *Mathematical exploration and discovery at scale*，arXiv:2511.02864，公开 v3，https://arxiv.org/html/2511.02864v3。核读 67 问题框架及 §6.2 的自卷积上界见证；本文数字限定于所核版本。
+<a id="ref-ethscope"></a>
+
+19. OpenAI Math repository，Lean statement document `lean/docs/378.md`，2026，https://github.com/openai/math/blob/main/lean/docs/378.md。用于核对固定宽度精确计数的次指数范围，不宣称由此得到 $\mathrm P=\mathrm{NP}$。
+

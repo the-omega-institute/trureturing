@@ -22,6 +22,7 @@ open D5.S1.Dynamics.PeriodicOrbits.SkewZModFixedCount
 
 variable {X : Type*} {q : ℕ}
 
+open scoped Classical in
 /-- The base return table seen by a cyclic skew product after imposing zero holonomy. -/
 noncomputable def zeroHolonomyCount (f : X → X) (c : X → ZMod q) [Fintype X] (n : ℕ) : ℕ :=
   Fintype.card {x : X // f^[n] x = x ∧ birkhoffSum f c n x = 0}
@@ -40,7 +41,7 @@ theorem delta_fixed_count_skew_zmod (f : X → X) (c : X → ZMod q) [Fintype X]
   intro p hp
   rw [fixed_count_skew_zmod f c p.2]
   simp only [zeroHolonomyCount, Nat.cast_mul]
-  ring
+  ring_nf
 
 /-- The weighted number of exact lifted cycles factors through the fiber cardinality.
 

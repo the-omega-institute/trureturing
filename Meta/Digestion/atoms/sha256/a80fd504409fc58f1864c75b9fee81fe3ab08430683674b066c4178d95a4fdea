@@ -1,0 +1,40 @@
+#### 定理 8.4（固定内部读口的 Fisher 上界及局部达到）
+
+<a id="thm:qfi"></a>
+
+沿一条参数曲线取固定完整有限 POVM $\{E_w\}$，
+$p_w=\langle\psi_\lambda,E_w\psi_\lambda\rangle$。
+在正支持上定义的 Fisher 信息满足
+
+$$
+\boxed{
+ \mathcal I_E(\lambda)=\sum_{w:p_w>0}\frac{(p_w')^2}{p_w}
+ \le4\left\lVert (I-P)\psi_\lambda'\right\rVert^2=4g_{\lambda\lambda}.
+ }                                                       \tag{40}
+$$
+
+在每个给定点，存在对该一参数方向达到上界的局部读口。
+
+**证明。**
+
+令 $\eta=(I-P)\psi'$。由正规化，
+$p_w'=2\operatorname{Re}\langle\eta,E_w\psi\rangle$。
+对 $E_w^{1/2}\eta,E_w^{1/2}\psi$ 用 Cauchy--Schwarz，
+得 $(p_w')^2/p_w\le4\langle\eta,E_w\eta\rangle$。
+求和即得上界；零概率项的导数为零。
+若 $\eta\ne0$，在所讨论点取
+$e_\pm=(\psi\pm\eta/\left\lVert \eta\right\rVert)/\sqrt2$ 的投影及正交补。
+两项概率均为 $1/2$，导数分别为 $\pm\left\lVert \eta\right\rVert$，
+故 Fisher 信息为 $4\left\lVert \eta\right\rVert^2$。
+当 $\eta=0$ 时上界为零。
+
+∎
+
+达到上界的读口可以依赖所讨论的未知点；
+它不是一个无需内部校准即可全域最优的统一仪器。
+式 (40) 要求效果固定。若 $E_w=E_w(\lambda)$，
+还存在 $\langle\psi,E_w'\psi\rangle$ 项；
+应使用式 (35) 的相对态或包含读口程序的整个输入。
+
+<a id="statement-8-5"></a>
+

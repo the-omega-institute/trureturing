@@ -1,0 +1,41 @@
+**Definition 52.2 (exact residual and limits of the length reduction).**
+By (51.23), for every tuple (51.2) with $D_\sigma<0$,
+
+$$
+ \text{there is exactly one global maximizing pair in }\mathcal T_x
+ \quad\Longleftrightarrow\quad
+ \text{$M$ has exactly one global maximum on }[x^2,1].
+\tag{52.1}
+$$
+
+This equivalence is established, as are boundary exclusion and unique
+vertical-fibre maximization. Both endpoint fibres remain in the
+comparison; Proposition 51.2 proves that neither can be globally
+maximizing when $D_\sigma<0$. The endpoint $\xi=13/4$ is included.
+The population endpoints, $\xi=0$ and $x=1$ lie outside (51.2) itself;
+they are not removed from the original domain or classified by this
+reduction.
+
+The right side of (52.1), uniformly over the original parameter range,
+remains unresolved. In (51.24), $\Gamma_{XX}<0$ and
+$\Gamma_{YY}<0$, but
+$-\Gamma_{XY}^2/\Gamma_{XX}\ge0$.
+Separate strict concavity therefore does not determine the sign of
+$M''$. No positive Schur complement, failure of uniqueness, or globally
+maximizing tie follows from this missing sign control.
+A sufficient derivative certificate would have to control the global
+profile, for example a global positive-to-negative one-crossing pattern
+for $M'$ excluding a maximizing plateau; a local crossing alone is
+insufficient. Neither such a certificate nor an actual globally
+maximizing tie is established here.
+
+Unique fibre lengths do not assert joint strict concavity, phase
+uniqueness, uniqueness in (51.12), or uniqueness for the full original
+optimization. Even a proof of (51.12) would leave the winning sign and
+population, $a_\xi$, complete phase preimages, the exact $\alpha$ and
+$\beta$, first-branch and endpoint classification, and the full
+original ordering to their separate comparisons. The conditional
+restriction (51.27) does not assert that a negative-determinant slice
+contributes to the original minimizing set. No physical-acquisition or
+whole-POVM conclusion is drawn.
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:32594ce650cd49b1d0d8c0d325bd9c52da3b1757dd18d5d493fb5af7ece12aa9
+  normalized_sha256: sha256:32594ce650cd49b1d0d8c0d325bd9c52da3b1757dd18d5d493fb5af7ece12aa9
+cas_ref: sha256:32594ce650cd49b1d0d8c0d325bd9c52da3b1757dd18d5d493fb5af7ece12aa9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Expository boundary-parameter summary and literature correspondence note pointing to the equal-leg case in Abiad et al., Alon row-kernel propagation, and DeAlba et al. tree-power minimum-rank references while explicitly stating that no separate theorem or claim outside Definition 1.1 and Theorem 3.1 is asserted.
+    previous_atom_id: c6592bcc40c9ba14e26d38b40cb3d2fc4d971cceeb9ba4be1b8b4f2730354ad9
+    next_atom_id: null

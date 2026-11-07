@@ -1,0 +1,5 @@
+source_id = "average-mixing-bipartite-rank-separation"
+path = "docs/develop/theory/AVERAGE_MIXING_BIPARTITE_RANK_SEPARATION.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

@@ -1,0 +1,29 @@
+fingerprints:
+  raw_sha256: sha256:c8d5b9bfedfe31a09b7ce07c1c93410d6a363ac1a733717b5c7af2feb8120a17
+  normalized_sha256: sha256:c8d5b9bfedfe31a09b7ce07c1c93410d6a363ac1a733717b5c7af2feb8120a17
+cas_ref: sha256:c8d5b9bfedfe31a09b7ce07c1c93410d6a363ac1a733717b5c7af2feb8120a17
+coverage_gids:
+  - gid: D5/S3/Quantum/Algebra/PauliFixedProductFamily.exact_action_data
+    target_statement_id: sha256:5b404557193e886f5d2e3752c67fd628183bae41f3843a7155f97131f90d3d5d
+  - gid: D5/S3/Quantum/Algebra/PauliFixedProductFamily.exact_constants
+    target_statement_id: sha256:ea6fa895e4845cec4954a70025ebb0d04848239b5b0c0144428922e1e9c6c0cb
+  - gid: D5/S3/Quantum/Algebra/PauliFixedProductFamily.exact_defects
+    target_statement_id: sha256:ba257d85c969a562b45470ab0a9470985b73f4ecefd84b87b073231b3076952d
+  - gid: D5/S3/Quantum/Algebra/PauliFixedProductFamily.exact_label_data
+    target_statement_id: sha256:2592bc8d5f7effd905487624ebdcbf33d61023da5ef17c15e40cee0712a682de
+  - gid: D5/S3/Quantum/Algebra/PauliFixedProductFamily.exact_support_gap
+    target_statement_id: sha256:1955068ffb32e8998a8652002178b292ef8da8c94ec0d730e6eb49b9532d6b1a
+  - gid: D5/S3/Quantum/Algebra/PauliFixedProductFamily.family_contract
+    target_statement_id: sha256:c43ca4ce7b073520a95548c7880612307b684f4f422ce2dd5ad565a907b2dc99
+  - gid: D5/S3/Quantum/Algebra/PauliFixedProductFamily.full_report
+    target_statement_id: sha256:26e21ba3671c9912c3fe482764b8e5571b385c2055fa6e4c33c85b5a2373b9a5
+  - gid: D5/S3/Quantum/Algebra/PauliFixedProductFamily.residual_scaling
+    target_statement_id: sha256:f4d722ed5aea0831419f932cb8bf4dea9ec9337204530b2637bcaa9c52884c53
+  - gid: D5/S3/Quantum/Algebra/PauliFixedProductLinear.actual_strict_improvement
+    target_statement_id: sha256:95e7f269829cd46907b7b872442c7d26128ba36402294870294d95ae46323b96
+  - gid: D5/S3/Quantum/Algebra/PauliFixedProductLinear.nonempty_improvement
+    target_statement_id: sha256:a11aa3d99f07643afd98238cc67610d79bed0b89ad27c302062b4fc833d31f42
+  - gid: D5/S3/Quantum/Algebra/PauliFixedProductLinear.small_interval_nonempty
+    target_statement_id: sha256:0c5fb1b4628565be2402d6e1865d9b956c9ba713490afeb203f8dd617632ae61
+receipts:
+  unresolved_subitems: []

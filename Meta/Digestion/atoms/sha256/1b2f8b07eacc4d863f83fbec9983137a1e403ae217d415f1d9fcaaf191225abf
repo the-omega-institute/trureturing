@@ -1,0 +1,72 @@
+## 18. 无共同相位假设的单列 Young 优化
+
+单列方法本身还可用 Young 不等式优化。取
+
+$$
+\delta=\frac1{16},
+\qquad \lambda=17000.
+$$
+
+因为 $\sqrt{\delta(1-\delta)}=\sqrt{15}/16<1/4$，每列主坐标平方至少为
+
+$$
+\frac12\frac{(11/16)^2}{3/2}=\frac{121}{768}>\frac1{16},
+$$
+
+而次坐标平方小于 $t<\delta$。因此可选取一个满足
+$|z_\ell|^2\ge(1-t)/2$ 的列，并只使用该列产生的单个相位。
+
+对该列，交叉项满足
+
+$$
+4\sqrt{2\kappa_R\tau t}
+\le\lambda\tau+\frac{8\kappa_R}{\lambda}t.
+$$
+
+除以 $|z_\ell|^2m_\sigma^2\ge(1-\delta)m_\sigma^2/2$，再用 $t\le1600a(E)$，得到
+
+$$
+d_U^2\le
+\frac{2(\lambda+2)}{m_\sigma^2(1-\delta)}\tau
++\frac{(12800+25600/\lambda)\kappa_R}
+       {m_\sigma^2(1-\delta)}a(E).
+$$
+
+加入效果项 $\|E-E_\sigma\|_{\mathrm F}^2\le3200a(E)$ 后，负分支的局部 $a(E)$ 系数为
+
+$$
+C_{-,\mathrm{loc}}
+=3200+\frac{17{,}410{,}048}{1275}(10+6\sqrt2)
+=255615.4008\ldots,
+$$
+
+其反馈系数为 $247673.4251\ldots$；正分支的两个系数都更小。补集上 $\rho\le9$ 且
+$a(E)\ge\delta/1600$，故补集系数至多为 $230400$。使用有理界
+
+$$
+\sqrt2<\frac{1414214}{10^6},\qquad
+\left(\frac{1414214}{10^6}\right)^2-2
+=\frac{309449}{250000000000}>0,
+$$
+
+负分支的两个局部系数分别满足
+
+$$
+C_{-,\mathrm{loc}}<\frac{5092338777088}{19921875}<255616,
+\qquad
+\frac{2(\lambda+2)}{m_-^2(1-\delta)}
+<\frac{58048466428}{234375}<255616.
+$$
+
+正分支的两个系数更小，因此得到
+
+$$
+\boxed{\qquad
+C_{\mathrm{prod}}\le255616,
+\qquad
+\int\rho\,d\mu\le2{,}044{,}928\,\varepsilon.
+\qquad}
+$$
+
+该单列改进不使用另一列的相位。
+

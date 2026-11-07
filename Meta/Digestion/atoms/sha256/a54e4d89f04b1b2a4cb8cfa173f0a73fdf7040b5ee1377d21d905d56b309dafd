@@ -1,0 +1,12 @@
+**定义 9.2（环与解析探针）。**沿用 $\zeta^2+\zeta+1=0$、$\eta=1-\zeta$，写
+
+$$
+R=\mathbb Z[1/6],\qquad D=R[\zeta],\qquad
+C_a=e_ae_a^*,\qquad
+P_{ab,r}=q_{ab,r}q_{ab,r}^*,\quad
+q_{ab,r}=\frac{e_a+\eta\zeta^re_b}{2}.
+\tag{9.2}
+$$
+
+这里 $0\le a<b<27$、$r=0,1$，$\mathcal I$ 为这些标签与二十七个坐标标签的并。$\mathcal P=\{P_i:i\in\mathcal I\}$ 正是 (8.6)，其大小为 $27+2\binom{27}{2}=729$。每个投影秩一、迹一；探针列的平方范数为 $(1+3)/4=1$。本节只用解析索引，没有枚举或数值认证。
+

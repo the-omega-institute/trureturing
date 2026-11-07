@@ -1,0 +1,11 @@
+**Open assertion 10.5 (Original universal sign).** For every actual
+complex PSD trace-one $\rho$ and independent $a,b\in[0,1]$, does
+$\Delta(\rho)\geq0$ hold? This is the open part of Assertion 9.1.
+Its witness-funding sufficient assertion is disproved by Proposition
+10.1; the visible-budget sufficient assertion (10.11) is disproved by
+Proposition 10.4. The actual-correlation bound (10.7), the supported BKM
+identities, the earlier lower bounds, and Proposition 9.2's exact
+pinching accounting remain valid. A sufficient argument retaining the
+visible endpoint budget cannot be repaired solely by adding path score
+observables, even all of them; it must use more endpoint information or
+a different combined inequality.

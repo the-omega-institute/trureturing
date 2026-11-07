@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:280e6a24b2a82bd0cbcf84947905d114849c83b5dfd57200f3042ad156359fc8
+  normalized_sha256: sha256:280e6a24b2a82bd0cbcf84947905d114849c83b5dfd57200f3042ad156359fc8
+cas_ref: sha256:280e6a24b2a82bd0cbcf84947905d114849c83b5dfd57200f3042ad156359fc8
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Upstream-only clause (36.7); no project GID supplies this exact section statement. At Mathlib revision 56a005855ea17e0b0958f73ec801ae140b0a1679 use Matrix.PosSemidef.conjTranspose_mul_mul_same, Matrix.PosSemidef.trace_eq_zero_iff, Matrix.PosSemidef.dotProduct_mulVec_zero_iff, Matrix.trace_mul_cycle, Matrix.trace_blockDiagonal', LinearMap.sum_single_apply and linear map_sum. For the actual native interface (36.1)-(36.2), put n = Sigma t, W_(L+1,t) and represent the fine direct sum by blockDiagonal'. Q_s is the diagonal indicator that the unique old prefix of a fine path has terminal s. Hence Q_s is Hermitian and idempotent, the Q_s sum to 1, and direct expansion of the finite ordinary traces gives tr(Q_s B) = sum_(t,e:s->t,u) B_t(ue,ue) = tr((E_L B)_s). No degree averaging occurs. These equalities are finite entry/sum normalization, retaining L=0 and empty index sets; no nonempty or positive-depth premise is added. For a positive input supported only at s, positivity of R and E_L R = id give zero projected trace at every r != s. Positive compression plus the zero-trace criterion makes Q_r B_s Q_r zero; the zero quadratic-form kernel criterion applied to its columns gives B_s Q_r = Q_r B_s = 0. The identity partition gives B_s = Q_s B_s Q_s. Block insertion, linearity and finite-sum distribution give (36.7). This records an upstream-only application and native parameter correspondence, not a new compiled project theorem or an escape witness. The coherent-lift, preparation-channel, multiplicity CPTP section (36.8), and operational clauses remain in child 999581875b8ad377965d28c98fd8c778978857f13d821d3bbb2e104f043cbb5e and are not settled.
+    previous_atom_id: b0f8a9ed3a6de13dbc5b3c30e3b30f82d0e57ed4ea93b76b35f59aa3f0de86c0
+    next_atom_id: 999581875b8ad377965d28c98fd8c778978857f13d821d3bbb2e104f043cbb5e

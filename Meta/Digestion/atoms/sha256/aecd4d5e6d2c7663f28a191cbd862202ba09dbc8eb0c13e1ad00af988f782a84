@@ -1,0 +1,28 @@
+**命题 C-73.4（模与相位共同控制条件纯态行列式）。** 在定义 C-73.1 的全正域，把条件底面系数写为
+
+$$
+B=\frac1{\sqrt r}\begin{pmatrix}\psi_0&\psi_3\\\psi_1&\psi_{13}\end{pmatrix}.
+$$
+
+则
+
+$$
+\begin{aligned}
+r^2|\det B|^2
+&=(\sqrt{p_0p_{13}}-\sqrt{p_1p_3})^2
++4\sqrt{p_0p_1p_3p_{13}}\sin^2(\chi/2),\\
+\det B=0&\quad\Longleftrightarrow\quad\Xi=1
+\quad\Longleftrightarrow\quad\eta=0\ \text{且}\ \chi=0\pmod{2\pi}.
+\end{aligned}
+\tag{C73.7}
+$$
+
+证明。消费 C-12.2 的相位敏感行列式，在当前记号中可直接由
+
+$$
+r\det B=\psi_0\psi_{13}-\psi_1\psi_3
+=\psi_1\psi_3(\Xi-1)
+$$
+
+核对。令两复乘积的模分别为 $a=\sqrt{p_0p_{13}}$、$b=\sqrt{p_1p_3}$，它们的相对相位为 $-\chi$。故模平方为 $a^2+b^2-2ab\cos\chi=(a-b)^2+4ab\sin^2(\chi/2)$。正性给 $ab>0$，两非负项同时为零恰要求 $a=b$ 且 $\chi=0\bmod2\pi$。这证明全部等价。若底角为零，须直接用复乘积差，不定义零振幅的辐角或零分母的 $\Xi$。该式表明规范圆消除的只是第一项，独立相位项仍可非零；其适用载体仍是明确给定的条件两因子纯态。证毕。
+

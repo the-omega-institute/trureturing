@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:570d7963b563082a25f0af281bae13eefca551e4d3700987c1ba5ace55352901
+  normalized_sha256: sha256:570d7963b563082a25f0af281bae13eefca551e4d3700987c1ba5ace55352901
+cas_ref: sha256:570d7963b563082a25f0af281bae13eefca551e4d3700987c1ba5ace55352901
+coverage_gids:
+  - gid: D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelLocalPositivity.exists_window_posDef
+    target_statement_id: sha256:aa9647b72516412da4c6762f21a5ba05e2134a96201c246f84f4debabfa33602
+receipts:
+  unresolved_subitems: []

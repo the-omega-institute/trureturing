@@ -1,0 +1,47 @@
+### 40.4. Exhaustive finite recurrence and all fifteen rows
+
+The following recurrence proves the completeness of the enumeration, independently of implementation choices. Let K_j be the inclusion-maximal cliques on the first j vertices, with K_0={empty set}. On adding vertex v, form
+
+$$
+\mathscr C=K_j\ \cup\ \{\{v\}\cup(C\cap N(v)):C\in K_j\},
+\qquad
+K_{j+1}=\operatorname{Max}_{\subseteq}\mathscr C.
+\tag{40.3}
+$$
+
+Every candidate in (40.3) is a clique. Every clique avoiding v extends to a member of K_j. Every clique containing v, after v is removed, extends to some C in K_j and is therefore contained in the candidate {v} union (C intersect N(v)). Thus every clique is contained in a candidate. Taking the inclusion-maximal candidates gives exactly all maximal cliques, proving (40.3) by induction. This also covers maximal cliques confined to one or two parts; they are removed only when selecting the three-part spanning cliques for the final maximum.
+
+Apply (40.1) and (40.3) with vertices ordered first by core and then by their binary ear mask. The complete table is:
+
+| Pair partition of selected centres | Vertices per core | All maximal cliques | Spanning maximal cliques | Maximum spanning weight |
+|---|---:|---:|---:|---:|
+| (0,2) / (4,6) / (8,10) | 24,20,24 | 45 | 27 | 4290 |
+| (0,2) / (4,8) / (6,10) | 24,10,12 | 11 | 1 | 3690 |
+| (0,2) / (4,10) / (6,8) | 24,12,20 | 19 | 6 | 3690 |
+| (0,4) / (2,6) / (8,10) | 12,10,24 | 11 | 1 | 3690 |
+| (0,4) / (2,8) / (6,10) | 12,10,12 | 6 | 1 | 3690 |
+| (0,4) / (2,10) / (6,8) | 12,12,20 | 10 | 2 | 3690 |
+| (0,6) / (2,4) / (8,10) | 12,20,24 | 19 | 6 | 3690 |
+| (0,6) / (2,8) / (4,10) | 12,10,12 | 6 | 1 | 3690 |
+| (0,6) / (2,10) / (4,8) | 12,12,10 | 6 | 1 | 3690 |
+| (0,8) / (2,4) / (6,10) | 12,20,12 | 10 | 2 | 3690 |
+| (0,8) / (2,6) / (4,10) | 12,10,12 | 6 | 1 | 3690 |
+| (0,8) / (2,10) / (4,6) | 12,12,20 | 10 | 2 | 3690 |
+| (0,10) / (2,4) / (6,8) | 16,20,20 | 19 | 6 | 3690 |
+| (0,10) / (2,6) / (4,8) | 16,10,10 | 8 | 1 | 3690 |
+| (0,10) / (2,8) / (4,6) | 16,10,20 | 11 | 1 | 3690 |
+
+For additional explicit arithmetic, in the first row the multiset of spanning weights is
+
+$$
+\begin{gathered}
+2706,2838,2838,3025,3025,3135,3135,3135,3135,3300,3300,\\
+3432,3432,3639,3639,3639,3674,3690,3839,3839,3839,\\
+3861,3861,3861,3861,4136,4290.
+\end{gathered}
+$$
+
+All other rows have maximum 3690. The companion verifier evaluates the finite formulas using exact integers, computes the table by recurrence (40.3), and requires equality of the entire maximal-clique lists with a separate pivoted clique enumeration. Its triangulation recursion independently checks (40.1): each triangulation has one unique triangle adjacent to root side (a,b); its apex k separates two smaller intervals. An interior original ear i=1,...,12 is present exactly when triangle (i-1,i,i+1) appears. Ears 0 and 13 are detected in root triangles (0,1,13) and (0,12,13). Duplicate ear masks in this recursion represent different triangulations and are deliberately counted with multiplicity.
+
+The supplied finite results satisfy these assertions. The table and (40.2), with the exhaustive finite computation, give $A\le4290$ for every original family in this long-gap domain.
+

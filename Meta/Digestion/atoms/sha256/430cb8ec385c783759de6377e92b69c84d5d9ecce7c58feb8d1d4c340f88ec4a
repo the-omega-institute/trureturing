@@ -1,0 +1,8 @@
+**Lemma 126.2.** The six tetrahedra
+
+    T_i = A B V_i V_{i+1}
+
+give a genuine strictly hyperideal triangulation of P, with compatible canonical truncations.
+
+**Proof.** Pulling the convex projective polyhedron from the vertex A cones A to every boundary face not containing A, namely the six faces L_i. This partitions it into the displayed tetrahedra, sharing precisely the radial triangles A B V_i. Strict convexity makes each tetrahedron nondegenerate. Its only edge that is not already a boundary edge of P is A B. Bao–Bonahon Lemma 3 states that the segment between any two distinct vertices of a hyperideal polyhedron meets hyperbolic space, so this diagonal is proper. Thus all six edges of every tetrahedron meet hyperbolic space and all four vertices are strictly outside its closure. Each tetrahedron is consequently genuinely hyperideal, rather than merely an abstract subdivision. The polar truncation plane depends only on its vertex, so the truncations agree across shared faces. Lemma 4 ensures the corresponding vertex half-spaces are disjoint. ∎
+

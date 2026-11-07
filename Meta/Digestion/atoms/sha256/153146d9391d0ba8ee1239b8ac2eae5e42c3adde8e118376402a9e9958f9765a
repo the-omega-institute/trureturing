@@ -1,0 +1,7 @@
+Condition on all neighbour choices. The $Z_k$ are then fixed, and the $d$ inspected controls have distinct time coordinates. They are independent of those choices and independent of one another, each being zero with probability $q$. Thus
+
+$$
+\mathbb P(A_i)=q^d.
+\tag{2.9}
+$$
+

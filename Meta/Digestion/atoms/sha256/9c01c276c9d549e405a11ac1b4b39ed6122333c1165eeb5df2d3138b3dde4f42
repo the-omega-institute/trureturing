@@ -1,0 +1,70 @@
+**Theorem 33.2 (mutual recovery, route agreement and settled updates,
+without an unwarranted minimality claim).** On this actual MarkedReady
+domain all four observations recover one another by finite mathematical
+maps on their actual images. More precisely, for every two such histories
+$h,h'$ and every $Z\in\{S_C,B_C,T_C,M_C\}$,
+
+$$
+Z(h)=Z(h')\quad\Longleftrightarrow\quad K_C(h)=K_C(h').
+\tag{AA.107}
+$$
+
+Every recovery route agrees, and every route commutes with each declared
+settled request's legality, complete reply and $K_C$ successor. Equality
+in (AA.107) implies $Q_C$ behavior equivalence for all finite future
+requests. Conversely $Q_C$ equivalence forces equal source and equal
+selected identity word. It need not force equal raw selection state;
+no general equality of (AA.107) with the minimal behavior kernel is claimed.
+The actual acquired callable memory is supplied by Theorem 32.3, separately
+from the mathematical descriptions and their recovery maps.
+
+Proof. Prefix closure converts $B_0$ to $S_0$, and maximal elements convert
+$S_0$ to $B_0$. Arity parses the same $t$, including the unary marker.
+Their attached marks and side words decode $\nu$ by Theorem 31.2, with
+$q$ unchanged. The labelled causal order in $T_C$ recovers $t$ by Theorem
+17.2, while its selected serial chain already gives $\nu$. Reading the
+selected retained fields of $M_C$ gives exactly the source, marks, tapes
+and $q$, and hence the same $K_C$.
+
+Conversely, from actual $K_C=(t,\nu,q)$ form its source support or terminal
+antichain, and attach the local bits and strict-descendant side projections
+proved unique in Theorem 31.2. Form $T_c$ from $t$ by (AA.67) and attach
+the actual selected chain and $q$. For memory form the corresponding
+source/mark/tape/control description with canonical source-preorder
+bindings and the fixed callable-entry roles. Every one of these operations
+is finite on a finite input. Each returns the original semantic observation
+on its actual image. This proves (AA.107) and the inverse identities.
+Every triangle and longer route extracts and reconstructs the same
+$K_C$ of this same process; it never combines independently chosen
+marginal realizations. Only §32, not this reconstruction of a description,
+provides real objects, current rights and an accessible service entry.
+No serializer for all twelve descriptions is presumed installed.
+
+At equal $K_C$, guarded source queries and addressed growth have the same
+legality and ordinary replies. Selected fetches return the same complete
+identity or OutOfRange. NextSelected therefore reaches the same current
+leaf and performs the same actual growth identity. Selection then reads
+the same $q,e$, so it returns the same $(q',b)$ and has exactly successor
+(AA.106); Theorem 31.2 uniquely determines that successor's mark/tape
+description. Queries and refusals instead preserve $K_C$. These statements
+also cover the unused tag and checked invalid indices. Thus the complete
+one-step responses and successors descend, and the explicit view maps
+commute with them. Induction over finite request sequences proves
+behavior equivalence. This supplies the actual legality, label and update
+premises of the PG and typed-view suppliers; it does not infer them from
+view names.
+
+Different source terms have different Tag replies at a first differing
+logical constructor/address. At equal source, different finite selected
+words differ at a FetchSelected index, including the in-range versus
+OutOfRange case when one is a proper prefix. Hence task equivalence
+forces equal $(t,\nu)$. For the limitation about $q$, consider an event-only
+selector that selects nothing and merely stores the kind of the last
+successful event. The two actual words (AA.75) have equal source, empty
+selected word and different last kinds. Its stored state never affects
+selection or any source handler, so every future $Q_C$ request has the
+same behavior despite those different raw states. Thus a sufficient
+current control coordinate is not automatically a minimal behavioral
+quotient. Proposition 30.4 separately shows why comparing only immediate
+source successors would be too weak even at equal $q$. $\square$
+

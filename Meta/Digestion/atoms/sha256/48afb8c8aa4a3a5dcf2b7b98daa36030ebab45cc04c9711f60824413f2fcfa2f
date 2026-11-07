@@ -1,0 +1,11 @@
+**Proposition 24.3 (genuine quotient and all history fibres).** The complete-response quotient of Definition 24.2 is exactly $X$, with $|V|=31$. Every vertex is reachable from the fixed root, and all legal quotient words lift to actual executions. The entire legal root language is the following table; a row with a restricted index contributes histories only in its stated range.
+
+| Endpoint | All histories ending there | Length |
+| --- | --- | --- |
+| $o$ | $\varepsilon$ | $0$ |
+| $w$ | $b$ | $1$ |
+| $t_j$, $1\le j\le5$ | $ba^{6-j}$ | $7-j$ |
+| $t_j$, $1\le j\le13$ | $bba^{13-j}$ | $15-j$ |
+| $v$ | $p_i$, $i\in\{0,1,2\}$ | $n_i$ |
+| $s$ | $p_i b$, $i\in\{0,1,2\}$ | $n_i+1$ |
+| $c_{m,j}$ | $p_i\rho_m W_m^k W_m[0:j]$, $i\in\{0,1,2\}$, $k\ge0$ | $n_i+r_m+mk+j$ |

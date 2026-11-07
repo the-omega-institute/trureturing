@@ -1,0 +1,61 @@
+**Proposition 16.2 (serial distinctions still drive original returned
+answers and real Next edits).** The native family contains histories
+with the same current geometry and boundary but distinct original
+FetchGrowth replies and distinct actual Next edits. More generally every
+two distinct histories in $\mathcal H(T_r)$ are separated by an original
+FetchGrowth request. Thus the serial distinctions charged in (IV.35)
+belong to the unchanged full task.
+
+Proof. Since $d_1\ge9$, the two words
+
+$$
+u_0=\rho A_1Q_1A_2\cdots A_{d_1},\qquad
+u_1=\rho A_1A_2Q_1A_3\cdots A_{d_1}
+\tag{IV.39}
+$$
+
+are legal histories of $t_1$. Append to both the same legal concatenation
+$v$ of suffixes (IV.32) for blocks $2,\ldots,r$, taking $v=\varepsilon$
+when $r=1$. The resulting histories $h_0=u_0v$, $h_1=u_1v$ end at the
+same $T_r$. FetchGrowth$(3)$ returns respectively $P_R$ and $S_L$.
+On that same current source, $R$ is a beta leaf and the leftmost logical
+leaf below $L$ is the beta at $L^{q_r}$. Hence Next$(3)$ executes
+respectively $S_R$ and $S_{L^{q_r}}$. These are edits on the actual
+current source after the internal recall, not on a historical scratch
+tree. The single outer Next reply retains both the old recalled pair
+and its actual new pair, followed by the original completion and Return
+phases; no external Recall or extra ACK is inserted.
+
+For arbitrary distinct $h,h'\in\mathcal H(T_r)$, their common finite
+event count ensures an index $k\in\{1,\ldots,N(T_r)\}$ at which their
+literal kinds or full addresses differ. FetchGrowth$(k)$ returns those
+different pairs. Thus the full original task must distinguish every
+member of the fibre. AA Definition 17.3 still gives
+$S_0\leftrightarrow B_0\leftrightarrow T_r$ by arity parsing, prefix
+closure and maximal elements, including beta's unary marker. Those bare
+source views determine the causal order, and identify neither $h_0$
+nor $h_1$ as the selected serial extension. $\square$
+
+On the acquired ordinal installation, AAII Theorem 97.2's inverse routes
+between supplemented space $(S_0,J_{\rm ord})$, supplemented boundary
+$(B_0,J_{\rm ord})$, successful serial time $h$, and retained callable
+memory still factor through the same actual $(t,h)$ and commute with
+the complete original service. Theorem 15.1 changes the attainable
+payload boundary for a forward head supplement with immutable prefixes:
+even the static per-source prefix-code width $G(t)$ plus any fixed
+constant cannot suffice uniformly. This does not remove the existing
+mutual recovery on the supplemented returned image, and it adds no
+serial inverse from bare geometry or boundary. Successful time remains
+generation order, excluding physical duration and the wider I/O,
+controller, query and refusal chronology.
+
+The charge in (IV.35) is only the maximum number of binary data bits
+at a specified current source. Actual source vertices and fields,
+journal headers and links, reference widths and bindings, granted
+access, scans/reads/writes, edits, arithmetic, scratch replay, reserved
+and coexisting old/new backing, ingress and pending work, full output,
+Print, End, ACK, root Return, cleanup and retained cleared capacity keep
+their separate charges from §11 and AAII Definition 97.3. No total-cost,
+runtime, latency, energy or general physical or quantum impossibility
+is entailed by this binary observation-contract lower bound.
+

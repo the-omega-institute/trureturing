@@ -1,0 +1,28 @@
+### 命题 3.4（保持类型的完整补全）
+
+<a id="prop-c117-completion"></a>
+
+任意上述不增迹分支都能成为完整比较守恒过程的一部分。
+
+**证明。**
+若输入输出为同一空间，可增加 $K_{\rm fail}=\sqrt{I-E}$。若两者维数不同，这个平方根的类型是 $H\to H$，不能直接当作 $H\to H_{\rm out}$ 的算子。
+
+一般情况下，在记录中取正交直和 $R=R_{\rm succ}\oplus H$，记 $J_f:H\to R$ 为第二个分量的等距嵌入，并选输出中的一个单位向量 $a$。定义
+
+$$
+\widetilde V\psi
+ =\sum_jK_j\psi\otimes\lvert {\rm succ},j\rangle
+   +a\otimes J_f\sqrt{I-E}\,\psi.
+$$
+
+两类记录正交，故
+$\widetilde V^*\widetilde V=E+(I-E)=I$。
+在输入正交基上展开失败记录，等价于补入
+
+$$
+L_i=\lvert a\rangle\langle i\rvert\sqrt{I-E},\qquad
+ \sum_iL_i^*L_i=I-E.
+$$
+
+它们具有正确的输入输出类型。失败时也保留剩余输入的记录，而非把失败定义成整体消失。
+

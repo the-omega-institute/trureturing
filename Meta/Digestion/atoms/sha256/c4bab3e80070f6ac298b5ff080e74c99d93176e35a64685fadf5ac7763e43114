@@ -1,0 +1,27 @@
+**Theorem 58.3 (entire normalized retained-core comparison).** Under Definition 58.1, define every tilde quantity by substituting the vector $z_s$ of Theorem 58.2 for $u_s$ in the following exact R (24.42), (52.1) core, consistently in every occurrence:
+$$
+\begin{gathered}
+x_s=F_su_s,\quad m_s=\int F_s|u_s|^2,\quad \delta_s=s^5\int f(Y_s\xi)|u_s|^2d\xi,\quad n_s=m_s+\delta_s,\quad d_s=\langle G_s,u_s\rangle,\quad R_s=\langle E_s,u_s\rangle,\\
+\delta_{\chi,s}=s^5\int P_\chi(Y_s\xi)|u_s|^2d\xi,\quad
+Q_{\chi,s}=j_0s^5\iint\Pi_\chi(Y_s\eta,Y_s\xi)\overline{x_s(\eta)}x_s(\xi)d\eta d\xi,\quad
+c_s=\frac{n_s+\delta_{\chi,s}}{d_s},\\
+\mathcal J_s=c_sR_s+C_*\delta_{\chi,s}+Q_{\chi,s}=n_s(\mathcal C_{\chi,s}-C_*),\qquad
+\widetilde{\mathcal C}_{\chi,s}:=C_*+\frac{\widetilde c_s\langle E_s,z_s\rangle+C_*\widetilde\delta_{\chi,s}+\widetilde Q_{\chi,s}}{\widetilde n_s}.
+\end{gathered}
+\tag{58.11}
+$$
+Here $f=W_{1,d}$ is the full long field in physical variables, whereas $P_\chi=\chi\mathcal T_3f$ is the retained polynomial. The kernel $\Pi_\chi$ keeps the sum of the two endpoint weighted degrees at most three. In particular the denominator contains the full $\delta_s$, not $\delta_{\chi,s}$. Then both exact and substituted denominators $n_s,d_s$ are nonzero for small $s$, and
+$$
+|\widetilde{\mathcal C}_{\chi,s}-\mathcal C_{\chi,s}|
+\le C_{d,\chi}\bigl(s^{65/8}+s^9+s^{13}\bigr)=o(s^8).
+\tag{58.12}
+$$
+
+Proof. Put $\epsilon_s=\|z_s-u_s\|_2$. Both vectors have norm one. Bounded $f,P_\chi$ give $|\widetilde\delta_s-\delta_s|+|\widetilde\delta_{\chi,s}-\delta_{\chi,s}|\le Cs^5\epsilon_s$. Uniform boundedness of $F_s$ and the fixed $\|G_s\|_2$ give $|\widetilde m_s-m_s|+|\widetilde n_s-n_s|+|\widetilde d_s-d_s|\le C\epsilon_s$. Since $n_s\to\mu>0$, $d_s=1+O(s)$ and $\epsilon_s\to0$, all four denominators are bounded away from zero, and $|\widetilde c_s-c_s|\le C\epsilon_s$. The inherited tested identity R (24.39), (24.42) gives $R_s=O(s^5)$; independently R (41.7) gives $|\langle E_s,z_s-u_s\rangle|\le Cs^{33/8}\epsilon_s$.
+For the late term put $e_s=F_s(z_s-u_s)$. Uniform $F_s\in L^2$ gives $\|x_s\|_1\le C$ and $\|e_s\|_1\le C\epsilon_s$. If $B_\chi$ is the sesquilinear pairing with kernel $\Pi_\chi(Y_s\eta,Y_s\xi)$, the exact difference is $j_0s^5[B_\chi(e_s,x_s)+B_\chi(x_s,e_s)+B_\chi(e_s,e_s)]$. The kernel is bounded, so this costs $Cs^5(\epsilon_s+\epsilon_s^2)$, retaining both single-input terms and the cross term. Also $\delta_{\chi,s},Q_{\chi,s}=O(s^5)$ and $c_s=O(1)$, so the entire numerator $\mathcal J_s$ is $O(s^5)$. Changing $c_s$ costs $Cs^5\epsilon_s$; changing the final division by $n_s$ costs the same, using its positive lower bound and $|\widetilde n_s-n_s|=O(\epsilon_s)$. Thus
+$$
+|\widetilde{\mathcal C}_{\chi,s}-\mathcal C_{\chi,s}|\le C\{s^{33/8}\epsilon_s+s^5(\epsilon_s+\epsilon_s^2)\}.
+\tag{58.13}
+$$
+Insert $\epsilon_s=O(s^4)$ from (58.2). The three powers are $65/8,9,13$, all strictly larger than eight, proving (58.12). No condition $\mathfrak m_d=0$ entered. R Theorems 52.3 and 54.1 may consequently use the substituted core with the same $o_{d,M,\chi}(s^8)$ remainder, keeping the complete-minus-retained mass, both single-outer late inputs, the two-outer term and joint subtraction; each finite $M$ remains separately fixed. The known $s^8\log(1/(Ms^6))$ uplift in R Theorem 49.2 is unchanged. The entire approximant in (58.11) remains unsigned; its precision supplies no strict selecting inequality, actual-state branch, phase-orbit convergence or source-family obstruction. Zero-stratum occurrence, analytic $L^2$ preparation and physical spatial dimension remain unresolved. The comparison is a repository-derived conditional deduction; the cited Fischer–Ruzhansky interface and classical spectral calculus, Riesz projection and interpolation steps are intermediate results, not novelty claims. The underlying analytic suppliers are not independently recertified here. $\square$
+

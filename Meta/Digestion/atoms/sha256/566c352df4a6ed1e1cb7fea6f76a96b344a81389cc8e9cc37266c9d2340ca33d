@@ -1,0 +1,12 @@
+**数学引文（本应用的经典歧义与情境拼接）。** 上述两份不同共同经典律都已经存在，且产生同一所保留报告；这是一份报告的非唯一提升。Abramsky–Brandenburger，*The Sheaf-Theoretic Structure Of Non-Locality and Contextuality*，[arXiv:1102.0264v7](https://arxiv.org/html/1102.0264v7)，§§2.4–2.5、3、Theorem 8.1，处理给定测量覆盖及在交叠上相容的各情境概率律：在普通非负概率情形，全局分布须同时限制为全部情境律；其不存在才是该框架的非情境拼接障碍。Theorem 8.1 的隐变量分布独立于情境，各隐变量的单测量边缘相容且情境响应因子化；Bell 情形另有各方测量选择的覆盖结构。定理 23.2 的已有两份全局律各自提供全局提升，因而其局部不充分并不建立这种不存在性。
+
+Werner，*Quantum states with Einstein-Podolsky-Rosen correlations admitting a hidden-variable model*，Physical Review A 40, 4277，[DOI 10.1103/PhysRevA.40.4277](https://journals.aps.org/pra/abstract/10.1103/PhysRevA.40.4277)，摘要给非经典相关态仍可有隐变量模型的反例。其指定投影测量类的局域模型条件在这里仅列为有范围的待核引文，不作为本章证明前提，也不扩为全部 POVM。经典联合律不等于乘积律，不意味着量子纠缠，更不推出 Bell 违反。这些文献只限定本原生应用的解释范围，不另列一般量子定理。
+
+[H49]: AURIC_FIB_ATOM_HIDDEN_RELATIONS_STATISTICS_PHASE_AND_SEAMS.md
+[N49]: FIB_RELATIONAL_CONTINUATION_GEOMETRY.md
+[R49]: AURIC_FIB_ATOM_RESPONSE_CONTRAST_HIGHER_BLOCK_CYCLES_AND_FUTURE_VISIBILITY.md
+[P49]: AURIC_FIB_ATOM_JOINT_PROJECTION_MULTIWINDOW_ORDER_AND_RESPONSE_FIBERS.md
+[V49]: ../../../D5/S3/Analytic/GoldenTomography/FiniteVandermondeTomography.lean
+[J49]: ../../../D5/S3/Arith/FibonacciAtomic/NativeContinuation/JointLaw.lean
+[Z49]: ../../../D5/S3/Arith/FibonacciAtomic/NativeContinuation/NullReplyFiber.lean
+
