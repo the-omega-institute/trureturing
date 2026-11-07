@@ -168,6 +168,19 @@ class InterruptionTests(unittest.TestCase):
     def test_int_during_install_rolls_back(self):
         self.interrupt("install", signal.SIGINT)
 
+    def test_normal_and_argument_failure_have_terminal_outcomes(self):
+        oleans = self.root / ".lake/build/lib/lean/D5"
+        oleans.mkdir(parents=True)
+        (oleans / "Test.olean").write_text("warm fixture")
+        for arguments, expected in (([], 0), (["--invalid"], 2)):
+            result = subprocess.run(self.command() + arguments, cwd=self.root, env=self.env,
+                                    capture_output=True, text=True, timeout=15)
+            self.assertEqual(expected, result.returncode, result.stdout + result.stderr)
+            self.assert_guard_free()
+            phases = [json.loads(line) for line in (self.root / "phases").read_text().splitlines()]
+            self.assertEqual("finish", phases[-1]["boundary"])
+            self.assertEqual(expected, phases[-1]["raw_exit"])
+
 
 if __name__ == "__main__":
     if sys.argv[1] == "transport":
