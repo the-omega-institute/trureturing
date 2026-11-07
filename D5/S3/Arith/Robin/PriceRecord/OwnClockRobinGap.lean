@@ -59,7 +59,7 @@ private lemma support_exact {S : Finset ℕ} (hS : primeSupport S) (a : ℕ → 
   apply Finset.Subset.antisymm (support_subset hS a)
   intro p hp
   rw [← Nat.support_factorization, Finsupp.mem_support_iff,
-    support_factorization_apply hS a p, if_pos hp]
+    support_factorization_apply hS a p, ite_eq_left hp]
   exact ne_of_gt (lt_of_lt_of_le (by norm_num : (0 : ℕ) < 1) (ha p hp))
 
 private lemma benefit_nat {p a : ℕ} (hp : p.Prime) :
@@ -91,7 +91,7 @@ lemma phi_eq_robin_margin {S : Finset ℕ} (hS : primeSupport S) (a : ℕ → �
       ∑ p ∈ S, goldenPrimeLocalObjective 0 p ((supportInteger S a).factorization p) := by
     apply sum_congr rfl
     intro p hp
-    rw [support_factorization_apply hS a p, if_pos hp, benefit_nat (hS p hp)]
+    rw [support_factorization_apply hS a p, ite_eq_left hp, benefit_nat (hS p hp)]
   rw [phi, hlocal, ← hsum, ← support_integer_log hS a]
   rfl
 
@@ -157,7 +157,10 @@ theorem original_margin_own_clock_gap {S : Finset ℕ} (hS : primeSupport S)
   dsimp only
   let x : ℕ → ℝ := fun p => (a p : ℝ)
   let A : ℕ → ℕ := fun p => (a p).toNat
-  have hx : admissible S x := by intro p hp; exact_mod_cast ha p hp
+  have hx : admissible S x := by
+    intro p hp
+    change (1 : ℝ) ≤ (a p : ℝ)
+    exact_mod_cast ha p hp
   have heq : ∀ p ∈ S, (A p : ℝ) = x p := by
     intro p hp
     exact integer_cast_toNat a ha hp
@@ -169,7 +172,7 @@ theorem original_margin_own_clock_gap {S : Finset ℕ} (hS : primeSupport S)
     rw [support_integer_log hS A]
     apply sum_congr rfl
     intro p hp
-    rw [heq p hp]
+    exact congrArg (fun z : ℝ => z * log (p : ℝ)) (heq p hp)
   have hmargin : robinLogMargin (supportInteger S A) = phi S x :=
     (phi_eq_robin_margin hS A).symm.trans (phi_congr heq)
   have hd := own_clock_decomposition hS hcard hx

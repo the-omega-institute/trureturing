@@ -196,7 +196,10 @@ theorem all_integer_gap {S : Finset ℕ} (hS : primeSupport S) (hcard : 3 ≤ S.
       roundingSum S (fun p => (a p : ℝ)) ≤
         phi S (fun p => (a p : ℝ)) - realInfimum S := by
   let x : ℕ → ℝ := fun p => (a p : ℝ)
-  have hx : admissible S x := by intro p hp; exact_mod_cast ha p hp
+  have hx : admissible S x := by
+    intro p hp
+    change (1 : ℝ) ≤ (a p : ℝ)
+    exact_mod_cast ha p hp
   have hlam := own_price_pos hS hcard hx
   have hd := own_clock_decomposition hS hcard hx
   have hsum : roundingSum S x ≤ ∑ p ∈ S, priceLoss p (ownPrice S x) (x p) := by
