@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Constants.Moments.CountableHankelNegativeWitness
 import Reg.Support.DependentFamily
 
+/-! Source-bound audit of the complete original theorem. -/
+
 namespace Reg.D5.S3.Constants.Moments.CountableHankelNegativeWitness
 open _root_.D5.S3.Constants.Moments.CountableHankelNegativeWitness
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
@@ -68,11 +70,12 @@ def audit : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     owner := `D5.S3.Constants.Moments.CountableHankelNegativeWitness
     definition := none
     coordinates := #[0]
-    readouts := #[{ path := #["body", "body", "body", "fn", "arg", "arg"]
-                   stateBinder := 1
-                   functionOperand := false
-                   stateOperand := none
-                   booleanPredicate := false }] }
+    readouts := #[{
+      path := #["body", "body", "body", "fn", "arg", "arg"]
+      stateBinder := 1
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]

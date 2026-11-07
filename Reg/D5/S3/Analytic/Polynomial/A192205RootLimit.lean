@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Analytic.Polynomial.A192205RootLimit
 import Reg.Support.DependentFamily
 
+/-! Source-bound audit of the complete original theorem. -/
+
 namespace Reg.D5.S3.Analytic.Polynomial.A192205RootLimit
 open _root_.D5.S3.Analytic.Polynomial.A192205RootLimit
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
@@ -30,13 +32,13 @@ abbrev arena : Arena where
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have he : (1:ℝ) = 16*Real.sqrt 3/9 :=
-    tendsto_nhds_unique tendsto_const_nhds (by simpa [rejected, realize] using h)
+    by simpa [arena, rejected, realize] using h
   have hs := Real.sq_sqrt (show (0:ℝ) ≤ 3 by norm_num)
   nlinarith
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨(), 0, 1, ?_⟩
-  norm_num [actual, realize, a, p, Finset.sum_range_succ]
+  norm_num [actual, realize, a, p, Finset.sum_range_succ, Polynomial.coeff_one, Polynomial.coeff_X, Polynomial.coeff_X_pow]
 def family : Registration arena (type_of% result) where
   actual := actual
   bridge := Iff.rfl
@@ -71,11 +73,12 @@ def audit : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
     owner := `D5.S3.Analytic.Polynomial.A192205RootLimit
     definition := none
     coordinates := #[]
-    readouts := #[{ path := #["fn", "fn", "arg", "body", "fn", "arg", "arg"]
-                   stateBinder := 0
-                   functionOperand := false
-                   stateOperand := none
-                   booleanPredicate := false }] }
+    readouts := #[{
+      path := #["fn", "fn", "arg", "body", "fn", "arg", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
