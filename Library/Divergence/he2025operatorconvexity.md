@@ -165,6 +165,29 @@ arbitrary-direction claim. It does not claim the full all-`alpha` HSF
 conjecture, novelty, or an official open-problem resolution. The primary HSF
 source and the original radial `alpha=3` exposition remain the citation anchor.
 
+## Probability transform derivative bounds
+
+`D5/S3/Analytic/Probability/ResolventPowerThirdOrder` proves a separate
+scalar analytic ingredient. For an arbitrary probability measure, a measurable
+real random variable `R` in `[0,1]` almost everywhere, and
+`K(s) = integral (1 + R*s)^(-1)`, define
+`G(s) = (1 + a*s)^(q+1) * K(s)^q` using real powers.
+`powerCurve_derivatives` identifies the actual second and third iterated
+derivatives at zero with their first-three-moment formulas, for every real
+`a` and `q`. `powerCurve_third_order` proves, for `a` in `[0,1]` and `q>0`,
+that `G''(0)>=0`, that `G'''(0)<=(q-1)*G''(0)` when `q>=1`, and that
+`G'''(0)<=0` when `q<=1`.
+
+The proof differentiates the actual integral under a uniform kernel bound,
+then uses variance bounds and integrals of nonnegative weighted squares.
+It assumes neither differentiability nor finite support; singular laws,
+endpoint atoms and zero curvature are included. A Dirac law at zero with
+`a=1` attains the supercritical coefficient `q-1`.
+These are formal probability bounds. The Stieltjes representation of the
+actual noncommuting matrix pencil, its rank-one matrix transfer, and the
+full HSF conjecture remain separate unproved obligations here. No literature
+priority or open-problem resolution is claimed for this module.
+
 ## Verified locators
 
 - arXiv:2502.05627v1, Conjecture 6.2 and the preceding scalar discussion.
