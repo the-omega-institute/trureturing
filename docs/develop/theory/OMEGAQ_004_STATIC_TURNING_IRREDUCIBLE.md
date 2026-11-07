@@ -1186,3 +1186,159 @@ K. de Leeuw、I. Glicksberg，*Applications of almost periodic compactifications
 <a id="append-anchor"></a>
 
 ## 追加锚（本行以下为增补区）
+
+## 12. 同一原源的全域平方值域给出有限容量
+
+<a id="sec-range-capacity"></a>
+
+本节把有限容量直接接到第 11.1--11.4 节已经定义的完整原未来上。它不把有限维写进前件，也不把一个有限窗口、一个截断响应或一个新的来源差额换进原对象。
+
+### 定义 12.1（完整共同平方域上的源值域前件）
+
+沿用第 11.1--11.4 节的 $\mathcal L,\mathcal F,\mathcal R,x_a,V,u,K,c,e,W$，其中
+
+$$
+e=x_\epsilon-c,\qquad
+W=\overline{\operatorname{span}}\{ke:k\in K\}.
+\tag{12.1}
+$$
+
+这里仍保留第 11.2 节关于完整原未来轨道 $\mathcal O$ 全有界的前件；$K$ 是由该全未来前件和第 11.3 节的统计逆得到的强闭包紧群。
+
+令 $\sigma_A,\sigma_B:\mathbb R\to K$ 是**同一个**强连续表示的两个一参数子群。记它们在 Banach 空间 $W$ 上的 $C_0$ 生成元为 $A,B$；此时不假定它们有界、可交换或先有内积。定义完整共同平方域
+
+$$
+D_0=\operatorname{Dom}(A^2)\cap\operatorname{Dom}(B^2),
+\qquad
+R_{A,B}x=-A^2x-B^2x-\alpha x\quad(x\in D_0),
+\tag{12.2}
+$$
+
+其中 $\alpha\in\mathbb R$ 是同一源关系中的标量。源值域前件是
+
+$$
+\boxed{\operatorname{ran}(R_{A,B})=\mathbb R e\ne\{0\}.}
+\tag{12.3}
+$$
+
+同时保留精确消费者所需的非标量条件
+
+$$
+\nexists\,\beta\in\mathbb R\ \text{使得}\quad
+-A^2-B^2=\beta I_W\quad\text{在 }D_0\text{ 上成立}.
+\tag{12.4}
+$$
+
+式 (12.3) 是在完整的 $D_0$ 上的等式，而不是在一个图闭包、近似值域或外延算子上的说法。它也不删除任何 $f\in\mathcal F$、终端标签、返回记忆、适应、有限并行、参考、时钟或失败/停止/销毁分支。
+
+### 引理 12.2（完整共同平方域的有限向量逼近）
+
+设 $\pi(k)$ 表示 $K$ 在 $W$ 上的作用，并令 $W_{\mathrm{fin}}$ 为所有有限维 $K$-不变子空间的代数和。对每个 $y\in D_0$，存在同一网 $(y_\lambda)$ 满足下式，其中各极限均取 $W$ 的范数拓扑：
+
+$$
+y_\lambda\in W_{\mathrm{fin}}\cap D_0,\qquad
+y_\lambda\to y,\qquad
+A^2y_\lambda\to A^2y,\qquad
+B^2y_\lambda\to B^2y.
+\tag{12.5}
+$$
+
+特别地，$D_0$ 在 $W$ 中稠密；这里的结论是从原来的强连续表示推出的，不是把 $D_0$ 换成一个预先指定的图核心。
+
+**证明。** 先把实表示复化为 $W_{\mathbb C}$，只为使用复表示的矩阵系数；共轭稳定的有限和再取实部仍给出原来的实有限维不变空间，不向前端加入 Hilbert 度量。Shiga 的定义 1 把完全可分解表示定义为有限维不可约不变子空间在强拓扑下生成稠密空间；其定理 2 说明，对紧群的弱连续 Banach 表示，这与强连续性等价 [8]。在本处强连续性已经由第 11.3 节的强算子拓扑给出，故有限维不变向量稠密。Eisner--Farkas--Haase--Nagel 的引理 15.13(a) 更具体地说：有限维酉表示的矩阵系数卷积作用在任意向量上，落在一个有限维不变子空间内；定理 15.14 说明这些空间的闭线性包就是整个表示空间 [7]。
+
+取实值的有限中心三角多项式近似单位 $q_\lambda$。这样的网可由单位元邻域内积分为 $1$ 的连续非负核构造：紧群有共轭不变邻域基，对核作共轭平均仍得到近似单位；由 [7] 定理 15.8 作一致范数下的有限矩阵系数逼近，再取实部、作共轭平均并把积分归一化。后面这些操作保持有限矩阵系数的线性包，与原核的 $L^1$ 误差趋于零。强连续性保证原连续核的卷积作用强趋于恒等，而 [7] 式 (15.4) 的卷积算子范数界使上述 $L^1$ 误差在每个向量上也趋于零，故有限中心核具有同一强逼近性质。置
+
+$$
+P_\lambda z=\int_K q_\lambda(k)\,\pi(k)z\,d\mu_K(k).
+\tag{12.6}
+$$
+
+于是 $P_\lambda z\to z$；每个 $P_\lambda z$ 由引理 15.13(a) 属于 $W_{\mathrm{fin}}$。实值性保证 $P_\lambda$ 保持原实空间，中心性给出
+$P_\lambda\pi(k)=\pi(k)P_\lambda$ 对所有 $k\in K$ 成立，因而分别与 $\sigma_A(t)$ 和 $\sigma_B(t)$ 相容。若 $z\in\operatorname{Dom}(A)$，对生成元的差商取极限并使用生成元的闭性，得到
+
+$$
+A P_\lambda z=P_\lambda A z;
+$$
+
+对 $z\in\operatorname{Dom}(A^2)$ 再作一次同样的差商，得到 $A^2P_\lambda z=P_\lambda A^2z$。对 $B$ 完全相同。于是对 $y\in D_0$，同一网同时给出 (12.5)。有限维 $K$-不变子空间上的两个一参数群都是连续矩阵群，故该子空间包含于两个完整平方域。取任意 $z\in W$ 时，因而有 $P_\lambda z\in D_0$ 且 $P_\lambda z\to z$，所以 $D_0$ 稠密。证明只使用各自一参数子群与中心卷积的相容性，没有使用 $AB=BA$。$\square$
+
+### 定理 12.3（条件性的全未来有限容量）
+
+在定义 12.1 的完整原前端上，若同一强连续紧 Banach 表示满足 (12.3)，则
+
+$$
+\boxed{\dim_{\mathbb R}W<\infty.}
+\tag{12.7}
+$$
+
+这里不需要先假定不可约性、有限维、Hilbert 度量、有界生成元、未来双射或一个扩展到 $W$ 的 $R_{A,B}$。
+
+**证明。** 由 (12.3) 取 $y\in D_0$ 使 $R_{A,B}y=e$。用引理 12.2 取 $y_\lambda$。由 (12.2) 和 (12.5)，
+
+$$
+R_{A,B}y_\lambda\longrightarrow R_{A,B}y=e.
+\tag{12.8}
+$$
+
+对每个 $\lambda$，取包含 $y_\lambda$ 的有限维 $K$-不变空间 $F_\lambda$。一参数群在 $F_\lambda$ 上是有限维连续矩阵群，故其生成元在该空间上处处有定义且有界；因此 $F_\lambda\subseteq D_0$，并且 $R_{A,B}F_\lambda\subseteq F_\lambda$。另一方面 (12.3) 给出 $R_{A,B}F_\lambda\subseteq\mathbb R e$。由 (12.8) 至少有一个 $\lambda$ 使 $R_{A,B}y_\lambda\ne0$。于是
+
+$$
+0\ne R_{A,B}y_\lambda\in F_\lambda\cap\mathbb R e,
+$$
+
+从而 $e\in F_\lambda$。第 11.4 节的完整循环性给
+$W=\overline{\operatorname{span}}(Ke)\subseteq F_\lambda$；有限维子空间在 Banach 空间中闭，所以 $W=F_\lambda$，得到 (12.7)。证毕。
+
+这个证明使用的是精确值域中的一个原像以及在同一个 $D_0$ 上的平方值收敛。它没有把 $\operatorname{ran}(R_{A,B})$ 换成近似值域，也没有用闭值域假设、闭算子和、交换生成元或一个预置图核心来代替 (12.3)。
+
+### 推论 12.4（与同一原源的 Q017 来源投影接口）
+
+现在把第 11.1--11.4 节的原对象按 $\Omega Q$-017 定义 2.1 的同一来源识别：$a$ 是原可逆历史，$f$ 是完整合法未来请求，$w$ 是其全部结果标签，且
+
+$$
+x_a(f,w)=p(a;f,w),\qquad
+V=\operatorname{span}_{\mathbb R}\{x_a\},\qquad
+W=\ker u=\operatorname{span}_{\mathbb R}\{x_a-x_b\}.
+\tag{12.9}
+$$
+
+这里保留 Q017 定义 2.1 的全部原身份、端口、设备、历史、失败和消费者量词；没有用有限窗口替换 $\mathcal F$。定理 12.3 先支付 Q017 所要求的有限容量前件，随后才可使用 Q017 定义 2.3 的同一轨道平均比较。令 $\mathsf B$ 为该定义得到的正定不变比较（这就是 Q017 中记作 $B$ 的形式）；它满足 $\mathsf B(e,e)=1$，并由 Q017 定义 3.1 的同一来源向量给出
+
+$$
+P_ez=\mathsf B(e,z)e.
+\tag{12.10}
+$$
+
+有限性之后，$\sigma_A$ 和 $\sigma_B$ 的生成元才是处处有界的矩阵生成元。因为这两个子群保持 $\mathsf B$，相对于 $\mathsf B$ 的伴随满足 $A^{\dagger_{\mathsf B}}=-A$、$B^{\dagger_{\mathsf B}}=-B$。于是
+$R_{A,B}=-A^2-B^2-\alpha I_W$ 是 $\mathsf B$-自伴的。由 (12.3) 写
+$R_{A,B}z=\varphi(z)e$。自伴性给
+
+$$
+\varphi(z)\mathsf B(e,t)=\varphi(t)\mathsf B(e,z)\qquad(z,t\in W).
+$$
+
+取 $t=e$ 并用 $\mathsf B(e,e)=1$，得到 $\varphi(z)=\gamma\mathsf B(e,z)$，其中 $\gamma=\varphi(e)\ne0$。因此同一精确源关系在 Q017 的来源投影坐标中恰为
+
+$$
+\boxed{-A^2-B^2=\alpha I_W+\gamma P_e,\qquad \gamma\ne0.}
+\tag{12.11}
+$$
+
+这就是 Q017 定义 3.1 的
+$M(A,B)\in\operatorname{span}_{\mathbb R}\{I_W,P_e\}\setminus\mathbb RI_W$；非标量性被保留为该精确消费者的前件，而不是被容量结论抹去。对保来源共轭 $T$，有
+$P_{Te}=TP_eT^{-1}$；对固定来源的稳定子则有
+$hP_eh^{-1}=P_e$。这些是 Q017 自己的协变/来源投影接口，未另造一个替代投影。
+
+式 (12.11) 仍不包含 Q017 的全 Lie 生成前件
+$\operatorname{Lie}\langle A,B\rangle=\mathfrak g$。只有在该前件以及 Q017 其余有限分类前件被独立满足时，才能把已有 Q017 分类结果作为后续消费者；定理 12.3 本身不推出 $\dim W=3$、$\mathfrak g=\mathfrak{so}(W,\mathsf B)$ 或任何静态 $D$ 恢复，也不重证那些成熟结果。
+
+### 12.5 条件结论与实际原 $\Omega$ 的边界
+
+定理 12.3 是一条 PAPER 条件蕴含：如果实际原 $\Omega$ 的**全部未来**行轨道确实全有界，并且同一原始 $e=x_\epsilon-c$ 在完整共同平方域上满足精确的非零值域式 (12.3)，则完整原响应差空间 $W$ 有限维，Q017 的有限容量入口被支付。对实际原 $\Omega$，这两个前件仍是 `ASSUMED-UNVERIFIED`；本节没有构造原 $\Omega$，也没有把任何有限样本、有限支撑或有限协议当作全部未来。
+
+因此本节没有构造有限 Jordan $E$、原生 $q$、实际参考/联合/仪器/历史、适应或并行的新增操作、完整输出或全未来返回，也没有构造物理时钟、能量、$\hbar$ 或正规性。零质量、非等质量、有限支撑与无限支撑以及所有原来源和消费者范围仍按原卷保留。第 11.5 节的静止转向不可约路线是另一种附加选择，本节没有暗中使用它；本节也不提出非标量条件的必要性、冗余性、严格弱化或全局最优性主张。
+
+本节实际消费的文献接口是 Shiga [8] 的定义 1、定理 2，以及 Eisner--Farkas--Haase--Nagel [7] 的式 (15.4)、定理 15.8、引理 15.13(a)、定理 15.14：前者核对完全可分解的有限维不变子空间语言，后者核对有限矩阵系数卷积、强连续紧群表示的有限维不变子空间稠密性及其 Banach 版本。它们只作为本源特定证明中的表示论工具，不被复制成新的通用项目定理。
+
+## 追加锚（本行以下为增补区）
