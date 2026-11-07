@@ -5,6 +5,8 @@
    anchors: []
    digest: Finite stochastic postprocessing is equivalent to universal Bayes-risk dominance. -/
 
+import D5.S3.Divergence.ClassicalDPI
+import D5.S3.Estimation.DecisionRisk.DescentDefectBounds
 import D5.S3.Estimation.SequentialDecisionRisk.FiniteDeficiencyRiskTransfer
 import Mathlib.Analysis.Convex.StdSimplex
 import Mathlib.Analysis.LocallyConvex.Separation
@@ -45,7 +47,8 @@ open D5.S3.Divergence.ClassicalDPI
 open D5.S3.Estimation.DecisionRisk.DescentDefectBounds
 open D5.S3.Estimation.SequentialDecisionRisk.FiniteDeficiencyRiskTransfer
 
-private theorem continuous_linear_expansion
+/- Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/25274. -/
+theorem continuous_linear_expansion
     {I J : Type*} [Fintype I] [Fintype J]
     [DecidableEq I] [DecidableEq J]
     (functional : (I -> J -> Real) →L[Real] Real)
@@ -566,6 +569,5 @@ theorem finite_bayes_risk_dominance_iff_postprocessing
       (sourceRiskLower.trans (assumedOrder.trans targetRiskUpper)))
         strictSeparatorRisk
 
-#print axioms finite_bayes_risk_dominance_iff_postprocessing
 
 end D5.S3.Estimation.DecisionRisk.FiniteBayesRiskDominanceCriterion

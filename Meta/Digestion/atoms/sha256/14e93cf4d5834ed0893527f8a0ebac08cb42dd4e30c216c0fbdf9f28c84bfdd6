@@ -1,0 +1,4 @@
+## 165. The orbit-closure criterion for a countable successor stack
+
+Section 164 leaves the exact common kernel as the missing infinite-horizon object. A useful distinction is available when the successor readout extends to $L^2(m)$ and its coordinates have Hilbert-space representers. In that case the countable stack is governed by the closed heat orbit of those representers; finite-prefix rank-nullity does not have to be used as a proxy for the exact intersection.
+

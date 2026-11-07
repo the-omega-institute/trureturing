@@ -1,0 +1,87 @@
+### 同一预算保证无限酉过程收敛
+
+保留全部寄存器，在第 $j$ 个寄存器上定义
+
+$$
+U_j=
+\begin{pmatrix}
+\sqrt{1-b_j}&-\sqrt{b_j}\\
+\sqrt{b_j}&\sqrt{1-b_j}
+\end{pmatrix}.
+$$
+
+每个 $U_j$ 都是酉算子。取以全零状态为基准的无限 qubit 张量积空间，令
+
+$$
+V_h=U_1\cdots U_h.
+$$
+
+<!-- editorial-note:start incomplete-tensor-space -->
+**【编者局部说明：希尔伯特空间与新因子】** 这里具体取相对于零真空的不完全无限张量积
+
+$$
+\mathcal H=\overline{\bigcup_{L\ge0}(\mathbb C^2)^{\otimes L}\otimes|0\rangle_{L+1}\otimes|0\rangle_{L+2}\otimes\cdots}.
+$$
+
+$U_j$ 仅作用于第 $j$ 个新因子，其余因子取恒等；不同 $j$ 的算子对易。下文“只涉及有限个寄存器的向量”指某个有限前缀中的任意向量（可以纠缠），其后各因子确为 $|0\rangle$；这些向量的并集稠密。上面定义的 $V_h$ 是该空间上的有限乘积酉算子。
+<!-- editorial-note:end incomplete-tensor-space -->
+
+式 (32) 自动给出
+
+$$
+\sum_jb_j
+\le
+\sum_j-\log(1-b_j)
+=
+-\log W<\infty.
+$$
+
+对于只涉及有限个寄存器的向量 $\xi$，当 $N>M$ 足够大时，
+
+$$
+\begin{aligned}
+\|V_N\xi-V_M\xi\|^2
+&=
+2\|\xi\|^2
+\left(
+1-\prod_{j=M+1}^{N}\sqrt{1-b_j}
+\right)\\
+&\le
+2\|\xi\|^2\sum_{j>M}b_j
+\longrightarrow0.
+\end{aligned}
+$$
+
+由稠密性与 $\|V_h\|=1$，得到强收敛。对伴随 $V_h^*$ 同样成立，因此极限 $V$ 满足
+
+<a id="eq-36"></a>
+
+$$
+\boxed{V^*V=VV^*=I.}
+\tag{36}
+$$
+
+<!-- editorial-note:start strong-adjoint-limit -->
+**【编者局部说明：强极限为何仍为酉】** 若 $M$ 已超过 $\xi$ 的支撑，尾部内积逐因子等于 $\sqrt{1-b_j}$，正好得到原稿的范数等式。再用 $1-\prod\sqrt{1-b_j}\le\sum b_j$ 即得尾界。(32) 经有限前缀取对数再取极限给出 $\sum b_j\le-\log W<\infty$。伴随的尾真空内积仍是同一个实数乘积，因此 $V_h^*$ 也在该稠密集上 Cauchy；两列算子的范数均为 $1$，故均扩张为整个 $\mathcal H$ 上的强收敛。若极限分别为 $V,A$，内积取极限得 $A=V^*$；一致有界性又给出
+
+$$
+V_hV_h^*\xrightarrow{\rm strong}VA=I,
+\qquad
+V_h^*V_h\xrightarrow{\rm strong}AV=I.
+$$
+
+于是 (36) 成立。仅有酉算子列的强收敛不足以推出酉性；这里两列同时收敛才是依据。本文没有声称算子范数收敛。
+<!-- editorial-note:end strong-adjoint-limit -->
+
+所以这里确实得到了无限酉极限。
+
+每一步的三项读出可以对应三个正交事件子空间：此前已经出现 $1$、此前全零而本位为 $1$、此前及本位均为零。完整寄存器保留了递归历史，三轴读出负责当前的预算。
+
+<!-- editorial-note:start born-readout-boundary -->
+**【编者局部说明：事件概率与实现边界】** 对初态为全零真空的 $V_j|0\cdots\rangle$，这三个互相正交且穷尽的事件子空间的 Born 概率依次是 $q_{j-1}$、$(1-q_{j-1})b_j$、$(1-q_{j-1})(1-b_j)$。这是选定辅助张量积载体上的读出，完整态保留全部已用寄存器。无限数学模型的酉极限存在，不自动授予原生算术信息取得、有限资源实现或物理控制能力。
+<!-- editorial-note:end born-readout-boundary -->
+
+---
+
+<a id="sec-9"></a>
+

@@ -1,0 +1,58 @@
+### 引理：所有正收益乘法方向都满足 $p<T+\log T$
+
+若
+
+$$
+p\ge T+\log T,
+\qquad h=\log p,
+$$
+
+则
+
+$$
+p-\log T\ge T,\qquad h\ge\log T,
+$$
+
+从而
+
+$$
+ph\ge(T+h)\log T.
+$$
+
+利用 $\log(1+u)>u/(1+u)$，
+
+$$
+\log(1+h/T)
+>
+\frac h{T+h}
+\ge\frac{\log T}{p}.
+$$
+
+因此
+
+$$
+\begin{aligned}
+f(T+h)-f(T)
+&=
+\log\left(
+1+\frac{\log(1+h/T)}{\log T}
+\right)\\
+&>\log(1+1/p)
+\ge\lambda_{p,a+1}.
+\end{aligned}
+$$
+
+故
+
+<a id="eq-20"></a>
+
+$$
+\boxed{
+p\ge T+\log T
+\Longrightarrow D_p^+(n)<0.
+}
+\tag{20}
+$$
+
+所以每一步只需在有限多个素数乘法方向和有限多个删除方向中定义最大收益。
+

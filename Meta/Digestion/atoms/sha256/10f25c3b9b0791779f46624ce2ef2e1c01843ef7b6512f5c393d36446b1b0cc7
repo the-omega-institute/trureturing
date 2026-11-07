@@ -1,0 +1,151 @@
+## 82. 对称纤维的球面半周商与最大 concurrence
+
+**命题 C-82.1（常曲率对称纤维的完整球面表示）。** 取
+$X=Y=r/2$，令 $L=r/2>0$。则
+
+$$
+p_\kappa=(\kappa,L-\kappa,Z,L-\kappa,\kappa),
+\qquad 0<\kappa<L,
+$$
+
+$$
+\mathcal I=\frac2\kappa+\frac2{L-\kappa},\qquad
+f=\frac{\kappa(L-\kappa)}L.
+\tag{C82.1}
+$$
+
+换元
+
+$$
+\kappa=\frac L2(1-\cos\vartheta),\qquad 0<\vartheta<\pi
+\tag{C82.2}
+$$
+
+给
+
+$$
+g=L\left(d\vartheta^2+\frac14\sin^2\vartheta\,d\chi^2\right),
+\qquad \mathcal K=\frac1L=\frac2r.
+\tag{C82.3}
+$$
+
+完备化是半径 $\sqrt L$ 的圆球绕两极旋转半周所得的度量商，
+两个极点的锥角均为 $\pi$；极点距离恰为 $\pi\sqrt L$。
+概率关联圆的位置为整个赤道相位圆：
+
+$$
+\eta=0\ \Longleftrightarrow\ \kappa=L/2
+\ \Longleftrightarrow\ \vartheta=\pi/2,\qquad \chi\in S^1.
+\tag{C82.4}
+$$
+
+证明。将对称均值代入式 (C76.2)，得到概率。
+四倒数求和后取 $2/\mathcal I$，给式 (C82.1)。
+式 (C82.2) 中
+
+$$
+d\kappa=\frac L2\sin\vartheta\,d\vartheta,\qquad
+f=\frac L4\sin^2\vartheta,
+$$
+
+故 $d\kappa^2/f=L\,d\vartheta^2$，角向项如式 (C82.3)。
+对 $f=\kappa-\kappa^2/L$ 有 $-f''/2=1/L$。
+局部令 $\phi=\chi/2$，度量变成
+$L(d\vartheta^2+\sin^2\vartheta\,d\phi^2)$，
+是半径 $\sqrt L$ 的标准圆球度量。
+但原 $\chi$ 周期为 $2\pi$，所以这里 $\phi$ 周期只有 $\pi$。
+从 $\phi$ 周期为 $2\pi$ 的整圆球出发，识别 $\phi$ 和 $\phi+\pi$，
+便得到原内部度量；两极由定理 C-80.2 的半周商延伸，均有角 $\pi$。
+定理 C-81.1 排除其他完成点，所以这一局部表示确给整个完备化的度量商。
+
+任一连接两极的可求长路径在内部满足
+$ds\ge\sqrt L\,|d\vartheta|$。
+从第一极到第二极，连续 $\vartheta$ 的总变差至少为 $\pi$，
+因而长度至少 $\pi\sqrt L$；若路径经过极点，可先在
+$\epsilon\le\vartheta\le\pi-\epsilon$ 截取再令 $\epsilon\downarrow0$，
+仍得同一下界。固定 $\chi$ 的经线长度为
+$\int_0^\pi\sqrt L\,d\vartheta=\pi\sqrt L$，达到下界。
+这也与式 (C81.1) 的 $T$ 完全一致。
+
+最后，
+$p_0p_{13}/(p_1p_3)=\kappa^2/(L-\kappa)^2$，
+故 $\eta=\frac14\log(\kappa/(L-\kappa))$，
+零点恰为 $\kappa=L/2$，换元后即赤道。
+此时 $\chi$ 仍自由遍历整个 $2\pi$ 圆周，不能把一个概率圆读数当成唯一隐藏态。
+常曲率局部圆球与全局带两个锥点的半周商在这里各有明确含义。证毕。
+
+**定理 C-82.2（纤维层面的曲率取等与最大纠缠存在性）。** 固定 C-76 的
+$(X,Y,Z)$，以下三项等价：
+
+$$
+\begin{gathered}
+X=Y=r/2;\\
+\text{存在内部 }(\kappa,\chi)\text{ 使 }\mathcal K=2/r;\\
+\text{存在内部条件底面纯态使 }\mathcal C=1.
+\end{gathered}
+\tag{C82.5}
+$$
+
+在这条对称纤维上，$\chi=\pi\bmod2\pi$ 的每个内部 $\kappa$ 都有 $\mathcal C=1$；
+曲率则在全部内部点取等，包括 $\mathcal C=0$ 的点。
+
+证明。第一项与第二项的等价由定理 C-79.3 的完整等号条件给出。
+若 $\mathcal C=1$，式 (C76.8) 使
+$\mathsf B\mathsf B^\dagger=I_2/2$。
+由于 $\mathsf B$ 可逆，由
+$\mathsf B\mathsf B^\dagger=I_2/2$ 左乘 $\mathsf B^{-1}$ 再右乘 $\mathsf B$，
+得 $\mathsf B^\dagger\mathsf B=I_2/2$，因此另一侧约化态也为 $I_2/2$。
+两侧占位为一的概率分别是
+
+$$
+(\rho_A)_{11}=\frac{p_1+p_{13}}r=\frac Xr,\qquad
+(\rho_B)_{11}=\frac{p_3+p_{13}}r=\frac Yr.
+$$
+
+二者必须均为 $1/2$，故 $X=Y=r/2$。
+反之，在对称纤维中 $a=\kappa$、$b=L-\kappa$，
+选 $\chi=\pi$，行列式模为 $(a+b)/r=L/(2L)=1/2$，所以
+
+$$
+\mathcal C=\frac{2}{r}|-\kappa-(L-\kappa)|=1.
+$$
+
+每个内部 $\kappa$ 均可作此选择，且可由前四相位为零、最后相位为 $\pi$ 的实际五态代表实现。
+这证明存在性的反向及整条相位经线结论。证毕。
+
+**命题 C-82.3（球面坐标中的 concurrence 与唯一内部乘积点）。** 对称纤维上
+
+$$
+\begin{aligned}
+\mathcal C^2
+&=\frac{(2\kappa-L)^2
++4\kappa(L-\kappa)\sin^2(\chi/2)}{L^2}\\
+&=1-\sin^2\vartheta\cos^2(\chi/2).
+\end{aligned}
+\tag{C82.6}
+$$
+
+在全正内部，唯一 $\mathcal C=0$ 的商状态为
+$(\vartheta,\chi)=(\pi/2,0\bmod2\pi)$；
+全部 $\mathcal C=1$ 的内部状态恰为 $\chi=\pi\bmod2\pi$。
+
+证明。在式 (C77.1) 的乘积差展开中代入
+$a=\kappa$、$b=L-\kappa$、$r=2L$，给第一行。
+由
+$2\kappa-L=-L\cos\vartheta$、
+$4\kappa(L-\kappa)=L^2\sin^2\vartheta$，
+第一行变为
+$\cos^2\vartheta+\sin^2\vartheta\sin^2(\chi/2)$，即第二行。
+要 $\mathcal C=0$，两个不超过一的非负因子
+$\sin^2\vartheta$、$\cos^2(\chi/2)$ 的乘积必须为一，
+故各自均为一，给唯一内部点。
+要 $\mathcal C=1$，两因子乘积为零；内部 $\sin\vartheta>0$，
+所以只能 $\cos(\chi/2)=0$，即所述整条经线。
+
+特别地，赤道上 $\chi=0$ 与 $\chi=\pi$ 同有 $\mathcal K=2/r$，
+而 concurrence 分别为零和一。这是“曲率在该点取等当且仅当该点最大纠缠”的反例；
+正确等价是定理 C-82.2 的纤维对称性与最大纠缠的存在性。
+沿 $\chi=\pi$ 改变内部 $\kappa$ 可以改变概率椭圆但保持最大 concurrence；
+沿赤道改变 $\chi$ 可以保持概率圆但改变 concurrence。
+这两个函数可以同在一个参数面上，却不能彼此替代。证毕。
+

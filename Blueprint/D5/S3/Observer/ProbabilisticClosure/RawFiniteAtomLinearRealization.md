@@ -4,7 +4,19 @@
 
 Finite native-test readouts through the exceptional parity quotient.
 
-**Theorem 1.1 (Three finite native-test carriers).**
+**Theorem 1.1 (Measurable original absorbing execution).**
+
+Lean statement: `D5/S3/Observer/ProbabilisticClosure/RawFiniteAtomLinearRealization.measurable_actual_run`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/RawFiniteAtomLinearRealization.measurable_actual_run` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every measurable seed space, original Policy and natural horizon, the original actualRun is a measurable function of seed and source into the discrete State space.
+
+**Theorem 1.2 (Three finite native-test carriers).**
 
 Lean statement: `D5/S3/Observer/ProbabilisticClosure/RawFiniteAtomLinearRealization.result`
 
@@ -22,7 +34,7 @@ For every measurable independent old seed, causal policy, finite acquired histor
 
 In each exceptional raw component the parity pairs zero-zero and one-one share the even coordinate, while one-zero and zero-one share the odd coordinate. This quotient preserves marker rates, flips even and odd on a zero reply, and sends every marker to the shared terminal coordinate. Pushing the full feature through this quotient preserves every finite output-adaptive test row and every normalized output-successor update. Under the source mixture, almost every source couples the recovered terminal bit to its original root for every causal policy, seed value and finite stopping history.
 
-**Theorem 1.2 (Finite test rows descend through the raw quotient).**
+**Theorem 1.3 (Finite test rows descend through the raw quotient).**
 
 Lean statement: `D5/S3/Observer/ProbabilisticClosure/RawFiniteAtomLinearRealization.raw_row_descends`
 
@@ -34,7 +46,7 @@ Lean statement: `D5/S3/Observer/ProbabilisticClosure/RawFiniteAtomLinearRealizat
 
 For every finite component family, strictly positive unit-interval alpha, finite test and full raw coordinate, the test row at its encoded raw coordinate equals the full carrier test row at the original coordinate.
 
-**Theorem 1.3 (Cardinality of one raw component).**
+**Theorem 1.4 (Cardinality of one raw component).**
 
 Lean statement: `D5/S3/Observer/ProbabilisticClosure/RawFiniteAtomLinearRealization.raw_component_card`
 
@@ -46,7 +58,7 @@ Lean statement: `D5/S3/Observer/ProbabilisticClosure/RawFiniteAtomLinearRealizat
 
 For every unit-interval alpha and component parameter q, the raw canonical parity pairs number two if alpha equals (one minus alpha) times q, and four otherwise.
 
-**Theorem 1.4 (Concrete raw test readouts).**
+**Theorem 1.5 (Concrete raw test readouts).**
 
 Lean statement: `D5/S3/Observer/ProbabilisticClosure/RawFiniteAtomLinearRealization.raw_native_bridge`
 
@@ -58,7 +70,7 @@ Lean statement: `D5/S3/Observer/ProbabilisticClosure/RawFiniteAtomLinearRealizat
 
 For every finite component family, strictly positive alpha and component parameters, and positive weights summing to one, the concrete rawModel and rawFeature preserve all original-history conditional native finite-test probabilities, with normalized nonnegative history features.
 
-**Theorem 1.5 (Concrete raw feature updates).**
+**Theorem 1.6 (Concrete raw feature updates).**
 
 Lean statement: `D5/S3/Observer/ProbabilisticClosure/RawFiniteAtomLinearRealization.raw_feature_updates`
 
@@ -70,7 +82,7 @@ Lean statement: `D5/S3/Observer/ProbabilisticClosure/RawFiniteAtomLinearRealizat
 
 Under the same positivity and weight normalization assumptions, the concrete raw feature updates by normalized joint output-successor transport for every history, queried arm and source whose output matrix mass is positive.
 
-**Theorem 1.6 (Raw carrier cardinality).**
+**Theorem 1.7 (Raw carrier cardinality).**
 
 Lean statement: `D5/S3/Observer/ProbabilisticClosure/RawFiniteAtomLinearRealization.raw_card`
 
@@ -82,7 +94,7 @@ Lean statement: `D5/S3/Observer/ProbabilisticClosure/RawFiniteAtomLinearRealizat
 
 For every finite component family and unit-interval alpha, the concrete raw carrier has exactly four times the component count minus twice the exceptional component count plus one coordinates.
 
-**Theorem 1.7 (Raw probability columns).**
+**Theorem 1.8 (Raw probability columns).**
 
 Lean statement: `D5/S3/Observer/ProbabilisticClosure/RawFiniteAtomLinearRealization.raw_probability`
 
@@ -96,6 +108,7 @@ For every finite component family and strictly positive alpha, the concrete raw 
 
 ## References
 
+- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/RawFiniteAtomLinearRealization.measurable_actual_run`
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/RawFiniteAtomLinearRealization.raw_card`
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/RawFiniteAtomLinearRealization.raw_component_card`
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/RawFiniteAtomLinearRealization.raw_feature_updates`
