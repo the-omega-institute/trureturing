@@ -22,6 +22,10 @@ $$\forall\,s\,:\,\mathbb{R}\,,\,2\,<\,s\,\to\,\left(\exists\,X\,:\,\operatorname
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/InversePowerLineEquilibria.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/op-ferudun2610s2` (proved) by `D5/S3/StatisticalMechanics/InversePowerLineEquilibria.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"op-ferudun2610s2","declaration_gid":"D5/S3/StatisticalMechanics/InversePowerLineEquilibria.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Alper Ferudun (2026). *Equilibria of Inverse-Square Repulsion on the Line Are Arithmetic Progressions*. DOI: [10.48550/arXiv.2610.06944](https://doi.org/10.48550/arXiv.2610.06944). URL: <https://arxiv.org/abs/2610.06944v1>.

@@ -28,7 +28,10 @@ internal sealed class InversePowerLineEquilibriaDocument : IScribeDocumentDefini
                 StatementSource.FromAuthor(Disp(Seq(Forall, Thin, F.Id("s"), Thin, Colon, Thin, Seq(Mathbb, Grp(F.Id("R"))), Thin, Comma, Thin, D(2), Thin, Lt, Thin, F.Id("s"), Thin, To, Thin, Parenthesized(Seq(Exists, Thin, F.Id("X"), Thin, Colon, Thin, Seq(Operatorname, Grp(F.Id("Set"))), Thin, Seq(Mathbb, Grp(F.Id("R"))), Thin, Comma, Thin, Seq(Operatorname, Grp(F.Id("IsSEquilibrium"))), Thin, F.Id("s"), Thin, F.Id("X"))), Thin, Land, Thin, Parenthesized(Seq(Forall, Thin, F.Id("X"), Thin, Colon, Thin, Seq(Operatorname, Grp(F.Id("Set"))), Thin, Seq(Mathbb, Grp(F.Id("R"))), Thin, Comma, Thin, Seq(Operatorname, Grp(F.Id("IsSEquilibrium"))), Thin, F.Id("s"), Thin, F.Id("X"), Thin, Iff, Thin, Exists, Thin, Alpha, Thin, Colon, Thin, Seq(Mathbb, Grp(F.Id("R"))), Thin, Comma, Thin, D(0), Thin, Lt, Thin, Alpha, Thin, Land, Thin, Parenthesized(Seq(Exists, Thin, Beta, Thin, Colon, Thin, Seq(Mathbb, Grp(F.Id("R"))), Thin, Comma, Thin, F.Id("X"), Thin, Eq, Thin, Seq(Operatorname, Grp(F.Id("arithmeticProgression"))), Thin, Alpha, Thin, Beta))))))),
                 AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("For every real s > 2, an equilibrium exists and its point set is exactly an affine image of the integers with positive scale. Reciprocal consecutive gaps are positive harmonic functions for the transformed conductances. On each proper positive sublevel, interval packing and second-moment estimates produce finitely supported functions of arbitrarily small induced energy. A strict exterior harmonic flux contradicts this energy bound unless the reciprocal gaps are constant. Constant gaps reconstruct the progression, and the absolutely convergent p-series gives the converse."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("op-ferudun2610s2"),
+                    ResolutionKind.Proved)))));
 
     private static Formula Parenthesized(Formula value) => Seq(Left, Open, value, Right, Close);
 }
