@@ -1292,3 +1292,223 @@ or service resources needed for a physical-memory statement.
 $\square$
 
 ## 追加锚（本行以下为增补区）
+
+
+## 35. Common-input compatibility of saturated and axis completions
+
+**Definition 35.1 (constructed inputs and absolute query indices).**
+Fix one graph of Assumption 21.1 with $K\ge4$. For a qualifying
+pair of Definition 25.1 and an assignment of its $U$ with weight
+in (SI.168), denote the two particular vectors (SI.171) by
+$x^-,x^+$, and their discriminator state from Theorem 25.3 by
+$r_2$. Independently choose an actual axis pair of Definition 29.1
+on this same graph and an assignment of its own $U$ with weight
+in (SI.182). Denote its particular vectors (SI.183) by $y^-,y^+$
+and its discriminator by $r_3$. Use $d_-,d_+,k,\ell_-,\ell_+$
+for this axis pair as in Theorem 29.2, and write
+
+$$
+\Delta=d_+-d_-,\qquad
+\varepsilon=k-(n-d_--2).
+\tag{SI.202}
+$$
+
+Thus $\Delta\in\{0,1\}$ and $\varepsilon$ is the nonnegative
+integer called $e$ in (SI.184). No equality between the incoming
+states, supports or depths of the two separately chosen pairs is
+assumed. A common input means equality of the whole Boolean
+vectors on $[n]$, evaluated from the fixed start of this one graph.
+It does not mean only equal weights or equal exposed counts.
+
+For an actual input $x$ let $q_t(x)$ be its running state at its
+$t$-th query, let $i_t(x)=i(q_t(x))$, and put
+$S_{<t}(x)=\{i_s(x):1\le s<t\}$, for
+$1\le t\le t_P(x)$. A query is old on this input precisely when
+$i_t(x)\in S_{<t}(x)$. These are indices of the actual run, not
+extra changing configuration.
+
+**Theorem 35.2 (colour freshness and common-input exclusion).**
+For every choice in Definition 35.1 both $x^-$ and $x^+$ use
+exactly $n$ queries, with final state $r_2$. Their pre-final
+queries satisfy the separate implications
+
+$$
+\begin{aligned}
+1\le t<n,\quad x^-_{i_t(x^-)}=0
+   &\ \Longrightarrow\ i_t(x^-)\notin S_{<t}(x^-),\\
+1\le t<n,\quad x^+_{i_t(x^+)}=1
+   &\ \Longrightarrow\ i_t(x^+)\notin S_{<t}(x^+).
+\end{aligned}
+\tag{SI.203}
+$$
+
+The compatibility restrictions on the two same-output comparisons
+are as follows.
+
+1. If $y^-=x^-$, then $r_3=r_2$ is a positive terminal literal
+   gate and
+
+$$
+\Delta=0,\qquad\varepsilon=1,\qquad
+\ell_-=\ell_+=0,\qquad t_P(y^-)=t_P(y^+)=n.
+\tag{SI.204}
+$$
+
+2. If $y^+=x^+$, then $r_3=r_2$ is again a positive terminal
+   literal gate and
+
+$$
+(\Delta,\varepsilon)\in\{(0,1),(1,0)\},\qquad
+\ell_-=\ell_+=0,\qquad
+ t_P(y^-)=n-\Delta,\quad t_P(y^+)=n.
+\tag{SI.205}
+$$
+
+In particular, when this chosen $r_2$ has negative sign, neither
+same-output equality can hold. Both signs in Definition 26.1 remain
+permitted for qualifying pairs in general.
+
+More precisely, let $\mathcal E_2$ be any signed family of
+Definition 26.1 and let $\mathcal E_{3,R}$ be any family of
+Definition 29.1 whose pairs have unequal incoming depths, all on
+this same graph. Let $\mathcal X_2^-$ be exactly the set of negative
+vectors (SI.171) from $\mathcal E_2$, over every permitted
+assignment in (SI.168), and let $\mathcal X_{3,R}^-$ be exactly
+the set of negative vectors (SI.183) from $\mathcal E_{3,R}$, over
+every permitted assignment in (SI.182). Then
+
+$$
+\mathcal X_2^-\cap\mathcal X_{3,R}^-=\varnothing.
+\tag{SI.206}
+$$
+
+For the choice $\Pi_R$ in Corollary 33.1, this excludes a joint-demand
+route that uses one negative actual input as both a saturated
+literal-family completion and an unequal-depth axis-family
+completion. It supplies no additive installed-state capacity bound.
+
+Proof. Reuse the precise equality conclusion of Theorem 25.3.
+The incoming prefixes each use $d$ fresh queries, the common
+continuation before the discriminator has exactly $u+1$ queries,
+and its coordinates are exactly the disjoint sets $A,B,U_0,U_1$
+of (SI.169), each queried once there. The discriminator is query
+$n=d+u+2$ on both complete runs and is followed immediately by
+termination. Every earlier query in either incoming prefix is fresh
+by SI Theorem 2.2.
+
+On $x^-$ the coordinates in $A$ have value one and those in $B$
+have value zero. Thus the zero queries in this common continuation
+are precisely $B\cup U_0$. Both sets lie outside its incoming
+support $S$, and distinctness in (SI.169) makes each of these zero
+queries fresh relative to all earlier queries of this actual run.
+On $x^+$ the one queries in the common continuation are precisely
+$A\cup U_1$. These sets lie outside its incoming support $T$ and
+are likewise queried once there. This proves both implications in
+(SI.203), including queries in the incoming prefixes. The argument
+does not assert freshness of pre-final ones on $x^-$ or of
+pre-final zeros on $x^+$: $A$ is old on the former and $B$ is old
+on the latter whenever the respective set is nonempty. The final
+coordinate is old on both inputs; its sign is exactly the sign
+specified in Theorem 25.3, with no positivity assumption.
+
+For the axis pair, Theorem 29.2 places the discriminator at an old
+coordinate of both incoming supports, with replies zero on $y^-$
+and one on $y^+$. Its absolute query numbers on those inputs are
+respectively
+
+$$
+N_-=d_-+k+1=n-1+\varepsilon,\qquad
+N_+=d_++k+1=n-1+\Delta+\varepsilon.
+\tag{SI.207}
+$$
+
+Both queries actually occur, and both numbers are at most $n$.
+These are occurrence numbers on the actual runs; the graph need
+not assign one depth to an installed state.
+
+Suppose first that $y^-=x^-$. The axis discriminator is an old
+zero query on this input. Equation (SI.203) forbids its occurring
+before query $n$, so $N_-=n$ and $\varepsilon=1$. Its state is
+$q_n(x^-)=r_2$, by determinism on the same whole input. Since
+$r_2$ is a signed terminal literal gate and this zero reply returns
+the correct output zero, its sign is positive. Its two fixed
+successors are therefore the two output terminals, giving
+$\ell_-=\ell_+=0$. The inequality
+$\Delta+\varepsilon+\ell_+\le1$ in (SI.184) now forces
+$\Delta=0$. Equation (SI.207) gives (SI.204).
+
+Suppose instead that $y^+=x^+$. This time the axis discriminator
+is an old one query on the shared input. The second implication
+of (SI.203) forces $N_+=n$. Hence
+$\Delta+\varepsilon=1$ and its state is $q_n(x^+)=r_2$.
+Its one reply returns the correct output one, so the signed gate
+$r_2$ must be positive. Both tails are empty because its fixed
+successors are terminals. The possibilities $\Delta\in\{0,1\}$
+and (SI.207) give exactly (SI.205). In particular the case
+$\Delta=1,\varepsilon=0$ is not eliminated by this argument;
+this necessary-case possibility asserts no graph realizing it.
+The gate-sign conclusion in both cases proves the negative-sign
+exclusion. For every unequal-depth axis pair, (SI.182) gives
+$\Delta=1$. Applying (SI.204) to each proposed common negative
+input proves (SI.206), including empty families. No analogous
+positive-family disjointness is inferred from (SI.205).
+
+The source correspondence uses the actual histories throughout.
+SI Theorem 2.2 supplies live freshness and exact incoming depths;
+SI Lemma 11.3 supplies the incompatibility used in Theorem 29.2.
+PE Theorem 7.2 supplies the paired vectors and joint certificates,
+with its $(p,y,V,Q)$ corresponding to
+$(\alpha,\beta,K-g,K-h)$ for the gap-two pair. Theorem 25.3
+specializes these vectors to (SI.171) and saturates the common
+continuation; (SI.169) yields the colour-specific consequence
+(SI.203). For the axis pair the correspondence is
+$(p,y,V,Q)=(0,\beta,K-3,K)$, and Theorem 29.2 supplies (SI.183),
+the old positive discriminator and the slack inequalities
+(SI.184). Arbitrary opposite-output extensions of the incoming
+histories need not have the form (SI.171) or (SI.183) and are not
+covered by this comparison. The original letter-cap inequalities
+(SI.174) and (SI.185) continue to apply separately on their own
+actual inputs; identifying one vector neither concatenates runs
+nor combines independently minimized charges.
+
+The precise counting consumer is Corollary 33.1 with $n=9$, $K=4$,
+$L=6$, $B=(a,9)$, $a\in\{1,2,3\}$ and $\Pi=\Pi_R$.
+Take $\mathcal E_2$ to be its optional signed family giving
+$t_{\rm lit}$ and $\mathcal E_{3,R}$ its unequal-depth axis
+family giving $t_3$, with both families' incoming cells in $V_B$.
+Equation (SI.206) rules out identifying their negative witnessing
+inputs in an attempted joint charge toward (SI.199). It does not
+make their installed discriminator images disjoint: distinct inputs
+can have the same discriminator state and label. In particular a positive
+terminal literal gate already has positive short exits, as in
+Definitions 25.2 and 29.1. Neither equality of the two input
+vectors nor a shared incoming history is required for an installed
+state to serve different pairs. PE Proposition 9.1 gives precisely
+this state-reuse boundary. Thus the maximum in (SI.198), rather
+than an unsupported sum of its separate transversal demands,
+remains the supplied capacity bound. A separation of the installed
+state images, or another joint lower bound that pays for their
+intersection, is an additional obligation.
+
+This is a repo-derived restriction comparing the two constructed
+completion families. Deterministic indistinguishability, threshold
+certificates and equality in a query budget are inherited
+arguments; no new general hitting-set inequality is used.
+The ordered graphs of [Bryant Section 2, Definition 1][Bryant] require
+strictly increasing variable indices on nonterminal edges.
+The acyclic programs and semantic read-once accepting paths of
+[Cook, Edmonds, Medabalimi and Pitassi Section 2.1][CEMP] also have
+hypotheses absent from Assumption 21.1. Those sources supply no
+normalization of its certified traffic for this proof, and no
+worldwide novelty assertion is made.
+
+The argument holds separately for every original positive increasing
+position tuple and every permitted graph for that tuple. It keeps
+both pointwise caps, adaptive orders, paid certified queries and
+union cycles. It proves neither existence of either collision family
+nor a uniform deficit bound for (SI.199) or (SI.200). The whole-table
+condition (SI.166), CP.28 and unrestricted $m_{\rm exec}=24$
+remain unresolved; no physical-memory consequence or Lean-kernel
+verification is asserted. $\square$
+
+## 追加锚（本行以下为增补区）
