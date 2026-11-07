@@ -29,6 +29,10 @@ upper bounds from their false proposed ordering. Attribution of the symmetric
 scores and qubit/commuting constructions to Hyunho Cha is retained as in the
 later verification note. The general all-pure comparison remains unresolved.
 
+## Locator
+
+Custody record: https://github.com/the-omega-institute/trureturing/blob/e766f6c09bc629e934d0b4d1de2162768da42dea/Library/QuantumBounds/anonymous2026pgmmechanism.md
+
 The metadata URL identifies this repository citation and custody record at an
 immutable source checkpoint, published as an ancestor of the formal delivery.
 It is not a public URL for the supplied manuscript, and makes no assertion

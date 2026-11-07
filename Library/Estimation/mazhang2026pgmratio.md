@@ -37,6 +37,10 @@ supplied symbolic checker and its finite checks are evidence of their stated
 scope, and do not establish the universal claims. General all-pure comparisons
 and quantitative spectral-floor comparisons remain open.
 
+## Locator
+
+Custody record: https://github.com/the-omega-institute/trureturing/blob/e766f6c09bc629e934d0b4d1de2162768da42dea/Library/QuantumBounds/mazhang2026pgmratio.md
+
 The metadata URL identifies this repository citation and custody record at an
 immutable source checkpoint, published as an ancestor of the formal delivery.
 It is not a public URL for the supplied manuscript, and makes no assertion
