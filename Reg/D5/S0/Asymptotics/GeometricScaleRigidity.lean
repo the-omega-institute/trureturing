@@ -39,12 +39,7 @@ abbrev arena : Arena where
 
 abbrev sourceScope := type_of% (@_root_.D5.S0.Asymptotics.GeometricScaleRigidity.geometric_scale_rigidity)
 
-theorem source_bridge : sourceScope ↔ arena.Law actual := by
-  constructor
-  · intro h hfun hrho0 hrho1 hscale
-    exact h hfun hrho0 hrho1 hscale
-  · intro h hfun hrho0 hrho1 hscale
-    exact h hfun hrho0 hrho1 hscale
+theorem source_bridge : sourceScope ↔ arena.Law actual := Iff.rfl
 
 theorem actual_law : arena.Law actual :=
   source_bridge.mp (@_root_.D5.S0.Asymptotics.GeometricScaleRigidity.geometric_scale_rigidity)
@@ -56,7 +51,8 @@ theorem rejected_law : ¬ arena.Law rejected := by
   have hscale : ∀ n : ℕ, one ((0 : ℝ) ^ n * 0) = one 0 := by
     intro n
     rfl
-  have hh := h hconst (by norm_num) (by norm_num) hscale
+  have hh := h (h := one) (rho := (0 : ℝ)) (M := (0 : ℝ)) hconst
+    (by norm_num : (0 : ℝ) ≤ 0) (by norm_num : (0 : ℝ) < 1) hscale
   norm_num [rejected, realize, one] at hh
 
 def family : Registration arena sourceScope where
