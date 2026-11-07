@@ -1,1 +1,0 @@
-WIP: install immutable infimum candidates and accepted dependency overlays; reuse canonical logarithm quadratic supplier
