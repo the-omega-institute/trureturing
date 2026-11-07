@@ -28,11 +28,24 @@ Problem 3.13, PDF page 26, asks:
 
 > Does $[N,X_C]=0$ for all $N$ norming $V$ imply that $\|V+s[X,V]\|=\|V\|$ in some interval $|s|<\delta$?
 
-Definition 2.1 describes an Ad-invariant Finsler norm as a nonnegative function on the skew-Hermitian matrices which is nondegenerate, subadditive, positively homogeneous and invariant under unitary conjugation. The trace-duality remark states:
+Definition 2.1, PDF page 3, states:
+
+> It is a function $\|\cdot\|:\mathfrak u_n\to\mathbb R_{\ge0}$ such that for any $X,Y\in\mathfrak u_n$
+>
+> 1. $\|X\|=0$ if and only if $X=0$ (non-degenerate)
+> 2. $\|X+Y\|\le\|X\|+\|Y\|$ (subadditive)
+> 3. $\|\lambda X\|=\lambda\|X\|$ for any $\lambda\in\mathbb R_{\ge0}$ (positively homogenous)
+> 4. $\|UXU^*\|=\|X\|$ for any $U\in\mathsf{\mathbf U}(n,\mathbb C)$ (Ad-invariant).
+
+The trace-duality remark, PDF page 4, states:
 
 > We say that $\varphi\in \mathfrak u_n'$ is a unit norming functional of $V\in\mathfrak u_n$ if $\varphi(V)=\|V\|$ and $\|\varphi\|=1$.
 
-It defines $\|\varphi\|=\max\{\varphi(X):\|X\|\le1\}$ without the modulus and uses $\varphi_N(Y)=-\operatorname{tr}(NY)$ on the skew-Hermitian space. Definition 2.30 writes $V=i\sum_k v_kP_k$ with different eigenvalues and orthogonal spectral projections and defines $X_C=\sum_{k\ne j}P_kXP_j$.
+It defines $\|\varphi\|=\max\{\varphi(X):\|X\|\le1\}$ without the modulus and uses $\varphi_N(Y)=-\operatorname{tr}(NY)$ on the skew-Hermitian space. Definition 2.30, PDF page 14, states:
+
+> Let $0\ne V\in\mathfrak u_n$, write $V=i\sum_{k\in F}v_kP_k$ with $v_1>v_2>\dots>v_F$ a diagonalization of $V$ where the eigenvalues are different and ordered decreasingly. Each $P_k$ is an orthonormal projection onto the corresponding eigenspace and $P_kP_j=0$ for $k\ne j$.
+
+> For any $X\in\mathfrak u_n$ we can decompose $X=X_D+X_C$, where $X_D=\sum_kP_kXP_k$ and $X_C=\sum_{k\ne j}P_kXP_j$, the block-diagonal and block-codiagonal parts of $X$.
 
 Theorem 3.11 instead uses a norming functional of the endpoint $V+[X,V]$. The counterexample to Problem 3.13 does not refute that endpoint criterion.
 

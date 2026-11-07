@@ -17,69 +17,72 @@ The skew-adjoint convention is inlined in the claim; proofs use Mathlib skewAdjo
 The public result is the designated refutation result (`basis=refutes`) and is exempt from four-slot escape registration (CLAUDE.md §3.9).
 
 Per-declaration classification (all escape_witness: none):
-pairing: proof_shape: bind-only; consumers: dualNorm, IsNorming, pairing_add, pairing_smul, norming_bound, norming_traceless, norming_central.
-IsAdInvariantFinsler: proof_shape: bind-only; consumers: claim, bodyNorm_admissible.
-dualNorm: proof_shape: bind-only; consumers: IsNorming, norming_bound.
-IsNorming: proof_shape: bind-only; consumers: claim, norming_traceless, norming_central, result.
-SpectralData: proof_shape: bind-only; consumers: codiagonal, claim.
-codiagonal: proof_shape: bind-only; consumers: claim, result.
-claim: proof_shape: bind-only; consumers: result.
-weight: proof_shape: bind-only; consumers: bodyNorm, weight_bound, weight_bdd, weight_le, bodyNorm_le, cent_le, rest_le, bodyNorm_zero, bodyNorm_add, weight_smul, bodyNorm_conj, bodyNorm_V, bodyNorm_quadratic, bodyNorm_strict.
-bodyNorm: proof_shape: bind-only; consumers: weight_le, bodyNorm_le, cent_le, rest_le, bodyNorm_zero, bodyNorm_add, bodyNorm_smul, bodyNorm_conj, bodyNorm_eq_zero, bodyNorm_admissible, bodyNorm_V, bodyNorm_quadratic, norming_bound, norming_traceless, norming_central, bodyNorm_strict, line_strict, result.
-center_formula: proof_shape: bind-only; consumers: bodyNorm_zero, cent_add, cent_smul, cent_conj, bodyNorm_eq_zero, cent_V, bodyNorm_quadratic, norming_central, cent_line.
-denom_pos: proof_shape: bind-only; consumers: weight_bound, bodyNorm_add, bodyNorm_V, bodyNorm_quadratic, bodyNorm_strict.
-coeff_nonneg: proof_shape: bind-only; consumers: bodyNorm_add.
-weight_bound: proof_shape: bind-only; consumers: weight_bdd.
-weight_bdd: proof_shape: bind-only; consumers: weight_le.
-weight_le: proof_shape: bind-only; consumers: cent_le, rest_le, bodyNorm_add, bodyNorm_smul, bodyNorm_strict.
-bodyNorm_le: proof_shape: bind-only; consumers: bodyNorm_zero, bodyNorm_add, bodyNorm_smul, bodyNorm_V, bodyNorm_quadratic.
-cent_le: proof_shape: bind-only; consumers: bodyNorm_zero, bodyNorm_eq_zero, bodyNorm_admissible, bodyNorm_V.
-rest_le: proof_shape: bind-only; consumers: bodyNorm_eq_zero.
-bodyNorm_zero: proof_shape: bind-only; consumers: bodyNorm_smul, bodyNorm_eq_zero, bodyNorm_admissible.
-cent_add: proof_shape: bind-only; consumers: bodyNorm_add, bodyNorm_quadratic, cent_line.
-rest_add: proof_shape: bind-only; consumers: bodyNorm_add, bodyNorm_quadratic.
-cent_smul: proof_shape: bind-only; consumers: weight_smul, bodyNorm_quadratic, cent_line.
-rest_smul: proof_shape: bind-only; consumers: weight_smul, bodyNorm_quadratic.
-bodyNorm_add: proof_shape: bind-only; consumers: bodyNorm_admissible.
-weight_smul: proof_shape: bind-only; consumers: bodyNorm_smul.
-bodyNorm_smul: proof_shape: bind-only; consumers: bodyNorm_admissible, norming_bound.
-trace_conj: proof_shape: bind-only; consumers: cent_conj, rest_conj.
-cent_conj: proof_shape: bind-only; consumers: bodyNorm_conj.
-rest_conj: proof_shape: bind-only; consumers: bodyNorm_conj.
-bodyNorm_conj: proof_shape: bind-only; consumers: bodyNorm_admissible.
-bodyNorm_eq_zero: proof_shape: bind-only; consumers: bodyNorm_admissible.
-bodyNorm_admissible: proof_shape: bind-only; consumers: result.
-J: proof_shape: bind-only; consumers: V, skew_J, cent_V, rest_V, line_radius.
-K: proof_shape: bind-only; consumers: V, skew_K, cent_V, rest_V, norm_K, norming_central, line_radius.
-X: proof_shape: bind-only; consumers: codiagonal, claim, skew_X, norming_central, cent_line, line_radius, line_strict, result.
-T: proof_shape: bind-only; consumers: skew_T, norming_central.
-V: proof_shape: bind-only; consumers: IsNorming, SpectralData, claim, skew_V, cent_V, rest_V, norm_rest_V, bodyNorm_V, bodyNorm_quadratic, norming_traceless, norming_central, cent_line, line_radius, line_strict, result.
-skew_J: proof_shape: bind-only; consumers: skew_V.
-skew_K: proof_shape: bind-only; consumers: skew_V, norming_central.
-skew_X: proof_shape: bind-only; consumers: norming_central, result.
-skew_T: proof_shape: bind-only; consumers: norming_central.
-skew_V: proof_shape: bind-only; consumers: norming_traceless, result.
-cent_V: proof_shape: bind-only; consumers: rest_V, bodyNorm_V, bodyNorm_quadratic, cent_line.
-rest_V: proof_shape: bind-only; consumers: norm_rest_V.
-norm_K: proof_shape: bind-only; consumers: norm_rest_V.
-norm_rest_V: proof_shape: bind-only; consumers: bodyNorm_V, bodyNorm_quadratic.
-bodyNorm_V: proof_shape: bind-only; consumers: norming_traceless, line_strict.
-bodyNorm_quadratic: proof_shape: bind-only; consumers: norming_traceless.
-pairing_add: proof_shape: bind-only; consumers: norming_traceless.
-pairing_smul: proof_shape: bind-only; consumers: norming_bound, norming_traceless.
-norming_bound: proof_shape: bind-only; consumers: norming_traceless.
-norming_traceless: proof_shape: bind-only; consumers: norming_central.
-norming_central: proof_shape: bind-only; consumers: result.
-bodyNorm_strict: proof_shape: bind-only; consumers: line_strict.
-cent_line: proof_shape: bind-only; consumers: line_radius, line_strict.
-line_radius: proof_shape: bind-only; consumers: line_strict.
-line_strict: proof_shape: bind-only; consumers: result.
-result: proof_shape: bind-only; consumers: terminal result.
+pairing: proof_shape: bind-only; consumers: IsNorming,dualNorm,norming_bound,norming_central,norming_traceless,pairing_add,pairing_smul; Direct frozen dependencies: none.
+IsAdInvariantFinsler: proof_shape: bind-only; consumers: bodyNorm_admissible,claim; Direct frozen dependencies: none.
+dualNorm: proof_shape: bind-only; consumers: IsNorming,norming_bound,norming_central,norming_traceless; Direct frozen dependencies: none.
+IsNorming: proof_shape: bind-only; consumers: claim,norming_central,norming_traceless,result; Direct frozen dependencies: none.
+SpectralData: proof_shape: bind-only; consumers: claim,codiagonal,result; Direct frozen dependencies: none.
+codiagonal: proof_shape: bind-only; consumers: claim,result; Direct frozen dependencies: none.
+claim: proof_shape: bind-only; consumers: result; Direct frozen dependencies: none.
+weight: proof_shape: bind-only; consumers: bodyNorm,bodyNorm_V,bodyNorm_add,bodyNorm_conj,bodyNorm_le,bodyNorm_quadratic,bodyNorm_smul,bodyNorm_strict,bodyNorm_zero,cent_le,rest_le,weight_bdd,weight_bound,weight_le,weight_smul; Direct frozen dependencies: centeredEffect (identity above).
+bodyNorm: proof_shape: bind-only; consumers: bodyNorm_V,bodyNorm_add,bodyNorm_admissible,bodyNorm_conj,bodyNorm_eq_zero,bodyNorm_le,bodyNorm_quadratic,bodyNorm_smul,bodyNorm_strict,bodyNorm_zero,cent_le,line_strict,norming_bound,norming_central,norming_traceless,rest_le,result,weight_le; Direct frozen dependencies: centeredEffect (identity above).
+center_formula: proof_shape: bind-only; consumers: bodyNorm_eq_zero,bodyNorm_quadratic,cent_V,cent_add,cent_conj,cent_line,cent_smul,line_radius,norming_central,rest_V; Direct frozen dependencies: none.
+denom_pos: proof_shape: bind-only; consumers: bodyNorm_V,bodyNorm_add,bodyNorm_quadratic,bodyNorm_strict,weight_bound; Direct frozen dependencies: none.
+coeff_nonneg: proof_shape: bind-only; consumers: bodyNorm_add; Direct frozen dependencies: none.
+weight_bound: proof_shape: bind-only; consumers: weight_bdd; Direct frozen dependencies: centeredEffect (identity above).
+weight_bdd: proof_shape: bind-only; consumers: weight_le; Direct frozen dependencies: centeredEffect (identity above).
+weight_le: proof_shape: bind-only; consumers: bodyNorm_add,bodyNorm_smul,bodyNorm_strict,cent_le,rest_le; Direct frozen dependencies: centeredEffect (identity above).
+bodyNorm_le: proof_shape: bind-only; consumers: bodyNorm_V,bodyNorm_add,bodyNorm_quadratic,bodyNorm_smul,bodyNorm_zero; Direct frozen dependencies: centeredEffect (identity above).
+cent_le: proof_shape: bind-only; consumers: bodyNorm_V,bodyNorm_admissible,bodyNorm_eq_zero,bodyNorm_zero; Direct frozen dependencies: centeredEffect (identity above).
+rest_le: proof_shape: bind-only; consumers: bodyNorm_eq_zero; Direct frozen dependencies: centeredEffect (identity above).
+bodyNorm_zero: proof_shape: bind-only; consumers: bodyNorm_admissible,bodyNorm_eq_zero,bodyNorm_smul; Direct frozen dependencies: centeredEffect (identity above).
+cent_add: proof_shape: bind-only; consumers: bodyNorm_add,bodyNorm_quadratic,cent_line; Direct frozen dependencies: none.
+rest_add: proof_shape: bind-only; consumers: bodyNorm_add,bodyNorm_quadratic; Direct frozen dependencies: centeredEffect (identity above).
+cent_smul: proof_shape: bind-only; consumers: bodyNorm_quadratic,cent_line,weight_smul; Direct frozen dependencies: none.
+rest_smul: proof_shape: bind-only; consumers: bodyNorm_quadratic,weight_smul; Direct frozen dependencies: centeredEffect (identity above).
+bodyNorm_add: proof_shape: bind-only; consumers: bodyNorm_admissible; Direct frozen dependencies: centeredEffect (identity above).
+weight_smul: proof_shape: bind-only; consumers: bodyNorm_smul; Direct frozen dependencies: centeredEffect (identity above).
+bodyNorm_smul: proof_shape: bind-only; consumers: bodyNorm_admissible,norming_bound; Direct frozen dependencies: centeredEffect (identity above).
+trace_conj: proof_shape: bind-only; consumers: cent_conj,rest_conj; Direct frozen dependencies: none.
+cent_conj: proof_shape: bind-only; consumers: bodyNorm_conj; Direct frozen dependencies: none.
+rest_conj: proof_shape: bind-only; consumers: bodyNorm_conj; Direct frozen dependencies: centeredEffect (identity above).
+bodyNorm_conj: proof_shape: bind-only; consumers: bodyNorm_admissible; Direct frozen dependencies: centeredEffect (identity above).
+bodyNorm_eq_zero: proof_shape: bind-only; consumers: bodyNorm_admissible; Direct frozen dependencies: centeredEffect (identity above).
+bodyNorm_admissible: proof_shape: bind-only; consumers: result; Direct frozen dependencies: centeredEffect (identity above).
+J: proof_shape: bind-only; consumers: V,skew_J,skew_V; Direct frozen dependencies: none.
+K: proof_shape: bind-only; consumers: V,cent_V,line_radius,norm_K,norm_rest_V,norming_central,rest_V,skew_K,skew_V; Direct frozen dependencies: none.
+X: proof_shape: bind-only; consumers: cent_line,line_radius,line_strict,norming_central,result,skew_X; Direct frozen dependencies: none.
+T: proof_shape: bind-only; consumers: norming_central,skew_T; Direct frozen dependencies: none.
+V: proof_shape: bind-only; consumers: bodyNorm_V,bodyNorm_quadratic,cent_V,cent_line,line_radius,line_strict,norm_rest_V,norming_central,norming_traceless,rest_V,result,skew_V; Direct frozen dependencies: none.
+skew_J: proof_shape: bind-only; consumers: skew_V; Direct frozen dependencies: none.
+skew_K: proof_shape: bind-only; consumers: norming_central,skew_V; Direct frozen dependencies: none.
+skew_X: proof_shape: bind-only; consumers: norming_central,result; Direct frozen dependencies: none.
+skew_T: proof_shape: bind-only; consumers: norming_central; Direct frozen dependencies: none.
+skew_V: proof_shape: bind-only; consumers: norming_traceless,result; Direct frozen dependencies: none.
+cent_V: proof_shape: bind-only; consumers: bodyNorm_V,bodyNorm_quadratic,cent_line,rest_V; Direct frozen dependencies: none.
+rest_V: proof_shape: bind-only; consumers: norm_rest_V; Direct frozen dependencies: centeredEffect (identity above).
+norm_K: proof_shape: bind-only; consumers: norm_rest_V; Direct frozen dependencies: none.
+norm_rest_V: proof_shape: bind-only; consumers: bodyNorm_V,bodyNorm_quadratic; Direct frozen dependencies: centeredEffect (identity above).
+bodyNorm_V: proof_shape: bind-only; consumers: line_strict,norming_traceless; Direct frozen dependencies: centeredEffect (identity above).
+bodyNorm_quadratic: proof_shape: bind-only; consumers: norming_traceless; Direct frozen dependencies: centeredEffect (identity above).
+pairing_add: proof_shape: bind-only; consumers: norming_traceless; Direct frozen dependencies: none.
+pairing_smul: proof_shape: bind-only; consumers: norming_bound,norming_traceless; Direct frozen dependencies: none.
+norming_bound: proof_shape: bind-only; consumers: norming_traceless; Direct frozen dependencies: centeredEffect (identity above).
+norming_traceless: proof_shape: bind-only; consumers: norming_central; Direct frozen dependencies: centeredEffect (identity above).
+norming_central: proof_shape: bind-only; consumers: result; Direct frozen dependencies: centeredEffect (identity above).
+bodyNorm_strict: proof_shape: bind-only; consumers: line_strict; Direct frozen dependencies: centeredEffect (identity above).
+cent_line: proof_shape: bind-only; consumers: line_radius,line_strict; Direct frozen dependencies: none.
+line_radius: proof_shape: bind-only; consumers: line_strict; Direct frozen dependencies: centeredEffect (identity above).
+line_strict: proof_shape: bind-only; consumers: result; Direct frozen dependencies: centeredEffect (identity above).
+result: proof_shape: bind-only; consumers: terminal result; Direct frozen dependencies: centeredEffect (identity above).
 -/
 
 import D5.S3.Quantum.Fibers.ReadoutOrthogonalEquivalence
 
+/-! A polar-supremum counterexample to norming commutation implying local flatness. -/
+
 set_option autoImplicit false
+set_option linter.style.longLine false
 namespace D5.S3.HilbertOperators.LarotondaReyNormingFlatnessRefutation
 
 open scoped BigOperators ComplexConjugate
@@ -192,17 +195,19 @@ private theorem rest_le (Y : Matrix (Fin 2) (Fin 2) ℂ) : 2 * ‖centeredEffect
 
 private theorem bodyNorm_zero : bodyNorm 0 = 0 := by
   apply le_antisymm
-  · apply bodyNorm_le; intro q; simp [weight, center_formula, centeredEffect]
+  · apply bodyNorm_le; intro q; simp [weight, centeredEffect]
   · simpa [center_formula] using cent_le 0
 
 private theorem cent_add (Y Z : Matrix (Fin 2) (Fin 2) ℂ) : (Finset.univ.expect ∘ Matrix.diag) (Y+Z) = (Finset.univ.expect ∘ Matrix.diag) Y + (Finset.univ.expect ∘ Matrix.diag) Z := by
-  simp [center_formula, add_div]
+  simp only [center_formula]
+  simp [add_div]
 
 private theorem rest_add (Y Z : Matrix (Fin 2) (Fin 2) ℂ) : centeredEffect (Y+Z) = centeredEffect Y + centeredEffect Z := by
   simp [centeredEffect, add_div, add_smul]; abel
 
 private theorem cent_smul (r : ℝ) (Y : Matrix (Fin 2) (Fin 2) ℂ) : (Finset.univ.expect ∘ Matrix.diag) (r • Y) = r • (Finset.univ.expect ∘ Matrix.diag) Y := by
-  simp [center_formula, Matrix.trace_smul]; ring
+  simp only [center_formula]
+  simp [Matrix.trace_smul]; ring
 
 private theorem rest_smul (r : ℝ) (Y : Matrix (Fin 2) (Fin 2) ℂ) : centeredEffect (r • Y) = r • centeredEffect Y := by
   ext i j; simp [centeredEffect, Matrix.trace_smul, smul_sub, Matrix.smul_apply]; ring
@@ -249,7 +254,7 @@ private theorem rest_conj (U Y : Matrix (Fin 2) (Fin 2) ℂ)
       U * centeredEffect Y * star U := by
   simp only [centeredEffect,
     trace_conj U Y hU, mul_sub, sub_mul, Matrix.mul_smul,
-    Matrix.smul_mul, one_mul, mul_one, Matrix.mem_unitaryGroup_iff.mp hU]
+    Matrix.smul_mul, mul_one, Matrix.mem_unitaryGroup_iff.mp hU]
 
 private theorem bodyNorm_conj (U Y : Matrix (Fin 2) (Fin 2) ℂ) (hU : U ∈ Matrix.unitaryGroup (Fin 2) ℂ) :
     bodyNorm (U * Y * star U) = bodyNorm Y := by
@@ -302,11 +307,12 @@ private theorem skew_V : V ∈ skewAdjoint (Matrix (Fin 2) (Fin 2) ℂ) := by
   exact (skewAdjoint (Matrix (Fin 2) (Fin 2) ℂ)).add_mem skew_J (skewAdjoint.smul_mem (1/2 : ℝ) skew_K)
 
 private theorem cent_V : (Finset.univ.expect ∘ Matrix.diag) V = Complex.I := by
-  norm_num [V, J, K, center_formula, Matrix.trace_fin_two]
+  rw [center_formula]
+  norm_num [V, J, K, Matrix.trace_fin_two]
 
 private theorem rest_V : centeredEffect V = (1/2 : ℝ) • K := by
-  change V - ((Finset.univ.expect ∘ Matrix.diag) V) • 1 = _
-  rw [cent_V]; simp [V, J]
+  change V - (Matrix.trace V / 2) • 1 = _
+  rw [← center_formula V, cent_V]; simp [V, J]
 
 private theorem norm_K : ‖K‖ = 1 := by
   have h : star K * K = 1 := by
@@ -325,11 +331,14 @@ private theorem bodyNorm_V : bodyNorm V = 1 := by
     rw [cent_V, norm_rest_V, Complex.norm_I]
     apply (div_le_iff₀ (denom_pos q)).2
     nlinarith [sq_nonneg (q : ℝ)]
-  · simpa [cent_V] using cent_le V
+  · have h := cent_le V
+    rw [cent_V, Complex.norm_I] at h
+    exact h
 
 private theorem bodyNorm_quadratic (W : Matrix (Fin 2) (Fin 2) ℂ) (hc : (Finset.univ.expect ∘ Matrix.diag) W = 0) (e : ℝ) :
     bodyNorm (V + e • W) ≤ 1 + e^2 * ‖W‖^2 := by
-  have hcent : (Finset.univ.expect ∘ Matrix.diag) (V + e • W) = Complex.I := by simp [cent_add, cent_smul, cent_V, hc]
+  have hcent : (Finset.univ.expect ∘ Matrix.diag) (V + e • W) = Complex.I := by
+    rw [cent_add, cent_smul, cent_V, hc, smul_zero, add_zero]
   have hrest : ‖centeredEffect (V + e • W)‖ ≤ 1/2 + |e| * ‖W‖ := by
     rw [rest_add, rest_smul]
     have hh : centeredEffect W = W := by
@@ -342,6 +351,7 @@ private theorem bodyNorm_quadratic (W : Matrix (Fin 2) (Fin 2) ℂ) (hc : (Finse
   apply (div_le_iff₀ (denom_pos q)).2
   have hmul := mul_le_mul_of_nonneg_left hrest (by nlinarith [q.property.1] : 0 ≤ 2*(q:ℝ))
   have hsq := sq_nonneg ((q:ℝ) - |e| * ‖W‖)
+  have heq : (|e| * ‖W‖)^2 = e^2 * ‖W‖^2 := by rw [mul_pow, sq_abs]
   have hp1 := mul_nonneg (sq_nonneg (|e| * ‖W‖)) (sq_nonneg (q:ℝ))
   have hp2 := mul_nonneg (sq_nonneg (|e| * ‖W‖)) q.property.1
   simp only [mul_pow, sq_abs] at hp1 hp2
@@ -351,7 +361,7 @@ private theorem pairing_add (N Y Z : Matrix (Fin 2) (Fin 2) ℂ) : pairing N (Y+
   simp [pairing, mul_add, Matrix.trace_add]; ring
 
 private theorem pairing_smul (N Y : Matrix (Fin 2) (Fin 2) ℂ) (r : ℝ) : pairing N (r • Y) = r * pairing N Y := by
-  simp [pairing, Matrix.mul_smul, Matrix.trace_smul]
+  simp [pairing, Matrix.trace_smul]
 
 private theorem norming_bound (N Y : Matrix (Fin 2) (Fin 2) ℂ) (hN : dualNorm bodyNorm N = 1)
     (hY : Y ∈ skewAdjoint (Matrix (Fin 2) (Fin 2) ℂ)) (b : ℝ) (hb : 0 < b) (hF : bodyNorm Y ≤ b) : pairing N Y ≤ b := by
@@ -389,11 +399,11 @@ private theorem norming_traceless (N W : Matrix (Fin 2) (Fin 2) ℂ) (hN : IsNor
 
 private theorem norming_central (N : Matrix (Fin 2) (Fin 2) ℂ) (hN : IsNorming bodyNorm V N) :
     ∃ z : ℂ, N = z • (1 : Matrix (Fin 2) (Fin 2) ℂ) := by
-  have hk := norming_traceless N K hN skew_K (by norm_num [center_formula, K])
-  have hx := norming_traceless N X hN skew_X (by norm_num [center_formula, X])
-  have ht := norming_traceless N T hN skew_T (by norm_num [center_formula, T])
+  have hk := norming_traceless N K hN skew_K (by rw [center_formula]; norm_num [K])
+  have hx := norming_traceless N X hN skew_X (by rw [center_formula]; norm_num [X])
+  have ht := norming_traceless N T hN skew_T (by rw [center_formula]; norm_num [T])
   simp [pairing, K, Matrix.trace_fin_two, Matrix.mul_apply, Fin.sum_univ_two, Complex.mul_re] at hk
-  simp [pairing, X, Matrix.trace_fin_two, Matrix.mul_apply, Fin.sum_univ_two, Complex.mul_re] at hx
+  simp [pairing, X, Matrix.trace_fin_two, Matrix.mul_apply, Fin.sum_univ_two] at hx
   simp [pairing, T, Matrix.trace_fin_two, Matrix.mul_apply, Fin.sum_univ_two, Complex.mul_re] at ht
   have hs : star N = -N := hN.1
   have hs00 := congrArg (fun M : Matrix (Fin 2) (Fin 2) ℂ => (M 0 0).re) hs
@@ -404,7 +414,7 @@ private theorem norming_central (N : Matrix (Fin 2) (Fin 2) ℂ) (hN : IsNorming
   refine ⟨N 0 0, ?_⟩
   ext i j
   fin_cases i <;> fin_cases j <;> apply Complex.ext <;>
-    simp [Matrix.smul_apply, Matrix.one_apply] <;> linarith
+    simp [Matrix.smul_apply] <;> linarith
 
 private theorem bodyNorm_strict (Y : Matrix (Fin 2) (Fin 2) ℂ) (hc : ‖(Finset.univ.expect ∘ Matrix.diag) Y‖ = 1) (hr : 1/2 < ‖centeredEffect Y‖) :
     1 < bodyNorm Y := by
@@ -429,16 +439,17 @@ private theorem bodyNorm_strict (Y : Matrix (Fin 2) (Fin 2) ℂ) (hc : ‖(Finse
 private theorem cent_line (s : ℝ) : (Finset.univ.expect ∘ Matrix.diag) (V + s • (X * V - V * X)) = Complex.I := by
   rw [cent_add, cent_smul, cent_V]
   have ht : (Finset.univ.expect ∘ Matrix.diag) (X * V - V * X) = 0 := by
-    simp [center_formula, Matrix.trace_sub, Matrix.trace_mul_comm X V]
-  simp [ht]
+    rw [center_formula]
+    simp [Matrix.trace_sub, Matrix.trace_mul_comm X V]
+  rw [ht, smul_zero, add_zero]
 
 private theorem line_radius (s : ℝ) : ‖centeredEffect (V + s • (X * V - V * X))‖^2 = 1/4 + s^2 := by
   let A := centeredEffect (V + s • (X * V - V * X))
   have hA : A = !![Complex.I / 2, -(s : ℂ) * Complex.I;
       -(s : ℂ) * Complex.I, -Complex.I / 2] := by
     change centeredEffect (V + s • (X * V - V * X)) = _
-    change (V + s • (X * V - V * X)) - ((Finset.univ.expect ∘ Matrix.diag) (V + s • (X * V - V * X))) • 1 = _
-    rw [cent_line]
+    change (V + s • (X * V - V * X)) - (Matrix.trace (V + s • (X * V - V * X)) / 2) • 1 = _
+    rw [← center_formula, cent_line]
     ext i j
     fin_cases i <;> fin_cases j <;> apply Complex.ext <;>
       norm_num [V, J, K, X, Matrix.mul_apply, Matrix.vecMul, dotProduct, Fin.sum_univ_two,
@@ -457,7 +468,7 @@ private theorem line_strict (s : ℝ) (hs : s ≠ 0) :
     bodyNorm V < bodyNorm (V + s • (X * V - V * X)) := by
   rw [bodyNorm_V]
   apply bodyNorm_strict
-  · simp [cent_line]
+  · rw [cent_line, Complex.norm_I]
   · have := line_radius s
     nlinarith [sq_pos_of_ne_zero hs, norm_nonneg (centeredEffect (V+s•(X*V-V*X)))]
 
@@ -468,7 +479,7 @@ theorem result : ¬ D5.S3.HilbertOperators.LarotondaReyNormingFlatnessRefutation
       N * codiagonal D X = codiagonal D X * N := by
     intro N hN
     obtain ⟨z,rfl⟩ := norming_central N hN
-    simp [Matrix.smul_mul, Matrix.mul_smul]
+    simp
   obtain ⟨δ,hδ,hlocal⟩ := hflat D hD X skew_X hcomm
   have he := hlocal (δ/2) (by rw [abs_of_pos (by linarith : 0 < δ/2)]; linarith)
   exact (line_strict (δ/2) (by linarith)).ne' he

@@ -20,7 +20,8 @@ internal sealed class LarotondaReyNormingFlatnessRefutationDocument : IScribeDoc
                     + "The real part of −Matrix.trace (N * Y) gives that real pairing on skew-adjoint matrices."),
             Definition("finsler", "IsAdInvariantFinsler", "The Ad-invariant Finsler class", FinslerFormula(),
                 AssessedProvenance.FromLiterature(Source),
-                "Definition 2.1 on page 3 says: “It is a function ‖·‖ : 𝔲ₙ → ℝ≥0 such that for any X,Y ∈ 𝔲ₙ” and lists non-degeneracy, subadditivity, positive homogeneity and Ad-invariance. "
+                "Definition 2.1 on page 3 says: “It is a function ‖·‖ : 𝔲ₙ → ℝ≥0 such that for any X,Y ∈ 𝔲ₙ” and specifies “‖X‖ = 0 if and only if X = 0 (non-degenerate)”, "
+                    + "“‖X+Y‖ ≤ ‖X‖+‖Y‖ (subadditive)”, “‖λX‖ = λ‖X‖ for any λ ∈ ℝ≥0 (positively homogenous)” and “‖UXU*‖ = ‖X‖ for any U ∈ 𝐔(n,ℂ) (Ad-invariant).” "
                     + "Here F is an ambient matrix function, with the four conditions imposed on skewAdjoint. Nonnegativity and F 0 = 0 are explicit."),
             Definition("dual-norm", "dualNorm", "The dual supremum", DualFormula(),
                 AssessedProvenance.FromLiterature(Source),
@@ -32,7 +33,8 @@ internal sealed class LarotondaReyNormingFlatnessRefutationDocument : IScribeDoc
                     + "N is required to be skew-adjoint, have dualNorm one and attain F V under pairing."),
             Definition("spectral-data", "SpectralData", "Finite spectral blocks", SpectralFormula(),
                 AssessedProvenance.FromLiterature(Source),
-                "Definition 2.30 on page 14 writes V = i Σ vₖ Pₖ with distinct eigenvalues and orthogonal spectral projections. "
+                "Definition 2.30 on page 14 states: “Let 0 ≠ V ∈ 𝔲ₙ, write V = i Σₖ∈F vₖPₖ with v₁ > v₂ > ⋯ > v_F a diagonalization of V where the eigenvalues are different and ordered decreasingly. "
+                    + "Each Pₖ is an orthonormal projection onto the corresponding eigenspace and PₖPⱼ = 0 for k ≠ j.” "
                     + "SpectralData stores a positive number of blocks, their real values and nonzero self-adjoint idempotent projections, orthogonality, completeness, the decomposition and skew-adjointness. "
                     + "Distinct values replace the source's decreasing enumeration; summation and codiagonal are invariant under a permutation of blocks. "
                     + "Each row below gives one field with its full dependent type."),
