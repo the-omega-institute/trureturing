@@ -277,6 +277,17 @@ class LifecycleTests(unittest.TestCase):
         self.assertEqual(run(self.main, "rev-parse", branch).stdout.strip(), head)
         self.assertEqual(sentinel.read_text(), "external bytes")
 
+    def test_explicit_batch_can_remove_its_invoking_source_first(self):
+        first, second = self.root / "a-invoking", self.root / "z-second"
+        retained = {name: self.commit_branch(name, path, 60) for name, path in
+                    (("lane/governance/first", first), ("lane/governance/second", second))}
+        result = preservation.remove(SimpleNamespace(source=first, names="", path=[first, second], preview=False))
+        self.assertEqual(result["status"], "succeeded", result)
+        self.assertFalse(first.exists())
+        self.assertFalse(second.exists())
+        for branch, head in retained.items():
+            self.assertEqual(run(self.main, "rev-parse", branch).stdout.strip(), head)
+
     def test_stale_reuse_is_immediate_and_new_commit_invalidates(self):
         candidate = self.root / "candidate"
         old_branch = "lane/governance/old"

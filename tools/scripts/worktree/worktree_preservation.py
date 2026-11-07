@@ -157,7 +157,7 @@ def remove(options):
         try:
             if target.resolve() == main:
                 raise Refused("main_worktree")
-            item = qualify(options.source, target)
+            item = qualify(main, target)
             if options.preview:
                 outcomes.append(dict(path=str(target), outcome="would_remove",
                                      branch=item.get("branch"), head=item.get("HEAD")))
