@@ -329,7 +329,7 @@ private def coordinateEquiv : Coords ≃ Vertex where
   left_inv := by
     rintro (⟨t,r,k⟩ | ⟨b,k⟩)
     · fin_cases t <;> norm_num [decode, encode, Prod.ext_iff] <;>
-        split_ifs <;> (try simp_all only [Sum.inl.injEq, Prod.mk.injEq]) <;> omega
+        split_ifs <;> (try simp_all only [Sum.inl.injEq, Prod.mk.injEq, true_and]) <;> omega
     · cases b <;> simp [decode, encode]
   right_inv := by
     intro v
