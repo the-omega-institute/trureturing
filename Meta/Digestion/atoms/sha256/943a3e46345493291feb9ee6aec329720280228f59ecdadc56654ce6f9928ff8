@@ -1,0 +1,9 @@
+**定义 42.1（原输出的测试集）。** 集合 $T\subseteq A_D$ 称为输出测试集，若对全部 $p,q\in A_D$ 有
+
+$$
+\bigl(\forall t\in T,\ D(p,t)=D(q,t)\bigr)\Longrightarrow p=q.
+\tag{42.1}
+$$
+
+这是对同一旧值的数学辨识，不计设备数、读取精度或实际认证成本。
+
