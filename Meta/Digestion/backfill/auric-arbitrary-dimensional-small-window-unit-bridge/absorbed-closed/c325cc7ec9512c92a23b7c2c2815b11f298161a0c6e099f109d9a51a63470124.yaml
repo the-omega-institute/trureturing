@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:c325cc7ec9512c92a23b7c2c2815b11f298161a0c6e099f109d9a51a63470124
+  normalized_sha256: sha256:c325cc7ec9512c92a23b7c2c2815b11f298161a0c6e099f109d9a51a63470124
+cas_ref: sha256:c325cc7ec9512c92a23b7c2c2815b11f298161a0c6e099f109d9a51a63470124
+coverage_gids:
+  - gid: D5/S3/Quantum/Algebra/JordanOutputBound.actual_output_bound
+    target_statement_id: sha256:aa865213791a8e6d1ff1752c3ff5c9a88e2cae73612fd97e070ced94068cd48c
+receipts:
+  unresolved_subitems: []
