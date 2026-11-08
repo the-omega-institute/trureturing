@@ -115,9 +115,6 @@ private theorem orthogonalize (D : E → E → E) (h : PureSuppliers D) (x y : V
   refine ⟨u, v, huv, ?_, hc.symm⟩
   simpa [pure, u, v] using h.label_rotation (pure x) (pure y) c s hcs
 
-private theorem jordan_zero_left (a : E) : jordan 0 a = 0 := by
-  ext i <;> simp [jordan, dot]
-
 private theorem jordan_zero_right (a : E) : jordan a 0 = 0 := by
   ext i <;> simp [jordan, dot]
 
@@ -182,7 +179,7 @@ private theorem orthogonal_zero_face (D : E → E → E) (h : PureSuppliers D)
     ext i <;> simp [pure, jordan, hxy]
   have hf := h.difference (pure x) (pure y) 0
   have hz : (2 : ℝ) • jordan (pure y) (D (pure x) (pure y)) = 0 := by
-    simpa [finiteDifference, hzero, hj, jordan_zero_right, jordan_zero_left] using hf
+    simpa [finiteDifference, hzero, hj, jordan_zero_right] using hf
   have hz' : jordan (pure y) (D (pure x) (pure y)) = 0 :=
     (smul_eq_zero.mp hz).resolve_left (by norm_num)
   have hv : (D (pure x) (pure y)).1 • y = 0 := by
@@ -283,7 +280,6 @@ private theorem saturation_estimate (D : E → E → E) (h : PureSuppliers D)
     have hf := h.difference (pure x) (pure y) c
     rw [finiteDifference, hp, hq, hab, hac] at hf
     simp only [add_zero, zero_add, sub_zero, jordan_zero_right, smul_zero] at hf
-    have hwperp : dot y w = 0 := cross_perp_right x y
     apply Prod.ext
     · have hs := congrArg Prod.fst hf
       rw [hk, hacj] at hs
