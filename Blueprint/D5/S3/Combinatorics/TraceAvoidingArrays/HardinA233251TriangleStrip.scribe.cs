@@ -32,7 +32,7 @@ internal sealed class HardinA233251TriangleStripDocument : IScribeDocumentDefini
                 "This integer sum fixes the first colour to zero and starts the shared scanner with both flags false."),
             Thm("certificate", "finite_certificate", "The one-row class counts", CertificateFormula(),
                 "The eight reachable boundary classes split according to the second seen flag. A fully seen boundary has 48 continuations. A boundary with only colour one seen has 20 continuations entering the fully seen class and eight staying in its class. The first row gives one fully seen array and two arrays with only colour one seen."),
-            Thm("result", "result", "Barker's generating function", ResultFormula(),
+            Resolution("result", "result", "Barker's generating function", ResultFormula(),
                 "Let U(k) and V(k) be the continuation counts with and without colour two already seen. Then U(0)=V(0)=1, U(k+1)=48U(k), and V(k+1)=8V(k)+20U(k). Decomposing the literal arrays into their first row and tail gives a(k+1)=U(k)+2V(k). Consequently a(n+3)=56a(n+2)-384a(n+1), with a(1)=3 and a(2)=104. Coefficient comparison proves the displayed identity in integer power series; every natural count is cast to an integer before forming the series."))));
 
     private static DocumentBlock Def(string id, string name, string title, Formula formula, string prose,
@@ -46,6 +46,11 @@ internal sealed class HardinA233251TriangleStripDocument : IScribeDocumentDefini
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
             Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
+    private static DocumentBlock Resolution(string id, string name, string title, Formula formula, string prose) =>
+        Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + name), H(title),
+            StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
+            Blocks(Paragraph(Text(prose))), DescribeRole.Theorem,
+            new OpenProblemResolutionClaim(ProblemSlugRef.Create("hardin233251"), ResolutionKind.Proved));
 
     private static Formula RowLegalFormula()
     {

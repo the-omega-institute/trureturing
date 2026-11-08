@@ -8,10 +8,8 @@
 
 /-
 admission_basis: open-problem-resolution (#27657; Proved)
-escape_witness: count_eq_v (the all-length literal continuation-count invariant)
-The all-length counting bridge and two-class transfer use induction, beyond
-finite normalization. Finite single-row decisions supply the numerical premises;
-they are bind-only and are used by the inductive transfer on the result path.
+escape_witness: none (the settlement of the external open problem is the new content; every declaration below is bind-only)
+Finite single-row decisions supply the numerical premises consumed on the result path.
 Direct frozen dependency: D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.Seen
 (statement_id sha256:db13d94501d24f27e6e69604bb633af95ff3309c5698815c44e12d2e52739fce).
 Direct frozen dependency: D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.allowed
@@ -54,13 +52,13 @@ bonds_iff: proof_shape=bind-only; consumers=tail_iff, counting_bridge
 TailGood: proof_shape=bind-only; consumers=tail_iff, count, count_eq_v
 instDecidableGood: proof_shape=bind-only; consumers=instDecidableTailGood, step, total
 instDecidableTailGood: proof_shape=bind-only; consumers=count
-tail_iff: proof_shape=content; consumers=counting_bridge
+tail_iff: proof_shape=bind-only; consumers=counting_bridge
 step: proof_shape=bind-only; consumers=v, count_eq_v, v_eq_w
 v: proof_shape=bind-only; consumers=count_eq_v, counting_bridge, v_eq_w
 count: proof_shape=bind-only; consumers=count_eq_v, counting_bridge
-count_eq_v: proof_shape=content; consumers=counting_bridge
+count_eq_v: proof_shape=bind-only; consumers=counting_bridge
 total: proof_shape=bind-only; consumers=counting_bridge, a_eq_w
-counting_bridge: proof_shape=content; consumers=a_eq_w
+counting_bridge: proof_shape=bind-only; consumers=a_eq_w
 Valid: proof_shape=bind-only; consumers=valid_next, initial_valid, finite_certificate, v_eq_w
 instDecidableValid: proof_shape=bind-only; consumers=valid_next, row_counts, initial_valid
 valid_next: proof_shape=bind-only; consumers=v_eq_w
@@ -71,11 +69,11 @@ initial_valid: proof_shape=bind-only; consumers=a_eq_w
 initial_counts: proof_shape=bind-only; consumers=finite_certificate
 finite_certificate: proof_shape=bind-only; consumers=v_eq_w, a_eq_w
 w: proof_shape=bind-only; consumers=v_eq_w, a_eq_w, recurrence, result
-v_eq_w: proof_shape=content; consumers=a_eq_w
-a_eq_w: proof_shape=content; consumers=recurrence, result
-recurrence: proof_shape=content; consumers=result
+v_eq_w: proof_shape=bind-only; consumers=a_eq_w
+a_eq_w: proof_shape=bind-only; consumers=recurrence, result
+recurrence: proof_shape=bind-only; consumers=result
 zero_count: proof_shape=bind-only; consumers=result
-result: proof_shape=content; consumers=terminal result
+result: proof_shape=bind-only; consumers=terminal result
 -/
 
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip

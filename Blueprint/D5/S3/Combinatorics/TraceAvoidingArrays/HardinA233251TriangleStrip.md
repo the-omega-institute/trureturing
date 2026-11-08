@@ -136,6 +136,10 @@ $$\left(1 - 8 \cdot X\right) \cdot \left(1 - 48 \cdot X\right) \cdot \operatorna
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233251TriangleStrip.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/hardin233251` (proved) by `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233251TriangleStrip.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hardin233251","declaration_gid":"D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233251TriangleStrip.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233251: six-colour complementary-pair exclusion on a three-column strip*. URL: <https://oeis.org/A233251>.
