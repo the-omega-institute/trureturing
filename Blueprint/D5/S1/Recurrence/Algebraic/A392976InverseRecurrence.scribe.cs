@@ -7,6 +7,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S1.Recurrence.Algebraic;
 internal sealed class A392976InverseRecurrenceDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S1/Recurrence/Algebraic/A392976InverseRecurrence.";
+    private static readonly LibraryNoteRef Source =
+        LibraryNoteRef.Create("D5/L/RecurrenceComposition/mathar2026a392976");
     private static Formula V(string name) => F.Id(name);
     private static Formula Nat => Seq(Mathbb, Grp(V("N")));
     private static Formula Q => Seq(Mathbb, Grp(V("Q")));
@@ -89,11 +91,12 @@ internal sealed class A392976InverseRecurrenceDocument : IScribeDocumentDefiniti
     }
 
     private static DocumentBlock Node(string name, string title, Formula formula,
-        string prose, DescribeRole role) => Describe.Lean(
+        string prose, DescribeRole role, AssessedProvenance? provenance = null,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create("a392976-" + (name == "A" ? "series" : name == "a" ? "sequence" : name.ToLowerInvariant())),
             DeclarationHandle.Create(Prefix + name), H(title),
-            StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(),
-            Blocks(Paragraph(Text(prose))), role);
+            StatementSource.FromAuthor(Disp(formula)), provenance ?? AssessedProvenance.FromRepo(Source),
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The inverse quintic satisfies the full A392976 recurrence and is D-finite.",
@@ -108,15 +111,22 @@ internal sealed class A392976InverseRecurrenceDocument : IScribeDocumentDefiniti
                 + "and subtraction in a sequence argument is "
                 + "natural subtraction. The function castQ embeds a natural number into Q. "
                 + "Substitution uses the polynomial f as its formal power series.")),
+            Paragraph(Text("The source is OEIS A392976, NAME and Mathar's FORMULA conjecture, "
+                + "revision 19, January 31, 2026, pinned oeisdata export "
+                + "4c6abcdf8b00fd262030066ebfced671457e5b43. The sequence is due to Seiichi Manyama; "
+                + "the conjecture is due to R. J. Mathar, January 29, 2026. Credit The Online Encyclopedia "
+                + "of Integer Sequences, the OEIS Foundation and the named contributors; the source text "
+                + "is CC BY-SA 4.0. The Library note retains the literal source wording and immutable locator. "
+                + "The author gives no onset: n at least five is the valid-lag interpretation, not a quotation.")),
             Node("f", "The quintic polynomial",
                 Equal(V("f"), Multiply(V("X"), Par(Subtract(Pow(Par(Subtract(Num(1), Pow(V("X"), 2))), 2), V("X"))))),
                 "The polynomial lies in Q[X], has constant coefficient zero and linear coefficient one.",
-                DescribeRole.Definition),
+                DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("U", "The zero-constant inverse",
                 Equal(V("U"), Call("substInvOfIsUnit", V("f"))),
                 "The formal inverse construction applies because the linear coefficient of f is a unit. "
                     + "Its defining uniqueness and both inverse compositions appear in the complete assertion below.",
-                DescribeRole.Definition),
+                DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("A", "The quotient series",
                 Equal(V("A"), Call("mk", Par(Seq(V("n"), Colon, Nat, Sp, Mapsto, Sp,
                     Coeff(Add(V("n"), Num(1)), V("U")))))),
@@ -135,7 +145,7 @@ internal sealed class A392976InverseRecurrenceDocument : IScribeDocumentDefiniti
                 "The assertion includes both inverse compositions, uniqueness among all zero-constant "
                     + "formal right inverses, X A=U, homogeneous D-finiteness, and all six signed terms "
                     + "of the stated recurrence at every n at least five. No exceptional index is removed.",
-                DescribeRole.Definition),
+                DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "The full A392976 identity and D-finiteness", FullClaim(),
                 "Write theta=X d/dX and let c(k,n) be the six signed polynomial coefficients displayed above. "
                     + "The operator sum over k=0,...,5 of X^k c(k,theta+k) annihilates A. Multiplication "
@@ -145,5 +155,17 @@ internal sealed class A392976InverseRecurrenceDocument : IScribeDocumentDefiniti
                     + "Coefficient extraction gives exactly the displayed identity at every n at least five. "
                     + "Expanding theta powers into ordinary derivatives gives a homogeneous operator of "
                     + "order five; its fifth-derivative polynomial has coefficient 23495312375279 at degree five, "
-                    + "so the operator is nonzero. No minimal-order assertion is made.", DescribeRole.Theorem))));
+                    + "so the operator is nonzero. No minimal-order assertion is made. "
+                    + "All 23 authored theorem proofs are bind-only under the repository's expansion and "
+                    + "normalization rule; the consumed helpers organize this proof. The admission basis is "
+                    + "open-problem-resolution for the complete externally named conjecture preregistered at "
+                    + "https://github.com/the-omega-institute/trureturing/issues/28023#issuecomment-6719559027. "
+                    + "No escape witness or new proof method is claimed. The Euler coefficient input is "
+                    + "D5/S1/Recurrence/A308815DFiniteRecurrence.euler_coeff; its sequence endpoint is not used "
+                    + "as a supplier of this recurrence. The retained Reg audit is unfinished "
+                    + "(declared_unresolved, IE-C050 ClosedTruthReadout, source.roles); "
+                    + "https://github.com/the-omega-institute/trureturing/issues/28047 records the missing "
+                    + "six-occurrence role and reconstruction binding. The compiling audit is not declared_validated.",
+                DescribeRole.Theorem, resolution: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("oeis-a392976-inverse-recurrence"), ResolutionKind.Proved)))));
 }
