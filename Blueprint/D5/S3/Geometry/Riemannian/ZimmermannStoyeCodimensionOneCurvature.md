@@ -58,6 +58,10 @@ $$\forall n \in \operatorname {Nat},\; (4 \le n) \Rightarrow ((\forall A1 \in \o
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/Riemannian/ZimmermannStoyeCodimensionOneCurvature.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/zs2403` (proved) by `D5/S3/Geometry/Riemannian/ZimmermannStoyeCodimensionOneCurvature.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"zs2403","declaration_gid":"D5/S3/Geometry/Riemannian/ZimmermannStoyeCodimensionOneCurvature.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Ralf Zimmermann and Jakob Stoye (2024). *High curvature means low-rank: On the sectional curvature of Grassmann and Stiefel manifolds and the underlying matrix trace inequalities*. DOI: [10.1137/24M1655755](https://doi.org/10.1137/24M1655755). URL: <https://arxiv.org/abs/2403.01879v3>.
