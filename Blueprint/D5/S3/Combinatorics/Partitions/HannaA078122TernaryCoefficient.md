@@ -46,6 +46,10 @@ $$(\exists M \in \operatorname{Matrix}\left(\operatorname{Nat}, \operatorname{Na
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Partitions/HannaA078122TernaryCoefficient.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/hanna-a078122` (proved) by `D5/S3/Combinatorics/Partitions/HannaA078122TernaryCoefficient.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hanna-a078122","declaration_gid":"D5/S3/Combinatorics/Partitions/HannaA078122TernaryCoefficient.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Paul D. Hanna (2002). *OEIS A078122 — infinite lower triangular cubic-shift matrix*. URL: <https://oeis.org/A078122>.

@@ -24,12 +24,13 @@ internal sealed class HannaA078122TernaryCoefficientDocument : IScribeDocumentDe
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source())),
             Node("hanna-result", "The coefficient formula for every source matrix", "result", Disp(ClaimBody()),
                 "The finite-difference recurrence for the restricted ternary partition coefficients gives a scaled convolution identity by double induction. The resulting natural-valued lower triangular matrices form an additive semigroup in their scale parameter. At parameter one, the cube shifts both indices, while the first column and diagonal are one. Strong induction on rows identifies every source matrix with this construction. The exponent identity 3^(n−k)(3^k−1)=3^n−3^(n−k) gives exactly the stated coefficient. This proves the full unbounded ternary array, including existence; other bases and row-sum interpretations are separate questions.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source())))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source()),
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("hanna-a078122"), ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string id, string title, string name, Formula formula,
-        string prose, DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        string prose, DescribeRole role, AssessedProvenance provenance, OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create(id), DeclarationHandle.Create(Prefix + name), H(title),
-            StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role);
+            StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula X(string name) => F.Id(name);
