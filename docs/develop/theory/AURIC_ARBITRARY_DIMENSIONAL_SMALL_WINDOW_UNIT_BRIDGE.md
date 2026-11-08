@@ -4654,7 +4654,7 @@ Hanche-Olsen–Størmer 4.1.14的明确JB零面结论为：投影q与正元素h�
 
 $$
 E_p=X_p,\qquad
-X_p\cong\mathbb R,\ \mathbb R\oplus\mathbb R,\ 
+X_p\cong\mathbb R,\ \mathbb R\oplus\mathbb R,\
 \text{或 }H_2(\mathbb C).
 \tag{121.1}
 $$
