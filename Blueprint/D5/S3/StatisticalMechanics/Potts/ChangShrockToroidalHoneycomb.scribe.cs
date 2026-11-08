@@ -16,15 +16,15 @@ internal sealed class ChangShrockToroidalHoneycombDocument : IScribeDocumentDefi
         Blocks(
             Definition("Coeff", Eq(N("Coeff"), Call("MvPolynomial", Call("Fin", D(2)), Z())),
                 "Coeff is the polynomial ring over the integers with two independent variables indexed by Fin 2."),
-            Definition("q", Eq(N("q"), Call("MvPolynomialX", D(0))),
-                "MvPolynomialX denotes MvPolynomial.X. The first polynomial indeterminate is the Potts component weight q."),
-            Definition("v", Eq(N("v"), Call("MvPolynomialX", D(1))),
+            Definition("q", Eq(N("q"), At(Q("MvPolynomial", "X"), D(0))),
+                "The first polynomial indeterminate is the Potts component weight q."),
+            Definition("v", Eq(N("v"), At(Q("MvPolynomial", "X"), D(1))),
                 "The second polynomial indeterminate is the Potts bond weight v."),
             Definition("Adjacent", All("L", Nat(), All("i", Sites(), All("j", Sites(),
                 IffOf(Call("Adjacent", X("i"), X("j")), Or(
                     Eq(Call("mod", Add(Call("val", X("i")), D(1)), X("L")), Call("val", X("j"))),
                     Eq(Call("mod", Add(Call("val", X("j")), D(1)), X("L")), Call("val", X("i")))))))),
-                "Sites are numbered from zero. Adjacency is symmetric and includes the cyclic seam."),
+                "Sites are numbered from zero; mod denotes Nat.mod. Adjacency is symmetric and includes the cyclic seam."),
             Definition("Native", Width(All("f", Arrow(Sites(), Sites()),
                 IffOf(Call("Native", X("L"), X("f")), NativeBody()))),
                 "The nonzero symbols are the L-1 distinct marks. A bijective word represents singleton components, with symbol zero unmarked. "
@@ -53,26 +53,26 @@ internal sealed class ChangShrockToroidalHoneycombDocument : IScribeDocumentDefi
                 "Closing the unmarked singleton multiplies by q. A site of a marked double block detaches to an unmarked singleton. "
                 + "Removing a marked singleton loses a bridge and therefore projects to zero in this block."),
             Definition("vertical", Width(Eq(Call("vertical", X("L")),
-                Call("ListProd", Call("ofFn", Fn("i", Sites(),
+                At(Q("List", "prod"), Call("ofFn", Fn("i", Sites(),
                     Add(Mul(N("v"), D(1)), Call("detach", X("i")))))))),
-                "This is the ordered longitudinal product V of equation (2.34). ListProd multiplies endomorphisms by composition, in increasing site order."),
+                "This is the ordered longitudinal product V of equation (2.34). List.prod multiplies endomorphisms by composition, in increasing site order.", true),
             Definition("horizontal", Width(All("b", N("Bool"),
                 Eq(Call("horizontal", X("L"), X("b")),
-                    Call("ListProd", Call("ofFn", Fn("k", Call("Fin", Call("div", X("L"), D(2))),
+                    At(Q("List", "prod"), Call("ofFn", Fn("k", Call("Fin", Call("div", X("L"), D(2))),
                         Add(D(1), Mul(N("v"), Call("join",
                             Call("ofNat", X("L"), Offset()),
                             Call("ofNat", X("L"), Add(Offset(), D(1)))))))))))),
                 "The Boolean b selects the second bond layer. Its offset is one when true and zero when false. "
                 + "Thus false pairs sites 0-1, 2-3 and so on; true pairs sites 1-2, 3-4 and the seam L-1 to 0. "
-                + "Fin.ofNat reduces site numbers modulo L. These are the two honeycomb H operators in equation (2.34)."),
+                + "Fin.ofNat reduces site numbers modulo L. Here div(L,2) denotes Nat.div L 2, the integer quotient floor(L/2). These are the two honeycomb H operators in equation (2.34).", true),
             Definition("transfer", Width(Eq(Call("transfer", X("L")),
                 Mul(Mul(Call("vertical", X("L")), Call("horizontal", X("L"), N("true"))),
                     Mul(Call("vertical", X("L")), Call("horizontal", X("L"), N("false")))))),
                 "Equation (2.35) defines T=(V Htwo)(V Hone). The operator acts on the full native labelled degree L-1 block, including double-block states.", true),
             Definition("alternatingVector", Width(Eq(Call("alternatingVector", X("L")),
                 Seq(Script(Sum, "s", Call("Perm", Sites())), Sp,
-                    Call("single", Call("subtype", X("s")), Call("IntCast", Call("PermSign", X("s"))))))),
-                "PermSign denotes Equiv.Perm.sign followed by coercion to the integers; IntCast embeds that integer into Coeff. The sum runs over all permutations of the L symbols. Its singleton-state coefficient is the integer sign, embedded in Coeff. "
+                    Call("single", Call("subtype", X("s")), Par(Seq(Call("val", At(Q("Equiv", "Perm", "sign"), X("s"))), Colon, Sp, N("Coeff"))))))),
+                "Equiv.Perm.sign takes values in the units of the integers; its value is cast into Coeff. The sum runs over all permutations of the L symbols. Its singleton-state coefficient is the integer sign, embedded in Coeff. "
                 + "The identity permutation contributes coefficient one, and no other permutation represents that labelled singleton diagram."),
             Describe.Lean(DescribeId.Create("result"), DeclarationHandle.Create(Prefix + "result"),
                 H("The eigenvalue at every even width"), StatementSource.FromAuthor(Disp(ResultFormula())),
@@ -85,7 +85,7 @@ internal sealed class ChangShrockToroidalHoneycombDocument : IScribeDocumentDefi
                         + "The longitudinal product therefore multiplies every such basis vector by v^(L-1)(v+q). "
                         + "Applying the two longitudinal layers and the two transverse layers gives v^(2(L-1))(v+q)^2 times w. "
                         + "The identity coefficient proves w is nonzero over the polynomial ring itself; no division by v or specialization of q is used."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem, new OpenProblemResolutionClaim(ProblemSlugRef.Create("changshrock2005honeycomb"), ResolutionKind.Proved)))));
 
     private static Formula NativeBody() => Or(
         Ex("s", Call("Perm", Sites()), Eq(X("f"), X("s"))),
@@ -94,12 +94,12 @@ internal sealed class ChangShrockToroidalHoneycombDocument : IScribeDocumentDefi
                 And(Eq(At(X("s"), X("i")), D(0)),
                     Eq(X("f"), Call("update", X("s"), X("i"), At(X("s"), X("j")))))))))));
     private static Formula JoinBody() => If(Eq(Site("i"), Site("j")), Call("single", X("s"), D(1)),
-        If(Eq(Site("i"), D(0)), Call("ket", Call("update", X("s"), X("i"), Site("j"))),
-            If(Eq(Site("j"), D(0)), Call("ket", Call("update", X("s"), X("j"), Site("i"))), D(0))));
+        If(Eq(Site("i"), D(0)), Call("ket", Call("update", Call("val", X("s")), X("i"), Site("j"))),
+            If(Eq(Site("j"), D(0)), Call("ket", Call("update", Call("val", X("s")), X("j"), Site("i"))), D(0))));
     private static Formula DetachBody() => If(Eq(Site("i"), D(0)),
         Mul(N("q"), Call("single", X("s"), D(1))),
         If(Ex("j", Sites(), And(Ne(X("j"), X("i")), Eq(Site("j"), Site("i")))),
-            Call("ket", Call("update", X("s"), X("i"), D(0))), D(0)));
+            Call("ket", Call("update", Call("val", X("s")), X("i"), D(0))), D(0)));
     private static Formula ResultFormula() => All("L", Nat(),
         Arrow(new Formula.Relation(D(2), FormulaRelationOperator.LessThanOrEqual, X("L")),
             Arrow(Call("Even", X("L")), Ex("w", Call("Space", X("L")),
@@ -107,7 +107,7 @@ internal sealed class ChangShrockToroidalHoneycombDocument : IScribeDocumentDefi
                     Mul(Power(N("v"), Mul(D(2), Sub(X("L"), D(1)))),
                         Mul(Power(Add(N("v"), N("q")), D(2)), X("w")))))))));
     private static Formula Offset() => Add(Mul(D(2), Call("val", X("k"))), If(X("b"), D(1), D(0)));
-    private static Formula Site(string name) => At(X("s"), X(name));
+    private static Formula Site(string name) => At(Call("val", X("s")), X(name));
     private static DocumentBlock Definition(string name, Formula formula, string text, bool literature = false) =>
         Describe.Lean(DescribeId.Create(name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
             H(name), StatementSource.FromAuthor(Disp(formula)),
@@ -120,6 +120,7 @@ internal sealed class ChangShrockToroidalHoneycombDocument : IScribeDocumentDefi
     private static Formula X(string name) => F.Id(name);
     private static Formula N(string name) => Seq(Operatorname, Grp(X(name)));
     private static Formula Call(string name, params Formula[] args) => At(N(name), args);
+    private static Formula Q(params string[] parts) => Seq(parts.SelectMany((x, k) => k == 0 ? new[] { N(x) } : new[] { Dot, N(x) }).ToArray());
     private static Formula At(Formula f, params Formula[] args) => new Formula.Apply(f, [.. args]);
     private static Formula Par(Formula f) => Seq(Open, f, Close);
     private static Formula Eq(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.Equal, b);

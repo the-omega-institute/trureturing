@@ -20,7 +20,7 @@ Coeff is the polynomial ring over the integers with two independent variables in
 
 **Definition 1.2 (q).**
 
-$$\operatorname{q} = \operatorname{MvPolynomialX}\left(0\right)$$
+$$\operatorname{q} = \operatorname{MvPolynomial}.\operatorname{X}\left(0\right)$$
 
 *Formalization.* `D5/S3/StatisticalMechanics/Potts/ChangShrockToroidalHoneycomb.q` (`✓ std3`).
 
@@ -30,11 +30,11 @@ $$\operatorname{q} = \operatorname{MvPolynomialX}\left(0\right)$$
 
 *Commentary.*
 
-MvPolynomialX denotes MvPolynomial.X. The first polynomial indeterminate is the Potts component weight q.
+The first polynomial indeterminate is the Potts component weight q.
 
 **Definition 1.3 (v).**
 
-$$\operatorname{v} = \operatorname{MvPolynomialX}\left(1\right)$$
+$$\operatorname{v} = \operatorname{MvPolynomial}.\operatorname{X}\left(1\right)$$
 
 *Formalization.* `D5/S3/StatisticalMechanics/Potts/ChangShrockToroidalHoneycomb.v` (`✓ std3`).
 
@@ -58,7 +58,7 @@ $$\forall (L: \mathbb{N}), (\forall (i: \operatorname{Fin}\left(L\right)), (\for
 
 *Commentary.*
 
-Sites are numbered from zero. Adjacency is symmetric and includes the cyclic seam.
+Sites are numbered from zero; mod denotes Nat.mod. Adjacency is symmetric and includes the cyclic seam.
 
 **Definition 1.5 (Native).**
 
@@ -118,7 +118,7 @@ A native connectivity word gives its unit basis vector. A word outside this degr
 
 **Definition 1.9 (join).**
 
-$$\forall (L: \mathbb{N}), ([\operatorname{NeZero}\left(L\right)] \forall (i: \operatorname{Fin}\left(L\right)), (\forall (j: \operatorname{Fin}\left(L\right)), (\operatorname{join}\left(i, j\right) = \operatorname{linearCombination}\left(\operatorname{Coeff}, ((s: \operatorname{State}\left(L\right)) \mapsto \operatorname{ite}\left(s\left(i\right) = s\left(j\right), \operatorname{single}\left(s, 1\right), \operatorname{ite}\left(s\left(i\right) = 0, \operatorname{ket}\left(\operatorname{update}\left(s, i, s\left(j\right)\right)\right), \operatorname{ite}\left(s\left(j\right) = 0, \operatorname{ket}\left(\operatorname{update}\left(s, j, s\left(i\right)\right)\right), 0\right)\right)\right))\right))))$$
+$$\forall (L: \mathbb{N}), ([\operatorname{NeZero}\left(L\right)] \forall (i: \operatorname{Fin}\left(L\right)), (\forall (j: \operatorname{Fin}\left(L\right)), (\operatorname{join}\left(i, j\right) = \operatorname{linearCombination}\left(\operatorname{Coeff}, ((s: \operatorname{State}\left(L\right)) \mapsto \operatorname{ite}\left(\operatorname{val}\left(s\right)\left(i\right) = \operatorname{val}\left(s\right)\left(j\right), \operatorname{single}\left(s, 1\right), \operatorname{ite}\left(\operatorname{val}\left(s\right)\left(i\right) = 0, \operatorname{ket}\left(\operatorname{update}\left(\operatorname{val}\left(s\right), i, \operatorname{val}\left(s\right)\left(j\right)\right)\right), \operatorname{ite}\left(\operatorname{val}\left(s\right)\left(j\right) = 0, \operatorname{ket}\left(\operatorname{update}\left(\operatorname{val}\left(s\right), j, \operatorname{val}\left(s\right)\left(i\right)\right)\right), 0\right)\right)\right))\right))))$$
 
 *Formalization.* `D5/S3/StatisticalMechanics/Potts/ChangShrockToroidalHoneycomb.join` (`✓ std3`).
 
@@ -132,7 +132,7 @@ Joining sites already in the same block changes nothing. An unmarked block takes
 
 **Definition 1.10 (detach).**
 
-$$\forall (L: \mathbb{N}), ([\operatorname{NeZero}\left(L\right)] \forall (i: \operatorname{Fin}\left(L\right)), (\operatorname{detach}\left(i\right) = \operatorname{linearCombination}\left(\operatorname{Coeff}, ((s: \operatorname{State}\left(L\right)) \mapsto \operatorname{ite}\left(s\left(i\right) = 0, (\operatorname{q}) \cdot (\operatorname{single}\left(s, 1\right)), \operatorname{ite}\left(\exists (j: \operatorname{Fin}\left(L\right)), ((j \ne i) \land (s\left(j\right) = s\left(i\right))), \operatorname{ket}\left(\operatorname{update}\left(s, i, 0\right)\right), 0\right)\right))\right)))$$
+$$\forall (L: \mathbb{N}), ([\operatorname{NeZero}\left(L\right)] \forall (i: \operatorname{Fin}\left(L\right)), (\operatorname{detach}\left(i\right) = \operatorname{linearCombination}\left(\operatorname{Coeff}, ((s: \operatorname{State}\left(L\right)) \mapsto \operatorname{ite}\left(\operatorname{val}\left(s\right)\left(i\right) = 0, (\operatorname{q}) \cdot (\operatorname{single}\left(s, 1\right)), \operatorname{ite}\left(\exists (j: \operatorname{Fin}\left(L\right)), ((j \ne i) \land (\operatorname{val}\left(s\right)\left(j\right) = \operatorname{val}\left(s\right)\left(i\right))), \operatorname{ket}\left(\operatorname{update}\left(\operatorname{val}\left(s\right), i, 0\right)\right), 0\right)\right))\right)))$$
 
 *Formalization.* `D5/S3/StatisticalMechanics/Potts/ChangShrockToroidalHoneycomb.detach` (`✓ std3`).
 
@@ -146,31 +146,27 @@ Closing the unmarked singleton multiplies by q. A site of a marked double block 
 
 **Definition 1.11 (vertical).**
 
-$$\forall (L: \mathbb{N}), ([\operatorname{NeZero}\left(L\right)] \operatorname{vertical}\left(L\right) = \operatorname{ListProd}\left(\operatorname{ofFn}\left(((i: \operatorname{Fin}\left(L\right)) \mapsto ((\operatorname{v}) \cdot (1)) + (\operatorname{detach}\left(i\right)))\right)\right))$$
+$$\forall (L: \mathbb{N}), ([\operatorname{NeZero}\left(L\right)] \operatorname{vertical}\left(L\right) = \operatorname{List}.\operatorname{prod}\left(\operatorname{ofFn}\left(((i: \operatorname{Fin}\left(L\right)) \mapsto ((\operatorname{v}) \cdot (1)) + (\operatorname{detach}\left(i\right)))\right)\right))$$
 
 *Formalization.* `D5/S3/StatisticalMechanics/Potts/ChangShrockToroidalHoneycomb.vertical` (`✓ std3`).
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Shu-Chiuan Chang and Robert Shrock (2005). *Transfer Matrices for the Partition Function of the Potts Model on Toroidal Lattice Strips*. DOI: [10.1016/j.physa.2005.08.076](https://doi.org/10.1016/j.physa.2005.08.076). URL: <https://arxiv.org/abs/cond-mat/0506274v1>.
+*Citation.* Shu-Chiuan Chang and Robert Shrock (2005). *Transfer Matrices for the Partition Function of the Potts Model on Toroidal Lattice Strips*. DOI: [10.1016/j.physa.2005.08.076](https://doi.org/10.1016/j.physa.2005.08.076). URL: <https://arxiv.org/abs/cond-mat/0506274v1>.
 
 *Commentary.*
 
-This is the ordered longitudinal product V of equation (2.34). ListProd multiplies endomorphisms by composition, in increasing site order.
+This is the ordered longitudinal product V of equation (2.34). List.prod multiplies endomorphisms by composition, in increasing site order.
 
 **Definition 1.12 (horizontal).**
 
-$$\forall (L: \mathbb{N}), ([\operatorname{NeZero}\left(L\right)] \forall (b: \operatorname{Bool}), (\operatorname{horizontal}\left(L, b\right) = \operatorname{ListProd}\left(\operatorname{ofFn}\left(((k: \operatorname{Fin}\left(\operatorname{div}\left(L, 2\right)\right)) \mapsto (1) + ((\operatorname{v}) \cdot (\operatorname{join}\left(\operatorname{ofNat}\left(L, ((2) \cdot (\operatorname{val}\left(k\right))) + (\operatorname{ite}\left(b, 1, 0\right))\right), \operatorname{ofNat}\left(L, (((2) \cdot (\operatorname{val}\left(k\right))) + (\operatorname{ite}\left(b, 1, 0\right))) + (1)\right)\right))))\right)\right)))$$
+$$\forall (L: \mathbb{N}), ([\operatorname{NeZero}\left(L\right)] \forall (b: \operatorname{Bool}), (\operatorname{horizontal}\left(L, b\right) = \operatorname{List}.\operatorname{prod}\left(\operatorname{ofFn}\left(((k: \operatorname{Fin}\left(\operatorname{div}\left(L, 2\right)\right)) \mapsto (1) + ((\operatorname{v}) \cdot (\operatorname{join}\left(\operatorname{ofNat}\left(L, ((2) \cdot (\operatorname{val}\left(k\right))) + (\operatorname{ite}\left(b, 1, 0\right))\right), \operatorname{ofNat}\left(L, (((2) \cdot (\operatorname{val}\left(k\right))) + (\operatorname{ite}\left(b, 1, 0\right))) + (1)\right)\right))))\right)\right)))$$
 
 *Formalization.* `D5/S3/StatisticalMechanics/Potts/ChangShrockToroidalHoneycomb.horizontal` (`✓ std3`).
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Shu-Chiuan Chang and Robert Shrock (2005). *Transfer Matrices for the Partition Function of the Potts Model on Toroidal Lattice Strips*. DOI: [10.1016/j.physa.2005.08.076](https://doi.org/10.1016/j.physa.2005.08.076). URL: <https://arxiv.org/abs/cond-mat/0506274v1>.
+*Citation.* Shu-Chiuan Chang and Robert Shrock (2005). *Transfer Matrices for the Partition Function of the Potts Model on Toroidal Lattice Strips*. DOI: [10.1016/j.physa.2005.08.076](https://doi.org/10.1016/j.physa.2005.08.076). URL: <https://arxiv.org/abs/cond-mat/0506274v1>.
 
 *Commentary.*
 
-The Boolean b selects the second bond layer. Its offset is one when true and zero when false. Thus false pairs sites 0-1, 2-3 and so on; true pairs sites 1-2, 3-4 and the seam L-1 to 0. Fin.ofNat reduces site numbers modulo L. These are the two honeycomb H operators in equation (2.34).
+The Boolean b selects the second bond layer. Its offset is one when true and zero when false. Thus false pairs sites 0-1, 2-3 and so on; true pairs sites 1-2, 3-4 and the seam L-1 to 0. Fin.ofNat reduces site numbers modulo L. Here div(L,2) denotes Nat.div L 2, the integer quotient floor(L/2). These are the two honeycomb H operators in equation (2.34).
 
 **Definition 1.13 (transfer).**
 
@@ -186,7 +182,7 @@ Equation (2.35) defines T=(V Htwo)(V Hone). The operator acts on the full native
 
 **Definition 1.14 (alternatingVector).**
 
-$$\forall (L: \mathbb{N}), ([\operatorname{NeZero}\left(L\right)] \operatorname{alternatingVector}\left(L\right) = \sum_{s \in \operatorname{Perm}\left(\operatorname{Fin}\left(L\right)\right)} \operatorname{single}\left(\operatorname{subtype}\left(s\right), \operatorname{IntCast}\left(\operatorname{PermSign}\left(s\right)\right)\right))$$
+$$\forall (L: \mathbb{N}), ([\operatorname{NeZero}\left(L\right)] \operatorname{alternatingVector}\left(L\right) = \sum_{s \in \operatorname{Perm}\left(\operatorname{Fin}\left(L\right)\right)} \operatorname{single}\left(\operatorname{subtype}\left(s\right), (\operatorname{val}\left(\operatorname{Equiv}.\operatorname{Perm}.\operatorname{sign}\left(s\right)\right): \operatorname{Coeff})\right))$$
 
 *Formalization.* `D5/S3/StatisticalMechanics/Potts/ChangShrockToroidalHoneycomb.alternatingVector` (`✓ std3`).
 
@@ -196,13 +192,17 @@ $$\forall (L: \mathbb{N}), ([\operatorname{NeZero}\left(L\right)] \operatorname{
 
 *Commentary.*
 
-PermSign denotes Equiv.Perm.sign followed by coercion to the integers; IntCast embeds that integer into Coeff. The sum runs over all permutations of the L symbols. Its singleton-state coefficient is the integer sign, embedded in Coeff. The identity permutation contributes coefficient one, and no other permutation represents that labelled singleton diagram.
+Equiv.Perm.sign takes values in the units of the integers; its value is cast into Coeff. The sum runs over all permutations of the L symbols. Its singleton-state coefficient is the integer sign, embedded in Coeff. The identity permutation contributes coefficient one, and no other permutation represents that labelled singleton diagram.
 
 **Theorem 1.15 (The eigenvalue at every even width).**
 
 $$\forall (L: \mathbb{N}), ((2 \le L) \to ((\operatorname{Even}\left(L\right)) \to (\exists (w: \operatorname{Space}\left(L\right)), ((w \ne 0) \land (\operatorname{transfer}\left(L\right)\left(w\right) = ((\operatorname{v})^{((2) \cdot ((L) - (1)))}) \cdot ((((\operatorname{v}) + (\operatorname{q}))^{(2)}) \cdot (w)))))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/Potts/ChangShrockToroidalHoneycomb.result` (`✓ std3`). ∎
+
+*Resolves.* `Problems/changshrock2005honeycomb` (proved) by `D5/S3/StatisticalMechanics/Potts/ChangShrockToroidalHoneycomb.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"changshrock2005honeycomb","declaration_gid":"D5/S3/StatisticalMechanics/Potts/ChangShrockToroidalHoneycomb.result","resolution_kind":"proved"} -->
 
 *Source.* Repository-derived.
 

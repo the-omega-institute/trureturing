@@ -14,6 +14,8 @@ import Mathlib.Tactic.Ring
 
 /-!
 admission_basis: open-problem-resolution (#28063; Proved)
+Registration audit (CLAUDE.md §3.9): result is declared_unresolved (IE-C050);
+the unfinished audit is recorded in issue #28118.
 escape_witness: none; admission uses the external open-problem resolution.
 direct_frozen_dependencies: none
 Coeff: proof_shape=definition; consumers=q,v,Space
