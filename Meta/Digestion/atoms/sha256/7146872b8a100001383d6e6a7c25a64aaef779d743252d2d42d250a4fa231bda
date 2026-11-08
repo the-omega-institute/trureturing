@@ -1,0 +1,10 @@
+**推论 112.2（辅助平方与反对易式）。** 写 $B_xy=B(x,y)$、$(x\otimes y)z=\langle y,z\rangle x$，则
+
+$$
+B_x^2=-\|x\|^2I+x\otimes x,\qquad
+B_xB_y+B_yB_x=x\otimes y+y\otimes x-2\langle x,y\rangle I.
+\tag{112.1}
+$$
+
+证明。对 $y\perp x$，$B_x$ 是斜的 $\|x\|$ 倍等距映射，内积配对给平方为 $-\|x\|^2I$；x方向为零，得到第一式。利用已支付的首槽线性将x替换为x+y，再减去两个平方恒等，得到第二式。∎
+
