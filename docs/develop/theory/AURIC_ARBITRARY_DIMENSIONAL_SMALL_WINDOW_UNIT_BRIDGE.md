@@ -3922,6 +3922,362 @@ $\Phi_\varepsilon(su+x)=sI-\varepsilon x\cdot\sigma$ 及两种经典支，得到
 
 ## 追加锚（本行以下为增补区）
 
+## 99. 有限谱原域中的同一二标签平方配平候选
+
+**定义 99.1（原合同、范围与目标）。** 沿用[静态重构卷22.1–22.3](AURIC_C128_ARBITRARY_DIMENSIONAL_STATIC_QUANTUM_RECONSTRUCTION.md)的同一无R背景：实Archimedean序单位空间 $(E,C,u,N)$ 可无限维、不完备；原正实评价族准确决定C并分离E，所有质量 $m_\alpha=\alpha(u)\ge0$ 原样保留。原 $S,D:E^2\to E$ 起初只是总映射。A1要求全部原二标签G为Hermitian PSD，包含全部实缩放、平移、零与重复标签；A2要求相加三表 $(a+b,a,b)$ 的实部在整个 $\mathbb R^3$ 上PSD，并使 $v^*Gv=0,v=(1,-1,-1)$，保留相应排列；A3为 $S(u,u)=u$ 及固定有理 $0<\theta\le1$ 下 $0\le e\le\theta u\Rightarrow S(e,e)\le e$。这里 $G_{\alpha,ij}=\alpha S(a_i,a_j)-\mathrm i\alpha D(a_i,a_j)$。不输入完整复三表正性P3。
+
+只复用该卷无R接口已经恢复的同一Jordan乘法 $a\circ b=S(a,b)$、准确原锥与范数，以及含单位JB完成X；E为X中的稠密Jordan子代数。未知D不先延拓到X，不预付可加、齐次、连续、单位行或平移中性。完整候选仍为 $\mathsf H_{\rm orig}+\mathsf{PB}$：
+
+$$
+\begin{aligned}
+Q_\alpha(b,c)&=\alpha(b^2+c^2+2D(b,c)),\\
+r_t&=b+tD(a,b)-t(a\circ c),\\
+s_t&=c+t(a\circ b)+tD(a,c),\\
+\mathsf{PB}:\quad Q_\alpha(r_1,s_1)&=Q_\alpha(r_{-1},s_{-1})
+\quad(a,b,c\in E,\ \alpha\in\mathcal P).
+\end{aligned}
+\tag{99.1}
+$$
+
+目标仍是同一个旧D的原R：
+
+$$
+(a\circ b)\circ c-D(D(a,b),c)=a\circ(b\circ c)-D(a,D(b,c)).
+\tag{99.2}
+$$
+
+99–101的引理适用于一般原域。102–103另明确限定：**每个原元素分别在X中具有有限谱**，不要求统一谱点数上界、有限维或完备。104–105仅讨论完整 $M_n(\mathbb C)_{\rm sa}$。这些范围条件不加入一般候选，也不计成一般总假设减少；93.1的完整量子比特分类保持原范围。
+
+**引理 99.2（数学正读取、支撑零面与有限差分）。** 任意X上数学正泛函β可以读取同一个原二表：
+
+$$
+|\beta D(a,b)|^2\le\beta(a^2)\beta(b^2)-\beta(a\circ b)^2.
+\tag{99.3}
+$$
+
+另有 $D(a,b)=-D(b,a)$、$D(a,ta)=D(a,0)=0$。若记 $v=D(a,b)-a\circ c,w=a\circ b+D(a,c)$，PB准确等价于
+
+$$
+D(b+v,c+w)-D(b-v,c-w)=-2b\circ v-2c\circ w.
+\tag{99.4}
+$$
+
+固定 $h=D(\mu u,b)\ne0$，取归一范数支撑态β，使 $\beta(h)=Z,|Z|=N(h)>0$，则 $\beta(b\circ h)=\beta(b)=0$。
+
+证明。94.1中二次型元素 $W_z\in C$ 的论证支付99.3，并不增加实际准备评价。Hermitian性、原分离性和零行列式给反对称及比例零值。展开已知Jordan平方给99.4，没有展开D的相加输入。支撑态满足 $\beta((h-Zu)^2)=0$，故 $\beta((h-Zu)\circ x)=0$ 对所有x成立。PB取 $a=\mu u,c=ku,k=\mu Z/(1+\mu^2)$；比例零值支付 $D(a,c)=0$。两外层有
+
+$$
+s_+-\mu r_+=s_-+\mu r_-=-\mu(h-Zu).
+$$
+
+在β的实Jordan半内积商中两对均成比例，99.3使两个外层D的β值归零。99.4右端是 $-2b\circ h$，遂有 $0=\beta(b\circ h)=Z\beta(b)$。∎
+
+**推论 99.3（半定正交输入）。** 在一般原域，若 $a\circ b=0$ 且a或b属于 $C\cup(-C)$，则 $D(a,b)=0$。
+
+证明。令 $d=D(a,b)$。99.4取c为零，并交换a,b，给 $a\circ d=b\circ d=0$。若d非零，取其范数支撑态，$\beta(d)=Z$，则 $0=\beta(a\circ d)=Z\beta(a)$。当a半定，$0\le a^2\le N(a)(\pm a)$ 使 $\beta(a^2)=0$，99.3与 $\beta(d)=Z\ne0$ 矛盾。b半定时交换两输入。这里只使用一个固定输出的支撑零面。∎
+
+## 100. 一般原域中所有二谱标签的单位行
+
+**定理 100.1（二次元素的全单位行）。** 若原b满足 $b^2\in\operatorname{span}_{\mathbb R}\{u,b\}$，则对全部实μ有 $D(\mu u,b)=0$。本条不要求原域逐元素有限谱，也不要求未知单位输出有限谱。
+
+证明。标量b由比例零值处理。其余情形用单生成JB演算完成平方，写 $b=tu+rv,v^2=u,r\ne0$；平方标量为零时JB范数使元素本身为零。令 $p=(u+v)/2,q=(u-v)/2$，这是两个原互补投影。已知Jordan二次表示 $U_p=2L_p^2-L_p,L_px=p\circ x$ 保持正锥。固定 $h=D(\mu u,b)$，以所有 $\beta\circ U_p$ 读取原二表：$U_pu=p,U_pb=(t+r)p,U_pb^2=(t+r)^2p$，实Gram行列式为零，所以 $U_ph=0$；同理 $U_qh=0$。准确算子等式
+
+$$
+U_p-U_q=2L_p-I=L_v
+$$
+
+给 $v\circ h=0,b\circ h=th$。若 $t\ne0,h\ne0$，99.2的支撑态给 $0=\beta(b\circ h)=tZ$，矛盾。
+
+只余 $b^2=\rho^2u,\rho>0$。取非标量 $h_0^2=\rho_0^2u$ 及非零τ，在PB取 $(a,b_0,c_0)=(h_0,\tau h_0,\tau h_0)$。两个内层D由比例零值归零，正负外层为 $(A,B)$、$(B,A)$，其中 $A=\tau(h_0-h_0^2),B=\tau(h_0+h_0^2)$。99.4右端为零，反对称使 $D(A,B)=0$。置 $\eta=\sqrt2-1$，
+
+$$
+x=\frac{A+\eta B}{1+\eta^2},\qquad y=\frac{B-\eta A}{1+\eta^2}.
+$$
+
+两者在 $\operatorname{span}\{u,h_0\}$ 中的谱中点分别是 $\tau(\eta-1)\rho_0^2/(1+\eta^2)$、$\tau(1+\eta)\rho_0^2/(1+\eta^2)$，均非零。已证部分故给 $D(\eta u,x)=D(\eta u,y)=0$。PB取 $(\eta u,x,y)$，其正外层为 $(A,B)$，负外层为 $((A+B)/\sqrt2,(B-A)/\sqrt2)$，右端仍为零，因此
+
+$$
+D(\sqrt2\tau h_0,\sqrt2\tau h_0^2)=0.
+$$
+
+给定上述b与 $\mu\ne0$，选 $h_0=\mu b/\rho^2,\tau=\rho^2/(\sqrt2\mu)$，末式就是 $D(b,\mu u)=0$。μ或b为零由P2处理。这里尚未预用全域标签旋转。∎
+
+## 101. 对整个双角重新配平，消去谱间遗漏
+
+**定理 101.1（有限谱单位输出的反交换）。** 在一般原域，固定 $h=D(\mu u,b)$。若h在X中具有有限谱，则 $b\circ h=0$；b本身可有无限谱。
+
+证明。写 $h=\sum_{j=1}^m\rho_jp_j,\sum_jp_j=u$，其中谱值互异、投影两两正交。每个 $p_j$ 是h的有限实插值多项式，故属于原E。固定 $i\ne j$，置
+
+$$
+e=p_i+p_j,\qquad c=\frac\mu{1+\mu^2}\bigl(\rho_ip_i+\rho_j(u-p_i)\bigr).
+\tag{101.1}
+$$
+
+c至多二谱，100.1支付 $D(\mu u,c)=0$。PB取 $(\mu u,b,c)$，两外层为 $r_\pm=b\pm h\mp\mu c,s_\pm=c\pm\mu b$，且
+
+$$
+s_+-\mu r_+=s_-+\mu r_-=(1+\mu^2)c-\mu h=:z.
+\tag{101.2}
+$$
+
+z在整个e角上为零，且z是h的谱多项式，所以 $U_e(z^2)=0$。任意正β给正泛函 $\beta_e=\beta\circ U_e$；Jordan Cauchy–Schwarz使101.2两外层的实Gram行列式均为零。99.3使两外层D的 $\beta_e$ 值均为零。99.4右端准确为 $-2b\circ h$，所以
+
+$$
+U_{p_i+p_j}(b\circ h)=0.
+\tag{101.3}
+$$
+
+对单个 $p_i$ 改取标量 $c=\mu\rho_i u/(1+\mu^2)$，同理得 $U_{p_i}(b\circ h)=0$。有限正交幂等元的Peirce分解中，$U_{p_i}$ 读取对角分量，$U_{p_i+p_j}-U_{p_i}-U_{p_j}$ 读取整个 $(i,j)$ 交叉分量；全部这些分量直和为整个X。于是 $b\circ h=0$，也覆盖仅一个谱点的情况。∎
+
+本条对每个双角重新构造同一原域内的PB，使该整个双角中两外层都落到P2零面。它没有从两份本征向量读数极化出未曾取得的交叉项；94.3的 $b=\sigma_x,h=\sigma_z$ 仍说明反交换本身不能推出h为零。
+
+## 102. 逐元素有限谱原域的全部单位行
+
+**定理 102.1（全部有限矩阵及更大原域的单位行）。** 在99.1背景中，若每个原 $x\in E$ 在X中分别具有有限谱，则
+
+$$
+\boxed{D(\mu u,b)=0\quad(\mu\in\mathbb R,\ b\in E).}
+\tag{102.1}
+$$
+
+证明。以下所有辅助标签都是原有限谱元素的有限插值多项式及实线性组合。
+
+第一步，称 $b=\sum_i\lambda_ip_i$ 满足谱和条件，若 $\lambda_i+\lambda_j\ne0$ 对全部i,j成立，包含 $i=j$。当前范围保证 $h=D(\mu u,b)$ 有限谱；101.1给 $b\circ h=0$。在b的有限Peirce分解上，$L_b$ 在单角与双角的系数分别为 $\lambda_i$、$(\lambda_i+\lambda_j)/2$，均非零，所以h为零。对任意固定b，仿射标签 $b+tu$ 不满足此条件的t只有有限多个。
+
+第二步，在每个固定交换平面 $V_b=\operatorname{span}\{u,b\}$ 内先证明全部标签旋转。约定
+
+$$
+R_\phi(x,y)=(\cos\phi\,x-\sin\phi\,y,\ \sin\phi\,x+\cos\phi\,y).
+\tag{102.2}
+$$
+
+若x,y相关，比例P2给所有旋转输出为零。否则它们张成 $V_b$。对b的每对谱值，旋转后任一分量的谱和是不恒为零的正弦余弦组合：若恒零，两个独立坐标都会被同一个非零线性泛函 $(s,t)\mapsto2s+(\lambda_i+\lambda_j)t$ 消去，矛盾。因此仅有限个角使任一分量不满足谱和条件。存在非空开区间I，两分量均满足该条件。
+
+记 $f(\theta)=D(R_\theta(x,y))$。固定 $\theta\in I$ 和 $\cos\phi\ne0$，PB取 $a=(\tan\phi)u,(b_0,c_0)=\cos\phi R_\theta(x,y)$。第一步支付两个内层单位输出为零，99.4给
+
+$$
+f(\theta+\phi)=f(\theta-\phi).
+\tag{102.3}
+$$
+
+对任意足够小的h，$I\cap(I-h)$ 含开区间。给定任意ξ，从该区间选θ，避开两次反射的离散半转异常值；先关于θ再关于 $\theta+h$ 反射，得 $f(\xi)=f(\xi+2h)$。任意角增量分成有限个这样的小增量，f即恒定。没有用D连续性。
+
+第三步，固定 $\mu\ne0,b=\sum_k\lambda_kp_k,h=D(\mu u,b)$。101.1给 $b\circ h=0$，P2以全部单角正泛函读取，又给 $U_{p_k}h=0$。故h唯一可能剩下的是 $\lambda_i+\lambda_j=0,i\ne j$ 的交叉分量。谱值互异，所以此处写 $\lambda_i=\lambda,\lambda_j=-\lambda$ 时 $\lambda\ne0$。
+
+对每个充分小的 $\tau>0$，构造
+
+$$
+b=\tau(a_\tau^2+u)+\mu a_\tau.
+\tag{102.4}
+$$
+
+标量方程 $\tau(x^2+1)+\mu x=\lambda_k$ 有两条实根
+
+$$
+\begin{aligned}
+x_k^s(\tau)&=\frac{-\mu+\operatorname{sgn}(\mu)\sqrt{\mu^2+4\tau(\lambda_k-\tau)}}{2\tau},\\
+x_k^\ell(\tau)&=-\frac\mu\tau-x_k^s(\tau),\qquad x_k^s(\tau)\longrightarrow\frac{\lambda_k}{\mu}.
+\end{aligned}
+\tag{102.5}
+$$
+
+在目标i块选小根、j块选大根，其他谱块固定任择一支，令 $a_\tau=\sum_kx_k(\tau)p_k$。这就是原b的有限插值多项式。置 $k_\tau=\mu\tau/(1+\tau^2)$。可以选任意小的正τ，使 $a_\tau$ 与 $a_\tau+k_\tau u$ 同时满足谱和条件，理由如下。
+
+含大根的根和发散；两个小根对应非相反谱值时，根和趋非零值。若两个小根对应 $\pm\nu$ 而原根和为零，相加两份标量方程给 $0=2\tau(1+x^2)$，矛盾。对移位后的相反根，若根和为零，写 $x_r=-k_\tau+v,x_s=-k_\tau-v$；相加、相减原方程给
+
+$$
+v^2=\frac{\mu^2}{(1+\tau^2)^2}-1,\qquad
+\nu=v\mu\frac{1-\tau^2}{1+\tau^2}.
+$$
+
+于是异常τ必须满足
+
+$$
+\nu^2(1+\tau^2)^4=
+\mu^2(1-\tau^2)^2\bigl(\mu^2-(1+\tau^2)^2\bigr).
+\tag{102.6}
+$$
+
+移项多项式的 $\tau^8$ 系数为 $\nu^2+\mu^2>0$，所以只有有限个实根。包括重复指标和零谱值在内，谱点对有限，避开这些有限异常即可。
+
+第一步因此给 $D(a_\tau,\tau u)=0$。第二步在 $\operatorname{span}\{u,a_\tau\}$ 内取 $\cos\phi=\tau/\sqrt{1+\tau^2},\sin\phi=1/\sqrt{1+\tau^2}$，把 $(a_\tau,\mu u+\tau a_\tau)$ 旋转成
+
+$$
+\left(-\frac\mu{\sqrt{1+\tau^2}}u,\ \sqrt{1+\tau^2}(a_\tau+k_\tau u)\right).
+$$
+
+第一步又给 $D(a_\tau,\mu u+\tau a_\tau)=0$。现在PB取 $a=a_\tau,b_0=\mu u+\tau a_\tau,c_0=\tau u$。两内层D确已归零，正外层准确为 $(\mu u,b)$，负外层为 $(\mu u+2\tau a_\tau,2\tau u-b)$；99.4右端为零。因此同一固定输出满足
+
+$$
+h=D(\mu u+2\tau a_\tau,\ 2\tau u-b).
+\tag{102.7}
+$$
+
+令 $e=p_i+p_j,v=p_i-p_j$。这些显式标签在整个e角中有
+
+$$
+U_e(\mu u+2\tau a_\tau)\longrightarrow\mu v,\qquad
+U_e(2\tau u-b)\longrightarrow-\lambda v.
+\tag{102.8}
+$$
+
+标签与其平方均在b的同一有限交换代数中，故对每个数学正 $\beta_e=\beta\circ U_e$，102.7的P2右端实Gram行列式趋零。左端始终为固定数 $|\beta_e(h)|^2$，所以 $\beta_e(h)=0$；等价地，若其非零，选一个足够小且避开有限异常集的有限τ，已得到直接矛盾。全部β分离给 $U_{p_i+p_j}h=0$。全部可能的交叉块均被消去，有限Peirce分解给h为零。μ为零由P2处理。∎
+
+102.8只对标量根与已知Jordan表达式取极限，没有对未知D取极限；102.7中的旧输出固定。PB的时间参数始终只有 $t=\pm1$。τ是辅助原标签系数。若一般原域仅当前b有限谱，不能直接用102.1：其证明还要求h及第一、二步中辅助单位输出有限谱。
+
+## 103. 标签旋转与平方射线成为结论
+
+**推论 103.1（全部标签的SO(2)不变性）。** 在102.1的逐元素有限谱原域中，对所有b,c及实φ，$D(R_\phi(b,c))=D(b,c)$。旧D每槽为奇，并有
+
+$$
+D(su+xb,tu+yb)=0,\qquad D(b,\lambda b^2)=0
+\quad(s,t,x,y,\lambda\in\mathbb R,\ b\in E).
+\tag{103.1}
+$$
+
+证明。PB取 $a=\mu u$，102.1使全部内层单位输出归零，所以 $D(b-\mu c,c+\mu b)=D(b+\mu c,c-\mu b)$。反解左侧标签，得到角度 $-2\arctan\mu$ 的全部非半转旋转；半转由两次四分之一转给出。四分之一转与反对称性给每槽奇性。一次标签旋转消去上述仿射对中一个b系数，再用102.1，给第一个零值。最后PB取 $a=\lambda b,b_0=c_0=b/\sqrt2$，比例零值及反对称性给
+
+$$
+D\left((b-\lambda b^2)/\sqrt2,(b+\lambda b^2)/\sqrt2\right)=0.
+$$
+
+这是 $(b,\lambda b^2)$ 的 $\pi/4$ 标签旋转，故第二个零值成立。∎
+
+全单位行不等于 $D(a+\lambda u,b)=D(a,b)$。103.1只消去同一仿射交换平面上的D；任意不同原轴间的单位平移中性及可加性仍需跨输入证明。
+
+## 104. 秩二反交换输入的任意单侧补角
+
+**定理 104.1（整输出及取向的单侧局部化）。** 设原域为完整 $E=M_n(\mathbb C)_{\rm sa}$，p为秩二原投影，$q=I-p$，$T=qTq=T^*$。94.2和93.1在p角给固定Pauli坐标及固定 $\varepsilon_p\in\{1,-1\}$。若 $x\perp y$，则
+
+$$
+\boxed{D(\Phi_p(0,x),\Phi_p(0,y)+T)=\Phi_p(0,\varepsilon_p x\times y).}
+\tag{104.1}
+$$
+
+证明。写 $a=\Phi_p(0,x),b=\Phi_p(0,y)+T,d=D(a,b)$。$a\circ b=0$，99.4取c为零并交换a,b，给 $a\circ d=b\circ d=0$。若 $x\ne0$，a在p上可逆，第一等式使pdq与qdp为零；P2在q支撑向量态上给qdq为零，所以 $d=pdp$。写 $d=\Phi_p(\delta,z)$，两等式给 $\delta=0,z\perp x,y$。x,y均非零时，p支撑P2给 $d=\Phi_p(0,\kappa x\times y),|\kappa|\le1$。y为零时，p支撑P2也给pdp为零；x为零直接用零输入。
+
+先固定该原对、T及κ。取适配正向坐标 $x=Xe_1,y=Ye_2,X,Y>0$。对固定 $\eta>0$ 及任意有限 $\lambda>0$，置
+
+$$
+r=\sqrt{\lambda^2X^2+\eta^2},\qquad c=\Phi_p(r,\lambda Xe_1).
+$$
+
+角分类支付 $D(a,c)=0$。PB外层为
+
+$$
+r_\pm=\Phi_p(\mp\lambda X^2,Ye_2\pm\kappa XY e_3\mp rXe_1)+T,
+\qquad s_\pm=c.
+$$
+
+99.4右端为 $2\lambda X^2\Phi_p(0,Ye_2)$。取p支撑纯态方向 $n=(-\lambda X/r,\eta/r,0)$，用 $L_n(s,v)=v+sn$ 计算二表实Gram：$L_nc=\eta e_2$，两外层行列式平方根同为 $X\eta\sqrt{\eta^4/r^2+\kappa^2Y^2}$。T在这些数学评价中消失。因此
+
+$$
+(1-\kappa^2)\lambda^2X^2Y^2\le\eta^4+\kappa^2Y^2\eta^2.
+\tag{104.2}
+$$
+
+若 $|\kappa|<1$，选足够大的有限λ即矛盾，故 $|\kappa|=1$。
+
+须继续比较取向，不能从幅度饱和直接借用角内符号。记 $\varepsilon=\varepsilon_p$，假设 $\kappa=-\varepsilon$。先令 $X\ne1$，在PB另取 $c=\Phi_p(0,Ae_2+Be_3)$，其中 $A\ne0,B=(1-X^2)A/(2\varepsilon X)$。两内层Jordan积及 $b\circ d,c\circ D(a,c)$ 都为零，所以99.4要求两个外层D相等。其p内向量为
+
+$$
+\begin{aligned}
+R_\pm&=Y(e_2\mp\varepsilon Xe_3),\\
+S_\pm&=(A\mp\varepsilon XB)e_2+(B\pm\varepsilon XA)e_3.
+\end{aligned}
+\tag{104.3}
+$$
+
+$r_\pm$ 带同一T，$s_\pm$ 完全支持在p。直接计算给
+
+$$
+R_+\cdot S_+=0,\quad R_-\cdot S_-=2Y(1-X^2)A\ne0,\quad
+|R_\pm|\,|S_\pm|=L:=Y(1+X^2)\sqrt{A^2+B^2}.
+$$
+
+正外层由已证支撑与幅度饱和有整输出范数L，必要时交换输入。负外层只使用其实际输出p压缩的P2：若该压缩为 $\Phi_p(\delta,z)$，则
+
+$$
+|\delta|+|z|\le|R_-\times S_-|
+=\sqrt{L^2-[2Y(1-X^2)A]^2}<L.
+$$
+
+这里两个p内标签无标量，故二表在全部p纯态的右端为固定 $|R_-\times S_-|$；压缩范数正是 $|\delta|+|z|$。与两整输出相等矛盾。没有假设负外层整输出支持在p。
+
+若 $X=1$，取 $c=\Phi_p(0,kYe_2)$，$k>0,k\sqrt2Y\ne1$。两外层为
+
+$$
+\begin{aligned}
+r_+&=\Phi_p(0,Y(e_2-\varepsilon e_3))+T,&s_+&=\Phi_p(0,kY(e_2+\varepsilon e_3)),\\
+r_-&=\Phi_p(0,Y(e_2+\varepsilon e_3))+T,&s_-&=\Phi_p(0,kY(e_2-\varepsilon e_3)).
+\end{aligned}
+$$
+
+两对均正交。交换输入后，其纯p标签长度 $k\sqrt2Y\ne1$，刚证的取向比较适用。于是两输出分别为 $\Phi_p(0,2kY^2e_1)$、$\Phi_p(0,-2kY^2e_1)$，但99.4又要求二者相等，矛盾。故所有情况 $\kappa=\varepsilon_p$。∎
+
+## 105. 同一补角的双侧输入与主轴条件
+
+**定理 105.1（有条件的双侧局部化）。** 在104.1的完整矩阵原域中，令
+
+$$
+a=\Phi_p(0,x)+\alpha T,\quad b=\Phi_p(0,y)+\beta T,\quad
+\alpha\beta(|x|^2-|y|^2)+(\beta^2-\alpha^2)x\cdot y=0.
+\tag{105.1}
+$$
+
+则整个旧输出 $D(a,b)=\Phi_p(0,\varepsilon_p x\times y)$。
+
+证明。$\alpha=\beta=0$ 直接用角分类。否则置 $r=\sqrt{\alpha^2+\beta^2}$，$X=(\beta x-\alpha y)/r,Y=(\alpha x+\beta y)/r$。103.1的一次SO(2)标签旋转给
+
+$$
+D(a,b)=D(\Phi_p(0,X),\Phi_p(0,Y)+rT).
+$$
+
+条件105.1恰是 $X\cdot Y=0$，且 $X\times Y=x\times y$。104.1支付结论。∎
+
+特别 $\alpha=\beta=1,|x|=|y|$ 时允许非正交输入与非零共同补角。在 $M_3$ 中取 $a=\sigma_1+tq,b=(\sigma_1+\sigma_2)/\sqrt2+tq,t\ne0$，便有 $D(a,b)=\varepsilon_p\sigma_3/\sqrt2$。几何上，105.1要求补角系数向量 $(\alpha,\beta)$ 是角内二标签实Gram矩阵的一个特征方向；同一次旋转才可同时消去一个补角并正交化角内向量。任意双侧补角、角内另带任意标量，以及不同角的取向一致性，尚未由本条覆盖。
+
+## 106. 更大结构、量子对应与可加性的真实缺口
+
+**定义 106.1（有限谱几何与准确简洁性）。** 单位输出的有限谱把空间分成有限个正角；每个双角各自的一份PB给整个交叉分量上的约束，有限Peirce分解将它们重新拼回同一个元素。对有限谱原输入，反交换只容许输出连在 $+\lambda,-\lambda$ 之间。102.5的两条根支在目标双角上分别选相反方向，102.7始终搬运同一旧输出；外层标签可以任意接近同一条实直线，P2允许的面积遂把固定残差压到零。全过程不先定义一张新的理想D。
+
+更大结构首先是已给JB结构的完整有限Peirce分解，不是只看各本征态的散点。104.1复用的每个实际秩二角仍有93.1的三轴：正交单位轴a,b及 $c=D(a,b)$ 满足 $a^2=b^2=c^2=p$、$D(a,c)=-b,D(b,c)=a$。这是有限三维自旋提升；不是物理三空间或所有角全局定向的证明。
+
+候选仍只给同一份PB。逐元素有限谱范围内，单位行、全部标签SO(2)和平方射线零值现在都是结论；无需为这些中间步骤另立公理。一般域P3尚未删掉，也没有证明PB最小或总来源成本下降。与完整量子比特分类相比，这里扩张已证中间结论的范围，不能把未闭合的完整矩阵分类说成更简洁的完整重构。
+
+**命题 106.2（明确足以回接的迹桥）。** 在完整有限矩阵原域中，若另能从原条件证明
+
+$$
+\operatorname{Tr}(D(a,b)c)=-\operatorname{Tr}(bD(a,c))\quad(a,b,c\in E),
+\tag{106.1}
+$$
+
+则同一旧D分别实线性；随后P2给全部有限复Gram正性，并可接静态卷23.1得到原R。这里106.1本身仍未从PB证明。
+
+证明。对任意 $r,s\in\mathbb R$，分别使用106.1于 $rb_1+sb_2,b_1,b_2$，迹配对使 $D(a,rb_1+sb_2)-rD(a,b_1)-sD(a,b_2)$ 与全部c正交，所以为零。反对称支付第一槽实线性。此后才可把有限复系数合成为两个实标签，用P2恢复整个有限Gram的二次型正性；PB加P3到R直接复用静态卷23.1。∎
+
+静态卷32–38已在同一准确原背景中证明P3、分别可加、实双线性与全部有限Gram等价，并分解完整PB的结合子缺陷。这不支付未知D的可加性。其 $N(D(a,b))\le N(a)N(b)$ 点态界也不能先作为D的增量连续界。93.2的全域 $D_\kappa$ 同时满足单位行、SO(2)、平方射线零值及全部有限Gram，却违反完整PB和R，说明这些中间后果单独不足；它不是全候选反例。
+
+**定义 106.3（QM消费者与实际共同实现）。** 在完整H2中93.1已恢复同一复结合乘法及全部有限Gram，按95.2接回可观测量、态、正质量完整菜单下的Born概率、条件Heisenberg动力与仪器消费者。在更大原域，102.1–105.1支付的是明确的单位与局部关系；原R、Hilbert或C*重构仍等106.1或其他真实可加性桥。数学正泛函与原有限多项式标签不制造实际准备、复相位控制、仪器、共同来源或未来返回。
+
+[完整记录续卷116–122](AURIC_C139_FINITE_RETURN_CALIBRATION_AND_LOAD_STABILITY_CONTINUATION.md)的联合界要求同一个实际完整记录 $E_r$ 及同一实际联合 $B_r+C_r=E_r,\sum_rE_r=I$；记录保真度对量子效果的限制以及CountRead的半误差界，均不能提供未知D线性或替代原共同菜单和整响应绑定。104–105的数学补角局部化也不自动构造这一实际联合。
+
+原 $\Omega/$native、全词同一K/J/q、零／不等／次归一质量、中心与经典不等维块、实际准备／菜单／分支／失败／细记录、共同相关正输入及全参考层、全部顺序自适应并行历史和仍合法未来、停止拒绝销毁、真正分组遗忘、同数两侧与逆向真实返回，继续保持95.2的原量词。CountRead无限维、正常性／前对偶、原 $\sigma,t_0,B,B_{\rm cl}$ 与相位预算、物理钟能量及共同 $\hbar$ 均有各自来源义务。逐元素有限谱不等于有限维，不截断这些无限来源。
+
+## 107. 成熟工具、组合结果与完整白话
+
+**定义 107.1（文献与结论范围）。** Hanche-Olsen–Størmer，[*Jordan operator algebras*](https://hanche.folk.ntnu.no/joa/joa-m.pdf)，2.6.1–2.6.3、2.6.5给单投影与完整有限正交幂等元Peirce分解及其乘法，3.3.6给JB二次表示的正性；范数支撑与Jordan Cauchy–Schwarz的准确接口见96.1。这里用的是已给JB结构、原有限插值多项式和对固定元素的完整分解，满足这些成熟工具的前件。使用的是完整直和及 $L_{p_k}$ 的0、1/2、1特征值公式。
+
+Ayupov–Arzikulov–Umrzaqov–Nuriddinov，[*Description of 2-local derivations and automorphisms on finite dimensional Jordan algebras*，arXiv:1911.03194v2](https://arxiv.org/abs/1911.03194v2)，定义与定理5.3要求每对输入有同一个真正Jordan导子共同实现。其正定结合双线性型方法在已经具有该共同导子见证时可推出线性。这里尚未为 $\Delta_a(b)=D(a,b)$ 构造这种见证；不能先用完成复化或一个共同迹把该前件消掉。96.1的weak-2-local比较同样保持原条件。
+
+本卷已有98在另一个明确合同中，以指定原自旋背景、实际二表及NN支付全域PY，并在另加旧正交循环后消费既有重构。那里没有从PB推出NN；这里也不输入NN或该条PY。两条路线分别减少各自固定背景中的中间前提，不能把它们未支付的条件拼成一次一般重构。
+
+100–105是 $\texttt{repo-derived}$ 的纸面组合推导：二谱单位行、有限谱单位输出反交换、逐元素有限谱原域的全单位行，以及秩二单侧／主轴条件双侧补角局部化。Peirce分解、正二次表示、谱插值和标量二次方程不是新发明；不宣称文献穷尽或历史原创优先权。全部数学为纸面证明，未作Lean kernel核验。一般原域全单位行、任意单位平移中性与可加性、完整 $M_3$ 分类及一般 $\mathsf H_{\rm orig}+\mathsf{PB}\Rightarrow R$ 仍未证明，也没有满足全合同而R失败的全域反例。
+
+**定义 107.2（完整白话）。** 仍从同一张未知的二元关系开始，只要求每两个对象的正表成立，以及同一个评价读取的两份相反平方始终配平，不先规定关系线性。已经可靠的两个谱值像两块能直接读取的砖：先用它们给每两个输出谱块各造一份原标签，把整个双角推到二表的零面，便能证明残余单位输出与原输入反交换。当原域中每个元素分别只有有限多个谱值时，残差只可能藏在大小相同、符号相反的两个块之间。接着对所有谱值解同一个二次方程，在这两个块分别选不同根；每一步都是原域中实际存在的有限多项式，配平始终把同一个旧输出搬到新的外层标签上。两标签在目标双角中可以任意接近同一条直线，二表容许的面积随之任意小，固定残差只能为零。这样全部有限矩阵里的单位行都成为结论，标签旋转和全部平方射线零值也跟着出来。秩二角里再比较等长却面积不同的两对标签，可以证明单侧任意补角不能改变原输出和取向；若两侧补角方向恰好是角内Gram的一条主轴，同一次旋转还能消去一侧补角并把角内向量转正交。更大结构是这些角怎样完整拼成同一个Jordan对象；下一步仍要证明任意输入之间的可加性与各角取向传播，才可在一般矩阵中恢复结合复乘法和整套量子公理。这里没有把这个缺口重新命名成公理，也没有把有限角的三轴或数学态当成完整物理来源。
+
+## 追加锚（本行以下为增补区）
+
 ## 120. 同一原域上的二点谱与固定输出
 
 **定义 120.1（一般背景与数学评价）。** 本增补始终采用[静态重构卷](AURIC_C128_ARBITRARY_DIMENSIONAL_STATIC_QUANTUM_RECONSTRUCTION.md)定义22.1的同一个 $\mathsf H_{\rm orig}$，只另要求定义22.3的完整 $\mathsf{PB}$。特别地，原P2本已包含在背景内；没有R、NN、PY、Jacobi、旧D的可加性、连续性或平移中性前件。依该卷2.1–2.2的R-free接口，原 $E$ 是同一含单位JB完成 $X$ 的稠密含单位Jordan子代数，$C=E\cap X_+$，$S=\circ$，且 $N(a)=\|a\|$ 对全部原a成立。下文所有D的输入和输出均在原E中，除非结论已经明示 $E=X$；不定义一个完成上的旧D。
