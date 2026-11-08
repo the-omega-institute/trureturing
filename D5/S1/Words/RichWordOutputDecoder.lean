@@ -80,7 +80,7 @@ private theorem blockIndex_spec (p : ℕ) :
     E (blockIndex p) ≤ p ∧ p < E (blockIndex p+1) := Nat.find_spec (window p)
 
 private theorem window_unique {p j k : ℕ}
-    (hj : E j ≤ p ∧ p < E (j+1)) (hk : E k ≤ p ∧ p < E (k+1)) : j = k := by
+    (hj : E j ≤ p ∧ p < E (j + 1)) (hk : E k ≤ p ∧ p < E (k + 1)) : j = k := by
   by_contra h
   rcases lt_or_gt_of_ne h with h | h
   · have := E_strict.monotone (show j+1 ≤ k by omega); omega
@@ -249,7 +249,7 @@ def Right (t : List Output) (w : List Input) (j : ℕ) : Prop :=
   t <+: q (u (j+w.length))
 
 private theorem left_boundary_iff (s : List Output) (A j : ℕ)
-    (hs : (0 : Output) ∉ s) (he : A+s.length = E j) :
+    (hs : (0 : Output) ∉ s) (he : A + s.length = E j) :
     Occ s A ↔ Left s j := by
   by_cases hn : s = []
   · simp [hn, Left, Occ, factor]
@@ -320,7 +320,8 @@ private theorem right_boundary_iff (t : List Output) (j : ℕ)
     have heq : [0]++t = (eta (u j)).take (1+t.length) := by
       have h' : factor x (E j) (1+t.length)=[0]++t := by simpa [Occ,Nat.add_comm] using h
       exact h'.symm.trans hh
-    have hpre : [0]++t <+: eta (u j) := List.prefix_iff_eq_take.mpr (by simpa [Nat.add_comm] using heq)
+    have hpre : [0]++t <+: eta (u j) :=
+      List.prefix_iff_eq_take.mpr (by simpa [Nat.add_comm] using heq)
     simpa [eta_cons] using hpre
   · rintro ⟨z,hz⟩
     have hh : Occ (([0]++t)++z) (E j) := by
@@ -399,7 +400,8 @@ private theorem typeI_paid (n j : ℕ)
     have he : j=0 := by omega
     exact RichWordTypeIOccurrence.typeI_not_at_origin n (he ▸ hj)
   have hl := (RichWordTypeIOccurrence.lext_iff _ (u (j-1))).mpr ⟨j,hp,hj,rfl⟩
-  have hr := (RichWordTypeIOccurrence.rext_iff _ (u (j+(RichWordTypeIOccurrence.typeI n).length))).mpr
+  have hr := (RichWordTypeIOccurrence.rext_iff _
+    (u (j+(RichWordTypeIOccurrence.typeI n).length))).mpr
     ⟨j,hj,rfl⟩
   rw [(RichWordTypeIOccurrence.typeI_extensions n).1] at hl
   rw [(RichWordTypeIOccurrence.typeI_extensions n).2] at hr
@@ -517,7 +519,7 @@ private theorem image_length (w : List Input) :
 private theorem W_mono {v z : Input → ℕ} (h : v ≤ z) : W v ≤ W z := by
   exact Finset.sum_le_sum (fun c _ => Nat.mul_le_mul_left _ (h c))
 
-private theorem exact_gap (A B j k d : ℕ) (hj : A+d=E j) (hk : B+d=E k) (hjk : j ≤ k) :
+private theorem exact_gap (A B j k d : ℕ) (hj : A + d = E j) (hk : B + d = E k) (hjk : j ≤ k) :
     B-A = W (RichWordTypeIOccurrence.parikh (RichWordTypeIOccurrence.returnWord j k)) := by
   have he := E_add j (k-j)
   rw [Nat.add_sub_of_le hjk] at he
@@ -542,7 +544,7 @@ private theorem transport (w : List Input) (s t : List Output) (mu : Input → �
     (hs : (0 : Output) ∉ s) (ht : (0 : Output) ∉ t)
     (hpay : ∀ j, RichWordTypeIOccurrence.Occ w j → Left s j ∧ Right t w j)
     (hmin : (∃ j k, RichWordTypeIOccurrence.Consecutive w j k ∧
-      RichWordTypeIOccurrence.parikh (RichWordTypeIOccurrence.returnWord j k)=mu) ∧
+      RichWordTypeIOccurrence.parikh (RichWordTypeIOccurrence.returnWord j k) = mu) ∧
       ∀ j k, RichWordTypeIOccurrence.Consecutive w j k →
       mu ≤ RichWordTypeIOccurrence.parikh (RichWordTypeIOccurrence.returnWord j k)) :
     Transport w s t mu := by

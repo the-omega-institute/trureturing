@@ -2,6 +2,7 @@ import D5.S1.Words.RichWordOutputDecoder
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
 
+/-! The complete marker-decoder telescope with its actual position readout. -/
 open _root_.D5.S1.Words.RichWordOutputDecoder
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
@@ -37,7 +38,7 @@ abbrev arena : Arena where
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  have ho : Occ (decorated [] [] []) 0 := by decide
+  have ho : Occ (decorated [] [] []) 0 := by unfold Occ decorated; decide
   have hr := (_root_.D5.S1.Words.RichWordOutputDecoder.occurrence_decoder
     [] [] [] 0 (by simp) (by simp)).mp ho
   exact (h [] [] [] 0 (by simp) (by simp)).mpr hr
@@ -61,8 +62,8 @@ def family : Registration arena
     refine ⟨([],[],[]),0,2,?_⟩
     change Occ (decorated [] [] []) 0 ≠ Occ (decorated [] [] []) 2
     intro h
-    exact (by decide : ¬ Occ (decorated [] [] []) 2)
-      (Eq.mp h (by decide : Occ (decorated [] [] []) 0))
+    exact (by unfold Occ decorated; decide : ¬ Occ (decorated [] [] []) 2)
+      (Eq.mp h (by unfold Occ decorated; decide : Occ (decorated [] [] []) 0))
 
 noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S1.Words.RichWordOutputDecoder.occurrence_decoder)

@@ -39,7 +39,7 @@ internal sealed class RichWordOutputDecoderDocument : IScribeDocumentDefinition
         Seq(Exists,Sp,F.Id(name),Colon,Sp,type,Comma,Sp,body);
     private static Formula Eq(Formula a, Formula b) => new Formula.Relation(a,FormulaRelationOperator.Equal,b);
     private static Formula Lt(Formula a, Formula b) => new Formula.Relation(a,FormulaRelationOperator.LessThan,b);
-    private static Formula Le(Formula a, Formula b) => new Formula.Relation(a,FormulaRelationOperator.LessOrEqual,b);
+    private static Formula Le(Formula a, Formula b) => new Formula.Relation(a,FormulaRelationOperator.LessThanOrEqual,b);
     private static Formula And(Formula a, Formula b) => new Formula.Logic(a,FormulaLogicOperator.And,b);
     private static Formula Imp(Formula a, Formula b) => new Formula.Logic(a,FormulaLogicOperator.Implies,b);
     private static Formula Iff(Formula a, Formula b) => new Formula.Logic(a,FormulaLogicOperator.Iff,b);
