@@ -2104,7 +2104,7 @@ $$
 \tag{224.11}
 $$
 
-For $f=\mathsf R^{1/2}u$, $u\in N$, its heat preimage is $D^*u$, uniquely because heat is injective. The equality of the range and exponential domain follows directly from the spectral calculus for $K_\ell\ge0$. This is the elementary adjoint proof of the range-factorization principle of R. G. Douglas, *On majorization, factorization, and range inclusion of operators on Hilbert space*, [doi:10.1090/S0002-9939-1966-0189428-1](https://doi.org/10.1090/S0002-9939-1966-0189428-1); the proof above supplies the specific inclusion used here. Neither a lower heat comparison nor equality with the heat-range norm has been assumed.
+For $f=\mathsf R^{1/2}u$, $u\in N$, its heat preimage is $D^*u$, uniquely because heat is injective. The equality of the range and exponential domain follows directly from the spectral calculus for $K_\ell\ge0$. This is the elementary adjoint proof of the range-factorization principle of R. G. Douglas, *On majorization, factorization, and range inclusion of operators on Hilbert space*, [doi:10.1090/S0002-9939-1966-0203464-1](https://doi.org/10.1090/S0002-9939-1966-0203464-1); the proof above supplies the specific inclusion used here. Neither a lower heat comparison nor equality with the heat-range norm has been assumed.
 
 ### 224.C. Cayley contraction and an actual phase orbit
 
@@ -2126,7 +2126,7 @@ $$
 
 The inequality gives $\|\mathsf R^{1/2}M_\gamma u\|_2\le\|\mathsf R^{1/2}u\|_2$. Thus (224.13) is well-defined even for zero classes and extends to a contraction on $N$, then by zero on $\ker\mathsf R$. Taking adjoints in $L_0\mathsf R^{1/2}=\mathsf R^{1/2}M_\gamma$ gives $M_\gamma\mathsf R^{1/2}=\mathsf R^{1/2}L_0^*$. For $u\in N$, $L_0^*u\in N$ and $\|L_0^*u\|_2\le\|u\|_2$. Hence multiplication by $\gamma$ preserves $\mathcal H_{\mathsf R}$ and is a contraction in (224.10). These are precisely the kernel-sensitive adjoint steps, rather than an assumed inverse for $\mathsf R$.
 
-Choose $0\ne f\in\mathcal H_{\mathsf R}$. The bounded-operator exponential on this Hilbert space defines, for every real $s$,
+Choose $u_0\in H_\ell$ with $\mathsf R u_0\ne0$, which exists by 224.A, and put $f=\mathsf R u_0$. Then $0\ne f\in\operatorname{Ran}\mathsf R\subset\mathcal H_{\mathsf R}$, so (224.11) makes $f$ an actual positive-time heat image. The bounded-operator exponential on this Hilbert space defines, for every real $s$,
 
 $$
 f_s=e^{is\gamma}f\in\mathcal H_{\mathsf R},\qquad
