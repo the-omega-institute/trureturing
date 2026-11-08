@@ -269,7 +269,7 @@ private theorem scaled_step (B : PowerSeries ℚ) (d : ℕ) (N : Polynomial ℚ)
   have hd := congrArg (derivative (R := ℚ)) h
   simp only [Derivation.leibniz, derivative_pow, derivative_coe,
     Nat.add_sub_cancel, Nat.cast_add, Nat.cast_one, smul_eq_mul] at hd
-  simp only [Polynomial.coe_mul, Polynomial.coe_sub, coe_nat]
+  simp only [Polynomial.coe_mul, Polynomial.coe_sub, coe_nat, Nat.cast_add, Nat.cast_one]
   linear_combination (H : PowerSeries ℚ)^(d + 2) * theta_transport B +
     (f : PowerSeries ℚ) * H * hd -
     (f : PowerSeries ℚ) * (d + 1 : PowerSeries ℚ) * (Polynomial.derivative H : PowerSeries ℚ) * h
@@ -281,9 +281,8 @@ private theorem scaled_iterates (j : ℕ) (hj : j < 5) :
   | zero =>
     have h := theta_transport U
     rw [inverse_left, derivative_X, mul_one] at h
-    simpa only [Function.iterate_one, pow_one] using
-      h.trans (by norm_num [num, f, Polynomial.coe_add, Polynomial.coe_mul,
-        Polynomial.coe_sub, Polynomial.coe_pow, coe_nat]; ring)
+    have he : num 1 = f := by norm_num [num, f]; ring
+    simpa only [Function.iterate_one, pow_one, he] using h
   | succ j ih =>
     have h := scaled_step (theta^[j + 1] U) (2*j) (num (j + 1)) (ih (by omega))
     rw [num_recurrence j (by omega)]
@@ -404,12 +403,12 @@ private theorem recurrence (n : ℕ) (hn : 5 ≤ n) :
   linear_combination h
 
 private def p : ℕ → Polynomial ℚ
-  | 0 => (-826722892323288) * Polynomial.X^3 + (-3941533408005120) * Polynomial.X^4 + (702108258284160) * Polynomial.X^5
-  | 1 => (-2474598487285584) * Polynomial.X^3 + (-29725035256305912) * Polynomial.X^4 + (-37619021616684360) * Polynomial.X^5 + (10842264054320400) * Polynomial.X^6
-  | 2 => (-487468272050316) * Polynomial.X^3 + (-18745339188989196) * Polynomial.X^4 + (-73317780250674234) * Polynomial.X^5 + (-46696771941891900) * Polynomial.X^6 + (22139482729590000) * Polynomial.X^7
-  | 3 => (80011861733460) * Polynomial.X^3 + (-1128902401445964) * Polynomial.X^4 + (-19400635956590748) * Polynomial.X^5 + (-42822888796040886) * Polynomial.X^6 + (-13455662294384000) * Polynomial.X^7 + (12623525781600000) * Polynomial.X^8
-  | 4 => (137479527309760) * Polynomial.X^4 + (-607506851481168) * Polynomial.X^5 + (-5424885553010130) * Polynomial.X^6 + (-7721677106063578) * Polynomial.X^7 + (-483806081571250) * Polynomial.X^8 + (2436784456650000) * Polynomial.X^9
-  | 5 => (23495312375279) * Polynomial.X^5 + (-73180721424774) * Polynomial.X^6 + (-406745978528262) * Polynomial.X^7 + (-384334715888720) * Polynomial.X^8 + (78200611484375) * Polynomial.X^9 + (140685548031250) * Polynomial.X^10
+  | 0 => Polynomial.C (-826722892323288 : ℚ) * Polynomial.X^3 + Polynomial.C (-3941533408005120 : ℚ) * Polynomial.X^4 + Polynomial.C (702108258284160 : ℚ) * Polynomial.X^5
+  | 1 => Polynomial.C (-2474598487285584 : ℚ) * Polynomial.X^3 + Polynomial.C (-29725035256305912 : ℚ) * Polynomial.X^4 + Polynomial.C (-37619021616684360 : ℚ) * Polynomial.X^5 + Polynomial.C (10842264054320400 : ℚ) * Polynomial.X^6
+  | 2 => Polynomial.C (-487468272050316 : ℚ) * Polynomial.X^3 + Polynomial.C (-18745339188989196 : ℚ) * Polynomial.X^4 + Polynomial.C (-73317780250674234 : ℚ) * Polynomial.X^5 + Polynomial.C (-46696771941891900 : ℚ) * Polynomial.X^6 + Polynomial.C (22139482729590000 : ℚ) * Polynomial.X^7
+  | 3 => Polynomial.C (80011861733460 : ℚ) * Polynomial.X^3 + Polynomial.C (-1128902401445964 : ℚ) * Polynomial.X^4 + Polynomial.C (-19400635956590748 : ℚ) * Polynomial.X^5 + Polynomial.C (-42822888796040886 : ℚ) * Polynomial.X^6 + Polynomial.C (-13455662294384000 : ℚ) * Polynomial.X^7 + Polynomial.C (12623525781600000 : ℚ) * Polynomial.X^8
+  | 4 => Polynomial.C (137479527309760 : ℚ) * Polynomial.X^4 + Polynomial.C (-607506851481168 : ℚ) * Polynomial.X^5 + Polynomial.C (-5424885553010130 : ℚ) * Polynomial.X^6 + Polynomial.C (-7721677106063578 : ℚ) * Polynomial.X^7 + Polynomial.C (-483806081571250 : ℚ) * Polynomial.X^8 + Polynomial.C (2436784456650000 : ℚ) * Polynomial.X^9
+  | 5 => Polynomial.C (23495312375279 : ℚ) * Polynomial.X^5 + Polynomial.C (-73180721424774 : ℚ) * Polynomial.X^6 + Polynomial.C (-406745978528262 : ℚ) * Polynomial.X^7 + Polynomial.C (-384334715888720 : ℚ) * Polynomial.X^8 + Polynomial.C (78200611484375 : ℚ) * Polynomial.X^9 + Polynomial.C (140685548031250 : ℚ) * Polynomial.X^10
   | _ => 0
 
 set_option maxHeartbeats 4000000 in
@@ -420,7 +419,7 @@ private theorem normal_form (B : PowerSeries ℚ) :
     Function.iterate_succ_apply', theta, Derivation.leibniz, derivative_pow,
     derivative_X, derivative_one, map_add, map_mul, map_natCast, map_ofNat,
     Polynomial.coe_add, Polynomial.coe_mul, Polynomial.coe_pow,
-    Polynomial.coe_neg, coe_nat]
+    Polynomial.coe_neg, coe_nat, Polynomial.coe_C]
   ring
 
 private theorem dfinite : DFinite A := by
