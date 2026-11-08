@@ -8,7 +8,7 @@ internal sealed class C128IdealConsequencesDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Local sections of the whole ideal prove nonunitality and detect ambient Jordan annihilation.",
-        H("Whole-Ideal Local Sections and Nonunitality"), Blocks(
+        H("The Whole Selfadjoint Ideal, Local Sections and Nonunitality"), Blocks(
             Describe.Lean(DescribeId.Create("nonzero-nonunital"),
                 DeclarationHandle.Create("D5/S3/ContinuousObservables/C128IdealConsequences.nonzero_nonunital"),
                 H("The algebra is nonzero and genuinely nonunital"),
@@ -30,7 +30,12 @@ internal sealed class C128IdealConsequencesDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(), Blocks(
                     Paragraph(Text("X is the whole selfadjoint continuous matrix field space on [0,1], I is its entire zero-off-U selfadjoint ideal, S(a,r)=(ar+ra)/2, and inc includes U in [0,1]. For every a in X, annihilating every element of I under S is equivalent to vanishing at every point of U.")),
                     Paragraph(Text("The inverse of the onto real linear isometry j carries each selfadjoint local identity section into the whole ideal I. Evaluating S(a,r)=0 at that point gives a=0 there. Conversely the product is zero on U because a vanishes there, and off U because every ideal field vanishes there. This establishes the ambient pointwise criterion; identifying the closure of U with [0,1/4] and the original polynomial-domain annihilator requires further arguments."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem),
+Paragraph(Text("Use Y=[0,1], U=(0,1/4) minus all 1/n for natural n at least 5, M=CStarMatrix (Fin 2) (Fin 2) Complex with its operator norm, A=the whole C0(U,M), and X=the whole selfadjoint part of C(Y,M). In C128IdealConsequences, I is the real submodule of every selfadjoint field vanishing off U. The real linear isometry equivalence j restricts I onto the whole selfadjoint part of A; its inverse is zero extension. These are organizational definitions used by the local-section annihilator and nonzero proofs.")),
+            Paragraph(Text("The following are consequences of the whole complex extension theorem and the definitions, rather than additional named D5 theorems. I is closed: it is the inverse image of the closed whole complex ideal under the continuous subtype map. S(a,b)=(ab+ba)/2 is the original real Jordan product. Define the original oriented operation D(a,b)=i(ab-ba)/2. Star reverses products and conjugates i to -i, so both S and D are selfadjoint. At every point outside U an ideal factor is zero, so S(X,I) is contained in I and D(I,I) is contained in I.")),
+            new DocumentBlock.DisplayFormula(SelfAdjointStatement()),
+            Paragraph(Text("Here Jordan(p,q)=(pq+qp)/2 and Oriented(p,q)=i(pq-qp)/2 in A, with exactly this commutator orientation. For r in I and t in U, j(r)(t)=r(inc(t)). Applying this evaluation identity to each summand and product gives both displayed correspondence identities by extensionality on every point of U. The restricted operation inputs carry the preceding ideal-membership proofs. The onto isometry, both inverse laws, closedness, both closure laws and both complete correspondence identities are checked at their full function-space types. No additional unconsumed S/D wrapper is retained in D5.")),
+            Paragraph(Text("The content-bearing host C128IdealConsequences uses j inverse on genuine selfadjoint local identity sections to prove the ambient Jordan annihilator criterion and nonzero I. This does not prove polynomial-plus-ideal completeness, its all-input S/D closure, noncommuting seeds, the full original model, or physical realization.")))));
     private static Formula V(string name) => F.Id(name);
     private static Formula Call(string name, params Formula[] args)
     {
@@ -48,4 +53,12 @@ internal sealed class C128IdealConsequencesDocument : IScribeDocumentDefinition
         Seq(Forall, Sp, Par(Seq(V(name), Colon, Sp, type)), Comma, Sp, body);
     private static Formula And(params Formula[] clauses) => Seq(clauses.SelectMany((c, i) =>
         i == 0 ? new Formula[] { Par(c) } : new Formula[] { Sp, Land, Sp, Par(c) }).ToArray());
+    private static Formula SelfAdjointStatement() =>
+        And(
+            Call("IsClosed", V("I")),
+            All("a", V("X"), All("r", V("I"), Seq(Call("S", V("a"), V("r")), InMacro, Sp, V("I")))),
+            All("r", V("I"), All("s", V("I"), Seq(Call("D", V("r"), V("s")), InMacro, Sp, V("I")))),
+            All("r", V("I"), All("t", V("U"), Seq(Call("j", V("r"), V("t")), Eq, Call("r", Call("inc", V("t")))))),
+            All("r", V("I"), All("s", V("I"), Seq(Call("j", Call("S", V("r"), V("s"))), Eq, Call("Jordan", Call("j", V("r")), Call("j", V("s")))))),
+            All("r", V("I"), All("s", V("I"), Seq(Call("j", Call("D", V("r"), V("s"))), Eq, Call("Oriented", Call("j", V("r")), Call("j", V("s")))))));
 }
