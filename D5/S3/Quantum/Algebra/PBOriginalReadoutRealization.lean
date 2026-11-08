@@ -139,9 +139,6 @@ def cyclicOrbit (φ : A →ₚ[ℂ] ℂ) (B : StarSubalgebra ℂ A) : B →ₗ[�
 def cyclicSpace (φ : A →ₚ[ℂ] ℂ) (B : StarSubalgebra ℂ A) : Submodule ℂ φ.GNS :=
   (cyclicOrbit φ B).range.topologicalClosure
 
-instance realGNS (φ : A →ₚ[ℂ] ℂ) : InnerProductSpace ℝ φ.GNS :=
-  InnerProductSpace.complexToReal
-
 private theorem cyclic_unit_mem (φ : A →ₚ[ℂ] ℂ) (B : StarSubalgebra ℂ A) :
     cyclicVector φ ∈ cyclicSpace φ B := by
   apply Submodule.le_topologicalClosure
