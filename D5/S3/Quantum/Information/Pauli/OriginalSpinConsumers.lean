@@ -6,9 +6,12 @@
    utility: none
    digest: Both Pauli orientations preserve original spin evaluations and all finite directed Gram tables. -/
 
+import Mathlib.Geometry.Euclidean.Angle.Unoriented.CrossProduct
 import D5.S3.Quantum.Algebra.PauliFixedProductFamily
 import D5.S3.Quantum.Measurement.FourQubitParentConstruction
 import D5.S3.Quantum.SpinFactor.OriginalDContract
+
+/-! Both matrix orientations on the original spin carrier, cone and norm. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -31,19 +34,17 @@ abbrev ContractEvaluation :=
 
 private def euclideanVec (v : Vec) : EuclideanSpace ℝ (Fin 3) := toLp 2 v
 
-private theorem euclideanVec_norm (v : Vec) : ‖euclideanVec v‖ =
-    _root_.D5.S3.Quantum.SpinFactor.OriginalDContract.vnorm v := by
-  simp [euclideanVec,
-    _root_.D5.S3.Quantum.SpinFactor.OriginalDContract.vnorm,
-    _root_.D5.S3.Quantum.SpinFactor.OriginalDContract.dot,
-    PiLp.inner_apply, dotProduct, Fin.sum_univ_three, RCLike.inner_apply]
-
 private theorem dot_euclidean (x y : Vec) :
     inner ℝ (euclideanVec x) (euclideanVec y) =
       _root_.D5.S3.Quantum.SpinFactor.OriginalDContract.dot x y := by
   simp [euclideanVec,
     _root_.D5.S3.Quantum.SpinFactor.OriginalDContract.dot,
     PiLp.inner_apply, dotProduct, Fin.sum_univ_three, RCLike.inner_apply]
+  ring
+
+private theorem euclideanVec_norm (v : Vec) : ‖euclideanVec v‖ = vnorm v := by
+  rw [norm_eq_sqrt_real_inner, dot_euclidean]
+  rfl
 
 /-- The original scalar/vector coordinates, with their original unit. -/
 abbrev unit : E := _root_.D5.S3.Quantum.SpinFactor.OriginalDContract.unit
@@ -71,8 +72,14 @@ def jordan (a b : E) : E := _root_.D5.S3.Quantum.SpinFactor.OriginalDContract.jo
 /-- The supplied cross channel as a real bilinear map on the original carrier. -/
 def cross : E →ₗ[ℝ] E →ₗ[ℝ] E where
   toFun a := ofFamily.comp ((_root_.D5.S3.Quantum.Algebra.PauliFixedProductFamily.C (toFamily a)).comp toFamily)
-  map_add' a b := by ext c; simp [map_add]
-  map_smul' r a := by ext c; simp [map_smul]
+  map_add' a b := by
+    apply LinearMap.ext
+    intro c
+    simp only [LinearMap.comp_apply, map_add, LinearMap.add_apply]
+  map_smul' r a := by
+    apply LinearMap.ext
+    intro c
+    simp only [LinearMap.comp_apply, map_smul, LinearMap.smul_apply, RingHom.id_apply]
 
 /-- `false` is the usual matrix product, `true` its opposite. -/
 def sign (opposite : Bool) : ℝ := if opposite then 1 else -1
@@ -90,25 +97,15 @@ abbrev cone : E → Prop :=
 def evaluate (m : ℝ) (v : Vec) (a : E) : ℝ :=
   m * a.1 + _root_.D5.S3.Quantum.SpinFactor.OriginalDContract.dot v a.2
 
-private theorem evaluate_formula (m : ℝ) (v : Vec) (a : E) :
-    evaluate m v a = m * a.1 +
-      _root_.D5.S3.Quantum.SpinFactor.OriginalDContract.dot v a.2 := by
-  rfl
-
-private theorem evaluate_contract (α : ContractEvaluation) (a : E) :
-    evaluate α.mass α.vector a =
-      _root_.D5.S3.Quantum.SpinFactor.OriginalDContract.evaluate α a := by
-  rfl
-
 /-- Positivity is tested on the original spin cone. -/
 def PositiveEvaluation (α : E →ₗ[ℝ] ℝ) : Prop := ∀ a, cone a → 0 ≤ α a
 
 def evaluationLinear (m : ℝ) (v : Vec) : E →ₗ[ℝ] ℝ where
   toFun := evaluate m v
-  map_add' a b := by simp [evaluate, evaluate_formula,
-    _root_.D5.S3.Quantum.SpinFactor.OriginalDContract.dot, dotProduct, map_add]; ring
-  map_smul' r a := by simp [evaluate, evaluate_formula,
-    _root_.D5.S3.Quantum.SpinFactor.OriginalDContract.dot, dotProduct, map_smul]; ring
+  map_add' a b := by simp [evaluate,
+    _root_.D5.S3.Quantum.SpinFactor.OriginalDContract.dot, dotProduct, Fin.sum_univ_three]; ring
+  map_smul' r a := by simp [evaluate,
+    _root_.D5.S3.Quantum.SpinFactor.OriginalDContract.dot, dotProduct, Fin.sum_univ_three]; ring
 
 def phi (a : E) : Mat :=
   _root_.D5.S3.Quantum.Measurement.FourQubitParentConstruction.scalarB a.1
@@ -152,7 +149,7 @@ private theorem jordan_supplier (a b : E) :
       _root_.D5.S3.Quantum.Algebra.PauliFixedProductFamily.spin,
       _root_.D5.S3.Quantum.SpinFactor.OriginalDContract.jordan,
       _root_.D5.S3.Quantum.SpinFactor.OriginalDContract.dot,
-      PiLp.inner_apply, Fin.sum_univ_three, RCLike.inner_apply]
+      PiLp.inner_apply, dotProduct, Fin.sum_univ_three, RCLike.inner_apply]
     ring
   · ext i
     fin_cases i <;> simp [jordan, ofFamily, toFamily,
@@ -194,7 +191,9 @@ private theorem phi_product (opposite : Bool) (a b : E) :
     product opposite (phi a) (phi b) =
       phi (jordan a b) - Complex.I • phi (fixed opposite a b) := by
   cases opposite <;> ext i j <;> fin_cases i <;> fin_cases j <;> apply Complex.ext <;>
-    simp [product, phi, jordan_coordinates, fixed_coordinates, sign,
+    simp [product, phi, euclideanVec, jordan_coordinates, fixed_coordinates, sign,
+      _root_.D5.S3.Quantum.SpinFactor.OriginalDContract.dot,
+      _root_.D5.S3.Quantum.SpinFactor.OriginalDContract.cross, dotProduct,
       _root_.D5.S3.Quantum.Measurement.FourQubitParentConstruction.scalarB, _root_.D5.S3.Quantum.Measurement.FourQubitParentConstruction.B_formula, Matrix.mul_apply, Fin.sum_univ_two,
       PiLp.inner_apply, Fin.sum_univ_three, RCLike.inner_apply,
       cross_apply, Complex.mul_re, Complex.mul_im] <;> ring
@@ -210,28 +209,46 @@ private theorem density_mass (m : ℝ) (v : Vec) : (density m v).trace = (m : �
 
 private theorem evaluation_positive (m : ℝ) (v : Vec) :
     PositiveEvaluation (evaluationLinear m v) ↔ vnorm v ≤ m := by
+  have hnorm (x : Vec) : 0 ≤ vnorm x := Real.sqrt_nonneg _
+  have hneg : vnorm (-v) = vnorm v := by
+    simp [vnorm, _root_.D5.S3.Quantum.SpinFactor.OriginalDContract.vnorm,
+      _root_.D5.S3.Quantum.SpinFactor.OriginalDContract.dot]
   constructor
   · intro h
     have hm : 0 ≤ m := by
-      simpa [evaluationLinear, evaluate, unit] using h unit (by simp [cone, unit])
-    have hv := h (vnorm v, -v) (by simp [cone])
-    have hv' : 0 ≤ m * vnorm v - (vnorm v) ^ 2 := by
-      simpa [evaluationLinear, evaluate, evaluate_formula,
-        _root_.D5.S3.Quantum.SpinFactor.OriginalDContract.dot,
-        dotProduct, Fin.sum_univ_three, sub_eq_add_neg] using hv
+      have hh := h (1, 0) (by
+        simp [cone, _root_.D5.S3.Quantum.SpinFactor.OriginalDContract.cone,
+          _root_.D5.S3.Quantum.SpinFactor.OriginalDContract.vnorm,
+          _root_.D5.S3.Quantum.SpinFactor.OriginalDContract.dot])
+      simpa [evaluationLinear, evaluate,
+        _root_.D5.S3.Quantum.SpinFactor.OriginalDContract.dot] using hh
+    have hv := h (vnorm v, -v) (by
+      change vnorm (-v) ≤ vnorm v
+      rw [hneg])
+    have hsq : vnorm v ^ 2 =
+        _root_.D5.S3.Quantum.SpinFactor.OriginalDContract.dot v v := by
+      rw [← euclideanVec_norm, ← dot_euclidean]
+      exact (real_inner_self_eq_norm_sq _).symm
+    change 0 ≤ m * vnorm v +
+      _root_.D5.S3.Quantum.SpinFactor.OriginalDContract.dot v (-v) at hv
+    have hd : _root_.D5.S3.Quantum.SpinFactor.OriginalDContract.dot v (-v) =
+        -(vnorm v ^ 2) := by
+      rw [_root_.D5.S3.Quantum.SpinFactor.OriginalDContract.dot, dotProduct_neg]
+      exact congrArg Neg.neg hsq.symm
+    rw [hd] at hv
     by_cases hz : vnorm v = 0
     · simpa [hz] using hm
-    · have hn : 0 < vnorm v := lt_of_le_of_ne
-        (by exact Real.sqrt_nonneg _) (Ne.symm hz)
+    · have hn : 0 < vnorm v := lt_of_le_of_ne (hnorm v) (Ne.symm hz)
       nlinarith
   · intro hm a ha
-    have hm0 : 0 ≤ m := (by exact Real.sqrt_nonneg _).trans hm
+    have hm0 : 0 ≤ m := (hnorm v).trans hm
     have hin := real_inner_le_norm (euclideanVec (-v)) (euclideanVec a.2)
-    rw [dot_euclidean, dot_euclidean, euclideanVec_norm, euclideanVec_norm,
-      norm_neg] at hin
-    have hmul := mul_le_mul hm ha (by exact Real.sqrt_nonneg _) hm0
-    change 0 ≤ m * a.1 +
-      _root_.D5.S3.Quantum.SpinFactor.OriginalDContract.dot v a.2
+    rw [dot_euclidean, euclideanVec_norm, euclideanVec_norm, hneg] at hin
+    simp only [_root_.D5.S3.Quantum.SpinFactor.OriginalDContract.dot,
+      neg_dotProduct] at hin
+    have hmul := mul_le_mul hm ha (hnorm a.2) hm0
+    change 0 ≤ m * a.1 + v ⬝ᵥ a.2
+    change vnorm v * vnorm a.2 ≤ m * a.1 at hmul
     linarith
 
 private theorem evaluation_representation (α : E →ₗ[ℝ] ℝ) :
@@ -244,13 +261,15 @@ private theorem evaluation_representation (α : E →ₗ[ℝ] ℝ) :
   intro a
   have he : a = a.1 • unit + ∑ i : Fin 3, a.2 i • e i := by
     apply Prod.ext
-    · simp [unit, e, Fin.sum_univ_three]
+    · simp [unit, _root_.D5.S3.Quantum.SpinFactor.OriginalDContract.unit,
+        e, Fin.sum_univ_three]
     · ext i
-      fin_cases i <;> simp [unit, e, Fin.sum_univ_three]
+      fin_cases i <;> simp [unit, _root_.D5.S3.Quantum.SpinFactor.OriginalDContract.unit,
+        e, Fin.sum_univ_three]
   calc
     α a = α (a.1 • unit + ∑ i : Fin 3, a.2 i • e i) := congrArg α he
     _ = evaluate m v a := by
-      simp [map_add, map_sum, map_smul, evaluate, evaluate_formula, m, v,
+      simp [map_add, map_sum, map_smul, evaluate, m, v,
         _root_.D5.S3.Quantum.SpinFactor.OriginalDContract.dot,
         dotProduct, Fin.sum_univ_three]
       ring
@@ -268,12 +287,12 @@ private theorem positive_evaluation_complete (α : E →ₗ[ℝ] ℝ)
 private theorem trace_evaluate (m : ℝ) (v : Vec) (a : E) :
     (density m v * phi a).trace = (evaluate m v a : ℂ) := by
   apply Complex.ext <;>
-    simp [density, phi, euclideanVec, evaluate, evaluate_formula,
+    simp [density, phi, euclideanVec, evaluate,
       _root_.D5.S3.Quantum.SpinFactor.OriginalDContract.dot,
       _root_.D5.S3.Quantum.Measurement.FourQubitParentConstruction.scalarB,
       _root_.D5.S3.Quantum.Measurement.FourQubitParentConstruction.B_formula,
       Matrix.trace, Matrix.mul_apply, Fin.sum_univ_two, PiLp.inner_apply,
-      Fin.sum_univ_three, RCLike.inner_apply, Complex.mul_re, Complex.mul_im] <;> ring
+      dotProduct, Fin.sum_univ_three, RCLike.inner_apply, Complex.mul_re, Complex.mul_im] <;> ring
 
 private theorem original_order_interval (a : E) (r : ℝ) :
     (((r : ℂ) • (1 : Mat) - phi a).PosSemidef ∧
@@ -297,14 +316,15 @@ private theorem original_order_interval (a : E) (r : ℝ) :
   rw [hm, hp,
     _root_.D5.S3.Quantum.Measurement.FourQubitParentConstruction.scalarB_posSemidef_iff,
     _root_.D5.S3.Quantum.Measurement.FourQubitParentConstruction.scalarB_posSemidef_iff,
-    euclideanVec_norm, euclideanVec_norm, norm_neg]
+    show euclideanVec (-a.2) = -euclideanVec a.2 from rfl,
+    norm_neg, euclideanVec_norm]
   constructor
   · rintro ⟨hm, hp⟩
     have h : |a.1| ≤ r - vnorm a.2 := abs_le.mpr ⟨by linarith, by linarith⟩
-    dsimp [originalNorm]
+    dsimp [originalNorm, _root_.D5.S3.Quantum.SpinFactor.OriginalDContract.originalNorm]
     linarith
   · intro h
-    dsimp [originalNorm] at h
+    dsimp [originalNorm, _root_.D5.S3.Quantum.SpinFactor.OriginalDContract.originalNorm] at h
     exact ⟨by linarith [le_abs_self a.1], by linarith [neg_le_abs a.1]⟩
 
 private theorem density_surjective (ρ : Mat) (hρ : ρ.PosSemidef) :
@@ -331,6 +351,7 @@ private theorem phi_positive (a : E) : (phi a).PosSemidef ↔ cone a := by
   rw [phi,
     _root_.D5.S3.Quantum.Measurement.FourQubitParentConstruction.scalarB_posSemidef_iff,
     euclideanVec_norm]
+  rfl
 
 private theorem gram_trace (opposite : Bool) (m : ℝ) (v : Vec) (a b : E) :
     (evaluate m v (jordan a b) : ℂ) -
@@ -341,15 +362,15 @@ private theorem gram_trace (opposite : Bool) (m : ℝ) (v : Vec) (a b : E) :
     trace_evaluate]
 
 private theorem gram_transpose {ι : Type*} (m : ℝ) (v : Vec) (a : ι → E) :
-    gram (fixed true) m v a = (gram (fixed false) m v a)ᵀ := by
+    gram (fun a b => fixed true a b) m v a = (gram (fun a b => fixed false a b) m v a)ᵀ := by
   ext i j
-  change _ = gram (fixed false) m v a j i
+  change _ = gram (fun a b => fixed false a b) m v a j i
   simp only [gram, gram_trace, product, Bool.false_eq_true, ↓reduceIte]
 
 /-- The usual-order quadratic form is the trace of one positive conjugation of the density. -/
 private theorem gram_quadratic_trace {ι : Type*} [Fintype ι]
     (m : ℝ) (v : Vec) (a : ι → E) (c : ι → ℂ) :
-    star c ⬝ᵥ (gram (fixed false) m v a *ᵥ c) =
+    star c ⬝ᵥ (gram (fun a b => fixed false a b) m v a *ᵥ c) =
       (density m v *
         ((∑ i, c i • phi (a i))ᴴ * (∑ j, c j • phi (a j)))).trace := by
   classical
@@ -359,26 +380,29 @@ private theorem gram_quadratic_trace {ι : Type*} [Fintype ι]
     Matrix.sum_mul, Matrix.mul_sum, Matrix.smul_mul, Matrix.mul_smul,
     Matrix.trace_sum, Matrix.trace_smul, smul_smul,
     phi_star]
+  simp only [smul_eq_mul, Finset.mul_sum]
+  rw [Finset.sum_comm]
   apply Finset.sum_congr rfl
   intro i _
   apply Finset.sum_congr rfl
   intro j _
-  simp only [smul_eq_mul]
   ring
 
 private theorem gram_usual_hermitian {ι : Type*} (m : ℝ) (v : Vec) (a : ι → E) :
-    (gram (fixed false) m v a).IsHermitian := by
+    (gram (fun a b => fixed false a b) m v a).IsHermitian := by
   ext i j
   apply Complex.ext <;>
-    simp [gram, evaluate, jordan_coordinates, fixed_coordinates, sign,
+    simp [gram, evaluate, euclideanVec, jordan_coordinates, fixed_coordinates, sign,
+      _root_.D5.S3.Quantum.SpinFactor.OriginalDContract.dot,
+      _root_.D5.S3.Quantum.SpinFactor.OriginalDContract.cross, dotProduct,
       PiLp.inner_apply, Fin.sum_univ_three, RCLike.inner_apply,
       cross_apply, Complex.mul_re, Complex.mul_im] <;> ring
 
 private theorem fixed_gram_positive {ι : Type*} [Fintype ι]
     (opposite : Bool) (m : ℝ) (v : Vec) (hm : vnorm v ≤ m) (a : ι → E) :
-    (gram (fixed opposite) m v a).PosSemidef := by
+    (gram (fun a b => fixed opposite a b) m v a).PosSemidef := by
   classical
-  have usual : (gram (fixed false) m v a).PosSemidef := by
+  have usual : (gram (fun a b => fixed false a b) m v a).PosSemidef := by
     apply Matrix.PosSemidef.of_dotProduct_mulVec_nonneg (gram_usual_hermitian m v a)
     intro c
     rw [gram_quadratic_trace]
@@ -393,16 +417,21 @@ private theorem fixed_gram_positive {ι : Type*} [Fintype ι]
     exact usual.transpose
 
 private theorem fixed_contract_p2 (opposite : Bool) :
-    P2 (fixed opposite) := by
+    P2 (fun a b => fixed opposite a b) := by
   intro α a b
   let labels : Fin 2 → E := ![a, b]
   have h := fixed_gram_positive opposite α.mass α.vector α.positive labels
-  simpa [labels,
-    _root_.D5.S3.Quantum.SpinFactor.OriginalDContract.gram2,
-    _root_.D5.S3.Quantum.SpinFactor.OriginalDContract.readout,
-    evaluate_contract] using h
+  have he : _root_.D5.S3.Quantum.SpinFactor.OriginalDContract.gram2
+      (fun a b => fixed opposite a b) α a b =
+        gram (fun a b => fixed opposite a b) α.mass α.vector labels := by
+    ext i j
+    fin_cases i <;> fin_cases j <;> rfl
+  rw [he]
+  exact h
 
-private theorem fixed_phase_balance (opposite : Bool) : PB (fixed opposite) := by
+set_option maxRecDepth 8192 in
+set_option maxHeartbeats 2000000 in
+private theorem fixed_phase_balance (opposite : Bool) : PB (fun a b => fixed opposite a b) := by
   intro α a b c
   cases opposite <;>
     simp [PB,
@@ -412,7 +441,10 @@ private theorem fixed_phase_balance (opposite : Bool) : PB (fixed opposite) := b
       _root_.D5.S3.Quantum.SpinFactor.OriginalDContract.evaluate,
       _root_.D5.S3.Quantum.SpinFactor.OriginalDContract.jordan,
       _root_.D5.S3.Quantum.SpinFactor.OriginalDContract.dot,
-      jordan_coordinates, fixed_coordinates, sign, Fin.sum_univ_three] <;> ring
+      fixed_coordinates, sign,
+      _root_.D5.S3.Quantum.SpinFactor.OriginalDContract.cross,
+      dotProduct, Fin.sum_univ_three, Matrix.vecHead, Matrix.vecTail,
+      Pi.smul_apply, Pi.add_apply, Pi.sub_apply, Pi.neg_apply, smul_eq_mul] <;> ring
 
 private theorem fixed_R (opposite : Bool) (a b c : E) :
     jordan (jordan a b) c - jordan a (jordan b c) =
@@ -455,7 +487,8 @@ private theorem fixed_R (opposite : Bool) (a b c : E) :
   have hs := congrArg ofFamily hsum
   simp only [map_sub] at hs
   cases opposite <;>
-    simpa only [jordan_supplier, hround, a₀, b₀, c₀, fixed, sign, cross] using hs
+    simpa [jordan_supplier, hround, a₀, b₀, c₀, fixed, sign, cross,
+      LinearMap.comp_apply] using hs
 
 private theorem originalNorm_nonneg (a : E) : 0 ≤ originalNorm a :=
   add_nonneg (abs_nonneg _) (Real.sqrt_nonneg _)
@@ -464,7 +497,7 @@ private theorem originalNorm_add (a b : E) :
     originalNorm (a + b) ≤ originalNorm a + originalNorm b := by
   have hvec : vnorm (a.2 + b.2) ≤ vnorm a.2 + vnorm b.2 := by
     rw [← euclideanVec_norm, ← euclideanVec_norm, ← euclideanVec_norm]
-    simpa only [map_add] using (norm_add_le (euclideanVec a.2) (euclideanVec b.2))
+    simpa [euclideanVec] using (norm_add_le (euclideanVec a.2) (euclideanVec b.2))
   change |a.1 + b.1| + vnorm (a.2 + b.2) ≤
     (|a.1| + vnorm a.2) + (|b.1| + vnorm b.2)
   linarith [abs_add_le a.1 b.1, hvec]
@@ -472,22 +505,11 @@ private theorem originalNorm_add (a b : E) :
 private theorem cross_norm (x y : Vec) :
     vnorm (_root_.D5.S3.Quantum.SpinFactor.OriginalDContract.cross x y) ≤
       vnorm x * vnorm y := by
-  let z : Vec := _root_.D5.S3.Quantum.SpinFactor.OriginalDContract.cross x y
-  have hquad := cross_dot_cross (fun i => x i) (fun i => y i)
-    (fun i => x i) (fun i => y i)
-  change (fun i => z i) ⬝ᵥ (fun i => z i) = _ at hquad
-  have h : (vnorm z) ^ 2 +
-      (_root_.D5.S3.Quantum.SpinFactor.OriginalDContract.dot x y) ^ 2 =
-      (vnorm x) ^ 2 * (vnorm y) ^ 2 := by
-    simpa [z, _root_.D5.S3.Quantum.SpinFactor.OriginalDContract.vnorm,
-      _root_.D5.S3.Quantum.SpinFactor.OriginalDContract.dot] using hquad
-  nlinarith [Real.sqrt_nonneg
-      (_root_.D5.S3.Quantum.SpinFactor.OriginalDContract.dot x x),
-    Real.sqrt_nonneg
-      (_root_.D5.S3.Quantum.SpinFactor.OriginalDContract.dot y y),
-    Real.sqrt_nonneg
-      (_root_.D5.S3.Quantum.SpinFactor.OriginalDContract.dot z z), sq_nonneg
-      (_root_.D5.S3.Quantum.SpinFactor.OriginalDContract.dot x y)]
+  rw [← euclideanVec_norm, ← euclideanVec_norm, ← euclideanVec_norm]
+  change ‖toLp 2 (x ⨯₃ y)‖ ≤ ‖toLp 2 x‖ * ‖toLp 2 y‖
+  rw [InnerProductGeometry.norm_toLp_symm_crossProduct]
+  exact mul_le_of_le_one_right (mul_nonneg (norm_nonneg _) (norm_nonneg _))
+    (Real.sin_le_one _)
 
 private theorem fixed_bound (opposite : Bool) (a b : E) :
     originalNorm (fixed opposite a b) ≤ originalNorm a * originalNorm b := by
@@ -495,7 +517,11 @@ private theorem fixed_bound (opposite : Bool) (a b : E) :
   have ha : vnorm a.2 ≤ originalNorm a := le_add_of_nonneg_left (abs_nonneg _)
   have hb : vnorm b.2 ≤ originalNorm b := le_add_of_nonneg_left (abs_nonneg _)
   have hmul := mul_le_mul ha hb (Real.sqrt_nonneg _) (originalNorm_nonneg _)
-  cases opposite <;> simpa [originalNorm, fixed_coordinates, sign] using h.trans hmul
+  cases opposite <;> simpa [originalNorm,
+    _root_.D5.S3.Quantum.SpinFactor.OriginalDContract.originalNorm,
+    fixed_coordinates, sign, vnorm,
+    _root_.D5.S3.Quantum.SpinFactor.OriginalDContract.vnorm,
+    _root_.D5.S3.Quantum.SpinFactor.OriginalDContract.dot] using h.trans hmul
 
 private theorem fixed_difference_bound (opposite : Bool) (a b a' b' : E) :
     originalNorm (fixed opposite a b - fixed opposite a' b') ≤
@@ -504,12 +530,11 @@ private theorem fixed_difference_bound (opposite : Bool) (a b a' b' : E) :
   have he : fixed opposite a b - fixed opposite a' b' =
       fixed opposite (a - a') b + fixed opposite a' (b - b') := by
     simp [map_sub, LinearMap.sub_apply]
-    abel
   rw [he]
   exact (originalNorm_add _ _).trans
     (add_le_add (fixed_bound opposite _ _) (fixed_bound opposite _ _))
 
-private theorem fixed_continuous (opposite : Bool) : OriginalContinuous (fixed opposite) := by
+private theorem fixed_continuous (opposite : Bool) : OriginalContinuous (fun a b => fixed opposite a b) := by
   intro a b η hη
   let K : ℝ := originalNorm a + originalNorm b + 1
   have hK : 0 < K := by
@@ -535,7 +560,7 @@ private theorem fixed_continuous (opposite : Bool) : OriginalContinuous (fixed o
   have hsecond : originalNorm a * originalNorm (b' - b) ≤ originalNorm a * δ :=
     mul_le_mul_of_nonneg_left hb.le hna
   have hstrict : δ * originalNorm b' < δ * (originalNorm b + 1) :=
-    mul_lt_mul_of_pos_left (lt_of_lt_of_le hb' (add_le_add_left hδ1 _)) hδ
+    mul_lt_mul_of_pos_left (lt_of_lt_of_le hb' (add_le_add_right hδ1 _)) hδ
   calc
     originalNorm (fixed opposite a' b' - fixed opposite a b) ≤
         δ * originalNorm b' + originalNorm a * δ := hmain.trans (add_le_add hfirst hsecond)
@@ -546,13 +571,13 @@ private theorem fixed_continuous (opposite : Bool) : OriginalContinuous (fixed o
 structure Consequences (D : Relation) : Prop where
   p2 : P2 D
   pb : PB D
-  unit_left : ∀ r b, D (r • unit) b = 0
-  unit_right : ∀ r a, D a (r • unit) = 0
-  translation : ∀ r q a b, D (a + r • unit) (b + q • unit) = D a b
+  unit_left : ∀ (r : ℝ) (b : E), D (r • unit) b = 0
+  unit_right : ∀ (r : ℝ) (a : E), D a (r • unit) = 0
+  translation : ∀ (r q : ℝ) (a b : E), D (a + r • unit) (b + q • unit) = D a b
   add_left : ∀ a b c, D (a + b) c = D a c + D b c
   add_right : ∀ a b c, D a (b + c) = D a b + D a c
-  smul_left : ∀ r a b, D (r • a) b = r • D a b
-  smul_right : ∀ r a b, D a (r • b) = r • D a b
+  smul_left : ∀ (r : ℝ) (a b : E), D (r • a) b = r • D a b
+  smul_right : ∀ (r : ℝ) (a b : E), D a (r • b) = r • D a b
   bound : ∀ a b, originalNorm (D a b) ≤ originalNorm a * originalNorm b
   difference_bound : ∀ a b a' b', originalNorm (D a b - D a' b') ≤
     originalNorm (a - a') * originalNorm b + originalNorm a' * originalNorm (b - b')
@@ -571,7 +596,7 @@ def MatrixInterfaces (opposite : Bool) (D : Relation) : Prop :=
         ∃ m : ℝ, ∃ v : Vec, vnorm v ≤ m ∧ ∀ a, α a = evaluate m v a) ∧
       (∀ m v a, (density m v * phi a).trace = (evaluate m v a : ℂ)) ∧
       (∀ a, (phi a).PosSemidef ↔ cone a) ∧
-      (∀ a r, (((r : ℂ) • (1 : Mat) - phi a).PosSemidef ∧
+      (∀ (a : E) (r : ℝ), (((r : ℂ) • (1 : Mat) - phi a).PosSemidef ∧
         ((r : ℂ) • (1 : Mat) + phi a).PosSemidef) ↔ originalNorm a ≤ r) ∧
       (∀ ρ : Mat, ρ.PosSemidef → ∃ m : ℝ, ∃ v : Vec, vnorm v ≤ m ∧ ρ = density m v) ∧
       (∀ a b, product opposite (phi a) (phi b) =
@@ -611,11 +636,17 @@ theorem same_D_consequences (opposite : Bool) (D : Relation)
     finite_gram := fun n m v hm a => fixed_gram_positive opposite m v hm a
     reassociation := fixed_R opposite }
   · intro r b
-    simp [fixed_coordinates, unit, cross_apply]
+    simp [fixed_coordinates, unit,
+      _root_.D5.S3.Quantum.SpinFactor.OriginalDContract.unit,
+      _root_.D5.S3.Quantum.SpinFactor.OriginalDContract.cross]
   · intro r a
-    simp [fixed_coordinates, unit, cross_apply]
+    simp [fixed_coordinates, unit,
+      _root_.D5.S3.Quantum.SpinFactor.OriginalDContract.unit,
+      _root_.D5.S3.Quantum.SpinFactor.OriginalDContract.cross]
   · intro r q a b
-    simp [fixed_coordinates, unit]
+    simp [fixed_coordinates, unit,
+      _root_.D5.S3.Quantum.SpinFactor.OriginalDContract.unit,
+      _root_.D5.S3.Quantum.SpinFactor.OriginalDContract.cross]
   · intro a b c
     exact LinearMap.congr_fun ((fixed opposite).map_add a b) c
   · intro a b c

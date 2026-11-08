@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.SpinFactor;
 
@@ -17,7 +19,7 @@ internal sealed class OriginalClassificationDocument : IScribeDocumentDefinition
                 DescribeId.Create("original-complete-classification"),
                 DeclarationHandle.Create("D5/S3/Quantum/SpinFactor/OriginalClassification.complete_classification"),
                 H("Complete P2-PB iff classification"),
-                StatementSource.WithoutFormula(),
+                StatementSource.FromAuthor(Disp(ClassificationFormula())),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("For every original total D, P2 D and PB D are equivalent to the existence of one Orientation epsilon, chosen globally before any input, with D a b = crossD epsilon a b for all a,b in the original E."))),
                 DescribeRole.Theorem),
@@ -25,8 +27,42 @@ internal sealed class OriginalClassificationDocument : IScribeDocumentDefinition
                 DescribeId.Create("original-complete-consequences"),
                 DeclarationHandle.Create("D5/S3/Quantum/SpinFactor/OriginalClassification.complete_consequences"),
                 H("Same-D consequences of the classified orientation"),
-                StatementSource.WithoutFormula(),
+                StatementSource.FromAuthor(Disp(ConsequencesFormula())),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("For every D satisfying the original P2 and PB, the endpoint returns one global Orientation epsilon, its all-input crossD equality, the full Consequences structure, and the corresponding MatrixInterfaces structure. The structures retain unit and translation neutrality, real bilinearity, original-norm continuity and bounds, all finite complex Gram tables, R, all positive evaluations and masses, the cone and the original norm. No physical realization or stronger regularity is asserted."))),
                 DescribeRole.Theorem))));
+
+    private static Formula ClassificationFormula() => For(
+        Iff(And(Call("P2", X("D")), Call("PB", X("D"))),
+            Exists(CrossEquality(), "epsilon", X("Orientation"))),
+        "D", Relation());
+
+    private static Formula ConsequencesFormula()
+    {
+        var e = X("epsilon"); var d = X("D");
+        var choices = new Formula.Logic(Equal(e, X("plus")),
+            FormulaLogicOperator.Or, Equal(e, X("minus")));
+        var result = And(choices, And(CrossEquality(),
+            And(Call("Consequences", d), Call("MatrixInterfaces", Call("orientationBool", e), d))));
+        return For(Implies(Call("P2", d), Implies(Call("PB", d),
+            Exists(result, "epsilon", X("Orientation")))), "D", Relation());
+    }
+
+    private static Formula CrossEquality() => For(For(
+        Equal(Apply(X("D"), X("a"), X("b")),
+            Call("crossD", X("epsilon"), X("a"), X("b"))), "b", X("E")), "a", X("E"));
+    private static Formula X(string name) => F.Id(name);
+    private static Formula Relation() => new Formula.TypeArrow(X("E"),
+        new Formula.TypeArrow(X("E"), X("E")));
+    private static Formula Apply(Formula f, params Formula[] args) => new Formula.Apply(f, [.. args]);
+    private static Formula Call(string name, params Formula[] args) =>
+        Apply(Seq(Operatorname, Grp(X(name))), args);
+    private static Formula For(Formula body, string name, Formula type) =>
+        new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), type, body);
+    private static Formula Exists(Formula body, string name, Formula type) =>
+        new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create(name), type, body);
+    private static Formula And(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.And, b);
+    private static Formula Implies(Formula a, Formula b) =>
+        new Formula.Logic(a, FormulaLogicOperator.Implies, b);
+    private static Formula Iff(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.Iff, b);
 }
