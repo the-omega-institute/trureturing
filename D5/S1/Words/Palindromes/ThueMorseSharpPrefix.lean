@@ -8,6 +8,8 @@
 
 import D5.S1.Words.Palindromes.ThueMorseAttainment
 
+/-! A sharp comparison of actual ordinary and mixed costs on all zero-start prefixes. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -18,6 +20,7 @@ open D5.S1.Words.Palindromes.PeriodDoubling
 /-- The signed binary weight controls ordinary palindromic cost on every literal prefix. -/
 theorem prefix_signed_upper (n : ℕ) :
     FridPrefix.PL (factor n 0) ≤ 2 * signedWeight (n : ℤ) := by
+  classical
   obtain ⟨hzero, hone, hneg, htri, heven, hodd⟩ := signed_weight_arithmetic
   have adjacent (x : ℤ) : signedWeight x ≤ signedWeight (x + 1) + 1 ∧
       signedWeight (x + 1) ≤ signedWeight x + 1 := by
@@ -42,7 +45,9 @@ theorem prefix_signed_upper (n : ℕ) :
       FridPrefix.PL (factor (m + 1) 0) ≤ FridPrefix.PL (factor m 0) + 1 ∧
       FridPrefix.PL (factor m 0) ≤ FridPrefix.PL (factor (m + 1) 0) + 1 := by
     have h := FridPrefix.pl_one_letter_lipschitz (factor m 0) (thueMorse m)
-    rw [← factor_concat m 0] at h
+    have hc := factor_concat m 0
+    simp only [Nat.zero_add] at hc
+    rw [← hc] at h
     rw [abs_le] at h
     constructor <;> omega
   induction n using Nat.strong_induction_on with
@@ -62,11 +67,10 @@ theorem prefix_signed_upper (n : ℕ) :
       have hrange : n % 4 < 4 := Nat.mod_lt _ (by decide)
       interval_cases hres : n % 4
       · have hn4 : n = 4 * m := by omega
-        subst n
         have hw : signedWeight ((4 * m : ℕ) : ℤ) = signedWeight (m : ℤ) := by
           push_cast
           rw [show (4 : ℤ) * m = 2 * (2 * m) by ring, heven, heven]
-        rw [hw]
+        rw [hn4, hw]
         omega
       · have hn4 : n = 4 * m + 1 := by omega
         have hs := (step (4 * m)).1
@@ -93,6 +97,8 @@ theorem prefix_signed_upper (n : ℕ) :
         rw [he] at hf1
         have he' : 4 * m + 2 + 1 = 4 * m + 3 := by omega
         rw [he'] at hs2
+        have he'' : 4 * m + 1 + 1 = 4 * m + 2 := by omega
+        rw [he''] at hs1
         omega
       · have hn4 : n = 4 * m + 3 := by omega
         have hm1 : m + 1 < n := by omega
@@ -139,10 +145,10 @@ private theorem prefix_two_costs :
       have hh := (hpal p (by simp)).2.reverse_eq
       rw [he] at hh
       simp at hh
-  rw [hw] at hp hc
+  norm_num [hw] at hp hc
   exact ⟨by omega, by omega⟩
 
-/-- Every positive zero-start prefix obeys the factor-two bound, attained by the same actual minima. -/
+/-- The factor-two bound for every positive prefix, attained by the same actual minima. -/
 theorem sharp_factor_two_prefix :
     (∀ n : ℕ, 1 ≤ n → FridPrefix.PL (factor n 0) ≤ 2 * combinedLength (factor n 0)) ∧
     (∃ n : ℕ, 1 ≤ n ∧ FridPrefix.PL (factor n 0) = 2 * combinedLength (factor n 0) ∧
