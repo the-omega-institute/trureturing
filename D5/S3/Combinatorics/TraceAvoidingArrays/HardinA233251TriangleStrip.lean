@@ -8,6 +8,8 @@
 
 /-
 admission_basis: open-problem-resolution (#27657; Proved)
+Registration audit (CLAUDE.md §3.9): finite_certificate is declared_unresolved (IE-C050);
+the unfinished audit is recorded in issue #27943.
 escape_witness: none (the settlement of the external open problem is the new content; every declaration below is bind-only)
 Finite single-row decisions supply the numerical premises consumed on the result path.
 Direct frozen dependency: D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.Seen

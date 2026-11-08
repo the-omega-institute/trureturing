@@ -8,6 +8,8 @@
 
 /-
 admission_basis: open-problem-resolution (#27656; Proved)
+Registration audit (CLAUDE.md §3.9): finish_fst, finish_snd, good_iff and edge_iff are
+declared_unresolved (IE-C050); the unfinished audit is recorded in issue #27943.
 escape_witness: none (open-problem-resolution; the settlement is the new content)
 Direct frozen dependency: D5.S3.Observer.Separation.BooleanRankThreeK4.beta
 (statement_id sha256:1abdc5f3db71567fe05de5aabbe80dddeb5ec5179e4ec7fd49fe71e500518481), the complementary-pair label map.
