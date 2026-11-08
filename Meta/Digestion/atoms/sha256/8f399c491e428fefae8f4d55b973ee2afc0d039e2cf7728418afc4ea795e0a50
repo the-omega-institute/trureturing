@@ -1,0 +1,4 @@
+#### 定义 10.1：固定点的二元关系
+
+对 $f:X\to X$，定义 $\Gamma_f=\{(x,f(x)):x\in X\}$、 $\Delta_X=\{(x,x):x\in X\}$。 固定点集合准确为 $\Gamma_f\cap\Delta_X$ 在第一坐标的投影。
+
