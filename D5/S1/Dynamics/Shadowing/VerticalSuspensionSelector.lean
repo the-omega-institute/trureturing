@@ -435,7 +435,7 @@ structure ValidCrossing (H : LocalEquiconnection K) (z w : Suspension K) : Prop 
   labels : (label ⟨z, left_interior⟩, label ⟨w, right_interior⟩) ∈ H.domain
 
 /-- An auxiliary full-history domain used to assemble the explicit formula.
-The metric pseudoorbit domain must still be proved to map into this domain. -/
+The compact link bound maps every admitted metric pseudoorbit into this domain. -/
 abbrev AdmissibleHistory (H : LocalEquiconnection K) :=
   {x : ℤ → Suspension K //
     ForwardSign (fun j => (height (x j) : ℝ)) ∧
@@ -500,7 +500,7 @@ private theorem chartValue_adjacent {H : LocalEquiconnection K}
   congr 1 <;> push_cast <;> ring
 
 /-- Every possible weak crossing gives the same point in the actual quotient. -/
-theorem chart_value_independent {H : LocalEquiconnection K}
+private theorem chart_value_independent {H : LocalEquiconnection K}
     (x : AdmissibleHistory H) (i j : ℤ) (hi : Crossing (historyHeight x) i)
     (hj : Crossing (historyHeight x) j) : chartValue x i hi = chartValue x j hj := by
   rcases crossing_separation x.2.1 hi hj with he | ⟨he, _⟩ | ⟨he, _⟩
@@ -608,7 +608,7 @@ private theorem continuousAt_selector_crossing {H : LocalEquiconnection K}
   have hcover : (⋃ k, C k) = univ := by
     apply eq_univ_of_forall
     intro y
-    rcases crossing_classification y.1.2.1 with hn | hp | ⟨k, hk⟩
+    rcases crossing_classification (v := historyHeight y.1) y.1.2.1 with hn | hp | ⟨k, hk⟩
     · exact (not_lt_of_ge (hn (j + 2)).le y.2.2).elim
     · exact (not_lt_of_ge (hp (j - 1)).le y.2.1).elim
     · have hb := crossing_local_range y.1.2.1 y.2.1 y.2.2 hk
@@ -663,7 +663,7 @@ private theorem uniform_cap [CompactSpace K] (p : Height) (N : Suspension K)
   obtain ⟨U, V, _, hV, hKU, hpV, hUV⟩ :=
     generalized_tube_lemma isCompact_univ isCompact_singleton hpre hsub
   refine ⟨V, hV, hpV (mem_singleton p), fun u v hv => ?_⟩
-  exact hUV ⟨hKU (mem_univ u), hv⟩
+  exact hUV (show (u, v) ∈ U ×ˢ V from ⟨hKU (mem_univ u), hv⟩)
 
 private theorem negative_phase_cap [CompactSpace K] (O : Set (Suspension K))
     (hO : IsOpen O) (hN : north ∈ O) :
@@ -704,14 +704,14 @@ private theorem continuousAt_selector_negative [CompactSpace K] {H : LocalEquico
     (isOpen_lt (continuous_historyHeight A) continuous_const).mem_nhds (hx A)
   apply hnb.mono
   intro y hy
-  rcases crossing_classification y.2.1 with hn | hp | ⟨j, hj⟩
+  rcases crossing_classification (v := historyHeight y) y.2.1 with hn | hp | ⟨j, hj⟩
   · simpa only [selector_negative y hn] using hN
   · exact (not_lt_of_ge (hp A).le hy).elim
   · rw [selector_at_crossing y j hj]
     apply hA
     have hjA : A ≤ j := by
       by_contra h
-      have := nonnegative_after y.2.1 (show j + 1 ≤ A by omega) hj.2
+      have := nonnegative_after (v := historyHeight y) y.2.1 (show j + 1 ≤ A by omega) hj.2
       linarith
     have hcast : (A : ℝ) ≤ (j : ℝ) := by exact_mod_cast hjA
     have hs := (crossingFraction_mem y j hj).1
@@ -728,7 +728,7 @@ private theorem continuousAt_selector_positive [CompactSpace K] {H : LocalEquico
     (isOpen_lt continuous_const (continuous_historyHeight (-A))).mem_nhds (hx (-A))
   apply hnb.mono
   intro y hy
-  rcases crossing_classification y.2.1 with hn | hp | ⟨j, hj⟩
+  rcases crossing_classification (v := historyHeight y) y.2.1 with hn | hp | ⟨j, hj⟩
   · exact (not_lt_of_ge (hn (-A)).le hy).elim
   · simpa only [selector_positive y hp] using hS
   · rw [selector_at_crossing y j hj]
@@ -737,18 +737,18 @@ private theorem continuousAt_selector_positive [CompactSpace K] {H : LocalEquico
       by_contra h
       rcases eq_or_lt_of_le (show -A ≤ j by omega) with he | he
       · subst j; linarith [hj.1]
-      · have := positive_after y.2.1 he hy.le
+      · have := positive_after (v := historyHeight y) y.2.1 he hy.le
         linarith [hj.1]
     have hcast : (j : ℝ) + 1 ≤ -(A : ℝ) := by exact_mod_cast (show j + 1 ≤ -A by omega)
     have hs := (crossingFraction_mem y j hj).2
     linarith
 
 /-- Includes every nonconstant strict-sign history, using uniform quotient cap neighborhoods. -/
-theorem continuous_selector [CompactSpace K] (H : LocalEquiconnection K) :
+private theorem continuous_selector [CompactSpace K] (H : LocalEquiconnection K) :
     Continuous (selector : AdmissibleHistory H → Suspension K) := by
   apply continuous_iff_continuousAt.mpr
   intro x
-  rcases crossing_classification x.2.1 with hn | hp | ⟨j, hj⟩
+  rcases crossing_classification (v := historyHeight x) x.2.1 with hn | hp | ⟨j, hj⟩
   · exact continuousAt_selector_negative x hn
   · exact continuousAt_selector_positive x hp
   · exact continuousAt_selector_crossing x j hj
@@ -759,11 +759,13 @@ private theorem height_vertical (z : Suspension K) :
 
 private theorem verticalHeight_fixed_bottom :
     verticalHeight ⟨-1, by constructor <;> norm_num⟩ =
-      ⟨-1, by constructor <;> norm_num⟩ := mobiusHeight_bottom _ _
+      ⟨-1, by constructor <;> norm_num⟩ :=
+  mobiusHeight_bottom _ ⟨Real.neg_one_lt_tanh _, Real.tanh_lt_one _⟩
 
 private theorem verticalHeight_fixed_top :
     verticalHeight ⟨1, by constructor <;> norm_num⟩ =
-      ⟨1, by constructor <;> norm_num⟩ := mobiusHeight_top _ _
+      ⟨1, by constructor <;> norm_num⟩ :=
+  mobiusHeight_top _ ⟨Real.neg_one_lt_tanh _, Real.tanh_lt_one _⟩
 
 private theorem vertical_interior (z : Interior (K := K)) :
     (height (vertical z.1) : ℝ) ∈ Ioo (-1 : ℝ) 1 := by
@@ -802,7 +804,7 @@ private theorem vertical_crossing_valid (H : LocalEquiconnection K) (z : Suspens
       norm_num at hw
     · linarith
   refine ⟨hi, vertical_interior ⟨z, hi⟩, ?_⟩
-  rw [label_vertical]
+  rw [label_vertical ⟨z, hi⟩]
   exact H.diagonal _
 
 private theorem vertical_positive (z : Suspension K) (hz : 0 ≤ (height z : ℝ)) :
@@ -873,7 +875,8 @@ private theorem exists_closed_link_tolerance [CompactSpace K]
       intro p hp
       apply dist_pos.mpr
       intro he
-      exact hp (he ▸ hgraph p.1))
+      apply hp
+      simpa only [he] using hgraph p.1)
   refine ⟨ε / 2, half_pos hε, fun z w hzw => ?_⟩
   have hgood : (z, w) ∈ G := by
     by_contra hbad
@@ -884,10 +887,269 @@ private theorem exists_closed_link_tolerance [CompactSpace K]
     rcases hgood.1 with h | h
     · linarith
     · exact h
+
   · intro hz hw
     rcases hgood.2 with h | h | h
     · linarith
     · linarith
     · exact h
+
+private def translateHistory {H : LocalEquiconnection K} (n : ℤ) (x : AdmissibleHistory H) :
+    AdmissibleHistory H :=
+  ⟨fun j => x.1 (j + n), by
+    constructor
+    · intro j hj
+      simpa only [add_assoc, add_comm, add_left_comm] using x.2.1 (j + n) hj
+    · intro j hj
+      have hc : Crossing (historyHeight x) (j + n) := by
+        simpa only [Crossing, historyHeight, add_assoc, add_comm, add_left_comm] using hj
+      simpa only [add_assoc, add_comm, add_left_comm] using x.2.2 (j + n) hc⟩
+
+private theorem crossing_translate {H : LocalEquiconnection K} (n : ℤ)
+    (x : AdmissibleHistory H) (j : ℤ) :
+    Crossing (historyHeight (translateHistory n x)) j ↔ Crossing (historyHeight x) (j + n) := by
+  simp only [Crossing, historyHeight, translateHistory, add_assoc, add_comm, add_left_comm]
+
+private theorem vertical_zpow_phasePoint (u : K) (t : ℝ) (n : ℤ) :
+    ((vertical : Suspension K ≃ₜ Suspension K) ^ n) (phasePoint u t) =
+      phasePoint u (t + (n : ℝ)) := by
+  induction n using Int.induction_on with
+  | zero => simp
+  | succ n ih =>
+    rw [show (n : ℤ) + 1 = 1 + n by omega, zpow_add, zpow_one, Homeomorph.mul_apply,
+      ih, vertical_phasePoint]
+    congr 1 <;> push_cast <;> ring
+  | pred n ih =>
+    rw [show -(n : ℤ) - 1 = -1 + -n by omega, zpow_add, zpow_neg_one, Homeomorph.mul_apply,
+      Homeomorph.inv_apply, ih]
+    apply vertical.injective
+    rw [Homeomorph.apply_symm_apply, vertical_phasePoint]
+    congr 1 <;> push_cast <;> ring
+
+private theorem vertical_north : vertical (north : Suspension K) = north := by
+  change point _ (verticalHeight _) = point _ _
+  rw [verticalHeight_fixed_bottom]
+
+private theorem vertical_south : vertical (south : Suspension K) = south := by
+  change point _ (verticalHeight _) = point _ _
+  rw [verticalHeight_fixed_top]
+
+private theorem vertical_zpow_pole (p : Suspension K) (hp : vertical p = p) (n : ℤ) :
+    ((vertical : Suspension K ≃ₜ Suspension K) ^ n) p = p := by
+  induction n using Int.induction_on with
+  | zero => simp
+  | succ n ih =>
+    rw [show (n : ℤ) + 1 = 1 + n by omega, zpow_add, zpow_one, Homeomorph.mul_apply, ih, hp]
+  | pred n ih =>
+    rw [show -(n : ℤ) - 1 = -1 + -n by omega, zpow_add, zpow_neg_one,
+      Homeomorph.mul_apply, Homeomorph.inv_apply, ih]
+    apply vertical.injective
+    rw [Homeomorph.apply_symm_apply, hp]
+
+private theorem chartValue_translate {H : LocalEquiconnection K} (n : ℤ)
+    (x : AdmissibleHistory H) (j : ℤ) (hj : Crossing (historyHeight x) (j + n)) :
+    chartValue (translateHistory n x) j ((crossing_translate n x j).mpr hj) =
+      ((vertical : Suspension K ≃ₜ Suspension K) ^ n) (chartValue x (j + n) hj) := by
+  have hf : crossingFraction (translateHistory n x) j = crossingFraction x (j + n) := by
+    simp only [crossingFraction, historyHeight, translateHistory,
+      add_assoc, add_comm, add_left_comm]
+  have hp : crossingPair (translateHistory n x) j ((crossing_translate n x j).mpr hj) =
+      crossingPair x (j + n) hj := by
+    apply Subtype.ext
+    simp only [crossingPair, translateHistory, add_assoc, add_comm, add_left_comm]
+  unfold chartValue
+  rw [vertical_zpow_phasePoint, hp]
+  have hs : (⟨crossingFraction (translateHistory n x) j,
+      crossingFraction_mem _ _ ((crossing_translate n x j).mpr hj)⟩ : Icc (0 : ℝ) 1) =
+      ⟨crossingFraction x (j + n), crossingFraction_mem _ _ hj⟩ := Subtype.ext hf
+  rw [hs, hf]
+  congr 1 <;> push_cast <;> ring
+
+private theorem selector_translate {H : LocalEquiconnection K} (n : ℤ)
+    (x : AdmissibleHistory H) :
+    selector (translateHistory n x) =
+      ((vertical : Suspension K ≃ₜ Suspension K) ^ n) (selector x) := by
+  rcases crossing_classification (v := historyHeight x) x.2.1 with hn | hp | ⟨j, hj⟩
+  · have ht : ∀ k, historyHeight (translateHistory n x) k < 0 := fun k => hn (k + n)
+    rw [selector_negative _ ht, selector_negative _ hn, vertical_zpow_pole _ vertical_north]
+  · have ht : ∀ k, 0 < historyHeight (translateHistory n x) k := fun k => hp (k + n)
+    rw [selector_positive _ ht, selector_positive _ hp, vertical_zpow_pole _ vertical_south]
+  · have hj' : Crossing (historyHeight x) (j - n + n) := by simpa using hj
+    rw [selector_at_crossing _ (j - n) ((crossing_translate n x (j - n)).mpr hj'),
+      chartValue_translate n x (j - n) hj']
+    simpa only [sub_add_cancel] using congrArg
+      ((vertical : Suspension K ≃ₜ Suspension K) ^ n) (selector_at_crossing x j hj).symm
+
+private theorem vertical_orbit_step (z : Suspension K) (j : ℤ) :
+    ((vertical : Suspension K ≃ₜ Suspension K) ^ (j + 1)) z =
+      vertical (((vertical : Suspension K ≃ₜ Suspension K) ^ j) z) := by
+  rw [add_comm j 1, zpow_add, zpow_one, Homeomorph.mul_apply]
+
+private def orbitHistory (H : LocalEquiconnection K) (z : Suspension K) : AdmissibleHistory H :=
+  ⟨fun j => ((vertical : Suspension K ≃ₜ Suspension K) ^ j) z, by
+    constructor
+    · intro j hj
+      change 0 < (height (((vertical : Suspension K ≃ₜ Suspension K) ^ (j + 1)) z) : ℝ)
+      rw [vertical_orbit_step]
+      exact vertical_positive _ hj
+    · intro j hj
+      change ValidCrossing H (((vertical : Suspension K ≃ₜ Suspension K) ^ j) z)
+        (((vertical : Suspension K ≃ₜ Suspension K) ^ (j + 1)) z)
+      rw [vertical_orbit_step]
+      apply vertical_crossing_valid H _ hj.1
+      simpa only [vertical_orbit_step] using hj.2⟩
+
+private theorem height_phasePoint (u : K) (t : ℝ) :
+    (height (phasePoint u t) : ℝ) = Real.tanh t := rfl
+
+private theorem selector_orbit_phasePoint (H : LocalEquiconnection K) (u : K) (t : ℝ) :
+    selector (orbitHistory H (phasePoint u t)) = phasePoint u t := by
+  let j : ℤ := ⌊-t⌋
+  let x := orbitHistory H (phasePoint u t)
+  have hh (k : ℤ) : historyHeight x k = Real.tanh (t + (k : ℝ)) := by
+    change (height (((vertical : Suspension K ≃ₜ Suspension K) ^ k) (phasePoint u t)) : ℝ) = _
+    rw [vertical_zpow_phasePoint, height_phasePoint]
+  have hj0 : t + (j : ℝ) ≤ 0 := by have := Int.floor_le (-t); dsimp [j]; linarith
+  have hj1 : 0 ≤ t + ((j + 1 : ℤ) : ℝ) := by
+    have := Int.lt_floor_add_one (-t)
+    dsimp [j]
+    push_cast
+    linarith
+  have hj : Crossing (historyHeight x) j := by
+    constructor
+    · rw [hh]
+      simpa only [Real.tanh_zero] using strictMono_tanh.monotone hj0
+    · rw [hh]
+      simpa only [Real.tanh_zero] using strictMono_tanh.monotone hj1
+  have hf : crossingFraction x j = -(t + (j : ℝ)) := by
+    unfold crossingFraction
+    rw [hh, hh, Real.artanh_tanh, Real.artanh_tanh]
+    push_cast
+    have he : t + ((j : ℝ) + 1) - (t + (j : ℝ)) = 1 := by ring
+    rw [he, div_one]
+  have hp : crossingPair x j hj = ⟨(u, u), H.diagonal u⟩ := by
+    apply Subtype.ext
+    dsimp [crossingPair, x, orbitHistory]
+    simp only [vertical_zpow_phasePoint]
+    simp only [phasePoint]
+    apply Prod.ext <;> apply label_point
+  rw [selector_at_crossing x j hj]
+  unfold chartValue
+  rw [hp, H.refl]
+  congr 1
+  rw [hf]
+  ring
+
+private theorem selector_orbit (H : LocalEquiconnection K) (z : Suspension K) :
+    selector (orbitHistory H z) = z := by
+  induction z using Quotient.inductionOn with | _ p =>
+    rcases p with ⟨u, v⟩
+    by_cases hb : (v : ℝ) = -1
+    · have hp : point u v = (north : Suspension K) := by
+        have hv : v = ⟨-1, by constructor <;> norm_num⟩ := Subtype.ext hb
+        rw [hv]
+        exact point_bottom _ _
+      change selector (orbitHistory H (point u v)) = point u v
+      rw [hp]
+      apply selector_negative
+      intro j
+      change (height (((vertical : Suspension K ≃ₜ Suspension K) ^ j) north) : ℝ) < 0
+      rw [vertical_zpow_pole _ vertical_north]
+      norm_num [north, height_point]
+    · by_cases ht : (v : ℝ) = 1
+      · have hp : point u v = (south : Suspension K) := by
+          have hv : v = ⟨1, by constructor <;> norm_num⟩ := Subtype.ext ht
+          rw [hv]
+          exact point_top _ _
+        change selector (orbitHistory H (point u v)) = point u v
+        rw [hp]
+        apply selector_positive
+        intro j
+        change 0 < (height (((vertical : Suspension K ≃ₜ Suspension K) ^ j) south) : ℝ)
+        rw [vertical_zpow_pole _ vertical_south]
+        norm_num [south, height_point]
+      · have hi : (v : ℝ) ∈ Ioo (-1 : ℝ) 1 := by
+          exact ⟨lt_of_le_of_ne v.2.1 (Ne.symm hb), lt_of_le_of_ne v.2.2 ht⟩
+        have hp : phasePoint u (Real.artanh v) = point u v := by
+          unfold phasePoint
+          congr 1
+          apply Subtype.ext
+          exact Real.tanh_artanh hi
+        change selector (orbitHistory H (point u v)) = point u v
+        rw [← hp]
+        exact selector_orbit_phasePoint H u _
+
+/-- The entire true orbit, with negative iterates and zero link errors. -/
+def orbit {X : Type*} [PseudoMetricSpace X] (f : X ≃ₜ X) (δ : ℝ) (hδ : 0 ≤ δ)
+    (z : X) : ClosedPseudoOrbit f δ :=
+  ⟨fun j => (f ^ j) z, by
+    intro j
+    have he : (f ^ (j + 1)) z = f ((f ^ j) z) := by
+      rw [add_comm j 1, zpow_add, zpow_one, Homeomorph.mul_apply]
+    simpa only [he, dist_self] using hδ⟩
+
+/-- The selector contract has the actual full closed integer domain. -/
+structure IntegerSelector {X : Type*} [PseudoMetricSpace X] (f : X ≃ₜ X)
+    (δ : ℝ) (hδ : 0 ≤ δ) where
+  map : ClosedPseudoOrbit f δ → X
+  continuous_map : Continuous map
+  closed_domain : IsClosed {x : ℤ → X | ∀ j : ℤ, dist (f (x j)) (x (j + 1)) ≤ δ}
+  fixes_orbit : ∀ z, map (orbit f δ hδ z) = z
+  integer_equivariant : ∀ n : ℤ, ∀ x : ClosedPseudoOrbit f δ,
+    map (shift f δ n x) = (f ^ n) (map x)
+
+private def restrictIntegerSelector {X : Type*} [PseudoMetricSpace X] (f : X ≃ₜ X)
+    (δ ε : ℝ) (hδ : 0 ≤ δ) (hε : 0 ≤ ε) (hδε : δ ≤ ε)
+    (R : IntegerSelector f ε hε) : IntegerSelector f δ hδ where
+  map x := R.map ⟨x.1, fun j => (x.2 j).trans hδε⟩
+  continuous_map := R.continuous_map.comp (continuous_subtype_val.subtype_mk _)
+  closed_domain := closed_pseudoOrbit f.continuous δ
+  fixes_orbit z := by
+    change R.map _ = z
+    convert R.fixes_orbit z using 1
+  integer_equivariant n x := by
+    convert R.integer_equivariant n ⟨x.1, fun j => (x.2 j).trans hδε⟩ using 1
+
+/-- One full-domain selector and its literal restrictions to every smaller positive tolerance.
+The metric is explicitly required to induce the native quotient topology. -/
+theorem compact_lec_crossing_selector [CompactSpace K] [MetrizableSpace K]
+    (H : LocalEquiconnection K) (m : MetricSpace (Suspension K))
+    (hm : (inferInstance : TopologicalSpace (Suspension K)) = m.toUniformSpace.toTopologicalSpace) :
+    letI := m.replaceTopology hm
+    ∃ δstar : ℝ, ∃ hδstar : 0 < δstar,
+      ∃ Rstar : IntegerSelector (vertical : Suspension K ≃ₜ Suspension K) δstar hδstar.le,
+        ∀ δ : ℝ, ∀ hδ : 0 < δ, ∀ hbound : δ ≤ δstar,
+          ∃ R : IntegerSelector (vertical : Suspension K ≃ₜ Suspension K) δ hδ.le,
+            ∀ x, R.map x = Rstar.map ⟨x.1, fun j => (x.2 j).trans hbound⟩ := by
+  letI := m.replaceTopology hm
+  obtain ⟨δstar, hδstar, hlink⟩ := exists_closed_link_tolerance H m hm
+  let liftHistory : ClosedPseudoOrbit (vertical : Suspension K → Suspension K) δstar →
+      AdmissibleHistory H := fun x => ⟨x.1, by
+    constructor
+    · intro j hj
+      exact (hlink (x.1 j) (x.1 (j + 1)) (x.2 j)).1 hj
+    · intro j hj
+      exact (hlink (x.1 j) (x.1 (j + 1)) (x.2 j)).2 hj.1 hj.2⟩
+  have hcont : Continuous liftHistory := continuous_subtype_val.subtype_mk _
+  let Rstar : IntegerSelector (vertical : Suspension K ≃ₜ Suspension K) δstar hδstar.le := {
+    map := fun x => selector (liftHistory x)
+    continuous_map := (continuous_selector H).comp hcont
+    closed_domain := closed_pseudoOrbit vertical.continuous δstar
+    fixes_orbit := by
+      intro z
+      have he : liftHistory (orbit vertical δstar hδstar.le z) = orbitHistory H z :=
+        Subtype.ext rfl
+      change selector (liftHistory _) = z
+      rw [he]
+      exact selector_orbit H z
+    integer_equivariant := by
+      intro n x
+      have he : liftHistory (shift vertical δstar n x) = translateHistory n (liftHistory x) :=
+        Subtype.ext rfl
+      change selector (liftHistory _) = (vertical ^ n) (selector (liftHistory x))
+      rw [he]
+      exact selector_translate n (liftHistory x) }
+  refine ⟨δstar, hδstar, Rstar, fun δ hδ hbound => ?_⟩
+  exact ⟨restrictIntegerSelector vertical δ δstar hδ.le hδstar.le hbound Rstar, fun _ => rfl⟩
 
 end D5.S1.Dynamics.Shadowing.VerticalSuspensionSelector
