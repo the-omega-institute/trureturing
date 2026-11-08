@@ -112,7 +112,7 @@ def registration_upper : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := some ℕ
-  sourceSelection := some { owner := `D5.S1.Words.Palindromes.ThueMorseSharpPrefix, definition := none, coordinates := #[], readouts := #[{ path := #["body", "fn", "arg"], stateBinder := 0 }] }
+  sourceSelection := some { owner := `D5.S1.Words.Palindromes.ThueMorseSharpPrefix, definition := none, coordinates := #[], readouts := #[{ path := #["body", "fn", "arg"], stateBinder := 0, functionOperand := false, stateOperand := none, booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[] }
@@ -136,7 +136,7 @@ def registration_sharp : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := some ℕ
-  sourceSelection := some { owner := `D5.S1.Words.Palindromes.ThueMorseSharpPrefix, definition := none, coordinates := #[], readouts := #[{ path := #["fn", "arg", "body", "body", "fn", "arg"], stateBinder := 0 }] }
+  sourceSelection := some { owner := `D5.S1.Words.Palindromes.ThueMorseSharpPrefix, definition := none, coordinates := #[], readouts := #[{ path := #["fn", "arg", "body", "body", "fn", "arg"], stateBinder := 0, functionOperand := false, stateOperand := none, booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[] }
