@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/Geometry/KingFiniteReplay
    mirror-E: none(waiver:finite-graph-singular-homology)
-   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Maps]
+   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Subgraph]
    utility: kind=numeric-reduction; basis=consumer=D5/S3/Geometry/KingFinalComposition.routeBaseReducedHomologyIso; premises=D5/S3/Geometry/KingFiniteReplay.adjacency39
    digest: The exact forty-move chain from the actual graph6-complement seed to the 141-vertex labeled graph. -/
 import D5.S3.Geometry.KingFiniteReplay.Data

@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/Geometry/KingFiniteReplay/DataLozinThird
    mirror-E: none(waiver:finite-graph-singular-homology)
-   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Maps]
+   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Subgraph]
    utility: kind=numeric-reduction; basis=consumer=D5/S3/Geometry/KingFiniteReplay.fortyMoves; premises=D5/S3/Geometry/KingFiniteReplay/FiniteLabels.rowBits_spec
    digest: The exact forty-one Nat-labeled graph states and proved row caches. -/
 import D5.S3.Geometry.KingFiniteReplay.FiniteLabels

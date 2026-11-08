@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/Geometry/KingFiniteReplay/TripleReplay
    mirror-E: none(waiver:finite-graph-singular-homology)
-   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Maps]
+   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Subgraph]
    utility: kind=numeric-reduction; basis=consumer=D5/S3/Geometry/KingFiniteReplay.fortyMoves; premises=D5/S3/Geometry/KingFiniteReplay/TripleReplay.initialAdjacency
    digest: The original seed labels and ten literal triple subdivisions. -/
 import D5.S3.Geometry.KingFiniteReplay.DataTriples

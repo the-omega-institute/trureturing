@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Geometry/KingFiniteReplay/FiniteLabels
    mirror-E: none(waiver:finite-graph-singular-homology)
-   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Maps]
+   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Subgraph]
    utility: none
    digest: Finite label and adjacency reductions consumed by the forty literal graph moves. -/
 import D5.S3.Geometry.FiniteGraphSuspensionMoves

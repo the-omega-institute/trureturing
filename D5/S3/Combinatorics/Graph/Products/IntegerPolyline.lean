@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Graph/Products/IntegerPolyline
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.Data.List.Range]
+   anchors: [mathlib/module/Mathlib.Data.Int.NatAbs]
    utility: none
    digest: Integer polyline samples agree with the complete corner expansion and the right-closed verifier convention. -/
 import D5.S3.Combinatorics.Graph.Products.LatticeRouting

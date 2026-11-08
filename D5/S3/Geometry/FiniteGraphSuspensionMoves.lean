@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Geometry/FiniteGraphSuspensionMoves
    mirror-E: none(waiver:finite-graph-singular-homology)
-   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Maps]
+   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Subgraph]
    utility: none
    digest: Concrete finite move chains consume the three proved graph identifications and their integral singular-homology shifts. -/
 import D5.S3.Geometry.FiniteGraphSuspensionMoves.Lozin
