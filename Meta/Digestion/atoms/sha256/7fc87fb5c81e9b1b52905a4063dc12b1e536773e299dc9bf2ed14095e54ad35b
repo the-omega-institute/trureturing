@@ -1,0 +1,14 @@
+**定理 55.2（固定有限行认回全部旧响应）。** 在定义 55.1 的同一有限 $\mathsf H_{\rm orig}+\mathsf{PB}$ 背景下，对任意所选 (55.1) 及基，下列四项等价：
+
+1. $\mathsf F_{\rm row}$。
+2. 完整原 $\mathsf P_3$。
+3. 对每个非经典块存在一个全块固定符号 $\varepsilon_j\in\{1,-1\}$，对所有原 $b,c\in E$，包括所有混合输入，
+
+   $$
+   D(b,c)_j=\varepsilon_j\frac{\mathrm i}{2}[b_j,c_j];
+   \qquad D(b,c)_j=0\quad(n_j=1).
+   \tag{55.4}
+   $$
+
+4. 同一个旧 $D$ 满足全部原 R。
+
