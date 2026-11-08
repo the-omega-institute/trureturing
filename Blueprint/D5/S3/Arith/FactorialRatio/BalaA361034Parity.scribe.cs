@@ -12,6 +12,11 @@ internal sealed class BalaA361034ParityDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Bala's OEIS A361034 parity characterization.",
         H("OEIS A361034: parity of a quartic factorial quotient"), Blocks(
+            Node("binary_factorial_balance", All("n", Nat(),
+                Eq(Add(App(Q("Nat", "factorization"), Fact(V("n")), D(2)),
+                    App(Q("List", "sum"), App(Q("Nat", "digits"), D(2), V("n")))), V("n"))),
+                "The factorial exponent of two and the binary digit sum add to the index.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo()),
             Node("quotient_odd", SharedBody(),
                 "For positive natural numbers C and j, when 8 j! C = (4j)! and the exponent of 2 in C is 3j - 3, the factorial quotient is an integer and is odd exactly when n + j is a power of two. The binary digit sum determines the exponent of 2 in the quotient.",
                 DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),

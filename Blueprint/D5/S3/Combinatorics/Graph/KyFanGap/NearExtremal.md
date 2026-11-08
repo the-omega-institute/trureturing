@@ -30,10 +30,24 @@ Lean statement: `D5/S3/Combinatorics/Graph/KyFanGap/NearExtremal.uniform_gap`
 
 Every nonsquare positive integer k admits a positive gap below (1+sqrt(k))/2 for the normalized Ky Fan k-sum of every symmetric zero-one matrix of order at least k. Write c=1/sqrt(k), B=2A-J and T=B/n. An attaining signed orthonormal family defines Q=U diag(signs) U-transpose, with Q cubed equal to Q and squared Frobenius norm k. The two nonnegative variational deficits control both the Frobenius distance from T to cQ and the action of Q-I on the constant vector. Smooth the family by x(r,i)=sqrt(n)(T u(i))(r)/c. Cauchy-Schwarz bounds every coordinate by sqrt(k); the attaining family is supplied by the proved signed spectral formula. Its bilinear kernel satisfies H/n=TQT/c; the identity Q cubed equals Q bounds its approximation error by that of T-cQ. The same variational deficits bound the normalized row-sum error. Their sum would violate the positive bilinear approximation gap if the Ky Fan deficit were arbitrarily small. This produces a positive uniform gap without a numerical value for the optimal constant.
 
+**Theorem 1.3 (The real Frobenius norm squared is the coordinate square sum).**
+
+$$\forall (m : \mathbb{N}), (\forall (n : \mathbb{N}), (\forall (A : \operatorname{Matrix}\left(\operatorname{Fin}\left(m\right), \operatorname{Fin}\left(n\right), \mathbb{R}\right)), (\left\lVert A \right\rVert^{2} = \sum_{(r : \operatorname{Fin}\left(m\right))} (\sum_{(s : \operatorname{Fin}\left(n\right))} (A\left(r, s\right)^{2})))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/KyFanGap/NearExtremal.real_frobenius_sq` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every pair of natural dimensions m and n and every real matrix A indexed by Fin(m) and Fin(n), the square of its Frobenius norm equals the sum over both coordinates of the squared entries.
+
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/Graph/KyFanGap/NearExtremal.bilinear_approximation_gap`
+- Truth anchor: `D5/S3/Combinatorics/Graph/KyFanGap/NearExtremal.real_frobenius_sq`
 - Truth anchor: `D5/S3/Combinatorics/Graph/KyFanGap/NearExtremal.uniform_gap`
 - Dependency: [D5/S3/Arith/Lattices/Klartag/Completion/Discharge](../../../Arith/Lattices/Klartag/Completion/Discharge.md)
+- Dependency: [D5/S3/Combinatorics/Graph/KyFanGap/Defs](Defs.md)
 - Dependency: [D5/S3/Combinatorics/Graph/KyFanGap/SignedVariational](SignedVariational.md)
 - Dependency: [D5/S3/Combinatorics/Graph/KyFanGap/UniformGap](UniformGap.md)

@@ -27,6 +27,15 @@ internal sealed class TriangularMeanSquareDocument : IScribeDocumentDefinition
                     "Let f and g be square integrable on ordered intervals whose endpoints depend on X, and let S(X) be eventually positive. If the square integral of g divided by S tends to a nonnegative L and that of f-g divided by S tends to zero, then the square integral of f divided by S also tends to L. The reverse triangle inequality first compares the square roots, then squaring recovers the limit."))),
                 DescribeRole.Theorem),
             Describe.Lean(
+                DescribeId.Create("min-kernel-integrable"),
+                DeclarationHandle.Create(Prefix + "min_kernel_integrable"),
+                H("Integrability of the min-kernel energy"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For every integrable real profile g on the unit interval, the function g(s)g(t)min(s,t) is integrable on the unit square. The product g(s)g(t) is integrable by Fubini, and min(s,t) lies between zero and one on the square."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("fixed-length-profile-mean-square-tendsto"),
                 DeclarationHandle.Create(Prefix + "fixed_length_profile_mean_square_tendsto"),
                 H("The fixed-length profile mean square"),

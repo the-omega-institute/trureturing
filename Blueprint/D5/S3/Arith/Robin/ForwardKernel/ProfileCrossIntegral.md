@@ -4,7 +4,43 @@
 
 Uniform bounds for moving-increment primitives control cross integrals of weighted profiles.
 
-**Theorem 1.1 (Uniform profile estimate).**
+**Definition 1.1 (Weight for a pair of moving profiles).**
+
+Lean statement: `D5/S3/Arith/Robin/ForwardKernel/ProfileCrossIntegral.crossWeight`
+
+*Formalization.* `D5/S3/Arith/Robin/ForwardKernel/ProfileCrossIntegral.crossWeight` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For real a,b,s,t,x, define the cross weight as x^(-a-b)*priceRatio(x,s*x^a)*priceRatio(x,t*x^b).
+
+**Theorem 1.2 (Continuous differentiability of the cross weight).**
+
+Lean statement: `D5/S3/Arith/Robin/ForwardKernel/ProfileCrossIntegral.crossWeight_contDiffOn`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ForwardKernel/ProfileCrossIntegral.crossWeight_contDiffOn` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For X>=4 and s,t>=0, the cross weight is continuously differentiable on [X,2X], for arbitrary real a and b. The displaced arguments remain above one, where the price weight is smooth and positive.
+
+**Theorem 1.3 (Endpoint and variation bound for the cross weight).**
+
+Lean statement: `D5/S3/Arith/Robin/ForwardKernel/ProfileCrossIntegral.crossWeight_variation`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ForwardKernel/ProfileCrossIntegral.crossWeight_variation` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+If 0<a,b<1, X>=4, and s,t belong to [0,1], then the absolute value of the cross weight at 2X plus the integral of its absolute derivative from X to 2X is at most (27+a+b)*X^(-a-b).
+
+**Theorem 1.4 (Uniform profile estimate).**
 
 Lean statement: `D5/S3/Arith/Robin/ForwardKernel/ProfileCrossIntegral.profile_cross_integral_of_covariance_bound`
 
@@ -20,6 +56,9 @@ The exact normalized response formula expresses the cross integral as an integra
 
 ## References
 
+- Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/ProfileCrossIntegral.crossWeight`
+- Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/ProfileCrossIntegral.crossWeight_contDiffOn`
+- Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/ProfileCrossIntegral.crossWeight_variation`
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/ProfileCrossIntegral.profile_cross_integral_of_covariance_bound`
 - Dependency: [D5/S3/Arith/Robin/ForwardKernel/CrossExponentDefs](CrossExponentDefs.md)
 - Dependency: [D5/S3/Arith/Robin/ForwardKernel/ProfileKernelDefs](ProfileKernelDefs.md)

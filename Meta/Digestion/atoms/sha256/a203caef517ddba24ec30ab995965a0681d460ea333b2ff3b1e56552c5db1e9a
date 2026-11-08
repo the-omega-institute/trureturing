@@ -1,0 +1,29 @@
+**Definition 191.1 (baseline and candidate label maps).** For a bounded partition $u$ as in Proposition 190.1, define
+
+$$
+\Phi_f:\mathbb R^{\mathcal L}\longrightarrow L^\infty(m;\mathbb R),
+\qquad
+\Phi_f(a)=F_a,
+$$
+
+and
+
+$$
+\Phi_u:\mathbb R^{\mathcal L}\longrightarrow \mathcal W_u,
+\qquad
+\Phi_u(a)=H_a.
+\tag{191.1}
+$$
+
+Write $r_u=\dim\mathcal W_u=\operatorname{rank}\Phi_u$, and let
+
+$$
+\mathcal R_u=\mathcal W_u\cap
+\operatorname{Rad}_1(\mathcal W_u)\cap
+\operatorname{Rad}_2(\mathcal W_u)\cap
+\operatorname{Rad}_3(\mathcal W_u).
+\tag{191.2}
+$$
+
+Here the intersection with $\mathcal W_u$ records the common radical inside the candidate span.
+

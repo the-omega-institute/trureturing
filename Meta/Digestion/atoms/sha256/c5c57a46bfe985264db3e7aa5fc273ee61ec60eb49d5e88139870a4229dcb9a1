@@ -1,0 +1,17 @@
+**定义 183.1（完整候选与准确论域）。** 继续取 128.1 的同一原 $E,C,u,N,\mathcal P,S,D$、原 A1–A3、准确锥、全部原 P2 和完整 PB。A1 是全部原有向 Hermitian 二表正性；A2 是相加三表及其排列的实部正性与指定相加向量的零二次值；A3 是 $S(u,u)=u$ 和对同一固定有理 $0<\theta\le1$ 的 $0\le e\le\theta u\Rightarrow S(e,e)\le e$。消费其既有无 R 接口，$a\circ b=S(a,b)$，$E$ 是含单位实 JB 代数 $X$ 中的含单位稠密 Jordan 子代数，$C=E\cap X_+$，$N=\|\cdot\|_X|_E$。$E$ 可以不完备，$X$ 不必是 JC 代数，不要求原最小投影、有限谱、有限秩核或本质紧理想。
+
+同一个旧总映射 $D:E^2\to E$ 起初不预设可加、齐次、连续、可测、协变或完成延拓。129.1 与母卷 99.2 供应任意数学正泛函 $\beta$ 的准确预算及原有限差分：
+
+$$
+\begin{aligned}
+|\beta D(a,b)|^2
+&\le\beta(a^2)\beta(b^2)-\beta(a\circ b)^2,\\
+v&=D(a,b)-a\circ c,\qquad w=a\circ b+D(a,c),\\
+D(b+v,c+w)-D(b-v,c-w)
+&=-2b\circ v-2c\circ w.
+\end{aligned}
+\tag{183.1}
+$$
+
+这些读取不新增实际准备。反对称性、$D(a,ta)=D(a,0)=0$ 直接复用母卷 99.2。不增加单位行、输入平移中性或纯态纤维条件作为公理。
+

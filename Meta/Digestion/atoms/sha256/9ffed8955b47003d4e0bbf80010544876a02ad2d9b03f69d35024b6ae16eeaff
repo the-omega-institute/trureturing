@@ -1,0 +1,10 @@
+现在准确复用正交迹续卷定理 447.1 证明内（该卷式 (447.3)）的二项式正算子刚性，不复用其全效果窗口前件：若 $0\le A\le I$、$Au=\lambda u$，则正算子 $P_{n,k}=\binom nkA^k(I-A)^{n-k}$ 满足 $\sum P_{n,k}=I$、$\sum(k/n)P_{n,k}=A$，且 $\|P_{n,k}\|=\binom nk\lambda^k(1-\lambda)^{n-k}$。由二项式方差得
+
+$$
+\|A-\lambda I\|\le
+\sum_{k=0}^n|k/n-\lambda|\binom nk\lambda^k(1-\lambda)^{n-k}
+\le\sqrt{\lambda(1-\lambda)/n}\longrightarrow0.
+\tag{2.16}
+$$
+
+所以 $A=\lambda I$。

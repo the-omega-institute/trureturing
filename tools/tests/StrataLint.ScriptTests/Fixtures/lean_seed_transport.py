@@ -367,7 +367,7 @@ clock = 0
 time.monotonic = lambda: clock
 def run(args, *rest, **kwargs):
     global clock
-    root = str(pathlib.Path(os.environ["FAKE_REMOTE"]).parent)
+    root = str(pathlib.Path(os.environ["FAKE_REMOTE"]).parent.resolve())
     if args[:3] == ["git", "-C", root]:
         field = {("rev-parse", "--verify", "HEAD"): "FAKE_NATIVE_HEAD",
                  ("status", "--porcelain"): "FAKE_NATIVE_STATUS",

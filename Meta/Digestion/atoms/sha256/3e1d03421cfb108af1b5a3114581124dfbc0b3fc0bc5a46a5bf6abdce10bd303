@@ -1,0 +1,57 @@
+**定理 208.1（保留算子交叠的完整平方）。** 在 200.1 下，若原 $a,b$ 满足 $a\circ b\in\mathbb Ru$ 或 $a^2-b^2\in\mathbb Ru$，则同一个 $d=D(a,b)$ 满足
+
+$$
+a\circ d=b\circ d=0,\qquad
+d^2=a^2b^2-(a\circ b)^2.
+\tag{208.1}
+$$
+
+右端两平方交换，故环境乘积 $a^2b^2$ 也等于原 $a^2\circ b^2$。平方差条件允许 $a\circ b$ 为非标量算子。
+
+证明。若 $a\circ b=\tau u$，PB $(a,b,0)$ 的两个外层第二标签为 $\pm\tau u$；183.2 的全单位行使两个外层值为零，故 $b\circ d=0$。交换两输入得 $a\circ d=0$。若 $a^2-b^2$ 为标量，先取原
+
+$$
+x=(a+b)/\sqrt2,\qquad y=(b-a)/\sqrt2.
+$$
+
+185.1 的 SO$(2)$ 保持同一旧值，且 $x\circ y=(b^2-a^2)/2$ 为标量。上一段给 $x\circ d=y\circ d=0$，解已知元素的线性关系即得所需形状，没有展开未知 $D$。
+
+记 $c=a\circ b$、$B=C^*(u,a,b,d)$。两种条件都给 $[a^2,b]=[b^2,a]=0$，因而 $c$ 和 $a,b$ 交换；已得反交换使 $d$ 与 $a^2,b^2,c$ 交换。因此
+
+$$
+C_0=C^*(u,a^2,b^2,c,d^2)\subset Z(B).
+\tag{208.2}
+$$
+
+逐个取 $C_0$ 的字符，按 201.1 的非零中央商与态延拓读取原 P2、PB。写该商中 $a^2,b^2,c,d^2$ 的像为 $\alpha u,\beta u,\gamma u,\delta^2u$。$d$ 的谱支撑态和原 P2 给
+
+$$
+0\le\delta^2\le\alpha\beta-\gamma^2.
+\tag{208.3}
+$$
+
+$\delta=0$ 时同一上界由原实 Gram 正性给出。取一个标量 SO$(2)$ 角度，对角化该字符的实 Gram；将这个角度作用于原标签，仍记为 $x,y$。旧值仍为 $d$，但只在当前商中有
+
+$$
+\bar x^2=X^2u,\quad \bar y^2=Y^2u,\quad
+\overline{x\circ y}=0,\quad
+X^2Y^2=\alpha\beta-\gamma^2.
+\tag{208.4}
+$$
+
+若 $XY=0$，(208.3) 已给等号。否则取任意有限 $\lambda>0$，$t=\sqrt{\lambda^2X^2+1}$，以及原第三标签 $z=tu+\lambda x$。185.1 给 $D(x,z)=0$。这次真实 PB 的完整位移为
+
+$$
+\nu=d-tx-\lambda x^2,\qquad \omega=x\circ y.
+\tag{208.5}
+$$
+
+全局 $\omega$ 不必为零。两个真实外层为 $(y+\nu,z+\omega)$ 和 $(y-\nu,z-\omega)$，右端为 $-2y\circ\nu-2z\circ\omega$。在当前商中，$\bar\omega=0$，右端成为 $2\lambda X^2\bar y$。已知原标签的两个实 Gram 预算，准确就是 202.2–202.4 的同一计算：取 $\bar x/X,\bar y/Y$ 的反交换单位轴及其 $n=-(\lambda X/t)(\bar x/X)+(1/t)(\bar y/Y)$ 的 $+1$ 支撑态，两预算均为 $X^2/t^2+\delta^2$，右端读数为 $2\lambda X^2Y/t$。原 P2 分别约束两份未知外层值，遂给
+
+$$
+\lambda^2X^2(X^2Y^2-\delta^2)\le X^2+\delta^2.
+\tag{208.6}
+$$
+
+任何严格亏损都被某个有限 $\lambda$ 排除。故每个字符有 $\delta^2=X^2Y^2$，字符分离 $C_0$ 给 (208.1)。没有在商上定义 $D$，没有以两个第二标签的商像相等推断两个旧响应相等；这里只分别读取它们的预算。全部外层输入在原 $E$，外层输出不必属于 $B$。零代数另由零平方直接包含。∎
+
