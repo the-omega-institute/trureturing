@@ -6,6 +6,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.BinomialBases;
 
 internal sealed class MatharA001722Document : IScribeDocumentDefinition
 {
+    private static readonly LibraryNoteRef Source =
+        LibraryNoteRef.Create("D5/L/RecurrenceComposition/mathar2026a386829");
     private const string Prefix = "D5/S3/Combinatorics/BinomialBases/MatharA001722.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
@@ -13,20 +15,21 @@ internal sealed class MatharA001722Document : IScribeDocumentDefinition
         H("Mathar's recurrence and D-finiteness for A001722"),
         Blocks(
             Node("s", "Signed Stirling coefficients", Signed(),
-                "The coefficient convention is signed: s(N,K) is the coefficient of X to the K in the product of X-i for i from zero through N-1. The empty product is one. Coefficients and casts are in the integers.", DescribeRole.Definition),
+                "The coefficient convention is signed: s(N,K) is the coefficient of X to the K in the product of X-i for i from zero through N-1. The empty product is one. Coefficients and casts are in the integers.", DescribeRole.Definition, true),
             Node("a", "The full coefficient sum", Sequence(),
-                "This is Borislav Crstici's all-index formula in OEIS A001722, revision 26, https://oeis.org/A001722/internal?fmt=text. The canonical entry name is Generalized Stirling numbers [n+7,7]_5. The range contains both zero and n; the binomial coefficient is computed in the naturals and cast to the integers. No recurrence or initial-value characterization is assumed.", DescribeRole.Definition),
+                "This is Borislav Crstici's all-index formula in OEIS A001722, revision 26, https://oeis.org/A001722/internal?fmt=text. The canonical entry name is Generalized Stirling numbers [n+7,7]_5. The range contains both zero and n; the binomial coefficient is computed in the naturals and cast to the integers. No recurrence or initial-value characterization is assumed.", DescribeRole.Definition, true),
             Node("G", "Ordinary formal generating series", Generating(),
                 "G is the ordinary formal power series whose nth coefficient is a(n) cast to the rationals. It is not an exponential generating series, and no convergence assertion is involved.", DescribeRole.Definition),
             Node("claim", "The two assertions", ClaimFormula(),
-                "The first assertion is Mathar's recurrence in the formula field of OEIS A001722, revision 26. Every n at least three is included. Subtraction in the subscripts is natural subtraction; n is cast to the integers before computing the polynomial coefficients. The second assertion requires a homogeneous polynomial-coefficient differential equation for the same full G, with at least one nonzero coefficient polynomial. The inclusion is the canonical map from rational polynomials to rational formal power series; D is formal differentiation, and its zeroth iterate is the identity.", DescribeRole.Definition),
+                "The first assertion is Mathar's recurrence in the formula field of OEIS A001722, revision 26. Every n at least three is included. Subtraction in the subscripts is natural subtraction; n is cast to the integers before computing the polynomial coefficients. The second assertion requires a homogeneous polynomial-coefficient differential equation for the same full G, with at least one nonzero coefficient polynomial. The inclusion is the canonical map from rational polynomials to rational formal power series; D is formal differentiation, and its zeroth iterate is the identity.", DescribeRole.Definition, true),
             Node("result", "Recurrence and a homogeneous annihilator", Disp(And(Recurrence(), DFinite())),
                 "Set B(n)=(-1)^n times the Taylor translate at -5 of the falling product of length n+2. The Hasse derivative coefficient formula gives coeff(2,B(n))=a(n), directly from the signed sum. Multiplication of the falling product by its next factor gives B(n+1)=B(n)(n+7-X). The combination B(m+3)-3(m+8)B(m+2)+(3m^2+45m+169)B(m+1)-(m+7)^3 B(m) equals -X^3 B(m); taking its second coefficient proves the recurrence. For the ordinary series, the fourth-order operator has coefficient polynomials p(0)=-18+254z-1029z^2, p(1)=1-24z+253z^2-1019z^3, p(2)=-3z^2+54z^3-289z^4, p(3)=3z^4-30z^5 and p(4)=-z^6. All higher p(j) are zero. Coefficient extraction reduces its equation to the recurrence multiplied by n+1. The two boundary coefficients use a(0)=1, a(1)=18 and a(2)=251. Thus every coefficient vanishes and p(4) is nonzero.", DescribeRole.Theorem)), []));
 
-    private static DocumentBlock Node(string name, string title, Formula formula, string prose, DescribeRole role) =>
+    private static DocumentBlock Node(string name, string title, Formula formula, string prose, DescribeRole role, bool literature = false) =>
         Describe.Lean(DescribeId.Create("mathar-a001722-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
-            AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), role);
+            literature ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
+            Blocks(Paragraph(Text(prose))), role);
 
     private static Formula N() => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula Z() => Seq(Mathbb, Grp(F.Id("Z")));
@@ -83,7 +86,7 @@ internal sealed class MatharA001722Document : IScribeDocumentDefinition
         Formula nonzero=Ex("j",N(),And(Le(j,r),
             new Formula.Relation(Call("p",j),FormulaRelationOperator.NotEqual,D(0))));
         Formula equation=Eq(Sum(j,Add(r,D(1)),Mul(Call("inclusion",Call("p",j)),
-            Call("iterate",Call("derivative"),j,F.Id("G")))),D(0));
+            Call("iterate",F.Id("D"),j,F.Id("G")))),D(0));
         return Ex("r",N(),Ex("p",new Formula.TypeArrow(N(),Call("Polynomial",Q())),And(nonzero,equation)));
     }
     private static Formula ClaimFormula() => Disp(new Formula.Logic(F.Id("claim"),
