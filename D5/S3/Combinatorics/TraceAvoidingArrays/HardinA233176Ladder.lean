@@ -255,6 +255,7 @@ private instance instDecidableLegal {n : ℕ} (A : Fin 3 × Fin n → Fin 6) :
 /-- Literal filtered count; the first-cell existential sets the empty coefficient to zero. -/
 def a (n : ℕ) : ℕ :=
   (Finset.univ.filter (fun A : Fin 3 × Fin n → Fin 6 => Legal A)).card
+attribute [local irreducible] a
 private def pairs (c : Col) : Labels := fun i => beta (c i)
 private def compatible (p : Labels) (c : Col) : Prop :=
   ∀ r s : Fin 3, (r.val ≤ s.val + 1 ∧ s.val ≤ r.val + 1) → beta (c s) ≠ p r
@@ -529,7 +530,13 @@ private theorem digit_key : ∀ (t b c : Fin 3) (p : Labels),
     digit (key t b c p) 243 = t ∧ digit (key t b c p) 81 = b ∧
     digit (key t b c p) 27 = c ∧
     ![digit (key t b c p) 9, digit (key t b c p) 3, digit (key t b c p) 1] = p := by
-  decide +kernel
+  intro t b c p
+  refine ⟨Fin.ext ?_, Fin.ext ?_, Fin.ext ?_, ?_⟩
+  · dsimp [digit, key]; omega
+  · dsimp [digit, key]; omega
+  · dsimp [digit, key]; omega
+  · ext i
+    fin_cases i <;> dsimp [digit, key] <;> omega
 private def moves (q r t b c : Fin 3) (p : Labels) : Multiset ℕ :=
   ((Finset.univ.filter (admissible q r t b c p)).val.map fun d =>
     key (next t (d 0)) (next b (d 1)) (next c (d 2)) (pairs d))
@@ -539,12 +546,15 @@ private def linkKeys (q r t b c : Fin 3) (p : Labels) : Multiset ℕ :=
   ((links.getD i #[]).toList.flatMap fun e => List.replicate (e % 9) (e / 9) : List ℕ)
 local macro "check_states" : tactic => `(tactic| {
   simp only [Fin.forall_fin_succ_pi, Fin.forall_fin_zero_pi]
-  intro q r t b c
-  fin_cases q <;> fin_cases r <;> fin_cases t <;> fin_cases b <;> fin_cases c
-  all_goals first
-    | (intro x y z h; exfalso
-       rcases h with ⟨htq, hqb, hbr, hrc, _, _, _⟩; omega)
-    | (intro x; fin_cases x <;> decide +kernel) })
+  intro q r t b c x y z h
+  rcases h with ⟨htq, hqb, hbr, hrc, hpt, hpb, hpc⟩
+  fin_cases q <;> fin_cases r <;> try (exfalso; omega)
+  all_goals (fin_cases t <;> try (exfalso; omega))
+  all_goals (fin_cases b <;> try (exfalso; omega))
+  all_goals (fin_cases c <;> try (exfalso; omega))
+  all_goals (fin_cases x <;> try (exfalso; omega))
+  all_goals (fin_cases y <;> try (exfalso; omega))
+  all_goals (fin_cases z <;> first | (exfalso; omega) | decide +kernel) })
 set_option maxRecDepth 100000
 set_option maxHeartbeats 100000000
 private theorem moves_certificate : ∀ q r t b c p, Valid q r t b c p →
