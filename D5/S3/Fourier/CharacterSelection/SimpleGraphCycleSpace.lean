@@ -6,16 +6,20 @@
    utility: none
    digest: Simple cycles generate binary graph relations and determine all anchored lifts. -/
 
-import D5.S3.Fourier.CharacterSelection.BinaryCharacterCodeDuality
-import Mathlib.Combinatorics.SimpleGraph.Acyclic
-import Mathlib.Combinatorics.SimpleGraph.Paths
-import Mathlib.Algebra.Field.ZMod
-import Mathlib.LinearAlgebra.Span.Basic
-import Mathlib.Algebra.Module.Pi
-import Mathlib.Tactic.Abel
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.Ring
-import Mathlib.Probability.UniformOn
+module
+
+public import D5.S3.Fourier.CharacterSelection.BinaryCharacterCodeDuality
+public import Mathlib.Combinatorics.SimpleGraph.Acyclic
+public import Mathlib.Combinatorics.SimpleGraph.Paths
+public import Mathlib.Algebra.Field.ZMod
+public import Mathlib.LinearAlgebra.Span.Basic
+public import Mathlib.Algebra.Module.Pi
+public import Mathlib.Tactic.Abel
+public import Mathlib.Tactic.LinearCombination
+public import Mathlib.Tactic.Ring
+public import Mathlib.Probability.UniformOn
+
+@[expose] public section
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

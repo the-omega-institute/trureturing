@@ -1,13 +1,9 @@
-module
-
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233176Ladder
 import D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 import Reg.Support.SingleDependentReadout
 import LeanInformationAuditInterface.Contract.Registration
 
 /-! Readout registrations for the ladder generating function and its initial coefficients. -/
-
-public section
 
 namespace Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233176Ladder
 

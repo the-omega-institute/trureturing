@@ -34,6 +34,8 @@ internal sealed class HardinA233175PairStripDocument : IScribeDocumentDefinition
                 "Acceptance says that every restricted colour has its required earlier occurrence, unless that colour was already recorded in the initial flags."),
             Def("pairs", "pairs", "The two boundary labels", PairsFormula(),
                 "Here beta is the frozen map D5.S3.Observer.Separation.BooleanRankThreeK4.beta : Fin 6 → Fin 3, beta = ![0,1,2,2,1,0], whose fibres {0,5}, {1,4} and {2,3} are the complementary pairs; a legal bond joins different fibres. Only these labels of the preceding column affect future bonds."),
+            Def("compatible", "compatible", "Boundary compatibility", CompatibleFormula(),
+                "Each new row label avoids both labels of the preceding column."),
             Thm("edgeiff", "edge_iff", "Pair-label characterization of bonds", EdgeIffFormula(),
                 "Each of the four bonds is legal exactly when its endpoint colours have distinct complementary-pair labels."),
             Def("a", "a", "The literal filtered count", CountFormula(),
@@ -133,6 +135,17 @@ internal sealed class HardinA233175PairStripDocument : IScribeDocumentDefinition
         var c = V("c");
         return All("c", V("Col"), Eq(Call("pairs", c),
             Pair(Call("beta", App(c, D(0))), Call("beta", App(c, D(1))))));
+    }
+
+    private static Formula CompatibleFormula()
+    {
+        var p = V("p"); var c = V("c"); var r = V("r");
+        const string own = "D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.";
+        const string beta = "D5.S3.Observer.Separation.BooleanRankThreeK4.beta";
+        var label = Call(beta, App(c, r));
+        return All("p", Product(Fin(3), Fin(3)), All("c", Call(own + "Col"),
+            Iff(Call(own + "compatible", p, c), All("r", Fin(2),
+                And(Ne(label, Proj(p, 1)), Ne(label, Proj(p, 2)))))));
     }
 
     private static Formula EdgeIffFormula()
@@ -235,7 +248,8 @@ internal sealed class HardinA233175PairStripDocument : IScribeDocumentDefinition
         All("b", V("Seen"), All("p", Product(Fin(3), Fin(3)), body))));
     private static Formula Number(int n) => Seq(n.ToString(System.Globalization.CultureInfo.InvariantCulture).Select(c => D((byte)(c-'0'))).ToArray());
     private static Formula TextFormula(string s) => Seq(Operatorname,
-        s.Contains('.') ? Grp(V(s.Split('.')[0]), Dot, V(s.Split('.')[1])) : Grp(V(s)));
+        Grp(Seq(s.Split('.').SelectMany((part, i) =>
+            i == 0 ? new[] { V(part) } : new[] { Dot, V(part) }).ToArray())));
     private static Formula V(string name) => F.Id(name);
     private static Formula Fin(byte n) => Call("Fin", D(n));
     private static Formula App(Formula f, params Formula[] args) => new Formula.Apply(f, [.. args]);

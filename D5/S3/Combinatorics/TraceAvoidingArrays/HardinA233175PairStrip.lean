@@ -76,9 +76,13 @@ recurrence: proof_shape=bind-only; consumers=result
 result: proof_shape=bind-only; consumers=terminal result
 -/
 
-import D5.S3.Observer.Separation.BooleanRankThreeK4
+module
+
+public import D5.S3.Observer.Separation.BooleanRankThreeK4
 import Mathlib.Tactic
-import Mathlib.RingTheory.PowerSeries.Basic
+public import Mathlib.RingTheory.PowerSeries.Basic
+
+public section
 
 /-!
 Six-colour complementary-pair exclusion on two rows, with row-major normalization.
@@ -93,19 +97,19 @@ open D5.S3.Observer.Separation.BooleanRankThreeK4 (beta)
 abbrev Seen := Bool × Bool
 abbrev Col := Fin 2 → Fin 6
 
-def allowed (s : Seen) (c : Fin 6) : Prop :=
+@[expose] def allowed (s : Seen) (c : Fin 6) : Prop :=
   ((c = 2 ∨ c = 3 ∨ c = 4) → s.1 = true) ∧ (c = 3 → s.2 = true)
 private instance instDecidableAllowed (s : Seen) (c : Fin 6) : Decidable (allowed s c) :=
   inferInstanceAs (Decidable ((_ → _) ∧ (_ → _)))
 
-def advance (s : Seen) (c : Fin 6) : Seen :=
+@[expose] def advance (s : Seen) (c : Fin 6) : Seen :=
   (s.1 || decide (c = 1), s.2 || decide (c = 2))
 
-def good : {n : ℕ} → Seen → (Fin n → Fin 6) → Prop
+@[expose] def good : {n : ℕ} → Seen → (Fin n → Fin 6) → Prop
   | 0, _, _ => True
   | _n + 1, s, f => allowed s (f 0) ∧ good (advance s (f 0)) (Fin.tail f)
 
-def finish : {n : ℕ} → Seen → (Fin n → Fin 6) → Seen
+@[expose] def finish : {n : ℕ} → Seen → (Fin n → Fin 6) → Seen
   | 0, s, _ => s
   | _n + 1, s, f => finish (advance s (f 0)) (Fin.tail f)
 
@@ -183,9 +187,9 @@ private theorem normal_iff {n : ℕ} (A : Fin 2 × Fin n → Fin 6) :
     · simpa using ht j
     · simpa using hb j
 
-def pairs (c : Col) : Fin 3 × Fin 3 := (beta (c 0), beta (c 1))
+@[expose] def pairs (c : Col) : Fin 3 × Fin 3 := (beta (c 0), beta (c 1))
 
-private def compatible (p : Fin 3 × Fin 3) (c : Col) : Prop :=
+@[expose] def compatible (p : Fin 3 × Fin 3) (c : Col) : Prop :=
   ∀ r, beta (c r) ≠ p.1 ∧ beta (c r) ≠ p.2
 
 private instance instDecidableCompatible (p : Fin 3 × Fin 3) (c : Col) :
