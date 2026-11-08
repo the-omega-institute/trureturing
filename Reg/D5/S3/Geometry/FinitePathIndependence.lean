@@ -16,7 +16,7 @@ namespace Reg.D5.S3.Geometry.FinitePathIndependence
 abbrev signature : Signature where
   Params := Unit
   State _ := ℕ
-  Role := Fin 3
+  Role := Bool ⊕ Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
   Output _ _ := ℕ
@@ -25,10 +25,11 @@ abbrev signature : Signature where
 
 def actual : Realization signature :=
   realize signature (fun i _ k =>
-    if i = 0 then 3 * (k + 1) else if i = 1 then 3 * k + 1 else 3 * k + 2)
+    Sum.elim (fun b => Bool.rec (3 * (k + 1)) (3 * k + 1) b)
+      (fun _ => 3 * k + 2) i)
     (fun e => nomatch e)
 
-def intervene (i : Fin 3) : Realization signature :=
+def intervene (i : Bool ⊕ Unit) : Realization signature :=
   realize signature (fun j p k => if j = i then 0 else actual.readout j p k)
     (fun e => nomatch e)
 
@@ -37,41 +38,45 @@ abbrev arena : Arena where
   Law R :=
     IsEmpty (FiniteCoordinateTruncation.Ispace (SimpleGraph.pathGraph 0)) ∧
     (∀ k : ℕ, Nonempty (FiniteCoordinateTruncation.Ispace
-      (SimpleGraph.pathGraph (R.readout 0 () k)) ≃ₕ EuclideanSphereJoin.StdSphere k)) ∧
+      (SimpleGraph.pathGraph (R.readout (.inl false) () k)) ≃ₕ EuclideanSphereJoin.StdSphere k)) ∧
     (∀ k : ℕ, ContractibleSpace (FiniteCoordinateTruncation.Ispace
-      (SimpleGraph.pathGraph (R.readout 1 () k)))) ∧
+      (SimpleGraph.pathGraph (R.readout (.inl true) () k)))) ∧
     (∀ k : ℕ, Nonempty (FiniteCoordinateTruncation.Ispace
-      (SimpleGraph.pathGraph (R.readout 2 () k)) ≃ₕ EuclideanSphereJoin.StdSphere k))
+      (SimpleGraph.pathGraph (R.readout (.inr ()) () k)) ≃ₕ EuclideanSphereJoin.StdSphere k))
 
 private theorem bridge :
     (type_of% (_root_.D5.S3.Geometry.FinitePathIndependence.classification)) ↔
       arena.Law actual := Iff.rfl
 
-private theorem rejected_law (i : Fin 3) : ¬ arena.Law (intervene i) := by
+private theorem rejected_law (i : Bool ⊕ Unit) : ¬ arena.Law (intervene i) := by
   intro h
   have he := _root_.D5.S3.Geometry.FinitePathIndependence.classification.1
-  fin_cases i
-  · obtain ⟨e⟩ := h.2.1 0
-    exact he.false (e.invFun (EuclideanSphereJoin.coordinatePoint 0))
-  · letI : ContractibleSpace (FiniteCoordinateTruncation.Ispace
-        (SimpleGraph.pathGraph 0)) := h.2.2.1 0
-    obtain ⟨e⟩ := ContractibleSpace.hequiv_unit
-      (FiniteCoordinateTruncation.Ispace (SimpleGraph.pathGraph 0))
-    exact he.false (e.invFun ())
+  rcases i with (b | ⟨⟩)
+  · cases b
+    · obtain ⟨e⟩ := h.2.1 0
+      exact he.false (e.invFun (EuclideanSphereJoin.coordinatePoint 0))
+    · letI : ContractibleSpace (FiniteCoordinateTruncation.Ispace
+          (SimpleGraph.pathGraph 0)) := h.2.2.1 0
+      obtain ⟨e⟩ := ContractibleSpace.hequiv_unit
+        (FiniteCoordinateTruncation.Ispace (SimpleGraph.pathGraph 0))
+      exact he.false (e.invFun ())
   · obtain ⟨e⟩ := h.2.2.2 0
     exact he.false (e.invFun (EuclideanSphereJoin.coordinatePoint 0))
 
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨(), 0, 1, ?_⟩
-  fin_cases i <;> norm_num [actual, realize] <;> decide
+  rcases i with (b | u)
+  · cases b <;> decide
+  · cases u
+    decide
 
 def family : Registration arena
     (type_of% (_root_.D5.S3.Geometry.FinitePathIndependence.classification)) where
   actual := actual
   bridge := bridge
   variation := ⟨bridge.mp _root_.D5.S3.Geometry.FinitePathIndependence.classification,
-    intervene 0, rejected_law 0⟩
+    intervene (.inl false), rejected_law (.inl false)⟩
   sensitivity := ⟨fun i => ⟨intervene i,
     fun j h => by funext p k; simp [intervene, realize, h], rfl, rejected_law i⟩,
     fun e => nomatch e⟩
@@ -92,7 +97,8 @@ def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize signature (fun i _ k =>
-    if i = 0 then 3 * (k + 1) else if i = 1 then 3 * k + 1 else 3 * k + 2)
+    Sum.elim (fun b => Bool.rec (3 * (k + 1)) (3 * k + 1) b)
+      (fun _ => 3 * k + 2) i)
     (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
@@ -103,12 +109,12 @@ def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["arg", "fn", "arg", "body", "arg", "fn", "fn", "fn", "arg", "arg", "arg"]
+      path := #["arg", "arg", "fn", "arg", "body", "fn", "arg", "arg", "arg"]
       stateBinder := 0
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }, {
-      path := #["arg", "arg", "fn", "arg", "body", "fn", "arg", "arg", "arg"]
+      path := #["arg", "fn", "arg", "body", "arg", "fn", "fn", "fn", "arg", "arg", "arg"]
       stateBinder := 0
       functionOperand := false
       stateOperand := none
