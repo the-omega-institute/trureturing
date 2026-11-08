@@ -5,30 +5,11 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.FiniteGroups.NikolovSegal.TypeA.Unit
 internal sealed class PartIIUnitriangularLangDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The actual arbitrary-field unitriangular Lang construction on Uplus n F. The height torus is restricted from the determinant-one matrix action, the finite inverse is a strict-upper Neumann sum, and the resonance obstruction is an explicit transvection.",
+        "The height-torus Lang map, its finite inverse and its resonant-root obstruction on Uplus over an arbitrary field.",
         H("Part II Unitriangular Lang"),
         Blocks(
-            Describe.Lean(
-                DescribeId.Create("typea-unitriangular-lang-nonresonant"),
-                DeclarationHandle.Create("D5/S3/FiniteGroups/NikolovSegal/TypeA/Unitriangular/PartIIUnitriangularLangLinear.Nonresonant"),
-                H("Nonresonant"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The root-weight condition quantifies over every positive distance below n and retains the arbitrary field and all rank-zero and rank-one cases."))),
-                DescribeRole.Definition),
-            Describe.Lean(
-                DescribeId.Create("typea-unitriangular-lang-finite-solution-equation"),
-                DeclarationHandle.Create("D5/S3/FiniteGroups/NikolovSegal/TypeA/Unitriangular/PartIIUnitriangularLangLinear.finiteSolution_equation"),
-                H("finite solution equation"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The explicit finite sum solves the strict-upper nonlinear coordinate equation by layer raising and the pinned geometric telescoping identity."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("typea-unitriangular-lang-finite-solution-unique"),
-                DeclarationHandle.Create("D5/S3/FiniteGroups/NikolovSegal/TypeA/Unitriangular/PartIIUnitriangularLangLinear.finiteSolution_unique"),
-                H("finite solution unique"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("Under nonresonance, every strict-upper solution of the coordinate equation equals the displayed finite Neumann sum."))),
-                DescribeRole.Theorem),
+            Paragraph(Text("Let F be any field, n any natural rank and a a unit of F. Uplus n F is the upper-unitriangular subgroup of the determinant-one matrices. Restrict heightTorus(a) to obtain sigma(a), and define psi(a)(g) = sigma(a)(g)*g^-1. Writing g = 1+X and a target y = 1+b, the group equation psi(a)(g) = y is equivalent to sigma(a)(g) = y*g, hence to delta(a)(X) = b + b*X.")),
+            Paragraph(Text("Under nonresonance, the strict-upper coordinate solution is the sum of T_b^k(deltaInv(a)(b)) for 0 <= k < n-1, where T_b(X) = deltaInv(a)(b*X). Adding the identity matrix produces langInverse(a)(y) in the same Uplus subgroup. The coordinate equation yields the right inverse law, and coordinate uniqueness yields the left inverse law.")),
             Describe.Lean(
                 DescribeId.Create("typea-unitriangular-lang-psi-lang-inverse"),
                 DeclarationHandle.Create("D5/S3/FiniteGroups/NikolovSegal/TypeA/Unitriangular/PartIIUnitriangularLang.psi_langInverse"),
@@ -57,5 +38,5 @@ internal sealed class PartIIUnitriangularLangDocument : IScribeDocumentDefinitio
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("On the actual Uplus subgroup over any field and every natural rank, surjectivity and bijectivity coincide and are equivalent to nonresonance."))),
                 DescribeRole.Theorem),
-            Paragraph(Text("The source keeps the determinant-one matrix carrier, the Uplus subgroup, the height torus and the strict-upper filtration explicit. It does not assume finite cardinality, algebraic closure, characteristic restrictions, or an opaque existence-only inverse.")))));
+            Paragraph(Text("Resonance at a positive distance d means that the root weight a^d-1 is zero. The target transvection 1+E_(0,d) then forces 0 = 1 at entry (0,d): the delta term vanishes, while the product b*X contributes X_(d,d) = 0. Thus this explicit target is unreachable. Nonresonance is equivalent to surjectivity and bijectivity for every rank, including zero and one.")))));
 }

@@ -1,11 +1,19 @@
+/- GID: D5/S3/FiniteGroups/NikolovSegal/TypeA/Unitriangular/PartIIUnitriangularLang
+   generality: G
+   mirror-B: D5/B/S3/FiniteGroups/NikolovSegal/TypeA/Unitriangular/PartIIUnitriangularLang
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Finite explicit inverses and root-weight obstructions for the height-torus Lang map. -/
+
 import D5.S3.FiniteGroups.NikolovSegal.TypeA.Unitriangular.PartIIUnitriangularLangLinear
 import D5.S3.FiniteGroups.NikolovSegal.TypeA.Unitriangular.PartIIUnitriangularActions
 import D5.S3.FiniteGroups.NikolovSegal.TypeA.Unitriangular.SLnUnitriangular
 
 set_option autoImplicit false
 
-/- Source candidate only; owner-exports.json specifies the exact original
-   declarations to expose. No compiler or kernel check has been run. -/
+/-! The height-torus Lang map on the upper-unitriangular subgroup has a finite
+inverse under root-weight nonresonance and explicit obstructions at resonant roots. -/
 namespace NikolovSegal.PartIIUnitriangularLang
 
 open Matrix PartIIUnitriangularLayers PartIIUnitriangularActions SLnNormalizer

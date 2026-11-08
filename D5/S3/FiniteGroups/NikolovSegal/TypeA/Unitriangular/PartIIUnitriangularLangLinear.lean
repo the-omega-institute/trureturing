@@ -1,3 +1,11 @@
+/- GID: D5/S3/FiniteGroups/NikolovSegal/TypeA/Unitriangular/PartIIUnitriangularLangLinear
+   generality: G
+   mirror-B: D5/B/S3/FiniteGroups/NikolovSegal/TypeA/Unitriangular/PartIIUnitriangularLangLinear
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Depth-raising finite geometric sums solve the unitriangular Lang coordinate equation. -/
+
 import D5.S3.FiniteGroups.NikolovSegal.TypeA.Unitriangular.PartIIUnitriangularLayers
 import Mathlib.Algebra.Module.LinearMap.End
 import Mathlib.Algebra.Module.Submodule.LinearMap
@@ -5,9 +13,8 @@ import Mathlib.Algebra.Ring.GeomSum
 
 set_option autoImplicit false
 
-/- Source candidate only; no elaboration or kernel verification has been run.
-   Requires the public exports specified in owner-exports.json, without changing
-   any existing statement or proof. -/
+/-! Strict-upper filtration and root-weight division reduce the Lang coordinate
+equation to a depth-raising operator with a terminating finite geometric sum. -/
 namespace NikolovSegal.PartIIUnitriangularLang
 
 open PartIIUnitriangularLayers
