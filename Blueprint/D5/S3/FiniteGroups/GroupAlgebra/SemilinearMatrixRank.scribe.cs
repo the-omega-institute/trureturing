@@ -74,7 +74,7 @@ internal sealed class SemilinearMatrixRankDocument : IScribeDocumentDefinition
 
     private static DocumentBlock.Describe Entry(string name, string title, DescribeRole role, string text) =>
         Describe.Lean(DescribeId.Create(name.Replace('.', '-').Replace('_', '-').ToLowerInvariant()),
-            DeclarationHandle.Create(Prefix + name),
+            DeclarationHandle.Create(Prefix + name[(name.LastIndexOf('.') + 1)..]),
             H(title), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(text))), role);
 }

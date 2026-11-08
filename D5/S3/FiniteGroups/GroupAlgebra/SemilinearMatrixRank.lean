@@ -179,12 +179,10 @@ def matrixAction (a : A →+* Module.End D U) (tau : Γ →* Module.End D U)
   (skewRepresentation k F A a tau covariance).comp
     (TraceDualSkewMatrix.skewMatrixEquiv k F A b).symm.toRingEquiv.toRingHom
 
-variable (a : A →+* Module.End D U) (tau : Γ →* Module.End D U)
-  (covariance : ∀ (g : Γ) (x : A), tau g * a x = a (g • x) * tau g)
-
-include a tau covariance in
 /-- Galois symmetry divides the rank over the original, possibly noncommutative D. -/
-theorem card_galois_dvd_finrank [FiniteDimensional D U] :
+theorem card_galois_dvd_finrank (a : A →+* Module.End D U) (tau : Γ →* Module.End D U)
+    (covariance : ∀ (g : Γ) (x : A), tau g * a x = a (g • x) * tau g)
+    [FiniteDimensional D U] :
     Nat.card Γ ∣ Module.finrank D U := by
   letI : Nonempty (Fin (Module.finrank k F)) :=
     ⟨⟨0, Module.finrank_pos (R := k) (M := F)⟩⟩
@@ -192,9 +190,10 @@ theorem card_galois_dvd_finrank [FiniteDimensional D U] :
   simpa only [Fintype.card_fin] using
     Corner.card_dvd_finrank (matrixAction k F A a tau covariance (Module.finBasis k F))
 
-include a tau covariance in
 /-- A nonzero covariant module has a positive integral original-D multiplicity. -/
-theorem exists_pos_galois_rank [FiniteDimensional D U] [Nontrivial U] :
+theorem exists_pos_galois_rank (a : A →+* Module.End D U) (tau : Γ →* Module.End D U)
+    (covariance : ∀ (g : Γ) (x : A), tau g * a x = a (g • x) * tau g)
+    [FiniteDimensional D U] [Nontrivial U] :
     ∃ r : ℕ, 0 < r ∧ Module.finrank D U = Nat.card Γ * r := by
   letI : Nonempty (Fin (Module.finrank k F)) :=
     ⟨⟨0, Module.finrank_pos (R := k) (M := F)⟩⟩
