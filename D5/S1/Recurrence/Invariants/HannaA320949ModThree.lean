@@ -11,7 +11,7 @@ proof_shape: result: bind-only; consumer: settling result.
 proof_shape: all private theorem/lemma declarations: bind-only; consumers: downstream declarations on the result path, as listed by the source proof.
 escape_witness: none (external open-problem-resolution admission).
 admission_basis: open-problem-resolution (#21890; Proved)
-Direct frozen dependencies: HannaA301310Divisibility.falling_hasSum; PowerSeriesNormalizedContraction.exists_unique_fixed; AbsoluteReciprocalGeometricParity.agree_inv; UnitReversionSquareParity.Agree, agree_pow, agree_mul, and agree_X; ContinuedFractionOddSquare.map_inverse and inverse_one; CompositionalSquareDyadicDenominators.coeff_subst_sum.
+Direct frozen dependencies: HannaA301310Divisibility.coeff_cast, eval_diff_iter_apply, and falling_hasSum; PowerSeriesNormalizedContraction.exists_unique_fixed; AbsoluteReciprocalGeometricParity.agree_inv; UnitReversionSquareParity.Agree, agree_pow, agree_mul, and agree_X; ContinuedFractionOddSquare.map_inverse and inverse_one; CompositionalSquareDyadicDenominators.coeff_subst_sum.
 The public source definitions term, IsGF, and claim retain their literal preregistered expressions; all auxiliary declarations are private and consumed by result.
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/22543; no enrolled four-slot template faithfully reads the conjunction of rational generating-function existence and universal integer divisibility.
 -/
@@ -74,18 +74,22 @@ private theorem squareChoosePolynomial_degree (k : ℕ) :
   have h : Ring.choose (Polynomial.X ^ 2 : ℚ[X]) k =
       Polynomial.C (k.factorial : ℚ)⁻¹ *
         (descPochhammer ℚ k).comp (Polynomial.X ^ 2) := by
-    apply Polynomial.eq_of_infinite_eval_eq
-    apply (Set.infinite_range_of_injective
-      (Nat.cast_injective : Function.Injective (fun j : ℕ => (j : ℚ)))).mono
-    rintro t ⟨j, rfl⟩
-    simp only [Set.mem_ofPred_eq, eval_mul, eval_C, eval_comp, eval_pow, eval_X]
-    have hm := Ring.map_choose (Polynomial.evalRingHom (j : ℚ))
-      (Polynomial.X ^ 2 : ℚ[X]) k
-    simp only [Polynomial.coe_evalRingHom, eval_pow, eval_X] at hm
-    rw [hm, Ring.choose_eq_smul, smul_eq_mul,
-      Polynomial.descPochhammer_smeval_eq_ascPochhammer,
-      Polynomial.ascPochhammer_smeval_eq_eval,
-      descPochhammer_eval_eq_ascPochhammer]
+    have hx : (descPochhammer ℤ k).smeval (Polynomial.X ^ 2 : ℚ[X]) =
+        (descPochhammer ℚ k).comp (Polynomial.X ^ 2) := by
+      rw [← Polynomial.aeval_eq_smeval, Polynomial.aeval_def,
+        ← descPochhammer_map (Int.castRingHom ℚ) k,
+        Polynomial.comp, Polynomial.eval₂_map]
+      rfl
+    have H := Ring.descPochhammer_eq_factorial_smul_choose (Polynomial.X ^ 2 : ℚ[X]) k
+    rw [hx, nsmul_eq_mul] at H
+    have hf : (k.factorial : ℚ) ≠ 0 := by exact_mod_cast Nat.factorial_ne_zero k
+    apply mul_left_cancel₀ (a := (Polynomial.C (k.factorial : ℚ) : ℚ[X]))
+      (by simpa using hf)
+    calc
+      _ = (descPochhammer ℚ k).comp (Polynomial.X ^ 2) := by
+        simpa only [map_natCast] using H.symm
+      _ = _ := by
+        rw [← mul_assoc, ← map_mul, mul_inv_cancel₀ hf, map_one, one_mul]
   rw [h]
   apply (natDegree_C_mul_le _ _).trans
   apply natDegree_comp_le.trans
@@ -96,14 +100,9 @@ private theorem cast_forward_difference (f : ℕ → ℤ) (P : ℚ[X])
     (hf : ∀ j : ℕ, (f j : ℚ) = P.eval (j : ℚ)) (m : ℕ) :
     (((fwdDiff (1 : ℕ))^[m] f 0 : ℤ) : ℚ) =
       (fwdDiff (1 : ℚ))^[m] P.eval 0 := by
-  rw [fwdDiff_iter_eq_sum_shift, fwdDiff_iter_eq_sum_shift]
-  push_cast
-  apply sum_congr rfl
-  intro j hj
-  simp only [zero_add, nsmul_eq_mul, mul_one, zsmul_eq_mul]
-  rw [← hf]
-  push_cast
-  rfl
+  have h := D5.S3.ArithSums.HannaA301310Divisibility.coeff_cast P f (fun j => (hf j).symm) m
+  rw [D5.S3.ArithSums.HannaA301310Divisibility.eval_diff_iter_apply P m 0] at h
+  exact h
 
 private theorem newtonCoeff_high (k m : ℕ) (hm : 2 * k < m) :
     newtonCoeff k m = 0 := by

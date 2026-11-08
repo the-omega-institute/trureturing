@@ -12,6 +12,8 @@ internal sealed class HannaA301310DivisibilityDocument : IScribeDocumentDefiniti
     private static Formula V(string name) => F.Id(name);
     private static Formula Naturals => Seq(Mathbb, Grp(V("N")));
     private static Formula Reals => Seq(Mathbb, Grp(V("R")));
+    private static Formula Rationals => Seq(Mathbb, Grp(V("Q")));
+    private static Formula RationalPolynomials => Seq(Rationals, OpenBracket, V("X"), CloseBracket);
     private static Formula Integers => new Formula.Integers();
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula Typed(Formula value, Formula type) =>
@@ -41,6 +43,34 @@ internal sealed class HannaA301310DivisibilityDocument : IScribeDocumentDefiniti
     private static Formula ClaimBody() => All("n", Naturals, Positive(V("n"),
         SomeInteger(Equal(Call("a", V("n")), Multiply(Typed(Num(10), Reals),
             Typed(V("q"), Reals))))));
+    private static Formula Lambda(string name, Formula type, Formula body) =>
+        Parenthesized(Seq(V("fun"), Sp, Typed(V(name), type), Sp, Mapsto, Sp, body));
+    private static Formula ApplyQualified(string owner, string name, params Formula[] arguments) =>
+        new Formula.Apply(Qualified(owner, name), [.. arguments]);
+    private static Formula Eval(Formula polynomial, Formula point) =>
+        ApplyQualified("Polynomial", "eval", point, polynomial);
+    private static Formula PolynomialDifference() => Lambda("Q", RationalPolynomials,
+        Call("fwdDiff", Typed(D(1), RationalPolynomials),
+            Lambda("U", RationalPolynomials,
+                ApplyQualified("Polynomial", "comp", V("Q"), V("U"))), V("X")));
+    private static Formula Iteration(Formula function, Formula count, Formula value) =>
+        ApplyQualified("Function", "iterate", function, count, value);
+    private static Formula EvalDiffIterApplyFormula() =>
+        All("P", RationalPolynomials, All("j", Naturals, All("x", Rationals,
+            Equal(Eval(Iteration(PolynomialDifference(), V("j"), V("P")), V("x")),
+                new Formula.Apply(Iteration(Call("fwdDiff", Typed(D(1), Rationals)), V("j"),
+                    Lambda("y", Rationals, Eval(V("P"), V("y")))), [V("x")])))));
+    private static Formula CoeffCastFormula() =>
+        All("P", RationalPolynomials,
+            All("f", new Formula.TypeArrow(Naturals, Integers),
+                Implies(Parenthesized(All("k", Naturals,
+                    Equal(Eval(V("P"), Typed(V("k"), Rationals)),
+                        Typed(Call("f", V("k")), Rationals)))),
+                    All("j", Naturals,
+                        Equal(Typed(new Formula.Apply(
+                                Iteration(Call("fwdDiff", Typed(D(1), Naturals)), V("j"), V("f")),
+                                [D(0)]), Rationals),
+                            Eval(Iteration(PolynomialDifference(), V("j"), V("P")), D(0)))))));
     private static Formula SumBody(bool rising)
     {
         var n = V("n");
@@ -61,6 +91,14 @@ internal sealed class HannaA301310DivisibilityDocument : IScribeDocumentDefiniti
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Hanna's A301310 coefficients are integer multiples of 10 at every positive index.",
         H("Hanna's A301310 divisibility conjecture"), Blocks(
+            Node("eval_diff_iter_apply", "Evaluation of iterated polynomial differences",
+                EvalDiffIterApplyFormula(),
+                "Evaluating the jth forward difference of a rational polynomial at x equals the jth forward difference of its evaluation function at x. The polynomial step is composition with X+1 minus composition with X. This identity relates polynomial degree bounds to differences of values.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
+            Node("coeff_cast", "Integer values and rational polynomial differences",
+                CoeffCastFormula(),
+                "If a rational polynomial agrees with an integer sequence at every natural input, casting the sequence's jth forward difference at zero to the rationals gives the evaluation at zero of the polynomial's jth forward difference. The value correspondence is assumed for every natural index.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
             Node("a", "The source coefficient series",
                 All("n", Naturals, Equal(Call("a", V("n")), Series(V("n")))),
                 "OEIS A301310, FORMULA line 3 (unpaginated): a(n) = Sum_{k>=0} 2^k * binomial(k^2, n) / 3^(k+1). Here n and k range over natural numbers, Nat.choose is the ordinary natural binomial coefficient, and the infinite sum is taken in the real numbers.",
