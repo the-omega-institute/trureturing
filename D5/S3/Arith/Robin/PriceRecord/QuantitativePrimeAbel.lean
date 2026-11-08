@@ -1,5 +1,5 @@
 /- GID: D5/S3/Arith/Robin/PriceRecord/QuantitativePrimeAbel
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Arith/Robin/PriceRecord/QuantitativePrimeAbel
    mirror-E: none(waiver:general-asymptotic-analysis)
    anchors: []

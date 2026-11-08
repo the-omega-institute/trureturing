@@ -1,5 +1,5 @@
 /- GID: D5/S3/Arith/Robin/PriceRecord/RealInfimumPrimeBoundary
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Arith/Robin/PriceRecord/RealInfimumPrimeBoundary
    mirror-E: none(waiver:general-real-analysis)
    anchors: []
