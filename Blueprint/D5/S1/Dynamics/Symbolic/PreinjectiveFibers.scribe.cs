@@ -71,7 +71,7 @@ internal sealed class PreinjectiveFibersDocument : IScribeDocumentDefinition
                 Seq(Open, All("x", Config), Id("x"), Sp, InMacro, Sp, Id("F"), Sp, Rightarrow, Sp,
                     Code(Id("x")), Sp, Eq, Sp, Id("y"), Close, Sp, Rightarrow),
                 Ex("a", Int), Ex("b", Int), Seq(Id("a"), Sp, Le, Sp, Id("b"), Sp, Land),
-                Call("Set.InjOn", Collars, Call("coeSet", Id("F")))))),
+                Call("Set.InjOn", Collars, Call("coeSet", Id("F"))))),
             AssessedProvenance.FromRepo(), Blocks(
                 Paragraph(Text("The alphabet need not be finite or nonempty. For every finite family F of arbitrary integer configurations "
                     + "whose complete images all equal the prescribed y, there exist a≤b such that collarPair(k,a,b) is injective on F.")),
@@ -88,7 +88,7 @@ internal sealed class PreinjectiveFibersDocument : IScribeDocumentDefinition
                 Seq(Pre, Sp, Rightarrow), All("y", Config),
                 Seq(Call("Set.Finite", Fiber), Sp, Land),
                 Seq(Call("Set.ncard", Fiber), Sp, Le, Sp,
-                    Seq(Call("Nat.card", Id("A")), Caret, Grp(D(2), Sp, Cdot, Sp, Open, Width, Close)))))),
+                    Seq(Call("Nat.card", Id("A")), Caret, Grp(D(2), Sp, Cdot, Sp, Open, Width, Close))))),
             AssessedProvenance.FromRepo(), Blocks(
                 Paragraph(Text("For every universe u, every A : Type(u) with Finite(A), every natural k, every arbitrary local rule h and every complete output y : Z → A, "
                     + "native preinjectivity implies both explicit finiteness of {x : Z → A | code(h,x)=y} and its Set.ncard bound card(A)^(2(k+1)). "
@@ -100,7 +100,13 @@ internal sealed class PreinjectiveFibersDocument : IScribeDocumentDefinition
                     + "Applying the bound to the now finite full fiber proves the ncard inequality. This is a classical deduction; "
                     + "the bound is not asserted sharp and supplies no effective inversion algorithm.")),
                 Paragraph(Text("The statement and collar synthesis are authored here from the native code interface and generic finite-set cardinality results. "
-                    + "The mathematical mechanism belongs to classical finite-window symbolic dynamics; no literature novelty is claimed."))),
+                    + "The mathematical mechanism belongs to classical finite-window symbolic dynamics; no literature novelty is claimed.")),
+                Paragraph(Text("For an entropy application, equip the finite alphabet with discrete uniformity, put X=A^Z and let Y be the actual range of code(h). "
+                    + "The source X is compact, and continuity of code(h) makes Y compact. Let S be spatial shift by one on X, T its restriction to Y, "
+                    + "and π : X → Y the code with its codomain restricted to its range. The original code_shift identity makes π a surjective semiconjugacy. "
+                    + "Subtype equality identifies each π-fiber with the complete-output fiber above, with the same explicit finiteness and uniform bound. "
+                    + "D5.S1.Dynamics.FiniteFiberEntropy.finite_fiber_entropy therefore gives equal covering entropy for S on X and T on Y, including the empty case. "
+                    + "These are spatial shift dynamics; this consequence does not concern iteration of code(h)."))),
             DescribeRole.Theorem)),
         [DocumentEdge.Dependency.Create(GidRef.Create("D5/S1/Dynamics/Symbolic/PermutativeLifts/BipermutativePreinjectivity"))]));
 }
