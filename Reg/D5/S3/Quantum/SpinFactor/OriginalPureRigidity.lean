@@ -2,13 +2,15 @@ import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
 import D5.S3.Quantum.SpinFactor.OriginalPureRigidity
 
-/-! Faithful source-equivalence attempts for the conditional pure theorems.
+/-! Source-equivalence attempts for the pure theorems and original endpoint.
 
 Each factory requires an actual total relation with the displayed source
 suppliers. The global factory additionally requires the common-perpendicular
-interface. There is no closed registration value in this module: supplying
-these witnesses, compiling the source and checking the raw selectors are
-separate obligations. The factories do not assert declared validation.
+interface. OriginalGlobalPure retains the endpoint's full P2/PB telescope;
+its variation witness requires an actual original D satisfying P2 and PB.
+There is no closed registration value in this module. Concrete witnesses,
+source compilation, lawful template binding and raw selectors remain
+unverified. The factories do not assert declared validation.
 -/
 
 noncomputable section
@@ -380,5 +382,63 @@ def registration (D₀ : E → E → E) (h₀ : PureSuppliers D₀)
   options := #[]
 
 end GlobalPure
+
+namespace OriginalGlobalPure
+
+abbrev arena : Arena where
+  signature := equalitySignature E
+  Law O := ∀ (D : E → E → E) (_ : P2 D) (_ : PB D),
+    ∃ e : ℝ, (e = 1 ∨ e = -1) ∧ ∀ x y : Vec,
+      O.readout () () (D (pure x) (pure y)) (0, e • cross x y)
+
+private theorem rejected_law (D₀ : E → E → E) (hP₀ : P2 D₀) (hPB₀ : PB D₀) :
+    ¬ arena.Law (equalityRejected E) := by
+  intro h
+  obtain ⟨e, he, hf⟩ := h D₀ hP₀ hPB₀
+  exact hf 0 0
+
+def family (D₀ : E → E → E) (hP₀ : P2 D₀) (hPB₀ : PB D₀) :
+    Registration arena (type_of% (@global_pure)) where
+  actual := equalityActual E
+  bridge := Iff.rfl
+  variation := ⟨@global_pure, equalityRejected E, rejected_law D₀ hP₀ hPB₀⟩
+  sensitivity := equalitySensitivity E arena.Law (rejected_law D₀ hP₀ hPB₀)
+  dependence := outputDependence
+
+def registration (D₀ : E → E → E) (hP₀ : P2 D₀) (hPB₀ : PB D₀) :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+      (@global_pure) (Realization (equalitySignature E)) Type Unit where
+  unitName := `D5.S3.Quantum.SpinFactor.OriginalPureRigidity.global_pure.audit
+  realizationName := `Reg.D5.S3.Quantum.SpinFactor.OriginalPureRigidity.OriginalGlobalPure.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family D₀ hP₀ hPB₀⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize (equalitySignature E)
+    (fun _ _ x y => x = y) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := some E
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.SpinFactor.OriginalPureRigidity
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "arg", "body", "arg", "body", "body", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end OriginalGlobalPure
 
 end Reg.D5.S3.Quantum.SpinFactor.OriginalPureRigidity

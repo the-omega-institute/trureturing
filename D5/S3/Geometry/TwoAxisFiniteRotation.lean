@@ -114,7 +114,7 @@ private theorem determinant_plane_reflection {n : Space} (hn : n ≠ 0) :
     Submodule.orthogonal_orthogonal, finrank_span_singleton hn]
   norm_num
 
-private theorem unit_perpendicular_pair (a b : Space) :
+theorem unit_perpendicular_pair (a b : Space) :
     ∃ n : Space, ‖n‖ = 1 ∧ ⟪a, n⟫_ℝ = 0 ∧ ⟪b, n⟫_ℝ = 0 := by
   classical
   let P : Submodule ℝ Space := Submodule.span ℝ ({a, b} : Set Space)
