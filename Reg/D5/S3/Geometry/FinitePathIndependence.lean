@@ -2,86 +2,78 @@ import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
 import D5.S3.Geometry.FinitePathIndependence
 
-/-! The complete path law on native realization sets, with whole-family variation.
-The source selector attempts the literal native-space observation in the empty
-clause; this is a type-valued observation, rather than an underlying set readout. -/
+/-! The three vertex-count readouts in the complete native path classification.
+Each role retains its original universally quantified index. Interventions change
+one whole count family, while the empty clause and all native spaces stay in Law. -/
 
 noncomputable section
-open Set ContinuousMap
+open ContinuousMap
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.Geometry
 
 namespace Reg.D5.S3.Geometry.FinitePathIndependence
 
 abbrev signature : Signature where
-  Params := ℕ
-  State n := SimpleGraph (Fin n)
-  Role := Unit
+  Params := Unit
+  State _ := ℕ
+  Role := Fin 3
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ n := Set (Fin n → ℝ)
+  Output _ _ := ℕ
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def nativeSet (n : ℕ) (G : SimpleGraph (Fin n)) : Set (Fin n → ℝ) :=
-  FiniteConeCollapse.realization
-    (FiniteGraphVertexSubstitution.independenceComplex G).toPreAbstractSimplicialComplex
-
 def actual : Realization signature :=
-  realize signature (fun _ n G => nativeSet n G) (fun e => nomatch e)
+  realize signature (fun i _ k =>
+    if i = 0 then 3 * (k + 1) else if i = 1 then 3 * k + 1 else 3 * k + 2)
+    (fun e => nomatch e)
 
-def rejected : Realization signature :=
-  realize signature (fun _ _ _ => ∅) (fun e => nomatch e)
+def intervene (i : Fin 3) : Realization signature :=
+  realize signature (fun j p k => if j = i then 0 else actual.readout j p k)
+    (fun e => nomatch e)
 
 abbrev arena : Arena where
   signature := signature
   Law R :=
-    IsEmpty (↥(R.readout () 0 (SimpleGraph.pathGraph 0))) ∧
-    (∀ k : ℕ, Nonempty (↥(R.readout () (3 * (k + 1))
-      (SimpleGraph.pathGraph (3 * (k + 1)))) ≃ₕ EuclideanSphereJoin.StdSphere k)) ∧
-    (∀ k : ℕ, ContractibleSpace (↥(R.readout () (3 * k + 1)
-      (SimpleGraph.pathGraph (3 * k + 1))))) ∧
-    (∀ k : ℕ, Nonempty (↥(R.readout () (3 * k + 2)
-      (SimpleGraph.pathGraph (3 * k + 2))) ≃ₕ EuclideanSphereJoin.StdSphere k))
+    IsEmpty (FiniteCoordinateTruncation.Ispace (SimpleGraph.pathGraph 0)) ∧
+    (∀ k : ℕ, Nonempty (FiniteCoordinateTruncation.Ispace
+      (SimpleGraph.pathGraph (R.readout 0 () k)) ≃ₕ EuclideanSphereJoin.StdSphere k)) ∧
+    (∀ k : ℕ, ContractibleSpace (FiniteCoordinateTruncation.Ispace
+      (SimpleGraph.pathGraph (R.readout 1 () k)))) ∧
+    (∀ k : ℕ, Nonempty (FiniteCoordinateTruncation.Ispace
+      (SimpleGraph.pathGraph (R.readout 2 () k)) ≃ₕ EuclideanSphereJoin.StdSphere k))
 
 private theorem bridge :
     (type_of% (_root_.D5.S3.Geometry.FinitePathIndependence.classification)) ↔
       arena.Law actual := Iff.rfl
 
-private theorem rejected_law : ¬ arena.Law rejected := by
+private theorem rejected_law (i : Fin 3) : ¬ arena.Law (intervene i) := by
   intro h
-  haveI : ContractibleSpace (↥(∅ : Set (Fin 1 → ℝ))) := h.2.2.1 0
-  obtain ⟨e⟩ := ContractibleSpace.hequiv_unit
-    (↥(∅ : Set (Fin 1 → ℝ)))
-  exact (e.invFun ()).property
+  have he := _root_.D5.S3.Geometry.FinitePathIndependence.classification.1
+  fin_cases i
+  · obtain ⟨e⟩ := h.2.1 0
+    exact he.false (e.invFun (EuclideanSphereJoin.coordinatePoint 0))
+  · letI : ContractibleSpace (FiniteCoordinateTruncation.Ispace
+        (SimpleGraph.pathGraph 0)) := h.2.2.1 0
+    obtain ⟨e⟩ := ContractibleSpace.hequiv_unit
+      (FiniteCoordinateTruncation.Ispace (SimpleGraph.pathGraph 0))
+    exact he.false (e.invFun ())
+  · obtain ⟨e⟩ := h.2.2.2 0
+    exact he.false (e.invFun (EuclideanSphereJoin.coordinatePoint 0))
 
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
-  refine ⟨2, ⊥, ⊤, ?_⟩
-  intro h
-  let x : Fin 2 → ℝ := fun _ => 1 / 2
-  have hm : x ∈ nativeSet 2 (⊥ : SimpleGraph (Fin 2)) := by
-    apply (FiniteCoordinateTruncation.realization_iff _ _).mpr
-    constructor
-    · constructor
-      · intro a; norm_num [x]
-      · norm_num [x]
-    · simp [FiniteCoordinateTruncation.Avoid]
-  change nativeSet 2 (⊥ : SimpleGraph (Fin 2)) =
-    nativeSet 2 (⊤ : SimpleGraph (Fin 2)) at h
-  rw [h] at hm
-  have hz := ((FiniteCoordinateTruncation.realization_iff _ _).mp hm).2
-    (0 : Fin 2) (1 : Fin 2) (by simp)
-  norm_num [x] at hz
+  refine ⟨(), 0, 1, ?_⟩
+  fin_cases i <;> norm_num [actual, realize] <;> decide
 
 def family : Registration arena
     (type_of% (_root_.D5.S3.Geometry.FinitePathIndependence.classification)) where
   actual := actual
   bridge := bridge
   variation := ⟨bridge.mp _root_.D5.S3.Geometry.FinitePathIndependence.classification,
-    rejected, rejected_law⟩
-  sensitivity := ⟨fun i => ⟨rejected,
-    fun j h => (h (Subsingleton.elim j i)).elim, rfl, rejected_law⟩,
+    intervene 0, rejected_law 0⟩
+  sensitivity := ⟨fun i => ⟨intervene i,
+    fun j h => by funext p k; simp [intervene, realize, h], rfl, rejected_law i⟩,
     fun e => nomatch e⟩
   dependence := dependence
 
@@ -99,7 +91,9 @@ def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ n G => nativeSet n G) (fun e => nomatch e))
+  readout := some (realize signature (fun i _ k =>
+    if i = 0 then 3 * (k + 1) else if i = 1 then 3 * k + 1 else 3 * k + 2)
+    (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -109,10 +103,20 @@ def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["fn", "arg", "arg"]
+      path := #["arg", "fn", "arg", "body", "arg", "fn", "fn", "fn", "arg", "arg", "arg"]
       stateBinder := 0
       functionOperand := false
-      stateOperand := some #["arg"]
+      stateOperand := none
+      booleanPredicate := false }, {
+      path := #["arg", "arg", "fn", "arg", "body", "fn", "arg", "arg", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }, {
+      path := #["arg", "arg", "arg", "body", "arg", "fn", "fn", "fn", "arg", "arg", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := none
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none

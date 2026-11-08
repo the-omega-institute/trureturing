@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Geometry/FinitePathIndependence
    mirror-E: none(waiver:native-path-classification)
-   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Hasse]
+   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Acyclic]
    utility: none
    digest: Exact modulo-three homotopy classification of native path independence realizations. -/
 import D5.S3.Geometry.FiniteForestIndependence
