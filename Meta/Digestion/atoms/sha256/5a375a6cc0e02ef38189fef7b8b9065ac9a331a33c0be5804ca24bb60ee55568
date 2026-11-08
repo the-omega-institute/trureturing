@@ -1,0 +1,10 @@
+**Definition 192.1 (the three-mode source plane).** Retain the source operator $P$ and source label $q$ of Definition 175.1, and set
+
+$$
+\mathcal S_q=\operatorname{span}_{\mathbb R}\{Pq,P^2q,P^3q\}
+\subset L^2(m;\mathbb R).
+\tag{192.1}
+$$
+
+For a full-zero partition, let $\mathcal R_u$ be the common radical inside $\mathcal W_u$ from Definition 191.1.
+
