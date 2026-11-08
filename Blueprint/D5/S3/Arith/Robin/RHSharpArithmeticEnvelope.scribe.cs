@@ -25,7 +25,7 @@ internal sealed class RHSharpArithmeticEnvelopeDocument : IScribeDocumentDefinit
                 Blocks(Paragraph(Text("Here E₃ is Mertens.E₃ and theta is Chebyshev.theta. Both are the canonical actual arithmetic functions."))),
                 DescribeRole.Definition),
             Describe.Lean(
-                DescribeId.Create("actual-B-lower-endpoint"),
+                DescribeId.Create("actual-b-lower-endpoint"),
                 DeclarationHandle.Create("D5/S3/Arith/Robin/RHSharpArithmeticEnvelope.actual_B_lower_endpoint"),
                 H("All-real envelope, arbitrarily late attainment and exact liminf in one result"),
                 StatementSource.FromAuthor(EndpointClaim()), AssessedProvenance.FromRepo(),
