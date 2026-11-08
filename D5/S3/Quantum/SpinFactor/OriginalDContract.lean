@@ -477,12 +477,11 @@ theorem unit_rows (D : E → E → E) (hP : P2 D) (hPB : PB D) (q : ℝ) (b : E)
     have hj : jordan a v = (q / r, 0) := by
       apply Prod.ext
       · simp [a, v, jordan, dot, smul_dotProduct, dotProduct_smul]
-        change q / dot y y * (1 / r * dot y y) = q / r
-        field_simp
+        field_simp [show y ⬝ᵥ y ≠ 0 from hyy]
       · simp [a, v, jordan]
     let A : E := (-q / r, (1 / r) • y)
     let B : E := (q / r, (1 / r) • y)
-    have hA : v - jordan a v = A := by rw [hj]; ext <;> simp [v, A]
+    have hA : v - jordan a v = A := by rw [hj]; ext <;> simp [v, A, neg_div]
     have hB : v + jordan a v = B := by rw [hj]; ext <;> simp [v, B]
     have hAB : D A B = 0 := by
       simpa only [hA, hB] using pb_equal_labels D hP hPB a v hav
@@ -521,12 +520,14 @@ theorem unit_rows (D : E → E → E) (hP : P2 D) (hPB : PB D) (q : ℝ) (b : E)
       · funext i
         simp [A, B, smul_eq_mul]
         field_simp
-        linear_combination y i * hr2
+        ring_nf
+        simp [hr2]
     have hu : (1 / r) • B - (1 / r) • A = (q, 0) := by
       apply Prod.ext
       · simp [A, B, smul_eq_mul]
         field_simp
-        linear_combination q * hr2
+        ring_nf
+        simp [hr2]
       · funext i
         simp [A, B, smul_eq_mul]
     rw [hx, hu, hAB] at h
