@@ -3,8 +3,24 @@
    mirror-B: D5/B/S3/StatisticalMechanics/VertexModels/PonciniRasmussenNineAction
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: [mathlib/module/Mathlib.Algebra.MonoidAlgebra.Module]
-   utility: none
+   utility: kind=numeric-reduction; basis=refutes=gid:D5/S3/StatisticalMechanics/VertexModels/PonciniRasmussenMinpolyRefutation.claim; result=D5/S3/StatisticalMechanics/VertexModels/PonciniRasmussenMinpolyRefutation.result; claim=D5/S3/StatisticalMechanics/VertexModels/PonciniRasmussenMinpolyRefutation.claim
    digest: The checked table gives exact generator multiplication in the literal diagram algebra. -/
+
+/-
+admission_basis: open-problem-resolution (#27843; Refuted)
+escape_witness: literal finite computations transported to the degree-57 annihilator
+Direct frozen dependencies (declaration statement_ids):
+D5/S3/Combinatorics/PerfectMatchings/OrderedMatchingCore.NCMatching sha256:e57e27461371a52ec60ddecf793e8636b33575dfd226354a0a39adeb4fc8c180
+D5/S3/Topology/FiniteMatchingClosure.Boundary sha256:2d22740b62cc9ff6a486d404f032436c21abd62130e080eb9e91719ecefa9bc6
+D5/S3/Topology/FiniteMatchingClosure.Matching sha256:fd9df4ba1fc572f200a8c9ff58f36e53a205ade28d7c790a87120a8723a6cdb9
+D5/S3/Topology/FiniteMatchingClosure.cupcapMatching sha256:c244a1d0c295526be0811c97ed793929c5a156f92b1269a8c33c7bfda9bf3109
+D5/S3/Topology/FiniteMatchingClosure.mate sha256:28b6db6a4ff9477dd543699cd3439ba967d854c089c412870c9eb135520ccf46
+D5/S3/Topology/FiniteMatchingComposition.composite sha256:916faedcd34e169a2fbdf6728df71f94600d26fc1f3c6b285d74c8f06225beff
+D5/S3/Topology/FiniteMatchingComposition.internalLoopCount sha256:93bdce1ab5e61437907986b6f2bdde47b0b5f569fbacb1d341051b76d3d98b2c
+D5/S3/Topology/FiniteMatchingSewing.matching_ext sha256:c122a00bd61ef1c7696ea12717caa82fe0b7d18ae95f1c43e0f1984a19ffa070
+unit_basis: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenMinpolyRefutation.annihilator_aeval
+generator_basis: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenMinpolyRefutation.sparse_lift
+-/
 import D5.S3.StatisticalMechanics.VertexModels.PonciniRasmussenNineDiagrams
 import D5.S3.Combinatorics.PerfectMatchings.PlanarDiagramAlgebra
 import D5.S3.Topology.FiniteMatchingClosure

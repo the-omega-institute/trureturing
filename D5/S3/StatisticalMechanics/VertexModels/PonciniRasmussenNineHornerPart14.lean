@@ -5,6 +5,147 @@
    anchors: [mathlib/module/Mathlib.Data.Int.Basic]
    utility: kind=numeric-reduction; basis=refutes=gid:D5/S3/StatisticalMechanics/VertexModels/PonciniRasmussenMinpolyRefutation.claim; result=D5/S3/StatisticalMechanics/VertexModels/PonciniRasmussenMinpolyRefutation.result; claim=D5/S3/StatisticalMechanics/VertexModels/PonciniRasmussenMinpolyRefutation.claim
    digest: Four split integer Horner steps for the nine-strand certificate. -/
+
+/-
+admission_basis: open-problem-resolution (#27843; Refuted)
+escape_witness: literal finite computations transported to the degree-57 annihilator
+Direct frozen dependencies (declaration statement_ids):
+none (direct prerequisites are unfrozen or pinned upstream)
+step56_part0: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step56_blocks
+step56_part1: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step56_blocks
+step56_part2: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step56_blocks
+step56_part3: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step56_blocks
+step56_part4: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step56_blocks
+step56_part5: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step56_blocks
+step56_part6: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step56_blocks
+step56_part7: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step56_blocks
+step56_part8: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step56_blocks
+step56_part9: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step56_blocks
+step56_part10: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step56_blocks
+step56_part11: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step56_blocks
+step56_part12: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step56_blocks
+step56_part13: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step56_blocks
+step56_part14: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step56_blocks
+step56_part15: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step56_blocks
+step56_part16: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step56_blocks
+step56_part17: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step56_blocks
+step56_part18: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step56_blocks
+step56_part19: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step56_blocks
+step56_part20: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step56_blocks
+step56_part21: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step56_blocks
+step56_part22: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step56_blocks
+step56_part23: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step56_blocks
+step56_part24: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step56_blocks
+step56_part25: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step56_blocks
+step56_part26: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step56_blocks
+step56_part27: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step56_blocks
+step56_part28: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step56_blocks
+step56_part29: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step56_blocks
+step56_part30: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step56_blocks
+step56_part31: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step56_blocks
+step56_part32: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step56_blocks
+step56_part33: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step56_blocks
+step56_part34: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step56_blocks
+step56_part35: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step56_blocks
+step56_part36: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step56_blocks
+step56_part37: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step56_blocks
+step56_part38: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step56_blocks
+step56_part39: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step56_blocks
+step56_part40: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step56_blocks
+step56_part41: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step56_blocks
+step56_part42: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step56_blocks
+step56_part43: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step56_blocks
+step56_part44: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step56_blocks
+step56_part45: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step56_blocks
+step56_part46: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step56_blocks
+step56_part47: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step56_blocks
+step56_part48: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step56_blocks
+step56_part49: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step56_blocks
+step56_part50: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step56_blocks
+step56_part51: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step56_blocks
+step56_part52: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step56_blocks
+step56_part53: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step56_blocks
+step56_part54: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step56_blocks
+step56_part55: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step56_blocks
+step56_part56: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step56_blocks
+step56_part57: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step56_blocks
+step56_part58: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step56_blocks
+step56_part59: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step56_blocks
+step56_part60: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step56_blocks
+step56_part61: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step56_blocks
+step56_part62: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step56_blocks
+step56_part63: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step56_blocks
+step56_blocks: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step56_all
+step56_all: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step56
+step56: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.annihilation
+step57_part0: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step57_blocks
+step57_part1: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step57_blocks
+step57_part2: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step57_blocks
+step57_part3: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step57_blocks
+step57_part4: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step57_blocks
+step57_part5: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step57_blocks
+step57_part6: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step57_blocks
+step57_part7: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step57_blocks
+step57_part8: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step57_blocks
+step57_part9: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step57_blocks
+step57_part10: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step57_blocks
+step57_part11: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step57_blocks
+step57_part12: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step57_blocks
+step57_part13: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step57_blocks
+step57_part14: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step57_blocks
+step57_part15: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step57_blocks
+step57_part16: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step57_blocks
+step57_part17: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step57_blocks
+step57_part18: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step57_blocks
+step57_part19: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step57_blocks
+step57_part20: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step57_blocks
+step57_part21: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step57_blocks
+step57_part22: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step57_blocks
+step57_part23: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step57_blocks
+step57_part24: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step57_blocks
+step57_part25: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step57_blocks
+step57_part26: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step57_blocks
+step57_part27: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step57_blocks
+step57_part28: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step57_blocks
+step57_part29: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step57_blocks
+step57_part30: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step57_blocks
+step57_part31: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step57_blocks
+step57_part32: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step57_blocks
+step57_part33: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step57_blocks
+step57_part34: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step57_blocks
+step57_part35: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step57_blocks
+step57_part36: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step57_blocks
+step57_part37: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step57_blocks
+step57_part38: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step57_blocks
+step57_part39: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step57_blocks
+step57_part40: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step57_blocks
+step57_part41: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step57_blocks
+step57_part42: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step57_blocks
+step57_part43: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step57_blocks
+step57_part44: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step57_blocks
+step57_part45: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step57_blocks
+step57_part46: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step57_blocks
+step57_part47: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step57_blocks
+step57_part48: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step57_blocks
+step57_part49: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step57_blocks
+step57_part50: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step57_blocks
+step57_part51: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step57_blocks
+step57_part52: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step57_blocks
+step57_part53: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step57_blocks
+step57_part54: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step57_blocks
+step57_part55: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step57_blocks
+step57_part56: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step57_blocks
+step57_part57: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step57_blocks
+step57_part58: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step57_blocks
+step57_part59: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step57_blocks
+step57_part60: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step57_blocks
+step57_part61: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step57_blocks
+step57_part62: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step57_blocks
+step57_part63: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step57_blocks
+step57_blocks: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step57_all
+step57_all: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.step57
+step57: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.annihilation
+-/
 import D5.S3.StatisticalMechanics.VertexModels.PonciniRasmussenNineHornerData
 import Mathlib.Tactic.FinCases
 import Mathlib.Data.Fintype.Fin

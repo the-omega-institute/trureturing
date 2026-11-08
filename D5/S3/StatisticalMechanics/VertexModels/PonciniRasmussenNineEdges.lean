@@ -3,8 +3,117 @@
    mirror-B: D5/B/S3/StatisticalMechanics/VertexModels/PonciniRasmussenNineEdges
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: [mathlib/module/Mathlib.Data.List.Sort]
-   utility: none
+   utility: kind=numeric-reduction; basis=refutes=gid:D5/S3/StatisticalMechanics/VertexModels/PonciniRasmussenMinpolyRefutation.claim; result=D5/S3/StatisticalMechanics/VertexModels/PonciniRasmussenMinpolyRefutation.result; claim=D5/S3/StatisticalMechanics/VertexModels/PonciniRasmussenMinpolyRefutation.claim
    digest: Incoming and outgoing sparse actions have exactly the same weighted edges. -/
+
+/-
+admission_basis: open-problem-resolution (#27843; Refuted)
+escape_witness: literal finite computations transported to the degree-57 annihilator
+Direct frozen dependencies (declaration statement_ids):
+none (direct prerequisites are unfrozen or pinned upstream)
+Tree: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.Tree.below, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.Tree.brecOn
+get: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.incoming
+rows: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.incoming
+incoming: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.incomingEdges, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.sparseHamiltonian_eq
+sparseHamiltonian_eq: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.sparse_sum
+incomingEdges: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edges_perm, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.incoming_encoded
+outgoingEdges: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edges_perm, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.outgoing_encoded
+mergeForKernel: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck13, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck13._proof_1
+mergeForKernel_eq: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edges_perm, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.sortForKernel_perm
+sortForKernel: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck0, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck0._proof_1
+sortForKernel_perm: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edges_perm
+edgeKey: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeKey_injective, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeKey_injective._proof_1
+edgeKey_injective: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edges_perm
+sourcePart: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.encodedPart, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.outgoing_encoded
+encodedPart: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck0, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck0._proof_1
+natOrder: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck0, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck0._proof_1
+edgeNode0: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck0, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck0._proof_1
+edgeNode1: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck1, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck1._proof_1
+edgeNode2: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck2, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck2._proof_1
+edgeNode3: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck3, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck3._proof_1
+edgeNode4: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck4, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck4._proof_1
+edgeNode5: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck5, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck5._proof_1
+edgeNode6: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck16, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck16._proof_1
+edgeNode7: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck7, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck7._proof_1
+edgeNode8: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck8, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck8._proof_1
+edgeNode9: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck15, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck15._proof_1
+edgeNode10: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck10, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck10._proof_1
+edgeNode11: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck11, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck11._proof_1
+edgeNode12: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck12, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck12._proof_1
+edgeNode13: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck13, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck13._proof_1
+edgeNode14: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck14, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck14._proof_1
+edgeNode15: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck15, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck15._proof_1
+edgeNode16: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck16, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck16._proof_1
+edgeNode17: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck17, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck17._proof_1
+edgeNode18: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck18, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck18._proof_1
+edgeNode19: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck19, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck19._proof_1
+edgeNode20: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck20, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck20._proof_1
+edgeNode21: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck21, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck21._proof_1
+edgeNode22: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck22, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck22._proof_1
+edgeNode23: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck23, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck23._proof_1
+edgeNode24: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck24, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck24._proof_1
+edgeNode25: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck25, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck25._proof_1
+edgeNode26: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck26, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck26._proof_1
+edgeNode27: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck27, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck27._proof_1
+edgeNode28: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck28, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck28._proof_1
+edgeNode29: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck29, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck29._proof_1
+edgeNode30: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck30, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck30._proof_1
+edgeNode31: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck31, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck31._proof_1
+edgeNode32: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck32, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck32._proof_1
+edgeNode33: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck33, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck33._proof_1
+edgeNode34: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck34, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck34._proof_1
+edgeNode35: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck35, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck35._proof_1
+edgeNode36: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck36, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck36._proof_1
+edgeCheck0: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edges_perm
+edgeCheck1: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edges_perm
+edgeCheck2: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edges_perm
+edgeCheck3: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edges_perm
+edgeCheck4: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edges_perm
+edgeCheck5: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edges_perm
+edgeCheck6: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edges_perm
+edgeCheck7: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edges_perm
+edgeCheck8: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edges_perm
+edgeCheck9: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edges_perm
+edgeCheck10: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edges_perm
+edgeCheck11: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edges_perm
+edgeCheck12: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edges_perm
+edgeCheck13: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edges_perm
+edgeCheck14: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edges_perm
+edgeCheck15: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edges_perm
+edgeCheck16: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edges_perm
+edgeCheck17: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edges_perm
+edgeCheck18: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edges_perm
+edgeCheck19: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edges_perm
+edgeCheck20: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edges_perm
+edgeCheck21: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edges_perm
+edgeCheck22: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edges_perm
+edgeCheck23: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edges_perm
+edgeCheck24: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edges_perm
+edgeCheck25: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edges_perm
+edgeCheck26: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edges_perm
+edgeCheck27: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edges_perm
+edgeCheck28: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edges_perm
+edgeCheck29: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edges_perm
+edgeCheck30: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edges_perm
+edgeCheck31: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edges_perm
+edgeCheck32: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edges_perm
+edgeCheck33: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edges_perm
+edgeCheck34: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edges_perm
+edgeCheck35: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edges_perm
+edgeCheck36: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edges_perm
+source_partition: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.outgoing_encoded
+outgoing_encoded: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edges_perm
+incoming_encoded: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edges_perm
+edges_perm: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.sparse_sum
+sum_flatMap: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.incoming_sum, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.outgoing_sum
+sum_filterMap: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.outgoing_sum
+foldl_add_sum: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.incoming_sum
+int_sum_smul: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.incoming_sum
+sum_finRange: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.incoming_sum, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.outgoing_sum
+outgoing_sum: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.sparse_sum
+incoming_sum: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.sparse_sum
+sparse_sum: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenMinpolyRefutation.sparse_lift
+-/
 import D5.S3.StatisticalMechanics.VertexModels.PonciniRasmussenNineHornerData
 import D5.S3.StatisticalMechanics.VertexModels.PonciniRasmussenNineDiagrams
 import Mathlib.Data.List.Sort
@@ -102,13 +211,13 @@ private def encodedPart (k : Nat) : List Nat :=
       if ht : (transition g s).val < 4862 then
         some ((⟨(transition g s).val,ht⟩ : Fin 4862),(⟨s.val,by omega⟩ : Fin 8192)) else none).map edgeKey
 private def natOrder (a b : Nat) : Bool := decide (a ≤ b)
-local syntax "prb1_edges% [" num,* "]" : term
+local syntax "prb1_edges% " "[" num,* "]" : term
 elab_rules : term
   | `(prb1_edges% [$ns:num,*]) => do
-    let ty := mkConst ``Nat
-    let mut out := mkApp (mkConst ``List.nil [Level.zero]) ty
+    let ty := Lean.mkConst ``Nat
+    let mut out := mkApp (Lean.mkConst ``List.nil [Level.zero]) ty
     for n in ns.getElems.reverse do
-      out := mkApp3 (mkConst ``List.cons [Level.zero]) ty (mkNatLit n.getNat) out
+      out := mkApp3 (Lean.mkConst ``List.cons [Level.zero]) ty (mkNatLit n.getNat) out
     return out
 
 private def edgeNode0 : List Nat := prb1_edges% [42, 61, 72, 85, 118, 132, 132, 188, 217, 245, 8235, 8254, 8265, 8305, 8325, 8325, 8381, 8410, 8438, 16428, 16447, 16467, 16503, 16518, 16518, 16574, 16603, 24621, 24640, 24685, 24711, 24711, 24767, 24796, 32814, 32833, 32878, 32904, 32904, 32960, 32989, 41007, 41030, 41046, 41080, 41097, 41097, 41153, 41201, 49200, 49223, 49266, 49290, 49290, 49346, 49394, 57393, 57425, 57465, 57483, 57483, 57539, 65586, 65618, 65658, 65676, 65676, 65732, 73779, 73832, 73869, 73869, 73925, 81972, 82025, 82062, 82062, 82118, 90165, 90218, 90255, 90255, 90311, 98358, 98411, 98448, 98448, 98504, 106551, 106604, 106641, 106641, 106697, 114744, 114762, 114775, 114811, 114834, 114834, 114900, 114935, 122937, 122955, 122995, 123027, 123027, 123093, 123128, 131130, 131156, 131196, 131220, 131220, 131286, 139323, 139375, 139413, 139413, 139479, 147516, 147568, 147606, 147606, 147672, 155714, 155736, 155773, 155799, 155799, 155885, 163907, 163956, 163992, 163992, 164078, 172100, 172121, 172158, 172185, 172185, 172271, 180293, 180341, 180378, 180378, 180464, 188492, 188543, 188571, 188571, 196685, 196736, 196764, 196764, 204878, 204929, 204957, 204957, 213071, 213122, 213150, 213150, 221264, 221315, 221343, 221343, 229466, 229536, 229536, 237659, 237729, 237729, 245852, 245922, 245922, 254045, 254115, 254115, 262238, 262308, 262308, 270431, 270501, 270501, 278624, 278694, 278694, 286817, 286887, 286887, 295010, 295080, 295080, 303203, 303273, 303273, 311396, 311466, 311466, 319589, 319659, 319659, 327782, 327852, 327852, 335975, 336045, 336045, 344064, 344238, 344286, 344313, 352257, 352431, 352479, 352506, 360450, 360624, 360672, 368643, 368817, 368865, 376836, 377010, 377058, 385029, 385203, 385267, 393222, 393396, 393460, 401415, 401589, 409608, 409782, 417801, 417975, 425994, 426168, 434187, 434361, 442380, 442554, 450573, 450747, 458766, 458813, 458954, 459003, 466959, 467006, 467147, 467196, 475152, 475199, 475340, 483345, 483392, 483533, 491538, 491585, 491726, 499919, 499965, 508112, 508158, 516305, 524498, 532691, 540691, 540742, 540746, 540899, 548884, 548935, 548939, 549092, 557077, 557128, 557285, 565270, 565321, 565478, 573671, 581864, 590057, 598250, 606443, 614636, 622615, 622673, 622676, 622680, 622847, 630808, 630866, 630871, 639001, 639059, 639065, 647194, 647253, 655387, 655446, 737308, 737384, 737391, 737396, 737407, 745501, 745577, 745584, 745597, 753694, 753770, 753779, 753792, 761887, 761963, 761979, 770080, 770156, 770172, 778273, 778349, 778357, 778369, 786466, 786542, 786558, 794659, 794737, 794754, 802852, 802930, 802947, 811045, 811126, 819238, 819319, 827431, 827512, 835624, 835705, 843817, 843898, 1081344, 1089537, 1097730, 1105923, 1114116, 1122309, 1130502, 1138695, 1146888, 1155081, 1163274, 1171467, 1179660, 1187853, 1196046, 1204239, 1212432, 1220625, 1228818, 1237011, 1245204, 1253397, 1261590, 1269783, 1277976, 1286169, 1294362, 1302555, 1310748, 1318941, 1327134, 1335327, 1343520, 1351713, 1359906, 1368099, 1376292, 1384485, 1392678, 1400871, 1409064, 1417257, 1425450, 1425540, 1425596, 1425596, 1433643, 1433733, 1433789, 1433789, 1441836, 1441926, 1441982, 1441982, 1450029, 1450119, 1450175, 1450175, 1458222, 1458312, 1458368, 1458368, 1466415, 1466505, 1466561, 1466561, 1474608, 1474698, 1474754, 1474754, 1482801, 1482891, 1482947, 1482947, 1490994, 1491084, 1491140, 1491140, 1499187, 1499277, 1499333, 1499333, 1507380, 1507470, 1507526, 1507526, 1515573, 1515663, 1515719, 1515719, 1523766, 1523856, 1523912, 1523912, 1531959, 1532049, 1532105, 1532105, 1540270, 1548463, 1556656, 1564849, 1573042, 1581235, 1589428, 1597621, 1605814, 1614007, 1622200, 1630393, 1638586, 1646779, 1654840, 1654930, 1654991, 1654996, 1654996, 1655006, 1663033, 1663123, 1663184, 1663189, 1663189, 1663199, 1671226, 1671316, 1671377, 1671382, 1671382, 1671392, 1679419, 1679509, 1679570, 1679575, 1679575, 1679585, 1687612, 1687702, 1687763, 1687768, 1687768, 1687778, 1695805, 1695961, 1703998, 1704154, 1712191, 1712347, 1720384, 1720540, 1728577, 1728733, 1736906, 1745099, 1753292, 1761485, 1769678, 1777871, 1777886, 1786064, 1786079, 1794257, 1794272, 1802450, 1802465, 1810643, 1810658, 1818841, 1827034, 1835227, 1843420, 1851613, 1859650, 1859735, 1859815, 1859819, 1859821, 1859821, 1859827, 1859835, 1867843, 1867928, 1868008, 1868012, 1868014, 1868014, 1868020, 1868028, 1876036, 1876121, 1876201, 1876207, 1876207, 1876217, 1884229, 1884314, 1884394, 1884400, 1884400, 1884410, 1892422, 1892593, 1892605, 1900615, 1900786, 1900798, 1908808, 1908981, 1917001, 1917174, 1925194, 1925367, 1933387, 1933560, 1941731, 1949924, 1958117, 1966310, 1974503, 1974515, 1982696, 1982708, 1990897, 1999090, 2007273, 2007289, 2007293, 2015466, 2015482, 2015486, 2023659, 2023675, 2031852, 2031868, 2040053, 2048246, 2056439, 2056445, 2064632, 2064638, 2089036, 2089115, 2097229, 2097308, 2105422, 2105501, 2113615, 2113694, 2121808, 2121887, 2130001, 2138194, 2146387, 2154580, 2162773, 2170966, 2179159, 2187352, 2195545, 2203903, 2433114, 2433184, 2441307, 2441377, 2449500, 2449570, 2457693, 2457763, 2465886, 2465956, 2474079, 2474149, 2482272, 2482342, 2490465, 2490535, 2498658, 2498728, 2506851, 2506921, 2515044, 2515114, 2523237, 2523307, 2531430, 2531500, 2539623, 2539693, 2547816, 2556009, 2564202, 2572395, 2580588, 2588781, 2596974, 2605167, 2613360, 2621553, 2629746, 2637939, 2646132, 2654325, 2662518, 2670711, 2678904, 2687097, 2695290, 2703483, 2711676, 2719869, 2728062, 2736255, 2744448, 2752641, 2760834, 2769027, 3514368, 3522561, 3530754, 3538947, 3547140, 3555333, 3563526, 3571719, 3579912, 3588105, 3596298, 3604491, 3612684, 3620877, 3629070, 3637263, 3645456, 3653649, 3661842, 3670035, 3678228, 3686421, 3694614, 3702807, 3711000, 3719193, 3727386, 3735579, 3743772, 3751965, 3760158, 3768351, 3776544, 3784737, 3792930, 3801123, 3809316, 3817509, 3825702, 3833895, 3842088, 3850281, 3858474, 3866667, 3874860, 3883053, 3891246, 3899439, 3907632, 3915825, 3924018, 3932211, 3940404, 3948597, 3956790, 3964983, 3973176, 3981369, 3989562, 3997755, 4005948, 4014141, 4022334, 4030527, 4038720, 4046913, 4055106, 4063299, 4071492, 4079685, 4087878, 4096071, 4104264, 4112457, 4120650, 4128843, 4137036, 4145229, 4153422, 4161615, 4169808, 4178001, 4186194, 4194387, 4202580, 4210773, 4218966, 4227159, 4235352, 4243545, 4251738, 4259931, 4268124, 4276317, 4284510, 4292703, 4300896, 4309089, 4317282, 4325475, 4333668, 4341861, 4350054, 4358247, 4366440, 4374633, 4382826, 4391019, 4399212, 4407405, 4415598, 4423791, 4431984, 4440177, 4448370, 4456563, 4464756, 4472949, 4481142, 4489335, 4497528, 4505721, 4513914, 4522107, 4530300, 4538493, 4546686, 4554879, 4563072, 4571265, 4579458, 4587651, 4595844, 4604037, 4612230, 4620423, 4628616, 4636809, 4645002, 4653195, 4661388, 4669581, 4677774, 4685967, 4694160, 4702353, 4710546, 4718739, 4726932, 4735125, 4743318, 4751511, 4759704, 4767897, 4776090, 4784283, 4792476, 4800669, 4808862, 4817055, 4825248, 4833441, 4841634, 4849827, 4858020, 4866213, 4874406, 4882599, 4890792, 4898985, 4907178, 4915371, 4923564, 4931757, 5284014, 5292207, 5300400, 5308593, 5316786, 5324979, 5333172, 5341365, 5349558, 5357751, 5365944, 5374137, 5382330, 5390523, 5398716, 5406909, 5415102, 5423295, 5431488, 5439681, 5447874, 5456067, 5464260, 5472453, 5480646, 5488839, 5497032, 5505225, 5857482, 5865675, 5873868, 5882061, 5890254, 5898447, 5906640, 5914833, 5923026, 5931219, 5939412, 5947605, 5955798, 5963991, 5972184, 5980377, 5988570, 5996763, 6004956, 6013149, 6021342, 6029535, 6037728, 6045921, 6054114, 6430947, 6439140, 6447333, 6455526, 6463719, 6471912, 6480105, 6488298, 6496491, 6504684, 6512877, 6521070, 6529263, 6537456, 6545649, 6553842, 6562035, 6570228, 6578421, 6586614, 6594807, 6603000, 6611193, 6619386, 6627579, 6635772, 6643965, 6652158, 7119103, 11714560, 11722753, 11730946, 11739139, 11747332, 11755525, 11763718, 11771911, 11780104, 11788297, 11796490, 11804683, 11812876, 11821069, 11829262, 11837455, 11845648, 11853841, 11862034, 11870227, 11878420, 11886613, 11894806, 11902999, 11911192, 11919385, 11927578, 11935771, 11943964, 11952157, 11960350, 11968543, 11976736, 11984929, 11993122, 12001315, 12009508, 12017701, 12025894, 12034087, 12042280, 12050473, 12058666, 12066859, 12075052, 12083245, 12091438, 12099631, 12107824, 12116017, 12124210, 12132403, 12140596, 12148789, 12156982, 12165175, 12173368, 12181561, 12189754, 12197947, 12206140, 12214333, 12222526, 12230719, 12238912, 12247105, 12255298, 12263491, 12271684, 12279877, 12288070, 12296263, 12304456, 12312649, 12320842, 12329035, 12337228, 12345421, 12353614, 12361807, 12370000, 12378193, 12386386, 12394579, 12402772, 12410965, 12419158, 12427351, 12435544, 12443737, 12451930, 12460123, 12468316, 12476509, 12484702, 12492895, 12501088, 12509281, 12517474, 12525667, 12533860, 12542053, 12550246, 12558439, 12566632, 12574825, 12583018, 12591211, 12599404, 12607597, 12615790, 12623983, 12632176, 12640369, 12648562, 12656755, 12664948, 12673141, 12681334, 12689527, 12697720, 12705913, 12714106, 12722299, 12730492, 12738685, 12746878, 12755071, 12763264, 12771457, 12779650, 12787843, 12796036, 12804229, 12812422, 12820615, 12828808, 12837001, 12845194, 12853387, 12861580, 12869773, 12877966, 12886159, 12894352, 12902545, 12910738, 12918931, 12927124, 12935317, 12943510, 12951703, 12959896, 12968089, 12976282, 12984475, 12992668, 13000861, 13009054, 13017247, 13025440, 13033633, 13041826, 13050019, 13058212, 13066405, 13074598, 13082791, 13090984, 13099177, 13107370, 13115563, 13123756, 13131949, 13140142, 13148335, 13156528, 13164721, 13172914, 13181107, 13189300, 13197493, 13205686, 13213879, 13222072, 13230265, 13238458, 13246651, 13254844, 13263037, 13271230, 13279423, 13287616, 13295809, 13304002, 13312195, 13320388, 13328581, 13336774, 13344967, 13353160, 13361353, 13369546, 13377739, 13385932, 13394125, 13402318, 13410511, 13418704, 13426897, 13435090, 13443283, 13451476, 13459669, 13467862, 13476055, 13484248, 13492441, 13500634, 13508827, 13517020, 13525213, 13533406, 13541599, 13549792, 13557985, 13566178, 13574371, 13582564, 13590757, 13598950, 13607143, 13615336, 13623529, 13631722, 13639915, 13648108, 13656301, 13664494, 13672687, 13680880, 13689073, 13697266, 13705459, 13713652, 13721845, 13730038, 13738231, 13746424, 13754617, 13762810, 13771003, 13779196, 13787389, 13795582, 13803775]
@@ -235,19 +344,19 @@ private theorem incoming_encoded : incomingEdges.map edgeKey = edgeNode36 := by
 theorem edges_perm : incomingEdges.Perm outgoingEdges := by
   apply (List.map_perm_map_iff edgeKey_injective).mp
   rw [incoming_encoded, outgoing_encoded]
-  have hp0 : edgeNode0.Perm encodedPart 0 := by
+  have hp0 : edgeNode0.Perm (encodedPart 0) := by
     rw [← edgeCheck0]
     exact sortForKernel_perm natOrder 12 _
-  have hp1 : edgeNode1.Perm encodedPart 1 := by
+  have hp1 : edgeNode1.Perm (encodedPart 1) := by
     rw [← edgeCheck1]
     exact sortForKernel_perm natOrder 12 _
   have hp2 : edgeNode2.Perm (encodedPart 0 ++ encodedPart 1) := by
     rw [← edgeCheck2, mergeForKernel_eq]
     exact (List.merge_perm_append natOrder).trans (hp0.append hp1)
-  have hp3 : edgeNode3.Perm encodedPart 2 := by
+  have hp3 : edgeNode3.Perm (encodedPart 2) := by
     rw [← edgeCheck3]
     exact sortForKernel_perm natOrder 12 _
-  have hp4 : edgeNode4.Perm encodedPart 3 := by
+  have hp4 : edgeNode4.Perm (encodedPart 3) := by
     rw [← edgeCheck4]
     exact sortForKernel_perm natOrder 12 _
   have hp5 : edgeNode5.Perm (encodedPart 2 ++ encodedPart 3) := by
@@ -256,22 +365,22 @@ theorem edges_perm : incomingEdges.Perm outgoingEdges := by
   have hp6 : edgeNode6.Perm ((encodedPart 0 ++ encodedPart 1) ++ (encodedPart 2 ++ encodedPart 3)) := by
     rw [← edgeCheck6, mergeForKernel_eq]
     exact (List.merge_perm_append natOrder).trans (hp2.append hp5)
-  have hp7 : edgeNode7.Perm encodedPart 4 := by
+  have hp7 : edgeNode7.Perm (encodedPart 4) := by
     rw [← edgeCheck7]
     exact sortForKernel_perm natOrder 12 _
-  have hp8 : edgeNode8.Perm encodedPart 5 := by
+  have hp8 : edgeNode8.Perm (encodedPart 5) := by
     rw [← edgeCheck8]
     exact sortForKernel_perm natOrder 12 _
   have hp9 : edgeNode9.Perm (encodedPart 4 ++ encodedPart 5) := by
     rw [← edgeCheck9, mergeForKernel_eq]
     exact (List.merge_perm_append natOrder).trans (hp7.append hp8)
-  have hp10 : edgeNode10.Perm encodedPart 6 := by
+  have hp10 : edgeNode10.Perm (encodedPart 6) := by
     rw [← edgeCheck10]
     exact sortForKernel_perm natOrder 12 _
-  have hp11 : edgeNode11.Perm encodedPart 7 := by
+  have hp11 : edgeNode11.Perm (encodedPart 7) := by
     rw [← edgeCheck11]
     exact sortForKernel_perm natOrder 12 _
-  have hp12 : edgeNode12.Perm encodedPart 8 := by
+  have hp12 : edgeNode12.Perm (encodedPart 8) := by
     rw [← edgeCheck12]
     exact sortForKernel_perm natOrder 12 _
   have hp13 : edgeNode13.Perm (encodedPart 7 ++ encodedPart 8) := by
@@ -286,22 +395,22 @@ theorem edges_perm : incomingEdges.Perm outgoingEdges := by
   have hp16 : edgeNode16.Perm (((encodedPart 0 ++ encodedPart 1) ++ (encodedPart 2 ++ encodedPart 3)) ++ ((encodedPart 4 ++ encodedPart 5) ++ (encodedPart 6 ++ (encodedPart 7 ++ encodedPart 8)))) := by
     rw [← edgeCheck16, mergeForKernel_eq]
     exact (List.merge_perm_append natOrder).trans (hp6.append hp15)
-  have hp17 : edgeNode17.Perm encodedPart 9 := by
+  have hp17 : edgeNode17.Perm (encodedPart 9) := by
     rw [← edgeCheck17]
     exact sortForKernel_perm natOrder 12 _
-  have hp18 : edgeNode18.Perm encodedPart 10 := by
+  have hp18 : edgeNode18.Perm (encodedPart 10) := by
     rw [← edgeCheck18]
     exact sortForKernel_perm natOrder 12 _
   have hp19 : edgeNode19.Perm (encodedPart 9 ++ encodedPart 10) := by
     rw [← edgeCheck19, mergeForKernel_eq]
     exact (List.merge_perm_append natOrder).trans (hp17.append hp18)
-  have hp20 : edgeNode20.Perm encodedPart 11 := by
+  have hp20 : edgeNode20.Perm (encodedPart 11) := by
     rw [← edgeCheck20]
     exact sortForKernel_perm natOrder 12 _
-  have hp21 : edgeNode21.Perm encodedPart 12 := by
+  have hp21 : edgeNode21.Perm (encodedPart 12) := by
     rw [← edgeCheck21]
     exact sortForKernel_perm natOrder 12 _
-  have hp22 : edgeNode22.Perm encodedPart 13 := by
+  have hp22 : edgeNode22.Perm (encodedPart 13) := by
     rw [← edgeCheck22]
     exact sortForKernel_perm natOrder 12 _
   have hp23 : edgeNode23.Perm (encodedPart 12 ++ encodedPart 13) := by
@@ -313,22 +422,22 @@ theorem edges_perm : incomingEdges.Perm outgoingEdges := by
   have hp25 : edgeNode25.Perm ((encodedPart 9 ++ encodedPart 10) ++ (encodedPart 11 ++ (encodedPart 12 ++ encodedPart 13))) := by
     rw [← edgeCheck25, mergeForKernel_eq]
     exact (List.merge_perm_append natOrder).trans (hp19.append hp24)
-  have hp26 : edgeNode26.Perm encodedPart 14 := by
+  have hp26 : edgeNode26.Perm (encodedPart 14) := by
     rw [← edgeCheck26]
     exact sortForKernel_perm natOrder 12 _
-  have hp27 : edgeNode27.Perm encodedPart 15 := by
+  have hp27 : edgeNode27.Perm (encodedPart 15) := by
     rw [← edgeCheck27]
     exact sortForKernel_perm natOrder 12 _
   have hp28 : edgeNode28.Perm (encodedPart 14 ++ encodedPart 15) := by
     rw [← edgeCheck28, mergeForKernel_eq]
     exact (List.merge_perm_append natOrder).trans (hp26.append hp27)
-  have hp29 : edgeNode29.Perm encodedPart 16 := by
+  have hp29 : edgeNode29.Perm (encodedPart 16) := by
     rw [← edgeCheck29]
     exact sortForKernel_perm natOrder 12 _
-  have hp30 : edgeNode30.Perm encodedPart 17 := by
+  have hp30 : edgeNode30.Perm (encodedPart 17) := by
     rw [← edgeCheck30]
     exact sortForKernel_perm natOrder 12 _
-  have hp31 : edgeNode31.Perm encodedPart 18 := by
+  have hp31 : edgeNode31.Perm (encodedPart 18) := by
     rw [← edgeCheck31]
     exact sortForKernel_perm natOrder 12 _
   have hp32 : edgeNode32.Perm (encodedPart 17 ++ encodedPart 18) := by

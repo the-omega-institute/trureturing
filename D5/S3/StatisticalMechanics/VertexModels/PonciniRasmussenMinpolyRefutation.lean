@@ -3,8 +3,31 @@
    mirror-B: D5/B/S3/StatisticalMechanics/VertexModels/PonciniRasmussenMinpolyRefutation
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: [mathlib/module/Mathlib.FieldTheory.Minpoly.Field]
-   utility: kind=certified-instance; basis=refutes=gid:D5/S3/StatisticalMechanics/VertexModels/PonciniRasmussenMinpolyRefutation.claim; claim=D5/S3/StatisticalMechanics/VertexModels/PonciniRasmussenMinpolyRefutation.claim; result=D5/S3/StatisticalMechanics/VertexModels/PonciniRasmussenMinpolyRefutation.result
+   utility: kind=certified-instance; basis=refutes=gid:D5/S3/StatisticalMechanics/VertexModels/PonciniRasmussenMinpolyRefutation.claim; result=D5/S3/StatisticalMechanics/VertexModels/PonciniRasmussenMinpolyRefutation.result; claim=D5/S3/StatisticalMechanics/VertexModels/PonciniRasmussenMinpolyRefutation.claim
    digest: Conjecture B.1 for the literal planar diagram algebra at loop fugacity zero. -/
+
+/-
+admission_basis: open-problem-resolution (#27843; Refuted)
+escape_witness: literal finite computations transported to the degree-57 annihilator
+Direct frozen dependencies (declaration statement_ids):
+none (direct prerequisites are unfrozen or pinned upstream)
+claim: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenMinpolyRefutation.result
+liftVector: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenMinpolyRefutation.fold_lift, D5.S3.StatisticalMechanics.PonciniRasmussenMinpolyRefutation.h_lift
+h_lift: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenMinpolyRefutation.sparse_lift
+lift_step: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenMinpolyRefutation.fold_lift
+polynomialFromCoefficients: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenMinpolyRefutation.annihilator, D5.S3.StatisticalMechanics.PonciniRasmussenMinpolyRefutation.annihilator_degree
+fold_aeval: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenMinpolyRefutation.polynomial_annihilates
+fold_lift: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenMinpolyRefutation.polynomial_annihilates
+polynomial_annihilates: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenMinpolyRefutation.annihilator_aeval
+basisDiagram: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenMinpolyRefutation.annihilator_aeval, D5.S3.StatisticalMechanics.PonciniRasmussenMinpolyRefutation.sparse_lift
+sparse_lift: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenMinpolyRefutation.annihilator_aeval
+annihilator: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenMinpolyRefutation.annihilator_aeval, D5.S3.StatisticalMechanics.PonciniRasmussenMinpolyRefutation.annihilator_degree
+annihilator_aeval: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenMinpolyRefutation.minpoly_nine_bound
+annihilator_monic: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenMinpolyRefutation.minpoly_nine_bound
+annihilator_degree: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenMinpolyRefutation.minpoly_nine_bound
+minpoly_nine_bound: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenMinpolyRefutation.result
+result: proof_shape=content; consumers=terminal(refutes #27843)
+-/
 import D5.S3.Combinatorics.PerfectMatchings.PlanarDiagramAlgebra
 import D5.S3.StatisticalMechanics.VertexModels.PonciniRasmussenNineDiagrams
 import D5.S3.StatisticalMechanics.VertexModels.PonciniRasmussenNineAction

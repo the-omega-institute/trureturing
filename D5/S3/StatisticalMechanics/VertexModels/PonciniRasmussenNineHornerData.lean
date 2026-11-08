@@ -5,6 +5,79 @@
    anchors: [mathlib/module/Mathlib.Data.Int.Basic]
    utility: kind=numeric-reduction; basis=refutes=gid:D5/S3/StatisticalMechanics/VertexModels/PonciniRasmussenMinpolyRefutation.claim; result=D5/S3/StatisticalMechanics/VertexModels/PonciniRasmussenMinpolyRefutation.result; claim=D5/S3/StatisticalMechanics/VertexModels/PonciniRasmussenMinpolyRefutation.claim
    digest: The fixed sparse rows and integer vector states for the nine-strand certificate. -/
+
+/-
+admission_basis: open-problem-resolution (#27843; Refuted)
+escape_witness: literal finite computations transported to the degree-57 annihilator
+Direct frozen dependencies (declaration statement_ids):
+none (direct prerequisites are unfrozen or pinned upstream)
+Tree: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.Tree.below, D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.Tree.brecOn
+get: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.sparseHamiltonian, D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.state
+rows: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.sparseHamiltonian
+annihilatorCoefficients: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenMinpolyRefutation.annihilator, D5.S3.StatisticalMechanics.PonciniRasmussenMinpolyRefutation.annihilator_aeval
+sparseHamiltonian: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenMinpolyRefutation.annihilator_aeval, D5.S3.StatisticalMechanics.PonciniRasmussenMinpolyRefutation.sparse_lift
+hornerValue: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.annihilation
+v0: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.state
+v1: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.state
+v2: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.state
+v3: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.state
+v4: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.state
+v5: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.state
+v6: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.state
+v7: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.state
+v8: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.state
+v9: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.state
+v10: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.state
+v11: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.state
+v12: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.state
+v13: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.state
+v14: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.state
+v15: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.state
+v16: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.state
+v17: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.state
+v18: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.state
+v19: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.state
+v20: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.state
+v21: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.state
+v22: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.state
+v23: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.state
+v24: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.state
+v25: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.state
+v26: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.state
+v27: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.state
+v28: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.state
+v29: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.state
+v30: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.state
+v31: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.state
+v32: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.state
+v33: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.state
+v34: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.state
+v35: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.state
+v36: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.state
+v37: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.state
+v38: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.state
+v39: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.state
+v40: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.state
+v41: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.state
+v42: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.state
+v43: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.state
+v44: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.state
+v45: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.state
+v46: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.state
+v47: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.state
+v48: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.state
+v49: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.state
+v50: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.state
+v51: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.state
+v52: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.state
+v53: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.state
+v54: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.state
+v55: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.state
+v56: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.state
+v57: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.state
+v58: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.state
+state: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.annihilation, D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.final_zero
+-/
 import Mathlib.Data.Int.Basic
 
 /-! Exact integer data and finite kernel reduction. -/
