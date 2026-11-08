@@ -47,6 +47,19 @@ internal sealed class FlatPairJointBlocksDocument : IScribeDocumentDefinition
                         "This condition specifies a full frame; it does not assert its existence for " +
                         "an arbitrary pair."))),
                 DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("flat-pair-complete-joint-block-classification"),
+                DeclarationHandle.Create("D5/S3/Quantum/Algebra/FlatPairJointBlocks.flat_pair_joint_blocks_iff"),
+                H("Complete classification and converse"),
+                StatementSource.FromAuthor(ClassificationFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "Skew(T) means inner(Tx,y)=-inner(x,Ty) for all original vectors x,y in F. " +
+                    "Flat(A,D) means -A squared-D squared is the identity endomorphism of F. " +
+                    "The left side is precisely the complete original-space frame condition defined above. " +
+                    "The equivalence includes the zero space, all zero residual complements, both endpoint " +
+                    "square shares, both collinear signs, the strict interior, independent block parameters, " +
+                    "and the converse for every complete permitted assembly. No uniqueness is asserted.")))),
             Paragraph(Text("Square and mixed spectral coordinates")),
             Paragraph(Text(
                 "For skew A,D with -A squared-D squared=I, put P=-A squared and " +
@@ -134,6 +147,16 @@ internal sealed class FlatPairJointBlocksDocument : IScribeDocumentDefinition
         parts.Add(Close);
         return Seq([.. parts]);
     }
+
+    private static Formula ClassificationFormula() => Disp(Seq(
+        Forall, Sp, F.Id("F"), Colon, F.Id("Type"), Comma,
+        OpenBracket, Call("NormedAddCommGroup", F.Id("F")), CloseBracket,
+        OpenBracket, Call("InnerProductSpace", Seq(Mathbb, Grp(F.Id("R"))), F.Id("F")), CloseBracket,
+        OpenBracket, Call("FiniteDimensional", Seq(Mathbb, Grp(F.Id("R"))), F.Id("F")), CloseBracket, Comma,
+        Forall, Sp, F.Id("A"), Comma, F.Id("D"), Colon, Call("End", Seq(Mathbb, Grp(F.Id("R"))), F.Id("F")), Comma,
+        Call("HasFlatPairJointBlocks", F.Id("A"), F.Id("D")), Iff,
+        Call("Skew", F.Id("A")), Land, Sp, Call("Skew", F.Id("D")), Land, Sp,
+        Call("Flat", F.Id("A"), F.Id("D")), Dot));
 
     private static Formula FrameFormula() => Disp(Seq(
         Forall, Sp, F.Id("F"), Colon, F.Id("Type"), Comma,

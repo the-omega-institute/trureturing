@@ -912,15 +912,17 @@ theorem flat_pair_joint_blocks_iff (A D : F →ₗ[ℝ] F) :
               rw [hDj]
               change d • (t • I (vv k)+Real.sqrt (1-t^2) • J (vv k)) = _
               rw [hIv,hJv]
+            have castA (x : V) : (AV x : E)=A (x : E) := rfl
+            have castD (x : V) : (DV x : E)=D (x : E) := rfl
             apply (quaternion_orbit_span_data (F := E)).2.2 A D r t v horth hrp hrq ht ht1
-            · simpa [v,vv,a,d,smul_neg,neg_smul,sub_eq_add_neg] using congrArg ((↑) : V → E) (actA 0)
-            · simpa [v,vv,a,d,smul_neg,neg_smul,sub_eq_add_neg] using congrArg ((↑) : V → E) (actA 1)
-            · simpa [v,vv,a,d,smul_neg,neg_smul,sub_eq_add_neg] using congrArg ((↑) : V → E) (actA 2)
-            · simpa [v,vv,a,d,smul_neg,neg_smul,sub_eq_add_neg] using congrArg ((↑) : V → E) (actA 3)
-            · simpa [v,vv,a,d,smul_neg,neg_smul,sub_eq_add_neg] using congrArg ((↑) : V → E) (actD 0)
-            · simpa [v,vv,a,d,smul_neg,neg_smul,sub_eq_add_neg] using congrArg ((↑) : V → E) (actD 1)
-            · simpa [v,vv,a,d,smul_neg,neg_smul,sub_eq_add_neg] using congrArg ((↑) : V → E) (actD 2)
-            · simpa [v,vv,a,d,smul_neg,neg_smul,sub_eq_add_neg] using congrArg ((↑) : V → E) (actD 3)
+            · simpa [v,vv,a,d,castA,castD,smul_neg,neg_smul,sub_eq_add_neg] using congrArg ((↑) : V → E) (actA 0)
+            · simpa [v,vv,a,d,castA,castD,smul_neg,neg_smul,sub_eq_add_neg] using congrArg ((↑) : V → E) (actA 1)
+            · simpa [v,vv,a,d,castA,castD,smul_neg,neg_smul,sub_eq_add_neg] using congrArg ((↑) : V → E) (actA 2)
+            · simpa [v,vv,a,d,castA,castD,smul_neg,neg_smul,sub_eq_add_neg] using congrArg ((↑) : V → E) (actA 3)
+            · simpa [v,vv,a,d,castA,castD,smul_neg,neg_smul,sub_eq_add_neg] using congrArg ((↑) : V → E) (actD 0)
+            · simpa [v,vv,a,d,castA,castD,smul_neg,neg_smul,sub_eq_add_neg] using congrArg ((↑) : V → E) (actD 1)
+            · simpa [v,vv,a,d,castA,castD,smul_neg,neg_smul,sub_eq_add_neg] using congrArg ((↑) : V → E) (actD 2)
+            · simpa [v,vv,a,d,castA,castD,smul_neg,neg_smul,sub_eq_add_neg] using congrArg ((↑) : V → E) (actD 3)
         obtain ⟨U,hAU,hDU,hU,hframe⟩ := single
         obtain ⟨hAc,hDc,hAs,hDs,hf,hd,join⟩ :=
           flat_pair_complement_descent_data A D hA hD hflat U hU hAU hDU
