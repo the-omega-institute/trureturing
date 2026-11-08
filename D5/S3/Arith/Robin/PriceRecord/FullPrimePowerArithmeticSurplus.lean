@@ -44,11 +44,11 @@ def fullPrimePowerResidual (z : ℝ) : ℝ :=
   ∑ p ∈ Nat.primesLE ⌊z⌋₊, ∑' k : ℕ,
     if 2 ≤ k ∧ z < (p : ℝ) ^ k then (p : ℝ)⁻¹ ^ k / (k : ℝ) else 0
 
-private def shiftedTail (q : ℝ) (b : ℕ) : ℝ :=
+def shiftedTail (q : ℝ) (b : ℕ) : ℝ :=
   ∑' r : ℕ, q ^ (r + (b + 1)) / (r + (b + 1) : ℕ)
 
 /-- Integer-log and real-floor cutoffs agree, with BOTH power endpoints. -/
-private theorem cutoff_spec {z : ℝ} (hz : 4 ≤ z) {p : ℕ}
+theorem cutoff_spec {z : ℝ} (hz : 4 ≤ z) {p : ℕ}
     (hp : p.Prime) (hpz : (p : ℝ) ≤ z) :
     1 ≤ cutoffExponent z p ∧
       (p : ℝ) ^ cutoffExponent z p ≤ z ∧
@@ -130,7 +130,7 @@ private theorem shifted_tail_bound {q : ℝ} (hq0 : 0 < q) (hq1 : q < 1) (b : �
 /-- Reindex the actual full residual. Summability is established before the
 prefix/tail identity is used, so the real tsum default-zero convention cannot
 silently discard an infinite tail. -/
-private theorem residual_prime_eq_shift {z : ℝ} (hz : 4 ≤ z) {p : ℕ}
+theorem residual_prime_eq_shift {z : ℝ} (hz : 4 ≤ z) {p : ℕ}
     (hp : p.Prime) (hpz : (p : ℝ) ≤ z) :
     (∑' k : ℕ, if 2 ≤ k ∧ z < (p : ℝ) ^ k then
       (p : ℝ)⁻¹ ^ k / (k : ℝ) else 0) =
@@ -274,7 +274,7 @@ private theorem layer_tail_gt_first {n p : ℕ} (hp : p.Prime) :
   unfold layerTail
   linarith
 
-private def primeContribution (z : ℝ) (n p : ℕ) : ℝ :=
+def primeContribution (z : ℝ) (n p : ℕ) : ℝ :=
   layerTail n p + ((n.factorization p : ℝ) - (cutoffExponent z p : ℝ)) *
     (Real.log (p : ℝ) / (z * Real.log z)) -
       shiftedTail (p : ℝ)⁻¹ (cutoffExponent z p)
@@ -457,7 +457,7 @@ private theorem two_scale {z : ℝ} (hz : 4 ≤ z) :
       field_simp
       <;> ring
 
-private theorem full_surplus_eq_sum {z : ℝ} (hz : 4 ≤ z) {n : ℕ}
+theorem full_surplus_eq_sum {z : ℝ} (hz : 4 ≤ z) {n : ℕ}
     (hsupport : n.primeFactors = Nat.primesLE ⌊z⌋₊) :
     tail n + (Real.log (n : ℝ) - Chebyshev.psi z) / (z * Real.log z) -
       fullPrimePowerResidual z =
@@ -498,7 +498,7 @@ private theorem full_surplus_eq_sum {z : ℝ} (hz : 4 ≤ z) {n : ℕ}
   dsimp [primeContribution]
   ring
 
-private theorem prime_contribution_pos {z : ℝ} (hz : 4 ≤ z) {n p : ℕ}
+theorem prime_contribution_pos {z : ℝ} (hz : 4 ≤ z) {n p : ℕ}
     (hp : p.Prime) (hpz : (p : ℝ) ≤ z) (ha : 1 ≤ n.factorization p) :
     0 < primeContribution z n p := by
   have hi0 : 0 < (p : ℝ)⁻¹ := inv_pos.mpr (by exact_mod_cast hp.pos)
@@ -856,7 +856,7 @@ private theorem mangoldt_prefix_eq {z : ℝ} (hz : 4 ≤ z) :
 
 /-- A genuinely summable complete Euler logarithm is split at b. Its
 remaining shifted series is exactly the original strict prime-power residual. -/
-private theorem prime_prefix_add_residual {z : ℝ} (hz : 4 ≤ z) {p : ℕ}
+theorem prime_prefix_add_residual {z : ℝ} (hz : 4 ≤ z) {p : ℕ}
     (hp : p.Prime) (hpz : (p : ℝ) ≤ z) :
     (∑ k ∈ Icc 1 (cutoffExponent z p), (p : ℝ)⁻¹ ^ k / (k : ℝ)) +
       (∑' k : ℕ, if 2 ≤ k ∧ z < (p : ℝ) ^ k then

@@ -38,7 +38,7 @@ theorem atanhParameter_lt_third {y : ℝ} (hy1 : 1 ≤ y) (hy2 : y < 2) :
 noncomputable def logRemainder (y : ℝ) (K : ℕ) : ℝ :=
   Real.log y - atanhPartial (atanhParameter y) K
 
-private lemma atanh_remainder_sharp {t : ℝ} (ht0 : 0 ≤ t) (ht1 : t < 1) (K : ℕ) :
+lemma atanh_remainder_sharp {t : ℝ} (ht0 : 0 ≤ t) (ht1 : t < 1) (K : ℕ) :
     0 ≤ Real.log ((1 + t) / (1 - t)) - atanhPartial t K ∧
       Real.log ((1 + t) / (1 - t)) - atanhPartial t K ≤
         2 * t ^ (2 * K + 1) / ((2 * K + 1) * (1 - t ^ 2)) := by
