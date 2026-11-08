@@ -6,7 +6,7 @@
    utility: none
    digest: The signed Stirling coefficient sequence A001722 satisfies Mathar's recurrence and is D-finite as an ordinary rational formal power series. -/
 
-/-!
+/-
 The source is OEIS A001722, revision 26, formula field:
 https://oeis.org/A001722/internal?fmt=text
 The Crstici signed Stirling sum is the definition. Mathar's conjecture asks for
@@ -63,7 +63,6 @@ private theorem falling_degree (N : ℕ) : (falling N).natDegree ≤ N := by
     rw [hf]
     exact (natDegree_mul_le).trans (Nat.add_le_add ih
       (le_of_eq (natDegree_X_sub_C (N : ℤ))))
-
 
 private theorem shifted_coeff (n : ℕ) : (shifted n).coeff 2 = a n := by
   have hd : (hasseDeriv 2 (falling (n+2))).natDegree < n+1 := by
