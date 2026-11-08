@@ -51,9 +51,9 @@ private theorem rotation_cross (R : TwoAxisFiniteRotation.Orthogonal)
       dot (rotate R u) (cross (rotate R v) (rotate R z)) = dot u (cross v z) := by
     have hmat : ![rotate R u, rotate R v, rotate R z] = ![u, v, z] * M.transpose := by
       ext i j
+      have hi := congrFun (hm (Fin.cases u (Fin.cases v (fun _ => z)) i)) j
       fin_cases i <;>
-        simpa [Matrix.mul_apply, Matrix.mulVec, dotProduct, mul_comm] using
-          congrFun (hm (Fin.cases u (Fin.cases v (fun _ => z)) i)) j
+        simpa [Matrix.mul_apply, Matrix.mulVec, dotProduct, mul_comm] using hi
     change (rotate R u) ⬝ᵥ ((rotate R v) ⨯₃ (rotate R z)) = u ⬝ᵥ (v ⨯₃ z)
     rw [triple_product_eq_det, triple_product_eq_det, hmat,
       Matrix.det_mul, Matrix.det_transpose, hd, mul_one]
