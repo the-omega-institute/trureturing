@@ -75,7 +75,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
       path := #["body", "body", "body", "fn", "arg", "fn", "arg"]
       stateBinder := 2
       functionOperand := false
-      stateOperand := some #["arg", "arg"]
+      stateOperand := none
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
@@ -146,7 +146,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
       path := #["body", "body", "body", "fn", "arg", "fn", "arg"]
       stateBinder := 2
       functionOperand := false
-      stateOperand := some #["arg", "arg"]
+      stateOperand := none
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
@@ -217,7 +217,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
       path := #["body", "body", "body", "fn", "arg"]
       stateBinder := 2
       functionOperand := false
-      stateOperand := some #["arg"]
+      stateOperand := none
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
@@ -286,7 +286,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
       path := #["body", "body", "arg"]
       stateBinder := 1
       functionOperand := false
-      stateOperand := some #["arg"]
+      stateOperand := none
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
