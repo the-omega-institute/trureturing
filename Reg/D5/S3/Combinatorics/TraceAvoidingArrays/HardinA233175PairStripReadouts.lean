@@ -1,4 +1,5 @@
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip
+import D5.S3.Observer.Separation.BooleanRankThreeK4
 import D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 import Reg.Support.SingleDependentReadout
 import LeanInformationAuditInterface.Contract.Registration
@@ -38,12 +39,14 @@ private theorem rejected_law : ¬ arena.Law rejected := by
 def family : Registration arena (type_of% @finish_fst) where
   actual := actual
   bridge := Iff.rfl
-  variation := ⟨finish_fst, rejected, rejected_law⟩
+  variation := ⟨@finish_fst, rejected, rejected_law⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual rejected rejected_law
   dependence := by
     intro i
     refine ⟨(1, (false, false)), (fun _ => 0), (fun _ => 1), ?_⟩
+    change (finish (false, false) (fun _ : Fin 1 => (0 : Fin 6))).1 ≠
+      (finish (false, false) (fun _ : Fin 1 => (1 : Fin 6))).1
     decide +kernel
 
 def audit : Contract.Registration (@finish_fst) (Realization signature) Type Unit where
@@ -106,12 +109,14 @@ private theorem rejected_law : ¬ arena.Law rejected := by
 def family : Registration arena (type_of% @finish_snd) where
   actual := actual
   bridge := Iff.rfl
-  variation := ⟨finish_snd, rejected, rejected_law⟩
+  variation := ⟨@finish_snd, rejected, rejected_law⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual rejected rejected_law
   dependence := by
     intro i
     refine ⟨(1, (false, false)), (fun _ => 0), (fun _ => 2), ?_⟩
+    change (finish (false, false) (fun _ : Fin 1 => (0 : Fin 6))).2 ≠
+      (finish (false, false) (fun _ : Fin 1 => (2 : Fin 6))).2
     decide +kernel
 
 def audit : Contract.Registration (@finish_snd) (Realization signature) Type Unit where
@@ -176,13 +181,13 @@ private theorem rejected_law : ¬ arena.Law rejected := by
 def family : Registration arena (type_of% @good_iff) where
   actual := actual
   bridge := Iff.rfl
-  variation := ⟨good_iff, rejected, rejected_law⟩
+  variation := ⟨@good_iff, rejected, rejected_law⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual rejected rejected_law
   dependence := by
     intro i
     refine ⟨(1, (false, false)), (fun _ => 0), (fun _ => 2), ?_⟩
-    decide +kernel
+    simp [actual, realize, good, allowed]
 
 def audit : Contract.Registration (@good_iff) (Realization signature) Type Unit where
   unitName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStripReadouts.GoodCriterion.auditUnit
@@ -250,7 +255,7 @@ def family : Registration arena (type_of% @edge_iff) where
   dependence := by
     intro i
     refine ⟨(fun _ => 0), (fun _ => 0), (fun _ => 1), ?_⟩
-    decide +kernel
+    simp [actual, realize, beta]
 
 def audit : Contract.Registration (@edge_iff) (Realization signature) Type Unit where
   unitName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStripReadouts.PairBonds.auditUnit

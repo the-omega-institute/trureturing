@@ -83,8 +83,8 @@ internal sealed class HardinA233251TriangleStripDocument : IScribeDocumentDefini
         var horizontal = All("i", Call("Fin", n), Call("rowLegal",
             Seq(LambdaLower, Sp, j, Colon, Sp, Fin(3), Sp, Mapsto, Sp, Cell(i, j))));
         var x = Cell(i, Call("Fin.succ", j));
-        var y = Cell(Call("Fin.mk", Add(Call("val", i), D(1))), Call("Fin.castSucc", j));
-        var anti = All("i", Call("Fin", n), Imp(Lt(Add(Call("val", i), D(1)), n),
+        var y = Cell(Call("Fin.mk", Add(Call("val", i), D(1)), V("h")), Call("Fin.castSucc", j));
+        var anti = All("i", Call("Fin", n), All("h", Lt(Add(Call("val", i), D(1)), n),
             All("j", Fin(2), And(Ne(x, y), Ne(Add(Call("val", x), Call("val", y)), D(5))))));
         Formula Earlier(byte colour) => Ex("r", Call("Fin", n), Ex("k", Fin(3),
             And(Or(Lt(r, i), And(Eq(r, i), Lt(k, j))), Eq(Cell(r, k), D(colour)))));

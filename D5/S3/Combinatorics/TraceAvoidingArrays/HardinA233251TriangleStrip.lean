@@ -133,13 +133,13 @@ private theorem tail_iff {n : ℕ} (s : Seen) (p : Fin 3 × Fin 3) (f : Fin n �
       · intro h
         constructor
         · intro hn
-          simpa only [bonds_iff, Fin.tail] using h.1 (by omega)
+          simpa only [bonds_iff, Fin.tail, Fin.succ] using h.1 (by omega)
         · intro i hi
           exact h.2 i (by omega)
       · rintro ⟨h0, ht⟩
         constructor
         · intro hn
-          simpa only [bonds_iff, Fin.tail] using h0 (by omega)
+          simpa only [bonds_iff, Fin.tail, Fin.succ] using h0 (by omega)
         · intro i hi
           exact ht i (by omega)
     rw [hb]
@@ -208,18 +208,23 @@ private theorem counting_bridge (n : ℕ) : (a (n + 1) : ℤ) = total (v n) := b
         simpa only [show i = 0 from Fin.ext hi, Fin.cons_zero] using h
       · exact fun h => ⟨0, rfl, h⟩
     rw [hz]
-    simp only [Fin.forall_fin_succ, Fin.cons_zero, Fin.cons_succ]
+    simp only [Fin.forall_fin_succ, Fin.cons_zero, Fin.cons_succ,
+      Fin.val_zero, Fin.val_succ]
     constructor
     · rintro ⟨hc, hr, hb, hg⟩
       refine ⟨⟨hc, hr.1, hg.1⟩, hg.2, hr.2, ?_, ?_⟩
       · intro i hi
         exact hb.2 i (by omega)
       · intro hn
-        simpa only [bonds_iff] using hb.1 (by omega)
+        have he : (⟨0 + 1, by omega⟩ : Fin (n + 1)) = (⟨0, hn⟩ : Fin n).succ :=
+          Fin.ext rfl
+        simpa only [bonds_iff, he, Fin.cons_succ] using hb.1 (by omega)
     · rintro ⟨⟨hc, hr, hg⟩, hn, ht, hb, hp⟩
       refine ⟨hc, ⟨hr, ht⟩, ⟨?_, ?_⟩, hg, hn⟩
       · intro h
-        simpa only [bonds_iff] using hp (by omega)
+        have he : (⟨0 + 1, h⟩ : Fin (n + 1)) = (⟨0, by omega⟩ : Fin n).succ :=
+          Fin.ext rfl
+        simpa only [bonds_iff, he, Fin.cons_succ] using hp (by omega)
       · intro i hi
         exact hb i (by omega)
   change (∑ f : Fin n → Row,
@@ -365,7 +370,11 @@ theorem result :
     linarith
   · have h1 := a_eq_w 0
     have h2 := a_eq_w 1
-    simp [w] at h1 h2
-    interval_cases n <;> norm_num [zero_count, h1, h2]
+    change (a 1 : ℤ) = 2 * 1 + 1 at h1
+    change (a 2 : ℤ) = 2 * (8 * 1 + 20 * 1) + 48 * 1 at h2
+    norm_num only at h1 h2
+    interval_cases n <;> norm_num only [zero_count, h1, h2,
+      Nat.reduceLeDiff, Nat.reduceSubDiff, Nat.reduceEqDiff, if_true, if_false,
+      Nat.cast_zero, mul_zero, sub_self, add_zero]
 
 end D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip
