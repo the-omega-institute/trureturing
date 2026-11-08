@@ -11,28 +11,18 @@ Escape audit unfinished for the older five arbitrary-characteristic additions on
 Current audit gap (exactly these two targets): D5.S3.FiniteGroups.FrobeniusCharacterDegrees.extRep_apply_tmul and D5.S3.FiniteGroups.FrobeniusCharacterDegrees.trivial_restriction_or_index_dvd_of_fixedPointFree. Audit compilation exit: 2; not declared_validated. https://github.com/the-omega-institute/trureturing/issues/27999
 admission_basis: escape-witness
 Frozen baseline inputs (module statement identities):
-D5/S3/FiniteGroups/FiniteCharacterAlgebra @ sha256:5ea5be4246f85df1a6a5a34be414eaa3174509f06a0bb1c923f3d8e8cfff6a55
-D5/S3/FiniteGroups/CliffordConstituents @ sha256:f6e6d286b818f1665d1a59844c6a457c3907fdb4bfcaca1018640dabe80920d7
-D5/S3/FiniteGroups/CliffordDecomposition @ sha256:942e8a07e15758d3a11fe9c6234cbc9507dec0773748704252c247840de4f647
-D5/S3/FiniteGroups/InducedCharacterFormula @ sha256:1c3aec1e0516377c8748f40cb426d2126c6743facaedfe9089323543a1b2e4e2
-D5/S3/FiniteGroups/CharacterDegreeDivisibility @ sha256:ff98a4e5b1afad07cc0f8e78fc943f0c30d1141d02e1e4ebacbf7ee2fa074c68
-D5/S3/FiniteGroups/ComplexCharacterAbelianProducts @ sha256:0f5341f17c27bceb2085721564486b26af2042f25ae947bd7e5d60c092c79fcf
+D5/S3/FiniteGroups/FiniteCharacterAlgebra @ sha256:5ea5be4246f85df1a6a5a34be414eaa3174509f06a0bb1c923f3d8e8cfff6a55; D5/S3/FiniteGroups/CliffordConstituents @ sha256:f6e6d286b818f1665d1a59844c6a457c3907fdb4bfcaca1018640dabe80920d7
+D5/S3/FiniteGroups/CliffordDecomposition @ sha256:942e8a07e15758d3a11fe9c6234cbc9507dec0773748704252c247840de4f647; D5/S3/FiniteGroups/InducedCharacterFormula @ sha256:1c3aec1e0516377c8748f40cb426d2126c6743facaedfe9089323543a1b2e4e2
+D5/S3/FiniteGroups/CharacterDegreeDivisibility @ sha256:ff98a4e5b1afad07cc0f8e78fc943f0c30d1141d02e1e4ebacbf7ee2fa074c68; D5/S3/FiniteGroups/ComplexCharacterAbelianProducts @ sha256:0f5341f17c27bceb2085721564486b26af2042f25ae947bd7e5d60c092c79fcf
 Module escape_witness: trivial_restriction_or_index_dvd_of_fixedPointFree
 Over an algebraically closed field, fixed-point-free conjugation and Clifford decomposition give the structural alternative. Over an arbitrary field, original k[K]-semisimple W-isotypic support survives E[K]-subquotients; supported simple factors are nontrivial on N when W is, and finite-length dimension additivity descends index divisibility.
-trivial_of_invariant_fixedPointFree | proof_shape: bind-only | escape_witness: none | consumer: inertia_eq_of_fixedPointFree
-abelian_character_eq_iff | proof_shape: bind-only | escape_witness: none | consumer: inertia_eq_of_fixedPointFree
-degree_square_le_card | proof_shape: content | escape_witness: D5.S3.FiniteGroups.FiniteCharacterAlgebra.Representation.asAlgebraHom_surjective_of_isIrreducible | consumer: D5.S3.FiniteGroups.BahturinCentronePereiraPeakGroups.BCP31.B_degree_dvd
-degree_dvd_quotient_card | proof_shape: content | escape_witness: D5.S3.FiniteGroups.CharacterDegreeDivisibility.TauCeti.Representation.finrank_dvd_card | consumer: degree_dvd_or_index_dvd_of_fixedPointFree
-inertia_eq_of_fixedPointFree | proof_shape: bind-only | escape_witness: none | consumer: degree_dvd_or_index_dvd_of_fixedPointFree
-restriction_trivial_of_clifford_constituent_trivial | proof_shape: bind-only | escape_witness: none | consumer: degree_dvd_or_index_dvd_of_fixedPointFree
-degree_dvd_or_index_dvd_of_fixedPointFree | proof_shape: content | escape_witness: degree_dvd_or_index_dvd_of_fixedPointFree | consumer: D5.S3.FiniteGroups.BahturinCentronePereiraPeakGroups.BCP31.B_degree_dvd
-trivial_of_equiv_fixedPointFree_of_isAlgClosed | proof_shape: content | escape_witness: trivial_of_equiv_fixedPointFree_of_isAlgClosed | consumer: inertia_eq_of_fixedPointFree_of_isAlgClosed, trivial_of_character_invariant_fixedPointFree_of_isAlgClosed
-trivial_of_character_invariant_fixedPointFree_of_isAlgClosed | proof_shape: content | escape_witness: D5.S3.FiniteGroups.FiniteCharacterAlgebra.TauCeti.exists_trace_one_zero_of_not_nonempty_linearEquiv | consumer: none
-inertia_eq_of_fixedPointFree_of_isAlgClosed | proof_shape: content | escape_witness: trivial_of_equiv_fixedPointFree_of_isAlgClosed | consumer: trivial_restriction_or_index_dvd_of_fixedPointFree_of_isAlgClosed
-restriction_trivial_of_clifford_constituent_trivial_generic | proof_shape: bind-only | escape_witness: none | consumer: trivial_restriction_or_index_dvd_of_fixedPointFree_of_isAlgClosed
-trivial_restriction_or_index_dvd_of_fixedPointFree_of_isAlgClosed | proof_shape: content | escape_witness: trivial_of_equiv_fixedPointFree_of_isAlgClosed | consumer: trivial_restriction_or_index_dvd_of_fixedPointFree
-extRep_apply_tmul | proof_shape: bind-only | escape_witness: none | consumer: pure_image_linear
-pure_image_linear | proof_shape: bind-only | escape_witness: none | consumer: ext_isotypic
+trivial_of_invariant_fixedPointFree | proof_shape: bind-only | escape_witness: none | consumer: inertia_eq_of_fixedPointFree; abelian_character_eq_iff | proof_shape: bind-only | escape_witness: none | consumer: inertia_eq_of_fixedPointFree
+degree_square_le_card | proof_shape: content | escape_witness: D5.S3.FiniteGroups.FiniteCharacterAlgebra.Representation.asAlgebraHom_surjective_of_isIrreducible | consumer: D5.S3.FiniteGroups.BahturinCentronePereiraPeakGroups.BCP31.B_degree_dvd; degree_dvd_quotient_card | proof_shape: content | escape_witness: D5.S3.FiniteGroups.CharacterDegreeDivisibility.TauCeti.Representation.finrank_dvd_card | consumer: degree_dvd_or_index_dvd_of_fixedPointFree
+inertia_eq_of_fixedPointFree | proof_shape: bind-only | escape_witness: none | consumer: degree_dvd_or_index_dvd_of_fixedPointFree; restriction_trivial_of_clifford_constituent_trivial | proof_shape: bind-only | escape_witness: none | consumer: degree_dvd_or_index_dvd_of_fixedPointFree
+degree_dvd_or_index_dvd_of_fixedPointFree | proof_shape: content | escape_witness: degree_dvd_or_index_dvd_of_fixedPointFree | consumer: D5.S3.FiniteGroups.BahturinCentronePereiraPeakGroups.BCP31.B_degree_dvd; trivial_of_equiv_fixedPointFree_of_isAlgClosed | proof_shape: content | escape_witness: trivial_of_equiv_fixedPointFree_of_isAlgClosed | consumer: inertia_eq_of_fixedPointFree_of_isAlgClosed, trivial_of_character_invariant_fixedPointFree_of_isAlgClosed
+trivial_of_character_invariant_fixedPointFree_of_isAlgClosed | proof_shape: content | escape_witness: D5.S3.FiniteGroups.FiniteCharacterAlgebra.TauCeti.exists_trace_one_zero_of_not_nonempty_linearEquiv | consumer: none; inertia_eq_of_fixedPointFree_of_isAlgClosed | proof_shape: content | escape_witness: trivial_of_equiv_fixedPointFree_of_isAlgClosed | consumer: trivial_restriction_or_index_dvd_of_fixedPointFree_of_isAlgClosed
+restriction_trivial_of_clifford_constituent_trivial_generic | proof_shape: bind-only | escape_witness: none | consumer: trivial_restriction_or_index_dvd_of_fixedPointFree_of_isAlgClosed; trivial_restriction_or_index_dvd_of_fixedPointFree_of_isAlgClosed | proof_shape: content | escape_witness: trivial_of_equiv_fixedPointFree_of_isAlgClosed | consumer: trivial_restriction_or_index_dvd_of_fixedPointFree
+extRep_apply_tmul | proof_shape: bind-only | escape_witness: none | consumer: pure_image_linear; pure_image_linear | proof_shape: bind-only | escape_witness: none | consumer: ext_isotypic
 ext_isotypic | proof_shape: content | escape_witness: ext_isotypic | consumer: trivial_restriction_or_index_dvd_of_fixedPointFree
 supported_submodule | proof_shape: bind-only | escape_witness: none | consumer: finite_length_dvd_of_supported
 supported_quotient | proof_shape: bind-only | escape_witness: none | consumer: finite_length_dvd_of_supported
