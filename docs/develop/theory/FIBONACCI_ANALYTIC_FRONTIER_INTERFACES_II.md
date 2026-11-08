@@ -2286,3 +2286,110 @@ $$
 证明。偶数 $k$ 时，与定理 494.2 的证明相同，对 $W_k$ 的每个配对用 Fubini 得 $Q(g)^{k/2}$，配对数为 $(k-1)!!$（Isserlis 公式），故由定理 494.1，$\lim\mathbb E Z_X^k=c_k\kappa^{k/2}(k-1)!!\,Q(g)^{k/2}=\mathbb E U^{kr}\cdot\mathbb E G^k=\mathbb E(U^rG)^k$；奇数阶两边都为 $0$。在 $U$ 上取条件期望，$\mathbb Ee^{tU^rG}=\mathbb E\exp\bigl(\frac{t^2\kappa Q(g)}2U^{2r}\bigr)\le\exp\bigl(\frac{t^2\kappa Q(g)}22^{2r}\bigr)$，故 $U^rG$ 的分布由矩唯一确定。对任意 $X_n\to\infty$，由矩方法（Billingsley, Probability and Measure, 3rd ed., Theorem 30.2）得 $Z_{X_n}$ 依分布收敛到 $U^rG$，从而 $Z_X$ 依分布收敛。(494.6) 由在 $U$ 上取条件期望得到。若 $Q(g)>0$，$U^rG$ 关于 $0$ 对称且 $\mathbb P(U^rG=0)=0$，故 $(0,\infty)$ 与 $(-\infty,0)$ 都是极限分布的连续集，其概率都是 $\frac12$，由 portmanteau 定理得结论。证毕。
 
 **范围。** 定理 494.1、494.2 与推论 494.3 是抽象接口上的结论；对 $E=\psi-\mathrm{id}$，(494.3) 与推论 494.3 所需的 Brownian 型接口都未被证明。Montgomery–Soundararajan [Primes in short intervals, Comm. Math. Phys. 252 (2004), 589–617] 猜想 1 关于固定加法长度 $H=H(N)$、$n\le N$ 变动时的单长度矩，不直接提供 (494.3)：后者涉及四个不同移动长度 $s_jx^\theta$ 的混合矩及其与宏观位置 $U_X$ 的渐近独立性。Leung [Joint distribution of primes in multiple short intervals, Adv. Math. 490 (2026), 110847] 在 RH 与 LI 下研究比例长度 $\delta x$ 的多个不交区间，采用对数取样 $\frac1{\log X}\int_2^X(\cdots)\frac{dx}x$，得到 $\delta\to0$ 时的高斯近似；其单个移动区间的结果另设 QLI，取 $\log x$ 在 $[U,2U]$ 上均匀分布、$\delta=o(1)$ 且 $\log(1/\delta)=o(\log U)$（该文定理 10.1）。两者的取样都不是本节 $[X,2X]$ 上的 $dx/(x\log2)$，长度也不是幂次 $x^\theta$，且都不处理移动价格核。本节的新内容限于：带宏观权 $U_X^{kr}$ 的矩传递对任意实值 $L^1$ 剖面与原价格权成立，以及由此得到的显式常数 (494.4)–(494.6)；尺度混合本身是经典机制。矩方法、Isserlis 公式与 Hölder、Fubini、控制收敛都是标准工具。
+
+## 追加锚（本行以下为增补区）
+
+## 495. 不同指数的联合矩：交叉核的消失与平方的正相关
+
+沿用 §494 的 $\mu_X,U_X,c_k$ 与记号。固定 $0<\theta_1<\theta_2<1$、实值 $g_1,g_2\in L^1(0,1)$，令 $\kappa_i=1-\theta_i$、$r_i=\kappa_i/2$、$Q_i=Q(g_i)$，
+
+$$
+B_{i,X}(s,x)=\frac{D_{sx^{\theta_i}}(x)}{\sqrt{x^{\theta_i}\log x}},\qquad
+Z_{i,X}=\frac{\mathcal T_{\theta_i,g_i}}{\sqrt{X^{1-\theta_i}\log X}}\qquad(i=1,2).
+$$
+
+对整数 $p,q\ge0$、$k=p+q\ge1$，令 $i_\ell=1$（$\ell\le p$）、$i_\ell=2$（$\ell>p$），$\gamma_{p,q}=pr_1+qr_2$，$c_{p,q}=\int_1^2u^{\gamma_{p,q}}\frac{du}{u\log2}$。
+
+**联合矩接口。** 称 $E$ 满足 $(\mathrm J_{p,q})$，若
+
+(a) 存在 $C$，使对充分大的 $X$，$\sup_{i=1,2}\sup_{0\le s\le1}\mathbb E_{\mu_X}|B_{i,X}(s)|^k\le C$；
+
+(b) 对每个 $\mathbf s\in[0,1]^k$，极限
+
+$$
+M_{p,q}(\mathbf s)=\lim_{X\to\infty}\mathbb E_{\mu_X}\Bigl[U_X^{\gamma_{p,q}}\prod_{\ell=1}^kB_{i_\ell,X}(s_\ell)\Bigr]
+\tag{495.1}
+$$
+
+存在。
+
+与 §494 相同，$M_{p,q}$ 可测且 $|M_{p,q}|\le2^{\gamma_{p,q}}C$。$q=0$ 时 $(\mathrm J_{p,0})$ 蕴含 $\theta=\theta_1$ 的 $(\mathrm M_p)$，二者的极限核相同（(a) 对两个指数都要求矩界，故 $(\mathrm J_{p,0})$ 更强）。
+
+**引理 495.1（联合矩传递）。** 设 $E$ 局部有界 Borel 可测且满足 $(\mathrm J_{p,q})$。则
+
+$$
+\lim_{X\to\infty}\mathbb E_{\mu_X}\bigl[Z_{1,X}^pZ_{2,X}^q\bigr]=\int_{[0,1]^k}\Bigl(\prod_{\ell=1}^kg_{i_\ell}(s_\ell)\Bigr)M_{p,q}(\mathbf s)\,d\mathbf s .
+\tag{495.2}
+$$
+
+证明。对每个因子用定理 494.1 证明中的表示 $Z_{i,X}=U_X^{r_i}L_X\int_0^1g_i(s)B_{i,X}(s)\rho_x(sx^{\theta_i})\,ds$，宏观因子之积为 $U_X^{\gamma_{p,q}}$。令 $\eta_X=\max_{i=1,2}\sup_{x,s}|L_X(x)\rho_x(sx^{\theta_i})-1|$；由 $1\le L_X\le\sqrt{1+\log2/\log X}$ 与 $1-4u/x\le\rho_x(u)\le1$，$\eta_X=O\bigl((\log X)^{-1}+X^{\theta_2-1}\bigr)\to0$。其余各步——Fubini 的合法性（广义 Hölder 不等式给出 $\mathbb E_{\mu_X}[U_X^{\gamma_{p,q}}\prod_\ell|B_{i_\ell,X}(s_\ell)|]\le2^{\gamma_{p,q}}C$）、把价格因子换成 $1$ 的误差 $((1+\eta_X)^k-1)2^{\gamma_{p,q}}C\prod_\ell\|g_{i_\ell}\|_1$、控制收敛——与定理 494.1 的证明逐行相同。证毕。
+
+**定理 495.2（交叉二阶核的消失）。** 设 $E$ 局部有界 Borel 可测，(490.2) 分别在 $0<\alpha_1<\theta_1<\beta_1<1$ 与 $0<\alpha_2<\theta_2<\beta_2<1$ 上成立，且 $(\mathrm J_{1,1})$(b) 成立。则
+
+$$
+\int_0^1\!\!\int_0^1g_1(s)g_2(t)\,M_{1,1}(s,t)\,ds\,dt=0\qquad(\text{对一切实值 }g_1,g_2\in L^1(0,1)),
+\tag{495.3}
+$$
+
+从而 $M_{1,1}=0$ 在 $[0,1]^2$ 上几乎处处成立。
+
+证明。先验证 $(\mathrm J_{1,1})$(a)：$R=X^{\theta_i}$ 满足 (491.1)，由引理 491.1（取 $p(x)=x$、$q(x)=x+sx^{\theta_i}$），对 $i=1,2$ 与 $s\in[0,1]$ 一致地 $\int_X^{2X}D_{sx^{\theta_i}}(x)^2\,dx\ll X^{1+\theta_i}\log X$，而在 $[X,2X]$ 上 $x^{\theta_i}\log x\ge X^{\theta_i}\log X$、$1/x\le1/X$，故 $\mathbb E_{\mu_X}|B_{i,X}(s)|^2\ll1$。由引理 495.1，$\mathbb E_{\mu_X}[Z_{1,X}Z_{2,X}]$ 收敛到 (495.3) 左边。另一方面
+
+$$
+\mathbb E_{\mu_X}[Z_{1,X}Z_{2,X}]=\frac1{\log2}\cdot\frac1{N_X}\int_X^{2X}\mathcal T_{\theta_1,g_1}\mathcal T_{\theta_2,g_2}\frac{dx}x,\qquad N_X=X^{1-(\theta_1+\theta_2)/2}\log X ,
+$$
+
+由定理 491.6(i)（取 $a=\theta_1$、$b=\theta_2$，并取 $\mu,\nu$ 为 $\theta_1$ 到 $\min(\beta_1,\theta_2)$ 之间的三等分点）它是 $O(X^{-\eta_0})\to0$。这给出 (495.3)。取 $g_1,g_2$ 为区间的示性函数，$M_{1,1}$ 在每个矩形 $[a_1,b_1]\times[a_2,b_2]\subset[0,1]^2$ 上的积分为零；$M_{1,1}$ 有界可测，故有限带号测度 $M_{1,1}\,ds\,dt$ 在生成 $[0,1]^2$ 的 Borel $\sigma$-代数的矩形 $\pi$-系上为零，由 Dynkin $\pi$-$\lambda$ 定理它为零测度，即 $M_{1,1}=0$ 几乎处处。证毕。
+
+因此在 (490.2) 下，两个不同指数的 Brownian 型联合接口中，交叉协方差核只能是零：不同指数的局部增量过程在宏观加权下渐近不相关这一事实不是附加假设，而是 §491 的推论。
+
+**Brownian 型联合四阶接口。** 设 $C:[0,1]^2\to\mathbb R$ 有界可测，称 $E$ 满足以 $C$ 为交叉核的 $(\mathrm W_{2,2})$，若 $(\mathrm J_{1,1})$(b) 以 $M_{1,1}=c_{1,1}C$ 成立，且 $(\mathrm J_{2,2})$(b) 以
+
+$$
+M_{2,2}(s_1,s_2,t_1,t_2)=c_{2,2}\Bigl[\kappa_1\kappa_2\min(s_1,s_2)\min(t_1,t_2)+C(s_1,t_1)C(s_2,t_2)+C(s_1,t_2)C(s_2,t_1)\Bigr]
+\tag{495.4}
+$$
+
+成立（变量顺序 $(s_1,s_2)$ 对应 $\theta_1$，$(t_1,t_2)$ 对应 $\theta_2$）。这是二维 Gauss 过程 $(\sqrt{\kappa_1}B^{(1)},\sqrt{\kappa_2}B^{(2)})$ 在交叉协方差为 $C$ 时的四阶 Isserlis 公式乘以宏观因子 $c_{2,2}$。
+
+**定理 495.3（不同指数的平方正相关）。** 设 $E$ 局部有界 Borel 可测，(490.2) 与 (493.1) 分别在包含 $\theta_1$ 与 $\theta_2$ 的指数带上成立，且 $E$ 满足以某个有界可测 $C$ 为交叉核的 $(\mathrm W_{2,2})$。则
+
+$$
+\lim_{X\to\infty}\mathbb E_{\mu_X}[Z_{1,X}Z_{2,X}]=0,\qquad
+\lim_{X\to\infty}\mathbb E_{\mu_X}[Z_{1,X}^2Z_{2,X}^2]=c_{2,2}\,\kappa_1\kappa_2\,Q_1Q_2 ,
+\tag{495.5}
+$$
+
+其中 $c_{2,2}=\dfrac{2^{\kappa_1+\kappa_2}-1}{(\kappa_1+\kappa_2)\log2}$；并且
+
+$$
+\lim_{X\to\infty}\Bigl(\mathbb E_{\mu_X}[Z_{1,X}^2Z_{2,X}^2]-\mathbb E_{\mu_X}Z_{1,X}^2\,\mathbb E_{\mu_X}Z_{2,X}^2\Bigr)=\kappa_1\kappa_2\,Q_1Q_2\,\bigl(c_{2,2}-c_{2,0}\,c_{0,2}\bigr),
+\tag{495.6}
+$$
+
+其中 $c_{2,0}=\frac{2^{\kappa_1}-1}{\kappa_1\log2}$、$c_{0,2}=\frac{2^{\kappa_2}-1}{\kappa_2\log2}$，且 $c_{2,2}>c_{2,0}c_{0,2}$。特别地，若 $g_1,g_2$ 都不几乎处处为零，则 (495.6) 的极限严格为正。
+
+证明。第一式由定理 495.2 的证明得到。对第二式验证 $(\mathrm J_{2,2})$(a)：由引理 493.1 的第一式（对两条指数带分别使用），与定理 494.2 的证明相同，$\sup_{i,s}\mathbb E_{\mu_X}|B_{i,X}(s)|^4\ll\max(C_4^{(1)},C_4^{(2)})$。由引理 495.1，$\lim\mathbb E[Z_{1,X}^2Z_{2,X}^2]=\int\prod g\cdot M_{2,2}$。对 (495.4) 的三项分别用 Fubini：第一项给出 $\kappa_1\kappa_2Q_1Q_2$；后两项各为 $\bigl(\iint g_1(s)g_2(t)C(s,t)\,ds\,dt\bigr)^2$。由 $(\mathrm J_{1,1})$(b) 与定理 495.2，$c_{1,1}\iint g_1g_2C=\iint g_1g_2M_{1,1}=0$，而 $c_{1,1}>0$，故后两项为零，得 (495.5) 第二式；可积性由 $C$ 有界与 $g_i\in L^1$ 给出。由定理 490.6，$\lim\mathbb EZ_{i,X}^2=\frac{(2^{\kappa_i}-1)Q_i}{\log2}=c_{2,0}\kappa_1Q_1$（$i=1$）与 $c_{0,2}\kappa_2Q_2$（$i=2$），得 (495.6)。最后，令 $U$ 在 $[1,2]$ 上有密度 $1/(u\log2)$，$U'$ 为其独立复制，$f(u)=u^{\kappa_1}$、$h(u)=u^{\kappa_2}$ 都严格递增，则
+
+$$
+c_{2,2}-c_{2,0}c_{0,2}=\mathbb E[f(U)h(U)]-\mathbb Ef(U)\,\mathbb Eh(U)=\tfrac12\,\mathbb E\bigl[(f(U)-f(U'))(h(U)-h(U'))\bigr]>0 ,
+$$
+
+因为被积函数在 $U\ne U'$ 时严格为正，而 $\mathbb P(U\ne U')=1$（Chebyshev 积分不等式的严格形式；该不等式见 Hardy–Littlewood–Pólya, Inequalities, Cambridge 1934, 定理 236）。若 $g_i$ 都不几乎处处为零，则 $Q_1,Q_2>0$（定理 490.6 的证明）。证毕。
+
+若 $g_1,g_2$ 都不几乎处处为零，则在 $(\mathrm W_{2,2})$ 与 (490.2)、(493.1) 下，两个不同指数的归一化核渐近不相关，而它们的平方渐近正相关：$Z_{1,X},Z_{2,X}$ 的二阶、四阶联合矩极限不可能是两个独立随机变量的联合矩。正相关来自两者共享的宏观尺度 $U_X=x/X$，其大小 $\kappa_1\kappa_2Q_1Q_2(c_{2,2}-c_{2,0}c_{0,2})$ 只经 $\theta_1,\theta_2$ 依赖宏观取样。
+
+**推论 495.4（符号的渐近独立）。** 设 (490.2) 分别在包含 $\theta_1$、$\theta_2$ 的指数带上成立，且对一切 $p,q\ge0$（$p+q\ge1$），$(\mathrm J_{p,q})$ 成立，其极限为二维 Brownian 型：$M_{p,q}=c_{p,q}\sum_{\pi}\prod_{\{a,b\}\in\pi}C_{i_ai_b}(s_a,s_b)$（对 $\{1,\dots,k\}$ 的全部完美配对 $\pi$ 求和，$k$ 奇时为零），其中 $C_{11}=\kappa_1\min$、$C_{22}=\kappa_2\min$、$C_{12}(s,t)=C_{21}(t,s)=C(s,t)$ 有界可测。若 $g_1,g_2$ 都不几乎处处为零，令 $U$ 如上，$G_i\sim N(0,\kappa_iQ_i)$，$U,G_1,G_2$ 相互独立。则 $(Z_{1,X},Z_{2,X})$ 依分布收敛到 $(U^{r_1}G_1,U^{r_2}G_2)$，且四个符号象限的 $\mu_X$-测度都趋于 $\frac14$：
+
+$$
+\lim_{X\to\infty}\mu_X\{\varepsilon_1Z_{1,X}>0,\ \varepsilon_2Z_{2,X}>0\}=\frac14\qquad(\varepsilon_1,\varepsilon_2\in\{\pm1\}).
+\tag{495.7}
+$$
+
+证明。由 $(\mathrm J_{1,1})$ 与定理 495.2，$\iint g_1g_2C=0$。由引理 495.1，$\lim\mathbb E[Z_{1,X}^pZ_{2,X}^q]=c_{p,q}\sum_\pi\prod_{\{a,b\}\in\pi}\iint g_{i_a}g_{i_b}C_{i_ai_b}$（Fubini 把每个配对的积分分解为各对的积分之积）；含交叉对的配对贡献为零，余下为 $c_{p,q}(p-1)!!\,(\kappa_1Q_1)^{p/2}(q-1)!!\,(\kappa_2Q_2)^{q/2}$（$p,q$ 都为偶数，约定 $(-1)!!=1$），否则为 $0$。这正是 $\mathbb E\,U^{\gamma_{p,q}}\,\mathbb EG_1^p\,\mathbb EG_2^q=\mathbb E[(U^{r_1}G_1)^p(U^{r_2}G_2)^q]$。对实数 $a,b$，在 $U$ 上取条件，$aU^{r_1}G_1+bU^{r_2}G_2$ 是方差至多 $2^{2\max(r_1,r_2)}(a^2\kappa_1Q_1+b^2\kappa_2Q_2)$ 的中心高斯变量，故其矩生成函数处处有限，分布由矩确定。由一维矩方法（Billingsley, Probability and Measure, 3rd ed., Theorem 30.2）与 Cramér–Wold 定理（同书 Theorem 29.4），沿任意 $X_n\to\infty$ 依分布收敛。由于 $U>0$，$\operatorname{sgn}(U^{r_i}G_i)=\operatorname{sgn}G_i$；$G_1,G_2$ 独立、对称且无原子，故每个开象限的极限概率为 $\frac14$，坐标轴的极限概率为零，开象限是极限分布的连续集，由 portmanteau 定理得 (495.7)。证毕。
+
+**命题 495.5（联合信息的必要性）。** 存在取值于 $\mathbb R^2$ 的随机向量 $V=(V_1,V_2)$，使 $\mathbb EV_i=0$、$\mathbb EV_i^2=\mathbb EV_i^4=\frac12$（$i=1,2$）、$\mathbb EV_1V_2=0$，而四个开象限的概率都为零。因此两个坐标各自的有界四阶矩与零协方差不足以推出 (495.7) 型的象限结论；推论 495.4 用的是全部联合矩。
+
+证明。令 $V$ 等概率地取值于 $(1,0),(-1,0),(0,1),(0,-1)$。则 $V_1$ 以概率 $\frac14$ 取 $\pm1$、以概率 $\frac12$ 取 $0$，故 $\mathbb EV_1=0$、$\mathbb EV_1^2=\mathbb EV_1^4=\frac12$；$V_2$ 同理。每个取值都有一个坐标为零，故 $V_1V_2=0$，$\mathbb EV_1V_2=0$，且每个取值都落在坐标轴上，四个开象限的概率都为零。证毕。
+
+**范围。** 引理 495.1、定理 495.2–495.3 与推论 495.4 是抽象接口上的结论；对 $E=\psi-\mathrm{id}$，(493.1)、$(\mathrm W_{2,2})$ 与推论 495.4 的全阶接口都未被证明。Montgomery–Soundararajan [Primes in short intervals, Comm. Math. Phys. 252 (2004), 589–617] 在其强 Hardy–Littlewood 型相关误差假设下推出单一长度的矩（其更一般的矩渐近为该文猜想 1），不涉及不同指数的移动长度 $sx^{\theta_1},tx^{\theta_2}$ 的混合矩及其与宏观位置的联合；Leung [Joint distribution of primes in multiple short intervals, Adv. Math. 490 (2026), 110847] 在 RH 与 LI 下处理比例长度的多个不交区间并采用对数取样。本节的新内容是：定理 495.2 由 §491 推出交叉二阶核必须几乎处处为零，以及定理 495.3 给出的显式正相关常数 $\kappa_1\kappa_2Q_1Q_2(c_{2,2}-c_{2,0}c_{0,2})$。矩方法、Cramér–Wold 定理、Isserlis 公式、Chebyshev 积分不等式与 $\pi$-$\lambda$ 定理都是标准工具。

@@ -918,3 +918,576 @@ Finally, for the original soft readout, $f_B=p$ in Definition 211.1, so the cent
 
 
 ## 追加锚（本行以下为增补区）
+
+## 216. An original later marginal varies inside one exact positive hard fiber
+
+**Definition 216.1 (the original later one-time coordinate).** Retain exactly Definition 211.1 and the functions $X$, number $t_0$ and tensor $R$ of Theorem 212.1. For an integer $j\ge3$ and a pointwise whole-$G$ Borel simplex tuple $u$, put
+
+$$
+ M_j(u)=\int_G g_j u_0\,dm,
+ \qquad g_j=P^jg=g_{(2+j)d}.
+ \tag{216.1}
+$$
+
+For a deterministic whole-$G$ Borel partition $D$, write $M_j(D)=M_j(\mathbf1_D)$. By Appendix II Theorem 117.2, this is the probability of label $0$ at the original epoch $(2+j)d$ for the diffusion started at the original source $e$ at time zero. The partition is held fixed at every read; neither the source nor the clock is restarted.
+
+**Theorem 216.2 (actual hard future separation at fixed current law).** For every original $\theta=(a,\eta,d,b)$ and every fixed $0<t<t_0(\theta)$, there exist an integer $j\ge3$, a number $\delta>0$, and deterministic pointwise whole-$G$ Borel partitions $D^\lambda$, one for every $|\lambda|<\delta$, such that, with $u^*=u^{(t)}$,
+
+$$
+ \begin{gathered}
+ D^\lambda\in\mathscr F_t,\qquad
+ M_j(D^\lambda)=M_j(u^*)+\lambda
+       \quad(|\lambda|<\delta),\\
+ \mathcal H_{51}(\mathbf1_{D^\lambda})=\mathcal H_{51}(f),\qquad
+ \Delta(D^\lambda)_{yzw}=t^2R_{yzw}
+       \quad((y,z,w)\in\mathcal L^3).
+ \end{gathered}
+ \tag{216.2}
+$$
+
+Here $\mathscr F_t$ is exactly (214.15), and every triple uses its displayed hard partition in all three slots, including its own propagated terminal. In particular, the two actual hard partitions
+
+$$
+ D=D^{\delta/2},\qquad E=D^{-\delta/2}
+ \quad\hbox{satisfy}\quad
+ M_j(D)-M_j(E)=\delta>0.
+ \tag{216.3}
+$$
+
+They have identical H51 and identical complete current three-read law, with BB3 residual exactly $t^2\kappa>0$. Thus even the complete current law together with H51 does not determine all later original one-time marginals on this fixed positive-residual hard fiber. The epoch and the interval may depend on $\theta,t$; the assertion requires neither a prescribed epoch nor a common pair for all future epochs.
+
+*Proof.* Fix arbitrary original $\theta$ and $0<t<t_0$. Retain the original invariant slack set $E_{\rm sl}=E$ of (153.6), writing $E_{\rm sl}$ to distinguish it from the second partition in (216.3). It contains the open rotation lift of the nonempty quotient neighborhood $U\Subset\mathcal Q$. By 212.C, all components of $u^*$ have a common lower bound $\sigma_t>0$ on $E_{\rm sl}$. Retain the sixty-three bounded supported sum-zero directions $e_1,\ldots,e_{63}$ of 212.C and the current map
+
+$$
+ \mathcal J(u)=\left(\mathcal H_{36}(u),
+       (\mathcal C(u_a,u_b,u_c))_{abc\in I^3}\right)\in\mathbb R^{63}.
+ \tag{216.4}
+$$
+
+The actual matrix $A_{\ell k}=D\mathcal J_\ell(u^*)[e_k]$ is invertible by (212.11)--(212.18). This is the rank proved for the original current map, not a new rank hypothesis.
+
+### 216.A. A bounded supported future direction outside the current rows
+
+Every $g_j$ is bounded by $\|g\|_\infty$, by the Markov contraction. It has a real analytic representative on the connected full-measure set $\Omega=\{r>0\}$, by the source propagation identity and Appendix II (122.8)--(122.11). The restricted family
+
+$$
+ (\mathbf1_{E_{\rm sl}}g_j)_{j\ge3}
+ \quad\hbox{is linearly independent in }L^2(E_{\rm sl},m).
+ \tag{216.5}
+$$
+
+Indeed, a finite relation zero almost everywhere on $E_{\rm sl}$ is an analytic function zero almost everywhere on its open subset over $U$. Full support and continuity make it zero throughout that open subset. Analytic uniqueness on connected $\Omega$ makes it zero on $\Omega$, hence in $L^2(G,m)$. The resulting nonzero polynomial relation $q(P)g=0$ contradicts Appendix IV Lemma 169.1 with source time $2d$. This uses orbit independence only, with no claim of source cyclicity or density.
+
+Let $\mathscr V=L^2(E_{\rm sl},m;\mathbb R^I)$ with its real inner product. For a bounded supported triple $h_I=(h_i)_{i\in I}$, always use the compensating component $h_B=-\sum_{i\in I}h_i$. At $u^*$ each current differential has a bounded real Borel density $\rho_\ell\in\mathscr V$:
+
+$$
+ D\mathcal J_\ell(u^*)[h]
+       =\sum_{i\in I}\int_{E_{\rm sl}}\rho_{\ell,i}h_i\,dm,
+ \qquad 1\le\ell\le63.
+ \tag{216.6}
+$$
+
+To see boundedness directly, the marginal rows have densities $g_0,g_1,g_2$. The ordered pair rows have the densities obtained from $g_a vP^k w$ by moving $P^k$ to the other factor, with $(a,k)=(0,1),(0,2),(1,1)$. For the triple row $abc\in I^3$, the density in component $i$ is the restriction to $E_{\rm sl}$ of
+
+$$
+ \mathbf1_{i=a}\,gP(u_b^*Pu_c^*)
+ +\mathbf1_{i=b}\,P(gu_a^*)Pu_c^*
+ +\mathbf1_{i=c}\,P(u_b^*P(gu_a^*)).
+ \tag{216.7}
+$$
+
+Self-adjointness gives the terminal term in (216.7). The Markov bound and $0\le u_y^*\le1$ bound each summand by $\|g\|_\infty$. These expressions also show that (216.6) concerns the full actual operator and the common current tuple in every slot.
+
+Put $V=\operatorname{span}_{\mathbb R}\{\rho_1,\ldots,\rho_{63}\}\subset\mathscr V$. For each $j\ge3$ let $k_j=(g_j,0,0)|_{E_{\rm sl}}$, in the component order $0,1,3$. By (216.5) these vectors are linearly independent. Since $V$ is finite dimensional, choose one integer $j\ge3$ with $k_j\notin V$. Let $\Pi_V$ be the orthogonal projection in $\mathscr V$, and set
+
+$$
+ w=k_j-\Pi_Vk_j,\qquad
+ h_i=\mathbf1_{E_{\rm sl}}w_i\ (i\in I),\qquad
+ h_B=-\sum_{i\in I}h_i,\qquad
+ \gamma=\|w\|_{\mathscr V}^2>0.
+ \tag{216.8}
+$$
+
+The vector $w$ is bounded: $k_j$ is bounded and $\Pi_Vk_j$ is a finite linear combination of the bounded $\rho_\ell$. It has real Borel representatives. Orthogonality gives the exact identities
+
+$$
+ D\mathcal J(u^*)[h]=0,\qquad
+ DM_j(u^*)[h]=\langle k_j,w\rangle_{\mathscr V}
+              =\gamma>0.
+ \tag{216.9}
+$$
+
+Thus this is an actual legal bounded direction with a nonzero future differential, rather than a transversality assumption about arbitrary hard partitions.
+
+### 216.B. A legal sixty-four-dimensional simplex family
+
+Define $\widetilde e_k=e_k$ for $k\le63$ and $\widetilde e_{64}=h$, and put
+
+$$
+ \begin{gathered}
+ u(z)=u^*+\sum_{k=1}^{64}z_k\widetilde e_k,
+ \qquad \mathcal J^+(u)=(\mathcal J(u),M_j(u)),\\
+ F(z)=\mathcal J^+(u(z))-\mathcal J^+(u^*),\qquad
+ \widetilde A=DF(0)
+       =\begin{pmatrix}A&0\\ *&\gamma\end{pmatrix}.
+ \end{gathered}
+ \tag{216.10}
+$$
+
+The matrix $\widetilde A$ is invertible. Choose bounded Borel representatives and a common Borel null set covering the exceptional bounds and sum-zero identities of these finitely many directions. Set the directions equal to zero there, and use the original pointwise simplex representative of $u^*$ there. Outside $E_{\rm sl}$ every direction is zero. On $E_{\rm sl}$, a sufficiently small radius $r>0$ gives
+$\sup_y|\sum_kz_k\widetilde e_{k,y}|<\sigma_t/2$ for $\|z\|_2\le r$ outside the repaired set. Thus $u(z)$ is a pointwise simplex tuple on the whole original $G$ throughout this closed parameter ball. The repairs change no integral. They restrict neither the state space nor the form domain of $K$.
+
+The map $F$ is polynomial, $F(0)=0$, and its derivative at zero is $\widetilde A$. Shrink the legal radius so that
+
+$$
+ \sup_{\|z\|_2\le r}
+       \|z-\widetilde A^{-1}F(z)\|_2<r/3.
+ \tag{216.11}
+$$
+
+### 216.C. Simultaneous exact hard realization of the current and future coordinates
+
+Take increasing finite Borel partitions $\mathcal P_n$ generating the original Borel sigma algebra, and use exactly the common coordinate-quantile construction of 212.D on the entire ball in (216.10). Within each positive-mass cell, nested consecutive coordinate slices have masses $\int_Cu_y(z)\,dm$ in the order $0,1,3,B$. Coordinate hyperplanes are $m$-null because the original $m=h^2\mu$ is absolutely continuous in these coordinates. Thus the slices exist for every parameter, including zero prescribed masses. Assign endpoints consistently and assign zero-mass cells to $B$. This defines deterministic pointwise whole-$G$ Borel partitions $D_n(z)$ with
+
+$$
+ \begin{gathered}
+ \int_C\mathbf1_{D_{n,y}(z)}\,dm=\int_Cu_y(z)\,dm
+       \quad(C\in\mathcal P_n),\\
+ \sum_y m(D_{n,y}(z)\mathbin\triangle D_{n,y}(z'))
+       \le6\sum_y\|u_y(z)-u_y(z')\|_1.
+ \end{gathered}
+ \tag{216.12}
+$$
+
+Retain the original path density $W$ of (212.21), and set
+
+$$
+ W_n=\mathbb E[W\mid\mathcal P_n^{\otimes3}],\qquad
+ g_{j,n}=\mathbb E[g_j\mid\mathcal P_n],\qquad
+ F_n(z)=\mathcal J^+(\mathbf1_{D_n(z)})-\mathcal J^+(u^*).
+ \tag{216.13}
+$$
+
+Both conditional expectations converge in $L^1$ to their respective densities. The cell identities (216.12) make the soft and hard integrals against $W_n$ equal for every current row, and make their label-$0$ integrals against $g_{j,n}$ equal. Consequently
+
+$$
+ \sup_{\|z\|_2\le r}\|F_n(z)-F(z)\|_2
+ \le2\sqrt{63}\,\|W-W_n\|_1
+              +2\|g_j-g_{j,n}\|_1
+ \longrightarrow0.
+ \tag{216.14}
+$$
+
+This is simultaneous approximation of the original current path law and the original later source density, uniformly on the whole legal ball. Each $F_n$ is continuous: (216.12) gives continuity of indicators in $L^1$, telescoping current slot products bounds their changes by the bounded marginals $g_0,g_1,g_2$, and the future integral is bounded by $\|g_j\|_\infty$ times the change in its indicator. No differentiability of a hard partition or of its boundaries is used.
+
+Choose one finite $n$ so that the right side of (216.14), multiplied by $\|\widetilde A^{-1}\|$, is less than $r/3$. Then choose $\delta>0$ so that
+
+$$
+ \|\widetilde A^{-1}(0_{63},\lambda)\|_2<r/3
+       \quad(|\lambda|<\delta).
+ \tag{216.15}
+$$
+
+For every such $\lambda$, the continuous map
+
+$$
+ z\longmapsto z-\widetilde A^{-1}
+                      (F_n(z)-(0_{63},\lambda))
+ \tag{216.16}
+$$
+
+maps the closed radius-$r$ ball into itself, by (216.11), (216.14) and (216.15). Brouwer's closed-ball fixed-point theorem supplies a root $z_\lambda$ with $F_n(z_\lambda)=(0_{63},\lambda)$. Put $D^\lambda=D_n(z_\lambda)$. These are actual deterministic hard partitions, and they satisfy exactly
+
+$$
+ \mathcal J(\mathbf1_{D^\lambda})=\mathcal J(u^*),\qquad
+ M_j(D^\lambda)=M_j(u^*)+\lambda.
+ \tag{216.17}
+$$
+
+The finite $n$ is chosen before the target $\lambda$; no continuity or compatibility of the roots is needed.
+
+### 216.D. Recovery of the complete fixed current law and its chronological consumer
+
+The first thirty-six equations in (216.17) give $\mathcal H_{36}(\mathbf1_{D^\lambda})=\mathcal H_{36}(f)$. Thus both $\Delta(D^\lambda)$ and $\Delta(u^*)=t^2R$ have zero contractions and belong to $H^{\otimes3}$. Their coordinates on $I^3$ agree by the other twenty-seven current equations. Restriction to $I^3$ is injective on $H^{\otimes3}$, as in (212.25), so all sixty-four coordinates agree. Since $R\in\mathcal W_{13}\cap\ker L$, (157.8) and Proposition 211.2 give exact H51. Therefore every $D^\lambda$ lies in exactly $\mathscr F_t$, proving (216.2). Taking the two target values in (216.3) proves their strictly positive marginal difference. By (216.1) it occurs at an actual original integer epoch, in the same source-start process.
+
+The consumer is chronological sufficiency of the exact current-law fiber: equality of every current three-read coefficient, even with H51 fixed, cannot determine this later label probability. The source-orbit escape in 216.A and its simultaneous hard realization in 216.C supply an actual pair; the partition-distance separation in Corollary 214.3 alone and the fixed-hard-versus-soft pair obstruction in Theorem 215.2 do not supply that pair.
+
+This is a repo-derived composition of the original source orbit, the actual current rank in 212.C, and the common hard carrier. The analytic uniqueness intermediary is the identity principle for real analytic functions, also used in Appendix III 153.D; the supplied local analyticity is Appendix II (122.8)--(122.11), with its cited Kotake--Narasimhan regularity theorem. The fixed-point intermediary is L. E. J. Brouwer, *Über Abbildung von Mannigfaltigkeiten*, [doi:10.1007/BF01456931](https://doi.org/10.1007/BF01456931), in the same closed-ball form as 212.D. Finite cell-mass matching is only the linear step; the exact common-partition nonlinear equations follow from (216.10)--(216.17), rather than from a general linear purification theorem. These classical intermediaries are not standalone new theory.
+
+All original source and analytic suppliers retain their inherited scope. This positive-residual result imposes no extra hypothesis on $\theta$ or the admitted representative $b$: replacing $f^0$ by $f$ in target integrals changes no original positive-time law, and every repaired null set is null for all those laws. It leaves universal residual-zero $F_{64}$ attainment or exclusion, origin enclosure, actual compatible summable continuation, physical succession and general instrument or full-history contracts unresolved. $\square$
+
+## 追加锚（本行以下为增补区）
+
+## 217. Every baseline relation pays source heat energy through the actual full law
+
+**Definition 217.1 (relation space, actual residual and relation matrix).** Retain exactly Definition 211.1 and all its original endpoint, source and analytic suppliers. In particular, $\theta=(a,\eta,d,b)$ ranges over every original permitted value, $m=h^2\mu$, $g=g_{2d}$, $P=T_d$, $Pf_3=cg$ and $p=1/4$. All tuples below are pointwise Borel simplex tuples on the whole original $G$, and every coefficient uses that tuple in all three slots, with its own propagated terminal. Equalities of functions and norm analyticity refer to $m$-classes; bounded Borel representatives and null repairs retain the pointwise interface because every original positive-time slot law is absolutely continuous with respect to $m$. Put
+
+$$
+\begin{gathered}
+ K_{\rm rel}=\left\{a\in\mathbb R^{\mathcal L}:\sum_y a_yf_y=0\right\},\qquad
+ h_a(u)=\sum_y a_yu_y,\\
+ \delta(u)=\|\Delta(u)\|_\infty,\qquad
+ \varepsilon_3(u)=\|u_3-f_3\|_\infty,\\
+ a^{(1)}=(1,-1,0,0),\qquad
+ a^{(B)}=(-p,-p,-p,1-p)
+ \quad\text{in the order }(0,1,3,B).
+\end{gathered}
+\tag{217.1}
+$$
+
+These two vectors form a basis of $K_{\rm rel}$. Indeed $f$ has the affine form (157.1), and $[b]$ is nonconstant by the source-start argument in Proposition 135.2. Thus $a\cdot f=0$ imposes two independent scalar conditions on four coefficients; the displayed independent vectors satisfy them. For this basis write
+
+$$
+\begin{gathered}
+ h_1=u_0-u_1,\qquad h_B=u_B-p,\\
+ Q_{rs}(u)=\mathcal C(h_r,h_s,f_3),\qquad
+ R_{rs}(u)=\sum_{y,z}a_y^{(r)}a_z^{(s)}\Delta(u)_{yz3},
+ \quad r,s\in\{1,B\}.
+\end{gathered}
+\tag{217.2}
+$$
+
+**Theorem 217.2 (all relations, cross terms and terminal-defect bound).** For any finite list $a^{(r)}\in K_{\rm rel}$ and any legal $u$, define $h_r,Q_{rs},R_{rs}$ by the same formulas. Then
+
+$$
+\begin{aligned}
+ R_{rs}(u)&=\mathcal C(h_r,h_s,u_3),\\
+ Q_{rs}(u)-R_{rs}(u)&=-\mathcal C(h_r,h_s,u_3-f_3),\\
+ Q_{rs}(u)&=c\left\langle T_{d/2}(gh_r),T_{d/2}(gh_s)\right\rangle_m.
+\end{aligned}
+\tag{217.3}
+$$
+
+In particular $Q$ is a symmetric positive-semidefinite Gram matrix. With $A_r=\|a^{(r)}\|_1$,
+
+$$
+\begin{gathered}
+ |R_{rs}(u)|\le A_rA_s\delta(u),\qquad
+ |Q_{rs}(u)-R_{rs}(u)|
+ \le\|h_r\|_\infty\|h_s\|_\infty\varepsilon_3(u),\\
+ 0\le c\|T_{d/2}(gh_a(u))\|_2^2
+ \le\|a\|_1^2\delta(u)+\|h_a(u)\|_\infty^2\varepsilon_3(u)
+ \quad(a\in K_{\rm rel}).
+\end{gathered}
+\tag{217.4}
+$$
+
+For the displayed basis the residual constants are $A_1^2=4$, $A_B^2=9/4$ and $A_1A_B=3$. For every $v=(\alpha,\beta)$ the same bound applies to $a=\alpha a^{(1)}+\beta a^{(B)}$, so it controls the joint cross terms and every relation direction, rather than only two separate diagonal tests. At an exact full-law zero it leaves precisely the terminal-defect cost; it imposes no terminal-preservation, parity or first-order-kernel hypothesis.
+
+*Proof.* Contracting the actual residual in the first two slots gives
+
+$$
+ R_{rs}(u)=\mathcal C(h_r,h_s,u_3)
+  -\mathcal C(a^{(r)}\cdot f,a^{(s)}\cdot f,f_3)
+ =\mathcal C(h_r,h_s,u_3).
+$$
+
+Subtract the same expression with terminal $f_3$. The original propagation $Pf_3=cg$ and self-adjointness give
+
+$$
+ \mathcal C(h_r,h_s,f_3)
+ =c\langle gh_r,P(gh_s)\rangle_m
+ =c\langle T_{d/2}(gh_r),T_{d/2}(gh_s)\rangle_m.
+$$
+
+All terms are finite since $g\in L^2(m)$ and the $h_r$ are bounded. This consumes the original positive source form (134.15)--(134.19), not a substituted initial law. The Markov contraction and $\int g\,dm=1$ give $|\mathcal C(v,w,z)|\le\|v\|_\infty\|w\|_\infty\|z\|_\infty$; the finite coefficient sum gives the other estimate in (217.4). These prove every assertion, including arbitrary linear combinations. The strictness used below is the existing fact that $T_{d/2}$ is injective and $g>0$ almost everywhere: $Q_{aa}=0$ implies $h_a=0$. $\square$
+
+## 218. Unrestricted finite-parameter analytic zeros and ordinary rank deficiency
+
+**Definition 218.1 (a norm-analytic chart through the original readout).** Let $U\subset\mathbb R^n$ be an open neighborhood of $0$. A chart here is any real norm-analytic map
+
+$$
+ \Phi:U\longrightarrow L^\infty(G,m;\mathbb R)^{\mathcal L},
+ \qquad \Phi(0)=f,
+\tag{218.1}
+$$
+
+whose values admit legal whole-$G$ Borel simplex representatives. Its range need not lie in a fixed finite-dimensional function space, and $\Phi_3$ is unrestricted. Use the actual sixty-three-coordinate current map $\mathcal J$ of (212.17) and put
+
+$$
+ \mathscr R=\{u:h_1(u)=h_B(u)=0\},\qquad
+ E(u)=Q_{11}(u)+Q_{BB}(u).
+\tag{218.2}
+$$
+
+A regular zero means ordinary surjectivity onto $\mathbb R^{63}$ of the derivative of the current map, with no transversality qualifier.
+
+**Theorem 218.2 (analytic full-zero obstruction without a terminal ansatz).** For every original $\theta$ and every chart (218.1), there is a neighborhood $U_0$ of $0$ such that
+
+$$
+ z\in U_0,\quad\Delta(\Phi(z))=0
+ \quad\Longrightarrow\quad h_1(\Phi(z))=h_B(\Phi(z))=0.
+\tag{218.3}
+$$
+
+At every such zero the ambient derivative $D\mathcal J(\Phi(z))$, on bounded sum-zero direction tuples, has rank at most $62$. Thus the chart derivative also has rank at most $62$: these are not ordinary $63$-coordinate regular zeros.
+
+More generally, a norm-analytic curve of legal exact full-law zeros on a connected real interval, taking the value $f$ at an interior point, remains in $\mathscr R$ throughout that interval. It cannot reach a hard tuple, including at any endpoint to which it extends continuously in $L^\infty$. Smooth flat departures, nonanalytic paths, arbitrary infinite-parameter zero sets, finite-amplitude zeros outside this neighborhood and direct hard constructions are not excluded by this assertion.
+
+*Proof.* First consider a norm-analytic curve $u(s)$ through $f$, with $\Delta(u(s))=0$ for $s>0$ sufficiently small. If $h_r(u(s))$ is not identically zero as an analytic germ, let $k\ge1$ be its first nonzero Taylor order. Then, for one nonzero bounded $m$-class $H$,
+
+$$
+ h_r(u(s))=s^kH+O_{L^\infty}(s^{k+1}),\qquad
+ Q_{rr}(u(s))
+ =s^{2k}c\|T_{d/2}(gH)\|_2^2+O(s^{2k+1}).
+\tag{218.4}
+$$
+
+The leading energy is strictly positive by the last sentence of Theorem 217.2. But $\varepsilon_3(u(s))=O(s)$, without any restriction on its first-order coefficient. Equation (217.4) at the exact zero gives
+
+$$
+ 0\le Q_{rr}(u(s))
+ \le\|h_r(u(s))\|_\infty^2\varepsilon_3(u(s))
+ =O(s^{2k+1}),
+\tag{218.5}
+$$
+
+contradicting (218.4). Hence both relation functions vanish as analytic germs. The identity principle, applied to every continuous linear functional on $L^\infty$, extends their vanishing along a connected analytic interval. Norm continuity preserves these equalities at an included limit endpoint. A hard $B$ indicator cannot equal $p=1/4$ almost everywhere on the probability space, proving the hard-tuple assertion.
+
+For finite parameter dimension, all sixty-four functions $\Delta(\Phi(z))_{yzw}$ and the scalar $E(\Phi(z))$ are real analytic: $\mathcal C$ is bounded trilinear, and $E$ is a continuous quadratic form in the analytic relation functions. Moreover $E(u)>0$ exactly when $u\notin\mathscr R$. If (218.3) failed arbitrarily near $0$, the semianalytic, hence subanalytic, set
+
+$$
+ X=\{x\in U:\Delta(\Phi(x))_{yzw}=0\text{ for all }y,z,w,
+                         \ E(\Phi(x))>0\}
+\tag{218.6}
+$$
+
+would have $0$ in its closure.
+Use Bierstone--Milman, [*Semianalytic and subanalytic sets*, IHES 67, pp.5--42](https://www.numdam.org/item/PMIHES_1988__67__5_0.pdf), Theorem 0.2, with the pure $n$-dimensional analytic manifold $U$ and compact set $\{0\}$. It supplies finitely many analytic $\varphi_i:\mathbb R^n\to U$ and compact $L_i$ whose images cover a neighborhood of $0$, with each $\varphi_i^{-1}(X)$ a union of quadrants. This supplies the required arbitrary-dimensional curve passage as follows. Lift a sequence in $X$ tending to $0$ into the $L_i$. Finiteness and compactness give one $i$, one quadrant $Q\subset\varphi_i^{-1}(X)$, and a convergent subsequence of lifts with limit $y_0\in\overline Q$ and $\varphi_i(y_0)=0$. Choose $y_1\in Q$. By their Definition 5.4 each coordinate of $Q$ is either zero, strictly positive or strictly negative; consequently
+
+$$
+ y(s)=y_0+s(y_1-y_0)\in Q\quad(0<s<1).
+\tag{218.7}
+$$
+
+The analytic curve $s\mapsto\Phi(\varphi_i(y(s)))$ passes through $f$, is an exact zero for small positive $s$, and has $E>0$ there. This contradicts (218.4)--(218.5). It proves (218.3). This use of rectilinearization includes the compact lifting and quadrant-segment argument; it does not promote the one-dimensional Lemma 6.3 to higher dimensions.
+
+Finally, at any $u\in\mathscr R$ the actual scalar contraction
+
+$$
+ R_{11}(u)=\Delta(u)_{003}-\Delta(u)_{013}
+                    -\Delta(u)_{103}+\Delta(u)_{113}
+          =\mathcal C(h_1(u),h_1(u),u_3)
+\tag{218.8}
+$$
+
+has zero derivative in every bounded direction, since each differentiated term retains a zero $h_1$ factor. The expression on the left is a nonzero linear functional of the last twenty-seven coordinates of $\mathcal J(u)-\mathcal J(f)$, indexed by $I^3$. It annihilates the entire derivative range, giving rank at most $62$ without a transverse-branch assumption. This also excludes a regular zero in a smooth parameterization at any of these points, though it makes no assertion about zeros reached by an unrelated smooth flat departure. $\square$
+
+The source-specific conclusion uses the terminal-defect inequality for every analytic relation order, then finite-dimensional real analytic geometry. The latter is a consumed classical tool; its semianalytic description, pure-dimensional manifold, compact set and inverse-image quadrant hypotheses are all as above. No global spectral gap, source-orbit density or common fixed reservoir is assumed.
+
+## 219. The actual joint quadratic cone and soft origin-enclosure restriction in H51
+
+**Definition 219.1 (actual matrices and bounded proximity).** Use the ordered relation basis of (217.1), with $R(u),Q(u)$ as in (217.2). For $C>0$ and $t>0$, bounded proximity means
+
+$$
+ \max_y\|u_y-f_y\|_\infty\le Ct.
+\tag{219.1}
+$$
+
+It implies $\|h_1\|_\infty\le2Ct$, $\|h_B\|_\infty\le Ct$ and $\varepsilon_3(u)\le Ct$. Write $b_1=2$, $b_B=1$ for these constants, and define the injective real linear map
+
+$$
+ A_\theta v=\sqrt c\,T_{d/2}(gv):L^\infty(m;\mathbb R)\longrightarrow L^2(m;\mathbb R).
+\tag{219.2}
+$$
+
+**Theorem 219.2 (exactly the full positive-semidefinite two-contrast cone).** For every original $\theta$, the matrices that occur as finite limits
+
+$$
+ t_n^{-2}R(u_n)\longrightarrow Z,\qquad t_n\downarrow0,
+ \qquad \sup_n t_n^{-1}\max_y\|u_{n,y}-f_y\|_\infty<\infty
+\tag{219.3}
+$$
+
+for actual legal whole-$G$ soft tuples are precisely
+
+$$
+ \operatorname{Sym}_2^+
+ =\left\{\begin{pmatrix}x&z\\z&y\end{pmatrix}:
+                   x\ge0,\ y\ge0,\ z^2\le xy\right\}.
+\tag{219.4}
+$$
+
+The same limit set is obtained with $Q(u_n)$ in (219.3). No convergence or compactness of the scaled function tangents is assumed for necessity. Every matrix in (219.4), including ranks zero and one, is attained by a bounded affine soft path whose variations are supported on original legal slack, with $u_3=f_3$ and $\Delta(u_t)=O(t^2)$ in all sixty-four coordinates. These last choices are properties of the sufficiency construction, not restrictions on (219.3).
+
+Quantitatively, every tuple satisfying (219.1) obeys
+
+$$
+ |R_{rs}(u)-Q_{rs}(u)|\le b_rb_sC^3t^3.
+\tag{219.5}
+$$
+
+If also $\delta(u_t)=o(t^2)$, then $t^{-2}Q(u_t)\to0$. This asserts collapse of the weighted heat energies, not compactness or $L^2$ convergence of the scaled contrasts. If a scaled contrast does converge in $L^2$, its limit is zero, by boundedness of $g$, continuity of the heat map and injectivity.
+
+*Proof.* Equation (219.5) is (217.4). At every amplitude $Q(u)$ is a positive-semidefinite Gram matrix, and (219.5) makes $t_n^{-2}(R-Q)\to0$ under a single finite proximity constant. The positive-semidefinite cone is closed in this finite-dimensional matrix space, so every limit is in (219.4), whether or not the functions have convergent subsequences.
+
+For sufficiency choose an original Borel slack set $E$ of positive $m$-measure as in (153.6); only positivity of its measure is needed here. Define the sum-zero label lifts
+
+$$
+ n_1=(1/2,-1/2,0,0),\qquad
+ n_B=(-1/2,-1/2,0,1).
+\tag{219.6}
+$$
+
+They satisfy $a^{(r)}\cdot n_s=\mathbf1_{r=s}$ and $(n_s)_3=0$. On the infinite-dimensional space of bounded real Borel classes supported in $E$, impose the at most $128$ linear equations
+
+$$
+ D\Delta(f)[n_1v]=0,\qquad D\Delta(f)[n_Bv]=0.
+\tag{219.7}
+$$
+
+These are bounded linear functionals by the trilinear estimate of Theorem 217.2. Nonatomicity, disjoint positive-measure subsets of $E$, and rank-nullity give two independent classes in their common kernel, by the finite-codimension argument of (134.21). Since $A_\theta$ is injective, Gram--Schmidt for the inner product $\langle A_\theta v,A_\theta w\rangle_m$ gives bounded supported Borel functions $v_1,v_2$ in the same kernel with
+
+$$
+ \langle A_\theta v_i,A_\theta v_j\rangle_m=\mathbf1_{i=j}.
+\tag{219.8}
+$$
+
+For any $Z\in\operatorname{Sym}_2^+$ choose a real $2$-by-$2$ matrix $B$ with $BB^{\mathsf T}=Z$, including singular $B$ when necessary. Set $\xi_r=\sum_jB_{rj}v_j$ and
+
+$$
+ \begin{aligned}
+ u_{t,0}&=f_0+t(\xi_1-\xi_B)/2,&
+ u_{t,1}&=f_1-t(\xi_1+\xi_B)/2,\\
+ u_{t,3}&=f_3,& u_{t,B}&=p+t\xi_B.
+ \end{aligned}
+\tag{219.9}
+$$
+
+The components sum to one. The unchanged $f_3$ is positive everywhere, and $f_0,f_1,p\ge1/4$ globally. Bounded supported representatives therefore make (219.9) a pointwise simplex tuple for all sufficiently small $|t|$, equal to $f$ outside $E$. Its contrasts are exactly $t\xi_1,t\xi_B$, so (219.8) and its own terminal $u_{t,3}=f_3$ give
+
+$$
+ R(u_t)=Q(u_t)=t^2Z.
+\tag{219.10}
+$$
+
+The direction in (219.9) is a sum of $n_1\xi_1,n_B\xi_B$, so (219.7) kills every first-order full-law coefficient. Trilinearity then gives the asserted full $O(t^2)$ residual with a finite quadratic limit. This does not claim exact H51 calibration of the constructed paths or realization of every tensor in that slice. Necessity on that exact slice, and the ball consumer, are supplied next.
+
+For the subquadratic-residual statement, (217.4) gives
+
+$$
+ 0\le t^{-2}Q_{rr}(u_t)
+ \le A_r^2\delta(u_t)/t^2+b_r^2C^3t.
+\tag{219.11}
+$$
+
+Both diagonals tend to zero, and the Gram Cauchy--Schwarz inequality controls the cross term. The final strong-tangent conclusion follows from (219.2), $g\in L^\infty$, and injectivity; no subsequence with this stronger property is presumed. The Gram factorization and finite-codimension argument are consumed linear-algebra tools; the actual source, legal tuple and first-order full-law interface are (219.7)--(219.10). $\square$
+
+**Definition 219.3 (the exact twelve-dimensional residual space and soft image).** Use precisely the H51 space of Theorem 212.1,
+
+$$
+ \mathscr V_{51}=\mathcal W_{13}\cap\ker L
+ \subset H^{\otimes3},\qquad \dim\mathscr V_{51}=12,
+\tag{219.12}
+$$
+
+with the tensor maximum norm, not a quotient norm or a larger ambient residual space. Let
+
+$$
+ \mathscr S_C(t)=\{\Delta(u):u\text{ legal on }G,
+       \ \mathcal H_{51}(u)=\mathcal H_{51}(f),
+       \ \max_y\|u_y-f_y\|_\infty\le Ct\}.
+\tag{219.13}
+$$
+
+The exact pair contractions, the eight contrast equations (157.8), the six distinct-label equations and (211.3) put this image in $\mathscr V_{51}$ exactly. For $S\in\mathscr V_{51}$ define
+
+$$
+ \mathsf M(S)_{rs}=\sum_{y,z}a_y^{(r)}a_z^{(s)}S_{yz3},\qquad
+ \ell_v(S)=v^{\mathsf T}\mathsf M(S)v,\qquad
+ d_v=\sup_{\|S\|_\infty\le1,\ S\in\mathscr V_{51}}|\ell_v(S)|.
+\tag{219.14}
+$$
+
+On this exact space $\mathsf M(S)$ is symmetric: its off-diagonal difference is $L(S)$, using the zero pair contractions and $S_{013}=S_{103}=0$. Also $\mathsf M(S)_{BB}=S_{BB3}$. For $v\ne0$, $d_v$ is a finite positive constant determined by this explicit finite-dimensional interface.
+
+**Theorem 219.4 (quantitative joint-cone restriction on origin enclosure).** For every original $\theta$, $C,t>0$ and $S\in\mathscr S_C(t)$,
+
+$$
+ \begin{gathered}
+ v^{\mathsf T}\mathsf M(S)v
+ \ge-C^3t^3(2|\alpha|+|\beta|)^2
+ \quad(v=(\alpha,\beta)\in\mathbb R^2),\\
+ \mathsf M(S)+5C^3t^3I_2\ \text{is positive semidefinite}.
+ \end{gathered}
+\tag{219.15}
+$$
+
+Consequently every finite $t^{-2}$ limit of such exact-slice matrices is in (219.4). If an entire relative residual ball is in this actual soft image,
+
+$$
+ B_{\mathscr V_{51},\infty}(S_*,r)
+ =\{S\in\mathscr V_{51}:\|S-S_*\|_\infty<r\}
+ \subseteq\mathscr S_C(t),\qquad r>0,
+\tag{219.16}
+$$
+
+then the joint family of necessary inequalities is
+
+$$
+ r d_v\le\ell_v(S_*)+C^3t^3(2|\alpha|+|\beta|)^2
+ \quad(v=(\alpha,\beta)\ne0).
+\tag{219.17}
+$$
+
+In the $B$ direction the exact dual constant is $d_{(0,1)}=1$, giving
+
+$$
+ r\le (S_*)_{BB3}+C^3t^3\le\|S_*\|_\infty+C^3t^3.
+\tag{219.18}
+$$
+
+In particular an origin-centered ball contained in this soft image has radius at most $C^3t^3$. More generally, an origin-enclosing ball, meaning $r>\|S_*\|_\infty$, has origin margin at most $C^3t^3$. For the actual center $S_*=t^2R$ of Theorem 212.1 this becomes
+
+$$
+ r\le t^2\kappa+C^3t^3,\qquad
+ r-t^2\|R\|_\infty\le C^3t^3.
+\tag{219.19}
+$$
+
+Thus for fixed $C$ no such uniformly $O(t)$ soft-image balls can enclose the origin with a positive margin of order $t^2$. If $\|R\|_\infty>\kappa$, an origin-enclosing ball at that center additionally requires $C^3t>\|R\|_\infty-\kappa$. These are restrictions on actual soft-image coverage, with their proximity hypothesis; they do not assert nonattainment of the point $0$, which is itself attained softly by $f$.
+
+*Proof.* For the actual tuple representing $S$, apply (217.3) to $h_v=\alpha h_1+\beta h_B$. Its positive energy differs from $\ell_v(S)$ by at most
+
+$$
+ \|h_v\|_\infty^2\varepsilon_3(u)
+ \le C^3t^3(2|\alpha|+|\beta|)^2.
+\tag{219.20}
+$$
+
+This proves (219.15), including the cross terms. The matrix assertion follows from $(2|\alpha|+|\beta|)^2\le5(\alpha^2+\beta^2)$. For a ball (219.16), the infimum of $\ell_v$ over that ball is $\ell_v(S_*)-rd_v$. Apply (219.15) to every point and approach that infimum to obtain (219.17).
+
+For completeness, the claimed dual constants are computed in the actual slice. Put $k=q/c=(-1/2,-1/2,1,0)$ and use $n_1,n_B$ of (219.6). For a symmetric matrix $Z$, form the explicit tensor
+
+$$
+ \begin{aligned}
+ \mathsf D(Z)={}&\sum_{r,s\in\{1,B\}}Z_{rs}
+ (n_r\otimes n_s\otimes k+n_r\otimes k\otimes n_s
+                                  +k\otimes n_r\otimes n_s)\\
+ &+(Z_{11}-Z_{BB})k\otimes k\otimes k.
+ \end{aligned}
+\tag{219.21}
+$$
+
+All factors are in $H$, and each summand has a $k$ slot, so $\mathsf D(Z)\in\mathcal W$. This tensor is fully symmetric. Its $013$ coordinate is $(-Z_{11}+Z_{BB})/4+(Z_{11}-Z_{BB})/4=0$; symmetry kills all six distinct-label coordinates and gives $L(\mathsf D(Z))=0$. Thus it is in the exact $\mathscr V_{51}$. Since $a^{(r)}\cdot k=0$, $k_3=1$ and $a^{(r)}\cdot n_s=\mathbf1_{r=s}$, contraction of (219.21) gives
+
+$$
+ \mathsf M(\mathsf D(Z))=Z.
+\tag{219.22}
+$$
+
+Hence $d_v>0$ for every nonzero $v$, by choosing $Z=vv^{\mathsf T}$. In particular, for $Z=\operatorname{diag}(0,1)$ the entries of $\mathsf D(Z)$, up to permutation of slots, are as follows, with $i,j,l\in\{0,1\}$:
+
+$$
+ \begin{array}{c|rrrrrrrrrr}
+ \text{labels}&BBB&BBi&BB3&Bij&Bi3&B33&ijl&ij3&i33&333\\ \hline
+ \mathsf D(Z)&0&-1/2&1&1/2&-1/2&0&-1/4&0&1/2&-1
+ \end{array}
+\tag{219.23}
+$$
+
+Repeated indices are allowed. These values follow directly by using $n_{B,i}=k_i=-1/2$, $n_{B,B}=k_3=1$ and $n_{B,3}=k_B=0$ in (219.21). They show $\|\mathsf D(Z)\|_\infty=1$ and $\mathsf D(Z)_{BB3}=1$. The reverse bound $|S_{BB3}|\le\|S\|_\infty$ is immediate, proving $d_{(0,1)}=1$. Equations (219.18)--(219.19) now follow from (219.17) and $R_{BB3}=\kappa$. The tensor (219.21) is a dual-norm witness in the residual vector space, not an assertion that this tensor is attained by a soft or hard tuple. $\square$
+
+The joint-cone consumer above is distinct from the existing positive-BB3 hard neighborhood in (212.2). That hard neighborhood keeps its original existence and positive-residual conclusions. Its quantile carriers are not asserted to satisfy (219.1), so (219.15)--(219.19) are not transferred to them. The results leave universal original hard $F_{64}$ attainment or exclusion, unrestricted origin enclosure, compatible summable continuation, changing reservoirs, nonanalytic or smooth flat zero paths, finite-amplitude zero constructions and physical succession unresolved. The source-specific deductions consume the original heat form, affine relation space and exact H51 interface; they carry no global novelty or Lean/kernel assertion.
+
+## 追加锚（本行以下为增补区）
