@@ -1,0 +1,34 @@
+**Theorem 209.5 (a source-specific co-selected sequence realizing the slack).** For every original $\theta$, there exists a sequence of deterministic whole-$G$ Borel partitions
+
+$$
+D_n\in\mathscr F_{154}(\theta)
+$$
+
+whose own terminals are used in every coordinate, such that (208.1) holds, $u_{n,i}\overset{*}{\rightharpoonup}f_i$ for every $i$, and
+
+$$
+\Delta(D_n)_{BB3}>0,\qquad
+\|\Delta(D_n)\|_{\max}\longrightarrow0.
+\tag{209.18}
+$$
+
+*Proof.* Use the actual finite construction of Appendix III §§154.E and 155.2. For its fixed original $\theta$, write $\kappa=R_{BB3}>0$ and $J=\|R\|_\infty>0$ as in (155.4). Choose $t_n\downarrow0$ with $t_n<t_0$ and set, for example,
+
+$$
+\varepsilon=\frac12,\qquad
+\delta_n=\frac{t_n^2}{32}\min\{\kappa,J\}.
+\tag{209.19}
+$$
+
+Then the strict restriction in (155.5) holds for $(t,t',\delta)=(t_n,t_n/2,\delta_n)$. Theorem 155.2 supplies co-selected actual partitions $D_n,D_n'\in\mathscr F_{154}(\theta)$ from one common finite-cell quantile construction. Retain the first endpoint. Its estimates give
+
+$$
+\Delta(D_n)_{BB3}>t_n^2\kappa-\delta_n>0,\qquad
+\|\Delta(D_n)\|_{\max}\le t_n^2J+\delta_n\longrightarrow0.
+\tag{209.20}
+$$
+
+It remains to make the weak-star quantifier explicit. Fix a countable $L^1(m)$-dense family of tests. In the quantile construction of 154.E, refine the finite coordinate partition far enough at the $n$th step to match the center $u^{(t_n)}$ on the first $n$ tests to error $<1/n$; the cell-mass identities and density of the refining partitions give this uniformly for the finitely many tests. Since $u^{(t_n)}\to f$ in $L^\infty$ as $t_n\downarrow0$, choose $t_n$ recursively so that its first $n$ test pairings differ from those of $f$ by $<1/n$. The diagonal sequence of indicators therefore converges componentwise weak-star to $f$. The same refinement is allowed in the Brouwer step because the approximation estimates in (154.30) and (155.15) improve along the refining partitions. The exact $\mathcal H_{43}$ roots give (208.1), and every coefficient in (209.20) is evaluated with the corresponding partition's own propagated terminals. No endpoint is held fixed and no physical successor is asserted. $\square$
+
+Theorem 209.5 consumes the finite calibrated endpoints of §155.2 to realize the sequence hypothesis of Propositions 209.2–209.4 for every original parameter. It shows that the particular exclusion mechanism of Section 208 loses its sign margin on actual original hard approximants: the matrix budgets converge to the strictly negative source form $-\Lambda_j$, the refined finite-$k$ budgets are eventually negative where defined, and the unrefined $B3B$ lower bound converges to a negative number while the actual residual converges to zero. This does not construct an original $F_{64}$ witness, prove nonattainment, or provide a successor from an arbitrary fixed endpoint; the fixed-start summable chain of (155.31), the universal $F_{64}$ question and the physical succession question remain open.
+

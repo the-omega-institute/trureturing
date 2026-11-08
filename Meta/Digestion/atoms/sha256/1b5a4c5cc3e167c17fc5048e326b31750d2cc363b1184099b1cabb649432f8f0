@@ -1,0 +1,42 @@
+**Proposition 195.1 (saturated-kernel identification).** Let $u$ be a full-zero bounded partition and put $r_u=\dim\mathcal W_u$. If
+
+$$
+\dim\ker\mathsf L_u=r_u-2,
+\tag{195.1}
+$$
+
+then
+
+$$
+\ker\mathsf L_u=\mathcal R_u.
+\tag{195.2}
+$$
+
+Likewise,
+
+$$
+\dim\ker\mathsf K_u=r_u-2
+\quad\Longrightarrow\quad
+\ker\mathsf K_u=\mathcal R_u.
+\tag{195.3}
+$$
+
+If both equalities in (195.1) and (195.3) hold, then
+
+$$
+\ker\mathsf L_u=\ker\mathsf K_u=\mathcal R_u,
+\tag{195.4}
+$$
+
+so the common radical is obtained by solving either finite-dimensional weighted kernel system.
+
+*Proof.* Proposition 194.2 gives the inclusions
+
+$$
+\mathcal R_u\subseteq\ker\mathsf L_u,
+\qquad
+\mathcal R_u\subseteq\ker\mathsf K_u,
+$$
+
+while Proposition 191.2 gives $\dim\mathcal R_u=r_u-2$. Under (195.1), the two subspaces $\mathcal R_u$ and $\ker\mathsf L_u$ have the same finite dimension, so the first inclusion is equality. The proof for $\mathsf K_u$ is identical, and (195.4) follows when both maps are saturated. $\square$
+

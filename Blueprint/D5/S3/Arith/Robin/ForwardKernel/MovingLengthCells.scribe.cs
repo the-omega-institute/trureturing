@@ -11,6 +11,15 @@ internal sealed class MovingLengthCellsDocument : IScribeDocumentDefinition
         H("Equal-cell limits determine the moving-length constant"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("fixed-normalizer-ratio"),
+                DeclarationHandle.Create(Prefix + "fixed_normalizer_ratio"),
+                H("The fixed-length normalization ratio"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For c>0 and any real theta, the ratio of (X/(c*X^theta))*log(X/(c*X^theta)) to X^(1-theta)*log(X) tends to (1-theta)/c as X tends to infinity."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("cell-point-mem"),
                 DeclarationHandle.Create(Prefix + "cellPoint_mem"),
                 H("Cell endpoints lie in the dyadic interval"),
@@ -44,7 +53,7 @@ internal sealed class MovingLengthCellsDocument : IScribeDocumentDefinition
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "Let E be measurable and bounded on compact intervals, with the short-interval mean-square bound and uniform cumulative variance band asymptotic. These imply the fixed-length triangular mean-square limit on every interval [aX,bX] with 1<=a<b<=2 and every positive length factor c. For fixed positive n, summing the square integrals with length frozen at (a_j X)^(4/5) and dividing by X^(1/5) log X tends to the sum of a_j^(-4/5)/(15n), where a_j=1+j/n. The fixed-length normalizer divided by X^(1/5) log X tends to 1/(5c)."))),
+                    "Let E be a Borel real function bounded on compact intervals, assume 0<alpha<theta<beta<1 and the uniform cumulative variance band asymptotic, and let g be integrable on [0,1]. For fixed positive n, sum the profile square integrals on [a_j X,a_(j+1) X] with length frozen at (a_j X)^theta, where a_j=1+j/n. Dividing by X^(1-theta) log X gives the limit ((1-theta)Q(g)/n) times the sum of a_j^(-theta). The fixed-length normalizer divided by this scale tends to (1-theta)/c."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("cell-constant-tendsto"),
@@ -53,6 +62,6 @@ internal sealed class MovingLengthCellsDocument : IScribeDocumentDefinition
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "The constants (15n)^(-1) times the sum of (1+j/n)^(-4/5) for 0<=j<n tend to (2^(1/5)-1)/3. Since v^(-4/5) decreases on [1,2], its left and right rectangle sums bound its integral. Their difference is (1-2^(-4/5))/n, so the normalized upper sum differs from the limiting constant by at most 1/(15n)."))),
+                    "For 0<theta<1 and any real profile g, the constants ((1-theta)Q(g)/n) times the sum of (1+j/n)^(-theta) for 0<=j<n tend to Q(g)*(2^(1-theta)-1). Since v^(-theta) decreases on [1,2], its left and right rectangle sums bound its integral and differ by (1-2^(-theta))/n. Multiplying the resulting rectangle-sum limit by (1-theta)Q(g) proves the conclusion without a sign assumption on Q(g)."))),
                 DescribeRole.Theorem))));
 }

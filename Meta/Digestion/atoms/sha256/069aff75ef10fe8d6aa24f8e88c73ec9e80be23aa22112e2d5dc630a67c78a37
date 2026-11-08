@@ -1,0 +1,50 @@
+**Proposition 197.2 (canonical quotient reconstruction).** If all sixty-four residuals of $u$ vanish, then $T_u$ is a well-defined surjective linear map and
+
+$$
+\ker T_u=\mathcal R_u,
+\qquad
+\mathcal W_u/\mathcal R_u\ \cong\ E_f.
+\tag{197.2}
+$$
+
+More precisely, the induced map
+
+$$
+\overline T_u:\mathcal W_u/\mathcal R_u\longrightarrow E_f,
+\qquad
+\overline T_u([x])=T_u(x),
+\tag{197.3}
+$$
+
+is an isomorphism, and for every $x,y,z\in\mathcal W_u$,
+
+$$
+\mathcal C(x,y,z)
+ =\mathcal C\bigl(T_u x,T_u y,T_u z\bigr).
+\tag{197.4}
+$$
+
+Thus the trilinear form induced by $\mathcal C$ on the quotient is exactly the restriction of the baseline form to $E_f$.
+
+*Proof.* Suppose that $H_a=H_b$. Then $a-b\in\ker\Phi_u$, and Proposition 191.2 gives $\ker\Phi_u\subseteq\ker\Phi_f$. Hence $F_a=F_b$, so (197.1) is independent of the representing label vector. Linearity is immediate from the definitions of $H_a$ and $F_a$.
+
+For every $F_a\in E_f$, the element $H_a\in\mathcal W_u$ satisfies $T_u(H_a)=F_a$, proving surjectivity. Moreover,
+
+$$
+T_u(H_a)=0
+\quad\Longleftrightarrow\quad
+F_a=0.
+$$
+
+Proposition 190.1 identifies the set of such $H_a$ with the common radical, so $\ker T_u=\mathcal R_u$. The first isomorphism theorem gives (197.2)--(197.3).
+
+For $x=H_a$, $y=H_b$ and $z=H_c$, the full-zero residual identity gives
+
+$$
+\mathcal C(x,y,z)
+ =\mathcal C(F_a,F_b,F_c)
+ =\mathcal C(T_ux,T_uy,T_uz).
+$$
+
+Every element of $\mathcal W_u$ has this form, so (197.4) follows. Since each element of $\mathcal R_u$ is a radical in every slot, the left-hand side of (197.4) is independent of the representatives of the quotient classes; consequently it is precisely the quotient trilinear form, and (197.4) identifies that form with the baseline restriction. $\square$
+

@@ -1,0 +1,52 @@
+**定理 109.1（同一个旧D的纯面积律）。** 对全部原 $x,y\in V$，
+
+$$
+D(x,y)\in V,\qquad D(x,y)\perp x,y,\qquad
+\|D(x,y)\|^2=\|x\|^2\|y\|^2-\langle x,y\rangle^2.
+\tag{109.1}
+$$
+
+这里将纯向量x识别为原标签 $0u+x$，以下同。
+
+证明。比例输入由P2归零。先取正交非零x,y，固定 $d=D(x,y)$。99.4取第三输入零，并交换x,y，给 $x\circ d=y\circ d=0$。写 $d=hu+z$，前式的向量部为hx，故h为零，而 $z\perp x,y$。取数学正读取 $\alpha_n(su+v)=s+\langle n,v\rangle$，$\|n\|=1$，P2给 $\|d\|\le\|x\|\|y\|$；这些读取由准确原锥合法取得。
+
+记 $x=Xe_1,y=Ye_2$，$X,Y>0$，$e_1,e_2$ 为原正交单位向量，$\kappa=\|d\|/(XY)\in[0,1]$。对任意有限 $\lambda,\eta>0$ 令
+
+$$
+r=\sqrt{\lambda^2X^2+\eta^2},\qquad
+c=ru+\lambda x,\qquad
+n=-\frac{\lambda X}{r}e_1+\frac{\eta}{r}e_2.
+$$
+
+108.2支付 $D(x,c)=0$。PB中 $(a,b,c)=(x,y,c)$ 的外层准确为
+
+$$
+r_\pm=\mp\lambda X^2u+y\pm d\mp rx,\qquad s_\pm=c,
+$$
+
+而99.4的右端为 $2\lambda X^2y$。定义已知线性图 $L_n(su+v)=v+sn$。有
+
+$$
+\alpha_n(a^2)=\|L_na\|^2,\qquad
+\alpha_n(a\circ b)=\langle L_na,L_nb\rangle.
+$$
+
+因此二表实Gram行列式就是这两个已知向量的Gram行列式，不需三维叉积。现有 $L_nc=\eta e_2$、$L_nr_\pm=y\pm A$，其中
+
+$$
+A=d-rx-\lambda X^2n,\qquad
+\langle A,e_1\rangle=-X\eta^2/r,\qquad d\perp e_1,e_2.
+$$
+
+两外层行列式的平方根均为 $X\eta\sqrt{\eta^4/r^2+\kappa^2Y^2}$。以同一 $\alpha_n$ 读取99.4并用两次P2，得
+
+$$
+\frac{2\lambda X^2Y\eta}{r}
+\le2X\eta\sqrt{\eta^4/r^2+\kappa^2Y^2},
+\qquad
+(1-\kappa^2)\lambda^2X^2Y^2\le\eta^4+\kappa^2Y^2\eta^2.
+\tag{109.2}
+$$
+
+若 $\kappa<1$，固定η后选择足够大的有限原λ即矛盾；内层d始终固定。d为零时同一计算仍成立，不虚设第三方向。故正交对饱和。任意独立纯输入对的实二阶Gram可由SO(2)对角化；108.2保持同一输出，输入张成平面及Gram行列式也保持，遂得109.1。未对未知D取极限或预付齐次性。∎
+

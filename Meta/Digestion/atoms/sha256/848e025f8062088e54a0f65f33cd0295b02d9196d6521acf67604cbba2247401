@@ -1,0 +1,190 @@
+**定理 81.2（A 下原映射的下降、剪切、齐次与中央中性）。** 在定义 81.1 的原入口加完整 A 下，对每个原 $a$，在整个完成中有
+
+$$
+\ker K_a\cap M_a=\{0\}.
+\tag{81.5}
+$$
+
+对全部原 $a,b,c,k$、全部实 $s,t$，同一个旧 $D$ 满足
+
+$$
+\begin{aligned}
+D(a,b)=D(a,c)&\ \Longleftrightarrow\ K_a b=K_a c,\\
+K_a k=0&\ \Longrightarrow\ D(a,b+k)=D(a,b),\\
+D(a,b+sa)&=D(a,b),\qquad D(a+sb,b)=D(a,b),\\
+D(ta,b)&=D(a,tb)=tD(a,b).
+\end{aligned}
+\tag{81.6}
+$$
+
+特别地，任意原 $z_1,z_2\in E\cap Z(X)$ 均有完整的两槽中央平移中性
+
+$$
+D(a+z_1,b+z_2)=D(a,b),
+\tag{81.7}
+$$
+
+以及全部原行的奇性和跨行变号
+
+$$
+F_a(-b)=-F_a(b),\qquad F_{-a}(b)=-F_a(b).
+\tag{81.8}
+$$
+
+这里的中心不限定为 $\mathbb Ru$。若再给 (81.4) 的 J，则对原 $x,y$，
+
+$$
+[L_x,L_y]=0\quad\Longrightarrow\quad
+F_x\circ F_y=F_y\circ F_x\quad\text{on }E.
+\tag{81.9}
+$$
+
+J 只用于 (81.9)。本定理的原零值与原零行、零列判据直接使用 (64.4)–(64.5)，不另立零值结论；不据 (81.6) 断言任意两个不同方向上的加性或完整 R。
+
+证明。$E=\{0\}$ 时全部成立，以下设 $E\ne\{0\}$。实际二表已经给出 (64.7) 的反对称性，定理 64.2 给出原零值、零行及零列。特别是 $F_a(0)=0$、$F_0=0$。这些既有结论不需要 A 或 J。
+
+先在已知完成中证明需要的线性算子消去性质。固定原 $a$，写 $K=K_a$。只复用定理 15.2 证明中 (15.5)–(15.6) 的 JB 子论证，不移用该定理含 R 和原读回律的前件、旧 $D$ 的线性或其延拓结论。具体地，置 $U_x=2L_x^2-L_{x^2}$，在 $X$ 中取
+
+$$
+c_h=(u+ha^2)^{-1/2},\qquad B_h=U_{c_h}(I+hU_a),\qquad h\ge0.
+\tag{81.10}
+$$
+
+Hanche-Olsen–Størmer，[*Jordan operator algebras*](https://hanche.folk.ntnu.no/joa/joa-m.pdf)，Theorem 3.2.2、§3.2.3 及 Theorem 3.2.4（印刷页 78–79）给含单位单生成结合子代数 $C(a)$ 的连续函数演算；$X$ 本来就是含单位 JB，故其假设在这里满足，$u+ha^2$ 的谱严格为正。Proposition 3.3.6（印刷页 83）给任意 JB 的 $U_x$ 保正。故 $B_h$ 保正；只在 $C(a)$ 内计算得 $B_hu=c_h^2\circ(u+ha^2)=u$。Proposition 3.3.10（印刷页 84）使给定 JB 范数就是序单位范数，于是正幺的 $B_h$ 为收缩。以上没有要求整个 $X$ 为结合或特殊 Jordan 代数。
+
+函数演算及 $x\mapsto U_x$ 的有界二次性给算子范数展开
+
+$$
+c_h=u-\tfrac h2a^2+O(h^2),\qquad
+U_{c_h}=I-hL_{a^2}+O(h^2),\qquad
+B_h=I+2hK+O(h^2).
+$$
+
+对每个固定 $t\ge0$，有界算子的 Euler 乘积极限遂给
+
+$$
+B_{t/(2n)}^n\longrightarrow T_t=e^{tK},\qquad
+\|T_t\|\le1.
+\tag{81.11}
+$$
+
+这一步是成熟的有界线性算子指数论证：每个因子与 $I+(t/n)K$ 相差 $O(n^{-2})$，乘积差的逐项望远镜估计趋零，后一个 Euler 乘积趋于指数。它只涉及已知 $K$；其正号准确对应 NN 的 $+K$，不使用 $e^{-tK}$ 的收缩性。
+
+对 $T>0$ 取已知线性算子的范数积分均值
+
+$$
+A_T=\frac1T\int_0^T T_t\,dt,\qquad \|A_T\|\le1.
+$$
+
+若 $v\in\ker K$，则 $A_Tv=v$。对原 $e\in E$，有界生成元的积分恒等式给
+
+$$
+A_TKe=\frac{T_Te-e}{T},\qquad
+\|A_TKe\|\le\frac{2\|e\|}{T}\longrightarrow0.
+\tag{81.12}
+$$
+
+任取 $m\in M_a$，用原 $Ke$ 逼近 $m$；一致界 $\|A_T\|\le1$ 给
+
+$$
+\|A_Tm\|\le\|m-Ke\|+\frac{2\|e\|}{T},
+$$
+
+故 $A_Tm\to0$。若 $m$ 同时在 $\ker K$ 中，这个极限又等于 $m$，得到 (81.5)。这里只证明均值在核上恒等、在闭像上趋零，没有断言它在任意 $X$ 元素上收敛，也没有建立全局直和分解。由此 $K_a$ 在 $M_a$ 上单射。此段完全不使用 A；A 将在实际输出的消去处使用。
+
+现在回到原映射。固定原 $a$，写 $F=F_a$。由于 $F:E\to E$ 且 $F^2=K|_E$，复合的结合性给
+
+$$
+F(Kb)=F(F(Fb))=K(Fb)\quad(b\in E).
+\tag{81.13}
+$$
+
+这里未把未知 $F$ 分配到任何和、差或极限上。若 $Kb=Kc$，对这两个相等的原输入施一次 $F$，由 (81.13) 得 $K(Fb-Fc)=0$；分配律只用于已知线性 $K$。A 使 $Fb,Fc\in M_a$，因而其差在 $M_a$，(81.5) 消去该差。反向若 $Fb=Fc$，直接再施 $F$ 得 $Kb=Kc$。这证明 (81.6) 的第一式及原核陪集下降。另记一个后面实际使用的消去域：
+
+$$
+p,q\in E\cap M_a,\quad Fp=Fq\quad\Longrightarrow\quad p=q.
+\tag{81.14}
+$$
+
+理由是对相等的原输出再施 $F$ 得 $Kp=Kq$，而 $p-q\in M_a$。这里没有声称 $F$ 在全部 $E$ 上单射，也不要求它满射到 $E\cap M_a$。
+
+由 $K_a a=0$ 和原核下降，得 $D(a,b+sa)=D(a,b)$；反对称性随即给 $D(a+sb,b)=D(a,b)$。这两种原剪切只改变输入对的实线性坐标，每一步仍在 $E^2$。它们使 $D$ 在两个初等剪切矩阵
+
+$$
+U(r)=\begin{pmatrix}1&r\\0&1\end{pmatrix},\qquad
+V(r)=\begin{pmatrix}1&0\\r&1\end{pmatrix}
+$$
+
+作用于列向量 $(a,b)^{\mathsf T}$ 后不变。对任意实 $t\ne0$，直接的二阶矩阵恒等式
+
+$$
+\begin{pmatrix}t&0\\0&t^{-1}\end{pmatrix}
+=U(t-1)V(1)U(t^{-1}-1)V(-t)
+$$
+
+因而给出
+
+$$
+D(ta,b/t)=D(a,b),\qquad
+F_{ta}(c)=F_a(tc)\quad(c\in E).
+\tag{81.15}
+$$
+
+这包括负 $t$；所得只是同一原输入平面内的换基，不是任意相加的分配律。
+
+固定原 $a,b$ 并置 $p=F_a b$。由 (81.15)，同一 $p$ 也是 $F_{ta}(b/t)$。对这份真实原输出使用 NN，并再用 (81.15) 的跨行转移，得到
+
+$$
+F_a(tp)=F_{ta}(p)
+=F_{ta}(F_{ta}(b/t))
+=K_{ta}(b/t)=tK_a b.
+\tag{81.16}
+$$
+
+末步只用已知双线性 Jordan 乘法给 $K_{ta}=t^2K_a$。令 $q=F_a(tb)$，则 NN 对原 $tb$ 给 $F_a(q)=tK_a b$。因此 $F_a(q)=F_a(tp)$。A 给 $p,q\in E\cap M_a$，该空间为实线性，故 $tp$ 也在其中；现在才合法使用 (81.14)，得到 $q=tp$。这证明 $D(a,tb)=tD(a,b)$；(81.15) 随即给 $D(ta,b)=tD(a,b)$。$t=0$ 由原零输入成立。特别取 $t=-1$ 得 (81.8)，也可对任何原实际嵌套输出使用这一奇性。证明没有由 $F_{ta}^2=t^2F_a^2$ 直接认同非线性平方根，真正的消去发生在 (81.16) 后的 $E\cap M_a$。
+
+若原 $z\in E\cap Z(X)$，(64.4)–(64.5) 给 $D(a,z)=0$，从而 $K_a z=0$。已证的原核下降于是给 $D(a,b+z)=D(a,b)$，反对称再给 $D(a+z,b)=D(a,b)$；两次应用即得 (81.7)。零中央行、列在此仅供应 $K_a z=0$，平移结论另由 A 支持的下降支付；未把中心压成标量，也未比较两张相同平方的未知行。
+
+最后才使用 J。若 $[L_x,L_y]=0$，既有 (64.4) 给 $D(x,y)=0$。将原三元组 $(x,y,b)$ 代入 (81.4)，全部内外输入仍在 $E$；由反对称性、已证的第二槽奇性和零输入，得到
+
+$$
+0=D(x,D(y,b))+D(y,-D(x,b))+D(b,0)
+=F_x(F_y b)-F_y(F_x b).
+$$
+
+这正是 (81.9)。
+
+附于本条的标准模型相容性只使用以下额外指定前件：同一个完成 $X$ 被保单位等距 Jordan 识别为某个含单位复 $C^*$ 代数 $\mathcal B$ 的自伴部；原 $E$ 是其中稠密含单位的实 Jordan 子代数，且对原交换子 $[a,b]/(2\mathrm i)$ 封闭；原正评价是复正泛函的原限制；旧映射本来就是
+
+$$
+D(a,b)=\epsilon\frac{ab-ba}{2\mathrm i},\qquad \epsilon\in\{1,-1\}
+\quad\text{为固定选择}.
+\tag{81.17}
+$$
+
+这些是指定实现的附加模型假设，不用于前面的任意 JB 证明。令已知有界实线性算子 $\delta_a x=\epsilon[a,x]/(2\mathrm i)$ 作用于整个 $X$；结合乘法直接给
+
+$$
+\delta_a^2x=-\tfrac14[a,[a,x]]=K_ax,\qquad
+G_t x=e^{-\mathrm i\epsilon ta/2}x e^{\mathrm i\epsilon ta/2}
+=e^{t\delta_a}x,\qquad \|G_t\|=1\quad(t\in\mathbb R).
+\tag{81.18}
+$$
+
+用成熟的实 Hahn–Banach 闭子空间分离检验 $\delta_ab$ 是否在 $\overline{K_a(X)}$ 中。若 $f\in X^*$ 消灭 $K_a(X)$，则 $\delta_a^{*2}f=0$，故
+
+$$
+e^{t\delta_a^*}f=f+t\delta_a^*f,\qquad
+\|f+t\delta_a^*f\|=\|G_t^*f\|\le\|f\|.
+$$
+
+让 $t\to+\infty$，得到 $\delta_a^*f=0$。因此每个这样的 $f$ 也消灭 $\delta_a(X)$，闭子空间分离给 $\delta_ab\in\overline{K_a(X)}$。已知 $K_a$ 连续且原 $E$ 稠密，所以
+
+$$
+\overline{K_a(X)}^{\,X}=\overline{K_a(E)}^{\,X}=M_a.
+$$
+
+对原 $a,b$，交换子封闭又使 $\delta_ab=D(a,b)\in E$；于是完整 A 成立，并且 (81.3) 的逼近见证确实可取原 $c\in E$。这没有要求原 $E$ 完备、对指数或平方根封闭；$G_t$ 只在模型完成中用于已知线性算子的证明，不作为未知 $D$ 的延拓。
+
+该指定模型中的 Jordan 平方、单位与小窗口满足原实入口。为核对二表的准确方向，(81.17) 在 $\epsilon=1$ 时使 $S(a_i,a_j)-\mathrm iD(a_i,a_j)=a_ja_i$，在 $\epsilon=-1$ 时为 $a_ia_j$。对原正评价的复正延拓 $\varphi$ 和 $v=\sum_jc_ja_j$，相应标量二次式分别为 $\varphi(vv^*)$、$\varphi(v^*v)$，均非负；零及不等评价质量均不需除法。NN 的符号已由 (81.18) 核对，J 为已知结合交换子的 Jacobi。故任一满足这些明确模型假设的稠密、可不完备、原交换子封闭域都与 A 相容；这只证明指定原交换子模型满足 A，没有从原二表加 NN 推出 A，也没有提供完整原 $\Omega$ 的实际来源实现。∎
+

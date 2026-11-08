@@ -7,7 +7,7 @@ doi: 10.22331/q-2019-10-14-194
 url: https://arxiv.org/abs/1805.09364v3
 claim: "Without post-selection the mean product of the pointer positions of n sequential weak measurements of A_1, ..., A_n on rho is 2^(-(n-1)) Tr[{A_1, {A_2, ..., {A_(n-1), A_n}...}} rho]; for two projection observables (eigenvalues 0 and 1) it is at least -1/8, and the authors conjecture the bound -1/8 for every number n of projection observables."
 strata_touched:
-  - D5/S3/Quantum/Measurement/SequentialWeakPointerRefutation
+  - D5/S3/Quantum/Measurement/Weak/SequentialWeakPointerRefutation
 license: citation-only
 triage: anchor
 ---

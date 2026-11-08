@@ -1,0 +1,22 @@
+**引理 75.2（原有限词的准确粘合）。** 在75.1的同一 $D$ 坐标内，令 $J$ 为 $A_0$ 的代数交换子星理想。Hanche-Olsen–Størmer Remark7.4.15的成熟一般公式限制到原有限词后，准确给
+
+$$
+\begin{aligned}
+B&=\{(a,b^{\rm op})\in A_0\oplus A_0^{\rm op}:b-a\in J\},\\
+\iota(x)&=(x,x^{\rm op}),\qquad
+\tau(a,b^{\rm op})=(b,a^{\rm op}),\qquad
+\mathfrak n_D=0\oplus J^{\rm op}.
+\end{aligned}
+\tag{75.2}
+$$
+
+证明。该Remark给完成 $A$ 的两份相反乘法在闭交换子理想处的粘合。原有限词两分量属于 $A_0$，在交换代数商 $A_0/J$ 中相同。反向不以闭包替代 $J$：对每个 $x\in A_0$，$j(x)=(x,x^{\rm op})$ 已在原像复张成内，而
+
+$$
+j(x)j(y)-j(yx)=([x,y],0).
+\tag{75.3}
+$$
+
+左右乘 $j(a),j(b)$ 并有限相加给 $(J,0)\subset B$，翻面给 $(0,J^{\rm op})\subset B$。任何 $b-a\in J$ 的对遂等于 $j(b)+(a-b,0)$，真由有限词生成。$\rho$ 投第一分量，所以核为75.2最后一项。这不是完成中的稠密性论证。∎
+
+

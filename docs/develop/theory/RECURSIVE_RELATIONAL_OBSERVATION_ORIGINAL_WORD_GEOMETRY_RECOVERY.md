@@ -3564,3 +3564,1247 @@ complete quantum origin, nor a formal-verification claim.
 [ART15]: https://arxiv.org/abs/1311.3066v1
 
 ## 追加锚（本行以下为增补区）
+
+## 18. Four original marker counts in place of a word table
+
+**Definition 18.1 (the sparse chronological statistic).** Retain
+Assumption 1.1 and Definition 1.2, for all their finite positive
+$a,\eta,d$ and permitted repairs. In particular $H$ is the full
+complex endpoint, $b=g_d$, $P=T_d$, and the actual initial hidden
+read density is $Pb=g_{2d}$. Put $I_i=\mathbf1\{Y_i=3\}$.
+For a fixed integer $r\ge0$, define the three positive lags
+
+$$
+ h_1=r+1,\qquad h_2=r+2,\qquad h_3=2r+2,
+ \qquad \lambda_r=2r+2.
+ \tag{18.1}
+$$
+
+For $N\ge1$ use exactly the initial chronological label segment
+$Y_0,\ldots,Y_{N+\lambda_r-1}$ of the one original trajectory.
+The four integer fields are
+
+$$
+ Z=\sum_{i=0}^{N-1}I_i,\qquad
+ A_j=\sum_{i=0}^{N-1}I_i I_{i+h_j}\quad(1\le j\le3),
+ \qquad z=Z/N,\quad a_j=A_j/N.
+ \tag{18.2}
+$$
+
+Thus $0\le A_j\le Z\le N$. If $r=0$, $A_2=A_3$ and those two
+fields may share one value. All intermediate labels are the original
+four-label reads; the statistic subsequently uses their marker bits.
+No conditioning, selected marker, restart, new read epoch or
+independent trajectory is involved. In particular a marker at
+index $i$ is an ordinary observed label, not a new source entrance.
+
+Under the invariant mathematical comparison $Q_*$ of Definition
+15.1 set $q=f_3=cb$ and, for positive integer $h$, set
+
+$$
+ \mu_h=\langle q,P^h q\rangle_m.
+ \tag{18.3}
+$$
+
+This comparison is used only to calculate errors of (18.2) under
+$Q_0$, the actual $e$-start law. It is not an available preparation.
+
+**Definition 18.2 (the sparse numerical packet and its guards).**
+In addition to $r,N$, declare an integer $v\ge1$, rational
+$t>0$, $0<\epsilon<1$, and validated rational lower bounds
+
+$$
+ 0<D_0^-\le d_{1/(4d)},\qquad
+ 0<D_v^-\le d_{1/(vd)},\qquad D_0^-,D_v^-\le1.
+ \tag{18.4}
+$$
+
+Here $d_\xi$ is exactly the original full-source capacity divided
+by $\xi$ in [R, Definition 9.1], not the killed capacity. These
+are the same coefficient/clock and capacity services as Definition
+9.1 and [R, §11]. Their construction, validation and encoding are
+paid inputs. Neither a numerical supremum of $b$, a hidden
+coordinate, a new clock nor a value of $c$ is supplied. The packet
+is selected without consulting its label segment. Put
+
+$$
+ \begin{gathered}
+ \overline V_{N,v}=
+ \min\left\{\frac14,\frac{6v-3}{4N}
+                   +6\frac{1-D_v^-}{D_v^-}\right\},\qquad
+ \alpha_{N,v,t}=
+ \min\left\{1,\frac2t\sqrt{\frac{\overline V_{N,v}}{D_0^-}}\right\},\\
+ c_-=[z-t]_+,\qquad c_+=\min\{1,z+t\},\\
+ (\widetilde m_r,\widetilde m_{r+1},\widetilde m_{2r+1})
+ =\begin{cases}(A_1/Z,A_2/Z,A_3/Z),&Z>0,\\(0,0,0),&Z=0,\end{cases}\\
+ e=\begin{cases}\min\{1,2Nt/Z\},&Z>0,\\1,&Z=0,\end{cases}
+ \qquad
+ L=\widetilde m_r-\widetilde m_{r+1}-2e.
+ \end{gathered}
+ \tag{18.5}
+$$
+
+The repeated coordinate at $r=0$ has a single meaning since its
+counts agree. There are no pseudocounts and no word histogram.
+For a declared rational failure allowance $0<\beta<1$, the wholly
+rational input condition
+
+$$
+ 4\overline V_{N,v}\le\beta^2t^2D_0^-
+ \tag{18.6}
+$$
+
+suffices for $\alpha_{N,v,t}\le\beta$. The output guards are
+
+$$
+ L>0,\qquad c_->0,\qquad
+ \widetilde m_{2r+1}+e\le c_-(1+4\epsilon^2).
+ \tag{18.7}
+$$
+
+## 19. Sparse simultaneous confidence for the original dual consumer
+
+**Theorem 19.1 (lag-uniform original acquisition of the two
+certificates).** Under Definitions 18.1–18.2, the exact original
+source correspondence is
+
+$$
+ \mathbb E_*z=c,\qquad
+ \mathbb E_*a_j=\mu_{h_j}=c\,m_{h_j-1}\quad(1\le j\le3).
+ \tag{19.1}
+$$
+
+There is a simultaneous event, defined directly from the four raw
+counts,
+
+$$
+ \mathcal F_{N,r,t}=
+ \left\{|z-c|\le t,\quad
+       |a_j-cm_{h_j-1}|\le t\ (1\le j\le3)\right\},
+ \qquad Q_0(\mathcal F_{N,r,t})\ge1-\alpha_{N,v,t}.
+ \tag{19.2}
+$$
+
+On this event $c\in[c_-,c_+]$ and
+
+$$
+ |\widetilde m_j-m_j|\le e
+ \quad(j\in\{r,r+1,2r+1\}).
+ \tag{19.3}
+$$
+
+If (18.7) passes, set $\tau=8L$ and use the same $D_0=I-P$,
+$S=C_3$, prefix algebra $\mathscr C_0$ and functional $\ell_{B^r}$
+as in Theorem 16.2. On $\mathcal F_{N,r,t}$ the two conclusions are
+exactly
+
+$$
+ \begin{gathered}
+ A=D_0-\tau S\in\mathscr C_0,\qquad
+ \ell_{B^r}(A^*A)\le-4L^2<0,\\
+ \sup_{E\in\mathscr Y}|R_B^r(E)-Q_*(E)|\le\epsilon.
+ \end{gathered}
+ \tag{19.4}
+$$
+
+Consequently the original probability of passing the guards while
+either conclusion is false is at most $\alpha_{N,v,t}$. The bound
+(18.5) contains no lag $h_j$, word-span or word-cardinality factor.
+The record length and retention still depend on $\lambda_r$.
+This is confidence for a new sparse event (19.2), not an assertion
+that the full-word event of Definition 9.1 was already sparse.
+
+*Proof.* First, $\int q\,dm=c$ since $\int b\,dm=1$.
+Stationarity of the comparison hidden chain and conditional
+independence of distinct original read noises give
+$\mathbb E_*I_iI_{i+h}=\langle q,P^h q\rangle_m$ for $h\ge1$.
+The actual source identity of (15.4), with index $h-1$, gives
+
+$$
+ \langle q,P^h q\rangle_m
+ =c^2\langle b,P^h b\rangle_m=c\,m_{h-1}.
+ \tag{19.5}
+$$
+
+This proves (19.1). The extra read after the first marker is why
+coordinate $m_j$ uses lag $j+1$, rather than lag $j$. The hidden
+initial density in $m_j$ remains $Pb$, not $b$ or $1$.
+
+We next bound the variances of these actual pair counts, including
+interlaced pairs. Write
+
+$$
+ \theta_n=\Theta(1/(nd)),\qquad u=q-c,\qquad
+ \gamma_n=\langle u,P^n u\rangle_m\quad(n\ge1).
+ \tag{19.6}
+$$
+
+Here $\Theta$ is the source defect of [R, (9.1)]. Its monotonicity
+needed below follows from its original killed-resolvent definition:
+if $\nu$ is the spectral measure of $F$ at $h$ in raw $L^2(\mu)$,
+then
+
+$$
+ 1-d_\xi=\int_{[0,\infty)}\frac{\xi}{x+\xi}\,d\nu(x).
+ \tag{19.7}
+$$
+
+The right side is nondecreasing in $\xi$. Since $0<d_\xi<1$,
+$\Theta(\xi)=(1-d_\xi)/d_\xi$ is nondecreasing as well.
+Thus $\theta_n$ is nonincreasing in $n$, and $\theta_n\to0$.
+This uses the killed operator only inside the existing full-source
+rank-one defect formula; it does not change the process endpoint.
+
+The positive-form Cauchy–Schwarz argument in [R, (9.3), (9.15)]
+implies, for centered real $f,g$ with sup norms at most one,
+
+$$
+ |\langle f,P^n g\rangle_m|\le\theta_n.
+ \tag{19.8}
+$$
+
+Indeed $P^n=e^{-ndK}$ is positive self-adjoint, and each diagonal
+positive form is at most $\theta_n$ by [R, (9.3)]. In particular
+$0\le\gamma_n\le\theta_n$, and $\gamma_n$ is nonincreasing by
+spectral calculus. All functions used below are bounded real
+$m$-classes, so permitted null-set repairs do not affect the
+pairings or actual positive-time read laws.
+
+Fix any positive lag $h$ and let $J_i=I_iI_{i+h}$.
+For $k>h$, reversing the first pair by self-adjointness gives
+
+$$
+ \operatorname{Cov}_*(J_0,J_k)=
+ \langle qP^h q-\mu_h,
+         P^{k-h}(qP^h q-\mu_h)\rangle_m,
+ \qquad
+ |\operatorname{Cov}_*(J_0,J_k)|\le\theta_{k-h}.
+ \tag{19.9}
+$$
+
+The centered factor has sup norm at most one since
+$0\le qP^h q\le1$. For $0<k<h$, all four read epochs are distinct
+and chronological conditioning gives instead
+
+$$
+ \mathbb E_*(J_0J_k)
+ =\langle qP^k q,P^{h-k}(qP^k q)\rangle_m.
+ \tag{19.10}
+$$
+
+This identity includes the interlacing $0,k,h,h+k$; treating these
+pairs as disjoint windows would not give it. Put
+$w_k=qP^k u$ and $v_k=qP^{h-k}q$. Expanding
+$qP^kq=cq+w_k$ inside (19.10) yields
+
+$$
+ \mathbb E_*(J_0J_k)
+ =c^4+c^2\gamma_{h-k}
+       +2c\langle v_k,P^k u\rangle_m
+       +\langle w_k,P^{h-k}w_k\rangle_m.
+ \tag{19.11}
+$$
+
+Since $u$ is centered, $v_k$ may be centered in its pairing with
+$P^k u$. Both centered sup norms are at most one, so (19.8)
+bounds the absolute value of that pairing by $\theta_k$.
+Contraction and $0\le q\le1$ also give
+
+$$
+ 0\le\langle w_k,P^{h-k}w_k\rangle_m
+ \le\|w_k\|_2^2\le\|P^k u\|_2^2
+ =\gamma_{2k}\le\theta_k.
+ \tag{19.12}
+$$
+
+Finally $\mu_h=c^2+\gamma_h$, $\mu_h+c^2\le2$, and
+$\gamma_h\le\gamma_k$ for $k<h$. Subtracting $\mu_h^2$ from
+(19.11), and bounding its four resulting terms, gives
+
+$$
+ |\operatorname{Cov}_*(J_0,J_k)|
+ \le\theta_{h-k}+5\theta_k\qquad(0<k<h).
+ \tag{19.13}
+$$
+
+The shared-read case $k=h$ uses $I_h^2=I_h$, not two independent
+read noises. For that case, and for any other exceptional lag,
+Cauchy–Schwarz and the Bernoulli variance bound give
+$|\operatorname{Cov}_*(J_0,J_k)|\le1/4$.
+
+For a chosen separation $v\ge1$, call a covariance index
+$1\le k<N$ exceptional when
+
+$$
+ k<v\quad\hbox{or}\quad |k-h|<v.
+ \tag{19.14}
+$$
+
+There are at most $(v-1)+(2v-1)=3v-2$ such indices, independently
+of $h$. For every other index, (19.9), (19.13) and monotonicity
+of $\theta_n$ bound the absolute covariance by $6\theta_v$.
+The usual covariance expansion for the stationary average of the
+$J_i$ therefore gives
+
+$$
+ \begin{aligned}
+ \operatorname{Var}_*\left(\frac1N\sum_{i=0}^{N-1}J_i\right)
+ &=\frac{N\operatorname{Var}_*(J_0)
+      +2\sum_{k=1}^{N-1}(N-k)\operatorname{Cov}_*(J_0,J_k)}{N^2}\\
+ &\le\frac1{4N}+\frac{3v-2}{2N}+6\theta_v
+ =\frac{6v-3}{4N}+6\theta_v.
+ \end{aligned}
+ \tag{19.15}
+$$
+
+The good-lag term uses
+$2N^{-2}\sum_{k=1}^{N-1}(N-k)\le1$; an empty good or exceptional
+set causes no difficulty. An average of Bernoulli variables is
+in $[0,1]$, so its variance is also at most $1/4$.
+For the marker average $z$ alone,
+$\operatorname{Cov}_*(I_0,I_k)=\gamma_k$. Its at most $v-1$
+short indices and remaining bound $\theta_v$ give the same
+conservative envelope. The lower certificate $D_v^-$ in (18.4)
+thus proves simultaneously, without a lag restriction,
+
+$$
+ \operatorname{Var}_*(z)\le\overline V_{N,v},\qquad
+ \operatorname{Var}_*(a_j)\le\overline V_{N,v}\quad(1\le j\le3).
+ \tag{19.16}
+$$
+
+The covariance identities and summation here are mature second-moment
+methods, used inside this source-specific acquisition proof. No
+positive spectral gap, geometric ergodicity or independent-window
+assumption was used. The separation parameter $v$ is an integer in
+the proof and numerical packet; it does not change any physical gap.
+For example, $v=\lfloor\sqrt N\rfloor$ makes the exact envelope in
+(19.15) tend to zero for each fixed source, uniformly over the pair
+lag. No source-uniform rate for $\theta_v$ follows.
+
+Chebyshev's inequality and a union bound over the four fields give
+$Q_*(\mathcal F_{N,r,t}^c)\le4\overline V_{N,v}/t^2$.
+On the full hidden-and-read record starting at the first read, the
+actual initial-law derivative relative to the invariant comparison
+is $g_{2d}(X_0)$. The future kernels, including fresh read noise,
+are identical. As in [R, (9.18)], the full-source defect gives
+$\|g_{2d}\|_2^2\le d_{1/(4d)}^{-1}\le(D_0^-)^{-1}$.
+Cauchy–Schwarz on this common path space consequently yields
+
+$$
+ Q_0(\mathcal F_{N,r,t}^c)
+ \le(D_0^-)^{-1/2}Q_*(\mathcal F_{N,r,t}^c)^{1/2}
+ \le\frac2t\sqrt{\frac{\overline V_{N,v}}{D_0^-}}.
+ \tag{19.17}
+$$
+
+This is the standard $L^2$ initial-law event transfer; see Daniel
+Paulin, *Concentration inequalities for Markov chains by Marton
+couplings and spectral methods*, arXiv:1212.2015v3, Proposition
+3.14, (3.25) [PS18]. Its hypotheses are a common time-homogeneous
+transition, invariant comparison and square-integrable initial
+Radon–Nikodym density. Here the displayed direct path-space proof
+also incorporates the same conditional read kernel. No burn-in or
+stationary preparation is substituted. Paulin's positive-gap
+variance bounds are not premises. Clipping (19.17) at one proves
+(19.2); (18.6) is precisely its squared sufficient condition.
+
+On $\mathcal F_{N,r,t}$, $c\in[c_-,c_+]$. If $Z>0$, (19.5)
+gives, for each of the three coordinates,
+
+$$
+ \left|\frac{a_j}{z}-m_{h_j-1}\right|
+ =\frac{|(a_j-cm_{h_j-1})-m_{h_j-1}(z-c)|}{z}
+ \le\frac{2t}{z}.
+ \tag{19.18}
+$$
+
+Both the ratio and the true probability are in $[0,1]$, justifying
+the cap at one in $e$. If $Z=0$, the declared error $e=1$ is valid
+and $L>0$ cannot pass. This proves (19.3) without any division by
+a rare $B^r$ frequency. In particular these ratios estimate original
+nonstationary coordinates; raw marker frequency $z$ estimates $c$.
+
+The deterministic part of Theorem 16.2 uses only the three
+coordinate error bounds and the enclosure of $c$. Equations
+(19.3), (18.7) supply exactly those hypotheses, with $e$ in place
+of $e_p$. Thus $\Delta_r\ge L>0$, and the already established
+expansion (16.7), with $0<a_r\le1/16$, gives the first conclusion
+of (19.4) at $\tau=8L$. Also
+$m_{2r+1}\le\widetilde m_{2r+1}+e\le c(1+4\epsilon^2)$,
+so the existing complete-kernel bound (15.4) gives the second.
+The exact square expansion and complete-future theorem are reused;
+the additional assertion is that (18.2) actually supplies their
+simultaneous finite inputs with the original-start error (19.17).
+$\square$
+
+[PS18]: https://arxiv.org/html/1212.2015v3
+
+## 20. Fair sparse refinement on one retained original record
+
+**Assumption 20.1 (a declared summable schedule).** Fix one original
+source, rational $0<\epsilon<1$ and $0<\alpha_*<1$, and retain
+the numerical services of Definition 18.2. Before inspecting labels,
+declare a countable schedule $(r_s,k_s)_{s\ge1}$ with every fixed
+$r\ge0$ occurring at arbitrarily large refinement levels $k_s$.
+For example, concatenate the blocks $r=0,\ldots,n$, with $k=n$,
+for $n=0,1,\ldots$. Declare rational $t_s>0$, $0<\beta_s<1$
+such that $\sum_s\beta_s\le\alpha_*$ and $t_s\to0$ along each
+fixed-$r$ subsequence. The choices $t_s=2^{-k_s-3}$ and
+$\beta_s=\alpha_*2^{-s}$ suffice.
+
+Choose $v_s,N_s$ and validated defects, without label feedback,
+so that (18.6) holds with allowance $\beta_s$ and
+$R_s=N_s+\lambda_{r_s}$ is nondecreasing. These choices may use
+the original numerical source/clock services. All stages use the
+initial $R_s$ labels of the same retained and extended trajectory
+from $e$. A later segment is never treated as a new $e$-start.
+New lags are counted by a paid scan of that retained prefix.
+
+**Theorem 20.2 (sourcewise finite stopping with strict fixed-lag
+slack).** The services in Assumption 20.1 permit all of its finite
+packet choices. On the event
+
+$$
+ \mathcal F_*:=\bigcap_{s\ge1}\mathcal F_{N_s,r_s,t_s},
+ \qquad Q_0(\mathcal F_*)\ge1-\alpha_*,
+ \tag{20.1}
+$$
+
+the first stage passing (18.7) is finite and both conclusions
+(19.4) hold at that stage. No source-uniform stopping index,
+physical time, resource rate or finite total bill is asserted
+off this event.
+
+*Proof.* First fix a validated $D_0^->0$ once. For a given stage
+let $\delta_s=\beta_s^2t_s^2D_0^-/4>0$. Since
+$d_{1/(vd)}\to1$ as $v\to\infty$, the numerical services permit
+finite selection of $v_s$ and a sufficiently refined $D_{v_s}^-$
+with
+
+$$
+ 6\frac{1-D_{v_s}^-}{D_{v_s}^-}<\delta_s/2.
+ \tag{20.2}
+$$
+
+A search over increasing integers and improving validated lower
+enclosures terminates by this strict inequality and convergence.
+For example one may also enforce $v_s\ge2^{k_s}$. At this fixed
+$v_s$, choose $N_s$ large enough that
+$(6v_s-3)/(4N_s)\le\delta_s/2$ and $R_s\ge R_{s-1}$.
+One may also enforce $N_s\ge2^{k_s}v_s$. These are finite integer
+inequalities. Then $\overline V_{N_s,v_s}\le\delta_s$, proving
+(18.6). The construction needs no rate for the convergence of the
+capacity defect. Refining its enclosures is essential: fixed
+coarse lower bounds need not permit (20.2).
+
+Theorem 19.1 and countable subadditivity give (20.1), despite the
+shared and nested data. On this event, for every fixed $r$ and its
+refining subsequence, once $t_s<c$,
+
+$$
+ z_s\ge c-t_s>0,\qquad
+ c_{-,s}\ge c-2t_s,\qquad
+ e_s\le\frac{2t_s}{c-t_s}\longrightarrow0.
+ \tag{20.3}
+$$
+
+By (15.4) choose a finite fixed $r$ with
+$\kappa=c(1+4\epsilon^2)-m_{2r+1}>0$. At this very same $r$,
+$\Delta_r>0$. Along its refining subsequence,
+
+$$
+ L_s\ge\Delta_r-4e_s,\qquad
+ \widetilde m_{2r+1,s}+e_s\le m_{2r+1}+2e_s.
+ \tag{20.4}
+$$
+
+Eventually $4e_s<\Delta_r$, $t_s<c/2$, and
+$2e_s+2t_s(1+4\epsilon^2)<\kappa$. These inequalities imply all
+of (18.7). Their stage index is finite in the declared schedule,
+and Theorem 19.1 applies there on $\mathcal F_*$. Merely letting
+$r$ increase is not the argument: $\Delta_r$ shrinks, while the
+proof refines at a fixed $r$ having both positive margins.
+$\square$
+
+**Proposition 20.3 (selection, conditioning and the retained past).**
+The first successful stage in Theorem 20.2 is a stopping rule for
+the successively available original label prefixes and declared
+numerical packets. The probability of issuing a false certificate
+at any stage is at most $\alpha_*$. For any fixed $r$, conditional
+on the actual acquired record beginning with $B^r$, that probability
+is at most $\min\{1,4^r\alpha_*\}$. The result certifies the
+specified mathematical conditional law $R_B^r$ on its complete
+renumbered future, and does not force that conditioning event.
+It makes no comparison including the retained original past beyond
+the distinctions of Proposition 16.3.
+
+*Proof.* Every guard is a finite rational function or comparison of
+an available prefix and its declared packet; the event of first
+success by stage $s$ is measurable from that prefix. A false
+certificate belongs to $\mathcal F_*^c$, proving the unconditional
+claim. The original probability of the fixed event $H_r$ is
+$4^{-r}$ by (15.2), so division gives the conditional bound.
+This does not give the same bound for a random selected $r$
+conditioned on its own selected event. Proposition 16.3 continues
+to give the full-past obstruction, in particular
+$\operatorname{TV}(Q_0,(J_r)_*Q_*)\ge1-4^{-r}$.
+$\square$
+
+## 21. Paid representation, chronological work and the scope of reuse
+
+**Definition 21.1 (a finite bit and arithmetic model).** Encode each
+original label by two bits. A marker bit is obtained by comparing
+that label with $3$. For one packet write
+
+$$
+ R=N+\lambda_r,\qquad b_N=\lceil\log_2(N+1)\rceil,
+ \qquad w=\lceil\log_2(R+2)\rceil.
+ \tag{21.1}
+$$
+
+Use unsigned bounded integers, explicit bit arrays and exact rational
+arithmetic. A word operation acts on at most $w$ bits and may read
+or write a bit, compare, add, subtract, or take an integer remainder.
+A word operation is not a constant-cost real operation: the
+schoolbook bit cost is at most $O(w^2)$, including remainder.
+Numerical-service bit work and its own peak space are separate
+charges $C_{\rm cap}$ and $M_{\rm cap}$. Names have the total
+query-function meaning of [R, Definition 11.1]; a finite packet
+uses only finitely many precision queries. Their answer costs,
+as well as construction and validation, belong to $C_{\rm cap}$.
+Let $B_{\rm cap}$ count the finite retained name representations,
+query replies, validated capacity certificates and rational packet.
+An infinite name is not treated as a finite string; oracle access
+and its costs remain the stated conditional service. No bound for
+these three quantities is implicit in a count of labels.
+
+**Proposition 21.2 (an explicit realization and its bill).** The
+statistic (18.2) has a chronological realization with exactly four
+count fields of $b_N$ bits, a circular array of $\lambda_r$ marker
+bits, a two-bit current label, one current marker bit, and sixteen
+$w$-bit control registers. Hence this allocated counting workspace
+has exactly
+
+$$
+ 4b_N+\lambda_r+3+16w
+ \tag{21.2}
+$$
+
+bits, apart from the separately encoded numerical packet. A
+shared field can reduce it when $r=0$; no minimality is asserted.
+The exact observation bill is $R$ labels, with final original read
+at $(R+1)d$ from the $e$-start. The count fields each lie in
+$\{0,\ldots,N\}$. At most $4N$ count increments and
+$64(R+\lambda_r+1)$ word operations suffice, including initial
+array writes, index work and marker extraction. Thus schoolbook
+bit work is $O((R+\lambda_r+1)w^2+Nb_N)$ in addition to the
+numerical-service and rational-guard work.
+
+If $U$ is the total bit length of the rational inputs and the
+integers appearing in (18.1)–(18.7), straight-line evaluation of
+those displayed rational expressions and cross-multiplied guards
+has $O(U^2)$ schoolbook bit cost, denoted $C_{\rm rat}$, and
+$O(U)$ additional working bits. This charge includes producing
+$\tau=8L$ and checking (18.6); square roots need not be computed.
+Without retaining the full label prefix, the four counts, their
+integer parameters and numerical packet suffice for these guards.
+If the original label segment is retained as well, its additional
+payload is exactly $2R$ bits, with its index and length already
+covered by the stated control registers.
+
+For the nested-record route through a finite successful stage $S$,
+retaining all original labels pays exactly $2R_S$ payload bits and
+$R_S$ physical reads in total. Recounting all prefixes pays
+
+$$
+ \begin{gathered}
+ \sum_{s=1}^S64(R_s+\lambda_{r_s}+1)
+       \quad\hbox{word operations at their respective widths }w_s,\\
+ \sum_{s=1}^S4N_s\quad\hbox{as an upper bound on count increments},
+ \qquad
+ \sum_{s=1}^S(C_{{\rm cap},s}+C_{{\rm rat},s})
+       \quad\hbox{additional bit work}.
+ \end{gathered}
+ \tag{21.3}
+$$
+
+The last required indexed read is at $(R_S+1)d$, not a sum of
+restarted clocks. With service scratch released between stages,
+peak space for these prefixes is bounded by $2R_S$ plus the
+maximum, over $s\le S$, of (21.2), $B_{{\rm cap},s}$, the guard
+working space and $M_{{\rm cap},s}$ added together. Source names
+retained for reuse are included in $B_{{\rm cap},s}$. Every term
+is finite on the stopping event; no expectation or source-uniform
+bound for their sum is inferred.
+
+Indexed read horizons are not wall-clock decision deadlines. This
+bit model assumes no operation rate relative to $d$. If continuing
+passive capture retains $J\ge0$ additional labels while numerical
+work or guard evaluation finishes, the total bill adds $J$ reads,
+$2J$ payload bits, an overrun index of
+$w_J=\lceil\log_2(R_S+J+2)\rceil$ bits, and at most
+$64(J+1)$ capture/index word operations of width $w_J$. The last
+retained read is then at $(R_S+J+1)d$; peak payload is
+$2(R_S+J)$ bits. The guards still use only their declared prefixes.
+No source pause, delayed read gap or free overrun retention is
+implicit, and no wall-clock latency bound is claimed.
+
+*Proof.* Initialize the circular array and count fields to zero.
+At label index $k=0,\ldots,R-1$, extract $I_k$. If $k<N$, add it
+to $Z$. For each of the three ordered lags $h_j$, if $k\ge h_j$
+and $i_j=k-h_j<N$, retrieve $I_{i_j}$ from its circular position
+and add $I_{i_j}I_k$ to $A_j$. Perform these reads before writing
+$I_k$ in position $k\bmod\lambda_r$. A required old bit is still
+in the array since $1\le h_j\le\lambda_r$; the equality case is
+why the write comes last. Only initialized past positions are
+read. Each pair origin $i=0,\ldots,N-1$ is counted exactly once,
+at index $i+h_j\le R-1$. This proves (18.2) as an actual consumer
+of the chronological original segment, including its endpoint.
+
+One allocation of the control registers is
+$N,r,\lambda_r,h_1,h_2,h_3,R,k,p,p_1,p_2,p_3,i_1,i_2,i_3$
+and one temporary register, where $p=k\bmod\lambda_r$ and
+$p_j=i_j\bmod\lambda_r$ are used only when their origins are
+eligible. All register values fit in $w$ bits; negative origins
+are avoided by the first test. Range tests, subtractions,
+remainders, bit accesses, products of two bits and increments
+require fewer than sixty-four of the declared word operations
+per label. Initialization and final extraction fit the remaining
+$64(\lambda_r+1)$ allowance. Each count has $N$ possible unit
+increments, proving the separate $4N$ bound. The loop index and
+ring positions are included in (21.2), rather than hidden in a
+unit-memory convention.
+
+The rational formulas have a fixed finite number of operations
+and bounded algebraic degree in their encoded inputs. They may
+be evaluated with unreduced fractions and positive denominators,
+using cross products for comparisons. Their intermediate bit
+lengths are $O(U)$; schoolbook multiplication gives $O(U^2)$ bit
+work and $O(U)$ space. The $Z=0$ branch is tested before division.
+This accounts for deterministic arithmetic without assuming
+constant-cost access to exact real source parameters.
+
+For the nested route, store the two-bit labels once as the source
+continues. At each stage scan its complete retained prefix using
+the same counter construction, then release its counting scratch
+after deciding the guards. Original physical reads are not repeated;
+record accesses and computations are repeated and charged in
+(21.3). Numerical packets are constructed or validated at their
+stated costs. Summing the finite scans and taking the maximum of
+simultaneously held workspaces gives the asserted bill. $\square$
+
+**Definition 21.3 (source correspondence and mathematical scope).**
+The additional result of Theorem 19.1 is the following
+`repo-derived` acquisition/interface deduction: the original marker
+and three homogeneous lag pairs (18.2) produce the same square and
+specified complete conditional-future certificates as §16, with
+the new original-start event (19.2), capacity confidence independent
+of the pair lag, and the actual representation and costs (21.2)–(21.3).
+The exact marked-source relation is (19.5), not an identification
+based solely on a shared model-family name. The original full-source
+suppliers are [R, §8] for the marked identity, [R, §9] for the
+capacity resolvent, bounded centered covariance and initial-density
+estimate, and [R, §11] for the numerical defects. Equations
+(15.4), (16.7) and the deterministic part of Theorem 16.2 supply
+the two consumers. Theorem 20.2 adds only sourcewise stopping under
+its explicitly stated fair refinement and numerical services.
+
+The standard covariance expansion, positive-form Cauchy–Schwarz,
+Chebyshev and union bounds, initial-law transfer [PS18, Proposition
+3.14, (3.25)] and rational interval propagation are
+`literature-attested` intermediates inside this deduction. They
+are not new general concentration or spectral theorems. Paulin's
+spectral-gap bounds require an additional positive-gap hypothesis;
+none is supplied or inferred here. The comparison is conditional
+ordinary mathematics under the analytic suppliers of Assumption
+1.1, without a claim of formal verification or worldwide priority.
+
+At matched $r,N$, the four bounded count values replace the
+$4^{2r+4}$ fields of the full length-$2r+4$ word table in Definition
+9.1; the sparse final lag is $2r+2$, so its endpoint uses
+$N+2r+2$ labels. Its confidence is derived directly, rather than
+by summing the old word errors. The old full table has additional
+consumers that these four counts do not serve. Defect refinement,
+record retention, arithmetic, final time and all numerical services
+remain on the bill. There is no claim of optimal counters,
+source-uniform convergence, or dominance of every total-resource
+coordinate. Exact laws, finite-confidence certificates, actual
+reachability, full-past prediction and uniform rates are distinct:
+the B-conditioned suffix theorem does not prepare stationarity,
+force $B^r$, discard its paid past for free, or compare the retained
+full record with a stationary one. The negative square remains
+failure of the specified algebraic positive-state binding, not a
+negative physical probability.
+
+## 追加锚（本行以下为增补区）
+
+## 22. Compact source transport with the entire original endpoint
+
+**Definition 22.1 (scalar localization data).** Retain Assumptions
+1.1–1.3, the entire complex domain (1.3), the full form (1.4), and
+the source dictionary (12.1)–(12.3). Write $L_d=dK$ on the full
+$\mathcal H=L^2(m)$, and let $Q$ project onto $\mathcal O$.
+The marked tuple and Theorems 4.1 and 12.2 supply
+
+$$
+\mathsf B=N_3/c,\qquad U\mathsf R U^{-1}=M_r|_{\mathcal O},\qquad
+s=\|\widehat P^{-1/2}b_o\|^2=s_d=\operatorname{tr}b>0.
+\tag{22.1}
+$$
+
+The inverse in (22.1) is only on its proved entrance-vector
+domain: it corresponds to $g_{d/2}$. The trace identity is
+[SRO, (SRO.3)], since $\|hg_{d/2}\|_{L^2(\mu)}^2
+=\|g_{d/2}\|_{L^2(m)}^2$. The notation $s$ denotes the source
+trace; the global calibration is $N_d=\|g_d\|_\infty$.
+No equality between them is assumed.
+
+A scalar packet consists of bounded open intervals
+$I_0\Subset I_1\Subset I_2$ with
+$\overline I_2\cap\{0,s\}=\varnothing$, real
+$\phi\in C_c^\infty(I_2)$ equal to one near $\overline I_1$,
+and $\sigma\in C_c^\infty(I_1)$ with $0\le\sigma\le1$ and
+$\sigma=1$ on $I_0$. Define source functions and intrinsic operators
+
+$$
+\begin{gathered}
+f_1=\phi(b)b,\qquad f_2=\phi(b)r,\qquad
+\mathsf F_1=\phi(\mathsf B)\mathsf B,\qquad
+\mathsf F_2=\phi(\mathsf B)\mathsf R,\\
+\Gamma_d(f,g)=d\,\mathfrak a(f,g)
+             =d\,\nabla f^{\mathsf T}\mathsf A\nabla g.
+\end{gathered}
+\tag{22.2}
+$$
+
+These are choices in recovered scalar functional calculus.
+Coordinates, $h$, derivatives and source flows used below are
+proof representations, not additional observation inputs.
+In addition to Assumption 1.1 use the same-source all-angle limit
+[SRO, Theorem 4.1, (SRO.39)], exterior decay [R, Theorem 14.3,
+(14.12)], and, only for nonidentity, [EF, Theorem 3.1].
+
+**Lemma 22.2 (actual compact localization and multiplier domains).**
+For every compact scalar set $C\subset\mathbb R\setminus\{0,s\}$,
+$b^{-1}(C)$ is compact in $M=G\setminus\{e\}$. In particular
+$f_1,f_2,\sigma(b)\in C_c^\infty(M)$.
+For every $c_0\in C_c^\infty(M)$, multiplication preserves the
+entire complex $D(K)$, and more precisely
+
+$$
+\begin{gathered}
+hc_0u\in D(\overline S_{a,\eta}),\qquad
+ A(hc_0u)=C(hc_0u)=0\quad(u\in D(K)),\\
+[L_d,M_{c_0}]:D(K)\longrightarrow\mathcal H
+\quad\text{is bounded for the graph norm of }K.
+\end{gathered}
+\tag{22.3}
+$$
+
+Every compactly supported $H^1$ function on $M$ belongs to
+$\mathscr V_0$. These claims do not identify punctured tests with
+a core for the full $K$ or its full form domain.
+
+*Proof.* The source chart in (SRO.39) exhausts a neighborhood of
+$e$ and gives $b\to s$ uniformly in angle. The proper exterior
+gauge in [R, (14.12)] gives $b\to0$ uniformly at infinity.
+A compact $C$ avoiding both limits therefore excludes an entire
+source neighborhood and the exterior of a sufficiently large
+original coordinate box. Continuity of the smooth $b$ makes its
+inverse image closed in the remaining punctured compact set.
+This proves compactness and the assertions about (22.2).
+
+For $u\in D(K)\subset\mathscr V$, [S, (115.14)–(115.15)] gives
+$u\in H^1_{\rm loc}(M)$, and the actual weak equation is
+
+$$
+-\operatorname{div}(h^2\mathsf A\nabla u)=h^2Ku
+\quad\text{on }M.
+\tag{22.4}
+$$
+
+This is [S, (120.6)] for $D(K)$, not a weak equation asserted for
+all $\mathscr V$. On nested relatively compact punctured
+neighborhoods, $h^2\mathsf A$ is smooth and uniformly elliptic,
+$h,h^{-1}$ are bounded, and $h^2Ku$ is locally $L^2$.
+Hunter's interior theorem [HUN, Theorem 4.27] applies separately
+to the real and imaginary parts. Thus for each such compact
+$C_0$ there is a finite constant with
+
+$$
+\|u\|_{H^2(C_0)}
+ \le C_{C_0}(\|Ku\|_{L^2(m)}+\|u\|_{L^2(m)}).
+\tag{22.5}
+$$
+
+Here restriction is taken from a slightly larger punctured
+neighborhood. The principal matrix is exactly (12.1); its
+determinant is $a^3\eta>0$, so no horizontal or central term
+has been deleted.
+
+Consequently $hc_0u$ is compactly supported $H^2$ away from $e$.
+Mollify within a fixed punctured neighborhood of its support.
+The raw expression $aL-\eta\partial_w^2-16\sqrt{a\eta}\Gamma$
+is continuous from $H^2$ to $L^2(\mu)$ there, since its
+coefficients and potential are smooth and bounded there.
+The mollifications converge in its graph norm and belong to
+$\mathcal D_0$. Hence $hc_0u\in D(\overline S_{a,\eta})$.
+The actual endpoint theorem [E, Theorem 112.2, (112.5)] says
+that both coefficients of this minimal-domain vector vanish.
+It also places that vector inside the original $D(H)$, proving
+(22.3). The product rule and (22.5) give the graph bound for the
+commutator. For compact $H^1$ functions the analogous
+mollification uses local equivalence of the weighted form norm
+and the ordinary $H^1$ norm; its limit lies in $\mathscr V_0$.
+Neither argument approximates the source summand by punctured
+vectors in the full diffusion graph or form norm. $\square$
+
+**Theorem 22.3 (intrinsically determined compact transport on the
+actual source).** For every scalar packet define bounded extensions
+from the dense domain $D(\Lambda)$ by
+
+$$
+\mathsf E_{ij}
+ =\overline{-\tfrac12[[\Lambda,\mathsf F_i],\mathsf F_j]},
+\qquad i,j\in\{1,2\}.
+\tag{22.6}
+$$
+
+They exist, commute with one another and with $\mathsf B,\mathsf R$,
+and correspond under $U$ to the actual multipliers by
+$e_{ij}=\Gamma_d(f_i,f_j)$. Put
+
+$$
+\begin{gathered}
+\Delta=e_{11}e_{22}-e_{12}^2\ge0,\qquad
+(\alpha_{\ell j})_{\ell,j=1}^2
+ =\sigma(b)\begin{pmatrix}e_{22}&-e_{12}\\-e_{12}&e_{11}\end{pmatrix},\\
+\mathsf A_{\ell j}
+ =\sigma(\mathsf B)(\operatorname{adj}\mathsf E)_{\ell j},\qquad
+v_j=d\mathsf A\nabla f_j,\qquad
+Y_\ell=\sum_{j=1}^2\alpha_{\ell j}v_j,\qquad
+\chi=\sigma(b)\Delta.
+\end{gathered}
+\tag{22.7}
+$$
+
+The adjugate means the displayed polynomial matrix; there is no
+determinant inverse. Every $e_{ij},\alpha_{\ell j}$ and $Y_\ell$
+is smooth and compactly supported in $M$. On all of $M$,
+
+$$
+Y_1b=\chi,\qquad Y_1r=0,\qquad
+Y_2b=0,\qquad Y_2r=\chi.
+\tag{22.8}
+$$
+
+On exactly $D(\Lambda)$ define
+
+$$
+\mathsf S_{\ell,0}
+ =-\frac i4\sum_{j=1}^2
+ \left(\mathsf A_{\ell j}[\Lambda,\mathsf F_j]
+       +[\Lambda,\mathsf F_j]\mathsf A_{\ell j}\right).
+\tag{22.9}
+$$
+
+All products have this full domain. This symmetric operator has
+a self-adjoint graph closure $\mathsf S_\ell$. Its source realization
+is the actual restriction of the following maximal operator:
+
+$$
+\begin{gathered}
+D_Yu=Y\cdot\nabla u+\tfrac12(\operatorname{div}_mY)u,
+\qquad \operatorname{div}_mY=h^{-2}\operatorname{div}(h^2Y),\\
+D(S_\ell)=\{u\in L^2(m):D_{Y_\ell}u\in L^2(m)
+                         \text{ distributionally on }M\},
+\qquad S_\ell u=iD_{Y_\ell}u,\\
+UD(\mathsf S_\ell)=D(S_\ell)\cap\mathcal O,\qquad
+U\mathsf S_\ell U^{-1}=S_\ell|_{\mathcal O}.
+\end{gathered}
+\tag{22.10}
+$$
+
+Let $\Phi_{\ell,t}$ be the complete source flow of $Y_\ell$.
+The intrinsic group $\mathsf W_\ell(t)=e^{-it\mathsf S_\ell}$
+corresponds to the restriction of
+
+$$
+\begin{gathered}
+j_{\ell,t}(x)
+ =\frac{h(\Phi_{\ell,t}(x))^2}{h(x)^2}
+                   |\det D\Phi_{\ell,t}(x)|,\\
+W_\ell(t)u=\sqrt{j_{\ell,t}}\,u\circ\Phi_{\ell,t},
+\qquad W_\ell(t)=e^{-itS_\ell}
+\quad\text{on the full }\mathcal H.
+\end{gathered}
+\tag{22.11}
+$$
+
+The full group reduces $\mathcal O$ before restriction and satisfies
+
+$$
+\begin{gathered}
+W_\ell(t)D(K)=D(K),\qquad W_\ell(t)\mathscr V=\mathscr V,\\
+A(hW_\ell(t)u)=A(hu),\quad C(hW_\ell(t)u)=C(hu)
+                                      \quad(u\in D(K)),\\
+\operatorname{tr}(W_\ell(t)u)=\operatorname{tr}u
+                                      \quad(u\in\mathscr V).
+\end{gathered}
+\tag{22.12}
+$$
+
+These are preservation of domains and source data, with no claim
+of equality of diffusion energy values. All transport parameters
+$t\in\mathbb R$ are mathematical parameters distinct from the
+original physical clock and read gaps.
+
+*Proof.* First work on the full source. Lemma 22.2 makes
+$[L_d,M_{f_i}]M_{f_j}$ and its reversed product legitimate on
+$D(L_d)=D(K)$. The local product rule, already used in Theorem
+12.2 and [S, §129.D], gives on precisely that domain
+
+$$
+\begin{gathered}
+[L_d,M_f]=-2D_{v_f},\qquad v_f=d\mathsf A\nabla f,\\
+[[L_d,M_{f_i}],M_{f_j}]=-2M_{e_{ij}}.
+\end{gathered}
+\tag{22.13}
+$$
+
+Local $H^2$ regularity justifies the weak derivatives in these
+identities. Their rightmost multipliers are bounded, smooth and
+compactly supported. Since $Q$ reduces $L_d$ and the $M_{f_i}$,
+it commutes on $D(L_d)$ with the double commutators, and hence
+with their bounded extensions. Restriction and transport by $U$
+prove (22.6). This is the compact-domain form of the existing
+energy-recovery mechanism in Theorem 12.2, retaining the sign of
+$e_{12}$; it requires no new global energy-domain premise for $r$
+or $\gamma$ and no repetition of a phase-limit theorem.
+
+The real Gram matrix is positive semidefinite pointwise.
+Polynomial multiplier calculus proves (22.7), including reduction
+by $Q$ and compact smoothness of all coefficients. Wherever
+$\sigma(b)$ is supported, $\phi(b)=1$ on a neighborhood, so
+$f_1=b$, $f_2=r$ there. Multiplying the Gram matrix by its
+adjugate gives (22.8). Elsewhere the coefficients and $\chi$
+vanish. Lemma 22.2 applies to all these coefficient multipliers.
+Thus the full-source version $S_{\ell,0}$ of (22.9) is defined
+on all $D(L_d)$, not just on compact tests.
+
+For a real compact coefficient $\alpha$,
+$M_\alpha D_v+D_vM_\alpha=2D_{\alpha v}$.
+Together with (22.13), this fixes both the sign and factor in
+(22.9): $S_{\ell,0}=iD_{Y_\ell}$. Integration by parts on a
+fixed punctured compact neighborhood proves symmetry for all
+its domain vectors, which are locally $H^2$. There is no source
+boundary term.
+
+Extend $Y_\ell$ by zero through $e$ in the original underlying
+$\mathbb R^4$. It is a globally smooth compact vector field with
+bounded derivative. Its ODE has a unique complete smooth flow
+for both signs of time. Every flow map is the identity near $e$
+and off one fixed compact subset of $M$. Uniqueness also makes
+that compact set invariant: a point outside is fixed and cannot
+be reached from a different point by a diffeomorphism.
+The density in (22.11) is smooth and positive on $M$ and equals
+one in these identity regions. Change of variables in the fixed
+measure $m$ proves unitarity; the Jacobian cocycle proves the
+group law. Continuity on $C_c^\infty(M)$ followed by density and
+unitarity proves strong continuity on $\mathcal H$.
+Differentiation at zero on these tests gives $D_{Y_\ell}$.
+
+By Stone's theorem [T, Theorem 5.2] this group has a self-adjoint
+generator agreeing with $iD_{Y_\ell}$ on the tests. They are
+dense, contained in its domain and invariant under every group
+member. The invariant-domain criterion [T, Corollary 5.3] makes
+them a core for this first-order generator. Testing the adjoint
+against these same compact functions identifies its domain with
+the distributional maximal domain in (22.10): the weighted formal
+adjoint of $D_Y$ is $-D_Y$. All distributions are tested on $M$,
+where the density is smooth and positive, and $Y$ vanishes near
+both ends. Thus the compact-test operator is essentially
+self-adjoint with exactly that maximal domain. The symmetric
+$S_{\ell,0}$ contains this core and lies in its maximal adjoint,
+so its graph closure is the same $S_\ell$. The core is a
+transport core; no core for the non-Friedrichs diffusion is
+being asserted.
+
+Reduction is established on the full source: $Q$ preserves
+$D(L_d)$ and commutes there with $L_d$ and every coefficient
+in (22.9), so $QS_{\ell,0}=S_{\ell,0}Q$. Passing to graph
+limits shows $Q D(S_\ell)\subset D(S_\ell)$ and
+$QS_\ell=S_\ell Q$. The complementary projection has the same
+property; hence $Q$ reduces $S_\ell$ and its unitary group.
+Since $D(L_d)$ contains the transport core, it is also a core
+for $S_\ell$. For a vector in $D(S_\ell)\cap\mathcal O$, project
+such a graph-approximating sequence by $Q$. The new sequence lies
+in $D(L_d)\cap\mathcal O$ and has the same graph limit. This
+proves precisely the intrinsic closure and domain in (22.10).
+It does not assume that punctured compact vectors inside
+$\mathcal O$ are dense, nor that $Q$ is a Markov projection.
+
+For $u\in D(K)$, (22.5) and smoothness of the flow and weight
+make $W_\ell(t)u-u$ compactly supported $H^2$ away from $e$.
+The graph-mollification argument of Lemma 22.2 puts its $h$-multiple
+in $D(\overline S_{a,\eta})$. Both raw coefficients of that
+difference vanish by [E, (112.5)]. Thus $W_\ell(t)u$ belongs to
+the same entire complex $D(K)$ with both coefficients unchanged.
+The inverse group gives equality of domains. Equivalently the
+raw action is the half-density pullback
+
+$$
+J_hW_\ell(t)J_h^{-1}v
+ =|\det D\Phi_{\ell,t}|^{1/2}\,v\circ\Phi_{\ell,t},
+\tag{22.14}
+$$
+
+which is the identity in a whole neighborhood of the singular
+source. For $u\in\mathscr V$, the difference is instead compact
+$H^1$ on $M$, hence belongs to $\mathscr V_0$ by Lemma 22.2.
+Its trace is zero. Applying the inverse again proves the full
+form-domain and trace assertions. In particular the nonpolar
+source summand has been retained. $\square$
+
+## 23. Ordered multiplication and original-word continuation
+
+**Theorem 23.1 (actual pullback multiplication and compact next
+actions).** Let $M_k$ be any bounded actual source multiplier
+reducing $\mathcal O$, whose restriction $\mathsf C_k$ is already
+determined in the recovered space. For any finite ordered list
+$\beta=((\ell_1,t_1),\ldots,(\ell_n,t_n))$ of transports from
+Theorem 22.3, allowing different scalar packets, put
+
+$$
+\begin{gathered}
+\mathsf W_\beta=\mathsf W_{\ell_1}(t_1)\cdots
+                       \mathsf W_{\ell_n}(t_n),\qquad
+\Theta_\beta=\Phi_{\ell_n,t_n}\circ\cdots\circ\Phi_{\ell_1,t_1},\\
+\mathsf C_{k,\beta}
+  =\mathsf W_\beta\mathsf C_k\mathsf W_\beta^*,\qquad
+U\mathsf C_{k,\beta}U^{-1}=M_{k\circ\Theta_\beta}|_{\mathcal O}.
+\end{gathered}
+\tag{23.1}
+$$
+
+The last operator is actual bounded multiplication on all
+$\mathcal O$. Every finite group product preserves $D(K)$,
+$\mathscr V$, both raw endpoint coefficients and trace in the
+sense of (22.12). For $k=r$ write $q_\beta=r\circ\Theta_\beta$
+and $\mathsf Q_\beta=\mathsf C_{r,\beta}$. Then
+
+$$
+\begin{gathered}
+q_\beta-r\in C_c^\infty(M),\qquad
+v_\beta=(\mathsf Q_\beta-\mathsf R)\Omega\in D(\Lambda),\\
+Uv_\beta=q_\beta-r,\qquad
+U\Lambda v_\beta=dK(q_\beta-r),\qquad \tau(v_\beta)=0,\\
+U\widehat P^zv_\beta=T_{zd}(q_\beta-r)\quad(z\ge0),\qquad
+\lim_{z\downarrow0}\frac{\widehat P^zv_\beta-v_\beta}{z}
+                       =-\Lambda v_\beta.
+\end{gathered}
+\tag{23.2}
+$$
+
+*Proof.* Direct cancellation of the two density weights gives
+$W_\ell(t)M_kW_\ell(t)^*=M_{k\circ\Phi_{\ell,t}}$ on the full
+source. These diffeomorphisms are nonsingular for $m$: on $M$
+its density is strictly positive and smooth, while $e$ is a
+fixed null point. Pullback therefore respects completed measurable
+classes and permitted null repairs. Reduction of both factors
+proves reduction of the conjugate before restriction. For two
+factors the symbol is $k\circ\Phi_{\ell_2,t_2}\circ
+\Phi_{\ell_1,t_1}$; induction gives exactly (23.1), without any
+commutation of fields. Domain and source-data preservation compose
+in the written operator order.
+
+The finite source composite is smooth and the identity near $e$
+and off a punctured compact set. Since $r$ is smooth on $M$,
+$q_\beta-r$ is compact smooth there. It belongs to $D(K)$ by
+(22.3), or directly because its $h$-multiple is in $\mathcal D_0$.
+Both multipliers reduce $\mathcal O$, so their difference applied
+to $1$ lies in $\mathcal O$. Theorem 3.2 now proves every domain
+and action in (23.2); the last limit is the generator derivative
+on this vector. These are genuine next heat actions on a compact
+difference, with no global $r\in D(K)$ premise. All constructions
+in (22.6), (22.9) and (23.1) commute with marked-tuple unitary
+intertwiners: bounded functional calculus, graph closure and the
+self-adjoint group calculus are intrinsic. $\square$
+
+**Theorem 23.2 (a nonidentity witness for every positive triple).**
+For each original finite $a,\eta,d>0$ there is a scalar packet
+for which the second flow has, for all $t\ge0$,
+
+$$
+\begin{gathered}
+b\circ\Phi_{2,t}=b,\qquad
+q_t=r\circ\Phi_{2,t},\qquad
+q_t-r=\int_0^t\chi(\Phi_{2,v}(\,\cdot\,))\,dv,\\
+0<r\le q_t\le1.
+\end{gathered}
+\tag{23.3}
+$$
+
+There is a nonempty open source set on which $q_t>r$ for every
+$t>0$. Thus $\mathsf Q_t\ne\mathsf R$, with the difference
+detected on $\Omega$. Such a packet can be selected from the exact
+tuple without adding source coordinates as input.
+
+*Proof.* [EF, Theorem 3.1] supplies an actual open rank-two region
+for $(b,\gamma)$ for each positive triple. Since
+$dr=-r^2d\gamma$, the pair $(b,r)$ has rank two there as well.
+In that region $db\ne0$, so there is a point with
+$b\notin\{0,s\}$. Choose the scalar intervals around its $b$-value.
+On the plateau the Gram matrix in (22.7) is the Gram of $db,dr$
+for the positive definite $d\mathsf A$. Its determinant is
+positive at that point and on a smaller open neighborhood.
+There $\sigma(b)=1$ and $\chi>0$. This proves existence using
+only the actual source rank supplier, not a dimension count or a
+hypothesis that two gradients span the full tangent space.
+
+For an intrinsic selection, fix a countable enumeration of rational
+nested interval packets and fixed smooth cutoff recipes for their
+endpoints, retaining those with $s\notin\overline I_2$ and
+$0\notin\overline I_2$. Their recovered determinants are
+$\mathsf\Delta=\mathsf E_{11}\mathsf E_{22}-\mathsf E_{12}^2$.
+The preceding open neighborhood guarantees a packet with
+
+$$
+\left\|\mathbf1_{I_0}(\mathsf B)
+           \mathbf1_{(0,\infty)}(\mathsf\Delta)\Omega\right\|^2>0.
+\tag{23.4}
+$$
+
+Select the first such packet. This is an exact set-theoretic test
+of spectral mass, with no finite comparison algorithm or passive
+stopping rule asserted. Smoothness also makes its set
+$\{b\in I_0,\Delta>0\}$ open and nonempty. Equations (22.8) and
+the ODE give (23.3). The integrand is nonnegative everywhere and
+strictly positive initially on that set. Continuity gives a
+positive initial integral, and nonnegativity keeps it positive
+for every later $t>0$. Every nonempty open subset of $M$ has
+positive original $m$-measure, so $(\mathsf Q_t-\mathsf R)\Omega
+\ne0$.
+
+This witness also separates domain preservation from diffusion
+symmetry. For $t>0$, $\int q_t\,dm>\int r\,dm$. If $W_2(t)1=1$,
+then (22.11) forces $j_{2,t}=1$, and change of variables would
+force equality of these integrals. Hence $W_2(t)1\ne1$.
+It has norm one and trace one, so it cannot be another constant.
+By $\ker K=\mathbb C1$ its full diffusion energy is strictly
+positive, whereas $\mathscr E[1]=0$. Thus this transport does
+not preserve the diffusion form values or commute with the heat
+operator. These assertions concern this mathematical transport,
+not an applied change to the source process. $\square$
+
+**Theorem 23.3 (the unchanged original word and B3 consumers).**
+For any $\beta$ in Theorem 23.1 and every original word $u$,
+
+$$
+\mathbb E_e\!\left[q_\beta(Z_{2d})
+      \mathbf1_{\{Y_0\cdots Y_{|u|-1}=u\}}\right]
+ =\langle\widehat P b_o,\mathsf Q_\beta F_u^o\rangle.
+\tag{23.5}
+$$
+
+For the original word $B3$, this is the concrete multiplication
+action and moment
+
+$$
+\begin{gathered}
+F_{B3}^o=\frac c4\widehat P b_o,\qquad
+U\mathsf Q_\beta\widehat P b_o=q_\beta g_{2d},\\
+\mathbb E_e[q_\beta(Z_{2d})\mathbf1_{\{Y_0=B,Y_1=3\}}]
+ =\frac c4\langle\widehat P b_o,
+                         \mathsf Q_\beta\widehat P b_o\rangle.
+\end{gathered}
+\tag{23.6}
+$$
+
+For a nonidentity packet of Theorem 23.2 and every $t>0$, (23.6)
+strictly exceeds the same expression with $\mathsf R$ in place
+of $\mathsf Q_t$. More generally let $\mathsf C_j$ be finitely
+many bounded recovered pullback multipliers from (23.1), with
+source symbols $k_j$, and let $y_0,\ldots,y_\ell\in\mathcal L$.
+With $D_j=\mathsf C_jN_{y_j}$ one has
+
+$$
+\mathbb E_e\!\left[\prod_{j=0}^{\ell}
+       k_j(Z_{(j+2)d})\mathbf1_{\{Y_j=y_j\}}\right]
+ =\langle\widehat P b_o,
+             D_0\widehat P D_1\cdots\widehat P D_\ell\Omega\rangle.
+\tag{23.7}
+$$
+
+*Proof.* The first read has exactly the original density
+$g_{2d}=Pb$, represented by $\widehat P b_o$. Conditional on the
+one undisturbed path, the original fresh label noise gives the
+product of the original $f_{y_j}$, with no additional emission.
+Backward Markov conditioning at the original gaps $d$ gives
+(23.5) and (23.7), as in Theorem 14.1. Every displayed multiplier
+acts on all $\mathcal O$ by (23.1), so all intermediate vectors
+remain in that actual sector. No compression to
+$\mathcal H_{\rm rel}$ is used. The recursion (3.3),
+$N_B=I/4$, and $N_3\Omega=cb_o$ give (23.6).
+Its difference from the $r$ expression is
+$(c/4)\int g_{2d}^2(q_t-r)\,dm>0$, since $g_{2d}>0$ almost
+everywhere. All integrands are bounded except this integrable
+square, and $q_t-r$ is positive on a set of positive measure.
+Null repairs do not matter at these finitely many positive read
+times. This proves exact original-path insertion moments, not
+observation of an inserted value on a realized path. $\square$
+
+**Definition 23.4 (attribution and remaining recovery boundary).**
+The source-specific correspondence in §§22–23 is `repo-derived`
+conditional mathematics: recovered scalar properness pays actual
+compact domains; the full-source commutator closure and its
+reduction pay actual transported multiplication; the original
+entrance and word recursion consume it. Theorem 12.2 and
+[S, §129.D] already supply the energy/commutator mechanism.
+Bounded double commutators, Gram cofactors, complete compact
+flows, weighted change of variables, Stone's theorem and the
+invariant-domain core criterion [T, Theorem 5.2, Corollary 5.3]
+are reused ingredients. Hunter's theorem [HUN, Theorem 4.27]
+is used only in the punctured interior with its actual $H^1$
+weak solution, smooth elliptic coefficients and $L^2$ forcing.
+The full endpoint is [E, Theorem 112.2]; the full form and trace
+are [S, (115.14)–(115.20)].
+
+Inverse energy-Gram differentiation and its chain rule are prior
+art in Hino [HIN, Theorem 3.4, (3.16), Remark 3.5, (3.19)].
+His regular strongly local form, minimal energy-dominant measure,
+finite index and full-index coordinate hypotheses are not inferred
+from two observed functions here. Cofactors suffice for (23.3);
+no normalized inverse frame or claim of full spatial coordinates
+is required. No general phase, Gram or flow fact is claimed as
+new, and no fresh formal verification or worldwide priority is
+asserted.
+
+Nonidentity of $\mathsf Q_t$ and $\mathsf R$ does not prove
+strict enlargement of $W^*(\mathsf B,\mathsf R)$, nonmeasurability
+of $q_t$ for $\overline{\sigma(b,\gamma)}^{\,m}$, minimality,
+spatial completeness or $\mathcal H_{\rm rel}=\mathcal O$.
+The already recovered vector $\widehat P\mathsf R\Omega$
+corresponds to $T_dr$ [JET, Corollary 12.3]; no identity here
+promotes it to the actual multiplier $M_{T_dr}|_{\mathcal O}$.
+That multiplier's reduction and intrinsic action remain unpaid,
+as do both signs of the full-reference heat-factor condition
+(14.5). A compact difference in (23.2) does not establish global
+$r$ or $\gamma$ membership in $\mathscr V$ or $D(K)$.
+
+The source, raw Haar measure, entire complex endpoint, normalized
+$h$, reference $m$, original positive parameters, $e$-start,
+calibration, physical clock, labels, read history and retained
+memory are unchanged in (23.5)–(23.7). Exact tuple constructions
+supply neither native physical controls nor a finite passive
+evaluator, effective group/closure moduli or a cost advantage.
+The all-positive-parameter mutual recovery of space, time,
+boundary and memory remains a further problem.
+
+[SRO]: RECURSIVE_RELATIONAL_OBSERVATION_SOURCE_RELATIVE_ORDER.md
+[HUN]: https://www.math.ucdavis.edu/~hunter/pdes/ch4.pdf
+[HIN]: https://arxiv.org/html/1212.6166v1
+[JET]: RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_SOURCE_JET_CERTIFICATION.md
+
+## 追加锚（本行以下为增补区）

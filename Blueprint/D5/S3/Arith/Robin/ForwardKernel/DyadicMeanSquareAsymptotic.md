@@ -1,12 +1,10 @@
-# Dyadic mean-square asymptotic and point extraction
+# Dyadic profile-kernel asymptotics
 
 ## Abstract
 
-The moving-length mean-square limit transfers to the original forward response and yields a point in every sufficiently large dyadic interval.
+The variance band gives the profile-kernel mean-square law and strict excursions on sets of positive measure.
 
-Write E(x)=psi(x)-x, H(x)=x^(4/5), and P(h,x)=h^(-2) times the integral of E(x+u)-E(x) for 0<=u<=h. The scale is S(X)=X^(1/5)*log(X). The assumptions are the von Koch bound, the uniform short-interval mean-square bound, and the uniform cumulative variance band asymptotic.
-
-**Theorem 1.1 (The point-extraction weight).**
+**Theorem 1.1 (The dyadic point weight).**
 
 Lean statement: `D5/S3/Arith/Robin/ForwardKernel/DyadicMeanSquareAsymptotic.dyadic_point_weight_integral_tendsto`
 
@@ -16,37 +14,38 @@ Lean statement: `D5/S3/Arith/Robin/ForwardKernel/DyadicMeanSquareAsymptotic.dyad
 
 *Commentary.*
 
-The integral of x^(1/5)*log(x)/x over [X,2X], divided by S(X), tends to 5*(2^(1/5)-1). Substitution x=X*v makes the quotient the integral of v^(-4/5) over [1,2], plus the fixed integral of v^(-4/5)*log(v) divided by log(X).
+For 0<theta<1, the integral of x^(1-theta) log(x)/x on [X,2X], divided by X^(1-theta) log X, tends to (2^(1-theta)-1)/(1-theta). Substitution x=Xv leaves the integral of v^(-theta) on [1,2], plus a fixed logarithmic integral divided by log X.
 
-**Theorem 1.2 (Transfer to the original forward response).**
+**Theorem 1.2 (The profile-kernel mean-square law).**
 
-Lean statement: `D5/S3/Arith/Robin/ForwardKernel/DyadicMeanSquareAsymptotic.forward_kernel_dyadic_mean_square_asymptotic`
+Lean statement: `D5/S3/Arith/Robin/ForwardKernel/DyadicMeanSquareAsymptotic.profile_kernel_dyadic_mean_square_asymptotic`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ForwardKernel/DyadicMeanSquareAsymptotic.forward_kernel_dyadic_mean_square_asymptotic` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-Assume the von Koch error bound, the uniform short-interval mean-square bound, and the uniform cumulative variance band asymptotic. The moving-length theorem gives the limit (2^(1/5)-1)/3 for the normalized square integral of P(H(x),x). The integral of forwardResponse(x)^2/x has the same normalized limit. The unweighted response is sqrt(x)*P(H(x),x). After division by sqrt(x), the difference from the original response has normalized squared integral tending to zero. The L2 reverse triangle inequality therefore preserves the mean-square limit. The three hypotheses are assumptions; the von Koch bound and the short-interval estimate follow from the Riemann hypothesis, and the cumulative variance asymptotic follows from the Riemann hypothesis together with the strong pair-correlation conjecture, so the theorem is conditional.
-
-**Theorem 1.3 (A point in each sufficiently large dyadic interval).**
-
-Lean statement: `D5/S3/Arith/Robin/ForwardKernel/DyadicMeanSquareAsymptotic.forward_kernel_dyadic_point`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ForwardKernel/DyadicMeanSquareAsymptotic.forward_kernel_dyadic_point` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ForwardKernel/DyadicMeanSquareAsymptotic.profile_kernel_dyadic_mean_square_asymptotic` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
 *Commentary.*
 
-Under the von Koch bound and the two uniform variance hypotheses, the normalized integral of forwardResponse(x)^2/x tends to (2^(1/5)-1)/3. For every 0<c<1/sqrt(15), every sufficiently large interval [X,2X] contains a point x with absolute response at least c*x^(1/10)*sqrt(log(x)). Otherwise squaring and integrating the pointwise strict bound would bound the mean square by c^2 times the point-extraction weight, contradicting their limiting ratio 1/15. The three hypotheses are assumptions; the von Koch bound and the short-interval estimate follow from the Riemann hypothesis, and the cumulative variance asymptotic follows from the Riemann hypothesis together with the strong pair-correlation conjecture, so the theorem is conditional.
+Let E be measurable and bounded on compact intervals, 0<alpha<theta<beta<1, and assume the uniform cumulative variance asymptotic on that exponent band. For every real integrable Borel profile g, the integral of the square of its price-kernel response with measure dx/x on [X,2X], divided by X^(1-theta) log X, tends to Q(g)(2^(1-theta)-1). Price removal is negligible in the normalized L2 norm. The reverse triangle inequality transfers the moving-profile limit to the price-kernel response. No von Koch bound or separate short-interval upper hypothesis is required.
+
+**Theorem 1.3 (Strict excursions on a set of positive measure).**
+
+Lean statement: `D5/S3/Arith/Robin/ForwardKernel/DyadicMeanSquareAsymptotic.profile_kernel_dyadic_large_set`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ForwardKernel/DyadicMeanSquareAsymptotic.profile_kernel_dyadic_large_set` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Under the same hypotheses, if g is not zero almost everywhere and 0<c<sqrt((1-theta)Q(g)), every sufficiently large [X,2X] has a positive-measure set where the absolute response is strictly greater than c x^((1-theta)/2) sqrt(log x). Positivity of Q(g) follows from its tail-energy representation. A zero-measure excursion set would bound the square integral almost everywhere by c squared times the dyadic point weight, contradicting the strict gap between their limiting constants.
+
+For Corollary 490.7, take E=psi-id, theta=4/5, g=1, alpha=3/4, beta=7/8. The identity forwardResponse_eq_profileResponse identifies the kernel. The integral_min_unit_square formula gives Q(1)=1/3, so the mean-square limit is (2^(1/5)-1)/3 and the excursion threshold is sqrt((1/5)(1/3))=1/sqrt(15). The positive-measure strict conclusion implies the earlier non-strict point conclusion. These substitutions use only the band asymptotic and the established local bounded measurability of psi-id.
 
 ## References
 
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/DyadicMeanSquareAsymptotic.dyadic_point_weight_integral_tendsto`
-- Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/DyadicMeanSquareAsymptotic.forward_kernel_dyadic_mean_square_asymptotic`
-- Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/DyadicMeanSquareAsymptotic.forward_kernel_dyadic_point`
-- Dependency: [D5/S3/Arith/Robin/ForwardKernel/DyadicMeanSquareUpper](DyadicMeanSquareUpper.md)
+- Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/DyadicMeanSquareAsymptotic.profile_kernel_dyadic_large_set`
+- Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/DyadicMeanSquareAsymptotic.profile_kernel_dyadic_mean_square_asymptotic`
 - Dependency: [D5/S3/Arith/Robin/ForwardKernel/MovingLengthMeanSquare](MovingLengthMeanSquare.md)
 - Dependency: [D5/S3/Arith/Robin/ForwardKernel/WeightRemoval](WeightRemoval.md)
