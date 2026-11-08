@@ -1,0 +1,65 @@
+**定理 35.2（实方向盲区及全 PB 的尺度选择）。** 每个族成员满足 $\mathsf H_{\rm orig}$ 的全部静态条件、完整 $\mathsf P_3$ 和全部有限原复 Gram 正性。每个成员对全部原 $\alpha,a,b$ 满足 $c=0$ 的 PB。对全部原 $\alpha,a,b,c$，其完整 PB 缺陷准确为
+
+$$
+\boxed{\begin{aligned}
+\Delta_\alpha^\kappa(a;b,c)
+&=4(1-\kappa^2)\alpha\bigl((b\circ a)\circ c
+-b\circ(a\circ c)\bigr)\\
+&=(1-\kappa^2)\alpha\bigl([a,[b,c]]\bigr).
+\end{aligned}}
+\tag{35.2}
+$$
+
+因此全评价、全输入 PB 成立，当且仅当 $\kappa=1$、$\kappa=-1$ 或 $\mathcal A$ 交换。对非交换 $\mathcal A$，这个统一标量缩放族中只留下正、反两种真实乘法取向；$c=0$ 子族却允许整个区间。
+
+证明。继承的锥和单位使 $E$ 成为 Archimedean 序单位空间，序单位范数就是继承范数；不要求 $E$ 完备。对任意原小效果 $0\le e\le\theta u$，给定 $C^*$ 代数内的谱不等式给 $0\le e^2\le\theta e\le e$，且 $e^2\in E$，故原小窗口与 $S(u,u)=u$ 成立，不要求平方根留在原域。
+
+记 $w_+=(1+\kappa)/2$、$w_-=(1-\kappa)/2$，均非负且和为一。同一原复化在这里就是 $\mathcal A_0$，其 $\star_\kappa=S-\mathrm iD_\kappa$ 为
+
+$$
+z\star_\kappa w=w_+zw+w_-wz.
+\tag{35.3}
+$$
+
+对原实标签 $a_j$ 与复系数 $z_j$，令 $v=\sum_jz_ja_j\in\mathcal A_0$。原评价的复延拓于是给
+
+$$
+\sum_{j,k}\overline z_jz_k g_\alpha^\kappa(a_j,a_k)
+=w_+\alpha(v^*v)+w_-\alpha(vv^*)\ge0.
+\tag{35.4}
+$$
+
+因为 $v^*v,vv^*\in E\cap\mathcal A_+$，这里可直接用原评价，不需另加完成态。式 (35.4) 给所有有限表的 PSD，包括 Hermitian 性、重复与零标签。实部表在全部实系数下正；标签 $(a+b,a,b)$ 的系数 $(1,-1,-1)$ 合成 $v=0$，故原相加零平方也成立。这逐项支付 A1.2 第 1–3 项，不只支付某个标量 P2 子接口。全原质量无需归一，零评价也在内。
+
+下面仅在这个已明确双线性的参考族中展开。对原实 $x,a,y$，由 (35.3) 直接相乘并相减得
+
+$$
+\begin{aligned}
+\mathcal A_\kappa(x,a,y)
+&=w_+w_-\bigl(axy+yxa-xya-ayx\bigr)\\
+&=\frac{1-\kappa^2}{4}[a,[x,y]]\\
+&=(1-\kappa^2)\bigl((x\circ a)\circ y-x\circ(a\circ y)\bigr).
+\end{aligned}
+\tag{35.5}
+$$
+
+双交换子在实输入下自伴，故这里 $I_0^\kappa=0$，$R_0^\kappa$ 就是 (35.5)。为从它得到完整 PB 缺陷而非只得到两个差的差，使用 (33.5)–(33.7)。对任意原实 $b$，$\mathcal A_\kappa(b,a,b)=0$，所以 (33.6) 给 $d(b)=0$；对任意原实 $b,c$，$f(b,c)=\alpha(\mathcal A_\kappa(b,a,c))$ 为实。因此 (33.7) 第一式给 $\Delta_\alpha^\kappa(a;b,c)=4\alpha(\mathcal A_\kappa(b,a,c))$，即 (35.2)。取 $c=0$ 就给全部实方向 PB。这个计算没有预设 $\star_\kappa$ 结合。
+
+若 $\kappa=\pm1$，(35.3) 分别为原乘法与相反乘法，(35.2) 恒零。若 $\mathcal A$ 交换，所有交换子亦恒零。反向，若全 PB 成立且 $|\kappa|<1$，评价分离与 (35.2) 给
+
+$$
+[a,[b,c]]=0\qquad(a,b,c\in E).
+\tag{35.6}
+$$
+
+取 $a=b$。对任意 $b,c\in E$，给定 Banach 代数中有界算子 $\operatorname{ad}_b$ 的指数级数给
+
+$$
+e^{\mathrm itb}ce^{-\mathrm itb}=c+\mathrm it[b,c]
+\qquad(t\in\mathbb R),
+$$
+
+因为 $\operatorname{ad}_b^2c=0$。$b$ 自伴，左边范数恒为 $\|c\|$；三角不等式给 $|t|\|[b,c]\|\le2\|c\|$，任取 $t$ 遂得 $[b,c]=0$。原 $E$ 复张成 $\mathcal A_0$，而 $\mathcal A_0$ 在 $\mathcal A$ 稠密，故 $\mathcal A$ 交换。这个指数只用于已给参考 $C^*$ 代数中的证明，不是原域的指数封闭或物理时间操作。零代数本来交换，全部式子为零，亦在结论内。∎
+
+一般原代数并不因此只有两种全局 $D$；上述“两种”只指固定 $\mathcal A$ 中统一标量 $D_\kappa=\kappa\mathcal C$ 的族。不同中央取向或经典接缝仍由 W73–80 的一般对应容纳，不因这个反事实被删掉。
+

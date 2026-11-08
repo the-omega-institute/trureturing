@@ -1,0 +1,39 @@
+**定义 80.1（原理想作用及准确的范数条件）。** 固定含单位实 JB 代数 $X$、含单位范数稠密实 Jordan 子代数 $E\subset X$，以及原继承资料
+
+$$
+S(a,b)=a\circ b,\qquad C=E\cap X_+,\qquad
+N(a)=\|a\|_X,\qquad u=1_X.
+\tag{80.1}
+$$
+
+取非零闭 Jordan 理想 $I\subset X$，要求整个 $I\subset E$，并供应一个等距实 Jordan 同构
+
+$$
+j:I\longrightarrow A_{\rm sa},
+\tag{80.2}
+$$
+
+其中 $A$ 是非零无单位复 C* 代数。$j$ 是给定种子与给定复乘法之间的识别，不是从 JB 结构中自动选出的复取向。先不输入任何旧 $D$、P2 或 PB 条件。定义
+
+$$
+\begin{aligned}
+\nu_I(x)&=\sup_{\substack{r\in I\\\|r\|\le1}}\|x\circ r\|
+             &&(x\in X),\\
+\operatorname{Ann}_X(I)&=\{x\in X:x\circ r=0\text{ 对全部 }r\in I\},\\
+\operatorname{Ann}_E(I)&=E\cap\operatorname{Ann}_X(I).
+\end{aligned}
+\tag{80.3}
+$$
+
+$\nu_I$ 是原对称二元关系的作用半范数。原 JB 乘法界给 $\nu_I(x)\le\|x\|$ 及 $|\nu_I(x)-\nu_I(y)|\le\|x-y\|$。只含原标签、原范数和原 $S$ 的恢复条件为
+
+$$
+\boxed{\quad
+N(a)=\sup_{\substack{r\in I\\N(r)\le1}}N(S(a,r))
+\quad\text{对全部 }a\in E.
+\quad}
+\tag{80.4}
+$$
+
+这比“每个非零原标签至少作用到一个种子标签”所表达的 $\operatorname{Ann}_E(I)=0$ 强；它要求作用的全部原尺度也被恢复。$I$ 的完整原包含与 (80.4) 都是公开前件，不能由稠密性、完成中存在理想或一个非零投影代付。
+
