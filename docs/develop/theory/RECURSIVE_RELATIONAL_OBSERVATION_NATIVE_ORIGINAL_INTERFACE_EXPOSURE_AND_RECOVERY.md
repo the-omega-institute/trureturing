@@ -2953,7 +2953,7 @@ Its Lemmas 4.7 and 6.7 include response, counters, semantic/unified
 rows, dependencies, actual delivery/check/ACK and source-token return.
 ARC Definitions 5.1–5.4 and Proposition 5.5 include the real outer01
 entry, InnerReturn normalization and CaptureCAP before the next Ready.
-ARC's history returns and GENERAL §16's installed-row cover supply
+ARC's history returns and GENERAL Lemma 13.2's installed-row cover supply
 the last row: a reconstructed Step or old source in a bank remains
 represented material. Neither restores a source field or a permission
 on the live source. Busy/unauthorized attempts have their unchanged
