@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Quantum/Algebra/UnitBridgeLocalization
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Algebra.Module.LocalizedModule.Basic]
-   utility: kind=none
+   utility: none
    digest: Square-denominator localization of the same original total relation. -/
 
 import D5.S3.Quantum.Algebra.UnitBridgeRawGeometry

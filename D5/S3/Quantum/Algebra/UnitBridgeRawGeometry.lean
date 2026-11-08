@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Quantum/Algebra/UnitBridgeRawGeometry
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Topology.ContinuousMap.Algebra, mathlib/module/Mathlib.LinearAlgebra.CrossProduct]
-   utility: kind=none
+   utility: none
    digest: Original continuous spin sections and the two raw moment identities. -/
 
 import Mathlib.Topology.ContinuousMap.Algebra
