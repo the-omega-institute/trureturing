@@ -2393,3 +2393,107 @@ $$
 证明。令 $V$ 等概率地取值于 $(1,0),(-1,0),(0,1),(0,-1)$。则 $V_1$ 以概率 $\frac14$ 取 $\pm1$、以概率 $\frac12$ 取 $0$，故 $\mathbb EV_1=0$、$\mathbb EV_1^2=\mathbb EV_1^4=\frac12$；$V_2$ 同理。每个取值都有一个坐标为零，故 $V_1V_2=0$，$\mathbb EV_1V_2=0$，且每个取值都落在坐标轴上，四个开象限的概率都为零。证毕。
 
 **范围。** 引理 495.1、定理 495.2–495.3 与推论 495.4 是抽象接口上的结论；对 $E=\psi-\mathrm{id}$，(493.1)、$(\mathrm W_{2,2})$ 与推论 495.4 的全阶接口都未被证明。Montgomery–Soundararajan [Primes in short intervals, Comm. Math. Phys. 252 (2004), 589–617] 在其强 Hardy–Littlewood 型相关误差假设下推出单一长度的矩（其更一般的矩渐近为该文猜想 1），不涉及不同指数的移动长度 $sx^{\theta_1},tx^{\theta_2}$ 的混合矩及其与宏观位置的联合；Leung [Joint distribution of primes in multiple short intervals, Adv. Math. 490 (2026), 110847] 在 RH 与 LI 下处理比例长度的多个不交区间并采用对数取样。本节的新内容是：定理 495.2 由 §491 推出交叉二阶核必须几乎处处为零，以及定理 495.3 给出的显式正相关常数 $\kappa_1\kappa_2Q_1Q_2(c_{2,2}-c_{2,0}c_{0,2})$。矩方法、Cramér–Wold 定理、Isserlis 公式、Chebyshev 积分不等式与 $\pi$-$\lambda$ 定理都是标准工具。
+
+## 追加锚（本行以下为增补区）
+
+## 496. 方差带推出带宏观权的二阶接口
+
+沿用 §490 的 $E,D_v,V$ 与 §494 的 $\mu_X,U_X,B_X,\kappa$。本节 $E$ 局部有界 Borel 可测，(490.2) 在 $0<\alpha<\theta<\beta<1$ 上成立。令 $h=X^\theta$、$\mathscr N_X=Xh\log X$、$\|f\|_{X,2}^2=\mathscr N_X^{-1}\int_X^{2X}|f|^2$，以及
+
+$$
+\varepsilon_X=\sup_{\substack{X/2\le Y\le4X\\Y^\alpha\le v\le Y^\beta}}\left|\frac{V(Y,v)}{Yv\log(Y/v)}-1\right| ,
+\tag{496.1}
+$$
+
+由 (490.2)，$\varepsilon_X\to0$；本节不假设任何收敛速度。
+
+**引理 496.1（局部方差与移动端点）。** (i) 设 $X\ge4$，$J=[A,B]\subset[X/2,4X]$，$R>0$ 满足
+
+$$
+(4X)^\alpha\le R,\qquad 4R\le(X/2)^\beta .
+\tag{496.2}
+$$
+
+则对所有 $v\in[R,4R]$，$\int_A^BD_v(y)^2\,dy\le v\log X\,\bigl(3(B-A)+16\varepsilon_XX\bigr)$。
+
+(ii) 设 $I$ 为紧区间，$p,q\in C^1(I)$，$p',q'\ge m>0$，$p(I),q(I)\subset J$，$|q-p|\le R$，且对某个 $C\ge0$，$\int_JD_v^2\le Cv$（$R\le v\le4R$）。则 $\int_I|E(q(x))-E(p(x))|^2\,dx\le20CR/m$。
+
+(iii) 在 (i) 及 (ii) 关于 $I,p,q,m$ 的条件下，$\int_I|E(q)-E(p)|^2\le\frac{20R}m\log X\,\bigl(3|J|+16\varepsilon_XX\bigr)$。
+
+证明。(i) 由 (496.2)，对 $Y\in[X/2,4X]$ 与 $v\in[R,4R]$ 有 $Y^\alpha\le v\le Y^\beta$。于是 $\int_A^BD_v^2=V(B,v)-V(A,v)\le v\bigl(B\log\frac Bv-A\log\frac Av\bigr)+\varepsilon_Xv\bigl(B\log\frac Bv+A\log\frac Av\bigr)$。函数 $y\mapsto y\log(y/v)$ 的导数 $\log(y/v)+1\le\log(4X)+1\le3\log X$，故第一项至多 $3v(B-A)\log X$；又 $A+B\le8X$、$0<\log(A/v),\log(B/v)\le\log(4X)\le2\log X$，故第二项至多 $16\varepsilon_XXv\log X$。
+
+(ii) 令 $\delta=q-p$。对 $v\in[2R,3R]$ 有恒等式 $E(q(x))-E(p(x))=D_v(p(x))-D_{v-\delta(x)}(q(x))$（两个增量的终点都是 $p(x)+v$），且 $v-\delta(x)\in[R,4R]$。平方、用 $|a-b|^2\le2a^2+2b^2$、对 $v\in[2R,3R]$ 取平均并对 $x\in I$ 积分：第一项换元 $y=p(x)$，逆 Jacobian 至多 $1/m$；第二项对固定 $x$ 作平移 $w=v-\delta(x)$，把范围放大到 $[R,4R]$，再由 Tonelli 与换元 $y=q(x)$。得
+
+$$
+\int_I|E(q)-E(p)|^2\le\frac2{mR}\Bigl(\int_{2R}^{3R}\!\!\int_JD_v^2+\int_R^{4R}\!\!\int_JD_w^2\Bigr)\le\frac{2C}{mR}\Bigl(\frac52+\frac{15}2\Bigr)R^2=\frac{20CR}m .
+$$
+
+局部有界性使所有积分有限，Borel 可测性使换序合法。(iii) 把 (i) 代入 (ii)。证毕。
+
+(iii) 保留了因子 $|J|$，而不是把它放大成 $X$；下面把 $[X,2X]$ 分成 $n$ 块时，正是这一点使冻结误差为 $O(1/n)$。
+
+**引理 496.2（宏观变长的冻结）。** 固定 $M\ge1$、$L\ge0$。设 $a\in C^1([1,2])$，$0\le a\le M$，$|a'|\le L$，令 $f_{a,X}(x)=D_{h\,a(x/X)}(x)$。对正整数 $n$，令 $u_j=1+j/n$、$I_j=[u_jX,u_{j+1}X]$，在 $I_j$ 上令 $F_{a,n,X}(x)=D_{h\,a(u_j)}(x)$。若 $Mh\le X$、$Lh/X\le\frac12$，且 $R=(1+L)h/n$ 满足 (496.2)，则
+
+$$
+\|f_{a,X}-F_{a,n,X}\|_{X,2}^2\le120(1+L)\Bigl(\frac1n+\frac{Mh}X\Bigr)+640(1+L)\varepsilon_X .
+\tag{496.3}
+$$
+
+特别地，对每个固定 $n$，$\limsup_X\sup_a\|f_{a,X}-F_{a,n,X}\|_{X,2}^2\le120(1+L)/n$（上确界取遍满足条件的 $a$），且对充分大的 $X$，$\|f_{a,X}\|_{X,2}^2\le880M$。
+
+证明。在 $I_j$ 上取 $p(x)=x+h\,a(u_j)$、$q(x)=x+h\,a(x/X)$，则 $f_{a,X}-F_{a,n,X}=E(q)-E(p)$，$p'=1$，$q'\ge\frac12$，$|q-p|\le Lh/n\le R$，两像都含于 $J_j=[u_jX,u_{j+1}X+Mh]\subset[X/2,4X]$，$|J_j|=X/n+Mh$。由引理 496.1(iii)（$m=\frac12$），$\int_{I_j}|f_{a,X}-F_{a,n,X}|^2\le40R\log X\,(3X/n+3Mh+16\varepsilon_XX)$。对 $j$ 求和并除以 $\mathscr N_X$ 得 (496.3)。对固定 $n$，$R=ch$（$c=(1+L)/n$）满足 $R/(4X)^\alpha=c4^{-\alpha}X^{\theta-\alpha}\to\infty$、$4R/(X/2)^\beta=4c2^\beta X^{\theta-\beta}\to0$，故 (496.2) 与其余条件最终成立（$R=Mh$ 同理），门槛只依赖 $E,\alpha,\theta,\beta,M,L,n$。最后在整个 $[X,2X]$ 上取 $p(x)=x$、$q(x)=x+h\,a(x/X)$、$R=Mh$、$J=[X,2X+Mh]$；对充分大的 $X$，$\varepsilon_X\le1$，由引理 496.1(iii)，$\|f_{a,X}\|_{X,2}^2\le40M(3(1+Mh/X)+16\varepsilon_X)\le880M$。证毕。
+
+**定理 496.3（宏观变长的带权协方差）。** 设 $a,b\in C^1([1,2])$ 非负，$w\in C([1,2])$ 实值。则
+
+$$
+\frac1{X^{1+\theta}\log X}\int_X^{2X}w(x/X)\,D_{X^\theta a(x/X)}(x)\,D_{X^\theta b(x/X)}(x)\,dx\longrightarrow\kappa\int_1^2w(u)\min\bigl(a(u),b(u)\bigr)\,du .
+\tag{496.4}
+$$
+
+证明。第一步（固定长度）。固定 $1\le u<v\le2$、$q>0$、$e\ge0$。端点 $Y_X=dX+eh$（$d\in\{u,v\}$）满足 $qh/Y_X^\alpha\to\infty$、$qh/Y_X^\beta\to0$ 与 $\log(Y_X/(qh))/\log X\to\kappa$，故由 (490.2)，$V(dX+eh,qh)/\mathscr N_X\to dq\kappa$，从而 $\mathscr N_X^{-1}\int_{uX+eh}^{vX+eh}D_{qh}^2\to\kappa q(v-u)$。对 $0<c\le d$，由 $D_{dh}(x)-D_{ch}(x)=D_{(d-c)h}(x+ch)$ 得极化恒等式 $2D_{ch}D_{dh}=D_{ch}^2+D_{dh}^2-D_{(d-c)h}(\cdot+ch)^2$（由方差经极化恢复两点相关，见 Leung [Joint distribution of primes in multiple short intervals, Adv. Math. 490 (2026), 110847] 附注 2.3）；第三项的积分区间为 $[uX+ch,vX+ch]$，用上式处理，得
+
+$$
+\mathscr N_X^{-1}\int_{uX}^{vX}D_{ch}D_{dh}\longrightarrow\kappa(v-u)\min(c,d) ;
+\tag{496.5}
+$$
+
+$c=d$ 时第三项为零，$cd=0$ 时乘积为零。
+
+第二步（分块）。取共同的 $M\ge1$、$L\ge0$ 使 $0\le a,b\le M$、$|a'|,|b'|\le L$，沿用引理 496.2 的分块，令 $w_n=w(u_j)$（$u_j\le u<u_{j+1}$）。由 (496.5)，对固定 $n$，$\mathscr N_X^{-1}\int_X^{2X}w_n(x/X)F_{a,n,X}F_{b,n,X}\to q_n=\frac\kappa n\sum_jw(u_j)\min(a(u_j),b(u_j))$，且 $\|F_{a,n,X}\|_{X,2}^2\to\frac\kappa n\sum_ja(u_j)\le M$。
+
+第三步（误差）。由 $wf_af_b-w_nF_aF_b=(w-w_n)f_af_b+w_n\bigl((f_a-F_a)f_b+F_a(f_b-F_b)\bigr)$、Cauchy–Schwarz 与引理 496.2，记 $\omega_w$ 为 $w$ 的连续模、$d_n=\sqrt{120(1+L)/n}$，
+
+$$
+\limsup_X\Bigl|\mathscr N_X^{-1}\int_X^{2X}w(x/X)f_af_b-q_n\Bigr|\le880M\,\omega_w(1/n)+\|w\|_\infty\bigl(\sqrt{880M}+\sqrt M\bigr)d_n .
+$$
+
+又 $\min(a,b)$ 的 Lipschitz 常数至多 $L$，故 $|q_n-\kappa\int_1^2w\min(a,b)|\le\kappa(M\omega_w(1/n)+L\|w\|_\infty/n)$。先令 $X\to\infty$，再令 $n\to\infty$。证毕。
+
+**推论 496.4（二阶 Brownian 接口）。** 对每个实值 $\phi\in C([1,2])$，
+
+$$
+\sup_{s,t\in[0,1]}\Bigl|\mathbb E_{\mu_X}\bigl[\phi(U_X)B_X(s)B_X(t)\bigr]-\kappa\min(s,t)\int_1^2\phi(u)\frac{du}{u\log2}\Bigr|\longrightarrow0 ,
+\tag{496.6}
+$$
+
+且对充分大的 $X$，$\sup_{s\in[0,1]}\mathbb E_{\mu_X}|B_X(s)|^2\le1760/\log2$。
+
+证明。在 $[X,2X]$ 上 $x^\theta\log x\cdot x=X^{1+\theta}\log X\cdot u^{1+\theta}(1+\log u/\log X)$（$u=x/X$），故
+
+$$
+\mathbb E_{\mu_X}\bigl[\phi(U_X)B_X(s)B_X(t)\bigr]=\frac1{\log2}\cdot\frac1{\mathscr N_X}\int_X^{2X}w_X(x/X)D_{sx^\theta}(x)D_{tx^\theta}(x)\,dx,\qquad w_X(u)=\frac{\phi(u)u^{-1-\theta}\log X}{\log X+\log u},
+$$
+
+且 $\|w_X-w\|_\infty\le\|\phi\|_\infty\log2/\log X$，$w(u)=\phi(u)u^{-1-\theta}$。由引理 496.2 的一致界（$a(u)=su^\theta$ 满足 $0\le a\le2$、$|a'|\le1$），把 $w_X$ 换成 $w$ 的误差至多 $1760\|\phi\|_\infty/\log X$，对 $s,t$ 一致。由定理 496.3（$a(u)=su^\theta$、$b(u)=tu^\theta$，$\min(a,b)=u^\theta\min(s,t)$）得 (496.6) 的逐点形式；二阶矩界由 $x^{1+\theta}\log x\ge X^{1+\theta}\log X$ 与同一一致界得到。对一致性，固定 $0<\delta\le1$，对 $|s-t|\le\delta$ 在引理 496.1(iii) 中取 $p(x)=x+sx^\theta$、$q(x)=x+tx^\theta$、$R=2\delta h$、$m=1$、$J=[X,2X+2h]$，门槛与 $s,t$ 无关，得 $\limsup_X\sup_{|s-t|\le\delta}\|B_X(s)-B_X(t)\|_{L^2(\mu_X)}^2\le120\delta/\log2$。由 Cauchy–Schwarz，$K_X(s,t)=\mathbb E_{\mu_X}[\phi(U_X)B_X(s)B_X(t)]$ 满足 $\limsup_X\sup_{|s-s'|,|t-t'|\le\delta}|K_X(s,t)-K_X(s',t')|\le\frac{2\|\phi\|_\infty}{\log2}\sqrt{1760\cdot120\,\delta}$；在 $[0,1]^2$ 的有限 $\delta$-网上逐点收敛是一致的，极限核在 $\delta$ 尺度上的变化至多 $2\kappa\|\phi\|_\infty\delta$，令 $\delta\downarrow0$。证毕。
+
+**推论 496.5（一、二阶接口由 (490.2) 推出）。** (a) $(\mathrm M_2)$ 成立，$M_2(s,t)=c_2\kappa\min(s,t)=\frac{2^\kappa-1}{\log2}\min(s,t)$。
+
+(b) 对每个实值 $\phi\in C([1,2])$，$\sup_{s\in[0,1]}|\mathbb E_{\mu_X}[\phi(U_X)B_X(s)]|\to0$；特别地 $(\mathrm M_1)$ 以 $M_1=0$ 成立。
+
+(c) 设 $0<\theta_1<\theta_2<1$，(490.2) 分别在包含 $\theta_1$、$\theta_2$ 的指数带上成立，$B_{i,X}$ 如 §495。则对每个实值 $\phi\in C([1,2])$，$\sup_{s,t\in[0,1]}|\mathbb E_{\mu_X}[\phi(U_X)B_{1,X}(s)B_{2,X}(t)]|\to0$；特别地 $(\mathrm J_{1,1})$ 成立且 $M_{1,1}\equiv0$。
+
+证明。(a) 取 $\phi(u)=u^\kappa$，由推论 496.4，二阶矩界给出 (a) 部分，极限核连续。(b) 取 $\theta<\nu<\beta$、$M=X^\nu$、$f_s(x)=D_{sx^\theta}(x)$、$P_s(y)=\int_X^yf_s$。引理 493.2 的证明给出 $\sup_{s,y}|P_s(y)|\ll\sqrt{\log X}\bigl(Xh/\sqrt M+\sqrt{XhM}\bigr)$，故 $\sup_{s,y}|P_s(y)|/(X\sqrt{h\log X})\ll X^{-(\nu-\theta)/2}+X^{-(1-\nu)/2}\to0$。$\mathbb E_{\mu_X}[\phi(U_X)B_X(s)]=\frac1{\log2}\int_X^{2X}\phi(x/X)\,\varpi(x)f_s(x)\,dx$，其中 $\varpi(x)=x^{-1-\theta/2}(\log x)^{-1/2}$ 在 $[X,2X]$ 上单调、$\varpi\le X^{-1-\theta/2}(\log X)^{-1/2}$。若 $\phi$ 是 $n$ 块阶梯函数，逐块分部积分（$\varpi$ 递减，故每块 $[a,b]$ 上 $\varpi(a)+\varpi(b)+\int_a^b|\varpi'|=2\varpi(a)\le2\varpi(X)$）给出至多 $\frac{2n}{\log2}\|\phi\|_\infty\sup_{s,y}|P_s(y)|\,X^{-1-\theta/2}(\log X)^{-1/2}\to0$；一般连续 $\phi$ 用阶梯函数 $\phi_n$ 一致逼近，误差由 $|\mathbb E[(\phi-\phi_n)(U_X)B_X(s)]|\le\|\phi-\phi_n\|_\infty(\mathbb EB_X(s)^2)^{1/2}$ 与推论 496.4 的二阶矩界控制。(c) 取 $\theta_1<\mu<\nu<\min(\beta_1,\theta_2)$、$\eta_0=\frac12\min(\mu-\theta_1,\nu-\mu,\theta_2-\nu)$。由引理 491.3（$h=X^{\theta_1}$、$k=X^{\theta_2}$），对每个区间 $I\subset[X,2X]$ 与 $s,t\in[0,1]$ 一致地 $|\int_ID_{sx^{\theta_1}}D_{tx^{\theta_2}}|\ll X^{1+(\theta_1+\theta_2)/2}\log X\cdot X^{-\eta_0}$。与推论 496.4 同样写出权 $w_X(u)=\phi(u)u^{-1-(\theta_1+\theta_2)/2}\log X/(\log X+\log u)$；对 $n$ 块阶梯权，上界逐块给出至多 $Cn\|w\|_\infty X^{-\eta_0}$（相对于自然尺度 $X^{1+(\theta_1+\theta_2)/2}\log X$）；连续权的逼近误差由两个指数的二阶矩界与 Cauchy–Schwarz 控制，至多 $C'\omega_w(1/n)$。先令 $X\to\infty$ 再令 $n\to\infty$。证毕。
+
+因此，在相应的 (490.2) 下，§494–§495 各接口中总阶数为一和二的部分都是定理：$M_1=0$、$M_{2,0}=c_{2,0}\kappa_1\min$、$M_{0,2}=c_{0,2}\kappa_2\min$、$M_{1,1}\equiv0$（这加强了定理 495.2 的几乎处处结论），所需的一、二阶矩界也已给出。总阶数三及更高的绝对矩界与相应混合矩极限仍需额外假设，包括 Brownian 型接口所要求的奇阶极限为零；四阶情形还涉及 (493.1) 型上界及四阶混合矩极限。
+
+**范围。** 本节以 (490.2) 为条件，不涉及素数余项 $E=\psi-\mathrm{id}$ 的算术证明。固定长度方差到比例长度或移动长度的转移已有先例：Goldston [Notes on pair correlation of zeros and prime numbers, arXiv:math/0412313] §9 用 Saffari–Vaughan 论证讨论比例窗与加法窗方差的定性等价；Bui–Keating–Smith [On the variance of sums of arithmetic functions over primes in short intervals and pair correlation for $L$-functions in the Selberg class, J. London Math. Soc. 94 (2016), 161–185] 的定理 $C_1$、$D_1$ 在固定加法窗与比例窗之间转移方差；Chan [Higher moments of primes in short intervals I, arXiv:math/0409530v2 (2004)] 定理 3.1、4.1 在 RH 与定量矩假设下转移固定长度与比例长度的偶矩，方法可追溯到 Saffari–Vaughan。极化恢复两点相关是已知工具（Leung 2026 附注 2.3）。本节在上述转移方法下给出：只用定性的一致 $o(1)$ 假设 (490.2)、对局部有界 Borel $E$ 的局部移动端点估计（引理 496.1(iii)，保留区间长度 $|J|$）与冻结误差 (496.3)，由此对一般宏观变长 $X^\theta a(x/X)$ 与连续宏观权得到带权协方差 (496.4)，以及对时间参数一致的二阶接口 (496.6) 和推论 496.5 对 §494–§495 接口的削减。
