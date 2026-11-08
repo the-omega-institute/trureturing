@@ -1,0 +1,15 @@
+**定理 331.1（局部严格删除及完整满足族）。** $\mathsf G_{0h}+\mathsf Z_{\rm fin}$ 在单载体右单位层严格弱于 $\mathsf G_{0h}+\mathsf Z_0$。另一方面，325.1 的完整 tagged-CP 满足族分别满足 $\mathsf C_{\rm fin}(B)$ 和 $\mathsf C_{\rm fin}(\mathsf B_{\rm cl})$，包括无实际 $M_2$ 对象或简单块的子族。
+
+证明。局部取
+
+$$
+E=H_3(\mathbb C)\oplus H_2(\mathbb C)\oplus\mathbb R^k,
+\quad 5+k>p_*,\qquad
+D(a,b)=0\oplus\{\operatorname{Tr}(\sigma_zb_2)a_2\}\oplus0.
+\tag{331.1}
+$$
+
+$\operatorname{Tr}\sigma_z=0$ 给右单位。primitive 输入若在不同块，输出为零；若同在二阶块，输出是第一原子的标量倍，总在两输入的支持角内；其他同源输入输出为零。因此整个 $\mathsf G_{0h}$ 成立。每个高秩首原子的输出恒为零，故不论先定静态坐标如何，全部 $\mathsf Z_{\rm fin}$ 成立。却取二阶块内 $p=(I_2+\sigma_z)/2$、$e=(I_2-\sigma_z)/2$，得 $e\perp p$ 且 $\tau(D(e,p))=1$。这只区分局部前件，没有供应完整原联合或 sigma，不是完整 $B_*$ 的反模型。完整背景中 329.1 恢复全部被删关系，完整模型类未因此扩大。
+
+完整满足族原已满足全部零角迹，故包含本轮任意先定的有限测试；其同一 sigma、两份完整背景、全部过程及无实际 $M_2$ 子族均由 325.1 保留。∎
+

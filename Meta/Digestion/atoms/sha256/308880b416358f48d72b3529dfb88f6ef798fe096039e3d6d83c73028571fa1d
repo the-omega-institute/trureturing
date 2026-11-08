@@ -1,0 +1,61 @@
+**Lemma 23.2 (global complete-field remainder).** The new integrals converge absolutely. Each $\mathcal V_j$ is real, bounded and satisfies $\mathcal V_j\circ\sigma=(-1)^j\mathcal V_j$. Moreover $|\mathcal V_4(r,\mathbf z)|\le C(1+|r|)^{-1}$, and on all of $\mathbb R^4$, with the original zero extension,
+
+$$
+\left\|\widetilde U_s-
+ \left(V+s\mathcal V_1+s^2\mathcal V_2+s^3\mathcal V_3+s^4\mathcal V_4\right)
+\right\|_\infty\le Cs^5(1+|\log s|)=o(s^4).
+\tag{23.2}
+$$
+
+Proof. Choose the same sufficiently small fixed $\ell>0$ as in the proof of (22.10), so $(-\ell/s,\ell/s)\Subset I_s$ and $\nu\ell<1/4$. Put $L_s=\ell/s$ and $T_s=s^{-2}$. On $S_t<L_s$ use
+
+$$
+M(\beta)=\int_0^t(1+\beta H_u)^{-2}u(H_u)u(H_u)^{\mathsf T}\,du.
+$$
+
+For $|\beta|L_s\le1/4$ this covariance is uniformly comparable to $M_0$. Differentiating the scalar denominator, then conjugating by $M_0^{-1/2}$, gives
+
+$$
+\|M_0^{-1/2}M^{(j)}(\beta)M_0^{-1/2}\|\le C_jS_t^j,
+\qquad
+|\partial_\beta^j\gamma_{M(\beta)}(\mathbf z)|
+ \le C_jS_t^j(\det M_0)^{-1/2}\quad(0\le j\le5).
+\tag{23.3}
+$$
+
+For $j=0$ only the second inequality is intended. Each Gaussian derivative is a polynomial of bounded degree in $M_0^{-1/2}\mathbf z$ times a uniformly decreasing Gaussian. The matrix bound controls its coefficients and therefore its supremum over all real phases. This proves (23.3) directly, extending the finite-order calculation of P (107.6).
+
+For $t\le T_s$, $0\le\vartheta\le s$ and $k\le5$, differentiation gives $|\partial_\vartheta^ke^{\lambda\vartheta^2t}|\le C_kt^{k/2}$, since $\vartheta\sqrt t\le1$. Leibniz, (23.3) and the full-moment estimate (3.3), at orders at most five, imply
+
+$$
+h_t(r)\mathbb E_{0,r}^t\left[
+ \mathbf1_{S_t<L_s}\sup_{0\le\vartheta\le s}
+ \left|\partial_\vartheta^5
+       \left(e^{\lambda\vartheta^2t}\gamma_{M(\nu\vartheta)}(\mathbf z)\right)\right|
+ \right]
+ \le C\sum_{j=0}^5t^{(5-j)/2}t^{(j-7)/2}=Ct^{-1}.
+\tag{23.4}
+$$
+
+Taylor's theorem is applied on each safe path before averaging. Its integrated remainder on $[1,T_s]$ is at most $Cs^5\int_1^{s^{-2}}t^{-1}dt$. Expanding
+$M(\beta)=M_0-2\beta M_1+3\beta^2M_2-4\beta^3M_3+5\beta^4M_4+\cdots$
+in the matrix Taylor formula gives the five fourth-order coefficients $5,8,9/2,6,2/3$ in (23.1). For example the second derivative contributes $8D^2\gamma[M_1,M_3]+(9/2)D^2\gamma[M_2,M_2]$, the third contributes $6D^3\gamma[M_1,M_1,M_2]$, and the fourth contributes $(2/3)D^4\gamma[M_1,M_1,M_1,M_1]$. Multiplication by $e^{\lambda s^2t}$ adds exactly $\nu^2\lambda tp_2+(\lambda^2/2)t^2p_0$ at fourth order, as well as the lower-order clock terms already retained.
+
+The moment estimate with the endpoint retained gives
+
+$$
+|p_4(t;\xi)|+|tp_2(t;\xi)|+|t^2p_0(t;\xi)|
+ \le Ct^{-3/2}e^{-cr^2/t}.
+\tag{23.5}
+$$
+
+Its integral on $t\ge1$ proves convergence, boundedness and the height decay. Bridge reflection $H\mapsto-H$, with the phase map in $\sigma$, proves the parities exactly as in P (107.8).
+
+We check the entire native comparison. On every path surviving in the original $I_s$, $1+\nu sH_u$ has fixed positive lower and upper bounds inherited from $(k-\alpha_\kappa)/d_0$. Thus its Gaussian has supremum at most $C(\det M_0)^{-1/2}$, including surviving paths that leave the safe strip. By (3.3), deleting these paths on $[1,T_s]$ costs at most
+
+$$
+C\int_1^{T_s}t^{-7/2}e^{-cL_s^2/t}dt\le CL_s^{-5}=O(s^5).
+$$
+
+For a retained coefficient $t^kp_j$, put $m=j+2k\le4$. Removing its safe-path indicator costs at most $CL_s^{m-5}$ after integration: its integrand is bounded by $Ct^{(m-7)/2}e^{-cL_s^2/t}$, and the substitution $t=L_s^2u$ proves this bound. Its full canonical tail past $T_s$ is at most $CT_s^{(m-5)/2}$. Multiplication by $s^m$ makes both errors $O(s^5)$. The original native tail past $T_s$ is $O(s^5)$ by (2.9a). Both original deaths are retained in the surviving-path part. Outside $I_s$ a safe path cannot have that endpoint; (3.3) then gives the same deleted-coefficient estimates for zero extension. These bounds, including all phases and the unchanged $j_0^{-1}$, prove (23.2). No infinite-time differentiation or local-to-global heat inference is used. $\square$
+

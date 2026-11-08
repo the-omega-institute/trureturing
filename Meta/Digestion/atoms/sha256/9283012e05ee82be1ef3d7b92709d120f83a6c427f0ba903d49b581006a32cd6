@@ -1,0 +1,23 @@
+**Lemma 6.1 (Live epochs of the actual observer).** Follow the full source history analytically while holding any actually emitted label fixed thereafter. Let $Y_n$ be the state immediately after the tick at $\tau_n$, and define
+
+$$
+N=\inf\{n\ge0:Y_n\in\{d_0,d_1\}\},
+\qquad Q_T=\sum_{t\ge0}\mathbf1_{\{T>t\}}X_t,
+\qquad p_i=\mathsf P_{i,q}(D=1).
+\tag{6.1}
+$$
+
+Under source $i$, $Y_0$ has law $\nu_i$ and $Y_n$ has kernel $U_i$. For a compliant actual observer,
+
+$$
+N<\infty\ \text{almost surely},
+\qquad Y_N=d_D,
+\qquad N\le Q_T\le T,
+\qquad\mathbb E_iN<\infty.
+\tag{6.2}
+$$
+
+Proof. The actual first-wait law and independence of subsequent gaps give (3.2), with ordinary fresh update randomness along each analytical epoch. If stopping is before or at the first tick, $N=0$. Otherwise each $Y_r$, $r<N$, is a live read-ready state immediately after a distinct actually read tick, and commits to another read. These $N$ ticks are included in $Q_T$, proving $N\le Q_T\le T$.
+
+If the stop occurs during zeros, the next analytical tick records only the already fixed label; that tick may be unread and is not added to $Q_T$. Every source interval is finite almost surely. Actual almost-sure stopping therefore gives finite $N$ and the recorded label $Y_N=d_D$. The finite actual paid mean gives finite $\mathbb E_iN$. These are the continuation's Lemma 25.1 and the two companions' actual-epoch interface. $\square$
+

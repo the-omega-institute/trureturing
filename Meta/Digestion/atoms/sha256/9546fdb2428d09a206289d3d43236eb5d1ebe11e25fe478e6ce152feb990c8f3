@@ -1,0 +1,42 @@
+**Definition 3.1 (jointly realized fields).** Let $H_v$ be the height bridge with generator $\partial_r^2$ from zero to $r$ in time $t$. On this single bridge put
+
+$$
+\begin{aligned}
+u(h)&=(1,h,h^2/2),&S_t&=\sup_{0\le v\le t}|H_v|,\\
+M_j&=\int_0^tH_v^j u(H_v)u(H_v)^{\mathsf T}dv\quad(j=0,1,2),\\
+\gamma_M(\mathbf z)&=(4\pi)^{-3/2}(\det M)^{-1/2}
+ e^{-\mathbf z^{\mathsf T}M^{-1}\mathbf z/4},&
+h_t(r)&=(4\pi t)^{-1/2}e^{-r^2/(4t)},\\
+p_0(t;r,\mathbf z)&=h_t(r)\mathbb E_{0,r}^t[\gamma_{M_0}(\mathbf z)]=k_t(r,\mathbf z),\\
+p_1(t;r,\mathbf z)&=h_t(r)\mathbb E_{0,r}^t[-2D\gamma_{M_0}(\mathbf z)[M_1]],\\
+p_2(t;r,\mathbf z)&=h_t(r)\mathbb E_{0,r}^t[
+ 3D\gamma_{M_0}(\mathbf z)[M_2]+2D^2\gamma_{M_0}(\mathbf z)[M_1,M_1]],\\
+V_j&=j_0^{-1}\int_1^\infty p_j(t;\cdot)dt\quad(j=1,2),&
+V_{\rm t}&=j_0^{-1}\int_1^\infty t p_0(t;\cdot)dt>0.
+\end{aligned}
+\tag{3.1}
+$$
+
+Here $u(h)$ is the vector in the first line and $D$ differentiates in the positive matrix. P §107 supplies absolute convergence and the full-space complete-field expansion
+
+$$
+\begin{gathered}
+\widetilde U_s=V+\beta_sV_1+\beta_s^2V_2+\lambda s^2V_{\rm t}+\mathcal R_s,
+\qquad \|\mathcal R_s\|_\infty\le Cs^{5/2},\\
+|V_1|\le C(1+|r|)^{-4},\qquad |V_2|+V_{\rm t}\le C(1+|r|)^{-3},\\
+V_j\circ\sigma=(-1)^jV_j,\qquad V_{\rm t}\circ\sigma=V_{\rm t}.
+\end{gathered}
+\tag{3.2}
+$$
+
+The expansion includes every real phase, both moving deaths, zero extension and the original infinite-time tail. Its source-weighted moment antecedent is, for every fixed $m\in\mathbb N_0$, $t>0$ and $L\ge0$,
+
+$$
+h_t(r)\mathbb E_{0,r}^t[
+ (\det M_0)^{-1/2}S_t^m\mathbf1_{\{S_t>L\}}]
+ \le C_m t^{(m-7)/2}e^{-c_mL^2/t},
+\tag{3.3}
+$$
+
+with its stated full-moment version at $L=0$. No local heat theorem alone is being extended to (3.2). The clock in all these fields is $B$, not $aB$.
+

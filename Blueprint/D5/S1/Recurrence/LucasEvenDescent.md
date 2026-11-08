@@ -46,7 +46,19 @@ $$\begin{aligned}\forall R: Type* [\operatorname{CommRing}\left(R\right)],\\\for
 
 Commuting a matrix power with the companion matrix determines all four entries in terms of U(n) and U(n+1). Multiplication by one more companion matrix gives the recurrence; the zeroth and first powers give U(0)=0 and U(1)=1. No sign restriction on n is used.
 
-**Theorem 1.4 (The doubling hypotheses force two-torsion).**
+**Theorem 1.4 (The two Lucas doubling identities).**
+
+$$\forall R: Type* [\operatorname{CommRing}\left(R\right)], \forall p: R, q: \operatorname{Units}\left(R\right), \forall n: \mathbb{Z}, \operatorname{lucasU}\left(p, q, 2 \cdot n\right) = 2 \cdot \operatorname{lucasU}\left(p, q, n\right) \cdot \operatorname{lucasU}\left(p, q, n + 1\right) - p \cdot \operatorname{lucasU}\left(p, q, n\right)^{2} \land \operatorname{lucasU}\left(p, q, 2 \cdot n + 1\right) = \operatorname{lucasU}\left(p, q, n + 1\right)^{2} - \operatorname{val}\left(q\right) \cdot \operatorname{lucasU}\left(p, q, n\right)^{2}$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/LucasEvenDescent.doubling` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Multiplying the companion matrix power at n by itself gives the entries at 2*n. The identities hold at every integer index over any commutative ring with q a unit.
+
+**Theorem 1.5 (The doubling hypotheses force two-torsion).**
 
 $$\begin{aligned}\forall R: Type* [\operatorname{CommRing}\left(R\right)],\\\forall p: R, q: \operatorname{Units}\left(R\right),\\\forall n: \mathbb{Z},\\\operatorname{U}\left(p, q, 2 \cdot n\right) = 0 \Rightarrow \operatorname{U}\left(p, q, 2 \cdot n + 1\right) = \operatorname{val}\left(q^{n}\right) \Rightarrow\\2 \cdot \operatorname{U}\left(p, q, n\right) = 0\end{aligned}$$
 
@@ -58,7 +70,7 @@ $$\begin{aligned}\forall R: Type* [\operatorname{CommRing}\left(R\right)],\\\for
 
 For arbitrary p, matrix multiplication gives both doubling identities, and the determinant gives the quadratic identity with right side q^n. Combining them under both displayed hypotheses yields (2U(n))q^n=0. Cancel the unit q^n. This step holds over any commutative ring, without a finiteness or modulus hypothesis.
 
-**Definition 1.5 (The nonnegative generator of the zero indices).**
+**Definition 1.6 (The nonnegative generator of the zero indices).**
 
 $$\begin{aligned}\forall R: Type* [\operatorname{CommRing}\left(R\right)],\\\forall p: R, q: \operatorname{Units}\left(R\right),\\g: \mathbb{Z}, g\mathbb{Z} = \{ n: \mathbb{Z} \mid \operatorname{U}\left(p, q, n\right) = 0 \},\\\operatorname{e}\left(p, q\right) = \operatorname{natAbs}\left(g\right) \in \mathbb{N}\end{aligned}$$
 
@@ -70,7 +82,7 @@ $$\begin{aligned}\forall R: Type* [\operatorname{CommRing}\left(R\right)],\\\for
 
 The addition identity closes the zero indices under addition. At a zero index, the determinant identity makes the next value a unit; the addition identity then closes the zero indices under negation. Every additive subgroup of the integers is cyclic. Lean chooses a generator g using Classical.choose and takes its natural absolute value. In the display gZ denotes its subgroup of integer multiples. This construction is noncomputable and may give zero over an infinite ring; positivity is proved separately under the finite-ring hypothesis.
 
-**Theorem 1.6 (Zero indices are exactly entry-point multiples).**
+**Theorem 1.7 (Zero indices are exactly entry-point multiples).**
 
 $$\begin{aligned}\forall R: Type* [\operatorname{CommRing}\left(R\right)],\\\forall p: R, q: \operatorname{Units}\left(R\right),\\\forall n: \mathbb{Z},\\\operatorname{U}\left(p, q, n\right) = 0 \iff \operatorname{Cast}\left(\operatorname{e}\left(p, q\right), \mathbb{Z}\right) \mid n\end{aligned}$$
 
@@ -82,7 +94,7 @@ $$\begin{aligned}\forall R: Type* [\operatorname{CommRing}\left(R\right)],\\\for
 
 Membership in the cyclic subgroup is integer divisibility by its generator. Replacing that generator by its natural absolute value does not change divisibility. The equivalence includes negative indices and does not require a finite ring.
 
-**Theorem 1.7 (The least positive zero index over a finite ring).**
+**Theorem 1.8 (The least positive zero index over a finite ring).**
 
 $$\begin{aligned}\forall R: Type* [\operatorname{CommRing}\left(R\right)],\\{}[\operatorname{Finite}\left(R\right)],\\\forall p: R, q: \operatorname{Units}\left(R\right),\\0 < \operatorname{e}\left(p, q\right) \land \operatorname{U}\left(p, q, \operatorname{Cast}\left(\operatorname{e}\left(p, q\right), \mathbb{Z}\right)\right) = 0 \land\\\forall r: \mathbb{N}, 0 < r \Rightarrow \operatorname{U}\left(p, q, \operatorname{Cast}\left(r, \mathbb{Z}\right)\right) = 0 \Rightarrow \operatorname{e}\left(p, q\right) \leq r\end{aligned}$$
 
@@ -94,7 +106,7 @@ $$\begin{aligned}\forall R: Type* [\operatorname{CommRing}\left(R\right)],\\{}[\
 
 The companion unit has positive finite order, and its power at that order is the identity. Thus there is a positive zero index. The divisibility characterization makes e positive, makes e itself a zero index, and bounds it by every positive natural zero index. This identifies the subgroup construction with the usual entry point of the sequence at nonnegative indices.
 
-**Theorem 1.8 (Exactly one descent alternative in ZMod m).**
+**Theorem 1.9 (Exactly one descent alternative in ZMod m).**
 
 $$\begin{aligned}\forall m: \mathbb{N}, 0 < m \Rightarrow \operatorname{Even}\left(m\right) \Rightarrow\\\forall p: \operatorname{ZMod}\left(m\right),\\\forall q: \operatorname{Units}\left(\operatorname{ZMod}\left(m\right)\right), \forall n: \mathbb{Z},\\\operatorname{U}\left(p, q, 2 \cdot n\right) = 0 \Rightarrow \operatorname{U}\left(p, q, 2 \cdot n + 1\right) = \operatorname{val}\left(q^{n}\right) \Rightarrow\\\operatorname{Xor}\left(\operatorname{U}\left(p, q, n\right) = 0, \operatorname{U}\left(p, q, n\right) = \operatorname{Cast}\left(\operatorname{Div}\left(m, 2\right), \operatorname{ZMod}\left(m\right)\right) \land \operatorname{Even}\left(\operatorname{e}\left(p, q\right)\right) \land \exists c: \mathbb{Z}, \operatorname{Odd}\left(c\right) \land n = c \cdot \operatorname{Div}\left(\operatorname{Cast}\left(\operatorname{e}\left(p, q\right), \mathbb{Z}\right), 2\right)\right)\end{aligned}$$
 
@@ -108,7 +120,7 @@ The ring theorem gives 2U(n)=0 for arbitrary p. In ZMod m, the self-negative res
 
 Here Xor(A,B) means (A and not B) or (B and not A), matching Lean's exclusive disjunction. The alternatives are mutually exclusive because an even positive m is at least 2 and 0 < m/2 < m. Consequently the half-modulus residue is not zero. Both alternatives actually occur, and they occur inside the cited paper's own parameter setting: take p=2 and q=-1, the Pell sequence, whose parameters are nonzero and coprime and whose discriminant is 8, so it is nondegenerate. Modulo m=2 the index n=1 has U(2)=0 and U(3)=1=q, with U(1)=1=m/2 and e=2, so n=1 is the odd multiple 1*(e/2) and the half-modulus alternative holds. Modulo m=4, where e=4, the index n=-2 gives the half-modulus alternative with c=-1 and the index n=-4 gives the zero alternative; those two exercise the negative indices that the integer quantifier admits.
 
-**Theorem 1.9 (Conjecture 5.2 with integer parameters).**
+**Theorem 1.10 (Conjecture 5.2 with integer parameters).**
 
 $$\begin{aligned}\forall p: \mathbb{Z}, q: \mathbb{Z}, m: \mathbb{N},\\0 < m \Rightarrow \operatorname{Even}\left(p\right) \Rightarrow \operatorname{Even}\left(m\right) \Rightarrow \operatorname{gcd}\left(q, \operatorname{Cast}\left(m, \mathbb{Z}\right)\right) = 1 \Rightarrow\\\forall n: \mathbb{Z},\\\operatorname{let} Q: \operatorname{Units}\left(\operatorname{ZMod}\left(m\right)\right) = \operatorname{unit}\left(q, m\right) \operatorname{in}\\\operatorname{U}\left(\operatorname{Cast}\left(p, \operatorname{ZMod}\left(m\right)\right), Q, 2 \cdot n\right) = 0 \Rightarrow \operatorname{U}\left(\operatorname{Cast}\left(p, \operatorname{ZMod}\left(m\right)\right), Q, 2 \cdot n + 1\right) = \operatorname{val}\left(Q^{n}\right) \Rightarrow\\\operatorname{Xor}\left(\operatorname{U}\left(\operatorname{Cast}\left(p, \operatorname{ZMod}\left(m\right)\right), Q, n\right) = 0, \operatorname{U}\left(\operatorname{Cast}\left(p, \operatorname{ZMod}\left(m\right)\right), Q, n\right) = \operatorname{Cast}\left(\operatorname{Div}\left(m, 2\right), \operatorname{ZMod}\left(m\right)\right) \land \operatorname{Even}\left(\operatorname{e}\left(\operatorname{Cast}\left(p, \operatorname{ZMod}\left(m\right)\right), Q\right)\right) \land \exists c: \mathbb{Z}, \operatorname{Odd}\left(c\right) \land n = c \cdot \operatorname{Div}\left(\operatorname{Cast}\left(\operatorname{e}\left(\operatorname{Cast}\left(p, \operatorname{ZMod}\left(m\right)\right), Q\right), \mathbb{Z}\right), 2\right)\right)\end{aligned}$$
 
@@ -128,6 +140,7 @@ For integers p and q, the hypothesis gcd(q,m)=1 supplies the canonical unit Q in
 
 - Truth anchor: `D5/S1/Recurrence/LucasEvenDescent.companion`
 - Truth anchor: `D5/S1/Recurrence/LucasEvenDescent.conjecture_five_two`
+- Truth anchor: `D5/S1/Recurrence/LucasEvenDescent.doubling`
 - Truth anchor: `D5/S1/Recurrence/LucasEvenDescent.entryPoint`
 - Truth anchor: `D5/S1/Recurrence/LucasEvenDescent.entry_point_spec`
 - Truth anchor: `D5/S1/Recurrence/LucasEvenDescent.lucasU`
