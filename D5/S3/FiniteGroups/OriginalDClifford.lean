@@ -272,7 +272,7 @@ private noncomputable def originalDActualComponent
 
 /-- Actual inertia: the stabilizer of the genuine D-submodule component under
 left evaluation by `D = End_{k[G]} ρ.asModule`. -/
-private noncomputable def originalDActualInertia
+noncomputable def originalDActualInertia
     (σ : Subrepresentation (ρ.comp N.subtype)) (hσ : IsAtom σ) : Subgroup G where
   carrier := {g | originalDActualComponent ρ σ hσ g = originalDBaseComponent ρ σ hσ}
   one_mem' := by
@@ -481,7 +481,7 @@ private noncomputable def originalDRestrictEquivPiIndependent
     LinearEquiv.piCongrRight (fun q => (hcomponent q).symm)
 
 /-- Independent-universe original-D Clifford rank formula. -/
-private theorem originalD_finrank_independent_universes
+theorem originalD_finrank_independent_universes
     (σ : Subrepresentation (ρ.comp N.subtype)) (hσ : IsAtom σ) :
     Module.finrank (Module.End k[G] ρ.asModule) ρ.asModule =
       (originalDActualInertia ρ σ hσ).index *
