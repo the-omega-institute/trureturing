@@ -1,6 +1,7 @@
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
 import D5.S3.Quantum.Foundation.ProjectorRayDifferential
+import Mathlib.Analysis.InnerProductSpace.PiL2
 
 /-!
 Full-telescope source reconstruction for the local ray-distance speed theorem.
@@ -8,10 +9,11 @@ The parameter family retains the original amplitude carrier and both instances;
 the state retains the original base amplitude and velocity. The law retains
 the actual curve, derivative and neighbourhood unit-norm hypotheses.
 
-This is source-binding preparation, not a validated Contract.Registration.
-Whole-family intervention, sensitivity, actual observational dependence and
-compiler occurrence/coordinate evidence remain required. A constant readout or
-a signature that discards the amplitude carrier cannot replace these operands.
+The dependent-family evidence includes an explicit rejected whole family and
+two distinct observations in the same two-dimensional amplitude space.
+It is not a validated Contract.Registration: compiler occurrence/coordinate
+evidence and the outer typed contract remain required. A signature that
+discards the amplitude carrier cannot replace these operands.
 The unfinished binding is tracked at
 https://github.com/the-omega-institute/trureturing/issues/28177.
 -/
@@ -67,5 +69,53 @@ theorem source_bridge : (type_of% (@fs_angle_speed.{u})) ↔
 
 theorem actual_positive : arena.{u}.Law actual :=
   source_bridge.mp (@fs_angle_speed.{u})
+
+def rejected : Realization signature.{u} :=
+  realize signature (fun _ _ _ => 1) (fun e => nomatch e)
+
+private def testParameters : Parameters.{u} :=
+  ⟨EuclideanSpace ℂ (ULift.{u} (Fin 2)), inferInstance, inferInstance⟩
+
+private def base : testParameters.{u}.E := EuclideanSpace.single ⟨0⟩ 1
+
+private def transverse : testParameters.{u}.E := EuclideanSpace.single ⟨1⟩ 1
+
+private theorem base_norm : ‖base.{u}‖ = 1 := by
+  simp [base, EuclideanSpace.single, PiLp.norm_single]
+
+private theorem transverse_norm : ‖transverse.{u}‖ = 1 := by
+  simp [transverse, EuclideanSpace.single, PiLp.norm_single]
+
+private theorem base_transverse_inner : inner ℂ base.{u} transverse = 0 := by
+  simp [base, transverse, EuclideanSpace.inner_single_left,
+    EuclideanSpace.single, PiLp.single_apply]
+
+private theorem rejected_law : ¬ arena.{u}.Law rejected := by
+  intro h
+  have ht := h testParameters (fun _ : ℝ => base) base 0 base_norm rfl
+    (hasDerivAt_const (0 : ℝ) base)
+    (Eventually.of_forall fun _ => base_norm)
+  have hz : Tendsto (fun _ : ℝ => (0 : ℝ)) (𝓝[≠] 0) (𝓝 1) := by
+    simpa [rejected, realize, fsAngle, inner_self_eq_norm_sq_to_K, base_norm] using ht
+  exact zero_ne_one (tendsto_nhds_unique tendsto_const_nhds hz)
+
+private theorem dependence : ObservationalDependence signature.{u} actual := by
+  intro role
+  refine ⟨testParameters, (base, 0), (base, transverse), ?_⟩
+  change Real.sqrt (‖(0 : testParameters.E)‖ ^ 2 - ‖inner ℂ base 0‖ ^ 2) ≠
+    Real.sqrt (‖transverse‖ ^ 2 - ‖inner ℂ base transverse‖ ^ 2)
+  simp [transverse_norm, base_transverse_inner]
+
+def family : Registration arena.{u} (type_of% (@fs_angle_speed.{u})) where
+  actual := actual
+  bridge := source_bridge
+  variation := ⟨actual_positive, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      exact ⟨rejected, fun j hj => (hj (Subsingleton.elim j i)).elim, rfl, rejected_law⟩
+    · intro e
+      exact nomatch e
+  dependence := dependence
 
 end Reg.D5.S3.Quantum.Foundation.ProjectorRayDifferential
