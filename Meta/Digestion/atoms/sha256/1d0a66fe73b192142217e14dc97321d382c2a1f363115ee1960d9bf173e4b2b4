@@ -1,0 +1,93 @@
+## 参考来源
+
+<a id="ref-repo"></a>
+
+\[1\] Trureturing，默认分支 `dev`。主快照 [840da33992b6](https://github.com/the-omega-institute/trureturing/commit/840da33992b600d8d4808b04ff82dde323089212)，2026-11-07 21:30:57 UTC；末次 [142923373ceb](https://github.com/the-omega-institute/trureturing/commit/142923373ceb82823ffce0ddd26a796501c4fb60)，21:39:03 UTC。末次查询 21:40:13 UTC；合并理论目录 1351 份。
+
+<a id="ref-otf5"></a>
+
+\[2\] Trureturing， *OTF-005：轴面几何、相位纤维与内生闭合* ，尤其 C1–C7、§§6、9–10。<https://github.com/the-omega-institute/trureturing/blob/142923373ceb82823ffce0ddd26a796501c4fb60/docs/develop/theory/OTF_005_AXIS_PLANE_GEOMETRY_PHASE_FIBRES_AND_ENDOGENOUS_CLOSURE.md>。
+
+<a id="ref-c128"></a>
+
+\[3\] Trureturing， *C128：任意维原对象保持的静态量子重构* ，§§16–21：纯锚、原映射线性恢复、轴外距离、混态边界与隐藏直和反例。<https://github.com/the-omega-institute/trureturing/blob/840da33992b600d8d4808b04ff82dde323089212/docs/develop/theory/AURIC_C128_ARBITRARY_DIMENSIONAL_STATIC_QUANTUM_RECONSTRUCTION.md>。
+
+<a id="ref-jbbridge"></a>
+
+\[4\] Trureturing， *任意维小窗口的同一原单位桥* ，§§57–63：原 Jordan 图册、混合标准/反向嵌入与原值 $D$。<https://github.com/the-omega-institute/trureturing/blob/840da33992b600d8d4808b04ff82dde323089212/docs/develop/theory/AURIC_ARBITRARY_DIMENSIONAL_SMALL_WINDOW_UNIT_BRIDGE.md>。
+
+<a id="ref-c139cont"></a>
+
+\[5\] Trureturing， *C139：有限返回标定与负载稳定性续卷* ，末次关于完整 CountRead 支持和有限分组收敛的增补。<https://github.com/the-omega-institute/trureturing/blob/142923373ceb82823ffce0ddd26a796501c4fb60/docs/develop/theory/AURIC_C139_FINITE_RETURN_CALIBRATION_AND_LOAD_STABILITY_CONTINUATION.md>。
+
+<a id="ref-c139cp"></a>
+
+\[6\] Trureturing， *C139: Fixed-source comparators and native event boundary* ，定义 66.1、定理 67.1，第 68、74–85 节。 <https://github.com/the-omega-institute/trureturing/blob/840da33992b600d8d4808b04ff82dde323089212/docs/develop/theory/AURIC_C139_FIXED_SOURCE_COMPARATORS_AND_NATIVE_EVENT_BOUNDARY.md>。
+
+<a id="ref-v89"></a>
+
+\[7\] Trureturing， *V89：平方闭合、递归稳定与关系量子场* ，第 4–7 节，UCP 背景下的乘法域。<https://github.com/the-omega-institute/trureturing/blob/840da33992b600d8d4808b04ff82dde323089212/docs/develop/theory/AURIC_SQUARE_CLOSURE_RECURSIVE_STABILITY_RELATIONAL_QUANTUM_FIELD_V89.md>。
+
+<a id="ref-r522"></a>
+
+\[8\] Trureturing， *R5-022：有向面积与三元返回* ，定理 2.2，第 9 节。<https://github.com/the-omega-institute/trureturing/blob/840da33992b600d8d4808b04ff82dde323089212/docs/develop/theory/AURIC_R5_022_ORIENTED_AREA_AND_TERNARY_RETURN.md>。
+
+<a id="ref-otf4"></a>
+
+\[9\] Trureturing， *OTF-004：内生观察、注意、控制与余弦反馈* ，第 2、6–7 节。<https://github.com/the-omega-institute/trureturing/blob/840da33992b600d8d4808b04ff82dde323089212/docs/develop/theory/OTF_004_ENDOGENOUS_OBSERVATION_ATTENTION_CONTROL_AND_COSINE_FEEDBACK.md>。
+
+<a id="ref-rodriguez"></a>
+
+\[10\] Á. Rodríguez Palacios， *One-sided division absolute valued algebras* ，Publicacions Matemàtiques 36(2B) (1992), 925–954。<https://doi.org/10.5565/PUBLMAT_362B92_12>；作者机构原文目录与摘要 <https://ddd.uab.cat/record/60222>。其单侧除法理论包括内积范数结论与无限维左单位实例。
+
+<a id="ref-baez"></a>
+
+\[11\] J. C. Baez， *The Octonions* ，Bull. Amer. Math. Soc. 39 (2002), 145–205。 作者原稿 <https://math.ucr.edu/home/baez/octonions/octonions.pdf>。 合成代数、Clifford 关系、spinor 与射影几何的既有背景；本稿不认领这些一般结构的历史优先权。
+
+<a id="ref-ashtekar"></a>
+
+\[12\] A. Ashtekar and T. A. Schilling， *Geometrical Formulation of Quantum Mechanics* ，1997。 <https://arxiv.org/abs/gr-qc/9706069>。
+
+<a id="ref-projector"></a>
+
+\[13\] J. Mitscherling, A. Avdoshkin and J. E. Moore， *Gauge-invariant projector calculus for quantum state geometry and applications to observables in crystals* ，arXiv:2412.03637v2，2025-05-22 版本，§II.6.1。<https://arxiv.org/html/2412.03637v2>。
+
+<a id="ref-berry"></a>
+
+\[14\] M. V. Berry， *Quantal phase factors accompanying adiabatic changes* ，Proc. R. Soc. Lond. A 392 (1984), 45–57。 <https://doi.org/10.1098/rspa.1984.0023>；作者稿 <https://michaelberryphysics.wordpress.com/wp-content/uploads/2013/07/berry120.pdf>。
+
+<a id="ref-ding"></a>
+
+\[15\] Z. Ding, Y. Deng, S.-M. Fei et al.， *Universal conservation laws of the wave-particle-entanglement triad: theory and experiment* ，Light: Science & Applications 14, 82 (2025)，2025-02-12。<https://doi.org/10.1038/s41377-025-01759-4>。
+
+<a id="ref-siddiqui"></a>
+
+\[16\] M. A. Siddiqui， *Entanglement inference from quantum erasure and path discrimination* ，arXiv:2611.02679v1，2026-11-02 预印本，§§II–IV 及相应补充材料。<https://arxiv.org/abs/2611.02679>；全文 <https://arxiv.org/pdf/2611.02679>。本稿不将预印本标作已同行评审。
+
+<a id="ref-gogo05"></a>
+
+\[17\] A. Gogo, W. D. Snyder and M. Beck， *Comparing quantum and classical correlations in a quantum eraser* ，Phys. Rev. A 71, 052103 (2005)。<https://doi.org/10.1103/PhysRevA.71.052103>；作者稿 <https://people.reed.edu/~beckm/QM/qe/qe.pdf>。
+
+<a id="ref-toth05"></a>
+
+\[18\] G. Tóth and O. Gühne， *Detecting Genuine Multipartite Entanglement with Two Local Measurements* ，Phys. Rev. Lett. 94, 060501 (2005)。<https://arxiv.org/abs/quant-ph/0405165>；<https://doi.org/10.1103/PhysRevLett.94.060501>。
+
+<a id="ref-englert"></a>
+
+\[19\] B.-G. Englert， *Fringe Visibility and Which-Way Information: An Inequality* ，Phys. Rev. Lett. 77 (1996), 2154。 <https://doi.org/10.1103/PhysRevLett.77.2154>。
+
+<a id="ref-watrous"></a>
+
+\[20\] J. Watrous， *The Theory of Quantum Information* ，Chapter 2，尤其 Theorem 2.22。 作者原稿 <https://cs.uwaterloo.ca/~watrous/TQI/TQI.2.pdf>。
+
+<a id="ref-pw"></a>
+
+\[21\] D. N. Page and W. K. Wootters，  *Evolution without evolution: Dynamics described by stationary observables* ，Phys. Rev. D 27 (1983), 2885–2892。 <https://doi.org/10.1103/PhysRevD.27.2885>。
+
+<a id="ref-trinity"></a>
+
+\[22\] P. A. Höhn, A. R. H. Smith and M. P. E. Lock，  *Trinity of relational quantum dynamics* ，Phys. Rev. D 104 (2021), 066001。 <https://arxiv.org/abs/1912.00033>。
+
+<a id="ref-baumann"></a>
+
+\[23\] V. Baumann and M. P. E. Lock， *Time delocalization and causality across temporal quantum reference frames* ，Phys. Rev. D 114, 086005 (2026)，2026-10-05。<https://doi.org/10.1103/9pl6-z9g4>。

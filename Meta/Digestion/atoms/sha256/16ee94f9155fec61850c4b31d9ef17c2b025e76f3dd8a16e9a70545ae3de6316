@@ -1,0 +1,24 @@
+**定义 80.1（原度量不变的剪切资料族）。** 始终在约定 69.1 所指的同一个[XII 定义 55.1][XII] 基类中构造数据。保留全部原 $89$ 配置、$235$ 实际边及中心、固定外位、十一地址和原块规则。任取 $k\ge1$，每个原纤维的度量始终是
+
+$$
+V_q=P_q\perp Z_q=\mathbb R^2\perp\mathbb R^k,\qquad
+L_0=J\oplus0,\quad J=\begin{pmatrix}0&-1\\1&0\end{pmatrix}.
+\tag{80.1}
+$$
+
+任选固定实线性 $N_q:P_q\to Z_q$，将其在 $Z_q$ 上延拓为零，要求唯一原 ready $r=\{3,7\}$ 上 $N_r=0$。置
+
+$$
+\begin{gathered}
+N_q^2=0,\quad L_0N_q=0,\quad
+G_q=I+N_q,\quad G_q^{-1}=I-N_q,\\
+L_q=G_qL_0G_q^{-1}=G_qL_0,\qquad
+u_*=(e_1,0)\in V_r,\\
+T_{qt}=I_2\oplus O_{qt},\quad O_{qt}\in O(k),\quad
+O_{tq}=O_{qt}^{-1}\quad\text{（全部原边）}.
+\end{gathered}
+\tag{80.2}
+$$
+
+这里 $G_q$ 仅是证明用可逆矩阵，非零剪切时不是原度量等距，不是定义 72.1 的允许坐标规范或一项物理操作。原 $g$ 不变，实际 $T$ 就是 (80.2)，不是 $G_qT_{qt}G_t^{-1}$。原 $B_j(N,O)=B_j(O)$ 逐字由这些实际 $T$ 经 [XII 式 (49.2)][XII] 的黄金活动块、阻塞单点及两个边界生成；绝不将 $\mathcal G B_j(0,I)\mathcal G^{-1}$ 充作原 $B_j$。
+

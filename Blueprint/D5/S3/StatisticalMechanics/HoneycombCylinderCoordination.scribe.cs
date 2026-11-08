@@ -29,6 +29,30 @@ internal sealed class HoneycombCylinderCoordinationDocument : IScribeDocumentDef
                 "The neighbours of A(i,j) are B(i,j), B(i−1,j) and B(i,j−1). "
                     + "The second disjunct supplies the reverse edges. The Boolean labels differ "
                     + "along every edge, so the graph has no loops."),
+            Definition("potential", "potential", "The shared plane-distance potential", PotentialFormula(),
+                "The TeaCoordinationSequence residual is used with parameters (0,0) on A vertices and (0,1) on B vertices; toNat is the integer-to-natural conversion."),
+            Theorem("geodesic", "geodesic", "A walk attaining the potential", GeodesicFormula(),
+                "Strong induction on the potential constructs an adjacent descent and a walk of exactly that length."),
+            Theorem("plane-distance", "plane_distance", "The exact plane graph distance",
+                All("v", V("Vertex"), Eq(App(Q("SimpleGraph", "dist"), V("honeycombGraph"),
+                    Pair(V("false"), Pair(D(0), D(0))), V("v")), Call("potential", V("v")))),
+                "The geodesic gives the upper bound and the potential bound gives the reverse inequality."),
+            Definition("a-fiber", "AFiber", "An A-coordinate slice", FiberFormula(false),
+                "The integer i determines j=s−i. The natural radius k is cast to the integers in the residual equality."),
+            Definition("b-fiber", "BFiber", "A B-coordinate slice", FiberFormula(true),
+                "The shifted residual uses parameters (0,1), and k is cast to the integers."),
+            Theorem("finite-a-fiber", "finiteAFiber", "Finiteness of A-coordinate slices",
+                All("s", Integers(), All("k", Naturals(), Call("Finite", Call("AFiber", V("s"), V("k"))))),
+                "The slice embeds in the finite integer interval [−k,k]."),
+            Theorem("finite-b-fiber", "finiteBFiber", "Finiteness of B-coordinate slices",
+                All("s", Integers(), All("k", Naturals(), Call("Finite", Call("BFiber", V("s"), V("k"))))),
+                "The slice embeds in the finite integer interval [−k−1,k]."),
+            Theorem("a-fiber-card", "a_fiber_card", "A-coordinate slice cardinalities", FiberCardFormula(false),
+                "For k>0, interior slices contain two points, and each of the two boundary slices contains k+1 points."),
+            Theorem("b-fiber-card", "b_fiber_card", "B-coordinate slice cardinalities", FiberCardFormula(true),
+                "Interior slices contain two points. The two boundary slices contain k+1 and k+2 points."),
+            Theorem("interval-sum", "interval_sum", "The weighted intersection of integer intervals", IntervalSumFormula(),
+                "The sum is over Finset.Icc L U. Its value is twice the nonnegative length of the intersection with [a,b]."),
             Definition("translation", "translationSetoid", "Integral powers of the translation",
                 TranslationFormula(),
                 "The integer k may have either sign or be zero. The Boolean label is fixed. "
@@ -101,6 +125,61 @@ internal sealed class HoneycombCylinderCoordinationDocument : IScribeDocumentDef
             DeclarationHandle.Create(Module + "." + name), H(title),
             StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(Source),
             Blocks(Paragraph(Text(commentary))), DescribeRole.Definition);
+
+    private static DocumentBlock Theorem(string id, string name, string title, Formula formula,
+        string commentary) => Describe.Lean(DescribeId.Create(id),
+            DeclarationHandle.Create(Module + "." + name), H(title),
+            StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(Source),
+            Blocks(Paragraph(Text(commentary))), DescribeRole.Theorem);
+
+    private static Formula PotentialFormula()
+    {
+        var v = V("v");
+        Formula Radius(byte q) => App(Q("Int", "toNat"), App(Q("TeaCoordinationSequence", "residual"),
+            I(v), J(v), D(0), D(q)));
+        return All("v", V("Vertex"), Eq(Call("potential", v),
+            Ite(Eq(Color(v), V("true")), Add(Mul(D(2), Radius(1)), D(1)), Mul(D(2), Radius(0)))));
+    }
+
+    private static Formula GeodesicFormula()
+    {
+        var v = V("v"); var p = V("p");
+        return All("v", V("Vertex"), Ex("p", App(Q("SimpleGraph", "Walk"), V("honeycombGraph"),
+            Pair(V("false"), Pair(D(0), D(0))), v),
+            Eq(App(Q("Walk", "length"), p), Call("potential", v))));
+    }
+
+    private static Formula FiberFormula(bool b)
+    {
+        var s = V("s"); var k = V("k"); var i = V("i");
+        return All("s", Integers(), All("k", Naturals(),
+            Eq(Call(b ? "BFiber" : "AFiber", s, k), Call("Subtype", Lambda("i", Integers(),
+                Eq(App(Q("TeaCoordinationSequence", "residual"), i, Sub(s, i), D(0), b ? D(1) : D(0)),
+                    Cast(k, Integers())))))));
+    }
+
+    private static Formula FiberCardFormula(bool b)
+    {
+        var s = V("s"); var k = V("k"); var z = Cast(k, Integers()); var neg = Sub(D(0), z);
+        var interior = And(b ? Le(neg, s) : Lt(neg, s), Lt(s, z));
+        var rhs = Add(Add(Ite(interior, D(2), D(0)), Ite(Eq(s, z), Add(k, D(1)), D(0))),
+            Ite(Eq(s, b ? Sub(neg, D(1)) : neg), Add(k, b ? D(2) : D(1)), D(0)));
+        var equality = Eq(App(Q("Nat", "card"), Call(b ? "BFiber" : "AFiber", s, k)), rhs);
+        return All("s", Integers(), All("k", Naturals(), b ? equality : Imp(Lt(D(0), k), equality)));
+    }
+
+    private static Formula IntervalSumFormula()
+    {
+        var l = V("L"); var u = V("U"); var a = V("a"); var b = V("b"); var s = V("s");
+        var sum = App(Q("Finset", "sum"), App(Q("Finset", "Icc"), l, u),
+            Lambda("s", Integers(), Ite(And(Le(a, s), Le(s, b)), Cast(D(2), Naturals()), D(0))));
+        var length = App(Q("Int", "toNat"), Sub(Add(Call("min", u, b), D(1)), Call("max", l, a)));
+        return All("L", Integers(), All("U", Integers(), All("a", Integers(), All("b", Integers(),
+            Eq(sum, Mul(D(2), length))))));
+    }
+
+    private static Formula Ite(Formula p, Formula a, Formula b) => Call("ite", p, a, b);
+    private static Formula Lt(Formula a, Formula b) => Seq(a, Sp, F.Lt, Sp, b);
 
     private static Formula GraphFormula()
     {

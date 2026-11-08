@@ -1,0 +1,12 @@
+**推论 7.1（全部有限原复 Gram 正性）。** 对每个有限原标签族 $a_1,\ldots,a_n$、所有复系数 $z_1,\ldots,z_n$ 和每个原 $\alpha$，
+
+$$
+\sum_{j,k}\overline{z_j}z_k
+\bigl[\alpha(S(a_j,a_k))-\mathrm i\alpha(D(a_j,a_k))\bigr]\ge0.
+\tag{7.1}
+$$
+
+这包括零标签、重复标签、零质量及不同原质量；它不再是新增的独立表正性前件。
+
+证明。令 $z=\sum_jz_ja_j\in A_E$，则 $z^*z\in E\cap A_+=C$。原评价在它上非负，展开得 (7.1)。$m_\alpha=0$ 的正评价在整个序单位空间上为零，所以对应整表为零；无须除以质量。∎
+

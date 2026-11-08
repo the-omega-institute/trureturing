@@ -6,6 +6,7 @@
    utility: none
    digest: Gaussian cosine quotients are Bochner integrable and the logarithmic singular kernel belongs to symmetric L2. -/
 
+import D5.S3.Analytic.LogSquareBound
 import D5.S3.Fourier.Asymptotics.SameNoiseSecondChaos
 import D5.S3.Fourier.Asymptotics.CosineNormalizedRemainder
 import D5.S3.Fourier.Asymptotics.L2ContinuousPrimitive
@@ -469,24 +470,6 @@ theorem regularKernel_difference (D s : ℝ)
   ring
 
 end Frequency
-theorem log_square_bound (x : ℝ) (hx : 0 < x) :
-    (Real.log x)^2 ≤ 16 * x ^ (-1/2 : ℝ) + x^2 := by
-  by_cases h1 : x ≤ 1
-  · have hl : Real.log x ≤ 0 := Real.log_nonpos hx.le h1
-    have h := Real.log_le_rpow_div (inv_nonneg.mpr hx.le) (by norm_num : (0 : ℝ) < 1/4)
-    rw [Real.log_inv, ← Real.rpow_neg_eq_inv_rpow] at h
-    have hp : 0 ≤ x ^ (-1/4 : ℝ) := Real.rpow_nonneg hx.le _
-    have he : (x ^ (-1/4 : ℝ))^2 = x ^ (-1/2 : ℝ) := by
-      rw [← Real.rpow_natCast, ← Real.rpow_mul hx.le]; norm_num
-    have hb : (Real.log x)^2 ≤ 16 * (x ^ (-1/4 : ℝ))^2 := by
-      norm_num at h; nlinarith
-    rw [he] at hb
-    nlinarith [sq_nonneg x]
-  · have hl : 0 ≤ Real.log x := Real.log_nonneg (le_of_not_ge h1)
-    have hb := Real.log_le_sub_one_of_pos hx
-    have hp : 0 ≤ x ^ (-1/2 : ℝ) := Real.rpow_nonneg hx.le _
-    nlinarith
-
 theorem log_square_gaussian_integrable (b : ℝ) (hb : 0 < b) :
     Integrable (fun x : ℝ => (Real.log |x|)^2 * Real.exp (-b*x^2)) := by
   have hi : IntegrableOn (fun x : ℝ => (Real.log |x|)^2 * Real.exp (-b*x^2)) (Ioi 0) := by
@@ -499,7 +482,7 @@ theorem log_square_gaussian_integrable (b : ℝ) (hb : 0 < b) :
     rw [abs_of_pos hx]
     dsimp only [Pi.add_apply]
     rw [Real.rpow_two]
-    have H := log_square_bound x hx
+    have H := D5.S3.Analytic.LogSquareBound.log_square_bound x hx
     nlinarith [Real.exp_pos (-b*x^2)]
   rw [← integrableOn_univ, ← @Iio_union_Ici _ _ (0 : ℝ), integrableOn_union,
     integrableOn_Ici_iff_integrableOn_Ioi]

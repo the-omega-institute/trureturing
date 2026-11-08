@@ -11,6 +11,7 @@ import pathlib
 import re
 import shlex
 import shutil
+import signal
 import stat
 import subprocess
 import sys
@@ -104,6 +105,21 @@ class GitHubCommandError(subprocess.CalledProcessError):
     """Keep captured diagnostics in callers' failure receipts."""
     def __str__(self):
         return f"{super().__str__()} stderr: {self.stderr or '<empty>'}"
+
+
+class ReleaseInterrupted(KeyboardInterrupt):
+    """A native signal requests stack unwinding and the existing rollback."""
+    def __init__(self, signum):
+        self.exit_code = 128 + signum
+        super().__init__(signal.Signals(signum).name)
+
+
+def interrupt_release(signum, _frame):
+    # A second cooperative signal must not interrupt rollback or child joining.
+    # The owning process runner retains its bounded hard-stop fallback.
+    signal.signal(signal.SIGINT, signal.SIG_IGN)
+    signal.signal(signal.SIGTERM, signal.SIG_IGN)
+    raise ReleaseInterrupted(signum)
 
 
 def checked_run(command, deadline):
@@ -772,7 +788,7 @@ def restore_snapshot(root, partition, tag, stage, deadline, verification=None, r
     lake = root / ".lake"
     if lake.is_symlink():
         raise ValueError("shared cache target is forbidden")
-    installed, backup, base_prepared, base_recorded = [], None, False, False
+    installed, backup, base_recorded = [], None, False
     target, base = lake / "build", root / report_reuse.BASE_RECORD
     try:
         with contextlib.ExitStack() as opened:
@@ -823,12 +839,13 @@ def restore_snapshot(root, partition, tag, stage, deadline, verification=None, r
                             and (refresh_stale or not any(target.iterdir())))):
                         (source / ".release-refreshed-at").write_text(
                             datetime.datetime.now(datetime.timezone.utc).isoformat() + "\n", encoding="utf-8")
+                        had_build = target.is_dir()
+                        had_base = base.exists() or base.is_symlink()
                         backup = pathlib.Path(tempfile.mkdtemp(prefix=".release-backup-", dir=lake))
-                        if target.is_dir():
+                        if had_build:
                             target.rename(backup / "build")
-                        if base.exists() or base.is_symlink():
+                        if had_base:
                             base.rename(backup / "base.json")
-                        base_prepared = True
                         source.rename(target)
                         installed.append("build")
                         base_recorded = report_reuse.record_seed_base(root, commit)
@@ -842,14 +859,18 @@ def restore_snapshot(root, partition, tag, stage, deadline, verification=None, r
         if backup is not None:
             # Keep both trees if rollback itself fails; never clean that backup.
             try:
-                if installed:
-                    target.rename(backup / "replacement")
-                if (backup / "build").is_dir():
-                    (backup / "build").rename(target)
-                if base_prepared:
+                # Signals can raise after a rename but before Python records its
+                # return. Recover from the saved entries and pre-mutation state.
+                saved_build, saved_base = backup / "build", backup / "base.json"
+                if saved_build.is_dir() or not had_build:
+                    if target.exists():
+                        target.rename(backup / "replacement")
+                    if saved_build.is_dir():
+                        saved_build.rename(target)
+                if saved_base.exists() or saved_base.is_symlink() or not had_base:
                     report_reuse.invalidate_seed_base(root)
-                    if (backup / "base.json").exists() or (backup / "base.json").is_symlink():
-                        (backup / "base.json").rename(base)
+                    if saved_base.exists() or saved_base.is_symlink():
+                        saved_base.rename(base)
             except OSError as rollback_error:
                 raise RollbackFailed(backup, install_error, rollback_error) from rollback_error
             # Removing discarded bytes is housekeeping after a successful rollback.
@@ -1126,20 +1147,29 @@ def main():
     previous_run_id = os.environ.get("TRURETURING_MAINTENANCE_RUN_ID")
     if LOG is not None:
         os.environ["TRURETURING_MAINTENANCE_RUN_ID"] = LOG.run_id
+    previous_signals = {kind: signal.signal(kind, interrupt_release)
+                        for kind in (signal.SIGINT, signal.SIGTERM)}
     try:
         try:
             exit_code = _main()
         except BaseException as error:
+            code = error.exit_code if isinstance(error, ReleaseInterrupted) else \
+                error.code if isinstance(error, SystemExit) and isinstance(error.code, int) else 130 \
+                if isinstance(error, KeyboardInterrupt) else 1
+            if isinstance(error, ReleaseInterrupted):
+                receipt(CURRENT_OPERATION or "fetch", "interrupted", _phase=CURRENT_PHASE,
+                        _error=error, reason=str(error), exit_code=code)
             if LOG is not None:
-                code = error.code if isinstance(error, SystemExit) and isinstance(error.code, int) else 130 \
-                    if isinstance(error, KeyboardInterrupt) else 1
-                _observe(CURRENT_OPERATION or "unknown",
-                         "cancelled" if isinstance(error, KeyboardInterrupt) else "failed",
-                         phase=CURRENT_PHASE, reason=type(error).__name__, error=error)
+                if not isinstance(error, ReleaseInterrupted):
+                    _observe(CURRENT_OPERATION or "unknown",
+                             "cancelled" if isinstance(error, KeyboardInterrupt) else "failed",
+                             phase=CURRENT_PHASE, reason=type(error).__name__, error=error)
                 LOG.finish(code, operation=CURRENT_OPERATION, action=CURRENT_OPERATION, mode=CURRENT_MODE,
                            status=LOG_LAST.get("status"), outcome=LOG_LAST.get("outcome"),
                            stage=LOG_LAST.get("phase"), error_type=LOG_LAST.get("error_type"),
                            reason_code=LOG_LAST.get("reason_code"))
+            if isinstance(error, ReleaseInterrupted):
+                return code
             raise
         if LOG is not None:
             LOG.finish(exit_code, operation=CURRENT_OPERATION, action=CURRENT_OPERATION, mode=CURRENT_MODE,
@@ -1148,6 +1178,8 @@ def main():
                        reason_code=LOG_LAST.get("reason_code"))
         return exit_code
     finally:
+        for kind, handler in previous_signals.items():
+            signal.signal(kind, handler)
         if previous_run_id is None:
             os.environ.pop("TRURETURING_MAINTENANCE_RUN_ID", None)
         else:

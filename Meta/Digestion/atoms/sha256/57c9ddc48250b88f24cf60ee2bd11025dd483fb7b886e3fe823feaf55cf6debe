@@ -1,0 +1,18 @@
+#### 反例 9.5：删去共同源条件，完全可分整体也能伪装两轴记录
+
+令
+
+$$
+\rho_Z=\tfrac12(\lvert 00\rangle\langle 00\rvert+\lvert 11\rangle\langle 11\rvert),\qquad
+ \rho_X=\tfrac12(\lvert++\rangle\langle++\rvert+\lvert--\rangle\langle--\rvert),
+$$
+
+并取内部控制整体
+
+$$
+\omega_{CAM}=\tfrac12\lvert\mathsf z\rangle\langle\mathsf z\rvert\otimes\rho_Z
+             +\tfrac12\lvert\mathsf x\rangle\langle\mathsf x\rvert\otimes\rho_X.
+$$
+
+它是三个部分上的完全可分态。 控制为 $\mathsf z$ 时读标记 $Z$，控制为 $\mathsf x$ 时读标记 $X$， 逐菜单都给 Bell 源的完整条件态记录。 但两次记录作用于不同条件源，不能拼成同一个 $\rho_{AM}$ 的两条相关。 所以把控制器写进整体后，还必须传播其与制备的相关，不能默认独立。
+

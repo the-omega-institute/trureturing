@@ -1,0 +1,20 @@
+**Theorem 40.1 (late first-correction remainder).** On every actual sequence of Corollary 33.3, including bounded-$r_s$ sequences,
+
+$$
+s\|(\mathcal B_s(h_s)^*-\mathcal N_s)g_1\|_2=o(s^4).
+\tag{40.1}
+$$
+
+Together with Theorems 38.2 and 39.1 this establishes both estimates and coefficient existence in (34.2). It supersedes exactly the first-$g_1$ unproved boundary of Definition 34.2 and its corresponding assertion in Definition 35.1.
+
+Proof. Theorem 38.1 puts this fixed $g_1$ in $L^1\cap L^2$. Apply the owned fixed-input bound (29.3):
+
+$$
+\|(\mathcal B_s(h)^*-\mathcal N_s)g_1\|_2
+\le C\left[(h+s^5)(\|g_1\|_1+\|g_1\|_2)
++s^7h^{-1/4}\|g_1\|_1\right].
+\tag{40.2}
+$$
+
+This bound uses the original two-face heat, short field and complete long field; no long Coulomb multiplier is assigned an $L^2$ norm. At the actual $h_s=r_ss^8/a$, P (100.3)'s $r_s\ge c>0$ gives $s^7h_s^{-1/4}=a^{1/4}s^5r_s^{-1/4}\le Cs^5$. Since $\epsilon_c(s)=o(s^4)$ gives $h_s=o(s^4)$, the norm is $O_{g_1}(h_s+s^5)$ and its exterior factor $s$ proves (40.1). No divergence of $r_s$ is assumed. $\square$
+
