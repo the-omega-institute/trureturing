@@ -72,7 +72,7 @@ private lemma exp_natural (s : ℝ) (k : ℕ) :
     Real.exp (-s * k) = Real.exp (-s)^k := by
   simpa [mul_comm] using Real.exp_nat_mul (-s) k
 
-private lemma summable_term (m : ℕ) {s : ℝ} (hs : 0 < s) :
+lemma summable_term (m : ℕ) {s : ℝ} (hs : 0 < s) :
     Summable (term m s) := by
   have h := summable_pow_mul_geometric_of_norm_lt_one m (exp_norm_lt_one hs)
   have he : term m s = fun k : ℕ =>
@@ -82,11 +82,11 @@ private lemma summable_term (m : ℕ) {s : ℝ} (hs : 0 < s) :
   rw [he]
   exact h.sub (summable_of_ne_finset_zero (s := {0}) (by intro b hb; simp only [mem_singleton] at hb; simp [hb]))
 
-private lemma term_nonneg (m : ℕ) (s : ℝ) (k : ℕ) : 0 ≤ term m s k := by
+lemma term_nonneg (m : ℕ) (s : ℝ) (k : ℕ) : 0 ≤ term m s k := by
   unfold term
   split_ifs <;> positivity
 
-private lemma powerSum_pos (m : ℕ) {s : ℝ} (hs : 0 < s) : 0 < powerSum m s := by
+lemma powerSum_pos (m : ℕ) {s : ℝ} (hs : 0 < s) : 0 < powerSum m s := by
   exact (summable_term m hs).tsum_pos (term_nonneg m s) 1 (by simp [term]; positivity)
 
 private lemma weighted_term (p m : ℕ) (s : ℝ) (k : ℕ) :
@@ -319,7 +319,7 @@ private lemma stirling_at_one (m : ℕ) :
     simp [hmj]
   · simp
 
-private lemma scaled_powerSum_limit (m : ℕ) :
+lemma scaled_powerSum_limit (m : ℕ) :
     Tendsto (fun s : ℝ => s^(m+1) * powerSum m s) (𝓝[>] 0)
       (𝓝 (m.factorial : ℝ)) := by
   have hid : Tendsto (fun s : ℝ => s) (𝓝[>] 0) (𝓝 0) :=

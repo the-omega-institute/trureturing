@@ -1,0 +1,47 @@
+**命题 82.1（所有原正表与 PB 都不能修补这个替换）。** 令
+
+$$
+\begin{gathered}
+Y=[0,1],\qquad
+U=(0,\tfrac14)\setminus\{1/n:n\ge5\},\\
+X=C(Y,M_2(\mathbb C))_{\rm sa},\qquad
+A=C_0(U,M_2(\mathbb C)),\\
+I=\{\text{把 }A_{\rm sa}\text{ 在 }Y\setminus U\text{ 上延零所得的函数}\},\\
+E=\{P+i:P(t)\text{ 是自伴矩阵多项式},\ i\in I\}.
+\end{gathered}
+\tag{82.1}
+$$
+
+此处小写 $i\in I$ 表示一个理想元素；复数单位仍写 $\mathrm i$。取原 $u(t)=I_2$、一致范数、继承正锥，以及标准原关系
+
+$$
+S(a,b)=\tfrac12(ab+ba),\qquad
+D(a,b)=\tfrac{\mathrm i}{2}(ab-ba).
+\tag{82.2}
+$$
+
+则 80.1 的全部结构背景成立，$j:I\to A_{\rm sa}$ 为限制映射；原 $S,D$ 均返回 $E$，完整原 P2、完整 PB、全部有限复 Gram 以及准确非交换种子识别均成立。但是
+
+$$
+\operatorname{Ann}_E(I)=0,\qquad
+0\ne\operatorname{Ann}_X(I)
+=\{f\in X:f|_{[0,1/4]}=0\}.
+\tag{82.3}
+$$
+
+81.1 的 $\rho$ 是限制到 $U$ 的映射，取值于 $M(A)_{\rm sa}=C_b(U,M_2)_{\rm sa}$。原标签
+
+$$
+a(t)=tI_2,\qquad b(t)=(\tfrac14-t)I_2
+\tag{82.4}
+$$
+
+满足
+
+$$
+N(a)=1,\qquad \nu_I(a)=\tfrac14,\qquad
+\rho(b)\ge0,\qquad b\notin C.
+\tag{82.5}
+$$
+
+证明。删去的点集在 $(0,\frac14)$ 内相对闭，故 $U$ 是 $Y$ 的开子集；它非空、局部紧且非紧。
