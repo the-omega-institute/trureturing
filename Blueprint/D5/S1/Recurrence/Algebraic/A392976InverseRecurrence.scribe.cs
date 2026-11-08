@@ -8,7 +8,7 @@ internal sealed class A392976InverseRecurrenceDocument : IScribeDocumentDefiniti
 {
     private const string Prefix = "D5/S1/Recurrence/Algebraic/A392976InverseRecurrence.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/RecurrenceComposition/mathar2026a392976");
+        LibraryNoteRef.Create("D5/L/RecurrenceAlgebraic/mathar2026a392976");
     private static Formula V(string name) => F.Id(name);
     private static Formula Nat => Seq(Mathbb, Grp(V("N")));
     private static Formula Q => Seq(Mathbb, Grp(V("Q")));
