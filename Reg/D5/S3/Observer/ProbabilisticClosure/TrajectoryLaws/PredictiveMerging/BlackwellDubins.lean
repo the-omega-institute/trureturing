@@ -72,13 +72,15 @@ def mergingArena : Arena where
           |(κ n (past X n ω)).real C.val - (eta n (past X n ω)).real C.val|)))
         atTop (𝓝 0)
 
-private abbrev Toy := fun _ : ℕ => ULift.{u} Bool
+private abbrev Toy : ℕ → Type u := fun _ => ULift.{u} Bool
 
-private def seed : History Toy := fun _ => ⟨false⟩
+private def seed : History.{u} Toy := fun _ => ⟨false⟩
 
-private def basePath : History Toy := Classical.choice (show Nonempty (History Toy) from ⟨seed⟩)
+private def basePath : History.{u} Toy :=
+  Classical.choice (show Nonempty (History.{u} Toy) from ⟨seed⟩)
 
-private def counterPath : History Toy := fun i => ⟨!(basePath i).down⟩
+private def counterPath : History.{u} Toy := fun i =>
+  ULift.up.{u} (!((basePath i).down))
 
 private def toyLaw : Measure (History Toy) := Measure.dirac counterPath
 
@@ -107,15 +109,18 @@ private theorem toy_marginals_ne :
   have hread : rejected.readout () (Toy, 0) = fun _ => past Toy 0 basePath := rfl
   have hdiff : past Toy 0 basePath ≠ past Toy 0 counterPath := by
     intro heq
-    have hh := congrArg (fun p : Past Toy 0 => (p ⟨0, le_rfl⟩).down) heq
+    have hh := congrArg (fun p : Past Toy 0 => (p ⟨0, by simp⟩).down) heq
     change (basePath 0).down = !(basePath 0).down at hh
     have hb : ∀ b : Bool, b ≠ !b := by decide
     exact hb _ hh
   intro heq
   rw [hread] at heq
   have hh := congrArg (fun μ : Measure (Past Toy 0) => μ {past Toy 0 counterPath}) heq
+  have hdiff' : past Toy 0 counterPath ≠ past Toy 0 basePath := by
+    intro h
+    exact hdiff h.symm
   simpa [toyLaw, Measure.map_const, Measure.map_dirac' (toy_past_measurable 0),
-    hdiff, Ne.symm hdiff] using hh
+    hdiff, hdiff'] using hh
 
 private theorem rejected_change : ¬ changeArena.{u}.Law rejected := by
   intro h
@@ -143,7 +148,7 @@ private theorem actual_dependence : ObservationalDependence signature.{u} actual
   intro _
   refine ⟨(Toy, 0), (fun _ => ⟨false⟩), (fun _ => ⟨true⟩), ?_⟩
   intro heq
-  have hh := congrArg (fun p : Past Toy 0 => (p ⟨0, le_rfl⟩).down) heq
+  have hh := congrArg (fun p : Past Toy 0 => (p ⟨0, by simp⟩).down) heq
   cases hh
 
 def changeFamily : Registration changeArena.{u}
@@ -152,7 +157,8 @@ def changeFamily : Registration changeArena.{u}
   bridge := Iff.rfl
   variation := ⟨@predictive_change_of_measure.{u}, rejected, rejected_change⟩
   sensitivity := ⟨fun i => ⟨rejected,
-    fun j h => (h (Subsingleton.elim j i)).elim, rfl, rejected_change⟩,
+    fun j h => (h (show j = i from @Subsingleton.elim Unit _ j i)).elim,
+    rfl, rejected_change⟩,
     fun e => nomatch e⟩
   dependence := actual_dependence
 
@@ -162,7 +168,8 @@ def mergingFamily : Registration mergingArena.{u}
   bridge := Iff.rfl
   variation := ⟨@blackwell_dubins_predictive_merging.{u}, rejected, rejected_merging⟩
   sensitivity := ⟨fun i => ⟨rejected,
-    fun j h => (h (Subsingleton.elim j i)).elim, rfl, rejected_merging⟩,
+    fun j h => (h (show j = i from @Subsingleton.elim Unit _ j i)).elim,
+    rfl, rejected_merging⟩,
     fun e => nomatch e⟩
   dependence := actual_dependence
 
