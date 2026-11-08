@@ -8,6 +8,7 @@
 import D5.S1.Words.RichWordTypeIIOccurrence
 import D5.S1.Words.Complexity.SahasrabudheEvenAdditiveComplexityMorphism
 
+/-! Exact marker parsing for the literal image of the frozen seven-letter source. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -39,7 +40,8 @@ private theorem eta_injective : Function.Injective eta := by decide
 
 private theorem eta_marker (c : Input) (i : ℕ) (hi : i < (eta c).length) :
     (eta c)[i] = 0 ↔ i = 0 := by
-  fin_cases c <;> simp [eta] at hi ⊢ <;> interval_cases i <;> decide
+  have ht : ∀ c : Input, ∀ i : Fin (eta c).length, (eta c)[i.val] = 0 ↔ i.val = 0 := by decide
+  exact ht c ⟨i,hi⟩
 
 /-- Cumulative image lengths of the actual source prefix. -/
 def E : ℕ → ℕ
@@ -65,7 +67,8 @@ private theorem window (p : ℕ) : ∃ j, E j ≤ p ∧ p < E (j+1) := by
     obtain ⟨j,hj,hk⟩ := ih
     by_cases h : p+1 < E (j+1)
     · exact ⟨j, by omega, h⟩
-    · exact ⟨j+1, by omega, by have := E_strict (Nat.lt_succ_self (j+1)); omega⟩
+    · have hh := E_strict (show j+1 < j+1+1 by omega)
+      exact ⟨j+1, by omega, by omega⟩
 
 private def blockIndex (p : ℕ) : ℕ := Nat.find (window p)
 
@@ -103,6 +106,58 @@ private theorem block_factor (j : ℕ) :
 private theorem at_boundary (j : ℕ) : x (E j) = 0 := by
   have h := block_letter j 0 (eta_pos _)
   simpa [eta_cons] using h
+
+private theorem marker_boundary (p : ℕ) : x p = 0 ↔ ∃! j, p = E j := by
+  constructor
+  · intro hp
+    obtain ⟨hj,hk⟩ := blockIndex_spec p
+    have hd : p-E (blockIndex p) < (eta (u (blockIndex p))).length := by
+      simp only [E] at hk; omega
+    have hz := (eta_marker _ _ hd).mp hp
+    refine ⟨blockIndex p, by omega, ?_⟩
+    intro j he
+    exact E_strict.injective (by omega)
+  · rintro ⟨j,rfl,_⟩
+    exact at_boundary j
+
+private theorem E_add (j m : ℕ) :
+    E (j+m) = E j + (subst eta (factor u j m)).length := by
+  induction m with
+  | zero => simp [factor, subst]
+  | succ m ih =>
+    rw [show j+(m+1) = (j+m)+1 by omega, E, ih]
+    rw [show m+1 = m+1 from rfl, factor_add, subst_append, List.length_append]
+    simp [factor, subst, Nat.add_assoc]
+
+private theorem factor_ofFn {m : ℕ} (y : ℕ → Fin m) (j n : ℕ) :
+    factor y j n = List.ofFn (Complexity.wordFactor y n j) := by
+  apply List.ext_getElem
+  · simp [factor_len]
+  · intro i hi hj
+    rw [factor_get _ _ _ _ (by simpa only [factor_len] using hi)]
+    rfl
+
+private def encode (c : Output) : ℤ := c.val
+
+private theorem encode_injective : Function.Injective encode := by
+  intro a b h
+  apply Fin.ext
+  exact Int.ofNat_inj.mp h
+
+private theorem image_interval (j m : ℕ) :
+    factor x (E j) (E (j+m)-E j) = subst eta (factor u j m) := by
+  apply List.map_injective_iff.mpr encode_injective
+  have hh := Complexity.SahasrabudheEvenAdditiveComplexityMorphism.morphic_block
+    u (fun a => (eta a).map encode) (fun p => encode (x p)) E E_strict.monotone
+    (by intro i; simp [E])
+    (by intro i k hk; simpa using congrArg encode (block_letter i k (by simpa using hk))) j m
+  rw [factor_ofFn, List.map_ofFn]
+  change List.ofFn (Complexity.wordFactor (fun p => encode (x p)) _ _) = _
+  simpa only [factor_ofFn, subst, List.map_flatMap] using hh
+
+private theorem factor_image (j m : ℕ) :
+    factor x (E j) (subst eta (factor u j m)).length = subst eta (factor u j m) := by
+  simpa only [E_add, Nat.add_sub_cancel_left] using image_interval j m
 
 /-- Occurrences are literal windows, including the origin and all overlaps. -/
 def Occ (v : List Output) (A : ℕ) : Prop := factor x A v.length = v
@@ -142,7 +197,7 @@ private theorem first_block_recovery (a : Input) (z : List Output) (j : ℕ)
       have hh := occ_letter h (i := (eta (u j)).length) (by simp; omega)
       have he : x (E j+(eta (u j)).length) = 0 := at_boundary (j+1)
       have hz : (eta a)[(eta (u j)).length] = 0 := by
-        simpa only [List.getElem_append_left hd] using hh.symm.trans he
+        simpa only [List.append_assoc, List.getElem_append_left hd] using hh.symm.trans he
       have := (eta_marker a _ hd).mp hz
       have := eta_pos (u j)
       omega
@@ -156,13 +211,160 @@ theorem marked_core_recovery (w : List Input) (j : ℕ)
   induction w generalizing j with
   | nil => simp [RichWordTypeIOccurrence.Occ, factor]
   | cons a w ih =>
-    have ha : u j = a := first_block_recovery a (subst eta w) j (by
-      simpa [RankOneMorphismIterationBound.subst_cons, List.append_assoc] using h)
+    obtain ⟨z,hz⟩ : ∃ z, subst eta w++[0]=[0]++z := by
+      cases w with
+      | nil => exact ⟨[],rfl⟩
+      | cons b w => exact ⟨q b++subst eta w++[0], by simp [subst,eta_cons,List.append_assoc]⟩
+    have ha : u j = a := first_block_recovery a z j (by
+      simpa only [RankOneMorphismIterationBound.subst_cons, hz, List.append_assoc] using h)
     have ht := ((occ_append (eta a) (subst eta w++[0]) (E j)).mp (by
       simpa [RankOneMorphismIterationBound.subst_cons, List.append_assoc] using h)).2
     have hw := ih (j+1) (by simpa [E, ha] using ht)
     change factor u j (w.length+1) = a::w
     rw [show w.length+1 = 1+w.length by omega, factor_add]
     simpa [factor, ha] using congrArg (fun z : List Input => [a]++z) hw
+
+private theorem marked_core_iff (w : List Input) (j : ℕ) :
+    Occ (subst eta w ++ [0]) (E j) ↔ RichWordTypeIOccurrence.Occ w j := by
+  constructor
+  · exact marked_core_recovery w j
+  · intro h
+    change factor u j w.length = w at h
+    have he : E (j+w.length) = E j+(subst eta w).length := by
+      simpa only [h] using E_add j w.length
+    apply (occ_append _ _ _).mpr
+    refine ⟨?_, (occ_singleton _ _).mpr (he ▸ at_boundary (j+w.length))⟩
+    simpa only [Occ,h] using factor_image j w.length
+
+/-- The left filter imposes no predecessor when the decoration is empty. -/
+def Left (s : List Output) (j : ℕ) : Prop :=
+  s = [] ∨ (0 < j ∧ s <:+ q (u (j-1)))
+
+/-- The right decoration lies in the actual tail after the last core marker. -/
+def Right (t : List Output) (w : List Input) (j : ℕ) : Prop :=
+  t <+: q (u (j+w.length))
+
+private theorem left_boundary_iff (s : List Output) (A j : ℕ)
+    (hs : (0 : Output) ∉ s) (he : A+s.length = E j) :
+    Occ s A ↔ Left s j := by
+  by_cases hn : s = []
+  · simp [hn, Left, Occ, factor]
+  have hd : 0 < s.length := List.length_pos_iff.mpr hn
+  constructor
+  · intro h
+    have hj : 0 < j := by
+      by_contra hz
+      have hj0 : j=0 := by omega
+      rw [hj0,E] at he
+      omega
+    have hpj : j-1+1=j := by omega
+    have hep : E (j-1) < E j := E_strict (by omega)
+    have hpa : E (j-1) < A := by
+      by_contra hz
+      have hi : E (j-1)-A < s.length := by omega
+      have hh := occ_letter h hi
+      have hh' : s[E (j-1)-A] = 0 := by
+        rw [show A+(E (j-1)-A)=E (j-1) by omega, at_boundary] at hh
+        exact hh.symm
+      exact hs (hh' ▸ List.getElem_mem hi)
+    have hlen : (eta (u (j-1))).length = A-E (j-1)+s.length := by
+      have := E (j-1+1); have hh := congrArg E hpj
+      rw [E] at hh
+      omega
+    have hb := block_factor (j-1)
+    rw [hlen, factor_add, show E (j-1)+(A-E (j-1))=A by omega, h] at hb
+    have hsu : s <:+ eta (u (j-1)) := ⟨factor x (E (j-1)) (A-E (j-1)), hb⟩
+    rw [eta_cons, List.suffix_cons_iff] at hsu
+    rcases hsu with hsu | hsu
+    · exact (hs (by simp [hsu])).elim
+    · exact Or.inr ⟨hj,hsu⟩
+  · rintro (h | ⟨hj,hq⟩)
+    · exact (hn h).elim
+    obtain ⟨p,hp⟩ := hq
+    have hlen := congrArg List.length hp
+    have hb := block_factor (j-1)
+    rw [eta_cons, ← hp] at hb
+    have hj' : j-1+1=j := by omega
+    have hstep := congrArg E hj'
+    rw [E,eta_cons,← hp] at hstep
+    simp only [List.length_cons,List.length_append] at hstep
+    have hA : A=E (j-1)+(1+p.length) := by omega
+    have hh : Occ ((0::p)++s) (E (j-1)) := by simpa [Occ] using hb
+    simpa [hA,Nat.add_comm] using ((occ_append (0::p) s (E (j-1))).mp hh).2
+
+private theorem right_boundary_iff (t : List Output) (j : ℕ)
+    (ht : (0 : Output) ∉ t) :
+    Occ ([0]++t) (E j) ↔ t <+: q (u j) := by
+  constructor
+  · intro h
+    have hlen : 1+t.length ≤ (eta (u j)).length := by
+      by_contra hn
+      have hi : (eta (u j)).length < ([0]++t).length := by simp; omega
+      have hp := eta_pos (u j)
+      have hh := occ_letter h hi
+      have hz : ([0]++t)[(eta (u j)).length] = 0 := by
+        rw [show E j+(eta (u j)).length=E (j+1) from rfl,at_boundary] at hh
+        exact hh.symm
+      have hz' : t[(eta (u j)).length-1]'(by simp at hi; omega) = 0 := by
+        simpa only [List.singleton_append, List.getElem_cons, Nat.ne_of_gt hp, dite_false] using hz
+      exact ht (hz' ▸ List.getElem_mem (by simp at hi; omega))
+    have hh := congrArg (List.take (1+t.length)) (block_factor j)
+    have hf : (factor x (E j) (eta (u j)).length).take (1+t.length) =
+        factor x (E j) (1+t.length) := by
+      simp [factor, ← List.map_take, List.take_range, Nat.min_eq_left hlen]
+    rw [hf] at hh
+    have heq : [0]++t = (eta (u j)).take (1+t.length) := by
+      have h' : factor x (E j) (1+t.length)=[0]++t := by simpa [Occ,Nat.add_comm] using h
+      exact h'.symm.trans hh
+    have hpre : [0]++t <+: eta (u j) := List.prefix_iff_eq_take.mpr (by simpa [Nat.add_comm] using heq)
+    simpa [eta_cons] using hpre
+  · rintro ⟨z,hz⟩
+    have hh : Occ (([0]++t)++z) (E j) := by
+      simpa [Occ,eta_cons,← hz] using block_factor j
+    exact ((occ_append ([0]++t) z (E j)).mp hh).1
+
+/-- Exact filtered decoder for every core, including the empty core and origin. -/
+theorem occurrence_decoder (w : List Input) (s t : List Output) (A : ℕ)
+    (hs : (0 : Output) ∉ s) (ht : (0 : Output) ∉ t) :
+    Occ (s++subst eta w++[0]++t) A ↔
+      ∃! j, A+s.length=E j ∧ RichWordTypeIOccurrence.Occ w j ∧ Left s j ∧ Right t w j := by
+  constructor
+  · intro h
+    obtain ⟨hl,hrest⟩ := (occ_append s (subst eta w++[0]++t) A).mp
+      (by simpa [List.append_assoc] using h)
+    have hcore := ((occ_append (subst eta w++[0]) t _).mp hrest).1
+    have hz : x (A+s.length)=0 := by
+      cases w with
+      | nil => simpa [subst,occ_singleton] using hcore
+      | cons a w =>
+        have hh := occ_letter hcore (i := 0) (by simp [subst,eta_cons])
+        simpa [subst,eta_cons] using hh
+    obtain ⟨j,hj,hunique⟩ := (marker_boundary _).mp hz
+    have hw := (marked_core_iff w j).mp (hj ▸ hcore)
+    have hw' : factor u j w.length=w := hw
+    have hend : E (j+w.length)=E j+(subst eta w).length := by
+      simpa only [hw'] using E_add j w.length
+    have hr : Occ ([0]++t) (E (j+w.length)) := by
+      have := ((occ_append (subst eta w) ([0]++t) _).mp
+        (by simpa [List.append_assoc] using hrest)).2
+      simpa [hj,← hend] using this
+    refine ⟨j, ⟨hj,hw,(left_boundary_iff s A j hs hj).mp hl,
+      (right_boundary_iff t (j+w.length) ht).mp hr⟩, ?_⟩
+    intro k hk
+    exact hunique k hk.1
+  · rintro ⟨j,⟨hj,hw,hl,hr⟩,_⟩
+    have hw' : factor u j w.length=w := hw
+    have hleft := (left_boundary_iff s A j hs hj).mpr hl
+    have hcore := (marked_core_iff w j).mpr hw
+    have hright := (right_boundary_iff t (j+w.length) ht).mpr hr
+    have hend : E (j+w.length)=E j+(subst eta w).length := by
+      simpa only [hw'] using E_add j w.length
+    have he : Occ (subst eta w++([0]++t)) (E j) := by
+      apply (occ_append (subst eta w) ([0]++t) (E j)).mpr
+      refine ⟨((occ_append (subst eta w) [0] (E j)).mp hcore).1, ?_⟩
+      simpa [← hend] using hright
+    have hh := (occ_append s (subst eta w++[0]++t) A).mpr
+      ⟨hleft, by simpa [hj,List.append_assoc] using he⟩
+    simpa only [List.append_assoc] using hh
 
 end D5.S1.Words.RichWordOutputDecoder
