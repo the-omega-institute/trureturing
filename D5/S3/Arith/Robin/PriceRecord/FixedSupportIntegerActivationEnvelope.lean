@@ -12,14 +12,14 @@ import D5.S3.Arith.Robin.EulerLayer.EulerLayerRootSecondOrder
 import Mathlib.Order.Interval.Finset.Nat
 import Mathlib.Analysis.Real.Sqrt
 
-/-! SOURCE_ONLY_UNCOMPILED. This research candidate has not been elaborated,
-kernel checked, registered, admitted or frozen. All proof bodies below are
-prospective source, with the native obligations listed in source-contract.json.
+/-! Native Lean elaboration and kernel compilation of this finite construction
+have succeeded. This owner is not frozen; independent prefreeze review and
+publication are separate from the scoped source checks.
 
 The integer image retains every supported-admissible natural vector. Only the
 constructed trial vector is set to zero off support. No cardinal-three,
 prime-prefix, record, minimizing-vector or asymptotic premise occurs here.
-The scalar and conditional-infimum steps are paid bindings. The proposed
+The scalar and conditional-infimum steps are paid bindings. The new
 content is the uniform ceiling/three/two/one construction, consumed in the
 upper half of finite_integer_activation_envelope. The lower half keeps the
 literal two activation sums and the public finite cubic correction tail. -/
@@ -153,8 +153,8 @@ private lemma loss_data {S : Finset ℕ} (hS : primeSupport S)
   linarith only [houter]
 
 -- Paid scalar bindings, shared by nonnegativity, the upper transfer and lower
--- confinement. Both quadratic comparisons are local algebraic consequences
--- of the public rational log bound; no private frozen proof is copied.
+-- confinement. The nested estimate composes
+-- the public rational log bound; no private frozen proof is copied.
 private lemma loglog_price_bounds {u L : ℝ} (hu : 0 ≤ u) (hL : 1 ≤ L) :
     0 ≤ log (1 + log (1 + u) / L) ∧
     log (1 + log (1 + u) / L) ≤ u / L ∧
@@ -178,31 +178,32 @@ private lemma loglog_price_bounds {u L : ℝ} (hu : 0 ≤ u) (hL : 1 ≤ L) :
   have hdivu : u / L ≤ u := by
     apply (div_le_iff₀ hL0).mpr
     nlinarith [mul_nonneg hu (sub_nonneg.mpr hL)]
-  have hquadU : u - u ^ 2 / 2 ≤ s := by
-    have hh := le_log_one_add_of_nonneg hu
-    have hrat : u - u ^ 2 / 2 ≤ 2 * u / (u + 2) := by
-      apply (le_div_iff₀ (by linarith : 0 < u + 2)).mpr
-      nlinarith [mul_nonneg hu (sq_nonneg u)]
-    exact hrat.trans hh
-  have hquadV : v - v ^ 2 / 2 ≤ t := by
-    have hh := le_log_one_add_of_nonneg hv0
-    have hrat : v - v ^ 2 / 2 ≤ 2 * v / (v + 2) := by
-      apply (le_div_iff₀ (by linarith : 0 < v + 2)).mpr
-      nlinarith [mul_nonneg hv0 (sq_nonneg v)]
-    exact hrat.trans hh
-  have hsquare : v ^ 2 ≤ u ^ 2 / L := by
-    calc
-      v ^ 2 = v * v := by ring
-      _ ≤ u * (u / L) := mul_le_mul (hvu.trans hdivu) hvu hv0 hu
-      _ = u ^ 2 / L := by ring
-  have hgap : u / L - v ≤ (u ^ 2 / L) / 2 := by
-    have hh := div_le_div_of_nonneg_right hquadU hL0.le
-    change (u - u ^ 2 / 2) / L ≤ v at hh
-    rw [show (u - u ^ 2 / 2) / L = u / L - (u ^ 2 / L) / 2 by ring] at hh
-    linarith only [hh]
+  -- Compose the existing rational log bounds directly. No private quadratic
+  -- helper is copied or promoted from the queued curvature unit.
+  let w := (2 * u / (u + 2)) / L
+  have hw0 : 0 ≤ w := by dsimp only [w]; positivity
+  have hwv : w ≤ v :=
+    div_le_div_of_nonneg_right (le_log_one_add_of_nonneg hu) hL0.le
+  have htw : 2 * w / (w + 2) ≤ t := by
+    apply (le_log_one_add_of_nonneg hw0).trans
+    exact log_le_log (by positivity) (by linarith only [hwv])
+  let D := L * (u + 2) + u
+  have hD0 : 0 < D := by dsimp only [D]; positivity
+  have hnorm : 2 * w / (w + 2) = 2 * u / D := by
+    dsimp only [w, D]
+    field_simp
+    <;> ring
+  rw [hnorm] at htw
+  have hrat : u / L - u ^ 2 / L ≤ 2 * u / D := by
+    apply (le_div_iff₀ hD0).mpr
+    apply (mul_le_mul_iff_left₀ hL0).mp
+    field_simp
+    dsimp only [D]
+    nlinarith only [mul_nonneg (sq_nonneg u)
+      (show 0 ≤ L - 1 + (L + 1) * u by positivity)]
   refine ⟨ht0, htv.trans hvu, ?_⟩
   change u / L - t ≤ u ^ 2 / L
-  linarith only [hgap, hquadV, hsquare]
+  linarith only [hrat, htw]
 
 /-- Uniform second-layer finite construction, independent of the own clock.
 The literal witness uses a ceiling on the head and three/two/one on the tail.
@@ -216,8 +217,8 @@ theorem constructive_trial_vector {S : Finset ℕ} (hS : primeSupport S)
   let T := log (1 / lam)
   let a := trialVector S lam q
   let K := lam * (T + 1)
-  let B := S.filter (fun p => (p : ℝ) ≤ q)
-  let R := S.filter (fun p => ¬ (p : ℝ) ≤ q)
+  let B := S.filter (fun p : ℕ => (p : ℝ) ≤ q)
+  let R := S.filter (fun p : ℕ => ¬ (p : ℝ) ≤ q)
   have hq0 : 0 < q := by linarith
   have hq4 : (16 : ℝ) ≤ q ^ 4 := by
     calc
@@ -243,7 +244,7 @@ theorem constructive_trial_vector {S : Finset ℕ} (hS : primeSupport S)
     have hp0 : (0 : ℝ) < p := by linarith
     have hlp : 0 < log (p : ℝ) := log_pos hp1
     have heqa : a p = Nat.ceil (T / log (p : ℝ)) := by
-      simp only [a, trialVector, if_pos hp, if_pos hpq, T]
+      simp only [a, trialVector, ite_eq_left hp, ite_eq_left hpq, T]
     have hratio : 4 ≤ T / log (p : ℝ) := by
       apply (le_div_iff₀ hlp).mpr
       have hlog := log_le_log hp0 hpq
@@ -261,7 +262,7 @@ theorem constructive_trial_vector {S : Finset ℕ} (hS : primeSupport S)
       rw [← heqa] at hh
       have hmul := mul_lt_mul_of_pos_right hh hlp
       rw [show (T / log (p : ℝ) + 1) * log (p : ℝ) = T + log (p : ℝ) by
-        field_simp [hlp.ne']; ring] at hmul
+        field_simp [hlp.ne']<;> ring] at hmul
       linarith only [hmul]
     have hpow : 1 / lam ≤ (p : ℝ) ^ (a p) := by
       apply (log_le_log_iff (by positivity) (pow_pos hp0 _)).mp
@@ -303,7 +304,7 @@ theorem constructive_trial_vector {S : Finset ℕ} (hS : primeSupport S)
     by_cases hpq : (p : ℝ) ≤ q
     · have hh := (hsmall p hp hpq).1
       omega
-    · simp only [a, trialVector, if_pos hp, if_neg hpq]
+    · simp only [a, trialVector, ite_eq_left hp, ite_eq_right hpq]
       split_ifs <;> norm_num
   have hpoint (p : ℕ) (hp : p ∈ S) :
       lam * ((a p : ℝ) - 1) * log (p : ℝ) + eulerTerm p (a p) ≤
@@ -311,7 +312,7 @@ theorem constructive_trial_vector {S : Finset ℕ} (hS : primeSupport S)
           min (lam * log (p : ℝ)) (1 / (p : ℝ) ^ 3) +
             (if (p : ℝ) ≤ q then K else 2 / (p : ℝ) ^ 4) := by
     by_cases hpq : (p : ℝ) ≤ q
-    · simpa only [if_pos hpq] using (hsmall p hp hpq).2
+    · simpa only [ite_eq_left hpq] using (hsmall p hp hpq).2
     · have hp2 : (2 : ℝ) ≤ p := by exact_mod_cast (hS p hp).two_le
       have hp0 : (0 : ℝ) < p := by linarith
       let t : ℝ := 1 / (p : ℝ)
@@ -334,15 +335,15 @@ theorem constructive_trial_vector {S : Finset ℕ} (hS : primeSupport S)
         dsimp only [eulerTerm, b]
         rw [hinv]
         ring
-      rw [if_neg hpq, hinv 2, hinv 3]
-      rw [show 2 / (p : ℝ) ^ 4 = 2 * t ^ 4 by rw [← hinv 4]; ring]
+      rw [ite_eq_right hpq, hinv 2, hinv 3]
+      rw [show 2 / (p : ℝ) ^ 4 = 2 * t ^ 4 by rw [← hinv 4]<;> ring]
       change _ ≤ min b (t ^ 2) + min b (t ^ 3) + 2 * t ^ 4
       by_cases h3 : b ≤ t ^ 3
       · have h2 : b ≤ t ^ 2 := h3.trans h23
         have heqa : a p = 3 := by
-          simp only [a, trialVector, if_pos hp, if_neg hpq]
+          simp only [a, trialVector, ite_eq_left hp, ite_eq_right hpq]
           rw [hinv 3]
-          exact if_pos h3
+          exact ite_eq_left h3
         have hlog := D5.S3.Arith.Lattices.Klartag.neg_log_one_sub_le
           (pow_nonneg ht0 4) (hhalf 4 (by norm_num))
         rw [heqa, hJ, min_eq_left h2, min_eq_left h3]
@@ -351,9 +352,9 @@ theorem constructive_trial_vector {S : Finset ℕ} (hS : primeSupport S)
         linarith only [hlog, h84]
       · by_cases h2 : b ≤ t ^ 2
         · have heqa : a p = 2 := by
-            simp only [a, trialVector, if_pos hp, if_neg hpq]
+            simp only [a, trialVector, ite_eq_left hp, ite_eq_right hpq]
             rw [hinv 3, hinv 2]
-            exact (if_neg h3).trans (if_pos h2)
+            exact (ite_eq_right h3).trans (ite_eq_left h2)
           have hlog := D5.S3.Arith.Lattices.Klartag.neg_log_one_sub_le
             (pow_nonneg ht0 3) (hhalf 3 (by norm_num))
           rw [heqa, hJ, min_eq_left h2, min_eq_right (le_of_not_ge h3)]
@@ -365,9 +366,9 @@ theorem constructive_trial_vector {S : Finset ℕ} (hS : primeSupport S)
             linarith only [hexcess, h64]
           linarith only [hpaid, pow_nonneg ht0 4]
         · have heqa : a p = 1 := by
-            simp only [a, trialVector, if_pos hp, if_neg hpq]
+            simp only [a, trialVector, ite_eq_left hp, ite_eq_right hpq]
             rw [hinv 3, hinv 2]
-            exact (if_neg h3).trans (if_neg h2)
+            exact (ite_eq_right h3).trans (ite_eq_right h2)
           have hlog := D5.S3.Arith.Lattices.Klartag.neg_log_one_sub_le
             (pow_nonneg ht0 2) (hhalf 2 (by norm_num))
           rw [heqa, hJ, min_eq_right (le_of_not_ge h2),
@@ -384,7 +385,7 @@ theorem constructive_trial_vector {S : Finset ℕ} (hS : primeSupport S)
       intro p hp
       rcases mem_filter.mp hp with ⟨hpS, hpq⟩
       exact mem_Icc.mpr ⟨(hS p hpS).one_lt.le, Nat.le_floor hpq⟩
-    have hcN : B.card ≤ ⌊q⌋₊ := by simpa using card_le_card hsub
+    have hcN : B.card ≤ ⌊q⌋₊ := by simpa using Finset.card_le_card hsub
     have hcR : (B.card : ℝ) ≤ (⌊q⌋₊ : ℝ) := by exact_mod_cast hcN
     exact hcR.trans (Nat.floor_le hq0.le)
   have htail := D5.S3.Arith.Robin.ActualPriceRecordPrimeStructure.finite_cubic_tail
@@ -414,7 +415,7 @@ theorem constructive_trial_vector {S : Finset ℕ} (hS : primeSupport S)
     change (B.card : ℝ) * K + (∑ p ∈ R, 2 / (p : ℝ) ^ 4) = _
     rw [show (∑ p ∈ R, 2 / (p : ℝ) ^ 4) =
       2 * (∑ p ∈ R, 1 / (p : ℝ) ^ 4) by
-        rw [mul_sum]; apply sum_congr rfl; intros; ring]
+        rw [mul_sum]; apply sum_congr rfl; intros<;> ring]
   have hhead : (B.card : ℝ) * K ≤ lam * q * (T + 1) := by
     have hh := mul_le_mul_of_nonneg_right hcard
       (show 0 ≤ K by
@@ -430,7 +431,17 @@ theorem constructive_trial_vector {S : Finset ℕ} (hS : primeSupport S)
   rw [hsplit] at hsum
   change linearCost S lam a ≤ activationSum S lam + secondActivationSum S lam +
     lam * q * (T + 1) + 4 / q ^ 3
-  linarith only [hsum, hhead, hquarticTail]
+  have htailPaid : 2 * (∑ p ∈ R, 1 / (p : ℝ) ^ 4) ≤ 4 / q ^ 3 := by
+    calc
+      _ ≤ 2 * (2 / q ^ 3) := mul_le_mul_of_nonneg_left hquarticTail (by norm_num)
+      _ = _ := by ring
+  calc
+    _ ≤ activationSum S lam + secondActivationSum S lam +
+        ((B.card : ℝ) * K + 2 * (∑ p ∈ R, 1 / (p : ℝ) ^ 4)) := hsum
+    _ ≤ activationSum S lam + secondActivationSum S lam +
+        (lam * q * (T + 1) + 4 / q ^ 3) :=
+      add_le_add le_rfl (add_le_add hhead htailPaid)
+    _ = _ := by ring
 
 /-- The original full integer-image, finite free-q/r second-layer envelope.
 No condition is imposed on an arbitrary vector outside S. No minimizer,
@@ -471,7 +482,7 @@ theorem finite_integer_activation_envelope {S : Finset ℕ} (hS : primeSupport S
   -- all-vector path; no independently retained min/cutoff wrapper is added.
   have hfloor (a : ℕ → ℕ) (ha : supportedAdmissible S a) :
       A - 2 * lam * log (1 / lam) ≤ linearCost S lam a := by
-    let E := S.filter (fun p =>
+    let E := S.filter (fun p : ℕ =>
       1 / (p : ℝ) ^ 2 - 1 / (p : ℝ) ^ 3 < lam * log (p : ℝ))
     have hlocal (p : ℕ) (hp : p ∈ S) :
         min (lam * log (p : ℝ)) (1 / (p : ℝ) ^ 2) +
@@ -532,7 +543,7 @@ theorem finite_integer_activation_envelope {S : Finset ℕ} (hS : primeSupport S
               dsimp only [j, b, y]
               simpa only [ha2, Nat.cast_ofNat, Nat.reduceAdd,
                 show (2 : ℝ) - 1 = 1 by norm_num, mul_one] using
-                add_le_add_left htail (lam * log (p : ℝ))
+                add_le_add (le_refl (lam * log (p : ℝ))) htail
             exact ((min_le_right _ _).trans (min_le_left _ _)).trans hj
           · have ha3 : 3 ≤ a p := by have := ha p hp; omega
             have haR : (3 : ℝ) ≤ a p := by exact_mod_cast ha3
@@ -545,12 +556,13 @@ theorem finite_integer_activation_envelope {S : Finset ℕ} (hS : primeSupport S
       have hgap : min b x + min b y ≤
           (min b (x - y) + min b y) + (if x - y < b then y else 0) := by
         by_cases hc : x - y < b
-        · rw [if_pos hc, min_eq_right hc.le]
+        · rw [ite_eq_left hc, min_eq_right hc.le]
           linarith only [min_le_right b x]
         · have hbx : b ≤ x - y := le_of_not_gt hc
-          simp only [if_neg hc, min_eq_left hbx,
+          simp only [ite_eq_right hc, min_eq_left hbx,
             min_eq_left (show b ≤ x by linarith only [hbx, hy0]), add_zero]
-      exact hgap.trans (add_le_add_right hf _)
+          exact le_rfl
+      exact hgap.trans (add_le_add hf (le_refl _))
     let X := 1 / lam
     let Q := sqrt (X / log X)
     have hX0 : 0 < X := one_div_pos.mpr hlam
@@ -586,7 +598,7 @@ theorem finite_integer_activation_envelope {S : Finset ℕ} (hS : primeSupport S
       calc
         _ ≤ Q ^ 2 * (log X / 2) :=
           mul_le_mul_of_nonneg_left hQlog (sq_nonneg Q)
-        _ = X / 2 := by rw [hQsq]; field_simp [hlogX0.ne']; ring
+        _ = X / 2 := by rw [hQsq]; field_simp [hlogX0.ne']<;> ring
     have hEcut (p : ℕ) (hp : p ∈ E) : Q < (p : ℝ) := by
       rcases mem_filter.mp hp with ⟨hpS, hc⟩
       have hp2 : (2 : ℝ) ≤ p := by exact_mod_cast (hS p hpS).two_le
@@ -594,7 +606,7 @@ theorem finite_integer_activation_envelope {S : Finset ℕ} (hS : primeSupport S
       have hp0 : (0 : ℝ) < p := by linarith
       have hscaled := mul_lt_mul_of_pos_right hc (sq_pos_of_pos hp0)
       have heq : (1 / (p : ℝ) ^ 2 - 1 / (p : ℝ) ^ 3) * (p : ℝ) ^ 2 =
-          1 - 1 / (p : ℝ) := by field_simp [hp0.ne']; ring
+          1 - 1 / (p : ℝ) := by field_simp [hp0.ne']<;> ring
       rw [heq] at hscaled
       have hinv : 1 / (p : ℝ) ≤ 1 / 2 :=
         one_div_le_one_div_of_le (by norm_num : (0 : ℝ) < 2) hp2
@@ -689,7 +701,7 @@ theorem finite_integer_activation_envelope {S : Finset ℕ} (hS : primeSupport S
         linarith only [hF, hJ, hA, hscalar, herr]
       exact (min_le_right _ _).trans hlower
   have hne : (integerValues S).Nonempty := by
-    refine ⟨phi S (fun _ => (1 : ℝ)) - baseline S, fun _ => 1, ?_, rfl⟩
+    refine ⟨phi S (fun _ => (1 : ℝ)) - baseline S, fun _ => 1, ?_, by simp only [Nat.cast_one]⟩
     intro p hp
     exact le_rfl
   have hb : BddBelow (integerValues S) := by
@@ -708,7 +720,10 @@ theorem finite_integer_activation_envelope {S : Finset ℕ} (hS : primeSupport S
       have hu : 0 ≤ clockIncrement S a / H := div_nonneg hU hH0.le
       have hh := (loglog_price_bounds hu hL1.le).2.1
       rw [hF, hlinear, hnormalize]
-      exact add_le_add_right hh _
+      exact add_le_add hh (le_refl (tailCost S a))
     exact (csInf_le hb hmem).trans (hupper.trans htrial)
+
+#print axioms constructive_trial_vector
+#print axioms finite_integer_activation_envelope
 
 end D5.S3.Arith.Robin.PriceRecord.FixedSupportIntegerActivationEnvelope

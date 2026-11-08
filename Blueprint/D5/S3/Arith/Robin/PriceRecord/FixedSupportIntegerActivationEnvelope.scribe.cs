@@ -8,15 +8,16 @@ internal sealed class FixedSupportIntegerActivationEnvelopeDocument : IScribeDoc
         "D5/S3/Arith/Robin/PriceRecord/FixedSupportIntegerActivationEnvelope.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Prospective fixed-support two-layer integer activation envelope.",
+        "Fixed-support two-layer integer activation envelope.",
         H("A finite construction in the complete nonlinear integer image"),
         Blocks(
             Paragraph(Text(
-                "SOURCE_ONLY_UNCOMPILED: the Lean and Scribe sources are prospective and "
-                + "have not been compiled. No kernel result, accepted axiom closure, freeze, "
-                + "admission or independent review is asserted. This is one repository-exposed "
-                + "Codex source implementation, not an independent triplet. The first-library "
-                + "assessment did not locate a whole supplier in its inspected scope; this is "
+                "The finite construction has passed native Lean elaboration and kernel "
+                + "compilation. Scoped axiom and registration evidence are checked separately. "
+                + "No freeze, independent review or RH conclusion is asserted. This is one "
+                + "source implementation, not an independent review triplet. Local library "
+                + "search found the probability, logarithm and finite-tail suppliers used below; "
+                + "it did not locate a whole construction in the inspected scope. This is "
                 + "neither universal absence nor a claim of literature novelty.")),
             Paragraph(Text(
                 "Let S be any finite set of natural primes. The domain is all a:N->N "
@@ -38,7 +39,7 @@ internal sealed class FixedSupportIntegerActivationEnvelopeDocument : IScribeDoc
                 Blocks(
                     Paragraph(Text(
                         "For every finite prime support S, real lambda>0 and real q>=2 "
-                        + "satisfying lambda*q^4<=1, the candidate constructs a supported-admissible "
+                        + "satisfying lambda*q^4<=1, the theorem constructs a supported-admissible "
                         + "a with J_lambda(a)<=A1+A2+lambda*q*(log(1/lambda)+1)+4/q^3. "
                         + "This primitive is independent of the own clock. Its literal trialVector "
                         + "is zero off S. At p in S with p<=q it is "
@@ -62,7 +63,7 @@ internal sealed class FixedSupportIntegerActivationEnvelopeDocument : IScribeDoc
                         + "One finite_cubic_tail application to S filtered by p>q, with "
                         + "p^-4<=(1/q)p^-3, bounds the combined excess by 4/q^3. "
                         + "The uniform witness, admissibility and aggregate estimate form the "
-                        + "proposed primitive. The upper half of finite_integer_activation_envelope "
+                        + "new construction. The upper half of finite_integer_activation_envelope "
                         + "uses this estimate on its actual proof path."))),
                 DescribeRole.Theorem),
             Describe.Lean(
@@ -73,7 +74,7 @@ internal sealed class FixedSupportIntegerActivationEnvelopeDocument : IScribeDoc
                 Blocks(
                     Paragraph(Text(
                         "For H=theta(S)>exp(1), L=log(H), lambda=1/(H*L), every real r,q "
-                        + "with 0<r<=1, 2Lr<=1, q>=2 and lambda*q^4<=1 satisfies the proposed "
+                        + "with 0<r<=1, 2Lr<=1, q>=2 and lambda*q^4<=1 satisfies the finite "
                         + "bounds min(r,A1+A2-2lambda*log(1/lambda)-16Lr^2)<=C and "
                         + "C<=A1+A2+lambda*q*(log(1/lambda)+1)+4/q^3. "
                         + "There is no card(S)>=3 assumption: a support such as {17} is "
@@ -97,7 +98,7 @@ internal sealed class FixedSupportIntegerActivationEnvelopeDocument : IScribeDoc
                         + "therefore gives total correction <=2/Q^2=2lambda*log(1/lambda). "
                         + "No private cutoff or logarithm owner is copied or exposed.")),
                     Paragraph(Text(
-                        "The prior source normalization, global scalar defect and all-vector "
+                        "The exact source normalization, global scalar defect and all-vector "
                         + "sublevel proof are adapted in this same owner. For u=U/H>=0,L>=1, "
                         + "the public rational logarithm bounds give 0<=log(1+log(1+u)/L)<=u/L "
                         + "and deficit <=u^2/L. If F<r, Real.abs_exp_sub_one_le is applied "
@@ -112,11 +113,10 @@ internal sealed class FixedSupportIntegerActivationEnvelopeDocument : IScribeDoc
                         + "transfer the upper estimate. These order and scalar helpers are "
                         + "consumed bindings, not separate claimed contributions. "
                         + "This source implements exactly depth K=3, not a parameterized "
-                        + "finite-depth family or an infinite-depth lower theorem. It replaces "
-                        + "the prior canonical prospective owner rather than adding companions; "
-                        + "the older free-q condition lambda*q^3<=1 is not asserted here. "
+                        + "finite-depth family or an infinite-depth lower theorem. It retains the exact quartic free-q condition. "
                         + "No optimized cutoff, cubic PNT tail, theta-PNT proof, asymptotic "
-                        + "limit, Reg or freeze artifact is included. Native Lean and Scribe "
-                        + "elaboration and all exact-domain/proof-shape checks remain unresolved."))),
+                        + "limit or freeze artifact is included. The mirrored Reg source audits "
+                        + "the literal q observation in the head error with all hypotheses retained; "
+                        + "its producer state is reported separately from kernel compilation."))),
                 DescribeRole.Theorem))));
 }
