@@ -2,15 +2,14 @@ import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
 import D5.S3.Quantum.SpinFactor.OriginalPureRigidity
 
-/-! Source-equivalence attempts for the pure theorems and original endpoint.
+/-! Source-equivalence families for the pure theorems and original endpoint.
 
 Each factory requires an actual total relation with the displayed source
 suppliers. The global factory additionally requires the common-perpendicular
 interface. OriginalGlobalPure retains the endpoint's full P2/PB telescope;
 its variation witness requires an actual original D satisfying P2 and PB.
-There is no closed registration value in this module. Concrete witnesses,
-source compilation, lawful template binding and raw selectors remain
-unverified. The factories do not assert declared validation.
+The registration constructors depend on these witnesses; none supplies an
+inhabitant of the original P2/PB hypotheses.
 -/
 
 noncomputable section
