@@ -47,7 +47,7 @@ variable (O : Machine C I R)
 
 /-- Every live configuration is retained, including unreachable ones. Only
     the already emitted configurations with the same decision are merged. -/
-def Boundary := {c : C // O.emission c = none} ⊕ Bool
+abbrev Boundary := {c : C // O.emission c = none} ⊕ Bool
 
 instance [Fintype C] : Fintype O.Boundary := by
   unfold Boundary
@@ -198,12 +198,20 @@ private theorem stop_spec (seed : I) (source : ℕ → Bool) (coins : ℕ → R)
     O.stopIndex seed source coins = some n ↔
       (O.execute seed source coins n).action.output ≠ none ∧
       ∀ k < n, (O.execute seed source coins k).action.output = none := by
-  letI : MeasurableSpace (Option Bool) := ⊤
-  change firstHit {a : Option Bool | a ≠ none}
-    (fun k => (O.execute seed source coins k).action.output) = some n ↔ _
-  rw [first_hit_some]
-  change (_ ∧ ∀ k < n, ¬ (O.execute seed source coins k).action.output ≠ none) ↔ _
-  simp only [not_not]
+  constructor
+  · intro hn
+    unfold stopIndex at hn
+    split at hn
+    next h =>
+      have he := Option.some.inj hn
+      subst n
+      exact ⟨Nat.find_spec h, fun k hk => not_not.mp (Nat.find_min h hk)⟩
+    next h => cases hn
+  · rintro ⟨hn, hpre⟩
+    have h : ∃ k, (O.execute seed source coins k).action.output ≠ none := ⟨n, hn⟩
+    have he : Nat.find h = n := (Nat.find_eq_iff h).mpr
+      ⟨hn, fun k hk => by rw [hpre k hk]; simp⟩
+    simp only [stopIndex, dif_pos h, he]
 
 private theorem stop_length (seed : I) (source : ℕ → Bool) (coins : ℕ → R)
     (n : ℕ) (hn : O.stopIndex seed source coins = some n) :
@@ -349,7 +357,7 @@ theorem stopping_normalization [Fintype C] [MeasurableSpace I] [MeasurableSpace 
       rw [heff]
       rfl
     constructor <;> apply PMF.toMeasure_injective <;>
-      simp [A, B, Measure.toPMF_toMeasure, habs, PMF.toMeasure_pure]
+      simp [A, B, Measure.toPMF_toMeasure, habs, Measure.map_const, PMF.toMeasure_pure]
   · intro seed coins wait gaps
     let source := ActualRenewalStopping.sourceBit wait gaps
     let Z := ActualRenewalStopping.run O.labels O.normalizedUpdate
@@ -370,7 +378,7 @@ theorem stopping_normalization [Fintype C] [MeasurableSpace I] [MeasurableSpace 
       rw [hr]
       cases ht : firstHit O.labels Z with
       | none => rfl
-      | some t => cases ho : O.output (Z t) <;> simp [Z] at ho <;> simp [ho]
+      | some t => cases ho : O.output (Z t) <;> simp only [Z] at ho ⊢ <;> simp [ho]
 
 end Machine
 end D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.ReadExecution.OriginalObserverNormalization
