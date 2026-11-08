@@ -1,0 +1,7 @@
+**Lemma 9.1 (E3: uniform eighth-power collapsed entropy).** On the source-only neighborhood (2.9), for every finite integer $L\ge1$ and both targets,
+
+$$
+d_i(e^{-s},L)\le4\delta^2s^2\min\{1,(sL)^8\}
+\quad(0<s<s_H).
+\tag{9.1}
+$$
