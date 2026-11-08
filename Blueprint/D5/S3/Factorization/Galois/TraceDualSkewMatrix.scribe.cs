@@ -84,7 +84,8 @@ internal sealed class TraceDualSkewMatrixDocument : IScribeDocumentDefinition
                 + "d_j(sum_g r.coeff(g)*(g acting on u_i))."))));
 
     private static DocumentBlock.Describe Entry(string name, string title, DescribeRole role, string text) =>
-        Describe.Lean(DescribeId.Create(name), DeclarationHandle.Create(Prefix + name),
+        Describe.Lean(DescribeId.Create(name.Replace('_', '-').ToLowerInvariant()),
+            DeclarationHandle.Create(Prefix + name),
             H(title), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(text))), role);
 }
