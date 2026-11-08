@@ -534,4 +534,68 @@ theorem unit_rows (D : E → E → E) (hP : P2 D) (hPB : PB D) (q : ℝ) (b : E)
     rw [p2_skew D hP (0, y) (q, 0), ← h, neg_zero]
   · exact unit_row_nonzero_scalar D hP hPB q b.1 b.2 ht
 
+/-- Every exact real SO(2) label rotation preserves the same original D. -/
+theorem label_rotation (D : E → E → E) (hP : P2 D) (hPB : PB D)
+    (C S : ℝ) (hCS : C ^ 2 + S ^ 2 = 1) (b c : E) :
+    D b c = D (C • b + S • c) (C • c - S • b) := by
+  have hcay (l : ℝ) (b c : E) :
+      D b c = D (((1 - l ^ 2) / (1 + l ^ 2)) • b +
+        ((2 * l) / (1 + l ^ 2)) • c)
+        (((1 - l ^ 2) / (1 + l ^ 2)) • c - ((2 * l) / (1 + l ^ 2)) • b) :=
+    label_cayley D hPB l b c (unit_rows D hP hPB _ _) (unit_rows D hP hPB _ _)
+  by_cases hC : C = -1
+  · have hS : S = 0 := by rw [hC] at hCS; nlinarith [sq_nonneg S]
+    have h1 : D b c = D c (-b) := by simpa using hcay 1 b c
+    have h2 : D c (-b) = D (-b) (-c) := by simpa using hcay 1 c (-b)
+    simpa [hC, hS] using h1.trans h2
+  · have hden : 1 + C ≠ 0 := by intro h; apply hC; linarith
+    let l := S / (1 + C)
+    have hdenl : 1 + l ^ 2 ≠ 0 := by positivity
+    have h1 : (1 - l ^ 2) / (1 + l ^ 2) = C := by
+      apply (div_eq_iff hdenl).mpr
+      dsimp [l]
+      field_simp
+      linear_combination -(1 + C) * hCS
+    have h2 : 2 * l / (1 + l ^ 2) = S := by
+      apply (div_eq_iff hdenl).mpr
+      dsimp [l]
+      field_simp
+      linear_combination -S * hCS
+    simpa only [h1, h2] using hcay l b c
+
+private theorem same_axis_zero (D : E → E → E) (hP : P2 D) (hPB : PB D)
+    (s t k : ℝ) (x : Vec) : D (s, x) (t, k • x) = 0 := by
+  let L := Real.sqrt (1 + k ^ 2)
+  have hLpos : 0 < L := by dsimp [L]; positivity
+  have hL : L ≠ 0 := ne_of_gt hLpos
+  have hL2 : L ^ 2 = 1 + k ^ 2 := Real.sq_sqrt (by positivity)
+  have hCS : (k / L) ^ 2 + (-1 / L) ^ 2 = 1 := by
+    field_simp
+    nlinarith only [hL2]
+  have h := label_rotation D hP hPB (k / L) (-1 / L) hCS (s, x) (t, k • x)
+  have hfirst : (k / L) • (s, x) + (-1 / L) • (t, k • x) =
+      ((k / L) * s + (-1 / L) * t, 0) := by
+    apply Prod.ext rfl
+    funext i
+    simp [smul_eq_mul]
+    ring
+  rw [hfirst, unit_rows D hP hPB] at h
+  exact h
+
+/-- Collinear vector parts force zero for all original scalar parts and degeneracies. -/
+theorem collinear_zero (D : E → E → E) (hP : P2 D) (hPB : PB D)
+    (a b : E) (hab : cross a.2 b.2 = 0) : D a b = 0 := by
+  by_cases ha : a.2 = 0
+  · have he : a = (a.1, 0) := Prod.ext rfl ha
+    rw [he]
+    exact unit_rows D hP hPB _ _
+  have hlin : ¬LinearIndependent ℝ ![a.2, b.2] := by
+    intro h
+    exact (crossProduct_ne_zero_iff_linearIndependent.mpr h) hab
+  rw [LinearIndependent.pair_iff' ha, not_forall_not] at hlin
+  obtain ⟨k, hk⟩ := hlin
+  have hb : b = (b.1, k • a.2) := Prod.ext rfl hk.symm
+  rw [hb]
+  exact same_axis_zero D hP hPB a.1 b.1 k a.2
+
 end D5.S3.Quantum.SpinFactor.OriginalDContract
