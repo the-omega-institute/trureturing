@@ -232,18 +232,11 @@ private theorem vnorm_sq (x : Vec) : vnorm x ^ 2 = dot x x :=
 
 private theorem p2_scalar_pair (D : E → E → E) (hP : P2 D) (l k : ℝ) :
     D (l, 0) (k, 0) = 0 := by
-  apply evaluations_separate
-  intro α
-  have hb := p2_determinant_bound D hP α (l, 0) (k, 0)
-  have hz : evaluate α (D (l, 0) (k, 0)) = 0 := by
-    have he : evaluate α (jordan (l, 0) (l, 0)) *
-        evaluate α (jordan (k, 0) (k, 0)) -
-          evaluate α (jordan (l, 0) (k, 0)) ^ 2 = 0 := by
-      simp [evaluate, jordan, dot]
-      ring
-    rw [he] at hb
-    nlinarith [sq_nonneg (evaluate α (D (l, 0) (k, 0)))]
-  simpa [evaluate, dot] using hz
+  by_cases hk : k = 0
+  · subst k
+    exact (p2_zero_rows D hP).2 _
+  simpa [Prod.smul_mk, smul_eq_mul, div_mul_cancel₀ l hk] using
+    (p2_proportional D hP (l / k) (k, 0)).1
 
 private theorem p2_scalar_face (D : E → E → E) (hP : P2 D)
     (l t : ℝ) (y : Vec) :
@@ -284,9 +277,8 @@ private theorem p2_scalar_face (D : E → E → E) (hP : P2 D)
   · change y ⬝ᵥ (D (l, 0) (t, y)).2 = 0
     linarith
 
-/-- A finite PB substitution forces every unit row with nonzero input scalar to vanish. -/
-theorem unit_row_nonzero_scalar (D : E → E → E) (hP : P2 D) (hPB : PB D)
-    (l t : ℝ) (y : Vec) (ht : t ≠ 0) : D (l, 0) (t, y) = 0 := by
+private theorem unit_row_scalar_obstruction (D : E → E → E) (hP : P2 D) (hPB : PB D)
+    (l t : ℝ) (y : Vec) : t * vnorm (D (l, 0) (t, y)).2 ^ 2 = 0 := by
   let z := (D (l, 0) (t, y)).2
   have hf := p2_scalar_face D hP l t y
   have hd : D (l, 0) (t, y) = (0, z) := Prod.ext hf.1 rfl
@@ -348,10 +340,20 @@ theorem unit_row_nonzero_scalar (D : E → E → E) (hP : P2 D) (hPB : PB D)
       simpa [evaluate, jordan, α, dot, dotProduct_add,
         dotProduct_smul, hyz, hzy, hzz] using heα
     nlinarith only [he']
-  have hz0 : Z = 0 := sq_eq_zero_iff.mp ((mul_eq_zero.mp htz).resolve_left ht)
-  have hz : z = 0 := dotProduct_self_eq_zero.mp (by rw [hzz, hz0]; norm_num)
-  rw [hd, hz]
-  rfl
+  exact htz
+
+/-- A finite PB substitution forces every unit row with nonzero input scalar to vanish. -/
+theorem unit_row_nonzero_scalar (D : E → E → E) (hP : P2 D) (hPB : PB D)
+    (l t : ℝ) (y : Vec) (ht : t ≠ 0) : D (l, 0) (t, y) = 0 := by
+  have hf := p2_scalar_face D hP l t y
+  have ho := unit_row_scalar_obstruction D hP hPB l t y
+  have hz : vnorm (D (l, 0) (t, y)).2 = 0 :=
+    sq_eq_zero_iff.mp ((mul_eq_zero.mp ho).resolve_left ht)
+  apply Prod.ext hf.1
+  apply dotProduct_self_eq_zero.mp
+  change dot (D (l, 0) (t, y)).2 (D (l, 0) (t, y)).2 = 0
+  rw [← vnorm_sq, hz]
+  norm_num
 
 private theorem jordan_scalar (l : ℝ) (b : E) : jordan (l, 0) b = l • b := by
   apply Prod.ext
