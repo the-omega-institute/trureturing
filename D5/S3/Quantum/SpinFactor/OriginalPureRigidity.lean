@@ -57,20 +57,20 @@ private theorem dot_sub_right (x y z : Vec) : dot x (y - z) = dot x y - dot x z 
   dotProduct_sub x y z
 
 private theorem dot_smul_left (a : ℝ) (x y : Vec) : dot (a • x) y = a * dot x y := by
-  simp [dot, smul_dotProduct]
+  simpa only [smul_eq_mul] using (smul_dotProduct a x y)
 
 private theorem dot_smul_right (a : ℝ) (x y : Vec) : dot x (a • y) = a * dot x y := by
-  simp [dot, dotProduct_smul, mul_comm]
+  simpa only [smul_eq_mul] using (dotProduct_smul a x y)
 
 private theorem cross_sub_left (x y z : Vec) :
     cross (x - y) z = cross x z - cross y z := by
   rw [sub_eq_add_neg, cross_add_left, ← neg_one_smul ℝ y, cross_smul_left]
-  simp
+  simp [sub_eq_add_neg]
 
 private theorem cross_sub_right (x y z : Vec) :
     cross x (y - z) = cross x y - cross x z := by
   rw [sub_eq_add_neg, cross_add_right, ← neg_one_smul ℝ z, cross_smul_right]
-  simp
+  simp [sub_eq_add_neg]
 
 /-- A finite real root diagonalizes the two-label Gram matrix. Only the
 known vector arithmetic is normalized; no unknown D value is expanded. -/
@@ -91,7 +91,7 @@ private theorem orthogonalize (D : E → E → E) (h : PureSuppliers D) (x y : V
   have ht : C * t ^ 2 + (A - B) * t - C = 0 := by
     dsimp [t]
     field_simp [hC]
-    nlinarith [hR]
+    nlinarith [hR, congrArg (fun q : ℝ => C * q) hR]
   let r := Real.sqrt (1 + t ^ 2)
   have hr : 0 < r := Real.sqrt_pos.2 (by positivity)
   have hr0 := ne_of_gt hr
@@ -105,12 +105,13 @@ private theorem orthogonalize (D : E → E → E) (h : PureSuppliers D) (x y : V
   let u := c • x + s • y
   let v := (-s) • x + c • y
   have huv : dot u v = 0 := by
-    simp only [u, v, dot_add_left, dot_add_right, dot_smul_left,
-      dot_smul_right, dot_symm y x]
-    change (c * (-s * A) + c * (c * C)) + (s * (-s * C) + s * (c * B)) = 0
-    dsimp [c, s]
-    field_simp [hr0]
-    nlinarith [ht]
+    have he : dot u v = (C * (1 - t ^ 2) + (B - A) * t) / r ^ 2 := by
+      simp only [u, v, dot_add_left, dot_add_right, dot_smul_left,
+        dot_smul_right, dot_symm y x]
+      change (c * (-s * A) + c * (c * C)) + (s * (-s * C) + s * (c * B)) = _
+      dsimp [c, s]
+      field_simp [hr0] <;> ring
+    rw [he, show C * (1 - t ^ 2) + (B - A) * t = 0 by nlinarith [ht], zero_div]
   have hc : cross u v = cross x y := by
     simp only [u, v, cross_add_left, cross_add_right, cross_smul_left,
       cross_smul_right, cross_self, smul_zero, zero_add, add_zero,
@@ -192,7 +193,8 @@ private theorem orthogonal_direction (D : E → E → E) (h : PureSuppliers D)
     {x y : Vec} (hx : x ≠ 0) (hy : y ≠ 0) (hxy : dot x y = 0) :
     ∃ k : ℝ, D (pure x) (pure y) = (0, k • cross x y) := by
   obtain ⟨hs, hyz⟩ := orthogonal_zero_face D h hy hxy
-  have hswap := orthogonal_zero_face D h hx (by rwa [dot_symm])
+  have hswap := orthogonal_zero_face D h (x := y) (y := x) hx
+    (by rwa [dot_symm])
   have hxz : dot x (D (pure x) (pure y)).2 = 0 := by
     have hsk := h.antisymmetric (pure x) (pure y)
     rw [hsk] at hswap
@@ -233,7 +235,7 @@ private theorem saturation_estimate (D : E → E → E) (h : PureSuppliers D)
       (1 / (r * Y)) * ((1 / (r * Y)) * B) = 1
     rw [← hYsq]
     field_simp [hr0, hY0]
-    nlinarith [hrsq]
+    nlinarith [hrsq, congrArg (fun q : ℝ => q * Y ^ 2) hrsq]
   let c : E := (r, l • x)
   let p : E := (-l * A, y + k • w - r • x)
   let q : E := (l * A, y - k • w + r • x)
@@ -251,7 +253,9 @@ private theorem saturation_estimate (D : E → E → E) (h : PureSuppliers D)
     · rfl
   have hq : pure y - D (pure x) (pure y) + jordan (pure x) c = q := by
     rw [hk, hacj]
-    rfl
+    apply Prod.ext
+    · simp [pure, q]
+    · rfl
   have hfd : D p c - D q c = (0, (2 * l * A) • y) := by
     have hf := h.difference (pure x) (pure y) c
     rw [finiteDifference, hp, hq, hab, hac] at hf
@@ -269,8 +273,7 @@ private theorem saturation_estimate (D : E → E → E) (h : PureSuppliers D)
   have hnc : lift n c = (1 / Y) • y := by
     funext i
     simp [lift, n, c, Pi.smul_apply, smul_eq_mul]
-    field_simp [hr0, hY0]
-    ring
+    field_simp [hr0, hY0] <;> ring
   have hrcancel : -r + l * l * A / r = -1 / r := by
     field_simp [hr0]
     nlinarith [hrsq]
@@ -297,42 +300,46 @@ private theorem saturation_estimate (D : E → E → E) (h : PureSuppliers D)
       change crossProduct (crossProduct x y) y = -B • x
       rw [cross_cross_eq_smul_sub_smul]
       simp [hxy, B, dot, neg_smul]
-    have hcoef1 : (sg * k) * ((1 / Y) * (-B)) = -sg * k * Y := by
-      rw [← hYsq]
-      field_simp [hY0]
-      ring
-    have hcoef2 : (sg * (-1 / r)) * (1 / Y) = -sg / (r * Y) := by
-      field_simp [hr0, hY0]
-      ring
     have he : cross (lift n (-sg * l * A, y + sg • (k • w - r • x))) (lift n c) =
         (-sg * k * Y) • x + (-sg / (r * Y)) • w := by
       rw [hL, hnc]
       simp only [cross_add_left, cross_smul_left, cross_smul_right,
-        cross_self, smul_zero, zero_add, hcross, smul_smul, hcoef1, hcoef2]
-      rfl
+        cross_self, smul_zero, zero_add, hcross]
+      funext i
+      simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul]
+      dsimp only [w]
+      rw [← hYsq]
+      field_simp [hr0, hY0] <;> ring
     rw [he]
     simp only [dot_add_left, dot_add_right, dot_smul_left, dot_smul_right,
       hxw, hwx, hww, mul_zero, zero_mul, add_zero, zero_add]
     rw [← hYsq]
-    field_simp [hr0, hY0]
-    ring
+    field_simp [hr0, hY0] <;> ring
   let f := (D p c).1 + dot n (D p c).2
   let g := (D q c).1 + dot n (D q c).2
   have hf : f ^ 2 ≤ A / r ^ 2 + k ^ 2 * A * B := by
+    have hp' : p = (-(1 : ℝ) * l * A, y + (1 : ℝ) • (k • w - r • x)) := by
+      ext i <;> simp [p] <;> ring
+    have hd := hdet (1 : ℝ)
+    rw [← hp'] at hd
+    simp only [one_pow, one_mul] at hd
     have hh := h.bound n hn p c
-    simpa [p, hdet 1, one_smul] using hh
+    rw [hd] at hh
+    exact hh
   have hg : g ^ 2 ≤ A / r ^ 2 + k ^ 2 * A * B := by
-    have hh := h.bound n hn q c
     have he : q = (-(-1) * l * A, y + (-1 : ℝ) • (k • w - r • x)) := by
       ext i <;> simp [q] <;> ring
-    rw [he, hdet] at hh
-    simpa using hh
+    have hd := hdet (-1 : ℝ)
+    rw [← he] at hd
+    norm_num at hd
+    have hh := h.bound n hn q c
+    rw [hd] at hh
+    exact hh
   have hny : dot n y = Y / r := by
     simp only [n, dot_add_left, dot_smul_left, hxy, mul_zero, zero_add]
     change (1 / (r * Y)) * B = Y / r
     rw [← hYsq]
-    field_simp [hr0, hY0]
-    ring
+    field_simp [hr0, hY0] <;> ring
   have hfg : f - g = 2 * l * A * Y / r := by
     have hv := congrArg (fun a : E => a.1 + dot n a.2) hfd
     change (D p c).1 - (D q c).1 + dot n ((D p c).2 - (D q c).2) =
@@ -346,12 +353,10 @@ private theorem saturation_estimate (D : E → E → E) (h : PureSuppliers D)
     have hmul := mul_le_mul_of_nonneg_right hh (sq_nonneg r)
     have hleft : (2 * l * A * Y / r) ^ 2 * r ^ 2 = 4 * l ^ 2 * A ^ 2 * B := by
       rw [← hYsq]
-      field_simp [hr0]
-      ring
+      field_simp [hr0] <;> ring
     have hright : (4 * (A / r ^ 2 + k ^ 2 * A * B)) * r ^ 2 =
         4 * (A + k ^ 2 * A * B * r ^ 2) := by
-      field_simp [hr0]
-      ring
+      field_simp [hr0] <;> ring
     rw [hleft, hright] at hmul
     nlinarith [hmul]
   rw [hrsq] at hh'
@@ -386,8 +391,7 @@ theorem orthogonal_saturation (D : E → E → E) (h : PureSuppliers D)
     change (W⁻¹ * (k * dot w w)) ^ 2 ≤ dot w w at hb
     rw [← hWsq] at hb
     have hc : W⁻¹ * (k * W ^ 2) = k * W := by
-      field_simp [hW0]
-      ring
+      field_simp [hW0] <;> ring
     rw [hc] at hb
     apply (mul_le_mul_right (sq_pos_of_pos hW)).mp
     nlinarith [hb]
@@ -458,10 +462,15 @@ theorem transverse_sign (D : E → E → E) (h : PureSuppliers D)
     have hf := h.difference (pure x) (pure y) (pure z)
     have hf' : D (pure p) (pure q) - D (pure p') (pure q') = 0 := by
       simpa [finiteDifference, hjy, hjz, hjdy, hjdz, hky, hlz,
-        p, q, p', q', pure, jordan_zero_right] using hf
+        p, q, p', q', pure, jordan_zero_right, sub_eq_add_neg] using hf
     exact sub_eq_zero.mp hf'
   have hsq : dot (cross p q) (cross p q) = dot (cross p' q') (cross p' q') := by
-    rw [← pure_square D h, he, pure_square D h]
+    calc
+      dot (cross p q) (cross p q) =
+          dot (D (pure p) (pure q)).2 (D (pure p) (pure q)).2 :=
+        (pure_square D h p q).symm
+      _ = dot (D (pure p') (pure q')).2 (D (pure p') (pure q')).2 := by rw [he]
+      _ = dot (cross p' q') (cross p' q') := pure_square D h p' q'
   have hycross : dot y (cross x z) = -dot x (cross y z) := by
     change y ⬝ᵥ (x ⨯₃ z) = -(x ⬝ᵥ (y ⨯₃ z))
     rw [triple_product_permutation y x z, ← cross_anticomm y z, dotProduct_neg]
@@ -571,7 +580,8 @@ theorem nonunit_row_sign (D : E → E → E) (h : PureSuppliers D)
       rw [ha]
       change _ + t * (x ⬝ᵥ (z ⨯₃ (x ⨯₃ y))) = _
       rw [cross_cross_eq_smul_sub_smul']
-      simp [dotProduct_sub, dotProduct_smul, hxz, dot_symm x y, hxy, dot]
+      simp [dotProduct_sub, dotProduct_smul, hxz, dot_symm x y, hxy, dot,
+        mul_comm, mul_left_comm, mul_assoc]
     rw [he]
     exact ht2
   obtain ⟨m, hm, hmq⟩ := pure_pair_saturation D h x q
@@ -664,7 +674,7 @@ private theorem unit_pair_sign (D : E → E → E) (h : PureSuppliers D)
   have htwo : D (pure x) (pure (2 • y)) = (0, (2 * e) • w) := by
     have hd := hoff x (2 • y)
       (by simp [dot_smul_right, hxy])
-      (Or.inr (by simp [dot_smul_left, dot_smul_right, hy]))
+      (Or.inr (by norm_num [dot_smul_left, dot_smul_right, hy]))
     simpa [cross_smul_right, w, smul_smul, mul_comm] using hd
   let p := y - e • w
   let q := (2 : ℝ) • y + (2 * e) • w
@@ -724,7 +734,7 @@ private theorem unit_pair_sign (D : E → E → E) (h : PureSuppliers D)
     have hf := h.difference (pure x) (pure y) (pure (2 • y))
     have hf' : D (pure p) (pure q) - D (pure p') (pure q') = 0 := by
       simpa [finiteDifference, hjy, hjtwo, hjdy, hjdtwo, hky, hkneg, htwo,
-        p, q, p', q', pure, w, neg_smul] using hf
+        p, q, p', q', pure, w, neg_smul, sub_eq_add_neg] using hf
     exact sub_eq_zero.mp hf'
   rw [hDp, hDp'] at heq
   have hxzero : x = 0 := by
