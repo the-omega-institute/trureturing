@@ -763,3 +763,389 @@ $$
 全部合法顺序／自适应／并行历史、每个仍合法未来、细记录与真正分组遗忘、停止／拒绝／销毁、同数两侧及逆向真实返回均保留。CountRead无穷、正常性、指定前对偶、原域上的流、物理钟、Hamiltonian生成元定义域、能量、作用量及共同正 $\hbar$ 均未由辅助共轭或中央取向生产。原菜单返回障碍及其它来源条件不因原多项式运输关系而消失；这些条件与本节前件共同保持完整量子起源目标的原范围。
 
 ## 追加锚（本行以下为增补区）
+
+## 137. 固定实际框架对任意原第二输入的奇块识别
+
+**定义 137.1（同一原资料、固定框架与残差）。** 保持123.1、130.1的同一原
+$(E,C,u,N,\mathcal P,S,D)$、准确锥、全部A1–A3、全部原P2和完整原PB。原
+$E$仍可不完备，$D:E^2\to E$仍是同一个总映射；不加入可加、连续、可测、
+单位平移、商下降、完成延拓、任意原轴存在或物理来源前件。固定一个实际
+三轴
+
+$$
+h^2=e^2=u,\qquad h\circ e=0,\qquad j=D(h,e),
+$$
+
+并沿用134.2的辅助元 $Q=ihej\in Z(\mathcal A)$、$Q^*=Q$、$Q^2=u$。在整个
+原 $E$ 上定义有限Jordan算子
+
+$$
+\widetilde T_h=[L_j,L_e],\qquad
+P_h^-:=\tfrac12(I-U_h),\qquad
+d_x:=D(h,x),\quad k_x:=h\circ x,\quad z_x:=P_h^-x,
+$$
+
+以及
+
+$$
+r_h(x):=d_x-\widetilde T_hx .
+\tag{137.1}
+$$
+
+在 $V_h$ 上，$\widetilde T_h$ 就是100.1和133.1的 $T$；由
+$je=iQh$ 及成熟的JC交换子恒等式，它在环境中也可写为
+
+$$
+\widetilde T_hx=\frac {i}{2}Q[h,x],
+\tag{137.2}
+$$
+
+故它杀掉 $U_h=+1$ 的分量，并在 $V_h$ 上等于 $iQhx$。77.2在同一标量平方
+片 $\operatorname{span}_{\mathbb R}\{u,h,e,j\}$ 中给出两个实际仿射锚的
+放大形式：对任意实 $s,\alpha$，
+
+$$
+D(h,sp+\alpha(u+h))=sq,
+\qquad (p,q)=(e,j)\ \text{或}\ (j,-e).
+\tag{137.3}
+$$
+
+这里使用的是已付的标量平方片双线性，而不是一般的单位平移；式(137.3)不
+把未知 $D$ 在一般 $E$ 上拆开。
+
+**定理 137.2（R1：固定实际首轴的任意原输入投影）。** 在137.1的条件下，
+对每个原 $x\in E$，
+
+$$
+\boxed{P_h^-D(h,x)=\widetilde T_hx},
+\qquad
+\boxed{U_hr_h(x)=r_h(x)} .
+\tag{137.4}
+$$
+
+换言之，同一个实际旧值的 $h$-奇块由固定三轴完全确定；未确定的部分只能是
+$h$-交换残差。若 $x\in V_h$，则133.1已经给 $r_h(x)=0$。
+
+证明。固定 $x$，简写 $d=d_x,k=k_x,z=z_x,n=u+h$。对137.3的任一 $(p,q)$，
+在完整原PB中取实际三元组
+
+$$
+(a,b,c)=(h,sp+\alpha n,x).
+$$
+
+其两个位移为 $\nu=sq-k$、$\omega=d+\alpha n$，所以两个外层原标签为
+
+$$
+\begin{aligned}
+R_+&=s(p+q)+\alpha n-k,&S_+&=x+d+\alpha n,\\
+R_-&=s(p-q)+\alpha n+k,&S_-&=x-d-\alpha n.
+\end{aligned}
+\tag{137.5}
+$$
+
+这四个标签均在原 $E$。利用 $p\circ q=0$、$n\circ q=q$、
+$n\circ k-k-x=-z$，PB的右侧逐项化简为
+
+$$
+D(R_+,S_+)-D(R_-,S_-)
+=-2\alpha(sq+z)+2s\,p\circ k-2x\circ d .
+\tag{137.6}
+$$
+
+对两个外层旧值分别使用同一个数学正实读取 $\phi$ 的P2，并使用123.2的
+$B_\phi$，再只对显式标量 $\alpha$ 取两侧的二次式主项，得到对所有实 $s$
+
+$$
+\begin{aligned}
+2|\phi(sq+z)|\le{}&
+\sqrt{B_\phi\bigl(n,x+k+d-s(p+q)\bigr)}\\
+&+\sqrt{B_\phi\bigl(n,x+k-d+s(p-q)\bigr)}.
+\end{aligned}
+\tag{137.7}
+$$
+
+这一步没有对 $D$ 的值取极限：$d$ 固定在原域中，极限只作用于已知的
+正实标量多项式系数。特别地，P2始终是两张原二表的同一读取预算。
+
+现在在忠实含单位表示 $\mathcal A\subset B(H)$ 中工作。令
+
+$$
+H_\sigma=\{\xi:h\xi=-\xi,\ Q\xi=-\sigma\xi\},
+\qquad \sigma\in\{1,-1\},
+$$
+
+并取非零 $\xi\in H_\sigma$、$\eta=j\xi$。若 $\phi_\delta$ 是向量
+$(\xi+\delta\eta)/(1+\delta^2)^{1/2}$ 的正读取，则对每个固定自伴 $v$ 有精确式
+
+$$
+B_{\phi_\delta}(n,v)=
+\frac{4\delta^2}{(1+\delta^2)^2}
+\left(\|v\xi+\delta v\eta\|^2-
+\bigl(\operatorname{Re}\langle\eta,v\xi\rangle
+ +\delta\operatorname{Re}\langle\eta,v\eta\rangle\bigr)^2\right).
+\tag{137.8}
+$$
+
+记 $P_\eta w=w-\operatorname{Re}\langle\eta,w\rangle\eta$。在137.7中先固定
+$s$，约去 $2\delta/(1+\delta^2)$，令 $\delta\downarrow0$，得到
+
+$$
+\begin{aligned}
+2\left|\operatorname{Re}\langle\eta,(sq+z)\xi\rangle\right|
+\le{}&\left\|P_\eta\bigl((x+k+d-s(p+q))\xi\bigr)\right\|\\
+&+\left\|P_\eta\bigl((x+k-d+s(p-q))\xi\bigr)\right\| .
+\end{aligned}
+\tag{137.9}
+$$
+
+先取 $(p,q)=(e,j)$。由 $e\xi=i\sigma\eta$、$j\xi=\eta$，两边在
+$s\to+\infty$ 与 $s\to-\infty$ 的一次项均由固定向量范数给出；绝对值的两侧导数相夹，得到
+
+$$
+\begin{aligned}
+w_+&:=P_\eta((x+k+d)\xi),&w_-&:=P_\eta((x+k-d)\xi),\\
+P_\eta((e+j)\xi)&=i\sigma\eta,&P_\eta((e-j)\xi)&=i\sigma\eta,\\
+\left.\frac{d}{ds}\right|_{+\infty}
+\bigl(\|w_+-s i\sigma\eta\|+\|w_-+s i\sigma\eta\|\bigr)
+&=\operatorname{Re}\langle-i\sigma\eta,w_+\rangle
+ +\operatorname{Re}\langle i\sigma\eta,w_-\rangle
+=-2\sigma\operatorname{Im}D_0 .
+\end{aligned}
+\tag{137.10a}
+$$
+
+$s\to+\infty$ 给出一个导数方向的界，而 $s\to-\infty$ 给出反向界；两侧
+主斜率相同，故显示的一次系数必须相等。
+
+$$
+\operatorname{Re}A=-\sigma\operatorname{Im}D_0,
+\qquad
+A:=\langle\eta,z\xi\rangle,\quad D_0:=\langle\eta,d\xi\rangle .
+\tag{137.10}
+$$
+
+同一计算使用第二锚 $(p,q)=(j,-e)$，其 $q\xi=-i\sigma\eta$，给出
+
+$$
+\operatorname{Re}D_0=\sigma\operatorname{Im}A.
+\tag{137.11}
+$$
+
+故
+
+$$
+\langle j\xi,(d+i\sigma z)\xi\rangle=0
+\qquad(\xi\in H_\sigma).
+\tag{137.12}
+$$
+
+这里的顺序是先取显式 $\alpha$ 主项，再取固定向量态的 $\delta$ 极限，最后
+取显式 $s$ 的两条尾部；没有缩放未知旧响应或给它添加连续性。
+
+对137.12作普通复极化。由于 $Q$ 在整个 $\mathcal A$ 中中央，$d,z$ 没有
+相反 $Q$ 扇区之间的块；而 $j$ 将 $H_\sigma$ 等距映到相应的 $h=+1$
+扇区。若 $\mathsf p_\sigma$ 是 $H_\sigma$ 的投影，137.12等价于
+
+$$
+\mathsf p_\sigma j(d+i\sigma z)\mathsf p_\sigma=0.
+\tag{137.13}
+$$
+
+用 $K_0=je=iQh$ 将其改写，就是
+$P_h^-d\,\mathsf p_\sigma=\widetilde T_hz\,\mathsf p_\sigma$。两个
+$\sigma$ 扇区的直和是整个 $h=-1$ 子空间；自伴性给出反向块，忠实性遂得
+$P_h^-d=\widetilde T_hz=\widetilde T_hx$，最后一个等号由137.2及
+$U_h$-偶分量上的消失性成立。于是137.4成立。空扇区和 $E=0$ 的情形均为
+真空等式，不需选择向量。∎
+
+## 138. R2：原生横向域中的交换子残差
+
+**定理 138.1（R2：同一旧残差的原生共同交换子包含）。** 若 $x\in V_e$，置
+$y=D(e,x)$。则 $y\in V_e$、$y^2=x^2$、$D(e,y)=-x$，并且
+
+$$
+\boxed{r_h(x)\in E\cap\{h,e,j\}'} .
+\tag{138.1}
+$$
+
+因而对任意 $b,c\in V_e$，固定首轴的加性缺陷
+
+$$
+\delta_h(b,c):=D(h,b+c)-D(h,b)-D(h,c)
+$$
+
+满足
+
+$$
+\boxed{\delta_h(b,c)\in E\cap\{h,e,j\}'} .
+\tag{138.2}
+$$
+
+证明。公共横向行133.1对实际框架 $(e,h,-j)$ 给出 $y\in V_e$ 及
+$D(e,y)=-x$。在原PB中取
+
+$$
+(a,b,c)=\left(e,\frac{h-j}{2},\frac{x+y}{2}\right).
+$$
+
+其两份外层准确为 $(-j,y)$ 与 $(h,x)$；两份内平方相同且交叠为零，
+故完整PB的右侧为零，得到
+
+$$
+D(-j,y)=D(h,x)=d_x.
+\tag{138.3}
+$$
+
+对实际框架 $(-j,e,h)$ 使用137.4，并复用已付的三轴四元数表，得到
+
+$$
+P_j^-d_x=\widetilde T_{-j}y=\widetilde T_hx.
+\tag{138.4}
+$$
+
+137.4本身给 $P_h^-d_x=\widetilde T_hx$。故 $r_h(x)$ 同时与 $h,j$
+普通交换；又 $Q$ 中央且 $e=-iQhj$，它也与 $e$ 交换，证明138.1。由于
+$\widetilde T_h$ 是已知线性Jordan算子，
+
+$$
+\delta_h(b,c)=r_h(b+c)-r_h(b)-r_h(c),
+$$
+
+所以138.2成立。这里没有把 $D(h,b+c)$ 拆成两项；PB只识别了同一个旧值
+$D(-j,y)$。∎
+
+## 139. R3：标量平方输入与两个实际演员的支撑律
+
+**推论 139.1（R3：全标量平方第二输入）。** 若原 $x$ 满足
+
+$$
+x^2=\lambda u,\qquad \lambda\ge0,
+$$
+
+则
+
+$$
+\boxed{D(h,x)=\widetilde T_hx,\qquad r_h(x)=0.}
+\tag{139.1}
+$$
+
+零输入、$\lambda=0$、非零输入与 $h$ 有非零交叠的情形全部包含在内。
+
+证明。因 $h^2-x^2=(1-\lambda)u$，前卷18.1给
+$h\circ D(h,x)=0$。于是 $d_x=P_h^-d_x$，137.4立即给139.1。没有除以
+$x^2$，也没有选取谱根或补入原域外的标签。∎
+
+**定理 139.2（两个实际框架的支撑敏感取向律）。** 设 $h$ 与 $a$ 是同一
+环境中实际存在的两个单位平方演员，各自带有本文意义下的实际正交框架，并
+记其中央取向为 $Q_h,Q_a$。则
+
+$$
+D(h,a)=\frac i2Q_h[h,a],\qquad
+D(a,h)=-\frac i2Q_a[h,a],
+$$
+
+从原反对称性得到
+
+$$
+\boxed{(Q_h-Q_a)[h,a]=0},
+\qquad
+\boxed{\frac{u-Q_hQ_a}{2}\,[h,a]=0}.
+\tag{139.2}
+$$
+
+第二式是中央支撑投影的说法；它不把 $[h,a]$ 可逆化，也不要求两个中央取向
+在整个环境中相同。
+
+证明。139.1分别应用于框架 $h$ 和 $a$，再用137.2的环境交换子表达式与
+$D(a,h)=-D(h,a)$，即得两式。两中央自伴对合相乘仍为中央对合；将第一式
+左乘 $Q_h$ 得第二式。∎
+
+若 $f$ 是实际存在且与 $h$ 正交的伴轴，133–134已经支付其同一 $h$ 行所
+继承的 $Q$ 相等关系。138.1在另一个实际框架上只能作用于该框架所给出的
+$V_f$（及其明确的伴轴横向域）；只有当一个输入同时属于两份规定域时，
+相应残差才可写成两个共同交换子的交。这里没有制造新的伴轴，也没有把有限
+交提升为 $Z(X)$。
+
+## 140. 供应对应、混合接缝与未支付的静态消费者
+
+**定义 140.1（新增关系的归属与消费者）。** 137–139是
+$\texttt{repo-derived}$ 的固定实际框架应用。137.2的成熟中间恒等式使用
+van de Wetering，*Commutativity in Jordan Operator Algebras*，Proposition 3.2
+及式(2)的JC算子交换子与环境交换对应；文献只供应该环境恒等式，不识别
+未知原 $D$。本应用的实际来源如下：
+
+| 新关系 | 直接使用的已付来源 | 新增的准确范围 |
+| --- | --- | --- |
+| 137.4 | 123.1–123.2、123.4、123.5、125.1、133.1–134.3、77.2 | 对一个实际 $h,e,j$，任意原 $x\in E$ 的同一旧输出奇块被识别为 $\widetilde T_hx$ |
+| 138.1–138.2 | 133.1 的实际 $(e,h,-j)$ 行、完整PB及137.4 | $V_e$ 上的同一残差及其固定首轴缺陷落入实际三轴共同交换子 |
+| 139.1 | 前卷18.1与137.4 | 全部 $x^2\in\mathbb R_{ge0}u$ 的第二输入零残差 |
+| 139.2 | 两份已实际存在的框架、139.1及原反对称 | 两个实际演员交叠交换子的中央支撑律 |
+
+137–139没有重新生产全局 $Q$ 中央性、全部 $V_h$ 的横向行或同一伴轴的
+$Q$ 相等；这些由133–134直接供应。数学正读取、Hilbert向量、投影和显式
+标量极限只用于验证同一原调用，不成为新的实际准备或新的 $D$ 输入。
+
+**定义 140.2（精确的混合接缝缺口）。** 对任意原 $c,z$ 满足
+
+$$
+U_hc=c,\qquad z\in V_h,
+$$
+
+仍需证明
+
+$$
+\boxed{r_h(c+z)=r_h(c)},
+\quad\text{即}\quad
+\boxed{D(h,c+z)=D(h,c)+\widetilde T_hz}.
+\tag{140.1}
+$$
+
+137.4只给 $r_h(c+z)$ 与 $h$ 交换；138.1只有在 $c+z\in V_e$ 时才给三轴
+共同交换子，139.1只覆盖标量平方输入。一般 $c+z$ 的 $h$-交换部分与横向
+部分之间仍没有一份实际PB/P2预算能消去未知的混合响应。特别不能把
+$D(h,c)$ 当作零，也不能把 $D(h,c+z)$ 拆成两项。这个缺口保留了任意首
+标签、无实际三轴的原域和全域旧 $D$ 的完整量词。
+
+静态卷89.2–89.3要求对全部原 $a,b,c$，
+
+$$
+\delta_a(b,c)\in E\cap Z(X),
+\quad\text{等价地}\quad
+[L_{\delta_a(b,c)},L_x]y=0\quad(\forall x,y\in E).
+$$
+
+138.2只有 $E\cap\{h,e,j\}'$，这是一个由实际三轴决定的共同交换子，
+一般严格大于全局中心。比如在标准全背景 $M_2(\mathbb C)\otimes
+M_2(\mathbb C)$ 中取 $h=\sigma_z\otimes I$、$e=\sigma_x\otimes I$、
+$j=-\sigma_y\otimes I$，其原生共同交换子含 $I\otimes\sigma_z$，而该元
+不与 $I\otimes\sigma_x$ 交换；这个例子只排除“共同交换子即全局中心”的
+偷换，不是否定标准响应中的零残差。因而138.2不能直接消费静态卷89。
+
+静态卷94–98的条件消费者要求统一缺陷包络
+
+$$
+A(R)=\sup_{\|a\|,\|b\|,\|c\|\le R}\|\delta_a(b,c)\|=o(R).
+$$
+
+137–139没有给出这个全输入一致增长；逐份P2至多提供二次量级的
+$A(R)\le4R^2$ 型上界，不能替换 $o(R)$。同样，原多项式卷36–40在标量
+端点多项式域中已经支付全部无迹输入及共同符号，但其混合中心接头
+
+$$
+D(fu+A,gu+B)=D(A,B)
+\tag{140.2}
+$$
+
+仍是该卷39.2的未决等式；139.1不能把这个域局部结论倒推为一般原域的
+混合拼接。
+
+完整保持唯一原 $\Omega$、原 $E/D$、native、全词同一 $q,K,J$、
+parent/ready、中心经典与不等维块、全部实际准备及零／不等／次归一质量。
+Born仍只在正质量的实际完整菜单上归一；Hilbert表示和中央取向不产生实际
+准备。CP仍需同一整台实际箭头、真正相关联合及递归同源参考；完整仪器的
+环境、成功／失败、记录、后口输出，Kraus、TP、更新、Lüders及实际忠实
+交换共同生成的张量仍各守原前件。全部合法顺序、自适应、并行历史、每个
+合法未来、真正分组遗忘、停止／拒绝／销毁、同数两侧和逆向真实返回仍在
+量词内；CountRead、正常性、指定前对偶、原域流、物理钟、Hamiltonian
+定义域、能量、作用量及共同正 $\hbar$ 均未由137–139生产。
+## 追加锚（本行以下为增补区）
