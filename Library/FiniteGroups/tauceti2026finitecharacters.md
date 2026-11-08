@@ -124,6 +124,31 @@ Copyright (c) 2026 Tau Ceti contributors. All rights reserved.
 
 Authors: The Tau Ceti contributors. The coset source also credits Claude.
 
+## Classical background for the modular additions
+
+The modular additions use the same Schur, density and Clifford infrastructure
+as the pinned port. For a directly inspected classical exposition of simultaneous
+density and simple-character separation, see Pavel Etingof, Oleg Golberg,
+Sebastian Hensel, Tiankai Liu, Alex Schwendner, Dmitry Vaintrob and Elena Yudovina,
+Introduction to Representation Theory, https://math.mit.edu/~etingof/replect.pdf,
+Theorem 2.5(ii) (simultaneous surjectivity to endomorphism algebras), and
+Theorem 2.17(i) (linear independence of characters of pairwise nonisomorphic
+finite-dimensional irreducible algebra representations). The two-module
+trace-one/trace-zero witness is obtained by choosing a rank-one trace-one block
+and a zero block in Theorem 2.5(ii). Equality of simple monoid characters extends
+linearly to the monoid algebra, where that separation applies. These are
+classical consequences, not mathematical novelty claims. The source's
+algebraically closed base-field hypothesis remains in force.
+
+The repository's fixed-point-free twist-rigidity argument and its structural
+Frobenius alternative combine these classical inputs with the existing
+fixed-point-free commutator and generic Clifford APIs. Their descriptions are
+repo-derived, not quotations of a verified external theorem with the complete
+same telescope. The integer divisibility comes from natural-number dimensions
+in Clifford decomposition. Field-valued traces in characteristic p retain only
+the image of those dimensions in the field; the complex integer degree dichotomy
+is not asserted in arbitrary characteristic. No external excerpt is reproduced.
+
 ## Complete license
 
 ```text
