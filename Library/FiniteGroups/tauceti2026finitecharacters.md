@@ -149,6 +149,41 @@ in Clifford decomposition. Field-valued traces in characteristic p retain only
 the image of those dimensions in the field; the complex integer degree dichotomy
 is not asserted in arbitrary characteristic. No external excerpt is reproduced.
 
+## Arbitrary-field descent
+
+The arbitrary-field structural alternative in `FrobeniusCharacterDegrees` is a
+repo-derived synthesis of the algebraically closed alternative and scalar
+extension; it is not attributed to the pinned port as an exact theorem. Set
+A = k[K], B = E[K] for an algebraic closure E of k. Although E tensor_k W need
+not be semisimple over B, its restriction to A is semisimple and W-isotypic:
+the A-linear maps w ↦ c tensor w have simple or zero images and their images
+generate all pure tensors. B-submodules inherit this A-support by inclusion.
+For a B-quotient, A-semisimplicity descends along the quotient map, and lifting
+each simple A-submodule shows that its isomorphism type is W. Consequently
+every B-subquotient retains the original A-support.
+
+A nonzero B-simple factor Q therefore contains an A-linear copy of W. If N
+acted trivially on Q, this injection would force trivial N-action on W. When
+W has nontrivial N-action, every supported simple factor does too; the
+algebraically closed alternative makes N.index divide each factor's
+E-dimension. Finite-length induction and dimension additivity give the same
+divisibility for E tensor_k W, whose E-dimension equals the k-dimension of W
+by base change. Neither B-semisimplicity nor inertia equal to N over the
+original nonsplitting field is asserted. No characteristic, perfectness,
+separability or coprimality assumption is added, and no literature novelty is
+claimed.
+
+The inner-action obstruction in `FrobeniusInnerActionObstruction` uses this
+original-module support on a nonzero simple E[N]-submodule. An implementer
+and its inverse in the representation image preserve that same submodule;
+fixed-point-free rigidity there and an injective support map force the
+original action to be trivial. For a finite-dimensional simple quotient of
+k[N], a faithful simple module detects that the quotient factors through
+the existing standard augmentation and is k-algebra isomorphic to k. This
+is a repository derivation, not an exact theorem attributed to TauCeti or
+a literature novelty claim. It supplies an ingredient of the arithmetic
+Frobenius direction; the stronger normalized-degree statement remains open.
+
 ## Complete license
 
 ```text

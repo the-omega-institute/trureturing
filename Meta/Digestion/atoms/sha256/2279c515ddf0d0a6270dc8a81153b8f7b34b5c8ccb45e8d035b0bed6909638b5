@@ -1,0 +1,25 @@
+#### 命题 7.4：同一方向路径不能确定唯一 Hamiltonian 或时长
+
+给定 $C^1$ 的 $n(t)\in S^2$，全部使其满足薛定谔方向运动的自伴生成元为
+
+$$
+H(t)=h_0(t)I+\frac\hbar2\sigma_{n\times\dot n+\lambda(t)n},
+\qquad h_0,\lambda\text{ 任意实连续函数}.
+$$
+
+其射影速度为 $ds_{\rm FS}/dt=\Delta H/\hbar=\|\dot n\|/2$。 同一几何路径和闭路面积在重新参数化后不变，而经过的钟时可以改变。
+
+**证明。**
+
+写 $H=h_0I+(\hbar/2)\sigma_\omega$。 Pauli 对易式将 $\dot P=-i[H,P]/\hbar$ 化为 $\dot n=\omega\times n$。 上一分解给其全部解 $\omega=n\times\dot n+\lambda n$。 纯态方差为
+
+$$
+(\Delta H)^2=\frac{\hbar^2}{4}
+\bigl(\|\omega\|^2-(\omega\cdot n)^2\bigr)
+=\frac{\hbar^2}{4}\|\dot n\|^2.
+$$
+
+度量公式给速度。取 $t=a\tau$、$a>0$， 新生成元 $H'(\tau)=aH(a\tau)$ 描述相同轨迹， 总参数时长由 $T$ 变成 $T/a$，面积不变，证明不可唯一识别。
+
+$\square$
+

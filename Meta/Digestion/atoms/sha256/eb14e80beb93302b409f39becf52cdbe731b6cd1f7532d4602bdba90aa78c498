@@ -1,0 +1,43 @@
+#### 定理 6.8：Pauli 乘法与自伴算子的全部形式
+
+对 $z,t\in W$，有
+
+$$
+\begin{aligned}
+\sigma_z^*&=\sigma_z,\qquad
+\sigma_z\sigma_t=B(z,t)I+i\sigma_{z\times t},
+\end{aligned}
+\tag{6.6}
+$$
+
+$$
+\begin{aligned}
+\operatorname{Tr}\sigma_z&=0,\qquad
+\operatorname{Tr}(\sigma_z\sigma_t)=2B(z,t).
+\end{aligned}
+\tag{6.7}
+$$
+
+每个自伴算子唯一为 $F=sI+\sigma_z$，其本征值为 $s\pm\sqrt{q(z)}$。因此
+
+$$
+E:=\operatorname{Herm}(H_J)=\mathbb RI\oplus\sigma(W),\qquad
+E_+=\{sI+\sigma_z:s\ge\sqrt{q(z)}\}.
+$$
+
+**证明。**
+
+纯元右乘和 $J$ 都反自伴且交换，所以 $-JR_z$ 自伴。 注意右乘次序反转，故
+
+$$
+\sigma_z\sigma_t=J^2R_zR_t=-R_{tz}
+=B(z,t)I+R_{z\times t}
+=B(z,t)I+i\sigma_{z\times t}.
+$$
+
+若 $z\ne0$，选单位 $t\perp z$；上式给 $\sigma_t\sigma_z\sigma_t=-\sigma_z$ 与 $\sigma_t^2=I$。 迹在相似变换下不变，故 $\operatorname{Tr}\sigma_z=0$；$z=0$ 也成立。 再次取迹即得配对公式。
+
+上一全算子表示中，自伴性等价于 $a=\bar a$、$b=-\bar b$， 所以自伴算子恰为 $sI+\sigma_z$，且表示唯一。 式 (6.6) 给 $\sigma_z^2=q(z)I$；自伴性与迹零给两个本征值 $\pm\sqrt{q(z)}$，包括 $z=0$ 的退化情形。 加上 $sI$ 后逐一判定本征值非负，得到正锥。
+
+$\square$
+
