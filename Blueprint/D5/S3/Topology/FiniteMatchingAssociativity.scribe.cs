@@ -6,21 +6,117 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Topology;
 
 internal sealed class FiniteMatchingAssociativityDocument : IScribeDocumentDefinition
 {
+    private const string Prefix = "D5/S3/Topology/FiniteMatchingAssociativity.";
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Associative matching sewing", H("Associative matching sewing"), Blocks(
-            Paragraph(Text("Boundary(n) is Bool times Fin(n). Composite follows paths in the glued middle boundary. InternalLoopCount counts connected components avoiding every exposed endpoint. No planarity assumption is used. A closed triple network is partitioned into the components removed in the first sewing and those removed in the second sewing; rotating its three matching layers preserves the closed inventory.")),
-            Describe.Lean(DescribeId.Create("composite-assoc"), DeclarationHandle.Create("D5/S3/Topology/FiniteMatchingAssociativity.composite_assoc"),
-                H("composite_assoc"), StatementSource.FromAuthor(Disp(All("n", Id("Nat"), All("d", Call("Matching", Call("Boundary", Id("n"))), All("e", Call("Matching", Call("Boundary", Id("n"))), All("f", Call("Matching", Call("Boundary", Id("n"))), Equal(Call("composite", Call("composite", Id("d"), Id("e")), Id("f")), Call("composite", Id("d"), Call("composite", Id("e"), Id("f")))))))))),
-                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("Both bracketings induce the same equivalence relation on the exterior boundary through partitionProduct associativity."))), DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("internalloopcount-cocycle"), DeclarationHandle.Create("D5/S3/Topology/FiniteMatchingAssociativity.internalLoopCount_cocycle"),
-                H("internalLoopCount_cocycle"), StatementSource.FromAuthor(Disp(All("n", Id("Nat"), All("d", Call("Matching", Call("Boundary", Id("n"))), All("e", Call("Matching", Call("Boundary", Id("n"))), All("f", Call("Matching", Call("Boundary", Id("n"))), Equal(Call("Add", Call("internalLoopCount", Id("d"), Id("e")), Call("internalLoopCount", Call("composite", Id("d"), Id("e")), Id("f"))), Call("Add", Call("internalLoopCount", Id("e"), Id("f")), Call("internalLoopCount", Id("d"), Call("composite", Id("e"), Id("f"))))))))))),
-                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("The two sums count the same closed components of the triple gluing. The disjoint component equivalences retain internal components from both stages."))), DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("internalloopcount-pos-assoc"), DeclarationHandle.Create("D5/S3/Topology/FiniteMatchingAssociativity.internalLoopCount_pos_assoc"),
-                H("internalLoopCount_pos_assoc"), StatementSource.FromAuthor(Disp(All("n", Id("Nat"), All("d", Call("Matching", Call("Boundary", Id("n"))), All("e", Call("Matching", Call("Boundary", Id("n"))), All("f", Call("Matching", Call("Boundary", Id("n"))), Iff(Or(Call("Positive", Call("internalLoopCount", Id("d"), Id("e"))), Call("Positive", Call("internalLoopCount", Call("composite", Id("d"), Id("e")), Id("f")))), Or(Call("Positive", Call("internalLoopCount", Id("e"), Id("f"))), Call("Positive", Call("internalLoopCount", Id("d"), Call("composite", Id("e"), Id("f")))))))))))),
-                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("The integer component identity implies equivalence of the two loop flags."))), DescribeRole.Theorem))));
+            Paragraph(Text("Boundary n is Bool times Fin n. Composite pairs exposed " +
+                "endpoints through the glued middle boundary. The internal loop" +
+                " count counts connected components that avoid every exposed " +
+                "endpoint. No planarity assumption is used.")),
 
-    private static Formula Id(string name) => F.Id(name);
-    private static Formula All(string name, Formula type, Formula body) => new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), type, body);
-    private static Formula Or(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.Or, b);
-    private static Formula Iff(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.Iff, b);
+            Node("composite_assoc", Triple(Eq(Call("composite", Call("composite", X("d"), X("e")),
+                X("f")),
+                Call("composite", X("d"), Call("composite", X("e"), X("f"))))),
+                "Both bracketings induce the same exterior equivalence relation.",
+                DescribeRole.Theorem),
+            Node("internalLoopCount_cocycle", Triple(Eq(Add(Loops(X("d"), X("e")),
+                Loops(Call("composite", X("d"), X("e")), X("f"))),
+                Add(Loops(X("e"), X("f")), Loops(X("d"), Call("composite", X("e"), X("f"))))))),
+                "Both sums count the closed components of the triple gluing.",
+                DescribeRole.Theorem),
+            Node("internalLoopCount_pos_assoc", Triple(IffOf(
+                Or(Less(D(0), Loops(X("d"), X("e"))),
+                    Less(D(0), Loops(Call("composite", X("d"), X("e")), X("f")))),
+                Or(Less(D(0), Loops(X("e"), X("f"))),
+                    Less(D(0), Loops(X("d"), Call("composite", X("e"), X("f"))))))),
+                "A closed component occurs in one bracketing exactly when one " +
+                "occurs in the other.",
+                DescribeRole.Theorem))));
+
+    private static Formula Triple(Formula body) => All("n", Nat(),
+        All("d", Matchings(), All("e", Matchings(), All("f", Matchings(), body))));
+    private static Formula Matchings() => Call("Matching", Call("Boundary", X("n")));
+    private static Formula Loops(Formula a, Formula b) => Call("internalLoopCount", a, b);
+
+
+    private static LibraryNoteRef Source =>
+        LibraryNoteRef.Create("D5/L/StatisticalMechanics/poncini2023planar");
+    private static Formula X(string name) => F.Id(name);
+    private static Formula N(string name) => Seq(Operatorname, Grp(X(name)));
+    private static Formula Q(string name) => Seq(name.Split('.').SelectMany((s, i) =>
+        i == 0 ? new[] { N(s) } : new[] { Dot, N(s) }).ToArray());
+    private static Formula Call(string name, params Formula[] args) => At(Q(name), args);
+    private static Formula At(Formula f, params Formula[] args) => new Formula.Apply(f, [.. args]);
+    private static Formula D(long n) => n < 0 ? Negate(D(-n)) : Num(n);
+    private static Formula Parenthesized(Formula f) => Seq(Open, f, Close);
+    private static Formula Typed(Formula f, Formula type) =>
+        Parenthesized(Seq(f, Colon, Sp, type));
+    private static Formula Bound(string name, Formula type) => Typed(X(name), type);
+    private static Formula All(string name, Formula type, Formula body) =>
+        Seq(Forall, Sp, Bound(name, type), Comma, Sp, Parenthesized(body));
+    private static Formula Ex(string name, Formula type, Formula body) =>
+        Seq(Exists, Sp, Bound(name, type), Comma, Sp, Parenthesized(body));
+    private static Formula Fn(string name, Formula type, Formula body) =>
+        Parenthesized(Seq(Bound(name, type), Sp, Mapsto, Sp, body));
+    private static Formula Eq(Formula a, Formula b) =>
+        new Formula.Relation(a, FormulaRelationOperator.Equal, b);
+    private static Formula Ne(Formula a, Formula b) =>
+        new Formula.Relation(a, FormulaRelationOperator.NotEqual, b);
+    private static Formula Less(Formula a, Formula b) =>
+        new Formula.Relation(a, FormulaRelationOperator.LessThan, b);
+    private static Formula Le(Formula a, Formula b) =>
+        new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
+    private static Formula And(Formula a, Formula b) =>
+        new Formula.Logic(Parenthesized(a), FormulaLogicOperator.And, Parenthesized(b));
+    private static Formula Or(Formula a, Formula b) =>
+        new Formula.Logic(Parenthesized(a), FormulaLogicOperator.Or, Parenthesized(b));
+    private static Formula IffOf(Formula a, Formula b) =>
+        new Formula.Logic(Parenthesized(a), FormulaLogicOperator.Iff, Parenthesized(b));
+    private static Formula Arrow(Formula a, Formula b) =>
+        new Formula.TypeArrow(Parenthesized(a), Parenthesized(b));
+    private static Formula Add(Formula a, Formula b) =>
+        new Formula.Binary(Parenthesized(a), FormulaBinaryOperator.Add, Parenthesized(b));
+    private static Formula Sub(Formula a, Formula b) =>
+        new Formula.Binary(Parenthesized(a), FormulaBinaryOperator.Subtract, Parenthesized(b));
+    private static Formula Mul(Formula a, Formula b) =>
+        new Formula.Binary(Parenthesized(a), FormulaBinaryOperator.Multiply, Parenthesized(b));
+    private static Formula Power(Formula a, Formula b) =>
+        new Formula.Power(Parenthesized(a), Parenthesized(b));
+    private static Formula Negate(Formula a) => Seq(Minus, Parenthesized(a));
+    private static Formula If(Formula c, Formula a, Formula b) => Call("ite", c, a, b);
+    private static Formula Dite(string name, Formula c, Formula a, Formula b) =>
+        Call("dite", c, Fn(name, c, a), Call("Function.const", Call("Not", c), b));
+    private static Formula Nat() => N("Nat");
+    private static Formula IntType() => N("Int");
+    private static Formula Fin(Formula n) => Call("Fin", n);
+    private static Formula Val(Formula x) => Call("Fin.val", x);
+    private static Formula SubVal(Formula x) => Call("Subtype.val", x);
+    private static Formula OmegaProof() => Seq(N("by"), Sp, N("omega"));
+    private static Formula FinMk(Formula x, Formula proof) => Call("Fin.mk", x, proof);
+    private static Formula Embed(Formula x) => FinMk(Val(x), OmegaProof());
+    private static Formula Pair(Formula a, Formula b) => Call("Prod.mk", a, b);
+    private static Formula SumOver(string name, Formula type, Formula body) =>
+        Call("Finset.sum", Call("Finset.univ"), Fn(name, type, body));
+    private static Formula Smul(Formula a, Formula b) => Call("HSMul.hSMul", a, b);
+    private static Formula Ring(Formula body) => All("R", N("Type"),
+        Seq(OpenBracket, Call("CommRing", X("R")), CloseBracket, Sp, body));
+    private static Formula Group(Formula body) => All("A", N("Type"),
+        Seq(OpenBracket, Call("AddCommGroup", X("A")), CloseBracket, Sp, body));
+    private static Formula Vector() => Arrow(Fin(D(8192)), IntType());
+    private static Formula ZeroVector() => Call("Function.const", Fin(D(8192)), D(0));
+    private static Formula Field(string name, Formula value) =>
+        Seq(Q(name), Sp, Colon, F.Eq, Sp, value);
+    private static Formula Record(params Formula[] fields) => Seq(OpenBrace, Sp,
+        Seq(fields.SelectMany((f, i) => i == 0 ? new[] { f } :
+            new[] { Comma, Sp, f }).ToArray()), Sp, CloseBrace);
+    private static DocumentBlock Node(string name, Formula formula, string prose,
+        DescribeRole role = DescribeRole.Definition, bool literature = false,
+        bool acknowledgeSource = false) => Describe.Lean(
+            DescribeId.Create(name.Replace('_', '-').ToLowerInvariant()),
+            DeclarationHandle.Create(Prefix + name), H(name),
+            StatementSource.FromAuthor(Disp(formula)),
+            literature ? AssessedProvenance.FromLiterature(Source) :
+                acknowledgeSource ? AssessedProvenance.FromRepo(Source) :
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), role);
+
 }

@@ -6,29 +6,137 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.StatisticalMechanics.VertexModels;
 
 internal sealed class PonciniRasmussenNineEdgesDocument : IScribeDocumentDefinition
 {
+    private const string Prefix =
+                "D5/S3/StatisticalMechanics/VertexModels/PonciniRasmussenNineEdges." ;
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Reindexing the generator edges", H("Reindexing the generator edges"), Blocks(
-            Paragraph(Text("Incoming and outgoing lists contain pairs (target,source), with source embedded in Fin(8192). Multiplicities remain present. Kernel reduction checks the sorted source blocks and their successive merges. The structural merge evaluator agrees with List.merge, whose permutation theorem transfers the exact finite sum. The calculation applies to every additive commutative group.")),
-            Describe.Lean(DescribeId.Create("incoming"), DeclarationHandle.Create("D5/S3/StatisticalMechanics/VertexModels/PonciniRasmussenNineEdges.incoming"),
-                H("incoming"), StatementSource.FromAuthor(Disp(All("i", Call("Fin", Num(8192)), Equal(Call("incoming", Id("i")), Call("get", Id("rows"), Call("val", Id("i"))))))),
-                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("The fixed binary tree contains the same incoming source lists used by sparseHamiltonian."))), DescribeRole.Definition),
-            Describe.Lean(DescribeId.Create("sparsehamiltonian-eq"), DeclarationHandle.Create("D5/S3/StatisticalMechanics/VertexModels/PonciniRasmussenNineEdges.sparseHamiltonian_eq"),
-                H("sparseHamiltonian_eq"), StatementSource.FromAuthor(Disp(All("v", Call("Function", Call("Fin", Num(8192)), Id("Int")), All("i", Call("Fin", Num(8192)), Equal(Call("sparseHamiltonian", Id("v"), Id("i")), Call("Negate", Call("FoldLeft", Call("incoming", Id("i")), Call("AddIncomingCoefficient", Id("v"), Num(8192)), Num(0)))))))),
-                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("AddIncomingCoefficient(s,j) is s+v(j modulo 8192)."))), DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("incomingedges"), DeclarationHandle.Create("D5/S3/StatisticalMechanics/VertexModels/PonciniRasmussenNineEdges.incomingEdges"),
-                H("incomingEdges"), StatementSource.FromAuthor(Disp(Equal(Id("incomingEdges"), Call("FlatMap", Call("finRange", Num(4862)), Call("IncomingTargetSourcePairs", Id("incoming"), Num(8192)))))),
-                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("For target t, map every source s in incoming(t) to (t,s modulo 8192)."))), DescribeRole.Definition),
-            Describe.Lean(DescribeId.Create("outgoingedges"), DeclarationHandle.Create("D5/S3/StatisticalMechanics/VertexModels/PonciniRasmussenNineEdges.outgoingEdges"),
-                H("outgoingEdges"), StatementSource.FromAuthor(Disp(Equal(Id("outgoingEdges"), Call("FlatMap", Call("finRange", Num(4862)), Call("FilterMap", Call("finRange", Num(8)), Id("NonzeroTransitionTargetSource")))))),
-                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("For each source s and generator g, include (transition(g,s),s) precisely when the transition is below 4862."))), DescribeRole.Definition),
-            Describe.Lean(DescribeId.Create("edges-perm"), DeclarationHandle.Create("D5/S3/StatisticalMechanics/VertexModels/PonciniRasmussenNineEdges.edges_perm"),
-                H("edges_perm"), StatementSource.FromAuthor(Disp(Call("Perm", Id("incomingEdges"), Id("outgoingEdges")))),
-                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("The edge multiset is preserved exactly."))), DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("sparse-sum"), DeclarationHandle.Create("D5/S3/StatisticalMechanics/VertexModels/PonciniRasmussenNineEdges.sparse_sum"),
-                H("sparse_sum"), StatementSource.FromAuthor(Disp(GroupAll("A", All("b", Call("Function", Call("Fin", Num(4862)), Id("A")), All("v", Call("Function", Call("Fin", Num(8192)), Id("Int")), Equal(Call("Sum", Id("t"), Call("Fin", Num(4862)), Call("IntegerSMul", Call("sparseHamiltonian", Id("v"), Call("CastFin", Id("t"), Num(8192))), Call("b", Id("t")))), Call("Negate", Call("Sum", Id("s"), Call("Fin", Num(4862)), Call("Sum", Id("g"), Call("Fin", Num(8)), Call("IfLess", Call("val", Call("transition", Id("g"), Id("s"))), Num(4862), Call("IntegerSMul", Call("v", Call("CastFin", Id("s"), Num(8192))), Call("b", Call("transition", Id("g"), Id("s")))), Num(0))))))))))),
-                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("Integer scalar multiplication distributes over the finite incoming rows. The edge permutation gives the equality in any additive commutative group."))), DescribeRole.Theorem))));
+            Paragraph(Text("Incoming and outgoing edges are pairs of a Fin 4862 target and" +
+                " a Fin 8192 source. Lists preserve multiplicity. Their " +
+                "permutation identity reindexes the integer scalar sum in every" +
+                " additive commutative group.")),
 
-    private static Formula Id(string name) => F.Id(name);
-    private static Formula All(string name, Formula type, Formula body) => new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), type, body);
-    private static Formula GroupAll(string name, Formula body) => All(name, Id("Type"), Seq(OpenBracket, Call("AddCommGroup", Id(name)), CloseBracket, Sp, body));
+            Node("incoming", All("i", Fin(D(8192)), Eq(Call("incoming", X("i")),
+                Call("get", N("rows"), Val(X("i"))))),
+                "The private get and rows are the binary lookup and literal " +
+                "incoming lists in this module."),
+            Node("sparseHamiltonian_eq", All("v", Vector(), Eq(Call("sparseHamiltonian", X("v")),
+                Fn("i", Fin(D(8192)), IncomingFold()))),
+                "List.foldl adds the coefficient at each source index, then the" +
+                " Hamiltonian negates the sum.",
+                DescribeRole.Theorem),
+            Node("incomingEdges", Eq(N("incomingEdges"), Call("List.flatMap",
+                Fn("t", Fin(D(4862)), Call("List.map", Fn("s", Nat(),
+                    Pair(X("t"), ModIndex(X("s")))),
+                    Call("incoming", Embed(X("t"))))), Call("List.finRange", D(4862)))),
+                "Each source in a target row is reduced modulo 8192 with " +
+                "Nat.mod_lt providing the bound."),
+            Node("outgoingEdges", Eq(N("outgoingEdges"), Call("List.flatMap",
+                Fn("s", Fin(D(4862)), Call("List.filterMap", Fn("g", Fin(D(8)),
+                    Dite("ht", TransitionBound(), Call("Option.some",
+                        Pair(FinMk(Val(Transition()), X("ht")), Embed(X("s")))),
+                        N("Option.none"))), Call("List.finRange", D(8)))),
+                Call("List.finRange", D(4862)))),
+                "Only transitions with value below 4862 contribute an edge."),
+            Node("edges_perm", Call("List.Perm", N("incomingEdges"), N("outgoingEdges")),
+                "Both lists enumerate the same edges with the same multiplicities.",
+                DescribeRole.Theorem),
+            Node("sparse_sum", Group(All("b", Arrow(Fin(D(4862)), X("A")), All("v", Vector(),
+                Eq(SumOver("t", Fin(D(4862)), Smul(
+                    At(Call("sparseHamiltonian", X("v")), Embed(X("t"))), At(X("b"), X("t")))),
+                    Negate(SumOver("s", Fin(D(4862)), SumOver("g", Fin(D(8)),
+                        Dite("ht", TransitionBound(), Smul(At(X("v"), Embed(X("s"))),
+                            At(X("b"), FinMk(Val(Transition()), X("ht")))), D(0))))))))),
+                "Finset.sum binds t, s and g at their stated finite types. Both" +
+                " Fin embeddings and the target proof ht are explicit.",
+                DescribeRole.Theorem))));
+
+    private static Formula ModIndex(Formula s) => FinMk(Call("Nat.mod", s, D(8192)),
+        Call("Nat.mod_lt", s, OmegaProof()));
+    private static Formula IncomingFold() => Negate(Call("List.foldl",
+        Fn("s", IntType(), Fn("j", Nat(), Add(X("s"), At(X("v"), ModIndex(X("j")))))),
+        D(0), Call("incoming", X("i"))));
+    private static Formula Transition() => Call("transition", X("g"), X("s"));
+    private static Formula TransitionBound() => Less(Val(Transition()), D(4862));
+
+
+    private static LibraryNoteRef Source =>
+        LibraryNoteRef.Create("D5/L/StatisticalMechanics/poncini2023planar");
+    private static Formula X(string name) => F.Id(name);
+    private static Formula N(string name) => Seq(Operatorname, Grp(X(name)));
+    private static Formula Q(string name) => Seq(name.Split('.').SelectMany((s, i) =>
+        i == 0 ? new[] { N(s) } : new[] { Dot, N(s) }).ToArray());
+    private static Formula Call(string name, params Formula[] args) => At(Q(name), args);
+    private static Formula At(Formula f, params Formula[] args) => new Formula.Apply(f, [.. args]);
+    private static Formula D(long n) => n < 0 ? Negate(D(-n)) : Num(n);
+    private static Formula Parenthesized(Formula f) => Seq(Open, f, Close);
+    private static Formula Typed(Formula f, Formula type) =>
+        Parenthesized(Seq(f, Colon, Sp, type));
+    private static Formula Bound(string name, Formula type) => Typed(X(name), type);
+    private static Formula All(string name, Formula type, Formula body) =>
+        Seq(Forall, Sp, Bound(name, type), Comma, Sp, Parenthesized(body));
+    private static Formula Ex(string name, Formula type, Formula body) =>
+        Seq(Exists, Sp, Bound(name, type), Comma, Sp, Parenthesized(body));
+    private static Formula Fn(string name, Formula type, Formula body) =>
+        Parenthesized(Seq(Bound(name, type), Sp, Mapsto, Sp, body));
+    private static Formula Eq(Formula a, Formula b) =>
+        new Formula.Relation(a, FormulaRelationOperator.Equal, b);
+    private static Formula Ne(Formula a, Formula b) =>
+        new Formula.Relation(a, FormulaRelationOperator.NotEqual, b);
+    private static Formula Less(Formula a, Formula b) =>
+        new Formula.Relation(a, FormulaRelationOperator.LessThan, b);
+    private static Formula Le(Formula a, Formula b) =>
+        new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
+    private static Formula And(Formula a, Formula b) =>
+        new Formula.Logic(Parenthesized(a), FormulaLogicOperator.And, Parenthesized(b));
+    private static Formula Or(Formula a, Formula b) =>
+        new Formula.Logic(Parenthesized(a), FormulaLogicOperator.Or, Parenthesized(b));
+    private static Formula IffOf(Formula a, Formula b) =>
+        new Formula.Logic(Parenthesized(a), FormulaLogicOperator.Iff, Parenthesized(b));
+    private static Formula Arrow(Formula a, Formula b) =>
+        new Formula.TypeArrow(Parenthesized(a), Parenthesized(b));
+    private static Formula Add(Formula a, Formula b) =>
+        new Formula.Binary(Parenthesized(a), FormulaBinaryOperator.Add, Parenthesized(b));
+    private static Formula Sub(Formula a, Formula b) =>
+        new Formula.Binary(Parenthesized(a), FormulaBinaryOperator.Subtract, Parenthesized(b));
+    private static Formula Mul(Formula a, Formula b) =>
+        new Formula.Binary(Parenthesized(a), FormulaBinaryOperator.Multiply, Parenthesized(b));
+    private static Formula Power(Formula a, Formula b) =>
+        new Formula.Power(Parenthesized(a), Parenthesized(b));
+    private static Formula Negate(Formula a) => Seq(Minus, Parenthesized(a));
+    private static Formula If(Formula c, Formula a, Formula b) => Call("ite", c, a, b);
+    private static Formula Dite(string name, Formula c, Formula a, Formula b) =>
+        Call("dite", c, Fn(name, c, a), Call("Function.const", Call("Not", c), b));
+    private static Formula Nat() => N("Nat");
+    private static Formula IntType() => N("Int");
+    private static Formula Fin(Formula n) => Call("Fin", n);
+    private static Formula Val(Formula x) => Call("Fin.val", x);
+    private static Formula SubVal(Formula x) => Call("Subtype.val", x);
+    private static Formula OmegaProof() => Seq(N("by"), Sp, N("omega"));
+    private static Formula FinMk(Formula x, Formula proof) => Call("Fin.mk", x, proof);
+    private static Formula Embed(Formula x) => FinMk(Val(x), OmegaProof());
+    private static Formula Pair(Formula a, Formula b) => Call("Prod.mk", a, b);
+    private static Formula SumOver(string name, Formula type, Formula body) =>
+        Call("Finset.sum", Call("Finset.univ"), Fn(name, type, body));
+    private static Formula Smul(Formula a, Formula b) => Call("HSMul.hSMul", a, b);
+    private static Formula Ring(Formula body) => All("R", N("Type"),
+        Seq(OpenBracket, Call("CommRing", X("R")), CloseBracket, Sp, body));
+    private static Formula Group(Formula body) => All("A", N("Type"),
+        Seq(OpenBracket, Call("AddCommGroup", X("A")), CloseBracket, Sp, body));
+    private static Formula Vector() => Arrow(Fin(D(8192)), IntType());
+    private static Formula ZeroVector() => Call("Function.const", Fin(D(8192)), D(0));
+    private static Formula Field(string name, Formula value) =>
+        Seq(Q(name), Sp, Colon, F.Eq, Sp, value);
+    private static Formula Record(params Formula[] fields) => Seq(OpenBrace, Sp,
+        Seq(fields.SelectMany((f, i) => i == 0 ? new[] { f } :
+            new[] { Comma, Sp, f }).ToArray()), Sp, CloseBrace);
+    private static DocumentBlock Node(string name, Formula formula, string prose,
+        DescribeRole role = DescribeRole.Definition, bool literature = false,
+        bool acknowledgeSource = false) => Describe.Lean(
+            DescribeId.Create(name.Replace('_', '-').ToLowerInvariant()),
+            DeclarationHandle.Create(Prefix + name), H(name),
+            StatementSource.FromAuthor(Disp(formula)),
+            literature ? AssessedProvenance.FromLiterature(Source) :
+                acknowledgeSource ? AssessedProvenance.FromRepo(Source) :
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), role);
+
 }

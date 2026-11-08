@@ -6,22 +6,195 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.StatisticalMechanics.VertexModels;
 
 internal sealed class PonciniRasmussenNineHornerDataDocument : IScribeDocumentDefinition
 {
+    private const string Prefix = "D5/S3/StatisticalMechanics/VertexModels/PonciniRasmussenNineHo"
+                +
+                "rnerData.";
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Integer data for nine strands", H("Integer data for nine strands"), Blocks(
-            Paragraph(Text("The 4862 diagram coordinates are padded to 8192. Binary tree lookup takes the left subtree for an even index and the right subtree for an odd index, then divides the index by two. The incoming rows retain multiplicity. The private vectors v0 through v58 are literal integer trees. Their recurrence and endpoint values are separate checked theorems.")),
-            Describe.Lean(DescribeId.Create("annihilatorcoefficients"), DeclarationHandle.Create("D5/S3/StatisticalMechanics/VertexModels/PonciniRasmussenNineHornerData.annihilatorCoefficients"),
-                H("annihilatorCoefficients"), StatementSource.FromAuthor(Disp(Equal(Id("annihilatorCoefficients"), Call("List", Num(1), Num(0), Call("Negate", Num(163)), Num(0), Num(12285), Num(0), Call("Negate", Num(569445)), Num(0), Num(18215115), Num(0), Call("Negate", Num(427662891)), Num(0), Num(7652877936), Num(0), Call("Negate", Num(106986874650)), Num(0), Num(1188246329388), Num(0), Call("Negate", Num(10605723426434)), Num(0), Num(76659122475479), Num(0), Call("Negate", Num(450854928573687)), Num(0), Num(2162620108980042), Num(0), Call("Negate", Num(8462844884056308)), Num(0), Num(26973986982247197), Num(0), Call("Negate", Num(69786597194594871)), Num(0), Num(145778728152448221), Num(0), Call("Negate", Num(244086630072528699)), Num(0), Num(324477075047489821), Num(0), Call("Negate", Num(338328989148555271)), Num(0), Num(272486148975235188), Num(0), Call("Negate", Num(166252500600659604)), Num(0), Num(74962166731413102), Num(0), Call("Negate", Num(24185673946500264)), Num(0), Num(5347591521504921), Num(0), Call("Negate", Num(762922848588417)), Num(0), Num(64282035899880), Num(0), Call("Negate", Num(2771640702288)), Num(0), Num(43808164416), Num(0))))),
-                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("The list is in highest-degree-first order."))), DescribeRole.Definition),
-            Describe.Lean(DescribeId.Create("sparsehamiltonian"), DeclarationHandle.Create("D5/S3/StatisticalMechanics/VertexModels/PonciniRasmussenNineHornerData.sparseHamiltonian"),
-                H("sparseHamiltonian"), StatementSource.FromAuthor(Disp(All("v", Call("Function", Call("Fin", Num(8192)), Id("Int")), All("i", Call("Fin", Num(8192)), Equal(Call("sparseHamiltonian", Id("v"), Id("i")), Call("Negate", Call("FoldLeft", Call("get", Id("rows"), Call("val", Id("i"))), Call("AddIncomingCoefficient", Id("v"), Num(8192)), Num(0)))))))),
-                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("AddIncomingCoefficient(s,j) is s+v(j modulo 8192)."))), DescribeRole.Definition),
-            Describe.Lean(DescribeId.Create("hornervalue"), DeclarationHandle.Create("D5/S3/StatisticalMechanics/VertexModels/PonciniRasmussenNineHornerData.hornerValue"),
-                H("hornerValue"), StatementSource.FromAuthor(Disp(Equal(Id("hornerValue"), Call("FoldLeft", Id("annihilatorCoefficients"), Id("HornerStep"), Id("ZeroVector"))))),
-                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("HornerStep(v,c)(i) equals sparseHamiltonian(v)(i) plus c at coordinate 4861 and zero elsewhere. The initial vector is zero."))), DescribeRole.Definition),
-            Describe.Lean(DescribeId.Create("state"), DeclarationHandle.Create("D5/S3/StatisticalMechanics/VertexModels/PonciniRasmussenNineHornerData.state"),
-                H("state"), StatementSource.FromAuthor(Disp(All("k", Id("Nat"), All("i", Call("Fin", Num(8192)), Equal(Call("state", Id("k"), Id("i")), Call("get", Call("MatchNat", Id("k"), Call("Branch", Num(0), Id("v0")), Call("Branch", Num(1), Id("v1")), Call("Branch", Num(2), Id("v2")), Call("Branch", Num(3), Id("v3")), Call("Branch", Num(4), Id("v4")), Call("Branch", Num(5), Id("v5")), Call("Branch", Num(6), Id("v6")), Call("Branch", Num(7), Id("v7")), Call("Branch", Num(8), Id("v8")), Call("Branch", Num(9), Id("v9")), Call("Branch", Num(10), Id("v10")), Call("Branch", Num(11), Id("v11")), Call("Branch", Num(12), Id("v12")), Call("Branch", Num(13), Id("v13")), Call("Branch", Num(14), Id("v14")), Call("Branch", Num(15), Id("v15")), Call("Branch", Num(16), Id("v16")), Call("Branch", Num(17), Id("v17")), Call("Branch", Num(18), Id("v18")), Call("Branch", Num(19), Id("v19")), Call("Branch", Num(20), Id("v20")), Call("Branch", Num(21), Id("v21")), Call("Branch", Num(22), Id("v22")), Call("Branch", Num(23), Id("v23")), Call("Branch", Num(24), Id("v24")), Call("Branch", Num(25), Id("v25")), Call("Branch", Num(26), Id("v26")), Call("Branch", Num(27), Id("v27")), Call("Branch", Num(28), Id("v28")), Call("Branch", Num(29), Id("v29")), Call("Branch", Num(30), Id("v30")), Call("Branch", Num(31), Id("v31")), Call("Branch", Num(32), Id("v32")), Call("Branch", Num(33), Id("v33")), Call("Branch", Num(34), Id("v34")), Call("Branch", Num(35), Id("v35")), Call("Branch", Num(36), Id("v36")), Call("Branch", Num(37), Id("v37")), Call("Branch", Num(38), Id("v38")), Call("Branch", Num(39), Id("v39")), Call("Branch", Num(40), Id("v40")), Call("Branch", Num(41), Id("v41")), Call("Branch", Num(42), Id("v42")), Call("Branch", Num(43), Id("v43")), Call("Branch", Num(44), Id("v44")), Call("Branch", Num(45), Id("v45")), Call("Branch", Num(46), Id("v46")), Call("Branch", Num(47), Id("v47")), Call("Branch", Num(48), Id("v48")), Call("Branch", Num(49), Id("v49")), Call("Branch", Num(50), Id("v50")), Call("Branch", Num(51), Id("v51")), Call("Branch", Num(52), Id("v52")), Call("Branch", Num(53), Id("v53")), Call("Branch", Num(54), Id("v54")), Call("Branch", Num(55), Id("v55")), Call("Branch", Num(56), Id("v56")), Call("Branch", Num(57), Id("v57")), Call("Default", Id("v58"))), Call("val", Id("i")))))))),
-                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("All states, including the default v58, are literal integer vectors."))), DescribeRole.Definition))));
+            Paragraph(Text("The 4862 diagram coordinates are embedded in Fin 8192. The " +
+                "private get function reads a binary tree by parity and " +
+                "division by two. The private rows and v0 through v58 are the " +
+                "literal source lists and integer trees of this module.")),
 
-    private static Formula Id(string name) => F.Id(name);
-    private static Formula All(string name, Formula type, Formula body) => new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), type, body);
+            Node("annihilatorCoefficients", Eq(N("annihilatorCoefficients"), Coefficients()),
+                "These 58 integers are in highest-degree-first order."),
+            Node("sparseHamiltonian", All("v", Vector(), Eq(Call("sparseHamiltonian", X("v")),
+                Fn("i", Fin(D(8192)), Negate(Call("List.foldl",
+                    Fn("s", IntType(), Fn("j", Nat(), Add(X("s"), At(X("v"),
+                        FinMk(Call("Nat.mod", X("j"), D(8192)),
+                            Call("Nat.mod_lt", X("j"), OmegaProof())))))),
+                    D(0), Call("get", N("rows"), Val(X("i")))))))),
+                "The sum retains repeated source coordinates and uses the " +
+                "negative Hamiltonian sign."),
+            Node("hornerValue", Eq(N("hornerValue"), Call("List.foldl",
+                Fn("v", Vector(), Fn("c", IntType(), Fn("i", Fin(D(8192)),
+                    Add(Call("sparseHamiltonian", X("v"), X("i")),
+                        If(Call("BEq.beq", Val(X("i")), D(4861)), X("c"), D(0)))))),
+                ZeroVector(), N("annihilatorCoefficients"))),
+                "The callback adds c only at the identity coordinate. Its " +
+                "initial function is constant zero."),
+            Node("state", All("k", Nat(), Eq(Call("state", X("k")), Fn("i", Fin(D(8192)),
+                Call("get", StateTree(), Val(X("i")))))),
+                "The match has branches 0 through 57; every other natural number selects v58."))));
+    private static Formula Coefficients() => Seq(OpenBracket, D(1), Comma, Sp, D(0), Comma, Sp,
+                D(-163), Comma, Sp, D(0), Comma, Sp, D(12285), Comma, Sp, D(0), Comma, Sp,
+                D(-569445), Comma, Sp, D(0), Comma, Sp, D(18215115), Comma, Sp, D(0), Comma, Sp,
+                D(-427662891), Comma, Sp, D(0), Comma, Sp, D(7652877936), Comma, Sp, D(0), Comma,
+                Sp, D(-106986874650), Comma, Sp, D(0), Comma, Sp, D(1188246329388), Comma, Sp, D(0)
+                , Comma, Sp, D(-10605723426434), Comma, Sp, D(0), Comma, Sp, D(76659122475479),
+                Comma, Sp, D(0), Comma, Sp, D(-450854928573687), Comma, Sp, D(0), Comma, Sp,
+                D(2162620108980042), Comma, Sp, D(0), Comma, Sp, D(-8462844884056308), Comma, Sp,
+                D(0), Comma, Sp, D(26973986982247197), Comma, Sp, D(0), Comma, Sp,
+                D(-69786597194594871), Comma, Sp, D(0), Comma, Sp, D(145778728152448221), Comma, Sp
+                , D(0), Comma, Sp, D(-244086630072528699), Comma, Sp, D(0), Comma, Sp,
+                D(324477075047489821), Comma, Sp, D(0), Comma, Sp, D(-338328989148555271), Comma,
+                Sp, D(0), Comma, Sp, D(272486148975235188), Comma, Sp, D(0), Comma, Sp,
+                D(-166252500600659604), Comma, Sp, D(0), Comma, Sp, D(74962166731413102), Comma, Sp
+                , D(0), Comma, Sp, D(-24185673946500264), Comma, Sp, D(0), Comma, Sp,
+                D(5347591521504921), Comma, Sp, D(0), Comma, Sp, D(-762922848588417), Comma, Sp,
+                D(0), Comma, Sp, D(64282035899880), Comma, Sp, D(0), Comma, Sp, D(-2771640702288),
+                Comma, Sp, D(0), Comma, Sp, D(43808164416), Comma, Sp, D(0), CloseBracket);
+    private static Formula StateTree() => Parenthesized(Seq(N("match"), Sp, X("k"), Sp, N("with"),
+                Sp,
+            Seq(Bar, Sp, D(0), Sp, Mapsto, Sp, N("v0"), Sp),
+            Seq(Bar, Sp, D(1), Sp, Mapsto, Sp, N("v1"), Sp),
+            Seq(Bar, Sp, D(2), Sp, Mapsto, Sp, N("v2"), Sp),
+            Seq(Bar, Sp, D(3), Sp, Mapsto, Sp, N("v3"), Sp),
+            Seq(Bar, Sp, D(4), Sp, Mapsto, Sp, N("v4"), Sp),
+            Seq(Bar, Sp, D(5), Sp, Mapsto, Sp, N("v5"), Sp),
+            Seq(Bar, Sp, D(6), Sp, Mapsto, Sp, N("v6"), Sp),
+            Seq(Bar, Sp, D(7), Sp, Mapsto, Sp, N("v7"), Sp),
+            Seq(Bar, Sp, D(8), Sp, Mapsto, Sp, N("v8"), Sp),
+            Seq(Bar, Sp, D(9), Sp, Mapsto, Sp, N("v9"), Sp),
+            Seq(Bar, Sp, D(10), Sp, Mapsto, Sp, N("v10"), Sp),
+            Seq(Bar, Sp, D(11), Sp, Mapsto, Sp, N("v11"), Sp),
+            Seq(Bar, Sp, D(12), Sp, Mapsto, Sp, N("v12"), Sp),
+            Seq(Bar, Sp, D(13), Sp, Mapsto, Sp, N("v13"), Sp),
+            Seq(Bar, Sp, D(14), Sp, Mapsto, Sp, N("v14"), Sp),
+            Seq(Bar, Sp, D(15), Sp, Mapsto, Sp, N("v15"), Sp),
+            Seq(Bar, Sp, D(16), Sp, Mapsto, Sp, N("v16"), Sp),
+            Seq(Bar, Sp, D(17), Sp, Mapsto, Sp, N("v17"), Sp),
+            Seq(Bar, Sp, D(18), Sp, Mapsto, Sp, N("v18"), Sp),
+            Seq(Bar, Sp, D(19), Sp, Mapsto, Sp, N("v19"), Sp),
+            Seq(Bar, Sp, D(20), Sp, Mapsto, Sp, N("v20"), Sp),
+            Seq(Bar, Sp, D(21), Sp, Mapsto, Sp, N("v21"), Sp),
+            Seq(Bar, Sp, D(22), Sp, Mapsto, Sp, N("v22"), Sp),
+            Seq(Bar, Sp, D(23), Sp, Mapsto, Sp, N("v23"), Sp),
+            Seq(Bar, Sp, D(24), Sp, Mapsto, Sp, N("v24"), Sp),
+            Seq(Bar, Sp, D(25), Sp, Mapsto, Sp, N("v25"), Sp),
+            Seq(Bar, Sp, D(26), Sp, Mapsto, Sp, N("v26"), Sp),
+            Seq(Bar, Sp, D(27), Sp, Mapsto, Sp, N("v27"), Sp),
+            Seq(Bar, Sp, D(28), Sp, Mapsto, Sp, N("v28"), Sp),
+            Seq(Bar, Sp, D(29), Sp, Mapsto, Sp, N("v29"), Sp),
+            Seq(Bar, Sp, D(30), Sp, Mapsto, Sp, N("v30"), Sp),
+            Seq(Bar, Sp, D(31), Sp, Mapsto, Sp, N("v31"), Sp),
+            Seq(Bar, Sp, D(32), Sp, Mapsto, Sp, N("v32"), Sp),
+            Seq(Bar, Sp, D(33), Sp, Mapsto, Sp, N("v33"), Sp),
+            Seq(Bar, Sp, D(34), Sp, Mapsto, Sp, N("v34"), Sp),
+            Seq(Bar, Sp, D(35), Sp, Mapsto, Sp, N("v35"), Sp),
+            Seq(Bar, Sp, D(36), Sp, Mapsto, Sp, N("v36"), Sp),
+            Seq(Bar, Sp, D(37), Sp, Mapsto, Sp, N("v37"), Sp),
+            Seq(Bar, Sp, D(38), Sp, Mapsto, Sp, N("v38"), Sp),
+            Seq(Bar, Sp, D(39), Sp, Mapsto, Sp, N("v39"), Sp),
+            Seq(Bar, Sp, D(40), Sp, Mapsto, Sp, N("v40"), Sp),
+            Seq(Bar, Sp, D(41), Sp, Mapsto, Sp, N("v41"), Sp),
+            Seq(Bar, Sp, D(42), Sp, Mapsto, Sp, N("v42"), Sp),
+            Seq(Bar, Sp, D(43), Sp, Mapsto, Sp, N("v43"), Sp),
+            Seq(Bar, Sp, D(44), Sp, Mapsto, Sp, N("v44"), Sp),
+            Seq(Bar, Sp, D(45), Sp, Mapsto, Sp, N("v45"), Sp),
+            Seq(Bar, Sp, D(46), Sp, Mapsto, Sp, N("v46"), Sp),
+            Seq(Bar, Sp, D(47), Sp, Mapsto, Sp, N("v47"), Sp),
+            Seq(Bar, Sp, D(48), Sp, Mapsto, Sp, N("v48"), Sp),
+            Seq(Bar, Sp, D(49), Sp, Mapsto, Sp, N("v49"), Sp),
+            Seq(Bar, Sp, D(50), Sp, Mapsto, Sp, N("v50"), Sp),
+            Seq(Bar, Sp, D(51), Sp, Mapsto, Sp, N("v51"), Sp),
+            Seq(Bar, Sp, D(52), Sp, Mapsto, Sp, N("v52"), Sp),
+            Seq(Bar, Sp, D(53), Sp, Mapsto, Sp, N("v53"), Sp),
+            Seq(Bar, Sp, D(54), Sp, Mapsto, Sp, N("v54"), Sp),
+            Seq(Bar, Sp, D(55), Sp, Mapsto, Sp, N("v55"), Sp),
+            Seq(Bar, Sp, D(56), Sp, Mapsto, Sp, N("v56"), Sp),
+            Seq(Bar, Sp, D(57), Sp, Mapsto, Sp, N("v57"), Sp),
+            Seq(Bar, Sp, Underscore, Sp, Mapsto, Sp, N("v58"))));
+
+
+    private static LibraryNoteRef Source =>
+        LibraryNoteRef.Create("D5/L/StatisticalMechanics/poncini2023planar");
+    private static Formula X(string name) => F.Id(name);
+    private static Formula N(string name) => Seq(Operatorname, Grp(X(name)));
+    private static Formula Q(string name) => Seq(name.Split('.').SelectMany((s, i) =>
+        i == 0 ? new[] { N(s) } : new[] { Dot, N(s) }).ToArray());
+    private static Formula Call(string name, params Formula[] args) => At(Q(name), args);
+    private static Formula At(Formula f, params Formula[] args) => new Formula.Apply(f, [.. args]);
+    private static Formula D(long n) => n < 0 ? Negate(D(-n)) : Num(n);
+    private static Formula Parenthesized(Formula f) => Seq(Open, f, Close);
+    private static Formula Typed(Formula f, Formula type) =>
+        Parenthesized(Seq(f, Colon, Sp, type));
+    private static Formula Bound(string name, Formula type) => Typed(X(name), type);
+    private static Formula All(string name, Formula type, Formula body) =>
+        Seq(Forall, Sp, Bound(name, type), Comma, Sp, Parenthesized(body));
+    private static Formula Ex(string name, Formula type, Formula body) =>
+        Seq(Exists, Sp, Bound(name, type), Comma, Sp, Parenthesized(body));
+    private static Formula Fn(string name, Formula type, Formula body) =>
+        Parenthesized(Seq(Bound(name, type), Sp, Mapsto, Sp, body));
+    private static Formula Eq(Formula a, Formula b) =>
+        new Formula.Relation(a, FormulaRelationOperator.Equal, b);
+    private static Formula Ne(Formula a, Formula b) =>
+        new Formula.Relation(a, FormulaRelationOperator.NotEqual, b);
+    private static Formula Less(Formula a, Formula b) =>
+        new Formula.Relation(a, FormulaRelationOperator.LessThan, b);
+    private static Formula Le(Formula a, Formula b) =>
+        new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
+    private static Formula And(Formula a, Formula b) =>
+        new Formula.Logic(Parenthesized(a), FormulaLogicOperator.And, Parenthesized(b));
+    private static Formula Or(Formula a, Formula b) =>
+        new Formula.Logic(Parenthesized(a), FormulaLogicOperator.Or, Parenthesized(b));
+    private static Formula IffOf(Formula a, Formula b) =>
+        new Formula.Logic(Parenthesized(a), FormulaLogicOperator.Iff, Parenthesized(b));
+    private static Formula Arrow(Formula a, Formula b) =>
+        new Formula.TypeArrow(Parenthesized(a), Parenthesized(b));
+    private static Formula Add(Formula a, Formula b) =>
+        new Formula.Binary(Parenthesized(a), FormulaBinaryOperator.Add, Parenthesized(b));
+    private static Formula Sub(Formula a, Formula b) =>
+        new Formula.Binary(Parenthesized(a), FormulaBinaryOperator.Subtract, Parenthesized(b));
+    private static Formula Mul(Formula a, Formula b) =>
+        new Formula.Binary(Parenthesized(a), FormulaBinaryOperator.Multiply, Parenthesized(b));
+    private static Formula Power(Formula a, Formula b) =>
+        new Formula.Power(Parenthesized(a), Parenthesized(b));
+    private static Formula Negate(Formula a) => Seq(Minus, Parenthesized(a));
+    private static Formula If(Formula c, Formula a, Formula b) => Call("ite", c, a, b);
+    private static Formula Dite(string name, Formula c, Formula a, Formula b) =>
+        Call("dite", c, Fn(name, c, a), Call("Function.const", Call("Not", c), b));
+    private static Formula Nat() => N("Nat");
+    private static Formula IntType() => N("Int");
+    private static Formula Fin(Formula n) => Call("Fin", n);
+    private static Formula Val(Formula x) => Call("Fin.val", x);
+    private static Formula SubVal(Formula x) => Call("Subtype.val", x);
+    private static Formula OmegaProof() => Seq(N("by"), Sp, N("omega"));
+    private static Formula FinMk(Formula x, Formula proof) => Call("Fin.mk", x, proof);
+    private static Formula Embed(Formula x) => FinMk(Val(x), OmegaProof());
+    private static Formula Pair(Formula a, Formula b) => Call("Prod.mk", a, b);
+    private static Formula SumOver(string name, Formula type, Formula body) =>
+        Call("Finset.sum", Call("Finset.univ"), Fn(name, type, body));
+    private static Formula Smul(Formula a, Formula b) => Call("HSMul.hSMul", a, b);
+    private static Formula Ring(Formula body) => All("R", N("Type"),
+        Seq(OpenBracket, Call("CommRing", X("R")), CloseBracket, Sp, body));
+    private static Formula Group(Formula body) => All("A", N("Type"),
+        Seq(OpenBracket, Call("AddCommGroup", X("A")), CloseBracket, Sp, body));
+    private static Formula Vector() => Arrow(Fin(D(8192)), IntType());
+    private static Formula ZeroVector() => Call("Function.const", Fin(D(8192)), D(0));
+    private static Formula Field(string name, Formula value) =>
+        Seq(Q(name), Sp, Colon, F.Eq, Sp, value);
+    private static Formula Record(params Formula[] fields) => Seq(OpenBrace, Sp,
+        Seq(fields.SelectMany((f, i) => i == 0 ? new[] { f } :
+            new[] { Comma, Sp, f }).ToArray()), Sp, CloseBrace);
+    private static DocumentBlock Node(string name, Formula formula, string prose,
+        DescribeRole role = DescribeRole.Definition, bool literature = false,
+        bool acknowledgeSource = false) => Describe.Lean(
+            DescribeId.Create(name.Replace('_', '-').ToLowerInvariant()),
+            DeclarationHandle.Create(Prefix + name), H(name),
+            StatementSource.FromAuthor(Disp(formula)),
+            literature ? AssessedProvenance.FromLiterature(Source) :
+                acknowledgeSource ? AssessedProvenance.FromRepo(Source) :
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), role);
+
 }
