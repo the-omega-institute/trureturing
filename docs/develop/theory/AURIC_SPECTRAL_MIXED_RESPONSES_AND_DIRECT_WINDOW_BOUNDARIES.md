@@ -477,3 +477,424 @@ $(b,c)$、$(b+c,b)$、$(b+c,c)$ 都是同一 $W$ 的基，故这些直接窗口�
 **定义 9.1（完整白话）。** 还是同一个原世界、同一张二元响应表、同一正表和完整正反配平，每个原方向与自己的响应已经能画一只可靠的圆。平方全落在单位实线的方向片上，[中央卷 62–63](AURIC_CENTRAL_RESPONSE_SQUARE_AND_RADIAL_CONSISTENCY.md) 已把同一旧响应接成双线性面积表并从两根正交单位轴生出闭合三轴，不必先要求输出留在方向片内；而 [中央卷 76–80](AURIC_CENTRAL_RESPONSE_SQUARE_AND_RADIAL_CONSISTENCY.md) 更已把生成三轴的全部带单位输入、任意标量平方片的仿射双线性和生成四维窗的内在复乘法接通，这些都不再是未付余量；这里另接平方可非中央、交叠可不定号的输入分支，不把已有的方向片当作全部原世界。现在要接通两只圆，第三个真正原标签把它们放进同一次配平，先迫使可能的不相容残余只能把交叠的一份正读数搬到大小相同的负读数。只要这两个输入的平方在合法实缩放后只差一个单位倍数，而且非零正负读数的大小不重合，平方就仍能分清原来的符号，残余便同时被要求保持和翻转同一个交叠，最后只能消失；正负谱可以同时存在，也可以连续变化并碰到零，原世界不必补根、逆或谱投影。这样锁住的是这两个实际原输入的两份混合关系。对任意两只横向圆，还能直接确定同步旋转保持同一旧响应，但这并不等于它们的交叠不变，更不等于查相加输入等于把两个响应相加。确有满足全部数学正表和配平的原域，其两个输入与它们的和需要三份不能由非零同态或可逆换基压掉的非单位平方坐标，所以不能承诺总把任意原三角直接送进已经解决的窄窗口；这个例子自己的响应已经可加，限制的是这条覆盖路线。这些已付条件窗口之外任意方向的共同混合、跨参考的共同复取向、全域同一结合乘法，以及实际准备、一般实际 Born 菜单、整台仪器、相关联合、递归参考、全部历史每个未来、真正遗忘、真实返回、计数与正常性、物理钟、能量和共同作用量，仍各守原来的未付条件，完整原目标保持不变。
 
 ## 追加锚（本行以下为增补区）
+
+## 10. 同一原对的缺陷代数与中心锥
+
+**约定 10.0（追加部分的引用范围）。** 本追加部分的无卷名编号均指本卷；中央卷在这里包括 94–99，条件窗口的准确范围取 14.3。本卷 1–9 的固定版本引用仍按其各自限定读取。
+
+**定义 10.1（原三标签、缺陷四元组与诊断代数）。** 保持 1.1 的同一原资料、同一原 $h^2=u$、全部原 P2 与完整 PB。固定真正原 $y,z\in V_h$，满足
+
+$$
+y^2-z^2\in\mathbb Ru.
+\tag{10.1}
+$$
+
+仍令
+
+$$
+P=y\circ z,\qquad Q=Jy\circ Jz,\qquad
+U=y\circ Jz,\qquad V=Jy\circ z.
+\tag{10.2}
+$$
+
+为避免与 0.2 的 JB 完成 $X$ 混淆，定义
+
+$$
+\mathsf A=P+Q,\qquad
+\mathsf X=P-Q,\qquad
+\mathsf Y=U+V,\qquad
+\mathsf R=P^2,\qquad
+\mathsf T=\mathsf X^2.
+\tag{10.3}
+$$
+
+这些全是原 Jordan 元。在给定忠实含单位 JC 环境 $A_0=C^*(X)$ 中记
+
+$$
+\mathfrak B_{y,z}=C^*(u,\mathsf A,\mathsf X,\mathsf Y)\subset A_0.
+\tag{10.4}
+$$
+
+这是由同一原对及其实际响应生成的诊断 C* 代数。其谱、表示、商和双对偶只用于读取固定元素，不作为新输入送回原 $D$。原域可不完备；只要求 1.1 的弱 JC 包含，不要求 $X=(A_0)_{\rm sa}$。若原对象为零，则此代数、下述元素与理想全为零，不可约表示集合为空；以下需要态或非零单位的步骤只在非零对象中使用。
+
+**定理 10.2（同一原 PB 响应的中心锥关系）。** 在 10.1 下，原两圆接口 2.1 给出的四个等式进一步推出
+
+$$
+\begin{gathered}
+\mathsf A\circ\mathsf X=\mathsf A\circ\mathsf Y
+=\mathsf X\circ\mathsf Y=0,
+\qquad
+\mathsf X^2=\mathsf Y^2=\mathsf T,
+\\
+\mathsf R=\frac{\mathsf A^2+\mathsf X^2}{4},
+\qquad
+\mathsf A^2=4\mathsf R-\mathsf T,
+\\
+0\le \mathsf T\le4\mathsf R,
+\qquad
+\mathsf R,\mathsf T\in Z(\mathfrak B_{y,z}).
+\end{gathered}
+\tag{10.5}
+$$
+
+这三份 Jordan 正交等价于 $\mathsf A,\mathsf X,\mathsf Y$ 在环境结合乘法中两两反交换。这里的中心性只是在诊断代数 $\mathfrak B_{y,z}$ 内成立；不宣称 $\mathsf R$、$\mathsf T$ 或任一取向元在 $A_0$ 或整个原世界中中央。
+
+证明。2.1 给 $P^2=Q^2$、$\mathsf X^2=\mathsf Y^2$、$P\circ\mathsf Y=0$ 与 $\mathsf X\circ\mathsf Y=0$。由
+
+$$
+\mathsf A\circ\mathsf X=P^2-Q^2=0
+\tag{10.6}
+$$
+
+得第一份反交换。又 $\mathsf X\circ\mathsf Y=0$ 与 $P\circ\mathsf Y=0$ 给 $Q\circ\mathsf Y=0$，所以 $\mathsf A\circ\mathsf Y=0$。对自伴元，Jordan 正交正是环境乘法的反交换，故三者两两反交换。
+
+在环境中展开平方，交叉项相消，得
+
+$$
+\mathsf A^2+\mathsf X^2=2(P^2+Q^2)=4P^2=4\mathsf R.
+\tag{10.7}
+$$
+
+自伴平方正性给 $\mathsf R\ge0$、$\mathsf T\ge0$，而 $4\mathsf R-\mathsf T=\mathsf A^2\ge0$。若自伴元 $a$ 与自伴元 $b$ 反交换，则 $a^2b=ba^2$；逐一对三生成元使用此事实，$\mathsf A^2$、$\mathsf X^2$、$\mathsf Y^2$ 与 $\mathfrak B_{y,z}$ 的每个生成元交换。由 (10.7) 得 $\mathsf R,\mathsf T$ 在 $\mathfrak B_{y,z}$ 内中央。全程只用了 2.1 的有限原关系和环境中的固定乘法，没有使用未知 $D$ 的连续性、可加性、闭合性或原域中的谱投影。∎
+
+## 11. 连续中心谱上的不可约 Clifford 纤维
+
+**定义 11.1（中心纤维与边界分层）。** 令 $\widehat{\mathfrak B}_{y,z}$ 为 $\mathfrak B_{y,z}$ 的非零不可约 *-表示类。由 10.2 和 Schur 引理，任一 $\pi\in\widehat{\mathfrak B}_{y,z}$ 有唯一 $r,t\in\mathbb R$ 使
+
+$$
+\pi(\mathsf R)=rI,\qquad \pi(\mathsf T)=tI.
+\tag{11.1}
+$$
+
+记 $s=4r-t$。$\Sigma_{y,z}$ 是中央子代数 $Z_0=C^*(u,\mathsf R,\mathsf T)$ 的字符空间，以字符在 $(\mathsf R,\mathsf T)$ 上的值作坐标；非零对象时它是紧集，可含连续部分。由 10.2，
+
+$$
+\Sigma_{y,z}\subset\{(r,t):r\ge0,\ 0\le t\le4r\}.
+\tag{11.2}
+$$
+
+对 $(r,t)\in\Sigma_{y,z}$，令 $\mathfrak B_{r,t}$ 为按该中心字符取的商，即模去由 $\mathsf R-ru,\mathsf T-tu$ 生成的闭理想。每个这样的商非零：中心字符有态延伸，而其延伸态的 GNS 循环向量被这两份中央关系消灭，故整个循环表示均被它们消灭。反向，每个不可约表示限制到 $Z_0$ 都是字符；每个非零纤维商也有不可约表示。因此 $\Sigma_{y,z}$ 正是 (11.1) 的全部可能坐标。商只读取诊断代数，不定义原 $D$ 的商响应。
+
+**定理 11.2（全部不可约纤维的精确分类）。** 在 11.1 下，对每个不可约表示 $\pi$ 有如下穷尽分类。
+
+1. 若 $r=0$，则 $t=0$，且 $\pi(\mathsf A)=\pi(\mathsf X)=\pi(\mathsf Y)=0$；该纤维只有一维标量不可约表示。
+2. 若 $t=0$，则 $\pi(\mathsf X)=\pi(\mathsf Y)=0$，且纤维的不可约表示均为一维；当 $r>0$ 时 $\pi(\mathsf A)=2\sqrt r$ 或 $-2\sqrt r$，实际纤维可保留其中一个或两个符号。
+3. 若 $t>0$，则纤维不可约表示恰为二维。令
+
+   $$
+   e_1=\frac{\pi(\mathsf X)}{\sqrt t},\qquad
+   e_2=\frac{\pi(\mathsf Y)}{\sqrt t}.
+   \tag{11.3}
+   $$
+   它们是反交换的自伴酉元。若 $0<t<4r$，再令 $e_3=\pi(\mathsf A)/\sqrt s$；则
+
+   $$
+   e_1^2=e_2^2=e_3^2=I,
+   \qquad e_i e_j=-e_j e_i\ (i\ne j),
+   \tag{11.4}
+   $$
+   且取向只能有两种；实际纤维可保留其中一种或二者
+
+   $$
+   \varepsilon(\pi)=-\mathrm i e_1e_2e_3\in\{+I,-I\}.
+   \tag{11.5}
+   $$
+   适当选取二维基后，准确写成
+
+   $$
+   \pi(\mathsf X)=\sqrt t\,\sigma_z,
+   \qquad
+   \pi(\mathsf Y)=\sqrt t\,\sigma_x,
+   \qquad
+   \pi(\mathsf A)=\varepsilon\sqrt{4r-t}\,\sigma_y.
+   \tag{11.6}
+   $$
+   若 $t=4r>0$，则 $\pi(\mathsf A)=0$，而 $(\pi(\mathsf X),\pi(\mathsf Y))$ 仍是一份二维 Pauli 对；此边界没有第三轴取向。 因而任何一维标量不可约纤维必有 $t=0$。
+
+证明。若 $r=0$，(11.2) 给 $t=0$，再由 (10.5) 的三个平方等式和自伴平方零得到三像全为零。若 $t=0$，$\mathsf X^2=\mathsf Y^2=0$ 给两像为零；剩下的像由一个自伴元 $\pi(\mathsf A)$ 生成，且平方为 $4rI$，不可约性遂给一维表示及所列两个标量值。
+
+设 $t>0$。式 (10.5) 给 $e_1,e_2$ 为反交换自伴酉元。令 $H_+$、$H_-$ 为 $e_1$ 的正、负特征空间；$e_2$ 在二者之间给酉双射。因此存在 Hilbert 空间 $K$ 使
+
+$$
+H_\pi\cong\mathbb C^2\otimes K,\qquad
+ e_1=\sigma_z\otimes I_K,\qquad
+ e_2=\sigma_x\otimes I_K.
+\tag{11.7}
+$$
+当 $s=0$，这两元生成 $M_2(\mathbb C)\otimes I_K$；不可约性迫使 $K=\mathbb C$，故表示二维。
+
+当 $s>0$，$e_3$ 也是与前两元反交换的自伴酉元。与 (11.7) 的两元反交换的算子必为
+
+$$
+ e_3=\sigma_y\otimes W
+\tag{11.8}
+$$
+其中 $W=W^*$ 且 $W^2=I_K$。前两元已生成 $\sigma_y\otimes I_K$，与 $e_3$ 相乘又给 $I_2\otimes W$，故生成代数为 $M_2(\mathbb C)\otimes C^*(W)$。$W$ 的正、负特征空间正交直和为 $K$；任取其中一个非零特征向量，其张成的一维空间与 $\mathbb C^2$ 的张量积是生成代数的不变子空间。不可约性迫使 $K$ 一维、$W=\varepsilon I$，其中 $\varepsilon=\pm1$。标准 Pauli 乘法 $\sigma_z\sigma_x=\mathrm i\sigma_y$ 遂给 (11.5)–(11.6)。
+
+这对应成熟的 $\mathrm{Cl}_2(\mathbb C)\simeq M_2(\mathbb C)$ 与 $\mathrm{Cl}_3(\mathbb C)\simeq M_2(\mathbb C)\oplus M_2(\mathbb C)$ 表示分类；各纤维只保留实际商中存在的表示。∎
+
+## 12. 双对偶中的最大反射支撑
+
+**定理 12.1（残余的满支撑角与两种 Clifford 取向）。** 在 10.1 下，令 $M=\mathfrak B_{y,z}^{**}$，对正中心元置 $s_M(a)=1_{(0,\infty)}(a)\in Z(M)$，并记
+
+$$
+\mathsf C=-\mathrm i\,\mathsf A\mathsf X\mathsf Y,
+\qquad
+z_{\rm res}=s_M(\mathsf T),
+\qquad
+z_{\rm ref}=s_M\bigl(\mathsf T(4\mathsf R-\mathsf T)\bigr).
+\tag{12.1}
+$$
+
+则 $\mathsf C$ 是 $\mathfrak B_{y,z}$ 内的中央自伴元，且
+
+$$
+\mathsf C^2=\mathsf T^2(4\mathsf R-\mathsf T).
+\tag{12.2}
+$$
+
+在 $Z(M)$ 中作有界 Borel 函数演算，令 $\Omega=\operatorname{sgn}(\mathsf C)$，其中 $\operatorname{sgn}(0)=0$。则
+
+$$
+\Omega^2=z_{\rm ref},\qquad
+z_\pm=\frac{z_{\rm ref}\pm\Omega}{2}
+\tag{12.3}
+$$
+
+是两个正交中央投影。在 $0<t<4r$ 的每个不可约表示的正常双对偶延伸下，$\Omega$ 的像恰为 (11.5) 的 $\varepsilon(\pi)$。准确的最大性是：对任一中央投影 $e\in Z(M)$，
+
+$$
+\begin{aligned}
+s_{eM}(e\mathsf T)=e
+&\iff e\le z_{\rm res},\\
+s_{eM}(e\mathsf T)=s_{eM}\bigl(e(4\mathsf R-\mathsf T)\bigr)=e
+&\iff e\le z_{\rm ref}.
+\end{aligned}
+\tag{12.3a}
+$$
+
+故 $z_{\rm res}$ 是 $\mathsf T$ 满支撑的最大中央角，$z_{\rm ref}$ 是两份正元同时满支撑的最大中央角。满支撑表示在该角的忠实正常表示中核为零；不要求谱与零分离或正元可逆。
+
+证明。三生成元两两反交换，故 $\mathsf A\mathsf X\mathsf Y$ 与每个生成元交换；反转三个自伴因子的次序给 $(\mathsf A\mathsf X\mathsf Y)^*=-\mathsf A\mathsf X\mathsf Y$，所以 $\mathsf C$ 中央且自伴。三次反交换的平方恒等式为
+
+$$
+(\mathsf A\mathsf X\mathsf Y)^2=-\mathsf A^2\mathsf X^2\mathsf Y^2,
+$$
+
+代入 (10.5) 得 (12.2)。Borel 函数演算给 $\Omega^2=s_M(\mathsf C^2)$。对交换正元，乘积的支撑是两支撑之交；它们可同时按非负函数读取，乘积非零的集合恰是两者同时非零的集合。因此
+
+$$
+s_M(\mathsf C^2)
+=s_M(\mathsf T)s_M(4\mathsf R-\mathsf T)
+=z_{\rm ref}.
+\tag{12.4}
+$$
+
+于是 (12.3) 的两元自伴、平方等于自身且乘积为零。中央投影 $e$ 与谱投影交换，故 $s_{eM}(ea)=e\,s_M(a)$；分别用于两份正元便得 (12.3a) 及最大性。在这些角上零仍可为谱的聚点。
+
+对内点纤维，(11.6) 给 $\pi(\mathsf C)=\varepsilon\,t\sqrt{4r-t}\,I$；正常延伸保留相应谱支撑，故 $\Omega$ 的像为 $\varepsilon I$。边界 $t=0$ 或 $t=4r$ 的表示消灭 $z_{\rm ref}$；前者无残余，后者有二维 Pauli 对但没有第三轴取向。上述投影属于诊断双对偶，不因此属于原 $E$ 或全环境中心。∎
+
+## 13. 同一原混合残余的交换子理想
+
+**定理 13.1（原混合误差的精确闭理想与交换化）。** 在 10.1 的同一原资料、同一原 $h,y,z,J$ 下，简记 $B=\mathfrak B_{y,z}$，以 $\operatorname{Id}_B(a)$ 表示包含 $a$ 的最小范数闭双边星理想。令
+
+$$
+\mathcal K=\overline{\operatorname{span}}
+\{b[c,d]e:b,c,d,e\in B\},\qquad
+\mathsf H=[\mathsf X,\mathsf Y].
+\tag{13.1}
+$$
+
+则同一原响应的两份误差满足
+
+$$
+\begin{gathered}
+\mathsf H=2\mathsf X\mathsf Y,\qquad
+\mathsf H^*\mathsf H=4\mathsf T^2,\qquad
+|\mathsf H|=2\mathsf T,\\
+\boxed{\mathcal K
+=\operatorname{Id}_B(\mathsf H)
+=\operatorname{Id}_B(\mathsf T)
+=\operatorname{Id}_B(\mathsf X)
+=\operatorname{Id}_B(\mathsf Y)
+=\overline{\mathsf T B}.}
+\end{gathered}
+\tag{13.2}
+$$
+
+特别地，下列条件等价：$B$ 交换、$\mathcal K=0$、$\mathsf H=0$、$\mathsf T=0$、两份原混合式
+
+$$
+Jy\circ Jz=y\circ z,\qquad
+y\circ Jz+Jy\circ z=0
+\tag{13.3}
+$$
+
+同时成立。商 $B/\mathcal K$ 是此诊断代数的最大交换 C* 商，允许为零；任意到 C* 代数的 *-同态 $\rho$ 均满足
+
+$$
+\rho(B)\text{ 交换}
+\iff\rho(\mathsf T)=0
+\iff\rho(\mathsf X)=\rho(\mathsf Y)=0.
+\tag{13.4}
+$$
+
+在 12.1 的 $M=B^{**}$ 中，还有精确支撑关系
+
+$$
+\overline{\mathcal K}^{\,w^*}=z_{\rm res}M.
+\tag{13.5}
+$$
+
+所有闭包和商均只在固定的诊断 C* 代数中使用，不给原 $D$ 新增商论域、连续性或可加性前件。
+
+证明。10.2 的反交换给 $\mathsf H=2\mathsf X\mathsf Y$；自伴性和 $\mathsf X^2=\mathsf Y^2=\mathsf T$ 给
+
+$$
+\mathsf H^*\mathsf H
+=4\mathsf Y\mathsf X^2\mathsf Y
+=4\mathsf T\mathsf Y^2=4\mathsf T^2.
+\tag{13.6}
+$$
+
+$\mathsf T\ge0$，所以唯一正平方根是 $|\mathsf H|=2\mathsf T$。令 $I=\operatorname{Id}_B(\mathsf T)$。在 C* 商 $B/I$ 中，$\mathsf X$ 和 $\mathsf Y$ 的自伴像平方均为零，故两像为零。商由单位像和一个自伴元 $\mathsf A+I$ 生成，因而交换，包含零商情形。因此全部交换子在 $I$ 中，$\mathcal K\subset I$。
+
+另一方面 $\mathsf H\in\mathcal K$，而包含 $\mathsf H$ 的闭星理想包含 $\mathsf H^*\mathsf H$ 及其连续函数演算的正平方根。故 $\mathsf T=|\mathsf H|/2\in\operatorname{Id}_B(\mathsf H)\subset\mathcal K$，从而 $I\subset\operatorname{Id}_B(\mathsf H)\subset\mathcal K\subset I$。其中平方根函数在零处为零，故可在该理想内作演算，不需理想有单位。
+
+$\mathsf T=\mathsf X^2$ 给 $I\subset\operatorname{Id}_B(\mathsf X)$；上段的商平方零又给 $\mathsf X\in I$，故两理想相等。$\mathsf Y$ 同理。$\mathsf T$ 中央，$\mathsf TB$ 本身是双边星理想，故其范数闭包就是 $I$。这证明 (13.2)。单位存在时 $[c,d]=u[c,d]u\in\mathcal K$；交换子换序取伴随仍在所定义的闭线性包内，所以 $\mathcal K$ 确是全部交换子生成的闭星理想。
+
+由 (13.2)，$\mathcal K=0\iff\mathsf T=0\iff\mathsf H=0$；自伴平方零给 $\mathsf T=0\iff\mathsf X=\mathsf Y=0$，后者按 (10.2)–(10.3) 正是 (13.3)。全部交换子为零等价于 $B$ 交换。任一交换像的 *-同态都消灭全部交换子及 $\mathcal K$，反向消灭 $\mathcal K$ 的同态经交换商因子化。这既证明最大交换商的泛性质，也给 (13.4)，包括零同态。
+
+最后令 $e_n=\mathsf T(\mathsf T+n^{-1}u)^{-1}\in\mathsf TB$。这是固定环境正元的连续函数演算；有界递增序列 $e_n$ 在 $M$ 中强收敛、亦弱星收敛到 $z_{\rm res}$。故 $\overline{\mathcal K}^{w^*}$ 包含 $z_{\rm res}$。范数闭双边理想的弱星闭包是 $M$ 的双边理想：先固定一个 $B$ 元取弱星极限，再用 $B$ 在 $M$ 的弱星稠密性和乘法分别弱星连续性，便允许两侧乘任意 $M$ 元。因此它包含 $z_{\rm res}M$；反向由 $(u-z_{\rm res})\mathsf T=0$ 及 $\mathcal K=\overline{\mathsf TB}$ 得到。式 (13.5) 成立。这里只逆 $\mathsf T+n^{-1}u$，从未逆 $\mathsf T$，故零谱及向零积聚的连续谱均在证明内。∎
+
+**定理 13.2（残余读取的存在、量词与精确范数）。** 在 13.1 下，(13.3) 等价于 $z_{\rm res}=0$，也等价于不存在满足 $\pi(\mathsf T)>0$ 的不可约表示。若 $\mathsf T\ne0$，存在满足
+
+$$
+\pi(\mathsf T)=\|\mathsf T\|I>0
+\tag{13.7}
+$$
+
+的二维不可约商表示。准确的全称结论是：每个实际读取 $t>0$ 的不可约表示为二维，每个读取 $t=0$ 的不可约表示为一维；同一个有非零残余的 $B$ 可以兼有两类表示。对每个不可约表示，
+
+$$
+\begin{gathered}
+\|\pi(\mathsf X)\|=\|\pi(\mathsf Y)\|=\sqrt t,
+\qquad \|\pi(\mathsf A)\|=\sqrt{4r-t},\\
+\|\pi(\mathsf H)\|=2t.
+\end{gathered}
+\tag{13.8}
+$$
+
+全局则有
+
+$$
+\begin{gathered}
+\|\mathsf X\|=\|\mathsf Y\|=\sqrt{\|\mathsf T\|},
+\qquad \|\mathsf A\|=\sqrt{\|4\mathsf R-\mathsf T\|},\\
+\boxed{\|[\mathsf X,\mathsf Y]\|
+=2\|\mathsf T\|=2\|\mathsf X\|^2=2\|\mathsf Y\|^2.}
+\end{gathered}
+\tag{13.9}
+$$
+
+证明。正元支撑为零当且仅当该元为零；13.1 遂给与 $z_{\rm res}=0$ 的等价。若 $\mathsf T=0$，所有表示当然消灭它。反向设 $m=\|\mathsf T\|>0$。在 $C^*(u,\mathsf T)$ 上取正谱最大点 $m$ 的评价态，并将它正延伸到 $B$。因此
+
+$$
+F=\{\phi\in S(B):\phi(\mathsf T)=m\}
+\tag{13.10}
+$$
+
+是非空弱星紧凸集。它还是整个态空间的面：若 $0<\lambda<1$ 且 $\lambda\phi_1+(1-\lambda)\phi_2\in F$，由 $0\le\phi_i(\mathsf T)\le m$，必有两份读数都等于 $m$，即两态均属 $F$。Krein–Milman 定理给 $F$ 的一个极点 $\phi$；面的性质使它也是 $S(B)$ 的极点，故为纯态。
+
+纯态的循环 GNS 表示 $\pi_\phi$ 非零且不可约。中央性和 Schur 引理给 $\pi_\phi(\mathsf T)=tI$，循环单位向量的读数给 $t=\phi(\mathsf T)=m>0$。11.2 遂给二维表示，像为 $M_2(\mathbb C)$，所以也是所述商表示。这完成不存在正残余不可约读取与 $\mathsf T=0$ 的双向证明。11.2 给两类表示的准确量词；(10.5)、(13.6) 与 C* 范数恒等式分别在表示中和 $B$ 中给 (13.8)–(13.9)。不需谱隙、原投影、原纯态准备或全局矩阵分解。∎
+
+## 14. 退化边界与已付原窗口
+
+**命题 14.1（第三轴为零仍有完整残余理想）。** 只保留 2.1 的代数关系，在 $M_2(\mathbb C)$ 中取
+
+$$
+P=\sigma_z,\qquad Q=-\sigma_z,\qquad U=V=\sigma_x.
+\tag{14.1}
+$$
+
+则 $\mathsf A=0$、$\mathsf X=2\sigma_z$、$\mathsf Y=2\sigma_x$、$\mathsf R=I$、$\mathsf T=4I$。这是 $t=4r$ 的二维边界纤维；两份混合式均失败，且
+
+$$
+\mathsf C=0,\qquad z_{\rm ref}=0,\qquad
+\mathcal K=M_2(\mathbb C),\qquad
+|[\mathsf X,\mathsf Y]|=8I.
+\tag{14.1a}
+$$
+
+所以第三轴取向支撑不能代替残余理想的支撑。有限方程也允许非零残余与标量读取并存、以及连续残余向零积聚。
+
+证明。Pauli 乘法给 $P^2=Q^2$、$\mathsf X^2=\mathsf Y^2=4I$、$\mathsf X\circ\mathsf Y=P\circ\mathsf Y=0$，且 $\mathsf A=0$。故 $r=1,t=4$，而 $\mathsf X,\mathsf Y$ 生成 $M_2(\mathbb C)$；$\mathsf T=4I$ 生成整个理想，13.1 给 (14.1a)。
+
+与标量块 $P=Q=1/2,U=V=0$ 直和后，$\mathsf A=1\oplus0$，$\mathsf X=0\oplus2\sigma_z$，$\mathsf Y=0\oplus2\sigma_x$，故诊断代数为 $\mathbb C\oplus M_2(\mathbb C)$，$\mathcal K=0\oplus M_2(\mathbb C)$。其一维表示读取 $r=1/4,t=0$，二维表示读取 $r=1,t=4$，两者确实并存。
+
+另将 (14.1) 的四元组同时乘以参数 $\lambda\in[0,1]$，在 $C([0,1],M_2)$ 中生成诊断代数。固定坐标函数给 $\mathsf R(\lambda)=\lambda^2I$、$\mathsf T(\lambda)=4\lambda^2I$、$\mathsf A=0$。每个 $\lambda>0$ 的取值表示为二维，$\lambda=0$ 的像为标量；$\mathsf T$ 的谱为 $[0,4]$，所以不具有正下界。其 $z_{\rm res}$ 角仍满支撑，且每个正 $\lambda$ 的表示延伸在此角上为单位，因而该角中的谱也含向零积聚的正值。上述构造只实现有限两圆代数关系，不提供整个原 $E^2$ 上满足全部 P2 与完整 PB 的总 $D$。∎
+
+**定义 14.2（同一原三标签与整体障碍）。** 三标签仍是同一真正原 $(h,y,z)$：$h$ 是原第三标签，$Jy,Jz$ 是同一旧 $D$ 的实际响应；$\mathsf A,\mathsf X,\mathsf Y$ 由这五个原元素通过 Jordan 组合得到。在给定原 JC 包含中有
+
+$$
+\text{同一原 PB 两圆接口}
+\Longrightarrow
+\text{三元反交换及中心锥 }0\le\mathsf T\le4\mathsf R
+\Longrightarrow
+\mathcal K=\operatorname{Id}_{\mathfrak B_{y,z}}([\mathsf X,\mathsf Y])
+=\overline{\mathsf T\mathfrak B_{y,z}}
+\Longrightarrow
+\bigl(\mathfrak B_{y,z}\text{ 交换}\iff\text{两份原混合式成立}\bigr).
+\tag{14.2}
+$$
+
+这个闭理想结论针对未归一化的同一原混合误差，并连接所有纤维的公共交换商；不只是将每个正纤维除以长度得到 Pauli 轴。任意标量读取必消灭该理想，读取正残余的二维表示则不能消灭它；14.1 说明第三轴退化时这份障碍仍完整存在。结论是给定弱 JC 包含中的诊断，不断言不同忠实 JC 环境的全部诊断代数已被规范识别。
+
+**定义 14.3（已付半正定窗与全域边界）。** 在本追加部分引用中央卷时，同时采用其 94–99。中央卷 97.1 已给：若原标量平方子空间 $K\subset V_h$ 满足 $z\circ K\subset\mathbb Ru$，则同一个旧 $J$ 对全部 $k\in K$ 满足 $J(z+k)=Jz+Jk$。中央卷 97.2 已将其用于 91.1 的全部核方向：若原实线性 $W\subset V_h$、$R_1\in E\setminus\mathbb Ru$ 及实二次型 $q_0,q_1$ 满足
+
+$$
+w^2=q_0(w)u+q_1(w)R_1\quad(w\in W),\qquad q_1\ge0,
+\tag{14.3}
+$$
+
+则同一旧 $J|_W$ 实线性，且对全部 $v,w\in W$ 有
+
+$$
+Jv\circ Jw=v\circ w,\qquad
+v\circ Jw+Jv\circ w=0.
+\tag{14.4}
+$$
+
+包括 $q_1=0$、退化、任意秩、无限维、连续谱及不定 $q_0$；不要求 $R_1$ 在全环境中央、正或可逆，也不要求 $J(W)\subset W$。该特定核匹配与窗口内加法因而属于已付条件结论。若 10.1 的 $y,z$ 同属这样的 $W$，则直接有 $\mathsf T=0$、$\mathcal K=0$；NR 分支和已有标量平方窗也保持其既有结论。
+
+尚须另外证明的是这些前件之外的一般原输入加法、不同原首标签的共同取向、任意第一输入的可加，以及同一旧 $D$ 在全部 $E^2$ 上的实双线性与完整原复乘法。一般原域未必有非零原正交单位方向，故本窗不是全原域的普遍入口。一般商下降、完成延拓、全域原 R、输出闭合及七项消费者仍各守原合同；环境读取的商、支撑和结合乘法不提供这些桥。
+
+## 15. 七项量子消费者的准确接线
+
+**定义 15.1（局部障碍与七项原合同）。** 10.1–14.3 只约束同一标量平方差原对的混合残余、诊断表示及交换子理想；下列七项原合同逐项保持原量词。
+
+| 原消费者 | 局部结果提供与仍必须保持的原条件 |
+| --- | --- |
+| 1. 复 Hilbert 载体、可观测量与叠加 | $\mathfrak B_{y,z}$ 只给同一原对的数学 C* 诊断和局部 Pauli 纤维。仍须忠实 JC 包含保持同一 $S,C,u,N$，以及同一旧 $D$ 在全部原 $E$ 上的实双线性，才可接全部有限复 Gram、原 $R$ 和 $a\star b=a\circ b-\mathrm iD(a,b)$ 的同一结合乘法；$\mathsf F$ 路线仍守其完整 $E=A_{\rm sa}$ 前件。原可取得标签、跨评价配对、共同核 $K$、同一 $J_a$、全部有限及零长度全词、native、父位置、ready、合法控制和实际相干叠加准备，均不能由纤维表示供应。 |
+| 2. 态、效果、质量与 Born | 全部原正实评价、准确效果、零／不等／次归一质量和中心权保持；只有原实际完整菜单 $\sum_l e_l=u$ 且 $m_\alpha=\alpha(u)>0$ 时才用 $\alpha(e_l)/m_\alpha$，零质量不除。共同根、准备、接受、抽签、mark、接线、全部 P9 分支、独立 $W_e$、AS／EC、菜单外 OB、实际二维到三维适配器、固定支持和全部切口仍取中央卷 52.1、三角卷 250.1 的同一合同；数学态、纯态 GNS 和 $\mathfrak B_{y,z}$ 的二维表示不变成实际准备或质量。 |
+| 3. native、真正相关联合与张量 | 仍须同一个非零实际共同来源、全部中心对、经典／不等维块、忠实同向交换的局部全矩阵两腿、交叉零、生成分离、共同联合生成与重数，以及全部乘积和真正相关输入。分别可得的二维诊断商、边缘表示或中心谱不能拼成同一实际相关联合，也不能替代局部旧乘法的共同取向。 |
+| 4. CP 与整台递归同源参考 | 原 typed 前接、真实未归一回溯、合法后口、全未来自然性、反变复合、typed 分区及箭头商下降全部保留。还需整台仪器连环境及每一个成功、失败、记录、后口输出的同规则实际 $r^+$，系统腿和 $M_2$ 腿共同真支持、三颗实际投影及 $I_2$ 实张成、支持内补事件、全部相关正输入的 intertwining 与夹界、每个所需有限递归深度及累计支持的准确运输；一个二维不可约诊断商不支付任何 CP 或递归实际箭头。 |
+| 5. 完整仪器、更新、TP 与 Lüders | 同一旧星乘法另已在全部原域识别后，才有原正夹心；完整 typed 单位分区才给 TP，全部输出的像内射线校准才接 Lüders。全输入运输、成功／失败、记录／后口、停止／拒绝／销毁、接受、真正遗忘、AC、精确 $N_u$、X／Xs、原平方根词和接受端均保留。Kraus、密度、迹类及收敛只在有限全矩阵域，或另有正常物理表示、指定前对偶和适用分解／收敛接口时使用。 |
+| 6. 全历史、全部未来、遗忘与真实返回 | 全部合法顺序／自适应／并行历史、环境泄漏、细记录及每个输出仍合法的每个未来、停止／拒绝／销毁、共同记录真正分组遗忘均保身份，未定义请求仍未定义。$B,B_{\rm cl}$、同数两侧真实逆向返回、CountRead 完整输出至全部活动 ready 接头、两条负提升活路和相干聚合、全菜单及接受端、九叶彩票、空程序、拒绝叶与相干返回继续保持三角卷 250.1 的原合同；非离散／无穷记录、可数可加、无限历史、正常性和指定前对偶仍须原桥。 |
+| 7. 物理动力与共同尺度 | 全域旧乘法另被识别且流保持原域后，才可消费完成上的指数流；还须原相位、实际门序列、可逆一参数群、物理钟、所需强连续酉实现及生成元域、Hamiltonian 能量解释、作用量、共同 $\hbar>0$ 与共同仪器齐备，才按原规范使用 $\dot b=2D(H,b)/\hbar$。$r,t$、Pauli 坐标、$\Omega$ 和双对偶支撑不是物理时间、能量、作用量或共同尺度。 |
+
+原 $\Omega/\mathrm{native}$、全词 $K/J/q/u/N/\mathcal P/S/D$、父位置与 ready、原中心／经典／不等维块／静默域、全部质量、全部实际准备与完整菜单、共同记录真正分组遗忘、全仪器及其每一个环境／输出／成功／失败／记录／后口、同一实际相关联合与递归同源参考、全部合法顺序／自适应／并行历史和每个合法未来、停止／拒绝／销毁、同数两侧真实双向返回、CountRead 正常性与前对偶、物理钟／能量／共同 $\hbar$，一律继续取 8.2–8.4、中央卷 52.1、三角卷 128.1、206.1、250.1 的完整原资料与全部量词。
+
+## 16. 数学接口与完整直观
+
+**定义 16.1（成熟工具与原响应的对应）。** 2.1 及三角卷 212.1–213.1 给等平方差两圆关系和半定消去；三角卷 190.1–190.3、219.1 给已归一固定三轴及局部体积元。中央卷 88–91 的仿射陪集和核差公式与 94–99 的核匹配按 14.3 一并使用。任意弱 JC 包含下的固定原对由这些实际两圆关系得到 (10.5)，而 (13.2) 进一步将其未归一化误差与整个诊断代数的闭交换子理想、最大交换商及 (13.5) 的支撑连接。
+
+Lundholm–Svensson，[*Clifford algebra, geometric algebra, and applications*](https://www.math.lmu.de/~lundholm/clifford.pdf)，§2.1–§2.3、Example 5.2、Theorem 8.4 分别供应反交换关系、Pauli 实现和有限维复 Clifford 不可约分类。Landsman，[*Lecture Notes on C*-Algebras, Hilbert C*-modules, and Quantum Mechanics*](https://arxiv.org/abs/math-ph/9807030)，§2.5 的连续函数演算、Theorems 2.7.2–2.7.3 的近似单位与闭理想商、Theorem 2.12.4 的纯态 GNS 不可约性及 Theorems 2.12.10–2.12.11 的极点和谱值支撑，分别用于 13.1 的理想计算和 13.2 的紧面分离。它们均是原响应定理内的中间工具。
+
+[小窗口单位桥卷](AURIC_ARBITRARY_DIMENSIONAL_SMALL_WINDOW_UNIT_BRIDGE.md) 70.1–70.2 已有具体连续矩阵代数的闭交换子理想与乘子取向；75.2–77.1 讨论原有限词的代数理想和最小取向载体。13.1 的 $\mathcal K$ 则是同一对实际 PB 响应误差生成的诊断 C* 代数内的范数闭理想；不将它认作原有限词代数理想，不以闭包论证替代原域成员关系，也不把它认作全域旧 $D$ 的最小取向载体。
+
+**定义 16.2（完整白话）。** 固定同一个原参考方向和同一对原输入，仍使用那张旧响应表；只选择两输入平方之差是标量单位的情形。原配平使两个混合误差成为彼此反交换、平方相同的两根数学轴，共同平方 $T$ 就是误差强度。它们交换先后顺序的差，其绝对值恰好是 $2T$。因此，允许在诊断代数中左右相乘、相加并取范数极限后，所有换序差生成的部分，正好就是原两份误差生成的部分；把这一部分取商消去，剩余代数必交换。反过来，诊断代数若交换，两份原误差便同时为零。这是一条对同一原对的整体障碍，不只是一份归一化矩阵形状。
+
+只有实际读到 $T>0$ 的不可约截面才必为二维；一个有误差的代数仍可同时有读到 $T=0$ 的一维截面。第三轴尚在时，每个实际内部截面保留两种可能取向中的一种；第三轴退化时两根误差轴仍可非零；总平方为零时则全部消失。中心读数可连续向零靠近，满支撑只保证没有核，不保证能求逆。中央卷 94–99 已使所述半正定平方窗口的核内外转向一致，该窗口内的加法和混合关系属于已有结论；窗口之外的全原域加法与不同参考方向的共同取向仍须另证。这里没有给原响应增加连续性，没有把商、谱或支撑变成原演员，也没有从有限矩阵片段造出总 P2/PB 模型。原世界仍可无原子、投影贫乏、含型 II／III、中心、经典、不等维块及静默域；全部零、不等和次归一质量以及七项消费者的实际准备、完整仪器及全部输出、共同相关联合、递归同源参考、每个合法历史与未来、真正遗忘与真实返回、计数、钟、能量和共同作用量，继续保留各自原条件。
+
+## 追加锚（本行以下为增补区）
