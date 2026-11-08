@@ -91,8 +91,9 @@ internal sealed class NativeWeightedBaseRankSaturationDocument : IScribeDocument
             isBase(b), Sp, Land, Sp, minimum(b));
         Formula iff = Seq(Open, minimum(b), Sp, Iff, Sp,
             Seq(Forall, Sp, t, Colon, Sp, real, Comma, Sp, saturation), Close);
-        Formula body = Seq(attainment, Sp, Land, Sp,
-            Forall, Sp, b, Colon, Sp, setE, Comma, Sp, isBase(b), Sp, Rightarrow, Sp, iff);
+        Formula allBases = Seq(Forall, Sp, b, Colon, Sp, setE, Comma, Sp,
+            isBase(b), Sp, Rightarrow, Sp, iff);
+        Formula body = Seq(Open, attainment, Close, Sp, Land, Sp, allBases);
         return Disp(Seq(
             Forall, Sp, u, Colon, Sp, type, Comma, Sp,
             Forall, Sp, e, Colon, Sp, type, Sp, u, Comma, Sp,
@@ -106,11 +107,14 @@ internal sealed class NativeWeightedBaseRankSaturationDocument : IScribeDocument
     {
         Formula w = F.Id("w"), b = F.Id("B"), e = F.Id("e");
         Formula real = Seq(Mathbb, Grp(F.Id("R")));
+        Formula type = Seq(Operatorname, Grp(F.Id("Type")));
         Formula setE = Call("Set", F.Id("E"));
         Formula sumIndex = Seq(e, Sp, InMacro, Sp,
             Call("toFinite", b), Dot, Operatorname, Grp(F.Id("toFinset")));
         Formula sum = new Formula.Subscript(Sum, Grp(sumIndex));
-        return Disp(Seq(Forall, Sp, F.Id("E"), Colon, Sp, setE, Comma, Sp,
+        return Disp(Seq(Forall, Sp, F.Id("u"), Colon, Sp, type, Comma, Sp,
+            Forall, Sp, F.Id("E"), Colon, Sp, type, Sp, F.Id("u"), Comma, Sp,
+            OpenBracket, Call("Finite", F.Id("E")), CloseBracket, Comma, Sp,
             Forall, Sp, w, Colon, Sp, new Formula.TypeArrow(F.Id("E"), real), Comma, Sp,
             Forall, Sp, b, Colon, Sp, setE, Comma, Sp,
             Call("baseWeight", w, b), Sp, Eq, Sp,
@@ -121,12 +125,14 @@ internal sealed class NativeWeightedBaseRankSaturationDocument : IScribeDocument
     {
         Formula e = F.Id("E"), m = F.Id("M"), w = F.Id("w"), t = F.Id("t");
         Formula real = Seq(Mathbb, Grp(F.Id("R")));
+        Formula type = Seq(Operatorname, Grp(F.Id("Type")));
         Formula matroidE = Call("Matroid", e);
         Formula setE = Call("Set", e);
         Formula body = Seq(OpenBrace, F.Id("x"), Sp, Mid, Sp,
             F.Id("x"), Sp, InMacro, Sp, m, Dot, F.Id("E"), Sp, Land, Sp,
             Call("w", F.Id("x")), Sp, Leq, Sp, t, CloseBrace);
-        return Disp(Seq(Forall, Sp, e, Colon, Sp, setE, Comma, Sp,
+        return Disp(Seq(Forall, Sp, F.Id("u"), Colon, Sp, type, Comma, Sp,
+            Forall, Sp, e, Colon, Sp, type, Sp, F.Id("u"), Comma, Sp,
             Forall, Sp, m, Colon, Sp, matroidE, Comma, Sp,
             Forall, Sp, w, Colon, Sp, new Formula.TypeArrow(e, real), Comma, Sp,
             Forall, Sp, t, Colon, Sp, real, Comma, Sp,

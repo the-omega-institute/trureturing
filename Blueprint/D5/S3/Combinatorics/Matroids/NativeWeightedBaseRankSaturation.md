@@ -6,7 +6,7 @@ Finite native matroid minimum-weight bases are characterized by every real thres
 
 **Definition 1.1 (The actual finite weight of a base).**
 
-$$\forall E: \operatorname{Set}\left(E\right), \forall w: E \to \mathbb{R}, \forall B: \operatorname{Set}\left(E\right), \operatorname{baseWeight}\left(w, B\right) = \sum_{{e \in \operatorname{toFinite}\left(B\right).\operatorname{toFinset}}} \operatorname{w}\left(e\right).$$
+$$\forall u: \operatorname{Type}, \forall E: \operatorname{Type} u, [\operatorname{Finite}\left(E\right)], \forall w: E \to \mathbb{R}, \forall B: \operatorname{Set}\left(E\right), \operatorname{baseWeight}\left(w, B\right) = \sum_{{e \in \operatorname{toFinite}\left(B\right).\operatorname{toFinset}}} \operatorname{w}\left(e\right).$$
 
 *Formalization.* `D5/S3/Combinatorics/Matroids/NativeWeightedBaseRankSaturation.baseWeight` (`✓ std3`).
 
@@ -18,7 +18,7 @@ For a finite carrier, baseWeight is the finite sum of the given real weight func
 
 **Definition 1.2 (The native lower threshold set).**
 
-$$\forall E: \operatorname{Set}\left(E\right), \forall M: \operatorname{Matroid}\left(E\right), \forall w: E \to \mathbb{R}, \forall t: \mathbb{R}, \operatorname{lowerWeightSet}\left(M, w, t\right) = \{x \mid x \in M.E \land \operatorname{w}\left(x\right) \leq t\}.$$
+$$\forall u: \operatorname{Type}, \forall E: \operatorname{Type} u, \forall M: \operatorname{Matroid}\left(E\right), \forall w: E \to \mathbb{R}, \forall t: \mathbb{R}, \operatorname{lowerWeightSet}\left(M, w, t\right) = \{x \mid x \in M.E \land \operatorname{w}\left(x\right) \leq t\}.$$
 
 *Formalization.* `D5/S3/Combinatorics/Matroids/NativeWeightedBaseRankSaturation.lowerWeightSet` (`✓ std3`).
 
@@ -30,7 +30,7 @@ The threshold set retains precisely elements of the native ground M.E whose real
 
 **Theorem 1.3 (Attainment and the complete every-base threshold-rank iff).**
 
-$$\forall u: \operatorname{Type}, \forall E: \operatorname{Type} u, [\operatorname{Finite}\left(E\right)], \forall M: \operatorname{Matroid}\left(E\right), \forall w: E \to \mathbb{R}, \exists B: \operatorname{Set}\left(E\right), M.\operatorname{IsBase} B \land \forall C: \operatorname{Set}\left(E\right), M.\operatorname{IsBase} C \Rightarrow \operatorname{baseWeight}\left(w, B\right) \leq \operatorname{baseWeight}\left(w, C\right) \land \forall B: \operatorname{Set}\left(E\right), M.\operatorname{IsBase} B \Rightarrow (\forall C: \operatorname{Set}\left(E\right), M.\operatorname{IsBase} C \Rightarrow \operatorname{baseWeight}\left(w, B\right) \leq \operatorname{baseWeight}\left(w, C\right) \iff \forall t: \mathbb{R}, \operatorname{ncard}\left(B \operatorname{inter} \operatorname{lowerWeightSet}\left(M, w, t\right)\right) = M.\operatorname{eRk}(\operatorname{lowerWeightSet}\left(M, w, t\right)).\operatorname{toNat}).$$
+$$\forall u: \operatorname{Type}, \forall E: \operatorname{Type} u, [\operatorname{Finite}\left(E\right)], \forall M: \operatorname{Matroid}\left(E\right), \forall w: E \to \mathbb{R}, (\exists B: \operatorname{Set}\left(E\right), M.\operatorname{IsBase} B \land \forall C: \operatorname{Set}\left(E\right), M.\operatorname{IsBase} C \Rightarrow \operatorname{baseWeight}\left(w, B\right) \leq \operatorname{baseWeight}\left(w, C\right)) \land \forall B: \operatorname{Set}\left(E\right), M.\operatorname{IsBase} B \Rightarrow (\forall C: \operatorname{Set}\left(E\right), M.\operatorname{IsBase} C \Rightarrow \operatorname{baseWeight}\left(w, B\right) \leq \operatorname{baseWeight}\left(w, C\right) \iff \forall t: \mathbb{R}, \operatorname{ncard}\left(B \operatorname{inter} \operatorname{lowerWeightSet}\left(M, w, t\right)\right) = M.\operatorname{eRk}(\operatorname{lowerWeightSet}\left(M, w, t\right)).\operatorname{toNat}).$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Matroids/NativeWeightedBaseRankSaturation.native_weighted_base_rank_saturation` (`✓ std3`). ∎
 
