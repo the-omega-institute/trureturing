@@ -2494,9 +2494,9 @@ $$
 \tag{16.14}
 $$
 
-当 $p\ge7$ 时，两因子均为正整数，且至多 $(p+1+2\sqrt p)/2<p$。若 $\varepsilon_p=-1$ 且 $p\equiv3\pmod4$，则 $E_0$ 超奇异，$a_p=0$，从而 $C_p/4=((p-1)/2)^2$，仍只有严格较小的素因子。$a_p=0$ 也由 $x$ 与 $-x$ 的二次特征和相消直接得到。
+当 $p\ge7$ 时，两因子均为正整数，且至多 $(p+1+2\sqrt p)/2<p$。若 $\varepsilon_p=-1$ 且 $p\equiv3\pmod4$，则 $(X^3-X)^{(p-1)/2}$ 仅含奇次幂，其 $X^{p-1}$ 系数为零，故由 Silverman V.4.1(a) 知 $E_0$ 超奇异。又因二次特征 $\chi$ 满足 $\chi(-1)=-1$，$x$ 与 $-x$ 对 $\sum_{x\in\mathbb F_p}\chi(x^3-x)$ 的贡献相消，故 $a_p=0$。从而 $C_p/4=((p-1)/2)^2$，仍只有严格较小的素因子。
 
-剩下的分支是 $\varepsilon_p=-1$ 且 $p\equiv1\pmod4$；$\varepsilon_p=1$ 时无论普通或超奇异，均已由 (16.14) 处理。在这个剩余分支，$(X^3-X)^{(p-1)/2}=X^{(p-1)/2}(X^2-1)^{(p-1)/2}$ 的 $X^{p-1}$ 系数为 $(-1)^{(p-1)/4}\binom{(p-1)/2}{(p-1)/4}\not\equiv0\pmod p$，因为所涉阶乘的指标均小于 $p$。因此 Silverman V.4.1(a) 判定这条曲线的约化普通。由 V.3.1(b)，其几何自同源环是虚二次域中的一个整环，包含由 $[i]$ 给出的 $\mathbb Z[i]$；后者已是 $\mathbb Q(i)$ 的极大整环，故该环正是 $\mathbb Z[i]$。Frobenius 的迹与范数遂给出 $\pi=u+vi$，其中 $u,v\in\mathbb Z$、$u^2+v^2=p$、$a_p=2u$。又由 $4\mid\#E_0(\mathbb F_p)$，有 $2u\equiv p+1\equiv2\pmod4$，所以 $u$ 为奇数、$v$ 为偶数。在此 $\varepsilon_p=-1$ 的分支中，
+剩下的分支是 $\varepsilon_p=-1$ 且 $p\equiv1\pmod4$；$\varepsilon_p=1$ 时无论普通或超奇异，均已由 (16.14) 处理。在这个剩余分支，$(X^3-X)^{(p-1)/2}=X^{(p-1)/2}(X^2-1)^{(p-1)/2}$ 的 $X^{p-1}$ 系数为 $(-1)^{(p-1)/4}\binom{(p-1)/2}{(p-1)/4}\not\equiv0\pmod p$，因为所涉阶乘的指标均小于 $p$。因此 Silverman V.4.1(a) 判定这条曲线的约化普通。由 V.3.1(b)，其几何自同源环是某个虚二次域中的序（满秩的 $\mathbb Z$-子环），且包含由 $[i]$ 给出的 $\mathbb Z[i]$，故该虚二次域就是 $\mathbb Q(i)$。$\mathbb Z[i]$ 已是该域的极大整环，故几何自同源环正是 $\mathbb Z[i]$。Frobenius 的迹与范数遂给出 $\pi=u+vi$，其中 $u,v\in\mathbb Z$、$u^2+v^2=p$、$a_p=2u$。又由 $4\mid\#E_0(\mathbb F_p)$，有 $2u\equiv p+1\equiv2\pmod4$，所以 $u$ 为奇数、$v$ 为偶数。在此 $\varepsilon_p=-1$ 的分支中，
 
 $$
 \frac{C_p}{4}
