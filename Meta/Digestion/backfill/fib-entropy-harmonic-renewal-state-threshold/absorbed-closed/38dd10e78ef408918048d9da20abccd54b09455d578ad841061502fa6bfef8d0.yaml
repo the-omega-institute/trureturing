@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:38dd10e78ef408918048d9da20abccd54b09455d578ad841061502fa6bfef8d0
   normalized_sha256: sha256:38dd10e78ef408918048d9da20abccd54b09455d578ad841061502fa6bfef8d0
 cas_ref: sha256:38dd10e78ef408918048d9da20abccd54b09455d578ad841061502fa6bfef8d0
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/ReadExecution/NormalizedPowerPerturbationAllCutoffKL.normalized_power_perturbation_all_cutoff_kl
+    target_statement_id: sha256:4f893fe9c505587b4dd3cd44e40ef4411a4a97b2d5707823cd7cce44d2c2f285
 receipts:
   unresolved_subitems: []
