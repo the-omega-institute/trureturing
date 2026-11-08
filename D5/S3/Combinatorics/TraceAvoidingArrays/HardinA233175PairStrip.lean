@@ -9,7 +9,9 @@
 /-
 admission_basis: open-problem-resolution (#27656; Proved)
 escape_witness: none (open-problem-resolution; the settlement is the new content)
-Direct frozen dependencies: none. Pinned Mathlib supplies finite sums and power-series coefficients.
+Direct frozen dependency: D5.S3.Observer.Separation.BooleanRankThreeK4.beta
+(statement_id sha256:4d28f42d1bda6ccad928ffeaa23471945d90a760f82fa38f755ecbef9e992dc9), the complementary-pair label map.
+Pinned Mathlib supplies finite sums and power-series coefficients.
 Seen: proof_shape=bind-only; consumers=allowed, advance, good, finish, TailGood, step, v, count, total, seenCode
 Col: proof_shape=bind-only; consumers=pairs, compatible, chain, TailGood, step, count, total, counting_bridge
 allowed: proof_shape=bind-only; consumers=good, tailGood_cons, step, total, counting_bridge
@@ -23,7 +25,6 @@ good_iff: proof_shape=bind-only; consumers=normal_iff
 normal: proof_shape=bind-only; consumers=Legal, normal_iff
 earlier_iff: proof_shape=bind-only; consumers=normal_iff
 normal_iff: proof_shape=bind-only; consumers=legal_iff
-pair: proof_shape=bind-only; consumers=pairs, compatible, edge_iff
 pairs: proof_shape=bind-only; consumers=chain, step, total, legal_iff
 compatible: proof_shape=bind-only; consumers=edge_iff, chain, step
 instDecidableCompatible: proof_shape=bind-only; consumers=instDecidableChain, step
@@ -73,6 +74,7 @@ recurrence: proof_shape=bind-only; consumers=result
 result: proof_shape=bind-only; consumers=terminal result
 -/
 
+import D5.S3.Observer.Separation.BooleanRankThreeK4
 import Mathlib.Tactic
 import Mathlib.RingTheory.PowerSeries.Basic
 
@@ -83,6 +85,8 @@ The continuation transfer retains the final top record and both current seen-col
 
 open scoped BigOperators
 namespace D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip
+
+open D5.S3.Observer.Separation.BooleanRankThreeK4 (beta)
 
 abbrev Seen := Bool × Bool
 abbrev Col := Fin 2 → Fin 6
@@ -177,12 +181,10 @@ private theorem normal_iff {n : ℕ} (A : Fin 2 × Fin n → Fin 6) :
     · simpa using ht j
     · simpa using hb j
 
-def pair (c : Fin 6) : Fin 3 := ![0, 1, 2, 2, 1, 0] c
-
-def pairs (c : Col) : Fin 3 × Fin 3 := (pair (c 0), pair (c 1))
+def pairs (c : Col) : Fin 3 × Fin 3 := (beta (c 0), beta (c 1))
 
 private def compatible (p : Fin 3 × Fin 3) (c : Col) : Prop :=
-  ∀ r, pair (c r) ≠ p.1 ∧ pair (c r) ≠ p.2
+  ∀ r, beta (c r) ≠ p.1 ∧ beta (c r) ≠ p.2
 
 private instance instDecidableCompatible (p : Fin 3 × Fin 3) (c : Col) :
     Decidable (compatible p c) :=
@@ -190,7 +192,7 @@ private instance instDecidableCompatible (p : Fin 3 × Fin 3) (c : Col) :
 
 private theorem edge_iff (c d : Col) :
     (∀ r s, c r ≠ d s ∧ (c r).val + (d s).val ≠ 5) ↔ compatible (pairs c) d := by
-  have h : ∀ x y : Fin 6, (x ≠ y ∧ x.val + y.val ≠ 5) ↔ pair x ≠ pair y := by
+  have h : ∀ x y : Fin 6, (x ≠ y ∧ x.val + y.val ≠ 5) ↔ beta x ≠ beta y := by
     decide +kernel
   simp only [h, compatible, pairs, Fin.forall_fin_two]
   tauto
