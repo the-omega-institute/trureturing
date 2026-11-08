@@ -1,0 +1,64 @@
+**定理 42.1（实际投影保留同一横向取向）。** 固定原 $h^2=u$、$b\in V_h$，记 $J=J_h$、$R=b^2$。若 $R$ 有有限谱，且原投影 $p$ 满足普通 $[p,h]=[p,b]=0$，则
+
+$$
+\boxed{[p,Jb]=0,\qquad J(pb)=pJb.}
+\tag{42.1}
+$$
+
+$R$ 和 $p$ 都可以非中央，$R$ 可以退化，环境维数与谱重数不限。
+
+证明。$h$ 普通交换 $R$，而原有限代数 $W=\operatorname{alg}_{\mathbb R}(u,p,R)$ 交换 $h,b$，并包含其 Gram $u,R,0$。41.1 应用于 $(h,b)$，用 35.1 的 $D(h,b)=Jb$，先得 $[p,j]=0$，其中 $j=Jb$。
+
+记 $k=J(pb)$。$pb$ 是原横向元；16.3 给 $k^2=pR$ 及 $k\circ pb=0$。由 $k^2=pR$ 的支撑，$k=pkp$，所以也有 $k\circ b=0$、$[k,R]=0$。$j$ 同样与 $R$ 交换。
+
+固定实 $0<r<1$，令 $L=1+r^2$，取原
+
+$$
+v=(b-rj)/\sqrt L,\qquad \ell=(rb+j)/\sqrt L.
+$$
+
+19–20 的自身圆给 $Jv=\ell$，35.1 给 $D(rh,pb)=rk,D(rh,v)=r\ell$。PB $(rh,pb,v)$ 的右端为零，故准确共享
+
+$$
+\begin{aligned}
+K&=D(pb+rk,\ \sqrt L b)\\
+ &=D\left(pb-rk,\ \frac{(1-r^2)b-2rj}{\sqrt L}\right).
+\end{aligned}
+\tag{42.2}
+$$
+
+第一对的平方和交叠分别是 $LpR,LR,\sqrt L pR$，都在同一有限 $W$ 中；$W$ 普通交换两输入。因此 41.1 给
+
+$$
+K^2=r^2LpR^2,\qquad b\circ K=k\circ K=0,\qquad K=pKp.
+\tag{42.3}
+$$
+
+其中 $K=pKp$ 由平方支撑给出；先由反交换第二标签得 $b\circ K=0$，再用 $[p,K]=0$ 和第一标签得 $k\circ K=0$。没有将 $K$ 预先放入局部代数。
+
+记第二对为 $x=pb-rk,y=((1-r^2)b-2rj)/\sqrt L$。它们的平方是 $LpR,LR$，而 $K^2$ 是 (42.3) 的同一原平方；这些平方均普通交换 $x,y$。17.1 的四个前件全满足，所以
+
+$$
+\mathcal A_-:=x^2y^2-(x\circ y)^2\le K^2.
+\tag{42.4}
+$$
+
+令 $Q=k\circ j$。它支撑于 $p$，并与 $p,R$ 交换；$(k\pm pj)^2\ge0$ 给 $-pR\le Q\le pR$。直接在已知 JC 乘法中展开，得到
+
+$$
+\begin{aligned}
+x\circ y&=\bigl((1-r^2)pR+2r^2Q\bigr)/\sqrt L,\\
+\mathcal A_--K^2
+ &=\frac{4r^2}{L}(pR-Q)(pR+r^2Q)\ge0.
+\end{aligned}
+\tag{42.5}
+$$
+
+第二行各因子交换。置 $\zeta=pR-Q$，有 $0\le\zeta\le2pR$ 及 $pR+r^2Q\ge(1-r^2)pR$。由 (42.4)–(42.5) 相夹，$\zeta pR=0$，继而 $0\le\zeta^2\le2\zeta pR=0$。因此 $Q=pR$，最终
+
+$$
+(k-pj)^2=2(pR-Q)=0.
+$$
+
+自伴平方零给 $k=pj$。全程没有除以 $R$、丢弃零块或以 $pb=(b+(2p-u)b)/2$ 调用未付加法。∎
+
