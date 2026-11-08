@@ -16,8 +16,8 @@ D5/S3/FiniteGroups/CliffordDecomposition @ sha256:942e8a07e15758d3a11fe9c6234cbc
 D5/S3/FiniteGroups/InducedCharacterFormula @ sha256:1c3aec1e0516377c8748f40cb426d2126c6743facaedfe9089323543a1b2e4e2
 D5/S3/FiniteGroups/CharacterDegreeDivisibility @ sha256:ff98a4e5b1afad07cc0f8e78fc943f0c30d1141d02e1e4ebacbf7ee2fa074c68
 D5/S3/FiniteGroups/ComplexCharacterAbelianProducts @ sha256:0f5341f17c27bceb2085721564486b26af2042f25ae947bd7e5d60c092c79fcf
-Module escape_witness: degree_dvd_or_index_dvd_of_fixedPointFree
-Fixed-point-free conjugation forces a nontrivial constituent inertia group to equal the normal kernel; Clifford decomposition yields the dichotomy.
+Module escape_witness: trivial_restriction_or_index_dvd_of_fixedPointFree
+Over an algebraically closed field, fixed-point-free conjugation and Clifford decomposition give the structural alternative. Over an arbitrary field, original k[K]-semisimple W-isotypic support survives E[K]-subquotients; supported simple factors are nontrivial on N when W is, and finite-length dimension additivity descends index divisibility.
 trivial_of_invariant_fixedPointFree | proof_shape: bind-only | escape_witness: none | consumer: inertia_eq_of_fixedPointFree
 abelian_character_eq_iff | proof_shape: bind-only | escape_witness: none | consumer: inertia_eq_of_fixedPointFree
 degree_square_le_card | proof_shape: content | escape_witness: D5.S3.FiniteGroups.FiniteCharacterAlgebra.Representation.asAlgebraHom_surjective_of_isIrreducible | consumer: D5.S3.FiniteGroups.BahturinCentronePereiraPeakGroups.BCP31.B_degree_dvd
@@ -29,7 +29,14 @@ trivial_of_equiv_fixedPointFree_of_isAlgClosed | proof_shape: content | escape_w
 trivial_of_character_invariant_fixedPointFree_of_isAlgClosed | proof_shape: content | escape_witness: D5.S3.FiniteGroups.FiniteCharacterAlgebra.TauCeti.exists_trace_one_zero_of_not_nonempty_linearEquiv | consumer: none
 inertia_eq_of_fixedPointFree_of_isAlgClosed | proof_shape: content | escape_witness: trivial_of_equiv_fixedPointFree_of_isAlgClosed | consumer: trivial_restriction_or_index_dvd_of_fixedPointFree_of_isAlgClosed
 restriction_trivial_of_clifford_constituent_trivial_generic | proof_shape: bind-only | escape_witness: none | consumer: trivial_restriction_or_index_dvd_of_fixedPointFree_of_isAlgClosed
-trivial_restriction_or_index_dvd_of_fixedPointFree_of_isAlgClosed | proof_shape: content | escape_witness: trivial_of_equiv_fixedPointFree_of_isAlgClosed | consumer: none
+trivial_restriction_or_index_dvd_of_fixedPointFree_of_isAlgClosed | proof_shape: content | escape_witness: trivial_of_equiv_fixedPointFree_of_isAlgClosed | consumer: trivial_restriction_or_index_dvd_of_fixedPointFree
+extRep_apply_tmul | proof_shape: bind-only | escape_witness: none | consumer: pure_image_linear
+pure_image_linear | proof_shape: bind-only | escape_witness: none | consumer: ext_isotypic
+ext_isotypic | proof_shape: content | escape_witness: ext_isotypic | consumer: trivial_restriction_or_index_dvd_of_fixedPointFree
+supported_submodule | proof_shape: bind-only | escape_witness: none | consumer: finite_length_dvd_of_supported
+supported_quotient | proof_shape: bind-only | escape_witness: none | consumer: finite_length_dvd_of_supported
+finite_length_dvd_of_supported | proof_shape: content | escape_witness: finite_length_dvd_of_supported | consumer: trivial_restriction_or_index_dvd_of_fixedPointFree
+trivial_restriction_or_index_dvd_of_fixedPointFree | proof_shape: content | escape_witness: ext_isotypic, finite_length_dvd_of_supported | consumer: none
 -/
 
 import Mathlib.Analysis.Complex.Polynomial.Basic
@@ -616,11 +623,11 @@ theorem trivial_restriction_or_index_dvd_of_fixedPointFree_of_isAlgClosed
 end D5.S3.FiniteGroups.FrobeniusCharacterDegrees
 end ModularFrobeniusAction
 
+namespace D5.S3.FiniteGroups.FrobeniusCharacterDegrees
 
-
-namespace ArbitraryFieldDescent
-
+open CategoryTheory
 open scoped TensorProduct
+open scoped _root_.MonoidAlgebra
 
 variable {k E G V : Type*} [Field k] [Field E] [Algebra k E]
   [Group G] [AddCommGroup V] [Module k V]
@@ -636,118 +643,10 @@ noncomputable def extRep (ρ : Representation k G V) :
     extRep ρ g (e ⊗ₜ[k] v) = e ⊗ₜ[k] ρ g v := by
   rfl
 
-@[simp] theorem extRep_finrank [Module.Finite k V] (ρ : Representation k G V) :
-    Module.finrank E (E ⊗[k] V) = Module.finrank k V := by
-  exact Module.finrank_baseChange
-section GenericDescent
-universe u
-variable {R E M : Type u} [Ring R] [Field E] [Algebra E R]
-  [AddCommGroup M] [Module R M] [Module E M] [IsScalarTower E R M]
-  [Module.Finite E M]
-
-/-- Finite-dimensional module dimensions are divisible by `d` when every simple
-submodule has dimension divisible by `d`. -/
-theorem finrank_dvd_of_simple_submodules (d : ℕ)
-    (hbase : ∀ {X : Type u} [AddCommGroup X] [Module R X] [Module E X]
-      [IsScalarTower E R X] [Module.Finite E X]
-      (S : Submodule R X), IsSimpleModule R S →
-        d ∣ Module.finrank E (S.restrictScalars E)) :
-    d ∣ Module.finrank E M := by
-  classical
-  by_cases hzero : Module.finrank E M = 0
-  · simp [hzero]
-  induction hdim : Module.finrank E M using Nat.strong_induction_on generalizing M with
-  | h n ih =>
-    let p : Set ℕ := {m | ∃ S : Submodule R M, S ≠ ⊥ ∧
-      m = Module.finrank E (S.restrictScalars E)}
-    have hp : p.Nonempty := by
-      refine ⟨Module.finrank E M, ⊤, ?_, ?_⟩
-      · intro htop
-        apply hzero
-        apply (Module.finrank_zero_iff).2
-        refine ⟨fun x y => ?_⟩
-        have hxR : x ∈ (⊥ : Submodule R M) := htop ▸ (Submodule.mem_top : x ∈ (⊤ : Submodule R M))
-        have hyR : y ∈ (⊥ : Submodule R M) := htop ▸ (Submodule.mem_top : y ∈ (⊤ : Submodule R M))
-        have hx0 : x = 0 := by simpa using hxR
-        have hy0 : y = 0 := by simpa using hyR
-        exact hx0.trans hy0.symm
-      · rw [Submodule.restrictScalars_top, finrank_top]
-
-    obtain ⟨S, hSne, hSdim⟩ := Nat.sInf_mem hp
-    have hSsimple : IsSimpleModule R S := by
-      rw [isSimpleModule_iff_isAtom, isAtom_iff_le_of_ge]
-      refine ⟨hSne, ?_⟩
-      intro T hTne hTS
-      by_contra hne
-      have hlt : T.restrictScalars E < S.restrictScalars E := by
-        refine lt_of_le_of_ne (Submodule.restrictScalars_mono E hTS) ?_
-        intro heq
-        have heq' : T = S := Submodule.restrictScalars_injective E _ _ heq
-        exact hne (heq'.symm ▸ le_rfl)
-      have hdimlt : Module.finrank E (T.restrictScalars E) <
-          Module.finrank E (S.restrictScalars E) := by
-        exact lt_of_le_of_ne (Submodule.finrank_mono
-          (Submodule.restrictScalars_mono E hTS)) (by
-            intro heq
-            have heq' : T = S := Submodule.restrictScalars_injective E _ _
-              (Submodule.eq_of_le_of_finrank_eq
-                (Submodule.restrictScalars_mono E hTS) heq)
-            exact hne (heq'.symm ▸ le_rfl))
-      have hmem : Module.finrank E (T.restrictScalars E) ∈ p := ⟨T, hTne, rfl⟩
-      exact (Nat.not_lt_of_ge (Nat.sInf_le hmem)) (by simpa [← hSdim] using hdimlt)
-    have hdS : d ∣ Module.finrank E (S.restrictScalars E) := hbase (X := M) S hSsimple
-    have hquotlt : Module.finrank E (M ⧸ S) < Module.finrank E M := by
-      have hadd := (S.restrictScalars E).finrank_quotient_add_finrank
-      have hpos : 0 < Module.finrank E (S.restrictScalars E) := by
-        apply Nat.pos_of_ne_zero
-        intro hz
-        have hbot : S.restrictScalars E = (⊥ : Submodule E M) :=
-          (Submodule.finrank_eq_zero).mp hz
-        exact hSne (Submodule.restrictScalars_injective E _ _ hbot)
-      have hle : Module.finrank E (M ⧸ S.restrictScalars E) +
-          Module.finrank E (S.restrictScalars E) ≤ Module.finrank E M := le_of_eq hadd
-      have hlt' : Module.finrank E (M ⧸ S.restrictScalars E) < Module.finrank E M := by
-        omega
-      rw [← LinearEquiv.finrank_eq (Submodule.Quotient.restrictScalarsEquiv E S)]
-      exact hlt'
-    obtain ⟨c, hc⟩ := hdS
-    have hdQ : d ∣ Module.finrank E (M ⧸ S) := by
-      by_cases hqzero : Module.finrank E (M ⧸ S) = 0
-      · simp [hqzero]
-      · apply ih (M := M ⧸ S) (Module.finrank E (M ⧸ S))
-        · exact hdim ▸ hquotlt
-        · exact hqzero
-        · rfl
-    obtain ⟨q, hq⟩ := hdQ
-    have hadd := (S.restrictScalars E).finrank_quotient_add_finrank
-    have heq : Module.finrank E (M ⧸ S) + Module.finrank E (S.restrictScalars E) =
-        Module.finrank E M := by
-      rw [← LinearEquiv.finrank_eq (Submodule.Quotient.restrictScalarsEquiv E S)]
-      exact hadd
-    refine ⟨q + c, ?_⟩
-    calc
-      n = Module.finrank E M := hdim.symm
-      _ = Module.finrank E (M ⧸ S) +
-          Module.finrank E (S.restrictScalars E) := heq.symm
-      _ = d * q + d * c := by rw [hq, hc]
-      _ = d * (q + c) := by ring
-end GenericDescent
-
-end ArbitraryFieldDescent
-
-namespace D5.S3.FiniteGroups.FrobeniusCharacterDegrees
-
-open CategoryTheory
-open scoped TensorProduct
-open scoped _root_.MonoidAlgebra
-
-variable {k E G V : Type*} [Field k] [Field E] [Algebra k E]
-  [Group G] [AddCommGroup V] [Module k V]
-
 private noncomputable def originalModule (ρ : Representation k G V) :
     Module (MonoidAlgebra k G) (E ⊗[k] V) := by
   let ρE : Representation E G (E ⊗[k] V) :=
-    _root_.ArbitraryFieldDescent.extRep ρ
+    extRep ρ
   let M := ρE.asModule
   exact Module.compHom M (MonoidAlgebra.mapRingHom G (algebraMap k E))
 
@@ -757,7 +656,7 @@ private theorem pure_image_linear
     ∃ f : ρ.asModule →ₗ[MonoidAlgebra k G] (E ⊗[k] V),
       ∀ v, f v = c ⊗ₜ[k] (ρ.asModuleEquiv v : V) := by
   let ρE : Representation E G (E ⊗[k] V) :=
-    _root_.ArbitraryFieldDescent.extRep ρ
+    extRep ρ
   let M := ρE.asModule
   letI : Module k M := Module.compHom M (algebraMap k E)
   letI : IsScalarTower k E M := IsScalarTower.of_compHom k E M
@@ -791,7 +690,7 @@ private theorem pure_image_linear
             have hf₀ (x : V) : ρE.asModuleEquiv (f₀ x) = c ⊗ₜ[k] x := by
               rfl
             have hact (x : V) : ρE g (c ⊗ₜ[k] x) = c ⊗ₜ[k] ρ g x := by
-              exact _root_.ArbitraryFieldDescent.extRep_apply_tmul ρ g c x
+              exact extRep_apply_tmul ρ g c x
             simp only [Representation.asAlgebraHom_single, LinearMap.smul_apply]
             rw [hf₀, hact]
             rw [TensorProduct.tmul_smul]
@@ -800,6 +699,8 @@ private theorem pure_image_linear
   intro v
   rfl
 
+/-- Scalar extension retains semisimple, isotypic support for the original group algebra.
+This asserts no semisimplicity for the extended group algebra. -/
 private theorem ext_isotypic
     (ρ : Representation k G V)
     (hρ : IsSimpleModule (MonoidAlgebra k G) ρ.asModule) :
@@ -903,6 +804,8 @@ private theorem supported_quotient
 
 universe uA uB uE uS uX
 
+/-- Finite-length induction uses only supported simple quotients, retaining support
+through both the submodule and quotient at each step. -/
 private theorem finite_length_dvd_of_supported
     {A : Type uA} {B : Type uB} {E : Type uE} {S0 : Type uS} {X : Type uX}
     [Ring A] [Ring B] [Field E]
@@ -964,6 +867,8 @@ private theorem finite_length_dvd_of_supported
         _ = d * c + d * q := by rw [hc, hq]
         _ = d * (q + c) := by ring
 
+/-- The Frobenius structural alternative over any field. Nontrivial normal action
+survives in every supported simple factor after scalar extension. -/
 theorem trivial_restriction_or_index_dvd_of_fixedPointFree
     {k : Type*} [Field k]
     {K : Type} [Group K] [Finite K] (N : Subgroup K) [N.Normal]
@@ -980,7 +885,7 @@ theorem trivial_restriction_or_index_dvd_of_fixedPointFree
     let B := MonoidAlgebra E K
     let φ : A →+* B := MonoidAlgebra.mapRingHom K (algebraMap k E)
     let ρE : Representation E K (E ⊗[k] W) :=
-      _root_.ArbitraryFieldDescent.extRep W.ρ
+      extRep W.ρ
     let S0 : Submodule A (Representation.asModule W.ρ) := ⊤
     letI : IsSimpleModule A (Representation.asModule W.ρ) := by
       rw [← Representation.irreducible_iff_isSimpleModule_asModule]
@@ -1097,7 +1002,7 @@ theorem trivial_restriction_or_index_dvd_of_fixedPointFree
             (f ((Representation.asModuleEquiv W.ρ).symm w)))
       · simpa [Xrep] using hdY
     have hdim : Module.finrank E (E ⊗[k] W) = Module.finrank k W := by
-      exact _root_.ArbitraryFieldDescent.extRep_finrank W.ρ
+      exact Module.finrank_baseChange
     rw [hdim] at hd
     exact hd
 
