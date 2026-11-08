@@ -130,32 +130,32 @@ private theorem cell_thresholds {z : ℝ} (hz : 11 < z) (hz13 : z ≤ 13) :
     apply (div_le_iff₀ hl2).mpr
     have h : Real.log (63 / 62 : ℝ) ≤ Real.log 2 / (z * Real.log z) := by
       linarith only [hhi63, h2.1]
-    simpa only [one_div, div_eq_mul_inv, mul_comm] using h
+    simpa [one_div, div_eq_mul_inv, mul_assoc, mul_left_comm, mul_comm] using h
   · norm_num [goldenLayerMarginal]
     apply (le_div_iff₀ hl2).mpr
     have h : Real.log 2 / (z * Real.log z) ≤ Real.log (31 / 30 : ℝ) := by
       linarith only [hlo31, h2.2]
-    simpa only [one_div, div_eq_mul_inv, mul_comm] using h
+    simpa [one_div, div_eq_mul_inv, mul_assoc, mul_left_comm, mul_comm] using h
   · norm_num [goldenLayerMarginal]
     apply (div_le_iff₀ hl3).mpr
     have h : Real.log (40 / 39 : ℝ) ≤ Real.log 3 / (z * Real.log z) := by
       linarith only [hhi40, h3.1]
-    simpa only [one_div, div_eq_mul_inv, mul_comm] using h
+    simpa [one_div, div_eq_mul_inv, mul_assoc, mul_left_comm, mul_comm] using h
   · norm_num [goldenLayerMarginal]
     apply (le_div_iff₀ hl3).mpr
     have h : Real.log 3 / (z * Real.log z) ≤ Real.log (13 / 12 : ℝ) := by
       linarith only [hlo13, h3.2]
-    simpa only [one_div, div_eq_mul_inv, mul_comm] using h
+    simpa [one_div, div_eq_mul_inv, mul_assoc, mul_left_comm, mul_comm] using h
   · norm_num [goldenLayerMarginal]
     apply (div_le_iff₀ hl5).mpr
     have h : Real.log (31 / 30 : ℝ) ≤ Real.log 5 / (z * Real.log z) := by
       linarith only [hhi31, h5.1]
-    simpa only [one_div, div_eq_mul_inv, mul_comm] using h
+    simpa [one_div, div_eq_mul_inv, mul_assoc, mul_left_comm, mul_comm] using h
   · norm_num [goldenLayerMarginal]
     apply (le_div_iff₀ hl5).mpr
     have h : Real.log 5 / (z * Real.log z) ≤ Real.log (6 / 5 : ℝ) :=
       h5.2.le.trans hlo6
-    simpa only [one_div, div_eq_mul_inv, mul_comm] using h
+    simpa [one_div, div_eq_mul_inv, mul_assoc, mul_left_comm, mul_comm] using h
 
 /-- Transfer the library's all-exponent objective comparison to the
 actual signed contribution, leaving its entire reference tail intact. -/
@@ -224,13 +224,43 @@ private theorem cell_full_tails {z : ℝ} (hz : 11 < z) (hz13 : z ≤ 13) :
   have hi5 : -Real.log (1 - 1 / (5 : ℝ)) = Real.log (5 / 4) := by
     rw [show (1 - 1 / (5 : ℝ)) = (5 / 4 : ℝ)⁻¹ by norm_num, Real.log_inv]
     ring
-  rw [hi2] at h2
-  rw [hi3] at h3
-  rw [hi5] at h5
-  norm_num [show Icc 1 3 = ({1, 2, 3} : Finset ℕ) by decide] at h2
-  norm_num [show Icc 1 2 = ({1, 2} : Finset ℕ) by decide] at h3
-  norm_num [show Icc 1 1 = ({1} : Finset ℕ) by decide] at h5
-  refine ⟨?_, ?_, ?_⟩ <;> linarith only [h2, h3, h5]
+  have h2' :
+      (∑ k ∈ (Icc (1 : ℕ) 3), (2 : ℝ)⁻¹ ^ k / (k : ℝ)) + shiftedTail (2 : ℝ)⁻¹ 3 =
+        Real.log 2 := by
+    calc
+      (∑ k ∈ (Icc (1 : ℕ) 3), (2 : ℝ)⁻¹ ^ k / (k : ℝ)) + shiftedTail (2 : ℝ)⁻¹ 3 =
+          -Real.log (1 - 1 / (2 : ℝ)) := by
+            norm_num at h2 ⊢
+            exact h2
+      _ = Real.log 2 := hi2
+  have h3' :
+      (∑ k ∈ (Icc (1 : ℕ) 2), (3 : ℝ)⁻¹ ^ k / (k : ℝ)) + shiftedTail (3 : ℝ)⁻¹ 2 =
+        Real.log (3 / 2) := by
+    calc
+      (∑ k ∈ (Icc (1 : ℕ) 2), (3 : ℝ)⁻¹ ^ k / (k : ℝ)) + shiftedTail (3 : ℝ)⁻¹ 2 =
+          -Real.log (1 - 1 / (3 : ℝ)) := by
+            norm_num at h3 ⊢
+            exact h3
+      _ = Real.log (3 / 2) := hi3
+  have h5' :
+      (∑ k ∈ (Icc (1 : ℕ) 1), (5 : ℝ)⁻¹ ^ k / (k : ℝ)) + shiftedTail (5 : ℝ)⁻¹ 1 =
+        Real.log (5 / 4) := by
+    calc
+      (∑ k ∈ (Icc (1 : ℕ) 1), (5 : ℝ)⁻¹ ^ k / (k : ℝ)) + shiftedTail (5 : ℝ)⁻¹ 1 =
+          -Real.log (1 - 1 / (5 : ℝ)) := by
+            norm_num at h5 ⊢
+            exact h5
+      _ = Real.log (5 / 4) := hi5
+  norm_num [show Icc (1 : ℕ) 3 = ({1, 2, 3} : Finset ℕ) by decide] at h2'
+  norm_num [show Icc (1 : ℕ) 2 = ({1, 2} : Finset ℕ) by decide] at h3'
+  norm_num [show Icc (1 : ℕ) 1 = ({1} : Finset ℕ) by decide] at h5'
+  have h2'' : shiftedTail (2 : ℝ)⁻¹ 3 = Real.log 2 - 2 / 3 := by
+    linarith only [h2']
+  have h3'' : shiftedTail (3 : ℝ)⁻¹ 2 = Real.log (3 / 2) - 7 / 18 := by
+    linarith only [h3']
+  have h5'' : shiftedTail (5 : ℝ)⁻¹ 1 = Real.log (5 / 4) - 1 / 5 := by
+    linarith only [h5']
+  exact ⟨h2'', h3'', h5''⟩
 
 private theorem three_log_identity :
     Real.log (32 / 31 : ℝ) + Real.log (27 / 26 : ℝ) + Real.log (25 / 24 : ℝ) -
@@ -282,16 +312,26 @@ private theorem actual_surplus_lower {z : ℝ} (hz : 11 < z) (hz13 : z ≤ 13)
   have hc2 := contribution_comparison (n := n) (a := 4) Nat.prime_two ht2.1 ht2.2
   have hc3 := contribution_comparison (n := n) (a := 2) Nat.prime_three ht3.1 ht3.2
   have hc5 := contribution_comparison (n := n) (a := 1) (by norm_num : Nat.Prime 5) ht5.1 ht5.2
-  rw [hb2, hr2] at hc2
-  rw [hb3, hr3] at hc3
-  rw [hb5, hr5] at hc5
-  have he2 : -Real.log (1 - (2 : ℝ)⁻¹ ^ (4 + 1)) = Real.log (32 / 31 : ℝ) := by
+  rw [hb2] at hc2
+  rw [hb3] at hc3
+  rw [hb5] at hc5
+  norm_num only [Nat.cast_ofNat] at hc2 hc3 hc5
+  have hr2' : shiftedTail (1 / (2 : ℝ)) 3 = Real.log 2 - 2 / 3 := by
+    simpa only [one_div] using hr2
+  have hr3' : shiftedTail (1 / (3 : ℝ)) 2 = Real.log (3 / 2) - 7 / 18 := by
+    simpa only [one_div] using hr3
+  have hr5' : shiftedTail (1 / (5 : ℝ)) 1 = Real.log (5 / 4) - 1 / 5 := by
+    simpa only [one_div] using hr5
+  rw [hr2'] at hc2
+  rw [hr3'] at hc3
+  rw [hr5'] at hc5
+  have he2 : -Real.log (31 / 32 : ℝ) = Real.log (32 / 31 : ℝ) := by
     rw [← Real.log_inv]
     norm_num
-  have he3 : -Real.log (1 - (3 : ℝ)⁻¹ ^ (2 + 1)) = Real.log (27 / 26 : ℝ) := by
+  have he3 : -Real.log (26 / 27 : ℝ) = Real.log (27 / 26 : ℝ) := by
     rw [← Real.log_inv]
     norm_num
-  have he5 : -Real.log (1 - (5 : ℝ)⁻¹ ^ (1 + 1)) = Real.log (25 / 24 : ℝ) := by
+  have he5 : -Real.log (24 / 25 : ℝ) = Real.log (25 / 24 : ℝ) := by
     rw [← Real.log_inv]
     norm_num
   rw [he2] at hc2
@@ -308,8 +348,12 @@ private theorem actual_surplus_lower {z : ℝ} (hz : 11 < z) (hz13 : z ≤ 13)
     intro p hp
     have hp' : p = 2 ∨ p = 3 ∨ p = 5 := by simpa only [T, mem_insert, mem_singleton] using hp
     rcases hp' with rfl | rfl | rfl
-    all_goals apply Nat.mem_primesLE.mpr
-    all_goals exact ⟨Nat.le_floor (by linarith), by norm_num⟩
+    · exact Nat.mem_primesLE.mpr
+        ⟨Nat.le_floor (by linarith : (2 : ℝ) ≤ z), by norm_num⟩
+    · exact Nat.mem_primesLE.mpr
+        ⟨Nat.le_floor (by linarith : (3 : ℝ) ≤ z), by norm_num⟩
+    · exact Nat.mem_primesLE.mpr
+        ⟨Nat.le_floor (by linarith : (5 : ℝ) ≤ z), by norm_num⟩
   have hpos (p : ℕ) (hp : p ∈ S) : 0 < primeContribution z n p := by
     obtain ⟨hpf, hpp⟩ := Nat.mem_primesLE.mp hp
     have hpz : (p : ℝ) ≤ z :=
@@ -324,9 +368,12 @@ private theorem actual_surplus_lower {z : ℝ} (hz : 11 < z) (hz13 : z ≤ 13)
   have hsum : 113 / 90 + Real.log (120 / 403 : ℝ) +
       Real.log 2 / (z * Real.log z) ≤ ∑ p ∈ S, primeContribution z n p := by
     apply hthree.trans
-    simpa [T] using hsubset
+    simpa [T, add_assoc] using hsubset
   rw [full_surplus_eq_sum (by linarith : 4 ≤ z) hsupport]
-  exact (add_lt_add_right constant_lower (Real.log 2 / (z * Real.log z))).trans_le hsum
+  have hconst : 21 / 500 + Real.log 2 / (z * Real.log z) <
+      113 / 90 + Real.log (120 / 403 : ℝ) + Real.log 2 / (z * Real.log z) := by
+    linarith only [constant_lower]
+  exact hconst.trans_le hsum
 
 /-- The unchanged strict half-surplus on the entire first continuum cell.
 All original positive integers with literal full prime support and
