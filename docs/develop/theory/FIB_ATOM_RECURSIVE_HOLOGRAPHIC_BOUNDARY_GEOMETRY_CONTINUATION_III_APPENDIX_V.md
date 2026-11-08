@@ -2377,3 +2377,307 @@ Their individual zeros have not been established, and no individual $D_j(v)=\mat
 The source-specific four-form signed-index deduction and its common-object composition here are `repo-derived` relative to the explicit original suppliers. The literature credit within Theorem 224.2 concerns classical Hilbert range factorization, spectral Jensen and analytic zero-set uniqueness; the common-zero and compact-fiber mechanisms are the cited repository results. Constants and vector choices depend on the fixed original data and coefficients; no parameter-uniform estimate, globally positive density lower bound, continuous sign selection or compatible hard endpoint path is asserted. $\square$
 
 ## 追加锚（本行以下为增补区）
+## 226. Constant categorical products inside the full actual hard-law image
+
+**Definition 226.1 (the unchanged process and full hierarchical coordinates).** Retain exactly the complete original endpoint, source and analytic supplier telescope of Definition 211.1, hence of III152.1 and III135.1. In particular every original $\theta=(a,\eta,d,b)$ is permitted: $a,\eta,d>0$ are arbitrary finite original parameters and $b$ is any prescribed everywhere Borel representative of $g_d$ with $0<b\le M$. Keep the original group and product, raw Haar measure $\mu$, source $e$, unit-source field, coefficient-one zero state and positive normalized $h$, actual selector $A_{\rm src}=\rho C_{\rm src}$, full source-inclusive conservative operator $K$, measure $m=h^2\mu$, clock and source start. Write $P=T_d$, $g=g_{2d}$, $g_j=P^jg$ for $j=0,1,2$, $\mathcal L=\{0,1,3,B\}$ and $I=\{0,1,3\}$ as before. The epochs are still $2d,3d,4d$. The forms $L_j,Q_r,\mathcal C$ are precisely (III152.7), with $r\in\{12,13,23\}$.
+
+For a pointwise Borel simplex tuple $u$ on all of $G$, let
+
+$$
+\begin{aligned}
+\mathscr L_\theta(u)_{abc}&=\mathcal C(u_a,u_b,u_c),\\
+\mathscr A_\theta&=\{\mathscr L_\theta(\mathbf1_D):
+ D\text{ is one pointwise Borel partition of all }G\},\\
+\mathscr M&=\left\{T\in\mathbb R^{\mathcal L^3}:
+                    \sum_{a,b,c}T_{abc}=1\right\}.
+\end{aligned}
+\tag{226.1}
+$$
+
+All three factors in $\mathscr L_\theta(\mathbf1_D)$ use that same partition, and its last factor is its own $P\mathbf1_{D_c}$. For $T\in\mathscr M$, denote by $T_A$ its marginal on a set $A\subset\{1,2,3\}$ of slots, and set $T_\varnothing=1$. Define the hierarchical coordinate map
+
+$$
+\Xi(T)=\left(
+ (T_{\{j+1\}}(a))_{j=0,1,2;\ a\in I},
+ (T_{\{k,\ell\}}(a,b))_{k\ell=12,13,23;\ a,b\in I},
+ (T_{abc})_{abc\in I^3}\right)\in\mathbb R^{63}.
+\tag{226.2}
+$$
+
+Thus $\Xi(\mathscr L_\theta(u))=\mathcal J(u)$ for the actual map (212.17). The norm used on these coordinates is Euclidean. A finite common quantile carrier means a fixed finite Borel partition $\mathcal P$ of $G$, with each positive-mass cell subdivided into consecutive first-coordinate quantile slices in the fixed label order $0,1,3,B$. The slice masses may vary with the target; the cells, coordinate and order do not. Every null cell is assigned to $B$.
+
+**Theorem 226.2 (the full constant-product interior).** Under exactly Definition 226.1, for every original $\theta$ and every constant categorical vector $\pi=(\pi_y)_{y\in\mathcal L}$ with $\pi_y>0$ and $\sum_y\pi_y=1$, there are $\delta_{\theta,\pi}>0$ and one finite common quantile carrier such that every $T\in\mathscr M$ satisfying
+
+$$
+\|\Xi(T)-\Xi(\pi^{\otimes3})\|_2<\delta_{\theta,\pi}
+\tag{226.3}
+$$
+
+has strictly positive entries and equals $\mathscr L_\theta(\mathbf1_D)$ for a partition on that carrier. In particular $\pi^{\otimes3}$ is in the ordinary interior of $\mathscr A_\theta$ relative to $\mathscr M$, in all sixty-three hierarchical directions. The carrier and radius precede the target quantifier. No rank or zero-attainment hypothesis is added to the original supplier telescope.
+
+*Proof.* Fix arbitrary original $\theta$ and strictly positive $\pi$.
+
+### 226.A. An exact product center from the actual supported odd data
+
+Use the invariant slack set $E$, bounded supported odd functions $x_i$ for $i\in I$, their finite disjoint spectra and ordered functional independence constructed in 212.A–B. They are the actual functions of (212.9)–(212.10). In particular
+
+$$
+L_j(x_i)=0,\qquad
+Q_r(x_i,x_k)=0
+\quad(j=0,1,2;\ i,k\in I;\ r=12,13,23).
+\tag{226.4}
+$$
+
+The first equalities follow from invariance of $g_j$ and oddness, and the second include the self-pair equalities in (212.10). Set
+
+$$
+X_i=x_i\quad(i\in I),\qquad X_B=-x_0-x_1-x_3,
+\qquad u_y^*=\pi_y+tX_y.
+\tag{226.5}
+$$
+
+Choose one $t>0$ so small that $t\max_y\|X_y\|_\infty<\frac12\min_y\pi_y$. Bounded Borel representatives and one common Borel null repair make $\sum_yX_y=0$, support in $E$, and the resulting positive slack hold pointwise on all of $G$. Thus $u^*$ is a legal whole-$G$ simplex tuple, with uniform positive slack in all four components. Equation (226.4) extends to $X_a,X_b$ for all $a,b\in\mathcal L$ by bilinearity. Also
+
+$$
+\mathcal C(X_a,X_b,X_c)=0
+\quad(a,b,c\in\mathcal L),
+\tag{226.6}
+$$
+
+because simultaneous half-turn changes the sign of its three odd inputs, while $g,m,P$ are invariant. All integrals are finite by boundedness and the original probability path law. Conservation and self-adjointness give the exact expansion
+
+$$
+\begin{aligned}
+\mathcal C(u_a^*,u_b^*,u_c^*)
+={}&\pi_a\pi_b\pi_c
++t\bigl(\pi_b\pi_cL_0(X_a)+\pi_a\pi_cL_1(X_b)
+                    +\pi_a\pi_bL_2(X_c)\bigr)\\
+&+t^2\bigl(\pi_cQ_{12}(X_a,X_b)
+          +\pi_bQ_{13}(X_a,X_c)
+          +\pi_aQ_{23}(X_b,X_c)\bigr)
++t^3\mathcal C(X_a,X_b,X_c)\\
+={}&\pi_a\pi_b\pi_c.
+\end{aligned}
+\tag{226.7}
+$$
+
+For example $\mathcal C(1,v,w)=Q_{23}(v,w)$ and $\mathcal C(v,1,w)=Q_{13}(v,w)$. Therefore the same actual nonconstant soft tuple $u^*$ has the exact product law in all sixty-four entries. The nonconstant original $f^0$ has been replaced only as the center of this construction; none of the process data has changed.
+
+### 226.B. All sixty-three directions at this constant base
+
+The change of center requires its own differential calculation. Use independent variations of components in $I$, compensating their sum in $B$. For the nine invariant directions $\mathbf1_Eg_j$ in these components, the marginal differential is three copies of
+
+$$
+G_E=(\langle g_i,\mathbf1_Eg_j\rangle_m)_{0\le i,j\le2}>0.
+\tag{226.8}
+$$
+
+This is the original positive definite matrix (III152.34), using Lemma III147.2 and analytic uniqueness on the open quotient neighborhood in $E$. For an odd direction $h$ varying component $a\in I$, the actual pair derivative at (226.5) is
+
+$$
+D Q_r(u_i,u_j)[\delta u_a=h]\big|_{u=u^*}
+=t\left(\mathbf1_{i=a}Q_r(h,x_j)
+       +\mathbf1_{j=a}Q_r(x_i,h)\right).
+\tag{226.9}
+$$
+
+Every constant-$\pi$ term pairs an odd function with an invariant density and is zero. In the high sector belonging to each $x_a$, the six ordered functionals remain independent by (212.10). For the diagonal pair $(a,a)$ their three sums are independent, so choose three dual odd directions there varying component $a$. For each unordered distinct pair $\{a,b\}$ choose six dual odd directions in the high sector of $x_b$, varying component $a$, for the six rows $Q_r(h,x_b),Q_r(x_b,h)$. Disjoint spectra kill all the undesignated pair rows. These are the twenty-seven directions of (III152.35)–(III152.36), now with the derivative (226.9). Their marginal derivatives vanish and their pair block is invertible, with its nonzero factor $t$. Together with (226.8) they give an invertible lower thirty-six-row block at the new center.
+
+For the remaining twenty-seven directions reuse the actual vector densities $\mathbf R_{abc}$ of (212.11), whose Gram matrix $\mathsf G$ is positive definite by (212.13). Define
+
+$$
+e_{abc,j}=R_{abc}^{(j)}\quad(j\in I),\qquad
+ e_{abc,B}=-\sum_{j\in I}R_{abc}^{(j)}
+ \quad(abc\in I^3).
+\tag{226.10}
+$$
+
+They are bounded, supported in $E$, even and of zero angular mean. Their lower thirty-six derivatives at $u^*$ are zero. In the marginal rows this follows from zero angular mean; in pair rows the constant part is invariant and the linear-in-$t$ part is odd. For any direction $h$ of the form (226.10), self-adjointness gives
+
+$$
+D\mathcal C(u_a,u_b,u_c)[h]\big|_{u=u^*}
+=t^2\sum_{j\in I}\int_G h_jR_{abc}^{(j)}\,dm
+\quad(abc\in I^3).
+\tag{226.11}
+$$
+
+Indeed its first-, middle- and last-slot quadratic densities are respectively $gP(x_bPx_c)$, $P(gx_a)Px_c$ and $P(x_bP(gx_a))$, exactly those defining (212.11). At this constant base the constant-in-$t$ density is still invariant and the linear-in-$t$ density is odd, so both pair to zero with $h$. Its support and zero angular mean permit the supported mean-removal in (212.11). Thus the last block is precisely $t^2\mathsf G$, with no new rank premise.
+
+Number these sixty-three directions $e_1,\ldots,e_{63}$. The actual derivative of $\mathcal J$ on them is block triangular with invertible diagonal blocks. Consequently
+
+$$
+u(z)=u^*+\sum_{k=1}^{63}z_ke_k,\qquad
+F(z)=\mathcal J(u(z))-\Xi(\pi^{\otimes3}),\qquad
+A=DF(0)
+\tag{226.12}
+$$
+
+satisfies $F(0)=0$ and $A$ is invertible. All directions are bounded and sum to zero including their $B$ component. The pointwise slack in (226.5) gives a legal closed parameter ball. Since $F$ is polynomial, shrink its radius to $r>0$ so that
+
+$$
+\sup_{\|z\|_2\le r}\|z-A^{-1}F(z)\|_2<r/4.
+\tag{226.13}
+$$
+
+Equations (226.7)–(226.13) establish an exact product-law center with a nonsingular full sixty-three-dimensional differential under the original source.
+
+### 226.C. A fixed finite hard carrier covers a full coordinate ball
+
+Apply the common finite quantile construction of 212.D to the whole family $u(z)$ in (226.12). With the same increasing finite Borel partitions $\mathcal P_n$, form $D_n(z)$ by consecutive slices of masses $\int_{A_0}u_y(z)\,dm$ inside every positive-mass cell $A_0$. The original measure has no mass on coordinate hyperplanes. Hence all slices exist, their endpoints can be assigned consistently, and the resulting $D_n(z)$ is a deterministic Borel partition of the whole original $G$. The slice estimate remains
+
+$$
+\sum_y m(D_{n,y}(z)\mathbin\triangle D_{n,y}(z'))
+\le6\sum_y\|u_y(z)-u_y(z')\|_1.
+\tag{226.14}
+$$
+
+Keep the exact original path density $W$ and its conditional expectations $W_n$ from (212.21). The argument of (212.22), using the same tuple or partition in every slot, yields
+
+$$
+\begin{aligned}
+F_n(z)&=\mathcal J(\mathbf1_{D_n(z)})-\Xi(\pi^{\otimes3}),\\
+\sup_{\|z\|_2\le r}\|F_n(z)-F(z)\|_2
+ &\le2\sqrt{63}\,\|W-W_n\|_1\longrightarrow0.
+\end{aligned}
+\tag{226.15}
+$$
+
+For $W_n$ each coordinate integral factors cellwise, so equality of the slice masses gives exact equality with $u(z)$. The two errors against $W-W_n$ give the displayed bound, uniformly for the whole parameter ball. Continuity of $F_n$ follows by telescoping each changed slot, using the bounded original marginals $g,Pg,P^2g$ and (226.14). This argument imposes no regularity on moving quantile boundaries.
+
+Choose one finite $n$ with $\sup\|A^{-1}(F_n-F)\|_2<r/4$. For every coordinate displacement $v$ satisfying $\|A^{-1}v\|_2<r/4$, the map
+
+$$
+z\longmapsto z-A^{-1}(F_n(z)-v)
+\tag{226.16}
+$$
+
+sends the closed radius-$r$ ball into itself by (226.13)–(226.15). Brouwer's finite-dimensional closed-ball theorem gives a root $z_v$ with $F_n(z_v)=v$. In particular the exact center $v=0$ and a full open neighborhood of it are attained on this single finite $\mathcal P_n$ carrier. A continuous choice of the roots is not required or asserted.
+
+Finally $\Xi:\mathscr M\to\mathbb R^{63}$ is an affine isomorphism. To see this without restricting to a fixed lower-law fiber, fix the labels in $I$ on slots $F$ and put $B$ in the other slots $B_0=\{1,2,3\}\setminus F$. Complement expansion gives
+
+$$
+T_{(a_F,B_{B_0})}
+=\sum_{A_0\subset B_0}(-1)^{|A_0|}
+  \sum_{i_{A_0}\in I^{A_0}}
+      T_{F\cup A_0}(a_F,i_{A_0}).
+\tag{226.17}
+$$
+
+Every marginal on the right is among (226.2), or is $T_\varnothing=1$. Conversely these formulas reconstruct a tensor of total mass one with the prescribed hierarchical marginals: summing a reconstructed $B$ slot cancels the corresponding negative terms and returns the specified lower marginal. Thus all sixty-three coordinate displacements, including changing lower laws, have unique tensors in $\mathscr M$.
+
+The entries of $\pi^{\otimes3}$ are strictly positive and the inverse affine map is continuous. Choose $\delta_{\theta,\pi}>0$ small enough that (226.3) ensures positivity and $\|A^{-1}(\Xi(T)-\Xi(\pi^{\otimes3}))\|_2<r/4$. The root just constructed has the same $\Xi$ coordinates as $T$; (226.17) proves equality of all sixty-four actual coefficients. This proves the theorem.
+
+The source-specific inputs (212.9)–(212.13) retain their exact hypotheses and consume the classical intermediate results of R. Meshulam and P. Šemrl, *Locally linearly dependent operators*, [Theorem 2.2](https://doi.org/10.2140/pjm.2002.203.441), and B. S. Mityagin, *The zero set of a real analytic function*, [Proposition 0](https://arxiv.org/abs/1512.07276v1). The fixed-point step is the closed-ball form of L. E. J. Brouwer, *Über Abbildung von Mannigfaltigkeiten*, [doi:10.1007/BF01456931](https://doi.org/10.1007/BF01456931), as used in 212.D. Finite linear vector-measure purification, including Dvoretzky–Wald–Wolfowitz's [§3 Theorem 4 and Lemma 2](https://msp.org/pjm/1951/1-1/pjm-v1-n1-p06-s.pdf), preserves fixed linear integrals; it is not being applied to the partition-dependent nonlinear law. Here the exact nonlinear attainment follows from the actual center, all sixty-three derivatives and the uniform hard approximation followed by (226.16). The constant-base full-law interior is repo-derived from these original source data, rather than a separate assertion of a general purification theorem. $\square$
+
+## 227. Actual complete laws for a nonconstant weak-contrast comparison
+
+**Definition 227.1 (only the comparison readout changes).** Under Definition 226.1 retain the original $M,c,b,f$. Since $\int_Gb\,dm=1$, put
+
+$$
+\begin{gathered}
+\pi=\int_G f\,dm
+ =\left(\frac{3/4-c}{2},\frac{3/4-c}{2},c,\frac14\right),\\
+f^\lambda=\pi+\lambda(f-\pi),\qquad 0\le\lambda\le1,\\
+f_3^\lambda=c[1+\lambda(b-1)],\quad f_B^\lambda=\tfrac14,\quad
+ f_0^\lambda=f_1^\lambda=\frac{3/4-c[1+\lambda(b-1)]}{2}.
+\end{gathered}
+\tag{227.1}
+$$
+
+Every $f^\lambda$ is a pointwise Borel simplex tuple on the whole $G$. Its comparison law uses that same readout at the three original epochs, with conditionally independent fresh read noises given the original path, namely $T^\lambda=\mathscr L_\theta(f^\lambda)$. The source, operator, measure and epochs are exactly those of Definition 226.1, without stationary replacement or a change of clock.
+
+**Corollary 227.2 (nonconstant actual complete64 laws and own-terminal rank two).** Under exactly Definition 227.1, for every original $\theta$ there exist $\epsilon_\theta\in(0,1)$ and one finite common quantile carrier such that for every $0\le\lambda\le\epsilon_\theta$ a pointwise whole-$G$ Borel partition $D^\lambda$ on that carrier satisfies
+
+$$
+\mathcal C(\mathbf1_{D_a^\lambda},\mathbf1_{D_b^\lambda},
+                          \mathbf1_{D_c^\lambda})
+ =\mathcal C(f_a^\lambda,f_b^\lambda,f_c^\lambda)
+\quad(a,b,c\in\mathcal L).
+\tag{227.2}
+$$
+
+For every $0<\lambda\le\epsilon_\theta$, the readout $f^\lambda$ is nonconstant, its three label-$3$ source marginal masses are strictly decreasing in chronological order, and the displayed partition's actual own-label-$3$ terminal matrix satisfies
+
+$$
+A^{D^\lambda}_{ab}
+ =\int_Gg\mathbf1_{D_a^\lambda}
+       P\!\left(\mathbf1_{D_b^\lambda}P\mathbf1_{D_3^\lambda}\right)dm,
+\qquad \operatorname{rank}A^{D^\lambda}=2.
+\tag{227.3}
+$$
+
+At $\lambda=0$ the same matrix has rank one. At $\lambda=1$ the comparison law is exactly the original $F_{64}$ target, but (227.2) is asserted only on the stated small interval.
+
+*Proof.* All four entries of $\pi$ are strictly positive, since $0<c<1/4$. Apply Theorem 226.2 at this $\pi$, obtaining a full coordinate neighborhood and one finite carrier. Each coefficient of $T^\lambda$ is a polynomial in $\lambda$ of degree at most three, and $T^0=\pi^{\otimes3}$. Continuity therefore supplies $\epsilon_0\in(0,1)$ with
+
+$$
+\|\Xi(T^\lambda)-\Xi(\pi^{\otimes3})\|_2
+ <\delta_{\theta,\pi}
+\quad(0\le\lambda\le\epsilon_0).
+\tag{227.4}
+$$
+
+The theorem gives all sixty-four equalities (227.2) on its one common carrier, without changing any process input. In particular it gives equality of the actual matrix (227.3) with $A^\lambda_{ab}=\mathcal C(f_a^\lambda,f_b^\lambda,f_3^\lambda)$. The partition's terminal in this equality is still its own $P\mathbf1_{D_3^\lambda}$; it is not identified with $Pf_3^\lambda$.
+
+The class $b$ is nonconstant by Proposition III135.2. Thus $f^\lambda$ is nonconstant whenever $\lambda>0$. If $t_r=\int g_{rd}f_3\,dm$ are the original masses, that proposition gives $t_2>t_3>t_4>0$. Hence the changed target, and the same hard partition by marginalization of (227.2), have
+
+$$
+\int_Gg_{rd}f_3^\lambda\,dm
+ =(1-\lambda)c+\lambda t_r
+\quad(r=2,3,4),
+\tag{227.5}
+$$
+
+strictly decreasing for every positive $\lambda$. These laws therefore differ from the constant categorical product even at the marginal level.
+
+For rank, set $\xi_0=1$, $\xi_1=b-1$. The four functions $f_a^\lambda$ have coefficient matrix
+
+$$
+R_\lambda=
+\begin{pmatrix}
+(3/4-c)/2&-\lambda c/2\\
+(3/4-c)/2&-\lambda c/2\\
+c&\lambda c\\
+1/4&0
+\end{pmatrix}
+\tag{227.6}
+$$
+
+in this two-function basis. Conservation and $Pb=g$ give
+
+$$
+\begin{aligned}
+q_\lambda&=Pf_3^\lambda=c[(1-\lambda)+\lambda g],\\
+(H_\lambda)_{ij}&=\langle g\xi_i,P(q_\lambda\xi_j)\rangle_m
+\quad(i,j=0,1),\\
+A^\lambda&=R_\lambda H_\lambda R_\lambda^{\mathsf T}.
+\end{aligned}
+\tag{227.7}
+$$
+
+All entries are finite since $b,g$ are bounded and $P$ is the original $L^2$ contraction. The matrix $H_\lambda$ is affine in $\lambda$; it need not be symmetric for $\lambda<1$. At $\lambda=1$, however,
+
+$$
+(H_1)_{ij}=c\langle g\xi_i,P(g\xi_j)\rangle_m,\qquad
+v^{\mathsf T}H_1v
+ =c\|T_{d/2}(g(v_0+v_1(b-1)))\|_2^2>0
+ \quad(v\ne0).
+\tag{227.8}
+$$
+
+Strict positivity of $g$, nonconstancy of $b$ and injectivity of the original heat semigroup give the strict inequality, exactly the weighted heat argument of III135.2. Thus the real polynomial $p(\lambda)=\det H_\lambda$, of degree at most two, has $p(1)>0$ and is not identically zero. Its positive roots are finite. Choose $\epsilon_1\in(0,1)$ so that $p(\lambda)\ne0$ throughout $0<\lambda\le\epsilon_1$; a root at zero is harmless.
+
+The principal submatrix of $A^\lambda$ in the ordered rows and columns $(3,B)$ has determinant
+
+$$
+\det A^\lambda_{\{3,B\},\{3,B\}}
+ =\left(\frac{\lambda c}{4}\right)^2p(\lambda)\ne0
+\quad(0<\lambda\le\epsilon_1).
+\tag{227.9}
+$$
+
+This determinant identity holds for nonsymmetric $H_\lambda$ as well. Equation (227.7) gives rank at most two, while (227.9) gives rank at least two. Taking $\epsilon_\theta=\min\{\epsilon_0,\epsilon_1\}$ proves (227.3) for every partition attaining the displayed complete law. At zero, $A^0_{ab}=\pi_a\pi_b\pi_3$ has rank one. No symmetry or positive definiteness of the changed target matrix was assumed.
+
+For $\lambda<1$ it is the comparison readout, and hence its target marginal, pair and triple laws, that changes. It is not the original $\mathscr D_{12}(\theta)$ constraint with $f$ retained: (227.5) gives the changed right-hand sides. The original law at $\lambda=1$ and its rank-two slice remain exactly those of III135.1–III135.2. The local radius (227.4) provides neither continuation to $1$ nor compatible choices or summable label motion across $\lambda$. It supplies no simultaneous original nine-form zero, no original twenty-seven coarse equations, and no physical-successor correspondence. The complete original $F_{64}$ attainment or exclusion problem at $\lambda=1$, and the physical-successor problem, therefore remain unresolved by these local changed-comparison results. $\square$
+
+## 追加锚（本行以下为增补区）
