@@ -25,14 +25,14 @@ internal static class WorktreeProtocolCommand
     }
 
     internal static CommandResult Run(string root, IReadOnlyList<string> arguments,
-        IWorktreeProcessRunner runner, TimeSpan? timeout = null)
+        IWorktreeProcessRunner runner, TimeSpan? timeout = null, bool reportPending = true)
     {
         // Isolated Python imports host libraries without searching a repository
         // cwd or PYTHONPATH for another implementation of a support module.
         using var program = new EmbeddedProgramFile(Program.Value
             + "sys.exit(sys.modules['worktree_protocol'].main())\n");
         var result = runner.Run("python3", new[] { "-I", "-B", program.FilePath,
-            "--source", root }.Concat(arguments).ToArray(),
+            "--source", root }.Concat(reportPending ? [] : new[] { "--no-agent-summary" }).Concat(arguments).ToArray(),
             root, timeout ?? BoundedProcessRunner.HangDetectionBudget);
         return new CommandResult(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardOutput),
             Encoding.UTF8.GetString(result.StandardError), result.ExitCode);
@@ -136,7 +136,7 @@ internal static class WorktreeProtocolCommand
         // Dependency order: protocol imports the publication and preservation
         // adapters. These modules use only
         // host Python standard-library modules and native Git beyond this set.
-        foreach (var name in new[] { "maintenance_log", "worktree_protocol", "worktree_publication", "worktree_preservation", "worktree_host_cleanup", "worktree_pool" })
+        foreach (var name in new[] { "maintenance_log", "worktree_protocol", "worktree_agent_state", "worktree_publication", "worktree_preservation", "worktree_host_cleanup", "worktree_pool" })
         {
             using var stream = assembly.GetManifestResourceStream($"WorktreeProtocol.{name}.py")
                 ?? throw new InvalidOperationException($"worktree adapter module is unavailable: {name}");

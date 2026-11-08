@@ -23,6 +23,10 @@ internal static class RemoveWorktreesCommand
         string repositoryRoot,
         IReadOnlyList<string> arguments,
         IWorktreeProcessRunner runner)
+        => WorktreeAgentStateCommand.After(repositoryRoot, runner, () => RunCore(repositoryRoot, arguments, runner));
+
+    private static CommandResult RunCore(string repositoryRoot, IReadOnlyList<string> arguments,
+        IWorktreeProcessRunner runner)
     {
         ArgumentNullException.ThrowIfNull(arguments);
         ArgumentNullException.ThrowIfNull(runner);
@@ -83,7 +87,7 @@ internal static class RemoveWorktreesCommand
                     branch = observed.Branch is null ? null : "refs/heads/" + observed.Branch,
                 }));
             }
-            removal = WorktreeProtocolCommand.Run(repositoryRoot, request, runner, Timeout.InfiniteTimeSpan);
+            removal = WorktreeProtocolCommand.Run(repositoryRoot, request, runner, Timeout.InfiniteTimeSpan, reportPending: false);
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
         {

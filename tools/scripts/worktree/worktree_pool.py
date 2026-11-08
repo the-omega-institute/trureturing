@@ -8,6 +8,7 @@ from worktree_protocol import (GitFailure, Refused, clear_matching_stale, git, g
                                head_committer_time, head_oid, identity, inventory,
                                mark_stale, reuse, stale_head, value)
 from worktree_preservation import remove_registered
+from worktree_agent_state import record
 
 FOUR_HOURS = 4 * 60 * 60
 SIX_HOURS = 6 * 60 * 60
@@ -75,6 +76,7 @@ def _allocate(source, path, options, base, expected, removed=False):
     git(source, "branch", "--", branch, base)
     try:
         git(source, "worktree", "add", "--no-checkout", "--", str(path), branch)
+        record(source, path, created=True, branch=reference)
         git(path, "reset", "--hard", "--no-recurse-submodules", "HEAD", timeout=1200)
         _check_pins(path, expected)
         clear_matching_stale(source, branch, head_oid(path))

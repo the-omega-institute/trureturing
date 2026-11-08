@@ -6,6 +6,7 @@ native ``branch.<name>.worktreeStaleHead`` configuration value. There is no
 occupancy lock, activity scan, allocation ledger, or process liveness probe.
 """
 import argparse
+from contextvars import ContextVar
 import json
 import os
 from pathlib import Path
@@ -30,6 +31,7 @@ if __name__ == "__main__":
 LOG = None
 LOG_ACTION = None
 LOG_LAST = {}
+AUXILIARY_DEADLINE = ContextVar("worktree_auxiliary_deadline", default=None)
 SCOPED_PROCESS_ENVIRONMENT = {
     "MSBUILDDISABLENODEREUSE": "1",
     "DOTNET_CLI_USE_MSBUILD_SERVER": "0",
@@ -70,6 +72,12 @@ def git_environment(overrides=None):
 
 
 def git(root, *args, env=None, input=None, check=True, timeout=300):
+    deadline = AUXILIARY_DEADLINE.get()
+    if deadline is not None:
+        remaining = deadline - time.monotonic()
+        if remaining <= 0:
+            raise TimeoutError("agent_state_budget_exhausted")
+        timeout = min(timeout, remaining)
     command = ["git", "-C", str(root), *map(str, args)]
     try:
         result = subprocess.run(command, input=input, stdout=subprocess.PIPE,
@@ -260,6 +268,10 @@ def with_command(options):
         raise Refused("missing_command")
     path = Path(options.path).resolve()
     identity(options.source, path)
+    if not options.no_agent_summary:
+        from worktree_agent_state import report
+        report(options.source)
+        options.no_agent_summary = True
     os.chdir(path)
     os.execvpe(options.argv[0], options.argv, git_environment())
 
@@ -279,6 +291,9 @@ def reuse(options, allow_recovered_base=False):
         expected = git(options.source, "show", base + ":" + pin).stdout
         if (options.path / pin).read_bytes() != expected:
             raise Refused("incompatible_pin:" + pin)
+    clear_matching_stale(options.source, expected_branch, head_oid(options.path))
+    from worktree_agent_state import record
+    record(options.source, options.path, branch=expected_branch)
     return dict(event="worktree_init", status="reused", path=str(options.path.resolve()),
                 branch=options.branch, base_revision=base)
 
@@ -286,7 +301,11 @@ def reuse(options, allow_recovered_base=False):
 def _main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--source", type=Path, default=Path.cwd())
+    parser.add_argument("--no-agent-summary", action="store_true", help=argparse.SUPPRESS)
     commands = parser.add_subparsers(dest="action", required=True)
+    commands.add_parser("pending", help="show current-agent pending worktrees (advisory)")
+    registration = commands.add_parser("record-registration", help=argparse.SUPPRESS)
+    registration.add_argument("--path", type=Path, required=True)
     command = commands.add_parser("with")
     command.add_argument("--path", type=Path, default=Path.cwd())
     command.add_argument("argv", nargs=argparse.REMAINDER)
@@ -347,8 +366,21 @@ def _main(argv=None):
     global LOG, LOG_ACTION, LOG_LAST
     LOG_ACTION, LOG_LAST = options.action, {}
     LOG = MaintenanceLog("worktree-protocol", options.source) if MaintenanceLog else None
+    summary_source = options.source
+    # Anchor the final view before an operation can remove its invoking tree.
+    from worktree_agent_state import budget, record, report
+    if options.action not in ("qualify", "validate-mirror", "record-registration", "pending"):
+        try:
+            with budget():
+                summary_source = Path(inventory(options.source)[0]["worktree"])
+        except Exception:
+            pass
     try:
-        if options.action == "with":
+        if options.action == "pending":
+            print(json.dumps(report(options.source)), flush=True)
+        elif options.action == "record-registration":
+            record(options.source, options.path, created=True)
+        elif options.action == "with":
             if options.argv[:1] == ["--"]:
                 options.argv.pop(0)
             with_command(options)
@@ -405,6 +437,10 @@ def _main(argv=None):
         prefix = "WORKTREE_FAILED " if options.action == "claim" else "WORKTREE_RETAINED "
         print(prefix + str(error), file=sys.stderr, flush=True)
         return 73
+    finally:
+        if not options.no_agent_summary and options.action not in (
+                "pending", "record-registration", "qualify", "validate-mirror"):
+            report(summary_source)
 
 
 def main(argv=None):

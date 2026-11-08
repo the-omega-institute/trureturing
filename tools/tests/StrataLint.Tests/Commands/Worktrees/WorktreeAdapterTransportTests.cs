@@ -18,7 +18,7 @@ public sealed class WorktreeAdapterTransportTests
     {
         using var directory = new TemporaryDirectory();
         // These checkout-local modules must never supply executable code.
-        foreach (var module in new[] { "worktree_protocol", "worktree_publication",
+        foreach (var module in new[] { "worktree_protocol", "worktree_agent_state", "worktree_publication",
                      "worktree_preservation", "worktree_pool" })
             File.WriteAllText(Path.Combine(directory.Path, module + ".py"), "raise RuntimeError('checkout import')\n");
         var launches = 0;
@@ -112,7 +112,7 @@ public sealed class WorktreeAdapterTransportTests
             }
             var program = File.ReadAllText(programPath);
             var assembly = typeof(WorktreeCommand).Assembly;
-            foreach (var name in new[] { "worktree_protocol", "worktree_publication",
+            foreach (var name in new[] { "worktree_protocol", "worktree_agent_state", "worktree_publication",
                          "worktree_preservation", "worktree_pool" })
             {
                 using var resource = assembly.GetManifestResourceStream($"WorktreeProtocol.{name}.py");

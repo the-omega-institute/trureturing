@@ -27,6 +27,11 @@ internal static class CleanLanesCommand
 
     internal static CommandResult Run(string repositoryRoot, IReadOnlyList<string> arguments,
         IWorktreeProcessRunner runner, IReadOnlyList<string> tempRoots, DateTimeOffset now, Action<string>? anchorProcess = null)
+        => WorktreeAgentStateCommand.After(repositoryRoot, runner,
+            () => RunCore(repositoryRoot, arguments, runner, tempRoots, now, anchorProcess));
+
+    private static CommandResult RunCore(string repositoryRoot, IReadOnlyList<string> arguments,
+        IWorktreeProcessRunner runner, IReadOnlyList<string> tempRoots, DateTimeOffset now, Action<string>? anchorProcess)
     {
         _ = tempRoots; _ = now;
         try
@@ -39,7 +44,7 @@ internal static class CleanLanesCommand
             var dev = RunGit(root, ["rev-parse", "--verify", "refs/remotes/origin/dev^{commit}"], runner, "origin/dev is unavailable");
             var args = new List<string> { "pool", "--dev", Decode(dev.StandardOutput).Trim() };
             if (options.Force) args.Add("--force");
-            var result = WorktreeProtocolCommand.Run(root, args, runner, Timeout.InfiniteTimeSpan);
+            var result = WorktreeProtocolCommand.Run(root, args, runner, Timeout.InfiniteTimeSpan, reportPending: false);
             if (result.Output.Length == 0) return result;
             using var document = JsonDocument.Parse(result.Output);
             var output = new StringBuilder();

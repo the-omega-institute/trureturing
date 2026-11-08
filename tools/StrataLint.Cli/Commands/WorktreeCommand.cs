@@ -35,6 +35,7 @@ internal static class WorktreeCommand
         + "StrataLint worktree publish --branch NAME [--commit REV] | "
         + "StrataLint worktree finalize --branch NAME --writers-joined | "
         + "StrataLint worktree stale [--path DIR] | StrataLint worktree return [--path DIR] | "
+        + "StrataLint worktree pending | "
         + "StrataLint worktree ensure-cache [--path DIR] [--restore-dependencies] | "
         + "StrataLint worktree ensure-cache [--path DIR] [--restore-dependencies] | "
         + "StrataLint worktree with-cache-writer [--path DIR] -- COMMAND [ARG ...] | "
@@ -73,7 +74,7 @@ internal static class WorktreeCommand
         ArgumentNullException.ThrowIfNull(arguments);
         ArgumentNullException.ThrowIfNull(runner);
         ArgumentNullException.ThrowIfNull(cloner);
-        if (arguments.Count > 0 && arguments[0] is "with" or "checkpoint" or "publish" or "finalize" or "return" or "stale")
+        if (arguments.Count > 0 && arguments[0] is "with" or "checkpoint" or "publish" or "finalize" or "return" or "stale" or "pending")
             return WorktreeProtocolCommand.Run(repositoryRoot, arguments, runner, Timeout.InfiniteTimeSpan);
         if (arguments.Count > 0
             && string.Equals(arguments[0], "remove", StringComparison.Ordinal))
@@ -104,6 +105,13 @@ internal static class WorktreeCommand
             return ValidateBranch(arguments.Skip(1).ToArray());
         }
 
+        return WorktreeAgentStateCommand.After(repositoryRoot, runner,
+            () => Create(repositoryRoot, arguments, runner));
+    }
+
+    private static CommandResult Create(string repositoryRoot, IReadOnlyList<string> arguments,
+        IWorktreeProcessRunner runner)
+    {
         WorktreeOptions? options = null;
         string? requestedBase = null;
         string? invokingDirectory = null;
@@ -114,6 +122,7 @@ internal static class WorktreeCommand
         var halfBuiltRecovered = false;
         var stage = "preflight";
         int? failureExitCode = null;
+        var agentWarning = string.Empty;
         try
         {
             if (runner is ProductionWorktreeProcessRunner production)
@@ -212,6 +221,7 @@ internal static class WorktreeCommand
                 BoundedProcessRunner.HangDetectionBudget,
                 "git worktree add failed");
             worktreeCreated = true;
+            agentWarning = WorktreeAgentStateCommand.Capture(options.Source, options.Path, runner);
             WorktreeCreationSafety.ValidateCreatedWorktree(options, runner);
             stage = "checkout";
             WorktreeCreationSafety.CheckoutCreatedWorktree(options, runner);
@@ -242,7 +252,7 @@ internal static class WorktreeCommand
                 dotnet_restore = options.SkipRestore ? "skipped" : "restored",
             }) + "\n";
             MaintenanceLogAdapter.Record("worktree-init", "succeeded", "complete", null, null);
-            return new CommandResult(true, summary, RenderDonorWarning(options, donor));
+            return new CommandResult(true, summary, agentWarning + RenderDonorWarning(options, donor));
         }
         catch (Exception exception)
         {
@@ -263,7 +273,7 @@ internal static class WorktreeCommand
                 cleanup = cleanupException.Message;
             }
             return new CommandResult(false, string.Empty,
-                FailureReceipt(exception.Message, cleanup, recoveryResult), failureExitCode);
+                FailureReceipt(exception.Message, cleanup, recoveryResult) + agentWarning, failureExitCode);
         }
         finally
         {
@@ -631,7 +641,7 @@ internal static class WorktreeCommand
         var arguments = new List<string> { "recover-init", "--path", options.Path,
             "--branch", options.Branch, "--base", options.Base };
         if (options.SkipRestore) arguments.Add("--skip-restore");
-        return WorktreeProtocolCommand.Run(options.Source, arguments, runner, Timeout.InfiniteTimeSpan);
+        return WorktreeProtocolCommand.Run(options.Source, arguments, runner, Timeout.InfiniteTimeSpan, reportPending: false);
     }
 
     private static void RunRequired(

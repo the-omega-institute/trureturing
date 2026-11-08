@@ -19,13 +19,16 @@ public sealed class WorktreeProtocolTests(ITestOutputHelper output)
             TimeSpan.FromSeconds(180), 1024 * 1024);
         Assert.True(build.ExitCode == 0,
             Encoding.UTF8.GetString(build.StandardOutput) + Encoding.UTF8.GetString(build.StandardError));
-        var script = Path.Combine(root,
-            "tools/tests/StrataLint.WorktreeContract.Tests/Fixtures/stale_lifecycle_cases.py");
-        var result = TestProcessRunner.Run("python3", ["-B", script, root], root,
-            TimeSpan.FromSeconds(300), 1024 * 1024);
-        output.WriteLine(Encoding.UTF8.GetString(result.StandardOutput));
-        output.WriteLine(Encoding.UTF8.GetString(result.StandardError));
-        Assert.True(result.ExitCode == 0,
-            Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError));
+        foreach (var name in new[] { "stale_lifecycle_cases", "agent_state_cases", "agent_state_entrance_cases" })
+        {
+            var script = Path.Combine(root,
+                $"tools/tests/StrataLint.WorktreeContract.Tests/Fixtures/{name}.py");
+            var result = TestProcessRunner.Run("python3", ["-B", script, root], root,
+                TimeSpan.FromSeconds(300), 1024 * 1024);
+            output.WriteLine(Encoding.UTF8.GetString(result.StandardOutput));
+            output.WriteLine(Encoding.UTF8.GetString(result.StandardError));
+            Assert.True(result.ExitCode == 0,
+                Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError));
+        }
     }
 }
