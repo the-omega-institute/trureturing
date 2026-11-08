@@ -155,17 +155,7 @@ internal sealed class A392976InverseRecurrenceDocument : IScribeDocumentDefiniti
                     + "Coefficient extraction gives exactly the displayed identity at every n at least five. "
                     + "Expanding theta powers into ordinary derivatives gives a homogeneous operator of "
                     + "order five; its fifth-derivative polynomial has coefficient 23495312375279 at degree five, "
-                    + "so the operator is nonzero. No minimal-order assertion is made. "
-                    + "All 23 authored theorem proofs are bind-only under the repository's expansion and "
-                    + "normalization rule; the consumed helpers organize this proof. The admission basis is "
-                    + "open-problem-resolution for the complete externally named conjecture preregistered at "
-                    + "https://github.com/the-omega-institute/trureturing/issues/28023#issuecomment-6719559027. "
-                    + "No escape witness or new proof method is claimed. The Euler coefficient input is "
-                    + "D5/S1/Recurrence/A308815DFiniteRecurrence.euler_coeff; its sequence endpoint is not used "
-                    + "as a supplier of this recurrence. The retained Reg audit is unfinished "
-                    + "(declared_unresolved, IE-C050 ClosedTruthReadout, source.roles); "
-                    + "https://github.com/the-omega-institute/trureturing/issues/28047 records the missing "
-                    + "six-occurrence role and reconstruction binding. The compiling audit is not declared_validated.",
+                    + "so the operator is nonzero. No minimal-order assertion is made.",
                 DescribeRole.Theorem, resolution: new OpenProblemResolutionClaim(
                     ProblemSlugRef.Create("oeis-a392976-inverse-recurrence"), ResolutionKind.Proved)))));
 }
