@@ -108,6 +108,14 @@ def result (seed : I) (source : ℕ → Bool) (coins : ℕ → R) :
     (O.execute seed source coins n).action.output.map fun d =>
       ((O.execute seed source coins n).acquired, d)
 
+/-- The original paid cost is read from its actual receipt, including the
+    terminal partial gap; none denotes an execution that never emits. -/
+def paidCost (seed : I) (source : ℕ → Bool) (coins : ℕ → R) : Option ℕ :=
+  (O.result seed source coins).map (fun v => v.1.length)
+
+def decision (seed : I) (source : ℕ → Bool) (coins : ℕ → R) : Option Bool :=
+  (O.result seed source coins).map Prod.snd
+
 private theorem live_length (seed : I) (source : ℕ → Bool) (coins : ℕ → R)
     (n : ℕ) : (O.execute seed source coins n).action.output = none →
       (O.execute seed source coins n).acquired.length = n := by
@@ -296,6 +304,8 @@ theorem stopping_normalization [Fintype C] [MeasurableSpace I] [MeasurableSpace 
         let Y := ActualRenewalStopping.epoch O.labels O.normalizedUpdate
           (O.boundary (O.initial seed)) coins wait gaps
         O.stopIndex seed source coins = firstHit O.labels Z ∧
+        O.paidCost seed source coins = firstHit O.labels Z ∧
+        O.decision seed source coins = (firstHit O.labels Z).bind (fun t => O.output (Z t)) ∧
         O.result seed source coins = (firstHit O.labels Z).bind
           (fun t => (O.output (Z t)).map fun d => ((List.range t).map source, d)) ∧
         (∀ T, O.stopIndex seed source coins = some T → ∃ N d,
@@ -331,7 +341,26 @@ theorem stopping_normalization [Fintype C] [MeasurableSpace I] [MeasurableSpace 
     constructor <;> apply PMF.toMeasure_injective <;>
       simp [A, B, Measure.toPMF_toMeasure, heff, normalizedUpdate, PMF.toMeasure_pure]
   · intro seed coins wait gaps
-    exact (stopping_transfer O M hM seed coins wait gaps).2
+    let source := ActualRenewalStopping.sourceBit wait gaps
+    let Z := ActualRenewalStopping.run O.labels O.normalizedUpdate
+      (O.boundary (O.initial seed)) coins wait gaps
+    obtain ⟨_, hs, hr, hf⟩ := stopping_transfer O M hM seed coins wait gaps
+    refine ⟨hs, ?_, ?_, hr, hf⟩
+    · change (O.result seed source coins).map (fun v => v.1.length) = firstHit O.labels Z
+      rw [hr]
+      cases ht : firstHit O.labels Z with
+      | none => rfl
+      | some t =>
+        have hterm := ((first_hit_some O.labels Z t).mp ht).1
+        cases ho : O.output (Z t) with
+        | none => exact False.elim (hterm ho)
+        | some d => simp [ho]
+    · change (O.result seed source coins).map Prod.snd =
+        (firstHit O.labels Z).bind (fun t => O.output (Z t))
+      rw [hr]
+      cases ht : firstHit O.labels Z with
+      | none => rfl
+      | some t => cases ho : O.output (Z t) <;> simp [ho]
 
 end Machine
 end D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.ReadExecution.OriginalObserverNormalization
