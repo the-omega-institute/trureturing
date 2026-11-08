@@ -787,4 +787,8 @@ class LifecycleTests(unittest.TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main(verbosity=2)
+    if sys.argv[1:] == ["--list-tests"]:
+        print(json.dumps(["LifecycleTests." + name for name in
+                          unittest.defaultTestLoader.getTestCaseNames(LifecycleTests)]))
+    else:
+        unittest.main(verbosity=2)
