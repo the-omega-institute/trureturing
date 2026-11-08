@@ -4817,3 +4817,153 @@ JB 的正结构还排除了藏在窗口边界上的余量。角外的整块分�
 同一原 $\Omega$/source/native 及 §98.6 列明的全部来源合同继续按各自全输入量词保留。数学角、分类同构、谱投影及辅助连续泛函均不自动成为实际准备、菜单、压缩、仪器、相关复合、合法历史或全未来真实返回，也不产生物理钟、能量与共同 $\hbar$。本节缩小的是已有原幂等角承接同一 $D$ 的接口缺口及其有限几何消费者；一般同一 $D$ 的自动双线性／$R$ 与完整物理来源目标仍未结算。
 
 ## 追加锚（本行以下为增补区）
+
+## 120. 完整原三阶复矩阵域中所有秩二角的同一取向
+
+**定义 120.1（指定全域及完整原配平）。** 保留同一原 $\Omega$、原标签与来源量词，仅考虑原全域已有准确识别
+
+$$
+E=M_3(\mathbb C)_{\rm sa},\qquad u=I_3,\qquad
+a\circ b=S(a,b)=\tfrac12(ab+ba),\qquad C=M_3(\mathbb C)_+,\qquad N(a)=\|a\|_{\rm op}
+\tag{120.1}
+$$
+
+的条件分支。固定原正实线性评价族 $P$，它分离 $E$ 并准确决定 $C$，即 (119.1)；全部原质量 $m_\alpha=\alpha(I_3)$ 保留零、不等和次归一情形。原 $D:E^2\to E$ 仅为总映射，满足全部实际有向二表 P2，即 (119.2)，以及对全部原 $a,b,c\in E$、$\alpha\in P$ 的完整 PB：
+
+$$
+\begin{aligned}
+Q_\alpha(b,c)&=\alpha(b^2+c^2+2D(b,c)),\\
+r_\pm&=b\pm D(a,b)\mp a\circ c,\qquad
+s_\pm=c\pm a\circ b\pm D(a,c),\\
+Q_\alpha(r_+,s_+)&=Q_\alpha(r_-,s_-).
+\end{aligned}
+\tag{120.2}
+$$
+
+PB 的时间参数仍只有 $+1,-1$。不输入 $D$ 的可加、齐次、连续、协变、单位平移中性、NN、Jacobi、P3、迹斜性或一致预测放大界；不把指定矩阵背景当作原来源已经供应的事实。
+
+**定理 120.2（同一旧关系的跨角取向）。** 在定义 120.1 的全部条件下，存在一个 $\eta\in\{+1,-1\}$，使
+
+$$
+\boxed{\quad D(a,b)=\eta\,\frac{\mathrm i}{2}(ab-ba)
+\quad\text{对每个秩二投影 }p\text{ 及全部 }a=pap,\ b=pbp\in E.\quad}
+\tag{120.3}
+$$
+
+同一个 $\eta$ 因而适用于每对原秩一投影。此处结论只覆盖共同支撑秩至多二的输入对。
+
+证明。先复用 99.2 的两个准确接口。P2 的 Hermitian 性和原分离性给 $D(b,a)=-D(a,b)$；其二次型元素
+$|z_1|^2a^2+|z_2|^2b^2+2\operatorname{Re}(\bar z_1z_2)(a\circ b)+2\operatorname{Im}(\bar z_1z_2)D(a,b)$ 被全部原评价读为非负，故在同一原锥 $C$ 中。因此每个数学正泛函也读取同一二表。特别对任意未归一向量 $\psi\in\mathbb C^3$，$\beta_\psi(x)=\psi^*x\psi$ 给
+
+$$
+|\beta_\psi D(x,y)|^2\le
+\|x\psi\|^2\|y\psi\|^2-
+\bigl(\operatorname{Re}\langle x\psi,y\psi\rangle\bigr)^2.
+\tag{120.4}
+$$
+
+内积对第二槽线性。PB 展开已知 Jordan 平方并用原分离性，准确给原元素恒等式 (99.4)；这也能被任意 $\beta_\psi$ 读取。数学泛函不是新增的实际准备。
+
+对每个秩二原投影 $p$，119.2 使同一个 $D$ 在 $E_p=pEp$ 上闭合；119.3 的不含 NN/J 部分给其原单位 $p$、准确角锥、继承范数及全部原限制评价，角质量仍为 $\alpha(p)$。Jordan 乘法及 PB 的全部内外输入均留在此角，故完整 PB 也逐值限制成立。角内任意数学正泛函 $\gamma$ 可通过正泛函 $x\mapsto\gamma(pxp)$ 读取全域二表及元素 PB，因而 93.1 所需的全部正读取均可用；没有宣称全部角态可实际准备。完整 $E_p\cong H_2(\mathbb C)$ 的 Pauli 识别保持单位、乘法、锥和范数，93.1 遂给固定符号
+
+$$
+D(a,b)=\eta_p\,\frac{\mathrm i}{2}(ab-ba)
+\qquad(a,b\in E_p),\qquad \eta_p\in\{+1,-1\}.
+\tag{120.5}
+$$
+
+相对于继承的矩阵乘法，此符号由角内任一非交换对唯一确定。这里只有同角结论，尚未比较不同 $p$；未用 119.4–119.5 的 NN/J 条件分类。
+
+现取得一个跨角比较不等式。固定秩一原投影 $e,B,C$，置
+
+$$
+V=D(e,B)-e\circ C,\qquad W=e\circ B+D(e,C).
+\tag{120.6}
+$$
+
+两对 $(e,B)$、$(e,C)$ 分别共同支撑于秩至多二的原角，所以 (120.5) 已支付 $D(\tau e,B)=\tau D(e,B)$、$D(\tau e,C)=\tau D(e,C)$ 对全部实 $\tau$ 成立。对原三元组 $(\tau e,B,C)$ 用 PB 的元素式，得到
+
+$$
+D(B+\tau V,C+\tau W)-D(B-\tau V,C-\tau W)
+=-2\tau(B\circ V+C\circ W).
+\tag{120.7}
+$$
+
+取任意 $B\psi=0$ 的数学向量，记 $v=V\psi$、$z=C\psi$、$w=W\psi$ 及
+
+$$
+\begin{aligned}
+R&=\operatorname{Re}\langle z,w\rangle,\\
+\Delta&=\|v\|^2\|z\|^2-(\operatorname{Re}\langle v,z\rangle)^2,\qquad
+H=\|v\|^2\|w\|^2-(\operatorname{Re}\langle v,w\rangle)^2\ge0.
+\end{aligned}
+$$
+
+由 (120.7)，两个外层旧输出的 $\beta_\psi$ 值之差为 $-2\tau R$。分别对这两对原输入用 (120.4)，当 $\tau\ne0$ 时三角不等式给
+
+$$
+\begin{aligned}
+2|R|&\le\sqrt{F(\tau)}+\sqrt{F(-\tau)},\\
+F(t)&=\|v\|^2\|z+tw\|^2-
+\bigl(\operatorname{Re}\langle v,z+tw\rangle\bigr)^2\ge0,\\
+R^2&\le\tfrac12(F(\tau)+F(-\tau))=\Delta+\tau^2H.
+\end{aligned}
+\tag{120.8}
+$$
+
+最后一步只用实 Cauchy–Schwarz。若 $R^2>\Delta$，取有限非零实 $\tau$ 满足 $\tau^2<(R^2-\Delta)/(H+1)$ 就与 (120.8) 矛盾。因此必要地
+
+$$
+R^2\le\Delta.
+\tag{120.9}
+$$
+
+这里始终只用 PB 的正反时间；小尺度属于原首输入标签 $\tau e$。未对未知 $D$ 作极限、连续延拓或跨角线性展开。
+
+取任意正交单位复基 $e_0,e_1,e_2$，令 $P_f=ff^*$ 表示单位向量 $f$ 的秩一投影，并取
+
+$$
+\begin{gathered}
+\tfrac12\le\kappa<1,\quad s=\sqrt{1-\kappa^2}>0,\quad d=1-\kappa,\\
+e=P_{e_0},\quad B=P_{(e_0+e_1)/\sqrt2},\quad
+C=P_{(e_0+\kappa e_1+s e_2)/\sqrt2}.
+\end{gathered}
+\tag{120.10}
+$$
+
+设 $p_B$、$p_C$ 分别投影到 $\operatorname{span}_{\mathbb C}\{e_0,e_1\}$、$\operatorname{span}_{\mathbb C}\{e_0,\kappa e_1+s e_2\}$。反设 $\eta_{p_B}=\eta$、$\eta_{p_C}=-\eta$，取未归一数学向量 $\psi=e_0-e_1+\mathrm i\eta(d/s)e_2$，于是 $B\psi=0$。由 (120.5) 计算 (120.6)，在此基中准确有
+
+$$
+\begin{aligned}
+v&=\tfrac14\bigl((\kappa-2)(1+\mathrm i\eta),\ -\kappa-\mathrm i\eta,\ -s\bigr)^{\mathsf T},\\
+z&=\tfrac{d(1+\mathrm i\eta)}2(1,\kappa,s)^{\mathsf T},\\
+w&=\tfrac14\bigl(2-\kappa+\mathrm i\eta\kappa,\ 1+\mathrm i\eta\kappa,\ \mathrm i\eta s\bigr)^{\mathsf T}.
+\end{aligned}
+\tag{120.11}
+$$
+
+仅用 $s^2=1-\kappa^2$、$\eta^2=1$，这些显式向量给
+
+$$
+\begin{aligned}
+\|v\|^2&=\tfrac18(d^2+2d+2),& \|z\|^2&=d^2,\\
+\operatorname{Re}\langle v,z\rangle&=-\tfrac18d(d+4),& R&=\tfrac18d(4-d),\\
+\Delta&=\tfrac18d^3+\tfrac7{64}d^4,&
+\Delta-R^2&=\tfrac{d^2}{32}(3d^2+8d-8)<0.
+\end{aligned}
+\tag{120.12}
+$$
+
+严格号因 $0<d\le1/2$，括号至多 $3/4+4-8=-13/4$。这违反 (120.9)，故 (120.10) 的两角必同号。任选正交基这里只是对同一原矩阵及其原输出作坐标计算，不要求 $D$ 对酉变换协变。
+
+最后作有限拼接。固定任意原秩一投影 $e=P_{e_0}$，任意两个包含它的秩二角可写成 $\operatorname{span}\{e_0,v_1\}$、$\operatorname{span}\{e_0,v_2\}$，其中 $v_1,v_2\in e_0^\perp$ 为单位向量。重选 $v_2$ 的相位使 $\langle v_1,v_2\rangle=\kappa\in[0,1]$，这不改变角。若 $\kappa=1$，两角相同；若 $1/2\le\kappa<1$，用 $e_1=v_1,e_2=(v_2-\kappa v_1)/\sqrt{1-\kappa^2}$ 直接应用上述比较。若 $0\le\kappa<1/2$，插入单位向量 $v_0=(v_1+v_2)/\sqrt{2+2\kappa}$，则 $\langle v_1,v_0\rangle=\langle v_0,v_2\rangle=\sqrt{(1+\kappa)/2}\in[1/\sqrt2,1)$；两次已经证明的比较即得两角同号。因此全部含 $e$ 的秩二角同号。
+
+在 $\mathbb C^3$ 中任意两个二维子空间的交维数至少一，选交中的一条单位射线就能应用上一段；于是所有原秩二角共享一个 $\eta$，(120.5) 给 (120.3)。任意两条秩一投影的像之和维数至多二，可包含在某个原秩二角中，故其同式也成立。全程只有有限比较，没有稠密性或取向的连续性论证。∎
+
+**定义 120.3（几何内容、成熟工具及边界）。** (120.3) 的 $\texttt{repo-derived}$ 增量是不同原角之间的取向一致性：(120.7) 将同一个原 PB 的两次外层调用与原 P2 的共同零面绑定，(120.12) 排除相反取向，再由有限链覆盖所有角。119.2–119.3 的角接口及 93.1 的单角分类直接复用，不重计为新分类；矩阵乘法、正二次型和实 Cauchy–Schwarz 为 $\texttt{literature-attested}$ 工具。两种整体符号仍都保留，局部 Bloch 三轴的方向是响应几何，不是物理三空间或物理时间方向。
+
+成熟局部导子刚性不代付本条比较。Ayupov–Arzikulov–Umrzaqov–Nuriddinov，[*Description of 2-local derivations and automorphisms on finite dimensional Jordan algebras*，arXiv:1911.03194v2，Theorem 5.3](https://arxiv.org/html/1911.03194v2#S5.Thmtheorem3) 要求每对输入有共同导子见证；Cabello–Peralta，[*Weak-2-local symmetric maps on C*-algebras*，arXiv:1510.00915v1，Theorem 2.5、Corollary 2.10](https://arxiv.org/html/1510.00915v1) 也保留其局部线性插值见证。单角的 (120.5) 不供应这些跨角见证。Niestegge，[*Dynamical Correspondence in a Generalized Quantum Theory*，arXiv:1402.0158v2，§4 Lemma 3、§5 Definition 1](https://arxiv.org/html/1402.0158v2#S5) 分别以有界线性算子和线性动力对应为前件；这里未输入这些前件，也未重作其成熟重构定理。不作历史优先权或文献穷尽主张。
+
+任意共同支撑秩三的原对、全域可加／齐次／连续、一般压缩相容性、中央旁观平移及完整 $R$ 不在 (120.3) 的结论中；不得由小角公式作未经证明的线性延伸。一般 JB 的 P2+PB 桥和一致预测放大界的实际供应也未由此得到。即使原域确有本节矩阵识别，原质量、实际准备与 native gate/port、父位置、记录、参考、时钟、所有合法顺序／自适应／并行未来及失败／停止／销毁分支的完整条件联合律，仍须满足 95.2、98.6 的原来源合同。数学向量读取及角内识别不构造这些来源，不制造复制、重置、回返、CP、仪器或物理能量／共同作用量。完整无限维 CountRead 响应仍须在其整个原域上处理，不能由此有限条件分支取代；全量子起源目标仍保留这些缺口。
+
+## 追加锚（本行以下为增补区）
