@@ -8,8 +8,8 @@ import D5.S3.Quantum.SpinFactor.OriginalClassification
 The closed registration constants use the original positive cross model only
 to witness failure of the rejected readout. Their laws retain every original
 relation and supplier premise, including the full P2/PB endpoint telescope.
-The supplier and Euclidean adapters are unnamed proof terms; the mathematical
-source declarations and their visibility are unchanged.
+The supplier and Euclidean adapters are closed private proof helpers consumed
+by the registration families.
 -/
 
 noncomputable section
@@ -20,70 +20,68 @@ open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 
 namespace Reg.D5.S3.Quantum.SpinFactor.OriginalPureRigidity
 
-local notation "auditModelLaws" =>
-  ((_root_.D5.S3.Quantum.SpinFactor.OriginalClassification.complete_classification
-    (crossD .plus)).mpr ⟨.plus, fun _ _ => rfl⟩)
+private theorem auditModelLaws : P2 (crossD .plus) ∧ PB (crossD .plus) :=
+  (_root_.D5.S3.Quantum.SpinFactor.OriginalClassification.complete_classification
+    (crossD .plus)).mpr ⟨.plus, fun _ _ => rfl⟩
 
-local notation "auditSuppliers" =>
-  (show PureSuppliers (crossD .plus) from by
-    have laws := auditModelLaws
-    refine {
-      antisymmetric := p2_skew _ laws.1
-      axis_zero := collinear_zero _ laws.1 laws.2
-      difference := (pb_iff_finite_difference _).mp laws.2
-      bound := ?_
-      label_rotation := ?_ }
-    · intro n hn a b
-      let α : Evaluation := ⟨1, n, by simp [vnorm, hn]⟩
-      have hnn : dotProduct n n = 1 := hn
-      have he (u v : E) :
-          evaluate α (jordan u v) = dot (lift n u) (lift n v) := by
-        simp only [evaluate, α, jordan, lift, dot, one_mul,
-          add_dotProduct, dotProduct_add, smul_dotProduct, dotProduct_smul,
-          smul_eq_mul, hnn, dotProduct_comm u.2 n]
-        ring
-      have hcross (x y : Vec) :
-          dot (crossProduct x y) (crossProduct x y) =
-            dot x x * dot y y - dot x y ^ 2 := by
-        simpa only [dot, pow_two, dotProduct_comm y x] using
-          (cross_dot_cross x y x y)
-      have hb := p2_determinant_bound (crossD .plus) laws.1 α a b
-      rw [he a a, he b b, he a b] at hb
-      simpa only [evaluate, α, one_mul, hcross] using hb
-    · intro a b c s hcs
-      simpa only [sub_eq_add_neg, neg_smul, add_comm] using
-        (_root_.D5.S3.Quantum.SpinFactor.OriginalDContract.label_rotation
-          (crossD .plus) laws.1 laws.2 c s hcs a b))
+private theorem auditSuppliers : PureSuppliers (crossD .plus) := by
+  have laws := auditModelLaws
+  refine {
+    antisymmetric := p2_skew _ laws.1
+    axis_zero := collinear_zero _ laws.1 laws.2
+    difference := (pb_iff_finite_difference _).mp laws.2
+    bound := ?_
+    label_rotation := ?_ }
+  · intro n hn a b
+    let α : Evaluation := ⟨1, n, by simp [vnorm, hn]⟩
+    have hnn : dotProduct n n = 1 := hn
+    have he (u v : E) :
+        evaluate α (jordan u v) = dot (lift n u) (lift n v) := by
+      simp only [evaluate, α, jordan, lift, dot, one_mul,
+        add_dotProduct, dotProduct_add, smul_dotProduct, dotProduct_smul,
+        smul_eq_mul, hnn, dotProduct_comm u.2 n]
+      ring
+    have hcross (x y : Vec) :
+        dot (crossProduct x y) (crossProduct x y) =
+          dot x x * dot y y - dot x y ^ 2 := by
+      simpa only [dot, pow_two, dotProduct_comm y x] using
+        (cross_dot_cross x y x y)
+    have hb := p2_determinant_bound (crossD .plus) laws.1 α a b
+    rw [he a a, he b b, he a b] at hb
+    simpa only [evaluate, α, one_mul, hcross] using hb
+  · intro a b c s hcs
+    simpa only [sub_eq_add_neg, neg_smul, add_comm] using
+      (_root_.D5.S3.Quantum.SpinFactor.OriginalDContract.label_rotation
+        (crossD .plus) laws.1 laws.2 c s hcs a b)
 
-local notation "auditPerpendicular" =>
-  (show CommonNonunitPerpendicular from by
-    intro a b
-    obtain ⟨n, hn, han, hbn⟩ :=
-      _root_.D5.S3.Geometry.TwoAxisFiniteRotation.unit_perpendicular_pair
-        (WithLp.toLp 2 a) (WithLp.toLp 2 b)
-    let v : Vec := WithLp.ofLp n
-    have hv : dot v v = 1 := by
-      have hs := EuclideanSpace.real_norm_sq_eq n
-      rw [hn] at hs
-      simpa only [one_pow, dot, dotProduct, v, pow_two, one_mul] using hs.symm
-    have hav : dot a v = 0 := by
-      simpa [PiLp.inner_apply, RCLike.inner_apply, dot, dotProduct, v, mul_comm] using han
-    have hbv : dot b v = 0 := by
-      simpa [PiLp.inner_apply, RCLike.inner_apply, dot, dotProduct, v, mul_comm] using hbn
-    have hvv : dotProduct v v = 1 := hv
-    have hav' : dotProduct a v = 0 := hav
-    have hbv' : dotProduct b v = 0 := hbv
-    let z : Vec := (2 : ℝ) • v
-    have hzz : dot z z = 4 := by
-      norm_num [z, dot, smul_dotProduct, dotProduct_smul, smul_eq_mul, hvv]
-    refine ⟨z, ?_, ?_, ?_, ?_⟩
-    · intro hz
-      rw [hz] at hzz
-      norm_num [dot] at hzz
-    · simp only [z, dot, dotProduct_smul, smul_eq_mul, hav', mul_zero]
-    · simp only [z, dot, dotProduct_smul, smul_eq_mul, hbv', mul_zero]
-    · rw [hzz]
-      norm_num)
+private theorem auditPerpendicular : CommonNonunitPerpendicular := by
+  intro a b
+  obtain ⟨n, hn, han, hbn⟩ :=
+    _root_.D5.S3.Geometry.TwoAxisFiniteRotation.unit_perpendicular_pair
+      (WithLp.toLp 2 a) (WithLp.toLp 2 b)
+  let v : Vec := WithLp.ofLp n
+  have hv : dot v v = 1 := by
+    have hs := EuclideanSpace.real_norm_sq_eq n
+    rw [hn] at hs
+    simpa only [one_pow, dot, dotProduct, v, pow_two, one_mul] using hs.symm
+  have hav : dot a v = 0 := by
+    simpa [PiLp.inner_apply, RCLike.inner_apply, dot, dotProduct, v, mul_comm] using han
+  have hbv : dot b v = 0 := by
+    simpa [PiLp.inner_apply, RCLike.inner_apply, dot, dotProduct, v, mul_comm] using hbn
+  have hvv : dotProduct v v = 1 := hv
+  have hav' : dotProduct a v = 0 := hav
+  have hbv' : dotProduct b v = 0 := hbv
+  let z : Vec := (2 : ℝ) • v
+  have hzz : dot z z = 4 := by
+    norm_num [z, dot, smul_dotProduct, dotProduct_smul, smul_eq_mul, hvv]
+  refine ⟨z, ?_, ?_, ?_, ?_⟩
+  · intro hz
+    rw [hz] at hzz
+    norm_num [dot] at hzz
+  · simp only [z, dot, dotProduct_smul, smul_eq_mul, hav', mul_zero]
+  · simp only [z, dot, dotProduct_smul, smul_eq_mul, hbv', mul_zero]
+  · rw [hzz]
+    norm_num
 
 abbrev equalitySignature (α : Type) : Signature where
   Params := Unit
