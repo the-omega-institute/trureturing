@@ -1,0 +1,20 @@
+**定理 5.3（平均右平移恢复原配对）。**对全部 $a,b,u,v$ 与 $L\ge1$，有
+
+$$
+\left|B(\mathcal T_L^ue_a,\mathcal T_L^ve_b)-B(e_a,e_b)\right|
+\le\frac{3[c(a,b)+q(a)+r(b)]+27[\Omega(u)+\Omega(v)]}L.
+\tag{5.5}
+$$
+
+**证明。**四点极化给
+
+$$
+\begin{aligned}
+2B(\mathcal T_L^ue_a,\mathcal T_L^ve_b)
+={}&-K_L(a,u;b,v)+K_L(a,u;1,v)\\
+&+K_L(1,u;b,v)-C_L(u,v).
+\end{aligned}
+$$
+
+前三项分别用 (5.3)，其主项为 $c(a,b)+C_L(u,v)$、$q(a)+C_L(u,v)$、$r(b)+C_L(u,v)$。共同的 $C_L$ 精确抵消，剩余 $2B(e_a,e_b)$。三个误差预算相加后除以二，得到 (5.5)。此式不预设 $B$ 对称或正定。
+

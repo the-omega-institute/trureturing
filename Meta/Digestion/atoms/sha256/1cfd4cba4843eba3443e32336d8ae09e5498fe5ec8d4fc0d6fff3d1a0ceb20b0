@@ -1,0 +1,48 @@
+**引理 26.4（正负三角形同总量）。**同一固定原条件切口上，
+
+$$
+a_1+a_\zeta+a_{\zeta^2}
+=a_{-1}+a_{-\zeta}+a_{-\zeta^2}=C.
+\tag{26.12}
+$$
+
+**证明。**对 $s\in\mu_6$ 置
+
+$$
+\begin{gathered}
+w_s^+=x+s(y+d_1)+s^2(d_2+d_3),\qquad
+w_s^-=x+s(y-d_1)-s^2(d_2+d_3),\\
+P_s^\pm=w_s^\pm(w_s^\pm)^*/6,\qquad
+k_s=\bigl(s d_1+s^2(d_2+d_3)\bigr)/\eta.
+\end{gathered}
+\tag{26.13}
+$$
+
+三个正交部分的平方范数各为二，故 $(w_s^\pm)^*w_s^\pm=6$，$P_s^\pm$ 是 $M_6(D)$ 中的秩一 Hermitian 幂等子。这里使用全幂等子测度及其 $V(P_s^\pm)$ 实现；不把 $w_s^\pm/\sqrt6$ 当成 $D$-单位射线。等价地，$w_s^\pm/\eta=q_s\pm k_s$ 在 $D^6$ 内范数平方为二，属于前述第二种本原长度的投影读法。
+
+$k_s$ 是暗 $D$-单位向量，且 $w_s^\pm=\eta(q_s\pm k_s)$。于是 $P_s^+\perp P_s^-$，两者和为 $Q_s+P_{k_s}$。由暗区零质量，
+
+$$
+\mu(P_s^+)+\mu(P_s^-)=a_s.
+\tag{26.14}
+$$
+
+令 $T$ 分别取 $\mu_3$ 与 $-\mu_3$。同一符号族中，任意不同 $s,t\in T$ 有
+$r=\bar s t\in\{\zeta,\zeta^2\}$，故
+$(w_s^\pm)^*w_t^\pm=2(1+r+r^2)=0$。对两种 $T$ 都有
+$\sum_{s\in T}s=\sum_{s\in T}s^2=0$，且交叉项也含这两个零和，因而直接外积求和给
+
+$$
+\begin{gathered}
+\sum_{s\in T}P_s^+=K^+
+=X+(y+d_1)(y+d_1)^*/2+Z_d,\\
+\sum_{s\in T}P_s^-=K^-
+=X+(y-d_1)(y-d_1)^*/2+Z_d,\qquad
+Z_d=(d_2+d_3)(d_2+d_3)^*/2.
+\end{gathered}
+\tag{26.15}
+$$
+
+每行右侧是三个两两正交的 $D$-投影之和，故 $K^\pm$ 也是合法幂等子；$Z_d\le D_0$，其质量为零。两条 $(y\pm d_1)$ 的规范投影互相正交，和为 $Y+P_{d_1}$。因此
+$\mu(K^+)+\mu(K^-)=2\mu(X)+\alpha=C$。对 (26.14) 在 $T$ 上求和，再用各符号族的正交可加性，得 $\sum_{s\in T}a_s=C$。这正是 (26.12)。$\square$
+

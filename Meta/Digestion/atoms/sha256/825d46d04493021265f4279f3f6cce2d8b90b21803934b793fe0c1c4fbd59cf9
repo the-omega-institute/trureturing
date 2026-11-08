@@ -1,0 +1,27 @@
+### 推论 2.7（一个参照类中的可变与不变）
+
+<a id="cor-c123-reference-class"></a>
+
+同类忠实参照共用 $\mathcal T_\sigma$、$\mathfrak F_\sigma$ 及每块的余量态
+$\omega_\alpha$。其全部自由度是
+
+$$
+Q_\alpha=p_\alpha\rho_\alpha^L,
+ \qquad p_\alpha>0,\quad\sum_\alpha p_\alpha=1,
+ \qquad \rho_\alpha^L>0,\quad\operatorname{Tr}\rho_\alpha^L=1.
+$$
+
+所以中心权重 $p_\alpha$ 与块内逻辑态 $\rho_\alpha^L$ 均可改变；固定的是各块条件余量态。该类是固定状态凸集的忠实部分，实维数为
+$\sum_\alpha(\dim L_\alpha)^2-1$。
+
+**证明。**
+同一回推给同一回接与固定代数。结论随即来自
+[(17)](#eq-c123-equivalent-reference-class)，其中每个正定逻辑矩阵贡献
+$(\dim L_\alpha)^2$ 个实参数，总归一化减去一个参数。
+
+忠实性与共同输出角是定理的明确前件。若原来还有 $K_0^\perp$，可人为补全为
+$\widetilde{\mathcal R}_\sigma(Y)
+=\mathcal R_\sigma(P_0YP_0)+\operatorname{Tr}[(I-P_0)Y]\,\xi$，
+其中 $\xi$ 是任意密度矩阵。两次任意选取不同的补全态，当然可能得到不同的环境外延；上述等价没有认证不可达输入。
+参照降秩时，$C^{-1}$ 和共同支持也可能消失，不能把忠实类的边界未经重证便纳入同一定理。
+

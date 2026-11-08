@@ -1,0 +1,23 @@
+#### 推论 10.3（最优剩余关系的秩）
+
+若 $`t_*>0`$，则
+
+$$
+G=t_*\mathbf1\mathbf1^*+R,\qquad R\succeq0,\qquad
+\boxed{\operatorname{rank}  R=\operatorname{rank}  G-1.}
+$$
+
+$R$ 是 $r_j=x_j-q$ 的 Gram 矩阵。
+
+**证明。**
+
+由正交分解，$\langle x_j,x_k\rangle =\left\lVert q\right\rVert ^2+\langle r_j,r_k\rangle$。
+而 $L=D\oplus\operatorname{span} \{q\}$，并且 $r_j$ 张成 $D$：
+一边 $r_j\in D$，另一边 $x_j-x_1=r_j-r_1$。
+所以剩余 Gram 秩为 $\dim D=\dim L-1=\operatorname{rank}  G-1$。
+
+□
+
+该秩只计当前有限地址族的剩余幅度维数，
+不能替代全输入仪器的 Choi 秩或整个装置的最小环境维数。
+

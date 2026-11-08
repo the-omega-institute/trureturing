@@ -1,0 +1,62 @@
+**Theorem 51.3 (unique interior maximum on each open vertical fibre).**
+For either row and every tuple (51.2), independently of the sign of
+$D_\sigma$, every $Y\in(x^2,1)$ has exactly one maximizing point
+$\widehat X(Y)$ on its full closed vertical fibre, and
+
+$$
+ (L-\sqrt Y)^2<\widehat X(Y)<1,
+ \qquad
+ \Gamma_{XX}(X,Y)<0
+ \quad\bigl((L-\sqrt Y)^2<X<1\bigr).
+\tag{51.17}
+$$
+
+**Proof.** The fibre is exactly $[(L-\sqrt Y)^2,1]$.
+On its interior set
+
+$$
+ u=1-X,\qquad
+ v=\frac\Delta X
+   =2(L^2+Y)-X-\frac{(L^2-Y)^2}{X}.
+\tag{51.18}
+$$
+
+Here $u,v>0$; these auxiliary real functions are distinct from the
+feedback vector $v$ in (51.5). They satisfy
+
+$$
+ F=\sqrt{\frac{1-Y}{4Y}}\sqrt{uv},\qquad
+ u_{XX}=0,\qquad
+ v_{XX}=-\frac{2(L^2-Y)^2}{X^3}<0.
+\tag{51.19}
+$$
+
+For $f=\sqrt{uv}$, ordinary differentiation yields
+
+$$
+ f_{XX}
+ =\frac{u_{XX}v+uv_{XX}}{2\sqrt{uv}}
+   -\frac{(u_Xv-uv_X)^2}{4(uv)^{3/2}}<0.
+\tag{51.20}
+$$
+
+Thus $F_{XX}<0$. Write $Q=C^2$. Since $R,C>0$ on the open fibre,
+
+$$
+\begin{aligned}
+ C_{XX}&=\frac{\ell mF_{XX}}{C}-\frac{Q_X^2}{4C^3}<0,\\
+ R_{XX}&=-\frac{a^2k^2}{4R^3}<0,\\
+ \Gamma_{XX}&=\sqrt p\,R_{XX}+\sqrt q\,C_{XX}<0.
+\end{aligned}
+\tag{51.21}
+$$
+
+The lower fibre endpoint has $X,Y<1$ and lies on the curved boundary;
+the positive coherent gain in (51.15) excludes it as a fibre maximum.
+The upper endpoint is $X=1$ with $x^2<Y<1$, and the inward gain used
+in Proposition 51.2 excludes it as well. Neither of these two
+perturbations uses $D_\sigma<0$. Continuity gives a maximum on the
+closed fibre. All maxima are interior, where the strictly negative
+second derivative gives strict concavity and hence uniqueness.
+$\square$
+

@@ -1,0 +1,30 @@
+**定义 151.1（完整来源、固定记录和字面尾块）。** 固定 138.1 的同一个 $89$ 维来源、唯一 ready $e_0=R_0v$、全部实际有限前缀 $a\in\mathsf W_{11}$、原七地址后读字 $h\in\mathsf W$、原记录 $i\in\{0,1\}$ 和全部 $w\in\Omega_{10}$。固定边界仍为 $b_{-1}b_0=10$、$b_{10}b_{11}b_{12}=010$，内部九位无相邻占据。令
+
+$$
+\begin{gathered}
+\mathcal K_i=M_i\mathcal K,\qquad
+S_0=\{000,010,100\},\qquad S_1=\{001,101\},\\
+\mathcal H_s=\operatorname{span}\{|b\rangle:(b_7,b_8,b_9)=s\},
+\qquad P_s:\mathcal K_i\longrightarrow\mathcal H_s\quad(s\in S_i),\\
+\mathcal A_i=\bigoplus_{s\in S_i}\operatorname{End}_{\mathbb C}(\mathcal H_s)
+\ \subset\operatorname{End}_{\mathbb C}(\mathcal K_i),\\
+E^i_{h,w}=\left.M_iK_h^*N_wK_hM_i\right|_{\mathcal K_i},
+\qquad
+\mathcal V_i=\operatorname{span}_{\mathbb R}
+ \{E^i_{h,w}:h\in\mathsf W,\ w\in\Omega_{10}\}.
+\end{gathered}
+\tag{151.1}
+$$
+
+$\mathcal A_i$ 是按字面尾块嵌入的矩阵代数，不预先定义为门生成的代数。$\operatorname{Herm}(\mathcal A_i)$ 取其自伴部分的实向量空间。由于 $h$ 只改变 $b_0,\ldots,b_6$，它保持每个 $\mathcal H_s$；$b_7=1$ 迫使 $b_6=0$，$b_7=0$ 则允许全部六位 $b_1\cdots b_6$。故具体分解为
+
+| 记录 $i$ | 字面尾 $s=(b_7,b_8,b_9)$ | 自由前缀与边界 | $\dim\mathcal H_s$ | 八步表形 |
+| --- | --- | --- | --- | --- |
+| $0$ | $000$ | 六位无相邻占据 | $21$ | $[5,3]$ |
+| $0$ | $010$ | 六位无相邻占据 | $21$ | $[5,3]$ |
+| $0$ | $100$ | 五位无相邻占据，$b_6=0$ | $13$ | $[4,4]$ |
+| $1$ | $001$ | 六位无相邻占据 | $21$ | $[5,3]$ |
+| $1$ | $101$ | 五位无相邻占据，$b_6=0$ | $13$ | $[4,4]$ |
+
+这里的计数是 II §103 已有的 $13\times2+21\times3=89$ 分解，$\dim\mathcal K_0=55$、$\dim\mathcal K_1=34$。按相同的前缀路径识别，三个 $21$ 维块上的每个 $K_j$ 完全相同，两个 $13$ 维块上的每个 $K_j$ 也完全相同；后读控制不能分别指定这些同型旁观副本。所有非法旧标签仍保留为零投影，合法旧标签在固定 $\mathcal K_i$ 上至多指定一条完整路径。旧事件始终为 $A=\{b_1=1\}$，$Q=N_A$。
+

@@ -1,0 +1,44 @@
+**定理 42.4（删除 Z 的完整模型）。** 在同一完整 tagged-CP 背景上，Z 不能由 SC、S 和其余原数据推出。取与指针标签不同的三阶对象 \(A_0\)，令 \(\Gamma_P=\operatorname{id}\)，在 \(A_0\) 上取 \(v=\operatorname{diag}(1,-1,1)\)，并按原 33.3 的标签张量规则延拓。定义
+
+$$
+D^{\mathrm{alt},A}_a b
+=\frac12\bigl(\delta^A_{\Gamma_A(a)}b-
+\delta^A_{\Gamma_A(b)}a\bigr).
+\tag{42.3}
+$$
+
+它对所有完整 \(E_A\) 交替，故 SC 成立；在实际张量联合上局部嵌入和交叉零仍成立，因为相异张量因子交换。\(\Gamma_P=\operatorname{id}\) 使指针上的关系仍为原 \(\delta\)，故 S 原样成立。所有原准备、概率、过程菜单、失败、遗忘、记录、具名返回和合法有限历史均逐字继承；这里的模型构造是全局的，不是把一个局部角冒充成整个背景。
+
+在 \(A_0\) 的三阶块取
+
+$$
+ h=e_{11}-e_{22},\quad x=e_{12}+e_{21},\quad y=e_{23}+e_{32},\quad a=h+x.
+$$
+
+直接计算给出
+
+$$
+D^{\mathrm{alt}}_{a}(h\circ y)-D^{\mathrm{alt}}_{a}h\circ y
+-h\circ D^{\mathrm{alt}}_{a}y
+=\frac i2(e_{13}-e_{31})\ne0.
+\tag{42.4}
+$$
+
+为给出合规的实际正准备，令
+
+$$
+ w=(1,1+i,1)^\mathsf T,\quad q=ww^*/4,\quad
+ u=(-1+i,1,0)^\mathsf T/\sqrt3.
+$$
+
+则 \(q\ge0\)、\(u^*w=0\)、\(u^*u=1\)，且
+
+$$
+D^{\mathrm{alt}}_a q=
+\begin{pmatrix}1/4&0&1/8\\0&-1/4&0\\1/8&0&0\end{pmatrix},
+\qquad u^*D^{\mathrm{alt}}_a q\,u=\frac1{12}\ne0.
+\tag{42.5}
+$$
+
+因此原菜单中的正准备 \(\alpha_u(z)=u^*zu\) 满足 \(\alpha_u(I)=1\)、\(\alpha_u(q)=0\)，但 \(\alpha_u(D^{\mathrm{alt}}_a q)\ne0\)，直接否定 Z。式 (42.4) 同时显示非导子性；它没有把数学向量或矩阵角升级为新设备。∎
+

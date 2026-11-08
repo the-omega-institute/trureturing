@@ -57,7 +57,7 @@ private theorem abs_affine_le_endpoints (a b t : ℝ) (ht : |t| ≤ 1) :
   · rw [max_comm]
     apply abs_le_max_abs_abs <;> nlinarith
 
-private theorem separately_affine_cube_vertex {ι : Type*} [Fintype ι] [DecidableEq ι]
+theorem separately_affine_cube_vertex {ι : Type*} [Fintype ι] [DecidableEq ι]
     (F : (ι → ℝ) → ℝ)
     (hF : ∀ x i, ∃ a b : ℝ, ∀ t,
       F (Function.update x i t) = a*t+b)

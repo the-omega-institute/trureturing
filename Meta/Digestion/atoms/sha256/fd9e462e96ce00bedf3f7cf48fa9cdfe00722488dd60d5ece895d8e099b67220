@@ -1,0 +1,37 @@
+### 152.G. Recovery of the fourth label and the precise residual boundary
+
+For any bounded $v$, the original propagation and self-adjointness give the row and column sums
+
+$$
+\begin{array}{c|cc}
+ r&Q_r(v,1)&Q_r(1,v)\\ \hline
+12&L_0(v)&L_1(v)\\
+13&L_0(v)&L_2(v)\\
+23&L_1(v)&L_2(v).
+\end{array}
+\tag{152.45}
+$$
+
+Write these left and right marginal functionals as $L_r^{\rm left},L_r^{\rm right}$. For either tuple $v=\mathbf1_D$ or $v=f$, the pointwise complement identity gives
+
+$$
+\begin{aligned}
+Q_r(v_a,v_B)&=L_r^{\rm left}(v_a)-\sum_{b\in I}Q_r(v_a,v_b),\\
+Q_r(v_B,v_a)&=L_r^{\rm right}(v_a)-\sum_{b\in I}Q_r(v_b,v_a),\\
+Q_r(v_B,v_B)&=1-\sum_{a\in I}
+  \bigl(L_r^{\rm left}(v_a)+L_r^{\rm right}(v_a)\bigr)
+  +\sum_{a,b\in I}Q_r(v_a,v_b).
+\end{aligned}
+\tag{152.46}
+$$
+
+Every term on the right is already fixed by (152.8). This proves all ordered pair coordinates with label $B$. Likewise $L_j(v_B)=1-\sum_{a\in I}L_j(v_a)$ gives the fourth marginal at each epoch, proving $D\in\mathscr D_{12}(\theta)$ by (152.4)–(152.5). The $013$ equation is the last coordinate of (152.8). Restoring the originally prescribed representative $b$ changes none of these target integrals. All intermediate null repairs are harmless because all three positive-time source marginals are absolutely continuous with respect to $m$. This proves (152.9). $\square$
+
+The source-specific composition in Theorem 152.2 is `repo-derived`: the invariant-slack sector continuation and the six ordered functionals feed the same original-source thirty-seven-coordinate attainment argument. Heat analyticity, local smoothing, the principal-symbol calculation, source-start nonconstancy and the global sector negative tests are the supplied results (122.11), Corollary 126.2, §§129.C–D and Corollary 133.3. The marginal independence and the finite-dimensional correction and quantile templates are Lemmas 147.2–147.3 and Theorem 148.1. They are used within this proof, not asserted as new standalone results.
+
+The known analytic uniqueness input is B. S. Mityagin, *The zero set of a real analytic function*, [arXiv:1512.07276v1](https://arxiv.org/abs/1512.07276v1), Proposition 0; its connected-open-domain and positive-measure-zero-set hypotheses are paid in 152.A. The known local-dependence input is R. Meshulam and P. Šemrl, *Locally linearly dependent operators*, [doi:10.2140/pjm.2002.203.441](https://doi.org/10.2140/pjm.2002.203.441), Theorem 2.2, pp. 444–445; (152.27) uses its contrapositive for real vector spaces and $n=6,c=1$. The fixed-point input is Brouwer's theorem, *Über Abbildung von Mannigfaltigkeiten*, [doi:10.1007/BF01456931](https://doi.org/10.1007/BF01456931), in its finite-dimensional closed-ball form, as used in §148. No priority claim is attached to these intermediates or to their source-specific composition.
+
+For this partition define the actual residual $\Delta_{yzw}=\mathcal C(\mathbf1_{D_y},\mathbf1_{D_z},\mathbf1_{D_w})-\mathcal C(f_y,f_z,f_w)$. All its pair sums vanish. By Proposition 150.3 it lies in $H_0^{\otimes3}$, where $H_0=\{v\in\mathbb R^{\mathcal L}:\sum_yv_y=0\}$, and its twenty-seven ambient coordinates are $\Delta_{ijk}$, $i,j,k\in I$. Theorem 152.2 pays precisely $\Delta_{013}=0$ among these. The other twenty-six equations remain obligations for the same $D$; this ambient linear count asserts neither independence nor feasibility of their nonlinear restrictions to partitions. The unchanged original objective is still $\forall\theta\ \exists D:\Phi_3(\mathbf1_D)=\Phi_3(f)$ in all sixty-four ordered coordinates. Every residual uses its actual terminal $P\mathbf1_{D_w}$, with no substitution by $Pf_w$.
+
+The all-pair witness of §150 and the B8/two-$B$ refinement witness of §151 remain separate witnesses. Theorem 152.2 imposes no arbitrary extra $L^1$ moment list, B8 condition, two-$B$ compatibility or rank-two law for $A_D[y,z]=\mathcal C(\mathbf1_{D_y},\mathbf1_{D_z},\mathbf1_{D_3})$. It does not settle the half-time negative-space lift, the nonsymmetric finite-index continuation or an every-overlap criterion. All its assertions retain the original full endpoint, source, measure, clock, state space and common readout. They introduce no extra seed, controller, postselection or slot-dependent partition, and supply no physical-realization assertion or counterexample to the original $F_{64}$ statement.
+

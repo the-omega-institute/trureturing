@@ -1,0 +1,9 @@
+**定义 81.1（两个完整候选）。** 令 $\mathsf C_R^{\rm mean}=B_R+\mathrm M+\mathrm{SJ}$、$\mathsf C_{\rm cl}^{\rm mean}=\mathsf B_{\rm cl}+\mathrm M+\mathrm{SJ}$。SJ 逐字是同一原 AC 效果 $d=T_m(u_I)$ 在整个原 $E_P$ 上的
+
+$$
+D_d^2=L_d^2-L_d.
+\tag{81.1}
+$$
+
+候选没有把 D 定义为差商或重构交换子；平均点也不更换原对象、原 q 或原合法调用。M 是一族混合相容关系，SJ 是另一项独立标定；合并记号不减少其独立信息。
+

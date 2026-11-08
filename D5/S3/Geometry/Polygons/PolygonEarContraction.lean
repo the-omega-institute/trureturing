@@ -415,7 +415,7 @@ private lemma lift_mem_expand (hm : 5 ≤ m) {e : Sym2 (ZMod m)}
 def reducedCenters (P : Finset (ZMod (m + 1))) : Finset (ZMod m) :=
   (P.erase 1).image vertexDrop
 
-private lemma reduced_centres_card (hm : 6 ≤ m) {P : Finset (ZMod (m + 1))}
+lemma reduced_centres_card (hm : 6 ≤ m) {P : Finset (ZMod (m + 1))}
     (h1 : 1 ∈ P) : (reducedCenters P).card = P.card - 1 := by
   rw [reducedCenters, card_image_of_injOn, card_erase_of_mem h1]
   intro i hi j hj hij
@@ -423,7 +423,7 @@ private lemma reduced_centres_card (hm : 6 ≤ m) {P : Finset (ZMod (m + 1))}
   have hj' := lift_drop (by omega) (mem_erase.mp hj).1
   rw [← hi', ← hj', hij]
 
-private lemma reduced_centres_compatible (hm : 6 ≤ m) {P : Finset (ZMod (m + 1))}
+lemma reduced_centres_compatible (hm : 6 ≤ m) {P : Finset (ZMod (m + 1))}
     (hP : Compatible P) (h1 : 1 ∈ P) :
     Compatible (reducedCenters P) := by
   intro i hi j hj hij hc

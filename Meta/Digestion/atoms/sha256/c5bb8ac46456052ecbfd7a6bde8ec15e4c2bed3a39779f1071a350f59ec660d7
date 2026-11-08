@@ -1,0 +1,95 @@
+**定理 107.2（裸有限代数上的全域恢复）。** 在任意有限 EJA、任意原正 Frobenius 内积 $q$ 与任意原实双线性 $D$ 上，(107.1) 与定义 106.1 的全部实输入关系 $\mathsf F_{\rm cut}$ 等价。两者均推出
+
+$$
+\begin{aligned}
+&D_au=D_ua=0,\qquad D_aa=0,\qquad D_ab=-D_ba,\\
+&D_a(x\circ y)=D_ax\circ y+x\circ D_ay,\\
+&q(D_ax,y)=-q(x,D_ay),\\
+&D_c=P_cD_c=D_cP_c,\qquad D_c^2=-\tfrac14P_c,
+\quad P_c=4(L_c-L_c^2),\quad c^2=c.
+\end{aligned}
+\tag{107.2}
+$$
+
+这些局部结论不消费准备覆盖、完整实际联合、预给单位保持或复矩阵分类。
+
+证明。固定幂等元 $c$。成熟 Peirce 分解及原 Frobenius 性给原 $q$-正交投影与余量公式
+
+$$
+P_c^2=P_c=P_c^*,\qquad
+\operatorname{im}P_c=E_{1/2}(c),\qquad
+N_c:=\ker P_c=E_1(c)\oplus E_0(c),\qquad
+W_c(x)=\tfrac12\|P_cx\|_q^2.
+\tag{107.3}
+$$
+
+因此 $W_c(a-b)=0$ 当且仅当 $b=a+n$、$n\in N_c$；这种平移保持 $W_c(x+n)=W_c(x)$，也保持沿任意固定向量平移后的余量。
+
+先设 $\mathsf F_{\rm fib}$。分别取 $b=a$ 与 $b=a+n$，相减得
+
+$$
+q(D_ac,n)=0\quad(n\in N_c),\qquad
+D_ac\in E_{1/2}(c),\qquad
+D_ac=2c\circ D_ac.
+\tag{107.4}
+$$
+
+所有幂等元均在此量词中。特别 $P_u=0$ 给 $D_au=0$。固定任意 $a$，置 $T=D_a$。正交幂等元 $p,r$ 的和仍幂等；将 (107.4) 分别用于 $p,r,p+r$，由线性相减得
+
+$$
+p\circ Tr+r\circ Tp=0.
+\tag{107.5}
+$$
+
+对任意 $x$ 取其同一空间中的数学谱分解 $x=\sum_i\lambda_i r_i$。对角项用 $Tr_i=2r_i\circ Tr_i$，交叉项用 (107.5)，于是
+
+$$
+\begin{aligned}
+2x\circ Tx
+&=\sum_i2\lambda_i^2r_i\circ Tr_i
+ +2\sum_{i<j}\lambda_i\lambda_j(r_i\circ Tr_j+r_j\circ Tr_i)\\
+&=\sum_i\lambda_i^2Tr_i=T(x^2).
+\end{aligned}
+\tag{107.6}
+$$
+
+对 $x+y$ 二次极化给全部 Jordan 导子律。这是本卷引理 88.1 所用成熟 frame 抵消方法在全幂等域上的直接应用。另由 Peirce 正交性，$q(Tr_i,r_j)=0$ 对全部 $i,j$ 成立：$j=i$ 属于 $E_1(r_i)$，$j\ne i$ 属于 $E_0(r_i)$。故 $q(Tx,x)=0$；实极化得 $q(Tx,y)=-q(x,Ty)$。此处直接使用原 Frobenius 型，未把不等块权换成规范迹。Lyapunov-like、单位湮灭与导子的成熟对应及斜伴随结论，参见 Tao–Gowda, *A Representation Theorem for Lyapunov-like Transformations on Euclidean Jordan Algebras*, [作者原文](https://userpages.umbc.edu/~gowda/papers/trGOW12-01.pdf)，§2、Proposition 3；其中后续采用规范内积，本段给出对任意原正 Frobenius 型所需的对应步骤，未单列为新结论。
+
+再在 (107.1) 取 $a=b=c$。由 (107.4)，$v=D_cc$ 属于 $E_{1/2}(c)$，故 $q(v,c)=0$。于是
+
+$$
+0=2q(D_cc,c)+W_c(c+2D_cc)=2\|D_cc\|_q^2,
+\qquad D_cc=0\quad(c^2=c).
+\tag{107.7}
+$$
+
+对同框 $r_i,r_j$ 再取 $c=r_i+r_j$，得到 $D_{r_i}r_j+D_{r_j}r_i=0$。谱展开遂给任意 $x$ 的 $D_xx=0$，双线性极化给全反对称性。结合 $D_au=0$，也得 $D_ua=0$，没有预先交换原作用的两个槽。
+
+现在固定 $c$，记 $H=D_c$。反对称性和 (107.4) 给 $Ha=-D_ac\in\operatorname{im}P_c$。若 $n\in N_c$，则对任意 $a$ 有 $q(Hn,a)=-q(n,Ha)=0$，故 $Hn=0$，即 $H=P_cH=HP_c$。取 (107.1) 的 $b=a$，斜伴随性给 $q(D_ac,a)=0$ 与 $q(P_ca,Ha)=q(a,Ha)=0$，从而
+
+$$
+\begin{aligned}
+2W_c(a)&=W_c(a+2Ha)=W_c(a)+2\|Ha\|_q^2,\\
+4\|Ha\|_q^2&=\|P_ca\|_q^2,\\
+q(Ha,Hb)&=\tfrac14q(P_ca,P_cb),\\
+H^*H&=\tfrac14P_c,\qquad H^2=-\tfrac14P_c.
+\end{aligned}
+\tag{107.8}
+$$
+
+这里极化恢复的是同一原 $D_c$ 的精确尺度，不是另行归一化。最后对任意、无同纤维限制的 $a,b$ 展开：
+
+$$
+\begin{aligned}
+W_c(b+2D_ca)
+&=\tfrac12\|P_cb+2Ha\|_q^2\\
+&=W_c(b)+2q(b,Ha)+2\|Ha\|_q^2\\
+&=W_c(a)+W_c(b)-2q(D_ac,b).
+\end{aligned}
+\tag{107.9}
+$$
+
+这才得到全域 $\mathsf F_{\rm cut}$。不能在任意 $a,b$ 时径自令 $n=b-a\in N_c$；从纤维内不变性到 (107.9) 的桥梁正是跨全部幂等元恢复的原结构与尺度。
+
+反向设 $\mathsf F_{\rm cut}$。在 $W_c(a-b)=0$ 时 $b=a+n$、$n\in N_c$，所以 $W_c(b)=W_c(a)$ 且 $W_c(b+2D_ca)=W_c(a+2D_ca)$，直接限制即给 (107.1)。由已证正向也得 (107.2)。零对象的所有等式为空或为零；零、单位、中央及任意秩幂等元均包含，$P_c=0$ 时 (107.2) 给 $D_c=0$。证明没有引入任何实际数学角或额外准备。∎
+

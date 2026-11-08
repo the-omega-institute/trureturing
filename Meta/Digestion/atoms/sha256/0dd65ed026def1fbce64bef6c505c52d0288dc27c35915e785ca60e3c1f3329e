@@ -1,0 +1,11 @@
+**引理 2.1（有界交换平均刚性）。**在交换幺半群 $S$ 上，令 $T_jh(x)=h(x+s_j)$、$P=m^{-1}\sum_jT_j$。若实函数 $h$ 有界且 $Ph=h$，则每个 $T_jh=h$。
+
+**证明。**置 $d_j=T_jh-h$。平移交换，故 $Pd_j=d_j$。于是
+
+$$
+g=P(h^2)-h^2=\frac1m\sum_jd_j^2\ge0,
+\qquad Pg\ge\frac1m\sum_j(Pd_j)^2=g.
+$$
+
+因此 $ng\le\sum_{r=0}^{n-1}P^rg=P^n(h^2)-h^2\le\|h\|_\infty^2$。令 $n\to\infty$，得 $g=0$，各 $d_j=0$。这是 Prunaru 的交换半群 Choquet–Deny 证明的有限原子版本；这里只用有限和，不给 $S$ 增添拓扑或物理概率。
+

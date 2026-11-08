@@ -1,0 +1,42 @@
+**定义 164.1（奇位扇区及其原载体向量）。** 置
+
+$$
+O=\{1,3,5,7,9\},\qquad
+J_{\rm ev}=\{0,2,4,6,8,10\},\qquad
+S=\{s:s\subseteq O\}.
+\tag{164.2}
+$$
+
+$S$ 有 $32$ 个元素，每个都是 $E$ 的合法配置。对 $s\in S$，令
+
+$$
+\begin{gathered}
+A_s=\{j\in\{2,4,6,8\}:j-1\notin s,\ j+1\notin s\},
+\qquad m_s=|A_s|,\\
+R_s=\sum_{r\subseteq A_s}|s\cup r\rangle\langle s\cup r|,\\
+w_s=\sum_{r\subseteq A_s}x^{m_s-|r|}(-y)^{|r|}|s\cup r\rangle,
+\qquad \kappa_s=x^{m_s}.
+\end{gathered}
+\tag{164.3}
+$$
+
+每个 $q\in E$ 唯一写成 $q=s\cup r$，其中 $s=q\cap O$、$r=q\setminus O\subseteq A_s$。反之，每个这样的 $s\cup r$ 都合法：偶位彼此不相邻，而 $A_s$ 正好排除与 $s$ 相邻的偶位。因此这些扇区覆盖整个原 $E$，不是代码投影或部分路径限制，且
+
+$$
+\sum_{s\in S}R_s=I_{\mathcal K},\qquad
+R_sR_{s'}=0\ (s\ne s'),\qquad
+\sum_{s\in S}2^{m_s}=|E|=89.
+\tag{164.4}
+$$
+
+扇区支撑互不相交，并且
+
+$$
+\|w_s\|^2=\sum_{r\subseteq A_s}x^{2(m_s-|r|)}y^{2|r|}
+=(x^2+y^2)^{m_s}=1,\qquad
+\langle s|w_s\rangle=\kappa_s>0.
+\tag{164.5}
+$$
+
+所以 $(w_s)_{s\in S}$ 为正交归一族。这里的扇区、和式与向量全都在原 $\mathcal K=\mathbb C^E$ 内定义，不引入物理张量分解、辅助载体或新准备权限。
+

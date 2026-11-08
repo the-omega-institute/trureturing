@@ -1,0 +1,75 @@
+**Theorem 33.1 (sharp complete-domain energies).**
+For every fixed $s\in\mathbb R$, $b>0$ and $g>0$, through both signs,
+
+$$
+\begin{aligned}
+E_{\rm raw}(\kappa,\tau_s;g)&\longrightarrow e(gc_s),\\
+E_{\rm unit}(\kappa,\tau_b;g)&\longrightarrow
+ e\!\left(gc_0G_{\beta b}(0)\right).
+\end{aligned}
+\tag{33.1}
+$$
+
+These are infima over exactly $\mathcal F_\kappa$ of [G, (25.9)],
+not restricted infima.
+
+Proof. For either line put $M=c_s$ or $M=c_0G_{\beta b}(0)$,
+respectively, and $c=gM$. Since $\rho\ge0$ and
+
+$$
+G_t(0)-G_t(D)=\frac1\pi\sum_{j\ge1}
+ e^{-tj^2}(1-\cos(jD))\ge0,
+\tag{33.2}
+$$
+
+(32.9) gives $W_\kappa\le M\phi+o(1)$ uniformly. By [G, (26.13)],
+or by the height-slice Dirichlet inequality on its complete domain,
+
+$$
+T_\kappa[f]-c\int_\Omega\phi|f|^2\,d\mu
+\ge e(c)\|f\|_2^2.
+\tag{33.3}
+$$
+
+Indeed each scalar Fourier summand is $H_c$ plus the nonnegative
+potential $(nA_\kappa+mB_\kappa+\kappa j b_\kappa)^2$.
+Summing its scalar variational inequality is legitimate on the exact
+completed domain. This proves the lower limit for every normalized
+state, without a compactness assumption.
+
+For the upper limit take a real $F\in C_c^\infty((-1,1))$ with
+$\int_{\mathbb R}F^2=1$ and define, in the actual circle chart,
+
+$$
+f_\kappa(k,\theta,v,D)=\frac{u_c(k)}{2\pi}
+ \ell_\kappa^{-1/2}F(D/\ell_\kappa),
+\qquad
+\ell_\kappa=
+\begin{cases}
+a\tau_s^{1/4},&\text{raw},\\
+\sqrt a,&\text{unit}.
+\end{cases}
+\tag{33.4}
+$$
+
+For small $a$ its support avoids the phase seam. Height approximation
+and the smooth periodic bump put it in $\mathcal F_\kappa$.
+The raw Jacobian and visible volume give $\|f_\kappa\|_2=1$ exactly.
+Directly from the original $Q_\kappa$,
+
+$$
+T_\kappa[f_\kappa]
+=\varepsilon^2\|u_c'\|_2^2
+ +\frac{a^2}{\ell_\kappa^2}\|F'\|_2^2
+                  \int_I b_\kappa^2u_c^2\,dk.
+\tag{33.5}
+$$
+
+The second term tends to zero. In the raw case
+$\ell_\kappa/r_s=\tau_s^{-1/4}\to0$; in the unit case
+$\ell_\kappa\to0$. Thus (32.9) shows that the potential expectation
+converges to $M\int_I\phi u_c^2\,dk$ in either case. The limiting trial
+energy is $e(c)$. Min-max now proves both upper limits and hence (33.1).
+No assertion about actual ground-state limits has been inferred from
+these trial states. $\square$
+

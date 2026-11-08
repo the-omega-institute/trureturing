@@ -1,0 +1,109 @@
+**Theorem 48.3 (strict coupled collision descent).** Let
+$F=\psi\psi^\dagger$ be pure, $0<\rho(E,U)=\xi\le R_\star$, and let
+$U=\operatorname{diag}(v)U_\sigma$ be phase. If, for some $i\ne j$,
+
+$$
+ \ell_i^\sigma=\ell_j^\sigma,\qquad v_i\ne v_j,\qquad
+ \chi_\sigma\ne0,
+\tag{48.10}
+$$
+
+then an actual pure phase pair exists at exactly the same true original
+level $\xi$ and has strictly smaller $g$. Consequently every pure phase
+global minimizer in this interval obeys the collision-locking relation
+
+$$
+ r_i^\sigma\psi=r_j^\sigma\psi\quad\Longrightarrow\quad v_i=v_j
+ \qquad(1\le i,j\le4).
+\tag{48.11}
+$$
+
+**Proof.** Write $S=\operatorname{Tr}(\operatorname{diag}(v))=\sum_i v_i$.
+The active level formula gives
+
+$$
+ |S|=4+q_\sigma(\psi)-\xi/2\ge4-\frac{\xi}{2}\ge\frac{19}{8}>2.
+\tag{48.12}
+$$
+
+Because $v_i\ne v_j$, the four phases are not all equal, so $|S|<4$.
+There is an index $k$ with
+$\operatorname{Im}(\overline S v_k)\ne0$. Otherwise every $v_k$ is
+$S/|S|$ or $-S/|S|$, and the sum of four such phases has modulus only
+$0$, $2$, or $4$, contrary to $2<|S|<4$.
+Let $\pi$ interchange $i$ and $j$, and write $\widetilde v=\pi v$. Choose
+$k'$ equal to $k$ if $k\notin\{i,j\}$, and equal to $\pi(k)$ otherwise.
+Then the entry at $k'$ of $\widetilde v$ is the same phase $v_k$, and the
+corresponding labels at $k$ and $k'$ are equal at $t=0$.
+
+Put
+
+$$
+ a_0=a_\sigma(\operatorname{diag}v),\qquad
+ a_1=a_\sigma(\operatorname{diag}\widetilde v),\qquad
+ c_1=a_1-a_0=(v_j-v_i)(r_i^\sigma-r_j^\sigma).
+\tag{48.13}
+$$
+
+Then $c_1\psi=0$, $c_1\ne0$, and $a_0\psi=a_1\psi=\chi_\sigma$.
+Set $\eta=\chi_\sigma c_1^\dagger$. Since
+$\psi^\dagger\eta=\overline{c_1\psi}\,\chi_\sigma=0$, the normalized curve
+
+$$
+ \psi(t)=\frac{\psi+t\eta}{\sqrt{1+t^2\|\eta\|_2^2}},\qquad t\in\mathbb R
+\tag{48.14}
+$$
+
+is an actual pure-effect curve with $\psi'(0)=\eta$. Its away population
+is $q(t)=q_\sigma(\psi(t))$. Set
+$s(t)=4+q(t)-\xi/2$. At $t=0$, $s(0)=|S|$.
+The real implicit-function theorem applied to
+
+$$
+ \Phi(t,\theta)=\left|S+(e^{i\theta}-1)v_k\right|^2-s(t)^2
+\tag{48.15}
+$$
+
+produces a real $\theta(t)$ near zero with $\theta(0)=0$ and
+$\Phi(t,\theta(t))=0$, because
+$\partial_\theta\Phi(0,0)=-2\operatorname{Im}(\overline S v_k)\ne0$.
+Rotate entry $k$ of $v$ by $e^{i\theta(t)}$ and entry $k'$ of
+$\widetilde v$ by the same factor. Call the resulting phase vectors
+$v_0(t)$ and $v_1(t)$. Their complex traces are identical, and their
+moduli equal $s(t)$. Therefore the two corresponding actual pairs have
+active distance $\xi$. The strict opposite-sign gap at $t=0$ from
+(42.20) persists for small $t$, so this active distance remains the true
+original distance.
+
+Let $\chi_j(t)=a_\sigma(\operatorname{diag}v_j(t))\psi(t)$ and
+$g_j(t)=\psi(t)^\dagger H_0\psi(t)-|\chi_j(t)|^2$. At zero,
+$g_0(0)=g_1(0)$ and $\chi_0(0)=\chi_1(0)=\chi_\sigma$.
+The phase-correction terms in $\chi_0'(0)$ and $\chi_1'(0)$ agree: when
+$k'=k$ this is immediate, and when $k'=\pi(k)$ it follows from
+$\ell_i^\sigma=\ell_j^\sigma$. The common energy derivative also cancels.
+The remaining difference is
+
+$$
+ \chi_1'(0)-\chi_0'(0)=c_1\eta
+     =\chi_\sigma\|c_1\|_2^2.
+\tag{48.16}
+$$
+
+Consequently
+
+$$
+ g_1'(0)-g_0'(0)
+ =-2\operatorname{Re}\!\left(\overline{\chi_\sigma}
+       [\chi_1'(0)-\chi_0'(0)]\right)
+ =-2|\chi_\sigma|^2\|c_1\|_2^2<0.
+\tag{48.17}
+$$
+
+Since the derivative difference in (48.17) is nonzero, at least one of
+$g_0' (0)$ and $g_1' (0)$ is nonzero. Choose the sign of a sufficiently
+small real $t$ opposite to the sign of that nonzero derivative. The
+corresponding actual curve then has $g_j(t)<g_j(0)=g(E,U)$. This is a
+coupled effect--trace descent: the population changes with the effect while
+the trace is corrected on that same whole feedback. No fixed-population or
+separately optimized value has been used. $\square$
+

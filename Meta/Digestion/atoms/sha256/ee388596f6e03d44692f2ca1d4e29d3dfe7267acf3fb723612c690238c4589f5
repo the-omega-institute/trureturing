@@ -1,0 +1,29 @@
+**定义 1.3（同一个响应与端点裸类）。** 令
+$\Delta(E)=\{p:p_q\ge0,\ \sum_{q\in E}p_q=1\}$。
+$\mathscr C_{\rm end}$ 严格为 X 定义 1.3 的类：同一个连续映射
+$\Pi:X\to\Delta(E)$，其非零向量提升满足
+
+$$
+\begin{aligned}
+\Pi_q(\lambda z)&=\Pi_q(z)
+&&\left(q\in E,\ z\ne0,\ \lambda\in\mathbb C\setminus\{0\}\right),\\
+\sum_{q\in B}\Pi_q(K_jz)&=\sum_{q\in B}\Pi_q(z)
+&&\left(z\ne0,\ 0\le j\le10,\ B\in\mathscr B_j\right).
+\end{aligned}
+\tag{1.4}
+$$
+
+没有预给任何基态确定性取值、全域节点、整块支撑、二次型、PSD 表示、一般效果可加性或 Born 公式。全 $\mathbb{CP}^{88}$ 是函数的数学域，不授予任意射线的实际准备。
+
+作为比较，$\mathscr C_{\rm cal}$ 在此裸类中另要求
+$\Pi_q(e_s)=\delta_{qs}$，逐 $q,s\in E$；
+$\mathscr C_2$ 只要求 X 的两条指定校准
+
+$$
+\Pi_O(e_O)=\Pi_D(e_D)=1,\qquad
+O=\{1,3,5,7,9\},\quad D=\{2,4,6,8\}.
+\tag{1.5}
+$$
+
+二者相等是 X 定理 3.1 的既有结果，本卷直接消费，不重证其 $89$ 到 $2$ 桥梁。
+

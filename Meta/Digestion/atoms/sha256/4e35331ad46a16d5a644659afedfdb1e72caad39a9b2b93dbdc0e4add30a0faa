@@ -1,0 +1,69 @@
+### 命题 10.4（RLD 零损失但没有共同 CPTP 恢复）
+
+取
+
+$$
+\rho_0=\operatorname{diag}(3/4,1/4),\qquad
+ \rho_1=\operatorname{diag}(1/4,3/4),\qquad
+ N(X)=x_{00}P_0+x_{11}P_+.
+$$
+
+此通道的输入、输出中点均忠实，并且
+
+<a id="eq-c90-rld-example"></a>
+
+$$
+\begin{aligned}
+ J_{\mathrm{RLD,in}}&=J_{\mathrm{RLD,out}}=\frac14,\\
+ J_{\mathrm{in}}&=\frac14,\qquad
+ J_{\mathrm{out}}=\frac{\sqrt2}{8}<\frac14.
+ \end{aligned}
+\tag{10.2}
+$$
+
+不存在同时恢复 $\rho_0,\rho_1$ 的 CPTP 映射。
+
+**证明。**
+输入端 $\sigma=I/2$、$d=\mathsf Z/4$。
+输出中点与半差分别为
+
+$$
+\tau=\begin{pmatrix}3/4&1/4\\1/4&1/4\end{pmatrix},
+ \qquad
+ e=N(d)=\frac{\mathsf Z-\mathsf X}{8}.
+$$
+
+因此 $\det\tau=1/8$、$e^2=I/32$、$\operatorname{Tr}(\tau^{-1})=8$，
+给出 $J_{\mathrm{RLD,out}}=1/4$。
+又因 $e$ 与 $\tau-I/2=(\mathsf X+\mathsf Z)/4$ 反对易，
+$e$ 在 $\tau$ 的本征基中只有非对角项。若本征值为 $t_+,t_-$，则
+
+$$
+J_{\mathrm{out}}
+ =\frac{\operatorname{Tr}(e^2)}{\sqrt{t_+t_-}}
+ =\frac{1/16}{\sqrt{1/8}}=\frac{\sqrt2}{8}.
+$$
+
+输入两个平方均为 $1/4$，从而得到式 [(10.2)](#eq-c90-rld-example)。
+
+若共同恢复 $S$ 存在，令 $A=S(P_0)$、$B=S(P_+)$。
+两条恢复等式给出
+
+$$
+\frac{3A+B}{4}=\rho_0,\qquad
+ \frac{A+3B}{4}=\rho_1,
+$$
+
+解得 $A=P_0$、$B=P_1$。
+令 $F=S^*(P_0)$，则 $0\le F\le I$，且
+$\langle 0\rvert F\lvert 0\rangle=1$、$\langle +\rvert F\lvert +\rangle=0$。
+正性分别迫使 $F\lvert 0\rangle=\lvert 0\rangle$、$F\lvert +\rangle=0$，与
+$\langle0|+\rangle=1/\sqrt2$ 及 $F=F^\dagger$ 矛盾。
+
+**白话图景。**这个通道把两个可分开的标签，换成两个互相重叠的量子态。
+RLD 的平方恰好不变，却不能把标签共同找回来。
+本轮的对称平方严格下降，准确记下这次遗漏。
+权重放在关系的哪一侧，是恢复条件的一部分。
+
+<a id="section-11"></a>
+

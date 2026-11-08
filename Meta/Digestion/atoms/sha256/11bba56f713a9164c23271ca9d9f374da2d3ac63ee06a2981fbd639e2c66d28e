@@ -1,0 +1,13 @@
+### 5.4 有限内部读数怎样识别整条通道
+
+以下准备与效果的线性关系均在同一内部标定中给定。源基为 $e_1,\ldots,e_d$，准备以下 $d^2$ 个纯态投影：
+
+$$
+P_r=\lvert e_r\rangle\langle e_r\rvert,\quad
+ P^+_{rs}=\frac{\lvert e_r+e_s\rangle\langle e_r+e_s\rvert}2,\quad
+ P^{+i}_{rs}=\frac{\lvert e_r+ie_s\rangle\langle e_r+ie_s\rvert}2
+ \quad(r<s).
+$$
+
+在 $k$ 维输出端，用同样构造的 $k^2$ 个投影 $F_b$ 分别作为二元效果。实验需要的是这些实际准备和读口；它们可以各有对应的读数实验，不要求一份输出同时接受所有不相容测量。
+

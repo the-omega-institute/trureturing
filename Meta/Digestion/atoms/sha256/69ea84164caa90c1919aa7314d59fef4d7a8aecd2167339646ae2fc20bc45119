@@ -1,0 +1,9 @@
+**定义 91.2（原生整数互读条件 $\mathsf G_{\rm fin}$）。** 对每个上述有限表及每两份 $f,g\in\mathbb Z[i]^N$，令 $B_p(f,g)=\sum_{j,k}\overline{f_j}K_p(b_j,b_k)g_k$，要求
+
+$$
+\boxed{2\Re B_p(f,g)\le\Re B_p(f,f)+\Re B_p(g,g).}
+\tag{91.2}
+$$
+
+系数与配方重复次数没有统一上界。有限的是每对象的原子集与每张核表；这不是有限次有误差实验的证书。
+

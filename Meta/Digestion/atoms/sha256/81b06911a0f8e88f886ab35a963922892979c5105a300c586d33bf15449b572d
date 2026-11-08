@@ -1,0 +1,6 @@
+**对应 30.1（正延拓工具所需的未付前件）。**Muhamadiev–Diab，*On the extension of positive linear functionals*，IJMMS 23(1), 31–35，[原文](https://www.maths.tcd.ie/EMIS/journals/HOA/IJMMS/Volume23_1/457269.pdf)，Theorem 2.1 在实向量空间 $V$、锥 $K$、子空间 $L$ 上，以一个处处有限、次线性且对 $K$ 单调的支配泛函作为 $f_0:L\to\mathbb R$ 正延拓的充要条件；Theorem 2.2 可用更强的全混合支配 $f_0(\ell)\le p(\ell+k)$、$\ell\in L,k\in K$ 替代预给单调性。定理 25.2 的逐坐标预算并未给包含全部原关系的商空间上这些带符号混合向量的支配，也未给定理 29.1 行数据对全部四变量有限系统的可行性。该文不把本节行函数自动延拓为完整非负核。
+
+Tian，*Extensions of Operator-Valued Kernels on $\mathbb F_d^+$*，[arXiv:2510.10935v3 原文](https://arxiv.org/html/2510.10935v3)，Theorem 3.1 要求截断核正定及内部的 Loewner 支配 $K_\Sigma\preceq K$，才给保内部数据的全域正定延拓；Theorem 3.2 另用 Definition 2.4 的列收缩与全部内外边界 Gram 匹配，才保整个截断域。原 $c\ge0$ 是逐点费用非负，不是该正定前件；零对角正定核本身只能为零，不能直接把 $c$ 当成该文的 $K$。极化后要使用它，仍须先付相应强正性、Loewner 支配与忠实的上下文移位一致性。自由半群上下文索引也不自动保原 magma 括号、任意 $U$ 和全部 (R)。
+
+Akkaoui–Fadli，*New results about quadratic functional equation on semigroups*，Ann. Math. Sil. 39(2), 209–222，[原文](https://journals.us.edu.pl/index.php/AMSIL/article/download/18119/15367)，Theorem 3.3 的二次分解针对结合半群、两个保乘法自同态、唯一二可除的阿贝尔值群及 $f(x\phi(y))+f(\psi(y)x)=2f(x)+2f(y)$。不要求自同态为对合，并不删除结合与保乘法；原 (R) 尚未给这些对象层面前件。这三篇原文只提供所列工具及应用边界，不供应本卷未证的零词括号传播，也不据本节检索主张文献不存在或历史优先权。
+

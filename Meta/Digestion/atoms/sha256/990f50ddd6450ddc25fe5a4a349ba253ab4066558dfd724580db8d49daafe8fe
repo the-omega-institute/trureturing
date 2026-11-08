@@ -1,0 +1,120 @@
+**Theorem 57.3 (attainment and strict interior localization in both rows).**
+Each minimum $A_\sigma$ in (57.4) is attained. Every attaining tuple
+$(q,X,Y)$, for either $\sigma\in\{+,-\}$, satisfies
+
+$$
+0<q<1,\qquad D_\sigma(x,q)<0,\qquad
+x^2<X<Y<1,\qquad
+\sqrt X+\sqrt Y>1+x,\qquad X+Y<(1+x)^2.
+\tag{57.22}
+$$
+
+At each such population $q$, its ordered pair $(X,Y)$ is the unique
+maximizer of $\Gamma_\sigma$ on the entire $\mathcal T_x$.
+These are exclusions proved from the complete domain, rather than
+restrictions imposed before minimization. Uniqueness of the minimizing
+population $q$ is not asserted.
+
+*Proof.* The complete feasible set
+
+$$
+\mathcal D=\{(q,X,Y)\in[0,1]^3:
+ \sqrt X+\sqrt Y\ge1+3/16+q/2\}
+\tag{57.23}
+$$
+
+is closed and nonempty: $(X,Y)=(1,1)$ is feasible for every $q$.
+It is compact. The lower bounds on $X,Y$ and $|Z|\le1$ in
+Definition 57.1 ensure that (57.3) has no vanishing denominator,
+that all its radicals are defined, and that $G_\sigma$ is continuous
+on $\mathcal D$. This includes both population endpoints and all
+triangle boundaries. The extreme-value theorem gives attainment.
+
+Theorem 55.1 in “An interior obstruction to the fixed upper-endpoint
+threshold”, at $q=X=1/5$, $Y=17/20$, gives
+
+$$
+A_-<\frac{63272556}{125000000}<\frac{13}{25}.
+\tag{57.24}
+$$
+
+Theorem 57.2 therefore excludes every slice with $D_-(x,q)\ge0$
+from attaining $A_-$.
+
+For the positive row, Continuation II, Theorem 46.6 supplies
+$G_+(q,X,Y)\ge V(13/4)$ throughout every slice with
+$D_+(x,q)\ge0$. Theorem 49.1 puts $13/4$ strictly above the
+unique selected determinant zero, so the selected positive geometric
+population has negative determinant. Continuation II, Theorem 46.4
+then supplies an attained strict triangle competitor to that selected
+canonical pair at the same population and level. Consequently
+
+$$
+A_+<V(13/4).
+\tag{57.25}
+$$
+
+Thus no slice with $D_+(x,q)\ge0$ attains $A_+$ either.
+This comparison with the selected geometric value does not compare
+$A_-$ and $A_+$.
+
+At $q=0$ write $k=b-a>0$ in either fixed row and $R_0=ax+b$.
+The endpoint values of (46.13) are
+
+$$
+\mu=\frac{ak}{2R_0}>0,\qquad \nu=\frac k2>0,\qquad
+D_\sigma(x,0)=\frac{4\mu\nu x^2}{1+x}>0.
+\tag{57.26}
+$$
+
+The determinant exclusions just proved therefore exclude $q=0$
+in both rows without differentiating an endpoint radical.
+
+At $q=1$, $x=11/16$ and $L=27/16$. On the entire triangle,
+Cauchy--Schwarz and (57.1) give
+
+$$
+X+Y\ge\frac{L^2}{2}=\frac{729}{512},\qquad
+2-X-Y\le\frac{295}{512}.
+\tag{57.27}
+$$
+
+Since $F\le\sqrt{(1-X)(1-Y)}$, (57.3) and Cauchy--Schwarz give
+
+$$
+C_\sigma\le\ell\sqrt{1-X}+m\sqrt{1-Y},\qquad
+C_\sigma^2\le(\ell^2+m^2)(2-X-Y)
+ \le(\ell^2+m^2)\frac{295}{512}.
+\tag{57.28}
+$$
+
+In the positive row $\ell^2+m^2=h^2+s^2<1$ and $e^2>4$.
+In the negative row $\ell^2+m^2=c^2+h^2<3/2$ and $d^2>10$.
+The two strict energy bounds follow from the positive enclosures
+(57.8). Hence at every point of the corresponding endpoint triangle
+
+$$
+\begin{aligned}
+G_+(1,X,Y)&=e^2-4C_+^2
+ >4-4\frac{295}{512}=\frac{217}{128}>\frac{13}{25},\\
+G_-(1,X,Y)&=d^2-4C_-^2
+ >10-4\frac32\frac{295}{512}
+ =\frac{1675}{256}>\frac{13}{25}.
+\end{aligned}
+\tag{57.29}
+$$
+
+Theorem 54.1 gives $A_+<5081/10000<13/25$, and (57.24)
+gives $A_-<13/25$. Thus $q=1$ attains neither minimum.
+
+Finally fix any attaining tuple. Its $(X,Y)$ must maximize the
+nonnegative $\Gamma_\sigma$ on its full fixed-$q$ triangle:
+a strictly larger value would strictly lower $G_\sigma$, and
+Continuation II, Lemma 46.2 realizes that competitor at the same
+original level. We have already established $0<q<1$ and
+$D_\sigma(x,q)<0$. These are precisely the applicable population
+and determinant hypotheses of Continuation III, Definition 53.1,
+Lemma 53.2 and Theorem 53.4. Those suppliers give the unique
+maximizing ordered lengths and all the strict inequalities in
+(57.22). No sign assumption on $\nu$ is added. $\square$
+

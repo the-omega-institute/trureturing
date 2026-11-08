@@ -26,6 +26,14 @@ REPOSITORY_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd -P)"
 RESOURCE_OBSERVATION_LIB="$REPOSITORY_ROOT/tools/scripts/lib/resource-observation-lib.sh"
 [[ -r "$RESOURCE_OBSERVATION_LIB" ]] || exit 2
 source "$RESOURCE_OBSERVATION_LIB"
+if [[ -f "$REPOSITORY_ROOT/tools/scripts/lib/maintenance-log-lib.sh" ]]; then
+  source "$REPOSITORY_ROOT/tools/scripts/lib/maintenance-log-lib.sh"
+fi
+if [[ "${TRURETURING_MAINTENANCE_SCRIPT:-}" == lean-report ]]; then
+  if declare -F maintenance_log_begin >/dev/null; then
+  maintenance_log_begin lean-report "$REPOSITORY_ROOT" "$$" "$PPID"
+fi
+fi
 if [[ -d /private/tmp ]]; then DEFAULT_HOST_TMP=/private/tmp; else DEFAULT_HOST_TMP=/tmp; fi
 STATE_ROOT="${STRATALINT_SUPERVISOR_ROOT:-$DEFAULT_HOST_TMP/stratalint-report-supervisor-${UID:-$(id -u)}}"
 RUN_ROOT="$STATE_ROOT/runs"
@@ -96,6 +104,8 @@ FD_PEAK=0
 RSS_PEAK_KB=0
 RESOURCE_SAMPLING_INCOMPLETE=0
 STARTED_MS=0
+POLL_DELAY_FALLBACK=0
+POLL_DELAY_FIFO=""
 
 early_cleanup() {
   if [[ -n "$TMP_ROOT" ]]; then rm -rf -- "$TMP_ROOT"; fi
@@ -507,7 +517,7 @@ resource_sampling_unavailable() {
 }
 
 sample_supervised_resources() {
-  local pid rss fd members
+  local pid fd members
   local rss_total=0
   local fd_total=0
   if members="$({
@@ -522,48 +532,75 @@ sample_supervised_resources() {
   # This is cleanup identity state, not optional resource telemetry: retain
   # its hard failure if it cannot be recorded.
   printf '%s\n' "$members" | record_process_candidates || return "$?"
+  # Resource values concern one already-discovered cohort. Query that cohort
+  # together; per-PID tool startup must not multiply the observer's work.
+  local members_csv=""
   while IFS= read -r pid; do
     [[ -n "$pid" \
       && "$pid" != "$STDOUT_RELAY_PID" \
       && "$pid" != "$STDERR_RELAY_PID" ]] || continue
-    if rss="$( { ps -o rss= -p "$pid" 2>/dev/null || true; } \
-      | awk '{sum += $1} END {print sum + 0}')"; then
-      :
-    else
-      resource_sampling_unavailable rss "$?"
-      return 0
-    fi
-    if [[ ! "$rss" =~ ^[0-9]+$ ]]; then
-      resource_sampling_unavailable rss-value 2
-      return 0
-    fi
-    rss_total=$((rss_total + rss))
-    if [[ -d "/proc/$pid/fd" ]]; then
-      if fd="$( { find "/proc/$pid/fd" -mindepth 1 -maxdepth 1 -print 2>/dev/null || true; } \
-        | awk 'END {print NR + 0}')"; then
-        :
-      else
-        resource_sampling_unavailable fd "$?"
-        return 0
-      fi
-    elif command -v lsof >/dev/null 2>&1; then
-      if fd="$( { lsof -a -p "$pid" -d 0-999999 2>/dev/null || true; } \
-        | awk 'NR > 1 {count++} END {print count + 0}')"; then
-        :
-      else
-        resource_sampling_unavailable fd "$?"
-        return 0
-      fi
-    else
+    members_csv="${members_csv:+$members_csv,}$pid"
+  done < <(printf '%s\n' "$members")
+  [[ -n "$members_csv" ]] || return 0
+  if rss_total="$( { ps -o rss= -p "$members_csv" 2>/dev/null || true; } \
+    | awk '{sum += $1} END {print sum + 0}')"; then
+    :
+  else
+    resource_sampling_unavailable rss "$?"
+    return 0
+  fi
+  if [[ ! "$rss_total" =~ ^[0-9]+$ ]]; then
+    resource_sampling_unavailable rss-value 2
+    return 0
+  fi
+  if [[ ! -d /proc ]]; then
+    if ! command -v lsof >/dev/null 2>&1; then
       resource_sampling_unavailable fd-tool 127
       return 0
     fi
-    if [[ ! "$fd" =~ ^[0-9]+$ ]]; then
+    if fd_total="$( { lsof -a -p "$members_csv" -d 0-999999 2>/dev/null || true; } \
+      | awk 'NR > 1 {count++} END {print count + 0}')"; then
+      :
+    else
+      resource_sampling_unavailable fd "$?"
+      return 0
+    fi
+    if [[ ! "$fd_total" =~ ^[0-9]+$ ]]; then
       resource_sampling_unavailable fd-value 2
       return 0
     fi
-    fd_total=$((fd_total + fd))
-  done < <(printf '%s\n' "$members")
+  else
+    while IFS= read -r pid; do
+      [[ -n "$pid" \
+        && "$pid" != "$STDOUT_RELAY_PID" \
+        && "$pid" != "$STDERR_RELAY_PID" ]] || continue
+      if [[ -d "/proc/$pid/fd" ]]; then
+        if fd="$( { find "/proc/$pid/fd" -mindepth 1 -maxdepth 1 -print 2>/dev/null || true; } \
+          | awk 'END {print NR + 0}')"; then
+          :
+        else
+          resource_sampling_unavailable fd "$?"
+          return 0
+        fi
+      elif command -v lsof >/dev/null 2>&1; then
+        if fd="$( { lsof -a -p "$pid" -d 0-999999 2>/dev/null || true; } \
+          | awk 'NR > 1 {count++} END {print count + 0}')"; then
+          :
+        else
+          resource_sampling_unavailable fd "$?"
+          return 0
+        fi
+      else
+        resource_sampling_unavailable fd-tool 127
+        return 0
+      fi
+      if [[ ! "$fd" =~ ^[0-9]+$ ]]; then
+        resource_sampling_unavailable fd-value 2
+        return 0
+      fi
+      fd_total=$((fd_total + fd))
+    done < <(printf '%s\n' "$members")
+  fi
   if [[ "$rss_total" -gt "$RSS_PEAK_KB" ]]; then RSS_PEAK_KB="$rss_total"; fi
   if [[ "$fd_total" -gt "$FD_PEAK" ]]; then FD_PEAK="$fd_total"; fi
 }
@@ -615,10 +652,76 @@ wait_for_relay() {
   wait "$pid" >/dev/null 2>&1 || true
 }
 
+poll_delay() {
+  local rc=0 input=""
+  if [[ "$POLL_DELAY_FALLBACK" == "0" ]]; then
+    if sleep 0.1; then
+      return 0
+    else
+      rc=$?
+    fi
+    printf 'report-supervisor: polling delay unavailable (exit=%s); using timed fallback\n' "$rc" >&2
+    POLL_DELAY_FIFO="$TMP_ROOT/poll-delay.fifo"
+    if mkfifo "$POLL_DELAY_FIFO" 2>/dev/null; then
+      :
+    else
+      rc=$?
+      printf 'report-supervisor: polling delay fallback setup failed (mkfifo exit=%s)\n' "$rc" >&2
+      return 125
+    fi
+    if exec 8<>"$POLL_DELAY_FIFO"; then
+      :
+    else
+      rc=$?
+      printf 'report-supervisor: polling delay fallback setup failed (open exit=%s)\n' "$rc" >&2
+      return 125
+    fi
+    POLL_DELAY_FALLBACK=1
+  fi
+  # The private read/write FIFO has no intended writer. Reject a character
+  # even without a newline; this is a timer, not a worker input channel. Bash 3.2 needs an integer timeout and returns 1 on timeout;
+  # newer Bash returns 142. Check the fd separately because bad-fd also
+  # returns 1 on Bash 3.2.
+  if ! { : <&8; } 2>/dev/null; then
+    echo 'report-supervisor: polling delay fallback fd unavailable' >&2
+    return 125
+  fi
+  # Defer cancellation until the timed read returns: synchronous EXIT cleanup
+  # from this context can hang on Bash 3.2.
+  local poll_signal=0
+  trap 'poll_signal=129' HUP
+  trap 'poll_signal=130' INT
+  trap 'poll_signal=143' TERM
+  if IFS= read -r -n 1 -t 1 -u 8 input; then
+    rc=0
+  else
+    rc=$?
+  fi
+  trap 'exit 129' HUP
+  trap 'exit 130' INT
+  trap 'exit 143' TERM
+  if (( poll_signal != 0 )); then exit "$poll_signal"; fi
+  if [[ "$rc" == "0" ]]; then
+    echo 'report-supervisor: polling delay fallback received unexpected input' >&2
+    return 125
+  fi
+  if [[ -n "$input" ]]; then
+    echo 'report-supervisor: polling delay fallback received partial input' >&2
+    return 125
+  fi
+  if [[ "$rc" == "1" || "$rc" == "142" ]]; then
+    return 0
+  fi
+  printf 'report-supervisor: polling delay fallback failed (exit=%s)\n' "$rc" >&2
+  return 125
+}
+
 finish() {
   local rc=$?
   trap - EXIT HUP INT TERM
   set +e
+  # Close only the fallback timer opened by this supervisor.
+  if [[ "$POLL_DELAY_FALLBACK" == "1" ]]; then exec 8>&-; fi
   if [[ -n "$PROCESS_GROUP_ID" ]]; then
     sample_supervised_resources
     terminate_process_group "$PROCESS_GROUP_ID"
@@ -633,6 +736,7 @@ finish() {
   else
     resource_observe "report-supervisor-$ROLE" "$REPOSITORY_ROOT" "$FD_PEAK" "$RSS_PEAK_KB" || true
   fi
+  if declare -F maintenance_log_finish >/dev/null; then maintenance_log_finish "$rc"; fi
   if [[ -n "$SLOT_DIR" ]]; then rm -rf -- "$SLOT_DIR"; fi
   rm -rf -- "$TMP_ROOT"
   exit "$rc"
@@ -684,7 +788,7 @@ while process_exists "$CHILD_PID"; do
     BUILD_TIMED_OUT=1
     break
   fi
-  sleep 0.1
+  poll_delay
 done
 set +e
 wait "$CHILD_PID"

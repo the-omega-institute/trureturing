@@ -1,0 +1,174 @@
+**Theorem 17.3 (Every minimizer from a nonzero polynomial of cubic degree bound).** Under Definition 17.1 and Assumption 17.2, factor $\mathcal R$ in $F[t,X]$ into distinct monic-in-$X$ irreducible factors and their positive multiplicities:
+
+$$
+\mathcal R(X,t)=\prod_{\nu=1}^h h_\nu(X,t)^{e_\nu},
+\qquad
+V(X,t)=\prod_{\nu=1}^h h_\nu(X,t).
+\tag{17.6}
+$$
+
+These normalizations exist. Every $h_\nu$ has positive degree in both $X$ and $t$. Write $D=\deg_X V$ and $E=\deg_t V$, and define
+
+$$
+\begin{aligned}
+\Delta_1(t)&=\operatorname{Res}_X(V,V_X),\\
+\Delta_2(t)&=\operatorname{Res}_X(V,V_t),\\
+\Delta(t)&=\Delta_1(t)\Delta_2(t),\\
+C&=\{c\in\mathbb R:-1<c<1,\ \Delta(c)=0\}.
+\end{aligned}
+\tag{17.7}
+$$
+
+Subscripts on $V$ are partial derivatives. Resultants of a monic polynomial and a nonzero constant have their usual value, the constant raised to the degree of the monic polynomial. Then
+
+$$
+\begin{gathered}
+1\leq D\leq d^2,\qquad 1\leq E\leq2d,\qquad
+\Delta\in F[t]\setminus\{0\},\\
+1\leq\deg\Delta\leq(4D-2)E\leq8d^3-4d<8d^3.
+\end{gathered}
+\tag{17.8}
+$$
+
+The finite set $C$ is nonempty and contains every global minimizing parameter of $r$ on $[-1,1]$. For each real $c\in[-1,1]$, define the ordered real root
+
+$$
+\mathfrak s(c)=\max\{x\in\mathbb R:x\geq0,\ \mathcal R(x,c)=0\}.
+\tag{17.9}
+$$
+
+This root always exists and equals $s(c)$. Consequently the exact minimum and the entire optimizer set are
+
+$$
+\begin{aligned}
+s_*&=\min_{c\in C}\mathfrak s(c),\\
+\min_{-1\leq t\leq1}r(t)&=\text{the nonnegative real root of }Y^2-s_*=0,\\
+\operatorname*{argmin}_{[-1,1]}r
+ &=\{c\in C:\mathfrak s(c)=s_*\}.
+\end{aligned}
+\tag{17.10}
+$$
+
+In particular the optimizer set is finite, nonempty and contained in $(-1,1)$; each of its elements and the minimum value are algebraic over $F$. The factorization in (17.6) is taken for the given polynomial over the given field, including all its actual coefficient equalities.
+
+*Proof.* Expand $p^{\flat}$ before taking the resultant. Its coefficients in $Z$ are polynomials in $X$ and are affine in $t$, as are the coefficients of $p$. The Sylvester determinant has $d$ rows from each polynomial. Each determinant term therefore has degree at most $2d$ in $t$, whence
+
+$$
+\deg_t\mathcal R\leq2d.
+\tag{17.11}
+$$
+
+For any fixed real $t$ at which $p(0,t)\ne0$, the product formula (17.4) gives
+
+$$
+\begin{aligned}
+\mathcal R(X,t)
+ &=\prod_{i=1}^d\bigl(\lambda_i(t)^d
+                         p(X/\lambda_i(t),t)\bigr)\\
+ &=\prod_{i=1}^d\prod_{j=1}^d
+                         (X-\lambda_i(t)\lambda_j(t)).
+\end{aligned}
+\tag{17.12}
+$$
+
+The identity includes every ordered pair, also $i=j$, and all repeated roots. It holds without the restriction $p(0,t)\ne0$. One way to see this directly at a zero root is to note that $p^{\flat}(0,X,t)=X^d$: the factor in (17.4) for $\lambda_i=0$ is $X^d$, exactly the product of its $d$ factors on the right. For a nonzero $\lambda_i$ the preceding calculation still applies. Thus (17.12) is valid at every real $t$, including a vanishing constant term. Equivalently it is the polynomial identity obtained from the classical resultant formula before any specialization.
+
+In particular $\mathcal R$ is monic of degree $d^2$ in $X$, and is nonzero. For a real parameter, complex conjugation permutes the complete root multiset. If $|\lambda_i|=r(t)$, its conjugate is some $\lambda_j$ with the appropriate multiplicity, so $s(t)=\lambda_i\lambda_j$ is a nonnegative real root of $\mathcal R(X,t)$. Every other nonnegative real root is some product $\lambda_k\lambda_l$ and hence satisfies
+
+$$
+0\leq\lambda_k\lambda_l
+   =|\lambda_k\lambda_l|\leq r(t)^2.
+\tag{17.13}
+$$
+
+This proves (17.9) on the whole interval, including $s(t)=0$. It uses the full complex root multiset, not just its real roots or any selected conjugate pairs.
+
+The polynomial ring $F[t,X]$ is a unique factorization domain. The relevant Gauss-lemma passage between $F[t,X]$ and $F(t)[X]$ is the classical one for a polynomial ring over a field; see [The Stacks Project, Example 10.27.3, tag 00F0](https://stacks.math.columbia.edu/tag/00F0). Monicity of $\mathcal R$ in $X$ has two consequences. It has no nonconstant factor in $F[t]$, and every factor of positive $X$ degree can be normalized to be monic in $X$ with coefficients still in $F[t]$. Indeed the product of the $X$-leading coefficients of all factors, with multiplicity, is the constant one, so each such coefficient is a unit of $F[t]$. This proves existence and uniqueness, up to ordering, of (17.6).
+
+There is also no nonconstant factor of $\mathcal R$ in $F[X]$. For if $g(X)$ were such a factor and $\xi\in\mathbb C$ one of its roots, then $\mathcal R(\xi,1)=0$. Formula (17.12) and the endpoint hypothesis would give $|\xi|=1$. But $\mathcal R(\xi,0)=0$, and every product on the right of (17.12) at $t=0$ has modulus strictly less than one by (17.5). This would give $|\xi|<1$, a contradiction. Thus every $h_\nu$ depends on $t$ as well as $X$.
+
+Degrees in either variable add under nonzero products over an integral domain. Taking distinct factors once instead of $e_\nu$ times therefore gives
+
+$$
+1\leq\deg_X V\leq\deg_X\mathcal R=d^2,
+\qquad
+1\leq\deg_t V\leq\deg_t\mathcal R\leq2d.
+\tag{17.14}
+$$
+
+Moreover, for every real $c$, monicity of all the $h_\nu$ ensures that none specializes to the zero polynomial. Equation (17.6) then implies equality of zero sets
+
+$$
+\{x\in\mathbb C:\mathcal R(x,c)=0\}
+  =\{x\in\mathbb C:V(x,c)=0\}.
+\tag{17.15}
+$$
+
+Factors may acquire repeated roots or collide after specialization; this equality still holds. In particular $V(s(t),t)=0$ at every parameter in the interval.
+
+We prove that both resultants in (17.7) are nonzero polynomials. Work temporarily in the univariate polynomial ring $F(t)[X]$. Each monic $h_\nu$ remains irreducible there by Gauss's lemma, and distinct factors remain relatively prime. In characteristic zero, $(h_\nu)_X$ is nonzero and has $X$ degree less than $\deg_X h_\nu$. Also $(h_\nu)_t\ne0$, since $h_\nu$ depends on $t$, and its $X$ degree is strictly smaller than $\deg_X h_\nu$, since the leading coefficient in $X$ is the constant one. Hence $h_\nu$ divides neither of these two partial derivatives. Reducing the product rule modulo $h_\nu$ gives
+
+$$
+\begin{aligned}
+V_X&\equiv(h_\nu)_X\prod_{\mu\ne\nu}h_\mu
+                                      \pmod{h_\nu},\\
+V_t&\equiv(h_\nu)_t\prod_{\mu\ne\nu}h_\mu
+                                      \pmod{h_\nu}.
+\end{aligned}
+\tag{17.16}
+$$
+
+Both right sides are nonzero in the field $F(t)[X]/(h_\nu)$. It follows that
+
+$$
+\gcd(V,V_X)=\gcd(V,V_t)=1\quad\text{in }F(t)[X].
+\tag{17.17}
+$$
+
+The common-root criterion for a Sylvester resultant, or its equivalent Bézout criterion, now shows that $\Delta_1$ and $\Delta_2$ are nonzero in $F(t)$. They were defined as polynomial determinants over $F[t]$, so they are nonzero polynomials in $F[t]$. This step proves nonvanishing for the actual coefficients; it uses no unspecified generic parameter.
+
+For polynomials of $X$ degrees $A,B$ whose coefficient degrees in $t$ are at most $P,Q$, respectively, the Sylvester determinant gives
+
+$$
+\deg_t\operatorname{Res}_X(f,g)\leq BP+AQ.
+\tag{17.18}
+$$
+
+Indeed its determinant terms take $B$ coefficients from $f$ and $A$ from $g$. For $B=0$ the same inequality follows from $\operatorname{Res}_X(f,g)=g^A$ when $f$ is monic. Here each derivative of $V$ has $X$ degree at most $D-1$, while its coefficient degrees in $t$ are at most $E$. Applying (17.18) twice yields
+
+$$
+\deg\Delta_1\leq(2D-1)E,
+\qquad
+\deg\Delta_2\leq(2D-1)E,
+\qquad
+\deg\Delta\leq(4D-2)E\leq8d^3-4d.
+\tag{17.19}
+$$
+
+It remains to prove that every optimizer is captured, rather than only a selected smooth branch. First $r$ and $s$ are continuous. The full-multiset compactness proof used in Theorem 16.2 applies verbatim: for a sequence of real parameters tending to $t_0\in[-1,1]$, all root tuples lie in the product of $d$ closed unit disks by (17.5) and the endpoint hypothesis. Every convergent subsequence of those tuples factors the limiting monic polynomial into exactly its $d$ roots with multiplicity. Its maximum modulus is therefore $r(t_0)$. A subsequence contradicting continuity would have a further convergent root tuple and so is impossible. The polynomial factorization with multiplicities used here is the classical fundamental theorem of algebra; see [NIST DLMF, §1.11(ii)](https://dlmf.nist.gov/1.11#ii).
+
+The extreme-value theorem supplies a minimum on $[-1,1]$. Both endpoint radii are one, whereas $r(0)<1$, so every minimizer $t_0$ lies in the interior. Put $s_0=s(t_0)$. If $V_X(s_0,t_0)=0$, then $V$ and $V_X$ have the common root $s_0$ after specialization, and $\Delta_1(t_0)=0$.
+
+Suppose instead that $V_X(s_0,t_0)\ne0$. We can differentiate $s$ at this one point without choosing or differentiating individual eigenvalues. For $t\ne t_0$ sufficiently near $t_0$, use $V(s(t),t)=V(s_0,t_0)=0$ and apply the ordinary real mean value theorem separately in $X$ and in $t$. There are $\xi_t$ between $s(t)$ and $s_0$, and $\eta_t$ between $t$ and $t_0$, such that
+
+$$
+0=(s(t)-s_0)V_X(\xi_t,t)
+           +(t-t_0)V_t(s_0,\eta_t).
+\tag{17.20}
+$$
+
+When $s(t)=s_0$, the same formula holds with $\xi_t=s_0$. Continuity gives $\xi_t\to s_0$ and $\eta_t\to t_0$. Thus $V_X(\xi_t,t)$ is nonzero for all sufficiently close $t$, and division in (17.20) proves
+
+$$
+s'(t_0)=-\frac{V_t(s_0,t_0)}{V_X(s_0,t_0)}.
+\tag{17.21}
+$$
+
+Since $s$ has an interior minimum at $t_0$, its derivative there is zero. Therefore $V_t(s_0,t_0)=0$, so $\Delta_2(t_0)=0$. Monicity of $V$ makes the common-root resultant implication valid even if a specialized derivative has smaller degree or is the zero polynomial. These two alternatives also cover a zero minimum and every collision. Hence every minimizer belongs to $C$.
+
+The nonzero polynomial $\Delta$ has at least this one real interior root, so it has positive degree and $C$ is finite and nonempty. This completes (17.8). Because $s(t)=r(t)^2$ and $r(t)\geq0$, these two functions have the same minimizers. Every candidate is in the original interval, and every global minimizer is a candidate. Taking the least of the finitely many exact values (17.9) therefore proves both equalities and the entire-set assertion in (17.10).
+
+Finally, each $c\in C$ is algebraic over $F$, being a root of the nonzero polynomial $\Delta$. The polynomial $\mathcal R(X,c)$ is monic, so $\mathfrak s(c)$ is algebraic over $F(c)$ and hence over $F$. The minimum of a nonempty finite set of these numbers is one of them. Its nonnegative square root is algebraic as well. This is transitivity of algebraicity, as in [Milne, *Fields and Galois Theory*, version 5.10, Proposition 1.30 and Corollary 1.31](https://www.jmilne.org/math/CourseNotes/FT.pdf). It proves the asserted field boundary without requiring $F$ to be a number field.
+
+The affine-space result of Eaton, Grundel, Gürbüzbalaban and Overton cited in Definition 17.1, Proposition 1 and Theorem 1, establishes existence of an optimizer with a specified number of active roots. The finite description of every minimizing parameter here follows instead from (17.12), the exclusion of $t$-independent factors by the two spectral scales, and the exhaustive alternatives (17.20)–(17.21) or $V_X=0$. The classical resultant, factorization and field-extension facts are supporting steps in this implication. $\square$
+

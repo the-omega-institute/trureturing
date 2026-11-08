@@ -1,0 +1,37 @@
+## 参考文献
+
+<a id="ref-repo_pin"></a>
+
+\[1\] The Omega Institute，*trureturing*，默认分支 `dev` 固定提交 [`b1d673668c6d`](https://github.com/the-omega-institute/trureturing/commit/b1d673668c6d1bc06a152e4607048833d830ca53)， 2026-11-05 06:29:05 Asia/Singapore。 [相对 C138 的固定比较](https://github.com/the-omega-institute/trureturing/compare/66c49bfe9a1295ceea872b6e6a1d8146fb351237...b1d673668c6d1bc06a152e4607048833d830ca53)。 本轮源码读取范围及未重新运行 Lean 的边界见第 1节。
+
+<a id="ref-repo_three_read"></a>
+
+\[2\] The Omega Institute， [`D5/S0/Observation/ThreeReadBudget.lean`](https://github.com/the-omega-institute/trureturing/blob/b1d673668c6d1bc06a152e4607048833d830ca53/D5/S0/Observation/ThreeReadBudget.lean)， `three_read_budget_nullspace`； [配套 Blueprint](https://github.com/the-omega-institute/trureturing/blob/b1d673668c6d1bc06a152e4607048833d830ca53/Blueprint/D5/S0/Observation/ThreeReadBudget.md)。 99 行源码与 25 行说明均核读全文。已给双线性形式与线性操作的初始必要性子结论。
+
+<a id="ref-repo_c133"></a>
+
+\[3\] The Omega Institute， [*C133：三读闭合与可见复几何*](https://github.com/the-omega-institute/trureturing/blob/66c49bfe9a1295ceea872b6e6a1d8146fb351237/docs/develop/theory/AURIC_C133_THREE_READ_CLOSURE_VISIBLE_COMPLEX_GEOMETRY.md)， 历史固定提交 `66c49bfe9a12`，§§2.1–2.4、5.2。 一般双线性读口的完整纸面分类、读出商与原日志的区别。 本轮并未把后续全部分类归于新加入的单条 Lean 定理。
+
+<a id="ref-repo_c133v"></a>
+
+\[4\] The Omega Institute， [*C133 续五：从关系缺陷恢复平方几何*](https://github.com/the-omega-institute/trureturing/blob/66c49bfe9a1295ceea872b6e6a1d8146fb351237/docs/develop/theory/AURIC_C133_THREE_READ_CLOSURE_VISIBLE_COMPLEX_GEOMETRY_CONTINUATION_V.md)， 历史固定提交 `66c49bfe9a12`，§4。 交换群上的平行四边形恒等式及其极化与正 Gram 表示。
+
+<a id="ref-jordan1935"></a>
+
+\[5\] P. Jordan and J. von Neumann，*On inner products in linear, metric spaces*， *Annals of Mathematics* **36**(3) (1935), 719–723。 [DOI: 10.2307/1968653](https://doi.org/10.2307/1968653)。 经典平行四边形与内积刻画；本文从原单侧响应出发的推导另完整写出。
+
+<a id="ref-james1947"></a>
+
+\[6\] R. C. James，*Inner products in normed linear spaces*， *Bulletin of the American Mathematical Society* **53** (1947), 559–566，Theorem 1。 [原论文全文](https://web.mat.upc.edu/etseib/calcul2/Apunts/James_Robert_C-Inner_products_in_normed_linear_spaces.pdf)。 用于对照 C138 的范数与正交互易入口；本轮核心证明不依赖该几何定理。
+
+<a id="ref-martini2006"></a>
+
+\[7\] H. Martini and K. J. Swanepoel，*Antinorms and Radon curves*， *Aequationes Mathematicae* **72** (2006), 110–138。 [作者预印本 arXiv:math/0409200](https://arxiv.org/pdf/math/0409200)，§§3–6。 反范数与 Radon 互易的经典关系；本文六边形首响应另给直接计算。
+
+<a id="ref-busch2003"></a>
+
+\[8\] P. Busch，*Quantum states and generalized observables: a simple proof of Gleason’s theorem*， *Physical Review Letters* **91**, 120403 (2003)。 [作者全文 arXiv:quant-ph/9909073v3](https://arxiv.org/pdf/quant-ph/9909073)。 全部效果评价的密度态表示与复二维范围。
+
+<a id="ref-watrous2018"></a>
+
+\[9\] J. Watrous，*The Theory of Quantum Information*，Cambridge University Press (2018)。 [作者公开第 2 章](https://cs.uwaterloo.ca/~watrous/TQI/TQI.2.pdf)，Theorem 2.22。 标准完全正过程的矩阵表示；本文另证明同一原分支及实际混合域的表示条件。

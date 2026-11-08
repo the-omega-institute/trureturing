@@ -1,0 +1,14 @@
+For general $H$, a cut having $x_i$ vertices on its chosen side in block $i$ has size
+
+$$
+\sum_{\{i,j\}\in E(H)}
+\bigl[x_i(s-x_j)+x_j(s-x_i)\bigr].
+$$
+
+This polynomial is affine in each coordinate $x_i\in[0,s]$. Keeping all other coordinates fixed, an endpoint $0$ or $s$ has value at least the value at $x_i$. Rounding coordinates successively produces a block cut with no decrease. At an endpoint vector the value is $s^2$ times the size of a cut of $H$. A maximum cut of $H$ itself lifts to such a block cut. Consequently, exactly,
+
+$$
+C(G_s)=s^2C(H).
+\tag{5.4}
+$$
+

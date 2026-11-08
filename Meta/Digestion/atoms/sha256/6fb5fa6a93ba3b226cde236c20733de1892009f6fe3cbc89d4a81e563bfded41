@@ -1,0 +1,20 @@
+#### 命题 9.1（正秩一实关系成为量子纯态的条件）
+
+令 $S=\operatorname{Tr} R=\ell^{\mathsf T}c>0$。
+则 $Q=R/S$ 满足 $Q^2=Q$、$\operatorname{Tr} Q=1$、$\operatorname{rank} Q=1$。
+它是量子纯态当且仅当 $c$ 与 $\ell$ 正比例。
+
+**证明。**
+
+$R^2=c(\ell^{\mathsf T}c)\ell^{\mathsf T}=SR$，给出幂等与迹、秩。
+Hermitian 条件在实情形为 $c_i\ell_j=c_j\ell_i$。
+严格正性使这等价于全部 $c_i/\ell_i$ 相等。
+此时 $R$ 为一个正向量外积的正倍数，归一后为纯态；反向纯态必须 Hermitian。
+
+□
+
+一般的 $Q$ 是斜投影，不能因为迹一、幂等和秩一就替换为密度态。
+这条判据是本轮基于来源类型作出的纸面推论，不是新增入库定理。
+
+<a id="thm:diagonal-bridge"></a>
+

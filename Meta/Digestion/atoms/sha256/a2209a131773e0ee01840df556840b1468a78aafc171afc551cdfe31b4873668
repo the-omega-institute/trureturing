@@ -1,0 +1,21 @@
+对同一 $\mathcal N$ 及两份忠实状态 $\rho,\sigma$，下列条件等价：
+
+1. $\rho\sim_{\mathcal N}\sigma$，即
+    $\mathcal R_\rho=\mathcal R_\sigma$ 在*全部* $\mathcal B(K_0)$ 上成立。
+
+2. $\mathcal T_\sigma(\rho)=\rho$。
+
+3. $\rho=\Gamma_\sigma(a)$，其中 $a\in\mathfrak F_\sigma$ 正定，且
+    $\operatorname{Tr}\sigma a=1$。
+
+4. 在定理~[2.3](#thm-c123-fixed-blocks) 的分解中，
+
+
+   <a id="eq-c123-equivalent-reference-class"></a>
+
+   $$
+   \rho=\bigoplus_\alpha Q_\alpha\otimes\omega_\alpha,
+     \qquad Q_\alpha>0,\quad\sum_\alpha\operatorname{Tr} Q_\alpha=1.
+   \tag{17}
+   $$
+

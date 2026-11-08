@@ -1,0 +1,53 @@
+**Actual far-height mass.** We claim that, for the same fixed $\delta$, every actual unit complex ground state satisfies
+
+$$
+\int_{|r|>\delta/s}|F_s|^2
+ \le C_\delta(s^3+r_s^{-1/2}),\qquad F_s=\mathcal U_s\psi_s.
+\tag{22.24}
+$$
+
+This claim does not require (22.1). Use exactly P (104.1)'s $Q_s(t)=e^{-tC_s}$, kernel $q_s(t;\eta,\xi)$, resolvent $R_s(h)$, and split $U_s=U_s^{<}+U_s^{>}$ at $T_s=s^{-2}$. We prove, for every $h>0$,
+
+$$
+\|\mathbf1_{|r|>R}R_s(h)U_s\|_{2\to2}
+ \le C_\delta s^{3/2}+Cs^2h^{-1/4}+Cs^4h^{-1/2},
+\qquad R=\delta/s.
+\tag{22.25}
+$$
+
+For $0<t\le T_s$, P (104.4), symmetry and the semigroup column identity give $\sup_{\eta,\xi}q_s(t;\eta,\xi)\le Ct^{-7/2}$. Explicitly the uniform diagonal estimate at time $t$ is the squared column norm at time $t/2$, and Cauchy–Schwarz at the two endpoints gives this supremum. If $|\eta_r|\le R/2$, integrate first over all output phases. The height coordinate of the original scaled killed diffusion has generator $\partial_r^2$; its killing only decreases its endpoint measure. Hence
+
+$$
+\int_{|\xi_r|>R}q_s(t;\eta,\xi)d\xi
+ \le e^{\lambda s^2t}
+       \mathbb P(|\eta_r+\sqrt2B_t|>R)
+ \le Ce^{-cR^2/t}.
+$$
+
+The shifted factor is bounded on this time interval; the shifted heat is not assumed to be Markov in raw measure. Positivity and the supremum bound imply
+
+$$
+\|\mathbf1_{|\xi_r|>R}q_s(t;\eta,\cdot)\|_2
+ \le Ct^{-7/4}e^{-cR^2/t}.
+\tag{22.26}
+$$
+
+Split the input $U_s^{<}f$ at $|\eta_r|=R/2$ in the resolvent integral over $0<t<T_s$. For the inner input, P (104.6) gives $\|U_s^{<}f\|_1\le C\|f\|_2$, so (22.26) bounds its full-output contribution by
+
+$$
+C\|f\|_2\int_0^{T_s}t^{-7/4}e^{-cR^2/t}dt
+ \le CR^{-3/2}\|f\|_2.
+$$
+
+For the outer input, $0\le U_s^{<}\le U_s$ and (2.9)'s native height bound give multiplier norm $C_\delta s^5$. The same height bound applies before shear because the phase shear is bijective at each height. Since $Q_s(t)$ is an $L^2$ contraction, this contribution is at most $C_\delta s^5T_s\|f\|_2=C_\delta s^3\|f\|_2$. For the rest of the short-potential resolvent integral retain P (104.11)'s $Cs^2h^{-1/4}$ bound. For the entire long potential use P (104.14)'s $Cs^4h^{-1/2}$ bound; its multiplier is the actual fixed-cutoff $W_1$, not an $L^2$ Coulomb surrogate. These estimates prove (22.25), including time zero, all output phases and both moving deaths.
+
+The actual eigen-equation on $D(C_s)=\mathcal U_sD(S)$ is
+
+$$
+F_s=\frac\chi a R_s(h_s)U_sF_s,
+\qquad h_s=-\epsilon_c(s)/a=r_ss^8/a>0.
+\tag{22.27}
+$$
+
+Substitution in (22.25) gives $\|\mathbf1_{|r|>\delta/s}F_s\|_2\le C_\delta s^{3/2}+Cr_s^{-1/4}+Cr_s^{-1/2}$. P (100.3) gives $r_s\ge c_0>0$, so squaring and absorbing $r_s^{-1}$ into $C r_s^{-1/2}$ proves (22.24). All constants are uniform over actual ground-state choices; no rate for P (104.2)'s $d_s$ or norm-to-energy transfer has entered.
+

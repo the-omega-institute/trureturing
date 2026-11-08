@@ -1,0 +1,24 @@
+### 例 9.2（比较投影不是自动的物理条件期望）
+
+取 $\mathcal A=M_2(\mathbb C)$、
+$\rho=(I+r\sigma_x)/2$、$0<r<1$，
+并令读口为对角代数 $\mathcal D=\operatorname{span}\{P_0,P_1\}$。
+这是忠实状态。GNS 投影到 $\mathcal D\xi$ 的算子代表
+$\mathsf E_\omega(a)=b_0P_0+b_1P_1$ 满足正交条件
+
+$$
+b_i=\frac{\omega(P_ia)}{\omega(P_i)}.
+$$
+
+代入 $a=\sigma_y$，有
+$\omega(P_0\sigma_y)=-ir/2$、
+$\omega(P_1\sigma_y)=ir/2$，故
+
+$$
+\mathsf E_\omega(\sigma_y)=-ir\sigma_z.
+$$
+
+它连自伴性都不保持，因而不是物理 CP 条件期望。
+窗口投影定理仍然成立，因为它说的是比较空间的最佳近似。
+若需要物理条件期望，必须另加相应的存在及兼容条件。
+

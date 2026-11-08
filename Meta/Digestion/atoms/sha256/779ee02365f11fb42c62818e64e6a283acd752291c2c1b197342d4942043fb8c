@@ -1,0 +1,25 @@
+**Theorem 33.2 (joint noncompact seed expansion).** Each row in (33.1) belongs to complex $L^2$, and
+
+$$
+\left\|\mathcal N_sg_0-\sum_{m=0}^4s^m\mathcal N_mg_0\right\|_2
+ \le Cs^{33/8}+Cs^5(1+|\log s|)=o(s^4).
+\tag{33.2}
+$$
+
+Proof. Multiply (31.4)'s return remainder by $F_s$, whose $L^2$ norm is uniformly bounded. This costs $Cs^5(1+|\log s|)$. For the retained term $s^jG_jg_0$ expand the field only through order $4-j$. Use, in order $j=0,1,2,3,4$, the Hölder pairs
+
+$$
+(p_j,q_j)=(8,8/3),\ (4,4),\ (4,4),\ (4,4),\ (2,\infty),
+\qquad 1/p_j+1/q_j=1/2.
+\tag{33.3}
+$$
+
+The zeroth return is $p/(\gamma\mu)\in L^{8/3}$ by (31.2) and the mode decay; the other four return norms are Theorem 31.2. Each retained field coefficient is in the corresponding $L^{p_j}$ by (32.3), because its degree is at most $4-j<5-7/p_j$. Thus all coefficient products are in $L^2$. Lemma 32.1 gives the field remainders at these five degrees and exponents as
+
+$$
+O(s^{33/8}),\quad O(s^{13/4}),\quad O(s^3),\quad O(s^2),\quad O(s).
+\tag{33.4}
+$$
+
+After multiplication by $s^j$, their powers are $33/8,17/4,5,5,5$. Hölder and the finite sum prove (33.2). The proof expands the ordered joint product; it requires no separate $L^2$ Taylor expansions of $\mathcal V_2,\mathcal V_3,\mathcal V_4$ or of the higher return coefficients. $\square$
+

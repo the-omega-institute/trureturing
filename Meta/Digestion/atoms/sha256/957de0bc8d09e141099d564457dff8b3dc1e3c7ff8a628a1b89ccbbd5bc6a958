@@ -1,0 +1,22 @@
+#### 定理 12.3：复二维振幅
+
+该空间是复二维 Hilbert 空间 $\mathcal H\cong\mathbb C^2$。若 $v\perp \iota$ 为单位纯转向，则
+
+$$
+\mathcal Q=\mathbb C_\iota \oplus v\mathbb C_\iota
+$$
+
+是两份正交实二维平面；写 $q=j(z_1)+v j(z_2)$，便有
+
+$$
+\|q\|^2=|z_1|^2+|z_2|^2.
+$$
+
+**证明。**
+
+$\pi_\iota$ 保留 $1,\iota$ 分量并消去垂直纯转向，故值在 $\mathbb C_\iota$。对 $c,d\in\mathbb C_\iota$，因它们与 $\iota$ 交换， $\pi_\iota (csd)=c\pi_\iota (s)d$。这给内积的共轭线性、线性与共轭对称；$q^*q=\|q\|^2$ 给正定。四元数正交基 $1,\iota ,v,\iota v$ 给所列直和、复维数二与范数式。有限维保证完备。
+
+$\square$
+
+$\mathbb C_\iota$ 不是四元数的中心。它的单位范数元素构成保持原来源读出不变的右相位圈；复线性算子代数 $\operatorname{End}_\mathbb C(\mathcal H)$ 的标量中心才是通常的 $\mathbb CI$。这里明确区分两者。
+

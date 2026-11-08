@@ -1,0 +1,10 @@
+**命题 4.1（有限族的正提升）。**取原历史 $a_1,\ldots,a_r$，令 $P=\mathbb N^{3r}$、$\rho(n)=\sum_{i,k}n_{i,k}U^ka_i$，令 $\sigma e_{i,k}=e_{i,k+1 (\mathrm{mod} 3)}$ 循环各组三坐标。则
+
+$$
+F\rho\sigma=\omega F\rho=FU\rho.
+$$
+
+任意有限整数系数 $z_{i,k}$ 均有正提升：取 $t_i=\max(0,-z_{i,0},-z_{i,1},-z_{i,2})$，令 $h=\sum_{i,k}(z_{i,k}+t_i)U^ka_i$，则 $F(h)=\sum_{i,k}z_{i,k}\omega^kF(a_i)$。
+
+**证明。**用 (1.1) 和三相和为零。只断言可见相容，不断言原 $\rho\sigma=U\rho$。每个提升是有限正配方；任意复数或完成中的极限不在这份精确整数提升的供应范围内。
+

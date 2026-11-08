@@ -1,0 +1,78 @@
+**Lemma 3.2 (Compact localization for actual graphs).** Fix $a,h$.
+For any finite $L_0>0$, graphs in Definition 1.1 satisfying
+$W(G)\le L_0$ have actual sink marginals bounded below by a
+positive constant depending only on $L_0$. Uniformly on this
+sublevel,
+
+$$
+0\le H(x_G)-W(G)\le\frac{A(a,h,L_0)}{N^2}.
+\tag{3.8}
+$$
+
+If $N\to\infty$ and $W(G_N)\le M+O_{a,h}(N^{-1})$, the law of
+each graph belongs, eventually, to the union of the neighborhoods
+in Lemma 3.1 over every winning cap and partition. In whichever
+such neighborhood it lies, its number of exceptional sources is
+$O_{a,h}(1)$ and
+
+$$
+W(G_N)\ge M+\frac{\mathcal P_j(G_N)}N
+                         -\frac{A(a,h)}{N^2},
+\qquad
+\mathcal P_j(G)=\sum_{u\in S}\rho_j(L_u,B_u).
+\tag{3.9}
+$$
+
+The constants can be chosen uniformly over the finitely many
+winning partitions and over any fixed upper constant in the
+$O(N^{-1})$ hypothesis.
+
+**Proof.** Set $\vartheta=2/(1+\sqrt2)>0$. For $0\le t<1$,
+
+$$
+\vartheta t^2\le2(\sqrt{1+t^2}-1)\le t^2.
+$$
+
+The actual graph identity in Growing Lemma 9.2 therefore gives
+$\vartheta H(x_G)\le W(G)\le H(x_G)$. Since every source has
+positive degree,
+
+$$
+H(x_G)\ge\sum_{i=1}^s\frac1{y_i}.
+\tag{3.10}
+$$
+
+Indeed the numerator $A_i=\mathbb E[K^2\mathbf1_{i\in T}]$ is
+at least $y_i$. Thus $y_i\ge\vartheta/L_0$ on the sublevel.
+Put $\delta=\vartheta/L_0$. Each source degree is at most $s$,
+so Growing (9.5), with exactly $aN$ actual edges, implies
+
+$$
+0\le H(x_G)-W(G)
+\le\frac N4(aN)\left(\frac{s}{\delta N}\right)^4
+=\frac{as^4}{4\delta^4N^2}.
+\tag{3.11}
+$$
+
+This proves (3.8) without an imposed marginal floor.
+
+For the sequence in the assertion, $H(x_{G_N})\to M$ by (3.8)
+and the definition of $M$. Its laws belong to a compact subset
+of the finite-dimensional probability simplex: their means are
+$a$ and every marginal is at least some fixed $\delta>0$.
+$H$ is continuous on this compact set. Every subsequential limit
+therefore minimizes $H$, hence is one of the finitely many laws
+(1.7) by Growing Theorem 15.5. The laws eventually lie in any
+prescribed open union of their neighborhoods. This argument is
+uniform on the stated $M+O(N^{-1})$ sublevel; otherwise a
+contradicting sequence outside that union would have such a limit.
+
+Within each neighborhood (3.2) gives
+$\varepsilon=O_{a,h}(N^{-1})$. The number of exceptional sources
+is $N\varepsilon$, an integer bounded independently of $N$.
+The first line of (3.2), with (3.8), now gives (3.9), since
+$P(x_G)=\mathcal P_j(G)/N$. Finitely many caps and partitions
+allow common constants. This uses the existing exhaustive
+equality theorem only for localization; the finite-graph prices
+and the error estimate are additional relations. ∎
+

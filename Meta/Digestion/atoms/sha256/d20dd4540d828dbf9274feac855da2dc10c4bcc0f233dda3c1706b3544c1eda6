@@ -1,0 +1,78 @@
+**Theorem 25.3 (the original producer inequality on the opposite cap).**
+For every $E\in\operatorname{Dens}_2$ and every actual $U\in U(4)$,
+
+$$
+B\bigl(\operatorname{diag}(UU_+^\dagger)\bigr)\ge\frac{23}{6}
+\quad\Longrightarrow\quad
+g(E,U)\ge\frac1{25}\rho(E,U).
+\tag{25.22}
+$$
+
+Equality holds exactly when $E=E_-$ and $U=\lambda U_-$ for one
+common scalar $\lambda$ with $|\lambda|=1$. In particular, on
+this entire cap $g(E,U)\ge\kappa\rho(E,U)$; this latter inequality
+is strict at every pair outside the negative optimizer class.
+
+Proof. For the original $E,U$, take
+$w=\operatorname{diag}(UU_+^\dagger)$,
+$p=b_+^\dagger E^{\mathsf T}b_+$ and
+$\epsilon(E)=1-\operatorname{Tr}(E^2)\ge0$.
+The exact same-feedback comparison (23.14) gives
+
+$$
+g(E,U)-\gamma\rho(E,U)
+\ge G(w,p)-\gamma r(w,p)+\gamma\epsilon(E).
+\tag{25.23}
+$$
+
+Lemma 25.2 makes the right side nonnegative. If $\delta>0$,
+its quadratic-form term is strictly positive, since
+$(\sqrt p,\sqrt{1-p})$ is nonzero. If $\delta=0$, that term is
+$(d^2-2/25)p$; equality therefore forces $p=0$. Positivity of
+(23.9) then forces its off-diagonal entry to be zero and
+$E=E_-$. At $B=4$, (25.3) gives
+$w=\lambda(1,-1,-i,i)$. The unitary $UU_+^\dagger$ has all four
+diagonal entries of modulus one, so its row norms force all
+off-diagonal entries to vanish. As
+$U_-=\operatorname{diag}(1,-1,-i,i)U_+$, this yields
+$U=\lambda U_-$. Conversely, these original optimizer pairs
+have $g=\rho=0$ by Lemma 11.2.
+
+Section 22 proves $0<\kappa<1/25$. Outside this optimizer class,
+$\rho>0$ by Lemma 11.2, and (25.22) consequently implies
+$g-\kappa\rho\ge(1/25-\kappa)\rho>0$.
+
+The ordinary transpose in $p$ and (25.23) is the one fixed by
+the original record convention. The proof retains one actual
+shared $U$, the joint optimizer sign, and just the common
+scalar feedback phase. Equation (25.23) includes the impurity
+term with its nonnegative sign, so both singular and mixed
+normalized effects and every population are included. No
+spectral component is assigned a different feedback. $\square$
+
+The new cap is wholly in the complement of Section 24: (25.11)
+gives $A\le2/\sqrt3<2<A_0$ throughout $\mathcal C_-$.
+It contains the negative optimizer $B=4$ and every datum
+(25.13) with $0<\delta\le1/6$, for which $r=2(p+\delta)>0$.
+Combining Theorems 24.4 and 25.3, the remaining global
+sharp-endpoint obligation is exactly
+
+$$
+\nu_\kappa(w)\ge0
+\quad\text{for every }w\in\mathcal W
+\text{ with }A(w)<2+\sqrt{8/3}\text{ and }B(w)<23/6.
+\tag{25.24}
+$$
+
+The fixed-source implication (25.22) is repo-derived.
+Its exact source correspondence and mixed-effect transfer are
+Theorem 23.2, including the Thompson realization theorem in the
+Jasper--Loreaux--Weiss formulation cited there. The disk support
+and monotonicity calculation reuses (24.3)--(24.5), with the
+opposite coefficient pair and the range $\lambda\ge2$ justified
+in (25.7)--(25.9). The substantive uniform increment is the
+simultaneous opposite-cap bound (25.2) and its positive rational
+matrix margin (25.15). Neither optimality of the coefficient
+$1/25$ or the cutoff $23/6$, nor a global sharp constant outside
+the union of these two caps, is asserted.
+

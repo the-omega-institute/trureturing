@@ -1,0 +1,32 @@
+**推论 20.3（同一代表、原校准保态与谱条件的分界）。** 在命题 20.2 的对象上，复用精确 $C_{88}$／Takesaki 判据，有
+
+$$
+\begin{aligned}
+\epsilon=0
+&\ \Longleftrightarrow\ E\text{ 正}\\
+&\ \Longleftrightarrow\ E\text{ 为 UCP}\\
+&\ \Longleftrightarrow\
+\rho^{it}A\rho^{-it}=A\quad(t\in\mathbb R)\\
+&\ \Longleftrightarrow\
+\text{存在到恰好 }A\text{ 的保持原 }\rho\text{ 的条件期望}\\
+&\ \Longleftrightarrow\ \sigma=\rho .
+\end{aligned}
+\tag{20.14}
+$$
+
+其中条件期望采用保单位元、完全正、幂等、$A$-双模的含义。对 $\epsilon>0$，式 (20.6) 供应保持 $\sigma$ 的替代 $F$，不供应原 $E$ 的正性，且 $F_*(\rho)\ne\rho$。若给定目标 $\eta_0\ge0$ 并要求完全有界误差不超过 $\eta_0$，一个充分条件是 $\epsilon\le\eta_0\lambda$。
+
+证明。$\epsilon=0$ 就是原 $C_{88}$。正复线性映射保持伴随，结合定理 7.1 给前三个等价。若 $R$ 是保持 $\rho$ 的条件期望，则
+
+$$
+\operatorname{Tr}(\rho a^\dagger R(x))
+=\operatorname{Tr}(\rho R(a^\dagger x))
+=\operatorname{Tr}(\rho a^\dagger x),
+$$
+
+所以 $R=E$，而定理 7.1 给存在性的精确模判据。$\epsilon=0$ 时式 (20.6) 给 $\sigma=\rho$；反之若 $\sigma=\rho$，式 (20.7)、(20.11) 给 $E=F$ 为 UCP，故 $\epsilon=0$。
+
+必须分别保留三个误差对象：式 (20.10) 是这一对校准态的迹范数误差；式 (20.13) 是原代表与替代映射的算符误差，且对所有有限辅助矩阵一致；它们都不是原 $\rho$ 的精确保态回缩。$\operatorname{Tr}h=1$ 意味着 $\lambda\le1/d$，而 $h\ge\lambda_{\min}(\rho)I$。因此对每个固定 $(d,\rho,A)$ 的结论不等于跨维数的一致小误差定理；即使已知 $h\ge\kappa I/d$、$0<\kappa\le1$，由式 (20.6) 取得的充分界仍是 $d\epsilon/\kappa$。以下二维族表明，仅有忠实性而没有统一谱下界时，连固定维数也不存在非零缺陷阈值保证原 $E$ 正或保证其接近正映射。
+
+原校准保态但不固定整个 $A$ 的广义 CP 粗化是另一种性质，见 Carlen–Vershynina §1.4 及 Bardet–Capel–Rouzé §§2.4.1、A.1；后者的固定点条件期望还可有严格较小的像。它们不能替代式 (20.14) 中“到恰好 $A$ 的原校准保态回缩”，这里不另提出定量 Petz 结论。
+

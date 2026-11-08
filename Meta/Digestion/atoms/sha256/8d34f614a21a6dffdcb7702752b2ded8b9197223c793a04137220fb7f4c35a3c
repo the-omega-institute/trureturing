@@ -1,0 +1,86 @@
+**编者注 n23（Taylor 域与折叠权重的符号）。** 令 $R=\min_\rho|\rho-\tfrac12|>0$，最小值存在于离散零点族；Taylor 展开限于 $|w|<R$。任意更小闭盘上的几何展开由绝对权重和控制，可交换求和。代入 $\kappa_\rho=i a_\rho$，单项 $i b_\rho/(-iw-a_\rho)=b_\rho/(\kappa_\rho-w)$，所以奇次系数的符号正是原文所列。碰撞 $\lambda(a)=\lambda(a')$ 当且仅当 $a'=\pm a$；合并这两个位置且仅计一次解析重数 $m_\rho$，利用 $b_\rho=\lambda/(1+\lambda/4)$，得到（5.3）。分母不为零：$\lambda=-4$ 会给出被排除的端点 $a=\pm\tfrac12$。
+
+<!-- editorial-note: n23 end -->
+
+逐项展开给出
+
+$$
+c_j
+=
+\sum_\rho
+b_\rho\kappa_\rho^{-2}
+\left(\kappa_\rho^{-2}\right)^j.
+$$
+
+将 $\rho$ 与 $1-\rho$ 合并，得到不同折叠谱点集合 $\mathcal T$ 及权重 $\omega_\lambda$，使
+
+$$
+\boxed{
+c_j=\sum_{\lambda\in\mathcal T}
+\omega_\lambda\lambda^j.
+}
+
+$$
+
+<a id="eq-5-2"></a>
+
+(5.2)
+
+若对应 ζ 零点的重数为 $m_\rho$，则
+
+$$
+\boxed{
+\omega_\lambda
+=
+\frac{2m_\rho\lambda^2}{1+\lambda/4}.
+}
+
+$$
+
+<a id="eq-5-3"></a>
+
+(5.3)
+
+这些权重绝对可和，$\mathcal T\cup\{0\}$ 紧，唯一可能的聚点为 $0$。
+
+写
+
+$$
+\rho=\frac12+\delta+i\gamma,
+$$
+
+则
+
+$$
+\boxed{
+\lambda_\rho
+=
+\frac{\gamma^2-\delta^2+2i\delta\gamma}
+{(\delta^2+\gamma^2)^2}.
+}
+
+$$
+
+<a id="eq-5-4"></a>
+
+(5.4)
+
+非平凡零点没有实轴位置。因此：
+
+$$
+\delta=0
+\Longrightarrow
+\lambda_\rho=\gamma^{-2}>0,\quad \omega_\lambda>0;
+$$
+
+$$
+\delta\ne0
+\Longrightarrow
+\lambda_\rho\notin\mathbb R.
+$$
+
+一个离线四元组恰好对应一个非实共轭谱点对。
+
+<!-- editorial-note: n24 begin -->
+<a id="n24"></a>
+

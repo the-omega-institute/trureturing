@@ -1,0 +1,37 @@
+**Theorem 22.1 (sharp uniform local rank-one quotient).** For the unchanged $\rho$ and $g$ of Definition 11.1,
+
+$$
+\boxed{
+\lim_{\delta\downarrow0}\ \sup\left\{
+\frac{\rho(E,U)}{g(E,U)}:
+E\in\operatorname{Dens}_2,\ \operatorname{rank}E=1,\ U\in U(4),\
+0<\rho(E,U)\le\delta\right\}
+=R_*=29.3209568042764999367\ldots .
+}
+\tag{22.15}
+$$
+
+Both optimizer classes and the common scalar feedback phase are included in this limit. Equivalently, for every $\eta>0$ there is a $\delta_\eta>0$ such that every rank-one pair with $0<\rho\le\delta_\eta$ satisfies $\rho\le(R_*+\eta)g$, and the constant in this limiting statement cannot be decreased.
+
+**Proof.** A pair with $\rho\to0$ approaches one of the two optimizer circles in exactly the product metric of Definition 11.1. After a scalar phase choice it therefore enters one of the charts (22.4)–(22.5), with $r\to0$. Conversely, in these charts, $r^2\le N\le2r^2$, and (22.7) implies $\rho\ge r^2/2$ for sufficiently small $r$. The constants can be chosen the same in the two charts, and scalar phase invariance removes dependence on the location on either optimizer circle.
+
+There are constants $C,C'>0$ on these neighborhoods such that (22.7) and (22.14) imply
+
+$$
+g\ge\kappa N-Cr^3\ge\kappa\rho-C'r^3
+\ge(\kappa-2C'r)\rho.
+\tag{22.16}
+$$
+
+Thus $g/\rho$ has uniform lower limit at least $\kappa$. This estimate uses the size of the actual coordinates, not the first derivative of a chosen curve. It consequently includes sequences with changing directions, different relative perturbation scales, zero first velocity, and arbitrarily flat parametrizations. For positive $\rho$, the denominator $g$ is positive by Lemma 11.2, so (22.16) gives the required upper limit for $\rho/g$.
+
+For the reverse inequality, reuse the actual shared-feedback path from Theorem 21.3:
+
+$$
+E=E(t,\pi/2),\qquad
+U=\operatorname{diag}(e^{-ix_*t},e^{ix_*t},1,1)U_+,
+\qquad t\downarrow0.
+$$
+
+It has positive $\rho\to0$ and $\rho/g\to\kappa^{-1}$. Its coordinates satisfy $z=i\tan t$ and $X=\operatorname{diag}(-x_*t,x_*t,0,0)$, so it also realizes the equality direction identified after (22.14). Every sufficiently small distance constraint contains a tail of this path. This proves (22.15) without reproving the finite-scale theorem. $\square$
+

@@ -1,0 +1,50 @@
+### 定理 3.5（显式缺陷的全参考上界）
+
+<a id="thm-c122-diamond-defect"></a>
+
+对上述均匀参考回接有
+
+<a id="eq-c122-diamond-defect"></a>
+
+$$
+2(1-p)\le\|\mathcal T-\operatorname{id}_H\|_\diamond
+ \le\min\{2,2\|D_{\mathrm K}\|_\infty\}
+ \le\min\{2,2(d-1)(1-p)\}.
+\tag{17}
+$$
+
+特别地，$d=2$ 时
+
+<a id="eq-c122-qubit-exact-diamond"></a>
+
+$$
+\|\mathcal T-\operatorname{id}_2\|_\diamond=2(1-F_e(\pi,\mathcal T)).
+\tag{18}
+$$
+
+**证明。**
+令 $\Lambda(X)=\sum_aL_aXL_a$。对任意参考 $Q$ 和联合密度矩阵 $\rho$，
+$(\Lambda\otimes\operatorname{id}_Q)(\rho)\succeq0$，所以其迹范数为
+$\operatorname{Tr}[(D_{\mathrm K}\otimes I_Q)\rho]\le\|D_{\mathrm K}\|_\infty$。
+另一方面 Schatten 乘积不等式给出
+
+$$
+\tfrac12\|(D_{\mathrm K}\otimes I_Q)\rho+\rho(D_{\mathrm K}\otimes I_Q)\|_1
+ \le\|D_{\mathrm K}\|_\infty.
+$$
+
+对式~[(14)](#eq-c122-double-commutator) 使用三角不等式，就在*任意参考*上得到 $2\|D_{\mathrm K}\|_\infty$。
+
+若 Hermitian $L$ 去迹，其特征值为 $\lambda_1,\ldots,\lambda_d$，则对任意 $r$，
+
+$$
+\lambda_r^2=\left(\sum_{s\ne r}\lambda_s\right)^2
+ \le(d-1)\sum_{s\ne r}\lambda_s^2,
+ \quad\text{故}\quad
+ L^2\preceq\frac{d-1}{d}\operatorname{Tr}(L^2)I.
+$$
+
+对 $L_a$ 相加并用 $\operatorname{Tr} D_{\mathrm K}=d(1-p)$，得
+$D_{\mathrm K}\preceq(d-1)(1-p)I$。
+最后，用最大纠缠输入 $\Psi_\pi$ 及二元效果 $\Psi_\pi$ 检验输出，其成功概率差为 $1-p$，因此迹距离至少为 $2(1-p)$。$d=2$ 时上下界相等。
+

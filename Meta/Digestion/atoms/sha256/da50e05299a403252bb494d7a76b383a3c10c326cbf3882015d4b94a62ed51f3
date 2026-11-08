@@ -1,0 +1,38 @@
+### 引理 5.2（二元错误约束混合态重叠）
+
+<a id="lem-c123-binary-overlap"></a>
+
+对任意两个态 $\rho,\omega$ 和实际效果 $F$，记
+$e_\rho=1-\operatorname{Tr}(F\rho)$、$e_\omega=\operatorname{Tr}(F\omega)$，则
+
+<a id="eq-c123-overlap-bound"></a>
+
+$$
+\operatorname{Tr}(\rho\omega)
+ \le\left[\sqrt{(1-e_\rho)e_\omega}
+          +\sqrt{e_\rho(1-e_\omega)}\right]^2.
+\tag{31}
+$$
+
+特别地，两项错误都不超过 $\varepsilon\le1/2$ 时，右端至多为
+$4\varepsilon(1-\varepsilon)$。
+
+**证明。**
+在 $\sqrt\rho\sqrt\omega$ 中插入 $F+(I-F)$。Schatten 范数的乘积不等式给出
+
+$$
+\begin{aligned}
+\|\sqrt\rho\sqrt\omega\|_1
+ &\le\|\sqrt\rho F^{1/2}\|_2\|F^{1/2}\sqrt\omega\|_2\\
+ &\quad+\|\sqrt\rho(I-F)^{1/2}\|_2
+       \|(I-F)^{1/2}\sqrt\omega\|_2,
+\end{aligned}
+$$
+
+即括号内的上界。又
+$\operatorname{Tr}(\rho\omega)=\|\sqrt\rho\sqrt\omega\|_2^2
+\le\|\sqrt\rho\sqrt\omega\|_1^2$。
+最后写 $e_\rho=\sin^2\alpha,e_\omega=\sin^2\beta$，括号等于
+$\sin(\alpha+\beta)$；在两个错误均不超过 $\varepsilon\le1/2$ 时，它至多为
+$2\sqrt{\varepsilon(1-\varepsilon)}$。
+

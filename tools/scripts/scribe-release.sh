@@ -6,6 +6,16 @@
 # is the default. gh uses GH_TOKEN or its normal authenticated configuration.
 set -euo pipefail
 
+ROOT="$(cd "$(dirname "$0")/../.." && pwd -P)"
+if [[ -f "$ROOT/tools/scripts/lib/maintenance-log-lib.sh" ]]; then
+  source "$ROOT/tools/scripts/lib/maintenance-log-lib.sh"
+fi
+if declare -F maintenance_log_begin >/dev/null; then
+  maintenance_log_begin scribe-release "$ROOT" "$$" "$PPID"
+fi
+trap 'rc=$?; if declare -F maintenance_log_finish >/dev/null; then maintenance_log_finish "$rc"; fi; exit "$rc"' EXIT
+
+
 fail() {
   printf 'SCRIBE_RELEASE %s\n' "$2" >&2
   exit "$1"
@@ -53,7 +63,6 @@ command -v dotnet >/dev/null 2>&1 || fail 2 'MissingTool: dotnet'
 if [[ "$MODE" != local ]]; then
   command -v gh >/dev/null 2>&1 || fail 2 'MissingTool: gh'
 fi
-ROOT="$(cd "$(dirname "$0")/../.." && pwd -P)"
 PROJECT="$ROOT/tools/StrataLint.Scribe/StrataLint.Scribe.csproj"
 [[ -f "$ROOT/global.json" && -f "$PROJECT" && -d "$ROOT/Blueprint" ]] \
   || fail 2 'InvalidRepository: global.json, Blueprint and the Scribe host are required'
@@ -83,6 +92,7 @@ cleanup() {
     fi
   fi
   if [[ -n "$TEMP_DIRECTORY" ]]; then rm -rf -- "$TEMP_DIRECTORY" || rc=1; fi
+  if declare -F maintenance_log_finish >/dev/null; then maintenance_log_finish "$rc"; fi
   exit "$rc"
 }
 trap cleanup EXIT

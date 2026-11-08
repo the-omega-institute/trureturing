@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8de5b6a633d793bceca0a7ffec38731fb30a22fb874325173be17b180aeeb343
+  normalized_sha256: sha256:8de5b6a633d793bceca0a7ffec38731fb30a22fb874325173be17b180aeeb343
+cas_ref: sha256:8de5b6a633d793bceca0a7ffec38731fb30a22fb874325173be17b180aeeb343
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Definition of the original premise data and the quantifier order of the uniform finite readout law; it asserts no theorem. The original normed space, separating continuous evaluations, bounded symmetric bilinear S, total D, actual conjugacy, real associator and single formula on every actual output are retained as hypotheses of Theorem 12.2. This settlement does not assert Theorem 12.2 or the optional JB consequences of Definition 12.3.
+    previous_atom_id: 65db4bed4bc600022447cd927c365fa23c797220b706394a23c2531505c30408
+    next_atom_id: 958bd182b50e192deffc2d8e97ba5315f812fd883336849103b38532e291ef0f

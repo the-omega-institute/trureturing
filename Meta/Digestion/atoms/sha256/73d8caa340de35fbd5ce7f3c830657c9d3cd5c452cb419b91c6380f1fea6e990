@@ -1,0 +1,56 @@
+**Lemma 10.3 (Exact normalized-radical identity).** For a difference
+$D$ of two functions (8.4), write its terms as in (8.7), and set
+
+$$
+b_l=\frac{a_l'(0)}{a_l(0)},\qquad
+c_l=\frac{k_l}{a_l(0)}>0,\qquad
+q_l(u)=(1+b_lu)^2+c_l^2u^2.
+\tag{10.4}
+$$
+
+Group equal signatures $(b_l,c_l)$, and for each signature let
+$W_q(u)$ be the sum of its affine weights $w_l(u)$, with signs.
+Then $D$ is identically zero if and only if every $W_q$ is the zero
+polynomial. This includes repeated terms, zero weights and negative
+weights.
+
+**Proof.** The discriminant of $q_l$ is $-4c_l^2<0$. Thus it is
+an irreducible quadratic over $\mathbb Q$, with constant term one.
+Two such normalized quadratics agree exactly when $b_l$ and $c_l$
+agree. Distinct ones are nonassociate irreducibles; valuation at each
+of these factors proves independence of their classes in
+$\mathbb Q(u)^*/\mathbb Q(u)^{*2}$. The multiquadratic construction
+then gives independent sign changes of their square roots. To check
+the field step explicitly, induct on the number adjoined. Suppose the
+earlier subset products form a basis, with all sign changes acting
+independently. If the next $q$ were a square $z^2$ in that field, each
+sign automorphism would send $z$ to $z$ or $-z$. Thus $z$ would be a
+simultaneous eigenvector. The subset-product basis has distinct
+characters, so each such eigenspace is one-dimensional over
+$\mathbb Q(u)$, and $z$ would be a base-field multiple of one subset
+product. Squaring contradicts the independent square classes. The next
+quadratic extension therefore has degree two; its basis and all sign
+changes extend the previous ones. This proves the assertion by induction.
+It is the elementary quadratic Kummer construction;
+[Stacks, Section 9.24](https://stacks.math.columbia.edu/tag/09I6)
+gives the standard root-adjoining and sign-automorphism background.
+
+The positive branches in (8.3) satisfy
+
+$$
+R_{k_l}(a_l,u)=\frac{\sqrt{q_l(u)}}{1+b_lu}-1,
+\qquad
+\frac{u^2D(u)}2
+=\sum_q\frac{W_q(u)}{1+b_qu}\sqrt{q(u)}-\sum_qW_q(u).
+\tag{10.5}
+$$
+
+These square roots, as formal series with constant term one, give an
+embedding of the same field into the field of Laurent series. In that
+field $1$ and the individual square roots are linearly independent over
+$\mathbb Q(u)$, by the sign automorphisms. Thus (10.5) vanishes
+exactly when all $W_q/(1+b_qu)$ vanish; then its rational part
+vanishes too. All denominators are units at zero. This also proves
+that normalization is essential: $a_1=1,k_1=1$ and $a_2=2,k_2=2$
+give the same radical quotient, so their opposite weights cancel. ∎
+

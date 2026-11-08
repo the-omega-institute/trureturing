@@ -87,6 +87,16 @@ def _qualify_compiled(request, reading):
         return reading
     disposition = reading["disposition"]
     readings = disposition["readings"]
+    # This function runs only inside the compiler artifact producer. The
+    # standalone analyzer leaves this source-owned certificate unknown.
+    prediction = copy.deepcopy(request.get("compiled_prediction", {
+        "kind": "unknown", "reason": "no source-owned operation contract supplied"}))
+    continuation = reading.get("continuation_target")
+    if isinstance(continuation, dict):
+        continuation["predictive_closure"] = prediction
+        readings["predictive_closure"] = {
+            "kind": prediction["kind"],
+            "reason": prediction.get("reason", "compiled source-bound operation evidence")}
     def evidence(field, kind, reason):
         readings[field] = dict(kind=kind, reason=reason)
     if request.get("arena", "native-single-window") == "native-single-window":

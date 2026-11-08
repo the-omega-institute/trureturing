@@ -1,0 +1,48 @@
+**Lemma 42.3 (native overlap and its entry boundary).** Let
+$\mathcal O=G[\mathcal D_+]$. It is exactly the set of native trees
+with a nonempty leftmost spine whose deepest right subtree is alpha.
+Its inverse $\operatorname{pr}:\mathcal O\to\mathcal D_+$ collapses
+only the deepest $\langle\beta,\alpha\rangle$ to beta. Every
+nonempty completed macro word ends in $\mathcal O$.
+
+Reuse the actual-image inverse $\delta$ of $\rho$ from PG §37.2,
+(PG.3705), and Theorem 44.6. Thus its domain is the decidable grammar
+
+$$
+I=\rho[\mathcal T]::=\beta\mid\langle\beta,\alpha\rangle
+                              \mid\langle I,I\rangle.
+\tag{42.5}
+$$
+
+For $s=\operatorname{Sp}(r_1,\ldots,r_d)\in\mathcal D_+$ put
+$H(s)=\operatorname{Sp}(\rho r_1,\ldots,\rho r_d)$. Then
+
+$$
+\begin{aligned}
+F(s)&=G(H(s)),&\operatorname{pr}(F(s))&=H(s),\\
+n(H(s))&=n(s)+\ell(s)-1.&&
+\end{aligned}
+\tag{42.6}
+$$
+
+At beta, $H(\beta)=\beta$. At every multileaf $s$, $H(s)\notin
+\mathcal O$ and $n(H(s))>n(s)$. In particular, an overlap
+$F(s)=G(u)$ forces $u=H(s)$; for multileaf $s$, this $u$ cannot itself
+have arisen from a nonempty completed macro word.
+
+Proof. The spine presentation proves the characterization of
+$\mathcal O$, the collapse inverse and injectivity of $G$. Equation
+(42.3) puts both macro outputs in $\mathcal O$ and proves the first
+line of (42.6). The second follows by subtracting the one-event $G$
+increment from $n(F(s))=n(s)+\ell(s)$.
+
+The reused grammar (42.5) has disjoint alternatives because
+$\alpha\notin I$: the special pair has right alpha, whereas an internal
+pair of images has right child in $I$. Recursion on finite subtrees
+decides membership and computes $\delta$; it also supplies the reused
+global injectivity of $\rho$. For multileaf $s$, the deepest right
+subtree of $H(s)$ is $\rho r_d$, which cannot be alpha. Thus it is
+outside $\mathcal O$ and cannot be a nonempty macro output. Its strict
+$n$ inequality follows from $\ell(s)\ge2$. Applying the collapse to
+$F(s)=G(u)$ gives the asserted unique $u$. $\square$
+

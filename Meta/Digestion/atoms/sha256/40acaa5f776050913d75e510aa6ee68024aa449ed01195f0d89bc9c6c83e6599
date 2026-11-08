@@ -1,0 +1,30 @@
+### 定义 16.2（由行本身构造的实预测容量）
+
+将当前预测行定义为所有合法未来上的函数
+
+$$
+x_a(f,w)=p(a;f,w),\qquad
+V=\operatorname{span}_{\mathbb R}\{x_a:a\in\mathsf L\}.
+\tag{16.4}
+$$
+
+相同的 $x_a$ 表示在全部这些未来上不可区分。假设实预测容量恰为 $\dim_{\mathbb R}V=4$。这是一个明确前提，不从标签数、有限域的三维向量空间、现成矩阵维数或三次读数推出。令 $e_{f,w}$ 为坐标评价，则
+
+$$
+e_{f,w}(x_a)=p(a;f,w),\qquad
+\sum_{w\in\Gamma}e_{f,w}=u,\qquad u(x_a)=1,
+\qquad W=\ker u,\quad\dim_{\mathbb R}W=3.
+\tag{16.5}
+$$
+
+式 (16.2) 保证各 $f$ 定义的是同一个 $u$：在行的任意线性关系中，系数和必为零。所有评价函数分离 $V$；有限维性保证其中有有限个已声明评价张成 $V^*$。状态差张成 $W$，因为 $x_a$ 张成 $V$ 且均在 $u=1$。这些是构造的结果，没有添加不可观测坐标。
+
+式 (16.3) 使 $T_gx_a=x_{ag}$ 良定义并线性：若 $\sum_i t_i x_{a_i}=0$，则对每个 $f,w$，$\sum_i t_i x_{a_i g}(f,w)=\sum_i t_i x_{a_i}(gf,w)=0$。于是
+
+$$
+u T_g=u,\qquad T_hT_g=T_{gh},\qquad e_{gf,w}=e_{f,w}T_g.
+\tag{16.6}
+$$
+
+$T_{gh}$ 的下标仍按调用先后书写。这一证明消费全部未来的线性关系，不能用有限读数上的拟合代替。由 $\epsilon\in\mathsf F$ 及 $g\mathsf F\subseteq\mathsf F$ 可知 $\mathsf L\subseteq\mathsf F$，但不要求反向包含。式 (16.6) 只给出每个固定未来效果在可逆前缀下的轨道 $\{e_{f,w}T_g:g\in\mathsf L\}$；它不保证不同 $f$ 的效果属于同一轨道。一般 $f\in\mathsf F\setminus\mathsf L$ 也未被赋予 $V$ 上的变换 $T_f$。
+

@@ -1,0 +1,32 @@
+**定理 92.2（预算是尺度上界，横向退化是边界标定）。** 在各自完整背景已经取得全导子律与 SC 后，用定理 63.3 或 71.1 的共同原尺度 $\kappa\ge0$。则
+
+$$
+\mathsf G_{\rm fin}\quad\Longleftrightarrow\quad0\le\kappa\le1,
+\qquad
+\mathsf C_d\quad\Longleftrightarrow\quad\kappa=1.
+\tag{92.2}
+$$
+
+因此两种背景各自有完整同签名等价
+
+$$
+\begin{aligned}
+\mathsf C_{\rm Gram}(B)
+&\Longleftrightarrow B+\mathrm Z+\mathrm{SC}+\mathrm{SJ},\\
+\mathsf C_{\rm Gram}(\mathsf B_{\rm cl})
+&\Longleftrightarrow\mathsf B_{\rm cl}+\mathsf Q+\mathrm{SC}+\mathrm{SJ}.
+\end{aligned}
+\tag{92.3}
+$$
+
+证明。导子律、SC 和原 Frobenius 比较给 $D_ap=-D_pa$，且 $D_p$ 原 $q$-反自伴并湮灭 $N_p$。在 $W_p$ 令 $A_p=2D_p$。共同尺度给 $A_p^2=-\kappa I$。若 $\langle\cdot,\cdot\rangle_q$ 为原 $q$ 的 Hermitian 复化，则同一核恰为
+
+$$
+K_p(z,w)=\langle P_pz,(I+iA_p)P_pw\rangle_q.
+\tag{92.4}
+$$
+
+因为对实 $a,b$，右侧的虚部为 $q(a,A_pb)=-q(A_pa,b)$，与 (91.1) 一致。$iA_p$ 自伴；当 $\kappa>0$ 时，实反自伴性使 $A_p$ 的复特征值为成对的 $\pm i\sqrt\kappa$，故 $I+iA_p$ 的特征值为 $1\pm\sqrt\kappa$。$\kappa=0$ 时 $A_p=0$，该算子为 $I$。所有切空间上的核正性遂等价于 $\kappa\le1$；必要性只需原 $d\in\mathcal P_P^\dagger$ 的非零 $W_d$。C130 的同一等价给 (92.2) 第一式。横向右根空间非零则恰好要求一个 $1\pm\sqrt\kappa$ 为零，即 $\kappa=1$。这也证明边界条件不把零尺度误作量子标定。
+
+正向由定理 92.1 先取得对应的 Z 或 $\mathsf Q$ 及 SC，再用上述尺度论证得到 SJ。反向在各自完整量子候选中 $\kappa=1$，(92.4) 正半定且在非零 $W_d$ 上有非零根空间，因而预算和边界都成立。每一步都沿同一原 $D$ 和同一原 $q$。∎
+

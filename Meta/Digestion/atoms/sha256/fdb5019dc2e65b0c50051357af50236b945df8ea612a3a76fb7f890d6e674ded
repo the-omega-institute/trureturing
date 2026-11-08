@@ -1,0 +1,38 @@
+**Lemma 37.2 (actual-source lifting, including all prefixes).** Starting
+with any finite current LAB source $t$ and any $q,r\in Q$, this paired
+counter system reaches error if and only if some actual source-legal
+finite event continuation from $t$ has different bit words from $q,r$.
+Every error-free finite counter path lifts to a legal addressed LAB
+path from that particular $t$, with the stated paired controls and
+counts at every prefix. Conversely every such addressed path projects
+to its counter path until the first unequal bit.
+
+Proof. The forward projection is (AA.114), because promotion changes
+one current alpha leaf into beta and a split replaces one current beta
+leaf by precisely its left beta and right alpha children. Deterministic
+address classification gives their indicated states. The table supplies
+the paired controls and bits exactly.
+
+For the reverse direction maintain the actual finite source and the
+counter equality after each lifted prefix. An enabled counter transition
+has a token in its specified leaf place. By the equality with $m$,
+there is an actual current logical leaf $p$ of exactly that type and
+classifier state. Choose, for example, the first one in current source
+preorder. Its indicated promotion or split is genuinely enabled. Execute
+it at that address on the same source. Its children, if any, have the
+classifier states prescribed by the tables, so (AA.114) restores the
+counter equality. The selector sees this actual $(k,p)$ and hence the
+same table entry as the counter transition. Induction gives the lift
+of every prefix, including a transition producing error.
+
+Two different leaves may have the same classifier state. Exchanging
+which available one is used changes literal addresses but not availability
+of the next abstract transition: the resulting source again has precisely
+the required counts. There is no demand to reuse an already consumed
+identity. The construction always chooses a current leaf; newly produced
+tokens are realized by actually created children. This establishes the
+existential lifting needed here, rather than assuming that any word
+over the finite event types is source-legal. It does not reconstruct
+a unique addressed history from a counter path, or give the source from
+its counts. $\square$
+

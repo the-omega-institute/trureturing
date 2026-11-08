@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9d3724f0435a892c33b94edc63ee4af21254439cee5884c0e5238e0752d7553b
+  normalized_sha256: sha256:9d3724f0435a892c33b94edc63ee4af21254439cee5884c0e5238e0752d7553b
+cas_ref: sha256:9d3724f0435a892c33b94edc63ee4af21254439cee5884c0e5238e0752d7553b
+coverage_gids:
+  - gid: D5/S1/Words/AdmissibleWords/UncrossingFiber.forwardStep_energy
+    target_statement_id: sha256:5003f865f22740654f515120588ff4eb6973f3e5a3d5fe8fee37acea3087c56e
+  - gid: D5/S1/Words/AdmissibleWords/UncrossingFiber.forwardStep_energy_gap
+    target_statement_id: sha256:86a5ae24d4b16828f08442dc58885f16626d7e2755bb2a34b4929a3b09958e5c
+receipts:
+  unresolved_subitems: []

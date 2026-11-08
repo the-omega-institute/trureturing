@@ -1,0 +1,18 @@
+## Source statement and scope
+
+OEIS A014865, revision 18, lists N. J. A. Sloane and Olivier Gérard as the entry authors and attributes its conjectural clauses to Harvey P. Dale. The entry defines the integer sequence by
+$$
+s(1)=1,\qquad s(j)=15s(j-1)+j\quad(j\ge 2),
+$$
+and defines its qualifying indices by
+$$
+T=\{n\in\mathbb Z_{>0}:n\mid s(n)\}.
+$$
+The entry records the following three conjectural clauses:
+
+1. every member of $T$ is odd;
+2. every member of $T$ greater than $7$ is composite;
+3. every member of $T$ greater than $1$ is divisible by $3$ or by $5$ or by $7$, with the disjunction inclusive.
+
+The statements below prove all three clauses for every positive qualifying index. The recurrence coefficient $15$, the initial value, and the thresholds $7$ and $1$ are exactly those in the source.
+

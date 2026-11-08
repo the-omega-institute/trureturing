@@ -48,7 +48,7 @@ def parikh (word : List Bool) : Nat × Nat :=
     cases thueMorse n <;> rfl
   · exact Or.inr (fun _ => rfl)
 
-private def transition (start : Nat) : Nat :=
+def transition (start : Nat) : Nat :=
   if thueMorse start = thueMorse (start + 1) then 0 else 1
 
 private def alternations : Nat -> Nat -> Nat
@@ -67,10 +67,10 @@ private theorem alternations_le (edgeCount start : Nat) :
       have ha := ih (start + 1)
       omega
 
-@[simp] private theorem transition_two_mul (n : Nat) : transition (2 * n) = 1 := by
+@[simp] theorem transition_two_mul (n : Nat) : transition (2 * n) = 1 := by
   simp [transition]
 
-@[simp] private theorem transition_two_mul_add_one (n : Nat) :
+@[simp] theorem transition_two_mul_add_one (n : Nat) :
     transition (2 * n + 1) = 1 - transition n := by
   simp only [transition, thueMorse_two_mul_add_one]
   rw [show 2 * n + 1 + 1 = 2 * (n + 1) by omega, thueMorse_two_mul]

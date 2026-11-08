@@ -1,0 +1,104 @@
+**Theorem 58.1 (uncompensated RAW and the original free comparison).**
+Put $h=h_{\rm raw,\kappa}$, $w=w_{\rm raw,\kappa}$,
+$t=z/h$, and use the RAW $\xi_\kappa$. Define only from independent
+native data
+
+$$
+B_\kappa(z)=\frac1w e^{-(\lambda-\xi_\kappa)z/h},\qquad
+h_*(k,\theta,v)=\frac{\phi(k)}{2\pi},\qquad
+P_*=|h_*\rangle\langle h_*|.
+\tag{58.1}
+$$
+
+Uniformly on every compact positive $z$ interval,
+
+$$
+\begin{gathered}
+B_\kappa(z)\longrightarrow+\infty,\qquad
+\frac{w^{-1}e^{z\xi_\kappa/h}C_{{\rm raw},\kappa}(z/h)}
+                  {B_\kappa(z)}\longrightarrow P_*,\\
+\left\|w^{-1}e^{z\xi_\kappa/h}C_{{\rm raw},\kappa}(z/h)\right\|
+ \sim \frac1w e^{-(\lambda-\xi_\kappa)z/h},\\
+\frac{e^{z\xi_\kappa/h}}w
+       \|F_\kappa(z/h)-S_{z/h}\|\longrightarrow0.
+\end{gathered}
+\tag{58.2}
+$$
+
+The operator convergence is in norm on the entire base, and the norm
+equivalent has relative error tending to zero uniformly. Consequently
+$S_t$ is interchangeable with $F_\kappa(t)$ in the compensated RAW
+limit, although the two free terms themselves diverge at that
+normalization. The separately normalized UNIT free response tends
+to zero by (57.15).
+
+Proof. The original free $D$-independent subspace reduces $L_\kappa$,
+so its exact compression is $e^{-t\overline L_\kappa}$. In the
+zero visible block it is $-\varepsilon^2\partial_k^2$, with the
+exact ground $(\lambda,h_*)$ for every $\kappa$. Every other
+visible block adds the nonnegative square $(nA_\kappa+mB_\kappa)^2$.
+Their bottoms have a uniform positive gap above $\lambda$: use
+the large-frequency bound [G, (26.6)] outside a fixed lattice ball,
+and inside that ball use coefficient continuity and the strictly
+positive nonzero-visible gaps at $\kappa=0$ from Theorem 36.2.
+The next zero-visible height eigenvalue is $4\lambda$. Thus for
+some $\gamma_f>0$, all $t\ge0$ and small parameters,
+
+$$
+\|F_\kappa(t)\|=e^{-\lambda t},\qquad
+\|e^{\lambda t}F_\kappa(t)-P_*\|\le e^{-\gamma_ft}.
+\tag{58.3}
+$$
+
+There is no unknown free-bottom correction or boundary-overlap
+coefficient in this formula: the isometry $J$ fixes both exactly.
+
+In RAW, $w=\alpha_{\rm raw}a\tau_s^{1/4}$,
+$h=\tau_s^{-1/2}$ and $L_a=\log(1/a)$. Hence exactly
+
+$$
+\log B_\kappa(z)=L_a-\tfrac14\log\tau_s-\log\alpha_{\rm raw}
+                    -(\lambda-\xi_\kappa)z\sqrt{\tau_s}.
+\tag{58.4}
+$$
+
+Since $\tau_s\sim L_a/\lambda$ and $\xi_\kappa$ is bounded,
+$\log B_\kappa(z)/L_a\to1$ uniformly on compact positive $z$
+intervals. The compensated remainder in (57.10) is bounded after
+its stated normalization. Dividing it by $B_\kappa(z)$ makes it
+vanish uniformly; (58.3) proves the first three assertions of
+(58.2). This concerns exactly the object with $e^{z\xi_\kappa/h}/w$,
+regardless of the sign or a zero value of $e(c_{\rm raw})$.
+
+For the last assertion, the exact $(n,m)$ blocks of
+$\overline L_\kappa$ and $\mathcal K_0$ have the same scalar
+Dirichlet domain and potentials differing by at most
+$Ca(n^2+m^2)$, as in (46.1)--(46.2). Both scalar bottoms are at
+least $\lambda+c\Psi(\sqrt{n^2+m^2})$ uniformly, with $\Psi$
+from [G, (26.6)]. Duhamel on these scalar blocks, followed by the
+supremum over the entire integer lattice, therefore gives for $t\ge1$
+
+$$
+\|F_\kappa(t)-S_t\|
+ \le Ca t e^{-\lambda t}
+       \sup_{R\ge1}R^2e^{-ct\Psi(R)}
+ \le Ca t e^{-\lambda t}.
+\tag{58.5}
+$$
+
+The zero visible block agrees exactly and contributes zero.
+The last supremum is bounded because $\Psi$ has the growth
+specified in [G, (26.6)]. In the normalization at issue,
+$a/w=\alpha_{\rm raw}^{-1}\sqrt h$, so (58.5) implies
+
+$$
+\sup_{z_0\le z\le z_1}
+ \frac{e^{z\xi_\kappa/h}}w\|F_\kappa(z/h)-S_{z/h}\|
+ \le C h^{-1/2}e^{-(\lambda-\xi_\kappa)z_0/h}\longrightarrow0.
+\tag{58.6}
+$$
+
+Here $\lambda-\xi_\kappa\to\lambda-e(c_{\rm raw})>0$.
+This is a comparison of the two exact free responses at the requested
+scale, not an inference from their individual sizes. $\square$
+

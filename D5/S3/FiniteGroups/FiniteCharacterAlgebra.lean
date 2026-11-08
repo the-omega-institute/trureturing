@@ -20,8 +20,10 @@ This port uses repository namespaces and the pinned Mathlib API.
 Replace these ports by direct imports when the repository’s pinned Mathlib supplies
 equivalent declarations with the same hypotheses and conclusions.
 
+Escape audit unfinished for the five arbitrary-characteristic additions: https://github.com/the-omega-institute/trureturing/issues/27899
 admission_basis: escape-witness
-Direct frozen dependencies: none.
+Frozen baseline inputs (module statement identities):
+D5/S3/FiniteGroups/FiniteCharacterAlgebra @ sha256:5ea5be4246f85df1a6a5a34be414eaa3174509f06a0bb1c923f3d8e8cfff6a55
 Module escape_witness: Representation.asAlgebraHom_surjective_of_isIrreducible
 A linear operator is extended to an endomorphism commuting with the commutant using Schur scalars, then realized by the representation algebra.
 Subrepresentation.toSubmodule_bot | proof_shape: bind-only | escape_witness: none | consumer: D5.S3.FiniteGroups.CliffordConstituents.TauCeti.Representation.iSup_conjSubrep_eq_top, Representation.IntertwiningMap.eq_zero_iff_range_eq_bot, TauCeti.Representation.exists_isAtom, TauCeti.Representation.isIrreducible_of_finrank_eq_one, TauCeti.Representation.isIrreducible_toRepresentation_of_isAtom
@@ -85,12 +87,12 @@ TauCeti.classSum_commutes | proof_shape: bind-only | escape_witness: none | cons
 TauCeti.classSum_mem_center | proof_shape: bind-only | escape_witness: none | consumer: TauCeti.classSumCenter
 TauCeti.classSumCenter | proof_shape: bind-only | escape_witness: none | consumer: D5.S3.FiniteGroups.CharacterDegreeDivisibility.TauCeti.Representation.centralCharacter_classSumCenter_mul_character_one, D5.S3.FiniteGroups.CharacterDegreeDivisibility.TauCeti.Representation.finrank_dvd_card, D5.S3.FiniteGroups.CharacterDegreeDivisibility.TauCeti.Representation.finrank_mul_sum_centralCharacter_eq_card, D5.S3.FiniteGroups.CharacterDegreeDivisibility.TauCeti.Representation.isIntegral_centralCharacter_classSumCenter, D5.S3.FiniteGroups.CharacterDegreeDivisibility.TauCeti.isIntegral_classSumCenter, TauCeti.classSumCenter_coe
 TauCeti.classSumCenter_coe | proof_shape: bind-only | escape_witness: none | consumer: D5.S3.FiniteGroups.CharacterDegreeDivisibility.TauCeti.Representation.centralCharacter_classSumCenter_mul_character_one, D5.S3.FiniteGroups.CharacterDegreeDivisibility.TauCeti.isIntegral_classSumCenter
-TauCeti.finite_end_of_smulCommClass | proof_shape: bind-only | escape_witness: none | consumer: Representation.asAlgebraHom_surjective_of_isIrreducible
+TauCeti.finite_end_of_smulCommClass | proof_shape: bind-only | escape_witness: none | consumer: Representation.asAlgebraHom_surjective_of_isIrreducible, TauCeti.exists_trace_one_zero_of_not_nonempty_linearEquiv
 TauCeti.hom_eq_zero_of_isEmpty_linearEquiv | proof_shape: bind-only | escape_witness: none | consumer: TauCeti.subsingleton_linearMap_of_isEmpty_linearEquiv
 TauCeti.subsingleton_linearMap_of_isEmpty_linearEquiv | proof_shape: bind-only | escape_witness: none | consumer: TauCeti.finiteDimensional_linearMap_of_isEmpty_linearEquiv, TauCeti.finrank_linearMap_eq_zero_of_isEmpty_linearEquiv
-TauCeti.endAlgEquivSelfOfIsSimpleModule | proof_shape: bind-only | escape_witness: none | consumer: D5.S3.FiniteGroups.CharacterDegreeDivisibility.TauCeti.centralCharacter, D5.S3.FiniteGroups.CharacterDegreeDivisibility.TauCeti.smul_eq_centralCharacter_smul, Representation.asAlgebraHom_surjective_of_isIrreducible, TauCeti.endAlgEquivSelfOfIsSimpleModule_smul, TauCeti.endAlgEquivSelfOfIsSimpleModule_symm_apply, TauCeti.finrank_linearMap_eq_one_of_nonempty_linearEquiv
+TauCeti.endAlgEquivSelfOfIsSimpleModule | proof_shape: bind-only | escape_witness: none | consumer: D5.S3.FiniteGroups.CharacterDegreeDivisibility.TauCeti.centralCharacter, D5.S3.FiniteGroups.CharacterDegreeDivisibility.TauCeti.smul_eq_centralCharacter_smul, Representation.asAlgebraHom_surjective_of_isIrreducible, TauCeti.endAlgEquivSelfOfIsSimpleModule_smul, TauCeti.endAlgEquivSelfOfIsSimpleModule_symm_apply, TauCeti.finrank_linearMap_eq_one_of_nonempty_linearEquiv, TauCeti.exists_trace_one_zero_of_not_nonempty_linearEquiv
 TauCeti.endAlgEquivSelfOfIsSimpleModule_symm_apply | proof_shape: bind-only | escape_witness: none | consumer: TauCeti.endAlgEquivSelfOfIsSimpleModule_smul
-TauCeti.endAlgEquivSelfOfIsSimpleModule_smul | proof_shape: bind-only | escape_witness: none | consumer: D5.S3.FiniteGroups.CharacterDegreeDivisibility.TauCeti.smul_eq_centralCharacter_smul, Representation.asAlgebraHom_surjective_of_isIrreducible
+TauCeti.endAlgEquivSelfOfIsSimpleModule_smul | proof_shape: bind-only | escape_witness: none | consumer: D5.S3.FiniteGroups.CharacterDegreeDivisibility.TauCeti.smul_eq_centralCharacter_smul, Representation.asAlgebraHom_surjective_of_isIrreducible, TauCeti.exists_trace_one_zero_of_not_nonempty_linearEquiv
 TauCeti.homCongrRight | proof_shape: bind-only | escape_witness: none | consumer: D5.S3.FiniteGroups.CliffordConstituents.TauCeti.finrank_linearMap_eq_natCard_of_linearEquiv_pi, TauCeti.finiteDimensional_linearMap_of_isSimpleModule, TauCeti.finrank_linearMap_eq_one_of_nonempty_linearEquiv
 TauCeti.finrank_linearMap_eq_zero_of_isEmpty_linearEquiv | proof_shape: bind-only | escape_witness: none | consumer: D5.S3.FiniteGroups.CliffordConstituents.TauCeti.finrank_linearMap_pi_eq_natCard
 TauCeti.finiteDimensional_linearMap_of_isEmpty_linearEquiv | proof_shape: bind-only | escape_witness: none | consumer: TauCeti.finiteDimensional_linearMap_of_isSimpleModule
@@ -109,8 +111,12 @@ TauCeti.ClassFunction.characterPairing_apply | proof_shape: bind-only | escape_w
 TauCeti.ClassFunction.characterPairing_symm | proof_shape: bind-only | escape_witness: none | consumer: D5.S3.FiniteGroups.MackeyCharacterFormula.TauCeti.characterPairing_ind_ind_mackey
 TauCeti.ClassFunction.characterPairing_ofFDRep | proof_shape: bind-only | escape_witness: none | consumer: TauCeti.ClassFunction.characterPairing_ofFDRep_eq_finrank
 TauCeti.ClassFunction.characterPairing_ofFDRep_eq_finrank | proof_shape: bind-only | escape_witness: none | consumer: D5.S3.FiniteGroups.MackeyCharacterFormula.TauCeti.natCast_finrank_hom_indFDRep_mackey_erase
+TauCeti.exists_trace_one_zero_of_not_nonempty_linearEquiv | proof_shape: content | escape_witness: TauCeti.exists_trace_one_zero_of_not_nonempty_linearEquiv | consumer: Representation.nonempty_equiv_of_character_eq_of_isIrreducible
+Representation.nonempty_equiv_of_character_eq_of_isIrreducible | proof_shape: content | escape_witness: TauCeti.exists_trace_one_zero_of_not_nonempty_linearEquiv | consumer: D5.S3.FiniteGroups.FrobeniusCharacterDegrees.trivial_of_character_invariant_fixedPointFree_of_isAlgClosed
 -/
 import Mathlib.LinearAlgebra.Matrix.FiniteDimensional
+import Mathlib.LinearAlgebra.Prod
+import Mathlib.LinearAlgebra.Dual.Lemmas
 import Mathlib.Algebra.Category.ModuleCat.Simple
 import Mathlib.Algebra.Group.ConjFinite
 import Mathlib.RepresentationTheory.Character
@@ -838,4 +844,138 @@ theorem characterPairing_ofFDRep_eq_finrank [Invertible (Nat.card G : k)] (V W :
 end ClassFunction
 end TauCeti
 end UpstreamSource1_1
+
+section SimpleTraceSeparation
+
+namespace TauCeti
+
+/-- Ordinary traces distinguish nonisomorphic finite-dimensional simple modules,
+in every characteristic. The witness has traces exactly one and zero. -/
+theorem exists_trace_one_zero_of_not_nonempty_linearEquiv
+    {k R S T : Type*} [Field k] [IsAlgClosed k] [Ring R] [Algebra k R]
+    [AddCommGroup S] [Module k S] [Module R S] [IsScalarTower k R S]
+    [AddCommGroup T] [Module k T] [Module R T] [IsScalarTower k R T]
+    [FiniteDimensional k S] [FiniteDimensional k T]
+    [IsSimpleModule R S] [IsSimpleModule R T]
+    (hST : ¬ Nonempty (S ≃ₗ[R] T)) :
+    ∃ r : R,
+      LinearMap.trace k S (Module.toModuleEnd k (S := R) S r) = 1 ∧
+      LinearMap.trace k T (Module.toModuleEnd k (S := R) T r) = 0 := by
+  classical
+  letI : IsSemisimpleModule R (S × T) := by
+    have h : IsSemisimpleModule R
+        ↥((LinearMap.inl R S T).range ⊔ (LinearMap.inr R S T).range) :=
+      IsSemisimpleModule.sup (IsSemisimpleModule.range _) (IsSemisimpleModule.range _)
+    rw [LinearMap.sup_range_inl_inr] at h
+    exact (LinearEquiv.isSemisimpleModule_iff
+      (Submodule.topEquiv : (⊤ : Submodule R (S × T)) ≃ₗ[R] (S × T))).mp h
+  letI : Module.Finite (Module.End R (S × T)) (S × T) :=
+    finite_end_of_smulCommClass (R := R) (M := S × T) k
+  have hST0 : IsEmpty (S ≃ₗ[R] T) := not_nonempty_iff.mp hST
+  have hTS0 : IsEmpty (T ≃ₗ[R] S) := ⟨fun e => hST ⟨e.symm⟩⟩
+  letI : Nontrivial S := IsSimpleModule.nontrivial R S
+  obtain ⟨x, hx⟩ := exists_ne (0 : S)
+  obtain ⟨φ, hφ⟩ := Module.Projective.exists_dual_eq_one k hx
+  let U : Module.End k S := φ.smulRight x
+  have hcomm (F : Module.End R (S × T)) (s : S) (t : T) :
+      U (F (s, t)).1 = (F (U s, 0)).1 ∧ (F (U s, 0)).2 = 0 := by
+    let a : Module.End R S :=
+      (LinearMap.fst R S T).comp (F.comp (LinearMap.inl R S T))
+    let c : k := endAlgEquivSelfOfIsSimpleModule (k := k) a
+    have hb : (LinearMap.fst R S T).comp (F.comp (LinearMap.inr R S T)) = 0 :=
+      hom_eq_zero_of_isEmpty_linearEquiv hTS0 _
+    have hc : (LinearMap.snd R S T).comp (F.comp (LinearMap.inl R S T)) = 0 :=
+      hom_eq_zero_of_isEmpty_linearEquiv hST0 _
+    have hleft (v : S) : (F (v, 0)).1 = c • v :=
+      (endAlgEquivSelfOfIsSimpleModule_smul (k := k) a v).symm
+    have hright (w : T) : (F (0, w)).1 = 0 := LinearMap.congr_fun hb w
+    have hbottom (v : S) : (F (v, 0)).2 = 0 := LinearMap.congr_fun hc v
+    have hfst : (F (s, t)).1 = c • s := by
+      calc
+        _ = (F (s, 0) + F (0, t)).1 :=
+          congrArg Prod.fst (by simpa using F.map_add (s, 0) (0, t))
+        _ = c • s := by
+          change (F (s, 0)).1 + (F (0, t)).1 = c • s
+          rw [hleft, hright, add_zero]
+    constructor
+    · rw [hfst, hleft]
+      exact U.map_smul c s
+    · exact hbottom (U s)
+  let B : Module.End (Module.End R (S × T)) (S × T) :=
+    { toFun := fun m => (U m.1, 0)
+      map_add' := fun m n => Prod.ext (U.map_add m.1 n.1) (by simp)
+      map_smul' := fun F m => by
+        change (U (F m).1, 0) = F (U m.1, 0)
+        obtain ⟨h₁, h₂⟩ := hcomm F m.1 m.2
+        exact Prod.ext h₁ h₂.symm }
+  obtain ⟨r, hr⟩ := Module.Finite.toModuleEnd_moduleEnd_surjective
+    (R := R) (M := S × T) B
+  have hS : Module.toModuleEnd k (S := R) S r = U := by
+    apply LinearMap.ext
+    intro s
+    exact congrArg Prod.fst (LinearMap.congr_fun hr (s, 0))
+  have hT : Module.toModuleEnd k (S := R) T r = 0 := by
+    apply LinearMap.ext
+    intro t
+    exact congrArg Prod.snd (LinearMap.congr_fun hr (0, t))
+  refine ⟨r, ?_, ?_⟩
+  · rw [hS]
+    exact (LinearMap.trace_smulRight φ x).trans hφ
+  · rw [hT, map_zero]
+
+end TauCeti
+
+namespace Representation
+
+/-- Equality of ordinary characters implies equivalence for finite-dimensional
+irreducible representations over an algebraically closed field of any characteristic. -/
+theorem nonempty_equiv_of_character_eq_of_isIrreducible
+    {k G V W : Type*} [Field k] [IsAlgClosed k] [Monoid G]
+    [AddCommGroup V] [Module k V] [AddCommGroup W] [Module k W]
+    [FiniteDimensional k V] [FiniteDimensional k W]
+    (ρ : _root_.Representation k G V) (σ : _root_.Representation k G W)
+    (hρ : ρ.IsIrreducible) (hσ : σ.IsIrreducible)
+    (hχ : ρ.character = σ.character) :
+    Nonempty (_root_.Representation.Equiv ρ σ) := by
+  classical
+  letI : ρ.IsIrreducible := hρ
+  letI : σ.IsIrreducible := hσ
+  by_contra hnon
+  have hST : ¬ Nonempty (ρ.asModule ≃ₗ[MonoidAlgebra k G] σ.asModule) := by
+    rintro ⟨e⟩
+    let f : _root_.Representation.IntertwiningMap ρ σ :=
+      (_root_.Representation.IntertwiningMap.equivLinearMapAsModule ρ σ).symm e.toLinearMap
+    have hf : Function.Bijective f := by
+      change Function.Bijective e
+      exact e.bijective
+    exact hnon ⟨f.ofBijective hf⟩
+  obtain ⟨a, ha, hb⟩ :=
+    TauCeti.exists_trace_one_zero_of_not_nonempty_linearEquiv (k := k) hST
+  have htr (b : MonoidAlgebra k G) :
+      LinearMap.trace k V (ρ.asAlgebraHom b) =
+        LinearMap.trace k W (σ.asAlgebraHom b) := by
+    induction b using MonoidAlgebra.induction_linear with
+    | zero => simp
+    | add b c hb hc => simp only [map_add, hb, hc]
+    | single g c =>
+      simpa only [_root_.Representation.character,
+        _root_.Representation.asAlgebraHom_single, map_smul, smul_eq_mul] using
+        congrArg (fun z : k => c * z) (congrFun hχ g)
+  have ha' : LinearMap.trace k V (ρ.asAlgebraHom a) = 1 := by
+    calc
+      _ = LinearMap.trace k ρ.asModule
+          (Module.toModuleEnd k (S := MonoidAlgebra k G) ρ.asModule a) :=
+        LinearMap.trace_conj' _ ρ.asModuleEquiv
+      _ = 1 := ha
+  have hb' : LinearMap.trace k W (σ.asAlgebraHom a) = 0 := by
+    calc
+      _ = LinearMap.trace k σ.asModule
+          (Module.toModuleEnd k (S := MonoidAlgebra k G) σ.asModule a) :=
+        LinearMap.trace_conj' _ σ.asModuleEquiv
+      _ = 0 := hb
+  exact one_ne_zero (ha'.symm.trans ((htr a).trans hb'))
+
+end Representation
+end SimpleTraceSeparation
+
 end D5.S3.FiniteGroups.FiniteCharacterAlgebra

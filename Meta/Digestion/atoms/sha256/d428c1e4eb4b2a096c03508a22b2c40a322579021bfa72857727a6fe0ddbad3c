@@ -1,0 +1,121 @@
+**定理 7.2（原零行、原零列与完成中心准确相等）。** 在定义 7.1 下，以完成乘法定义有界算子 $L_\xi\eta=\xi\circ\eta$ 及 Jordan 中心
+
+$$
+Z(X)=\{\zeta\in X:[L_\zeta,L_\xi]=0\ \text{对全部 }\xi\in X\}.
+\tag{7.5}
+$$
+
+则同一个原 $D$ 满足完整等式
+
+$$
+\boxed{
+\begin{aligned}
+\{c\in E:D(c,a)=0\ \text{对全部 }a\in E\}
+&=\{c\in E:D(a,c)=0\ \text{对全部 }a\in E\}\\
+&=\{c\in E:i(c)\in Z(X)\}.
+\end{aligned}}
+\tag{7.6}
+$$
+
+把 $E$ 与其忠实像认同时，最后一项就是 $E\cap Z(X)$。特别地，同一原单位的整行、整列及其全部实标量倍都满足
+
+$$
+D(tu,a)=D(a,tu)=0\qquad(t\in\mathbb R,\ a\in E).
+\tag{7.7}
+$$
+
+在定义 2.1 的总映射入口加 (7.4) 时，以上结论适用于定理 6.1 的那个准确完成、那个原锥及全部原输入；不另换平方背景。
+
+证明。若 $E=0$，由稠密性 $X=0$，结论成立。以下设 $E\ne0$，记 $\widehat e=i(e)$，并仅在原 $E$ 上记 $T_a b=S(a,b)$。
+
+首先，(7.3) 的 Hermitian 性和原评价分离给 $D(a,b)=-D(b,a)$ 及 $D(a,a)=0$。原 Jordan 乘法有 $S(0,0)=0$，所以同一二表在标签 $(0,a)$ 上有零首对角；正半定性使该行列的非对角项为零，原评价分离再给 $D(0,a)=D(a,0)=0$。这些结论均对全部原标签成立。
+
+现在直接复用三标签卷定理 13.1 证明内的三循环消元 (13.2)，亦即该卷 (59.4) 的维数无关子论证。其所需的 $S$ 对称、$D$ 反对称和原实部式已分别由 (7.1)、上段和 (7.4) 供应，故
+
+$$
+D(D(a,b),x)=[T_b,T_a]x\qquad(a,b,x\in E).
+\tag{7.8}
+$$
+
+这只是在原 $E$ 中联立原等式，不展开未知 $D$ 的输入之和，也不使用有限 EJA 分类、有限中央理想、II₁ 背景或三标签复正性。
+
+还需把原二表正性准确传给证明所用的数学态。直接使用三标签卷 (59.5) 的原锥论证：对每对原 $a,b$ 和每个 $z_1,z_2\in\mathbb C$，原元素
+
+$$
+\begin{aligned}
+w={}&|z_1|^2S(a,a)+|z_2|^2S(b,b)\\
+ &+2\Re(\overline{z_1}z_2)S(a,b)
+   +2\Im(\overline{z_1}z_2)D(a,b)
+\end{aligned}
+\tag{7.9}
+$$
+
+满足 $\alpha(w)\ge0$ 对每个原 $\alpha$ 成立，故由 (7.2) 有 $w\in C$、$i(w)\in X_+$。因此每个数学态 $\varphi$（即 $X$ 上满足 $\varphi(1)=1$ 的连续正实线性泛函）都给
+
+$$
+M_\varphi(a,b)=
+\begin{pmatrix}
+\varphi(\widehat a\circ\widehat a)&
+\varphi(\widehat a\circ\widehat b)-\mathrm i\varphi(\widehat{D(a,b)})\\
+\varphi(\widehat a\circ\widehat b)+\mathrm i\varphi(\widehat{D(a,b)})&
+\varphi(\widehat b\circ\widehat b)
+\end{pmatrix}\succeq0.
+\tag{7.10}
+$$
+
+这不是对原评价族作正常性或对偶稠密性假设；它来自同一原元素 (7.9) 的锥成员身份。数学态也没有被加入实际准备族。
+
+令 $R=\{r\in E:D(r,a)=0\text{ 对全部 }a\in E\}$。反对称性已使零列集合等于 $R$。若 $r\in R$，(7.8) 给
+
+$$
+[T_b,T_r]x=D(D(r,b),x)=D(0,x)=0
+\qquad(b,x\in E).
+\tag{7.11}
+$$
+
+在 $X$ 上，$L_{\widehat b}$、$L_{\widehat r}$ 有界，且 (7.1) 使其交换子在稠密的 $i(E)$ 上为零，故在全部 $X$ 上为零。再以 $i(E)$ 的稠密性和 $\xi\mapsto L_\xi$ 的范数连续性，得到 $[L_\xi,L_{\widehat r}]=0$ 对每个 $\xi\in X$ 成立，即 $\widehat r\in Z(X)$。这里延拓的只有已知 JB 乘法算子，没有延拓 $D$。
+
+反向固定任意原 $c$，使 $\widehat c\in Z(X)$，并固定任意原 $a\in E$。令
+
+$$
+d=D(c,a)\in E.
+\tag{7.12}
+$$
+
+由 (7.8) 和中心条件，$D(d,x)=[T_a,T_c]x=0$ 对全部原 $x\in E$ 成立。因此 $d\in R$，上段已经证明的包含关系给 $\widehat d\in Z(X)$。到此尚未把 $d\in R$ 当成 $d=0$；须继续消掉这个可能的中央输出。
+
+只在完成中构造一个辅助交换子代数。成熟中心事实取 Hanche-Olsen–Størmer，[*Jordan Operator Algebras*](https://hanche.folk.ntnu.no/joa/joa-m.pdf)，§2.5.1 及 Lemma 2.5.3（印刷页 44–45）：中心是结合子代数，且中央元与任意元相结合。后一性质也可直接由 (7.5) 读出：对中央 $z$ 和任意 $x,y$，
+
+$$
+z\circ(x\circ y)=x\circ(z\circ y)=y\circ(z\circ x)=(z\circ x)\circ y.
+\tag{7.13}
+$$
+
+令 $A_0$ 为 $1,\widehat c,\widehat d$ 代数生成的中央结合子代数。由该书 §3.2.3（印刷页 79），单元 $\widehat a$ 与 $1$ 生成的 Jordan 代数是结合的。故对 $z,w\in A_0$ 及实多项式 $p,r$，(7.13) 给
+
+$$
+\bigl(z\circ p(\widehat a)\bigr)\circ\bigl(w\circ r(\widehat a)\bigr)
+=(z\circ w)\circ\bigl(p(\widehat a)\circ r(\widehat a)\bigr).
+\tag{7.14}
+$$
+
+这些元素的实线性张成是含单位结合 Jordan 子代数；(7.14) 也使其三重乘积不依赖括号。取范数闭包得到 $X$ 的含单位结合 JB 子代数 $B$，其中包含 $\widehat a,\widehat c,\widehat d$。这里的多项式、闭包都只用于完成中的已知乘法；既不要求它们全部返回 $i(E)$，也不对其中的新元素使用 $D$。
+
+该书 Theorem 3.2.2（印刷页 78–79）应用于这个 $B$，给一个紧 Hausdorff 空间 $K$ 及等距含单位代数同构 $B\cong C(K,\mathbb R)$。于是点值特征 $\chi:B\to\mathbb R$ 分离 $B$，满足 $\|\chi\|=\chi(1)=1$。对每个这样的 $\chi$，实 Hahn–Banach 定理给保持范数的实线性延拓 $\varphi_\chi:X\to\mathbb R$。该书 Proposition 3.3.10（印刷页 84）说明 $X$ 的 JB 范数准确是其序单位范数；所以 $\|\varphi_\chi\|=\varphi_\chi(1)=1$ 由 Lemma 1.2.2（印刷页 8）保证 $\varphi_\chi$ 为正。这正是 Lemma 1.2.4 同页的态延拓方法。无须要求延拓保乘法、正常或属于原 $\mathcal P$；只需它在 $B$ 上准确等于 $\chi$。
+
+在 (7.10) 中取原标签 $(c,a)$ 及数学态 $\varphi_\chi$。全部四个实乘积和 $\widehat d$ 均在 $B$ 中，因此特征的乘法性使该正矩阵准确成为
+
+$$
+\begin{pmatrix}
+\chi(\widehat c)^2&
+\chi(\widehat c)\chi(\widehat a)-\mathrm i\chi(\widehat d)\\
+\chi(\widehat c)\chi(\widehat a)+\mathrm i\chi(\widehat d)&
+\chi(\widehat a)^2
+\end{pmatrix}\succeq0.
+\tag{7.15}
+$$
+
+其行列式是 $-\chi(\widehat d)^2$，故 $\chi(\widehat d)=0$。特征分离 $B$，得到 $\widehat d=0$；原嵌入忠实再给 $d=0$。这对每个原 $a\in E$ 成立，故 $c\in R$，支付 (7.6) 的反向包含。论证没有除以 $\chi(\widehat c)$、$\chi(\widehat a)$ 或任何原质量，零值也包括在内。最后 $L_1=I$，全部 $t1$ 都在 $Z(X)$，所以 (7.6) 直接给 (7.7)，无须另作单位行证明。
+
+在定义 2.1 的总映射入口，定理 6.1 给的准确原乘法、原锥、原范数与原单位满足 (7.1)–(7.2)，其原二表就是 (7.3)；额外前件只是同一原 $D$ 的 (7.4)。因此上述每一步直接作用于那些原对象。本条 $\texttt{repo-derived}$ 综合是：原二重式先把中央输入的任意原输出送入原零行，再由零行对应中心，将该输出与原输入放在同一个辅助结合 JB 子代数中，以原锥传递的二表和特征态消去它。中心、结合 JB 谱表示、序单位范数及态延拓只是上述引文的成熟中间工具；不把它们另算为新一般定理，也不主张历史优先权。∎
+

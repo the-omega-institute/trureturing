@@ -1,0 +1,30 @@
+### 定理 18.1（逐输入块饱和消除中心泄漏）
+
+原对象为 $\mathcal A=\bigoplus_\alpha M_{d_\alpha}(\mathbb C)$，迹为通常迹之和。设同一原正复线性分支 $T:\mathcal A\to\mathcal A$ 满足 $T^\dagger(I)=E=(E_\alpha)_\alpha$。在每个原输入块供应定义 2.2 的有限设计，读回原同一输出块，得 $R_\alpha,Q_\alpha$。则
+
+$$
+R_\alpha\le Q_\alpha\quad\text{对每个 }\alpha.
+\tag{18.1}
+$$
+
+全部非零效果块饱和，当且仅当
+
+$$
+\boxed{T(X)_\alpha=\sqrt{E_\alpha}X_\alpha\sqrt{E_\alpha}
+\quad\text{对全部 }X\in\mathcal A.}
+\tag{18.2}
+$$
+
+给各输入块固定正权 $c_\alpha>0$ 时，单一汇总关系
+$\sum_\alpha c_\alpha R_\alpha\ge\sum_\alpha c_\alpha Q_\alpha$
+也等价于 (18.2)。
+
+**证明。** 数学上把原输出代数表示为 $K=\bigoplus_\beta\mathbb C^{d_\beta}$ 上的块对角矩阵。对输入块 $\alpha$，限制原 $T$ 得到正映射 $T_\alpha:M_{d_\alpha}\to\mathcal B(K)$，其完整成功效果为 $E_\alpha$。取原同名嵌入 $J_\alpha$，直接应用定理 16.1。输出其余各中心保留在 $K$ 中，并被 (16.12) 的泄漏项计入；支撑像以外的全部方向也保留在 (17.4) 中。因此等号迫使
+
+$$
+T_\alpha(X_\alpha)=J_\alpha\sqrt{E_\alpha}
+ X_\alpha\sqrt{E_\alpha}J_\alpha^\dagger.
+$$
+
+零效果块由定理 16.1 证明中的输入支撑关系 (16.3) 为零。输入直和的线性分解给 (18.2)，没有引入跨中心相干输入。所有 $Q_\alpha-R_\alpha$ 非负，正权汇总为零等价于逐项为零。反向直接代入。$\square$
+

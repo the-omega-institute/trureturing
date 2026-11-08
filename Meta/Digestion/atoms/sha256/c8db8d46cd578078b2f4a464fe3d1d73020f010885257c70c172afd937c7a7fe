@@ -1,0 +1,4 @@
+### 13.2　二元复比例的有限三维读出
+
+取 $\sigma_e$ 的单位 $+1$ 本征向量 $\lvert 0\rangle$，令 $\lvert 1\rangle=\sigma_v\lvert 0\rangle$。Pauli 关系使它们正交归一，并使 $(\sigma_v,\sigma_w,\sigma_e)$ 在这组复基下成为标准 $(\sigma_x,\sigma_y,\sigma_z)$。以下三坐标按 $(v,w,e)$ 排列，与前面构造的内容读出一致。
+

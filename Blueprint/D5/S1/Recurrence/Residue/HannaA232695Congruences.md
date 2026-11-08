@@ -52,3 +52,4 @@ An integral triangular recurrence transfers the residues of an approximate solut
 - Truth anchor: `D5/S1/Recurrence/Residue/HannaA232695Congruences.claim`
 - Truth anchor: `D5/S1/Recurrence/Residue/HannaA232695Congruences.result`
 - Dependency: [D5/S1/Recurrence/Residue/HannaEGFMachinery](HannaEGFMachinery.md)
+- Dependency: [D5/S1/Recurrence/Residue/IntegralEGFComposition](IntegralEGFComposition.md)

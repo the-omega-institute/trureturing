@@ -1,0 +1,58 @@
+### 1.2.2. A point-probability estimate for the actual law
+
+Let $\phi(t)=\mathbb E e^{itX}$ for real $t$. The conditional identity above gives
+
+$$
+\mathbb E(e^{itX}\mid\mathcal F)
+=e^{itB}\prod_{j=0}^{m-1}(1-p_j+p_je^{it}).
+$$
+
+For $0\le p\le1$, putting $s=\sin^2(t/2)$ yields
+
+$$
+|1-p+pe^{it}|^2=1-4p(1-p)s,
+\qquad
+|1-p+pe^{it}|\le e^{-2p(1-p)s}.
+$$
+
+Taking absolute values before averaging over $\mathcal F$, and using the independent events $G_j$, gives
+
+$$
+\begin{aligned}
+|\phi(t)|
+&\le \mathbb E\prod_j |1-p_j+p_je^{it}|\\
+&\le \mathbb E\exp\left(-2b_rs\sum_j\mathbf1_{G_j}\right)\\
+&=(1-q_r+q_re^{-2b_rs})^m\\
+&\le \exp\bigl(-mq_r(1-e^{-2b_rs})\bigr)\\
+&\le \exp\bigl(-mc_r\sin^2(t/2)\bigr).
+\end{aligned}
+$$
+
+The last inequality follows from concavity on $[0,1]$ of $s\mapsto1-e^{-2b_rs}$, whose value at zero is zero. No independence between $B$ and the events $G_j$ is needed; its phase has already disappeared in the absolute-value bound.
+
+For an integer $k$, finite Fourier inversion gives
+
+$$
+\Pr(X=k)=\frac1{2\pi}\int_{-\pi}^{\pi}e^{-ikt}\phi(t)\,dt.
+$$
+
+Indeed, expand the finite sum defining $\phi$ and use that the integral of $e^{i\ell t}$ on this interval is zero for every nonzero integer $\ell$. For $|t|\le\pi$, concavity of sine gives $\sin(|t|/2)\ge |t|/\pi$. Consequently, the Gaussian integral implies
+
+$$
+\begin{aligned}
+\Pr(X=k)
+&\le\frac1{2\pi}\int_{-\pi}^{\pi}
+       e^{-mc_rt^2/\pi^2}\,dt\\
+&\le\frac1{2\pi}\int_{\mathbb R}
+       e^{-mc_rt^2/\pi^2}\,dt
+ =\frac{\sqrt\pi}{2\sqrt{mc_r}}.
+\end{aligned}
+$$
+
+Because $n/(2r)\ge1$, we have $m\ge n/(4r)$. It follows that, for all $n\ge2r$,
+
+$$
+\sup_{k\in\mathbb Z}\Pr(X=k)
+\le\sqrt{\frac{\pi r}{c_r n}}.
+$$
+

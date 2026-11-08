@@ -1,0 +1,50 @@
+**命题 C-61.3（外部耦合在正均值纤维上选择唯一隐藏参数）。** 固定
+
+$$
+0<Z<1,\qquad r=1-Z,\qquad 0<X<r,\quad0<Y<r.
+$$
+
+四底角全正的五律恰由
+
+$$
+p(\kappa)=(r-X-Y+\kappa,\ X-\kappa,\ Z,\ Y-\kappa,\ \kappa),
+\qquad
+\max(0,X+Y-r)<\kappa<\min(X,Y)
+\tag{C61.5}
+$$
+
+给出。在此开区间上，外部耦合所须匹配的函数为
+
+$$
+\mathscr J(\kappa)
+=\log\frac{(r-X-Y+\kappa)\kappa}{(X-\kappa)(Y-\kappa)},
+\qquad
+\mathscr J'(\kappa)
+=\frac1{p_0}+\frac1{p_1}+\frac1{p_3}+\frac1{p_{13}}>0.
+\tag{C61.6}
+$$
+
+因此给定实际外部矩阵 $H_i$ 和这组可见均值，至多存在一个与之相符的 $\kappa$；在抽象正五律纤维中，每个有限实值 $\mathscr J$ 恰对应一个 $\kappa$。
+
+证明。由 $X,Y,Z,\kappa$ 逐项解出概率就是式 (C61.5)，其四个严格正条件等价于显示的区间。给定假设使区间非空：$X+Y-r<X,Y$ 且 $X,Y>0$。C-4.5–C-4.6 已在同一切向量 $(1,-1,0,-1,1)$ 上给出 Fisher 系数及四角差导数；将其 $\vartheta$ 对应为本节 $\mathscr J$，即得式 (C61.6)。逐项检验亦是 $p'_0=p'_{13}=1$、$p'_1=p'_3=-1$、$p'_2=0$，四个导数均以正号进入。
+
+趋近左端时，分子至少一因子趋零，分母两因子仍正，故 $\mathscr J\to-\infty$；趋近右端时，分母至少一因子趋零，分子两因子仍正，故 $\mathscr J\to+\infty$。连续性、严格单调性和介值定理给全实数上的唯一反解。作为该外部源的应用，令反解值匹配式 (C61.2)，便恢复隐藏的 $p_{13}$，继而恢复五律。
+
+这个反解并不声称任意均值、任意 $H_i$ 和任意局部活动都能同时由指定环实现。环的完整源条件仍须满足式 (C60.3)；特别是简单正活动环的 $\mathscr J_i$ 符号已由式 (C60.5) 固定。证毕。
+
+作为同一应用的局部敏感度，C-4.5 的信息系数 $\mathcal I$ 在这里给
+
+$$
+\mathcal I=\mathscr J'(\kappa),\qquad
+\frac{d\kappa}{d\mathscr J}=\mathcal I^{-1},\qquad
+ds^2_{\rm Fisher}=\mathcal I\,d\kappa^2.
+$$
+
+C-3.6、C-4.6 的熵与 KL 中间结果也在同一参数对应下适用：令 $\kappa_*=XY/r$，则 $\mathscr J(\kappa_*)=0$，$\frac{d}{d\kappa}H(p(\kappa))=-\mathscr J(\kappa)$，且
+
+$$
+H(p_*)-H(p)=\operatorname{KL}(p\Vert p_*)\ge0.
+$$
+
+这是独立补全的纤维比较，不把真实有环来源替换为最大熵律。实际环的非零 $\mathscr J_i$ 指定其偏离零耦合点的方向与唯一位置；它不是从可见均值自行产生的额外信息。
+

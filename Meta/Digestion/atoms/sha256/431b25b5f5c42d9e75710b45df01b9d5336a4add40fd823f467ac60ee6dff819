@@ -1,0 +1,20 @@
+**推论 14.4（原始关系类中的三点桥与反例定位）。**在完整原始前件及 (R) 下，
+
+$$
+\mathrm{DT}\ \Longleftrightarrow\ \mathrm N_3
+\ \Longleftrightarrow\ \mathrm N_5
+\ \Longleftrightarrow\ \mathrm N_{\rm fin}
+\ \Longleftrightarrow\ \mathrm{BR}
+\ \Longleftrightarrow\ \text{存在 (14.1) 的表示}.
+\tag{14.11}
+$$
+
+若某个原始 (R) 模型不具有目标表示，则必有三个不同的有序标签 $x,y,z$ 满足
+
+$$
+\sqrt{c(x,z)}>\sqrt{c(x,y)}+\sqrt{c(y,z)}.
+\tag{14.12}
+$$
+
+**证明。**$\mathrm{DT}$ 经定理 14.1 给表示，表示给全部其余条件；$\mathrm N_3$ 经引理 14.3 给 $\mathrm{DT}$；其余等价复用既有五点桥梁。反例定位是定理 14.1 的逆否；三标签中任意两者相同都会使 (14.12) 不可能，故可取三个不同标签。这里未证明对称性或二标签条件单独充分，也未主张三标签数最小。
+

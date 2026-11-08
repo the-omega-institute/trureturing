@@ -1,0 +1,24 @@
+**Definition 57.6 (sources and scope of the deduction).**
+The new paper deductions are the complete rational certificate
+(57.6), its nonnegative-determinant full-slice consequence (57.7),
+and the endpoint and determinant exclusions leading to (57.22)
+and (57.31). Their suppliers are Continuation II, Definition 46.1,
+Lemma 46.2, (46.11), (46.13), Theorems 46.4 and 46.6;
+Continuation III, Definition 53.1, Lemma 53.2, Theorem 53.4,
+Proposition 53.5 and Theorem 48.5; and this volume's Theorems 49.1,
+54.1 and the English Theorem 55.1 at $q=X=1/5$, $Y=17/20$,
+with its constant enclosures (55.3)--(55.4). Original recovery,
+transpose and true-distance conventions are (23.2), (23.9)--(23.13)
+and (42.17)--(42.20), reused through those source correspondences.
+
+The geometric-mean concavity used in (57.17) is proved explicitly
+above. Its standard convex-composition context is
+[Boyd and Vandenberghe, *Convex Optimization*, Section 3.2.4,
+Example 3.14](https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf),
+also cited in Section 51.5. No new external exact supplier or
+literature-priority claim is made. These are ordinary paper results;
+no Lean or kernel verification is asserted. They do not decide
+(57.33), the full interval sign-selection problem, physical realization
+or acquisition, or the larger reconstruction problem. The original
+complete domains and previously stated ranges remain in force.
+

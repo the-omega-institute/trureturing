@@ -1,0 +1,89 @@
+**定理 3.2（严格包含与一条确定的旧内部关系失效）。** 式 (3.3) 满足
+
+$$
+\widehat\Pi\in\mathscr C_{\rm end}\setminus\mathscr C_{\rm nat},\qquad
+\mathscr C_{\rm nat}\subsetneq\mathscr C_{\rm end}.
+\tag{3.4}
+$$
+
+失效可固定为地址 $2$、原分量 $B_* =\{\varnothing,\{2\}\}$ 及内部时刻 $\tau=\sqrt2/2$。加入原 R 后，两类的成功密度完全相同：
+
+$$
+\{\Pi\in\mathscr C_{\rm nat}:\mathrm R\}
+=\{\Pi\in\mathscr C_{\rm end}:\mathrm R\}
+=\{\Pi^{\rm B}\}.
+\tag{3.5}
+$$
+
+**证明。** 因恒等元在群内，对每个 $s\in S$ 都有 $0\le h_{\rm end}(z)\le |z_s|^2/\|z\|^2$。故 $\widehat\Pi_q\ge\tfrac12|z_q|^2/\|z\|^2$，并且满足节点。又 $\sum_qc_q=(1-1)^5=0$，所以总和为一。有限最小值连续，非零复缩放对每一项均无影响，因而密度定义在整个 $X$。不作节点除法或全支撑限制。
+
+右乘任一偶地址 $K_j$ 置换 $\mathcal G_{\rm ev}$，所以 $h_{\rm end}(K_jz)=h_{\rm end}(z)$。任一原偶地址分量，无论单点或二点，其修正和为 $\tfrac12h_{\rm end}\sum_{q\in B}c_q$，端点不变。特别覆盖边界地址零、十的全部单点。
+
+若 $j$ 为奇地址，每个交 $S$ 的原分量都是 $\{s,s\mathbin\triangle\{j\}\}\subset S$；两个邻位都是零，固定外邻位 $b_0=b_{10}=0$ 亦包括在内。两个 $c$ 相反，修正对和恒为零。其它活动对或阻塞单点不交 $S$，其修正也为零。因此全部奇地址分量同样满足端点式，无需假设 $h_{\rm end}$ 在奇地址下不变。加上参考平方分量恒等式，得到全部十一地址、全部原分量的 (1.3)。
+
+以下给出同一密度的明确严格性输入。沿用 III (164.3) 的实际载体内单位向量
+
+$$
+\begin{gathered}
+A_s=\{j\in\{2,4,6,8\}:j-1,j+1\notin s\},\quad m_s=|A_s|,\\
+w_s=\sum_{r\subseteq A_s}x^{m_s-|r|}(-y)^{|r|}|s\cup r\rangle,\qquad
+\kappa_s=x^{m_s}>0.
+\end{gathered}
+\tag{3.6}
+$$
+
+这些向量支撑在互不相交的奇位扇区中，覆盖全部 $E$；$\|w_s\|=1$，$\langle s|w_s\rangle=\kappa_s$。III164.2 已证明它们是全部偶地址的共同特征向量，包括两类阻塞单点及两个边界；这些事实直接复用。
+
+令 $T_t=I+(e^{i\alpha t}-1)Q_*$，并固定
+
+$$
+\begin{gathered}
+\tau=\sqrt2/2,\qquad
+\eta=T_{-\tau}\binom01=\binom{\eta_0}{\eta_1},\\
+v_\tau=\sum_{r\subseteq\{4,6,8\}}
+x^{3-|r|}(-y)^{|r|}
+\bigl(\eta_0|r\rangle+\eta_1|\{2\}\cup r\rangle\bigr),\\
+z_\tau=\frac1{\sqrt{32}}\left(v_\tau+\sum_{s\in S\setminus\{\varnothing\}}w_s\right).
+\end{gathered}
+\tag{3.7}
+$$
+
+$v_\tau$ 位于空奇位扇区，是单位向量：$\|\eta\|=1$，其余三个二坐标系数各有平方和 $x^2+y^2=1$。所以 $\|z_\tau\|=1$。这只是原 $89$ 坐标的显式和式，不是新物理张量源。
+
+对 $g=\prod K_j^{m_j}\in\mathcal G_{\rm ev}$，当 $s\ne\varnothing$ 时，共同特征向量性质给
+
+$$
+|(gz_\tau)_s|=\kappa_s/\sqrt{32}>0.
+\tag{3.8}
+$$
+
+空扇区内，地址 $4,6,8$ 对各自 $(x,-y)$ 系数的投影为零，边界投影也为零；仅地址 $2$ 改变 $\eta$。略去模长为一的共同相位，$T_1^{m_2}T_{-\tau}=T_{m_2-\tau}$，故
+
+$$
+|(gz_\tau)_\varnothing|
+=\frac{x^3xy}{\sqrt{32}}
+\left|e^{i\alpha(m_2-\tau)}-1\right|>0.
+\tag{3.9}
+$$
+
+若最后的模为零，则 $m_2-\tau=10k/3$，与 $\tau$ 无理矛盾。式 (3.8)–(3.9) 覆盖有限最小值中每一项，所以 $h_{\rm end}(z_\tau)>0$。特别 $\widehat\Pi_\varnothing(z_\tau)>\Pi^{\rm B}_\varnothing(z_\tau)$。
+
+反之，$U_2(\tau)$ 在空扇区把 $\eta$ 变成共同相位乘 $(0,1)^{\mathsf T}$，其它奇扇区不会进入空扇区，因此
+
+$$
+(U_2(\tau)z_\tau)_\varnothing=0,\qquad
+h_{\rm end}(U_2(\tau)z_\tau)=0.
+\tag{3.10}
+$$
+
+第二式只需取最小值中的 $g=I,s=\varnothing$。原 $B_*$ 是地址二的活动分量，且 $\sum_{q\in B_*}c_q=1$。参考平方对和在整个 $U_2(t)$ 下不变，于是
+
+$$
+\sum_{q\in B_*}\widehat\Pi_q(U_2(\tau)z_\tau)
+-\sum_{q\in B_*}\widehat\Pi_q(z_\tau)
+=-\frac12h_{\rm end}(z_\tau)<0.
+\tag{3.11}
+$$
+
+这违反一条旧 (157.3)，证明严格性。这里使用内部演化只是检验旧类成员身份，不在定理 2.1 中把它当作新类前件。旧类包含于新类由取 $t=1$ 直接得到；(3.5) 则由定理 2.1、Born 属于旧类及 III173.2 得出。∎
+

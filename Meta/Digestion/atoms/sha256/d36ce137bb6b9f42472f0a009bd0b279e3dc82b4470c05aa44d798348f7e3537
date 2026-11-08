@@ -1,0 +1,12 @@
+### 定义 29.3（所复用文献的精确范围）
+
+§§25–28 的源相对综合是 repo-derived 条件推导：将固定正展开接到原有统一有符号投影；将原有四次响应接到实际后缀；将既有共同效果障碍编码到共享三标签记录图；将四个实际正字接到父记录分数。调和分解、紧性、有限维行空间和联合可测性几何是成熟工具，不重新计作新定理或全球原创成果。
+
+| 来源及精确位置 | 复用的数学范围 | 未供应的原生前件 |
+| --- | --- | --- |
+| Caves–Fuchs–Manne–Renes，*Gleason-Type Derivations of the Quantum Probability Rule for Generalized Measurements*，[quant-ph/0306179v1](https://arxiv.org/html/quant-ph/0306179v1)，§IV.1 式 (11)–(20)、§IV.2.1 式 (22) | 沿用 §§17、21 已说明的球面调和、旋转不可约模与正交性 | 不将其 trine/POVM 可选性借入原模型；本节复用定理 21.2 而不重证该文的概率规则 |
+| Busch–Heinosaari，*Approximate Joint Measurements of Qubit Observables*，[0706.1415v2](https://arxiv.org/html/0706.1415v2)，式 (11)、(26)、(39)，Propositions 3–4 | 最大结果概率误差等于效果算子范数；无偏二元效果的共同测量条件为 $\|a+b\|+\|a-b\|\le2$ | 已给正 qubit 效果和共同父菜单是其前件，不能推出实际父请求 |
+| Yu–Liu–Li–Oh，*Joint measurement of two unsharp observables of a qubit*，[0805.1538v2](https://arxiv.org/html/0805.1538v2)，式 (1)–(5)、Theorem 1 | 给定二元 qubit 效果的共同测量条件；无偏时为 $m^2+n^2\le1+(m\cdot n)^2$，正交等锐度阈值为 $1/\sqrt2$ | 不供应原生请求、共同父、方向充分性或未知响应 |
+| Sinclair，*CP-stability and the local lifting property*，[NYJM 23 (2017), 739–747](https://nyjm.albany.edu/j/2017/23-34p.pdf)，Definition 1.1、Theorem A；另见 [1507.03702v1](https://arxiv.org/html/1507.03702v1) | 对指定算子系统及矩阵放大范数前件给附近 u.c.p. 映射 | 原始逐标签标量残差不供应共同算子系统、完全序、提升合同或矩阵层范数界 |
+| Lourenço，*Amenable cones: error bounds without constraint qualifications*，[修订稿 Proposition 38](https://optimization-online.org/wp-content/uploads/2017/11/6348.pdf) | 对固定可行对称锥系统及有界球给依赖系统的交集误差界 | 不提供增长有限子图上的统一常数，也不封闭 (22.4) 的全图上确界 |
+| Chiribella–Davidson–Paulsen–Rahaman，*Counterexamples to the extendibility of positive unital norm-one maps*，[2204.08819v1](https://arxiv.org/html/2204.08819v1)，Theorem 2.1 | 特定算子系统上正、保单位、范数一映射未必有正延拓 | 这是其模型类的延拓障碍，不是原生 AURIC 反例 |

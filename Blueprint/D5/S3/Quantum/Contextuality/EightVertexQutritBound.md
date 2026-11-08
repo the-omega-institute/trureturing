@@ -138,7 +138,31 @@ $$\forall (G: \operatorname{SimpleGraph}\left(\operatorname{D5.S3.Quantum.Contex
 
 A violation is an attained unit-state score strictly above SimpleGraph.indepNum, the noncontextual bound. Equation (25) asks for the minimum dimension with such a violation; its exact minimum for the two graphs is stated using IsLeast below.
 
-**Definition 1.12 (The six sharp-bound conclusions).**
+**Theorem 1.12 (Three orthonormal vectors give the squared norm).**
+
+$$\forall (a: \operatorname{EuclideanSpace}\left(\mathbb{R}, \operatorname{Fin}\left(3\right)\right)), (\forall (b: \operatorname{EuclideanSpace}\left(\mathbb{R}, \operatorname{Fin}\left(3\right)\right)), (\forall (c: \operatorname{EuclideanSpace}\left(\mathbb{R}, \operatorname{Fin}\left(3\right)\right)), ((\operatorname{Orthonormal}\left(\mathbb{R}, ![a, b, c]\right)) \Rightarrow (\forall (psi: \operatorname{EuclideanSpace}\left(\mathbb{R}, \operatorname{Fin}\left(3\right)\right)), (\operatorname{D5.S3.Quantum.Contextuality.EightVertexQutritBound.overlapSq}\left(psi, a\right) + \operatorname{D5.S3.Quantum.Contextuality.EightVertexQutritBound.overlapSq}\left(psi, b\right) + \operatorname{D5.S3.Quantum.Contextuality.EightVertexQutritBound.overlapSq}\left(psi, c\right) = \left\lVert psi \right\rVert^{2})))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Contextuality/EightVertexQutritBound.parseval_three` (`✓ std3`). ∎
+
+*Citation.* Mathlib contributors (2026). *Finite orthonormal Parseval and Bessel inequalities*. URL: <https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/Analysis/InnerProductSpace/PiL2.lean>.
+
+*Commentary.*
+
+For every orthonormal triple in real three-dimensional Euclidean space, the three squared overlaps sum to the squared norm of every vector.
+
+**Theorem 1.13 (An orthogonal unit pair bounds the squared overlaps).**
+
+$$\forall (d: \mathbb{N}), (\forall (x: \operatorname{EuclideanSpace}\left(\mathbb{R}, \operatorname{Fin}\left(d\right)\right)), (\forall (y: \operatorname{EuclideanSpace}\left(\mathbb{R}, \operatorname{Fin}\left(d\right)\right)), ((\left\lVert x \right\rVert = 1) \Rightarrow ((\left\lVert y \right\rVert = 1) \Rightarrow ((\operatorname{Inner.inner}\left(\mathbb{R}, x, y\right) = 0) \Rightarrow (\forall (psi: \operatorname{EuclideanSpace}\left(\mathbb{R}, \operatorname{Fin}\left(d\right)\right)), (\operatorname{D5.S3.Quantum.Contextuality.EightVertexQutritBound.overlapSq}\left(psi, x\right) + \operatorname{D5.S3.Quantum.Contextuality.EightVertexQutritBound.overlapSq}\left(psi, y\right) \le \left\lVert psi \right\rVert^{2})))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Contextuality/EightVertexQutritBound.bessel_pair` (`✓ std3`). ∎
+
+*Citation.* Mathlib contributors (2026). *Finite orthonormal Parseval and Bessel inequalities*. URL: <https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/Analysis/InnerProductSpace/PiL2.lean>.
+
+*Commentary.*
+
+In every natural dimension, the two squared overlaps with orthogonal unit vectors sum to at most the squared norm.
+
+**Definition 1.14 (The six sharp-bound conclusions).**
 
 $$\forall (G: \operatorname{SimpleGraph}\left(\operatorname{D5.S3.Quantum.Contextuality.EightVertexQutritBound.Vertex}\right)), ((\operatorname{D5.S3.Quantum.Contextuality.EightVertexQutritBound.Settled}\left(G\right)) \Leftrightarrow ((\operatorname{SimpleGraph.indepNum}\left(G\right) = 3) \land ((\forall (d: \mathbb{N}), ((d \le 3) \Rightarrow (\operatorname{D5.S3.Quantum.Contextuality.EightVertexQutritBound.UpperBound}\left(G, d, 3\right)))) \land ((\operatorname{IsGreatest}\left(\operatorname{D5.S3.Quantum.Contextuality.EightVertexQutritBound.UnitScores}\left(G, 3\right), 3\right)) \land ((\operatorname{D5.S3.Quantum.Contextuality.EightVertexQutritBound.eta}\left(G, 3\right) = 3) \land ((3 < \operatorname{D5.S3.Quantum.Contextuality.EightVertexQutritBound.eta}\left(G, 4\right)) \land (\operatorname{IsLeast}\left(\{(d: \mathbb{N}) \mid (\operatorname{D5.S3.Quantum.Contextuality.EightVertexQutritBound.HasViolation}\left(G, d\right))\}, 4\right))))))))$$
 
@@ -150,7 +174,7 @@ $$\forall (G: \operatorname{SimpleGraph}\left(\operatorname{D5.S3.Quantum.Contex
 
 The independence number is three. Every natural dimension at most three has the homogeneous upper bound three. Three is the greatest attained unit score in dimension three, and the dimension-three supremum equals three. The dimension-four supremum is strictly larger than three. Finally, four is the least natural dimension admitting an attained violation. IsGreatest includes both attainment and an upper bound; IsLeast includes both a violation at four and exclusion of all smaller dimensions.
 
-**Definition 1.13 (The proposition for both graphs).**
+**Definition 1.15 (The proposition for both graphs).**
 
 $$(\operatorname{D5.S3.Quantum.Contextuality.EightVertexQutritBound.claim}) \Leftrightarrow ((\operatorname{D5.S3.Quantum.Contextuality.EightVertexQutritBound.Settled}\left(\operatorname{D5.S3.Quantum.Contextuality.EightVertexQutritBound.W}\right)) \land (\operatorname{D5.S3.Quantum.Contextuality.EightVertexQutritBound.Settled}\left(\operatorname{D5.S3.Quantum.Contextuality.EightVertexQutritBound.G5}\right)))$$
 
@@ -162,7 +186,7 @@ $$(\operatorname{D5.S3.Quantum.Contextuality.EightVertexQutritBound.claim}) \Lef
 
 Section IV calls for an independent three-dimensional upper bound for the Wagner graph. Table V(a) gives qutrit value three and minimum dimension four for both the Wagner graph and the graph of rank five, with a dagger marking those dimension conclusions as numerical. This proposition states the exact conclusions for both graphs, including attainment and the bounds in every dimension at most three.
 
-**Theorem 1.14 (Qutrit value three and minimum violation dimension four).**
+**Theorem 1.16 (Qutrit value three and minimum violation dimension four).**
 
 $$\operatorname{D5.S3.Quantum.Contextuality.EightVertexQutritBound.claim}$$
 
@@ -195,8 +219,10 @@ In ℝ⁴, normalize the eight W vectors (20,15,0,0), (9,−12,−12,16), (12,16
 - Truth anchor: `D5/S3/Quantum/Contextuality/EightVertexQutritBound.UpperBound`
 - Truth anchor: `D5/S3/Quantum/Contextuality/EightVertexQutritBound.Vertex`
 - Truth anchor: `D5/S3/Quantum/Contextuality/EightVertexQutritBound.W`
+- Truth anchor: `D5/S3/Quantum/Contextuality/EightVertexQutritBound.bessel_pair`
 - Truth anchor: `D5/S3/Quantum/Contextuality/EightVertexQutritBound.claim`
 - Truth anchor: `D5/S3/Quantum/Contextuality/EightVertexQutritBound.eta`
 - Truth anchor: `D5/S3/Quantum/Contextuality/EightVertexQutritBound.overlapSq`
+- Truth anchor: `D5/S3/Quantum/Contextuality/EightVertexQutritBound.parseval_three`
 - Truth anchor: `D5/S3/Quantum/Contextuality/EightVertexQutritBound.result`
 - Truth anchor: `D5/S3/Quantum/Contextuality/EightVertexQutritBound.score`

@@ -58,7 +58,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   have hz := hs.mpr rfl
   norm_num [rejected, realize] at hz
 
-private theorem dependence : ObservationalDependence signature actual := by
+theorem dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨⟨2, (2 : ℂ)⁻¹ • (1 : Matrix (Fin 2) (Fin 2) ℂ)⟩, 0, 1, ?_⟩
   intro heq

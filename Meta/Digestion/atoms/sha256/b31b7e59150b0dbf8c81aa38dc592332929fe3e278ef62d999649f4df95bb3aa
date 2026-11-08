@@ -1,0 +1,34 @@
+**定义 23.2（完整事件律与忠实校准域）。** 对切口处完整已得历史 $h$，令 $M_h$ 是沿该分支按实际顺序相乘的门与投影，$v_h=M_h\Omega_0$，$c_h(i,z)=\langle i,z|v_h\rangle$。分支不归一化。若切口后还有延续，$N_{\ell|h}$ 是原表指定的完整后继分支乘积；完整 Born 律为
+
+$$
+\Pr(h,\ell,y)=|\langle y|N_{\ell|h}M_h\Omega_0\rangle|^2,
+\qquad
+\sum_{h,\ell,y}\Pr(h,\ell,y)=1.
+\tag{23.5}
+$$
+
+$y$ 是完整终端计算基结果，所有失败、停止及实际报告都包含在 $(h,\ell,y)$ 的样本空间中。没有后继时取 $N=I$。由已得报告决定的事件 $\mathcal E$ 必须在 $t_*$ 已经可判；不能把未来才测得的标签事后当作同一切口的已得事件。其未归一原生约化、质量及条件校准分别为
+
+$$
+\begin{aligned}
+\Xi_{\mathcal E}&=\sum_{h\in\mathcal E}\operatorname{Tr}_Z(v_hv_h^\dagger),
+& (\Xi_{\mathcal E})_{ij}&=\sum_{h\in\mathcal E,z}c_h(i,z)\overline{c_h(j,z)},\\
+p_{\mathcal E}&=\operatorname{Tr}\Xi_{\mathcal E}
+             =\sum_{h\in\mathcal E}\|v_h\|^2,
+& \rho&=\Xi_{\mathcal E}/p_{\mathcal E}\quad(p_{\mathcal E}>0).
+\end{aligned}
+\tag{23.6}
+$$
+
+对历史求和是保留完整经典记录律后选择原生因子的数学约化，不是相干叠加不同报告，也不是物理擦除或复制档案；已由原生单元 $X,Y$ 承载的报告不再增加一份返回量子副本。特别采用原设置读出时，$X=b_{10},Y=b_{13}$ 的非选择语义仍是 $\sum_{xy}P_{xy}DP_{xy}$，不是一个新增全局酉门。
+
+这里应用命题 20.2 的精确域是
+
+$$
+\mathfrak F=\{(\mathcal T,t_*,I,\mathcal E):\ p_{\mathcal E}>0,
+                         \ \operatorname{rank}\Xi_{\mathcal E}=d\}.
+\tag{23.7}
+$$
+
+命题 20.2 的原校准在此量化域内明确就是式 (23.6) 的同一个 $\rho$。给定 $A\subseteq M_d$ 后仍取原 $E_{\rho,A}$；不把另一个固定而无关的校准替换成原生边际。存在正质量事件并不保证式 (23.7)。若一个事件只含 $n_{\mathcal E}$ 个非零分支，则 $\operatorname{rank}\Xi_{\mathcal E}\le\min(d,e n_{\mathcal E})$；纯根本身不保证任何指定切口忠实。该秩上界由每个 $d\times e$ 系数矩阵的秩及有限求和直接得到，不是忠实切口的存在性定理。
+

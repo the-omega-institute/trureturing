@@ -1,0 +1,94 @@
+## 2　唯一候选 Q20：纯数学输入–输出区域
+
+**签名。**
+
+$$
+\Sigma=(\mathcal A,+,\cdot_{\mathbb R},0;m,p),\quad
+\mathcal A\in\mathbf{Vect}_{\mathbb R},\quad
+m:\mathcal A^2\to\mathcal A,\quad p:\mathcal A\to[0,\infty).
+$$
+
+**背景输入。**
+
+$$
+\mathsf B_1:\ m\in\operatorname{Bil}_{\mathbb R}(\mathcal A^2,\mathcal A),\qquad xy:=m(x,y),
+$$
+
+$$
+\mathsf B_2:\quad p(tx)=|t|p(x),\quad p(x+y)\le p(x)+p(y)
+\quad(x,y\in\mathcal A,\ t\in\mathbb R).
+$$
+
+**原关系输入。**
+
+$$
+\begin{aligned}
+\mathsf E&:\quad\exists x\quad p(x)>0,\\
+\mathsf N&:\quad\forall x,y\quad p(xy)=p(x)p(y),\\
+\mathsf U_p&:\quad\exists\varepsilon\ \forall x\quad
+p(\varepsilon x-x)+p(x\varepsilon-x)=0,\\
+\mathsf F&:\quad\exists a,b\ \forall c\quad
+p\bigl((ab-ba)c+a(bc)-b(ac)\bigr)=0\Longrightarrow p(c)=0.
+\end{aligned}
+$$
+
+$$
+\boxed{\mathsf Q_{20}=\mathsf E\land\mathsf N\land\mathsf U_p\land\mathsf F.}
+$$
+
+**定义。**
+
+$$
+q=p^2,\quad N=p^{-1}(0),\quad A=\mathcal A/N,\quad 1=[\varepsilon],\quad \mathsf U_q:=\mathsf U_p,
+$$
+
+$$
+k=ab-ba,\quad X(c)=kc,\quad Y(c)=a(bc)-b(ac),\quad T=X+Y,
+$$
+
+$$
+\mathcal B(x,y)=\tfrac14\bigl(q(x+y)-q(x-y)\bigr),\quad B([x],[y])=\mathcal B(x,y),
+$$
+
+$$
+W=1^\perp,\quad J=\frac{T}{2\sqrt{q(k)}},\quad h(x,y)=B(x,y)+iB(Jx,y).
+$$
+
+**闭合输出。**
+
+$$
+q(x+y)+q(x-y)=2q(x)+2q(y),\quad
+\mathcal B\in\operatorname{SymBil}_{\mathbb R}(\mathcal A),\quad\operatorname{rad}\mathcal B=N,
+$$
+
+$$
+\mathcal AN+N\mathcal A\subseteq N,\quad
+(A,m,p)\cong(\mathbb H,\cdot,|\cdot|),\quad
+\dim_{\mathbb R}A=4,\quad\dim_{\mathbb R}W=3,
+$$
+
+$$
+q(k)>0,\quad p(Tx-Ty)=2p(k)p(x-y),\quad
+q((xy)z-x(yz))=0,
+$$
+
+$$
+J^2=-I,\quad J^*=-J,\quad J^*J=I,\quad
+(A,J,h)\cong\mathbb C^2,\quad \mathbb P(A,J)\cong S^2.
+$$
+
+**计数。**
+
+$$
+\mathcal I_{\rm bg}=\{\mathsf B_1,\mathsf B_2\},\quad
+\mathcal I_{\rm rel}=\{\mathsf E,\mathsf N,\mathsf U_p,\mathsf F\},\qquad
+|\mathcal I_{\rm bg}|+|\mathcal I_{\rm rel}|=2+4=6.
+$$
+
+$$
+\mathsf B_2^{19}\Longrightarrow\mathsf B_2^{20},\qquad
+\mathsf B_2^{20}\not\Longrightarrow\mathsf B_2^{19},\qquad
+\mathsf B_1+\mathsf B_2^{20}+\mathsf E+\mathsf N+\mathsf U_p
+\Longrightarrow\mathsf B_2^{19}.
+$$
+

@@ -1,0 +1,31 @@
+**定义 24.1（Class $\mathcal C_{\diamond}$）。** Let $H$ be a finite
+connected simple unit-weight graph of even order $m\geq2$. Say that
+$H\in\mathcal C_{\diamond}$ if, for every $p\in V(H)$, at least
+one actual connected component of the induced open neighborhood
+$H[N_H(p)]$ is bipartite, a simple odd cycle $C_n$ with $n\geq3$,
+or a diamond. A singleton component is bipartite. Other actual
+components, their sizes and their edges are unrestricted, as are
+all attachments outside the selected neighborhood component.
+
+For every integer $S\geq1$, set $s=2S$ and use exactly Definition
+19.1:
+
+$$
+\begin{aligned}
+\Omega&=V(H)\times[2S],&
+\mathcal H_{mS}
+ &=\operatorname{span}_{\mathbb C}
+       \{|T\rangle:T\subseteq\Omega,\ |T|=mS\},\\
+K_s&=A(F_{mS}(H[\mathrm{empty}_{2S}])),&
+P_s&=\prod_{i\in V(H)}P_i,&
+E_s&=\min\operatorname{spec}(K_s|_{\mathcal H_{mS}}).
+\end{aligned}
+\tag{24.1}
+$$
+
+Here $F_{mS}$ denotes the ordinary token graph, every allowed move
+has coefficient one, and $P_i$ is invariance under all permutations
+of the original $2S$ coordinates at $i$. Only global half filling
+is imposed. In particular $E_s$ is the minimum on the entire
+original carrier, before imposing any fibre symmetry.
+

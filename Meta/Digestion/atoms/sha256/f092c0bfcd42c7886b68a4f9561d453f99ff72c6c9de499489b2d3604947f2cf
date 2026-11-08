@@ -1,0 +1,61 @@
+### 命题 15.1（实平方闭合仍会漏掉有向相位关系）
+
+<a id="prop-c94-two-arm-y"></a>
+
+在 $\mathcal S=\operatorname{span}_{\mathbb R}\{I,X,Z\}$ 中，Hermitian 平方及反交换子均闭合，
+但相对相位为 $i$ 的两支仪器
+
+$$
+M_\pm=\frac{X\pm iZ}{2}
+$$
+
+会完全区分同资料的 $\rho_\pm=(I\pm Y)/2$。
+
+**证明。**
+对实数 $a,b,c$，
+$(aI+bX+cZ)^2=(a^2+b^2+c^2)I+2abX+2acZ$，
+故平方闭合，反交换子由平方极化得到。
+但
+
+$$
+M_+^\dagger M_+=\frac{I+Y}{2},\qquad
+ M_-^\dagger M_-=\frac{I-Y}{2},
+$$
+
+两效果相加为单位，所以它们构成完整仪器的两个分支。
+正分支在 $\rho_+$、$\rho_-$ 上的概率分别为一、零，证明结论。
+
+这个实际操作若被声明可用，它就供应一个旧读数无法回答的新问题。
+仅从 $X,Z$ 可测，不能自动断言同根两支干涉、相对 $i$ 相位和相应控制已经可用。
+Atlas 已明确区分数学生成一个代数与实际供应其读口 [3](#ref-atlas)。
+
+一般地，对两个自伴关系 $A,B$ 与状态 $\rho$，定义
+
+$$
+\Gamma_\rho(A,B)=
+ \begin{pmatrix}
+ \operatorname{Tr}\rho A^2&\operatorname{Tr}\rho AB\\
+ \operatorname{Tr}\rho BA&\operatorname{Tr}\rho B^2
+ \end{pmatrix}\ge0.
+$$
+
+正性来自任意复数 $u,v$ 的
+$\operatorname{Tr}\rho(uA+vB)^\dagger(uA+vB)\ge0$。
+若 $T=\operatorname{Tr}\rho(A^2+B^2)>0$，其归一三维坐标为
+
+<a id="eq-c94-operator-pair-bloch"></a>
+
+$$
+\boxed{\quad
+ x=\frac{\operatorname{Tr}\rho(AB+BA)}{T},\qquad
+ y=\frac{\operatorname{Tr}\rho\,i[A,B]}{T},\qquad
+ z=\frac{\operatorname{Tr}\rho(A^2-B^2)}{T}.
+ \quad}
+\tag{15.1}
+$$
+
+因为 $\Gamma_{12}/T=(x-iy)/2$，其正性等价于 $x^2+y^2+z^2\le1$。
+$T=0$ 时正 Gram 矩阵为零，全部相关支路权重为零，不作归一。
+实相位比较读取反交换子，四分之一周比较读取交换子，第三方向记录两支平方量的差。
+这三个量都来自同一对关系的正比较表。
+

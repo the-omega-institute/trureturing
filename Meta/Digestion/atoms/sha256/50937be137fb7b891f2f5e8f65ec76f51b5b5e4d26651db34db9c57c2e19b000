@@ -1,0 +1,82 @@
+**Proposition 51.4 (exact scalar profile, its derivatives and the stationary identity).**
+For a fixed tuple (51.2), retain both endpoint fibres and define
+
+$$
+ M(Y)=\max_{(L-\sqrt Y)^2\le X\le1}\Gamma(X,Y),
+ \qquad x^2\le Y\le1.
+\tag{51.22}
+$$
+
+Then $M$ is continuous on $[x^2,1]$ and smooth on $(x^2,1)$.
+Each endpoint fibre also has exactly one maximizer, so extend the
+notation by $\widehat X(x^2)=1$ and $\widehat X(1)=x^2$.
+With $\operatorname{argmax}_S H$ denoting the set of all points of $S$
+where $H$ attains its largest value, one has the exact set identity
+
+$$
+ \operatorname{argmax}_{\mathcal T_x}\Gamma
+ =\{(\widehat X(Y),Y):
+              Y\in\operatorname{argmax}_{[x^2,1]}M\}.
+\tag{51.23}
+$$
+
+For $Y\in(x^2,1)$ the derivatives, evaluated at
+$(\widehat X(Y),Y)$, are
+
+$$
+\begin{aligned}
+ \widehat X'(Y)&=-\frac{\Gamma_{XY}}{\Gamma_{XX}},\\
+ M'(Y)&=\Gamma_Y,\\
+ M''(Y)&=\Gamma_{YY}-\frac{\Gamma_{XY}^2}{\Gamma_{XX}}.
+\end{aligned}
+\tag{51.24}
+$$
+
+If $D_\sigma<0$, every global maximizing pair additionally satisfies
+
+$$
+ bF_X+aF_Y=\frac{b\ell^2+am^2}{2\ell m}.
+\tag{51.25}
+$$
+
+**Proof.** Put $A(Y)=(L-\sqrt Y)^2$ and parameterize the fibre by
+$X=A(Y)+(1-A(Y))t$, $0\le t\le1$. The composed objective is continuous
+on the fixed compact rectangle $[x^2,1]\times[0,1]$.
+Uniform continuity implies continuity of its maximum over $t$,
+which is precisely $M(Y)$. This is the compact maximum principle
+used here only for the concrete fibres (51.22).
+
+At $Y=x^2$ the fibre is the singleton $X=1$. At $Y=1$ one has
+$F=0$ and $C=\ell\sqrt{1-X}$; both $R(X,1)$ and $C(X,1)$ strictly
+decrease with $X$. Thus the unique endpoint-fibre maximizers are
+$(1,x^2)$ and $(x^2,1)$, respectively. Combined with Theorem 51.3,
+this proves that every fibre has exactly one maximizer and proves
+(51.23) in both directions.
+
+On the open triangle all the radicands needed for $F,R,C$ are positive,
+so $\Gamma$ is smooth. At each fibre maximum
+$\Gamma_X(\widehat X(Y),Y)=0$ and $\Gamma_{XX}<0$.
+The real implicit-function theorem (Rudin, *Principles of Mathematical
+Analysis*, third edition, Theorem 9.28) gives the smooth local graph.
+Fibre uniqueness identifies these local graphs with $\widehat X$.
+Differentiating this stationarity equation and then
+$M(Y)=\Gamma(\widehat X(Y),Y)$ gives (51.24).
+The same calculation as (51.18)--(51.21), with coordinates interchanged,
+gives $F_{YY}<0$, $C_{YY}<0$ and
+$R_{YY}=-b^2k^2/(4R^3)<0$. Hence $\Gamma_{YY}<0$ in the interior.
+
+For $D_\sigma<0$, Proposition 51.2 places every global maximum in
+$\Omega_x$, where both first derivatives vanish. Using
+$R_X=-ak/(2R)$ and $R_Y=bk/(2R)$ gives
+
+$$
+ b\Gamma_X+a\Gamma_Y
+ =\frac{\sqrt q}{2C}
+   \bigl(2\ell m(bF_X+aF_Y)-b\ell^2-am^2\bigr).
+\tag{51.26}
+$$
+
+Here $q,C>0$, so stationarity gives (51.25). This identity is necessary
+at a global maximum, not a sufficient global comparison.
+$\square$
+

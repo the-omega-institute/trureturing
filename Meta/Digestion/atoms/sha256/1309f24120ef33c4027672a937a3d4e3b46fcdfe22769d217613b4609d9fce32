@@ -1,0 +1,30 @@
+**Proposition 206.1 (exact projected-body interpretation and the seed point).** Put
+
+$$
+\mathscr Q_u=M(\mathscr P_u)\subseteq\mathbb R^{2\times d},
+\qquad
+N=\mathsf B(\mathsf B^{\mathsf T}\mathsf B)^{-1}
+=\left(\frac{b_1}{2}\ \frac{b_2}{12}\right).
+\tag{206.1}
+$$
+
+Every zero-sum coefficient matrix has a unique decomposition
+
+$$
+A=NM(A)+\kappa z^{\mathsf T},\qquad z\in\mathbb R^d.
+\tag{206.2}
+$$
+
+Consequently $M_0\in\mathscr Q_u$ exactly when some $z\in\mathbb R^d$ makes $NM_0+\kappa z^{\mathsf T}$ satisfy all the pointwise inequalities of Definition 199.1. The body $\mathscr Q_u$ is convex, and it records actual label ranks by
+
+$$
+\mathscr P_u^{\mathrm{act}}
+:=\{A\in\mathscr P_u:W(A)=\mathcal W_u\}
+=\{A\in\mathscr P_u:\operatorname{rank}M(A)=d\}.
+\tag{206.3}
+$$
+
+For the fixed full-zero seed $u$ assumed in Definition 205.1, this set is nonempty: the coefficient matrix $A_*$ representing $u$ itself belongs to it. This is a conditional statement about the seed's own body, without an existence assertion for an original seed of rank three or four.
+
+*Proof.* Both $b_1,b_2$ have zero sum, are orthogonal, and have squared norms $2,12$. Thus $\mathsf B^{\mathsf T}N=I_2$, so the map $M:\mathscr A_u\to\mathbb R^{2\times d}$ is onto. Its kernel consists of columns in $\mathsf H\cap K^\perp=\mathbb R\kappa$: this intersection has dimension one and contains the nonzero vector $\kappa$. Subtracting $NM(A)$ proves (206.2) and uniqueness. Substitution into the defining inequalities proves the membership characterization. Linear images preserve convexity, and Proposition 205.2 proves (206.3). Proposition 199.2 supplies $A_*$, and $W(A_*)=\mathcal W_u$ by definition of the seed, so $\operatorname{rank}M(A_*)=d$. Projection retains the relation-image data needed for rank; distinct matrices in a fibre of $M$ can still give distinct lifted families. $\square$
+

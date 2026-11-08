@@ -34,6 +34,18 @@ internal sealed class ThueMorseReducedAbelianOddDocument : IScribeDocumentDefini
             Describe.Lean(DescribeId.Create("thue-morse-zero"), DeclarationHandle.Create("D5/S1/Words/Complexity/ThueMorseReducedAbelianOdd.thueMorse_zero"), H("thueMorse zero"), StatementSource.FromAuthor(Disp(Seq(Seq(Operatorname, Grp(F.Id("thueMorse"))), Sp, D(0), Sp, Eq, Sp, Seq(Operatorname, Grp(F.Id("false")))))), AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Words/allouche2021evilodious")), Blocks(Paragraph(Text("Page 2 defines the Thue-Morse sequence by t₀ = 0, t₂ₙ = tₙ, and t₂ₙ₊₁ = 1 − tₙ for n ≥ 0. Boolean false and true encode zero and one."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("thue-morse-two-mul"), DeclarationHandle.Create("D5/S1/Words/Complexity/ThueMorseReducedAbelianOdd.thueMorse_two_mul"), H("thueMorse two mul"), StatementSource.FromAuthor(Disp(Seq(Forall, Sp, Parenthesized(Seq(F.Id("n"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))))), Sp, Comma, Sp, Seq(Operatorname, Grp(F.Id("thueMorse"))), Sp, Parenthesized(Seq(D(2), Sp, Cdot, Sp, F.Id("n"))), Sp, Eq, Sp, Seq(Operatorname, Grp(F.Id("thueMorse"))), Sp, F.Id("n")))), AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Words/allouche2021evilodious")), Blocks(Paragraph(Text("Page 2 defines the Thue-Morse sequence by t₀ = 0, t₂ₙ = tₙ, and t₂ₙ₊₁ = 1 − tₙ for n ≥ 0. Boolean false and true encode zero and one."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("thue-morse-two-mul-add-one"), DeclarationHandle.Create("D5/S1/Words/Complexity/ThueMorseReducedAbelianOdd.thueMorse_two_mul_add_one"), H("thueMorse two mul add one"), StatementSource.FromAuthor(Disp(Seq(Forall, Sp, Parenthesized(Seq(F.Id("n"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))))), Sp, Comma, Sp, Seq(Operatorname, Grp(F.Id("thueMorse"))), Sp, Parenthesized(Seq(D(2), Sp, Cdot, Sp, F.Id("n"), Sp, Plus, Sp, D(1))), Sp, Eq, Sp, Seq(Seq(Operatorname, Grp(F.Id("Bool"))), Dot, Seq(Operatorname, Grp(F.Id("not")))), Sp, Parenthesized(Seq(Seq(Operatorname, Grp(F.Id("thueMorse"))), Sp, F.Id("n")))))), AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Words/allouche2021evilodious")), Blocks(Paragraph(Text("Page 2 defines the Thue-Morse sequence by t₀ = 0, t₂ₙ = tₙ, and t₂ₙ₊₁ = 1 − tₙ for n ≥ 0. Boolean false and true encode zero and one."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("tm-original-transition"),
+                DeclarationHandle.Create("D5/S1/Words/Complexity/ThueMorseReducedAbelianOdd.transition"),
+                H("Adjacent transition"), StatementSource.FromAuthor(TransitionDefinition()),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("The transition is zero for equal adjacent letters and one otherwise."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("tm-original-transition-even"),
+                DeclarationHandle.Create("D5/S1/Words/Complexity/ThueMorseReducedAbelianOdd.transition_two_mul"),
+                H("Aligned pairs alternate"), StatementSource.FromAuthor(TransitionEven()),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("Every pair at an even start consists of opposite letters."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("tm-original-transition-odd"),
+                DeclarationHandle.Create("D5/S1/Words/Complexity/ThueMorseReducedAbelianOdd.transition_two_mul_add_one"),
+                H("Odd transitions complement the smaller transition"), StatementSource.FromAuthor(TransitionOdd()),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("The odd-start transition complements the transition at half the index, with natural subtraction."))), DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("literal-thue-morse-factor"),
                 DeclarationHandle.Create(
@@ -393,6 +405,15 @@ internal sealed class ThueMorseReducedAbelianOddDocument : IScribeDocumentDefini
             Forall, Sp, k, InMacro, Naturals(), Comma, Sp,
             Call("R", length), Sp, Eq, Sp, D(3), Dot));
     }
+
+    private static Formula TransitionDefinition() => Disp(Seq(Forall, Sp, F.Id("n"), InMacro, Naturals(), Comma, Sp,
+        Call("transition", F.Id("n")), Eq, Call("ite", Seq(Call("thueMorse", F.Id("n")), Eq,
+            Call("thueMorse", Seq(F.Id("n"), Plus, D(1)))), D(0), D(1))));
+    private static Formula TransitionEven() => Disp(Seq(Forall, Sp, F.Id("n"), InMacro, Naturals(), Comma, Sp,
+        Call("transition", Seq(D(2), Times, Sp, F.Id("n"))), Eq, D(1)));
+    private static Formula TransitionOdd() => Disp(Seq(Forall, Sp, F.Id("n"), InMacro, Naturals(), Comma, Sp,
+        Call("transition", Seq(D(2), Times, Sp, F.Id("n"), Plus, D(1))), Eq,
+        Call("natSub", D(1), Call("transition", F.Id("n")))));
 
     private static Formula Call(string name, params Formula[] arguments)
     {

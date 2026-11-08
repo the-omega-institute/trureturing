@@ -1,0 +1,75 @@
+**Proposition 192.2 (source-mode transversality).** If $u$ is a bounded pointwise partition whose sixty-four residuals all vanish, then every $h\in\mathcal R_u$ satisfies
+
+$$
+\langle g,h\rangle_m
+=\langle Pg,h\rangle_m
+=\langle P^2g,h\rangle_m
+=0,
+\tag{192.2}
+$$
+
+and therefore
+
+$$
+\langle Pq,h\rangle_m
+=\langle P^2q,h\rangle_m
+=\langle P^3q,h\rangle_m
+=0.
+\tag{192.3}
+$$
+
+Consequently,
+
+$$
+\mathcal R_u\cap\mathcal S_q=\{0\},
+\qquad
+\mathcal R_u\subseteq\mathcal S_q^{\perp_m}.
+\tag{192.4}
+$$
+
+Combined with Proposition 191.2, a rank-three full-zero partition has a one-dimensional radical outside $\mathcal S_q$, and a rank-four full-zero partition has a two-dimensional radical outside $\mathcal S_q$.
+
+*Proof.* The partition identity gives
+
+$$
+1=u_0+u_1+u_3+u_B\in\mathcal W_u.
+\tag{192.5}
+$$
+
+Let $h\in\mathcal R_u$. Since $h$ lies in each of the three slot radicals and $1$ is an allowed argument in $\mathcal W_u$, the three choices of the slot occupied by $h$ give
+
+$$
+\mathcal C(h,1,1)=0,
+\qquad
+\mathcal C(1,h,1)=0,
+\qquad
+\mathcal C(1,1,h)=0.
+\tag{192.6}
+$$
+
+Using $P1=1$ and self-adjointness of $P$, these identities are respectively
+
+$$
+\langle g,h\rangle_m=0,
+\qquad
+\langle Pg,h\rangle_m=0,
+\qquad
+\langle P^2g,h\rangle_m=0,
+$$
+
+which proves (192.2). The source propagation identity $Pq=cg$ with $c>0$ gives
+
+$$
+Pq=cg,
+\qquad
+P^2q=cPg,
+\qquad
+P^3q=cP^2g.
+$$
+
+Substitution into (192.2) proves (192.3).
+
+By Lemma 169.1, the three vectors $Pq,P^2q,P^3q$ are linearly independent. Their Gram matrix in the positive $L^2(m)$ inner product is therefore positive definite. If $h\in\mathcal R_u\cap\mathcal S_q$, (192.3) says that $h$ is orthogonal to every vector in $\mathcal S_q$; taking the inner product with $h$ itself gives $\|h\|_2^2=0$. Thus $h=0$ as an $m$-class, proving (192.4). The dimension statements follow from (191.4). $\square$
+
+Hence any nontrivial rank-three or rank-four radical must be sought in the complement of the first three source-propagation modes. This is a necessary geometric condition, not a nonexistence proof: the out-of-plane radical, the remaining nonlinear common-first equations, arbitrary partitions beyond the rank trichotomy, $F_{64}$, $H43$, SRS\text{-}20, physical succession and Lean/kernel formalization remain open.
+

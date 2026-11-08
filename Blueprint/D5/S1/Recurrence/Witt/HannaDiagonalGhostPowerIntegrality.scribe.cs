@@ -35,6 +35,48 @@ internal sealed class HannaDiagonalGhostPowerIntegralityDocument : IScribeDocume
                     + SourceSentence + "\" The exponential is PowerSeries.exp over K, "
                     + "substituted at the positive-degree logarithmic input.",
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
+            Node("exponential_sum_constant", "The constant coefficient is one",
+                Disp(Seq(Context(Seq(V("Type"), Star), "a"),
+                    Equal(App(Q("PowerSeries", "constantCoeff"), Call("exponentialSum", V("a"))), D(1)))),
+                "For every characteristic-zero field K and sequence a, the formal exponential "
+                    + "of the logarithmic input has constant coefficient one.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("exponential_sum_equation", "The formal differential equation",
+                Disp(Seq(Context(Seq(V("Type"), Star), "a"),
+                    Equal(Multiply(V("X"), App(Q("PowerSeries", "derivative"),
+                            Call("exponentialSum", V("a")))),
+                        Multiply(App(Q("HannaDiagonalDerivativeParity", "step"), V("a"), D(0)),
+                            Call("exponentialSum", V("a")))))),
+                "For every characteristic-zero field K and sequence a, multiplying the derivative "
+                    + "of exponentialSum a by X gives HannaDiagonalDerivativeParity.step a 0 "
+                    + "times exponentialSum a. The entry a(0) contributes no constant term.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("divisorGhost", "The integer divisor-sum ghost",
+                DivisorGhostFormula(),
+                "For an integer sequence b, the nth ghost is the sum of d*b(d) over "
+                    + "the positive divisors of n. The empty divisor set at zero gives zero.",
+                DescribeRole.Definition, AssessedProvenance.FromRepo(Source)),
+            Node("GaussCondition", "Prime-power divisibility of successive ghosts",
+                GaussConditionFormula(),
+                "For every prime p, natural s and positive m, the ghost difference at "
+                    + "m*p^(s+1) and m*p^s is divisible by p^(s+1) in the integers.",
+                DescribeRole.Definition, AssessedProvenance.FromRepo(Source)),
+            Node("divisor_ghost_gauss", "Integer divisor sums satisfy the Gauss condition",
+                Disp(Seq(Bound("b", Arrow(Nat(), Integer())),
+                    Call("GaussCondition", Call("divisorGhost", V("b"))))),
+                "Nested divisor sets show that every new divisor carries the required "
+                    + "prime power. Thus the divisor-sum ghost of any integer ledger "
+                    + "satisfies the Gauss condition. This divisibility is used for "
+                    + "diagonal ghost powers and bounded square-weight corrections.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
+            Node("integral_input_ledger", "Formal integrality gives an integer ledger",
+                IntegralInputLedgerFormula(),
+                "Over any characteristic-zero field K, an integral formal exponential "
+                    + "has an integer Euler ledger. Every positive input ghost a(n) is "
+                    + "the canonical field image of the ledger's integer divisor sum. "
+                    + "The diagonal-power theorem and the bounded square-weight "
+                    + "correction theorem use this necessary integrality condition.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
             Node("claim", "Hanna's second-comment conjecture",
                 Disp(Equal(V("claim"), Parenthesized(ClaimBody()))),
                 "OEIS A156216, internal revision #3, second comment (unpaginated): \""
@@ -64,7 +106,7 @@ internal sealed class HannaDiagonalGhostPowerIntegralityDocument : IScribeDocume
     private static DocumentBlock Node(string name, string title, Formula formula,
         string prose, DescribeRole role, AssessedProvenance provenance,
         OpenProblemResolutionClaim? claim = null) => Describe.Lean(
-            DescribeId.Create("hanna-diagonal-" + name.ToLowerInvariant()),
+            DescribeId.Create("hanna-diagonal-" + name.ToLowerInvariant().Replace("_", "-")),
             DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.FromAuthor(formula), provenance,
             Blocks(Paragraph(Text(prose))), role, claim);
@@ -91,10 +133,51 @@ internal sealed class HannaDiagonalGhostPowerIntegralityDocument : IScribeDocume
             App(Q("HannaLogarithmicPowerClosure", "IntegralSeries"),
                 Call("exponentialSum", Lambda("n", Nat(),
                     new Formula.Power(App(V("C"), V("n")), V("n")))))));
-    private static Formula Context(Formula carrierType) => Seq(Bound("K", carrierType),
+
+    private static Formula DivisorGhostFormula() => Disp(Seq(
+        Bound("b", Arrow(Nat(), Integer())), Bound("n", Nat()),
+        Equal(Call("divisorGhost", V("b"), V("n")),
+            App(Q("Finset", "sum"), App(Q("Nat", "divisors"), V("n")),
+                Lambda("d", Nat(), Mul(Cast(V("d"), Integer()), App(V("b"), V("d"))))))));
+
+    private static Formula GaussConditionFormula() => Disp(Seq(
+        Bound("a", Arrow(Nat(), Integer())),
+        Equal(Call("GaussCondition", V("a")), Parenthesized(Seq(
+            Bound("p", Nat()), Implies(App(Q("Nat", "Prime"), V("p")), Seq(
+                Bound("s", Nat()), Bound("m", Nat()),
+                Implies(Less(D(0), V("m")), Divides(
+                    Power(Cast(V("p"), Integer()), Add(V("s"), D(1))),
+                    Sub(App(V("a"), Mul(V("m"), Power(V("p"), Add(V("s"), D(1))))),
+                        App(V("a"), Mul(V("m"), Power(V("p"), V("s"))))))))))))));
+
+    private static Formula IntegralInputLedgerFormula() => Disp(Seq(
+        Bound("K", Seq(V("Type"), Star)),
         OpenBracket, Call("Field", V("K")), CloseBracket, Sp,
         OpenBracket, Call("CharZero", V("K")), CloseBracket, Comma, Sp,
-        Bound("C", Seq(Nat(), Sp, To, Sp, V("K"))));
+        Bound("a", Arrow(Nat(), V("K"))),
+        Implies(App(Q("HannaLogarithmicPowerClosure", "IntegralSeries"),
+            Call("exponentialSum", V("a"))), Seq(
+                Exists, Sp, V("b"), Colon, Sp, Arrow(Nat(), Integer()), Comma, Sp,
+                Bound("n", Nat()), Implies(Less(D(0), V("n")),
+                    Equal(App(V("a"), V("n")),
+                        Cast(Call("divisorGhost", V("b"), V("n")), V("K"))))))));
+
+    private static Formula Integer() => Seq(Mathbb, Grp(V("Z")));
+    private static Formula Arrow(Formula a, Formula b) => Seq(a, Sp, To, Sp, b);
+    private static Formula Cast(Formula value, Formula type) =>
+        Parenthesized(Seq(value, Colon, Sp, type));
+    private static Formula Power(Formula value, Formula exponent) => new Formula.Power(value, exponent);
+    private static Formula Add(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Add, b);
+    private static Formula Sub(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Subtract, b);
+    private static Formula Mul(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Multiply, b);
+    private static Formula Less(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThan, b);
+    private static Formula Divides(Formula a, Formula b) => Seq(a, Sp, Mid, Sp, b);
+    private static Formula Implies(Formula a, Formula b) =>
+        new Formula.Logic(Parenthesized(a), FormulaLogicOperator.Implies, Parenthesized(b));
+    private static Formula Context(Formula carrierType, string sequence = "C") => Seq(Bound("K", carrierType),
+        OpenBracket, Call("Field", V("K")), CloseBracket, Sp,
+        OpenBracket, Call("CharZero", V("K")), CloseBracket, Comma, Sp,
+        Bound(sequence, Seq(Nat(), Sp, To, Sp, V("K"))));
     private static Formula Nat() => Seq(Mathbb, Grp(V("N")));
     private static Formula V(string name) => F.Id(name);
     private static Formula Q(string owner, string name) =>

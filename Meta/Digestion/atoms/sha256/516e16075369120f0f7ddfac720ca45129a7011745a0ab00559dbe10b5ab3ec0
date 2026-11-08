@@ -1,0 +1,25 @@
+**引理 88.1（有限 frame 的切向检验）。** 设 $T:E\to E$ 实线性、$Tu=0$。如果对全部 $p\in\mathcal P$ 有 $Tp\in E_{1/2}(p)$，则 $T$ 是整个原 EJA 的导子。
+
+证明。固定一个选定 frame $p_1,\ldots,p_m$。其联合 Peirce 分解写为 $E=\bigoplus_i\mathbb Rp_i\oplus\bigoplus_{i<j}E_{ij}$。记 $v_i=Tp_i$，则 $v_i\in\bigoplus_{j\ne i}E_{ij}$；由 $\sum_i v_i=Tu=0$，逐 $E_{ij}$ 分量有
+
+$$
+v_i^{ij}+v_j^{ij}=0.
+\tag{88.1}
+$$
+
+对这个 frame 对角化的任意 $x=\sum_i\lambda_i p_i$，在 $E_{ij}$ 上，$T(x^2)$ 的分量是 $(\lambda_i^2-\lambda_j^2)v_i^{ij}$；$2x\circ Tx$ 的分量是 $(\lambda_i+\lambda_j)(\lambda_i-\lambda_j)v_i^{ij}$。二者相等，其余分量均为零。所以二次映射
+
+$$
+H_T(x):=T(x^2)-2x\circ Tx
+\tag{88.2}
+$$
+
+在所有选定 frame 的对角子代数上为零。特别地，$H_T(2b_i)=0$ 给 $H_T(b_i)=0$，而 $H_T(b_i+b_j)=0$ 给
+
+$$
+T(b_i\circ b_j)=Tb_i\circ b_j+b_i\circ Tb_j.
+\tag{88.3}
+$$
+
+基展开把此式推广到所有两元，正是全域导子律。证明只用有限 EJA 的谱与 Peirce 结构，没有预设复矩阵类型。∎
+

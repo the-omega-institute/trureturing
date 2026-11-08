@@ -1,0 +1,35 @@
+### 上界证明
+
+对一个非实共轭谱点对，其对实多项式 $p$ 的贡献是
+
+$$
+2\Re\bigl[\omega_\lambda p(\lambda)^2\bigr].
+$$
+
+写 $\omega_\lambda=|\omega_\lambda|e^{i\phi}$，则
+
+$$
+\boxed{
+2\Re[\omega_\lambda p(\lambda)^2]
+=
+2|\omega_\lambda|
+\left[
+\bigl(\Re(e^{i\phi/2}p(\lambda))\bigr)^2
+-
+\bigl(\Im(e^{i\phi/2}p(\lambda))\bigr)^2
+\right].
+}
+
+$$
+
+<a id="eq-6-2"></a>
+
+(6.2)
+
+所以一个非实共轭对只提供一个负平方读出；正实谱点只提供非负平方。
+
+若 $M$ 有限，任何维数大于 $M$ 的多项式子空间，都存在非零多项式使这 $M$ 个负读出同时为零。该多项式上的整个二次型非负，所以负定子空间维数不可能超过 $M$。
+
+<!-- editorial-note: n29 begin -->
+<a id="n29"></a>
+

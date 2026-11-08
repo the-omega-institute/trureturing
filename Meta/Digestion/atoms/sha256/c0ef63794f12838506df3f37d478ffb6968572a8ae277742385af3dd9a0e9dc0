@@ -1,0 +1,183 @@
+### 定理 25.2（忠实校准与效果独立性共同控制原联合仪器）
+
+在定义 25.1 下，若每个 $t_j<1$，则存在仅用于比较的记忆 CPTP 映射
+$\widehat B_j:\mathcal B(M)\to\mathcal B(M)$，使两个完整旗标通道
+
+$$
+\begin{aligned}
+\mathfrak V(X)&=\sum_j|j\rangle\langle j|\otimes V_j(X),\\
+\mathfrak W(X)&=\sum_j|j\rangle\langle j|
+ \otimes(\mathcal A_j\otimes\widehat B_j)(X)
+\end{aligned}
+\tag{25.7}
+$$
+
+具有共同类型 $\mathcal B(H\otimes M)\to\mathcal B(\mathbb C^{\mathsf J}\otimes K\otimes M)$，且
+
+$$
+\boxed{
+\|\mathfrak V-\mathfrak W\|_\diamond\le\Delta
+:=\min\left\{2,\sum_j\left[e_j+\|E_j\|_{\mathrm{op}}f(t_j)\right]\right\},
+\qquad
+f(t)=\frac{(\sqrt{1+t}+1)t}{1+\sqrt{1-t}}\quad(0\le t<1).
+}
+\tag{25.8}
+$$
+
+特别地，(25.8) 对任意与 $M$ 相关的输入及任意惰性参考统一成立；后续调用的记忆不必等于 $\tau$、不必乘积，也不复位。$\widehat B_j$ 的存在不授予任何记忆端口、装置替换或新合法接续。标签始终是 $j$，下证的环境／矩阵指标不是新增原记录。
+
+**证明。** 先在每个固定原记录内部取有限 Stinespring 算子
+
+$$
+A_j:H\otimes M\longrightarrow K\otimes M\otimes Z_j,
+\qquad V_j(X)=\operatorname{Tr}_{Z_j}A_jXA_j^*.
+\tag{25.9}
+$$
+
+这是有限 CP 映射的成熟表示定理；[Watrous，定理 2.22](https://cs.uwaterloo.ca/~watrous/TQI/TQI.2.pdf) 对非零映射给出 CP、正 Choi、Kraus 与 Stinespring 表示的等价性，零映射直接取零算子。由完整性，$A_j^*A_j=V_j^\dagger(I)\le I$，所以 $\|A_j\|_{\mathrm{op}}\le1$。这些算子不必等距。
+
+将 $\tau$ 对角化为 $\sum_\mu p_\mu|\mu\rangle\langle\mu|$，$p_\mu\ge\lambda$。以 $a$ 标记输出 $M\otimes Z_j$ 的正交基，写
+
+$$
+A_{j,a\mu}=(I_K\otimes\langle a|)A_j(I_H\otimes|\mu\rangle):H\to K.
+\tag{25.10}
+$$
+
+于是 $T_j$ 的一个数学 Kraus 表示为 $\{\sqrt{p_\mu}A_{j,a\mu}\}_{a,\mu}$。在 $\mathcal B(H,K)$ 的 Hilbert–Schmidt 空间内投影到 $K_j$ 所张成的一维复空间：
+
+$$
+\begin{aligned}
+b_{j,a\mu}&=\frac{\operatorname{Tr}(K_j^*A_{j,a\mu})}{\operatorname{Tr}E_j},\\
+C_{j,a\mu}&=A_{j,a\mu}-b_{j,a\mu}K_j,\\
+B_j|\mu\rangle&=\sum_ab_{j,a\mu}|a\rangle,
+\qquad B_j:M\to M\otimes Z_j,\\
+L_j&=K_j\otimes B_j,
+\qquad C_j=A_j-L_j.
+\end{aligned}
+\tag{25.11}
+$$
+
+$L_j$ 的输入、输出张量因子按 (25.9) 自然排列。$\operatorname{Tr}E_j>0$，所以这里没有对零目标作除法。
+
+使用未归一化向量化 $|D\rangle\!\rangle=\sum_{r=1}^dD|r\rangle\otimes|r\rangle$，令 $J(\Phi)=(\Phi\otimes\operatorname{id}_H)(|I_H\rangle\!\rangle\langle\!\langle I_H|)$，以及
+
+$$
+Q_j=I_{K\otimes H}
+-\frac{|K_j\rangle\!\rangle\langle\!\langle K_j|}{\operatorname{Tr}E_j}.
+$$
+
+$Q_j$ 是正交投影，且 $Q_jJ(\mathcal A_j)=0$。由 (25.5)，
+
+$$
+\|J(T_j)-J(\mathcal A_j)\|_1\le d\delta_j.
+\tag{25.12}
+$$
+
+由于 $J(T_j)\ge0$，投影后的总质量为非负，并有
+
+$$
+\begin{aligned}
+\lambda\|C_j\|_{\mathrm{HS}}^2
+&\le\sum_{a,\mu}p_\mu\|C_{j,a\mu}\|_{\mathrm{HS}}^2\\
+&=\operatorname{Tr}[Q_jJ(T_j)]\\
+&=\operatorname{Tr}[Q_j(J(T_j)-J(\mathcal A_j))]
+\le d\delta_j.
+\end{aligned}
+\tag{25.13}
+$$
+
+第一步使用全部输入记忆方向的 $p_\mu\ge\lambda$；等式使用向量化的 Hilbert–Schmidt 等距及 (25.11) 的正交投影。因此
+
+$$
+\|A_j-L_j\|_{\mathrm{op}}\le h_j,
+\qquad \|L_j\|_{\mathrm{op}}\le1+h_j.
+\tag{25.14}
+$$
+
+置 $\mathcal B_j(Y)=\operatorname{Tr}_{Z_j}B_jYB_j^*$，它此时仅为 CP 映射。对任意参考和任意矩阵，展开
+
+$$
+A_jXA_j^*-L_jXL_j^*
+=(A_j-L_j)XA_j^*+L_jX(A_j-L_j)^*.
+$$
+
+Schatten 乘子不等式和环境偏迹的 diamond 范数一给
+
+$$
+\|V_j-\mathcal A_j\otimes\mathcal B_j\|_\diamond
+\le(\|A_j\|_{\mathrm{op}}+\|L_j\|_{\mathrm{op}})
+       \|A_j-L_j\|_{\mathrm{op}}
+\le e_j.
+\tag{25.15}
+$$
+
+这一步正是共同 Stinespring 算子的成熟上界方向，参见 [Kretschmann–Schlingemann–Werner，命题 3 及式 (14)](https://arxiv.org/pdf/0710.2495)：该文对 CP 映射及其共同表示使用 cb 算子范数；有限维取迹对偶即为这里的 diamond 范数。仓内 [V96 定理 60.1 的 (60.3)–(60.5)](AURIC_COMPOSITE_COMPARISON_FINITE_WITNESSES_COMMON_QUANTUM_SCALE_V96.md#60-两条有限误差读数控制全部效果与全部有限维数) 已复用同一估计。不在此假定任意选取的两个扩充已接近；(25.13) 是为原 $A_j$ 构造 $L_j$ 的具体依据。
+
+下一步同时使用全部原分支的完整性，而非对每支另作保迹假定。令
+
+$$
+S_j=B_j^*B_j=\mathcal B_j^\dagger(I_M),
+\qquad
+D=\sum_jE_j\otimes(S_j-I_M).
+$$
+
+若 $\Phi$ 是自伴保持映射，则对任意单位向量 $v$，
+$|\langle v,\Phi^\dagger(I)v\rangle|
+=|\operatorname{Tr}\Phi(|v\rangle\langle v|)|\le\|\Phi\|_\diamond$。
+将此应用于 (25.15) 的映射差并求和，由 $\sum_jV_j^\dagger(I)=I$ 和 $\sum_jE_j=I$ 得
+
+$$
+\|D\|_{\mathrm{op}}\le\sum_je_j=e.
+\tag{25.16}
+$$
+
+在系统因子上用真实效果对偶提取，得到
+
+$$
+S_j-I_M=\operatorname{Tr}_H[(F_j\otimes I_M)D],
+\qquad
+\|S_j-I_M\|_{\mathrm{op}}\le\|F_j\|_1\|D\|_{\mathrm{op}}
+\le t_j.
+\tag{25.17}
+$$
+
+范数不等式可直接由 $F_j$ 的自伴谱分解验证：每个压缩
+$(\langle u|\otimes I)D(|u\rangle\otimes I)$ 的算子范数至多 $\|D\|_{\mathrm{op}}$，谱系数绝对值之和为 $\|F_j\|_1$。这里不要求 $F_j$ 为正，也不忽略效果间的条件数。
+
+由 $t_j<1$，$S_j\ge(1-t_j)I_M>0$。在数学比较中定义
+
+$$
+\widehat B_j^{\mathrm{St}}=B_jS_j^{-1/2},
+\qquad
+\widehat B_j(Y)=\operatorname{Tr}_{Z_j}
+ \widehat B_j^{\mathrm{St}}Y(\widehat B_j^{\mathrm{St}})^*.
+\tag{25.18}
+$$
+
+因为 $(\widehat B_j^{\mathrm{St}})^*\widehat B_j^{\mathrm{St}}=I_M$，$\widehat B_j$ CPTP。极分解 $B_j=\widehat B_j^{\mathrm{St}}S_j^{1/2}$ 给
+
+$$
+\begin{aligned}
+\|B_j\|_{\mathrm{op}}&\le\sqrt{1+t_j},\\
+\|B_j-\widehat B_j^{\mathrm{St}}\|_{\mathrm{op}}
+&=\|S_j^{1/2}-I_M\|_{\mathrm{op}}\\
+&\le\frac{t_j}{1+\sqrt{1-t_j}}.
+\end{aligned}
+\tag{25.19}
+$$
+
+最后一步由 $s\in[1-t_j,1+t_j]$ 上的
+$|\sqrt s-1|=|s-1|/(1+\sqrt s)$ 逐谱值得出。再次使用 (25.15) 的共同扩充估计，
+
+$$
+\|\mathcal B_j-\widehat B_j\|_\diamond\le f(t_j),
+\qquad
+\|\mathcal A_j\otimes(\mathcal B_j-\widehat B_j)\|_\diamond
+\le\|E_j\|_{\mathrm{op}}f(t_j).
+\tag{25.20}
+$$
+
+后一式使用 $\|\operatorname{Ad}_{K_j}\|_\diamond=\|K_j\|_{\mathrm{op}}^2=\|E_j\|_{\mathrm{op}}$；上界由乘子估计，下界在最大本征向量的正输入上取到。
+
+对 (25.15)、(25.20) 取三角不等式，再将同一 $j$ 的差放入正交旗标块。任意输入上的块对角迹范数是各块迹范数之和，故完整差的 diamond 范数至多 (25.8) 中的和。$\mathfrak V$ 是通道；$\widehat B_j$ 保迹且 $\sum_jE_j=I_H$，所以 $\mathfrak W$ 也为通道，其差的 diamond 范数至多二。这给出截断及全部参考量词。$\delta_j=0$ 对全部 $j$ 成立时，$h_j=e=t_j=0$，上述构造直接给逐原记录的精确 $V_j=\mathcal A_j\otimes\widehat B_j$。$\square$
+

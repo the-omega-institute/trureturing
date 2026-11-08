@@ -1,0 +1,28 @@
+**Unresolved mathematical obligations 46.9.** The new result does not order
+all remaining populations and both signs against $V(\xi)$. It leaves the
+negative-determinant positive sector, the entire negative canonical and
+interior families, and their coupled level/population comparison. It does not
+compute exact $\alpha$ or $\beta$, decide whether they coincide, determine the
+maximal exhaustive-geometric-equality prefix or endpoint inclusion, or
+identify and exhaust the first globally minimizing branch. A determinant-zero
+slice has a complete fixed-population equality kernel, but coupled variation
+of population and level can still have higher-order behavior; it does not
+select a first boundary. Separated pure contacts, simultaneous contacts and
+coalescence remain possible.
+
+Through $R_\star$, (45.17) already excludes mixed global minimizers
+and identifies the attained pure, phase and original minimum values.
+Outside the canonical nonnegative slices, the remaining pure phase
+minimizers and their complete actual original lifts still require
+classification by the source42 variance-zero condition (42.25), with
+singular effects, zero coherence, zero recovery and repeated phases
+retained. For mixed sublevel competitors, Theorem 45.4 supplies the
+same-level strict pure improvement in its stated value range; no direct
+pure-slice bound for a mixed input is asserted here. Beyond $R_\star$,
+the purity and transport consumers do not apply, and all mixed effects
+and actual nondiagonal lifts remain in the unrestricted comparison.
+The exact alpha/beta endpoint equality, immediate right-side behavior, all first-branch
+obligations, and the full unrestricted first-loss/equality problem therefore
+remain open. This section supplies a necessary global relation toward the unchanged
+first-loss and equality problem and does not determine its unrestricted solution.
+

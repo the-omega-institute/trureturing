@@ -1,0 +1,38 @@
+**引理 229.1（标量互易缺陷的内蕴算子）。** 设简单有限 EJA $T$ 的秩至少三，原正 Frobenius 型为 $q_T$，原实双线性 $\bar D$ 有右单位零，并满足全部正交、二原子内部及半角角外配平。定义
+
+$$
+\begin{aligned}
+b_T(a,b)&=q_T(\bar D_ab,u_T),\\
+q_T(S_Ta,b)&=\tfrac12\bigl(b_T(a,b)-b_T(b,a)\bigr).
+\end{aligned}
+\tag{229.1}
+$$
+
+原 $q_T$ 的非退化性唯一给出实线性 $S_T:T\to T$。则 $S_T$ 是原 $q_T$ 斜伴随 Jordan 导子。此结论未假定 $b_T$ 对称，也没有假定原 $\bar D_a$ 是导子。
+
+证明。引理 211.1 给 $\bar D=\delta+$ 原径向项，$\delta$ 交替、共同谱框架消失、右单位零。式 (223.2) 说明径向总读数本来对称，故
+
+$$
+q_T(S_Ta,b)=q_T(\delta_ab,u_T).
+\tag{229.2}
+$$
+
+这给 $S_T^{\dagger_q}=-S_T$；$\delta_{u_T}b=0$ 亦给 $S_Tu_T=0$。固定 primitive $e$。每个 $x\in N_e=\mathbb Re\oplus T_0(e)$ 都与 $e$ 在同一个谱框架中，故 $\delta_ex=0$。于是
+
+$$
+q_T(S_Te,x)=0\quad(x\in N_e),
+\qquad S_Te\in T_e.
+\tag{229.3}
+$$
+
+复用定理 156.1 在 (156.4) 后的谱极化，参数在这里是同一个 $S_T$：任意 frame $(e_i)$ 中 $q_T(S_Te_i,e_j)=0$；任意自身谱分解 $a=\sum_i a_ie_i$ 因而满足 $q_T(S_Ta,a^2)=0$。将 $a+tb$ 代入并取一次项，得
+
+$$
+\begin{aligned}
+0&=q_T(S_Tb,a^2)+2q_T(S_Ta,a\circ b)\\
+&=q_T(-S_T(a^2)+2a\circ S_Ta,b).
+\end{aligned}
+$$
+
+非退化性及实极化给 $S_T(a\circ b)=S_Ta\circ b+a\circ S_Tb$。这只是由原读数次序差定义出的算子取得导子律，不是将它预先赋给原 $D$。∎
+

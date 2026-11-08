@@ -80,6 +80,7 @@ public sealed class EnginePublicSurfaceTests
         "StrataLint.Engine.LeanValidationOutcome+InfrastructureFailure",
         "StrataLint.Engine.LeanValidationOutcome0MatchExtensions",
         "StrataLint.Engine.LiteratureAnchor",
+        "StrataLint.Engine.MaintenanceLogAdapter",
         "StrataLint.Engine.ManifestLoadOutcome",
         "StrataLint.Engine.ManifestLoadOutcome+InfrastructureFailure",
         "StrataLint.Engine.ManifestLoadOutcome+Loaded",

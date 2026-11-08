@@ -1,0 +1,36 @@
+**定理 9.11（由一个原正种子得到全部所用字的当前协变）。**固定原输入 $\xi$ 的 (9.1)，对从该输入开始、每条边均实际供应定义 9.6–9.8 的有限字 $v=(\gamma_1,\ldots,\gamma_m)$，按物理顺序令 $K_v=k_{\gamma_m}\cdots k_{\gamma_1}$。则在该字的实际端口 $c_v$ 上，有限探针满足
+
+$$
+\begin{gathered}
+\Sigma_{c_v}=K_v\Sigma_\xi K_v^*\succeq0,\qquad
+y_{c_v}(i)=\operatorname{Tr}(\Sigma_{c_v}\widetilde P_i),\\
+w_{c_v}=\operatorname{Tr}\Sigma_{c_v}=w_\xi.
+\end{gathered}
+\tag{9.14}
+$$
+
+证明。空字由原菜单中同一事件的绑定成立。假设在 $c$ 已有矩阵 $\Sigma_c$ 表示全部有限探针；则下一实际端口的读数由 (9.12) 满足
+
+$$
+\begin{aligned}
+y_d(i)&=\sum_j\alpha_{\gamma i j}\operatorname{Tr}(\Sigma_c\widetilde P_j)
+=\operatorname{Tr}(\Sigma_ck_\gamma^*\widetilde P_i k_\gamma)\\
+&=\operatorname{Tr}(k_\gamma\Sigma_ck_\gamma^*\widetilde P_i).
+\end{aligned}
+\tag{9.15}
+$$
+
+所以定义 $\Sigma_d=k_\gamma\Sigma_ck_\gamma^*$，正性由种子继承，而非由有限非负数据重新证明。引理 9.3 的实分离给表示的唯一性；实际坐标分区给其迹就是 $w_d$。归纳得 (9.14)。若起点质量零，则原正种子为零，全部后续矩阵与探针读数为零；不定义零质量条件概率。$\square$
+
+同一实际端口若由两条路径抵达，各次使用的是它实际同一组探针事件与同一参考闭合，则两份运输矩阵因分离性相同。不同端口即使矩阵相同，也只得当前有限探针相容，不合并历史。若终点本来带原全菜单，其独立取得的原全菜单矩阵与运输矩阵在这些同一实际探针上相等，故两者相同；原全菜单仍然存在，未被有限测试替代。
+
+原固定 $S$ 支撑与移动运输也须同时相容。若输入已经支撑于 $S$，且输出 $d$ 本来在原固定 $S$ 全质量条件的域内，则必要且充分的相容式为
+
+$$
+ \operatorname{Tr}\bigl(\Sigma_ck_\gamma^*(I_{27}-S)k_\gamma\bigr)
+ =\|(I_{27}-S)k_\gamma\Sigma_c^{1/2}\|_{\rm HS}^2=0.
+\tag{9.16}
+$$
+
+确实 $W$ 保持 $S$，前三个适配坐标投影之和为 $S$。定义 9.6 的实际粗事件对应把原固定支撑条件接到这些坐标质量；左式因而为正输出矩阵的补角质量，零时由 PSD 得输出支撑于 $S$，反之立即为零。这与 §8.2 的精确支撑边界相同，既不要求所有新输出都固定于 $S$，也不允许把原受约束输出改名来逃避它。
+

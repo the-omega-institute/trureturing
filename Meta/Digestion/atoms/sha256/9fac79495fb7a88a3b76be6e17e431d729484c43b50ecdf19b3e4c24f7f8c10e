@@ -1,0 +1,5 @@
+**Proof.** On the entire late cube let
+$\nu_0(x)=P_{00x}$, $\nu_1(x)=P_{01x}$, $\nu_2(x)=P_{10x}$.
+Write $S_a=|\nu_a|$, $\nu=\nu_0+\nu_1+\nu_2$, $S=|\nu|$ and
+$W=E+S+t$. These are three parts of the same actual measure.
+

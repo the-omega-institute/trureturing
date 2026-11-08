@@ -1,0 +1,36 @@
+### 定理 5.8（一份可实施的总误差证书）
+
+<a id="thm-c122-implemented-certificate"></a>
+
+若
+
+$$
+\|\mathcal N-\mathcal N_0\|_\diamond\le\delta_{\rm tom},\qquad
+ \|\widetilde{\mathcal R}-\mathcal R_0\|_\diamond\le\eta,
+$$
+
+其中 $\widetilde{\mathcal R}$ 是*实际确定性* CPTP 实现，则
+
+<a id="eq-c122-total-operational-error"></a>
+
+$$
+\boxed{\quad
+ \|\widetilde{\mathcal R}\mathcal N-\operatorname{id}\|_\diamond
+ \le\min\{2,e_0+\delta_{\rm tom}+\eta\}.
+ \quad}
+\tag{39}
+$$
+
+**证明。**
+在差中插入 $\mathcal R_0\mathcal N$ 和 $\mathcal R_0\mathcal N_0$。
+CPTP 前后复合收缩 diamond 范数，再用三角不等式，即得所述三项之和；该范数已经包含任意参考。
+
+第二项不能兼任第三项。若滤片使用估计的 $\tau_0$，却仍运行未知实际 $U^*$，一般不再有
+$\sum_aM_a^*M_a=pP$，所以不能按名义 $p$ 宣布精确放大成立。可以从已识别的名义 Kraus 数据编译整个 $\mathcal R_0$；也可以对所调用的完整逆门、滤片和反射另外供应误差证书。普通通道层析不自动认证其某个指定酉扩充在未初始化方向上的作用。
+
+例如，共同辅助空间中的理想和实际等距若满足
+$\|W-\widetilde W\|_\infty\le\xi$，则逐项展开
+$WXW^*-\widetilde WX\widetilde W^*$ 并取部分迹，给实现通道的 diamond 误差至多 $2\xi$。若整个酉电路由门误差 $\xi_j$ 的有限门串构成，望远镜展开给
+$\xi\le\sum_j\xi_j$，于是可取 $\eta\le2\sum_j\xi_j$。
+所有失败处理也必须纳入这个确定性实现；不能只对接受样本报告 $\eta$。
+

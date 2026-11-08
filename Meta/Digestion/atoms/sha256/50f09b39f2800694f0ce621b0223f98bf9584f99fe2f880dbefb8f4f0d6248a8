@@ -1,0 +1,46 @@
+**定理 10.1（尚未交替时的平方根界）。** 在定义 8.1–8.2 下，不要求 C97。固定另一边的 $v=D_bd\ne0$，令 $r=\|v\|$、$\lambda\ne0$，则每个局部元 $a$ 满足
+
+$$
+\boxed{\|D_aa\|^2
+\le\frac{\|a\|\,
+\|R_\lambda(a\otimes d,a\otimes b,a\otimes1)\|}{|\lambda|r}.}\tag{10.1}
+$$
+
+若
+
+$$
+\delta=\sup_{\|a\|=1}\|D_aa\|,\qquad
+\varepsilon=\sup_{\|a\|=1}
+\|R_\lambda(a\otimes d,a\otimes b,a\otimes1)\|,
+$$
+
+则 $\delta\le\sqrt{\varepsilon/(|\lambda|r)}$，平方根指数及常数 $1$ 均尖锐。该界只控制所定义自身探针族，不把它升级为任意近似量子代数的稳定性定理。
+
+证明。式 (9.4) 与斜伴随性给
+
+$$
+\|D_aa\|^2=-g(a,D_a^2a)
+\le\|a\|\|D_a^2a\|
+=\frac{\|a\|\|R_{\rm self}\|}{|\lambda|r}.
+$$
+
+为达到等号，取 $J=\mathbb R1\oplus\mathbb R^2$ 的通常球比较，令 $J_0e_1=e_2$、$J_0e_2=-e_1$，定义
+
+$$
+D^t_{(\alpha,u)}(\beta,w)=(0,t u_1J_0w).
+$$
+
+$J_0$ 为旋转导子，所以该指派满足定义 8.1；$t\ne0$ 时非零。对单位向量 $a=e_1$ 有
+
+$$
+D_aa=te_2,\qquad D_a^2a=-t^2e_1.
+$$
+
+对任意单位 $a$ 又有 $\|D_aa\|\le|t|$、$\|D_a^2a\|\le t^2$，上式同时达到。因此
+
+$$
+\delta=|t|,\qquad \varepsilon=|\lambda|rt^2.
+$$
+
+这精确达到常数并在 $t\to0$ 时固定指数。若误差被定义为残差的平方或平方和，则相应是该平方误差的四分之一次幂；不能混同两种误差。此例没有让全部联合残差趋零的结论。∎
+

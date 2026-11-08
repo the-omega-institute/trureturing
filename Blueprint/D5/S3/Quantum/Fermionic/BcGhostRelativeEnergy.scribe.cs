@@ -1,0 +1,57 @@
+using static StrataLint.Scribe.DefinitionDsl;
+
+namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Fermionic;
+
+internal sealed class BcGhostRelativeEnergyDocument : IScribeDocumentDefinition
+{
+    private const string Prefix = "D5/S3/Quantum/Fermionic/BcGhostRelativeEnergy.";
+    private static DocumentBlock Node(string name, string prose, string telescope,
+        DescribeRole role = DescribeRole.Theorem) => Describe.Lean(
+        DescribeId.Create("bcghostrelativeenergy-" + name.Replace("_", "-").ToLowerInvariant()),
+        DeclarationHandle.Create(Prefix + name), H(name), StatementSource.WithoutFormula(),
+        AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose)),
+            Paragraph(Text("Exact Lean telescope: " + telescope))), role);
+
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Original bc relative energy",
+        H("Original bc relative energy"), Blocks(
+            Paragraph(Text("The carrier is exactly CountableOccupationFock.Fock = Finset Nat ->_0 Complex, and ket S = Finsupp.single S 1. The operators b,c and L are the original BcGhostFock and BcGhostVirasoro operators. L(0)v is the statewise locally finite finsum over ALL q:Int of summand 0 q v. The proof reduces this actual sum to active modes; it never replaces it by a bounded-mode operator.")),
+            Paragraph(Text("For each j:Nat put e(j)=-siteMode(j)*siteSign(j):Int, E(S)=sum(j in S)e(j), R(S)=E(S)+1 and level(S)=R(S).toNat. Explicitly e(2k)=k+2, e(2k+1)=k-1, so e(1)=-1 and e(3)=0. b(0) is the original annihilation operator at site 3. The down vector is literally c(1) vacuum = ket {1}. R is nonnegative even outside the relative kernel; it is not the unshifted L(0) eigenvalue.")),
+            Paragraph(Text("All variables and premises of each declaration are included in its exact Lean telescope below. For every ell:Nat, RelativeLevel ell v means b(0)v=0 AND (L(0)+id)v=ell*v. Its finite ket basis uses occupations excluding site 3 of exact relative energy ell, contained in range(2*ell+4). The proof supplies the support bound and the basis rather than assuming either.")),
+            Paragraph(Text("These are algebraic statements on finite-excitation vectors. Nonnegative relative energy is not positivity of a Hermitian form. No quartet contraction, no-ghost theorem, full BRST/string theory, Monster moonshine, complete VOA/CFT, anomaly/fusion completion or AdS/CFT completion follows here. These precise original-carrier statements are repo-derived; no literature novelty is claimed.")),
+            Paragraph(Text("Registration audit is unfinished for all 43 retained public theorems: https://github.com/the-omega-institute/trureturing/issues/25750. Completed registrations: 0; no declared_validated registration is claimed. The three excluded unconsumed research companions retain their exact statements and proofs in the pinned pre-repair native evidence linked by that issue.")),
+            Node("siteEnergy", "The signed original site mode gives the integer contribution -siteMode(j)*siteSign(j).", "def siteEnergy (j : ℕ) : ℤ", DescribeRole.Definition),
+            Node("energy", "The unshifted ghost energy is the sum of siteEnergy over the actual finite occupation S.", "def energy (S : Finset ℕ) : ℤ", DescribeRole.Definition),
+            Node("relativeEnergy", "The relative energy is energy(S)+1; the shift is fixed by the actual down state, not a replacement for L(0).", "def relativeEnergy (S : Finset ℕ) : ℤ", DescribeRole.Definition),
+            Node("L_zero_ket", "The proof evaluates the original locally finite sum over every integer mode q, reduces its support to activeModes(ket S), reindexes by siteMode and obtains the diagonal eigenvalue energy(S). No bounded-mode operator is substituted.", "theorem L_zero_ket (S : Finset ℕ) : L 0 (ket S) = (energy S : ℂ) • ket S"),
+            Node("L_zero_coefficient", "Finsupp induction extends the ket calculation to every original Fock vector, including mixed energies.", "theorem L_zero_coefficient (v : Fock) (S : Finset ℕ) : (L 0 v) S = (energy S : ℂ) * v S"),
+            Node("siteEnergy_even", "Every even site 2*k has energy k+2, for all k in Nat.", "theorem siteEnergy_even (k : ℕ) : siteEnergy (2*k) = (k : ℤ) + 2"),
+            Node("siteEnergy_odd", "Every odd site 2*k+1 has energy k-1 in Int, including k=0 and k=1.", "theorem siteEnergy_odd (k : ℕ) : siteEnergy (2*k+1) = (k : ℤ) - 1"),
+            Node("siteEnergy_one", "The occupied site 1 has energy -1; the convention retains the exceptional negative-energy site.", "theorem siteEnergy_one : siteEnergy 1 = -1"),
+            Node("siteEnergy_three", "The occupied site 3 has energy zero; its exclusion comes from ker b(0), not an energy inequality.", "theorem siteEnergy_three : siteEnergy 3 = 0"),
+            Node("siteEnergy_pos_of_ne_one_three", "All other sites have strictly positive integer site energy.", "theorem siteEnergy_pos_of_ne_one_three {j : ℕ} (h1 : j ≠ 1) (h3 : j ≠ 3) : 0 < siteEnergy j"),
+            Node("L_zero_down", "The literal c(1) vacuum, equal to ket {1}, is a -1 eigenvector of the original L(0).", "theorem L_zero_down : L 0 (c 1 vacuum) = -(c 1 vacuum)"),
+            Node("b_zero_down", "The original b(0) annihilates ket {1}; the coefficient characterization of its kernel supplies the proof.", "theorem b_zero_down : b 0 (ket {1}) = 0"),
+            Node("relativeEnergy_split", "Separating sites 1 and 3 gives the missing-site-1 indicator plus the positive contributions of the remaining sites. This includes every finite occupation, whether or not it lies in ker b(0).", "theorem relativeEnergy_split (S : Finset ℕ) : relativeEnergy S = (if 1 ∉ S then 1 else 0) + ∑ j ∈ (S.erase 1).erase 3, siteEnergy j"),
+            Node("relativeEnergy_nonneg", "The split proves nonnegativity of the shifted ghost energy for every occupation. It asserts nothing about the lattice Gram form or an inner product.", "theorem relativeEnergy_nonneg (S : Finset ℕ) : 0 ≤ relativeEnergy S"),
+            Node("level", "The natural relative level is relativeEnergy(S).toNat.", "def level (S : Finset ℕ) : ℕ", DescribeRole.Definition),
+            Node("level_cast", "Nonnegativity proves that casting the natural level back to Int recovers relativeEnergy exactly.", "theorem level_cast (S : Finset ℕ) : (level S : ℤ) = relativeEnergy S"),
+            Node("relativeOperator", "This endomorphism is the original L(0) plus the identity on the original Fock carrier.", "def relativeOperator : Module.End ℂ Fock", DescribeRole.Definition),
+            Node("relativeOperator_coefficient", "The shifted original operator multiplies each original coefficient by relativeEnergy(S).", "theorem relativeOperator_coefficient (v : Fock) (S : Finset ℕ) : (relativeOperator v) S = (relativeEnergy S : ℂ) * v S"),
+            Node("RelativeKernel", "This predicate means literally b(0)(v)=0.", "def RelativeKernel (v : Fock) : Prop", DescribeRole.Definition),
+            Node("RelativeLevel", "This predicate is the conjunction of the literal b(0) kernel and the ell eigen-equation for L(0)+id; ell ranges over every natural number.", "def RelativeLevel (ell : ℕ) (v : Fock) : Prop", DescribeRole.Definition),
+            Node("relative_level_coeff_iff", "Both directions hold for any Fock vector: coefficients on occupations containing site 3 vanish, and every nonzero coefficient has relativeEnergy ell. No support or eigenvector premise is suppressed.", "theorem relative_level_coeff_iff (ell : ℕ) (v : Fock) : RelativeLevel ell v ↔ (∀ S : Finset ℕ, 3 ∈ S → v S = 0) ∧ (∀ S : Finset ℕ, v S ≠ 0 → relativeEnergy S = (ell : ℤ))"),
+            Node("relative_ground_line", "The joint kernel of b(0) and L(0)+id is exactly the complex line through the actual ket {1}. The zero coefficient is allowed.", "theorem relative_ground_line (v : Fock) : (RelativeKernel v ∧ relativeOperator v = 0) ↔ ∃ α : ℂ, v = α • ket {1}"),
+            Node("relative_level_support", "For a vector in RelativeLevel ell, each occupation with nonzero original coefficient is contained in range(2*ell+4). The proof uses both the level equation and exclusion of site 3.", "theorem relative_level_support (ell : ℕ) (v : Fock) (hv : RelativeLevel ell v) : ∀ S : Finset ℕ, v S ≠ 0 → S ⊆ Finset.range (2*ell+4)"),
+            Node("levelOccupationSets", "This finite set filters the powerset of range(2*ell+4) by exclusion of site 3 and the exact integer energy equation.", "def levelOccupationSets (ell : ℕ) : Finset (Finset ℕ)", DescribeRole.Definition),
+            Node("mem_levelOccupationSets_iff", "This is the complete membership criterion, including the finite range bound, site-3 exclusion and exact integer relative energy.", "theorem mem_levelOccupationSets_iff (ell : ℕ) (S : Finset ℕ) : S ∈ levelOccupationSets ell ↔ S ⊆ Finset.range (2*ell+4) ∧ 3 ∉ S ∧ relativeEnergy S = (ell : ℤ)"),
+            Node("relative_level_expansion", "Every actual relative-level vector is the finite sum of its original coefficients times the original kets over levelOccupationSets ell.", "theorem relative_level_expansion (ell : ℕ) (v : Fock) (hv : RelativeLevel ell v) : v = ∑ S ∈ levelOccupationSets ell, v S • ket S"),
+            Node("levelKets", "The spanning set is the image of the finite allowed occupation set under the original ket map.", "def levelKets (ell : ℕ) : Set Fock", DescribeRole.Definition),
+            Node("level_ket_linearIndependent", "Independence is inherited from the full original Finsupp unit basis after restriction to the finite allowed occupations.", "theorem level_ket_linearIndependent (ell : ℕ) : LinearIndependent ℂ (fun S : {S : Finset ℕ // S ∈ levelOccupationSets ell} => ket S)"),
+            Node("relative_level_mem_span", "The finite coefficient expansion places every actual relative-level vector in the span of the original allowed kets.", "theorem relative_level_mem_span (ell : ℕ) (v : Fock) (hv : RelativeLevel ell v) : v ∈ Submodule.span ℂ (levelKets ell)"),
+            Node("relativeLevelSpace", "The actual simultaneous kernel/eigenspace is a complex submodule, closed under zero, sums and scalar multiplication.", "def relativeLevelSpace (ell : ℕ) : Submodule ℂ Fock where carrier", DescribeRole.Definition),
+            Node("mem_relativeLevelSpace_iff", "Membership unfolds to the full RelativeLevel predicate; this bridge is used to prove the basis vectors belong to the actual submodule.", "theorem mem_relativeLevelSpace_iff (ell : ℕ) (v : Fock) : v ∈ relativeLevelSpace ell ↔ RelativeLevel ell v"),
+            Node("relative_level_space_eq_span", "Both submodule inclusions are proved: the actual relative-level space equals the span of the original allowed kets.", "theorem relative_level_space_eq_span (ell : ℕ) : relativeLevelSpace ell = Submodule.span ℂ (levelKets ell)"),
+            Node("relativeLevelBasis", "A genuine basis of the actual submodule is constructed by transporting the basis of the span of the independent allowed kets.", "def relativeLevelBasis (ell : ℕ) : Module.Basis {S : Finset ℕ // S ∈ levelOccupationSets ell} ℂ (relativeLevelSpace ell)", DescribeRole.Definition),
+            Node("relative_level_finite_dimensional", "The finite index set of that actual basis proves finite dimensionality of every relative-level space.", "theorem relative_level_finite_dimensional (ell : ℕ) : FiniteDimensional ℂ (relativeLevelSpace ell)"))));
+}

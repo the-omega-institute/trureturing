@@ -1,0 +1,11 @@
+**推论 3.3（不定号配对的精确传递）。**沿用推论 2.3 的自由实差空间 $E$ 和双线性型 $B$。令 $h_{T,\kappa}=H_{T,\kappa}(1,\ldots,1)$、$\Xi_{T,\kappa}(\mathbf a)=e_{H_{T,\kappa}(\mathbf a)}-e_{h_{T,\kappa}}$，则
+
+$$
+\frac1{3^{N-1}}\sum_{\kappa}
+ B\bigl(\Xi_{T,\kappa}(\mathbf a),\Xi_{T,\kappa}(\mathbf b)\bigr)
+=\sum_iB(e_{a_i},e_{b_i}).
+\tag{3.3}
+$$
+
+**证明。**用 $2B(e_x-e_s,e_y-e_t)=-c(x,y)+c(x,t)+c(s,y)-c(s,t)$，对 (3.1) 的叶子输入对 $(\mathbf a,\mathbf b)$、$(\mathbf a,\mathbf1)$、$(\mathbf1,\mathbf b)$、$(\mathbf1,\mathbf1)$ 作四点极化即可。式 (3.3) 传递的是起初可非对称、不定号的 $B$；实际成对费用非负不能替代任意带符号组合的平方非负。
+

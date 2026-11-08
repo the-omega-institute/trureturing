@@ -5,9 +5,10 @@ year: 2019
 title: Palindromic length of words and morphisms in class P
 doi: 10.1016/j.tcs.2019.02.024
 url: https://arxiv.org/abs/1812.00711v2
-claim: Section 4 recalls Frid's conjecture on Fibonacci prefixes and the upper bound for their palindromic length.
+claim: Section 4 recalls Frid's Fibonacci prefix conjecture; Section 6 defines mixed pal-antipal length and conjectures unbounded equal-cost Thue-Morse prefixes.
 strata_touched:
   - D5/S1/Words/Palindromes/FridPrefix/FridPrefixPalindromicLength
+  - D5/S1/Words/Palindromes/ThueMorseSignedCut
 license: citation-only
 triage: anchor
 ---
@@ -59,3 +60,22 @@ implication. The stronger prefix limsup lower bound is repository-derived,
 not stated here by AKMP and not formalised in this delivery. Fibonacci growth
 and the limsup step remain outside the delivered formalisation; no Lean
 limsup theorem is delivered.
+
+## Mixed palindrome and antipalindrome scope
+
+Section 6, `pallen_classP.tex` lines 624–635, defines an antipalindrome by
+$w=E(w_n)E(w_{n-1})\cdots E(w_1)$, with $E(a)=b$ and $E(b)=a$, and considers
+the minimum number of consecutive factors each of which is a palindrome or
+an antipalindrome. Empty factors can be removed without changing the word.
+The Lean alphabet is `a=false`, `b=true`; exchange is `Bool.not`.
+
+The final paragraph, lines 678–679, says:
+
+> On the other hand, we suppose that there exist prefixes of arbitrary palindromic length whose combined pal-antipal length as big as the palindromic one.
+
+The quantified assertion is: for every $K\geq1$ there exists $n\geq1$ with
+$C(t[0:n))=PL(t[0:n))\geq K$. Here both costs are minima for the literal
+standard Thue-Morse prefix. The source's finite table does not prove this
+unbounded assertion. The signed-potential cut inequality and mixed-prefix
+lower bound are repository deductions, rather than results quoted from AKMP.
+They do not by themselves close the unbounded equality assertion.

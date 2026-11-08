@@ -11,8 +11,7 @@ public sealed partial class FileMapPolicyTests
     [Fact]
     public void EmptyRegPackagePassesRepositoryFileMapConformance()
     {
-        Assert.Empty(FileMapPolicy.InspectRepository(TestRepositoryLayout.FindRoot(),
-            FileMapPolicy.DocumentPaths(TestRepositoryLayout.FindRoot())));
+        Assert.Empty(FileMapPolicy.InspectRepository(TestRepositoryLayout.FindRoot()));
     }
 
     [Theory]

@@ -61,6 +61,10 @@ internal sealed class LucasEvenDescentDocument : IScribeDocumentDefinition
                     + "more companion matrix gives the recurrence; the zeroth and first "
                     + "powers give U(0)=0 and U(1)=1. No sign restriction on n is used.",
                 DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("doubling", "The two Lucas doubling identities", DoublingFormula(),
+                "Multiplying the companion matrix power at n by itself gives the entries at 2*n. "
+                    + "The identities hold at every integer index over any commutative ring with q a unit.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo()),
             Node("two_mul_lucas_eq_zero", "The doubling hypotheses force two-torsion",
                 TwoTorsionFormula(),
                 "For arbitrary p, matrix multiplication gives both doubling identities, and the "
@@ -181,6 +185,18 @@ internal sealed class LucasEvenDescentDocument : IScribeDocumentDefinition
     private static Formula Matrix(Formula a, Formula b, Formula c, Formula d) => Seq(
         Begin, Grp(F.Id("bmatrix")), a, Amp, b, RowBreak, c, Amp, d,
         End, Grp(F.Id("bmatrix")));
+
+    private static Formula DoublingFormula()
+    {
+        static Formula Lucas(Formula index) => Call("lucasU", P(), Q(), index);
+        var u = Lucas(N()); var v = Lucas(Add(N(), D(1)));
+        var first = Equal(Lucas(Mul(D(2), N())),
+            Sub(Mul(Mul(D(2), u), v), Mul(P(), Power(u, D(2)))));
+        var second = Equal(Lucas(Add(Mul(D(2), N()), D(1))),
+            Sub(Power(v, D(2)), Mul(Val(Q()), Power(u, D(2)))));
+        return Disp(Seq(RingContext(), Sp, Parameters(P(), Q(), R()), Sp, IntegerIndex(), Sp,
+            new Formula.Logic(first, FormulaLogicOperator.And, second)));
+    }
 
     private static Formula CompanionFormula()
     {

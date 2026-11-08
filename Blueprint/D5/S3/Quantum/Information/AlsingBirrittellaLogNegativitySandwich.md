@@ -119,5 +119,4 @@ Let F be the swap and Q = Σ_i p_i (C_i tensor C_i). The partial transpose of th
 - Dependency: [D5/S3/Quantum/Dynamics/KickedIsingNegativityRefutation](../Dynamics/KickedIsingNegativityRefutation.md)
 - Dependency: [D5/S3/Quantum/Entanglement/ConicalDesignConcurrenceComparability](../Entanglement/ConicalDesignConcurrenceComparability.md)
 - Dependency: [D5/S3/Quantum/Foundation/FiniteTraceDistance](../Foundation/FiniteTraceDistance.md)
-- Dependency: [D5/S3/Quantum/RandomCircuits/CHaarConcatenationNonmonotone](../RandomCircuits/CHaarConcatenationNonmonotone.md)
 - Dependency: [D5/S3/Quantum/RandomCircuits/HaarTwoCopyTwirl](../RandomCircuits/HaarTwoCopyTwirl.md)

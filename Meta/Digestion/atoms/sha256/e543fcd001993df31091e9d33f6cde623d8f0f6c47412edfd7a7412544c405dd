@@ -1,0 +1,41 @@
+**Theorem 54.1 (both field and return contributions).** For each fixed
+pair in Definition 53.1,
+
+$$
+\ell_b-\ell_{\rm ref}=\mathscr A\delta_b^{<}s^5+o_b(s^5).
+\tag{54.1}
+$$
+
+Proof. Use conjugate-linear first slots. The two exact eigen-equations
+and selfadjointness of $H_{\rm ref}$ give
+
+$$
+\begin{aligned}
+(\ell_b-\ell_{\rm ref})\langle x_{\rm ref},u_b\rangle
+={}&\langle x_{\rm ref},(H_b-H_{\rm ref})x_b\rangle\\
+ &+\ell_{\rm ref}\langle u_{\rm ref},(F_b-F_{\rm ref})u_b\rangle.
+\end{aligned}
+\tag{54.2}
+$$
+
+The denominator tends to $\mu$, using bounded $F_{\rm ref}$,
+$u_b-u_{\rm ref}\to0$ and (53.4). On output heights in $J$, the
+first term divided by $s^5$ tends to $j_0\delta_b^{<}A_p^2$.
+Indeed the normalized kernel in Lemma 53.2 is uniformly bounded;
+replacing either moving $x$ by $Vp$ costs its $L^1$ error times a
+bounded $L^1$ norm. Fixed-input dominated convergence then applies
+on the entire product space, with the expanding indicator of $J$.
+
+For its complementary output heights, (2.9) implies
+$F_{\rm ref}\le Cs^5$, since there $|r|\ge c/s$.
+Moreover $\|(H_b-H_{\rm ref})x_b\|_2\le C$: integrate contraction
+on $(0,1)$ and $Ct^{-7/4}\|x_b\|_1$ on $(1,T)$, separately
+for the two heats, using (29.5). Hence the omitted scalar is bounded by
+$Cs^5\|\mathbf1_{\{k\notin J\}}u_{\rm ref}\|_2=o(s^5)$.
+The last equality follows from full $L^2$ convergence to $p$, because
+this set recedes to $|r|\ge c/s$; zero-extended domain differences
+are included. For the second term in (54.2),
+$u_{\rm ref}u_b\to p^2$ in $L^1$ and the bounded multiplier limit
+of Lemma 53.2 gives $C_*\delta_b^{<}$ after division by $s^5$.
+Dividing the sum by $\mu$ proves (54.1). $\square$
+

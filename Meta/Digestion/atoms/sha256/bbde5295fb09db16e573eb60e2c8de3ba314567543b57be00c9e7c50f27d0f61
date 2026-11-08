@@ -1,0 +1,9 @@
+**推论 23.3（同一历史的未归一版本）。**若同一原历史总质量记为 $w_{\rm hist}\ge0$，并写 $\mu(I)=\mu(S)=w_{\rm hist}$，则上述证明不除以 $w_{\rm hist}$。所得 $F_{w_{\rm hist}}$ 满足
+
+$$
+ F_{w_{\rm hist}}(0)=0,\quad F_{w_{\rm hist}}(I)=w_{\rm hist},\quad
+ F_{w_{\rm hist}}(P+Q)=F_{w_{\rm hist}}(P)+F_{w_{\rm hist}}(Q)
+$$
+
+对正交 $P,Q$ 成立，并有 $0\le F_{w_{\rm hist}}(P)\le w_{\rm hist}$。若 $w_{\rm hist}=0$，所有这些实际事件质量均为零，不定义零质量条件准备；不等中心权重仍按原来的各自质量保留。
+

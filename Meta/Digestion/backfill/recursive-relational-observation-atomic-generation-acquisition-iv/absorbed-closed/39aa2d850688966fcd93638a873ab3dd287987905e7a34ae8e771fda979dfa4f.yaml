@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:39aa2d850688966fcd93638a873ab3dd287987905e7a34ae8e771fda979dfa4f
+  normalized_sha256: sha256:39aa2d850688966fcd93638a873ab3dd287987905e7a34ae8e771fda979dfa4f
+cas_ref: sha256:39aa2d850688966fcd93638a873ab3dd287987905e7a34ae8e771fda979dfa4f
+coverage_gids:
+  - gid: D5/S3/Combinatorics/Graph/Walks/BinaryWordGeometry.shortest_pop_append
+    target_statement_id: sha256:d1523bd819b52ccf56f8ea1233ab724a74d05d6d5e8bf5a7cab8650996146e3f
+receipts:
+  unresolved_subitems: []

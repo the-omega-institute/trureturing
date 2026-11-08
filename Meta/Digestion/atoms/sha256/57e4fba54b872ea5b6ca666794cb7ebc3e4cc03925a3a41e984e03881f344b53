@@ -1,0 +1,8 @@
+**Theorem 4 (compositeness above $7$).** If $n\in T$ and $n>7$, then $n$ is composite.
+
+**Proof.** By Theorem 3, $n$ is odd. If $n$ were prime, then $n>7$ implies $\gcd(n,15)=1$. Corollary 2 therefore gives
+$$
+15^n\equiv1\pmod n.
+$$
+Fermat's theorem also gives $15^{n-1}\equiv1\pmod n$. Multiplying the latter congruence by $15$ and comparing with the former yields $15\equiv1\pmod n$, so $n\mid14$. This is impossible for a prime $n>7$. Thus $n$ is composite. ∎
+

@@ -1,0 +1,8 @@
+令 $P=(2d)^{-1}\sum_{v=\pm e_i}T_v$、$L=P-I$、$\delta_v=T_v-I$。调和函数 $h$ 满足 $L(h^2)=(2d)^{-1}\sum_v(\delta_vh)^2$，其各差分仍调和。迭代即 Lippner–Mangoubi 的平方差分恒等式：
+
+$$
+L^k(H^2)=\frac1{(2d)^k}\sum_{v_1,\ldots,v_k}
+(\delta_{v_1}\cdots\delta_{v_k}H)^2\ge0.
+\tag{2.1}
+$$
+

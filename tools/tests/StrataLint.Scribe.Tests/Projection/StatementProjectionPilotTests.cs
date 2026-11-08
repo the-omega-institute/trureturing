@@ -175,7 +175,39 @@ public sealed class StatementProjectionPilotTests
             StatementV1Decoder.Decode(declaration.Value.GetProperty("type").GetString()!).Type);
 
         var formula = Assert.IsType<ProjectionOutcome.Projected>(outcome).Formula;
-        Assert.IsNotType<Formula.Placeholder>(formula);
+        var modulus = Assert.IsType<Formula.Bind>(formula);
+        var subgroup = Assert.IsType<Formula.Bind>(modulus.Body);
+        var function = Assert.IsType<Formula.Bind>(subgroup.Body);
+        var equality = Assert.IsType<Formula.Relation>(function.Body);
+        var rhs = Assert.IsType<Formula.Binary>(equality.Right);
+        var sum = Assert.IsType<Formula.Apply>(rhs.Right);
+        var lambda = Assert.IsType<Formula.LatexSequence>(sum.Arguments[1]);
+        var integrand = Assert.IsType<Formula.Apply>(lambda.Items[^2]);
+
+        // The existing finite_poisson_mod_four_even_delta witness has H = {0,2}
+        // and f = delta_0. Evaluate this pin's projected integrand on H-perp.
+        double Delta(int j) => j == 0 ? 1 : 0;
+        double Sample(int k) => integrand.Function switch
+        {
+            Formula.Symbol { Name.Value: "x3" } => Delta(k),
+            Formula.Apply { Function: Formula.NamedConstant { Name.Value: "dft" } } =>
+                Enumerable.Range(0, 4).Sum(j => Math.Cos(-2 * Math.PI * j * k / 4) * Delta(j)),
+            _ => throw new InvalidOperationException("Unexpected projected finite Poisson integrand.")
+        };
+        var projectedRhs = (2d / 4) * new[] { 0, 2 }.Sum(Sample);
+        Assert.Equal(1d, projectedRhs);
+        Assert.Equal(0.5d, (2d / 4) * new[] { 0, 2 }.Sum(Delta));
+
+        var specialization = Assert.IsType<Formula.Apply>(integrand.Function);
+        Assert.Equal("dft", Assert.IsType<Formula.NamedConstant>(specialization.Function).Name.Value);
+        Assert.Collection(specialization.Arguments,
+            item => Assert.Equal("x0", Assert.IsType<Formula.Symbol>(item).Name.Value),
+            item => Assert.Equal("Complex", Assert.IsType<Formula.NamedConstant>(item).Name.Value));
+        Assert.Collection(integrand.Arguments,
+            item => Assert.Equal("x3", Assert.IsType<Formula.Symbol>(item).Name.Value),
+            item => Assert.Equal(@"\mathrm{val}\left(\mathit{x4}\right)", LatexWriter.Write(item)));
+        Assert.Contains(@"\mathrm{dft}\left(\mathit{x0}, \mathrm{Complex}\right)",
+            LatexWriter.Write(formula), StringComparison.Ordinal);
     }
 
     [Fact]

@@ -1,0 +1,13 @@
+**定理 325.1（完整满足及严格局部删除）。** 前卷 317.1 的全部 tagged-CP 满足族分别满足 $\mathsf C_Z(B)$ 与 $\mathsf C_Z(\mathsf B_{\rm cl})$，包括原 $P=\mathbb C\oplus M_3$、没有实际 $M_2$ 对象或简单块的子族。与此同时，$\mathsf G_{0h}+\mathsf Z_0$ 在单载体右单位层严格弱于 $\mathsf G^0_{0h}$。
+
+证明。完整满足族的同一原 $D=\mathrm i[a,b]/2$ 在所有角内无迹，故新几何成立；同一原 sigma、全部过程背景及历史已由前卷 317.1 验明其数学模型条件。该族保留任意正定原比较参数 $r_s$ 与不等正块权 $w_s$，具体原双 Riesz 换算沿前卷 (317.1)，不限制为 $g^0=q$。因此完整族和无实际 $M_2$ 子族均直接保留。
+
+为证局部严格性，取 $E=H_2(\mathbb C)\oplus\mathbb R^k$，$2+k>p_*$，以及 Pauli 矩阵 $\sigma_x,\sigma_y,\sigma_z$，定义整个输出只在二阶块的
+
+$$
+D(a,b)=\operatorname{Tr}(\sigma_z\,\mathrm i[a_2,b_2])I_2\oplus0.
+\tag{325.1}
+$$
+
+它有右单位，且每个正交 primitive 对交换，故整向量 O 成立，包含跨中心对；半重叠对必在二阶块内，支持是该整块，故 $\mathsf G_{0h}$ 成立。取 $e=(I_2+\sigma_x)/2$、$p=(I_2+\sigma_y)/2$，则 $\operatorname{Tr}(ep)=1/2$、$\mathrm i[e,p]=-\sigma_z/2$，因而 $D(e,p)=-I_2\oplus0$，规范迹为 $-2$。这正是被删半角迹测试的非零值。此例只区分局部几何前件，未供应完整原联合或 sigma，不是两份完整背景的反模型。全背景中 323.1 恢复被删关系，故不声称完整模型类严格扩大。∎
+

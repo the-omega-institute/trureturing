@@ -1,0 +1,23 @@
+**命题 64.1（不闭合窗口允许四根方向）。** 完整静态候选允许四维的 $W$ 满足 (60.2)，同时 $D(W,W)\not\subset W$。
+
+证明。取标准 $E=M_4(\mathbb C)_{\rm sa}$、单位、算子范数、准确正锥及全部正评价和任意非负质量，以 $D(a,b)=i[a,b]/2$ 为同一个原响应。全部 A1–A3、P2 和完整 PB 直接复用静态卷 35.1–35.2 的标准参考模型。记 Pauli 矩阵为 $\sigma_x,\sigma_y,\sigma_z$，令
+
+$$
+\gamma_1=\sigma_x\otimes I_2,\quad
+\gamma_2=\sigma_y\otimes I_2,\quad
+\gamma_3=\sigma_z\otimes\sigma_x,\quad
+\gamma_4=\sigma_z\otimes\sigma_y.
+\tag{64.1}
+$$
+
+Pauli 乘法表给每个 $\gamma_i^2=u$，不同 $\gamma_i$ 两两反交换；它们在 Pauli 张量基中独立。因此其原实张成 $W$ 满足 $x\circ y=(\sum_i x_i y_i)u$。但
+
+$$
+D(\gamma_1,\gamma_2)=-\sigma_z\otimes I_2\notin W,
+\tag{64.2}
+$$
+
+最后的不包含同样由 Pauli 张量基独立性给出。这是标准参考模型中本窗口的直接消费者，不将 Clifford 或 Pauli 模型本身计作新发现，也不宣称它供应实际准备、仪器或时间。∎
+
+因此 63.1 的自身三轴闭合不能推广成任意原窗口至多三维，也不能把 $J_h:W_h\to V_h$ 擅自改成 $J_h:W_h\to W_h$。若要让原 $W_h$ 本身成为复向量空间，仍须其实际不变性；62.1 没有这个前件，也没有这个结论。
+

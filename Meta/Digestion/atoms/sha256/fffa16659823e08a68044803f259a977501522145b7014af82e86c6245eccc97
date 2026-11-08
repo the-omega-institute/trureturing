@@ -1,0 +1,26 @@
+**定义 37.1（一个完整固定域上的原数据族）。** 取命题 13.2、定理 33.1 的整个 tagged CP 签名，对象域就是全部 $\mathcal D_3$，含全部有限非空直和、原经典标签和每个实际普通张量联合对象。保留每个原准备、全部联合密度、原比较、完整 CP 仪器及其已安装可访问细口、原概率、每个失败输出、实际遗忘、所有支持返回数和每段原合法有限历史。原 $q/L$ 固定为这些满足族已给的普通迹型及矩阵 Jordan 乘法，原 $g^0$ 仍可为 (5.1) 的非迹型。
+
+对每个完整原对象，写
+
+$$
+\mathcal A_A=\bigoplus_sM_{n_s}(\mathbb C),\qquad
+\tau_A(x)=\sum_s\operatorname{Tr}(x_s),\qquad
+N_A=\tau_A(u_A)=\sum_sn_s,\qquad
+t_A=\tau_A/N_A.
+\tag{37.1}
+$$
+
+$N_A$ 不是 $\dim_{\mathbb R}E_A$。$t_A$ 是完整直和上的忠实归一迹，包含每个经典块；它不是选择一个活动块后的压缩迹。这里这些复坐标从模型定义起就有，不从待检验的原 $D$ 导出。对固定实数 $\varepsilon$，在所有原对象及实际联合对象**同时**指定原有向数据为
+
+$$
+\begin{aligned}
+\delta^A_ab&=\frac i2[a,b],\\
+\mathsf V_A(a,b)&=t_A(a\circ b)-t_A(a)t_A(b),\\
+M^A_ab&=\varepsilon\,\mathsf V_A(a,b)u_A,\\
+D^{A,\varepsilon}_ab&=\delta^A_ab+M^A_ab.
+\end{aligned}
+\tag{37.2}
+$$
+
+这是不同模型成员的初始原数据，成员内固定不动。$\mathsf V_A$ 仅定义这一反模型族的系数，不给 C127 添加数值输入，也不对待证明的原 $D$ 作归一化。只使用这一族，不以别的局部扰动充当全背景模型。
+

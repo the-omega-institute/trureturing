@@ -1,0 +1,107 @@
+**定理 9.2（作用支撑上的完整残差线性界）。** 在定义 9.1 下，精确地有
+
+$$
+\ker G_J=\ker\mathcal T_J=Z_J,
+\qquad \operatorname{ran}G_J=W_J=Z_J^\perp,
+\qquad D^J_aa\in W_J\quad(a\in J).
+\tag{9.4}
+$$
+
+因而 $W_J\ne\{0\}$ 时
+
+$$
+\|\mathcal T_Jz\|\ge\sigma_J\|z\|
+       \quad(z\in W_J).
+\tag{9.5}
+$$
+
+对 $A$ 方，若已给出 $0<s_A\le\sigma_A$，$k_B>0$，且
+
+$$
+h_A=k_Bs_A-\epsilon\sqrt{n_A}\,c_B>0,
+\qquad
+L_A=\frac{\epsilon\sqrt{n_A}\,c_A d_B}{h_A},
+\tag{9.6}
+$$
+
+则对每个单位 $a\in J_A$ 有 $\|D^A_aa\|\le L_A$。$c_A,c_B$ 仍恰为 (6.1)，$d_J,k_J$ 仍为 (5.5)；没有增加关于 $M$ 或 $\Gamma$ 的前件。交换双方定义 $h_B,L_B$ 及其可用条件。
+
+令 $\delta_J$ 保持定理 6.1 的原定义，再逐方定义
+
+$$
+\widehat\delta_J=
+\begin{cases}
+0,&W_J=\{0\},\\
+\min\{\delta_J,L_J\},&\text{该方的式 (9.6) 可用},\\
+\delta_J,&\text{其余情形}.
+\end{cases}
+\tag{9.7}
+$$
+
+则双方的完整结论为
+
+其中 $\delta_J^{\rm all}$ 是定理 9.4 在下文定义的两种合法界的逐方最小值；只使用本定理时可先取 $\delta_J^{\rm all}=\widehat\delta_J$。
+
+$$
+\begin{aligned}
+\sup_{\|a\|=1}\|D^J_aa\|&\le\delta_J^{\rm all},\\
+\|D^J_ac+D^J_ca\|&\le2\delta_J^{\rm all}\|a\|\|c\|,\\
+\|D^J_{1_J}\|_{\rm op}
+ &\le u_J\min\{d_J,2\delta_J^{\rm all}\}.
+\end{aligned}
+\tag{9.8}
+$$
+
+特别地，对任意指定 $0\le\vartheta<1$，若
+
+$$
+\epsilon\sqrt{n_A}\,c_B\le\vartheta k_Bs_A,
+\tag{9.9}
+$$
+
+则可以使用显式线性界
+
+$$
+\widehat\delta_A\le
+\min\left\{\delta_A,
+ \frac{\sqrt{n_A}\,c_A d_B}{(1-\vartheta)k_Bs_A}\,\epsilon\right\}.
+\tag{9.10}
+$$
+
+这里 (9.9) 是已有残差大小与独立局部有限数据之间的充分阈值，不是把待证自缺陷作为强制性前提。
+
+证明。先暂以 $\widehat\delta_J$ 记本定理正分母选项。由 (9.1)，$g_J(x,G_Jx)=\sum_i\|D^J_{e_i}x\|^2$，所以 $G_J$ 非负自伴且其零空间恰为 $Z_J$。另一方面，局部斜伴随性给
+
+$$
+\begin{aligned}
+x\in W_J^\perp
+&\ \Longleftrightarrow\quad
+ g_J(x,D^J_{e_i}y)=0\quad\text{对全部 }i,y\\
+&\ \Longleftrightarrow\ D^J_{e_i}x=0\quad\text{对全部 }i.
+\end{aligned}
+\tag{9.11}
+$$
+
+有限维正内积下，$W_J=Z_J^\perp=\operatorname{ran}G_J$。标签的实线性还给 $D^J_a=\sum_i a_iD^J_{e_i}$，故 $D^J_aa$ 属于 $W_J$。这证明 (9.4)，并非另加一个自缺陷的支撑假设。
+
+在 $W_J$ 的正交特征基中，$g_J(z,G_Jz)\ge\sigma_J^2\|z\|^2$，得到 (9.5)。此处使用有限维谱定理／最小正奇异值估计这一成熟中间工具，参见 [LAPACK Users' Guide，Singular Value Decomposition](https://www.netlib.org/lapack/lug/node32.html)。更换标签正交单位基时，$\sum_i(D^J_{e_i})^\dagger D^J_{e_i}$ 不变，所以正谱与 $Z_J,W_J$ 不依赖该正交坐标的选择。
+
+现在固定单位 $a\in J_A$，置 $z=D^A_aa$。复用同一完整残差已经给出的精确耦合 (6.14) 及其界 (6.15)。从伙伴有限曲率表选单位基向量 $f,g,b$ 达到 $k_B$；将 (6.15) 分别用于 $c=e_i$，再对这些 $n_A$ 个不等式平方求和，得到
+
+$$
+k_B\|\mathcal T_Az\|
+\le\epsilon\sqrt{n_A}
+       \bigl(c_A d_B+c_B\|z\|\bigr).
+\tag{9.12}
+$$
+
+(9.4) 已证明 $z\in W_A$，故 (9.5) 与 $s_A\le\sigma_A$ 给
+
+$$
+\bigl(k_Bs_A-\epsilon\sqrt{n_A}\,c_B\bigr)\|z\|
+\le\epsilon\sqrt{n_A}\,c_A d_B.
+\tag{9.13}
+$$
+
+正的 $h_A$ 允许除法，得到 (9.6)。这一步用整个作用族控制 $z$，不再把 (6.16) 的单个斜伴收缩变为 $\|z\|^2$。旧二次不等式 (6.4) 与其根／截顶仍独立成立，故可取 (9.7) 的最小值。$W_J=\{0\}$ 时全部 $D^J_{e_i}$ 为零，标签线性使 $D^J=0$，所以这一分支确实给零缺陷。定理 9.4 将在不要求 $h_J>0$ 时再给一个截顶线性选项；取两者的最小值后，最后逐字使用 (6.17) 的极化及 $D^J_a1_J=0$，得到 (9.8)。由 $h_A\ge(1-\vartheta)k_Bs_A$ 得 (9.10)。∎
+

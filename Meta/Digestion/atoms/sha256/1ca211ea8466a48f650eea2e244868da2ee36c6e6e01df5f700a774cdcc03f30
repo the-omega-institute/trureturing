@@ -1,0 +1,20 @@
+First suppose $\mu\le E+\delta$. Apply the optimized absorbing-chain
+supplier 206.7 with these exact $\gamma,S,t$. If $M_r$ denotes the
+sum of the r largest late totals, padded by zeros, set
+
+$$
+\begin{aligned}
+c_0&=\min((E+S)/2,S+\min(E_1,E_2)),\\
+d_0&=\max(0,\mu-t,M_2-E-S,M_3-W,\mu-c_0),\\
+s_1&=\min(S,\max(0,(E_2+S-E_1)/2)).
+\end{aligned}
+$$
+
+That supplier places C=$\gamma_n$ on $1^{n-1}0^{L-n+1}$,
+P=$s_1,S-s_1$ on the first two chain words, and T=t.
+Its parameter $q=\max(\mu,M_2-t)$ equals $\mu$ because $t\ge\mu$.
+Its actual-input lower bound is $d_0\le\delta$, and its exact complete
+cost is $\max(d_0,\mu-E)\le\delta$. Its hypotheses are precisely
+the present fixed totals and early-P family; no sorted input profile
+is required. This branch is a direct use of 206.7.
+

@@ -1,0 +1,128 @@
+**Theorem 141.2 (a bounded character-zero vector satisfying all seven equations).** For every original $\theta$, choose any reflection-even $k$ supplied by Proposition 141.1. There exists a bounded real Borel $v$ on the whole original $G$, pointwise invariant under every rotation and pointwise odd under $J$, such that
+
+$$
+\begin{gathered}
+\int_Gg_{jd}v\,dm=0\quad(j=2,3,4),\\
+Q_k(1,v)=0,\qquad Q_k(k,v)=0,\qquad
+Q_k(v,1)=0,\qquad Q_k(v,k)=0,\\
+Q_k(v,v)<0.
+\end{gathered}
+\tag{141.3}
+$$
+
+Here $Q_k(u,v)=\int guP(qv)\,dm$ uses exactly $q=Pk$. In particular this is the antecedent (140.4) on the rotation-invariant space.
+
+*Proof.* Let $\mathcal H_0^-$ be the closed complex subspace of $L^2(G,m)$ consisting of rotation-invariant, $J$-odd classes. The commuting rotation and reflection projections reduce the actual $K$; denote its nonnegative self-adjoint restriction by $K_0^-$. This is a restriction of the supplied full operator, with no replacement of its endpoint. The space contains every smooth invariant test compactly supported in $\{r>0,z>0\}$ together with its negative reflection. It is therefore nonzero and contains the local tests used below.
+
+Put
+
+$$
+s=g+q,\qquad t=g-q,\qquad
+\gamma=t/s\ \hbox{where }s>0,
+\qquad \gamma=0\ \hbox{on its null complement},\qquad
+\sigma=d/2,\qquad A=e^{-\sigma K_0^-}.
+\tag{141.4}
+$$
+
+Both weights are bounded, real, rotation invariant, $J$-even and strictly positive almost everywhere. The assertions for $g$ use Theorem 133.2 and the actual source density; those for $q$ use $q=T_dk$, positivity improvement and the Markov contraction. Thus $s>0$ almost everywhere and $|\gamma|\le1$. Multiplication by $s,t,\gamma$ preserves $\mathcal H_0^-$. On $\Omega$ the actual heat-image suppliers (122.9)–(122.11) make $g=T_dg_d$ and $q=T_dk$ analytic. Consequently $\gamma$ is smooth analytic on the open set where $s>0$.
+
+Suppose for contradiction that $Q_k(v,v)\ge0$ for every bounded real $v\in\mathcal H_0^-$. Self-adjointness of $P=A^2$ gives the exact identity
+
+$$
+4Q_k(v,v)=\|A(sv)\|_2^2-\|A(tv)\|_2^2.
+\tag{141.5}
+$$
+
+There is no global positive lower bound on $s$ in this identity or in the next step. For any real $u\in\mathcal H_0^-$ set
+
+$$
+u_n=u\,\mathbf1_{\{s\ge1/n,\ |u|\le n\}},\qquad v_n=u_n/s.
+\tag{141.6}
+$$
+
+Take $v_n=0$ where the indicator vanishes. These are allowed odd invariant tests with $\|v_n\|_\infty\le n^2$, and $u_n\to u$ in $L^2$. Applying (141.5) and passing to the limit proves $\|AM_\gamma u\|_2\le\|Au\|_2$. Real and imaginary parts extend this inequality to the whole complex $\mathcal H_0^-$. Since $A$ is injective with dense range, the rule $B(Au)=AM_\gamma u$ extends to a contraction $B$ on this entire space. Taking adjoints gives
+
+$$
+BA=AM_\gamma,\qquad AB^*=M_\gamma A,\qquad
+e^{\sigma K_0^-}M_\gamma e^{-\sigma K_0^-}=B^*.
+\tag{141.7}
+$$
+
+The last equality includes its range assertion, supplied by the middle equality. This is the elementary adjoint-factorization argument also used in Appendix II (128.5)–(128.6), now on the whole invariant reflection-odd space. Its domain is not obtained by discarding a finite-dimensional complement.
+
+Here is the required commutator consequence with its actual domains. For $\Pi_R=\mathbf1_{[0,R]}(K_0^-)$ define the entire bounded-operator-valued function
+
+$$
+F_R(z)=\Pi_Re^{zK_0^-}M_\gamma e^{-zK_0^-}\Pi_R.
+\tag{141.8}
+$$
+
+The spectral cutoffs define both exponential factors on bounded spectral intervals. On $\operatorname{Re}z=\sigma$, (141.7) and imaginary-time unitary conjugation give $\|F_R(z)\|\le1$. On $\operatorname{Re}z=-\sigma$, the adjoint identity gives the same bound. The functions are bounded on each closed vertical strip. Hadamard's three-lines theorem applied to scalar matrix coefficients therefore gives the bound one throughout this strip. Cauchy's estimate on the circle $|z|=\sigma/2$ yields
+
+$$
+\|F_R'(0)\|\le2/\sigma.
+\tag{141.9}
+$$
+
+For $u,v\in D(K_0^-)$, graph-norm convergence of the spectral cutoffs identifies the limit of the derivative pairing with
+
+$$
+\langle K_0^-u,\gamma v\rangle_m-
+\langle\gamma u,K_0^-v\rangle_m.
+\tag{141.10}
+$$
+
+Its absolute value is at most $(2/\sigma)\|u\|_2\|v\|_2$. Whenever $v$ and $\gamma v$ are smooth compact punctured tests in this subspace, self-adjointness and density of $D(K_0^-)$ identify (141.10) with the actual vector commutator and give
+
+$$
+\|[K,M_\gamma]v\|_2\le(2/\sigma)\|v\|_2.
+\tag{141.11}
+$$
+
+This does not assume global invariance of $D(K)$ under multiplication by $\gamma$.
+
+Choose any small quotient open patch $U$ compactly contained in $\{r>0,z>0,gq>0\}$, and a real $\chi\in C_c^\infty(U)$. For $\omega\in\mathbb R^3$, on $z>0$ take
+
+$$
+u_N=\chi(r,z,\xi)e^{iN\omega\cdot(r,z,\xi)},
+\tag{141.12}
+$$
+
+extend it negatively by $J$ to $z<0$, and set it zero elsewhere. These tests have angular character zero. Both $u_N$ and $\gamma u_N$ are genuine smooth compact punctured vectors in the original operator domain: multiplication by the positive smooth $h$ takes such vectors to the core $\mathcal D_0$ in (112.4). Their $L^2$ norms are independent of $N$. On the upper patch the original symbol (137.12), or the original Leibniz identity (122.22), gives
+
+$$
+[K,M_\gamma]u_N
+=-2iN\chi e^{iN\omega\cdot(r,z,\xi)}
+\left[a\gamma_r\omega_r+a\gamma_z\omega_z+
+\left(\eta+ar^2/4\right)\gamma_\xi\omega_\xi\right]
++O_{L^2(U)}(1).
+\tag{141.13}
+$$
+
+For fixed $\chi,\omega$ the remainder is bounded independently of $N$, because all coefficients and derivatives involved are bounded on its compact support. The reflected support is disjoint and cannot cancel the norm on $U$. Divide (141.11) by $N$ and let $N\to\infty$. Taking the three coordinate directions for $\omega$ shows $\chi\gamma_r=\chi\gamma_z=\chi\gamma_\xi=0$. The amplitude is arbitrary, and $a,\eta>0$, so $\gamma$ is constant on each connected such patch. Some nonempty patch exists by positivity almost everywhere; on one of them its constant $\gamma_0$ lies in $(-1,1)$.
+
+The analytic function $g-q-\gamma_0(g+q)$ consequently vanishes on a nonempty open subset of the connected $\Omega$. Analytic uniqueness, in the same actual heat-image class as §137, makes it vanish on all $\Omega$. Since $m(N)=0$, this gives
+
+$$
+q/g=(1-\gamma_0)/(1+\gamma_0)\quad m\text{-a.e.},
+\tag{141.14}
+$$
+
+contrary to (141.2). The assumed nonnegativity on all bounded real $\mathcal H_0^-$ is therefore false. There is a bounded real vector in this space with $Q_k(v,v)<0$.
+
+Choose a bounded Borel representative, average it over the circle, apply $(I-J)/2$, and assign zero on $N$. These operations preserve its class and bound and make it pointwise invariant and pointwise $J$-odd on all $G$. In particular it vanishes on the fixed hyperplane $z=0$, so there is no pointwise oddness obstruction. Each source density $g_{jd}$ is even, giving each of the three moment equations separately. For the four ordered equations, self-adjointness gives the explicit coefficients
+
+$$
+\begin{aligned}
+Q_k(1,v)&=\int_G v\,q\,Pg\,dm,&
+Q_k(k,v)&=\int_G v\,q\,P(gk)\,dm,\\
+Q_k(v,1)&=\int_G v\,g\,Pq\,dm,&
+Q_k(v,k)&=\int_G v\,g\,P(qk)\,dm.
+\end{aligned}
+\tag{141.15}
+$$
+
+All four coefficients multiplying $v$ are integrable and $J$-even, since $g,q,k$ are even and the actual $P$ commutes with $J$. Invariance of $m$ makes each displayed integral zero. This proves all of (141.3), without identifying either order of the bilinear form with the other.
+
+The factorization, three-lines interpolation, Cauchy estimate and analytic uniqueness are established intermediate methods; the factorization is proved explicitly above, and the interpolation and local-symbol computation use exactly the bounded strip and genuine punctured-core hypotheses displayed here. The source-specific composition with the full reflection symmetry and the endogenous terminal factor is `repo-derived`. It uses neither a finite-negative-square extension nor a new general index theorem. $\square$
+

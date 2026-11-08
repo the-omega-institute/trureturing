@@ -1,0 +1,68 @@
+**Definition 57.1 (the complete endpoint domains and source conventions).**
+Fix $\xi=13/4$ and use the constants $h,c,s,d,e$ of (49.2).
+For every $q\in[0,1]$ put
+
+$$
+p=1-q,\qquad x=\frac3{16}+\frac q2,\qquad
+ y=\sqrt{1-x^2},\qquad L=1+x,\qquad
+\mathcal T_x=\{(X,Y)\in[0,1]^2:\sqrt X+\sqrt Y\ge L\}.
+\tag{57.1}
+$$
+
+The pair coordinates retain their fixed order from Continuation II,
+Definition 46.1. In the positive row $(J,K)=((1,2),(3,4))$;
+in the negative row $(J,K)=((3,4),(1,2))$. Write the row constants as
+
+$$
+\begin{array}{c|cccccc}
+\sigma&a&b&\ell&m&K_\sigma&K_{-\sigma}\\ \hline
++&h&c&h&s&d&e\\
+-&s&h&c&h&e&d
+\end{array}
+\tag{57.2}
+$$
+
+Here these letters have the local row meanings of (46.11).
+On the whole attained triangle define, exactly as there,
+
+$$
+\begin{aligned}
+Z&=\frac{L^2-X-Y}{2\sqrt{XY}},&
+F&=\sqrt{(1-X)(1-Y)(1-Z^2)},\\
+R_\sigma&=\sqrt{a^2X+b^2Y+ab(L^2-X-Y)},&
+C_\sigma&=\sqrt{\ell^2(1-X)+m^2(1-Y)+2\ell mF},\\
+\Gamma_\sigma&=\sqrt p\,R_\sigma+\sqrt q\,C_\sigma,&
+G_\sigma(q,X,Y)&=K_\sigma^2p+K_{-\sigma}^2q-4\Gamma_\sigma^2.
+\end{aligned}
+\tag{57.3}
+$$
+
+All roots are nonnegative. Continuation II, Lemma 46.2 gives
+$X,Y\ge x^2\ge9/256$ and $|Z|\le1$, including every boundary.
+The other trace-triangle inequality is automatic since
+$|\sqrt X-\sqrt Y|\le1<L$. The minima below are precisely those
+of Definition 54.2, with no determinant or population restriction:
+
+$$
+A_\sigma=A_\sigma(13/4)
+ =\min_{\substack{q\in[0,1]\\(X,Y)\in\mathcal T_x}}
+       G_\sigma(q,X,Y).
+\tag{57.4}
+$$
+
+Write $D_\sigma(x,q)=\mathfrak D_\sigma(x,q)$ for the determinant
+in Continuation II, (46.13), without changing its normalization.
+In the negative canonical pair $(X,Y)=(x^2,1)$ put
+
+$$
+R_0=sx+h,\qquad C_0=cy,\qquad
+\gamma_0(q)=\sqrt{1-q}\,R_0+\sqrt q\,C_0,\qquad
+G_{\mathrm{can},-}(q)=e^2(1-q)+d^2q-4\gamma_0(q)^2.
+\tag{57.5}
+$$
+
+The citations to (55.3)--(55.4) and Theorem 55.1 below refer to
+Section 55 titled “An interior obstruction to the fixed upper-endpoint
+threshold”, whose attained point is $q=X=1/5$, $Y=17/20$.
+They do not refer to the other Section 55.
+

@@ -1,0 +1,79 @@
+**Proposition 51.2 (boundary exclusion and strict fixed-label ordering).**
+For every tuple (51.2) with $D_\sigma(x,q)<0$, every global maximizer
+of $\Gamma_\sigma$ on the complete domain $\mathcal T_x$ lies in
+
+$$
+ \Omega_x=\{(X,Y):x^2<X<Y<1,\ \sqrt X+\sqrt Y>L\}.
+\tag{51.13}
+$$
+
+**Proof.** Fix the tuple and suppress its parameters in $\Gamma$.
+Compact attainment is Definition 47.1. On all of $\mathcal T_x$,
+
+$$
+ F^2=\frac{(1-X)(1-Y)\Delta}{4XY}.
+\tag{51.14}
+$$
+
+At a point of the curved boundary with $X,Y<1$, increase $X$ by
+$\varepsilon>0$. This is feasible for sufficiently small
+$\varepsilon$, and $\Delta_X=2(L^2-X+Y)>0$. Consequently
+$F(X+\varepsilon,Y)=A\sqrt\varepsilon+O(\varepsilon^{3/2})$
+for a constant $A>0$. At the original point $F=0$ and
+$C^2=\ell^2(1-X)+m^2(1-Y)>0$. The square root defining $C$ therefore gives
+
+$$
+ C(X+\varepsilon,Y)-C(X,Y)
+ =\frac{\ell mA}{C(X,Y)}\sqrt\varepsilon+O(\varepsilon).
+\tag{51.15}
+$$
+
+The change in $R$ is $O(\varepsilon)$ because $R>0$. Since $q>0$,
+the positive leading term in (51.15) increases $\Gamma$, excluding
+every such curved-boundary point.
+
+On $X=1$ with $x^2<Y<1$, one has $\Delta>0$ and $C=m\sqrt{1-Y}>0$.
+Decreasing $X$ introduces a positive order-$\sqrt\varepsilon$
+coherent gain by (51.14); the remaining changes in $C$ are
+$O(\varepsilon)$, and $R$ increases. On $Y=1$ with $x^2<X<1$,
+decreasing $Y$ likewise introduces a positive coherent
+order-$\sqrt\varepsilon$ gain, whereas the possible loss in $R$
+is only $O(\varepsilon)$; here initially $C=\ell\sqrt{1-X}>0$.
+At $(1,1)$, decreasing $X$ is feasible and gives
+$C=\ell\sqrt\varepsilon$ while increasing $R$.
+
+At the canonical corner $(x^2,1)$,
+$\Gamma=\Gamma_0$. The strict same-slice competitor in Theorem 46.4,
+specifically (46.29)--(46.31), gives
+$\max_{\mathcal T_x}\Gamma>\Gamma_0$ when $D_\sigma<0$.
+Its reconstruction and the two-sign budget are precisely those retained
+in Definition 51.1, so this exclusion uses a legal competitor at the
+same true original distance.
+
+To compare the two fixed labels, suppose $X>Y$. The point $(Y,X)$
+is also in $\mathcal T_x$, while symmetry of $F$ gives
+
+$$
+\begin{aligned}
+ R(Y,X)^2-R(X,Y)^2&=k(a+b)(X-Y)>0,\\
+ C(Y,X)^2-C(X,Y)^2&=(\ell^2-m^2)(X-Y)>0.
+\end{aligned}
+\tag{51.16}
+$$
+
+Both weights are positive, so $\Gamma(Y,X)>\Gamma(X,Y)$.
+This is a comparison between distinct ordered points, not a quotient
+which exchanges the labels. It also excludes the remaining corner
+$(1,x^2)$.
+
+The only diagonal points not already excluded are interior points with
+$X=Y<1$ and $\sqrt X+\sqrt Y>L$. The direction $(-1,1)$ is feasible
+there. Symmetry and differentiability give zero directional derivative
+for $F$, while the directional derivatives of $R^2$ and $C^2$ are
+$k(a+b)>0$ and $\ell^2-m^2>0$, respectively. Since $R,C>0$ there,
+this direction strictly increases $\Gamma$.
+The curved arc, the two straight edges and their three corners exhaust
+the boundary of $\mathcal T_x$. Together with the diagonal and
+$X>Y$ comparison they leave exactly the region in (51.13).
+$\square$
+

@@ -1,0 +1,77 @@
+### 引理 1：粗网格可以使细节能量具有任意大的 $L^2$ 下界
+
+给定任意 $\beta>0$，可以把粗网格取得足够细，使
+
+$$
+\boxed{
+Q_P(F')\geq\beta\|F\|_2^2
+\qquad(F'\in Z).
+}
+$$
+<a id="eq-4"></a>
+<div class="equation-caption">Equation (4).</div>
+
+**证明。**
+
+若最大网格宽度为 $h$，由每格零均值，
+
+$$
+|\widehat F(\xi)|
+\leq \frac{h|\xi|}{2}\sqrt D\,\|F\|_2.
+$$
+
+因此
+
+$$
+\frac1{2\pi}
+\int_{-R}^{R}|\widehat F(\xi)|^2\,d\xi
+\leq
+\frac{Dh^2R^3}{12\pi}\|F\|_2^2.
+$$
+
+先选 $R$，使 $m(R)\geq2\beta$；再选 $h$，使右侧系数不超过 $1/2$。至少一半 Fourier 质量落在 $|\xi|>R$，于是
+
+$$
+Q_P(F')
+\geq
+\frac12m(R)\|F\|_2^2
+\geq\beta\|F\|_2^2.
+$$
+
+证毕。
+
+以下固定
+
+$$
+\beta=2(M_D+1),
+\qquad
+\theta=\frac{M_D}{\beta}<\frac12.
+$$
+
+在 $Z$ 上，以 $Q_P$ 为参考内积，实际形式可写为
+
+$$
+B_K(z,w)=\langle z,\mathcal A w\rangle_P,
+\qquad
+\mathcal A=I-\mathcal V,
+\qquad
+\|\mathcal V\|\leq\theta.
+$$
+
+所以
+
+$$
+\boxed{
+(1-\theta)I
+\preceq\mathcal A
+\preceq(1+\theta)I.
+}
+$$
+<a id="eq-5"></a>
+<div class="equation-caption">Equation (5).</div>
+
+这一步已经无条件证明了细节空间的正性。
+
+---
+
+<a id="section-3-residual-error-theorem"></a>

@@ -377,7 +377,7 @@ end
 noncomputable section
 variable {R : Type*} [Ring R] [Algebra ℂ R]
 variable {ι : Type*} [Fintype ι] [DecidableEq ι]
-private lemma cliffordLinear_anticommutator (g : ι → R)
+lemma cliffordLinear_anticommutator (g : ι → R)
     (hsq : ∀ j, g j*g j=1) (hanti : ∀ j k, j ≠ k → g j*g k=-(g k*g j))
     (c d : ι → ℂ) :
     Fintype.linearCombination ℂ g c*Fintype.linearCombination ℂ g d+Fintype.linearCombination ℂ g d*Fintype.linearCombination ℂ g c =

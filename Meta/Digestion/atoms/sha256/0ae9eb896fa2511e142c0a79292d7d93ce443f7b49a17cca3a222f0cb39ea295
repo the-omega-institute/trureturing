@@ -1,0 +1,179 @@
+### 定理 16.1（正分支的平均上界与唯一饱和）
+
+在定义 15.1 中，令 $A=\sqrt E$，则
+
+$$
+R_{\mathscr D,J}(T)\le Q_{\mathscr D}(E)
+=\frac{\operatorname{Tr}E+(\operatorname{Tr}A)^2}{d(d+1)}.
+\tag{16.1}
+$$
+
+等号成立当且仅当原分支本身满足
+
+$$
+\boxed{T(X)=JA X A J^\dagger\quad\text{对全部 }X\in\mathcal B(H).}
+\tag{16.2}
+$$
+
+因此在原同一块上，有限饱和关系 $R_{\mathscr D}(T)\ge Q_{\mathscr D}(E)$ 已从正性及正确成功效果选出平方根更新；所选分支的完全正性成为结论。
+
+**证明。** 先在同一正分支中取 $P=\operatorname{supp}E$，证明输入支撑关系
+
+$$
+T(X)=T(PXP)\qquad(X\in\mathcal B(H)).
+\tag{16.3}
+$$
+
+特别地，$E=0$ 时 $T=0$。
+
+对任意输出效果 $0\le B\le I_K$，正性给
+
+$$
+0\le T^\dagger(B)\le E.
+$$
+
+若 $0\le C\le E$，对 $v\in\ker E$ 有 $\langle v,Cv\rangle=0$，由正矩阵的平方根得到 $Cv=0$；故 $C=PCP$。因此
+
+$$
+\operatorname{Tr}[BT(X)]
+=\operatorname{Tr}[T^\dagger(B)X]
+=\operatorname{Tr}[BT(PXP)].
+$$
+
+效果张成输出自伴空间，复线性延拓得到 (16.3)。$E=0$ 时 $P=0$。这是同一正分支的数学支撑性质，证明中没有供给一个物理压缩或逆滤波。这里直接复用续篇定理 114.1 中由正确成功效果取得输入支撑的步骤。
+
+再复用成熟的块正矩阵界：若 $G$ 自伴，且在每个积向量上取非负值，则
+
+$$
+0\le\operatorname{Tr}G,\qquad
+\|G\|_{\mathrm{HS}}\le\operatorname{Tr}G.
+\tag{16.4}
+$$
+
+这是 Gurvits–Barnum 可分球定理的对偶形式 [6](#ref-positive-gb)，在 Szarek–Werner–Życzkowski 的推论 3 后明确写成 $\operatorname{Tr}(G^2)\le(\operatorname{Tr}G)^2$ [7](#ref-positive-swz)。仓内已有同一不等式及秩一投影补的可分性 [8](#ref-positive-repo-gb)，这里直接应用。不同因子维数可数学补零到同维，块正性、迹与 Hilbert–Schmidt 范数均保持，故 (16.4) 也适用于矩形输入输出。不需把 $G$ 假设为正半定。
+
+零效果由输入支撑关系 (16.3) 处理。设 $E\ne0$，在 $P H$ 中选本征基 $e_1,\ldots,e_r$，写
+
+$$
+Ae_i=a_i e_i,\qquad a_i>0,\qquad
+f_i=Je_i,\qquad s=\sum_{i=1}^r a_i.
+$$
+
+把此基补成 $H$ 的正交基。采用输入因子在前的 Choi 约定
+
+$$
+C_T=\sum_{i,j=1}^{d}|e_i\rangle\langle e_j|
+          \otimes T(|e_i\rangle\langle e_j|).
+\tag{16.5}
+$$
+
+正复线性映射保持伴随，故 $C_T$ 自伴；并且
+
+$$
+\langle x\otimes y,C_T(x\otimes y)\rangle
+=\langle y,T(|\bar x\rangle\langle\bar x|)y\rangle\ge0.
+\tag{16.6}
+$$
+
+这里只得到块正性，没有使用或断言 Choi 正性。输入支撑关系 (16.3) 使 (16.5) 只有 $i,j\le r$ 的项。以下仍保留整个输出 $K$。
+
+令
+
+$$
+\Omega_J=\sum_{i=1}^{d}e_i\otimes Je_i,
+\qquad z=\langle\Omega_J,C_T\Omega_J\rangle,
+\qquad P_J=JJ^\dagger.
+$$
+
+由设计等式在第一因子取转置，
+
+$$
+\sum_s w_s p_s^{\mathsf T}\otimes Jp_sJ^\dagger
+=\frac{I_H\otimes P_J+|\Omega_J\rangle\langle\Omega_J|}{d(d+1)}.
+$$
+
+结合 $\operatorname{Tr}[C_T(p^{\mathsf T}\otimes JpJ^\dagger)]
+=\operatorname{Tr}[JpJ^\dagger T(p)]$，得到不含 Kraus 的矩公式
+
+$$
+d(d+1)R_{\mathscr D,J}(T)
+=\operatorname{Tr}[P_J T(I_H)]+z.
+\tag{16.7}
+$$
+
+对 $A\otimes A$ 使用原设计等式，则
+
+$$
+d(d+1)Q_{\mathscr D}(E)=\operatorname{Tr}E+s^2.
+\tag{16.8}
+$$
+
+在 $P H\otimes K$ 中定义数学重加权
+
+$$
+G=(A_P^{-1/2}\otimes I_K)C_T(A_P^{-1/2}\otimes I_K),
+\qquad
+v=\sum_{i=1}^r\sqrt{a_i}\,e_i\otimes f_i,
+\tag{16.9}
+$$
+
+其中 $A_P$ 是 $A$ 在支撑上的限制。局部合同变换保持块正性，且正确成功效果给
+
+$$
+\begin{aligned}
+\operatorname{Tr}G
+ &=\sum_{i=1}^r a_i^{-1}\operatorname{Tr}T(|e_i\rangle\langle e_i|)
+ =\sum_{i=1}^r a_i=s,\\
+\|v\|^2&=s,\qquad z=\langle v,Gv\rangle.
+\end{aligned}
+\tag{16.10}
+$$
+
+对矩阵的普通 Hilbert–Schmidt Cauchy–Schwarz 不等式与成熟界 (16.4)，有
+
+$$
+z=\operatorname{Tr}[G|v\rangle\langle v|]
+\le s\|G\|_{\mathrm{HS}}\le s^2.
+\tag{16.11}
+$$
+
+这不是对正映射套用一般 Schwarz 不等式。另一方面，
+
+$$
+\ell=\operatorname{Tr}[(I_K-P_J)T(I_H)]\ge0,
+\qquad \operatorname{Tr}T(I_H)=\operatorname{Tr}E.
+$$
+
+因此完整差额为
+
+$$
+\boxed{d(d+1)(Q-R)=\ell+(s^2-z),\qquad
+\ell\ge0,\quad s^2-z\ge0.}
+\tag{16.12}
+$$
+
+这里 $\ell$ 保留了原输出在指定读回空间之外的泄漏。
+
+若 $Q=R$，则 $z=s^2$。注意 $\||v\rangle\langle v|\|_{\mathrm{HS}}=s$，由 (16.4) 直接得到
+
+$$
+\begin{aligned}
+\|G-|v\rangle\langle v|\|_{\mathrm{HS}}^2
+ &=\|G\|_{\mathrm{HS}}^2+s^2-2z\le0.
+\end{aligned}
+$$
+
+故 $G=|v\rangle\langle v|$。撤去数学重加权，
+
+$$
+C_T=|a_J\rangle\langle a_J|,\qquad
+a_J=\sum_{i=1}^r a_i e_i\otimes f_i.
+\tag{16.13}
+$$
+
+逐个矩阵单位读取 (16.13)，得 $T(|e_i\rangle\langle e_j|)=a_i a_j|f_i\rangle\langle f_j|$；再由输入支撑得到全部 $X$ 上的 (16.2)。反向代入给 $\ell=0,z=s^2$，所以等号成立。
+
+支撑秩一也可单独读出：若 $E=a^2|e\rangle\langle e|$，输入支撑关系 (16.3) 给 $T(X)=\langle e,Xe\rangle B$，其中 $B\ge0,\operatorname{Tr}B=a^2$。此时 $z=\langle Je,BJe\rangle\le a^2$；饱和迫使 $B=a^2|Je\rangle\langle Je|$。不存在遗漏的相位或支撑外分支。$\square$
+
+定理 16.1 是本卷有限设计合同对成熟正锥界的应用。Barnum 定理 5、8 与附录 A 定理 12，以及 Banaszek 的操作保真度公式，已经给出以算子分解描述的量子操作平均最优性 [3](#ref-barnum)、[4](#ref-banaszek)；这里沿用其目标量与二阶矩对应。新增的源内推论是本卷选中分支的 CP 前件可由正性取代，并以相同数据取得等号唯一性；不把成熟球定理、其对偶或固定测量最小扰动另立为原创原理。
+

@@ -1,0 +1,57 @@
+**命题 C-63.5（外部依赖的事件信息界及完整条件互信息）。** 在命题 C-63.3 的假设下，
+
+$$
+0<I_Q\le\bigl|\operatorname{Corr}_{Q}(B_L,B_R)\bigr|^2
+\le q_\Lambda^{2(n-2)}.
+\tag{C63.10}
+$$
+
+而在完整环律中，
+
+$$
+I(B_L;B_R\mid B_i)=(1-Z)I_Q
+\le(1-Z)q_\Lambda^{2(n-2)}.
+\tag{C63.11}
+$$
+
+证明。置 $P=Q_L\otimes Q_R$。$Q$ 四格全正，所以 $P$ 也全正。对每格使用 $\log t\le t-1$，得
+
+$$
+\operatorname{KL}(Q\Vert P)
+\le\sum_{x,y}\frac{Q(x,y)^2}{P(x,y)}-1
+=\sum_{x,y}\frac{(Q(x,y)-P(x,y))^2}{P(x,y)}
+=\chi^2(Q\Vert P).
+\tag{C63.12}
+$$
+
+最后等式只用 $\sum Q=\sum P=1$。这个有限 KL 估计与 C-3.6 所用对数不等式同属经典中间方法；其在本二元表上的值可以完整算出。记 $a=Q_L(1)$、$b=Q_R(1)$、$\delta=\operatorname{Cov}_Q(B_L,B_R)$。C-8.7 的同边缘差表给
+
+$$
+Q-P=\delta\begin{pmatrix}1&-1\\-1&1\end{pmatrix},
+$$
+
+故
+
+$$
+\begin{aligned}
+\chi^2(Q\Vert P)
+&=\delta^2\left(\frac1a+\frac1{1-a}\right)
+\left(\frac1b+\frac1{1-b}\right)\\
+&=\frac{\delta^2}{a(1-a)b(1-b)}
+=\bigl|\operatorname{Corr}_Q(B_L,B_R)\bigr|^2.
+\end{aligned}
+$$
+
+命题 C-63.3 给最后的衰减界。KL 非负及其等号条件可由同一个对数不等式作用于 $P/Q$ 得出；等号要求 $Q=P$。当前 $\det Q\ne0$，所以 $Q\ne P$ 且 $I_Q>0$。
+
+当 $B_i=1$，两个相邻端点均确定为零，其互信息为零。条件互信息按两个中心事件的实际概率平均，$\mathbb P(B_i=0)=r=1-Z$，立即得到式 (C63.11)。证毕。
+
+同一应用还保留 C-8.7 的精确端点近似意义：
+
+$$
+\operatorname{TV}(Q,Q_L\otimes Q_R)
+=\frac{2|\Delta_i|}{r^2}\le\frac12q_\Lambda^{n-2}.
+$$
+
+这些界控制当前指定的端点表及其有界函数。每个有限正活动长度仍有 $\Delta_i\ne0$、$I_Q>0$；小误差不等于精确独立，也不自动控制额外稀有事件条件化后的误差或整个外部配置的重建。
+

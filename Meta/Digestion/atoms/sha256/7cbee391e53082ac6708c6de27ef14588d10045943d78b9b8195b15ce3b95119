@@ -1,0 +1,47 @@
+**推论 11.3（All positive part sizes at every even scale）。** Let
+$H=K_{p_1,\ldots,p_q}$ be any labelled finite simple unit-weight
+complete multipartite graph, with $q\geq2$, every $p_a\geq1$, and
+even $m=\sum_a p_a$. For every even $s=2S\geq2$, on the original
+complete complex Boolean $k=mS$-token space, set
+$K=K_k$, $E=\lambda_{\min}(K)$ and
+$\mathcal N=\ker P_{\mathrm{sym}}$. Then $\mathcal N$ is nonzero
+and reducing, $g=\lambda_{\min}(K|_{\mathcal N})-E>0$, and
+
+$$
+\begin{aligned}
+\ker(K-EI)&\subseteq\operatorname{ran}P_{\mathrm{sym}},&
+K-EI&\succeq g(I-P_{\mathrm{sym}}),\\
+\|(I-P_{\mathrm{sym}})\phi\|^2
+&\leq\frac{\langle\phi,K\phi\rangle-E}{g}
+&& (\phi\in\mathcal H_{mS},\ \|\phi\|=1).
+\end{aligned}
+\tag{11.13}
+$$
+
+Proof. If $q=2$, every induced open neighborhood is independent.
+If $q=3$, the neighborhood of a vertex consists of the other two
+parts with all cross edges and no within-part edges, so it is complete
+bipartite. In either case $H$ has no isolates, and Theorem 7.2 and
+Corollary 7.3 apply at every integer $S\geq1$, with exactly this
+$E$, $K$ and $P_{\mathrm{sym}}$ and no flat-mode assumption.
+For $q\geq4$, if $2\max p_a\leq m$, Definition 10.1 and Theorem
+10.2 give all statements, including the weak-balance endpoint.
+Otherwise exactly one part has size greater than the sum of the
+others: two such parts would have sizes summing to more than $m$.
+Name that existing labelled part $C_0$ and the others $C_1,\ldots,C_r$,
+where $r=q-1\geq3$. This is a naming of the given parts, with no
+quotient of vertices or Boolean blocks. Definition 11.1 holds, and
+Theorem 11.2 proves (11.13). These cases are exhaustive.
+
+Corollary 11.3
+concerns unit weights, equal even Boolean block sizes and exact global
+half filling only. The case $q=1$ has no edges and is excluded by the
+original no-isolates domain. The arbitrary finite simple no-isolate
+base of even order, including unrestricted disconnected bases under
+only global half filling, remains unresolved. No exact formula for
+$E$, numerical value or rate for $g$, odd-scale extension for arbitrary
+multipartite bases, or extension to weights, unequal blocks or other
+fillings is asserted. The separate sufficient statements of §§6–10
+retain their hypotheses; the corollary combines §7, §10 and Theorem
+11.2 without changing those statements. $\square$
+

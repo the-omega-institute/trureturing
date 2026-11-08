@@ -1,0 +1,100 @@
+**Theorem 53.3 (complete immediate-right global branch classification).**
+There is $\varepsilon>0$, with $\xi_*+\varepsilon<61/25$, such that
+for every $\xi\in(\xi_*,\xi_*+\varepsilon)$ the complete actual
+global minimizing set consists of the four common-scalar orbits
+constructed in (49.20), (49.23), (49.45): two signs of $b$ near each
+of the two selected orientations. They have the same value. In
+particular these local phase branches are global on this neighborhood;
+this assertion does not classify arbitrary-unitary local minima.
+
+More explicitly, put $t=\xi/2$, $t_*=\xi_*/2$. Let $u(t)$ be the
+unique positive root in (49.45), let $b_\pm(t)=\pm\sqrt{u(t)}$, and
+let $\delta(t,b),a(t,b)$ be the unique stable-gradient graph of
+Section 49.9, expressed in its complete chart. For each
+$\tau\in\{-1,1\}$ and each choice $b=b_\pm(t)$ take
+$U=\lambda\operatorname{diag}(w_\tau(\delta(t,b),a(t,b),b))U_+$
+from (49.20), and the unique aligning effect $\widehat E$ from (49.23).
+These, for all $|\lambda|=1$, are exactly $\mathcal A_\xi$. Their
+common value has the expansion
+
+$$
+\begin{aligned}
+m(2t)-N(2t)&=-\frac{A(t)^2}{4C_{\mathrm{eff}}}
+                         +O(|t-t_*|^3),\\
+A(t)&=\frac{4\Gamma(t)}{L_a(t)}D_{\mathrm{sel}}(2t),\qquad
+A(t_*)=0,\quad A'(t_*)<0,\quad C_{\mathrm{eff}}>28/25.
+\end{aligned}
+\tag{53.3}
+$$
+
+Every global minimizing sequence as $\xi\downarrow\xi_*$ converges
+in distance to $\mathcal G_{\xi_*}$; both selected orientations are
+actual limits of these branches.
+
+*Proof.* First localize all global minimizers, without assuming that
+any local branch is global. Given any open neighborhood $\mathcal O$
+of $\mathcal G_{\xi_*}$ in the compact original domain, suppose there
+were levels $\xi_n\to\xi_*$ and global minimizers
+$X_n\notin\mathcal O$. Compactness gives a subsequence with limit $X$.
+Continuity gives $\rho(X)=\xi_*$, and the geometric competitors give
+
+$$
+f(X)=\lim_n m(\xi_n)\le\lim_n N(\xi_n)=N(\xi_*).
+\tag{53.4}
+$$
+
+Theorem 53.1 forces equality and $X\in\mathcal G_{\xi_*}$, a
+contradiction since the complement of $\mathcal O$ is closed. Thus all
+minimizers lie in any prescribed sufficiently small neighborhood at
+nearby levels. The same argument, or a shrinking-neighborhood
+contradiction, proves convergence in distance to this compact set.
+
+Choose the neighborhood small enough for the complete phase charts
+(43.2), all strict sign and feasibility conditions of Section 49.5,
+the unique fixed-feedback effect (49.23), and the stable-gradient
+elimination in Section 49.9. Shrink the level interval so that it lies
+below $61/25<13/4$. Theorem 48.5 makes every global minimizer pure
+phase; (52.6) and $m\le N$ exclude a negative-active one there.
+Hence it has positive phase coordinates in one of these two charts.
+It must use the unique fixed-feedback minimizing effect (49.23),
+otherwise that effect would strictly improve it at the same level.
+Its remaining phase coordinates minimize the analytic $\Psi$ in
+(49.24) in an open coordinate neighborhood, so its full gradient
+vanishes.
+
+The stable-gradient implicit function theorem has a unique graph in
+a fixed smaller product neighborhood. Thus every such stationary
+point lies on that graph and satisfies the reduced equation
+$\partial_b\Phi(t,b)=0$. The exact even symmetry gives either $b=0$
+or
+
+$$
+A(t)+2C(t)b^2+O(b^4)=0.
+\tag{53.5}
+$$
+
+The left side is analytic in $(t,u=b^2)$ with $u$ derivative
+$2C_{\mathrm{eff}}>0$ at $(t_*,0)$. On a smaller fixed neighborhood
+that derivative stays positive. Its unique zero is precisely $u(t)$
+of (49.45). This excludes additional nearby stationary roots as well
+as merely constructing the two roots. The $b=0$ stationary point is
+the selected geometric pair and has value $N(2t)$, while (49.46)
+provides a strictly smaller actual value for every $t>t_*$ sufficiently
+close. A global minimizer cannot have $b=0$. It is consequently one
+of the four displayed branches.
+
+There is no unproved equality of separately optimized values here.
+The exact chart identities (49.20) show that $|P|$, $|Q|$ and the
+reduced objective are independent of the orientation $\tau$.
+The exact symmetry $(a,b)\mapsto(-a,-b)$ in (49.24)--(49.25), together
+with uniqueness of the stable graph, makes the objective even in $b$.
+All four actual branches therefore have the same value. At least one
+is a global minimizer by attainment and the preceding exhaustive
+localization; equality of their values makes all four global. Local
+injectivity of the chart separates the two signs of $b$, and the
+neighborhoods of the two endpoint scalar orbits are disjoint. Thus
+there are exactly four orbits. Formula (49.46) now becomes the global
+value expansion (53.3). The branch coordinates tend to their selected
+base coordinates, proving attainment of both limiting orientations.
+$\square$
+

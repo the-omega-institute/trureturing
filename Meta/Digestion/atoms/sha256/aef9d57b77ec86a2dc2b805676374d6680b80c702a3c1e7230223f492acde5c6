@@ -1,0 +1,40 @@
+对固定 $\lambda$ 取原表达式的范数极限，得到
+
+$$
+\|p-R_\lambda p\|
+\le\sqrt3\|a\|\|b-R_\lambda b\|
+\le2\sqrt3\|a\|\|b\|.
+\tag{15.9}
+$$
+
+这里没有使用尚未定义的 $D(a,R_\lambda b)$。
+
+还需消掉 $R_\lambda p$ 的原读数。固定原 $\alpha$ 及 $\eta>0$，只选一次 (49.1) 的有限原 $t_j\in A_D,\beta_j\in P,c_j\in\mathbb R$。对所有真正输出 $p_n$ 用这同一公式，并用 $D(p_n,t_j)=[L_{b_n},L_a]t_j$；先在固定 $\lambda$ 下令 $n\to\infty$，只靠已知 Jordan 乘法及原评价连续性得到
+
+$$
+\left|\alpha(R_\lambda p)
+-\sum_jc_j\beta_j([L_{R_\lambda b},L_a]t_j)\right|
+\le\eta\|R_\lambda p\|\le\eta\|p\|.
+\tag{15.10}
+$$
+
+式 (15.10) 是原输出不等式的极限，没有直接把 (49.1) 用于完成中的新输出。
+
+使用 Bunce，[*On compact action in JB-algebras*, Proc. Edinburgh Math. Soc. 26 (1983), 353–360，DOI:10.1017/S0013091500004429](https://www.cambridge.org/core/services/aop-cambridge-core/content/view/S0013091500004429)，Lemma 1：在任意 JB 代数，$U_a k=a^2\circ k$ 等价于 $[L_a,L_k]=0$。因为 $U_a k-a^2\circ k=2H_ak$，故
+
+$$
+H_ak=0\quad\Longleftrightarrow\quad[L_a,L_k]=0.
+\tag{15.11}
+$$
+
+这是一般 JB 引理，未预付特殊性。将 $X$ 嵌入其 JBW 双对偶 $X^{**}$，使用本卷 12.4 已取的 Hanche-Olsen–Størmer Theorem 4.4.3。令 $b_\lambda=R_\lambda b$；它有界，且 $\|Hb_\lambda\|\le2\lambda\|b\|\to0$。每个弱星聚点 $k$ 因固定 $a$ 的 Jordan 乘法分别弱星连续而满足 $H_ak=0$，再由 (15.11) 得 $[L_k,L_a]=0$。每个固定原 $\beta_j$ 延为 $X^*$ 元素，对双对偶弱星连续，所以 $\beta_j([L_{b_\lambda},L_a]t_j)\to0$：若某标量子网不趋零，其有界输入子网再取弱星聚点即矛盾。无需原 $P$ 分离双对偶。
+
+在 (15.10) 先令 $\lambda\downarrow0$，再令 $\eta\downarrow0$，得到 $\alpha(R_\lambda p)\to0$。每次所选证书只有有限项，其系数不必跨评价或精度一致有界。结合 (15.9)，对全部原正评价有
+
+$$
+|\alpha(p)|\le2\sqrt3\,m_\alpha\|a\|\|b\|,
+\qquad m_\alpha=\alpha(u)=\|\alpha\|.
+$$
+
+原 $P$ 定义准确原锥，故 $-ru\le p\le ru$，其中 $r=2\sqrt3\|a\|\|b\|$。原序单位范数给 (15.1)，零质量亦包含而不作除法。有界双线性映射于是唯一延到同一个完成。∎
+

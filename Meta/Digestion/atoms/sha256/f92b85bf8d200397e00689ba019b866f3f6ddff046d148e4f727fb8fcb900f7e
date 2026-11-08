@@ -1,0 +1,53 @@
+**定理 96.1（不借单位保持的有限谱自举）。** 在任一上述完整背景中，$\mathsf R_{\rm fin}$ 推出全 SC、全部原 $D_a$ 为 Jordan 导子及唯一光滑余切下降。旧 $B$ 中恢复全 Z；$\mathsf B_{\rm cl}$ 中恢复 $\mathsf Q$。其中局部有限代数自举只需原有限 EJA、正 Frobenius $q$ 及双线性 $D$；不预设 $D_au=0$、$D_u=0$、反对称性或原生复核 Hermitian。
+
+证明。先在证明中引入 $P_p=4L_p-4L_p^2$ 与 $W_p=E_{1/2}(p)$。成熟 Peirce 分解使 $P_p$ 为原 $q$-正交投影。对 primitive $p$ 写 $a=\alpha p+w+n$，其中 $w\in W_p$、$n\in E_0(p)$。原 Frobenius 恒等式给
+
+$$
+\begin{aligned}
+q(p,a\circ a)&=q(p\circ a,a)
+ =\alpha^2q(p,p)+\tfrac12q(w,w),\\
+q(p,a)&=\alpha q(p,p),\qquad
+V_p(a)=\tfrac12q(P_pa,P_pa).
+\end{aligned}
+\tag{96.1}
+$$
+
+故 $V_p\ge0$，其零空间恰为 $E_1(p)\oplus E_0(p)$，沿该空间平移输入不改余量；特别有 $V_p(a+tu)=V_p(a)$。这些恒等式在不等正块权下仍使用原 $q$，不需 $D$ 或准备身份，中央 primitive 的余量恒零。零对象没有需要取分母的原子。
+
+$G_p$ 在两个输入共同缩放下二次齐次。对两份有理基系数取共同正分母，将 (95.2) 除以分母平方，即得有理输入预算；每张有限表上的连续性再给全部实输入预算。未把有理逼近认作实际准备。
+
+固定被测 $p$，取 $c\in\ker P_p$。任意实 $a,b,t$ 满足
+
+$$
+\begin{aligned}
+0&\le G_p(tc,b)=V_p(b)-2tq(D_cp,b),\\
+0&\le G_p(a,tc)=V_p(a)-2tq(D_ap,c).
+\end{aligned}
+\tag{96.2}
+$$
+
+$t$ 的双向无界性与 $q$ 非退化给
+
+$$
+D_cp=0\quad(c\in\ker P_p),\qquad D_ap\in W_p\quad(a\in E).
+\tag{96.3}
+$$
+
+同一二元预算同时湮灭输入核、禁止输出法向泄漏，没有预用反对称性。
+
+先恢复 SC：任一所选 frame 的原子 $r,p$，包括 $r=p$，均有 $r\in\ker P_p$，故 $D_rp=0$。因此二次映射 $Q(x)=D_xx$ 在每个所选 frame 的对角子代数上为零。各 $\mathcal F_{ii}$ 与 $\mathcal F_{ij}$ 给 $Q(b_i)=Q(b_i+b_j)=0$；沿定理 88.3 的同一二次极化得全 $D_aa=0$，进而 $D_ab=-D_ba$。这一方向此处连背景的单位保持也未消费，因为 (96.3) 已包含 $D_pp=0$。
+
+再恢复单位：$u\in\ker P_p$ 给 $D_up=0$。每个 $b_i\in\mathcal F_{ii}\subseteq\mathcal P_A$，所以被测原子张成 $E$，由第二槽线性得 $D_u=0$；SC 遂给全部 $D_au=-D_ua=0$。对每个基输入 $b_i$，(96.3) 的谱原子切向性与刚得的 $D_{b_i}u=0$ 满足引理 88.1，故 $D_{b_i}$ 是全导子；第一槽线性给全部 $D_a$。
+
+随后旧 $B$ 用定理 83.2 接回 Z，$\mathsf B_{\rm cl}$ 用推论 68.2 接回 $\mathsf Q$。定理 89.2 的原代数证明给全部数学原子的唯一光滑余切下降。以上代数步骤不使用准备精确覆盖；至此才消费各自完整背景的全网尺度定理。
+
+原子限制也有具体作用。对一般非零幂等元 $p$，写 $a=a_1+w+a_0$，同一 Peirce 计算给
+
+$$
+V_p(a)=\tfrac12q(w,w)+q(a_1,a_1)
+ -\frac{q(p,a_1)^2}{q(p,p)}.
+\tag{96.4}
+$$
+
+第二项的正比较余量仅在 primitive 的 $E_1(p)=\mathbb Rp$ 上恒消；例如 $H_2(\mathbb C)$ 中 $p=I$、$q=\operatorname{Tr}$、$a=\operatorname{diag}(1,-1)$ 给 $P_pa=0$ 而 $V_p(a)=2$。故一般 Grassmann 幂等元不能未经此项处理就替代上述原子。该成熟分解作为本自举的适用边界使用。∎
+

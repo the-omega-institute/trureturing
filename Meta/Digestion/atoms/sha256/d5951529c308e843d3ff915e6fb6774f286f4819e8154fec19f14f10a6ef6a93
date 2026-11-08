@@ -1,0 +1,90 @@
+**Theorem 39.2 (edge-specific pair-capacity obstruction).** Every
+admissible causal recorder with finite peak $L$ and worst logical update bill
+$D$ satisfies
+
+$$
+ k2^{k-1}\le P(L,D),
+\tag{IV.112}
+$$
+
+and, for every $L,D\ge0$,
+
+$$
+P(L,D)=
+\sum_{t=1}^{L}2^{L-t}
+\left(\sum_{d=1}^{\min(2D,t)}2^d
++\sum_{\substack{1\le i,j\le t\\i+j\le2D}}2^{i+j-2}\right).
+\tag{IV.113}
+$$
+
+Moreover,
+
+$$
+P(L,D)\le5\,2^L(2^D-1),
+\tag{IV.114}
+$$
+
+for all $L,D\ge0$, and the closed form
+
+$$
+P(L,D)=5\,2^L(2^D-1)-(D+1)2^{2D}+1
+\tag{IV.115}
+$$
+
+holds whenever $L\ge2D-1$ (in particular, for every $L\ge0$ when
+$D=0$).
+
+**Proof.** Let $e=\{x,y\}$ be a Boolean-cube edge whose differing label is
+$j$. Run all other labels first in one fixed order, with their common bits.
+The two runs have the same initial word and the same first $k-1$ inputs, so
+causality gives the same word $z_e$ immediately before the last insertion.
+If internal choices are allowed, choose one allowed outcome of this common
+prefix and use that same outcome for the two completions; the all-outcomes
+contract makes both completions admissible. Let $u_e\in R_x$ and
+$v_e\in R_y$ be the two terminal outputs. Each last
+update has at most $D$ actual edits, hence
+$\delta(u_e,v_e)\le\delta(u_e,z_e)+\delta(z_e,v_e)\le2D$.
+Exact terminal decoding makes $u_e\ne v_e$. If two cube edges selected the
+same unordered pair of words, decoding that pair would give the same
+unordered pair of assignments, and hence the same cube edge. Thus
+$e\mapsto\{u_e,v_e\}$ is injective. This proves (IV.112). The argument uses
+no global choice of one representative per assignment and no connectedness
+of any $R_x$; an assignment can use different representatives on its
+incident edges.
+
+For the count, assign a distinct word pair to its unique lowest common
+ancestor $w$. If $w$ has depth $L-t$, there are $2^{L-t}$ choices for it.
+If one endpoint is $w$ and the other is $d$ edges below, there are $2^d$
+choices for $1\le d\le\min(2D,t)$. Otherwise the endpoints lie in opposite
+child subtrees at distances $i,j\ge1$ from $w$, with $i,j\le t$ and
+$i+j\le2D$; there are $2^{i-1}2^{j-1}=2^{i+j-2}$ choices. The left/right
+roles count each unordered pair once. Summing over $t$ proves (IV.113),
+including the empty sum for $L=0$ or $D=0$.
+
+For $D=0$ every count is zero. Assume $D\ge1$. Divide (IV.113) by
+$2^L$ and extend the nonnegative sum to all $t\ge1$. An ancestor term of
+depth $d$ contributes
+$2^d\sum_{t=d}^{\infty}2^{-t}=2$, so these terms contribute $4D$. A
+cross-branch pair $(i,j)$ contributes
+$2^{i+j-2}\sum_{t=\max(i,j)}^{\infty}2^{-t}=2^{\min(i,j)-1}$. For
+$m=\min(i,j)$ there is one diagonal pair and $2(2D-2m)$ off-diagonal
+pairs. Therefore
+
+$$
+4D+\sum_{m=1}^{D}(4D-4m+1)2^{m-1}=5(2^D-1),
+$$
+
+which gives (IV.114). When $t\ge2D$, the inner bracket in (IV.113) is
+constant and equals
+
+$$
+\sum_{d=1}^{2D}2^d+\sum_{s=2}^{2D}(s-1)2^{s-2}
+=(D+1)2^{2D}-1.
+$$
+
+If $L\ge2D-1$, every omitted term in the infinite geometric sum has
+$t\ge2D$. Its normalized tail is therefore
+$2^{-L}((D+1)2^{2D}-1)$, and subtracting it from
+$2^{-L}5\,2^L(2^D-1)$ proves (IV.115). For $D=0$, both sides are zero for
+all $L$. $\square$
+

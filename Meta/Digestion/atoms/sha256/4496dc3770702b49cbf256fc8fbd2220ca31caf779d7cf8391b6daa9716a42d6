@@ -1,0 +1,42 @@
+**Proposition 149.1 (coarsening and the remaining coordinate equations).** Retain the original label set $\mathcal L=\{0,1,3,B\}$, tuple $f$, and target $F_{64}(\theta)$ of (144.4). Define $\pi:\mathcal L\to\{0,1\}$ by $\pi(B)=1$ and $\pi(0)=\pi(1)=\pi(3)=0$. Then $F_{64}(\theta)$ implies the binary conclusion (148.1), with its set equal to the actual partition cell $D_B$.
+
+For any fixed B8 witness $B$, extending that witness to $F_{64}(\theta)$ is equivalent to finding one whole-$G$ Borel partition with $D_B=B$ and $D_0,D_1,D_3$ partitioning $G\setminus B$, satisfying the following 56 coefficient equations. For $\varepsilon\in\{0,1\}^3$ put
+
+$$
+I_\varepsilon=\{(y,z,w)\in\mathcal L^3:
+                 (\pi(y),\pi(z),\pi(w))=\varepsilon\},
+\tag{149.1}
+$$
+
+and let $a_\varepsilon\in I_\varepsilon$ be the triple using $B$ in each coordinate equal to one and $0$ in each coordinate equal to zero. The required equations are
+
+$$
+\mathcal C(\mathbf1_{D_y},\mathbf1_{D_z},\mathbf1_{D_w})
+   =\mathcal C(f_y,f_z,f_w)
+\quad\text{for every }(y,z,w)\in
+     \bigcup_{\varepsilon\in\{0,1\}^3}
+                 (I_\varepsilon\setminus\{a_\varepsilon\}).
+\tag{149.2}
+$$
+
+All terminal factors in (149.2) are their own actual $P\mathbf1_{D_w}$. The number 56 counts independent ambient coordinate conditions after the eight disjoint block sums have been fixed; it asserts neither independence nor feasibility of the nonlinear constraints on the three refining sets.
+
+*Proof.* By (134.7), $f_B=p$ and $f_0+f_1+f_3=1-p$ pointwise. Multilinearity therefore gives
+
+$$
+\sum_{(y,z,w)\in I_\varepsilon}\mathcal C(f_y,f_z,f_w)
+ =p^{\varepsilon_1+\varepsilon_2+\varepsilon_3}
+       (1-p)^{3-\varepsilon_1-\varepsilon_2-\varepsilon_3}.
+\tag{149.3}
+$$
+
+For a partition, the same summation replaces the three grouped indicators by $\mathbf1_{D_B}$ or $1-\mathbf1_{D_B}$. This proves the forward coarsening implication. For a refinement of a fixed B8 witness, its block sums already equal (149.3). In each block, equality of all coordinates other than $a_\varepsilon$ then forces equality at $a_\varepsilon$ by subtraction from the known block sum. Conversely full equality supplies (149.2). Finally,
+
+$$
+\sum_{\varepsilon\in\{0,1\}^3}(|I_\varepsilon|-1)
+ =\sum_\varepsilon(3^{\#\{j:\varepsilon_j=0\}}-1)=64-8=56.
+\tag{149.4}
+$$
+
+The omitted coordinate in each block is determined by its sum, so these are independent coordinate conditions in the ambient affine space with those eight sums prescribed. Their pullback to actual common partitions remains the exact refinement problem. In particular Theorem 148.1 proves $\forall\theta\in\Theta\ B_8(\theta)$ but proves neither that every B8 witness is refinable nor that some B8 witness is refinable for every $\theta$. The latter existential refinement, equivalently universal $F_{64}$, remains unresolved. $\square$
+

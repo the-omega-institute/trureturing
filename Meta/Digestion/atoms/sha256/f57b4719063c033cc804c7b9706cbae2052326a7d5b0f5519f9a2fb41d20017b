@@ -1,0 +1,108 @@
+**Theorem 140.2 (an interior terminal perturbation and a sufficient constrained negative vector).** For every original $\theta$, one can choose a nonzero bounded invariant real $w$, supported in a compact subset of a positive analytic-$\beta$ quotient patch, with
+
+$$
+\int_Gg_{jd}w\,dm=0\quad(j=2,3,4).
+\tag{140.1}
+$$
+
+For sufficiently small nonzero real $\tau$, the function
+
+$$
+k=c\beta+\tau w
+\tag{140.2}
+$$
+
+is everywhere strictly positive, at most $3/8$, has the three prescribed $C$ marginals, and satisfies $q_k/g$ nonconstant almost everywhere, where $q_k=Pk$. Define the ordered compression
+
+$$
+Q_k(u,v)=\int_Gg\,u\,P((Pk)v)\,dm,\qquad
+\Delta_k=\det\begin{pmatrix}
+Q_k(1,1)&Q_k(1,k)\\
+Q_k(k,1)&Q_k(k,k)
+\end{pmatrix}.
+\tag{140.3}
+$$
+
+The same sufficiently small choices of $\tau$ can ensure $\Delta_k>0$.
+
+For any such $k$, suppose there exists a bounded invariant real $v$ with the three zero source moments and four ordered equations
+
+$$
+\begin{gathered}
+\int_Gg_{jd}v\,dm=0\quad(j=2,3,4),\\
+Q_k(1,v)=Q_k(k,v)=Q_k(v,1)=Q_k(v,k)=0,
+\qquad Q_k(v,v)<0.
+\end{gathered}
+\tag{140.4}
+$$
+
+Then a sufficiently small $\epsilon>0$ gives an admissible invariant stochastic tuple
+
+$$
+u^\epsilon=(3/4-k-\epsilon v,\ k,\ 1/4+\epsilon v)
+\tag{140.5}
+$$
+
+with
+
+$$
+\det A(u^\epsilon)=\epsilon^2\Delta_k Q_k(v,v)<0.
+\tag{140.6}
+$$
+
+Consequently this antecedent implies an exact invariant coarse zero and an original rank-at-most-two partition.
+
+*Proof.* The analytic representative of $\beta=g_d$ is positive almost everywhere on $\Omega$, so there is a quotient open patch with compact closure inside $X$ on which it is continuous and bounded below by some $b_*>0$. Use the representative of Proposition 136.2 equal to this analytic function there. Choose four disjoint positive-measure Borel subsets of a compact subpatch. Their invariant lifted indicators span a four-dimensional space. Three homogeneous source moment equations have a nonzero solution in this space, giving $w$ with (140.1). Its support in the quotient is compact; the angular lift is compact and stays away from $N$. Give it value zero on $N$.
+
+Choose $\tau\ne0$ so small that
+
+$$
+|\tau|\|w\|_\infty<\min(cb_*/2,1/8).
+\tag{140.7}
+$$
+
+On the support of $w$, $k\ge cb_*/2>0$ and $k\le1/4+1/8=3/8$; elsewhere $k=c\beta\in(0,1/4]$. The moments are unchanged by (140.1).
+
+At $\tau=0$, $Pk=cg$, and the compression in (140.3) is the symmetric weighted heat Gram matrix of the independent functions $1,c\beta$:
+
+$$
+Q_{c\beta}(u,v)=c\langle gu,P(gv)\rangle_m.
+$$
+
+Its determinant is strictly positive by $g>0$ and injectivity of $T_{d/2}$, exactly as in §135. Each entry of (140.3) is continuous in $\tau$: expanding the bounded factors $k=c\beta+\tau w$ and $Pk=cg+\tau Pw$ gives a finite polynomial of integrable terms. Therefore $\Delta_k>0$ for all sufficiently small $|\tau|$.
+
+For the nonconstant ratio, write $\delta=\tau Pw=P(k-c\beta)$. It is nonzero by injectivity and $w\ne0$. Moreover, self-adjointness, $P\beta=g$ and (140.1) give
+
+$$
+\langle\beta,\delta\rangle_m
+=\tau\langle g,w\rangle_m=0.
+$$
+
+If $Pk=\lambda g$, this identity would imply $(\lambda-c)\langle\beta,g\rangle_m=0$. The last inner product is finite and strictly positive, hence $\lambda=c$, contradicting $\delta\ne0$. Thus $q_k/g$ is nonconstant. This fact alone asserts no invariant negative index.
+
+Now assume precisely (140.4). Representatives of $v$ may be made invariant Borel with the same bound by angular averaging and null-set repair. Choose $\epsilon>0$ with $\epsilon\|v\|_\infty\le1/8$. In (140.5) the first component is at least $1/4$, the last at least $1/8$, the middle is strictly positive and their sum is one. The moments follow from those of $k$ and $v$, so the tuple is admissible, with its actual terminal factor $Pk$.
+
+Let $H$ be the ordered matrix of $Q_k$ in the function list $(1,k,v)$. All four ordered equations are needed to give
+
+$$
+H=\begin{pmatrix}
+Q_k(1,1)&Q_k(1,k)&0\\
+Q_k(k,1)&Q_k(k,k)&0\\
+0&0&Q_k(v,v)
+\end{pmatrix}.
+\tag{140.8}
+$$
+
+The rows of
+
+$$
+R_\epsilon=\begin{pmatrix}
+3/4&-1&-\epsilon\\
+0&1&0\\
+1/4&0&\epsilon
+\end{pmatrix}
+\tag{140.9}
+$$
+
+express the three components of $u^\epsilon$ in that list. Direct bilinearity gives $A(u^\epsilon)=R_\epsilon H R_\epsilon^{\mathsf T}$, valid for this nonsymmetric ordered form. Since $\det R_\epsilon=\epsilon$, taking determinants yields (140.6). Theorem 140.1 proves the final implication. $\square$
+

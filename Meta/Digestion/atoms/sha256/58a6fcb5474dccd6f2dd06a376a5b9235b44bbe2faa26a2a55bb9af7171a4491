@@ -1,0 +1,90 @@
+**Lemma 10.6 (Uniform rational separation and analytic control).**
+For all winning branches, all residues and all allocations in Section 8,
+set the positive even integer
+
+$$
+Q_0=2(a-1)\prod_{j\in J_*}(j r_j n_j)\le C_Ra^4.
+\tag{10.13}
+$$
+
+For any pair difference $D$ of the corresponding germs,
+
+$$
+(2Q_0)^{k+3}[u^k]D\in\mathbb Z\quad(k\ge0).
+\tag{10.14}
+$$
+
+There are $R$-only positive $c_R,C_R$ such that all these differences
+are holomorphic on a neighborhood of the closed disk
+$|u|\le r_0=c_Ra^{-3/2}$ and satisfy $|D(u)|\le M_0=C_Ra^6$
+on that disk. In particular a first nonzero coefficient of order $k$
+has absolute value at least $(2Q_0)^{-(k+3)}$.
+
+**Proof.** Growing Proposition 15.6 supplies at most two winning
+indices, both bounded by $J$. Each factor $jr_jn_j$ is
+$O_R(a^{3/2})$, proving (10.13). The coefficients of every affine
+weight $w_l$ in (8.7), and the numbers $b_l,c_l$ in (10.4), have
+denominators dividing $Q_0$. For the core this follows from
+
+$$
+\alpha=\frac{a-1}{r},\quad
+\varphi=-\frac{n+(r-1)d}{r},\quad
+\frac{\delta_i}{\alpha}=\frac{d-n+rz_i}{a-1},\quad
+\frac{k}{\alpha}=\frac{kr}{a-1}.
+\tag{10.15}
+$$
+
+For a tail the corresponding quantities are
+
+$$
+\beta=\frac{j}{rn},\quad
+v_-=\frac{n-d-rt}{rn},\quad v_+=v_-+1,\quad
+\frac{v_-}{\beta}=\frac{n-d-rt}{j},\quad
+\frac{k}{\beta}=\frac{krn}{j}.
+\tag{10.16}
+$$
+
+Multiplicities in (8.4) are integers, so do not add denominators.
+These formulas apply also to $a_0$ and to absent terms.
+
+For one normalized term, expand directly as
+
+$$
+R=\sqrt{1+\frac{c^2u^2}{(1+bu)^2}}-1
+ =\sum_{v\ge1}\binom{1/2}{v}c^{2v}u^{2v}(1+bu)^{-2v}.
+\tag{10.17}
+$$
+
+For $q\ge2$ its coefficient of $u^q$ is the sum over
+$1\le v\le q/2$ of
+
+$$
+\binom{1/2}{v}(-1)^{q-2v}
+ \binom{q-1}{q-2v}c^{2v}b^{q-2v}.
+\tag{10.18}
+$$
+
+The denominator of $\binom{1/2}{v}$ divides $2^{2v}$:
+explicitly it is $(-1)^{v-1}C_{v-1}/2^{2v-1}$ with integral
+Catalan number $C_{v-1}$. The remaining monomial has denominator
+dividing $Q_0^q$, so $[u^q]R\in(2Q_0)^{-q}\mathbb Z$.
+The coefficients of orders zero and one vanish. Multiplication by an
+affine weight with denominator dividing $Q_0$, and then by $2/u^2$,
+proves (10.14). This estimate uses the normalized quotients before
+clearing their product; no exponential denominator from a norm
+polynomial is needed.
+
+Uniformly in (10.15)--(10.16),
+$|b_l|+c_l\le C_Ra^{3/2}$. Core offsets have size $O_R(a)$;
+tail offsets $v_\pm$ have size $O_R(1)$, while
+$\beta^{-1}=O_R(a^{3/2})$. Choose $c_R$ small enough that on
+a neighborhood of the closed disk, $|b_lu|,|c_lu|\le1/8$.
+The square root in (10.17) is then its single holomorphic branch
+with value one at zero, and $|R|\le Cc_l^2|u|^2$.
+Every weight coefficient has size at most $C_Ra$ and there are
+$O_R(a)$ terms; hence $\sum_l|w_l(u)|\le C_Ra^2$ on this
+disk. Dividing their vanishing factors $u^2$ in (8.7) gives
+$|D(u)|\le C_Ra^5\le C_Ra^6$, including $u=0$ by continuity.
+This proves the disk and size assertions for one common radius and
+bound. All estimates are uniform in the integer states and allocations. ∎
+
