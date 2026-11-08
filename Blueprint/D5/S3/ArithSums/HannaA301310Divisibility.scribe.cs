@@ -65,7 +65,7 @@ internal sealed class HannaA301310DivisibilityDocument : IScribeDocumentDefiniti
             All("f", new Formula.TypeArrow(Naturals, Integers),
                 Implies(Parenthesized(All("k", Naturals,
                     Equal(Eval(V("P"), Typed(V("k"), Rationals)),
-                        Typed(Call("f", V("k")), Rationals)))),
+                        Typed(new Formula.Apply(V("f"), [V("k")]), Rationals)))),
                     All("j", Naturals,
                         Equal(Typed(new Formula.Apply(
                                 Iteration(Call("fwdDiff", Typed(D(1), Naturals)), V("j"), V("f")),
