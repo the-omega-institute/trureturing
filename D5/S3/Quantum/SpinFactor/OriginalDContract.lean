@@ -106,8 +106,8 @@ def basicOriginalD (D : E → E → E) : Prop :=
 def finiteDifference (D : E → E → E) (a b c : E) : E :=
   D (b + D a b - jordan a c) (c + jordan a b + D a c) -
     D (b - D a b + jordan a c) (c - jordan a b - D a c) +
-    2 • jordan b (D a b - jordan a c) +
-    2 • jordan c (jordan a b + D a c)
+    (2 : ℝ) • jordan b (D a b - jordan a c) +
+    (2 : ℝ) • jordan c (jordan a b + D a c)
 
 def classificationStatement : Prop :=
   ∀ D : E → E → E, P2 D ∧ PB D ↔
@@ -143,18 +143,16 @@ theorem p2_skew (D : E → E → E) (hP : P2 D) : skew D := by
   rw [map_neg]
   exact h
 
-private theorem p2_self (D : E → E → E) (hP : P2 D) (a : E) : D a a = 0 := by
-  have h := p2_skew D hP a a
+private theorem zero_of_eq_neg (a : E) (h : a = -a) : a = 0 := by
   apply Prod.ext
-  · change (D a a).1 = 0
-    have h' := congrArg Prod.fst h
-    simp only [Prod.fst_neg] at h'
-    linarith
+  · change a.1 = 0
+    exact CharZero.eq_neg_self_iff.mp (congrArg Prod.fst h)
   · funext i
-    change (D a a).2 i = 0
-    have h' := congrArg (fun e : E => e.2 i) h
-    change (D a a).2 i = -(D a a).2 i at h'
-    linarith
+    change a.2 i = 0
+    exact CharZero.eq_neg_self_iff.mp (congrArg (fun e : E => e.2 i) h)
+
+private theorem p2_self (D : E → E → E) (hP : P2 D) (a : E) : D a a = 0 :=
+  zero_of_eq_neg _ (p2_skew D hP a a)
 
 /-- The exact real determinant bound retains the real off-diagonal entry. -/
 theorem p2_determinant_bound (D : E → E → E) (hP : P2 D)
@@ -240,19 +238,24 @@ private theorem dot_self_nonneg (x : Vec) : 0 ≤ dot x x := by
 private theorem vnorm_sq (x : Vec) : vnorm x ^ 2 = dot x x :=
   Real.sq_sqrt (dot_self_nonneg x)
 
-private theorem p2_scalar_pair (D : E → E → E) (hP : P2 D) (λ k : ℝ) :
-    D (λ, 0) (k, 0) = 0 := by
+private theorem p2_scalar_pair (D : E → E → E) (hP : P2 D) (l k : ℝ) :
+    D (l, 0) (k, 0) = 0 := by
   apply evaluations_separate
   intro α
-  have hb := p2_determinant_bound D hP α (λ, 0) (k, 0)
-  have hz : evaluate α (D (λ, 0) (k, 0)) = 0 := by
-    simp [evaluate, jordan, dot] at hb
-    nlinarith [sq_nonneg (evaluate α (D (λ, 0) (k, 0)))]
+  have hb := p2_determinant_bound D hP α (l, 0) (k, 0)
+  have hz : evaluate α (D (l, 0) (k, 0)) = 0 := by
+    have he : evaluate α (jordan (l, 0) (l, 0)) *
+        evaluate α (jordan (k, 0) (k, 0)) -
+          evaluate α (jordan (l, 0) (k, 0)) ^ 2 = 0 := by
+      simp [evaluate, jordan, dot]
+      ring
+    rw [he] at hb
+    nlinarith [sq_nonneg (evaluate α (D (l, 0) (k, 0)))]
   simpa [evaluate, dot] using hz
 
 private theorem p2_scalar_face (D : E → E → E) (hP : P2 D)
-    (λ t : ℝ) (y : Vec) :
-    (D (λ, 0) (t, y)).1 = 0 ∧ dot y (D (λ, 0) (t, y)).2 = 0 := by
+    (l t : ℝ) (y : Vec) :
+    (D (l, 0) (t, y)).1 = 0 ∧ dot y (D (l, 0) (t, y)).2 = 0 := by
   by_cases hy : y = 0
   · subst y
     rw [p2_scalar_pair D hP]
@@ -264,92 +267,94 @@ private theorem p2_scalar_face (D : E → E → E) (hP : P2 D)
       exact hy (dotProduct_self_eq_zero.mp h.symm))
   let αp : Evaluation := ⟨vnorm y, y, le_rfl⟩
   let αm : Evaluation := ⟨vnorm y, -y, by simp [vnorm, dot]⟩
-  have hp := p2_determinant_bound D hP αp (λ, 0) (t, y)
-  have hm := p2_determinant_bound D hP αm (λ, 0) (t, y)
-  have hh := vnorm_sq y
-  have hp0 : evaluate αp (D (λ, 0) (t, y)) = 0 := by
-    have he : evaluate αp (jordan (λ, 0) (λ, 0)) *
+  have hp := p2_determinant_bound D hP αp (l, 0) (t, y)
+  have hm := p2_determinant_bound D hP αm (l, 0) (t, y)
+  have hh : y ⬝ᵥ y = vnorm y ^ 2 := (vnorm_sq y).symm
+  have hp0 : evaluate αp (D (l, 0) (t, y)) = 0 := by
+    have he : evaluate αp (jordan (l, 0) (l, 0)) *
         evaluate αp (jordan (t, y) (t, y)) -
-          evaluate αp (jordan (λ, 0) (t, y)) ^ 2 = 0 := by
-      simp [αp, evaluate, jordan, dot, dotProduct_add, dotProduct_smul, ← hh]
+          evaluate αp (jordan (l, 0) (t, y)) ^ 2 = 0 := by
+      simp [αp, evaluate, jordan, dot, dotProduct_add, dotProduct_smul, hh]
       ring
     rw [he] at hp
-    nlinarith [sq_nonneg (evaluate αp (D (λ, 0) (t, y)))]
-  have hm0 : evaluate αm (D (λ, 0) (t, y)) = 0 := by
-    have he : evaluate αm (jordan (λ, 0) (λ, 0)) *
+    nlinarith [sq_nonneg (evaluate αp (D (l, 0) (t, y)))]
+  have hm0 : evaluate αm (D (l, 0) (t, y)) = 0 := by
+    have he : evaluate αm (jordan (l, 0) (l, 0)) *
         evaluate αm (jordan (t, y) (t, y)) -
-          evaluate αm (jordan (λ, 0) (t, y)) ^ 2 = 0 := by
-      simp [αm, evaluate, jordan, dot, dotProduct_add, dotProduct_smul, ← hh]
+          evaluate αm (jordan (l, 0) (t, y)) ^ 2 = 0 := by
+      simp [αm, evaluate, jordan, dot, dotProduct_add, dotProduct_smul, hh]
       ring
     rw [he] at hm
-    nlinarith [sq_nonneg (evaluate αm (D (λ, 0) (t, y)))]
+    nlinarith [sq_nonneg (evaluate αm (D (l, 0) (t, y)))]
   simp only [evaluate, αp, αm, dot, neg_dotProduct] at hp0 hm0
   constructor
   · nlinarith
-  · change y ⬝ᵥ (D (λ, 0) (t, y)).2 = 0
+  · change y ⬝ᵥ (D (l, 0) (t, y)).2 = 0
     linarith
 
 /-- A finite PB substitution forces every unit row with nonzero input scalar to vanish. -/
 theorem unit_row_nonzero_scalar (D : E → E → E) (hP : P2 D) (hPB : PB D)
-    (λ t : ℝ) (y : Vec) (ht : t ≠ 0) : D (λ, 0) (t, y) = 0 := by
-  let z := (D (λ, 0) (t, y)).2
-  have hf := p2_scalar_face D hP λ t y
-  have hd : D (λ, 0) (t, y) = (0, z) := Prod.ext hf.1 rfl
-  have hyz : dot y z = 0 := hf.2
-  have hzy : dot z y = 0 := by simpa [dot, dotProduct_comm] using hyz
+    (l t : ℝ) (y : Vec) (ht : t ≠ 0) : D (l, 0) (t, y) = 0 := by
+  let z := (D (l, 0) (t, y)).2
+  have hf := p2_scalar_face D hP l t y
+  have hd : D (l, 0) (t, y) = (0, z) := Prod.ext hf.1 rfl
+  have hyz : y ⬝ᵥ z = 0 := hf.2
+  have hzy : z ⬝ᵥ y = 0 := by simpa [dotProduct_comm] using hyz
   let Z := vnorm z
-  let k := λ * Z / (1 + λ ^ 2)
-  have hden : 1 + λ ^ 2 ≠ 0 := by positivity
-  have hk : (1 + λ ^ 2) * k = λ * Z := by dsimp [k]; field_simp
+  let k := l * Z / (1 + l ^ 2)
+  have hden : 1 + l ^ 2 ≠ 0 := by positivity
+  have hk : (1 + l ^ 2) * k = l * Z := by dsimp [k]; field_simp
   let α : Evaluation := ⟨Z, z, le_rfl⟩
-  have hzz : dot z z = Z ^ 2 := (vnorm_sq z).symm
+  have hzz : z ⬝ᵥ z = Z ^ 2 := (vnorm_sq z).symm
   have hp := p2_determinant_bound D hP α
-    (t - λ * k, y + z) (k + λ * t, λ • y)
+    (t - l * k, y + z) (k + l * t, l • y)
   have hm := p2_determinant_bound D hP α
-    (t + λ * k, y - z) (k - λ * t, -λ • y)
-  have hp0 : evaluate α (D (t - λ * k, y + z) (k + λ * t, λ • y)) = 0 := by
-    have he : evaluate α (jordan (t - λ * k, y + z) (t - λ * k, y + z)) *
-        evaluate α (jordan (k + λ * t, λ • y) (k + λ * t, λ • y)) -
-          evaluate α (jordan (t - λ * k, y + z) (k + λ * t, λ • y)) ^ 2 = 0 := by
+    (t + l * k, y - z) (k - l * t, -l • y)
+  have hp0 : evaluate α (D (t - l * k, y + z) (k + l * t, l • y)) = 0 := by
+    have he : evaluate α (jordan (t - l * k, y + z) (t - l * k, y + z)) *
+        evaluate α (jordan (k + l * t, l • y) (k + l * t, l • y)) -
+          evaluate α (jordan (t - l * k, y + z) (k + l * t, l • y)) ^ 2 = 0 := by
       simp [evaluate, jordan, α, dot, add_dotProduct, dotProduct_add,
         smul_dotProduct, dotProduct_smul, hyz, hzy, hzz]
       linear_combination (norm := ring_nf) (Z ^ 2 * (y ⬝ᵥ y) *
-        ((1 + λ ^ 2) * k - λ * Z)) * hk
+        ((1 + l ^ 2) * k - l * Z)) * hk
     rw [he] at hp
-    nlinarith [sq_nonneg (evaluate α (D (t - λ * k, y + z) (k + λ * t, λ • y)))]
-  have hm0 : evaluate α (D (t + λ * k, y - z) (k - λ * t, -λ • y)) = 0 := by
-    have he : evaluate α (jordan (t + λ * k, y - z) (t + λ * k, y - z)) *
-        evaluate α (jordan (k - λ * t, -λ • y) (k - λ * t, -λ • y)) -
-          evaluate α (jordan (t + λ * k, y - z) (k - λ * t, -λ • y)) ^ 2 = 0 := by
+    nlinarith [sq_nonneg (evaluate α (D (t - l * k, y + z) (k + l * t, l • y)))]
+  have hm0 : evaluate α (D (t + l * k, y - z) (k - l * t, -l • y)) = 0 := by
+    have he : evaluate α (jordan (t + l * k, y - z) (t + l * k, y - z)) *
+        evaluate α (jordan (k - l * t, -l • y) (k - l * t, -l • y)) -
+          evaluate α (jordan (t + l * k, y - z) (k - l * t, -l • y)) ^ 2 = 0 := by
       simp [evaluate, jordan, α, dot, sub_dotProduct, dotProduct_sub,
         smul_dotProduct, dotProduct_smul, hyz, hzy, hzz]
       linear_combination (norm := ring_nf) (Z ^ 2 * (y ⬝ᵥ y) *
-        ((1 + λ ^ 2) * k - λ * Z)) * hk
+        ((1 + l ^ 2) * k - l * Z)) * hk
     rw [he] at hm
-    nlinarith [sq_nonneg (evaluate α (D (t + λ * k, y - z) (k - λ * t, -λ • y)))]
-  have he := (pb_iff_finite_difference D).mp hPB (λ, 0) (t, y) (k, 0)
+    nlinarith [sq_nonneg (evaluate α (D (t + l * k, y - z) (k - l * t, -l • y)))]
+  have he := (pb_iff_finite_difference D).mp hPB (l, 0) (t, y) (k, 0)
   have heα := congrArg (evaluationLinear α) he
-  have hr : (t, y) + D (λ, 0) (t, y) - jordan (λ, 0) (k, 0) =
-      (t - λ * k, y + z) := by rw [hd]; ext <;> simp [jordan, dot]
-  have hs : (k, 0) + jordan (λ, 0) (t, y) + D (λ, 0) (k, 0) =
-      (k + λ * t, λ • y) := by rw [p2_scalar_pair D hP]; ext <;> simp [jordan, dot]
-  have hr' : (t, y) - D (λ, 0) (t, y) + jordan (λ, 0) (k, 0) =
-      (t + λ * k, y - z) := by rw [hd]; ext <;> simp [jordan, dot]
-  have hs' : (k, 0) - jordan (λ, 0) (t, y) - D (λ, 0) (k, 0) =
-      (k - λ * t, -λ • y) := by
+  have hr : (t, y) + D (l, 0) (t, y) - jordan (l, 0) (k, 0) =
+      (t - l * k, y + z) := by rw [hd]; ext <;> simp [jordan, dot]
+  have hs : (k, 0) + jordan (l, 0) (t, y) + D (l, 0) (k, 0) =
+      (k + l * t, l • y) := by rw [p2_scalar_pair D hP]; ext <;> simp [jordan, dot]
+  have hr' : (t, y) - D (l, 0) (t, y) + jordan (l, 0) (k, 0) =
+      (t + l * k, y - z) := by rw [hd]; ext <;> simp [jordan, dot]
+  have hs' : (k, 0) - jordan (l, 0) (t, y) - D (l, 0) (k, 0) =
+      (k - l * t, -l • y) := by
     rw [p2_scalar_pair D hP]
     ext <;> simp [jordan, dot]
   simp only [finiteDifference, hr, hs, hr', hs', map_add, map_sub,
     map_smul, map_zero] at heα
-  change evaluate α (D (t - λ * k, y + z) (k + λ * t, λ • y)) -
-    evaluate α (D (t + λ * k, y - z) (k - λ * t, -λ • y)) +
-      2 * evaluate α (jordan (t, y) (D (λ, 0) (t, y) - jordan (λ, 0) (k, 0))) +
-      2 * evaluate α (jordan (k, 0) (jordan (λ, 0) (t, y) + D (λ, 0) (k, 0))) = 0 at heα
+  simp only [smul_eq_mul] at heα
+  change evaluate α (D (t - l * k, y + z) (k + l * t, l • y)) -
+    evaluate α (D (t + l * k, y - z) (k - l * t, -l • y)) +
+      2 * evaluate α (jordan (t, y) (D (l, 0) (t, y) - jordan (l, 0) (k, 0))) +
+      2 * evaluate α (jordan (k, 0) (jordan (l, 0) (t, y) + D (l, 0) (k, 0))) = 0 at heα
   rw [hp0, hm0, hd, p2_scalar_pair D hP] at heα
   simp [evaluate, jordan, α, dot, dotProduct_add, dotProduct_sub,
-    dotProduct_smul, hzy, hzz] at heα
-  have hz0 : Z = 0 := by nlinarith [sq_nonneg Z]
-  have hz : z = 0 := dotProduct_self_eq_zero.mp (by rw [← hzz, hz0]; norm_num)
+    dotProduct_smul, hyz, hzy, hzz] at heα
+  have htz : t * Z ^ 2 = 0 := by nlinarith only [heα]
+  have hz0 : Z = 0 := sq_eq_zero_iff.mp ((mul_eq_zero.mp htz).resolve_left ht)
+  have hz : z = 0 := dotProduct_self_eq_zero.mp (by rw [hzz, hz0]; norm_num)
   rw [hd, hz]
   rfl
 
