@@ -7,6 +7,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S1.Dynamics.Symbolic;
 internal sealed class PreinjectiveFibersDocument : IScribeDocumentDefinition
 {
     private const string Owner = "D5/S1/Dynamics/Symbolic/PreinjectiveFibers.";
+    private static readonly LibraryNoteRef BoundaryMechanism =
+        LibraryNoteRef.Create("D5/L/Entropy/karitaati2015statistical");
     private static Formula Id(string s) => F.Id(s);
     private static Formula Nat => Seq(Mathbb, Grp(Id("N")));
     private static Formula Int => Seq(Mathbb, Grp(Id("Z")));
@@ -72,7 +74,7 @@ internal sealed class PreinjectiveFibersDocument : IScribeDocumentDefinition
                     Code(Id("x")), Sp, Eq, Sp, Id("y"), Close, Sp, Rightarrow),
                 Ex("a", Int), Ex("b", Int), Seq(Id("a"), Sp, Le, Sp, Id("b"), Sp, Land),
                 Call("Set.InjOn", Collars, Call("coeSet", Id("F"))))),
-            AssessedProvenance.FromRepo(), Blocks(
+            AssessedProvenance.FromRepo(BoundaryMechanism), Blocks(
                 Paragraph(Text("The alphabet need not be finite or nonempty. For every finite family F of arbitrary integer configurations "
                     + "whose complete images all equal the prescribed y, there exist a≤b such that collarPair(k,a,b) is injective on F.")),
                 Paragraph(Text("Choose one distinguishing coordinate for each unequal pair in F and enclose all these coordinates in a single interval [a,b]. "
@@ -80,7 +82,10 @@ internal sealed class PreinjectiveFibersDocument : IScribeDocumentDefinition
                     + "A local output window missing the interval is unchanged. A window meeting the interval stays within the padded interval, "
                     + "where its exterior entries agree by the collars, so its output equals the corresponding output of x and hence of z. "
                     + "The splice differs from z on only finitely many coordinates. Preinjectivity forces it to equal z, so x and z agree throughout [a,b]. "
-                    + "The chosen distinguishing coordinates then force x=z. The interval can depend on F; no single interval for the entire fiber is asserted."))),
+                    + "The chosen distinguishing coordinates then force x=z. The interval can depend on F; no single interval for the entire fiber is asserted.")),
+                Paragraph(Text("The cited source's Theorem 22 proof, immediately before equation (34), uses preinjectivity and finite-type gluing "
+                    + "to determine an interior pattern from boundary and image patterns: a finite splice preserves the complete image and hence equals the original. "
+                    + "This is the classical boundary mechanism used here. The exact finite-family collar encoding for arbitrary alphabets is a repository deduction."))),
             DescribeRole.Theorem),
         Describe.Lean(DescribeId.Create("finite-complete-fiber"), DeclarationHandle.Create(Owner + "finite_fiber_ncard_le"),
             H("Every complete-output fiber is uniformly finite"), StatementSource.FromAuthor(St(
@@ -89,7 +94,7 @@ internal sealed class PreinjectiveFibersDocument : IScribeDocumentDefinition
                 Seq(Call("Set.Finite", Fiber), Sp, Land),
                 Seq(Call("Set.ncard", Fiber), Sp, Le, Sp,
                     Seq(Call("Nat.card", Id("A")), Caret, Grp(D(2), Sp, Cdot, Sp, Open, Width, Close))))),
-            AssessedProvenance.FromRepo(), Blocks(
+            AssessedProvenance.FromRepo(BoundaryMechanism), Blocks(
                 Paragraph(Text("For every universe u, every A : Type(u) with Finite(A), every natural k, every arbitrary local rule h and every complete output y : Z → A, "
                     + "native preinjectivity implies both explicit finiteness of {x : Z → A | code(h,x)=y} and its Set.ncard bound card(A)^(2(k+1)). "
                     + "The empty and singleton alphabets are included. Configurations and outputs have no finite-support or periodicity restriction, "
@@ -99,8 +104,10 @@ internal sealed class PreinjectiveFibersDocument : IScribeDocumentDefinition
                     + "If the full fiber were infinite, it would contain a finite subset with one more element than the bound, a contradiction. "
                     + "Applying the bound to the now finite full fiber proves the ncard inequality. This is a classical deduction; "
                     + "the bound is not asserted sharp and supplies no effective inversion algorithm.")),
-                Paragraph(Text("The statement and collar synthesis are authored here from the native code interface and generic finite-set cardinality results. "
-                    + "The mathematical mechanism belongs to classical finite-window symbolic dynamics; no literature novelty is claimed.")),
+                Paragraph(Text("The exact complete-output fiber finiteness and ncard bound are repository deductions from the classical boundary mechanism, "
+                    + "the native code interface and generic finite-set cardinality results. The cited Theorem 22 concerns measure-entropy preservation "
+                    + "for a preinjective factor map from a shift of finite type onto a shift; its proof is cited for the mechanism, not as a statement of this exact bound. "
+                    + "No literature novelty is claimed.")),
                 Paragraph(Text("For an entropy application, equip the finite alphabet with discrete uniformity, put X=A^Z and let Y be the actual range of code(h). "
                     + "The source X is compact, and continuity of code(h) makes Y compact. Let S be spatial shift by one on X, T its restriction to Y, "
                     + "and π : X → Y the code with its codomain restricted to its range. The original code_shift identity makes π a surjective semiconjugacy. "

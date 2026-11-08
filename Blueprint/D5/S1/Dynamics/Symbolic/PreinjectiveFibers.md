@@ -26,11 +26,15 @@ $$\begin{aligned}\forall u: \operatorname{Universe}(),\forall A: \operatorname{T
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* Jarkko Kari and Siamak Taati (2015). *Statistical Mechanics of Surjective Cellular Automata*. DOI: [10.1007/s10955-015-1281-2](https://doi.org/10.1007/s10955-015-1281-2). URL: <https://arxiv.org/html/1311.2319v3>.
+
 *Commentary.*
 
 The alphabet need not be finite or nonempty. For every finite family F of arbitrary integer configurations whose complete images all equal the prescribed y, there exist a≤b such that collarPair(k,a,b) is injective on F.
 
 Choose one distinguishing coordinate for each unequal pair in F and enclose all these coordinates in a single interval [a,b]. Suppose two members x,z agree on both outer collars. Splice x on [a,b] into z outside [a,b]. A local output window missing the interval is unchanged. A window meeting the interval stays within the padded interval, where its exterior entries agree by the collars, so its output equals the corresponding output of x and hence of z. The splice differs from z on only finitely many coordinates. Preinjectivity forces it to equal z, so x and z agree throughout [a,b]. The chosen distinguishing coordinates then force x=z. The interval can depend on F; no single interval for the entire fiber is asserted.
+
+The cited source's Theorem 22 proof, immediately before equation (34), uses preinjectivity and finite-type gluing to determine an interior pattern from boundary and image patterns: a finite splice preserves the complete image and hence equals the original. This is the classical boundary mechanism used here. The exact finite-family collar encoding for arbitrary alphabets is a repository deduction.
 
 **Theorem 1.3 (Every complete-output fiber is uniformly finite).**
 
@@ -40,13 +44,15 @@ $$\begin{aligned}\forall u: \operatorname{Universe}(),\forall A: \operatorname{T
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* Jarkko Kari and Siamak Taati (2015). *Statistical Mechanics of Surjective Cellular Automata*. DOI: [10.1007/s10955-015-1281-2](https://doi.org/10.1007/s10955-015-1281-2). URL: <https://arxiv.org/html/1311.2319v3>.
+
 *Commentary.*
 
 For every universe u, every A : Type(u) with Finite(A), every natural k, every arbitrary local rule h and every complete output y : Z → A, native preinjectivity implies both explicit finiteness of {x : Z → A | code(h,x)=y} and its Set.ncard bound card(A)^(2(k+1)). The empty and singleton alphabets are included. Configurations and outputs have no finite-support or periodicity restriction, and no balance, finite-fiber or growth certificate is an extra premise.
 
 Apply the finite-family encoding to any finite subset of the fiber. Its target consists of pairs of words of length k+1, so it has card(A)^(k+1)·card(A)^(k+1)=card(A)^(2(k+1)) elements. An injection gives that bound for every finite subset. If the full fiber were infinite, it would contain a finite subset with one more element than the bound, a contradiction. Applying the bound to the now finite full fiber proves the ncard inequality. This is a classical deduction; the bound is not asserted sharp and supplies no effective inversion algorithm.
 
-The statement and collar synthesis are authored here from the native code interface and generic finite-set cardinality results. The mathematical mechanism belongs to classical finite-window symbolic dynamics; no literature novelty is claimed.
+The exact complete-output fiber finiteness and ncard bound are repository deductions from the classical boundary mechanism, the native code interface and generic finite-set cardinality results. The cited Theorem 22 concerns measure-entropy preservation for a preinjective factor map from a shift of finite type onto a shift; its proof is cited for the mechanism, not as a statement of this exact bound. No literature novelty is claimed.
 
 For an entropy application, equip the finite alphabet with discrete uniformity, put X=A^Z and let Y be the actual range of code(h). The source X is compact, and continuity of code(h) makes Y compact. Let S be spatial shift by one on X, T its restriction to Y, and π : X → Y the code with its codomain restricted to its range. The original code_shift identity makes π a surjective semiconjugacy. Subtype equality identifies each π-fiber with the complete-output fiber above, with the same explicit finiteness and uniform bound. D5.S1.Dynamics.FiniteFiberEntropy.finite_fiber_entropy therefore gives equal covering entropy for S on X and T on Y, including the empty case. These are spatial shift dynamics; this consequence does not concern iteration of code(h).
 
