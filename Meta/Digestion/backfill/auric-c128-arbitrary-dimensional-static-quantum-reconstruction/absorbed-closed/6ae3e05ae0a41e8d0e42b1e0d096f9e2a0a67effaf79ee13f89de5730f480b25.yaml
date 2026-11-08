@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:6ae3e05ae0a41e8d0e42b1e0d096f9e2a0a67effaf79ee13f89de5730f480b25
   normalized_sha256: sha256:6ae3e05ae0a41e8d0e42b1e0d096f9e2a0a67effaf79ee13f89de5730f480b25
 cas_ref: sha256:6ae3e05ae0a41e8d0e42b1e0d096f9e2a0a67effaf79ee13f89de5730f480b25
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/ContinuousObservables/C128ZeroExtension.whole_zero_extension
+    target_statement_id: sha256:1dc8928dd6271254015bdb1daf3ac5a9ad3d049f262644972efb442da3c81168
 receipts:
   unresolved_subitems: []
