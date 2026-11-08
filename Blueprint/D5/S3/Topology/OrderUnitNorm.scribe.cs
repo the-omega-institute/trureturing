@@ -88,8 +88,20 @@ internal sealed class OrderUnitNormDocument : IScribeDocumentDefinition
                     Paragraph(Text("The map toData preserves C and u literally and supplies only these proved topology properties. The operator H, preparation set P, all functionals, the ordinary dual closure, and the actual exponential remain the original ones. The norm, square-operator coefficient, same-K extension, exact scaling and complementary minimum are precisely those in the preceding quantified criterion. This is the source's complete mathematical Theorem 68.1. The correlated execution-map extension of Section 69.2 is a separate statement and is not a consequence claimed here.")))))));
 
 
-    private static Formula SupportStatement() =>
-        Call("PositiveNormSupport", Id("E"), Id("C"), Id("u"), Id("n"));
+    private static Formula SupportStatement()
+    {
+        var e = Id("E"); var a = Id("a"); var beta = Id("beta");
+        var A = Id("A"); var u = Call("unit", A); var n = Call("orderNorm", A);
+        var betaLaws = And(All("x", Call("cone", A), Le(F.D(0), Apply(beta, Id("x")))),
+            Eq(Apply(beta, u), F.D(1)),
+            All("x", e, Le(Call("abs", Apply(beta, Id("x"))), Apply(n, Id("x")))),
+            Eq(Call("abs", Apply(beta, a)), Apply(n, a)));
+        var exists = new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create("beta"),
+            Call("RealLinearReadings", e), betaLaws);
+        return All("E", Id("Types"), Implies(Call("RealNormedVectorSpace", e),
+            All("A", Call("ConeUnitData", e), All("a", e,
+                Implies(new Formula.Relation(a, FormulaRelationOperator.NotEqual, F.D(0)), exists)))));
+    }
 
     private static Formula CoreStatement()
     {

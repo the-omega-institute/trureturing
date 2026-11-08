@@ -8,7 +8,23 @@ Let E be any real normed vector space. Its auxiliary norm supplies the topology 
 
 Put B equal to the vectors v for which u-v and u+v belong to C. For each v, let S(v) be the nonnegative real radii r for which r u-v and r u+v belong to C, and let n(v) be inf S(v). In particular, zero is retained among the radii. The order relation is exactly w-v in C.
 
-**Theorem 1.1 (The norm axioms follow from the original cone).**
+**Theorem 1.1 (Positive norm support on the entire original carrier).**
+
+$$\forall E \in Types,\; RealNormedVectorSpace\left(E\right) \Rightarrow \left(\forall A \in ConeUnitData\left(E\right),\; \forall a \in E,\; a \ne 0 \Rightarrow \left(\exists beta \in RealLinearReadings\left(E\right),\; \left(\forall x \in cone\left(A\right),\; 0 \le beta\left(x\right)\right) \land \left(beta\left(unit\left(A\right)\right) = 1 \land \left(\left(\forall x \in E,\; abs\left(beta\left(x\right)\right) \le orderNorm\left(A\right)\left(x\right)\right) \land abs\left(beta\left(a\right)\right) = orderNorm\left(A\right)\left(a\right)\right)\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Topology/OrderUnitNorm.positive_norm_support` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every nonzero original a, there is a real linear beta nonnegative on the original C, with beta(u)=1, abs(beta(x))<=n(x) for every original x, and abs(beta(a))=n(a). There is no completeness, finite-dimensionality, self-duality or prior state-existence assumption. At dimension zero there is no nonzero a; this theorem does not manufacture a normalized state on the zero space.
+
+Let r=n(a)>0. Both r u-a and r u+a belong to C by the existing attained-radius proof. They cannot both be interior points: openness would permit reducing r by a common strictly positive amount while keeping both inequalities in C, contradicting minimality. Apply the existing private boundary-support theorem at an endpoint which is not interior. It gives a nonzero positive continuous functional vanishing there and with strictly positive unit mass. Normalize by that mass. The endpoint equation makes the absolute value at a equal to r; the existing positive-functional bound proves contractivity on every original x.
+
+The same-delivery original unit-row theorem consumes this constructed reading. Mathematical support functionals do not construct physical preparations. This is classical order-unit duality, with no literature-priority claim. The four-slot audit remains unfinished under issue 28178.
+
+**Theorem 1.2 (The norm axioms follow from the original cone).**
 
 $$\forall E \in Types,\; RealNormedVectorSpace\left(E\right) \Rightarrow \left(\forall A \in ConeUnitData\left(E\right),\; \forall v \in E,\; 0 \le n\left(v\right) \land \left(\left(n\left(v\right) = 0 \Leftrightarrow v = 0\right) \land \left(\left(\forall a \in R,\; n\left(smul\left(a, v\right)\right) = abs\left(a\right) \cdot n\left(v\right)\right) \land \left(\forall w \in E,\; n\left(v + w\right) \le n\left(v\right) + n\left(w\right)\right)\right)\right)\right)$$
 
@@ -22,7 +38,7 @@ The symbols R and Types denote the real scalars and the type universe. ConeUnitD
 
 The symmetric interval is convex and balanced. Its gauge equals n exactly: every positive gauge radius is an order radius, and every radius just above the attained order radius is a positive gauge radius. This includes v=0, where S(0) contains its infimum zero although the gauge uses strictly positive radii. Mathlib's gaugeSeminorm supplies the seminorm laws. At n(v)=0 the attained inequalities put v and -v in C, so salience supplies definiteness.
 
-**Theorem 1.2 (Scalar rigidity on every original vector).**
+**Theorem 1.3 (Scalar rigidity on every original vector).**
 
 $$\forall E \in Types,\; RealNormedVectorSpace\left(E\right) \Rightarrow \left(\forall A \in ConeUnitData\left(E\right),\; \forall P \in RealEndomorphisms\left(E\right),\; \forall c \in R,\; \left(\left(\forall v \in cone\left(A\right),\; mem\left(P\left(v\right), cone\left(A\right)\right) \land mem\left(sub\left(v, P\left(v\right)\right), cone\left(A\right)\right)\right) \land P\left(unit\left(A\right)\right) = smul\left(c, unit\left(A\right)\right)\right) \Rightarrow \left(\forall v \in E,\; P\left(v\right) = smul\left(c, v\right)\right)\right)$$
 
@@ -62,7 +78,7 @@ For r strictly positive and y and r u-y in C, apply the effect certificate to y/
 
 Order-unit norm and positive-functional mass facts are classical; the construction retains the original cone, unit, functional and linear action in one construction. It asserts no literature priority or physical realization of the mathematical exponential.
 
-**Theorem 1.3 (Cross-positivity preserves the original cone).**
+**Theorem 1.4 (Cross-positivity preserves the original cone).**
 
 $$\forall E \in Types,\; FiniteDimensionalRealNormedSpace\left(E\right) \Rightarrow \left(\forall A \in ConeUnitData\left(E\right),\; \forall L \in RealEndomorphisms\left(E\right),\; \left(\forall z \in C,\; \forall beta \in PositiveAlgebraicDual,\; beta\left(z\right) = 0 \Rightarrow 0 \le beta\left(L\left(z\right)\right)\right) \Rightarrow \left(\forall t \in NonnegativeReals,\; \forall y \in C,\; mem\left(exp\left(smul\left(t, L\right)\right)\left(y\right), C\right)\right)\right)$$
 
@@ -82,7 +98,7 @@ At this original boundary contact take the supporting positive beta. For negativ
 
 The classical implication is the cross-positive generator theorem of Schneider and Vidyasagar, Cross-Positive Matrices, SIAM Journal on Numerical Analysis 7(4), 508-519, Theorem 3. The original source also cites Niestegge, arXiv:1402.0158v2, Section 4, Lemma 3 for the two-sided zero-contact criterion. These mathematical sources motivate the route; the Lean proof uses the pinned Hahn-Banach, compact-minimum, exponential derivative and one-sided slope declarations directly. No literature originality is asserted.
 
-**Theorem 1.4 (The same preparation coefficient and the same exponential).**
+**Theorem 1.5 (The same preparation coefficient and the same exponential).**
 
 $$\forall E \in Types,\; FiniteDimensionalRealNormedSpace\left(E\right) \Rightarrow \left(\forall A \in ConeUnitData\left(E\right),\; \forall H \in RealEndomorphisms\left(E\right),\; \forall P \in Subsets\left(PositiveDual\right),\; \left(H\left(u\right) = 0 \land Closure\left(Cone\left(P\right)\right) = PositiveDual\right) \Rightarrow \left(\left(\left(\exists q \in R,\; 0 \le q \land \left(\forall alpha \in P,\; Certificate\left(H, q, alpha\right)\right)\right) \Leftrightarrow \left(\forall t \in R,\; \left(\forall y \in C,\; mem\left(exp\left(smul\left(t, H\right)\right)\left(y\right), C\right)\right) \land exp\left(smul\left(t, H\right)\right)\left(u\right) = u\right)\right) \land \left(\left(\forall q \in R,\; \left(0 \le q \land \left(\forall alpha \in P,\; Certificate\left(H, q, alpha\right)\right)\right) \Rightarrow \left(\left(\forall beta \in PositiveDual,\; Certificate\left(H, q, beta\right)\right) \land \left(\forall beta \in PositiveDual,\; \forall r \in PositiveReals,\; \forall y \in C,\; mem\left(sub\left(smul\left(r, u\right), y\right), C\right) \Rightarrow square\left(abs\left(beta\left(H\left(y\right)\right)\right)\right) \le q \cdot r \cdot beta\left(y\right) \cdot beta\left(u\right)\right)\right)\right) \land \left(\left(\forall t \in R,\; \left(\forall y \in C,\; mem\left(exp\left(smul\left(t, H\right)\right)\left(y\right), C\right)\right) \land exp\left(smul\left(t, H\right)\right)\left(u\right) = u\right) \Rightarrow \left(\left(\forall beta \in PositiveDual,\; Certificate\left(H, norm\left(square\left(Hu\right)\right), beta\right)\right) \land \left(\forall beta \in PositiveDual,\; \forall x \in Effects,\; square\left(abs\left(beta\left(H\left(x\right)\right)\right)\right) \le norm\left(square\left(Hu\right)\right) \cdot min\left(beta\left(x\right), beta\left(sub\left(u, x\right)\right)\right) \cdot beta\left(u\right)\right)\right)\right)\right)\right)\right)$$
 
@@ -98,7 +114,7 @@ The fixed-coefficient extension and exact radius factor are retained. Their full
 
 Conversely Q=norm(H_u squared) is nonnegative and gives the certificate for every positive original functional. Applying this same bound to u-x and using H(u)=0 gives the complementary bound. Taking the lesser of the two proves the source's strengthening with Q min(beta(x),beta(u-x)) beta(u). Zero coefficient, zero mass and zero-dimensional fibers require no divisions. This theorem is a mathematical consequence for the original operator and preparations; it supplies no actual clock, reference or callable exponential.
 
-**Theorem 1.5 (The algebraic Archimedean hypotheses supply the topology bridge).**
+**Theorem 1.6 (The algebraic Archimedean hypotheses supply the topology bridge).**
 
 $$\forall E \in Types,\; FiniteDimensionalRealNormedSpace\left(E\right) \Rightarrow \left(\forall A \in ArchimedeanConeUnitData\left(E\right),\; \forall H \in RealEndomorphisms\left(E\right),\; \forall P \in Subsets\left(PositiveDual\right),\; \left(H\left(u\right) = 0 \land Closure\left(Cone\left(P\right)\right) = PositiveDual\right) \Rightarrow \left(Closed\left(C\right) \land \left(mem\left(u, Interior\left(C\right)\right) \land \left(\left(\left(\exists q \in R,\; 0 \le q \land \left(\forall alpha \in P,\; Certificate\left(H, q, alpha\right)\right)\right) \Leftrightarrow \left(\forall t \in R,\; \left(\forall y \in C,\; mem\left(exp\left(smul\left(t, H\right)\right)\left(y\right), C\right)\right) \land exp\left(smul\left(t, H\right)\right)\left(u\right) = u\right)\right) \land \left(\left(\forall q \in R,\; \left(0 \le q \land \left(\forall alpha \in P,\; Certificate\left(H, q, alpha\right)\right)\right) \Rightarrow \left(\left(\forall beta \in PositiveDual,\; Certificate\left(H, q, beta\right)\right) \land \left(\forall beta \in PositiveDual,\; \forall r \in PositiveReals,\; \forall y \in C,\; mem\left(sub\left(smul\left(r, u\right), y\right), C\right) \Rightarrow square\left(abs\left(beta\left(H\left(y\right)\right)\right)\right) \le q \cdot r \cdot beta\left(y\right) \cdot beta\left(u\right)\right)\right)\right) \land \left(\left(\forall t \in R,\; \left(\forall y \in C,\; mem\left(exp\left(smul\left(t, H\right)\right)\left(y\right), C\right)\right) \land exp\left(smul\left(t, H\right)\right)\left(u\right) = u\right) \Rightarrow \left(\left(\forall beta \in PositiveDual,\; Certificate\left(H, norm\left(square\left(Hu\right)\right), beta\right)\right) \land \left(\forall beta \in PositiveDual,\; \forall x \in Effects,\; square\left(abs\left(beta\left(H\left(x\right)\right)\right)\right) \le norm\left(square\left(Hu\right)\right) \cdot min\left(beta\left(x\right), beta\left(sub\left(u, x\right)\right)\right) \cdot beta\left(u\right)\right)\right)\right)\right)\right)\right)\right)\right)$$
 
@@ -120,4 +136,5 @@ The map toData preserves C and u literally and supplies only these proved topolo
 - Truth anchor: `D5/S3/Topology/OrderUnitNorm.cross_positive_flow`
 - Truth anchor: `D5/S3/Topology/OrderUnitNorm.identity_dominated_scalar`
 - Truth anchor: `D5/S3/Topology/OrderUnitNorm.norm_core`
+- Truth anchor: `D5/S3/Topology/OrderUnitNorm.positive_norm_support`
 - Truth anchor: `D5/S3/Topology/OrderUnitNorm.quantitative_generator_iff`
