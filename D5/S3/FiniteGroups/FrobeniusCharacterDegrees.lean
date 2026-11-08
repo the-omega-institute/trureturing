@@ -610,3 +610,122 @@ theorem trivial_restriction_or_index_dvd_of_fixedPointFree_of_isAlgClosed
 
 end D5.S3.FiniteGroups.FrobeniusCharacterDegrees
 end ModularFrobeniusAction
+
+
+
+namespace ArbitraryFieldDescent
+
+open scoped TensorProduct
+
+variable {k E G V : Type*} [Field k] [Field E] [Algebra k E]
+  [Group G] [AddCommGroup V] [Module k V]
+
+/-- Scalar extension of a representation, with the group acting on the second tensor factor. -/
+noncomputable def extRep (ρ : Representation k G V) :
+    Representation E G (E ⊗[k] V) where
+  toFun g := (ρ g).baseChange E
+  map_one' := by simp
+  map_mul' g h := by simp [← LinearMap.baseChange_mul]
+
+@[simp] theorem extRep_apply_tmul (ρ : Representation k G V) (g : G) (e : E) (v : V) :
+    extRep ρ g (e ⊗ₜ[k] v) = e ⊗ₜ[k] ρ g v := by
+  rfl
+
+@[simp] theorem extRep_finrank [Module.Finite k V] (ρ : Representation k G V) :
+    Module.finrank E (E ⊗[k] V) = Module.finrank k V := by
+  exact Module.finrank_baseChange
+section GenericDescent
+universe u
+variable {R E M : Type u} [Ring R] [Field E] [Algebra E R]
+  [AddCommGroup M] [Module R M] [Module E M] [IsScalarTower E R M]
+  [Module.Finite E M]
+
+/-- Finite-dimensional module dimensions are divisible by `d` when every simple
+submodule has dimension divisible by `d`. -/
+theorem finrank_dvd_of_simple_submodules (d : ℕ)
+    (hbase : ∀ {X : Type u} [AddCommGroup X] [Module R X] [Module E X]
+      [IsScalarTower E R X] [Module.Finite E X]
+      (S : Submodule R X), IsSimpleModule R S →
+        d ∣ Module.finrank E (S.restrictScalars E)) :
+    d ∣ Module.finrank E M := by
+  classical
+  by_cases hzero : Module.finrank E M = 0
+  · simp [hzero]
+  induction hdim : Module.finrank E M using Nat.strong_induction_on generalizing M with
+  | h n ih =>
+    let p : Set ℕ := {m | ∃ S : Submodule R M, S ≠ ⊥ ∧
+      m = Module.finrank E (S.restrictScalars E)}
+    have hp : p.Nonempty := by
+      refine ⟨Module.finrank E M, ⊤, ?_, ?_⟩
+      · intro htop
+        apply hzero
+        apply (Module.finrank_zero_iff).2
+        refine ⟨fun x y => ?_⟩
+        have hxR : x ∈ (⊥ : Submodule R M) := htop ▸ (Submodule.mem_top : x ∈ (⊤ : Submodule R M))
+        have hyR : y ∈ (⊥ : Submodule R M) := htop ▸ (Submodule.mem_top : y ∈ (⊤ : Submodule R M))
+        have hx0 : x = 0 := by simpa using hxR
+        have hy0 : y = 0 := by simpa using hyR
+        exact hx0.trans hy0.symm
+      · rw [Submodule.restrictScalars_top, finrank_top]
+
+    obtain ⟨S, hSne, hSdim⟩ := Nat.sInf_mem hp
+    have hSsimple : IsSimpleModule R S := by
+      rw [isSimpleModule_iff_isAtom, isAtom_iff_le_of_ge]
+      refine ⟨hSne, ?_⟩
+      intro T hTne hTS
+      by_contra hne
+      have hlt : T.restrictScalars E < S.restrictScalars E := by
+        refine lt_of_le_of_ne (Submodule.restrictScalars_mono E hTS) ?_
+        intro heq
+        have heq' : T = S := Submodule.restrictScalars_injective E _ _ heq
+        exact hne (heq'.symm ▸ le_rfl)
+      have hdimlt : Module.finrank E (T.restrictScalars E) <
+          Module.finrank E (S.restrictScalars E) := by
+        exact lt_of_le_of_ne (Submodule.finrank_mono
+          (Submodule.restrictScalars_mono E hTS)) (by
+            intro heq
+            have heq' : T = S := Submodule.restrictScalars_injective E _ _
+              (Submodule.eq_of_le_of_finrank_eq
+                (Submodule.restrictScalars_mono E hTS) heq)
+            exact hne (heq'.symm ▸ le_rfl))
+      have hmem : Module.finrank E (T.restrictScalars E) ∈ p := ⟨T, hTne, rfl⟩
+      exact (Nat.not_lt_of_ge (Nat.sInf_le hmem)) (by simpa [← hSdim] using hdimlt)
+    have hdS : d ∣ Module.finrank E (S.restrictScalars E) := hbase (X := M) S hSsimple
+    have hquotlt : Module.finrank E (M ⧸ S) < Module.finrank E M := by
+      have hadd := (S.restrictScalars E).finrank_quotient_add_finrank
+      have hpos : 0 < Module.finrank E (S.restrictScalars E) := by
+        apply Nat.pos_of_ne_zero
+        intro hz
+        have hbot : S.restrictScalars E = (⊥ : Submodule E M) :=
+          (Submodule.finrank_eq_zero).mp hz
+        exact hSne (Submodule.restrictScalars_injective E _ _ hbot)
+      have hle : Module.finrank E (M ⧸ S.restrictScalars E) +
+          Module.finrank E (S.restrictScalars E) ≤ Module.finrank E M := le_of_eq hadd
+      have hlt' : Module.finrank E (M ⧸ S.restrictScalars E) < Module.finrank E M := by
+        omega
+      rw [← LinearEquiv.finrank_eq (Submodule.Quotient.restrictScalarsEquiv E S)]
+      exact hlt'
+    obtain ⟨c, hc⟩ := hdS
+    have hdQ : d ∣ Module.finrank E (M ⧸ S) := by
+      by_cases hqzero : Module.finrank E (M ⧸ S) = 0
+      · simp [hqzero]
+      · apply ih (M := M ⧸ S) (Module.finrank E (M ⧸ S))
+        · exact hdim ▸ hquotlt
+        · exact hqzero
+        · rfl
+    obtain ⟨q, hq⟩ := hdQ
+    have hadd := (S.restrictScalars E).finrank_quotient_add_finrank
+    have heq : Module.finrank E (M ⧸ S) + Module.finrank E (S.restrictScalars E) =
+        Module.finrank E M := by
+      rw [← LinearEquiv.finrank_eq (Submodule.Quotient.restrictScalarsEquiv E S)]
+      exact hadd
+    refine ⟨q + c, ?_⟩
+    calc
+      n = Module.finrank E M := hdim.symm
+      _ = Module.finrank E (M ⧸ S) +
+          Module.finrank E (S.restrictScalars E) := heq.symm
+      _ = d * q + d * c := by rw [hq, hc]
+      _ = d * (q + c) := by ring
+end GenericDescent
+
+end ArbitraryFieldDescent
