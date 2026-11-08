@@ -62,7 +62,7 @@ $$(claim) \Leftrightarrow ((\operatorname{count}\left(1\right) = 104) \land ((\o
 
 *Commentary.*
 
-Empirical: a(n) = a(n-1) + 10*a(n-2) + 3*a(n-3) - 5*a(n-4) + a(n-5) for n>6. Empirical g.f.: 8*x*(13 + 33*x - 16*x^3 + 7*x^4 - x^5) / (1 - x - 10*x^2 - 3*x^3 + 5*x^4 - x^5). - _Colin Barker_, Apr 16 2018 OEIS A185763, formula field (unpaginated). Counts in the recurrence are embedded in Int, the formal series has coefficients in Rat, and the square root in the closed form is the positive real square root.
+Empirical: a(n) = a(n-1) + 10*a(n-2) + 3*a(n-3) - 5*a(n-4) + a(n-5) for n>6. Empirical g.f.: 8*x*(13 + 33*x - 16*x^3 + 7*x^4 - x^5) / (1 - x - 10*x^2 - 3*x^3 + 5*x^4 - x^5). - _Colin Barker_, Apr 16 2018 OEIS A185763, formula field (unpaginated). Counts in the recurrence are embedded in Int, and the formal series has coefficients in Rat.
 
 **Theorem 1.6 (The formulas hold).**
 
@@ -76,7 +76,7 @@ $$(\operatorname{count}\left(1\right) = 104) \land ((\operatorname{count}\left(2
 
 *Commentary.*
 
-A bijection encodes each binary row by a finite integer. The adjacent-trace tests give pair and triple conditions on consecutive rows. Weighted classes of row pairs preserve all continuation counts. An exact matrix-vector identity propagates to every length and gives the recurrence; coefficient comparison gives the formal generating series.
+A bijection encodes each binary row by a finite integer. The adjacent-trace tests give pair and triple conditions on consecutive rows. Weighted classes of row pairs preserve all continuation counts. An exact matrix-vector identity propagates to every length and gives the recurrence; coefficient comparison gives the formal generating series. This result settles OEIS A185763 (external question #21315) as a member of the shared Hardin problem resolution recorded with A185761.
 
 ## References
 

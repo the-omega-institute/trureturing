@@ -70,9 +70,15 @@ $$(\operatorname{count}\left(1\right) = 16) \land ((\operatorname{count}\left(2\
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA185761Recurrence.result` (`✓ std3`). ∎
 
-*Resolves.* `Problems/hardin1857-traceavoid` (proved) by `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA185761Recurrence.result`.
+*Resolves.* `Problems/hardin1857-traceavoid` (proved) by `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA185761Recurrence.result` and `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA185762Recurrence.result` and `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA185763Recurrence.result` and `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA185764Recurrence.result`.
 
 <!-- scribe-open-problem-resolution-v1 {"problem_slug":"hardin1857-traceavoid","declaration_gid":"D5/S3/Combinatorics/TraceAvoidingArrays/HardinA185761Recurrence.result","resolution_kind":"proved"} -->
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hardin1857-traceavoid","declaration_gid":"D5/S3/Combinatorics/TraceAvoidingArrays/HardinA185762Recurrence.result","resolution_kind":"proved"} -->
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hardin1857-traceavoid","declaration_gid":"D5/S3/Combinatorics/TraceAvoidingArrays/HardinA185763Recurrence.result","resolution_kind":"proved"} -->
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hardin1857-traceavoid","declaration_gid":"D5/S3/Combinatorics/TraceAvoidingArrays/HardinA185764Recurrence.result","resolution_kind":"proved"} -->
 
 *Source.* Repository-derived.
 

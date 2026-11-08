@@ -62,7 +62,7 @@ $$(claim) \Leftrightarrow ((\operatorname{count}\left(1\right) = 264) \land ((\o
 
 *Commentary.*
 
-Empirical: a(n) = a(n-1) + 17*a(n-2) + 9*a(n-3) - 22*a(n-4) - a(n-5) + a(n-6) - 6*a(n-7) for n>9. Empirical g.f.: 8*x*(33 + 108*x - 43*x^2 - 249*x^3 - 69*x^4 + 5*x^5 + 43*x^6 + 81*x^7 + 18*x^8) / (1 - x - 17*x^2 - 9*x^3 + 22*x^4 + x^5 - x^6 + 6*x^7). - _Colin Barker_, Apr 16 2018 OEIS A185764, formula field (unpaginated). Counts in the recurrence are embedded in Int, the formal series has coefficients in Rat, and the square root in the closed form is the positive real square root.
+Empirical: a(n) = a(n-1) + 17*a(n-2) + 9*a(n-3) - 22*a(n-4) - a(n-5) + a(n-6) - 6*a(n-7) for n>9. Empirical g.f.: 8*x*(33 + 108*x - 43*x^2 - 249*x^3 - 69*x^4 + 5*x^5 + 43*x^6 + 81*x^7 + 18*x^8) / (1 - x - 17*x^2 - 9*x^3 + 22*x^4 + x^5 - x^6 + 6*x^7). - _Colin Barker_, Apr 16 2018 OEIS A185764, formula field (unpaginated). Counts in the recurrence are embedded in Int, and the formal series has coefficients in Rat.
 
 **Theorem 1.6 (The formulas hold).**
 
@@ -76,7 +76,7 @@ $$(\operatorname{count}\left(1\right) = 264) \land ((\operatorname{count}\left(2
 
 *Commentary.*
 
-A bijection encodes each binary row by a finite integer. The adjacent-trace tests give pair and triple conditions on consecutive rows. Weighted classes of row pairs preserve all continuation counts. An exact matrix-vector identity propagates to every length and gives the recurrence; coefficient comparison gives the formal generating series.
+A bijection encodes each binary row by a finite integer. The adjacent-trace tests give pair and triple conditions on consecutive rows. Weighted classes of row pairs preserve all continuation counts. An exact matrix-vector identity propagates to every length and gives the recurrence; coefficient comparison gives the formal generating series. This result settles OEIS A185764 (external question #21316) as a member of the shared Hardin problem resolution recorded with A185761.
 
 ## References
 

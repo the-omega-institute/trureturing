@@ -62,7 +62,7 @@ $$(claim) \Leftrightarrow ((\operatorname{count}\left(1\right) = 40) \land ((\op
 
 *Commentary.*
 
-Empirical: a(n) = a(n-1) + 6*a(n-2) + a(n-3). Empirical g.f.: 8*x*(5 + 10*x + x^2) / (1 - x - 6*x^2 - x^3). OEIS A185762, formula field (unpaginated). Counts in the recurrence are embedded in Int, the formal series has coefficients in Rat, and the square root in the closed form is the positive real square root.
+Empirical: a(n) = a(n-1) + 6*a(n-2) + a(n-3). Empirical g.f.: 8*x*(5 + 10*x + x^2) / (1 - x - 6*x^2 - x^3). OEIS A185762, formula field (unpaginated). Counts in the recurrence are embedded in Int, and the formal series has coefficients in Rat.
 
 **Theorem 1.6 (The formulas hold).**
 
@@ -76,7 +76,7 @@ $$(\operatorname{count}\left(1\right) = 40) \land ((\operatorname{count}\left(2\
 
 *Commentary.*
 
-A bijection encodes each binary row by a finite integer. The adjacent-trace tests give pair and triple conditions on consecutive rows. Weighted classes of row pairs preserve all continuation counts. An exact matrix-vector identity propagates to every length and gives the recurrence; coefficient comparison gives the formal generating series.
+A bijection encodes each binary row by a finite integer. The adjacent-trace tests give pair and triple conditions on consecutive rows. Weighted classes of row pairs preserve all continuation counts. An exact matrix-vector identity propagates to every length and gives the recurrence; coefficient comparison gives the formal generating series. This result settles OEIS A185762 (external question #21314) as a member of the shared Hardin problem resolution recorded with A185761.
 
 ## References
 
