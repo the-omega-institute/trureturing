@@ -206,8 +206,9 @@ private def patchColoring (hp : d.mate (leftPort j hj) = rightPort j hj) :
         · cases b <;> simp [patch, piecesPerm, piecesMate, cupcapMatching, cupcapMate,
             hi, hi', leftPort, rightPort, Prod.ext_iff, Fin.ext_iff]
     · exact propext (paired_invariance j hj d hp (b,i)).symm
-  · rcases x with ⟨l,b,i⟩
-    cases l <;> cases b <;> simp [patch, seamPerm, seamMate, leftPort, rightPort]
+  · change patch j hj x = patch j hj (seamMate x)
+    rcases x with ⟨l,b,i⟩
+    cases l <;> cases b <;> simp [patch, seamMate, leftPort, rightPort]
 
 /-- Pairing the two generator inputs creates a closed internal component. -/
 theorem internalLoopCount_cupcap_pos (hp : d.mate (leftPort j hj) = rightPort j hj) :

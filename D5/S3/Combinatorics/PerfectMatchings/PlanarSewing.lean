@@ -275,7 +275,7 @@ private theorem seamSetoid_zero (p N : ℕ) (h : p+2*0 ≤ N) :
 
 /-- Sewing any number of nested adjacent seam pairs leaves a planar pairing
 on the surviving boundary, with exactly the induced component relation. -/
-theorem sewn_planar (m p k N : ℕ) (hp : p ≤ m) (hN : N = m+2*k)
+private theorem sewn_planar (m p k N : ℕ) (hp : p ≤ m) (hN : N = m+2*k)
     (M : NCMatching N) :
     ∃ Q : NCMatching m,
       matchingSetoid Q = Setoid.comap (gapEmbedding p k m N (by omega))

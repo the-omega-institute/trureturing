@@ -171,6 +171,16 @@ instance ring : Ring (TL R n) where
 
 instance algebra : Algebra R (TL R n) := Algebra.ofModule smul_mul' mul_smul'
 
+/-- Bilinear concatenation kills a basis product exactly when it contains a loop. -/
+theorem single_mul_single (a b : Diagram n) (r s : R) :
+    (MonoidAlgebra.single a r : TL R n) * MonoidAlgebra.single b s =
+      if internalLoopCount a.val b.val = 0 then MonoidAlgebra.single (concat a b) (r*s) else 0 := by
+  have ha : MonoidAlgebra.single a r = r • (MonoidAlgebra.single a 1 : TL R n) := by simp
+  have hb : MonoidAlgebra.single b s = s • (MonoidAlgebra.single b 1 : TL R n) := by simp
+  rw [ha, hb, smul_mul', mul_smul', basis_mul]
+  unfold basisProduct
+  split_ifs <;> simp [smul_smul]
+
 /-- The standard cup-cap generator at a zero-based index. -/
 def generator (i : Fin (n-1)) : TL R n :=
   MonoidAlgebra.single ⟨cupcapMatching i.val (by omega),
