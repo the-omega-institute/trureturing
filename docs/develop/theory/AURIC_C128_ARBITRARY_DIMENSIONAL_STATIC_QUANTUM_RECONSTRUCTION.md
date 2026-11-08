@@ -2187,9 +2187,9 @@ $$
 
 再由原评价准确决定序单位范数，得到 $N(D(a,b))\le N(a)N(b)$；零质量评价恒为零。因而 $D$ 唯一连续延拓到 $X^2$。标量切片的分别弱星延拓把它继续延拓到 $M^2$；这里使用的是 Hanche-Olsen–Størmer 的 JBW 双对偶接口和 Peralta–Rodríguez Palacios 的有界标量双线性型延拓，不使用 NN。
 
-对 $a,b\in X$，原有限 Gram 正性给 $q(a+\mathrm ib)=a^2+b^2+2D(a,b)\in X_+$，连续性给 $q(B)\subset M_+$。于是 $H_\varphi$ 半正定。把 (39.1) 写成原域上的 $q(t\star z)\le C_t^2q(z)$，对每个 $\varphi\in X^*_+$ 将差型作 Hilbert 因子分解，再把因子作双对偶延拓，便得到 (39.2)。这一段正是定理 28.1 证明中式 (28.2)、(28.4)、(28.7)–(28.12) 的无 NN 前端：它没有使用单位行、交替性、Moufang 恒等式或任何已由 NN 得出的结论。
+原有限 Gram 正性先在原复化域给出 $q$ 的正性，范数连续性再给 $a,b\in X$ 时 $q(a+\mathrm ib)=a^2+b^2+2D(a,b)\in X_+$，从而 $H_\varphi$ 在 $X\oplus\mathrm iX$ 上半正定。把 (39.1) 写成原域上的 $q(t\star z)\le C_t^2q(z)$，同样先以范数连续性传到该复化完成。对每个 $\varphi\in X^*_+$，将这一正型和相应差型分别作 Hilbert 因子分解，再把因子作双对偶延拓；由分别弱星连续延拓的唯一性认回同一乘法给出的正型和差型，再由规范正常正泛函决定双对偶正锥，得到 $q(B)\subset M_+$ 和 (39.2)。于是 $H_\varphi$ 在 $B$ 上也半正定，且每个原演员保留自己的原常数 $C_t$。这一段正是定理 28.1 证明中式 (28.2)、(28.4)、(28.7)–(28.11) 的无 NN 子论证：它没有使用单位行、交替性、Moufang 恒等式或任何已由 NN 得出的结论。
 
-下面支付单位行。由 $H_\varphi$ 的 Cauchy–Schwarz，若 $c\ge0$ 且 $\varphi(c)=0$，JB 函数演算给 $0\le c^2\le\lVert c\rVert c$，所以 $\varphi(c^2)=0$，并且 $\varphi(D(a,c))=0$。Niestegge §4 Lemma 3 的零面判据先在 $X$ 上说明每个有界 $\delta_a$ 是 order derivation。其规范弱星延拓在 $M$ 上仍是 order derivation 和 Jordan 导子；这是 JBW 双对偶中正群的弱星连续延拓。置 $T=\delta_u$；反对称性给 $T(u)=0$，故 $T$ 是 Jordan 导子。
+下面支付单位行。由 $H_\varphi$ 的 Cauchy–Schwarz，若 $c\ge0$ 且 $\varphi(c)=0$，JB 函数演算给 $0\le c^2\le\lVert c\rVert c$，所以 $\varphi(c^2)=0$，并且 $\varphi(D(a,c))=0$。Niestegge §4 Lemma 3 的零面判据先在 $X$ 上说明每个有界 $\delta_a$ 是 order derivation。相应正群的规范弱星延拓在 $M$ 上保留这一性质；对任意 $a\in M$，前段的双对偶正性也使上述零面计算对 $M$ 上全部连续正泛函成立，同一判据遂给 $\delta_a$ 的 order-derivation 性质。一般行的 Jordan 导子律待下面的单位行证明后取得。置 $T=\delta_u$；反对称性给 $T(u)=0$，故 $T$ 是 Jordan 导子。
 
 取任意 JBW 投影 $p$，置 $e=u-p$、$v=T(p)$。由 $T(p^2)=T(p)$，有 $p\circ v=v/2$，即 $v\in M_{1/2}(p)$。又 $\delta_p(u)=-v$。order derivation 的标准分解是
 
