@@ -164,6 +164,7 @@ theorem stopping_correspondence (labels : Set S) (update : S → Bool → R → 
         (N = 0 ↔ T ≤ wait + 1)) ∧
     (firstHit labels (run labels update initial coins wait gaps) = none ↔
       firstHit labels (epoch labels update initial coins wait gaps) = none) := by
+  letI : MeasurableSpace S := ⊤
   let Z := run labels update initial coins wait gaps
   let Y := epoch labels update initial coins wait gaps
   have finite (T : ℕ) (hT : firstHit labels Z = some T) :
@@ -178,7 +179,7 @@ theorem stopping_correspondence (labels : Set S) (update : S → Bool → R → 
     have hafter : T ≤ clock wait gaps N := Nat.find_spec hex
     have hbefore : ∀ n < N, clock wait gaps n < T := by
       intro n hn
-      exact Nat.lt_of_not_ge (Nat.find_min hex hn)
+      exact lt_of_not_ge (Nat.find_min hex hn)
     have hsame : Y N = Z T := run_absorbed labels update initial coins wait gaps T
       hterm _ hafter
     have hfirst : firstHit labels Y = some N := by
@@ -192,9 +193,8 @@ theorem stopping_correspondence (labels : Set S) (update : S → Bool → R → 
     · intro hn
       simpa only [hn, clock] using hafter
     · intro ht
-      apply Nat.eq_zero_of_not_pos
-      intro hn
-      have h := hbefore 0 hn
+      by_contra hn
+      have h := hbefore 0 (Nat.pos_of_ne_zero hn)
       simp only [clock] at h
       omega
   refine ⟨finite, ?_⟩
