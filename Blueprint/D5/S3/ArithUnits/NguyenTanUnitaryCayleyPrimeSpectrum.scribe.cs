@@ -38,7 +38,10 @@ internal sealed class NguyenTanUnitaryCayleyPrimeSpectrumDocument : IScribeDocum
                 StatementSource.FromAuthor(Disp(new Formula.Not(Parenthesized(ClaimBody())))),
                 AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("For every finite commutative group G of even cardinality at least three, the group algebra MonoidAlgebra (ZMod 2) G is Frobenius: its coefficient at the identity detects every nonzero ideal after multiplication by a suitable inverse basis element. The subgroup of basis units contains minus one. Coefficient vectors identify its Cayley graph with the binary Hamming graph. Coordinate changes connect the graph, and two changes through the complement connect each pair that differs in one coordinate. A proper homogeneous set in a connected triangle-free graph is independent, and two of its vertices would have identical neighbourhoods. Three available coordinates exclude such twins. A product of coordinate signs has eigenvalue card G − 2 card s; selecting half the coordinates gives a nonzero vector with eigenvalue zero. The cyclic group Multiplicative (ZMod d) therefore gives the family for every even d at least four. The settling contradiction uses d = 4. A polynomial-quotient isomorphism, a complete eigenbasis and the general multiplicity of zero are separate questions."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("nguyen-tan-2025-unitary-cayley-prime-zero-eigenvalue"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
         AssessedProvenance provenance) => Describe.Lean(

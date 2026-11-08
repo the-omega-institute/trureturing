@@ -82,6 +82,10 @@ $$\neg (\forall (R: Type), [\operatorname{CommRing}\left(R\right)], [\operatorna
 
 *Proof.* Machine-checked in Lean as `D5/S3/ArithUnits/NguyenTanUnitaryCayleyPrimeSpectrum.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/nguyen-tan-2025-unitary-cayley-prime-zero-eigenvalue` (refuted) by `D5/S3/ArithUnits/NguyenTanUnitaryCayleyPrimeSpectrum.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"nguyen-tan-2025-unitary-cayley-prime-zero-eigenvalue","declaration_gid":"D5/S3/ArithUnits/NguyenTanUnitaryCayleyPrimeSpectrum.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Tung T. Nguyen, Nguyen Duy Tân (2025). *Supercharacters of finite abelian groups and applications to spectra of U-unitary Cayley graphs*. DOI: [10.48550/arXiv.2508.10348](https://doi.org/10.48550/arXiv.2508.10348). URL: <https://arxiv.org/abs/2508.10348v1>.
