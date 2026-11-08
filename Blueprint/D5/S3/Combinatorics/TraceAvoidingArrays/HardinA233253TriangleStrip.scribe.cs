@@ -13,7 +13,7 @@ internal sealed class HardinA233253TriangleStripDocument : IScribeDocumentDefini
     private const string Scanner =
         "D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.";
     private const string Transfer =
-        "D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.Transfer.";
+        "D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.";
     private const string Beta = "D5.S3.Observer.Separation.BooleanRankThreeK4.beta";
     private static LibraryNoteRef Source =>
         LibraryNoteRef.Create("D5/L/Automata/hardin2013a233253");
@@ -113,7 +113,7 @@ internal sealed class HardinA233253TriangleStripDocument : IScribeDocumentDefini
         var y = Cell(next, Call("Fin.castSucc", j));
         var anti = All("i", Call("Fin", n), All("h", Lt(Add(Val(i), Num(1)), n),
             All("j", Fin(4), And(Ne(x, y), Ne(Add(Val(x), Val(y)), Num(5))))));
-        var normal = Call(Transfer + "normal", Pair(V("false"), V("false")),
+        var normal = Call(Transfer + "widthNormal", Pair(V("false"), V("false")),
             Fn("i", Call("Fin", n), Fn("j", Fin(5), Cell(i, j))));
         var arrays = Arrow(Product(Call("Fin", n), Fin(5)), Fin(6));
         var filter = Call("Finset.filter", Fn("A", arrays,
@@ -129,7 +129,7 @@ internal sealed class HardinA233253TriangleStripDocument : IScribeDocumentDefini
             All("j", Fin(4), Ne(App(p, j), Index(2, 3))));
         return All("s", Q(Scanner + "Seen"), All("p", N("Boundary"),
             Eq(CallLocal("Valid", s, p),
-                And(Eq(Proj(s, 1), V("true")), And(adjacent, absent)))));
+                Parenthesized(And(Eq(Proj(s, 1), V("true")), And(adjacent, absent))))));
     }
     private static Formula RankFormula()
     {

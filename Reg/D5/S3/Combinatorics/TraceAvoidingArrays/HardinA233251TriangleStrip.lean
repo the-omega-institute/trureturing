@@ -260,7 +260,7 @@ structure Model where
   edge : ∀ c d, E c d ↔ C (P c) d
 
 private instance {k n : ℕ} (s : Seen) (f : Fin n → Fin k → Fin 6) :
-    Decidable (Transfer.normal s f) :=
+    Decidable (widthNormal s f) :=
   inferInstanceAs (Decidable (∀ _ _, (_ → _) ∧ (_ → _)))
 
 def literal (m : Model) (n : ℕ) : ℤ := by
@@ -272,7 +272,7 @@ def literal (m : Model) (n : ℕ) : ℤ := by
     (∀ i, m.R (fun j => A (i, j))) ∧
     (∀ (i : Fin (n + 1)) (h : i.val + 1 < n + 1), m.E (fun j => A (i, j))
       (fun j => A (⟨i.val + 1, h⟩, j))) ∧
-    Transfer.normal (false, false) (fun i j => A (i, j)))).card : ℤ)
+    widthNormal (false, false) (fun i j => A (i, j)))).card : ℤ)
 
 abbrev signature : Signature where
   Params := Model
@@ -297,7 +297,7 @@ abbrev arena : Arena where
     (E : (Fin k → Fin 6) → (Fin k → Fin 6) → Prop) [de : DecidableRel E]
     (edge : ∀ c d, E c d ↔ C (P c) d) (n : ℕ),
     F.readout () ⟨k, positive, B, R, dr, P, C, dc, E, de, edge⟩ n =
-      Transfer.total R P (Transfer.v R P C n)
+      widthTotal R P (widthV R P C n)
 
 private def sample : Model where
   k := 1
@@ -316,16 +316,16 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hb := @h sample.k sample.positive sample.B sample.R sample.P sample.C
     sample.decR sample.decC sample.E sample.decE sample.edge 0
-  have ha := @Transfer.counting_bridge sample.k sample.positive sample.B
+  have ha := @width_counting_bridge sample.k sample.positive sample.B
     sample.R sample.P sample.C sample.decR sample.decC sample.E sample.decE sample.edge 0
   change literal sample 0 + 1 = _ at hb
   change literal sample 0 = _ at ha
   linarith
 
-def family : Registration arena (type_of% @Transfer.counting_bridge) where
+def family : Registration arena (type_of% @width_counting_bridge) where
   actual := actual
   bridge := Iff.rfl
-  variation := ⟨Transfer.counting_bridge, rejected, rejected_law⟩
+  variation := ⟨width_counting_bridge, rejected, rejected_law⟩
   sensitivity := by
     constructor
     · intro i
@@ -341,7 +341,7 @@ def family : Registration arena (type_of% @Transfer.counting_bridge) where
     exact ⟨sample, 0, 1, by decide +kernel⟩
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, 1, 0, 0, 0, 0, 0}
-    (@Transfer.counting_bridge) (Realization signature) Type Unit where
+    (@width_counting_bridge) (Realization signature) Type Unit where
   unitName := `Reg.A233251TransferBridge.auditUnit
   realizationName :=
     `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.TransferBridge.family

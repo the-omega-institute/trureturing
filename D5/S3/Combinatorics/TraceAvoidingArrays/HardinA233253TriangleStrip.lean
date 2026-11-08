@@ -27,15 +27,15 @@ D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.good_iff
 statement_id: sha256:59d0ffb034f7f2361718e6d2566eb24417785b9a178f6fcb44f336c1199d3d62
 D5.S3.Observer.Separation.BooleanRankThreeK4.beta
 statement_id: sha256:1abdc5f3db71567fe05de5aabbe80dddeb5ec5179e4ec7fd49fe71e500518481
-D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.Transfer.normal
+D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.widthNormal
 statement_id: sha256:386c206cc3ef6a59414e77c9819f248384e3bb7c274914a49a28c1d59e3129ad
-D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.Transfer.step
+D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.widthStep
 statement_id: sha256:cf04680f9e21b3a96c69763915af670c7b403f8176e0325d49d13ff3937b3132
-D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.Transfer.v
+D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.widthV
 statement_id: sha256:d734cb6b10f52d653d235d99d51686c6f8bd258e73c32e74d8bd1340ad480ca6
-D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.Transfer.total
+D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.widthTotal
 statement_id: sha256:97e351af0f202442e988e675899d67a9c9326e877fba056d2ba5a42882d1aa80
-D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.Transfer.counting_bridge
+D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.width_counting_bridge
 statement_id: sha256:ad20423c9b2be5ab903a544bd5d109b63b544742976d20571d3f7174cc7e4825
 D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.colour_bond_iff
 statement_id: sha256:b9273762bbccc68fc56c48c38b8aba02a46a50a53bfbbe70a660fd21867d6be8
@@ -164,9 +164,9 @@ private def Legal {n : ℕ} (A : Fin n × Fin 5 → Fin 6) : Prop :=
     (∀ i, rowLegal (fun j => A (i, j))) ∧
     (∀ (i : Fin n) (h : i.val + 1 < n), bonds (fun j => A (i, j))
       (fun j => A (⟨i.val + 1, h⟩, j))) ∧
-    Transfer.normal (false, false) (fun i j => A (i, j))
+    widthNormal (false, false) (fun i j => A (i, j))
 private instance instDecidableNormal {n : ℕ} (s : Seen) (f : Fin n → Row) :
-    Decidable (Transfer.normal s f) :=
+    Decidable (widthNormal s f) :=
   inferInstanceAs (Decidable (∀ _ _, (_ → _) ∧ (_ → _)))
 private instance instDecidableRowLegal (c : Row) : Decidable (rowLegal c) :=
   inferInstanceAs (Decidable (∀ _, _ ∧ _))
@@ -188,10 +188,10 @@ private instance instDecidableGood (s : Seen) (c : Row) : Decidable (good s c) :
   infer_instance
 private theorem bonds_iff (c d : Row) : bonds c d ↔ compatible (pairs c) d := by
   simp only [bonds, HardinA233251TriangleStrip.colour_bond_iff, compatible, pairs]
-private abbrev v := Transfer.v rowLegal pairs compatible
-private abbrev total := Transfer.total rowLegal pairs
+private abbrev v := widthV rowLegal pairs compatible
+private abbrev total := widthTotal rowLegal pairs
 private theorem counting_bridge (n : ℕ) : (a (n + 1) : ℤ) = total (v n) := by
-  exact Transfer.counting_bridge rowLegal pairs compatible bonds bonds_iff n
+  exact width_counting_bridge rowLegal pairs compatible bonds bonds_iff n
 /-- Adjacent boundary labels differ; absent colour two excludes its whole pair. -/
 def Valid (s : Seen) (p : Boundary) : Prop :=
   s.1 = true ∧ (∀ j : Fin 3, p j.castSucc ≠ p j.succ) ∧
@@ -872,9 +872,9 @@ private def eval (n : ℕ) (s : Seen) (p : Boundary) : ℤ :=
 private theorem v_eq_w (n : ℕ) (s : Seen) (p : Boundary) (h : Valid s p) :
     v n s p = eval n s p := by
   induction n generalizing s p with
-  | zero => simp [v, Transfer.v, eval, w]
+  | zero => simp [v, widthV, eval, w]
   | succ n ih =>
-    rw [v, Transfer.v, Transfer.step]
+    rw [v, widthV, widthStep]
     change (∑ c : Row, if rowLegal c ∧ compatible p c ∧ good s c then
       v n (finish s c) (pairs c) else 0) = _
     have hs : ∀ c : Row, (if rowLegal c ∧ compatible p c ∧ good s c then
@@ -901,7 +901,7 @@ private theorem v_eq_w (n : ℕ) (s : Seen) (p : Boundary) (h : Valid s p) :
     cases hb : s.2 <;> simp [hb, eval, w] <;> ring
 private theorem a_eq_w (n : ℕ) :
     (a (n + 1) : ℤ) = 8 * w n 0 + 28 * w n 1 + 44 * w n 2 := by
-  rw [counting_bridge, total, Transfer.total]
+  rw [counting_bridge, total, widthTotal]
   change (∑ c : Row, if c 0 = 0 ∧ rowLegal c ∧ good (false, false) c then
     v n (finish (false, false) c) (pairs c) else 0) = _
   have hs : ∀ c : Row, (if c 0 = 0 ∧ rowLegal c ∧ good (false, false) c then

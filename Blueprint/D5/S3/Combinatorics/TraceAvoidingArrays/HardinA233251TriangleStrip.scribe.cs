@@ -32,21 +32,21 @@ internal sealed class HardinA233251TriangleStripDocument : IScribeDocumentDefini
                 "This integer sum fixes the first colour to zero and starts the shared scanner with both flags false."),
             Thm("certificate", "finite_certificate", "The one-row class counts", CertificateFormula(),
                 "The eight reachable boundary classes split according to the second seen flag. A fully seen boundary has 48 continuations. A boundary with only colour one seen has 20 continuations entering the fully seen class and eight staying in its class. The first row gives one fully seen array and two arrays with only colour one seen."),
-            Def("transfernormal", "normal", "Row-major normalization at any width",
+            Def("transfernormal", "widthNormal", "Row-major normalization at any width",
                 TransferNormalFormula(),
                 "For every row and column index, earlier means strict lexicographic order. "
                 + "The two initial flags account for colours already seen before these rows."),
-            Def("transferstep", "step", "A row transfer at any width",
+            Def("transferstep", "widthStep", "A row transfer at any width",
                 TransferStepFormula(),
                 "R is the row predicate, P extracts the boundary, and C tests the next row. "
                 + "All predicates carry their Lean deciding instances."),
-            Def("transferv", "v", "Continuation counts at any width",
+            Def("transferv", "widthV", "Continuation counts at any width",
                 TransferVFormula(),
                 "The empty continuation has weight one. Each further row applies the transfer."),
-            Def("transfertotal", "total", "First-row aggregation at any width",
+            Def("transfertotal", "widthTotal", "First-row aggregation at any width",
                 TransferTotalFormula(),
                 "A positive width provides the column-zero index. The initial flags are false."),
-            Thm("transferbridge", "counting_bridge", "The literal count equals transfer",
+            Thm("transferbridge", "width_counting_bridge", "The literal count equals transfer",
                 TransferBridgeFormula(),
                 "Assume a positive width k and a boundary type B. The bond predicate E must "
                 + "be equivalent to C after applying P to the preceding row. The displayed "
@@ -79,7 +79,7 @@ internal sealed class HardinA233251TriangleStripDocument : IScribeDocumentDefini
             new OpenProblemResolutionClaim(ProblemSlugRef.Create("hardin233251"), ResolutionKind.Proved));
 
     private const string TransferRoot =
-        "D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.Transfer.";
+        "D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.";
     private const string ScannerRoot =
         "D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.";
     private const string PairMap = "D5.S3.Observer.Separation.BooleanRankThreeK4.beta";
@@ -120,7 +120,7 @@ internal sealed class HardinA233251TriangleStripDocument : IScribeDocumentDefini
                     Eq(App(App(V("f"), r), t),
                         Parenthesized(Seq(D(d), Colon, Sp, Fin(6)))))));
         Formula Is(byte d) => Eq(value, Parenthesized(Seq(D(d), Colon, Sp, Fin(6))));
-        return NormalParameters(Eq(TransferCall("normal", V("s"), V("f")),
+        return NormalParameters(Eq(TransferCall("widthNormal", V("s"), V("f")),
             All("i", ApplyName("Fin", V("n")), All("j", ApplyName("Fin", V("k")), And(
                 Imp(Or(Is(2), Or(Is(3), Is(4))),
                     Or(Eq(ApplyName("Prod.fst", V("s")), V("true")), Earlier(1))),
@@ -134,18 +134,18 @@ internal sealed class HardinA233251TriangleStripDocument : IScribeDocumentDefini
         var c = V("c"); var s = V("s"); var p = V("p");
         var condition = And(App(V("R"), c), And(App(V("C"), p, c), Good(s, c)));
         return GenericParameters(All("w", WeightType(), All("s", SeenType(), All("p", V("B"),
-            Eq(TransferCall("step", V("R"), V("P"), V("C"), V("w"), s, p),
+            Eq(TransferCall("widthStep", V("R"), V("P"), V("C"), V("w"), s, p),
                 SumOver("c", RowType(), Conditional(condition,
                     App(V("w"), Finish(s, c), App(V("P"), c)), Cast(D(0)))))))));
     }
     private static Formula TransferVFormula()
     {
-        Formula Value(Formula n) => TransferCall("v", V("R"), V("P"), V("C"), n);
+        Formula Value(Formula n) => TransferCall("widthV", V("R"), V("P"), V("C"), n);
         var baseCase = All("s", SeenType(), All("p", V("B"),
             Eq(App(Value(D(0)), V("s"), V("p")), Cast(D(1)))));
         var recursion = All("n", NatType(), All("s", SeenType(), All("p", V("B"),
             Eq(App(Value(Add(V("n"), D(1))), V("s"), V("p")),
-                TransferCall("step", V("R"), V("P"), V("C"), Value(V("n")), V("s"), V("p"))))));
+                TransferCall("widthStep", V("R"), V("P"), V("C"), Value(V("n")), V("s"), V("p"))))));
         return GenericParameters(And(baseCase, recursion));
     }
     private static Formula PositiveWidth(Formula body) =>
@@ -158,7 +158,7 @@ internal sealed class HardinA233251TriangleStripDocument : IScribeDocumentDefini
         var condition = And(Eq(App(c, zero), colourZero), And(App(V("R"), c), Good(s, c)));
         var sum = SumOver("c", RowType(), Conditional(condition,
             App(V("w"), Finish(s, c), App(V("P"), c)), Cast(D(0))));
-        var identity = Eq(TransferCall("total", V("R"), V("P"), V("w")), sum);
+        var identity = Eq(TransferCall("widthTotal", V("R"), V("P"), V("w")), sum);
         return All("k", NatType(), PositiveWidth(All("B", Qualified("Type"),
             All("R", Arrow(RowType(), Qualified("Prop")), All("P", Arrow(RowType(), V("B")),
             Instance("DecidablePred", V("R"), All("w", WeightType(), identity)))))));
@@ -177,7 +177,7 @@ internal sealed class HardinA233251TriangleStripDocument : IScribeDocumentDefini
         var bond = All("i", rows,
             All("h", Lt(Add(ApplyName("Fin.val", i), D(1)), Add(n, D(1))),
                 App(V("E"), Fn("j", cols, Cell(i, j)), Fn("j", cols, Cell(next, j)))));
-        var normal = TransferCall("normal", Pair(V("false"), V("false")),
+        var normal = TransferCall("widthNormal", Pair(V("false"), V("false")),
             Fn("i", rows, Fn("j", cols, Cell(i, j))));
         var filter = ApplyName("Finset.filter", Fn("A", Arrow(Product(rows, cols), Fin(6)),
             And(first, And(horizontal, And(bond, normal)))), ApplyName("Finset.univ"));
@@ -185,8 +185,8 @@ internal sealed class HardinA233251TriangleStripDocument : IScribeDocumentDefini
             Iff(App(V("E"), V("c"), V("d")),
                 App(V("C"), App(V("P"), V("c")), V("d")))));
         var identity = Eq(Cast(ApplyName("Finset.card", filter)),
-            TransferCall("total", V("R"), V("P"),
-                TransferCall("v", V("R"), V("P"), V("C"), n)));
+            TransferCall("widthTotal", V("R"), V("P"),
+                TransferCall("widthV", V("R"), V("P"), V("C"), n)));
         return GenericParameters(All("E", Arrow(RowType(), Arrow(RowType(), Qualified("Prop"))),
             Instance("DecidableRel", V("E"), Imp(edge, All("n", NatType(), identity)))), true);
     }
