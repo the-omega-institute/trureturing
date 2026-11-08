@@ -284,8 +284,8 @@ theorem slice_measurable (hτ : Measurable τ) (hK : ∀ j, Measurable (fun ω =
         ⋂ j : Fin n, (fun ω => K ω j.val) ⁻¹' {a.2 j} := by
       ext ω
       simp only [Set.mem_iInter, Set.mem_preimage, Set.mem_singleton_iff, Set.mem_setOf_eq]
-    rw [he]
-    exact MeasurableSet.iInter fun j : Fin n => (hK j.val) (measurableSet_singleton (a.2 j)))
+    exact (congrArg (fun B : Set Ω => MeasurableSet B) he).mpr
+      (MeasurableSet.iInter fun j : Fin n => (hK j.val) (measurableSet_singleton (a.2 j))))
 
 private theorem slices_disjoint (n : ℕ) :
     Pairwise (Disjoint on sourceSlice τ K n) := by
