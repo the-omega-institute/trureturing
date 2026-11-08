@@ -8,9 +8,9 @@ Write h=X^theta, u=x/X, and B(s,x)=D_(s*x^theta)(x)/sqrt(x^theta*log(x)). The lo
 
 **Theorem 1.1 (Uniform logarithmic correction).**
 
-Lean statement: `D5/S3/Arith/Robin/ForwardKernel/FourthMomentDyadicTransfer.logarithmic_correction_eventually`
+Lean statement: `D5/S3/Arith/Robin/ForwardKernel/FourthTransfer/FourthMomentDyadicTransfer.logarithmic_correction_eventually`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ForwardKernel/FourthMomentDyadicTransfer.logarithmic_correction_eventually` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ForwardKernel/FourthTransfer/FourthMomentDyadicTransfer.logarithmic_correction_eventually` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -20,9 +20,9 @@ For every natural k and eta>0, all sufficiently large X satisfy |sqrt(log(X)/log
 
 **Theorem 1.2 (Exact change of normalization).**
 
-Lean statement: `D5/S3/Arith/Robin/ForwardKernel/FourthMomentDyadicTransfer.dyadicB_eq_movingB`
+Lean statement: `D5/S3/Arith/Robin/ForwardKernel/FourthTransfer/FourthMomentDyadicTransfer.dyadicB_eq_movingB`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ForwardKernel/FourthMomentDyadicTransfer.dyadicB_eq_movingB` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ForwardKernel/FourthTransfer/FourthMomentDyadicTransfer.dyadicB_eq_movingB` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -32,9 +32,9 @@ For 0<theta<1, X>1 and x in [X,2X], put u=x/X and lambda=sqrt(log(X)/log(x)). Th
 
 **Theorem 1.3 (Uniform dyadic fourth moments).**
 
-Lean statement: `D5/S3/Arith/Robin/ForwardKernel/FourthMomentDyadicTransfer.dyadic_fourth_uniform`
+Lean statement: `D5/S3/Arith/Robin/ForwardKernel/FourthTransfer/FourthMomentDyadicTransfer.dyadic_fourth_uniform`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ForwardKernel/FourthMomentDyadicTransfer.dyadic_fourth_uniform` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ForwardKernel/FourthTransfer/FourthMomentDyadicTransfer.dyadic_fourth_uniform` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -44,9 +44,9 @@ Let E be locally bounded and Borel measurable, let 0<alpha<theta<beta<1, and ass
 
 **Theorem 1.4 (The homogeneous dyadic moment interface).**
 
-Lean statement: `D5/S3/Arith/Robin/ForwardKernel/FourthMomentDyadicTransfer.fixed_scale_dyadic_interface`
+Lean statement: `D5/S3/Arith/Robin/ForwardKernel/FourthTransfer/FourthMomentDyadicTransfer.fixed_scale_dyadic_interface`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ForwardKernel/FourthMomentDyadicTransfer.fixed_scale_dyadic_interface` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ForwardKernel/FourthTransfer/FourthMomentDyadicTransfer.fixed_scale_dyadic_interface` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -58,13 +58,13 @@ For k=3 specialize the general continuous kernel to W₃(s)=0. Its homogeneity i
 
 ## References
 
-- Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/FourthMomentDyadicTransfer.dyadicB_eq_movingB`
-- Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/FourthMomentDyadicTransfer.dyadic_fourth_uniform`
-- Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/FourthMomentDyadicTransfer.fixed_scale_dyadic_interface`
-- Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/FourthMomentDyadicTransfer.logarithmic_correction_eventually`
-- Dependency: [D5/S3/Arith/Robin/ForwardKernel/BrownianFourthKernel](BrownianFourthKernel.md)
-- Dependency: [D5/S3/Arith/Robin/ForwardKernel/DyadicMacroMoments](DyadicMacroMoments.md)
-- Dependency: [D5/S3/Arith/Robin/ForwardKernel/FirstOrderInterface](FirstOrderInterface.md)
-- Dependency: [D5/S3/Arith/Robin/ForwardKernel/FourthMomentMovingTransfer](FourthMomentMovingTransfer.md)
-- Dependency: [D5/S3/Arith/Robin/ForwardKernel/MomentTransferWeights](MomentTransferWeights.md)
-- Dependency: [D5/S3/Arith/Robin/ForwardKernel/SecondOrderInterface](SecondOrderInterface.md)
+- Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/FourthTransfer/FourthMomentDyadicTransfer.dyadicB_eq_movingB`
+- Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/FourthTransfer/FourthMomentDyadicTransfer.dyadic_fourth_uniform`
+- Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/FourthTransfer/FourthMomentDyadicTransfer.fixed_scale_dyadic_interface`
+- Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/FourthTransfer/FourthMomentDyadicTransfer.logarithmic_correction_eventually`
+- Dependency: [D5/S3/Arith/Robin/ForwardKernel/BrownianFourthKernel](../BrownianFourthKernel.md)
+- Dependency: [D5/S3/Arith/Robin/ForwardKernel/DyadicMacroMoments](../DyadicMacroMoments.md)
+- Dependency: [D5/S3/Arith/Robin/ForwardKernel/FirstOrderInterface](../FirstOrderInterface.md)
+- Dependency: [D5/S3/Arith/Robin/ForwardKernel/FourthTransfer/FourthMomentMovingTransfer](FourthMomentMovingTransfer.md)
+- Dependency: [D5/S3/Arith/Robin/ForwardKernel/MomentTransferWeights](../MomentTransferWeights.md)
+- Dependency: [D5/S3/Arith/Robin/ForwardKernel/SecondOrderInterface](../SecondOrderInterface.md)

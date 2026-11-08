@@ -6,9 +6,9 @@ Local fourth energy controls normalized moving and frozen increments.
 
 **Theorem 1.1 (Comparison with a fixed length).**
 
-Lean statement: `D5/S3/Arith/Robin/ForwardKernel/FourthMomentFreezing.macro_fourth_comparison`
+Lean statement: `D5/S3/Arith/Robin/ForwardKernel/FourthTransfer/FourthMomentFreezing.macro_fourth_comparison`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ForwardKernel/FourthMomentFreezing.macro_fourth_comparison` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ForwardKernel/FourthTransfer/FourthMomentFreezing.macro_fourth_comparison` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -18,9 +18,9 @@ For a bounded continuously differentiable macroscopic length, compare the moving
 
 **Theorem 1.2 (Finite fourth-order freezing estimate).**
 
-Lean statement: `D5/S3/Arith/Robin/ForwardKernel/FourthMomentFreezing.freezing_fourth_finite`
+Lean statement: `D5/S3/Arith/Robin/ForwardKernel/FourthTransfer/FourthMomentFreezing.freezing_fourth_finite`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ForwardKernel/FourthMomentFreezing.freezing_fourth_finite` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ForwardKernel/FourthTransfer/FourthMomentFreezing.freezing_fourth_finite` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -30,9 +30,9 @@ For n positive equal cells and R=(1+L)X to the theta divided by n, the fourth mo
 
 **Theorem 1.3 (Uniform moving fourth moments).**
 
-Lean statement: `D5/S3/Arith/Robin/ForwardKernel/FourthMomentFreezing.moving_fourth_uniform`
+Lean statement: `D5/S3/Arith/Robin/ForwardKernel/FourthTransfer/FourthMomentFreezing.moving_fourth_uniform`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ForwardKernel/FourthMomentFreezing.moving_fourth_uniform` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ForwardKernel/FourthTransfer/FourthMomentFreezing.moving_fourth_uniform` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -42,9 +42,9 @@ Under local fourth energy, for every M at least one and nonnegative derivative b
 
 **Theorem 1.4 (Uniform frozen fourth moments).**
 
-Lean statement: `D5/S3/Arith/Robin/ForwardKernel/FourthMomentFreezing.frozen_fourth_uniform`
+Lean statement: `D5/S3/Arith/Robin/ForwardKernel/FourthTransfer/FourthMomentFreezing.frozen_fourth_uniform`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ForwardKernel/FourthMomentFreezing.frozen_fourth_uniform` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ForwardKernel/FourthTransfer/FourthMomentFreezing.frozen_fourth_uniform` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -54,9 +54,9 @@ For each fixed positive number of cells, all sufficiently large X give fourth mo
 
 **Theorem 1.5 (Uniform eventual fourth-order freezing).**
 
-Lean statement: `D5/S3/Arith/Robin/ForwardKernel/FourthMomentFreezing.freezing_fourth_eventually`
+Lean statement: `D5/S3/Arith/Robin/ForwardKernel/FourthTransfer/FourthMomentFreezing.freezing_fourth_eventually`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ForwardKernel/FourthMomentFreezing.freezing_fourth_eventually` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ForwardKernel/FourthTransfer/FourthMomentFreezing.freezing_fourth_eventually` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -66,10 +66,10 @@ For every positive tolerance and fixed positive cell count, there is a common ev
 
 ## References
 
-- Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/FourthMomentFreezing.freezing_fourth_eventually`
-- Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/FourthMomentFreezing.freezing_fourth_finite`
-- Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/FourthMomentFreezing.frozen_fourth_uniform`
-- Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/FourthMomentFreezing.macro_fourth_comparison`
-- Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/FourthMomentFreezing.moving_fourth_uniform`
-- Dependency: [D5/S3/Arith/Robin/ForwardKernel/FourthMomentEndpoint](FourthMomentEndpoint.md)
-- Dependency: [D5/S3/Arith/Robin/ForwardKernel/MacroscopicFreezing](MacroscopicFreezing.md)
+- Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/FourthTransfer/FourthMomentFreezing.freezing_fourth_eventually`
+- Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/FourthTransfer/FourthMomentFreezing.freezing_fourth_finite`
+- Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/FourthTransfer/FourthMomentFreezing.frozen_fourth_uniform`
+- Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/FourthTransfer/FourthMomentFreezing.macro_fourth_comparison`
+- Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/FourthTransfer/FourthMomentFreezing.moving_fourth_uniform`
+- Dependency: [D5/S3/Arith/Robin/ForwardKernel/FourthTransfer/FourthMomentEndpoint](FourthMomentEndpoint.md)
+- Dependency: [D5/S3/Arith/Robin/ForwardKernel/MacroscopicFreezing](../MacroscopicFreezing.md)

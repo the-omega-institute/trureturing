@@ -59,5 +59,5 @@ Under the variance-band asymptotic, fix M>=1 and L>=0. For all sufficiently larg
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/MacroscopicFreezing.normalized_square_eventually`
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/MacroscopicFreezing.scale_conditions`
 - Dependency: [D5/S3/Arith/Robin/ForwardKernel/FixedLengthCovariance](FixedLengthCovariance.md)
+- Dependency: [D5/S3/Arith/Robin/ForwardKernel/FourthTransfer/MacroscopicEndpointGeometry](FourthTransfer/MacroscopicEndpointGeometry.md)
 - Dependency: [D5/S3/Arith/Robin/ForwardKernel/LocalVarianceBand](LocalVarianceBand.md)
-- Dependency: [D5/S3/Arith/Robin/ForwardKernel/MacroscopicEndpointGeometry](MacroscopicEndpointGeometry.md)

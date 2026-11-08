@@ -1,6 +1,6 @@
-/- GID: D5/S3/Arith/Robin/ForwardKernel/MacroscopicEndpointGeometry
+/- GID: D5/S3/Arith/Robin/ForwardKernel/FourthTransfer/MacroscopicEndpointGeometry
    generality: G
-   mirror-B: D5/B/S3/Arith/Robin/ForwardKernel/MacroscopicEndpointGeometry
+   mirror-B: D5/B/S3/Arith/Robin/ForwardKernel/FourthTransfer/MacroscopicEndpointGeometry
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
@@ -9,7 +9,7 @@
 import D5.S3.Arith.Robin.ForwardKernel.MacroscopicVarianceDefs
 import Mathlib.Analysis.Calculus.MeanValue
 
-namespace D5.S3.Arith.Robin.ForwardKernel.MacroscopicEndpointGeometry
+namespace D5.S3.Arith.Robin.ForwardKernel.FourthTransfer.MacroscopicEndpointGeometry
 
 open Set
 open MacroscopicVarianceDefs MovingLengthCells
@@ -91,4 +91,4 @@ theorem macro_cell_gap_le
     _ = X ^ θ * L / (n : ℝ) := by ring
 
 end
-end D5.S3.Arith.Robin.ForwardKernel.MacroscopicEndpointGeometry
+end D5.S3.Arith.Robin.ForwardKernel.FourthTransfer.MacroscopicEndpointGeometry

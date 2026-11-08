@@ -6,9 +6,9 @@ Local fourth energy controls normalized moving and frozen increments.
 
 **Theorem 1.1 (Fourth energy between moving endpoints).**
 
-Lean statement: `D5/S3/Arith/Robin/ForwardKernel/FourthMomentEndpoint.local_fourth_endpoint_bound`
+Lean statement: `D5/S3/Arith/Robin/ForwardKernel/FourthTransfer/FourthMomentEndpoint.local_fourth_endpoint_bound`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ForwardKernel/FourthMomentEndpoint.local_fourth_endpoint_bound` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ForwardKernel/FourthTransfer/FourthMomentEndpoint.local_fourth_endpoint_bound` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -18,6 +18,6 @@ Suppose the fourth powers of fixed increments have local energy at most C times 
 
 ## References
 
-- Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/FourthMomentEndpoint.local_fourth_endpoint_bound`
-- Dependency: [D5/S3/Arith/Robin/ForwardKernel/FourthMomentTransferDefs](FourthMomentTransferDefs.md)
-- Dependency: [D5/S3/Arith/Robin/ForwardKernel/MovingEndpointVariance](MovingEndpointVariance.md)
+- Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/FourthTransfer/FourthMomentEndpoint.local_fourth_endpoint_bound`
+- Dependency: [D5/S3/Arith/Robin/ForwardKernel/FourthTransfer/FourthMomentTransferDefs](FourthMomentTransferDefs.md)
+- Dependency: [D5/S3/Arith/Robin/ForwardKernel/MovingEndpointVariance](../MovingEndpointVariance.md)

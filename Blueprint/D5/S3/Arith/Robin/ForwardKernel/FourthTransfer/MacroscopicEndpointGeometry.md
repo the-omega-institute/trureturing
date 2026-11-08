@@ -6,9 +6,9 @@ Shared endpoint geometry for macroscopic freezing
 
 **Theorem 1.1 (Derivative and image bounds for moving endpoints).**
 
-Lean statement: `D5/S3/Arith/Robin/ForwardKernel/MacroscopicEndpointGeometry.macro_endpoint_geometry`
+Lean statement: `D5/S3/Arith/Robin/ForwardKernel/FourthTransfer/MacroscopicEndpointGeometry.macro_endpoint_geometry`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ForwardKernel/MacroscopicEndpointGeometry.macro_endpoint_geometry` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ForwardKernel/FourthTransfer/MacroscopicEndpointGeometry.macro_endpoint_geometry` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -18,9 +18,9 @@ Let a be a nonnegative C1 function on [1,2], bounded by M with absolute derivati
 
 **Theorem 1.2 (The endpoint gap on one equal cell).**
 
-Lean statement: `D5/S3/Arith/Robin/ForwardKernel/MacroscopicEndpointGeometry.macro_cell_gap_le`
+Lean statement: `D5/S3/Arith/Robin/ForwardKernel/FourthTransfer/MacroscopicEndpointGeometry.macro_cell_gap_le`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ForwardKernel/MacroscopicEndpointGeometry.macro_cell_gap_le` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ForwardKernel/FourthTransfer/MacroscopicEndpointGeometry.macro_cell_gap_le` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -30,6 +30,6 @@ Let a be a nonnegative C1 function on [1,2], bounded by M with absolute derivati
 
 ## References
 
-- Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/MacroscopicEndpointGeometry.macro_cell_gap_le`
-- Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/MacroscopicEndpointGeometry.macro_endpoint_geometry`
-- Dependency: [D5/S3/Arith/Robin/ForwardKernel/MacroscopicVarianceDefs](MacroscopicVarianceDefs.md)
+- Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/FourthTransfer/MacroscopicEndpointGeometry.macro_cell_gap_le`
+- Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/FourthTransfer/MacroscopicEndpointGeometry.macro_endpoint_geometry`
+- Dependency: [D5/S3/Arith/Robin/ForwardKernel/MacroscopicVarianceDefs](../MacroscopicVarianceDefs.md)

@@ -1,18 +1,18 @@
-/- GID: D5/S3/Arith/Robin/ForwardKernel/FourthMomentAsymptotic
+/- GID: D5/S3/Arith/Robin/ForwardKernel/FourthTransfer/FourthMomentAsymptotic
    generality: G
-   mirror-B: D5/B/S3/Arith/Robin/ForwardKernel/FourthMomentAsymptotic
+   mirror-B: D5/B/S3/Arith/Robin/ForwardKernel/FourthTransfer/FourthMomentAsymptotic
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: Uniform cumulative fourth-moment asymptotics imply band and local energy bounds. -/
 
-import D5.S3.Arith.Robin.ForwardKernel.FourthMomentTransferDefs
+import D5.S3.Arith.Robin.ForwardKernel.FourthTransfer.FourthMomentTransferDefs
 import D5.S3.Arith.Robin.ForwardKernel.FourthMomentBandDefs
 import D5.S3.Arith.Robin.ForwardKernel.VarianceTransfer
 
 /-! Cumulative fourth moments control the exponent band and every comparable subinterval. -/
 
-namespace D5.S3.Arith.Robin.ForwardKernel.FourthMomentAsymptotic
+namespace D5.S3.Arith.Robin.ForwardKernel.FourthTransfer.FourthMomentAsymptotic
 
 open Set MeasureTheory Filter
 open scoped Topology
@@ -239,4 +239,4 @@ theorem asymptotic_implies_local
   linarith
 
 end
-end D5.S3.Arith.Robin.ForwardKernel.FourthMomentAsymptotic
+end D5.S3.Arith.Robin.ForwardKernel.FourthTransfer.FourthMomentAsymptotic

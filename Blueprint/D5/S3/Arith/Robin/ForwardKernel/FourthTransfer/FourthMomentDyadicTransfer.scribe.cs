@@ -1,10 +1,10 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.Robin.ForwardKernel;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.Robin.ForwardKernel.FourthTransfer;
 
 internal sealed class FourthMomentDyadicTransferDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S3/Arith/Robin/ForwardKernel/FourthMomentDyadicTransfer.";
+    private const string Prefix = "D5/S3/Arith/Robin/ForwardKernel/FourthTransfer/FourthMomentDyadicTransfer.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Fixed-scale mixed moments with homogeneous kernels give dyadic moment interfaces.",

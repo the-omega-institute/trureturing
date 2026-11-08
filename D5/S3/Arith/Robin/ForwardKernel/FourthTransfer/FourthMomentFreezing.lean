@@ -1,17 +1,17 @@
-/- GID: D5/S3/Arith/Robin/ForwardKernel/FourthMomentFreezing
+/- GID: D5/S3/Arith/Robin/ForwardKernel/FourthTransfer/FourthMomentFreezing
    generality: G
-   mirror-B: D5/B/S3/Arith/Robin/ForwardKernel/FourthMomentFreezing
+   mirror-B: D5/B/S3/Arith/Robin/ForwardKernel/FourthTransfer/FourthMomentFreezing
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: Fourth energy yields uniform moving moments and fourth-order cell freezing estimates. -/
 
-import D5.S3.Arith.Robin.ForwardKernel.FourthMomentEndpoint
+import D5.S3.Arith.Robin.ForwardKernel.FourthTransfer.FourthMomentEndpoint
 import D5.S3.Arith.Robin.ForwardKernel.MacroscopicFreezing
 
 /-! Uniform fourth moments and freezing estimates for macroscopic lengths. -/
 
-namespace D5.S3.Arith.Robin.ForwardKernel.FourthMomentFreezing
+namespace D5.S3.Arith.Robin.ForwardKernel.FourthTransfer.FourthMomentFreezing
 
 open Set MeasureTheory Filter
 open scoped Topology BigOperators
@@ -393,4 +393,4 @@ theorem freezing_fourth_eventually
   exact hh.trans ((mul_le_mul_of_nonneg_left hsmall hD).trans hlast)
 
 end
-end D5.S3.Arith.Robin.ForwardKernel.FourthMomentFreezing
+end D5.S3.Arith.Robin.ForwardKernel.FourthTransfer.FourthMomentFreezing

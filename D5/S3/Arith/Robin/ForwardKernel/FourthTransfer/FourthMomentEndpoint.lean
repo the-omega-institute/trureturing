@@ -1,17 +1,17 @@
-/- GID: D5/S3/Arith/Robin/ForwardKernel/FourthMomentEndpoint
+/- GID: D5/S3/Arith/Robin/ForwardKernel/FourthTransfer/FourthMomentEndpoint
    generality: G
-   mirror-B: D5/B/S3/Arith/Robin/ForwardKernel/FourthMomentEndpoint
+   mirror-B: D5/B/S3/Arith/Robin/ForwardKernel/FourthTransfer/FourthMomentEndpoint
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: Local fourth energy bounds moving endpoint differences with an exact interval-length constant. -/
 
-import D5.S3.Arith.Robin.ForwardKernel.FourthMomentTransferDefs
+import D5.S3.Arith.Robin.ForwardKernel.FourthTransfer.FourthMomentTransferDefs
 import D5.S3.Arith.Robin.ForwardKernel.MovingEndpointVariance
 
 /-! The local fourth-energy estimate for two moving endpoints. -/
 
-namespace D5.S3.Arith.Robin.ForwardKernel.FourthMomentEndpoint
+namespace D5.S3.Arith.Robin.ForwardKernel.FourthTransfer.FourthMomentEndpoint
 
 open Set MeasureTheory
 open VarianceTransferDefs FourthMomentTransferDefs
@@ -64,4 +64,4 @@ theorem local_fourth_endpoint_bound
   exact (mul_le_mul_iff_right₀ hR).1 hh'
 
 end
-end D5.S3.Arith.Robin.ForwardKernel.FourthMomentEndpoint
+end D5.S3.Arith.Robin.ForwardKernel.FourthTransfer.FourthMomentEndpoint

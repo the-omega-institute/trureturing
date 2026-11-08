@@ -1,18 +1,18 @@
-/- GID: D5/S3/Arith/Robin/ForwardKernel/FourthMomentMovingTransfer
+/- GID: D5/S3/Arith/Robin/ForwardKernel/FourthTransfer/FourthMomentMovingTransfer
    generality: G
-   mirror-B: D5/B/S3/Arith/Robin/ForwardKernel/FourthMomentMovingTransfer
+   mirror-B: D5/B/S3/Arith/Robin/ForwardKernel/FourthTransfer/FourthMomentMovingTransfer
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: Fourth-order freezing transfers fixed-scale mixed moments to continuously varying lengths. -/
 
-import D5.S3.Arith.Robin.ForwardKernel.FourthMomentFreezing
-import D5.S3.Arith.Robin.ForwardKernel.FourthMomentBlockTransfer
-import D5.S3.Arith.Robin.ForwardKernel.FiniteProductMomentBounds
+import D5.S3.Arith.Robin.ForwardKernel.FourthTransfer.FourthMomentFreezing
+import D5.S3.Arith.Robin.ForwardKernel.FourthTransfer.FourthMomentBlockTransfer
+import D5.S3.Arith.Robin.ForwardKernel.FourthTransfer.FiniteProductMomentBounds
 import Mathlib.Topology.Order.ProjIcc
 import Mathlib.Topology.UniformSpace.HeineCantor
 
-namespace D5.S3.Arith.Robin.ForwardKernel.FourthMomentMovingTransfer
+namespace D5.S3.Arith.Robin.ForwardKernel.FourthTransfer.FourthMomentMovingTransfer
 
 open Set MeasureTheory Filter
 open scoped Topology BigOperators ENNReal
@@ -331,4 +331,4 @@ theorem moving_mixed_moments_tendsto
   linarith only [h₁, h₂, h₃, hmove, hfreeze, hQX, hnRp, hε]
 
 end
-end D5.S3.Arith.Robin.ForwardKernel.FourthMomentMovingTransfer
+end D5.S3.Arith.Robin.ForwardKernel.FourthTransfer.FourthMomentMovingTransfer

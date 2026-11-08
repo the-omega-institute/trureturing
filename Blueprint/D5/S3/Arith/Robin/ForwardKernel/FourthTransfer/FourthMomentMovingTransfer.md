@@ -6,9 +6,9 @@ Local fourth energy transfers interval-weighted fixed-scale mixed moments to mov
 
 **Theorem 1.1 (Fixed-scale to moving-length transfer).**
 
-Lean statement: `D5/S3/Arith/Robin/ForwardKernel/FourthMomentMovingTransfer.moving_mixed_moments_tendsto`
+Lean statement: `D5/S3/Arith/Robin/ForwardKernel/FourthTransfer/FourthMomentMovingTransfer.moving_mixed_moments_tendsto`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ForwardKernel/FourthMomentMovingTransfer.moving_mixed_moments_tendsto` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ForwardKernel/FourthTransfer/FourthMomentMovingTransfer.moving_mixed_moments_tendsto` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -20,7 +20,7 @@ Freeze all lengths and the weight at the left endpoints of n equal cells. Unifor
 
 ## References
 
-- Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/FourthMomentMovingTransfer.moving_mixed_moments_tendsto`
-- Dependency: [D5/S3/Arith/Robin/ForwardKernel/FiniteProductMomentBounds](FiniteProductMomentBounds.md)
-- Dependency: [D5/S3/Arith/Robin/ForwardKernel/FourthMomentBlockTransfer](FourthMomentBlockTransfer.md)
-- Dependency: [D5/S3/Arith/Robin/ForwardKernel/FourthMomentFreezing](FourthMomentFreezing.md)
+- Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/FourthTransfer/FourthMomentMovingTransfer.moving_mixed_moments_tendsto`
+- Dependency: [D5/S3/Arith/Robin/ForwardKernel/FourthTransfer/FiniteProductMomentBounds](FiniteProductMomentBounds.md)
+- Dependency: [D5/S3/Arith/Robin/ForwardKernel/FourthTransfer/FourthMomentBlockTransfer](FourthMomentBlockTransfer.md)
+- Dependency: [D5/S3/Arith/Robin/ForwardKernel/FourthTransfer/FourthMomentFreezing](FourthMomentFreezing.md)

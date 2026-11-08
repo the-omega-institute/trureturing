@@ -1,10 +1,10 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.Robin.ForwardKernel;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.Robin.ForwardKernel.FourthTransfer;
 
 internal sealed class FourthMomentAsymptoticDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S3/Arith/Robin/ForwardKernel/FourthMomentAsymptotic.";
+    private const string Prefix = "D5/S3/Arith/Robin/ForwardKernel/FourthTransfer/FourthMomentAsymptotic.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Uniform cumulative fourth-moment asymptotics give band and local energy estimates.",

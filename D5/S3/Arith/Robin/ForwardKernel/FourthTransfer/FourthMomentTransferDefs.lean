@@ -1,6 +1,6 @@
-/- GID: D5/S3/Arith/Robin/ForwardKernel/FourthMomentTransferDefs
+/- GID: D5/S3/Arith/Robin/ForwardKernel/FourthTransfer/FourthMomentTransferDefs
    generality: G
-   mirror-B: D5/B/S3/Arith/Robin/ForwardKernel/FourthMomentTransferDefs
+   mirror-B: D5/B/S3/Arith/Robin/ForwardKernel/FourthTransfer/FourthMomentTransferDefs
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
@@ -11,7 +11,7 @@ import D5.S3.Arith.Robin.ForwardKernel.MovingLengthCells
 
 /-! Fixed-scale and moving-length fourth-moment definitions. -/
 
-namespace D5.S3.Arith.Robin.ForwardKernel.FourthMomentTransferDefs
+namespace D5.S3.Arith.Robin.ForwardKernel.FourthTransfer.FourthMomentTransferDefs
 
 open Set MeasureTheory Filter
 open scoped Topology BigOperators
@@ -70,4 +70,4 @@ def freezeCoefficient (C L : ℝ) (n : ℕ) : ℝ :=
   1312 * C * (1 + L) ^ 2 / (3 * (n : ℝ) ^ 2 * Real.log 2)
 
 end
-end D5.S3.Arith.Robin.ForwardKernel.FourthMomentTransferDefs
+end D5.S3.Arith.Robin.ForwardKernel.FourthTransfer.FourthMomentTransferDefs

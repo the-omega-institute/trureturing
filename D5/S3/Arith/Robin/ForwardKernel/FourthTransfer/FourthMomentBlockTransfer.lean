@@ -1,17 +1,17 @@
-/- GID: D5/S3/Arith/Robin/ForwardKernel/FourthMomentBlockTransfer
+/- GID: D5/S3/Arith/Robin/ForwardKernel/FourthTransfer/FourthMomentBlockTransfer
    generality: G
-   mirror-B: D5/B/S3/Arith/Robin/ForwardKernel/FourthMomentBlockTransfer
+   mirror-B: D5/B/S3/Arith/Robin/ForwardKernel/FourthTransfer/FourthMomentBlockTransfer
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: Finite frozen blocks and logarithmic Riemann sums transfer fixed-scale moments. -/
 
-import D5.S3.Arith.Robin.ForwardKernel.FourthMomentTransferDefs
+import D5.S3.Arith.Robin.ForwardKernel.FourthTransfer.FourthMomentTransferDefs
 import D5.S3.Combinatorics.Permanental.CycleGeodesic.CycleGeodesicScaling
 
 /-! Fixed block convergence and Riemann sums for the logarithmic position law. -/
 
-namespace D5.S3.Arith.Robin.ForwardKernel.FourthMomentBlockTransfer
+namespace D5.S3.Arith.Robin.ForwardKernel.FourthTransfer.FourthMomentBlockTransfer
 
 open Set MeasureTheory Filter
 open scoped Topology BigOperators
@@ -165,4 +165,4 @@ theorem logarithmic_block_riemann (f : ℝ → ℝ) (hf : ContinuousOn f (Icc (1
   simpa only [sub_add_cancel, zero_add] using hd.add ht
 
 end
-end D5.S3.Arith.Robin.ForwardKernel.FourthMomentBlockTransfer
+end D5.S3.Arith.Robin.ForwardKernel.FourthTransfer.FourthMomentBlockTransfer

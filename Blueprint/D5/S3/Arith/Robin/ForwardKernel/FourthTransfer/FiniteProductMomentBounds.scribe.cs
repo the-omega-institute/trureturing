@@ -1,10 +1,10 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.Robin.ForwardKernel;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.Robin.ForwardKernel.FourthTransfer;
 
 internal sealed class FiniteProductMomentBoundsDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S3/Arith/Robin/ForwardKernel/FiniteProductMomentBounds.";
+    private const string Prefix = "D5/S3/Arith/Robin/ForwardKernel/FourthTransfer/FiniteProductMomentBounds.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Fourth moments control products of at most four factors and their replacement errors.",

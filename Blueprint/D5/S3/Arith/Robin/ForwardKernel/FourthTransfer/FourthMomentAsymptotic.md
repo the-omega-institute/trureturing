@@ -6,9 +6,9 @@ Uniform cumulative fourth-moment asymptotics give band and local energy estimate
 
 **Definition 1.1 (The uniform cumulative formula).**
 
-Lean statement: `D5/S3/Arith/Robin/ForwardKernel/FourthMomentAsymptotic.FourthMomentAsymptoticFor`
+Lean statement: `D5/S3/Arith/Robin/ForwardKernel/FourthTransfer/FourthMomentAsymptotic.FourthMomentAsymptoticFor`
 
-*Formalization.* `D5/S3/Arith/Robin/ForwardKernel/FourthMomentAsymptotic.FourthMomentAsymptoticFor` (`✓ std3`).
+*Formalization.* `D5/S3/Arith/Robin/ForwardKernel/FourthTransfer/FourthMomentAsymptotic.FourthMomentAsymptoticFor` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -18,9 +18,9 @@ For every eta>0, one threshold in Y works for every Y^alpha<=v<=Y^beta: the abso
 
 **Theorem 1.2 (The fourth-moment band bound).**
 
-Lean statement: `D5/S3/Arith/Robin/ForwardKernel/FourthMomentAsymptotic.asymptotic_implies_band`
+Lean statement: `D5/S3/Arith/Robin/ForwardKernel/FourthTransfer/FourthMomentAsymptotic.asymptotic_implies_band`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ForwardKernel/FourthMomentAsymptotic.asymptotic_implies_band` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ForwardKernel/FourthTransfer/FourthMomentAsymptotic.asymptotic_implies_band` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -30,9 +30,9 @@ Suppose E is locally bounded and measurable and 0<alpha<beta<1. The uniform cumu
 
 **Theorem 1.3 (Local fourth energy with constant thirteen).**
 
-Lean statement: `D5/S3/Arith/Robin/ForwardKernel/FourthMomentAsymptotic.asymptotic_implies_local`
+Lean statement: `D5/S3/Arith/Robin/ForwardKernel/FourthTransfer/FourthMomentAsymptotic.asymptotic_implies_local`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ForwardKernel/FourthMomentAsymptotic.asymptotic_implies_local` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ForwardKernel/FourthTransfer/FourthMomentAsymptotic.asymptotic_implies_local` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -44,9 +44,9 @@ The length v lies in the exponent band at both cumulative endpoints. Subtract th
 
 ## References
 
-- Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/FourthMomentAsymptotic.FourthMomentAsymptoticFor`
-- Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/FourthMomentAsymptotic.asymptotic_implies_band`
-- Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/FourthMomentAsymptotic.asymptotic_implies_local`
-- Dependency: [D5/S3/Arith/Robin/ForwardKernel/FourthMomentBandDefs](FourthMomentBandDefs.md)
-- Dependency: [D5/S3/Arith/Robin/ForwardKernel/FourthMomentTransferDefs](FourthMomentTransferDefs.md)
-- Dependency: [D5/S3/Arith/Robin/ForwardKernel/VarianceTransfer](VarianceTransfer.md)
+- Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/FourthTransfer/FourthMomentAsymptotic.FourthMomentAsymptoticFor`
+- Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/FourthTransfer/FourthMomentAsymptotic.asymptotic_implies_band`
+- Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/FourthTransfer/FourthMomentAsymptotic.asymptotic_implies_local`
+- Dependency: [D5/S3/Arith/Robin/ForwardKernel/FourthMomentBandDefs](../FourthMomentBandDefs.md)
+- Dependency: [D5/S3/Arith/Robin/ForwardKernel/FourthTransfer/FourthMomentTransferDefs](FourthMomentTransferDefs.md)
+- Dependency: [D5/S3/Arith/Robin/ForwardKernel/VarianceTransfer](../VarianceTransfer.md)

@@ -1,12 +1,12 @@
-/- GID: D5/S3/Arith/Robin/ForwardKernel/FourthMomentDyadicTransfer
+/- GID: D5/S3/Arith/Robin/ForwardKernel/FourthTransfer/FourthMomentDyadicTransfer
    generality: G
-   mirror-B: D5/B/S3/Arith/Robin/ForwardKernel/FourthMomentDyadicTransfer
+   mirror-B: D5/B/S3/Arith/Robin/ForwardKernel/FourthTransfer/FourthMomentDyadicTransfer
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: Homogeneous fixed-scale mixed moments give dyadic moment interfaces. -/
 
-import D5.S3.Arith.Robin.ForwardKernel.FourthMomentMovingTransfer
+import D5.S3.Arith.Robin.ForwardKernel.FourthTransfer.FourthMomentMovingTransfer
 import D5.S3.Arith.Robin.ForwardKernel.FirstOrderInterface
 import D5.S3.Arith.Robin.ForwardKernel.SecondOrderInterface
 import D5.S3.Arith.Robin.ForwardKernel.DyadicMacroMoments
@@ -15,7 +15,7 @@ import D5.S3.Arith.Robin.ForwardKernel.MomentTransferWeights
 
 /-! Uniform logarithmic correction and the exact dyadic normalization. -/
 
-namespace D5.S3.Arith.Robin.ForwardKernel.FourthMomentDyadicTransfer
+namespace D5.S3.Arith.Robin.ForwardKernel.FourthTransfer.FourthMomentDyadicTransfer
 
 open Set MeasureTheory Filter
 open scoped Topology BigOperators ENNReal
@@ -316,4 +316,4 @@ theorem fixed_scale_dyadic_interface
   simpa only [sub_add_cancel, zero_add] using herror.add hlim
 
 end
-end D5.S3.Arith.Robin.ForwardKernel.FourthMomentDyadicTransfer
+end D5.S3.Arith.Robin.ForwardKernel.FourthTransfer.FourthMomentDyadicTransfer

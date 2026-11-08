@@ -1,6 +1,6 @@
-/- GID: D5/S3/Arith/Robin/ForwardKernel/FiniteProductMomentBounds
+/- GID: D5/S3/Arith/Robin/ForwardKernel/FourthTransfer/FiniteProductMomentBounds
    generality: G
-   mirror-B: D5/B/S3/Arith/Robin/ForwardKernel/FiniteProductMomentBounds
+   mirror-B: D5/B/S3/Arith/Robin/ForwardKernel/FourthTransfer/FiniteProductMomentBounds
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
@@ -10,7 +10,7 @@ import D5.S3.Arith.Robin.ForwardKernel.MomentTransfer
 import Mathlib.MeasureTheory.Function.LpSeminorm.CompareExp
 import Mathlib.MeasureTheory.Function.LpSeminorm.LpNorm
 
-namespace D5.S3.Arith.Robin.ForwardKernel.FiniteProductMomentBounds
+namespace D5.S3.Arith.Robin.ForwardKernel.FourthTransfer.FiniteProductMomentBounds
 
 open MeasureTheory Filter
 open scoped BigOperators ENNReal
@@ -183,4 +183,4 @@ theorem product_fourth_difference_bound [IsProbabilityMeasure μ]
     _ = _ := by simp; ring
 
 end
-end D5.S3.Arith.Robin.ForwardKernel.FiniteProductMomentBounds
+end D5.S3.Arith.Robin.ForwardKernel.FourthTransfer.FiniteProductMomentBounds

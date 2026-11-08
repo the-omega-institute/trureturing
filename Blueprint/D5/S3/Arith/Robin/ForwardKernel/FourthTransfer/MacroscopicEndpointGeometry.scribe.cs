@@ -1,10 +1,10 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.Robin.ForwardKernel;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.Robin.ForwardKernel.FourthTransfer;
 
 internal sealed class MacroscopicEndpointGeometryDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S3/Arith/Robin/ForwardKernel/MacroscopicEndpointGeometry.";
+    private const string Prefix = "D5/S3/Arith/Robin/ForwardKernel/FourthTransfer/MacroscopicEndpointGeometry.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Shared endpoint geometry for macroscopic freezing",

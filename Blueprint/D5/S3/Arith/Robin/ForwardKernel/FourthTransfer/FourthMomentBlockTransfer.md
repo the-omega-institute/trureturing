@@ -8,9 +8,9 @@ The cells have endpoints u_j=1+j/n. Each cell receives its exact logarithmic pro
 
 **Theorem 1.1 (Finite frozen block convergence).**
 
-Lean statement: `D5/S3/Arith/Robin/ForwardKernel/FourthMomentBlockTransfer.fixed_block_moments_tendsto`
+Lean statement: `D5/S3/Arith/Robin/ForwardKernel/FourthTransfer/FourthMomentBlockTransfer.fixed_block_moments_tendsto`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ForwardKernel/FourthMomentBlockTransfer.fixed_block_moments_tendsto` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ForwardKernel/FourthTransfer/FourthMomentBlockTransfer.fixed_block_moments_tendsto` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -20,9 +20,9 @@ Assume interval-weighted fixed-scale mixed moment convergence for a kernel W. Fi
 
 **Theorem 1.2 (Riemann sums with exact logarithmic masses).**
 
-Lean statement: `D5/S3/Arith/Robin/ForwardKernel/FourthMomentBlockTransfer.logarithmic_block_riemann`
+Lean statement: `D5/S3/Arith/Robin/ForwardKernel/FourthTransfer/FourthMomentBlockTransfer.logarithmic_block_riemann`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ForwardKernel/FourthMomentBlockTransfer.logarithmic_block_riemann` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ForwardKernel/FourthTransfer/FourthMomentBlockTransfer.logarithmic_block_riemann` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -32,7 +32,7 @@ For every continuous real function f on [1,2], the sum of f(u_j) times the logar
 
 ## References
 
-- Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/FourthMomentBlockTransfer.fixed_block_moments_tendsto`
-- Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/FourthMomentBlockTransfer.logarithmic_block_riemann`
-- Dependency: [D5/S3/Arith/Robin/ForwardKernel/FourthMomentTransferDefs](FourthMomentTransferDefs.md)
-- Dependency: [D5/S3/Combinatorics/Permanental/CycleGeodesic/CycleGeodesicScaling](../../../Combinatorics/Permanental/CycleGeodesic/CycleGeodesicScaling.md)
+- Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/FourthTransfer/FourthMomentBlockTransfer.fixed_block_moments_tendsto`
+- Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/FourthTransfer/FourthMomentBlockTransfer.logarithmic_block_riemann`
+- Dependency: [D5/S3/Arith/Robin/ForwardKernel/FourthTransfer/FourthMomentTransferDefs](FourthMomentTransferDefs.md)
+- Dependency: [D5/S3/Combinatorics/Permanental/CycleGeodesic/CycleGeodesicScaling](../../../../Combinatorics/Permanental/CycleGeodesic/CycleGeodesicScaling.md)

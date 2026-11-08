@@ -8,13 +8,13 @@
 
 import D5.S3.Arith.Robin.ForwardKernel.LocalVarianceBand
 import D5.S3.Arith.Robin.ForwardKernel.FixedLengthCovariance
-import D5.S3.Arith.Robin.ForwardKernel.MacroscopicEndpointGeometry
+import D5.S3.Arith.Robin.ForwardKernel.FourthTransfer.MacroscopicEndpointGeometry
 
 namespace D5.S3.Arith.Robin.ForwardKernel.MacroscopicFreezing
 
 open Set MeasureTheory Filter
 open scoped Topology BigOperators
-open VarianceTransferDefs MacroscopicVarianceDefs MovingLengthCells MacroscopicEndpointGeometry
+open VarianceTransferDefs MacroscopicVarianceDefs MovingLengthCells FourthTransfer.MacroscopicEndpointGeometry
 
 noncomputable section
 
