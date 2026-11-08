@@ -209,3 +209,46 @@ theorem ball_actual_positive : ballArena.{u}.Law ballActual :=
   ball_source_bridge.mp (@unit_row_closed_ball.{u})
 
 end Reg.D5.S3.Quantum.SpinFactor.OriginalUnitSupport
+
+namespace Reg.D5.S3.Quantum.SpinFactor.OriginalUnitSupport
+
+open _root_.D5.S3.Quantum.SpinFactor.OriginalUnitSupport
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+
+structure SemidefiniteState (p : BallInputs.{u}) where
+  mu : ℝ
+  b : p.E
+  semidefinite : b ∈ p.A.cone ∨ -b ∈ p.A.cone
+
+abbrev semidefiniteSignature : Signature where
+  Params := BallInputs.{u}
+  State := SemidefiniteState
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output := fun _ p => p.E
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def semidefiniteActual : Realization semidefiniteSignature.{u} :=
+  realize semidefiniteSignature (fun _ p z => p.D (z.mu • p.A.unit) z.b) (fun e => nomatch e)
+
+abbrev semidefiniteArena : Arena where
+  signature := semidefiniteSignature.{u}
+  Law R := ∀ p z, R.readout () p z = 0
+
+abbrev semidefiniteSourceScope : Prop := type_of% (@unit_row_semidefinite.{u})
+
+theorem semidefinite_source_bridge : semidefiniteSourceScope.{u} ↔
+    semidefiniteArena.{u}.Law semidefiniteActual := by
+  constructor
+  · intro h p z
+    exact h p.S p.D p.P p.positive p.balance p.A p.comm p.unitLaw p.squareNorm
+      p.separates p.exactCone p.orderNorm z.mu z.b z.semidefinite
+  · intro h E normed space S D P hP hPB A hc hu hsq hsep hexact horder mu b hb
+    exact h ⟨E, S, D, P, hP, hPB, A, hc, hu, hsq, hsep, hexact, horder⟩ ⟨mu, b, hb⟩
+
+theorem semidefinite_actual_positive : semidefiniteArena.{u}.Law semidefiniteActual :=
+  semidefinite_source_bridge.mp (@unit_row_semidefinite.{u})
+
+end Reg.D5.S3.Quantum.SpinFactor.OriginalUnitSupport
