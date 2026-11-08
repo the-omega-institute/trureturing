@@ -26,7 +26,9 @@ abbrev signature : Signature where
   finiteAnchor := inferInstance
 
 def actual : Realization signature := realize signature
-  (fun _ p b => fixed p.1 p.2 b) (fun e => nomatch e)
+  (fun _ p b =>
+    _root_.D5.S3.Quantum.SpinFactor.OriginalDContract.crossD
+      (if p.1 then .plus else .minus) p.2 b) (fun e => nomatch e)
 
 def rejected : Realization signature := realize signature
   (fun _ _ _ => 0) (fun e => nomatch e)
@@ -38,29 +40,35 @@ abbrev arena : Arena where
     (∀ a b, D a b = R.readout () (opposite, a) b) →
       Consequences D ∧ MatrixInterfaces opposite D
 
-private def ex : E := (0, toLp 2 ![1, 0, 0])
-private def ey : E := (0, toLp 2 ![0, 1, 0])
+private def ex : E := (0, ![1, 0, 0])
+private def ey : E := (0, ![0, 1, 0])
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  have hnorm : ‖ey.2‖ ≤ 1 := by
-    have hs := _root_.D5.S3.Quantum.Measurement.FourQubitParentConstruction.norm_sq_coords ey.2
-    norm_num [ey] at hs
-    nlinarith [norm_nonneg ey.2]
-  have hb := (h false (fun _ _ => 0) (fun _ _ => rfl)).1.pb 1 ey.2 hnorm ex ex ey
-  norm_num [squareReadout, phaseLeft, phaseRight, evaluate, ex, ey, jordan,
-    ofFamily, toFamily, _root_.D5.S3.Quantum.Algebra.PauliFixedProductFamily.S,
-    _root_.D5.S3.Quantum.Algebra.PauliFixedProductFamily.spin,
-    PiLp.inner_apply, Fin.sum_univ_three, RCLike.inner_apply] at hb
+  have hnorm : vnorm ey.2 ≤ 1 := by
+    norm_num [ey, vnorm,
+      _root_.D5.S3.Quantum.SpinFactor.OriginalDContract.vnorm,
+      _root_.D5.S3.Quantum.SpinFactor.OriginalDContract.dot]
+  let α : ContractEvaluation :=
+    { mass := 1, vector := ey.2, positive := hnorm }
+  have hb := (h false (fun _ _ => 0) (fun _ _ => rfl)).1.pb α ex ex ey
+  norm_num [
+    _root_.D5.S3.Quantum.SpinFactor.OriginalDContract.PB,
+    _root_.D5.S3.Quantum.SpinFactor.OriginalDContract.squareReadout,
+    _root_.D5.S3.Quantum.SpinFactor.OriginalDContract.phaseR,
+    _root_.D5.S3.Quantum.SpinFactor.OriginalDContract.phaseS,
+    _root_.D5.S3.Quantum.SpinFactor.OriginalDContract.evaluate, ex, ey,
+    _root_.D5.S3.Quantum.SpinFactor.OriginalDContract.jordan,
+    _root_.D5.S3.Quantum.SpinFactor.OriginalDContract.dot] at hb
 
 private theorem actual_dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨(false, ex), 0, ey, ?_⟩
   intro h
   have hz := congrArg (fun a : E => a.2 2) h
-  norm_num [actual, realize, fixed, sign, cross, ofFamily, toFamily, ex, ey,
-    _root_.D5.S3.Quantum.Algebra.PauliFixedProductFamily.C,
-    _root_.D5.S3.Quantum.Algebra.PauliFixedProductFamily.cross, cross_apply] at hz
+  norm_num [actual, realize, ex, ey,
+    _root_.D5.S3.Quantum.SpinFactor.OriginalDContract.crossD,
+    _root_.D5.S3.Quantum.SpinFactor.OriginalDContract.cross] at hz
 
 def family : Registration arena (type_of% (@same_D_consequences)) where
   actual := actual
@@ -90,7 +98,9 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize signature
-    (fun _ p b => fixed p.1 p.2 b) (fun e => nomatch e))
+    (fun _ p b =>
+      _root_.D5.S3.Quantum.SpinFactor.OriginalDContract.crossD
+        (if p.1 then .plus else .minus) p.2 b) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none

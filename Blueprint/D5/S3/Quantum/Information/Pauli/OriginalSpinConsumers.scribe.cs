@@ -13,17 +13,17 @@ internal sealed class OriginalSpinConsumersDocument : IScribeDocumentDefinition
         H("Original spin evaluations and Pauli products"),
         Blocks(
             Def("E", "Original carrier", Equal(E(), Call("Prod", R(), V())),
-                "The carrier is a real scalar together with a vector in Euclidean real three-space. Write a = (s,x)."),
+                "The carrier is the canonical OriginalDContract carrier E = R x (Fin 3 -> R). Write a = (s,x); this source consumes that exact carrier."),
             Def("unit", "Unit", Equal(U(), Pair(Num(1), Num(0))),
                 "The unit has scalar coordinate one and vector coordinate zero."),
             Def("toFamily", "Four-coordinate transport", CoordinateFormula(true),
-                "The existing spin-product carrier orders its coordinates as scalar, x, y, z. This map only changes coordinates."),
+                "The existing spin-product carrier orders the canonical vector coordinates as scalar, x, y, z. This map is the supplier transport from the canonical carrier."),
             Def("ofFamily", "Scalar and vector transport", CoordinateFormula(false),
-                "The inverse coordinate transport retains the original scalar and Euclidean vector."),
+                "The inverse coordinate transport returns the original scalar and function-valued vector coordinates."),
             Def("jordan", "Original Jordan product", JordanFormula(),
-                "The product transports PauliFixedProductFamily.S to the original scalar/vector carrier."),
+                "The product is definitionally the canonical OriginalDContract.jordan; jordan_supplier records its correspondence with PauliFixedProductFamily.S."),
             Def("cross", "Bilinear cross channel", CrossFormula(),
-                "The channel transports the existing bilinear PauliFixedProductFamily.C and discards both scalar coordinates."),
+                "The channel transports PauliFixedProductFamily.C to the canonical OriginalDContract.cross channel and discards both scalar coordinates."),
             Def("sign", "Global orientation", For(Equal(Call("sign", X("o")),
                 Call("ite", X("o"), Num(1), Negate(Num(1)))), ("o", X("Bool"))),
                 "False selects sign minus one. True selects sign plus one."),
@@ -31,14 +31,14 @@ internal sealed class OriginalSpinConsumersDocument : IScribeDocumentDefinition
                 Smul(Call("sign", X("o")), Call("cross", X("a"), X("b")))), "a", "b"), ("o", X("Bool"))),
                 "One orientation is selected for the entire relation, independently of inputs and evaluations."),
             Def("originalNorm", "Original norm", EachE(Equal(N(X("a")),
-                Add(Call("abs", S(X("a"))), Norm(VPart(X("a"))))), "a"),
-                "This is the spin order-unit norm |s| plus the Euclidean length of x."),
+                Add(Call("abs", S(X("a"))), Call("vnorm", VPart(X("a"))))), "a"),
+                "This is the exact OriginalDContract norm |s| + vnorm x."),
             Def("cone", "Original cone", EachE(Iff(Call("cone", X("a")),
-                LE(Norm(VPart(X("a"))), S(X("a")))), "a"),
-                "Positivity means that the scalar coordinate dominates the vector length."),
+                LE(Call("vnorm", VPart(X("a"))), S(X("a")))), "a"),
+                "Positivity is the exact OriginalDContract cone inequality vnorm x <= s."),
             Def("evaluate", "All-mass evaluations", AllMV(EachE(Equal(Eval(X("a")),
                 Add(Multiply(X("m"), S(X("a"))), Inner(X("v"), VPart(X("a"))))), "a")),
-                "Allowed parameters satisfy norm v at most m. Zero, subnormalized and unequal masses are all retained."),
+                "The raw matrix coordinates represent every canonical Evaluation mass m and vector v with vnorm v <= m, including zero, subnormalized and unequal masses."),
             Def("PositiveEvaluation", "Positive real linear functionals", For(
                 Iff(Call("PositiveEvaluation", X("alpha")), EachE(
                     Implies(Call("cone", X("a")), LE(Num(0), Apply(X("alpha"), X("a")))), "a")),
@@ -47,10 +47,11 @@ internal sealed class OriginalSpinConsumersDocument : IScribeDocumentDefinition
                 Apply(Call("evaluationLinear", X("m"), X("v")), X("a")), Eval(X("a"))), "a")),
                 "The evaluation formula is real linear before imposing positivity."),
             Def("phi", "Pauli observable", EachE(Equal(Phi(X("a")),
-                Call("scalarB", S(X("a")), VPart(X("a")))), "a"),
+                Call("scalarB", S(X("a")), Call("toLp", Num(2), VPart(X("a"))))), "a"),
                 "The supplier scalarB gives the Hermitian matrix s I plus x dot sigma."),
             Def("density", "Unnormalized density", AllMV(Equal(Rho(),
-                Smul(Typed(Fraction(Num(1), Num(2)), C()), Call("scalarB", X("m"), X("v"))))),
+                Smul(Typed(Fraction(Num(1), Num(2)), C()),
+                    Call("scalarB", X("m"), Call("toLp", Num(2), X("v"))))),
                 "The density has trace m and is positive exactly when norm v is at most m."),
             Def("product", "Both matrix orientations", For(Equal(
                 Call("product", X("o"), X("A"), X("B")),
@@ -60,35 +61,28 @@ internal sealed class OriginalSpinConsumersDocument : IScribeDocumentDefinition
             Def("gram", "Actual directed Gram table", GramFormula(),
                 "Every ordered pair uses the actual D value, including each diagonal and both directed off-diagonal entries."),
             Def("P2", "Two-label complex positivity", For(Iff(Call("P2", X("D")),
-                PositiveMV(For(PSD(Gram()), ("a", Arrow(Fin(2), E()))))), ("D", Rel())),
-                "The complex matrix is positive for all original positive evaluations and all two-label families."),
-            Def("squareReadout", "Phase-square readout", SquareFormula(),
-                "The square sum includes twice the same original directed relation."),
-            Def("phaseLeft", "Left phase label", PhaseFormula(true),
-                "The left phase label is formed in the original carrier."),
-            Def("phaseRight", "Right phase label", PhaseFormula(false),
-                "The right phase label uses the same original relation."),
+                Call("OriginalDContract.P2", X("D"))), ("D", Rel())),
+                "This node is an alias of OriginalDContract.P2: every canonical positive Evaluation and every original pair uses the same total D in both directed off-diagonal entries and on both diagonals."),
             Def("PB", "Original plus/minus balance", For(Iff(Call("PB", X("D")),
-                PositiveMV(EachE(Equal(Q(Left(Num(1)), Right(Num(1))),
-                    Q(Left(Negate(Num(1))), Right(Negate(Num(1))))), "a", "b", "c"))), ("D", Rel())),
-                "Only t = 1 and t = -1 are compared. No continuous-time premise is added."),
+                Call("OriginalDContract.PB", X("D"))), ("D", Rel())),
+                "This node is an alias of OriginalDContract.PB: the canonical phaseR/phaseS outer pairs at t = +1 and t = -1 are compared with the same D."),
             Def("OriginalContinuous", "Continuity in the original norm", For(
                 Iff(Call("OriginalContinuous", X("D")), Continuity()), ("D", Rel())),
                 "Input and output increments are measured by |s| plus norm x."),
             Def("Consequences", "Same-relation consequences", For(
                 Iff(Call("Consequences", X("D")), ConsequenceFormula()), ("D", Rel())),
-                "Every conclusion concerns the same total relation D, including the original reassociation identity."),
+                "Every conclusion concerns the same arbitrary total relation D on the canonical OriginalDContract carrier, including the original reassociation identity."),
             Def("MatrixInterfaces", "Original cone, norm and evaluation interfaces", For(
                 Iff(Call("MatrixInterfaces", X("o"), X("D")), InterfaceFormula()),
                 ("o", X("Bool")), ("D", Rel())),
-                "Every positive original linear functional and every positive two by two matrix is represented with its full mass. The matrix order interval retains the original norm."),
+                "Every positive original linear functional and every positive two by two matrix is represented with its full canonical mass and vector. The matrix order interval retains the exact OriginalDContract norm."),
             Node("same_D_consequences", "One global orientation supplies all consumers", DescribeRole.Theorem,
                 For(Implies(EachE(Equal(DApply(X("a"), X("b")),
-                    Fixed(X("o"), X("a"), X("b"))), "a", "b"),
+                    CrossD(X("o"), X("a"), X("b"))), "a", "b"),
                     And(Call("Consequences", X("D")), Call("MatrixInterfaces", X("o"), X("D")))),
                     ("o", X("Bool")), ("D", Rel())),
-                "The Pauli identity identifies S - i D with one fixed multiplication order on every scalar/vector input. For ordinary order the complex Gram quadratic form is tr(rho Z* Z), with Z the finite sum of Hermitian labels with arbitrary complex coefficients. Cyclicity gives tr(Z rho Z*), which is nonnegative. Opposite order transposes the same Gram table. The phase balance and reassociation follow from the fixed cross formulas. The cross-product bound gives the original-norm difference estimate and continuity. No argument divides by the mass. This conditional statement supplies the reverse implication and the consequences after a global orientation has been obtained; it does not derive an orientation from arbitrary total D.")),
-        []));
+                "The hypothesis is the canonical OriginalDContract.crossD orientation on every original input; fixed_crossD connects it to one Bool-selected Pauli multiplication order. For ordinary order the complex Gram quadratic form is tr(rho Z* Z), with Z the finite sum of Hermitian labels with arbitrary complex coefficients. Cyclicity gives tr(Z rho Z*), which is nonnegative. Opposite order transposes the same directed Gram table. The canonical PB and reassociation, original-norm bounds, continuity, all-mass evaluation interfaces and all finite Gram consequences are then supplied for this same D. No argument divides by the mass; this endpoint is conditional and does not classify an arbitrary D.")),
+        [])));
 
     private static Formula CoordinateFormula(bool forward)
     {
@@ -99,22 +93,22 @@ internal sealed class OriginalSpinConsumersDocument : IScribeDocumentDefinition
                 Entry(VPart(a), 1), Comma, Entry(VPart(a), 2), Close);
             return EachE(Equal(Call("toFamily", a), Call("toLp", Num(2), coords)), "a");
         }
-        var vector = Call("toLp", Num(2), Seq(Open, Entry(a, 1), Comma, Entry(a, 2), Comma, Entry(a, 3), Close));
+        var vector = For(Equal(Apply(VPart(a), X("i")), Entry(a, 0)), ("i", Fin(3)));
         return For(Equal(Call("ofFamily", a), Pair(Entry(a, 0), vector)),
-            ("a", Call("EuclideanSpace", R(), Fin(4))));
+            ("a", Call("Pi", Fin(4), R())));
     }
 
     private static Formula JordanFormula()
     {
         var a = X("a"); var b = X("b");
-        var scalar = Add(Multiply(S(a), S(b)), Inner(VPart(a), VPart(b)));
+        var scalar = Add(Multiply(S(a), S(b)), Call("OriginalDContract.dot", VPart(a), VPart(b)));
         var vector = Add(Smul(S(a), VPart(b)), Smul(S(b), VPart(a)));
         return EachE(Equal(J(a, b), Pair(scalar, vector)), "a", "b");
     }
 
     private static Formula CrossFormula()
     {
-        var vector = Call("toLp", Num(2), Call("crossProduct", VPart(X("a")), VPart(X("b"))));
+        var vector = Call("OriginalDContract.cross", VPart(X("a")), VPart(X("b")));
         return EachE(Equal(Call("cross", X("a"), X("b")), Pair(Num(0), vector)), "a", "b");
     }
 
@@ -124,22 +118,6 @@ internal sealed class OriginalSpinConsumersDocument : IScribeDocumentDefinition
         var entry = Subtract(Typed(Eval(J(a, b)), C()), Multiply(Imag(), Typed(Eval(DApply(a, b)), C())));
         return For(AllMV(For(Equal(Apply(Gram(), X("i"), X("j")), entry),
             ("a", Arrow(X("I"), E())), ("i", X("I")), ("j", X("I")))), ("I", X("Type")), ("D", Rel()));
-    }
-
-    private static Formula SquareFormula()
-    {
-        var b = X("b"); var c = X("c");
-        var sum = Add(Add(J(b, b), J(c, c)), Smul(Num(2), DApply(b, c)));
-        return For(AllMV(EachE(Equal(Q(b, c), Eval(sum)), "b", "c")), ("D", Rel()));
-    }
-
-    private static Formula PhaseFormula(bool left)
-    {
-        var a = X("a"); var b = X("b"); var c = X("c"); var t = X("t");
-        var value = left
-            ? Subtract(Add(b, Smul(t, DApply(a, b))), Smul(t, J(a, c)))
-            : Add(Add(c, Smul(t, J(a, b))), Smul(t, DApply(a, c)));
-        return For(EachE(For(Equal(left ? Left(t) : Right(t), value), ("t", R())), "a", "b", "c"), ("D", Rel()));
     }
 
     private static Formula ConsequenceFormula()
@@ -167,7 +145,7 @@ internal sealed class OriginalSpinConsumersDocument : IScribeDocumentDefinition
     private static Formula InterfaceFormula()
     {
         var a = X("a"); var b = X("b"); var r = X("r"); var alpha = X("alpha");
-        var parameterBound = LE(Norm(X("v")), X("m"));
+        var parameterBound = LE(Call("vnorm", X("v")), X("m"));
         var positive = AllMV(Iff(PSD(Rho()), parameterBound));
         var mass = AllMV(Equal(Trace(Rho()), Typed(X("m"), C())));
         var evaluationPositive = AllMV(Iff(Call("PositiveEvaluation", Call("evaluationLinear", X("m"), X("v"))), parameterBound));
@@ -208,7 +186,7 @@ internal sealed class OriginalSpinConsumersDocument : IScribeDocumentDefinition
     private static Formula C() => Seq(Mathbb, Grp(X("C")));
     private static Formula Imag() => Seq(Operatorname, Grp(X("Complex"), Dot, X("I")));
     private static Formula E() => X("E");
-    private static Formula V() => Call("EuclideanSpace", R(), Fin(3));
+    private static Formula V() => Arrow(Fin(3), R());
     private static Formula Mat() => Call("Matrix", Fin(2), Fin(2), C());
     private static Formula Rel() => Arrow(E(), Arrow(E(), E()));
     private static Formula Linear() => Call("LinearMap", R(), E(), R());
@@ -220,15 +198,14 @@ internal sealed class OriginalSpinConsumersDocument : IScribeDocumentDefinition
     private static Formula J(Formula a, Formula b) => Call("jordan", a, b);
     private static Formula DApply(Formula a, Formula b) => Apply(X("D"), a, b);
     private static Formula Fixed(Formula o, Formula a, Formula b) => Call("fixed", o, a, b);
+    private static Formula CrossD(Formula o, Formula a, Formula b) =>
+        Call("OriginalDContract.crossD", Call("if", o, X(".plus"), X(".minus")), a, b);
     private static Formula N(Formula a) => Call("originalNorm", a);
     private static Formula Eval(Formula a) => Call("evaluate", X("m"), X("v"), a);
     private static Formula Phi(Formula a) => Call("phi", a);
     private static Formula Rho() => Call("density", X("m"), X("v"));
     private static Formula Gram() => Call("gram", X("D"), X("m"), X("v"), X("a"));
-    private static Formula Q(Formula b, Formula c) => Call("squareReadout", X("D"), X("m"), X("v"), b, c);
-    private static Formula Left(Formula t) => Call("phaseLeft", X("D"), X("a"), X("b"), X("c"), t);
-    private static Formula Right(Formula t) => Call("phaseRight", X("D"), X("a"), X("b"), X("c"), t);
-    private static Formula Inner(Formula a, Formula b) => Call("inner", R(), a, b);
+    private static Formula Inner(Formula a, Formula b) => Call("OriginalDContract.dot", a, b);
     private static Formula PSD(Formula a) => Call("PosSemidef", a);
     private static Formula Trace(Formula a) => Call("trace", a);
     private static Formula Pair(Formula a, Formula b) => Seq(Open, a, Comma, Sp, b, Close);
@@ -253,7 +230,7 @@ internal sealed class OriginalSpinConsumersDocument : IScribeDocumentDefinition
         return body;
     }
     private static Formula AllMV(Formula body) => For(body, ("m", R()), ("v", V()));
-    private static Formula PositiveMV(Formula body) => AllMV(Implies(LE(Norm(X("v")), X("m")), body));
+    private static Formula PositiveMV(Formula body) => AllMV(Implies(LE(Call("vnorm", X("v")), X("m")), body));
     private static Formula Conjoin(params Formula[] formulas)
     {
         var result = formulas[^1];
