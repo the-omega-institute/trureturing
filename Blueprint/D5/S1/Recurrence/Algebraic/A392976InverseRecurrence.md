@@ -6,13 +6,15 @@ The inverse quintic satisfies the full A392976 recurrence and is D-finite.
 
 OEIS A392976, https://oeis.org/A392976, defines the sequence by reversion of f(X)=X((1-X^2)^2-X). All series here are formal power series over Q, with ordinary degree beginning at zero. Rational coefficients provide the characteristic-zero carrier of the published integer sequence. The inverse has constant coefficient zero; both formal compositions are X. No analytic branch is selected. The offset is zero. The secondary offset three does not set the recurrence threshold. Every recurrence index is a natural number at least five, representing every integer in that range, and subtraction in a sequence argument is natural subtraction. The function castQ embeds a natural number into Q. Substitution uses the polynomial f as its formal power series.
 
+The source is OEIS A392976, NAME and Mathar's FORMULA conjecture, revision 19, January 31, 2026, pinned oeisdata export 4c6abcdf8b00fd262030066ebfced671457e5b43. The sequence is due to Seiichi Manyama; the conjecture is due to R. J. Mathar, January 29, 2026. Credit The Online Encyclopedia of Integer Sequences, the OEIS Foundation and the named contributors; the source text is CC BY-SA 4.0. The Library note retains the literal source wording and immutable locator. The author gives no onset: n at least five is the valid-lag interpretation, not a quotation.
+
 **Definition 1.1 (The quintic polynomial).**
 
 $$f = X \cdot ((1 - X^{2})^{2} - X)$$
 
 *Formalization.* `D5/S1/Recurrence/Algebraic/A392976InverseRecurrence.f` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* R. J. Mathar; Seiichi Manyama; The OEIS Foundation and contributors (2026). *OEIS A392976: formal inverse quintic, D-finiteness and Mathar's recurrence*. URL: <https://oeis.org/A392976/internal>.
 
 *Commentary.*
 
@@ -24,7 +26,7 @@ $$U = \operatorname{substInvOfIsUnit}\left(f\right)$$
 
 *Formalization.* `D5/S1/Recurrence/Algebraic/A392976InverseRecurrence.U` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* R. J. Mathar; Seiichi Manyama; The OEIS Foundation and contributors (2026). *OEIS A392976: formal inverse quintic, D-finiteness and Mathar's recurrence*. URL: <https://oeis.org/A392976/internal>.
 
 *Commentary.*
 
@@ -38,6 +40,8 @@ $$A = \operatorname{mk}\left((n:\mathbb{N} \mapsto \operatorname{coeff}\left(n +
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* R. J. Mathar; Seiichi Manyama; The OEIS Foundation and contributors (2026). *OEIS A392976: formal inverse quintic, D-finiteness and Mathar's recurrence*. URL: <https://oeis.org/A392976/internal>.
+
 *Commentary.*
 
 The n-th coefficient is the coefficient of degree n+1 in U, so X A=U.
@@ -49,6 +53,8 @@ $$\forall n \in \mathbb{N},\; \operatorname{a}\left(n\right) = \operatorname{coe
 *Formalization.* `D5/S1/Recurrence/Algebraic/A392976InverseRecurrence.a` (`✓ std3`).
 
 *Source.* Repository-derived.
+
+*Acknowledgement.* R. J. Mathar; Seiichi Manyama; The OEIS Foundation and contributors (2026). *OEIS A392976: formal inverse quintic, D-finiteness and Mathar's recurrence*. URL: <https://oeis.org/A392976/internal>.
 
 *Commentary.*
 
@@ -62,6 +68,8 @@ $$\forall B \in \mathbb{Q}[[X]],\; \operatorname{DFinite}\left(B\right) \Leftrig
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* R. J. Mathar; Seiichi Manyama; The OEIS Foundation and contributors (2026). *OEIS A392976: formal inverse quintic, D-finiteness and Mathar's recurrence*. URL: <https://oeis.org/A392976/internal>.
+
 *Commentary.*
 
 The derivative is formal. A polynomial family indexed by Fin(d+1) gives the coefficients of derivative orders zero through d. At least one polynomial is nonzero; the differential equation is homogeneous.
@@ -72,7 +80,7 @@ $$claim \Leftrightarrow \left(\operatorname{coeff}\left(0, U\right) = 0 \land \l
 
 *Formalization.* `D5/S1/Recurrence/Algebraic/A392976InverseRecurrence.claim` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* R. J. Mathar; Seiichi Manyama; The OEIS Foundation and contributors (2026). *OEIS A392976: formal inverse quintic, D-finiteness and Mathar's recurrence*. URL: <https://oeis.org/A392976/internal>.
 
 *Commentary.*
 
@@ -84,11 +92,17 @@ $$\operatorname{coeff}\left(0, U\right) = 0 \land \left(\operatorname{subst}\lef
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Algebraic/A392976InverseRecurrence.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a392976-inverse-recurrence` (proved) by `D5/S1/Recurrence/Algebraic/A392976InverseRecurrence.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a392976-inverse-recurrence","declaration_gid":"D5/S1/Recurrence/Algebraic/A392976InverseRecurrence.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
+
+*Acknowledgement.* R. J. Mathar; Seiichi Manyama; The OEIS Foundation and contributors (2026). *OEIS A392976: formal inverse quintic, D-finiteness and Mathar's recurrence*. URL: <https://oeis.org/A392976/internal>.
 
 *Commentary.*
 
-Write theta=X d/dX and let c(k,n) be the six signed polynomial coefficients displayed above. The operator sum over k=0,...,5 of X^k c(k,theta+k) annihilates A. Multiplication by X transforms it into the corresponding operator on U with theta+k-1. After composition with f, the chain rule clears denominators using H=f', whose constant coefficient is one. The resulting polynomial identity is zero. Coefficient extraction gives exactly the displayed identity at every n at least five. Expanding theta powers into ordinary derivatives gives a homogeneous operator of order five; its fifth-derivative polynomial has coefficient 23495312375279 at degree five, so the operator is nonzero. No minimal-order assertion is made.
+Write theta=X d/dX and let c(k,n) be the six signed polynomial coefficients displayed above. The operator sum over k=0,...,5 of X^k c(k,theta+k) annihilates A. Multiplication by X transforms it into the corresponding operator on U with theta+k-1. After composition with f, the chain rule clears denominators using H=f', whose constant coefficient is one. The resulting polynomial identity is zero. Coefficient extraction gives exactly the displayed identity at every n at least five. Expanding theta powers into ordinary derivatives gives a homogeneous operator of order five; its fifth-derivative polynomial has coefficient 23495312375279 at degree five, so the operator is nonzero. No minimal-order assertion is made. All 23 authored theorem proofs are bind-only under the repository's expansion and normalization rule; the consumed helpers organize this proof. The admission basis is open-problem-resolution for the complete externally named conjecture preregistered at https://github.com/the-omega-institute/trureturing/issues/28023#issuecomment-6719559027. No escape witness or new proof method is claimed. The Euler coefficient input is D5/S1/Recurrence/A308815DFiniteRecurrence.euler_coeff; its sequence endpoint is not used as a supplier of this recurrence. The retained Reg audit is unfinished (declared_unresolved, IE-C050 ClosedTruthReadout, source.roles); https://github.com/the-omega-institute/trureturing/issues/28047 records the missing six-occurrence role and reconstruction binding. The compiling audit is not declared_validated.
 
 ## References
 
