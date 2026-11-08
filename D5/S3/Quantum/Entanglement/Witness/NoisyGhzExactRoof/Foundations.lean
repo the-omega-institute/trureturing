@@ -247,21 +247,6 @@ theorem ghz_unit {n d : ℕ} (hn : 0 < n) (hd : 0 < d) :
   simp [hg, Complex.normSq_inv, Complex.normSq_ofReal,
     Real.sq_sqrt (Nat.cast_nonneg d), hdR]
 
-/-- For local dimension two every computational word is supported. This is
-the operator boundary identifying the witness with the fidelity witness. -/
-theorem qubit_support (n : ℕ) :
-    supportProjector n 2 = (1 : Matrix (Word (Fin 2) n) (Word (Fin 2) n) ℂ) := by
-  classical
-  have h (x : Word (Fin 2) n) : (Finset.univ.image x).card ≤ 2 := by
-    exact (Finset.card_le_univ _).trans_eq (Fintype.card_fin 2)
-  simp [supportProjector, h, diagonal_one]
-
-theorem qubit_witness (n : ℕ) :
-    witnessOp n 2 = (1 / 2 : ℝ) •
-      (1 : Matrix (Word (Fin 2) n) (Word (Fin 2) n) ℂ) -
-        rankOneDensity (ghz n 2) := by
-  simp [witnessOp, qubit_support]
-
 lemma cs {ι : Type*} [Fintype ι] (u v : ι → ℂ) :
     Complex.normSq (star u ⬝ᵥ v) ≤
       (∑ i, Complex.normSq (u i)) * ∑ i, Complex.normSq (v i) := by

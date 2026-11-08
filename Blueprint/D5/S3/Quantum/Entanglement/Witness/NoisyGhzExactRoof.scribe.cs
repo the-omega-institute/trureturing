@@ -78,7 +78,7 @@ internal sealed class NoisyGhzExactRoofDocument : IScribeDocumentDefinition
                 H("The manuscript support-rank formula"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(Antecedent),
-                Blocks(Paragraph(Text("The actual two-symbol support rank is also d+choose(d,2)*(2^n-2), with exact natural-number arithmetic."))),
+                Blocks(Paragraph(Text("The trace of the actual two-symbol supportProjector is d+choose(d,2)*(2^n-2). The proof uses support_trace and its disjoint supportIndexEquiv enumeration, then converts d+K*d*(d-1) to the binomial form by exact natural-number arithmetic."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("noisy-ghz-ghz-left-endpoint"),

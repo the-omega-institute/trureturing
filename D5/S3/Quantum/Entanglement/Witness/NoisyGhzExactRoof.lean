@@ -330,9 +330,12 @@ theorem qutrit_exact_ensemble :
     norm_num [starProbability,starDenominator,witnessSlope,supportRank,wordCount,cutCount,starValue] at h
     exact h
 
-/-- The two-symbol support rank also has the manuscript's binomial form. -/
+/-- The actual two-symbol projector has the manuscript's binomial trace.
+The support bijection supplies the counting fact; arithmetic only changes its form. -/
 theorem support_rank_binomial {n d : ℕ} (hn : 0 < n) (hd : 0 < d) :
-    supportRank n d = d+Nat.choose d 2*(2^n-2) := by
+    trace (supportProjector n d) = ((d+Nat.choose d 2*(2^n-2) : ℕ) : ℂ) := by
+  rw [support_trace hn]
+  congr 1
   have hchoose : d*(d-1) = Nat.choose d 2*2 := by
     simpa only [Nat.sub_add_cancel hd,Nat.choose_one_right] using
       Nat.add_one_mul_choose_eq (d-1) 1

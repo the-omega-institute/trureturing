@@ -64,22 +64,7 @@ internal sealed class NoisyGhzExactRoofFoundationsDocument : IScribeDocumentDefi
                 AssessedProvenance.FromRepo(Antecedent),
                 Blocks(Paragraph(Text("For positive party count and positive local dimension, the original ghz vector has sum of squared complex amplitudes one."))),
                 DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("noisy-ghz-qubit-support"),
-                DeclarationHandle.Create(Prefix + "qubit_support"),
-                H("The qubit support boundary"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(Antecedent),
-                Blocks(Paragraph(Text("When d=2 every computational word uses at most two symbols, so the actual supportProjector equals the identity."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("noisy-ghz-qubit-witness"),
-                DeclarationHandle.Create(Prefix + "qubit_witness"),
-                H("The qubit witness boundary"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(Antecedent),
-                Blocks(Paragraph(Text("The original witness is I/2 minus the GHZ projector at d=2. This is an operator identity and does not assert a qubit convex-roof formula."))),
-                DescribeRole.Theorem),
+            Paragraph(Text("Qubit operator boundary (direct application of the existing definitions, not a new standalone theorem): for any n and computational word x : Fin n -> Fin 2, card(univ.image x) <= card(Fin 2)=2. Thus every diagonal entry of supportProjector n 2 is one and P=I. Substitution into the original witnessOp definition gives W=(1/2)I-rankOneDensity(ghz n 2). The witness and fidelity operators, hence their defining optimizations, coincide. This uses no higher-dimensional roof theorem and asserts no qubit roof formula. Both operator equalities are checked as transient exact Lean applications; their derivation is retained here rather than as unused bind-only declarations.")),
             Describe.Lean(
                 DescribeId.Create("noisy-ghz-biseparable-overlap"),
                 DeclarationHandle.Create(Prefix + "biseparable_overlap"),
