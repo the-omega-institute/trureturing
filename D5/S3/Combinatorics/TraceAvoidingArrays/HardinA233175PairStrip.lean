@@ -10,7 +10,7 @@
 admission_basis: open-problem-resolution (#27656; Proved)
 escape_witness: none (open-problem-resolution; the settlement is the new content)
 Direct frozen dependency: D5.S3.Observer.Separation.BooleanRankThreeK4.beta
-(statement_id sha256:4d28f42d1bda6ccad928ffeaa23471945d90a760f82fa38f755ecbef9e992dc9), the complementary-pair label map.
+(statement_id sha256:1abdc5f3db71567fe05de5aabbe80dddeb5ec5179e4ec7fd49fe71e500518481), the complementary-pair label map.
 Pinned Mathlib supplies finite sums and power-series coefficients.
 Seen: proof_shape=bind-only; consumers=allowed, advance, good, finish, TailGood, step, v, count, total, seenCode
 Col: proof_shape=bind-only; consumers=pairs, compatible, chain, TailGood, step, count, total, counting_bridge
