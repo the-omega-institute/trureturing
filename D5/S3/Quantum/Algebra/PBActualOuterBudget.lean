@@ -275,7 +275,6 @@ theorem actual_outer_budget [Nontrivial H]
       sym (F.e v) v, sym (F.f v) v, sym (R.op (D x y) v) v,
       sym (F.f v) (F.e v), sym (R.op (D x y) v) (F.e v),
       sym (R.op (D x y) v) (F.f v)]
-    simp only [he, hf, hk, hef, hek, hfk]
     field_simp [ht]
     linear_combination (Y^2*t^2+δ^2*t^2+X^2*((t^2-l^2*X^2)^2+(t^2-l^2*X^2)+1))*htsq
   have gram_minus : reading R v (J (y-ν) (y-ν)) * reading R v (J (z-ω) (z-ω)) -
@@ -288,7 +287,6 @@ theorem actual_outer_budget [Nontrivial H]
       sym (F.e v) v, sym (F.f v) v, sym (R.op (D x y) v) v,
       sym (F.f v) (F.e v), sym (R.op (D x y) v) (F.e v),
       sym (R.op (D x y) v) (F.f v)]
-    simp only [he, hf, hk, hef, hek, hfk]
     field_simp [ht]
     linear_combination (Y^2*t^2+δ^2*t^2+X^2*((t^2-l^2*X^2)^2+(t^2-l^2*X^2)+1))*htsq
   have pp := R.p2 v (y+ν) (z+ω)
@@ -321,5 +319,7 @@ theorem actual_outer_budget [Nontrivial H]
   field_simp [ht] at bound'
   rw [htsq] at bound'
   nlinarith [bound']
+
+#print axioms actual_outer_budget
 
 end D5.S3.Quantum.Algebra.PBActualOuterBudget
