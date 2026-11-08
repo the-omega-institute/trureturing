@@ -170,6 +170,10 @@ $$\neg \mathrm{claim}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Magic/ThioSaturationRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/thio-2026-saturation-support-multiples` (refuted) by `D5/S3/Quantum/Magic/ThioSaturationRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"thio-2026-saturation-support-multiples","declaration_gid":"D5/S3/Quantum/Magic/ThioSaturationRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Jonathan J. Thio, Stephan De Bièvre, Crispin H. W. Barnes, and David R. M. Arvidsson-Shukur (2026). *Tight Quasiprobabilistic Entropic Uncertainty Relations for Discrete Quantum Systems*. URL: <https://arxiv.org/abs/2611.04009v1>.
