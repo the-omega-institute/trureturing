@@ -4,8 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Native finite matroid minimum-weight bases are characterized by every real threshold rank.
--/
+   digest: Native finite matroid minimum-weight bases are characterized by every real threshold rank. -/
 
 import Mathlib.Combinatorics.Matroid.Rank.ENat
 import Mathlib.Combinatorics.Matroid.Minor.Restrict

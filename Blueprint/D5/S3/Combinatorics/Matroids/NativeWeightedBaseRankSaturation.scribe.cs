@@ -41,7 +41,7 @@ internal sealed class NativeWeightedBaseRankSaturationDocument : IScribeDocument
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
-                        "For every universe u, every finite carrier E, every native matroid M on E, "
+                        "For every finite carrier E in an arbitrary universe, every native matroid M on E, "
                             + "and every real weight function w, a minimum-weight base exists. For "
                             + "each base B, minimum total weight among all bases is equivalent to "
                             + "saturating the native rank of every real lower threshold: the finite "
@@ -61,84 +61,98 @@ internal sealed class NativeWeightedBaseRankSaturationDocument : IScribeDocument
                             + "complexity or oracle claim.")),
                     Paragraph(Text(
                         "Oki--Schwarcz, arXiv:2511.16021v3, Theorem 2.1 ("
-                            + "https://arxiv.org/abs/2511.16021v3) is recorded only as a rank-increment "
-                            + "minimum-value supplier. It is not the literal every-base, every-real-threshold "
-                            + "iff stated here; no originality or external open-problem-resolution claim is "
-                            + "made."))),
+                            + "https://arxiv.org/abs/2511.16021v3) gives a related rank-increment "
+                            + "minimum-value formula. The present statement additionally characterizes "
+                            + "every base by every real threshold and applies to native finite matroids "
+                            + "with signed weights."))),
                 DescribeRole.Theorem))));
 
     private static Formula MainFormula()
     {
-        Formula u = F.Id("u"), e = F.Id("E"), m = F.Id("M"), w = F.Id("w");
+        Formula e = F.Id("E"), m = F.Id("M"), w = F.Id("w");
         Formula b = F.Id("B"), c = F.Id("C"), t = F.Id("t");
         Formula real = Seq(Mathbb, Grp(F.Id("R")));
-        Formula type = Seq(Operatorname, Grp(F.Id("Type")));
+        Formula typeU = new Formula.Subscript(F.Id("Type"), F.Id("u"));
         Formula setE = Call("Set", e);
         Formula matroidE = Call("Matroid", e);
-        Formula isBase(Formula x) => Seq(m, Dot, Operatorname, Grp(F.Id("IsBase")), Sp, x);
+        Formula isBase(Formula x) => QualifiedCall("Matroid", "IsBase", m, x);
         Formula total(Formula x) => Call("baseWeight", w, x);
         Formula lower(Formula x) => Call("lowerWeightSet", m, w, x);
-        Formula inter(Formula left, Formula right) => Seq(left, Sp,
-            Operatorname, Grp(F.Id("inter")), Sp, right);
-        Formula ncard(Formula x) => Call("ncard", x);
-        Formula erank(Formula x) => Seq(m, Dot, Operatorname, Grp(F.Id("eRk")), Open, x, Close);
-        Formula toNat(Formula x) => Seq(x, Dot, Operatorname, Grp(F.Id("toNat")));
-        Formula saturation = Seq(ncard(inter(b, lower(t))), Sp, Eq, Sp,
-            toNat(erank(lower(t))));
-        Formula minimum(Formula x) => Seq(Forall, Sp, c, Colon, Sp, setE, Comma, Sp,
-            isBase(c), Sp, Rightarrow, Sp, total(b), Sp, Leq, Sp, total(c));
-        Formula attainment = Seq(Exists, Sp, b, Colon, Sp, setE, Comma, Sp,
-            isBase(b), Sp, Land, Sp, minimum(b));
-        Formula iff = Seq(Open, minimum(b), Sp, Iff, Sp,
-            Seq(Forall, Sp, t, Colon, Sp, real, Comma, Sp, saturation), Close);
-        Formula allBases = Seq(Forall, Sp, b, Colon, Sp, setE, Comma, Sp,
-            isBase(b), Sp, Rightarrow, Sp, iff);
-        Formula body = Seq(Open, attainment, Close, Sp, Land, Sp, allBases);
-        return Disp(Seq(
-            Forall, Sp, u, Colon, Sp, type, Comma, Sp,
-            Forall, Sp, e, Colon, Sp, type, Sp, u, Comma, Sp,
-            OpenBracket, Call("Finite", e), CloseBracket, Comma, Sp,
-            Forall, Sp, m, Colon, Sp, matroidE, Comma, Sp,
-            Forall, Sp, w, Colon, Sp, new Formula.TypeArrow(e, real), Comma, Sp,
-            body, Dot));
+        Formula inter(Formula left, Formula right) => QualifiedCall("Set", "inter", left, right);
+        Formula ncard(Formula x) => QualifiedCall("Set", "ncard", x);
+        Formula erank(Formula x) => QualifiedCall("Matroid", "eRk", m, x);
+        Formula toNat(Formula x) => QualifiedCall("ENat", "toNat", x);
+        Formula saturation = Equal(ncard(inter(b, lower(t))), toNat(erank(lower(t))));
+        Formula minimum(Formula x) => All("C", setE,
+            Imp(isBase(c), Leq(total(x), total(c))));
+        Formula saturationAll = All("t", real, saturation);
+        Formula minimumIffSaturation = Iff(minimum(b), saturationAll);
+        Formula attainment = Some("B", setE, And(isBase(b), minimum(b)));
+        Formula allBases = All("B", setE, Imp(isBase(b), minimumIffSaturation));
+        Formula body = And(attainment, allBases);
+        return Disp(All("E", typeU,
+            Seq(Instance(Call("Finite", e)), Comma, Sp,
+                All("M", matroidE,
+                    All("w", new Formula.TypeArrow(e, real), body)))));
     }
 
     private static Formula BaseWeightFormula()
     {
         Formula w = F.Id("w"), b = F.Id("B"), e = F.Id("e");
         Formula real = Seq(Mathbb, Grp(F.Id("R")));
-        Formula type = Seq(Operatorname, Grp(F.Id("Type")));
+        Formula typeU = new Formula.Subscript(F.Id("Type"), F.Id("u"));
         Formula setE = Call("Set", F.Id("E"));
         Formula sumIndex = Seq(e, Sp, InMacro, Sp,
             Call("toFinite", b), Dot, Operatorname, Grp(F.Id("toFinset")));
         Formula sum = new Formula.Subscript(Sum, Grp(sumIndex));
-        return Disp(Seq(Forall, Sp, F.Id("u"), Colon, Sp, type, Comma, Sp,
-            Forall, Sp, F.Id("E"), Colon, Sp, type, Sp, F.Id("u"), Comma, Sp,
-            OpenBracket, Call("Finite", F.Id("E")), CloseBracket, Comma, Sp,
-            Forall, Sp, w, Colon, Sp, new Formula.TypeArrow(F.Id("E"), real), Comma, Sp,
-            Forall, Sp, b, Colon, Sp, setE, Comma, Sp,
-            Call("baseWeight", w, b), Sp, Eq, Sp,
-            sum, Sp, Call("w", e), Dot));
+        return Disp(All("E", typeU,
+            Seq(Instance(Call("Finite", F.Id("E"))), Comma, Sp,
+                All("w", new Formula.TypeArrow(F.Id("E"), real),
+                    All("B", setE,
+                        Equal(Call("baseWeight", w, b),
+                            Seq(sum, Sp, Call("w", e))))))));
     }
 
     private static Formula LowerWeightSetFormula()
     {
         Formula e = F.Id("E"), m = F.Id("M"), w = F.Id("w"), t = F.Id("t");
         Formula real = Seq(Mathbb, Grp(F.Id("R")));
-        Formula type = Seq(Operatorname, Grp(F.Id("Type")));
+        Formula typeU = new Formula.Subscript(F.Id("Type"), F.Id("u"));
         Formula matroidE = Call("Matroid", e);
         Formula setE = Call("Set", e);
         Formula body = Seq(OpenBrace, F.Id("x"), Sp, Mid, Sp,
             F.Id("x"), Sp, InMacro, Sp, m, Dot, F.Id("E"), Sp, Land, Sp,
             Call("w", F.Id("x")), Sp, Leq, Sp, t, CloseBrace);
-        return Disp(Seq(Forall, Sp, F.Id("u"), Colon, Sp, type, Comma, Sp,
-            Forall, Sp, e, Colon, Sp, type, Sp, F.Id("u"), Comma, Sp,
-            Forall, Sp, m, Colon, Sp, matroidE, Comma, Sp,
-            Forall, Sp, w, Colon, Sp, new Formula.TypeArrow(e, real), Comma, Sp,
-            Forall, Sp, t, Colon, Sp, real, Comma, Sp,
-            Call("lowerWeightSet", m, w, t), Sp, Eq, Sp, body, Dot));
+        return Disp(All("E", typeU,
+            All("M", matroidE,
+                All("w", new Formula.TypeArrow(e, real),
+                    All("t", real,
+                        Equal(Call("lowerWeightSet", m, w, t), body))))));
     }
 
     private static Formula Call(string name, params Formula[] arguments) =>
         new Formula.Apply(Seq(Operatorname, Grp(F.Id(name))), [.. arguments]);
+
+    private static Formula QualifiedCall(string owner, string name, params Formula[] arguments) =>
+        new Formula.Apply(Seq(Operatorname, Grp(F.Id(owner)), Dot, Operatorname, Grp(F.Id(name))),
+            [.. arguments]);
+
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
+    private static Formula All(string name, Formula type, Formula body) =>
+        Seq(Forall, Sp, Parenthesized(Seq(F.Id(name), Colon, Sp, type)), Comma, Sp,
+            Parenthesized(body));
+    private static Formula Some(string name, Formula type, Formula body) =>
+        Seq(Exists, Sp, Parenthesized(Seq(F.Id(name), Colon, Sp, type)), Comma, Sp,
+            Parenthesized(body));
+    private static Formula And(Formula left, Formula right) =>
+        new Formula.Logic(Parenthesized(left), FormulaLogicOperator.And, Parenthesized(right));
+    private static Formula Imp(Formula left, Formula right) =>
+        new Formula.Logic(Parenthesized(left), FormulaLogicOperator.Implies, Parenthesized(right));
+    private static Formula Iff(Formula left, Formula right) =>
+        new Formula.Logic(Parenthesized(left), FormulaLogicOperator.Iff, Parenthesized(right));
+    private static Formula Equal(Formula left, Formula right) =>
+        new Formula.Relation(left, FormulaRelationOperator.Equal, right);
+    private static Formula Leq(Formula left, Formula right) =>
+        new Formula.Relation(left, FormulaRelationOperator.LessThanOrEqual, right);
+    private static Formula Instance(Formula typeclass) => Seq(OpenBracket, typeclass, CloseBracket);
 }
