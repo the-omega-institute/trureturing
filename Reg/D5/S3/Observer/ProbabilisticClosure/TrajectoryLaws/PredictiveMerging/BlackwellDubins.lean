@@ -80,7 +80,7 @@ private def basePath : History.{u} Toy :=
   Classical.choice (show Nonempty (History.{u} Toy) from ⟨seed⟩)
 
 private def counterPath : History.{u} Toy := fun i =>
-  ULift.up.{u} (!((basePath i).down))
+  ULift.up.{u} (!((basePath.{u} i).down))
 
 private def toyLaw : Measure (History Toy) := Measure.dirac counterPath
 
@@ -106,11 +106,12 @@ private theorem toy_predictive (n : ℕ) :
 
 private theorem toy_marginals_ne :
     toyLaw.map (rejected.readout () (Toy, 0)) ≠ toyLaw.map (past Toy 0) := by
+  classical
   have hread : rejected.readout () (Toy, 0) = fun _ => past Toy 0 basePath := rfl
   have hdiff : past Toy 0 basePath ≠ past Toy 0 counterPath := by
     intro heq
     have hh := congrArg (fun p : Past Toy 0 => (p ⟨0, by simp⟩).down) heq
-    change (basePath 0).down = !(basePath 0).down at hh
+    change (basePath.{u} 0).down = !(basePath.{u} 0).down at hh
     have hb : ∀ b : Bool, b ≠ !b := by decide
     exact hb _ hh
   intro heq
@@ -119,8 +120,10 @@ private theorem toy_marginals_ne :
   have hdiff' : past Toy 0 counterPath ≠ past Toy 0 basePath := by
     intro h
     exact hdiff h.symm
-  simpa [toyLaw, Measure.map_const, Measure.map_dirac' (toy_past_measurable 0),
-    hdiff, hdiff'] using hh
+  have hzero_one : (0 : ℝ≥0∞) = 1 := by
+    simpa [toyLaw, Measure.map_const, Measure.map_dirac' (toy_past_measurable 0),
+      Pi.single_apply, hdiff, hdiff'] using hh
+  exact zero_ne_one hzero_one
 
 private theorem rejected_change : ¬ changeArena.{u}.Law rejected := by
   intro h
