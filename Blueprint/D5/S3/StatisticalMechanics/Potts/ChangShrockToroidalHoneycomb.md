@@ -62,7 +62,7 @@ Sites are numbered from zero; mod denotes Nat.mod. Adjacency is symmetric and in
 
 **Definition 1.5 (Native).**
 
-$$\forall (L: \mathbb{N}), ([\operatorname{NeZero}\left(L\right)] \forall (f: (\operatorname{Fin}\left(L\right)) \to (\operatorname{Fin}\left(L\right))), ((\operatorname{Native}\left(L, f\right)) \Leftrightarrow ((\exists (s: \operatorname{Perm}\left(\operatorname{Fin}\left(L\right)\right)), (f = s)) \lor (\exists (s: \operatorname{Perm}\left(\operatorname{Fin}\left(L\right)\right)), (\exists (i: \operatorname{Fin}\left(L\right)), (\exists (j: \operatorname{Fin}\left(L\right)), ((i \ne j) \land ((\operatorname{Adjacent}\left(i, j\right)) \land ((s\left(i\right) = 0) \land (f = \operatorname{update}\left(s, i, s\left(j\right)\right)))))))))))$$
+$$\forall (L: \mathbb{N}), ([\operatorname{NeZero}\left(L\right)] \forall (f: (\operatorname{Fin}\left(L\right)) \to (\operatorname{Fin}\left(L\right))), ((\operatorname{Native}\left(L, f\right)) \Leftrightarrow ((\exists (s: \operatorname{Perm}\left(\operatorname{Fin}\left(L\right)\right)), (f = \operatorname{Equiv}.\operatorname{toFun}\left(s\right))) \lor (\exists (s: \operatorname{Perm}\left(\operatorname{Fin}\left(L\right)\right)), (\exists (i: \operatorname{Fin}\left(L\right)), (\exists (j: \operatorname{Fin}\left(L\right)), ((i \ne j) \land ((\operatorname{Adjacent}\left(i, j\right)) \land ((\operatorname{Equiv}.\operatorname{toFun}\left(s\right)\left(i\right) = 0) \land (f = \operatorname{update}\left(\operatorname{Equiv}.\operatorname{toFun}\left(s\right), i, \operatorname{Equiv}.\operatorname{toFun}\left(s\right)\left(j\right)\right)))))))))))$$
 
 *Formalization.* `D5/S3/StatisticalMechanics/Potts/ChangShrockToroidalHoneycomb.Native` (`✓ std3`).
 
@@ -104,7 +104,7 @@ Space L is the free module of polynomial coefficients on the native degree L-1 d
 
 **Definition 1.8 (ket).**
 
-$$\forall (L: \mathbb{N}), ([\operatorname{NeZero}\left(L\right)] \forall (f: (\operatorname{Fin}\left(L\right)) \to (\operatorname{Fin}\left(L\right))), (\operatorname{ket}\left(f\right) = \operatorname{dite}\left(\operatorname{Native}\left(L, f\right), ((h: \operatorname{Native}\left(L, f\right)) \mapsto \operatorname{single}\left(\operatorname{Subtype}.\operatorname{mk}\left(f, h\right), 1\right)), ((h: \operatorname{Not}\left(\operatorname{Native}\left(L, f\right)\right)) \mapsto 0)\right)))$$
+$$\forall (L: \mathbb{N}), ([\operatorname{NeZero}\left(L\right)] \forall (f: (\operatorname{Fin}\left(L\right)) \to (\operatorname{Fin}\left(L\right))), (\operatorname{ket}\left(f\right) = \operatorname{dite}\left(\operatorname{Native}\left(L, f\right), ((h: \operatorname{Native}\left(L, f\right)) \mapsto \operatorname{single}\left(\operatorname{Subtype}.\operatorname{mk}\left(f, h\right), 1\right)), \operatorname{Function}.\operatorname{const}\left(\operatorname{Not}\left(\operatorname{Native}\left(L, f\right)\right), 0\right)\right)))$$
 
 *Formalization.* `D5/S3/StatisticalMechanics/Potts/ChangShrockToroidalHoneycomb.ket` (`✓ std3`).
 

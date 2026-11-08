@@ -4,7 +4,7 @@
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
    utility: none
-   digest: The alternating labelled connectivity vector yields the honeycomb degree L-1 eigenvalue. -/
+   digest: Alternating vectors give the honeycomb degree L-1 eigenvalue. -/
 
 import Mathlib.GroupTheory.Perm.Sign
 import Mathlib.Algebra.MvPolynomial.Basic
@@ -191,7 +191,8 @@ private theorem join_alternating (i j : Fin L) (hij : i ≠ j) :
       join_singleton_swap i j hij σ]
     simp
   · intro σ _ h
-    have hh : swap i j = (1 : Perm (Fin L)) := mul_left_cancel (a := σ) (by simpa only [mul_one] using h)
+    have hh : swap i j = (1 : Perm (Fin L)) :=
+      mul_left_cancel (a := σ) (by simpa only [mul_one] using h)
     have hh' := congrArg (fun τ : Perm (Fin L) => τ i) hh
     simp at hh'
     exact hij hh'.symm

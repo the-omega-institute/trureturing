@@ -41,7 +41,7 @@ internal sealed class ChangShrockToroidalHoneycombDocument : IScribeDocumentDefi
             Definition("ket", Width(All("f", Arrow(Sites(), Sites()),
                 Eq(Call("ket", X("f")), Call("dite", Call("Native", X("L"), X("f")),
                     Fn("h", Call("Native", X("L"), X("f")), Call("single", At(Q("Subtype", "mk"), X("f"), X("h")), D(1))),
-                    Fn("h", Call("Not", Call("Native", X("L"), X("f"))), D(0)))))),
+                    At(Q("Function", "const"), Call("Not", Call("Native", X("L"), X("f"))), D(0)))))),
                 "A native connectivity word gives its unit basis vector: dite binds h : Native L f, and Subtype.mk f h is the native state. A word outside this degree block gives zero."),
             Definition("join", Width(All("i", Sites(), All("j", Sites(),
                 Eq(Call("join", X("i"), X("j")), Call("linearCombination", N("Coeff"),
@@ -72,7 +72,7 @@ internal sealed class ChangShrockToroidalHoneycombDocument : IScribeDocumentDefi
                 "Equation (2.35) defines T=(V Htwo)(V Hone). The operator acts on the full native labelled degree L-1 block, including double-block states.", true),
             Definition("alternatingVector", Width(Eq(Call("alternatingVector", X("L")),
                 Seq(Script(Sum, "s", Call("Perm", Sites())), Sp,
-                    Mul(Par(Seq(Call("val", At(Q("Equiv", "Perm", "sign"), X("s"))), Colon, Sp, N("Coeff"))), Call("ket", At(Q("Equiv", "toFun"), X("s"))))))),
+                    Mul(Parenthesized(Seq(Call("val", At(Q("Equiv", "Perm", "sign"), X("s"))), Colon, Sp, N("Coeff"))), Call("ket", At(Q("Equiv", "toFun"), X("s"))))))),
                 "Equiv.Perm.sign takes values in the units of the integers; its value is cast into Coeff. The sum runs over all permutations of the L symbols. Its singleton-state coefficient is the integer sign, embedded in Coeff. "
                 + "The identity permutation contributes coefficient one, and no other permutation represents that labelled singleton diagram."),
             Describe.Lean(DescribeId.Create("result"), DeclarationHandle.Create(Prefix + "result"),
@@ -89,11 +89,11 @@ internal sealed class ChangShrockToroidalHoneycombDocument : IScribeDocumentDefi
                 DescribeRole.Theorem, new OpenProblemResolutionClaim(ProblemSlugRef.Create("changshrock2005honeycomb"), ResolutionKind.Proved)))));
 
     private static Formula NativeBody() => Or(
-        Ex("s", Call("Perm", Sites()), Eq(X("f"), X("s"))),
+        Ex("s", Call("Perm", Sites()), Eq(X("f"), At(Q("Equiv", "toFun"), X("s")))),
         Ex("s", Call("Perm", Sites()), Ex("i", Sites(), Ex("j", Sites(),
             And(Ne(X("i"), X("j")), And(Call("Adjacent", X("i"), X("j")),
-                And(Eq(At(X("s"), X("i")), D(0)),
-                    Eq(X("f"), Call("update", X("s"), X("i"), At(X("s"), X("j")))))))))));
+                And(Eq(At(At(Q("Equiv", "toFun"), X("s")), X("i")), D(0)),
+                    Eq(X("f"), Call("update", At(Q("Equiv", "toFun"), X("s")), X("i"), At(At(Q("Equiv", "toFun"), X("s")), X("j")))))))))));
     private static Formula JoinBody() => If(Eq(Site("i"), Site("j")), Call("single", X("s"), D(1)),
         If(Eq(Site("i"), D(0)), Call("ket", Call("update", Call("val", X("s")), X("i"), Site("j"))),
             If(Eq(Site("j"), D(0)), Call("ket", Call("update", Call("val", X("s")), X("j"), Site("i"))), D(0))));
@@ -123,22 +123,22 @@ internal sealed class ChangShrockToroidalHoneycombDocument : IScribeDocumentDefi
     private static Formula Call(string name, params Formula[] args) => At(N(name), args);
     private static Formula Q(params string[] parts) => Seq(parts.SelectMany((x, k) => k == 0 ? new[] { N(x) } : new[] { Dot, N(x) }).ToArray());
     private static Formula At(Formula f, params Formula[] args) => new Formula.Apply(f, [.. args]);
-    private static Formula Par(Formula f) => Seq(Open, f, Close);
+    private static Formula Parenthesized(Formula f) => Seq(Open, f, Close);
     private static Formula Eq(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.Equal, b);
     private static Formula Ne(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.NotEqual, b);
-    private static Formula And(Formula a, Formula b) => new Formula.Logic(Par(a), FormulaLogicOperator.And, Par(b));
-    private static Formula Or(Formula a, Formula b) => new Formula.Logic(Par(a), FormulaLogicOperator.Or, Par(b));
-    private static Formula IffOf(Formula a, Formula b) => new Formula.Logic(Par(a), FormulaLogicOperator.Iff, Par(b));
-    private static Formula Arrow(Formula a, Formula b) => new Formula.TypeArrow(Par(a), Par(b));
-    private static Formula Add(Formula a, Formula b) => new Formula.Binary(Par(a), FormulaBinaryOperator.Add, Par(b));
-    private static Formula Sub(Formula a, Formula b) => new Formula.Binary(Par(a), FormulaBinaryOperator.Subtract, Par(b));
-    private static Formula Mul(Formula a, Formula b) => new Formula.Binary(Par(a), FormulaBinaryOperator.Multiply, Par(b));
-    private static Formula Power(Formula a, Formula b) => new Formula.Power(Par(a), Par(b));
+    private static Formula And(Formula a, Formula b) => new Formula.Logic(Parenthesized(a), FormulaLogicOperator.And, Parenthesized(b));
+    private static Formula Or(Formula a, Formula b) => new Formula.Logic(Parenthesized(a), FormulaLogicOperator.Or, Parenthesized(b));
+    private static Formula IffOf(Formula a, Formula b) => new Formula.Logic(Parenthesized(a), FormulaLogicOperator.Iff, Parenthesized(b));
+    private static Formula Arrow(Formula a, Formula b) => new Formula.TypeArrow(Parenthesized(a), Parenthesized(b));
+    private static Formula Add(Formula a, Formula b) => new Formula.Binary(Parenthesized(a), FormulaBinaryOperator.Add, Parenthesized(b));
+    private static Formula Sub(Formula a, Formula b) => new Formula.Binary(Parenthesized(a), FormulaBinaryOperator.Subtract, Parenthesized(b));
+    private static Formula Mul(Formula a, Formula b) => new Formula.Binary(Parenthesized(a), FormulaBinaryOperator.Multiply, Parenthesized(b));
+    private static Formula Power(Formula a, Formula b) => new Formula.Power(Parenthesized(a), Parenthesized(b));
     private static Formula If(Formula condition, Formula yes, Formula no) => Call("ite", condition, yes, no);
-    private static Formula Bound(string name, Formula type) => Par(Seq(X(name), Colon, Sp, type));
-    private static Formula All(string name, Formula type, Formula body) => Seq(Forall, Sp, Bound(name, type), Comma, Sp, Par(body));
-    private static Formula Ex(string name, Formula type, Formula body) => Seq(Exists, Sp, Bound(name, type), Comma, Sp, Par(body));
-    private static Formula Fn(string name, Formula type, Formula body) => Par(Seq(Bound(name, type), Sp, Mapsto, Sp, body));
+    private static Formula Bound(string name, Formula type) => Parenthesized(Seq(X(name), Colon, Sp, type));
+    private static Formula All(string name, Formula type, Formula body) => Seq(Forall, Sp, Bound(name, type), Comma, Sp, Parenthesized(body));
+    private static Formula Ex(string name, Formula type, Formula body) => Seq(Exists, Sp, Bound(name, type), Comma, Sp, Parenthesized(body));
+    private static Formula Fn(string name, Formula type, Formula body) => Parenthesized(Seq(Bound(name, type), Sp, Mapsto, Sp, body));
     private static Formula SetOf(string name, Formula type, Formula body) => Seq(OpenBrace, Bound(name, type), Sp, Mid, Sp, body, CloseBrace);
     private static Formula Script(Formula op, string name, Formula type) => new Formula.Subscript(op, Seq(X(name), Sp, InMacro, Sp, type));
 }
