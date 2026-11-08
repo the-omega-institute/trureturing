@@ -53,7 +53,8 @@ def family : Registration arena (type_of% @result) where
     intro he
     have h1 : a 1 = 0 := he ▸ h0
     have hh := congrArg (PowerSeries.coeff 1) result
-    norm_num [PowerSeries.coeff_mul, h0, h1] at hh
+    norm_num [PowerSeries.coeff_mul, Finset.Nat.antidiagonal_succ, h0, h1] at hh
+    norm_num [map_ofNat] at hh
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     (@result) (Realization signature) Type Unit where
