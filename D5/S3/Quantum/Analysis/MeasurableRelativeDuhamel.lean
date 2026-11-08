@@ -404,7 +404,9 @@ theorem relative_duhamel (S : Contraction E) (B H : ℝ → E →L[ℂ] E)
     simp only [Pi.neg_apply, ContinuousLinearMap.neg_apply, map_neg]
   rw [hint] at hs
   refine ⟨hl.1, ?_, hl.2, ?_⟩
-  · simpa only [Pi.neg_apply, neg_neg] using hs.1.neg
+  · apply hs.1.neg.congr
+    intro s _
+    exact neg_neg _
   · have he := congrArg Neg.neg hs.2
     simpa only [neg_sub, intervalIntegral.integral_neg, neg_neg] using he
 
