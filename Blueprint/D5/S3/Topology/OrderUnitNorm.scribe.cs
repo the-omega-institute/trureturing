@@ -12,6 +12,16 @@ internal sealed class OrderUnitNormDocument : IScribeDocumentDefinition
             Paragraph(Text("Let E be any real normed vector space. Its auxiliary norm supplies the topology only. The exponential and generator statements below separately require finite dimension. The data A consist of a convex cone C containing zero, a closedness proof, salience, and a specified vector u in its interior. Salience means that a vector and its negative can both belong to C only when the vector vanishes. No inner product, lattice, Jordan product, self-duality or nonzero-dimension assumption is used.")),
             Paragraph(Text("Put B equal to the vectors v for which u-v and u+v belong to C. For each v, let S(v) be the nonnegative real radii r for which r u-v and r u+v belong to C, and let n(v) be inf S(v). In particular, zero is retained among the radii. The order relation is exactly w-v in C.")),
             Describe.Lean(
+                DescribeId.Create("positive-order-norm-support"),
+                DeclarationHandle.Create("D5/S3/Topology/OrderUnitNorm.positive_norm_support"),
+                H("Positive norm support on the entire original carrier"),
+                StatementSource.FromAuthor(F.Disp(SupportStatement())),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("For every nonzero original a, there is a real linear beta nonnegative on the original C, with beta(u)=1, abs(beta(x))<=n(x) for every original x, and abs(beta(a))=n(a). There is no completeness, finite-dimensionality, self-duality or prior state-existence assumption. At dimension zero there is no nonzero a; this theorem does not manufacture a normalized state on the zero space.")),
+                    Paragraph(Text("Let r=n(a)>0. Both r u-a and r u+a belong to C by the existing attained-radius proof. They cannot both be interior points: openness would permit reducing r by a common strictly positive amount while keeping both inequalities in C, contradicting minimality. Apply the existing private boundary-support theorem at an endpoint which is not interior. It gives a nonzero positive continuous functional vanishing there and with strictly positive unit mass. Normalize by that mass. The endpoint equation makes the absolute value at a equal to r; the existing positive-functional bound proves contractivity on every original x.")),
+                    Paragraph(Text("The same-delivery original unit-row theorem consumes this constructed reading. Mathematical support functionals do not construct physical preparations. This is classical order-unit duality, with no literature-priority claim. The four-slot audit remains unfinished under issue 28178.")))),
+            Describe.Lean(
                 DescribeId.Create("constructed-order-norm-core"),
                 DeclarationHandle.Create("D5/S3/Topology/OrderUnitNorm.norm_core"),
                 H("The norm axioms follow from the original cone"),
@@ -77,6 +87,9 @@ internal sealed class OrderUnitNormDocument : IScribeDocumentDefinition
                     Paragraph(Text("The order-unit bounds put every v in the linear span of C, so its affine span is the whole space. The pinned finite-dimensional convex-set theorem gives nonempty interior, including dimension zero. If v is an interior point and r u-v is in C for r>0, cone addition makes r u interior, and positive inverse scaling makes u interior. For v in the closure of C, adding epsilon u puts v+epsilon u in C: addition of an open interior set absorbs closure. The original Archimedean condition then puts v in C. Thus C is closed.")),
                     Paragraph(Text("The map toData preserves C and u literally and supplies only these proved topology properties. The operator H, preparation set P, all functionals, the ordinary dual closure, and the actual exponential remain the original ones. The norm, square-operator coefficient, same-K extension, exact scaling and complementary minimum are precisely those in the preceding quantified criterion. This is the source's complete mathematical Theorem 68.1. The correlated execution-map extension of Section 69.2 is a separate statement and is not a consequence claimed here.")))))));
 
+
+    private static Formula SupportStatement() =>
+        Call("PositiveNormSupport", Id("E"), Id("C"), Id("u"), Id("n"));
 
     private static Formula CoreStatement()
     {

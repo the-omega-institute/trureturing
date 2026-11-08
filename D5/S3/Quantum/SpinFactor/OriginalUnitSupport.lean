@@ -386,4 +386,42 @@ theorem unit_row_closed_ball
     (β (D (μ • A.unit) b)) hZ rfl hn
   exact (not_lt_of_ge hball) (hb.2 t)
 
+/-- All positive and negative original second inputs have zero unit rows.
+The original exact cone and order norm supply every support reading used. -/
+theorem unit_row_semidefinite
+    (S : E →ₗ[ℝ] E →ₗ[ℝ] E) (D : E → E → E)
+    (P : Set (E →ₗ[ℝ] ℝ)) (hP : P2 S D P) (hPB : PB S D P)
+    (A : D5.S3.Topology.OrderUnitNorm.Data E)
+    (hc : ∀ x y, S x y = S y x) (hu : ∀ x, S A.unit x = x)
+    (hsq : ∀ x, ‖S x x‖ = ‖x‖ ^ 2)
+    (hsep : ∀ x, (∀ α ∈ P, α x = 0) → x = 0)
+    (hexact : ∀ x, x ∈ A.cone ↔ ∀ α ∈ P, 0 ≤ α x)
+    (horder : ∀ x, A.orderNorm x = ‖x‖)
+    (μ : ℝ) (b : E) (hb : b ∈ A.cone ∨ -b ∈ A.cone) :
+    D (μ • A.unit) b = 0 := by
+  have ball (c : E) (hc : c ∈ A.cone) :
+      ‖c - (‖c‖ / 2) • A.unit‖ ≤ ‖c‖ / 2 := by
+    by_cases hw : c - (‖c‖ / 2) • A.unit = 0
+    · simp only [hw, norm_zero]
+      positivity
+    obtain ⟨β, hβ, hβu, hβnorm, hn⟩ :=
+      A.positive_norm_support (c - (‖c‖ / 2) • A.unit) hw
+    have hbc : 0 ≤ β c := hβ c hc
+    have hbound : β c ≤ ‖c‖ :=
+      (le_abs_self _).trans (by simpa only [horder] using hβnorm c)
+    rw [horder, map_sub, map_smul, hβu, smul_eq_mul, mul_one] at hn
+    rw [← hn]
+    exact abs_le.mpr ⟨by linarith, by linarith⟩
+  rcases hb with hp | hm
+  · exact unit_row_closed_ball S D P hP hPB A hc hu hsq hsep hexact horder μ b
+      (‖b‖ / 2) (by simpa only [abs_of_nonneg (by positivity : 0 ≤ ‖b‖ / 2)] using ball b hp)
+  · apply unit_row_closed_ball S D P hP hPB A hc hu hsq hsep hexact horder μ b
+      (-(‖b‖ / 2))
+    have hn := ball (-b) hm
+    have he : -b - (‖-b‖ / 2) • A.unit = -(b - (-(‖b‖ / 2)) • A.unit) := by
+      rw [norm_neg]
+      module
+    rw [he, norm_neg] at hn
+    simpa only [norm_neg, abs_neg, abs_of_nonneg (by positivity : 0 ≤ ‖b‖ / 2)] using hn
+
 end D5.S3.Quantum.SpinFactor.OriginalUnitSupport
