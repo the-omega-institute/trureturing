@@ -72,7 +72,7 @@ private theorem actual_dependence : ObservationalDependence signature.{u} actual
 
 def family : Registration arena.{u}
     (type_of% (@surjective_word_balance.{u})) where
-  actual := actual
+  actual := realize signature (fun _ P => P.2.2.1) (fun e => Empty.elim e)
   bridge := Iff.rfl
   variation := ⟨@surjective_word_balance.{u}, constantTarget, constant_rejected⟩
   sensitivity := by
