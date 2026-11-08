@@ -248,22 +248,23 @@ class LifecycleTests(unittest.TestCase):
     def test_actual_default_allocation_failure_reports_selected_not_nominal_path(self):
         import stat
         self.prepare_make()
-        tree = self.root / "selected-five-hour-tree"
-        branch = "lane/governance/selected"
-        head = self.commit_branch(branch, tree, 5 * 3600)
-        blocked = tree / "blocked"
-        blocked.write_text("retained on failure")
-        nominal = self.root / "trureturing-diagnostic-allocation"
-        self.assertNotEqual(tree, nominal)
-        os.chflags(blocked, stat.UF_IMMUTABLE)
-        try:
-            for entrance in ("default-make", "cli-with-nominal"):
-                with self.subTest(entrance=entrance):
+        for entrance in ("default-make", "cli-with-nominal"):
+            with self.subTest(entrance=entrance):
+                tree = self.root / ("selected-" + entrance)
+                branch = "lane/governance/selected-" + entrance
+                head = self.commit_branch(branch, tree, 5 * 3600)
+                blocked = tree / "blocked"
+                blocked.write_text("retained on failure")
+                name = "diagnostic-allocation-" + entrance
+                nominal = self.root / ("trureturing-" + name)
+                self.assertNotEqual(tree, nominal)
+                os.chflags(blocked, stat.UF_IMMUTABLE)
+                try:
                     if entrance == "default-make":
-                        failed = self.make("worktree", "KIND=governance", "NAME=diagnostic-allocation",
+                        failed = self.make("worktree", "KIND=governance", "NAME=" + name,
                                            "BASE=" + self.base, check=False)
                     else:
-                        failed = self.create("diagnostic-allocation", nominal, reuse_any=True, check=False)
+                        failed = self.create(name, nominal, reuse_any=True, check=False)
                     output = failed.stdout + failed.stderr
                     self.assertNotEqual(0, failed.returncode, output)
                     self.assertIn("removal_payload_failed:CalledProcessError", output)
@@ -272,10 +273,10 @@ class LifecycleTests(unittest.TestCase):
                     self.assertIn(str(tree), output)
                     self.assertTrue(blocked.exists())
                     self.assertFalse(nominal.exists())
-        finally:
-            os.chflags(blocked, 0)
-        self.make("worktree-remove", "NAMES=" + tree.name, "FORCE=1")
-        self.assertEqual(head, run(self.main, "rev-parse", branch).stdout.strip())
+                finally:
+                    os.chflags(blocked, 0)
+                    self.make("worktree-remove", "NAMES=" + tree.name, "FORCE=1")
+                self.assertEqual(head, run(self.main, "rev-parse", branch).stdout.strip())
         self.assertEqual("dev", run(self.main, "branch", "--show-current").stdout.strip())
 
     def test_missing_pointer_locked_registration_supported_cleanup_entrances(self):

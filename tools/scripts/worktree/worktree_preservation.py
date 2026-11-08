@@ -23,7 +23,7 @@ def finished_operations(metadata):
 def qualify(source, path, stack=None, snapshot=None, deadline=None):
     del stack, deadline
     path = Path(path).absolute()
-    if path.is_symlink() or not path.is_dir():
+    if path.is_symlink() or (os.path.lexists(path) and not path.is_dir()):
         raise Refused("missing_or_linked_tree")
     path = path.resolve()
     rows = snapshot[0] if snapshot is not None else inventory(source)
@@ -38,13 +38,15 @@ def qualify(source, path, stack=None, snapshot=None, deadline=None):
 
 
 def _missing_pointer_identity(source, path, rows, snapshot=None):
-    # Cleanup alone can recover an absent checkout pointer. Require the native
+    # Cleanup alone can recover an absent checkout root or pointer. Require the native
     # administration entry's backlink, common directory and HEAD to agree;
     # ordinary reuse/with identity continues to require the checkout pointer.
     if all(os.path.lexists(path / name) for name in ("HEAD", "objects", "refs")):
         raise Refused("foreign_repository")
     matches = [row for row in rows if Path(row["worktree"]).resolve() == path]
-    if len(matches) != 1 or path.stat().st_dev != path.parent.stat().st_dev:
+    if len(matches) != 1:
+        raise Refused("repository_identity")
+    if path.is_dir() and path.stat().st_dev != path.parent.stat().st_dev:
         raise Refused("repository_identity")
     shared = snapshot[1] if snapshot is not None else common(source)
     administration = shared / "worktrees"
@@ -116,33 +118,36 @@ def remove_registered(source, path, timeout=1800):
         return seconds
 
     try:
-        if not os.path.lexists(path / ".git"):
-            # Git validates even a double-force removal's pointer. Recreate
-            # only this proven missing pointer, without overwriting any entry
-            # or repairing/pruning other registrations.
-            current_rows = inventory(source)
+        # An absent root has no payload or pointer to repair. Native Git can
+        # remove its qualified registration directly, including a locked one.
+        if os.path.lexists(path):
             qualify(source, path)
-            _, metadata = _missing_pointer_identity(source, path, current_rows)
-            with (path / ".git").open("x") as pointer:
-                pointer.write("gitdir: " + str(metadata) + "\n")
-            identity(source, path)
-        phase = "payload"
-        # Bound argv even for a flat checkout. rm's physical traversal unlinks
-        # symlinks, including .lake, without following their external targets.
-        with os.scandir(path) as entries:
-            arguments = ["./" + entry.name for entry in entries if entry.name != ".git"]
-        batch, size = [], 0
-        for argument in arguments:
-            length = len(os.fsencode(argument)) + 1
-            if batch and size + length > 32768:
+            if not os.path.lexists(path / ".git"):
+                # Git validates a present root's pointer even with double force.
+                # Recreate only this proven missing pointer, without overwriting
+                # any entry or repairing/pruning other registrations.
+                current_rows = inventory(source)
+                _, metadata = _missing_pointer_identity(source, path, current_rows)
+                with (path / ".git").open("x") as pointer:
+                    pointer.write("gitdir: " + str(metadata) + "\n")
+                identity(source, path)
+            phase = "payload"
+            # Bound argv even for a flat checkout. rm's physical traversal unlinks
+            # symlinks, including .lake, without following their external targets.
+            with os.scandir(path) as entries:
+                arguments = ["./" + entry.name for entry in entries if entry.name != ".git"]
+            batch, size = [], 0
+            for argument in arguments:
+                length = len(os.fsencode(argument)) + 1
+                if batch and size + length > 32768:
+                    _remove_payload(path, batch, remaining())
+                    batch, size = [], 0
+                batch.append(argument)
+                size += length
+            if batch:
                 _remove_payload(path, batch, remaining())
-                batch, size = [], 0
-            batch.append(argument)
-            size += length
-        if batch:
-            _remove_payload(path, batch, remaining())
-        if any(entry.name != ".git" for entry in path.iterdir()):
-            raise GitFailure("payload remains")
+            if any(entry.name != ".git" for entry in path.iterdir()):
+                raise GitFailure("payload remains")
         phase = "final-native"
         qualify(source, path)
         result = git(source, "worktree", "remove", "--force", "--force", "--", str(path),
@@ -159,7 +164,7 @@ def remove_registered(source, path, timeout=1800):
             diagnostic = diagnostic.decode(errors="replace")
         raise GitFailure(f"removal_{phase}_failed:{type(error).__name__}:"
                          f"exit={getattr(error, 'returncode', None)}, "
-                         f"timeout={getattr(error, 'timeout', None)}; {str(error)[-4096:]}; "
+                         f"timeout={getattr(error, 'timeout', None)}; path={str(path)!r}; {str(error)[-4096:]}; "
                          f"stderr={diagnostic[-4096:]!r}; {_removal_state(source, path)}") from error
     return item
 
