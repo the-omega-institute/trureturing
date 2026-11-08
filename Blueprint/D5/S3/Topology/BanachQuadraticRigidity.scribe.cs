@@ -5,8 +5,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Topology;
 internal sealed class BanachQuadraticRigidityDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Distance conservation for the original symmetric quadratic equation in an arbitrary real Banach space.",
-        H("Quadratic ODE distance conservation"),
+        "Symmetric bilinear exponential-isometry rigidity in an arbitrary real Banach space.",
+        H("Banach quadratic rigidity"),
         Blocks(
             Describe.Lean(
                 DescribeId.Create("banach-quadratic-solution-distance"),
@@ -36,24 +36,61 @@ internal sealed class BanachQuadraticRigidityDocument : IScribeDocumentDefinitio
                         + "the asserted distance identity. The exponential derivative and "
                         + "mean value theorem are used directly from pinned Mathlib."))),
                 DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("banach-symmetric-bilinear-isometry-rigidity"),
+                DeclarationHandle.Create("D5/S3/Topology/BanachQuadraticRigidity.eq_zero_of_symmetric_exp_isometry"),
+                H("All exponential isometries force the bilinear map to vanish"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text(
+                        "For every real Banach space E and every continuous real bilinear "
+                        + "B:E times E to E, if B is symmetric and exp(t B(x,-)) is an "
+                        + "isometry for every x in E and every real t, then B=0. The given "
+                        + "norm is arbitrary. The theorem includes zero spaces and arbitrary "
+                        + "dimension and assumes no flow, linearity of a flow, inner product "
+                        + "or nontrivial carrier.")),
+                    Paragraph(Text(
+                        "Mathlib local existence for the continuously differentiable quadratic "
+                        + "field supplies a common local solution time near zero. For initial "
+                        + "x scale the state by a=r/(1+norm(x)), where r is the local radius. "
+                        + "Distance conservation against the zero solution keeps the scaled "
+                        + "solution norm equal to a norm(x). Scale its value by a inverse and "
+                        + "its time by r inverse. This supplies the normalized field "
+                        + "f(x)=B(x,x)/(1+norm(x)) on the same positive time interval for every "
+                        + "state. The frozen UniformLocalGlobalPasting theorem is applied "
+                        + "directly with this uniform all-state interval, producing a global "
+                        + "normalized solution. Its norm is constant by the frozen-orbit "
+                        + "comparison. Rescaling time by 1+norm(x) gives a global solution "
+                        + "of the original quadratic equation.")),
+                    Paragraph(Text(
+                        "Choose one such solution for each initial state. Distance "
+                        + "conservation proves uniqueness and the autonomous composition "
+                        + "law. Negative time provides an actual inverse, so each time map "
+                        + "is a surjective isometry fixing zero. Apply Mathlib's "
+                        + "IsometryEquiv.toRealLinearIsometryEquivOfMapZero directly. "
+                        + "Differentiating its scalar-two identity at time zero yields "
+                        + "4 B(x,x)=2 B(x,x), so B vanishes on the diagonal. Bilinearity "
+                        + "and symmetry then polarize this identity to B(x,y)=0."))),
+                DescribeRole.Theorem),
             Paragraph(Text(
                 "The intended source application is the quadratic-flow step after (2.8) in "
                 + "AURIC_ARBITRARY_DIMENSIONAL_SMALL_WINDOW_UNIT_BRIDGE. It uses the same "
                 + "completed space, the same original symmetric S, K=T-I, and "
                 + "B(a,b)=K(S(a,b))-S(K(a),b)-S(a,K(b)). Once that B and its exponential "
                 + "isometry hypotheses are supplied, the theorem applies to any two of its "
-                + "actual quadratic solutions on their common open time interval. Taking "
-                + "the second curve to be zero yields constant solution norm; taking two "
-                + "curves with the same initial state yields uniqueness on that interval.")),
+                + "actual quadratic solutions on their common open time interval. The "
+                + "full rigidity theorem then gives this same B=0, hence "
+                + "K(S(a,b))=S(K(a),b)+S(a,K(b)) for every a,b. This is the same-S "
+                + "derivation identity, conditional on supplying the source-specific "
+                + "bounded bilinear map and its exponential-isometry hypotheses.")),
             Paragraph(Text(
-                "The full arbitrary Banach-space implication from symmetry and all exponential "
-                + "isometries to B=0 remains a separate obligation. This distance theorem "
-                + "does not supply local existence, uniform continuation on invariant balls, "
-                + "a global flow or its surjectivity. Completing those steps would allow "
-                + "Mazur-Ulam, differentiation of the resulting linear flow at time zero, "
-                + "and polarization to prove B=0. The source-specific same-S derivation, "
-                + "the actual operators A_h, K=0, and the original unit law also remain "
-                + "outside this local result. The already formalized dominated scalar "
+                "This result supplies the arbitrary Banach quadratic-rigidity subargument. "
+                + "Constructing the source-specific B from the same S and K, proving its "
+                + "exponential isometries from the original order data, integrating the "
+                + "same-S derivation identity to (2.9), constructing the actual operators "
+                + "A_h, and deriving K=0 and the original unit law remain separate source "
+                + "bridges. The already formalized dominated scalar "
                 + "operator rigidity is not reproved here."))),
         []));
 }

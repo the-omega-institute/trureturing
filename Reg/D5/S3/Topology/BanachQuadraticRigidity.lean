@@ -27,8 +27,8 @@ theorem distance_actual : distanceScope.{u} := @quadratic_solution_dist_eq.{u}
 structure Inputs where
   E : Type u
   groupE : NormedAddCommGroup E
-  spaceE : @NormedSpace ℝ E _ groupE.toAddCommGroup
-  completeE : @CompleteSpace E groupE.toUniformSpace
+  spaceE : letI := groupE; NormedSpace ℝ E
+  completeE : letI := groupE; CompleteSpace E
   B : letI := groupE; letI := spaceE; E →L[ℝ] E →L[ℝ] E
   symmetric : ∀ x y : E, B x y = B y x
   exponentialIsometry : letI := groupE; letI := spaceE;
@@ -77,5 +77,53 @@ theorem source_bridge : distanceScope.{u} ↔ arena.{u}.Law actual.{u} := by
 
 theorem actual_positive : arena.{u}.Law actual.{u} :=
   source_bridge.mp (@quadratic_solution_dist_eq.{u})
+
+abbrev rigidityScope := type_of% (@eq_zero_of_symmetric_exp_isometry.{u})
+
+theorem rigidity_actual : rigidityScope.{u} := @eq_zero_of_symmetric_exp_isometry.{u}
+
+structure RigidityInputs where
+  E : Type u
+  groupE : NormedAddCommGroup E
+  spaceE : letI := groupE; NormedSpace ℝ E
+  completeE : letI := groupE; CompleteSpace E
+
+attribute [instance] RigidityInputs.groupE RigidityInputs.spaceE RigidityInputs.completeE
+
+abbrev rigidityState (P : RigidityInputs.{u}) := (P.E →L[ℝ] P.E →L[ℝ] P.E) × P.E × P.E
+
+abbrev rigiditySignature : Signature where
+  Params := RigidityInputs.{u}
+  State := rigidityState
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output := fun _ P => P.E
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def rigidityActual : Realization rigiditySignature.{u} :=
+  realize rigiditySignature (fun _ _ st => st.1 st.2.1 st.2.2) (fun a => nomatch a)
+
+def rigidityArena : Arena where
+  signature := rigiditySignature.{u}
+  Law := fun r => ∀ P (B : P.E →L[ℝ] P.E →L[ℝ] P.E),
+    (∀ x y : P.E, B x y = B y x) →
+    (∀ (x : P.E) (t : ℝ), Isometry (fun y : P.E => (NormedSpace.exp (t • B x)) y)) →
+    ∀ x y : P.E, r.readout () P (B, x, y) = 0
+
+theorem rigidity_source_bridge : rigidityScope.{u} ↔ rigidityArena.{u}.Law rigidityActual.{u} := by
+  constructor
+  · intro h P B hsymm hiso x y
+    change B x y = 0
+    rw [h B hsymm hiso]
+    rfl
+  · intro h E groupE spaceE completeE B hsymm hiso
+    let P : RigidityInputs.{u} := ⟨E, groupE, spaceE, completeE⟩
+    ext x y
+    exact h P B hsymm hiso x y
+
+theorem rigidity_actual_positive : rigidityArena.{u}.Law rigidityActual.{u} :=
+  rigidity_source_bridge.mp (@eq_zero_of_symmetric_exp_isometry.{u})
 
 end Reg.D5.S3.Topology.BanachQuadraticRigidity
