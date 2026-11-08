@@ -395,5 +395,52 @@ theorem actual_initial_law [Countable S] [MeasurableSingletonClass S]
   rw [← hUnion, measure_iUnion hdis hE, PMF.toMeasure_bind_apply _ _ _ hB]
   exact tsum_congr hmass
 
+/-- Integrate the next actual variable-length word on an exact raw history
+    event fixing its current state. The event restriction is deterministic;
+    the next-state law is a conclusion, including null and absorbed histories. -/
+theorem actual_past_step [Countable S] [MeasurableSingletonClass S]
+    (labels : Set S) (update : S → Bool → R → S)
+    (η : Measure S) (w f : PMF ℕ) (ρ : Measure R) [IsProbabilityMeasure ρ]
+    (A C : S → PMF S)
+    (heff : ∀ b, Measurable (fun p : S × R => effective labels update p.1 b p.2))
+    (hrow : ∀ s b, ρ.map (effective labels update s b) = (if b then C s else A s).toMeasure)
+    (hI : Measurable I) (hτ : Measurable τ)
+    (hK : ∀ j, Measurable (fun ω => K ω j))
+    (hξ : ∀ j, Measurable (fun ω => ξ ω j))
+    (hprimitive : Primitive P I τ K ξ η w f ρ)
+    (n : ℕ)
+    (D : (a : ℕ × (Fin n → ℕ)) → Set (S × (Fin (cut a.1 a.2) → R)))
+    (hD : ∀ a, MeasurableSet (D a)) (s : S)
+    (hstate : ∀ ω ∈ pastEvent I τ K ξ n D,
+      epoch labels update (I ω) (ξ ω) (τ ω) (K ω) n = s)
+    (k : ℕ) (B : Set S) (hB : MeasurableSet B) :
+    P (pastEvent I τ K ξ n D ∩ {ω | K ω n = k} ∩
+      {ω | epoch labels update (I ω) (ξ ω) (τ ω) (K ω) (n + 1) ∈ B}) =
+      P (pastEvent I τ K ξ n D) * f k * ((zeroRow A k s).bind C).toMeasure B := by
+  let V := word labels update k s ⁻¹' B
+  have hm : Measurable (word labels update k s) :=
+    (word_measurable labels update heff k).comp
+      (measurable_const.prodMk measurable_id)
+  have hV : MeasurableSet V := hm hB
+  have hh := random_cut_freshness P I τ K ξ η w f ρ hI hτ hK hξ
+    hprimitive n D hD k V hV
+  have hevent : pastEvent I τ K ξ n D ∩ {ω | K ω n = k} ∩
+      {ω | epoch labels update (I ω) (ξ ω) (τ ω) (K ω) (n + 1) ∈ B} =
+      pastEvent I τ K ξ n D ∩ {ω | K ω n = k} ∩
+        (fun ω j => ξ ω (clock (τ ω) (K ω) n + j.val)) ⁻¹' V := by
+    ext ω
+    by_cases hE : ω ∈ pastEvent I τ K ξ n D
+    · by_cases hk : K ω n = k
+      · have hy := (actual_words labels update (I ω) (ξ ω) (τ ω) (K ω)).2 n
+        rw [hk, hstate ω hE] at hy
+        simp only [Set.mem_inter_iff, Set.mem_setOf_eq, hE, hk, true_and,
+          Set.mem_preimage, V, hy]
+      · simp only [Set.mem_inter_iff, Set.mem_setOf_eq, hk, false_and, and_false]
+    · simp only [Set.mem_inter_iff, hE, false_and]
+  have hw := congrArg (fun μ : Measure S => μ B)
+    (finite_word_law labels update ρ A C heff hrow k s)
+  rw [Measure.map_apply hm hB] at hw
+  rw [hevent, hh, hw]
+
 end Probability
 end D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.ReadExecution.ActualRenewalPrefixLaw

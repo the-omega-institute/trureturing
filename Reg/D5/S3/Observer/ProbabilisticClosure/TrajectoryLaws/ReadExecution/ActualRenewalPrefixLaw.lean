@@ -225,7 +225,7 @@ private theorem initial_rejected : ¬ initialArena.{u,v,w}.Law massRejected := b
     (by
       intro n a l r D B hD hB
       simp [sourceSlice, rawPrefix, rawBlock, η, PMF.toMeasure_pure,
-        PMF.pure_apply, Fintype.prod_boole, Measure.pi_eq_dirac])
+        PMF.pure_apply, Fintype.prod_boole])
     ∅ MeasurableSet.empty
   simpa [massRejected, realize] using hh
 
@@ -251,6 +251,86 @@ def initialRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   arena := .source ⟨initialArena⟩, objectArena := .source ⟨initialArena⟩,
   catalog := Lean.Name.anonymous, localNames := false,
   realization := .source initialArena ⟨initialRecord⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence }, bundleNonempty := .absent,
+  readout := some (realize massSignature.{u} (fun _ p E => p.P E) (fun e => nomatch e)),
+  variation := .absent, sensitivity := .absent, partialSensitivity := none, escapeFrom := none,
+  sourceSelection := none,
+  continuation := .unknown, familyRecord := none,
+  options := #[{ name := `relaxedAutoImplicit, value := .bool false }] }
+
+def stepArena : Arena where
+  signature := massSignature.{u}
+  Law F := ∀ {Ω : Type u} [m : MeasurableSpace Ω] {S : Type v} {R : Type w}
+    [MeasurableSpace S] [MeasurableSpace R]
+    (P : Measure Ω) (I : Ω → S) (τ : Ω → ℕ) (K : Ω → ℕ → ℕ) (ξ : Ω → ℕ → R)
+    [Countable S] [MeasurableSingletonClass S]
+    (L : Set S) (U : S → Bool → R → S)
+    (η : Measure S) (a f : PMF ℕ) (ρ : Measure R) [IsProbabilityMeasure ρ]
+    (A C : S → PMF S)
+    (_ : ∀ b, Measurable (fun p : S × R => effective L U p.1 b p.2))
+    (_ : ∀ s b, ρ.map (effective L U s b) = (if b then C s else A s).toMeasure)
+    (_ : Measurable I) (_ : Measurable τ) (_ : ∀ j, Measurable (fun ω => K ω j))
+    (_ : ∀ j, Measurable (fun ω => ξ ω j)) (_ : Primitive P I τ K ξ η a f ρ)
+    (n : ℕ) (D : (q : ℕ × (Fin n → ℕ)) → Set (S × (Fin (cut q.1 q.2) → R)))
+    (_ : ∀ q, MeasurableSet (D q)) (s : S)
+    (_ : ∀ ω ∈ pastEvent I τ K ξ n D, epoch L U (I ω) (ξ ω) (τ ω) (K ω) n = s)
+    (k : ℕ) (B : Set S) (_ : MeasurableSet B),
+    F.readout () ⟨Ω,m,P⟩ (pastEvent I τ K ξ n D ∩ {ω | K ω n = k} ∩
+      {ω | epoch L U (I ω) (ξ ω) (τ ω) (K ω) (n + 1) ∈ B}) =
+    F.readout () ⟨Ω,m,P⟩ (pastEvent I τ K ξ n D) * f k *
+      ((zeroRow A k s).bind C).toMeasure B
+
+private theorem step_rejected : ¬ stepArena.{u,v,w}.Law massRejected := by
+  intro h
+  let E := ULift.{u} Empty
+  let A := ULift.{v} Unit
+  let R := ULift.{w} Unit
+  letI : MeasurableSpace E := ⊤
+  letI : MeasurableSpace A := ⊤
+  letI : MeasurableSpace R := ⊤
+  let I : E → A := fun e => nomatch e.down
+  let τ : E → ℕ := fun e => nomatch e.down
+  let K : E → ℕ → ℕ := fun e => nomatch e.down
+  let ξ : E → ℕ → R := fun e => nomatch e.down
+  let ρ : Measure R := Measure.dirac ⟨()⟩
+  let U : A → Bool → R → A := fun s _ _ => s
+  have hp : Primitive (0 : Measure E) I τ K ξ (0 : Measure A)
+      (PMF.pure 0) (PMF.pure 0) ρ := by
+    intro n a l r D B hD hB
+    simp
+  have hr : ∀ s b, ρ.map (effective Set.univ U s b) = (PMF.pure s).toMeasure := by
+    intro s b
+    simp [effective, PMF.toMeasure_pure]
+  have hh := h (0 : Measure E) I τ K ξ Set.univ U (0 : Measure A)
+    (PMF.pure 0) (PMF.pure 0) ρ PMF.pure PMF.pure
+    (fun _ => by simpa [effective] using measurable_fst) hr
+    (by fun_prop) (by fun_prop) (fun _ => by fun_prop) (fun _ => by fun_prop) hp
+    0 (fun _ => Set.univ) (fun _ => MeasurableSet.univ) (⟨()⟩ : A)
+    (fun ω => nomatch ω.down) 0 ∅ MeasurableSet.empty
+  simpa [massRejected, realize] using hh
+
+def stepRecord : Registration stepArena.{u,v,w} (type_of% (@actual_past_step.{v,w,u})) where
+  actual := massActual
+  bridge := Iff.rfl
+  variation := ⟨actual_past_step, massRejected, step_rejected⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨massRejected, ?_, rfl, step_rejected⟩
+      intro j hj
+      exact (hj (Subsingleton.elim j i)).elim
+    · intro i; exact nomatch i
+  dependence := massRecord.dependence
+
+def stepRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@actual_past_step.{v,w,u}) (type_of% (realize massSignature.{u}
+      (fun _ p E => p.P E) (fun e => nomatch e))) Unit Unit := {
+  unitName := `ActualRenewalPrefixLaw.actual_past_step.__information_unit,
+  realizationName := `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.ReadExecution.ActualRenewalPrefixLaw.stepRecord,
+  realizationSource := none, generated := false,
+  arena := .source ⟨stepArena⟩, objectArena := .source ⟨stepArena⟩,
+  catalog := Lean.Name.anonymous, localNames := false,
+  realization := .source stepArena ⟨stepRecord⟩,
   correspondence := { stage := .evidence, objectStage := .evidence }, bundleNonempty := .absent,
   readout := some (realize massSignature.{u} (fun _ p E => p.P E) (fun e => nomatch e)),
   variation := .absent, sensitivity := .absent, partialSensitivity := none, escapeFrom := none,
