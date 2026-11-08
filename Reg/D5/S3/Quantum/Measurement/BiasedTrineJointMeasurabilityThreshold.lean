@@ -1,6 +1,7 @@
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Measurement.BiasedTrineJointMeasurabilityThreshold
 import Reg.Support.SingleDependentReadout
+import Reg.D5.S3.Quantum.Measurement.FourQubitParentConstruction
 
 /-! Source-bound audit of the exact biased-trine compatibility threshold. -/
 
@@ -208,4 +209,72 @@ set_option pp.proofs false in
 end SumStrings
 
 end
+namespace ScalarInjective
+
+open _root_.D5.S3.Quantum.Measurement.FourQubitParentConstruction (scalarB B_formula)
+open Reg.D5.S3.Quantum.Measurement.FourQubitParentConstruction
+
+abbrev injectiveArena : Arena where
+  signature := scalarSignature
+  Law r := ∀ (t u : ℝ) (a v : Vec),
+    r.readout () t a = scalarB u v → t = u ∧ a = v
+
+def zeroReadout : Realization scalarSignature :=
+  realize scalarSignature (fun _ _ _ => 0) (fun e => nomatch e)
+
+theorem zeroReadout_rejected : ¬ injectiveArena.Law zeroReadout := by
+  intro h
+  have he := h 1 0 0 0 (by
+    change (0 : Mat) = scalarB 0 0
+    ext i j
+    fin_cases i <;> fin_cases j <;> simp [scalarB, B_formula])
+  norm_num at he
+
+noncomputable def injectiveEvidence : Registration injectiveArena (type_of% @scalarB_injective) where
+  actual := scalarActual
+  bridge := Iff.rfl
+  variation := ⟨scalarB_injective, zeroReadout, zeroReadout_rejected⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity
+    injectiveArena.Law scalarActual zeroReadout zeroReadout_rejected
+  dependence := scalarDependence
+
+noncomputable def injectiveRegistration :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@scalarB_injective) (Realization scalarSignature) Unit Unit := {
+  unitName := `Reg.D5.S3.Quantum.Measurement.BiasedTrineJointMeasurabilityThreshold.ScalarInjective.unit
+  realizationName :=
+    `Reg.D5.S3.Quantum.Measurement.BiasedTrineJointMeasurabilityThreshold.ScalarInjective.injectiveEvidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨injectiveArena⟩
+  objectArena := .source ⟨injectiveArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source injectiveArena ⟨injectiveEvidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize scalarSignature (fun _ t a => scalarB t a) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Measurement.BiasedTrineJointMeasurabilityThreshold
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "domain", "fn", "arg"]
+      stateBinder := 2
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+#print axioms injectiveEvidence
+#print axioms injectiveRegistration
+
+end ScalarInjective
+
 end Reg.D5.S3.Quantum.Measurement.BiasedTrineJointMeasurabilityThreshold
