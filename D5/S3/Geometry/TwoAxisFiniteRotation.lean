@@ -113,16 +113,16 @@ private theorem word_determinant {a b : Space} {l : List Orthogonal}
 
 private theorem determinant_plane_reflection {n : Space} (hn : n ≠ 0) :
     determinant (ℝ ∙ n)ᗮ.reflection = -1 := by
-  simp only [determinant, Submodule.det_reflection,
-    Submodule.orthogonal_orthogonal, finrank_span_singleton hn]
+  rw [determinant, Submodule.det_reflection, (ℝ ∙ n).orthogonal_orthogonal,
+    finrank_span_singleton hn]
   norm_num
 
 private theorem unit_perpendicular_pair (a b : Space) :
     ∃ n : Space, ‖n‖ = 1 ∧ ⟪a, n⟫_ℝ = 0 ∧ ⟪b, n⟫_ℝ = 0 := by
   classical
-  let P : Submodule ℝ Space := Submodule.span ℝ ({a, b} : Set Space)
+  let P : Submodule ℝ Space := Submodule.span ℝ (↑({a, b} : Finset Space) : Set Space)
   have hdim : finrank ℝ P ≤ 2 := by
-    simpa only [P, Set.finrank, Finset.coe_insert, Finset.coe_singleton] using
+    exact
       (finrank_span_finset_le_card (R := ℝ) ({a, b} : Finset Space)).trans
         Finset.card_le_two
   have hne : Pᗮ ≠ ⊥ := by
@@ -172,7 +172,7 @@ private theorem equal_latitude (a u v : Space) (huv : ‖u‖ = ‖v‖)
     exact Submodule.reflection_sub huv
 
 private theorem unit_inner_self {a : Space} (ha : ‖a‖ = 1) : ⟪a, a⟫_ℝ = 1 := by
-  simp [real_inner_self_eq_norm_sq, ha]
+  exact inner_self_eq_one_of_norm_eq_one ha
 
 /-- A prescribed latitude near the first pole intersects the latitude of that
 pole about the second axis. The third coordinate is constructed in the original
@@ -206,9 +206,9 @@ private theorem intersect_latitudes {a b : Space} (ha : ‖a‖ = 1) (hb : ‖b�
     simp [e, q, d, inner_sub_right, real_inner_smul_right, ha, pow_two]
   have hen : ⟪e, n⟫_ℝ = 0 := by
     simp [e, inner_sub_left, real_inner_smul_left, han, hbn]
-  have heb : ⟪e, b⟫_ℝ = 0 := (real_inner_comm e b).trans hbe
-  have hnb : ⟪n, b⟫_ℝ = 0 := (real_inner_comm n b).trans hbn
-  have hne : ⟪n, e⟫_ℝ = 0 := (real_inner_comm n e).trans hen
+  have heb : ⟪e, b⟫_ℝ = 0 := (real_inner_comm b e).trans hbe
+  have hnb : ⟪n, b⟫_ℝ = 0 := (real_inner_comm b n).trans hbn
+  have hne : ⟪n, e⟫_ℝ = 0 := (real_inner_comm e n).trans hen
   have hct : c * q = t - d ^ 2 := div_mul_cancel₀ _ (ne_of_gt hq)
   refine ⟨d • b + c • e + z • n, ?_, ?_, ?_⟩
   · have hi : ⟪d • b + c • e + z • n, d • b + c • e + z • n⟫_ℝ = 1 := by
@@ -289,7 +289,7 @@ private theorem sphere_orbit {a b : Space} (ha : ‖a‖ = 1) (hb : ‖b‖ = 1)
     rw [← Module.finrank_eq_rank]
     norm_num [Space]
   letI : PreconnectedSpace Sphere := isPreconnected_iff_preconnectedSpace.mp
-    (_root_.NormedSpace.isPreconnected_sphere hrank (0 : Space) 1)
+    (_root_.isPreconnected_sphere hrank (0 : Space) 1)
   have hU : U = Set.univ := (show IsClopen U from ⟨isOpen_compl_iff.mp hcompl, hopen⟩).eq_univ
     ⟨⟨a, by simpa only [Metric.mem_sphere, dist_zero_right] using ha⟩,
       1, (wordGroup a b).one_mem, rfl⟩

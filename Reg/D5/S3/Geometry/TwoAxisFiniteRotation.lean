@@ -59,7 +59,7 @@ abbrev arena : Arena where
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  obtain ⟨l, hl⟩ := h firstAxis secondAxis axes_gram 1 (by simp [determinant])
+  obtain ⟨l, hl⟩ := h firstAxis secondAxis axes_gram 1 (by change LinearMap.det (1 : Space →ₗ[ℝ] Space) = 1; simp)
   exact hl
 
 private theorem dependence : ObservationalDependence signature actual := by
@@ -182,7 +182,7 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
   have heq := h normParameters.{u}.Y normParameters.{u}.F normParameters.{u}.p
     normParameters.{u}.a normParameters.{u}.b axes_gram norm_local
-    1 (by simp [determinant])
+    1 (by change LinearMap.det (1 : Space →ₗ[ℝ] Space) = 1; simp)
   have hnorm := congrArg ULift.down heq
   change ‖(0 : Space)‖ = ‖firstAxis‖ at hnorm
   exact (zero_ne_one : (0 : ℝ) ≠ 1)
