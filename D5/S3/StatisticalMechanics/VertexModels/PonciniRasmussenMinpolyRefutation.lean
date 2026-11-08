@@ -8,6 +8,8 @@
 
 /-
 admission_basis: open-problem-resolution (#27843; Refuted)
+Registration audit (CLAUDE.md §3.9): result is exempt (basis=refutes); the 80 other new
+public theorems of this delivery lack declared_validated registrations (issue #28149).
 escape_witness: none (the settlement of the external open problem is the new content)
 Qualified-name abbreviations:
 PonciniRasmussenMinpolyRefutation = D5.S3.StatisticalMechanics.PonciniRasmussenMinpolyRefutation

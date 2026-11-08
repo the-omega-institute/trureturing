@@ -31,12 +31,18 @@ internal sealed class PonciniRasmussenMinpolyRefutationDocument : IScribeDocumen
                 " Nat.sub is truncated. The outer division and the degree cast " +
                 "are in Rat.",
                 literature: true),
-            Node("result", Call("Not", N("claim")),
-                "The integer recurrence and literal diagram action give " +
-                "p(h_9)=0 for a monic polynomial of degree 57. The minimal " +
-                "polynomial therefore has degree at most 57, which contradicts " +
-                "the conjectured value 81. No exact degree is asserted.",
-                DescribeRole.Theorem, acknowledgeSource: true))));
+            Describe.Lean(DescribeId.Create("result"), DeclarationHandle.Create(Prefix + "result"),
+                H("result"), StatementSource.FromAuthor(Disp(Call("Not", N("claim")))),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text(
+                    "The integer recurrence and literal diagram action give " +
+                    "p(h_9)=0 for a monic polynomial of degree 57. The minimal " +
+                    "polynomial therefore has degree at most 57, which contradicts " +
+                    "the conjectured value 81. No exact degree is asserted."))),
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("poncini-rasmussen-2022-minpoly-degree-conjecture-b1"),
+                    ResolutionKind.Refuted)))));
 
 
     private static LibraryNoteRef Source =>
