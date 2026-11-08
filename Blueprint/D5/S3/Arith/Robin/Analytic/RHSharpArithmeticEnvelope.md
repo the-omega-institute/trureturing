@@ -61,6 +61,6 @@ The resulting signed limit is D(x)*B(x)+2+G(log(x))->0 on ALL real endpoints. Co
 - Truth anchor: `D5/S3/Arith/Robin/Analytic/RHSharpArithmeticEnvelope.B`
 - Truth anchor: `D5/S3/Arith/Robin/Analytic/RHSharpArithmeticEnvelope.D`
 - Truth anchor: `D5/S3/Arith/Robin/Analytic/RHSharpArithmeticEnvelope.actual_B_lower_endpoint`
-- Dependency: [D5/S3/Arith/Robin/ThetaTailRobinWitness](ThetaTailRobinWitness.md)
-- Dependency: [D5/S3/Weil/Mertens/Cryptids/Schoenfeld](../../Weil/Mertens/Cryptids/Schoenfeld.md)
-- Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/RHSharpActualEnvelope](../../Weil/Mertens/IntegratedExplicit/RHSharpActualEnvelope.md)
+- Dependency: [D5/S3/Arith/Robin/ThetaTailRobinWitness](../ThetaTailRobinWitness.md)
+- Dependency: [D5/S3/Weil/Mertens/Cryptids/Schoenfeld](../../../Weil/Mertens/Cryptids/Schoenfeld.md)
+- Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/RHSharpActualEnvelope](../../../Weil/Mertens/IntegratedExplicit/RHSharpActualEnvelope.md)
