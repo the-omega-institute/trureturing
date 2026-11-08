@@ -8,111 +8,202 @@
 
 /-
 admission_basis: open-problem-resolution (#27843; Refuted)
-escape_witness: literal finite computations transported to the degree-57 annihilator
+escape_witness: none (the settlement of the external open problem is the new content)
+Qualified-name abbreviations:
+PonciniRasmussenMinpolyRefutation = D5.S3.StatisticalMechanics.PonciniRasmussenMinpolyRefutation
+PonciniRasmussenNineEdges = D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges
+Tree = D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.Tree
+edgeCheck0 = D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck0
+edgeCheck1 = D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck1
+edgeCheck10 = D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck10
+edgeCheck11 = D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck11
+edgeCheck12 = D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck12
+edgeCheck13 = D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck13
+edgeCheck14 = D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck14
+edgeCheck15 = D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck15
+edgeCheck16 = D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck16
+edgeCheck17 = D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck17
+edgeCheck18 = D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck18
+edgeCheck19 = D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck19
+edgeCheck2 = D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck2
+edgeCheck20 = D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck20
+edgeCheck21 = D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck21
+edgeCheck22 = D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck22
+edgeCheck23 = D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck23
+edgeCheck24 = D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck24
+edgeCheck25 = D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck25
+edgeCheck26 = D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck26
+edgeCheck27 = D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck27
+edgeCheck28 = D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck28
+edgeCheck29 = D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck29
+edgeCheck3 = D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck3
+edgeCheck30 = D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck30
+edgeCheck31 = D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck31
+edgeCheck32 = D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck32
+edgeCheck33 = D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck33
+edgeCheck34 = D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck34
+edgeCheck35 = D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck35
+edgeCheck36 = D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck36
+edgeCheck4 = D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck4
+edgeCheck5 = D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck5
+edgeCheck7 = D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck7
+edgeCheck8 = D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck8
+edgeKey_injective = D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeKey_injective
+
 Direct frozen dependencies (declaration statement_ids):
 none (direct prerequisites are unfrozen or pinned upstream)
-Tree: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.Tree.below, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.Tree.brecOn
-get: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.incoming
-rows: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.incoming
-incoming: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.incomingEdges, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.sparseHamiltonian_eq
-sparseHamiltonian_eq: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.sparse_sum
-incomingEdges: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edges_perm, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.incoming_encoded
-outgoingEdges: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edges_perm, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.outgoing_encoded
-mergeForKernel: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck13, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck13._proof_1
-mergeForKernel_eq: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edges_perm, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.sortForKernel_perm
-sortForKernel: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck0, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck0._proof_1
-sortForKernel_perm: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edges_perm
-edgeKey: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeKey_injective, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeKey_injective._proof_1
-edgeKey_injective: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edges_perm
-sourcePart: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.encodedPart, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.outgoing_encoded
-encodedPart: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck0, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck0._proof_1
-natOrder: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck0, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck0._proof_1
-edgeNode0: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck0, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck0._proof_1
-edgeNode1: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck1, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck1._proof_1
-edgeNode2: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck2, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck2._proof_1
-edgeNode3: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck3, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck3._proof_1
-edgeNode4: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck4, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck4._proof_1
-edgeNode5: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck5, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck5._proof_1
-edgeNode6: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck16, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck16._proof_1
-edgeNode7: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck7, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck7._proof_1
-edgeNode8: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck8, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck8._proof_1
-edgeNode9: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck15, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck15._proof_1
-edgeNode10: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck10, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck10._proof_1
-edgeNode11: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck11, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck11._proof_1
-edgeNode12: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck12, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck12._proof_1
-edgeNode13: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck13, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck13._proof_1
-edgeNode14: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck14, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck14._proof_1
-edgeNode15: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck15, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck15._proof_1
-edgeNode16: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck16, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck16._proof_1
-edgeNode17: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck17, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck17._proof_1
-edgeNode18: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck18, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck18._proof_1
-edgeNode19: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck19, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck19._proof_1
-edgeNode20: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck20, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck20._proof_1
-edgeNode21: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck21, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck21._proof_1
-edgeNode22: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck22, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck22._proof_1
-edgeNode23: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck23, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck23._proof_1
-edgeNode24: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck24, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck24._proof_1
-edgeNode25: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck25, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck25._proof_1
-edgeNode26: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck26, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck26._proof_1
-edgeNode27: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck27, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck27._proof_1
-edgeNode28: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck28, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck28._proof_1
-edgeNode29: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck29, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck29._proof_1
-edgeNode30: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck30, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck30._proof_1
-edgeNode31: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck31, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck31._proof_1
-edgeNode32: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck32, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck32._proof_1
-edgeNode33: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck33, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck33._proof_1
-edgeNode34: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck34, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck34._proof_1
-edgeNode35: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck35, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck35._proof_1
-edgeNode36: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck36, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edgeCheck36._proof_1
-edgeCheck0: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edges_perm
-edgeCheck1: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edges_perm
-edgeCheck2: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edges_perm
-edgeCheck3: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edges_perm
-edgeCheck4: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edges_perm
-edgeCheck5: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edges_perm
-edgeCheck6: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edges_perm
-edgeCheck7: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edges_perm
-edgeCheck8: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edges_perm
-edgeCheck9: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edges_perm
-edgeCheck10: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edges_perm
-edgeCheck11: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edges_perm
-edgeCheck12: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edges_perm
-edgeCheck13: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edges_perm
-edgeCheck14: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edges_perm
-edgeCheck15: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edges_perm
-edgeCheck16: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edges_perm
-edgeCheck17: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edges_perm
-edgeCheck18: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edges_perm
-edgeCheck19: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edges_perm
-edgeCheck20: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edges_perm
-edgeCheck21: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edges_perm
-edgeCheck22: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edges_perm
-edgeCheck23: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edges_perm
-edgeCheck24: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edges_perm
-edgeCheck25: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edges_perm
-edgeCheck26: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edges_perm
-edgeCheck27: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edges_perm
-edgeCheck28: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edges_perm
-edgeCheck29: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edges_perm
-edgeCheck30: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edges_perm
-edgeCheck31: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edges_perm
-edgeCheck32: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edges_perm
-edgeCheck33: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edges_perm
-edgeCheck34: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edges_perm
-edgeCheck35: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edges_perm
-edgeCheck36: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edges_perm
-source_partition: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.outgoing_encoded
-outgoing_encoded: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edges_perm
-incoming_encoded: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.edges_perm
-edges_perm: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.sparse_sum
-sum_flatMap: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.incoming_sum, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.outgoing_sum
-sum_filterMap: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.outgoing_sum
-foldl_add_sum: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.incoming_sum
-int_sum_smul: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.incoming_sum
-sum_finRange: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.incoming_sum, D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.outgoing_sum
-outgoing_sum: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.sparse_sum
-incoming_sum: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.sparse_sum
-sparse_sum: proof_shape=content; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenMinpolyRefutation.sparse_lift
+Tree: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.Tree.below,
+  PonciniRasmussenNineEdges.Tree.brecOn
+get: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.incoming
+rows: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.incoming
+incoming: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.incomingEdges,
+  PonciniRasmussenNineEdges.sparseHamiltonian_eq
+sparseHamiltonian_eq: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.sparse_sum
+incomingEdges: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.edges_perm,
+  PonciniRasmussenNineEdges.incoming_encoded
+outgoingEdges: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.edges_perm,
+  PonciniRasmussenNineEdges.outgoing_encoded
+mergeForKernel: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.edgeCheck13,
+  PonciniRasmussenNineEdges.edgeCheck13._proof_1
+mergeForKernel_eq: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.edges_perm,
+  PonciniRasmussenNineEdges.sortForKernel_perm
+sortForKernel: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.edgeCheck0,
+  PonciniRasmussenNineEdges.edgeCheck0._proof_1
+sortForKernel_perm: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.edges_perm
+edgeKey: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.edgeKey_injective,
+  PonciniRasmussenNineEdges.edgeKey_injective._proof_1
+edgeKey_injective: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.edges_perm
+sourcePart: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.encodedPart,
+  PonciniRasmussenNineEdges.outgoing_encoded
+encodedPart: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.edgeCheck0,
+  PonciniRasmussenNineEdges.edgeCheck0._proof_1
+natOrder: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.edgeCheck0,
+  PonciniRasmussenNineEdges.edgeCheck0._proof_1
+edgeNode0: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.edgeCheck0,
+  PonciniRasmussenNineEdges.edgeCheck0._proof_1
+edgeNode1: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.edgeCheck1,
+  PonciniRasmussenNineEdges.edgeCheck1._proof_1
+edgeNode2: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.edgeCheck2,
+  PonciniRasmussenNineEdges.edgeCheck2._proof_1
+edgeNode3: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.edgeCheck3,
+  PonciniRasmussenNineEdges.edgeCheck3._proof_1
+edgeNode4: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.edgeCheck4,
+  PonciniRasmussenNineEdges.edgeCheck4._proof_1
+edgeNode5: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.edgeCheck5,
+  PonciniRasmussenNineEdges.edgeCheck5._proof_1
+edgeNode6: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.edgeCheck16,
+  PonciniRasmussenNineEdges.edgeCheck16._proof_1
+edgeNode7: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.edgeCheck7,
+  PonciniRasmussenNineEdges.edgeCheck7._proof_1
+edgeNode8: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.edgeCheck8,
+  PonciniRasmussenNineEdges.edgeCheck8._proof_1
+edgeNode9: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.edgeCheck15,
+  PonciniRasmussenNineEdges.edgeCheck15._proof_1
+edgeNode10: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.edgeCheck10,
+  PonciniRasmussenNineEdges.edgeCheck10._proof_1
+edgeNode11: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.edgeCheck11,
+  PonciniRasmussenNineEdges.edgeCheck11._proof_1
+edgeNode12: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.edgeCheck12,
+  PonciniRasmussenNineEdges.edgeCheck12._proof_1
+edgeNode13: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.edgeCheck13,
+  PonciniRasmussenNineEdges.edgeCheck13._proof_1
+edgeNode14: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.edgeCheck14,
+  PonciniRasmussenNineEdges.edgeCheck14._proof_1
+edgeNode15: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.edgeCheck15,
+  PonciniRasmussenNineEdges.edgeCheck15._proof_1
+edgeNode16: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.edgeCheck16,
+  PonciniRasmussenNineEdges.edgeCheck16._proof_1
+edgeNode17: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.edgeCheck17,
+  PonciniRasmussenNineEdges.edgeCheck17._proof_1
+edgeNode18: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.edgeCheck18,
+  PonciniRasmussenNineEdges.edgeCheck18._proof_1
+edgeNode19: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.edgeCheck19,
+  PonciniRasmussenNineEdges.edgeCheck19._proof_1
+edgeNode20: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.edgeCheck20,
+  PonciniRasmussenNineEdges.edgeCheck20._proof_1
+edgeNode21: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.edgeCheck21,
+  PonciniRasmussenNineEdges.edgeCheck21._proof_1
+edgeNode22: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.edgeCheck22,
+  PonciniRasmussenNineEdges.edgeCheck22._proof_1
+edgeNode23: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.edgeCheck23,
+  PonciniRasmussenNineEdges.edgeCheck23._proof_1
+edgeNode24: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.edgeCheck24,
+  PonciniRasmussenNineEdges.edgeCheck24._proof_1
+edgeNode25: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.edgeCheck25,
+  PonciniRasmussenNineEdges.edgeCheck25._proof_1
+edgeNode26: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.edgeCheck26,
+  PonciniRasmussenNineEdges.edgeCheck26._proof_1
+edgeNode27: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.edgeCheck27,
+  PonciniRasmussenNineEdges.edgeCheck27._proof_1
+edgeNode28: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.edgeCheck28,
+  PonciniRasmussenNineEdges.edgeCheck28._proof_1
+edgeNode29: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.edgeCheck29,
+  PonciniRasmussenNineEdges.edgeCheck29._proof_1
+edgeNode30: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.edgeCheck30,
+  PonciniRasmussenNineEdges.edgeCheck30._proof_1
+edgeNode31: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.edgeCheck31,
+  PonciniRasmussenNineEdges.edgeCheck31._proof_1
+edgeNode32: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.edgeCheck32,
+  PonciniRasmussenNineEdges.edgeCheck32._proof_1
+edgeNode33: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.edgeCheck33,
+  PonciniRasmussenNineEdges.edgeCheck33._proof_1
+edgeNode34: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.edgeCheck34,
+  PonciniRasmussenNineEdges.edgeCheck34._proof_1
+edgeNode35: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.edgeCheck35,
+  PonciniRasmussenNineEdges.edgeCheck35._proof_1
+edgeNode36: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.edgeCheck36,
+  PonciniRasmussenNineEdges.edgeCheck36._proof_1
+edgeCheck0: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.edges_perm
+edgeCheck1: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.edges_perm
+edgeCheck2: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.edges_perm
+edgeCheck3: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.edges_perm
+edgeCheck4: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.edges_perm
+edgeCheck5: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.edges_perm
+edgeCheck6: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.edges_perm
+edgeCheck7: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.edges_perm
+edgeCheck8: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.edges_perm
+edgeCheck9: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.edges_perm
+edgeCheck10: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.edges_perm
+edgeCheck11: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.edges_perm
+edgeCheck12: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.edges_perm
+edgeCheck13: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.edges_perm
+edgeCheck14: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.edges_perm
+edgeCheck15: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.edges_perm
+edgeCheck16: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.edges_perm
+edgeCheck17: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.edges_perm
+edgeCheck18: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.edges_perm
+edgeCheck19: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.edges_perm
+edgeCheck20: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.edges_perm
+edgeCheck21: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.edges_perm
+edgeCheck22: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.edges_perm
+edgeCheck23: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.edges_perm
+edgeCheck24: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.edges_perm
+edgeCheck25: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.edges_perm
+edgeCheck26: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.edges_perm
+edgeCheck27: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.edges_perm
+edgeCheck28: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.edges_perm
+edgeCheck29: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.edges_perm
+edgeCheck30: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.edges_perm
+edgeCheck31: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.edges_perm
+edgeCheck32: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.edges_perm
+edgeCheck33: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.edges_perm
+edgeCheck34: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.edges_perm
+edgeCheck35: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.edges_perm
+edgeCheck36: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.edges_perm
+source_partition: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.outgoing_encoded
+outgoing_encoded: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.edges_perm
+incoming_encoded: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.edges_perm
+edges_perm: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.sparse_sum
+sum_flatMap: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.incoming_sum,
+  PonciniRasmussenNineEdges.outgoing_sum
+sum_filterMap: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.outgoing_sum
+foldl_add_sum: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.incoming_sum
+int_sum_smul: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.incoming_sum
+sum_finRange: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.incoming_sum,
+  PonciniRasmussenNineEdges.outgoing_sum
+outgoing_sum: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.sparse_sum
+incoming_sum: proof_shape=bind-only; consumers=PonciniRasmussenNineEdges.sparse_sum
+sparse_sum: proof_shape=bind-only; consumers=PonciniRasmussenMinpolyRefutation.sparse_lift
 -/
 import D5.S3.StatisticalMechanics.VertexModels.PonciniRasmussenNineHornerData
 import D5.S3.StatisticalMechanics.VertexModels.PonciniRasmussenNineDiagrams

@@ -8,25 +8,39 @@
 
 /-
 admission_basis: open-problem-resolution (#27843; Refuted)
-escape_witness: literal finite computations transported to the degree-57 annihilator
+escape_witness: none (the settlement of the external open problem is the new content)
+Qualified-name abbreviations:
+PonciniRasmussenMinpolyRefutation = D5.S3.StatisticalMechanics.PonciniRasmussenMinpolyRefutation
+
 Direct frozen dependencies (declaration statement_ids):
 none (direct prerequisites are unfrozen or pinned upstream)
-claim: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenMinpolyRefutation.result
-liftVector: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenMinpolyRefutation.fold_lift, D5.S3.StatisticalMechanics.PonciniRasmussenMinpolyRefutation.h_lift
-h_lift: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenMinpolyRefutation.sparse_lift
-lift_step: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenMinpolyRefutation.fold_lift
-polynomialFromCoefficients: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenMinpolyRefutation.annihilator, D5.S3.StatisticalMechanics.PonciniRasmussenMinpolyRefutation.annihilator_degree
-fold_aeval: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenMinpolyRefutation.polynomial_annihilates
-fold_lift: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenMinpolyRefutation.polynomial_annihilates
-polynomial_annihilates: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenMinpolyRefutation.annihilator_aeval
-basisDiagram: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenMinpolyRefutation.annihilator_aeval, D5.S3.StatisticalMechanics.PonciniRasmussenMinpolyRefutation.sparse_lift
-sparse_lift: proof_shape=content  ; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenMinpolyRefutation.annihilator_aeval
-annihilator: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenMinpolyRefutation.annihilator_aeval, D5.S3.StatisticalMechanics.PonciniRasmussenMinpolyRefutation.annihilator_degree
-annihilator_aeval: proof_shape=content  ; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenMinpolyRefutation.minpoly_nine_bound
-annihilator_monic: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenMinpolyRefutation.minpoly_nine_bound
-annihilator_degree: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenMinpolyRefutation.minpoly_nine_bound
-minpoly_nine_bound: proof_shape=content  ; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenMinpolyRefutation.result
-result: proof_shape=content; consumers=terminal(refutes #27843)
+claim: proof_shape=bind-only; consumers=PonciniRasmussenMinpolyRefutation.result
+liftVector: proof_shape=bind-only; consumers=PonciniRasmussenMinpolyRefutation.fold_lift,
+  PonciniRasmussenMinpolyRefutation.h_lift
+h_lift: proof_shape=bind-only; consumers=PonciniRasmussenMinpolyRefutation.sparse_lift
+lift_step: proof_shape=bind-only; consumers=PonciniRasmussenMinpolyRefutation.fold_lift
+polynomialFromCoefficients: proof_shape=bind-only;
+  consumers=PonciniRasmussenMinpolyRefutation.annihilator,
+  PonciniRasmussenMinpolyRefutation.annihilator_degree
+fold_aeval: proof_shape=bind-only;
+  consumers=PonciniRasmussenMinpolyRefutation.polynomial_annihilates
+fold_lift: proof_shape=bind-only;
+  consumers=PonciniRasmussenMinpolyRefutation.polynomial_annihilates
+polynomial_annihilates: proof_shape=bind-only;
+  consumers=PonciniRasmussenMinpolyRefutation.annihilator_aeval
+basisDiagram: proof_shape=bind-only; consumers=PonciniRasmussenMinpolyRefutation.annihilator_aeval,
+  PonciniRasmussenMinpolyRefutation.sparse_lift
+sparse_lift: proof_shape=bind-only; consumers=PonciniRasmussenMinpolyRefutation.annihilator_aeval
+annihilator: proof_shape=bind-only; consumers=PonciniRasmussenMinpolyRefutation.annihilator_aeval,
+  PonciniRasmussenMinpolyRefutation.annihilator_degree
+annihilator_aeval: proof_shape=bind-only;
+  consumers=PonciniRasmussenMinpolyRefutation.minpoly_nine_bound
+annihilator_monic: proof_shape=bind-only;
+  consumers=PonciniRasmussenMinpolyRefutation.minpoly_nine_bound
+annihilator_degree: proof_shape=bind-only;
+  consumers=PonciniRasmussenMinpolyRefutation.minpoly_nine_bound
+minpoly_nine_bound: proof_shape=bind-only; consumers=PonciniRasmussenMinpolyRefutation.result
+result: proof_shape=bind-only; consumers=terminal(refutes #27843)
 -/
 import D5.S3.Combinatorics.PerfectMatchings.PlanarDiagramAlgebra
 import D5.S3.StatisticalMechanics.VertexModels.PonciniRasmussenNineDiagrams

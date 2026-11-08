@@ -8,47 +8,87 @@
 
 /-
 admission_basis: open-problem-resolution (#27843; Refuted)
-escape_witness: basis_assoc; mul_assoc′ via the matching loop cocycle
+escape_witness: none (the settlement of the external open problem is the new content)
+Qualified-name abbreviations:
+PlanarDiagramAlgebra = D5.S3.Combinatorics.PerfectMatchings.PlanarDiagramAlgebra
+additiveWithOne = D5.S3.Combinatorics.PerfectMatchings.PlanarDiagramAlgebra.additiveWithOne
+generator = D5.S3.Combinatorics.PerfectMatchings.PlanarDiagramAlgebra.generator
+ring = D5.S3.Combinatorics.PerfectMatchings.PlanarDiagramAlgebra.ring
+PonciniRasmussenMinpolyRefutation = D5.S3.StatisticalMechanics.PonciniRasmussenMinpolyRefutation
+PonciniRasmussenNineAction = D5.S3.StatisticalMechanics.PonciniRasmussenNineAction
+
 Direct frozen dependencies (declaration statement_ids):
-D5/S3/Combinatorics/PerfectMatchings/OrderedMatchingCore.NCMatching sha256:e57e27461371a52ec60ddecf793e8636b33575dfd226354a0a39adeb4fc8c180
-D5/S3/Topology/FiniteMatchingClosure.Boundary sha256:2d22740b62cc9ff6a486d404f032436c21abd62130e080eb9e91719ecefa9bc6
-D5/S3/Topology/FiniteMatchingClosure.Matching sha256:fd9df4ba1fc572f200a8c9ff58f36e53a205ade28d7c790a87120a8723a6cdb9
-D5/S3/Topology/FiniteMatchingClosure.cupcapMatching sha256:c244a1d0c295526be0811c97ed793929c5a156f92b1269a8c33c7bfda9bf3109
-D5/S3/Topology/FiniteMatchingClosure.identityMatching sha256:4e81ed32fda7d78d7b0879b1359e8b4456fd02d02a1bddfc3866467d3101eef3
-D5/S3/Topology/FiniteMatchingComposition.composite sha256:916faedcd34e169a2fbdf6728df71f94600d26fc1f3c6b285d74c8f06225beff
-D5/S3/Topology/FiniteMatchingComposition.internalLoopCount sha256:93bdce1ab5e61437907986b6f2bdde47b0b5f569fbacb1d341051b76d3d98b2c
-D5/S3/Topology/FiniteMatchingSewing.composite_left_identity sha256:07912fb2ac6197baa42796958728686f79195325313b2c6d3682bd8d6c50fcb2
-D5/S3/Topology/FiniteMatchingSewing.composite_right_identity sha256:643f2f32e49dc01e35c1135e3562a2f176c2b572e06e19e36ee84cee1e927698
-D5/S3/Topology/FiniteMatchingSewing.internalLoopCount_left_identity sha256:80ce9232074dd54887115f25733c4f875d5e942b05ec0197c57b6a1e17cc8552
-D5/S3/Topology/FiniteMatchingSewing.internalLoopCount_right_identity sha256:de071019f564dc4808f5c050b1f8c8607ac1f07c80967b80eea3a67d0873c179
-Diagram: proof_shape=bind-only; consumers=D5.S3.Combinatorics.PerfectMatchings.PlanarDiagramAlgebra.TL, D5.S3.Combinatorics.PerfectMatchings.PlanarDiagramAlgebra.add_mul'
-identity: proof_shape=bind-only; consumers=D5.S3.Combinatorics.PerfectMatchings.PlanarDiagramAlgebra.additiveWithOne, D5.S3.Combinatorics.PerfectMatchings.PlanarDiagramAlgebra.additiveWithOne._proof_1
-concat: proof_shape=bind-only; consumers=D5.S3.Combinatorics.PerfectMatchings.PlanarDiagramAlgebra.basisProduct, D5.S3.Combinatorics.PerfectMatchings.PlanarDiagramAlgebra.basis_assoc
-concat_assoc: proof_shape=bind-only; consumers=D5.S3.Combinatorics.PerfectMatchings.PlanarDiagramAlgebra.basis_assoc
-TL: proof_shape=bind-only; consumers=D5.S3.Combinatorics.PerfectMatchings.PlanarDiagramAlgebra.add_mul', D5.S3.Combinatorics.PerfectMatchings.PlanarDiagramAlgebra.additiveWithOne
-basisProduct: proof_shape=bind-only; consumers=D5.S3.Combinatorics.PerfectMatchings.PlanarDiagramAlgebra.basis_assoc, D5.S3.Combinatorics.PerfectMatchings.PlanarDiagramAlgebra.basis_mul
-bilinear: proof_shape=bind-only; consumers=D5.S3.Combinatorics.PerfectMatchings.PlanarDiagramAlgebra.add_mul', D5.S3.Combinatorics.PerfectMatchings.PlanarDiagramAlgebra.basis_mul
-instMulTL: proof_shape=bind-only; consumers=D5.S3.Combinatorics.PerfectMatchings.PlanarDiagramAlgebra.add_mul', D5.S3.Combinatorics.PerfectMatchings.PlanarDiagramAlgebra.basis_assoc
-instOneTL: proof_shape=bind-only; consumers=D5.S3.Combinatorics.PerfectMatchings.PlanarDiagramAlgebra.mul_one', D5.S3.Combinatorics.PerfectMatchings.PlanarDiagramAlgebra.one_mul'
-add_mul': proof_shape=bind-only; consumers=D5.S3.Combinatorics.PerfectMatchings.PlanarDiagramAlgebra.mul_assoc', D5.S3.Combinatorics.PerfectMatchings.PlanarDiagramAlgebra.mul_one'
-mul_add': proof_shape=bind-only; consumers=D5.S3.Combinatorics.PerfectMatchings.PlanarDiagramAlgebra.mul_assoc', D5.S3.Combinatorics.PerfectMatchings.PlanarDiagramAlgebra.one_mul'
-zero_mul': proof_shape=bind-only; consumers=D5.S3.Combinatorics.PerfectMatchings.PlanarDiagramAlgebra.basis_assoc, D5.S3.Combinatorics.PerfectMatchings.PlanarDiagramAlgebra.mul_assoc'
-mul_zero': proof_shape=bind-only; consumers=D5.S3.Combinatorics.PerfectMatchings.PlanarDiagramAlgebra.basis_assoc, D5.S3.Combinatorics.PerfectMatchings.PlanarDiagramAlgebra.mul_assoc'
-smul_mul': proof_shape=bind-only; consumers=D5.S3.Combinatorics.PerfectMatchings.PlanarDiagramAlgebra.algebra, D5.S3.Combinatorics.PerfectMatchings.PlanarDiagramAlgebra.mul_assoc'
-mul_smul': proof_shape=bind-only; consumers=D5.S3.Combinatorics.PerfectMatchings.PlanarDiagramAlgebra.algebra, D5.S3.Combinatorics.PerfectMatchings.PlanarDiagramAlgebra.mul_assoc'
-basis_mul: proof_shape=bind-only; consumers=D5.S3.Combinatorics.PerfectMatchings.PlanarDiagramAlgebra.basis_assoc, D5.S3.Combinatorics.PerfectMatchings.PlanarDiagramAlgebra.mul_one'
-induction: proof_shape=bind-only; consumers=D5.S3.Combinatorics.PerfectMatchings.PlanarDiagramAlgebra.mul_assoc', D5.S3.Combinatorics.PerfectMatchings.PlanarDiagramAlgebra.mul_one'
-flags: proof_shape=content  ; consumers=D5.S3.Combinatorics.PerfectMatchings.PlanarDiagramAlgebra.basis_assoc
-basis_assoc: proof_shape=content  ; consumers=D5.S3.Combinatorics.PerfectMatchings.PlanarDiagramAlgebra.mul_assoc'
-mul_assoc': proof_shape=content  ; consumers=D5.S3.Combinatorics.PerfectMatchings.PlanarDiagramAlgebra.ring, D5.S3.Combinatorics.PerfectMatchings.PlanarDiagramAlgebra.ring._proof_2
-one_mul': proof_shape=bind-only; consumers=D5.S3.Combinatorics.PerfectMatchings.PlanarDiagramAlgebra.ring
-mul_one': proof_shape=bind-only; consumers=D5.S3.Combinatorics.PerfectMatchings.PlanarDiagramAlgebra.ring
-additiveWithOne: proof_shape=bind-only; consumers=D5.S3.Combinatorics.PerfectMatchings.PlanarDiagramAlgebra.ring, D5.S3.Combinatorics.PerfectMatchings.PlanarDiagramAlgebra.ring._proof_1
-ring: proof_shape=bind-only; consumers=D5.S3.Combinatorics.PerfectMatchings.PlanarDiagramAlgebra.algebra, D5.S3.Combinatorics.PerfectMatchings.PlanarDiagramAlgebra.single_mul_single
-algebra: proof_shape=bind-only; consumers=D5.S3.Combinatorics.PerfectMatchings.PlanarDiagramAlgebra.single_mul_single, D5.S3.StatisticalMechanics.PonciniRasmussenMinpolyRefutation.annihilator_aeval
-single_mul_single: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenNineAction.generator_basis
-generator: proof_shape=bind-only; consumers=D5.S3.Combinatorics.PerfectMatchings.PlanarDiagramAlgebra.generator.eq_1, D5.S3.Combinatorics.PerfectMatchings.PlanarDiagramAlgebra.h
-h: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenMinpolyRefutation.annihilator_aeval, D5.S3.StatisticalMechanics.PonciniRasmussenMinpolyRefutation.claim
+D5/S3/Combinatorics/PerfectMatchings/OrderedMatchingCore.NCMatching
+  sha256:e57e27461371a52ec60ddecf793e8636b33575dfd226354a0a39adeb4fc8c180
+D5/S3/Topology/FiniteMatchingClosure.Boundary
+  sha256:2d22740b62cc9ff6a486d404f032436c21abd62130e080eb9e91719ecefa9bc6
+D5/S3/Topology/FiniteMatchingClosure.Matching
+  sha256:fd9df4ba1fc572f200a8c9ff58f36e53a205ade28d7c790a87120a8723a6cdb9
+D5/S3/Topology/FiniteMatchingClosure.cupcapMatching
+  sha256:c244a1d0c295526be0811c97ed793929c5a156f92b1269a8c33c7bfda9bf3109
+D5/S3/Topology/FiniteMatchingClosure.identityMatching
+  sha256:4e81ed32fda7d78d7b0879b1359e8b4456fd02d02a1bddfc3866467d3101eef3
+D5/S3/Topology/FiniteMatchingComposition.composite
+  sha256:916faedcd34e169a2fbdf6728df71f94600d26fc1f3c6b285d74c8f06225beff
+D5/S3/Topology/FiniteMatchingComposition.internalLoopCount
+  sha256:93bdce1ab5e61437907986b6f2bdde47b0b5f569fbacb1d341051b76d3d98b2c
+D5/S3/Topology/FiniteMatchingSewing.composite_left_identity
+  sha256:07912fb2ac6197baa42796958728686f79195325313b2c6d3682bd8d6c50fcb2
+D5/S3/Topology/FiniteMatchingSewing.composite_right_identity
+  sha256:643f2f32e49dc01e35c1135e3562a2f176c2b572e06e19e36ee84cee1e927698
+D5/S3/Topology/FiniteMatchingSewing.internalLoopCount_left_identity
+  sha256:80ce9232074dd54887115f25733c4f875d5e942b05ec0197c57b6a1e17cc8552
+D5/S3/Topology/FiniteMatchingSewing.internalLoopCount_right_identity
+  sha256:de071019f564dc4808f5c050b1f8c8607ac1f07c80967b80eea3a67d0873c179
+Diagram: proof_shape=bind-only; consumers=PlanarDiagramAlgebra.TL, PlanarDiagramAlgebra.add_mul'
+identity: proof_shape=bind-only; consumers=PlanarDiagramAlgebra.additiveWithOne,
+  PlanarDiagramAlgebra.additiveWithOne._proof_1
+concat: proof_shape=bind-only; consumers=PlanarDiagramAlgebra.basisProduct,
+  PlanarDiagramAlgebra.basis_assoc
+concat_assoc: proof_shape=bind-only; consumers=PlanarDiagramAlgebra.basis_assoc
+TL: proof_shape=bind-only; consumers=PlanarDiagramAlgebra.add_mul',
+  PlanarDiagramAlgebra.additiveWithOne
+basisProduct: proof_shape=bind-only; consumers=PlanarDiagramAlgebra.basis_assoc,
+  PlanarDiagramAlgebra.basis_mul
+bilinear: proof_shape=bind-only; consumers=PlanarDiagramAlgebra.add_mul',
+  PlanarDiagramAlgebra.basis_mul
+instMulTL: proof_shape=bind-only; consumers=PlanarDiagramAlgebra.add_mul',
+  PlanarDiagramAlgebra.basis_assoc
+instOneTL: proof_shape=bind-only; consumers=PlanarDiagramAlgebra.mul_one',
+  PlanarDiagramAlgebra.one_mul'
+add_mul': proof_shape=bind-only; consumers=PlanarDiagramAlgebra.mul_assoc',
+  PlanarDiagramAlgebra.mul_one'
+mul_add': proof_shape=bind-only; consumers=PlanarDiagramAlgebra.mul_assoc',
+  PlanarDiagramAlgebra.one_mul'
+zero_mul': proof_shape=bind-only; consumers=PlanarDiagramAlgebra.basis_assoc,
+  PlanarDiagramAlgebra.mul_assoc'
+mul_zero': proof_shape=bind-only; consumers=PlanarDiagramAlgebra.basis_assoc,
+  PlanarDiagramAlgebra.mul_assoc'
+smul_mul': proof_shape=bind-only; consumers=PlanarDiagramAlgebra.algebra,
+  PlanarDiagramAlgebra.mul_assoc'
+mul_smul': proof_shape=bind-only; consumers=PlanarDiagramAlgebra.algebra,
+  PlanarDiagramAlgebra.mul_assoc'
+basis_mul: proof_shape=bind-only; consumers=PlanarDiagramAlgebra.basis_assoc,
+  PlanarDiagramAlgebra.mul_one'
+induction: proof_shape=bind-only; consumers=PlanarDiagramAlgebra.mul_assoc',
+  PlanarDiagramAlgebra.mul_one'
+flags: proof_shape=bind-only; consumers=PlanarDiagramAlgebra.basis_assoc
+basis_assoc: proof_shape=bind-only; consumers=PlanarDiagramAlgebra.mul_assoc'
+mul_assoc': proof_shape=bind-only; consumers=PlanarDiagramAlgebra.ring,
+  PlanarDiagramAlgebra.ring._proof_2
+one_mul': proof_shape=bind-only; consumers=PlanarDiagramAlgebra.ring
+mul_one': proof_shape=bind-only; consumers=PlanarDiagramAlgebra.ring
+additiveWithOne: proof_shape=bind-only; consumers=PlanarDiagramAlgebra.ring,
+  PlanarDiagramAlgebra.ring._proof_1
+ring: proof_shape=bind-only; consumers=PlanarDiagramAlgebra.algebra,
+  PlanarDiagramAlgebra.single_mul_single
+algebra: proof_shape=bind-only; consumers=PlanarDiagramAlgebra.single_mul_single,
+  PonciniRasmussenMinpolyRefutation.annihilator_aeval
+single_mul_single: proof_shape=bind-only; consumers=PonciniRasmussenNineAction.generator_basis
+generator: proof_shape=bind-only; consumers=PlanarDiagramAlgebra.generator.eq_1,
+  PlanarDiagramAlgebra.h
+h: proof_shape=bind-only; consumers=PonciniRasmussenMinpolyRefutation.annihilator_aeval,
+  PonciniRasmussenMinpolyRefutation.claim
 -/
 import D5.S3.Combinatorics.PerfectMatchings.PlanarSewing
 import D5.S3.Topology.BrauerZeroMonoid
