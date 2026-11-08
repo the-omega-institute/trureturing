@@ -17,6 +17,15 @@ internal sealed class FixedLengthCovarianceDocument : IScribeDocumentDefinition
                 + "V(Y,k)/(Y*k*log(Y/k)) tends uniformly to one for "
                 + "Y^alpha<=k<=Y^beta.")),
             Describe.Lean(
+                DescribeId.Create("length-div-tendsto-zero"),
+                DeclarationHandle.Create(Prefix + "length_div_tendsto_zero"),
+                H("Sublinear comparison lengths"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For every real c and theta<1, the ratio (c*X^theta)/X tends to zero as X tends to infinity."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("shifted-band"),
                 DeclarationHandle.Create(Prefix + "shifted_band"),
                 H("Fixed multiples enter the variance band"),

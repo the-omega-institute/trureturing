@@ -7,10 +7,11 @@
    digest: Variance and fourth moment bounds force positive proportions in both tails. -/
 
 import D5.S3.Arith.Robin.ForwardKernel.FourthMomentMovingBounds
-import D5.S3.Arith.Robin.ForwardKernel.FourthMomentMean
+import D5.S3.Arith.Robin.ForwardKernel.FirstOrderInterface
+import D5.S3.Arith.Robin.ForwardKernel.MomentTransfer
 import D5.S3.Arith.Robin.ForwardKernel.FourthMomentProbability
 import D5.S3.Arith.Robin.ForwardKernel.DyadicProbability
-import D5.S3.Arith.Robin.ForwardKernel.DyadicMeanSquareAsymptotic
+import D5.S3.Arith.Robin.ForwardKernel.FourthMomentKurtosis
 
 /-! Both strict profile tails occupy a uniform logarithmic proportion. -/
 
@@ -19,7 +20,7 @@ namespace D5.S3.Arith.Robin.ForwardKernel.FourthMomentOscillation
 open Set MeasureTheory Filter
 open scoped Topology
 open VarianceTransferDefs ProfileKernelDefs FourthMomentBandDefs
-open FourthMomentMovingBounds FourthMomentMean FourthMomentProbability DyadicProbability
+open FourthMomentMovingBounds FourthMomentProbability DyadicProbability
 
 noncomputable section
 set_option autoImplicit false
@@ -100,26 +101,13 @@ theorem profile_response_two_sided_positive_proportion
   have hs {X : ℝ} (hX : 1 < X) : 0 < meanSquareScale θ X :=
     mul_pos (Real.rpow_pos_of_pos (by linarith) _) (Real.log_pos hX)
   have hmean : Tendsto (fun X => ∫ x, Z X x ∂dyadicProbabilityMeasure X) atTop (𝓝 0) := by
-    have hm := (profile_response_mean_tendsto_zero hE hB hV
-      (ν := (θ + β) / 2) (by linarith [hB.2.2.1]) (by linarith [hB.2.2.1]) hg).div_const
-        (Real.log 2)
-    simp only [zero_div] at hm
-    apply hm.congr'
-    filter_upwards [eventually_gt_atTop (1 : ℝ)] with X hX
-    rw [dyadicProbabilityMeasure_integral (by linarith) _]
-    dsimp [Z]
-    simp_rw [div_right_comm (profileResponse E θ g _) (Real.sqrt _) _,
-      intervalIntegral.integral_div]
+    simpa only [pow_one, mul_zero, integral_zero, MomentTransferDefs.dyadicZ, Z] using
+      MomentTransfer.moment_transfer hE (hB.1.trans hB.2.1) hθ1 (by norm_num : 0 < 1) hg
+        (FirstOrderInterface.first_moment_interface hE hB hV)
   have hsecond : Tendsto (fun X => ∫ x, Z X x ^ 2 ∂dyadicProbabilityMeasure X)
       atTop (𝓝 (Q g * ((2 : ℝ) ^ (1 - θ) - 1) / Real.log 2)) := by
-    apply ((DyadicMeanSquareAsymptotic.profile_kernel_dyadic_mean_square_asymptotic
-      hE hB hV hg).div_const (Real.log 2)).congr'
-    filter_upwards [eventually_gt_atTop (1 : ℝ)] with X hX
-    rw [dyadicProbabilityMeasure_integral (by linarith) _]
-    dsimp [Z]
-    simp_rw [div_pow, Real.sq_sqrt (hs hX).le, div_right_comm _ (meanSquareScale θ X) _,
-      intervalIntegral.integral_div]
-    ring
+    simpa only [MomentTransferDefs.dyadicZ, Z, MomentTransferDefs.kappa, mul_comm (Q g)] using
+      FourthMomentKurtosis.dyadicZ_second_moment_tendsto hE hB hV hg
   have hgap : v < Q g * ((2 : ℝ) ^ (1 - θ) - 1) / Real.log 2 := by
     apply (lt_div_iff₀ hl).mpr
     have hlog : Real.log 2 < 1 := by linarith [Real.log_two_lt_d9]
