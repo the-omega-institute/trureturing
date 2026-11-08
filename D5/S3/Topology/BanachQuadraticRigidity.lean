@@ -6,15 +6,17 @@
    utility: none
    digest: Symmetric quadratic ODEs preserve distance in arbitrary real Banach spaces. -/
 
-module
-
-public import Mathlib.Analysis.SpecialFunctions.Exponential
-public import Mathlib.Analysis.Calculus.MeanValue
-public import Mathlib.Analysis.Calculus.Deriv.Mul
+import Mathlib.Analysis.SpecialFunctions.Exponential
+import Mathlib.Analysis.Calculus.MeanValue
+import Mathlib.Analysis.Calculus.Deriv.Mul
+import Mathlib.Analysis.Calculus.Deriv.Comp
+import Mathlib.Analysis.ODE.ExistUnique
+import Mathlib.Analysis.Calculus.Deriv.Shift
+import Mathlib.Analysis.Normed.Affine.MazurUlam
+import D5.S3.Geometry.ODE.UniformLocalGlobalPasting
 
 /-! Distance conservation without a differentiability hypothesis on the norm. -/
 
-@[expose] public section
 noncomputable section
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -78,5 +80,77 @@ theorem quadratic_solution_dist_eq
   exact hs.is_const_of_deriv_eq_zero hconn
     (fun v hv => (hd v hv).differentiableAt.differentiableWithinAt)
     (fun v hv => (hd v hv).deriv) ht hu
+
+/-- Normalize speed, not the state space. A common local time near zero for
+the quadratic field gives a common local time on all states for this field. -/
+private theorem exists_global_quadratic_solution
+    (B : E →L[ℝ] E →L[ℝ] E)
+    (hsymm : ∀ x y : E, B x y = B y x)
+    (hiso : ∀ (x : E) (t : ℝ),
+      Isometry (fun y : E => (NormedSpace.exp (t • B x)) y))
+    (x₀ : E) : ∃ γ : ℝ → E, γ 0 = x₀ ∧
+      ∀ t : ℝ, HasDerivAt γ (B (γ t) (γ t)) t := by
+  have hnorm {s : Set ℝ} (hs : IsOpen s) (hc : IsPreconnected s)
+      {x : ℝ → E} (hx : ∀ t ∈ s, HasDerivAt x (B (x t) (x t)) t)
+      {t u : ℝ} (ht : t ∈ s) (hu : u ∈ s) : ‖x t‖ = ‖x u‖ := by
+    simpa using quadratic_solution_dist_eq B hsymm hiso hs hc hx
+      (x := x) (y := fun _ => 0) (fun t _ => by simpa using hasDerivAt_const t (0 : E)) ht hu
+  have hC1 : ContDiff ℝ 1 (fun x : E => B x x) :=
+    B.isBoundedBilinearMap.contDiff.comp (contDiff_id.prodMk contDiff_id)
+  obtain ⟨r, hr, ε, hε, hlocal⟩ :=
+    hC1.contDiffAt.exists_forall_mem_closedBall_exists_eq_forall_mem_Ioo_hasDerivAt (0 : ℝ)
+  let f : E → E := fun x => (1 + ‖x‖)⁻¹ • B x x
+  have hflocal (x : E) : ∃ C : ℝ → E, C 0 = x ∧
+      ∀ t ∈ Ioo (-(r * ε)) (r * ε), HasDerivAt C (f (C t)) t := by
+    let a : ℝ := r / (1 + ‖x‖)
+    have hden : 0 < 1 + ‖x‖ := by positivity
+    have ha : 0 < a := div_pos hr hden
+    have hax : a • x ∈ Metric.closedBall (0 : E) r := by
+      rw [Metric.mem_closedBall, dist_zero_right, norm_smul, Real.norm_eq_abs, abs_of_pos ha]
+      dsimp [a]
+      apply (div_mul_le_iff₀ hden).2
+      nlinarith [norm_nonneg x]
+    obtain ⟨C, hC0, hCd⟩ := hlocal (a • x) hax
+    have hCd' : ∀ t ∈ Ioo (-ε) ε, HasDerivAt C (B (C t) (C t)) t := by
+      simpa only [zero_sub, zero_add] using hCd
+    have hCn (t : ℝ) (ht : t ∈ Ioo (-ε) ε) : ‖C t‖ = a * ‖x‖ := by
+      have hn := hnorm isOpen_Ioo (convex_Ioo (-ε) ε).isPreconnected hCd'
+        ht (show (0 : ℝ) ∈ Ioo (-ε) ε from ⟨by linarith, hε⟩)
+      simpa [hC0, norm_smul, Real.norm_eq_abs, abs_of_pos ha] using hn
+    refine ⟨fun t => a⁻¹ • C (t / r), ?_, ?_⟩
+    · simp [hC0, smul_smul, ne_of_gt ha]
+    · intro t ht
+      have htr : t / r ∈ Ioo (-ε) ε := by
+        constructor
+        · exact (lt_div_iff₀ hr).2 (by nlinarith [ht.1])
+        · exact (div_lt_iff₀ hr).2 ht.2
+      have hd := ((hCd' (t / r) htr).scomp (h := fun t : ℝ => t / r) t ((hasDerivAt_id t).div_const r)).const_smul a⁻¹
+      have hn : ‖a⁻¹ • C (t / r)‖ = ‖x‖ := by
+        rw [norm_smul, Real.norm_eq_abs, abs_of_pos (inv_pos.mpr ha), hCn _ htr]
+        field_simp
+      convert hd using 1
+      dsimp [f]
+      rw [hn]
+      simp only [map_smul, ContinuousLinearMap.smul_apply, smul_smul]
+      congr 1
+      dsimp [a]
+      field_simp
+  obtain ⟨γ, hγ0, hγd⟩ :=
+    D5.S3.Geometry.ODE.UniformLocalGlobalPasting.exists_global_solution_of_uniform_local
+      f (mul_pos hr hε) hflocal x₀
+  have hγn (t : ℝ) : ‖γ t‖ = ‖x₀‖ := by
+    have hd (t : ℝ) : HasDerivAt (fun s => ‖γ s‖) 0 t := by
+      apply hasDerivAt_norm_of_exp_isometry ((1 + ‖γ t‖)⁻¹ • B (γ t))
+      · intro h
+        simpa only [smul_smul] using hiso (γ t) (h * (1 + ‖γ t‖)⁻¹)
+      · simpa [f] using hγd t
+    have hn := is_const_of_deriv_eq_zero (fun t => (hd t).differentiableAt)
+      (fun t => (hd t).deriv) t 0
+    simpa [hγ0] using hn
+  refine ⟨fun t => γ ((1 + ‖x₀‖) * t), by simpa using hγ0, ?_⟩
+  intro t
+  have hd := (hγd ((1 + ‖x₀‖) * t)).scomp (h := fun t : ℝ => (1 + ‖x₀‖) * t) t
+    ((hasDerivAt_id t).const_mul (1 + ‖x₀‖))
+  simpa [f, hγn, smul_smul, ne_of_gt (show 0 < 1 + ‖x₀‖ by positivity)] using hd
 
 end D5.S3.Topology.BanachQuadraticRigidity
