@@ -55,3 +55,25 @@ state construction. Its eight-coordinate saturation addresses the particular
 Thio support question. No priority or global novelty claim, or classification
 of all attaining states at every purity, is made. The primary preprint is distributed under CC BY 4.0. The citations and brief
 quotation are attribution; no third-party source code or document is copied.
+
+## Verified locator
+
+Source: https://arxiv.org/abs/2611.04009v1
+
+Primary source version: arXiv:2611.04009v1. The locators for the preceding
+whole-source reading are Eqs. (9), (17), (19)–(21) and (39), the stated tensor
+extensions, Appendix A A1.p8.1 with its preceding support values and closed
+purity interval, and the separately scoped Lemma 2. The Appendix A question
+and quotation retain their full scope as stated above.
+
+Supplier-source locators for the attributed ingredients above:
+
+- Gross, arXiv:quant-ph/0602001v3: odd-dimensional parity, phase-point
+  operators, the antisymmetric qutrit projector and the distinct six-support
+  mixed-state example.
+- Prakash–Singhal, arXiv:2408.00436v2: Section II.B, Eqs. (II.14)–(II.19),
+  including the Eq. (II.15) sign discrepancy described above.
+- Prakash, arXiv:2003.02717v2: Section 3, Eqs. (14), (21)–(24), and
+  Sections 5 and 7.
+- Bozzetto–Hance, arXiv:2605.09558v3: Section III.2, Eqs. (7)–(9),
+  Table 2 and Section XI.4.
