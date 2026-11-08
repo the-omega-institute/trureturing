@@ -303,7 +303,7 @@ section Topology
 
 variable [Finite A] [TopologicalSpace A] [DiscreteTopology A]
 
-private theorem continuous_code (h : (Fin (k + 2) → A) → A) : Continuous (code h) := by
+theorem continuous_code (h : (Fin (k + 2) → A) → A) : Continuous (code h) := by
   apply continuous_pi
   intro i
   exact (continuous_of_discreteTopology : Continuous h).comp
