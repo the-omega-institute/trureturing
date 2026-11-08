@@ -1,0 +1,77 @@
+**引理 39.2（无 NN 的二次支配前端）。** 在 $\mathsf H_{\rm NN^-}$ 下，设 $M=X^{**}$ 为辅助 JBW 双对偶，$B=M\oplus\mathrm iM$。把 $D$ 按有界双线性延拓记为同一符号，把
+
+$$
+ x\star y=S(x,y)-\mathrm iD(x,y),\qquad q(z)=z^*\star z
+$$
+
+定义在 $B$ 上。则：
+
+1. $D$ 已是同一个原 $D$ 的实双线性反对称延拓，且 $N(D(a,b))\le N(a)N(b)$；对每个数学连续正泛函 $\varphi$，$H_\varphi(z,w)=\varphi_{\mathbb C}(z^*\star w)$ 是半正定型。
+2. 对每个原演员 $t\in E$，原常数 $C_t$ 延拓为
+
+   $$
+   0\le q(t\star\zeta)\le C_t^2q(\zeta)\qquad(\zeta\in B).
+   \tag{39.2}
+   $$
+
+3. $D(u,x)=D(x,u)=0$ 对所有 $x\in M$ 成立；因此每个 $\delta_a(x):=D(a,x)$（$a\in M$）是单位湮灭的 Jordan 导子。
+4. 对任意投影 $p\in M$、$e=u-p$ 和任意原 $t\in E$，令
+
+   $$
+   y=P_{1/2}(p)t,\qquad k=\delta_p(t)=\delta_p(y).
+   $$
+
+   则
+
+   $$
+   k^2=\frac14y^2.
+   \tag{39.3}
+   $$
+
+这里的 $p,e,M$ 只作辅助数学对象；式 (39.2) 的演员仍只有原 $t$。
+
+**证明。** 完整 Gram 正性和原词校准卷引理 400.1–400.2 先给同一个原 $D$ 的实双线性与反对称性。这一步不使用 NN。对每个正质量评价，二阶 Gram 的 Cauchy–Schwarz 给
+
+$$
+ |\alpha(D(a,b))|^2\le\alpha(a^2)\alpha(b^2)\le m_\alpha^2N(a)^2N(b)^2,
+$$
+
+再由原评价准确决定序单位范数，得到 $N(D(a,b))\le N(a)N(b)$；零质量评价恒为零。因而 $D$ 唯一连续延拓到 $X^2$。标量切片的分别弱星延拓把它继续延拓到 $M^2$；这里使用的是 Hanche-Olsen–Størmer 的 JBW 双对偶接口和 Peralta–Rodríguez Palacios 的有界标量双线性型延拓，不使用 NN。
+
+原有限 Gram 正性先在原复化域给出 $q$ 的正性，范数连续性再给 $a,b\in X$ 时 $q(a+\mathrm ib)=a^2+b^2+2D(a,b)\in X_+$，从而 $H_\varphi$ 在 $X\oplus\mathrm iX$ 上半正定。把 (39.1) 写成原域上的 $q(t\star z)\le C_t^2q(z)$，同样先以范数连续性传到该复化完成。对每个 $\varphi\in X^*_+$，将这一正型和相应差型分别作 Hilbert 因子分解，再把因子作双对偶延拓；由分别弱星连续延拓的唯一性认回同一乘法给出的正型和差型，再由规范正常正泛函决定双对偶正锥，得到 $q(B)\subset M_+$ 和 (39.2)。于是 $H_\varphi$ 在 $B$ 上也半正定，且每个原演员保留自己的原常数 $C_t$。这一段正是定理 28.1 证明中式 (28.2)、(28.4)、(28.7)–(28.11) 的无 NN 子论证：它没有使用单位行、交替性、Moufang 恒等式或任何已由 NN 得出的结论。
+
+下面支付单位行。由 $H_\varphi$ 的 Cauchy–Schwarz，若 $c\ge0$ 且 $\varphi(c)=0$，JB 函数演算给 $0\le c^2\le\lVert c\rVert c$，所以 $\varphi(c^2)=0$，并且 $\varphi(D(a,c))=0$。Niestegge §4 Lemma 3 的零面判据先在 $X$ 上说明每个有界 $\delta_a$ 是 order derivation。相应正群的规范弱星延拓在 $M$ 上保留这一性质；对任意 $a\in M$，前段的双对偶正性也使上述零面计算对 $M$ 上全部连续正泛函成立，同一判据遂给 $\delta_a$ 的 order-derivation 性质。一般行的 Jordan 导子律待下面的单位行证明后取得。置 $T=\delta_u$；反对称性给 $T(u)=0$，故 $T$ 是 Jordan 导子。
+
+取任意 JBW 投影 $p$，置 $e=u-p$、$v=T(p)$。由 $T(p^2)=T(p)$，有 $p\circ v=v/2$，即 $v\in M_{1/2}(p)$。又 $\delta_p(u)=-v$。order derivation 的标准分解是
+
+$$
+ d:=\delta_p+L_v,\qquad d(u)=0,\qquad d\text{ 为 Jordan 导子},
+$$
+
+其中 $L_v(x)=v\circ x$。因 $d(p)=v/2$，把 $d(p\circ v)=d(v/2)$ 左右两边投到 $M_0(p)$，得 $U_e d(v)=U_e(v^2)$；代入 $d(v)=\delta_pv+v^2$，得到
+
+$$
+ U_e\delta_pv=0.
+ \tag{39.4}
+$$
+
+现在在 (39.2) 中取原演员 $t=u$、向量 $\zeta=p$。因 $u\star p=p-\mathrm i v$，Peirce 展开给
+
+$$
+ U_e q(u\star p)=U_e\bigl(p+v^2-2\delta_pv\bigr)=U_ev^2.
+$$
+
+而 $q(p)=p$、$U_ep=0$，故 (39.2) 和 (39.4) 给 $U_ev^2=0$。半空间 Peirce 恒等式对 $v\in M_{1/2}(p)$ 给出 $U_e(v^2)=0\Rightarrow v=0$。所以 $T$ 在每个投影上为零；JBW 谱逼近和 $T$ 的弱星连续性给 $T=0$ 在整个 $M$ 上成立。反对称性再给 $D(x,u)=0$。因此每个 $\delta_a$ 都是湮灭单位的 order derivation，也就是 Jordan 导子。
+
+最后证明 (39.3)。固定投影 $p$，写 $\delta=\delta_p$，并按 Peirce 分解写原 $t=x+y+z$，其中 $x\in M_1(p)$、$y\in M_{1/2}(p)$、$z\in M_0(p)$。因 $\delta(p)=0$，导子律保持三个 Peirce 空间；$\delta z=0$，而 $\delta x=-\delta_xp$ 同时属于 $M_1(p)$ 和 $M_{1/2}(p)$，故 $\delta x=0$。于是 $k=\delta y$。只用 JB Peirce 乘法表、$U_pU_e=0$ 和 $p\circ y=y/2$，直接展开同一个 $q$ 得
+
+$$
+\begin{aligned}
+ U_eq(t\star p)&=U_e\left(\frac14y^2-k^2\right),\\
+ U_pq(t\star e)&=U_p\left(\frac14y^2-k^2\right).
+\end{aligned}
+\tag{39.5}
+$$
+
+注意 (39.5) 中各交叉项由 $\delta$ 的 Jordan 导子律消去；没有使用 NN 或结合律。把 (39.2) 分别用于 $\zeta=p$ 和 $\zeta=e$，右端分别被 $U_e(C_t^2p)=0$、$U_p(C_t^2e)=0$ 控制，于是 (39.5) 的两项都为零。差 $\frac14y^2-k^2$ 属于 $M_1(p)\oplus M_0(p)$，两个二次表示在这两个角上分别是恒等，故差本身为零，得到 (39.3)。引理得证。∎
+
