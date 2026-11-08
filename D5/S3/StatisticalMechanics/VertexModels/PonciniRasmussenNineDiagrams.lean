@@ -13,7 +13,6 @@ Qualified-name abbreviations:
 PonciniRasmussenMinpolyRefutation = D5.S3.StatisticalMechanics.PonciniRasmussenMinpolyRefutation
 PonciniRasmussenNineAction = D5.S3.StatisticalMechanics.PonciniRasmussenNineAction
 PonciniRasmussenNineDiagrams = D5.S3.StatisticalMechanics.PonciniRasmussenNineDiagrams
-Tree = D5.S3.StatisticalMechanics.PonciniRasmussenNineDiagrams.Tree
 diagram = D5.S3.StatisticalMechanics.PonciniRasmussenNineDiagrams.diagram
 matching = D5.S3.StatisticalMechanics.PonciniRasmussenNineDiagrams.matching
 raw = D5.S3.StatisticalMechanics.PonciniRasmussenNineDiagrams.raw
@@ -32,10 +31,6 @@ D5/S3/Topology/FiniteMatchingClosure.identityMatching
   sha256:4e81ed32fda7d78d7b0879b1359e8b4456fd02d02a1bddfc3866467d3101eef3
 D5/S3/Topology/FiniteMatchingClosure.mate
   sha256:28b6db6a4ff9477dd543699cd3439ba967d854c089c412870c9eb135520ccf46
-Tree: proof_shape=bind-only; consumers=PonciniRasmussenNineDiagrams.Tree.below,
-  PonciniRasmussenNineDiagrams.Tree.brecOn
-get: proof_shape=bind-only; consumers=PonciniRasmussenNineDiagrams.raw,
-  PonciniRasmussenNineDiagrams.raw._proof_2
 rawData: proof_shape=bind-only; consumers=PonciniRasmussenNineDiagrams.raw,
   PonciniRasmussenNineDiagrams.raw._proof_2
 transitions: proof_shape=bind-only; consumers=PonciniRasmussenNineDiagrams.transition,
@@ -173,6 +168,7 @@ transition_check_blocks: proof_shape=bind-only;
 transition_check: proof_shape=bind-only; consumers=PonciniRasmussenNineAction.generator_basis
 unit_check: proof_shape=bind-only; consumers=PonciniRasmussenNineAction.unit_basis
 -/
+import D5.S3.StatisticalMechanics.VertexModels.PonciniRasmussenCertificateTree
 import D5.S3.Combinatorics.PerfectMatchings.OrderedMatchingCore
 import D5.S3.Combinatorics.PerfectMatchings.PlanarSewing
 import D5.S3.Combinatorics.PerfectMatchings.PlanarDiagramAlgebra
@@ -188,23 +184,14 @@ set_option maxHeartbeats 0
 set_option linter.style.longLine false
 noncomputable section
 namespace D5.S3.StatisticalMechanics.PonciniRasmussenNineDiagrams
+open D5.S3.StatisticalMechanics.PonciniRasmussenCertificateTree D5.S3.StatisticalMechanics.PonciniRasmussenCertificateTree.Tree
 open CupCapBridgeProposal
 open D5.S3.Combinatorics.PerfectMatchings.PlanarSewing
 open D5.S3.Combinatorics.PerfectMatchings.PlanarDiagramAlgebra
 open D5.S3.Topology.FiniteMatchingClosure
 open D5.S3.Topology.CupCapComposition
 open Lean Elab Term
-local syntax "prb1_tree_data% " term : term
-elab_rules : term <= expectedType
-  | `(prb1_tree_data% $t) => withEnableInfoTree false (elabTerm t (some expectedType))
 
-private inductive Tree (α : Type) where
-  | leaf : α → Tree α
-  | node : Tree α → Tree α → Tree α
-open Tree
-private def get {α : Type} : Tree α → Nat → α
-  | .leaf a, _ => a
-  | .node l r, j => if j % 2 = 0 then get l (j/2) else get r (j/2)
 local syntax "prb1_table% " num "[" term,* "]" : term
 elab_rules : term
   | `(prb1_table% $depth:num [$rows,*]) => do
