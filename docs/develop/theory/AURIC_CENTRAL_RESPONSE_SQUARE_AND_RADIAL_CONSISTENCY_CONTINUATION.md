@@ -763,3 +763,338 @@ $$
 全部合法顺序／自适应／并行历史、每个仍合法未来、细记录与真正分组遗忘、停止／拒绝／销毁、同数两侧及逆向真实返回均保留。CountRead无穷、正常性、指定前对偶、原域上的流、物理钟、Hamiltonian生成元定义域、能量、作用量及共同正 $\hbar$ 均未由辅助共轭或中央取向生产。原菜单返回障碍及其它来源条件不因原多项式运输关系而消失；这些条件与本节前件共同保持完整量子起源目标的原范围。
 
 ## 追加锚（本行以下为增补区）
+
+## 137. 实际配平提取的同读取极限面积族
+
+**定义 137.1（完整候选与被提取的子系统）。** 完整研究候选仍是130.1、136.2的同一原 $\mathsf H_{\rm orig}+\mathsf{PB}$，并逐句纳入[多项式零响应卷24.1、29.2](AURIC_ORIGINAL_POLYNOMIAL_ZERO_RESPONSES_AND_CAYLEY_DOMAIN_BOUNDARIES.md)和[C139续卷155.1–155.2](AURIC_C139_FINITE_RETURN_CALIBRATION_AND_LOAD_STABILITY_CONTINUATION.md)的全部原来源及递归合同。以下另外定义一个估计子系统，只研究它丢失了什么信息；该子系统不替换完整候选。
+
+沿123.2记 $B_\phi(v,w)=\phi(v^2)\phi(w^2)-\phi(v\circ w)^2$。固定实际原 $a,b$，记 $x=D(a,b)$、$q=a\circ b$。若某个实际 $z$ 满足
+
+$$
+a\circ z=0,\qquad D(a,tz)=tT_a z\quad(t\in\mathbb R),\qquad z\circ T_a z=0,
+\tag{137.1}
+$$
+
+则实际 $\mathsf{PB}(a;b,tz)$ 的两份外层及右端准确为
+
+$$
+\begin{gathered}
+(b+x,\ t(z+T_a z)+q),\qquad
+(b-x,\ t(z-T_a z)-q),\\
+-2b\circ x-2t z\circ q.
+\end{gathered}
+\tag{137.2}
+$$
+
+对同一个正实读取 $\phi$，两份实际P2和标量三角不等式给，当 $t\ne0$ 时，
+
+$$
+2\left|\phi(z\circ q)+\frac{\phi(b\circ x)}t\right|
+\le
+\sqrt{B_\phi(b+x,z+T_a z+q/t)}
++\sqrt{B_\phi(b-x,z-T_a z-q/t)}.
+\tag{137.3}
+$$
+
+只用了 $B_\phi(v,tw+q)=t^2B_\phi(v,w+q/t)$。对固定 $v,w,q$，$B_\phi(v,w+s q)$ 是非负实二次多项式；令 $t\to+\infty$ 只对这些已知标量式和平方根取极限，得到
+
+$$
+\boxed{
+2|\phi(z\circ q)|\le
+\sqrt{B_\phi(b+x,z+T_a z)}
++\sqrt{B_\phi(b-x,z-T_a z)}.}
+\tag{137.4}
+$$
+
+这里没有对未知旧响应取输入极限，也没有识别两份外层值。原实际三轴 $a=h,e,j$ 的全部 $z\in V_a$ 由133.1及其同条件的循环应用供应(137.1)。这份预算推导是既有PB/P2的直接消费，本身不作为新增刚性。
+
+在一个另外指定的总映射中，若全部 Jordan 正交对的响应已知为 $T_a z$，称“全部极限面积族”为(137.4)对每个 $a,b,z$、每个 $a\circ z=0$ 及每个正实读取同时成立。以下模型甚至满足这份全首标签的较大族。它不被要求满足(137.3)的全部有限 $t$ 关系。
+
+## 138. 两块上保留全部准确横向行的单一总映射
+
+**定义 138.1（域、三轴及三个混合对）。** 取
+
+$$
+\begin{gathered}
+E=X=(M_2(\mathbb C)\oplus M_2(\mathbb C))_{\rm sa},\qquad u=(I,I),\\
+S(A,B)=A\circ B=\tfrac12(AB+BA),\qquad
+C=E\cap(M_2\oplus M_2)_+,\qquad
+N(A)=\max_r\|A_r\|,\\
+D_*(A,B)=\tfrac{\mathrm i}{2}[A,B],\\
+H=\begin{pmatrix}1&0\\0&-1\end{pmatrix},\quad
+K=\begin{pmatrix}0&1\\1&0\end{pmatrix},\quad
+J=\begin{pmatrix}0&\mathrm i\\-\mathrm i&0\end{pmatrix},\\
+h=(H,H),\qquad e=(K,K),\qquad j=(J,J),\\
+b=(H+K+J,\ 2H+3K+4J).
+\end{gathered}
+\tag{138.1}
+$$
+
+评价族取全部正实线性泛函，保留全部非负质量。特别 $D_*(h,e)=j$、$D_*(e,j)=h$、$D_*(j,h)=e$，且
+
+$$
+b^2=(3I,29I),\qquad
+h\circ b=(I,2I),\quad e\circ b=(I,3I),\quad j\circ b=(I,4I).
+\tag{138.2}
+$$
+
+令 $\mathcal S$ 是三个实际对 $(h,b),(e,b),(j,b)$ 的完整 $O(2)$ 轨道之并。换基作用是
+
+$$
+O\cdot(A,B)=(o_{11}A+o_{12}B,\ o_{21}A+o_{22}B).
+$$
+
+在整个 $E^2$ 定义同一个总函数
+
+$$
+\widehat D(A,B)=
+\begin{cases}
+-D_*(A,B),&(A,B)\in\mathcal S,\\
+D_*(A,B),&(A,B)\notin\mathcal S.
+\end{cases}
+\tag{138.3}
+$$
+
+重叠轨道也给相同规则，不需为三条行各选一个映射。$\widehat D$ 只用于下面明确列出的子系统。
+
+**定理 138.2（准确横向行与整个估计族仍不识别混合行）。** 定义138.1的同一总映射满足全部原A1–A3/P2、准确锥及范数条件，并有以下共同性质。
+
+1. 对全部 $A\circ B=0$，$\widehat D(A,B)=D_*(A,B)$。因此每个实际单位轴的整条横向行及其标准复合、平方、混合Gram和斜关系均准确，特别保留133.1在本模型中的所有原值。对 $a=h,e,j$、$z\in V_a$ 和全部实 $s,\ell$，还有 $\widehat D(sa,z+\ell u)=sD_*(a,z)$。
+2. 对每个 $O\in O(2)$，$\widehat D(O\cdot(A,B))=\det(O)\widehat D(A,B)$。反对称、每槽奇性及全部 $SO(2)$ 不变性成立；$N(\widehat D(A,B))\le N(A)N(B)$，且 $\widehat D(A,B)=0$ 当且仅当 $[A,B]=0$。单位、中央、仿射同轴及同一生成元多项式零行均保持。任意 Jordan 商中的中央输入，以及任意连续含单位 Jordan 同态的标量输入像，均给响应零像，准确范围见139节。
+3. 取其真正的横向值 $T_Az=\widehat D(A,z)=D_*(A,z)$，(137.4)对全部 $A,B,z\in E$、全部 $A\circ z=0$ 和每个正实读取同时成立，包括零、单块零、不等和次归一质量。
+4. 对同一个 $b$ 和每个 $a=h,e,j$，记 $q_a=a\circ b$、$b_{+,a}=q_a a$、$b_{-,a}=b-q_a a$。则
+
+   $$
+   \begin{gathered}
+   \widehat D(a,b_{+,a})=0,\qquad
+   \widehat D(a,b_{-,a})=D_*(a,b_{-,a}),\\
+   \widehat D(a,b)=-D_*(a,b_{-,a})\ne D_*(a,b_{-,a}).
+   \end{gathered}
+   \tag{138.4}
+   $$
+
+   混合加性缺陷恰为 $-2D_*(a,b_{-,a})$，非零且非中央。
+5. 对每个实 $t\ne0$，同一总映射违反真实原 $\mathsf{PB}(h;b,tb_{-,h})$；$t=1$ 时左端减右端恰为 $(8H,100H)$。
+
+本定理是准确横向行加整个极限估计族的反模型，不是全PB、原完整系统或其所有已付后果的反模型。证明在139–141节。
+
+## 139. 共同轨道避开全部正交对及零像边界
+
+证明138.2的第1、2项。固定 $a\in\{h,e,j\}$，写 $a\circ b=(I,kI)$，其中 $k=2,3,4$。任意行列式一的换基可写成
+
+$$
+R=ca-sb,\qquad W=sa+cb,\qquad c^2+s^2=1.
+$$
+
+记 $U=c^2-s^2$、$V=cs$，直接用(138.2)得
+
+$$
+R\circ W=((U-2V)I,\ (kU-28V)I),\qquad U^2+4V^2=1.
+\tag{139.1}
+$$
+
+若 $R\circ W=0$，则 $U=2V$、$(2k-28)V=0$；$k\in\{2,3,4\}$ 使 $U=V=0$，矛盾。任意行列式负一的换基是这种旋转后将一个标签反号，Jordan乘积仅反号，所以全部反射也不可能产生正交对。两个块中的原向量 $a_r,b_r$ 各自实线性独立，因此轨道中每个标签在每块都非零且无迹；两块交换子也都非零，因为换基只乘 $\det O$。这些结论对三个轨道的并仍成立。
+
+所以任何实际 $A\circ B=0$ 均不在修改集，完整响应准确为标准值。特别全部实际单位平方轴的横向行保持，不只保留横向响应的平方。对第1项最后的仿射行，$a,z$ 逐块无迹；若 $\ell\ne0$，第二标签有非零块标量部分，不能进入 $\mathcal S$；若 $\ell=0$，两输入正交。两种情形均给所述准确标准值，包括 $s=0$。
+
+标准 $S-iD_*$ 正是矩阵乘法。任意正读取下，它的二表正性来自成熟的正泛函Gram事实。$\mathcal S$ 对整个 $O(2)$ 封闭，且
+
+$$
+D_*(O\cdot(A,B))=\det(O)D_*(A,B).
+\tag{139.2}
+$$
+
+因此(138.3)保留同一反对称及全部换基关系。每份实际二表只会由标准正表变成其复共轭，仍半正定。A2的整个实相加三表由同一 $S$ 决定，保持原样；指定实零向量的虚二次值由反对称性成对抵消。全部排列、零、重复、实尺度和实平移的原输入均已包含。A3的单位及同一有理小效果窗口也完全由标准 $S$ 支付。这没有断言任意三标签复Gram正性。
+
+标准交换子满足 $N(D_*(A,B))\le N(A)N(B)$；整体反号保留此逐点范数界及其完整零集，故给第2项的全部零行。为核对零像的准确范围，任取闭 Jordan 理想 $I_0\subset E$。成熟的简单块事实在这里也可直接核对：$H_2(\mathbb C)=\mathbb RI\oplus\mathbb R^3$，乘法为
+
+$$
+(\lambda,v)\circ(\mu,w)=(\lambda\mu+v\cdot w,\lambda w+\mu v).
+\tag{139.3}
+$$
+
+一个理想若含非零纯向量，其平方给单位；若含 $\lambda I+v$ 且 $\lambda\ne0$，取非零 $w\perp v$，与 $w$ 的乘积给 $\lambda w$，也得到单位。因此每块简单。块的Jordan中心恰为 $\mathbb RI$：若纯向量 $v\ne0$，取非零 $w\perp v$，则 $[L_v,L_w]w=|w|^2v\ne0$。用两个中央块单位相乘分离任一理想，得 $I_0$ 是若干整块之和。若 $A+I_0$ 在商中中央，每个保留块的 $A_r$ 为标量，故 $D_*(A,B)_r=0$；整体反号不改零像，所以 $\widehat D(A,B)+I_0=0$。
+
+再取任意含单位实JB代数 $Y$ 和连续含单位 Jordan 同态 $\rho:E\to Y$。其核是上述理想。若 $\rho(A)=\mu1_Y$，则 $A-\mu u\in\ker\rho$，每个保留块的 $A_r=\mu I$，从而
+
+$$
+\rho\widehat D(A,B)=0.
+\tag{139.4}
+$$
+
+零目标同样成立，反对称性处理第二槽。这里只证明商中心或标量像的零吸收，不在任意商上定义响应，也不把两个同像原输入的任意旧值认作相同。∎
+
+## 140. 同一个正读取支付整个极限面积族
+
+证明138.2第3项。先取 $(A,B)\notin\mathcal S$。此时 $x=\widehat D(A,B)=D_*(A,B)$，所有横向值也都是 $D_*(A,z)$。预算(137.4)仅含这些内层值及已知Jordan乘积，所以与标准完整PB模型提取的同一预算逐项相同，因而成立。这里比较的是标量预算，没有假称 $\widehat D$ 的实际外层满足PB。
+
+以下取任意 $(A,B)\in\mathcal S$。139节已给每块 $A_r,B_r$ 无迹且 $A_r\ne0$。用(139.3)的欧氏坐标写
+
+$$
+\begin{gathered}
+A_r=\alpha_r\cdot\sigma,\quad \rho_r=|\alpha_r|>0,\quad
+n_r=\alpha_r/\rho_r,\quad B_r=\beta_r\cdot\sigma,\\
+c_r=n_r\cdot\beta_r,\qquad
+x=\widehat D(A,B)=-D_*(A,B),\qquad q=A\circ B.
+\end{gathered}
+\tag{140.1}
+$$
+
+Pauli坐标可用通常的三轴；(138.1)中 $J=-\sigma_y$ 的符号不改变点积、正交或长度。$x_r$ 无迹且垂直 $n_r$，而 $q_r=\rho_rc_rI$。
+
+每一个正实读取恰可写为
+
+$$
+\phi(v)=\sum_{r=1}^2m_r(\lambda_r+\eta_r\cdot v_r),
+\qquad v_r^{\rm matrix}=\lambda_r I+v_r\cdot\sigma,
+\qquad m_r\ge0,\quad |\eta_r|\le1.
+\tag{140.2}
+$$
+
+$m_r=0$ 时可任取 $\eta_r=0$。此处不令 $m_1+m_2=1$，也不在证明中除以任何质量。对逐块无迹的 $v,w$，同一读取的实Gram恰为
+
+$$
+\phi(v\circ w)=\sum_rm_rv_r\cdot w_r,
+\qquad
+B_\phi(v,w)=\|v\|_m^2\|w\|_m^2-\langle v,w\rangle_m^2,
+\tag{140.3}
+$$
+
+其中 $\langle v,w\rangle_m=\sum_rm_rv_r\cdot w_r$ 可以退化。普通 Cauchy–Schwarz 仍适用，或将每块向量乘 $\sqrt{m_r}$ 后使用通常欧氏内积。
+
+任取实际 $A\circ z=0$。每块 $A_r\ne0$ 使 $z_r$ 的标量部分为零且向量垂直 $n_r$。令
+
+$$
+T_Az=D_*(A,z),\qquad w_\pm=z\pm T_Az,\qquad
+C_0=\sum_rm_rc_r^2,\quad Z=\sum_rm_r|z_r|^2,\quad
+R_0=\sum_rm_r\rho_r^2|z_r|^2.
+\tag{140.4}
+$$
+
+在每块，$T_Az$ 垂直 $z_r,n_r$ 且长度为 $\rho_r|z_r|$。所以两份 $w_\pm$ 都垂直共同纵向向量 $L=(c_rn_r)_r$，并且
+
+$$
+\|w_+\|_m^2=\|w_-\|_m^2=Z+R_0,\qquad \|L\|_m^2=C_0.
+$$
+
+将 $B\pm x=L+P_\pm$，其中 $P_\pm$ 逐块垂直 $n_r$。在同一个加权Gram中分离 $L$，再用 Cauchy–Schwarz，得到
+
+$$
+\begin{aligned}
+B_\phi(B\pm x,w_\pm)
+&=C_0(Z+R_0)+\|P_\pm\|_m^2\|w_\pm\|_m^2
+ -\langle P_\pm,w_\pm\rangle_m^2\\
+&\ge C_0(Z+R_0).
+\end{aligned}
+\tag{140.5}
+$$
+
+另一方面，$q_r=\rho_rc_rI$ 及同一个(140.2)给
+
+$$
+\begin{aligned}
+|\phi(z\circ q)|
+&=\left|\sum_rm_r\rho_rc_r\,\eta_r\cdot z_r\right|\\
+&\le\sqrt{\Bigl(\sum_rm_rc_r^2\Bigr)
+                 \Bigl(\sum_rm_r\rho_r^2(\eta_r\cdot z_r)^2\Bigr)}
+\le\sqrt{C_0R_0}.
+\end{aligned}
+\tag{140.6}
+$$
+
+两式一起给
+
+$$
+2|\phi(z\circ q)|\le2\sqrt{C_0R_0}
+\le2\sqrt{C_0(Z+R_0)}
+\le\sqrt{B_\phi(B+x,w_+)}+\sqrt{B_\phi(B-x,w_-)}.
+\tag{140.7}
+$$
+
+这就是全部(137.4)。整个证明允许 $C_0,Z,R_0$ 任一为零、读取全零或只读一块；两根号和左端始终使用同一个正读取。它没有分别选择两个优化读取，也没有对未知响应作连续性假设。对三个指定单位轴，$\rho_r=1$，于是 $R_0=Z$，右端至少 $2\sqrt{2C_0Z}$，左端至多 $2\sqrt{C_0Z}$。当 $C_0Z>0$，这份严格余量具体显示绝对面积没有强迫所需取向饱和。∎
+
+## 141. 三条混合行反号及同一实际配平的有符号检出
+
+证明138.2第4、5项。对 $a=h,e,j$，$q_a$ 是(138.2)的中央元，$b_{+,a}=q_a a$ 与 $a$ 交换，而 $a\circ b_{-,a}=0$。标准响应 $D_*(a,b)=D_*(a,b_{-,a})$ 非零；(138.3)在指定混合对反号，却在交换对及全部正交对保持标准值。这给(138.4)和缺陷 $-2D_*(a,b_{-,a})$。该元素在两块都是非零无迹矩阵，故不在 $Z(X)=\mathbb RI\oplus\mathbb RI$。特别
+
+$$
+\widehat D(h,b)=(K-J,\ 4K-3J),\qquad
+D_*(h,b)=(J-K,\ 3J-4K).
+\tag{141.1}
+$$
+
+为保留原有符号调用，置
+
+$$
+z=b_{-,h}=(K+J,\ 3K+4J),\qquad
+y=D_*(h,z),\quad q=(I,2I),\quad b=qh+z,
+\quad z^2=(2I,25I).
+\tag{141.2}
+$$
+
+于是 $\widehat D(h,b)=-y$，而 $\widehat D(h,tz)=ty$。真实 $\mathsf{PB}(h;b,tz)$ 的两份外层准确为
+
+$$
+(b-y,\ t(z+y)+q),\qquad
+(b+y,\ t(z-y)-q).
+\tag{141.3}
+$$
+
+它们第二标签的块标量部分分别为 $q$、$-q$，均非零；$\mathcal S$ 中每个标签逐块无迹，所以这两份外层都在修改集之外，实际使用 $D_*$。这一步只识别本显式总映射的实际外层，不是假定一般原旧值双线性。
+
+现在才展开已知双线性 $D_*$。由 $hz=-zh$、$y=ihz$、$q$ 中央，
+
+$$
+D_*(h,y)=-z,\qquad D_*(z,y)=hz^2,\qquad
+b\circ y=z\circ y=0.
+$$
+
+因此
+
+$$
+\begin{aligned}
+\text{PB左端}
+ &=2tD_*(b,y)-2tD_*(y,z)
+ =-2tqz+4thz^2,\\
+\text{PB右端}&=-2tqz,\\
+\text{左端}-\text{右端}&=4thz^2.
+\end{aligned}
+\tag{141.4}
+$$
+
+$t=1$ 时差恰为 $(8H,100H)\ne0$；任意 $t\ne0$ 也失败。同一个产生极限预算的实际非单位第三标签族，在保留有符号等式时已经排除这个总映射。全部极限绝对值预算仍接受它，故其不足来自提取时丢失的联系。没有据此断言全部有限 $t$ 预算成立，也没有断言单位第三标签PB成立。138.2证毕。∎
+
+## 142. 与既有反号构造及完整原来源的准确关系
+
+**定义 142.1（承重增量与成熟工具）。** [多项式零响应卷31–35](AURIC_ORIGINAL_POLYNOMIAL_ZERO_RESPONSES_AND_CAYLEY_DOMAIN_BOUNDARIES.md)已经使用整个 $O(2)$ 轨道反号，证明单位第三标签子系统不足。该反号机制、标准矩阵模型和逐对复共轭正性在这里直接复用，不计新内容。那个指定轨道含其原正交对，因而不保留准确标准横向值；其32.5只保留相应平方和正交身份。138.2的承重增量是用两块不同的共同正交化条件，使修改轨道避开**所有** Jordan 正交对，再由140节同一读取的纵向Gram分离证明**整个**极限面积族仍成立。单位第三标签子族与极限估计族是不同子系统，没有声称本模型也满足前者。137节的预算代入和取极限单独不构成新增结论。
+
+[多项式零响应卷36–45](AURIC_ORIGINAL_POLYNOMIAL_ZERO_RESPONSES_AND_CAYLEY_DOMAIN_BOUNDARIES.md)在其指定标量端点多项式原域已经识别全部无迹输入对的共同取向，并消去全部混合输出的常数和一次项。这些结论直接复用，不能把138.1的两个完整矩阵块当作那个原域，或把明确违反全PB的 $\widehat D$ 当作它们的反例。该卷39.2的一般混合中央平移仍未由138.2证明或反驳；本续卷133–135的准确原横向行、中央 $Q$ 及标量平方差运输也全部保持原范围。
+
+本处结果归为 $\texttt{repo-derived}$ 的精确子系统分离，不主张历史优先权或文献穷尽。Pauli乘法、实二阶正交换基、有限简单 Jordan 块、正泛函Gram和 Cauchy–Schwarz 是成熟中间工具；Jordan与自旋背景沿 Hanche-Olsen–Størmer，[*Jordan Operator Algebras*](https://hanche.folk.ntnu.no/joa/joa-m.pdf)。它们各只承担139–140中写出的有限矩阵和正读取步骤。
+
+Cabello–Peralta，[*Weak-2-local symmetric maps on C*-algebras*](https://arxiv.org/html/1510.00915v1)，Theorem 2.5要求对每两个完整复输入和每份对偶读取，存在一个共同复线性保星映射准确实现两份读取值；面积上界没有供应这种共同等值插值。Ayupov–Arzikulov–Umrzaqov–Nuriddinov，[*2-Local and local derivations on Jordan matrix rings over commutative involutive rings*](https://arxiv.org/html/2108.03993v4)，Theorem 3在其含单位、交换、带对合且 $2$ 可逆的系数环及 $H_2$ 入口要求每两个输入由同一个真实内导子实现；本模型没有这种前件，也不以该分类承担证明。Alfsen–Shultz，[*Orientation in Operator Algebras*](https://pmc.ncbi.nlm.nih.gov/articles/PMC22571/)，Dynamical Correspondences及Theorem 1的入口已要求到斜序导子的全域线性动力对应。局部横向线性和两份绝对预算不支付该入口。三种文献关系都不能由名称相近替代其准确共同实现或线性条件。
+
+**定义 142.2（同一完整候选与七项消费者）。** 完整候选逐句采用137.1所引原合同，仍为同一原 $\mathsf H_{\rm orig}+\mathsf{PB}$ 及全部来源，绝不以 $\widehat D$ 替代。保留 C139 155.1–155.2及其全部递归前件的 $\mathsf Q^{\rm root}_{46}$、整个 $F_3$、全部十一端点、$\rho=0,k=0$、XV23.2／全原E1、同一ready两标量词和176长度选项，原根关系仍为
+
+$$
+s=(3,7,1,2,4,5,6,8,9),\qquad
+\operatorname{tr}(L_r^\dagger L_r)=2,\qquad
+\|U_si_rL_r\|_{\rm HS}^2\le2\quad(r\in\mathfrak K_{\rm r}).
+\tag{142.1}
+$$
+
+原 $\Omega$ 的全部准备、事件、程序／过程、native及全词同一 $K/J/q$、parent/ready、控制、旗标、环境、参考／副本和真实相关联合均保身份。中心、经典、不等维、静默块及全部零／不等／次归一质量仍在；固定支持的全质量、每个已量化切口和全部菜单不缩减。全部合法顺序／自适应／并行历史、每个完整输出和细记录、每个仍合法未来、真正分组遗忘、失败／拒绝／停止／销毁、同数两侧及真实逆向返回均保留；未定义请求不补零。
+
+七项消费者**全量采用**多项式零响应卷29.2和C139 155.2的原充分条件及其递归合同，以下只说明138.2没有生产它们，不能把本段当作更短的充分集合。实际相干准备、全词共同核及同一旧乘法识别齐备才接Hilbert／叠加；实际完整效果菜单及正输入质量齐备才作Born归一。实际非零忠实同向、交换且共同生成的两腿、原重数和全部相关输入齐备才认回真实张量。每条整台箭头的全槽比较或实际递归同源参考齐备才取得CP；返回复合CP不替因子CP。全部输入／全部输出的typed CP仪器、环境和成功失败细记录、真实单位分区齐备才接Kraus与TP；更新另需正输出质量，Lüders另需该输出的完整绑定与像内射线校准。全部合法历史／未来、真实遗忘和全输出真实返回仍需同一原生产者；无限／非离散CountRead、可数可加、正常性及指定前对偶各守原合同。物理动力学仍需实际可逆CPTP时间群及实际逆、所需强连续酉实现、生成元域、物理钟／能量和共同正 $\hbar$。根迹、两块矩阵、标签旋转及极限参数不供应任何这些来源。
+
+因此估计子系统不足已有138.2的完整反模型；原全PB是否迫使一般混合整行或全域旧响应实双线性，仍未由此判定。没有取得新实际来源、较少独立公理、模型类扩大、资源改进或完整量子目标完成结论。
+
+## 143. 共同转动与有符号接回的几何
+
+**定义 143.1（完整候选的直观含义）。** 原候选仍是同一张二元正表与完整三标签正反配平，连同142.2全量采用的原来源和七项消费者。这个有限反向检验说明：即使所有真正正交的比较已经准确，同一个混合比较仍可在三条参考行上一起反号。两块各自都能用一个角度把输入对变成正交，但它们需要的角度不同；原输入对只能共同转动，所以没有一个合法共同角度把这圈混合对送进已知正交行。只翻转这三圈，其余比较保留原值，就得到一张共同的总表。
+
+每个正读取的面积预算也看不出这次翻转。沿参考方向留下的共同纵向分量给两份Gram同时提供余量；它足以支付全部横向方向、全部正读取和全部质量的极限绝对预算。这不是分别给两份比较挑选方便答案。可是把同一混合对和它的实际横向部分一起送入原有符号配平，两条外层路径认回原标准方向，左右两边便留下明确非零差。因此必须继续使用有符号的跨路径联系，或另找真正供应它的关系；完整配平是否已经足够，仍是原问题。
+
+这里的三方向来自二阶矩阵的无迹系数，两块也不是两套已实现的物理系统。比较换序的反号、共同旋转不变、所有正交值正确，以及三标签嵌套路径接回同一结果，是不同关系。这个结论严格区分了它们，未把未知混合值写成定义后宣布已经解决，也未减少完整候选的独立来源条件。实际准备、完整菜单、所有质量、整台仪器及全部输出、真实联合和递归参考、全部历史未来及真实遗忘返回、完整计数、物理钟、能量和共同作用量继续按原合同保留。
+
+## 追加锚（本行以下为增补区）
