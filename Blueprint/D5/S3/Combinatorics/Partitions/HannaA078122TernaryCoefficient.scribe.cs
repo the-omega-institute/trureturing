@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Partitions;
 internal sealed class HannaA078122TernaryCoefficientDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/Partitions/HannaA078122TernaryCoefficient.";
-    private static LibraryNoteRef Source() => LibraryNoteRef.Create("D5/L/RecurrenceComposition/hanna2002a078122");
+    private static LibraryNoteRef Source() => LibraryNoteRef.Create("D5/L/ArithUnits/hanna2002a078122");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The cubic-shift matrix exists, and every such natural-valued matrix satisfies Hanna's full ternary coefficient formula.",
