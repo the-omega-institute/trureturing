@@ -56,10 +56,7 @@ private theorem E_strict : StrictMono E := by
   simp only [E]
   omega
 
-private theorem E_ge (j : ℕ) : j ≤ E j := by
-  induction j with
-  | zero => rfl
-  | succ j ih => have := eta_pos (u j); simp only [E]; omega
+private theorem E_ge (j : ℕ) : j ≤ E j := E_strict.id_le j
 
 private theorem window (p : ℕ) : ∃ j, E j ≤ p ∧ p < E (j+1) := by
   have hex : ∃ k, p < E k := ⟨p+1,lt_of_lt_of_le (Nat.lt_succ_self p) (E_ge (p+1))⟩
