@@ -4,11 +4,11 @@
 
 Exact action in the diagram algebra
 
-R is any commutative coefficient ring. The statements concern multiplication in TL(R,9), whose basis contains every noncrossing boundary matching. They follow from the checked table and the general cup-cap path and loop laws.
+For every commutative ring R, multiplication takes place in TL(R,9) on all noncrossing boundary matchings. The last tabulated coordinate is the through-strand identity. A nonzero generator transition is a Fin 4862 index constructed from its Fin 4863 value and its strict bound.
 
 **Theorem 1.1 (unit_basis).**
 
-$$\forall R \in Type,\; [\operatorname{CommRing}\left(R\right)] \operatorname{Single}\left(R, \operatorname{diagram}\left(4861\right), 1\right) = 1$$
+$$\forall (R: \operatorname{Type}), ([\operatorname{CommRing}\left(R\right)] (\operatorname{MonoidAlgebra}.\operatorname{single}\left(\operatorname{diagram}\left(\operatorname{Fin}.\operatorname{mk}\left(4861, \operatorname{by} \operatorname{omega}\right)\right), 1\right): \operatorname{TL}\left(R, 9\right)) = 1)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/VertexModels/PonciniRasmussenNineAction.unit_basis` (`✓ std3`). ∎
 
@@ -16,11 +16,11 @@ $$\forall R \in Type,\; [\operatorname{CommRing}\left(R\right)] \operatorname{Si
 
 *Commentary.*
 
-Single(R,d,r) denotes the basis vector with coefficient r in TL(R,9). The basis vector at coordinate 4861 equals the multiplicative identity.
+The identity coordinate represents the multiplicative unit.
 
 **Theorem 1.2 (generator_basis).**
 
-$$\forall R \in Type,\; [\operatorname{CommRing}\left(R\right)] \forall g \in \operatorname{Fin}\left(8\right),\; \forall i \in \operatorname{Fin}\left(4862\right),\; \operatorname{Multiply}\left(\operatorname{generator}\left(R, 9, g\right), \operatorname{Single}\left(R, \operatorname{diagram}\left(i\right), 1\right)\right) = \operatorname{IfLess}\left(\operatorname{val}\left(\operatorname{transition}\left(g, i\right)\right), 4862, \operatorname{Single}\left(R, \operatorname{diagram}\left(\operatorname{transition}\left(g, i\right)\right), 1\right), 0\right)$$
+$$\forall (R: \operatorname{Type}), ([\operatorname{CommRing}\left(R\right)] \forall (g: \operatorname{Fin}\left(8\right)), (\forall (i: \operatorname{Fin}\left(4862\right)), (((\operatorname{generator}\left(g\right): \operatorname{TL}\left(R, 9\right))) \cdot (\operatorname{MonoidAlgebra}.\operatorname{single}\left(\operatorname{diagram}\left(i\right), 1\right)) = \operatorname{dite}\left(\operatorname{Fin}.\operatorname{val}\left(\operatorname{transition}\left(g, i\right)\right) < 4862, ((ht: \operatorname{Fin}.\operatorname{val}\left(\operatorname{transition}\left(g, i\right)\right) < 4862) \mapsto \operatorname{MonoidAlgebra}.\operatorname{single}\left(\operatorname{diagram}\left(\operatorname{Fin}.\operatorname{mk}\left(\operatorname{Fin}.\operatorname{val}\left(\operatorname{transition}\left(g, i\right)\right), ht\right)\right), 1\right)), \operatorname{Function}.\operatorname{const}\left(\operatorname{Not}\left(\operatorname{Fin}.\operatorname{val}\left(\operatorname{transition}\left(g, i\right)\right) < 4862\right), 0\right)\right))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/VertexModels/PonciniRasmussenNineAction.generator_basis` (`✓ std3`). ∎
 
@@ -28,7 +28,7 @@ $$\forall R \in Type,\; [\operatorname{CommRing}\left(R\right)] \forall g \in \o
 
 *Commentary.*
 
-Every generator acts by exactly the indicated target basis vector, or by zero when an internal loop is formed.
+The loop case gives zero; the other case gives the reconnected basis diagram.
 
 ## References
 

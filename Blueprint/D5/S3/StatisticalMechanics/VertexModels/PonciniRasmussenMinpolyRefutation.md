@@ -1,34 +1,36 @@
-# Conjecture B.1 for literal diagram algebras
+# Refuting the zero-fugacity degree formula
 
 ## Abstract
 
-Conjecture B.1 for literal diagram algebras
+Refuting the zero-fugacity degree formula
 
-The coefficient field is C and the element is the negative sum h(C,n) of all n-1 standard generators. The multiplication is actual path concatenation of noncrossing matching diagrams, with every internal loop assigned zero. The definition below preserves the original universal quantifier. The degree-57 monic integer annihilator is transported through the exact generator action to the complex diagram algebra. Minpoly minimality gives degree at most 57, contradicting the conjectured value 81 at n=9. No faithful-representation assumption is used.
+Conjecture B.1 asserts a minimal-polynomial degree formula for every natural n at least two. The algebra is the full planar diagram algebra at loop fugacity zero. At n=9 the asserted value is 81, whereas an annihilating polynomial of degree 57 gives an upper bound of 57.
 
 **Definition 1.1 (claim).**
 
-$$claim \Leftrightarrow \left(\forall n \in Nat,\; \operatorname{AtLeast}\left(n, 2\right) \Rightarrow \operatorname{RationalCast}\left(\operatorname{natDegree}\left(\operatorname{minpoly}\left(Complex, \operatorname{h}\left(Complex, n\right)\right)\right)\right) = \operatorname{Divide}\left(\operatorname{Add}\left(\operatorname{Power}\left(3, \operatorname{Divide}\left(\operatorname{Add}\left(n, 1\right), 2\right)\right), \operatorname{Multiply}\left(\operatorname{Power}\left(\operatorname{NegativeOne}\left(\right), n\right), \operatorname{Power}\left(3, \operatorname{Divide}\left(\operatorname{Subtract}\left(n, 1\right), 2\right)\right)\right)\right), 2\right)\right)$$
+$$\operatorname{claim} = \forall (n: \operatorname{Nat}), ((2 \le n) \to ((\operatorname{Nat}.\operatorname{cast}\left(\operatorname{Polynomial}.\operatorname{natDegree}\left(\operatorname{minpoly}\left(\operatorname{Complex}, \operatorname{h}\left(\operatorname{Complex}, n\right)\right)\right)\right): \operatorname{Rat}) = \operatorname{HDiv}.\operatorname{hDiv}\left((((3: \operatorname{Rat}))^{(\operatorname{Nat}.\operatorname{div}\left((n) + (1), 2\right))}) + ((((-(1): \operatorname{Rat}))^{(n)}) \cdot (((3: \operatorname{Rat}))^{(\operatorname{Nat}.\operatorname{div}\left(\operatorname{Nat}.\operatorname{sub}\left(n, 1\right), 2\right))})), (2: \operatorname{Rat})\right)))$$
 
 *Formalization.* `D5/S3/StatisticalMechanics/VertexModels/PonciniRasmussenMinpolyRefutation.claim` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* Xavier Poncini and Jørgen Rasmussen (2023). *Integrability of planar-algebraic models*. DOI: [10.1088/1742-5468/acdce7](https://doi.org/10.1088/1742-5468/acdce7). URL: <https://arxiv.org/abs/2206.14462v2>.
 
 *Commentary.*
 
-The powers use natural-number exponents with natural division by two; the outer equality is in Q.
+Appendix B.1, (B.13): natural division defines both exponents; Nat.sub is truncated. The outer division and the degree cast are in Rat.
 
 **Theorem 1.2 (result).**
 
-$$\operatorname{Not}\left(claim\right)$$
+$$\operatorname{Not}\left(\operatorname{claim}\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/VertexModels/PonciniRasmussenMinpolyRefutation.result` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* Xavier Poncini and Jørgen Rasmussen (2023). *Integrability of planar-algebraic models*. DOI: [10.1088/1742-5468/acdce7](https://doi.org/10.1088/1742-5468/acdce7). URL: <https://arxiv.org/abs/2206.14462v2>.
+
 *Commentary.*
 
-The integer Horner certificate, the literal diagram transition law, and the unit diagram yield p(h_9)=0. The polynomial is monic of degree 57, so minpoly has degree at most 57<81.
+The integer recurrence and literal diagram action give p(h_9)=0 for a monic polynomial of degree 57. The minimal polynomial therefore has degree at most 57, which contradicts the conjectured value 81. No exact degree is asserted.
 
 ## References
 

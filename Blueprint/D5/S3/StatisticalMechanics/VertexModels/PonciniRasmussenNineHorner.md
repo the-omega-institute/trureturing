@@ -4,11 +4,11 @@
 
 Annihilation of the integer recurrence
 
-The split Horner equalities start at the zero vector, follow all 58 coefficients, and end at the zero vector. This is an exact integer assertion. The diagram action bridge identifies the sparse recurrence with left multiplication in the literal planar diagram algebra.
+The coefficient fold starts at zero, follows all 58 integer coefficients, and ends at zero. The diagram action identifies this recurrence with left multiplication by the nine-strand Hamiltonian.
 
 **Theorem 1.1 (annihilation).**
 
-$$hornerValue = ZeroVector$$
+$$\operatorname{hornerValue} = \operatorname{Function}.\operatorname{const}\left(\operatorname{Fin}\left(8192\right), 0\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/VertexModels/PonciniRasmussenNineHorner.annihilation` (`✓ std3`). ∎
 
@@ -16,7 +16,7 @@ $$hornerValue = ZeroVector$$
 
 *Commentary.*
 
-ZeroVector(i)=0 for every i in Fin(8192).
+The right-hand side is the constant zero function on Fin 8192.
 
 ## References
 

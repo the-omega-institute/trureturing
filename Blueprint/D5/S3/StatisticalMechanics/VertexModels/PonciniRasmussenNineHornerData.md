@@ -4,11 +4,11 @@
 
 Integer data for nine strands
 
-The 4862 diagram coordinates are padded to 8192. Binary tree lookup takes the left subtree for an even index and the right subtree for an odd index, then divides the index by two. The incoming rows retain multiplicity. The private vectors v0 through v58 are literal integer trees. Their recurrence and endpoint values are separate checked theorems.
+The 4862 diagram coordinates are embedded in Fin 8192. The private get function reads a binary tree by parity and division by two. The private rows and v0 through v58 are the literal source lists and integer trees of this module.
 
 **Definition 1.1 (annihilatorCoefficients).**
 
-$$annihilatorCoefficients = \operatorname{List}\left(1, 0, \operatorname{Negate}\left(163\right), 0, 12285, 0, \operatorname{Negate}\left(569445\right), 0, 18215115, 0, \operatorname{Negate}\left(427662891\right), 0, 7652877936, 0, \operatorname{Negate}\left(106986874650\right), 0, 1188246329388, 0, \operatorname{Negate}\left(10605723426434\right), 0, 76659122475479, 0, \operatorname{Negate}\left(450854928573687\right), 0, 2162620108980042, 0, \operatorname{Negate}\left(8462844884056308\right), 0, 26973986982247197, 0, \operatorname{Negate}\left(69786597194594871\right), 0, 145778728152448221, 0, \operatorname{Negate}\left(244086630072528699\right), 0, 324477075047489821, 0, \operatorname{Negate}\left(338328989148555271\right), 0, 272486148975235188, 0, \operatorname{Negate}\left(166252500600659604\right), 0, 74962166731413102, 0, \operatorname{Negate}\left(24185673946500264\right), 0, 5347591521504921, 0, \operatorname{Negate}\left(762922848588417\right), 0, 64282035899880, 0, \operatorname{Negate}\left(2771640702288\right), 0, 43808164416, 0\right)$$
+$$\operatorname{annihilatorCoefficients} = [1, 0, -(163), 0, 12285, 0, -(569445), 0, 18215115, 0, -(427662891), 0, 7652877936, 0, -(106986874650), 0, 1188246329388, 0, -(10605723426434), 0, 76659122475479, 0, -(450854928573687), 0, 2162620108980042, 0, -(8462844884056308), 0, 26973986982247197, 0, -(69786597194594871), 0, 145778728152448221, 0, -(244086630072528699), 0, 324477075047489821, 0, -(338328989148555271), 0, 272486148975235188, 0, -(166252500600659604), 0, 74962166731413102, 0, -(24185673946500264), 0, 5347591521504921, 0, -(762922848588417), 0, 64282035899880, 0, -(2771640702288), 0, 43808164416, 0]$$
 
 *Formalization.* `D5/S3/StatisticalMechanics/VertexModels/PonciniRasmussenNineHornerData.annihilatorCoefficients` (`✓ std3`).
 
@@ -16,11 +16,11 @@ $$annihilatorCoefficients = \operatorname{List}\left(1, 0, \operatorname{Negate}
 
 *Commentary.*
 
-The list is in highest-degree-first order.
+These 58 integers are in highest-degree-first order.
 
 **Definition 1.2 (sparseHamiltonian).**
 
-$$\forall v \in \operatorname{Function}\left(\operatorname{Fin}\left(8192\right), Int\right),\; \forall i \in \operatorname{Fin}\left(8192\right),\; \operatorname{sparseHamiltonian}\left(v, i\right) = \operatorname{Negate}\left(\operatorname{FoldLeft}\left(\operatorname{get}\left(rows, \operatorname{val}\left(i\right)\right), \operatorname{AddIncomingCoefficient}\left(v, 8192\right), 0\right)\right)$$
+$$\forall (v: (\operatorname{Fin}\left(8192\right)) \to (\operatorname{Int})), (\operatorname{sparseHamiltonian}\left(v\right) = ((i: \operatorname{Fin}\left(8192\right)) \mapsto -(\operatorname{List}.\operatorname{foldl}\left(((s: \operatorname{Int}) \mapsto ((j: \operatorname{Nat}) \mapsto (s) + (v\left(\operatorname{Fin}.\operatorname{mk}\left(\operatorname{Nat}.\operatorname{mod}\left(j, 8192\right), \operatorname{Nat}.\operatorname{mod_{lt}}\left(j, \operatorname{by} \operatorname{omega}\right)\right)\right)))), 0, \operatorname{get}\left(\operatorname{rows}, \operatorname{Fin}.\operatorname{val}\left(i\right)\right)\right))))$$
 
 *Formalization.* `D5/S3/StatisticalMechanics/VertexModels/PonciniRasmussenNineHornerData.sparseHamiltonian` (`✓ std3`).
 
@@ -28,11 +28,11 @@ $$\forall v \in \operatorname{Function}\left(\operatorname{Fin}\left(8192\right)
 
 *Commentary.*
 
-AddIncomingCoefficient(s,j) is s+v(j modulo 8192).
+The sum retains repeated source coordinates and uses the negative Hamiltonian sign.
 
 **Definition 1.3 (hornerValue).**
 
-$$hornerValue = \operatorname{FoldLeft}\left(annihilatorCoefficients, HornerStep, ZeroVector\right)$$
+$$\operatorname{hornerValue} = \operatorname{List}.\operatorname{foldl}\left(((v: (\operatorname{Fin}\left(8192\right)) \to (\operatorname{Int})) \mapsto ((c: \operatorname{Int}) \mapsto ((i: \operatorname{Fin}\left(8192\right)) \mapsto (\operatorname{sparseHamiltonian}\left(v, i\right)) + (\operatorname{ite}\left(\operatorname{BEq}.\operatorname{beq}\left(\operatorname{Fin}.\operatorname{val}\left(i\right), 4861\right), c, 0\right))))), \operatorname{Function}.\operatorname{const}\left(\operatorname{Fin}\left(8192\right), 0\right), \operatorname{annihilatorCoefficients}\right)$$
 
 *Formalization.* `D5/S3/StatisticalMechanics/VertexModels/PonciniRasmussenNineHornerData.hornerValue` (`✓ std3`).
 
@@ -40,11 +40,11 @@ $$hornerValue = \operatorname{FoldLeft}\left(annihilatorCoefficients, HornerStep
 
 *Commentary.*
 
-HornerStep(v,c)(i) equals sparseHamiltonian(v)(i) plus c at coordinate 4861 and zero elsewhere. The initial vector is zero.
+The callback adds c only at the identity coordinate. Its initial function is constant zero.
 
 **Definition 1.4 (state).**
 
-$$\forall k \in Nat,\; \forall i \in \operatorname{Fin}\left(8192\right),\; \operatorname{state}\left(k, i\right) = \operatorname{get}\left(\operatorname{MatchNat}\left(k, \operatorname{Branch}\left(0, v0\right), \operatorname{Branch}\left(1, v1\right), \operatorname{Branch}\left(2, v2\right), \operatorname{Branch}\left(3, v3\right), \operatorname{Branch}\left(4, v4\right), \operatorname{Branch}\left(5, v5\right), \operatorname{Branch}\left(6, v6\right), \operatorname{Branch}\left(7, v7\right), \operatorname{Branch}\left(8, v8\right), \operatorname{Branch}\left(9, v9\right), \operatorname{Branch}\left(10, v10\right), \operatorname{Branch}\left(11, v11\right), \operatorname{Branch}\left(12, v12\right), \operatorname{Branch}\left(13, v13\right), \operatorname{Branch}\left(14, v14\right), \operatorname{Branch}\left(15, v15\right), \operatorname{Branch}\left(16, v16\right), \operatorname{Branch}\left(17, v17\right), \operatorname{Branch}\left(18, v18\right), \operatorname{Branch}\left(19, v19\right), \operatorname{Branch}\left(20, v20\right), \operatorname{Branch}\left(21, v21\right), \operatorname{Branch}\left(22, v22\right), \operatorname{Branch}\left(23, v23\right), \operatorname{Branch}\left(24, v24\right), \operatorname{Branch}\left(25, v25\right), \operatorname{Branch}\left(26, v26\right), \operatorname{Branch}\left(27, v27\right), \operatorname{Branch}\left(28, v28\right), \operatorname{Branch}\left(29, v29\right), \operatorname{Branch}\left(30, v30\right), \operatorname{Branch}\left(31, v31\right), \operatorname{Branch}\left(32, v32\right), \operatorname{Branch}\left(33, v33\right), \operatorname{Branch}\left(34, v34\right), \operatorname{Branch}\left(35, v35\right), \operatorname{Branch}\left(36, v36\right), \operatorname{Branch}\left(37, v37\right), \operatorname{Branch}\left(38, v38\right), \operatorname{Branch}\left(39, v39\right), \operatorname{Branch}\left(40, v40\right), \operatorname{Branch}\left(41, v41\right), \operatorname{Branch}\left(42, v42\right), \operatorname{Branch}\left(43, v43\right), \operatorname{Branch}\left(44, v44\right), \operatorname{Branch}\left(45, v45\right), \operatorname{Branch}\left(46, v46\right), \operatorname{Branch}\left(47, v47\right), \operatorname{Branch}\left(48, v48\right), \operatorname{Branch}\left(49, v49\right), \operatorname{Branch}\left(50, v50\right), \operatorname{Branch}\left(51, v51\right), \operatorname{Branch}\left(52, v52\right), \operatorname{Branch}\left(53, v53\right), \operatorname{Branch}\left(54, v54\right), \operatorname{Branch}\left(55, v55\right), \operatorname{Branch}\left(56, v56\right), \operatorname{Branch}\left(57, v57\right), \operatorname{Default}\left(v58\right)\right), \operatorname{val}\left(i\right)\right)$$
+$$\forall (k: \operatorname{Nat}), (\operatorname{state}\left(k\right) = ((i: \operatorname{Fin}\left(8192\right)) \mapsto \operatorname{get}\left((\operatorname{match} k \operatorname{with} | 0 \mapsto \operatorname{v0} | 1 \mapsto \operatorname{v1} | 2 \mapsto \operatorname{v2} | 3 \mapsto \operatorname{v3} | 4 \mapsto \operatorname{v4} | 5 \mapsto \operatorname{v5} | 6 \mapsto \operatorname{v6} | 7 \mapsto \operatorname{v7} | 8 \mapsto \operatorname{v8} | 9 \mapsto \operatorname{v9} | 10 \mapsto \operatorname{v10} | 11 \mapsto \operatorname{v11} | 12 \mapsto \operatorname{v12} | 13 \mapsto \operatorname{v13} | 14 \mapsto \operatorname{v14} | 15 \mapsto \operatorname{v15} | 16 \mapsto \operatorname{v16} | 17 \mapsto \operatorname{v17} | 18 \mapsto \operatorname{v18} | 19 \mapsto \operatorname{v19} | 20 \mapsto \operatorname{v20} | 21 \mapsto \operatorname{v21} | 22 \mapsto \operatorname{v22} | 23 \mapsto \operatorname{v23} | 24 \mapsto \operatorname{v24} | 25 \mapsto \operatorname{v25} | 26 \mapsto \operatorname{v26} | 27 \mapsto \operatorname{v27} | 28 \mapsto \operatorname{v28} | 29 \mapsto \operatorname{v29} | 30 \mapsto \operatorname{v30} | 31 \mapsto \operatorname{v31} | 32 \mapsto \operatorname{v32} | 33 \mapsto \operatorname{v33} | 34 \mapsto \operatorname{v34} | 35 \mapsto \operatorname{v35} | 36 \mapsto \operatorname{v36} | 37 \mapsto \operatorname{v37} | 38 \mapsto \operatorname{v38} | 39 \mapsto \operatorname{v39} | 40 \mapsto \operatorname{v40} | 41 \mapsto \operatorname{v41} | 42 \mapsto \operatorname{v42} | 43 \mapsto \operatorname{v43} | 44 \mapsto \operatorname{v44} | 45 \mapsto \operatorname{v45} | 46 \mapsto \operatorname{v46} | 47 \mapsto \operatorname{v47} | 48 \mapsto \operatorname{v48} | 49 \mapsto \operatorname{v49} | 50 \mapsto \operatorname{v50} | 51 \mapsto \operatorname{v51} | 52 \mapsto \operatorname{v52} | 53 \mapsto \operatorname{v53} | 54 \mapsto \operatorname{v54} | 55 \mapsto \operatorname{v55} | 56 \mapsto \operatorname{v56} | 57 \mapsto \operatorname{v57} | _ \mapsto \operatorname{v58}), \operatorname{Fin}.\operatorname{val}\left(i\right)\right)))$$
 
 *Formalization.* `D5/S3/StatisticalMechanics/VertexModels/PonciniRasmussenNineHornerData.state` (`✓ std3`).
 
@@ -52,7 +52,7 @@ $$\forall k \in Nat,\; \forall i \in \operatorname{Fin}\left(8192\right),\; \ope
 
 *Commentary.*
 
-All states, including the default v58, are literal integer vectors.
+The match has branches 0 through 57; every other natural number selects v58.
 
 ## References
 

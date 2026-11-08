@@ -4,11 +4,11 @@
 
 Reindexing the generator edges
 
-Incoming and outgoing lists contain pairs (target,source), with source embedded in Fin(8192). Multiplicities remain present. Kernel reduction checks the sorted source blocks and their successive merges. The structural merge evaluator agrees with List.merge, whose permutation theorem transfers the exact finite sum. The calculation applies to every additive commutative group.
+Incoming and outgoing edges are pairs of a Fin 4862 target and a Fin 8192 source. Lists preserve multiplicity. Their permutation identity reindexes the integer scalar sum in every additive commutative group.
 
 **Definition 1.1 (incoming).**
 
-$$\forall i \in \operatorname{Fin}\left(8192\right),\; \operatorname{incoming}\left(i\right) = \operatorname{get}\left(rows, \operatorname{val}\left(i\right)\right)$$
+$$\forall (i: \operatorname{Fin}\left(8192\right)), (\operatorname{incoming}\left(i\right) = \operatorname{get}\left(\operatorname{rows}, \operatorname{Fin}.\operatorname{val}\left(i\right)\right))$$
 
 *Formalization.* `D5/S3/StatisticalMechanics/VertexModels/PonciniRasmussenNineEdges.incoming` (`✓ std3`).
 
@@ -16,11 +16,11 @@ $$\forall i \in \operatorname{Fin}\left(8192\right),\; \operatorname{incoming}\l
 
 *Commentary.*
 
-The fixed binary tree contains the same incoming source lists used by sparseHamiltonian.
+The private get and rows are the binary lookup and literal incoming lists in this module.
 
 **Theorem 1.2 (sparseHamiltonian_eq).**
 
-$$\forall v \in \operatorname{Function}\left(\operatorname{Fin}\left(8192\right), Int\right),\; \forall i \in \operatorname{Fin}\left(8192\right),\; \operatorname{sparseHamiltonian}\left(v, i\right) = \operatorname{Negate}\left(\operatorname{FoldLeft}\left(\operatorname{incoming}\left(i\right), \operatorname{AddIncomingCoefficient}\left(v, 8192\right), 0\right)\right)$$
+$$\forall (v: (\operatorname{Fin}\left(8192\right)) \to (\operatorname{Int})), (\operatorname{sparseHamiltonian}\left(v\right) = ((i: \operatorname{Fin}\left(8192\right)) \mapsto -(\operatorname{List}.\operatorname{foldl}\left(((s: \operatorname{Int}) \mapsto ((j: \operatorname{Nat}) \mapsto (s) + (v\left(\operatorname{Fin}.\operatorname{mk}\left(\operatorname{Nat}.\operatorname{mod}\left(j, 8192\right), \operatorname{Nat}.\operatorname{mod_{lt}}\left(j, \operatorname{by} \operatorname{omega}\right)\right)\right)))), 0, \operatorname{incoming}\left(i\right)\right))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/VertexModels/PonciniRasmussenNineEdges.sparseHamiltonian_eq` (`✓ std3`). ∎
 
@@ -28,11 +28,11 @@ $$\forall v \in \operatorname{Function}\left(\operatorname{Fin}\left(8192\right)
 
 *Commentary.*
 
-AddIncomingCoefficient(s,j) is s+v(j modulo 8192).
+List.foldl adds the coefficient at each source index, then the Hamiltonian negates the sum.
 
 **Definition 1.3 (incomingEdges).**
 
-$$incomingEdges = \operatorname{FlatMap}\left(\operatorname{finRange}\left(4862\right), \operatorname{IncomingTargetSourcePairs}\left(incoming, 8192\right)\right)$$
+$$\operatorname{incomingEdges} = \operatorname{List}.\operatorname{flatMap}\left(((t: \operatorname{Fin}\left(4862\right)) \mapsto \operatorname{List}.\operatorname{map}\left(((s: \operatorname{Nat}) \mapsto \operatorname{Prod}.\operatorname{mk}\left(t, \operatorname{Fin}.\operatorname{mk}\left(\operatorname{Nat}.\operatorname{mod}\left(s, 8192\right), \operatorname{Nat}.\operatorname{mod_{lt}}\left(s, \operatorname{by} \operatorname{omega}\right)\right)\right)), \operatorname{incoming}\left((\operatorname{Fin}.\operatorname{mk}\left(\operatorname{Fin}.\operatorname{val}\left(t\right), \operatorname{by} \operatorname{omega}\right): \operatorname{Fin}\left(8192\right))\right)\right)), \operatorname{List}.\operatorname{finRange}\left(4862\right)\right)$$
 
 *Formalization.* `D5/S3/StatisticalMechanics/VertexModels/PonciniRasmussenNineEdges.incomingEdges` (`✓ std3`).
 
@@ -40,11 +40,11 @@ $$incomingEdges = \operatorname{FlatMap}\left(\operatorname{finRange}\left(4862\
 
 *Commentary.*
 
-For target t, map every source s in incoming(t) to (t,s modulo 8192).
+Each source in a target row is reduced modulo 8192 with Nat.mod_lt providing the bound.
 
 **Definition 1.4 (outgoingEdges).**
 
-$$outgoingEdges = \operatorname{FlatMap}\left(\operatorname{finRange}\left(4862\right), \operatorname{FilterMap}\left(\operatorname{finRange}\left(8\right), NonzeroTransitionTargetSource\right)\right)$$
+$$\operatorname{outgoingEdges} = \operatorname{List}.\operatorname{flatMap}\left(((s: \operatorname{Fin}\left(4862\right)) \mapsto \operatorname{List}.\operatorname{filterMap}\left(((g: \operatorname{Fin}\left(8\right)) \mapsto \operatorname{dite}\left(\operatorname{Fin}.\operatorname{val}\left(\operatorname{transition}\left(g, s\right)\right) < 4862, ((ht: \operatorname{Fin}.\operatorname{val}\left(\operatorname{transition}\left(g, s\right)\right) < 4862) \mapsto \operatorname{Option}.\operatorname{some}\left(\operatorname{Prod}.\operatorname{mk}\left(\operatorname{Fin}.\operatorname{mk}\left(\operatorname{Fin}.\operatorname{val}\left(\operatorname{transition}\left(g, s\right)\right), ht\right), (\operatorname{Fin}.\operatorname{mk}\left(\operatorname{Fin}.\operatorname{val}\left(s\right), \operatorname{by} \operatorname{omega}\right): \operatorname{Fin}\left(8192\right))\right)\right)), \operatorname{Function}.\operatorname{const}\left(\operatorname{Not}\left(\operatorname{Fin}.\operatorname{val}\left(\operatorname{transition}\left(g, s\right)\right) < 4862\right), \operatorname{Option}.\operatorname{none}\right)\right)), \operatorname{List}.\operatorname{finRange}\left(8\right)\right)), \operatorname{List}.\operatorname{finRange}\left(4862\right)\right)$$
 
 *Formalization.* `D5/S3/StatisticalMechanics/VertexModels/PonciniRasmussenNineEdges.outgoingEdges` (`✓ std3`).
 
@@ -52,11 +52,11 @@ $$outgoingEdges = \operatorname{FlatMap}\left(\operatorname{finRange}\left(4862\
 
 *Commentary.*
 
-For each source s and generator g, include (transition(g,s),s) precisely when the transition is below 4862.
+Only transitions with value below 4862 contribute an edge.
 
 **Theorem 1.5 (edges_perm).**
 
-$$\operatorname{Perm}\left(incomingEdges, outgoingEdges\right)$$
+$$\operatorname{List}.\operatorname{Perm}\left(\operatorname{incomingEdges}, \operatorname{outgoingEdges}\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/VertexModels/PonciniRasmussenNineEdges.edges_perm` (`✓ std3`). ∎
 
@@ -64,11 +64,11 @@ $$\operatorname{Perm}\left(incomingEdges, outgoingEdges\right)$$
 
 *Commentary.*
 
-The edge multiset is preserved exactly.
+Both lists enumerate the same edges with the same multiplicities.
 
 **Theorem 1.6 (sparse_sum).**
 
-$$\forall A \in Type,\; [\operatorname{AddCommGroup}\left(A\right)] \forall b \in \operatorname{Function}\left(\operatorname{Fin}\left(4862\right), A\right),\; \forall v \in \operatorname{Function}\left(\operatorname{Fin}\left(8192\right), Int\right),\; \operatorname{Sum}\left(t, \operatorname{Fin}\left(4862\right), \operatorname{IntegerSMul}\left(\operatorname{sparseHamiltonian}\left(v, \operatorname{CastFin}\left(t, 8192\right)\right), \operatorname{b}\left(t\right)\right)\right) = \operatorname{Negate}\left(\operatorname{Sum}\left(s, \operatorname{Fin}\left(4862\right), \operatorname{Sum}\left(g, \operatorname{Fin}\left(8\right), \operatorname{IfLess}\left(\operatorname{val}\left(\operatorname{transition}\left(g, s\right)\right), 4862, \operatorname{IntegerSMul}\left(\operatorname{v}\left(\operatorname{CastFin}\left(s, 8192\right)\right), \operatorname{b}\left(\operatorname{transition}\left(g, s\right)\right)\right), 0\right)\right)\right)\right)$$
+$$\forall (A: \operatorname{Type}), ([\operatorname{AddCommGroup}\left(A\right)] \forall (b: (\operatorname{Fin}\left(4862\right)) \to (A)), (\forall (v: (\operatorname{Fin}\left(8192\right)) \to (\operatorname{Int})), (\operatorname{Finset}.\operatorname{sum}\left(\operatorname{Finset}.\operatorname{univ}\left(\right), ((t: \operatorname{Fin}\left(4862\right)) \mapsto \operatorname{HSMul}.\operatorname{hSMul}\left(\operatorname{sparseHamiltonian}\left(v\right)\left((\operatorname{Fin}.\operatorname{mk}\left(\operatorname{Fin}.\operatorname{val}\left(t\right), \operatorname{by} \operatorname{omega}\right): \operatorname{Fin}\left(8192\right))\right), b\left(t\right)\right))\right) = -(\operatorname{Finset}.\operatorname{sum}\left(\operatorname{Finset}.\operatorname{univ}\left(\right), ((s: \operatorname{Fin}\left(4862\right)) \mapsto \operatorname{Finset}.\operatorname{sum}\left(\operatorname{Finset}.\operatorname{univ}\left(\right), ((g: \operatorname{Fin}\left(8\right)) \mapsto \operatorname{dite}\left(\operatorname{Fin}.\operatorname{val}\left(\operatorname{transition}\left(g, s\right)\right) < 4862, ((ht: \operatorname{Fin}.\operatorname{val}\left(\operatorname{transition}\left(g, s\right)\right) < 4862) \mapsto \operatorname{HSMul}.\operatorname{hSMul}\left(v\left((\operatorname{Fin}.\operatorname{mk}\left(\operatorname{Fin}.\operatorname{val}\left(s\right), \operatorname{by} \operatorname{omega}\right): \operatorname{Fin}\left(8192\right))\right), b\left(\operatorname{Fin}.\operatorname{mk}\left(\operatorname{Fin}.\operatorname{val}\left(\operatorname{transition}\left(g, s\right)\right), ht\right)\right)\right)), \operatorname{Function}.\operatorname{const}\left(\operatorname{Not}\left(\operatorname{Fin}.\operatorname{val}\left(\operatorname{transition}\left(g, s\right)\right) < 4862\right), 0\right)\right))\right))\right)))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/VertexModels/PonciniRasmussenNineEdges.sparse_sum` (`✓ std3`). ∎
 
@@ -76,7 +76,7 @@ $$\forall A \in Type,\; [\operatorname{AddCommGroup}\left(A\right)] \forall b \i
 
 *Commentary.*
 
-Integer scalar multiplication distributes over the finite incoming rows. The edge permutation gives the equality in any additive commutative group.
+Finset.sum binds t, s and g at their stated finite types. Both Fin embeddings and the target proof ht are explicit.
 
 ## References
 

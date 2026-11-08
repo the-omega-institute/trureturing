@@ -1,14 +1,14 @@
-# Checked nine-strand matching coordinates
+# Nine-strand matching coordinates
 
 ## Abstract
 
-Checked nine-strand matching coordinates
+Nine-strand matching coordinates
 
-There are 4862 indexed literal matchings. Raw partner data are packed as base-18 integers: the digit at position x is the partner of x. The circular boundary lists the top ports left to right and the bottom ports right to left. All involution, no-fixed-point, noncrossing and transition facts are checked by kernel reduction. No completeness or faithful-representation assertion is needed.
+There are 4862 indexed noncrossing matchings. The actual private matching, get and transitions constants supply the decoded involution and literal transition tree. Circular order lists top ports left to right and bottom ports right to left. Transition value 4862 denotes a loop.
 
 **Definition 1.1 (diagram).**
 
-$$\forall i \in \operatorname{Fin}\left(4862\right),\; \operatorname{diagram}\left(i\right) = \operatorname{Subtype}\left(\operatorname{toMatching}\left(\operatorname{matching}\left(i\right)\right), \operatorname{ExistsWitness}\left(\operatorname{matching}\left(i\right), rfl\right)\right)$$
+$$\forall (i: \operatorname{Fin}\left(4862\right)), (\operatorname{diagram}\left(i\right) = \operatorname{Subtype}.\operatorname{mk}\left(\operatorname{toMatching}\left(\operatorname{matching}\left(i\right)\right), \operatorname{Exists}.\operatorname{intro}\left(\operatorname{matching}\left(i\right), \operatorname{rfl}\right)\right))$$
 
 *Formalization.* `D5/S3/StatisticalMechanics/VertexModels/PonciniRasmussenNineDiagrams.diagram` (`✓ std3`).
 
@@ -16,11 +16,11 @@ $$\forall i \in \operatorname{Fin}\left(4862\right),\; \operatorname{diagram}\le
 
 *Commentary.*
 
-Matching(i) is the NCMatching with the decoded partner function and the checked validity proofs.
+The subtype pairs the literal matching with its noncrossing representative.
 
 **Definition 1.2 (transition).**
 
-$$\forall g \in \operatorname{Fin}\left(8\right),\; \forall i \in \operatorname{Fin}\left(4862\right),\; \operatorname{transition}\left(g, i\right) = \operatorname{Modulo}\left(\operatorname{Divide}\left(\operatorname{get}\left(\operatorname{get}\left(transitions, \operatorname{val}\left(i\right)\right), 0\right), \operatorname{Power}\left(4863, \operatorname{val}\left(g\right)\right)\right), 4863\right)$$
+$$\forall (g: \operatorname{Fin}\left(8\right)), (\forall (i: \operatorname{Fin}\left(4862\right)), (\operatorname{transition}\left(g, i\right) = \operatorname{Fin}.\operatorname{mk}\left(\operatorname{Nat}.\operatorname{mod}\left(\operatorname{Nat}.\operatorname{div}\left(\operatorname{get}\left(\operatorname{get}\left(\operatorname{transitions}, \operatorname{Fin}.\operatorname{val}\left(i\right)\right), 0\right), (4863)^{(\operatorname{Fin}.\operatorname{val}\left(g\right))}\right), 4863\right), \operatorname{Nat}.\operatorname{mod_{lt}}\left(\operatorname{Nat}.\operatorname{div}\left(\operatorname{get}\left(\operatorname{get}\left(\operatorname{transitions}, \operatorname{Fin}.\operatorname{val}\left(i\right)\right), 0\right), (4863)^{(\operatorname{Fin}.\operatorname{val}\left(g\right))}\right), \operatorname{by} \operatorname{omega}\right)\right)))$$
 
 *Formalization.* `D5/S3/StatisticalMechanics/VertexModels/PonciniRasmussenNineDiagrams.transition` (`✓ std3`).
 
@@ -28,11 +28,11 @@ $$\forall g \in \operatorname{Fin}\left(8\right),\; \forall i \in \operatorname{
 
 *Commentary.*
 
-The code 4862 denotes a loop and hence zero. Other codes denote the reconnected target diagram. IndexBound is the finite-index inequality supplied by the generator type.
+Both operations on the packed transition code are natural-number division and remainder.
 
 **Theorem 1.3 (transition_check).**
 
-$$\forall i \in \operatorname{Fin}\left(4862\right),\; \forall g \in \operatorname{Fin}\left(8\right),\; \left(\operatorname{mate}\left(\operatorname{val}\left(\operatorname{diagram}\left(i\right)\right), \operatorname{Pair}\left(False, \operatorname{val}\left(g\right)\right)\right) = \operatorname{Pair}\left(False, \operatorname{Add}\left(\operatorname{val}\left(g\right), 1\right)\right) \Leftrightarrow \operatorname{val}\left(\operatorname{transition}\left(g, i\right)\right) = 4862\right) \land \left(\forall ht \in \operatorname{Less}\left(\operatorname{val}\left(\operatorname{transition}\left(g, i\right)\right), 4862\right),\; \forall x \in \operatorname{Boundary}\left(9\right),\; \operatorname{mate}\left(\operatorname{val}\left(\operatorname{diagram}\left(\operatorname{CastFin}\left(\operatorname{transition}\left(g, i\right), ht\right)\right)\right), x\right) = \operatorname{reconnected}\left(\operatorname{val}\left(g\right), IndexBound, \operatorname{val}\left(\operatorname{diagram}\left(i\right)\right), x\right)\right)$$
+$$\forall (i: \operatorname{Fin}\left(4862\right)), (\forall (g: \operatorname{Fin}\left(8\right)), (((\operatorname{Matching}.\operatorname{mate}\left(\operatorname{Subtype}.\operatorname{val}\left(\operatorname{diagram}\left(i\right)\right), \operatorname{Prod}.\operatorname{mk}\left(\operatorname{false}, \operatorname{Fin}.\operatorname{mk}\left(\operatorname{Fin}.\operatorname{val}\left(g\right), \operatorname{by} \operatorname{omega}\right)\right)\right) = \operatorname{Prod}.\operatorname{mk}\left(\operatorname{false}, \operatorname{Fin}.\operatorname{mk}\left((\operatorname{Fin}.\operatorname{val}\left(g\right)) + (1), \operatorname{by} \operatorname{omega}\right)\right)) \Leftrightarrow (\operatorname{Fin}.\operatorname{val}\left(\operatorname{transition}\left(g, i\right)\right) = 4862)) \land (\forall (ht: \operatorname{Fin}.\operatorname{val}\left(\operatorname{transition}\left(g, i\right)\right) < 4862), (\forall (x: \operatorname{Boundary}\left(9\right)), (\operatorname{Matching}.\operatorname{mate}\left(\operatorname{Subtype}.\operatorname{val}\left(\operatorname{diagram}\left(\operatorname{Fin}.\operatorname{mk}\left(\operatorname{Fin}.\operatorname{val}\left(\operatorname{transition}\left(g, i\right)\right), ht\right)\right)\right), x\right) = \operatorname{reconnected}\left(\operatorname{Fin}.\operatorname{val}\left(g\right), \operatorname{by} \operatorname{omega}, \operatorname{Subtype}.\operatorname{val}\left(\operatorname{diagram}\left(i\right)\right), x\right))))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/VertexModels/PonciniRasmussenNineDiagrams.transition_check` (`✓ std3`). ∎
 
@@ -40,11 +40,11 @@ $$\forall i \in \operatorname{Fin}\left(4862\right),\; \forall g \in \operatorna
 
 *Commentary.*
 
-The two generator ports are paired precisely for a zero transition. Each nonzero target has exactly the reconnected partner function.
+The target is constructed in Fin 4862 using ht. The source port indices lie in Fin 9 because g lies in Fin 8.
 
 **Theorem 1.4 (unit_check).**
 
-$$\forall x \in \operatorname{Boundary}\left(9\right),\; \operatorname{mate}\left(\operatorname{val}\left(\operatorname{diagram}\left(4861\right)\right), x\right) = \operatorname{mate}\left(\operatorname{identityMatching}\left(9\right), x\right)$$
+$$\forall (x: \operatorname{Boundary}\left(9\right)), (\operatorname{Matching}.\operatorname{mate}\left(\operatorname{Subtype}.\operatorname{val}\left(\operatorname{diagram}\left(\operatorname{Fin}.\operatorname{mk}\left(4861, \operatorname{by} \operatorname{omega}\right)\right)\right), x\right) = \operatorname{Matching}.\operatorname{mate}\left(\operatorname{identityMatching}\left(9\right), x\right))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/VertexModels/PonciniRasmussenNineDiagrams.unit_check` (`✓ std3`). ∎
 
@@ -52,7 +52,7 @@ $$\forall x \in \operatorname{Boundary}\left(9\right),\; \operatorname{mate}\lef
 
 *Commentary.*
 
-The last coordinate is the actual through-strand identity matching.
+Coordinate 4861 has the mate function of the identity matching.
 
 ## References
 

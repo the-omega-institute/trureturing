@@ -4,11 +4,11 @@
 
 Planar path sewing
 
-NCMatching is a fixed-point-free involutive permutation of a finite cyclic boundary without interleaving chords. BoundaryEquiv lists the top ports from left to right and then the bottom ports from right to left. Finite tagged matching networks are contracted by explicit maps. The adjacent seam relation is equality or one original matching edge or the new seam, closed under equivalence. Repeated adjacent seam elimination gives exactly the path-defined rectangle composite.
+NCMatching is a fixed-point-free involutive permutation without interleaving chords. The circular rectangle order goes left to right along the top and right to left along the bottom. Adjacent seam elimination preserves noncrossing and gives the path-defined rectangle composite.
 
 **Definition 1.1 (capStep).**
 
-$$\forall m \in Nat,\; \forall M \in \operatorname{NCMatching}\left(\operatorname{Add}\left(m, 2\right)\right),\; \forall j \in \operatorname{Fin}\left(\operatorname{Add}\left(m, 1\right)\right),\; \forall x \in \operatorname{Fin}\left(\operatorname{Add}\left(m, 2\right)\right),\; \forall y \in \operatorname{Fin}\left(\operatorname{Add}\left(m, 2\right)\right),\; \operatorname{capStep}\left(M, j, x, y\right) \Leftrightarrow \left(y = \operatorname{partner}\left(M, x\right) \lor \left(x = \operatorname{castSucc}\left(j\right) \land y = \operatorname{succ}\left(j\right)\right)\right)$$
+$$\forall (m: \operatorname{Nat}), (\forall (M: \operatorname{CupCapBridgeProposal}.\operatorname{NCMatching}\left((m) + (2)\right)), (\forall (j: \operatorname{Fin}\left((m) + (1)\right)), (\forall (x: \operatorname{Fin}\left((m) + (2)\right)), (\forall (y: \operatorname{Fin}\left((m) + (2)\right)), (\operatorname{capStep}\left(M, j, x, y\right) = \left((y = \operatorname{CupCapBridgeProposal}.\operatorname{NCMatching}.\operatorname{partner}\left(M, x\right)) \lor ((x = \operatorname{Fin}.\operatorname{castSucc}\left(j\right)) \land (y = \operatorname{Fin}.\operatorname{succ}\left(j\right)))\right))))))$$
 
 *Formalization.* `D5/S3/Combinatorics/PerfectMatchings/PlanarSewing.capStep` (`✓ std3`).
 
@@ -16,11 +16,11 @@ $$\forall m \in Nat,\; \forall M \in \operatorname{NCMatching}\left(\operatornam
 
 *Commentary.*
 
-The relation contains each original matching edge and one adjacent seam.
+The relation is an original matching edge or the oriented adjacent seam.
 
 **Theorem 1.2 (capSurgery_component_iff).**
 
-$$\forall m \in Nat,\; \forall M \in \operatorname{NCMatching}\left(\operatorname{Add}\left(m, 2\right)\right),\; \forall j \in \operatorname{Fin}\left(\operatorname{Add}\left(m, 1\right)\right),\; \forall x \in \operatorname{Fin}\left(m\right),\; \forall y \in \operatorname{Fin}\left(m\right),\; \operatorname{EqvGen}\left(\operatorname{capStep}\left(M, j\right), \operatorname{skipPair}\left(j, x\right), \operatorname{skipPair}\left(j, y\right)\right) \Leftrightarrow \left(y = x \lor y = \operatorname{partner}\left(\operatorname{capSurgery}\left(M, j\right), x\right)\right)$$
+$$\forall (m: \operatorname{Nat}), (\forall (M: \operatorname{CupCapBridgeProposal}.\operatorname{NCMatching}\left((m) + (2)\right)), (\forall (j: \operatorname{Fin}\left((m) + (1)\right)), (\forall (x: \operatorname{Fin}\left(m\right)), (\forall (y: \operatorname{Fin}\left(m\right)), ((\operatorname{Relation}.\operatorname{EqvGen}\left(\operatorname{capStep}\left(M, j\right), \operatorname{skipPair}\left(j, x\right), \operatorname{skipPair}\left(j, y\right)\right)) \Leftrightarrow ((y = x) \lor (y = \operatorname{CupCapBridgeProposal}.\operatorname{NCMatching}.\operatorname{partner}\left(\operatorname{capSurgery}\left(M, j\right), x\right))))))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/PerfectMatchings/PlanarSewing.capSurgery_component_iff` (`✓ std3`). ∎
 
@@ -28,11 +28,11 @@ $$\forall m \in Nat,\; \forall M \in \operatorname{NCMatching}\left(\operatornam
 
 *Commentary.*
 
-The survivor relation records precisely the reconnection after consuming adjacent ports, including an already paired input.
+The surviving relation is precisely equality or the mate relation after cap surgery.
 
 **Definition 1.3 (boundaryEquiv).**
 
-$$\forall n \in Nat,\; \operatorname{boundaryEquiv}\left(n\right) = \operatorname{ComposeEquiv}\left(\operatorname{boolProdEquivSum}\left(\operatorname{Fin}\left(n\right)\right), \operatorname{ComposeEquiv}\left(\operatorname{sumCongr}\left(Identity, Reverse\right), finSumFinEquiv\right)\right)$$
+$$\forall (n: \operatorname{Nat}), (\operatorname{boundaryEquiv}\left(n\right) = \operatorname{Equiv}.\operatorname{trans}\left(\operatorname{Equiv}.\operatorname{boolProdEquivSum}\left(\operatorname{Fin}\left(n\right)\right), \operatorname{Equiv}.\operatorname{trans}\left(\operatorname{Equiv}.\operatorname{sumCongr}\left(\operatorname{Equiv}.\operatorname{refl}\left(\operatorname{Fin}\left(n\right)\right), (\operatorname{Fin}.\operatorname{revPerm}: \operatorname{Equiv}.\operatorname{Perm}\left(\operatorname{Fin}\left(n\right)\right))\right), \operatorname{Equiv}.\operatorname{trans}\left(\operatorname{finSumFinEquiv}, \operatorname{finCongr}\left(\operatorname{by} \operatorname{omega}\right)\right)\right)\right))$$
 
 *Formalization.* `D5/S3/Combinatorics/PerfectMatchings/PlanarSewing.boundaryEquiv` (`✓ std3`).
 
@@ -40,11 +40,11 @@ $$\forall n \in Nat,\; \operatorname{boundaryEquiv}\left(n\right) = \operatornam
 
 *Commentary.*
 
-The final Fin congruence identifies n+n with 2*n. Top(b,i) has value i; bottom(b,i) has value n+(n-1-i).
+The last congruence identifies n+n with 2*n. Equiv.toFun sends a top port to i and a bottom port to n+(n-1-i).
 
 **Definition 1.4 (toMatching).**
 
-$$\forall n \in Nat,\; \forall M \in \operatorname{NCMatching}\left(\operatorname{Twice}\left(n\right)\right),\; \operatorname{toMatching}\left(M\right) = \operatorname{MatchingFromInvolution}\left(\operatorname{Conjugate}\left(\operatorname{Inverse}\left(\operatorname{boundaryEquiv}\left(n\right)\right), \operatorname{partner}\left(M\right), \operatorname{boundaryEquiv}\left(n\right)\right)\right)$$
+$$\forall (n: \operatorname{Nat}), (\forall (M: \operatorname{CupCapBridgeProposal}.\operatorname{NCMatching}\left((2) \cdot (n)\right)), (\operatorname{Matching}.\operatorname{mate}\left(\operatorname{toMatching}\left(M\right)\right) = ((x: \operatorname{Boundary}\left(n\right)) \mapsto \operatorname{Equiv}.\operatorname{toFun}\left(\operatorname{Equiv}.\operatorname{symm}\left(\operatorname{boundaryEquiv}\left(n\right)\right), \operatorname{CupCapBridgeProposal}.\operatorname{NCMatching}.\operatorname{partner}\left(M, \operatorname{Equiv}.\operatorname{toFun}\left(\operatorname{boundaryEquiv}\left(n\right), x\right)\right)\right))))$$
 
 *Formalization.* `D5/S3/Combinatorics/PerfectMatchings/PlanarSewing.toMatching` (`✓ std3`).
 
@@ -52,11 +52,11 @@ $$\forall n \in Nat,\; \forall M \in \operatorname{NCMatching}\left(\operatornam
 
 *Commentary.*
 
-The conjugation is on the actual endpoints; it forgets only the noncrossing proof.
+This is the literal mate field. Its involution and fixed-point-free proof fields follow from M.involutive and M.noFixed under the displayed equivalence. Matching records with equal mate fields are equal.
 
 **Theorem 1.5 (composite_planar).**
 
-$$\forall n \in Nat,\; \forall M \in \operatorname{NCMatching}\left(\operatorname{Twice}\left(n\right)\right),\; \forall P \in \operatorname{NCMatching}\left(\operatorname{Twice}\left(n\right)\right),\; \exists Q \in \operatorname{NCMatching}\left(\operatorname{Twice}\left(n\right)\right),\; \operatorname{toMatching}\left(Q\right) = \operatorname{composite}\left(\operatorname{toMatching}\left(M\right), \operatorname{toMatching}\left(P\right)\right)$$
+$$\forall (n: \operatorname{Nat}), (\forall (M: \operatorname{CupCapBridgeProposal}.\operatorname{NCMatching}\left((2) \cdot (n)\right)), (\forall (N: \operatorname{CupCapBridgeProposal}.\operatorname{NCMatching}\left((2) \cdot (n)\right)), (\exists (Q: \operatorname{CupCapBridgeProposal}.\operatorname{NCMatching}\left((2) \cdot (n)\right)), (\operatorname{toMatching}\left(Q\right) = \operatorname{composite}\left(\operatorname{toMatching}\left(M\right), \operatorname{toMatching}\left(N\right)\right)))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/PerfectMatchings/PlanarSewing.composite_planar` (`✓ std3`). ∎
 
@@ -64,11 +64,11 @@ $$\forall n \in Nat,\; \forall M \in \operatorname{NCMatching}\left(\operatornam
 
 *Commentary.*
 
-The contraction identifies both endpoint components with the actual composite. Noncrossing closure holds for all products, with any number of internal loops.
+Path composition of two planar matchings is planar, including products with internal loops.
 
 **Theorem 1.6 (identity_planar).**
 
-$$\forall n \in Nat,\; \exists Q \in \operatorname{NCMatching}\left(\operatorname{Twice}\left(n\right)\right),\; \operatorname{toMatching}\left(Q\right) = \operatorname{identityMatching}\left(n\right)$$
+$$\forall (n: \operatorname{Nat}), (\exists (Q: \operatorname{CupCapBridgeProposal}.\operatorname{NCMatching}\left((2) \cdot (n)\right)), (\operatorname{toMatching}\left(Q\right) = \operatorname{identityMatching}\left(n\right)))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/PerfectMatchings/PlanarSewing.identity_planar` (`✓ std3`). ∎
 
@@ -76,11 +76,11 @@ $$\forall n \in Nat,\; \exists Q \in \operatorname{NCMatching}\left(\operatornam
 
 *Commentary.*
 
-Reverse pairing on the cyclic boundary is the rectangle identity.
+Reversal of the circular boundary gives the rectangle identity.
 
 **Definition 1.7 (capReconnection).**
 
-$$\forall m \in Nat,\; \forall M \in \operatorname{NCMatching}\left(\operatorname{Add}\left(m, 2\right)\right),\; \forall j \in \operatorname{Fin}\left(\operatorname{Add}\left(m, 1\right)\right),\; \operatorname{capReconnection}\left(M, j\right) = \operatorname{NCMatchingFromPartner}\left(\operatorname{capConjugate}\left(M, j\right)\right)$$
+$$\forall (m: \operatorname{Nat}), (\forall (M: \operatorname{CupCapBridgeProposal}.\operatorname{NCMatching}\left((m) + (2)\right)), (\forall (j: \operatorname{Fin}\left((m) + (1)\right)), (\operatorname{CupCapBridgeProposal}.\operatorname{NCMatching}.\operatorname{partner}\left(\operatorname{capReconnection}\left(M, j\right)\right) = \operatorname{capConjugate}\left(M, j\right))))$$
 
 *Formalization.* `D5/S3/Combinatorics/PerfectMatchings/PlanarSewing.capReconnection` (`✓ std3`).
 
@@ -88,11 +88,11 @@ $$\forall m \in Nat,\; \forall M \in \operatorname{NCMatching}\left(\operatornam
 
 *Commentary.*
 
-CapConjugate is the conjugation swap(succ(j),partner(castSucc(j))) composed with partner and the same swap. Its partner is an involution without fixed points, and the adjacent reconnection preserves noncrossing.
+This is the literal partner field. The involutive and noFixed fields are capConjugate_involutive M j and capConjugate_noFixed M j. Adjacent reconnection supplies noncrossing; the proof fields do not change the partner permutation.
 
 **Theorem 1.8 (cupcap_planar).**
 
-$$\forall n \in Nat,\; \forall j \in Nat,\; \operatorname{Less}\left(\operatorname{Add}\left(j, 1\right), n\right) \Rightarrow \left(\exists Q \in \operatorname{NCMatching}\left(\operatorname{Twice}\left(n\right)\right),\; \operatorname{toMatching}\left(Q\right) = \operatorname{cupcapMatching}\left(j\right)\right)$$
+$$\forall (n: \operatorname{Nat}), (\forall (j: \operatorname{Nat}), (\forall (hj: (j) + (1) < n), (\exists (Q: \operatorname{CupCapBridgeProposal}.\operatorname{NCMatching}\left((2) \cdot (n)\right)), (\operatorname{toMatching}\left(Q\right) = \operatorname{cupcapMatching}\left(j, hj\right)))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/PerfectMatchings/PlanarSewing.cupcap_planar` (`✓ std3`). ∎
 
@@ -100,7 +100,7 @@ $$\forall n \in Nat,\; \forall j \in Nat,\; \operatorname{Less}\left(\operatorna
 
 *Commentary.*
 
-The cup-cap matching pairs j,j+1 on each side and sends every other port straight through. It is the adjacent reconnection of the identity.
+The standard adjacent cup-cap has a noncrossing representative.
 
 ## References
 

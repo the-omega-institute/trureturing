@@ -4,11 +4,11 @@
 
 Loop-zero matching monoid
 
-None is the absorbing zero; some(d) is a literal fixed-point-free boundary involution. Multiplication is some(composite(d,e)) when the internal loop count is zero and is none otherwise. The unit is the identity through-strand matching. These definitions include zero strands.
+Option.none is an absorbing zero. Option.some d retains the literal boundary matching d. The product follows the sewn paths when there is no internal loop, and is zero when a loop occurs. These definitions include zero strands.
 
 **Definition 1.1 (ZeroMatching).**
 
-$$\forall n \in Nat,\; \operatorname{ZeroMatching}\left(n\right) = \operatorname{Option}\left(\operatorname{Matching}\left(\operatorname{Boundary}\left(n\right)\right)\right)$$
+$$\forall (N: \operatorname{Nat}), (\operatorname{ZeroMatching}\left(N\right) = \operatorname{Option}\left(\operatorname{Matching}\left(\operatorname{Boundary}\left(N\right)\right)\right))$$
 
 *Formalization.* `D5/S3/Topology/BrauerZeroMonoid.ZeroMatching` (`✓ std3`).
 
@@ -16,11 +16,11 @@ $$\forall n \in Nat,\; \operatorname{ZeroMatching}\left(n\right) = \operatorname
 
 *Commentary.*
 
-The carrier adjoins one absorbing zero to all matchings.
+The carrier adjoins a single zero to the set of matchings.
 
 **Definition 1.2 (zeroMatchingMonoid).**
 
-$$\forall n \in Nat,\; \operatorname{zeroMatchingMonoid}\left(n\right) = \operatorname{MonoidWithZeroStructure}\left(\operatorname{ZeroMatching}\left(n\right), \operatorname{LoopZeroProduct}\left(n\right), \operatorname{Some}\left(\operatorname{identityMatching}\left(n\right)\right), None\right)$$
+$$\forall (N: \operatorname{Nat}), ((((1: \operatorname{ZeroMatching}\left(N\right)) = \operatorname{Option}.\operatorname{some}\left(\operatorname{identityMatching}\left(N\right)\right)) \land ((0: \operatorname{ZeroMatching}\left(N\right)) = \operatorname{Option}.\operatorname{none})) \land (\forall (a: \operatorname{ZeroMatching}\left(N\right)), (\forall (b: \operatorname{ZeroMatching}\left(N\right)), (((a) \cdot (b) = \operatorname{multiply}\left(a, b\right)) \land (\operatorname{multiply}\left(a, b\right) = \operatorname{Option}.\operatorname{casesOn}\left(a, \operatorname{Option}.\operatorname{none}, ((d: \operatorname{Matching}\left(\operatorname{Boundary}\left(N\right)\right)) \mapsto \operatorname{Option}.\operatorname{casesOn}\left(b, \operatorname{Option}.\operatorname{none}, ((e: \operatorname{Matching}\left(\operatorname{Boundary}\left(N\right)\right)) \mapsto \operatorname{ite}\left(\operatorname{internalLoopCount}\left(d, e\right) = 0, \operatorname{Option}.\operatorname{some}\left(\operatorname{composite}\left(d, e\right)\right), \operatorname{Option}.\operatorname{none}\right))\right))\right))))))$$
 
 *Formalization.* `D5/S3/Topology/BrauerZeroMonoid.zeroMatchingMonoid` (`✓ std3`).
 
@@ -28,11 +28,11 @@ $$\forall n \in Nat,\; \operatorname{zeroMatchingMonoid}\left(n\right) = \operat
 
 *Commentary.*
 
-The product has the displayed loop test. Pairing associativity and the loop cocycle prove associativity; the identity creates no internal loops.
+These are the literal one, zero and mul fields of zeroMatchingMonoid. Its associativity field is multiply_assoc; the unit laws use composite_left_identity, composite_right_identity and the corresponding zero loop counts. Option.casesOn expands the literal private multiply pattern match. The zero_mul and mul_zero fields are multiply_none_left and multiply_none_right.
 
 **Theorem 1.3 (some_mul_some).**
 
-$$\forall N \in Nat,\; \forall d \in \operatorname{Matching}\left(\operatorname{Boundary}\left(N\right)\right),\; \forall e \in \operatorname{Matching}\left(\operatorname{Boundary}\left(N\right)\right),\; \operatorname{Multiply}\left(\operatorname{Some}\left(d\right), \operatorname{Some}\left(e\right)\right) = \operatorname{If}\left(\operatorname{internalLoopCount}\left(d, e\right) = 0, \operatorname{Some}\left(\operatorname{composite}\left(d, e\right)\right), None\right)$$
+$$\forall (N: \operatorname{Nat}), (\forall (d: \operatorname{Matching}\left(\operatorname{Boundary}\left(N\right)\right)), (\forall (e: \operatorname{Matching}\left(\operatorname{Boundary}\left(N\right)\right)), (((\operatorname{Option}.\operatorname{some}\left(d\right): \operatorname{ZeroMatching}\left(N\right))) \cdot (\operatorname{Option}.\operatorname{some}\left(e\right)) = \operatorname{ite}\left(\operatorname{internalLoopCount}\left(d, e\right) = 0, \operatorname{Option}.\operatorname{some}\left(\operatorname{composite}\left(d, e\right)\right), \operatorname{Option}.\operatorname{none}\right))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Topology/BrauerZeroMonoid.some_mul_some` (`✓ std3`). ∎
 
@@ -40,7 +40,7 @@ $$\forall N \in Nat,\; \forall d \in \operatorname{Matching}\left(\operatorname{
 
 *Commentary.*
 
-The displayed product is the MonoidWithZero multiplication, not an additional operation.
+This is the multiplication of zeroMatchingMonoid.
 
 ## References
 

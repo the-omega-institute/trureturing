@@ -4,11 +4,11 @@
 
 Integer Horner recurrence 11
 
-The coefficient list and private integer vectors are fixed in the data module. Every displayed step is equality of functions on Fin(8192), checked with kernel reduction.
+The state function and coefficient list are fixed integer data. Each equality uses the literal sparseHamiltonian callback and the Boolean comparison of Fin.val with the identity coordinate 4861.
 
 **Theorem 1.1 (step44).**
 
-$$\forall i \in \operatorname{Fin}\left(8192\right),\; \operatorname{Add}\left(\operatorname{sparseHamiltonian}\left(\operatorname{state}\left(44\right), i\right), \operatorname{If}\left(\operatorname{val}\left(i\right) = 4861, 74962166731413102, 0\right)\right) = \operatorname{state}\left(45, i\right)$$
+$$((i: \operatorname{Fin}\left(8192\right)) \mapsto (\operatorname{sparseHamiltonian}\left(\operatorname{state}\left(44\right), i\right)) + (\operatorname{ite}\left(\operatorname{BEq}.\operatorname{beq}\left(\operatorname{Fin}.\operatorname{val}\left(i\right), 4861\right), 74962166731413102, 0\right))) = \operatorname{state}\left(45\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/VertexModels/PonciniRasmussenNineHornerPart11.step44` (`✓ std3`). ∎
 
@@ -16,11 +16,11 @@ $$\forall i \in \operatorname{Fin}\left(8192\right),\; \operatorname{Add}\left(\
 
 *Commentary.*
 
-Function extensionality combines the split kernel-checked integer coordinate equalities.
+This equality holds as a function on Fin 8192.
 
 **Theorem 1.2 (step45).**
 
-$$\forall i \in \operatorname{Fin}\left(8192\right),\; \operatorname{Add}\left(\operatorname{sparseHamiltonian}\left(\operatorname{state}\left(45\right), i\right), \operatorname{If}\left(\operatorname{val}\left(i\right) = 4861, 0, 0\right)\right) = \operatorname{state}\left(46, i\right)$$
+$$((i: \operatorname{Fin}\left(8192\right)) \mapsto (\operatorname{sparseHamiltonian}\left(\operatorname{state}\left(45\right), i\right)) + (\operatorname{ite}\left(\operatorname{BEq}.\operatorname{beq}\left(\operatorname{Fin}.\operatorname{val}\left(i\right), 4861\right), 0, 0\right))) = \operatorname{state}\left(46\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/VertexModels/PonciniRasmussenNineHornerPart11.step45` (`✓ std3`). ∎
 
@@ -28,11 +28,11 @@ $$\forall i \in \operatorname{Fin}\left(8192\right),\; \operatorname{Add}\left(\
 
 *Commentary.*
 
-Function extensionality combines the split kernel-checked integer coordinate equalities.
+This equality holds as a function on Fin 8192.
 
 **Theorem 1.3 (step46).**
 
-$$\forall i \in \operatorname{Fin}\left(8192\right),\; \operatorname{Add}\left(\operatorname{sparseHamiltonian}\left(\operatorname{state}\left(46\right), i\right), \operatorname{If}\left(\operatorname{val}\left(i\right) = 4861, \operatorname{Negate}\left(24185673946500264\right), 0\right)\right) = \operatorname{state}\left(47, i\right)$$
+$$((i: \operatorname{Fin}\left(8192\right)) \mapsto (\operatorname{sparseHamiltonian}\left(\operatorname{state}\left(46\right), i\right)) + (\operatorname{ite}\left(\operatorname{BEq}.\operatorname{beq}\left(\operatorname{Fin}.\operatorname{val}\left(i\right), 4861\right), -(24185673946500264), 0\right))) = \operatorname{state}\left(47\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/VertexModels/PonciniRasmussenNineHornerPart11.step46` (`✓ std3`). ∎
 
@@ -40,11 +40,11 @@ $$\forall i \in \operatorname{Fin}\left(8192\right),\; \operatorname{Add}\left(\
 
 *Commentary.*
 
-Function extensionality combines the split kernel-checked integer coordinate equalities.
+This equality holds as a function on Fin 8192.
 
 **Theorem 1.4 (step47).**
 
-$$\forall i \in \operatorname{Fin}\left(8192\right),\; \operatorname{Add}\left(\operatorname{sparseHamiltonian}\left(\operatorname{state}\left(47\right), i\right), \operatorname{If}\left(\operatorname{val}\left(i\right) = 4861, 0, 0\right)\right) = \operatorname{state}\left(48, i\right)$$
+$$((i: \operatorname{Fin}\left(8192\right)) \mapsto (\operatorname{sparseHamiltonian}\left(\operatorname{state}\left(47\right), i\right)) + (\operatorname{ite}\left(\operatorname{BEq}.\operatorname{beq}\left(\operatorname{Fin}.\operatorname{val}\left(i\right), 4861\right), 0, 0\right))) = \operatorname{state}\left(48\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/VertexModels/PonciniRasmussenNineHornerPart11.step47` (`✓ std3`). ∎
 
@@ -52,7 +52,7 @@ $$\forall i \in \operatorname{Fin}\left(8192\right),\; \operatorname{Add}\left(\
 
 *Commentary.*
 
-Function extensionality combines the split kernel-checked integer coordinate equalities.
+This equality holds as a function on Fin 8192.
 
 ## References
 

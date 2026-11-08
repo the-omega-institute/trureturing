@@ -4,11 +4,11 @@
 
 Integer Horner recurrence 0
 
-The coefficient list and private integer vectors are fixed in the data module. Every displayed step is equality of functions on Fin(8192), checked with kernel reduction.
+The state function and coefficient list are fixed integer data. Each equality uses the literal sparseHamiltonian callback and the Boolean comparison of Fin.val with the identity coordinate 4861.
 
 **Theorem 1.1 (step0).**
 
-$$\forall i \in \operatorname{Fin}\left(8192\right),\; \operatorname{Add}\left(\operatorname{sparseHamiltonian}\left(\operatorname{state}\left(0\right), i\right), \operatorname{If}\left(\operatorname{val}\left(i\right) = 4861, 1, 0\right)\right) = \operatorname{state}\left(1, i\right)$$
+$$((i: \operatorname{Fin}\left(8192\right)) \mapsto (\operatorname{sparseHamiltonian}\left(\operatorname{state}\left(0\right), i\right)) + (\operatorname{ite}\left(\operatorname{BEq}.\operatorname{beq}\left(\operatorname{Fin}.\operatorname{val}\left(i\right), 4861\right), 1, 0\right))) = \operatorname{state}\left(1\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/VertexModels/PonciniRasmussenNineHornerPart00.step0` (`✓ std3`). ∎
 
@@ -16,11 +16,11 @@ $$\forall i \in \operatorname{Fin}\left(8192\right),\; \operatorname{Add}\left(\
 
 *Commentary.*
 
-Function extensionality combines the split kernel-checked integer coordinate equalities.
+This equality holds as a function on Fin 8192.
 
 **Theorem 1.2 (step1).**
 
-$$\forall i \in \operatorname{Fin}\left(8192\right),\; \operatorname{Add}\left(\operatorname{sparseHamiltonian}\left(\operatorname{state}\left(1\right), i\right), \operatorname{If}\left(\operatorname{val}\left(i\right) = 4861, 0, 0\right)\right) = \operatorname{state}\left(2, i\right)$$
+$$((i: \operatorname{Fin}\left(8192\right)) \mapsto (\operatorname{sparseHamiltonian}\left(\operatorname{state}\left(1\right), i\right)) + (\operatorname{ite}\left(\operatorname{BEq}.\operatorname{beq}\left(\operatorname{Fin}.\operatorname{val}\left(i\right), 4861\right), 0, 0\right))) = \operatorname{state}\left(2\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/VertexModels/PonciniRasmussenNineHornerPart00.step1` (`✓ std3`). ∎
 
@@ -28,11 +28,11 @@ $$\forall i \in \operatorname{Fin}\left(8192\right),\; \operatorname{Add}\left(\
 
 *Commentary.*
 
-Function extensionality combines the split kernel-checked integer coordinate equalities.
+This equality holds as a function on Fin 8192.
 
 **Theorem 1.3 (step2).**
 
-$$\forall i \in \operatorname{Fin}\left(8192\right),\; \operatorname{Add}\left(\operatorname{sparseHamiltonian}\left(\operatorname{state}\left(2\right), i\right), \operatorname{If}\left(\operatorname{val}\left(i\right) = 4861, \operatorname{Negate}\left(163\right), 0\right)\right) = \operatorname{state}\left(3, i\right)$$
+$$((i: \operatorname{Fin}\left(8192\right)) \mapsto (\operatorname{sparseHamiltonian}\left(\operatorname{state}\left(2\right), i\right)) + (\operatorname{ite}\left(\operatorname{BEq}.\operatorname{beq}\left(\operatorname{Fin}.\operatorname{val}\left(i\right), 4861\right), -(163), 0\right))) = \operatorname{state}\left(3\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/VertexModels/PonciniRasmussenNineHornerPart00.step2` (`✓ std3`). ∎
 
@@ -40,11 +40,11 @@ $$\forall i \in \operatorname{Fin}\left(8192\right),\; \operatorname{Add}\left(\
 
 *Commentary.*
 
-Function extensionality combines the split kernel-checked integer coordinate equalities.
+This equality holds as a function on Fin 8192.
 
 **Theorem 1.4 (step3).**
 
-$$\forall i \in \operatorname{Fin}\left(8192\right),\; \operatorname{Add}\left(\operatorname{sparseHamiltonian}\left(\operatorname{state}\left(3\right), i\right), \operatorname{If}\left(\operatorname{val}\left(i\right) = 4861, 0, 0\right)\right) = \operatorname{state}\left(4, i\right)$$
+$$((i: \operatorname{Fin}\left(8192\right)) \mapsto (\operatorname{sparseHamiltonian}\left(\operatorname{state}\left(3\right), i\right)) + (\operatorname{ite}\left(\operatorname{BEq}.\operatorname{beq}\left(\operatorname{Fin}.\operatorname{val}\left(i\right), 4861\right), 0, 0\right))) = \operatorname{state}\left(4\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/VertexModels/PonciniRasmussenNineHornerPart00.step3` (`✓ std3`). ∎
 
@@ -52,7 +52,7 @@ $$\forall i \in \operatorname{Fin}\left(8192\right),\; \operatorname{Add}\left(\
 
 *Commentary.*
 
-Function extensionality combines the split kernel-checked integer coordinate equalities.
+This equality holds as a function on Fin 8192.
 
 ## References
 

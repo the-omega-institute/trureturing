@@ -4,35 +4,35 @@
 
 The literal planar diagram algebra
 
-A commutative coefficient ring R is arbitrary. Diagram(n) contains all boundary matchings admitting an NCMatching representative, without identifying distinct pairings. TL(R,n) is the free R-module on that set. The MonoidAlgebra wrapper supplies only coefficients and additive structure: no multiplication is installed on Diagram(n). The multiplication here is the bilinear extension of the loop-zero product. It is associative by the actual matching loop cocycle. The coefficient rings Z and C use the same construction. Fin(n-1) is empty at n=0 and n=1.
+The coefficient ring R is commutative. Diagram n contains the literal boundary matchings with a noncrossing representative; there is no quotient on pairings. TL(R,n) is the free coefficient module on this set. Its multiplication is the bilinear extension of path concatenation, with every internal loop assigned zero.
 
 **Definition 1.1 (Diagram).**
 
-$$\forall n \in Nat,\; \operatorname{Diagram}\left(n\right) = \operatorname{Subtype}\left(\operatorname{Matching}\left(\operatorname{Boundary}\left(n\right)\right), \operatorname{HasNoncrossingRepresentative}\left(n\right)\right)$$
+$$\forall (n: \operatorname{Nat}), (\operatorname{Diagram}\left(n\right) = \operatorname{Subtype}\left(((d: \operatorname{Matching}\left(\operatorname{Boundary}\left(n\right)\right)) \mapsto \exists (M: \operatorname{CupCapBridgeProposal}.\operatorname{NCMatching}\left((2) \cdot (n)\right)), (\operatorname{toMatching}\left(M\right) = d))\right))$$
 
 *Formalization.* `D5/S3/Combinatorics/PerfectMatchings/PlanarDiagramAlgebra.Diagram` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* Xavier Poncini and Jørgen Rasmussen (2023). *Integrability of planar-algebraic models*. DOI: [10.1088/1742-5468/acdce7](https://doi.org/10.1088/1742-5468/acdce7). URL: <https://arxiv.org/abs/2206.14462v2>.
 
 *Commentary.*
 
-HasNoncrossingRepresentative(d) means that there exists M:NCMatching(2*n) with toMatching(M)=d.
+This is the full zero-fugacity Temperley-Lieb diagram basis.
 
 **Definition 1.2 (TL).**
 
-$$\forall R \in Type,\; [\operatorname{CommRing}\left(R\right)] \forall n \in Nat,\; \operatorname{TL}\left(R, n\right) = \operatorname{MonoidAlgebra}\left(R, \operatorname{Diagram}\left(n\right)\right)$$
+$$\forall (R: \operatorname{Type}), ([\operatorname{CommRing}\left(R\right)] \forall (n: \operatorname{Nat}), (\operatorname{TL}\left(R, n\right) = \operatorname{MonoidAlgebra}\left(R, \operatorname{Diagram}\left(n\right)\right)))$$
 
 *Formalization.* `D5/S3/Combinatorics/PerfectMatchings/PlanarDiagramAlgebra.TL` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* Xavier Poncini and Jørgen Rasmussen (2023). *Integrability of planar-algebraic models*. DOI: [10.1088/1742-5468/acdce7](https://doi.org/10.1088/1742-5468/acdce7). URL: <https://arxiv.org/abs/2206.14462v2>.
 
 *Commentary.*
 
-The carrier is exactly the finite-support coefficient functions on all diagrams, in a one-field wrapper.
+MonoidAlgebra supplies the finite-support coefficient carrier. No multiplication is assumed on Diagram n.
 
 **Definition 1.3 (additiveWithOne).**
 
-$$\forall R \in Type,\; [\operatorname{CommRing}\left(R\right)] \forall n \in Nat,\; \operatorname{additiveWithOne}\left(R, n\right) = \operatorname{AdditiveGroupWithUnit}\left(\operatorname{FiniteSupportAddition}\left(\operatorname{Diagram}\left(n\right), R\right), \operatorname{single}\left(\operatorname{IdentityDiagram}\left(n\right), 1\right)\right)$$
+$$\forall (R: \operatorname{Type}), ([\operatorname{CommRing}\left(R\right)] \forall (n: \operatorname{Nat}), (\operatorname{additiveWithOne}\left(R, n\right) = \{ \operatorname{toAddCommGroup} := (\operatorname{inferInstance}: \operatorname{AddCommGroup}\left(\operatorname{TL}\left(R, n\right)\right)), \operatorname{one} := \operatorname{MonoidAlgebra}.\operatorname{single}\left(\operatorname{identity}\left(n\right), 1\right) \}))$$
 
 *Formalization.* `D5/S3/Combinatorics/PerfectMatchings/PlanarDiagramAlgebra.additiveWithOne` (`✓ std3`).
 
@@ -40,11 +40,11 @@ $$\forall R \in Type,\; [\operatorname{CommRing}\left(R\right)] \forall n \in Na
 
 *Commentary.*
 
-Addition and negation are coefficientwise, and the unit is the single identity diagram with coefficient one. Natural and integer casts are the canonical additive casts.
+The existing additive commutative group is extended by the single identity diagram with coefficient one. Here identity n is Subtype.mk (identityMatching n) (identity_planar n).
 
 **Definition 1.4 (ring).**
 
-$$\forall R \in Type,\; [\operatorname{CommRing}\left(R\right)] \forall n \in Nat,\; \operatorname{ring}\left(R, n\right) = \operatorname{RingStructure}\left(\operatorname{TL}\left(R, n\right), \operatorname{BilinearExtension}\left(\operatorname{LoopZeroProduct}\left(n\right)\right), \operatorname{single}\left(\operatorname{IdentityDiagram}\left(n\right), 1\right)\right)$$
+$$\forall (R: \operatorname{Type}), ([\operatorname{CommRing}\left(R\right)] \forall (n: \operatorname{Nat}), (\operatorname{ring}\left(R, n\right) = \{ \operatorname{toAddCommGroup} := \operatorname{AddCommGroupWithOne}.\operatorname{toAddCommGroup}\left(\operatorname{additiveWithOne}\right), \operatorname{toAddGroupWithOne} := \operatorname{AddCommGroupWithOne}.\operatorname{toAddGroupWithOne}\left(\operatorname{additiveWithOne}\right), \operatorname{mul_{assoc}} := \operatorname{mul_{assoc}}', \operatorname{one_{mul}} := \operatorname{one_{mul}}', \operatorname{mul_{one}} := \operatorname{mul_{one}}', \operatorname{left_{distrib}} := \operatorname{mul_{add}}', \operatorname{right_{distrib}} := \operatorname{add_{mul}}', \operatorname{zero_{mul}} := \operatorname{zero_{mul}}', \operatorname{mul_{zero}} := \operatorname{mul_{zero}}' \}))$$
 
 *Formalization.* `D5/S3/Combinatorics/PerfectMatchings/PlanarDiagramAlgebra.ring` (`✓ std3`).
 
@@ -52,11 +52,11 @@ $$\forall R \in Type,\; [\operatorname{CommRing}\left(R\right)] \forall n \in Na
 
 *Commentary.*
 
-The additive structure is unchanged. Basis products use composite(d,e) with coefficient zero for any internal loop; the loop cocycle proves their associativity. Linear extension proves the full ring laws.
+The additive projections expand the inherited additiveWithOne entry. The remaining entries are the literal Ring record fields. The existing multiplication is instMulTL; the loop cocycle gives basis associativity and linear extension gives the ring laws.
 
 **Definition 1.5 (algebra).**
 
-$$\forall R \in Type,\; [\operatorname{CommRing}\left(R\right)] \forall n \in Nat,\; \operatorname{algebra}\left(R, n\right) = \operatorname{AlgebraFromModule}\left(\operatorname{TL}\left(R, n\right), \operatorname{CoefficientwiseScalarAction}\left(R\right), \operatorname{algebraMap}\left(R, \operatorname{TL}\left(R, n\right)\right)\right)$$
+$$\forall (R: \operatorname{Type}), ([\operatorname{CommRing}\left(R\right)] \forall (n: \operatorname{Nat}), (\operatorname{algebra}\left(R, n\right) = \operatorname{Algebra}.\operatorname{ofModule}\left(\operatorname{smul_{mul}}', \operatorname{mul_{smul}}'\right)))$$
 
 *Formalization.* `D5/S3/Combinatorics/PerfectMatchings/PlanarDiagramAlgebra.algebra` (`✓ std3`).
 
@@ -64,11 +64,11 @@ $$\forall R \in Type,\; [\operatorname{CommRing}\left(R\right)] \forall n \in Na
 
 *Commentary.*
 
-The algebra map sends r to r times the unit; the existing coefficientwise R-module structure is compatible with multiplication on both sides.
+The two named scalar compatibility proofs define the algebra structure from the existing R-module.
 
 **Theorem 1.6 (single_mul_single).**
 
-$$\forall R \in Type,\; [\operatorname{CommRing}\left(R\right)] \forall n \in Nat,\; \forall a \in \operatorname{Diagram}\left(n\right),\; \forall b \in \operatorname{Diagram}\left(n\right),\; \forall r \in R,\; \forall s \in R,\; \operatorname{Multiply}\left(\operatorname{single}\left(a, r\right), \operatorname{single}\left(b, s\right)\right) = \operatorname{If}\left(\operatorname{internalLoopCount}\left(\operatorname{val}\left(a\right), \operatorname{val}\left(b\right)\right) = 0, \operatorname{single}\left(\operatorname{PlanarComposite}\left(a, b\right), \operatorname{Multiply}\left(r, s\right)\right), 0\right)$$
+$$\forall (R: \operatorname{Type}), ([\operatorname{CommRing}\left(R\right)] \forall (n: \operatorname{Nat}), (\forall (a: \operatorname{Diagram}\left(n\right)), (\forall (b: \operatorname{Diagram}\left(n\right)), (\forall (r: R), (\forall (s: R), (((\operatorname{MonoidAlgebra}.\operatorname{single}\left(a, r\right): \operatorname{TL}\left(R, n\right))) \cdot (\operatorname{MonoidAlgebra}.\operatorname{single}\left(b, s\right)) = \operatorname{ite}\left(\operatorname{internalLoopCount}\left(\operatorname{Subtype}.\operatorname{val}\left(a\right), \operatorname{Subtype}.\operatorname{val}\left(b\right)\right) = 0, \operatorname{MonoidAlgebra}.\operatorname{single}\left(\operatorname{concat}\left(a, b\right), (r) \cdot (s)\right), 0\right)))))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/PerfectMatchings/PlanarDiagramAlgebra.single_mul_single` (`✓ std3`). ∎
 
@@ -76,55 +76,55 @@ $$\forall R \in Type,\; [\operatorname{CommRing}\left(R\right)] \forall n \in Na
 
 *Commentary.*
 
-PlanarComposite carries exactly composite(val(a),val(b)), with planarity supplied by composite_planar. This is the defining vertical concatenation rule for arbitrary coefficients.
+The actual private concat has underlying matching composite (Subtype.val a) (Subtype.val b); composite_planar supplies the subtype proof. No extra operation on diagrams is introduced.
 
 **Definition 1.7 (generator).**
 
-$$\forall R \in Type,\; [\operatorname{CommRing}\left(R\right)] \forall n \in Nat,\; \forall i \in \operatorname{Fin}\left(\operatorname{Subtract}\left(n, 1\right)\right),\; \operatorname{generator}\left(R, n, i\right) = \operatorname{single}\left(\operatorname{PlanarCupcap}\left(n, i\right), 1\right)$$
+$$\forall (R: \operatorname{Type}), ([\operatorname{CommRing}\left(R\right)] \forall (n: \operatorname{Nat}), (\forall (i: \operatorname{Fin}\left(\operatorname{Nat}.\operatorname{sub}\left(n, 1\right)\right)), ((\operatorname{generator}\left(i\right): \operatorname{TL}\left(R, n\right)) = \operatorname{MonoidAlgebra}.\operatorname{single}\left(\operatorname{Subtype}.\operatorname{mk}\left(\operatorname{cupcapMatching}\left(\operatorname{Fin}.\operatorname{val}\left(i\right), \operatorname{by} \operatorname{omega}\right), \operatorname{cupcap_{planar}}\left(n, \operatorname{Fin}.\operatorname{val}\left(i\right), \operatorname{by} \operatorname{omega}\right)\right), 1\right))))$$
 
 *Formalization.* `D5/S3/Combinatorics/PerfectMatchings/PlanarDiagramAlgebra.generator` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* Xavier Poncini and Jørgen Rasmussen (2023). *Integrability of planar-algebraic models*. DOI: [10.1088/1742-5468/acdce7](https://doi.org/10.1088/1742-5468/acdce7). URL: <https://arxiv.org/abs/2206.14462v2>.
 
 *Commentary.*
 
-PlanarCupcap is cupcapMatching at the zero-based index; cupcap_planar provides its noncrossing witness. The printed generator label is i+1.
+The paper labels this cup-cap by Fin.val i+1; Lean uses the zero-based finite index i.
 
 **Definition 1.8 (h).**
 
-$$\forall R \in Type,\; [\operatorname{CommRing}\left(R\right)] \forall n \in Nat,\; \operatorname{h}\left(R, n\right) = \operatorname{Negate}\left(\operatorname{Sum}\left(\operatorname{Fin}\left(\operatorname{Subtract}\left(n, 1\right)\right), \operatorname{generator}\left(R, n\right)\right)\right)$$
+$$\forall (R: \operatorname{Type}), ([\operatorname{CommRing}\left(R\right)] \forall (n: \operatorname{Nat}), (\operatorname{h}\left(R, n\right) = -(\operatorname{Finset}.\operatorname{sum}\left(\operatorname{Finset}.\operatorname{univ}\left(\right), ((i: \operatorname{Fin}\left(\operatorname{Nat}.\operatorname{sub}\left(n, 1\right)\right)) \mapsto (\operatorname{generator}\left(i\right): \operatorname{TL}\left(R, n\right)))\right))))$$
 
 *Formalization.* `D5/S3/Combinatorics/PerfectMatchings/PlanarDiagramAlgebra.h` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* Xavier Poncini and Jørgen Rasmussen (2023). *Integrability of planar-algebraic models*. DOI: [10.1088/1742-5468/acdce7](https://doi.org/10.1088/1742-5468/acdce7). URL: <https://arxiv.org/abs/2206.14462v2>.
 
 *Commentary.*
 
-This is the negative sum of the n-1 standard open-boundary generators.
+Equation (4.69) is the negative sum of the n-1 open-boundary generators. Fin(n-1) is empty for n=0 and n=1.
 
 **Definition 1.9 (instMulTL).**
 
-$$\forall R \in Type,\; [\operatorname{CommRing}\left(R\right)] \forall n \in Nat,\; \forall a \in \operatorname{TL}\left(R, n\right),\; \forall b \in \operatorname{TL}\left(R, n\right),\; \operatorname{Multiply}\left(a, b\right) = \operatorname{bilinear}\left(a, b\right)$$
+$$\forall (R: \operatorname{Type}), ([\operatorname{CommRing}\left(R\right)] \forall (n: \operatorname{Nat}), (\operatorname{instMulTL}\left(R, n\right) = \operatorname{Mul}.\operatorname{mk}\left(((a: \operatorname{TL}\left(R, n\right)) \mapsto ((b: \operatorname{TL}\left(R, n\right)) \mapsto \operatorname{bilinear}\left(a, b\right)))\right)))$$
 
 *Formalization.* `D5/S3/Combinatorics/PerfectMatchings/PlanarDiagramAlgebra.instMulTL` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* Xavier Poncini and Jørgen Rasmussen (2023). *Integrability of planar-algebraic models*. DOI: [10.1088/1742-5468/acdce7](https://doi.org/10.1088/1742-5468/acdce7). URL: <https://arxiv.org/abs/2206.14462v2>.
 
 *Commentary.*
 
-The multiplication field sends (a,b) to bilinear(a)(b). Bilinear is the two successive Finsupp lifts of basisProduct(d,e): one composite basis vector when the internal loop count is zero, and zero otherwise.
+The literal private bilinear is the composition of two Finsupp.lift maps with MonoidAlgebra.coeffLinearEquiv.toLinearMap. Its basisProduct is MonoidAlgebra.single (concat a b) 1 when internalLoopCount a.val b.val=0, and zero otherwise.
 
 **Definition 1.10 (instOneTL).**
 
-$$\forall R \in Type,\; [\operatorname{CommRing}\left(R\right)] \forall n \in Nat,\; \operatorname{One}\left(\operatorname{TL}\left(R, n\right)\right) = \operatorname{single}\left(\operatorname{identity}\left(n\right), 1\right)$$
+$$\forall (R: \operatorname{Type}), ([\operatorname{CommRing}\left(R\right)] \forall (n: \operatorname{Nat}), (\operatorname{instOneTL}\left(R, n\right) = \operatorname{One}.\operatorname{mk}\left(\operatorname{MonoidAlgebra}.\operatorname{single}\left(\operatorname{identity}\left(n\right), 1\right)\right)))$$
 
 *Formalization.* `D5/S3/Combinatorics/PerfectMatchings/PlanarDiagramAlgebra.instOneTL` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* Xavier Poncini and Jørgen Rasmussen (2023). *Integrability of planar-algebraic models*. DOI: [10.1088/1742-5468/acdce7](https://doi.org/10.1088/1742-5468/acdce7). URL: <https://arxiv.org/abs/2206.14462v2>.
 
 *Commentary.*
 
-Identity(n) is identityMatching(n) equipped with the noncrossing witness identity_planar(n).
+The literal private identity is Subtype.mk (identityMatching n) (identity_planar n).
 
 ## References
 
