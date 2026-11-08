@@ -39,28 +39,29 @@ abbrev signature : Signature where
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ _ := Prop
+  Output _ _ := Bool
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def actual : Realization signature :=
-  realize signature (fun _ p l => IsAxisWord p.1 p.2.1 l ∧ l.prod = p.2.2)
+def actual : Realization signature := by
+  classical
+  exact realize signature (fun _ p l => decide (IsAxisWord p.1 p.2.1 l ∧ l.prod = p.2.2))
     (fun e => nomatch e)
 
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ => False) (fun e => nomatch e)
+  realize signature (fun _ _ _ => false) (fun e => nomatch e)
 
 abbrev arena : Arena where
   signature := signature
   Law O := ∀ (a b : Space),
     ⟪a, b⟫_ℝ ^ 2 < ‖a‖ ^ 2 * ‖b‖ ^ 2 →
     ∀ (R : Orthogonal), determinant R = 1 →
-      ∃ l : List Orthogonal, O.readout () (a, b, R) l
+      ∃ l : List Orthogonal, O.readout () (a, b, R) l = true
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   obtain ⟨l, hl⟩ := h firstAxis secondAxis axes_gram 1 (by change LinearMap.det (1 : Space →ₗ[ℝ] Space) = 1; simp)
-  exact hl
+  exact Bool.false_ne_true hl
 
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
@@ -74,22 +75,27 @@ private theorem dependence : ObservationalDependence signature actual := by
     norm_num at hc
   refine ⟨(firstAxis, secondAxis, 1), [], [halfturn], ?_⟩
   intro heq
-  have hnil : actual.readout i (firstAxis, secondAxis, 1) [] :=
-    ⟨by simp [IsAxisWord], rfl⟩
-  have hsingle : actual.readout i (firstAxis, secondAxis, 1) [halfturn] := Eq.mp heq hnil
-  exact hn (by simpa only [List.prod_singleton] using hsingle.2)
+  have hnil : actual.readout i (firstAxis, secondAxis, 1) [] = true := by
+    change decide (IsAxisWord firstAxis secondAxis [] ∧ ([] : List Orthogonal).prod = 1) = true
+    simp [IsAxisWord]
+  have hsingle : actual.readout i (firstAxis, secondAxis, 1) [halfturn] = true :=
+    heq.symm.trans hnil
+  have hp : IsAxisWord firstAxis secondAxis [halfturn] ∧ [halfturn].prod = 1 :=
+    of_decide_eq_true hsingle
+  exact hn (by simpa only [List.prod_singleton] using hp.2)
 
 def family : Registration arena (type_of% (@two_axis_finite_word)) where
   actual := actual
-  bridge := Iff.rfl
-  variation := ⟨two_axis_finite_word, rejected, rejected_law⟩
+  bridge := by simp only [arena, actual, realize, decide_eq_true_eq]
+  variation := ⟨by simpa only [arena, actual, realize, decide_eq_true_eq]
+    using two_axis_finite_word, rejected, rejected_law⟩
   sensitivity := ⟨fun i => ⟨rejected,
     fun j h => (h (Subsingleton.elim j i)).elim, rfl, rejected_law⟩,
     fun e => nomatch e⟩
   dependence := dependence
 
 def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@two_axis_finite_word) (Realization signature) Type Unit where
+    (@two_axis_finite_word) (Realization signature) Unit Unit where
   unitName := `Reg.D5.S3.Geometry.TwoAxisFiniteRotation.Words.__information_unit
   realizationName := `Reg.D5.S3.Geometry.TwoAxisFiniteRotation.Words.family
   realizationSource := none
@@ -101,12 +107,14 @@ def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature
-    (fun _ p l => IsAxisWord p.1 p.2.1 l ∧ l.prod = p.2.2) (fun e => nomatch e))
+  readout := by
+    classical
+    exact some (realize signature
+      (fun _ p l => decide (IsAxisWord p.1 p.2.1 l ∧ l.prod = p.2.2)) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some (List Orthogonal)
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Geometry.TwoAxisFiniteRotation
     definition := none
@@ -116,7 +124,7 @@ def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_
       stateBinder := 5
       functionOperand := false
       stateOperand := none
-      booleanPredicate := false }] }
+      booleanPredicate := true }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -215,7 +223,7 @@ def family : Registration arena.{u} (type_of% (@moving_axis_invariance.{u})) whe
   dependence := dependence
 
 def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@moving_axis_invariance.{u}) (Realization signature.{u}) Type Unit where
+    (@moving_axis_invariance.{u}) (Realization signature.{u}) Unit Unit where
   unitName := `Reg.D5.S3.Geometry.TwoAxisFiniteRotation.Transport.__information_unit
   realizationName := `Reg.D5.S3.Geometry.TwoAxisFiniteRotation.Transport.family
   realizationSource := none
@@ -232,7 +240,7 @@ def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some Orthogonal
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Geometry.TwoAxisFiniteRotation
     definition := none
