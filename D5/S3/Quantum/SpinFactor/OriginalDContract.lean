@@ -1,15 +1,16 @@
 /- GID: D5/S3/Quantum/SpinFactor/OriginalDContract
    generality: G
    mirror-B: D5/B/S3/Quantum/SpinFactor/OriginalDContract
-   mirror-E: none(waiver:source-only-contract)
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.LinearAlgebra.CrossProduct]
    utility: none
-   digest: The complete H2 original carrier, directed two-label positivity, and phase-balance contract.
+   digest: Directed positivity and finite phase balance force the original unit and label relations.
 
 This module records the exact original-domain contract used by the H2 classification.
 The arbitrary original map is kept as a total function.  No regularity, unit row,
 translation, bilinearity, or source-realisation premise is hidden in the definitions.
-The classification and the finite two-axis rotation argument are downstream consumers.
+The global classification additionally requires pure-vector rigidity and exact two-axis transport.
+Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/27928.
 -/
 
 import Mathlib.Analysis.Matrix.PosDef
@@ -47,8 +48,6 @@ structure Evaluation where
 def evaluate (α : Evaluation) (a : E) : ℝ :=
   α.mass * a.1 + dot α.vector a.2
 
-def allEvaluations : Set Evaluation := Set.univ
-
 def cross (x y : Vec) : Vec :=
   ![x 1 * y 2 - x 2 * y 1,
     x 2 * y 0 - x 0 * y 2,
@@ -60,9 +59,6 @@ inductive Orientation where
 
 def crossD (ε : Orientation) (a b : E) : E :=
   (0, match ε with | .plus => cross a.2 b.2 | .minus => -(cross a.2 b.2))
-
-def scalarPart (a : E) : ℝ := a.1
-def vectorPart (a : E) : Vec := a.2
 
 def readout (D : E → E → E) (α : Evaluation) (a b : E) : ℂ :=
   (evaluate α (jordan a b) : ℂ) - Complex.I * (evaluate α (D a b) : ℂ)
@@ -100,9 +96,6 @@ def zeroRows (D : E → E → E) : Prop :=
 def proportionalZero (D : E → E → E) : Prop :=
   ∀ (r : ℝ) (a : E), D (r • a) a = 0 ∧ D a (r • a) = 0
 
-def basicOriginalD (D : E → E → E) : Prop :=
-  skew D ∧ zeroRows D ∧ proportionalZero D
-
 def finiteDifference (D : E → E → E) (a b c : E) : E :=
   D (b + D a b - jordan a c) (c + jordan a b + D a c) -
     D (b - D a b + jordan a c) (c - jordan a b - D a c) +
@@ -128,7 +121,7 @@ private theorem evaluations_separate (a b : E)
   simp only [evaluate, one_mul, dot, zero_dotProduct, add_zero] at hs
   apply Prod.ext hs
   funext i
-  have hv := h ⟨1, Pi.single i 1, by simp [vnorm, dot, single_dotProduct]⟩
+  have hv := h ⟨1, Pi.single i 1, by simp [vnorm, dot]⟩
   simp [evaluate, dot, single_dotProduct] at hv
   linarith
 
@@ -137,8 +130,8 @@ theorem p2_skew (D : E → E → E) (hP : P2 D) : skew D := by
   intro a b
   apply evaluations_separate
   intro α
-  have h := congrArg Complex.im ((hP α a b).1.apply 0 1)
-  simp [gram2, readout, Complex.star_def] at h
+  have h : evaluate α (D b a) = -evaluate α (D a b) := by
+    simpa [gram2, readout] using congrArg Complex.im ((hP α a b).1.apply 0 1)
   change evaluate α (D b a) = evaluationLinear α (-D a b)
   rw [map_neg]
   exact h
@@ -228,8 +221,7 @@ theorem pb_iff_finite_difference (D : E → E → E) :
   · intro h α a b c
     have he := expansion α a b c
     rw [h a b c] at he
-    simp [evaluate, dot] at he
-    exact sub_eq_zero.mp he
+    exact sub_eq_zero.mp (by simpa [evaluate, dot] using he)
 
 private theorem dot_self_nonneg (x : Vec) : 0 ≤ dot x x := by
   unfold dot dotProduct
@@ -350,9 +342,12 @@ theorem unit_row_nonzero_scalar (D : E → E → E) (hP : P2 D) (hPB : PB D)
       2 * evaluate α (jordan (t, y) (D (l, 0) (t, y) - jordan (l, 0) (k, 0))) +
       2 * evaluate α (jordan (k, 0) (jordan (l, 0) (t, y) + D (l, 0) (k, 0))) = 0 at heα
   rw [hp0, hm0, hd, p2_scalar_pair D hP] at heα
-  simp [evaluate, jordan, α, dot, dotProduct_add, dotProduct_sub,
-    dotProduct_smul, hyz, hzy, hzz] at heα
-  have htz : t * Z ^ 2 = 0 := by nlinarith only [heα]
+  have htz : t * Z ^ 2 = 0 := by
+    have he' : 2 * (Z * (-(t * (l * k))) + t * Z ^ 2) +
+        2 * (Z * (k * (l * t))) = 0 := by
+      simpa [evaluate, jordan, α, dot, dotProduct_add,
+        dotProduct_smul, hyz, hzy, hzz] using heα
+    nlinarith only [he']
   have hz0 : Z = 0 := sq_eq_zero_iff.mp ((mul_eq_zero.mp htz).resolve_left ht)
   have hz : z = 0 := dotProduct_self_eq_zero.mp (by rw [hzz, hz0]; norm_num)
   rw [hd, hz]
@@ -545,8 +540,8 @@ theorem label_rotation (D : E → E → E) (hP : P2 D) (hPB : PB D)
     label_cayley D hPB l b c (unit_rows D hP hPB _ _) (unit_rows D hP hPB _ _)
   by_cases hC : C = -1
   · have hS : S = 0 := by rw [hC] at hCS; nlinarith [sq_nonneg S]
-    have h1 : D b c = D c (-b) := by simpa using hcay 1 b c
-    have h2 : D c (-b) = D (-b) (-c) := by simpa using hcay 1 c (-b)
+    have h1 : D b c = D c (-b) := by convert hcay 1 b c using 1 <;> norm_num
+    have h2 : D c (-b) = D (-b) (-c) := by convert hcay 1 c (-b) using 1 <;> norm_num
     simpa [hC, hS] using h1.trans h2
   · have hden : 1 + C ≠ 0 := by intro h; apply hC; linarith
     let l := S / (1 + C)
@@ -575,10 +570,11 @@ private theorem same_axis_zero (D : E → E → E) (hP : P2 D) (hPB : PB D)
   have h := label_rotation D hP hPB (k / L) (-1 / L) hCS (s, x) (t, k • x)
   have hfirst : (k / L) • (s, x) + (-1 / L) • (t, k • x) =
       ((k / L) * s + (-1 / L) * t, 0) := by
-    apply Prod.ext rfl
-    funext i
-    simp [smul_eq_mul]
-    ring
+    apply Prod.ext
+    · simp [smul_eq_mul]
+    · funext i
+      simp [smul_eq_mul]
+      ring
   rw [hfirst, unit_rows D hP hPB] at h
   exact h
 
