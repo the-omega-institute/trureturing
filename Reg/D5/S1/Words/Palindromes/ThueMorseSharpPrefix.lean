@@ -2,6 +2,8 @@ import D5.S1.Words.Palindromes.ThueMorseSharpPrefix
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
 
+/-! Source-bound observations for the complete sharp prefix comparison. -/
+
 open _root_.D5.S1.Words.Complexity
 open _root_.D5.S1.Words.FridPrefix
 open _root_.D5.S1.Words.Palindromes.PeriodDoubling
@@ -10,7 +12,6 @@ open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 
 namespace Reg.D5.S1.Words.Palindromes.ThueMorseSharpPrefix
 noncomputable section
-open Classical
 
 abbrev signature : Signature where
   Params := Unit
@@ -111,9 +112,7 @@ def registration_upper : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := some ℕ
-  sourceSelection := some { owner := `D5.S1.Words.Palindromes.ThueMorseSharpPrefix,
-    definition := none, coordinates := #[],
-    readouts := #[{ path := #["body", "fn", "arg"], stateBinder := 0 }] }
+  sourceSelection := some { owner := `D5.S1.Words.Palindromes.ThueMorseSharpPrefix, definition := none, coordinates := #[], readouts := #[{ path := #["body", "fn", "arg"], stateBinder := 0 }] }
   continuation := .unknown
   familyRecord := none
   options := #[] }
@@ -137,10 +136,7 @@ def registration_sharp : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := some ℕ
-  sourceSelection := some { owner := `D5.S1.Words.Palindromes.ThueMorseSharpPrefix,
-    definition := none, coordinates := #[],
-    readouts := #[{ path := #["fn", "arg", "body", "body", "fn", "arg"],
-      stateBinder := 0 }] }
+  sourceSelection := some { owner := `D5.S1.Words.Palindromes.ThueMorseSharpPrefix, definition := none, coordinates := #[], readouts := #[{ path := #["fn", "arg", "body", "body", "fn", "arg"], stateBinder := 0 }] }
   continuation := .unknown
   familyRecord := none
   options := #[] }
