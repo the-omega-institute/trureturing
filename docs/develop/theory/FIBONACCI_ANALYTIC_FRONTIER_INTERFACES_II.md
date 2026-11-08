@@ -2593,3 +2593,125 @@ $$
 于是，在 (490.2)、(497.6) 与 $(\mathrm F_4)$ 下，定理 494.2 的全部假设成立，其结论成立：二、四阶矩极限，以及 $g$ 不几乎处处为零时的超额峰度 $3(\frac a2\coth\frac a2-1)$；§494 中依赖移动长度与宏观权的四阶接口被约化为固定长度的陈述 (497.6) 与 $(\mathrm F_4)$。$(\mathrm F_3)$ 另给出三阶接口。
 
 **范围。** (497.6)、$(\mathrm F_3)$、$(\mathrm F_4)$ 对 $E=\psi-\mathrm{id}$ 未被证明。Montgomery–Soundararajan [Primes in short intervals, Comm. Math. Phys. 252 (2004), 589–617] 猜想 1（$K=4$）是单一长度 $H$ 的四阶矩渐近，与 (497.6) 同型，但不给出不同长度 $c_jh$ 的联合矩 $(\mathrm F_4)$；其定理 3 在强 Hardy–Littlewood 型相关误差假设下对 $\log N\le H\le N^{1/K}$ 给出带显式误差的公式，相对渐近在 $N^\eta\le H\le N^{1/K-\delta}$ 一类内部范围上成立。Chan [Higher moments of primes in short intervals I, arXiv:math/0409530v2 (2004)] 定理 3.1、4.1 在 RH 与定量矩假设下，于相应的内部参数范围上转移单一固定长度与比例长度的偶矩；Leung [Joint distribution of primes in multiple short intervals, Adv. Math. 490 (2026), 110847] 处理不交区间。本节在 §496 的端点与冻结方法下给出：$L^4$ 端点估计 (497.3)、$O(n^{-2})$ 的四阶冻结误差 (497.4)、带宏观区间权的固定尺度混合矩到移动长度的传递（定理 497.3），以及由此对 §494 三、四阶接口的约化。Isserlis 配对结构、Hölder 不等式与 Riemann 和逼近都是标准工具。
+
+## 追加锚（本行以下为增补区）
+
+## 498. 强 Hardy–Littlewood 假设下重叠短区间的三、四阶矩
+
+本节对 $E=\psi-\mathrm{id}$ 证明：在四点以内的 Montgomery–Soundararajan 型强 Hardy–Littlewood 误差假设下，对 $0<\theta<\frac14$，§497 的 $(\mathrm F_3)$、$(\mathrm F_4)$、(497.6) 与 (490.2) 都成立。
+
+**记号。** $\Lambda_0=\Lambda-1$。对有限整数集 $\mathcal D$，$\mathfrak S(\mathcal D)=\prod_p\frac{1-\nu_p(\mathcal D)/p}{(1-1/p)^{|\mathcal D|}}$（$\nu_p$ 为 $\mathcal D$ 模 $p$ 的剩余类个数，$\mathfrak S(\varnothing)=1$），$\mathfrak S_0(\mathcal D)=\sum_{\mathcal J\subseteq\mathcal D}(-1)^{|\mathcal D|-|\mathcal J|}\mathfrak S(\mathcal J)$；$\mathfrak S_0(\{d\})=0$。固定 $0<\alpha<\beta<\frac14$。
+
+**假设 $\mathrm{HL}_4(\beta)$。** 对每个 $\varepsilon>0$ 与 $M\ge1$，存在 $A_{\varepsilon,M}$ 与 $N_{\varepsilon,M}$，使对 $N\ge N_{\varepsilon,M}$、$1\le r\le4$、互异整数 $1\le d_1,\dots,d_r\le MN^\beta$ 与 $0\le y\le3N$，
+
+$$
+\Bigl|\sum_{n\le y}\prod_{j=1}^r\Lambda(n+d_j)-y\,\mathfrak S(\{d_1,\dots,d_r\})\Bigr|\le A_{\varepsilon,M}N^{1/2+\varepsilon}.
+\tag{498.1}
+$$
+
+这是 Montgomery–Soundararajan [Primes in short intervals, Comm. Math. Phys. 252 (2004), 589–617] 定理 3 的相关误差假设在 $k\le4$、位移至多 $MN^\beta$ 时的形式。
+
+对区间 $I=(a,b]\subseteq[0,M]$ 与 $H\ge1$，令 $\Delta_{H,I}(x)=\psi(x+bH)-\psi(x+aH)-(b-a)H$，$Z_{N,H}(I;x)=\Delta_{H,I}(x)/\sqrt{H\log N}$，$\kappa_{N,H}=\log(N/H)/\log N$，$\sigma(I,J)=|I\cap J|$，$\mathcal W_4(I_1,\dots,I_4)=\sigma(I_1,I_2)\sigma(I_3,I_4)+\sigma(I_1,I_3)\sigma(I_2,I_4)+\sigma(I_1,I_4)\sigma(I_2,I_3)$。对实值有界变差函数 $w$（在 $[1,2]$ 外延拓为零），$\|w\|_{\mathrm{BV}}=\|w\|_\infty+\operatorname{Var}_{\mathbb R}w$，$\langle w\rangle=\int_1^2w$。
+
+**定理 498.1（带宏观权的重叠区间矩）。** 设 $\mathrm{HL}_4(\beta)$，$M\ge1$ 固定。则当 $N\to\infty$ 时，
+
+$$
+\frac1N\int_N^{2N}w(x/N)\prod_{j=1}^3Z_{N,H}(I_j;x)\,dx=o(1),
+\tag{498.2}
+$$
+
+$$
+\frac1N\int_N^{2N}w(x/N)\prod_{j=1}^4Z_{N,H}(I_j;x)\,dx=\langle w\rangle\,\kappa_{N,H}^2\,\mathcal W_4(I_1,\dots,I_4)+o(1),
+\tag{498.3}
+$$
+
+余项关于 $N^\alpha\le H\le N^\beta$、$I_j\subseteq[0,M]$（含空区间与任意重叠）与 $\|w\|_{\mathrm{BV}}\le1$ 一致。
+
+取 $\alpha<\theta<\beta$、$N=X$、$H=X^\theta$、$I_j=(0,c_j]$ 与 $w(t)=\mathbf 1_{[u,v]}(t)/(t\log2)$（$\langle w\rangle=\nu([u,v])$，$\|w\|_{\mathrm{BV}}\le3/\log2$），由于 $Z_{X,h}((0,c];x)=\widetilde B_X(c,x)$、$\kappa_{X,h}=1-\theta=\kappa$、$\sigma((0,c_i],(0,c_j])=\min(c_i,c_j)$，定理 498.1 给出 §497 的 $(\mathrm F_3)$ 与 $(\mathrm F_4)$。
+
+**引理 498.2（二次关系下的四阶配对缺陷）。** 设 $S$ 为有限集，$\mathcal A$ 为交换实代数，$\ell:\mathcal A\to\mathbb R$ 线性，$\ell(1)=1$，且对 $d\in S$，$\ell(Y_d)=0$、$Y_d^2=aY_d+b$。对 $f_1,\dots,f_4:S\to\mathbb R$，令 $f_A=\prod_{i\in A}f_i$、$T_A=\sum_{d\in S}f_A(d)$、$V_k(f_1,\dots,f_k)=\ell\bigl(\prod_{i\le k}\sum_df_i(d)Y_d\bigr)$，以及有序互异指标和 $R_k(g_1,\dots,g_k)=\sum_{d_1,\dots,d_k\in S\text{ 两两不同}}\prod_jg_j(d_j)\,\ell(Y_{d_1}\cdots Y_{d_k})$。则
+
+$$
+V_2(f_i,f_j)=R_2(f_i,f_j)+bT_{ij},\qquad
+V_3=R_3+a\sum_{\{i,j\}}R_2(f_{ij},f_k)+abT_{123},
+\tag{498.4}
+$$
+
+$$
+\begin{aligned}
+V_4-\sum_\pi\prod_{\{i,j\}\in\pi}V_2(f_i,f_j)={}&R_4-\sum_\pi\prod_{\{i,j\}\in\pi}R_2(f_i,f_j)+a\sum_{\{i,j\}}R_3(f_{ij},f_k,f_l)+a^2\sum_{\pi=\{ij,kl\}}R_2(f_{ij},f_{kl})\\
+&+(a^2-2b)\sum_lR_2(f_{[4]\setminus\{l\}},f_l)+(a^2b-2b^2)T_{1234},
+\end{aligned}
+\tag{498.5}
+$$
+
+其中 $\pi$ 遍历三个完美配对，三个非平凡和分别有 $6,3,4$ 项。
+
+证明。由二次关系，$Y_d^3=(a^2+b)Y_d+ab$、$Y_d^4=(a^3+2ab)Y_d+(a^2b+b^2)$。展开 $V_k$ 并按指标相等关系分类。二、三阶式立即得到。四阶的五种重数类型贡献为：$1{+}1{+}1{+}1$ 给 $R_4$；重复对 $ij$ 的 $2{+}1{+}1$ 给 $aR_3(f_{ij},f_k,f_l)+b\bigl[T_{ij}R_2(f_k,f_l)-R_2(f_{ijk},f_l)-R_2(f_{ijl},f_k)\bigr]$（两个减项来自重复指标不得等于其余两个指标）；配对 $ij\mid kl$ 的 $2{+}2$ 给 $a^2R_2(f_{ij},f_{kl})+b^2(T_{ij}T_{kl}-T_{1234})$；单点 $l$ 的 $3{+}1$ 给 $(a^2+b)R_2(f_{[4]\setminus\{l\}},f_l)$；$4$ 给 $(a^2b+b^2)T_{1234}$。六个 $2{+}1{+}1$ 类型中，每个 $R_2(f_{[4]\setminus\{l\}},f_l)$ 恰被减去三次，合并系数为 $(a^2+b)-3b=a^2-2b$；三个 $2{+}2$ 类型给 $T_{1234}$ 贡献 $-3b^2$，合并系数为 $a^2b-2b^2$。最后把二阶式代入 $\sum_\pi\prod V_2$，项 $b\sum T_{ij}R_2(f_k,f_l)$ 与 $b^2\sum_\pi T_{ij}T_{kl}$ 恰好抵消，得 (498.5)。证毕。
+
+**引理 498.3（区间权的中心化奇异级数平均）。** 对区间 $I_j\subseteq[0,M]$，令 $R_k(H;I_1,\dots,I_k)=\sum\mathfrak S_0(\{d_1,\dots,d_k\})$，求和取遍两两不同、$d_j/H\in I_j$ 的正整数 $d_j$。则关于区间端点一致地，
+
+$$
+R_2(H;I,J)=-H\log H\,|I\cap J|+O_M(H),\qquad R_3=o_M\bigl((H\log H)^{3/2}\bigr),
+\tag{498.6}
+$$
+
+$$
+R_4(H;I_1,\dots,I_4)=\sum_\pi\prod_{\{i,j\}\in\pi}R_2(H;I_i,I_j)+o_M(H^2\log^2H)=H^2\log^2H\,\mathcal W_4(I_1,\dots,I_4)+o_M(H^2\log^2H).
+\tag{498.7}
+$$
+
+证明。(a) 二阶。令 $K(d,e)=\mathfrak S(\{d,e\})-1=\mathfrak S_0(\{d,e\})$（$d\ne e$）、$K(d,d)=0$，$A(m)=\sum_{1\le d,e\le m}K(d,e)$。由 Montgomery–Soundararajan 2004 定理 2 与 (16)，$A(m)=-m\log m+O(m)$。$K$ 平移不变，故对前缀区间有 $\sum_{d\le m,\,e\le n}K(d,e)=\frac12\bigl(A(m)+A(n)-A(|m-n|)\bigr)$；当 $0\le m,n\le MH$ 时它等于 $-\min(m,n)\log H+O_M(H)$。区间示性函数是两个前缀示性函数之差，展开得 (498.6) 第一式。
+
+(b) 有限筛。令 $Y_0=((M+5)H)^{10}$、$Q=\prod_{p\le Y_0}p$、$P=Q/\varphi(Q)\ll_M\log H$。在模 $Q$ 均匀的 $a$ 上令 $Y_d(a)=P\mathbf 1_{(a+d,Q)=1}-1$，则 $\mathbb EY_d=0$、$Y_d^2=(P-2)Y_d+(P-1)$，且由中国剩余定理，对互异位移 $\mathbb E\prod_{d\in\mathcal D}Y_d=\mathfrak S_{0,Q}(\mathcal D)$（Euler 积只取 $p\mid Q$）。位移直径至多 $(M+4)H$、$|\mathcal D|\le4$ 时，每个 $p>Y_0$ 看到 $|\mathcal D|$ 个不同剩余类，故 $\mathfrak S(\mathcal D)=\mathfrak S_Q(\mathcal D)(1+O(Y_0^{-1}))$；又 $0\le\mathfrak S_Q\le P^{|\mathcal D|}$，由容斥 $|\mathfrak S_0-\mathfrak S_{0,Q}|\ll_M(\log H)^4/Y_0$，对至多 $O_M(H^4)$ 个位移组求和后可忽略。
+
+(c) 有限筛的光滑权配对与区间恢复。令 $X_I=\sum_{d/H\in I}Y_d$、$A_H=\sqrt{H\log H}$。Montgomery–Soundararajan 2004 定理 1（(15)）给出：含 $K$ 个整数点的区间满足 $V_2(Q;K)\ll_MK\log H$、$V_4(Q;K)=3V_2(Q;K)^2+O(K^{2-1/28}P^{18})$；当 $K\ge H^{1/4}/\sqrt{\log H}$ 时误差除以 $K^2\log^2H$ 为 $O(K^{-1/28}(\log H)^{16})=o(1)$，当 $K$ 更小时用 $\|X_I\|_4\le KP$。合并得 $\|X_I\|_{L^4}\le C_MA_H\sqrt{|I|}+O_M(H^{1/4}\sqrt{\log H})$，对全部相关区间一致；故端点相差至多 $\delta$ 的两个区间满足 $\|X_I-X_J\|_4/A_H\le2C_M\sqrt\delta+o(1)$。Kuperberg [Sums of singular series along arithmetic progressions and with smooth weights, arXiv:2301.06095] 定理 1.3 对固定的光滑权 $f_j\in C_c^\infty((0,\infty))$ 给出有限筛矩的配对公式：$\mathbb E\prod_{j\le k}X_{f_j}=\sum_\pi\prod\mathbb E[X_{f_i}X_{f_j}]+O_{\mathbf f}(H^{k/2-1/(7k)}P^{2^k+k/2})$（奇数阶配对和为空；该定理允许任意无平方因子模，包括这里的 $Q$）。它与上面的有限筛变量的对应由 Ramanujan 展开 $P\mathbf 1_{(a,Q)=1}=\sum_{q\mid Q}\frac{\mu(q)}{\varphi(q)}c_q(a)$ 与模 $Q$ 的特征正交性给出。由 $P\ll_M\log H$，对固定光滑权，三阶矩为 $o(A_H^3)$、四阶 Wick 缺陷为 $o(A_H^4)$。用支撑在 $(0,\infty)$ 内的平移光滑化 $f_{I,\delta}$（例如 $\mathbf 1_{I+r}$ 对 $\delta\le r\le3\delta$ 的光滑平均）逼近区间示性函数，由 $\mathbf 1_{(a+r,b+r]}-\mathbf 1_{(a,b]}=\mathbf 1_{(b,b+r]}-\mathbf 1_{(a,a+r]}$ 与 Minkowski 不等式，误差在 $L^4$ 中至多 $2C_M\sqrt{3\delta}A_H+o(A_H)$；乘积的望远镜展开与 Hölder 不等式把误差传到三、四阶矩与四阶 Wick 缺陷。为得到端点一致性，先把任意区间移到有限 $\delta$-网格上，再对有限组网格区间使用配对公式；先令 $H\to\infty$ 再令 $\delta\downarrow0$。得有限筛的 $\mathbb E\prod_{j\le3}X_{I_j}=o_M(A_H^3)$ 与 $\mathbb E\prod_{j\le4}X_{I_j}-\sum_\pi\prod\mathbb E[X_{I_i}X_{I_j}]=o_M(A_H^4)$，对端点一致。
+
+(d) 去掉重合指标。对有限筛代数用引理 498.2（$a=P-2$、$b=P-1$，区间示性函数之积仍是区间示性函数）。由 (a) 与 (b)，所有出现的二阶互异指标和为 $O_M(H\log H)$，$T$ 型和为 $O_M(H)$。三阶式中 $R_3$ 以外的项为 $O_M(H\log^2H)=o((H\log H)^{3/2})$；四阶式中 $R_4-\sum_\pi\prod R_2$ 以外的项为 $o_M(H^2\log^2H)$（$aR_3$ 项由三阶结论控制，$a^2R_2$ 与 $(a^2-2b)R_2$ 项为 $O_M(H\log^3H)$，末项为 $O_M(H\log^3H)$）。结合 (c) 与 (b) 换回完整奇异级数，得 (498.6)–(498.7)。证毕。
+
+令 $\eta_M(H)\to0$ 为单调不增函数，同时控制 (498.6)–(498.7) 中归一化后的 $o$ 项。
+
+**引理 498.4（带 BV 权的算术传递）。** 设 $\mathrm{HL}_4(\beta)$，$H$ 为整数，$N^\alpha\le H\le N^\beta$，$S_I(n)=\sum_{d/H\in I}\Lambda_0(n+d)$。对 $k=3,4$ 与 $s\in\mathbb R$，令 $\Phi_k(s;\mathbf I)$ 为按引理 498.2 展开 $\prod_{j\le k}\sum_{d/H\in I_j}Y_d$ 的形式值：不同指标之积赋值 $\mathfrak S_0$，重复指标按 $Y_d^2=(s-2)Y_d+(s-1)$ 化简。则
+
+$$
+\sum_{N<n\le2N}w(n/N)\prod_{j=1}^kS_{I_j}(n)=\int_N^{2N}w(x/N)\,\Phi_k(\log x;\mathbf I)\,dx+O\bigl(\|w\|_{\mathrm{BV}}N^{1/2+\varepsilon}H^k\bigr),
+\tag{498.8}
+$$
+
+常数依赖 $\alpha,\beta,M,\varepsilon$ 与 (498.1) 的常数，关于区间端点一致。
+
+证明。令 $m=n+d$、$\lambda=\log n$。若 $\Lambda(m)\in\{0,\log m\}$，则 $Y=\Lambda(m)-1$ 满足 $Y^2=(z-2)Y+(z-1)$（$z=\log m$），从而 $Y^r=a_r(z)Y+b_r(z)$，其中 $a_r(z)=((z-1)^r-(-1)^r)/z$、$b_r=a_r+(-1)^r$ 为多项式。把 $z$ 换成 $\lambda$ 的误差为 $O_r((H/N)(\log N)^{r-1})$。真素数幂 $p^e$（$e\ge2$）在 $[1,3N]$ 中至多 $O(\sqrt N\log N)$ 个；在真素数幂处使用上述二次化简产生的误差只在化简某个重复指标时出现。把 $k$ 个指标按相等关系分成 $j$ 个不同位移，相应 $\log n$ 系数多项式的次数至多 $k-j$，展开中心化乘积只出现至多 $j\le4$ 个不同位移的相关。对 (498.1) 作分部求和（$w(x/N)p(\log x)$ 的上确界与变差 $\ll\|w\|_{\mathrm{BV}}(\log N)^{k-j}$），相关误差总计 $\ll\|w\|_{\mathrm{BV}}N^{1/2+\varepsilon}\sum_{j\le k}H^j(\log N)^{k-j}$；真素数幂误差 $\ll\|w\|_\infty\sqrt NH^{k-1}(\log N)^{k+1}$；对数替换误差 $\ll\|w\|_\infty H^k(\log N)^{k-1}$。由 $H\ge N^\alpha$，这些都被 (498.8) 的误差控制。证毕。
+
+**定理 498.1 的证明。** 令 $L=\log N$、$T_{ij}=\#\{d:d/H\in I_i\cap I_j\}=H\sigma(I_i,I_j)+O(1)$。由引理 498.3，对 $s\in[L,L+\log2]$，$R_2(I_i,I_j)+(s-1)T_{ij}=H(s-\log H)\sigma(I_i,I_j)+O_M(H)$。由引理 498.2 的三阶式，$|\Phi_3(s;\mathbf I)|\le C_M[\eta_M(H)(HL)^{3/2}+HL^2]$；由四阶式（重合类型的全部项保留在误差中），$\Phi_4(s;\mathbf I)=\sum_\pi\prod[R_2+(s-1)T]+O_M(\eta_M(H)H^2L^2+HL^3)$，代入上式并用 $HL^3=O_\alpha(H^2L)$，
+
+$$
+\Phi_4(s;\mathbf I)=H^2(s-\log H)^2\,\mathcal W_4(\mathbf I)+O_{\alpha,M}\bigl(\eta_M(H)H^2L^2+H^2L\bigr).
+$$
+
+不同位移的二阶主项为 $-H\log H\,\sigma$，重合位移补回 $H\log n\,\sigma$，四阶配对使用的方差是 $H\log(n/H)$。由引理 498.4，离散三阶矩除以 $N(HL)^{3/2}$ 后至多 $C\|w\|_{\mathrm{BV}}[\eta_M(H)+\sqrt{L/H}+N^{-1/2+\varepsilon}H^{3/2}L^{-3/2}]$；离散四阶矩的归一化误差至多 $C\|w\|_{\mathrm{BV}}[\eta_M(H)+1/L+N^{-1/2+\varepsilon}H^2L^{-2}]$，这里用到 $x\in[N,2N]$ 上 $(\log(x/H)/L)^2=\kappa_{N,H}^2+O(1/L)$。取 $0<\varepsilon<\frac12-2\beta$，则 $N^{-1/2+\varepsilon}H^2\le N^{-1/2+\varepsilon+2\beta}\to0$；这是本方法的界 $\beta<\frac14$。
+
+连续取样：若 $x=n+t$（$0\le t<1$），每个端点至多跨过一个整数，$|\Delta_{H,I}(x)-S_I(n)|\le2\log(4N)+2$，归一化后的 $L^4$ 误差为 $O_M(\sqrt{\log N/H})$；四个相同区间与 $w=1$ 的离散四阶式给出一致 $L^4$ 界，乘积的望远镜展开与 Hölder 不等式允许把离散增量换成连续增量。宏观权的单元误差满足 $\sum_n\int_n^{n+1}|w(x/N)-w(n/N)|\,dx\le\operatorname{Var}w$，结合粗界 $|Z_{N,H}|\ll_M\sqrt{H\log N}$，$k$ 阶乘积的权替换误差至多 $O_M(\|w\|_{\mathrm{BV}}(H\log N)^{k/2}/N)\to0$。实数 $H$ 换成 $\lfloor H\rfloor$ 只使物理端点 $x+aH$、$x+bH$ 移动 $O_M(1)$，增量变化 $O_M(\log N)$，同样处理。证毕。
+
+**推论 498.5（单长度接口）。** 设 $\mathrm{HL}_4(\beta)$。则 (490.2) 在 $\alpha<\theta<\beta$ 的带上成立，且对 $\mathsf B=1-\gamma-\log(2\pi)$（Montgomery–Soundararajan 2004 定理 3 的次项常数），使在 $Y^\alpha\le v\le Y^\beta$ 上一致地 (497.6) 成立。因此对 $\alpha<\theta<\beta<\frac14$，
+
+$$
+\mathrm{HL}_4(\beta)\ \Longrightarrow\ (490.2),\ (497.6),\ (\mathrm L_4),\ (\mathrm F_3),\ (\mathrm F_4),
+\tag{498.9}
+$$
+
+从而定理 494.2 的结论在 $\mathrm{HL}_4(\beta)$ 下对 $E=\psi-\mathrm{id}$ 与 $\alpha<\theta<\beta<\frac14$ 成立。
+
+证明。Montgomery–Soundararajan 2004 定理 3 在其相关误差假设 (20) 下，对整数长度 $\log Y\le K\le Y^{1/k}$ 给出 $\sum_{n\le Y}D_K(n)^k$（$k=2,4$）带显式误差的渐近；$k=4$ 时主项为 $3K^2\int_1^Y(\log(y/K)+\mathsf B)^2dy$，误差除以 $YK^2\log^2(Y/K)$ 后在 $Y^\alpha\le K\le Y^\beta$ 上一致趋于零（$\beta<\frac14$）。取 $K=\lfloor v\rfloor$；连续取样的替换 $|D_v(x)-D_K(\lfloor x\rfloor)|\ll\log Y$ 由 Hölder 不等式与四阶上界控制，主项中 $K$ 换成 $v$ 的误差为 $O(Yv\log^2Y)$。得 (497.6)；$k=2$ 同理给出 (490.2)。$(\mathrm L_4)$ 由引理 497.5 得到，$(\mathrm F_3)$、$(\mathrm F_4)$ 由定理 498.1 得到；再由推论 497.4 与引理 497.5，定理 494.2 的假设全部成立。证毕。
+
+**推论 498.6（均方误差即足够）。** 定理 498.1 中的 $\mathrm{HL}_4(\beta)$ 可换成：对每个 $\varepsilon>0$、$M\ge1$、$1\le r\le4$，一致地对 $1\le K\le MN^\beta$、$N\le y\le2N$，
+
+$$
+\sum_{\substack{1\le d_1,\dots,d_r\le K\\ \text{两两不同}}}|E_r(y;\mathbf d)|^2\le C_{\varepsilon,M}N^{1+2\varepsilon}K^r ,
+\tag{498.10}
+$$
+
+其中 $E_r(y;\mathbf d)$ 为 (498.1) 左边的相关误差。
+
+证明。在含 $j$ 个不同位移的重合类型中，中心化展开的一项使用其中 $r$ 个相关位移，其余位移的求和至多给出 $K^{j-r}$。由 Cauchy–Schwarz，$K^{j-r}\sum_{\mathbf d_r}|E_r|\le K^{j-r}K^{r/2}(\sum|E_r|^2)^{1/2}\le C^{1/2}N^{1/2+\varepsilon}K^j$，这正是引理 498.4 所需的误差；分部求和只用 $N\le y\le2N$。其余不变。证毕。
+
+**范围。** 本节的算术结论以 $\mathrm{HL}_4(\beta)$（或 (498.10)）为条件，且只覆盖 $0<\theta<\frac14$，不覆盖 §481 的 $\theta=4/5$；它供应三、四阶接口，不给出全阶联合中心极限。外部输入为：Montgomery–Soundararajan 2004 的定理 1（有限筛矩，(15)）、定理 2 与 (16)（二阶中心化奇异级数平均）、定理 3（单长度矩）；Kuperberg arXiv:2301.06095 定理 1.3（光滑权有限筛矩的配对公式）。Gallagher [On the distribution of primes in short intervals, Mathematika 23 (1976), 4–9] 处理对数长度的 Poisson 统计；Chan [A note on primes in short intervals, Int. J. Number Theory 2 (2006), 105–110] 把逐位移误差弱化为均方误差，推论 498.6 是同一机制在重叠区间混合矩上的形式；Leung [Joint distribution of primes in multiple short intervals, Adv. Math. 490 (2026), 110847] 在 RH 与 LI 下处理比例长度区间与对数取样；Leung [Pseudorandomness of primes at large scales, arXiv:2407.05380] 定理 2.1 在 HL 下给出对数长度（Poisson 区域）的混合矩；de la Bretèche [arXiv:2410.02480] 给出更精细的标量三阶矩分析。不交区间的联合矩经细分与可加性即可延伸到重叠区间，故重叠本身不是区别所在。本节在这些结果之上给出：多项式长度、端点一致的锐截断区间、宏观有界变差权与固定二倍区间连续取样下的三、四阶混合矩（引理 498.3 与定理 498.1），引理 498.2 是证明中所用的显式代数记账；由此在 $\alpha<\theta<\beta<\frac14$ 上推出 $(\mathrm F_3)$、$(\mathrm F_4)$ 与定理 494.2 的结论。
