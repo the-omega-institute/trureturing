@@ -2102,7 +2102,7 @@ B=ir\sigma A,\qquad
 \tag{159.8}
 $$
 
-令 $F_\sigma=(I+\sigma Q)/2$、$P_\pm=(I\pm h)/2$，只用于数学表示。对固定算子 $F_\sigma P_-j(g-ir\sigma v)P_-F_\sigma$ 使用150.8的普通复极化，(159.8)对全部向量成立即使该算子为零。$j$ 将 $F_\sigma P_-H$ 酉地送到 $F_\sigma P_+H$，于是
+令 $F_\sigma=(I+\sigma Q)/2$、$P_\pm=(I\pm h)/2$，只用于数学表示。对固定算子 $F_\sigma P_-j(g-ir\sigma v)P_-F_\sigma$ 使用150.8的普通复极化，(159.8)对全部向量成立遂得该算子为零。$j$ 将 $F_\sigma P_-H$ 酉地送到 $F_\sigma P_+H$，于是
 
 $$
 F_\sigma P_+gP_-F_\sigma
@@ -2111,5 +2111,333 @@ F_\sigma P_+gP_-F_\sigma
 $$
 
 反向块由自伴性为其伴随，准确带相反的 $i$ 号。$Q$ 中央排除跨 $\sigma$ 块；因此两份谱空间共同给 $P_{\rm tr}g=irQhv=rTv$。空谱块无须选择向量，某份负空间为空时 $j$ 的酉对应也使其正空间为空。忠实性返回原元素，得到(159.1)。所有极限都只作用于固定旧值的显式标量或向量式。∎
+
+## 追加锚（本行以下为增补区）
+
+## 160. 同一份原 PB 给残余的真实反交换关系
+
+**定理 160.1（外层投影的实际消费）。** 对任意实 $\mu,\lambda$ 和原 $v\in V_h$，固定
+
+$$
+\begin{gathered}
+c=\mu u+\lambda h,\quad x=c+v,\quad
+k=hc=\lambda u+\mu h,\\
+g=D(h,x)=Tv+\rho,\qquad
+\rho=P_{\rm com}g\in E,\quad h\rho=\rho h.
+\end{gathered}
+\tag{160.1}
+$$
+
+这里的分解由150.1给出。则同一实际旧输出的残余满足
+
+$$
+\boxed{v\circ\rho=0.}
+\tag{160.2}
+$$
+
+证明。$\mu=0$ 时，前卷18.1对 $h\circ x=\lambda u$ 给 $h\circ g=0$，即152.1的完整旧值 $g=Tv$，故 $\rho=0$。以下取 $\mu\ne0$，只用 $D(h,k)=0$ 的同轴原零值。在完整原PB中取 $(a,b,z)=(h,x,k)$，则
+
+$$
+\begin{aligned}
+\nu&=g-c,&\omega&=k,\\
+(b+\nu,z+\omega)&=(v+g,2k),&
+(b-\nu,z-\omega)&=(2c+v-g,0).
+\end{aligned}
+\tag{160.3}
+$$
+
+负外层第二标签确实为原零标签，其旧值由P2为零。$k^2=c^2$、$x\circ c=c^2+\mu v$，故PB及反对称性准确给
+
+$$
+\begin{aligned}
+D(v+g,2k)&=-2x\circ(g-c)-2k^2
+=-2x\circ g+2\mu v,\\
+\boxed{D(2k,v+g)=2x\circ g-2\mu v.}
+\end{aligned}
+\tag{160.4}
+$$
+
+此时 $v+g$ 尚含 $\rho$，未被当成横向输入。对同一个左侧旧值用159.1，参数一一对应为
+
+$$
+s=2\lambda,\qquad r=2\mu,\qquad y=v+g.
+$$
+
+于是
+
+$$
+P_{\rm tr}D(2k,v+g)
+=2\mu T P_{\rm tr}(v+g)
+=2\mu T(v+Tv)=2\mu(Tv-v).
+\tag{160.5}
+$$
+
+另一方面，展开的只是已知Jordan乘法。由 $h\circ Tv=0$、$v\circ Tv=0$，有
+
+$$
+x\circ g=\mu Tv+c\circ\rho+v\circ\rho.
+\tag{160.6}
+$$
+
+$c\circ\rho$ 与 $h$ 交换，$v\circ\rho$ 与 $h$ 反交换，因而(160.4)右端的横向投影是 $2\mu(Tv-v)+2v\circ\rho$。与(160.5)比较便得(160.2)。这条关系来自两份完整旧外值的PB，随后确由新投影公式消费；没有定义外层候选值来替换它。∎
+
+## 161. 含实际残余的相对中心与全部不可约读取
+
+**引理 161.1（固定元素的P2排零）。** 在同一环境中，设固定原 $v,\rho$ 满足
+
+$$
+h^2=u,\quad hv=-vh,\quad h\rho=\rho h,\quad v\rho=-\rho v,
+\tag{161.1}
+$$
+
+且固定元素 $g=Tv+\rho=iQhv+\rho$ 对原输入 $(h,x)$、$x=\mu u+\lambda h+v$ 满足全部环境数学态读取的原P2。则 $\rho=0$。这里 $\mu,\lambda$ 为任意实数，包括零；不假设 $v^2$ 全局中央、标量、可逆或有限谱。
+
+证明。零代数无须选态。其余情形定义
+
+$$
+w=h\rho,\qquad\mathcal K=C^*(u,Q,h,v,\rho)\subset\mathcal A.
+\tag{161.2}
+$$
+
+$w$ 自伴。由(161.1)，
+
+$$
+wv=h\rho v=-hv\rho=vh\rho=vw.
+$$
+
+它也与 $h,\rho,Q$ 交换，所以 $w\in Z(\mathcal K)$。另有 $hv^2=v^2h$、$\rho v^2=v^2\rho$，而 $v^2$ 与 $v,Q$ 交换，故
+
+$$
+\boxed{h\rho,\ v^2\in Z(\mathcal K).}
+\tag{161.3}
+$$
+
+这里的中心只属于含这份实际 $\rho$ 的 $\mathcal K$，未提升到整个 $\mathcal A$ 的中心；把 $\rho$ 明列为生成元，正是为了不预付旧 $D$ 的任何输出闭合。
+
+取 $\mathcal K$ 的任意非零不可约表示 $\pi$。由Schur引理，写
+
+$$
+\pi(Q)=\sigma I,\quad\pi(v^2)=b^2I,\quad
+\pi(h\rho)=mI,\qquad
+\sigma\in\{1,-1\},\ b\ge0,\ m\in\mathbb R.
+\tag{161.4}
+$$
+
+令 $H=\pi(h),V=\pi(v)$，则
+
+$$
+H^2=I,\quad HV=-VH,\quad V^2=b^2I,\quad
+\pi(\rho)=mH.
+\tag{161.5}
+$$
+
+若 $b=0$，自伴性给 $V=0$。像代数只由 $H$ 与标量生成，是交换的；不可约性使它为一维，$H=\pm I$。于是 $\pi(x)=\mu I+\lambda H$ 亦为标量。其唯一态拉回 $\mathcal K$ 并延拓到 $\mathcal A$，原 $(h,x)$ 的Gram为零，P2给 $|mH|^2=0$，所以 $m=0$。这个分支也覆盖 $v=0$、$\mu=0$、$\lambda=0$ 的全部交会端点。
+
+设 $b>0$，只在表示中定义
+
+$$
+E_0=V/b,\qquad J_0=i\sigma HE_0.
+\tag{161.6}
+$$
+
+$H,E_0,J_0$ 为两两反交换、自伴且平方为 $I$ 的三轴。为确认读取是真正的二阶像，令 $P_\pm=(I\pm H)/2$。$E_0$ 酉地交换两份非零的 $P_\pm$ 空间；以此识别两份空间后，$H$ 是 $\operatorname{diag}(I,-I)$，$E_0$ 是两个非对角单位。故它们生成的像准确为 $M_2(\mathbb C)\otimes I_{\mathcal L}$。不可约性使重数空间 $\mathcal L$ 为一维，否则其上任一非平凡投影都在交换子中。因此当前像确为不可约 $M_2(\mathbb C)$，并且
+
+$$
+\pi(x)=\mu I+\lambda H+bE_0,\qquad
+\pi(g)=bJ_0+mH.
+\tag{161.7}
+$$
+
+对每个单位实Bloch向量 $(n_x,n_y,n_z)$，二阶密度 $\tfrac12(I+n_xE_0+n_yJ_0+n_zH)$ 为正且迹一，其态分别读取三轴为 $n_x,n_y,n_z$。将此态拉回 $\mathcal K$，再由共同单位C*子代数的态延拓取得 $\mathcal A$ 上的态。该态所读的仍是同一份原 $h,x,g$，包括它们的原平方和原Jordan乘积。
+
+具体地，
+
+$$
+\begin{aligned}
+\pi(x^2)&=(\mu^2+\lambda^2+b^2)I+2\mu\lambda H+2\mu bE_0,\\
+\pi(h\circ x)&=\lambda I+\mu H.
+\end{aligned}
+\tag{161.8}
+$$
+
+所以原P2准确成为
+
+$$
+\boxed{(bn_y+mn_z)^2
+\le b^2+2\mu b n_x+\mu^2(1-n_z^2)
+=(b+\mu n_x)^2+\mu^2n_y^2.}
+\tag{161.9}
+$$
+
+最后一个等号使用 $n_x^2+n_y^2+n_z^2=1$。$\lambda$ 消失来自(161.8)的显式Gram相消，不是对未知响应使用剪切或平移不变性。
+
+若 $0<b<|\mu|$，取
+
+$$
+n_x=-b/\mu,\qquad n_y=0,\qquad
+n_z=\sqrt{1-b^2/\mu^2}>0.
+\tag{161.10}
+$$
+
+右侧为零，故 $m=0$，包括 $\mu$ 的两种符号。
+
+若 $b=|\mu|>0$，对 $0<z<1$ 取
+
+$$
+n_x=-\operatorname{sgn}(\mu)\sqrt{1-z^2},\quad n_y=0,\quad n_z=z.
+$$
+
+(161.9)给
+
+$$
+m^2z^2\le b^2(1-\sqrt{1-z^2})^2,\qquad
+|m|\le\frac{bz}{1+\sqrt{1-z^2}}.
+\tag{161.11}
+$$
+
+只令固定标量表达式的 $z\downarrow0$，得到 $m=0$；没有把端点态或极限输入送入旧 $D$。
+
+若 $b>|\mu|$，置 $q_0=\sqrt{1-\mu^2/b^2}>0$。反设 $m\ne0$，对 $0<z<q_0$ 取
+
+$$
+n_x=-\mu/b,\quad
+n_y=\operatorname{sgn}(m)\sqrt{q_0^2-z^2},\quad n_z=z.
+$$
+
+从(161.9)减去 $b^2n_y^2$，准确得到
+
+$$
+2b|m|\sqrt{q_0^2-z^2}\,z+m^2z^2
+\le(b^2-\mu^2)z^2.
+\tag{161.12}
+$$
+
+除以正 $z$，令 $z\downarrow0$，左侧趋于 $2b|m|q_0>0$，右侧趋于零，矛盾。$\mu=0,b>0$ 也在这个分支，$q_0=1$；没有遗漏零偏移。至此全部不可约表示都有 $m=0$，即 $\pi(\rho)=0$。不可约表示分离C*元素，故 $\rho=0$。∎
+
+证明所用成熟接口的准确出处为Blackadar，[*Operator Algebras*](https://www.bruceblackadar.com/Mathematics/Cycr.pdf)，II.6.1.8（不可约表示的交换子为 $\mathbb CI$）、II.6.3.1（子代数／算子系统的态延拓）、II.6.3.3与II.6.3.5（纯态取范数及态分离），以及II.6.4.9（不可约表示取范数，因而分离元素）。前卷18、72–73已有同类局部C*读取背景；(161.6)–(161.12)在此给出当前固定元素所需的完整计算。这些文献只提供读取工具，不提供新的旧响应身份。全程没有定义商上的 $D$，也没有把 $\pi(D(a,b))$ 写成某个新响应作用在 $\pi(a),\pi(b)$ 上。
+
+## 162. 同时单位偏移、轴偏移与任意实首槽强度
+
+**定理 162.1（同一原轴行的完整受限混合值）。** 在157.1下，对全部实 $R,\mu,\lambda$ 及任意原 $v\in V_h$，
+
+$$
+\boxed{D(Rh,\mu u+\lambda h+v)=RTv.}
+\tag{162.1}
+$$
+
+两种实偏移可同时非零；$v$ 的平方允许非中央、非可逆、奇异或连续谱，范数不受小窗口限制。
+
+证明。先取 $R=1$。150.1给160.1的分解；160.1消费实际 $\mathrm{PB}(h,x,k)$ 得 $v\circ\rho=0$。161.1对这份固定旧输出使用原P2，得到 $\rho=0$，故 $D(h,x)=Tv$。$\mu=0$ 的已付152.1及 $v=0$ 的同轴零行也与此一致。
+
+$R=0$ 时原P2与评价分离给 $D(0,x)=0$。现设 $R\ne0$，固定同一实际旧值
+
+$$
+g=D(Rh,x)=RTv+\rho,\qquad\rho=P_{\rm com}g,
+\tag{162.2}
+$$
+
+其中分解用159.1的 $s=0,r=R$，不是假设第一槽齐次。若 $\mu=0$，$(Rh)\circ x=R\lambda u$；前卷18.1给 $(Rh)\circ g=0$。由于 $R\ne0$ 且 $h\circ g=h\rho$、$h^2=u$，便有 $\rho=0$。
+
+若 $\mu\ne0$，仍令 $c=\mu u+\lambda h,k=hc$，只在原PB中取 $(a,b,z)=(Rh,x,Rk)$。同轴零行给 $D(Rh,Rk)=0$；完整位移与外层为
+
+$$
+\begin{aligned}
+\nu&=g-R^2c,&\omega&=Rk,\\
+(b+\nu,z+\omega)&=((1-R^2)c+v+g,2Rk),\\
+(b-\nu,z-\omega)&=((1+R^2)c+v-g,0).
+\end{aligned}
+\tag{162.3}
+$$
+
+负外层为零。用 $x\circ c=c^2+\mu v$、$k^2=c^2$，再用反对称性，准确得到
+
+$$
+\boxed{D(2Rk,(1-R^2)c+v+g)=2x\circ g-2R^2\mu v.}
+\tag{162.4}
+$$
+
+左侧用159.1，完整参数为 $s=2R\lambda,r=2R\mu,y=(1-R^2)c+v+g$，横向投影是
+
+$$
+2R\mu T(v+RTv)=2R\mu Tv-2R^2\mu v.
+\tag{162.5}
+$$
+
+右侧因 $x\circ g=R\mu Tv+c\circ\rho+v\circ\rho$，横向投影是(162.5)加 $2v\circ\rho$，故仍得 $v\circ\rho=0$。这一步包含负 $R$ 及 $R^2=1$ 的端点，不以第二标签预先横向为条件。
+
+最后，对全部数学态的原P2有
+
+$$
+|\phi(g/R)|^2\le B_\phi(h,x),\qquad
+B_\phi(Rh,x)=R^2B_\phi(h,x).
+\tag{162.6}
+$$
+
+这里除的是固定元素和显式Gram，不是改写 $D(Rh,x)/R$ 为 $D(h,x)$。对 $g/R=Tv+\rho/R$ 用161.1，得到 $\rho/R=0$。所有分支共同证明(162.1)。∎
+
+## 163. 已识别外值、仿射横向整行与两层旧调用
+
+**推论 163.1（同一PB外值的完整识别）。** 对160.1的实际输入，(160.4)的外值完整为
+
+$$
+\boxed{D(2\lambda u+2\mu h,v+Tv)=2\mu(Tv-v).}
+\tag{163.1}
+$$
+
+更一般地，(162.4)的同一个实际外值是
+
+$$
+D\bigl(2R\lambda u+2R\mu h,(1-R^2)(\mu u+\lambda h)+v+RTv\bigr)
+=2R\mu Tv-2R^2\mu v.
+\tag{163.2}
+$$
+
+证明。分别将162.1已识别的同一内值 $g=Tv$、$g=RTv$ 代回(160.4)、(162.4)。$x\circ Tv=\mu Tv$，所以得到所写完整值。即使(163.2)的第二标签带交换部分，识别依据也只是该次实际PB的精确标签；它不被扩张到任意混合第二输入。$R=0$ 时两边均零。∎
+
+**定理 163.2（仿射首标签的原横向整行）。** 对全部实 $s,r$ 和任意原 $w\in V_h$，
+
+$$
+\boxed{D(su+rh,w)=rTw.}
+\tag{163.3}
+$$
+
+证明。取原元素 $v=(w-Tw)/2\in V_h$，由 $T^2=-I$，有 $v+Tv=w$、$Tv-v=Tw$。在(163.1)准确置 $\lambda=s/2,\mu=r/2$，得到(163.3)。$r=0$ 与原单位行一致，$w=0$ 与零输入零值一致，$s=0$ 与162.1的 $\mu=\lambda=0$ 分支一致。这是同一外值已经认回后的消费者，不从159.1的投影值直接删掉未知交换块。∎
+
+**推论 163.3（实际两层原响应）。** 对162.1的每个实际原输入，任意实 $s,r,R$ 都有
+
+$$
+\begin{gathered}
+D(Rh,\mu u+\lambda h+v)=RTv\in E\cap V_h,\\
+D\bigl(su+rh,D(Rh,\mu u+\lambda h+v)\bigr)=-rR v.
+\end{gathered}
+\tag{163.4}
+$$
+
+特别
+
+$$
+\boxed{D(h,D(h,\mu u+\lambda h+v))=-v,\qquad
+D(Rh,D(Rh,\mu u+\lambda h+v))=-R^2v.}
+\tag{163.5}
+$$
+
+证明。内层由162.1识别为同一个原 $RTv$，外层对这份原横向元素用163.2，得到 $rT(RTv)=-rRv$。$T$ 的实线性来自其有限Jordan表达式，并非旧 $D$ 的全域线性前件。零值、负强度和全部偏移端点均包含在等式中。内外标签确实都在不完备原 $E$，但这些数学调用不供应物理准备、可控逆过程或实际双向返回。∎
+
+## 164. 原系数矩阵中的两份对角残余真正为零
+
+**推论 164.1（任意原非交换横向系数的旧矩阵值）。** 使用140.1、142.1、153.2的同一原坐标与旧 $\widetilde D$。对任意原 $z\in\mathfrak b$ 及实 $R,\mu,\lambda$，有
+
+$$
+\boxed{
+\widetilde D\!\left(
+RH,\begin{pmatrix}(\mu+\lambda)u&z\\z^*&(\mu-\lambda)u\end{pmatrix}
+\right)
+=R\begin{pmatrix}0&iz\\-iz^*&0\end{pmatrix}.}
+\tag{164.1}
+$$
+
+证明。令 $v$ 为该矩阵的原非对角部分之逆像，它属于原 $V_h$。140.1的同一坐标把 $\mu u+\lambda h+v$ 送到所写矩阵；153.8把 $Tv$ 送到右侧的 $R=1$ 矩阵。对162.1整体施加该坐标即得结论。这里的 $u$ 为系数单位，$H=\operatorname{diag}(u,-u)$；$z$ 可以是原不完备且非交换的系数域元素，不要求标量或有限谱。∎
+
+因此153.4的 $r_+(A),r_-(A)$ 在 $a=(\mu+\lambda)u,d=(\mu-\lambda)u$ 这个实际域上都为零。所排除的是同一个旧输出的残差，不是候选 $B_\star$ 的残差；162.1也准确给 $D(Rh,x)=B_\star(Rh,x)$，因为 $B_\star(Rh,x)=iRQhv$。这种一致性只在陈述的输入域成立。
 
 ## 追加锚（本行以下为增补区）
