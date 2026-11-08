@@ -1,0 +1,74 @@
+# Zero product-square budgets for a total response
+
+## Abstract
+
+Positive original pair tables and balancing constrain both directions of the same weighted response.
+
+Let E be any real vector space, including the zero space. No completeness, finite dimension or closure of response outputs in a smaller subspace is required. Let S:E x E -> E be real bilinear and symmetric, and let D:E x E -> E be a total map. Write x^2=S(x,x). An arbitrary indexed family e_i:E -> R of real linear evaluations separates E and determines exactly the cone C: x belongs to C if and only if e_i(x)>=0 for every i. A mathematical positive read is any real linear f with f(C)>=0. No normalization, mass restriction or additional actual preparation is introduced.
+
+OriginalTables(S,D,C,e) consists exactly of this symmetry, exact-cone and separation data and the following original constraints. For all a,b and i the directed complex table [[e_i(a^2),e_i(S(a,b))-i e_i(D(a,b))],[e_i(S(b,a))-i e_i(D(b,a)),e_i(b^2)]] is positive semidefinite. For every a,b,c and i, set r_+=b+D(a,b)-S(a,c), r_-=b-D(a,b)+S(a,c), s_+=c+S(a,b)+D(a,c), and s_-=c-S(a,b)-D(a,c). The complete balancing constraint is e_i(r_+^2+s_+^2+2D(r_+,s_+))=e_i(r_-^2+s_-^2+2D(r_-,s_-)). These are the pair and balancing constraints on the inherited Jordan product; the statements below need no further Jordan identities or norm assumptions. In particular D is not assumed linear, homogeneous, continuous or covariant.
+
+**Theorem 1.1 (Both directions from the actual swapped balancing instances).**
+
+$$\forall E \in \mathit{RealVectorSpaces},\; \forall S \in \operatorname{RealBilinearMaps}\left(E\right),\; \forall D \in \operatorname{TotalBinaryMaps}\left(E\right),\; \forall C \in \operatorname{Subsets}\left(E\right),\; \forall I \in \mathit{Types},\; \forall e \in \operatorname{IndexedRealLinearEvaluations}\left(I, E\right),\; \operatorname{OriginalTables}\left(S, D, C, e\right) \Rightarrow \left(\forall f \in \operatorname{PositiveRealLinearReads}\left(E, C\right),\; \forall a \in E,\; \forall b \in E,\; \operatorname{f}\left(\operatorname{S}\left(\operatorname{S}\left(a, b\right), \operatorname{S}\left(a, b\right)\right)\right) = 0 \Rightarrow \left(\operatorname{f}\left(\operatorname{S}\left(a, \operatorname{D}\left(a, b\right)\right)\right) = 0 \land \operatorname{f}\left(\operatorname{S}\left(b, \operatorname{D}\left(a, b\right)\right)\right) = 0\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Algebra/PBWeightedZeroBudget.zero_budget_directions` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Hermitian symmetry of the original pair tables and separation first imply D(b,a)=-D(a,b). For any complex column z, the real quadratic expression of that same table is the evaluation of one element of E. Its nonnegative readings under all original evaluations place that element in C. Hence every mathematical positive f reads the same pair table positively. This proves the positive-read extension from the exact cone, rather than adding it as another response law.
+
+If f(b^2)=0, the mature positive-semidefinite kernel theorem applied to the second coordinate column gives f(D(a,b))=0. In particular the original evaluations and separation give D(a,0)=0. Expanding only S in the complete balancing equality gives the element identity D(b+nu,c+omega)-D(b-nu,c-omega)=-2S(b,nu)-2S(c,omega), where nu=D(a,b)-S(a,c) and omega=S(a,b)+D(a,c). Unknown outer D values are never expanded.
+
+Put d=D(a,b) and g=S(a,b). The actual triple (a,b,0) gives D(b+d,g)-D(b-d,-g)=-2S(b,d). When f(g^2)=0, both outer response readings vanish by their original positive pair tables, forcing f(S(b,d))=0. Apply the actual swapped triple (b,a,0), symmetry of S and the proved skewness of D to obtain f(S(a,d))=0. The two statements concern one and the same original d.
+
+**Theorem 1.2 (A conditional rotated consumer keeps the weighted old value).**
+
+$$\forall E \in \mathit{RealVectorSpaces},\; \forall S \in \operatorname{RealBilinearMaps}\left(E\right),\; \forall D \in \operatorname{TotalBinaryMaps}\left(E\right),\; \forall C \in \operatorname{Subsets}\left(E\right),\; \forall I \in \mathit{Types},\; \forall e \in \operatorname{IndexedRealLinearEvaluations}\left(I, E\right),\; \operatorname{OriginalTables}\left(S, D, C, e\right) \Rightarrow \left(\operatorname{RotationInvariant}\left(D\right) \Rightarrow \left(\forall P \in E,\; \forall F \in E,\; \forall alpha \in R,\; \forall beta \in R,\; \forall theta \in R,\; \operatorname{PositiveOrderedWeights}\left(\mathit{alpha}, \mathit{beta}\right) \Rightarrow \left(\forall f \in \operatorname{PositiveRealLinearReads}\left(E, C\right),\; \operatorname{f}\left(\operatorname{S}\left(\operatorname{S}\left(\operatorname{cos}\left(\mathit{theta}\right) \cdot \mathit{alpha} \cdot P - \operatorname{sin}\left(\mathit{theta}\right) \cdot \mathit{beta} \cdot F, \operatorname{sin}\left(\mathit{theta}\right) \cdot \mathit{alpha} \cdot P + \operatorname{cos}\left(\mathit{theta}\right) \cdot \mathit{beta} \cdot F\right), \operatorname{S}\left(\operatorname{cos}\left(\mathit{theta}\right) \cdot \mathit{alpha} \cdot P - \operatorname{sin}\left(\mathit{theta}\right) \cdot \mathit{beta} \cdot F, \operatorname{sin}\left(\mathit{theta}\right) \cdot \mathit{alpha} \cdot P + \operatorname{cos}\left(\mathit{theta}\right) \cdot \mathit{beta} \cdot F\right)\right)\right) = 0 \Rightarrow \left(\operatorname{f}\left(\operatorname{S}\left(P, \operatorname{D}\left(\mathit{alpha} \cdot P, \mathit{beta} \cdot F\right)\right)\right) = 0 \land \operatorname{f}\left(\operatorname{S}\left(F, \operatorname{D}\left(\mathit{alpha} \cdot P, \mathit{beta} \cdot F\right)\right)\right) = 0\right)\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Algebra/PBWeightedZeroBudget.weighted_rotated_directions` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+RotationInvariant(D) is a separate hypothesis, quantified over every original a,b and every real theta: D(cos(theta)a-sin(theta)b,sin(theta)a+cos(theta)b)=D(a,b). It is not a field of OriginalTables, and these results do not derive it from the original constraints. With any original P,F, any real 0<alpha<=beta, and any real theta, define r=cos(theta)alpha P-sin(theta)beta F and s=sin(theta)alpha P+cos(theta)beta F. If a positive f has f(S(r,s)^2)=0, the preceding theorem and this independent rotation hypothesis constrain the literal T=D(alpha P,beta F). Inverting the known real rotation and cancelling the two positive weights gives f(S(P,T))=f(S(F,T))=0. No equality with alpha beta D(P,F) is used.
+
+For a projection-flip pair in an arbitrary complex C* background, this supplies the two null-read equations inside the weighted-shape argument, provided the chosen compressed positive reads have the displayed zero product-square budget. It does not construct the corner coordinates, prove that those compressed reads have zero budget, separate their operator blocks, bound a coefficient, or prove its square is the corner unit. Consequently it supplies neither the full weighted shape and upper bound nor saturation, an involutory seed, the two endogenous row values or their common-residual conclusion.
+
+**Theorem 1.3 (A null input forces an actual zero compressed response).**
+
+$$\forall E \in \mathit{RealVectorSpaces},\; \forall S \in \operatorname{RealBilinearMaps}\left(E\right),\; \forall D \in \operatorname{TotalBinaryMaps}\left(E\right),\; \forall C \in \operatorname{Subsets}\left(E\right),\; \forall I \in \mathit{Types},\; \forall e \in \operatorname{IndexedRealLinearEvaluations}\left(I, E\right),\; \operatorname{OriginalTables}\left(S, D, C, e\right) \Rightarrow \left(\forall A \in \mathit{UnitalComplexCStarAlgebrasWithStarOrder},\; \forall iota \in \operatorname{RealLinearMaps}\left(E, A\right),\; \operatorname{ExactConeAndSquares}\left(\mathit{iota}, S, C\right) \Rightarrow \left(\forall a \in E,\; \forall b \in E,\; \forall z \in A,\; \operatorname{iota}\left(a\right) \cdot z = 0 \Rightarrow \operatorname{star}\left(z\right) \cdot \operatorname{iota}\left(\operatorname{D}\left(a, b\right)\right) \cdot z = 0\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Algebra/PBWeightedZeroBudget.response_compression_of_annihilation` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Let A be an arbitrary unital complex C* algebra with its star order, including the zero algebra. Let iota:E -> A be real linear, with x in C if and only if 0<=iota(x), and iota(S(x,x))=iota(x)iota(x) for every original x. These are precisely the cone and square parts of an inherited Jordan inclusion; no completion of E, faithful state or predual is required. If iota(a)z=0 for any ambient multiplier z, the conclusion is z* iota(D(a,b))z=0. The multiplier is not passed to D.
+
+For every positive continuous real functional g on A, compose g with x maps to z*iota(x)z. Positivity of star conjugation makes this a mathematical positive read on the original E. Its reading of a^2 vanishes, so its reading of D(b,a) vanishes by the original pair table. Proved skewness gives the same conclusion for D(a,b). The norm-closed positive cone separates points by ProperCone.hyperplane_separation_point: a compression whose every positive continuous reading vanishes is both nonnegative and nonpositive, hence zero. The proof uses the ambient real normed space and does not require a Hilbert representation.
+
+**Theorem 1.4 (Support and two compressed directions for the same weighted old value).**
+
+$$\forall E \in \mathit{RealVectorSpaces},\; \forall S \in \operatorname{RealBilinearMaps}\left(E\right),\; \forall D \in \operatorname{TotalBinaryMaps}\left(E\right),\; \forall C \in \operatorname{Subsets}\left(E\right),\; \forall I \in \mathit{Types},\; \forall e \in \operatorname{IndexedRealLinearEvaluations}\left(I, E\right),\; \operatorname{OriginalTables}\left(S, D, C, e\right) \Rightarrow \left(\operatorname{RotationInvariant}\left(D\right) \Rightarrow \left(\forall A \in \mathit{UnitalComplexCStarAlgebrasWithStarOrder},\; \forall iota \in \operatorname{RealLinearMaps}\left(E, A\right),\; \operatorname{ExactConeAndSquares}\left(\mathit{iota}, S, C\right) \Rightarrow \left(\forall P \in E,\; \forall F \in E,\; \operatorname{IsStarProjection}\left(\operatorname{iota}\left(P\right)\right) \Rightarrow \left(\forall alpha \in R,\; \forall beta \in R,\; \forall theta \in R,\; \operatorname{PositiveOrderedWeights}\left(\mathit{alpha}, \mathit{beta}\right) \Rightarrow \left(\forall z \in A,\; \operatorname{iota}\left(\operatorname{S}\left(\operatorname{cos}\left(\mathit{theta}\right) \cdot \mathit{alpha} \cdot P - \operatorname{sin}\left(\mathit{theta}\right) \cdot \mathit{beta} \cdot F, \operatorname{sin}\left(\mathit{theta}\right) \cdot \mathit{alpha} \cdot P + \operatorname{cos}\left(\mathit{theta}\right) \cdot \mathit{beta} \cdot F\right)\right) \cdot z = 0 \Rightarrow \left(\left(1 - \operatorname{iota}\left(P\right)\right) \cdot \operatorname{iota}\left(\operatorname{D}\left(\mathit{alpha} \cdot P, \mathit{beta} \cdot F\right)\right) \cdot \left(1 - \operatorname{iota}\left(P\right)\right) = 0 \land \left(\operatorname{star}\left(z\right) \cdot \operatorname{iota}\left(\operatorname{S}\left(P, \operatorname{D}\left(\mathit{alpha} \cdot P, \mathit{beta} \cdot F\right)\right)\right) \cdot z = 0 \land \operatorname{star}\left(z\right) \cdot \operatorname{iota}\left(\operatorname{S}\left(F, \operatorname{D}\left(\mathit{alpha} \cdot P, \mathit{beta} \cdot F\right)\right)\right) \cdot z = 0\right)\right)\right)\right)\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Algebra/PBWeightedZeroBudget.weighted_compressed_directions` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Keep OriginalTables, the independent RotationInvariant hypothesis and the ambient inclusion conditions just stated. Take original P,F with iota(P) a selfadjoint projection, arbitrary 0<alpha<=beta, any real theta, and any ambient z satisfying iota(S(r,s))z=0 for the exact r,s above. Put T=D(alpha P,beta F) and Q=1-iota(P). Then Q iota(T)Q=0 and both z*iota(S(P,T))z and z*iota(S(F,T))z are zero. The support conclusion uses the preceding theorem at the actual inputs alpha P,beta F and multiplier Q. The two directional conclusions apply the weighted rotated theorem to every positive compressed read and separate the norm-positive cone.
+
+This statement applies to arbitrary projection-flip pairs in the original full C* carrier once the explicit rotated-product kernel is verified. It proves no existence or uniqueness of a corner coefficient W, no contraction or square upper bound, no same-W reverse budget and no involutory seed. The projection-flip identities and exact angle still have to produce the required kernels; full corner reconstruction, the saturation step and both endogenous rows remain additional mathematical obligations. No output-span premise, crossweight comparison or scaling of D occurs.
+
+## References
+
+- Truth anchor: `D5/S3/Quantum/Algebra/PBWeightedZeroBudget.response_compression_of_annihilation`
+- Truth anchor: `D5/S3/Quantum/Algebra/PBWeightedZeroBudget.weighted_compressed_directions`
+- Truth anchor: `D5/S3/Quantum/Algebra/PBWeightedZeroBudget.weighted_rotated_directions`
+- Truth anchor: `D5/S3/Quantum/Algebra/PBWeightedZeroBudget.zero_budget_directions`

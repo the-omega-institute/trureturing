@@ -31,6 +31,26 @@ internal sealed class PBWeightedZeroBudgetDocument : IScribeDocumentDefinition
                 Blocks(
                     Paragraph(Text("RotationInvariant(D) is a separate hypothesis, quantified over every original a,b and every real theta: D(cos(theta)a-sin(theta)b,sin(theta)a+cos(theta)b)=D(a,b). It is not a field of OriginalTables, and these results do not derive it from the original constraints. With any original P,F, any real 0<alpha<=beta, and any real theta, define r=cos(theta)alpha P-sin(theta)beta F and s=sin(theta)alpha P+cos(theta)beta F. If a positive f has f(S(r,s)^2)=0, the preceding theorem and this independent rotation hypothesis constrain the literal T=D(alpha P,beta F). Inverting the known real rotation and cancelling the two positive weights gives f(S(P,T))=f(S(F,T))=0. No equality with alpha beta D(P,F) is used.")),
                     Paragraph(Text("For a projection-flip pair in an arbitrary complex C* background, this supplies the two null-read equations inside the weighted-shape argument, provided the chosen compressed positive reads have the displayed zero product-square budget. It does not construct the corner coordinates, prove that those compressed reads have zero budget, separate their operator blocks, bound a coefficient, or prove its square is the corner unit. Consequently it supplies neither the full weighted shape and upper bound nor saturation, an involutory seed, the two endogenous row values or their common-residual conclusion."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("original-response-ambient-compression"),
+                DeclarationHandle.Create("D5/S3/Quantum/Algebra/PBWeightedZeroBudget.response_compression_of_annihilation"),
+                H("A null input forces an actual zero compressed response"),
+                StatementSource.FromAuthor(F.Disp(CompressionStatement())),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("Let A be an arbitrary unital complex C* algebra with its star order, including the zero algebra. Let iota:E -> A be real linear, with x in C if and only if 0<=iota(x), and iota(S(x,x))=iota(x)iota(x) for every original x. These are precisely the cone and square parts of an inherited Jordan inclusion; no completion of E, faithful state or predual is required. If iota(a)z=0 for any ambient multiplier z, the conclusion is z* iota(D(a,b))z=0. The multiplier is not passed to D.")),
+                    Paragraph(Text("For every positive continuous real functional g on A, compose g with x maps to z*iota(x)z. Positivity of star conjugation makes this a mathematical positive read on the original E. Its reading of a^2 vanishes, so its reading of D(b,a) vanishes by the original pair table. Proved skewness gives the same conclusion for D(a,b). The norm-closed positive cone separates points by ProperCone.hyperplane_separation_point: a compression whose every positive continuous reading vanishes is both nonnegative and nonpositive, hence zero. The proof uses the ambient real normed space and does not require a Hilbert representation."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("weighted-original-compression-and-directions"),
+                DeclarationHandle.Create("D5/S3/Quantum/Algebra/PBWeightedZeroBudget.weighted_compressed_directions"),
+                H("Support and two compressed directions for the same weighted old value"),
+                StatementSource.FromAuthor(F.Disp(AmbientWeightedStatement())),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("Keep OriginalTables, the independent RotationInvariant hypothesis and the ambient inclusion conditions just stated. Take original P,F with iota(P) a selfadjoint projection, arbitrary 0<alpha<=beta, any real theta, and any ambient z satisfying iota(S(r,s))z=0 for the exact r,s above. Put T=D(alpha P,beta F) and Q=1-iota(P). Then Q iota(T)Q=0 and both z*iota(S(P,T))z and z*iota(S(F,T))z are zero. The support conclusion uses the preceding theorem at the actual inputs alpha P,beta F and multiplier Q. The two directional conclusions apply the weighted rotated theorem to every positive compressed read and separate the norm-positive cone.")),
+                    Paragraph(Text("This statement applies to arbitrary projection-flip pairs in the original full C* carrier once the explicit rotated-product kernel is verified. It proves no existence or uniqueness of a corner coefficient W, no contraction or square upper bound, no same-W reverse budget and no involutory seed. The projection-flip identities and exact angle still have to produce the required kernels; full corner reconstruction, the saturation step and both endogenous rows remain additional mathematical obligations. No output-span premise, crossweight comparison or scaling of D occurs."))),
                 DescribeRole.Theorem))));
 
     private static Formula V(string name) => Id(name);
@@ -65,6 +85,31 @@ internal sealed class PBWeightedZeroBudgetDocument : IScribeDocumentDefinition
             All("alpha",V("R"), All("beta",V("R"), All("theta",V("R"),
             Imp(Call("PositiveOrderedWeights",alpha,beta),
                 All("f",Call("PositiveRealLinearReads",V("E"),V("C")),
-                    Imp(Zero(Read(S(g,g))), And(Zero(Read(S(p,t))),Zero(Read(S(f,t)))))))))))));
+                    Imp(Zero(Read(S(g,g))), And(Zero(Read(S(p,t))),Zero(Read(S(f,t))))))))))))));
+    }
+    private static Formula Compress(Formula z, Formula x) =>
+        Multiply(Multiply(Call("star",z),Call("iota",x)),z);
+    private static Formula AmbientScope(Formula body) =>
+        All("A",V("UnitalComplexCStarAlgebrasWithStarOrder"),
+            All("iota",Call("RealLinearMaps",V("E"),V("A")),
+                Imp(Call("ExactConeAndSquares",V("iota"),V("S"),V("C")),body)));
+    private static Formula CompressionStatement() => Scope(AmbientScope(
+        All("a",V("E"),All("b",V("E"),All("z",V("A"),
+            Imp(Zero(Multiply(Call("iota",V("a")),V("z"))),
+                Zero(Compress(V("z"),D(V("a"),V("b"))))))))));
+    private static Formula AmbientWeightedStatement()
+    {
+        var p=V("P"); var f=V("F"); var alpha=V("alpha"); var beta=V("beta");
+        var theta=V("theta"); var z=V("z"); var a=Multiply(alpha,p); var b=Multiply(beta,f);
+        var r=Subtract(Multiply(Call("cos",theta),a),Multiply(Call("sin",theta),b));
+        var s=Add(Multiply(Call("sin",theta),a),Multiply(Call("cos",theta),b));
+        var t=D(a,b); var q=Subtract(Num(1),Call("iota",p));
+        var result=And(Zero(Multiply(Multiply(q,Call("iota",t)),q)),
+            And(Zero(Compress(z,S(p,t))),Zero(Compress(z,S(f,t)))));
+        return Scope(Imp(Call("RotationInvariant",V("D")),AmbientScope(
+            All("P",V("E"),All("F",V("E"),Imp(Call("IsStarProjection",Call("iota",p)),
+                All("alpha",V("R"),All("beta",V("R"),All("theta",V("R"),
+                    Imp(Call("PositiveOrderedWeights",alpha,beta),All("z",V("A"),
+                        Imp(Zero(Multiply(Call("iota",S(r,s)),z)),result))))))))))));
     }
 }

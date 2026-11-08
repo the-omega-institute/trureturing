@@ -10,6 +10,9 @@ module
 
 public import Mathlib.Analysis.Matrix.PosDef
 public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
+public import Mathlib.Analysis.CStarAlgebra.ContinuousFunctionalCalculus.Order
+public import Mathlib.Analysis.Convex.Cone.Dual
+public import Mathlib.Analysis.Normed.Operator.Mul
 public import Mathlib.Tactic.Module
 public import Mathlib.Tactic.Linarith
 public import Mathlib.Tactic.Ring
@@ -102,7 +105,7 @@ private theorem positive_pair (H : OriginalTables S D C evaluation)
     simp [pairTable, dotProduct, mulVec, Fin.sum_univ_two,
       H.comm b a, skew H a b, Complex.mul_re, Complex.mul_im,
       Complex.sub_re, Complex.sub_im, Complex.add_re, Complex.add_im]
-    <;> ring
+    ring
 
 private theorem null_square_read (H : OriginalTables S D C evaluation)
     (f : E →ₗ[ℝ] ℝ) (hf : ∀ x ∈ C, 0 ≤ f x) (a b : E)
@@ -193,5 +196,86 @@ theorem weighted_rotated_directions (H : OriginalTables S D C evaluation)
     simpa only [ht, one_mul] using he
   exact ⟨(mul_eq_zero.mp ha).resolve_left (ne_of_gt hα),
     (mul_eq_zero.mp hb).resolve_left (ne_of_gt hβ)⟩
+
+section Ambient
+
+variable {A : Type*} [CStarAlgebra A] [PartialOrder A] [StarOrderedRing A]
+
+private theorem ambient_eq_zero (x : A)
+    (hx : ∀ g : A →L[ℝ] ℝ, (∀ y : A, 0 ≤ y → 0 ≤ g y) → g x = 0) : x = 0 := by
+  have positive (y : A)
+      (hy : ∀ g : A →L[ℝ] ℝ, (∀ z : A, 0 ≤ z → 0 ≤ g z) → g y = 0) : 0 ≤ y := by
+    by_contra hn
+    obtain ⟨g, hg, hneg⟩ :=
+      (ProperCone.positive ℝ A).hyperplane_separation_point hn
+    have hz := hy g (fun z hz => hg z hz)
+    linarith
+  have hpos := positive x hx
+  have hneg := positive (-x) (by
+    intro g hg
+    simpa only [map_neg, neg_eq_zero] using hx g hg)
+  exact le_antisymm (neg_nonneg.mp hneg) hpos
+
+/-- A null original input annihilates the actual response in every ambient
+compression. The multiplier need not be an original input. -/
+theorem response_compression_of_annihilation (H : OriginalTables S D C evaluation)
+    (ι : E →ₗ[ℝ] A) (hC : ∀ x, x ∈ C ↔ 0 ≤ ι x)
+    (hsq : ∀ x, ι (S x x) = ι x * ι x) (a b : E) (z : A)
+    (ha : ι a * z = 0) : star z * ι (D a b) * z = 0 := by
+  let compression := ContinuousLinearMap.mulLeftRight ℝ A (star z) z
+  have hc (x : E) : compression (ι x) = star z * ι x * z := rfl
+  have hzero : compression (ι (S a a)) = 0 := by
+    rw [hc, hsq]
+    simp only [mul_assoc, ha, mul_zero]
+  apply ambient_eq_zero
+  intro g hg
+  let f : E →ₗ[ℝ] ℝ := g.toLinearMap.comp (compression.toLinearMap.comp ι)
+  have hf (x : E) (hx : x ∈ C) : 0 ≤ f x :=
+    hg _ (star_left_conjugate_nonneg ((hC x).mp hx) z)
+  have h := null_square_read H f hf b a (by simp only [f, LinearMap.comp_apply,
+    ContinuousLinearMap.coe_coe, hzero, map_zero])
+  simpa only [skew H a b, map_neg, neg_eq_zero, f, LinearMap.comp_apply,
+    ContinuousLinearMap.coe_coe, hc] using h
+
+/-- Null compressed product squares constrain both original directions of
+the same weighted old value, in an arbitrary unital complex C* ambient algebra. -/
+theorem weighted_compressed_directions (H : OriginalTables S D C evaluation)
+    (rotation : RotationInvariant D)
+    (ι : E →ₗ[ℝ] A) (hC : ∀ x, x ∈ C ↔ 0 ≤ ι x)
+    (hsq : ∀ x, ι (S x x) = ι x * ι x)
+    (P F : E) (hP : IsStarProjection (ι P))
+    (α β θ : ℝ) (hα : 0 < α) (hαβ : α ≤ β) (z : A)
+    (hkernel : let r := Real.cos θ • (α • P) - Real.sin θ • (β • F)
+               let s := Real.sin θ • (α • P) + Real.cos θ • (β • F)
+               ι (S r s) * z = 0) :
+    (1 - ι P) * ι (D (α • P) (β • F)) * (1 - ι P) = 0 ∧
+      star z * ι (S P (D (α • P) (β • F))) * z = 0 ∧
+        star z * ι (S F (D (α • P) (β • F))) * z = 0 := by
+  let r := Real.cos θ • (α • P) - Real.sin θ • (β • F)
+  let s := Real.sin θ • (α • P) + Real.cos θ • (β • F)
+  change ι (S r s) * z = 0 at hkernel
+  let compression := ContinuousLinearMap.mulLeftRight ℝ A (star z) z
+  have hc (x : E) : compression (ι x) = star z * ι x * z := rfl
+  have hzero : compression (ι (S (S r s) (S r s))) = 0 := by
+    rw [hc, hsq]
+    simp only [mul_assoc, hkernel, mul_zero]
+  have reads (g : A →L[ℝ] ℝ) (hg : ∀ y : A, 0 ≤ y → 0 ≤ g y) :
+      g (star z * ι (S P (D (α • P) (β • F))) * z) = 0 ∧
+        g (star z * ι (S F (D (α • P) (β • F))) * z) = 0 := by
+    let f : E →ₗ[ℝ] ℝ := g.toLinearMap.comp (compression.toLinearMap.comp ι)
+    have hf (x : E) (hx : x ∈ C) : 0 ≤ f x :=
+      hg _ (star_left_conjugate_nonneg ((hC x).mp hx) z)
+    have h := weighted_rotated_directions H rotation P F α β θ hα hαβ f hf
+      (by change g (compression (ι (S (S r s) (S r s)))) = 0; rw [hzero, map_zero])
+    exact h
+  have hp2 : ι P * ι P = ι P := hP.isIdempotentElem
+  have hsupport := response_compression_of_annihilation H ι hC hsq
+    (α • P) (β • F) (1 - ι P) (by
+      rw [map_smul, smul_mul_assoc, mul_sub, mul_one, hp2, sub_self, smul_zero])
+  refine ⟨?_, ambient_eq_zero _ (fun g hg => (reads g hg).1),
+    ambient_eq_zero _ (fun g hg => (reads g hg).2)⟩
+  simpa only [star_sub, star_one, hP.isSelfAdjoint.star_eq] using hsupport
+
+end Ambient
 
 end D5.S3.Quantum.Algebra.PBWeightedZeroBudget
