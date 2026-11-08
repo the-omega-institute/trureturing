@@ -22,6 +22,10 @@ $$\neg (\exists B \in \mathbb{N} \to \mathbb{N},\; \forall G \in Type,\; [Group\
 
 *Proof.* Machine-checked in Lean as `D5/S3/FiniteGroups/NormalizerCentreIndex/LegarretaSicaTotaGavioli.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/legarreta-sica-tota-gavioli-question-3-3` (refuted) by `D5/S3/FiniteGroups/NormalizerCentreIndex/LegarretaSicaTotaGavioli.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"legarreta-sica-tota-gavioli-question-3-3","declaration_gid":"D5/S3/FiniteGroups/NormalizerCentreIndex/LegarretaSicaTotaGavioli.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Leire Legarreta, Carmela Sica, Maria Tota and Norberto Gavioli (2010). *On the Number of Normalizers and Conjugacy Classes of Normalizers*. URL: <https://www.m-hikari.com/ija/ija-2010/ija-21-24-2010/totaIJA21-24-2010.pdf>.

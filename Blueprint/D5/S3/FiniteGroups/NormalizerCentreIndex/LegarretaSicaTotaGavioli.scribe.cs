@@ -30,7 +30,10 @@ internal sealed class LegarretaSicaTotaGavioliDocument : IScribeDocumentDefiniti
                     "Coprimality splits subgroups and normalizers coordinatewise. The product has ten normalizers, eight classes, " +
                     "and centre index 8p². It is finite nilpotent, so every proper subgroup is strictly contained in its normalizer. " +
                     "Unbounded odd primes contradict any natural bound at eight. The separate finite-p-group question is left open."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("legarreta-sica-tota-gavioli-question-3-3"),
+                    ResolutionKind.Refuted)))));
 
     private static Formula ClaimBody()
     {
