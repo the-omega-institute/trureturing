@@ -25,7 +25,8 @@ internal static class WorktreeProtocolCommand
     }
 
     internal static CommandResult Run(string root, IReadOnlyList<string> arguments,
-        IWorktreeProcessRunner runner, TimeSpan? timeout = null, bool reportPending = true)
+        IWorktreeProcessRunner runner, TimeSpan? timeout = null, bool reportPending = true,
+        Stream? standardError = null)
     {
         // Isolated Python imports host libraries without searching a repository
         // cwd or PYTHONPATH for another implementation of a support module.
@@ -33,9 +34,9 @@ internal static class WorktreeProtocolCommand
             + "sys.exit(sys.modules['worktree_protocol'].main())\n");
         var result = runner.Run("python3", new[] { "-I", "-B", program.FilePath,
             "--source", root }.Concat(reportPending ? [] : new[] { "--no-agent-summary" }).Concat(arguments).ToArray(),
-            root, timeout ?? BoundedProcessRunner.HangDetectionBudget);
+            root, timeout ?? BoundedProcessRunner.HangDetectionBudget, null, standardError);
         return new CommandResult(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardOutput),
-            Encoding.UTF8.GetString(result.StandardError), result.ExitCode);
+            standardError is null ? Encoding.UTF8.GetString(result.StandardError) : string.Empty, result.ExitCode);
     }
 
     internal static CommandResult RunLines(string root, IReadOnlyList<string> arguments,

@@ -56,8 +56,14 @@ internal static class WorktreeCommand
         ".sshx-*",
     ];
 
-    internal static CommandResult Run(string repositoryRoot, IReadOnlyList<string> arguments) =>
-        Run(repositoryRoot, arguments, new ProductionWorktreeProcessRunner());
+    internal static CommandResult Run(string repositoryRoot, IReadOnlyList<string> arguments)
+    {
+        ArgumentNullException.ThrowIfNull(arguments);
+        using var standardError = arguments.Count > 0 && arguments[0] == "with"
+            ? Console.OpenStandardError() : null;
+        return Run(repositoryRoot, arguments, new ProductionWorktreeProcessRunner(), new ApfsDirectoryCloner(),
+            standardError);
+    }
 
     internal static CommandResult Run(
         string repositoryRoot,
@@ -69,13 +75,15 @@ internal static class WorktreeCommand
         string repositoryRoot,
         IReadOnlyList<string> arguments,
         IWorktreeProcessRunner runner,
-        IDirectoryCloner cloner)
+        IDirectoryCloner cloner,
+        Stream? standardError = null)
     {
         ArgumentNullException.ThrowIfNull(arguments);
         ArgumentNullException.ThrowIfNull(runner);
         ArgumentNullException.ThrowIfNull(cloner);
         if (arguments.Count > 0 && arguments[0] is "with" or "checkpoint" or "publish" or "finalize" or "return" or "stale" or "pending")
-            return WorktreeProtocolCommand.Run(repositoryRoot, arguments, runner, Timeout.InfiniteTimeSpan);
+            return WorktreeProtocolCommand.Run(repositoryRoot, arguments, runner, Timeout.InfiniteTimeSpan,
+                standardError: arguments[0] == "with" ? standardError : null);
         if (arguments.Count > 0
             && string.Equals(arguments[0], "remove", StringComparison.Ordinal))
         {
@@ -105,13 +113,14 @@ internal static class WorktreeCommand
             return ValidateBranch(arguments.Skip(1).ToArray());
         }
 
-        return WorktreeAgentStateCommand.After(repositoryRoot, runner,
-            () => Create(repositoryRoot, arguments, runner));
+        var result = Create(repositoryRoot, arguments, runner, out var summarySource);
+        return WorktreeAgentStateCommand.After(summarySource, runner, () => result);
     }
 
     private static CommandResult Create(string repositoryRoot, IReadOnlyList<string> arguments,
-        IWorktreeProcessRunner runner)
+        IWorktreeProcessRunner runner, out string summarySource)
     {
+        summarySource = repositoryRoot;
         WorktreeOptions? options = null;
         string? requestedBase = null;
         string? invokingDirectory = null;
@@ -125,9 +134,10 @@ internal static class WorktreeCommand
         var agentWarning = string.Empty;
         try
         {
-            if (runner is ProductionWorktreeProcessRunner production)
-                runner = production.WithEnvironment(WorktreeProtocolCommand.InitializationEnvironment(repositoryRoot));
             options = ParseArguments(repositoryRoot, arguments);
+            summarySource = options.Source;
+            if (runner is ProductionWorktreeProcessRunner production)
+                runner = production.WithEnvironment(WorktreeProtocolCommand.InitializationEnvironment(options.Source));
             requestedBase = options.Base;
             GitWorktreeInventory.FetchRemoteBase(options.Source, options.Base, runner);
             var baseRevision = VerifyBase(options, runner);
@@ -144,6 +154,7 @@ internal static class WorktreeCommand
             // Expiry can remove the invoking source. Resolve its base first and
             // anchor every subsequent operation, including fresh fallback, to main.
             options = options with { Source = main, Base = baseReference.Length == 0 ? baseRevision : baseReference };
+            summarySource = main;
             var currentDirectory = Directory.GetCurrentDirectory();
             var physicalDirectory = LeanCacheGuard.PhysicalPath(currentDirectory);
             var comparison = OperatingSystem.IsWindows() ? StringComparison.OrdinalIgnoreCase : StringComparison.Ordinal;
