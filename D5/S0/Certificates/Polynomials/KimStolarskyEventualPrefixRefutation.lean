@@ -10,6 +10,21 @@ import D5.S1.Depth.ContinuedFractions.QuadraticImpliesPeriodic
 import Mathlib.Topology.Instances.Real.Lemmas
 import Mathlib.Tactic
 
+/-! The source is arXiv:2511.15133v1, Theorem 1 and Remark 4, and
+Integers 26, A98, Theorem 1 and Remark 3. All three polynomial families,
+the m+1 shift, ordinary floor-and-inverse continued fractions, and the
+common eventual threshold are retained. Only the R conjunct is needed
+for the refutation. The other root branches are not asserted separately.
+
+proof_shape: result: bind-only (external open-problem resolution).
+admission_basis: open-problem-resolution, issue #28129.
+Private proof shapes: residue: bind-only, consumer result;
+parameter_large: bind-only, consumer r_failure;
+r_failure: bind-only, consumer result.
+All private lemmas are consumed by result or by a consumed private lemma;
+they organize algebra and modular arithmetic, not new upstream results.
+-/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -19,17 +34,7 @@ open Filter
 open scoped Topology BigOperators
 open D5.S1.Depth.ContinuedFractions.QuadraticImpliesPeriodic
 
-/- The source is arXiv:2511.15133v1, Theorem 1 and Remark 4, and
-Integers 26, A98, Theorem 1 and Remark 3. All three polynomial families,
-the m+1 shift, ordinary floor-and-inverse continued fractions, and the
-common eventual threshold are retained. Only the R conjunct is needed
-for the refutation. The other root branches are not asserted separately.
 
-proof_shape: result: bind-only (external open-problem resolution).
-admission_basis: open-problem-resolution, issue #28129.
-All private lemmas are consumed by result or by a consumed private lemma;
-they organize algebra and modular arithmetic, not new upstream results.
--/
 
 /-- The source triangular number, as a real. -/
 noncomputable def triangular (j : ℕ) : ℝ := (j : ℝ) * ((j : ℝ) + 1) / 2
@@ -114,7 +119,7 @@ private theorem r_failure (n : ℕ) (hres : parameter n % 7 = 4)
       ((2 * (m : ℝ) + 1) * (2 * (m : ℝ) + 2) / 2 +
         (1 + (m : ℝ) * ((m : ℝ) + 1) / 2) * x) = 0 := by
     have hsq := (sq_eq_zero_iff).mp hroot
-    simpa [rOdd, triangular, m, hshift, Nat.cast_add, Nat.cast_mul] using hsq
+    simpa [rOdd, triangular, m, hshift, Nat.cast_add, Nat.cast_mul, add_assoc] using hsq
   have hy : y - 4 = (2 * (m : ℝ) - 6) / ((m : ℝ) ^ 2 + m + 2) := by
     apply (eq_div_iff (ne_of_gt hD)).2
     dsimp [y]
@@ -140,7 +145,6 @@ private theorem r_failure (n : ℕ) (hres : parameter n % 7 = 4)
   have hnext : (Int.fract (y - 4)⁻¹)⁻¹ = ((m : ℝ) - 3) / 7 := by
     rw [Int.fract, hf1, hinv]
     simp only [add_sub_cancel_left, inv_div]
-    rfl
   have hf2 : (⌊((m : ℝ) - 3) / 7⌋ : ℝ) = (⌊(m : ℝ) / 7⌋ : ℝ) - 1 := by
     have h := (hp 2 (by simp [rDigits])).1
     change (⌊completeQuotient y 2⌋ : ℝ) = (⌊(m : ℝ) / 7⌋ : ℝ) - 1 at h
