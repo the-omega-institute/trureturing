@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S1.Recurrence.Periodic;
 internal sealed class BalaA281440TotientSquarePeriodDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S1/Recurrence/Periodic/BalaA281440TotientSquarePeriod.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/RecurrenceComposition/bala2026totientsquareperiod");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/ArithUnits/bala2026totientsquareperiod");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Totient-square periods of integral derivation coefficients.",

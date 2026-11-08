@@ -31,18 +31,6 @@ internal sealed class SchroderIntegralEGFDocument : IScribeDocumentDefinition
                 + "f(j,m)=f(j-1,m)+m(f(j,m-1)+f(j+1,m-1)). "
                 + "Recursion first decreases m, then j; all values are natural numbers.",
                 AssessedProvenance.FromLiterature(Source)),
-            Describe.Lean(DescribeId.Create("schroder-primitive"),
-                DeclarationHandle.Create(Prefix + "primitive"), H("Formal primitive"),
-                StatementSource.FromAuthor(PrimitiveFormula0()), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The formal primitive divides the preceding coefficient by its positive degree and has constant coefficient zero."))), DescribeRole.Definition),
-            Describe.Lean(DescribeId.Create("schroder-primitive-zero"),
-                DeclarationHandle.Create(Prefix + "primitive_zero"), H("Zero constant coefficient"),
-                StatementSource.FromAuthor(PrimitiveFormula1()), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The primitive starts at zero."))), DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("schroder-derivative-primitive"),
-                DeclarationHandle.Create(Prefix + "derivative_primitive"), H("Derivative of the primitive"),
-                StatementSource.FromAuthor(PrimitiveFormula2()), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("Differentiating cancels each positive degree denominator."))), DescribeRole.Theorem),
             Note("Original", "The original integral equation",
                 "A has constant coefficient one and satisfies "
                 + "A=1+Integral ((x/A)' / (x/A^2)') dx. Integration is formal, "
@@ -115,11 +103,4 @@ internal sealed class SchroderIntegralEGFDocument : IScribeDocumentDefinition
         DescribeId.Create("a338193-" + (name == "A" ? "series-a" : name.ToLowerInvariant().Replace('_', '-'))),
         DeclarationHandle.Create(Prefix + name), H(title), provenance,
         Blocks(Paragraph(Text(prose))));
-
-    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
-    private static Formula Qualified(string owner, string name) =>
-        Seq(Operatorname, Grp(F.Id(owner)), Dot, Operatorname, Grp(F.Id(name)));
-    private static Formula PrimitiveFormula0() => Disp(Seq(Forall, Sp, Parenthesized(Seq(F.Id("S"), Sp, Colon, Sp, F.Id("PowerSeries"), Sp, Seq(Mathbb, Grp(F.Id("Q"))))), Sp, Comma, Sp, F.Id("primitive"), Sp, F.Id("S"), Sp, Eq, Sp, Qualified("PowerSeries", "mk"), Sp, Parenthesized(Seq(F.Id("fun"), Sp, F.Id("n"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))), Sp, Mapsto, Sp, F.Id("if"), Sp, F.Id("n"), Sp, Eq, Sp, D(0), Sp, F.Id("then"), Sp, D(0), Sp, F.Id("else"), Sp, Qualified("PowerSeries", "coeff"), Sp, Parenthesized(Seq(F.Id("n"), Sp, Minus, Sp, D(1))), Sp, F.Id("S"), Sp, Slash, Sp, Parenthesized(Seq(F.Id("n"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("Q")))))))));
-    private static Formula PrimitiveFormula1() => Disp(Seq(Forall, Sp, Parenthesized(Seq(F.Id("S"), Sp, Colon, Sp, F.Id("PowerSeries"), Sp, Seq(Mathbb, Grp(F.Id("Q"))))), Sp, Comma, Sp, Qualified("PowerSeries", "constantCoeff"), Sp, Parenthesized(Seq(F.Id("primitive"), Sp, F.Id("S"))), Sp, Eq, Sp, D(0)));
-    private static Formula PrimitiveFormula2() => Disp(Seq(Forall, Sp, Parenthesized(Seq(F.Id("S"), Sp, Colon, Sp, F.Id("PowerSeries"), Sp, Seq(Mathbb, Grp(F.Id("Q"))))), Sp, Comma, Sp, Qualified("PowerSeries", "derivative"), Sp, Parenthesized(Seq(F.Id("primitive"), Sp, F.Id("S"))), Sp, Eq, Sp, F.Id("S")));
 }
