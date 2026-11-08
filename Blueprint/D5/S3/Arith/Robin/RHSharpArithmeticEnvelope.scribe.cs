@@ -32,20 +32,20 @@ internal sealed class RHSharpArithmeticEnvelopeDocument : IScribeDocumentDefinit
                 Blocks(
                     Paragraph(Text(
                         "Let D(x)=sqrt(x)*log(x), M=firstLiMass and "
-                        + "B(x)=Mertens.E₃(x)+log(log(theta(x)))-log(log(x)). Under RH, the original conclusion "
+                        + "B(x)=Mertens.E₃(x)+log(log(theta(x)))-log(log(x)). Under RH, the conclusion "
                         + "has three clauses. For every epsilon>0, eventually for ALL real x, theta(x)>1 and "
                         + "abs(D(x)*B(x)+2)<M+epsilon. For every epsilon>0 and real Y there is a real "
                         + "x>=max(2,Y) with theta(x)>1 and abs(D(x)*B(x)+2+M)<epsilon. Finally "
-                        + "Filter.liminf (fun x:Real => D(x)*B(x)) atTop=-2-M. No upper endpoint attainment, "
-                        + "RH proof, finite-5040 closure or all-integer Robin conclusion is part of this result.")),
+                        + "Filter.liminf (fun x:Real => D(x)*B(x)) atTop=-2-M. This states the lower endpoint; "
+                        + "upper endpoint attainment and integer Robin conclusions require further results.")),
                     Paragraph(Text(
                         "Use w(t)=ActualRobinClockCovariance.activationDensity(t)=(log(t)+1)/(t^2*log(t)^2), "
                         + "Jpsi(x)=integral_(t>x)(psi(t)-t)*w(t), S(x)=integral_(t>x)(psi(t)-theta(t))*w(t), "
                         + "and N(x)=log(log(theta(x)))-log(log(x))-(theta(x)-x)/(x*log(x)). All tails are the "
-                        + "actual infinite Lebesgue tails. CompleteMertensPeak.complete_mertens_ledger pays "
+                        + "actual infinite Lebesgue tails. CompleteMertensPeak.complete_mertens_ledger supplies "
                         + "the actual psiErrorKernel L1 premise and weighted integrability. The identity "
                         + "psiErrorKernel*r=(psi-t)*w is algebraic. CompleteChebyshevTailIdentity, followed "
-                        + "by algebra with the PUBLIC U, gives Q(x)=-U(x)/x for every x>=2, hence "
+                        + "by algebra with U, gives Q(x)=-U(x)/x for every x>=2, hence "
                         + "sqrt(x)*Q(x)=-G(log(x)). Inclusive finite Mangoldt sums remain intact.")),
                     Paragraph(Text(
                         "Apply WeightedTailTransport.transport_exp to this actual kernel, using "
@@ -56,20 +56,20 @@ internal sealed class RHSharpArithmeticEnvelopeDocument : IScribeDocumentDefinit
                         + "integrableOn_exp_mul_Ioi and integral_exp_mul_Ioi at coefficient -1/2, give "
                         + "abs(T(y))<=2*C*W(y)*exp(-y/2). The signed boundary is "
                         + "D(exp(y))*Jpsi(exp(y))+G(y)=-G(y)/y-exp(y/2)*y*T(y), so its absolute value "
-                        + "is at most C*(3/y+4/y^2), which tends to zero. This directly consumes the existing "
-                        + "absolute-Fubini transport; it does not reprove triangular Fubini or Abel summation.")),
+                        + "is at most C*(3/y+4/y^2), which tends to zero. This uses the "
+                        + "absolute-Fubini transport.")),
                     Paragraph(Text(
-                        "The public Schoenfeld supplier gives abs(psi(x)-x)<=(7/8)*sqrt(x)*log(x)^2 "
+                        "The Schoenfeld estimate gives abs(psi(x)-x)<=(7/8)*sqrt(x)*log(x)^2 "
                         + "for every real x>=5000 under RH. Chebyshev.psi_sub_theta_le_mul_sqrt supplies "
-                        + "psi(x)-theta(x)<=C*sqrt(x), with theta<=psi. The consumed private theta_error "
+                        + "psi(x)-theta(x)<=C*sqrt(x), with theta<=psi. The theta error "
                         + "therefore bounds abs((theta(x)-x)/x^(3/4)) by "
                         + "(7/8)*log(x)^2/x^(1/4)+C/x^(1/4). The root Mathlib API "
                         + "isLittleO_log_rpow_rpow_atTop, with r=2 and s=1/4, makes this tend to zero. "
-                        + "Both N_limit and theta_late consume this same theta_error(hRH). Multiplication "
+                        + "This estimate also controls the nonlinear remainder below. Multiplication "
                         + "by x^(-1/4) gives (theta(x)-x)/x->0, hence theta(x)/x->1 and eventually "
-                        + "theta(x)>1. No zero-abscissa or root-limit supplier is exposed.")),
+                        + "theta(x)>1.")),
                     Paragraph(Text(
-                        "For the private psi-theta root-rate helper, apply the same public Schoenfeld "
+                        "For the psi-theta root rate, apply the same public Schoenfeld "
                         + "bound at sqrt(x). The actual Costa-Pereira inequalities with exponents "
                         + "1/2,1/3,1/5 above and 1/2,1/3,1/7 below imply "
                         + "abs(psi(x)-theta(x)-sqrt(x))<=abs(psi(sqrt(x))-sqrt(x))"
@@ -79,8 +79,8 @@ internal sealed class RHSharpArithmeticEnvelopeDocument : IScribeDocumentDefinit
                         + "abs(log(x)*((psi(x)-theta(x))/sqrt(x)-1))<="
                         + "(7/32)*log(x)^3/x^(1/4)+C*log(x)/x^(1/6)+C*log(x)/x^(3/10). "
                         + "The root power-log API makes each term tend to zero. Multiply this actual rate "
-                        + "by 1/log(x), cancelling only eventually where x>1, to obtain the consumed "
-                        + "private psi_theta_root_limit_of_rh. S_limit(hRH) uses that local limit. "
+                        + "by 1/log(x), cancelling only eventually where x>1, to obtain the "
+                        + "limit (psi-theta)/sqrt->1 used in the square-root tail estimate. "
                         + "These are consequences of RH, not additional root-rate or error premises.")),
                     Paragraph(Text(
                         "For the nonlinear term put delta=theta(x)-x, L=log(x), u=delta/x and "
@@ -107,10 +107,10 @@ internal sealed class RHSharpArithmeticEnvelopeDocument : IScribeDocumentDefinit
                         "ThetaTailRobinWitness.theta_tail_mertens_robin supplies the actual theta-tail "
                         + "integrability and exact equality -(integral(theta-t)*w)=E₂p-(theta-x)/(x*log(x)). "
                         + "Subtracting actual integrable tails gives Jpsi-S=(theta-x)/(x*log(x))-E₂p, hence "
-                        + "B=Jpsi-S+(E₃+E₂p)+N. The consumed LOCAL finite cancellation is "
+                        + "B=Jpsi-S+(E₃+E₂p)+N. The finite cancellation is "
                         + "E₃+E₂p=sum_(n in Ioc(0,floorNat(x)))M_eq_summand(n)-(Mertens.M-Mertens.γ). "
-                        + "The public sum_M_eq_summand_le' bounds its absolute value by 4/x; normalized it "
-                        + "is bounded by 4*log(x)/sqrt(x)->0. No new Third lemma or repin is needed.")),
+                        + "The estimate sum_M_eq_summand_le' bounds its absolute value by 4/x; normalized it "
+                        + "is bounded by 4*log(x)/sqrt(x)->0.")),
                     Paragraph(Text(
                         "The resulting signed limit is D(x)*B(x)+2+G(log(x))->0 on ALL real endpoints. "
                         + "Combine this with the actual_G_control envelope and theta_late(hRH) for the first clause. For lower "
@@ -121,7 +121,7 @@ internal sealed class RHSharpArithmeticEnvelopeDocument : IScribeDocumentDefinit
                         + "eventual lower and upper boundedness of D*B. The nontrivial atTop filter and the "
                         + "upper bound give IsCoboundedUnder (>=). Apply le_liminf_iff using the lower "
                         + "epsilon envelope, and liminf_le_iff using the arbitrarily-late witnesses converted "
-                        + "to frequently_atTop. No boundedness or nonempty hypothesis is assumed."))),
+                        + "to frequently_atTop."))),
                 DescribeRole.Theorem))));
 
     private static Formula Real => Seq(Mathbb, Grp(F.Id("R")));
