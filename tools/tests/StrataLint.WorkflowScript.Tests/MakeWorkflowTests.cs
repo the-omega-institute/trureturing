@@ -334,7 +334,8 @@ public sealed partial class MakeWorkflowTests
     }
 
     private static int RecipeCount(string makefile, string target) =>
-        RecipeLines(makefile, target).Count;
+        RecipeLines(makefile, target)
+            .Count(static line => !line.StartsWith("\t\t", StringComparison.Ordinal));
 
     private static string Recipe(string makefile, string target) =>
         Assert.Single(RecipeLines(makefile, target));
