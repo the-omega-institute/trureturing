@@ -105,16 +105,15 @@ internal sealed class ChangShrockToroidalHoneycombDocument : IScribeDocumentDefi
                     + "double-block states.", true),
             Definition("alternatingVector", Width(Eq(Call("alternatingVector", X("L")),
                 Seq(Script(Sum, "s", At(Q("Equiv", "Perm"), Sites())), Sp,
-                    At(Q("Finsupp", "single"), Call("singletonState", X("s")),
+                    At(Q("Finsupp", "single"), At(Q("Subtype", "mk"), At(Q("Equiv", "toFun"), X("s")),
+                        At(Q("Or", "inl"), At(Q("Exists", "intro"), X("s"), N("rfl")))),
                         Parenthesized(Seq(At(Q("Int", "cast"), At(Q("Units", "val"),
                             At(Q("Equiv", "Perm", "sign"), X("s")))),
                             Colon, Sp, N("Coeff"))))))),
                 "Equiv.Perm.sign takes values in ℤˣ. Units.val gives its "
                     + "integer value, "
-                + "and Int.cast embeds it in Coeff. The original private "
-                    + "singletonState s is "
-                + "Subtype.mk (Equiv.toFun s) (Or.inl (Exists.intro s rfl)). "
-                    + "Thus the formula "
+                + "and Int.cast embeds it in Coeff. The basis state is the native singleton state "
+                    + "Subtype.mk (Equiv.toFun s) (Or.inl (Exists.intro s rfl)); thus the formula "
                 + "uses exactly the native singleton state and Finsupp.single of "
                     + "the definition. "
                 + "The identity permutation contributes one; all other "

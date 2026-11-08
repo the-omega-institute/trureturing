@@ -182,7 +182,7 @@ Equation (2.35) defines T=(V Htwo)(V Hone). The operator acts on the full native
 
 **Definition 1.14 (alternatingVector).**
 
-$$\forall (L: \mathbb{N}), ([\operatorname{NeZero}\left(L\right)] \operatorname{alternatingVector}\left(L\right) = \sum_{s \in \operatorname{Equiv}.\operatorname{Perm}\left(\operatorname{Fin}\left(L\right)\right)} \operatorname{Finsupp}.\operatorname{single}\left(\operatorname{singletonState}\left(s\right), (\operatorname{Int}.\operatorname{cast}\left(\operatorname{Units}.\operatorname{val}\left(\operatorname{Equiv}.\operatorname{Perm}.\operatorname{sign}\left(s\right)\right)\right): \operatorname{Coeff})\right))$$
+$$\forall (L: \mathbb{N}), ([\operatorname{NeZero}\left(L\right)] \operatorname{alternatingVector}\left(L\right) = \sum_{s \in \operatorname{Equiv}.\operatorname{Perm}\left(\operatorname{Fin}\left(L\right)\right)} \operatorname{Finsupp}.\operatorname{single}\left(\operatorname{Subtype}.\operatorname{mk}\left(\operatorname{Equiv}.\operatorname{toFun}\left(s\right), \operatorname{Or}.\operatorname{inl}\left(\operatorname{Exists}.\operatorname{intro}\left(s, \operatorname{rfl}\right)\right)\right), (\operatorname{Int}.\operatorname{cast}\left(\operatorname{Units}.\operatorname{val}\left(\operatorname{Equiv}.\operatorname{Perm}.\operatorname{sign}\left(s\right)\right)\right): \operatorname{Coeff})\right))$$
 
 *Formalization.* `D5/S3/StatisticalMechanics/Potts/ChangShrockToroidalHoneycomb.alternatingVector` (`✓ std3`).
 
@@ -192,7 +192,7 @@ $$\forall (L: \mathbb{N}), ([\operatorname{NeZero}\left(L\right)] \operatorname{
 
 *Commentary.*
 
-Equiv.Perm.sign takes values in ℤˣ. Units.val gives its integer value, and Int.cast embeds it in Coeff. The original private singletonState s is Subtype.mk (Equiv.toFun s) (Or.inl (Exists.intro s rfl)). Thus the formula uses exactly the native singleton state and Finsupp.single of the definition. The identity permutation contributes one; all other permutations give different labelled singleton diagrams.
+Equiv.Perm.sign takes values in ℤˣ. Units.val gives its integer value, and Int.cast embeds it in Coeff. The basis state is the native singleton state Subtype.mk (Equiv.toFun s) (Or.inl (Exists.intro s rfl)); thus the formula uses exactly the native singleton state and Finsupp.single of the definition. The identity permutation contributes one; all other permutations give different labelled singleton diagrams.
 
 **Theorem 1.15 (alternatingVector_ne_zero).**
 

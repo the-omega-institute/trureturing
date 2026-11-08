@@ -36,10 +36,6 @@ $$\forall (L: \mathbb{N}), ((2 \le L) \to (\exists (w: \operatorname{Space}\left
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/Potts/ChangShrockToroidalSquare.result` (`✓ std3`). ∎
 
-*Resolves.* `Problems/changshrock2005square` (proved) by `D5/S3/StatisticalMechanics/Potts/ChangShrockToroidalSquare.result`.
-
-<!-- scribe-open-problem-resolution-v1 {"problem_slug":"changshrock2005square","declaration_gid":"D5/S3/StatisticalMechanics/Potts/ChangShrockToroidalSquare.result","resolution_kind":"proved"} -->
-
 *Source.* Repository-derived.
 
 *Acknowledgement.* Shu-Chiuan Chang and Robert Shrock (2005). *Transfer Matrices for the Partition Function of the Potts Model on Toroidal Lattice Strips*. DOI: [10.1016/j.physa.2005.08.076](https://doi.org/10.1016/j.physa.2005.08.076). URL: <https://arxiv.org/abs/cond-mat/0506274v1>.
