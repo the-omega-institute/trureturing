@@ -83,4 +83,5 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   options := #[]
 
 #print axioms audit
+end
 end Reg.D5.S3.Combinatorics.BinomialBases.MatharA001722
