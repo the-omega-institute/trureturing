@@ -14,7 +14,7 @@ import Mathlib.Tactic.Ring
 
 /-!
 admission_basis: open-problem-resolution (#28063; Proved)
-escape_witness: the signed singleton sum is killed by each cyclic join.
+escape_witness: none; admission uses the external open-problem resolution.
 direct_frozen_dependencies: none
 Coeff: proof_shape=definition; consumers=q,v,Space
 q: proof_shape=definition; consumers=detach,result
@@ -36,12 +36,12 @@ alternatingVector_ne_zero: proof_shape=bind-only; consumers=result
 detach_singleton: proof_shape=bind-only; consumers=vertical_singleton
 update_swap: proof_shape=bind-only; consumers=join_singleton_swap
 join_singleton_swap: proof_shape=bind-only; consumers=join_alternating
-join_alternating: proof_shape=content; consumers=horizontal_alternating
-list_prod_on_vector: proof_shape=content; consumers=vertical_singleton,horizontal_alternating
+join_alternating: proof_shape=bind-only; consumers=horizontal_alternating
+list_prod_on_vector: proof_shape=bind-only; consumers=vertical_singleton,horizontal_alternating
 vertical_singleton: proof_shape=bind-only; consumers=vertical_alternating
 vertical_alternating: proof_shape=bind-only; consumers=result
 horizontal_alternating: proof_shape=bind-only; consumers=result
-result: proof_shape=content; consumers=registered claim #28063
+result: proof_shape=bind-only; consumers=registered claim #28063
 -/
 
 set_option autoImplicit false

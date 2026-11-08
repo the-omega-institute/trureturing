@@ -106,9 +106,9 @@ def registration :
   sourceSelection := some {
     owner := `D5.S3.StatisticalMechanics.Potts.ChangShrockToroidalHoneycomb
     definition := none
-    coordinates := #[0, 1, 2]
+    coordinates := #[0]
     readouts := #[{
-      path := #["body", "body", "body", "body", "arg", "body", "arg", "arg", "fn", "arg"]
+      path := #["body", "body", "body", "arg", "body", "arg", "fn", "arg"]
       stateBinder := 3
       functionOperand := false
       stateOperand := none
