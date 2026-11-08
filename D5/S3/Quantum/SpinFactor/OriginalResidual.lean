@@ -32,7 +32,7 @@ private def rotationLinear (R : TwoAxisFiniteRotation.Orthogonal) : Vec →ₗ[�
 private theorem rotation_dot (R : TwoAxisFiniteRotation.Orthogonal) (x y : Vec) :
     dot (rotate R x) (rotate R y) = dot x y := by
   have h := R.inner_map_map (WithLp.toLp 2 x) (WithLp.toLp 2 y)
-  simpa [dot, rotate, PiLp.inner_apply, RCLike.inner_apply] using h
+  simpa [dot, rotate, PiLp.inner_apply, Real.inner_apply] using h
 
 private theorem rotation_cross (R : TwoAxisFiniteRotation.Orthogonal)
     (hR : TwoAxisFiniteRotation.determinant R = 1) (x y : Vec) :
@@ -404,10 +404,11 @@ theorem local_full_circle (D : E → E → E) (hP : P2 D) (hPB : PB D)
 private theorem residual_swap (D : E → E → E) (hP : P2 D)
     (e s t : ℝ) (x y : Vec) :
     residual D e t s y x = -residual D e s t x y := by
-  unfold residual
-  rw [p2_skew D hP]
   have hc : cross y x = -cross x y := cross_anticomm x y |>.symm
-  rw [hc, smul_neg]
+  have hc0 : (0, e • cross y x : E) = -(0, e • cross x y) := by
+    apply Prod.ext <;> simp [hc]
+  unfold residual
+  rw [p2_skew D hP, hc0]
   abel
 
 private theorem local_second_circle (D : E → E → E) (hP : P2 D) (hPB : PB D)
@@ -461,8 +462,9 @@ private theorem residual_axes_nonparallel (e : ℝ) (he : e = 1 ∨ e = -1)
   have hwl : dot w l = 0 := by simpa [dot, dotProduct_comm] using hlw
   have hn (v : Vec) : ‖WithLp.toLp 2 v‖ ^ 2 = dot v v := by
     rw [← real_inner_self_eq_norm_sq]
-    simp [dot, PiLp.inner_apply, RCLike.inner_apply]
+    simp [dot, PiLp.inner_apply, Real.inner_apply]
   rw [hn, hn]
+  simp only [PiLp.inner_apply, Real.inner_apply]
   change dot (l + e • w) (l - e • w) ^ 2 <
     dot (l + e • w) (l + e • w) * dot (l - e • w) (l - e • w)
   simp only [dot, add_dotProduct, sub_dotProduct, dotProduct_add, dotProduct_sub,
@@ -538,7 +540,7 @@ private def matrixRotation (M : Matrix (Fin 3) (Fin 3) ℝ)
     intro x y
     change inner ℝ (WithLp.toLp 2 (M *ᵥ WithLp.ofLp x))
       (WithLp.toLp 2 (M *ᵥ WithLp.ofLp y)) = inner ℝ x y
-    simp only [PiLp.inner_apply, RCLike.inner_apply, conj_trivial]
+    simp only [PiLp.inner_apply, Real.inner_apply]
     change (M *ᵥ WithLp.ofLp x) ⬝ᵥ (M *ᵥ WithLp.ofLp y) =
       WithLp.ofLp x ⬝ᵥ WithLp.ofLp y
     rw [Matrix.dotProduct_mulVec, ← Matrix.mulVec_transpose,
@@ -622,7 +624,7 @@ private theorem probe_coordinate_bound (a Q : ℝ) (n z : Vec)
   have h₂ := hfaces 2
   have h₃ := hfaces 3
   simp only [halfSigns, Matrix.cons_val_zero, Matrix.cons_val_one,
-    Matrix.cons_val_two, one_mul, neg_one_mul] at h₀ h₁ h₂ h₃
+    Matrix.cons_val_two, Matrix.cons_val_three, one_mul, neg_one_mul] at h₀ h₁ h₂ h₃
   have hi : |a| + |v i * z i| ≤ Q := by
     fin_cases i
     · apply four_faces a (v 0 * z 0) (v 1 * z 1) (v 2 * z 2) Q
@@ -724,10 +726,10 @@ theorem saturated_support_zero (e δ Z : ℝ) (he : e = 1 ∨ e = -1)
     have hnw : dot n w = 0 := by
       simp [n, dot, smul_dotProduct, add_dotProduct, hcw, hpw, smul_eq_mul]
     have hnp : cross n p = -w := by
-      change (1 / b) • ((c + r • p) ⨯₃ p) = -w
-      rw [map_add, map_smul, hpp, smul_zero, add_zero, hcross, smul_smul]
-      field_simp [hb0]
-      simp
+      change ((1 / b) • (c + r • p)) ⨯₃ p = -w
+      rw [map_smul, map_add, map_smul, hpp, smul_zero, add_zero, hcross, smul_smul]
+      have hcoef : (1 / b) * (-b) = -1 := by field_simp [hb0]
+      rw [hcoef, neg_one_smul]
     have hf := hbound n hnn
     rw [hnw, hnp] at hf
     simpa [vnorm, dot] using support_zero_case δ Z hZ (by simpa [vnorm, dot] using hf)
@@ -738,7 +740,6 @@ theorem saturated_support_zero (e δ Z : ℝ) (he : e = 1 ∨ e = -1)
     have test (σ : ℝ) (hσ : σ = 1 ∨ σ = -1) :
         |δ + e * (σ * J)| + Z ≤ J := by
       let n := (1 / a) • (c + (σ * J) • w)
-      have hσ2 : σ ^ 2 = 1 := by rcases hσ with rfl | rfl <;> norm_num
       have hnn : dot n n = 1 := by
         simp only [n, dot, smul_dotProduct, dotProduct_smul, add_dotProduct,
           dotProduct_add, smul_eq_mul]
@@ -753,10 +754,10 @@ theorem saturated_support_zero (e δ Z : ℝ) (he : e = 1 ∨ e = -1)
         simp only [n, dot, smul_dotProduct, add_dotProduct, smul_eq_mul]
         change (1 / a) * (dot c w + (σ * J) * a) = σ * J
         rw [hcw]
-        field_simp
+        field_simp [ha0]
       have hnp : cross n p = (1 / a) • (-b • w + (σ * J) • c) := by
-        change (1 / a) • ((c + (σ * J) • w) ⨯₃ p) = _
-        rw [map_add, map_smul, hcross]
+        change ((1 / a) • (c + (σ * J) • w)) ⨯₃ p = _
+        rw [map_smul, map_add, map_smul, hcross]
         rfl
       have hnorm : vnorm (w + cross n p) = J := by
         rw [hnp]
@@ -828,7 +829,8 @@ private theorem unit_evaluation_bound (D : E → E → E) (hP : P2 D)
     rw [hsym]
     ring
   have hb := p2_determinant_bound D hP α a b
-  rw [hj, hj, hj, hgram] at hb
+  simp only [hj] at hb
+  rw [hgram] at hb
   simpa only [evaluate, α, one_mul] using hb
 
 private theorem orbit_evaluation_bound (D : E → E → E) (hP : P2 D) (hPB : PB D)
@@ -860,8 +862,9 @@ private theorem orbit_evaluation_bound (D : E → E → E) (hP : P2 D) (hPB : PB
         (residual D e s t x y).1 + e * dot n (cross x y) +
           dot (rotate R n) (residual D e s t x y).2 := by
     rw [hD]
-    simp only [Prod.fst_add, Prod.snd_add, Prod.fst, Prod.snd, add_zero,
-      dot, dotProduct_add, dotProduct_smul, smul_eq_mul]
+    change _ + dot (rotate R n)
+      ((residual D e s t x y).2 + e • rotate R (cross x y)) = _
+    simp only [dot, dotProduct_add, dotProduct_smul, smul_eq_mul]
     change _ + (dot (rotate R n) (residual D e s t x y).2 +
       e * dot (rotate R n) (rotate R (cross x y))) = _
     rw [rotation_dot]
