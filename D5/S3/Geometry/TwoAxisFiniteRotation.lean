@@ -8,10 +8,13 @@
 
 import Mathlib.Analysis.InnerProductSpace.PiL2
 import Mathlib.Analysis.InnerProductSpace.Projection.FiniteDimensional
+import Mathlib.Analysis.InnerProductSpace.Projection.Submodule
 import Mathlib.Analysis.Normed.Module.Connected
 import Mathlib.Topology.Connected.Clopen
 import Mathlib.Algebra.BigOperators.Group.List.Basic
 import Mathlib.Tactic
+
+/-! Exact algebraic generation of rotations and fixed-output moving-axis transport. -/
 
 noncomputable section
 
@@ -119,7 +122,7 @@ private theorem unit_perpendicular_pair (a b : Space) :
   classical
   let P : Submodule ℝ Space := Submodule.span ℝ ({a, b} : Set Space)
   have hdim : finrank ℝ P ≤ 2 := by
-    simpa only [P, Finset.coe_insert, Finset.coe_singleton] using
+    simpa only [P, Set.finrank, Finset.coe_insert, Finset.coe_singleton] using
       (finrank_span_finset_le_card (R := ℝ) ({a, b} : Finset Space)).trans
         Finset.card_le_two
   have hne : Pᗮ ≠ ⊥ := by
@@ -198,22 +201,25 @@ private theorem intersect_latitudes {a b : Space} (ha : ‖a‖ = 1) (hb : ‖b�
       unit_inner_self ha, unit_inner_self hb, real_inner_comm b a]
     ring
   have hbe : ⟪b, e⟫_ℝ = 0 := by
-    simp [e, d, inner_sub_right, real_inner_smul_right, unit_inner_self hb, real_inner_comm b a]
+    simp [e, d, inner_sub_right, real_inner_smul_right, hb, real_inner_comm b a]
   have hae : ⟪a, e⟫_ℝ = q := by
-    simp [e, q, d, inner_sub_right, real_inner_smul_right, unit_inner_self ha, pow_two]
+    simp [e, q, d, inner_sub_right, real_inner_smul_right, ha, pow_two]
   have hen : ⟪e, n⟫_ℝ = 0 := by
     simp [e, inner_sub_left, real_inner_smul_left, han, hbn]
+  have heb : ⟪e, b⟫_ℝ = 0 := (real_inner_comm e b).trans hbe
+  have hnb : ⟪n, b⟫_ℝ = 0 := (real_inner_comm n b).trans hbn
+  have hne : ⟪n, e⟫_ℝ = 0 := (real_inner_comm n e).trans hen
   have hct : c * q = t - d ^ 2 := div_mul_cancel₀ _ (ne_of_gt hq)
   refine ⟨d • b + c • e + z • n, ?_, ?_, ?_⟩
   · have hi : ⟪d • b + c • e + z • n, d • b + c • e + z • n⟫_ℝ = 1 := by
       simp only [inner_add_left, inner_add_right, real_inner_smul_left, real_inner_smul_right,
-        unit_inner_self hb, unit_inner_self hn, hbe, hbn, hen,
-        real_inner_comm e b, real_inner_comm n b, real_inner_comm n e]
+        unit_inner_self hb, unit_inner_self hn, hbe, hbn, hen, heb, hnb, hne,
+        mul_zero, zero_mul, add_zero, zero_add, mul_one]
       rw [he]
       nlinarith [hz, hdq]
     rw [real_inner_self_eq_norm_sq] at hi
     nlinarith [norm_nonneg (d • b + c • e + z • n)]
-  · simp [inner_add_right, real_inner_smul_right, unit_inner_self hb, hbe, hbn, d,
+  · simp [inner_add_right, real_inner_smul_right, hb, hbe, hbn, d,
       real_inner_comm b a]
   · simp only [inner_add_right, real_inner_smul_right, hae, han, mul_zero, add_zero]
     change d * d + c * q = t
@@ -266,7 +272,7 @@ private theorem sphere_orbit {a b : Space} (ha : ‖a‖ = 1) (hb : ‖b‖ = 1)
       rw [← hRv]
       simpa using (R.isometry.dist_eq a (R⁻¹ (z : Space))).symm
     obtain ⟨S, hS, hSx⟩ := hnear (R⁻¹ (z : Space))
-      (by simpa using hnorm z) (by simpa only [hd] using hz)
+      (by simpa using hnorm z) (by rw [hd]; exact hz)
     refine ⟨R * S, (wordGroup a b).mul_mem hR hS, ?_⟩
     change R (S a) = (z : Space)
     rw [hSx]
@@ -283,7 +289,7 @@ private theorem sphere_orbit {a b : Space} (ha : ‖a‖ = 1) (hb : ‖b‖ = 1)
     rw [← Module.finrank_eq_rank]
     norm_num [Space]
   letI : PreconnectedSpace Sphere := isPreconnected_iff_preconnectedSpace.mp
-    (NormedSpace.isPreconnected_sphere hrank (0 : Space) 1)
+    (_root_.NormedSpace.isPreconnected_sphere hrank (0 : Space) 1)
   have hU : U = Set.univ := (show IsClopen U from ⟨isOpen_compl_iff.mp hcompl, hopen⟩).eq_univ
     ⟨⟨a, by simpa only [Metric.mem_sphere, dist_zero_right] using ha⟩,
       1, (wordGroup a b).one_mem, rfl⟩
@@ -336,8 +342,7 @@ theorem two_axis_finite_word (a b : Space)
       dsimp [a', b']
       simp only [real_inner_smul_left, real_inner_smul_right]
       field_simp [ha, hb] <;> ring
-    apply (mul_lt_mul_right hp).mp
-    simpa only [hd, one_mul] using hab
+    nlinarith [hd]
   obtain ⟨l, hl, he⟩ := unit_axes_generate ha' hb' hab' R hR
   refine ⟨l, ?_, he⟩
   intro S hS
