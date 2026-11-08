@@ -134,6 +134,7 @@ import Mathlib.Tactic.Tauto
 public import Mathlib.RingTheory.PowerSeries.Basic
 /-! Three rows with horizontal and diagonal complementary-pair exclusion. -/
 public section
+set_option Elab.async false
 open scoped BigOperators
 namespace D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233176Ladder
 open HardinA233175PairStrip
@@ -544,7 +545,6 @@ local macro "check_states" : tactic => `(tactic| {
     | (intro x y z h; exfalso
        rcases h with ⟨htq, hqb, hbr, hrc, _, _, _⟩; omega)
     | (intro x; fin_cases x <;> decide +kernel) })
-set_option Elab.async false
 set_option maxRecDepth 100000
 set_option maxHeartbeats 100000000
 private theorem moves_certificate : ∀ q r t b c p, Valid q r t b c p →
@@ -717,7 +717,6 @@ local macro "check_step" : tactic => `(tactic| {
   rw [step_fast _ q r t b c p h]
   revert q r t b c p
   check_states })
-set_option Elab.async false
 set_option maxRecDepth 100000
 set_option maxHeartbeats 100000000
 private theorem table_base : ∀ q r t b c p, Valid q r t b c p →

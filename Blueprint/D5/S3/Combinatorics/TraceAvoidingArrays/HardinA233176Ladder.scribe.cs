@@ -80,11 +80,13 @@ internal sealed class HardinA233176LadderDocument : IScribeDocumentDefinition
         Formula Rank(Formula x) => Add(Mul(Val(Call("Prod.fst", x)), n),
             Val(Call("Prod.snd", x)));
         Formula Earlier(byte colour) => Ex("q", cells,
-            And(Lt(Rank(q), Rank(p)), Eq(App(a, q), D(colour))));
+            And(Lt(Rank(q), Rank(p)), Eq(App(a, q), Typed(D(colour), Fin(D(6))))));
         var current = App(a, p);
         var condition = All("p", cells, And(
-            Imp(Or(Eq(current, D(2)), Or(Eq(current, D(3)), Eq(current, D(4)))), Earlier(1)),
-            Imp(Eq(current, D(3)), Earlier(2))));
+            Imp(Or(Eq(current, Typed(D(2), Fin(D(6)))),
+                Or(Eq(current, Typed(D(3), Fin(D(6)))),
+                    Eq(current, Typed(D(4), Fin(D(6)))))), Earlier(1)),
+            Imp(Eq(current, Typed(D(3), Fin(D(6)))), Earlier(2))));
         return All("n", Q("Nat"), All("A", Arrow(cells, Fin(D(6))),
             Iff(Own("normal", a), condition)));
     }
@@ -95,7 +97,8 @@ internal sealed class HardinA233176LadderDocument : IScribeDocumentDefinition
         var r = V("r"); var s = V("s"); var h = V("h");
         var cells = Product(Fin(D(3)), Fin(n));
         var first = Ex("j", Fin(n),
-            And(Eq(Val(j), D(0)), Eq(App(a, Pair(D(0), j)), D(0))));
+            And(Eq(Val(j), D(0)), Eq(App(a, Pair(Typed(D(0), Fin(D(3))), j)),
+                Typed(D(0), Fin(D(6))))));
         var adjacent = And(Le(Val(r), Add(Val(s), D(1))),
             Le(Val(s), Add(Val(r), D(1))));
         var here = App(a, Pair(r, j));
