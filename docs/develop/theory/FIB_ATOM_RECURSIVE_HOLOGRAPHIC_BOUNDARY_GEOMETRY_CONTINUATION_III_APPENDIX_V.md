@@ -918,3 +918,202 @@ Finally, for the original soft readout, $f_B=p$ in Definition 211.1, so the cent
 
 
 ## 追加锚（本行以下为增补区）
+
+## 216. An original later marginal varies inside one exact positive hard fiber
+
+**Definition 216.1 (the original later one-time coordinate).** Retain exactly Definition 211.1 and the functions $X$, number $t_0$ and tensor $R$ of Theorem 212.1. For an integer $j\ge3$ and a pointwise whole-$G$ Borel simplex tuple $u$, put
+
+$$
+ M_j(u)=\int_G g_j u_0\,dm,
+ \qquad g_j=P^jg=g_{(2+j)d}.
+ \tag{216.1}
+$$
+
+For a deterministic whole-$G$ Borel partition $D$, write $M_j(D)=M_j(\mathbf1_D)$. By Appendix II Theorem 117.2, this is the probability of label $0$ at the original epoch $(2+j)d$ for the diffusion started at the original source $e$ at time zero. The partition is held fixed at every read; neither the source nor the clock is restarted.
+
+**Theorem 216.2 (actual hard future separation at fixed current law).** For every original $\theta=(a,\eta,d,b)$ and every fixed $0<t<t_0(\theta)$, there exist an integer $j\ge3$, a number $\delta>0$, and deterministic pointwise whole-$G$ Borel partitions $D^\lambda$, one for every $|\lambda|<\delta$, such that, with $u^*=u^{(t)}$,
+
+$$
+ \begin{gathered}
+ D^\lambda\in\mathscr F_t,\qquad
+ M_j(D^\lambda)=M_j(u^*)+\lambda
+       \quad(|\lambda|<\delta),\\
+ \mathcal H_{51}(\mathbf1_{D^\lambda})=\mathcal H_{51}(f),\qquad
+ \Delta(D^\lambda)_{yzw}=t^2R_{yzw}
+       \quad((y,z,w)\in\mathcal L^3).
+ \end{gathered}
+ \tag{216.2}
+$$
+
+Here $\mathscr F_t$ is exactly (214.15), and every triple uses its displayed hard partition in all three slots, including its own propagated terminal. In particular, the two actual hard partitions
+
+$$
+ D=D^{\delta/2},\qquad E=D^{-\delta/2}
+ \quad\hbox{satisfy}\quad
+ M_j(D)-M_j(E)=\delta>0.
+ \tag{216.3}
+$$
+
+They have identical H51 and identical complete current three-read law, with BB3 residual exactly $t^2\kappa>0$. Thus even the complete current law together with H51 does not determine all later original one-time marginals on this fixed positive-residual hard fiber. The epoch and the interval may depend on $\theta,t$; the assertion requires neither a prescribed epoch nor a common pair for all future epochs.
+
+*Proof.* Fix arbitrary original $\theta$ and $0<t<t_0$. Retain the original invariant slack set $E_{\rm sl}=E$ of (153.6), writing $E_{\rm sl}$ to distinguish it from the second partition in (216.3). It contains the open rotation lift of the nonempty quotient neighborhood $U\Subset\mathcal Q$. By 212.C, all components of $u^*$ have a common lower bound $\sigma_t>0$ on $E_{\rm sl}$. Retain the sixty-three bounded supported sum-zero directions $e_1,\ldots,e_{63}$ of 212.C and the current map
+
+$$
+ \mathcal J(u)=\left(\mathcal H_{36}(u),
+       (\mathcal C(u_a,u_b,u_c))_{abc\in I^3}\right)\in\mathbb R^{63}.
+ \tag{216.4}
+$$
+
+The actual matrix $A_{\ell k}=D\mathcal J_\ell(u^*)[e_k]$ is invertible by (212.11)--(212.18). This is the rank proved for the original current map, not a new rank hypothesis.
+
+### 216.A. A bounded supported future direction outside the current rows
+
+Every $g_j$ is bounded by $\|g\|_\infty$, by the Markov contraction. It has a real analytic representative on the connected full-measure set $\Omega=\{r>0\}$, by the source propagation identity and Appendix II (122.8)--(122.11). The restricted family
+
+$$
+ (\mathbf1_{E_{\rm sl}}g_j)_{j\ge3}
+ \quad\hbox{is linearly independent in }L^2(E_{\rm sl},m).
+ \tag{216.5}
+$$
+
+Indeed, a finite relation zero almost everywhere on $E_{\rm sl}$ is an analytic function zero almost everywhere on its open subset over $U$. Full support and continuity make it zero throughout that open subset. Analytic uniqueness on connected $\Omega$ makes it zero on $\Omega$, hence in $L^2(G,m)$. The resulting nonzero polynomial relation $q(P)g=0$ contradicts Appendix IV Lemma 169.1 with source time $2d$. This uses orbit independence only, with no claim of source cyclicity or density.
+
+Let $\mathscr V=L^2(E_{\rm sl},m;\mathbb R^I)$ with its real inner product. For a bounded supported triple $h_I=(h_i)_{i\in I}$, always use the compensating component $h_B=-\sum_{i\in I}h_i$. At $u^*$ each current differential has a bounded real Borel density $\rho_\ell\in\mathscr V$:
+
+$$
+ D\mathcal J_\ell(u^*)[h]
+       =\sum_{i\in I}\int_{E_{\rm sl}}\rho_{\ell,i}h_i\,dm,
+ \qquad 1\le\ell\le63.
+ \tag{216.6}
+$$
+
+To see boundedness directly, the marginal rows have densities $g_0,g_1,g_2$. The ordered pair rows have the densities obtained from $g_a vP^k w$ by moving $P^k$ to the other factor, with $(a,k)=(0,1),(0,2),(1,1)$. For the triple row $abc\in I^3$, the density in component $i$ is the restriction to $E_{\rm sl}$ of
+
+$$
+ \mathbf1_{i=a}\,gP(u_b^*Pu_c^*)
+ +\mathbf1_{i=b}\,P(gu_a^*)Pu_c^*
+ +\mathbf1_{i=c}\,P(u_b^*P(gu_a^*)).
+ \tag{216.7}
+$$
+
+Self-adjointness gives the terminal term in (216.7). The Markov bound and $0\le u_y^*\le1$ bound each summand by $\|g\|_\infty$. These expressions also show that (216.6) concerns the full actual operator and the common current tuple in every slot.
+
+Put $V=\operatorname{span}_{\mathbb R}\{\rho_1,\ldots,\rho_{63}\}\subset\mathscr V$. For each $j\ge3$ let $k_j=(g_j,0,0)|_{E_{\rm sl}}$, in the component order $0,1,3$. By (216.5) these vectors are linearly independent. Since $V$ is finite dimensional, choose one integer $j\ge3$ with $k_j\notin V$. Let $\Pi_V$ be the orthogonal projection in $\mathscr V$, and set
+
+$$
+ w=k_j-\Pi_Vk_j,\qquad
+ h_i=\mathbf1_{E_{\rm sl}}w_i\ (i\in I),\qquad
+ h_B=-\sum_{i\in I}h_i,\qquad
+ \gamma=\|w\|_{\mathscr V}^2>0.
+ \tag{216.8}
+$$
+
+The vector $w$ is bounded: $k_j$ is bounded and $\Pi_Vk_j$ is a finite linear combination of the bounded $\rho_\ell$. It has real Borel representatives. Orthogonality gives the exact identities
+
+$$
+ D\mathcal J(u^*)[h]=0,\qquad
+ DM_j(u^*)[h]=\langle k_j,w\rangle_{\mathscr V}
+              =\gamma>0.
+ \tag{216.9}
+$$
+
+Thus this is an actual legal bounded direction with a nonzero future differential, rather than a transversality assumption about arbitrary hard partitions.
+
+### 216.B. A legal sixty-four-dimensional simplex family
+
+Define $\widetilde e_k=e_k$ for $k\le63$ and $\widetilde e_{64}=h$, and put
+
+$$
+ \begin{gathered}
+ u(z)=u^*+\sum_{k=1}^{64}z_k\widetilde e_k,
+ \qquad \mathcal J^+(u)=(\mathcal J(u),M_j(u)),\\
+ F(z)=\mathcal J^+(u(z))-\mathcal J^+(u^*),\qquad
+ \widetilde A=DF(0)
+       =\begin{pmatrix}A&0\\ *&\gamma\end{pmatrix}.
+ \end{gathered}
+ \tag{216.10}
+$$
+
+The matrix $\widetilde A$ is invertible. Choose bounded Borel representatives and a common Borel null set covering the exceptional bounds and sum-zero identities of these finitely many directions. Set the directions equal to zero there, and use the original pointwise simplex representative of $u^*$ there. Outside $E_{\rm sl}$ every direction is zero. On $E_{\rm sl}$, a sufficiently small radius $r>0$ gives
+$\sup_y|\sum_kz_k\widetilde e_{k,y}|<\sigma_t/2$ for $\|z\|_2\le r$ outside the repaired set. Thus $u(z)$ is a pointwise simplex tuple on the whole original $G$ throughout this closed parameter ball. The repairs change no integral. They restrict neither the state space nor the form domain of $K$.
+
+The map $F$ is polynomial, $F(0)=0$, and its derivative at zero is $\widetilde A$. Shrink the legal radius so that
+
+$$
+ \sup_{\|z\|_2\le r}
+       \|z-\widetilde A^{-1}F(z)\|_2<r/3.
+ \tag{216.11}
+$$
+
+### 216.C. Simultaneous exact hard realization of the current and future coordinates
+
+Take increasing finite Borel partitions $\mathcal P_n$ generating the original Borel sigma algebra, and use exactly the common coordinate-quantile construction of 212.D on the entire ball in (216.10). Within each positive-mass cell, nested consecutive coordinate slices have masses $\int_Cu_y(z)\,dm$ in the order $0,1,3,B$. Coordinate hyperplanes are $m$-null because the original $m=h^2\mu$ is absolutely continuous in these coordinates. Thus the slices exist for every parameter, including zero prescribed masses. Assign endpoints consistently and assign zero-mass cells to $B$. This defines deterministic pointwise whole-$G$ Borel partitions $D_n(z)$ with
+
+$$
+ \begin{gathered}
+ \int_C\mathbf1_{D_{n,y}(z)}\,dm=\int_Cu_y(z)\,dm
+       \quad(C\in\mathcal P_n),\\
+ \sum_y m(D_{n,y}(z)\mathbin\triangle D_{n,y}(z'))
+       \le6\sum_y\|u_y(z)-u_y(z')\|_1.
+ \end{gathered}
+ \tag{216.12}
+$$
+
+Retain the original path density $W$ of (212.21), and set
+
+$$
+ W_n=\mathbb E[W\mid\mathcal P_n^{\otimes3}],\qquad
+ g_{j,n}=\mathbb E[g_j\mid\mathcal P_n],\qquad
+ F_n(z)=\mathcal J^+(\mathbf1_{D_n(z)})-\mathcal J^+(u^*).
+ \tag{216.13}
+$$
+
+Both conditional expectations converge in $L^1$ to their respective densities. The cell identities (216.12) make the soft and hard integrals against $W_n$ equal for every current row, and make their label-$0$ integrals against $g_{j,n}$ equal. Consequently
+
+$$
+ \sup_{\|z\|_2\le r}\|F_n(z)-F(z)\|_2
+ \le2\sqrt{63}\,\|W-W_n\|_1
+              +2\|g_j-g_{j,n}\|_1
+ \longrightarrow0.
+ \tag{216.14}
+$$
+
+This is simultaneous approximation of the original current path law and the original later source density, uniformly on the whole legal ball. Each $F_n$ is continuous: (216.12) gives continuity of indicators in $L^1$, telescoping current slot products bounds their changes by the bounded marginals $g_0,g_1,g_2$, and the future integral is bounded by $\|g_j\|_\infty$ times the change in its indicator. No differentiability of a hard partition or of its boundaries is used.
+
+Choose one finite $n$ so that the right side of (216.14), multiplied by $\|\widetilde A^{-1}\|$, is less than $r/3$. Then choose $\delta>0$ so that
+
+$$
+ \|\widetilde A^{-1}(0_{63},\lambda)\|_2<r/3
+       \quad(|\lambda|<\delta).
+ \tag{216.15}
+$$
+
+For every such $\lambda$, the continuous map
+
+$$
+ z\longmapsto z-\widetilde A^{-1}
+                      (F_n(z)-(0_{63},\lambda))
+ \tag{216.16}
+$$
+
+maps the closed radius-$r$ ball into itself, by (216.11), (216.14) and (216.15). Brouwer's closed-ball fixed-point theorem supplies a root $z_\lambda$ with $F_n(z_\lambda)=(0_{63},\lambda)$. Put $D^\lambda=D_n(z_\lambda)$. These are actual deterministic hard partitions, and they satisfy exactly
+
+$$
+ \mathcal J(\mathbf1_{D^\lambda})=\mathcal J(u^*),\qquad
+ M_j(D^\lambda)=M_j(u^*)+\lambda.
+ \tag{216.17}
+$$
+
+The finite $n$ is chosen before the target $\lambda$; no continuity or compatibility of the roots is needed.
+
+### 216.D. Recovery of the complete fixed current law and its chronological consumer
+
+The first thirty-six equations in (216.17) give $\mathcal H_{36}(\mathbf1_{D^\lambda})=\mathcal H_{36}(f)$. Thus both $\Delta(D^\lambda)$ and $\Delta(u^*)=t^2R$ have zero contractions and belong to $H^{\otimes3}$. Their coordinates on $I^3$ agree by the other twenty-seven current equations. Restriction to $I^3$ is injective on $H^{\otimes3}$, as in (212.25), so all sixty-four coordinates agree. Since $R\in\mathcal W_{13}\cap\ker L$, (157.8) and Proposition 211.2 give exact H51. Therefore every $D^\lambda$ lies in exactly $\mathscr F_t$, proving (216.2). Taking the two target values in (216.3) proves their strictly positive marginal difference. By (216.1) it occurs at an actual original integer epoch, in the same source-start process.
+
+The consumer is chronological sufficiency of the exact current-law fiber: equality of every current three-read coefficient, even with H51 fixed, cannot determine this later label probability. The source-orbit escape in 216.A and its simultaneous hard realization in 216.C supply an actual pair; the partition-distance separation in Corollary 214.3 alone and the fixed-hard-versus-soft pair obstruction in Theorem 215.2 do not supply that pair.
+
+This is a repo-derived composition of the original source orbit, the actual current rank in 212.C, and the common hard carrier. The analytic uniqueness intermediary is the identity principle for real analytic functions, also used in Appendix III 153.D; the supplied local analyticity is Appendix II (122.8)--(122.11), with its cited Kotake--Narasimhan regularity theorem. The fixed-point intermediary is L. E. J. Brouwer, *Über Abbildung von Mannigfaltigkeiten*, [doi:10.1007/BF01456931](https://doi.org/10.1007/BF01456931), in the same closed-ball form as 212.D. Finite cell-mass matching is only the linear step; the exact common-partition nonlinear equations follow from (216.10)--(216.17), rather than from a general linear purification theorem. These classical intermediaries are not standalone new theory.
+
+All original source and analytic suppliers retain their inherited scope. This positive-residual result imposes no extra hypothesis on $\theta$ or the admitted representative $b$: replacing $f^0$ by $f$ in target integrals changes no original positive-time law, and every repaired null set is null for all those laws. It leaves universal residual-zero $F_{64}$ attainment or exclusion, origin enclosure, actual compatible summable continuation, physical succession and general instrument or full-history contracts unresolved. $\square$
+
+## 追加锚（本行以下为增补区）
