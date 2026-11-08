@@ -1,0 +1,166 @@
+**定理 81.2（仿射两平方坐标的共同实线性）。** 在 81.1 下，同一旧 $G|_W:W\to V_h$ 实线性，而且对所有原 $v,w\in W$，
+
+$$
+\boxed{G(v)\circ G(w)=v\circ w,\qquad
+v\circ G(w)+G(v)\circ w=0.}
+\tag{81.3}
+$$
+
+因此任意有限原族 $w_1,\ldots,w_n\in W$、任意实数 $t_1,\ldots,t_n$ 都有
+
+$$
+D\left(rh,\sum_{i=1}^nt_iw_i\right)
+=\sum_{i=1}^nt_iD(rh,w_i).
+\tag{81.4}
+$$
+
+特别，全部响应的两点 Jordan Gram 与原两点 Gram 完全相同；混合关系是算子值的斜关系，不要求其中两项各自为零。
+
+证明。已发表的 35.1 已固定同一旧映射 $J_h$；这里仍直接复用 16.3、19.1、20.1，得到整个原 $V_h$ 上的
+
+$$
+\begin{gathered}
+G(v)\in V_h,\quad G(v)^2=v^2,\quad v\circ G(v)=0,\quad G(0)=0,\\
+G(tv)=tG(v)\quad(t\in\mathbb R),\\
+G(\cos\eta\,v+\sin\eta\,G(v))
+=-\sin\eta\,v+\cos\eta\,G(v).
+\end{gathered}
+\tag{81.5}
+$$
+
+这些既有结论不提供任意跨平面可加。21.1 的弱载体证明先写在等平方输入上；所需的标量平方差适配如下单独支付，不改变 21.1 的原陈述。
+
+先取原 $y,z\in V_h$，满足 $y^2-z^2\in\mathbb Ru$。记 $j_y=G(y),j_z=G(z)$ 及 $\ell=1+r^2$。三角卷 (128.6) 的实际 PB $(rh,y,z)$ 位移为 $rj_y,rj_z$；由 (81.5)，右端为零，故同一个原旧值满足
+
+$$
+K=D(y+rj_y,z+rj_z)=D(y-rj_y,z-rj_z).
+\tag{81.6}
+$$
+
+两份实际外层的输入平方各为 $\ell y^2,\ell z^2$，平方差仍是标量。因此 18.1 分别适用于这两份原调用，不能只凭两份输出相同就省略这个前件。置
+
+$$
+P=y\circ z,\quad Q=j_y\circ j_z,\quad
+U=y\circ j_z,\quad V=j_y\circ z,\quad
+T=P+r^2Q,\quad Y=U+V.
+$$
+
+两份准确面积给
+
+$$
+K^2+(T+rY)^2=\ell^2y^2z^2
+=K^2+(T-rY)^2,
+\qquad T\circ Y=0.
+\tag{81.7}
+$$
+
+这里 $y^2-z^2$ 为标量，故 $y^2,z^2$ 交换；两边使用的是同一算子乘积，不是分别选取的最优读取。没有展开未知 $D$ 对和的作用。
+
+分别将 $y,z$ 换成 (81.5) 的原圆标签 $y_\eta,z_\zeta$。每份圆保留自己的平方，所以每对圆标签仍满足标量平方差，(81.6)–(81.7) 对每对都合法，即使圆标签离开 $W$。现在准确复用三角卷 (212.2) 的双线性展开：令
+
+$$
+X_0=P-Q,\quad Y_0=U+V,\quad A_0=P+Q,\quad B_0=U-V,
+\quad a_0=(1+r^2)/2,\quad b_0=(1-r^2)/2>0.
+$$
+
+取独立实角 $\sigma=\eta+\zeta,\delta=\zeta-\eta$，所得关系为
+
+$$
+\left[a_0(A_0\cos\delta+B_0\sin\delta)
++b_0(X_0\cos\sigma+Y_0\sin\sigma)\right]
+\circ(Y_0\cos\sigma-X_0\sin\sigma)=0.
+\tag{81.8}
+$$
+
+比较 $\delta$ 与 $\delta+\pi$，再取 $\sigma=0,\pi/4$，得 $X_0\circ Y_0=0$、$X_0^2=Y_0^2$。分离另一部分，取 $\delta=0$、$\sigma=0,\pi/2$，得 $A_0\circ Y_0=A_0\circ X_0=0$。所以
+
+$$
+P^2=Q^2,\qquad P\circ Y_0=0,\qquad X_0^2=Y_0^2.
+\tag{81.9}
+$$
+
+若 $P\ge0$，三角卷 213.1 的同一正支撑消去适用：$PY_0=-Y_0P$ 使 $Y_0$ 与 $P^2$ 交换，进而与其正平方根 $P$ 交换，故 $PY_0=Y_0P=0$。于是
+
+$$
+PX_0^2P=PY_0^2P=0
+$$
+
+给 $X_0P=PX_0=0$；由 $Q=P-X_0$ 及 $Q^2=P^2$ 得 $X_0^2=0$，故 $X_0=Y_0=0$。$P\le0$ 时用 $-P$，$P=0$ 同样包含。由此补齐所需的准确接口：
+
+$$
+\left.
+\begin{gathered}
+y,z\in V_h,\quad y^2-z^2\in\mathbb Ru,\\
+y\circ z\ge0\ \text{或}\ y\circ z\le0
+\end{gathered}
+\right\}
+\Longrightarrow
+\begin{cases}
+G(y)\circ G(z)=y\circ z,\\
+y\circ G(z)+G(y)\circ z=0.
+\end{cases}
+\tag{81.10}
+$$
+
+正平方根只用于已知环境元的交换关系，不作为原 $D$ 输入。本段复用的是既有两圆代数和半定消去；补付的是 18.1、19.1 到标量平方差的弱载体适用性，不重复 17–20 的面积、整圆或径向证明链。
+
+下面识别整个 $W$ 的旧值。由于 $u,R$ 实线性无关，平方极化给唯一实对称双线性形式 $a,b$，满足
+
+$$
+v\circ w=a(v,w)u+b(v,w)R,\qquad
+a(w,w)=q_0(w),\quad b(w,w)=q_1(w).
+\tag{81.11}
+$$
+
+$b$ 是正定实内积。任取有限维原实线性 $F\subset W$。$F=0$ 时结论由零行成立；否则，成熟的有限维实对称谱定理给 $b$ 的一组正交单位基 $e_1,\ldots,e_n$，使 $a$ 同时对角，即
+
+$$
+b(e_i,e_j)=\delta_{ij},\qquad
+a(e_i,e_j)=\lambda_i\delta_{ij}.
+$$
+
+具体地，在 $F$ 上令 $b(Tv,w)=a(v,w)$，取这个 $b$ 自伴线性算子的正交特征基即可。这只是已知有限实系数形式的换基，不是对未知 $G$ 使用谱定理。每个 $e_i$ 都是有限个原输入的实组合，且
+
+$$
+e_i\circ e_j=0\quad(i\ne j),\qquad
+e_i^2=S_i:=\lambda_i u+R\ge0.
+\tag{81.12}
+$$
+
+不要求 $\lambda_i\ge0$；已知正平方 $S_i$ 才是下步使用的正元。
+
+对任意原 $w=\sum_i t_i e_i\ne0$，令 $s=\sqrt{b(w,w)}=(\sum_i t_i^2)^{1/2}>0$，这是普通实数。原 $y=w/s$ 与每根原轴 $e_i$ 满足
+
+$$
+y^2-e_i^2=\left(\frac{a(w,w)}{s^2}-\lambda_i\right)u,
+\qquad y\circ e_i=\frac{t_i}{s}S_i.
+\tag{81.13}
+$$
+
+后一元总是半定，包括 $t_i=0$。故 (81.10) 对每个实际原对 $(w/s,e_i)$ 适用，再用 20.1 的实径向式还原，得到
+
+$$
+G(w)\circ G(e_i)=w\circ e_i=t_iS_i.
+\tag{81.14}
+$$
+
+对 $i\ne j$，原对 $(e_i,e_j)$ 的平方差为 $(\lambda_i-\lambda_j)u$、交叠为零，故同一接口还给 $G(e_i)\circ G(e_j)=0$；对角项由 (81.5) 给 $G(e_i)^2=S_i$。这里从未要求 $G(e_i)$ 或 $G(w/s)$ 属于 $F$ 或 $W$。
+
+定义实线性映射 $L_F:F\to E$，使 $L_F(e_i)=G(e_i)$。以上实际配对给
+
+$$
+(L_Fw)^2=\sum_i t_i^2S_i=w^2,
+\qquad G(w)\circ L_Fw=\sum_i t_i^2S_i=w^2.
+$$
+
+因此
+
+$$
+(G(w)-L_Fw)^2=w^2+w^2-2w^2=0.
+\tag{81.15}
+$$
+
+忠实 JC 包含中的自伴平方零使 $G(w)=L_Fw$。$w=0$ 由原零行给同样等式。每个有限 $F$ 上都识别出同一旧 $G$ 的全部实际值；不同 $F$ 的线性映射在交集上都等于原 $G$，自动相容。任意有限输入族和其任意实组合都含于一个这样的 $F$，故得到整个 $W$ 的实线性和 (81.4)。最后对 $G(w)^2=w^2$、$w\circ G(w)=0$ 作线性极化，给全部 (81.3)。
+
+本证明包含 $W=0$、一维、相关输入、重特征值、零坐标、$q_0$ 的核或不定性，以及各 $S_i$ 的零支撑和连续谱。对待比较原标签的额外归一化只除以非零原 $w$ 对应的正实数 $s$；不除 $R$ 或 $S_i$，不取未知 $G$ 的极限。零代数没有非标量 $R$ 窗口，其零等式直接成立。∎
+
