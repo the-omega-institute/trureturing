@@ -125,7 +125,8 @@ private theorem exists_global_quadratic_solution
         constructor
         · exact (lt_div_iff₀ hr).2 (by nlinarith [ht.1])
         · exact (div_lt_iff₀ hr).2 (by nlinarith [ht.2])
-      have hd := ((hCd' (t / r) htr).scomp (h := fun t : ℝ => t / r) t ((hasDerivAt_id t).div_const r)).const_smul a⁻¹
+      have hd := ((hCd' (t / r) htr).scomp (h := fun t : ℝ => t / r) t
+        ((hasDerivAt_id t).div_const r)).const_smul a⁻¹
       have hn : ‖a⁻¹ • C (t / r)‖ = ‖x‖ := by
         rw [norm_smul, Real.norm_eq_abs, abs_of_pos (inv_pos.mpr ha), hCn _ htr]
         field_simp
@@ -137,7 +138,9 @@ private theorem exists_global_quadratic_solution
         dsimp [a]
         field_simp
       rw [hcoeff]
-      convert hd using 1 <;> ext v <;> rfl
+      convert hd using 1
+      ext v
+      rfl
   obtain ⟨γ, hγ0, hγd⟩ :=
     D5.S3.Geometry.ODE.UniformLocalGlobalPasting.exists_global_solution_of_uniform_local
       f (mul_pos hr hε) hflocal x₀
@@ -201,7 +204,8 @@ theorem eq_zero_of_symmetric_exp_isometry
     simp only [hφ0, map_smul, smul_apply, smul_smul] at heq
     have htwo : (2 : ℝ) • B x x = 0 := by
       apply add_left_cancel (a := (2 : ℝ) • B x x)
-      simpa only [add_zero, ← add_smul] using heq
+      norm_num only [add_zero, ← add_smul] at heq ⊢
+      exact heq
     exact (smul_eq_zero.mp htwo).resolve_left (by norm_num)
   ext x y
   have htwo : (2 : ℝ) • B x y = 0 := by
