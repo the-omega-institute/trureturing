@@ -3044,3 +3044,129 @@ Equation (229.16) approximates the actual density $g_n\prod k_d$ directly, so it
 This repo-derived quantified composition serves the original moving-readout laws (228.2). The kernel and nonatomic-coordinate suppliers, balanced realizations and interpolation are reused; the additional conclusion is prescribed accuracy at every original start for one compatible schedule and arbitrary individually finite windows. It is not a new general purification theorem or a global novelty claim. The construction gives no prescribed initial partition, online generation, effective algorithm, source-uniform computation, exact finite-epoch equality or infinite-record total-variation assertion. It preserves the narrower scopes of §§211–228 and supplies no original fixed-common-partition $F_{64}$ or exact coarse27 solution, joint odd $A/D/M$ equations, fixed-epoch cross-neighborhood summable-to-zero correction, native physical source/successor/clock identification or physical installation. These are ordinary paper conclusions, with no Lean/kernel claim and no identification of label motion with physical energy or cost. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 230. Exact original chronological laws from disjoint angular digits
+
+**Definition 230.1 (original angular classes and probability intervals).** Retain exactly Definitions 211.1 and 228.1, including every original $\theta=(a,\eta,d,b)$, all endpoint, domain, form and analytic suppliers, the coefficient-one state, source $e$, full conservative self-adjoint $K$, $m=h^2\mu$, $P=T_d$, $s_n=(n+2)d$, actual $g_n=g_{s_n}$ and the original $f$ with $f_B=1/4$. Use the original symmetric coordinates $\xi=\zeta-xy/2$, $q=(r,z,\xi)$ and the Borel angle $t=\arg(x+iy)/(2\pi)\pmod1\in[0,1)$ on $\Omega=\{r>0\}$. Appendix III Proposition 136.2 and (153.5) give
+
+$$
+ dm=d\nu(q)\,dt,\qquad d\nu(q)=2\pi rh(q)^2\,dr\,dz\,d\xi,
+ \qquad \nu(\mathcal Q)=1,\qquad m(G\setminus\Omega)=0.
+\tag{230.1}
+$$
+
+Choose the everywhere invariant Borel representative $b^0$ of that proposition, with $0<b^0\le M$ and $[b^0]=[b]=g_d$, and let $f^0$ be the original formula (211.1) evaluated at $b^0$. Thus $[f_y^0]=[f_y]$ for every label; this choice changes no original law. In the order $0,1,3,B$, let $I_y(q)\subset[0,1)$ be consecutive half-open intervals of lengths $f_y^0(q)$. Their endpoints are Borel functions of $q$.
+
+**Theorem 230.2 (exact unrestricted chronology and its attained motion).** For every original $\theta$ with exactly the retained suppliers, there is one predetermined, path-independent, pointwise whole-$G$ Borel four-label schedule $D=(D_n)_{n\ge0}$ such that
+
+$$
+\begin{gathered}
+ \mathsf H_{n,r}(\mathbf y)=\mathsf S_{n,r}(\mathbf y)
+ \quad(n,r\ge0,\ \mathbf y\in\mathcal L^{r+1}),\\
+ m(D_{n,y})=\int_G f_y\,dm\quad(n\ge0,\ y\in\mathcal L).
+\end{gathered}
+\tag{230.2}
+$$
+
+Here $n,r$ are integers, and the laws are precisely (228.2), with the actual $D_{n+j}$ in every slot and each own terminal. The hard countable label-record law equals the original fresh-noise soft countable label-record law on $\mathcal L^{\mathbb N_0}$. For this construction, every distinct pair $i,j\ge0$ satisfies
+
+$$
+\begin{gathered}
+ m\{\operatorname{label}_{D_i}\ne\operatorname{label}_{D_j}\}
+ =L_\theta:=\int_G\left(1-\sum_{y\in\mathcal L}f_y^2\right)dm,\\
+ \frac{21}{32}<L_\theta\le\frac34,\qquad
+ m(D_{i,B}\mathbin\triangle D_{j,B})=\frac38.
+\end{gathered}
+\tag{230.3}
+$$
+
+*Proof.* Partition the nonnegative digit indices into the disjoint pools $A_n=\{a_{n,k}:k\ge0\}$, where $a_{n,k}=2^n(2k+1)-1$. Indeed $j\in A_n$ precisely when $2^n$ divides $j+1$ and $2^{n+1}$ does not. On $[0,1)$ put
+
+$$
+ \varepsilon_j(t)=\lfloor2^{j+1}t\rfloor-2\lfloor2^jt\rfloor,
+ \qquad R_j(t)=(-1)^{\varepsilon_j(t)},\qquad
+ U_n(t)=\sum_{k\ge0}2^{-k-1}\varepsilon_{a_{n,k}}(t).
+\tag{230.4}
+$$
+
+The floor convention fixes every binary ambiguity, including dyadic points. All these functions are Borel. Define $\operatorname{label}_{D_n}(q,t)=y$ when $U_n(t)\in I_y(q)$. If $U_n(t)=1$, assign label $0$; assign the entire axis $G\setminus\Omega$ label $0$ at every index. This is a pointwise Borel partition of all $G$, fixed before any path is realized.
+
+Under angular Lebesgue measure, any prescription of finitely many binary digits has measure $2^{-s}$, where $s$ is the number prescribed: subdivide at the largest prescribed index and count the equal dyadic intervals. Consequently the bits are independent fair bits, each $U_n$ is uniform, and any finite family of distinct $U_n$ is independent. In particular $\{U_n=1\}$ is null, as is their countable union. These are properties of the existing angular coordinate; no random state is added to the hard process.
+
+We require finite approximations before using the actual joint law. For $N\ge1$ set
+
+$$
+\begin{aligned}
+ v_{n,N}(t)&=\sum_{k<N}2^{-k-1}\varepsilon_{a_{n,k}}(t),
+ &J_{n,N}(t)&=[v_{n,N}(t),v_{n,N}(t)+2^{-N}),\\
+ A_{n,y}^{N}(q,t)&=2^N\,|I_y(q)\cap J_{n,N}(t)|.
+\end{aligned}
+\tag{230.5}
+$$
+
+Here $|\cdot|$ is interval length. For fixed $q$, this is the conditional mean of $\mathbf1_{D_{n,y}}$ given the first $N$ digits of pool $A_n$: the remaining selected bits give a uniform point in $J_{n,N}$. Thus $0\le A_{n,y}^{N}\le1$, its angular mean is $f_y^0(q)$, and it differs from the indicator only on the at most two selected dyadic bins meeting an endpoint of $I_y(q)$, apart from the null convention above. Uniformly in $q$,
+
+$$
+ \int_0^1|A_{n,y}^{N}(q,t)-\mathbf1_{D_{n,y}}(q,t)|\,dt
+ \le 2^{1-N}.
+\tag{230.6}
+$$
+
+Expand this finite function in the Boolean character basis $\prod_{j\in F}R_j(t)$ with $F\subset\{a_{n,k}:k<N\}$. The coefficients are Borel functions of $q$, and the empty-character coefficient is $f_y^0(q)$. This finite binary-sign basis is classical: J. L. Walsh, *A Closed Set of Normal Orthogonal Functions*, American Journal of Mathematics **45** (1923), 5–24, §2, pp. 8–10, [original text](https://archive.org/download/sim_american-journal-of-mathematics_1923-01_45_1/sim_american-journal-of-mathematics_1923-01_45_1_djvu.txt). It is used here only as an intermediate expansion.
+
+Consider a nonconstant product of such characters from distinct pools, at angles $t_0,\ldots,t_r$. Let $j$ be the smallest digit appearing in it. Exactly one factor contains $j$, since the pools are disjoint. Directly from the floor formula, with all additions taken modulo $1$,
+
+$$
+ R_j(t+2^{-j-1})=-R_j(t),\qquad
+ R_k(t+2^{-j-1})=R_k(t)\quad(k>j).
+\tag{230.7}
+$$
+
+These identities hold at dyadic endpoints too, and after any angular offset. Hence simultaneous translation of all angles by $2^{-j-1}$ negates this product and fixes its $q$-dependent coefficient. Its integral against any simultaneously rotation-invariant probability on these slots is zero. This argument requires neither independent angles across slots nor a factorization of the transition kernel.
+
+Apply this to the actual probability measure
+
+$$
+ d\Pi_{n,r}=g_n(x_0)\prod_{j<r}k_d(x_j,x_{j+1})\,dm^{\otimes(r+1)}.
+\tag{230.8}
+$$
+
+Appendix II §120 proves that rotations preserve the full form including its source summand, commute with the actual $K,T_s$, and fix the actual source densities. Appendix II Definition 123.1 supplies the kernel and source-start Markov law. In particular, conservation gives mass one in (230.8), and its slot $j$ marginal is $g_{n+j}m$. To verify the simultaneous symmetry without choosing pointwise kernel versions, for bounded slot functions write its integral as
+
+$$
+ \int_G g_n v_0P(v_1P(\cdots P v_r))\,dm.
+\tag{230.9}
+$$
+
+For $r=0$, (230.9) means $\int_Gg_nv_0\,dm$. Commutation with rotations, invariance of $g_n,m$, and multiplication equivariance leave (230.9) unchanged when every $v_j$ is rotated together. Rectangles determine the joint measure, proving the claimed symmetry. Each slot avoids the axis almost surely and has uniform conditional angle given $q$, since its density $g_{n+j}$ is invariant. Thus (230.6) also bounds the error integrated against each actual slot marginal.
+
+Expand $\prod_{j=0}^r A_{n+j,y_j}^{N}(x_j)$ in finite characters. Every term except the all-empty term cancels by (230.7), since $n,\ldots,n+r$ are distinct. Therefore
+
+$$
+ \int\prod_{j=0}^r A_{n+j,y_j}^{N}\,d\Pi_{n,r}
+ =\int\prod_{j=0}^r f_{y_j}^0(q_j)\,d\Pi_{n,r}.
+\tag{230.10}
+$$
+
+Telescoping products of numbers in $[0,1]$ and using the actual slot marginals bound the difference between the left side and the constructed hard coefficient by $(r+1)2^{1-N}$. Letting $N\to\infty$ proves (230.2) for every $n,r$ and word, including $r=0$. This is convergence to the already defined indicators, not extraction of indicators from a weak-star limit. Absolute continuity of every positive-time slot law with respect to $m$ removes all representative and null-set changes, so the right side is the unchanged original $\mathsf S_{n,r}$. Formula (230.9) with $v_j=\mathbf1_{D_{n+j,y_j}}$ retains, in particular, the own terminal $P\mathbf1_{D_{n+r,y_r}}$ when $r\ge1$.
+
+For the countable law assertion, let $(\mathcal X,\mathscr A,\mathbb P_e)$ carry the original source-start process. The measurable map $\omega\mapsto(\operatorname{label}_{D_n}(Z_{s_n}(\omega)))_{n\ge0}$ defines a probability $\mathbb H$ on $\mathcal L^{\mathbb N_0}$. Let $\lambda$ be Lebesgue probability on $[0,1)$ and form the countable product $\lambda^{\mathbb N_0}$. Its finite rectangle probabilities are compatible; the classical countable product-measure theorem gives the measure. On $(\mathcal X\times[0,1)^{\mathbb N_0},\mathbb P_e\otimes\lambda^{\mathbb N_0})$, define the soft label at $n$ using the coordinate uniform $V_n$ and consecutive intervals of lengths the original $f_y(Z_{s_n})$. This measurable map defines the actual fresh-noise soft record probability $\mathbb S$.
+
+Independence of the $V_n$ gives exactly $\mathsf S_{n,r}$ for each soft window. Summing over a slot uses $\sum_yf_y=1$; conservation and $g_{n+1}=Pg_n$ give compatibility with the same source process at every start. Equality (230.2) for initial windows gives equality on every finite-index cylinder by marginalization. Those cylinders form a generating pi-system, so probability-measure uniqueness gives $\mathbb H=\mathbb S$. The product-measure and uniqueness steps are classical intermediates; see Rick Durrett, *Probability: Theory and Examples*, fifth-edition manuscript, §1.7, Appendix A.3 and Theorems A.1.4–A.1.5 on pi-systems and measure uniqueness, [text](https://services.math.duke.edu/~rtd/PTE/PTE5_011119.pdf). This establishes an unconditional output-record identity, without asserting equality conditional on the hidden path or reconstructing that path.
+
+Finally, conditional on fixed $q$ under $m$, disjoint pools make $U_i,U_j$ independent uniforms whenever $i\ne j$. Their label marginals are $f^0(q)$, giving the $m$-marginals in (230.2), equal-label probability $\sum_y(f_y^0(q))^2$ and $B$-disagreement probability $2(1/4)(3/4)=3/8$. With $z=f_3^0(q)\in(0,1/4]$,
+
+$$
+ 1-\sum_y(f_y^0(q))^2
+ =\frac{21}{32}+\frac34z-\frac32z^2
+ \in\left(\frac{21}{32},\frac34\right].
+\tag{230.11}
+$$
+
+Integration proves (230.3) for every distinct pair. In particular this schedule has $\ell_n=L_\theta>0$ and $\delta_n=3/8$ at every edge. These are costs of this construction, not universal lower bounds over exact schedules.
+
+For a prescribed array $0\le\beta_n<\infty$, the unresolved $E(\theta,\beta)$ requirement is existence of one schedule with exact equality in every finite window, $\ell_n\le\beta_n$ for every $n$, and $\ell_n\to0$. Theorem 228.2 still supplies the necessary condition $\sum_n\beta_n=\infty$; no sufficiency or counterexample for exact $E$ follows here. If $\beta_0=\beta_1=0$, any $E$ witness has $D_0=D_1=D_2$ modulo $m$; absolute continuity in (230.8) then makes its $(0,2)$ window exactly the original common-partition $F_{64}(\theta)$ of Appendix III (144.4). This implication supplies no converse or continuation.
+
+The source-specific synthesis is the single attained schedule for all original chronological cylinders and its computed motion. It retains the positive-accuracy theorem of §229 and leaves $F_{64}$, exact coarse27, simultaneous odd $A/D/M$, fixed-epoch cross-neighborhood summable correction, and physical source, successor, clock and installation unresolved. It asserts neither a common readout at all epochs nor slow or vanishing motion, arbitrary motion caps, online or effective generation, resource or energy bounds, or physical realization. $\square$
+
+## 追加锚（本行以下为增补区）

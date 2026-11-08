@@ -2122,3 +2122,434 @@ spatial, temporal, boundary and memory interfaces remains beyond
 this finite inverse.
 
 ## 追加锚（本行以下为增补区）
+
+
+## 16. Exact first-type compilation with a retained support mask
+
+**Definition 16.1 (source and two levels of operations).** Retain
+Assumption 1.1, Definition 12.1 and the exhaustive rational packet
+family of Definition 15.1, with the represented cutoff recipe
+[FEA, Definition 9.2]. Fix any original finite $a,\eta>0$ and write
+$b_t=g_t$, $\gamma_t=\Gamma_t(b_t,b_t)$ and
+$r_t=(1+\gamma_t)^{-1}$ on $M$, with the full principal matrix
+and $t>0$ as in [FEA, (9.1)]. At the original sampling interval
+$t=d$ these are exactly $b,\gamma,r$. A pure first-type tree has
+leaves $\phi(b_t)b_t$ from legal packets and only $\Gamma_t$ at
+its binary nodes. Different packets may occur in one tree.
+
+A terminal map is a finite scalar expression on the outputs of
+finitely many such trees. Its permitted ingredients here are rational
+arithmetic, the declared smooth cutoff recipes and their finitely
+many explicitly differentiated scalar expressions, reciprocals with
+specified denominator protection, and, for bounded outputs, square
+roots and $\iota$. A terminal map is not an additional operation
+inside the bare tree grammar. Exact smooth scalar maps are used in
+the compilation below; their finite error representations are
+specified in [FEA, §15]. Finite polynomial combinations of encoded
+outputs are the already permitted consumers [FEA, Definition 9.1].
+
+Every finite old menu means finitely many trees of Definition 15.1,
+including mixed packets. Numerical claims retain Definition 15.1's
+reference, jet, time-bracket, record and resource suppliers. A smooth
+cutoff supplied without the representation required there is not a
+numerical input to the following construction.
+
+**Theorem 16.2 (global masked replacement of the second leaf).**
+For each represented old packet with cutoff $\phi$, one can choose
+one represented legal auxiliary packet with cutoff $\psi$ such that
+$\psi=1$ on a neighborhood of $\operatorname{supp}\phi$. Its
+outer closure lies inside the old $I_2$. There are represented
+smooth scalar functions $R_\psi,D$ on $\mathbb R$ for which the
+three pure first-type trees
+
+$$
+V_t=\phi(b_t)b_t,\qquad U_t=\psi(b_t)b_t,\qquad
+W_t=\Gamma_t(U_t,U_t)
+\tag{16.1}
+$$
+
+satisfy the exact identity on all $M$
+
+$$
+\phi(b_t)r_t=V_tR_\psi(U_t)D(W_t).
+\tag{16.2}
+$$
+
+This holds simultaneously for all times for which the old packet
+is legal. In particular it holds throughout any certified legal
+reference bracket. Every tree in (16.1), and the actual symbol on
+either side of (16.2), is compact smooth on $M$ and has all the
+entire-domain and zero-source-trace conclusions of Theorem 12.2.
+More precisely the support of the right side of (16.2) equals
+$\operatorname{supp}(\phi(b_t)r_t)=\operatorname{supp}V_t$.
+No unlocalized $b_t$ has been used as a legal $\Gamma_t$ input.
+
+*Proof.* The rational transition endpoints in [FEA, Definition 9.2]
+give a compact rational interval $C_\phi\Subset I_2$ containing
+$\operatorname{supp}\phi$. Choose auxiliary rational nested
+intervals with $C_\phi$ inside their plateau and outer closure
+inside $I_2$. The same recipe constructs $\psi$, equal to one
+near $C_\phi$. Every auxiliary legality test follows already from
+avoidance of $0,s_t$ by the old outer closure; it can also be
+checked by [FEA, (9.6)]. No new trace value is assumed.
+
+Define $R_\psi(x)=\psi(x)/x$ for $x\ne0$ and $R_\psi(0)=0$.
+It is smooth because $\psi$ vanishes on a known neighborhood of
+zero. For the smooth transition $\vartheta$ in [FEA, (9.4)] put
+
+$$
+D(y)=
+\begin{cases}
+0,&y\le-1/2,\\
+\vartheta(4y+2)/(1+y),&y>-1/2.
+\end{cases}
+\tag{16.3}
+$$
+
+Flatness at $-1/2$ proves smoothness there; $D(y)=(1+y)^{-1}$
+for $y\ge-1/4$, in particular for $y\ge0$. On its nonzero
+branch the denominator is greater than $1/2$. These formulas,
+known distances of $\operatorname{supp}\psi$ from zero and the
+cutoff derivative bounds give finite representations of every
+required derivative. They do not introduce a reciprocal at zero.
+
+The positive principal matrix gives $W_t\ge0$ everywhere.
+At a point where $\phi(b_t)\ne0$, the plateau gives $U_t=b_t$
+on a neighborhood of that point. Hence $W_t=\gamma_t$ there,
+$R_\psi(U_t)=1/b_t$ and $V_t=b_t\phi(b_t)$. This proves
+(16.2) at that point. At every other point $V_t=0$, so both
+sides of (16.2) are zero. All factors are defined and smooth.
+Since $b_t>0$ and $r_t>0$ on $M$, the two sides and $V_t$
+have exactly the same nonzero set, hence the same support.
+This proves a global equality, including transition regions and
+zeros of $\phi(b_t)$. It uses the original $V_t$ as a mask;
+no implication from the support of an outer cutoff of $U_t$ to
+$\psi(b_t)=1$ is needed or asserted. In particular a different
+value of $b_t$ in an outer transition, even if it has the same
+$U_t$ value, cannot produce a nonzero right side when $V_t=0$.
+
+[W, Lemma 22.2] makes $U_t,V_t$ compact smooth on the punctured
+source. The local differential expression makes $W_t$ compact
+smooth as well. Outside the union of these compact supports the
+right side vanishes. Alternatively it equals the old compact
+second leaf. Apply the same lemma to each of these actual compact
+symbols: its multiplier preserves the entire complex $D(K)$,
+$hc_0u\in D(\overline S)$ and $A(hc_0u)=C(hc_0u)=0$ for
+$u\in D(K)$, and $c_0\in\mathscr V_0$ has source trace zero.
+The full-domain double commutator (12.4) recovers $W_t$ with its
+bounded extension. The terminal joint multiplier calculus then
+recovers (16.2). This is not a claim that global $b_t$ or $r_t$
+belongs to $D(K)$ or to the form domain. $\square$
+
+**Theorem 16.3 (finite source compiler, including mixed packets).**
+For each finite old menu there is a finite list $C_{1,t},\ldots,C_{N,t}$
+of pure first-type trees and, for each old symbol $c_t$, a represented
+smooth terminal map $F_c:\mathbb R^N\to\mathbb R$, independent
+of $t$, such that
+
+$$
+c_t(p)=F_c(C_{1,t}(p),\ldots,C_{N,t}(p))
+\qquad(p\in M).
+\tag{16.4}
+$$
+
+All identities are simultaneous on every common legal bracket.
+The list needs at most one auxiliary packet per distinct old packet.
+For one old tree of height $H$ and $\ell$ leaf occurrences, the
+construction can be made with
+
+$$
+N+1\le4^\ell,\qquad \max_i\operatorname{ht}(C_i)\le H+1,
+\qquad
+\sum_i\operatorname{size}(C_i)
+ \le N(2^{H+2}-1).
+\tag{16.5}
+$$
+
+Size here counts every leaf and binary node after full expansion,
+without shared-subexpression savings. For a menu, concatenate the
+individual lists; sums of the resulting bounds suffice. No bound
+on the number or scalar expression size of all possible menus is
+asserted. Every actual $F_c(C_t)$ has the compact, full-domain,
+trace, symmetry and recovered-multiplier conclusions of the old
+$c_t$; the compilation does not change those symbols.
+
+*Proof.* A first leaf uses itself with the identity terminal map.
+A second leaf uses the three trees and terminal map in (16.1)–(16.2).
+Suppose the two children have lists $A_1,\ldots,A_n$ and
+$B_1,\ldots,B_m$, with terminal maps $F,G$. Retain these lists
+and append all $nm$ pure trees $\Gamma_t(A_i,B_j)$. The terminal
+map for their old parent is
+
+$$
+H(x,y,z)=\sum_{i=1}^n\sum_{j=1}^m
+                  (\partial_iF)(x)(\partial_jG)(y)z_{ij}.
+\tag{16.6}
+$$
+
+Indeed the ordinary chain rule in the actual smooth principal
+expression gives
+$\Gamma_t(F(A),G(B))=\sum_{ij}\partial_iF(A)\partial_jG(B)
+\Gamma_t(A_i,B_j)$. Each appended input is already a compact pure
+tree, so (12.4) applies on the entire domain. Formula (16.6)
+is scalar output computation after those inputs have been supplied.
+In particular no scalar composition has been silently installed as
+a new bare-tree node. Induction proves (16.4), also when the
+children use different packets. All differentiation in this induction
+is of exact smooth expressions. Uniform value approximation is
+never passed through a differentiating energy operation.
+
+For the count, a first leaf has list length one and a second leaf
+length three. At a parent the length is $n+m+nm$, so one plus
+that length is $(n+1)(m+1)$. Induction on the number of old leaf
+occurrences gives $N+1\le4^\ell$. Leaf lists have maximum
+heights zero and one respectively. A parent raises the maximum
+child-list height by at most one, proving the height bound in
+(16.5). A binary tree of height $h$ has at most $2^{h+1}-1$
+nodes: the leaf case has one and the two child bounds sum to at
+most $2(2^h-1)+1$ at the parent. This proves the size bound.
+Each auxiliary choice is shared among all uses of the same packet.
+The displayed recurrence also supplies a finite scalar expression:
+finite symbolic differentiation, substitution and sums terminate.
+For its derivatives through order $j$, the base scalar functions
+$R_\psi,D$ and packet cutoffs need derivative orders no greater
+than $H+j$; at a parent, order $j$ uses child orders at most
+$j+1$, which proves this assertion inductively. Identity terminal
+maps require no additional scalar derivative supplier.
+
+The equalities are pointwise for all $p\in M$ and all legal $t$;
+no compact approximation is involved. Each pure tree is compact
+by Theorem 12.2. The terminal maps vanish at the all-zero input:
+this holds at leaves and in (16.6) because its $z$ coordinates
+are then zero. Thus their evaluated symbols also vanish outside
+a finite union of compact supports at each fixed time. [W, Lemma
+22.2] gives the original entire-domain conclusions there. Their
+multiplier identities are exact joint scalar functional calculus on
+the actual reducing multipliers, followed only by the full-domain
+commutators for pure trees. This proves all stated source claims.
+Uniform numerical compact support over a time bracket is not inferred
+from this fixed-time compactness assertion and is not required by
+the finite numerical consumers below. $\square$
+
+**Theorem 16.4 (unchanged completed information and multiplication
+algebra).** At each fixed original positive time, enumerate the
+exhaustive legal pure first-type trees as $\mathcal T_1$. Put
+
+$$
+\Sigma_1=\overline{\sigma(\iota(C):C\in\mathcal T_1)}^{\,m},
+\qquad
+\mathcal A_1=W^*(\mathsf C_{\iota(C)}:C\in\mathcal T_1).
+\tag{16.7}
+$$
+
+Under exactly the source and exceptional-set premises of §§12–14,
+with the exhaustive packet choice of Definition 15.1,
+
+$$
+\Sigma_1=\Sigma_\infty=\overline{\sigma(\pi)}^{\,m},\qquad
+\mathcal A_1=\mathcal A_\infty.
+\tag{16.8}
+$$
+
+Consequently Theorem 14.1's measured common-symmetry quotient,
+heat, full generator/form domains and source trace apply unchanged.
+These are completed measurable and von Neumann algebra equalities,
+not equality of bare expression syntaxes or of unclosed polynomial
+algebras. They do not follow from a single fixed compact seed.
+
+*Proof.* Every pure tree is an old tree, giving one inclusion.
+Theorem 16.3 and injectivity of $\iota$ make every old compact
+tree measurable for $\Sigma_1$. To recover the two unlocalized
+symbols in (12.1), enumerate all legal packet cutoffs. They take
+values in $[0,1]$. On $M\setminus\{b=s_d\}$, positivity of
+$b$ and the exhaustive plateaus give
+
+$$
+b=\sup_n\phi_n(b)b,\qquad
+r=\sup_n\phi_n(b)r.
+\tag{16.9}
+$$
+
+The second family on the right is first-only terminal calculus by
+(16.2). The exceptional level $\{b=s_d\}$ is null by Theorem
+12.2's analytic zero-set argument; $e$ and the omitted axis are
+null under the same hypotheses. All symbols retain their permitted
+null repairs. Thus (16.9) proves the reverse completed measurable
+inclusion. No assertion simultaneously outside one common null
+set for all uncountably many times is required: the statement is
+for each fixed source and time.
+
+The countable joint bounded Borel multiplier calculus used in
+Theorem 14.1 now gives equality of the generated von Neumann
+algebras. In particular $b,r$ are bounded multipliers even though
+their global operator-domain membership has not been asserted.
+Faithfulness follows by applying a multiplier to $1\in\mathcal O$,
+exactly as in that theorem. Reuse Theorem 14.1 for the quotient and
+its lawful heat; no new branch classification is needed. $\square$
+
+**Definition 16.5 (antecedents and size of the reduction).** The
+retained primitive leaf template is the exhaustive compact family
+$\phi(b_t)b_t$; the retained binary operation is the original
+$\Gamma_t$, including its full principal metric and central term.
+The eliminated leaf template is $\phi(b_t)r_t$. Terminal operations
+actually used are the represented protected reciprocals in
+(16.2), scalar multiplication, addition and symbolic partial
+differentiation in (16.6), bounded encoding/decoding on certified
+ranges, and the finite encoded-output polynomials in [FEA, §15].
+These output operations are paid finite computations, not new
+unencoded products or compositions in the bare grammar. The
+reduction removes one source-leaf template with the specified
+consumer calculus. It is not an absolute minimum, a finite global
+separating family, a cost improvement, or a realization by the free
+$\alpha,\beta$ pairing syntax of the Fibonacci relation volume.
+Geometry already supplied by $\Gamma_t$ has not been eliminated.
+
+The source-specific masked compiler (16.2)–(16.6) and its finite
+consumer transfer are `repo-derived` conditional mathematics.
+Leibniz, chain rules and locality are classical intermediate facts:
+Lenz–Stollmann–Veselić, [arXiv:0811.2135v1, §1][LSV16], state
+them for energy measures of regular strongly local Dirichlet forms,
+including their local-domain extension. Hino [HIN, Theorem 3.4,
+Remark 3.5, (3.19)] gives measurable differentiation and its chain
+rule under his strongly local regular form, energy-dominant measure,
+finite-index and full-index-coordinate hypotheses; his coordinates
+need not be injective. Neither paper supplies this source's singular
+endpoint, legal scalar packets, global support identity, numerical
+moduli or passive finite consumers. Here the chain rule is applied
+directly to smooth functions on $M$ with the given principal matrix;
+no unproved identification with either paper's global form hypotheses
+is needed. No general calculus theorem or literature priority is
+claimed for this reduction.
+
+[LSV16]: https://arxiv.org/html/0811.2135v1
+
+## 17. Quantitative finite inverse from pure first-type features
+
+**Theorem 17.1 (generated first-only separation and input tolerance).**
+Retain Definition 15.1 and Theorem 15.2's event, services and
+sourcewise finite costs. For any of its finite inverse outputs
+$K,J,z_t,\sigma,D$, compile all its old menu symbols by Theorem
+16.3. One can construct a finite pure first-type encoded feature
+vector $y_t=(\iota(C_{1,t}),\ldots,\iota(C_{N,t}))$, a positive
+rational separation $\sigma_1$, a rational $L_H\ge1$, and a
+represented terminal map $H:[-1,1]^N\to[-1,1]^m$ such that
+
+$$
+\begin{gathered}
+z_t(q)=H(y_t(q))\quad(q\in K,t\in J),\\
+\|H(y)-H(y')\|_\infty\le L_H\|y-y'\|_\infty,\\
+\|q-q'\|_\infty\ge\epsilon
+ \ \Longrightarrow\quad
+\|y_t(q)-y_s(q')\|_\infty>\sigma_1
+\quad(q,q'\in K,\ t,s\in J).
+\end{gathered}
+\tag{17.1}
+$$
+
+The compact, its high reference mass and its certified regularity
+are the ones already obtained in Theorem 15.2. A finite decoder
+$D_1$ with the same prototype outputs satisfies
+
+$$
+\|w-y_t(q)\|_\infty\le\sigma/(64L_H)
+\quad\Longrightarrow\quad
+\|D_1(w)-q\|_\infty<\epsilon
+\quad(w\in\mathbb Q^N,\ q\in K,t\in J).
+\tag{17.2}
+$$
+
+The extra packets are legal throughout $J$. Every new constant,
+including the positive gap and scalar numerical precision, is
+generated from finite certificates; none is a new source input.
+As in (15.5), (17.2) is conditional on legitimate point-feature
+inputs. Acquired word coefficients do not supply $w$ at a hidden
+point.
+
+*Proof.* Enclose the finitely many raw section boxes for $K$ in
+slightly larger rational boxes inside $\Omega$. [FEA, Theorem
+10.1] with [JET, §§15–16] constructs a rational $B\ge1$ bounding
+every $|C_{i,t}|$ there for $t\in J$. This is a local compact
+range bound, not an assumed global supremum. Auxiliary packets
+are legal by Theorem 16.2. Choose rational $0<r<1$ with
+$r^2>B^2/(1+B^2)$ and a rational $B^+>r/\sqrt{1-r^2}$.
+Both strict choices have finite elementary certificates. Set
+
+$$
+\begin{gathered}
+\chi_r(x)=\max(-r,\min(r,x)),\qquad
+I_r(x)=\frac{\chi_r(x)}{\sqrt{1-\chi_r(x)^2}},\\
+H_i(y)=\iota\bigl(F_{c_i}(I_r(y_1),\ldots,I_r(y_N))\bigr).
+\end{gathered}
+\tag{17.3}
+$$
+
+On the actual compact images the clipping is inactive and
+$I_r(\iota(C_{i,t}))=C_{i,t}$, proving the identity in (17.1).
+The map is defined on the whole cube, bounded componentwise by
+one, and computably evaluable to every positive rational error.
+The clipping belongs only to this terminal map; it is never
+differentiated by $\Gamma_t$.
+
+On $[-B^+,B^+]^N$, finite differentiated expressions from
+(16.6) and the protected scalar formulas produce rational bounds
+$M_{ij}\ge\sup|\partial_jF_{c_i}|$. Derivatives of the unclipped
+inverse in (17.3) are bounded by $(1-r^2)^{-3/2}$. Compute a
+rational upper bound $L_I$ for this number and take
+
+$$
+L_H\ge\max\left(1,\max_i L_I\sum_j M_{ij}\right),\qquad
+0<\sigma_1<\min(1,\sigma/L_H).
+\tag{17.4}
+$$
+
+The mean-value estimate on the convex raw range box, the
+$1$-Lipschitz clipping and $|\iota'|\le1$ prove the Lipschitz
+bound in (17.1). Combined with (15.4) it gives the strict first
+feature gap, also for independent $t,s\in J$. No inverse-Jacobian
+bound, unproved global stability constant or a new separation
+search has been supplied as an input.
+
+For a rational input $w$, clip each coordinate to $[-1,1]$ and
+evaluate $H$ to rational coordinate error at most $\sigma/64$;
+clip the resulting rational vector to $[-1,1]^m$ as well. Define
+$D_1$ by feeding that vector to the existing finite $D$. Clipping
+does not increase distance from the true feature vector. Under
+(17.2) the total old-feature error is at most
+$L_H\sigma/(64L_H)+\sigma/64=\sigma/32<\sigma/16$.
+Now (15.5) proves (17.2). All scalar evaluations have fixed
+positive requested precision, so this is a finite decoder.
+
+The original regular-frame certificates remain valid for the same
+symbols, now expressed by (16.4), including every tree in their
+Gram entries. Their plateaus, determinant margins, mass certificate
+and full-source interpretation are unchanged. In particular they
+are not inferred from approximate first-feature values. The finite
+bounds and moduli needed above are constructed in [FEA, §15];
+no derivative of a step approximation enters the proof. $\square$
+
+**Definition 17.2 (source and recovery boundary of the inverse
+transfer).** Theorem 17.1 reuses the finite inverse and its
+high-mass regular compact; the new assertion is its finite
+first-only supplier with generated numerical tolerance. The
+correspondence [W, Theorem 5.2] and [FEA, Theorem 2.1] transports
+every compact first leaf, every $\Gamma$ node, the source trace
+and every terminal expression. Thus the original interpretation
+continues to be $q_*$ in (15.3), for all finite positive
+$a,\eta,d$, without numerical names of those parameters.
+The group is $H^1\times\mathbb R$, the endpoint is the full
+complex $A=\rho C$ with its distinct $C=0$ selector, and $h$,
+operator/form domains, nonpolar source trace and original joint
+law have not been replaced. The first actual read remains $2d$
+and subsequent gaps $d$, with all four labels, actual calibration,
+allowed null repairs and fresh conditional read noise. These
+identities change a static relation supplier. They provide no
+new preparation, sensor, reset, control, physical units, or
+ready/throughput service. Assimilating every intervening label
+between a certified record endpoint $S$ and actual return $C$,
+actual-current-return predictive memory and the full mutual
+recovery of space, time, boundary and memory remain unresolved.
+The finite word consumer and its paid common-event stopping
+statement are [FEA, §§15–16] under their stated conditional
+source and resource premises.
+
+## 追加锚（本行以下为增补区）
