@@ -26,7 +26,7 @@ def clock (wait : ℕ) (gaps : ℕ → ℕ) : ℕ → ℕ
   | 0 => wait + 1
   | n + 1 => clock wait gaps n + gaps n + 1
 
-private theorem clock_strict (wait : ℕ) (gaps : ℕ → ℕ) :
+theorem clock_strict (wait : ℕ) (gaps : ℕ → ℕ) :
     StrictMono (clock wait gaps) := by
   apply strictMono_nat_of_lt_succ
   intro n
@@ -122,12 +122,12 @@ private theorem run_absorbed (labels : Set S) (update : S → Bool → R → S)
   obtain ⟨k, rfl⟩ := Nat.exists_eq_add_of_le ht
   induction k with
   | zero => rfl
-  | succ k ih => simp only [Nat.add_succ, run, ih, if_pos hT]
+  | succ k ih => simp only [Nat.add_succ, run, ih (by omega), if_pos hT]
 
 private theorem paid_card (wait : ℕ) (gaps : ℕ → ℕ) (T : ℕ) :
     paidTicks wait gaps T =
       ((range T).filter fun t => sourceBit wait gaps t = true).card := by
-  simp [paidTicks, card_filter]
+  simp only [paidTicks, card_filter]
 
 private theorem paid_le (wait : ℕ) (gaps : ℕ → ℕ) (T : ℕ) :
     paidTicks wait gaps T ≤ T := by
@@ -142,10 +142,13 @@ private theorem live_ticks_paid (wait : ℕ) (gaps : ℕ → ℕ) (T N : ℕ)
   apply card_le_card_of_injOn (fun n => clock wait gaps n - 1)
   · intro n hn
     have h := hlive n (mem_range.mp hn)
-    exact mem_filter.mpr ⟨mem_range.mpr (by omega), (source_words wait gaps).2.2.2 n⟩
+    refine mem_filter.mpr ⟨mem_range.mpr ?_, (source_words wait gaps).2.2.2 n⟩
+    change clock wait gaps n - 1 < T
+    omega
   · intro i hi j hj hij
     have hi' := clock_lower wait gaps i
     have hj' := clock_lower wait gaps j
+    change clock wait gaps i - 1 = clock wait gaps j - 1 at hij
     exact (clock_strict wait gaps).injective (by omega)
 
 /-- Finite actual first stopping gives the first terminal analytical epoch with
@@ -206,8 +209,11 @@ theorem stopping_correspondence (labels : Set S) (update : S → Bool → R → 
     | some n =>
       have hmem := ((first_hit_some labels Y n).mp hy).1
       have hex : ∃ t, Z t ∈ labels := ⟨clock wait gaps n, hmem⟩
-      simp only [firstHit, dif_pos hex] at hnone
-      cases hnone
+      unfold firstHit at hnone
+      split at hnone
+      · cases hnone
+      · rename_i hn
+        exact hn hex
   · intro hnone
     by_contra hrun
     cases hz : firstHit labels Z with

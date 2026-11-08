@@ -90,7 +90,7 @@ theorem actual_words (labels : Set S) (update : S → Bool → R → S)
 def cut {n : ℕ} (u : ℕ) (v : Fin n → ℕ) : ℕ :=
   u + 1 + ∑ j, (v j + 1)
 
-private theorem clock_cut (u : ℕ) (K : ℕ → ℕ) (n : ℕ) :
+theorem clock_cut (u : ℕ) (K : ℕ → ℕ) (n : ℕ) :
     clock u K n = cut u (fun j : Fin n => K j.val) := by
   induction n with
   | zero => simp [clock, cut]
@@ -199,7 +199,7 @@ private theorem finite_word_law (k : ℕ) (s : S) :
   rw [← Measure.map_map (heff true) (by fun_prop), hp]
   exact integrate_step labels update ρ A C heff hrow (zeroRow A k s) true
 
-private theorem initial_word_law (η : PMF S) (k : ℕ) :
+theorem initial_word_law (η : PMF S) (k : ℕ) :
     (η.toMeasure.prod (Measure.pi fun _ : Fin (k + 1) => ρ)).map
       (fun p => word labels update k p.1 p.2) =
       (η.bind fun s => (zeroRow A k s).bind C).toMeasure := by
@@ -250,7 +250,7 @@ def Primitive (η : Measure S) (w f : PMF ℕ) (ρ : Measure R) : Prop :=
         (η.prod (Measure.pi fun _ : Fin l => ρ)) D *
         (Measure.pi fun _ : Fin r => ρ) B
 
-private theorem slice_measurable (hτ : Measurable τ) (hK : ∀ j, Measurable (fun ω => K ω j))
+theorem slice_measurable (hτ : Measurable τ) (hK : ∀ j, Measurable (fun ω => K ω j))
     (n : ℕ) (a : ℕ × (Fin n → ℕ)) : MeasurableSet (sourceSlice τ K n a) :=
   (hτ (measurableSet_singleton _)).inter
     (MeasurableSet.iInter fun j => (hK j.val) (measurableSet_singleton _))
