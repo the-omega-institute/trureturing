@@ -532,7 +532,7 @@ cbv_simproc_pattern% (@Occupancy.read _ _ _) => kingReadReduction
 attribute [local cbv_simproc ↓] kingReadReduction
 open Lean Meta in
 /-- Normalize both sides with checked proofs; stalled computations are not values. -/
-private def kingCbvProof (target : Expr) : MetaM Expr := do
+private def kingCbvProof (target : Expr) : MetaM Expr := withFreshCache do
   let target ← instantiateMVars target
   let some (_, lhs, rhs) := target.eq? | throwError "Expected a closed equality"
   if target.hasMVar || target.hasFVar then throwError "Expected a closed equality"
@@ -563,17 +563,17 @@ private def kingCbvProof (target : Expr) : MetaM Expr := do
   let middle ← mkEqRefl lhsValue
   mkEqTrans lhsProof (← mkEqTrans middle (← mkEqSymm rhsProof))
 open Lean Meta in
-private def kingChecked (target proof : Expr) : MetaM Expr := do
+private def kingChecked (target proof : Expr) : MetaM Expr := withFreshCache do
   return mkConst (← withOptions (Lean.Elab.async.set · false) <| mkAuxLemma [] target proof)
 open Lean Meta in
-private def kingListProof (target : Expr) : MetaM Expr := do
+private def kingListProof (target : Expr) : MetaM Expr := withFreshCache do
   let target ← instantiateMVars target
   if target.hasMVar || target.hasFVar then throwError "Expected a closed equality"
   let some (_, lhs, rhs) := target.eq? | throwError "Expected list equality"
   let ty ← whnf (← inferType lhs)
   unless ty.isAppOfArity ``List 1 do throwError "Expected list type"
   let elt := ty.appArg!
-  let expose (original : Expr) : MetaM (Expr × Expr × Nat × Expr) := do
+  let expose (original : Expr) : MetaM (Expr × Expr × Nat × Expr) := withFreshCache do
     let mut tail := original
     let mut es := []
     for _ in [:64] do
@@ -588,19 +588,25 @@ private def kingListProof (target : Expr) : MetaM Expr := do
     let joined ← mkAppM ``List.append #[front, tail]
     let proof ← kingChecked (← mkEq original joined) (← mkEqRefl joined)
     return (front, tail, es.length, proof)
-  let mut left := lhs
-  let mut right := rhs
+  let mut left := lhs; let mut right := rhs
   let mut steps := #[]
   repeat
     let (lp, lt, ln, lh) ← expose left
     let (rp, rt, rn, rh) ← expose right
     unless ln == rn do throwError "Different list lengths"
     if ln == 0 then break
-    let ph ← kingCbvProof (← mkEq lp rp)
+    let some les := Lean.Meta.Tactic.Cbv.getListLitElems lp | throwError "Expected literal prefix"
+    let some res := Lean.Meta.Tactic.Cbv.getListLitElems rp | throwError "Expected literal prefix"
+    let append := mkApp (mkConst ``List.append [.zero]) elt
+    let mut ph ← mkEqRefl (← mkListLit elt [])
+    for (le, re) in (les.toList.zip res.toList).reverse do
+      let ls ← mkListLit elt [le]; let rs ← mkListLit elt [re]
+      let h ← kingCbvProof (← mkEq ls rs)
+      ph ← mkAppM ``congr #[(← mkAppM ``congrArg #[append, h]), ph]
     steps := steps.push (left, right, lh, rh, ph)
     left := lt
     right := rt
-  let mut proof ← kingCbvProof (← mkEq left right)
+  let mut proof ← kingChecked (← mkEq left right) (← mkEqRefl right)
   let append := mkApp (mkConst ``List.append [.zero]) elt
   for (l, r, lh, rh, ph) in steps.reverse do
     let functions ← mkAppM ``congrArg #[append, ph]
@@ -609,7 +615,7 @@ private def kingListProof (target : Expr) : MetaM Expr := do
       (← mkEqTrans lh (← mkEqTrans middle (← mkEqSymm rh)))
   return proof
 open Lean Meta in
-private def kingReductionProof (target : Expr) : MetaM Expr := do
+private def kingReductionProof (target : Expr) : MetaM Expr := withFreshCache do
   let target ← instantiateMVars target
   if target.hasMVar || target.hasFVar then throwError "Expected a closed equality"
   let some (_, lhs, rhs) := target.eq? | throwError "Expected equality"
@@ -618,14 +624,7 @@ private def kingReductionProof (target : Expr) : MetaM Expr := do
     let some es := Lean.Meta.Tactic.Cbv.getListLitElems args[1]! |
       throwError "Expected literal check block"
     unless es.size ≤ 64 do throwError "Check block exceeds 64 entries"
-    let mut assembled ← mkListLit args[0]! []
-    let mut proof ← mkEqRefl rhs
-    for e in es.toList.reverse do
-      let singleton ← mkListLit args[0]! [e]
-      let leaf ← kingCbvProof (← mkEq (mkApp3 (mkConst ``List.all [.zero]) args[0]! singleton args[2]!) rhs)
-      proof ← mkAppM ``checked_all_append #[args[2]!, singleton, assembled, leaf, proof]
-      assembled ← mkAppM ``List.append #[singleton, assembled]
-    return proof
+    return ← kingChecked target (← mkEqRefl rhs)
   if (← whnf (← inferType lhs)).isAppOfArity ``List 1 then return ← kingListProof target
   kingCbvProof target
 private theorem checked_fill_append (key : RawVertex → List Bool) (xs ys : List RawVertex)
@@ -655,8 +654,7 @@ private unsafe def kingFillProof (target : Expr) : MetaM Expr := do
   unless input.isAppOfArity ``Occupancy.fill 4 do throwError "Expected fill application"
   unless rhs.isAppOfArity ``Option.some 2 do throwError "Expected successful fill"
   let args := input.getAppArgs
-  let rawTy := args[0]!
-  let key := args[1]!
+  let rawTy := args[0]!; let key := args[1]!
   let xs := args[2]!
   let initial := args[3]!
   let finalTree := rhs.getAppArgs[1]!
@@ -685,14 +683,16 @@ private unsafe def kingFillProof (target : Expr) : MetaM Expr := do
     blocks := remaining.take 64 :: blocks
     remaining := remaining.drop 64
   for block in blocks.reverse do
-    let some next := Occupancy.fill nativeKey block nativeTree | throwError "Fill rejected an insertion"
-    let chunk ← mkListLit rawTy (← block.mapM quoteRawVertex)
-    let quoted ← quoteTree next
-    if quoted.hasMVar || quoted.hasFVar then throwError "Expected a closed occupancy value"
-    let nextExpr ← mkAuxDefinitionFor (← mkAuxDeclName (kind := `_kingFillState)) quoted (zetaDelta := true) (compile := false)
-    let result := mkApp someTree nextExpr
-    let eq ← mkEq (mkApp2 fill chunk current) result
-    let step ← kingChecked eq (← mkEqRefl result)
+    let (chunk, next, nextExpr, step) ← withFreshCache do
+      let some next := Occupancy.fill nativeKey block nativeTree | throwError "Fill rejected an insertion"
+      let chunk ← mkListLit rawTy (← block.mapM quoteRawVertex)
+      let quoted ← quoteTree next
+      if quoted.hasMVar || quoted.hasFVar then throwError "Expected a closed occupancy value"
+      let nextExpr ← mkAuxDefinitionFor (← mkAuxDeclName (kind := `_kingFillState)) quoted (zetaDelta := true) (compile := false)
+      let result := mkApp someTree nextExpr
+      let eq ← mkEq (mkApp2 fill chunk current) result
+      let step ← kingChecked eq (← mkEqRefl result)
+      return (chunk, next, nextExpr, step)
     steps := steps.push (chunk, current, nextExpr, step)
     current := nextExpr
     nativeTree := next
