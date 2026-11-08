@@ -240,3 +240,473 @@ $$
 对任一输入对，单位和两个标签张成的最小线性窗口至多三维；首个新的次数窗口由单位、原对象和它的平方张成，但乘起来可能走到三次方而离开窗口。全部有限次数窗口的并才是原域中的结合多项式代数，它可以无限维且不完备；这不是物理三维空间。对任意对象及它加单位后的对象，现在有整族共同的多项式零辅助行，但面对另一个一般对象，混合配平的外层值仍未被消去。因此一般单位平移、输入作用纤维、可加性和原换括号关系的主缺口继续保留，已有量子推导仍等待这些前件。实际准备、完整菜单、仪器全部输出、联合与参考、全部合法历史未来和真实返回，以及计数、物理钟、能量和共同作用量，仍须由同一原世界供应。
 
 ## 追加锚（本行以下为增补区）
+
+## 4. 任意 JB 同态像中的原标量行吸收
+
+**定义 4.1（同态只读取已知结构）。** 保持定义 1.1 的同一原 $E,C,u,N,\mathcal P,S,D$、原 A1–A3、准确锥、全部原 P2 与完整 PB。取含单位实 JB 代数 $Y$ 及连续含单位 Jordan 同态
+
+$$
+q:X\longrightarrow Y,\qquad \overline{q(X)}^{\|\cdot\|}=Y.
+\tag{4.1}
+$$
+
+于是 $q(E)$ 在 $Y$ 中范数稠密。$q$ 只保持已知实线性、单位及 Jordan 乘法；不在 $q(E)$ 上定义响应，不将同像原代表视为可互换。Hanche-Olsen–Størmer，[*Jordan Operator Algebras*](https://hanche.folk.ntnu.no/joa/joa-m.pdf)，Proposition 3.4.3（印刷页 85）还给 $q(X)$ 闭，故这里 $q$ 实际满射；$q(E)$ 则不要求满射。任意同态的闭含单位 JB 像均可作为这里的 $Y$。零目标单独按零映射处理。
+
+若 $\beta$ 是 $Y$ 上数学正实线性泛函，则 $\beta\circ q|_E$ 在原准确锥上正，故配平主卷引理 129.1 使其读取每张实际原 P2；PB 的原元素等式亦可由它读取。准确预算是
+
+$$
+|\beta(qD(v,w))|^2
+\le \beta((qv)^2)\beta((qw)^2)-\beta(qv\circ qw)^2
+\qquad(v,w\in E).
+\tag{4.2}
+$$
+
+这种拉回是数学读取，不增加实际准备或改变其质量。尤其 $qv=0$ 使第一对角为零，所有正 $\beta$ 都读到 $qD(v,w)=0$；正泛函分离 $Y$ 给
+
+$$
+qv=0\quad\Longrightarrow\quad qD(v,w)=0.
+\tag{4.3}
+$$
+
+反对称性处理第二槽。这个零像吸收是配平主卷 241.1 的零对角机制在任意 JB 像中的直接应用，不包含 $qD(v+k,w)=qD(v,w)$ 的一般纤维断言。
+
+**定理 4.2（一般标量像吸收）。** 在定义 4.1 的全部原域上，对任意原 $a,b\in E$、任意 $\mu\in\mathbb R$，有
+
+$$
+\boxed{q(a)=\mu1_Y\quad\Longrightarrow\quad qD(a,b)=0.}
+\tag{4.4}
+$$
+
+$E$ 可以无限维、不可分且不完备，$X$ 与 $Y$ 无须有非零最小投影；没有原谱投影、原根或原逆元闭合的前件。
+
+证明。$Y=0$ 时直接成立；$\mu=0$ 由 (4.3)。以下固定 $\mu\ne0$，记真正的原输出及其数学像
+
+$$
+H=D(a,b)\in E,\qquad B=q(b),\qquad h=q(H).
+$$
+
+先证明第二输入像半定时的结论。若 $h\ne0$，同书 Lemma 3.6.8（页 89）的范数支撑态给状态 $\beta$，令 $Z=\beta(h)$，满足 $|Z|=\|h\|>0$。由 Schwarz 不等式和 $h^2\le\|h\|^2 1_Y$，
+
+$$
+\beta((h-Z1_Y)^2)=0.
+\tag{4.5}
+$$
+
+选择实际比例标签 $c=ka\in E$，其中 $k=Z/(1+\mu^2)$。原比例零值给 $D(a,c)=0$。在原 PB $(a,b,c)$ 中，保留实际外层 $r_\pm,s_\pm$；其像为
+
+$$
+\begin{aligned}
+R_\pm:=q(r_\pm)&=B\pm h\mp k\mu^2 1_Y,\\
+S_\pm:=q(s_\pm)&=k\mu1_Y\pm\mu B,\\
+S_+-\mu R_+&=S_-+\mu R_-=\mu(Z1_Y-h).
+\end{aligned}
+\tag{4.6}
+$$
+
+在半内积 $\langle v,w\rangle_\beta=\beta(v\circ w)$ 中，(4.5) 使两组像向量分别成比例。因此 (4.2) 使两个实际外层输出的 $\beta\circ q$ 读取都为零。PB 右端的像准确为
+
+$$
+-2B\circ(h-k\mu^2 1_Y)-2k\mu1_Y\circ(\mu B)
+=-2B\circ h.
+$$
+
+又由 (4.5) 的 Schwarz 不等式，$\beta(B\circ h)=Z\beta(B)$，故 $Z\beta(B)=0$。若 $B\ge0$ 或 $B\le0$，则 $\beta(B)=0$ 及 $0\le B^2\le\|B\|(\pm B)$ 给 $\beta(B^2)=0$。原 $(a,b)$ 的 (4.2) 随即给 $Z=0$，矛盾。于是已经证明
+
+$$
+q(c)\in Y_+\cup(-Y_+)\quad\Longrightarrow\quad qD(a,c)=0
+\qquad(c\in E).
+\tag{4.7}
+$$
+
+现在处理一般 $B$。只为数学读取，取 $M=Y^{**}$，将 $\beta\in Y^*$ 正常延伸到 $M$。同书 Theorem 4.4.3（页 104）供应此 JBW 结构。Hamhalter，[*Pure states on Jordan algebras*](https://dml.cz/bitstream/handle/10338.dmlcz/133911/MathBohem_126-2001-1_7.pdf)，Mathematica Bohemica 126 (2001)，81–91，§1 页 82–83，供应每个纯态的最小非零支撑投影 $p\in M$，满足 $U_p(v)=\beta(v)p$；由正常性和弱星稠密性，该式从 $Y$ 延至 $M$。这里 $U_v=2L_v^2-L_{v^2}$，$L_vw=v\circ w$。
+
+固定满足 $\beta(h)\ne0$ 的纯态，令
+
+$$
+K=\frac{\mu h}{1+\mu^2},\qquad r=\beta(K)\ne0,
+\qquad C_0=\frac{U_K(p)}r\in M.
+\tag{4.8}
+$$
+
+$U_K$ 保正，故 $C_0$ 按 $r$ 的符号半定。最小支撑给 $M_1(p)=\mathbb Rp$、$\beta(p)=1$、$\beta=\beta\circ U_p$。将 $K=rp+v+w$ 按 Peirce 特征值 $1,1/2,0$ 分解；同书 Lemma 2.6.3（页 48）的乘法规则给
+
+$$
+U_K(p)=r^2p+rv+(v^2)_0,\qquad
+C_0-K=(v^2)_0/r-w\in M_0(p).
+\tag{4.9}
+$$
+
+所以 $\beta((C_0-K)^2)=0$。支撑、$C_0$ 及其根都只用于已知 Jordan 结构，不输入 $D$。
+
+同书 Lemma 4.1.9（页 96–97）给有界集上乘法联合强连续性；Theorem 4.5.12（页 115）的 Kaplansky 密度给有界强逼近。具体地，$Y$ 在 $M$ 中弱星稠密，弱与强拓扑在凸集上有相同闭包，故 $Y$ 强稠密；再用 $q(E)$ 在 $Y$ 中范数稠密，可以选择实际原 $e_i\in E$，使 $q(e_i)$ 一致范数有界且强收敛到 $|C_0|^{1/2}$。这里不要求提升 $e_i$ 在 $X$ 中范数有界。令
+
+$$
+c_i=\operatorname{sgn}(r)e_i^2\in E,\qquad C_i=q(c_i).
+$$
+
+于是 $C_i$ 一致有界、半定并强收敛到 $C_0$。(4.7) 已经支付 $qD(a,c_i)=0$。定义
+
+$$
+\delta_i=(1+\mu^2)C_i-\mu h,\qquad
+\varepsilon_i=\beta(\delta_i^2)^{1/2}\longrightarrow0.
+\tag{4.10}
+$$
+
+最后的收敛由 $\delta_i\to(1+\mu^2)(C_0-K)$ 强收敛及 (4.9) 的零平方读取得到。
+
+对每个 $i$，完整 PB 仍准确使用原标签
+
+$$
+\begin{aligned}
+r_\pm^{(i)}&=b\pm H\mp a\circ c_i,\\
+s_\pm^{(i)}&=c_i\pm a\circ b\pm D(a,c_i).
+\end{aligned}
+\tag{4.11}
+$$
+
+即使 $qD(a,c_i)=0$，也不在这些原标签里删除 $D(a,c_i)$。仅在计算像时，得
+
+$$
+\begin{aligned}
+R_\pm^{(i)}&=B\pm h\mp\mu C_i,&
+S_\pm^{(i)}&=C_i\pm\mu B,\\
+S_+^{(i)}-\mu R_+^{(i)}
+&=S_-^{(i)}+\mu R_-^{(i)}=\delta_i.
+\end{aligned}
+\tag{4.12}
+$$
+
+给第二向量加第一向量的实倍数不改实 Gram 行列式。故每张实际外层 P2 分别给
+
+$$
+|\beta(qD(r_\pm^{(i)},s_\pm^{(i)}))|
+\le\beta((R_\pm^{(i)})^2)^{1/2}\varepsilon_i
+\le M_0\varepsilon_i,
+\tag{4.13}
+$$
+
+其中 $M_0<\infty$ 只依赖 $B,h,\mu$ 和 $C_i$ 的一致像范数界。PB 右端的像却始终是固定元素
+
+$$
+-2B\circ(h-\mu C_i)-2C_i\circ(\mu B)=-2B\circ h.
+$$
+
+于是 $2|\beta(B\circ h)|\le2M_0\varepsilon_i$，从而 $\beta(B\circ h)=0$。若这个固定读取非零，一个足够准确的实际 $c_i$、一次原 PB 和两张原 P2 就已给出矛盾；没有对任何变动的未知输出取极限。
+
+若纯态 $\beta(h)=0$ 且 $\beta(h^2)=0$，Schwarz 不等式直接给 $\beta(B\circ h)=0$。若 $\beta(h)=0$ 而 $\beta(h^2)>0$，则对足够小的非零实 $t$，$1_Y+th$ 正且可逆。$U_{1_Y+th}$ 是正锥自同构，其对偶保持正极射线，故
+
+$$
+\beta_t(v)=\frac{\beta(U_{1_Y+th}v)}{\beta((1_Y+th)^2)}
+$$
+
+仍为纯态。二次表示的保正性及逆来自同书 Proposition 3.3.6、§3.2.10（页 83、96 的引用）。已知单生成演算和 $\beta(h)=0$ 给
+
+$$
+\beta_t(h)=\frac{2t\beta(h^2)+t^2\beta(h^3)}{1+t^2\beta(h^2)}\ne0
+\tag{4.14}
+$$
+
+对足够小的非零 $t$ 成立。已证情形使 $\beta_t(B\circ h)=0$；$U_{1_Y+th}=I+2tL_h+t^2U_h$ 使 $\beta_t\to\beta$ 范数收敛，所以固定元素仍读为零。纯态分离 $Y$，得到
+
+$$
+B\circ h=0.
+\tag{4.15}
+$$
+
+这只是读取的变形，不是实际准备或原输入的变形。
+
+下一步取得第二张固定表。准确调用原 PB $(b,a,\mu b)$，比例零值给 $D(b,\mu b)=0$，反对称性给 $D(b,a)=-H$。定义实际原标签
+
+$$
+x=a-H-\mu b^2,\qquad y=\mu b+b\circ a,
+\qquad x_-=a+H+\mu b^2,\qquad y_-=\mu b-b\circ a.
+$$
+
+$y_-$ 不必是原零，但 $q(y_-)=0$，所以只能由已经证明的 (4.3) 消去 $qD(x_-,y_-)$。PB 右端的像为
+
+$$
+2\mu h+2\mu^2B^2-2\mu^2B^2=2\mu h.
+$$
+
+因而两张固定实际表的像准确为
+
+$$
+\begin{array}{c|c|c}
+\text{第一输入像}&\text{第二输入像}&\text{旧输出像}\\ \hline
+\mu1_Y&B&h\\
+X_0:=\mu(1_Y-B^2)-h&Y_0:=2\mu B&2\mu h
+\end{array}
+\qquad qD(x,y)=2\mu h.
+\tag{4.16}
+$$
+
+这些不是在像上定义的新表函数，只是两次固定原调用的三个像。
+
+令 $J=\operatorname{JB}(1_Y,B,h)\subseteq Y$。同书 Theorem 7.2.5（页 156），亦见 van de Wetering，[*Commutativity in Jordan Operator Algebras*](https://arxiv.org/html/1912.01903v1)，Theorem 3.5，给两生成 $J$ 的忠实含单位 JC 表示。正锥由单生成谱演算准确保留。(4.15) 在其生成的复 C* 环境中成为 $Bh=-hB$，所以 $B^2$ 与 $h$ 交换。两张固定表的每个 P2 二次型像都属于 $J\cap Y_+=J_+$，因此环境中的向量态可合法读取它们；若需要拉回到整个 $Y$，这些 $J$ 上正泛函由序单位 Hahn–Banach 正延拓得到。这里只读取 (4.16) 的固定调用，不要求其他原调用的输出像属于 $J$。
+
+取交换 C* 子代数 $C^*(1_Y,B^2,h)$ 的任意字符 $\chi$，记 $t=\chi(B^2)\ge0$、$z=\chi(h)$。$z=0$ 已满足所需谱关系。若 $z\ne0$，将字符延为环境 C* 态；其 GNS 循环单位向量 $\xi$ 满足 $h\xi=z\xi$、$B^2\xi=t\xi$。第一张表给 $|z|\le|\mu|\sqrt t$，故 $t>0$。反交换给 $hB\xi=-zB\xi$，所以 $\xi$ 与 $B\xi/\sqrt t$ 正交。它们张成的二维不变空间上，
+
+$$
+B=\sqrt t\,\sigma_x,\quad h=z\sigma_z,\quad
+X_0=\mu(1-t)I-z\sigma_z,\quad Y_0=2\mu\sqrt t\,\sigma_x.
+$$
+
+用实单位向量 $(\cos\theta,\sin\theta)$ 读第二张固定表，写 $\eta=\cos2\theta$。其旧输出读取为 $2\mu z\eta$，两个输入作用向量的有向面积为 $2\mu\sqrt t[\mu(1-t)\eta-z]$。故
+
+$$
+|z\eta|\le\sqrt t\,|\mu(1-t)\eta-z|
+\quad(-1\le\eta\le1),\qquad |z|\le|\mu|\sqrt t.
+\tag{4.17}
+$$
+
+为完整排除残余谱，令 $A_0=\mu(1-t)\ne0$。若 $0<|z|\le|A_0|$，取 $\eta=z/A_0$，右端零而左端非零。若 $|z|>|A_0|$，取 $\eta=\operatorname{sgn}(A_0z)$，得到 $|z|\le\sqrt t(|z|-|A_0|)$。$t<1$ 时右端严格小于左端；$t>1$ 时则推出
+
+$$
+|z|\ge\frac{\sqrt t|A_0|}{\sqrt t-1}
+=|\mu|\sqrt t(\sqrt t+1),
+$$
+
+违反 (4.17) 的第二界。因此非零 $z$ 只能位于 $t=1$。字符分离交换子代数，包括 $t=0,z=0$ 的退化情形，给
+
+$$
+(B^2-1_Y)\circ h=0.
+\tag{4.18}
+$$
+
+还需排除 $t=1$ 上的残余，不能由 (4.15) 单独断言 $h=0$。取实际原 $d=D(y,x)$、$g=y\circ x$。由 (4.16) 及已知乘法，
+
+$$
+q(d)=-2\mu h,\qquad G:=q(g)=2\mu^2(B-B^3).
+$$
+
+在上述 JC 环境中，(4.15)、(4.18) 给 $Gh=hG=0$，故 $U_h(G^2)=0$；并有 $X_0\circ h=-h^2$。最后准确调用原 PB $(y,x,0)$：
+
+$$
+D(x+d,g)-D(x-d,-g)=-2x\circ d.
+\tag{4.19}
+$$
+
+对任意 $Y$ 上正 $\rho$，$\phi=\rho\circ U_h\circ q|_E$ 是数学正读取。两个实际外层 P2 的第二对角均为 $\phi(g^2)=\rho(U_h(G^2))=0$，故两输出的 $\phi$ 读取均为零。(4.19) 于是给
+
+$$
+0=4\mu\rho(U_h(X_0\circ h))
+=-4\mu\rho(h^4).
+\tag{4.20}
+$$
+
+全部正 $\rho$ 分离正锥，故 $h^4=0$；JB 范数恒等式给 $\|h\|^4=\|h^4\|=0$。于是 $h=0$。所有未知调用从头至尾只接收实际原 $E$ 标签；既未构造商响应，也未使用它的输入连续性。∎
+
+## 5. 仿射像、闭理想与原中心的零行
+
+**推论 5.1（仿射比例像与逐理想约束）。** 在定义 4.1 下，对任意原 $a,b$ 及实 $\kappa,\mu$，有
+
+$$
+q(a)=\kappa q(b)+\mu1_Y\quad\Longrightarrow\quad qD(a,b)=0.
+\tag{5.1}
+$$
+
+特别，对任意闭 Jordan 理想 $I\lhd X$，
+
+$$
+a-\kappa b-\mu u\in I\quad\Longrightarrow\quad D(a,b)\in I.
+\tag{5.2}
+$$
+
+若 $I_{\kappa,\mu}$ 是由 $a-\kappa b-\mu u$ 生成的最小闭 Jordan 理想，则
+
+$$
+D(a,b)\in\bigcap_{\kappa,\mu\in\mathbb R}I_{\kappa,\mu}.
+\tag{5.3}
+$$
+
+证明。对真正的原标签作配平主卷定义 185.1 已付的 SO$(2)$ 旋转，取 $\cos\theta=(1+\kappa^2)^{-1/2}$、$\sin\theta=\kappa(1+\kappa^2)^{-1/2}$。旋转后的第一标签像为 $\mu(1+\kappa^2)^{-1/2}1_Y$，同一个实际旧响应由旋转保持，故定理 4.2 给 (5.1)。这没有使用未知 $D$ 的齐次性。对真商 $q_I:X\to X/I$ 应用 (5.1) 即得 (5.2)；闭商为 JB 的准确来源是 Hanche-Olsen–Størmer Theorem 3.4.2（页 85）。$I=X$ 时结论直接成立。逐个取 $I=I_{\kappa,\mu}$ 得 (5.3)。这些是任意原代表的受限相容性，并非一般商纤维不变性。∎
+
+**推论 5.2（中心像模任意闭理想的零行）。** 在同一原完整候选下，对任意闭 Jordan 理想 $I\lhd X$，若原 $a\in E$ 满足 $q_I(a)\in Z(X/I)$，则
+
+$$
+D(a,b)\in I\qquad(b\in E).
+\tag{5.4}
+$$
+
+这里 $Z(Y)=\{z\in Y:[L_z,L_y]=0\text{ 对所有 }y\in Y\}$ 是 Jordan 算子中心。特别，$z\in E\cap Z(X)$ 给 $D(z,b)=0$；若原 $x\in E$ 的 $q_I(x)$ 中心，则任意实多项式 $p$ 和任意原 $b$ 满足 $D(p(x),b)\in I$。
+
+证明。先支付商的载体，而不假设旧响应下降。配平主卷定理 247.1 已排除 $X$ 的满 Albert 商。若 $Y=X/I\ne0$ 有满 Albert 商，复合 $q_I$ 就给 $X$ 的同一禁商，故 $Y$ 也没有满 Albert 商。同书 Lemma 7.2.2、Theorem 7.2.3、Theorem 7.2.5 的证明（页 155–156），连同 Corollary 4.5.8、Proposition 4.6.4（页 114、116），给成熟后果：非 JC 的 JB 代数有满 Albert 表示。具体地，非 JC 时存在非零纯例外闭理想；其非零因子表示满到 Albert，目标有限维因而为 JBW，理想表示遂延到整个代数且仍满射。因此 $Y$ 必有忠实、含单位、等距、锥准确的 JC 包含 $j_I:Y\to(A_I)_{\rm sa}$，其中 $A_I=C^*(j_I(Y))$；单位支撑压缩与锥反映按配平主卷 248.1 的已知表示论步骤处理。$I=0$ 时这正是该节已有的载体。
+
+van de Wetering Proposition 3.2 给 JC 子代数中 Jordan 算子通勤与环境算子通勤的等价。因此 $j_I(q_I(a))$ 与每个 $j_I(y)$ 通勤，属于 $Z(A_I)$。取 $A_I$ 的任意不可约复 C* 表示 $\pi$；Schur 引理使
+
+$$
+\pi j_Iq_I(a)=\mu_\pi 1,\qquad \mu_\pi\in\mathbb R.
+$$
+
+将复合 $q_\pi=\pi\circ j_I\circ q_I$ 的目标准确取为其闭含单位 Jordan 像 $Y_\pi\subseteq B(\mathcal H_\pi)_{\rm sa}$。这是 JB 代数，$q_\pi$ 保单位且有稠密像；实际上像闭性仍由 Proposition 3.4.3 给出。定理 4.2 直接作用于原调用 $(a,b)$，给 $q_\pi D(a,b)=0$。不可约 C* 表示分离 $A_I$，$j_I$ 又单射，故 $q_I D(a,b)=0$，得到 (5.4)。全理想及零代数情形无需选表示。中心对实多项式闭合，且 $p(x)\in E$，所以最后的多项式后果成立。这里没有在 $Y$ 上建立总响应，更没有用它套中心行定理。∎
+
+## 6. 四份独立平方根预算的严格正下确界
+
+**定义 6.1（共同多项式辅助行的带符号比较）。** 对任意原 $a,b$、实 $s$，令 $\tau\in\{0,s\}$，记
+
+$$
+a_\tau=a+\tau u,\qquad d_\tau=D(a_\tau,b),\qquad
+\delta=d_s-d_0.
+$$
+
+取原 $c=p(a)$，$p\in\mathbb R[T]$。定理 3.1 已支付 $D(a_\tau,c)=0$。准确外层及其带符号差记为
+
+$$
+\begin{aligned}
+R_{\tau,\pm}&=b\pm d_\tau\mp(a_\tau\circ c),&
+S_{\tau,\pm}&=c\pm(a_\tau\circ b),\\
+\mathcal B_\tau(c)
+&=D(R_{\tau,+},S_{\tau,+})-D(R_{\tau,-},S_{\tau,-}).
+\end{aligned}
+\tag{6.1}
+$$
+
+原 PB 直接给
+
+$$
+\begin{aligned}
+\mathcal B_\tau(c)
+&=-2b\circ d_\tau
+ +2\bigl[b\circ(a_\tau\circ c)-c\circ(a_\tau\circ b)\bigr],\\
+\mathcal B_s(c)-\mathcal B_0(c)&=-2b\circ\delta.
+\end{aligned}
+\tag{6.2}
+$$
+
+第二式中 $s$ 的两个已知项准确抵消；未在任何未知输入和上展开 $D$。对正数学读取 $\beta$，定义
+
+$$
+\begin{aligned}
+\Delta_{\tau,\pm}(c)
+&=\beta(R_{\tau,\pm}^2)\beta(S_{\tau,\pm}^2)
+  -\beta(R_{\tau,\pm}\circ S_{\tau,\pm})^2,\\
+W_\beta(c)&=\sum_{\tau\in\{0,s\},\,\epsilon\in\{+,-\}}
+                 \sqrt{\Delta_{\tau,\epsilon}(c)}.
+\end{aligned}
+\tag{6.3}
+$$
+
+和式按两个演员位置计数；$s=0$ 时即使标签重合也保留两次。四张独立 P2 加三角不等式只供应
+
+$$
+2|\beta(b\circ\delta)|\le W_\beta(c).
+\tag{6.4}
+$$
+
+(6.1)–(6.4) 是现有原接口在当前消费者中的直接代入，不另计为新增刚性结论。下述模型也允许 $c$ 遍历整个共同零辅助行，而不仅是 $\mathbb R[a]$。
+
+**命题 6.2（完整接口、无最小投影模型中的尖锐预算底）。** 存在同一个不完备原域、无非零最小 Jordan 投影的总 P2/PB 模型，使对每个 $s\ne0$，一份固定正数学读取满足
+
+$$
+\delta=0,\qquad
+\inf_{c\in\mathbb R[a]}W_\beta(c)
+=\inf_{\substack{c\in E:\ D(a,c)=0\\ D(a+su,c)=0}}W_\beta(c)
+=2|s|>0.
+\tag{6.5}
+$$
+
+这反驳的是以这四份独立预算普遍趋零为中间证书的证明步骤，不是单位平移或完整量子起源的反例。
+
+证明。取 $t\in[0,1]$，定义
+
+$$
+\begin{aligned}
+E&=\left\{F(t)=\sum_{k=0}^n t^k A_k:
+                   A_k\in M_2(\mathbb C)_{\rm sa}\right\},\\
+X&=C([0,1],M_2(\mathbb C))_{\rm sa},\qquad u=I,\\
+F\circ G&=(FG+GF)/2,\qquad C=E\cap X_+,\qquad
+D(F,G)=\frac{\mathrm i}{2}(FG-GF).
+\end{aligned}
+\tag{6.6}
+$$
+
+范数取限制的上确界算子范数。逐项 Weierstrass 逼近给 $E$ 在 $X$ 中稠密；连续非多项式 $|t-1/2|I$ 不属于 $E$，故这个稠密真子空间不完备。原评价取所有正点向量评价及其任意非负质量倍数，它们分离 $E$ 并准确决定 $C$，包括零、不等及次归一质量。任意固定原 $0<\theta\le1$ 保持不变。
+
+逐点有 $F\circ G-\mathrm iD(F,G)=FG$，所以每张原 P2 就是两个向量 $F(t)\xi,G(t)\xi$ 的普通复 Gram 表。相加三表的实部是相同向量的实 Gram 表，相加指定向量给零，因此 A2 成立。$S(u,u)=u$，且 $0\le e\le\theta u$ 给 $e^2\le e$，故 A3 成立。由准确锥，所有数学正读取亦可读取这些 P2。
+
+再核对所有原三元组的完整 PB。令 $Z=B+\mathrm iC$ 只记录两个原自伴标签，$A,B,C\in E$。使用 (6.6) 的同一符号，实际外层满足
+
+$$
+r_\pm+\mathrm i s_\pm=(u\pm\mathrm iA)Z,\qquad
+r_\pm^2+s_\pm^2+2D(r_\pm,s_\pm)
+=Z^*(u+A^2)Z.
+\tag{6.7}
+$$
+
+两侧完全相同，故 PB 在 $E$ 中作为元素恒等式对全部原三元组成立，再由每份原评价读取。这里只在已知多项式复化中计算乘法，没有缩小 PB 的输入范围。
+
+若 $p$ 是 $E$ 或 $X$ 中非零 Jordan 投影，连续整数值 $\operatorname{rank}p(t)$ 在连通区间上常数且非零。$p$ 与 $tp$ 都属于 $U_p(E)$（或 $U_p(X)$），并且实线性独立：$(\lambda+\nu t)p(t)=0$ 对全部 $t$ 成立只能有 $\lambda=\nu=0$。所以 $U_p(E)\ne\mathbb Rp$，$U_p(X)\ne\mathbb Rp$；原域和完成都没有非零最小 Jordan 投影。点纤维的矩阵投影不是这种全局最小投影。
+
+取常值 Pauli 元
+
+$$
+a=\begin{pmatrix}0&1\\1&0\end{pmatrix},\quad
+b=\begin{pmatrix}0&-\mathrm i\\\mathrm i&0\end{pmatrix},\quad
+z_0=\begin{pmatrix}1&0\\0&-1\end{pmatrix},\qquad
+\beta(F)=\frac12\int_0^1\operatorname{Tr}(F(t))\,dt.
+\tag{6.8}
+$$
+
+$\beta$ 是固定忠实数学态，不认作新增实际准备。因为 $a\circ b=0$、$[a,b]=2\mathrm i z_0$，同一个总 $D$ 给 $d_\tau=-z_0$，所以 $\delta=0$。$a^2=u$，故每个 $c\in\mathbb R[a]$ 都形如 $ru+qa$，$r,q\in\mathbb R$。更一般，(6.6) 中 $D(a,c)=D(a+su,c)=0$ 恰好要求 $[a,c]=0$，因此每个这样的原标签准确写为
+
+$$
+c(t)=r(t)u+q(t)a,\qquad r,q\in\mathbb R[t].
+\tag{6.9}
+$$
+
+这是 $a$ 的点态自伴通勤子空间；系数由 $r(t)=\operatorname{Tr}(c(t))/2$、$q(t)=\operatorname{Tr}(ac(t))/2$ 给出，确为实多项式，反向亦直接成立。
+
+在实内积 $\langle F,G\rangle_\beta=\beta(F\circ G)$ 中，$z_0$ 是单位向量，并逐点正交于 $u,a,b$。对移位演员，
+
+$$
+S_{s,\pm}=c\pm sb,\qquad
+R_{s,\pm}=R'_{s,\pm}\pm d_s,\qquad
+R'_{s,\pm}=b\mp(a_s\circ c).
+$$
+
+因为 $a_s\circ c=(q+sr)u+(r+sq)a$，$d_s=-z_0$ 同时正交于 $S_{s,\pm}$ 和 $R'_{s,\pm}$，且 $\|d_s\|_\beta=1$。于是每个符号都准确给
+
+$$
+\begin{aligned}
+\Delta_{s,\pm}(c)
+&=\|S_{s,\pm}\|_\beta^2
+ +\left(\|R'_{s,\pm}\|_\beta^2\|S_{s,\pm}\|_\beta^2
+        -\langle R'_{s,\pm},S_{s,\pm}\rangle_\beta^2\right)\\
+&\ge\|S_{s,\pm}\|_\beta^2
+ =\int_0^1(r(t)^2+q(t)^2)\,dt+s^2
+ \ge s^2.
+\end{aligned}
+\tag{6.10}
+$$
+
+括号非负仅用实 Schwarz 不等式。其余两份行列式也非负，故对整个共同零行的每个 $c$，无论次数、系数或范数，均有 $W_\beta(c)\ge2|s|$。
+
+$c=0$ 是合法共同零辅助标签。此时 $S_{0,\pm}=0$，故 $\Delta_{0,\pm}=0$；而 $R_{s,\pm}=b\pm d_s$、$S_{s,\pm}=\pm sb$ 给
+
+$$
+\Delta_{s,\pm}(0)=2s^2-s^2=s^2.
+$$
+
+所以 $W_\beta(0)=2|s|$，两个下确界都达到这个值，得到 (6.5)。$s=0$ 时同一选择给零，尖锐正底仅针对 $s\ne0$。这个模型的 $D$ 已是显式双线性交换子，只用于检验一个普遍证明证书，未用来认回一般原候选的未知响应。∎
+
+## 7. 同一旧关系的剩余比较与完整来源范围
+
+**定义 7.1（承重关系与尚缺的带符号接头）。** 定理 4.2 的 $\texttt{repo-derived}$ 综合，将配平主卷 §§183–184 的原单位行机制和 §§241–242 的有限自旋像机制接到任意含单位 JB 同态像；新增量词是一般 $Y$、任意实际原代表及仅在像中有界的逼近。所列成熟 JB 支撑、二次表示、密度、同态与 JC 工具是中间前置，不另计为新增定理。推论 5.1–5.2 是它在仿射像、闭理想及中心像中的直接消费者；中心模理想额外消费配平主卷 247–248 的 Albert 障碍与成熟表示论，没有假设商响应。命题 6.2 的承重内容是当前 (6.1) 四次原调用消费者中的精确预算下确界，模型构造及普通 Gram/Pauli 计算不作历史优先权或文献穷尽声明。这里的结论为纸面数学推导，不是冻结真值或新增模型公理。
+
+对定义 6.1 的一般原 $a,b,s$，即使所有多项式辅助行已知为零，仍未证明
+
+$$
+\beta\bigl(\mathcal B_s(c)-\mathcal B_0(c)\bigr)=0
+\quad\text{对全部数学正读取 }\beta.
+\tag{7.1}
+$$
+
+由 (6.2)，这与 $b\circ\delta=0$ 等价，任一合法共同辅助标签的该等式都支付同一个固定缺陷的这份 Jordan 读取。命题 6.2 表明，不能把普遍支付 (7.1) 的步骤设为四份无关联绝对预算的总和趋零，扩大到该模型的整个共同零行亦不够。沿这个消费者继续证明时，须保留四次实际旧输出间的符号或共同约束，而不是只让四个独立上界相加。(7.1) 本身尚未证明；即使取得 $b\circ\delta=0$，也仍需排除非零反交换残余，不能直接得到 $\delta=0$。
+
+标量像吸收不比较一般非标量像的不同原代表；它不推出 $D(a+z,b)=D(a,b)$，即使 $z$ 是原单位倍数或原中心元。任意通勤对的零值、一般商下降、原域可加／齐次／连续、共同取向、$\mathsf F$、原 R 及与某个环境交换子的全域识别仍未由这些结论取得。本卷定理 3.1 的全部同生成元多项式零值和 §2 的完整前向 Cayley 边界各守原量词。配平主卷 §§178–179 的 $\mathsf F$ 等价仍仅在其完整 $E=A_{\rm sa}$ 分支使用；[《中央响应平方与径向一致》](AURIC_CENTRAL_RESPONSE_SQUARE_AND_RADIAL_CONSISTENCY.md) §§6–10 则保持原 $E$ 稠密于整个指定 $A_{\rm sa}$ 的分支，不能用一般 JC 包含替代。这里既未增加原子分离，也未以已经正且实线性的返回映射预付 $D$ 的线性。
+
+**定义 7.2（来源合同与几何解释）。** 原 $\Omega/\mathrm{native}$、原 $E/D$、全词 $K/J/q$、父位置和 ready 类型、原中心与经典静默部分及不等维块、全部零／不等／次归一质量、实际准备与完整效果菜单、共同记录与真正分组遗忘、全仪器及其环境和全部输出、实际相关联合与递归同源参考，继续保持配平主卷定义 128.1、§§250–251 的同一来源。全部合法顺序／自适应／并行历史、每个仍合法未来、停止／拒绝／销毁、同数两侧与真实双向返回，均未被数学像或反例模型替换。Born 比例仍只用于原实际完整菜单和严格正质量；零质量不归一。完整 CountRead 无穷及非离散记录、可数可加、正常性与前对偶、物理钟、能量、作用量及共同正 $\hbar$ 仍须各自原来源。
+
+几何上，原标签即使不是单位，只要某份保 Jordan 乘法的数学读取把它照成单位倍数，它与任意另一原标签的旧响应就不能留下可见像。半定辅助像、纯态支撑和两张固定表限制的是同一旧输出；它们没有把完成里的投影变成原对象。中心元在每份不可约算子读取中变成标量，所以中心行及中心模理想行也被吸收。另一方面，完整模型中旧输出的真实差已经为零，四个独立面积上界仍能留下严格正底；这幅面积几何说明必须检验输出之间的实际关联。数学像、双对偶、纯态、字符、表示与预算模型都不制造实际准备、完整菜单、仪器、联合、参考、历史、未来、返回或物理尺度，也不完成完整量子起源目标。
+
+## 追加锚（本行以下为增补区）
