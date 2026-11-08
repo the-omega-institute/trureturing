@@ -1,0 +1,25 @@
+**推论 74.1（识别后才取得的代数与全部有限正表）。** 在 73.1 的全部前件下，原 $D$ 分别实双线性，并有
+
+$$
+\begin{gathered}
+N(D(a,b))\le N(a)N(b),\qquad D(u,a)=D(a,a^2)=0,\\
+D(a,D(b,c))+D(b,D(c,a))+D(c,D(a,b))=0,\\
+(a\circ b)\circ c-D(D(a,b),c)
+=a\circ(b\circ c)-D(a,D(b,c)).
+\tag{74.1}
+\end{gathered}
+$$
+
+原 $a\star b=a\circ b-\mathrm iD(a,b)$ 在 $E+\mathrm iE$ 上的复双线性延拓是结合含单位星乘法，其 C* 完成的自伴部准确为原 $X$。全部有限原复 Gram 正性，包括 P3，均成立。
+
+证明。(73.1) 先给双线性、交换子界、NN、单位行与 Jacobi；同一原值域再给 $a\star b=ab\in E+\mathrm iE$。故其复化就是 $M(A)$ 中的含单位星子代数，结合律实部给原 R。取这个子代数的范数闭包，其自伴部为 $\overline E=X$：自伴极限可将每个逼近元取实部。闭包的 C* 正锥在 $X$ 上与已给锥相同，单位、范数及全部评价质量不变。对任意有限原 $a_1,\ldots,a_n$、复系数 $\lambda_j$，置 $W=\sum_j\lambda_ja_j$，则 $W^*W\in E\cap M(A)_+=C$，故
+
+$$
+\sum_{j,k}\overline\lambda_j\lambda_k
+\bigl(\alpha(a_j\circ a_k)-\mathrm i\alpha(D(a_j,a_k))\bigr)
+=\alpha_{\mathbb C}(W^*W)\ge0.
+\tag{74.2}
+$$
+
+这包括零质量，无需将一般原评价写成迹密度，也没有在识别以前延拓旧 $D$。识别之后才有唯一有界双线性完成延拓及其有界导子流。∎
+

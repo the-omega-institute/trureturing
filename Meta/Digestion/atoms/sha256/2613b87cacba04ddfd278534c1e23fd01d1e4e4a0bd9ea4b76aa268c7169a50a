@@ -1,0 +1,8 @@
+**定义 30.1（成熟工具与新增综合）。** 原词卷 400.1–400.2 的原双线性、单位桥 64.2 的 NN 零核及单位行、三标签卷 73.1 和正交迹续卷 446.1、448.1 的有界线性接触／导子子论证、本卷 10.3 的 NN 后交替结合子代数子论证，均按定理 28.1 中逐项支付的前件复用，不另认领这些工具。其余成熟来源如下：
+
+| 来源 | 准确使用范围 |
+| --- | --- |
+| A. M. Peralta、Á. Rodríguez Palacios，*Grothendieck’s inequalities for real and complex JBW*-triples*，Proc. LMS 83，605–625，[DOI:10.1112/plms/83.3.605](https://doi.org/10.1112/plms/83.3.605)，[作者版](https://www.ugr.es/~aperalta/oldweb/documentos/papers/bigGrothendieckIneq.pdf) | Lemma 1.1 给标量双线性型的分别弱星连续双对偶延拓；Lemma 3.3 和 Theorem 3.4 后的说明给实数版本，§2 明确实 JB 代数属于实 JB* 三元系。只对已经证明有界的同一 $D$ 的标量切片应用，不借用任何结合复乘法。 |
+| Hanche-Olsen、Størmer，*Jordan operator algebras*，[作者公开本](https://hanche.folk.ntnu.no/joa/joa-m.pdf) | Theorem 4.4.3 给同一实 JB 乘法的 JBW 双对偶和原态的正常延拓；Proposition 4.2.3 给 JBW 元素的有限正交投影谱和范数逼近；互补投影的正二次表示及 $U_pU_{u-p}=0$ 取 §2.6、§3.3.6、Lemma 4.2.2。这些不是原 native 投影封闭或新的实际资源。 |
+| R. D. Schafer，*An introduction to nonassociative algebras*，[公开正文](https://www.gutenberg.org/files/25156/25156-pdf.pdf)，Chapter III，印刷页 18，(9) | 一般交替代数的中间 Moufang 恒等式 $(xy)(ax)=x(ya)x$ 及其证明；只需交替性，不需要除代数、有限维、因子或八元数分类。 |
+| Niestegge，[arXiv:1402.0158v2 §4 Lemma 3](https://arxiv.org/html/1402.0158v2#S4)；Baez，[arXiv:2006.14741v5 §4 Theorem 12](https://arxiv.org/html/2006.14741v5#Thmthm12) | 有界顺序导子的全态零面判据及 JB 斜顺序导子接口；动力对应重构仅在完整交换子条件已经由主证明取得后使用。Niestegge 的其他事件／条件概率前件不被默认为本模型的性质。 |
