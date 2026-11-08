@@ -4428,3 +4428,287 @@ $$
 **定义 111.1（完整白话）。** 原来的三根轴已经确定转向，现在考察一根同时与它们反交换的原方向。每根轴作用一次都会给它一份响应，但不能先认定三份响应相互接得上。把两根轴各取一半，把原方向与自身响应也各取一半，放进同一次正反配平，两侧的完整输入恰好变成“两根轴连续作用”和“第三根轴作用一次”；右端又因平方相同而为零，所以它们必须是同一个旧值。循环三次后，原方向和三份响应形成同一强度的四个正交方向，已有平方窗口便把这片真正接成四维线性作用。再把三根轴一起放回固定生成结构，这七个方向使任何读到非零强度的不可约截面至少需要、并恰好使用八个复坐标，所以小于八维的矩阵载体容不下这种第四方向。这是有限关系对更大结构的约束；一般原域中这种方向是否存在、不同四维片怎样接成全局响应，以及实际仪器、联合、历史未来、真实返回和时间，仍保留各自未付的关系。
 
 ## 追加锚（本行以下为增补区）
+
+## 112. 交换对合与两份实际圆的共同响应
+
+**定义 112.1（同一完整候选与原输入）。** 保持106.1的同一原资料、完整A1–A3、准确锥、全部P2和完整PB，以及110.3的全部实际来源量词。原域 $E$ 可不完备，只使用已付的忠实、含单位、等距且准确保锥JC包含 $E\subset A_{\rm sa}$。固定真正原 $h^2=u$，记 $V_h=\{v:h\circ v=0\}$、$Jv=D(h,v)$。对任意实际对合 $s^2=u$，已付的自身圆、负平方、平方保持、横向实缩放及62.1均按各自原定义域使用；不预付任意首标签的线性、单位平移、输出闭合或商下降。
+
+以下固定数学环境乘法只作读取。两个自伴标签的Jordan正交等价于反交换；环境中的交换不被一般地当作旧响应零值。先支付一个实际可用的有限特例：若原 $a^2=b^2=u$ 且 $ab=ba$，取
+
+$$
+r_0=\frac{a+2b}{\sqrt5},\qquad s_0=\frac{-2a+b}{\sqrt5},
+\qquad r_0^3=\frac{13a+14b}{5\sqrt5},
+\qquad s_0=\frac{41r_0-25r_0^3}{12}.
+\tag{112.1}
+$$
+
+实际SO$(2)$不变性及[原多项式零响应卷3.1](AURIC_ORIGINAL_POLYNOMIAL_ZERO_RESPONSES_AND_CAYLEY_DOMAIN_BOUNDARIES.md)给 $D(a,b)=D(r_0,s_0)=0$。这只消费一个明确的原多项式身份，不把一般通勤性解释为零方差。
+
+**定理 112.2（交换的横向对合锁住交叉响应）。** 若原
+
+$$
+h^2=e^2=f^2=u,\qquad h\circ e=h\circ f=0,\qquad ef=fe,
+\qquad j=D(h,e),
+$$
+
+则
+
+$$
+\boxed{j\circ f=0.}
+\tag{112.2}
+$$
+
+证明。所有构造均在原 $E$ 中进行。置 $p=e\circ f=ef$、$q=-h\circ p=-hp$。因为 $h$ 与 $e,f$ 分别反交换，$h$ 与 $p$ 交换；于是
+
+$$
+p^2=q^2=u,\qquad p\circ e=f,\qquad p\circ h=-q,
+\qquad e\circ q=f\circ q=0.
+\tag{112.3}
+$$
+
+$p$ 分别与 $e,h$ 交换，故(112.1)支付 $D(p,e)=D(p,h)=0$。在原 $\operatorname{PB}(p,e,h)$ 中，实际内值为 $\nu=q$、$\omega=f$，右端 $-2e\circ q-2h\circ f=0$。所以
+
+$$
+D(e+q,h+f)=D(e-q,h-f).
+\tag{112.4}
+$$
+
+取原 $e_\pm=(e\pm q)/\sqrt2$、$f_\pm=(h\pm f)/\sqrt2$。由(112.3)，它们平方全为 $u$，且
+
+$$
+e_\pm\circ f_\pm=0,\qquad e_+\circ e_-=0.
+\tag{112.5}
+$$
+
+第一式的交叉项恰为 $\pm(e\circ f+q\circ h)=0$。对每个实际正交对，62.1用于 $\operatorname{span}\{e_\pm,f_\pm\}$，故(112.4)的两端分别为 $2D(e_\pm,f_\pm)$。因此同一个原值
+
+$$
+w=D(e_+,f_+)=D(e_-,f_-)
+\tag{112.6}
+$$
+
+满足 $w^2=u$，并与 $e_\pm,f_\pm$ 全部Jordan正交。63.1的循环规律给 $D(w,e_\pm)=f_\pm$。此时才对包含实际首轴的标量平方片 $\operatorname{span}\{w,e_+,e_-\}$ 使用62.1，得到
+
+$$
+D(w,e)=D\left(w,\frac{e_++e_-}{\sqrt2}\right)
+=\frac{f_++f_-}{\sqrt2}=h.
+\tag{112.7}
+$$
+
+对原正交单位对 $w,e$ 再用同一循环规律，$D(e,h)=w$。反对称性给 $w=-j$。最后 $f=(f_+-f_-)/\sqrt2$；已知 $w\circ f_\pm=0$，只对Jordan乘法作线性组合，即得 $j\circ f=0$。没有对未知 $D$ 拆开一般和，也没有在非单位首标签上套用单位圆。∎
+
+## 113. 标量平方与标量交叠平方的实际混合消费者
+
+**推论 113.1（交换标量平方输入的交叉式）。** 若原 $x,z\in V_h$ 满足 $x^2=cu$、$z^2=du$ 且 $xz=zx$，则
+
+$$
+\boxed{Jx\circ Jz=x\circ z,\qquad x\circ Jz=Jx\circ z=0.}
+\tag{113.1}
+$$
+
+证明。零平方使对应自伴原标签为零。其余情形 $c,d>0$，置 $e=x/\sqrt c$、$f=z/\sqrt d$、$j=Je$、$k=Jf$。112.2给 $j\circ f=0$。现在 $\operatorname{span}\{h,j,f\}$ 全部平方为标量，62.1支付 $J$ 在 $\operatorname{span}\{j,f\}$ 上的线性及Gram保持。由 $Jj=-e$，有 $e\circ k=0$。又自身正交给
+
+$$
+0=(j+f)\circ J(j+f)=(j+f)\circ(-e+k)=j\circ k-e\circ f.
+$$
+
+乘回正实系数，得到(113.1)。这里的可用平面是112.2支付正交后的 $\operatorname{span}\{j,f\}$，没有先假定原 $\operatorname{span}\{x,z\}$ 为标量平方窗。∎
+
+**定理 113.2（原平方及交叠平方均标量时消去混合缺陷）。** 若原 $y,z\in V_h$ 满足
+
+$$
+y^2=cu,\qquad z^2=du,\qquad P=y\circ z,\qquad P^2=ru,
+\tag{113.2}
+$$
+
+则
+
+$$
+\boxed{Jy\circ Jz=P,\qquad y\circ Jz+Jy\circ z=0.}
+\tag{113.3}
+$$
+
+因此[谱混合响应卷10.1](AURIC_SPECTRAL_MIXED_RESPONSES_AND_DIRECT_WINDOW_BOUNDARIES.md)的 $X=P-Jy\circ Jz$、$Y=y\circ Jz+Jy\circ z$、$T=X^2$ 全为零。
+
+证明。$c=0$ 时 $y=Jy=0$。否则 $c>0$，令 $e=y/\sqrt c$、$j=Je$、$p=e\circ z=P/\sqrt c$，取有限原Jordan分量
+
+$$
+v=L_e^2z=\frac{z+eze}{2}=ep,\qquad
+w=z-v=\frac{z-eze}{2}.
+\tag{113.4}
+$$
+
+环境缩写 $eze=2e\circ(e\circ z)-z$ 确保原性。因为 $e^2=u$、$z^2=du$，有 $[e,p]=[z,p]=0$；直接展开得
+
+$$
+v,w\in V_h,\qquad ev=ve,\qquad e\circ w=v\circ w=0,
+\qquad v^2=\frac rc u,\qquad w^2=\left(d-\frac rc\right)u.
+\tag{113.5}
+$$
+
+两平方系数非负。62.1用于 $\operatorname{span}\{h,v,w\}$，支付 $Jz=Jv+Jw$。113.1用于交换的 $e,v$，给 $j\circ Jv=p$、$e\circ Jv+j\circ v=0$。62.1用于 $\operatorname{span}\{h,e,w\}$，支付 $j\circ Jw=e\circ w=0$ 和 $e\circ Jw+j\circ w=0$。合并这两份实际分量并乘回 $\sqrt c$，即得(113.3)。所有线性展开都发生在已付的标量平方片上。∎
+
+**命题 113.3（原平面的半正定平方窗不覆盖该前件）。** 在标准静态 $M_4(\mathbb C)_{\rm sa}$ 模型中，取
+
+$$
+h=\sigma_z\otimes I_2,\qquad y=\sigma_x\otimes I_2,
+\qquad z=\frac{\sigma_x\otimes\sigma_z+\sigma_y\otimes I_2}{\sqrt2}.
+\tag{113.6}
+$$
+
+这里 $y^2=z^2=u$、$P=(I_2\otimes\sigma_z)/\sqrt2$、$P^2=u/2$，故113.2适用；但原平面 $\operatorname{span}\{y,z\}$ 不满足97.2的单非标量半正定平方坐标前件。
+
+证明。Pauli矩阵的平方与反交换关系给上述等式，且 $P$ 非标量、$[y,z]\ne0$。若存在非标量 $R_1$ 及 $q_1\ge0$，使每个平面标签满足 $v^2=q_0(v)u+q_1(v)R_1$，则 $y^2,z^2$ 标量迫使 $q_1(y)=q_1(z)=0$。半正定二次型的零核为线性空间，故 $q_1(y+z)=0$；这与 $(y+z)^2=2u+2P$ 非标量矛盾。此命题区分直接适用范围，不把标准模型中已知的双线性另计为新成果。∎
+
+## 114. 任意标量平方差输入的一个正运输缺陷
+
+**定义 114.1（只用原Jordan多项式的缺陷）。** 现取任意原 $y,z\in V_h$ 满足 $y^2-z^2=\delta u$，记
+
+$$
+j=Jy,\quad k=Jz,\quad G=y^2=j^2,\quad z^2=k^2=G-\delta u,
+\qquad \mathcal U_a(b)=2a\circ(a\circ b)-a^2\circ b.
+$$
+
+定义原元素
+
+$$
+\Delta=\mathcal U_y(\mathcal U_j(z))+G^2\circ z,
+\qquad \Xi=\Delta\circ z.
+\tag{114.1}
+$$
+
+不要求根、逆、谱投影或环境中的虚数乘积属于原域。
+
+**定理 114.2（正缺陷及准确零值）。** 在114.1下，$\Xi\ge0$，正性取原准确锥。仅在环境中记 $F=iyj$、$H=hF$，则
+
+$$
+\boxed{2\Xi=\{F,z\}^2=[H,z]^*[H,z],\qquad
+\Delta^2=2G^2\Xi.}
+\tag{114.2}
+$$
+
+从而 $\Xi=0$、$\Delta=0$、$\{F,z\}=0$ 与 $[H,z]=0$ 四项等价。
+
+证明。$yj=-jy$ 使 $F$ 自伴且 $F^2=G^2$。$G$ 与 $h,y,j,z,k$ 全部交换；对 $z,k$ 使用它们的平方等于 $G-\delta u$。这只是在这些固定元的生成代数中的中心性。令 $B=Fz+zF$，则 $FB=BF$，且
+
+$$
+\mathcal U_y(\mathcal U_j(z))=yjzjy=FzF,
+\qquad \Delta=FB=BF.
+$$
+
+由 $z^2$ 与 $F$ 交换，
+
+$$
+B^2=FzFz+zFzF+2G^2z^2
+=\Delta z+z\Delta=2\Xi.
+$$
+
+故环境正性经准确锥给原 $\Xi\ge0$；又 $\Delta^2=F^2B^2=2G^2\Xi$。$h$ 与 $F$ 交换、与 $z$ 反交换，故 $[H,z]=hB$，其伴随平方为 $B^2$。$\Xi=0$ 由自伴平方零给 $B=0$，继而 $\Delta=0$；反向直接用 $\Xi=\Delta\circ z$，不除以可能退化的 $G$。其余等价同样由(114.2)得到。∎
+
+## 115. 单份输入运输迫使实际旧输出一同运输
+
+**定理 115.1（正缺陷零值的混合消费者）。** 在114.1下，若另有 $\Xi=0$，则
+
+$$
+\boxed{Jy\circ Jz=y\circ z,\qquad y\circ Jz+Jy\circ z=0,}
+\tag{115.1}
+$$
+
+并且旧输出自动满足
+
+$$
+\boxed{\mathcal U_y(\mathcal U_{Jy}(Jz))+G^2\circ Jz=0.}
+\tag{115.2}
+$$
+
+证明。取固定数学代数 $\mathcal B=C^*(u,h,y,j,z,k)$。$G$ 在其中中央。任一不可约表示 $\rho$ 将 $G$、$G-\delta u$ 读成 $\lambda I$、$\mu I$，其中 $\lambda,\mu\ge0$。若任一个为零，对应的两份自伴像由平方零而为零，结论直接成立。其余情形只归一化已有像：
+
+$$
+a=\rho(y)/\sqrt\lambda,\quad b=\rho(j)/\sqrt\lambda,
+\quad c=\rho(z)/\sqrt\mu,\quad d=\rho(k)/\sqrt\mu.
+\tag{115.3}
+$$
+
+它们平方为 $I$，且 $ab=-ba$、$cd=-dc$；114.2与前件给 $(iab)c(iab)=-c$。这里没有定义表示上的 $D$。由两个反交换自伴酉元的标准二块分解，可取共同Hilbert空间上的矩阵形式
+
+$$
+a=\begin{pmatrix}0&I\\I&0\end{pmatrix},\qquad
+b=\begin{pmatrix}0&iI\\-iI&0\end{pmatrix},\qquad
+iab=\begin{pmatrix}I&0\\0&-I\end{pmatrix},\qquad
+c=\begin{pmatrix}0&v\\v^*&0\end{pmatrix},
+\tag{115.4}
+$$
+
+其中 $v$ 酉。该成熟分解只用 $iab$ 的正负谱子空间及 $a$ 将它们酉互换；$c^2=I$ 使其非对角块为酉，不要求表示有限维。保留 $d$ 的全部未知块，$cd=-dc$、$d^2=I$ 准确给
+
+$$
+d=\begin{pmatrix}p&isv\\-iv^*s&-v^*pv\end{pmatrix},
+\qquad p=p^*,\quad s=s^*,\quad [p,s]=0,\quad p^2+s^2=I.
+\tag{115.5}
+$$
+
+例如，反交换先使右上块乘 $v^*$ 为反自伴并确定右下块；平方的对角与非对角块再分别给最后两式。令 $\varepsilon=(I-s)/2\ge0$、$\eta=(p-v^*pv)/2$，则 $p^2=4\varepsilon(I-\varepsilon)$。
+
+按[谱混合响应卷2.1](AURIC_SPECTRAL_MIXED_RESPONSES_AND_DIRECT_WINDOW_BOUNDARIES.md)取归一化混合量 $P_0=a\circ c$、$Q_0=b\circ d$、$X_0=P_0-Q_0$、$Y_0=a\circ d+b\circ c$、$T_0=X_0^2$。原四式在表示中仍成立，因为全部混合量都乘同一个非零系数 $\sqrt{\lambda\mu}$。置 $K=X_0+iY_0$，它们给
+
+$$
+K^2=0,\qquad T_0=\frac{KK^*+K^*K}{4},\qquad
+\{P_0,K\}=T_0.
+\tag{115.6}
+$$
+
+最后一式由 $P_0^2=Q_0^2$ 给 $\{P_0,X_0\}=X_0^2$，再用 $P_0\circ Y_0=0$。直接展开(115.4)–(115.5)，
+
+$$
+P_0=\operatorname{diag}((v+v^*)/2,(v+v^*)/2),\qquad
+K=\begin{pmatrix}2\varepsilon v&0\\2i\eta&2\varepsilon v\end{pmatrix}.
+\tag{115.7}
+$$
+
+$K^2=0$ 的对角块给 $\varepsilon v\varepsilon=0$。设 $q$ 为 $\varepsilon$ 的算子支撑。$\operatorname{ran}\varepsilon$ 在 $q\mathcal H$ 中稠密，故 $qvq=0$，伴随也给 $qv^*q=0$。$p^2=4\varepsilon(I-\varepsilon)$ 给 $p=qpq$，所以 $pvp=pv^*p=0$。这些投影只作环境证明工具。
+
+于是(115.6)第二式的左上块为
+
+$$
+(T_0)_{11}=\varepsilon^2+v^*\varepsilon^2v
++\frac{(p-v^*pv)^2}{4}
+=\varepsilon+v^*\varepsilon v.
+\tag{115.8}
+$$
+
+中间平方的混合项由 $pvp=pv^*p=0$ 消失；再代入 $p^2=4\varepsilon(I-\varepsilon)$。第三式的左上块同时给
+
+$$
+v\varepsilon v+v^*\varepsilon v+\varepsilon v^2+\varepsilon
+=(T_0)_{11}.
+$$
+
+消去共同项并右乘 $v^*$，得 $v\varepsilon+\varepsilon v=0$，所以 $v\varepsilon v^*=-\varepsilon$。左边非负、右边非正，故 $\varepsilon=0$。于是 $s=I$、$p=0$，全部未知块被迫成为
+
+$$
+d=\begin{pmatrix}0&iv\\-iv^*&0\end{pmatrix}=i(iab)c,
+\qquad b=i(iab)a.
+\tag{115.9}
+$$
+
+因此 $b\circ d=a\circ c$、$a\circ d+b\circ c=0$，且 $d$ 也反交换于 $iab$。恢复正实因子，得到该表示中的(115.1)与(115.2)。C*不可约表示分离固定代数元素，故原元素等式成立。证明只运输已经成立的原多项式身份，从未在商或完成上新定义旧响应，也没有舍弃旧输出的对角块。∎
+
+## 116. 完整候选的连接与仍需生产的关系
+
+**定义 116.1（增量、简化与成熟工具）。** 112.4–112.7的承重连接是在同一次原PB中识别两份完全相同的旧输出，再用两个真正原圆将它认回 $-D(h,e)$；113.2消费这份连接，将原输入拆为交换与反交换两份标量平方片。113.3保证这个消费者超出97.2在原输入平面上的直接前件，不把已有平方窗或标准模型的双线性计作增量。114.2给一份原正多项式缺陷；115.1消费其零值与已付两圆PB，利用 $v\varepsilon v^*=-\varepsilon$ 强迫旧输出全部未知块消失。因此一个输入运输条件足以确定输出运输，不需另加第二份条件。
+
+SO$(2)$换基、多项式代入、Peirce分量、Pauli矩阵、二块分解、Schur引理、不可约表示分离、自伴平方零与非负算子的支撑均是成熟中间工具。不可约读取和复矩阵工具的文献范围沿109.1、[谱卷7.2及11.2](AURIC_SPECTRAL_MIXED_RESPONSES_AND_DIRECT_WINDOW_BOUNDARIES.md)；动力对应仍按10.1及85.2所引Alfsen–Shultz、Cabello–Peralta的全域线性或共同实现前件使用。这些文献不供应112.4的旧响应身份或115.1的输出识别；本处为仓内综合，不主张历史原创或文献穷尽。
+
+**定义 116.2（完整候选与全域未付关系）。** 完整候选仍是同一A1–A3、准确锥、全部P2和完整PB；独立前提数未减少。113.2的标量平方条件是在原域中成立的等式，不允许用某个数学商中的标量读取替代。115.1中的 $\Xi=0$ 是条件消费者的额外前件；原PB是否对一般114.1输入强迫它为零，仍未证明，不能把该条件另加为公理后宣称压缩原候选。尚未证明它对混合缺陷为零的必要性。
+
+110.2的 $C_{+,+}$、一般共同反交换方向、不同四维窗的拼接、两交叉分量之和的旧值、任意首标签及全 $E^2$ 上双线性、一般单位平移、同像输入绑定、商下降和完成延拓均保留原范围。[静态卷89.2](AURIC_C128_ARBITRARY_DIMENSIONAL_STATIC_QUANTUM_RECONSTRUCTION.md)已经消费全原加性缺陷的中心性，但这份全域中心条件仍需生产；不能用这里的局部正运输缺陷替代它。[原零响应卷15.2](AURIC_ORIGINAL_POLYNOMIAL_ZERO_RESPONSES_AND_CAYLEY_DOMAIN_BOUNDARIES.md)已付 $D(a,b)=0\Rightarrow[a,b]=0$，本处不重做该支撑桥，也不反用它；同卷12–14无非零原正交锚的完整模型仍须覆盖。原域没有这类轴时，112–115不成为全域入口。
+
+**定义 116.3（现有量子公理的准确消费者）。** 全量保持98.2、110.3及其引用的七项来源。另付同一旧 $D$ 的全域实双线性后，才由静态32.2、23.1、33.2取得全部有限复Gram、原R及同一结合乘法 $a\star b=a\circ b-iD(a,b)$，据其原前件消费Hilbert表示和叠加。Born仅在实际完整菜单与正质量下归一，零、不等、次归一质量及中心经典不等维块均保留。实际箭头的CP、完整仪器连环境全部成功／失败／记录／后口输出、Kraus、TP、更新、Lüders与共同张量仍需各自整台原来源、真正相关联合和递归同源参考。全部合法顺序／自适应／并行历史、每个仍合法未来、真正分组遗忘、停止／拒绝／销毁、同数两侧真实双向逆返回、CountRead无穷、正常性和指定前对偶均保留。原 $\Omega/\mathrm{native}$、全词同一K/J/q、parent/ready、全部实际准备和完整菜单不替换。物理钟、流保持原域、Hamiltonian生成元域、能量及共同正 $\hbar$ 仍由原合同供应；数学块、谱投影和正运输缺陷都不制造这些来源。
+
+## 117. 两组斜放的圆怎样锁住同一转向的完整白话
+
+**定义 117.1（完整白话）。** 保持原来的二元正表和三对象正反配平，把同一根轴看成一面镜子，两根原方向都会穿过镜面，却彼此交换。它们的旧响应不能各自选择转向：在原域里拼出两组斜放的坐标架，同一次配平让两组架子吐出完全相同的一根旧箭头；两组本身又都是真正的圆，圆内已有规律把这根箭头钉死在原转向的反面。因此旧转向必须与另一根原方向正交。这条有限接线让一类原输入先拆成交换和反交换的两片，再接回同一混合响应，虽然原输入平面本身并不落在旧的半正定平方窗里。
+
+对更一般的输入，先连续经过原方向与自身响应的两次二次作用，再比较是否回到规定的反向位置，所得偏差有一份准确的原正读数。若这份读数为零，只规定输入怎样运输就足够：两圆配平会把旧输出藏着的全部未知块逼成一个既非负、又被酉变换送到自身负值的量，它只能为零。现在没有另加这份零值为普遍公理；仍须让原关系自己支付它，并把不同原输入的响应接成同一全域乘法。实际准备、完整仪器全部输出、相关联合、历史未来、真实返回和共同时间尺度仍各守原来源。
+
+## 追加锚（本行以下为增补区）
