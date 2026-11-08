@@ -12,6 +12,10 @@ internal sealed class TwoAxisFiniteRotationDocument : IScribeDocumentDefinition
         Blocks(
             Paragraph(Text(
                 "The vector space is the original real Euclidean three-space. "
+                + "Its Lean carrier is EuclideanSpace over the reals on Fin 3. "
+                + "The coordinate equivalence WithLp.toLp and WithLp.ofLp connects "
+                + "it to the original Fin 3 to real vector carrier; inner products "
+                + "become the original dot product and its norm becomes vnorm. "
                 + "Rotations are actual linear isometric equivalences with determinant one. "
                 + "The argument combines the classical reflection and sphere-connectedness "
                 + "results supplied by Mathlib with an explicit intersection of two latitudes. "
@@ -68,7 +72,9 @@ internal sealed class TwoAxisFiniteRotationDocument : IScribeDocumentDefinition
             Paragraph(Text(
                 "For the original spin-factor residual, fix real scalars s and t "
                 + "and a sign epsilon. The function on vector pairs is "
-                + "F(x,y)=D((s,x),(t,y))-(0,epsilon times (x cross y)). "
+                + "F(x,y)=D((s,ofLp x),(t,ofLp y)) minus crossD epsilon "
+                + "at those same original inputs. The original pair is inserted "
+                + "by toLp, and a rotation on raw coordinates is ofLp after R after toLp. "
                 + "At an independent pair with (s,t) nonzero, take w=x cross y "
                 + "and ell=s x+t y, and choose a=ell+epsilon w and b=ell-epsilon w. "
                 + "To apply the transport theorem, the actual local circle laws must "

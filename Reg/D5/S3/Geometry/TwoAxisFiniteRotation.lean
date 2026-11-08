@@ -31,56 +31,66 @@ private theorem halfturn_firstAxis : halfturn firstAxis = -firstAxis := by
   norm_num [firstAxis, secondAxis, PiLp.inner_apply, Fin.sum_univ_succ,
     RCLike.inner_apply]
 
+private theorem halfturn_ne_one : halfturn ≠ 1 := by
+  intro heq
+  have h := congrArg (fun R : Orthogonal => R firstAxis) heq
+  change halfturn firstAxis = firstAxis at h
+  rw [halfturn_firstAxis] at h
+  have hc := congrArg (fun v : Space => v 0) h
+  change (-1 : ℝ) = 1 at hc
+  norm_num at hc
+
+private theorem halfturn_determinant : determinant halfturn = 1 := by
+  have h0 : secondAxis ≠ 0 := by
+    intro h
+    have hg := axes_gram
+    simp [h] at hg
+  have hline := finrank_span_singleton h0 (K := ℝ)
+  have hd := (ℝ ∙ secondAxis).finrank_add_finrank_orthogonal
+  have hdim : Module.finrank ℝ Space = 3 := by simp [Space]
+  have hortho : Module.finrank ℝ (ℝ ∙ secondAxis)ᗮ = 2 := by omega
+  change determinant (ℝ ∙ secondAxis).reflection = 1
+  rw [determinant, Submodule.det_reflection, hortho]
+  norm_num
+
 namespace Words
 
 abbrev signature : Signature where
-  Params := Space × Space × Orthogonal
+  Params := Σ _ : Space, Σ _ : Space, Orthogonal
   State _ := List Orthogonal
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ _ := Prop
+  Output _ _ := Orthogonal
   Anchor := Empty
   finiteAnchor := inferInstance
 
 def actual : Realization signature :=
-  realize signature (fun _ p l => IsAxisWord p.1 p.2.1 l ∧ l.prod = p.2.2)
-    (fun e => nomatch e)
+  realize signature (fun _ _ l => l.prod) (fun e => nomatch e)
 
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ => False) (fun e => nomatch e)
+  realize signature (fun _ _ _ => 1) (fun e => nomatch e)
 
 abbrev arena : Arena where
   signature := signature
   Law O := ∀ (a b : Space),
     ⟪a, b⟫_ℝ ^ 2 < ‖a‖ ^ 2 * ‖b‖ ^ 2 →
     ∀ (R : Orthogonal), determinant R = 1 →
-      ∃ l : List Orthogonal, O.readout () (a, b, R) l
+      ∃ l : List Orthogonal, IsAxisWord a b l ∧ O.readout () ⟨a, b, R⟩ l = R
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  obtain ⟨l, hl⟩ := h firstAxis secondAxis axes_gram 1 (by simp [determinant])
-  exact hl
+  obtain ⟨l, hl⟩ := h firstAxis secondAxis axes_gram halfturn halfturn_determinant
+  exact halfturn_ne_one hl.2.symm
 
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
-  have hn : halfturn ≠ 1 := by
-    intro heq
-    have h := congrArg (fun R : Orthogonal => R firstAxis) heq
-    change halfturn firstAxis = firstAxis at h
-    rw [halfturn_firstAxis] at h
-    have hc := congrArg (fun v : Space => v 0) h
-    change (-1 : ℝ) = 1 at hc
-    norm_num at hc
-  refine ⟨(firstAxis, secondAxis, 1), [], [halfturn], ?_⟩
-  intro heq
-  have hnil : actual.readout i (firstAxis, secondAxis, 1) [] :=
-    ⟨by simp [IsAxisWord], rfl⟩
-  have hsingle : actual.readout i (firstAxis, secondAxis, 1) [halfturn] := Eq.mp heq hnil
-  exact hn (by simpa only [List.prod_singleton] using hsingle.2)
+  refine ⟨⟨firstAxis, secondAxis, 1⟩, [], [halfturn], ?_⟩
+  change ([] : List Orthogonal).prod ≠ [halfturn].prod
+  simpa using Ne.symm halfturn_ne_one
 
 def family : Registration arena (type_of% (@two_axis_finite_word)) where
-  actual := actual
+  actual := realize signature (fun _ _ l => l.prod) (fun e => nomatch e)
   bridge := Iff.rfl
   variation := ⟨two_axis_finite_word, rejected, rejected_law⟩
   sensitivity := ⟨fun i => ⟨rejected,
@@ -89,7 +99,7 @@ def family : Registration arena (type_of% (@two_axis_finite_word)) where
   dependence := dependence
 
 def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@two_axis_finite_word) (Realization signature) Type Unit where
+    (@two_axis_finite_word) (Realization signature) Unit Unit where
   unitName := `Reg.D5.S3.Geometry.TwoAxisFiniteRotation.Words.__information_unit
   realizationName := `Reg.D5.S3.Geometry.TwoAxisFiniteRotation.Words.family
   realizationSource := none
@@ -101,19 +111,18 @@ def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature
-    (fun _ p l => IsAxisWord p.1 p.2.1 l ∧ l.prod = p.2.2) (fun e => nomatch e))
+  readout := some (realize signature (fun _ _ l => l.prod) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some (List Orthogonal)
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Geometry.TwoAxisFiniteRotation
     definition := none
     coordinates := #[0, 1, 3]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "arg", "body"]
-      stateBinder := 5
+      path := #["body", "body", "body", "body", "body", "arg", "body", "arg", "fn", "arg"]
+      stateBinder := 0
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }
@@ -127,12 +136,16 @@ namespace Transport
 
 universe u
 
-structure Parameters where
-  Y : Type u
-  F : (Space × Space) → Y
-  p : Space × Space
-  a : Space
-  b : Space
+abbrev Parameters :=
+  Σ Y : Type u, Σ _ : (Space × Space) → Y, Σ _ : Space × Space, Σ _ : Space, Space
+
+namespace Parameters
+abbrev Y (q : Parameters.{u}) := q.1
+abbrev F (q : Parameters.{u}) := q.2.1
+abbrev p (q : Parameters.{u}) := q.2.2.1
+abbrev a (q : Parameters.{u}) := q.2.2.2.1
+abbrev b (q : Parameters.{u}) := q.2.2.2.2
+end Parameters
 
 abbrev signature : Signature where
   Params := Parameters.{u}
@@ -152,7 +165,7 @@ def rejected : Realization signature.{u} :=
 
 abbrev arena : Arena where
   signature := signature.{u}
-  Law O := ∀ (Y : Type u) (F : (Space × Space) → Y) (p : Space × Space)
+  Law O := ∀ {Y : Type u} (F : (Space × Space) → Y) (p : Space × Space)
     (a b : Space),
     ⟪a, b⟫_ℝ ^ 2 < ‖a‖ ^ 2 * ‖b‖ ^ 2 →
     (∀ (Q : Orthogonal), determinant Q = 1 → ∀ (T : Orthogonal),
@@ -161,12 +174,8 @@ abbrev arena : Arena where
     ∀ (R : Orthogonal), determinant R = 1 →
       O.readout () ⟨Y, F, p, a, b⟩ R = F p
 
-private def normParameters : Parameters.{u} where
-  Y := ULift.{u} ℝ
-  F p := ⟨‖p.1‖⟩
-  p := (firstAxis, 0)
-  a := firstAxis
-  b := secondAxis
+private def normParameters : Parameters.{u} :=
+  ⟨ULift.{u} ℝ, fun p => ⟨‖p.1‖⟩, (firstAxis, 0), firstAxis, secondAxis⟩
 
 private theorem norm_local :
     ∀ (Q : Orthogonal), determinant Q = 1 → ∀ (T : Orthogonal),
@@ -180,20 +189,16 @@ private theorem norm_local :
 
 private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
-  have heq := h normParameters.{u}.Y normParameters.{u}.F normParameters.{u}.p
+  have heq := h (Y := normParameters.{u}.Y) normParameters.{u}.F normParameters.{u}.p
     normParameters.{u}.a normParameters.{u}.b axes_gram norm_local
-    1 (by simp [determinant])
+    1 (by change LinearMap.det (1 : Space →ₗ[ℝ] Space) = 1; simp)
   have hnorm := congrArg ULift.down heq
   change ‖(0 : Space)‖ = ‖firstAxis‖ at hnorm
   exact (zero_ne_one : (0 : ℝ) ≠ 1)
     (by simpa only [norm_zero, firstAxis_norm] using hnorm)
 
-private def coordinateParameters : Parameters.{u} where
-  Y := ULift.{u} ℝ
-  F p := ⟨p.1 0⟩
-  p := (firstAxis, 0)
-  a := firstAxis
-  b := secondAxis
+private def coordinateParameters : Parameters.{u} :=
+  ⟨ULift.{u} ℝ, fun p => ⟨p.1 0⟩, (firstAxis, 0), firstAxis, secondAxis⟩
 
 private theorem dependence : ObservationalDependence signature.{u} actual := by
   intro i
@@ -206,7 +211,8 @@ private theorem dependence : ObservationalDependence signature.{u} actual := by
   norm_num at h
 
 def family : Registration arena.{u} (type_of% (@moving_axis_invariance.{u})) where
-  actual := actual
+  actual := realize signature.{u} (fun _ p R => p.F (rotatePair R p.p))
+    (fun e => nomatch e)
   bridge := Iff.rfl
   variation := ⟨@moving_axis_invariance.{u}, rejected, rejected_law⟩
   sensitivity := ⟨fun i => ⟨rejected,
@@ -215,7 +221,7 @@ def family : Registration arena.{u} (type_of% (@moving_axis_invariance.{u})) whe
   dependence := dependence
 
 def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@moving_axis_invariance.{u}) (Realization signature.{u}) Type Unit where
+    (@moving_axis_invariance.{u}) (Realization signature.{u}) Unit Unit where
   unitName := `Reg.D5.S3.Geometry.TwoAxisFiniteRotation.Transport.__information_unit
   realizationName := `Reg.D5.S3.Geometry.TwoAxisFiniteRotation.Transport.family
   realizationSource := none
@@ -227,12 +233,12 @@ def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ p R => p.F (rotatePair R p.p))
+  readout := some (realize signature.{u} (fun _ p R => p.F (rotatePair R p.p))
     (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some Orthogonal
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Geometry.TwoAxisFiniteRotation
     definition := none
