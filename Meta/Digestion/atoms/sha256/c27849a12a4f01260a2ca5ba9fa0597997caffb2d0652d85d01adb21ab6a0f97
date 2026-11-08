@@ -1,0 +1,23 @@
+### 13.1　$D$ 上的精确坐标稳定子
+
+本节的代数锚是坐标投影 $C_1=e_1e_1^*$。它只是轨道记号的锚，不是原彩票共同根
+$$
+D_0=WC_0W^*.
+$$
+令
+$$
+K=\mathbb Q(\sqrt{-3}),\qquad
+\mathcal O_K=\mathbb Z[\zeta],\qquad
+D=\mathcal O_K[1/6],\qquad
+G=U_{27}(D),
+$$
+并对任何 $k$ 定义末端坐标 $1$ 的几何标签
+$$
+\mathscr P(k)=k^*C_1k.
+$$
+若先执行前向矩阵 $a$，再执行 $k$，总矩阵是 $ka$，所以
+$$
+\mathscr P(ka)=a^*\mathscr P(k)a.
+$$
+这固定了本节的右作用方向。
+

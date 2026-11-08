@@ -1,0 +1,74 @@
+## 7　观察者记录也在整体内：干涉无需负概率
+
+在已建立的联合接口中，取
+
+$$
+|\Psi\rangle=|0\rangle u+|1\rangle v,\qquad
+\|u\|^2+\|v\|^2=1.
+$$
+
+$u,v$ 是内部记录或参考的向量，未要求它们可区分。记
+
+$$
+p=\|u\|^2,\quad q=\|v\|^2,\quad c=\langle v,u\rangle.
+$$
+
+忽略记录后的二路状态为
+
+$$
+\rho_{\rm path}=\begin{pmatrix}p&c\\\bar c&q\end{pmatrix},\qquad
+\det\rho_{\rm path}=pq-|c|^2\ge0.
+$$
+
+平衡输出并扫描相对相位时，两出口概率为
+
+$$
+p_+(\theta)=\frac12+\operatorname{Re}(e^{i\theta}c),\qquad
+p_-(\theta)=\frac12-\operatorname{Re}(e^{i\theta}c).
+$$
+
+二者都非负，且总和恒为一。一个出口相消，强度可以转到另一个出口；不需要负概率。
+
+定义偏置 $\mathcal P=|p-q|$、可见度 $\mathcal V=2|c|$、未保留在局部二元相干中的余量
+
+$$
+\mathcal R=2\sqrt{pq-|c|^2}.
+$$
+
+则直接展开给
+
+$$
+\boxed{\mathcal P^2+\mathcal V^2+\mathcal R^2=1.}
+\tag{18}
+$$
+
+这又是一份二元归一的三元约束，但三个量的操作含义已经明确。
+
+若用内部记录最佳区分两路，定义 $\mathcal D=\|uu^\dagger-vv^\dagger\|_1$。该 Hermitian 差的至多两个非零特征值为
+
+$$
+\lambda_\pm=\frac{p-q\pm\sqrt{1-4|c|^2}}2.
+$$
+
+由 $|c|^2\le pq$，两特征值异号或有零，故
+
+$$
+\mathcal D^2=1-4|c|^2=\mathcal P^2+\mathcal R^2,
+\qquad \mathcal D^2+\mathcal V^2=1.
+$$
+
+最佳猜路成功率为 $(1+\mathcal D)/2$：二元判别效果 $0\le E\le I$ 的成功率为 $q+\operatorname{Tr}(E(uu^\dagger-vv^\dagger))$，取正谱投影即得。
+
+一般混合联合态分块为 $\Omega=\bigl(\begin{smallmatrix}A&C\\C^\dagger&B\end{smallmatrix}\bigr)\succeq0$、$\operatorname{Tr}\Omega=1$。取纯化，再丢弃纯化参考，迹范数对 Hermitian 差的部分迹收缩性给
+
+$$
+\mathcal D=\|A-B\|_1,\quad\mathcal V=2|\operatorname{Tr}C|,
+\qquad \mathcal D^2+\mathcal V^2\le1.
+$$
+
+收缩性可由 $\|X\|_1=\max_{-I\le H\le I}\operatorname{Tr}(HX)$ 及 $H\mapsto H\otimes I$ 直接证明。混合情形等号也可能成立，不声称等号当且仅当整体纯。此为标准量子二路互补结构，本轮用它解释内部记录，并非新的物理预言。[\[12\]](#ref-englert)
+
+项目 V56 的算子值三轴说明，局部 Bloch 向量为零仍可保留完整联合纯态的关系；V84 则明确，历史索引被写成正交基是一种声明的记录表示，不自动证明实际路径已留下可区分的记录。不能既把每条过去路径视为物理正交记录，又无条件保留未读口中的相干。[\[7\]](#ref-v56), [\[8\]](#ref-v84)
+
+最新 RRO 增补对固定 $0\le\varepsilon<1/2$，在其终端曲线和资源合同下得到经典比较器的持久寄存器位数 $`B^*_\varepsilon(H)=\Theta_\varepsilon(\log H)`$，其中 $H\to\infty$；它已经假定所用相干与读出接口，且排除固定精确实系数表的描述精度、获取和实现成本。它说明有限几何载体与增长的历史记账是不同问题，不给“每一步都升一个 Hilbert 维”的结论，也不是本轮的 Born 推导。[\[5\]](#ref-rro)
+

@@ -1,0 +1,50 @@
+**Lemma 169.1 (a positive-time source density has no polynomial relation).** Let $t,d>0$ and let $g_t$ be the source-start density of Appendix III Theorem 117.2. There is no nonzero real polynomial $q$ such that
+
+$$
+q(T_d)g_t=0\quad\text{in }L^2(G,m).
+\tag{169.1}
+$$
+
+*Proof.* Write $T_s=e^{-sK}$ and let $E_K$ be the spectral resolution of the nonnegative self-adjoint $K$. If (169.1) held, then the spectral measure of $g_t$ would be supported on
+
+$$
+\Lambda=\{\lambda\ge0:q(e^{-d\lambda})=0\}.
+\tag{169.2}
+$$
+
+This set is finite: the nonzero polynomial $q$ has finitely many roots, and $\lambda\mapsto e^{-d\lambda}$ is one-to-one; a possible root at zero is not attained at a finite $\lambda$. Thus
+
+$$
+g_t=\sum_{\lambda\in\Lambda}g_{t,\lambda},
+\qquad g_{t,\lambda}=E_K(\{\lambda\})g_t.
+\tag{169.3}
+$$
+
+For $0<s<t$, the source propagation identity gives $g_t=T_{t-s}g_s$. Since $T_{t-s}$ is injective and commutes with $q(T_d)$,
+
+$$
+0=q(T_d)g_t=T_{t-s}q(T_d)g_s
+\quad\Longrightarrow\quad q(T_d)g_s=0.
+\tag{169.4}
+$$
+
+The same finite spectral decomposition therefore holds for every $g_s$. On the $\lambda$-eigenspace, $T_{t-s}$ is multiplication by $e^{-(t-s)\lambda}$, so
+
+$$
+g_s=\sum_{\lambda\in\Lambda}e^{(t-s)\lambda}g_{t,\lambda}
+\longrightarrow
+r:=\sum_{\lambda\in\Lambda}e^{t\lambda}g_{t,\lambda}
+\quad\text{in }L^2(m)\quad(s\downarrow0).
+\tag{169.5}
+$$
+
+For every $\psi\in C_c(G)$, the $L^2$ convergence and $m(G)=1$ give
+
+$$
+\int_G\psi r\,dm
+=\lim_{s\downarrow0}\int_G\psi g_s\,dm.
+\tag{169.6}
+$$
+
+The right side is $\lim_{s\downarrow0}\mathbb E_e[\psi(Z_s)]=\psi(e)$, because the retained diffusion starts at $e$ and has continuous paths. Hence the finite measure $r\,m$ equals $\delta_e$ on $C_c(G)$. This is impossible: $r\in L^2(m)\subset L^1(m)$ while $m(\{e\})=0$, so $r\,m$ is absolutely continuous with respect to $m$ and cannot be the point mass $\delta_e$. $\square$
+

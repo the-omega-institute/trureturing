@@ -1,0 +1,25 @@
+**定理 18.1（指定自旋分支的原值恢复）。** 在同一个 $\mathsf B$ 上，完整 R 等价于以下条件：$V=0$，或者存在一个原单位 $n\in V$ 和一个 $m>0$ 满足 $\mathsf Q_n$。非标量支的“存在一个”又等价于“每个原单位 $n$、每个 $m>0$ 都满足”。成立时 $\dim H\in\{0,1,3\}$ 且 $E=X$；维数零、一时 $D=0$，三维时在一次固定取向下有一个全局 $\varepsilon=\pm1$，使 $\kappa=\varepsilon\times$。同一原 $\star$ 分别为 $\mathbb C$、$\mathbb C\oplus\mathbb C$ 或 $M_2(\mathbb C)$，保持原 $u,C,N$ 及全部原正评价和质量。
+
+证明。先设存在所称锚。17.1 独立取得旧 $D$ 的双线性，此后定义复乘法才合法。令 $\ell:\mathcal F\to A_0$ 是 $\sum c_j[a_j]\mapsto\sum c_ja_j$；双线性说明自由型就是 $h_n(\ell f,\ell g)$，且
+
+$$
+\ell(\mathscr A_tf)=t\star\ell(f).
+\tag{18.1}
+$$
+
+$\ell$ 满射，所以 (16.7) 恰好变成这个原左乘保持 $A_0$ 的 $h_n$ 零空间，而非另造一个作用。
+
+若 $\dim V\ge2$，在原 $V$ 中选择单位 $x\perp n$；(16.3) 给第三轴 $y$，且三轴仍在原 $V$。17.2 给零向量 $z$，(16.7) 强迫全部原 $t=su+v$ 的 (17.6) 为零，故 $V\subseteq W$。又 $W\subseteq V$ 且三轴独立，所以 $V=W$ 为三维；这同时排除了维数二、所有至少四维及无限维情形。若没有独立 $x$，则 $V$ 为一维。$V=0$ 时由 (16.3) 直接有 $D=0$，无需锚。
+
+三维时交替三形式由一个实数决定；在固定正交取向下写 $\kappa(x,y)=\varepsilon x\times y$，面积式在一对正交单位向量上给 $\varepsilon^2=1$。这是一份全局符号，不能随平面改变。有限维 $V$ 在 $H$ 中闭而稠密，故 $V=H$、$E=X$。现在直接使用 W34.2 的显式同构：三维取 $\Phi_\varepsilon(su+x)=sI-\varepsilon x\cdot\sigma$；一维取 $su+rv\mapsto(s+r,s-r)$；零维取 $su\mapsto s$。它们对同一原 $S-\mathrm iD$ 保乘法、星、单位、锥和自伴范数，故完整 R 成立。没有先以 W33.2 的循环前件取得维数，再倒证稳定性。
+
+反向，在 $\mathsf B$ 加完整 R 下，W34.1–34.2 已给上述同一 C* 结构。对任意数学正评价 $\alpha_{m,n}$，结合乘法的成熟不等式
+
+$$
+\alpha_{m,n}((t\star a)^*\star(t\star a))
+\le N(t)^2\alpha_{m,n}(a^*\star a)\qquad(t\in E,\ a\in A_0)
+\tag{18.2}
+$$
+
+给 Gram 正性及零空间左乘稳定。经 $\ell$ 拉回就给全部自由标签上的 $\mathsf Q_n$。原 $\mathcal P$ 未被改成这些数学锚；原评价全数由同一同构运输，质量不变。∎
+

@@ -1,0 +1,33 @@
+**定义 C-90.1（固定条件态的比较及表面映射）。** 固定
+$0<\widehat X,\widehat Y<1$，令
+
+$$
+\widehat\kappa_-=\max(0,\widehat X+\widehat Y-1),\qquad
+\widehat\kappa_+=\min(\widehat X,\widehat Y).
+$$
+
+在归一化底面上取
+$\widehat\kappa\in[\widehat\kappa_-,\widehat\kappa_+]$，
+底角概率为
+$(1-\widehat X-\widehat Y+\widehat\kappa,
+\widehat X-\widehat\kappa,\widehat Y-\widehat\kappa,\widehat\kappa)$。
+另固定各个实际复振幅，得到一个归一化底面纯态 $|\phi\rangle$；
+这比固定 $\chi$ 或概率表更强。对 $0<r<1$ 定义
+
+$$
+|\psi_r\rangle=\sqrt{1-r}|2\rangle+\sqrt r|\phi\rangle,\qquad
+(X,Y,Z,\kappa)=(r\widehat X,r\widehat Y,1-r,r\widehat\kappa).
+\tag{C90.1}
+$$
+
+中模式系数取正，故相对底面的共同相位也已固定。
+每个 $r$ 有不同的固定均值纤维；这里不是在一条固定 $(X,Y,Z)$ 曲面上改变 $r$。
+为比较整个曲面，令 $\widehat\kappa,\chi$ 变化，使用对应映射
+
+$$
+F_r:(\widehat\kappa,\chi)\longmapsto(r\widehat\kappa,\chi).
+\tag{C90.2}
+$$
+
+帽号几何是总底面质量一的参数模型；不宣称它是 $Z>0$ 的五模式全正纤维。
+

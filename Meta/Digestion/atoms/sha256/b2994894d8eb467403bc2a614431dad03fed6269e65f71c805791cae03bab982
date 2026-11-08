@@ -1,0 +1,32 @@
+**约定 C-74.1（来源、符号及尺度的完整对应）。** 本章只在 $0<Z<1$、$0<X,Y<r$、$\kappa_-<\kappa<\kappa_+$ 的全正内部使用几何。来源为[《辛预测完成》§35.3–§35.7](SYMPLECTIC_PREDICTIVE_COMPLETION.md#357-隐藏概率信息反相位与两倍尺度的关系度量)与原卷 [C-13、C-14](AURIC_FIB_ATOM_HIDDEN_RELATIONS_STATISTICS_PHASE_AND_SEAMS.md#13-固定均值的五态相位商与复关系坐标)。它们均是另行指定复振幅之后的射影几何，不能由五概率自动唯一选出。
+
+为避免同名参数掩盖尺度，精确字典为
+
+$$
+\begin{gathered}
+\tau_{\rm SP}=J=\log\Omega,\qquad
+\eta_{\rm SP}=J/2=4\eta,\qquad
+\zeta_{\rm SP}=\Xi,\qquad I_{\rm SP}=\mathcal I,\\
+\theta_s^{\rm old}=-\theta_s,\qquad
+\Phi_{\rm old}=-\chi,\qquad
+u_{\rm old}=4\eta,\qquad
+ g_{\rm SP}=2g_{\rm old}.
+\end{gathered}
+\tag{C74.1}
+$$
+
+这里 $u_{\rm old}$ 指 C-13.3 的实对数模坐标。$\eta$ 始终是本椭圆半轴的对数，绝不能直接与 §35.7 的 $\eta_{\rm SP}$ 等同。两种角约定描述同一个复振幅，不是把状态另作复共轭。
+
+所选射影尺度在每条标准 $\mathbb{CP}^1$ 上辛面积为 $2\pi$。在全正归一化图上，来源的形式及度量为
+
+$$
+\omega=\sum_s d\theta_s\wedge dp_s,
+\qquad
+ g=\frac12\sum_s\frac{dp_s^2}{p_s}
++2\left[\sum_s p_s\,d\theta_s^2
+-\left(\sum_s p_s\,d\theta_s\right)^2\right].
+\tag{C74.2}
+$$
+
+共同相位先按射线识别，再固定三个矩值 $(X,Y,Z)$，最后除去三个位置相位的 $T^3$ 作用；只有这整个操作才给二维关系空间。底面条件化是另一种操作。
+
