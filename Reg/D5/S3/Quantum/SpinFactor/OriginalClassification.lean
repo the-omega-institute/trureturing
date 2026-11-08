@@ -44,6 +44,15 @@ abbrev arena : Arena where
     (∀ a b, D a b = R.readout () a b) →
       _root_.D5.S3.Quantum.SpinFactor.OriginalClassification.complete_classification D
 
+abbrev consequencesArena : Arena where
+  signature := signature
+  Law R := ∀ (D : E → E → E) (_ : P2 D) (_ : PB D),
+    (∀ a b, D a b = R.readout () a b) →
+      ∃ ε : Orientation,
+        (ε = .plus ∨ ε = .minus) ∧
+        (∀ a b, D a b = crossD ε a b) ∧
+        (Consequences D ∧ MatrixInterfaces (orientationBool ε) D)
+
 /- A later compiler-owned factory must supply the four-slot registration.  This
    source deliberately contains no fabricated proof of the rejected law, no
    guessed selector and no validation claim. -/
