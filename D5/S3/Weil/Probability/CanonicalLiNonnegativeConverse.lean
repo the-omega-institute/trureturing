@@ -6,7 +6,14 @@
    utility: none
    digest: Nonnegativity of every positive canonical Li coefficient implies standard RH. -/
 
+/- Escape audit unfinished for the published Pringsheim owner:
+https://github.com/the-omega-institute/trureturing/issues/22312 -/
+
 import D5.S3.Weil.Probability.CanonicalLiGrowthZeroFree
+import D5.S3.Zeros.Endpoints.CanonicalLiLocalExpansion
+import D5.S3.Analytic.ShiftedXiPoisson.ShiftedPoissonSemigroup
+import D5.S3.Zeros.CompletedZeta
+import D5.S3.Weil.ZetaCore.Statement
 import Mathlib.Analysis.Complex.Basic
 import Mathlib.Analysis.Analytic.IsolatedZeros
 import Mathlib.Analysis.Analytic.ChangeOrigin
@@ -136,7 +143,7 @@ private theorem analytic_germ_eq_of_real_interval (f g : ℂ → ℂ) (x ε : �
     exact False.elim (hball hmem (heq (x + t) (by linarith) (by linarith [min_le_left ε δ])))
 
 
-private theorem nonnegative_series_positive_boundary_obstruction (a : ℕ → ℝ)
+theorem nonnegative_series_positive_boundary_obstruction (a : ℕ → ℝ)
     (ha : ∀ n, 0 ≤ a n) (R : ℝ≥0) (hR : 0 < R)
     (hrad : (FormalMultilinearSeries.ofScalars ℂ (fun n => (a n : ℂ))).radius = (R : ℝ≥0∞))
     (g : ℂ → ℂ) (hg : AnalyticAt ℂ g (R : ℂ))
@@ -291,6 +298,5 @@ theorem canonical_li_nonnegative_implies_rh
   exact D5.S3.Weil.Probability.CanonicalLiGrowthZeroFree.canonical_li_disk_summability_implies_rh
     (canonical_li_nonnegative_summable nonnegative)
 
-#print axioms canonical_li_nonnegative_implies_rh
 
 end D5.S3.Weil.Probability.CanonicalLiNonnegativeConverse
