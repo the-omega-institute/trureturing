@@ -1117,3 +1117,256 @@ This is a repo-derived composition of the original source orbit, the actual curr
 All original source and analytic suppliers retain their inherited scope. This positive-residual result imposes no extra hypothesis on $\theta$ or the admitted representative $b$: replacing $f^0$ by $f$ in target integrals changes no original positive-time law, and every repaired null set is null for all those laws. It leaves universal residual-zero $F_{64}$ attainment or exclusion, origin enclosure, actual compatible summable continuation, physical succession and general instrument or full-history contracts unresolved. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 217. The two source relations pay heat energy through the actual full residual
+
+**Definition 217.1 (the two baseline relations and the full residual size).** Retain exactly Definition 211.1, including the original source-start law, $m$, $g=g_{2d}$, $P=T_d$, the same-source terminal convention and the prescribed tuple $f$. For a legal whole-$G$ Borel simplex tuple $u$, write
+
+$$
+\Delta(u)_{yzw}=\mathcal C(u_y,u_z,u_w)-\mathcal C(f_y,f_z,f_w),
+\qquad
+\delta(u)=\|\Delta(u)\|_\infty.
+$$
+
+Use the two coefficient vectors
+
+$$
+ a^{(1)}=(1,-1,0,0),
+ \qquad
+ a^{(B)}=(-p,-p,-p,1-p),
+ \qquad p=\tfrac14,
+ \tag{217.1}
+$$
+
+in the label order $(0,1,3,B)$. They satisfy
+$\sum_y a_y^{(r)}f_y=0$ pointwise for $r\in\{1,B\}$, and their associated relation functions are
+
+$$
+ h_r=h_{a^{(r)}}:=\sum_{y\in\mathcal L}a_y^{(r)}u_y,
+ \qquad
+ h_1=u_0-u_1,
+ \qquad
+ h_B=u_B-p.
+ \tag{217.2}
+$$
+
+The second vector is the affine $B$ relation written linearly on the simplex, since
+$\sum_yu_y=1$ and hence
+$\sum_ya_y^{(B)}u_y=u_B-p$. For any two such relation vectors put
+
+$$
+ Q_{rs}(u)=\mathcal C(h_r,h_s,f_3),
+ \qquad
+ R_{rs}(u)=\sum_{y,z\in\mathcal L}a_y^{(r)}a_z^{(s)}\Delta(u)_{yz3}.
+ \tag{217.3}
+$$
+
+**Theorem 217.2 (all-channel source relation-energy inequality).** For every original $\theta$, every legal whole-$G$ Borel simplex tuple $u$ and $r,s\in\{1,B\}$,
+
+$$
+ R_{rs}(u)=\mathcal C(h_r,h_s,u_3),
+ \qquad
+ Q_{rs}(u)-R_{rs}(u)=-\mathcal C(h_r,h_s,u_3-f_3).
+ \tag{217.4}
+$$
+
+The matrix $Q(u)=(Q_{rs}(u))_{r,s\in\{1,B\}}$ is positive semidefinite and
+
+$$
+ Q_{rs}(u)
+ =c\left\langle T_{d/2}(g h_r),T_{d/2}(g h_s)\right\rangle_{L^2(m)}.
+ \tag{217.5}
+$$
+
+Consequently, with $A_1=\|a^{(1)}\|_1=2$ and $A_B=\|a^{(B)}\|_1=3/2$,
+
+$$
+ 0\le Q_{rr}(u)
+ \le A_r^2\,\delta(u)
+      +\|h_r\|_\infty^2\,\|u_3-f_3\|_\infty,
+ \qquad r\in\{1,B\},
+ \tag{217.6}
+$$
+
+and, more generally,
+
+$$
+ |Q_{rs}(u)-R_{rs}(u)|
+ \le \|h_r\|_\infty\|h_s\|_\infty
+       \|u_3-f_3\|_\infty,
+ \qquad
+ |R_{rs}(u)|\le A_rA_s\,\delta(u).
+ \tag{217.7}
+$$
+
+Thus the positive source heat energy of both independent baseline relations is paid by the actual full residual and the actual terminal defect. No parity, preserved-terminal ansatz or two-label restriction is used.
+
+*Proof.* By (217.1)--(217.2), $\sum_ya_y^{(r)}f_y=0$. Bilinearity in the first two slots therefore gives
+
+$$
+\begin{aligned}
+R_{rs}(u)
+ &=\mathcal C\!\left(\sum_ya_y^{(r)}u_y,
+                    \sum_za_z^{(s)}u_z,u_3\right)
+   -\mathcal C\!\left(\sum_ya_y^{(r)}f_y,
+                    \sum_za_z^{(s)}f_z,f_3\right)\\
+ &=\mathcal C(h_r,h_s,u_3).
+\end{aligned}
+$$
+
+Subtracting the same expression with terminal $f_3$ proves the second identity in (217.4). The source propagation identity $Pf_3=cg$ from Appendix II (117.3) gives
+
+$$
+\mathcal C(h_r,h_s,f_3)
+ =c\int_Gg h_rP(gh_s)\,dm
+ =c\left\langle T_{d/2}(gh_r),T_{d/2}(gh_s)\right\rangle_m,
+$$
+
+by self-adjointness of the original heat semigroup. This proves (217.5) and positive semidefiniteness. Markov contraction and $|u_y|,|f_y|\le1$ give
+$|\mathcal C(v,w,z)|\le\|v\|_\infty\|w\|_\infty\|z\|_\infty$.
+Applying this to (217.4), and using
+$|R_{rs}|\le\sum_{y,z}|a_y^{(r)}a_z^{(s)}|\delta=A_rA_s\delta$,
+proves (217.6)--(217.7). $\square$
+
+## 218. A terminal-preserving analytic chart cannot leave the two relation loci
+
+**Definition 218.1 (the source-faithful analytic chart).** Let $E$ be a finite-dimensional real vector space of bounded real Borel direction tuples $\xi=(\xi_y)_{y\in\mathcal L}$ satisfying $\sum_y\xi_y=0$. A map
+
+$$
+ \Phi:B_\rho(0)\subset E\longrightarrow L^\infty(G,m;\mathbb R)^{\mathcal L}
+$$
+
+is a terminal-preserving norm-analytic chart through $f$ when $\Phi(0)=f$, every coordinate $\Phi_y$ is real analytic as an $L^\infty$-valued map, every $\Phi(z)$ is a legal whole-$G$ Borel simplex tuple, and
+
+$$
+ \Phi_3(z)=f_3\quad (\|z\|<\rho).
+ \tag{218.1}
+$$
+
+Its current map is the actual sixty-three-coordinate map
+
+$$
+ \mathcal J(\Phi(z))
+ =\left(\mathcal H_{36}(\Phi(z)),
+        (\mathcal C(\Phi_a(z),\Phi_b(z),\Phi_c(z)))_{abc\in I^3}\right)
+$$
+
+of (216.4), with the same current terminal in every slot. Write
+
+$$
+ \mathscr R=\{u:h_1(u)=0\text{ and }h_B(u)=0\}
+ \tag{218.2}
+$$
+
+for the two relation-preserving loci, as equalities of $m$-classes.
+
+**Theorem 218.2 (finite analytic chart obstruction).** For every original $\theta$ and every terminal-preserving norm-analytic chart $\Phi$ there is a neighborhood of $0$ such that
+
+$$
+ \Delta(\Phi(z))=0
+ \quad\Longrightarrow\quad
+ \Phi(z)\in\mathscr R.
+ \tag{218.3}
+$$
+
+In fact (218.3) holds at every legal point of the chart. Hence every analytic exact-zero curve $\gamma$ through $f$ that stays in this chart remains in both relation-preserving loci. No such curve can reach a deterministic hard partition: a hard $B$ indicator cannot equal the strict constant $p=1/4$ almost everywhere.
+
+A $63$-coordinate regular branch is therefore obstructed whenever “regular” means a rank-$63$ implicit-function branch whose tangent leaves $\mathscr R$. At a zero satisfying (218.3), every tangent of an exact-zero branch is tangent to $\mathscr R$; a transverse rank-$63$ branch cannot be an exact full-law branch. The conclusion does not exclude rank-$63$ charts tangent to $\mathscr R$, charts with a terminal correction, smooth flat departures, nonanalytic paths, finite-amplitude zeros, or direct hard constructions.
+
+*Proof.* At a full-law zero, $\delta(\Phi(z))=0$, and (218.1) makes the terminal-defect term in (217.6) vanish. Thus $Q_{11}(\Phi(z))=Q_{BB}(\Phi(z))=0$. Formula (217.5) and strict positivity of $g$ almost everywhere imply
+$g h_1=g h_B=0$ in $L^2(m)$, hence $h_1=h_B=0$ as $m$-classes. This proves (218.3). The identity holds along every analytic curve in the chart, so its image is contained in $\mathscr R$. If $D$ is a deterministic partition, $\mathbf1_{D_B}-1/4$ is nonzero on a set of full measure in at least one of $D_B$ and its complement; it cannot vanish as an $m$-class. Therefore the curve cannot reach a hard tuple. The tangent statement is the elementary tangent inclusion for a curve contained in the two zero loci. The final sentence records the exact hypotheses used and the candidate classes left outside them. $\square$
+
+The chart obstruction is finite-dimensional and source-faithful: it uses the original $g$, $P$, $f_3$, same-source terminal and whole-$G$ simplex interface. Bierstone--Milman, *Semianalytic and subanalytic sets*, IHES 67 (1988), Theorem 0.2 (printed p.6, PDF p.3), supplies rectilinearization for compact pieces of semianalytic sets; it does not turn an arbitrary smooth or infinite-dimensional zero set into an analytic curve. No use is made of their one-dimensional Lemma 6.3, so no higher-dimensional curve-selection conclusion is imported.
+
+## 219. The joint two-contrast cone and the origin-enclosure scale
+
+**Definition 219.1 (actual tangent cone of the two source relations).** Let $\mathscr T_\theta$ be the set of pairs $\xi=(\xi_1,\xi_B)$ for which there are legal whole-$G$ simplex tuples $u_t$ with
+
+$$
+ \|u_t-f\|_\infty=O(t),
+ \qquad
+ t^{-1}(h_1(u_t),h_B(u_t))\longrightarrow(\xi_1,\xi_B)
+ \quad\text{in }L^2(m)^2.
+ \tag{219.1}
+$$
+
+Define the actual joint quadratic cone
+
+$$
+ \mathfrak C_\theta
+ =\overline{\left\{s\,\mathsf G_\theta(\xi):
+        s\ge0,\ \xi\in\mathscr T_\theta\right\}},
+ \qquad
+ \mathsf G_\theta(\xi)_{rs}
+ =c\left\langle T_{d/2}(g\xi_r),
+                       T_{d/2}(g\xi_s)\right\rangle_m.
+ \tag{219.2}
+$$
+
+This is a cone in the two-by-two positive-semidefinite matrices. It is the cone generated by actual FIB tangent pairs, rather than the full abstract positive-semidefinite cone.
+
+**Theorem 219.2 (quadratic limits and the H51 scale restriction).** Let $u_t$ be a uniformly $O(t)$ near-$f$ family as in (219.1), and put
+
+$$
+ \delta_t=\delta(u_t),
+ \qquad
+ \varepsilon_t=\|u_{t,3}-f_3\|_\infty,
+ \qquad
+ Q_t=(Q_{rs}(u_t))_{r,s\in\{1,B\}}.
+$$
+
+Every finite matrix limit of $t^{-2}Q_t$ belongs to $\mathfrak C_\theta$ and is positive semidefinite. If
+
+$$
+ \delta_t=o(t^2),
+ \qquad
+ \varepsilon_t=o(1),
+ \tag{219.3}
+$$
+
+then $t^{-2}Q_t\to0$ entrywise and $\xi_1=\xi_B=0$. In particular this applies to an exact full-law zero with a terminal defect $O(t^2)$, and it applies to the terminal-preserving analytic chart of Section 218.
+
+For the exact H51 hard neighborhood supplied by Theorem 212.1, let
+$\mathscr V_{51}=\mathcal W_{13}\cap\ker L$ and write $S_t=t^2R$ for its center, with $R_{BB3}=\kappa>0$. If
+
+$$
+ \mathbb B_\infty(S_t,\epsilon_t^{\rm H})
+ =\{S\in\mathscr V_{51}:\|S-S_t\|_\infty<\epsilon_t^{\rm H}\},
+ \qquad
+ 0<\epsilon_t^{\rm H}<\tfrac12t^2\kappa,
+ \tag{219.4}
+$$
+
+is the actual H51 neighborhood of Theorem 212.1, then every $S$ in that neighborhood satisfies
+
+$$
+ S_{BB3}>\tfrac12t^2\kappa.
+ \tag{219.5}
+$$
+Consequently an origin-centered residual ball of radius $\rho_t$ can meet this exact H51 neighborhood only if
+
+$$
+ \rho_t>\tfrac12t^2\kappa,
+ \tag{219.6}
+$$
+
+and a ball containing the whole neighborhood must satisfy
+$\rho_t\ge t^2\kappa+\epsilon_t^{\rm H}$. Thus the joint cone and the hard $BB3$ component impose an explicit $t^2$ scale; no $o(t^2)$ origin enclosure can contain, or even meet, the exact H51 family supplied by Theorem 212.1.
+
+*Proof.* Formula (217.5) shows that $Q_t$ is positive semidefinite. The convergence in (219.1) and boundedness of the heat operator give
+$t^{-2}Q_t\to\mathsf G_\theta(\xi)$ along a convergent tangent subsequence; taking conic limits gives (219.2). For the diagonal entries, (217.6) and
+$\|h_r(u_t)\|_\infty=O(t)$ yield
+
+$$
+0\le t^{-2}Q_{rr}(u_t)
+ \le A_r^2\frac{\delta_t}{t^2}+O(t^0)\varepsilon_t.
+\tag{219.7}
+$$
+
+Under (219.3) the right side tends to zero. A positive-semidefinite two-by-two matrix with zero diagonal is zero, so the limit Gram matrix vanishes. Since $c>0$, $g>0$ almost everywhere and $T_{d/2}$ is injective, $\xi_1=\xi_B=0$ in $L^2(m)$. The exact-zero and analytic-chart specializations have the displayed terminal-defect bounds.
+
+For (219.5), use $S_{BB3}=t^2R_{BB3}+(S-S_t)_{BB3}$ and (219.4). If an origin-centered $\ell^\infty$ ball of radius $\rho_t$ meets the neighborhood, then some such $S$ has $|S_{BB3}|\le\rho_t$; (219.5) gives (219.6). To contain the whole neighborhood, take points with $(S-S_t)_{BB3}$ arbitrarily close to $+\epsilon_t^{\rm H}$ and use $S_{BB3}\to t^2\kappa+\epsilon_t^{\rm H}$. This proves the stated scale bounds. $\square$
+
+The cone statement concerns soft tangent images and the exact hard neighborhood in the inherited H51 space. It is not transferred to arbitrary hard quantile carriers, does not assert a source cyclicity or density theorem, and does not settle residual-zero $F_{64}$ attainment, compatible summable continuation or physical succession. Terminal-corrected analytic families with a nonvanishing first-order terminal defect, smooth flat paths, nonanalytic paths and finite-amplitude zeros remain outside the obstruction.
+
+## 追加锚（本行以下为增补区）
