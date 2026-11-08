@@ -32,7 +32,7 @@ namespace D5.S3.ContinuousObservables.C0Multipliers
 variable {X B : Type*} [TopologicalSpace X] [LocallyCompactSpace X] [T2Space X]
   [CStarAlgebra B] [Nontrivial B]
 
-private theorem local_unit (K : Set X) (hK : IsCompact K) :
+theorem local_unit (K : Set X) (hK : IsCompact K) :
     ∃ e : C₀(X, B), ‖e‖ ≤ 1 ∧ ∀ x ∈ K, e x = 1 := by
   obtain ⟨c, hcK, _, hcs, hc⟩ :=
     exists_continuous_one_zero_of_isCompact hK isClosed_empty (disjoint_empty K)
@@ -269,7 +269,7 @@ private theorem equivalence_actions (h : X →ᵇ B) (f : C₀(X, B)) (x : X) :
 def sourceDomain : Set ℝ :=
   Ioo 0 (1 / 4) \ {t | ∃ n : ℕ, 5 ≤ n ∧ t = 1 / (n : ℝ)}
 
-private theorem sourceDomain_open : IsOpen sourceDomain := by
+theorem sourceDomain_open : IsOpen sourceDomain := by
   have hlim : Tendsto (fun n : ℕ => 1 / ((n + 5 : ℕ) : ℝ)) atTop (𝓝 0) :=
     (tendsto_add_atTop_iff_nat 5).2 tendsto_one_div_atTop_nhds_zero_nat
   have hc := hlim.isCompact_insert_range.isClosed
