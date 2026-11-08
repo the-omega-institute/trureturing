@@ -4,7 +4,19 @@
 
 Cumulative and local variance bounds control increments between two increasing endpoints.
 
-**Theorem 1.1 (The two-endpoint square estimate).**
+**Theorem 1.1 (Shared even-power endpoint average).**
+
+Lean statement: `D5/S3/Arith/Robin/ForwardKernel/MovingEndpointVariance.two_endpoint_integral_average_pow_le`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ForwardKernel/MovingEndpointVariance.two_endpoint_integral_average_pow_le` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Let e be a positive even integer and E be locally bounded and Borel measurable. Suppose p and q are continuous on [l,r], their derivatives within the interval are at least m>0, and their images lie in [A,B]. Choose a<=b and c<=d so that [a-delta(x),b-delta(x)] lies in [c,d], where delta=q-p. If the integral of D_v(y)^e over [A,B] is at most an integrable F(v) on each averaging interval, then (b-a) times the integral of (E(q)-E(p))^e is at most 2^(e-1)/m times the sum of the integrals of F over [a,b] and [c,d]. The common-endpoint identity, the even-power sum inequality, translation, Fubini, and change of variables give this bound. Exponents two and four yield the square and fourth-moment endpoint estimates.
+
+**Theorem 1.2 (The two-endpoint square estimate).**
 
 Lean statement: `D5/S3/Arith/Robin/ForwardKernel/MovingEndpointVariance.two_endpoint_increment_square_le`
 
@@ -18,7 +30,7 @@ Let E be Borel measurable and locally bounded. Let p and q be continuous on [l,r
 
 Put delta=q(x)-p(x). Average the identity E(q(x))-E(p(x))=D_v(p(x))-D_(v-delta)(q(x)) over (C0+1)*R<=v<=(C0+2)*R, and use (A-B)^2<=2*A^2+2*B^2. Translation enlarges the second length interval to [R,(C0+2)*R]. Fubini and change of variables through p and q bound the two averaged terms by R*K/m and (C0+1)*R*K/m. Division by R gives the claim. Only differentiability and a positive lower derivative bound are needed; derivative continuity is unnecessary.
 
-**Theorem 1.2 (The local signed-endpoint estimate).**
+**Theorem 1.3 (The local signed-endpoint estimate).**
 
 Lean statement: `D5/S3/Arith/Robin/ForwardKernel/MovingEndpointVariance.local_two_endpoint_increment_square_le`
 
@@ -36,4 +48,5 @@ For the signed difference delta=q(x)-p(x), the increments D_v(p(x)) and D_(v-del
 
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/MovingEndpointVariance.local_two_endpoint_increment_square_le`
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/MovingEndpointVariance.two_endpoint_increment_square_le`
+- Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/MovingEndpointVariance.two_endpoint_integral_average_pow_le`
 - Dependency: [D5/S3/Arith/Robin/ForwardKernel/VarianceTransfer](VarianceTransfer.md)

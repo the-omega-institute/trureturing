@@ -15,6 +15,15 @@ internal sealed class SecondOrderInterfaceDocument : IScribeDocumentDefinition
                 + "and the uniform cumulative variance asymptotic (490.2). These conditional second-order results "
                 + "supply no arithmetic proof for E=psi-id and no higher-order interfaces.")),
             Describe.Lean(
+                DescribeId.Create("power-length-bounds"),
+                DeclarationHandle.Create(Prefix + "power_length_bounds"),
+                H("Power length bounds"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "If 0<theta<1 and 0<=s<=1, the function b(u)=s*u^theta is continuously differentiable on [1,2], takes values in [0,2], and has derivative of absolute value at most one. This supplies the length bounds for the second-order covariance and the higher moment transfer."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("explicit-second-moment-bound"),
                 DeclarationHandle.Create(Prefix + "explicit_second_moment_bound"),
                 H("An explicit second moment bound"),

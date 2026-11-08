@@ -26,7 +26,8 @@ set_option maxHeartbeats 800000
 set_option backward.isDefEq.respectTransparency false
 set_option backward.isDefEq.respectTransparency.types false
 
-private lemma power_length_bounds {θ s : ℝ} (hθ : 0 < θ) (hθ1 : θ < 1)
+/-- Power lengths with a unit parameter have size at most two and derivative at most one. -/
+lemma power_length_bounds {θ s : ℝ} (hθ : 0 < θ) (hθ1 : θ < 1)
     (hs : s ∈ Icc (0 : ℝ) 1) :
     MacroscopicLengthBounds (fun u : ℝ => s * u ^ θ) 2 1 := by
   have hu0 (u : ℝ) (hu : u ∈ Icc (1 : ℝ) 2) : 0 < u := by linarith [hu.1]
