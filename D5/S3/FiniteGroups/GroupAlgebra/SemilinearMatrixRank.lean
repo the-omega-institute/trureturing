@@ -1,6 +1,6 @@
-/- GID: D5/S3/FiniteGroups/SemilinearMatrixRank
+/- GID: D5/S3/FiniteGroups/GroupAlgebra/SemilinearMatrixRank
    generality: G
-   mirror-B: D5/B/S3/FiniteGroups/SemilinearMatrixRank
+   mirror-B: D5/B/S3/FiniteGroups/GroupAlgebra/SemilinearMatrixRank
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
@@ -36,7 +36,7 @@ noncomputable section
 
 open scoped BigOperators
 
-namespace D5.S3.FiniteGroups.SemilinearMatrixRank
+namespace D5.S3.FiniteGroups.GroupAlgebra.SemilinearMatrixRank
 
 open D5.S3.Factorization.Galois
 
@@ -129,6 +129,8 @@ end ExplicitCorner
 
 variable (theta : Matrix I I C →+* Module.End D U)
 
+include theta
+
 /-- A unital matrix-ring action forces divisibility of the original D-rank. -/
 theorem card_dvd_finrank [Nonempty I] [FiniteDimensional D U] :
     Fintype.card I ∣ Module.finrank D U := by
@@ -162,34 +164,44 @@ variable {D : Type uD} {U : Type uU} [DivisionRing D]
 
 local notation "Γ" => F ≃ₐ[k] F
 
-variable (a : A →+* Module.End D U) (tau : Γ →* Module.End D U)
-  (covariance : ∀ (g : Γ) (x : A), tau g * a x = a (g • x) * tau g)
-
 /-- The skew representation built from the supplied coefficient and group operators. -/
-def skewRepresentation : SkewMonoidAlgebra A Γ →+* Module.End D U :=
+def skewRepresentation (a : A →+* Module.End D U) (tau : Γ →* Module.End D U)
+    (covariance : ∀ (g : Γ) (x : A), tau g * a x = a (g • x) * tau g) :
+    SkewMonoidAlgebra A Γ →+* Module.End D U :=
   SkewMonoidAlgebra.liftNCRingHom a tau (fun {x g} => (covariance g x).symm)
 
 /-- Pull back the actual skew representation along the inverse ordinary matrix map. -/
-def matrixAction {I : Type uI} [Fintype I] [DecidableEq I]
+def matrixAction (a : A →+* Module.End D U) (tau : Γ →* Module.End D U)
+    (covariance : ∀ (g : Γ) (x : A), tau g * a x = a (g • x) * tau g)
+    {I : Type uI} [Fintype I] [DecidableEq I]
     (b : Module.Basis I k F) :
     Matrix I I (TraceDualSkewMatrix.invariants k F A) →+* Module.End D U :=
   (skewRepresentation k F A a tau covariance).comp
     (TraceDualSkewMatrix.skewMatrixEquiv k F A b).symm.toRingEquiv.toRingHom
 
+variable (a : A →+* Module.End D U) (tau : Γ →* Module.End D U)
+  (covariance : ∀ (g : Γ) (x : A), tau g * a x = a (g • x) * tau g)
+
+include a tau covariance in
 /-- Galois symmetry divides the rank over the original, possibly noncommutative D. -/
 theorem card_galois_dvd_finrank [FiniteDimensional D U] :
     Nat.card Γ ∣ Module.finrank D U := by
+  letI : Nonempty (Fin (Module.finrank k F)) :=
+    ⟨⟨0, Module.finrank_pos (R := k) (M := F)⟩⟩
   rw [IsGalois.card_aut_eq_finrank k F]
   simpa only [Fintype.card_fin] using
     Corner.card_dvd_finrank (matrixAction k F A a tau covariance (Module.finBasis k F))
 
+include a tau covariance in
 /-- A nonzero covariant module has a positive integral original-D multiplicity. -/
 theorem exists_pos_galois_rank [FiniteDimensional D U] [Nontrivial U] :
     ∃ r : ℕ, 0 < r ∧ Module.finrank D U = Nat.card Γ * r := by
+  letI : Nonempty (Fin (Module.finrank k F)) :=
+    ⟨⟨0, Module.finrank_pos (R := k) (M := F)⟩⟩
   rw [IsGalois.card_aut_eq_finrank k F]
   simpa only [Fintype.card_fin] using
     Corner.exists_pos_rank (matrixAction k F A a tau covariance (Module.finBasis k F))
 
 end Semilinear
 
-end D5.S3.FiniteGroups.SemilinearMatrixRank
+end D5.S3.FiniteGroups.GroupAlgebra.SemilinearMatrixRank

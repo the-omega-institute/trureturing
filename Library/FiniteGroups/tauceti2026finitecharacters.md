@@ -184,6 +184,55 @@ is a repository derivation, not an exact theorem attributed to TauCeti or
 a literature novelty claim. It supplies an ingredient of the arithmetic
 Frobenius direction; the stronger normalized-degree statement remains open.
 
+## Semilinear symmetry over the original division ring
+
+`Factorization/Galois/TraceDualSkewMatrix` gives a k-algebra equivalence from
+A skew Gal(F/k) to ordinary matrices over C = A^Gal(F/k). Here F/k is finite
+Galois, A is any unital F-algebra with a compatible k-algebra structure and
+scalar tower, and the multiplicative Galois action on A is semilinear over F.
+A and C may be noncommutative or trivial. A need not be finite dimensional;
+neither a descent equivalence nor an inverse of the group order is assumed.
+For a chosen k-basis b of F, the forward matrix entry (j,i) is
+`d_j(sum_g r.coeff(g) * (g acting on u_i))`, where u_i is the image of b_i
+and d_j is its trace-dual invariant coordinate. Its inverse is the inverse
+of this proved equivalence, not an assumed presentation.
+
+`FiniteGroups/GroupAlgebra/SemilinearMatrixRank` consumes this equivalence
+with an independent division ring D and a finite-dimensional left D-module U.
+The data are actual unital coefficient operators `a : A →+* End D U` and
+actual group operators `tau : Gal(F/k) →* End D U`, with covariance
+`tau(g) * a(x) = a(g acting on x) * tau(g)`. Mathlib's `liftNCRingHom` gives
+the skew representation, sending the single term (g,x) to `a(x) * tau(g)`.
+Composition with the inverse ordinary matrix equivalence therefore gives
+actual matrix units commuting with the original D-scalars.
+
+For an arbitrary unital map `theta : Matrix I I C →+* End D U`, fix i0 in I
+and let V be the range of theta(E_i0_i0). The D-linear maps
+`x ↦ (theta(E_i0_i)x)_i` and `s ↦ sum_i theta(E_i_i0)s_i` are inverse.
+The diagonal sum is the identity; off-diagonal products vanish, and the
+chosen idempotent fixes its range. Hence
+`finrank D U = card I * finrank D V`. This independent-D construction adapts
+`toModuleCatFromModuleCatLinearEquiv` in Mathlib's
+`RingTheory/Morita/Matrix.lean`, by Yunzhou Xie and Jujian Zhang, at revision
+56a005855ea17e0b0958f73ec801ae140b0a1679 under Apache 2.0. The ordinary
+Morita result supplies the coordinate mechanism; the client retains D by
+using operators already in End D U. No C-action or scalar tower on U,
+injectivity of theta, or simplicity of C is required.
+
+Apply this construction to the actual covariant matrix action and use
+`card Gal(F/k) = finrank k F`. The Galois cardinality divides `finrank D U`,
+including the zero module. When U is nonzero, its multiplicity is a positive
+natural number. The universes of k, F, A, D, U and the generic matrix index
+remain independent. There is no substitution of ordinary field dimension
+and no cancellation of a Schur index.
+
+This is an original-D rank ingredient, not the full normalized Frobenius
+theorem. Connecting a concrete Frobenius representation to these data still
+requires its center action and Galois identification, the relevant Hall
+complement and Skolem implementation, and the original-D isotypic passage.
+Those connections are not formalized by this unit. The construction is a
+classical structural synthesis, with no literature novelty claim.
+
 ## Complete license
 
 ```text
