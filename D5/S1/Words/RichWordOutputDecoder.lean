@@ -38,10 +38,11 @@ private theorem eta_pos (c : Input) : 0 < (eta c).length := by
 
 private theorem eta_injective : Function.Injective eta := by decide
 
+private theorem eta_marker_table :
+    ∀ c : Input, ∀ i : Fin (eta c).length, (eta c)[i.val] = 0 ↔ i.val = 0 := by decide
+
 private theorem eta_marker (c : Input) (i : ℕ) (hi : i < (eta c).length) :
-    (eta c)[i] = 0 ↔ i = 0 := by
-  have ht : ∀ c : Input, ∀ i : Fin (eta c).length, (eta c)[i.val] = 0 ↔ i.val = 0 := by decide
-  exact ht c ⟨i,hi⟩
+    (eta c)[i] = 0 ↔ i = 0 := eta_marker_table c ⟨i,hi⟩
 
 /-- Cumulative image lengths of the actual source prefix. -/
 def E : ℕ → ℕ
@@ -61,14 +62,17 @@ private theorem E_ge (j : ℕ) : j ≤ E j := by
   | succ j ih => have := eta_pos (u j); simp only [E]; omega
 
 private theorem window (p : ℕ) : ∃ j, E j ≤ p ∧ p < E (j+1) := by
-  induction p with
-  | zero => exact ⟨0, by simp [E], eta_pos (u 0)⟩
-  | succ p ih =>
-    obtain ⟨j,hj,hk⟩ := ih
-    by_cases h : p+1 < E (j+1)
-    · exact ⟨j, by omega, h⟩
-    · have hh := E_strict (show j+1 < j+1+1 by omega)
-      exact ⟨j+1, by omega, by omega⟩
+  have hex : ∃ k, p < E k := ⟨p+1,lt_of_lt_of_le (Nat.lt_succ_self p) (E_ge (p+1))⟩
+  have hh := Nat.find_spec hex
+  have hp : 0 < Nat.find hex := by
+    by_contra hn
+    have hz : Nat.find hex=0 := by omega
+    rw [hz,E] at hh
+    omega
+  refine ⟨Nat.find hex-1, ?_, ?_⟩
+  · have := Nat.find_min hex (show Nat.find hex-1 < Nat.find hex by omega)
+    omega
+  · simpa only [show Nat.find hex-1+1=Nat.find hex by omega] using hh
 
 private def blockIndex (p : ℕ) : ℕ := Nat.find (window p)
 
@@ -135,7 +139,7 @@ private theorem factor_ofFn {m : ℕ} (y : ℕ → Fin m) (j n : ℕ) :
   · simp [factor_len]
   · intro i hi hj
     rw [factor_get _ _ _ _ (by simpa only [factor_len] using hi)]
-    rfl
+    simp only [List.getElem_ofFn, Complexity.wordFactor]
 
 private def encode (c : Output) : ℤ := c.val
 
@@ -366,5 +370,222 @@ theorem occurrence_decoder (w : List Input) (s t : List Output) (A : ℕ)
     have hh := (occ_append s (subst eta w++[0]++t) A).mpr
       ⟨hleft, by simpa [hj,List.append_assoc] using he⟩
     simpa only [List.append_assoc] using hh
+
+/-- Phase decorations for the original six cyclic source phases. -/
+def r (n : ℕ) : List Output :=
+  ![[],[],[],[2],[2,2],[2,2,3,2,2]] ⟨n%6,by omega⟩
+
+private theorem r_free (n : ℕ) : (0 : Output) ∉ r n := by
+  have h : ∀ i : Fin 6, (0 : Output) ∉ (![[],[],[],[2],[2,2],[2,2,3,2,2]] i) := by decide
+  exact h ⟨n%6,by omega⟩
+
+private theorem r_common (n : ℕ) (c : Input)
+    (hc : c = RichWordTypeIOccurrence.phase n ∨ c = 6) :
+    r n <:+ q c ∧ r n <+: q c := by
+  have h : ∀ i : Fin 6, ∀ c : Input,
+      (c.val=i.val ∨ c=6) →
+      (![[],[],[],[2],[2,2],[2,2,3,2,2]] i : List Output) <:+ q c ∧
+      (![[],[],[],[2],[2,2],[2,2,3,2,2]] i : List Output) <+: q c := by decide
+  apply h ⟨n%6,by omega⟩ c
+  rcases hc with rfl | hc
+  · exact Or.inl rfl
+  · exact Or.inr hc
+
+private theorem typeI_paid (n j : ℕ)
+    (hj : RichWordTypeIOccurrence.Occ (RichWordTypeIOccurrence.typeI n) j) :
+    Left (r n) j ∧ Right (r n) (RichWordTypeIOccurrence.typeI n) j := by
+  have hp : 0 < j := by
+    by_contra hn
+    have he : j=0 := by omega
+    exact RichWordTypeIOccurrence.typeI_not_at_origin n (he ▸ hj)
+  have hl := (RichWordTypeIOccurrence.lext_iff _ (u (j-1))).mpr ⟨j,hp,hj,rfl⟩
+  have hr := (RichWordTypeIOccurrence.rext_iff _ (u (j+(RichWordTypeIOccurrence.typeI n).length))).mpr
+    ⟨j,hj,rfl⟩
+  rw [(RichWordTypeIOccurrence.typeI_extensions n).1] at hl
+  rw [(RichWordTypeIOccurrence.typeI_extensions n).2] at hr
+  exact ⟨Or.inr ⟨hp,(r_common n _ (by simpa using hl)).1⟩,
+    (r_common n _ (by simpa using hr)).2⟩
+
+private theorem typeII_paid (n : ℕ) (hn : 6 ≤ n) (j : ℕ)
+    (hj : RichWordTypeIOccurrence.Occ (RichWordTypeIIOccurrence.typeII n) j) :
+    Left (r n) j ∧ Right (r n) (RichWordTypeIIOccurrence.typeII n) j := by
+  have D := RichWordTypeIIOccurrence.actual_typeII n hn
+  have hn' : n-6+6=n := by omega
+  have ho := D.occurrence j
+  rw [hn'] at ho
+  obtain ⟨i,⟨hi,he⟩,_⟩ := ho.mp hj
+  have hp : 0 < j := he ▸ D.positive i hi
+  have hc := D.contexts i hi
+  rw [hn',← he] at hc
+  have hl : u (j-1)=RichWordTypeIOccurrence.phase n ∨ u (j-1)=6 := by
+    change RichWordTypeIOccurrence.word (j-1)=_ ∨ RichWordTypeIOccurrence.word (j-1)=_
+    rw [hc.1]; split_ifs <;> simp
+  have hr : u (j+(RichWordTypeIIOccurrence.typeII n).length)=RichWordTypeIOccurrence.phase n ∨
+      u (j+(RichWordTypeIIOccurrence.typeII n).length)=6 := by
+    change RichWordTypeIOccurrence.word (j+(RichWordTypeIIOccurrence.typeII n).length)=_ ∨
+      RichWordTypeIOccurrence.word (j+(RichWordTypeIIOccurrence.typeII n).length)=_
+    rw [hc.2]; split_ifs <;> simp
+  exact ⟨Or.inr ⟨hp,(r_common n _ hl).1⟩,(r_common n _ hr).2⟩
+
+private theorem left_le {s : List Output} {j : ℕ} (h : Left s j) : s.length ≤ E j := by
+  rcases h with rfl | ⟨hj,hq⟩
+  · simp
+  have hl := hq.length_le
+  have he : E j = E (j-1)+(eta (u (j-1))).length := by
+    have hh : E (j-1+1)=E (j-1)+(eta (u (j-1))).length := rfl
+    simpa only [show j-1+1=j by omega] using hh
+  rw [eta_cons] at he
+  simp only [List.length_cons] at he
+  omega
+
+/-- The decorated output factor; the highlighted marker closes the source core. -/
+def decorated (w : List Input) (s t : List Output) : List Output := s++subst eta w++[0]++t
+
+/-- Consecutive output starts, with all overlapping windows retained. -/
+def Consecutive (v : List Output) (A B : ℕ) : Prop :=
+  A < B ∧ Occ v A ∧ Occ v B ∧ ∀ C, A < C → C < B → ¬ Occ v C
+
+private theorem full_occurrence (w : List Input) (s t : List Output)
+    (hs : (0 : Output) ∉ s) (ht : (0 : Output) ∉ t)
+    (hpay : ∀ j, RichWordTypeIOccurrence.Occ w j → Left s j ∧ Right t w j) (A : ℕ) :
+    Occ (decorated w s t) A ↔ ∃! j, A+s.length=E j ∧ RichWordTypeIOccurrence.Occ w j := by
+  rw [decorated,occurrence_decoder w s t A hs ht]
+  constructor
+  · rintro ⟨j,hj,huniq⟩
+    refine ⟨j,⟨hj.1,hj.2.1⟩,?_⟩
+    intro k hk
+    exact huniq k ⟨hk.1,hk.2,hpay k hk.2⟩
+  · rintro ⟨j,hj,huniq⟩
+    exact ⟨j,⟨hj.1,hj.2,hpay j hj.2⟩,fun k hk => huniq k ⟨hk.1,hk.2.1⟩⟩
+
+private theorem output_at (w : List Input) (s t : List Output)
+    (hs : (0 : Output) ∉ s) (ht : (0 : Output) ∉ t)
+    (hpay : ∀ j, RichWordTypeIOccurrence.Occ w j → Left s j ∧ Right t w j)
+    (j : ℕ) (hj : RichWordTypeIOccurrence.Occ w j) :
+    Occ (decorated w s t) (E j-s.length) := by
+  have hle := left_le (hpay j hj).1
+  have heq := Nat.sub_add_cancel hle
+  apply (full_occurrence w s t hs ht hpay _).mpr
+  refine ⟨j,⟨heq,hj⟩,?_⟩
+  intro k hk
+  exact E_strict.injective (hk.1.symm.trans heq)
+
+private theorem consecutive_transport (w : List Input) (s t : List Output)
+    (hs : (0 : Output) ∉ s) (ht : (0 : Output) ∉ t)
+    (hpay : ∀ j, RichWordTypeIOccurrence.Occ w j → Left s j ∧ Right t w j) (A B : ℕ) :
+    Consecutive (decorated w s t) A B ↔ ∃ j k,
+      A+s.length=E j ∧ B+s.length=E k ∧ RichWordTypeIOccurrence.Consecutive w j k := by
+  constructor
+  · rintro ⟨hAB,hA,hB,hno⟩
+    obtain ⟨j,⟨hj,hoj⟩,_⟩ := (full_occurrence w s t hs ht hpay A).mp hA
+    obtain ⟨k,⟨hk,hok⟩,_⟩ := (full_occurrence w s t hs ht hpay B).mp hB
+    have hjk : j < k := E_strict.lt_iff_lt.mp (by omega)
+    refine ⟨j,k,hj,hk,hjk,hoj,hok,?_⟩
+    intro c hjc hck hoc
+    have hc := left_le (hpay c hoc).1
+    have hsc : E c-s.length+s.length=E c := Nat.sub_add_cancel hc
+    have hjc' := E_strict hjc
+    have hck' := E_strict hck
+    exact hno (E c-s.length) (by omega) (by omega) (output_at w s t hs ht hpay c hoc)
+  · rintro ⟨j,k,hj,hk,hjk,hoj,hok,hno⟩
+    have hAB : A < B := by have := E_strict hjk; omega
+    have hA := output_at w s t hs ht hpay j hoj
+    have hB := output_at w s t hs ht hpay k hok
+    have hAj : E j-s.length=A := by omega
+    have hBk : E k-s.length=B := by omega
+    refine ⟨hAB,hAj ▸ hA,hBk ▸ hB,?_⟩
+    intro C hAC hCB hC
+    obtain ⟨c,⟨hc,hoc⟩,_⟩ := (full_occurrence w s t hs ht hpay C).mp hC
+    exact hno c (E_strict.lt_iff_lt.mp (by omega)) (E_strict.lt_iff_lt.mp (by omega)) hoc
+
+/-- The positive letter weights are the literal image lengths. -/
+def W (v : Input → ℕ) : ℕ := ∑ c, (eta c).length*v c
+
+private theorem image_length (w : List Input) :
+    (subst eta w).length = W (RichWordTypeIOccurrence.parikh w) := by
+  classical
+  simp only [subst,List.length_flatMap,Finset.sum_list_map_count]
+  unfold W RichWordTypeIOccurrence.parikh AbelianBorders.AbelianBorderQuestionDefs.letterCount
+  simp only [nsmul_eq_mul]
+  rw [Finset.sum_subset (Finset.subset_univ w.toFinset)]
+  · apply Finset.sum_congr rfl
+    intro c hc
+    exact Nat.mul_comm _ _
+  · intro c _ hc
+    simp [List.count_eq_zero_of_not_mem (by simpa using hc)]
+
+private theorem W_mono {v z : Input → ℕ} (h : v ≤ z) : W v ≤ W z := by
+  exact Finset.sum_le_sum (fun c _ => Nat.mul_le_mul_left _ (h c))
+
+private theorem exact_gap (A B j k d : ℕ) (hj : A+d=E j) (hk : B+d=E k) (hjk : j ≤ k) :
+    B-A = W (RichWordTypeIOccurrence.parikh (RichWordTypeIOccurrence.returnWord j k)) := by
+  have he := E_add j (k-j)
+  rw [Nat.add_sub_of_le hjk] at he
+  have hl := image_length (factor u j (k-j))
+  change B-A=W (RichWordTypeIOccurrence.parikh (factor u j (k-j)))
+  omega
+
+/-- Exact occurrences, consecutive pairs, weighted gaps and an attained return minimum. -/
+structure Transport (w : List Input) (s t : List Output) (mu : Input → ℕ) : Prop where
+  occurrence : ∀ A, Occ (decorated w s t) A ↔
+    ∃! j, A+s.length=E j ∧ RichWordTypeIOccurrence.Occ w j
+  consecutive : ∀ A B, Consecutive (decorated w s t) A B ↔ ∃ j k,
+    A+s.length=E j ∧ B+s.length=E k ∧ RichWordTypeIOccurrence.Consecutive w j k
+  gap : ∀ A B j k, A+s.length=E j → B+s.length=E k → j ≤ k →
+    B-A=W (RichWordTypeIOccurrence.parikh (RichWordTypeIOccurrence.returnWord j k))
+  minimum : (∃ A B j k, Consecutive (decorated w s t) A B ∧
+    A+s.length=E j ∧ B+s.length=E k ∧ RichWordTypeIOccurrence.Consecutive w j k ∧
+    RichWordTypeIOccurrence.parikh (RichWordTypeIOccurrence.returnWord j k)=mu ∧ B-A=W mu) ∧
+    ∀ A B, Consecutive (decorated w s t) A B → W mu ≤ B-A
+
+private theorem transport (w : List Input) (s t : List Output) (mu : Input → ℕ)
+    (hs : (0 : Output) ∉ s) (ht : (0 : Output) ∉ t)
+    (hpay : ∀ j, RichWordTypeIOccurrence.Occ w j → Left s j ∧ Right t w j)
+    (hmin : (∃ j k, RichWordTypeIOccurrence.Consecutive w j k ∧
+      RichWordTypeIOccurrence.parikh (RichWordTypeIOccurrence.returnWord j k)=mu) ∧
+      ∀ j k, RichWordTypeIOccurrence.Consecutive w j k →
+      mu ≤ RichWordTypeIOccurrence.parikh (RichWordTypeIOccurrence.returnWord j k)) :
+    Transport w s t mu := by
+  refine ⟨full_occurrence w s t hs ht hpay,consecutive_transport w s t hs ht hpay,
+    fun A B j k => exact_gap A B j k s.length,?_,?_⟩
+  · obtain ⟨j,k,hjk,he⟩ := hmin.1
+    have hj := Nat.sub_add_cancel (left_le (hpay j hjk.2.1).1)
+    have hk := Nat.sub_add_cancel (left_le (hpay k hjk.2.2.1).1)
+    refine ⟨E j-s.length,E k-s.length,j,k,
+      (consecutive_transport w s t hs ht hpay _ _).mpr ⟨j,k,hj,hk,hjk⟩,hj,hk,hjk,he,?_⟩
+    rw [exact_gap _ _ j k s.length hj hk (Nat.le_of_lt hjk.1),he]
+  · intro A B hAB
+    obtain ⟨j,k,hj,hk,hjk⟩ := (consecutive_transport w s t hs ht hpay A B).mp hAB
+    rw [exact_gap A B j k s.length hj hk (Nat.le_of_lt hjk.1)]
+    exact W_mono (hmin.2 j k hjk)
+
+private theorem paid_sub {w : List Input} {s t z : List Output} {j : ℕ}
+    (h : Left z j ∧ Right z w j) (hs : s <:+ z) (ht : t <+: z) :
+    Left s j ∧ Right t w j := by
+  refine ⟨?_,ht.trans h.2⟩
+  rcases h.1 with hz | ⟨hp,hq⟩
+  · rw [hz] at hs
+    exact Or.inl (List.suffix_nil.mp hs)
+  · exact Or.inr ⟨hp,hs.trans hq⟩
+
+/-- Every original Type-I index and every common decoration retain all occurrences. -/
+theorem typeI_transport (n : ℕ) (s t : List Output) (hs : s <:+ r n) (ht : t <+: r n) :
+    Transport (RichWordTypeIOccurrence.typeI n) s t
+      ((RichWordTypeIOccurrence.M^n).mulVec (RichWordTypeIOccurrence.unit 6)) := by
+  exact transport _ _ _ _ (fun h => r_free n (hs.sublist.mem h))
+    (fun h => r_free n (ht.sublist.mem h)) (fun j hj => paid_sub (typeI_paid n j hj) hs ht)
+    (RichWordTypeIOccurrence.typeI_return_minimum n)
+
+/-- Original Type-II indices n at least six; the minimum column has exponent n. -/
+theorem typeII_transport (n : ℕ) (hn : 6 ≤ n) (s t : List Output)
+    (hs : s <:+ r n) (ht : t <+: r n) :
+    Transport (RichWordTypeIIOccurrence.typeII n) s t
+      ((RichWordTypeIOccurrence.M^n).mulVec (RichWordTypeIOccurrence.unit 0)) := by
+  have D := RichWordTypeIIOccurrence.actual_typeII n hn
+  have hh := D.minimum
+  rw [show n-6+6=n by omega] at hh
+  apply transport _ _ _ _ (fun h => r_free n (hs.sublist.mem h))
+    (fun h => r_free n (ht.sublist.mem h)) (fun j hj => paid_sub (typeII_paid n hn j hj) hs ht)
+  exact ⟨⟨_,_,hh.1,hh.2.1⟩,hh.2.2⟩
 
 end D5.S1.Words.RichWordOutputDecoder
