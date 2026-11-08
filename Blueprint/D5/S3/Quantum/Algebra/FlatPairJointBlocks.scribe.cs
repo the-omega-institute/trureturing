@@ -47,7 +47,7 @@ internal sealed class FlatPairJointBlocksDocument : IScribeDocumentDefinition
                         "This condition specifies a full frame; it does not assert its existence for " +
                         "an arbitrary pair."))),
                 DescribeRole.Definition),
-            H("Square and mixed spectral coordinates"),
+            Paragraph(Text("Square and mixed spectral coordinates")),
             Paragraph(Text(
                 "For skew A,D with -A squared-D squared=I, put P=-A squared and " +
                 "S=-(AD+DA)/2. Skewness makes P and S symmetric. The identity P=I+D squared " +
@@ -66,7 +66,7 @@ internal sealed class FlatPairJointBlocksDocument : IScribeDocumentDefinition
                 "Both normalized maps are skew complex structures. Cauchy-Schwarz gives " +
                 "-1<=t<=1. At t=1 or t=-1 the norm of (J-t Jone)x vanishes, giving " +
                 "J=t Jone and again a circle plane.")),
-            H("Metric orbit and complement exhaustion"),
+            Paragraph(Text("Metric orbit and complement exhaustion")),
             Paragraph(Text(
                 "In the strict interior define Jtwo=(J-t Jone)/sqrt(1-t squared). " +
                 "Expanding with Jone J+J Jone=-2t I gives Jtwo squared=-I and " +
@@ -80,7 +80,7 @@ internal sealed class FlatPairJointBlocksDocument : IScribeDocumentDefinition
                 "Removing a nonzero two- or four-vector orbit strictly reduces the finite " +
                 "dimension. Repeating this construction is the required exhaustion step; a " +
                 "single spectral fibre or a single orbit does not describe the whole space.")),
-            H("Converse arithmetic"),
+            Paragraph(Text("Converse arithmetic")),
             Paragraph(Text(
                 "On a circle plane the two negative squares sum to (a squared+d squared)I=I. " +
                 "On a quaternionic block, the square of t Jone+s Jtwo is " +
@@ -88,7 +88,7 @@ internal sealed class FlatPairJointBlocksDocument : IScribeDocumentDefinition
                 "negative squares are lambda I and (1-lambda)I. Equality on every vector of a " +
                 "complete basis gives the same identity on F. The zero space satisfies it too. " +
                 "No uniqueness of block order, multiplicity, or parameters is asserted.")),
-            H("Original-space branch restrictions"),
+            Paragraph(Text("Original-space branch restrictions")),
             Paragraph(Text(
                 "Let e be unit in the original W, let K,L be skew, and suppose " +
                 "-K squared-L squared=I+beta P(e), where P(e)x=inner(e,x)e. " +

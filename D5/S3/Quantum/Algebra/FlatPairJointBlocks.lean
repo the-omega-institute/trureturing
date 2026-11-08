@@ -64,7 +64,14 @@ private theorem flat_pair_joint_fiber_relations (A D : F →ₗ[ℝ] F)
       eigenspace P m.1 ⊓ eigenspace S m.2)) ∧
     (∀ r s : ℝ, ∀ x ∈ eigenspace P r ⊓ eigenspace S s,
       A x ∈ eigenspace P r ⊓ eigenspace S s ∧
-      D x ∈ eigenspace P r ⊓ eigenspace S s) := by
+      D x ∈ eigenspace P r ⊓ eigenspace S s) ∧
+    (∀ r s : ℝ, ∀ x ∈ eigenspace P r ⊓ eigenspace S s,
+      A (A x) = -r • x ∧ D (D x) = -(1 - r) • x ∧
+      A (D x) + D (A x) = (-2 * s) • x ∧
+      ⟪A x, A x⟫_ℝ = r * ⟪x, x⟫_ℝ ∧
+      ⟪D x, D x⟫_ℝ = (1 - r) * ⟪x, x⟫_ℝ ∧
+      ⟪A x, D x⟫_ℝ = s * ⟪x, x⟫_ℝ ∧
+      (⟪x, x⟫_ℝ = 1 → 0 ≤ r ∧ r ≤ 1 ∧ s ^ 2 ≤ r * (1 - r))) := by
   dsimp only
   let P := -(A * A)
   let S := (- (1 / 2 : ℝ)) • (A * D + D * A)
@@ -110,15 +117,56 @@ private theorem flat_pair_joint_fiber_relations (A D : F →ₗ[ℝ] F)
   have hPS : Commute P S := by
     dsimp [S]
     exact (hPA.mul_right hPD).add_right (hPD.mul_right hPA) |>.smul_right _
-  refine ⟨hP, hS, hPS, ⟨Commute.isSymmetric_directSumDecomposition hP hS hPS⟩, ?_⟩
-  intro r s x hx
-  simp only [Submodule.mem_inf, mem_eigenspace_iff] at hx ⊢
-  have move (T : F →ₗ[ℝ] F) (hPT : Commute P T) (hST : Commute S T) :
-      P (T x) = r • T x ∧ S (T x) = s • T x := by
+  refine ⟨hP, hS, hPS, ⟨Commute.isSymmetric_directSumDecomposition hP hS hPS⟩, ?_, ?_⟩
+  · intro r s x hx
+    simp only [Submodule.mem_inf, mem_eigenspace_iff] at hx ⊢
+    have move (T : F →ₗ[ℝ] F) (hPT : Commute P T) (hST : Commute S T) :
+        P (T x) = r • T x ∧ S (T x) = s • T x := by
+      constructor
+      · rw [← Module.End.mul_apply, hPT.eq, Module.End.mul_apply, hx.1, map_smul]
+      · rw [← Module.End.mul_apply, hST.eq, Module.End.mul_apply, hx.2, map_smul]
+    exact ⟨move A hPA hSA, move D hPD hSD⟩
+  · intro r s x hx
+    rcases hx with ⟨hpx, hsx⟩
+    rw [mem_eigenspace_iff] at hpx hsx
+    change -(A (A x)) = r • x at hpx
+    change (- (1 / 2 : ℝ)) • (A (D x) + D (A x)) = s • x at hsx
+    have hAA : A (A x) = -r • x := by
+      simpa only [neg_smul] using neg_eq_iff_eq_neg.mp hpx
+    have hf := DFunLike.congr_fun hflat x
+    change -(A (A x)) - D (D x) = x at hf
+    have hDD : D (D x) = -(1 - r) • x := by
+      rw [hAA] at hf
+      have hh : D (D x) = -(-r • x) - x :=
+        eq_sub_iff_add_eq.mpr ((add_comm _ _).trans (sub_eq_iff_eq_add.mp hf).symm)
+      rw [hh]
+      module
+    have hmix : A (D x) + D (A x) = (-2 * s) • x := by
+      have hh := congrArg (fun y : F => (-2 : ℝ) • y) hsx
+      norm_num [smul_smul] at hh
+      simpa only [neg_mul] using hh
+    have hna : ⟪A x, A x⟫_ℝ = r * ⟪x, x⟫_ℝ := by
+      rw [hA, hAA, real_inner_smul_right]
+      ring
+    have hnd : ⟪D x, D x⟫_ℝ = (1 - r) * ⟪x, x⟫_ℝ := by
+      rw [hD, hDD, real_inner_smul_right]
+      ring
+    have hcross : ⟪A x, D x⟫_ℝ = s * ⟪x, x⟫_ℝ := by
+      have hm := congrArg (fun y : F => ⟪x, y⟫_ℝ) hmix
+      simp only [inner_add_right, real_inner_smul_right] at hm
+      have h₁ := hA x (D x)
+      have h₂ := hD x (A x)
+      rw [real_inner_comm (A x) (D x)] at h₂
+      linarith
+    refine ⟨hAA, hDD, hmix, hna, hnd, hcross, ?_⟩
+    intro hn
+    have hposA := real_inner_self_nonneg (A x)
+    have hposD := real_inner_self_nonneg (D x)
+    have hcs := real_inner_mul_inner_self_le (A x) (D x)
+    rw [hna, hnd, hcross, hn] at hposA hposD hcs
     constructor
-    · rw [← Module.End.mul_apply, hPT.eq, Module.End.mul_apply, hx.1, map_smul]
-    · rw [← Module.End.mul_apply, hST.eq, Module.End.mul_apply, hx.2, map_smul]
-  exact ⟨move A hPA hSA, move D hPD hSD⟩
+    · nlinarith
+    constructor <;> nlinarith
 
 omit [FiniteDimensional ℝ F] in
 private theorem circle_orbit_span_data (J : F →ₗ[ℝ] F)
@@ -218,32 +266,34 @@ private theorem quaternion_orbit_span_data (I J : F →ₗ[ℝ] F)
   have tableJ : ∀ k : Fin 4, J ((![q, I q, J q, I (J q)] : Fin 4 → F) k) =
       (![J q, -I (J q), -q, I q] : Fin 4 → F) k := by
     intro k; fin_cases k <;> simp [hJ2, hJI, map_neg, hI2]
-  refine ⟨horth, ?_, ?_, ?_, ?_⟩
-  · simpa using tableI
-  · simpa using tableJ
-  all_goals
-    have memv (k : Fin 4) :
-        (![q, I q, J q, I (J q)] : Fin 4 → F) k ∈
-          Submodule.span ℝ (Set.range (![q, I q, J q, I (J q)] : Fin 4 → F)) :=
-      Submodule.subset_span ⟨k, rfl⟩
+  have memv (k : Fin 4) :
+      (![q, I q, J q, I (J q)] : Fin 4 → F) k ∈
+        Submodule.span ℝ (Set.range (![q, I q, J q, I (J q)] : Fin 4 → F)) :=
+    Submodule.subset_span ⟨k, rfl⟩
+  have inv (T : F →ₗ[ℝ] F)
+      (ht : ∀ k : Fin 4, T ((![q, I q, J q, I (J q)] : Fin 4 → F) k) ∈
+        Submodule.span ℝ (Set.range (![q, I q, J q, I (J q)] : Fin 4 → F))) :
+      ∀ x ∈ Submodule.span ℝ (Set.range (![q, I q, J q, I (J q)] : Fin 4 → F)),
+        T x ∈ Submodule.span ℝ (Set.range (![q, I q, J q, I (J q)] : Fin 4 → F)) := by
     intro x hx
     induction hx using Submodule.span_induction with
-    | mem x hx =>
-      obtain ⟨k, rfl⟩ := hx
-      fin_cases k <;> simp only [Matrix.cons_val_zero, Matrix.cons_val_one,
-        Matrix.cons_val_two, Matrix.cons_val_three, hI2, hJ2, hJI, map_neg, neg_neg]
-      all_goals first
-        | exact memv 0
-        | exact memv 1
-        | exact memv 2
-        | exact memv 3
-        | exact Submodule.neg_mem _ (memv 0)
-        | exact Submodule.neg_mem _ (memv 1)
-        | exact Submodule.neg_mem _ (memv 2)
-        | exact Submodule.neg_mem _ (memv 3)
+    | mem x hx => obtain ⟨k, rfl⟩ := hx; exact ht k
     | zero => simp
     | add x y hx hy ihx ihy => simpa only [map_add] using Submodule.add_mem _ ihx ihy
     | smul a x hx ih => simpa only [map_smul] using Submodule.smul_mem _ a ih
+  refine ⟨horth, ?_, ?_, inv I ?_, inv J ?_⟩
+  · simpa using tableI
+  · simpa using tableJ
+  · intro k; rw [tableI]; fin_cases k
+    · exact memv 1
+    · exact Submodule.neg_mem _ (memv 0)
+    · exact memv 3
+    · exact Submodule.neg_mem _ (memv 2)
+  · intro k; rw [tableJ]; fin_cases k
+    · exact memv 2
+    · exact Submodule.neg_mem _ (memv 3)
+    · exact Submodule.neg_mem _ (memv 0)
+    · exact memv 1
 
 private theorem flat_pair_complement_descent_data (A D : F →ₗ[ℝ] F)
     (hA : ∀ x y, ⟪A x, y⟫_ℝ = -⟪x, A y⟫_ℝ)
@@ -271,9 +321,8 @@ private theorem flat_pair_complement_descent_data (A D : F →ₗ[ℝ] F)
   · intro x y; exact hA x y
   · intro x y; exact hD x y
   · ext x
-    apply Subtype.ext
     exact DFunLike.congr_fun hflat (x : F)
-  · have hpos : 0 < Module.finrank ℝ V := Submodule.finrank_pos.mpr hV
+  · have hpos : 0 < Module.finrank ℝ V := Nat.pos_of_ne_zero (fun hz => hV (Submodule.finrank_eq_zero.mp hz))
     have hadd := V.finrank_add_finrank_orthogonal
     omega
 
