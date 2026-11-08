@@ -15,6 +15,7 @@ admission_basis: open-problem-resolution (#21407; Proved)
 No escape witness is claimed for admission.
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/21518
 The public integral_input_ledger and divisor_ghost_gauss audit is unfinished: https://github.com/the-omega-institute/trureturing/issues/25058
+Escape audit unfinished for exponential_sum_constant and exponential_sum_equation: https://github.com/the-omega-institute/trureturing/issues/23611
 Direct frozen dependencies are identified below by declaration, not module pins.
 Published owners retain their original private baseline identities here;
 their current public declaration identities require the canonical scope report.
@@ -478,7 +479,7 @@ private theorem input_x_derivative {K : Type*} [Field K] [CharZero K] (a : ℕ �
     rw [coeff_succ_X_mul, coeff_derivative]
     simp [logarithmicInput, Nat.cast_add_one_ne_zero]
 
-private theorem exponential_sum_constant {K : Type*} [Field K] [CharZero K] (a : ℕ → K) :
+theorem exponential_sum_constant {K : Type*} [Field K] [CharZero K] (a : ℕ → K) :
     constantCoeff (exponentialSum a) = 1 := by
   change MvPowerSeries.constantCoeff ((exp K).subst (logarithmicInput a)) = 1
   rw [constantCoeff_subst_of_constantCoeff_zero]
@@ -486,7 +487,7 @@ private theorem exponential_sum_constant {K : Type*} [Field K] [CharZero K] (a :
   · change constantCoeff (logarithmicInput a) = 0
     simp [logarithmicInput, ← coeff_zero_eq_constantCoeff_apply]
 
-private theorem exponential_sum_equation {K : Type*} [Field K] [CharZero K] (a : ℕ → K) :
+theorem exponential_sum_equation {K : Type*} [Field K] [CharZero K] (a : ℕ → K) :
     X * derivative (R := K) (exponentialSum a) = (D5.S1.Recurrence.Invariants.HannaDiagonalDerivativeParity.step a 0) * exponentialSum a := by
   have hh : HasSubst (logarithmicInput a) := HasSubst.of_constantCoeff_zero
     (by
