@@ -88,7 +88,85 @@ $$\forall h: \operatorname{PowerSeries}\left(\mathbb{Q}\right), (\operatorname{c
 
 Formal differentiation of exp(h) gives exp(h) times the derivative of h.
 
-**Definition 1.8 (Prime-power congruences).**
+**Definition 1.8 (Coefficientwise local integrality).**
+
+$$\forall r: \mathbb{N}, \forall f: \operatorname{PowerSeries}\left(\mathbb{Q}\right), \operatorname{IsRIntegralPS}\left(r, f\right) = \forall n: \mathbb{N}, \operatorname{IsRIntegralRat}\left(r, \operatorname{coeff}\left(n, f\right)\right)$$
+
+*Formalization.* `D5/S1/Recurrence/Algebraic/DoldExponentialIntegrality.IsRIntegralPS` (`✓ std3`).
+
+*Citation.* AINTLIB contributors (2026). *AINTLIB rational local integrality and the Dieudonne-Dwork criterion*. URL: <https://github.com/CBirkbeck/AINTLIB/blob/1e63feb21e2dd9e54908d14c9c07058eff3ff1d4/projects/FltRegularBernoulli/BernoulliRegular/Reflection/ResidueSymbol/Furtwaengler/DieudonneDwork/DieudonneDworkCriterion.lean>.
+
+*Commentary.*
+
+Every coefficient has denominator coprime to r.
+
+**Theorem 1.9 (Finite sums preserve local integrality).**
+
+$$\forall r: \mathbb{N}, \forall I: Type*, \forall s: \operatorname{Finset}\left(I\right), \forall f: I \to \mathbb{Q}, (\forall i: I, (i \in s) \implies (\operatorname{IsRIntegralRat}\left(r, f\left(i\right)\right))) \implies (\operatorname{IsRIntegralRat}\left(r, \operatorname{Finset.sum}\left(s, (fun i: I \mapsto f\left(i\right))\right)\right))$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Algebraic/DoldExponentialIntegrality.local_integral_sum` (`✓ std3`). ∎
+
+*Citation.* AINTLIB contributors (2026). *AINTLIB rational local integrality and the Dieudonne-Dwork criterion*. URL: <https://github.com/CBirkbeck/AINTLIB/blob/1e63feb21e2dd9e54908d14c9c07058eff3ff1d4/projects/FltRegularBernoulli/BernoulliRegular/Reflection/ResidueSymbol/Furtwaengler/DieudonneDwork/DieudonneDworkCriterion.lean>.
+
+*Commentary.*
+
+A finite sum of rationals with denominators coprime to r again has denominator coprime to r.
+
+**Theorem 1.10 (The formal exponential has constant one).**
+
+$$\forall h: \operatorname{PowerSeries}\left(\mathbb{Q}\right), (\operatorname{constantCoeff}\left(h\right) = 0) \implies (\operatorname{constantCoeff}\left(\operatorname{subst}\left(h, \operatorname{exp}\left(\mathbb{Q}\right)\right)\right) = 1)$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Algebraic/DoldExponentialIntegrality.expSeries_constant` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* AINTLIB contributors (2026). *AINTLIB rational local integrality and the Dieudonne-Dwork criterion*. URL: <https://github.com/CBirkbeck/AINTLIB/blob/1e63feb21e2dd9e54908d14c9c07058eff3ff1d4/projects/FltRegularBernoulli/BernoulliRegular/Reflection/ResidueSymbol/Furtwaengler/DieudonneDwork/DieudonneDworkCriterion.lean>.
+
+*Commentary.*
+
+A zero-constant formal input gives constant coefficient one after exponential substitution.
+
+**Theorem 1.11 (Local integrality at all primes is integral).**
+
+$$\forall f: \operatorname{PowerSeries}\left(\mathbb{Q}\right), (\forall p: \mathbb{N}, (\operatorname{Nat.Prime}\left(p\right)) \implies (\operatorname{IsRIntegralPS}\left(p, f\right))) \implies (\operatorname{HannaLogarithmicPowerClosure.IntegralSeries}\left(f\right))$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Algebraic/DoldExponentialIntegrality.integral_of_local` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* AINTLIB contributors (2026). *AINTLIB rational local integrality and the Dieudonne-Dwork criterion*. URL: <https://github.com/CBirkbeck/AINTLIB/blob/1e63feb21e2dd9e54908d14c9c07058eff3ff1d4/projects/FltRegularBernoulli/BernoulliRegular/Reflection/ResidueSymbol/Furtwaengler/DieudonneDwork/DieudonneDworkCriterion.lean>.
+
+*Commentary.*
+
+A rational denominator coprime to every prime equals one.
+
+**Theorem 1.12 (The sufficient Dieudonne-Dwork criterion).**
+
+$$\forall p: \mathbb{N}, (\operatorname{Nat.Prime}\left(p\right)) \implies (\forall h: \operatorname{PowerSeries}\left(\mathbb{Q}\right), (\operatorname{constantCoeff}\left(h\right) = 0) \implies ((\operatorname{IsRIntegralPS}\left(p, h - \operatorname{C}\left(\operatorname{Inv.inv}\left((p: \mathbb{Q})\right)\right) \cdot \operatorname{subst}\left(X^{p}, h\right)\right)) \implies (\operatorname{IsRIntegralPS}\left(p, \operatorname{subst}\left(h, \operatorname{exp}\left(\mathbb{Q}\right)\right)\right))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Algebraic/DoldExponentialIntegrality.local_exp_of_log_difference` (`✓ std3`). ∎
+
+*Citation.* AINTLIB contributors (2026). *AINTLIB rational local integrality and the Dieudonne-Dwork criterion*. URL: <https://github.com/CBirkbeck/AINTLIB/blob/1e63feb21e2dd9e54908d14c9c07058eff3ff1d4/projects/FltRegularBernoulli/BernoulliRegular/Reflection/ResidueSymbol/Furtwaengler/DieudonneDwork/DieudonneDworkCriterion.lean>.
+
+*Commentary.*
+
+For each prime p, local integrality of h-p inverse times h(X^p) implies local integrality of exp(h). The input h has constant coefficient zero.
+
+**Theorem 1.13 (Cancelling a natural denominator locally).**
+
+$$\forall p: \mathbb{N}, (\operatorname{Nat.Prime}\left(p\right)) \implies (\forall z: \mathbb{Z}, \forall n: \mathbb{N}, (n \neq 0) \implies (((p: \mathbb{Z})^{\operatorname{padicValNat}\left(p, n\right)} \mid z) \implies (\operatorname{IsRIntegralRat}\left(p, \frac{(z: \mathbb{Q})}{(n: \mathbb{Q})}\right))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Algebraic/DoldExponentialIntegrality.local_int_div_nat` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* AINTLIB contributors (2026). *AINTLIB rational local integrality and the Dieudonne-Dwork criterion*. URL: <https://github.com/CBirkbeck/AINTLIB/blob/1e63feb21e2dd9e54908d14c9c07058eff3ff1d4/projects/FltRegularBernoulli/BernoulliRegular/Reflection/ResidueSymbol/Furtwaengler/DieudonneDwork/DieudonneDworkCriterion.lean>.
+
+*Commentary.*
+
+If p to the valuation of nonzero n divides the integer z, then z/n has denominator coprime to p.
+
+**Definition 1.14 (Prime-power congruences).**
 
 $$\forall c: \mathbb{N} \to \mathbb{Z}, \operatorname{Dold}\left(c\right) \iff (\forall p: \mathbb{N}, (\operatorname{Nat.Prime}\left(p\right)) \implies (\forall m: \mathbb{N}, (m \neq 0) \implies ((p: \mathbb{Z})^{\operatorname{padicValNat}\left(p, m\right) + 1} \mid (c\left(p \cdot m\right) - c\left(m\right)))))$$
 
@@ -100,7 +178,7 @@ $$\forall c: \mathbb{N} \to \mathbb{Z}, \operatorname{Dold}\left(c\right) \iff (
 
 Dold(c) requires divisibility by p to the valuation of m plus one for every prime p and every nonzero natural m.
 
-**Definition 1.9 (The rational logarithmic input).**
+**Definition 1.15 (The rational logarithmic input).**
 
 $$\forall c: \mathbb{N} \to \mathbb{Z}, \operatorname{logInput}\left(c\right) = \operatorname{mk}\left((fun n: \mathbb{N} \mapsto \frac{(c\left(n\right): \mathbb{Q})}{(n: \mathbb{Q})})\right)$$
 
@@ -114,7 +192,7 @@ $$\forall c: \mathbb{N} \to \mathbb{Z}, \operatorname{logInput}\left(c\right) = 
 
 The degree-n input coefficient is c(n)/n over the rationals; rational division makes the constant coefficient zero.
 
-**Theorem 1.10 (Scaling the input takes powers).**
+**Theorem 1.16 (Scaling the input takes powers).**
 
 $$\forall f: \operatorname{PowerSeries}\left(\mathbb{Q}\right), (\operatorname{constantCoeff}\left(f\right) = 0) \implies (\forall n: \mathbb{N}, \operatorname{subst}\left(\operatorname{HSMul.hSMul}\left(n, f\right), \operatorname{exp}\left(\mathbb{Q}\right)\right) = \operatorname{subst}\left(f, \operatorname{exp}\left(\mathbb{Q}\right)\right)^{n})$$
 
@@ -128,7 +206,7 @@ $$\forall f: \operatorname{PowerSeries}\left(\mathbb{Q}\right), (\operatorname{c
 
 Substitution into PowerSeries.exp_pow_eq_rescale_exp gives the natural-scaling identity.
 
-**Theorem 1.11 (Exponential of a sum).**
+**Theorem 1.17 (Exponential of a sum).**
 
 $$\forall f: \operatorname{PowerSeries}\left(\mathbb{Q}\right), \forall g: \operatorname{PowerSeries}\left(\mathbb{Q}\right), (\operatorname{constantCoeff}\left(f\right) = 0) \implies ((\operatorname{constantCoeff}\left(g\right) = 0) \implies (\operatorname{subst}\left(f + g, \operatorname{exp}\left(\mathbb{Q}\right)\right) = \operatorname{subst}\left(f, \operatorname{exp}\left(\mathbb{Q}\right)\right) \cdot \operatorname{subst}\left(g, \operatorname{exp}\left(\mathbb{Q}\right)\right)))$$
 
@@ -140,7 +218,7 @@ $$\forall f: \operatorname{PowerSeries}\left(\mathbb{Q}\right), \forall g: \oper
 
 For two rational formal series with zero constant coefficients, substituting their sum into the exponential gives the product of the two substituted exponentials.
 
-**Theorem 1.12 (Dold congruences imply integrality).**
+**Theorem 1.18 (Dold congruences imply integrality).**
 
 $$\forall c: \mathbb{N} \to \mathbb{Z}, (\operatorname{Dold}\left(c\right)) \implies (\forall n: \mathbb{N}, \exists z: \mathbb{Z}, \operatorname{coeff}\left(n, \operatorname{subst}\left(\operatorname{logInput}\left(c\right), \operatorname{exp}\left(\mathbb{Q}\right)\right)\right) = (z: \mathbb{Q}))$$
 
@@ -155,12 +233,18 @@ Apply the sufficient Dieudonne-Dwork criterion at each prime. The Dold congruenc
 ## References
 
 - Truth anchor: `D5/S1/Recurrence/Algebraic/DoldExponentialIntegrality.Dold`
+- Truth anchor: `D5/S1/Recurrence/Algebraic/DoldExponentialIntegrality.IsRIntegralPS`
 - Truth anchor: `D5/S1/Recurrence/Algebraic/DoldExponentialIntegrality.IsRIntegralRat`
 - Truth anchor: `D5/S1/Recurrence/Algebraic/DoldExponentialIntegrality.add`
 - Truth anchor: `D5/S1/Recurrence/Algebraic/DoldExponentialIntegrality.expSeries_add`
+- Truth anchor: `D5/S1/Recurrence/Algebraic/DoldExponentialIntegrality.expSeries_constant`
 - Truth anchor: `D5/S1/Recurrence/Algebraic/DoldExponentialIntegrality.expSeries_derivative`
 - Truth anchor: `D5/S1/Recurrence/Algebraic/DoldExponentialIntegrality.expSeries_nsmul`
 - Truth anchor: `D5/S1/Recurrence/Algebraic/DoldExponentialIntegrality.integral_exp_of_dold`
+- Truth anchor: `D5/S1/Recurrence/Algebraic/DoldExponentialIntegrality.integral_of_local`
+- Truth anchor: `D5/S1/Recurrence/Algebraic/DoldExponentialIntegrality.local_exp_of_log_difference`
+- Truth anchor: `D5/S1/Recurrence/Algebraic/DoldExponentialIntegrality.local_int_div_nat`
+- Truth anchor: `D5/S1/Recurrence/Algebraic/DoldExponentialIntegrality.local_integral_sum`
 - Truth anchor: `D5/S1/Recurrence/Algebraic/DoldExponentialIntegrality.logInput`
 - Truth anchor: `D5/S1/Recurrence/Algebraic/DoldExponentialIntegrality.mul_coprime`
 - Truth anchor: `D5/S1/Recurrence/Algebraic/DoldExponentialIntegrality.neg`

@@ -41,6 +41,33 @@ internal sealed class DoldExponentialIntegralityDocument : IScribeDocumentDefini
                         Mul(Exponential(V("h")), Call("derivative", V("h")))))),
                 "Formal differentiation of exp(h) gives exp(h) times the derivative of h.",
                 DescribeRole.Theorem, AssessedProvenance.FromLiterature(Source)),
+            Node("IsRIntegralPS", "Coefficientwise local integrality",
+                All("r", N(), All("f", PS(Q()), Eqn(Call("IsRIntegralPS", V("r"), V("f")),
+                    All("n", N(), Call("IsRIntegralRat", V("r"), Coeff(V("n"), V("f"))))))),
+                "Every coefficient has denominator coprime to r.", DescribeRole.Definition,
+                AssessedProvenance.FromLiterature(Source)),
+            Node("local_integral_sum", "Finite sums preserve local integrality", LocalSumFormula(),
+                "A finite sum of rationals with denominators coprime to r again has denominator coprime to r.",
+                DescribeRole.Theorem, AssessedProvenance.FromLiterature(Source)),
+            Node("expSeries_constant", "The formal exponential has constant one",
+                All("h", PS(Q()), Imp(Eqn(Call("constantCoeff", V("h")), D(0)),
+                    Eqn(Call("constantCoeff", Exponential(V("h"))), D(1)))),
+                "A zero-constant formal input gives constant coefficient one after exponential substitution.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
+            Node("integral_of_local", "Local integrality at all primes is integral",
+                All("f", PS(Q()), Imp(All("p", N(), Imp(QualifiedCall("Nat", "Prime", V("p")),
+                    Call("IsRIntegralPS", V("p"), V("f")))),
+                    QualifiedCall("HannaLogarithmicPowerClosure", "IntegralSeries", V("f")))),
+                "A rational denominator coprime to every prime equals one.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
+            Node("local_exp_of_log_difference", "The sufficient Dieudonne-Dwork criterion",
+                LocalExponentialFormula(),
+                "For each prime p, local integrality of h-p inverse times h(X^p) implies local integrality of exp(h). The input h has constant coefficient zero.",
+                DescribeRole.Theorem, AssessedProvenance.FromLiterature(Source)),
+            Node("local_int_div_nat", "Cancelling a natural denominator locally",
+                LocalQuotientFormula(),
+                "If p to the valuation of nonzero n divides the integer z, then z/n has denominator coprime to p.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
             Node("Dold", "Prime-power congruences", All("c", Seq(N(), Sp, To, Sp, Z()), Seq(Call("Dold", V("c")), Sp, Iff, Sp, P(DoldBody()))),
                 "Dold(c) requires divisibility by p to the valuation of m plus one for every prime p and every nonzero natural m.", DescribeRole.Definition,
                 AssessedProvenance.FromLiterature(Source)),
@@ -57,6 +84,40 @@ internal sealed class DoldExponentialIntegralityDocument : IScribeDocumentDefini
             Node("integral_exp_of_dold", "Dold congruences imply integrality", All("c", Seq(N(), Sp, To, Sp, Z()), Imp(Call("Dold", V("c")), All("n", N(), Ex("z", Z(), Eqn(Coeff(V("n"), Exponential(Call("logInput", V("c")))), Cast(V("z"), Q())))))),
                 "Apply the sufficient Dieudonne-Dwork criterion at each prime. The Dold congruences make the logarithmic difference locally integral; a rational coefficient integral at every prime has denominator one. The local-integrality induction is adapted from AINTLIB.", DescribeRole.Theorem,
                 AssessedProvenance.FromLiterature(Source)))));
+
+    private static Formula LocalSumFormula()
+    {
+        var f = V("f"); var s = V("s"); var r = V("r");
+        var premise = All("i", V("I"), Imp(Seq(V("i"), Sp, InMacro, Sp, s),
+            Call("IsRIntegralRat", r, new Formula.Apply(f, [V("i")]))));
+        var sum = QualifiedCall("Finset", "sum", s,
+            Lam("i", V("I"), new Formula.Apply(f, [V("i")])));
+        return All("r", N(), All("I", Seq(V("Type"), Star),
+            All("s", Call("Finset", V("I")), All("f", Seq(V("I"), Sp, To, Sp, Q()),
+                Imp(premise, Call("IsRIntegralRat", r, sum))))));
+    }
+
+    private static Formula LocalExponentialFormula()
+    {
+        var p = V("p"); var h = V("h");
+        var substituted = Call("subst", Pow(V("X"), p), h);
+        var difference = new Formula.Binary(h, FormulaBinaryOperator.Subtract,
+            Mul(Call("C", QualifiedCall("Inv", "inv", Cast(p, Q()))), substituted));
+        return All("p", N(), Imp(QualifiedCall("Nat", "Prime", p),
+            All("h", PS(Q()), Imp(Eqn(Call("constantCoeff", h), D(0)),
+                Imp(Call("IsRIntegralPS", p, difference),
+                    Call("IsRIntegralPS", p, Exponential(h)))))));
+    }
+
+    private static Formula LocalQuotientFormula()
+    {
+        var p = V("p"); var n = V("n"); var z = V("z");
+        var divides = Seq(Pow(Cast(p, Z()), Call("padicValNat", p, n)), Sp, Mid, Sp, z);
+        return All("p", N(), Imp(QualifiedCall("Nat", "Prime", p),
+            All("z", Z(), All("n", N(), Imp(Seq(n, Sp, Neq, Sp, D(0)),
+                Imp(divides, Call("IsRIntegralRat", p,
+                    new Formula.Fraction(Cast(z, Q()), Cast(n, Q())))))))));
+    }
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
         DescribeRole role, AssessedProvenance provenance) =>
@@ -116,4 +177,7 @@ internal sealed class DoldExponentialIntegralityDocument : IScribeDocumentDefini
                     Eqn(Exponential(Add(f, g)), Mul(Exponential(f), Exponential(g)))))));
     }
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
+
+
+
 }

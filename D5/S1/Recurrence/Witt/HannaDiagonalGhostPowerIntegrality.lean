@@ -67,6 +67,7 @@ gauss_has_ledger: proof_shape: bind-only; escape_witness: none; consumers: gauss
 integral_input_ledger: proof_shape: bind-only (publication of the frozen private theorem); escape_witness: none; consumers: result, HannaPrimePowerCorrection.correction_ghost; Direct frozen dependencies: F1, F9, F6, F2, F7, F3, F4, F5, F10, F8, F11, F12.
 gauss_exponential_integral: proof_shape: content; escape_witness: none; consumers: result; Direct frozen dependencies: F1, F9, F6, F2, F7, F3, F4, F5, F8, F11, F12.
 result: proof_shape: content; escape_witness: none; consumers: external settlement; Direct frozen dependencies: F1, F9, F6, F2, F7, F3, F4, F5, F10, F8, F11, F12.
+Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/24041.
 -/
 
 import D5.S1.Recurrence.LinearRows.LinearExponentDyadicSupport
