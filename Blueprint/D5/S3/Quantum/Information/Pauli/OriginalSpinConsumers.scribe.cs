@@ -51,7 +51,7 @@ internal sealed class OriginalSpinConsumersDocument : IScribeDocumentDefinition
                 "The supplier scalarB gives the Hermitian matrix s I plus x dot sigma."),
             Def("density", "Unnormalized density", AllMV(Equal(Rho(),
                 Smul(Typed(Fraction(Num(1), Num(2)), C()),
-                    Call("scalarB", X("m"), Call("toLp", Num(2), X("v"))))),
+                    Call("scalarB", X("m"), Call("toLp", Num(2), X("v")))))),
                 "The density has trace m and is positive exactly when norm v is at most m."),
             Def("product", "Both matrix orientations", For(Equal(
                 Call("product", X("o"), X("A"), X("B")),
@@ -82,7 +82,7 @@ internal sealed class OriginalSpinConsumersDocument : IScribeDocumentDefinition
                     And(Call("Consequences", X("D")), Call("MatrixInterfaces", X("o"), X("D")))),
                     ("o", X("Bool")), ("D", Rel())),
                 "The hypothesis is the canonical OriginalDContract.crossD orientation on every original input; fixed_crossD connects it to one Bool-selected Pauli multiplication order. For ordinary order the complex Gram quadratic form is tr(rho Z* Z), with Z the finite sum of Hermitian labels with arbitrary complex coefficients. Cyclicity gives tr(Z rho Z*), which is nonnegative. Opposite order transposes the same directed Gram table. The canonical PB and reassociation, original-norm bounds, continuity, all-mass evaluation interfaces and all finite Gram consequences are then supplied for this same D. No argument divides by the mass; this endpoint is conditional and does not classify an arbitrary D.")),
-        [])));
+        []));
 
     private static Formula CoordinateFormula(bool forward)
     {
@@ -255,7 +255,6 @@ internal sealed class OriginalSpinConsumersDocument : IScribeDocumentDefinition
         }
         return Apply(Seq(Operatorname, Grp(tokens.ToArray())), args);
     }
-    private static Formula Norm(Formula a) => new Formula.Norm(a);
     private static Formula Negate(Formula a) => new Formula.Negate(a);
     private static Formula Fraction(Formula a, Formula b) => new Formula.Fraction(a, b);
     private static Formula Smul(Formula a, Formula b) => Seq(Open, a, Close, Sp, Cdot, Sp, Open, b, Close);
