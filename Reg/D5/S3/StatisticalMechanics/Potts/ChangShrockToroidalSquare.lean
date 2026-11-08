@@ -1,4 +1,5 @@
 import LeanInformationAuditInterface.Contract.Registration
+import D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 import D5.S3.StatisticalMechanics.Potts.ChangShrockToroidalHoneycomb
 import D5.S3.StatisticalMechanics.Potts.ChangShrockToroidalSquare
 import Reg.Support.DependentFamily
@@ -111,7 +112,7 @@ def registration :
     definition := none
     coordinates := #[0]
     readouts := #[{
-      path := #["body", "body", "body", "arg", "body", "arg", "fn", "arg"]
+      path := #["body", "body", "arg", "body", "arg", "fn", "arg"]
       stateBinder := 2
       functionOperand := false
       stateOperand := none

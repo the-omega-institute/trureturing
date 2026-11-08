@@ -29,7 +29,7 @@ internal sealed class ChangShrockToroidalSquareDocument : IScribeDocumentDefinit
                     At(Q("List", "prod"), At(Q("List", "ofFn"),
                         Fn("i", Sites(), Add(D(1), Smul(N("v"), Call("join", X("i"),
                             At(Q("Fin", "ofNat"), X("L"),
-                                Add(Val(X("i")), D(1)))))))))))),
+                                Add(Val(X("i")), D(1))))))))))))),
                 AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text(
                     "This is H in equation (2.34). The function bound by List.ofFn has domain "
