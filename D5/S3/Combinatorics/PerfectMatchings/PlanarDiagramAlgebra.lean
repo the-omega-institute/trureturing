@@ -1,5 +1,5 @@
 /- GID: D5/S3/Combinatorics/PerfectMatchings/PlanarDiagramAlgebra
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Combinatorics/PerfectMatchings/PlanarDiagramAlgebra
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Algebra.MonoidAlgebra.Module]
@@ -7,6 +7,9 @@
    digest: The free module on planar rectangle matchings with loop-zero concatenation. -/
 import D5.S3.Combinatorics.PerfectMatchings.PlanarSewing
 import D5.S3.Topology.FiniteMatchingAssociativity
+import D5.S3.Topology.FiniteMatchingClosure
+import D5.S3.Topology.FiniteMatchingComposition
+import D5.S3.Topology.FiniteMatchingSewing
 import Mathlib.Algebra.MonoidAlgebra.Module
 import Mathlib.Algebra.Algebra.Defs
 import Mathlib.LinearAlgebra.Finsupp.LSum
@@ -94,15 +97,15 @@ private theorem basis_assoc (a b c : Diagram n) :
     ((MonoidAlgebra.single a 1 : TL R n) * MonoidAlgebra.single b 1) *
       MonoidAlgebra.single c 1 =
     MonoidAlgebra.single a 1 * (MonoidAlgebra.single b 1 * MonoidAlgebra.single c 1) := by
-  have h := internalLoopCount_cocycle a.val b.val c.val
+  have h := internalLoopCount_pos_assoc a.val b.val c.val
   rw [basis_mul, basis_mul]
   unfold basisProduct
   by_cases hab : internalLoopCount a.val b.val = 0
   · rw [ite_eq_left hab]
     by_cases hbc : internalLoopCount b.val c.val = 0
     · rw [ite_eq_left hbc, basis_mul, basis_mul]
-      have he : internalLoopCount (concat a b).val c.val =
-          internalLoopCount a.val (concat b c).val := by dsimp [concat]; omega
+      have he : (internalLoopCount (concat a b).val c.val = 0) ↔
+          internalLoopCount a.val (concat b c).val = 0 := by dsimp [concat]; omega
       simp only [basisProduct, he, concat_assoc]
     · rw [ite_eq_right hbc, mul_zero', basis_mul]
       have he : internalLoopCount (concat a b).val c.val ≠ 0 := by dsimp [concat]; omega

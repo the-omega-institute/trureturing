@@ -8,6 +8,10 @@
 import D5.S3.StatisticalMechanics.VertexModels.PonciniRasmussenNineHorner
 import D5.S3.StatisticalMechanics.VertexModels.PonciniRasmussenNineDiagrams
 import Mathlib.Data.List.Sort
+import Mathlib.Algebra.BigOperators.Fin
+import Mathlib.Algebra.BigOperators.Group.List.Basic
+import Mathlib.Algebra.Module.Basic
+import Mathlib.Algebra.Module.BigOperators
 
 /-! Sorting checks the edge multiset including repeated sources and repeated generator targets. -/
 set_option autoImplicit false
@@ -59,5 +63,77 @@ private theorem sorted_equal :
 theorem edges_perm : incomingEdges.Perm outgoingEdges :=
   (List.mergeSort_perm incomingEdges _).symm.trans
     (sorted_equal ▸ List.mergeSort_perm outgoingEdges _)
+
+private theorem sum_flatMap {X Y A : Type*} [AddCommMonoid A]
+    (l : List X) (g : X → List Y) (f : Y → A) :
+    ((l.flatMap g).map f).sum = (l.map fun x => ((g x).map f).sum).sum := by
+  simp only [List.flatMap, List.map_flatten, List.sum_flatten, List.map_map]
+  rfl
+
+private theorem sum_filterMap {X Y A : Type*} [AddCommMonoid A]
+    (l : List X) (g : X → Option Y) (f : Y → A) :
+    ((l.filterMap g).map f).sum = (l.map fun x => (g x).elim 0 f).sum := by
+  induction l with
+  | nil => rfl
+  | cons a l ih =>
+    cases h : g a <;> simp [List.filterMap_cons, h, ih]
+
+private theorem foldl_add_sum {X A : Type*} [AddCommMonoid A]
+    (l : List X) (f : X → A) :
+    l.foldl (fun a x => a+f x) 0 = (l.map f).sum := by
+  rw [List.sum_eq_foldl, List.foldl_map]
+
+private theorem int_sum_smul {A : Type*} [AddCommGroup A] (l : List Int) (a : A) :
+    l.sum • a = (l.map fun z => z • a).sum := by
+  induction l with
+  | nil => simp
+  | cons x l ih => simp [add_zsmul, ih]
+
+
+private theorem sum_finRange {A : Type*} [AddCommMonoid A] {m : ℕ} (f : Fin m → A) :
+    ((List.finRange m).map f).sum = ∑ i, f i := (Fin.sum_univ_def f).symm
+
+private theorem outgoing_sum {A : Type*} [AddCommGroup A]
+    (T : Fin 8 → Fin 4862 → Fin 4863) (b : Fin 4862 → A) (v : Fin 8192 → Int) :
+    (((List.finRange 4862).flatMap fun s =>
+      (List.finRange 8).filterMap fun g =>
+        if ht : (T g s).val < 4862 then
+          some ((⟨(T g s).val,ht⟩ : Fin 4862),(⟨s.val,by omega⟩ : Fin 8192)) else none).map
+        fun e => v e.2 • b e.1).sum =
+      ∑ s : Fin 4862, ∑ g : Fin 8,
+        if ht : (T g s).val < 4862 then v ⟨s.val,by omega⟩ • b ⟨(T g s).val,ht⟩ else 0 := by
+  rw [sum_flatMap]
+  simp only [sum_filterMap]
+  simp_rw [show ∀ (s : Fin 4862) (g : Fin 8),
+      ((if ht : (T g s).val < 4862 then
+          some ((⟨(T g s).val,ht⟩ : Fin 4862),(⟨s.val,by omega⟩ : Fin 8192)) else none).elim 0
+        (fun e => v e.2 • b e.1)) =
+      (if ht : (T g s).val < 4862 then v ⟨s.val,by omega⟩ • b ⟨(T g s).val,ht⟩ else 0) from by
+    intro s g; split_ifs <;> rfl]
+  simp_rw [sum_finRange]
+
+private theorem incoming_sum {A : Type*} [AddCommGroup A]
+    (row : Fin 8192 → List Nat) (b : Fin 4862 → A) (v : Fin 8192 → Int) :
+    (((List.finRange 4862).flatMap fun t =>
+      (row ⟨t.val,by omega⟩).map fun s => (t, (⟨s%8192,Nat.mod_lt _ (by omega)⟩ : Fin 8192))).map
+        fun e => v e.2 • b e.1).sum =
+      ∑ t : Fin 4862,
+        (row ⟨t.val,by omega⟩).foldl (fun a s => a+v ⟨s%8192,Nat.mod_lt _ (by omega)⟩) 0 • b t := by
+  rw [sum_flatMap]
+  simp only [List.map_map, Function.comp_apply]
+  simp only [foldl_add_sum, int_sum_smul, List.map_map]
+  exact sum_finRange _
+
+/-- Reindexing the incoming action by its source and generator preserves every coefficient. -/
+theorem sparse_sum {A : Type*} [AddCommGroup A] (b : Fin 4862 → A) (v : Fin 8192 → Int) :
+    (∑ t : Fin 4862, sparseHamiltonian v ⟨t.val,by omega⟩ • b t) =
+      -(∑ s : Fin 4862, ∑ g : Fin 8,
+        if ht : (transition g s).val < 4862 then
+          v ⟨s.val,by omega⟩ • b ⟨(transition g s).val,ht⟩ else 0) := by
+  have he := (edges_perm.map (fun e => v e.2 • b e.1)).sum_eq
+  rw [incoming_sum, outgoing_sum] at he
+  rw [sparseHamiltonian_eq]
+  simp only [neg_zsmul, Finset.sum_neg_distrib]
+  exact congrArg Neg.neg he
 
 end D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges
