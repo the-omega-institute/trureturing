@@ -25,7 +25,7 @@ internal sealed class KimStolarskyEventualPrefixRefutationDocument : IScribeDocu
                     "D5/S0/Certificates/Polynomials/KimStolarskyEventualPrefixRefutation.result"),
                 H("No common eventual threshold exists"),
                 StatementSource.WithoutFormula(),
-                AssessedProvenance.FromLiterature(Source),
+                AssessedProvenance.FromRepo(Source),
                 Blocks(
                     Paragraph(Text(
                         "Put m=10^(4n+2). The shifted R polynomial is the square of "
