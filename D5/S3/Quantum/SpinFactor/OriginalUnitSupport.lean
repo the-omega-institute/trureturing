@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Quantum/SpinFactor/OriginalUnitSupport
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.Analysis.Matrix.PosDef, mathlib/module/Mathlib.Algebra.QuadraticDiscriminant]
+   anchors: [mathlib/module/Mathlib.Analysis.Matrix.PosDef]
    utility: none
    digest: Norm-support readings of an original unit output annihilate its second label. -/
 
@@ -16,7 +16,8 @@ public import Mathlib.Tactic
 
 /-! A unit-row prerequisite on an arbitrary, possibly incomplete original carrier.
 The total relation has no linearity or output-closure assumption. The original
-generated three-axis and affine-identification theorems are not asserted here. -/
+generated three-axis and affine-identification theorems are not asserted here.
+Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/28178. -/
 
 @[expose] public section
 noncomputable section
@@ -27,24 +28,54 @@ namespace D5.S3.Quantum.SpinFactor.OriginalUnitSupport
 
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
 
-/-- The original directed two-table, with its real Jordan diagonal. -/
+/-- The original directed two-table, including its unknown diagonal responses. -/
 def table (S : E →ₗ[ℝ] E →ₗ[ℝ] E) (D : E → E → E)
     (α : E →ₗ[ℝ] ℝ) (a b : E) : Matrix (Fin 2) (Fin 2) ℂ :=
-  !![(α (S a a) : ℂ), (α (S a b) : ℂ) - Complex.I * (α (D a b) : ℂ);
-     (α (S b a) : ℂ) - Complex.I * (α (D b a) : ℂ), (α (S b b) : ℂ)]
+  !![(α (S a a) : ℂ) - Complex.I * (α (D a a) : ℂ),
+     (α (S a b) : ℂ) - Complex.I * (α (D a b) : ℂ);
+     (α (S b a) : ℂ) - Complex.I * (α (D b a) : ℂ),
+     (α (S b b) : ℂ) - Complex.I * (α (D b b) : ℂ)]
 
 /-- All original positive readings, retaining their actual, unnormalized masses. -/
 def P2 (S : E →ₗ[ℝ] E →ₗ[ℝ] E) (D : E → E → E)
     (P : Set (E →ₗ[ℝ] ℝ)) : Prop :=
   ∀ α ∈ P, ∀ a b, (table S D α a b).PosSemidef
 
-/-- The complete element-valued original balance, on all three original labels. -/
-def PB (S : E →ₗ[ℝ] E →ₗ[ℝ] E) (D : E → E → E) : Prop :=
-  ∀ a b c,
+/-- The real square readout of a pair of original labels. -/
+def squareReadout (S : E →ₗ[ℝ] E →ₗ[ℝ] E) (D : E → E → E)
+    (α : E →ₗ[ℝ] ℝ) (b c : E) : ℝ :=
+  α (S b b) + α (S c c) + 2 * α (D b c)
+
+/-- The complete original reading balance, on all three original labels. -/
+def PB (S : E →ₗ[ℝ] E →ₗ[ℝ] E) (D : E → E → E)
+    (P : Set (E →ₗ[ℝ] ℝ)) : Prop :=
+  ∀ α ∈ P, ∀ a b c,
+    squareReadout S D α (b + (D a b - S a c)) (c + (S a b + D a c)) =
+      squareReadout S D α (b - (D a b - S a c)) (c - (S a b + D a c))
+
+private theorem finite_difference
+    (S : E →ₗ[ℝ] E →ₗ[ℝ] E) (D : E → E → E)
+    (P : Set (E →ₗ[ℝ] ℝ)) (hPB : PB S D P)
+    (hc : ∀ x y, S x y = S y x)
+    (hsep : ∀ x, (∀ α ∈ P, α x = 0) → x = 0) (a b c : E) :
     D (b + (D a b - S a c)) (c + (S a b + D a c)) -
       D (b - (D a b - S a c)) (c - (S a b + D a c)) =
         -(2 : ℝ) • S b (D a b - S a c) -
-          (2 : ℝ) • S c (S a b + D a c)
+          (2 : ℝ) • S c (S a b + D a c) := by
+  apply sub_eq_zero.mp
+  apply hsep
+  intro α hα
+  let ν := D a b - S a c
+  let ω := S a b + D a c
+  have hp : squareReadout S D α (b + ν) (c + ω) =
+      squareReadout S D α (b - ν) (c - ω) := hPB α hα a b c
+  change α (D (b + ν) (c + ω) - D (b - ν) (c - ω) -
+    (-(2 : ℝ) • S b ν - (2 : ℝ) • S c ω)) = 0
+  simp only [squareReadout, map_add, map_sub, LinearMap.add_apply,
+    LinearMap.sub_apply] at hp
+  rw [hc ν b, hc ω c] at hp
+  simp only [map_sub, map_smul, smul_eq_mul]
+  linarith only [hp]
 
 private theorem determinant_bound
     (S : E →ₗ[ℝ] E →ₗ[ℝ] E) (D : E → E → E)
@@ -52,11 +83,19 @@ private theorem determinant_bound
     (hc : ∀ x y, S x y = S y x)
     (α : E →ₗ[ℝ] ℝ) (hα : α ∈ P) (a b : E) :
     (α (D a b)) ^ 2 ≤ α (S a a) * α (S b b) - (α (S a b)) ^ 2 := by
+  have ha : α (D a a) = 0 := by
+    have h := congrArg Complex.im ((hP α hα a b).1.apply 0 0)
+    simp [table] at h
+    linarith
+  have hb : α (D b b) = 0 := by
+    have h := congrArg Complex.im ((hP α hα a b).1.apply 1 1)
+    simp [table] at h
+    linarith
   have hs : α (D b a) = -α (D a b) := by
     have h := congrArg Complex.im ((hP α hα a b).1.apply 0 1)
     simpa [table] using h
   have hd := (Complex.nonneg_iff.mp (hP α hα a b).det_nonneg).1
-  simp [table, Matrix.det_fin_two, hc b a, hs,
+  simp [table, Matrix.det_fin_two, hc b a, ha, hb, hs,
     Complex.mul_re, Complex.mul_im] at hd
   nlinarith
 
@@ -96,7 +135,7 @@ label and its Jordan product with that output as zero. This is a finite P2/PB
 consequence; the state is used only to read the same fixed original output. -/
 theorem support_unit_obstruction
     (S : E →ₗ[ℝ] E →ₗ[ℝ] E) (D : E → E → E)
-    (P : Set (E →ₗ[ℝ] ℝ)) (hP : P2 S D P) (hPB : PB S D)
+    (P : Set (E →ₗ[ℝ] ℝ)) (hP : P2 S D P) (hPB : PB S D P)
     (hc : ∀ x y, S x y = S y x) (u : E) (hu : ∀ x, S u x = x)
     (hsq : ∀ x, ‖S x x‖ = ‖x‖ ^ 2)
     (hsep : ∀ x, (∀ α ∈ P, α x = 0) → x = 0)
@@ -161,7 +200,7 @@ theorem support_unit_obstruction
   have hpz := read_zero rp sp (gram_zero rp sp μ hsp)
   have hmz := read_zero rm sm (gram_zero rm sm (-μ) hsm)
   have hinner := scalar_pair_zero S D P hP hc u hu hsep μ k
-  have hp := congrArg α (hPB (μ • u) b (k • u))
+  have hp := congrArg α (finite_difference S D P hPB hc hsep (μ • u) b (k • u))
   have hν : D (μ • u) b - S (μ • u) (k • u) = ν := by
     simp [ν, h, map_smul, hu, smul_smul, mul_comm]
   have hω : S (μ • u) b + D (μ • u) (k • u) = ω := by

@@ -23,7 +23,7 @@ structure RawInputs where
   D : E → E → E
   P : Set (E →ₗ[ℝ] ℝ)
   positive : P2 S D P
-  balance : PB S D
+  balance : PB S D P
   comm : ∀ x y, S x y = S y x
   unit : E
   unitLaw : ∀ x, S unit x = x
