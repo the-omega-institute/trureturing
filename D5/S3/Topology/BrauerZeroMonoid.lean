@@ -51,14 +51,15 @@ private theorem multiply_assoc {N : ℕ} (a b c : ZeroMatching N) :
       cases c with
       | none => rw [multiply_none_right, multiply_none_right, multiply_none_right]
       | some f =>
-        have h := internalLoopCount_cocycle d e f
+        have h := internalLoopCount_pos_assoc d e f
         rw [multiply_some d e, multiply_some e f]
         by_cases hde : internalLoopCount d e = 0
         · rw [ite_eq_left hde]
           by_cases hef : internalLoopCount e f = 0
           · rw [ite_eq_left hef, multiply_some, multiply_some]
-            have hc : internalLoopCount (composite d e) f = internalLoopCount d (composite e f) := by omega
-            rw [hc, composite_assoc]
+            have hc : (internalLoopCount (composite d e) f = 0) ↔
+                internalLoopCount d (composite e f) = 0 := by omega
+            simp only [hc, composite_assoc]
           · rw [ite_eq_right hef, multiply_none_right, multiply_some]
             have hc : internalLoopCount (composite d e) f ≠ 0 := by omega
             rw [ite_eq_right hc]
@@ -90,5 +91,12 @@ instance zeroMatchingMonoid (N : ℕ) : MonoidWithZero (ZeroMatching N) where
       rw [multiply_some, internalLoopCount_right_identity, ite_eq_left rfl, composite_right_identity]
   zero_mul := multiply_none_left
   mul_zero := multiply_none_right
+
+/-- The monoid product follows the actual sewn paths, with an internal loop giving zero. -/
+theorem some_mul_some {N : ℕ} (d e : Matching (Boundary N)) :
+    (some d : ZeroMatching N) * some e =
+      if internalLoopCount d e = 0 then some (composite d e) else none := by
+  exact multiply_some d e
+
 
 end D5.S3.Topology.BrauerZeroMonoid

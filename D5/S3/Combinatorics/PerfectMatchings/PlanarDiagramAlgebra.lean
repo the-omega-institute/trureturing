@@ -6,6 +6,7 @@
    utility: none
    digest: The free module on planar rectangle matchings with loop-zero concatenation. -/
 import D5.S3.Combinatorics.PerfectMatchings.PlanarSewing
+import D5.S3.Topology.BrauerZeroMonoid
 import D5.S3.Topology.FiniteMatchingAssociativity
 import D5.S3.Topology.FiniteMatchingClosure
 import D5.S3.Topology.FiniteMatchingComposition
@@ -25,6 +26,7 @@ open D5.S3.Topology.FiniteMatchingClosure
 open D5.S3.Topology.FiniteMatchingComposition
 open D5.S3.Topology.FiniteMatchingSewing
 open D5.S3.Topology.FiniteMatchingAssociativity
+open D5.S3.Topology.BrauerZeroMonoid
 
 /-- All literal noncrossing rectangle diagrams, with no quotient on pairings. -/
 abbrev Diagram (n : ℕ) := {d : Matching (Boundary n) // ∃ M : NCMatching (2*n), toMatching M = d}
@@ -93,11 +95,37 @@ private theorem induction {P : TL R n → Prop} (a : TL R n)
       simpa only [MonoidAlgebra.smul_single, smul_eq_mul, mul_one, MonoidAlgebra.ofCoeff_single] using hs r _ (hb d)
   exact h a.coeff
 
+private theorem flags {N : ℕ} (d e f : Matching (Boundary N)) :
+    (0 < internalLoopCount d e ∨ 0 < internalLoopCount (composite d e) f) ↔
+    (0 < internalLoopCount e f ∨ 0 < internalLoopCount d (composite e f)) := by
+  have h := mul_assoc (some d : ZeroMatching N) (some e) (some f)
+  have hl : ((some d : ZeroMatching N) * some e) * some f = none ↔
+      (0 < internalLoopCount d e ∨ 0 < internalLoopCount (composite d e) f) := by
+    rw [some_mul_some]
+    by_cases hde : internalLoopCount d e = 0
+    · rw [ite_eq_left hde, some_mul_some]
+      split_ifs <;> simp_all <;> omega
+    · rw [ite_eq_right hde]
+      change (0 : ZeroMatching N) * some f = none ↔ _
+      rw [zero_mul]
+      exact ⟨fun _ => Or.inl (Nat.pos_of_ne_zero hde), fun _ => rfl⟩
+  have hr : (some d : ZeroMatching N) * (some e * some f) = none ↔
+      (0 < internalLoopCount e f ∨ 0 < internalLoopCount d (composite e f)) := by
+    rw [some_mul_some e f]
+    by_cases hef : internalLoopCount e f = 0
+    · rw [ite_eq_left hef, some_mul_some]
+      split_ifs <;> simp_all <;> omega
+    · rw [ite_eq_right hef]
+      change (some d : ZeroMatching N) * 0 = none ↔ _
+      rw [mul_zero]
+      exact ⟨fun _ => Or.inl (Nat.pos_of_ne_zero hef), fun _ => rfl⟩
+  exact hl.symm.trans ((congrArg (fun a => a = none) h) ▸ hr)
+
 private theorem basis_assoc (a b c : Diagram n) :
     ((MonoidAlgebra.single a 1 : TL R n) * MonoidAlgebra.single b 1) *
       MonoidAlgebra.single c 1 =
     MonoidAlgebra.single a 1 * (MonoidAlgebra.single b 1 * MonoidAlgebra.single c 1) := by
-  have h := internalLoopCount_pos_assoc a.val b.val c.val
+  have h := flags a.val b.val c.val
   rw [basis_mul, basis_mul]
   unfold basisProduct
   by_cases hab : internalLoopCount a.val b.val = 0

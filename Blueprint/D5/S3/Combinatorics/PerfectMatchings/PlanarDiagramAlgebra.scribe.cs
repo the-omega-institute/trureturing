@@ -32,7 +32,13 @@ internal sealed class PlanarDiagramAlgebraDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("PlanarCupcap is cupcapMatching at the zero-based index; cupcap_planar provides its noncrossing witness. The printed generator label is i+1."))), DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("h"), DeclarationHandle.Create("D5/S3/Combinatorics/PerfectMatchings/PlanarDiagramAlgebra.h"),
                 H("h"), StatementSource.FromAuthor(Disp(All("R", Id("CommutativeRing"), All("n", Id("Nat"), Equal(Call("h", Id("R"), Id("n")), Call("Negate", Call("Sum", Call("Fin", Call("Subtract", Id("n"), Num(1))), Call("generator", Id("R"), Id("n"))))))))),
-                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("This is the negative sum of the n-1 standard open-boundary generators."))), DescribeRole.Definition))));
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("This is the negative sum of the n-1 standard open-boundary generators."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("instmultl"), DeclarationHandle.Create("D5/S3/Combinatorics/PerfectMatchings/PlanarDiagramAlgebra.instMulTL"),
+                H("instMulTL"), StatementSource.FromAuthor(Disp(All("R", Id("CommutativeRing"), All("n", Id("Nat"), All("a", Call("TL", Id("R"), Id("n")), All("b", Call("TL", Id("R"), Id("n")), Equal(Call("Multiply", Id("a"), Id("b")), Call("bilinear", Id("a"), Id("b"))))))))),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("The multiplication field sends (a,b) to bilinear(a)(b). Bilinear is the two successive Finsupp lifts of basisProduct(d,e): one composite basis vector when the internal loop count is zero, and zero otherwise."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("instonetl"), DeclarationHandle.Create("D5/S3/Combinatorics/PerfectMatchings/PlanarDiagramAlgebra.instOneTL"),
+                H("instOneTL"), StatementSource.FromAuthor(Disp(All("R", Id("CommutativeRing"), All("n", Id("Nat"), Equal(Id("One"), Call("single", Call("identity", Id("n")), Num(1))))))),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("Identity(n) is identityMatching(n) equipped with the noncrossing witness identity_planar(n)."))), DescribeRole.Definition))));
 
     private static Formula Id(string name) => F.Id(name);
     private static Formula All(string name, Formula type, Formula body) => new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), type, body);
