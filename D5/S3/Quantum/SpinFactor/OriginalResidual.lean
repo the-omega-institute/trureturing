@@ -251,20 +251,20 @@ private theorem axis_cayley_reconstruction (e : ℝ) (he : e = 1 ∨ e = -1)
     let C := (1 / 2 : ℝ) • (y - y')
     let V := (1 / 2 : ℝ) • (y + y')
     have hBU : dot B U = 0 := by
-      simp only [B, U, dot, smul_dotProduct, dotProduct_smul,
-        sub_dotProduct, dotProduct_add, smul_eq_mul]
-      have hsym : dot x x' = dot x' x := dotProduct_comm _ _
-      change (1 / 2 : ℝ) * ((1 / 2 : ℝ) *
-        (dot x x + dot x x' - (dot x' x + dot x' x'))) = 0
-      linarith
+      calc
+        dot B U = (1 / 4 : ℝ) * (dot x x - dot x' x') := by
+          simp only [B, U, dot, smul_dotProduct, dotProduct_smul,
+            sub_dotProduct, dotProduct_add, smul_eq_mul]
+          rw [dotProduct_comm x x']
+          ring
+        _ = 0 := by rw [hxx]; ring
     have hBV : dot B V + dot U C = 0 := by
-      simp only [B, V, U, C, dot, smul_dotProduct, dotProduct_smul,
-        sub_dotProduct, add_dotProduct, dotProduct_add, dotProduct_sub, smul_eq_mul]
-      change (1 / 2 : ℝ) * ((1 / 2 : ℝ) *
-        (dot x y + dot x y' - (dot x' y + dot x' y'))) +
-        (1 / 2 : ℝ) * ((1 / 2 : ℝ) *
-          (dot x y - dot x y' + (dot x' y - dot x' y'))) = 0
-      linarith
+      calc
+        dot B V + dot U C = (1 / 2 : ℝ) * (dot x y - dot x' y') := by
+          simp only [B, V, U, C, dot, smul_dotProduct, dotProduct_smul,
+            sub_dotProduct, add_dotProduct, dotProduct_add, dotProduct_sub, smul_eq_mul]
+          ring
+        _ = 0 := by rw [hxy]; ring
     have haxis : s • B + t • C + e • (cross B V + cross U C) = 0 := by
       funext i
       have hi := congrFun hk i
@@ -460,6 +460,7 @@ private theorem residual_axes_nonparallel (e : ℝ) (he : e = 1 ∨ e = -1)
     simp only [add_dotProduct, smul_dotProduct, dot_self_cross,
       dot_cross_self, smul_zero, add_zero]
   have hwl : dot w l = 0 := by simpa [dot, dotProduct_comm] using hlw
+  simp only [dot] at hL hW hlw hwl
   have hn (v : Vec) : ‖WithLp.toLp 2 v‖ ^ 2 = dot v v := by
     rw [← real_inner_self_eq_norm_sq]
     simp [dot, PiLp.inner_apply, Real.inner_apply]
@@ -469,9 +470,6 @@ private theorem residual_axes_nonparallel (e : ℝ) (he : e = 1 ∨ e = -1)
     dot (l + e • w) (l + e • w) * dot (l - e • w) (l - e • w)
   simp only [dot, add_dotProduct, sub_dotProduct, dotProduct_add, dotProduct_sub,
     smul_dotProduct, dotProduct_smul, smul_eq_mul]
-  change (dot l l - e * dot l w + (e * dot w l - e * (e * dot w w))) ^ 2 <
-    (dot l l + e * dot l w + (e * dot w l + e * (e * dot w w))) *
-      (dot l l - e * dot l w - (e * dot w l - e * (e * dot w w)))
   rw [hlw, hwl]
   rcases he with rfl | rfl <;> nlinarith [mul_pos hL hW]
 
@@ -684,7 +682,6 @@ theorem saturated_support_zero (e δ Z : ℝ) (he : e = 1 ∨ e = -1)
     · exact Finset.sum_nonneg (fun i _ => mul_self_nonneg (w i))
     · intro h
       exact hw (dotProduct_self_eq_zero.mp h.symm)
-  have hb : 0 ≤ b := Finset.sum_nonneg (fun i _ => mul_self_nonneg (p i))
   have hpw : dot p w = 0 := by simpa [dot, dotProduct_comm] using hwp
   have hcw : dot c w = 0 := by
     change (w ⨯₃ p) ⬝ᵥ w = 0
@@ -715,14 +712,16 @@ theorem saturated_support_zero (e δ Z : ℝ) (he : e = 1 ∨ e = -1)
     have hr : r ^ 2 = b - a := Real.sq_sqrt (sub_nonneg.mpr hba)
     let n := (1 / b) • (c + r • p)
     have hnn : dot n n = 1 := by
-      simp only [n, dot, smul_dotProduct, dotProduct_smul, add_dotProduct,
-        dotProduct_add, smul_eq_mul]
-      change (1 / b) * ((1 / b) * (dot c c + r * dot c p +
-        (r * dot p c + r * (r * dot p p)))) = 1
-      rw [hcc, hcp, hpc]
-      change _ = 1
-      field_simp [hb0]
-      nlinarith [congrArg (fun u : ℝ => b * u) hr]
+      calc
+        dot n n = (1 / b) ^ 2 * (dot c c + r * dot c p +
+            r * dot p c + r ^ 2 * b) := by
+          simp only [n, b, dot, smul_dotProduct, dotProduct_smul, add_dotProduct,
+            dotProduct_add, smul_eq_mul]
+          ring
+        _ = 1 := by
+          rw [hcc, hcp, hpc]
+          field_simp [hb0]
+          nlinarith [congrArg (fun u : ℝ => b * u) hr]
     have hnw : dot n w = 0 := by
       simp [n, dot, smul_dotProduct, add_dotProduct, hcw, hpw, smul_eq_mul]
     have hnp : cross n p = -w := by
@@ -741,15 +740,18 @@ theorem saturated_support_zero (e δ Z : ℝ) (he : e = 1 ∨ e = -1)
         |δ + e * (σ * J)| + Z ≤ J := by
       let n := (1 / a) • (c + (σ * J) • w)
       have hnn : dot n n = 1 := by
-        simp only [n, dot, smul_dotProduct, dotProduct_smul, add_dotProduct,
-          dotProduct_add, smul_eq_mul]
-        change (1 / a) * ((1 / a) * (dot c c + (σ * J) * dot c w +
-          ((σ * J) * dot w c + (σ * J) * ((σ * J) * a)))) = 1
-        rw [hcc, hcw, hwc]
-        rcases hσ with rfl | rfl <;>
-          field_simp [ha0] <;>
-          nlinarith [hJ, congrArg (fun u : ℝ => a * u) hJ,
-            congrArg (fun u : ℝ => a ^ 2 * u) hJ]
+        calc
+          dot n n = (1 / a) ^ 2 * (dot c c + (σ * J) * dot c w +
+              (σ * J) * dot w c + (σ * J) ^ 2 * a) := by
+            simp only [n, a, dot, smul_dotProduct, dotProduct_smul, add_dotProduct,
+              dotProduct_add, smul_eq_mul]
+            ring
+          _ = 1 := by
+            rw [hcc, hcw, hwc]
+            rcases hσ with rfl | rfl <;>
+              field_simp [ha0] <;>
+              nlinarith [hJ, congrArg (fun u : ℝ => a * u) hJ,
+                congrArg (fun u : ℝ => a ^ 2 * u) hJ]
       have hnw : dot n w = σ * J := by
         simp only [n, dot, smul_dotProduct, add_dotProduct, smul_eq_mul]
         change (1 / a) * (dot c w + (σ * J) * a) = σ * J
@@ -764,21 +766,24 @@ theorem saturated_support_zero (e δ Z : ℝ) (he : e = 1 ∨ e = -1)
         unfold vnorm
         have hsq : dot (w + (1 / a) • (-b • w + (σ * J) • c))
             (w + (1 / a) • (-b • w + (σ * J) • c)) = J ^ 2 := by
-          simp only [dot, add_dotProduct, dotProduct_add, smul_dotProduct,
-            dotProduct_smul, smul_eq_mul]
-          change a + (1 / a) * (-b * a + (σ * J) * dot w c) +
-            (1 / a) * (-b * a + (σ * J) * dot c w) +
-            (1 / a) * ((1 / a) *
-              ((-b) * ((-b) * a + (σ * J) * dot w c) +
-                (σ * J) * ((-b) * dot c w + (σ * J) * dot c c))) = J ^ 2
-          rw [hcw, hwc, hcc]
-          rcases hσ with rfl | rfl <;>
-            field_simp [ha0] <;>
-            nlinarith [hJ, congrArg (fun u : ℝ => a * u) hJ,
-              congrArg (fun u : ℝ => b * u) hJ,
-              congrArg (fun u : ℝ => a ^ 2 * u) hJ,
-              congrArg (fun u : ℝ => a * b * u) hJ,
-              congrArg (fun u : ℝ => b ^ 2 * u) hJ]
+          calc
+            _ = a + (1 / a) * (-b * a + (σ * J) * dot w c) +
+                (1 / a) * (-b * a + (σ * J) * dot c w) +
+                (1 / a) ^ 2 *
+                  ((-b) * ((-b) * a + (σ * J) * dot w c) +
+                    (σ * J) * ((-b) * dot c w + (σ * J) * dot c c)) := by
+              simp only [a, dot, add_dotProduct, dotProduct_add, smul_dotProduct,
+                dotProduct_smul, smul_eq_mul]
+              ring
+            _ = J ^ 2 := by
+              rw [hcw, hwc, hcc]
+              rcases hσ with rfl | rfl <;>
+                field_simp [ha0] <;>
+                nlinarith [hJ, congrArg (fun u : ℝ => a * u) hJ,
+                  congrArg (fun u : ℝ => b * u) hJ,
+                  congrArg (fun u : ℝ => a ^ 2 * u) hJ,
+                  congrArg (fun u : ℝ => a * b * u) hJ,
+                  congrArg (fun u : ℝ => b ^ 2 * u) hJ]
         rw [hsq, Real.sqrt_sq hJ0]
       simpa only [hnw, hnorm] using hbound n hnn
     have hp := test 1 (Or.inl rfl)
@@ -809,10 +814,6 @@ private theorem unit_evaluation_bound (D : E → E → E) (hP : P2 D)
     have hsym : dot a.2 n = dot n a.2 := dotProduct_comm _ _
     simp only [evaluate, α, jordan, L, one_mul, dot, dotProduct_add,
       dotProduct_sub, dotProduct_smul, smul_dotProduct, add_dotProduct, smul_eq_mul]
-    change a.1 * b.1 + dot a.2 b.2 +
-      (a.1 * dot n b.2 + b.1 * dot n a.2) =
-        dot a.2 b.2 + b.1 * dot a.2 n +
-          (a.1 * dot n b.2 + a.1 * (b.1 * dot n n))
     rw [hn, hsym]
     ring
   have hc : cross (L a) (L b) = cross a.2 b.2 + cross n (a.1 • b.2 - b.1 • a.2) := by
