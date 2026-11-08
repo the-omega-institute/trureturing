@@ -1999,3 +1999,321 @@ goal. The actual source and all remaining original-domain obligations
 are retained.
 
 ## 追加锚（本行以下为增补区）
+
+## 19. Low leaf growth excludes a literal native split supplier
+
+**Definition 19.1 (completed source paths and the literal comparison).**
+At an actual acknowledged CAP admission, or at an authentic outer Ready
+of Assumption 1.2, let $t$ be the current valid source and let
+$\lambda(t)\le h\le K$. Write $a(t)$ and $b(t)$ for its numbers of alpha
+and beta leaves, so $\lambda(t)=a(t)+b(t)$. A literal subtree retains
+every ordered branch and leaf label: $t\preceq s$ means that following
+some finite $L/R$ address from the original root of $s$ reaches exactly
+$t$. The empty address is allowed. This is a relation between source
+values, not an address resolver or a permission to read either value.
+
+A completed returning source path is a finite actual continuation of
+the installed CAP/ARC/$G_{\mathrm{gc}}$ graph between such boundaries.
+Every invoked source or maintenance service in it completes its actual
+response, required rows and dependencies, delivery, checks, ACK and
+source-token return. Its additional journal, audit, history and local
+work uses only the actually admitted entries and current rights. Busy
+or unauthorized attempts can have their unexecuted `none`; executed
+refusals retain their actual effects and records. A global halt and an
+unfinished source overwrite are not returning endpoints. No reset,
+second preparation, controller reinstallation, or restoration of a
+represented old source is part of this path.
+
+The source-changing cases at completed boundaries are precisely CAP
+Definition 1.2's accepted Rho, Left$(v)$ and Right$(v)$, with the
+actually supplied nonempty finite $v$ and current whole-candidate
+guard. CAP Theorem 4.5 and Definition 4.6 supply these cases and all
+seven frame branches. Reserve and Raise preserve the source by CAP
+Theorems 5.2–5.3, including their unchanged/refusal outcomes. The
+remaining source reads and rejects preserve it. ARC Propositions 3.5
+and 5.5 and GCA Theorem 6.4 preserve the current source through the
+annex and history returns. GENERAL §16's installed-row cover keeps
+represented Step, old source fields and recovered permissions as bank
+data; they are not writes or restored authority on the live source.
+Local and audit work retains its original source-preserving operands.
+Thus these intervening operations may change material, heads, meters,
+guards, bindings and acquired information without adding a source
+replacement case. This uses the source-writer and return contracts;
+it does not settle the inventory of complete $Q$ responses.
+
+For the native comparison use the existing source-value map
+
+$$
+\begin{aligned}
+\iota(\alpha)&=\operatorname{Source.of}(\mathrm{true}),&
+\iota(\beta)&=\operatorname{Source.of}(\mathrm{false}),\\
+\iota(\langle u,v\rangle)&=
+ \operatorname{Source.mul}(\iota(u),\iota(v)).
+\end{aligned}
+$$
+
+[Literal journal adapter](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_LITERAL_JOURNAL_ADAPTER.md)
+(LJA), Definition 2.1's token/parser correspondence gives exactly these
+labels and ordered constructors. The recursive equations give
+$\iota(\rho t)=\operatorname{substitution}(\iota(t))$, and native
+composition is $(a(t),b(t))$. Use `Native`, `splitLeft` and `eventIndex`
+with the meanings of `NativeLocalSourceExecution`, and $F,G$ with
+the meanings of `NativeCompletedHistoryRecovery`: $F$ is global
+substitution and $G$ splits the current leftmost beta. The supplied
+guarded-execution correspondence concerns that native source and its
+actual addressed promote/split calls. The map $\iota$ identifies source
+syntax; it identifies neither the two installed operation menus nor
+their physical histories, completion edges or costs.
+
+**Theorem 19.2 (small-growth invariant of the installed source menu).**
+Fix any starting boundary of Definition 19.1 with valid source $t$,
+$b(t)>0$ and $\lambda(t)\le h\le K$. For every completed returning
+source path ending with source $s$,
+
+$$
+0\le\lambda(s)-\lambda(t)<b(t)
+\quad\Longrightarrow\quad
+\begin{cases}
+\text{the path contains no accepted Rho},\\
+t\preceq s.
+\end{cases}
+\tag{19.1}
+$$
+
+The difference is an integer difference. In fact every such path has
+nonnegative leaf growth. The implication permits any finite additional
+Reserve/Raise, arbitrary finite supplied contexts, adaptive choices
+using legitimately acquired information, and all the source-preserving
+intervening work of Definition 19.1. It imposes no common capacity,
+path-length, storage or computation bound.
+
+Proof. At completed source boundaries the actual cases have the
+following changes; the first three rows apply only upon acceptance.
+
+| Completed case at source $u$ | New source | Leaf increment | New beta count |
+| --- | --- | --- | --- |
+| Rho | $\rho u$ | $b(u)$ | $a(u)+b(u)$ |
+| Left$(v)$ | $\langle v,u\rangle$ | $\lambda(v)$ | $b(v)+b(u)$ |
+| Right$(v)$ | $\langle u,v\rangle$ | $\lambda(v)$ | $b(u)+b(v)$ |
+| Read, source reject, maintenance or source-preserving work | $u$ | $0$ | $b(u)$ |
+
+The Rho row follows by counting the original replacements
+$\alpha\mapsto\beta$ and $\beta\mapsto\langle\beta,\alpha\rangle$.
+The graft rows follow from the ordered pairing constructor, and
+$\lambda(v)\ge1$ because the actual context is nonempty. Each row has
+nonnegative leaf increment and never decreases the beta count.
+Definition 19.1 supplies the source-preserving last row, without
+discarding any physical effects of those operations.
+
+If an accepted Rho occurs, consider its current source $u$ immediately
+before that accepted call. Earlier completed cases give
+$b(u)\ge b(t)$ and $\lambda(u)\ge\lambda(t)$. That call alone adds
+$b(u)$ leaves. All later completed cases have nonnegative increment.
+Consequently
+
+$$
+\lambda(s)-\lambda(t)\ge b(u)\ge b(t),
+$$
+
+contrary to the strict inequality in (19.1). Thus no accepted Rho
+occurs. Executed rejected Rho calls are still allowed.
+
+Without an accepted Rho, each completed source change is a whole-tree
+graft. Track one literal occurrence of the starting $t$. Initially its
+address is empty. At Left$(v)$ prefix that address by $R$, and at
+Right$(v)$ prefix it by $L$. Each source-preserving case retains it.
+Finite induction gives an actual ordered labelled occurrence in $s$.
+This is elementary context-preservation reasoning, as already used on
+the bracket family in [Dynamic-acquisition frontiers](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_DYNAMIC_ACQUISITION_FRONTIERS.md)
+(DAF), Lemma 3.2; here the strict growth condition excludes every
+accepted substitution on this installed menu.
+
+The argument samples valid completed boundaries, not temporary source
+packets inside a private generated circuit. CAP's busy source token
+prevents a second call from treating such a packet as an additional
+source. All its intervening writes and returns remain part of the
+actual finite path and its bill. No inference about a missing whole
+$Q$ successor field is required. ∎
+
+**Proposition 19.3 (unbounded reached beta combs and failure of the
+literal split).** In Assumption 1.2's fixed original beta boot define
+
+$$
+C_1=\beta,\qquad C_{m+1}=\langle C_m,\beta\rangle
+\quad(m\ge1).
+\tag{19.2}
+$$
+
+For every $m\ge2$, an actual finite sequence of completed original
+calls and their acknowledged outer returns reaches source $C_m$ on
+the same preparation occurrence. It can reach that source with
+$h=K=m+1$. Its syntax satisfies
+
+$$
+\operatorname{Native}(\iota(C_m)),\qquad
+\operatorname{eventIndex}(\iota(C_m))=2m-1>1.
+\tag{19.3}
+$$
+
+From any reached boundary with this source there is no completed
+returning original-menu path whose final source $s$ satisfies
+
+$$
+\iota(s)=\operatorname{splitLeft}(\iota(C_m)).
+\tag{19.4}
+$$
+
+This remains so after any finite further Reserve/Raise and permitted
+source-preserving work, with no uniform bound on the resulting guard
+or reserve. In particular the obstruction holds when both starting
+source and desired target fit the current guard and backing.
+
+Proof. The paid initial preparation and stationary acquisition in
+ARC Definitions 4.1 and 9.1 leave the actual source $C_1=\beta$ at
+the authentic outer Ready, with $h=K=1$. For each $k=1,\ldots,m-1$,
+use the actual 01 entry to complete, in order,
+
+$$
+\operatorname{Reserve}(k+1),\qquad
+\operatorname{Raise}(k+1),\qquad
+\operatorname{Right}(\beta).
+\tag{19.5}
+$$
+
+When the source is $C_k$ and $h=K=k$, the first two calls preserve
+that very source and establish $h=K=k+1$. The actually supplied beta
+context is valid and nonempty. Its whole candidate has $k+1$ leaves,
+so CAP Theorem 4.5 makes Right$(\beta)$ accept and install exactly
+$C_{k+1}$. CAP Lemmas 4.7 and 6.7 and ARC Proposition 5.5 give the
+finite row/delivery/ACK, source-token and outer-return path for each
+call. Supply every finite canonical frame at its prescribed IN sites;
+the finite generator, service and capture work has the cited finite
+return. The construction uses raw frames of the installed entry and
+does not modify the parked Stop client or install an automatic policy.
+All already acquired material and rights remain under their original
+contracts. Iterating (19.5) therefore reaches $C_m$ with $h=K=m$.
+One further completed Reserve$(m+1)$ and Raise$(m+1)$ leaves $C_m$
+unchanged and gives the stated target capacity.
+
+There are $m$ beta leaves and no alpha leaves in $C_m$. The existing
+native birth-sort equations accept beta at either required leaf sort;
+at each branch of $C_{k+1}$ they test $C_k$ at the left birth sort
+and beta at the right one. Induction gives Native. The supplied native
+attainment equivalence consequently places $\iota(C_m)$ in the domain
+of the completed native inverse, and its index formula gives (19.3).
+This is the native alpha-origin successful-event index, computed on
+its own logical source. It is neither CAP's source-call count, rho
+epoch or primitive clock nor an identification of the two physical
+construction histories.
+
+To compute the desired literal target in the same ordered syntax put
+
+$$
+D_1=\langle\beta,\alpha\rangle,\qquad
+D_{k+1}=\langle D_k,\beta\rangle.
+\tag{19.6}
+$$
+
+The defining left-descent equations of splitLeft give
+$\operatorname{splitLeft}(\iota(C_k))=\iota(D_k)$ for all $k\ge1$.
+Here $\lambda(D_m)=m+1$ and $b(C_m)=m$. Every nonleaf literal subtree
+of $D_m$ contains its unique alpha: the nonleaf subtrees are precisely
+$D_1,\ldots,D_m$, since the right child at every enclosing branch is
+beta. A direct induction on (19.6) proves that list, with the only
+additional subtree values being the leaves alpha and beta. As $m\ge2$,
+$C_m$ is a nonleaf with no alpha. Hence
+
+$$
+C_m\npreceq D_m,\qquad
+0\le\lambda(D_m)-\lambda(C_m)=1<m=b(C_m).
+\tag{19.7}
+$$
+
+If a path satisfying (19.4) existed, injectivity of the literal
+constructor map would make its final source $D_m$. Theorem 19.2
+and (19.7) would require $C_m\preceq D_m$, a contradiction.
+Further maintenance or source-preserving work leaves the starting
+source and this strict inequality unchanged and is already allowed
+by that theorem. At $h=K=m+1$ the target's $m+1$ leaves fit, so
+the contradiction is not a shortage of semantic guard or backing.
+The exclusion is literal source reachability. ∎
+
+**Corollary 19.4 (boundary of importing the completed native inverse).**
+There is no supplier on all reached original sources satisfying Native
+and native entry index greater than one that implements each native
+$G$ by a finite completed returning path of the unchanged original
+menu while retaining the literal source map $\iota$ at both endpoints.
+The supplier may choose its path adaptively from all legitimately
+acquired data and may perform arbitrarily much finite maintenance,
+history, audit and local work under the original permissions.
+
+Proof. Apply the proposed supplier at any of Proposition 19.3's
+reached $C_m$, $m\ge2$. Its $G$ path would satisfy (19.4), which that
+proposition excludes. The supplied native theorem identifies $G$ with
+an actually guarded addressed leftmost split in its own source menu;
+it supplies no such call to CAP. Equality of the global $F$ source
+substitution under $\iota$ therefore cannot supply the missing $G$
+path or transport every completed $F/G$ history to this installation. ∎
+
+**Convention 19.5 (reused mathematics, recovery scope and resources).**
+The native guarded-run correspondence and the completed inverse,
+including its original acquired final syntax, authenticated entry
+index and completed-return premises, are reused from
+`NativeLocalSourceExecution.native_execution` and
+`NativeCompletedHistoryRecovery.completed_history_recovery` and their
+owning Scribes. DAF Lemma 3.2 already supplies its single-occurrence
+context invariant. `GraftAffineClosure` supplies its composition and
+residue action classification, and `SourceTransportCentralizer`
+supplies its pairing-preserving commuting-map classification and
+image inverses. Neither result installs a local replacement call in
+this source menu. Counting leaves and following ordered contexts are
+elementary ingredients. The `repo-derived` content of Theorem 19.2
+and Proposition 19.3 is their restriction on the actual CAP source
+paths and the unbounded same-boot witnesses excluding literal native
+split transfer.
+
+For the `literature-attested` simulation comparison, Lynch and
+Vaandrager's *Forward and Backward Simulations, Part I: Untimed
+Systems* ([primary text](https://groups.csail.mit.edu/tds/papers/Lynch/IC95.pdf)),
+§3.2, defines a forward simulation by initial-state matching and
+matching each source step from every related target state by a finite
+target execution with the same external trace and related endpoint.
+Lemma 3.8 extends that matching to finite execution fragments;
+Theorem 3.10 gives trace-inclusion soundness. Those results require
+the matching relation and paths. Here Proposition 19.3 excludes such
+a path for $G$ when the endpoint relation requires literal source
+equality under $\iota$. It makes no general claim against simulations
+using different relations or encoded states, and no worldwide
+originality claim.
+
+In particular a decoder on actually acquired records, a computation
+of a represented split tree in an owned bank, or a separately proved
+encoded/conjugate execution has different endpoint obligations.
+Corollary 19.4 excludes only literal current-source realization of
+$G$. It does not invalidate the existing positive history inverses,
+finite acquisitions or any checked rejection/request material.
+GENERAL16 and Corollary 18.6's actually acquired raw requests retain
+their distinctions and may legitimately affect future choices. Full
+$Q$ and its exhaustive joint-successor membership remain as specified
+in Convention 18.7; the present source invariant neither replaces
+that task nor concludes equality of its complete responses. Actual
+S-to-C assimilation and source correspondences with diffusion or
+AURIC retain their separate unresolved obligations.
+
+Every witness path pays for its original beta boot and stationary
+acquisition, each supplied context and frame, directory and guard
+publication, source generation and reads/writes, retained old and
+new backing, request/row/dependency copies, capture, checks, ACKs,
+source-token and outer returns. All intervening journal/history work
+retains its query, reconstruction, output and storage charges. At each
+finite native prefix the original bill is still
+$(n,2n,S_{\rm irreducible}+b_{\rm ctl}+8A+8n)$, together with GENERAL's
+separate paid incidence foundation and tariff. CAP Theorem 7.2 and
+the actual RCA recurrence determine those quantities; (19.2)–(19.7)
+give no smaller runtime or storage bound. The mathematical counts
+$\lambda,a,b$ and the native logical index are not new actor readouts
+or free acquisitions. Increasing $m$ requires a longer actual paid
+construction on the same installed source, with finite material at
+each finite stage and no fixed bound for the whole family.
+
+## 追加锚（本行以下为增补区）
