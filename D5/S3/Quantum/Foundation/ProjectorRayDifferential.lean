@@ -10,6 +10,7 @@ import D5.S3.QuantumBounds.FubiniStudyRecordTime
 import Mathlib.Analysis.InnerProductSpace.Calculus
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.InverseDeriv
 import Mathlib.Analysis.Calculus.Deriv.Slope
+import Mathlib.Tactic.NormNum
 
 /-!
 The angle is the existing `fsAngle`, namely arccos of the modulus of the
@@ -87,7 +88,9 @@ theorem fs_angle_speed {f : ℝ → E} {ψ v : E}
     simpa [q] using hq.tendsto.comp hgn
   have hlimit : Tendsto (fun t : ℝ => fsAngle ψ (f t) / |t|) (𝓝[≠] 0)
       (𝓝 ‖horizontal ψ v‖) := by
-    apply (by simpa using hqn.mul hn).congr'
+    have hm : Tendsto (fun t : ℝ => q ‖g t‖ * (‖g t‖ / |t|))
+        (𝓝[≠] 0) (𝓝 ‖horizontal ψ v‖) := by simpa using hqn.mul hn
+    apply hm.congr'
     filter_upwards [hunit.filter_mono nhdsWithin_le_nhds] with t ht
     rw [fs_angle_eq_arcsin_horizontal ψ (f t) hψ ht]
     change q ‖g t‖ * (‖g t‖ / |t|) = Real.arcsin ‖g t‖ / |t|
