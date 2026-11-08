@@ -1,0 +1,50 @@
+**约定 C-84.3（相位商、尺度与面积）。** 先将归一化振幅除去共同相位成为射线，
+固定 $(X,Y,Z)$，再除去占位 $T^3$ 作用
+
+$$
+\theta_s\longmapsto\theta_s+\gamma_0+x_s\gamma_X+y_s\gamma_Y+z_s\gamma_Z.
+$$
+
+这里 $x=(0,1,0,0,1)$、$y=(0,0,0,1,1)$、$z=(0,0,1,0,0)$。
+全正内部的剩余角为
+
+$$
+\chi=\theta_0-\theta_1-\theta_3+\theta_{13}\pmod{2\pi}.
+$$
+
+C-73.2 的整周期消相位公式给周期恰为 $2\pi$。
+按 C-74、C-79 及[《辛预测完成》§35.5–35.7](SYMPLECTIC_PREDICTIVE_COMPLETION.md#355-固定可见均值后的真正辛约化)选择
+
+$$
+\omega_{\rm red}=d\chi\wedge d\kappa,\qquad
+g=\frac{\mathcal I}{2}d\kappa^2+\frac2{\mathcal I}d\chi^2,\qquad
+\mathcal I=\frac1{p_0}+\frac1{p_1}+\frac1{p_3}+\frac1{p_{13}}.
+\tag{C84.5}
+$$
+
+这是标准射影直线辛面积 $2\pi$ 的尺度，即原卷度量的两倍。
+$\det g=1$，故 Riemann 面积密度等于 $|\omega_{\rm red}|=d\kappa\,d\chi$，
+完整面积为
+
+$$
+\mathcal A=\int_{\kappa_-}^{\kappa_+}\int_0^{2\pi}d\chi\,d\kappa=2\pi w.
+\tag{C84.6}
+$$
+
+两端的新增点面积为零。C-80、C-81 已证明：$X+Y=r$ 使下端双零，
+$X=Y$ 使上端双零；其余端点单零。单零端点光滑，双零端点锥角为 $\pi$。
+因此非墙条件 $X\ne Y$、$X+Y\ne r$ 下是光滑闭曲面面积；
+墙上同一内部积分仍成立，却不把锥点变成普通光滑点。
+这是一种已选择的约化几何，不由宽度另推一种维数。
+
+在全正域，带标记概率关联椭圆继续使用
+
+$$
+\eta=\frac18\log\frac{p_0p_{13}}{p_1p_3},\qquad
+\Xi=\frac{\psi_0\psi_{13}}{\psi_1\psi_3}=e^{4\eta-i\chi}.
+\tag{C84.7}
+$$
+
+$\log$ 在此为自然对数。概率椭圆的标记半轴为 $e^\eta,e^{-\eta}$；
+它的圆条件 $\eta=0$ 与下面条件振幅的谱圆条件不同。
+

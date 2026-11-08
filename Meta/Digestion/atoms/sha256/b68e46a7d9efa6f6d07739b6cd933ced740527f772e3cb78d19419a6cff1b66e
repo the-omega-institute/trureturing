@@ -1,0 +1,28 @@
+**定理 75.4（精确相位一空间与原 ready 边共同核）。** 在约定 69.1 的完整原类中，
+
+$$
+\ker(V_1-I)=\mathcal H_1
+=K_{\mathbb C}\oplus\operatorname{ran}Q_1,
+\qquad
+\operatorname{ran}Q_1=\ker C_{\mathbb C}=K_{\mathbb C},
+\qquad
+T_{rs}(\ker L_s)=\ker L_r.
+\tag{75.4}
+$$
+
+证明。各 $\mathcal H_\eta$ 为完整代数直和，且 $V_1$ 保持它们。在 (75.2) 的两个可能特征值 $\eta,\eta^2$ 中，只有 $\eta=1$ 或 $-1$ 能产生相位一；引理 75.3 已使 $\mathcal H_{-1}=0$。在 $\mathcal H_1$ 上 $E_0=I$，相似使 $V_1=I$。分解任意 $V_1$ 相位一向量到这些不变空间，即得第一项的**整个**等号。由 $[F,V_1]=0$，$F$ 保持这一完整相位一空间。
+
+取 $w\in\operatorname{ran}Q_1$。$F(0,w)=(cAw,bCw)$ 在 $\mathcal H_1$ 内，故 $Aw\in K_{\mathbb C}$；它也属于 $\operatorname{im}A$。$A$ 半单使 $\ker A\cap\operatorname{im}A=0$，所以 $Aw=0$，即 $\operatorname{ran}Q_1\subseteq K_{\mathbb C}$。
+
+再取 $v\in K_{\mathbb C}$，$F(v,0)=(0,cCv)$ 在 $\mathcal H_1$ 内，故 $Cv\in\operatorname{ran}Q_1\subseteq K_{\mathbb C}$。因此 $K_{\mathbb C}$ 是 $C$ 不变空间。半单算子的最小多项式无重根，其不变限制的最小多项式整除此多项式，所以 $C|_{K_{\mathbb C}}$ 仍半单，存在由 $C$ 特征向量组成的基。每个基向量都是 $A$ 指标零和 $C$ 某个整数指标 $n$ 的真正共同向量；无理迹判据逐个给 $n=0$，于是 $C|_K=0$。
+
+现有包含链
+
+$$
+K_{\mathbb C}\subseteq\ker C_{\mathbb C}
+\subseteq\operatorname{ran}Q_1\subseteq K_{\mathbb C},
+\tag{75.5}
+$$
+
+中间包含只用 $R=e^{\alpha C}$。各空间因而相等。这里只证明两个相位一投影的**像**相同，不由此宣称代数投影 $Q_1=P_1$；其补空间尚未识别。回到实空间并解开给定实际 $T_{rs}$，得到最后一式。∎
+

@@ -1,0 +1,117 @@
+**Supported complex lower bound.** Choose $\delta>0$ small enough that $|r|\le3\delta/s$ lies between both moving faces and $3\nu\delta<1/4$, and set $R=\delta/s$. Further smallness of this fixed $\delta$ will be specified below. Let $\rho$ be the even cutoff of R Lemma 8.1 and let $d=d_{s,\delta}$ be exactly its (8.1): $d=\rho(r/R)((1+\beta r)^{-2}-1)$ on $|r|<3R$, and $d=0$ elsewhere. The rational expression is evaluated only on that safe strip. On $\mathcal Q_E$ define the estimating form
+
+$$
+\begin{aligned}
+\mathfrak q_{s,\delta}[z]={}&h[z]+a\int d|Yz|^2
+ -\chi\int(\beta V_1+\beta^2V_2+\lambda s^2V_{\rm t}
+                         +s^3\mathcal W_3)|z|^2
+ -a\lambda s^2\|z\|_2^2.
+\end{aligned}
+\tag{22.14}
+$$
+
+For every $u\in\mathcal Q_E$ supported in $|r|\le2R$, native strip admissibility and (22.10) imply
+
+$$
+|\widetilde q_s^c[u]-\mathfrak q_{s,\delta}[u]|
+ \le Cs^4\|u\|_2^2.
+\tag{22.15}
+$$
+
+Put $t_s=p+\beta\Psi$, $c=b(p,u)/b[p]=\mu^{-1}\int Vpu$, and $w=u-ct_s$. By R Theorem 16.2 these are canonical form vectors. Oddness gives $b(p,\Psi)=0$, so $b(p,w)=0$ and $|c|\le C\|u\|_2$, using $Vp\in L^2$. The estimating form is used on $t_s,w$ on the canonical space; exact native agreement is claimed only on their supported sum $u$.
+
+Define $I_\Psi=\int r(Yp)(Y\Psi)$ and $J_\Psi=\int V_1p\Psi$. The response equation gives $D_{\rm resp}=2aI_\Psi+\chi J_\Psi$ and $h[t_s]=\beta^2D_{\rm resp}$. Taylor expansion of the safe rational coefficient through cubic order and parity give
+
+$$
+a\int d|Yt_s|^2
+ =3a\beta^2A-4a\beta^2I_\Psi+O_\delta(s^4).
+\tag{22.16}
+$$
+
+Here are the required tail and remainder bounds for this expansion. The $p$ diagonal's odd linear and cubic terms vanish with the even cutoff; its quadratic cutoff loss is $O(\beta^2R^{-3})$ by (22.6), and its fourth-order remainder is bounded by $C\beta^4\|r^2Yp\|_2^2$. For the leading kinetic cross term the omitted tail is bounded by
+
+$$
+\int_{|r|>2R}|rYp\,Y\Psi|
+ \le\|\mathbf1_{|r|>2R}rYp\|_2
+       \|\mathbf1_{|r|>2R}Y\Psi\|_2
+ \le CR^{-3}.
+\tag{22.17}
+$$
+
+Its coefficient is $\beta^2$, making the loss $O_\delta(s^5)$. The quadratic-coefficient cross term vanishes by parity, and the remaining cross term is bounded by $C\beta^4\|r^2Yp\|_2\|rY\Psi\|_2$. In the response diagonal the linear coefficient vanishes by parity; the remainder is bounded by $C\beta^4\|rY\Psi\|_2^2$. These are finite by (22.6), establishing (22.16) without an unproved weighted response norm.
+
+The complete potential expansion on $t_s$ has its quadratic part $-\chi\beta^2(C_2+2J_\Psi)-\chi\lambda s^2T$. Every cubic base contribution vanishes: $V_1\Psi^2$, $V_2p\Psi$, $V_{\rm t}p\Psi$ and $\mathcal W_3p^2$ are odd. Boundedness of the fields and $p,\Psi\in L^2$ bound the remaining terms by $Cs^4$. The exact threshold is $-a\lambda s^2\|t_s\|_2^2=-a\lambda s^2+O(s^4)$, since $\langle p,\Psi\rangle=0$. Thus
+
+$$
+\mathfrak q_{s,\delta}[t_s]
+ =\beta^2(K_{\rm base}-D_{\rm resp})
+       -\lambda s^2D_{\rm clock}+O_\delta(s^4)
+ =O_\delta(s^4),
+\tag{22.18}
+$$
+
+where the last equality uses exactly (22.1).
+
+We next bound the cross and complement terms for arbitrary complex $w$ with $b(p,w)=0$. The complexified response equation gives $h(t_s,w)=\beta\ell(w)$; its first-order kinetic and $V_1$ contributions cancel those in (22.14). The remaining kinetic coefficients satisfy
+
+$$
+\|(d+2\beta r)Yp\|_2\le C_\delta s^2,
+\qquad \|\beta dY\Psi\|_2\le Cs^2.
+\tag{22.19}
+$$
+
+For the first bound, on $|r|<3R$ write $d+2\beta r=\rho(r/R)(d_{\rm rat}(r)+2\beta r)+2\beta r(1-\rho(r/R))$, where $d_{\rm rat}(r)=(1+\beta r)^{-2}-1$ is evaluated only there. Outside that strip $d+2\beta r=2\beta r$. The first term is bounded by $C\beta^2r^2$ on the strip, and the remaining terms have norm at most $C\beta R^{-3/2}$ after multiplication by $Yp$, by (22.6). For the second bound use $|d|\le C|\beta r|$ and $rY\Psi\in L^2$.
+
+R Theorem 4.1 bounds each $L\in\{V_1,V_2,V_{\rm t}\}$ by $C\sqrt V$, with $\int\sqrt V|z|^2\le\Gamma b[z]$. Cauchy–Schwarz with this positive weight bounds $|\int L\Psi w|$ by $C\sqrt{b[\Psi]}\sqrt{b[w]}$; (3.6) gives the analogous bound with $p$. Equation (22.7) bounds the threshold cross term containing $p$. Keep the threshold term containing $\beta\Psi$ and the bounded cubic-field cross term as $L^2$ terms. Together with (22.19) this gives
+
+$$
+|\mathfrak q_{s,\delta}(t_s,w)|
+ \le C_\delta s^2\sqrt{b[w]}+Cs^3\|w\|_2,
+\tag{22.20}
+$$
+
+$$
+\mathfrak q_{s,\delta}[w]
+ \ge(a\theta-C\delta-Cs)b[w]-Cs^2\|w\|_2^2.
+\tag{22.21}
+$$
+
+The second inequality uses the energy-complement gap (3.4), $|d|\le C\delta$, the same multiplier bounds, and boundedness of $\mathcal W_3$. In particular its negative $L^2$ term is retained.
+
+To absorb that term use the support relation, not a positive global $L^2$ gap. Let $\kappa_R(r)$ equal one on $[-2R,2R]$, vanish outside $[-4R,4R]$, and have $|\kappa_R'|\le C/R$. Hilbert-valued one-dimensional Dirichlet Poincaré for $\kappa_Rw$ gives
+
+$$
+\begin{aligned}
+\|\kappa_Rw\|_2
+ &\le CR\|X(\kappa_Rw)\|_2\\
+ &\le CR\sqrt{b[w]}+C\|\mathbf1_{2R<|r|<4R}w\|_2.
+\end{aligned}
+$$
+
+The extra cutoff derivative has been included in the last term. Outside the support of $u$, $w=-ct_s$. The same relation bounds $(1-\kappa_R)w$, so (22.5)–(22.6) yield
+
+$$
+\begin{aligned}
+\|w\|_2&\le CR\sqrt{b[w]}
+      +C|c|\|\mathbf1_{|r|>2R}t_s\|_2\\
+ &\le C\frac\delta s\sqrt{b[w]}
+      +C(R^{-3/2}+sR^{-1/2})|c|\\
+ &\le C\frac\delta s\sqrt{b[w]}+C_\delta s^{3/2}|c|,\\
+s^2\|w\|_2^2&\le C\delta^2 b[w]+C_\delta s^5|c|^2.
+\end{aligned}
+\tag{22.22}
+$$
+
+This auxiliary height cutoff is canonical; its support need not lie inside the native domain. Its Poincaré estimate requires only $Xw\in L^2$, as follows by the $\mathcal Q_E$ core closure and Fubini, with values in $L^2(\mathbb R^3;\mathbb C)$.
+
+Use complex polarization on $u=ct_s+w$. First fix $\delta>0$ small enough to absorb $C\delta+C\delta^2$ in (22.21) into $a\theta$, then take $s$ sufficiently small. In the cross term (22.20), (22.22) bounds $s^3\|w\|_2$ by $C\delta s^2\sqrt{b[w]}+C_\delta s^{9/2}|c|$. Young's inequality absorbs $C_\delta s^2|c|\sqrt{b[w]}$ and leaves $C_\delta s^4|c|^2$; the $s^5$ and $s^{9/2}$ terms are smaller. Combining (22.18)–(22.22) and then (22.15) proves
+
+$$
+\widetilde q_s^c[u]\ge-C_\delta s^4\|u\|_2^2
+\quad\bigl(u\in\mathcal Q_E,
+             \operatorname{supp}u\subset\{|r|\le2\delta/s\}\bigr).
+\tag{22.23}
+$$
+
+All pairings extend from the core by the displayed bounds. Only $p$ and $\Psi$ have prescribed parities; neither $u$ nor $w$ is restricted to a real or parity subspace.
+

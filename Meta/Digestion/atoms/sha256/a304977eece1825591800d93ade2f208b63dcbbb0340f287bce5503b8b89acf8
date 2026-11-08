@@ -1,0 +1,20 @@
+### 5.2　精确参照下的稳定性
+
+设输出参照 Gram 精确为 $G=[\langle a_i,a_j\rangle]>0$，$Va_i=b_i$。对一个输入向量 $u$ 及实际输出 $y$，令
+
+$$
+e_i=\langle b_i,y\rangle-\langle a_i,u\rangle,
+\qquad \|y\|^2-\|u\|^2\le\eta,\quad\eta\ge0.
+$$
+
+写 $u=\sum_i c_i a_i$，展开 $\|y-Vu\|^2$ 并对 $`c^*e`$ 用 Cauchy–Schwarz，得到
+
+$$
+\|y-Vu\|^2
+\le\eta+2\|u\|\sqrt{e^*G^{-1}e}
+\le\eta+\frac{2\|u\|\|e\|}{\sqrt{\lambda_{\min}(G)}}.
+\tag{5}
+$$
+
+参照几乎线性相关时，误差会被放大。这个整理推论与 V80 §14 的近似稳定性及 V63 的参照条件数控制一致；没有同时估计参照 Gram 误差时，不能把式(5)直接当作完整实验误差证书。[\[4\]](#ref-v80), [\[6\]](#ref-v63)
+

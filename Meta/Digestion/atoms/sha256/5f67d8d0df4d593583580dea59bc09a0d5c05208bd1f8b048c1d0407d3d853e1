@@ -1,0 +1,9 @@
+**Definition 167.1 (the bounded calibration space).** Retain all hypotheses and notation of Section 166. Thus $H=L^2(G,m;\mathbb R)$, $W\subset H$ is the finite span of the bounded representers from (166.1), and put
+
+$$
+V_\infty=L^\infty(G,m;\mathbb R)\cap W^\perp.
+\tag{167.1}
+$$
+
+All functions and orthogonality relations are understood as $m$-classes. The finite-dimensionality of $W$ implies that it has a bounded $m$-class basis after removing linear dependencies from the at most $64$ generators.
+

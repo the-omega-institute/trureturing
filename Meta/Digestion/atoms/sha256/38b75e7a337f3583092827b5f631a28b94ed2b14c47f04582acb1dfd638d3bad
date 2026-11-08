@@ -1,0 +1,45 @@
+### 定理 2：贪心链支配定理
+
+对任意 $B\mid m$，取相邻链节点
+
+$$
+N_k\le m\le N_{k+1}.
+$$
+
+记
+
+$$
+T_k=\log N_k,
+\qquad
+\theta=
+\frac{\log m-T_k}{T_{k+1}-T_k}\in[0,1].
+$$
+
+则
+
+<a id="eq-7"></a>
+
+$$
+\boxed{
+R(m)
+\le
+R(N_k)^{1-\theta}R(N_{k+1})^\theta
+\le
+\max\{R(N_k),R(N_{k+1})\}.
+}
+\tag{7}
+$$
+
+因此
+
+<a id="eq-8"></a>
+
+$$
+\boxed{
+\forall\,B\mid m,\ R(m)<1
+\quad\Longleftrightarrow\quad
+\forall k,\ R(N_k)<1.
+}
+\tag{8}
+$$
+

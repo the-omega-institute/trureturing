@@ -1,0 +1,19 @@
+**Corollary 25.2 (negative fourth-order subsequences and the weak threshold pairing).** On any actual sequence with
+
+$$
+\epsilon_c(s)/s^4\longrightarrow L<0,
+\tag{25.8}
+$$
+
+one has
+
+$$
+r_s\asymp s^{-4},\quad b[w_s]=O_\delta(s^4),\quad
+\|w_s\|_2=O_\delta(s),\quad
+w_s/s\rightharpoonup0\text{ in }L^2,\quad
+\langle v,w_s\rangle=o_\delta(s).
+\tag{25.9}
+$$
+
+Proof. The scale relation is (1.7). Insert it in (25.4), then (25.6); $c_s$ is bounded. The vectors $w_s/s$ are bounded in $L^2$, while $\|X(w_s/s)\|_2=O_\delta(s)\to0$. Every weak $L^2$ cluster point therefore has distributional $\partial_r$ equal to zero. An $L^2(\mathbb R_r\times\mathbb R^3)$ function independent of $r$ is zero, by Fubini. Weak compactness and uniqueness of this cluster point prove weak convergence along the entire sequence. Pair it with the fixed $v\in L^2$ to obtain the last assertion. No estimate of $\langle v,z\rangle$ by $\sqrt{b[z]}$ is asserted or used. $\square$
+

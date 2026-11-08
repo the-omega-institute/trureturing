@@ -1,0 +1,115 @@
+**定理 23.1（任意维原域上的准确桥梁）。** 在 $\mathsf H_{\rm orig}$ 的同一原资料上，下列两项等价：
+
+1. 全部原 $a,b,c\in E$ 满足原 R：
+
+   $$
+   S(S(a,b),c)-D(D(a,b),c)
+   =S(a,S(b,c))-D(a,D(b,c)).
+   \tag{23.1}
+   $$
+
+2. 完整原 $\mathsf P_3$ 与 $\mathsf{PB}$ 同时成立。
+
+第二项不另假设 $D$ 的双线性、单位行、中央中性、有界性、导子律或共同表示。它先恢复同一个原 $D$，再恢复同一个原复化 $E\oplus\mathrm iE$ 上的结合乘法 $a\star b=S(a,b)-\mathrm iD(a,b)$。因此 A5.9、A6.3、A7、A8、A14 的完整同一对象结论随后全部按原条件适用，包括全部原质量、准确原锥和原范数。$E$ 可以无限维、不完备；不要求纯态、忠实单锚、有限块或自旋背景。
+
+证明。先设第二项。只用 A1–3，按 A2.1–2.2 已列的准确参数对应，直接采用 W 定理 2.2、6.1 中不使用 R 的同一 $S$ 完成接口。特别是原 $S$ 已为对称实双线性，$S(u,a)=a$，原 $E$ 忠实嵌入其 JB 完成；此处不调用需要 R 的 A3–5，也不预先延拓未知 $D$。
+
+现在直接采用[原词校准卷引理 400.1、推论 400.2](AURIC_C128_ORIGINAL_WORD_CALIBRATION_AND_FIXED_RELATION.md)。对每个原 $\alpha$，其 $b(a,b)$ 精确取 $\alpha(S(a,b))$，其 $\delta(a,b)$ 精确取 $\alpha(D(a,b))$，其 $g$ 就是定义 22.2 的 $g_\alpha$。$b$ 的原对称实双线性已由上述接口支付，(399.2) 的全部三标签复正性由 $\mathsf P_3$ 支付。400.1 的线性化不使用 R、完备性、有限维、乘法单位或正质量，故它与原评价分离性直接给同一个旧 $D$ 的反对称实双线性。400.2 随即给每个原评价的全部有限原复 Gram 正性。这里只复用这两个既有结果，不将其三标签刚性重列为新证明。
+
+到这一步才在原复向量空间 $A_E=E\oplus\mathrm iE$ 上将 $\star=S-\mathrm iD$ 复双线性延拓，定义共轭 $z^*$ 及原评价的复线性延拓 $\alpha_{\mathbb C}$。尚未声称 $\star$ 结合或有单位。由 $S$ 对称、$D$ 反对称，直接有
+
+$$
+(z\star w)^*=w^*\star z^*,\qquad
+h_\alpha(z,w):=\alpha_{\mathbb C}(z^*\star w).
+\tag{23.2}
+$$
+
+$h_\alpha$ 第一槽共轭线性，且在实标签上就是 $g_\alpha$。400.2 的正性使它成为半正定 Hermitian 型，允许非平凡零空间。对 $z=b+\mathrm ic$，原符号给
+
+$$
+z^*\star z=S(b,b)+S(c,c)+2D(b,c),\qquad
+h_\alpha(z,z)=Q_\alpha(b,c).
+\tag{23.3}
+$$
+
+对原实 $a$ 记数学复线性左乘 $\lambda_a z=a\star z$。由定义而不是结合律，
+
+$$
+\lambda_a(b+\mathrm ic)
+=S(a,b)+D(a,c)+\mathrm i\bigl(S(a,c)-D(a,b)\bigr),
+\qquad r_t+\mathrm i s_t=z+\mathrm i t\lambda_a z.
+\tag{23.4}
+$$
+
+因而第一槽共轭线性的准确符号是
+
+$$
+\begin{aligned}
+&Q_\alpha(r_1,s_1)-Q_\alpha(r_{-1},s_{-1})\\
+&\qquad=h_\alpha(z+\mathrm i\lambda_a z,z+\mathrm i\lambda_a z)
+-h_\alpha(z-\mathrm i\lambda_a z,z-\mathrm i\lambda_a z)\\
+&\qquad=-4\operatorname{Im}h_\alpha(z,\lambda_a z).
+\end{aligned}
+\tag{23.5}
+$$
+
+$\mathsf{PB}$ 于是等价于 $h_\alpha(z,\lambda_a z)$ 对全部 $z\in A_E$ 为实数。为把这个对角式用于不同输入，令
+
+$$
+k(z,w)=h_\alpha(z,\lambda_a w)-h_\alpha(\lambda_a z,w).
+$$
+
+它是半双线性型，且 $k(z,z)=0$。分别展开 $k(z+w,z+w)=0$ 与 $k(z+\mathrm iw,z+\mathrm iw)=0$，得到
+$k(z,w)+k(w,z)=0$ 和 $\mathrm ik(z,w)-\mathrm ik(w,z)=0$，故 $k(z,w)=0$。这是普通复极化的代数步骤，不需要正定性、商、范数、连续性或有界左作用。所得完整配对关系为
+
+$$
+h_\alpha(\lambda_a z,w)=h_\alpha(z,\lambda_a w)
+\quad(a\in E,\ z,w\in A_E,\ \alpha\in\mathcal P).
+\tag{23.6}
+$$
+
+对 (23.6) 使用 (23.2) 的反乘法共轭，仍不使用结合律，得到
+
+$$
+\alpha_{\mathbb C}\!\left((z^*\star a)\star w-z^*\star(a\star w)\right)=0.
+\tag{23.7}
+$$
+
+原评价分离 $E$，其复延拓便分离 $A_E$ 的实、虚两部分。取原实 $z=x,w=y$，(23.7) 因此在原复化内给
+
+$$
+(x\star a)\star y=x\star(a\star y)
+\quad(x,a,y\in E).
+\tag{23.8}
+$$
+
+三个实输入任意，复三线性遂给整个 $A_E$ 上的结合律。具体地，实输入上的结合子准确为
+
+$$
+\begin{aligned}
+&(a\star b)\star c-a\star(b\star c)\\
+&=S(S(a,b),c)-D(D(a,b),c)-S(a,S(b,c))+D(a,D(b,c))\\
+&\quad-\mathrm i\bigl(D(S(a,b),c)+S(D(a,b),c)
+-D(a,S(b,c))-S(a,D(b,c))\bigr).
+\end{aligned}
+\tag{23.9}
+$$
+
+其实部就是原 R 的两边之差；虚部同时给 A7.2 的原虚部换括号式。因此 R 真正在同一个原 $E$ 中恢复，未只在某个评价商、完成或中心外部成立。
+
+原 R 已支付以后，原背景正是 A1.1–1.2 的全部四组关系。此时且仅此时直接消费 A5.9、A6.3 及其引用的 W20.1：原 $D$ 的有界延拓、中央与单位平移中性、同一原稠密含单位 pre-C* 结构、准确锥和范数全部保持。这里既不重建标准 C* 后端，也不把 A5.9 用作删 R 前的线性化依据。
+
+反向，若第一项成立，则完整 A 已满足。直接由 A5.9、A6.3、A7.1 得原 $S,D$ 的实双线性、同一原结合 $\star$ 及全部有限原复 Gram 正性，特别得到 $\mathsf P_3$。在这个已恢复的乘法上，对原实 $a$ 有 $a^*=a$，所以
+
+$$
+\begin{aligned}
+h_\alpha(\lambda_a z,w)
+&=\alpha_{\mathbb C}((z^*\star a)\star w)\\
+&=\alpha_{\mathbb C}(z^*\star(a\star w))
+=h_\alpha(z,\lambda_a w).
+\end{aligned}
+\tag{23.10}
+$$
+
+取 $w=z$ 给 $h_\alpha(z,\lambda_a z)$ 为实，(23.5) 即给全部原 $\mathsf{PB}$。这一路的结合性是完整 A 的既有结论，未用于正向恢复。两向均保持原映射、原标签与原评价。∎
+
