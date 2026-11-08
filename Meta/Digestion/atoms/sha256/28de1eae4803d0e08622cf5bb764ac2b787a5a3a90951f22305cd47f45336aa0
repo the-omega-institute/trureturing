@@ -1,0 +1,16 @@
+**左单位。** 写 $e_{\mathbf r}=(I+\mathbf r\cdot\boldsymbol\sigma)/2$，$\|\mathbf r\|=1$。若 $v=a_0I+\mathbf w\cdot\boldsymbol\sigma$，直接乘法给
+
+$$
+v\in E_{1/2}(e_{\mathbf r})
+\Longleftrightarrow a_0=0,\quad\mathbf r\cdot\mathbf w=0.
+$$
+
+互补原子 $e_{-\mathbf r}=I-e_{\mathbf r}$ 有同一切面。对固定原子 $p$，双线性使
+
+$$
+D(I,p)=D(e_{\mathbf r},p)+D(e_{-\mathbf r},p)
+\in E_{1/2}(e_{\mathbf r})
+$$
+
+对每个 $\mathbf r$ 成立。所有这些平面的交为零，所以 $D(I,p)=0$。原子张成 $E$，得 $D(I,b)=0$。
+

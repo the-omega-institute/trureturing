@@ -6,8 +6,12 @@
    utility: none
    digest: Product-SIC zero fidelity and the sharp process-fidelity bound on qubit channels. -/
 
+import D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence
+import D5.S3.Quantum.FiniteDimensional
+import D5.S3.Quantum.PureState.PureStateHandshake
+import D5.S3.Quantum.Foundation.FiniteKrausChannel
+import D5.S3.Quantum.QuantumChannels.MayerKnillInfidelityScalingCore
 import D5.S3.Resource.CompositeConeProperness
-import D5.S3.Quantum.Measurement.ExactConditionalPreparationCost
 import D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation
 import D5.S3.QuantumBounds.PeritoTsirelson
 
@@ -257,26 +261,6 @@ theorem product_pauli_parseval {n : ℕ} (s : Fin n → Fin 4 → Fin 2 → ℂ)
     ring
   exact heq
 
-theorem kraus_survival {a : Type*} [Fintype a] {r : ℕ}
-    (ψ : a → ℂ) (K : Fin r → Matrix a a ℂ) :
-    (star ψ ⬝ᵥ MatrixMap.of_kraus K K (rankOneDensity ψ) *ᵥ ψ).re =
-      ∑ j, ‖star ψ ⬝ᵥ K j *ᵥ ψ‖ ^ 2 := by
-  classical
-  have hp (A : Matrix a a ℂ) : A * rankOneDensity ψ * Aᴴ = rankOneDensity (A *ᵥ ψ) := by
-    simpa only [one_smul] using
-      D5.S3.Quantum.Measurement.ExactConditionalPreparationCost.hsandwich A ψ 1
-  have hs (v : a → ℂ) : star ψ ⬝ᵥ rankOneDensity v *ᵥ ψ =
-      (Complex.normSq (star ψ ⬝ᵥ v) : ℂ) := by
-    simp only [rankOneDensity, vecMulVec_mulVec, dotProduct_smul, op_smul_eq_smul,
-      smul_eq_mul]
-    change (star v ⬝ᵥ ψ) * (star ψ ⬝ᵥ v) = _
-    rw [star_dotProduct v ψ]
-    rw [mul_comm]
-    exact Complex.mul_conj _
-  unfold MatrixMap.of_kraus
-  simp only [LinearMap.sum_apply, LinearMap.coe_mk, AddHom.coe_mk, hp]
-  rw [Matrix.sum_mulVec, dotProduct_sum]
-  simp only [hs, Complex.re_sum, Complex.ofReal_re, Complex.normSq_eq_norm_sq]
 
 theorem bell_amplitude {n : ℕ} (A : Matrix (Fin n → Fin 2) (Fin n → Fin 2) ℂ) :
     star (maxEntangledVector (Fin n → Fin 2)) ⬝ᵥ
@@ -399,7 +383,7 @@ theorem process_trace {n r : ℕ} (K : Fin r → Matrix (Fin n → Fin 2) (Fin n
     MatrixMap.of_kraus (fun j => 1 ⊗ₖ K j) (fun j => 1 ⊗ₖ K j)
       (rankOneDensity (maxEntangledVector (Fin n → Fin 2))) *ᵥ
         maxEntangledVector (Fin n → Fin 2)).re = _
-  rw [kraus_survival]
+  rw [MayerKnillInfidelityScalingCore.kraus_survival]
   have h (j : Fin r) :
       ‖star (maxEntangledVector (Fin n → Fin 2)) ⬝ᵥ (1 ⊗ₖ K j) *ᵥ
         maxEntangledVector (Fin n → Fin 2)‖ ^ 2 =
@@ -419,7 +403,7 @@ theorem zero_trace {n r : ℕ} (s : Fin n → Fin 4 → Fin 2 → ℂ) (hs : ∀
     rw [rankOneDensity, vecMulVec_mul, trace_vecMulVec, dotProduct_mulVec,
       dotProduct_comm]
   unfold zeroFidelity
-  simp_rw [kraus_survival, ht]
+  simp_rw [MayerKnillInfidelityScalingCore.kraus_survival, ht]
   rw [Finset.sum_comm]
   simp_rw [product_pauli_parseval s hs]
   rw [Finset.sum_comm, Finset.mul_sum]
@@ -598,7 +582,6 @@ theorem result : claim := by
   · intro f hf hf1
     exact tight_channel hn s hs f hf hf1
 
-#print axioms result
 
 end
 end D5.S3.Quantum.QuantumChannels.MayerZeroFidelityTightness

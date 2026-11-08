@@ -38,7 +38,7 @@ def deletionBarrier (L x : ℝ) : ℝ := L - L ^ (x / (x + 1)) - Real.log x
 /-- The exact fresh-prime insertion barrier. -/
 def insertionBarrier (L x : ℝ) : ℝ := Real.log x - L ^ (1 + 1 / x) + L
 
-private theorem deletion_strictAnti {L : ℝ} (hL : 1 < L) :
+theorem deletion_strictAnti {L : ℝ} (hL : 1 < L) :
     StrictAntiOn (deletionBarrier L) (Set.Ioi 1) := by
   intro x hx y hy hxy
   have hx0 : 0 < x := by change 1 < x at hx; linarith
@@ -51,7 +51,7 @@ private theorem deletion_strictAnti {L : ℝ} (hL : 1 < L) :
   dsimp [deletionBarrier]
   linarith
 
-private theorem insertion_strictMono {L : ℝ} (hL : 1 < L) :
+theorem insertion_strictMono {L : ℝ} (hL : 1 < L) :
     StrictMonoOn (insertionBarrier L) (Set.Ioi 1) := by
   intro x hx y hy hxy
   have hx0 : 0 < x := by change 1 < x at hx; linarith
@@ -78,7 +78,7 @@ private theorem loglog_comparison {L y c : ℝ} (hL : 1 < L) (hy : 1 < y)
   rw [he, div_le_iff₀ hc]
   constructor <;> intro h <;> nlinarith only [h]
 
-private theorem deletion_test {L x : ℝ} (hL : 1 < L) (hx : 1 < x)
+theorem deletion_test {L x : ℝ} (hL : 1 < L) (hx : 1 < x)
     (hy : 1 < L - Real.log x) :
     0 ≤ deletionBarrier L x ↔
       Real.log (Real.log L) - Real.log (Real.log (L - Real.log x)) ≤
@@ -89,7 +89,7 @@ private theorem deletion_test {L x : ℝ} (hL : 1 < L) (hx : 1 < x)
   dsimp [deletionBarrier]
   constructor <;> intro h <;> linarith
 
-private theorem insertion_test {L x : ℝ} (hL : 1 < L) (hx : 1 < x) :
+theorem insertion_test {L x : ℝ} (hL : 1 < L) (hx : 1 < x) :
     0 ≤ insertionBarrier L x ↔
       Real.log (1 + 1 / x) ≤
         Real.log (Real.log (L + Real.log x)) - Real.log (Real.log L) := by
@@ -207,7 +207,7 @@ private theorem insertion_far_pos {L : ℝ} (hL : 1 < L) :
   rw [Real.log_exp]
   linarith
 
-private theorem barrier_roots {L z : ℝ} (hL : 16 < L) (hz : 11 < z)
+theorem barrier_roots {L z : ℝ} (hL : 16 < L) (hz : 11 < z)
     (hzL : z < L) (hhalf : L - z < 1 / 2)
     (hroot : firstLayerPrice z = 1 / (L * Real.log L)) :
     ∃ α β : ℝ, L / 2 < α ∧ α < z ∧ L < β ∧
@@ -276,7 +276,7 @@ private theorem support_cofactor_domain {N p : ℕ} (hN : 55440 < N)
     have := Nat.le_of_dvd hpos hb
     omega
 
-private theorem W_first_delta {n p : ℕ} (hn : 1 ≤ n) (hp : p.Prime)
+theorem W_first_delta {n p : ℕ} (hn : 1 ≤ n) (hp : p.Prime)
     (hf : n.factorization p = 0) :
     W (n * p) - W n = Real.log (1 + 1 / (p : ℝ)) := by
   have hd := golden_resource_objective_single_layer_delta 0 hn hp

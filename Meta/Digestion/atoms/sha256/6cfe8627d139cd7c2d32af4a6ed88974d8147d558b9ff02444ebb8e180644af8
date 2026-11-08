@@ -1,0 +1,20 @@
+**Assumption 2.4 (Source moment orders).** With $s=-\log q\downarrow0$, retain the supplied estimates
+
+$$
+Z_i(e^{-s})=9!s^{-10}(1+O_H(s)),
+\qquad \mu_i(e^{-s})=\frac{10}s+O_H(1),
+\qquad \beta_i(e^{-s})=\frac{11}{2s}+O_H(1).
+\tag{2.8}
+$$
+
+These are the continuation's equation (23.7) and the two companions' corresponding source assumptions. Their nested polynomial-geometric moment derivations are credited. The lower argument needs only the consequences
+
+$$
+Z_0(e^{-s})\ge\frac{9!}{2}s^{-10},
+\qquad \mu_0(e^{-s})\ge\frac5s
+\quad(0<s<s_H)
+\tag{2.9}
+$$
+
+for one sufficiently small $s_H>0$ depending only on the fixed source. Scalar power-sum inequalities used later are proved from their absolutely convergent series, rather than introduced as further moment premises.
+

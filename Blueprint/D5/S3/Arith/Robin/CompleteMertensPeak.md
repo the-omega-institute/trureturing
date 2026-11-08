@@ -4,6 +4,18 @@
 
 Complete cumulative and literal arithmetic-kernel peaks locate strict finite Robin violations.
 
+**Theorem 1.1 (The unconditional full weighted ledger).**
+
+Lean statement: `D5/S3/Arith/Robin/CompleteMertensPeak.complete_mertens_ledger`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/CompleteMertensPeak.complete_mertens_ledger` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every real t>=2, the actual complete Chebyshev error kernel and its existing WeightedTailTransport logarithmic weight are integrable on (t,infinity), and E2Lambda(t)=(psi(t)-t)/(t*log(t))-WeightedTailTransport.weightedTail(psiErrorKernel,t). WeightedPrimeLimit supplies absolute integrability and CompleteChebyshevTailIdentity supplies the complete normalized identity internally. There is no public hLay, normalization or integrability hypothesis, and no new integral owner. The existing calculus and both existing internal consumers are retained.
+
 Conditional fixed-B0 application of the positive-U composite. Assume an actual nontrivial rho0 with beta=Re(rho0)>1/2 and gamma=Im(rho0)>0. Use delta, D, m0, m1 and A from the complete positive-U derivation in the WholeFormula, ActualZeroLaplace, ActualReciprocalSquareBounds, ZeroPowerSum and CountableGaussianQuadraticFourthMoment expositions. Separately assume hJY: for EVERY REAL u>=2, |Chebyshev.psi(u)-u|<=(939/100)*u*(log(u))^(303/200)*exp(-(4137/5000)*sqrt(log(u))), where the real exponent is Real.rpow. This is the exact additional quantitative Johnston-Yang premise used by complete_mertens_peak. No instance of it and no implication to it from the zero premises is asserted.
 
 The height and strip bounds give D>20 and 0<delta<1/2, hence m0>160000. Since exp(x)>=1+x, exp(4*m0)>10000 and therefore A>=10000. Write L=log(A)>=0. The bound L^2/(1+L)<=L converts U(A)>sqrt(A)*(4*L+9) into the exact weaker peak premise U(A)>sqrt(A)*(4*L^2/(1+L)+9) of complete_mertens_peak. WeightedPrimeLimit.chebyshev_error_kernel_integrable supplies absolute integrability of the actual complete Chebyshev-error kernel on (1,infinity) unconditionally. Applying CompleteChebyshevTailIdentity.complete_chebyshev_tail_identity at EVERY real endpoint t>=2 supplies hLay with Q the literal complete tail integral. Thus hLay and integrability are discharged by existing results; hJY remains explicit.
@@ -12,7 +24,7 @@ Applying complete_mertens_peak with hJY and this derived hLay produces a real t 
 
 The preceding paragraph describes the older hJY-dependent route. The new OriginalLocalA module separately closes the unchanged original implication without hJY via a proved signed endpoint. In particular the all-real JY bound is an additional analytic supplier, not a registration, a numerical sample, or a consequence of the full explicit formula. The separate existing literal-kernel theorem below has its own premise and qualitative finite-time conclusion; it does not supply this specified B0 bound. Neither RH nor existence of an off-critical zero nor an unconditional Robin counterexample is claimed.
 
-**Theorem 1.1 (A finite signed endpoint forces a strict Mertens peak).**
+**Theorem 1.2 (A finite signed endpoint forces a strict Mertens peak).**
 
 Lean statement: `D5/S3/Arith/Robin/CompleteMertensPeak.finite_mertens_peak_of_signed_endpoint`
 
@@ -24,7 +36,7 @@ Lean statement: `D5/S3/Arith/Robin/CompleteMertensPeak.finite_mertens_peak_of_si
 
 For A>=10000 and B>=A, the signed lower bound Q(B)-I(B)/r(B)>-1/(2*sqrt(A)), together with the complete Lay identity and the displayed positive U(A) peak, forces a real t in [A,B] whose actual prefix lcm is strictly greater than 5040 and strictly violates Robin. The finite no-peak contradiction retains the sign of the far endpoint. It uses no JY majorant and proves N<=exp(B*log(B)). OriginalLocalA supplies that signed endpoint at B=exp(y) and pays the original local and global bounds. This is a new alternative to the earlier absolute-tail route; its existing quantitative theorem still retains hJY.
 
-**Theorem 1.2 (A complete cumulative peak gives an actual lcm witness).**
+**Theorem 1.3 (A complete cumulative peak gives an actual lcm witness).**
 
 Lean statement: `D5/S3/Arith/Robin/CompleteMertensPeak.complete_mertens_peak`
 
@@ -48,7 +60,7 @@ The complete weighted Mertens identity relates E₂Λ to I. Completing each prim
 
 Positivity and monotonicity of r bound the absolute far-end difference by twice the unweighted absolute Chebyshev tail. Logarithmic and square-root substitutions reduce that tail to the fifth exponential moment. Comparing with the derivative of -(5/2)*z^5*exp(-4*z/5) bounds the far-end difference by 100*z^5*exp(-4*z/5), which at B is less than 1/(2*sqrt(A)). Integrating 0<=w(t)<=1/t then gives Q(A)>-(4/r(A)+17/2)/sqrt(A), contradicting U(A)=-A*Q(A) and the peak. The existing common_robin_response supplies the actual integer witness and its size bound.
 
-**Theorem 1.3 (A literal complete arithmetic-kernel peak gives a finite Robin violation).**
+**Theorem 1.4 (A literal complete arithmetic-kernel peak gives a finite Robin violation).**
 
 Lean statement: `D5/S3/Arith/Robin/CompleteMertensPeak.actual_kernel_peak_robin_violation`
 
@@ -69,6 +81,7 @@ The quantitative theorem above retains both its exact hypotheses and its explici
 ## References
 
 - Truth anchor: `D5/S3/Arith/Robin/CompleteMertensPeak.actual_kernel_peak_robin_violation`
+- Truth anchor: `D5/S3/Arith/Robin/CompleteMertensPeak.complete_mertens_ledger`
 - Truth anchor: `D5/S3/Arith/Robin/CompleteMertensPeak.complete_mertens_peak`
 - Truth anchor: `D5/S3/Arith/Robin/CompleteMertensPeak.finite_mertens_peak_of_signed_endpoint`
 - Dependency: [D5/S3/Arith/Robin/LcmRobinResponse](LcmRobinResponse.md)
@@ -76,3 +89,4 @@ The quantitative theorem above retains both its exact hypotheses and its explici
 - Dependency: [D5/S3/Arith/Robin/QuotientIntegralBudget](QuotientIntegralBudget.md)
 - Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/TrivialZeroLaplace](../../Weil/Mertens/IntegratedExplicit/TrivialZeroLaplace.md)
 - Dependency: [D5/S3/Weil/Mertens/WeightedPrimeLimit](../../Weil/Mertens/WeightedPrimeLimit.md)
+- Dependency: [D5/S3/Weil/Mertens/WeightedTailTransport](../../Weil/Mertens/WeightedTailTransport.md)

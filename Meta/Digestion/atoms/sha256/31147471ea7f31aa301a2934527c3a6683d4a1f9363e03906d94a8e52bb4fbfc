@@ -1,0 +1,22 @@
+**Corollary 49.2 (conditional positive-quartic full-mass Coulomb branch).** If the fixed datum of Definition 42.1 has $C_4>0$, then (42.6) holds for every prescribed sequence and every actual normalized complex ground-state choice, with
+
+$$
+\begin{aligned}
+M&=\int_I\phi(k)^2c_\kappa(k)c_\kappa(k)^{\mathsf T}\,dk,\\
+\beta_C&=\frac{\phi(k_0)\int_I\phi(k)^3\,dk}{4\pi\sqrt{\det M}},
+& e_C&=-\frac{\beta_C^2}{4a},&
+\varrho&=\frac{\beta_C}{2a},\\
+h_C(z)&=(\det M)^{-1/4}(\varrho^3/\pi)^{1/2}
+       \exp\!\left(-\varrho\sqrt{z^{\mathsf T}M^{-1}z}\right),\\
+(\mathcal D_g\psi)(k,z)&=g^{-3/2}\psi(k,z/g),&
+\mathbb T&=\{\zeta\in\mathbb C:|\zeta|=1\}.
+\end{aligned}
+\tag{49.6}
+$$
+
+Proof. Under $C_{\rm resp}=0$ and $C_4>0$, the owning quartic spectral-bottom law, Theorem 27.1, supplies $\epsilon_c(s)=o(s^4)$. The owned actual compactness and weak-disk result identifies every microscopic weak cluster as $cp$. Theorem 49.1 forces $c=0$. Weak sequential compactness of the unit ball then makes each whole prescribed actual sequence weakly zero: a sequence failing a weak test would have a weakly convergent subsequence contradicting its zero cluster.
+
+Apply the already proved actual weak-zero endpoint, Theorem 10.2, with its original fixed-cutoff source hypotheses. It gives $E_s/g_s^2\to e_C$, $r_s\to-\chi_c^2e_C$ and the full-mass phase orbit with exactly (49.6). Since $g_s=\chi_cs^3$, its energy statement is (42.6). This uses the actual theorem, not its one-sided trial upper bound.
+
+All antecedents of Theorem 10.2 remain in force, including its fixed source, matrix positivity, both original faces and actual attainment. If an every-choice conclusion failed, choose failing actual ground states along a sequence $s_n\downarrow0$; the sequential argument just proved contradicts that failure. This establishes the stated every-choice quantifiers, with no trial, arbitrary near-minimizer or phase-fixed substitute. $\square$
+

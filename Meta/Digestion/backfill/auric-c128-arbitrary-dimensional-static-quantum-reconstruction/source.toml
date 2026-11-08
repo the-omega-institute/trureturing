@@ -1,0 +1,5 @@
+source_id = "auric-c128-arbitrary-dimensional-static-quantum-reconstruction"
+path = "docs/develop/theory/AURIC_C128_ARBITRARY_DIMENSIONAL_STATIC_QUANTUM_RECONSTRUCTION.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

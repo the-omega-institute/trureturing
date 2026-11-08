@@ -1,0 +1,164 @@
+**定理 28.1（任意 JB 背景的原结合子刚性）。** 在定义 27.1 的全部背景、NN 和全部有限原复 Gram 正性下，(27.3) 当且仅当同一原 $D$ 满足完整 R：
+
+$$
+S(S(a,b),c)-S(a,S(b,c))
+=D(D(a,b),c)-D(a,D(b,c))
+\qquad(a,b,c\in E).
+\tag{28.1}
+$$
+
+成立时，原 $a\star b=S(a,b)-\mathrm iD(a,b)$ 的复双线性延拓结合，并由既有动力对应后端取得相容 C* 完成；其自伴部、单位、正锥、自伴范数和原评价分别就是 $X,u,X_+,N$ 的完成及原评价的连续延拓。该结论不限定维数、因子、矩阵图表或中央取向。
+
+证明。$E=0$ 时结论直接成立，以下设 $E\ne0$。下面全部辅助完成、双对偶、态、投影和左右乘算子仅为同一原乘法的证明工具。
+
+先支付既有代数和分析接口。原词卷引理 400.1 适用于这里固定的双线性实部和三标签共同正性，直接给同一个原 $D$ 实双线性及反对称性；不重新推导该刚性。原二表与准确原锥给
+
+$$
+|\alpha(D(a,b))|^2\le\alpha(a^2)\alpha(b^2)
+\le m_\alpha^2N(a)^2N(b)^2,
+\qquad N(D(a,b))\le N(a)N(b).
+\tag{28.2}
+$$
+
+最后一步使用原序单位范数的准确公式 $N(v)=\sup_{m_\alpha>0}|\alpha(v)|/m_\alpha$。零质量评价恒零，不除以零。单位桥定理 64.2 的前件仅为这里的 JB 接口、原二表和 NN；以 $b=u$ 应用其零核结论，得 $D(a,u)=0$。所以同一个 $D$ 唯一有界双线性延拓到 $X^2$，反对称、单位零和 NN 由范数连续性保留。
+
+在 Banach 复化 $A=X\oplus\mathrm iX$ 上定义同一延拓乘法 $x\star y=S(x,y)-\mathrm iD(x,y)$，再复双线性延拓；置 $(a+\mathrm ib)^*=a-\mathrm ib$ 和
+
+$$
+q(z)=z^*\star z,
+\qquad q(a+\mathrm ib)=a^2+b^2+2D(a,b).
+\tag{28.3}
+$$
+
+此处尚不声称结合性或 C* 范数。反对称性给反乘法的共轭线性对合，$u$ 为双侧单位。对 $z\in E\oplus\mathrm iE$，全部原评价对 $q(z)$ 非负，故 $q(z)\in C$；连续性给全部 $z\in A$ 的 $q(z)\in X_+$。因此任意数学连续正泛函 $\varphi\in X^*_+$ 都给正半定型
+
+$$
+H_\varphi(z,w)=\varphi_{\mathbb C}(z^*\star w).
+\tag{28.4}
+$$
+
+这里正性先成为原锥事实，再施加数学泛函；没有假设原评价族在全正对偶中稠密，也没有把数学态加入原准备。
+
+对 $\delta_a b=D(a,b)$，既有接触判据子论证现在具有全部前件：$\delta_a$ 有界实线性，$\delta_a u=0$；若 $c\in X_+$ 且 $\varphi(c)=0$，JB 函数演算给 $0\le c^2\le\|c\|c$，故 $\varphi(c^2)=0$。(28.4) 在 $(a,c)$ 上的 Cauchy–Schwarz 使 $\varphi(\delta_a c)=0$。完备序单位空间的有界顺序导子零面判据遂使 $e^{s\delta_a}$ 双向保锥；单位零使它保单位。在 JB 代数中这给 Jordan 自同构群，微分得到
+
+$$
+D(a,S(b,c))=S(D(a,b),c)+S(b,D(a,c)).
+\tag{28.5}
+$$
+
+此处复用三标签卷 73.1、正交迹续卷 446.1、448.1 的有界线性接触／导子子论证，而非其带 R 或其他额外前件的完整恢复结论。所用成熟零面判据的准确版本是 Niestegge §4 Lemma 3；JB 的保单位顺序导子与 Jordan 导子接口亦见 Baez §4。PY 和 Jacobi 均未用作前提。
+
+由 (28.5)，$\star$ 在实三元组上的结合子的虚部为零。其实部正是定义 10.2 的 $F$；NN 给 $F(a,a,c)=0$，而对称 $S$ 和反对称 $D$ 给 $F(c,b,a)=-F(a,b,c)$。按定理 10.3 的代数子论证极化，$F$ 全交替。因此 $A$ 是含单位交替星代数；此步只取得交替性，未取得结合性。
+
+接着构造确实延拓这个乘法的双对偶。置 $M=X^{**}$；Hanche-Olsen–Størmer Theorem 4.4.3 使它以原 Jordan 乘法的分别弱星连续延拓成为 JBW 代数，规范前对偶为 $X^*$。Peralta–Rodríguez Palacios Lemma 1.1、Lemma 3.3 及 Theorem 3.4 后的实数说明适用于任意实 JB 代数上的有界标量双线性型。对每个 $g\in X^*$，延拓
+
+$$
+u_g(a,b)=g(D(a,b)),\qquad
+\langle\widetilde D(\xi,\eta),g\rangle
+=\widetilde u_g(\xi,\eta).
+\tag{28.6}
+$$
+
+标量延拓唯一、分别弱星连续且保范数；其对 $g$ 的线性和界 $|\widetilde u_g(\xi,\eta)|\le\|g\|\|\xi\|\|\eta\|$ 说明右侧确实定义 $M$ 的元素。因此 $\widetilde D:M^2\to M$ 是原 $D$ 的有界双线性、分别弱星连续延拓。以 $S_M-\mathrm i\widetilde D$ 定义 $B=M\oplus\mathrm iM$ 的乘法，仍记为 $\star$。其对合、单位和原限制保留。交替性先写成完全极化的三线性结合子恒等式，每个变量在每一项只出现一次，再逐变量取弱星极限；所以 $B$ 仍交替。没有把含重复变量的多项式直接称为弱星连续。
+
+下面核对正性及同一个常数的延拓，而不对双对偶直接套原评价的分离性。双线性已付后，$\ell:\mathcal F\to E\oplus\mathrm iE$、$\ell(\sum_jz_j[a_j])=\sum_jz_ja_j$ 满足
+
+$$
+h_\alpha(f,f)=\alpha(q(\ell f)),\qquad
+\ell(A_tf)=t\star\ell f.
+\tag{28.7}
+$$
+
+故 (27.3) 和准确原锥等价给每个固定原 $t$ 的原序不等式
+
+$$
+0\le q(t\star z)\le C_t^2q(z)
+\qquad(z\in E\oplus\mathrm iE).
+\tag{28.8}
+$$
+
+范数连续性先将它传到 $A$。固定 $\varphi\in X^*_+$ 后，(28.4) 和
+
+$$
+K_{\varphi,t}(z,w)
+=C_t^2H_\varphi(z,w)-H_\varphi(t\star z,t\star w)
+\tag{28.9}
+$$
+
+都是 $A$ 上有界正半定半双线性型。任一这样的型 $k$ 可写成 $k(z,w)=\langle Jz,Jw\rangle$，其中 $J$ 为进入其 Hilbert 完成的有界线性映射。Hilbert 空间反身，故 $J^{**}$ 的值仍在该 Hilbert 空间，且弱星到弱连续；于是 $\langle J^{**}\zeta,J^{**}\eta\rangle$ 是 $k$ 在 $A^{**}=B$ 上的正半定、分别弱星连续延拓。分别弱星连续延拓的唯一性，将这两份延拓分别认作
+
+$$
+\widetilde H_\varphi(\zeta,\eta)
+=\varphi_{\mathbb C}(\zeta^*\star\eta),
+\quad
+\widetilde K_{\varphi,t}(\zeta,\eta)
+=C_t^2\widetilde H_\varphi(\zeta,\eta)
+-\widetilde H_\varphi(t\star\zeta,t\star\eta),
+\tag{28.10}
+$$
+
+其中 $\varphi$ 在 $M$ 上取其规范正常延拓，且固定原 $t$ 的左乘为其有界算子的双对偶延拓。这一步利用正型的 Hilbert 分解，不对二次表达式交换未经支付的联合弱星极限。
+
+$X^*_+$ 的规范正常延拓决定 $M_+$，故 (28.10) 给出
+
+$$
+q(\zeta)\in M_+,\qquad
+0\le q(t\star\zeta)\le C_t^2q(\zeta)
+\quad(t\in E,\ \zeta\in B).
+\tag{28.11}
+$$
+
+只保留每个原 $t$ 原先的常数；没有为任意完成或双对偶作用者假设支配界。并且平方是准确的：若 $q(\zeta)=0$，由 $\widetilde H_\varphi$ 的 Cauchy–Schwarz 及 $u$ 为单位，有
+
+$$
+|\varphi_{\mathbb C}(\zeta)|^2
+=|\widetilde H_\varphi(u,\zeta)|^2
+\le\varphi(u)\varphi(q(\zeta))=0.
+\tag{28.12}
+$$
+
+全部正常正泛函分离 $M$，分别取实部和虚部，得 $\zeta=0$。这不要求某一个正常态忠实。
+
+现在支付结合性的关键步骤。对任意数学投影 $p=p^2\in M$，记 $e=u-p$ 和 JB 二次表示 $U_p=2L_p^2-L_{p^2}$。交替代数的中间 Moufang 恒等式 $(xy)(ax)=x(ya)x$ 给
+
+$$
+q(\zeta\star p)
+=(p\star\zeta^*)\star(\zeta\star p)
+=p\star q(\zeta)\star p
+=U_pq(\zeta).
+\tag{28.13}
+$$
+
+末项等式由交替乘法的对称化就是 $S_M$ 以及柔性律给出。括号中的 $p\star q(\zeta)\star p$ 无歧义；这里不预付一般结合性。$U_p,U_e$ 都是正映射，且 $U_eU_p=U_pU_e=0$，这是互补 JB 投影的标准 Peirce 身份。
+
+固定原 $t$ 和任意 $\zeta\in B$，置 $w=t\star(\zeta\star p)$。将 (28.11) 用于 $\zeta\star p$，再施加正映射 $U_e$，得
+
+$$
+0\le q(w\star e)=U_eq(w)
+\le C_t^2U_eU_pq(\zeta)=0.
+\tag{28.14}
+$$
+
+由 (28.12)，$w\star e=0$，所以 $w=w\star p$。换用互补投影 $e$ 同证：原左乘 $\lambda_t:\zeta\mapsto t\star\zeta$ 分别保持 $B\star p$ 和 $B\star e$。
+
+右交替性给 $R_p^2=R_p$、$R_e=I-R_p$，其中 $R_p\zeta=\zeta\star p$。因此这两个子空间恰是互补右乘投影的像；同时保持它们意味着 $\lambda_tR_p=R_p\lambda_t$。换回乘法，得到
+
+$$
+(t\star\zeta)\star p=t\star(\zeta\star p)
+\qquad(t\in E,\ \zeta\in B,\ p=p^2\in M).
+\tag{28.15}
+$$
+
+这由二次序支配推出，未把左作用的有界性直接误认作伴随性或乘法性。
+
+JBW 谱逼近定理 Hanche-Olsen–Størmer Proposition 4.2.3 说明，$M$ 中每个实元素均可在范数下由有限实正交投影谱和逼近。结合子对第三槽线性且范数连续，故 (28.15) 对全部第三槽 $c\in M$ 成立，再复线性延拓到 $B$。特别取原 $t=a,\zeta=b,c\in E$，得到原 $\star$ 的完整结合律，其实部正是 (28.1)。所有投影只出现在辅助双对偶中，原域不需要含有任何一个这样的投影。
+
+最后按定理 10.3，完整 R 给 $[\delta_a,\delta_b]=-[L_a,L_b]$；已支付的有界实线性对应、$\delta_a a=0$ 及斜顺序导子值域，正好满足 Baez Theorem 12 所述 Alfsen–Shultz 动力对应接口。故既有后端给同一 $S-\mathrm iD$ 的相容 C* 结构及原锥、单位、自伴范数和原评价。反向，若保留的背景中完整 R 成立，同一后端给结合乘法，并在该 C* 代数内有
+
+$$
+0\le z^*\star t^2\star z\le N(t)^2z^*\star z.
+\tag{28.16}
+$$
+
+施加每个原评价并用 (28.7)，即得 (27.3)，可取 $C_t=N(t)$。此反向只在结合性已付后使用，未反用正交迹续卷 437 的构造。∎
+

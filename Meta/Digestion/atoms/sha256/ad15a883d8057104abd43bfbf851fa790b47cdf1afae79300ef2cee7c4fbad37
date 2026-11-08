@@ -1,0 +1,40 @@
+**Theorem 37.1 (the source-forced first charge).** The unique correction of Proposition 34.1 is exactly
+
+$$
+g_1=\frac{\mathcal V_1p+Vv}{\mu}
+=\frac{\mathcal V_1p+\nu V\Psi}{\mu},
+\qquad Ag_1=\gamma\mathcal N_1g_0,\qquad
+\langle p,g_1\rangle=0.
+\tag{37.1}
+$$
+
+Proof. The specified reconstruction in R Theorem 16.2 gives
+
+$$
+v=W+\gamma G_0q,\qquad q=\mathcal V_1p+Vv.
+\tag{37.2}
+$$
+
+This right side is an admitted multiplier source:
+
+$$
+q/\sqrt V=(\mathcal V_1/\sqrt V)p+\sqrt Vv\in L^2
+\tag{37.3}
+$$
+
+by R Theorem 4.1, bounded $V$ and the owned $v\in L^2$. Thus $G_0q$ is precisely P Theorem 87.2's reconstruction with multiplication by $\sqrt V$; no inverse on arbitrary $L^2$ is used. Also $q\in L^2$. Since $p,V$ are even under $\sigma$ and $\mathcal V_1,v$ are odd, $\langle p,q/\mu\rangle=0$. Theorems 36.2 and (31.2) give
+
+$$
+\begin{aligned}
+A(q/\mu)
+&=(\mathcal V_1p+V(v-\gamma G_0q))/\mu\\
+&=(\mathcal V_1p+VW)/\mu\\
+&=\gamma(\mathcal V_1G_0g_0+VG_1g_0)
+=\gamma\mathcal N_1g_0.
+\end{aligned}
+\tag{37.4}
+$$
+
+The already owned normalized Fredholm uniqueness of Proposition 34.1 now identifies $q/\mu=g_1$. Fixed canonical parity is used only to normalize this correction, never to restrict any actual state. The classical compact Fredholm alternative retains its stated reconstruction scope. $\square$
+
+

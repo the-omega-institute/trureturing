@@ -1,0 +1,22 @@
+**定义 18.1（只测试实际输出的形式行）。** 全部前件准确取定义 7.1，不追加三标签卷 (49.1)、(72.1)、输出外延性或输出覆盖。以下以忠实嵌入认同 $E\subseteq X$，置
+
+$$
+A=\operatorname{ran}D,\qquad W=\operatorname{span}_{\mathbb R}A,
+\qquad Z_E=E\cap Z(X),\qquad F=\mathbb R^{(A)}.
+\tag{18.1}
+$$
+
+$F$ 的元素是有限支撑形式和；$[p]$ 是以实际原值 $p\in A$ 为指标的形式基元。准确沿用三标签卷 (71.3)、(77.1) 的行坐标，定义两个实线性映射
+
+$$
+\begin{aligned}
+T:F&\longrightarrow W,&T\Bigl(\sum_jr_j[p_j]\Bigr)&=\sum_jr_jp_j,\\
+R:F&\longrightarrow\mathbb R^{A\times\mathcal P},&
+R\Bigl(\sum_jr_j[p_j]\Bigr)_{t,\beta}
+ &=\sum_jr_j\beta(D(p_j,t)).
+\end{aligned}
+\tag{18.2}
+$$
+
+两个映射的线性来自形式和的定义，不预设未知 $D$ 在输入上的线性。原输出集 $A$ 未被替换成 $W$，测试指标仍只有 $t\in A$。
+

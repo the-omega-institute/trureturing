@@ -1,0 +1,43 @@
+**Theorem 14.2 (quantitative finite-native energy comparison).** With the strictly positive explicit constant $c_*$ of (13.1), for every $K$ in Definition 14.1 there is $s_K>0$ such that for every $0<s<s_K$ and every actual normalized complex ground-state choice,
+
+$$
+\frac{e_1(g_s)-E_s}{g_s^2}
+ \ge c_*\sqrt{j_0\chi_c}\,A_s(K)\ge0.
+\tag{14.2}
+$$
+
+Neither a response sign nor a bound on $r_s$ is a hypothesis.
+
+Proof. Choose any nonnegative normalized actual reference ground state $v_{g_s}$. Its common operator domain with $u_s$ is exactly $D(S)$, and both potentials are bounded at this fixed $s$. Selfadjointness and the two actual eigen-equations therefore give the exact finite pairing
+
+$$
+\begin{aligned}
+O_s&:=\langle v_{g_s},u_s\rangle\in(0,1],\\
+(e_1(g_s)-E_s)O_s
+ &=g_s\int_{\mathcal C}D_s v_{g_s}u_s\,dY.
+\end{aligned}
+\tag{14.3}
+$$
+
+Strict positivity gives $O_s>0$, and Cauchy–Schwarz gives $O_s\le1$. The integral is finite by boundedness of $D_s$ and the two $L^2$ norms. This identity uses selfadjoint operator pairings, without additional phase derivatives or boundary integration. Its nonnegative right side also proves $e_1(g_s)-E_s\ge0$. Restrict it to $\Xi_s(K)$, apply (13.10), divide by $g_s^2O_s$, and use $O_s\le1$. The result is
+
+$$
+\frac{e_1(g_s)-E_s}{g_s^2}
+ \ge c_*g_s^{1/2}\int_{\Xi_s(K)}\phi(k)D_su_s\,dY.
+\tag{14.4}
+$$
+
+The exact source/coordinate normalization is
+
+$$
+\begin{aligned}
+\int_{\Xi_s(K)}\phi(k)D_su_s\,dY
+ &=j_0s^7s^{-5}(j_0s^7)^{-1/2}A_s(K)
+ =\sqrt{j_0}s^{-3/2}A_s(K),\\
+g_s^{1/2}s^{-3/2}&=\sqrt{\chi_c}.
+\end{aligned}
+\tag{14.5}
+$$
+
+Substitution proves (14.2). All smallness conditions come from Corollary 13.3 and the inclusion of $K$, hence are independent of the actual ground-state choice. The signed rational fields, $j_0$, unit raw source, both height faces and the $B$ clock remain those of §§1–2. $\square$
+

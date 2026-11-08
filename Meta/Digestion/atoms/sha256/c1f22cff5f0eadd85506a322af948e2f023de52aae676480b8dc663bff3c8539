@@ -1,0 +1,34 @@
+**Proposition 203.2 (exact scalarization of the two rulings).** With the notation above,
+
+$$
+ \mathscr P_u\cap
+ \{c z^{\mathsf T}:z\in\mathbb R^2\}
+ =\{c z^{\mathsf T}:z\in\mathscr Z_c\},
+\tag{203.6}
+$$
+
+and
+
+$$
+ \mathscr P_u\cap
+ \{v w^{\mathsf T}:v\in\mathsf H\}
+ =\{v w^{\mathsf T}:v\in\mathscr V_w\}.
+\tag{203.7}
+$$
+
+Both parameter sets are convex. For every parameter in either set, the corresponding family in (203.2) or (203.4) satisfies
+
+$$
+ \sum_{y\in\mathcal L}\widetilde u_y=1,
+ \qquad
+ T_u(\widetilde u_y)=f_y,
+ \qquad
+ \Delta(\widetilde u)_{yzk}=0
+ \quad(y,z,k\in\mathcal L).
+\tag{203.8}
+$$
+
+*Proof.* If $A=c z^{\mathsf T}$, then its $y$-th row is $(c_yz_1,c_yz_2)$, so (199.1) is exactly (203.2). The column-sum equations in (199.2) hold because $c\in\mathsf H$, and the remaining condition $A\in\mathscr P_u$ is precisely the pointwise inequality in (203.3). This proves (203.6), including uniqueness of $z$ because $c\ne0$. The proof of (203.7) is identical: the rows of $A=v w^{\mathsf T}$ give (203.4), and $v\in\mathsf H$ supplies the column-sum equations.
+
+The inequalities in (203.3) and (203.5) are affine in their parameters, so the two parameter sets are convex. Finally, the zero-sum condition gives the first identity in (203.8), the section identity and $T_u(r_\ell)=0$ give the second, and Proposition 199.2 gives the residual identity. \(\square\)
+

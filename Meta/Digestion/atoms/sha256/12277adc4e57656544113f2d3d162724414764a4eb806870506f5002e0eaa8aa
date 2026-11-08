@@ -1,0 +1,20 @@
+**定理 105.1（有条件的双侧局部化）。** 在104.1的完整矩阵原域中，令
+
+$$
+a=\Phi_p(0,x)+\alpha T,\quad b=\Phi_p(0,y)+\beta T,\quad
+\alpha\beta(|x|^2-|y|^2)+(\beta^2-\alpha^2)x\cdot y=0.
+\tag{105.1}
+$$
+
+则整个旧输出 $D(a,b)=\Phi_p(0,\varepsilon_p x\times y)$。
+
+证明。$\alpha=\beta=0$ 直接用角分类。否则置 $r=\sqrt{\alpha^2+\beta^2}$，$X=(\beta x-\alpha y)/r,Y=(\alpha x+\beta y)/r$。103.1的一次SO(2)标签旋转给
+
+$$
+D(a,b)=D(\Phi_p(0,X),\Phi_p(0,Y)+rT).
+$$
+
+条件105.1恰是 $X\cdot Y=0$，且 $X\times Y=x\times y$。104.1支付结论。∎
+
+特别 $\alpha=\beta=1,|x|=|y|$ 时允许非正交输入与非零共同补角。在 $M_3$ 中取 $a=\sigma_1+tq,b=(\sigma_1+\sigma_2)/\sqrt2+tq,t\ne0$，便有 $D(a,b)=\varepsilon_p\sigma_3/\sqrt2$。几何上，105.1要求补角系数向量 $(\alpha,\beta)$ 是角内二标签实Gram矩阵的一个特征方向；同一次旋转才可同时消去一个补角并正交化角内向量。任意双侧补角、角内另带任意标量，以及不同角的取向一致性，尚未由本条覆盖。
+

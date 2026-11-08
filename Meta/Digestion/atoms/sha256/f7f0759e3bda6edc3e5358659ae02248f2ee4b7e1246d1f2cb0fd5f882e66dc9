@@ -1,0 +1,56 @@
+**命题 3.2（背景、正二标签与非可加性）。** 定义 3.1 满足定义 1.2 的全部对称含幺、分离、锥和序界背景。$D$ 连续、交替、分别对全部实数齐次，且 $D(a,u)=D(u,a)=0$。对每个 $\alpha\in\mathcal P$，全部一、二标签的 (1.2) 矩阵半正定；但 $D$ 不可加。
+
+证明。式 (3.1) 逐坐标给对称实双线性和 $u\circ a=a$。若三个 $\alpha_j(a)$ 全为零，先得 $a_0=0$，再得 $a_1=a_2=0$，故评价分离。$E_+$ 是三个线性闭半空间的交，且 $E_+\cap(-E_+)=\{0\}$，所以为闭尖锥。三个 $\alpha_j(u)$ 均为 $1$；给定 $a$，取 $r=\max_j|\alpha_j(a)|$，便有 $\alpha_j(ru\pm a)\ge0$，即 $-ru\le a\le ru$。对 $\alpha=\sum_j\lambda_j\alpha_j$，原质量为 $m=\alpha(u)=\sum_j\lambda_j$；允许任意非等质量，也包括 $m=0$ 的零评价。
+
+由 $|n_0|\le\|n\|$ 得
+
+$$
+|f(n)|\le\|n\|,\qquad f(sn)=s f(n)\quad(s\in\mathbb R).
+\tag{3.4}
+$$
+
+非零点处的连续性来自商式，原点处由第一界直接得到。第二式在 $s\ne0,n\ne0$ 时由分子三次、分母二次齐次性得到，余下零情形直接成立；它也给 $f(-n)=-f(n)$。叉积连续、双线性且交替，因此 $D$ 连续、交替、反对称并在每槽分别实齐次。$a\times u$ 的首坐标为零，故 $D(a,u)=D(u,a)=0$。
+
+为证所有评价下的二标签正性，记 $h_\alpha(a,b)=\alpha(a\circ b)=a^{\mathsf T}H_\alpha b$。三个基本实 Gram 矩阵是
+
+$$
+H_0=I_3,\qquad
+H_1=\begin{pmatrix}1&1/2&0\\1/2&1&0\\0&0&1\end{pmatrix},\qquad
+H_2=\begin{pmatrix}1&0&1/2\\0&1&0\\1/2&0&1\end{pmatrix}.
+\tag{3.5}
+$$
+
+例如 $a^{\mathsf T}(H_1-I_3/2)a=(a_0+a_1)^2/2+a_2^2/2\ge0$，$H_2-I_3/2$ 同理，$H_0\ge I_3/2$。所以
+
+$$
+H_\alpha=\sum_j\lambda_jH_j\ge\tfrac m2 I_3.
+\tag{3.6}
+$$
+
+给任意 $a,b$，在包含它们的二维平面取正交单位列组成 $V$，写 $[a\ b]=VR$；即使 $a,b$ 相关或为零也可如此延拓选平面。令 $B=V^{\mathsf T}H_\alpha V\ge(m/2)I_2$。二维正矩阵的行列式满足 $\det B\ge m^2/4$，而 $\det(R)^2=\|a\times b\|^2$，于是
+
+$$
+\begin{aligned}
+h_\alpha(a,a)h_\alpha(b,b)-h_\alpha(a,b)^2
+ &=\det(R)^2\det B\\
+ &\ge\tfrac{m^2}{4}\|a\times b\|^2,\\
+|\alpha(D(a,b))|
+ &=\tfrac m2|f(a\times b)|
+ \le\tfrac m2\|a\times b\|.
+\end{aligned}
+\tag{3.7}
+$$
+
+$D$ 的交替性和实部对称性使二标签表 Hermitian；其对角非负，行列式由 (3.7) 非负，所以半正定。一标签表为其主限制。$m=0$ 时非负系数全为零，表就是零表；相关、零及重复标签也已包含在同一证明内，没有除以质量、面积或 Gram 行列式。
+
+最后，逐项代入 (3.3)：
+
+$$
+D(u,e_2)=0,\qquad
+D(e_1,e_2)=\tfrac12u,\qquad
+D(u+e_1,e_2)=\tfrac14u.
+\tag{3.8}
+$$
+
+末式的叉积为 $(1,-1,0)$，其 $f$ 值为 $1/2$。因此 $D(u+e_1,e_2)\ne D(u,e_2)+D(e_1,e_2)$，给出显式非可加性。∎
+

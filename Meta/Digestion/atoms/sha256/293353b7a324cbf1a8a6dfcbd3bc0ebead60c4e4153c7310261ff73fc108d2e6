@@ -1,0 +1,32 @@
+**Definition 57.1 (owners and mathematical scope).** The new deductions
+of §§51–56 are conditional on the original ordinary analytic suppliers,
+not on an absolute early spectral estimate. P70/75 own fixed-cutoff
+compactness and attainment; P76/97/107 own both-face heat and the exact
+rational same-bridge moments; P87–88 own specified compact reconstruction
+and its simple mode; P104 owns global reconstruction and the long-field
+resolvent bound. P105 is reused unchanged for actual choices.
+L36/41 own the full-frequency tensor band with both endpoint factors.
+The compact translated uniformity, convergent relative integral,
+wall coefficient, moving early comparison, full residual and principal
+norm equality are proved here, not supplied by local heat asymptotics.
+
+The local primary interface is Colin de Verdière–Hillairet–Trélat,
+*Small-time asymptotics of hypoelliptic heat kernels near the diagonal,
+nilpotentization and related results*, Annales Henri Lebesgue 4,
+[Theorem B, pp.915–916; §3.1 and Theorem 3.2, pp.917–922](https://ahl.centre-mersenne.org/item/10.5802/ahl.93.pdf).
+The fields $\varepsilon\partial_k,c_\kappa(k)\cdot\partial_q$ have
+zero divergence in raw measure, zero drift, and determinant nonzero
+on the common larger interval, hence uniformly bounded step three.
+The privileged weights are $(1,1,2,3)$ and density is $j_0d\xi$.
+The killed realizations are selfadjoint contractions; after shift their
+semigroups satisfy the allowed $e^{\lambda t}$ bound.
+These meet the primary's smooth density, bracket, realization and
+compact-interior localization hypotheses. That theorem supplies local
+smoothness/nilpotentization only. Equations (52.4),(53.2) and L41,
+rather than that local theorem, pay time-zero relative cancellation,
+remote endpoints and infinite time. The compact spectral perturbation,
+nonzero-product correspondence, Gaussian conditioning, spectral calculus
+and variance inequality are classical intermediate steps. The resulting
+same-source relative law is repository-derived; no worldwide novelty
+or fresh global-antecedent certification is asserted.
+

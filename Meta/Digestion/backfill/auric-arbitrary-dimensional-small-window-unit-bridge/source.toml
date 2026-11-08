@@ -1,0 +1,5 @@
+source_id = "auric-arbitrary-dimensional-small-window-unit-bridge"
+path = "docs/develop/theory/AURIC_ARBITRARY_DIMENSIONAL_SMALL_WINDOW_UNIT_BRIDGE.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

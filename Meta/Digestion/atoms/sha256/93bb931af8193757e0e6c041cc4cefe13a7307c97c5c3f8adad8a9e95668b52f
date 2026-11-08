@@ -1,0 +1,156 @@
+**定理 16.2（A full-carrier wheel energy bound）。** For every odd $n\geq7$
+with Definition 16.1,
+
+$$
+\boxed{\quad E\leq-\frac{4n(n+1)}{2n+1}t_n<-2n.\quad}
+\tag{16.3}
+$$
+
+Proof. Write $c=c_n$, $\varepsilon=1/10$, and
+$u_j=\exp(2\pi\mathrm i rj/n)$ for $j\in\mathbb Z/n\mathbb Z$.
+Since $\gcd(r,2r+1)=1$, the $u_j$ run through all $n$th roots of
+unity. The vectors $u^k=(u_j^k)_j$, $0\leq k<n$, are orthogonal,
+with squared norm $n$: for distinct exponents the inner product is
+a geometric sum with ratio a nontrivial $n$th root. Cycle adjacency
+$a_C$ satisfies $a_Cu=-2cu$. Also $a_C\preceq2I$, since
+$2\operatorname{Re}(\overline{v_j}v_{j+1})\leq|v_j|^2+|v_{j+1}|^2$
+for each rim edge and every complex $v$.
+Define phases on all base vertices by
+
+$$
+w_h=-1,\qquad w_j=\frac{u_j+\varepsilon}{1+\varepsilon u_j}.
+\tag{16.4}
+$$
+
+The denominators have modulus at least $1-\varepsilon>0$.
+The numerator and denominator have the same squared modulus
+$1+\varepsilon^2+2\varepsilon\operatorname{Re}u_j$, so $|w_i|=1$
+at every vertex. Since $n$ is odd, finite geometric division gives
+
+$$
+\begin{aligned}
+\frac1{1+\varepsilon u_j}
+ &=\frac{\sum_{k=0}^{n-1}(-\varepsilon u_j)^k}{1+\varepsilon^n},\\
+w_j&=\mu+A\sum_{k=1}^{n-1}(-\varepsilon)^{k-1}u_j^k,\\
+\mu&=\frac{\varepsilon+\varepsilon^{n-1}}{1+\varepsilon^n}
+ \geq\varepsilon,\qquad
+A=\frac{1-\varepsilon^2}{1+\varepsilon^n}>0.
+\end{aligned}
+\tag{16.5}
+$$
+
+The inequality for $\mu$ follows by subtracting $\varepsilon$:
+the numerator of the difference is
+$\varepsilon^{n-1}(1-\varepsilon^2)>0$.
+Thus the rim vector has the orthogonal decomposition
+$w_{\rm rim}=Au+v$, $v\perp u$,
+$\|v\|^2=n(1-A^2)$, and $\sum_jw_j=n\mu$.
+Self-adjointness and $a_Cu=-2cu$ eliminate its cross terms.
+Consequently, with $a_H=A(H)$,
+
+$$
+\begin{aligned}
+w^*a_Hw
+ &=w_{\rm rim}^*a_Cw_{\rm rim}-2n\mu\\
+ &\leq-2ncA^2+2n(1-A^2)-2n\mu\\
+ &=-2n\bigl((1+c)A^2+\mu-1\bigr).
+\end{aligned}
+\tag{16.6}
+$$
+
+For $n\geq7$, put $\delta=\varepsilon^n<1/100000$. Since $\delta<1$,
+
+$$
+(1+\delta)^2\leq1+3\delta
+ <1+\frac3{100000}<\frac{9801}{9800},\qquad
+A^2=\frac{9801}{10000(1+\delta)^2}>\frac{49}{50}.
+\tag{16.7}
+$$
+
+Here the last strict rational comparison follows from
+$3\cdot9800<100000$. As $c>0$, (16.5)–(16.7) imply
+
+$$
+(1+c)A^2+\mu-1
+ >\frac{49}{50}c+\frac8{100}>t_n,
+\qquad w^*a_Hw\leq-2nt_n.
+\tag{16.8}
+$$
+
+Lift these phases to a vector on the original carrier, not to a
+minimum in an auxiliary spin space. For each $m$-subset $T\subseteq\Omega$ set
+
+$$
+\Phi(T)=\binom{2m}{m}^{-1/2}\prod_{(i,a)\in T}w_i.
+\tag{16.9}
+$$
+
+Its norm is one because every product has modulus one. It is
+within-fibre invariant and has exactly $m$ particles. For an ordered
+pair of distinct coordinates $x\in B_i$, $y\in B_j$, exactly
+$\binom{2m-2}{m-1}$ such subsets contain $x$ and omit $y$.
+The phase product in the corresponding adjacency quadratic form is
+$\overline{w_i}w_j$. There are four coordinate pairs for every
+ordered base edge. Hence, counting both orientations just as in (2.4),
+
+$$
+\begin{aligned}
+\langle\Phi,K\Phi\rangle
+ &=4\frac{\binom{2m-2}{m-1}}{\binom{2m}{m}}w^*a_Hw
+ =\frac{2m}{2m-1}w^*a_Hw\\
+ &\leq-\frac{4nm}{2m-1}t_n.
+\end{aligned}
+\tag{16.10}
+$$
+
+The ratio is $m^2/((2m)(2m-1))$, by factorial cancellation.
+The full-space Rayleigh principle proves the first inequality in
+(16.3). For complex vectors it is the same principle: if $K$ is
+real symmetric and $z=x+\mathrm i y$, then
+$z^*Kz=x^{\mathsf T}Kx+y^{\mathsf T}Ky$ and
+$z^*z=\|x\|^2+\|y\|^2$.
+
+The subset count, normalization and real/complex comparison are the
+intermediates (3.5)–(3.7), supplied in full by
+[CutBoundRefutation](../../../D5/S3/Combinatorics/Graph/TokenGraph/CutBoundRefutation.lean)
+and its [Scribe](../../../Blueprint/D5/S3/Combinatorics/Graph/TokenGraph/CutBoundRefutation.scribe.cs):
+`Test.move`, `Test.toNbr_bij`, `Test.token_energy`, `counting_identity`,
+`card_move_family`, `W_move` and the proof-local norm and Rayleigh
+identities. Their parameters here are $N=2m$, $k=m$, block size $2$,
+and coordinate phase $w_i$; no pentagon energy or cut estimate is used.
+The phase-subset method also has the classical fixed-magnetization
+precedent Bärwinkel–Schmidt–Schnack,
+[§§2.2–2.3, (14)–(21)](https://arxiv.org/pdf/cond-mat/0210458v2),
+whose cyclic hypotheses are not assumed for the wheel.
+The wheel-specific inference is (16.4)–(16.8), followed by the
+unchanged full-carrier count.
+
+For the strict endpoint comparison, $\cos x\geq1-x^2/2$ follows by
+integrating $\sin x\leq x$ on $x\geq0$. One elementary exact bound
+$\pi^2<10$ follows from
+
+$$
+0<\int_0^1\frac{x^4(1-x)^4}{1+x^2}\,dx=\frac{22}{7}-\pi,
+\qquad \left(\frac{22}{7}\right)^2<10.
+\tag{16.11}
+$$
+
+For the integral identity divide its integrand to obtain
+$x^6-4x^5+5x^4-4x^2+4-4/(1+x^2)$ and integrate each term.
+It follows that
+
+$$
+\begin{aligned}
+t_n&>\frac{21}{20}-\frac{49}{10n^2},\\
+\frac{21}{20}-\frac{49}{10n^2}
+ -\left(1-\frac1{2n+2}\right)
+ &=\frac{n^3+11n^2-98n-98}{20n^2(n+1)}>0.
+\end{aligned}
+\tag{16.12}
+$$
+
+Indeed for $v=n-7\geq0$ the numerator is
+$v^3+32v^2+203v+98>0$. Therefore
+$t_n>(2n+1)/(2n+2)$, which proves the second inequality in (16.3)
+with $m=n+1$, including $n=7$. $\square$
+

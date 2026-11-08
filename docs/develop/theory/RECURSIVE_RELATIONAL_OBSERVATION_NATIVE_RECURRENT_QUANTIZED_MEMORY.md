@@ -430,3 +430,308 @@ At pinned mathlib revision `56a005855ea17e0b0958f73ec801ae140b0a1679`, number-fi
 [MC]: https://arxiv.org/html/quant-ph/9707031v1
 
 ## 追加锚（本行以下为增补区）
+
+## 8. Native positive-entrance marked refinement codec
+
+**Definition 8.1 (marked law, names and supplied interfaces).** Fix $p\ge8$, any center $n$ of Definition 2.1, an occupied configuration $q$ with $n(q)\ne0$, and an already arrived original address $j$. The pulse law in this section is the positive-entrance minimal-current law with the *entire* entrance vector $n$ and original Hamiltonian $H_j$. Its existence and node-safe conditional meaning are those of III146.1, III160.1 and IV278.1. The new service is separate from Definition 3.1's dyadic phase sampler: its phase probabilities are exact. On composing pulses, its target is precisely Definition 4.1's exact-phase rounded process, with the same center reencodings and literal read. The target is not the unrounded original-word law.
+
+For a genuine jump at pulse age $T\in(0,1)$, its canonical name is the consistent sequence
+
+$$
+\mathcal I_r(T)=
+\left[2^{-r}\lfloor2^rT\rfloor,
+      2^{-r}(\lfloor2^rT\rfloor+1)\right],\qquad r\ge1.
+\tag{8.1}
+$$
+
+A precision-$r$ answer is the integer $\lfloor2^rT\rfloor$, its length and framing, equivalently that interval. Earlier answers are prefixes of later ones. The limiting name determines the genuine real $T$; a returned interval or one of its endpoints never replaces $T$ in the marked-history coordinate. The floor convention selects the right interval at a dyadic tie. Such ties will be null on each positive jump component. No-jump outcomes have a discrete tag and no time name. Retain the pulse index, phase and candidate labels, configurations immediately before and after each jump, seams, original read and terminal, and actual requests, order and schedule. A path with two jumps retains both times, even if its endpoint equals its entrance.
+
+All $89$ complex coordinates, the $26+63$ decomposition, exterior bits, ready $\{3,7\}$, eleven prefix and seven future addresses, both records, all $1024$ terminal and $2048$ formal record/terminal labels, and every original finite $\mathsf T(a)$ and $\mathsf R(a,h)$ remain in scope. There is no uniform upper bound on the allowed finite word lengths, and the same external $h$ is used on both record branches. Original zero, failure, refusal, stop, alarm, archive and return coordinates remain, with their stipulated unconditional masses. The fair-bit service, native Hamiltonians and holding law, original read/update and quantizer are explicit premises. The names are a mathematical output interface, granting no additional physical read, preparation or control operation.
+
+The original pulse age and the actual schedule are different coordinates. Keep the schedule unchanged, including any original exogenous schedule input and its same conditional kernel. Age names and that coordinate determine actual jump times. For an executable absolute-time query, an effective schedule realizer and every precision it actually uses must additionally be supplied and charged. No effective presentation of an arbitrary measurable schedule, reference or archive is part of Definition 8.1.
+
+**Lemma 8.2 (uniform native mass guard).** Put
+
+$$
+A=64(p+64).
+\tag{8.2}
+$$
+
+Use the original active-pair data $m,b,D,E_D$ of (3.2) and finite precision (2.11). On every nonconstant monotone phase, let $d_0>0$ and $d_1\ge0$ be its departing masses. Every nonzero member of $\{d_0,d_1,d_0-d_1,|D|\}$ lies strictly between $2^{-A}$ and $2^A$. Exact zeros and phase classification are decidable by the existing native algebraic arithmetic. Consequently each phase outcome of positive probability, jump or no jump, has probability at least $2^{-2A}$, uniformly over the entire valid-center domain.
+
+Proof. This is a precision guard for time output, using the existing fixed-order arithmetic, rather than another endpoint compiler. Take the conservative raw size $S=2^{p+9}$ allowed by (2.8). The bounds of finite precision (2.14) give
+
+$$
+\|D\|_c<2^{2p+35},\qquad
+\|b\|_c<2^{2p+37},\qquad
+\|E_D\|_c<2^{4p+76},\qquad
+\|m\|_c<2^{2p+25}.
+\tag{8.3}
+$$
+
+Seam masses, turn masses and differences of two endpoints of a phase therefore have form
+
+$$
+\delta=a+c\sqrt{E_D},\qquad
+ a\in\mathbb Z[y],\quad |c|\le4,\quad
+ \|a\|_c<2^{2p+50}.
+\tag{8.4}
+$$
+
+Here $c$ is an integer: a seam uses $c=0$, a turn uses $c=2$ or $-2$, and subtraction gives the stated range. For example the two turn rows are $b\pm2\sqrt{E_D}$ and $m-b\mp2\sqrt{E_D}$; seam squares use the original algebraic endpoint entries. The coefficient allowances in (8.4) cover the reductions, real parts and differences using (2.7). Since $0<y<1$ and the basis factors $y^k\zeta^e$ have modulus at most one,
+
+$$
+|a\pm c\sqrt{E_D}|<2^{2p+51},\qquad
+\|a^2-c^2E_D\|_c<2^{4p+105}.
+\tag{8.5}
+$$
+
+If the reduced polynomial $a^2-c^2E_D$ is nonzero, apply the quartic norm separation (2.11) at height $4p+105$. It gives
+
+$$
+|a^2-c^2E_D|>2^{-12p-324},\qquad
+|a+c\sqrt{E_D}|>2^{-14p-375}.
+\tag{8.6}
+$$
+
+The second inequality follows by division by the other factor's upper bound in (8.5). If the squared expression is zero, the expression in (8.4) is either zero or $2a$. Signs before squaring decide which; when nonzero, the original quartic norm bound for $a$ is stronger than (8.6). This includes $E_D=0$ and exact cancellations. A nonzero $|D|=\sqrt{E_D}$ is similarly bounded below by applying (2.11) to $E_D$ at height $4p+76$; its upper bound follows from (8.3). All these lower and upper exponents are dominated by $A$ for $p\ge8$.
+
+The phase probabilities are $d_1/d_0$ and $(d_0-d_1)/d_0$. A positive numerator is among the guarded quantities, so each positive ratio is at least $2^{-2A}$. This is a statement about local phase outcomes from a fixed grid center. It is not a lower bound on an original record, a selected history event or an external reference event. ∎
+
+**Lemma 8.3 (certified native survival evaluation).** Fix a decreasing phase $[a,\beta]\subseteq[0,1]$ with departing mass $d$ and $d_0=d(a)>0$. Define its clamped survival function by
+
+$$
+S(t)=\frac{d(\operatorname{clamp}_{[a,\beta]}t)}{d_0},
+\qquad t\in[0,1].
+\tag{8.7}
+$$
+
+There is one rational outward-enclosure procedure which, on a dyadic $t$ of denominator at most $2^r$ and integers $k\ge0$, $r\ge1$, encloses $S(t)$ with midpoint error and radius at most $2^{-k-4}$. It uses $O(L)$ scratch bits and at most $CL^6$ schoolbook bit operations, where
+
+$$
+L=16A+4(k+r)+128
+\tag{8.8}
+$$
+
+and $C$ is an absolute native constant. It includes queries at turns, nodes and phase endpoints, without an exact transcendental sign or root oracle.
+
+Proof. Reuse the exact classification and endpoint expressions in finite precision §§2.2–2.3 and Theorem 2.2. For $D=0$ no nonconstant phase is needed. Otherwise write $D=u+iv$. The signs of $v$ and $\operatorname{Im}(D\zeta)$ decide whether there is an interior turn and its direction. Zero endpoint derivatives are endpoint turns. The real and imaginary parts needed for quadrant selection have exact quartic-field signs: a positive fixed factor $\sin\alpha$ converts the imaginary coefficient to $v$, and $2\operatorname{Re}D=D+\overline D$. The value of $\sin\alpha$ itself is the positive square root of $1-x^2/4$. Thus all nontrigonometric data have fixed-degree algebraic presentations.
+
+Here is a finite enclosure procedure for a turn, including its branch. Choose the argument $\theta\in[0,2\pi)$ of $D$ by its exact quadrant. Rotate $D$ by a signed multiple of $\pi/2$ until the rotated coordinates satisfy $u'\ge|v'|$ and $u'>0$. Compare magnitudes by their squares in $\mathbb Q(y)$, after deciding signs, and use a fixed rotation convention at a tie. Thus these choices use only the exact native signs. Then
+
+$$
+\arg(u'+iv')=2\arctan\frac{v'}{|D|+u'},
+\qquad
+\left|\frac{v'}{|D|+u'}\right|
+\le\sqrt2-1<\tfrac12.
+\tag{8.9}
+$$
+
+Undo the chosen rotation in the fixed quadrant convention. If an interior turn exists, the selected zero is $\theta+\alpha t=\ell\pi$: $\ell=1$ when $\operatorname{Im}D>0$, and $\ell=2$ when $\operatorname{Im}D<0$. The derivative tests already certify that this solution is in $(0,1)$. If there is no interior turn, the phase endpoints are $0,1$. Thus branch selection uses no numerical comparison with a transcendental boundary. An endpoint derivative equal to zero was recognized algebraically before this construction.
+
+Positive algebraic square roots can be enclosed by rational bisection with signs before squaring; isolate $y$ as in Theorem 2.2. For the remaining constants and functions use
+
+$$
+\frac\pi4=4\arctan(1/5)-\arctan(1/239),\qquad
+\arctan z=\sum_{h=0}^{N-1}\frac{(-1)^hz^{2h+1}}{2h+1}
+       +\varepsilon_N,\quad
+|\varepsilon_N|\le\frac{|z|^{2N+1}}{1-|z|^2},
+\tag{8.10}
+$$
+
+and the real and imaginary parts of the bounded-angle enclosure
+
+$$
+e^{iz}=\sum_{h=0}^{N}\frac{(iz)^h}{h!}+\rho_N(z),\qquad
+|\rho_N(z)|\le e^2\frac{2^{N+1}}{(N+1)!}\quad(|z|\le2).
+$$
+
+The sine/cosine arguments are the native angles $|\alpha t|<2$; the argument series in (8.10) has modulus less than $1/2$. Taking $N\ge16(L+1)$ suffices for the displayed exponential tail to be below $2^{-L}$: at least half the factorial factors are at least $(N+1)/2$, giving a geometric upper bound once $N\ge32$. The geometric tail in (8.10) requires only $O(L)$ terms as well. These reused elementary identities thus provide explicit truncation errors exponentially small in $L$. Evaluate terms by fixed-point recurrences with outward rounding, rather than retaining factorial-sized rational denominators. At each elementary operation retain its rounding enclosure; $O(\log(L+2))$ extra guard bits absorb the sum of $O(L)$ rounding errors. Integer parts have $O(A)$ bits. Bisection intervals, a constant number of series accumulators, loop counters and multiplication scratch consequently have $O(L)$ bits. Schoolbook multiplication and division of those registers, and the $O(L)$ stages, are bounded conservatively by $CL^6$. No table depending on the center or precision is supplied.
+
+For completeness, the error budget is uniform even near a node or a turn. Set $\epsilon=2^{-L/2}$. Compute the algebraic operands, $\pi$, and the series with certified absolute errors at most $\epsilon$ before composition, using the available $L$-bit registers. Guarded nonzero denominators are bounded below by $2^{-A}$: these include $d_0$, $|D|$, and $|D|+u'$. Bisection for a square root uses additional $O(A)$ guard precision if its radicand is small. This fits in $L$, as do coefficient evaluation and the rounding guards just described. Once $L$ has the value (8.8), operand intervals for the positive denominators stay bounded away from zero.
+
+The quotient in (8.9) has perturbation at most $C2^{2A}\epsilon$; $|\arctan'|\le1$ on this range. Division by $\alpha>1$ to obtain the turn changes only the absolute constant. Clamp is nonexpansive in its endpoints: replacing $a,\beta$ by their enclosed approximations changes its value by at most their largest error, without deciding whether $t$ equals an endpoint. Also
+
+$$
+|d'(t)|\le2\alpha|D|<2^{A+2}.
+\tag{8.11}
+$$
+
+Using this bound for the argument error and $d_0>2^{-A}$ for the final division bounds the propagated survival error by $2^{8A+16}\epsilon$. This deliberately enlarged estimate covers the algebraic operand errors, quotient errors and final outward rounding as well. Equations (8.8) and $r\ge1$ give
+
+$$
+2^{8A+16}\epsilon
+ =2^{-2(k+r)-48}<2^{-k-4}.
+\tag{8.12}
+$$
+
+One may enlarge the resulting enclosure to the stated radius and intersect with $[0,1]$. There is no division by $d'(t)$, so a zero derivative at a turn causes no singular precision requirement. A mass can vanish at $\beta$; only the positive $d_0$ is a denominator. This proves the asserted certified evaluation and bounds. ∎
+
+**Theorem 8.4 (exact local marked refinement).** For every input of Definition 8.1, one fixed fair-bit codec determines the exact discrete jump count and marks, with at most two jumps, and answers every finite sequence of interleaved integer-precision queries about its occurred jumps almost surely. Its answers are the compatible canonical names (8.1). Their decoded marked law is exactly the native positive-entrance pulse law for $n$. The assertion includes singletons, flat current, endpoint turns, interior turns, no-jump atoms and zero endpoint masses. It needs no prior numerical resolution of an earlier jump time to determine a later phase outcome or pulse endpoint.
+
+Proof. On an original active pair use the phases already supplied by (3.2) and finite precision §2.2. A singleton or an identically zero current has no jumps. On a decreasing phase the departing row has integrated survival $d(t)/d_0$, and the receiver is absorbing until that phase ends. Supply one fresh uniform variable $U\in(0,1)$ by revealing independent fair binary digits only as needed. Its infinite bit string is a probability-space description, not a stored exact real. For $\tau=d_1/d_0$ the rule is
+
+$$
+\begin{cases}
+\text{no jump},&U\le\tau,\\
+\text{one jump at the unique }T\in(a,\beta)
+       \text{ with }d(T)=d_0U,&U>\tau.
+\end{cases}
+\tag{8.13}
+$$
+
+The nonconstant phase is strictly decreasing in its interior. The law in (8.13) therefore has survival $d(t)/d_0$ and jump density $-d'(t)/d_0$ there, along with its no-jump atom $\tau$. When $d_1=0$ the jump occurs strictly before the node almost surely. When a configuration is receiving it stays fixed within that phase; no artificial jump is placed at a turn or seam. Positive entrance and exit support follow from these original phase rows, as in Theorem 3.2 with exact probabilities.
+
+This construction respects the original candidate indexing of III145.2(4). If the supplied exponential innovation is $E_{\rm call,c}$, take $U_{\rm call,c}=e^{-E_{\rm call,c}}$. It is uniform, and crossing its integrated hazard is exactly (8.13). An initially receiving row has zero hazard until a possible turn, so its first candidate starts departing there. After a first jump the new row has zero hazard until that turn; the next original candidate is still unused and independent. Its integrated risk then starts from the deterministic second-phase mass of that row, computed from the same entrance pair. If a departing row has no jump in the first phase it becomes receiving after the turn, and cannot have a later jump in that pulse. Thus at most two candidates are relevant. Their labels count genuine next-jump candidates, not blindly the two phase numbers. In particular, zero-hazard waiting does not consume a new candidate. This also explains why no unresolved first timestamp is an input to the second decision. The construction gives the same integrated-risk map when those actual original innovations are supplied; fresh bits alone supply its occurred-history law and do not acquire an independently running source's seeds or assert a new coupling of unexecuted programs.
+
+For an actual finite computation, retain the binary prefix of $U$ and its dyadic interval. Decide $U\le\tau$ by increasing that prefix until it is separated from $\tau$, using the exact radical comparisons of finite precision §2.3 on the two interval endpoints. Handle $\tau=0,1$ exactly. On a jump, start canonical bisection of $[0,1]$. At a midpoint $t$ of binary depth $\ell$, enclose $S(t)$ by Lemma 8.3 with the current seed length $k$ and evaluator parameter $r=\ell$, independently of the eventual requested precision. If the two enclosures are disjoint, $U>S(t)$ means $T<t$, and $U<S(t)$ means $T>t$. If they overlap, reveal the next paid bit of this same $U$, increase the evaluation precision, and repeat. Successful decisions advance one time digit. The clamp in (8.7) makes this comparison valid even when a midpoint lies outside the phase. Stop after the requested $r$ digits and retain both prefixes. A later query continues this identical digit-by-digit procedure, or reads a truncation of the current longer time prefix. No seed is resampled, and no decided time digit is revoked.
+
+The only equalities that can prevent a comparison from eventually separating are $U=\tau$ or $U=S(t)$ for a dyadic midpoint $t$. Each has probability zero. Equivalently, the positive jump component has a density and gives no mass to a prescribed dyadic time, including a dyadic turn. The integer centers, occupied configurations, addresses, phase choices, dyadic midpoints, call/candidate slots and finite words form a countable family. Excluding these equalities gives a common probability-one set on which every such finite query terminates and all its answers refer to the same $T$. On the null complement choose a fixed measurable completion of the decoded map and the floor convention (8.1); a finite query is still asserted to terminate only almost surely. No positive failure, refusal, stop or alarm mass is added.
+
+Keeping the discrete tags, marks and all original metadata makes the infinite canonical name and its decoded marked path measurable inverses on this full-measure space. This is the reversible-coordinate option in XI54.1, not a projection to finite time precision. In particular encoding and decoding preserve probability TV for the same marked laws. ∎
+
+**Lemma 8.5 (creation-conditioned tails and adaptive revelation).** For a candidate seed $e$, let $\mathcal F_e$ be the prior information at its creation, fixing its center pair, address, phase and positive entrance, before any digit of its own fresh $U_e$ is revealed. For a local phase outcome $B$ of positive conditional probability, let $K_e(r)$ be the greatest number of its seed bits used to decide that outcome and, on a jump, to refine its time through depth $r\ge1$ by Theorem 8.4. On a no-jump outcome there are no midpoint queries. Then for every integer $z\ge0$,
+
+$$
+\Pr\!\left(K_e(r)>r+2A+16+z\mid\mathcal F_e,B\right)
+ \le2^{-z},\qquad
+\mathbb E\!\left[K_e(r)\mid\mathcal F_e,B\right]
+ \le r+2A+18.
+\tag{8.14}
+$$
+
+The same inequalities hold after mixing over $B$ and the creation prior. They are not claims conditional on a revealed prefix, an arbitrarily selected query, a rare transcript or a reference event.
+
+For deterministic finite workload caps $H\ge0$, $Q\ge0$, $R\ge1$, allow at most $H$ original pulse calls and at most $Q$ individual mark/precision refinement queries with requested precisions at most $R$, chosen and interleaved using already available information. A grouped request counts its individual mark queries. Define $M_R$ as the maximum seed-prefix length in the mathematical completion that refines every created jumping candidate through depth $R$ and decides every created no-jump candidate. Take $M_R=0$ if none is created. Then
+
+$$
+\Pr\!\left(M_R>
+ R+2A+16+\lceil\log_2(2H+1)\rceil+z\right)\le2^{-z}.
+\tag{8.15}
+$$
+
+The actual workload consumes no more bits for each seed than this completion. In particular, its expected total native fresh bits are at most
+
+$$
+2H(R+2A+18).
+\tag{8.16}
+$$
+
+Proof. Fix the creation prior first, so all thresholds for this seed are deterministic. At time depth at most $r$ there are at most $2^r-1$ possible dyadic midpoints in $[0,1]$, irrespective of which bisection path is taken. Include the endpoint threshold $\tau$ as one more. If a comparison remains unresolved after $k$ seed bits, that bit interval and the evaluator enclosure overlap. Lemma 8.3 makes the radius at most $2^{-k-4}$, while the seed interval has length $2^{-k}$. Hence $U_e$ is within $2\cdot2^{-k}$ of the exact threshold. The exact endpoint comparison has the same implication with a smaller constant. A union bound, with allowance for the indexing of the next bit, gives
+
+$$
+\Pr(K_e(r)>k\mid\mathcal F_e)
+ \le\min\{1,2^{r-k+6}\}.
+\tag{8.17}
+$$
+
+This bound also covers the no-jump outcome. Intersecting its unresolved set with $B$ and dividing only by $\Pr(B\mid\mathcal F_e)\ge2^{-2A}$ from Lemma 8.2 gives $\min\{1,2^{r-k+2A+6}\}$ as a conditional upper bound. At $k=r+2A+16+z$ it is smaller than the first bound in (8.14). Summing its integer tail gives the expectation, since $\sum_{z\ge0}2^{-z}=2$. The same calculation bounds every fixed moment of the excess by an absolute constant depending only on that moment. No lower bound on an inverse derivative of $d$ was used.
+
+For the workload, regard fresh bits as independent streams labeled by the actually created call and candidate, exposed only on demand. This is a deferred-revelation coupling for the proof; a finite implementation stores only its consumed prefixes and obtains every new bit from the paid fair-bit service. It does not retain an infinite seed or access future original requests. The internal comparison schedule is fixed: at each midpoint use the current prefix, add a bit only on an unresolved comparison, and advance one time digit only on a successful one. Refining all the way to $R$ therefore extends the same decisions as any sequence of shorter queries. The actual state at every query is a prefix of that completed state. This is pathwise domination, not a fresh application of (8.14) conditional on which query was selected.
+
+There are at most $2H$ candidates. A possible slot's entrance may depend on earlier outcomes and query answers, but, conditional on its own creation prior, its unused seed is independent and the same uniform bound applies. Average (8.14) over its two local outcomes and its creation prior, assigning zero length to a slot that is not created. The union bound over these slots and $2H\,2^{-\lceil\log_2(2H+1)\rceil}\le1$ prove (8.15), with no independence assumption between the candidate lengths. Summing their individual expectations proves (8.16). Auxiliary completion bits are solely a domination device and are not charged as consumed actual bits unless actually requested. This proves the adaptive assertion without reconditioning on a selected rare event. ∎
+
+**Theorem 8.6 (fully charged finite-query representation).** Use fixed $d=89$ and schoolbook bit work. For the deterministic analytic caps $H,Q,R$ of Lemma 8.5 there is a sequential current-descriptor representation of the codec with the following native bounds, for one absolute constant $C$:
+
+$$
+\begin{aligned}
+\mathbb E[\text{native fresh bits}]&\le2H(R+2A+18),\\
+\mathbb E[\text{peak active native scratch}]
+ &\le C\{89p+A+R+\log(H+1)+1\},\\
+\mathbb E[\text{retained current name payload}]
+ &\le CH\{p+R+\log(H+1)+1\},\\
+\mathbb E[\text{native arithmetic work}]
+ &\le C\left[89(H+1)p^3
+ +(H+Q)\{A+R+\log(H+1)+1\}^{8}\right].
+\end{aligned}
+\tag{8.18}
+$$
+
+The arithmetic line is supplemented by actual descriptor access, scans, framing, maintenance, rewrites/splices, and input/output copying. All other retained data and all external services are additional, as specified below. The expectations include adaptive query selection under these deterministic caps. Neither deterministic worst-case finite caps nor constant total history memory are asserted.
+
+Proof. At creation of a jumping mark, retain its active entrance pair: four integer coefficients from (2.1), the pair/configuration labels, $j$, phase and candidate, the call identifier, the consumed seed prefix, the largest decided time prefix, and their lengths. The pair determines $m,b,D,E_D$, both phases and every later evaluator input. Thus an entire old $89$-vector is unnecessary. It would be incorrect to discard this pair or its seed prefix when the predictive center advances and later resample an old mark. A no-jump seed may be discarded once its outcome is determined, provided no later permitted operation uses that seed; its no-jump tag and any retained outcome history remain charged. Discarding any jumping descriptor withdraws its future refinement service; the bounds in (8.18) allow all occurred jump descriptors to be kept.
+
+For a mark refined through $r$, this descriptor needs
+
+$$
+C\{p+r+K_e(r)+\log(K_e(r)+2)+\log(r+2)
+       +\log(H+1)+1\}
+\tag{8.19}
+$$
+
+bits, with signed coefficient and self-delimiting length framing. The uniform seed prefix is stored literally; unrequested tails are future paid random input. The interval index is its $r$ time digits. $A=O(p)$ and (8.14) make the expectation of (8.19) $O(p+R+\log(H+1)+1)$. There are at most $2H$ marks. The actual final payload is bounded by its depth-$R$ completion, as is its peak payload, since these per-mark prefixes and lengths grow monotonically. This proves the payload bound. The $O(H)$ no-jump/count/mark tags, if kept in the same list, fit in it. Previously retained literal answers, copied descriptors and obsolete versions do not fit for free: their entire encoded lengths must be added. A precision-$r$ interval answer itself has length $O(r+\log(r+2))$ bits, before any additional original metadata.
+
+Choose a sequential list with one current record per mark. Append new records; locate an old one by scanning the actual encoded list, without a free random-access index. Read the selected record into the active workspace. After refinement replace it by its new record, moving the remaining list as necessary. The old and new records while being replaced are active scratch; they are not an uncharged persistent version history. A tape scan and in-place splice can be charged $O(L_{\rm ret}+\ell_{\rm new})$ actual bit access/copy operations, where $L_{\rm ret}$ is the actual current encoded-list length and $\ell_{\rm new}$ is the replacement length. New record framing and length updates are charged too. An implementation which keeps both persistent versions or an immutable refinement log must instead add every retained version, identifier and fragment, together with its access and reconstruction work. Append-only mathematical source has no implication that this private representation must keep immutable snapshots.
+
+The current center, its exact raw update and quantizer scratch use $O(89p)$ bits and $O(89p^3)$ work per pulse/read by Theorem 2.2. Keep the original stage/record flags, current address and configuration, precision parameter and call counter. Their native space is absorbed in $O(p+R+\log(H+1)+1)$. Only the active mark's old/new descriptor, seed prefix, decided time digits and evaluator registers need be added to active scratch. At all times these are bounded by
+
+$$
+C\{89p+A+R+M_R+\log(H+1)+1\}.
+\tag{8.20}
+$$
+
+The list cursor and length registers have logarithmic length in its actual encoding, also absorbed by this bound. Taking expectations in (8.15) proves the active-space line of (8.18). Retained descriptors are an additional resource, not subsumed under that scratch estimate.
+
+To justify the arithmetic exponent, suppose a candidate's current query ends at time depth $r$ and seed length $K$. Its endpoint comparisons are the paid algebraic comparisons of finite precision §2.3 at height $O(p+K)$. Each midpoint evaluation has work at most $C(A+K+r+1)^6$ by Lemma 8.3. A successful comparison advances a time digit; an unsuccessful one reveals another seed bit. Reusing the current prefixes consequently requires at most $C(r+K+1)$ evaluator/comparison calls for a complete refinement, including the outcome decision. This gives the deterministic, deliberately loose bound
+
+$$
+C(A+r+K+1)^8
+\tag{8.21}
+$$
+
+for its native arithmetic. A repeated or lower-precision query can return a truncation; its actual answer copy is still charged. At most $H$ pulse procedures and $Q$ refinement requests need such arithmetic, with at most two candidates per pulse, plus $H+1$ possible whole-vector updates. From (8.15), every fixed moment satisfies
+
+$$
+\mathbb E[(A+R+M_R+1)^8]
+ \le C\{A+R+\log(H+1)+1\}^8.
+\tag{8.22}
+$$
+
+Summing (8.21) with this maximum, rather than conditioning on a selected query, proves the arithmetic line of (8.18). Equation (8.16) supplies its fresh-bit line. Almost-sure termination was proved in Theorem 8.4; the exponential tail proves the stronger finite expectations here.
+
+For the native list alone, the expected total scan/splice contribution can additionally be bounded by $C(H+Q)H\{p+R+\log(H+1)+1\}$ under this representation, using the completed total record length. Alternatively charge its actual measured access count. Native bit generation and all comparisons in (8.18) are bit work, not unit-cost real operations. Original input reads, forwarding and output copies remain actual additional work, even when they carry a string already stored elsewhere.
+
+Every retained original request, report, chronological history, readable archive, cut/reference representation, schedule/clock name, input/output buffer and query-controller state is charged at its actual encoded length. The native service needs no $Q$-counter or future request tape; a controller which retains a query count, answers, policies or versions supplies and pays for that state. Add all work and memory of schedule realizers, reference decoders, archive code/state, innovations, emission decisions and emitted outputs, and all acquisition, access, copying and physical service costs. An output is free of retained storage only after it is no longer readable by the continuation. Streaming and retained history are different resource choices.
+
+The parameters $H,Q,R$ are deterministic workload caps for the estimate, not free future inputs to the codec or restrictions of the original word menu. The same procedure runs without a horizon input. If an uncapped random workload is merely finite almost surely, the costs remain finite on each terminating finite run, but finite expectations require a separate integrability argument for the right side and all external/access costs. With unbounded precision or retained history there is no fixed finite total bit, storage or time budget. ∎
+
+**Corollary 8.7 (causal exact rounded law and original from-ready comparison).** Compose Theorem 8.4 with the original endpoint center update $\mathcal N_p(K_jn)$, literal report $I=b_9(q)$, configuration-preserving read update $\mathcal N_p(M_In)$, and literal terminal $W(q)$. Initialize at the known ready by (3.1). For every finite original program, the decoded joint law is exactly Definition 4.1's exact-phase rounded *marked* process. It is consistent on common occurred prefixes. If the program has at most $H$ pulses, on XI54.1's common original marked-source coordinates its distance from the original from-ready law is at most
+
+$$
+\operatorname{TV}(L_{\rm original},L_{\rm codec,decoded})
+ \le\min\{1,(H+1)(1+16b_*H)\eta_p\},
+\qquad \eta_p=4\sqrt{89}\,2^{-p}.
+\tag{8.23}
+$$
+
+There is no dyadic phase-rounding term. The same original readable archive kernel on its unchanged inputs preserves this comparison, with its execution and resource premises separate.
+
+Proof. Conditional on each arrived valid $(n,q,j)$, Theorem 8.4 identifies the entire marked pulse kernel, not just its endpoint. Exact phase outcomes end on the support of $K_jn$; Theorems 2.2 and 3.2 supply the support-preserving reencoding and valid next entrance. At the read $M_In$ is nonzero because it contains the occupied coordinate; its literal projection and reencoding keep $q$ and the reported sector. No zero true branch is assigned a normalized original state; a rounded-positive branch uses only its own nonzero center projection. The endpoint and next center depend on the exact discrete outcomes, not on how many digits of a genuine time have been requested. Thus old names can continue to be refined after later pulses without changing any source state. Iterated causal kernel composition proves equality with the rounded marked law. Independent fresh candidate tails and processing only arrived requests give common occurred-prefix consistency. They do not add adaptive source controls or give access to the original model's counterfactual noise realization.
+
+For the comparison, directly reuse Theorem 4.2's square-dominated common submeasure on full configuration histories. Its jump-list/holding-factor construction and node limit in (4.6)–(4.8) already retain the genuine jump times and before/after marks; its estimate precedes the projection to $C$ in Theorem 5.1. The pulse losses and $H+1$ reencoding losses there give exactly (8.23). Canonical name decoding is a reversible change of this marked coordinate. There is no comparison with the floored Bernoulli rows (3.4), hence no $2H2^{-p}$ term. In particular this argument does not require the rounded runtime cut to have a square marginal, and does not apply XI54.6 at such a cut.
+
+Retain actual request, schedule, order and failure coordinates, using only their original common external-input contracts. XI54.2's $A_\kappa$ attaches the same original readable archive mechanism on these inputs and reports, not on private descriptors. Common-kernel contraction, and projection back when the source is retained, give the same TV bound (indeed the same distance before and after that common extension). This statement is measurable-kernel composition; an executable archive must separately be supplied with its code, innovations and complete costs. ∎
+
+**Definition 8.8 (continuation, reference and realization boundaries).** A continuation from an actual cut must receive the actual unchanged $(I,Y,Q)$ joint and the stipulated independence of unused source innovations. The local kernel for a supplied center and positive $q$ is defined above; the codec does not acquire that joint, identify an unknown configuration or recover an already realized reference from reports. Equation (8.23) is a known-ready comparison. It does not automatically extend to an arbitrary additional reference joint or to an arbitrary cut. Such an extension requires its own common-joint premises and applicable comparison estimate.
+
+A reference already specified as a Borel function of an occurred decoded history can be transported through the same reversible name map, on the same sample. This gives a measure-theoretic identity. A separately supplied actual reference is kept in its actual joint distribution, with no independent resampling or invented coupling. Neither assertion supplies an evaluator for an arbitrary Borel function, its lawful extraction, its certification or its cost. The same distinction applies to a history decoder with non-effective external coordinates.
+
+Pulse-age names and the unchanged actual schedule preserve actual time. If a start-time realizer and an age name each provide enclosures with errors at most $2^{-r-2}$, their sum gives an absolute-time enclosure with error below $2^{-r}$, plus the actual addition and output costs. This is not automatically a canonical absolute-time binary digit decision: a sum arbitrarily near a dyadic boundary can require deeper comparisons and more schedule queries. Every precision actually requested from that realizer, its retained names and all work are additional charges. No native-only expected or worst-case budget is asserted for an arbitrary supplied schedule.
+
+The original readable archive still receives only $g(Y)$, actually arrived requests and their call times/order, literal original reports/failures and earlier actual archive emissions, as in XI54.2. It never receives private jump names, seeds, unreported configurations or replacement comparison vectors. Emission times, counts, absence, post-terminal archives and return data keep their original coordinates and kernel. Arbitrary measurable archive or reference kernels need not have executable bounded realizers. Their descriptive existence supplies no random-bit source, extraction device or finite resource contract.
+
+All branch and error masses in (8.23) are unconditional. No relative or absolute error guarantee conditional on an arbitrary rare original event is obtained. The grid preserves the support of each immediate argument; it can still remove a later exact cancellation, so exact original-word null support is not asserted. All original labels and legal moves remain. Fixed $p$ gives the displayed horizon-dependent comparison, not a uniform fixed accuracy for every unbounded finite horizon. Query access to names is a computational output service of this law representation, not a newly permitted internal-time observation or physical feedback operation.
+
+The common marked coordinate in (8.23) omits a common exact-vector graph identification. XI55 supplies each model's own deterministic vector reconstruction; different exact graphs can have TV one in one unchanged exact-vector coordinate. The rounded vector is never substituted for the original vector there. Source-preserving inverse or mutual recovery, unrestricted continuation, response identification and the complete relationships among space, time, boundary and memory remain additional obligations. The unknown response remains $\Pi:D_{\rm act}\to\Delta(E)$, with no newly supplied regularity or domain extension. Original R/common odds/calibration, preparation/device/joint/reference contracts and actual histories are retained, not generated by the codec. No reset, clone, affine mixture, inverse control, hidden reader or destructive-to-continuing substitution is introduced.
+
+Actual native source, Hamiltonian/holding/read/update/quantizer realization, a physical independent fair-bit supply, clocks, effective reference/archive/schedule services, lawful acquisition, certification and physical adoption are independent premises. When not separately supplied they are ASSUMED-UNVERIFIED for a physical application. The conditional mathematical implication above does not establish those premises, an energy or real-time deadline bound, physical optimality, or completion of the full quantum-source objective.
+
+**Definition 8.9 (suppliers and the source-specific increment).** The statements here are ordinary conditional paper mathematics. Source identities and interfaces are those of the exact RQ/FP/XI text at repository revision `1bfe29bafbcb2c76bdd9536a55f9c37d5505b3c8`. The reused original pulse, candidate innovations and actual-past contracts are III145–146/160 and IV278; fixed-order endpoint arithmetic and radical signs are finite precision §§2.1–2.3 and Theorems 2.2–3.2 above. The full-history domination/stability proof is Theorem 4.2, with the same XI54 coordinate/archive and XI55 vector-graph boundaries. Those results are used directly rather than claimed anew.
+
+The integral-risk and node suppliers remain [Georgii–Tumulka, arXiv:math/0312294v2, §3 (10)–(11), Lemma 2(a),(b),(d)][GT] and [Dürr–Goldstein–Tumulka–Zanghì, arXiv:quant-ph/0407116v1, §2.7 (23)–(29)][DGTZ]. The same $P_q=|q\rangle\langle q|$, $H_{\rm GT}=2H_j$ correspondence matches their $\hbar=2$ to native $\hbar=1$. They supply holding, node and process premises, not the native computational resource theorem. [Karney, *Sampling exactly from the normal distribution*, arXiv:1303.6257v2, §1 and the u-rand representation/comparison discussion][Karney8] supplies a primary precedent for exact objects with progressively generated random digits. Its normal sampler and cost claims are not suppliers for (8.18). Generic inverse-transform sampling, elementary-function series, certified interval arithmetic, norm separation, tail summation, deferred revelation and measurable isomorphism are reused tools inside the source-specific proof.
+
+The `repo-derived` increment is the native uniform mass/survival-evaluation guard connected to an effective genuine marked-output map, its candidate correspondence, compatible pulse-age names and fully paid finite-query interface, including the creation-conditioned and adaptive-domination resource arguments. The already covered terminal $\Theta(\log H)$ result, finite-seam memory theorem, endpoint arithmetic, square-domination estimate, XI54 archive contract and horizon-free full-seam lower bound do not supply this effective marked-time service. Expected variable-length storage is not a finite worst-case reachable-state count, and (8.23) is not the horizon-free fixed-error premise of that lower bound. No matching optimum, global novelty, exhaustive search, independent physical premise supply or new kernel verification is asserted. A user-authored conditional synthesis remains conditional input; it does not independently realize any of the actual supplies in Definition 8.8.
+
+[Karney8]: https://arxiv.org/html/1303.6257v2
+
+## 追加锚（本行以下为增补区）

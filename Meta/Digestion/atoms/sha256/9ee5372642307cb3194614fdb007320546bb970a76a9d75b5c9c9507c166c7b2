@@ -1,0 +1,34 @@
+**定义 3.1（反例的全部资料）。** 取 $E=\mathbb R^3$，有序基为 $u=e_0,e_1,e_2$，坐标写为 $a=(a_0,a_1,a_2)$。固定乘法
+
+$$
+a\circ b=
+(a_0b_0+a_1b_1+a_2b_2,\ a_0b_1+a_1b_0,\ a_0b_2+a_2b_0).
+\tag{3.1}
+$$
+
+取三个实线性评价及其非负锥
+
+$$
+\begin{gathered}
+\alpha_0(a)=a_0,\qquad
+\alpha_1(a)=a_0+\tfrac12a_1,\qquad
+\alpha_2(a)=a_0+\tfrac12a_2,\\
+\mathcal P=\left\{\sum_{j=0}^2\lambda_j\alpha_j:\lambda_j\ge0\right\},\qquad
+E_+=\{a:\alpha_j(a)\ge0\ (j=0,1,2)\}.
+\end{gathered}
+\tag{3.2}
+$$
+
+叉积和范数均为这些坐标下的普通 Euclidean 运算。定义
+
+$$
+f(n)=
+\begin{cases}
+ n_0^3/\|n\|^2,&n\ne0,\\
+ 0,&n=0,
+\end{cases}
+\qquad
+D(a,b)=\tfrac12 f(a\times b)u.
+\tag{3.3}
+$$
+

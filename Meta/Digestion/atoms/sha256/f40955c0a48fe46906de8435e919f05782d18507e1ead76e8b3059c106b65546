@@ -1,0 +1,19 @@
+**Definition 5.2 (Per-target clipped kernel).** For a finite integer $L\ge1$, put
+
+$$
+\begin{aligned}
+\pi_i&=\sum_{k=1}^Lf_i(k),
+&J_i^L&=\frac1{\pi_i}\sum_{k=1}^Lf_i(k)K_k,\\
+V_i^L&=\frac1{1-\pi_i}\sum_{k>L}f_i(k)K_k,
+&\gamma_L&=1+\frac\delta{L+1}.
+\end{aligned}
+\tag{5.5}
+$$
+
+Every mass is positive and $0<\pi_i<1$. These matrices are stochastic and fix both labels. For target $i$ and opponent $j=1-i$, define the proof kernel
+
+$$
+W_i=\pi_jJ_j^L+(1-\pi_j)V_i^L.
+\tag{5.6}
+$$
+

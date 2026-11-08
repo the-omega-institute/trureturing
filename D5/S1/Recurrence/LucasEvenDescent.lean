@@ -6,6 +6,17 @@
    utility: none
    digest: Lucas doubling descends to zero or half-modulus at odd half-entry indices. -/
 
+/-
+doubling: proof_shape: bind-only; escape_witness: none.
+Consumers: two_mul_lucas_eq_zero and BalaEvenStepFibonacciPolynomialIntegrality.u_doubling.
+Direct frozen dependencies:
+D5/S1/Recurrence/LucasEvenDescent.lucasU; sha256:cbeb592ae9fb671d629aef82ed1fd47ca5fa1f30e75e1da7b0a4089da4600755.
+D5/S1/Recurrence/LucasEvenDescent.powerMatrix; sha256:7c3919366b4d98078349009599f0e05f4dcaee3ba1bf2f275bd0bc76bc562a56.
+D5/S1/Recurrence/LucasEvenDescent.power_add; sha256:2d2b705e1dc2b5f3b9a2ee1bd95356ed0e02a2d2dc271e587b2eca749e7b9736.
+D5/S1/Recurrence/LucasEvenDescent.power_shape; sha256:e8f97983a6fc440a8f0ccb6376fb6d77aacb0c9274acadf1094f83c6ac6af821.
+Escape audit unfinished for doubling: https://github.com/the-omega-institute/trureturing/issues/27594
+-/
+
 import Mathlib.Data.ZMod.Units
 import Mathlib.GroupTheory.SpecificGroups.Cyclic
 import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
@@ -120,7 +131,7 @@ private theorem determinant_identity (p : R) (q : Rˣ) (n : ℤ) :
   simp
   ring
 
-private theorem doubling (p : R) (q : Rˣ) (n : ℤ) :
+theorem doubling (p : R) (q : Rˣ) (n : ℤ) :
     lucasU p q (2 * n) = 2 * lucasU p q n * lucasU p q (n + 1) - p * lucasU p q n ^ 2 ∧
     lucasU p q (2 * n + 1) = lucasU p q (n + 1) ^ 2 - ↑q * lucasU p q n ^ 2 := by
   have h := power_add p q n n
@@ -281,14 +292,5 @@ theorem conjecture_five_two (p q : ℤ) (m : ℕ) (hm : 0 < m)
   dsimp only
   exact lucas_even_descent m hm hmEven _ _ _
 
-#print axioms companion
-#print axioms lucasU
-#print axioms lucas_recurrence
-#print axioms two_mul_lucas_eq_zero
-#print axioms entryPoint
-#print axioms lucas_eq_zero_iff_entry_dvd
-#print axioms entry_point_spec
-#print axioms lucas_even_descent
-#print axioms conjecture_five_two
 
 end D5.S1.Recurrence.LucasEvenDescent

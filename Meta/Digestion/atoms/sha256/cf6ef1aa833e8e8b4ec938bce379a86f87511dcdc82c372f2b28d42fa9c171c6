@@ -1,0 +1,70 @@
+**命题 14.4（Coronas outside all four supplied graph hypotheses）。**
+For every integer $r\geq5$, let $F_r=K_r-\{a,b\}$ be the complete
+graph with just the edge $\{a,b\}$ removed, and put
+$H_r=F_r\mathbin\circ K_1$. Then $H_r$ has order $2r$ and all
+conclusions (14.2) at every integer $S\geq1$. On $H_r$ itself,
+the connected block-graph hypothesis of Corollary 13.3, the wholly
+bipartite-neighborhood hypothesis of Definition 7.1, the complete
+multipartite hypothesis of Corollary 11.3 and the flat-least-mode
+hypothesis of Assumption 3.1 all fail.
+
+Proof. The core is connected: its sole nonadjacent pair $a,b$ has
+a common neighbor, and every other pair is adjacent. Corollary 14.3
+therefore gives order $m=2r$, filling $k=2rS$ and every conclusion,
+on the unchanged original carrier. In particular every core vertex
+has its own isolated leaf component in its neighborhood, and a leaf
+has a singleton neighborhood.
+
+The core $F_r$ is two-connected. Deleting any one of its vertices
+leaves a complete graph or a complete graph missing one edge on
+$r-1\geq4$ vertices. Either is connected, since any missing pair
+still has a third vertex joining them. It is a maximal two-connected
+subgraph of $H_r$: a leaf cannot lie in a two-connected subgraph,
+as it has degree at most one there. Thus this core is a graph block
+of $H_r$. It is not a clique because $a,b$ are nonadjacent.
+Consequently $H_r$ is not a block graph in the precise sense of
+Definition 12.1 and Corollary 13.3.
+
+At the core vertex $c_a$, the other core neighbors are the
+$r-2$ vertices distinct from $a,b$. They induce $K_{r-2}$;
+the remaining neighbor is its isolated leaf $\ell_a$.
+Since $r-2\geq3$, this neighborhood contains a triangle and is not
+bipartite. This disproves the wholly bipartite-neighborhood condition
+on $H_r$, while its singleton component still meets Definition 14.1.
+
+In a complete multipartite graph, distinct nonadjacent vertices must
+belong to the same independent part. Choose two distinct core labels
+$u,v$. In $H_r$, $\ell_u$ is nonadjacent to both $c_v$ and
+$\ell_v$, whereas $c_v$ is adjacent to $\ell_v$.
+These three relations are incompatible with any complete multipartite
+partition. Thus $H_r$ fails that hypothesis, with arbitrary labelled
+or unequal parts as well.
+
+Finally let $A=A(F_r)$ and order the base adjacency coordinates as
+cores followed by leaves. Then
+
+$$
+a_r=A(H_r)=\begin{pmatrix}A&I\ I&0\end{pmatrix}.
+\tag{14.16}
+$$
+
+Choose any core edge $\{u,v\}$. Give a vector $w$ the coordinates
+$w_{c_u}=1$, $w_{c_v}=-1$, $w_{\ell_u}=-1$,
+$w_{\ell_v}=1$, and zero elsewhere. Its squared norm is four.
+Only the core edge and these two leaf edges contribute to its
+adjacency quadratic form, each with endpoint product $-1$ and both
+orientations. Hence $\langle w,a_rw\rangle=-6$, and the actual
+least base eigenvalue satisfies $\lambda_{\min}(a_r)\leq-3/2<-1$.
+For any complex eigenvector $z$ at this least eigenvalue $\lambda$,
+the leaf equations in (14.16) are $\lambda z_{\ell_v}=z_{c_v}$.
+If every coordinate had modulus one, they would force $|\lambda|=1$,
+a contradiction. This rules out the exact complex flat least mode
+of Assumption 3.1 on $H_r$; it does not require a formula for that
+base eigenvalue or for the many-body $E$.
+
+Thus these coronas exhibit the graph-domain addition while the
+classical spin tools and spectral implications remain the supplied
+intermediates. No priority assertion or conclusion for arbitrary
+connected even-order bases follows from the four failed sufficient
+hypotheses. $\square$
+

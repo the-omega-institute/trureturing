@@ -145,4 +145,34 @@ theorem arithmetic_surplus_dominates_loglog_curvature {z M : ℝ}
   rw [hhalf] at harith
   linarith only [hsmall, harith]
 
+/-- Half the actual complete surplus pays curvature; the remaining half
+retains the explicit root-scale constant. -/
+theorem arithmetic_surplus_sub_curvature_root_scale {z M : ℝ}
+    (hz : 11 < z) (hM : 0 < M) (hMhalf : M < 1 / 2) {n : ℕ}
+    (hn : 0 < n) (hsupport : n.primeFactors = Nat.primesLE ⌊z⌋₊) :
+    let K := Real.log (Real.log z) + M / (z * Real.log z) -
+      Real.log (Real.log (z + M))
+    1 / (4000 * Real.sqrt z * Real.log z) <
+      D5.S3.Arith.Robin.OriginalEndpointPrimeTail.tail n +
+        (Real.log (n : ℝ) - Chebyshev.psi z) / (z * Real.log z) -
+          fullPrimePowerResidual z - K := by
+  dsimp only
+  obtain ⟨_, hquad⟩ := loglog_curvature (by linarith : 1 < z) hM hMhalf
+  have hsmall := hquad.trans (curvature_bound_lt_surplus_half hz)
+  have hold := full_prime_power_arithmetic_surplus (by linarith : 4 ≤ z) hn hsupport
+  have hroot :=
+    D5.S3.Arith.Robin.PriceRecord.FullPrimePowerArithmeticSurplus.full_prime_power_arithmetic_surplus_root_scale
+      (by linarith : 4 ≤ z) hn hsupport
+  have hhalf : Real.log (Real.log z) + M / (z * Real.log z) -
+      Real.log (Real.log (z + M)) <
+      (D5.S3.Arith.Robin.OriginalEndpointPrimeTail.tail n +
+        (Real.log (n : ℝ) - Chebyshev.psi z) / (z * Real.log z) -
+          fullPrimePowerResidual z) / 2 := by
+    have heq : Real.log 2 / (6 * z * Real.log z) =
+        2 * (Real.log 2 / (12 * z * Real.log z)) := by ring
+    linarith only [hsmall, hold, heq]
+  have heq : 1 / (2000 * Real.sqrt z * Real.log z) =
+      2 * (1 / (4000 * Real.sqrt z * Real.log z)) := by ring
+  linarith only [hroot, hhalf, heq]
+
 end D5.S3.Arith.Robin.PriceRecord.CurvatureCorrectedArithmeticSurplus

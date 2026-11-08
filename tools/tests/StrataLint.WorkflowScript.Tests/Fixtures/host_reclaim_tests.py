@@ -61,6 +61,9 @@ class HostReclaimTests(unittest.TestCase):
         self.git(self.main, "init", "--initial-branch=dev")
         self.git(self.main, "config", "user.name", "Reclaim Tests")
         self.git(self.main, "config", "user.email", "reclaim@example.invalid")
+        self.git(self.main, "config", "maintenance.auto", "false")
+        self.git(self.main, "config", "gc.auto", "0")
+        self.git(self.main, "config", "gc.autoDetach", "false")
         (self.main / "source").write_text("retained\n")
         (self.main / ".gitignore").write_text(".lake/\n")
         self.git(self.main, "add", ".")
@@ -75,6 +78,9 @@ class HostReclaimTests(unittest.TestCase):
         self.git(self.main, "clone", "--no-hardlinks", self.main, target)
         self.git(target, "config", "user.name", "Reclaim Tests")
         self.git(target, "config", "user.email", "reclaim@example.invalid")
+        self.git(target, "config", "maintenance.auto", "false")
+        self.git(target, "config", "gc.auto", "0")
+        self.git(target, "config", "gc.autoDetach", "false")
         return target
 
     def age(self, root):

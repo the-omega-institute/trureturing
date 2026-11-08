@@ -1,0 +1,26 @@
+**定理 324.1（完整候选的恒等对应）。** 对定义 319.1 的任意同一原菜单及预先固定的同一 $t_0$，分别有
+
+$$
+\mathsf C_Z(B_*)\Longleftrightarrow\mathsf C_T(B_*)
+\Longleftrightarrow\mathsf C_{\rm support}(B_*).
+\tag{324.1}
+$$
+
+对应对全部原数据和全部合法有限历史都是恒等。由同一原 $D$ 定向的复坐标中，所有原对象满足
+
+$$
+\begin{gathered}
+\mathcal A_A=\bigoplus_s B(H_{A,s}),\quad
+E_A=(\mathcal A_A)_{\rm sa},\quad C_A=(\mathcal A_A)_+,\\
+D_ab=\tfrac{\mathrm i}{2}[a,b],\qquad
+ a\cdot b=a\circ b-\mathrm iD_ab,\\
+D_ab=-D_ba,\quad D_aa=D_au=D_ua=0,\quad
+[D_a,D_b]=-[L_a,L_b],\quad D_c^2=-P_c/4\ (c^2=c).
+\end{gathered}
+\tag{324.2}
+$$
+
+全部原实际联合成为保持同一取向的普通复张量，全部原相关输入和原经典中心保持。
+
+证明。323.1 的无标定桥先恢复前卷 315.1 的完整前件；共同尺度包含零分支。随后才在同一 $J_0,t_0,q,W,D$ 上使用原 $\sigma_{t_0}$，按前卷 276.1–276.2、315.1 使共同曲率系数为一，取得 (324.1)–(324.2)。不重标原 $D$、不重新选择标签，也不以单块符号选择替换整个原接口取向。全部实际张量结论复用前卷 316.1 的已匹配接口。∎
+

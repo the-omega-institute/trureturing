@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c8cc92b70f9cd792128f1f2ef7e7bc67aff743b4d9daa351cba628a2b7c1fded
+  normalized_sha256: sha256:c8cc92b70f9cd792128f1f2ef7e7bc67aff743b4d9daa351cba628a2b7c1fded
+cas_ref: sha256:c8cc92b70f9cd792128f1f2ef7e7bc67aff743b4d9daa351cba628a2b7c1fded
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Applicability annotation for the fixed canonical pulse fibre, not a general classification. The positive statement that whole curves determine the original weighted generators, and hence the original left products L_q T_qt, is direct reuse of pinned Mathlib hasDerivAt_exp_smul_const, HasDerivAt.hasDerivWithinAt, HasDerivWithinAt.congr_of_mem, uniqueDiffOn_Icc_zero_one and UniqueDiffWithinAt.eq_deriv at zero, followed by the unchanged original block rules and cancellation of the nonzero alpha and c. This does not assume equality outside [0,1]. The need for the canonical J plus zero response, fixed positive metric and original isometries is an explicit applicability limit; no assertion of general rank two at every vertex, parallel kernels or flat active transport is settled. References to later ready results retain their own hypotheses and are not new proof claims here. Endpoint aliasing is the existing exponential periodicity boundary (Complex.exp_two_pi_mul_I and NormedSpace.map_exp), not generator uniqueness from endpoint samples. This receipt records that scope only; it does not claim a proof of the excluded general classification or of any unassigned later atom.
+    previous_atom_id: 1d9637f6042f1ba727e5859944c3c7f495819737bc35c978cd9dccf6ecffd938
+    next_atom_id: 2cd7977124a14b3f75ab34527bb0ae76fa9a8f5c8ebb216703e75430f386b7f1

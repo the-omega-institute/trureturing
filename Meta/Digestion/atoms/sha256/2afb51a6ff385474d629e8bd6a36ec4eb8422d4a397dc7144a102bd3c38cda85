@@ -1,0 +1,46 @@
+**Proposition 209.3 (finite-$k$ refinement and its eventual sign).** Let
+
+$$
+k_{j,n}=\operatorname*{ess\,sup}_{D_{n,j}}\chi
+$$
+
+with respect to $v\,m$. Whenever $k_{j,n}<\infty$,
+
+$$
+k_{j,n}\ge\frac{\xi_j}{2}
+\tag{209.10}
+$$
+
+for all sufficiently large $n$. For those indices, the refined form
+
+$$
+R_{j,n}=\left(1+\frac1{k_{j,n}}\right)G_{j,n}^+
+       +\frac1{k_{j,n}}G_{j,n}^- -V_{j,n}
+\tag{209.11}
+$$
+
+is strictly negative definite on $K_{\rm rel}$ once $n$ is sufficiently large. If $k_{j,n}=\infty$, this refinement is inapplicable.
+
+*Proof.* Since $w\in L^1(m)$, (209.1) gives
+
+$$
+\frac1{\pi_j}\int_Gu_{n,j}w\,dm\longrightarrow\xi_j.
+\tag{209.12}
+$$
+
+The left side is the $\nu_{j,n}$-mean of $\chi$ and is at most $k_{j,n}$ whenever that essential supremum is finite. This proves (209.10). The conditional-variance estimate (208.24), with the current partition, gives
+
+$$
+H_{\chi,j,n}\preceq k_{j,n}(V_{j,n}-G_{j,n}^+).
+\tag{209.13}
+$$
+
+Rearranging (209.13) yields
+
+$$
+R_{j,n}\preceq\frac1{k_{j,n}}S_{j,n}.
+\tag{209.14}
+$$
+
+By Proposition 209.2, $S_{j,n}$ is eventually strictly negative definite, and (209.10) makes the scalar factor positive. Equation (209.14) therefore makes $R_{j,n}$ strictly negative definite as well. Infinite $k_{j,n}$ supplies no expression of the form (209.11). $\square$
+

@@ -211,7 +211,7 @@ class RefRecovery:
 
     def check(self, wanted):
         preservation, _ = worktree_modules()
-        from worktree_protocol import git_environment, scope_fds
+        from worktree_protocol import git_environment
         refs = preservation.git(self.repository, "for-each-ref", "--format=%(refname) %(objectname)").stdout
         if refs != self.refs:
             # Peel snapshot OIDs, so a moving ref cannot substitute another root.
@@ -250,7 +250,7 @@ class RefRecovery:
                 subprocess.run(["git", "--no-replace-objects", "-C", str(self.repository), "cat-file", "--batch"],
                                input=b"\n".join(wanted_blobs) + b"\n", stdout=blobs,
                                stderr=subprocess.PIPE, check=True, timeout=60,
-                               env=git_environment(), pass_fds=scope_fds())
+                               env=git_environment())
                 blobs.seek(0)
                 for oid in wanted_blobs:
                     header = blobs.readline().split()
@@ -1016,11 +1016,12 @@ def remnant_candidates(repository, inventory):
     if not siblings:
         return
     preservation, _ = worktree_modules()
+    from worktree_protocol import common as git_common
     try:
         top = preservation.git(main, "rev-parse", "--show-toplevel").stdout.removesuffix(b"\n")
         if (Path(os.fsdecode(top)).resolve() != main or not (main / ".git").is_dir()
-                or preservation.common(main) != (main / ".git").resolve()
-                or preservation.common(repository) != preservation.common(main)):
+                or git_common(main) != (main / ".git").resolve()
+                or git_common(repository) != git_common(main)):
             raise OSError("main_checkout_unverifiable")
     except (OSError, RuntimeError, ValueError, subprocess.SubprocessError) as error:
         raise OSError("main_checkout_unverifiable: " + str(error)) from error
@@ -1064,7 +1065,7 @@ def artifact_lakes(path, protected, worktrees, unobservable):
         yield entry, found
 
 
-def clean_worktrees(repository, base, delete, active_paths=(), working_directory=None):
+def clean_worktrees(repository, base, delete, working_directory=None):
     arguments = ["/bin/bash", str(repository / "tools/scripts/clean-lanes.sh"),
                  "--base", base, "--lanes-only"]
     if delete:
@@ -1114,9 +1115,23 @@ def clean_from_anchor(options, caller, disk_descriptor):
     # Registered-tree disposal can remove this program's source checkout.
     worktree_modules()
     inventory = registered_worktrees(options.repository)
-    worktrees = set(inventory)
     lanes_exit = clean_worktrees(options.repository, options.base, options.delete,
                                 working_directory=next(iter(inventory), options.repository))
+    # Only artifact disposal uses the artifact owner's mutex. Registered-tree
+    # cleanup has already completed, even when another artifact sweep is active.
+    lock_path = Path(tempfile.gettempdir()) / ("trureturing-clean-all-" + str(os.getuid()) + ".lock")
+    descriptor = os.open(lock_path, os.O_CREAT | os.O_RDWR | os.O_NOFOLLOW, 0o600)
+    with os.fdopen(descriptor, "r+") as lock:
+        info = os.fstat(lock.fileno())
+        if info.st_uid != os.getuid() or info.st_nlink != 1 or not stat.S_ISREG(info.st_mode):
+            raise OSError("invalid cleanup lock")
+        fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        return clean_artifacts(options, caller, disk_descriptor, inventory, lanes_exit,
+                               codex, sshx, roots)
+
+
+def clean_artifacts(options, caller, disk_descriptor, inventory, lanes_exit, codex, sshx, roots):
+    worktrees = set(inventory)
     try:
         active = active_paths(codex)
     except OSError as error:
@@ -1285,15 +1300,7 @@ def _main(arguments=None):
             return 0
         if options.tmp_root is None:
             options.tmp_root = [Path("/tmp"), Path(tempfile.gettempdir())]
-        # Use a named, per-user lock so concurrent sweeps cannot delete the same tree.
-        lock_path = Path(tempfile.gettempdir()) / ("trureturing-clean-all-" + str(os.getuid()) + ".lock")
-        descriptor = os.open(lock_path, os.O_CREAT | os.O_RDWR | os.O_NOFOLLOW, 0o600)
-        with os.fdopen(descriptor, "r+") as lock:
-            info = os.fstat(lock.fileno())
-            if info.st_uid != os.getuid() or info.st_nlink != 1 or not stat.S_ISREG(info.st_mode):
-                raise OSError("invalid cleanup lock")
-            fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
-            return run_clean(options)
+        return run_clean(options)
     except LowDiskSpace as error:
         print(str(error), file=sys.stderr)
         return 73

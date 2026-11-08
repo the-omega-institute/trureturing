@@ -1,0 +1,118 @@
+**Theorem 52.1 (a common domain and the exact moment criterion).**
+Let $\mathscr D$ consist of finite sums
+
+$$
+h(k,\theta,v)=\frac1{2\pi}\sum_{(n,m)\in E}
+                     h_{nm}(k)e^{i(n\theta+mv)},
+\qquad E\subset\mathbb Z^2\text{ finite},\quad
+h_{nm}\in C_c^\infty(I).
+\tag{52.1}
+$$
+
+This is dense in the whole base Hilbert space and is contained in
+$D(\mathcal K_c^r)$ for every finite $c\ge0$ and every integer
+$r\ge0$. For every such $h$, the functions $T_c(t)h$, $B_b(t)h$
+and $A_s(t)h$ have strong right derivatives of every order at
+$t=0$, as well as continuous strong derivatives on $[0,\infty)$.
+
+For a finite positive UNIT list and a finite positive RAW list write
+
+$$
+\begin{aligned}
+B^{[n]}(t)&=\sum_{i=1}^nw_iT_{c_i}(t),&
+w_i&\ge0,\quad\sum_iw_i=1,\quad c_i\ge0,\\
+A^{[n]}(t)&=\sum_{i=1}^na_i[T_{d_i}(t)-S_t],&
+a_i&\ge0,\quad d_i\ge0,
+\end{aligned}
+\tag{52.2}
+$$
+
+where every coefficient and coupling is finite. For every integer
+$q\ge0$, agreement of derivatives of orders $0,\ldots,q$ at
+zero on every input in $\mathscr D$ is equivalent respectively to
+
+$$
+\sum_iw_ic_i^j=m_j^b\quad(0\le j\le q),
+\qquad
+\sum_i a_i d_i^j=m_j^s\quad(1\le j\le q).
+\tag{52.3}
+$$
+
+The RAW condition for $q=0$ is empty. No normalization of
+$\sum_i a_i$ occurs.
+
+Proof. In each fixed angular mode the action of $K$ is exactly
+(36.1) at $c=0$, a second-order height differential expression
+with smooth polynomial potential. It maps $C_c^\infty(I)$ to
+itself. Multiplication by the smooth $\phi$ has the same property,
+without changing angular modes or enlarging the height support.
+The explicit Dirichlet operator domain in (36.1) contains these
+functions. Consequently $\mathcal K_c\mathscr D\subset\mathscr D$,
+and induction proves membership in every generator-power domain.
+Density follows from finite Fourier truncation and the density of
+$C_c^\infty(I)$ in height $L^2$. This is a dense invariant test
+domain for powers, not a claim that density makes it an operator
+core for the Dirichlet generator. In particular no all-order
+domain claim about the distinct vector $h_*$ of (44.6) is needed.
+
+Put $L=-K$. On $\mathscr D$, for $r\ge0$,
+
+$$
+(L+cM)^r h=\sum_{j=0}^r c^j W_{r,j}h,
+\qquad W_{r,0}=L^r,\quad W_{r,r}=M^r.
+\tag{52.4}
+$$
+
+Here $W_{r,j}$ is the sum of all ordered words of length $r$
+with $j$ factors $M$ and $r-j$ factors $L$, each word in its
+actual order of action. This follows by ordinary multiplication
+and induction on $r$ on the invariant domain; it is not a
+commutative binomial formula. The spectral theorem gives
+$\partial_t^rT_c(t)h=T_c(t)(L+cM)^rh$ continuously down to zero.
+For $c$ in a compact interval these derivatives are bounded
+uniformly on any fixed time interval, because (52.4) is a finite
+vector-valued polynomial and $\|T_c(t)\|\le e^{cPt}$.
+Thus differentiation under the finite measure $\mu_b$ is justified.
+
+For the infinite raw measure one needs the compensation also
+after differentiation. For fixed $r,h,T$, (52.4) shows
+$\|[(L+cM)^r-L^r]h\|\le C_{r,h}c$ for $0\le c\le C_s$.
+The exact identity
+
+$$
+\begin{aligned}
+\partial_t^r[T_c(t)-S_t]h
+ &=[T_c(t)-S_t]L^rh
+   +T_c(t)[(L+cM)^r-L^r]h
+\end{aligned}
+\tag{52.5}
+$$
+
+and (44.4) therefore bound this derivative by $C_{r,h,T}c$
+uniformly on $[0,T]$. This is integrable against $\nu_s$ by
+(50.6). Dominated strong integration, applied successively to
+these continuous derivatives (or to their integral fundamental
+theorem), proves every asserted derivative of $A_s(t)h$.
+At zero their values are consequently
+
+$$
+\begin{aligned}
+\partial_t^rB_b(0)h&=\sum_{j=0}^r m_j^bW_{r,j}h,\\
+\partial_t^rA_s(0)h&=\sum_{j=1}^r m_j^sW_{r,j}h.
+\end{aligned}
+\tag{52.6}
+$$
+
+The empty second sum is zero. Formula (52.6) for the finite
+lists holds with their finite moments, also when a coupling or
+coefficient is zero. It proves sufficiency in (52.3).
+For necessity, argue successively in $r$. Once the lower moments
+agree, the difference of the derivatives of order $r$ is exactly
+the difference of the $r$th moments times $M^rh$. For every
+$r\ge1$, $M^r$ is injective, hence is nonzero on any nonzero
+$h\in\mathscr D$. Equality for all such $h$ forces that moment
+to agree. In UNIT the zeroth moments already agree by the required
+normalization; in RAW both zeroth responses vanish. This proves
+necessity for every $q$, without a visible-mode restriction and
+without commuting any factors. $\square$
+
