@@ -2239,8 +2239,10 @@ Definition 7.3. Here their explicit constants and the bracket
 transport are `repo-derived` deductions for this full source; no
 new general elliptic theorem or worldwide priority is claimed.
 
-Only the reference coefficients $(1,1)$ and rational trial times
-are numerical inputs. The full original transport is still (8.3),
+The only coefficient and time parameters numerically evaluated are
+the reference coefficients $(1,1)$ and rational trial times; the
+constructed reference vector/resolvent services remain required.
+The full original transport is still (8.3),
 including its maximal domain, both complex coefficients, zero line,
 form, trace, entrance and calibration. In a passive application
 $\tau=a^2d/\eta$ lies in a statistically certified bracket; (15.2)
@@ -2250,8 +2252,8 @@ $e$-start, first read $2d$, later gaps $d$, four labels and conditional
 noise remain intact. Numerical reference coordinates are proof
 and computation variables, never readings of the realized path.
 No jet query has been numerically executed here and no new Lean
-verification is asserted. The finite-order supplier does not identify a specified successor
-or $T_dr$ as a witnessing vector; qualitative strict compact-energy
+verification is asserted. The finite-order supplier does not identify
+a specified successor or $T_dr$ as a witnessing vector; qualitative strict compact-energy
 enlargement remains [FG, Theorem 10.2].
 
 ## 追加锚（本行以下为增补区）
