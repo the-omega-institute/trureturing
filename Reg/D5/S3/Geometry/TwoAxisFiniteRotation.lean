@@ -90,7 +90,7 @@ private theorem dependence : ObservationalDependence signature actual := by
   simpa using Ne.symm halfturn_ne_one
 
 def family : Registration arena (type_of% (@two_axis_finite_word)) where
-  actual := actual
+  actual := realize signature (fun _ _ l => l.prod) (fun e => nomatch e)
   bridge := Iff.rfl
   variation := ⟨two_axis_finite_word, rejected, rejected_law⟩
   sensitivity := ⟨fun i => ⟨rejected,
@@ -111,7 +111,7 @@ def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some actual
+  readout := some (realize signature (fun _ _ l => l.prod) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -211,7 +211,8 @@ private theorem dependence : ObservationalDependence signature.{u} actual := by
   norm_num at h
 
 def family : Registration arena.{u} (type_of% (@moving_axis_invariance.{u})) where
-  actual := actual
+  actual := realize signature.{u} (fun _ p R => p.F (rotatePair R p.p))
+    (fun e => nomatch e)
   bridge := Iff.rfl
   variation := ⟨@moving_axis_invariance.{u}, rejected, rejected_law⟩
   sensitivity := ⟨fun i => ⟨rejected,
@@ -232,7 +233,8 @@ def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some actual
+  readout := some (realize signature.{u} (fun _ p R => p.F (rotatePair R p.p))
+    (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
