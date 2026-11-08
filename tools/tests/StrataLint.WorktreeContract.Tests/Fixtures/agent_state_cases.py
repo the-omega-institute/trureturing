@@ -140,6 +140,21 @@ class AgentStateTests(unittest.TestCase):
         with agent("codex:creator"):
             self.assertEqual(self.view()["pending"], [])
 
+    def test_branch_switch_does_not_transfer_release_and_scan_failure_is_incomplete(self):
+        tree = self.root / "switched"
+        with agent("codex:one"):
+            self.create("switched", tree)
+            protocol.mark_stale(self.main, tree)
+            self.assertEqual(self.view()["pending"], [])
+            run(tree, "switch", "-c", "lane/governance/next-task")
+            view = self.view()
+            self.assertEqual(view["pending"][0]["reason"], "no_stale_marker")
+            self.assertEqual(view["pending"][0]["matched_by"], ["creator"])
+            with patch.object(protocol, "inventory", side_effect=TimeoutError("agent_state_budget_exhausted")):
+                view = self.view()
+            self.assertFalse(view["complete"])
+            self.assertIn("agent_state_budget_exhausted", view["unknown"][0]["reason"])
+
     def test_capture_precedes_checkout_failure_then_explicit_recovery(self):
         tree = self.root / "early"
         real_git = __import__("shutil").which("git")

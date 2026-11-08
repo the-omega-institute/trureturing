@@ -58,16 +58,24 @@ def registration(source, path, snapshot=None):
         raise ValueError("main_worktree_has_no_agent_record")
     # An open directory pins the native registration even if Git removes and
     # recreates its pathname. All publication uses this descriptor, never mkdir.
+    observed = _stamp(os.stat(admin))
     fd = os.open(admin, os.O_RDONLY | os.O_DIRECTORY)
     try:
         fcntl.flock(fd, fcntl.LOCK_EX | fcntl.LOCK_NB)
         stamp = _stamp(os.fstat(fd))
+        if stamp != observed:
+            raise ValueError("registration_changed")
+        pointer = Path(path).resolve() / ".git"
+        pointer_bytes, backlink_bytes = pointer.read_bytes(), (admin / "gitdir").read_bytes()
 
         def verify():
-            current, current_admin = native.identity(source, path)
-            if current_admin != admin or _stamp(os.stat(admin)) != stamp:
+            if (_stamp(os.stat(admin)) != stamp or pointer.read_bytes() != pointer_bytes
+                    or (admin / "gitdir").read_bytes() != backlink_bytes):
                 raise ValueError("registration_changed")
-            return current
+            rows = [row for row in native.inventory(source) if Path(row["worktree"]).resolve() == pointer.parent]
+            if len(rows) != 1:
+                raise ValueError("registration_changed")
+            return rows[0]
 
         verify()
         yield fd, stamp, item, verify
@@ -90,7 +98,7 @@ def read(fd, stamp):
         raise ValueError("agent_state_too_large")
     state = json.loads(raw)
     if (not isinstance(state, dict) or set(state) != {"version", "registration", "creator", "allocation"}
-            or state["version"] != 1 or state["registration"] != stamp
+            or type(state["version"]) is not int or state["version"] != 1 or state["registration"] != stamp
             or not _valid_agent(state["creator"])):
         raise ValueError("malformed_agent_state")
     allocation = state["allocation"]
@@ -148,6 +156,11 @@ def record(source, path, *, created=False, branch=None):
 def _observe(source, path, snapshot):
     with registration(source, path, snapshot) as (fd, stamp, item, verify):
         state = read(fd, stamp)
+        if state is None:
+            # Unattributed legacy trees cannot enter the caller's filtered list.
+            # Report the missing data without spending native status reads on it.
+            return dict(path=str(path), branch=item.get("branch"), creator=None, allocation=None,
+                        metadata="missing", status="unavailable", reason="creator_unknown")
         branch = native.branch_name(path)
         if state and state["allocation"] and state["allocation"]["branch"] != branch:
             state["allocation"] = None

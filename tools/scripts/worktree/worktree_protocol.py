@@ -306,6 +306,7 @@ def _main(argv=None):
     commands.add_parser("pending", help="show current-agent pending worktrees (advisory)")
     registration = commands.add_parser("record-registration", help=argparse.SUPPRESS)
     registration.add_argument("--path", type=Path, required=True)
+    registration.add_argument("--branch", required=True)
     command = commands.add_parser("with")
     command.add_argument("--path", type=Path, default=Path.cwd())
     command.add_argument("argv", nargs=argparse.REMAINDER)
@@ -379,7 +380,7 @@ def _main(argv=None):
         if options.action == "pending":
             print(json.dumps(report(options.source)), flush=True)
         elif options.action == "record-registration":
-            record(options.source, options.path, created=True)
+            record(options.source, options.path, created=True, branch="refs/heads/" + options.branch)
         elif options.action == "with":
             if options.argv[:1] == ["--"]:
                 options.argv.pop(0)

@@ -116,6 +116,7 @@ class AgentEntranceTests(unittest.TestCase):
             self.assertEqual(result.returncode, 0)
             self.assertEqual(json.loads(result.stdout)["status"], "succeeded")
             self.assertIn("attribution unavailable", result.stderr)
+            self.assertIn("pending summary unavailable", result.stderr)
             self.assertIn("auxiliary-injected-failure", result.stderr)
             self.assertFalse(self.local(tree).exists())
 

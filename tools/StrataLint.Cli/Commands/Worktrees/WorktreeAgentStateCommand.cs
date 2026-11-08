@@ -22,8 +22,8 @@ internal static class WorktreeAgentStateCommand
         try
         {
             var pending = WorktreeProtocolCommand.Run(anchor, ["pending"], runner, TimeSpan.FromSeconds(6));
-            return result with { Error = result.Error + (pending.Error.Length != 0 ? pending.Error
-                : "WORKTREE_AGENT_WARNING pending summary unavailable\n") };
+            return result with { Error = result.Error + pending.Error + (!pending.Success || pending.Error.Length == 0
+                ? "WORKTREE_AGENT_WARNING pending summary unavailable\n" : string.Empty) };
         }
         catch (Exception error) when (error is not OutOfMemoryException)
         {
@@ -32,11 +32,11 @@ internal static class WorktreeAgentStateCommand
         }
     }
 
-    internal static string Capture(string source, string path, IWorktreeProcessRunner runner)
+    internal static string Capture(string source, string path, string branch, IWorktreeProcessRunner runner)
     {
         try
         {
-            var result = WorktreeProtocolCommand.Run(source, ["record-registration", "--path", path],
+            var result = WorktreeProtocolCommand.Run(source, ["record-registration", "--path", path, "--branch", branch],
                 runner, TimeSpan.FromSeconds(6), reportPending: false);
             return result.Error + (result.Success ? string.Empty : "WORKTREE_AGENT_WARNING attribution unavailable\n");
         }

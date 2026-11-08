@@ -221,7 +221,7 @@ internal static class WorktreeCommand
                 BoundedProcessRunner.HangDetectionBudget,
                 "git worktree add failed");
             worktreeCreated = true;
-            agentWarning = WorktreeAgentStateCommand.Capture(options.Source, options.Path, runner);
+            agentWarning = WorktreeAgentStateCommand.Capture(options.Source, options.Path, options.Branch, runner);
             WorktreeCreationSafety.ValidateCreatedWorktree(options, runner);
             stage = "checkout";
             WorktreeCreationSafety.CheckoutCreatedWorktree(options, runner);
