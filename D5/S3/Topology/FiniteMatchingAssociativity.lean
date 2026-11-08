@@ -164,7 +164,7 @@ private def adjoinUnmarked {X B Y : Type*} (r : X → X → Prop) (a : B → X)
   have hex (q : Unmarked (disjointStep r (fun x y => y = f.mate x)) (adjoinBoundary a)) :
       ∃ c : Component r, E q.1 = Sum.inl c := by
     cases h : E q.1 with
-    | inl c => exact ⟨c,h⟩
+    | inl c => exact ⟨c,rfl⟩
     | inr c =>
       exfalso
       induction c using Quotient.inductionOn with

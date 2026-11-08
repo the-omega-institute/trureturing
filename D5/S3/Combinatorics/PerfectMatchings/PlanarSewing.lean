@@ -1,0 +1,538 @@
+/- GID: D5/S3/Combinatorics/PerfectMatchings/PlanarSewing
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/PerfectMatchings/PlanarSewing
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: [mathlib/module/Mathlib.Logic.Relation]
+   utility: none
+   digest: Adjacent planar sewing preserves the surviving endpoint components. -/
+import D5.S3.Combinatorics.PerfectMatchings.OrderedMatchingCore
+import D5.S3.Combinatorics.PerfectMatchings.AdjacentCapSurgery
+import D5.S3.Combinatorics.PerfectMatchings.AraujoBrauerSourceMonoids
+import D5.S3.Topology.FiniteMatchingClosure
+import D5.S3.Topology.FiniteMatchingComposition
+import D5.S3.Topology.FiniteMatchingSewing
+import Mathlib.Logic.Relation
+import Mathlib.Logic.Equiv.Fin.Basic
+import Mathlib.Logic.Equiv.Prod
+
+set_option autoImplicit false
+noncomputable section
+attribute [local instance] Classical.propDecidable
+
+namespace D5.S3.Combinatorics.PerfectMatchings.PlanarSewing
+open CupCapBridgeProposal
+open D5.S3.Topology.FiniteMatchingClosure
+open D5.S3.Topology.FiniteMatchingComposition
+open D5.S3.Topology.FiniteMatchingSewing
+open D5.S3.Combinatorics.PerfectMatchings.AraujoBrauerSourceMonoids
+
+def capStep {m : ℕ} (M : NCMatching (m+2)) (j : Fin (m+1))
+    (x y : Fin (m+2)) : Prop :=
+  y = M.partner x ∨ (x = j.castSucc ∧ y = j.succ)
+
+private theorem reconnect_path {m : ℕ} (M : NCMatching (m+2)) (j : Fin (m+1))
+    (x : Fin (m+2)) :
+    Relation.EqvGen (capStep M j) x (reconnectPartner M j x) := by
+  unfold reconnectPartner
+  split_ifs with ha hb
+  · exact .trans _ _ _ (.rel _ _ (Or.inl ha.symm))
+      (.trans _ _ _ (.rel _ _ (Or.inr ⟨rfl,rfl⟩)) (.rel _ _ (Or.inl rfl)))
+  · exact .trans _ _ _ (.rel _ _ (Or.inl hb.symm))
+      (.trans _ _ _ (.symm _ _ (.rel _ _ (Or.inr ⟨rfl,rfl⟩)))
+        (.rel _ _ (Or.inl rfl)))
+  · exact .rel _ _ (Or.inl rfl)
+
+private theorem capSurgery_path {m : ℕ} (M : NCMatching (m+2)) (j : Fin (m+1))
+    (x : Fin m) :
+    Relation.EqvGen (capStep M j) (skipPair j x)
+      (skipPair j ((capSurgery M j).partner x)) := by
+  rw [capSurgery_reconnect]
+  exact reconnect_path M j _
+
+private def Patch {m : ℕ} (M : NCMatching (m+2)) (j : Fin (m+1)) (x : Fin (m+2)) : Prop :=
+  x = j.castSucc ∨ x = j.succ ∨ x = M.partner j.castSucc ∨ x = M.partner j.succ
+
+private theorem patch_mate {m : ℕ} (M : NCMatching (m+2)) (j : Fin (m+1))
+    (x : Fin (m+2)) : Patch M j (M.partner x) ↔ Patch M j x := by
+  unfold Patch
+  constructor
+  · rintro (h | h | h | h)
+    · right; right; left
+      exact (M.involutive x).symm.trans (congrArg M.partner h)
+    · right; right; right
+      exact (M.involutive x).symm.trans (congrArg M.partner h)
+    · exact Or.inl (M.partner.injective h)
+    · exact Or.inr (Or.inl (M.partner.injective h))
+  · rintro (rfl | rfl | rfl | rfl)
+    · exact Or.inr (Or.inr (Or.inl rfl))
+    · exact Or.inr (Or.inr (Or.inr rfl))
+    · exact Or.inl (M.involutive _)
+    · exact Or.inr (Or.inl (M.involutive _))
+
+private theorem cap_component {m : ℕ} (M : NCMatching (m+2)) (j : Fin (m+1))
+    (x y : Fin (m+2)) :
+    Relation.EqvGen (capStep M j) x y ↔
+      y = x ∨ y = M.partner x ∨ (Patch M j x ∧ Patch M j y) := by
+  constructor
+  · intro h
+    induction h with
+    | rel x y h =>
+      rcases h with h | ⟨rfl,rfl⟩
+      · exact Or.inr (Or.inl h)
+      · exact Or.inr (Or.inr ⟨Or.inl rfl, Or.inr (Or.inl rfl)⟩)
+    | refl => exact Or.inl rfl
+    | symm x y h ih =>
+      rcases ih with h | h | ⟨hx,hy⟩
+      · exact Or.inl h.symm
+      · exact Or.inr (Or.inl (by rw [h, M.involutive]))
+      · exact Or.inr (Or.inr ⟨hy,hx⟩)
+    | trans x y z hxy hyz ih₁ ih₂ =>
+      rcases ih₁ with rfl | rfl | ⟨hx,hy⟩
+      · exact ih₂
+      · rcases ih₂ with h | h | ⟨hy,hz⟩
+        · exact Or.inr (Or.inl h)
+        · exact Or.inl (h.trans (M.involutive x))
+        · exact Or.inr (Or.inr ⟨(patch_mate M j x).mp hy,hz⟩)
+      · rcases ih₂ with rfl | rfl | ⟨_,hz⟩
+        · exact Or.inr (Or.inr ⟨hx,hy⟩)
+        · exact Or.inr (Or.inr ⟨hx,(patch_mate M j y).mpr hy⟩)
+        · exact Or.inr (Or.inr ⟨hx,hz⟩)
+  · have hp (z : Fin (m+2)) (hz : Patch M j z) :
+        Relation.EqvGen (capStep M j) j.castSucc z := by
+      rcases hz with rfl | rfl | rfl | rfl
+      · exact .refl _
+      · exact .rel _ _ (Or.inr ⟨rfl,rfl⟩)
+      · exact .rel _ _ (Or.inl rfl)
+      · exact .trans _ _ _ (.rel _ _ (Or.inr ⟨rfl,rfl⟩)) (.rel _ _ (Or.inl rfl))
+    rintro (rfl | rfl | ⟨hx,hy⟩)
+    · exact .refl _
+    · exact .rel _ _ (Or.inl rfl)
+    · exact .trans _ _ _ (.symm _ _ (hp x hx)) (hp y hy)
+
+private theorem survivor_component {m : ℕ} (M : NCMatching (m+2)) (j : Fin (m+1))
+    (x y : Fin (m+2)) (hxa : x ≠ j.castSucc) (hxb : x ≠ j.succ)
+    (hya : y ≠ j.castSucc) (hyb : y ≠ j.succ)
+    (h : Relation.EqvGen (capStep M j) x y) :
+    y = x ∨ y = reconnectPartner M j x := by
+  have hab : j.castSucc ≠ j.succ := by
+    intro h; have := congrArg Fin.val h; simp only [Fin.val_castSucc, Fin.val_succ] at this; omega
+  rcases (cap_component M j x y).mp h with h | h | ⟨hx,hy⟩
+  · exact Or.inl h
+  · right
+    have hpa : M.partner x ≠ j.castSucc := fun hh => hya (h.trans hh)
+    have hpb : M.partner x ≠ j.succ := fun hh => hyb (h.trans hh)
+    simpa only [reconnectPartner, ite_eq_right hpa, ite_eq_right hpb] using h
+  · rcases hx with hx | hx | rfl | rfl
+    · exact False.elim (hxa hx)
+    · exact False.elim (hxb hx)
+    · rcases hy with hy | hy | rfl | rfl
+      · exact False.elim (hya hy)
+      · exact False.elim (hyb hy)
+      · exact Or.inl rfl
+      · exact Or.inr (by unfold reconnectPartner; rw [M.involutive _]; simp only [ite_true])
+    · rcases hy with hy | hy | rfl | rfl
+      · exact False.elim (hya hy)
+      · exact False.elim (hyb hy)
+      · exact Or.inr (by unfold reconnectPartner; rw [M.involutive _]; simp only [ite_eq_right hab.symm, ite_true])
+      · exact Or.inl rfl
+
+/-- Removing a sewn adjacent pair preserves precisely the endpoint relation. -/
+theorem capSurgery_component_iff {m : ℕ} (M : NCMatching (m+2)) (j : Fin (m+1))
+    (x y : Fin m) :
+    Relation.EqvGen (capStep M j) (skipPair j x) (skipPair j y) ↔
+      y = x ∨ y = (capSurgery M j).partner x := by
+  constructor
+  · intro h
+    rcases survivor_component M j _ _
+      (skipPair_survives j x).1 (skipPair_survives j x).2
+      (skipPair_survives j y).1 (skipPair_survives j y).2 h with h | h
+    · exact Or.inl (skipPair_injective j h)
+    · right
+      apply skipPair_injective j
+      rw [capSurgery_reconnect]
+      exact h
+  · rintro (rfl | rfl)
+    · exact .refl _
+    · exact capSurgery_path M j x
+
+private def matchingSetoid {m : ℕ} (M : NCMatching m) : Setoid (Fin m) :=
+  involutionSetoid M.partner M.involutive
+
+private theorem capSurgery_comap {m : ℕ} (M : NCMatching (m+2)) (j : Fin (m+1)) :
+    Setoid.comap (skipPair j) (Relation.EqvGen.setoid (capStep M j)) =
+      matchingSetoid (capSurgery M j) := by
+  ext x y
+  change Relation.EqvGen (capStep M j) (skipPair j x) (skipPair j y) ↔
+    (x = y ∨ (capSurgery M j).partner x = y)
+  rw [capSurgery_component_iff]
+  exact or_congr eq_comm eq_comm
+
+private def seamLeft (p k N : ℕ) (h : p+2*k ≤ N) (t : Fin k) : Fin N :=
+  ⟨p+t, by omega⟩
+
+private def seamRight (p k N : ℕ) (h : p+2*k ≤ N) (t : Fin k) : Fin N :=
+  ⟨p+(2*k-1-t), by omega⟩
+
+private def seamSetoid (p k N : ℕ) (h : p+2*k ≤ N) : Setoid (Fin N) :=
+  Relation.EqvGen.setoid (fun x y =>
+    ∃ t : Fin k, x = seamLeft p k N h t ∧ y = seamRight p k N h t)
+
+private theorem seam_skip_left {p k m : ℕ} (h : p+2*(k+1) ≤ m+2) (t : Fin k) :
+    skipPair (⟨p+k,by omega⟩ : Fin (m+1)) (seamLeft p k m (by omega) t) =
+      seamLeft p (k+1) (m+2) h t.castSucc := by
+  apply Fin.ext
+  change (if p+t.val < p+k then p+t.val else p+t.val+2) = p+t.val
+  rw [ite_eq_left (by omega)]
+
+private theorem seam_skip_right {p k m : ℕ} (h : p+2*(k+1) ≤ m+2) (t : Fin k) :
+    skipPair (⟨p+k,by omega⟩ : Fin (m+1)) (seamRight p k m (by omega) t) =
+      seamRight p (k+1) (m+2) h t.castSucc := by
+  apply Fin.ext
+  change (if p+(2*k-1-t.val) < p+k then p+(2*k-1-t.val) else p+(2*k-1-t.val)+2) =
+    p+(2*(k+1)-1-t.val)
+  rw [ite_eq_right (by omega)]
+  omega
+
+private theorem rel_sup_left {X : Type*} {R S : Setoid X} {x y : X}
+    (h : R x y) : (R ⊔ S) x y := Setoid.le_def.mp le_sup_left h
+
+private theorem rel_sup_right {X : Type*} {R S : Setoid X} {x y : X}
+    (h : S x y) : (R ⊔ S) x y := Setoid.le_def.mp le_sup_right h
+
+private theorem rel_map {X Y : Type*} (R : Setoid X) (f : X → Y) {x y : X}
+    (h : R x y) : (R.map f) (f x) (f y) := Setoid.le_def.mp Setoid.le_comap_map h
+
+private theorem seam_reduction {p k m : ℕ} (M : NCMatching (m+2))
+    (h : p+2*(k+1) ≤ m+2) :
+    matchingSetoid M ⊔ seamSetoid p (k+1) (m+2) h =
+      Relation.EqvGen.setoid (capStep M (⟨p+k,by omega⟩ : Fin (m+1))) ⊔
+        (seamSetoid p k m (by omega)).map (skipPair (⟨p+k,by omega⟩ : Fin (m+1))) := by
+  let j : Fin (m+1) := ⟨p+k,by omega⟩
+  apply le_antisymm
+  · apply sup_le
+    · intro x y hxy
+      apply rel_sup_left
+      rcases hxy with rfl | rfl
+      · exact .refl _
+      · exact .rel _ _ (Or.inl rfl)
+    · apply Setoid.eqvGen_le
+      rintro x y ⟨t,rfl,rfl⟩
+      by_cases ht : t.val < k
+      · let s : Fin k := ⟨t.val,ht⟩
+        have he : s.castSucc = t := Fin.ext rfl
+        rw [← he, ← seam_skip_left h s, ← seam_skip_right h s]
+        apply rel_sup_right
+        exact rel_map _ _ (Relation.EqvGen.rel _ _ ⟨s,rfl,rfl⟩)
+      · have ht : t.val = k := by omega
+        have ha : seamLeft p (k+1) (m+2) h t = j.castSucc := Fin.ext (by simp [seamLeft,j,ht])
+        have hb : seamRight p (k+1) (m+2) h t = j.succ := Fin.ext (by dsimp [seamRight,j]; omega)
+        rw [ha,hb]
+        exact rel_sup_left (Relation.EqvGen.rel _ _ (Or.inr ⟨rfl,rfl⟩))
+  · apply sup_le
+    · apply Setoid.eqvGen_le
+      intro x y hxy
+      rcases hxy with rfl | ⟨rfl,rfl⟩
+      · exact rel_sup_left (Or.inr rfl)
+      · apply rel_sup_right
+        apply Relation.EqvGen.rel
+        refine ⟨Fin.last k,?_,?_⟩
+        · apply Fin.ext; rfl
+        · apply Fin.ext; dsimp [seamRight,j]; omega
+    · apply Setoid.gc_map_comap.le_iff_le.mpr
+      apply Setoid.eqvGen_le
+      rintro x y ⟨t,rfl,rfl⟩
+      change (matchingSetoid M ⊔ seamSetoid p (k+1) (m+2) h).r
+        (skipPair j (seamLeft p k m _ t)) (skipPair j (seamRight p k m _ t))
+      rw [seam_skip_left h, seam_skip_right h]
+      exact rel_sup_right (Relation.EqvGen.rel _ _ ⟨t.castSucc,rfl,rfl⟩)
+
+private theorem sewn_comap {p k m : ℕ} (M : NCMatching (m+2))
+    (h : p+2*(k+1) ≤ m+2) :
+    Setoid.comap (skipPair (⟨p+k,by omega⟩ : Fin (m+1)))
+      (matchingSetoid M ⊔ seamSetoid p (k+1) (m+2) h) =
+      matchingSetoid (capSurgery M (⟨p+k,by omega⟩ : Fin (m+1))) ⊔
+        seamSetoid p k m (by omega) := by
+  rw [seam_reduction M h, comap_sup_map, capSurgery_comap]
+
+private def gapEmbedding (p k m N : ℕ) (h : m+2*k ≤ N) (x : Fin m) : Fin N :=
+  ⟨if x.val < p then x.val else x.val+2*k, by split_ifs <;> omega⟩
+
+private theorem gapEmbedding_step {p k m N : ℕ} (hp : p ≤ m) (hN : N = m+2*k)
+    (x : Fin m) :
+    gapEmbedding p (k+1) m (N+2) (by omega) x =
+      skipPair (⟨p+k,by omega⟩ : Fin (N+1)) (gapEmbedding p k m N (by omega) x) := by
+  apply Fin.ext
+  simp only [gapEmbedding, skipPair, insertPort, Fin.val_mk]
+  split_ifs <;> omega
+
+private theorem seamSetoid_zero (p N : ℕ) (h : p+2*0 ≤ N) :
+    seamSetoid p 0 N h = ⊥ := by
+  apply le_antisymm
+  · apply Setoid.eqvGen_le
+    rintro x y ⟨t,_⟩
+    exact Fin.elim0 t
+  · exact bot_le
+
+/-- Sewing any number of nested adjacent seam pairs leaves a planar pairing
+on the surviving boundary, with exactly the induced component relation. -/
+theorem sewn_planar (m p k N : ℕ) (hp : p ≤ m) (hN : N = m+2*k)
+    (M : NCMatching N) :
+    ∃ Q : NCMatching m,
+      matchingSetoid Q = Setoid.comap (gapEmbedding p k m N (by omega))
+        (matchingSetoid M ⊔ seamSetoid p k N (by omega)) := by
+  induction k generalizing N with
+  | zero =>
+    simp only [Nat.mul_zero, Nat.add_zero] at hN
+    subst N
+    refine ⟨M,?_⟩
+    rw [seamSetoid_zero, sup_bot_eq]
+    have hg : gapEmbedding p 0 m m (by omega) = id := by
+      funext x
+      apply Fin.ext
+      dsimp [gapEmbedding]
+      split_ifs <;> omega
+    rw [hg, Setoid.comap_id]
+  | succ k ih =>
+    obtain ⟨t,rfl⟩ : ∃ t, N = t+2 := ⟨N-2,by omega⟩
+    have ht : t = m+2*k := by omega
+    let j : Fin (t+1) := ⟨p+k,by omega⟩
+    obtain ⟨Q,hQ⟩ := ih t ht (capSurgery M j)
+    refine ⟨Q,?_⟩
+    have hg : gapEmbedding p (k+1) m (t+2) (by omega) =
+        skipPair j ∘ gapEmbedding p k m t (by omega) := by
+      funext x
+      exact gapEmbedding_step hp ht x
+    rw [hg, Setoid.comap_comp, sewn_comap M (by omega)]
+    exact hQ
+
+private def appendPartner {m n : ℕ} (M : NCMatching m) (N : NCMatching n) :
+    Equiv.Perm (Fin (m+n)) :=
+  finSumFinEquiv.symm.trans ((Equiv.sumCongr M.partner N.partner).trans finSumFinEquiv)
+
+private theorem appendPartner_left {m n : ℕ} (M : NCMatching m) (N : NCMatching n)
+    (i : Fin m) : appendPartner M N (Fin.castAdd n i) = Fin.castAdd n (M.partner i) := by
+  simp [appendPartner]
+
+private theorem appendPartner_right {m n : ℕ} (M : NCMatching m) (N : NCMatching n)
+    (i : Fin n) : appendPartner M N (Fin.natAdd m i) = Fin.natAdd m (N.partner i) := by
+  simp [appendPartner]
+
+private def appendMatching {m n : ℕ} (M : NCMatching m) (N : NCMatching n) :
+    NCMatching (m+n) where
+  partner := appendPartner M N
+  involutive i := by
+    refine Fin.addCases (fun j => ?_) (fun j => ?_) i
+    · rw [appendPartner_left, appendPartner_left, M.involutive]
+    · rw [appendPartner_right, appendPartner_right, N.involutive]
+  noFixed i := by
+    refine Fin.addCases (fun j => ?_) (fun j => ?_) i
+    · rw [appendPartner_left]
+      exact fun h => M.noFixed j (Fin.ext (congrArg (fun z : Fin (m+n) => z.val) h))
+    · rw [appendPartner_right]
+      exact fun h => N.noFixed j (Fin.ext (Nat.add_left_cancel (congrArg Fin.val h)))
+  noncrossing a b := by
+    refine Fin.addCases (fun x => ?_) (fun x => ?_) a <;>
+      refine Fin.addCases (fun y => ?_) (fun y => ?_) b
+    · simpa only [appendPartner_left, Fin.lt_def, Fin.val_castAdd] using M.noncrossing x y
+    · rw [appendPartner_left, appendPartner_right]
+      intro _ h _
+      have := (M.partner x).isLt
+      simp only [Fin.lt_def, Fin.val_natAdd, Fin.val_castAdd] at h
+      omega
+    · rw [appendPartner_right, appendPartner_left]
+      intro h _ _
+      have := y.isLt
+      simp only [Fin.lt_def, Fin.val_natAdd, Fin.val_castAdd] at h
+      omega
+    · simpa only [appendPartner_right, Fin.natAdd_lt_natAdd_iff] using N.noncrossing x y
+
+/-- Rectangle boundary order, with the lower row reversed. -/
+def boundaryEquiv (n : ℕ) : Bool × Fin n ≃ Fin (2*n) :=
+  (Equiv.boolProdEquivSum (Fin n)).trans
+    ((Equiv.sumCongr (Equiv.refl _) Fin.revPerm).trans
+      (finSumFinEquiv.trans (finCongr (by omega))))
+
+noncomputable def toMatching {n : ℕ} (M : NCMatching (2*n)) :
+    D5.S3.Topology.FiniteMatchingClosure.Matching (Bool × Fin n) where
+  mate x := (boundaryEquiv n).symm (M.partner (boundaryEquiv n x))
+  involutive x := by
+    dsimp only
+    rw [(boundaryEquiv n).apply_symm_apply, M.involutive,
+      (boundaryEquiv n).symm_apply_apply]
+  fixedPointFree x := by
+    intro h
+    have h' := congrArg (boundaryEquiv n) h
+    simp only [(boundaryEquiv n).apply_symm_apply] at h'
+    exact M.noFixed _ h'
+
+
+private def flatEquiv (n : ℕ) : Piece n ≃ Fin (2*n+2*n) :=
+  (Equiv.boolProdEquivSum (Boundary n)).trans
+    ((Equiv.sumCongr (boundaryEquiv n) (boundaryEquiv n)).trans finSumFinEquiv)
+
+private theorem flat_left {n : ℕ} (b : Boundary n) :
+    flatEquiv n (false,b) = Fin.castAdd (2*n) (boundaryEquiv n b) := by
+  simp [flatEquiv, Equiv.boolProdEquivSum]
+
+private theorem flat_right {n : ℕ} (b : Boundary n) :
+    flatEquiv n (true,b) = Fin.natAdd (2*n) (boundaryEquiv n b) := by
+  simp [flatEquiv, Equiv.boolProdEquivSum]
+
+private theorem boundary_top {n : ℕ} (i : Fin n) :
+    (boundaryEquiv n (false,i)).val = i.val := by
+  simp [boundaryEquiv, Equiv.boolProdEquivSum]
+
+private theorem boundary_bottom {n : ℕ} (i : Fin n) :
+    (boundaryEquiv n (true,i)).val = 2*n-1-i.val := by
+  simp [boundaryEquiv, Equiv.boolProdEquivSum, Fin.rev]
+  omega
+
+private theorem flat_mate {n : ℕ} (M N : NCMatching (2*n)) (x : Piece n) :
+    flatEquiv n (piecesMate (toMatching M) (toMatching N) x) =
+      (appendMatching M N).partner (flatEquiv n x) := by
+  rcases x with ⟨l,b⟩
+  cases l
+  · change flatEquiv n (false,(toMatching M).mate b) =
+      appendPartner M N (flatEquiv n (false,b))
+    rw [flat_left, flat_left, appendPartner_left]
+    change Fin.castAdd (2*n) (boundaryEquiv n ((boundaryEquiv n).symm
+      (M.partner (boundaryEquiv n b)))) = _
+    rw [Equiv.apply_symm_apply]
+  · change flatEquiv n (true,(toMatching N).mate b) =
+      appendPartner M N (flatEquiv n (true,b))
+    rw [flat_right, flat_right, appendPartner_right]
+    change Fin.natAdd (2*n) (boundaryEquiv n ((boundaryEquiv n).symm
+      (N.partner (boundaryEquiv n b)))) = _
+    rw [Equiv.apply_symm_apply]
+
+private theorem flat_outer {n : ℕ} (b : Boundary n) :
+    flatEquiv n (outerPiece b) = gapEmbedding n n (2*n) (2*n+2*n) (by omega)
+      (boundaryEquiv n b) := by
+  rcases b with ⟨b,i⟩
+  cases b
+  · rw [show outerPiece (false,i) = (false,(false,i)) from rfl, flat_left]
+    apply Fin.ext
+    change (boundaryEquiv n (false,i)).val =
+      if (boundaryEquiv n (false,i)).val < n then (boundaryEquiv n (false,i)).val
+      else (boundaryEquiv n (false,i)).val+2*n
+    rw [boundary_top, ite_eq_left i.isLt]
+  · rw [show outerPiece (true,i) = (true,(true,i)) from rfl, flat_right]
+    apply Fin.ext
+    change 2*n+(boundaryEquiv n (true,i)).val =
+      if (boundaryEquiv n (true,i)).val < n then (boundaryEquiv n (true,i)).val
+      else (boundaryEquiv n (true,i)).val+2*n
+    rw [boundary_bottom, ite_eq_right (by omega)]
+    omega
+
+private theorem flat_seam_left {n : ℕ} (i : Fin n) :
+    flatEquiv n (false,(true,i)) =
+      seamLeft n n (2*n+2*n) (by omega) (⟨n-1-i.val,by omega⟩ : Fin n) := by
+  rw [flat_left]
+  apply Fin.ext
+  change (boundaryEquiv n (true,i)).val = n+(n-1-i.val)
+  rw [boundary_bottom]
+  omega
+
+private theorem flat_seam_right {n : ℕ} (i : Fin n) :
+    flatEquiv n (true,(false,i)) =
+      seamRight n n (2*n+2*n) (by omega) (⟨n-1-i.val,by omega⟩ : Fin n) := by
+  rw [flat_right]
+  apply Fin.ext
+  change 2*n+(boundaryEquiv n (false,i)).val = n+(2*n-1-(n-1-i.val))
+  rw [boundary_top]
+  omega
+
+private def graphStep {n : ℕ} (M N : NCMatching (2*n)) (x y : Fin (2*n+2*n)) : Prop :=
+  y = (appendMatching M N).partner x ∨
+    ∃ t : Fin n, x = seamLeft n n (2*n+2*n) (by omega) t ∧
+      y = seamRight n n (2*n+2*n) (by omega) t
+
+private theorem graphStep_setoid {n : ℕ} (M N : NCMatching (2*n)) :
+    Relation.EqvGen.setoid (graphStep M N) =
+      matchingSetoid (appendMatching M N) ⊔ seamSetoid n n (2*n+2*n) (by omega) := by
+  apply le_antisymm
+  · apply Setoid.eqvGen_le
+    intro x y h
+    rcases h with rfl | h
+    · exact rel_sup_left (Or.inr rfl)
+    · exact rel_sup_right (Relation.EqvGen.rel _ _ h)
+  · apply sup_le
+    · intro x y h
+      rcases h with rfl | rfl
+      · exact .refl _
+      · exact .rel _ _ (Or.inl rfl)
+    · apply Setoid.eqvGen_le
+      intro x y h
+      exact .rel _ _ (Or.inr h)
+
+private def graphEquiv {n : ℕ} (M N : NCMatching (2*n)) :
+    Component (graphStep M N) ≃ Component (halfEdgeStep (toMatching M) (toMatching N)) := by
+  apply contractionEquiv _ _ (flatEquiv n).symm (flatEquiv n)
+    (flatEquiv n).symm_apply_apply
+  · intro x y h
+    rcases h with rfl | ⟨t,rfl,rfl⟩
+    · apply Relation.EqvGen.rel
+      left
+      apply (flatEquiv n).injective
+      change flatEquiv n ((flatEquiv n).symm ((appendMatching M N).partner x)) =
+        flatEquiv n (piecesMate (toMatching M) (toMatching N) ((flatEquiv n).symm x))
+      rw [flat_mate, Equiv.apply_symm_apply, Equiv.apply_symm_apply]
+    · let i : Fin n := ⟨n-1-t.val,by omega⟩
+      have hi : (⟨n-1-i.val,by omega⟩ : Fin n) = t := Fin.ext (by dsimp [i]; omega)
+      have hl := flat_seam_left i
+      have hr := flat_seam_right i
+      rw [hi] at hl hr
+      rw [← hl, ← hr, Equiv.symm_apply_apply, Equiv.symm_apply_apply]
+      exact .rel _ _ (Or.inr rfl)
+  · intro x y h
+    rcases h with h | h
+    · subst y
+      change Relation.EqvGen (graphStep M N) _ (flatEquiv n (piecesMate _ _ x))
+      rw [flat_mate]
+      exact .rel _ _ (Or.inl rfl)
+    · subst y
+      rcases x with ⟨l,b,i⟩
+      cases l <;> cases b
+      · exact .refl _
+      · change Relation.EqvGen (graphStep M N) (flatEquiv n (false,(true,i)))
+          (flatEquiv n (true,(false,i)))
+        rw [flat_seam_left, flat_seam_right]
+        exact .rel _ _ (Or.inr ⟨_,rfl,rfl⟩)
+      · change Relation.EqvGen (graphStep M N) (flatEquiv n (true,(false,i)))
+          (flatEquiv n (false,(true,i)))
+        rw [flat_seam_left, flat_seam_right]
+        exact .symm _ _ (.rel _ _ (Or.inr ⟨_,rfl,rfl⟩))
+      · exact .refl _
+  · intro x
+    rw [Equiv.apply_symm_apply]
+    exact .refl _
+
+/-- Literal path composition of two planar rectangle matchings is planar. -/
+theorem composite_planar {n : ℕ} (M N : NCMatching (2*n)) :
+    ∃ Q : NCMatching (2*n), toMatching Q = composite (toMatching M) (toMatching N) := by
+  obtain ⟨Q,hQ⟩ := sewn_planar (2*n) n n (2*n+2*n) (by omega) rfl (appendMatching M N)
+  refine ⟨Q,?_⟩
+  apply matching_ext
+  intro a
+  let b := (toMatching Q).mate a
+  have h : Relation.EqvGen (graphStep M N) (flatEquiv n (outerPiece a))
+      (flatEquiv n (outerPiece b)) := by
+    change (Relation.EqvGen.setoid (graphStep M N)) _ _
+    rw [graphStep_setoid, flat_outer, flat_outer]
+    change (Setoid.comap (gapEmbedding n n (2*n) (2*n+2*n) _)
+      (matchingSetoid (appendMatching M N) ⊔ seamSetoid n n (2*n+2*n) _))
+      (boundaryEquiv n a) (boundaryEquiv n b)
+    rw [← hQ]
+    right
+    exact (Equiv.apply_symm_apply (boundaryEquiv n) _).symm
+  have he := congrArg (graphEquiv M N) (Quotient.sound h)
+  change component (halfEdgeStep (toMatching M) (toMatching N))
+      ((flatEquiv n).symm (flatEquiv n (outerPiece a))) =
+    component (halfEdgeStep (toMatching M) (toMatching N))
+      ((flatEquiv n).symm (flatEquiv n (outerPiece b))) at he
+  rw [Equiv.symm_apply_apply, Equiv.symm_apply_apply] at he
+  rcases (composite_component_iff (toMatching M) (toMatching N) a b).mp he with he | he
+  · exact False.elim ((toMatching Q).fixedPointFree a he)
+  · exact he
+
+end D5.S3.Combinatorics.PerfectMatchings.PlanarSewing
