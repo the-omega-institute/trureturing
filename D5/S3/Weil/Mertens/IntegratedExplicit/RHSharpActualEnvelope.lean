@@ -108,6 +108,7 @@ private lemma phaseSum_pow (hRH : RiemannHypothesis) (n : ℕ) :
     congr 1
     apply Complex.ext <;>
       simp [Complex.mul_re, Complex.mul_im, on_line hRH k]
+    ring
   rw [hp, he]
   ring
 
@@ -159,7 +160,7 @@ theorem actual_G_control (hRH : RiemannHypothesis) :
     calc
       _ ≤ |(normalizedH y).re| + |residual y| := abs_add_le _ _
       _ ≤ ‖normalizedH y‖ + |residual y| :=
-        add_le_add_right (Complex.abs_re_le_norm _) _
+        add_le_add (Complex.abs_re_le_norm _) le_rfl
       _ < firstLiMass + epsilon := add_lt_add_of_le_of_lt (normalizedH_bound hRH y) hr
   · intro epsilon he Y
     have hcluster : MapClusterPt (firstLiMass : ℂ) atTop

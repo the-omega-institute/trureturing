@@ -11,7 +11,7 @@ internal sealed class RHSharpActualEnvelopeDocument : IScribeDocumentDefinition
         H("The complete actual zero series under RH"),
         Blocks(
             Describe.Lean(
-                DescribeId.Create("actual-G"),
+                DescribeId.Create("actual-g"),
                 DeclarationHandle.Create("D5/S3/Weil/Mertens/IntegratedExplicit/RHSharpActualEnvelope.G"),
                 H("The normalized complete Mertens primitive"),
                 StatementSource.FromAuthor(GDefinition()), AssessedProvenance.FromRepo(),
@@ -22,7 +22,7 @@ internal sealed class RHSharpActualEnvelopeDocument : IScribeDocumentDefinition
                 + "actualCoeff and actualH of ActualZeroLaplace. Every natural index is an actual analytic "
                 + "zero occurrence through actualOccurrenceEquiv, including its multiplicity. Both conjugate signs are included.")),
             Describe.Lean(
-                DescribeId.Create("actual-G-control"),
+                DescribeId.Create("actual-g-control"),
                 DeclarationHandle.Create("D5/S3/Weil/Mertens/IntegratedExplicit/RHSharpActualEnvelope.actual_G_control"),
                 H("Eventual absolute control and arbitrarily late values near the positive mass"),
                 StatementSource.FromAuthor(ControlClaim()), AssessedProvenance.FromRepo(),
@@ -92,7 +92,7 @@ internal sealed class RHSharpActualEnvelopeDocument : IScribeDocumentDefinition
         var t = F.Id("T");
         var n = F.Id("n");
         var threshold = F.Id("Y");
-        var mass = Call("firstLiMass");
+        var mass = F.Id("firstLiMass");
         var envelope = All("epsilon", Real, ImpliesClaim(Less(D(0), e),
             ExistsOne("T", Real, All("y", Real, ImpliesClaim(Le(t, y),
                 Less(new Formula.Absolute(Call("G", y)), Add(mass, e)))))));
