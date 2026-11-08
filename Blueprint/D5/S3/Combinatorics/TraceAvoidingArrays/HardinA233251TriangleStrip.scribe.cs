@@ -132,7 +132,6 @@ internal sealed class HardinA233251TriangleStripDocument : IScribeDocumentDefini
             Mul(x, Sub(D(3), Mul(D(6,4), x)))), Sp, TextFormula("in"), Sp, Call("PowerSeries", V("Int")));
     }
 
-    private static Formula Number(int n) => Seq(n.ToString(System.Globalization.CultureInfo.InvariantCulture).Select(c => D((byte)(c-'0'))).ToArray());
     private static Formula TextFormula(string s) => Seq(Operatorname,
         s.Contains('.') ? Grp(V(s.Split('.')[0]), Dot, V(s.Split('.')[1])) : Grp(V(s)));
     private static Formula V(string name) => F.Id(name);
@@ -160,7 +159,6 @@ internal sealed class HardinA233251TriangleStripDocument : IScribeDocumentDefini
     private static Formula Add(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Add, b);
     private static Formula Sub(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Subtract, b);
     private static Formula Mul(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Multiply, b);
-    private static Formula Pow(Formula a, Formula b) => new Formula.Power(Parenthesized(a), b);
     private static Formula All(string name, Formula type, Formula body) =>
         Seq(Forall, Sp, V(name), Colon, Sp, type, Comma, Sp, Parenthesized(body));
     private static Formula Ex(string name, Formula type, Formula body) =>
