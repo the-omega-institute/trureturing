@@ -1,0 +1,30 @@
+### 命题 4.3（qubit 的三元定向）
+
+对归一纯 qubit 态，写 $P_i=(I+\mathbf r_i\cdot\boldsymbol\sigma)/2$，则
+
+<a id="eq-c129-bargmann-qubit"></a>
+
+$$
+\mathcal B_{123}=\operatorname{Tr}(P_1P_2P_3)
+ =\frac{1+\mathbf r_1\cdot\mathbf r_2+\mathbf r_2\cdot\mathbf r_3
+ +\mathbf r_3\cdot\mathbf r_1
+ +i\,\mathbf r_1\cdot(\mathbf r_2\times\mathbf r_3)}4.
+\tag{3}
+$$
+
+**证明。**
+使用 $(\mathbf a\cdot\sigma)(\mathbf b\cdot\sigma)
+=(\mathbf a\cdot\mathbf b)I+i(\mathbf a\times\mathbf b)\cdot\sigma$，展开并取迹；非标量 Pauli 项迹为零，得到公式。
+
+取同一顺序的三态
+
+$$
+v_1=\lvert 0\rangle ,\qquad v_2=\frac{\lvert 0\rangle +\lvert 1\rangle }{\sqrt2},\qquad
+ v_3^{\pm}=\frac{\lvert 0\rangle \pm i\lvert 1\rangle }{\sqrt2}.
+$$
+
+两张 Gram 表都满足全部续写，分别给 $\mathcal B_{123}^{\pm}=(1\pm i)/4$。
+第三态已在前两态的复张成空间内，故该步新增正交余量为零，三元环仍有相反虚部。
+新事件标签、新独立方向和新可读相位不是同一个计数。
+这说明候选允许定向关系存在，却不强制所有关系选择同一符号；把 Bloch 定向接到实际空间手性还需相应标定与实现。
+

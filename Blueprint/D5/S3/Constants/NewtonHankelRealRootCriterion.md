@@ -4,7 +4,19 @@
 
 Negative real roots of a positive-coefficient polynomial are equivalent to positivity of its Newton--Hankel matrix.
 
-**Theorem 1.1 (Positive coefficients give positive evaluation).**
+**Theorem 1.1 (Explicit evaluation interface for real interpolation).**
+
+Lean statement: `D5/S3/Constants/NewtonHankelRealRootCriterion.exists_real_pair_interpolant`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Constants/NewtonHankelRealRootCriterion.exists_real_pair_interpolant` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every natural d, complex root vector on Fin d, and complex z in its finite image with conjugate(z) unequal to z, assume that membership in this finite image is invariant under complex conjugation. There exists a real coefficient vector on Fin d whose vectorPolynomialValue at every w in that image is i when w=z, minus i when w=conjugate(z), and zero otherwise. The original private interpolation construction is reused unchanged. This explicit interface is consumed by complete countable-spectrum head isolation; it is an organizational helper, not a second interpolation proof.
+
+**Theorem 1.2 (Positive coefficients give positive evaluation).**
 
 $$\forall (P: \operatorname{Polynomial}\left(\mathbb{R}\right)), (\forall (d: \mathbb{N}), (((\operatorname{Polynomial.natDegree}\left(P\right) = d) \land (\forall (k: \mathbb{N}), ((k \le d) \Rightarrow (0 < \operatorname{Polynomial.coeff}\left(P, k\right))))) \Rightarrow (\forall (x: \mathbb{R}), ((0 \le x) \Rightarrow (0 < \operatorname{Polynomial.eval}\left(x, P\right))))))$$
 
@@ -16,7 +28,7 @@ $$\forall (P: \operatorname{Polynomial}\left(\mathbb{R}\right)), (\forall (d: \m
 
 A real polynomial of degree d with strictly positive coefficients from zero through d has a strictly positive value at every nonnegative real argument. The displayed degree equality and coefficient inequalities are the definition of HasPositiveCoefficientsOfDegree. Every term in its evaluation sum is nonnegative, and its constant term is strictly positive.
 
-**Theorem 1.2 (Negative roots are equivalent to Newton--Hankel positivity).**
+**Theorem 1.3 (Negative roots are equivalent to Newton--Hankel positivity).**
 
 $$\forall d, P, lambda,\\(\operatorname{PositiveCoefficientsOfDegree}\left(P, d\right) \land \operatorname{EnumeratesReversedRoots}\left(P, lambda\right) \land \operatorname{ConjugationStable}\left(lambda\right)) \Rightarrow\\\operatorname{HasOnlyNegativeRealRoots}\left(P\right) \iff \operatorname{PosSemidef}\left(G_{d}\right).$$
 
@@ -35,4 +47,5 @@ This declaration carries only properties one and two of the source theorem. It d
 ## References
 
 - Truth anchor: `D5/S3/Constants/NewtonHankelRealRootCriterion.eval_pos_of_positive_coefficients`
+- Truth anchor: `D5/S3/Constants/NewtonHankelRealRootCriterion.exists_real_pair_interpolant`
 - Truth anchor: `D5/S3/Constants/NewtonHankelRealRootCriterion.negative_real_roots_iff_newtonHankel_posSemidef`

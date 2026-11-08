@@ -1440,3 +1440,252 @@ The one-retained-environment interaction of Proposition 8.3 is a different contr
 The theorem assumes the abstract source data, frame operations, positive weights, fresh pure records and terminal trace supplied in Assumptions 1.4 and 7.5. It does not prove a native $\alpha/\beta$ acquisition bridge, physical preparation or calibration, finite executable precision, a clock or readout apparatus, an acquired event/path archive, reset or erasure cost, or an all-horizon autonomous interaction.
 
 ## 追加锚（本行以下为增补区）
+
+## 14. Sharp uniform exact-length terminal horizon
+
+**定义 14.1（Source parameters and indexed length-eight minor）。** Use exactly the strict-unbalanced domain $\mathcal D_{\ne}$ and the fresh unread terminal-channel contract of Definition 12.1. In particular,
+
+$$
+t=p+q,\quad B=1-p-q,\quad A=B-r,\qquad
+(\alpha,\beta,\eta,\zeta)
+=\left(\sqrt{p/t},\sqrt{q/t},\sqrt{A/B},\sqrt{r/B}\right).
+\tag{14.1}
+$$
+
+The source Kraus operators remain (2.6), with the transports (1.3), inverse reverse edges and identity self-loops. The same input/output frame $D=\sum_i|i\rangle\langle i|\otimes G_i^\dagger$, with $(G_0,G_1,G_2,G_3,G_4)=(I_K,a,ca,a^\dagger ca,b)$, gives precisely
+
+$$
+DL_0D^*=\sqrt B\,U\otimes I_K,\qquad
+DL_1D^*=\sqrt t\,V\otimes I_K,
+\tag{14.2}
+$$
+
+where $U,V$ are the actual matrices (12.5)–(12.6). Thus the negative square closing edge and both positive leaf entries are retained. The factor $I_K$, $K=\mathbb C^2$, is the protected logical factor, not an additional environment.
+
+Put $\mathsf G_0=U,\mathsf G_1=V$ for the two word letters. For $m=\sum_{j=1}^8w_j2^{8-j}$, with all eight binary digits retained, define
+
+$$
+\Gamma_8(m)=\mathsf G_{w_8}\cdots \mathsf G_{w_1},\qquad
+\operatorname v(Z)_{5i+j}=Z_{ij}\quad(0\le i,j\le4).
+\tag{14.3}
+$$
+
+Fix the ordered column list
+
+$$
+\mathcal I=(0,1,2,3,5,6,7,10,11,13,14,15,21,22,23,27,29,30,
+45,47,55,59,111,119,239)
+\tag{14.4}
+$$
+
+and let $M=[\operatorname v(\Gamma_8(m))]_{m\in\mathcal I}$, with rows $0,\ldots,24$ in the order (14.3). The recurrence (13.3) instead multiplies letters on the right. Reversal permutes the complete set of length-eight words and therefore preserves its span; it does not justify transferring an individually indexed minor between the two conventions. The determinant below uses only (14.3)–(14.4); the integer minors in (13.4) retain their original recurrence and indexing.
+
+**引理 14.2（All-parameter polynomial certificate for the source minor）。** Throughout $\mathcal D_{\ne}$,
+
+$$
+\boxed{\det M=
+\frac{768\,\zeta^{36}(\alpha+\beta)^{16}(\beta-\alpha)^{36}}
+{(1+\eta)^{12}}\ne0.}
+\tag{14.5}
+$$
+
+**证明。** Rationalize the two positive unit circles by
+
+$$
+x=\frac{\zeta}{1+\eta},\qquad y=\frac{\beta}{1+\alpha},\qquad
+\eta=\frac{1-x^2}{1+x^2},\quad \zeta=\frac{2x}{1+x^2},\quad
+\alpha=\frac{1-y^2}{1+y^2},\quad \beta=\frac{2y}{1+y^2}.
+\tag{14.6}
+$$
+
+Here $0<x,y<1$. In the polynomial ring $\mathbb Z[x,y]$ write
+
+$$
+f=1+x^2,\quad g=1+y^2,\quad h_-=y^2-2y-1,\quad
+h_+=y^2+2y-1,\quad \ell=y^2-1.
+$$
+
+The scaled letters are the following polynomial matrices, with exactly the source's signs and configuration order:
+
+$$
+\widehat U=fU=
+\begin{pmatrix}
+1-x^2&0&0&0&2x\\
+0&f&0&0&0\\
+0&0&f&0&0\\
+0&0&0&f&0\\
+2x&0&0&0&x^2-1
+\end{pmatrix},\qquad
+\widehat V=gV=
+\begin{pmatrix}
+0&2y&0&y^2-1&0\\
+1-y^2&0&2y&0&0\\
+0&1-y^2&0&2y&0\\
+-2y&0&1-y^2&0&0\\
+0&0&0&0&g
+\end{pmatrix}.
+\tag{14.7}
+$$
+
+Let $\widehat\Gamma_8(m)$ and $\widehat M$ use (14.3)–(14.4) with these scaled letters. The selected words contain altogether $114$ zero letters and $86$ one letters, so
+
+$$
+\det\widehat M=f^{114}g^{86}\det M.
+\tag{14.8}
+$$
+
+The following finite fraction-free certificate specifies the entire polynomial calculation. Since $\widehat U^2=f^2I_5$, adjacent pairs of zero letters can be removed, contributing powers of $f$. In the column order (14.4), the numbers of removed letters are
+
+$$
+(e_0,\ldots,e_{24})=
+(8,6,6,6,4,4,4,4,4,4,4,4,2,2,2,2,2,2,2,2,2,2,0,0,0),
+\qquad \sum_j e_j=78.
+\tag{14.9}
+$$
+
+Thus $Z^{(0)}_{ij}=f^{-e_j}\widehat M_{ij}$ is a polynomial matrix and $\det\widehat M=f^{78}\det Z^{(0)}$. This also gives a direct way to form $Z^{(0)}$: delete every adjacent $00$ pair in each binary word, then multiply the remaining scaled letters in the order (14.3).
+
+Index all rows and columns from zero. For $k=0,\ldots,23$, first swap rows $(k,r_k)$ in the current $Z^{(k)}$ at precisely these stages:
+
+$$
+(k,r_k)=(2,4),(3,4),(4,5),(5,6),(11,24),(12,13),(14,15),(17,20),(19,21).
+\tag{14.10}
+$$
+
+There is no swap at any other stage. Call the resulting matrix $\widetilde Z^{(k)}$, put $p_k=\widetilde Z^{(k)}_{kk}$ and $p_{-1}=1$, and update the trailing block simultaneously by
+
+$$
+Z^{(k+1)}_{ij}=
+\frac{p_k\widetilde Z^{(k)}_{ij}
+-\widetilde Z^{(k)}_{ik}\widetilde Z^{(k)}_{kj}}{p_{k-1}}
+\quad(i,j>k).
+\tag{14.11}
+$$
+
+Set $Z^{(k+1)}_{ik}=0$ for $i>k$ and keep the other entries of $\widetilde Z^{(k)}$. All divisions in (14.11) are exact polynomial divisions. This is fraction-free determinant elimination, equivalently the successive-minor identity; it uses $\sum_{j=1}^{24}j^2=4900$ such divisions. To make the intermediate identities reproducible as well as the final factorization, define the five residual polynomials
+
+$$
+\begin{aligned}
+R_1={}&x^2y^3-x^2y+y^4+3y^3+2y^2-3y+1,\\
+R_2={}&2x^2y^5-4x^2y^4-4x^2y^3+4x^2y^2+2x^2y
++y^6+4y^5-3y^4+3y^2+4y-1,\\
+R_3={}&2x^2y^3-4x^2y^2-2x^2y+y^4+4y^3-6y^2-4y+1,\\
+R_4={}&y^4+4y^3-6y^2-4y+1,\\
+R_5={}&y^6-2y^5+y^4+12y^3-y^2-2y-1.
+\end{aligned}
+$$
+
+For $0\le k<24$ the pivots, and for $k=24$ the final entry $p_{24}=Z^{(24)}_{24,24}$, have the form
+
+$$
+p_k=c_k x^{i_k}y^{j_k}f^{u_k}g^{v_k}
+h_-^{a_k}h_+^{b_k}\ell^{d_k}T_k,
+\tag{14.12}
+$$
+
+with the following complete table. Each row is an identity in $\mathbb Z[x,y]$ determined by (14.7), (14.9)–(14.11).
+
+| $k$ | $c_k$ | $(i_k,j_k,u_k,v_k,a_k,b_k,d_k)$ | $T_k$ |
+| --- | --- | --- | --- |
+| 0 | $1$ | $(0,0,0,0,0,0,0)$ | $1$ |
+| 1 | $2$ | $(0,1,1,0,0,0,0)$ | $1$ |
+| 2 | $4$ | $(1,1,1,1,0,0,0)$ | $1$ |
+| 3 | $-4$ | $(1,1,1,1,1,1,0)$ | $1$ |
+| 4 | $16$ | $(3,1,1,0,1,3,1)$ | $1$ |
+| 5 | $-64$ | $(5,1,1,0,1,3,1)$ | $R_1$ |
+| 6 | $32$ | $(5,0,2,2,2,4,1)$ | $R_1$ |
+| 7 | $-128$ | $(7,1,3,3,2,6,1)$ | $1$ |
+| 8 | $-256$ | $(9,2,4,4,3,6,1)$ | $1$ |
+| 9 | $1024$ | $(10,2,4,4,3,7,3)$ | $1$ |
+| 10 | $-2048$ | $(12,2,4,5,4,7,1)$ | $R_2$ |
+| 11 | $-4096$ | $(12,2,4,7,4,9,1)$ | $R_2$ |
+| 12 | $8192$ | $(14,1,5,7,4,10,2)$ | $R_2R_3$ |
+| 13 | $65536$ | $(18,2,6,8,5,12,3)$ | $R_3$ |
+| 14 | $-262144$ | $(20,2,6,11,6,13,2)$ | $R_3$ |
+| 15 | $-524288$ | $(21,2,7,11,7,15,1)$ | $R_3R_4$ |
+| 16 | $262144$ | $(23,0,8,13,8,17,1)$ | $R_3R_5$ |
+| 17 | $3145728$ | $(24,0,9,15,8,19,1)$ | $R_3R_5$ |
+| 18 | $6291456$ | $(28,0,10,19,11,21,1)$ | $1$ |
+| 19 | $50331648$ | $(29,1,10,21,11,23,1)$ | $1$ |
+| 20 | $-100663296$ | $(31,1,10,23,13,25,0)$ | $1$ |
+| 21 | $-402653184$ | $(32,1,10,25,12,27,0)$ | $R_4$ |
+| 22 | $1610612736$ | $(33,1,11,27,13,30,0)$ | $R_4$ |
+| 23 | $-3221225472$ | $(34,0,12,30,14,34,1)$ | $1$ |
+| 24 | $-12884901888$ | $(36,0,12,34,16,36,0)$ | $1$ |
+
+Every listed pivot is a nonzero polynomial. The nine row swaps give
+
+$$
+\begin{aligned}
+\det Z^{(0)}&=-p_{24}
+=3\cdot2^{32}x^{36}f^{12}g^{34}h_-^{16}h_+^{36},\\
+\det\widehat M&=3\cdot2^{32}x^{36}f^{90}g^{34}h_-^{16}h_+^{36}.
+\end{aligned}
+\tag{14.13}
+$$
+
+The certificate is a symbolic calculation over $\mathbb Q(x,y)$ whose input and final output lie in $\mathbb Z[x,y]$. It proves a polynomial identity before specialization. Individual intermediate pivots, including the $R_i$, may vanish at particular real parameters; no nonvanishing assumption on those specialized pivots is used, and no parameter locus is lost by the elimination.
+
+Finally, (14.6) gives $1+\eta=2/f$, $\zeta=2x/f$, $\alpha+\beta=-h_-/g$ and $\beta-\alpha=h_+/g$. Dividing (14.13) by the factor in (14.8) yields
+
+$$
+\det M=3\cdot2^{32}x^{36}f^{-24}g^{-52}h_-^{16}h_+^{36}
+=\frac{768\,\zeta^{36}(\alpha+\beta)^{16}(\beta-\alpha)^{36}}
+{(1+\eta)^{12}}.
+$$
+
+This proves (14.5) for every source parameter: $\zeta>0$, $\alpha+\beta>0$, $1+\eta>0$, and $\beta-\alpha\ne0$ is exactly $p\ne q$. $\square$
+
+**定理 14.3（Sharp uniform horizon and full-input pure terminal minimum）。** For the actual strict-unbalanced source on the whole $H=\mathbb C^5\otimes\mathbb C^2$, under Definition 12.1's independently fresh pure environments, unread output and terminal trace, the exact-length configuration spans satisfy
+
+$$
+\boxed{\mathcal S_N=M_5(\mathbb C)\quad\text{and}\quad
+\operatorname{rank}J(\Phi_{\ne}^N)=25\qquad(N\ge8).}
+\tag{14.14}
+$$
+
+The least uniform cutoff is exactly
+
+$$
+\boxed{N_*=8.}
+\tag{14.15}
+$$
+
+For every such source and every selected $N\ge8$, the minimum dimension of an initially pure terminal environment is $25$, attained by a full-input dilation. The same dimension suffices and is necessary with any untouched finite reference, including coherent and entangled inputs. For a mixed terminal environment of dimension $d$ and initial state $\sigma_E$, the conclusion is only
+
+$$
+25\le d\,\operatorname{rank}\sigma_E\le d^2.
+\tag{14.16}
+$$
+
+**证明。** The $25$ columns in Lemma 14.2 are independent exact-length-eight words, so $\mathcal S_8=M_5(\mathbb C)$. Reuse the homogeneous propagation step of Theorem 12.2: $U$ is invertible and $U\mathcal S_N\subseteq\mathcal S_{N+1}$, hence full span at one exact length implies full span at its successor. This gives (14.14)'s span assertion for all exact $N\ge8$, without replacing exact length by a cumulative span.
+
+Reuse the exact interior obstruction of Proposition 13.2 with its original certificate (13.2)–(13.4). At $(p,q,r)=(9/50,8/25,8/25)$, (14.1) gives $t=B=1/2$, $A=9/50$, and $(\alpha,\beta,\eta,\zeta)=(3/5,4/5,3/5,4/5)$, equivalently $x=y=1/2$. Its exact length-seven span has dimension $24$. Thus no cutoff at most seven works for every source and every subsequent exact length. Together with the all-parameter upper bound eight, this proves (14.15). This sharpness argument reuses the published witness; it is not a new rank computation or a claim that every source first saturates at eight.
+
+For the channel consequence, the established Sanz–Choi supplier has the precise correspondence
+
+$$
+\mathcal E_{\mathcal A}(Z)=B UZU^*+tVZV^*,\qquad
+\mathcal A=(\sqrt B\,U,\sqrt t\,V),\qquad D_{\mathrm{Sanz}}=5,
+\quad d_{\mathrm{Sanz}}=2.
+$$
+
+Sanz, Pérez-García, Wolf and Cirac, *A quantum version of Wielandt's inequality*, arXiv:0909.5347v2, §II following equation (1), identifies $\operatorname{rank}J(\mathcal E_{\mathcal A}^N)$ with the span of products of exactly $N$ Kraus operators. Since $B,t>0$, these spans are precisely $\mathcal S_N$. Its generic Proposition 3 and Theorem 1(2) concern this configuration channel; the source-specific identity (14.5) supplies the sharper horizon here. No primitivity conclusion for a ten-dimensional channel is being inferred.
+
+In the actual source coordinates, every chronological Kraus word satisfies
+
+$$
+L_{w_N}\cdots L_{w_1}
+=B^{n_0/2}t^{n_1/2}
+D^*\bigl((\mathsf G_{w_N}\cdots \mathsf G_{w_1})\otimes I_K\bigr)D,
+\qquad n_0+n_1=N.
+\tag{14.17}
+$$
+
+All scalar weights are nonzero and $Z\mapsto D^*(Z\otimes I_K)D$ is injective. Therefore the full-input Kraus span has exactly the same dimension $25$. The positive Choi sum (12.12) and the pure-environment minimality/attainment argument of Theorem 12.2 apply unchanged at these earlier lengths. These are the existing Kraus/Choi/Stinespring suppliers of Watrous, *The Theory of Quantum Information*, Theorem 2.22 and Corollary 2.27, not new generic results. Tensoring the actual Kraus operators with $I_R$ preserves linear independence and realizes the channel on every untouched reference. The same spectral Kraus expansion as (12.13) gives (14.16), with no mixed-environment optimum or attainment at dimension five inferred. $\square$
+
+**假设 14.4（Exact conclusion and remaining contracts）。** Theorem 14.3 closes the uniform $N=8$ question left in Assumption 13.3 and tightens Proposition 13.2's interval $8\le N_*\le12$ to (14.15). Theorem 12.2's sufficient $N\ge12$ result, its proof, and the exact interior witness remain valid. The source-specific polynomial identity is a repo-derived ordinary proof; no Lean verification or worldwide novelty claim is made. The balanced stratum $p=q$ retains the separate rank-$4$ plateau of Theorem 8.2. The strict-domain determinant has no uniform positive lower bound near balance or the excluded boundary strata, so no uniform numerical conditioning or finite-precision margin follows. The pointwise earliest saturation time of other sources at lengths below eight is not classified.
+
+Every operational premise of Definitions 1.1, 12.1 and Assumptions 1.4, 7.5 remains in force. This is a terminal realization for each selected $N$ of the fixed unread channel power with independently fresh environments, not one common autonomous interaction and initial density realizing all prefix powers. It supplies no measured-successor instrument, intervened process tensor, feedback or recovery/compression of an acquired edge/path archive. It does not establish native $\alpha/\beta$ acquisition, physical parameter preparation or calibration, a readout apparatus, a clock, erasure/reset cost, or a realization of physical space or time. Untouched references remain input correlations, not available memory. The framed logical tensor identity is preserved; terminal rank $25$ is not a full-$M_{10}$ primitivity claim. The broader relational restoration and acquisition problems remain open.
+
+## 追加锚（本行以下为增补区）

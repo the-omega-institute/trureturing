@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:7a78bd993dbd417b8fe992615621add57def090d61f0954fac0cd9d6abfa4b4e
+  normalized_sha256: sha256:7a78bd993dbd417b8fe992615621add57def090d61f0954fac0cd9d6abfa4b4e
+cas_ref: sha256:7a78bd993dbd417b8fe992615621add57def090d61f0954fac0cd9d6abfa4b4e
+coverage_gids:
+  - gid: D5/S3/StatisticalMechanics/NoisyVoter/FiniteCausalInputs.history_law_of_positive_coordinate_laws
+    target_statement_id: sha256:68a8522575aacbc026d66f9d3e84a4290d6a37d2c17b9531ee5b16fc5633b93b
+receipts:
+  unresolved_subitems: []

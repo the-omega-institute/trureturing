@@ -1,0 +1,55 @@
+**定理 3.3（静态闭合与动态闭合的有限分离）。** 仍在三维参数类中，设 $\mu=\lambda c_Ac_B$，并定义左嵌套 Jacobi 残差
+
+$$
+\operatorname{Jac}_T(P,Q,R)=T(T(P,Q),R)+T(T(Q,R),P)+T(T(R,P),Q).
+$$
+
+则
+
+$$
+\operatorname{Jac}_T(C_{11},C_{21},C_{22})=(c_B^2-c_A^2)C_{12}.\tag{3.5}
+$$
+
+取 $x=A_1+B_1+C_{22}$、$y=C_{11}$、$x^2=M_\lambda(x,x)$，Jordan 缺陷为
+
+$$
+\boxed{M_\lambda(x^2,M_\lambda(x,y))-M_\lambda(x,M_\lambda(x^2,y))
+=2(\mu^2-1)C_{22}.}\tag{3.6}
+$$
+
+$M_\lambda$ 为 Jordan 乘法恰当且仅当 $\mu^2=1$。在其两个实参数支上，受限动态残差分别为
+
+$$
+\mathcal L((ab)^{-1})=|a-b|,\qquad
+\mathcal L(-(ab)^{-1})=a+b.\tag{3.7}
+$$
+
+所以静态 Jordan 比较允许的联合结构，仍可因共同变化不相容而被排除；即使 $a=b$，负参数支也不能满足 C96。
+
+证明。$T(C_{11},C_{21})=c_AA_3$，再作用到 $C_{22}$ 给 $-c_A^2C_{12}$；$T(C_{21},C_{22})=c_BB_3$，再作用到 $C_{11}$ 给 $c_B^2C_{12}$；第三项为零，得到 (3.5)。
+
+比较乘法的基关系为
+
+$$
+\begin{aligned}
+M_\lambda(A_i,A_k)&=\delta_{ik}I,&
+M_\lambda(B_j,B_l)&=\delta_{jl}I,&
+M_\lambda(A_i,B_j)&=C_{ij},\\
+M_\lambda(A_i,C_{kl})&=\delta_{ik}B_l,&
+M_\lambda(B_j,C_{kl})&=\delta_{jl}A_k,\\
+M_\lambda(C_{ij},C_{kl})&=\delta_{ik}\delta_{jl}I
+-\mu\sum_{m,n}\epsilon_{ikm}\epsilon_{jln}C_{mn}.
+\end{aligned}
+$$
+
+故 $x^2=3I+2C_{11}$，$M_\lambda(x,y)=A_1+B_1-\mu C_{33}$，而
+
+$$
+\begin{aligned}
+M_\lambda(x^2,M_\lambda(x,y))&=5A_1+5B_1-3\mu C_{33}+2\mu^2C_{22},\\
+M_\lambda(x,M_\lambda(x^2,y))&=5A_1+5B_1-3\mu C_{33}+2C_{22}.
+\end{aligned}
+$$
+
+这证明必要性。若 $\mu=\pm1$，分别取两个局部单位叉积，必要时反转其中一个符号；其复结合张量积的对称部分恰为当前 $M_\lambda$，故满足 Jordan 恒等式。这里临时构造的单位括号不替代原有 $c_A,c_B$ 动力，因而不暗中证明原来的 $T$ 相容。最后直接代入 (3.2) 得到 (3.7)。若把 $x$ 归一为 $x/\sqrt3$，式 (3.6) 的系数相应成为 $2(\mu^2-1)/(3\sqrt3)$。∎
+

@@ -1,0 +1,74 @@
+### 定理 2.1（反向的四个一致性定律）
+
+<a id="thm-c122-four-laws"></a>
+
+设 $\mathcal N:(H,\sigma)\to(K,\tau)$、
+$\mathcal M:(K,\tau)\to(L,\omega)$ 保持所标定的参考态，则
+
+<a id="eq-c122-involution"></a>
+
+$$
+\begin{aligned}
+\mathcal P_{\tau,\mathcal P_{\sigma,\mathcal N}}
+       &=\mathcal N,
+\end{aligned}
+\tag{6}
+$$
+
+<a id="eq-c122-sequence"></a>
+
+$$
+\begin{aligned}
+\mathcal P_{\sigma,\mathcal M\mathcal N}
+       &=\mathcal P_{\sigma,\mathcal N}\mathcal P_{\tau,\mathcal M},
+\end{aligned}
+\tag{7}
+$$
+
+<a id="eq-c122-parallel"></a>
+
+$$
+\begin{aligned}
+\mathcal P_{\sigma_1\otimes\sigma_2,\mathcal N_1\otimes\mathcal N_2}
+       &=\mathcal P_{\sigma_1,\mathcal N_1}\otimes
+         \mathcal P_{\sigma_2,\mathcal N_2},
+\end{aligned}
+\tag{8}
+$$
+
+<a id="eq-c122-unitary-reverse"></a>
+
+$$
+\begin{aligned}
+\mathcal P_{\sigma,\operatorname{Ad}_U}&=\operatorname{Ad}_{U^*}
+       \quad\text{（$U$ 为酉）}.
+\end{aligned}
+\tag{9}
+$$
+
+**证明。**
+每个 $\Gamma_\sigma$ 对 Hilbert–Schmidt 配对自伴随，因此
+
+$$
+\mathcal P_{\sigma,\mathcal N}^*
+       =\Gamma_\tau^{-1}\mathcal N\Gamma_\sigma.
+$$
+
+再次反向即得
+$\Gamma_\tau\mathcal P_{\sigma,\mathcal N}^*\Gamma_\sigma^{-1}
+=\mathcal N$，证明第一式。第二式则直接来自
+
+$$
+\Gamma_\sigma\mathcal N^*\mathcal M^*\Gamma_\omega^{-1}
+ =(\Gamma_\sigma\mathcal N^*\Gamma_\tau^{-1})
+  (\Gamma_\tau\mathcal M^*\Gamma_\omega^{-1}).
+$$
+
+第三式使用 $\Gamma_{\sigma_1\otimes\sigma_2}
+=\Gamma_{\sigma_1}\otimes\Gamma_{\sigma_2}$、张量积的伴随与支撑逆分解。
+最后，$\tau=U\sigma U^*$ 给出
+$\tau^{-1/2}=U\sigma^{-1/2}U^*$，代入 Petz 公式后所有权重抵消，只余 $U^*(\cdot)U$。
+
+这些等式说明：一条边的反向与顺序、并行和再次反向相容。
+式~[(6)](#eq-c122-involution) 说的是*反向规则再反一次得到原规则*；它没有把有损通道变成可逆通道。例如完全退相干满足自己的反向仍是自身，但往返仍会丢失非对角元。2026 年关于四项一致性刻画 Petz 反向的全局唯一性结果由前章单独引述 [5](#ref-retrodiction2026)；本定理仅直接验证该公式确实满足四项要求。
+

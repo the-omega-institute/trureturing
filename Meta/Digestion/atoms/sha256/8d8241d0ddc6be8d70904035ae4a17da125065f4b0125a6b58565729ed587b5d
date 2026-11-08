@@ -1,0 +1,26 @@
+### 定义 36.1（原终端子图、裸种子与准确生成问题）
+
+严格取定义 26.1 的同一十三维 $H$、唯一初态 $v_0=e_{00100}$、局部角 $L=\operatorname{span}(v_0,v_1)$ 及其有序正交基 $(v_0,v_1)$。置 $\mathsf B_{45}=\{4,5\}^{<\infty}$、$\mathsf W_7=\{0,\ldots,6\}^{<\infty}$，均含空字；调用顺序仍为 (16.21)。全部前缀为 $a\in\mathsf B_{45}$，全部终端请求为 $(f,w)\in\mathsf W_7\times\Omega_{10}$，$\Omega_{10}=\{0,1\}^{10}$。不截断字长，不增加中间读口。此处选定的是定义 26.1 已给的 **Born 比较族** $q_w$，不是未知原生响应，也不是命题 26.2 的正参数扰动。
+
+记 $\iota:L\hookrightarrow H$ 为原有子空间的包含，$U_a=K_a|_L$、$\psi_a=U_av_0$、$\rho_a=|\psi_a\rangle\langle\psi_a|$。对每个原标签，包括不在 $H$ 中的零标签，定义原始效果与质量
+
+$$
+ E_{f,w}=\iota^*K_f^*|w\rangle\langle w|K_f\iota,
+ \qquad F_{f,w}(n_a)=\operatorname{Tr}(\rho_aE_{f,w}).
+ \tag{36.1}
+$$
+
+$n_a$ 是 (18.1) 对应的 Bloch 方向。数学上对任意 $n\in S^2$ 取 $\rho_n=(I+n\cdot\sigma)/2$，以同一迹配对定义连续函数 $F_{f,w}(n)$；这不供应额外准备。裸种子固定为全部 $F_{\epsilon,w}$，其效果只有 $P_0=|v_0\rangle\langle v_0|$、$P_1=|v_1\rangle\langle v_1|$ 及其余 $1022$ 个零效果。
+
+待检验的展开要求：存在有限 $m$、任意实数 $\lambda_r\ge0$、逐项实际有限字 $B_r\in\mathsf B_{45}$ 和原标签 $w_r\in\Omega_{10}$，使
+
+$$
+ F_{345,u_0}(n_a)
+ =\sum_{r=1}^m\lambda_r F_{\epsilon,w_r}(A_{B_r}n_a)
+ \quad\text{对每个 }a\in\mathsf B_{45},
+ \qquad u_0=1000000010.
+ \tag{36.2}
+$$
+
+这里 $A_B$ 是实际局部字的比较作用，故右侧在原程序上是前缀 $a$ 后再调用 $B_r$ 的裸读数。不同程序和历史仍是不同条件索引，不因方向相同而删除。$m$ 有限并不限制可选 $B_r$ 的长度或总轨道；不将闭包旋转列为可调用字。
+

@@ -1,0 +1,13 @@
+### 定义 2.3（旁观方向条件）
+
+每个实方向 $a$ 产生 $D_a\in\mathfrak{so}(W)$，$a\mapsto D_a$ 实线性，$D_a a=0$，且 $D\ne0$。要求对全部标签及其线性合成，
+
+<a id="eq-c117-spectator"></a>
+
+$$
+\boxed{[D_a,D_b]z=0\quad(z\perp a,b).}
+\tag{1}
+$$
+
+这是完整向量等式。只比较 $z\cdot[D_a,D_b]z$ 没有约束力，因为反对称算子的该自比较总是零。
+

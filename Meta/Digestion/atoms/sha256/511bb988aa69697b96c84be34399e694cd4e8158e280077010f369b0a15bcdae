@@ -1,0 +1,24 @@
+所以 $\operatorname{Ran} W\oplus\operatorname{Ran} B$ 自然等同于 $\mathbb C^2\otimes S$。
+在这*整个*空间上，$\Pi_g$ 与 $CJJ^*C^*$ 的分块矩阵分别为
+
+$$
+\begin{pmatrix}I&0\\0&0\end{pmatrix},\qquad
+ \begin{pmatrix}
+ \sin^2\theta\,I&\sin\theta\cos\theta\,I\\
+ \sin\theta\cos\theta\,I&\cos^2\theta\,I
+ \end{pmatrix}.
+$$
+
+因此同一个两反射操作
+
+$$
+Q=(2CJJ^*C^*-I)(I-2\Pi_g)
+$$
+
+在该空间上的作用为
+
+$$
+Q=\begin{pmatrix}\cos2\theta&\sin2\theta\\
+ -\sin2\theta&\cos2\theta\end{pmatrix}\otimes I_S.
+$$
+

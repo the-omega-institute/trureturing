@@ -1,0 +1,125 @@
+### 定理 25.2（整个正生成图的统一兼容修复）
+
+在定义 25.1 下，先设存在常数种子向量 $(c_j)_{j\in J}$，其常数展开
+
+$$
+ c_i=\sum_{j,r}\lambda_{ijr}c_j
+ \tag{25.3}
+$$
+
+满足 $\mathcal D$ 的全部关系；特别是种子行本身也满足该展开的一致性。要求 $c_j=0$ 当且仅当当前种子 $F_j\equiv0$，其余 $c_j$ 严格为正。由非负展开及菜单归一化，$0\le c_i\le1$。给定
+
+$$
+ 0<\kappa\le\min\{c_j:j\in J,\ F_j\not\equiv0\},
+ \qquad \theta=\frac{\delta}{\kappa},
+$$
+
+则一个全图共同公式
+
+$$
+ G_i(n)=\frac{f_i(n)+\theta c_i}{1+\theta}
+ \tag{25.4}
+$$
+
+给出 $G\in\mathcal K_{\mathcal D}$，保持全部恒零标签，并同时满足
+
+$$
+ \boxed{
+ d_{\mathcal D}(F)\le\frac{\delta}{\kappa+\delta},
+ \qquad
+ \tau_{\mathcal D}(PF)\le
+ \frac{\delta(1+\delta)}{\kappa+\delta}.}
+ \tag{25.5}
+$$
+
+不需要另加统一系数和界。若响应类非空且定义 25.1 的全部数据固定，则可以按有限种种子零掩码选取常数族，使一个 $\kappa>0$ 对该类中的所有响应同时成立，独立于当前响应及其 $\varepsilon$。
+
+**证明。** 首先核对共同线性结构。对旋转 $B$ 记 $U_Bh(n)=h(Bn)$。以 $m=Bn$ 换元，旋转不变性给出
+
+$$
+ \alpha(U_Bh)=\alpha(h),\qquad
+ \beta(U_Bh)=B^{-1}\beta(h),\qquad
+ P(U_Bh)=U_B(Ph),\qquad P1=1.
+ \tag{25.6}
+$$
+
+对任意原关系 $\sum_\ell d_\ell F_{i_\ell}(B_\ell n)=d$ 施加同一个 $P$，就得到 $\sum_\ell d_\ell f_{i_\ell}(B_\ell n)=d$。系数可以为任意固定实数，故这同时保留记录加和、控制串接、归一化、标签识别与零边。(25.1) 也由线性性和 (25.6) 保留。$c$ 满足同一组关系，所以 (25.4) 保留它们，包括右端非零的仿射等式；所有菜单使用同一个分母。
+
+下面构造常数见证。对任一兼容响应定义
+
+$$
+ \mu_i=\int F_i\,d\sigma.
+$$
+
+积分 (25.1) 得 $\mu_i=\sum_{j,r}\lambda_{ijr}\mu_j$；积分每条原仿射关系得常数族 $\mu$ 满足 $\mathcal D$。若非负连续 $F_j$ 在一点严格为正，则在一个正测度邻域上严格为正，故 $\mu_j>0$；反之 $F_j\equiv0$ 时 $\mu_j=0$。因此 $\mu_j=0$ 恰对应恒零种子。至少一个种子非零，否则 (25.1) 会使每个菜单全部为零，与归一化矛盾。$J$ 有限，所以对单一响应取 $c=\mu$ 已得到一个正的种子下界。
+
+这个单一响应的均值下界可以沿一族响应趋零。为取得统一常数，令
+
+$$
+ \mathfrak S=\bigl\{
+ \{j\in J:F_j\not\equiv0\}:F\text{ 属于固定兼容响应类}
+ \bigr\}.
+$$
+
+$\mathfrak S$ 非空，每个元素非空，且至多有 $2^{|J|}$ 个元素。对每个出现的掩码 $S\in\mathfrak S$ 一次选取一个兼容响应，取其均值族 $c^S$。于是 $c^S_j>0$ 当且仅当 $j\in S$，且其常数展开满足同一个 $\mathcal D$。置
+
+$$
+ \kappa=\min_{S\in\mathfrak S}\min_{j\in S}c^S_j>0.
+ \tag{25.7}
+$$
+
+这是有限个正数的最小值。对当前响应使用其掩码对应的 $c^S$，即得不依赖当前均值及 $\varepsilon$ 的常数。这里使用有限选择，不重新证明定理 22.2 的全图紧性结论。
+
+见证还保持整个原图的零掩码。若 $F_i\equiv0$，则
+
+$$
+ 0=\mu_i=\sum_{j,r}\lambda_{ijr}\mu_j.
+$$
+
+非负项中不可能有活动种子的正系数，故由同一掩码得到 $c_i=0$。反之 $F_i\not\equiv0$ 时 $\mu_i>0$，某项活动种子具有正系数，故 $c_i>0$。这包括未列入 $J$ 的所有原标签。
+
+对活动种子，由 (25.2) 有 $f_j\ge F_j-\delta$，而 $\theta c_j\ge\delta$；恒零种子上 $f_j=c_j=F_j=0$。因此所有种子都满足 $f_j+\theta c_j\ge F_j$。用精确的非负展开逐项传播到每个原标签，得到
+
+$$
+ \begin{aligned}
+ f_i(n)+\theta c_i
+ &=\sum_{j,r}\lambda_{ijr}
+   [f_j(B_{ijr}n)+\theta c_j]\\
+ &\ge\sum_{j,r}\lambda_{ijr}F_j(B_{ijr}n)=F_i(n).
+ \end{aligned}
+ \tag{25.8}
+$$
+
+故 $G_i\ge F_i/(1+\theta)\ge0$。$G$ 仿射并满足全部原菜单归一化，所以 $G\in\mathcal K_{\mathcal D}$。同一菜单的其余完整标签也满足这个下界，故
+
+$$
+ \frac{F_i}{1+\theta}\le G_i
+ \le1-\frac{1-F_i}{1+\theta}
+ =\frac{F_i+\theta}{1+\theta}.
+$$
+
+由 $0\le F_i\le1$，得到 $\|G_i-F_i\|_\infty\le\theta/(1+\theta)$，即 (25.5) 的第一式。另一方面 $0\le c_i\le1$ 且 $f_i\in[-\delta,1+\delta]$，所以
+
+$$
+ \|G_i-f_i\|_\infty
+ =\frac{\theta}{1+\theta}\|c_i-f_i\|_\infty
+ \le\frac{\theta(1+\delta)}{1+\theta}.
+$$
+
+消费 (22.5) 的仿射精确范数恒等式
+
+$$
+ \|a+\langle b,n\rangle\|_\infty=|a|+\|b\|,
+$$
+
+代入 $\theta=\delta/\kappa$ 即得第二式。$\delta=0$ 时同一公式给 $G=f=F$。
+
+传播 (25.8) 的是精确正支配，不是带误差的展开，所以未用 $\sum_{j,r}\lambda_{ijr}$ 的统一界。见证构造后，活动种子的系数才有后验界
+
+$$
+ \sum_{j\in S,r}\lambda_{ijr}
+ \le\frac{c_i}{\kappa}\le\frac1\kappa.
+$$
+
+零种子上的系数即使很大也不影响函数。全部积分、常数混合与函数修复都是数学构造，不提供原生随机选字、准备、复制、reset 或新读口。∎
+

@@ -1,0 +1,114 @@
+## 源稿前言与排版元数据
+
+```latex
+% !TEX program = xelatex
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=24mm,headheight=16pt]{geometry}
+\IfFileExists{ctex.sty}{\usepackage[UTF8,fontset=auto]{ctex}}{
+  \usepackage{fontspec}
+  \IfFontExistsTF{Noto Serif CJK SC}{\setmainfont{Noto Serif CJK SC}[AutoFakeBold=1.7]}{\setmainfont{NotoSerifCJKsc-Regular.otf}[Path=fonts/,AutoFakeBold=1.7,AutoFakeSlant=.15]}
+  \XeTeXlinebreaklocale "zh"
+  \XeTeXlinebreakskip=0pt plus 1pt
+}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{xcolor,booktabs,array,tabularx,longtable}
+\usepackage{fancyhdr,enumitem,hyperref,needspace,tikz}
+\usetikzlibrary{arrows.meta,calc,positioning}
+\definecolor{ink}{HTML}{17384A}
+\definecolor{accent}{HTML}{007D86}
+\definecolor{warm}{HTML}{B75B39}
+\hypersetup{colorlinks=true,linkcolor=ink,urlcolor=accent,citecolor=ink,
+pdftitle={AURIC v81：共享内容相容、量子寻址与最大共同分支}}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small AURIC / v81 / 共享内容与量子寻址}
+\fancyhead[R]{\small 定义、定理、证明与白话}
+\fancyfoot[C]{\thepage}
+\setlength{\parindent}{1.8em}
+\setlength{\parskip}{4pt}
+\setlength{\emergencystretch}{3em}
+\setlist{nosep,leftmargin=2em}
+\renewcommand{\baselinestretch}{1.10}
+\renewcommand{\contentsname}{目录}
+\renewcommand{\abstractname}{摘要}
+\renewcommand{\figurename}{图}
+\renewcommand{\refname}{固定来源与证明归属}
+\renewcommand{\proofname}{证明}
+\numberwithin{equation}{section}
+\theoremstyle{definition}
+\newtheorem{definition}{定义}[section]
+\newtheorem{theorem}[definition]{定理}
+\newtheorem{lemma}[definition]{引理}
+\newtheorem{proposition}[definition]{命题}
+\newtheorem{corollary}[definition]{推论}
+\newtheorem{remark}[definition]{说明}
+\newcommand{\ip}[2]{\langle #1,#2\rangle}
+\newcommand{\norm}[1]{\left\lVert #1\right\rVert}
+\newcommand{\C}{\mathbb C}
+\newcommand{\R}{\mathbb R}
+\newcommand{\tr}{\operatorname{Tr}}
+\newcommand{\Rea}{\operatorname{Re}}
+\newcommand{\Ima}{\operatorname{Im}}
+\newcommand{\Span}{\operatorname{span}}
+\newcommand{\rank}{\operatorname{rank}}
+\newcommand{\ran}{\operatorname{ran}}
+\newcommand{\kerop}{\operatorname{ker}}
+\newcommand{\ket}[1]{|#1\rangle}
+\newcommand{\bra}[1]{\langle#1|}
+\newcommand{\Exec}{\operatorname{Exec}}
+\newcommand{\plain}[1]{\par\noindent\textbf{白话图景。}#1\par}
+\newcommand{\repo}[2]{\href{https://github.com/the-omega-institute/trureturing/blob/c63ab162315fddd0801cbe9f47dbf3eda6e13360/docs/develop/theory/#1}{#2}}
+\title{\color{ink}\bfseries 共享内容相容公理\\[6pt]
+\large 从内容寻址到量子过程与最大共同分支\\[4pt]
+AURIC v81：一个完整候选及其有限量子理论}
+\author{项目连续研究稿}
+\date{2026 年 11 月 2 日}
+```
+
+```latex
+\begin{document}
+\maketitle
+\clearpage
+\setcounter{tocdepth}{1}
+{\small\setlength{\parskip}{0pt}\tableofcontents}
+\newpage
+\begin{center}\small\texttt{c63ab162315fddd0801cbe9f47dbf3eda6e13360}\end{center}
+\begin{center}\small
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{.26\textwidth}X@{}}
+\toprule
+\\
+\midrule
+\\
+\\
+\\
+\\
+\bottomrule
+\end{tabularx}
+\end{center}
+{\small
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{.20\textwidth}
+>{\raggedright\arraybackslash}p{.35\textwidth}
+>{\raggedright\arraybackslash}p{.39\textwidth}@{}}
+\toprule
+\\
+\midrule
+\endfirsthead
+\toprule
+通常的量子规则 & 在本理论中的来处 & 不能略去的范围条件\\
+\midrule
+\endhead
+\\[4pt]
+\\[4pt]
+\\[4pt]
+\\[4pt]
+\\[4pt]
+\\[4pt]
+\\[4pt]
+\\[4pt]
+\\[4pt]
+\\
+\bottomrule
+\end{longtable}}
+\begin{thebibliography}{20}
+\end{thebibliography}
+\end{document}
+```

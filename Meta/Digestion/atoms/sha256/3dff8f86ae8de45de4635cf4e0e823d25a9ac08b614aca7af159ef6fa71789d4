@@ -1,0 +1,12 @@
+### [6]
+
+The Omega Institute,
+[*WDigits.lean*](https://github.com/the-omega-institute/trureturing/blob/4008fb9289d85582c68b23a5810474e4463c64ea/D5/S0/Conventions/WDigits.lean)，
+[*DeficitInteger.lean*](https://github.com/the-omega-institute/trureturing/blob/4008fb9289d85582c68b23a5810474e4463c64ea/D5/S1/Deficit/DeficitInteger.lean)，
+[*DeficitThreeValued.lean*](https://github.com/the-omega-institute/trureturing/blob/4008fb9289d85582c68b23a5810474e4463c64ea/D5/S1/Deficit/DeficitThreeValued.lean)。
+沿用 C132 已全文核读的固定算术来源，本轮确认三份文件在 `d9880e9f2c32`、`30817972a543` 与 `4008fb9289d8` 的 blob 一致并补读全文：
+`betaDigits`、`betaReal`、`deficit_integer`、`deficit_three_valued`。
+本稿只使用其三值缺口结论；余循环等式在正文由定义直接证明。
+
+<a id="ref-moretti2017"></a>
+

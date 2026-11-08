@@ -1,0 +1,44 @@
+**Definition 43.1 (coherent prefix syntax).** Retain Definition 42.1's
+one LAB root/source/epoch, authentic operands, exclusive current rights,
+full ancestral tapes and finite backing per finite run. Let $L(u)=\ell(u)$.
+For $u\in\mathcal D_+$ and $0\le j\le L(u)$, define $F_j(u)$ to be the
+logical source after exactly the first $j$ rows of Definition 41.1's
+sealed OLD frontier have completed their guarded primitive, all tape and
+arithmetic maintenance, literal reply, acknowledgement and inner return.
+Newly born leaves are excluded. Thus $F_0(u)=u$, $F_{L(u)}(u)=\rho(u)$,
+and native $G(u)=F_1(u)$. An active outer call has not yet returned;
+even at $j=L(u)$ its pending output/acknowledgement/return is retained.
+At $j=0$ acquisition may still precede sealing or a next-row operand.
+Only such coherent source cuts, and stationary control transitions
+between them, are considered; an unfinished inner commit is excluded.
+
+For the inverse use two syntax sorts, not two new source types:
+
+$$
+\mathcal T_B::=\beta\mid\langle\mathcal T_B,\mathcal T_A\rangle,
+\qquad \mathcal T_A::=\alpha\mid\mathcal T_B.
+\tag{43.1}
+$$
+
+AA Theorem 17.2 gives $\mathcal T_A=\mathcal D$ and
+$\mathcal T_B=\mathcal D_+$. The left child of any branch belongs to
+$\mathcal T_B$, because it is born beta and cannot become alpha;
+the right child may also be an untouched alpha. At the actual root,
+using sort $B$ means that the initial promotion has already happened,
+not that its actual birth type was beta. Extend $F_j$ descriptively to
+either sort by applying $\rho$ once at its first $j$ original leaves.
+This auxiliary extension at alpha gives no native $G$ there.
+
+Reuse the actual-image inverse $\delta:I\to\mathcal T$ of (42.5).
+For $s\in\{A,B\}$ define the decidable full-image predicate
+
+$$
+J_s(y)\quad\Longleftrightarrow\quad y\in I\ \text{and}\
+\delta(y)\in\mathcal T_s.
+\tag{43.2}
+$$
+
+Both conditions matter: $\langle\beta,\beta\rangle\in I$ but its
+inverse $\langle\alpha,\alpha\rangle$ is not attained. Counts use
+$n=a+2b-1$ as in (42.1), not elapsed time or material depth.
+

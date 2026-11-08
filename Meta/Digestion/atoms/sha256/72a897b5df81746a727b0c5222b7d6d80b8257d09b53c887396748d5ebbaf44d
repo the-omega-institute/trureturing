@@ -1,0 +1,35 @@
+### 说明 11.3（很小的二态损失不自动使整个通道接近酉）
+
+固定 $N=E_z$、$0<z<1$，令
+
+$$
+\rho_0=\frac{I+z\mathsf Z}{2},\qquad
+ \rho_1^\epsilon=\frac{I+z\mathsf Z+\epsilon\mathsf X}{2}.
+$$
+
+对充分小的 $\epsilon>0$，两态忠实且不对易；
+由它们和 $I$ 可线性解出 $\mathsf X,\mathsf Z$，故生成 $M_2$。
+它们的输出相同，故 $J_{\mathrm{out}}=0$。
+选定 $\epsilon_0<\sqrt{1-z^2}$，则对 $0<\epsilon\le\epsilon_0$，
+中点的最小本征值一致满足
+
+$$
+\lambda_{\min}(\sigma_\epsilon)\ge
+ m:=\frac{1-\sqrt{z^2+\epsilon_0^2/4}}2>0.
+$$
+
+因为 $d_\epsilon=-\epsilon\mathsf X/4$，
+
+$$
+0\le\ell=J_{\mathrm{in}}
+ \le\frac{\left\lVert d_\epsilon\right\rVert_2^2}{m}
+ =\frac{\epsilon^2}{8m}\longrightarrow0.
+$$
+
+但对任意酉 $U$，$N(P_+)=I/2$ 与 $UP_+U^\dagger$ 的迹范数距离恒为 $1$。
+所以 $N$ 始终远离每个酉通道。
+问题在于两输入趋于重合，不能从小误差推出全代数的统一稳定性；
+这与 v89 中近重合生成元的边界一致 [9](#ref-v89)。
+
+<a id="section-12"></a>
+

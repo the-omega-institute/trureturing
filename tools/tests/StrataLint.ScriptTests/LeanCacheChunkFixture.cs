@@ -31,7 +31,7 @@ internal sealed class LeanCacheChunkFixture : IDisposable
         owner = Path.Combine(Path.GetDirectoryName(script)!, "lean_cache_release.py");
         foreach (var directory in new[] { repository, bin, releases, Path.GetDirectoryName(script)!, Path.Combine(repository, ".lake/build") })
             ScriptHarnessScratch.EnsureDirectory(directory);
-        foreach (var name in new[] { "lean-cache-publish.sh", "lean_cache_release.py", "lean_cache_topology.py", "lean_cache.py", "cache_material.py" })
+        foreach (var name in new[] { "lean-cache-publish.sh", "lean_cache_release.py", "lean_cache_release_io.py", "lean_cache_topology.py", "lean_cache.py", "cache_material.py" })
             ScriptHarnessScratch.CopyScriptInto(
                 Path.Combine(TestRepositoryLayout.FindRoot(), "tools/scripts/worktree", name),
                 Path.Combine(Path.GetDirectoryName(script)!, name));
@@ -85,8 +85,8 @@ internal sealed class LeanCacheChunkFixture : IDisposable
                 def add(self, *args, **kwargs): pass
                 def __exit__(self, *args):
                     shutil.copyfile(pathlib.Path(os.environ["CHUNK_FIXTURE"]) / "archive", self.path)
-            def open_archive(path, mode="r", **kwargs):
-                return PackedFixture(path) if mode == "w:gz" else original(path, mode, **kwargs)
+            def open_archive(name=None, mode="r", **kwargs):
+                return PackedFixture(name) if mode == "w:gz" else original(name, mode, **kwargs)
             tarfile.open = open_archive
             """);
     }

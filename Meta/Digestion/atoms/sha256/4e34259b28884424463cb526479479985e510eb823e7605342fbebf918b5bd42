@@ -1,0 +1,44 @@
+**引理 5.6（线性辅助动力对应）。** 存在有界实线性赋值
+
+$$
+\psi^\chi:J\longrightarrow\operatorname{Der}_{\rm skew}(J),
+\qquad \psi^\chi_{\pi(a)}=T_a,
+\tag{5.11}
+$$
+
+满足
+
+$$
+\psi^\chi_x(x)=0,\quad
+\psi^\chi_x(y)=-\psi^\chi_y(x),\quad \psi^\chi_1=0,
+\quad [\psi^\chi_x,\psi^\chi_y]=-[L_x,L_y].
+\tag{5.12}
+$$
+
+证明。对原 $a,c,b$，将 (5.9) 用于 $a+c,a,c$，原第一槽加法缺陷是中心，故 $(T_{a+c}-T_a-T_c)\pi(b)$ 是标量。同理 $(T_{ta}-tT_a)\pi(b)$ 是标量。两算子都是有界斜顺序导子，其范围在稠密集 $\pi(E)$ 上为标量，故在整个 $J$ 上也为标量；定义 5.3 迫使二者为零。
+
+所以 $a\mapsto T_a$ 实线性，而 (5.8) 使其在 $\ker(\pi|_E)$ 上为零，并连续延拓为 (5.11)。值域的范数闭性由定义 5.3 保证。$T_a\pi(a)=0$ 经稠密性给 $\psi_x(x)=0$，极化给反对称性；又 $T_a1=0$，故 $\psi_1(x)=-\psi_x1=0$。
+
+核对负交换子号时，对原 $a,b,c$ 使用 (5.9) 两次。内层标量由 $\psi_{\pi(a)}1=0$ 消灭，而 $D(b,c)\in E$ 是实际原输出，故
+
+$$
+\psi_{\pi(a)}\psi_{\pi(b)}\pi(c)
+ -\pi D(a,D(b,c))\in\mathbb R1.
+\tag{5.13}
+$$
+
+交换 $a,b$ 再相减。嵌套式 (3.2) 和反对称性给出精确恒等式
+
+$$
+\begin{aligned}
+D(a,D(b,c))-D(b,D(a,c))
+ &=-[L_c,L_b]a+[L_c,L_a]b\\
+ &=[L_b,L_a]c.
+\end{aligned}
+\tag{5.14}
+$$
+
+最后一行仅用交换乘法展开后消去 $c\circ(a\circ b)$。所以
+$[\psi_{\pi(a)},\psi_{\pi(b)}]+[L_{\pi(a)},L_{\pi(b)}]$
+在稠密 $\pi(E)$ 上、因而在 $J$ 上取标量值。它是有界斜顺序导子，再用定义 5.3 得零。对 $a,b$ 连续延拓，得到 (5.12) 的负号。∎
+

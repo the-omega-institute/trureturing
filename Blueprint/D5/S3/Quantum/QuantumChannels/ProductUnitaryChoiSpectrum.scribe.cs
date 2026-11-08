@@ -58,6 +58,9 @@ internal sealed class ProductUnitaryChoiSpectrumDocument : IScribeDocumentDefini
                 Seq(Frac2(D(1), Cast(V("n"))), Sp, V("I"))))),
                 "I/n on pairs of indices: the Choi matrix of depol(n).",
                 DescribeRole.Definition, Repo()),
+            Node("depol-single-dmat", "Matrix-unit entries of the trace-to-identity map", "depol_single_eq_dmat", DepolSingleFormula(),
+                "For every natural dimension n and all i, j, a and b in Fin n, depol n applied to Matrix.single i j 1 has entry dmat n (i, a) (j, b).",
+                DescribeRole.Theorem, Repo()),
             Node("qmat", "The Choi matrix of the complementary projection", "qmat", Disp(For(V("n"), Nat(), Equal(
                 Call("qmat", V("n")),
                 Seq(Call("kmat", V("n")), Sp, Minus, Sp, Call("dmat", V("n")))))),
@@ -100,6 +103,18 @@ internal sealed class ProductUnitaryChoiSpectrumDocument : IScribeDocumentDefini
                 new OpenProblemResolutionClaim(
                     ProblemSlugRef.Create("garcia-velo-2026-product-unitary-choi-spectrum"),
                     ResolutionKind.Proved)))));
+
+    private static Formula DepolSingleFormula()
+    {
+        Formula pair(Formula x, Formula y) => Parenthesized(Seq(x, Comma, Sp, y));
+        Formula single = new Formula.Apply(Seq(Operatorname, Grp(V("Matrix")), Dot, Operatorname, Grp(V("single"))),
+            [V("i"), V("j"), D(1)]);
+        Formula body = Equal(new Formula.Apply(Call("depol", V("n")), [single, V("a"), V("b")]),
+            new Formula.Apply(Call("dmat", V("n")), [pair(V("i"), V("a")), pair(V("j"), V("b"))]));
+        foreach (string name in new[] { "b", "a", "j", "i" })
+            body = new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), Call("Fin", V("n")), body);
+        return Disp(new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create("n"), Nat(), body));
+    }
 
     private static AssessedProvenance Lit() => AssessedProvenance.FromLiterature(Source);
     private static AssessedProvenance Repo() => AssessedProvenance.FromRepo(Source);

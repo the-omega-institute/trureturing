@@ -1,0 +1,8 @@
+### 1.2　本轮继续退回哪个前件
+
+作为已经核验的历史版本，C138 固定提交中的 [C133 主文](https://github.com/the-omega-institute/trureturing/blob/66c49bfe9a1295ceea872b6e6a1d8146fb351237/docs/develop/theory/AURIC_C133_THREE_READ_CLOSURE_VISIBLE_COMPLEX_GEOMETRY.md) §2 的完整纸面论证已从上述预算推出对称半正定读数、可见商上的等距三周期， 再以 $J=(I+2T)/\sqrt3$ 得到复结构及 Hilbert 完成。 因此，继续补出这条商空间证明属于补齐来源接口；不能重新称它为本轮发现。 主文同时明说：实配方空间和双线性聚合仍在输入端。
+
+同一历史提交的 [C130 §2](https://github.com/the-omega-institute/trureturing/blob/66c49bfe9a1295ceea872b6e6a1d8146fb351237/docs/develop/theory/AURIC_C130_MUTUAL_READOUT_BOUND_QUANTUM_RELATIONS.md) 在整数配方预算下得到 Hermitian 正性，其有限双和聚合与复数结构也有明确来源。 而 [C133 续五 §4](https://github.com/the-omega-institute/trureturing/blob/66c49bfe9a1295ceea872b6e6a1d8146fb351237/docs/develop/theory/AURIC_C133_THREE_READ_CLOSURE_VISIBLE_COMPLEX_GEOMETRY_CONTINUATION_V.md) 先在已经得到的交换群上证明平行四边形律，再以极化、正 Gram 商和完成获得平方几何。 这些已有路线提示了本轮的精确目标：从一个原始实读数 $q$ 的二元微扰比较出发， 证明双线性读口本身，而不是先把它写进读口的类型。
+
+后文采取的入口是双方一阶响应互易。新的证明若成立，便能把 *双线性读口*从假设移入结论，再与已有三读预算对接。 实向量配方、右方向导数的存在、统一读数及所有相关方向的互易仍须明示； 它们是这条候选的前件，不因采用较短的表述而自动来自 $\Omega$。
+

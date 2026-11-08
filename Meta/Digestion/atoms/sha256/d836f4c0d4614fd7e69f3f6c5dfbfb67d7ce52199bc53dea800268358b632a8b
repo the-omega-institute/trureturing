@@ -1,0 +1,101 @@
+### 定理 17.1（正响应的循环表示）
+
+<a id="thm-c92-gns"></a>
+
+定义
+
+$$
+k(a,b)=\omega(a^\dagger b),\qquad
+ \mathcal N_\omega=\{a\in\mathfrak A:\omega(a^\dagger a)=0\}.
+$$
+
+则 $k$ 是正关系核，商空间 $\mathfrak A/\mathcal N_\omega$ 的内积为
+
+$$
+\langle[a],[b]\rangle=\omega(a^\dagger b).
+$$
+
+它的完备化 $H_\omega$ 上存在含幺 $*$ 表示 $\pi_\omega$ 与单位循环向量
+$\Omega_\omega$，满足
+
+<a id="eq-c92-gns-representation"></a>
+
+$$
+\omega(a)=\langle\Omega_\omega,\pi_\omega(a)\Omega_\omega\rangle,
+ \qquad
+ \overline{\pi_\omega(\mathfrak A)\Omega_\omega}=H_\omega.
+\tag{17.1}
+$$
+
+对已经固定的同一个 $\omega$，这种循环表示唯一到保持循环向量的酉等价。
+
+**证明。**
+对任意有限 $a_i\in\mathfrak A$ 与复数 $c_i$，正性给
+
+$$
+\sum_{i,j}\overline{c_i}k(a_i,a_j)c_j
+ =\omega\!\left[
+   \left(\sum_i c_ia_i\right)^\dagger
+   \left(\sum_j c_ja_j\right)\right]\ge0.
+$$
+
+通过考察 $\omega((a+zb)^\dagger(a+zb))\ge0$ 的复数二次式，得到
+
+$$
+|\omega(a^\dagger b)|^2
+ \le\omega(a^\dagger a)\omega(b^\dagger b).
+$$
+
+因此零范数元与全部元正交，零元集合是线性空间，商上的内积良定义且正定。
+
+对 $b\in\mathfrak A$，$C^*$ 正序给
+$b^\dagger b\le\left\lVert b\right\rVert^2 I$，所以
+
+<a id="eq-c92-gns-left-bound"></a>
+
+$$
+\omega(a^\dagger b^\dagger ba)
+ \le\left\lVert b\right\rVert^2\omega(a^\dagger a).
+\tag{17.2}
+$$
+
+若 $a\in\mathcal N_\omega$，右侧为零，故 $ba\in\mathcal N_\omega$；
+这证明 $\mathcal N_\omega$ 是左理想。
+于是左乘
+
+$$
+\pi_\omega(b)[a]=[ba]
+$$
+
+在商空间上良定义。
+式 [(17.2)](#eq-c92-gns-left-bound) 给其范数不超过 $\left\lVert b\right\rVert$，
+故它唯一有界延拓到 $H_\omega$。
+乘法与单位性质由左乘直接成立，且
+
+$$
+\langle[x],\pi_\omega(b)[y]\rangle
+ =\omega(x^\dagger by)
+ =\langle\pi_\omega(b^\dagger)[x],[y]\rangle,
+$$
+
+所以该映射保持伴随。
+
+取 $\Omega_\omega=[I]$，由 $\omega(I)=1$ 得其范数一，
+且 $\pi_\omega(a)\Omega_\omega=[a]$，这些向量按定义稠密。
+式 [(17.1)](#eq-c92-gns-representation) 随即成立。
+若 $(H',\pi',\Omega')$ 是同一态的另一循环表示，
+映射 $[a]\mapsto\pi'(a)\Omega'$ 保持全部内积，
+由两边的循环性延拓为所需酉映射。
+
+这里还得到精确的内容等价：
+
+$$
+[a]=[b]
+ \iff
+ \omega\bigl((a-b)^\dagger(a-b)\bigr)=0.
+$$
+
+左理想性质保证，零区别在任何相同的左续接后仍为零。
+因此“同内容取同地址”在这个表示中是一个有明确比较范围的商定义。
+所有有限 Gram 正性由同一个 $\omega$ 保证，而非逐对选取互不相容的局部实现。
+

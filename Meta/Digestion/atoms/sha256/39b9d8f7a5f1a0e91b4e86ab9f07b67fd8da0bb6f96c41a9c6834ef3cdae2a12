@@ -1,0 +1,78 @@
+**Theorem 139.2 (positive value, zero closure and deterministic paths).** For every original $\theta$, the actual determinant image
+
+$$
+I_\theta=\{\det A_E:E\in\mathscr E_\theta\}\subset\mathbb R
+\tag{139.4}
+$$
+
+is an interval containing a strictly positive value, and $0\in\overline{I_\theta}$. Moreover any two members of $\mathscr E_\theta$ can be joined by a path of invariant deterministic partitions retaining all nine marginals, along which the actual determinant is continuous. In particular there is an original $D\in\mathscr D_{12}(\theta)$ with $\operatorname{rank}A^D=3$ exactly.
+
+*Proof.* First produce a positive stochastic value. Choose six disjoint positive-$\bar m$ Borel subsets of $X$. Their six indicators span a six-dimensional space of bounded invariant functions. The common kernel of the three source moment functionals has dimension at least three and therefore contains a $v$ outside $\operatorname{span}\{1,\beta\}$. Normalize $\|v\|_\infty\le1$. For $0<\epsilon\le1/8$ set
+
+$$
+u^+=(3/4-c\beta-\epsilon v,\ c\beta,\ 1/4+\epsilon v).
+\tag{139.5}
+$$
+
+All components are nonnegative: $c\beta\le1/4$, the first is at least $3/8$ and the last at least $1/8$. Their sum is one. The three zero source moments of $v$ give exactly the prescribed marginals. The functions $1,\beta,v$ are independent, since $\beta$ is nonconstant by §135 and $v$ was chosen outside their span. The three components of $u^+$ are consequently independent as well: their sum gives $1$, the middle gives $\beta$, and the last then gives $v$.
+
+For this stochastic tuple, and only using its own terminal component, $Pu_C^+=cP\beta=cg$. Hence
+
+$$
+A(u^+)_{ij}=c\langle gu_i^+,P(gu_j^+)\rangle_m.
+\tag{139.6}
+$$
+
+For every nonzero coefficient vector $a\in\mathbb R^3$, independence of the components, positivity of $g$ and injectivity of $T_{d/2}$ give
+
+$$
+a^{\mathsf T}A(u^+)a
+=c\left\|T_{d/2}\left(g\sum_i a_i u_i^+\right)\right\|_2^2>0.
+$$
+
+Thus this stochastic matrix is symmetric positive definite and has positive determinant. Theorem 139.1 supplies an actual invariant partition with strictly positive determinant. It does not identify its actual terminal factor with $cg$.
+
+For the unperturbed tuple $u^0=(3/4-c\beta,c\beta,1/4)$, the same weighted Gram formula holds and its components span exactly $\operatorname{span}\{1,\beta\}$. Its matrix has rank two by strict heat positivity on that span, hence determinant zero. Applying Theorem 139.1 to $u^0$ gives actual invariant determinants tending to zero. This establishes closure, without asserting attainment.
+
+It remains to prove the interval property on the deterministic class itself. Given feasible quotient partitions $E,F$, write their mismatch blocks as $H_{ij}=E_i\cap F_j$, $i\ne j$. On each block use the four finite atomless measures
+
+$$
+\lambda=(\bar m,\bar\nu_2,\bar\nu_3,\bar\nu_4).
+$$
+
+Their simultaneous proportional subdivision follows from Dvoretzky–Wald–Wolfowitz Lemma 2, applied recursively. More explicitly, halve every block into two Borel pieces of equal $\lambda$-vector measure, then halve each piece, and continue. Order the level-$n$ pieces by their binary words. Each has vector measure $2^{-n}\lambda(H_{ij})$. The unions of the first $k$ pieces are nested at dyadic parameters $k2^{-n}$ and compatible across levels. For arbitrary $t\in(0,1)$ take the union of these initial unions at dyadic parameters below $t$; by continuity from below this defines nested Borel $T_{ij,t}$ with
+
+$$
+\lambda(T_{ij,t})=t\lambda(H_{ij}).
+\tag{139.7}
+$$
+
+Set $T_{ij,0}=\varnothing$, $T_{ij,1}=H_{ij}$. Any endpoint discrepancy in the union construction is null for all four measures and these assignments retain (139.7).
+
+At parameter $t$, switch the label from $i$ to $j$ on $T_{ij,t}$ in each mismatch block, leaving all other points at their $E$ labels. Call the resulting partition $E(t)$. It is Borel, disjoint and exhaustive. For every label $l$ and source measure,
+
+$$
+\bar\nu_r(E_l(t))
+=\bar\nu_r(E_l)+t\bigl(\bar\nu_r(F_l)-\bar\nu_r(E_l)\bigr)
+=\bar\nu_r(E_l).
+\tag{139.8}
+$$
+
+Its lift, with the fixed axis assigned to $S$, is feasible and invariant. If an original endpoint assigned the axis differently, it has the same integrals and actual matrix; either null assignment can be made at the endpoint without affecting continuity below.
+
+For $s<t$, the changed set $H$ has $\nu_r(H)\le t-s$ for $r=2,3,4$, by (139.7) and disjointness of the mismatch blocks. Each actual entry is the probability of the event that the common partition gives labels $(i,j,C)$ at the three original epochs. This event changes only if at least one of the three states belongs to $H$. The union bound with the three original source laws gives
+
+$$
+|(A_{E(t)})_{ij}-(A_{E(s)})_{ij}|\le3|t-s|.
+\tag{139.9}
+$$
+
+In particular this bound includes the terminal-cell change. Every entry is between zero and one. Expanding the determinant into six signed products and telescoping each product in its three factors gives
+
+$$
+|\det A_{E(t)}-\det A_{E(s)}|\le54|t-s|.
+\tag{139.10}
+$$
+
+The intermediate value theorem along this path proves that $I_\theta$ is an interval. Apply Theorem 138.2 to the positive actual endpoint already obtained: $A_E$ is invertible, so its corresponding original four-cell matrix has rank exactly three. $\square$
+

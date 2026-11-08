@@ -1,0 +1,63 @@
+**命题 C-71.2（四角椭圆的精确响应含义）。** 对命题 C-67.2 的规范椭圆，若无标记轴比为 $R_{\rm ell}=e^{2|\eta|}$，则该正边界块对对数比例的最小全局 Lipschitz 常数为
+
+$$
+\sup_{x\in\mathbb R}|F_H'(x)|
+=|\rho_*(H)|
+=\tanh(2|\eta(H)|)
+=\frac{R_{\rm ell}^2-1}{R_{\rm ell}^2+1}<1.
+\tag{C71.3}
+$$
+
+若 $ad\ne bc$，导数绝对值在唯一输入
+
+$$
+e^x=\sqrt{\frac{bd}{ac}}
+\tag{C71.4}
+$$
+
+达到最大；若 $ad=bc$，$F_H$ 恒定，最佳常数为零，所有输入都达到该值。
+
+证明中的收缩机制是经典 Birkhoff–Hilbert 正锥结果。Samuel N. Cohen、Eliana Fausti，*Hyperbolic contractivity and the Hilbert metric on probability measures*，[arXiv:2309.02413v2](https://arxiv.org/abs/2309.02413v2)，Theorem 2.4 明确署名 Birkhoff，Proposition 4.1 给非负矩阵的经典系数表达。此处将其二维精确值与已有四角椭圆轴比连接，完整的标量计算如下。
+
+求导得到
+
+$$
+F_H'(x)=\frac{(ad-bc)e^x}{(ae^x+b)(ce^x+d)}.
+\tag{C71.5}
+$$
+
+令 $z=e^x>0$，则导数绝对值为
+
+$$
+\frac{|ad-bc|}{acz+(ad+bc)+bd/z}.
+$$
+
+由
+
+$$
+acz+\frac{bd}{z}-2\sqrt{abcd}
+=\left(\sqrt{acz}-\sqrt{bd/z}\right)^2\ge0,
+$$
+
+分母在 $z=\sqrt{bd/(ac)}$ 取最小，且正格值保证这个输入有限而唯一。如果分子非零，这也给唯一最大导数。最大值为
+
+$$
+\begin{aligned}
+\frac{|ad-bc|}{ad+bc+2\sqrt{abcd}}
+&=\frac{|(\sqrt{ad}-\sqrt{bc})(\sqrt{ad}+\sqrt{bc})|}
+{(\sqrt{ad}+\sqrt{bc})^2}\\
+&=\frac{|\sqrt{ad}-\sqrt{bc}|}{\sqrt{ad}+\sqrt{bc}}
+=|\rho_*|.
+\end{aligned}
+$$
+
+若 $ad=bc$，两行正比例，$(ae^x+b)/(ce^x+d)=a/c=b/d$，所以 $F_H$ 恒定。两种情形下均得到显示的上确界。均值定理使它成为全局 Lipschitz 上界；反过来，任意全局 Lipschitz 常数必须不小于每一点差商的极限 $|F_H'(x)|$，所以它确是最小常数。这里的“达到”首先指导数；不要求两个不同有限输入间的差商也恰等于最大导数。
+
+式 (C67.8) 给 $|\rho_*|=\tanh(|J|/4)=\tanh(2|\eta|)$，再用 $R_{\rm ell}^2=e^{4|\eta|}$ 得式 (C71.3)。与经典直径式也可逐项对照：$F_H(-\infty)=\log(b/d)$，$F_H(+\infty)=\log(a/c)$，且导数符号恒定；所以输出正射线集合的 Hilbert 直径是
+
+$$
+\Delta(H)=\left|\log\frac{a/c}{b/d}\right|=|J(H)|.
+$$
+
+Birkhoff 的 $\tanh(\Delta/4)$ 因此正是当前系数，没有额外乘二或除二。证毕。
+

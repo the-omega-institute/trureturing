@@ -1,0 +1,10 @@
+**定理 1.3（完整分类）。**上述来源下，(R) 当且仅当存在复 Hilbert 空间 $H$ 及可加映射 $F:M\to H$，使
+
+$$
+c(a,b)=\|F(a)-F(b)\|^2,\qquad F(Ua)=\omega F(a),
+\quad \omega=-\frac12+i\frac{\sqrt3}{2}.
+\tag{1.1}
+$$
+
+要求 $H=\overline{\operatorname{span}_{\mathbb C}F(M)}$ 后，表示唯一到唯一的保标签酉同构。零表示及非忠实原档案均包括在内。可见标记的加法性是结论，不是原始标记的前件。
+

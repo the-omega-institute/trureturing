@@ -1,0 +1,22 @@
+**Definition 1.2 (Full free polytope).** A pure $n$-qubit Pauli stabilizer
+state is the rank-one projector onto the common $+1$ eigenspace of an
+abelian Pauli subgroup of order $2^n$ that does not contain $-I$.
+Let $\mathrm{STAB}_n$ be the convex hull of these projectors and set
+
+$$
+\mathcal C(\eta)=\min_{\tau\in\mathrm{STAB}_n}
+\|W_\eta-W_\tau\|_1\quad(n=1,2),\qquad
+P=\operatorname{conv}\{p_0,\ldots,p_{59}\},\qquad
+F(z)=\min_{p\in P}\|z-p\|_1\quad(z\in\mathbb R^{16}).
+$$
+
+The vectors $p_i$ are the complete two-qubit stabilizer vectors in
+Definition 4.1. In particular $P=W(\mathrm{STAB}_2)$, and $F$ is
+defined even for vectors that are not Wigner functions of positive matrices.
+The minimum exists because $P$ is a nonempty compact polytope.
+The Pauli subgroup, convex hull and distance definitions agree with
+`Stab`, `Wfree`, `WignerOne`, `WignerTwo`, `COne` and `CTwo` in
+[WignerDistanceMinimum](../../../D5/S3/Quantum/Magic/WignerDistanceMinimum.lean).
+The coordinate identification is $(q,p)\mapsto2q+p$; the normalization
+is $1/2$ for one-qubit traces and $1/4$ for two-qubit traces.
+

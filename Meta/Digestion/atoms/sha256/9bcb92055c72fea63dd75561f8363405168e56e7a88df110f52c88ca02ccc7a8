@@ -1,0 +1,24 @@
+**定理 121.1（返回细支的因子正常形）。** 每份定义 120.1 的非零返回细支资料都有相同阶数的输入、输出支撑角。映射 $\beta_S$ 是这两个角之间的 Jordan 保星同构。若其阶数为 $r$，选择输入角基后，恰有保乘法或反乘法形式
+
+$$
+\begin{aligned}
+S(X)&=KXK^\dagger,
+ &&\text{或}\quad S(X)=KX^{\mathsf T}K^\dagger,
+ \qquad X\in P\mathcal AP,\\
+K&=G^{1/2}V,\qquad
+V^\dagger V=P,\quad VV^\dagger=Q.
+\end{aligned}
+\tag{121.1}
+$$
+
+其中 $V$ 是两个支撑 Hilbert 空间之间的酉识别。两种方向在 $r\ge2$ 时不同；$r=1$ 时相同。未预设任何完全正性。
+
+证明。(120.2) 使压缩后的 $S$ 成为双射，逆为 $q^{-1}U$，且两者正；两角的实自伴维数相同，所以其矩阵阶数相同。由 $G=S(P)$，$G$ 在 $Q$ 上严格正，故 $\beta_S$ 和
+
+$$
+\beta_S^{-1}=q^{-1}U\operatorname{Ad}_{G^{1/2}}
+\tag{121.2}
+$$
+
+均正且幺。直接使用 [Mori，arXiv:1811.01647v2，定理 1.1](https://arxiv.org/html/1811.01647v2) 的 Kadison 线性幺序同构定理及其有限因子分类；得到 $\beta_S(X)=VXV^\dagger$ 或 $VX^{\mathsf T}V^\dagger$，从而有 (121.1)。这是成熟工具在两个原支撑角上的应用，不是新的 Jordan 分类。输入、输出支撑消失的部分已经由定义 120.1 的正性论证处理，不另制造修复箭头。∎
+

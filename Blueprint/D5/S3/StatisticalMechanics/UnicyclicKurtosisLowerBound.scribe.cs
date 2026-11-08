@@ -61,6 +61,35 @@ internal sealed class UnicyclicKurtosisLowerBoundDocument : IScribeDocumentDefin
                     + "for the displayed inverse-rate expression on positive unidirectional cycles."))),
                 DescribeRole.Definition),
             Describe.Lean(
+                DescribeId.Create("normalized"),
+                DeclarationHandle.Create(Prefix + "normalized"),
+                H("Kurtosis in rescaled inverse rates"),
+                StatementSource.FromAuthor(Disp(NormalizedFormula())),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text(
+                    "Dividing every inverse rate by its first power sum rewrites kurtosis as "
+                    + "15 times the square of the second power sum, minus 20 times the third, "
+                    + "plus 6 times the fourth divided by the second. The identity holds for "
+                    + "every natural n and every real vector k, using total real inversion and division. "
+                    + "To prove it, factor the normalization denominator out of each sum. "
+                    + "If the first or second inverse-rate power sum is zero, simplify using "
+                    + "division by zero; otherwise clear the nonzero denominators."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("moments"),
+                DeclarationHandle.Create(Prefix + "moments"),
+                H("Four inequalities for positive-coordinate power sums"),
+                StatementSource.FromAuthor(Disp(MomentsFormula())),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text(
+                    "For a strictly positive real vector x on Fin n with n at least two, "
+                    + "the second power sum is positive and the third is nonnegative. "
+                    + "Cauchy-Schwarz applied to x and its coordinatewise square bounds the "
+                    + "square of the third power sum by the product of the second and fourth. "
+                    + "The strict square-sum inequality applied to the positive coordinates xᵢ² "
+                    + "bounds the fourth power sum strictly below the square of the second."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("result"),
                 DeclarationHandle.Create(Prefix + "result"),
                 H("The strict bound and its sharp limiting value"),
@@ -155,6 +184,34 @@ internal sealed class UnicyclicKurtosisLowerBoundDocument : IScribeDocumentDefin
                     Divide(Multiply(Real(1, 5), Power(second, Natural(2))), Power(first, Natural(4))),
                     Divide(Multiply(Real(2, 0), third), Power(first, Natural(3)))),
                     Divide(Multiply(Real(6), fourth), Multiply(Power(first, Natural(2)), second))))));
+    }
+
+    private static Formula NormalizedFormula()
+    {
+        Formula rescaled = LambdaOf("i", FinOf(X("n")),
+            Divide(At(Qualified("Inv", "inv"), At(X("k"), X("i"))),
+                PowerSum(Natural(1), LambdaOf("j", FinOf(X("n")),
+                    At(Qualified("Inv", "inv"), At(X("k"), X("j")))))));
+        Formula second = PowerSum(Natural(2), rescaled);
+        Formula third = PowerSum(Natural(3), rescaled);
+        Formula fourth = PowerSum(Natural(4), rescaled);
+        return All("n", Naturals(), All("k", RateType(),
+            Equal(At(Local("kurtosis"), X("k")),
+                Add(Subtract(Multiply(Real(1, 5), Power(second, Natural(2))),
+                    Multiply(Real(2, 0), third)), Divide(Multiply(Real(6), fourth), second)))));
+    }
+
+    private static Formula MomentsFormula()
+    {
+        Formula second = PowerSum(Natural(2), X("x"));
+        Formula third = PowerSum(Natural(3), X("x"));
+        Formula fourth = PowerSum(Natural(4), X("x"));
+        Formula positive = All("i", FinOf(X("n")), Less(Real(0), At(X("x"), X("i"))));
+        return All("n", Naturals(), Implication(LessEqual(Natural(2), X("n")),
+            All("x", RateType(), Implication(positive,
+                Conjunction(Less(Real(0), second), Conjunction(LessEqual(Real(0), third),
+                    Conjunction(LessEqual(Power(third, Natural(2)), Multiply(second, fourth)),
+                        Less(fourth, Power(second, Natural(2))))))))));
     }
 
     private static Formula LowerBoundFormula() =>

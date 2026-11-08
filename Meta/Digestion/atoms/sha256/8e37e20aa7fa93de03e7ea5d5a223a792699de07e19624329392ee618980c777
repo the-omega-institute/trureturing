@@ -1,0 +1,64 @@
+### 推论 6.2（迹距离与完整读出分布）
+
+<a id="cor-c90-operational-bound"></a>
+
+记 $\widehat\rho=\mathcal R_\sigma\mathcal N\rho$。
+则
+
+<a id="eq-c90-trace-distance"></a>
+
+$$
+\boxed{\quad
+ \frac12\left\lVert \rho-\widehat\rho\right\rVert_1
+ \le\frac12\sqrt{\ell_\sigma(\rho)}.
+ \quad}
+\tag{6.1}
+$$
+
+对同一个完整后续 CPTP 协议 $\Lambda$ 及任意有限 POVM $\{M_y\}$，令
+
+$$
+p_y=\operatorname{Tr}(M_y\Lambda(\rho)),\qquad
+ \widehat p_y=\operatorname{Tr}(M_y\Lambda(\widehat\rho)).
+$$
+
+则
+
+<a id="eq-c90-tv-bound"></a>
+
+$$
+\frac12\sum_y|p_y-\widehat p_y|
+ \le\frac12\left\lVert \rho-\widehat\rho\right\rVert_1
+ \le\frac12\sqrt{\ell_\sigma(\rho)}.
+\tag{6.2}
+$$
+
+**证明。**
+在引理 [6.1](#lem-c90-trace-norm) 中取
+$Z=W_\sigma(\rho-\widehat\rho)$，再使用
+式 [(5.3)](#eq-c90-weighted-residual)，即得迹距离界。
+测量与 $\Lambda$ 合成仍是 CPTP 映射，其输出为对角概率矩阵。
+引理 [4.1](#lem-c90-endpoints) 的迹范数收缩遂给出总变差界。
+等价地，对任一最终事件，其效果经 $\Lambda^*$ 拉回后仍位于 $[0,I]$。
+对 Hermitian、无迹的 $Z$，正负谱分解给出
+
+$$
+\sup_{0\le F\le I}|\operatorname{Tr}(FZ)|=\frac12\left\lVert Z\right\rVert_1.
+$$
+
+因此一般结果空间也能用事件概率差的上确界表述同一结论。
+
+完整协议可以包含由该接口准备的辅助系统、反馈及全部分支记录，只要对两种输入使用同一个
+确定的 CPTP 接口。任意已有的未知纠缠扩张，则须另行把联合态纳入声明。
+若仅保留某个分支再除以其成功概率，条件化可能放大差别，
+不能不加条件地继续使用式 [(6.2)](#eq-c90-tv-bound)。
+这一界也没有自动供应恢复映射所需的实际装置；原生菜单、校准与执行资源
+仍由项目已经声明的操作接口负责。
+
+**白话图景。**平方损失不只告诉我们“有多少东西没接回来”。
+它还能限制以后任何完整读出的差别：不论接下来怎样加入辅助系统、记录或反馈，
+两份内容产生的完整结果分布都不会超过同一个误差界。
+若只挑一个罕见分支重新归一，就改变了问题，不能把完整分布的界直接照搬。
+
+<a id="section-7"></a>
+

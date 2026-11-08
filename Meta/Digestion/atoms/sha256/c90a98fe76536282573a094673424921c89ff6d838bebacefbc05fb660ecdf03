@@ -1,0 +1,24 @@
+**引理 16.3（尚未交替时的精确原始式）。** 记 $v=D_bd,w=D_db,K_{ae}=[L_a,L_e]$，则
+
+$$
+\boxed{R(a\otimes b,c\otimes d,e\otimes1)
+=\bigl(K_{ae}c+\beta S(c,D_ae)\bigr)\otimes v
+-\kappa D_cD_ae\otimes w.}\tag{16.3}
+$$
+
+特别地，交换参照槽后的自身报告为
+
+$$
+\boxed{R(p\otimes d,p\otimes b,p\otimes1)
+=-\kappa D_p^2p\otimes v+\beta S(p,D_pp)\otimes w.}\tag{16.4}
+$$
+
+证明。$M(c\otimes d,e\otimes1)=S(c,e)\otimes d$，而 $T(a\otimes b,e\otimes1)=D_ae\otimes b$。在 (16.2) 展开后，乘 $S(b,d)$ 的三项由局部导子律抵消；两个 $\beta$ 项之差是
+
+$$
+\beta\bigl(D_aS(c,e)-S(D_ac,e)\bigr)\otimes v
+=\beta S(c,D_ae)\otimes v.
+$$
+
+剩余两个普通比较项给 $K_{ae}c\otimes v$，有向比较修正给最后的 $-\kappa$ 项。所有消去的单位项只用 $B(a,1)=0$，没有使用 $B(1,a)=0$。取 $a=c=e=p$ 并交换参照槽即得 (16.4)。∎
+

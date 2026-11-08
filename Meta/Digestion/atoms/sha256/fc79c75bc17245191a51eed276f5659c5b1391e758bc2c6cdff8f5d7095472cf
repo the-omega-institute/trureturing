@@ -1,0 +1,132 @@
+**Lemma 56.2 (a full-form barrier and amplitude tails).**
+There are $c>0$, $\epsilon_0>0$ and $C<\infty$ such that the following
+statements hold for all sufficiently small nonzero parameters.
+For $f$ in the original completed form domain,
+
+$$
+\begin{aligned}
+\mathfrak q_{\mathcal H}[f]-\xi_\kappa\|f\|^2+\delta_\kappa\|f\|^2
+\ge{}&\frac12\int_{\mathbb T^3}
+             \langle f,K_\kappa f\rangle_{L^2(I)}\,d\theta\,dv\,dD\\
+ &+\|Q_\kappa f\|^2
+ +ch\int_\Omega m_h(D/\ell)|f|^2\,d\mu .
+\end{aligned}
+\tag{56.2}
+$$
+
+For any normalized actual full eigenfunction with eigenvalue
+$\xi_\kappa+hr$, where $-1\le r\le\epsilon_0/h$, one has
+
+$$
+\frac{\|J^*f\|^2}{w}\le C\sqrt{r+2}.
+\tag{56.3}
+$$
+
+For every fixed upper bound on $r$, its rescaled amplitude
+$F(q,y)=\sqrt\ell f(q,\ell y)$ satisfies the uniform tail statement
+
+$$
+\lim_{R\to\infty}\limsup_{\kappa\to0}
+ \int_{R<|y|<\pi/\ell}\|F(\cdot,y)\|_{\mathscr H_B}\,dy=0.
+\tag{56.4}
+$$
+
+These estimates concern the full eigenfunction, including its nonzero
+visible Fourier components.
+
+Proof. Fix a closed interval $J_0\Subset I$ of positive length.
+The height gap in Lemma 40.2 is at least $\gamma_*>0$, and
+$\int_{J_0}v_\kappa^2\ge\alpha_*>0$. Write a height vector as
+$zv_\kappa+R_0$, with $R_0\perp v_\kappa$. By (39.4), putting
+$p(D)=\min\{(D/d)^2,1\}$, the nonnegative height multiplier
+$V_D=g[U_\kappa(k,0)-U_\kappa(k,D)]$ is at least
+$g\eta_{J_0}p(D)1_{J_0}$. For $0<\theta\le1$ sufficiently small,
+
+$$
+\begin{aligned}
+\tfrac12\langle f,K_\kappa f\rangle+\langle f,V_Df\rangle
+&\ge\left(\frac{\gamma_*}{2}-\theta g\eta_{J_0}\right)\|R_0\|^2
+  +\frac{\theta g\eta_{J_0}\alpha_*}{2}p(D)|z|^2\\
+&\ge c\,p(D)\|f\|^2.
+\end{aligned}
+\tag{56.5}
+$$
+
+Here $|A+B|^2\ge|A|^2/2-|B|^2$ was integrated on $J_0$,
+and $p\le1$ absorbs the $R_0$ term. Applying this on height slices,
+retaining the other half of $K_\kappa$ and the entire $Q_\kappa$
+square, proves (56.2), since $p(D)=hm_h(D/\ell)$. The replacement
+of $gW$ by $gU_\kappa$ costs at most $\delta_\kappa\|f\|^2$.
+The height-slice argument is valid on the horizontal completion by
+its height derivative characterization [G, (26.13)]; it assumes no
+isotropic Sobolev domain for the full operator.
+
+Here is a weighted eigenfunction argument that supplies the missing
+amplitude integrability on the whole growing chart. Set $E=r+2\ge1$,
+choose $R_E=(8E/c)^{1/2}$ and decrease $\epsilon_0$ so that
+$R_E^2<1/(2h)$ and $R_E<\pi/\ell$ throughout the stated energy range.
+Let $M_b=\sup_{\kappa,k}b_\kappa(k)<\infty$ and choose $\eta>0$
+with $M_b^2\eta^2\le c/4$. On the actual periodic chart define
+
+$$
+\Phi(y)=\eta\int_{R_E}^{|y|}\sqrt{m_h(s)}\,ds
+ \quad(|y|>R_E),\qquad \Phi(y)=0\quad(|y|\le R_E).
+\tag{56.6}
+$$
+
+Its values match at the seam. Use $\min\{\Phi,L\}$ first, so every
+multiplier is bounded. The product rule and the eigenvalue equation give
+exactly the usual weighted energy identity
+
+$$
+\mathfrak q_{\mathcal H}[e^\Phi f]-(\xi_\kappa+hr)\|e^\Phi f\|^2
+ =h\int b_\kappa(k)^2|\Phi'(y)|^2e^{2\Phi(y)}|F(q,y)|^2\,d\nu_B\,dy.
+\tag{56.7}
+$$
+
+Indeed $Q_\kappa\Phi=\kappa b_\kappa\ell^{-1}\Phi'$ and
+$a^2/\ell^2=h$; the weight has no height derivative. This is the
+Agmon energy-identity method, applied here directly to the native
+horizontal form. Lipschitz periodic multiplication preserves its
+completed domain: approximate the weight by smooth periodic weights,
+use the horizontal product rule, and then close the form. The height
+Dirichlet traces stay zero. Thus (56.7) does not introduce a new domain
+or assume an exponential-decay theorem for a different operator.
+
+Using (56.2) in (56.7), dividing by $h$, and dropping the nonnegative
+height and horizontal terms yields
+
+$$
+\int\left[cm_h-r-\delta_\kappa/h-M_b^2|\Phi'|^2\right]
+          e^{2\Phi}|F|^2\,d\nu_B\,dy\le0.
+\tag{56.8}
+$$
+
+For small parameters $\delta_\kappa/h\le1$. Inside $R_E$ the bracket
+is at least $-E$; outside it is at least $E$, since
+$m_h\ge8E/c$ and $M_b^2|\Phi'|^2\le cm_h/4$. The same inequalities
+hold for the truncated weight. Normalization followed by monotone
+convergence as $L\to\infty$ therefore proves
+
+$$
+\int e^{2\Phi}\|F(\cdot,y)\|_{\mathscr H_B}^2dy\le2.
+\tag{56.9}
+$$
+
+For $|y|>R_E$, $\sqrt{m_h(y)}\ge R_E$, so
+$\Phi(y)\ge\eta R_E(|y|-R_E)$. Consequently
+
+$$
+\int e^{-2\Phi}dy\le2R_E+\frac1{\eta R_E}\le C\sqrt E,
+\qquad
+\left(\int\|F(\cdot,y)\|_{\mathscr H_B}dy\right)^2\le C\sqrt E.
+\tag{56.10}
+$$
+
+Since $J^*f=\sqrt{\ell/(2\pi)}\int F(\cdot,y)dy$ and
+$w=\alpha_\sigma\ell$, this proves (56.3). For bounded $E$, the
+same Cauchy--Schwarz estimate on $|y|>R$, using (56.6) and then
+$h\to0$, makes the right tail tend to zero. This proves (56.4).
+In particular no global untruncated second moment has been inferred
+from (40.7)--(40.9). $\square$
+

@@ -1,0 +1,20 @@
+**命题 142.2（关系前件的独立内容及起源边界）。** 140.1–140.2 不在其陈述中预置记录平方权重，也不等同于把 II (137.3) 的目标比较器换名；但在 $\mathcal B$ 和 139.2 的原生分离供应下，其合取与记录目标等价。因此该路线是明确的条件推进，不是已经取得的物理概率起源，也不宣称整体前提强度比全部既有路线更弱。
+
+证明。140.1 的两边均为同一读口在不同真实调用历史上的记录边缘，没有终端比较器或投影范数；140.2 的两边均为同一固定旧事件的终端概率，一边仅对真实中间记录求和，没有直接比较记录 $i$ 与另一个终端事件。141.1 给各项单独成立而记录目标失败的完整既有源模型；141.2 还说明已知系统控制与这两项的一部分不足。承重推断是 139.2 将两个可能相同的条件终端响应变成可区分响应，并由 (140.1) 把这个真实新前缀的权重带回旧前缀。去掉同时控制供应、更新、全域终端或真实历史上的统计职责，都不能照用该推断。两项合取在此类内的必要充分性恰为 140.3，不将这种逻辑等价本身称作无前提解释。
+
+完整起源仍须独立供应同一来源在全部所需有限字上的相干执行、失败范围、全载体终端充分性和实际纯更新，尤其须从来源规律证明或另行建立 (140.1) 与 (140.2) 的真实统计职责。它们的物理成立性在此为未解决前件；矩阵不改变 $b_9$ 和 $[Q,M_i]=0$ 均不足以解除它们。若真实装置只有指定取得序列的误差合同，不能据有限字存在将它扩张为这里对任意前缀的合同。若有未计入的失败质量、档案依赖后继或终端漂移，也不属于本精确模型，不能丢弃该质量后归一化使用结论。
+
+定理确定的是所列程序的记录概率及 (140.4)；给定真实档案核时，再由 (138.3) 得该核下的完整律。它不构造所有保留仪器、不规定档案核、不供应额外准备、复制、复位、辅助系统、混态仿射／CP、公用连续旋钮、可靠统计查询或有限认证。复 Hilbert／Fibonacci 语义和 ready 仍为模型前提。∎
+
+[II]: https://github.com/the-omega-institute/trureturing/blob/1f8199f2f7bb97c98cbe68c95ce3cbde36354ed0/docs/develop/theory/AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_II.md
+[V37]: https://github.com/the-omega-institute/trureturing/blob/1f8199f2f7bb97c98cbe68c95ce3cbde36354ed0/docs/develop/theory/AURIC_BINARY_RELATIONS_UNITARY_REPRESENTATION_AND_GOLDEN_GATE_UNIVERSALITY_V37.md
+[V37dev]: https://github.com/the-omega-institute/trureturing/blob/ed2d5bb5f5e987e2364caefe5d3a12c16f1a16a8/docs/develop/theory/AURIC_BINARY_RELATIONS_UNITARY_REPRESENTATION_AND_GOLDEN_GATE_UNIVERSALITY_V37.md
+[V38]: https://github.com/the-omega-institute/trureturing/blob/1f8199f2f7bb97c98cbe68c95ce3cbde36354ed0/docs/develop/theory/AURIC_COMPLETE_QUANTUM_PROCESSES_INTERNAL_MEMORY_AND_RANK_BOUNDARY_STABILITY_V38.md
+[FLW]: https://arxiv.org/html/math/0103200v1
+[Luders]: https://arxiv.org/html/quant-ph/0403007v1
+[KB]: https://arxiv.org/html/1207.3666v3
+[Barnum]: https://arxiv.org/html/quant-ph/0312150v1
+[MGM]: https://arxiv.org/html/1811.11060v2
+[Cavendish]: https://arxiv.org/html/2610.22823v1
+[Torres]: https://arxiv.org/html/2602.09056v1
+

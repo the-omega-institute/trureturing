@@ -1,0 +1,68 @@
+**Mathematical source correspondence 45.9.** The objects and exact
+ordinary-transpose identities are (23.2), (23.9)--(23.12) and (39.1).
+The individual arc minimizers, all scalar truncations, aligning phases
+and impurity formula are (36.5)--(36.7) and (36.10)--(36.16).
+Theorem 42.3 supplies sign separation on the full stated interval,
+including all mixed effects; Theorems 35.2 and 42.4 supply compact
+attainment and the phase value/equality transport. The selected
+comparison below $c_0-3/16$ is the existing conclusion of Theorem 44.3,
+using (44.19) and Theorem 41.2. Its witness and scalar calculation
+are not additional hypotheses about a globally minimizing branch.
+
+The finite Cauchy--Schwarz inequality is a standard intermediate tool;
+compare [NIST DLMF, Section 1.7(i), (1.7.1)](https://dlmf.nist.gov/1.7.E1).
+For the complex sum in Lemma 45.2, the triangle inequality followed
+by that real finite-sum inequality with
+$a_i=|\ell_i|$, $b_i=|x_i-\mu|$ gives exactly the squared-norm bound
+used in (45.7). The zero-sum coefficient rows permit centering; they
+supply no new independent realization assumption. The compact-minimum
+argument is the finite-dimensional extreme-value theorem on the actual
+closed level sets. No new spectral-diagonal realization theorem is
+needed: the feedback remains fixed in Theorem 45.4, and phase endpoints
+have the explicit unitary realization in (45.20).
+
+The fixed-record deductions are the crossed-amplitude floor, the
+exclusion of low mixed arc minima, strict same-level purification under
+$g\le c_0$, and its global purity and pure phase certificate consequences.
+Theorem 36.3 proves earlier same-level purification only under its
+stated sign or small-level hypotheses; Theorem 41.4 proves purity on
+an already value-preserving prefix. Neither is used to certify a
+prefix here. Proposition 40.5's failure of universal same-feedback
+purification at arbitrary defect remains valid. The present argument
+does not assert $g>c_0$ for every mixed input: Lemma 45.3 applies to
+mixed arc minimizers, whereas a mixed input with $g\le c_0$ has the
+strict improvement in Theorem 45.4. The population-sensitive pointwise
+screen of Theorem 44.3 remains useful with its own hypotheses. These
+are constrained-optimization deductions for the fixed record, with no
+claim of literature-wide originality.
+
+**Unresolved mathematical obligations 45.10 (complete pure phase
+ordering and actual equality).** On every level of a proposed preceding
+value prefix inside $(0,R]$, the remaining universal inequality is
+(45.22), for every actual $w\in\mathbb T^4$ and both admissible signs.
+For a proposed exhaustive-equality prefix, its additional obligation
+is the complete endpoint equality classification in (45.23), with
+all zero-amplitude and zero-coherence cases retained. Equations
+(45.19)--(45.26) provide an equivalent certificate and boundary
+problem, not its evaluation.
+
+The exact infima $\alpha,\beta$, whether they coincide, the inclusion
+or exclusion of the exhaustive-equality endpoint, and any earlier
+pure equality ties remain undetermined. Every first competing global
+branch inside this interval must be pure, but its actual identity,
+ordering against all other pure branches, exhaustion, boundary limits
+and full attainment/equality sets are still required. Pure coalescence
+and separated pure contact are both retained. Determinant zero is only
+the necessary condition in the scopes of Section 43; its higher-order
+and global consequences and possible simultaneous separated pure
+contact remain unresolved.
+
+The rank-one variance-zero original lifts in (45.24) still require
+complete evaluation. Purity alone supplies no classification of
+nonphase original minimizing lifts. The sufficient phase-transport
+condition beyond $R$ retains exactly its domain in Section 42;
+no purification or pure phase reduction outside $(0,R]$ follows here.
+The inherited beyond-four geometric ordering and core-attainment
+obligations remain. The normalized-effect pair-domain conclusions
+above do not assert a whole-POVM or native-acquisition result.
+

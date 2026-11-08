@@ -1,0 +1,40 @@
+### 命题 8.1（显式二元酉扩张）
+
+<a id="prop-c92-effect-unitary"></a>
+
+对任意 $0\le E\le I$，令 $A=\sqrt E$、$B=\sqrt{I-E}$。
+在 $H\otimes\mathbb C^2$ 上，以辅助端口基底排列块矩阵，定义
+
+<a id="eq-c92-effect-unitary"></a>
+
+$$
+U_E=\begin{pmatrix}A&-B\\ B&A\end{pmatrix}.
+\tag{8.1}
+$$
+
+则 $U_E$ 为酉，且对初始化为 $\lvert 0\rangle$ 的辅助端口，
+
+<a id="eq-c92-effect-isometry"></a>
+
+$$
+V_E\psi:=U_E(\psi\otimes\lvert 0\rangle)
+ =\sqrt E\,\psi\otimes\lvert 0\rangle+
+   \sqrt{I-E}\,\psi\otimes\lvert 1\rangle.
+\tag{8.2}
+$$
+
+读取辅助端口的 $0,1$，恰好实现 $(E,I-E)$。
+
+**证明。**
+$A,B$ 同为 $E$ 的谱函数，因此相互对易，且 $A^2+B^2=I$。
+直接作块矩阵乘法，$U_E^\dagger U_E=U_EU_E^\dagger=I$。
+第一个块列给出式 [(8.2)](#eq-c92-effect-isometry)。
+对输入态 $\rho$，两项概率分别为
+$\operatorname{Tr}(A\rho A)=\operatorname{Tr}(\rho E)$ 与
+$\operatorname{Tr}(B\rho B)=\operatorname{Tr}[\rho(I-E)]$。
+
+在 $E$ 的每个本征方向上，式 [(8.1)](#eq-c92-effect-unitary) 都是一项普通二维旋转，
+其两个幅度是 $\sqrt e$ 和 $\sqrt{1-e}$。
+这解释了正效果怎样在既定平方读出下获得归一幅度实现；
+不提供该整体算符的免费制备、门分解或资源代价。
+

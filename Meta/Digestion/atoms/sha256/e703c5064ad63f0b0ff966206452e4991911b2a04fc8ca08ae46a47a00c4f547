@@ -1,0 +1,51 @@
+**定理 85.2（完整两纤维输出及所有静默项）。** 在原实际等距识别下，对每个上述 $n$ 精确有
+
+$$
+\begin{aligned}
+(U_1^n\widehat u_*)_r&=w_n+z,\\
+T_{rs}(U_1^n\widehat u_*)_s&=v_n+Nv_n,\\
+w_n&=x^2R_{n\alpha}p+xR_{2n\alpha}p,\\
+v_n&=c(R_{2n\alpha}-R_{n\alpha})p,\\
+(U_1^n\widehat u_*)_q&=0\qquad(q\notin\{r,s\}),\\
+\|w_n\|^2+\|v_n\|^2&=\rho^2,\qquad
+\boxed{\Delta_n=\|Nv_n\|^2\ge0}.
+\end{aligned}
+\tag{85.2}
+$$
+
+特别地，根静默分量 $z$ 原位保留；邻点的**全部**静默输出为 $T_{sr}Nv_n$，没有从范数中漏掉。
+
+证明。原 $\mathcal W_{rs}=V_r\oplus V_s\subset\mathcal V$ 被地址一的实际生成元保持。仅用 $I\oplus T_{rs}$ 作等距识别，在其上 $A_1=\alpha F$。令 $\mathscr G=\operatorname{diag}(I_{V_r},G)$ 和
+
+$$
+F_0=\begin{pmatrix}aA&cA\\cA&bA\end{pmatrix},\qquad
+H_0=\begin{pmatrix}1+x&c\\c&1+x^2\end{pmatrix}
+=I_2+P_{\rm g},\qquad
+P_{\rm g}=\begin{pmatrix}x&c\\c&x^2\end{pmatrix}.
+\tag{85.3}
+$$
+
+$P_{\rm g}=(\sqrt x,x)^{\mathsf T}(\sqrt x,x)$，$x+x^2=1$，所以它是**原黄金块**的秩一正交投影，$H_0$ 的特征值为 $1,2$。这里 $P_{\rm g}$ 作用于两个顶点的标量位置，不与活动面 $P$ 混同。由 $AN=0$、$C=GA$ 直接核对四块得 $F=\mathscr G F_0\mathscr G^{-1}$，故 $e^{n\alpha F}=\mathscr G e^{n\alpha F_0}\mathscr G^{-1}$。这是原同一个 $U_1^n$ 的恒等式；$\mathscr G$ 不是新度量、实际运输、$B_1$、程序或合法物理控制。
+
+在 $P\oplus P$ 上，$F_0$ 是同一个 $J$ 乘以 $H_0$，从两个投影直接得到
+
+$$
+e^{n\alpha F_0}|_{P\oplus P}
+=(I_2-P_{\rm g})\otimes R_{n\alpha}
++P_{\rm g}\otimes R_{2n\alpha}.
+\tag{85.4}
+$$
+
+它在原直和度量中正交，而在 $K\oplus K$ 上为恒等。输入的两纤维坐标是 $(p+z,0)$；$\mathscr G^{-1}$ 不改它，(85.4) 给活动输出 $(w_n,v_n)$，$\mathscr G$ 仅在邻点另添 $Nv_n$。于是 $z$ 仍只在根，与根活动输出正交；邻点 $v_n\perp Nv_n$；两顶点也在原 $g$ 中正交。实际 $T_{rs}$ 是等距，所以完整范数恰为
+
+$$
+\|U_1^n\widehat u_*\|_g^2
+=\|w_n\|^2+\|z\|^2+\|v_n\|^2+\|Nv_n\|^2
+=1+\|Nv_n\|^2.
+\tag{85.5}
+$$
+
+所有其它配置的零输出来自原两纤维不变性，不是删掉其它配置。∎
+
+非负性不是关于 $n$ 的单调性。原十回返及 $R_{10\alpha}=R_{20\alpha}=I$ 给 $v_{10}=0$、$\Delta_{10}=0$；在 $\rho>0,N\ne0$ 时，下一节的两响应中至少一项严格为正。若 $\rho=0$，则 $p=0$，(85.2) 对**这个地址的全部幂**给 $\Delta_n=0$，任意局部 $N$ 都不可见；不据此称任意其它原字都不可见。
+
