@@ -746,20 +746,6 @@ namespace ArbitraryFieldDescent
 variable {k E G V : Type*} [Field k] [Field E] [Algebra k E]
   [Group G] [AddCommGroup V] [Module k V]
 
-noncomputable def extRepK (ρ : Representation k G V) :
-    Representation k G (E ⊗[k] V) where
-  toFun g := ((ρ g).baseChange E).restrictScalars k
-  map_one' := by
-    ext x
-    simp
-  map_mul' g h := by
-    ext x
-    simp [← LinearMap.baseChange_mul]
-
-@[simp] theorem extRepK_apply (ρ : Representation k G V) (g : G)
-    (x : E ⊗[k] V) : extRepK ρ g x = (ρ g).baseChange E x := by
-  rfl
-
 private noncomputable def originalModule (ρ : Representation k G V) :
     Module (MonoidAlgebra k G) (E ⊗[k] V) := by
   let ρE : Representation E G (E ⊗[k] V) :=
