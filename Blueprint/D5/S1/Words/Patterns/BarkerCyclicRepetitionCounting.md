@@ -72,6 +72,10 @@ $$(\exists F \in \operatorname{PowerSeries}\left(\mathbb{Q}\right),\; \operatorn
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/Patterns/BarkerCyclicRepetitionCounting.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/barker268943` (proved) by `D5/S1/Words/Patterns/BarkerCyclicRepetitionCounting.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"barker268943","declaration_gid":"D5/S1/Words/Patterns/BarkerCyclicRepetitionCounting.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* R. H. Hardin; Colin Barker (2019). *OEIS A268943: cyclic successive equality events*. URL: <https://oeis.org/A268943>.

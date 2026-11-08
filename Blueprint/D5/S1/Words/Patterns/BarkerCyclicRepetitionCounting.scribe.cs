@@ -63,13 +63,17 @@ internal sealed class BarkerCyclicRepetitionCountingDocument : IScribeDocumentDe
                 + "coefficients 13,-34,-56. The exponential terms with bases 7, 3-√17, "
                 + "3+√17 satisfy that recurrence and agree with the counts at indices 1,2,3. "
                 + "Uniqueness of recurrence solutions yields the radical formula.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("barker268943"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula,
-        string prose, DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        string prose, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
         DescribeId.Create("a268943-" + name.ToLowerInvariant()),
         DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
-        provenance, Blocks(Paragraph(Text(prose))), role);
+        provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula EventLabelsFormula()
     {
