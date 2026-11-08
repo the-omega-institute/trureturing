@@ -1,0 +1,12 @@
+**定义 50.1（原投影角及所用接口）。** 固定 A22.1 的准确 $\mathsf H_{\rm orig}$，不假设 R、P3 或 PB。按 A2.1–2.2、32.1 已列的 R-free 对应，同一原 $E$ 是其含单位 JB 完成 $X$ 的稠密 Jordan 子代数，$S(a,b)=a\circ b$，$C=E\cap X_+$，$N$ 为完成范数的限制。以下闭合推导在这个已给 JB 接口上只用原 P2；不要求 $X$ 特殊、矩阵化、有限秩，或 $E$ 完备、旧 $D$ 正则。每个投影必须本来就是原标签 $p\in E$、$p^2=p$，不从完成补入原标签。记
+
+$$
+L_px=p\circ x,\qquad U_p=2L_p^2-L_p,\qquad
+X_p=U_p(X),\qquad E_p=U_p(E),\qquad C_p=E_p\cap C.
+\tag{50.1}
+$$
+
+全部原 $\Omega/E/K/u/N/\mathcal P/S/D/q$、原标签、质量、中心、经典不等维块、静默域和来源合同仍准确取 A22.1、8.3–8.4、14.2、37.2。$p$ 是角内数学单位，不替换全域单位 $u$，不定义新的实际系统或菜单。
+
+同域先例为 [UnitBridge 公开固定稿 `0b25c36cf8eaaf19fd1057f3830fd8100a66bc32` 的 W108.2–108.3](https://github.com/the-omega-institute/trureturing/blob/0b25c36cf8eaaf19fd1057f3830fd8100a66bc32/docs/develop/theory/AURIC_ARBITRARY_DIMENSIONAL_SMALL_WINDOW_UNIT_BRIDGE.md#L4325-L4419)：仅原 P2 已给一般原 JB 投影角的同一旧输出支撑与闭合，以及 $E_p=U_p(E)=E\cap X_p$、稠密完成、锥、范数、原索引评价、局部质量和小窗口的核心限制接口；这些结论不要求 NN 或 Jacobi。下述固定 $p,d$ 的二生成元 JB 路线是同一闭合结论的替代证明，作为定理 51.1 的中间步骤使用，不另计闭合与核心接口为新增结论。该固定稿的 W108.2–108.3 不指本卷其余 W 编号所引用的 canonical UnitBridge 中的 W108–118。
+
