@@ -33,7 +33,7 @@ internal sealed class HardinA233253TriangleStripDocument : IScribeDocumentDefini
                 "Rows are functions on five ordered column indices."),
             Def("boundary", "Boundary", "A boundary",
                 Eq(N("Boundary"), Arrow(Fin(4), Fin(3))),
-                "The four labels record complementary pairs at columns one through four."),
+                "The four labels record complementary pairs at column indices 1 through 4."),
             Def("horizontal", "rowLegal", "Horizontal exclusions", RowFormula(),
                 "The conjunction excludes equality and a natural-number sum of five."),
             Def("pairs", "pairs", "Boundary labels", PairsFormula(),
@@ -64,7 +64,7 @@ internal sealed class HardinA233253TriangleStripDocument : IScribeDocumentDefini
                 + "240 enter the fully seen sector and their rank sum is 448. The "
                 + "initial counts are eight and 28, with fully seen rank sum 44."),
             Thm("result", "result", "Barker's identity", ResultFormula(),
-                "Write a continuation as F in the sector without colour two, and as U+rZ "
+                "The continuations from length zero have form F without colour two, and U+rZ "
                 + "in the fully seen sector. At length zero, F=U=1 and Z=0. The one-row "
                 + "identities give F'=32F+240U+448Z, U'=320U+512Z and Z'=64U+160Z. "
                 + "The shared strip counting theorem gives a(n+1)=8F(n)+28U(n)+44Z(n). "

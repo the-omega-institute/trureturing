@@ -4,40 +4,31 @@
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
    utility: kind=numeric-reduction; basis=consumer=D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233251TriangleStrip.result; premises=D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233251TriangleStrip.finite_certificate
-   digest: Barker's generating function for the literal normalized six-colour three-column strip. -/
+   digest: Barker's generating function for the literal normalized three-column strip. -/
 
 /-
 admission_basis: open-problem-resolution (#27657; Proved)
 escape_witness: none
 Registration audits retain their exact scoped-report states; see issue #27943.
-Direct frozen dependency:
+Direct frozen dependencies (declaration statement_ids):
 D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.Seen
 statement_id: sha256:db13d94501d24f27e6e69604bb633af95ff3309c5698815c44e12d2e52739fce
-Direct frozen dependency:
 D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.allowed
 statement_id: sha256:4ee019eb42606605da41b2b090212be244d3bf48d64a2c10dc2d9c6c6f7e6468
-Direct frozen dependency:
 D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.advance
 statement_id: sha256:63e23e390cbc7ee42155ce307351f149d901cd9013daee3d6d2eac775e24af71
-Direct frozen dependency:
 D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.good
 statement_id: sha256:f68e874b0a22676cb3053202c645a8ce30010dcd695d55f3e7fce272d4ce5989
-Direct frozen dependency:
 D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.finish
 statement_id: sha256:ebae2e26fe8811cb0e473a0168c27f49fa151fa2bcecda8ad3ba0c9fabc41a7f
-Direct frozen dependency:
 D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.finish_fst
 statement_id: sha256:5859cc0f84f4e6a91313521f32ea6d187c4822bb52d4e438939da5e000940bd5
-Direct frozen dependency:
 D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.finish_snd
 statement_id: sha256:1ada14ea452d6f35f959dbbd5a034265c8c6921cd041422cad27ec166a94d24c
-Direct frozen dependency:
 D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.good_iff
 statement_id: sha256:59d0ffb034f7f2361718e6d2566eb24417785b9a178f6fcb44f336c1199d3d62
-Direct frozen dependency:
 D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.edge_iff
 statement_id: sha256:eb164ba2a30a036eb9157c90341cc0d7664c1e26513ba1fedc8a4964a09ae84a
-Direct frozen dependency:
 D5.S3.Observer.Separation.BooleanRankThreeK4.beta
 statement_id: sha256:1abdc5f3db71567fe05de5aabbe80dddeb5ec5179e4ec7fd49fe71e500518481
 Transfer.Row: proof_shape=bind-only; consumers=Transfer.normal, Transfer.step
