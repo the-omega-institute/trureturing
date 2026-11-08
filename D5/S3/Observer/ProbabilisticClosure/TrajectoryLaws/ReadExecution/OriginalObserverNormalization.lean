@@ -12,7 +12,7 @@ import Mathlib.Data.Fintype.Card
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
-open Classical
+open Classical MeasureTheory
 
 namespace D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.ReadExecution.OriginalObserverNormalization
 open FreshServiceRestart
@@ -24,10 +24,6 @@ variable {C I R : Type*}
 inductive Action (emission : C → Option Bool) where
   | read (state : {c : C // emission c = none})
   | emit (state : C) (decision : Bool) (valid : emission state = some decision)
-
-def Action.configuration {emission : C → Option Bool} : Action emission → C
-  | .read c => c.val
-  | .emit c _ _ => c
 
 def Action.output {emission : C → Option Bool} : Action emission → Option Bool
   | .read _ => none
@@ -92,7 +88,7 @@ structure Execution where
 def execute (seed : I) (source : ℕ → Bool) (coins : ℕ → R) : ℕ → O.Execution
   | 0 => ⟨O.initial seed, []⟩
   | n + 1 =>
-    let e := O.execute seed source coins n
+    let e := execute seed source coins n
     match e.action with
     | .emit _ _ _ => e
     | .read c =>
@@ -166,15 +162,13 @@ private theorem same_budget [Fintype C] : Fintype.card O.Boundary ≤ Fintype.ca
     has paid exactly n reads. Initial and in-zero stopping are included. -/
 theorem execution_normalization (seed : I) (coins : ℕ → R)
     (wait : ℕ) (gaps : ℕ → ℕ) (n : ℕ) :
-    O.boundary (O.execute seed (ActualRenewalStopping.sourceBit wait gaps) coins n).action =
+    let e := O.execute seed (ActualRenewalStopping.sourceBit wait gaps) coins n
+    O.boundary e.action =
       ActualRenewalStopping.run O.labels O.normalizedUpdate
         (O.boundary (O.initial seed)) coins wait gaps n ∧
-    (O.execute seed (ActualRenewalStopping.sourceBit wait gaps) coins n).acquired =
-      (List.range (O.execute seed (ActualRenewalStopping.sourceBit wait gaps) coins n)
-        .acquired.length).map (ActualRenewalStopping.sourceBit wait gaps) ∧
-    ((O.execute seed (ActualRenewalStopping.sourceBit wait gaps) coins n).action.output =
-      none → (O.execute seed (ActualRenewalStopping.sourceBit wait gaps) coins n)
-        .acquired.length = n) := by
+    e.acquired = (List.range e.acquired.length).map
+      (ActualRenewalStopping.sourceBit wait gaps) ∧
+    (e.action.output = none → e.acquired.length = n) := by
   refine ⟨?_, receipt_prefix O seed _ coins n, live_length O seed _ coins n⟩
   induction n with
   | zero => rfl
@@ -195,7 +189,8 @@ private theorem stop_spec (seed : I) (source : ℕ → Bool) (coins : ℕ → R)
     O.stopIndex seed source coins = some n ↔
       (O.execute seed source coins n).action.output ≠ none ∧
       ∀ k < n, (O.execute seed source coins k).action.output = none := by
-  simpa only [stopIndex, firstHit, Set.mem_setOf_eq, not_not] using
+  letI : MeasurableSpace (Option Bool) := ⊤
+  simpa only [stopIndex, firstHit, Set.mem_ofPred_eq, not_not] using
     (first_hit_some {a : Option Bool | a ≠ none}
       (fun k => (O.execute seed source coins k).action.output) n)
 
@@ -214,7 +209,7 @@ private theorem stop_length (seed : I) (source : ℕ → Bool) (coins : ℕ → 
 /-- Original first emission is identified with the target only AFTER its
     operational definition. Its full receipt and internal label are retained;
     the actual-renewal epoch consumer then charges only originally paid bits. -/
-theorem stopping_normalization [Fintype C] (M : ℕ) (hM : Fintype.card C ≤ M)
+private theorem stopping_transfer [Fintype C] (M : ℕ) (hM : Fintype.card C ≤ M)
     (seed : I) (coins : ℕ → R) (wait : ℕ) (gaps : ℕ → ℕ) :
     Fintype.card O.Boundary ≤ M ∧
     O.stopIndex seed (ActualRenewalStopping.sourceBit wait gaps) coins =
@@ -247,7 +242,7 @@ theorem stopping_normalization [Fintype C] (M : ℕ) (hM : Fintype.card C ≤ M)
     exact boundary_output O _
   have hstop : O.stopIndex seed source coins = firstHit O.labels Z := by
     unfold stopIndex firstHit
-    simp only [labels, Set.mem_setOf_eq, houtput]
+    simp only [labels, Set.mem_ofPred_eq, houtput]
   have hresult : O.result seed source coins = (firstHit O.labels Z).bind
       (fun t => (O.output (Z t)).map fun d => ((List.range t).map source, d)) := by
     rw [result, ← hstop]
@@ -274,7 +269,69 @@ theorem stopping_normalization [Fintype C] (M : ℕ) (hM : Fintype.card C ≤ M)
         (O.boundary (O.initial seed)) coins wait gaps).1 T hfirst
     refine ⟨N, d, ?_, hN, hsame.trans hZ, hpaid, hle, hzero⟩
     rw [hresult, hfirst]
-    simp [hZ, output]
+    simp [hZ, output, source]
+
+/-- A single initialization law and two single-operation rows precede every
+    source coordinate. They are pushforwards of the actual primitive maps.
+    Their original-innovation simulation retains the full stopped receipt. -/
+theorem stopping_normalization [Fintype C] [MeasurableSpace I] [MeasurableSpace R]
+    (κ : Measure I) (ρ : Measure R) [IsProbabilityMeasure κ] [IsProbabilityMeasure ρ]
+    (hinit : Measurable (fun seed => O.boundary (O.initial seed)))
+    (hread : ∀ c b, Measurable (fun r => O.boundary (O.joint c b r)))
+    (M : ℕ) (hM : Fintype.card C ≤ M) :
+    ∃ (η : PMF O.Boundary) (A B : O.Boundary → PMF O.Boundary),
+      κ.map (fun seed => O.boundary (O.initial seed)) = η.toMeasure ∧
+      (∀ s, η s = κ {seed | O.boundary (O.initial seed) = s}) ∧
+      (∀ b, Measurable (fun p : O.Boundary × R =>
+        ActualRenewalPrefixLaw.effective O.labels O.normalizedUpdate p.1 b p.2)) ∧
+      (∀ s b, ρ.map (ActualRenewalPrefixLaw.effective O.labels O.normalizedUpdate s b) =
+        (if b then B s else A s).toMeasure) ∧
+      (∀ d, A (Sum.inr d) = PMF.pure (Sum.inr d) ∧
+        B (Sum.inr d) = PMF.pure (Sum.inr d)) ∧
+      Fintype.card O.Boundary ≤ M ∧
+      ∀ (seed : I) (coins : ℕ → R) (wait : ℕ) (gaps : ℕ → ℕ),
+        let source := ActualRenewalStopping.sourceBit wait gaps
+        let Z := ActualRenewalStopping.run O.labels O.normalizedUpdate
+          (O.boundary (O.initial seed)) coins wait gaps
+        let Y := ActualRenewalStopping.epoch O.labels O.normalizedUpdate
+          (O.boundary (O.initial seed)) coins wait gaps
+        O.stopIndex seed source coins = firstHit O.labels Z ∧
+        O.result seed source coins = (firstHit O.labels Z).bind
+          (fun t => (O.output (Z t)).map fun d => ((List.range t).map source, d)) ∧
+        (∀ T, O.stopIndex seed source coins = some T → ∃ N d,
+          O.result seed source coins = some ((List.range T).map source, d) ∧
+          firstHit O.labels Y = some N ∧ Y N = Sum.inr d ∧
+          N ≤ ActualRenewalStopping.paidTicks wait gaps T ∧
+          ActualRenewalStopping.paidTicks wait gaps T ≤ T ∧
+          (N = 0 ↔ T ≤ wait + 1)) := by
+  have heff (s : O.Boundary) (b : Bool) (r : R) :
+      ActualRenewalPrefixLaw.effective O.labels O.normalizedUpdate s b r =
+        O.normalizedUpdate s b r := by
+    cases s <;> simp [ActualRenewalPrefixLaw.effective, labels, output, normalizedUpdate]
+  have hmeas (b : Bool) : Measurable (fun p : O.Boundary × R =>
+      ActualRenewalPrefixLaw.effective O.labels O.normalizedUpdate p.1 b p.2) := by
+    simp_rw [heff]
+    apply measurable_from_prod_countable_right
+    intro s
+    cases s with
+    | inl c => exact hread c.val b
+    | inr d => exact measurable_const
+  let η := (κ.map (fun seed => O.boundary (O.initial seed))).toPMF
+  let A := fun s =>
+    (ρ.map (ActualRenewalPrefixLaw.effective O.labels O.normalizedUpdate s false)).toPMF
+  let B := fun s =>
+    (ρ.map (ActualRenewalPrefixLaw.effective O.labels O.normalizedUpdate s true)).toPMF
+  refine ⟨η, A, B, (Measure.toPMF_toMeasure _).symm, ?_, hmeas, ?_, ?_,
+    (same_budget O).trans hM, ?_⟩
+  · intro s
+    exact Measure.map_apply hinit (measurableSet_singleton s)
+  · intro s b
+    cases b <;> exact (Measure.toPMF_toMeasure _).symm
+  · intro d
+    constructor <;> apply PMF.toMeasure_injective <;>
+      simp [A, B, Measure.toPMF_toMeasure, heff, normalizedUpdate, PMF.toMeasure_pure]
+  · intro seed coins wait gaps
+    exact (stopping_transfer O M hM seed coins wait gaps).2
 
 end Machine
 end D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.ReadExecution.OriginalObserverNormalization
