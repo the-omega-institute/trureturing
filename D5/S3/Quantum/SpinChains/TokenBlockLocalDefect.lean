@@ -275,4 +275,118 @@ private lemma output_only_zero (m s r : ℕ) (i : Fin m) (f : Space m s r)
     omega
   rw [hz, map_zero]
 
+private def fiberPermutation (m s r : ℕ) (i : Fin m)
+    (R : Finset (Outside m s i)) (π : Equiv.Perm (Fin s)) :
+    Equiv.Perm (Fiber m s r i R) :=
+  π.finsetCongr.subtypeEquiv (fun A => by simp)
+
+private lemma assemble_permutation (m s : ℕ) (i : Fin m)
+    (R : Finset (Outside m s i)) (A : Finset (Fin s)) (π : Equiv.Perm (Fin s)) :
+    (assemble m s i R A).map (Equiv.Perm.prodExtendRight i π).toEmbedding =
+      assemble m s i R (A.map π.toEmbedding) := by
+  let e := Equiv.sumCongr (Equiv.refl (Outside m s i)) π
+  have he : (R.disjSum A).map e.toEmbedding = R.disjSum (A.map π.toEmbedding) := by
+    ext u
+    rcases u with u | a <;> simp [e]
+  simp only [assemble, Finset.map_map]
+  rw [← he, Finset.map_map]
+  congr 1
+  ext u
+  rcases u with u | a
+  · exact Equiv.Perm.prodExtendRight_apply_ne π u.property u.val.2
+  · simp [siteSplit, e]
+
+private lemma action_slices_forward (m s r : ℕ) (i : Fin m)
+    (π : Equiv.Perm (Fin s)) (f : Space m s r)
+    (R : Finset (Outside m s i)) (A : Fiber m s r i R) :
+    split m s r i (permutationAction m s r i π f) R (fiberPermutation m s r i R π A) =
+      split m s r i f R A := by
+  rw [split_apply, split_apply]
+  change f ((rankPermutation m s r i π).symm _) = f _
+  congr 1
+  apply (rankPermutation m s r i π).injective
+  rw [Equiv.apply_symm_apply]
+  apply Subtype.ext
+  exact (assemble_permutation m s i R A.val π).symm
+
+private lemma invariant_iff_constant (m s r : ℕ) (i : Fin m) (f : Space m s r) :
+    f ∈ invariantSubspace m s r i ↔
+      ∀ (R : Finset (Outside m s i)) (A B : Fiber m s r i R),
+        split m s r i f R A = split m s r i f R B := by
+  constructor
+  · intro hf R A B
+    obtain ⟨π, hπ⟩ := Equiv.Perm.exists_map_finset_eq A.val B.val (by
+      have := A.property
+      have := B.property
+      omega)
+    have he : fiberPermutation m s r i R π A = B := Subtype.ext hπ
+    have h := action_slices_forward m s r i π f R A
+    rw [show permutationAction m s r i π f = f from hf π, he] at h
+    exact h.symm
+  · intro hf π
+    apply (split m s r i).injective
+    ext R A
+    let B := (fiberPermutation m s r i R π).symm A
+    have h := action_slices_forward m s r i π f R B
+    rw [show fiberPermutation m s r i R π B = A from
+      (fiberPermutation m s r i R π).apply_symm_apply A] at h
+    exact h.trans (hf R B A)
+
+private def countingAverage (m s r : ℕ) (i : Fin m)
+    (R : Finset (Outside m s i)) (f : FiberSpace m s r i R) : FiberSpace m s r i R :=
+  WithLp.toLp 2 fun _ => (Fintype.card (Fiber m s r i R) : ℂ)⁻¹ * ∑ A, f A
+
+private lemma sum_sub_average (m s r : ℕ) (i : Fin m)
+    (R : Finset (Outside m s i)) (f : FiberSpace m s r i R) :
+    ∑ A, (f - countingAverage m s r i R f) A = 0 := by
+  classical
+  by_cases h : Nonempty (Fiber m s r i R)
+  · letI := h
+    have hc : (Fintype.card (Fiber m s r i R) : ℂ) ≠ 0 := by
+      exact_mod_cast Fintype.card_ne_zero
+    simp only [PiLp.sub_apply, countingAverage, PiLp.toLp_apply,
+      Finset.sum_sub_distrib, Finset.sum_const, Finset.card_univ, nsmul_eq_mul]
+    rw [← mul_assoc, mul_inv_cancel₀ hc, one_mul, sub_self]
+  · haveI : IsEmpty (Fiber m s r i R) := not_nonempty_iff.mp h
+    exact Finset.sum_eq_zero (fun A _ => isEmptyElim A)
+
+/-- The independently defined all-permutation projection is counting average on every outside set. -/
+theorem projection_counting_slices (m s r : ℕ) (i : Fin m) (f : Space m s r)
+    (R : Finset (Outside m s i)) :
+    split m s r i (projection m s r i f) R =
+      WithLp.toLp 2 (fun _ : Fiber m s r i R =>
+        (Fintype.card (Fiber m s r i R) : ℂ)⁻¹ * ∑ A, split m s r i f R A) := by
+  classical
+  let a := WithLp.toLp 2 (fun R : Finset (Outside m s i) =>
+    countingAverage m s r i R (split m s r i f R))
+  let v := (split m s r i).symm a
+  have hv : split m s r i v = a := (split m s r i).apply_symm_apply a
+  have hmem : v ∈ invariantSubspace m s r i := by
+    rw [invariant_iff_constant]
+    intro R A B
+    rw [hv]
+    rfl
+  have horth : ∀ w ∈ invariantSubspace m s r i, inner ℂ (f-v) w = 0 := by
+    intro w hw
+    rw [← (split m s r i).inner_map_map, PiLp.inner_apply]
+    apply Finset.sum_eq_zero
+    intro R _
+    by_cases h : Nonempty (Fiber m s r i R)
+    · let A₀ := Classical.choice h
+      have hc := (invariant_iff_constant m s r i w).mp hw R
+      rw [PiLp.inner_apply]
+      simp only [map_sub, hv, PiLp.sub_apply, PiLp.toLp_apply, RCLike.inner_apply]
+      simp_rw [hc _ A₀]
+      have hz := sum_sub_average m s r i R (split m s r i f R)
+      change (∑ A, split m s r i w R A₀ * starRingEnd ℂ
+        ((split m s r i f R - countingAverage m s r i R (split m s r i f R)) A)) = 0
+      rw [← Finset.mul_sum, ← map_sum, hz, map_zero, mul_zero]
+    · haveI : IsEmpty (Fiber m s r i R) := not_nonempty_iff.mp h
+      rw [PiLp.inner_apply]
+      exact Finset.sum_eq_zero (fun A _ => isEmptyElim A)
+  have hp := (invariantSubspace m s r i).eq_starProjection_of_mem_of_inner_eq_zero hmem horth
+  change split m s r i ((invariantSubspace m s r i).starProjection f) R = _
+  rw [hp, hv]
+  rfl
+
 end D5.S3.Quantum.SpinChains.TokenBlockLocalDefect
