@@ -93,9 +93,11 @@ internal sealed class OriginalSpinConsumersDocument : IScribeDocumentDefinition
                 Entry(VPart(a), 1), Comma, Entry(VPart(a), 2), Close);
             return EachE(Equal(Call("toFamily", a), Call("toLp", Num(2), coords)), "a");
         }
-        var vector = For(Equal(Apply(VPart(a), X("i")), Entry(a, 0)), ("i", Fin(3)));
-        return For(Equal(Call("ofFamily", a), Pair(Entry(a, 0), vector)),
-            ("a", Call("Pi", Fin(4), R())));
+        var image = Call("ofFamily", a);
+        var vector = For(Equal(Apply(VPart(image), X("i")),
+            Apply(a, Call("Fin.succ", X("i")))), ("i", Fin(3)));
+        return For(And(Equal(S(image), Entry(a, 0)), vector),
+            ("a", Call("EuclideanSpace", R(), Fin(4))));
     }
 
     private static Formula JordanFormula()
@@ -199,7 +201,7 @@ internal sealed class OriginalSpinConsumersDocument : IScribeDocumentDefinition
     private static Formula DApply(Formula a, Formula b) => Apply(X("D"), a, b);
     private static Formula Fixed(Formula o, Formula a, Formula b) => Call("fixed", o, a, b);
     private static Formula CrossD(Formula o, Formula a, Formula b) =>
-        Call("OriginalDContract.crossD", Call("if", o, X(".plus"), X(".minus")), a, b);
+        Call("OriginalDContract.crossD", Call("ite", o, X("plus"), X("minus")), a, b);
     private static Formula N(Formula a) => Call("originalNorm", a);
     private static Formula Eval(Formula a) => Call("evaluate", X("m"), X("v"), a);
     private static Formula Phi(Formula a) => Call("phi", a);
@@ -237,7 +239,22 @@ internal sealed class OriginalSpinConsumersDocument : IScribeDocumentDefinition
         for (var i = formulas.Length - 2; i >= 0; --i) result = And(formulas[i], result);
         return result;
     }
-    private static Formula Call(string name, params Formula[] args) => Apply(Seq(Operatorname, Grp(X(name))), args);
+    private static Formula Call(string name, params Formula[] args)
+    {
+        var words = name.Split('.');
+        var tokens = new System.Collections.Generic.List<Formula>();
+        for (var i = 0; i < words.Length; ++i)
+        {
+            if (i != 0) tokens.Add(Dot);
+            var parts = words[i].Split('_');
+            for (var j = 0; j < parts.Length; ++j)
+            {
+                if (j != 0) tokens.Add(Sp);
+                tokens.Add(X(parts[j]));
+            }
+        }
+        return Apply(Seq(Operatorname, Grp(tokens.ToArray())), args);
+    }
     private static Formula Norm(Formula a) => new Formula.Norm(a);
     private static Formula Negate(Formula a) => new Formula.Negate(a);
     private static Formula Fraction(Formula a, Formula b) => new Formula.Fraction(a, b);

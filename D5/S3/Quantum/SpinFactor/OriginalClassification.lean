@@ -9,14 +9,7 @@
      D5/S3/Geometry/TwoAxisFiniteRotation,
      D5/S3/Quantum/Information/Pauli/OriginalSpinConsumers]
    utility: none
-   digest: Complete original-D H2 classification and same-D consequences.
-
-This is the integration endpoint for the pinned original Theorem 93.1.  The
-proof deliberately consumes the pure and residual all-input interfaces and the
-same-D Pauli consumer.  Those imported sources are transported WIP sources in
-this phase; no kernel, admission, freeze, or registration success is claimed
-by this file until the later compiler and canonical-writer phases.
--/
+   digest: Complete original-D H2 classification and same-D consequences. -/
 
 import D5.S3.Quantum.SpinFactor.OriginalPureRigidity
 import D5.S3.Quantum.SpinFactor.OriginalResidual
@@ -27,9 +20,10 @@ noncomputable section
 namespace D5.S3.Quantum.SpinFactor.OriginalClassification
 
 open OriginalDContract
-open OriginalPureRigidity
-open OriginalResidual
+open OriginalPureRigidity (global_pure)
+open OriginalResidual (all_inputs_of_pure)
 open _root_.D5.S3.Quantum.Information.Pauli.OriginalSpinConsumers
+  (Consequences MatrixInterfaces same_D_consequences)
 
 abbrev Relation := E → E → E
 
