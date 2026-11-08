@@ -1,0 +1,4 @@
+## 178. Terminal-pair preservation rigidifies arbitrary partitions
+
+The preceding sections treated the symmetric first-label family. A general pointwise partition can still be considered if its terminal pair preserves the same affine channel. That single preservation condition is enough to turn the baseline's two independent label relations into quantitative obstructions.
+

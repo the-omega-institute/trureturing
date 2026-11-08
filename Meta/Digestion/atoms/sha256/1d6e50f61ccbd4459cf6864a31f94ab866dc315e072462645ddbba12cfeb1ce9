@@ -1,0 +1,27 @@
+**Proposition 207.2 (valid transverse-pair scope).** Suppose $d=2$ and $A,D\in\mathscr P_u$ have nonzero rank-one restrictions
+
+$$
+M(A)=\alpha v^{\mathsf T},\qquad M(D)=\gamma t^{\mathsf T}.
+$$
+
+For $0<\theta<1$, their feasible mixture has actual label rank four exactly when
+
+$$
+\det(\alpha\ \gamma)\det(v\ t)\ne0,
+\tag{207.3}
+$$
+
+because
+
+$$
+\det M\bigl(\theta A+(1-\theta)D\bigr)
+=\theta(1-\theta)\det(\alpha\ \gamma)\det(v\ t).
+\tag{207.4}
+$$
+
+For rank-one coefficient endpoints $A=c v^{\mathsf T}$ and $D=e t^{\mathsf T}$, the column factors to use are $\alpha=\mathsf B^{\mathsf T}c$ and $\gamma=\mathsf B^{\mathsf T}e$. If either is zero, the mixture cannot have actual rank four. Independence of $c,e$ alone does not suffice.
+
+*Proof.* Apply the determinant expansion of Proposition 202.2 to the two restricted $2\times2$ matrices. Convexity gives feasibility, and Proposition 205.2 converts determinant nonvanishing into actual label rank four. The endpoint formula follows by multiplying the coefficient factorizations by $\mathsf B^{\mathsf T}$. In particular, the premise that every matrix of the whole feasible body has coefficient rank at most one forbids a rank-two coefficient mixture; the premise that every projected matrix has rank at most one forbids (207.3). Neither global premise supplies a route to a rank-four family.
+
+Convexity alone also gives no converse requiring rank-one endpoints: the abstract convex matrix body $\{I_2\}$ has full-rank points and no rank-one points. This is not asserted to be a realizable FIB body. It shows that a rank-one endpoint search requires an additional property of the particular body to be exhaustive. $\square$
+
