@@ -24,13 +24,16 @@ internal sealed class HannaA381361AllOddDocument : IScribeDocumentDefinition
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "Every term is an odd integer", ClaimBody(),
                 "The rational source series exists uniquely and its exponential coefficients are integers. In characteristic two every normalized Hurwitz square is the unit sequence; inversion and coefficientwise absolute value preserve this reduction. The derivative recurrence therefore gives a(n+1)=a(n) modulo two. Since a(0)=1, every term is odd. The claim concerns only this parity assertion; divisibility by five and elliptic or asymptotic formulas require separate arguments.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("oeis-a381361-hanna-all-odd"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) =>
+        DescribeRole role, AssessedProvenance provenance, OpenProblemResolutionClaim? claim = null) =>
         Describe.Lean(DescribeId.Create("hanna-a381361-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(Disp(formula)),
-            provenance, Blocks(Paragraph(Text(prose))), role);
+            provenance, Blocks(Paragraph(Text(prose))), role, claim);
 
     private static Formula V(string name) => F.Id(name);
     private static Formula Call(string name, params Formula[] args) =>

@@ -34,6 +34,10 @@ $$(\exists A \in \operatorname{PowerSeries}\left(\mathbb{Q}\right),\; \operatorn
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Parity/HannaA381361AllOdd.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a381361-hanna-all-odd` (proved) by `D5/S1/Recurrence/Parity/HannaA381361AllOdd.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a381361-hanna-all-odd","declaration_gid":"D5/S1/Recurrence/Parity/HannaA381361AllOdd.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Paul D. Hanna (2025). *OEIS A381361: all terms are odd*. URL: <https://oeis.org/A381361/internal>.
