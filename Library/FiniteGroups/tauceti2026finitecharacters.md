@@ -173,6 +173,17 @@ original nonsplitting field is asserted. No characteristic, perfectness,
 separability or coprimality assumption is added, and no literature novelty is
 claimed.
 
+The inner-action obstruction in `FrobeniusInnerActionObstruction` uses this
+original-module support on a nonzero simple E[N]-submodule. An implementer
+and its inverse in the representation image preserve that same submodule;
+fixed-point-free rigidity there and an injective support map force the
+original action to be trivial. For a finite-dimensional simple quotient of
+k[N], a faithful simple module detects that the quotient factors through
+the existing standard augmentation and is k-algebra isomorphic to k. This
+is a repository derivation, not an exact theorem attributed to TauCeti or
+a literature novelty claim. It supplies an ingredient of the arithmetic
+Frobenius direction; the stronger normalized-degree statement remains open.
+
 ## Complete license
 
 ```text
