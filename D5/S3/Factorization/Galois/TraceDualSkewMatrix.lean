@@ -4,17 +4,32 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Trace-dual coordinates identify an arbitrary semilinear Galois skew algebra with endomorphisms and ordinary matrices over its invariant algebra. -/
+   digest: Trace-dual skew action, invariant coordinates and ordinary matrices. -/
 
-import Mathlib.Algebra.Algebra.Opposite
-import Mathlib.Algebra.Algebra.Tower
-import Mathlib.Algebra.Module.Equiv.Opposite
-import Mathlib.Algebra.Module.RingHom
-import Mathlib.Algebra.SkewMonoidAlgebra.Lift
-import Mathlib.Algebra.BigOperators.Finsupp.Basic
-import Mathlib.FieldTheory.Galois.Basic
-import Mathlib.LinearAlgebra.Matrix.ToLin
-import Mathlib.RingTheory.Trace.Basic
+module
+
+public import Mathlib.Algebra.Algebra.Opposite
+public import Mathlib.Algebra.Algebra.Tower
+public import Mathlib.Algebra.Module.Equiv.Opposite
+public import Mathlib.Algebra.Module.RingHom
+public import Mathlib.Algebra.SkewMonoidAlgebra.Lift
+public import Mathlib.Algebra.BigOperators.Finsupp.Basic
+public import Mathlib.FieldTheory.Galois.Basic
+public import Mathlib.LinearAlgebra.Matrix.ToLin
+public import Mathlib.RingTheory.Trace.Basic
+
+/-!
+# Trace-dual Galois skew matrices
+
+The skew action on an arbitrary semilinear algebra is identified with endomorphisms
+of its right invariant module. Trace-dual coordinates give a genuine basis and an
+ordinary matrix presentation over the invariant algebra.
+-/
+
+@[expose] public section
+
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
 
 noncomputable section
 
@@ -34,6 +49,7 @@ section Orthogonality
 
 variable {I : Type uI} [Fintype I] [DecidableEq I] (b : Module.Basis I k F)
 
+open Classical in
 /-- The only field calculation: a rectangular left inverse is also a right inverse.
 This is private glue consumed by the arbitrary-A coefficient inverse below. -/
 private theorem automorphism_orthogonality (h g : Γ) :
@@ -45,7 +61,7 @@ private theorem automorphism_orthogonality (h g : Γ) :
     ext i j
     change (∑ g : Γ, g (b.traceDual i) * g (b j)) = (1 : Matrix I I F) i j
     simp_rw [← map_mul]
-    rw [← Algebra.trace_eq_sum_automorphisms]
+    rw [← trace_eq_sum_automorphisms]
     simp [b.trace_traceDual_mul, Matrix.one_apply, eq_comm]
   have hcard : Fintype.card I = Fintype.card Γ := by
     calc
@@ -54,20 +70,21 @@ private theorem automorphism_orthogonality (h g : Γ) :
       _ = Fintype.card Γ := Fintype.card_eq_nat_card.symm
   let e : I ≃ Γ := (Fintype.card_eq.mp hcard).some
   have hPQ : P * Q = 1 := (Matrix.mul_eq_one_comm_of_equiv e).mp hQP
-  simpa only [Matrix.mul_apply, P, Q, Matrix.one_apply] using
-    congrArg (fun M : Matrix Γ Γ F => M h g) hPQ
+  have H := congrArg (fun M : Matrix Γ Γ F => M h g) hPQ
+  change (∑ i, h (b i) * g (b.traceDual i)) = (1 : Matrix Γ Γ F) h g at H
+  simpa only [Matrix.one_apply] using H
 
 end Orthogonality
 
 variable (A : Type uA) [Ring A] [Algebra F A]
   [Algebra k A] [IsScalarTower k F A]
-  [MulSemiringAction Γ A] [SMulDistribClass Γ F A]
+  [MulSemiringAction (F ≃ₐ[k] F) A] [SMulDistribClass (F ≃ₐ[k] F) F A]
 
 /- The k-algebra structure on A can always be supplied by
    Algebra.restrictScalars k F A, with IsScalarTower.restrictScalars k F A.
    SMulDistribClass is actual semilinearity, not an effective-descent assumption. -/
 
-private instance actionCommutesBase : SMulCommClass Γ k A where
+instance actionCommutesBase : SMulCommClass Γ k A where
   smul_comm g r x := by
     rw [← algebraMap_smul F r x, smul_distrib_smul]
     change g (algebraMap k F r) • (g • x) = r • (g • x)
@@ -86,40 +103,39 @@ def invariants : Subalgebra k A where
     rw [smul_mul', hx g, hy g]
   algebraMap_mem' := fun r g => smul_algebraMap g r
 
+set_option quotPrecheck false in
 local notation "C" => ↥(invariants k F A)
 
+omit [FiniteDimensional k F] [IsGalois k F] in
 @[simp] theorem invariant_fixed (c : C) (g : Γ) : g • (c : A) = c := c.property g
 
 /-- Restrict the existing right regular A-module along C → A. -/
 instance rightModule : Module Cᵐᵒᵖ A :=
   Module.compHom A (RingHom.op (invariants k F A).val.toRingHom)
 
-@[simp] theorem right_smul (c : Cᵐᵒᵖ) (x : A) : c • x = x * (unop c : A) := rfl
-
 instance rightTower : IsScalarTower k Cᵐᵒᵖ A where
   smul_assoc r c x := by
-    change x * ((r • unop c : C) : A) = r • (x * (unop c : A))
-    change x * (algebraMap k A r * (unop c : A)) =
-      algebraMap k A r * (x * (unop c : A))
-    rw [← mul_assoc, ← Algebra.commutes r x, mul_assoc]
+    change x * ((r • unop c : C) : A) = r • (x * ((unop c : C) : A))
+    rw [Subalgebra.coe_smul, Algebra.mul_smul_comm]
 
+omit [FiniteDimensional k F] [IsGalois k F] [Algebra k A] [IsScalarTower k F A] in
 private theorem sigma_scalar (g : Γ) (z : F) :
     g • algebraMap F A z = algebraMap F A (g z) :=
   (algebraMap.smul' g z A).symm
 
 /-- Coefficients act by left multiplication, on the right C-module. -/
-private def coefficientAction : A →ₐ[k] Module.End Cᵐᵒᵖ A := by
+def coefficientAction : A →ₐ[k] Module.End Cᵐᵒᵖ A := by
   letI : SMulCommClass A Cᵐᵒᵖ A := ⟨fun a c x => by
-    change a * (x * (unop c : A)) = (a * x) * (unop c : A)
-    exact (mul_assoc a x (unop c : A)).symm⟩
+    change a * (x * ((unop c : C) : A)) = (a * x) * ((unop c : C) : A)
+    exact (mul_assoc a x ((unop c : C) : A)).symm⟩
   exact Algebra.lsmul k Cᵐᵒᵖ A
 
-private def groupAction : Γ →* Module.End Cᵐᵒᵖ A where
+def groupAction : Γ →* Module.End Cᵐᵒᵖ A where
   toFun g :=
     { toFun := fun x => g • x
       map_add' := fun x y => smul_add g x y
       map_smul' := fun c x => by
-        change g • (x * (unop c : A)) = (g • x) * (unop c : A)
+        change g • (x * ((unop c : C) : A)) = (g • x) * ((unop c : C) : A)
         rw [smul_mul', invariant_fixed] }
   map_one' := by ext x; exact one_smul Γ x
   map_mul' g h := by ext x; exact mul_smul g h x
@@ -132,6 +148,7 @@ def Phi : SkewMonoidAlgebra A Γ →ₐ[k] Module.End Cᵐᵒᵖ A :=
       ext x
       exact (smul_mul' g a x).symm)
 
+omit [FiniteDimensional k F] [IsGalois k F] in
 @[simp] theorem Phi_single (g : Γ) (a x : A) :
     Phi k F A (SkewMonoidAlgebra.single g a) x = a * (g • x) := by
   change SkewMonoidAlgebra.liftNC
@@ -157,12 +174,14 @@ variable {I : Type uI} [Fintype I] [DecidableEq I] (b : Module.Basis I k F)
 def u (i : I) : A := algebraMap F A (b i)
 def v (i : I) : A := algebraMap F A (b.traceDual i)
 
+open Classical in
 private theorem coefficient_orthogonality (h g : Γ) :
     (∑ i, (h • u k F A b i) * (g • v k F A b i)) =
       if h = g then 1 else 0 := by
   have H := congrArg (algebraMap F A) (automorphism_orthogonality k F b h g)
   simpa [u, v, sigma_scalar, map_sum, map_mul] using H
 
+open Classical in
 private theorem coefficient_orthogonality_one (g : Γ) :
     (∑ i, u k F A b i * (g • v k F A b i)) = if g = 1 then 1 else 0 := by
   simpa only [one_smul, eq_comm] using coefficient_orthogonality k F A b 1 g
@@ -173,11 +192,12 @@ def dRaw (i : I) : A →+ A where
   map_zero' := by simp
   map_add' x y := by simp only [mul_add, smul_add, Finset.sum_add_distrib]
 
+omit [Algebra k A] [IsScalarTower k F A] [SMulDistribClass (F ≃ₐ[k] F) F A] in
 theorem dRaw_fixed (i : I) (x : A) (h : Γ) :
     h • dRaw k F A b i x = dRaw k F A b i x := by
   change h • (∑ g : Γ, g • (v k F A b i * x)) = _
   simp only [Finset.smul_sum, ← mul_smul]
-  exact (Equiv.mulLeft h).sum_comp (fun g : Γ => g • (v k F A b i * x))
+  exact Equiv.sum_comp (Equiv.mulLeft h) (fun g : Γ => g • (v k F A b i * x))
 
 def d (i : I) (x : A) : C := ⟨dRaw k F A b i x, dRaw_fixed k F A b i x⟩
 
@@ -213,7 +233,7 @@ private theorem dRaw_basis_mul (j i : I) (c : C) :
       change g • (algebraMap F A (b.traceDual j) * (algebraMap F A (b i) * c)) = _
       rw [← mul_assoc, ← map_mul, smul_mul', sigma_scalar, invariant_fixed]
     _ = algebraMap F A (algebraMap k F (Algebra.trace k F (b.traceDual j * b i))) * c := by
-      rw [← Finset.sum_mul, ← map_sum, ← Algebra.trace_eq_sum_automorphisms]
+      rw [← Finset.sum_mul, ← map_sum, ← trace_eq_sum_automorphisms]
     _ = if j = i then (c : A) else 0 := by
       rw [b.trace_traceDual_mul]
       by_cases h : j = i <;> simp [h, eq_comm]
@@ -267,8 +287,8 @@ theorem rightBasis_apply (i : I) : rightBasis k F A b i = u k F A b i := by
   classical
   rw [rightBasis, Module.Basis.coe_ofEquivFun]
   change (∑ l, u k F A b l *
-    ((unop (Pi.single i (1 : Cᵐᵒᵖ) l) : C) : A)) = u k F A b i
-  simp [Pi.single_apply]
+    ((unop ((Pi.single i (1 : Cᵐᵒᵖ) : I → Cᵐᵒᵖ) l) : C) : A)) = u k F A b i
+  simp [Pi.single_apply, apply_ite]
 
 private theorem end_reconstruct (T : Module.End Cᵐᵒᵖ A) (x : A) :
     (∑ i, T (u k F A b i) * (d k F A b i x : A)) = T x := by
@@ -353,9 +373,9 @@ theorem endMatrixEquiv_apply (T : Module.End Cᵐᵒᵖ A) (j i : I) :
   change d k F A b j (T ((coordinates k F A b).symm (Pi.single i 1))) = _
   have hb : (coordinates k F A b).symm (Pi.single i 1) = rightBasis k F A b i := by
     rw [rightBasis, Module.Basis.coe_ofEquivFun]
-    change (∑ l, u k F A b l * ((Pi.single i (1 : C) l : C) : A)) =
-      ∑ l, u k F A b l * ((unop (Pi.single i (1 : Cᵐᵒᵖ) l) : C) : A)
-    simp [Pi.single_apply]
+    change (∑ l, u k F A b l * (((Pi.single i (1 : C) : I → C) l : C) : A)) =
+      ∑ l, u k F A b l * ((unop ((Pi.single i (1 : Cᵐᵒᵖ) : I → Cᵐᵒᵖ) l) : C) : A)
+    simp [Pi.single_apply, apply_ite]
   rw [hb, rightBasis_apply]
 
 /-- The basis-dependent matrix presentation of the arbitrary-coefficient skew algebra. -/
