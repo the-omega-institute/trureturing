@@ -98,9 +98,11 @@ private theorem circle_le_word_right (a b : Space) : axisCircle b ≤ wordGroup 
 
 private theorem word_determinant {a b : Space} {l : List Orthogonal}
     (hl : IsAxisWord a b l) : determinant l.prod = 1 := by
+  revert hl
   induction l with
-  | nil => exact determinant_one
+  | nil => intro hl; exact determinant_one
   | cons R l ih =>
+    intro hl
     have hR : determinant R = 1 :=
       (hl R (by simp)).elim (fun h => h.1) (fun h => h.1)
     have hl' : IsAxisWord a b l := fun S hS => hl S (by simp [hS])
@@ -133,8 +135,8 @@ private theorem unit_perpendicular_pair (a b : Space) :
     Submodule.inner_right_of_mem_orthogonal (Submodule.subset_span (by simp)) hv
   refine ⟨‖v‖⁻¹ • v, ?_, ?_, ?_⟩
   · simp [norm_smul, norm_ne_zero_iff.mpr hv0]
-  · simp [inner_smul_right, hav]
-  · simp [inner_smul_right, hbv]
+  · simp [real_inner_smul_right, hav]
+  · simp [real_inner_smul_right, hbv]
 
 /-- Equal latitude circles are orbits of the full axis circle. The determinant
 correction fixes both the axis and the source vector. -/
@@ -190,28 +192,28 @@ private theorem intersect_latitudes {a b : Space} (ha : ‖a‖ = 1) (hb : ‖b�
   let e := a - d • b
   have he : ⟪e, e⟫_ℝ = q := by
     dsimp [e, q, d]
-    simp only [inner_sub_left, inner_sub_right, inner_smul_left, inner_smul_right,
-      conj_trivial, unit_inner_self ha, unit_inner_self hb, real_inner_comm b a]
+    simp only [inner_sub_left, inner_sub_right, real_inner_smul_left, real_inner_smul_right,
+      unit_inner_self ha, unit_inner_self hb, real_inner_comm b a]
     ring
   have hbe : ⟪b, e⟫_ℝ = 0 := by
-    simp [e, d, inner_sub_right, inner_smul_right, unit_inner_self hb, real_inner_comm b a]
+    simp [e, d, inner_sub_right, real_inner_smul_right, unit_inner_self hb, real_inner_comm b a]
   have hae : ⟪a, e⟫_ℝ = q := by
-    simp [e, q, d, inner_sub_right, inner_smul_right, unit_inner_self ha]
+    simp [e, q, d, inner_sub_right, real_inner_smul_right, unit_inner_self ha, pow_two]
   have hen : ⟪e, n⟫_ℝ = 0 := by
-    simp [e, inner_sub_left, inner_smul_left, han, hbn]
+    simp [e, inner_sub_left, real_inner_smul_left, han, hbn]
   have hct : c * q = t - d ^ 2 := div_mul_cancel₀ _ (ne_of_gt hq)
   refine ⟨d • b + c • e + z • n, ?_, ?_, ?_⟩
   · have hi : ⟪d • b + c • e + z • n, d • b + c • e + z • n⟫_ℝ = 1 := by
-      simp only [inner_add_left, inner_add_right, inner_smul_left, inner_smul_right,
-        conj_trivial, unit_inner_self hb, unit_inner_self hn, hbe, hbn, hen,
+      simp only [inner_add_left, inner_add_right, real_inner_smul_left, real_inner_smul_right,
+        unit_inner_self hb, unit_inner_self hn, hbe, hbn, hen,
         real_inner_comm e b, real_inner_comm n b, real_inner_comm n e]
       rw [he]
       nlinarith [hz, hdq]
     rw [real_inner_self_eq_norm_sq] at hi
     nlinarith [norm_nonneg (d • b + c • e + z • n)]
-  · simp [inner_add_right, inner_smul_right, unit_inner_self hb, hbe, hbn, d,
+  · simp [inner_add_right, real_inner_smul_right, unit_inner_self hb, hbe, hbn, d,
       real_inner_comm b a]
-  · simp only [inner_add_right, inner_smul_right, hae, han, mul_zero, add_zero]
+  · simp only [inner_add_right, real_inner_smul_right, hae, han, mul_zero, add_zero]
     change d * d + c * q = t
     nlinarith [hct]
 
@@ -289,11 +291,12 @@ private theorem unit_axes_generate {a b : Space} (ha : ‖a‖ = 1) (hb : ‖b�
     (hab : ⟪a, b⟫_ℝ ^ 2 < 1) (R : Orthogonal) (hR : determinant R = 1) :
     R ∈ wordGroup a b := by
   obtain ⟨S, hS, hSa⟩ := sphere_orbit ha hb hab (R a) (by simpa using ha)
+  have hSdet : determinant S = 1 := by
+    obtain ⟨l, hl, rfl⟩ := hS
+    exact word_determinant hl
   have hfix : S⁻¹ * R ∈ axisCircle a := by
     refine ⟨?_, ?_⟩
-    · rw [determinant_mul, determinant_inv_one (by
-        obtain ⟨l, hl, rfl⟩ := hS
-        exact word_determinant hl), hR]
+    · rw [determinant_mul, determinant_inv_one hSdet, hR]
       norm_num
     · change S⁻¹ (R a) = a
       rw [← hSa]
@@ -327,9 +330,10 @@ theorem two_axis_finite_word (a b : Space)
     have hp : 0 < ‖a‖ ^ 2 * ‖b‖ ^ 2 := mul_pos (sq_pos_of_ne_zero ha) (sq_pos_of_ne_zero hb)
     have hd : (⟪a', b'⟫_ℝ ^ 2) * (‖a‖ ^ 2 * ‖b‖ ^ 2) = ⟪a, b⟫_ℝ ^ 2 := by
       dsimp [a', b']
-      simp only [inner_smul_left, inner_smul_right, conj_trivial]
-      field_simp [ha, hb]
-    nlinarith
+      simp only [real_inner_smul_left, real_inner_smul_right]
+      field_simp [ha, hb] <;> ring
+    apply (mul_lt_mul_right hp).mp
+    simpa only [hd, one_mul] using hab
   obtain ⟨l, hl, he⟩ := unit_axes_generate ha' hb' hab' R hR
   refine ⟨l, ?_, he⟩
   intro S hS

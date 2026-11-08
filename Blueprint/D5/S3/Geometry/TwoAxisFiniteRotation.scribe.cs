@@ -64,7 +64,18 @@ internal sealed class TwoAxisFiniteRotationDocument : IScribeDocumentDefinition
                 + "axis and takes O p exactly to (O g) p. Induction over an exact "
                 + "finite word proves the stated equality. For a scalar/vector "
                 + "residual this mechanism requires its actual circle laws and "
-                + "transported axes, but no continuity of the residual.", DescribeRole.Theorem))));
+                + "transported axes, but no continuity of the residual.", DescribeRole.Theorem),
+            Paragraph(Text(
+                "For the original spin-factor residual, fix real scalars s and t "
+                + "and a sign epsilon. The function on vector pairs is "
+                + "F(x,y)=D((s,x),(t,y))-(0,epsilon times (x cross y)). "
+                + "At an independent pair with (s,t) nonzero, take w=x cross y "
+                + "and ell=s x+t y, and choose a=ell+epsilon w and b=ell-epsilon w. "
+                + "To apply the transport theorem, the actual local circle laws must "
+                + "hold at every rotated input, and the axes there must be O a and "
+                + "O b. Under those hypotheses the conclusion preserves this "
+                + "same scalar/vector residual for every rotation. The function "
+                + "D remains the same total relation throughout the application.")))));
 
     private static DocumentBlock Node(string id, string declaration, string title,
         string prose, DescribeRole role) => Describe.Lean(
