@@ -16,6 +16,7 @@ Registration audit (CLAUDE.md §3.9): result is declared_unresolved (IE-C050);
 the unfinished audit is recorded in issue #28118.
 escape_witness: none; admission uses the external open-problem resolution.
 direct_frozen_dependencies: none
+Square.result denotes ChangShrockToroidalSquare.result in the same Potts namespace.
 Coeff: proof_shape=definition; consumers=q,v,Space
 q: proof_shape=definition; consumers=detach,result
 v: proof_shape=definition; consumers=vertical,horizontal,result
@@ -32,14 +33,15 @@ horizontal: proof_shape=definition; consumers=transfer,horizontal_alternating
 transfer: proof_shape=definition; consumers=result
 alternatingVector: proof_shape=definition; consumers=result
 singletonState_injective: proof_shape=bind-only; consumers=alternatingVector_ne_zero
-alternatingVector_ne_zero: proof_shape=bind-only; consumers=result
+alternatingVector_ne_zero: proof_shape=bind-only; consumers=result,Square.result
 detach_singleton: proof_shape=bind-only; consumers=vertical_singleton
 update_swap: proof_shape=bind-only; consumers=join_singleton_swap
 join_singleton_swap: proof_shape=bind-only; consumers=join_alternating
-join_alternating: proof_shape=bind-only; consumers=horizontal_alternating
-list_prod_on_vector: proof_shape=bind-only; consumers=vertical_singleton,horizontal_alternating
+join_alternating: proof_shape=bind-only; consumers=horizontal_alternating,Square.result
+list_prod_on_vector: proof_shape=bind-only; consumers=vertical_singleton,
+  horizontal_alternating,Square.result
 vertical_singleton: proof_shape=bind-only; consumers=vertical_alternating
-vertical_alternating: proof_shape=bind-only; consumers=result
+vertical_alternating: proof_shape=bind-only; consumers=result,Square.result
 horizontal_alternating: proof_shape=bind-only; consumers=result
 result: proof_shape=bind-only; consumers=registered claim #28063
 -/

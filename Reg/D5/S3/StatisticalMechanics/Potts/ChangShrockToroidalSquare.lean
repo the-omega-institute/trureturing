@@ -8,7 +8,7 @@ import Mathlib.Algebra.MvPolynomial.Eval
 
 namespace Reg.D5.S3.StatisticalMechanics.Potts.ChangShrockToroidalSquare
 
-open _root_.D5.S3.StatisticalMechanics.Potts.ChangShrockToroidalHoneycomb
+open _root_.D5.S3.StatisticalMechanics.Potts.ChangShrockToroidalHoneycomb (Coeff Space v q)
 open _root_.D5.S3.StatisticalMechanics.Potts.ChangShrockToroidalSquare
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 
