@@ -263,18 +263,6 @@ private lemma number_slices (m s r : ℕ) (i : Fin m) (f : Space m s r)
   change (((assemble m s i R A.val).filter (fun u => u.1 = i)).card : ℂ) * _ = _
   rw [assemble_block_card]
 
-private lemma output_only_zero (m s r : ℕ) (i : Fin m) (f : Space m s r)
-    (R : Finset (Outside m s i)) (hR : R.card + s + 1 = r) :
-    previousCountingSplit m s r i (lower m s r i f) R = 0 := by
-  rw [lower_slices]
-  have hz : split m s r i f R = 0 := by
-    ext A
-    have hc := Finset.card_le_univ A.val
-    have ha := A.property
-    simp only [Fintype.card_fin] at hc
-    omega
-  rw [hz, map_zero]
-
 private def fiberPermutation (m s r : ℕ) (i : Fin m)
     (R : Finset (Outside m s i)) (π : Equiv.Perm (Fin s)) :
     Equiv.Perm (Fiber m s r i R) :=
