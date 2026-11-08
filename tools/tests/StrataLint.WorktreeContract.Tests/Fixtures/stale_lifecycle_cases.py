@@ -281,6 +281,24 @@ class LifecycleTests(unittest.TestCase):
 
     def test_missing_pointer_locked_registration_supported_cleanup_entrances(self):
         self.prepare_make()
+        # Control only the unrelated artifact activity inventory. Make, the host
+        # cleanup owner and native registered-tree removal still execute normally.
+        python = self.bin / "python3"
+        python.write_text(f'''#!{sys.executable}
+import importlib.util, os, sys
+arguments = sys.argv[1:]
+if arguments[:1] == ["-B"]:
+    arguments.pop(0)
+if arguments[:1] != [{str(self.main / "tools/scripts/host-cleanup.py")!r}]:
+    os.execv({sys.executable!r}, [{sys.executable!r}, *sys.argv[1:]])
+sys.path.insert(0, os.path.dirname(arguments[0]))
+spec = importlib.util.spec_from_file_location("cleanup", arguments[0])
+cleanup = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(cleanup)
+cleanup.active_paths = lambda *args, **kwargs: set()
+raise SystemExit(cleanup.main(arguments[1:]))
+''')
+        python.chmod(0o700)
         for entrance in ("clean-all", "clean-lanes", "worktree-remove"):
             with self.subTest(entrance=entrance):
                 tree = self.root / ("missing-" + entrance)
