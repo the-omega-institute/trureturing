@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/StatisticalMechanics/VertexModels/PonciniRasmussenNineHornerPart08
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: [mathlib/module/Mathlib.Data.Int.Basic]
-   utility: kind=numeric-reduction; basis=refutes=gid:D5/S3/StatisticalMechanics/VertexModels/PonciniRasmussenMinpolyRefutation.claim; result=D5/S3/StatisticalMechanics/VertexModels/PonciniRasmussenMinpolyRefutation.result; claim=D5/S3/StatisticalMechanics/VertexModels/PonciniRasmussenMinpolyRefutation.claim
+   utility: kind=numeric-reduction; basis=consumer=D5/S3/StatisticalMechanics/VertexModels/PonciniRasmussenMinpolyRefutation.result; premises=D5/S3/StatisticalMechanics/VertexModels/PonciniRasmussenNineHornerPart08.step32,D5/S3/StatisticalMechanics/VertexModels/PonciniRasmussenNineHornerPart08.step33,D5/S3/StatisticalMechanics/VertexModels/PonciniRasmussenNineHornerPart08.step34,D5/S3/StatisticalMechanics/VertexModels/PonciniRasmussenNineHornerPart08.step35
    digest: Four split integer Horner steps for the nine-strand certificate. -/
 
 /-

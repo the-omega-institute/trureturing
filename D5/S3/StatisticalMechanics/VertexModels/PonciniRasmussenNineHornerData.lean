@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/StatisticalMechanics/VertexModels/PonciniRasmussenNineHornerData
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: [mathlib/module/Mathlib.Data.Int.Basic]
-   utility: kind=numeric-reduction; basis=refutes=gid:D5/S3/StatisticalMechanics/VertexModels/PonciniRasmussenMinpolyRefutation.claim; result=D5/S3/StatisticalMechanics/VertexModels/PonciniRasmussenMinpolyRefutation.result; claim=D5/S3/StatisticalMechanics/VertexModels/PonciniRasmussenMinpolyRefutation.claim
+   utility: kind=numeric-reduction; basis=consumer=D5/S3/StatisticalMechanics/VertexModels/PonciniRasmussenMinpolyRefutation.result; premises=D5/S3/StatisticalMechanics/VertexModels/PonciniRasmussenNineHorner.annihilation
    digest: The fixed sparse rows and integer vector states for the nine-strand certificate. -/
 
 /-

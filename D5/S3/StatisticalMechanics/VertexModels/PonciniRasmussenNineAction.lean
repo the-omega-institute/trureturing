@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/StatisticalMechanics/VertexModels/PonciniRasmussenNineAction
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: [mathlib/module/Mathlib.Algebra.MonoidAlgebra.Module]
-   utility: kind=numeric-reduction; basis=refutes=gid:D5/S3/StatisticalMechanics/VertexModels/PonciniRasmussenMinpolyRefutation.claim; result=D5/S3/StatisticalMechanics/VertexModels/PonciniRasmussenMinpolyRefutation.result; claim=D5/S3/StatisticalMechanics/VertexModels/PonciniRasmussenMinpolyRefutation.claim
+   utility: kind=numeric-reduction; basis=consumer=D5/S3/StatisticalMechanics/VertexModels/PonciniRasmussenMinpolyRefutation.result; premises=D5/S3/StatisticalMechanics/VertexModels/PonciniRasmussenNineDiagrams.transition_check,D5/S3/StatisticalMechanics/VertexModels/PonciniRasmussenNineDiagrams.unit_check
    digest: The checked table gives exact generator multiplication in the literal diagram algebra. -/
 
 /-
