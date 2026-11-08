@@ -105,7 +105,7 @@ private lemma sign_sum_bound (s : Fin 3 → Bool) :
          linear_combination (norm := module) hz
        rw [he, norm_smul, trine_norm]; norm_num)
 
-private lemma scalarB_injective (t u : ℝ) (a v : EuclideanSpace ℝ (Fin 3))
+lemma scalarB_injective (t u : ℝ) (a v : EuclideanSpace ℝ (Fin 3))
     (h : scalarB t a = scalarB u v) : t = u ∧ a = v := by
   unfold scalarB at h
   have h00 : t + a 2 = u + v 2 := by
