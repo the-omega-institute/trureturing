@@ -2575,3 +2575,210 @@ Hilbert／叠加、态／效果／Born、张量、typed CP 与参考、Kraus／T
 因此这次确实识别了无限多对真实原输入：所有处处无迹的输入对，其旧响应都是同一个符号乘以 $\mathrm i[a,b]/2$。简化的是共同取向和原值识别的图景与适用范围，不是宣称更少的独立公理已经推出全部量子力学。一般输入还带有中心多项式偏置；知道纯偏置单独比较时为零，并不等于已经证明把它加到别的方向上不会改变比较。这一个跨轴接头仍未支付，全域可加性、原 R 和完整重构仍未完成。原准备、菜单、质量、完整仪器和所有输出、真实相关联合及递归参考、每段历史与未来、真实遗忘和双向返回、完整计数、钟、能量和共同作用量的来源条件仍完整保留。
 
 ## 追加锚（本行以下为增补区）
+
+## 41. 同一混合旧响应的一次系数预算
+
+**定义 41.1（原候选、系数与范围）。** 完整采用 36.1 的同一标量端点矩阵多项式域 $E$、忠实完成 $X$、准确锥、原范数、逐点 Jordan 乘法，以及同一个未知总映射 $D:E^2\to E$。前件准确是静态重构卷 1.1、1.2 第 1–3 项及 22.1 的无 R 背景 $\mathsf H_{\rm orig}$，加全部原 PB (36.2)；保留完整实相加三角、小效果关系、全部原正评价与零／不等／次归一质量。配平主卷 128.1–128.2、129.1 和 185.1 的接口均取这些同一原对象。不消费静态卷依赖 R 的 3.2 中央缺陷定位，也不输入 $D$ 的可加、齐次、连续、中心平移或商下降。
+
+对固定矩阵多项式 $p$，以 $[x^k]p$ 表示其第 $k$ 次系数；$O(x^k)$ 只描述这份固定多项式在零端点的消失阶，不是对所有输入的统一估计。记 $M^0=M-\operatorname{tr}(M)u/2$。通常 Pauli 坐标 $M^0=\mathbf m\cdot\boldsymbol\sigma$ 的算子范数是 $|\mathbf m|$。以下只提取每份实际旧输出的系数，不定义输入一阶截断上的响应。
+
+**定理 41.2（由两份外层共同约束取得的混合预算）。** 任取实际原 $a,c\in E$，写
+
+$$
+\begin{gathered}
+a=\lambda u+xA+O(x^2),\qquad
+c=\tau u+xC+O(x^2),\qquad d=D(a,c),\\
+A^0=\mathbf u\cdot\boldsymbol\sigma.
+\end{gathered}
+\tag{41.1}
+$$
+
+则 $d(0)=0$，其一次系数无迹。写 $[x]d=\mathbf h\cdot\boldsymbol\sigma$；只要 $\tau\ne0$，就有
+
+$$
+\boxed{|\mathbf h|\le |\tau|\,|\mathbf u|.}
+\tag{41.2}
+$$
+
+此界对全部实数 $\lambda$ 成立，包含 $|\lambda|\ge1$、$\lambda=0$、$\mathbf u=0$ 及任意实际第二输入的高次项。证明在本节给出首项正性步骤，在 §42 完成共同约束。
+
+首先，129.1 的准确锥传递使每个数学向量读取 $\phi_{x,\psi}(p)=\langle\psi,p(x)\psi\rangle$ 读取同一 P2，且保留单位质量 $\|\psi\|^2$。在 $x=0$ 两输入都是实标量单位，实 Gram 行列式为零，所以全部读取给 $D(p,q)(0)=0$，对每个实际 $p,q\in E$ 成立。数学读取并不因此成为实际准备。
+
+在证明内部使用下列成熟 Gram 首项事实。任取固定实际原输入
+
+$$
+p=ru+xP+O(x^2),\qquad q=su+xQ+O(x^2),\qquad
+D(p,q)=xF+O(x^2),\qquad T=sP-rQ.
+$$
+
+把复向量空间看成实内积空间，内积为原复内积的实部。两个实际作用向量的外积首项是 $-x\,\psi\wedge T\psi$，所以它们的实 Gram 行列式的 $x^2$ 系数为
+
+$$
+\|\psi\|^2\langle\psi,T^2\psi\rangle
+-\langle\psi,T\psi\rangle^2.
+$$
+
+这也直接说明输入的二次系数在该首项抵消。同一 P2 因而给
+
+$$
+|\langle\psi,F\psi\rangle|^2
+\le\|\psi\|^2\langle\psi,T^2\psi\rangle
+-\langle\psi,T\psi\rangle^2.
+\tag{41.3}
+$$
+
+这里只比较固定多项式不等式的首项；因不等式对所有足够小的正 $x$ 成立，系数比较有效。若 $T^0=\mathbf t\cdot\boldsymbol\sigma\ne0$，在 $T$ 的两个单位本征向量上右端为零，故 $F$ 的两个相应对角值为零。这给 $\operatorname{tr}F=0$ 及 $\mathbf f\cdot\mathbf t=0$，其中 $F=\mathbf f\cdot\boldsymbol\sigma$。若 $\mathbf f\ne0$，再沿 $\mathbf f$ 的单位本征方向读取，得到 $|\mathbf f|\le|\mathbf t|$；$\mathbf f=0$ 时同样成立。$T$ 为标量时全部方差都为零，所有读取直接给 $F=0$。因此总有
+
+$$
+F=\mathbf f\cdot\boldsymbol\sigma,\qquad
+\mathbf f\cdot\mathbf t=0,\qquad |\mathbf f|\le|\mathbf t|.
+\tag{41.4}
+$$
+
+这个中间步骤应用于 $(a,c)$，已支付定理中的无迹表述；它本身只给 $|\mathbf h|\le|\tau\mathbf u-\lambda\mathbf v|$，其中 $C^0=\mathbf v\cdot\boldsymbol\sigma$。还须真正消去这份第二输入的切向预算。
+
+## 42. 零槽配平的两张垂直圆盘
+
+继续证明 41.2。对实际原三元组 $(a,0,c)$ 使用完整 PB。P2 给 $D(a,0)=0$，所以位移、两份原外层及右端准确为
+
+$$
+\begin{gathered}
+\nu=-a\circ c,\qquad\omega=d,\qquad
+r_\eta=-\eta a\circ c,\qquad s_\eta=c+\eta d,
+\quad\eta\in\{1,-1\},\\
+D(r_+,s_+)-D(r_-,s_-)=-2c\circ d.
+\end{gathered}
+\tag{42.1}
+$$
+
+所有内外层均属于原 $E$，同一个 $d$ 是实际旧值。两份外层输出各写为 $xF_\eta+O(x^2)$。其端点与一次输入系数是
+
+$$
+\begin{gathered}
+r_\eta(0)=-\eta\lambda\tau u,\qquad s_\eta(0)=\tau u,\\
+[x]r_\eta=-\eta(\lambda C+\tau A),\qquad
+[x]s_\eta=C+\eta H,\qquad H=[x]d.
+\end{gathered}
+$$
+
+对应 (41.3) 的 $T_\eta$ 为
+
+$$
+\begin{aligned}
+T_\eta
+&=\tau[x]r_\eta+\eta\lambda\tau[x]s_\eta
+=\lambda\tau H-\eta\tau^2A,\\
+T_\eta^0&=\mathbf t_\eta\cdot\boldsymbol\sigma,
+\qquad \mathbf t_\eta=\tau(\lambda\mathbf h-\eta\tau\mathbf u).
+\end{aligned}
+\tag{42.2}
+$$
+
+第二输入的 $C$ 在这个真实调用中抵消。由 (41.4)，$F_\eta=\mathbf f_\eta\cdot\boldsymbol\sigma$，且
+
+$$
+\mathbf f_\eta\cdot\mathbf t_\eta=0,\qquad
+|\mathbf f_\eta|\le|\mathbf t_\eta|,\qquad
+\mathbf f_+-\mathbf f_-=-2\tau\mathbf h.
+\tag{42.3}
+$$
+
+最后一式取自同一 PB 的一次系数。因 $\tau\ne0$，定义普通实向量 $\mathbf m=(\mathbf f_++\mathbf f_-)/(2\tau)$。于是 $\mathbf f_+/\tau=\mathbf m-\mathbf h$、$\mathbf f_-/\tau=\mathbf m+\mathbf h$。两条正交关系相减、两条长度平方界相加，分别给
+
+$$
+\begin{gathered}
+\tau\,\mathbf m\cdot\mathbf u=-\lambda|\mathbf h|^2,\\
+|\mathbf m|^2+(1-\lambda^2)|\mathbf h|^2\le\tau^2|\mathbf u|^2.
+\end{gathered}
+\tag{42.4}
+$$
+
+具体地，正交式是 $(\mathbf m-\mathbf h)\cdot(\lambda\mathbf h-\tau\mathbf u)=0$ 和 $(\mathbf m+\mathbf h)\cdot(\lambda\mathbf h+\tau\mathbf u)=0$。$|\lambda|>1$ 时，(42.4) 的第二式单独不能控制 $\mathbf h$；必须同时使用第一式。
+
+令 $z=|\mathbf h|^2$、$w=\tau^2|\mathbf u|^2$。普通 Cauchy–Schwarz 与 (42.4) 给
+
+$$
+\lambda^2z^2\le w|\mathbf m|^2
+\le w\bigl((\lambda^2-1)z+w\bigr),
+\qquad (z-w)(\lambda^2z+w)\le0.
+\tag{42.5}
+$$
+
+若 $\lambda=0$，(42.4) 已直接给 $z\le w$。若 $\lambda\ne0$ 而 $z>w$，则 $z>0$，(42.5) 的两个因子都严格为正，矛盾。所以总有 $z\le w$，即 (41.2)。这也涵盖 $w=0$ 和负 $\tau$。唯一除法是除以非零实常数 $\tau$；没有除以变量 $x$，没有把任何形式商送入 $D$。定理 41.2 得证。∎
+
+## 43. 全部实际混合输出的一次项消失
+
+**定理 43.1（标量端点原域的全输入二阶消失）。** 在 41.1 的同一完整候选下，对全部实际原 $a,b\in E$，
+
+$$
+\boxed{[x^0]D(a,b)=[x]D(a,b)=0.}
+\tag{43.1}
+$$
+
+即每一份固定旧输出在端点为 $O(x^2)$，包括任意混合标量输入。这不只限于 $E_0^2$，也不需要先消费 36.2 的无迹交换子识别。
+
+证明。常数项已在 §41 由端点 P2 消去。写
+
+$$
+\begin{gathered}
+a=\alpha u+xA+O(x^2),\qquad b=\beta u+xB+O(x^2),\\
+A^0=\mathbf u\cdot\boldsymbol\sigma,\qquad
+B^0=\mathbf v\cdot\boldsymbol\sigma,\qquad
+[x]D(a,b)=\mathbf e\cdot\boldsymbol\sigma.
+\end{gathered}
+$$
+
+若 $\alpha=\beta=0$，(41.3) 的 $T=0$，直接给 $\mathbf e=0$。以下设 $\rho=\sqrt{\alpha^2+\beta^2}>0$。对普通实常数角度 $\theta$，形成真正的原标签
+
+$$
+\begin{gathered}
+a_\theta=a\cos\theta-b\sin\theta,\qquad
+b_\theta=a\sin\theta+b\cos\theta,\\
+D(a_\theta,b_\theta)=D(a,b).
+\end{gathered}
+\tag{43.2}
+$$
+
+最后一式准确复用配平主卷 185.1；它保持完整旧输出，不只是范数或某份读取。旋转后第二端点和第一输入的一次无迹系数为
+
+$$
+\tau_\theta=\alpha\sin\theta+\beta\cos\theta,\qquad
+\mathbf u_\theta=\mathbf u\cos\theta-\mathbf v\sin\theta,
+\qquad |\mathbf u_\theta|\le M:=\sqrt{|\mathbf u|^2+|\mathbf v|^2}.
+$$
+
+当 $\tau_\theta\ne0$，41.2 给同一个固定向量的界
+
+$$
+|\mathbf e|\le |\tau_\theta|\,|\mathbf u_\theta|
+\le |\tau_\theta|M.
+\tag{43.3}
+$$
+
+$M=0$ 时任选 $\tau_\theta\ne0$ 即得 $\mathbf e=0$。若 $M>0$ 且 $\mathbf e\ne0$，半径 $\rho$ 的端点圆允许选择一个有限常数角，使
+
+$$
+0<|\tau_\theta|<\min\{\rho,|\mathbf e|/(2M)\}.
+$$
+
+(43.3) 遂给 $|\mathbf e|<|\mathbf e|/2$，矛盾。故总有 $\mathbf e=0$。没有对未知 $D$ 求导、取输入连续极限、按角度作多项式假设，或把旋转后第一端点归一成一；41.2 对全部 $\lambda$ 的范围在这里实际被消费。∎
+
+## 44. 几何、未付高阶与量子消费者
+
+**定义 44.1（共同圆盘与剩余桥）。** §42 的三维图景是两份实际外层向量 $\mathbf m-\mathbf h$、$\mathbf m+\mathbf h$，分别位于法向 $\lambda\mathbf h-\tau\mathbf u$、$\lambda\mathbf h+\tau\mathbf u$ 的垂直平面内，长度不超过相应法向的长度。法向为零时，相应允许集合退化为单点零。两点差、两张平面的方向和两个半径都含同一个内层 $\mathbf h$，所以不能分别选择最有利的响应。共同正交和长度界才给 (42.5)。三维来自 $H_2(\mathbb C)$ 的无迹一次系数，不是物理空间维数或三个实际系统。
+
+43.1 也使 39.1 的中心平移差值 $D(fu+A,gu+B)-D(A,B)$ 的常数和一次系数为零，但未证明该多项式恒为零。完整混合桥 (39.2)、所有二次及更高系数、全域分别可加、原 R 和同一结合乘法仍待证。一般混合输入的 P2 行列式仍可从 $x^2$ 开始，输出平方现在从 $x^4$ 开始；这份较低阶正余量会遮住二次输出，不能直接把首项证明的下标提高一位。也不能宣称 $D(a,b)/x^2\in E$：该商的常数矩阵未必是标量。没有取得原 $D$ 的系数局部性或一般截断商下降。
+
+承重连接 41.2、43.1 归为 $\texttt{repo-derived}$：真实零槽 PB 的两份外层 P2，联合给出不依赖第二输入切向系数的界，再由实际 SO$(2)$ 旧值不变性消去全部混合一次项。Gram 外积、Pauli 矩阵、Cauchy–Schwarz、平方展开和实圆参数是成熟中间工具，仅附于该推导。数学正读取与标签旋转直接复用配平主卷 129.1、185.1；Jordan 背景沿 39.2 所引 Hanche-Olsen–Størmer 的同一来源。36.2 的整个无迹响应识别不是此前件；静态卷 89.2 的中央缺陷桥与 95.1 的统一次线性增长桥仍未支付。不主张文献穷尽或历史优先权。
+
+**定义 44.2（完整物理来源与七项条件消费者）。** 全部采用 24.1、29.2、34.2、39.3 的同一来源合同和量词。原 $\Omega/\mathrm{native}$、全词同一 $K/J/q$、parent/ready、原中心与经典／不等维／静默块保持。全部实际准备、完整效果菜单、原零／不等／次归一质量保持；Born 仅对正质量的实际完整菜单归一，更新另需正输出质量。全部 typed 仪器、环境及每个成功／失败／细记录／port／post-port 输出，真实相关联合、系统腿、共同实现、生成、重数及递归同源参考保持。全部合法顺序／自适应／并行历史及每个输出的每个合法未来、真正分组遗忘、停止／拒绝／销毁、同数两侧真实双向逆返回保持。CountRead 的无限／非离散记录、可数可加、正常性与指定前对偶，以及物理钟、保持原域的流、能量、生成元域、共同正 $\hbar$ 和共同仪器仍各守原合同。
+
+Hilbert／叠加、态／效果／Born、张量、typed CP 与参考、Kraus／TP／更新／Lüders、全历史／返回／CountRead、物理动力学七项消费者，仍只按 29.2 的全部充分条件接回。43.1 不供应全域双线性，也不供应其中任何实际准备、仪器、联合、历史、计数或动力学来源。原独立条件数没有减少，端点变量和旋转角都不是物理时间。
+
+## 45. 同一比较转动后仍须接回的完整白话
+
+**定义 45.1（比较路径与简洁性）。** 候选仍是同一张二元正表与完整三标签正反配平。这次可以把两份都带标量偏置的真实输入纳入一个共同结论：它们的比较输出在标量端点没有常数项，也没有一次项。证明不先规定响应会相加。先拿同一个旧响应放进零槽配平；两条外层路径各有一张正表，像两个方向和大小相互牵连的圆盘。它们的差必须接回同一个内层响应，因此不能各自挑一个方便答案。共同限制把一次响应压在一个只看第二端点和第一方向的界内。随后把原输入对一起转一个普通角度，完整比较结果仍须相同，却能让第二端点足够小。若一次响应非零，选择一个有限角就会违反这个界，所以它只能为零。
+
+这里“不随顺序变”准确说的是：这些已证明等价的比较路径必须认回同一份结果。交换比较两端会翻转有向部分，改变实际测量先后则是另一项物理问题。两两都有比较、共同旋转不改变比较、不同嵌套路径相容，仍是不同条件，不能互相替换。图景中的三方向是矩阵系数几何；不是要求所有测量交换，也不是推导出物理三维空间。简化发生在同一原条件的后果和证明组织：任意混合输入的一次自由度一起消失；尚未减少独立公理，也没有把高次项或中心平移接头写成定义后宣布已经解决。原准备和菜单、质量、整台仪器及全部输出、真实相关联合和递归参考、全部历史未来及真实遗忘返回、完整计数、物理钟、能量和共同作用量继续完整保留。
+
+## 追加锚（本行以下为增补区）
