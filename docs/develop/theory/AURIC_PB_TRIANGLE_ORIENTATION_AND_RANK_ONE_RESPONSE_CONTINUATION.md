@@ -1811,3 +1811,586 @@ $$
 **定义 182.2（完整白话）。** 候选仍是同一对对象的正表和同一份读数的正反平方配平。现在把剩下的一个问题画得更清楚：在某条读取射线上，如果两对对象对这条射线的作用完全相同，它们的响应读数会不会仍然不同？本轮给出一个条件答案：只要这种不同确实被排除，原来的正表预算就会迫使同一个旧响应真正遵守相加和实数缩放，不用再另行假定它连续。证明先在有限矩阵里沿几条精确不改变附近读数的方向走短折线，预算使目标读数不能突然跳动；所有这些方向再一起排除非线性起伏，只留下直的关系。接着用原代数里真正存在的有限输入实现，把这份直关系传回原来的任意对象，不要求原世界含紧算子或最小投影。到二阶复截面，它像是三根 Pauli 轴加一根标量轴，沿每条零线只保持对应方向的读数；这幅图描述输入参数，不制造物理时空。旧关系一旦相加，已有的全有限正表提升和 PB 结合子恢复便接上原量子代数。但关键的一步仍须原候选自己给出：为什么相同输入作用一定不能产生不同读数？这一步尚未证明，所以纤维条件仍是一座待付的桥，不能改名为公理后说量子起源已经完成。实际准备、设备、联合、所有未来与真实返回，以及物理钟和作用量，仍须来自同一个原世界。
 
 ## 追加锚（本行以下为增补区）
+
+## 183. 原原子族的联合分离条件
+
+**定义 183.1（只在原实 Jordan 域上增加的几何前件）。** 固定 128.1–128.4 的全部原资料，特别是同一个稠密含单位实 Jordan 子代数 $E\subset X$、原 $S=\circ,D:E^2\to E$、准确锥、单位、范数、原评价及全部质量、P2 和完整 PB。另要求存在一个原幂等元集合 $\mathscr P$，满足
+
+$$
+\begin{gathered}
+p\in E,\qquad p^2=p\ne0,\qquad U_p(E)=\mathbb Rp
+\quad(p\in\mathscr P),\\
+J=\overline{\operatorname{Id}_X(\mathscr P)}^{\|\cdot\|},\qquad
+\operatorname{ann}_X(J):=\{x\in X:x\circ y=0\ (y\in J)\}=0.
+\tag{183.1}
+\end{gathered}
+$$
+
+$\operatorname{Id}_X$ 表示 Jordan 理想生成。$U_p=2L_p^2-L_p$ 是原乘法的二次投影；原子条件不用数域、内积或坐标表述。联合本质性只施于整个 $J$，不施于任何一颗 $p$ 生成的理想。它是明确的条件几何原语，不是信息守恒、共同谱或一般原 $\Omega$ 已经供应的事实。此处的理想记号 $J$ 不与原全词 $K/J/q$ 中的来源标签作识别。
+
+不输入 $D$ 的线性、连续、NN、Jacobi、协变、商下降或完成延拓；不输入全部原有限框架、整个闭理想包含于 $E$、复 Hilbert 空间、特殊性或算子乘法闭合。$X=0$ 时允许空族，以下乘积和直和取零对象。
+
+**定理 183.2（原原子选型与非本质分量上的全部旧值）。** 在定义 183.1 下，存在指标集 $\Lambda$、非零复 Hilbert 空间 $H_\lambda$ 和闭 Jordan 理想 $I_\lambda\lhd X$，使
+
+$$
+J=\mathop{\bigoplus}\limits_{\lambda\in\Lambda}^{c_0} I_\lambda,
+\qquad j_\lambda:I_\lambda\cong_J K(H_\lambda)_{\rm sa}.
+\tag{183.2}
+$$
+
+$c_0$ 意指对每个 $\delta>0$，只有有限多个分量的范数至少为 $\delta$，范数取上确界。允许任意指标集、有限维／无限维／不可分 $H_\lambda$；$\dim_{\mathbb C}H_\lambda=1$ 准确给经典 $\mathbb R$ 因子。每个 $I_\lambda$ 至少含一颗 $\mathscr P$ 中的原原子，但未必本质。
+
+选定一次所得坐标 $j_\lambda$ 后，存在保单位正 Jordan 表示
+
+$$
+\begin{gathered}
+\rho_\lambda:X\longrightarrow B(H_\lambda)_{\rm sa},\qquad
+\rho_\lambda|_{I_\lambda}=j_\lambda,\qquad
+\ker\rho_\lambda=\operatorname{ann}_X(I_\lambda),\\
+\rho=(\rho_\lambda)_\lambda:
+X\hookrightarrow\mathop{\prod}\limits_{\lambda\in\Lambda}^{\ell^\infty}
+B(H_\lambda)_{\rm sa},\\
+\|x\|=\sup_\lambda\|\rho_\lambda(x)\|,\qquad
+x\ge0\ \Longleftrightarrow\ \rho_\lambda(x)\ge0\quad(\lambda\in\Lambda).
+\tag{183.3}
+\end{gathered}
+$$
+
+各表示具有自己的实际核，不宣称各自忠实。对每个 $\dim H_\lambda\ge2$ 的分量，存在唯一固定 $\varepsilon_\lambda\in\{-1,+1\}$，使
+
+$$
+\boxed{\quad
+\rho_\lambda D(a,b)=
+\varepsilon_\lambda\frac{[\rho_\lambda a,\rho_\lambda b]}{2i}
+\quad\text{对每一对原 }a,b\in E.\quad}
+\tag{183.4}
+$$
+
+经典分量上 $\rho_\lambda D(a,b)=0$。不先在 $\rho_\lambda(E)$ 或任何商上定义 $D$。不同分量允许异号，全部原中心保留。原 $D$ 的实双线性、全部原三输入的 (128.5)、原复化上 $\star=\circ-iD$ 的结合星乘法，以及每个未改变的原评价对任意有限原输入族的完整有向 Gram 正性，均为结论。证明由 184–192 给出。
+
+## 184. 原原子生成的理想及其真正原核心
+
+**引理 184.1（从原最小角到环境简单对偶理想）。** 每颗 $p\in\mathscr P$ 是 $X$ 的一维投影，即 $U_pX=\mathbb Rp$。$J$ 是简单对偶 JB 代数的 $c_0$ 直和；其各简单分量是 $X$ 的闭 Jordan 理想，并由某颗原 $p$ 生成。对这样的分量 $I$，有
+
+$$
+\overline{E\cap I}^{\|\cdot\|}=I,\qquad
+U_kX=U_kI\quad(k^2=k\in I).
+\tag{184.1}
+$$
+
+第二式不声称 $k$ 是原标签；当另外 $k\in E$ 时才调用原角定理。
+
+证明。$U_p$ 连续，$E$ 稠密而 $\mathbb Rp$ 闭，故 $U_pX=\mathbb Rp$。用 Bunce 的记号，令 $C(X)$ 为 $X$ 中全部一维投影的闭实线性包。[*On compact action in JB-algebras*，Theorem 3(b)(iii)、Lemma 4，页 356–357](https://doi.org/10.1017/S0013091500004429) 给：$C(X)$ 是 $X$ 的闭 Jordan 理想，是对偶 JB 代数，且
+
+$$
+C(X)=\mathop{\bigoplus}\limits_{\gamma\in\Gamma}^{c_0} A_\gamma
+\tag{184.2}
+$$
+
+为简单对偶分量直和。该文 Theorem 3(b)(ii) 还给每个分量元素的范数收敛正交一维投影谱展开。这些是关于 $C(X)$ 的成熟结构，未把任意 $X$ 宣布为对偶代数。
+
+须核对每个 $A_\gamma$ 对环境 $X$ 仍是理想。取 $y\in A_\gamma$、$x\in X$，则 $w=x\circ y\in C(X)$。若 $\nu\ne\gamma$，对 $A_\nu$ 的任意一维投影 $e$，有 $e\circ y=0$，即 $y\in X_0(e)$。Peirce 乘法规则使 $x\circ y$ 没有 $X_2(e)$ 分量，故 $U_ew=0$。若 $w_\nu\ne0$，对它使用上述正交一维投影谱展开，可找到一个非零谱系数及对应 $e$，使 $U_ew_\nu\ne0$，矛盾。因此 $w$ 只有 $\gamma$ 分量，$A_\gamma\lhd X$。
+
+$p\in C(X)$ 的非零坐标只能有一个：若有两个，将其中一个坐标 $p_\gamma$ 单独视作 $C(X)\subset X$ 的元素，则 $U_pp_\gamma=p_\gamma$ 不在 $\mathbb Rp$。所以 $p$ 位于唯一一个 $A_\gamma$。简单性使 $p$ 在 $C(X)$ 中生成整个 $A_\gamma$；环境理想性又使它在 $X$ 中恰好生成该分量。因此 $J$ 正是被 $\mathscr P$ 命中的分量的 $c_0$ 和，记它们为 $I_\lambda$。此步未选择数域。
+
+固定其中一颗 $p\in I_\lambda\cap\mathscr P$。它生成的闭环境理想是下列实线性包的闭包：
+
+$$
+\operatorname{span}_{\mathbb R}
+\{L_{x_1}\cdots L_{x_n}p:n\ge0,\ x_j\in X\}.
+\tag{184.3}
+$$
+
+因为这个闭包恰好是含 $p$ 且在全部 $L_x$ 下不变的最小闭子空间。逐个以原 $E$ 元素逼近有限多个 $x_j$，连续 Jordan 乘法使 (184.3) 的每个生成元都可由 $E\cap I_\lambda$ 中的元素范数逼近。这证明第一式 (184.1)，不是一般稠密子空间与任意理想交集的无条件断言。最后，理想性给 $U_kX\subset I$，且 $U_k$ 是其像上的恒等投影，所以 $U_kX=U_kI$。∎
+
+## 185. 简单对偶类型中紧算子字典的准确范围
+
+**引理 185.1（需要消费的成熟类型字典）。** 简单对偶 JB 分量只有以下可能：有限维简单正式实 Jordan 代数、无限维自旋因子，或
+
+$$
+K_{\mathbb F}(H)_{\rm sa},\qquad
+\mathbb F=\mathbb R,\mathbb C,\mathbb H,\qquad
+\dim_{\mathbb F}H=\infty.
+\tag{185.1}
+$$
+
+这里实／四元数情形的算子及伴随均按相应 Hilbert 空间理解。此列表是成熟对偶分类和类型 I 分类的消费，不是原 $X$ 的预设坐标。
+
+证明。Bunce Theorem 3(a)，页 356，将简单对偶 JB 列为 Albert 代数、自旋因子和由紧算子组成的简单 JC 代数。有限维部分按单位桥 122.1 所用的成熟有限分类处理。对其余简单紧 JC 代数 $B$，Bunce Theorem 5(iii) 的证明，页 358–359，明确使用其弱算子闭包 $M$ 为类型 I JW 因子。以下说明此处从该包络到紧算子字典的对应，不把包络分类直接套到一般 $X$。
+
+在给出 $B$ 的紧 JC 表示中，任取一维投影 $e\in B$；它是有限秩投影。因 $U_e$ 弱算子连续且 $U_eB=\mathbb Re$，在 $M$ 中仍有 $U_eM=\mathbb Re$。Bunce Theorem 3(b)(ii) 的每个 $B$ 元素的最小投影谱展开，因此也由 $M$ 的最小投影组成。
+
+还需反向对应。记 $B_1(e),M_1(e)$ 为半 Peirce 空间。$B_1(e)$ 范数闭且在 $M_1(e)$ 中弱算子稠密。相对 $e$，这些都是形如
+
+$$
+\begin{pmatrix}0&T^*\\T&0\end{pmatrix},
+\qquad T:e\mathcal H\longrightarrow(1-e)\mathcal H
+\tag{185.2}
+$$
+
+的有限列算子；$\dim e\mathcal H<\infty$。其算子范数与有限列的 Hilbert 范数等价，弱算子拓扑正是这个实 Hilbert 空间的弱拓扑。因此闭实线性子空间 $B_1(e)$ 在此拓扑下也闭，得到 $B_1(e)=M_1(e)$。
+
+若 $M$ 的秩为一，则它是一维。秩为二时是自旋因子；取非零半 Peirce 元，其平方是正数倍的 $1_M$，故 $1_M\in B$。它在原紧 JC 表示中为有限秩，因而其支撑空间及 $M$ 都有限维。有限秩 $n\ge3$ 的类型 I 因子由 Hanche-Olsen–Størmer [*Jordan Operator Algebras*，Theorem 5.3.8，页 132](https://hanche.folk.ntnu.no/joa/joa-m.pdf) 分类，亦有限维。这些情形没有留下无限维非自旋的 $B$。
+
+无限秩时才使用该书 Theorem 7.5.11（页 169–170）：其前件是类型 $I_n$ 的 JBW 因子且 $4\le n\le\infty$；这里已支付该前件。结合 §7.5.5、7.5.10 的实／四元数识别，$M$ 同构于 $B_{\mathbb F}(H)_{\rm sa}$，$\mathbb F\in\{\mathbb R,\mathbb C,\mathbb H\}$。相对于上述最小 $e$，$B_1(e)=M_1(e)$ 使所有相应单列及其平方都属于 $B$；平方减去 $e$ 的标量倍，给 $e^\perp$ 上任意射线投影。再用同一单列和实线性组合，得到任意射线投影，故得到全部有限秩自伴元。范数闭性给 $K_{\mathbb F}(H)_{\rm sa}\subset B$。反向包含由前述最小投影谱展开给出：每个 $B$ 元素都是这些有限秩投影的范数极限。因此恰好是 (185.1)。本论证不含可分性前件；有限列和单个向量的论证适用于任意 Hilbert 维数。∎
+
+## 186. 用原输入角选择复数类型
+
+**定理 186.1（原子理想的复紧选型）。** 引理 184.1 的每个 $I_\lambda$ 都是 (183.2) 的复紧 Hermitian 理想。选型所用幂等元和角内旧调用全部属于原 $E$。
+
+证明。若 $I=I_\lambda$ 有限维，(184.1) 和有限维线性闭性给 $I\subset E$，特别其单位 $k$ 是原幂等元。由 $I\lhd X$ 及其单位性，$X_2(k)=I$。单位桥 119.2–119.3 支付同一旧 $D$ 的角闭合、准确锥／范数／全部原限制评价，完整 PB 的每次嵌套调用均在原角中；121.1、122.1 的有限选型因而适用。$I$ 简单，只能是一个 $H_n(\mathbb C)$，包含 $n=1$。不是先把分类中央单位借给原 $D$；其原有性来自 (184.1)。
+
+若 $I$ 是无限维自旋因子，选一颗 $p\in I\cap\mathscr P$。它是非平凡最小投影。由 $E\cap I$ 稠密及原 $p$ 的半 Peirce 投影，存在非零原 $z\in E\cap I_1(p)$。自旋乘法给
+
+$$
+z^2=c\,1_I,\qquad c>0.
+\tag{186.1}
+$$
+
+故 $k=z^2/c=1_I\in E$，$X_2(k)=I$。单位桥 121.1 对这个真实原单位角要求它为一维、两经典维或 $H_2(\mathbb C)$，与无限维矛盾。这也解释为何不能略去原单位供应直接对完成中的自旋因子调用旧 $D$。
+
+其余无限维类型由 185.1 给出。只在此分支的结构坐标中，将原 $p$ 写成 $ee^*$，$\|e\|=1$，$e\in H_{\mathbb F}$。$(E\cap I)_1(p)$ 在 $I_1(p)$ 中稠密，故可取非零原元 $z$，其坐标为
+
+$$
+z=we^*+ew^*,\qquad w\perp_{\mathbb F}e,\quad w\ne0.
+$$
+
+这里只描述这个原元的坐标，不假定任意此类列都原有。准确平方给
+
+$$
+z^2=\|w\|^2p+ww^*,\qquad
+k=\frac{z^2}{\|w\|^2}=p+\frac{ww^*}{\|w\|^2}\in E,
+\qquad X_2(k)=I_2(k)\cong_J H_2(\mathbb F).
+\tag{186.2}
+$$
+
+这个全实际角是自旋角，其纯向量维数分别为 $2,3,5$。单位桥 121.1 对同一个角内旧 $D$ 只允许非经典的三维纯向量支，故 $\mathbb F=\mathbb C$。由此取得 $j_\lambda$ 和复 Hilbert 空间；复数域、完整二级角及特殊性均在此后才成为结论。原实／四元数候选的排除针对它们已证明原有的角，未对不在 $E$ 的投影作旧调用。∎
+
+## 187. 非本质分量的表示与实际核
+
+**引理 187.1（有限压缩构造的非忠实版本与联合忠实性）。** (183.2) 给 (183.3)。此外，对 $x\in X,y\in I_\lambda$，
+
+$$
+j_\lambda(x\circ y)=\rho_\lambda(x)\circ j_\lambda(y),\qquad
+\|\rho_\lambda(x)\|=
+\|x+\operatorname{ann}_X(I_\lambda)\|_{X/\operatorname{ann}_X(I_\lambda)}.
+\tag{187.1}
+$$
+
+证明。固定 $I=I_\lambda,j=j_\lambda,H=H_\lambda$。复用 168.1 的相容有限压缩构造及其乘法验证，直到其使用本质性的步骤为止。对每个有限维 $L\subset H$，$e_L=j^{-1}(P_L)\in I$，有
+
+$$
+A_L(x)=j(U_{e_L}x),\quad
+\|A_L(x)\|\le\|x\|,\quad
+P_LA_M(x)P_L=A_L(x)\quad(L\subset M).
+\tag{187.2}
+$$
+
+相容有界 Hermitian 型给唯一 $\rho_\lambda(x)\in B(H)_{\rm sa}$。168.1 的 (168.4)–(168.5) 只用理想性、Peirce 平方和 $j$ 在 $I$ 上的忠实性；它们不需要 $\operatorname{ann}_X(I)=0$，原样给 (187.1) 第一式、$\rho_\lambda(x^2)=\rho_\lambda(x)^2$ 以及保单位、保正、收缩和 $\rho_\lambda|_I=j$。同一构造涵盖有限 $H$，包括一维 $H$，此时可取 $L=H$。这些压缩只在完成上的已知 Jordan 运算中使用，未给旧 $D$ 增加输入。
+
+若 $\rho_\lambda(x)=0$，第一式及 $j$ 单射给 $x\circ I=0$。反之，$x\circ I=0$ 使每个 $U_{e_L}x=0$，故全部有限压缩为零，$\rho_\lambda(x)=0$。因此核恰为实际湮灭子，而非零核的假定。JB 商定理及同态等距定理（Hanche-Olsen–Størmer 3.4.2–3.4.4）给第二式 (187.1)。
+
+对 $\mu\ne\lambda$，$I_\mu\circ I_\lambda=0$，所以 $\rho_\lambda(I_\mu)=0$。因 $J$ 是这些理想的范数闭和，
+
+$$
+\ker\rho=\bigcap_\lambda\operatorname{ann}_X(I_\lambda)
+=\operatorname{ann}_X(J)=0.
+\tag{187.3}
+$$
+
+各表示收缩，故落在有界乘积。若全部 $\rho_\lambda(x)\ge0$，在 $X$ 的单生成连续谱演算中取负部 $x_-=\max(-x,0)$。保单位 Jordan 同态保持该谱演算，遂使全部 $\rho_\lambda(x_-)=0$；(187.3) 给 $x_-=0$。这证明联合反映正性。将各坐标的 $-M1\le\rho_\lambda(x)\le M1$ 拉回，$M=\sup_\lambda\|\rho_\lambda(x)\|$，原序单位范数给 $\|x\|\le M$；收缩性给反向界。没有要求某一分量独自看到整个 $X$。∎
+
+## 188. 原理想吸收与分量内的实际有限框架
+
+**引理 188.1（一般 JB 理想对同一旧值的吸收）。** 对任一闭 Jordan 理想 $I\lhd X$，仅原 P2 已给
+
+$$
+D(E,E\cap I)\subset E\cap I,\qquad
+D(E\cap I,E)\subset E\cap I.
+\tag{188.1}
+$$
+
+这里没有要求 $I\subset E$ 或 $I$ 本质，也没有给输入纤维不变。
+
+证明。消费静态重构卷 71.1 的同一正二表吸收机制，在这里用实 JB 商而非已给 C* 种子坐标。设 $b\in E\cap I,a\in E$，$q_I:X\to X/I$ 是仅针对已知 Jordan 结构的商。Hanche-Olsen–Størmer Theorem 3.4.2 给 $X/I$ 的 JB 结构。129.1 使它的任意正泛函 $\phi$ 拉回原 $E$ 后读取同一个 P2；由于 $q_I(b^2)=0$，零对角预算给
+
+$$
+\phi(q_I(D(a,b)))=0.
+\tag{188.2}
+$$
+
+JB 商的正泛函分离元素，故 $q_I(D(a,b))=0$，即原输出属于 $I$；它本来就属于 $E$。原反对称性给另一槽。$I=X$ 或零商时断言直接成立。$q_I$ 在这里只检验每个实际输出是否落在理想中；没有出现 $D(q_Ia,q_Ib)$，也没有比较两个不同原输入的旧输出。∎
+
+**引理 188.2（一个原子在非本质分量内供应的原向量核）。** 固定一个非经典分量，暂记 $I,j,\rho,H$，并选原 $p\in I\cap\mathscr P$，使 $j(p)=ee^*$、$\|e\|=1$。置
+
+$$
+\begin{gathered}
+H_e(z)=ze^*+ez^*,\qquad
+V=\{z\in e^\perp:j^{-1}(H_e(z))\in E\cap I\},\qquad
+H_0=\mathbb Ce\oplus V.
+\tag{188.3}
+\end{gathered}
+$$
+
+则 $H_0$ 是稠密复线性子空间，全部 $\rho(a)$、$a\in E$ 保持 $H_0$。对有限维复 $L\subset H_0$，有真正原投影及全角
+
+$$
+e_L=j^{-1}(P_L)\in E\cap I,\qquad
+E\cap X_2(e_L)=X_2(e_L)=j^{-1}(B(L)_{\rm sa}).
+\tag{188.4}
+$$
+
+这些原有限角的同一旧 $D$ 具有一个共同符号 $\varepsilon\in\{-1,+1\}$。
+
+证明。这是 169.2、170.2 的原核构造所需接口的非本质版本；逐项核对它们在此成立的理由。若 $0\ne z\in V$，原元 $h=j^{-1}(H_e(z))$ 给
+
+$$
+k=h^2/\|z\|^2\in E\cap I,\qquad
+j(k)=ee^*+zz^*/\|z\|^2.
+\tag{188.5}
+$$
+
+由 (184.1)，$X_2(k)=I_2(k)$ 是真实有限复矩阵角。单位桥 119.3 的稠密性与有限维闭性使它全部原有，故 $H_e(iz)$ 也有原提升，$V$ 复线性。又 $j^{-1}(zz^*)=h^2-\|z\|^2p\in E$。式 (169.3) 的实线性组合现在在 $I$ 内给每个 $\xi\in H_0$ 的原提升 $j^{-1}(\xi\xi^*)$，有限 Gram–Schmidt 给 (188.4)。密度使用 (184.1)：对任意 $z\perp e$，以 $E\cap I$ 中的元逼近 $j^{-1}(H_e(z))$，施加半 Peirce 投影即给 $V$ 中趋向 $z$ 的向量。
+
+对任意原演员 $a$，记 $A=\rho(a)$、$\beta=\langle e,Ae\rangle$、$w=(1-ee^*)Ae$。真实原元
+
+$$
+2a\circ p-2\beta p\in E\cap I
+\tag{188.6}
+$$
+
+的 $j$ 坐标是 $H_e(w)$，所以 $w\in V$。再令原 $b=U_{u-p}a$，则 $\rho(b)=(1-ee^*)A(1-ee^*)$。对 $z\in V$，$b\circ j^{-1}(H_e(z))\in E\cap I$，其坐标是 $H_e(\rho(b)z)/2$。这正是 169.2 的保持性证明，给 $AH_0\subset H_0$；没有以 $\rho$ 在整个 $X$ 上的单射性作推理。
+
+(188.4) 的每个角均由 119.2–119.3 继承同一旧输出及原限制评价，完整 PB 的内外层调用都在原角。143.1 给该角完整旧值识别。两个有限框架的和仍在 $H_0$，在共同角中比较非交换秩二子角即使所有符号一致；$\dim H\ge2$ 保证存在这样的原角和非零交换子，符号唯一。有限维 $H$ 时 $H_0=H$；无限维和不可分时只得到稠密的 $H_0$，未给环境全部有限秩标签。∎
+
+**引理 188.3（任意原背景的完整原秩一行）。** 在引理 188.2 的坐标中，对每个单位 $f\in H_0$，令 $P_f=ff^*$、$e_f=j^{-1}(P_f)\in E\cap I$，并令 $K_\varepsilon(A,B)=\varepsilon[A,B]/(2i)$。则
+
+$$
+D(te_f,a)=j^{-1}\bigl(tK_\varepsilon(P_f,\rho(a))\bigr)
+\quad(t\in\mathbb R,\ a\in E).
+\tag{188.7}
+$$
+
+右边是有原提升的有限秩元，等式在原 $E\cap I$ 中成立，包含它在别的分量上的精确零值。
+
+证明。置实际旧输出 $d=D(te_f,a)$。188.1 先使 $d\in E\cap I$，这一步消除了非本质表示的核方向，未假定商上的 $D$。129.1 的数学向量预算在正表示 $\rho$ 下给
+
+$$
+|\langle\xi,\rho D(x,y)\xi\rangle|^2
+\le\|\rho(x)\xi\|^2\|\rho(y)\xi\|^2
+-\bigl(\operatorname{Re}\langle\rho(x)\xi,\rho(y)\xi\rangle\bigr)^2
+\quad(x,y\in E).
+\tag{188.8}
+$$
+
+对 $\xi\perp f$，第一平方为零；固定自伴输出极化给
+
+$$
+\begin{gathered}
+j(d)=\delta P_f+H_f(w),\quad
+\delta=\langle f,j(d)f\rangle,\quad
+w=(1-P_f)j(d)f,\quad
+z=(1-P_f)\rho(a)f,\quad
+\beta=\langle f,\rho(a)f\rangle,\quad
+c_0=e_f\circ a,\quad
+j(c_0)=\beta P_f+H_f(z)/2.
+\tag{188.9}
+\end{gathered}
+$$
+
+188.2 对实际原 $d$ 和 $a$ 都适用，故 $w,z\in H_0$。所以 $e_f,d,c_0$ 全部支撑在实际原角 $e_L$，其中 $L=\operatorname{span}_{\mathbb C}\{f,z,w\}$，$\dim L\le3$；这些原元都在 $I$ 中，$j$ 对它们忠实。
+
+现在准确消费 171.1／静态重构卷 63.1 的同一次三阶外层 PB 计算：在原 (128.6) 中取 $(a,te_f,0)$，得到
+
+$$
+D(te_f-d,tc_0)-D(te_f+d,-tc_0)=2t\,e_f\circ d.
+\tag{188.10}
+$$
+
+两次外层调用都在刚支付的原全角，由 143.1 认回。171.4 的已知矩阵计算于是给
+
+$$
+2t\delta P_f+tH_f(w)=t^2H_f(i\varepsilon z/2).
+\tag{188.11}
+$$
+
+$t\ne0$ 时 $\delta=0,w=i\varepsilon tz/2$；$t=0$ 用原零行。由 $j$ 在 $I$ 上单射读回即为 (188.7)。此处只消费既有锁行计算，新增的接口是实际输出先落入 $I$，以及它和演员所生成的三个向量确有原角；没有把单分量完成像中的角公式当作一般原商公式。∎
+
+## 189. 在原标签上提升有限乘子
+
+**引理 189.1（保留全部原核部分的精确提升）。** 固定引理 188.2 的分量。令 $\mathcal E=E\oplus iE$ 为形式复化，只使用它的向量空间、原共轭和原实虚部；此时不赋予未知结合乘法。置
+
+$$
+T(Z)=\rho(a)+i\rho(b)\quad(Z=a+ib\in\mathcal E).
+\tag{189.1}
+$$
+
+$T$ 可以有核。记 $\mathcal F_0$ 为支撑于某个有限 $L\subset H_0$ 的全部有限秩复算子。$j$ 的复化给唯一原提升
+
+$$
+\ell:\mathcal F_0\longrightarrow(E\cap I)\oplus i(E\cap I),
+\quad T\ell(k)=k,\quad
+\ell(k^*)=\ell(k)^*.
+\tag{189.2}
+$$
+
+对 $A,B\in1+\mathcal F_0$、$Z\in\mathcal E$，定义实际原标签变换
+
+$$
+\mathscr L_A Z=Z+\ell((A-1)T(Z)),\qquad
+\mathscr R_B Z=Z+\ell(T(Z)(B-1)).
+\tag{189.3}
+$$
+
+这些变换均有定义，且
+
+$$
+\begin{gathered}
+T(\mathscr L_A Z)=AT(Z),\quad
+T(\mathscr R_B Z)=T(Z)B,\\
+\mathscr L_A\mathscr L_B Z=\mathscr L_{AB}Z,\qquad
+\mathscr L_A\mathscr R_B Z=\mathscr R_B\mathscr L_A Z
+=Z+\ell(AT(Z)B-T(Z)).
+\tag{189.4}
+\end{gathered}
+$$
+
+相应右乘复合也按实际矩阵乘法成立。其他分量的原坐标不变；这些公式始终在 $\mathcal E$ 内成立，而非仅在 $T(\mathcal E)$ 内成立。特别地，若 $W\in\ker T$，变换对 $Z+W$ 的结果是对 $Z$ 的结果再加同一个 $W$。
+
+证明。对 $Z=a+ib$，$T(Z)$ 和 $T(Z)^*$ 都保持 $H_0$，由 188.2 的全部原演员保持性得到。若 $k=P_LkP_L\in\mathcal F_0$，则 $kT(Z)$ 的实部和虚部支撑在有限空间 $L+T(Z)^*L\subset H_0$，而 $T(Z)k$ 用 $L+T(Z)L$。所以两者均在 $\mathcal F_0$；(188.4) 给其每个自伴部分在 $E\cap I$ 中的唯一提升。这是 170.1 的有限乘子论证，但提升落在原理想中，不要求 $\rho|_E$ 单射。
+
+$\ell$ 的唯一性仅来自 $j$ 在 $I$ 上的单射，给实虚线性和伴随对应。将 (189.3) 逐次代入，所有修正项都属于同一个原理想复化，故可由 $\ell$ 的线性相加；例如左乘复合的修正是
+
+$$
+\ell((B-1)T(Z))+\ell((A-1)BT(Z))
+=\ell((AB-1)T(Z)).
+\tag{189.5}
+$$
+
+这证明实际标签等式，不是从相同表示像倒推相同原标签。其余公式同理。$\rho_\mu(I)=0$、$\mu\ne\lambda$ 给其他分量不变。$W\in\ker T$ 时修正项完全相同，故原 $W$ 从未被删除、另选代表或归零。
+
+令 $\tau Z=iZ^*$，这是实际原实虚部交换。提升还准确满足
+
+$$
+\tau\mathscr L_A Z=\mathscr R_{A^*}\tau Z,
+\qquad
+\tau\mathscr R_A Z=\mathscr L_{A^*}\tau Z.
+\tag{189.6}
+$$
+
+这些也是对同一原理想修正直接取共轭所得，不要求旧 $D$ 在核纤维上不变。∎
+
+## 190. 非忠实分量中同一 PB 的原标签运输
+
+**定理 190.1（未预付商下降的双侧有限相位不变性）。** 对 $Z=a+ib\in\mathcal E$ 定义有界自伴分量残差
+
+$$
+\mathfrak F_\lambda(Z)=
+\rho_\lambda D(a,b)-K_{\varepsilon_\lambda}(T(Z)_{\rm Re},T(Z)_{\rm Im}).
+\tag{190.1}
+$$
+
+此定义的自变量是实际原标签对；不假定残差能下降到 $T(Z)$ 的函数。令 $\mathcal U_0$ 为某个有限 $L\subset H_0$ 之外恒等的全部酉算子。则对所有原 $Z$ 和 $U,V\in\mathcal U_0$，
+
+$$
+\mathfrak F_\lambda(\mathscr L_U\mathscr R_V Z)
+=\mathfrak F_\lambda(Z).
+\tag{190.2}
+$$
+
+证明。消费 172.1／静态重构卷 64.1 的相位相减机制，支付这里不能由单分量坐标自动提供的实际标签等式。取原 $h=te_f$。188.3 识别任意原 $x,y$ 上的两个内层旧值 $D(h,x),D(h,y)$，且这两值和 $h\circ x,h\circ y$ 全在 $E\cap I$。所以原 PB 的实虚增量不仅具有已知坐标，还分别等于那些坐标在 $I$ 中的唯一原提升。
+
+写 $P=P_f$。$\varepsilon=-1$ 时，(128.6) 两个外层原标签对恰好为 $\mathscr L_{1+itP}Z$ 和 $\mathscr L_{1-itP}Z$；$\varepsilon=+1$ 时恰好为相应的 $\mathscr R_{1\pm itP}Z$。标准比较映射满足同一个算子 PB：$\varepsilon=-1$ 时 $Q_K= T(Z)^*T(Z)$，$\varepsilon=+1$ 时 $Q_K=T(Z)T(Z)^*$。将原 PB 经 $\rho_\lambda$ 读取，再减去这个已知比较恒等式，得到
+
+$$
+\begin{cases}
+\mathfrak F_\lambda(\mathscr L_{1+itP}Z)
+=\mathfrak F_\lambda(\mathscr L_{1-itP}Z),&\varepsilon=-1,\\
+\mathfrak F_\lambda(\mathscr R_{1+itP}Z)
+=\mathfrak F_\lambda(\mathscr R_{1-itP}Z),&\varepsilon=+1.
+\end{cases}
+\tag{190.3}
+$$
+
+没有展开未知外层 $D$，也没有以相同分量输入替换原调用。
+
+置 $A_t=(1-itP)^{-1}=1+((1-it)^{-1}-1)P$。负号情形把 (190.3) 用于实际 $Z_0=\mathscr L_{A_t}Z$，正号情形用于 $Z_0=\mathscr R_{A_t}Z$。(189.4) 给实际标签恒等式
+
+$$
+\mathscr L_{1-itP}Z_0=Z
+\quad\text{或}\quad
+\mathscr R_{1-itP}Z_0=Z,
+\tag{190.4}
+$$
+
+并给另一个端点是 Cayley 相位的实际提升，相位为
+
+$$
+U_{f,t}=1+\left(\frac{1+it}{1-it}-1\right)P_f.
+\tag{190.5}
+$$
+
+(190.4) 是修正项在原理想中准确相消的结果，不是 $T$ 单射的结果。若原 $Z$ 含非零的 $\ker T$ 部分，它在两个端点和所有中间标签中一直保留。
+
+有限实 $t$ 给除 $-1$ 外的每个秩一相位；$-1=i\cdot i$ 用两次 $t=1$ 的实际变换得到。对有限 $L\subset H_0$ 用有限酉谱定理，每个 $U\in\mathcal U_0$ 是有限个这类相位的乘积。每个中间标签由 189.1 留在原域，188.3 在其两个实输入上仍适用，故负号给所有左不变性，正号给所有右不变性。没有以稠密相位加未知连续性补全圆周。
+
+最后，原反对称性给
+
+$$
+\mathfrak F_\lambda(\tau Z)=-\mathfrak F_\lambda(Z).
+\tag{190.6}
+$$
+
+用实际标签恒等式 (189.6)，从已得的一侧不变性推得另一侧，再逐次作用即为 (190.2)。因此本运输不经过 $E/(E\cap\ker\rho_\lambda)$ 上的旧映射；原商相容性尚未被使用。∎
+
+## 191. 全部原输入的分量残差消失
+
+**定理 191.1（非本质块的全部旧值识别）。** 对每个非经典分量及每个原 $Z\in\mathcal E$，$\mathfrak F_\lambda(Z)=0$。经典分量的全部原 $D$ 坐标为零。因此 (183.4) 对每一对原输入成立。
+
+证明。这里准确消费 173.1／152.1 的固定输出双侧预算；不是把 167.2 应用于一个未定义旧 $D$ 的商。固定原 $Z$，记 $T=T(Z)$。若 $T=0$，两个原实输入在本分量的表示像都为零，(188.8) 直接使 $\rho_\lambda D(\operatorname{Re}Z,\operatorname{Im}Z)=0$，残差也为零。
+
+设 $T\ne0$、$M=\|T\|$。固定任意单位 $\xi\in H_0$，选单位 $v_n\in H_0$，使
+
+$$
+r_n=\|Tv_n\|>0,\quad r_n\longrightarrow M,
+\qquad w_n=Tv_n/r_n\in H_0.
+\tag{191.1}
+$$
+
+存在 $R_n,L_n\in\mathcal U_0$，分别把 $\xi$ 送到 $v_n$、把 $w_n$ 送到 $\xi$；只在至多二维的核内子空间延拓相应一维等距匹配。实际原标签为
+
+$$
+Z_n=\mathscr L_{L_n}\mathscr R_{R_n}Z=a_n+ib_n\in\mathcal E,
+\quad T(Z_n)=W_n=L_nTR_n,
+\quad\mathfrak F_\lambda(Z_n)=\mathfrak F_\lambda(Z).
+\tag{191.2}
+$$
+
+最后一式由 190.1 在原标签上给出；没有把 $Z_n$ 改成任何别的同像代表。
+
+173.3–173.4 的已知算子估计适用于这个 $T$：若 $A=T^*T$、$\delta_n=\sqrt{M^2-r_n^2}$，则
+
+$$
+\begin{gathered}
+\|(A-r_n^2)v_n\|^2\le r_n^2(M^2-r_n^2),\\
+W_n\xi=r_n\xi,\qquad
+\|W_n^*\xi-r_n\xi\|\le\delta_n,\\
+\|\rho_\lambda(b_n)\xi\|\le\delta_n/2,
+\qquad\|\rho_\lambda(a_n)\xi\|\le M.
+\tag{191.3}
+\end{gathered}
+$$
+
+对这两个真正原输入用 (188.8)，比较交换子的读数也有相同的 Cauchy–Schwarz 界。因此
+
+$$
+\begin{aligned}
+|\langle\xi,\mathfrak F_\lambda(Z)\xi\rangle|
+&=|\langle\xi,\mathfrak F_\lambda(Z_n)\xi\rangle|\\
+&\le2\|\rho_\lambda(a_n)\xi\|\,
+          \|\rho_\lambda(b_n)\xi\|
+\le M\delta_n\longrightarrow0.
+\end{aligned}
+\tag{191.4}
+$$
+
+左边是一个固定有界自伴输出残差的同一读数，故为零。对全部单位 $\xi\in H_0$ 成立；稠密性和固定有界算子的二次型连续性、极化给残差为零。极限仅在已知算子估计和固定输出读取中使用，不要求 $Z_n$ 收敛，不对旧 $D$ 作输入极限。有限维 $H$ 也适用，且此时 $H_0=H$。不可分 $H$ 中只为一个固定 $T$ 选近范数序列，未要求可数稠密核。
+
+若 $H_\lambda$ 一维，$\rho_\lambda(a),\rho_\lambda(b)$ 是实数。它们的实 Gram 行列式恒为零，P2 经这个正表示读取直接给 $\rho_\lambda D(a,b)=0$；不用相位论证。
+
+至此对原任意 $a,b$ 均取得 (183.4)。特别是
+
+$$
+\rho_\lambda a=\rho_\lambda a',\quad
+\rho_\lambda b=\rho_\lambda b'
+\ \Longrightarrow\
+\rho_\lambda D(a,b)=\rho_\lambda D(a',b')
+\tag{191.5}
+$$
+
+现在才成为结论。原输入纤维相容性没有先于识别使用，也不以它取代 178.2 的一般 C* 输入作用纤维问题。∎
+
+## 192. 联合忠实性传回原代数和每份原质量
+
+**推论 192.1（原双线性、结合星乘法、原 R 与全有限正表）。** 定理 183.2 的全部代数结论成立，且
+
+$$
+\|D(a,b)\|\le\|a\|\,\|b\|\quad(a,b\in E).
+\tag{192.1}
+$$
+
+若 $z\in E\cap Z(X)$ 是任意原中央元，则 $D(z,a)=0$；没有要求中心只有全局标量。不同非经典分量的符号不必一致。
+
+证明。对每个分量的所有原输入已由 191.1 认回，右边是已知实双线性表达式。联合单射性遂使原 $D$ 分别实双线性；交换子范数界及 (183.3) 给 (192.1)。这些结论也使唯一有界双线性完成延拓成为可能，但该延拓只在原值识别之后取得，不作为任何一步原调用的替身。
+
+消费 174.1、161.1 的原代数后端，并保留逐分量取向。将形式复化映到有界算子乘积，$\rho_{\mathbb C}(a+ib)=(\rho_\lambda a+i\rho_\lambda b)_\lambda$；它由 (187.3) 单射。定义原 $\star$ 为 $a\star b=a\circ b-iD(a,b)$ 的复双线性延拓，原共轭为星。对自伴原 $a,b$，
+
+$$
+\rho_{\lambda,\mathbb C}(a\star b)=
+\begin{cases}
+\rho_\lambda(a)\rho_\lambda(b),&\varepsilon_\lambda=-1,\\
+\rho_\lambda(b)\rho_\lambda(a),&\varepsilon_\lambda=+1.
+\end{cases}
+\tag{192.2}
+$$
+
+经典分量取通常乘法。原 $S,D$ 的值域使 $a\star b\in\mathcal E$；因此这里是通常／相反乘积按分量定向的原像闭合，未预付原算子通常乘法闭合。每个坐标乘法结合并符合星律，联合单射性使原 $\star$ 结合且符合星律。其结合律实部正是
+
+$$
+(a\circ b)\circ c-D(D(a,b),c)
+=a\circ(b\circ c)-D(a,D(b,c))
+\quad(a,b,c\in E).
+\tag{192.3}
+$$
+
+每个内层旧输出本来在 $E$，两个外层仍调用同一个原 $D$。异号分量不被转置掉；本卷 162.1 的混合取向与通常乘法闭合区别继续适用。
+
+给定任意有限原 $a_1,\ldots,a_m$、复系数 $c_r$ 及任意未改变的原评价 $\alpha$，令 $T_0=\sum_r c_ra_r\in\mathcal E$。174.3 的正平方消费在这里逐分量给
+
+$$
+\rho_\lambda(T_0^*\star T_0)=
+\begin{cases}
+\rho_{\lambda,\mathbb C}(T_0)^*\rho_{\lambda,\mathbb C}(T_0),
+&\varepsilon_\lambda=-1,\\
+\rho_{\lambda,\mathbb C}(T_0)\rho_{\lambda,\mathbb C}(T_0)^*,
+&\varepsilon_\lambda=+1.
+\end{cases}
+\tag{192.4}
+$$
+
+经典分量为相应模平方。$T_0^*\star T_0\in E$，全部坐标非负；联合反映正性使它在同一原锥 $C$。所以
+
+$$
+\sum_{r,s}\bar c_rc_s
+\bigl(\alpha(a_r\circ a_s)-i\alpha D(a_r,a_s)\bigr)
+=\alpha_{\mathbb C}(T_0^*\star T_0)\ge0.
+\tag{192.5}
+$$
+
+这就是全部有限原有向 Gram 正性。各 $\alpha$ 仍在整个原 $E$ 上读取，不被分量向量态取代；无需把它写成分量上正常态的求和。原 $m_\alpha=\alpha(u)$、不等与次归一质量原样保留。质量零时 $|\alpha(a)|\le m_\alpha N(a)$ 给评价恒零，不做除法；奇异原评价也保留。
+
+若 $z\in Z(X)$，对 $I_\lambda$ 的每颗最小投影 $e$，$[L_z,L_e]e=0$ 给 $L_e^2z=L_ez$，故 $U_ez=e\circ z$。置 $A=\rho_\lambda(z)$、$P=j_\lambda(e)$，表示中即 $PAP=(PA+AP)/2$，所以 $A$ 与每个秩一 $P$ 交换，必为本块标量。反过来，所有分量均为标量的 $X$ 元素使 $[L_z,L_x]y$ 的全部坐标为零；联合单射性使其为零，故该元素属于 $Z(X)$。因此全部原中央元保留，(183.4) 仅使其旧响应为零。不同分量之间没有非零 Peirce 连接，143.1 的相交角取向比较只在一个分量内施行；已有 122.2、162.1 的异号实例允许独立符号。∎
+
+## 193. 来源对应与同一量子起源的条件边界
+
+**定义 193.1（成熟供应、既有结论与新增桥梁）。** 本节的数学引文和对应范围如下。
+
+| 供应位置 | 准确用途与未被代付的事项 |
+| --- | --- |
+| Bunce，*On compact action in JB-algebras*，Proc. Edinburgh Math. Soc. 26，353–360，DOI 10.1017/S0013091500004429；页 355 的一维投影定义，Theorem 3(a)、3(b)(ii)–(iii)、Lemma 4，页 356–357 | 全部完成原子的闭包是对偶 Jordan 理想、简单对偶分解和正交最小投影谱展开。不是整个任意 $X$ 的对偶分类，也不供应原子属于 $E$ 或联合本质性。 |
+| 同文 Theorem 5(iii) 的证明，页 358–359；Hanche-Olsen–Størmer，*Jordan Operator Algebras*，Theorem 5.3.8，页 132，§7.5.5、7.5.10–7.5.11，页 167–170 | 简单紧 JC 的类型 I JW 包络和正确秩范围内的实／复／四元数类型。185.1 说明最小投影和紧元的双向对应；7.5.11 不用于一般 JB，不承担秩二或秩三选型。 |
+| 同书 §2.6.2、Lemma 2.6.3，页 47–48；Theorem 3.2.4、Corollary 3.2.5，页 79；Propositions 3.3.6、3.3.10，页 83–84；Theorem 3.4.2、Proposition 3.4.3、§3.4.4，页 85 | Peirce 分解／乘法、谱演算、二次表示正性、准确序单位范数、JB 商及同态核／等距性质。JB 商只用于已知 Jordan 运算和单次旧输出的吸收，不预给旧 $D$ 的商。 |
+| 单位桥 119.2–119.3、121.1、122.1；本卷 143.1 | 全实际原角的闭合与评价限制、原自旋和有限选型、有限角全部旧值识别。186 先产生所需原角，再消费它们；不会由“完成有角”跳到“旧 $D$ 可调用”。 |
+| 本卷 168–170、171–174；静态重构卷 63.1、64.1、71.1 | 既有有限压缩构造、原核／有限乘子、三阶锁行、Cayley 相位、反对称换槽和固定输出双侧零预算。188.1 把吸收机制接到实 JB 理想；189–190 在非忠实表示中以唯一理想修正实现每个实际原标签等式。 |
+| 静态重构卷 70.1、73.1；本卷 167.1–167.2、178.1–179.1 | 前者另给忠实乘子嵌入、整个原闭种子及内部识别；167 另给单个本质复紧理想；178 另给完整 C* 原载体并保留输入作用纤维条件。这里未援用这些不同前件来替代非本质分量识别，也未重证一般纤维条件等价。 |
+| D5／Blueprint 的 `Quantum/Algebra/UnitBridgeRawGeometry` 与 `Topology/JBAlgebra` | 前者的原连续自旋载体保留 PY／NN 等前件；后者供应单生成 Jordan 幂与闭包。它们不供应这里的原子族、非忠实块上的旧 $D$ 下降或全部原输入识别。 |
+
+对偶／类型 I 分类、有限维闭性、有界型表示、Hilbert 极化及有限酉谱定理属于 $\texttt{literature-attested}$ 工具。本节 $\texttt{repo-derived}$ 的承重综合是：原最小角先给生成理想中的稠密原元素，原 Peirce 平方支付排除非复类型所需的实际角；各非本质复紧分量的表示保留其实际核；原吸收使锁行输出落回可忠实读取的单个理想；有限乘子仅作为这个理想中的原修正作用于完整原标签，最后联合忠实性传回全部旧值和每份原质量。并未把简单对偶分类或单个本质原子的既有定理单列为本节的新增结果；不作穷尽文献、历史优先权或无条件最小公理主张。
+
+**定义 193.2（原来源、无限与物理接口仍须各自支付）。** 定义 183.1 是同一原实域上的条件原语。实际原 $\Omega$ 是否供应 $\mathscr P\subset E$ 和完成层的 $\operatorname{ann}_X(J)=0$，仍未证明；不能由信息守恒、共同谱、抽象完成原子或数学态可分离性推出。没有要求单颗原子的理想本质，但要求全部这些理想共同没有环境湮灭子。$J$ 可以是 $X$ 的真理想，$X$ 也未被识别成整个算子乘积；每个分量表示的实际核按 (183.3) 保留。一般无原子、型 II／III 及没有这份原子供应的投影稀少原域，仍是完整目标的缺口，这里没有给这些类的完整候选反模型。
+
+同一原 $\Omega/E/S/D$、锥／单位／范数／原评价与所有原质量、全词 $K/J/q$、父位置与 ready／端口类型、实际准备与完整菜单、共同记录与真正分组遗忘、实际参考及真实条件联合律、复合系统、完整仪器及其环境和全部输出都不更换。原全部合法顺序／自适应／并行历史、每个仍合法未来、失败／拒绝／停止／销毁／泄漏分支、同数两侧和真实逆向返回继续保留原量词。数学角、滤子、表示和相位不生产原生操作、接受叶活动输出、第一合法消费者或新的源未来；原 $q$ 也不被任何数学理想商替换。
+
+完整 CountRead 无穷、非离散记录、正常性与指定前对偶、可数可加及无限联合接口仍须原合同；有限 Gram 不是这些合同。所有原评价可以奇异，不强制成迹类态。原复化的定向结合乘法不等于数学有限时间流保持不完备原域，164.1 的边界保留。物理钟、能量／哈密顿量、生成元域、作用量与共同 $\hbar$ 仍没有从局部几何和取向导出。静态重构卷 68.1、78.1 的量子消费者只在各自原实际合同已给处消费，本条件定理不结清完整量子起源目标。
+
+## 追加锚（本行以下为增补区）
