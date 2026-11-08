@@ -9,7 +9,17 @@ internal sealed class PBOriginalReadoutRealizationDocument : IScribeDocumentDefi
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A single ambient state gives a coherent reading of every original label, and its selected central sector supplies the actual PB outer budgets.",
         H("Original labels, positive two-tables, and a selected central sector"),
-        Blocks(Describe.Lean(DescribeId.Create("original-piecewise"),
+        Blocks(Describe.Lean(DescribeId.Create("original-positive-readings"),
+            DeclarationHandle.Create("D5/S3/Quantum/Algebra/PBOriginalReadoutRealization.original_positive_readings"),
+            H("Whole directed tables and actual finite matrix corners"),
+            StatementSource.FromAuthor(Disp(PositiveStatement())), AssessedProvenance.FromRepo(),
+            Blocks(
+                Paragraph(Text("Let C be any subset of the original real normed space E detected exactly by all original real-linear evaluations p. J is the original bilinear Jordan product and D is the same arbitrary total function. Suppose every original directed two-table is positive semidefinite. Every C-positive real-linear functional f then reads the whole directed table positively, for every original pair and every complex test vector. Its determinant gives the stated quadratic budget. No nonzero, unit-mass or continuity premise is imposed on f or the original evaluations. The proof uses the positive quadratic original label and the exact cone, rather than an extension to an ambient associative algebra.")),
+                Paragraph(Text("originalCorner(i,JX,k) is exactly the original inclusion inverse image of the Peirce two-space ker(JX(i(k))-id). Thus its elements are literally original labels in E intersect X two(k). ActualMatrixCorner supplies the source's closed-corner interface: an isometric original inclusion, inherited Jordan multiplication, the original k as corner unit, closure under J and the same D, and a real-linear equivalence onto all self-adjoint complex matrices. The equivalence preserves the inherited norm using the matrix L2 operator norm, the unit, the Jordan product, and the exact inherited cone. This is a conditional interface, not a construction from abstract JB axioms. Density and completeness of a real JB completion are not needed once this actual finite interface is supplied.")),
+                Paragraph(Text("cornerJordan and cornerResponse are literal restrictions: their underlying original labels are J(a,b) and D(a,b). Every original evaluation restricts by composition with the original subtype inclusion, so exact-cone detection and all original directed tables restrict without changing preparations or their masses. The matrix equivalence is onto the whole finite self-adjoint matrix space; no proper surrogate matrix subsystem is substituted.")),
+                Paragraph(Text("cornerOp is ordinary matrix action on EuclideanSpace over the complex scalars. cornerVectorRead is the real part of the vector expectation, is real linear and nonnegative on the inherited cone, and its complex expectation is real. It reads k as the squared Euclidean norm, J(a,a) as the squared Euclidean norm of a acting on the vector, and J(a,b) as the real inner product of the two resulting vectors. Whole-table transfer and the determinant give the budget on the literal original D(a,b). The index type may be empty and the vector may be zero. The zero corner and k=0 remain in scope whenever the supplied interface exists; no ambient extension, GNS representation or normalized vector is used."))),
+            DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("original-piecewise"),
             DeclarationHandle.Create("D5/S3/Quantum/Algebra/PBOriginalReadoutRealization.original_piecewise"),
             H("Coherent realization with zero and nonzero axis branches"),
             StatementSource.FromAuthor(Disp(Statement())), AssessedProvenance.FromRepo(),
@@ -35,6 +45,47 @@ internal sealed class PBOriginalReadoutRealizationDocument : IScribeDocumentDefi
     private static Formula Imp(Formula a, Formula b) => new Formula.Logic(a,FormulaLogicOperator.Implies,b);
     private static Formula Mul(Formula a, Formula b) => global::StrataLint.Scribe.DefinitionDsl.Multiply(a,b);
     private static Formula Inst(Formula a, Formula b) => Seq(OpenBracket,a,CloseBracket,b);
+    private static Formula PositiveStatement()
+    {
+        var E=I("E"); var P=I("P"); var J=I("J"); var D=I("D"); var cone=I("C"); var p=I("p");
+        var f=I("f"); var a=I("a"); var b=I("b"); var X=I("X"); var i=I("i"); var JX=I("JX");
+        var k=I("k"); var n=I("n"); var R=I("R"); var v=I("v"); var real=C("Real"); var complex=C("Complex");
+        var K=C("originalCorner",i,JX,k); var F=C("cornerVectorRead",R,v);
+        Formula Apply(Formula x)=>C("apply",F,x);
+        Formula Op(Formula x)=>C("apply",C("cornerOp",R,x),v);
+        Formula Sq(Formula x)=>C("pow",x,N(2));
+        Formula Norm(Formula x)=>C("norm",x);
+        Formula Re(Formula x)=>C("re",x);
+        Formula Inner(Formula x,Formula y)=>C("inner",complex,x,y);
+        Formula RJ(Formula x,Formula y)=>C("cornerJordan",R,x,y);
+        Formula RD(Formula x,Formula y)=>C("cornerResponse",R,x,y);
+        var baseTable=All("f",C("RealLinearMap",E,real),Imp(C("PositiveOn",f,cone),
+            All("a",E,All("b",E,And(C("PosSemidef",C("originalTable",J,D,f,a,b)),
+                C("Le",Sq(C("apply",f,C("apply",D,a,b))),
+                    C("Subtract",Mul(C("apply",f,C("apply",J,a,a)),C("apply",f,C("apply",J,b,b))),
+                        Sq(C("apply",f,C("apply",J,a,b))))))))));
+        var vectors=And(All("a",K,Imp(C("Member",C("val",a),cone),C("Le",N(0),Apply(a)))),
+            And(All("a",K,Eq(Inner(v,Op(a)),C("ofReal",Apply(a)))),
+            And(Eq(Apply(C("CornerUnit",R)),Sq(Norm(v))),
+            And(All("a",K,Eq(Apply(RJ(a,a)),Sq(Norm(Op(a))))),
+            And(All("a",K,All("b",K,Eq(Apply(RJ(a,b)),Re(Inner(Op(a),Op(b)))))),
+                All("a",K,All("b",K,
+                    And(Eq(C("val",RJ(a,b)),C("apply",J,C("val",a),C("val",b))),
+                    And(Eq(C("val",RD(a,b)),C("apply",D,C("val",a),C("val",b))),
+                    And(C("PosSemidef",C("originalTable",C("cornerJordan",R),C("cornerResponse",R),F,a,b)),
+                        C("Le",Sq(Apply(RD(a,b))),C("Subtract",Mul(Sq(Norm(Op(a))),Sq(Norm(Op(b)))),
+                            Sq(Re(Inner(Op(a),Op(b))))))))))))))));
+        var corners=All("X",I("Type"),Inst(C("NormedAddCommGroup",X),Inst(C("NormedSpace",real,X),
+            All("i",C("RealLinearIsometry",E,X),All("JX",C("RealBilinearMap",X,X,X),
+            All("k",E,All("n",I("Type"),Inst(C("Fintype",n),Inst(C("DecidableEq",n),
+            All("R",C("ActualMatrixCorner",J,D,cone,i,JX,k,n),All("v",C("EuclideanSpace",complex,n),vectors)))))))))));
+        var hypotheses=And(C("ExactCone",cone,p),C("AllOriginalTablesPositive",J,D,p));
+        var body=All("J",C("RealBilinearMap",E,E,E),All("D",C("Function",E,E,E),
+            All("C",C("Set",E),All("p",C("Function",P,C("RealLinearMap",E,real)),
+                Imp(hypotheses,And(baseTable,corners))))));
+        return All("E",I("Type"),All("P",I("Type"),
+            Inst(C("NormedAddCommGroup",E),Inst(C("NormedSpace",real,E),body))));
+    }
     private static Formula Statement()
     {
         var A=I("A"); var E=I("E"); var P=I("P"); var O=I("O"); var B=I("B"); var center=I("C");

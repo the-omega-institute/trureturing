@@ -151,6 +151,7 @@ The construction of this interface from a real JB completion is not asserted. -/
 structure ActualMatrixCorner (J : E →ₗ[ℝ] E →ₗ[ℝ] E) (D : E → E → E)
     (C : Set E) (i : E →ₗᵢ[ℝ] X) (JX : X →ₗ[ℝ] X →ₗ[ℝ] X) (k : E)
     (n : Type*) [Fintype n] [DecidableEq n] where
+  closed : IsClosed (originalCorner i.toLinearMap JX k : Set E)
   inherited_jordan : ∀ a b, i (J a b) = JX (i a) (i b)
   unit_mem : k ∈ originalCorner i.toLinearMap JX k
   jordan_closed : ∀ a b : originalCorner i.toLinearMap JX k,
@@ -160,11 +161,12 @@ structure ActualMatrixCorner (J : E →ₗ[ℝ] E →ₗ[ℝ] E) (D : E → E �
   matrix : originalCorner i.toLinearMap JX k ≃ₗ[ℝ] selfAdjoint (Matrix n n ℂ)
   norm_matrix : ∀ a, ‖(matrix a : Matrix n n ℂ)‖ = ‖a‖
   unit_matrix : (matrix ⟨k, unit_mem⟩ : Matrix n n ℂ) = 1
-  jordan_matrix : ∀ a b,
+  jordan_matrix : ∀ a b : originalCorner i.toLinearMap JX k,
     (matrix ⟨J a b, jordan_closed a b⟩ : Matrix n n ℂ) =
       (1 / 2 : ℝ) • ((matrix a : Matrix n n ℂ) * matrix b +
         (matrix b : Matrix n n ℂ) * matrix a)
-  exact_cone : ∀ a, (a : E) ∈ C ↔ (matrix a : Matrix n n ℂ).PosSemidef
+  exact_cone : ∀ a : originalCorner i.toLinearMap JX k,
+    (a : E) ∈ C ↔ (matrix a : Matrix n n ℂ).PosSemidef
 
 variable {J : E →ₗ[ℝ] E →ₗ[ℝ] E} {D : E → E → E} {C : Set E}
 variable {i : E →ₗᵢ[ℝ] X} {JX : X →ₗ[ℝ] X →ₗ[ℝ] X} {k : E}
@@ -189,7 +191,12 @@ def cornerResponse (R : ActualMatrixCorner J D C i JX k n)
 def cornerOp (R : ActualMatrixCorner J D C i JX k n)
     (a : originalCorner i.toLinearMap JX k) :
     EuclideanSpace ℂ n →L[ℂ] EuclideanSpace ℂ n :=
-  Matrix.toEuclideanCLM (R.matrix a : Matrix n n ℂ)
+  (Matrix.toEuclideanCLM (n := n) (𝕜 := ℂ)) (R.matrix a : Matrix n n ℂ)
+
+private theorem matrix_real_smul (r : ℝ) (M : Matrix n n ℂ) :
+    (Matrix.toEuclideanCLM (n := n) (𝕜 := ℂ)) (r • M) =
+      r • (Matrix.toEuclideanCLM (n := n) (𝕜 := ℂ)) M :=
+  ((Matrix.toEuclideanCLM (n := n) (𝕜 := ℂ)).toAlgEquiv.toAlgHom.restrictScalars ℝ).toLinearMap.map_smul r M
 
 /-- A corner-local real-linear vector functional; no ambient extension is chosen. -/
 def cornerVectorRead (R : ActualMatrixCorner J D C i JX k n)
@@ -197,13 +204,15 @@ def cornerVectorRead (R : ActualMatrixCorner J D C i JX k n)
   toFun a := (inner ℂ v (cornerOp R a v)).re
   map_add' a b := by simp [cornerOp, map_add, inner_add_right]
   map_smul' r a := by
-    simp [cornerOp, map_smul, inner_smul_right, RCLike.real_smul_eq_coe_mul]
+    simp only [cornerOp, map_smul, selfAdjoint.val_smul, matrix_real_smul,
+      smul_apply, inner_smul_right_eq_smul]
+    exact RCLike.smul_re (K := ℂ) r _
 
 private theorem corner_vector {P : Type*}
     (p : P → E →ₗ[ℝ] ℝ) (hexact : ∀ a, a ∈ C ↔ ∀ q, 0 ≤ p q a)
     (hraw : ∀ q a b, (originalTable J D (p q) a b).PosSemidef)
     (R : ActualMatrixCorner J D C i JX k n) (v : EuclideanSpace ℂ n) :
-    (∀ a, (a : E) ∈ C → 0 ≤ cornerVectorRead R v a) ∧
+    (∀ a : originalCorner i.toLinearMap JX k, (a : E) ∈ C → 0 ≤ cornerVectorRead R v a) ∧
     (∀ a, inner ℂ v (cornerOp R a v) = (cornerVectorRead R v a : ℂ)) ∧
     cornerVectorRead R v ⟨k, R.unit_mem⟩ = ‖v‖ ^ 2 ∧
     (∀ a, cornerVectorRead R v (cornerJordan R a a) = ‖cornerOp R a v‖ ^ 2) ∧
@@ -216,36 +225,45 @@ private theorem corner_vector {P : Type*}
           (inner ℂ (cornerOp R a v) (cornerOp R b v)).re ^ 2) := by
   have hs (a) : (cornerOp R a).IsSymmetric :=
     ((R.matrix a).property.map Matrix.toEuclideanCLM).isSymmetric
-  have hp (a) (ha : (a : E) ∈ C) : 0 ≤ cornerVectorRead R v a := by
-    have h := (R.exact_cone a).mp ha
-    have h' := h.re_dotProduct_nonneg (WithLp.ofLp v)
-    simpa [cornerVectorRead, cornerOp, Matrix.toEuclideanCLM, Matrix.toLpLin_apply,
-      EuclideanSpace.inner_eq_star_dotProduct, dotProduct_comm] using h'
+  have hp (a : originalCorner i.toLinearMap JX k) (ha : (a : E) ∈ C) : 0 ≤ cornerVectorRead R v a := by
+    have h := Matrix.isPositive_toEuclideanLin_iff.mpr ((R.exact_cone a).mp ha)
+    exact h.re_inner_nonneg_right v
   have hj (a b) : cornerOp R (cornerJordan R a b) = (1 / 2 : ℝ) •
       (cornerOp R a * cornerOp R b + cornerOp R b * cornerOp R a) := by
-    change Matrix.toEuclideanCLM (R.matrix ⟨J a b, R.jordan_closed a b⟩ : Matrix n n ℂ) = _
+    change (Matrix.toEuclideanCLM (n := n) (𝕜 := ℂ))
+      (R.matrix ⟨J a b, R.jordan_closed a b⟩ : Matrix n n ℂ) = _
     rw [R.jordan_matrix]
-    simp [cornerOp]
+    simp [cornerOp, matrix_real_smul]
+  have hn (w : EuclideanSpace ℂ n) : (inner ℂ w w).re = ‖w‖ ^ 2 := by
+    exact inner_self_eq_norm_sq (𝕜 := ℂ) w
   have hc (a b) : cornerVectorRead R v (cornerJordan R a b) =
       (inner ℂ (cornerOp R a v) (cornerOp R b v)).re := by
     change (inner ℂ v (cornerOp R (cornerJordan R a b) v)).re = _
     rw [hj]
-    simp only [ContinuousLinearMap.smul_apply, ContinuousLinearMap.add_apply,
-      ContinuousLinearMap.mul_apply, inner_smul_right, inner_add_right]
-    rw [← hs a v (cornerOp R b v), ← hs b v (cornerOp R a v)]
+    simp only [smul_apply, add_apply, mul_apply_eq_comp,
+      inner_smul_right_eq_smul (𝕝 := ℝ), inner_add_right]
+    have ha := hs a v (cornerOp R b v)
+    have hb := hs b v (cornerOp R a v)
+    change inner ℂ (cornerOp R a v) (cornerOp R b v) =
+      inner ℂ v (cornerOp R a (cornerOp R b v)) at ha
+    change inner ℂ (cornerOp R b v) (cornerOp R a v) =
+      inner ℂ v (cornerOp R b (cornerOp R a v)) at hb
+    rw [← ha, ← hb]
+    simp only [← RCLike.re_eq_complex_re, RCLike.smul_re, map_add]
     rw [inner_re_symm (𝕜 := ℂ) (cornerOp R b v) (cornerOp R a v)]
-    simp
-    <;> ring
+    ring
   refine ⟨hp, ?_, ?_, ?_, hc, ?_⟩
   · intro a
     apply Complex.ext
-    · simp [cornerVectorRead]
+    · rfl
     · simpa using (hs a).im_inner_self_apply v
   · change (inner ℂ v (cornerOp R ⟨k, R.unit_mem⟩ v)).re = _
-    simp [cornerOp, R.unit_matrix, inner_self_eq_norm_sq_to_K]
+    have hu : cornerOp R ⟨k, R.unit_mem⟩ = 1 := by
+      simp only [cornerOp, R.unit_matrix, map_one]
+    rw [hu]
+    exact hn v
   · intro a
-    rw [hc, inner_self_eq_norm_sq_to_K]
-    simp
+    rw [hc, hn]
   · intro a b
     let q : P → originalCorner i.toLinearMap JX k →ₗ[ℝ] ℝ := fun q =>
       (p q).comp (originalCorner i.toLinearMap JX k).subtype
@@ -253,7 +271,7 @@ private theorem corner_vector {P : Type*}
       {a | (a : E) ∈ C} q (fun a => hexact a)
       (fun q a b => hraw q a b) (cornerVectorRead R v) hp a b
     refine ⟨ht.1, ?_⟩
-    simpa only [hc, inner_self_eq_norm_sq_to_K, Complex.ofReal_re] using ht.2
+    simpa only [hc, hn] using ht.2
 
 /-- Whole original directed P2 for every cone-positive mathematical functional,
 with its determinant and the literal same-D finite matrix-corner vector readings. -/
@@ -268,7 +286,7 @@ theorem original_positive_readings {P : Type*}
       (i : E →ₗᵢ[ℝ] X) (JX : X →ₗ[ℝ] X →ₗ[ℝ] X) (k : E)
       (n : Type*) [Fintype n] [DecidableEq n]
       (R : ActualMatrixCorner J D C i JX k n) (v : EuclideanSpace ℂ n),
-      (∀ a, (a : E) ∈ C → 0 ≤ cornerVectorRead R v a) ∧
+      (∀ a : originalCorner i.toLinearMap JX k, (a : E) ∈ C → 0 ≤ cornerVectorRead R v a) ∧
       (∀ a, inner ℂ v (cornerOp R a v) = (cornerVectorRead R v a : ℂ)) ∧
       cornerVectorRead R v ⟨k, R.unit_mem⟩ = ‖v‖ ^ 2 ∧
       (∀ a, cornerVectorRead R v (cornerJordan R a a) = ‖cornerOp R a v‖ ^ 2) ∧
