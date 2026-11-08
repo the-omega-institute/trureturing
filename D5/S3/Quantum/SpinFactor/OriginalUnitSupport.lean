@@ -13,6 +13,7 @@ public import Mathlib.Algebra.QuadraticDiscriminant
 public import Mathlib.Analysis.Normed.Operator.Basic
 public import Mathlib.LinearAlgebra.BilinearMap
 public import Mathlib.Tactic
+public import D5.S3.Topology.OrderUnitNorm
 
 /-! A unit-row prerequisite on an arbitrary, possibly incomplete original carrier.
 The total relation has no linearity or output-closure assumption. The original
@@ -257,7 +258,7 @@ private theorem quadratic_read
   apply Complex.ext <;>
     simp [table, quadraticElement, dotProduct, Matrix.mulVec, Fin.sum_univ_two,
       hself, hsk a b, hc b a, map_add, map_smul, smul_eq_mul,
-      Complex.mul_re, Complex.mul_im, Complex.conj_re, Complex.conj_im] <;> ring
+      Complex.mul_re, Complex.mul_im, Complex.conj_re, Complex.conj_im, pow_two] <;> ring
 
 private theorem positive_p2
     (S : E →ₗ[ℝ] E →ₗ[ℝ] E) (D : E → E → E)
@@ -275,7 +276,7 @@ private theorem positive_p2
   apply Matrix.PosSemidef.of_dotProduct_mulVec_nonneg
   · ext i j
     fin_cases i <;> fin_cases j <;>
-      simp [table, Matrix.conjTranspose_apply, hself, hsk a b, hc b a]
+      simp [table, Matrix.conjTranspose_apply, hself, hsk a b, hc b a, sub_eq_add_neg]
   · intro z
     rw [quadratic_read S D hc hsk]
     have hw : quadraticElement S D a b z ∈ C := by
@@ -357,5 +358,32 @@ theorem positive_support_unit_boundary
     have hbs : β (S b b) ≤ 0 := by nlinarith only [hbnd]
     have hprod := mul_nonpos_of_nonneg_of_nonpos (sq_nonneg μ) hbs
     exact hZ (by nlinarith [sq_nonneg Z])
+
+/-- On the same arbitrary original carrier, every second label in a closed
+semidefinite norm ball has zero unit row. The support reading is constructed
+from the original order-unit cone, rather than supplied as an extra premise. -/
+theorem unit_row_closed_ball
+    (S : E →ₗ[ℝ] E →ₗ[ℝ] E) (D : E → E → E)
+    (P : Set (E →ₗ[ℝ] ℝ)) (hP : P2 S D P) (hPB : PB S D P)
+    (A : D5.S3.Topology.OrderUnitNorm.Data E)
+    (hc : ∀ x y, S x y = S y x) (hu : ∀ x, S A.unit x = x)
+    (hsq : ∀ x, ‖S x x‖ = ‖x‖ ^ 2)
+    (hsep : ∀ x, (∀ α ∈ P, α x = 0) → x = 0)
+    (hexact : ∀ x, x ∈ A.cone ↔ ∀ α ∈ P, 0 ≤ α x)
+    (horder : ∀ x, A.orderNorm x = ‖x‖)
+    (μ : ℝ) (b : E) (t : ℝ) (hball : ‖b - t • A.unit‖ ≤ |t|) :
+    D (μ • A.unit) b = 0 := by
+  by_contra hh
+  obtain ⟨β, hβ, hβu, hβnorm, hn⟩ := A.positive_norm_support (D (μ • A.unit) b) hh
+  rw [horder] at hn
+  have hZ : β (D (μ • A.unit) b) ≠ 0 := by
+    intro hz
+    rw [hz, abs_zero] at hn
+    exact hh (norm_eq_zero.mp hn.symm)
+  have hb := positive_support_unit_boundary S D P hP hPB hc A.unit hu hsq hsep
+    (A.cone : Set E) hexact μ b β hβ hβu
+    (fun x => by simpa only [horder] using hβnorm x)
+    (β (D (μ • A.unit) b)) hZ rfl hn
+  exact (not_lt_of_ge hball) (hb.2 t)
 
 end D5.S3.Quantum.SpinFactor.OriginalUnitSupport
