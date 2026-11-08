@@ -113,6 +113,9 @@ def prepare_mirror(options):
     from worktree_agent_state import record
     record(options.source, path, created=True, branch=reference)
     git(path, "reset", "--hard", "--no-recurse-submodules", "HEAD")
+    initial_head = value(path, "rev-parse", "--verify", "HEAD")
+    git(path, "hook", "run", "--ignore-missing", "post-checkout", "--",
+        "0" * len(initial_head), initial_head, "1")
     identity(options.source, path)
     landing = value(path, "rev-parse", "--verify", options.merge + "^{commit}")
     if value(path, "rev-parse", "HEAD") == value(options.source, "rev-parse", options.base):

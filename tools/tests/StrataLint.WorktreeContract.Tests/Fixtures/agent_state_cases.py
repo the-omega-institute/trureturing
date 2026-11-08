@@ -203,6 +203,15 @@ class AgentStateTests(unittest.TestCase):
             with self.assertRaisesRegex(protocol.GitFailure, "injected-pool-checkout"):
                 publication.prepare_mirror(options)
         self.assertEqual(self.saved(mirror)["creator"], "claude:mirror")
+        hook = self.main / ".git/hooks/post-checkout"
+        hook.write_text("#!/bin/sh\necho injected-mirror-hook >&2\nexit 43\n")
+        hook.chmod(0o755)
+        options.path, options.branch = self.root / "hook-mirror", "lane/governance/hook-mirror"
+        with agent("claude:hook"):
+            with self.assertRaisesRegex(protocol.GitFailure, "injected-mirror-hook"):
+                publication.prepare_mirror(options)
+        self.assertEqual(self.saved(options.path)["creator"], "claude:hook")
+        self.assertTrue((options.path / "lean-toolchain").is_file())
 
     def test_malformed_unwritable_and_native_read_failure_are_advisory(self):
         tree = self.root / "damaged"
