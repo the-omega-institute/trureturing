@@ -88,6 +88,31 @@ noncomputable def source_registration : Registration arena.{u}
     have hw := congrArg (fun p => p.2 (0 : ULift.{u} Unit)) h
     simpa [actual, realize] using hw
 
+noncomputable def registration :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@native_weighted_base_rank_saturation.{u}) (Realization signature.{u}) Unit Unit := {
+  unitName := `Reg.D5.S3.Combinatorics.Matroids.NativeWeightedBaseRankSaturation.unit
+  realizationName := `Reg.D5.S3.Combinatorics.Matroids.NativeWeightedBaseRankSaturation.source_registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena.{u}⟩
+  objectArena := .source ⟨arena.{u}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena.{u} ⟨source_registration.{u}⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some actual
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := none
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
 #print axioms source_registration
+#print axioms registration
 
 end Reg.D5.S3.Combinatorics.Matroids.NativeWeightedBaseRankSaturation
