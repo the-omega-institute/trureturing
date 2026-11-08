@@ -69,7 +69,7 @@ internal sealed class FrobeniusInnerActionObstructionDocument : IScribeDocumentD
             And(Eq(q, factor), App(F.Id("Nonempty"), equiv)));
         result = All("hu", All("n", n, Eq(App(q, App(basis, App(phi, x))),
             Mul(Mul(App(Q("Units", "val"), u), App(q, App(basis, x))),
-                App(Q("Units", "val"), App(F.Id("Inv.inv"), u))))), result);
+                App(Q("Units", "val"), App(Q("Inv", "inv"), u))))), result);
         result = All("u", App(F.Id("Units"), a), result);
         result = All("hphi", FixedFree(n, phi), result);
         result = All("phi", App(F.Id("MulAut"), n), result);
@@ -89,8 +89,13 @@ internal sealed class FrobeniusInnerActionObstructionDocument : IScribeDocumentD
         All("n", n, Imp(Eq(App(phi, F.Id("n")), F.Id("n")), Eq(F.Id("n"), D(1))));
     private static Formula TypeStar() => Seq(F.Id("Type"), Star);
     private static Formula GroupAlgebra(Formula k, Formula n) => App(F.Id("MonoidAlgebra"), k, n);
-    private static Formula Q(string owner, string name) =>
-        Seq(Operatorname, Grp(F.Id(owner)), Dot, Operatorname, Grp(F.Id(name)));
+    private static Formula Q(string owner, string name)
+    {
+        string[] parts = owner.Split('.');
+        Formula result = Seq(Operatorname, Grp(F.Id(parts[0])));
+        foreach (string part in parts.Skip(1)) result = Seq(result, Dot, Operatorname, Grp(F.Id(part)));
+        return Seq(result, Dot, Operatorname, Grp(F.Id(name)));
+    }
     private static Formula App(Formula function, params Formula[] args) => new Formula.Apply(function, [.. args]);
     private static Formula All(string name, Formula domain, Formula body) =>
         new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), domain, body);
