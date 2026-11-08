@@ -1,0 +1,15 @@
+fingerprints:
+  raw_sha256: sha256:5ce8253da2f5cea441a06bab8a9020cbac8ae8e647e960a7d2fe02b327271fcf
+  normalized_sha256: sha256:5ce8253da2f5cea441a06bab8a9020cbac8ae8e647e960a7d2fe02b327271fcf
+cas_ref: sha256:5ce8253da2f5cea441a06bab8a9020cbac8ae8e647e960a7d2fe02b327271fcf
+coverage_gids:
+  - gid: D5/S3/Quantum/Algebra/Knot/WeightedPathArtinRepresentation.representation
+    target_statement_id: sha256:0725a68e387862f623fe8330b4c287118088edb882873a1d8b63bcc3b6a48300
+  - gid: D5/S3/Quantum/Algebra/Knot/WeightedPathReverseTemperleyLieb.weighted_path_reverse_temperley_lieb
+    target_statement_id: sha256:550cd4c1d742a53a2a8375cb989c24fc34587eacd73b445bf11f4a8701082dc4
+  - gid: D5/S3/Quantum/Algebra/WeightedLegalPathTemperleyLieb.weighted_legal_path_temperley_lieb
+    target_statement_id: sha256:c5840426ee67329d7e147afd844cfbf9239b96250b6ae03493bdc022b484fdbd
+  - gid: D5/S3/Quantum/Dynamics/BarrigaTenModeFourierEdgeRefutation.expIdempotent
+    target_statement_id: sha256:81fe3b9092def1bb868df7758389b770189226362a6a10e64323424b330af2cb
+receipts:
+  unresolved_subitems: []

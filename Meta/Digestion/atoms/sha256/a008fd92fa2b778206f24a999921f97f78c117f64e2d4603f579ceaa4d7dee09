@@ -1,0 +1,4 @@
+**Theorem 14.2 (Small-total coincidence and vacuum).** For $k>0$ and $N\ge3$, the minimum and maximum of Theorem 14.1's scalar expression coincide if and only if $N=3$ or $N=4$. At these totals every positive integer triple is in the common extremal class. For $N\ge5$ the minimum is strictly below the maximum. At physical vacuum $a=1$ every positive integer triple, at every total, has value zero and is both a minimizer and a maximizer.
+
+**Proof.** The extreme representative is balanced exactly when $N-2\le2$, equivalently $N=3$ or $4$. Theorem 14.1's equality classification then gives the coincidence assertion and the strict separation otherwise. The vacuum assertion is Theorem 13.4, and has no nonvacuum strictness attached to it. ∎
+

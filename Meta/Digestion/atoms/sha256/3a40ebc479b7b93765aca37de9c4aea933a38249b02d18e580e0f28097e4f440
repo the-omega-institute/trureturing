@@ -1,0 +1,27 @@
+**定理 101.1（有限谱单位输出的反交换）。** 在一般原域，固定 $h=D(\mu u,b)$。若h在X中具有有限谱，则 $b\circ h=0$；b本身可有无限谱。
+
+证明。写 $h=\sum_{j=1}^m\rho_jp_j,\sum_jp_j=u$，其中谱值互异、投影两两正交。每个 $p_j$ 是h的有限实插值多项式，故属于原E。固定 $i\ne j$，置
+
+$$
+e=p_i+p_j,\qquad c=\frac\mu{1+\mu^2}\bigl(\rho_ip_i+\rho_j(u-p_i)\bigr).
+\tag{101.1}
+$$
+
+c至多二谱，100.1支付 $D(\mu u,c)=0$。PB取 $(\mu u,b,c)$，两外层为 $r_\pm=b\pm h\mp\mu c,s_\pm=c\pm\mu b$，且
+
+$$
+s_+-\mu r_+=s_-+\mu r_-=(1+\mu^2)c-\mu h=:z.
+\tag{101.2}
+$$
+
+z在整个e角上为零，且z是h的谱多项式，所以 $U_e(z^2)=0$。任意正β给正泛函 $\beta_e=\beta\circ U_e$；Jordan Cauchy–Schwarz使101.2两外层的实Gram行列式均为零。99.3使两外层D的 $\beta_e$ 值均为零。99.4右端准确为 $-2b\circ h$，所以
+
+$$
+U_{p_i+p_j}(b\circ h)=0.
+\tag{101.3}
+$$
+
+对单个 $p_i$ 改取标量 $c=\mu\rho_i u/(1+\mu^2)$，同理得 $U_{p_i}(b\circ h)=0$。有限正交幂等元的Peirce分解中，$U_{p_i}$ 读取对角分量，$U_{p_i+p_j}-U_{p_i}-U_{p_j}$ 读取整个 $(i,j)$ 交叉分量；全部这些分量直和为整个X。于是 $b\circ h=0$，也覆盖仅一个谱点的情况。∎
+
+本条对每个双角重新构造同一原域内的PB，使该整个双角中两外层都落到P2零面。它没有从两份本征向量读数极化出未曾取得的交叉项；94.3的 $b=\sigma_x,h=\sigma_z$ 仍说明反交换本身不能推出h为零。
+

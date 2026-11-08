@@ -11,6 +11,15 @@ internal sealed class MovingLengthCellsDocument : IScribeDocumentDefinition
         H("Equal-cell limits determine the moving-length constant"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("fixed-normalizer-ratio"),
+                DeclarationHandle.Create(Prefix + "fixed_normalizer_ratio"),
+                H("The fixed-length normalization ratio"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For c>0 and any real theta, the ratio of (X/(c*X^theta))*log(X/(c*X^theta)) to X^(1-theta)*log(X) tends to (1-theta)/c as X tends to infinity."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("cell-point-mem"),
                 DeclarationHandle.Create(Prefix + "cellPoint_mem"),
                 H("Cell endpoints lie in the dyadic interval"),

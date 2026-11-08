@@ -11,6 +11,15 @@ internal sealed class VarianceTransferDocument : IScribeDocumentDefinition
         H("Variance transfer"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("bounded-increment-comp"),
+                DeclarationHandle.Create(Prefix + "bounded_increment_comp"),
+                H("Compact bound for continuously parametrized increments"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "Let E be locally bounded and measurable, let K be compact, and let the step u and starting point x be continuous real functions on the parameter space. There is M>=0 such that abs(E(x(p)+u(p))-E(x(p)))<=M for every p in K."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("profile-average-eq-unit-integral"),
                 DeclarationHandle.Create(Prefix + "profileAverage_eq_unit_integral"),
                 H("The unit-interval formula"),
@@ -81,6 +90,15 @@ internal sealed class VarianceTransferDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "On a finite rectangle, the square of an increment is integrable with respect to the product of the two restricted Lebesgue measures when the starting point is the first coordinate and the step is any continuous function of both coordinates."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("lp-norm-two-eq-interval-l2"),
+                DeclarationHandle.Create(Prefix + "lpNorm_two_eq_intervalL2"),
+                H("Interval L2 and lpNorm conversion"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For an almost everywhere measurable real function on an ordered finite interval, its lpNorm at exponent two on the restricted interval measure equals the square-root interval L2 norm."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("interval-l2-reverse-triangle"),

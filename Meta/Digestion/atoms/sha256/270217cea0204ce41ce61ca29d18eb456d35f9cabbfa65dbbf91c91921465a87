@@ -1,0 +1,135 @@
+**定理 2.2（小窗口恢复准确原 $S$ 的单位）。** 定义 2.1 的任一入口均给同一个原乘法的
+
+$$
+\boxed{S(u,a)=S(a,u)=a\quad(a\in E).}
+\tag{2.2}
+$$
+
+总映射入口还自动取得同一个 $S$ 的对称实双线性。两种入口均有 $N(S(a,b))\le M_\theta N(a)N(b)$，其中 $M_\theta=2/\theta-1$。不要求有限维、原域完备、全效果收缩、Jordan 律、旧 $D$ 的正则性或实部换括号式。
+
+证明。$E=0$ 时平凡，以下设 $E\ne0$，故 $N(u)=1$。先明确总映射入口的对应。三标签卷定理 19.1 证明中从 Hermitian 二表到该卷式 (19.1) 的整个极化前段只用原评价分离、实相加三角和零平方，不用维数：它给 $S$ 对称、全部原平方正、$S(0,a)=0$，并由平行四边形及代数极化给同一 $S$ 的双可加和有理双线性。这里原锥由评价半空间定义而闭且 Archimedean，原序界给
+
+$$
+N(c)=\sup_{\alpha\in\mathcal P,\ m_\alpha>0}
+\frac{|\alpha(c)|}{m_\alpha};
+\tag{2.3}
+$$
+
+零质量评价在全部 $E$ 上恒零。因此三标签卷式 (19.2)–(19.3) 的窗口估计及有理逼近也原样适用，给 $N(S(a,b))\le M_\theta N(a)N(b)$；双可加性与此界再给实双线性。这里没有应用三标签卷定理 19.1 的有限维结论，也没有使用该卷式 (19.5) 的特征积分或 Hessian。以下给出同时适用于约化入口的窗口估计，以表明有界性不是额外公理。
+
+若 $N(x)\le1$，原 $e_\pm=\theta(u\pm x)/2$ 都在原窗口内。仅用有理双线性及 (2.1)，
+
+$$
+0\le x^2,\qquad
+\frac{\theta^2}{2}(u+x^2)=e_+^2+e_-^2\le\theta u,
+\qquad x^2\le M_\theta u.
+\tag{2.4}
+$$
+
+取有理 $r>N(a)$ 并令 $r\downarrow N(a)$，由锥闭性得 $a^2\le M_\theta N(a)^2u$。对任意数学态 $\varphi$，平方正性使 $\varphi(S(\cdot,\cdot))$ 满足 Cauchy–Schwarz；有理双线性阶段只需检验所有有理系数的二次式，稠密性同样给判别式界。全部数学态对序单位范数 norming，故
+
+$$
+|\varphi(S(a,b))|^2\le\varphi(a^2)\varphi(b^2)
+\le M_\theta^2N(a)^2N(b)^2,
+\qquad N(S(a,b))\le M_\theta N(a)N(b).
+\tag{2.5}
+$$
+
+在总映射入口，也可直接以原二表和 (2.3) 取得同一界，再作实数逼近；没有为使用实双线性而预先假定它。数学态仅作对偶工具，不加入原准备族。
+
+令 $X$ 为原 $N$ 的忠实完成，$C_X=\overline C^{\,X}$，仍以 $S$ 记同一乘法的唯一有界延拓。沿[正交迹续卷](AURIC_C128_ORTHOGONAL_TRACE_AND_CORNER_RELATIONS_CONTINUATION.md)定理 446.1 证明内的序单位完成论证，$u$ 仍为内部序单位，延拓范数仍为其序单位范数，且 $C_X\cap E=C$。具体地，原 norming 态连续延拓；若它们对 $x\in X$ 全非负，取 $N(a_n-x)\le\varepsilon_n\downarrow0$，则 $a_n+\varepsilon_nu\in C$，从而 $x\in C_X$。这也给锥的尖性和忠实限制。平方正性由连续性延拓；若 $0\le e\le\theta u$ 在 $X$ 内，同样的逼近给
+
+$$
+e_n=\frac{a_n+\varepsilon_nu}{1+2\varepsilon_n/\theta}
+\in[0,\theta u]\cap E,\qquad e_n\longrightarrow e.
+\tag{2.6}
+$$
+
+故同一小窗口收缩传到 $X$，正是正交迹续卷定理 454.1 证明内的小窗口完成步骤。对 $c\in C_X$ 取 $r>0$ 使 $c/r\le\theta u$，得 $0\le c^2\le rc$。任意连续正泛函 $\varphi$ 若 $\varphi(c)=0$，便有 $\varphi(c^2)=0$；再以全部 $(c+ta)^2$ 的正性得
+
+$$
+\varphi(S(a,c))=0
+\quad(c\in C_X,\ \varphi\ge0,\ \varphi(c)=0).
+\tag{2.7}
+$$
+
+只用实平方即可得到此零支撑面关系，不需要旧 $D$ 或复三表。成熟顺序导子判据取 Niestegge，[arXiv:1402.0158v2，§4 Lemma 3](https://arxiv.org/html/1402.0158v2#S4)：有界算子 $A$ 满足 (2.7) 的零面条件，当且仅当 $e^{tA}C_X=C_X$ 对所有实 $t$ 成立。这里用其序单位空间的算子判据，不借该文 §2(A) 已经假定的乘法单位。
+
+比较解还需同一判据的时间依赖形式。若 $A(t)$ 范数连续且逐时满足零面条件，解 $y'=A(t)y+\varepsilon u$，$y(0)=c+\varepsilon u$。有限首次触边时可取支撑态 $\varphi$，$\varphi(y)=0$，左导数非正，而方程使之等于 $\varepsilon>0$，矛盾。令 $\varepsilon\downarrow0$ 得正演化，反向时间同证其逆为正。此为正交迹续卷定理 446.1 的边界证明在连续系数下的直接应用。
+
+置 $L_ab=S(a,b)$、$T=L_u$、$K=T-I$、$U_t=e^{tK}$。(2.7) 使每个 $L_a$ 为顺序导子；这类算子由零面条件组成范数闭实线性空间，并由共轭后范数微分对交换子封闭。$I$ 也是顺序导子，故 $K$ 是顺序导子；$Tu=u$ 给 $Ku=0$。于是 $U_t$ 与 $U_{-t}$ 互为正逆且保 $u$，均为原序单位范数的等距算子。
+
+此时不能调用已使用单位律的正交迹续卷定理 448.1。仅对当前特定 $K=T-I$，定义
+
+$$
+B(a,b)=KS(a,b)-S(Ka,b)-S(a,Kb),\qquad
+B_a=[K,L_a]-L_{Ka},\qquad B_au=KTa-TKa=0.
+\tag{2.8}
+$$
+
+末式使用 $K$ 与 $T$ 通勤及 $Ku=0$，未使用 $T=I$。每个 $B_a$ 因而是零单位顺序导子，生成等距群。复用正交迹续卷定理 448.1 证明内的二次流刚性方法：对 $z'=A(t)z$，若每个 $e^{hA(t)}$ 等距，则 $z(t+h)=e^{hA(t)}z(t)+o(|h|)$ 使 $N(z(t))$ 导数为零，无须范数本身可微。用于 $x'=B(x,x)$ 得解范数恒定；有界双线性场在有界球上有统一 Lipschitz 界和有界性，故解在全部实时间存在。两解之差满足 $(x-y)'=B(x+y,x-y)$，距离也恒定。流 $\Phi_t$ 因而是保零的满射等距，逆为 $\Phi_{-t}$。成熟 Mazur–Ulam 定理（Nica，[arXiv:1306.2380v1](https://arxiv.org/html/1306.2380v1)，开篇定理）给实线性；对 $\Phi_t(2x)=2\Phi_t(x)$ 在零时微分得 $4B(x,x)=2B(x,x)$，极化得 $B=0$。因此这个尚待消去的 $K$ 已是同一 $S$ 的代数导子，且
+
+$$
+U_tS(a,b)=S(U_ta,U_tb).
+\tag{2.9}
+$$
+
+现在以同一平方构造锥镜面。令 $\Psi_t(x)$ 为 Banach 空间中 $x'=-x^2$ 的局部唯一流；有界双线性给局部存在唯一性。两解差满足
+
+$$
+w'=-L_{\Psi_t(x)+\Psi_t(y)}w.
+\tag{2.10}
+$$
+
+时间依赖的正演化使 $\Psi_t$ 在共同存在的正时间区间保序。标量解是 $\Psi_t(ru)=r(1+rt)^{-1}u$。对任意 $c\in\mathcal O:=\operatorname{int}C_X$，选 $0<\delta\le R$ 使 $\delta u\le c\le Ru$。比较给
+
+$$
+\frac{\delta-1}{1+(\delta-1)t}u
+\le\Psi_t(c-u)\le
+\frac{R-1}{1+(R-1)t}u\qquad(0\le t\le1).
+\tag{2.11}
+$$
+
+两端分母在此区间严格为正，故解有统一范数界。双线性场的局部延拓遂保证它存在到 $t=1$。于是对整个 $\mathcal O$ 定义
+
+$$
+J(c)=u-\Psi_1(c-u),\qquad
+R^{-1}u\le J(c)\le\delta^{-1}u.
+\tag{2.12}
+$$
+
+$J$ 取值仍在 $\mathcal O$ 且反序。令 $a=c-u$、$b=-\Psi_1(a)=J(c)-u$；路径 $-\Psi_{1-t}(a)$ 同样满足 $x'=-x^2$，从 $b$ 出发到 $-a$。唯一性给 $\Psi_1(b)=-a$，故 $J(J(c))=c$；特别是 $J$ 在整个内部满射。
+
+缩放必须保留单位缺陷。平方齐次性给 $\Psi_t(sa)=s\Psi_{st}(a)$。更一般地，若 $d=1+rt>0$，直接用 $S(u,z)=(I+K)z$ 及 (2.9) 得
+
+$$
+\Psi_t(ru+a)=\frac r d u+d^{-2}U_{-2\log d}\Psi_{t/d}(a).
+\tag{2.13}
+$$
+
+准确的导数核对是：令 $z=d^{-2}U_{-2\log d}\Psi_{t/d}(a)$，则 $z'=-2(r/d)(I+K)z-z^2$，而 $(r/d)'=-(r/d)^2$，所以右端解同一初值方程。恒等式在所示解存在的连通时间区间成立。用于 $ru+a=sc-u$，即 $r=s-1$、$a=s(c-u)$、$t=1$；内层对应时间 $st/(1+(s-1)t)$ 在 $[0,1]$，故 (2.11) 已保证所需存在性。得到全部 $s>0,c\in\mathcal O$ 的精确式
+
+$$
+\Psi_1(sc-u)=(1-s^{-1})u+s^{-1}U_{-2\log s}\Psi_1(c-u),
+\qquad J(sc)=s^{-1}U_{-2\log s}J(c).
+\tag{2.14}
+$$
+
+固定 $h>0$，由 $e^hc\ge c$、反序性及 (2.14)，得 $e^{-h}U_{-2h}J(c)\le J(c)$。$J$ 的满射性使它对每个内部元成立；对 $y\in C_X$ 以 $y+\varepsilon u$ 逼近，得到算子序中的
+
+$$
+A_h=e^{-h}U_{-2h},\qquad 0\le A_h\le I,\qquad A_hu=e^{-h}u.
+\tag{2.15}
+$$
+
+现在准确复用正交迹续卷定理 447.1 证明内（该卷式 (447.3)）的二项式正算子刚性，不复用其全效果窗口前件：若 $0\le A\le I$、$Au=\lambda u$，则正算子 $P_{n,k}=\binom nkA^k(I-A)^{n-k}$ 满足 $\sum P_{n,k}=I$、$\sum(k/n)P_{n,k}=A$，且 $\|P_{n,k}\|=\binom nk\lambda^k(1-\lambda)^{n-k}$。由二项式方差得
+
+$$
+\|A-\lambda I\|\le
+\sum_{k=0}^n|k/n-\lambda|\binom nk\lambda^k(1-\lambda)^{n-k}
+\le\sqrt{\lambda(1-\lambda)/n}\longrightarrow0.
+\tag{2.16}
+$$
+
+所以 $A=\lambda I$。用于 (2.15)，$U_{-2h}=I$ 对每个 $h>0$ 成立；在零处范数微分给 $K=0$，即延拓的同一 $L_u=I$。对每个原 $a\in E$，$S(u,a)$ 与 $a$ 都属于原 $E$，忠实嵌入的单射性给 (2.2)，对称性给另一槽。没有以完成替换原载体，也没有要求 $J$ 的值落回原 $E$。∎
+

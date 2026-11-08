@@ -1,0 +1,38 @@
+**定义 66.1（图表签名与规范翻面）。** 保持57.1的原 $E=\bigcup_nJ_n$、$J_n\cong H_{d_n}(\mathbb C)$、$d_n\ge3$ 且无界、忠实保单位实 Jordan 嵌入 $\theta_n$、准确原锥、单位、范数、正评价及全部来源合同。这里不先给未知 $D$。对每个已知 $\theta_n$ 作实到复的线性延拓，得到 $M_{d_n}\to M_{d_{n+1}}$ 的保伴随 Jordan 同态。只对这个已知同态使用 Hanche-Olsen–Størmer，[*Jordan operator algebras*](https://hanche.folk.ntnu.no/joa/joa-m.pdf)，§7.4.8的定义和Theorem7.4.14：源满矩阵代数没有一维表示，故通常及相反两部分为正交支撑上的星同态与星反同态。有限矩阵表示的矩阵单位将两部分分别识别为重数 $r_n,s_n\ge0$ 的放大。因此，在辅助酉坐标中，
+
+$$
+\theta_n(a)=U_n\operatorname{diag}(a\otimes I_{r_n},a^{\mathsf T}\otimes I_{s_n})U_n^\ast,
+\qquad d_{n+1}=(r_n+s_n)d_n,\qquad r_n+s_n\ge1.
+\tag{66.1}
+$$
+
+称 $r_ns_n>0$ 为真正混合；一项为零的边称纯边，包括重数一的同构。有限满矩阵 Jordan 自同构为通常或相反自同构，取7.4.11的有限维情形；故改变图表的辅助取向只会交换 $r_n,s_n$，不改变是否真正混合。复合签名为 $(r_2r_1+s_2s_1,r_2s_1+s_2r_1)$，由逐块代入得到；复合路径含一条真正混合边时两项均正。因此“只有有限多条真正混合边”也不因取共尾子链而改变。无限多条纯转置边只是在每层交换两份标签，不属于真正混合。
+
+Theorem7.1.8及Remark7.4.15给原 $J_n$ 的有限普遍包络。将第二份相反代数以转置识别为通常矩阵，取
+
+$$
+\begin{aligned}
+B_n&=M_{d_n}\oplus M_{d_n},&
+j_n(a)&=(a,a^{\mathsf T}),&
+\tau_n(x,y)&=(y^{\mathsf T},x^{\mathsf T}),\\
+\kappa_n(x,y)&=\bigl(
+U_n\operatorname{diag}(x\otimes I_{r_n},y\otimes I_{s_n})U_n^\ast,\,
+\overline U_n\operatorname{diag}(y\otimes I_{r_n},x\otimes I_{s_n})U_n^{\mathsf T}
+\bigr).
+\end{aligned}
+\tag{66.2}
+$$
+
+空重数块省去。$\kappa_n$ 为忠实保单位星同态，保持最大直和范数；直接代入给 $\kappa_nj_n=j_{n+1}\theta_n$、$\tau_{n+1}\kappa_n=\kappa_n\tau_n$。定义 $B_{\rm alg}=\varinjlim(B_n,\kappa_n)$、原包含 $\iota:E\to(B_{\rm alg})_{\rm sa}$ 及相容的复线性反自同构 $\tau$。这个包络只由原 Jordan 图表与嵌入生成；其乘法是辅助有限词的乘法，不是预置在原 $E+iE$ 上的量子乘法。每颗包络元来自某一有限 $B_n$，其由 $j_n(J_n)$ 生成的代数就是整个有限 $B_n$，无需完成取极限。
+
+在这个代数并内有准确的实、复固定点等式
+
+$$
+(B_{\rm alg}^{\tau})_{\rm sa}=\iota(E),
+\qquad
+V:=B_{\rm alg}^{\tau}=\iota(E)+i\iota(E).
+\tag{66.3}
+$$
+
+因为任一待检元和它的伴随、翻面都来自同一有限层；忠实性使极限中的相等就是该有限层中的相等。在 $B_n$ 中，翻面固定元准确为 $(x,x^{\mathsf T})$，再自伴就准确为 $j_n(J_n)$。$V$ 此时仅是复线性、伴随封闭的子空间，不据此宣称它对原包络乘法封闭。
+

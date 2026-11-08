@@ -4,7 +4,19 @@
 
 Freezing a variable length for bounded Lipschitz profiles has a quadratic error bound.
 
-**Theorem 1.1 (The square error from freezing a profile length).**
+**Theorem 1.1 (Square bound for a bounded factor).**
+
+Lean statement: `D5/S3/Arith/Robin/ForwardKernel/ProfileLengthComparison.bounded_factor_square_le`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ForwardKernel/ProfileLengthComparison.bounded_factor_square_le` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+If a measurable factor k is bounded in absolute value by C on an interval [a,b], then the square of the integral of k times f is at most C^2 times the interval length times the integral of f^2. The estimate uses the integral triangle inequality followed by Cauchy-Schwarz.
+
+**Theorem 1.2 (The square error from freezing a profile length).**
 
 Lean statement: `D5/S3/Arith/Robin/ForwardKernel/ProfileLengthComparison.variable_profile_square_error_le`
 
@@ -18,5 +30,6 @@ Let E be locally bounded and measurable, let g be an integrable Borel profile bo
 
 ## References
 
+- Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/ProfileLengthComparison.bounded_factor_square_le`
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/ProfileLengthComparison.variable_profile_square_error_le`
 - Dependency: [D5/S3/Arith/Robin/ForwardKernel/MovingLengthRegularity](MovingLengthRegularity.md)

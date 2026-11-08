@@ -1,0 +1,29 @@
+**引理 151.1（交换实虚两槽的更短桥梁）。** 在同一背景中，150.1 同时推出
+
+$$
+\mathfrak F(ZU)=\mathfrak F(Z)
+\tag{151.1}
+$$
+
+对全部上述有限支持酉成立，无需先证明每槽奇性。
+
+证明。定义已知实线性变换 $\mathcal J(Z)=iZ^*$。$Z=x+iy$ 时 $\mathcal J(Z)=y+ix$，而 $F$ 反对称，故
+
+$$
+\mathfrak F(\mathcal JZ)=-\mathfrak F(Z),\qquad
+\mathcal J(ZU)=U^*\mathcal J(Z).
+$$
+
+将 150.1 用于原有界元 $\mathcal J(Z)$ 及 $U^*$，准确得到
+
+$$
+\mathfrak F(ZU)
+=-\mathfrak F(\mathcal J(ZU))
+=-\mathfrak F(U^*\mathcal J(Z))
+=-\mathfrak F(\mathcal J(Z))
+=\mathfrak F(Z).
+\tag{151.2}
+$$
+
+这里只交换两槽，不调用尚未支付的 $D(x,-y)=-D(x,y)$、有限谱相加或无限单位行公式。∎
+

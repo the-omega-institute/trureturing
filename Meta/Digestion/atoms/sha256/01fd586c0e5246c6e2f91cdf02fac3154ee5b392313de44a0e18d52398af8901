@@ -1,0 +1,108 @@
+**定理 40.1（原局部范数与两个原追加门）。** 在定义 38.1、假设 38.2 下，令 $\rho=\zeta^2$。对全部正配方 $A,B$，恰有
+
+$$
+\boxed{c_*(A,B)=m_0\|V(A)-V(B)\|_L^2.}
+\tag{40.1}
+$$
+
+总比较空间恰为复二维 $L$ 的一个原单位等距副本；ready 端 $u$ 对应 $\rho I_L$，两个追加等距分别对应原 $K_4|_L,K_5|_L$。这个比较空间的识别不替换原整个十三维来源。
+
+证明。使用定理 39.3，记 $e=F([\epsilon])$、$b=F([5])$，两个诱导等距仍写作 $T_4,T_5$，诱导正交标记写作 $u$。三条 (38.7) 的总零向量分别给
+
+$$
+\begin{aligned}
+T_4e&=-u^3e,& T_4b&=ub-u^2e,\\
+T_5e&=b,& T_5b&=(u-u^3)b+u^4e.
+\end{aligned}
+\tag{40.2}
+$$
+
+这里 $F([4^6])=u^3e$，$F([4^4])=u^2e$，$F([445])=ub$，$F([4^6 5])=u^3b$，$F([4^8])=u^4e$。特别地 $54$ 的矩阵是 $K_4K_5$，$445$ 是 $K_5K_4^2$，并未倒置调用顺序。
+
+置 $W=\operatorname{span}_{\mathbb R}\{u^ke,u^kb:0\le k<5\}$。由 (40.2) 及交换性，$W$ 在两个 $T_j$ 下不变；它包含 $e$，逐字追加的归纳遂使每个 $F([a])$ 都在 $W$。反向其生成向量就是 $[4^{2k}]$ 和 $[4^{2k}5]$ 的像，故 $W$ 是整个生成比较空间。$\mathcal D=0$ 在两个轨道上各给一个关系，所以 $\dim_{\mathbb R}W\le8$。现在才由有限维性得两个等距 $T_j$ 满射。
+
+在 $W$ 上，$S=u+u^{-1}$ 自伴，且由 $I+u+\cdots+u^4=0$，
+
+$$
+S^2+S-I=0,\qquad s\in\{x,-1/x\}.
+\tag{40.3}
+$$
+
+因此 $W$ 正交分成这两个可能为空的实扇区。两个 $T_j$ 保持各扇区并为其等距。对任一扇区选择 $|\lambda|=1$、$\operatorname{Im}\lambda\ne0$、$\lambda+\lambda^{-1}=s$，以
+
+$$
+J_s=\frac{u-(s/2)I}{\operatorname{Im}\lambda}
+\tag{40.4}
+$$
+
+赋予它复结构，$J_s^2=-I$ 且 $J_s$ 正交，此时 $u$ 是复标量 $\lambda$。两个 $T_j$ 与此复结构交换并保持复内积。取复内积第一槽共轭线性，记扇区分量为 $e_s,b_s$。由 $T_5e_s=b_s$，有 $t=\|e_s\|^2=\|b_s\|^2$。再用 $T_4$ 对内积的保持和 (40.2)，置 $g=\langle e_s,b_s\rangle$，得到
+
+$$
+g=\langle-\lambda^3e_s,\lambda b_s-\lambda^2e_s\rangle
+=-\lambda^{-2}g+\lambda^{-1}t,
+\qquad sg=t.
+\tag{40.5}
+$$
+
+若 $s=x\in(0,1)$，则 $g=t/x$，而 Cauchy–Schwarz 给 $|g|\le t$，迫使 $t=0$。该扇区的两个生成元都为零，其全部 $u$ 轨道也为零，所以整个扇区为零。余下扇区取 $\lambda=\rho=e^{6\pi i/5}$，因为 $\rho+\rho^{-1}=-1/x$。$\|e\|^2=m_0$，故
+
+$$
+\operatorname{Gram}_{\mathbb C}(e,b)
+=m_0\begin{pmatrix}1&-x\\-x&1\end{pmatrix},\qquad
+\det\operatorname{Gram}=m_0^2(1-x^2)=m_0^2x>0.
+\tag{40.6}
+$$
+
+两个生成元复线性独立，且其 $u$ 轨道只作复标量乘法，所以 $\dim_{\mathbb C}W=2$。若不要求 $m_0>0$，同一推导允许 $e=b=0$、整个 $W=0$；这里没有在一般论证中排除零模型。
+
+现在核对原源。C117 (16.22) 在原基 $v,l_1=e_{00101}$ 上给 $K_4=\operatorname{diag}(\zeta,\rho)$，以及 $K_5=\zeta[I+(\zeta-1)Q]$。利用
+
+$$
+\rho^5=1,\quad 1+\rho+\cdots+\rho^4=0,\quad
+\zeta=-\rho^3,\quad x=\rho^2+\rho^3,\quad
+\zeta^2+x\zeta+1=0,
+\tag{40.7}
+$$
+
+置 $b_0=K_5v$，直接得到
+
+$$
+b_0=\zeta(x^2+x\zeta)v+\zeta(\zeta-1)x\sqrt x\,l_1
+=-xv+\beta l_1,\qquad \beta=\zeta(\zeta-1)x\sqrt x\ne0.
+\tag{40.8}
+$$
+
+原门酉性给 $\|v\|=\|b_0\|=1$，$\langle v,b_0\rangle=-x$，正好是 (40.6) 除去原单位因子后的 Gram。并且
+
+$$
+\begin{aligned}
+K_4v&=-\rho^3v,& K_4b_0&=\rho b_0-\rho^2v,\\
+K_5v&=b_0,& K_5b_0&=(\rho-\rho^3)b_0+\rho^4v.
+\end{aligned}
+\tag{40.9}
+$$
+
+第二式的 $v$ 系数来自 $x(\rho-\zeta)=x(\rho+\rho^3)=-\rho^2$；第四式来自 $K_5$ 的特征多项式 $(z-\zeta)(z-\rho)$。这只是原给定门的精确代数，不用未知 $P$ 的 Born 性。
+
+由 Gram 匹配，存在复酉 $R:W\to L$，满足 $Re=\sqrt{m_0}v$、$Rb=\sqrt{m_0}b_0$。比较 (40.2)、(40.9)，在基 $e,b$ 上即有 $RT_j=K_jR$、$Ru=\rho R$，遂在整个空间成立。对实际字长归纳，$RF([a])=\sqrt{m_0}K_av$；配方可加性给 (40.1)。原 ready 端的对应也逐字成立：
+
+$$
+V(U[a])=K_{44a}v=K_aK_4^2v=\rho K_av.
+\tag{40.10}
+$$
+
+这里用的是 $K_4^2v=\rho v$，不声称 $K_4^2$ 在任意输入或整个 $H$ 上等于 $\rho I$。三条振幅零式亦由 (40.9) 分别成为
+
+$$
+\begin{aligned}
+K_4v+K_4^6v&=(-\rho^3+\rho^3)v=0,\\
+K_4K_5v+K_4^4v-K_5K_4^2v
+&=(\rho b_0-\rho^2v)+\rho^2v-\rho b_0=0,\\
+K_5^2v+K_5K_4^6v-K_5K_4^2v-K_4^8v
+&=(\rho-\rho^3)b_0+\rho^4v+\rho^3b_0-\rho b_0-\rho^4v=0.
+\end{aligned}
+\tag{40.11}
+$$
+
+这核对了三个新增零比较所选择的原字对象；零读数本身仍由 (38.7) 承担。∎
+

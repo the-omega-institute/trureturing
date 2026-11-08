@@ -1,0 +1,11 @@
+**定义 10.1（局部正核工具的准确出处）。** [Buescu–Paixão–Oliveira，*Propagation of regularity and positive definiteness: a constructive approach*，arXiv:1802.07092v1](https://arxiv.org/html/1802.07092v1) 的 Definition 1.1 定义全部有限复二次型正性；P1–P3 给非负对角、Hermitian 性和二点 Cauchy–Schwarz。其 Lemma 2.2 的显示证明 (2.1)–(2.4) 用三个标签及系数 $(\eta,1,-1)$ 推出
+
+$$
+|k(x_1,x_2)-k(x_1,x_3)|^2
+\le k(x_1,x_1)\bigl[k(x_2,x_2)+k(x_3,x_3)
+                  -2\Re k(x_2,x_3)\bigr].
+\tag{10.1}
+$$
+
+该局部估计只用这三个标签：对正首对角可选相应 $\eta$ 消去平方，零对角则用二点 Cauchy–Schwarz。原论文的引理前件仍是完整正定核；这里仅说明其显示证明的局部用量，不能从这个前件循环借来待证的全部有限正性。其后拓扑连续性定理不承担本卷同一旧 $D$ 恢复或反例的推理。此处的原始文献归属限于这些条目，不声称通读其他正核专著或取得全球优先权。
+
