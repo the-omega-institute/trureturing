@@ -49,7 +49,8 @@ def family : Registration arena (type_of% @finish_fst) where
       (finish (false, false) (fun _ : Fin 1 => (1 : Fin 6))).1
     decide +kernel
 
-def audit : Contract.Registration (@finish_fst) (Realization signature) Type Unit where
+def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+    (@finish_fst) (Realization signature) Type Unit where
   unitName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStripReadouts.FinishFirst.auditUnit
   realizationName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStripReadouts.FinishFirst.family
   realizationSource := none
@@ -119,7 +120,8 @@ def family : Registration arena (type_of% @finish_snd) where
       (finish (false, false) (fun _ : Fin 1 => (2 : Fin 6))).2
     decide +kernel
 
-def audit : Contract.Registration (@finish_snd) (Realization signature) Type Unit where
+def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+    (@finish_snd) (Realization signature) Type Unit where
   unitName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStripReadouts.FinishSecond.auditUnit
   realizationName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStripReadouts.FinishSecond.family
   realizationSource := none
@@ -189,7 +191,8 @@ def family : Registration arena (type_of% @good_iff) where
     refine ⟨(1, (false, false)), (fun _ => 0), (fun _ => 2), ?_⟩
     simp [actual, realize, good, allowed]
 
-def audit : Contract.Registration (@good_iff) (Realization signature) Type Unit where
+def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+    (@good_iff) (Realization signature) Type Unit where
   unitName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStripReadouts.GoodCriterion.auditUnit
   realizationName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStripReadouts.GoodCriterion.family
   realizationSource := none
@@ -257,7 +260,8 @@ def family : Registration arena (type_of% @edge_iff) where
     refine ⟨(fun _ => 0), (fun _ => 0), (fun _ => 1), ?_⟩
     simp [actual, realize, beta]
 
-def audit : Contract.Registration (@edge_iff) (Realization signature) Type Unit where
+def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+    (@edge_iff) (Realization signature) Type Unit where
   unitName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStripReadouts.PairBonds.auditUnit
   realizationName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStripReadouts.PairBonds.family
   realizationSource := none
