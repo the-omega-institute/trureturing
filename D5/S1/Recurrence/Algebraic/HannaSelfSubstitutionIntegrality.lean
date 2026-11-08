@@ -8,62 +8,42 @@
 
 /-
 admission_basis: open-problem-resolution (#18709; Proved)
-escape_witness: none; admission uses the external settling result.
-logSum: proof_shape: definition; escape_witness: none; consumers: step_agree, input_coeff, logSum_zero, step_zero, logSum_subst_power, logSum_sub, input_pow_eq, geometric_input, logSum_agree, SolvesHanna, exp_logSum_integral_of_divisibility, logSum_constants, integral_input_ghost, solves_zero, claim_of_preservation, result, claim, step, preserve_integer_ghost; Direct frozen dependencies: none.
-SolvesHanna: proof_shape: definition; escape_witness: none; consumers: exists_unique_solves, solves_zero, claim_of_preservation, claim, D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegralityA157675.claim; Direct frozen dependencies: none.
-claim: proof_shape: definition; escape_witness: none; consumers: claim_of_preservation, result; Direct frozen dependencies: F17.
-logSum_zero: proof_shape: bind-only; escape_witness: none; consumers: step_agree, step_zero, input_pow_eq, exp_logSum_integral_of_divisibility; Direct frozen dependencies: none.
-step: proof_shape: definition; escape_witness: none; consumers: step_agree, step_zero, exists_unique_solves, claim_of_preservation, result; Direct frozen dependencies: none.
-step_zero: proof_shape: bind-only; escape_witness: none; consumers: exists_unique_solves, solves_zero; Direct frozen dependencies: F8.
-rescale_agree: proof_shape: bind-only; escape_witness: none; consumers: logSum_agree; Direct frozen dependencies: F23.
-logSum_agree: proof_shape: bind-only; escape_witness: none; consumers: step_agree; Direct frozen dependencies: F23, F24.
-step_agree: proof_shape: bind-only; escape_witness: none; consumers: exists_unique_solves, claim_of_preservation; Direct frozen dependencies: F23, F24, F25.
-solves_zero: proof_shape: bind-only; escape_witness: none; consumers: exists_unique_solves, claim_of_preservation; Direct frozen dependencies: F8.
-exists_unique_solves: proof_shape: bind-only; escape_witness: none; consumers: claim_of_preservation; Direct frozen dependencies: F8, F23, F24, F25, F21.
-integral_one: proof_shape: bind-only; escape_witness: none; consumers: claim_of_preservation; Direct frozen dependencies: F17.
-claim_of_preservation: proof_shape: content; escape_witness: none; consumers: result; Direct frozen dependencies: F17, F23, F24, F25, F8, F21.
-input_coeff: proof_shape: bind-only; escape_witness: none; consumers: input_pow_eq, logSum_constants; Direct frozen dependencies: none.
-integral_iff_map: proof_shape: bind-only; escape_witness: none; consumers: integral_inv, geometric_input, result; Direct frozen dependencies: F17.
-logSum_constants: proof_shape: bind-only; escape_witness: none; consumers: integral_input_ghost; Direct frozen dependencies: F40.
-power_lift: proof_shape: bind-only; escape_witness: none; consumers: preserve_integer_ghost; Direct frozen dependencies: none.
-rescale_frobenius: proof_shape: bind-only; escape_witness: none; consumers: preserve_integer_ghost; Direct frozen dependencies: F18, F27.
-logSum_sub: proof_shape: bind-only; escape_witness: none; consumers: exp_logSum_integral_of_divisibility; Direct frozen dependencies: none.
-logSum_subst_power: proof_shape: bind-only; escape_witness: none; consumers: exp_logSum_integral_of_divisibility; Direct frozen dependencies: none.
-exp_logSum_integral_of_divisibility: proof_shape: bind-only; escape_witness: none; consumers: preserve_integer_ghost; Direct frozen dependencies: F17, F16, F22, F27, F5, F3, F1, F15, F13.
-preserve_integer_ghost: proof_shape: bind-only; escape_witness: none; consumers: result; Direct frozen dependencies: F17, F18, F27, F16, F22, F5, F3, F1, F15, F13.
-integral_input_ghost: proof_shape: bind-only; escape_witness: none; consumers: result; Direct frozen dependencies: F17, F31, F40, F39, F30.
-result: proof_shape: content; escape_witness: none; consumers: D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegralityA157675.result; Direct frozen dependencies: F17, F18, F27, F16, F22, F5, F3, F1, F15, F13, F31, F40, F39, F30, F23, F24, F25, F8, F21.
-integral_inv: proof_shape: bind-only; escape_witness: none; consumers: geometric_input; Direct frozen dependencies: F17.
-input_pow_eq: proof_shape: bind-only; escape_witness: none; consumers: geometric_input; Direct frozen dependencies: F8, F28.
-geometric_input: proof_shape: bind-only; escape_witness: none; consumers: D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegralityA157675.result; Direct frozen dependencies: F17, F8, F28.
-Direct frozen dependencies:
-F1: D5/S1/Recurrence/Algebraic/DoldExponentialIntegrality.IsRIntegralPS; statement_id: sha256:ba8f837cf22cb5e9c10e6b49f31c6bc2b100067357955e0c6fe55384a0750ea9.
-F3: D5/S1/Recurrence/Algebraic/DoldExponentialIntegrality.IsRIntegralRat; statement_id: sha256:53246f9f06573c4281b2b5f6125688d166229f662aea17c390eb7f72caae7aa3.
-F5: D5/S1/Recurrence/Algebraic/DoldExponentialIntegrality.local_integral_sum; statement_id: sha256:67b906f1feddcd8598a952e1c78597056ae3ced10cae8193e56c1663b3bf7bbb.
-F8: D5/S1/Recurrence/Algebraic/DoldExponentialIntegrality.expSeries_constant; statement_id: sha256:3818db27ec0992d51a03df5086b6f167ef61cc182ed886b9fca617d13755f428.
-F13: D5/S1/Recurrence/Algebraic/DoldExponentialIntegrality.integral_of_local; statement_id: sha256:de14e85f34e107074880cc1c807c785cfb3232dbda7341ae542622678962c4e4.
-F15: D5/S1/Recurrence/Algebraic/DoldExponentialIntegrality.local_exp_of_log_difference; statement_id: sha256:457327474b89982dc4eaa0999fd690ca2e73f9fe6bccce56c22322e3521b9f70.
-F16: D5/S1/Recurrence/Algebraic/DoldExponentialIntegrality.local_int_div_nat; statement_id: sha256:e96240d98b9b17063b4d23bfa79fa67607f88687ff543bdfc489a8cd0b414af0.
-F17: D5/S1/Recurrence/Algebraic/HannaLogarithmicPowerClosure.IntegralSeries; statement_id: sha256:63e70f464749e368856bfaa91133b0adfeda478327572310319dbf6077b632cb.
-F18: D5/S1/Recurrence/Invariants/CubicFifteenSubstitutionParity.prime_power_subst; statement_id: sha256:4b665513911f58443c7679757dc619d66730344174351ea1f23cedc92766f795.
-F21: D5/S1/Recurrence/Invariants/PowerSeriesNormalizedContraction.exists_unique_fixed; statement_id: sha256:bd62df5aa141eaff1ceec9e8af00309b4a8e194b4354ad180a51862599cef981.
-F22: D5/S1/Recurrence/Invariants/PowerSeriesNormalizedContraction.map_subst_pow; statement_id: sha256:d19dcfba5fe44ddf479cc0294b8857874dc3c678681b9b22b3f1dfa5ddc1c7cd.
-F23: D5/S1/Recurrence/Invariants/UnitReversionSquareParity.Agree; statement_id: sha256:76d7ce5ef0f66968d4516f93f05e27e9125f8f29944ffacca0d95b580f786d34.
-F24: D5/S1/Recurrence/Invariants/UnitReversionSquareParity.agree_pow; statement_id: sha256:0c9456bb3300b1f38308df2b3a2abc2d51d68b3b05356990e7bc5cfc4bfb0dbb.
-F25: D5/S1/Recurrence/Invariants/UnitReversionSquareParity.subst_inner_agree; statement_id: sha256:70b2ee35c9f37a83ac3c7fafdd24ab8c9a71bd427dd766a52b2641e8e37ecfa5.
-F27: D5/S1/Recurrence/Residue/CompositionalSquareDyadicDenominators.C_dvd_iff_coeff; statement_id: sha256:8c1882146ae6e181a5d76db021c447d3d876e2310da5375697c52f0bb35ef4a1.
-F28: D5/S1/Recurrence/Residue/ParametricExponentialSquareCongruence.linear_ode_unique; statement_id: sha256:3ee42d0d09e04d4498194d296af5f0f5a145cdae9192b759e0c6e4174d652ebe.
-F30: D5/S1/Recurrence/Witt/HannaDiagonalGhostPowerIntegrality.divisorGhost; statement_id: sha256:27f83da21eae9f4f50072fef77b1af6f5c3425852cd01eaff663bcfa02d0dd04.
-F31: D5/S1/Recurrence/Witt/HannaDiagonalGhostPowerIntegrality.divisor_ghost_gauss; statement_id: sha256:ee871fe21a8444af72ab71b5e6400a07ffe1efea286c857e4a104a0db9045cae.
-F39: D5/S1/Recurrence/Witt/HannaDiagonalGhostPowerIntegrality.integral_input_ledger; statement_id: sha256:bf3d7b524710191f707c7b1a65af5a365e89f916b533f1f58d0ce2ddf9fc39e8.
-F40: D5/S1/Recurrence/Witt/HannaDiagonalGhostPowerIntegrality.logarithmicInput; statement_id: sha256:b5bd1729420ea137fa187a9a0e1d88b1b77aaf96af596fd62dcfe2f59419635b.
-The claim inlines the source exponential input; the proof uses the existing
-HannaDiagonalGhostPowerIntegrality.exponentialSum through logSum_constants.
+escape_witness: HannaSelfSubstitutionIntegrality.claim_of_preservation.
+logSum: proof_shape: definition; escape_witness: none; consumers: D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.SolvesHanna, D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.claim, D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.logSum_zero, D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.step, D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.step_zero, D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.logSum_agree, D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.step_agree, D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.solves_zero, D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.claim_of_preservation, D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.input_coeff, D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.logSum_constants, D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.logSum_sub, D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.logSum_subst_power, D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.exp_logSum_integral_of_divisibility, D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.preserve_integer_ghost, D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.integral_input_ghost, D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.result, D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.input_pow_eq, D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.geometric_input.
+SolvesHanna: proof_shape: definition; escape_witness: none; consumers: D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.claim, D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.solves_zero, D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.exists_unique_solves, D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.claim_of_preservation, D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegralityA157675.claim.
+claim: proof_shape: definition; escape_witness: none; consumers: D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.claim_of_preservation, D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.result.
+logSum_zero: proof_shape: bind-only; escape_witness: none; consumers: D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.step_zero, D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.step_agree, D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.exp_logSum_integral_of_divisibility, D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.input_pow_eq.
+step: proof_shape: definition; escape_witness: none; consumers: D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.step_zero, D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.step_agree, D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.exists_unique_solves, D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.claim_of_preservation, D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.result.
+step_zero: proof_shape: bind-only; escape_witness: none; consumers: D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.solves_zero, D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.exists_unique_solves.
+rescale_agree: proof_shape: bind-only; escape_witness: none; consumers: D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.logSum_agree.
+logSum_agree: proof_shape: bind-only; escape_witness: none; consumers: D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.step_agree.
+step_agree: proof_shape: bind-only; escape_witness: none; consumers: D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.exists_unique_solves, D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.claim_of_preservation.
+solves_zero: proof_shape: bind-only; escape_witness: none; consumers: D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.exists_unique_solves, D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.claim_of_preservation.
+exists_unique_solves: proof_shape: bind-only; escape_witness: none; consumers: D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.claim_of_preservation.
+integral_one: proof_shape: bind-only; escape_witness: none; consumers: D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.claim_of_preservation.
+claim_of_preservation: proof_shape: content; escape_witness: HannaSelfSubstitutionIntegrality.claim_of_preservation; consumers: D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.result.
+input_coeff: proof_shape: bind-only; escape_witness: none; consumers: D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.logSum_constants, D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.input_pow_eq.
+integral_iff_map: proof_shape: bind-only; escape_witness: none; consumers: D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.result, D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.integral_inv, D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.geometric_input.
+logSum_constants: proof_shape: bind-only; escape_witness: none; consumers: D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.integral_input_ghost.
+power_lift: proof_shape: bind-only; escape_witness: none; consumers: D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.preserve_integer_ghost.
+rescale_frobenius: proof_shape: bind-only; escape_witness: none; consumers: D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.preserve_integer_ghost.
+logSum_sub: proof_shape: bind-only; escape_witness: none; consumers: D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.exp_logSum_integral_of_divisibility.
+logSum_subst_power: proof_shape: bind-only; escape_witness: none; consumers: D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.exp_logSum_integral_of_divisibility.
+exp_logSum_integral_of_divisibility: proof_shape: bind-only; escape_witness: none; consumers: D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.preserve_integer_ghost.
+preserve_integer_ghost: proof_shape: bind-only; escape_witness: none; consumers: D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.result.
+integral_input_ghost: proof_shape: bind-only; escape_witness: none; consumers: D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.result.
+result: proof_shape: content; escape_witness: HannaSelfSubstitutionIntegrality.claim_of_preservation; consumers: D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegralityA157675.result.
+integral_inv: proof_shape: bind-only; escape_witness: none; consumers: D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.geometric_input.
+input_pow_eq: proof_shape: bind-only; escape_witness: none; consumers: D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.geometric_input.
+geometric_input: proof_shape: bind-only; escape_witness: none; consumers: D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegralityA157675.result.
+The claim inlines the source exponential input; the proof uses
+HannaDiagonalGhostPowerIntegrality.logarithmicInput through logSum_constants.
 The formal exponential is PowerSeries.subst, without a forwarding definition.
+The proof reuses the frozen private Dold suppliers through open private.
 claim_of_preservation carries the integral-iterate and coefficient-agreement induction.
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/24041.
 -/
-
+import Batteries.Tactic.OpenPrivate
 import D5.S1.Recurrence.Invariants.PowerSeriesNormalizedContraction
 import D5.S1.Recurrence.Invariants.UnitReversionSquareParity
 import D5.S1.Recurrence.Residue.CompositionalSquareDyadicDenominators
@@ -78,6 +58,9 @@ set_option autoImplicit false
 namespace D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality
 
 open PowerSeries
+open private integral_of_local expSeries_constant local_exp_of_log_difference
+  local_int_div_nat IsRIntegralRat.sum
+  from D5.S1.Recurrence.Algebraic.DoldExponentialIntegrality
 open D5.S1.Recurrence.Algebraic.HannaLogarithmicPowerClosure (IntegralSeries)
 open D5.S1.Recurrence.Invariants.UnitReversionSquareParity
 open D5.S1.Recurrence.Invariants.PowerSeriesNormalizedContraction
@@ -101,7 +84,7 @@ private noncomputable def step (L : ℕ → ℚ) (B : PowerSeries ℚ) : PowerSe
 
 private theorem step_zero (L : ℕ → ℚ) (B : PowerSeries ℚ) :
     constantCoeff (step L B) = 1 :=
-  D5.S1.Recurrence.Algebraic.DoldExponentialIntegrality.expSeries_constant (logSum_zero _)
+  expSeries_constant (logSum_zero _)
 
 private theorem rescale_agree {d : ℕ} {B C : PowerSeries ℚ}
     (h : Agree d B C) (a : ℚ) : Agree d (rescale a B) (rescale a C) := by
@@ -305,15 +288,15 @@ private theorem exp_logSum_integral_of_divisibility
       (p : PowerSeries ℤ) ^ padicValNat p n ∣
         f n - if p ∣ n then (f (n/p)).subst ((X : PowerSeries ℤ)^p) else 0) :
     IntegralSeries (((exp ℚ).subst) (logSum fun n => (f n).map (Int.castRingHom ℚ))) := by
-  apply D5.S1.Recurrence.Algebraic.DoldExponentialIntegrality.integral_of_local
+  apply integral_of_local
   intro p hp
-  apply D5.S1.Recurrence.Algebraic.DoldExponentialIntegrality.local_exp_of_log_difference p hp _ (logSum_zero _)
+  apply local_exp_of_log_difference p hp _ (logSum_zero _)
   have hpQ : (p : ℚ) ≠ 0 := by exact_mod_cast hp.ne_zero
   rw [logSum_subst_power p hp.ne_zero, ← mul_assoc, ← map_mul,
     inv_mul_cancel₀ hpQ, map_one, one_mul, ← logSum_sub]
   intro N
   simp only [logSum, coeff_mk]
-  apply D5.S1.Recurrence.Algebraic.DoldExponentialIntegrality.local_integral_sum
+  apply IsRIntegralRat.sum
   intro n hn
   have hn0 : n ≠ 0 := Nat.ne_of_gt (Finset.mem_Icc.mp hn).1
   let t : PowerSeries ℤ := f n - if p ∣ n then (f (n/p)).subst (X^p) else 0
@@ -331,7 +314,7 @@ private theorem exp_logSum_integral_of_divisibility
       exact (map_subst_pow (Int.castRingHom ℚ) (f (n/p)) p hp.ne_zero).symm
     · simp [hpn]
   rw [ht, coeff_map]
-  exact D5.S1.Recurrence.Algebraic.DoldExponentialIntegrality.local_int_div_nat p hp _ n hn0 hdiv
+  exact local_int_div_nat p hp _ n hn0 hdiv
 
 private theorem preserve_integer_ghost
     (L : ℕ → ℤ)
@@ -431,7 +414,7 @@ private theorem input_pow_eq (a : ℚ) :
       ring
   apply D5.S1.Recurrence.Residue.ParametricExponentialSquareCongruence.linear_ode_unique
     (((exp ℚ).subst (logSum fun n => C (a ^ n)))) g (C a * g)
-  · simp only [coeff_zero_eq_constantCoeff, D5.S1.Recurrence.Algebraic.DoldExponentialIntegrality.expSeries_constant (logSum_zero _), hg0]
+  · simp only [coeff_zero_eq_constantCoeff, expSeries_constant (logSum_zero _), hg0]
   · rw [derivative_subst (.of_constantCoeff_zero (logSum_zero _)),
       derivative_exp, hlog]
     ring
