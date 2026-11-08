@@ -116,7 +116,7 @@ configuration outside the half-open insertion interval. -/
 def writeWord {n : ℕ} (p : Fin n → A) (t : ℤ) (z : ℤ → A) : ℤ → A :=
   fun i => if hi : t ≤ i ∧ i < t + n then p ⟨(i - t).toNat, by omega⟩ else z i
 
-private theorem writeWord_at {n : ℕ} (p : Fin n → A) (t : ℤ) (z : ℤ → A)
+theorem writeWord_at {n : ℕ} (p : Fin n → A) (t : ℤ) (z : ℤ → A)
     (j : Fin n) : writeWord p t z (t + (j : ℕ)) = p j := by
   have hj := j.isLt
   simp only [writeWord]
