@@ -108,10 +108,16 @@ private def projectorVelocity (ψ v : E) : E →L[ℂ] E :=
 
 private theorem rank_one_bilinear : IsBoundedBilinearMap ℝ
     (fun p : E × E => InnerProductSpace.rankOne ℂ p.1 p.2) where
-  add_left x y z := by ext w; simp [InnerProductSpace.rankOne_apply, smul_add]
-  smul_left c x y := by ext w; simp [InnerProductSpace.rankOne_apply, smul_comm]
-  add_right x y z := by ext w; simp [InnerProductSpace.rankOne_apply, add_smul]
-  smul_right c x y := by ext w; simp [InnerProductSpace.rankOne_apply, smul_comm]
+  add_left x y z := by ext w; simp [InnerProductSpace.rankOne_apply]
+  smul_left c x y := by
+    ext w
+    change inner ℂ y w • (c • x) = c • (inner ℂ y w • x)
+    exact smul_comm _ _ _
+  add_right x y z := by ext w; simp [InnerProductSpace.rankOne_apply]
+  smul_right c x y := by
+    ext w
+    change inner ℂ (c • y) w • x = c • (inner ℂ y w • x)
+    rw [inner_smul_left_eq_smul, smul_assoc]
   bound := ⟨1, zero_lt_one, fun x y => by simp⟩
 
 private theorem projector_curve_hasDerivAt {f : ℝ → E} {ψ v : E}
@@ -138,11 +144,13 @@ private theorem trace_projector_velocity [FiniteDimensional ℂ E]
     (ψ v : E) (hψ : ‖ψ‖ = 1) (ht : (inner ℂ ψ v).re = 0) :
     LinearMap.trace ℂ E ((InnerProductSpace.rankOne ℂ ψ ψ).toLinearMap.comp
       ((projectorVelocity ψ v).toLinearMap.comp (projectorVelocity ψ v).toLinearMap)) =
-      (‖horizontal ψ v‖ ^ 2 : ℂ) := by
+      ((‖horizontal ψ v‖ ^ 2 : ℝ) : ℂ) := by
   let D := projectorVelocity ψ v
   have hconj : inner ℂ v ψ = -inner ℂ ψ v := by
-    rw [← inner_conj_symm ψ v]
-    apply Complex.ext <;> simp [ht]
+    rw [← inner_conj_symm v ψ]
+    apply Complex.ext
+    · simp only [Complex.conj_re, Complex.neg_re, ht, neg_zero]
+    · simp only [Complex.conj_im, Complex.neg_im]
   have ha : D ψ = horizontal ψ v := by
     simp [D, projectorVelocity, horizontal, InnerProductSpace.rankOne_apply,
       inner_self_eq_norm_sq_to_K, hψ, hconj, sub_eq_add_neg, add_comm]
@@ -173,7 +181,10 @@ theorem fs_angle_speed_projector [FiniteDimensional ℂ E] {f : ℝ → E} {ψ v
   dsimp only
   rw [(projector_curve_hasDerivAt h₀ hf).deriv,
     trace_projector_velocity ψ v hψ (unit_curve_tangent h₀ hf hunit)]
-  simpa [horizontal_norm_sq ψ v hψ] using fs_angle_speed hψ h₀ hf hunit
+  change Tendsto (fun t : ℝ => fsAngle ψ (f t) / |t|) (𝓝[≠] 0)
+    (𝓝 (Real.sqrt (‖horizontal ψ v‖ ^ 2)))
+  rw [horizontal_norm_sq ψ v hψ]
+  exact fs_angle_speed hψ h₀ hf hunit
 
 #print axioms fs_angle_speed
 #print axioms fs_angle_speed_projector
