@@ -2125,3 +2125,149 @@ $$
 完整候选仍是原背景加完整三标签及全部原评价、全部原三元组的 PB，没有加严或缩小原世界。由它恢复同一原乘法后，七项量子结构仍严格按 A25.1 的各自合同接回：复 Hilbert 表示、正质量 Born、native 与真实联合、CP 参考、完整仪器更新、所有历史未来与真实返回、物理动力尺度。质量不改值，原 $q$ 不改义，中心、经典不等维块与静默部分不删除。共同联合、整台参考、全部输出失败与细记录、真分组遗忘、所有仍合法未来、正常域、物理钟、能量及共同作用量仍由原来源供应；数学上的平方差、完成、商、唯一还原和表示都不会自动制造这些对象。本组完成的是有限诊断和一个准确的弱化障碍，完整量子起源及 PB 单独能否支付旧关系可加性仍留在原目标内。
 
 ## 追加锚 C128PBDEFECT32TO38（本行以下为增补区）
+
+## 39. 增补七·从全族二次支配消去 NN
+
+**本批导航。** 本批固定 §§27–31 的同一原对象、同一原评价族、同一原 $D$、同一稠密 JB 嵌入和同一自由标签量词，只删除定理 28.1 前件中的 NN，证明它由完整有限 Gram 正性与原评价族对每个原演员的统一二次支配推出。证明完成后才调用定理 28.1；不改判 §§32–38 的加性、PB、来源和反例边界。
+
+**定义 39.1（删去 NN 的准确保留类）。** 记 $\mathsf H_{\rm NN^-}$ 为定义 27.1 的全部资料与量词，唯一删去其中的式 (27.1)。因此仍固定原 $(E,C,u,N)$、全部原评价 $\mathcal P$ 及其原质量、同一忠实等距保单位稠密 Jordan 嵌入 $E\subset X$、同一原对称双线性 $S$ 和同一总映射 $D:E^2\to E$。保留
+
+$$
+ h_\alpha([a],[b])=\alpha(S(a,b))-\mathrm i\alpha(D(a,b)),\qquad
+ A_t[a]=[S(t,a)]-\mathrm i[D(t,a)],
+$$
+
+对全部原 $\alpha$、全部原标签和全部有限自由复向量的 Gram 正性，并保留
+
+$$
+ \forall t\in E\ \exists C_t<\infty\ \forall\alpha\in\mathcal P\ \forall f\in\mathcal F,\qquad
+ h_\alpha(A_tf,A_tf)\le C_t^2h_\alpha(f,f).
+ \tag{39.1}
+$$
+
+常数只属于该原 $t$，同时对所有原评价和所有自由有限 $f$ 有效；不把它赋给完成、双对偶或投影中的辅助演员。$\mathsf H_{\rm NN^-}$ 不输入 $R$、PB、PY、Jacobi、原投影封闭、纯准备或实际乘法表示。
+
+**引理 39.2（无 NN 的二次支配前端）。** 在 $\mathsf H_{\rm NN^-}$ 下，设 $M=X^{**}$ 为辅助 JBW 双对偶，$B=M\oplus\mathrm iM$。把 $D$ 按有界双线性延拓记为同一符号，把
+
+$$
+ x\star y=S(x,y)-\mathrm iD(x,y),\qquad q(z)=z^*\star z
+$$
+
+定义在 $B$ 上。则：
+
+1. $D$ 已是同一个原 $D$ 的实双线性反对称延拓，且 $N(D(a,b))\le N(a)N(b)$；对每个数学连续正泛函 $\varphi$，$H_\varphi(z,w)=\varphi_{\mathbb C}(z^*\star w)$ 是半正定型。
+2. 对每个原演员 $t\in E$，原常数 $C_t$ 延拓为
+
+   $$
+   0\le q(t\star\zeta)\le C_t^2q(\zeta)\qquad(\zeta\in B).
+   \tag{39.2}
+   $$
+
+3. $D(u,x)=D(x,u)=0$ 对所有 $x\in M$ 成立；因此每个 $\delta_a(x):=D(a,x)$（$a\in M$）是单位湮灭的 Jordan 导子。
+4. 对任意投影 $p\in M$、$e=u-p$ 和任意原 $t\in E$，令
+
+   $$
+   y=P_{1/2}(p)t,\qquad k=\delta_p(t)=\delta_p(y).
+   $$
+
+   则
+
+   $$
+   k^2=\frac14y^2.
+   \tag{39.3}
+   $$
+
+这里的 $p,e,M$ 只作辅助数学对象；式 (39.2) 的演员仍只有原 $t$。
+
+**证明。** 完整 Gram 正性和原词校准卷引理 400.1–400.2 先给同一个原 $D$ 的实双线性与反对称性。这一步不使用 NN。对每个正质量评价，二阶 Gram 的 Cauchy–Schwarz 给
+
+$$
+ |\alpha(D(a,b))|^2\le\alpha(a^2)\alpha(b^2)\le m_\alpha^2N(a)^2N(b)^2,
+$$
+
+再由原评价准确决定序单位范数，得到 $N(D(a,b))\le N(a)N(b)$；零质量评价恒为零。因而 $D$ 唯一连续延拓到 $X^2$。标量切片的分别弱星延拓把它继续延拓到 $M^2$；这里使用的是 Hanche-Olsen–Størmer 的 JBW 双对偶接口和 Peralta–Rodríguez Palacios 的有界标量双线性型延拓，不使用 NN。
+
+对 $a,b\in X$，原有限 Gram 正性给 $q(a+\mathrm ib)=a^2+b^2+2D(a,b)\in X_+$，连续性给 $q(B)\subset M_+$。于是 $H_\varphi$ 半正定。把 (39.1) 写成原域上的 $q(t\star z)\le C_t^2q(z)$，对每个 $\varphi\in X^*_+$ 将差型作 Hilbert 因子分解，再把因子作双对偶延拓，便得到 (39.2)。这一段正是定理 28.1 证明中式 (28.2)、(28.4)、(28.7)–(28.12) 的无 NN 前端：它没有使用单位行、交替性、Moufang 恒等式或任何已由 NN 得出的结论。
+
+下面支付单位行。由 $H_\varphi$ 的 Cauchy–Schwarz，若 $c\ge0$ 且 $\varphi(c)=0$，JB 函数演算给 $0\le c^2\le\lVert c\rVert c$，所以 $\varphi(c^2)=0$，并且 $\varphi(D(a,c))=0$。Niestegge §4 Lemma 3 的零面判据先在 $X$ 上说明每个有界 $\delta_a$ 是 order derivation。其规范弱星延拓在 $M$ 上仍是 order derivation 和 Jordan 导子；这是 JBW 双对偶中正群的弱星连续延拓。置 $T=\delta_u$；反对称性给 $T(u)=0$，故 $T$ 是 Jordan 导子。
+
+取任意 JBW 投影 $p$，置 $e=u-p$、$v=T(p)$。由 $T(p^2)=T(p)$，有 $p\circ v=v/2$，即 $v\in M_{1/2}(p)$。又 $\delta_p(u)=-v$。order derivation 的标准分解是
+
+$$
+ d:=\delta_p+L_v,\qquad d(u)=0,\qquad d\text{ 为 Jordan 导子},
+$$
+
+其中 $L_v(x)=v\circ x$。因 $d(p)=v/2$，把 $d(p\circ v)=d(v/2)$ 左右两边投到 $M_0(p)$，得 $U_e d(v)=U_e(v^2)$；代入 $d(v)=\delta_pv+v^2$，得到
+
+$$
+ U_e\delta_pv=0.
+ \tag{39.4}
+$$
+
+现在在 (39.2) 中取原演员 $t=u$、向量 $\zeta=p$。因 $u\star p=p-\mathrm i v$，Peirce 展开给
+
+$$
+ U_e q(u\star p)=U_e\bigl(p+v^2-2\delta_pv\bigr)=U_ev^2.
+$$
+
+而 $q(p)=p$、$U_ep=0$，故 (39.2) 和 (39.4) 给 $U_ev^2=0$。半空间 Peirce 恒等式对 $v\in M_{1/2}(p)$ 给出 $U_e(v^2)=0\Rightarrow v=0$。所以 $T$ 在每个投影上为零；JBW 谱逼近和 $T$ 的弱星连续性给 $T=0$ 在整个 $M$ 上成立。反对称性再给 $D(x,u)=0$。因此每个 $\delta_a$ 都是湮灭单位的 order derivation，也就是 Jordan 导子。
+
+最后证明 (39.3)。固定投影 $p$，写 $\delta=\delta_p$，并按 Peirce 分解写原 $t=x+y+z$，其中 $x\in M_1(p)$、$y\in M_{1/2}(p)$、$z\in M_0(p)$。因 $\delta(p)=0$，导子律保持三个 Peirce 空间；$\delta z=0$，而 $\delta x=-\delta_xp$ 同时属于 $M_1(p)$ 和 $M_{1/2}(p)$，故 $\delta x=0$。于是 $k=\delta y$。只用 JB Peirce 乘法表、$U_pU_e=0$ 和 $p\circ y=y/2$，直接展开同一个 $q$ 得
+
+$$
+\begin{aligned}
+ U_eq(t\star p)&=U_e\left(\frac14y^2-k^2\right),\\
+ U_pq(t\star e)&=U_p\left(\frac14y^2-k^2\right).
+\end{aligned}
+\tag{39.5}
+$$
+
+注意 (39.5) 中各交叉项由 $\delta$ 的 Jordan 导子律消去；没有使用 NN 或结合律。把 (39.2) 分别用于 $\zeta=p$ 和 $\zeta=e$，右端分别被 $U_e(C_t^2p)=0$、$U_p(C_t^2e)=0$ 控制，于是 (39.5) 的两项都为零。差 $\frac14y^2-k^2$ 属于 $M_1(p)\oplus M_0(p)$，两个二次表示在这两个角上分别是恒等，故差本身为零，得到 (39.3)。引理得证。∎
+
+**定理 39.3（同一原 $D$ 的 NN 消除定理）。** 在 $\mathsf H_{\rm NN^-}$ 下，同一个原 $D$ 满足
+
+$$
+D(a,D(a,b))=(L_a^2-L_{a^2})b\qquad(a,b\in E).
+\tag{39.6}
+$$
+
+**证明。** 继续引理的记号。对固定投影 $p$，把 (39.3) 对两个原输入极化，并用 $\delta$ 与 $P_{1/2}(p)$ 的分别弱星连续延拓。对任意 $y\in M_{1/2}(p)$，得到
+
+$$
+(\delta y)^2=\frac14y^2,\qquad
+(\delta^2y)^2=\frac1{16}y^2.
+\tag{39.7}
+$$
+
+把导子律应用于 $p\circ y=y/2$、$p\circ\delta y=\delta y/2$ 以及 (39.7) 的极化式，并按 Peirce 乘法表收集 $M_{1/2}(p)$ 分量，得到
+
+$$
+\left(\delta^2y+\frac14y\right)^2=0.
+\tag{39.8}
+$$
+
+JB 代数平方的形式实性使 (39.8) 的括号为零，即 $\delta^2y=-y/4$。$\delta$ 在 $M_1(p)$、$M_0(p)$ 上为零，而 $L_p^2-L_p$ 在三个 Peirce 空间上的特征值分别为 $0,-1/4,0$；所以对每个原 $t$ 有
+
+$$
+\delta_p^2t=(L_p^2-L_p)t,\qquad
+F(p)t=0,\quad F(a):=\delta_a^2-L_a^2+L_{a^2}.
+\tag{39.9}
+$$
+
+这一步的支配常数始终是原演员 $t$ 的 $C_t$；没有把 $p$ 当作需要满足 (39.1) 的原演员。
+
+若 $p,q$ 是正交投影，则 $p+q$ 仍是投影，(39.9) 对 $p,q,p+q$ 相减后给出 $F$ 在正交投影之间的交叉极化项为零。对有限实谱和 $\sum_j\lambda_jp_j$，二次性遂给 $F(\sum_j\lambda_jp_j)t=0$。JBW 谱定理把任意 $a\in M$ 范数逼近为这样的有限谱和；$D,S$ 的有界双线性使 $F(a)t$ 连续，故 $F(a)t=0$ 对全部 $a\in M$、原 $t\in E$ 成立。限制 $a,b\in E$ 即得 (39.6)。全程只用辅助双对偶的投影和谱逼近，没有把投影、纯态或指数当作原准备或原操作。∎
+
+**推论 39.4（定理 28.1 的合法消费）。** 定理 39.3 建立 NN 后，定义 27.1 的其余前件、全部有限原 Gram 正性和 (27.3) 原样保留，故可在此处而非此前调用定理 28.1。所得是同一原 $D$ 的原结合关系 (28.1)，以及定理 28.1 已列出的相容复乘法和后端结论。新的推论没有更换 $D$、没有增加完成演员的界、没有把任何完成对象变成原操作，也没有减少原 $\Omega$、原准备、native/全词 $K/J$、父位置、ready 类型、记录、参考、时钟、相关联合、失败/拒绝/停止/销毁分支、任意合法历史和未来、零/不等/未归一质量、无限 CountRead、正常性或物理时间/能量/作用量的来源义务。
+
+## 40. 本批的来源、几何与边界
+
+**文献表态。** 原词校准卷 400.1–400.2 和本卷 §§27–31 是仓内既有前件与后端。Hanche-Olsen–Størmer，*Jordan Operator Algebras*，Theorem 4.4.3、Proposition 4.2.3 与 §2.6 的 JBW 双对偶、投影 Peirce 规则和有限谱逼近是成熟辅助工具；Niestegge，[arXiv:1402.0158v2](https://arxiv.org/html/1402.0158v2)，§4 Lemma 3 及其 order-derivation 分解给零面判据和单位分解。Peralta–Rodríguez Palacios 的实 JB*-三元组双对偶标量型延拓用于 (39.2) 的分别弱星步骤，来源为 [作者版本 PDF](https://www.ugr.es/~aperalta/oldweb/documentos/papers/bigGrothendieckIneq.pdf)。Baez，[arXiv:2006.14741v5 §4](https://arxiv.org/html/2006.14741v5#S4)，Theorem 12 明确把单位湮灭的 skew order derivation 与动力对应及其曲率条件区分开；它支持本批“先得到导子，后由 (39.6) 接回后端”的边界。Schupp–Szabo，[arXiv:2311.03647v3 §§2–3](https://arxiv.org/html/2311.03647v3)，只说明关联包络和 GNS 不能代替原非结合乘法的曲率识别。
+
+本批的 repo-derived 增量是：在不把 NN 放入输入的准确 $\mathsf H_{\rm NN^-}$ 上，将全原评价、全自由有限 Gram 正性和每个原演员的统一二次支配先变成同一辅助 JBW 双对偶上的序支配；零面判据先给 order derivation，单位演员的互补 Peirce 零面再给单位行，原演员对任意辅助投影的两侧支配给半空间平方恒等式，最后由投影极化和谱逼近给 (39.6)。这不是把一般动力对应定理改写成新结论，也不是复述 §§32–38 的 PB 或有限缺陷。
+
+**几何说明。** 对一个辅助投影 $p$，二次支配同时看 $t\star p$ 与 $t\star(u-p)$。若左作用把某个右支撑角的零质量漏到互补角，正映射 $U_{u-p}$ 或 $U_p$ 会把非零平方留在右端为零的角中，因而违反全自由向量支配；这正是单个评价或逐评价常数看不见的核。单位行先由同样的互补角测试得到，随后半 Peirce 方向的响应只能以四分之一平方旋转，谱分解把这一局部关系接成全域 NN。§§35–36 的 $D_\kappa$ 族说明点态或单评价控制不能替代这里的共同常数和全部自由向量量词。
+
+**本批不主张的。** 这是条件静态定理：它没有从原 $\Omega$ 实际供应 JB 嵌入、全部有限 Gram、(39.1) 或完整原评价族；没有构造原准备、效果、设备、返回箭头、共同参考、CP、完整仪器、接受叶活动输出与第一消费者、读后 ready、全输出/全未来返回、无限记录正常性或物理时钟。它没有证明最小公理集、较低经验成本、取向选择、物理信息守恒或完整量子起源目标，也没有 Lean、kernel、全库构建或全目标成功结论。文献检索限于上述仓内来源和公开主来源，未作穷尽新颖性断言；本批保留对立取向和所有原来源义务。
+
+## 追加锚（本行以下为增补区）
