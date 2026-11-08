@@ -3300,21 +3300,41 @@ $$
 
 这保留严格左端、包含右端、任意空剩余类块及真实的 floor 长度。
 
-以下只使用 Dick–Pillichshammer，*Digital Nets and Sequences: Discrepancy Theory and Quasi-Monte Carlo Integration*，定义 3.13（印刷页 72）和定理 3.26（印刷页 84）的二维 Erdős–Turán–Koksma 截断。其频率权重仍是
+Dick–Pillichshammer，*Digital Nets and Sequences: Discrepancy Theory and Quasi-Monte Carlo Integration*，定义 3.13（印刷页 72）和定理 3.26（印刷页 84）仍提供 (12.11) 的二维 Erdős–Turán–Koksma 频率权重接口：
 
 $$
 r(m)=\max(1,|m_1|)\max(1,|m_2|),
 \tag{18.7}
 $$
 
-正是 (12.11) 的接口；本段把该经典截断在一个小矩形上的系数保留下来，不把它另立为一般定理。对 $0<r\le1/4$ 和 $J\ge2$，取标准的一维区间上、下三角多项式 $p_{j,r,z_j}^{-},p_{j,r,z_j}^{+}$。它们的次数不超过 $J$，满足 $p^- \le\mathbf 1_I\le p^+$ 且 $p^+\ge0$；用它们的乘积和一次 inclusion–exclusion 组合
+小盒的局部零频误差另由 Faifman–Rudnick，*Statistics of the zeros of zeta functions in families of hyperelliptic curves over a finite field*，Compositio Mathematica **146** (2010)，81–101，[作者公开原文](https://www.math.tau.ac.il/~rudnick/papers/compositio%20offprint.pdf)，[DOI 10.1112/S0010437X09004308](https://doi.org/10.1112/S0010437X09004308)，§4 印刷页 90 的 (4.1)–(4.4) 提供。该处对任意长度 $0<|I|<1$ 及整数 $J\ge1$ 给出实三角多项式的逐点夹逼、准确均值及 Fourier 系数误差；这里不使用随后要求 $J|I|>1$ 的 Proposition 4.1。
+
+对 $0<r\le1/4$ 和整数 $J\ge2$，记 $I_j=\{x\in\mathbb T:\|x-z_j\|_{\mathbb T}<r\}$、$\delta_J=(J+1)^{-1}$、$e(t)=\exp(2\pi it)$，并以 $\widehat f(m)=\int_{\mathbb T}f(x)e(-mx)\,dx$ 归一化 Fourier 系数。将上述长度 $2r$、中心为 $0$ 的多项式平移到 $z_j$，记为 $p_j^\pm=p_{j,r,z_j}^\pm$；平移不改变均值及系数模。它们的次数不超过 $J$，且
+
+$$
+\widehat p_j^\pm(0)=2r\pm\delta_J,\qquad
+\left|\widehat p_j^\pm(m)-\widehat{\mathbf 1_{I_j}}(m)\right|\le\delta_J
+\quad(0<|m|\le J).
+$$
+
+原文的闭区间外 $p_j^-\le0$，区间内 $p_j^+\ge1$；连续性使边界也分别满足 $p_j^-\le0$、$p_j^+\ge1$，故同一对多项式对严格开区间仍有 $p_j^-\le\mathbf 1_{I_j}\le p_j^+$ 且 $p_j^+\ge0$。开、闭端点不影响积分；对 $m\ne0$，
+
+$$
+\widehat{\mathbf 1_{I_j}}(m)
+=e(-mz_j)\frac{\sin(2\pi mr)}{\pi m},\qquad
+|\widehat p_j^\pm(m)|
+\le\min\left(2r,\frac1{\pi|m|}\right)+\delta_J
+\quad(0<|m|\le J).
+$$
+
+用它们的乘积和一次 inclusion–exclusion 组合
 
 $$
 P_{r,z}^{+}=p_{1}^{+}p_{2}^{+},\qquad
 P_{r,z}^{-}=p_{1}^{-}p_{2}^{+}+p_{1}^{+}p_{2}^{-}-p_{1}^{+}p_{2}^{+}
 $$
 
-得到次数不超过 $J$ 的二维上下式。四种点是否属于两个区间的逐项检查给出 $P_{r,z}^{-}\le\mathbf 1_{I_1\times I_2}\le P_{r,z}^{+}$；其端点按开区间的一侧极限取，使得
+得到每坐标次数不超过 $J$ 的二维上下式，即 Fourier 支撑满足 $\|m\|_\infty\le J$，不要求总次数不超过 $J$。四种点是否属于两个区间的逐项检查给出
 
 $$
 P_{r,z}^{-}(x)\le
@@ -3323,7 +3343,14 @@ P_{r,z}^{-}(x)\le
 \tag{18.8}
 $$
 
-存在绝对常数 $C_0$，对两种符号同时有
+两坐标的积分相乘，给出准确零频
+
+$$
+\widehat P_{r,z}^+(0)=4r^2+4r\delta_J+\delta_J^2,\qquad
+\widehat P_{r,z}^-(0)=4r^2-4r\delta_J-3\delta_J^2.
+$$
+
+由 $\delta_J\le J^{-1}$ 即得下式第一界。存在绝对常数 $C_0$，对两种符号同时有
 
 $$
 \left|\widehat P_{r,z}^{\pm}(0)-4r^2\right|
@@ -3335,7 +3362,7 @@ $$
 \tag{18.9}
 $$
 
-确切地说，一维系数由 $\min(r,|m|^{-1})+J^{-1}$ 控制；对 $m_1,m_2$ 取乘积后，(18.9) 的和由
+对第二界，一维零频的绝对值不超过 $2r+\delta_J$，非零系数由上述 $\min(2r,(\pi|m|)^{-1})+\delta_J$ 控制。对 $m_1,m_2$ 取乘积，且 $P_{r,z}^-$ 只有三个乘积项，故 (18.9) 的和由
 
 $$
 \left(\,r+\sum_{j=1}^{J}\frac1j+\frac{J}{J}\right)^2
@@ -3343,7 +3370,7 @@ $$
 \tag{18.10}
 $$
 
-得到。因而这里保留的是 ETK 的实际调和频率权重，而不是把频率数目 $O(J^2)$ 当作系数和。开、闭端点的差别由一侧极限处理，所以 (18.8) 对严格圆距离条件也成立。
+得到。这里的实际系数界保留 (18.7) 的调和频率权重，而不是把频率数目 $O(J^2)$ 当作系数和。
 
 固定 $H,r$，把区间内的 $N=N_H(A_0,B_0)$ 个允许项写成 $n_k=b_H+q_H(k_0+k)$。对每个非零 $m$，几何和及定理 17.2 的 (17.5) 给出
 
@@ -3368,24 +3395,41 @@ N\left(\frac rJ+\frac1{J^2}\right)
 \tag{18.12}
 $$
 
-其中 $\mathcal B(z,r)$ 是两个圆距离都小于 $r$ 的开盒。式 (18.12) 是本节唯一使用的局部 ETK 估计；它来自 (18.7) 的固定权重、(17.5) 的实际频率分离和几何和，不使用相邻 $q_H$ 的比值。
+其中 $\mathcal B(z,r)$ 是两个圆距离都小于 $r$ 的开盒。式 (18.12) 是本节唯一使用的局部估计；它来自上述区间多项式的 (18.8)–(18.10)、(17.5) 的实际频率分离和几何和，不使用相邻 $q_H$ 的比值。
 
-**证明（阶段跳点、变半径和所有短块）。** 令 $K=\lceil\log X\rceil$，把 $(X,2X]$ 按实端点
+**证明（阶段跳点、变半径和所有短块）。** 取 $X$ 足够大，令 $K=\lceil\log X\rceil\le X$，按整数切点定义
 
 $$
-I_k=\left(X+\frac{kX}{K},\,X+\frac{(k+1)X}{K}\right]
-\quad(0\le k<K)
+\begin{aligned}
+t_k&=\left\lfloor X+\frac{kX}{K}\right\rfloor
+\quad(0\le k\le K),\\
+I_k&=(t_k,t_{k+1}]\cap\mathbb Z
+\quad(0\le k<K).
+\end{aligned}
 \tag{18.13}
 $$
 
-切成整数区间，再与各个非空的阶段集合 $\{n:h(n)=H\}$ 相交。由于
+这里 $t_0=X$、$t_K=2X$，各 $I_k$ 不交且并集为 $(X,2X]\cap\mathbb Z$。将每个 $I_k$ 与阶段集合 $\{n\in\mathbb Z:h(n)=H\}$ 相交，丢弃空的整数交集，把所有非空交集编号为 $I_\nu$。由 $h$ 的单调性，每个 $I_\nu$ 仍为连续整数块；明确定义
+
+$$
+A_\nu=\min I_\nu-1,\qquad B_\nu=\max I_\nu.
+$$
+
+于是 $A_\nu,B_\nu\in\mathbb Z$，$I_\nu=(A_\nu,B_\nu]\cap\mathbb Z$，且对包含该块的 $I_k$ 有
+
+$$
+\#I_\nu=B_\nu-A_\nu
+\le t_{k+1}-t_k\le\frac XK+1.
+$$
+
+由于
 
 $$
 \sqrt{\log(2X+2)}-\sqrt{\log(X+2)}\longrightarrow0,
 \tag{18.14}
 $$
 
-足够大时 $(X,2X]$ 至多遇到一个 $h$ 的跳点，所以所得非空整数区间 $I_\nu=(A_\nu,B_\nu]\cap\mathbb Z$ 的数目 $m_X$ 满足 $m_X\le2K+2$。这个结论只用阶段函数的定义；跳点可以落在任意一个小区间内，任何由此产生的短块或空块都保留在下面的求和中。
+足够大时 $(X,2X]$ 至多遇到一个 $h$ 的跳点，所以所得非空整数块的数目 $m_X$ 满足 $m_X\le2K+2$。跳点可以落在任意一个小区间内；所有非空整数块，包括短阶段块及其中允许剩余类计数 $N_\nu=0$ 的块，都保留在下面的求和中。
 
 在 $(X,2X]$ 上，$\rho$ 的对数导数满足
 
@@ -3395,14 +3439,14 @@ $$
 \tag{18.15}
 $$
 
-故同一 $I_\nu$ 内的最大、最小半径
+每个 $n\in I_\nu$ 满足 $A_\nu+1\le n\le B_\nu$，而 $\rho$ 单调递减，故同一 $I_\nu$ 内的最大、最小半径准确地是
 
 $$
 r_\nu^+=\rho(A_\nu+1),\qquad r_\nu^-=\rho(B_\nu)
 \tag{18.16}
 $$
 
-满足 $r_\nu^+/r_\nu^-=1+O(K^{-1})$，常数只依赖 $\beta,\gamma$。取 $X$ 足够大使 $r_\nu^+\le1/4$。嵌套性给出
+由 (18.15) 和 $B_\nu-A_\nu\le X/K+1$，它们满足 $r_\nu^+/r_\nu^-=1+O(K^{-1}+X^{-1})=1+O(K^{-1})$，常数只依赖 $\beta,\gamma$。取 $X$ 足够大使 $r_\nu^+\le1/4$。嵌套性给出
 
 $$
 \mathcal B(z,r_\nu^-)
@@ -3419,7 +3463,7 @@ L_\nu=4\sum_{n\in I_\nu}\frac{\rho(n)^2}{q_\nu}.
 \tag{18.18}
 $$
 
-将 (18.12) 对 $r_\nu^-$ 和 $r_\nu^+$ 各用一次，再用 (18.17) 夹住真实的变半径命中数。结合 (18.6) 及 (18.16)，得到
+将 (18.12) 对 $r_\nu^-$ 和 $r_\nu^+$ 各用一次，再用 (18.17) 夹住真实的变半径命中数。结合 $\#I_\nu=B_\nu-A_\nu$、(18.6) 及 (18.16)，得到
 
 $$
 \begin{aligned}
@@ -3430,7 +3474,7 @@ $$
 \tag{18.19}
 $$
 
-其中 $q_+=q(h(2X),h(2X);M)$。第一项支付同一小区间内的真实半径变化；第二项正是 (18.6) 的真实 floor 余项；最后一项对短块也成立，因为 (18.11) 使用的是 $\min(N,\cdots)$，没有把长块的相对差异度假定为短块的相对估计。若 $N_\nu=0$，(18.19) 仍是有效的空块不等式。
+其中 $q_+=q(h(2X),h(2X);M)$。第一项支付同一小区间内的真实半径变化；第二项来自 (18.6) 的 $|N_\nu-(B_\nu-A_\nu)/q_\nu|<1$，乘以任一端点面积后不超过 $4(r_\nu^+)^2$；最后一项对短块也成立，因为 (18.11) 使用的是 $\min(N,\cdots)$，没有把长块的相对差异度假定为短块的相对估计。若 $N_\nu=0$，则 $S_\nu=0$ 且 $(B_\nu-A_\nu)/q_\nu<1$，从而 $L_\nu\le4(r_\nu^+)^2$，仍由同一 floor 余项控制。
 
 记 $\underline r=\rho(2X)$、$\overline r=\rho(X+1)$，并取
 
@@ -3439,7 +3483,7 @@ J=\left\lceil\underline r^{-2}\right\rceil.
 \tag{18.20}
 $$
 
-这些端点半径之比由 (18.15) 有界。又 $q_\nu\mid q_+$，所以
+这些端点半径之比由 (18.15) 有界。所有 $I_\nu$ 构成 $(X,2X]\cap\mathbb Z$ 的不交分割，故 $\sum_\nu(B_\nu-A_\nu)=X$。又 $q_\nu\mid q_+$，所以
 
 $$
 L_X=\sum_\nu L_\nu
