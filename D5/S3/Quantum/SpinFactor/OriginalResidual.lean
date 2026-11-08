@@ -37,9 +37,6 @@ private def rotationLinear (R : TwoAxisFiniteRotation.Orthogonal) : Vec →ₗ[�
   (WithLp.linearEquiv 2 ℝ Vec).toLinearMap ∘ₗ R.toLinearMap ∘ₗ
     (WithLp.linearEquiv 2 ℝ Vec).symm.toLinearMap
 
-private theorem rotationLinear_apply (R : TwoAxisFiniteRotation.Orthogonal) (x : Vec) :
-    rotationLinear R x = rotate R x := rfl
-
 private theorem rotation_dot (R : TwoAxisFiniteRotation.Orthogonal) (x y : Vec) :
     dot (rotate R x) (rotate R y) = dot x y := by
   have h := R.inner_map_map (WithLp.toLp 2 x) (WithLp.toLp 2 y)
@@ -437,7 +434,9 @@ theorem local_full_circle (D : E → E → E) (hP : P2 D) (hPB : PB D)
     rw [rotation_cross R hR.1]
     have h : rotationLinear R (s • x + t • y + e • cross x y) =
         s • x + t • y + e • cross x y := congrArg WithLp.ofLp hR.2
-    simpa only [map_add, map_smul, rotationLinear_apply] using h
+    have hrotate (v : Vec) : rotationLinear R v = rotate R v := rfl
+    simp only [map_add, map_smul] at h
+    simpa only [hrotate] using h
   obtain hfix | ⟨q, hqx, hqy, hix, hiy⟩ := axis_cayley_reconstruction e he s t x y
     (rotate R x) (rotate R y) hw (rotation_dot R x x)
     (rotation_dot R x y) hk
