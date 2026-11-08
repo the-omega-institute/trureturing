@@ -1,0 +1,9 @@
+**Corollary 204.4 (the remaining ruling search is an envelope problem).** After the quotient identity is fixed, the fixed-column branch requires only the intersection of the two-dimensional plane $\{h_z:z\in\mathbb R^2\}$ with the pointwise strip
+
+$$
+L_c\le h\le U_c,
+\tag{204.8}
+$$
+
+along with the zero-profile conditions. The fixed-row branch requires only an interval-box intersection with $\mathsf H$. Every point found by either test yields a legal full-zero family by Proposition 203.2, while failure of the corresponding envelope intersection rules out that entire ruling factor. These are characterizations of fixed coefficient rulings; the label-span rank of their families is determined by Proposition 205.2. Neither characterization supplies an original full-zero seed in a prescribed rank branch.
+

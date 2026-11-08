@@ -1,0 +1,19 @@
+**引理 129.1（数学读取的准确预算）。** 在定义 128.1 下，任何数学正实线性泛函 $\phi:E\to\mathbb R$ 都能读取同一个 P2。特别地，在实际复矩阵角中，取内积 $\langle x,y\rangle=x^*y$ 和 $\phi_\xi(t)=\xi^*t\xi$，有
+
+$$
+|\phi_\xi(D(x,y))|^2\le\Delta_\xi(x,y)
+:=\|x\xi\|^2\|y\xi\|^2-
+\bigl(\operatorname{Re}\langle x\xi,y\xi\rangle\bigr)^2.
+\tag{129.1}
+$$
+
+证明。P2 的 Hermitian 性和分离性先给 $D(y,x)=-D(x,y)$。对任意 $z_1,z_2\in\mathbb C$，同一 P2 使元素
+
+$$
+|z_1|^2x^2+|z_2|^2y^2
++2\operatorname{Re}(\overline{z_1}z_2)x\circ y
++2\operatorname{Im}(\overline{z_1}z_2)D(x,y)
+$$
+
+被全部原评价读为非负。准确锥 (128.1) 使它属于 $C$，故任何数学正泛函也读为非负，正是同一二表的正性。矩阵向量读取的对角值是 $\|x\xi\|^2,\|y\xi\|^2$，实非对角值是 $\operatorname{Re}\langle x\xi,y\xi\rangle$，取行列式即得 (129.1)。角内正泛函作用于角内这个正元素即可，不要求先将它延到环境。这里使用准确锥的数学对偶，不新增实际准备，不供应三表或全有限 Gram 正性。∎
+
