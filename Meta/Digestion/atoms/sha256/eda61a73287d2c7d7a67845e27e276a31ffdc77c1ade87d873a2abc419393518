@@ -1,0 +1,23 @@
+**引理 92.3（P2的饱和支持面消去全部残差）。** 对全部原a,b，有 $F(a,b)=0$。
+
+证明。向量部共线时由89.3；两标量均零时由91.1。其余情形写固定残差 $F(a,b)=(\delta,z)$，并记 $p=sy-tx,W=|w|>0,P=|p|$。92.4使旋转输入的旧输出为 $(\delta,\varepsilon Ow+z)$。取该输入在评价方向On下的88.3，再让O遍历SO(3)，得到
+
+$$
+|\delta+\varepsilon n\cdot w|+|z|\le|w+n\times p|\qquad(|n|=1).
+\tag{92.5}
+$$
+
+若 $P\ge W$，取
+
+$$
+n=\frac{w\times p}{P^2}+\sqrt{1-W^2/P^2}\,\frac pP.
+$$
+
+其长度为一，$n\times p=-w,n\cdot w=0$，92.5立即给 $|\delta|+|z|=0$。若 $P<W$，置 $J=\sqrt{W^2-P^2}>0$，取
+
+$$
+n_\pm=\frac{w\times p}{W^2}\pm\sqrt{1-P^2/W^2}\,\frac wW.
+$$
+
+则 $|n_\pm|=1,n_\pm\cdot w=\pm J,|w+n_\pm\times p|=J$。92.5给 $|\delta+\varepsilon J|+|z|\le J$ 和 $|\delta-\varepsilon J|+|z|\le J$。由 $\max\{|\delta+J|,|\delta-J|\}=J+|\delta|$ 再得残差零。∎
+

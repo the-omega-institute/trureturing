@@ -1,0 +1,33 @@
+#### 引理 3.4：保持相似倍率的复化
+
+对实 Banach 空间 $B$，在 $B_{\mathbb C}:=B\oplus iB$ 上定义
+
+$$
+\|u+iv\|_{\mathbb C}
+:=\sup_{\theta\in[0,2\pi]}
+\|u\cos\theta-v\sin\theta\|.
+$$
+
+这给出复 Banach 空间范数。 若 $R:B\to B$ 为满射实线性相似，倍率为 $r>0$，则其复化 $R_{\mathbb C}(u+iv):=Ru+iRv$ 仍为满射相似，倍率同为 $r$。
+
+**证明。**
+
+正定性和三角不等式逐点成立。 乘以 $e^{i\phi}$ 仅把上式中的角度 $\theta$ 平移为 $\theta+\phi$， 故范数具有复绝对齐次性。并且
+
+$$
+\max\{\|u\|,\|v\|\}\le\|u+iv\|_{\mathbb C}
+\le\|u\|+\|v\|,
+$$
+
+所以该范数完备。 相似律直接给
+
+$$
+\|Ru+iRv\|_{\mathbb C}
+=\sup_\theta r\|u\cos\theta-v\sin\theta\|
+=r\|u+iv\|_{\mathbb C}.
+$$
+
+实逆算子的复化是复逆，因此满射性也保持。
+
+$\square$
+

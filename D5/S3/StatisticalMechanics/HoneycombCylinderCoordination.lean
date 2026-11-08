@@ -73,6 +73,7 @@ Reg below denotes Reg.D5.S3.StatisticalMechanics.HoneycombCylinderCoordination.
 result: proof_shape=content; consumers=Reg.initial_values, Reg.family
 -/
 
+import D5.S3.Combinatorics.PositionSets.VertexPositionRatioRefutation
 import D5.S3.StatisticalMechanics.TeaCoordinationSequence
 
 /-! Literal honeycomb graph distances and diagonal translation quotients. -/
@@ -96,7 +97,7 @@ def honeycombGraph : SimpleGraph Vertex where
   symm := ⟨fun _ _ h => h.symm⟩
   loopless := ⟨by rintro ⟨b, i, j⟩ h; cases b <;> simp_all⟩
 
-private def potential (v : Vertex) : ℕ :=
+def potential (v : Vertex) : ℕ :=
   if v.1 then 2 * (TeaCoordinationSequence.residual v.2.1 v.2.2 0 1).toNat + 1
   else 2 * (TeaCoordinationSequence.residual v.2.1 v.2.2 0 0).toNat
 
@@ -158,7 +159,7 @@ private lemma potential_descent (v : Vertex) (h : 0 < potential v) :
         Or.inl ⟨rfl, rfl, Or.inr (Or.inl ⟨rfl, rfl⟩)⟩, ?_⟩
       dsimp [potential, TeaCoordinationSequence.residual]; omega
 
-private lemma geodesic (v : Vertex) :
+lemma geodesic (v : Vertex) :
     ∃ p : honeycombGraph.Walk (false, 0, 0) v, p.length = potential v := by
   generalize ht : potential v = t
   induction t using Nat.strong_induction_on generalizing v with
@@ -172,7 +173,7 @@ private lemma geodesic (v : Vertex) :
       exact ⟨p.append hw.toWalk, by
         rw [SimpleGraph.Walk.length_append, SimpleGraph.Adj.length_toWalk, hp]; omega⟩
 
-private lemma plane_distance (v : Vertex) :
+lemma plane_distance (v : Vertex) :
     honeycombGraph.dist (false, 0, 0) v = potential v := by
   obtain ⟨p, hp⟩ := geodesic v
   apply le_antisymm
@@ -368,18 +369,18 @@ private def shellEquiv {n : ℕ} (hn : 0 < n) (m : ℕ) :
     change potential v.1 = m ↔ (cylinderGraph n).dist (origin n) (Quotient.mk _ v.1) = m
     rw [rep_distance hn])).symm
 
-private abbrev AFiber (s : ℤ) (k : ℕ) :=
+abbrev AFiber (s : ℤ) (k : ℕ) :=
   {i : ℤ // (TeaCoordinationSequence.residual i (s-i) 0 0) = k}
-private abbrev BFiber (s : ℤ) (k : ℕ) :=
+abbrev BFiber (s : ℤ) (k : ℕ) :=
   {i : ℤ // (TeaCoordinationSequence.residual i (s-i) 0 1) = k}
 
-private instance finiteAFiber (s : ℤ) (k : ℕ) : Finite (AFiber s k) := by
+instance finiteAFiber (s : ℤ) (k : ℕ) : Finite (AFiber s k) := by
   let f (i : AFiber s k) : Set.Icc (-(k : ℤ)) k :=
     ⟨i.1, by have h := i.2; dsimp [TeaCoordinationSequence.residual] at h; constructor <;> omega⟩
   exact Finite.of_injective f (fun i j h => Subtype.ext
     (congrArg (fun z : Set.Icc (-(k : ℤ)) k => z.1) h))
 
-private instance finiteBFiber (s : ℤ) (k : ℕ) : Finite (BFiber s k) := by
+instance finiteBFiber (s : ℤ) (k : ℕ) : Finite (BFiber s k) := by
   let f (i : BFiber s k) : Set.Icc (-(k : ℤ)-1) k :=
     ⟨i.1, by have h := i.2; dsimp [TeaCoordinationSequence.residual] at h; constructor <;> omega⟩
   exact Finite.of_injective f (fun i j h => Subtype.ext
@@ -483,7 +484,7 @@ private lemma finite_shell {n : ℕ} (hn : 0 < n) (m : ℕ) :
     rw [he]
     exact Finite.of_equiv _ ((shellEquiv hn _).trans (oddShellEquiv n _)).symm
 
-private lemma a_fiber_card (s : ℤ) (k : ℕ) (hk : 0 < k) :
+lemma a_fiber_card (s : ℤ) (k : ℕ) (hk : 0 < k) :
     Nat.card (AFiber s k) =
       (if -(k : ℤ) < s ∧ s < k then 2 else 0) +
       (if s = k then k+1 else 0) + (if s = -(k : ℤ) then k+1 else 0) := by
@@ -527,7 +528,7 @@ private lemma a_fiber_card (s : ℤ) (k : ℕ) (hk : 0 < k) :
           rintro ⟨i, hi⟩; dsimp [TeaCoordinationSequence.residual] at hi; omega⟩
         simp [hs, hp, hm]
 
-private lemma b_fiber_card (s : ℤ) (k : ℕ) :
+lemma b_fiber_card (s : ℤ) (k : ℕ) :
     Nat.card (BFiber s k) =
       (if -(k : ℤ) ≤ s ∧ s < k then 2 else 0) +
       (if s = k then k+1 else 0) + (if s = -(k : ℤ)-1 then k+2 else 0) := by
@@ -572,7 +573,7 @@ private lemma b_fiber_card (s : ℤ) (k : ℕ) :
           rintro ⟨i, hi⟩; dsimp [TeaCoordinationSequence.residual] at hi; omega⟩
         simp [hs, hp, hm]
 
-private lemma interval_sum (L U a b : ℤ) :
+lemma interval_sum (L U a b : ℤ) :
     (∑ s ∈ Finset.Icc L U, if a ≤ s ∧ s ≤ b then (2 : ℕ) else 0) =
       2 * (min U b + 1 - max L a).toNat := by
   classical

@@ -1,0 +1,14 @@
+**定义 8.1（同一静态输入的表示）。** 对 $A$ 取忠实含单位 GNS 直和表示 $\Pi:A\to B(H)$。每个正质量原评价 $\alpha/m_\alpha$ 的 GNS 分量给原读数向量 $\xi_\alpha$，令其范数为 $\sqrt{m_\alpha}$；零质量取零向量。因此
+
+$$
+\begin{aligned}
+\Pi(S(a,b))&=\tfrac12\bigl(\Pi(a)\Pi(b)+\Pi(b)\Pi(a)\bigr),\\
+\Pi(D(a,b))&=\tfrac{\mathrm i}{2}[\Pi(a),\Pi(b)],\\
+\alpha(a)&=\langle\xi_\alpha,\Pi(a)\xi_\alpha\rangle,
+\qquad \|\xi_\alpha\|^2=m_\alpha.
+\end{aligned}
+\tag{8.1}
+$$
+
+这是标准 C*-表示后果：取全部数学态的 GNS 直和可得忠实性与等距性，并可另加原态分量。它不声称 $\Pi(E)$ 满射到全部自伴算子，也不指定原 native。原二表是同一 $\Pi(a)\xi_\alpha$ 的 Gram 表，但把该存在式表示认作具名原程序，仍须原对应合同。
+

@@ -1,0 +1,75 @@
+#### 定理 11.1：混态序列统一界的充要性
+
+在上述固定 $\mathsf B$、M和G下，UB与同一个原 $D$ 的完整R等价。 成立时 $D$ 自动有界实双线性，且 $\dim H\in\{1,3\}$、$E=\mathbb Ru\oplus H$； 一轴支为 $\mathbb C\oplus\mathbb C$，三轴支为 $M_2(\mathbb C)$。 若原 $V$ 至少含两个独立方向，就只留下三轴支。 标量支 $V=0$ 另外直接给 $D=0$、代数 $\mathbb C$，不需要M。 完整R成立后可取 $C_t=N(t)$。
+
+**证明。**
+
+先仅固定任意一个 $j_0$。PSD型的Cauchy–Schwarz使 $\mathcal N_{j_0}=\{f:h_{j_0}(f,f)=0\}$为复线性子空间。 若实系数关系 $r=\sum_k c_k[a_k]$ 满足 $\sum_k c_ka_k=0$， 则S双线性及D反对称使虚部成对抵消，给
+
+$$
+h_{j_0}(r,r)
+=\alpha_{j_0}\!\left(S\!\left(\sum_kc_ka_k,\sum_kc_ka_k\right)\right)=0.
+$$
+
+故 $\eta:E\to\mathcal F/\mathcal N_{j_0}$、$a\mapsto[a]+\mathcal N_{j_0}$ 为实线性映射，并且由(B)
+
+$$
+\|\eta(v)\|^2=m_{j_0}\|v\|^2\qquad(v\in V).
+\tag{1}
+$$
+
+UB给 $\mathscr A_t\mathcal N_{j_0}\subseteq\mathcal N_{j_0}$。 将其用于 $[a+b]-[a]-[b]$ 与 $[\lambda a]-\lambda[a]$， S项由已知双线性消去，于是相应D线性缺陷的$\eta$像为零。 这些缺陷在V中，(1)使它们真正为零。 反对称性给另一槽线性。因此同一个旧D双线性； 由(B)也有 $N(D(a,b))\le N(a)N(b)$。 这一步只使用一个混态读出的正性与每个作用的有限界，不使用纯性。
+
+若V没有与n独立的方向，则 $V=\mathbb Rn$，(B)使D为零，得到一轴支。 否则在原V中取单位 $x\perp n$，令
+
+$$
+y=\kappa(n,x),\quad W=\operatorname{span}\{n,x,y\},\quad z=x-iy.
+$$
+
+由(B)，三轴正交单位；在现在已经合法的复双线性乘法 $a\star b=S(a,b)-iD(a,b)$中有
+
+$$
+z^*\star z=2(u-n).
+\tag{2}
+$$
+
+假设有原单位 $w\perp W$。记 $p=\kappa(w,x)$、$q=\kappa(w,y)$。 双线性及(B)经极化给交替三形式$\langle\kappa(a,b),c\rangle$和
+
+$$
+\kappa(a,\kappa(b,c))+\kappa(b,\kappa(a,c))
+=\langle a,c\rangle b+\langle b,c\rangle a-2\langle a,b\rangle c.
+$$
+
+从而 $\|p\|=\|q\|=1$、$\kappa(n,q)=p$， $\langle n,\kappa(q,p)\rangle=1$，且 $w\star z=-q-ip$。 因此
+
+$$
+h_j(z,z)=2m_j(1-r_j),\qquad
+h_j(w\star z,w\star z)=2m_j(1+r_j).
+\tag{3}
+$$
+
+这里把自由表达式$[x]-i[y]$送入UB即可； D双线性已使自由型因子化至$E+iE$，原$\mathscr A_w$准确下降为$w\star$。 UB及(3)要求
+
+$$
+C_w^2\ge\frac{1+r_j}{1-r_j}\longrightarrow\infty,
+$$
+
+矛盾。若原V中有任意$v\notin W$，则$w=(v-P_Wv)/\|v-P_Wv\|$仍属原V， 正是所排除的单位向量。故V=W。 有限维V闭且在H中稠密，故V=H。 交替三形式在三维中只有一个系数，面积式使该系数为$\pm1$； 同一原$\kappa$于是为固定取向的$\pm$叉积。 既有显式Pauli同构给同一$S-iD$的$M_2(\mathbb C)$乘法，因而完整R成立。
+
+反向，$\mathsf B$加完整R的既有恢复给同一兼容C\*结构。 对每个正评价$\alpha_j$和$t\in E$，
+
+$$
+\alpha_j((t\star a)^*\star(t\star a))
+\le N(t)^2\alpha_j(a^*\star a).
+$$
+
+由自由标签求和映射拉回即给全部j、f的UB，取$C_t=N(t)$。
+
+$\square$
+
+**条件审计.**
+
+本推论另付的是M、G、UB，依赖既有B/PY/NN，未从主候选免费导出。 M所含原方向、实际评价供应、全量程$r_j\to1$均要列账。 G不是只检查二阶或三阶Gram；UB不是逐态各自有界。 无需可实施纯态，也无需把数学极限添加为原准备。 若$r_j$始终离1有正距离，则Spin7的同一作用界可统一有限，不能排除七轴。 若仅每个j分别有界，C12819.1的Spin7给准确发散比$(1+r_j)/(1-r_j)$。 若删指定单一自旋背景，隐藏直和块反例依然有效。 任何有限深度的验证都不能替代上述全序列、全原输入量词。 此结果只是项目中纯锚接口的一条替代供应定理，不声称全局最少公理或物理时间起源。
+
+<a id="section-12"></a>
+
