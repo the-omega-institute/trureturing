@@ -12,7 +12,7 @@ $$\forall n:\mathbb{N}, \operatorname{a}\left(n\right)=\sum_{k=0}^{n} \operatorn
 
 *Formalization.* `D5/S3/ArithSums/MatharA386844.a` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* R. J. Mathar; Seiichi Manyama (2026). *Mathar's twin recurrence and D-finiteness conjectures for OEIS A386844*. URL: <https://oeis.org/A386844>.
 
 *Commentary.*
 
@@ -24,7 +24,7 @@ $$\forall n:\mathbb{N}, R_{3}(n)=3 \cdot (n:\mathbb{Z}) \cdot \left(2 \cdot (n:\
 
 *Formalization.* `D5/S3/ArithSums/MatharA386844.R3` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* R. J. Mathar; Seiichi Manyama (2026). *Mathar's twin recurrence and D-finiteness conjectures for OEIS A386844*. URL: <https://oeis.org/A386844>.
 
 *Commentary.*
 
@@ -36,7 +36,7 @@ $$\forall n:\mathbb{N}, R_{2}(n)=(n:\mathbb{Z}) \cdot \left(2 \cdot (n:\mathbb{Z
 
 *Formalization.* `D5/S3/ArithSums/MatharA386844.R2` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* R. J. Mathar; Seiichi Manyama (2026). *Mathar's twin recurrence and D-finiteness conjectures for OEIS A386844*. URL: <https://oeis.org/A386844>.
 
 *Commentary.*
 
@@ -50,6 +50,8 @@ $$A=\sum_{n=0}^{\infty} (\operatorname{a}\left(n\right):\mathbb{Q}) \cdot z^{n}$
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* R. J. Mathar; Seiichi Manyama (2026). *Mathar's twin recurrence and D-finiteness conjectures for OEIS A386844*. URL: <https://oeis.org/A386844>.
+
 *Commentary.*
 
 A belongs to Q[[z]] and has rational coefficient a(n) at every natural index. It is an ordinary formal power series, with no convergence assumption.
@@ -61,6 +63,8 @@ $$\forall j:\mathbb{N}, \forall f:\mathbb{Q}[[z]], \operatorname{D}\left(j, f\ri
 *Formalization.* `D5/S3/ArithSums/MatharA386844.D` (`✓ std3`).
 
 *Source.* Repository-derived.
+
+*Acknowledgement.* R. J. Mathar; Seiichi Manyama (2026). *Mathar's twin recurrence and D-finiteness conjectures for OEIS A386844*. URL: <https://oeis.org/A386844>.
 
 *Commentary.*
 
@@ -74,6 +78,8 @@ $$\forall r:\mathbb{N}, \forall p:\operatorname{Fin}\left(r + 1\right) \to \math
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* R. J. Mathar; Seiichi Manyama (2026). *Mathar's twin recurrence and D-finiteness conjectures for OEIS A386844*. URL: <https://oeis.org/A386844>.
+
 *Commentary.*
 
 The sum uses all finite indices j from zero through r. Each polynomial is embedded into Q[[z]] before multiplication.
@@ -86,6 +92,8 @@ $$P\iff (\forall n:\mathbb{N}, 3 \le n \implies R_{3}(n)=0) \land (\forall n:\ma
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* R. J. Mathar; Seiichi Manyama (2026). *Mathar's twin recurrence and D-finiteness conjectures for OEIS A386844*. URL: <https://oeis.org/A386844>.
+
 *Commentary.*
 
 P requires both universal signed recurrences and a finite nonzero homogeneous polynomial differential operator on this same complete A.
@@ -96,11 +104,21 @@ $$(\forall n:\mathbb{N}, 3 \le n \implies R_{3}(n)=0) \land (\forall n:\mathbb{N
 
 *Proof.* Machine-checked in Lean as `D5/S3/ArithSums/MatharA386844.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/mathar-a386844-twin-recurrences-dfinite` (proved) by `D5/S3/ArithSums/MatharA386844.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"mathar-a386844-twin-recurrences-dfinite","declaration_gid":"D5/S3/ArithSums/MatharA386844.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
+
+*Acknowledgement.* R. J. Mathar; Seiichi Manyama (2026). *Mathar's twin recurrence and D-finiteness conjectures for OEIS A386844*. URL: <https://oeis.org/A386844>.
 
 *Commentary.*
 
 The literal coefficient identity identifies A with (1+w)^3/(1-5w), where w has zero constant term and z(1+w)^3=w(1-w)^2. Lagrange substitution supplies this all-index bridge. The transported numerator identities give O3 A=8z+532z^2 and O2 A=-8z. Coefficient extraction gives the stated guarded recurrences, including their endpoints. Applying theta-1 to the second forcing identity and cancelling z^2 gives the ordinary differential operator with coefficients 420; 3612z-177; 4593z^2-1209z+6; 1539z^3-943z^2+29z; 135z^4-145z^3+10z^2. Its constant coefficient polynomial 420 is nonzero. All substitutions and derivatives are formal.
+
+All eleven theorem proofs are bind-only under the repository's inlining and normalization rule. The auxiliary declarations have actual live consumers; result settles the named external conjunction under the open-problem-resolution admission basis. No new proof technique or escape witness is claimed. The source and bounded literature scope are recorded in the Library note and matching Problems dossier; worldwide openness and priority remain unverified.
+
+The retained Reg mirror supplies a compiled typed DependentFamily registration for the literal summand and the same full conjunction. The outer Contract registration and source-occurrence binding remain unfinished under the linked issue https://github.com/the-omega-institute/trureturing/issues/27973#issuecomment-6718421807. The family proof does not supply declared_validated status.
 
 ## References
 
