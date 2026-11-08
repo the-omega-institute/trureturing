@@ -13,6 +13,17 @@ Pinned revision: 5ed82d14634e8d9576bb844c7bd4e3da66d450e7
 Upstream: StacksCore/RingTheory/TwoSidedIdeal/Operations.lean
 SHA-256: 46be68d41f8ac60c28a7391b92e845b00bde919b3b9e2244282293ce5b50fe61
 The pinned source files contain no individual author or copyright notices.
+Retirement: when the Mathlib revision pinned in this repository's lake-manifest.json
+provides equivalent required declarations, replace the corresponding fragments
+with direct Mathlib reuse and remove unused transplants. In this namespace these
+are `map_le_iff_le_comap` for nonunital nonassociative rings and any FunLike
+NonUnitalRingHomClass, `map_bot` with only ZeroHomClass on that FunLike family,
+and `mem_map_of_mem` with no homomorphism-class assumption. For arbitrary unital
+rings and FunLike families they are `map_eq_bot_iff_le_ker`,
+`mem_map_iff_of_surjective` (surjective RingHomClass map with kernel contained in
+I.asIdeal), `toTwoSided_le_iff` (I.IsTwoSided), `map_le_twoSided` (no homomorphism
+class required), and `asIdeal_comap`; `map_eq_bot_iff_le_ker` and `asIdeal_comap`
+require RingHomClass, without commutativity or finiteness assumptions.
 -/
 
 import Mathlib.RingTheory.Ideal.Maps

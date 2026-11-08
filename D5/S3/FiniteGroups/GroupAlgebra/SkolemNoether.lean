@@ -13,6 +13,13 @@ Pinned revision: 5ed82d14634e8d9576bb844c7bd4e3da66d450e7
 Upstream: StacksCore/RingTheory/SkolemNoether.lean
 SHA-256: 28e02088adb5705d79804feb8c7c581fa11005fcbd5ccc984b9c394936581a39
 The pinned source files contain no individual author or copyright notices.
+Retirement: when the Mathlib revision pinned in this repository's lake-manifest.json
+provides equivalents of this namespace's `skolemNoether` and `skolemNoether'`,
+replace the corresponding fragments with direct Mathlib reuse and remove unused
+transplants. Required scope: any field K, finite-dimensional central simple
+K-algebra A and simple K-algebra B, with no assumed finiteness of B; any two
+K-algebra maps f, g : B →ₐ[K] A are conjugate by a unit of A. In particular every
+K-algebra automorphism of A is inner, with no restriction on the characteristic.
 -/
 
 import Mathlib.Algebra.Azumaya.Defs

@@ -13,6 +13,12 @@ Pinned revision: 5ed82d14634e8d9576bb844c7bd4e3da66d450e7
 Upstream: StacksCore/RingTheory/SimpleRing/TensorProduct.lean
 SHA-256: b3923c79247c13f6f13fc4fb6094570bd1b8065d3361425ae72003eefb6f8b37
 The pinned source files contain no individual author or copyright notices.
+Retirement: when the Mathlib revision pinned in this repository's lake-manifest.json
+provides equivalents of this namespace's `isSimpleRing` and `isSimpleRing'`,
+for any field K and simple K-algebras A, B with either factor central over K,
+replace the corresponding tensor-simplicity fragments with direct Mathlib reuse
+and remove unused transplanted helpers. The required conclusion is
+IsSimpleRing (A ⊗[K] B), with no finite-dimensionality assumption on either factor.
 -/
 
 import Mathlib.Algebra.Central.Basic

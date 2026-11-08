@@ -13,6 +13,11 @@ Pinned revision: 5ed82d14634e8d9576bb844c7bd4e3da66d450e7
 Upstream: StacksCore/RingTheory/TwoSidedIdeal/SpanAsSum.lean
 SHA-256: 123adece5b72fe7eddcbf9d854712612bb5868fedb65a541b31db7c9b8ba71a4
 The pinned source files contain no individual author or copyright notices.
+Retirement: when the Mathlib revision pinned in this repository's lake-manifest.json
+provides an equivalent of this namespace's `exists_sum_mul_mul_eq_one` for any
+unital simple ring R and a ≠ 0, producing n : ℕ and x, y : Fin n → R with
+∑ i, x i * a * y i = 1, replace that fragment with direct Mathlib reuse and remove
+unused transplanted helpers. No commutativity, field, or finiteness is required.
 -/
 
 import Mathlib.Algebra.Group.Subgroup.Finsupp

@@ -15,6 +15,13 @@ SHA-256: 5f5496b114b4852d86535beacd0db9ecc28eeff81fe9d68257627bdda66e6edf
 Upstream: StacksCore/LinearAlgebra/Dimension/Finite.lean
 SHA-256: c6579009c8e3296239dc55ad9e1c7892feab42e745755dbc24694c8a0cafbb66
 The pinned source files contain no individual author or copyright notices.
+Retirement: when the Mathlib revision pinned in this repository's lake-manifest.json
+provides an equivalent of this namespace's `linearEquiv_iff_finrank_eq_over_simple_ring`,
+for any field k, finite-dimensional simple k-algebra A and finite
+A-modules M, N with compatible k-actions and scalar towers, replace that fragment
+with direct Mathlib reuse and remove its unused transplanted helpers. Preserve
+the equivalence between Nonempty (M ≃ₗ[A] N) and equality of k-finranks,
+including zero modules, without centrality or algebraic-closure assumptions.
 -/
 
 import Mathlib.Algebra.Category.ModuleCat.Products

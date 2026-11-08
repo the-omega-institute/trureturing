@@ -20,6 +20,12 @@ ba8ec35982ceecbd31ca987cbe0cee30477f4883,
 OddOrder/Isaacs/Ch06_FrobeniusActions/KernelComplement.lean, lines 53–103.
 Copyright (c) 2026 Yawara Ishida. Released under Apache-2.0.
 Schur–Zassenhaus is reused directly from pinned Mathlib.
+Retirement: when the Mathlib revision pinned in this repository's lake-manifest.json
+provides an equivalent of this namespace's `exists_complement`, replace the
+transplanted Hall-coprimality fragment with direct Mathlib reuse and remove unused
+transplants. Required scope: any finite group G and normal subgroup N such that
+∀ g : G, g ∉ N → ∀ n : N, MulAut.conjNormal g n = n → n = 1; the conclusion is
+∃ C : Subgroup G, N.IsComplement' C, with no properness or nontriviality assumption.
 -/
 
 noncomputable section

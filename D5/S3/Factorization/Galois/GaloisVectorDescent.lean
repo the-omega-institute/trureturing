@@ -21,6 +21,16 @@ Upstream: Theory/Representation/FiniteFieldSemilinearDisplacement/Descent.lean
 SHA-256: 88372d6b2a7d0c4ef321d78bee826c6bb1ca6dfbd4539687a3e0e038b80cf47f
 The invariant-generation argument is adapted to independent universes and a
 Galois-group action; canonical tensor descent uses Mathlib base-change maps.
+Retirement: when the Mathlib revision pinned in this repository's lake-manifest.json
+provides equivalents of this namespace's `span_fixedPoints`,
+`exists_invariant_basis`, or `descentEquiv`, replace the corresponding fragments
+with direct Mathlib reuse and remove unused transplants. Required scope: finite
+G, fields K, L with Algebra K L, MulSemiringAction G L and IsGaloisGroup G K L,
+and any L-vector space V with DistribMulAction G V and SMulDistribClass G L V,
+in independent G/K/L/V universes. Preserve invariant generation, a fixed L-basis
+indexed in V's universe, and the canonical L-linear equivalence L ⊗[K] V^G ≃ₗ[L] V
+given by a ⊗ w ↦ a • w; descent uses a compatible Module K V and scalar tower.
+No finite-dimensionality or characteristic assumption may be added.
 
 Effective semilinear descent for an arbitrary-dimensional vector space. The finite
 sum below is not divided by the order of the group. The group law on V and
