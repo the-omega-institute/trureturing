@@ -1,12 +1,14 @@
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
 import D5.S3.Quantum.SpinFactor.OriginalResidual
+import D5.S3.Quantum.SpinFactor.OriginalClassification
 
 /-! Source-equivalent equality readouts for the residual statements.
 
-Factories retain every original premise. Their relation witness is an explicit
-parameter, not a closed original-P2/PB instance. Source selectors designate the
-original equality readouts. A selector alone supplies no validation claim.
+Closed records retain every original premise in their laws. The existing plus
+model witnesses failure of the rejected readout on each whole law. Source
+selectors designate the original equality readouts. A selector alone supplies
+no validation claim.
 -/
 
 noncomputable section
@@ -57,6 +59,16 @@ private theorem element_ne : (0 : E) ≠ unit := by
 private def x₀ : Vec := ![1, 0, 0]
 private def y₀ : Vec := ![0, 1, 0]
 
+private theorem model_plus : P2 (crossD .plus) ∧ PB (crossD .plus) := by
+  have h :=
+    _root_.D5.S3.Quantum.Information.Pauli.OriginalSpinConsumers.same_D_consequences
+      true (crossD .plus) (fun _ _ => rfl)
+  exact ⟨h.1.p2, h.1.pb⟩
+
+private theorem model_plus_pure (x y : Vec) :
+    crossD .plus (0, x) (0, y) = (0, (1 : ℝ) • cross x y) := by
+  simp [crossD]
+
 namespace Cayley
 
 abbrev arena : Arena where
@@ -68,26 +80,19 @@ abbrev arena : Arena where
       O.readout () () (residual D e s t x y)
         (residual D e s t (-cayleyImage e q x) (-cayleyImage e q y))
 
-private theorem rejected_law (D₀ : E → E → E) (hP₀ : P2 D₀) (hPB₀ : PB D₀)
-    (e₀ : ℝ) (he₀ : e₀ = 1 ∨ e₀ = -1)
-    (hpure₀ : ∀ x y : Vec, D₀ (0, x) (0, y) = (0, e₀ • cross x y)) :
-    ¬ arena.Law (rejected E) := by
+private theorem rejected_law : ¬ arena.Law (rejected E) := by
   intro h
-  exact h D₀ hP₀ hPB₀ e₀ he₀ hpure₀ 0 0 0 0 0 (by simp [dot]) (by simp [dot])
+  exact h (crossD .plus) model_plus.1 model_plus.2 1 (Or.inl rfl)
+    model_plus_pure 0 0 0 0 0 (by simp [dot]) (by simp [dot])
 
-def family (D₀ : E → E → E) (hP₀ : P2 D₀) (hPB₀ : PB D₀)
-    (e₀ : ℝ) (he₀ : e₀ = 1 ∨ e₀ = -1)
-    (hpure₀ : ∀ x y : Vec, D₀ (0, x) (0, y) = (0, e₀ • cross x y)) :
-    Registration arena (type_of% (@cayley_residual)) where
+def family : Registration arena (type_of% (@cayley_residual)) where
   actual := actual E
   bridge := Iff.rfl
-  variation := ⟨@cayley_residual, rejected E, rejected_law D₀ hP₀ hPB₀ e₀ he₀ hpure₀⟩
-  sensitivity := eqSensitivity E arena.Law (rejected_law D₀ hP₀ hPB₀ e₀ he₀ hpure₀)
+  variation := ⟨@cayley_residual, rejected E, rejected_law⟩
+  sensitivity := eqSensitivity E arena.Law rejected_law
   dependence := eqDependence E 0 unit element_ne
 
-def registration (D₀ : E → E → E) (hP₀ : P2 D₀) (hPB₀ : PB D₀)
-    (e₀ : ℝ) (he₀ : e₀ = 1 ∨ e₀ = -1)
-    (hpure₀ : ∀ x y : Vec, D₀ (0, x) (0, y) = (0, e₀ • cross x y)) :
+def registration :
     LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
       (@cayley_residual) (Realization (eqSignature E)) Type Unit where
   unitName := `D5.S3.Quantum.SpinFactor.OriginalResidual.cayley_residual.audit
@@ -98,7 +103,7 @@ def registration (D₀ : E → E → E) (hP₀ : P2 D₀) (hPB₀ : PB D₀)
   objectArena := .source ⟨arena⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source arena ⟨family D₀ hP₀ hPB₀ e₀ he₀ hpure₀⟩
+  realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize (eqSignature E) (fun _ _ x y => x = y) (fun e => nomatch e))
@@ -138,30 +143,23 @@ abbrev arena : Arena where
         O.readout () () (residual D e s t (rotate R x) (rotate R y))
           (residual D e s t x y)
 
-private theorem rejected_law (D₀ : E → E → E) (hP₀ : P2 D₀) (hPB₀ : PB D₀)
-    (e₀ : ℝ) (he₀ : e₀ = 1 ∨ e₀ = -1)
-    (hpure₀ : ∀ x y : Vec, D₀ (0, x) (0, y) = (0, e₀ • cross x y)) :
-    ¬ arena.Law (rejected E) := by
+private theorem rejected_law : ¬ arena.Law (rejected E) := by
   intro h
-  apply h D₀ hP₀ hPB₀ e₀ he₀ hpure₀ 0 0 x₀ y₀ _ 1
+  apply h (crossD .plus) model_plus.1 model_plus.2 1 (Or.inl rfl)
+    model_plus_pure 0 0 x₀ y₀ _ 1
     (TwoAxisFiniteRotation.axisCircle _).one_mem
   intro hh
   have hi := congrFun hh 2
   norm_num [x₀, y₀, cross] at hi
 
-def family (D₀ : E → E → E) (hP₀ : P2 D₀) (hPB₀ : PB D₀)
-    (e₀ : ℝ) (he₀ : e₀ = 1 ∨ e₀ = -1)
-    (hpure₀ : ∀ x y : Vec, D₀ (0, x) (0, y) = (0, e₀ • cross x y)) :
-    Registration arena (type_of% (@local_full_circle)) where
+def family : Registration arena (type_of% (@local_full_circle)) where
   actual := actual E
   bridge := Iff.rfl
-  variation := ⟨@local_full_circle, rejected E, rejected_law D₀ hP₀ hPB₀ e₀ he₀ hpure₀⟩
-  sensitivity := eqSensitivity E arena.Law (rejected_law D₀ hP₀ hPB₀ e₀ he₀ hpure₀)
+  variation := ⟨@local_full_circle, rejected E, rejected_law⟩
+  sensitivity := eqSensitivity E arena.Law rejected_law
   dependence := eqDependence E 0 unit element_ne
 
-def registration (D₀ : E → E → E) (hP₀ : P2 D₀) (hPB₀ : PB D₀)
-    (e₀ : ℝ) (he₀ : e₀ = 1 ∨ e₀ = -1)
-    (hpure₀ : ∀ x y : Vec, D₀ (0, x) (0, y) = (0, e₀ • cross x y)) :
+def registration :
     LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
       (@local_full_circle) (Realization (eqSignature E)) Type Unit where
   unitName := `D5.S3.Quantum.SpinFactor.OriginalResidual.local_full_circle.audit
@@ -172,7 +170,7 @@ def registration (D₀ : E → E → E) (hP₀ : P2 D₀) (hPB₀ : PB D₀)
   objectArena := .source ⟨arena⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source arena ⟨family D₀ hP₀ hPB₀ e₀ he₀ hpure₀⟩
+  realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize (eqSignature E) (fun _ _ x y => x = y) (fun e => nomatch e))
@@ -281,27 +279,20 @@ abbrev arena : Arena where
     ∃ e : ℝ, (e = 1 ∨ e = -1) ∧ ∀ (s t : ℝ) (x y : Vec),
       O.readout () () (D (s, x) (t, y)) (0, e • cross x y)
 
-private theorem rejected_law (D₀ : E → E → E) (hP₀ : P2 D₀) (hPB₀ : PB D₀)
-    (hpure₀ : ∃ e : ℝ, (e = 1 ∨ e = -1) ∧
-      ∀ x y : Vec, D₀ (0, x) (0, y) = (0, e • cross x y)) :
-    ¬ arena.Law (rejected E) := by
+private theorem rejected_law : ¬ arena.Law (rejected E) := by
   intro h
-  obtain ⟨e, he, hf⟩ := h D₀ hP₀ hPB₀ hpure₀
+  obtain ⟨e, he, hf⟩ := h (crossD .plus) model_plus.1 model_plus.2
+    ⟨1, Or.inl rfl, model_plus_pure⟩
   exact hf 0 0 0 0
 
-def family (D₀ : E → E → E) (hP₀ : P2 D₀) (hPB₀ : PB D₀)
-    (hpure₀ : ∃ e : ℝ, (e = 1 ∨ e = -1) ∧
-      ∀ x y : Vec, D₀ (0, x) (0, y) = (0, e • cross x y)) :
-    Registration arena (type_of% (@all_inputs_of_pure)) where
+def family : Registration arena (type_of% (@all_inputs_of_pure)) where
   actual := actual E
   bridge := Iff.rfl
-  variation := ⟨@all_inputs_of_pure, rejected E, rejected_law D₀ hP₀ hPB₀ hpure₀⟩
-  sensitivity := eqSensitivity E arena.Law (rejected_law D₀ hP₀ hPB₀ hpure₀)
+  variation := ⟨@all_inputs_of_pure, rejected E, rejected_law⟩
+  sensitivity := eqSensitivity E arena.Law rejected_law
   dependence := eqDependence E 0 unit element_ne
 
-def registration (D₀ : E → E → E) (hP₀ : P2 D₀) (hPB₀ : PB D₀)
-    (hpure₀ : ∃ e : ℝ, (e = 1 ∨ e = -1) ∧
-      ∀ x y : Vec, D₀ (0, x) (0, y) = (0, e • cross x y)) :
+def registration :
     LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
       (@all_inputs_of_pure) (Realization (eqSignature E)) Type Unit where
   unitName := `D5.S3.Quantum.SpinFactor.OriginalResidual.all_inputs_of_pure.audit
@@ -312,7 +303,7 @@ def registration (D₀ : E → E → E) (hP₀ : P2 D₀) (hPB₀ : PB D₀)
   objectArena := .source ⟨arena⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source arena ⟨family D₀ hP₀ hPB₀ hpure₀⟩
+  realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize (eqSignature E) (fun _ _ x y => x = y) (fun e => nomatch e))
