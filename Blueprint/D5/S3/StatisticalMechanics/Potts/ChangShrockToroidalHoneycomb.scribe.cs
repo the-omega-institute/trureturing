@@ -75,6 +75,24 @@ internal sealed class ChangShrockToroidalHoneycombDocument : IScribeDocumentDefi
                     Mul(Parenthesized(Seq(Call("val", At(Q("Equiv", "Perm", "sign"), X("s"))), Colon, Sp, N("Coeff"))), Call("ket", At(Q("Equiv", "toFun"), X("s"))))))),
                 "Equiv.Perm.sign takes values in the units of the integers; its value is cast into Coeff. The sum runs over all permutations of the L symbols. Its singleton-state coefficient is the integer sign, embedded in Coeff. "
                 + "The identity permutation contributes coefficient one, and no other permutation represents that labelled singleton diagram."),
+            Theorem("alternatingVector_ne_zero", Width(Ne(Call("alternatingVector", X("L")), D(0))),
+                "The identity permutation has coefficient one in the alternating vector."),
+            Theorem("join_alternating", Width(All("i", Sites(), All("j", Sites(),
+                Arrow(Ne(X("i"), X("j")), Eq(At(Call("join", X("i"), X("j")),
+                    Call("alternatingVector", X("L"))), D(0)))))),
+                "For any two different sites, with no parity or adjacency restriction, "
+                + "pair each permutation with its product by their transposition. "
+                + "The join images agree and the integer signs are opposite."),
+            Theorem("list_prod_on_vector", ProductFormula(),
+                "The list retains its order. The hypothesis specifies the action of every "
+                + "factor on w; scalar linearity gives the product action. "
+                + "The type A is arbitrary, including types in any universe."),
+            Theorem("vertical_alternating", Width(Eq(At(Call("vertical", X("L")),
+                Call("alternatingVector", X("L"))),
+                At(Q("HSMul", "hSMul"), Mul(Power(N("v"), Sub(X("L"), D(1))),
+                    Add(N("v"), N("q"))), Call("alternatingVector", X("L"))))),
+                "Every nonzero width is allowed. Each permutation has exactly one zero "
+                + "symbol, giving the factor v+q; its other L-1 sites each give v."),
             Describe.Lean(DescribeId.Create("result"), DeclarationHandle.Create(Prefix + "result"),
                 H("The eigenvalue at every even width"), StatementSource.FromAuthor(Disp(ResultFormula())),
                 AssessedProvenance.FromRepo(Source),
@@ -88,6 +106,24 @@ internal sealed class ChangShrockToroidalHoneycombDocument : IScribeDocumentDefi
                         + "The identity coefficient proves w is nonzero over the polynomial ring itself; no division by v or specialization of q is used."))),
                 DescribeRole.Theorem, new OpenProblemResolutionClaim(ProblemSlugRef.Create("changshrock2005honeycomb"), ResolutionKind.Proved)))));
 
+    private static Formula ProductFormula() => Width(All("A", Seq(N("Type"), Star),
+        All("xs", At(Q("List"), X("A")),
+            All("B", Arrow(X("A"), At(Q("Module", "End"), N("Coeff"),
+                Call("Space", X("L")))),
+                All("c", Arrow(X("A"), N("Coeff")), All("w", Call("Space", X("L")),
+                    Arrow(All("a", X("A"), Arrow(
+                        new Formula.Relation(X("a"), FormulaRelationOperator.MemberOf, X("xs")),
+                        Eq(At(At(X("B"), X("a")), X("w")),
+                            At(Q("HSMul", "hSMul"), At(X("c"), X("a")), X("w"))))),
+                        Eq(At(At(Q("List", "prod"),
+                            At(Q("List", "map"), X("B"), X("xs"))), X("w")),
+                            At(Q("HSMul", "hSMul"), At(Q("List", "prod"),
+                                At(Q("List", "map"), X("c"), X("xs"))), X("w"))))))))));
+    private static DocumentBlock Theorem(string name, Formula formula, string text) =>
+        Describe.Lean(DescribeId.Create(name.Replace("_", "").ToLowerInvariant()),
+            DeclarationHandle.Create(Prefix + name), H(name),
+            StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(Source),
+            Blocks(Paragraph(Text(text))), DescribeRole.Theorem);
     private static Formula NativeBody() => Or(
         Ex("s", Call("Perm", Sites()), Eq(X("f"), At(Q("Equiv", "toFun"), X("s")))),
         Ex("s", Call("Perm", Sites()), Ex("i", Sites(), Ex("j", Sites(),
