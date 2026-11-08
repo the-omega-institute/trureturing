@@ -598,4 +598,38 @@ def capReconnection {m : ℕ} (M : NCMatching (m+2)) (j : Fin (m+1)) : NCMatchin
     rw [capConjugate_reconnect M j y hya hyb] at hends
     exact reconnect_noncrossing M j x y hxa hxb hya hyb hxy hyx hends
 
+private theorem swap_val {t : ℕ} (a b x : Fin t) :
+    (Equiv.swap a b x).val = if x.val = a.val then b.val else
+      if x.val = b.val then a.val else x.val := by
+  simp only [Equiv.swap_apply_def, Fin.ext_iff]
+  split_ifs <;> rfl
+
+/-- Each standard cup-cap generator is a planar rectangle matching. -/
+private theorem cupcap_planar_succ (m j : ℕ) (hj : j+1 < m+2) :
+    ∃ Q : NCMatching (2*(m+2)), toMatching Q = cupcapMatching j hj := by
+  let k : Fin (2*m+3) := ⟨j, by omega⟩
+  let Q : NCMatching (2*(m+2)) := capReconnection (identityNC (m+2)) k
+  refine ⟨Q, ?_⟩
+  apply matching_ext
+  rintro ⟨b,i⟩
+  apply (boundaryEquiv (m+2)).injective
+  change boundaryEquiv (m+2) ((boundaryEquiv (m+2)).symm
+    (Q.partner (boundaryEquiv (m+2) (b,i)))) =
+      boundaryEquiv (m+2) (cupcapMate j hj (b,i))
+  rw [Equiv.apply_symm_apply]
+  change capConjugate (identityNC (m+2)) k (boundaryEquiv (m+2) (b,i)) = _
+  rw [capConjugate_apply]
+  apply Fin.ext
+  change (Equiv.swap k.succ (Fin.rev k.castSucc)
+    (Fin.rev (Equiv.swap k.succ (Fin.rev k.castSucc) (boundaryEquiv (m+2) (b,i))))).val = _
+  simp only [swap_val, Fin.val_rev, Fin.val_succ, Fin.val_castSucc, cupcapMate, k]
+  cases b <;> simp only [Bool.not_false, Bool.not_true, boundary_top, boundary_bottom]
+  all_goals split_ifs <;> simp only [boundary_top, boundary_bottom] <;> omega
+
+/-- Standard generators are planar for every admissible strand index. -/
+theorem cupcap_planar (n j : ℕ) (hj : j+1 < n) :
+    ∃ Q : NCMatching (2*n), toMatching Q = cupcapMatching j hj := by
+  obtain ⟨m,rfl⟩ : ∃ m, n = m+2 := ⟨n-2, by omega⟩
+  exact cupcap_planar_succ m j hj
+
 end D5.S3.Combinatorics.PerfectMatchings.PlanarSewing
