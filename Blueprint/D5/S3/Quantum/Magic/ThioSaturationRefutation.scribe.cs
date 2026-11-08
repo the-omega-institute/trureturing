@@ -6,7 +6,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Magic;
 internal sealed class ThioSaturationRefutationDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Quantum/Magic/ThioSaturationRefutation.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Quantum/thio2026tight");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Entropy/thio2026tight");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "An actual complex noisy Strange qutrit has eight nonzero Gross-Wigner coordinates and saturates the fixed-purity natural-log entropy bound.",
