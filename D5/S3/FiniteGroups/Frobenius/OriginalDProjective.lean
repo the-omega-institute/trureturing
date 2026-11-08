@@ -7,7 +7,7 @@
    digest: Projectivity from actual original-D regular coordinates and relative trace. -/
 
 import D5.S3.FiniteGroups.Frobenius.OriginalDFrobenius
-import Mathlib.RepresentationTheory.Maschke
+import Mathlib.Algebra.Module.Projective
 import Mathlib.GroupTheory.GroupAction.Quotient
 
 /-!
@@ -146,7 +146,7 @@ private theorem coset_trace [Finite G] (ρ : Representation k G V) (C : Subgroup
           (MonoidAlgebra.single h (1 : k) • v)) =
       MonoidAlgebra.single h (1 : k) •
         (MonoidAlgebra.single g (1 : k) • s (MonoidAlgebra.single g⁻¹ (1 : k) • v))
-    simp only [← mul_smul, MonoidAlgebra.single_mul_single, one_mul,
+    simp only [← mul_smul, MonoidAlgebra.single_mul_single,
       mul_inv_rev, mul_assoc, inv_mul_cancel, mul_one]
   have hB (q : G ⧸ C) (v : ρ.asModule) : f (B q v) = v := by
     refine Quotient.inductionOn q ?_
