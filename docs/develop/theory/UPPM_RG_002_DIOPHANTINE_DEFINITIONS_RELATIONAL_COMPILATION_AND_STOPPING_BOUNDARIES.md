@@ -2339,3 +2339,1197 @@ $$
 实际点及其标号来自 [Brox 固定源码的 “The quadratic-field elliptic curve”](https://github.com/JoseBrox/diophantine-z-q_improvements/blob/61b82ccacfbefdff3d6e7cf986d6e6279afa1372/papers/trace_heights/aggregate_trace_height_20261108_v9.tex)，变换与形式群工具为上述 Silverman 的经典结果。这里的推导补出该固定数据的局部次数、具体极小模型、初始深度及所有精度的二进阶，不作一般局部理论或文献优先权的主张。它不求奇素数地方的精确阶，不补出完整的 $\mathbb Z/\mathbb Q$ 定义或物理对应；§§13–14 的一般联合返回结论及其余边界继续沿用。$\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 16. 实际共同周期的二次对数主阶、交叉因子吸收与加权入口余项
+
+**定义 16.1（共同局部阶与入口）。** 本节保持定义 11.1、13.1 的实际 $F,E_0,P_1,P_2,U_v(r),q(B,r;M)$，赋值仍取 $\operatorname{ord}_v(\mathfrak m_v)=1$。有理数上的 $v_p$ 则取 $v_p(p)=1$，故 $\operatorname{ord}_v|_{\mathbb Q^\times}=e_vv_p$。沿用 $a,b,c$ 的正实根，另记
+
+$$
+\begin{gathered}
+a^2=2,\quad b^2=3-a,\quad c^2=3+a,\quad bc=\sqrt7,\\
+K=F(i),\qquad [i](X,Y)=(-X,iY),\qquad i^2=-1.
+\end{gathered}
+\tag{16.1}
+$$
+
+这里 $K$ 专指本节的复乘扩域，不是定义 11.1 中暂用同一字母的二次域。对每个有理素数 $p$（包括 $2,7$）及整数 $r\ge1$，定义 $\delta_{p,v}(r)=\operatorname{lcm}(d_{v,1}(r),d_{v,2}(r))$（$v\mid p$），并定义 $\delta_p(r)=\operatorname{lcm}_{v\mid p}\delta_{p,v}(r)$。命题 16.2 将证明 $\delta_p(r)=\delta_{p,v}(r)$ 对每个 $v\mid p$ 成立。以下只有入口记号 $n_p,t_p$ 限于 $p\ne2,7$，定义为
+
+$$
+\begin{aligned}
+n_p&=\operatorname{lcm}\bigl(\operatorname{ord}(\overline P_1),
+                         \operatorname{ord}(\overline P_2)\bigr),\\
+t_p&=\min_{j=1,2}\operatorname{ord}_v
+               \bigl(t([n_p]P_j)\bigr),\qquad t=-X/Y.
+\end{aligned}
+\tag{16.2}
+$$
+
+横线是原好约化模型 $E_0$ 在同一个 $k_v$ 中的约化，$\overline O=O$ 的阶取 $1$；参数在此式中只用于已经约化为 $O$ 的点。所有 $[n_p]P_j$ 非零，故 $t_p$ 是有限正整数。记
+
+$$
+\begin{gathered}
+\mathcal G_H=\{p\le H:p\ne2,7\},\qquad
+h_0=\widehat h(P_1)=\widehat h(P_2),\qquad C_E=2\log2,\\
+A=64h_0,\qquad B=8C_E,\qquad
+b_p(H)=v_p(\delta_p(H)),\qquad
+W(H)=\sum_{p\in\mathcal G_H}(t_p-1)\log p.
+\end{gathered}
+\tag{16.3}
+$$
+
+高度为绝对对数高度及 §12 的典范高度归一化，特别地复用 (12.7) 对所有代数点的 $h(xT)\le2\widehat h(T)+C_E$，不另换比较常数。高度的共轭不变性及 (12.8) 给出 $0<h_0\le\log82/2$。
+
+**命题 16.2（实际符号轨道严格运输原过滤）。** $F/\mathbb Q$ 是次数 $8$ 的 $D_4$ Galois 扩张；每个自同构把有序点对 $(P_1,P_2)$ 变为其带独立符号的排列。若 $g(v)=w$，则完备域同构诱导
+
+$$
+g(U_v(r))=U_w(r)\qquad(r\ge1).
+\tag{16.4}
+$$
+
+因而对每个有理素数 $p$ 及整数 $r\ge1$，$\delta_{p,v}(r)$ 与 $v\mid p$ 无关且等于 $\delta_p(r)$；对所有 $B_0\ge2$、整数 $r,M\ge1$，有原对象的精确接口
+
+$$
+\begin{aligned}
+q(B_0,r;M)&=\operatorname{lcm}\bigl(M,\{\delta_p(r):p\le B_0\}\bigr),\\
+\bigl([m]P_j\in U_v(r)\text{ 对所有 }p\le B_0,v\mid p,j\bigr)
+&\ \Longleftrightarrow\ \delta_p(r)\mid m\text{ 对所有 }p\le B_0.
+\end{aligned}
+\tag{16.5}
+$$
+
+第二行对所有 $m\in\mathbb Z$ 成立，包括零和负数。
+
+**证明。** $F$ 是 $Z^4-6Z^2+7$ 的分裂域，根为 $\pm b,\pm c$，且 $a=3-b^2$。§15 已给出 $[F:\mathbb Q]=8$。自同构固定 $a$ 时独立改变 $b,c$ 的符号；反转 $a$ 时交换 $b,c$ 并可独立改变符号。这八个作用给出上述二面体群。由定义 11.1 的坐标，$b$ 或 $c$ 换号恰将相应点取负，$a$ 换号并交换 $b,c$ 则交换两点。Galois 群在 $p$ 上的地方间传递，且完备域同构保整数归一化赋值。
+
+奇素数处原方程在 $\mathbb Q$ 上定义，参数 $t$ 也在 $\mathbb Q$ 上定义，故约化为 $O$ 与 $\operatorname{ord}_v(t)\ge r$ 同时运输。二进处将原先选定的极小模型共轭，仍为极小整模型；它与目标地方原先选定的极小模型之间正是 §15 所用的保单位元整变换。式 (15.25)–(15.26) 表明形式参数互为首项系数为单位的整级数，因而保每个 $\mathfrak m^r$，不是只保第一层。这给出 (16.4)，不改变原同构或原过滤。对子群取负不改变成员条件；排列两点不改变两个阶的最小公倍数。因此共同阶与地方无关。最后在有限商群中 $[m]P_j\in U_v(r)$ 当且仅当 $d_{v,j}(r)\mid m$；代回定义 (13.2) 得证。$\square$
+
+**定理 16.3（非分歧奇素数的全部精确阶）。** 对 $p\ne2,7$，$F$ 及 $K$ 在 $p$ 上均不分歧，$e_v=1$，(16.2) 的 $n_p,t_p$ 与地方无关。对每个 $r\ge1$，
+
+$$
+\delta_p(r)=n_p p^{\max(0,r-t_p)}.
+\tag{16.6}
+$$
+
+更精确地，对非零整数 $m$，两点同时属于 $U_v(r)$ 的充要条件是 $n_p\mid m$ 且
+
+$$
+t_p+v_p(m/n_p)\ge r.
+\tag{16.7}
+$$
+
+$m=0$ 时同时成员条件恒成立。
+
+**证明。** 在 $\mathbb Z[1/14]$ 上先添 $a$，再添 $b,c$；各平方根的被开方元素是单位，其二次方程导数也是单位，因为 $(3-a)(3+a)=7$。这些有限 étale 扩张说明只有 $2,7$ 能分歧；再添 $i$ 不增加奇素数分歧。$E_0$ 的判别式为 $64$，故所有奇素数处好约化。约化阶有限，且倍数约化为 $O$ 当且仅当相应的阶整除该整数。因此两点同时约化为 $O$ 当且仅当 $n_p\mid m$。
+
+对这些地方，$1>e_v/(p-1)=1/(p-1)$。Silverman 的形式对数定理 [IV.6.4](https://www.math.ens.psl.eu/~obenoist/refs/Silverman.pdf) 在整个第一层给出保赋值的群同构到 $\mathfrak m_v$。保赋值也可直接由对数及逆指数在每个 $\mathfrak m_v^r$ 上互逆得出。若 $s_j=\operatorname{ord}_v(t([n_p]P_j))$，则对任意非零整数 $u$，
+
+$$
+\operatorname{ord}_v(t([u n_p]P_j))=s_j+v_p(u).
+\tag{16.8}
+$$
+
+所有参数非零：否则某个非零整数倍的实际非挠点为 $O$，违背域嵌入的单射性及 Brox 的非挠性。共同最小深度因此是 $t_p+v_p(u)$。命题 16.2 运输约化及深度，给出 $n_p,t_p$ 的地方无关性。式 (16.7) 的最小正解为 (16.6)；取负不改赋值，零倍另行成立。$\square$
+
+**定理 16.4（实际半点、共同 Frobenius 核及下降支持）。** 对每个 $p\ne2,7$，令 $\pi$ 为 $E_0/\mathbb F_p$ 的 $p$ 次 Frobenius，$a_p=p+1-\#E_0(\mathbb F_p)$。置
+
+$$
+\begin{aligned}
+\varepsilon_p&=-1\quad\Longleftrightarrow\quad
+ \left(\frac2p\right)=\left(\frac7p\right)=-1,
+ \qquad \varepsilon_p=1\text{ 在其余情形},\\
+C_p&=
+\begin{cases}
+(p+1)^2-a_p^2,&\varepsilon_p=1,\\
+(p-1)^2+a_p^2,&\varepsilon_p=-1.
+\end{cases}
+\end{aligned}
+\tag{16.9}
+$$
+
+在同一个 $\overline{\mathbb F}_p$ 中，$\overline P_1,[i]\overline P_1,\overline P_2,[i]\overline P_2$ 都属于同一个群
+
+$$
+[2]G_p,\qquad
+G_p=\ker(\pi^2-[\varepsilon_p]),\qquad
+\#G_p=C_p,\quad \#[2]G_p=C_p/4\le p^2.
+\tag{16.10}
+$$
+
+特别地，这是整数整除式而非大小比较：
+
+$$
+n_p\mid C_p/4,\qquad n_p\le p^2.
+\tag{16.11}
+$$
+
+若 $p\ge11$，$n_p$ 的每个素因子均严格小于 $p$；小素数的实际值为
+
+$$
+n_3=2,\qquad n_5=5.
+\tag{16.12}
+$$
+
+**证明（半点及同一个核）。** 从 Brox 固定源码 “The quadratic-field elliptic curve” 中的 $R_0=(1+a,2a)$ 及其共轭，经原归一化取得一对半点
+
+$$
+R_1=\left(\frac{1+a}{b^2},\frac{2a}{b^3}\right),\qquad
+R_2=\left(\frac{1-a}{c^2},\frac{-2a}{c^3}\right),\qquad
+[2]R_j=P_j.
+\tag{16.13}
+$$
+
+其合法性也由 $E$ 上的 $R_0$ 代入及定义 11.1 的保群同构直接保证；两点的纵坐标符号同时按共轭运输。这对半点与原点对具有相同的带符号排列作用。
+
+在 $v\mid p$ 取算术 Frobenius $g\in\operatorname{Gal}(F/\mathbb Q)$。若 $g(a)=a$，则 $g$ 分别给 $b,c$ 换号，故 $g^2$ 为恒等。若 $g(a)=-a$，写 $g(b)=u c,g(c)=v b$，其中 $u,v\in\{1,-1\}$；于是 $g^2$ 同时把 $b,c$ 乘以 $uv$，且 $g(bc)=uv\,bc$。在不分歧的二次子域中，$g(a)/a=(2/p)$、$g(bc)/(bc)=(7/p)$。因此 $g^2$ 对两个半点的共同作用恰为 $[\varepsilon_p]$。约化与 Frobenius 相容，故两者的约化都在 $G_p$ 中；这同时处理剩余次数为 $1,2,4$ 的情形，而没有假设所有半点已在 $\mathbb F_{p^2}$ 上。
+
+无论 $p\bmod4$ 如何，$\pi^2$ 与 $[i]$ 交换，因为 $i^{p^2}=i$；故 $G_p$ 及其倍二像均在 $[i]$ 下稳定。Frobenius 特征多项式及 Hasse 界给出 $\deg(\pi^2-[\varepsilon_p])=C_p$。该同源的微分是 $-\varepsilon_p$，非零，故可分，几何核确有 $C_p$ 个点。$E_0[2]=\{O,(0,0),(1,0),(-1,0)\}$ 都在 $\mathbb F_p$ 上，故全在 $G_p$ 中。$p$ 为奇数保证倍二可分且其核正好这四点，因此有限群 $G_p$ 的倍二像的阶为 $C_p/4$。由 Lagrange 定理，两点的阶及其最小公倍数整除这个整数。
+
+这里使用的经典工具仅是 Silverman [III.6、V.2.3.1、V.3–4](https://www.math.ens.psl.eu/~obenoist/refs/Silverman.pdf) 的同源、Frobenius 和普通/超奇异分类；$\varepsilon_p$ 来自实际 $D_4$ 作用，不是普通性的判据。由 $a_p^2\le4p$，两种符号均有 $C_p\le(p+1)^2\le4p^2$，得大小界。
+
+**证明（支持与小素数）。** 对 $\varepsilon_p=1$，$a_p$ 是偶数，因为有理二挠群使 $4\mid\#E_0(\mathbb F_p)$，于是
+
+$$
+\frac{C_p}{4}=
+ \frac{p+1-a_p}{2}\,\frac{p+1+a_p}{2}.
+\tag{16.14}
+$$
+
+当 $p\ge7$ 时，两因子均为正整数，且至多 $(p+1+2\sqrt p)/2<p$。若 $\varepsilon_p=-1$ 且 $p\equiv3\pmod4$，则 $(X^3-X)^{(p-1)/2}$ 仅含奇次幂，其 $X^{p-1}$ 系数为零，故由 Silverman V.4.1(a) 知 $E_0$ 超奇异。又因二次特征 $\chi$ 满足 $\chi(-1)=-1$，$x$ 与 $-x$ 对 $\sum_{x\in\mathbb F_p}\chi(x^3-x)$ 的贡献相消，故 $a_p=0$。从而 $C_p/4=((p-1)/2)^2$，仍只有严格较小的素因子。
+
+剩下的分支是 $\varepsilon_p=-1$ 且 $p\equiv1\pmod4$；$\varepsilon_p=1$ 时无论普通或超奇异，均已由 (16.14) 处理。在这个剩余分支，$(X^3-X)^{(p-1)/2}=X^{(p-1)/2}(X^2-1)^{(p-1)/2}$ 的 $X^{p-1}$ 系数为 $(-1)^{(p-1)/4}\binom{(p-1)/2}{(p-1)/4}\not\equiv0\pmod p$，因为所涉阶乘的指标均小于 $p$。因此 Silverman V.4.1(a) 判定这条曲线的约化普通。由 V.3.1(b)，其几何自同源环是某个虚二次域中的序（满秩的 $\mathbb Z$-子环），且包含由 $[i]$ 给出的 $\mathbb Z[i]$，故该虚二次域就是 $\mathbb Q(i)$。$\mathbb Z[i]$ 已是该域的极大整环，故几何自同源环正是 $\mathbb Z[i]$。Frobenius 的迹与范数遂给出 $\pi=u+vi$，其中 $u,v\in\mathbb Z$、$u^2+v^2=p$、$a_p=2u$。又由 $4\mid\#E_0(\mathbb F_p)$，有 $2u\equiv p+1\equiv2\pmod4$，所以 $u$ 为奇数、$v$ 为偶数。在此 $\varepsilon_p=-1$ 的分支中，
+
+$$
+\frac{C_p}{4}
+=\frac{(p-1)^2+4u^2}{4}
+=\frac{(p+1)^2-4v^2}{4}
+=\frac{p+1-2v}{2}\,\frac{p+1+2v}{2}.
+\tag{16.15}
+$$
+
+两因子是正整数，因 $v$ 为偶数且 $p$ 为奇数；由 $|v|\le\sqrt p$，$p\ge7$ 时它们同样严格小于 $p$。这些整数因子分解而非单独的 $n_p\le p^2$，才给出下降支持。
+
+$p=3$ 时 $\varepsilon_3=1,a_3=0$，且实际 $X_j\equiv-1$、$Y_j\equiv0$，两点约化都是非零二挠点，故 $n_3=2$。$p=5$ 时 $(2/5)=(7/5)=-1$；在 $\mathbb F_5$ 逐个 $X$ 的 $X^3-X$ 为 $0,0,1,4,0$，故 $\#E_0(\mathbb F_5)=8,a_5=-2$，得到 $C_5/4=5$。原坐标分母在 $5$ 为单位，两点均为仿射点而非 $O$；它们属于阶 $5$ 的倍二像群，故各自阶为 $5$。这证明两个例外及全部支持声明。$\square$
+
+**命题 16.5（实际七进共同周期）。** $7$ 上有两个地方，均有 $e_v=f_v=2$。原定义的全部共同阶为
+
+$$
+\delta_7(r)=2\,7^{\lceil(r-1)/2\rceil}\qquad(r\ge1).
+\tag{16.16}
+$$
+
+**证明。** 记 $\nu_7$ 为 $\mathbb Q_7$ 上满足 $\nu_7(7)=1$ 的赋值，在 $\mathbb Q_7$ 中选 $a\equiv3\pmod7$ 的平方根。由 $(3-a)(3+a)=7$，有 $\nu_7(3-a)=1$，而 $3+a\equiv6$ 是剩余非平方单位。因而添 $b$ 给出二次全分歧扩张，添 $c$ 给出二次非分歧扩张，合成局部次数 $4$、$e=f=2$；另一个 $a$ 的根给出另一个地方。全局次数 $8$ 保证恰有这两个地方。在选定完备域 $F_v$ 上，将整数归一化的 $\operatorname{ord}_v$ 简写为 $v$，则 $v|_{\mathbb Q_7^\times}=2\nu_7$，从而 $v(7)=v(3-a)=2$、$v(b)=1,v(c)=0$。下文的深度均用这个 $v$。
+
+原坐标为 $X_1=(115-27a)/56,Y_1=(-660+417a)/(32b^3)$ 及其同时共轭 $X_2=(115+27a)/56,Y_2=(-660-417a)/(32c^3)$。在 $a\equiv3$ 的地方，$115-27a$、$-660+417a$ 均为单位，所以
+
+$$
+v(X_1)=-2,\qquad v(Y_1)=-3,\qquad v(t(P_1))=1.
+\tag{16.17}
+$$
+
+这先判定 $P_1$ 约化为 $O$。对另一点使用确切恒等式
+
+$$
+X_2+1=\frac{9(19+3a)}{56},\qquad
+(19+3a)(19-3a)=7^3,\qquad
+(-660+417a)(-660-417a)=87822=2\cdot3^2\cdot7\cdot17\cdot41.
+\tag{16.18}
+$$
+
+其中 $19-3a$ 与 $-660+417a$ 为单位，故 $v(X_2+1)=4,v(Y_2)=2$；$P_2$ 约化为 $T=(-1,0)$。其倍二斜率 $(3X_2^2-1)/(2Y_2)$ 的赋值为 $-2$，分子模 $7$ 为 $2$；倍二公式遂给出 $v(X([2]P_2))=-4,v(Y([2]P_2))=-6$，所以 $[2]P_2$ 的形式深度为 $2$。$[2]P_1$ 的深度仍为 $1$。
+
+因此共同约化入口整数是 $2$，共同入口深度为 $1$，而两个点的个别深度并不相同。这里 $1>e/(7-1)=1/3$，形式对数在第一层即保赋值。对非零偶整数 $m=2u$，共同最小深度恰为 $1+2v_7(u)$；对奇整数，第二点仍约化为 $T$，不在第一层。另一地方由命题 16.2 运输并交换两点，给出相同条件。零倍自动合格，负倍同样适用。故最小正合格整数为 (16.16)。每乘一个 $7$ 增加的两层来自 $v(7)=2$，不是将形式群高度当作分歧指数。$\square$
+
+**定理 16.6（四个实际方向限制共同过深入口）。** 对所有 $p\ne2,7$，有无条件的同一实际入口界
+
+$$
+(t_p-v_p(n_p))\log p\le64h_0p+8C_E=Ap+B.
+\tag{16.19}
+$$
+
+此式允许 $t_p>1$，不预设单点或同时 Wieferich 素数的稀疏性。
+
+**证明（高度与独立性）。** $F$ 全实且次数 $8$，故 $[K:\mathbb Q]=16$。Brox 固定源码的 `lem:independent` 已证明原 $P_1,P_2$ 在 $\mathbb Z[i]$ 上模挠独立，本节直接复用。于是
+
+$$
+T_1=P_1,\quad T_2=[i]P_1,\quad T_3=P_2,\quad T_4=[i]P_2
+\tag{16.20}
+$$
+
+任何非平凡整数线性组合均非挠。令 $\langle S,T\rangle=(\widehat h(S+T)-\widehat h(S)-\widehat h(T))/2$。典范高度的二次性、双线性及 Galois 不变性使用 Silverman VIII.9.3；$[i]$ 是高度等距，因为它把横坐标乘以 $-1$，并与倍二交换。因而 $\langle P_j,[i]P_j\rangle=\langle[i]P_j,-P_j\rangle=0$。此外，固定 $a,b,i$ 而反转 $c$ 的 $K$-自同构固定前两个方向、反转后两个方向；每个跨两点的配对等于其相反数，也为零。共轭不变性给出四个方向的高度全为 $h_0$。因此对所有整数 $z_k$，
+
+$$
+\widehat h\left(\sum_{k=1}^4[z_k]T_k\right)
+=h_0\sum_{k=1}^4z_k^2.
+\tag{16.21}
+$$
+
+由 (12.8) 知 $h_0\le\log82/2$，由非挠性和正定性知 $h_0>0$；不需要重新证明高度比较或计算完整 Mordell–Weil 群。
+
+**证明（同一个有限群中的短关系）。** 对 $K$ 的地方 $w$，以下 $U_w(r)$ 仅指原整方程在 $K_w$ 上约化为 $O$ 且原参数深度至少为 $r$ 的子群；其与 $E_0(F_v)$ 的交仍为原 $U_v(r)$。固定一个 $w\mid v\mid p$ 的 $K$ 地方。$K_w/\mathbb Q_p$ 不分歧，故其整数赋值在 $F_v$ 上仍是原赋值，且 $[K_w:\mathbb Q_p]=f_w\ge1$。在这同一个剩余域的代数闭包中，四个 $T_k$ 的约化由 (16.10) 同属大小至多 $p^2$ 的群 $[2]G_p$。取 $L=\lfloor\sqrt p\rfloor$。$(L+1)^4>p^2$，所以把 $(L+1)^4$ 个向量 $z\in\{0,\ldots,L\}^4$ 映到 $\sum[z_k]\overline T_k$，必有两个不同向量同像。作差取得 $z\ne0$、$|z_k|\le L$，使实际全局点
+
+$$
+R=\sum_{k=1}^4[z_k]T_k\in E_0(K)
+\tag{16.22}
+$$
+
+在 $w$ 约化为 $O$。独立性保证 $R$ 非挠且非零；(16.21) 给出 $\widehat h(R)\le4h_0L^2\le4h_0p$。
+
+**证明（同一关系的局部与全局账）。** 每个 $[n_p]T_k$ 在 $w$ 都属于 $U_w(t_p)$：对原两点是定义，对 $[i]$ 方向由形式群自同构保深度得到。因此同一个 $[n_p]R$ 属于 $U_w(t_p)$。$R$ 自身已经在第一层，可使用保赋值形式对数，得到
+
+$$
+s:=\operatorname{ord}_w(t(R))\ge t_p-v_p(n_p).
+\tag{16.23}
+$$
+
+具体地，$\log([n_p]R)=n_p\log(R)$，所以其赋值为 $s+v_p(n_p)$，不能把 $n_p$ 的 $p$ 因子遗漏。形式展开在这个好整模型上给出 $\operatorname{ord}_w(x(R))=-2s$。在绝对高度公式中取 $|p|_w=p^{-1}$，这一处的权重为 $f_w/16$，故该处非负贡献为 $2s f_w\log p/16$，而其它各处的 $\log\max(1,|x(R)|)$ 均非负。于是
+
+$$
+\begin{aligned}
+(t_p-v_p(n_p))\log p
+&\le s\log p\le8h(x(R))\\
+&\le16\widehat h(R)+8C_E
+\le64h_0p+8C_E.
+\end{aligned}
+\tag{16.24}
+$$
+
+若左端非正，同一不等式仍成立。这里局部读数、抽屉所得关系及高度估计始终是一个 $R$、一个 $w$ 及原同一对点；没有把不同地方、不同关系的分别最优值拼接。$\square$
+
+**定理 16.7（实际共同周期的有限下界与匹配主阶）。** 对所有整数 $H\ge2,M\ge1$，原共同周期满足
+
+$$
+\log q(H,H;M)
+\ge H\sum_{p\in\mathcal G_H}\log p
+ -64h_0\sum_{p\in\mathcal G_H}p
+ -8C_E\,\#\mathcal G_H.
+\tag{16.25}
+$$
+
+令 $\mathcal P(H)=\prod_{p\le H}p$。对所有整数 $H\ge7$ 及所有 $M\ge1$，还有真正的整除上包络
+
+$$
+q(H,H;M)\mid
+ \operatorname{lcm}\bigl(M,5\mathcal P(H)^{H-1}\bigr).
+\tag{16.26}
+$$
+
+因而每个固定 $M$ 都有无条件的
+
+$$
+\log q(H,H;M)
+=H\vartheta(H)+O\left(\frac{H^2}{\log H}\right)
+\sim H^2\qquad(H\to\infty).
+\tag{16.27}
+$$
+
+误差常数可依赖固定 $M$ 及本节固定点；(16.26) 的阈值 $7$ 与 $M$ 无关。
+
+**证明（下界来自实际自身分量）。** 由 (16.6)，对每个 $p\in\mathcal G_H$，
+
+$$
+\begin{aligned}
+v_p(q(H,H;M))&\ge b_p(H)
+=v_p(n_p)+\max(0,H-t_p)\\
+&\ge H-(t_p-v_p(n_p)).
+\end{aligned}
+\tag{16.28}
+$$
+
+把这些不同素数的实际自身指数乘以 $\log p$ 后相加，再用 (16.19)，即得 (16.25)。右侧某一项若为负，只是一个仍有效的下界，不会删掉其原量词。这一步没有使用 $C_p$ 或任何较大消去数的最小公倍数作下界。
+
+**证明（跨地方素因子的整除上界）。** 对 $p\in\mathcal G_H$，$t_p\ge1$，且由下降支持和 (16.12)，$v_p(n_p)=0$，唯一例外为 $v_5(n_5)=1$。因此来自 (16.6) 自身的 $p$ 指数不超过 $H-1$，在 $p=5$ 处不超过 $H$。来自 $n_p$ 的其它素因子均不超过 $H$，而 $n_p\le p^2\le H^2$ 保证每个这样的 $\ell$ 指数至多 $2\log H/\log\ell\le2\log H/\log2\le H-1$，最后一个不等式对 $H\ge7$ 成立。
+
+§15 给出 $\delta_2(H)=2^{\kappa(H)}$，$\kappa(H)=\max(0,\lceil(H-15)/8\rceil)\le H-1$。命题 16.5 给出 $\delta_7(H)=2\cdot7^{\lceil(H-1)/2\rceil}$，其两个指数同样不超过 $H-1$。故每个实际 $\delta_p(H)$ 都整除 $5\mathcal P(H)^{H-1}$；结合 (16.5) 得 (16.26)。共同整数在这里由最小公倍数承担，大小不等式没有被改写为未经证明的整除式。
+
+**证明（闭合主阶）。** 经典素数定理及其分部求和后果给出 $\vartheta(H)\sim H$、$\pi(H)=O(H/\log H)$、$\sum_{p\le H}p=O(H^2/\log H)$。其原始来源是 Hadamard，*Sur la distribution des zéros de la fonction ζ(s) et ses conséquences arithmétiques*，Bull. Soc. Math. France 24，199–220，[DOI:10.24033/bsmf.545](https://doi.org/10.24033/bsmf.545)；以及 de la Vallée Poussin，*Recherches analytiques sur la théorie des nombres premiers*，Ann. Soc. Sci. Bruxelles 20，183–256。这里只用无条件素数定理，不用 RH 或其误差估计。
+
+从 (16.25) 减去 $H\vartheta(H)$，遗漏的 $2,7$ 只产生 $O(H)$；余下损失是 $O(H^2/\log H)$。从 (16.26) 则有 $\log q\le\log M+\log5+(H-1)\vartheta(H)$。两边夹住实际同一个 $q$，得到 (16.27)。$\square$
+
+**定理 16.8（最终自身指数分解与加权次阶的精确身份）。** 可取一个与 $M$ 无关的结构阈值
+
+$$
+H_*=82^{128}.
+\tag{16.29}
+$$
+
+对每个整数 $H\ge H_*$，每一素数的最大指数最终由它自己的地方取得，精确地
+
+$$
+q(H,H;M)=\operatorname{lcm}\left(M,\prod_{p\le H}p^{b_p(H)}\right)
+\quad\text{对所有 }M\ge1,
+\tag{16.30}
+$$
+
+其中
+
+$$
+\begin{aligned}
+b_2(H)&=\kappa(H),&b_7(H)&=\left\lceil\frac{H-1}{2}\right\rceil,\\
+b_p(H)&=H-t_p+v_p(n_p)\quad&&(p\in\mathcal G_H).
+\end{aligned}
+\tag{16.31}
+$$
+
+对固定 $M$，还须越过一个依赖 $M$ 的阈值才能删去 (16.30) 的 $M$。例如约定 $P^+(1)=1$、空集最大值为零，取
+
+$$
+H_M=\max\left(H_*,P^+(M),8v_2(M)+15,
+ 2\max_{\ell\text{ 奇素数}}v_\ell(M)+1\right).
+\tag{16.32}
+$$
+
+则所有整数 $H\ge H_M$ 均有完整的次阶恒等式
+
+$$
+\begin{aligned}
+\log q(H,H;M)
+={}&(H-1)(\vartheta(H)-\log2-\log7)-W(H)\\
+ &+\log5+b_2(H)\log2+b_7(H)\log7.
+\end{aligned}
+\tag{16.33}
+$$
+
+特别地，本节证明的加权入口余项范围为
+
+$$
+\begin{aligned}
+0\le W(H)
+&\le A\sum_{p\in\mathcal G_H}p+B\,\#\mathcal G_H
+ +\log5-\sum_{p\in\mathcal G_H}\log p\\
+&=O(H^2/\log H)\qquad(H\ge H_*).
+\end{aligned}
+\tag{16.34}
+$$
+
+本条不给 $W$ 更强的平均界，尤其不将 $t_p$ 替换为 $1$。
+
+**证明（入口阈值与最终吸收）。** 对 $p\in\mathcal G_H$，由 (16.19) 和 (16.12)、下降支持，$v_p(n_p)\le1$。函数 $x/\log x$ 在 $x\ge3$ 上递增，故
+
+$$
+t_p\le\frac{Ap+B}{\log p}+v_p(n_p)
+\le\frac{AH}{\log H}+\frac B{\log3}+1.
+\tag{16.35}
+$$
+
+$A\le32\log82$，而 $H\ge82^{128}$ 保证 $AH/\log H\le H/4$；$B/\log3+1<12\le H/4$。所以每个 $p\in\mathcal G_H$ 的入口都已满足 $t_p\le H/2$，从而 $b_p(H)\ge H/2$，并可在 (16.6) 中去掉截断。这是同时控制所有 $p\le H$ 的量词，不是对每个固定 $p$ 分别取阈值。
+
+跨地方的因子只来自 $n_p$ 及 $\delta_7$ 中的因子 $2$；它们的素数支持在 $H$ 内，指数至多 $2\log H/\log2$。对 $H\ge256$，
+
+$$
+\kappa(H)\ge\frac{H-15}{8}\ge\frac{2\log H}{\log2},\qquad
+\left\lceil\frac{H-1}{2}\right\rceil
+ \ge\frac{2\log H}{\log2},\qquad
+\frac H2\ge\frac{2\log H}{\log2}.
+\tag{16.36}
+$$
+
+这些不等式在 $256$ 处成立，左右差的导数随后为正。因此每个交叉素因子已被相同素数自身的 $b_\ell(H)$ 吸收，包括 $2,7$。另一方面 $p^{b_p(H)}\mid\delta_p(H)$ 本来就是实际阶的自身分量。因此 $\operatorname{lcm}_{p\le H}\delta_p(H)$ 与 $\prod_{p\le H}p^{b_p(H)}$ 相互整除，得 (16.30)。阈值极不锐利，但只依赖原固定数据，完全独立于 $M$。
+
+若 $H\ge H_M$，$M$ 的所有素因子都不超过 $H$；对奇素数，其所需指数由 $b_p(H)\ge H/2$ 或 $b_7(H)\ge(H-1)/2$ 覆盖；对 $2$ 则由 $b_2(H)\ge(H-15)/8$ 覆盖。因此 $M$ 整除自身分量乘积，可以删去最小公倍数中的 $M$。这是固定模数的另一个阈值，不能与结构阈值混同。
+
+**证明（不丢线性项的恒等式）。** 对 $H\ge H_M$，(16.31) 给出
+
+$$
+\begin{aligned}
+\sum_{p\in\mathcal G_H}b_p(H)\log p
+&=(H-1)\sum_{p\in\mathcal G_H}\log p
+ -\sum_{p\in\mathcal G_H}(t_p-1)\log p
+ +\sum_{p\in\mathcal G_H}v_p(n_p)\log p\\
+&=(H-1)(\vartheta(H)-\log2-\log7)-W(H)+\log5.
+\end{aligned}
+\tag{16.37}
+$$
+
+最后一项恰为 $\log5$，因为只有 $n_5$ 含自身素数且 $v_5(n_5)=1$。加上二进、七进自身分量便是 (16.33)。等价地，从二次基线减去实际周期，完整损失为
+
+$$
+\begin{aligned}
+H\vartheta(H)-\log q(H,H;M)
+={}&W(H)+\vartheta(H)+(H-1)(\log2+\log7)\\
+&-b_2(H)\log2-b_7(H)\log7-\log5.
+\end{aligned}
+\tag{16.38}
+$$
+
+其中 $\vartheta(H)$ 这一线性主阶项不能省略。对 (16.19) 移项，有 $(t_p-1)\log p\le Ap+B+(v_p(n_p)-1)\log p$；逐个素数相加并用同一个 $\log5$ 恒等式即得 (16.34)，再用素数定理完成其阶估计。
+
+用白话说，原问题要求一把整数钥匙同时打开两个点在全部地方、全部指定深度的锁。Galois 对称使同一有理素数上各把锁的共同条件相同；半点使四个方向落在一个较小的有限群中。四维整数盒比这个群大时，必有一个不长的全局组合落进同一局部单位元邻域。若原点对的共同入口过深，这个组合也被迫过深，而它的全局高度付不起这么大的一个局部贡献。这限制的是两点和复乘方向的同一个实现。
+
+每个好素数自己的地方于是提供约 $H$ 个该素数因子，损失由实际 $t_p$ 精确记录。其它地方夹带的该素数因子只有对数多个，最终被自身分量完全吸收。故所有素数的 $H\log p$ 成本相加，得到二次的 $H\vartheta(H)$；没有将一个较大消去数的增长移植给实际周期。尚未控制得更细的部分正是 $W(H)$：本节只用全局高度支付它的总上界，没有证明入口深度的更强平均规律。
+
+本节的固定数据、半点及 $\mathbb Z[i]$ 模挠独立性引自 [Brox 固定提交 `61b82ccacfbefdff3d6e7cf986d6e6279afa1372` 的原始源码](https://github.com/JoseBrox/diophantine-z-q_improvements/blob/61b82ccacfbefdff3d6e7cf986d6e6279afa1372/papers/trace_heights/aggregate_trace_height_20261108_v9.tex)。所引 Silverman 经典结果按非分歧奇素数、七进 $r>e/(p-1)$、可分核及普通/超奇异条件分别使用；二进原过滤及精确阶只复用 §15。文献重合核对限于该固定源码、Silverman 上述章节及本卷 §§11–15：新增综合是原点对的共同入口界、实际周期上下界闭合和 (16.33) 的精确余项身份，不主张全领域原创优先权。这些结论的对象仅是此处固定数据的实际共同周期，不扩张为完整的 $\mathbb Z/\mathbb Q$ 定义或物理同构。$\square$
+
+## 追加锚（本行以下为增补区）
+
+## 17. 实际共轭 CM 点的多项式频率预算与自身阶段双边计数
+
+**定义 17.1（固定数据、原过滤与完整相容目标）。** 本节固定定义 11.1 的正实根与指定实嵌入，使用同一曲线和点
+
+$$
+\begin{gathered}
+F=\mathbb Q(\sqrt2,\sqrt{3-\sqrt2},\sqrt{3+\sqrt2}),\qquad
+E_0:Y^2=X^3-X,\\
+P_1=\left(\frac{115-27\sqrt2}{56},
+ \frac{-660+417\sqrt2}{32(3-\sqrt2)^{3/2}}\right),\\
+P_2=\left(\frac{115+27\sqrt2}{56},
+ \frac{-660-417\sqrt2}{32(3+\sqrt2)^{3/2}}\right).
+\end{gathered}
+\tag{17.1}
+$$
+
+$C=E_0(\mathbb R)^0$、$\omega=dX/(2Y)$、正实周期 $\Omega$、$\theta:C\to\mathbb T=\mathbb R/\mathbb Z$ 及 $\alpha=(\theta(P_1),\theta(P_2))$ 均为定义 12.1 的对象。特别地，$\theta(R)=\Omega^{-1}\int_O^R\omega\pmod{\mathbb Z}$，圆距离记作 $\|\cdot\|_{\mathbb T}$。
+
+有限端始终是 $F$ 的全部有限位。对 $v\mid p$，$\mathfrak m_v$、原极小整模型 $\mathcal E_v$、保单位元同构 $\iota_v$ 和形式参数同构 $\psi_v$ 严格沿用定义 13.1；奇素数处原方程即为该模型。具体的过滤、阶和共同模数为
+
+$$
+\begin{aligned}
+U_v(r)&=\iota_v^{-1}
+ \bigl(\psi_v(\widehat{\mathcal E}_v(\mathfrak m_v^r))\bigr),\\
+d_{v,j}(r)&=\operatorname{ord}_{E_0(F_v)/U_v(r)}(P_j+U_v(r)),\\
+D_H&=q(H,H;1),\\
+q(B,r;M)&=\operatorname{lcm}
+ \bigl(M,\{d_{v,j}(r):p\le B,\ v\mid p,\ j=1,2\}\bigr).
+\end{aligned}
+\tag{17.2}
+$$
+
+这里 $r,H,M$ 为正整数且 $H\ge2$。形式深度要求先进入约化至单位元的形式群，再取参数属于 $\mathfrak m_v^r$；不以任意仿射点上的坐标比值替代这一条件。
+
+令 $\widehat{\mathbb Z}=\varprojlim_m\mathbb Z/m\mathbb Z$。对 $u\in\widehat{\mathbb Z}$，原目标 $\eta(u)$ 的坐标由
+
+$$
+\{\eta_{v,j}(u)\}
+ =\bigcap_{r\ge1}\bigl([b_{v,j,r}]P_j+U_v(r)\bigr),
+\qquad b_{v,j,r}\equiv u\pmod{d_{v,j}(r)}
+\tag{17.3}
+$$
+
+定义，交集的唯一性和代表无关性由定理 14.2 保证。完整有限目标空间为 $\eta(\widehat{\mathbb Z})$，使用普通乘积拓扑。固定 $M\ge1$、$a_0\in\mathbb Z$ 后，本节的全部相容目标指
+
+$$
+u\in a_0+M\widehat{\mathbb Z},\qquad z\in\mathbb T^2.
+\tag{17.4}
+$$
+
+这是同一整数的相容目标族；不允许把不同地方任意独立指定的点自动视为此族中的元素。
+
+**定理 17.2（原实际点的固定 CM 参数桥与增长模数差异度）。** 对 (17.1) 的原点对，存在只依赖这些固定数据的常数 $A>0$、$\mu>0$，使所有整数 $q,J\ge1$ 同时满足
+
+$$
+\lambda_q(J):=
+\min_{\substack{m\in\mathbb Z^2\\0<\|m\|_\infty\le J}}
+ \|q(m_1\alpha_1+m_2\alpha_2)\|_{\mathbb T}
+\ge A(qJ)^{-\mu}.
+\tag{17.5}
+$$
+
+可取 $A\le1/2$。对任意起点 $\xi\in\mathbb T^2$、整数 $N,q,J\ge1$，定义 12.1 的普通半开矩形极端差异度满足
+
+$$
+\begin{aligned}
+\mathcal D_N(\xi,q)
+&\le\frac9{2(J+1)}
+ +\frac{9}{8A N}q^\mu J^\mu
+ \left[\left(1+2\sum_{j=1}^J\frac1j\right)^2-1\right]\\
+&\le\frac9{2(J+1)}+
+ \frac9{A N}q^\mu J^{\mu+2}.
+\end{aligned}
+\tag{17.6}
+$$
+
+起点、矩形端点及增长中的 $q$ 均在这些量词之内。这里存在的 $A,\mu$ 未被赋予数值，(17.5)–(17.6) 不宣称数值明确的起点或实际计算效率。
+
+**证明（解析归一化与非零形式）。** 只为调用复解析定理，取一次固定数域
+
+$$
+K_{\rm CM}=F(i),\qquad D=[K_{\rm CM}:\mathbb Q]=16.
+\tag{17.7}
+$$
+
+次数及 $\operatorname{End}_{\overline{\mathbb Q}}(E_0)=\mathbb Z[i]$ 见 §16 及其所引固定源码。写 $W=2Y$，则解析方程为 $W^2=4X^3-4X$，其 Weierstrass 不变量是 $g_2=4,g_3=0$，且 $dX/W=\omega$。经典复一致化给出一个固定周期格 $\Lambda$ 及
+
+$$
+z\longmapsto (X,Y)=(\wp(z),\wp'(z)/2).
+\tag{17.8}
+$$
+
+固定一次定向周期基 $\omega_1,\omega_2$，$\tau=\omega_2/\omega_1$ 的虚部为正。由于复乘域为 $\mathbb Q(i)$，$\tau\in\mathbb Q(i)\subset K_{\rm CM}$。这是经典 CM 一致化的中间输入，参见 Silverman，*The Arithmetic of Elliptic Curves*，第二版，[VI §1 及 VI §4](https://www.math.ens.psl.eu/~obenoist/refs/Silverman.pdf)。这里只在复解析坐标中写 $W=2Y$，不对 (17.2) 的有限位模型、地方集合或过滤施加坐标变换。
+
+取 $\alpha_j$ 的唯一代表 $a_j\in(0,1)$，置
+
+$$
+\ell_j=\Omega a_j\quad(j=1,2),\qquad \ell_3=\Omega.
+\tag{17.9}
+$$
+
+$P_j\ne O$，故这些代表存在且非零；(17.8) 的指数映射将 $\ell_j$ 送到 $P_j$，将非零周期 $\Omega\in\Lambda$ 送到 $O$。这使用原 $\omega$ 与 $\theta$ 的周期对应，不把 $\theta(P_j)$ 当作未经缩放的椭圆对数。
+
+给定 $q,J\ge1$ 及 $0<\|m\|_\infty\le J$，取最近整数 $b$，使
+
+$$
+\delta=q(m_1a_1+m_2a_2)-b,\qquad
+|\delta|=\|q m\cdot\alpha\|_{\mathbb T}\le\tfrac12.
+\tag{17.10}
+$$
+
+因 $0<a_j<1$，有 $|b|\le2qJ+1/2\le3qJ$。考虑齐次椭圆对数形式
+
+$$
+L'(Z_0,Z_1,Z_2,Z_3)=q m_1Z_1+q m_2Z_2-bZ_3,
+\qquad u'=(1,\ell_1,\ell_2,\Omega).
+\tag{17.11}
+$$
+
+于是 $L'(u')=\Omega\delta$。若它为零，(17.8) 的群同态性会给出 $[qm_1]P_1+[qm_2]P_2=O$。Brox，[固定源码](https://github.com/JoseBrox/diophantine-z-q_improvements/blob/61b82ccacfbefdff3d6e7cf986d6e6279afa1372/papers/trace_heights/aggregate_trace_height_20261108_v9.tex) `lem:independent` 对这同一正根归一化点对证明了 $\mathbb Z[i]$ 上模挠独立性；其整数系数特例与 $m\ne0$ 排除该等式。因此 $L'(u')\ne0$，包括最近整数有两个选择时的每一个选择。
+
+**证明（Ably 的全部固定参数与子群分支）。** 所用经典输入为 Ably，*Formes linéaires de logarithmes de points algébriques sur une courbe elliptique de type CM*，[DOI:10.5802/aif.1745，原文 Theorem 2.1，印刷页 3–4](https://www.numdam.org/item/AIF_2000__50_1_1_0.pdf)。对应参数为 $k=3$、数域 (17.7)、非零对数 $(\ell_1,\ell_2,\ell_3)$ 和形式 (17.11)。对前两个对数，$\wp(\ell_j)=X(P_j)\in F$；第三个是原定理明确允许的非零周期。它们的指数点在原文射影坐标中为
+
+$$
+\gamma_j=[1:X(P_j):2Y(P_j)]\quad(j=1,2),
+\qquad \gamma_3=[0:0:1].
+\tag{17.12}
+$$
+
+原文的 $h$ 是绝对对数射影 Weil 高度：在含坐标的数域 $L$ 上，
+
+$$
+h([x_0:\cdots:x_s])=
+\frac1{[L:\mathbb Q]}\sum_w[L_w:\mathbb Q_w]
+ \log\max_i|x_i|_w.
+\tag{17.13}
+$$
+
+绝对值采用乘积公式归一化；复处使用通常模并以局部次数 $2$ 加权。系数族高度是加上坐标 $1$ 后的射影高度；特别地，整数 $t$ 的高度为 $\log\max(1,|t|)$。本证明用 (17.12) 的点高度，不以典范高度、仅横坐标高度或相对数域高度代替它。$h(\gamma_3)=0$，其余两个高度都是固定有限数。
+
+为逐项满足原文 (2.1)–(2.3)，固定
+
+$$
+\begin{aligned}
+v_j&=e+h(\gamma_j)+|\ell_j|^2/D+1/D,\qquad
+ V_j=\exp(v_j)\quad(j=1,2,3),\\
+v&=\max_j v_j,\qquad V=\exp(v),\qquad E_{\rm A}=e,\\
+B&=3e^e qJ.
+\end{aligned}
+\tag{17.14}
+$$
+
+所有 $V_j,E_{\rm A}$ 均至少为 $e$，且
+
+$$
+\begin{gathered}
+\log B\ge\max\bigl(e,h(qm_1),h(qm_2),h(-b)\bigr),\\
+\log V_j\ge\max\bigl(h(\gamma_j),|\ell_j|^2/D,1/D\bigr),\\
+e\le E_{\rm A}\le
+ \min_j\frac{e\sqrt{D\log V_j}}{|\ell_j|}.
+\end{gathered}
+\tag{17.15}
+$$
+
+这分别是原文的三个参数条件。$D,k,\omega_1,\omega_2,\ell_j,\gamma_j,V_j,E_{\rm A}$ 均不随 $q,J,m,b$ 改变；只有 $B$ 和线性形式的整数系数变化。
+
+原文下界有代数子群分支，不能省略。其陈述中的两个加法坐标须按该文 §4（印刷页 10）和证明结尾（印刷页 31）的齐次增广理解。具体地，在三个系数 $(qm_1,qm_2,-b)$ 中选绝对值最大的非零系数 $c_*$，令 $c_j$ 为各系数除以 $c_*$，则增广形式和向量为
+
+$$
+\widetilde L(Z_{-1},Z_0,Z_1,Z_2,Z_3)
+ =-Z_{-1}+Z_0+\sum_{j=1}^3c_j Z_j,
+\qquad \widetilde u=(1,1,\ell_1,\ell_2,\Omega).
+\tag{17.16}
+$$
+
+它们满足 $\widetilde L(\widetilde u)=L'(u')/c_*\ne0$。因而不存在连通代数子群 $G'\le\mathbb G_a^2\times E_0^3$，使 $\widetilde u\in T_{G'}(\mathbb C)\subseteq\ker\widetilde L$：这些包含关系本身即迫使该值为零。等价地，原文印刷页 31 在齐次情形把该分支投到椭圆因子，其切空间既包含 $(\ell_1,\ell_2,\Omega)$ 又包含于 $\ker(qm_1Z_1+qm_2Z_2-bZ_3)$，仍与 (17.11) 的非零性矛盾。这样同时处理了额外加法坐标和周期项，没有把四维 $u'$ 直接放入五维切空间。
+
+于是原文 (2.4) 的下界分支适用。令 $C_{\rm A}>0$ 为该定理仅依赖 $k,\omega_1,\omega_2$ 的常数，置
+
+$$
+\kappa=C_{\rm A}D^5\log(De)\,v_1v_2v_3>0.
+\tag{17.17}
+$$
+
+由于 $\log E_{\rm A}=1$，该下界在本参数下准确地给出
+
+$$
+\log|L'(u')|\ge-\kappa\log(BD\log V)
+=-\kappa\log(3e^e Dv qJ).
+\tag{17.18}
+$$
+
+因此可固定
+
+$$
+\mu=\kappa,\qquad
+A=\min\left(\frac12,\frac{(3e^e Dv)^{-\kappa}}\Omega\right)>0.
+\tag{17.19}
+$$
+
+除以 $\Omega$ 并对 (17.10) 的全部非零频率取最小值得 (17.5)。这里没有把随 $q$ 增长的点 $[q]P_j$ 当成新的对数输入，也没有把 $\Omega$ 的整数倍藏入一个随频率改变的代数常数项。
+
+**证明（普通矩形与来源范围）。** 复用 (12.11) 的二维 Erdős–Turán–Koksma 不等式及 (12.12) 的几何级数界。非零频率的平均绝对值至多 $1/(2N\lambda_q(J))$，起点只乘以模为 $1$ 的因子；权重和为 $S_J=(1+2\sum_{j\le J}1/j)^2-1\le8J^2$。代入 (17.5) 正好得到 (17.6)，无需重新证明经典 ETK 定理。其矩形版本和系数仍取 Dick–Pillichshammer，[所引预印本](https://web.maths.unsw.edu.au/~josefdick/preprints/DP_book_preprint.pdf) 定义 3.13 与定理 3.26。
+
+文献对应限于 Ably 上述主定理、§4、证明结尾及其所列 Philippon–Waldschmidt 前驱结果，Brox 固定点独立性，以及本卷 §§11–16 的目标与周期结果。Ably 的 CM 对数下界和 ETK 都是文献中间输入；这里的综合是 (17.1) 的原点对、原周期、增长共同模数及后述自身阶段计数的参数对应，不将一般经典定理另称为新增数学。常数 $C_{\rm A}$ 未在这里数值化，故 (17.19) 也不提供数值算法复杂度、最优指数或文献原创优先权的结论。$\square$
+
+**定义 17.3（独立指定的深度、实窗和同整数计数）。** 取全域非递减函数 $h:\mathbb Z_{\ge1}\to\mathbb Z_{\ge2}$，满足 $h(n)\to\infty$，以及全域正的非递增函数 $r:\mathbb Z_{\ge1}\to\mathbb R_{>0}$，满足 $r(n)\to0$。对 (17.4) 的目标定义
+
+$$
+\begin{split}
+\mathcal S_{h,r}(u,z;a_0,M)=\{n\ge1:\ &n\equiv a_0\pmod M,\\
+&\|\theta([n]P_j)-z_j\|_{\mathbb T}<r(n)\quad(j=1,2),\\
+&[n]P_j-\eta_{v,j}(u)\in U_v(h(n))\\
+&\hspace{20mm}(p\le h(n),\ v\mid p,\ j=1,2)\}.
+\end{split}
+\tag{17.20}
+$$
+
+$n$ 在此始终为正整数。对正整数 $X$，置
+
+$$
+\begin{aligned}
+C_{h,r}(X;u,z)&=\#\bigl(\mathcal S_{h,r}(u,z;a_0,M)\cap(X,2X]\bigr),\\
+T_{h,r}(X;u,z)&=\#\bigl(\mathcal S_{h,r}(u,z;a_0,M)\cap[1,X]\bigr),\\
+H_-&=h(X),\qquad H_+=h(2X),\\
+q_-&=q(H_-,H_-;M),\qquad q_+=q(H_+,H_+;M),\\
+R_-&=r(X),\qquad R_+=r(2X).
+\end{aligned}
+\tag{17.21}
+$$
+
+目标在计数期间固定，阶段使用整数自身的 $h(n),r(n)$。以下所有阈值均允许依赖固定的 $M,h,r$ 及原算术数据，不能依赖 $u,z$。
+
+**定理 17.4（支付同整数误差的单一有限预算）。** 固定定理 17.2 的 $A,\mu$，并定义
+
+$$
+p_\mu=2\mu+6,\qquad
+K_\mu=4+144A^{-1}37^{\mu+2}.
+\tag{17.22}
+$$
+
+在定义 17.3 下，若整数 $X\ge1$ 满足
+
+$$
+r(X)\le\frac14,\qquad
+X\ge K_\mu q_+^{\mu+1}R_+^{-p_\mu},
+\tag{17.23}
+$$
+
+则对全部 (17.4) 的相容目标一致地有
+
+$$
+\frac{X R_+^2}{4q_+}
+\le C_{h,r}(X;u,z)
+\le\frac{8X R_-^2}{q_-}.
+\tag{17.24}
+$$
+
+这是一条有限充分预算，不是命中的必要条件。它允许 $[X,2X]$ 内跨过任意多个 $h$ 的跳点，不要求相邻实际周期之比有界。
+
+**证明（固定阶段的准确进程长度）。** 对任一固定 $H\ge2$，$D_H$ 为 (17.2) 的实际共同阶。由 (17.3) 在每个有限商中的像以及定理 14.2 的 CRT 等价，所有 $p\le H,v\mid p,j$ 的深度 $H$ 条件正好等价于 $n\equiv u\pmod{D_H}$。再加模 $M$ 的条件，因 $u\equiv a_0\pmod M$，全部解为
+
+$$
+n\equiv b_H\pmod{q(H,H;M)},\qquad
+b_H\equiv u\pmod{q(H,H;M)},\quad 0\le b_H<q(H,H;M).
+\tag{17.25}
+$$
+
+令 $q=q(H,H;M)$、$b=b_H$。在 $(X,2X]$ 内，全部解精确地写成
+
+$$
+\begin{aligned}
+k_0&=\left\lfloor\frac{X-b}{q}\right\rfloor+1,\\
+N&=\left\lfloor\frac{2X-b}{q}\right\rfloor
+ -\left\lfloor\frac{X-b}{q}\right\rfloor,\\
+n_k&=b+q(k_0+k),\qquad 0\le k<N.
+\end{aligned}
+\tag{17.26}
+$$
+
+因此 $|N-X/q|<1$，起点 $n_0\alpha$ 可任意变化；它不改变 (17.6)。公式处理了严格左端和包含右端，不以 $\lfloor X/q\rfloor$ 代替真实长度。
+
+**证明（面积误差与充分成本）。** 对任意 $0<R\le1/4$，圆靶
+
+$$
+\mathcal B(z,R)=\{w\in\mathbb T^2:
+ \|w_j-z_j\|_{\mathbb T}<R\ (j=1,2)\}
+\tag{17.27}
+$$
+
+的面积为 $4R^2$。将两个开圆弧沿 $0$ 切开，得到至多四个互不相交的普通矩形，端点可开可闭。普通半开矩形的差异度界也适用于这些端点约定：在固定有限样本上，用内侧与外侧半开矩形逼近，令端点移量趋于零，面积趋于同一值，分别控制计数的下界和上界。跨切口时把 $0$ 分配给恰好一个区间。因此
+
+$$
+\left|\frac1N\#\{0\le k<N:n_k\alpha\in\mathcal B(z,R)\}-4R^2\right|
+\le4\mathcal D_N(n_0\alpha,q).
+\tag{17.28}
+$$
+
+这一步保留严格圆距离条件，不以边界零测为理由忽略有限样本的边界点。
+
+令
+
+$$
+J_R=\lceil36R^{-2}\rceil,\qquad
+B(q,R)=\max\left(2,
+ \left\lceil72A^{-1}q^\mu J_R^{\mu+2}R^{-2}\right\rceil\right).
+\tag{17.29}
+$$
+
+若 $X\ge2qB(q,R)$，则 $N\ge B(q,R)$，并且 $X/(2q)\le N\le3X/(2q)$。(17.6) 的两项分别至多 $R^2/8$，所以 $\mathcal D_N\le R^2/4$；(17.28) 的计数介于 $3NR^2$ 和 $5NR^2$ 之间。特别地，它介于 $XR^2/q$ 和 $8XR^2/q$ 之间。
+
+对 $R\le1/4$ 有 $J_R\le37R^{-2}$，且由 (17.29)
+
+$$
+\begin{aligned}
+2qB(q,R)
+&\le4q+144A^{-1}q^{\mu+1}J_R^{\mu+2}R^{-2}\\
+&\le K_\mu q^{\mu+1}R^{-(2\mu+6)}.
+\end{aligned}
+\tag{17.30}
+$$
+
+所以 (17.23) 支付了右端较强阶段 $(H_+,R_+)$ 的全部进程长度与面积误差。又因 $q_-\mid q_+$、$R_-\ge R_+$，同一预算也支付左端较弱阶段 $(H_-,R_-)$ 的误差，不另要求周期比值的控制。
+
+**证明（回接自身阶段的两次包含）。** 若一个整数在 $(X,2X]$ 内满足较强阶段 (17.25) 及 $n\alpha\in\mathcal B(z,R_+)$，则 $h(n)\le H_+$，而 $r(n)\ge R_+$。原子群的嵌套性使这些条件蕴涵 (17.20) 的全部条件。固定阶段的下界于是给出甚至更强的 $C_{h,r}\ge XR_+^2/q_+$，故得到 (17.24) 所列下界。
+
+反之，每个 (17.20) 的成功整数满足 $h(n)\ge H_-$、$r(n)\le R_-$，因此属于较弱阶段 (17.25) 和 $\mathcal B(z,R_-)$。由已支付的较弱阶段上界，$C_{h,r}\le8XR_-^2/q_-$。这两个包含各使用同一个 $n$ 的两个点、全部所列有限位及实端条件；没有将分别可达的整数拼成一个整数。所有估计与 $b_H,z$ 无关，故量词一致于全部目标。$\square$
+
+**定理 17.5（平方根对数深度、多项式实缩靶与准确幂指数）。** 独立于定义 13.1 的旧参数范围，取
+
+$$
+c>0,\qquad \beta,\gamma\ge0,\qquad \beta+\gamma>0,
+\tag{17.31}
+$$
+
+并在全部正整数上定义
+
+$$
+\begin{aligned}
+h_c(n)&=\max\left(2,\left\lfloor c\sqrt{\log(n+2)}\right\rfloor\right),\\
+\rho(n)&=(n+2)^{-\beta}(\log(n+2))^{-\gamma},\\
+R(n)&=\min\bigl(1/4,\rho(n)\bigr).
+\end{aligned}
+\tag{17.32}
+$$
+
+$h_c$ 全域非递减且趋于无穷，$\rho$ 全域正、非递增且趋于零。成功集合使用定义 17.3 中 $h=h_c,r=\rho$，不把实半径改成旧卷的某个参数范围。若
+
+$$
+(\mu+1)c^2+(2\mu+6)\beta<1,
+\tag{17.33}
+$$
+
+则存在只依赖固定原数据及 $M,c,\beta,\gamma$ 的整数 $X_0$，使对每个整数 $X\ge X_0$ 和每个 (17.4) 的目标，
+
+$$
+\frac{X R(2X)^2}{4q(h_c(2X),h_c(2X);M)}
+\le C_{h_c,\rho}(X;u,z)
+\le\frac{8X\rho(X)^2}{q(h_c(X),h_c(X);M)}.
+\tag{17.34}
+$$
+
+特别地，令 $s=1-c^2-2\beta>0$，则双边计数给出目标一致的极限
+
+$$
+\begin{aligned}
+\lim_{X\to\infty}
+\sup_{\substack{u\in a_0+M\widehat{\mathbb Z}\\z\in\mathbb T^2}}
+\left|\frac{\log C_{h_c,\rho}(X;u,z)}{\log X}-s\right|&=0,\\
+\lim_{X\to\infty}
+\sup_{\substack{u\in a_0+M\widehat{\mathbb Z}\\z\in\mathbb T^2}}
+\left|\frac{\log T_{h_c,\rho}(X;u,z)}{\log X}-s\right|&=0.
+\end{aligned}
+\tag{17.35}
+$$
+
+对足够大的 $X$，对数中的计数均为正。不同目标可以由不同整数命中；本定理不主张一个整数同时命中所有 $z$。
+
+**证明（区域核算）。** 定理 16.7 是这里复用的实际周期输入：对每个固定 $M$，$\log q(H,H;M)\sim H^2$。对 $H_-=h_c(X)$ 和 $H_+=h_c(2X)$ 分别使用它，得
+
+$$
+\frac{\log q_-}{\log X}\longrightarrow c^2,
+\qquad
+\frac{\log q_+}{\log X}\longrightarrow c^2.
+\tag{17.36}
+$$
+
+这是对两端各自的主阶应用，没有估计 $q_+/q_-$ 或相邻阶段周期比。又有
+
+$$
+\frac{-\log\rho(X)}{\log X}\longrightarrow\beta,
+\qquad
+\frac{-\log\rho(2X)}{\log X}\longrightarrow\beta.
+\tag{17.37}
+$$
+
+所以有限预算右端的指数准确地是
+
+$$
+\frac{\log\bigl(K_\mu q_+^{\mu+1}\rho(2X)^{-(2\mu+6)}\bigr)}{\log X}
+\longrightarrow(\mu+1)c^2+(2\mu+6)\beta<1.
+\tag{17.38}
+$$
+
+$\gamma$ 的贡献是 $O(\log\log X)$，在此严格不等式内不增加幂指数。取严格余量后，(17.38) 保证所有足够大整数 $X$ 满足 (17.23)，并同时有 $\rho(X)\le1/4$。这给出共同的 $X_0$；它不含 $u,z,a_0$。定理 17.4 即给出 (17.34)，此时 $R(2X)=\rho(2X)$。$2\mu+6$ 来自 (17.30) 的 $J_R^{\mu+2}R^{-2}$，没有采用未经此预算支付的较小系数。
+
+**证明（下界与上界共同决定指数）。** (17.33) 与 $\mu>0$ 蕴涵 $c^2+2\beta<1$。把 (17.36)–(17.37) 代入 (17.34) 的两端，两端对数除以 $\log X$ 都趋于 $1-c^2-2\beta=s$。其中分母 $q_-$ 的上计数界不可省略；它与 $q_+$ 的下计数界共同夹住实际的 $C_{h_c,\rho}$。两端都独立于目标，因此同时证明第一条一致极限及最终正性。
+
+对累计计数，固定任意 $0<\varepsilon<s$。第一条一致极限给出共同阈值后，每个整数 $Y$ 的块计数介于 $Y^{s-\varepsilon}$ 和 $Y^{s+\varepsilon}$。下界用 $Y=\lfloor X/2\rfloor$ 的整个块，它包含于 $[1,X]$。上界把 $[1,X]$ 包在有限初始段与 $(2^j,2^{j+1}]$ 的并中；其块上界是公比 $2^{s+\varepsilon}>1$ 的几何和，总和为 $O(X^{s+\varepsilon})$，初始段长度也与目标无关。令 $\varepsilon\downarrow0$，得第二条一致极限。
+
+用白话说，有限位的全部锁先把整数筛成一个真实进程，代价由实际共同模数承担；两个实方向再要求这条进程进入面积约为实半径平方的窗口。右端最深、最窄的条件提供一批必然成功的整数，左端最浅、最宽的条件限制全部可能成功的整数。两端的模数未必接近，但它们的对数都有同一主阶，所以足以夹出准确的幂指数。充分区域 (17.33) 说明本面积误差能被支付，不表示区域外没有命中，也不表示该区域或常数最优。
+
+这些是固定算术轨道的同时逼近与计数结论。任一成功整数列趋于无穷时，对每个固定 $v,r$ 最终满足原 $U_v(r)$ 目标，实端同时趋于 $z$，故得到 $\mathbb T^2$ 与 $\eta(a_0+M\widehat{\mathbb Z})$ 中相应目标的联合逼近；这只涉及普通乘积拓扑。它不构成完整的 $\mathbb Z/\mathbb Q$ 丢番图定义，不提供量子物理起源或经验物理同一性的认证。$\square$
+
+**推论 17.6（同一预算的次平方根对数深度与对数实窗）。** 保持 (17.1)–(17.4) 的全部原数据。取任意全域非递减、趋于无穷的整数深度 $g(n)\ge2$，满足
+
+$$
+g(n)=o(\sqrt{\log(n+2)}),
+\qquad r_\delta(n)=(\log(n+2))^{-\delta},\quad\delta>0.
+\tag{17.39}
+$$
+
+成功集合在 (17.20) 中独立取 $h=g,r=r_\delta$。则存在共同阈值，使每个足够大的整数 $X$ 及全部 (17.4) 的目标满足
+
+$$
+\frac{Xr_\delta(2X)^2}{4q(g(2X),g(2X);M)}
+\le C_{g,r_\delta}(X;u,z)
+\le\frac{8Xr_\delta(X)^2}{q(g(X),g(X);M)}.
+\tag{17.40}
+$$
+
+两种计数的目标一致幂指数均为 $1$。特别地，对任意固定 $d_*>0$，全域深度
+
+$$
+g_{d_*}(n)=\max\left(2,
+ \left\lfloor d_*\sqrt{\log\log(n+e^e)}\right\rfloor\right)
+\tag{17.41}
+$$
+
+满足本条条件，且目标一致地有更细的对数阶
+
+$$
+C_{g_{d_*},r_\delta}(X;u,z)
+ =X(\log X)^{-(d_*^2+2\delta)+o(1)}.
+\tag{17.42}
+$$
+
+这里 $o(1)$ 一致于全部相容目标。对于一般 $g$，对每个 $\varepsilon>0$，最终一致地有
+
+$$
+C_{g,r_\delta}(X;u,z)
+\ge\frac{X}{(\log X)^{2\delta+\varepsilon}}
+\tag{17.43}
+$$
+
+的一项充分附加条件是
+
+$$
+g(n)^2=o(\log\log(n+2)).
+\tag{17.44}
+$$
+
+例如 $g(n)=\max(2,\lfloor(\log\log(n+16))^{1/3}\rfloor)$ 满足 (17.44)，而 $g(n)=\max(2,\lfloor(\log(n+2))^a\rfloor)$、$0<a<1/2$ 满足 (17.39)，不据此自动取得 (17.43)。
+
+**证明。** 定理 16.7 给出 $\log q(g(2X),g(2X);M)=o(\log X)$，且 $-\log r_\delta(2X)=O(\log\log X)$。因此同一个 (17.23) 的预算右端为 $X^{o(1)}$，最终小于 $X$；较弱阶段也由它支付。定理 17.4 得 (17.40)，两端的对数除以 $\log X$ 均趋于 $1$。累计计数照定理 17.5 的几何和论证，仍为目标一致的指数 $1$。
+
+对 (17.41)，$g_{d_*}(X)^2\sim d_*^2\log\log X$，$g_{d_*}(2X)^2\sim d_*^2\log\log X$。分别应用实际周期主阶，两个模数的对数除以 $\log\log X$ 均趋于 $d_*^2$；再由 (17.40) 的两边得 (17.42)。该论证也说明一个固定深度系数的对数损失由实际周期支付，不需要相邻周期比有界。
+
+若另有 (17.44)，则 $q(g(2X),g(2X);M)=(\log X)^{o(1)}$，且 $r_\delta(2X)^2=(\log X)^{-2\delta}(1+o(1))$。将其代入 (17.40)，固定的因子 $4$ 可由任意 $\varepsilon$ 的严格余量吸收，得到 (17.43)。所列第一个深度的平方为 $O((\log\log n)^{2/3})$；第二个例子的平方则为 $O((\log n)^{2a})=o(\log n)$。这分别证明两个例子的适用范围。
+
+因而本卷原对数实窗和满足 (17.44) 的高密度情形，是同一有限预算的较弱推论；$\delta$ 在这里可以是任意正数，不沿用旧的 $0<\gamma<1/4$ 限制。一般的次平方根对数深度只保证 $X^{1-o(1)}$ 型计数，不能把它说成具有任意指定对数损失的高密度界。本推导不需要另一个 David 参数桥，也不改动旧高度法已有结论；未满足 (17.39) 的自适应深度或其它缩靶安排不由本条处理。$\square$
+
+## 追加锚（本行以下为增补区）
+## 18. 实际自身阶段的移动质量与目标一致相对渐近
+
+**定义 18.1（平方根对数阶段与移动质量）。** 保持定义 17.1 的 $F,E_0,P_1,P_2$、正实嵌入、圆坐标 $\theta$、$\alpha$、全部有限地方的 $U_v$、原过滤及相容目标 (17.4)。固定 $M\ge1$、$a_0\in\mathbb Z$，并取
+
+$$
+\begin{aligned}
+h(n)&=\max\left(2,\left\lfloor c_0\sqrt{\log(n+2)}\right\rfloor\right),\\
+\rho(n)&=(n+2)^{-\beta}(\log(n+2))^{-\gamma},
+\end{aligned}
+\tag{18.1}
+$$
+
+其中 $c_0>0$、$\beta,\gamma\ge0$ 且 $\beta+\gamma>0$。对 $u\in a_0+M\widehat{\mathbb Z}$、$z=(z_1,z_2)\in\mathbb T^2$，令
+
+$$
+\begin{aligned}
+S_X(u,z)=\#\{n\in\mathbb Z:\;&X<n\le2X,\ n\equiv a_0\pmod M,\\
+&\|\theta([n]P_j)-z_j\|_{\mathbb T}<\rho(n)\quad(j=1,2),\\
+&[n]P_j-\eta_{v,j}(u)\in U_v(h(n))\\
+&\hspace{20mm}(p\le h(n),\ v\mid p,\ j=1,2)\},\\
+L_X&=4\sum_{X<n\le2X}
+ \frac{\rho(n)^2}{q(h(n),h(n);M)}.
+\end{aligned}
+\tag{18.2}
+$$
+
+这里 $X$ 为正整数，$S_X$ 是每个整数使用自身 $h(n)$ 和自身半径的实际命中数，$L_X$ 使用同一实际模数的移动质量；右端不把任意阶段的模数替换成一个共同的上界。
+
+**定理 18.2（严格充分区域内的移动质量渐近）。** 令 $A,\mu$ 为定理 17.2 中的固定常数，并置
+
+$$
+\Delta=1-(\mu+1)c_0^2-(2\mu+2)\beta.
+\tag{18.3}
+$$
+
+若 $\Delta>0$，则
+
+$$
+\lim_{X\to\infty}
+\sup_{\substack{u\in a_0+M\widehat{\mathbb Z}\\z\in\mathbb T^2}}
+\left|\frac{S_X(u,z)}{L_X}-1\right|=0.
+\tag{18.4}
+$$
+
+条件 (18.3) 是充分条件；本条不主张其必要性、端点有效性、任何数值效率或常数最优性。
+
+**证明（每个阶段的准确剩余类与固定半径估计）。** 记
+
+$$
+q_H=q(H,H;M).
+\tag{18.5}
+$$
+
+若 $H$ 是 $h(n)$ 在某个整数区间上的值，则 (17.25) 的有限商等价和定义 14.2 的 CRT 给出唯一的剩余类 $b_H\pmod {q_H}$，使该区间内的全部有限地方条件及 $M$-同余恰好等价于 $n\equiv b_H\pmod {q_H}$。这里 $b_H$ 依赖 $u$，但 $q_H$ 不依赖 $u,z$。对任意整数端点 $A_0<B_0$，该区间中的允许项准确地是
+
+$$
+N_H(A_0,B_0)=
+\left\lfloor\frac{B_0-b_H}{q_H}\right\rfloor-
+\left\lfloor\frac{A_0-b_H}{q_H}\right\rfloor,
+\qquad
+\left|N_H(A_0,B_0)-\frac{B_0-A_0}{q_H}\right|<1.
+\tag{18.6}
+$$
+
+这保留严格左端、包含右端、任意空剩余类块及真实的 floor 长度。
+
+Dick–Pillichshammer，*Digital Nets and Sequences: Discrepancy Theory and Quasi-Monte Carlo Integration*，定义 3.13（印刷页 72）和定理 3.26（印刷页 84）仍提供 (12.11) 的二维 Erdős–Turán–Koksma 频率权重接口：
+
+$$
+r(m)=\max(1,|m_1|)\max(1,|m_2|),
+\tag{18.7}
+$$
+
+小盒的局部零频误差另由 Faifman–Rudnick，*Statistics of the zeros of zeta functions in families of hyperelliptic curves over a finite field*，Compositio Mathematica **146** (2010)，81–101，[作者公开原文](https://www.math.tau.ac.il/~rudnick/papers/compositio%20offprint.pdf)，[DOI 10.1112/S0010437X09004308](https://doi.org/10.1112/S0010437X09004308)，§4 印刷页 90 的 (4.1)–(4.4) 提供。该处对任意长度 $0<|I|<1$ 及整数 $J\ge1$ 给出实三角多项式的逐点夹逼、准确均值及 Fourier 系数误差；这里不使用随后要求 $J|I|>1$ 的 Proposition 4.1。
+
+对 $0<r\le1/4$ 和整数 $J\ge2$，记 $I_j=\{x\in\mathbb T:\|x-z_j\|_{\mathbb T}<r\}$、$\delta_J=(J+1)^{-1}$、$e(t)=\exp(2\pi it)$，并以 $\widehat f(m)=\int_{\mathbb T}f(x)e(-mx)\,dx$ 归一化 Fourier 系数。将上述长度 $2r$、中心为 $0$ 的多项式平移到 $z_j$，记为 $p_j^\pm=p_{j,r,z_j}^\pm$；平移不改变均值及系数模。它们的次数不超过 $J$，且
+
+$$
+\widehat p_j^\pm(0)=2r\pm\delta_J,\qquad
+\left|\widehat p_j^\pm(m)-\widehat{\mathbf 1_{I_j}}(m)\right|\le\delta_J
+\quad(0<|m|\le J).
+$$
+
+原文的闭区间外 $p_j^-\le0$，区间内 $p_j^+\ge1$；连续性使边界也分别满足 $p_j^-\le0$、$p_j^+\ge1$，故同一对多项式对严格开区间仍有 $p_j^-\le\mathbf 1_{I_j}\le p_j^+$ 且 $p_j^+\ge0$。开、闭端点不影响积分；对 $m\ne0$，
+
+$$
+\widehat{\mathbf 1_{I_j}}(m)
+=e(-mz_j)\frac{\sin(2\pi mr)}{\pi m},\qquad
+|\widehat p_j^\pm(m)|
+\le\min\left(2r,\frac1{\pi|m|}\right)+\delta_J
+\quad(0<|m|\le J).
+$$
+
+用它们的乘积和一次 inclusion–exclusion 组合
+
+$$
+P_{r,z}^{+}=p_{1}^{+}p_{2}^{+},\qquad
+P_{r,z}^{-}=p_{1}^{-}p_{2}^{+}+p_{1}^{+}p_{2}^{-}-p_{1}^{+}p_{2}^{+}
+$$
+
+得到每坐标次数不超过 $J$ 的二维上下式，即 Fourier 支撑满足 $\|m\|_\infty\le J$，不要求总次数不超过 $J$。四种点是否属于两个区间的逐项检查给出
+
+$$
+P_{r,z}^{-}(x)\le
+\mathbf 1_{\{\|x_j-z_j\|_{\mathbb T}<r,\ j=1,2\}}(x)
+\le P_{r,z}^{+}(x).
+\tag{18.8}
+$$
+
+两坐标的积分相乘，给出准确零频
+
+$$
+\widehat P_{r,z}^+(0)=4r^2+4r\delta_J+\delta_J^2,\qquad
+\widehat P_{r,z}^-(0)=4r^2-4r\delta_J-3\delta_J^2.
+$$
+
+由 $\delta_J\le J^{-1}$ 即得下式第一界。存在绝对常数 $C_0$，对两种符号同时有
+
+$$
+\left|\widehat P_{r,z}^{\pm}(0)-4r^2\right|
+\le C_0\left(\frac rJ+\frac1{J^2}\right),
+\qquad
+\sum_{0<\|m\|_\infty\le J}
+\left|\widehat P_{r,z}^{\pm}(m)\right|
+\le C_0(1+\log J)^2.
+\tag{18.9}
+$$
+
+对第二界，一维零频的绝对值不超过 $2r+\delta_J$，非零系数由上述 $\min(2r,(\pi|m|)^{-1})+\delta_J$ 控制。对 $m_1,m_2$ 取乘积，且 $P_{r,z}^-$ 只有三个乘积项，故 (18.9) 的和由
+
+$$
+\left(\,r+\sum_{j=1}^{J}\frac1j+\frac{J}{J}\right)^2
+\le C(1+\log J)^2
+\tag{18.10}
+$$
+
+得到。这里的实际系数界保留 (18.7) 的调和频率权重，而不是把频率数目 $O(J^2)$ 当作系数和。
+
+固定 $H,r$，把区间内的 $N=N_H(A_0,B_0)$ 个允许项写成 $n_k=b_H+q_H(k_0+k)$。对每个非零 $m$，几何和及定理 17.2 的 (17.5) 给出
+
+$$
+\left|\sum_{k=0}^{N-1}e^{2\pi i m\cdot(n_k\alpha)}\right|
+\le\min\left(N,\frac1{2\|q_Hm\cdot\alpha\|_{\mathbb T}}\right)
+\le\frac1{2A}q_H^{\mu}J^{\mu}
+\quad(0<\|m\|_\infty\le J).
+\tag{18.11}
+$$
+
+起点只贡献模为 $1$ 的因子。将 (18.9) 插入 (18.8)，并同时使用 (18.11)，得到对任意起点、中心 $z$ 和任意 $N$（包括 $N=0$）的一致估计
+
+$$
+\left|
+\#\{0\le k<N:n_k\alpha\in\mathcal B(z,r)\}-4r^2N
+\right|
+\le C_1\left[
+N\left(\frac rJ+\frac1{J^2}\right)
++A^{-1}q_H^{\mu}J^{\mu}(1+\log J)^2
+\right],
+\tag{18.12}
+$$
+
+其中 $\mathcal B(z,r)$ 是两个圆距离都小于 $r$ 的开盒。式 (18.12) 是本节唯一使用的局部估计；它来自上述区间多项式的 (18.8)–(18.10)、(17.5) 的实际频率分离和几何和，不使用相邻 $q_H$ 的比值。
+
+**证明（阶段跳点、变半径和所有短块）。** 取 $X$ 足够大，令 $K=\lceil\log X\rceil\le X$，按整数切点定义
+
+$$
+\begin{aligned}
+t_k&=\left\lfloor X+\frac{kX}{K}\right\rfloor
+\quad(0\le k\le K),\\
+I_k&=(t_k,t_{k+1}]\cap\mathbb Z
+\quad(0\le k<K).
+\end{aligned}
+\tag{18.13}
+$$
+
+这里 $t_0=X$、$t_K=2X$，各 $I_k$ 不交且并集为 $(X,2X]\cap\mathbb Z$。将每个 $I_k$ 与阶段集合 $\{n\in\mathbb Z:h(n)=H\}$ 相交，丢弃空的整数交集，把所有非空交集编号为 $I_\nu$。由 $h$ 的单调性，每个 $I_\nu$ 仍为连续整数块；明确定义
+
+$$
+A_\nu=\min I_\nu-1,\qquad B_\nu=\max I_\nu.
+$$
+
+于是 $A_\nu,B_\nu\in\mathbb Z$，$I_\nu=(A_\nu,B_\nu]\cap\mathbb Z$，且对包含该块的 $I_k$ 有
+
+$$
+\#I_\nu=B_\nu-A_\nu
+\le t_{k+1}-t_k\le\frac XK+1.
+$$
+
+由于
+
+$$
+\sqrt{\log(2X+2)}-\sqrt{\log(X+2)}\longrightarrow0,
+\tag{18.14}
+$$
+
+足够大时 $(X,2X]$ 至多遇到一个 $h$ 的跳点，所以所得非空整数块的数目 $m_X$ 满足 $m_X\le2K+2$。跳点可以落在任意一个小区间内；所有非空整数块，包括短阶段块及其中允许剩余类计数 $N_\nu=0$ 的块，都保留在下面的求和中。
+
+在 $(X,2X]$ 上，$\rho$ 的对数导数满足
+
+$$
+\left|\frac{d}{dx}\log\rho(x)\right|
+\le\frac{\beta+\gamma/\log(X+2)}{X+2}.
+\tag{18.15}
+$$
+
+每个 $n\in I_\nu$ 满足 $A_\nu+1\le n\le B_\nu$，而 $\rho$ 单调递减，故同一 $I_\nu$ 内的最大、最小半径准确地是
+
+$$
+r_\nu^+=\rho(A_\nu+1),\qquad r_\nu^-=\rho(B_\nu)
+\tag{18.16}
+$$
+
+由 (18.15) 和 $B_\nu-A_\nu\le X/K+1$，它们满足 $r_\nu^+/r_\nu^-=1+O(K^{-1}+X^{-1})=1+O(K^{-1})$，常数只依赖 $\beta,\gamma$。取 $X$ 足够大使 $r_\nu^+\le1/4$。嵌套性给出
+
+$$
+\mathcal B(z,r_\nu^-)
+\subseteq\mathcal B(z,\rho(n))
+\subseteq\mathcal B(z,r_\nu^+)
+\quad(n\in I_\nu).
+\tag{18.17}
+$$
+
+令 $H_\nu$ 为该区间的阶段，$q_\nu=q_{H_\nu}$，$N_\nu=N_{H_\nu}(A_\nu,B_\nu)$，并令 $S_\nu$ 表示 $S_X(u,z)$ 在 $I_\nu$ 内的贡献；再置
+
+$$
+L_\nu=4\sum_{n\in I_\nu}\frac{\rho(n)^2}{q_\nu}.
+\tag{18.18}
+$$
+
+将 (18.12) 对 $r_\nu^-$ 和 $r_\nu^+$ 各用一次，再用 (18.17) 夹住真实的变半径命中数。结合 $\#I_\nu=B_\nu-A_\nu$、(18.6) 及 (18.16)，得到
+
+$$
+\begin{aligned}
+|S_\nu-L_\nu|\le C_2\bigg(&K^{-1}L_\nu+(r_\nu^+)^2
+ +N_\nu\left(\frac{r_\nu^+}{J}+\frac1{J^2}\right)\\
+&+A^{-1}q_+^{\mu}J^{\mu}(1+\log J)^2\bigg),
+\end{aligned}
+\tag{18.19}
+$$
+
+其中 $q_+=q(h(2X),h(2X);M)$。第一项支付同一小区间内的真实半径变化；第二项来自 (18.6) 的 $|N_\nu-(B_\nu-A_\nu)/q_\nu|<1$，乘以任一端点面积后不超过 $4(r_\nu^+)^2$；最后一项对短块也成立，因为 (18.11) 使用的是 $\min(N,\cdots)$，没有把长块的相对差异度假定为短块的相对估计。若 $N_\nu=0$，则 $S_\nu=0$ 且 $(B_\nu-A_\nu)/q_\nu<1$，从而 $L_\nu\le4(r_\nu^+)^2$，仍由同一 floor 余项控制。
+
+记 $\underline r=\rho(2X)$、$\overline r=\rho(X+1)$，并取
+
+$$
+J=\left\lceil\underline r^{-2}\right\rceil.
+\tag{18.20}
+$$
+
+这些端点半径之比由 (18.15) 有界。所有 $I_\nu$ 构成 $(X,2X]\cap\mathbb Z$ 的不交分割，故 $\sum_\nu(B_\nu-A_\nu)=X$。又 $q_\nu\mid q_+$，所以
+
+$$
+L_X=\sum_\nu L_\nu
+\ge\frac{4X\underline r^2}{q_+},
+\qquad
+N_\nu\le\frac{B_\nu-A_\nu}{q_\nu}+1.
+\tag{18.21}
+$$
+
+把 (18.19) 对所有 $\nu$ 相加。由 $J\ge\underline r^{-2}$、(18.21)、$m_X\le2K+2$ 及端点半径比的有界性，得到
+
+$$
+\frac{|S_X-L_X|}{L_X}
+\le C_3\left[
+\frac1K+\underline r+\frac{Kq_+}{X}
++\frac{Kq_+^{\mu+1}\underline r^{-(2\mu+2)}
+ (1+\log(1/\underline r))^2}{X}
+\right].
+\tag{18.22}
+$$
+
+这里没有丢掉任一阶段的初项：所有 $+1$ 都由 (18.6) 保留，并在 (18.21) 后形成 $Kq_+/X$ 及同阶的更小项；所有短、空剩余类块都在 (18.19) 中以绝对误差计入。特别是 (18.22) 不需要 $q_+/q_-$ 或任何相邻阶段模数比有界。
+
+**证明（严格区域与统一量词）。** 定理 16.7 对固定 $M$ 给出
+
+$$
+\frac{\log q_+}{\log X}\longrightarrow c_0^2,
+\qquad
+-\frac{\log\underline r}{\log X}\longrightarrow\beta.
+\tag{18.23}
+$$
+
+其中 $h(2X)=c_0\sqrt{\log X}+o(\sqrt{\log X})$；对数因子 $\gamma$ 只贡献 $O(\log\log X)$。因此 (18.3) 蕴涵
+
+$$
+\frac1{\log X}\log\left(
+\frac{q_+^{\mu+1}\underline r^{-(2\mu+2)}}{X}
+\right)
+\longrightarrow-\Delta<0.
+\tag{18.24}
+$$
+
+乘以 $K=\lceil\log X\rceil$ 和 (18.22) 中的调和对数因子不改变这个严格负的幂指数。又由 $\Delta>0$ 得 $c_0^2+2\beta<1$，所以 $q_+/X\to0$、$\underline r\to0$，且 (18.22) 的右端趋于零。估计中的常数只依赖固定的 $M,a_0,c_0,\beta,\gamma,A,\mu$ 及原算术数据，不依赖 $u,z$；故得到 (18.4)。同时 (18.21) 表明 $L_X\to\infty$，其幂指数至少为 $1-c_0^2-2\beta>0$。
+
+用白话说，把二倍区间按阶段跳点和 $\log X$ 个短小片段切开，每片只用一个真实模数和两个相邻的真实半径。经典 ETK 的调和频率权重把一片的非零频率误差压到 $q_H^\mu J^\mu$ 乘对数平方；选 $J$ 为最小半径的平方倒数后，全部片段的总误差正是 (18.24) 所支付的量。一个阶段即使只剩很短的一截，仍按绝对误差处理；真正的 floor 初项也单独留下并由 $Kq_+/X$ 吸收。因此计数的主项是每个整数自身的 $4\rho(n)^2/q(h(n),h(n);M)$ 之和，而不是用最深阶段模数或端点半径偷换出来的粗界。
+
+本条只是在固定的实际共轭点、原有限地方过滤、原共同整数及全部相容目标上作条件性综合；$A,\mu$ 沿用定理 17.2，未求数值。它不声称完整的 $\mathbb Z/\mathbb Q$ 定义、量子物理起源、实际算法效率或必要边界，也不把条件区域外的行为判作失败。$\square$
+
+## 追加锚（本行以下为增补区）

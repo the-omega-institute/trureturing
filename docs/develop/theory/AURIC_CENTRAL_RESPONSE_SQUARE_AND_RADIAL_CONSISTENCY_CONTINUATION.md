@@ -374,3 +374,1497 @@ Cabello–Peralta，[*Weak-2-local symmetric maps on C*-algebras*](https://arxiv
 完整保持98.2与110.3的原来源：唯一原 $\Omega$、原 $E/D$、native、全词同一K/J/q、parent/ready、中心经典与不等维块、全部实际准备及零／不等／次归一质量；正质量Born只在实际完整菜单归一。Hilbert表示、叠加与可取得原标签保留原范围。CP仍需整台实际箭头、实际相关联合及递归同源参考；完整仪器连环境全部成功／失败／记录／后口输出，Kraus、TP、更新、Lüders及实际忠实交换共同生成的张量各守原前件。全部合法顺序／自适应／并行历史、每个仍合法未来、细记录与真正分组遗忘、停止／拒绝／销毁、同数两侧及逆向真实返回均保留。CountRead无穷、正常性、指定前对偶、原域上的流、物理钟、Hamiltonian生成元定义域、能量、作用量和共同正 $\hbar$ 仍须实际来源。本节只供应所述两条原响应关系，不宣告完整量子起源目标成立。
 
 ## 追加锚（本行以下为增补区）
+
+## 130. 原三轴应用的完整前件与两条供应
+
+**定义 130.1（原域、实际三轴与引用范围）。** 本续卷130–136节仍取123.1的同一原 $(E,C,u,N,\mathcal P,S,D)$，其中 $E$ 是含单位实 Archimedean 序单位空间；正实线性评价族 $\mathcal P$ 分离元素并准确决定 $C$。保留全部原质量，包括零、不等与次归一质量。完整A1是全部有向Hermitian二表正性；A2是原相加三表及其排列的实部半正定与 $(1,-1,-1)$ 的零二次值；A3是 $S(u,u)=u$，以及同一个固定有理 $0<\theta\le1$ 上的 $0\le v\le\theta u\Rightarrow S(v,v)\le v$。全部原P2和完整原PB均取定义123.2及式(123.4)–(123.5)，对全部原输入成立。
+
+沿前卷16.1–16.2的同一忠实、含单位、等距且准确保锥JC包含记原元素，有
+
+$$
+S(a,b)=a\circ b=\frac{ab+ba}{2},\qquad
+E\subset X\subset\mathcal A_{\rm sa},\qquad
+\overline E=X,\quad\mathcal A=C^*(X),\quad
+C=E\cap\mathcal A_+,\quad N=\|\cdot\||_E.
+\tag{130.1}
+$$
+
+原 $E$ 是这些已识别Jordan运算的原定义域，可以不完备；不要求 $X=\mathcal A_{\rm sa}$。$D:E^2\to E$ 始终是同一原总映射，不预付一般可加、连续、可测、商下降或完成延拓。以下未标“前卷”的130–136节编号均指本续卷；前卷0–122及本续卷123–129的定义与引用保持各自原范围。
+
+固定123.1的实际原 $h,e$ 及同一旧输出 $j=D(h,e)$，故
+
+$$
+h^2=e^2=j^2=u,\qquad
+h\circ e=h\circ j=e\circ j=0,\qquad
+D(e,j)=h,\quad D(j,h)=e.
+\tag{130.2}
+$$
+
+仍记 $V_a=\{z\in E:a\circ z=0\}$、$L_a z=a\circ z$、$U_a=2L_a^2-I$、$T=[L_j,L_e]$，并记 $Gz=D(h,z)$ 对原 $z\in V_h$。对三个实际首标签另记 $F_a w=D(a,w)$，只在所用原 $w\in V_a$ 上调用。前卷100.1及本续卷127.1的原有限分量为
+
+$$
+\begin{gathered}
+E_\sigma=\{x\in E:U_ax=\sigma_a x\ (a=h,e,j)\},\qquad
+E=\bigoplus_{\sigma\in\{1,-1\}^3}E_\sigma,\\
+A_1=E_{-+-},\quad A_2=E_{--+},\quad
+M=A_0=E_{---},\quad C_{+,+}=E_{-++},\\
+V_h=A_1\oplus A_2\oplus M\oplus C_{+,+},\qquad
+\Pi=\tfrac12(I-U_eU_j)|_{V_h}.
+\end{gathered}
+\tag{130.3}
+$$
+
+三个 $U_a$ 是保持原 $E$ 的对易Jordan自同构。每个分量投影均是式(127.3)的有限原Jordan表达式。环境解释是 $U_ax=axa$，正号等价于 $ax=xa$，负号等价于 $ax=-xa$。这里尚不假设三份共轭的乘积为恒等。
+
+**定义 130.2（所消费的已发表关系）。** 对全部原 $z\in V_h$，125.1及126.1供应
+
+$$
+\begin{gathered}
+\Pi Gz=T\Pi z,\qquad
+r_z:=Gz-T\Pi z\in M\oplus C_{+,+},\\
+r_z^2=((I-\Pi)z)^2.
+\end{gathered}
+\tag{130.4}
+$$
+
+只消费127.1的平方结论
+
+$$
+w^2\in E\cap Z(X)\cap Z(\mathcal A)\qquad(w\in M).
+\tag{130.5}
+$$
+
+该中心是整个 $X$ 及其生成的 $\mathcal A$ 的中心。它不是某个有限生成诊断代数的中心；以下不需要128.1的全 $M$ 线性结论。前卷32–36及式(123.2)给原行的实齐次、自身正交、平方保持与负平方。前卷106.2、107.1–107.2给 $F_a(M)\subset M$ 及实际三轴复合表；前卷97.1给原标量平方方向上的加法。前卷54.1、56.1只在其首标签严格收缩且平方全局中央、相应原横向输入的Gram全局中央时使用。没有对125.1增加循环变体。
+
+## 131. 共享投影排除原双交换横向分量
+
+**定理 131.1（整个原 $C_{+,+}$ 为零）。** 在130.1的原背景下，$C_{+,+}=\{0\}$。
+
+证明。任取原 $c\in C_{+,+}$，使用同一实际输入 $z=e+c\in V_h$。因 $e\in A_1$，有 $\Pi z=e$、$Te=j$，故(130.4)给
+
+$$
+G(e+c)=j+s,\qquad s=m+d\in M\oplus C_{+,+},\qquad s^2=c^2.
+\tag{131.1}
+$$
+
+原平方保持 $(Gz)^2=z^2$ 因而准确给
+
+$$
+j\circ s=e\circ c.
+\tag{131.2}
+$$
+
+$j\circ m=0$，故左侧是 $j\circ d$。它的 $U_e$ 符号为负，因为 $U_ej=-j$、$U_ed=d$；右侧的 $U_e$ 符号为正。对(131.2)施加保持原域的 $(I+U_e)/2$，得到 $e\circ c=0$。又 $U_ec=c$ 意味着 $ec=ce$，所以 $e\circ c=ec$，在环境中左乘 $e$ 并用 $e^2=u$ 得 $c=0$。环境乘法只用于证明这个原元素为零，没有成为新的旧响应输入。∎
+
+## 132. 全局中央平方与实际三轴复合排除共同反交换方向
+
+**定理 132.1（整个原 $M$ 为零）。** 在同一原背景下，$M=A_0=E_{---}=\{0\}$。不要求其中元素的平方为标量、可逆或有限谱。
+
+证明。任取原 $w_0\in M$。选择正实数 $k$ 使 $w=kw_0$ 满足 $\|w\|<1$，记
+
+$$
+R=w^2,\qquad p=F_hw,\qquad r=F_jw.
+\tag{132.1}
+$$
+
+由(130.5)，$R\in E\cap Z(X)\cap Z(\mathcal A)$。前卷106.2、107.1、原平方保持及自身正交给
+
+$$
+p,r\in M,\qquad p^2=r^2=R,\qquad
+w\circ r=0,\qquad F_er=p,\qquad F_eh=-j.
+\tag{132.2}
+$$
+
+特别 $\|r\|=\|w\|$。取正实数 $t$ 满足 $t(1+\|w\|)<1$，定义真正原标签
+
+$$
+a=t(h+r),\qquad b=e+w.
+\tag{132.3}
+$$
+
+它们满足
+
+$$
+\begin{gathered}
+\|a\|<1,\qquad a^2=t^2(u+R)\in Z(X)\cap Z(\mathcal A),\\
+e,w\in V_a,\qquad e^2=u,\quad w^2=R,\quad e\circ w=0,\\
+a\circ b=0,\qquad b^2=u+R.
+\end{gathered}
+\tag{132.4}
+$$
+
+这里 $r\circ e=h\circ w=h\circ r=0$ 来自原共同反交换空间，$r\circ w=0$ 来自原自身响应，故两份横向条件逐项成立。于是前卷56.1用于严格收缩的实际首标签 $a$ 及原 $e,w$，确实给
+
+$$
+D(a,b)=D(a,e)+D(a,w).
+\tag{132.5}
+$$
+
+先计算第一项。首标签 $e$ 是原单位平方轴，$r,h\in V_e$，且 $r\circ h=0$。前卷97.1沿原标量平方方向 $h$ 及前卷35.1的原行实齐次给
+
+$$
+D(a,e)=-D(e,t(h+r))
+=-t(F_eh+F_er)=t(j-p).
+\tag{132.6}
+$$
+
+第一步是原反对称性；没有使用一般第一槽齐次。
+
+再计算第二项。实际首标签 $w$ 已严格收缩，平方 $R$ 全局中央。原 $h,r\in V_w$ 的Gram是 $u,R,0$，所以前卷56.1与54.1在准确原域上给
+
+$$
+D(w,a)=t\{D(w,h)+D(w,r)\}.
+\tag{132.7}
+$$
+
+原反对称性给 $D(w,h)=-p$ 及 $D(w,j)=-r$。对同一个实际首标签 $w$、原横向标签 $j$，前卷54.1的带权负平方给
+
+$$
+D(w,-r)=D(w,D(w,j))=-R\circ j.
+$$
+
+原第二槽奇性因而给 $D(w,r)=R\circ j$。再用原反对称性，(132.7)成为
+
+$$
+D(a,w)=t(p-R\circ j).
+\tag{132.8}
+$$
+
+把两份已识别的同一旧值代回(132.5)，得到
+
+$$
+D(a,b)=t(u-R)j.
+\tag{132.9}
+$$
+
+右侧环境乘积等于原Jordan表达式 $t(j-R\circ j)$。另一方面，$a\circ b=0$，故前卷16.3的原正交面积式与(132.4)给
+
+$$
+D(a,b)^2=a^2b^2=t^2(u+R)^2.
+\tag{132.10}
+$$
+
+对(132.9)平方，$R$ 与 $j$ 交换且 $j^2=u$，同一个左侧又等于 $t^2(u-R)^2$。相减得 $4t^2R=0$。由于 $t>0$，有 $R=0$，自伴平方零给 $w=0$，再由 $k>0$ 得 $w_0=0$。
+
+所有缩放均为原实线性域内的实数缩放。未知响应的缩放只在已经支付的单位平方行或严格收缩中央平方行的第二槽中调用。没有除以 $R$，没有归一化谱纤维，也没有用前卷109.1的局部诊断中心替换(130.5)。零元素和零强度不被删除。∎
+
+## 133. 同一实际横向行的全部输入识别
+
+**定理 133.1（全原 $V_h$ 上的同一 $D=T$）。** 在130.1下，对每个原 $z\in V_h$，
+
+$$
+\boxed{D(h,z)=Tz,\qquad V_h=A_1\oplus A_2.}
+\tag{133.1}
+$$
+
+此原限制实线性、保持 $V_h$，并对全部原 $y,z\in V_h$ 满足
+
+$$
+\begin{gathered}
+(Ty)^2=y^2,\qquad T^2y=-y,\qquad \|Ty\|=\|y\|,\\
+Ty\circ Tz=y\circ z,\qquad
+y\circ Tz+Ty\circ z=0.
+\end{gathered}
+\tag{133.2}
+$$
+
+证明。131.1、132.1使 $\Pi=I$ 在整个原 $V_h$ 上成立，(130.4)因而给同一实际输出(133.1)。$T=[L_j,L_e]$ 原本就是保持 $E$ 的已知实线性Jordan表达式，前卷101.1还给 $T(A_1)\subset A_2$、$T(A_2)\subset A_1$。
+
+仅为环境计算记 $K_0=je$。前卷102.2给
+
+$$
+K_0^*=-K_0,\qquad K_0^2=-u,\qquad
+Tz=\tfrac12(K_0z-zK_0)=K_0z\quad(z\in V_h),
+\tag{133.3}
+$$
+
+因为原 $V_h=A_1\oplus A_2$ 的全部元素都与 $K_0$ 反交换。于是 $(Ty)(Tz)=yz$、$T^2y=-y$，而左乘酉元 $K_0$ 保范数。取Jordan对称部得到Gram等式；展开并消去 $yK_0=-K_0y$、$zK_0=-K_0z$ 的对应项，得到斜关系。这些计算识别的是(133.1)已经支付的实际旧输出，未由已知 $T$ 的性质反向假定未知 $G$ 的性质。∎
+
+**推论 133.2（固定实际首轴的全部横向缺陷）。** 对任意有限原族 $z_i\in V_h$ 及实数 $s_i$，
+
+$$
+D\left(h,\sum_i s_i z_i\right)=\sum_i s_iD(h,z_i).
+\tag{133.4}
+$$
+
+因此静态卷89.1的原加性缺陷 $\delta_h(y,z)=D(h,y+z)-D(h,y)-D(h,z)$ 对全部原 $y,z\in V_h$ 为零。
+
+证明。只在原有限和中使用(133.1)与已知 $T$ 的实线性。前卷35.1还保证旧记号 $J_hz=2D(h/2,z)$ 在这个定义域上就是同一 $D(h,z)$。因而前卷114–115中的固定参考行 $J$ 也对应这里的实际输出。平方、Gram和交叠不受标量、中央、可逆或有限谱限制；这里没有把 $D$ 延拓到完成，也没有得到静态卷89.2的全原 $\mathsf C_{\rm add}$。∎
+
+## 134. 从横向消失到整个原域的三重共轭
+
+**定理 134.1（所有原分量的偶性与辅助中央取向）。** 在130.1下，
+
+$$
+\boxed{\mathcal F:=U_hU_eU_j=I_E.}
+\tag{134.1}
+$$
+
+环境元 $Q=i h e j\in\mathcal A$ 满足
+
+$$
+\boxed{Q^*=Q,\qquad Q^2=u,\qquad Q\in Z(\mathcal A).}
+\tag{134.2}
+$$
+
+不要求 $Q\in E$、$Q\in X$ 或 $Q$ 为标量。对全部原 $z\in V_h$，同一旧值准确为
+
+$$
+\boxed{D(h,z)=Tz=iQhz.}
+\tag{134.3}
+$$
+
+证明。使用(130.3)的全部八份原有限投影。$\mathcal F$ 在 $E_\sigma$ 上的符号是 $\sigma_h\sigma_e\sigma_j$。131.1已经消去 $E_{-++}$，132.1已经消去 $E_{---}$。尚须处理 $h$-交换的两份负偶性空间，不能从 $V_h$ 上的结论直接略过它们。
+
+若原 $x\in E_{++-}$，则 $x$ 与 $h,e$ 交换、与 $j$ 反交换。原元素 $c=e\circ x=ex\in E$ 的三符号是 $(-,+,+)$，故 $c\in C_{+,+}=0$。因 $e^2=u$ 且 $ex=xe$，$e\circ c=x$，所以 $x=0$。若原 $x\in E_{+-+}$，同样取原 $c=j\circ x=jx$，其三符号也是 $(-,+,+)$，且 $j\circ c=x$，故 $x=0$。这两份桥都只使用有限原Jordan运算，没有向原域加入 $ex$ 或 $jx$ 以外的新乘法标签：它们在各自交换条件下本来就是原Jordan乘积。
+
+全部原分量的对应为：
+
+| 原三符号 $(\sigma_h,\sigma_e,\sigma_j)$ | $\mathcal F$ 符号 | 原域上的结论 |
+| --- | --- | --- |
+| $(+,+,+)$ | $+$ | 保留，$\mathcal F x=x$ |
+| $(+,+,-)$ | $-$ | $e\circ x\in E_{-++}=0$，且 $x=e\circ(e\circ x)=0$ |
+| $(+,-,+)$ | $-$ | $j\circ x\in E_{-++}=0$，且 $x=j\circ(j\circ x)=0$ |
+| $(+,-,-)$ | $+$ | 保留，$\mathcal F x=x$ |
+| $(-,+,+)$ | $-$ | 131.1给零 |
+| $(-,+,-)$ | $+$ | 原 $A_1$，保留 |
+| $(-,-,+)$ | $+$ | 原 $A_2$，保留 |
+| $(-,-,-)$ | $-$ | 132.1给零 |
+
+故所有 $\mathcal F$-负分量为零，证明(134.1)对整个原 $E$ 成立。
+
+三个轴两两反交换且平方为 $u$，直接给 $(hej)^*=-hej$、$(hej)^2=-u$，所以 $Q$ 自伴且平方为 $u$。三重共轭在环境中的准确次序是
+
+$$
+\mathcal F(x)=hej\,x\,jeh=QxQ.
+\tag{134.4}
+$$
+
+由(134.1)，$QxQ=x$ 对每个原 $x\in E$ 成立；右乘 $Q$ 给 $Qx=xQ$。环境乘法连续性将此交换性传到 $X=\overline E$，再传到 $\mathcal A=C^*(X)$，得到整个环境的中央性。该步骤不延拓旧 $D$。
+
+最后，$je=iQh$，故(133.3)给(134.3)，符号与原 $D(h,e)=j$ 一致。$Q$ 只是辅助环境中的中央自伴对称元，可在不同中央部分有不同符号，未选择统一标量取向。$K_0=je$ 与 $Q$ 均不指原native／全词接口的 $K,q,J$。∎
+
+## 135. 原运输多项式的双交换子与完整标量平方差消费者
+
+**定理 135.1（全部原横向对的准确缺陷式）。** 对任意原 $y,z\in V_h$，定义同一实际输出及原Jordan多项式
+
+$$
+\begin{gathered}
+j_y=D(h,y),\qquad G_0=y^2=j_y^2,\\
+\mathcal U_a(v)=2a\circ(a\circ v)-a^2\circ v,\\
+\Delta_y(z)=\mathcal U_y(\mathcal U_{j_y}(z))+G_0^2\circ z\in E,
+\qquad \Xi_y(z)=\Delta_y(z)\circ z\in E.
+\end{gathered}
+\tag{135.1}
+$$
+
+辅助环境元 $F_y=iyj_y$、$H_y=hF_y$ 满足
+
+$$
+F_y=QhG_0,\qquad H_y=QG_0,
+\qquad [H_y,z]=Q[G_0,z].
+\tag{135.2}
+$$
+
+对这些全部原输入，有准确环境表达
+
+$$
+\boxed{\Delta_y(z)=\frac12[G_0,[G_0,z]].}
+\tag{135.3}
+$$
+
+不要求 $G_0$ 全局中央，也不要求任何平方可逆或具有有限谱。双交换子右侧沿(135.3)等于原域内的多项式，未被添加为新的响应输入。
+
+证明。由(134.3)，$j_y=iQhy$；$hy=-yh$ 且 $Q$ 中央，所以
+
+$$
+F_y=iy(iQhy)=Qhy^2=QhG_0,\qquad H_y=QG_0.
+$$
+
+$G_0$ 与 $h$ 交换，故 $F_y,H_y$ 自伴，且 $F_y^2=G_0^2$。中央性给(135.2)的交换子式。成熟的JC二次表示恒等式是 $\mathcal U_a(v)=ava$；只将它用在已有原Jordan表达式上。由 $yj_y=-j_yy$，
+
+$$
+\mathcal U_y(\mathcal U_{j_y}(z))
+=yj_yzj_yy=F_yzF_y
+=QhG_0zQhG_0=-G_0zG_0.
+\tag{135.4}
+$$
+
+最后一步只用 $Q^2=u$、$Q$ 中央、$hG_0=G_0h$ 及 $hz=-zh$，没有令 $G_0$ 与 $z$ 交换。因而
+
+$$
+\Delta_y(z)=-G_0zG_0+\tfrac12(G_0^2z+zG_0^2)
+=\tfrac12[G_0,[G_0,z]],
+$$
+
+即得(135.3)。$\Delta_y(z)$ 与 $\Xi_y(z)$ 属于原 $E$，由(135.1)的有限Jordan表达式保证。这里没有断言任意 $y,z$ 的 $\Xi_y(z)$ 都非负；前卷114.2的正性只在其标量平方差定义域使用。∎
+
+**推论 135.2（整个合格原分支的零缺陷与同一输出运输）。** 若上述原 $y,z$ 满足 $y^2-z^2=\delta u$，其中 $\delta\in\mathbb R$，则
+
+$$
+\boxed{\Delta_y(z)=\Xi_y(z)=0.}
+\tag{135.5}
+$$
+
+令 $j_z=D(h,z)$。前卷115.1–115.2对这些全部原对适用，准确给
+
+$$
+\begin{gathered}
+j_y\circ j_z=y\circ z,\qquad
+y\circ j_z+j_y\circ z=0,\\
+\boxed{\mathcal U_y(\mathcal U_{j_y}(j_z))+G_0^2\circ j_z=0.}
+\end{gathered}
+\tag{135.6}
+$$
+
+零、奇异、非可逆和非有限谱强度均保留。
+
+证明。$G_0=z^2+\delta u$ 使 $[G_0,z]=0$，(135.3)直接给 $\Delta_y(z)=0$，其原Jordan乘积给 $\Xi_y(z)=0$。也可在前卷114.2的准确原域中，用(135.2)读取
+
+$$
+2\Xi_y(z)=[H_y,z]^*[H_y,z]
+=[G_0,z]^*[G_0,z]=0.
+\tag{135.7}
+$$
+
+原对应是前卷114.1的 $J=J_h=D(h,\cdot)$、$j=j_y$、$k=j_z$、$G=G_0$，由推论133.2及前卷35.1支付，未改换旧输出。因此零缺陷是前卷115.1的已推出前件，(135.6)是该既有消费者的直接结论，其证明不必重作。两份混合式还与式(133.2)的全 $V_h$ Gram／斜关系相符。作为输出运输的同域核对，$j_z=iQhz\in V_h$ 且
+
+$$
+[G_0,j_z]=iQh[G_0,z]=0;
+$$
+
+再将(135.3)用于这个原 $j_z$，也得到(135.6)最后一式。整个论证没有除以 $G_0$ 或 $z^2$，没有添加原根、逆或谱投影。若 $X=0$，上述原元素与关系全为零，无需选态。∎
+
+## 136. 原供应对应、几何与完整来源的未决边界
+
+**定义 136.1（关系的用途与数学归属）。** 131–135是 $\texttt{repo-derived}$ 的综合应用。承重关系是原投影余量与全局中央平方共同排除整个剩余横向空间，原有限Jordan映射再排除全部负偶性分量，最后同一实际行把原运输缺陷化成强度的双交换子。准确依赖与消费者为：
+
+| 来源或结论 | 所承担的原义务 |
+| --- | --- |
+| 本续卷123.1、125.1、126.1 | 保留完整原背景，并识别 $D(h,e+c)$ 的实际投影与余量平方，供131.1消去 $C_{+,+}$ |
+| 本续卷127.1的平方结论 | 给任意原 $w\in M$ 的全局中央 $w^2$，供132.1两次应用前卷56.1；不使用128.1或循环版125.1 |
+| 前卷106.2、107.1–107.2、97.1、54.1、56.1及式(16.3) | 在准确原定义域识别式(132.3)的同一旧值，再以其原面积平方排除 $M$；严格收缩由实缩放支付 |
+| 131.1、132.1、前卷101.1及102.2 | 在整个原 $V_h$ 识别 $D(h,\cdot)=T$，得到全部混合Gram与斜关系，推进前卷110、116保留的原行缺口及静态卷89.1的横向缺陷 |
+| 原有限八分量投影及134.1 | 对全部原 $E$ 给 $U_hU_eU_j=I$，由此证明辅助 $Q$ 在整个 $\mathcal A$ 中中央 |
+| 134.3、135.3及原 $y^2-z^2=\delta u$ | 给前卷114–115整个合格原分支的 $\Delta=\Xi=0$ 与同一实际输出运输，支付前卷116.2在此native分支上的零缺陷前件 |
+
+前卷107的三轴复合仍由它已经展开的实际PB外层对供应：循环 $(a,b,c)$ 与原 $w$ 对应 $(c,F_aw)$、$(b,w)$，另一份对应 $(c,w)$、$(b,-F_aw)$，两份右端均为零。这里消费该已发表原值身份，不把四元数表重新作为独立生产者，也不以全域线性替换那些实际调用。
+
+成熟中间工具是实线性投影、JC自伴平方零、单位共轭、范数连续性及固定环境乘法的交换子计算。van de Wetering，[*Commutativity in Jordan Operator Algebras*](https://arxiv.org/html/1912.01903v1)，Proposition 3.2及其式(2)给JC算子交换与环境交换的对应及 $[L_a,L_b]x=[[a,b],x]/4$；该文的二次表示约定给 $\mathcal U_a(v)=ava$。这里只将这些成熟恒等式作为原响应应用的中间工具，不另立通用分类，也不主张历史优先权或文献穷尽。
+
+几何上，整个原 $V_h$ 现在由同一个实线性 $T$ 配对，$T^2=-I$，且准确保持原Jordan Gram。辅助中央对称元 $Q$ 记录该实际三轴的取向；它不被要求是原可取得标签或统一标量。强度 $y^2$ 对第二标签的交换关系控制135.3的运输缺陷，标量平方差使这种交换直接成立。三轴、横向复结构与中央取向均不限定整个原域或物理空间为三维；平方和交叠仍允许非中央、奇异与连续谱。
+
+**定义 136.2（一般原响应与全部实际来源保持）。** 这些结论以存在式(130.2)的实际原单位平方正交对及其同一旧响应为条件。没有这种原轴的域仍属于完整目标，未由本应用覆盖。对一般原首标签、一般非正交输入，以及 $h$-交换分量与横向分量相加后的同一旧响应，尚未由这里取得全域加法或一般单位／中央平移。$Q$ 的全局中央性及 $\mathcal F=I_E$ 是已付环境中的结构结论，不是全部旧 $D(a,b)$ 的环境交换子表示。
+
+静态卷89.2–89.3仍是全原 $\mathsf C_{\rm add}$ 的条件消费者；式(133.4)只供应其固定实际 $h$ 的横向子类。静态卷90–93所需的、对全部原 $a,b,c$ 统一的单个有限加性缺陷上界，未由原P2/PB或本应用生产，也不作本应用前提。一般旧 $D$ 的实双线性、完整原P3及全部有限复Gram、原R和同一 $a\star b=a\circ b-iD(a,b)$ 的结合性仍各守原供应条件；没有给出违背这些一般结论的忠实全P2／全PB反模型。前卷110.2与116.2、本续卷129.2的未决描述在131–135明确覆盖的同一native分支上由这些推导推进，其余原范围保留。
+
+完整保持唯一原 $\Omega$、原 $E/D$、native、全词同一 $q,K,J$、parent/ready、中心经典与不等维块、全部实际准备及零／不等／次归一质量。Born只在正质量的实际完整菜单上归一；Hilbert表示、叠加及所有可取得原标签仍守原来源范围。CP需要同一整台实际箭头、真正相关联合及递归同源参考；完整仪器连环境全部成功／失败／记录／后口输出，Kraus、TP、更新、Lüders及实际忠实交换共同生成的张量仍需各自原前件。
+
+全部合法顺序／自适应／并行历史、每个仍合法未来、细记录与真正分组遗忘、停止／拒绝／销毁、同数两侧及逆向真实返回均保留。CountRead无穷、正常性、指定前对偶、原域上的流、物理钟、Hamiltonian生成元定义域、能量、作用量及共同正 $\hbar$ 均未由辅助共轭或中央取向生产。原菜单返回障碍及其它来源条件不因原多项式运输关系而消失；这些条件与本节前件共同保持完整量子起源目标的原范围。
+
+## 追加锚（本行以下为增补区）
+
+## 137. 同一原三轴的有限系数域
+
+**定义 137.1（原背景、系数与完成层）。** 完整保持130.1的同一原 $(E,C,u,N,\mathcal P,S,D)$、A1–A3、准确锥、全部原P2及完整原PB，并消费133.1–134.1。仍有 $E\subset X\subset\mathcal A_{\rm sa}$、$\overline E=X$、$\mathcal A=C^*(X)$；原 $E$ 可以不完备，$X$ 不要求等于 $\mathcal A_{\rm sa}$。固定同一实际原有向三轴
+
+$$
+s_1=h,\quad s_2=e,\quad s_3=j=D(h,e),\qquad
+s_r^2=u,\quad s_r\circ s_t=0\ (r\ne t),
+\tag{137.1}
+$$
+
+以及134.1的 $U_hU_eU_j=I_E$、$Q=i h e j\in Z(\mathcal A)$、$Q^*=Q$、$Q^2=u$。本节以后的方括号只指给定环境 $\mathcal A$ 的交换子，不是旧 $D$ 的定义。置
+
+$$
+\mathcal B_0=E_{+++}
+=\{c\in E:[c,h]=[c,e]=[c,j]=0\},\qquad
+Y=\overline{\mathcal B_0}^{\,X}.
+\tag{137.2}
+$$
+
+$\mathcal B_0$ 的元素只与三根轴交换，彼此不要求交换，也不要求属于整个原域的中心。$s_rc$ 在下文表示原Jordan乘积 $s_r\circ c$；证明两者交换后，才在环境中写成普通乘积。$E=0$ 时取 $u=h=e=j=Q=0$，全部系数域、复化、完成与矩阵代数均为零；所有等式仍成立，无须非零态。非零矩阵单位的解释只用于 $E\ne0$。
+
+**定理 137.2（整个原域的唯一有限四系数）。** 令
+
+$$
+\begin{aligned}
+P_0&=\tfrac14(I+U_h+U_e+U_j),&
+P_1&=\tfrac14(I+U_h-U_e-U_j),\\
+P_2&=\tfrac14(I-U_h+U_e-U_j),&
+P_3&=\tfrac14(I-U_h-U_e+U_j),\\
+\kappa_0(a)&=P_0a,&
+\kappa_r(a)&=s_r\circ P_ra\quad(1\le r\le3).
+\end{aligned}
+\tag{137.3}
+$$
+
+这里 $P_2$ 是有限投影的编号，不指原二表正性。每个原 $a\in E$ 唯一地写成
+
+$$
+\boxed{a=c_0+h c_1+e c_2+j c_3,\qquad c_r=\kappa_r(a)\in\mathcal B_0.}
+\tag{137.4}
+$$
+
+$\mathcal B_0$ 是含单位实Jordan域，$P_r$ 与 $\kappa_r$ 都是保持原 $E$ 的有限实Jordan表达式，范数至多为一。完成层准确为
+
+$$
+Y=P_0X=X_{+++},\qquad
+X=Y\oplus hY\oplus eY\oplus jY.
+\tag{137.5}
+$$
+
+证明。零代数时各式直接成立，以下设 $E\ne0$。134.1给 $U_j=U_hU_e$。三个共轭对合对易，故(137.3)是四个角色投影，和为 $I$、两两乘积为零，像依次为 $E_{+++},E_{+--},E_{-+-},E_{--+}$。$P_0E=\mathcal B_0$；它的Jordan闭合来自三个 $U$ 都是原Jordan自同构。
+
+若 $x\in P_rE$、$r>0$，则 $x$ 与 $s_r$ 交换。原 $c=s_r\circ x=s_rx$ 与三轴均交换：自身轴的符号为正，另两轴各从 $s_r$ 和 $x$ 得到一个负号。因此 $c\in\mathcal B_0$，且 $s_r\circ c=x$。反向，$c\in\mathcal B_0$ 时 $s_r\circ c\in P_rE$。对 $a=\sum_rP_ra$ 逐项使用这两个逆映射，得到(137.4)及唯一性。
+
+每个 $U$ 是环境单位共轭，故为等距算子；$P_r$ 的四项平均给范数界一。$\|L_{s_r}\|\le\|s_r\|=1$，所以 $\|\kappa_r\|\le1$。这些有界投影与逆映射延至 $X$。$P_0E$ 在闭空间 $P_0X$ 中稠密，故 $Y=P_0X$，继而得到(137.5)。所有原输入只用了有限和及原Jordan运算，没有原根、原逆元或无限原分解。∎
+
+## 138. 跨轴二元关系强迫内部有向闭合
+
+**定义 138.1（内部系数有向差）。** 对原 $c,d\in\mathcal B_0$，定义有限原表达式
+
+$$
+\beta(c,d)=-j\circ\bigl((h\circ c)\circ(e\circ d)\bigr).
+\tag{138.1}
+$$
+
+取 $\varepsilon_{123}=1$ 的三指标交替符号。对(137.4)中的原 $a=\sum_{r=0}^3s_rc_r$、$b=\sum_{r=0}^3s_rd_r$，此处仅以 $s_0c_0=c_0$ 作为记号，置
+
+$$
+\begin{aligned}
+\gamma_0(a,b)&=\beta(c_0,d_0)+\sum_{r=1}^3\beta(c_r,d_r),\\
+\gamma_k(a,b)&=\beta(c_0,d_k)+\beta(c_k,d_0)
++\sum_{r,t=1}^3\varepsilon_{rtk}(c_r\circ d_t),\\
+B_\star(a,b)&=\gamma_0(a,b)+\sum_{k=1}^3s_k\circ\gamma_k(a,b).
+\end{aligned}
+\tag{138.2}
+$$
+
+$B_\star$ 是待由下述定理支付闭合与性质的规范候选；该符号不重命名旧 $D$。
+
+**定理 138.2（非交换系数闭合及全部原二元乘积）。** 对全部原 $c,d\in\mathcal B_0$，
+
+$$
+\boxed{\beta(c,d)\in\mathcal B_0,\qquad
+\beta(c,d)=\tfrac{iQ}{2}[c,d],\qquad
+(h\circ c)\circ(e\circ d)=-j\circ\beta(c,d).}
+\tag{138.3}
+$$
+
+因此(138.2)给保持整个原域的实交替双线性映射，并满足
+
+$$
+\boxed{B_\star:E^2\longrightarrow E,\qquad
+B_\star(a,b)=\tfrac{iQ}{2}[a,b],\qquad
+N(B_\star(a,b))\le N(a)N(b).}
+\tag{138.4}
+$$
+
+原Jordan乘积也由同一系数准确决定：
+
+$$
+\begin{aligned}
+a\circ b&=\eta_0+\sum_{k=1}^3s_k\circ\eta_k,\\
+\eta_0&=c_0\circ d_0+\sum_{r=1}^3c_r\circ d_r,\\
+\eta_k&=c_0\circ d_k+c_k\circ d_0
+-\sum_{r,t=1}^3\varepsilon_{rtk}\beta(c_r,d_t).
+\end{aligned}
+\tag{138.5}
+$$
+
+这些公式仅由原 $S$ 及同一有向三轴决定，因而不依赖所选忠实JC实现；不以一般旧 $D$ 的任何双线性为前件。
+
+证明。$hc\in E_{+--}$、$ed\in E_{-+-}$。因为每个 $U$ 保Jordan乘积，原 $y=(hc)\circ(ed)$ 位于 $E_{--+}$，故原 $-j\circ y$ 位于 $\mathcal B_0$。先由这个有限式支付返回原系数域，再在环境中计算：$c,d$ 与轴交换而 $eh=-he$，所以
+
+$$
+y=\tfrac12he(cd-dc),\qquad
+he=-iQj,\qquad
+-j\circ y=\tfrac{iQ}{2}[c,d].
+\tag{138.6}
+$$
+
+对 $E_{--+}$ 施加两次 $L_j$ 为恒等，得到(138.3)的最后一式。右侧 $iQ[c,d]/2$ 自伴；这里未先假设任何环境交换子属于原域，也未将 $\beta(c,d)$ 认作旧 $D(c,d)$。
+
+现在(138.2)的每个 $\gamma_k$ 已在 $\mathcal B_0$ 中，所以 $B_\star(a,b)\in E$。环境中三轴满足
+
+$$
+s_rs_t=-iQ\sum_k\varepsilon_{rtk}s_k\quad(r\ne t).
+\tag{138.7}
+$$
+
+展开 $[a,b]$：零轴与自身轴项分别给 $[c_0,d_0]$、$[c_r,d_r]$；零轴与第 $k$ 轴项给 $s_k([c_0,d_k]+[c_k,d_0])$；异轴项为
+
+$$
+[s_rc_r,s_td_t]=2s_rs_t(c_r\circ d_t)\quad(r\ne t).
+\tag{138.8}
+$$
+
+乘 $iQ/2$ 并用 $Q^2=u$，正好得到(138.2)。交替性由交换子身份给出，实双线性也已由原有限公式给出。$Q$ 为中央自伴酉元，$\|[a,b]\|\le2\|a\|\|b\|$，得到范数界。对Jordan乘积作相同展开，同轴项给 $c_r\circ d_r$，异轴项给
+
+$$
+(s_rc_r)\circ(s_td_t)
+=\tfrac12s_rs_t[c_r,d_t]
+=-\sum_k\varepsilon_{rtk}s_k\beta(c_r,d_t),
+\tag{138.9}
+$$
+
+这证明(138.5)。全部中间输出都已在原域中。
+
+任意保持单位、Jordan乘积及这三根标记轴的Jordan映射，都保持 $U,P,\kappa,\beta,\gamma$ 的有限表达式，所以也保持 $B_\star$。这正是相对于同一标记有向三轴的规范性，不声称所有轴选择已经给旧 $D$ 完成全域拼接。
+
+反向检查时，若某对原系数的有向差不能返回 $\mathcal B_0$，则同一原二元关系 $y=(h\circ c)\circ(e\circ d)\in E_{--+}$ 与 $-j\circ y\in\mathcal B_0$ 不可能同时保留。若某对原 $a,b$ 的 $iQ[a,b]/2$ 不能返回 $E$，(138.2)的有限原重构将与这个环境身份矛盾。被击中的正是原跨轴Jordan闭合关系；这项反事实没有识别未知旧值 $D(a,b)$。∎
+
+## 139. 保持原完成自伴部的结合复化
+
+**定义 139.1（候选复乘法与原系数星代数）。** 在原复向量空间 $E_{\mathbb C}=E\oplus iE$ 上取 $`(a+ib)^*=a-ib`$，以
+
+$$
+a\star b=a\circ b-iB_\star(a,b)\qquad(a,b\in E)
+\tag{139.1}
+$$
+
+作复双线性延拓。取 $\mathfrak b=\mathcal B_0\oplus i\mathcal B_0$，其同一乘法在实系数上为
+
+$$
+c\star d=c\circ d-i\beta(c,d).
+\tag{139.2}
+$$
+
+记所得 $E_{\mathbb C}$ 的C*完成为 $\mathcal C$，$\mathfrak b$ 的C*完成为 $\mathcal B$；它们的存在、范数及所指的具体闭包由下一定理给出。$\mathcal C$、$\mathcal B$ 分别区别于原JC环境 $\mathcal A$ 与原锥 $C$。
+
+**定理 139.2（内部有限闭合接到准确的完成层）。** 式(139.1)使 $E_{\mathbb C}$ 成为含单位pre-C*代数，$\mathfrak b$ 是其含单位星子代数。对 $z=a+ib$，其C*范数由原域内部给出：
+
+$$
+\boxed{\|a+ib\|_\star^2
+=N\bigl(a^2+b^2+2B_\star(a,b)\bigr).}
+\tag{139.3}
+$$
+
+它在自伴原域上就是 $N$。作为原环境中的复向量空间，两个完成准确为
+
+$$
+\begin{gathered}
+\mathcal C=X+iX,\qquad \mathcal C_{\rm sa}=X,\qquad
+\mathcal C_+=X\cap\mathcal A_+,\qquad C=E\cap\mathcal C_+,\\
+\mathcal B=Y+iY\subset\mathcal C,\qquad
+\mathcal B_{\rm sa}=Y,\qquad \mathfrak b_{\rm sa}=\mathcal B_0.
+\end{gathered}
+\tag{139.4}
+$$
+
+证明。仅在证明所用的原环境中定义
+
+$$
+z_+=\tfrac12(u+Q),\qquad z_-=\tfrac12(u-Q).
+\tag{139.5}
+$$
+
+它们是 $\mathcal A$ 的中央正交投影，和为 $u$；不要求属于 $E,X$ 或 $\mathcal C$。由(138.4)，对原复化中的 $x,y$ 有
+
+$$
+x\star y=z_+xy+z_-yx.
+\tag{139.6}
+$$
+
+在整个原环境向量空间上采用(139.6)，得到与
+
+$$
+z_+\mathcal A\ \oplus\ (z_-\mathcal A)^{\rm op}
+\tag{139.7}
+$$
+
+相同的C*代数结构：第二部分只反转乘法次序，范数和伴随保持原样。中央正交性给结合律；两部分的C*范数均为原范数，直和范数仍为 $\mathcal A$ 的原范数。因此无需把 $z_\pm$ 作为原输入，就可使用这个辅助环境证明 $\star$ 结合且保星。
+
+这一步是成熟的中央相反乘法构造。Najafi–Moslehian，[*Deformation of involution and multiplication in a C*-algebra*](https://arxiv.org/pdf/1304.8091)，Lemma 2.1及其证明给 $x\mathbin{\diamond}y=p x v y+(1-p)y v x$、$x^\#=v^*x^*v^*$；其中央投影 $p$ 取 $z_+$，酉参数 $v$ 取这里的单位 $u$，便是(139.6)–(139.7)。引用中的酉参数不是原三轴之一。这项成熟结果只承担辅助环境的C*性质，不承担原输出闭合或旧 $D$ 识别。
+
+138.2已独立支付 $B_\star(E,E)\subset E$，故 $E_{\mathbb C}$ 在这个辅助环境中是含单位星子代数；(138.3)同样使 $\mathfrak b$ 星闭合。$E_{\mathbb C}$ 的范数闭包恰为 $X+iX$：一方面 $E$ 在 $X$ 稠密，另一方面实部、虚部连续且 $X$ 闭，所以 $X+iX$ 闭。同理 $\overline{\mathfrak b}=Y+iY$。这证明两个完成及其自伴部的身份。
+
+相反C*代数与原代数具有相同的自伴正锥，中央直和也保持这个一级正锥；闭C*子代数继承环境正锥。因此 $\mathcal C_+=X\cap\mathcal A_+$，再用130.1得到原锥身份。直接在原复化中计算
+
+$$
+z^*\star z=a^2+b^2+2B_\star(a,b)\in E\cap\mathcal C_+=C.
+\tag{139.8}
+$$
+
+C*恒等式给(139.3)，也表明此范数由原 $S,N$ 和标记三轴决定。非零原 $z$ 的 $z^*\star z$ 不为零，因为辅助环境的C*范数忠实；故这不是半范数。全程没有对旧 $D$ 取极限。原 $\mathfrak b,E_{\mathbb C}$ 不因此根闭合、逆闭合或完备；连续函数演算仅可在已构造的C*完成中使用。∎
+
+## 140. 整个原域的准确二阶系数矩阵
+
+**定理 140.1（原稠密域与完成层的同一矩阵坐标）。** 存在保单位、保星的C*同构 $\Phi:\mathcal C\to M_2(\mathcal B)$，限制为原星代数同构 $E_{\mathbb C}\to M_2(\mathfrak b)$ 及原Jordan、范数、一级序同构
+
+$$
+\boxed{E\ \cong\ H_2(\mathfrak b):=M_2(\mathfrak b)_{\rm sa}.}
+\tag{140.1}
+$$
+
+对(137.4)的全部原 $a$，具体为
+
+$$
+\boxed{\Phi(a)=
+\begin{pmatrix}
+c_0+c_1&c_2+i c_3\\
+c_2-i c_3&c_0-c_1
+\end{pmatrix}.}
+\tag{140.2}
+$$
+
+矩阵内系数用 $\mathfrak b$ 或 $\mathcal B$ 的 $\star$ 相乘；不将它们改成交换标量。准确保持的是
+
+$$
+\begin{gathered}
+\Phi(u)=I_2,
+\quad \Phi(h)=\sigma_z,\quad\Phi(e)=\sigma_x,
+\quad\Phi(j)=-\sigma_y,\\
+\Phi(a\circ b)=\tfrac12\bigl(\Phi(a)\Phi(b)+\Phi(b)\Phi(a)\bigr),\\
+\Phi(B_\star(a,b))=\tfrac i2[\Phi(a),\Phi(b)],\\
+N(a)=\|\Phi(a)\|,\qquad
+\Phi(C)=H_2(\mathfrak b)\cap M_2(\mathcal B)_+.
+\end{gathered}
+\tag{140.3}
+$$
+
+证明。原轴在新乘法下满足 $h\star e=-ij$、$e\star j=-ih$、$j\star h=-ie$。在原复化中置
+
+$$
+f_{11}=\tfrac12(u+h),\quad f_{22}=\tfrac12(u-h),\quad
+f_{12}=\tfrac12(e-ij),\quad f_{21}=\tfrac12(e+ij).
+\tag{140.4}
+$$
+
+代入这些轴关系，得到
+
+$$
+f_{rs}^*=f_{sr},\qquad
+f_{rs}\star f_{tv}=\delta_{st}f_{rv},\qquad
+f_{11}+f_{22}=u.
+\tag{140.5}
+$$
+
+这只是使用成熟矩阵单位的具体中间步骤。先准确识别系数与角：$\mathcal B$ 正是 $\mathcal C$ 内三轴的共同 $\star$-交换子代数。确实，(139.6)给 $[x,s_r]_\star=Q[x,s_r]$，$Q$ 在辅助环境中可逆；实虚部再用(137.5)得到共同交换域恰为 $Y+iY$。因此 $\mathcal B$ 与全部 $f_{rs}$ 交换。
+
+系数到角的映射及其逆为
+
+$$
+\begin{aligned}
+\iota:\mathcal B&\longrightarrow f_{11}\star\mathcal C\star f_{11},
+&\iota(b)&=b\star f_{11},\\
+\iota^{-1}(t)&=t+f_{21}\star t\star f_{12}.
+\end{aligned}
+\tag{140.6}
+$$
+
+对角内 $t$，右侧与四个矩阵单位交换，所以属于 $\mathcal B$；其乘 $f_{11}$ 正好返回 $t$。反向由(140.5)及 $b$ 与矩阵单位交换得到 $\iota^{-1}(\iota(b))=b$。两式保乘法与伴随，单位 $u$ 对应角单位 $f_{11}$。相同论证在原 $\mathfrak b$ 与 $f_{11}\star E_{\mathbb C}\star f_{11}$ 上成立。这一步不能把对角嵌入的系数直接当作角内元素而省略。
+
+现在应用成熟的完整矩阵单位识别：Blackadar，[*Operator Algebras: Theory of C*-Algebras and von Neumann Algebras*](https://www.bruceblackadar.com/Mathematics/Cycr.pdf)，II.9.4.3，给含单位C*代数中 $\sum_rf_{rr}=u$ 时的同构 $x\mapsto(f_{1r}\star x\star f_{s1})_{r,s}$，其值域是角代数上的二阶矩阵。再逐项施加(140.6)，得到
+
+$$
+\Phi(x)_{rs}=\iota^{-1}(f_{1r}\star x\star f_{s1}).
+\tag{140.7}
+$$
+
+原域限制没有额外闭合要求：对任意 $(b_{rs})\in M_2(\mathfrak b)$，逆像是有限和 $\sum_{r,s}f_{r1}\star\iota(b_{rs})\star f_{1s}\in E_{\mathbb C}$。这同时证明原域限制的满射，而非只证明它稠密。把 $h,e,j$ 及共同交换系数代入(140.7)，正好得到(140.2)。完成层由同一公式给C*同构，因此自动等距并准确保正锥。
+
+若矩阵在 $M_2(\mathfrak b)$ 中自伴，两个对角元属于 $\mathcal B_0$，上非对角元唯一为 $c_2+ic_3$、$c_2,c_3\in\mathcal B_0$；两个对角元的半和与半差给 $c_0,c_1$。所以其逆像准确属于原 $E$。这证明(140.1)，而不是只找出一个Pauli子窗。结合(139.4)得到(140.3)。$f_{11},f_{22}$ 是原Jordan投影，$f_{12},f_{21}$ 是原复化元素；这不赋予任何一个元素实际仪器、准备或可取得程序的身份。∎
+
+## 141. 有限原词与候选三标签的直接消费者
+
+**推论 141.1（同一原域的有限可逆性与候选全表）。** 对任意有限原 $a_1,\ldots,a_n\in E$，原环境的正反词对称和属于原域：
+
+$$
+\tfrac12(a_1\cdots a_n+a_n\cdots a_1)\in E.
+\tag{141.1}
+$$
+
+候选 $B_\star$ 在全部原输入上满足
+
+$$
+\begin{aligned}
+(a\circ b)\circ c-B_\star(B_\star(a,b),c)
+&=a\circ(b\circ c)-B_\star(a,B_\star(b,c)),\\
+B_\star(a,b\circ c)
+&=B_\star(a,b)\circ c+b\circ B_\star(a,c),\\
+\sum_{\rm cyc}B_\star(a,B_\star(b,c))&=0.
+\end{aligned}
+\tag{141.2}
+$$
+
+对每个原正评价 $\alpha$ 和任意有限原族，候选表准确为
+
+$$
+g^\star_\alpha(a,b)=\alpha(a\circ b)-i\alpha(B_\star(a,b)),\qquad
+[g^\star_\alpha(a_r,a_s)]_{r,s=1}^n\succeq0.
+\tag{141.3}
+$$
+
+因而也给候选三标签正性；这里全部响应名都是 $B_\star$，没有把候选R或候选正表记作旧 $D$ 的新支付。
+
+证明。有限 $\star$-词 $w=a_1\star\cdots\star a_n$ 属于 $E_{\mathbb C}$，在证明环境中等于
+
+$$
+w=z_+a_1\cdots a_n+z_-a_n\cdots a_1.
+\tag{141.4}
+$$
+
+于是 $`(w+w^*)/2`$ 正好等于(141.1)，并属于 $E_{\mathbb C}$ 的自伴部 $E$。这也使完成 $X$ 成为给定环境中的可逆JC代数；原 $E$ 只称具有该有限词性质的Jordan域，不要求完备，也不借一般可逆JC的分类逆命题。
+
+对已构造的结合乘法取实部，得到(141.2)第一行；它就是将静态卷(23.1)中的响应全部换成 $B_\star$。结合代数交换子的导子律与Jacobi恒等式给另外两行。这些成熟后果的实际用途是：有限中间值已经由138.2返回同一原域，故这些身份确实是原域上的候选身份。
+
+正评价满足 $|\alpha(a)|\le\alpha(u)N(a)$，所以唯一连续延至 $X$。若 $x\in X_+$，用 $a_m\in E$ 逼近 $x$，再加趋零的正实倍单位即可取原正逼近，故该延拓保持正性。复线性延拓为 $\widehat\alpha:\mathcal C\to\mathbb C$ 后，(139.4)使它正且保持质量 $\widehat\alpha(u)=\alpha(u)$。对 $W=\sum_r\lambda_ra_r\in E_{\mathbb C}$，有
+
+$$
+\sum_{r,s}\overline{\lambda_r}\lambda_sg^\star_\alpha(a_r,a_s)
+=\widehat\alpha(W^*\star W)\ge0,
+\qquad W^*\star W\in C.
+\tag{141.5}
+$$
+
+零质量时原正评价为零，整表为零；没有归一。正泛函、有限Gram和交换子后果是成熟C*工具，这里的增量在于它们可消费整个原稠密域的内部有限闭合。它们不证明未知旧表 $[\alpha(a_r\circ a_s)-i\alpha(D(a_r,a_s))]$ 的三标签或更长正性。∎
+
+## 142. 同一个旧总映射的精确矩阵运输
+
+**定理 142.1（原P2、PB与未识别旧值的同域改坐标）。** 令 $\phi=\Phi|_E:E\to H_2(\mathfrak b)$。定义
+
+$$
+\begin{gathered}
+\widetilde D(A,B)=\phi\bigl(D(\phi^{-1}A,\phi^{-1}B)\bigr),\qquad
+\widetilde\alpha=\alpha\circ\phi^{-1},\\
+A\circ_m B=\tfrac12(AB+BA),\qquad
+\widetilde C=H_2(\mathfrak b)\cap M_2(\mathcal B)_+.
+\end{gathered}
+\tag{142.1}
+$$
+
+则 $\widetilde D$ 是定义在全部原矩阵域 $H_2(\mathfrak b)^2$ 上、值仍在该域中的同一个旧总映射的精确运输。全部原评价、质量、范数、A1–A3、原P2与完整原PB同时运输。其中原二表为
+
+$$
+\left[
+\widetilde\alpha(A_r\circ_m A_s)
+-i\widetilde\alpha(\widetilde D(A_r,A_s))
+\right]_{r,s=1}^2\succeq0,
+\tag{142.2}
+$$
+
+完整PB为：对全部 $A,B,T\in H_2(\mathfrak b)$，置
+
+$$
+\nu=\widetilde D(A,B)-A\circ_m T,\qquad
+\omega=A\circ_m B+\widetilde D(A,T),
+\tag{142.3}
+$$
+
+则
+
+$$
+\widetilde D(B+\nu,T+\omega)-\widetilde D(B-\nu,T-\omega)
+=-2B\circ_m\nu-2T\circ_m\omega.
+\tag{142.4}
+$$
+
+只在已经支付的三条原横向单位行上认回候选：
+
+$$
+\begin{gathered}
+D(s_r,z)=B_\star(s_r,z)\quad(z\in V_{s_r},\ r=1,2,3),\\
+\widetilde D(\phi(s_r),Z)=\tfrac i2[\phi(s_r),Z]
+\quad(\phi(s_r)\circ_m Z=0).
+\end{gathered}
+\tag{142.5}
+$$
+
+证明。140.1给 $\phi$ 对原域的实线性双射、Jordan同构、等距与准确一级保锥，故(142.1)只改变每个原输入和输出的坐标。评价分离、准确锥和所有质量随双射保持。将原两标签代入(142.2)，每个复数项逐项等于原二表；A1–A3中的所有相加、零值、单位和同一个有理小窗口同样逐项保持。把原(123.5)整体施加 $\phi$，得到(142.3)–(142.4)。这里没有展开任何未知旧响应的和，也没有把 $\widetilde D$ 延到 $M_2(\mathcal B)_{\rm sa}$。
+
+对 $r=1$，134.3与 $[h,z]=2hz$ 给(142.5)。将130.2的循环三元组 $(e,j,h)$、$(j,h,e)$ 分别代入已经完整成立的133.1–134.1，得到另两条横向行；循环置换的 $i s_1s_2s_3$ 仍是同一个 $Q$。再用(140.3)得到矩阵式。这里只消费这三条完整定理，不另假定125.1的循环中间结论。∎
+
+**定义 142.2（下一原消费者与未证等式）。** 在同一原域定义
+
+$$
+\rho(a,b)=D(a,b)-B_\star(a,b)\in E,
+\qquad
+\widetilde\rho(A,B)=\widetilde D(A,B)-\tfrac i2[A,B].
+\tag{142.6}
+$$
+
+由精确坐标运输有 $\widetilde\rho(\phi(a),\phi(b))=\phi(\rho(a,b))$，所以全原 $\rho=0$ 与全原矩阵域上 $\widetilde D(A,B)=i[A,B]/2$ 完全是同一个待证命题。定义残差不证明它为零，也不给残差双线性或连续性。例如，对原 $a=c_0+h c_1+z$、$z\in V_h$，(142.5)仍不能把未知 $D(h,a)$ 拆成三项；完整单位行、一般单位或中央平移、第一槽一般齐次、一般可加、商下降、未知输入连续性、函数演算输入及完成延拓均未由此取得。
+
+前卷77.1–78.1已认回标量系数四维窗的同一旧乘法，直接复用其原范围，不作为此处新结论。对全域旧 $D$，静态卷32.2、23.1、33.2的P3、双线性、原R及同一旧结合乘法消费者仍取各自完整前件。141.1的候选有限Gram与候选R不替它们支付任何旧表前件；这里也没有构造满足全部原P2/PB而 $\rho\ne0$ 的反模型。新的真实消费者是将同一个旧问题及其全部原二元、三元关系准确放到 $H_2(\mathfrak b)$ 上，不是另选辅助响应替换原目标。
+
+## 143. 原环境、矩阵序与三轴分支的准确范围
+
+**定义 143.1（三层对象与一级序）。** 原系数星代数 $\mathfrak b$ 可以无限维、非交换、不完备；$\mathcal B$ 是它的数学C*完成。$\mathcal A=C^*(X)$ 用原JC环境的乘法生成，$\mathcal C=X+iX$ 用由三轴确定的 $\star$ 相乘。它们不得默认相等。$\Phi:\mathcal C\to M_2(\mathcal B)$ 作为C*同构完全等距且完全保正；但从 $\mathcal C$ 到原 $\mathcal A$ 的相同向量包含，只在自伴部保证140.3的原范数和一级正锥，未保证原环境继承的全部矩阵序或CP。
+
+原环境也可用成熟矩阵单位识别为二阶矩阵，但其系数与乘法不同：置 $\mathcal R=\{r\in\mathcal A:[r,h]=[r,e]=0\}$，其矩阵单位为
+
+$$
+t_{11}=\tfrac12(u+h),\quad t_{22}=\tfrac12(u-h),\quad
+t_{12}=\tfrac12(e-iQj),\quad t_{21}=\tfrac12(e+iQj).
+\tag{143.1}
+$$
+
+在原环境乘法下代入轴关系即得完整矩阵单位，且 $\mathcal R$ 是其共同交换域；系数到角仍需(140.6)同形的识别。因此 Blackadar II.9.4.3给 $\mathcal A\cong M_2(\mathcal R)$。这里的 $t_{12},t_{21}$ 未必属于 $E_{\mathbb C}$，$\mathcal R$ 的原乘法不能替代 $\mathcal B$ 的 $\star$，所以这个成熟环境分解不承担140.1的原域结论。
+
+**命题 143.2（原环境可严格大于保持原自伴部的新完成）。** 存在满足137.1背景的原域，使 $Q,z_\pm$ 不属于 $\mathcal C$，且相同向量包含 $\mathcal C\subset\mathcal A$ 不保持矩阵正性。
+
+证明。只为显示这些边界，取
+
+$$
+E=X=\{(x,x^{\mathsf T}):x\in M_2(\mathbb C)_{\rm sa}\}
+\subset M_2(\mathbb C)\oplus M_2(\mathbb C),
+\tag{143.2}
+$$
+
+单位、Jordan乘法、范数、锥和全部正评价均从第一坐标运输，旧响应取同一图上的标准响应
+
+$$
+D\bigl((x,x^{\mathsf T}),(y,y^{\mathsf T})\bigr)
+=\bigl(i[x,y]/2,(i[x,y]/2)^{\mathsf T}\bigr).
+\tag{143.3}
+$$
+
+它是标准二阶C*模型的原Jordan、旧响应同构，故全部原P2/PB成立；标准模型的这些关系直接复用前卷29.2所引任意C*乘法身份。取 $h=(\sigma_z,\sigma_z)$、$e=(\sigma_x,\sigma_x)$、$j=(-\sigma_y,\sigma_y)$。直接相乘得到
+
+$$
+Q=(I,-I),\quad z_+=(I,0),\quad z_-=(0,I),\qquad
+\mathcal A=C^*(X)=M_2(\mathbb C)\oplus M_2(\mathbb C).
+\tag{143.4}
+$$
+
+最后一个身份也可直接看出：$Q$ 属于生成代数，两个中央投影分别切出整个两份全矩阵。另一方面，
+
+$$
+\mathcal C=X+iX=\{(z,z^{\mathsf T}):z\in M_2(\mathbb C)\}
+\tag{143.5}
+$$
+
+按(139.6)相乘，等于一份 $M_2(\mathbb C)$；它不含(143.4)的三个取向元素。第一坐标到原环境的向量包含是 $z\mapsto(z,z^{\mathsf T})$。其第二腿转置在一级上保正，但在二阶矩阵上，正元 $\sum_{r,s=1}^2E_{rs}\otimes E_{rs}=|\Omega\rangle\langle\Omega|$、$\Omega=e_1\otimes e_1+e_2\otimes e_2$，被送到翻转算子 $\sum_{r,s}E_{rs}\otimes E_{sr}$。它在 $e_1\otimes e_2-e_2\otimes e_1$ 上的本征值为 $-1$，故不保正。这是成熟转置现象在所构造两层环境上的应用，不把该例另立为新的标准矩阵理论，也不把数学矩阵正元当作实际相关准备。∎
+
+**定义 143.3（完成闭合与全局轴的条件范围）。** 前卷29.2的原自伴多项式模型直接给 $\mathfrak b$ 不要求根闭合或逆闭合的实例：取常值Pauli三轴，其系数原域仍是相应多项式星代数；原域没有一般谱根。原 $1+t^2$ 在完成中可逆，但其逆不在原多项式域：若 $(1+t^2)p(t)=1$ 在区间成立，则为多项式恒等式，比较最高次系数即矛盾。数学完成中的平方根、逆元、谱投影与极限不自动成为原 $E$ 的可调用输入。$Q,z_\pm$ 尤其不取得原标签、仪器或实际中央分支身份。
+
+二阶表示没有把整个原域压成四个实数；四个系数本身可无限维且彼此不交换。因此除非再有相应交换与标量前件，不能把它称作普通Bloch球，也不表示物理三空间。若这个三轴分支的 $\mathcal C$ 恰为有限维，则 $\mathcal B$ 的有限维C*分块使其简单复块为 $M_{2n_r}(\mathbb C)$，$n_r$ 可不同。故全单位三轴本来就不兼容该分支中的非零一维经典块或奇数满矩阵块。完整原目标仍包括没有这份全单位三轴的无轴、经典、奇数矩阵及其它域；这些域不能因本分支的坐标定理而被删除。不同块、不同轴和一般原响应的识别仍各取实际前件。
+
+## 144. 原关系的增量与更短几何
+
+**定义 144.1（承重对应与数学归属）。** 137–142的综合归为 $\texttt{repo-derived}$：消费同一原三轴已迫的四偶扇区，再由(138.1)把跨轴二元Jordan关系转成内部系数有向差，供整个原域的有限候选闭合，继而精确给原稠密矩阵域及保持 $X$ 的定向C*完成。矩阵单位、相反代数、C*完成、正泛函及有限Gram是成熟中间工具，承重处分别采用139.2及140.1所引的准确文献条件；不调用通常需要更高秩前件的Jordan协调化分类，也不以普遍C*包络的自伴部替换原 $X$。不宣称历史原创或文献穷尽。
+
+前卷18.1的面积、77.1–78.1的标量四维窗、29.2的指定 $M_2(B)$ 多项式模型、本续卷131–134的消失与原横向行均是已有供应。它们不等于从当前整个原域推出 $E_{\mathbb C}=M_2(\mathfrak b)$ 的内部闭合链。静态卷14.1、23.1、32.2、33.2的同一旧乘法后端仍各有原R、P3或旧双线性前件，也未被倒用来构造本候选。
+
+二元关系所保留的不只是各系数自己的对称乘积：把 $c,d$ 分别放到 $h,e$ 两条轴上，轴的反交换使其系数先后差在原Jordan乘积中显露；第三轴 $j$ 再把这份差读回 $\mathcal B_0$。这是有限三向提升，不是在物理空间添加方向，也不是把原三标签正性无条件支付给旧 $D$。式(138.3)、(138.5)说明内部定义不能任意互相独立：改动系数有向差而保留原混合Jordan二元关系，会直接破坏这些等式。141.3的三标签与全部有限表只属于这个已构造候选。
+
+几何简化准确地是 $E=H_2(\mathfrak b)$、$X=M_2(\mathcal B)_{\rm sa}$ 的坐标描述，连同142.1对同一个旧 $D$ 的运输。没有把候选响应当成旧响应，没有证明完整A1–A3/P2/PB的独立信息减少，也没有给全局最少公理数。原候选与原完成判据保持；下一份实际数学缺口仍是142.2的全原旧值识别。
+
+## 145. 七项原量子消费者的完整条件接口
+
+**定义 145.1（复Hilbert载体、可观测量与叠加）。** 139–140给原Jordan域的保单位、原范数和一级原锥的复C*几何，故可用成熟忠实Hilbert表示表示 $\mathcal C\cong M_2(\mathcal B)$。要把该结合表示认作同一原响应的共同乘法，仍须全域 $D=B_\star$，或另已支付静态卷32.2、23.1所需的旧双线性、P3及完整PB等原入口。唯一原 $\Omega$、具名且可取得的原标签、跨评价配对、native、全词同一 $q,K,J$、parent/ready、合法控制及实际相干叠加准备，完整取静态卷8.3–8.4、14.2、25.1与三标签卷8.2–8.5、80.1的来源合同；数学表示不产生全 $B(H)$ 满射或任意控制。
+
+**定义 145.2（正评价、效果、质量与Born）。** 141.1保质量延拓每份原正评价，140.3保原效果区间 $E\cap[0,u]$。只在同一个实际完整菜单及 $m_\alpha=\alpha(u)>0$ 时使用 $p_\alpha(e)=\alpha(e)/m_\alpha$；零、不等、次归一质量、原 $q$、中心经典混合、不等维块与静默部分按原范围保留。数学所有态和效果不等于实际准备或菜单齐备。静态卷25.1第二行所保留的原准备、事件接受归属、共同根、抽签、mark、$\mathrm C_{12},\mathrm A_{12},\mathrm{BI}_{12}$、预定有限强度尺度、P9分支及独立 $W_e$、完整菜单、固定支持全质量与全部原中间切口，均不由矩阵坐标生成；一般无限维系数域没有被改成有限密度矩阵表。
+
+**定义 145.3（native、真正相关联合与张量）。** $M_2(\mathcal B)$ 是同一单域的数学因子描述，不制造实际二元参考或复合。全词同一 $K/J$、交叉零和生成分离仍需原来源；张量接线仍需同一个实际非零联合、忠实同向交换的两腿、联合生成、所需重数，以及全部相关输入、中心对、经典和不等维块。其量词准确沿静态卷25.1第三行、53.1及单位桥95.2、116.1；分别可达的两腿、相同边缘或一个数学张量表示不替代共同实现。系数非交换也不自动给它物理子系统身份。
+
+**定义 145.4（CP与整台递归同源参考）。** 原未归一回溯 $\alpha_A(\beta_rb)=\alpha_B^r(b)$、typed前接及合法后口、全未来自然性、反变合法复合、typed分区和箭头商下降均取原合同。要使用原CP接口，实际箭头须连环境及全部成功、失败、细记录、后口输出，系统腿与二元参考腿须共同真支持且忠实同向交换；三实际投影与各自支持内补、全部相关正输入上的intertwining及夹界、每个有限递归深度与累计支持的准确运输均保留。静态卷25.1第四行及原整台参考消费者的这些前件不由静态 $M_2(\mathcal B)$ 或141.3候选Gram支付；143.2也排除了把一级原序保持直接升级为原环境CP的推断。支持内补仍不是环境补。
+
+**定义 145.5（完整仪器、Kraus、更新、TP与Lüders）。** 原Jordan二次夹心仍是有限表达式 $\mathcal U_a(b)=2a\circ(a\circ b)-a^2\circ b$；在候选结合乘法中它等于 $a\star b\star a$。这只给数学入口。静态卷25.1第五行所需的全部原输入运输、完整typed输出菜单、环境、成功失败、细记录、接受端、真正分组遗忘、AC、精确 $N_u$、X/Xs、平方根词及其原接受条件全部保留。TP需要完整单位分区，Lüders需要同一完整输出的像内射线校准；仅正质量分支归一，零分支和合法未来不删除。有限密度、迹和算子Kraus公式只在原有限全矩阵域或已供应所需正规表示与指定前对偶并确实适用的域消费。数学完成里的根不供应原平方根词或接受端。
+
+**定义 145.6（全部历史、未来、遗忘与真实返回）。** 原合法顺序、自适应、并行历史，每个仍合法未来，环境与全部细记录、真正分组遗忘、停止、拒绝、销毁、泄漏、同数两侧及逆向真实返回，均保留静态卷8.4、25.1第六行和单位桥原消费者的全部量词。CountRead绑定读后同一原完整活动输入及全未来返回；负提升两条活路的分别控制与相干聚合、具名分析词到实际菜单均须原生构造。原 $B$ 的精确正生成与另名 $B_{\rm cl}$ 的闭正生成不混同，这两个来源条件也不是此处系数代数 $\mathcal B$。可数可加、非离散记录、无限历史、正常性和指定前对偶不由范数完成产生；相同矩阵而不同原程序、原读取顺序、原 $q$-零集和AC方向仍保持。
+
+**定义 145.7（动力、物理钟与共同尺度）。** 候选 $B_\star$ 可给数学有界内导子，但若要使用旧响应公式 $\dot b=2D(H,b)/\hbar$，仍须认回同一个旧 $D$ 并供应原流保持原域、实际相位和门序列、可逆一参数群、物理钟、所需强连续酉实现与生成元定义域、Hamiltonian的能量解释、作用量及共同正 $\hbar$。静态卷25.1第七行中的原 $\sigma,t_0$、共同仪器、固定 $d$、固定域、resolvent与 $3s+r\le1$ 预算均守原量词。矩阵单位、$Q$、谱、数学指数及完成不产生这些物理来源；一般无界生成元不被有界候选导子替代。
+
+## 146. 四系数几何与旧关系的完整白话
+
+**定义 146.1（有限坐标、内部闭合与原缺口的白话含义）。** 三根已经由同一原响应选定的轴，给每个原对象盖上三个正反记号。134.1只允许四种偶记号，因此每个原对象都能有限、唯一地拆成四份。第一份本来就与三轴交换；把另外三份各乘回相应轴，它们也都成为与三轴交换的系数。这里的“系数”不是四个实数：它们可以各有无限多自由度，并且彼此不交换。
+
+关键在于，原来的对称二元关系没有丢掉系数的先后差。把一份系数放到 $h$ 轴上，另一份放到 $e$ 轴上，再作原Jordan组合；轴自身的反交换会把系数的先后差留下来。第三轴 $j$ 把它读回原系数域。这一步给出的是有限原公式，所以不需要先向原域加入根、逆、谱切片或极限。它把四个分量接成了整个带系数二阶复矩阵域；只说“像一个三维球”会漏掉系数自身的非交换关系。
+
+由此，每个原对象和全部原对称二元关系都在一张准确矩阵坐标表里。补上数学极限以后得到真正的二阶矩阵C*代数，但原对象仍准确占原来的稠密矩阵域。原JC环境可以同时容纳正反取向，新的乘法按同一有向三轴协调这两部分；环境的取向投影甚至可以不在新完成里，更不是原可调用标签。保持一级正锥也不等于保持原环境所有矩阵层的正性，更不等于实际复合或CP已经存在。
+
+这张几何表强迫了一份规范候选有向关系，却没有替换旧 $D$。三条已经认回的横向单位行确实与候选一致；一般带交换分量、带单位分量或任意两输入的旧值仍要用原P2/PB继续认回。现在可以把同一个旧总映射连同原评价、P2及PB完整搬到同一个原矩阵域上继续研究，而不能用候选正表或候选换括号式代付旧表。若候选不能内部闭合，原跨轴Jordan关系就会直接矛盾；若旧 $D$ 还没有被认回，矩阵图景的简洁也不会使这个缺口自行消失。
+
+这里缩短的是整个Jordan域的几何描述，没有减少已经声明的独立原公理数，没有把数学三轴说成物理三空间，也没有删掉完整目标中无轴、经典、奇数矩阵等其它原域。Born的实际菜单、整台仪器、真正相关联合和参考、全部历史未来与真实返回、物理时钟、能量及共同尺度，都仍要来自同一个原世界；数学完成和坐标不能替世界供应它们。
+
+## 追加锚（本行以下为增补区）
+
+## 147. 任意原混合输入与同一旧输出的两个投影
+
+**定义 147.1（完整原前件与固定行）。** 本节及以下各节完整保持130.1、137.1的同一原 $(E,C,u,N,\mathcal P,S,D)$、A1–A3、准确锥、全部原P2及完整原PB。仍有同一忠实含单位JC包含
+
+$$
+E\subset X\subset\mathcal A_{\rm sa},\qquad
+\overline E=X,\qquad\mathcal A=C^*(X).
+\tag{147.1}
+$$
+
+原 $E$ 可以不完备，不要求 $X=\mathcal A_{\rm sa}$；旧 $D:E^2\to E$ 不预付一般齐次、可加、连续、商下降、输入函数演算或完成延拓。固定同一实际原 $h,e,j=D(h,e)$，消费133.1–134.1的全部原横向行、三轴循环及辅助中央取向
+
+$$
+\begin{gathered}
+h^2=e^2=j^2=u,\qquad h\circ e=h\circ j=e\circ j=0,\\
+Q=i h e j\in Z(\mathcal A),\qquad Q^*=Q,\quad Q^2=u,\\
+T=[L_j,L_e],\qquad D(h,v)=Tv=iQhv\quad(v\in V_h),
+\qquad T^2v=-v.
+\end{gathered}
+\tag{147.2}
+$$
+
+这里 $L_a z=a\circ z$、$V_h=\{v\in E:h\circ v=0\}$。$Q$ 不要求属于 $E$ 或 $X$。令
+
+$$
+\begin{gathered}
+U_h=2L_h^2-I,\qquad
+P_{\rm tr}=\tfrac12(I-U_h),\qquad
+P_{\rm com}=\tfrac12(I+U_h),\\
+\operatorname{Com}_h=\{c\in E:hc=ch\}=P_{\rm com}E.
+\end{gathered}
+\tag{147.3}
+$$
+
+这些都是保持原域的有限Jordan表达式。对每个任意原 $x\in E$，以下始终固定
+
+$$
+\begin{gathered}
+c=P_{\rm com}x,\qquad v=P_{\rm tr}x,\qquad
+x=c+v,\quad hc=ch,\quad hv=-vh,\\
+k=h\circ x=h\circ c=hc\in E,\qquad
+g=D(h,x)\in E,\qquad n=u+h.
+\end{gathered}
+\tag{147.4}
+$$
+
+特别没有假定 $g\in V_h$；$g$ 的两个 $h$-交换对角块全程保留。环境乘法、Hilbert向量和谱压缩只供证明，不增加旧 $D$ 的可调用输入。零原域的全部等式为零，以下非零向量读取仅用于非零表示空间。
+
+**定义 147.2（两份实际锚与同一读取）。** 只取两种已存在的实际原锚
+
+$$
+(p,q)=(e,j)\quad\hbox{或}\quad(p,q)=(j,-e).
+\tag{147.5}
+$$
+
+前卷77.1在同一标量四维窗中准确给出，对所有实 $t,\alpha$，
+
+$$
+D(h,tp+\alpha n)=tq,\qquad
+h\circ(tp+\alpha n)=\alpha n,\qquad p\circ q=0.
+\tag{147.6}
+$$
+
+这里只使用已经认回的原窗，不向一般 $x$ 加单位后拆分未知旧值。对同一个数学正实读取 $\phi$，沿用123.2
+
+$$
+B_\phi(a,b)=\phi(a^2)\phi(b^2)-\phi(a\circ b)^2,
+\qquad |\phi D(a,b)|\le\sqrt{B_\phi(a,b)}.
+\tag{147.7}
+$$
+
+由16.2及123.2的准确锥接口，环境数学向量态可以如此读取每张原P2；它不必是实际准备。每次两张P2共用同一 $\phi$，不把 $|\phi D|^2$ 换成 $\phi(D^2)$。
+
+## 148. 任意混合旧值的实际配平与完整 Gram 预算
+
+**定理 148.1（保留全部输出块的共享预算）。** 对147.4的任意固定原 $x,g$、147.5的任一实际锚、每个实 $t$ 及同一个数学正读取 $\phi$，令
+
+$$
+W_+=x+k+g-t(p+q),\qquad
+W_-=x+k-g+t(p-q).
+\tag{148.1}
+$$
+
+则
+
+$$
+\boxed{2|\phi(tq+v)|\le
+\sqrt{B_\phi(n,W_+)}+\sqrt{B_\phi(n,W_-)}.}
+\tag{148.2}
+$$
+
+$W_\pm$ 可以含任意 $h$-交换分量，不预付它们横向。
+
+证明。对全部有限实 $t,\alpha$，只调用同一个原PB三元组
+
+$$
+(a,b,z)=(h,tp+\alpha n,x).
+\tag{148.3}
+$$
+
+两份内层原响应由(147.4)、(147.6)准确为 $tq,g$；相应位移及两份完整外层原输入为
+
+$$
+\begin{aligned}
+\nu&=tq-k,&\omega&=\alpha n+g,\\
+R_+&=t(p+q)-k+\alpha n,&S_+&=x+g+\alpha n,\\
+R_-&=t(p-q)+k+\alpha n,&S_-&=x-g-\alpha n.
+\end{aligned}
+\tag{148.4}
+$$
+
+每个标签都在原 $E$。由于 $n\circ q=q$，且
+
+$$
+n\circ k=c+hc,\qquad n\circ x=c+hc+v,
+\qquad n\circ k-n\circ x=-v,
+\tag{148.5}
+$$
+
+原PB的右端完整展开为
+
+$$
+\begin{aligned}
+D(R_+,S_+)-D(R_-,S_-)
+&=-2(tp+\alpha n)\circ(tq-k)-2x\circ(\alpha n+g)\\
+&=2t\,p\circ k-2x\circ g-2\alpha(tq+v).
+\end{aligned}
+\tag{148.6}
+$$
+
+$2t\,p\circ k$ 与 $-2x\circ g$ 都保留；任何一般交换性或输出横向性都未用来删项。对两个未知完整外值分别施加同一个 $\phi$ 的原P2，再作标量三角不等式，得到
+
+$$
+\left|\phi(2t\,p\circ k-2x\circ g)-2\alpha\phi(tq+v)\right|
+\le\sqrt{B_\phi(R_+,S_+)}+\sqrt{B_\phi(R_-,S_-)}.
+\tag{148.7}
+$$
+
+为准确处理大 $\alpha$，对任意固定原自伴 $A,B,n$ 和 $s\in\{1,-1\}$，已知实Jordan乘法的双线性给
+
+$$
+\begin{aligned}
+B_\phi(A+\alpha n,B+s\alpha n)
+&=B_\phi(A,B)+2\alpha C_s(A,B;n)
++\alpha^2B_\phi(n,B-sA),\\
+C_s(A,B;n)
+&=s\phi(A^2)\phi(n\circ B)+\phi(n\circ A)\phi(B^2)\\
+&\quad-\phi(A\circ B)\{\phi(n\circ B)+s\phi(n\circ A)\}.
+\end{aligned}
+\tag{148.8}
+$$
+
+确实，三份已知读取分别展开为
+
+$$
+\begin{aligned}
+\phi((A+\alpha n)^2)&=\phi(A^2)+2\alpha\phi(n\circ A)+\alpha^2\phi(n^2),\\
+\phi((B+s\alpha n)^2)&=\phi(B^2)+2s\alpha\phi(n\circ B)+\alpha^2\phi(n^2),\\
+\phi((A+\alpha n)\circ(B+s\alpha n))
+&=\phi(A\circ B)+\alpha\{\phi(n\circ B)+s\phi(n\circ A)\}
++s\alpha^2\phi(n^2).
+\end{aligned}
+\tag{148.9}
+$$
+
+在前两式乘积减第三式平方中，四次、三次项各自相消；二次项为
+
+$$
+\phi(n^2)\phi((B-sA)^2)-\phi(n\circ(B-sA))^2,
+$$
+
+即(148.8)所写的Gram行列式。正外层取 $A=t(p+q)-k,B=x+g,s=1$；负外层取 $A=t(p-q)+k,B=x-g,s=-1$，故二次系数准确是 $B_\phi(n,W_+)$ 与 $B_\phi(n,W_-)$。
+
+把(148.7)除以 $|\alpha|$，只在这些显式标量二次式中令 $|\alpha|\to\infty$，得到(148.2)。二次系数为零时，除后的相应根号仍趋于零，未丢退化情形。两份未知外值在每个有限 $\alpha$ 已由原P2逐份上界，不存在 $D$ 的输入极限或未知输出连续性前件。∎
+
+## 149. 不假定横向的向量态预算
+
+**定理 149.1（全部对角块保留时的精确向量恒等式）。** 在 $\mathcal A$ 的忠实含单位Hilbert表示中，内积第一槽共轭线性。固定 $\sigma\in\{1,-1\}$，取任意单位向量
+
+$$
+\xi\in H_{\sigma,-}:=\{\xi:Q\xi=\sigma\xi,\ h\xi=-\xi\},
+\qquad \eta=q\xi,
+\tag{149.1}
+$$
+
+其中 $(p,q)$ 是147.5的任一锚；空空间无需取向量。对 $\delta>0$，令 $\phi_\delta$ 为单位向量 $(\xi+\delta\eta)/\sqrt{1+\delta^2}$ 的数学向量态，并令
+
+$$
+\mathfrak p_\eta w=w-\operatorname{Re}\langle\eta,w\rangle\eta.
+\tag{149.2}
+$$
+
+它是底层实Hilbert空间中去掉实方向 $\eta$ 的正交投影。对每个任意固定自伴 $W\in E$，无须 $W\in V_h$，均有
+
+$$
+\boxed{B_{\phi_\delta}(n,W)
+=\frac{4\delta^2}{(1+\delta^2)^2}
+\left\|\mathfrak p_\eta(W\xi+\delta W\eta)\right\|^2.}
+\tag{149.3}
+$$
+
+因此148.2推出，对全部实 $t$，
+
+$$
+\boxed{
+2\left|t+\operatorname{Re}\langle\eta,v\xi\rangle\right|
+\le
+\left\|\mathfrak p_\eta((v+g)\xi)-t p\xi\right\|
++\left\|\mathfrak p_\eta((v-g)\xi)+t p\xi\right\|.}
+\tag{149.4}
+$$
+
+证明。两份锚都满足 $qp=je=iQh$，所以
+
+$$
+\|\eta\|=1,\qquad h\eta=\eta,\quad Q\eta=\sigma\eta,
+\qquad p\xi=-i\sigma\eta.
+\tag{149.5}
+$$
+
+这里 $Q$ 中央，故 $p,q$ 和所有固定原元素都保持其两个谱子空间。$h$ 自伴使 $\xi\perp\eta$；又 $n\xi=0,n\eta=2\eta,n^2=2n$。直接读取固定 $W$ 得
+
+$$
+\begin{aligned}
+\phi_\delta(n^2)&=\frac{4\delta^2}{1+\delta^2},\\
+\phi_\delta(W^2)&=\frac{\|W\xi+\delta W\eta\|^2}{1+\delta^2},\\
+\phi_\delta(n\circ W)
+&=\frac{2\delta}{1+\delta^2}
+\operatorname{Re}\langle\eta,W\xi+\delta W\eta\rangle.
+\end{aligned}
+\tag{149.6}
+$$
+
+最后一式使用 $W=W^*$，故 $\langle\eta,W\eta\rangle$ 为实数。代入Gram行列式，正好是去掉一个实正交分量后的范数平方，得到(149.3)。这些公式没有删除 $W$ 的任何对角作用。
+
+$tq+v\in V_h$，其两份对角读取为零，所以
+
+$$
+\phi_\delta(tq+v)=\frac{2\delta}{1+\delta^2}
+\left(t+\operatorname{Re}\langle\eta,v\xi\rangle\right).
+\tag{149.7}
+$$
+
+将(149.3)分别用于148.2的完整 $W_+,W_-$，将(149.7)用于左侧，约去共同正因子 $2\delta/(1+\delta^2)$，得
+
+$$
+2\left|t+\operatorname{Re}\langle\eta,v\xi\rangle\right|
+\le\sum_{s\in\{+,-\}}
+\left\|\mathfrak p_\eta(W_s\xi+\delta W_s\eta)\right\|.
+\tag{149.8}
+$$
+
+现在只对固定向量范数令 $\delta\downarrow0$。由 $x+k=nc+v$、$c$ 与 $h$ 交换及 $n\xi=0$，有 $(x+k)\xi=v\xi$。又 $q\xi=\eta$、$p\xi=-i\sigma\eta$，所以
+
+$$
+\mathfrak p_\eta(q\xi)=0,\qquad
+\mathfrak p_\eta(p\xi)=p\xi.
+\tag{149.9}
+$$
+
+两份极限向量准确是(149.4)右侧。$g$ 自始至终是固定的完整旧值；其 $h$-交换分量仍在 $(v\pm g)\xi$ 中。全部极限只读取已固定元素，不曾令 $D$ 的输入收敛。∎
+
+## 150. 正反大锚及两锚复极化锁住同一非对角块
+
+**定理 150.1（任意原混合输入的横向旧输出）。** 对147.1背景下每个原 $x\in E$，同一个旧总映射满足
+
+$$
+\boxed{P_{\rm tr}D(h,x)=T P_{\rm tr}x=iQh P_{\rm tr}x.}
+\tag{150.1}
+$$
+
+不要求 $x$ 的平方、任一系数平方或混合Gram为标量、中央、可逆或有限谱。
+
+证明。固定149.1的 $\sigma,\xi$ 及任一实际锚。记实数和固定向量
+
+$$
+a=\operatorname{Re}\langle\eta,v\xi\rangle,\qquad
+w=p\xi,\qquad z_\pm=\mathfrak p_\eta((v\pm g)\xi),\qquad
+b=\operatorname{Re}\langle w,g\xi\rangle.
+\tag{150.2}
+$$
+
+$\|w\|=1$ 且 $\operatorname{Re}\langle\eta,w\rangle=0$。成熟的Hilbert范数一次项对任意固定向量 $z$ 给
+
+$$
+\|rw+z\|-r
+=\frac{2r\operatorname{Re}\langle w,z\rangle+\|z\|^2}
+{\|rw+z\|+r}
+\longrightarrow\operatorname{Re}\langle w,z\rangle
+\quad(r\to+\infty).
+\tag{150.3}
+$$
+
+分母除以 $r$ 后趋于二，因为 $|\|rw+z\|-r|\le\|z\|$。这里仅对显式固定向量范数使用平方差恒等式。
+
+在(149.4)取 $t=r\to+\infty$，两份右侧范数减去 $2r$ 的极限为
+
+$$
+-\operatorname{Re}\langle w,z_+\rangle
++\operatorname{Re}\langle w,z_-\rangle=-2b;
+$$
+
+左侧减去 $2r$ 的极限为 $2a$，故 $a\le-b$。再取 $t=-r\to-\infty$，两份右侧范数减去 $2r$ 的极限为 $2b$，左侧为 $-2a$，故 $a\ge-b$。两端一起迫使
+
+$$
+\operatorname{Re}\langle\eta,v\xi\rangle
+=-\operatorname{Re}\langle p\xi,g\xi\rangle.
+\tag{150.4}
+$$
+
+在这些等式中，$\operatorname{Re}\langle w,\mathfrak p_\eta z\rangle
+=\operatorname{Re}\langle w,z\rangle$，所以没有将未知 $g$ 换成横向投影再求预算。由(149.5)及内积约定，(150.4)等价于
+
+$$
+\operatorname{Im}\langle\eta,g\xi\rangle
+=\sigma\operatorname{Re}\langle\eta,v\xi\rangle.
+\tag{150.5}
+$$
+
+先取 $(p,q)=(e,j)$，写
+
+$$
+A_\xi=\langle j\xi,v\xi\rangle,\qquad
+B_\xi=\langle j\xi,g\xi\rangle.
+$$
+
+第一锚给 $\operatorname{Im}B_\xi=\sigma\operatorname{Re}A_\xi$。第二锚 $(p,q)=(j,-e)$ 给 $\eta'=-e\xi=i\sigma j\xi$，因此
+
+$$
+A'_\xi=-i\sigma A_\xi,\qquad B'_\xi=-i\sigma B_\xi.
+$$
+
+将它们代入第二份(150.5)，得到
+
+$$
+-\sigma\operatorname{Re}B_\xi=\operatorname{Im}A_\xi.
+$$
+
+联合两份实等式，准确为
+
+$$
+\boxed{B_\xi=i\sigma A_\xi,\qquad
+\langle j\xi,(g-i\sigma v)\xi\rangle=0.}
+\tag{150.6}
+$$
+
+两种实际锚各自使用148.3–148.7的一次PB及同一读取的两张P2，不假定它们的未知外层输出相等。
+
+为将全部二次读取接回完整压缩，令 $E_\sigma=(I+\sigma Q)/2$、$P_\pm=(I\pm h)/2$，只在数学表示中使用这些投影；它们不成为原输入。$E_\sigma$ 与所有原元素交换。令
+
+$$
+M_\sigma=E_\sigma P_-\,j(g-i\sigma v)\,P_-E_\sigma.
+\tag{150.7}
+$$
+
+(150.6)对 $H_{\sigma,-}$ 中每个单位向量成立，再以固定算子的二次齐次性推广到全部向量。普通复极化不需要 $M_\sigma$ 自伴：若 $q_M(\zeta)=\langle\zeta,M_\sigma\zeta\rangle$，则对任意 $\zeta,\omega\in H_{\sigma,-}$，
+
+$$
+\begin{aligned}
+4\langle\zeta,M_\sigma\omega\rangle
+&=q_M(\zeta+\omega)-q_M(\zeta-\omega)\\
+&\quad-iq_M(\zeta+i\omega)+iq_M(\zeta-i\omega)=0.
+\end{aligned}
+\tag{150.8}
+$$
+
+所以 $M_\sigma=0$。$j$ 将 $H_{\sigma,-}$ 酉地送到 $H_{\sigma,+}=E_\sigma P_+H$，且 $j^2=I$；左乘 $j$ 即给
+
+$$
+E_\sigma P_+gP_-E_\sigma
+=i\sigma E_\sigma P_+vP_-E_\sigma.
+\tag{150.9}
+$$
+
+$g,v$ 自伴，故伴随确定反向块：
+
+$$
+E_\sigma P_-gP_+E_\sigma
+=-i\sigma E_\sigma P_-vP_+E_\sigma.
+\tag{150.10}
+$$
+
+这里的反号正是 $i\sigma hv$ 在反向块上的反号；没有声称完整 $g=i\sigma v$。$Q$ 中央排除不同 $\sigma$ 谱空间之间的任何原元素块。又
+
+$$
+P_{\rm tr}g=\tfrac12(g-hgh)=P_+gP_-+P_-gP_+,
+$$
+
+故(150.9)–(150.10)在两份 $Q$ 谱空间上共同给 $P_{\rm tr}g=iQhv$。空谱空间无须读取；若某份 $h$ 负空间为空，$j$ 的酉对应使其正空间也为空。忠实性把这个环境等式认回原元素，最后用147.2的已有原 $Tv=iQhv$ 得(150.1)。全部未知旧值只在有限原标签上出现，未使用任何 $D$ 的可加性或输入连续性。∎
+
+## 151. 横向身份的有限原参数反事实
+
+**推论 151.1（每个失败见证都有有限实际预算矛盾）。** 若150.1对某个固定原 $x$ 失败，则存在147.5的一种实际锚、有限实 $t,\alpha$、正实 $\delta$ 及149.1的一份向量态，使同一个原PB的(148.6)与该态下两份原P2不能同时成立。这是逐失败见证的有限检出，不是一份预先固定的有限参数表覆盖无限原域。
+
+证明。若横向算子差非零，由 $Q$ 中央、自伴性及两个非对角块互为伴随，某份 $E_\sigma P_+(g-i\sigma v)P_-E_\sigma$ 非零。$j$ 的酉对应及复极化(150.8)遂给一个单位 $\xi$，使(150.6)失败。第一、第二实际锚的两份实等式不可能同时成立，故至少一种锚在(150.2)有
+
+$$
+\varepsilon:=a+b\ne0.
+\tag{151.1}
+$$
+
+设 $F(t)$ 是(149.4)右侧减左侧。由(150.3)，
+
+$$
+\lim_{r\to+\infty}F(r)=-2\varepsilon,
+\qquad \lim_{r\to+\infty}F(-r)=2\varepsilon.
+\tag{151.2}
+$$
+
+$\varepsilon>0$ 时取一个有限大正 $t$，$\varepsilon<0$ 时取一个有限大负 $t$，使相应 $F(t)<0$。现在固定这个 $t$；(149.8)右侧是固定向量的连续范数，因此存在有限正 $\delta$，使(149.8)仍严格失败。等价地，该固定 $\phi_\delta$ 的(148.2)严格失败。最后固定 $t,\delta,\xi$：由(148.8)及(148.7)左侧的显式仿射式，除以 $|\alpha|$ 后的差趋向这份严格负差，所以某个有限大 $|\alpha|$ 已使(148.7)失败。
+
+(148.7)只由该同一个原PB和同一态的两张原P2推出。故这个有限原三元组及两份完整原外层就是矛盾见证，不需要真的把无穷大或零极限当成原标签。参数可依赖 $x$、其同一旧值和失败压缩，没有给出统一的有限测试清单或资源上界。∎
+
+## 152. 任意实纵向轴偏移的原值与两层原消费者
+
+**定理 152.1（任意原横向输入加实轴偏移）。** 对全部实 $\lambda$ 及任意原 $v\in V_h$，同一个旧响应满足
+
+$$
+\boxed{D(h,\lambda h+v)=Tv=iQhv.}
+\tag{152.1}
+$$
+
+$v^2$ 可非中央、奇异、非可逆或具有连续谱，$N(v)$ 不受小窗口限制。
+
+证明。置原 $x=\lambda h+v$，固定同一个旧 $g=D(h,x)$。有 $h\circ x=\lambda u$。精确消费前卷18.1的标量交叠入口：它已经给出 $h\circ g=0$，故 $P_{\rm tr}g=g$。本卷150.1于是给
+
+$$
+g=P_{\rm tr}g=T P_{\rm tr}(\lambda h+v)=Tv.
+\tag{152.2}
+$$
+
+这里用的是18.1已经证明的正交结论，不从相同面积平方擅自选择取向，也不重新证明或重计18.1的面积关系。其已有面积结论在这个分支正是 $g^2=v^2$，与133.2的 $(Tv)^2=v^2$ 相符；识别完整原值所新增的步骤是150.1。$\lambda=0$ 复用已有横向行，$v=0$ 复用同轴零值，这两种特例不另计增量。证明不对 $v^2$ 作原根、逆元、谱切片或归一。∎
+
+**推论 152.2（同一旧行的两层有限嵌套）。** 对上述每个原 $(\lambda,v)$，两次原调用准确为
+
+$$
+\begin{array}{c|c|c}
+\text{原层次}&\text{完整原输入}&\text{同一旧输出}\\ \hline
+\text{内层}&(h,\lambda h+v)&Tv\in E\cap V_h\\
+\text{外层}&(h,D(h,\lambda h+v))=(h,Tv)&-v
+\end{array}
+\tag{152.3}
+$$
+
+即
+
+$$
+\boxed{D(h,D(h,\lambda h+v))=-v.}
+\tag{152.4}
+$$
+
+证明。内层由152.1识别为同一原 $Tv$，133.1保证它仍在原 $V_h$。外层再对这份实际旧输出使用133.1，得到 $D(h,Tv)=T(Tv)=-v$。全部内外标签均在原域，不把候选 $B_\star$ 的复合表冒充旧响应，也不把这个数学嵌套解释成实际仪器的逆向返回程序。∎
+
+## 153. 同一原矩阵表的非对角块与精确剩余量
+
+**定义 153.1（保留的原残差）。** 对每个原 $x=c+v$ 定义
+
+$$
+\rho_h(x)=P_{\rm com}D(h,x)\in E,\qquad
+h\rho_h(x)=\rho_h(x)h.
+\tag{153.1}
+$$
+
+150.1给准确分解
+
+$$
+\boxed{D(h,c+v)=Tv+\rho_h(c+v).}
+\tag{153.2}
+$$
+
+这个定义不声称 $\rho_h(c+v)$ 与 $v$ 无关，也不声称它等于 $D(h,c)$。
+
+**定理 153.2（与整个原系数几何的真实连接）。** 使用140.1及142.1的同一原矩阵坐标，令
+
+$$
+H=\phi(h)=\begin{pmatrix}u&0\\0&-u\end{pmatrix},\qquad
+A=\phi(x)=\begin{pmatrix}a&b\\b^*&d\end{pmatrix}
+\in H_2(\mathfrak b),
+\tag{153.3}
+$$
+
+其中 $a,d\in\mathcal B_0$、$b\in\mathfrak b$；这里矩阵中的 $u$ 是系数代数的单位。则同一个旧 $\widetilde D$ 准确满足
+
+$$
+\boxed{\widetilde D(H,A)=
+\begin{pmatrix}
+r_+(A)&ib\\-ib^*&r_-(A)
+\end{pmatrix},\qquad r_\pm(A)\in\mathcal B_0.}
+\tag{153.4}
+$$
+
+同一个旧输出的全部非对角块已识别；两个对角块仍是原问题的剩余量。特别对全部 $\lambda\in\mathbb R,b\in\mathfrak b$，
+
+$$
+\widetilde D\left(H,\begin{pmatrix}\lambda u&b\\b^*&-\lambda u\end{pmatrix}\right)
+=\begin{pmatrix}0&ib\\-ib^*&0\end{pmatrix}.
+\tag{153.5}
+$$
+
+证明。$P_{\rm com}x$ 对应 $A$ 的对角部分，$P_{\rm tr}x$ 对应非对角部分。138.2的候选有准确身份
+
+$$
+B_\star(h,x)=\tfrac{iQ}{2}[h,x]=iQhv=Tv.
+\tag{153.6}
+$$
+
+因此本次150.1不是用它定义旧值，而是另外证明旧值与这份候选的差只在交换块中：142.2的同一全域残差限制到这条原行时，确有
+
+$$
+\rho(h,x)=D(h,x)-B_\star(h,x)=\rho_h(x).
+\tag{153.7}
+$$
+
+由140.3，
+
+$$
+\phi(Tv)=\tfrac i2[H,A]
+=\begin{pmatrix}0&ib\\-ib^*&0\end{pmatrix}.
+\tag{153.8}
+$$
+
+将(153.2)整体施加 $\phi$，剩余原自伴交换块 $\phi(\rho_h(x))$ 恰为两份自伴系数 $r_\pm(A)$，即(153.4)。这里从未对不要求属于 $E$ 的辅助 $Q$ 施加 $\phi$。$a=\lambda u,d=-\lambda u$ 时，152.1消去同一剩余块，得到(153.5)。矩阵系数可以非交换且不完备，$b$ 是任意原系数复化元素，不是标量窗的替代记号。∎
+
+**定义 153.3（准确未证边界）。** 在本次固定实际三轴分支，一般目标仍包含
+
+$$
+\rho_h(c+v)=0\quad(c\in\operatorname{Com}_h,\ v\in V_h).
+\tag{153.9}
+$$
+
+150.1仅把这份缺口定位到同一旧输出的 $h$-交换块。$v=0$ 时它只给 $[D(h,c),h]=0$，不证明一般 $D(h,c)=0$；特别对任意 $c\in\mathcal B_0$ 的完整零行仍未支付。$\rho_h(c+v)=D(h,c)$ 亦未支付，不能先设它与 $v$ 无关再消去它。152.1只消去 $c=\lambda h$ 的分支；不能把它与此前另已支付的单位偏移分支合用，擅自得到任意 $\mu u+\lambda h+v$ 的完整原值，也不能推出一般单位或中央平移。
+
+全部原第二输入上的完整单位平方行、一般首标签、无这份实际原正交三轴的域、一般第一槽齐次、全域分别可加及实双线性、全部旧P3与有限旧复Gram、旧R和同一旧结合乘法，仍各有未付桥。一般商下降、输入函数演算、未知输入连续性及旧响应的原完成运输也未由此得到。141.1的候选正表、候选R和139.2的候选完成保持其候选身份，不代付这些旧表条件。没有给出满足完整全部原P2/PB而违反上述一般结论的反模型，故不宣称这些条件独立或完整目标不可能。
+
+## 154. 承重来源、二元后果与几何简化的范围
+
+**定义 154.1（原关系对应与复用边界）。** 148–153的增量归为 $\texttt{repo-derived}$ 综合：任意原混合 $x$ 的同一旧输出，先由实际PB及两份原P2识别全部横向块，再以既有正交消费者识别实纵向轴偏移分支，最后给同一行的两层旧值。其承重关系准确为：
+
+| 来源 | 本次承担的义务 |
+| --- | --- |
+| 130.1、137.1及123.2 | 同一个旧总映射、完整原A1–A3/P2/PB、原准确锥和同一读取；不预付混合旧输出横向 |
+| 前卷77.1 | 两份实际锚的全部有限内值 $D(h,tp+\alpha n)=tq$，使148.4的外层完整可列 |
+| 133.1–134.1 | 原横向 $T$、负平方及整个环境中的中央 $Q$；不重计 $M,C_{+,+}$ 消失或横向行 |
+| 148.6–148.9 | 一份实际PB与同态两张P2的完整Gram预算，保留一般 $k$、$g$ 及全部常数项 |
+| 149.3、150.3及150.8 | 任意自伴旧输出的向量预算、正反大锚一次项与两锚复极化，认回同一个非对角块 |
+| 前卷18.1及150.1 | 已有正交加本次投影身份，供152.1识别任意原 $v$ 与实 $\lambda h$ 混合的完整旧值 |
+| 133.1及152.1 | 152.3两次实际原调用，外层消费内层已经认回的旧输出 |
+| 138.2、140.1及142.1 | 将新身份准确接到同一 $H_2(\mathfrak b)$ 原域和旧 $\widetilde D$；剩余只在该行的对角块 |
+
+124–125已对横向输入使用共享预算及饱和读取，133–134已识别全部原横向行；本次不将这些特例改称新结论。前卷18.1的面积与正交、77.1–78.1的标量四维窗均直接复用；152.1的 $v$ 不必落在任何标量平方片中。静态卷55.1–56.1认回所有混合旧值的入口还要求有限完成及全部固定演员行的可加性，不能用该条件结论代付本次任意不完备原域中的剩余块。以上对应不宣称全仓检索穷尽。
+
+148.8的实Gram展开、149.3的Hilbert范数恒等式、150.3的范数一次项和150.8的固定算子复极化都是成熟中间工具，已在承重证明中给出具体等式。它们不证明一般非线性旧表的局部到整体定理，也不供应额外联合正表。van de Wetering，[*Commutativity in Jordan Operator Algebras*](https://arxiv.org/html/1912.01903v1)，Proposition 3.2及式(2)的JC对应保持136.1的使用范围；Alfsen–Shultz，[*Orientation in Operator Algebras*](https://pmc.ncbi.nlm.nih.gov/articles/PMC22571/)，Theorem 1的全域线性动力对应前件仍未供应。Cabello–Peralta，[*Weak-2-local symmetric maps on C*-algebras*](https://arxiv.org/abs/1510.00915)，Theorem 2.5所需完整复C*域及逐对、逐泛函共同复线性保星插值器也不是本候选的前件。这里沿129.1、136.1已有引文保留这些适用边界，不宣称新的外部文献穷尽或全球原创。
+
+137–140的更简洁几何是整个原Jordan域的有限四系数与 $H_2(\mathfrak b)$，不是普通三维Bloch球。本次增加的是同一个旧响应缺陷的定位：对固定 $h$ 的全部原混合输入，几何中的非对角块已无自由余量；未知仍在同一个旧输出的两份对角块。138.3的内部系数闭合若失败，会直接破坏原跨轴Jordan二元关系；150.1的旧输出投影若失败，则由151.1破坏一份实际原PB和同态两张P2。二者的反事实对象不同，不能用候选闭合替代旧响应身份。完整原公理仍逐项使用，未减少所声明的独立公理数，也未证明最少公理数或独立性。
+
+## 155. 新支付对七项原量子消费者的准确接口
+
+**定义 155.1（同一原来源与七项条件保持）。** 145.1–145.7的七项定义逐项完整保持。本次新增支付只有150.1的固定行横向块、152.1的受限混合完整原值及152.3的两层原调用，不把它们升级为全部量子来源。相应接口为：
+
+1. **复Hilbert、可观测量与叠加。** 145.1已有的数学 $\mathcal C\cong M_2(\mathcal B)$ 表示保持；新值确实属于同一个旧行，却没有供应全域 $D=B_\star$、旧双线性、旧P3、原R及全域共同乘法。唯一原 $\Omega$、原 $E/S/D$、native、全词同一 $q,K,J$、parent/ready、具名可取得标签、合法控制及实际相干叠加准备不由辅助压缩生成，也不宣称所有 $B(H)$ 均可取得。
+2. **态、效果、质量与Born。** 145.2中的同一原正评价、原效果、全部实际完整菜单及接受条件保持；仅对正质量归一，零、不等、次归一质量、中心经典混合、不等维与静默部分完整保留。证明中的数学向量态不增加实际准备，原质量没有被 $\delta$ 或谱压缩重定标。
+3. **native、真相关联合与张量。** 145.3中的同一个实际非零共同来源、忠实同向交换的两腿、共同生成分离、所需重数及全部相关输入仍须原实现。相同边缘、辅助 $Q$ 的谱部分和系数矩阵分解均不提供真相关联合；完整目标中无轴、经典及奇数矩阵等原域继续保留。
+4. **CP与整台递归同源参考。** 145.4中的原回溯、typed前接后接、所有仍合法未来、原箭头商下降、系统与参考共同真支持、支持内补、全部相关正输入及每个所需有限递归深度不变。整台实际箭头连同环境、全部成功／失败／细记录／port／post-port输出都在原量词内；单行非对角识别不支付这些运输或联合正性，也不把143.2的一级序边界升级为CP。
+5. **完整仪器、Kraus、TP、更新与Lüders。** 145.5所需全部原输入运输、完整typed菜单和单位分区、AC及原接受端、射线校准、真正分组遗忘及全部输出保持。更新仅在正输出质量归一；Kraus、密度与迹类公式仍限于准确合格的有限全矩阵域，或另已供应正常表示、指定前对偶及所需收敛的域。152.3的旧响应输出不提供原平方根词或实际仪器。
+6. **全部历史、未来、真遗忘、双向真实返回与CountRead。** 145.6的全部合法顺序／自适应／并行历史、每个仍合法未来、全部细记录、停止／拒绝／销毁、泄漏、同数两侧及逆向真实返回保持。152.4是数学两层响应，不能认作实际返回程序。CountRead仍绑定读后同一原完整活动输入和全未来；无限／非离散记录、可数可加、正常性及指定前对偶不由本次范数读取或原域有限嵌套产生。
+7. **动力、物理钟、能量与共同尺度。** 145.7的同一旧全域乘法、保持不完备原域的流、实际相位与门序列、可逆一参数群、物理钟、强连续酉实现及生成元定义域、Hamiltonian能量解释、作用量与共同正 $\hbar$ 仍各取原来源和预算。$\alpha,t,\delta$ 是有限见证的数学参数，其极限仅比较固定标量或向量，不供应物理时间、控制成本或钟能量的共同尺度。
+
+因此同源要求仍覆盖唯一原世界、原评价与质量、全部实际菜单、整台输出及环境记录、真正相关联合与递归参考、全部历史未来及真遗忘双向返回。辅助 $Q$、向量态、矩阵坐标和两层数学响应不替换任何一个原接口。
+
+## 156. 任意混合旧输出与剩余对角块的完整白话
+
+**定义 156.1（同一原值、两次实际配平与几何位置的白话含义）。** 固定已经存在的原轴 $h$ 后，每个原输入都能有限地拆成两份：一份与 $h$ 交换，记作 $c$；另一份与 $h$ 反交换，记作 $v$。旧结果已经知道单独送入 $v$ 时，同一原响应会把它转成 $Tv$。新问题是，把任意交换部分 $c$ 加进去以后，那张旧表究竟还输出什么。这里不先说输出横向，也不把新构造的标准表当成答案；同一份完整旧输出一直记作 $g$。
+
+已知的三轴小窗提供两种确实可调用的锚。把锚沿同一已知原方向放大，再加一个有限倍的 $u+h$，每种锚都只需把它和原 $x$ 放进一次完整正反配平。两份内层旧值已知，其中一份就是固定的 $g$；两份外层虽然未知，却各有同一个正读取的原二表预算。展开的只是已知Jordan乘法，绝不把未知响应拆成加法。大投影倍数的三次、四次项相消，留下两份完整Gram预算；交换输入和输出的对角块在这一步都保留。
+
+随后用一个几乎落在 $h$ 负空间的数学向量读取，并在正空间掺入一点由实际锚确定的向量。它不是新准备，只是准确锥允许的证明读取。对任意自伴旧输出，Gram行列式都恰好是一份去掉实方向后的向量范数平方，所以不需要先假定 $g$ 横向。交换输入 $c$ 在选定负向量上的已知组合消去，未知 $g$ 的对角作用仍在范数里。
+
+让已知锚分别沿正端和负端变大，固定向量范数的两份一次项必须同时满足预算。与锚正交的固定对角向量不能改变这份一次项，因此两端共同固定一个真实非对角读数。换另一种实际锚，就补齐它的另一个复相位分量；再比较同一空间中向量的和与相位和，所有非对角块都被确定。结论是：不论原交换输入 $c$ 是什么，同一旧输出的横向部分始终就是 $Tv$。若有一处不符，先取有限大的正锚或负锚，再取有限小的掺入量和有限大的投影倍数，就已经破坏同一次原配平与两张原二表；并不需要把无穷标签送进旧表，也没有一张固定有限参数清单覆盖全部原输入。
+
+这仍没有删掉输出中与 $h$ 交换的那一块。它准确叫作 $\rho_h(c+v)$，是同一旧输出的一部分，可以依赖整个输入。现在还不能说它就是单独输入 $c$ 的响应，更不能直接说一般为零。四系数矩阵几何因此确实让问题短了一截：整条固定旧行的非对角块已认回，剩下的是同一张表的两个对角块；不是另画一张更漂亮的候选表替代原表，也不是少用了原公理。
+
+若交换输入恰好只是任意实倍 $\lambda h$，情况进一步闭合：原交叠 $h\circ(\lambda h+v)$ 是标量单位，既有18.1已经保证完整输出横向。本次又确定了它的全部横向部分，所以真正得到原值 $D(h,\lambda h+v)=Tv$。这里的 $v$ 可以有非中央、奇异或连续谱平方，不需属于有限标量窗。把这份已经认回、仍在原域的输出再送入同一行，第二次原响应就是 $-v$。它是两个真实原标签调用的数学身份，不是实际机器已经能逆向返回的证明，也不能和另一种单位偏移未经证明地叠加使用。
+
+完整目标还包括一般交换块零值、完整单位平方行、其它首标签和没有这些实际三轴的原域，以及同一旧表的全域双线性、原R与完成运输。三轴和带系数二阶矩阵没有把物理空间规定为三维。实际准备、全部菜单和原质量、整台仪器与环境记录、真相关联合和递归同源参考、全部历史未来、真遗忘和双向真实返回、完整计数、物理钟、能量及共同正尺度，仍必须来自同一个原世界，不能由这份几何或数学嵌套凭空供应。
+
+## 追加锚（本行以下为增补区）
