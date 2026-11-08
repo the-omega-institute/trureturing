@@ -1,0 +1,39 @@
+**引理 92.1（原纯三元组给出的两条残差轴）。** 对 $a=(s,x),b=(t,y)$ 定义证明中的残差
+
+$$
+F(a,b)=D(a,b)-(0,\varepsilon x\times y).
+$$
+
+当x,y独立且 $(s,t)\ne(0,0)$ 时，令 $w=x\times y,\ell=sx+ty$。F在同时旋转x,y绕 $k_+=\ell+\varepsilon w$ 或 $k_-=\ell-\varepsilon w$ 的任意角度后，输出作为原E中的同一个元素保持不变。
+
+证明。$\ell,w$ 非零且正交。取任一满足 $\xi\cdot x=t,\xi\cdot y=-s$ 的向量，其全部解为
+
+$$
+\xi=\frac{\ell\times w}{|w|^2}+\lambda w\quad(\lambda\in\mathbb R),\qquad
+\xi\times w=-\ell.
+\tag{92.1}
+$$
+
+记 $C_\xi v=\xi\times v$，$O_\xi=(I-\varepsilon C_\xi)(I+\varepsilon C_\xi)^{-1}\in SO(3)$。逆存在，因为 $v\cdot(v+\varepsilon\xi\times v)=|v|^2$；$C_\xi$ 反对称给 $O_\xi^{\mathsf T}O_\xi=I$，且分子分母行列式同为 $1+|\xi|^2$，故其行列式为一。在PB取三个纯输入 $\xi,B,C$，其中 $B=(I+\varepsilon C_\xi)^{-1}x,C=(I+\varepsilon C_\xi)^{-1}y$。91.1已确定两内层D，且 $\xi\cdot B=t,\xi\cdot C=-s$。正、负外层对准确为 $(a,b)$ 和 $((-s,O_\xi x),(-t,O_\xi y))$。88.4右端为 $2(0,(\xi\cdot C)B-(\xi\cdot B)C)$；直接叉积展开给
+
+$$
+\varepsilon(x\times y-O_\xi x\times O_\xi y)
+=2((\xi\cdot C)B-(\xi\cdot B)C).
+$$
+
+相减得 $F(a,b)=F((-s,O_\xi x),(-t,O_\xi y))$。89.1的半转又给 $F(-a,-b)=F(a,b)$，所以
+
+$$
+F(a,b)=F((s,-O_\xi x),(t,-O_\xi y)).
+\tag{92.2}
+$$
+
+令 $J_w$ 为绕w的半转；它在x,y上就是负号，因此空间变换是 $H_\lambda=O_\xi J_w$。用实单位四元数表示已知旋转，$O_\xi$ 对应 $(1,-\varepsilon\xi)$ 的归一化，$J_w$ 对应 $(0,w/|w|)$。两者相乘并用92.1，给 $H_\lambda$ 的四元数正比于
+
+$$
+(\varepsilon\lambda|w|^2,w+\varepsilon\ell).
+\tag{92.3}
+$$
+
+随着实 $\lambda$ 变化，它准确给绕 $k_+$ 的所有非恒等旋转；恒等本来成立，不需F连续。交换原输入后 $\ell$ 不变、$w\mapsto-w$，再用F反对称，得到绕 $k_-$ 的全部旋转。两轴非平行。∎
+

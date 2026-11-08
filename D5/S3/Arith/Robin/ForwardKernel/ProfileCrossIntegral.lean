@@ -25,7 +25,7 @@ set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 set_option backward.isDefEq.respectTransparency.types false
 
-private def crossWeight (a b s t x : ℝ) : ℝ :=
+def crossWeight (a b s t x : ℝ) : ℝ :=
   x ^ (-a - b) * priceRatio x (s * x ^ a) * priceRatio x (t * x ^ b)
 
 private lemma ratio_contDiffAt {θ s x : ℝ} (hx : 1 < x) (hs : 0 ≤ s) :
@@ -46,7 +46,7 @@ private lemma ratio_contDiffAt {θ s x : ℝ} (hx : 1 < x) (hs : 0 ≤ s) :
       (Real.contDiffAt_rpow_const_of_ne hx0.ne')))).div (hw _ hx)
         (OriginalMovingWindowMoment.weight_pos hx).ne'
 
-private lemma crossWeight_contDiffOn {a b s t X : ℝ} (hX : 4 ≤ X)
+lemma crossWeight_contDiffOn {a b s t X : ℝ} (hX : 4 ≤ X)
     (hs : 0 ≤ s) (ht : 0 ≤ t) :
     ContDiffOn ℝ 1 (crossWeight a b s t) (uIcc X (2 * X)) := by
   rw [uIcc_of_le (by linarith : X ≤ 2 * X)]
@@ -116,7 +116,7 @@ private lemma crossWeight_deriv_bound {a b s t x : ℝ}
       gcongr
     _ = _ := by nlinarith [hp]
 
-private lemma crossWeight_variation {a b s t X : ℝ}
+lemma crossWeight_variation {a b s t X : ℝ}
     (ha : 0 < a) (ha1 : a < 1) (hb : 0 < b) (hb1 : b < 1)
     (hX : 4 ≤ X) (hs : s ∈ Icc (0 : ℝ) 1) (ht : t ∈ Icc (0 : ℝ) 1) :
     |crossWeight a b s t (2 * X)| + (∫ x in X..(2 * X), |deriv (crossWeight a b s t) x|) ≤

@@ -11,6 +11,24 @@ internal sealed class VarianceTransferDocument : IScribeDocumentDefinition
         H("Variance transfer"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("increment-pow-integrable-on"),
+                DeclarationHandle.Create(Prefix + "increment_pow_integrableOn"),
+                H("Powers of moving increments on compact sets"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "Let E be locally bounded and Borel measurable, and let u and x be continuous real functions on a Hausdorff Borel space with a measure finite on compact sets. For every compact set K and natural number n, the function (E(x(p)+u(p))-E(x(p)))^n is integrable on K."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("bounded-increment-comp"),
+                DeclarationHandle.Create(Prefix + "bounded_increment_comp"),
+                H("Compact bound for continuously parametrized increments"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "Let E be locally bounded and measurable, let K be compact, and let the step u and starting point x be continuous real functions on the parameter space. There is M>=0 such that abs(E(x(p)+u(p))-E(x(p)))<=M for every p in K."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("profile-average-eq-unit-integral"),
                 DeclarationHandle.Create(Prefix + "profileAverage_eq_unit_integral"),
                 H("The unit-interval formula"),

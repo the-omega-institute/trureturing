@@ -1,0 +1,25 @@
+**定理 167.2（一个原有限角下的全部旧值）。** 在定义 167.1 下，存在忠实、等距、保单位、保正且反映正性的 Jordan 表示
+
+$$
+\rho:X\longrightarrow B(H)_{\rm sa},\qquad \rho|_I=j,
+\tag{167.2}
+$$
+
+和一个固定的 $\varepsilon\in\{-1,+1\}$，使同一个原总映射准确满足
+
+$$
+\boxed{\quad
+\rho(D(a,b))=\varepsilon\frac{[\rho(a),\rho(b)]}{2i}
+\quad\text{对全部原 }a,b\in E .\quad}
+\tag{167.3}
+$$
+
+符号相对于指定 $j$ 及通常算子乘法，不通过改变理想坐标消去。它与[静态重构卷 62–69](AURIC_C128_ARBITRARY_DIMENSIONAL_STATIC_QUANTUM_RECONSTRUCTION.md) 的符号准确满足 $\eta=-\varepsilon$。原 $D$ 分别实双线性，原 (128.5) 对全部原三输入成立，原 $E+iE$ 上 $\star=\circ-iD$ 的复双线性延拓是结合星乘法；$\varepsilon=-1$ 对应通常乘法，$\varepsilon=+1$ 对应相反乘法。对任意有限 $m$、全部原 $a_1,\ldots,a_m$ 和每个未改变的原评价 $\alpha$，
+
+$$
+\left[\alpha(a_r\circ a_s)-i\alpha D(a_r,a_s)\right]_{r,s=1}^m\succeq0.
+\tag{167.4}
+$$
+
+这些结论包含任意无限秩、无限谱原输入、不完备 $E$、不可分 $H$ 以及无限维核和余核；没有增加旧 $D$ 的正则性前件。证明见 168–174。
+

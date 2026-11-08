@@ -1,0 +1,39 @@
+**Proposition 205.2 (exact FIB label-rank criterion).** For every feasible $A\in\mathscr P_u$,
+
+$$
+\begin{aligned}
+W(A)\cap\mathcal R_u&=j\bigl(\operatorname{im}M(A)^{\mathsf T}\bigr),\\
+\ker(a\mapsto\textstyle\sum_y a_yu_y(A))&=K\cap\ker A^{\mathsf T},\\
+\dim W(A)&=2+\operatorname{rank}M(A).
+\end{aligned}
+\tag{205.3}
+$$
+
+The first space in (205.3) is also the common radical of the tensor restricted to $W(A)$. In particular,
+
+$$
+W(A)=\mathcal W_u
+\quad\Longleftrightarrow\quad
+\operatorname{rank}M(A)=d.
+\tag{205.4}
+$$
+
+Thus $\operatorname{rank}A=d$ in (199.4) is necessary for (205.4), but measures the span of the corrections, rather than the actual excess label rank. If $d=0$, both ranks are zero and every feasible family has label rank two.
+
+*Proof.* Such coherent representatives exist: choose bounded representatives of a host basis containing $1$. Outside a common null set the seed's finitely many linear identities hold. On that null set assign every basis function its value at one fixed point outside it. Extending linearly then preserves $1$ and represents the seed by a legal partition everywhere. For these fixed representatives the lifted label map is
+
+$$
+\Phi_A(a)=S_u(\Phi_f(a))+j(A^{\mathsf T}a),
+\qquad T_u\Phi_A=\Phi_f.
+\tag{205.5}
+$$
+
+Consequently $T_u:W(A)\to E_f$ is onto, and a label combination belongs to its kernel exactly when its coefficient vector is in $K$. Writing that vector as $\mathsf Bz$ gives
+
+$$
+\ker(T_u|_{W(A)})=\Phi_A(K)
+=j\bigl(\operatorname{im}(A^{\mathsf T}\mathsf B)\bigr).
+$$
+
+Injectivity of $j$ also gives the second identity in (205.3). Since $\ker T_u=\mathcal R_u$ and $\dim E_f=2$, rank--nullity gives the last identity. The standard principle used here is Axler, *Linear Algebra Done Right*, fourth edition, [Theorem 3.21](https://LADR.plus/x3nullspace.html#x3nullspace-4); its application is to the lifted FIB label map and its baseline relation restriction. The family is full-zero by Proposition 199.2, so Proposition 190.1 identifies $\Phi_A(K)$ with its common radical. Finally $W(A)\subseteq\mathcal W_u$ and $\dim\mathcal W_u=2+d$, proving (205.4). The inequality $\operatorname{rank}M(A)\le\operatorname{rank}A$ proves necessity. $\square$
+

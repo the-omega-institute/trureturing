@@ -1,0 +1,33 @@
+**定理 24.2（原序反映、局部平方约束与无漂移的准确等价）。** 固定定义 8.1、实际共轭、R 及 FR，在此共同底座上，下列条件等价：O；同一个原 $D$ 联合有界；24.1 的同一兼容 C* 完成；对全部原 $a,b\in E$ 与 $\alpha\in P$ 有 $\alpha(R_\lambda^aD(a,b))\to0$；以及只在原先固定小效果窗要求
+
+$$
+0\le e,f\le\theta u
+\quad\Longrightarrow\quad
+D(e,f)^2\le\frac12\bigl(U_e(f^2)+U_f(e^2)\bigr),
+\qquad U_a=2L_a^2-L_{a^2}.
+\tag{24.2}
+$$
+
+这里的极限条件只是等价刻画，不是 22.1 另加的前件。
+
+证明。O 推出有界性、再给完成已由 22.2、24.1 支付。反向在该 C* 完成中，$\delta_ab=i[a,b]/2$ 是等距群 $T_sb=e^{isa/2}be^{-isa/2}$ 的有界生成元。对非零 $b$ 取实范数支撑泛函 $f$，$\|f\|=1,f(b)=N(b)$。因 $f(T_sb)\le N(b)$ 对正负 $s$ 均成立，零处微分给 $f(\delta_ab)=0$，故 $N(b+t\delta_ab)\ge N(b)$，即 O。该 $f$ 只作证明工具，不增添原准备。
+
+完成还给
+
+$$
+D(a,b)^2+(a\circ b)^2
+=\frac12\bigl(U_a(b^2)+U_b(a^2)\bigr),
+\tag{24.3}
+$$
+
+因为在同一结合乘法中 $U_ac=aca$，直接展开两边即可。因此有 (24.2)。反过来，一般 JB 二次表示保正且 $U_eu=e^2$，故右侧不超过 $\theta^4u$，给 $N(D(e,f))\le\theta^2$。对任意原 $a,b$ 和 $r>N(a),s>N(b)$，取原效果 $e=\theta(u+a/r)/2,f=\theta(u+b/s)/2$。FR 已给的双线性及单位零使 $D(e,f)=\theta^2D(a,b)/(4rs)$，故 $N(D(a,b))\le4rs$；令 $r,s$ 下降即给全域有界。该步骤没有假定复正表。
+
+弱 Abel 条件推出有界性，直接复用 15.4–15.9 的真实输出估计与常数项为一的原多项式子论证：这些段落只需 FR 已恢复的代数恒等式和已知 JB 平方，不用其后 (49.1) 证书步骤。它给 $\|p-R_\lambda^ap\|\le2\sqrt3N(a)N(b)$，$p=D(a,b)$。弱余项条件和准确原锥便给 (15.1)。从兼容完成反向，令 $\mu=\sqrt\lambda$，等距群预解满足 $\|(\mu I\pm\delta_a)^{-1}\|\le1/\mu$，而
+
+$$
+R_\lambda^a\delta_a
+=\frac\lambda2\bigl[(\mu I-\delta_a)^{-1}-(\mu I+\delta_a)^{-1}\bigr].
+$$
+
+所以更强地有 $\|R_\lambda^aD(a,b)\|\le\sqrt\lambda N(b)$。这里没有把 $e^{tH_a}$ 写成单个共轭，也未给 Banach 算子偷用 Hilbert 正规谱演算。∎
+

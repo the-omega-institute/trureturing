@@ -1,0 +1,55 @@
+**定理 1.2（中央输入 Gram 的正交传递）。** 对原 $a,b$ 及同一旧 $d=D(a,b)$，记 $c=a\circ b$。若
+
+$$
+[a^2,b]=[b^2,a]=0,\qquad
+[d,a^2]=[d,b^2]=[d,c]=0,
+\tag{1.1}
+$$
+
+则同一旧响应满足
+
+$$
+a\circ d=b\circ d=0,\qquad
+d^2=a^2b^2-c^2.
+\tag{1.2}
+$$
+
+不先假设响应正交，也不要求三个 Gram 元素只有一个非标量坐标。
+
+证明。令 $B=C^*(u,a,b,d)$、$C_0=C^*(u,a^2,b^2,c)$。前两个交换子及结合展开给 $[a,c]=[b,c]=0$，而 (1.1) 的其余条件使
+
+$$
+C_0\subset Z(B).
+$$
+
+取 $B$ 的任意纯数学态 $\psi$。成熟的 GNS 与 Schur 引理给一个 $C_0$ 的字符 $\chi$，使中央元在该态的 GNS 表示中等于 $\chi$ 倍单位。特别，对中央自伴 $v$ 有 $\psi(v^2)=\chi(v)^2$。
+
+对实 $\theta$ 取实际原标签
+
+$$
+a_\theta=a\cos\theta-b\sin\theta,\qquad
+b_\theta=a\sin\theta+b\cos\theta.
+$$
+
+185.1 保持 $D(a_\theta,b_\theta)=d$。它们的实际交叠为中央元
+
+$$
+Q_\theta=a_\theta\circ b_\theta
+=\tfrac12\sin(2\theta)(a^2-b^2)+\cos(2\theta)c.
+\tag{1.3}
+$$
+
+两个实数 $\chi(a^2-b^2),\chi(c)$ 总允许选择一个实 $\theta$，使 $\chi(Q_\theta)=0$。这个角度只确定原标签的实线性组合；可以依赖当前纯态，不要求对全部纯态统一。
+
+把 $\psi$ 正延拓到整个 $A$，记为 $\phi$；这是 201.1 的既有态延拓接口。由中央 GNS 读数，$\phi(Q_\theta^2)=0$。原 PB $(a_\theta,b_\theta,0)$ 的位移为 $\nu=d$、$\omega=Q_\theta$，故
+
+$$
+D(b_\theta+d,Q_\theta)-D(b_\theta-d,-Q_\theta)
+=-2b_\theta\circ d.
+\tag{1.4}
+$$
+
+两份原外层的第二标签平方在 $\phi$ 下都读零。P2 分别使两份未知旧输出的 $\phi$ 读数为零，所以 $\psi(b_\theta\circ d)=0$。再用原 PB $(b_\theta,a_\theta,0)$，内层旧值为 $-d$，位移为 $\nu=-d$、$\omega=Q_\theta$；同样的两份零预算给 $\psi(a_\theta\circ d)=0$。反解实旋转，得到 $\psi(a\circ d)=\psi(b\circ d)=0$。
+
+这对 $B$ 的全部纯态成立。纯态分离自伴元素，故 $a\circ d=b\circ d=0$。235.2 随即支付准确面积式。若 $B=0$，全部等式直接为零。没有在商上定义 $D$，没有要求外层未知输出属于 $B$；同一延拓态在整个 $A$ 上分别读取它们。∎
+

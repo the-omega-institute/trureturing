@@ -1,0 +1,123 @@
+**定理 56.1（定理 55.2 的全域识别步骤）。** 定义 55.1 的原背景及 $\mathsf F_{\rm row}$ 推出 (55.4)，无需先假设旧 $D$ 的其他行线性、连续或压缩相容。
+
+证明。先列出所用的两个既有接口及其准确使用范围。
+
+由 W99.2，原二表可被同一有限 JB 对象的每个数学正泛函读取；它不是添加实际准备。特别在第 $j$ 块任意单位向量 $\xi$ 的数学读取 $\beta_{j,\xi}(x)=\xi^*x_j\xi$ 下，任意原 $b,c$ 的旧输出 $d=D(b,c)$ 满足
+
+$$
+|\beta_{j,\xi}(d)|^2
+\le\beta_{j,\xi}(b^2)\beta_{j,\xi}(c^2)
+       -\beta_{j,\xi}(b\circ c)^2,
+\qquad
+\|d_j\|\le\|b_j\|\,\|c_j\|.
+\tag{56.1}
+$$
+
+第二式对该块全部单位向量取上确界取得，其他块输入仍任意。若 $n_j=1$，第一式右端恒零，故 $d_j=0$；这正是 W123.1 的经典输出结论。全局还使用 A32.1–32.2 的逐点界 $N(D(b,c))\le N(b)N(c)$。两个界都没有声称未知总映射连续。
+
+其次，A50–51、W119–121 已支付所有原投影角闭合和完整 PB 的继承。对同块任意两颗秩一投影 $p,q$，它们的联合支撑秩至多二，故同一个旧 $D$ 在该真实角上由 W114.1 分类；对来自不同块的 $p,q$，该角为交换角，旧值为零。这里不压缩任意外部输入，只对本来就在角内的两个原标签调用定理。
+
+固定一个演员 $a=p/2$。其行 $T(b)=D(a,b)$ 由 (55.3) 可加；全局逐点界使它在零点连续。可加性先给有理齐次，再由有理逼近给实齐次，故这一行现在才成为有界实线性算子。在演员所在块记 $\mathcal C(a,b)=\mathrm i[a,b]/2$。对每颗与 $p$ 不交换的秩一投影 $q$，上述旧角分类给
+
+$$
+T(q)=\eta(q)\mathcal C(a,q),\qquad\eta(q)\in\{1,-1\}.
+\tag{56.2}
+$$
+
+所有其他块分量均为零。符号在这些 $q$ 上一致：把 $p$ 的像向量暂记为 $e_1$，每个这样的射线唯一可写成
+
+$$
+q=P(\cos t\,e_1+\sin t\,v),
+\quad0<t<\pi/2,\quad v\in\mathbb C^{n_j-1},\quad\|v\|=1.
+\tag{56.3}
+$$
+
+参数域是连通的，包含 $n_j=2$ 时的圆。由已经证明的 $T$ 连续，(56.2) 中的符号可由非零 $\mathcal C(a,q)$ 的实 Hilbert–Schmidt 比值读取，故为连续的 $\{1,-1\}$ 值函数，必为常数 $\varepsilon_a$。与 $p$ 交换的秩一投影由同一秩一／二角分类给零值；其他块投影也给零值。每个原 $b$ 在各块的有限谱分解都是这些原秩一投影的实线性组合，所以，仅展开这条已付线性的固定行，得到
+
+$$
+D(a,b)_j=\varepsilon_a\mathcal C(a,b_j),\qquad
+D(a,b)_\ell=0\ (\ell\ne j)
+\quad(b\in E).
+\tag{56.4}
+$$
+
+同块相邻演员投影的内积绝对值分别为 $1/\sqrt2$、$1/2$，均严格介于零与一之间；相应交换子非零。旧二表给反对称性，所以把两个相邻演员分别代入 (56.4)，便有 $(\varepsilon_a-\varepsilon_{a'})\mathcal C(a,a')=0$。沿链传播，全部选定行共有同一个 $\varepsilon_j$。这一步仅比较已经识别的固定行，不假设其他两角的符号可在交换交集上传播。
+
+现在只为计算定义辅助的结合矩阵乘法 $\star_\varepsilon$：每块按该符号取通常或相反乘法，经典块取通常乘法。尚未把它等同于旧 $S-\mathrm iD$。在原复向量空间的数学坐标中令
+
+$$
+z=b+\mathrm ic,\qquad
+\mathcal Q(z)=b^2+c^2+2D(b,c)\in E.
+\tag{56.5}
+$$
+
+每个 $z$ 唯一对应两个原实标签，故未扩大旧 $D$ 的定义域。固定演员 $a$ 的两条已识别旧行给 A22.3 的准确等式
+
+$$
+r_\pm+\mathrm is_\pm
+ =F_\pm z:=z\pm\mathrm i(a\star_\varepsilon z).
+\tag{56.6}
+$$
+
+完整 PB 对全部原评价成立，而这些评价分离 $E$，所以 $\mathcal Q(F_+z)=\mathcal Q(F_-z)$ 是原元素等式。$F_-$ 为可逆的矩阵线性映射：演员块上的左／右乘因子为 $I-\mathrm ip/2$，其余块是恒等。代入任意 $F_-^{-1}z$，得到
+
+$$
+\mathcal Q(V_a z)=\mathcal Q(z),\qquad V_a=F_+F_-^{-1}.
+\tag{56.7}
+$$
+
+在 $\varepsilon_j=1$ 时 $V_a$ 是该块左乘 $U_p$，在 $\varepsilon_j=-1$ 时是右乘 $U_p$，其中
+
+$$
+U_p=(I+\mathrm ip/2)(I-\mathrm ip/2)^{-1}
+ =I+(\zeta-1)p=\exp(\mathrm i\vartheta p),
+\quad\zeta=\frac{3+4\mathrm i}{5},\quad\vartheta=2\arctan(1/2).
+\tag{56.8}
+$$
+
+这些都是原标签之间的数学变换，不是已实现的物理门。由于 $V_a$ 可逆，(56.7) 也给逆变换的不变性，因而给由全部选定演员产生的每个有限群词的不变性。
+
+下面只证明这些矩阵群词稠密，不对 $\mathcal Q$ 取未经许可的连续延拓。首先 $\zeta$ 不是单位根：若其为单位根，则 $\zeta+\zeta^{-1}=6/5$ 是有理代数整数，必为整数，矛盾。这里的整性也可由 $P_0=2,P_1=x,P_m=xP_{m-1}-P_{m-2}$ 及 $P_m(\zeta+\zeta^{-1})=2$ 直接看出。故 $\vartheta/(2\pi)$ 无理，$U_p$ 的整数幂闭包包含全部 $\exp(\mathrm itp)$；圆上无理转动的稠密性由抽屉原理取得任意小的非零转角，再以其整数倍逼近任意给定转角。
+
+令 $G$ 为这些 $U_{p_{j,r}}$ 在 $U(n_j)$ 中生成子群的闭包。矩阵群的 Lie 代数按 $\mathfrak g=\{A:\exp(tA)\in G\ (t\in\mathbb R)\}$ 定义；它是对交换子封闭的闭实向量空间，直接使用 Hall，[*An Elementary Introduction to Groups and Representations*, arXiv:math-ph/0005032v1](https://arxiv.org/abs/math-ph/0005032v1)，Theorems 3.9、3.16 的有限矩阵指数结论。这里 $G$ 是闭矩阵子群，所有矩阵有界、有限维，满足该结论的全部条件；没有把旧 $D$ 当作 Lie 代数映射。
+
+为核对生成性，记矩阵单位为 $E_{rs}$，写
+
+$$
+H_r=\mathrm iE_{rr},\qquad
+X_{rs}=\mathrm i(E_{rs}+E_{sr}),\qquad
+Y_{rs}=E_{rs}-E_{sr}.
+$$
+
+已有 $H_1,\mathrm ip_{j,2},\ldots,\mathrm ip_{j,n_j}\in\mathfrak g$。若 $H_r\in\mathfrak g$，则对 $s=r+1$，
+
+$$
+[H_r,\mathrm ip_{j,s}]=-Y_{rs}/2,\qquad
+[H_r,Y_{rs}]=X_{rs},\qquad
+2\mathrm ip_{j,s}-H_r-X_{rs}=H_s.
+\tag{56.9}
+$$
+
+归纳取得全部对角及相邻的 $X,Y$。对不同的 $r<s<t$，$[Y_{rs},Y_{st}]=Y_{rt}$，再用 $[H_r,Y_{rt}]=X_{rt}$，取得全部斜 Hermitian 矩阵的实基。因此 $\mathfrak g=\mathfrak u(n_j)$。每个酉矩阵经有限谱分解都是某个斜 Hermitian 矩阵的指数，故 $G=U(n_j)$。这是数学闭包的结论，不是有限词精确合成、实际控制或资源成本的结论。
+
+最后固定任意原 $b,c$，只处理一个非经典块 $z_j=b_j+\mathrm ic_j$，其余块原样保留。若 $\varepsilon_j=1$，有限矩阵极分解给某个酉 $U$ 使 $Uz_j=h=(z_j^*z_j)^{1/2}\ge0$；奇异时在核的等维补上延伸部分等距映射即可。选实际有限群词 $U_m\to U$，在这一块左乘 $U_m$，记所得整对象的实虚部为 $b^{(m)},c^{(m)}\in E$。每次有限词的 (56.7) 给
+
+$$
+\mathcal Q(z)_j=\mathcal Q(b^{(m)}+\mathrm ic^{(m)})_j,
+\qquad b_j^{(m)}\longrightarrow h,\quad c_j^{(m)}\longrightarrow0.
+$$
+
+仅由 (56.1)，
+
+$$
+\left\|\mathcal Q(z)_j-h^2\right\|
+\le\left\|(b_j^{(m)})^2+(c_j^{(m)})^2-h^2\right\|
+   +2\|b_j^{(m)}\|\,\|c_j^{(m)}\|
+\longrightarrow0.
+\tag{56.10}
+$$
+
+故 $\mathcal Q(z)_j=z_j^*z_j$。若 $\varepsilon_j=-1$，用右极分解选 $U$ 使 $z_jU=(z_jz_j^*)^{1/2}$，在该块右乘逼近词，完全相同的界给 $\mathcal Q(z)_j=z_jz_j^*$。其他块的输入从未受限，故这个结论识别的是任意混合输入的第 $j$ 个旧输出。经典分量已由 (56.1) 为零。展开这两个已知矩阵平方，正好得到 (55.4)。
+
+整个逼近只用原二表在虚部趋零处的界；没有从稠密不变性直接宣称 $\mathcal Q$ 连续，没有对原 $D$ 预付单位平移、任意压缩、线性或结合乘法。任意块中的全部旧值、同块取向和块间独立性均由此实际识别。∎
+

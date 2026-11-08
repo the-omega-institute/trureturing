@@ -18,7 +18,19 @@ Lean statement: `D5/S3/Arith/Robin/ForwardKernel/TriangularMeanSquare.interval_s
 
 Let f and g be square integrable on ordered intervals whose endpoints depend on X, and let S(X) be eventually positive. If the square integral of g divided by S tends to a nonnegative L and that of f-g divided by S tends to zero, then the square integral of f divided by S also tends to L. The reverse triangle inequality first compares the square roots, then squaring recovers the limit.
 
-**Theorem 1.2 (The fixed-length profile mean square).**
+**Theorem 1.2 (Integrability of the min-kernel energy).**
+
+Lean statement: `D5/S3/Arith/Robin/ForwardKernel/TriangularMeanSquare.min_kernel_integrable`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ForwardKernel/TriangularMeanSquare.min_kernel_integrable` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every integrable real profile g on the unit interval, the function g(s)g(t)min(s,t) is integrable on the unit square. The product g(s)g(t) is integrable by Fubini, and min(s,t) lies between zero and one on the square.
+
+**Theorem 1.3 (The fixed-length profile mean square).**
 
 Lean statement: `D5/S3/Arith/Robin/ForwardKernel/TriangularMeanSquare.fixed_length_profile_mean_square_tendsto`
 
@@ -36,6 +48,7 @@ Rescaling to the unit interval and absolute Fubini express the normalized square
 
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/TriangularMeanSquare.fixed_length_profile_mean_square_tendsto`
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/TriangularMeanSquare.interval_square_tendsto_of_l2_negligible`
+- Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/TriangularMeanSquare.min_kernel_integrable`
 - Dependency: [D5/S3/Arith/Robin/ForwardKernel/FixedLengthCovariance](FixedLengthCovariance.md)
 - Dependency: [D5/S3/Arith/Robin/ForwardKernel/MovingLengthVariance](MovingLengthVariance.md)
 - Dependency: [D5/S3/Arith/Robin/ForwardKernel/VarianceTransfer](VarianceTransfer.md)

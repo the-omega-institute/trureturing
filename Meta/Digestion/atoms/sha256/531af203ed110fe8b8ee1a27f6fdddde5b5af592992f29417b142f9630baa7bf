@@ -1,0 +1,10 @@
+#### 命题 10.6：自然三维坐标没有固定射影线性推进
+
+不存在固定 $M\in M_3(\mathbb R)$ 使 $Mv(x)=\lambda(x)v(\cos x)\ne0$ 在一个非空实开区间恒成立。
+
+**证明。**
+
+将三行记为 $(a,b,c),(d,e,f),(g,h,k)$。 首行给 $\lambda=a+bx+c\cos x$。 次行的整函数恒等式延拓到 $x=iy$，虚部给 $ey=by\cosh y$，故 $b=e=0$；实部给 $d+(f-a)\cosh y-c\cosh^2y=0$，故 $c=d=0,f=a$。 因此 $\lambda=a\ne0$。 第三行成为 $g+hx+k\cos x=a\cos(\cos x)$。 再置 $x=iy$，虚部使 $h=0$，右端有界而 $\cosh y$ 无界使 $k=0$。 取 $\cosh y=\pi,2\pi$，分别给 $g=-a,g=a$，矛盾。
+
+$\square$
+
