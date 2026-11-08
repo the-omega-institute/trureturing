@@ -47,8 +47,18 @@ private theorem fiber_power_bound [Finite A] [Nonempty A]
       ⟨i.val % L, Nat.mod_lt _ hL⟩
   have hcat (v : Fin m → Fiber h w) (b : Fin m) (s : Fin L) :
       cat v ⟨b.val * L + s.val, by nlinarith [b.isLt, s.isLt]⟩ = (v b).val s := by
-    simp [cat, Nat.add_div, Nat.div_eq_of_lt s.isLt, Nat.mul_div_cancel _ hL,
-      Nat.add_mod, Nat.mod_eq_of_lt s.isLt]
+    have hd : (b.val * L + s.val) / L = b.val := by
+      rw [Nat.add_comm, Nat.add_mul_div_right _ _ hL,
+        Nat.div_eq_of_lt s.isLt, zero_add]
+    have hb : (⟨(b.val * L + s.val) / L,
+        (Nat.div_lt_iff_lt_mul hL).mpr
+          (show b.val * L + s.val < m * L by nlinarith [b.isLt, s.isLt])⟩ : Fin m) = b :=
+      Fin.ext hd
+    dsimp only [cat]
+    rw [hb]
+    apply congrArg (v b).val
+    apply Fin.ext
+    simp [Nat.add_mod, Nat.mod_eq_of_lt s.isLt]
   let lift (v : Fin m → Fiber h w) : ℤ → A := writeWord (cat v) (r : ℕ) c
   have hlift (v : Fin m → Fiber h w) (b : Fin m) (s : Fin L) :
       lift v ((r : ℕ) + (b.val * L + s.val : ℕ)) = (v b).val s := by
@@ -117,8 +127,7 @@ private theorem fiber_power_bound [Finite A] [Nonempty A]
     have hx := congrFun heq ((r : ℕ) + (b.val * L + s.val : ℕ))
     exact (hlift v b s).symm.trans (hx.trans (hlift z b s))
   have hc := Nat.card_le_card_of_injective key hkey
-  simpa only [Nat.card_eq_fintype_card, Fintype.card_fun, Fintype.card_fin,
-    ← pow_mul, r, Nat.mul_comm] using hc
+  simpa only [Nat.card_fun, Nat.card_fin, ← pow_mul, r, Nat.mul_comm] using hc
 
 private theorem fiber_card_le [Finite A] (hpre : Preinjective h)
     {n : ℕ} (w : Fin n → A) : Nat.card (Fiber h w) ≤ (Nat.card A) ^ (k + 1) := by
@@ -133,7 +142,8 @@ private theorem fiber_card_le [Finite A] (hpre : Preinjective h)
     let B := (Nat.card A) ^ (k + 1)
     have hB : 0 < B := pow_pos (Nat.card_pos (α := A)) _
     by_contra hnot
-    have hlt : (B : ℝ) < Nat.card (Fiber h w) := by exact_mod_cast (show B < _ from Nat.lt_of_not_ge hnot)
+    have hlt : (B : ℝ) < Nat.card (Fiber h w) := by
+      exact_mod_cast (show B < _ from Nat.lt_of_not_ge hnot)
     have hratio : 1 < (Nat.card (Fiber h w) : ℝ) / B :=
       (one_lt_div (by exact_mod_cast hB)).mpr hlt
     obtain ⟨m, hm⟩ := pow_unbounded_of_one_lt (B : ℝ) hratio
@@ -168,6 +178,7 @@ theorem surjective_word_balance [Finite A] (k : ℕ)
     simp only [Fintype.card_fun, Fintype.card_fin, Finset.sum_const,
       Finset.card_univ, smul_eq_mul, Nat.card_eq_fintype_card]
     rw [← pow_add]
+    simp only [Nat.add_assoc]
   have heq := (Finset.sum_eq_sum_iff_of_le (fun v _ => hle v)).mp htotal w (Finset.mem_univ w)
   convert heq using 1
   apply Nat.card_congr
