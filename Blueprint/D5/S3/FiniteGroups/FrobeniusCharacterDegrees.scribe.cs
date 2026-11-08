@@ -8,7 +8,7 @@ internal sealed class FrobeniusCharacterDegreesDocument : IScribeDocumentDefinit
 {
     private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/FiniteGroups/tauceti2026finitecharacters");
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Fixed-point-free conjugation gives a structural alternative for simple representations in every characteristic and integer degree dichotomies over the complex numbers.",
+        "Fixed-point-free conjugation gives a structural alternative for simple representations over arbitrary fields and integer degree dichotomies over the complex numbers.",
         H("Degrees over normal subgroups"),
         Blocks(Node("degree_square_le_card", "The degree-square bound", Square(),
             "The group algebra maps onto the endomorphism algebra of a simple representation. Comparing dimensions bounds the square of its degree by the group order."),
@@ -18,7 +18,7 @@ internal sealed class FrobeniusCharacterDegreesDocument : IScribeDocumentDefinit
             "Assume a simple representation has character invariant under a fixed-point-free automorphism. Character orthogonality supplies an isomorphism with the twisted representation, hence an invertible intertwiner. Surjectivity of the Lang map makes its twisted traces constant. Density extends the resulting trace identities to every endomorphism, and rank-one trace pairings force the representation to be trivial."),
             Node("degree_dvd_or_index_dvd_of_fixedPointFree_nonabelian", "The nonabelian divisibility dichotomy", DichotomyNonabelian(),
             "The same Clifford argument works for an arbitrary finite normal subgroup. Character invariance under an inertia conjugation is first converted to triviality by the trace-rigidity theorem, so a nontrivial constituent has inertia exactly the kernel; the two Clifford branches give the stated divisibility alternatives."),
-            ModularEquivNode(), ModularCharacterNode(), ModularAlternativeNode())));
+            ModularEquivNode(), ModularCharacterNode(), ModularAlternativeNode(), ArbitraryAlternativeNode())));
     private static DocumentBlock Node(string name, string title, Formula formula, string prose) =>
         Describe.Lean(DescribeId.Create("frobenius-" + name.Replace('_', '-').ToLowerInvariant()),
             DeclarationHandle.Create("D5/S3/FiniteGroups/FrobeniusCharacterDegrees." + name), H(title),
@@ -102,6 +102,16 @@ internal sealed class FrobeniusCharacterDegreesDocument : IScribeDocumentDefinit
         "A structural Frobenius alternative over an algebraically closed field", ModularAlternative(),
         "Let K be a finite group and N a normal subgroup, with every conjugation by an element outside N fixing only the identity of N. Clifford restriction chooses a simple N-constituent V and a multiplicity e. For a nontrivial V, membership in its inertia subgroup is equivalent to an isomorphism with the conjugate constituent. The existing FDRep-isomorphism/representation-equivalence bridge gives the twist equivalence, so fixed-point-free rigidity excludes every inertia element outside N. Since N lies in the inertia group, inertia equals N and the orbit has N.index elements. The generic Clifford formula is an equality of natural numbers: finrank_k W = e * inertia.index * finrank_k V. It therefore gives N.index dividing finrank_k W, with witness e * finrank_k V. In the trivial-constituent branch, every conjugate constituent has trivial action, hence so does the product module defining the Clifford sum. The actual Clifford isomorphism, the shrink equivalence and injectivity transport trivial action back to the restriction of W. This branch uses no character-equals-dimension test. In characteristic p the trace of the identity is only the image of the natural-number dimension in k: p and zero have the same image. Such field-valued equalities cannot certify natural-number divisibility or the converse implication from constant character to triviality for arbitrary modules (p copies of a module already have zero character). The surviving arithmetic statement comes from the natural-number Clifford formula. This result does not replace trivial restriction by the assertion that finrank_k W divides N.index in positive characteristic. The four earlier complex results, including their full integer degree dichotomies, remain separate. Density, Clifford theory and this synthesis are classical mathematics, not a claim of literature novelty.");
 
+    private static DocumentBlock ArbitraryAlternativeNode() =>
+        Describe.Lean(DescribeId.Create("frobenius-trivial-restriction-or-index-dvd-of-fixed-point-free"),
+            DeclarationHandle.Create("D5/S3/FiniteGroups/FrobeniusCharacterDegrees.trivial_restriction_or_index_dvd_of_fixedPointFree"),
+            H("The arbitrary-field structural Frobenius alternative"),
+            StatementSource.FromAuthor(Disp(ArbitraryAlternative())),
+            AssessedProvenance.FromRepo(Source),
+            Blocks(Paragraph(Text(
+                "Let A = k[K] and let W be simple. After scalar extension to the algebraic closure E, the original A-action on E tensor_k W is semisimple and W-isotypic: each map w ↦ c tensor w is A-linear, its image is zero or simple of type W, and pure tensors generate. Submodules and quotients inherit this restricted A-support. A finite-length induction over E[K] therefore reduces to supported E[K]-simple quotients. The algebraically closed theorem applies to each such quotient; if its restriction to N were trivial, an A-linear injection W -> Q would force the original restriction on W to be trivial. Otherwise N.index divides every simple factor dimension, and additivity of E-dimensions gives the divisibility for E tensor_k W. Base change identifies that dimension with finrank_k W. The argument uses no semisimplicity of E[K] and no separability, perfectness, characteristic-zero, or coprime-order hypothesis."))),
+            DescribeRole.Theorem);
+
     private static Formula ModularRigidity(bool characterHypothesis)
     {
         Formula k = F.Id("k"), a = F.Id("A"), alpha = F.Id("alpha"), v = F.Id("V"), x = F.Id("a");
@@ -136,6 +146,23 @@ internal sealed class FrobeniusCharacterDegreesDocument : IScribeDocumentDefinit
             All("N", App(F.Id("Subgroup"), group), Instance(App(Q("Subgroup", "Normal"), n),
             All("hfix", fixedFree, All("W", App(F.Id("FDRep"), k, group),
             Instance(App(Q("CategoryTheory", "Simple"), w), conclusion)))))))))));
+    }
+
+    private static Formula ArbitraryAlternative()
+    {
+        Formula k = F.Id("k"), group = F.Id("K"), n = F.Id("N"), g = F.Id("g"), x = F.Id("n"), w = F.Id("W");
+        Formula fixedFree = All("g", group, Imp(new Formula.Not(Member(g, n)),
+            All("n", n, Imp(Equal(App(Q("MulAut", "conjNormal"), g, x), x), Equal(x, D(1))))));
+        Formula restriction = App(Seq(ModularRho(w), Dot, Operatorname, Grp(F.Id("comp"))),
+            App(Q("Subgroup", "subtype"), n));
+        Formula conclusion = new Formula.Logic(
+            Parenthesized(App(Q("Representation", "IsTrivial"), restriction)), FormulaLogicOperator.Or,
+            Parenthesized(Divides(App(Q("Subgroup", "index"), n), App(Q("Module", "finrank"), k, w))));
+        return All("k", MTypeStar(), Instance(App(F.Id("Field"), k),
+            All("K", F.Id("Type"), Instance(App(F.Id("Group"), group), Instance(App(F.Id("Finite"), group),
+            All("N", App(F.Id("Subgroup"), group), Instance(App(Q("Subgroup", "Normal"), n),
+            All("hfix", fixedFree, All("W", App(F.Id("FDRep"), k, group),
+            Instance(App(Q("CategoryTheory", "Simple"), w), conclusion))))))))));
     }
 
     private static Formula MTypeStar() => Seq(F.Id("Type"), Star);

@@ -741,8 +741,6 @@ open CategoryTheory
 open scoped TensorProduct
 open scoped _root_.MonoidAlgebra
 
-namespace ArbitraryFieldDescent
-
 variable {k E G V : Type*} [Field k] [Field E] [Algebra k E]
   [Group G] [AddCommGroup V] [Module k V]
 
@@ -1102,7 +1100,5 @@ theorem trivial_restriction_or_index_dvd_of_fixedPointFree
       exact _root_.ArbitraryFieldDescent.extRep_finrank W.ρ
     rw [hdim] at hd
     exact hd
-
-end ArbitraryFieldDescent
 
 end D5.S3.FiniteGroups.FrobeniusCharacterDegrees

@@ -2,7 +2,7 @@
 
 ## Abstract
 
-Fixed-point-free conjugation gives a structural alternative for simple representations in every characteristic and integer degree dichotomies over the complex numbers.
+Fixed-point-free conjugation gives a structural alternative for simple representations over arbitrary fields and integer degree dichotomies over the complex numbers.
 
 **Theorem 1.1 (The degree-square bound).**
 
@@ -102,6 +102,20 @@ $$\forall k \in Type*,\; [Field\left(k\right)], [IsAlgClosed\left(k\right)], \fo
 
 Let K be a finite group and N a normal subgroup, with every conjugation by an element outside N fixing only the identity of N. Clifford restriction chooses a simple N-constituent V and a multiplicity e. For a nontrivial V, membership in its inertia subgroup is equivalent to an isomorphism with the conjugate constituent. The existing FDRep-isomorphism/representation-equivalence bridge gives the twist equivalence, so fixed-point-free rigidity excludes every inertia element outside N. Since N lies in the inertia group, inertia equals N and the orbit has N.index elements. The generic Clifford formula is an equality of natural numbers: finrank_k W = e * inertia.index * finrank_k V. It therefore gives N.index dividing finrank_k W, with witness e * finrank_k V. In the trivial-constituent branch, every conjugate constituent has trivial action, hence so does the product module defining the Clifford sum. The actual Clifford isomorphism, the shrink equivalence and injectivity transport trivial action back to the restriction of W. This branch uses no character-equals-dimension test. In characteristic p the trace of the identity is only the image of the natural-number dimension in k: p and zero have the same image. Such field-valued equalities cannot certify natural-number divisibility or the converse implication from constant character to triviality for arbitrary modules (p copies of a module already have zero character). The surviving arithmetic statement comes from the natural-number Clifford formula. This result does not replace trivial restriction by the assertion that finrank_k W divides N.index in positive characteristic. The four earlier complex results, including their full integer degree dichotomies, remain separate. Density, Clifford theory and this synthesis are classical mathematics, not a claim of literature novelty.
 
+**Theorem 1.8 (The arbitrary-field structural Frobenius alternative).**
+
+$$\forall k \in Type*,\; [Field\left(k\right)], \forall K \in Type,\; [Group\left(K\right)], [Finite\left(K\right)], \forall N \in Subgroup\left(K\right),\; [\operatorname{Subgroup}.\operatorname{Normal}\left(N\right)], \forall hfix \in \left(\forall g \in K,\; (\neg g \in N) \Rightarrow (\forall n \in N,\; (\operatorname{MulAut}.\operatorname{conjNormal}\left(g, n\right) = n) \Rightarrow (n = 1))\right),\; \forall W \in FDRep\left(k, K\right),\; [\operatorname{CategoryTheory}.\operatorname{Simple}\left(W\right)], (\operatorname{Representation}.\operatorname{IsTrivial}\left(\operatorname{FDRep}.\rho\left(W\right).\operatorname{comp}\left(\operatorname{Subgroup}.\operatorname{subtype}\left(N\right)\right)\right)) \lor (\operatorname{Subgroup}.\operatorname{index}\left(N\right) \mid \operatorname{Module}.\operatorname{finrank}\left(k, W\right))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/FiniteGroups/FrobeniusCharacterDegrees.trivial_restriction_or_index_dvd_of_fixedPointFree` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* The Tau Ceti contributors; Claude (2026). *TauCeti finite representation and character theory*. URL: <https://github.com/TauCetiProject/TauCeti/tree/a780c7ad6beb23f60a17351a492d177878020ad5>.
+
+*Commentary.*
+
+Let A = k[K] and let W be simple. After scalar extension to the algebraic closure E, the original A-action on E tensor_k W is semisimple and W-isotypic: each map w ↦ c tensor w is A-linear, its image is zero or simple of type W, and pure tensors generate. Submodules and quotients inherit this restricted A-support. A finite-length induction over E[K] therefore reduces to supported E[K]-simple quotients. The algebraically closed theorem applies to each such quotient; if its restriction to N were trivial, an A-linear injection W -> Q would force the original restriction on W to be trivial. Otherwise N.index divides every simple factor dimension, and additivity of E-dimensions gives the divisibility for E tensor_k W. Base change identifies that dimension with finrank_k W. The argument uses no semisimplicity of E[K] and no separability, perfectness, characteristic-zero, or coprime-order hypothesis.
+
 ## References
 
 - Truth anchor: `D5/S3/FiniteGroups/FrobeniusCharacterDegrees.degree_dvd_or_index_dvd_of_fixedPointFree`
@@ -110,6 +124,7 @@ Let K be a finite group and N a normal subgroup, with every conjugation by an el
 - Truth anchor: `D5/S3/FiniteGroups/FrobeniusCharacterDegrees.trivial_of_character_invariant_fixedPointFree`
 - Truth anchor: `D5/S3/FiniteGroups/FrobeniusCharacterDegrees.trivial_of_character_invariant_fixedPointFree_of_isAlgClosed`
 - Truth anchor: `D5/S3/FiniteGroups/FrobeniusCharacterDegrees.trivial_of_equiv_fixedPointFree_of_isAlgClosed`
+- Truth anchor: `D5/S3/FiniteGroups/FrobeniusCharacterDegrees.trivial_restriction_or_index_dvd_of_fixedPointFree`
 - Truth anchor: `D5/S3/FiniteGroups/FrobeniusCharacterDegrees.trivial_restriction_or_index_dvd_of_fixedPointFree_of_isAlgClosed`
 - Dependency: [D5/S3/FiniteGroups/CharacterDegreeDivisibility](CharacterDegreeDivisibility.md)
 - Dependency: [D5/S3/FiniteGroups/CliffordConstituents](CliffordConstituents.md)
