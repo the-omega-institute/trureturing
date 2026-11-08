@@ -4746,8 +4746,8 @@ $S_R$ 的加权面积及全部内层旧输出共享中央 $R$，不要求或证�
 [*Notes on distinguishability of postselected computations*，arXiv:2011.08487v2](https://arxiv.org/html/2011.08487v2)，
 Introduction的式(1)以线性CP、迹不增且对每个密度输入成功率非零的映射定义后选择，
 随后除以输出迹，明确产生非线性。Lemma 2（Conversion Lemma）及其证明比较
-$\rho_p=(1-p)\rho_0+p\rho_1$，把误差写成二次多项式；其二次系数是
-$\operatorname{tr}[\Psi(\rho_1-\rho_0)]\,\Phi(\rho_1-\rho_0)$，输出反差控制成功率差。
+$\rho_p=(1-p)\rho_0+p\rho_1$，把误差写成二次多项式；其二次项为
+$-p^2\operatorname{tr}[\Psi(\rho_1-\rho_0)]\,\Phi(\rho_1-\rho_0)$，输出反差控制成功率差。
 在非恒定目标及零误差条件下，这已给CP全输入情形的公共成功率思想；本文不把
 它宣称为新发现。该引理的全输入、CP、迹条件及严格正成功率不能直接当成本卷
 有限原供应、普通正映射和零返回情形的证明。
