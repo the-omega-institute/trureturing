@@ -10,7 +10,7 @@ $$\forall N \in \mathbb{N},\; \forall K \in \mathbb{N},\; \operatorname{s}\left(
 
 *Formalization.* `D5/S3/Combinatorics/BinomialBases/MatharA001722.s` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* R. J. Mathar; Seiichi Manyama; Borislav Crstici (2026). *Mathar recurrence and D-finiteness conjectures: OEIS A386829 and A001722*. URL: <https://oeis.org/A386829>.
 
 *Commentary.*
 
@@ -22,7 +22,7 @@ $$\forall n \in \mathbb{N},\; \operatorname{a}\left(n\right) = \sum_{k \in \oper
 
 *Formalization.* `D5/S3/Combinatorics/BinomialBases/MatharA001722.a` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* R. J. Mathar; Seiichi Manyama; Borislav Crstici (2026). *Mathar recurrence and D-finiteness conjectures: OEIS A386829 and A001722*. URL: <https://oeis.org/A386829>.
 
 *Commentary.*
 
@@ -36,17 +36,19 @@ $$\forall n \in \mathbb{N},\; \operatorname{coeff}\left(n, G\right) = (\operator
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* R. J. Mathar; Seiichi Manyama; Borislav Crstici (2026). *Mathar recurrence and D-finiteness conjectures: OEIS A386829 and A001722*. URL: <https://oeis.org/A386829>.
+
 *Commentary.*
 
 G is the ordinary formal power series whose nth coefficient is a(n) cast to the rationals. It is not an exponential generating series, and no convergence assertion is involved.
 
 **Definition 1.4 (The two assertions).**
 
-$$claim \Leftrightarrow ((\forall n \in \mathbb{N},\; 3 \le n \Rightarrow (\operatorname{a}\left(n\right) + 3 \cdot (-(n : \mathbb{Z}) - 5) \cdot \operatorname{a}\left(n - 1\right) + (3 \cdot ((n : \mathbb{Z}))^{2} + 27 \cdot (n : \mathbb{Z}) + 61) \cdot \operatorname{a}\left(n - 2\right) - ((n : \mathbb{Z}) + 4)^{3} \cdot \operatorname{a}\left(n - 3\right) = 0)) \land (\exists r \in \mathbb{N},\; \exists p \in \mathbb{N} \to \operatorname{Polynomial}\left(\mathbb{Q}\right),\; (\exists j \in \mathbb{N},\; (j \le r) \land (\operatorname{p}\left(j\right) \ne 0)) \land (\sum_{j \in \operatorname{range}\left(r + 1\right)} (\operatorname{inclusion}\left(\operatorname{p}\left(j\right)\right) \cdot \operatorname{iterate}\left(\operatorname{derivative}\left(\right), j, G\right)) = 0)))$$
+$$claim \Leftrightarrow ((\forall n \in \mathbb{N},\; 3 \le n \Rightarrow (\operatorname{a}\left(n\right) + 3 \cdot (-(n : \mathbb{Z}) - 5) \cdot \operatorname{a}\left(n - 1\right) + (3 \cdot ((n : \mathbb{Z}))^{2} + 27 \cdot (n : \mathbb{Z}) + 61) \cdot \operatorname{a}\left(n - 2\right) - ((n : \mathbb{Z}) + 4)^{3} \cdot \operatorname{a}\left(n - 3\right) = 0)) \land (\exists r \in \mathbb{N},\; \exists p \in \mathbb{N} \to \operatorname{Polynomial}\left(\mathbb{Q}\right),\; (\exists j \in \mathbb{N},\; (j \le r) \land (\operatorname{p}\left(j\right) \ne 0)) \land (\sum_{j \in \operatorname{range}\left(r + 1\right)} (\operatorname{inclusion}\left(\operatorname{p}\left(j\right)\right) \cdot \operatorname{iterate}\left(D, j, G\right)) = 0)))$$
 
 *Formalization.* `D5/S3/Combinatorics/BinomialBases/MatharA001722.claim` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* R. J. Mathar; Seiichi Manyama; Borislav Crstici (2026). *Mathar recurrence and D-finiteness conjectures: OEIS A386829 and A001722*. URL: <https://oeis.org/A386829>.
 
 *Commentary.*
 
@@ -54,11 +56,13 @@ The first assertion is Mathar's recurrence in the formula field of OEIS A001722,
 
 **Theorem 1.5 (Recurrence and a homogeneous annihilator).**
 
-$$(\forall n \in \mathbb{N},\; 3 \le n \Rightarrow (\operatorname{a}\left(n\right) + 3 \cdot (-(n : \mathbb{Z}) - 5) \cdot \operatorname{a}\left(n - 1\right) + (3 \cdot ((n : \mathbb{Z}))^{2} + 27 \cdot (n : \mathbb{Z}) + 61) \cdot \operatorname{a}\left(n - 2\right) - ((n : \mathbb{Z}) + 4)^{3} \cdot \operatorname{a}\left(n - 3\right) = 0)) \land (\exists r \in \mathbb{N},\; \exists p \in \mathbb{N} \to \operatorname{Polynomial}\left(\mathbb{Q}\right),\; (\exists j \in \mathbb{N},\; (j \le r) \land (\operatorname{p}\left(j\right) \ne 0)) \land (\sum_{j \in \operatorname{range}\left(r + 1\right)} (\operatorname{inclusion}\left(\operatorname{p}\left(j\right)\right) \cdot \operatorname{iterate}\left(\operatorname{derivative}\left(\right), j, G\right)) = 0))$$
+$$(\forall n \in \mathbb{N},\; 3 \le n \Rightarrow (\operatorname{a}\left(n\right) + 3 \cdot (-(n : \mathbb{Z}) - 5) \cdot \operatorname{a}\left(n - 1\right) + (3 \cdot ((n : \mathbb{Z}))^{2} + 27 \cdot (n : \mathbb{Z}) + 61) \cdot \operatorname{a}\left(n - 2\right) - ((n : \mathbb{Z}) + 4)^{3} \cdot \operatorname{a}\left(n - 3\right) = 0)) \land (\exists r \in \mathbb{N},\; \exists p \in \mathbb{N} \to \operatorname{Polynomial}\left(\mathbb{Q}\right),\; (\exists j \in \mathbb{N},\; (j \le r) \land (\operatorname{p}\left(j\right) \ne 0)) \land (\sum_{j \in \operatorname{range}\left(r + 1\right)} (\operatorname{inclusion}\left(\operatorname{p}\left(j\right)\right) \cdot \operatorname{iterate}\left(D, j, G\right)) = 0))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/BinomialBases/MatharA001722.result` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
+
+*Acknowledgement.* R. J. Mathar; Seiichi Manyama; Borislav Crstici (2026). *Mathar recurrence and D-finiteness conjectures: OEIS A386829 and A001722*. URL: <https://oeis.org/A386829>.
 
 *Commentary.*
 
