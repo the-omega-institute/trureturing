@@ -917,9 +917,10 @@ A finite menu declares finitely many such packets, finitely many
 binary trees with these leaves and operation $\Gamma_t$, finitely
 many pairs of original words $u,v\in\mathcal L^*$, and positive
 rational output tolerances. The marked alphabet $\{3,B\}$ is the
-numerical basis; the other two letters are expanded exactly below. Any fixed finite syntax is allowed, including
-mixed packets. A tree leaf has height zero and
-$h(\Gamma(f,g))=1+\max(h(f),h(g))$. These are the actual compact
+numerical basis; the other two letters are expanded exactly below.
+Any fixed finite syntax is allowed, including mixed packets. A tree
+leaf has height zero and
+$\operatorname{ht}(\Gamma(f,g))=1+\max(\operatorname{ht}(f),\operatorname{ht}(g))$. These are the actual compact
 relations of [EF, Definition 12.1 and Theorem 12.2], rather than
 new formal generators or a different source model.
 
@@ -942,7 +943,9 @@ Q_k(u,v)=\langle v_u,M_{k_\tau}v_v\rangle_{m_{\rm ref}},
 \tag{9.3}
 $$
 
-transported to the actual original member by Theorem 2.1.
+Here the word vectors are the reference counterparts at $\tau$
+with the actual calibration $c$, as in Theorem 5.1; Theorem 2.1
+transports (9.3) to the actual original member.
 They are original-word matrix coefficients of already recovered
 multipliers. The encodings are injective on each real symbol,
 so they preserve its completed measurable information. They
@@ -982,7 +985,8 @@ $$
 This follows by differentiating
 $[a(x)+a(1-x)]\vartheta(x)=a(x)$. Rational point values and
 derivatives have arbitrary finite error enclosures using elementary
-exponential evaluation and this positive denominator. For an explicit exponential error at rational $y\ge0$,
+exponential evaluation and this positive denominator. For an explicit
+exponential error at rational $y\ge0$,
 sum $e^y$ through degree $N$ with $N+2>2y$; its positive omitted
 tail is at most $2y^{N+1}/(N+1)!$. Inverting its interval, whose
 lower endpoint is at least one, encloses $e^{-y}$. This tail tends
@@ -1129,8 +1133,8 @@ used. $\square$
 **Theorem 10.2 (acquired finite recursive matrix coefficients).**
 For one allowed packet and successful legal bracket, compute
 $Z_u,r_u$ from Theorem 5.1 and the finite affine expansion below,
-choosing all step supports in a compact $K\Subset\Omega$. For each finite
-encoded product compute $k,e_k$ by Theorem 10.1 on that $K$.
+choosing all step supports in a compact $K\Subset\Omega$. For each
+finite encoded product compute $k,e_k$ by Theorem 10.1 on that $K$.
 On their common rational partition form
 
 $$
@@ -1314,7 +1318,7 @@ Integrating its fourth coordinate gives the following lower bound
 for the *full* joint law of the same source functions:
 
 $$
-(b_t,\gamma_t,z_t)_*m\ \ge\
+(b_t,\gamma_t,z_t)_*m\ \ge
  \lambda\,\mathbf1_{R_1\times R_2\times R_3}(y)\,dy,
 \qquad \lambda=l_h^2|R_4|/D>0.
 \tag{11.7}
@@ -1411,8 +1415,8 @@ rational center in $\Omega$ can be chosen there.
 Approximate that derivative by rational invertible $A$ and fix a
 larger rational box with the computed derivative constants. A
 sufficiently small rational cube around the center makes (11.3)
-strict at the actual time. A sufficiently small positive rational
-rectangle around a rational approximation to $\Psi_\tau(x_0)$
+strict at the actual time. A sufficiently small rational rectangle
+of positive side lengths around a rational approximation to $\Psi_\tau(x_0)$
 makes (11.4) strict. The time moduli in [JET, §16] and the finite
 expressions in Theorem 10.1 keep these strict tests valid throughout
 a sufficiently narrow rational bracket containing $\tau$. The
