@@ -36,6 +36,7 @@ structure PureSuppliers (D : E → E → E) : Prop where
     D a b = D (c • a + s • b) ((-s) • a + c • b)
 
 private theorem dot_nonneg (x : Vec) : 0 ≤ dot x x := by
+  change 0 ≤ ∑ i : Fin 3, x i * x i
   exact Finset.sum_nonneg (fun i _ => mul_self_nonneg (x i))
 
 private theorem dot_pos {x : Vec} (hx : x ≠ 0) : 0 < dot x x := by
@@ -57,10 +58,10 @@ private theorem dot_sub_right (x y z : Vec) : dot x (y - z) = dot x y - dot x z 
   dotProduct_sub x y z
 
 private theorem dot_smul_left (a : ℝ) (x y : Vec) : dot (a • x) y = a * dot x y := by
-  simpa only [smul_eq_mul] using (smul_dotProduct a x y)
+  simpa only [dot, smul_eq_mul] using (smul_dotProduct a x y)
 
 private theorem dot_smul_right (a : ℝ) (x y : Vec) : dot x (a • y) = a * dot x y := by
-  simpa only [smul_eq_mul] using (dotProduct_smul a x y)
+  simpa only [dot, smul_eq_mul] using (dotProduct_smul a x y)
 
 /-- A finite real root diagonalizes the two-label Gram matrix. Only the
 known vector arithmetic is normalized; no unknown D value is expanded. -/
@@ -98,17 +99,18 @@ private theorem orthogonalize (D : E → E → E) (h : PureSuppliers D) (x y : V
     have he : dot u v = (C * (1 - t ^ 2) + (B - A) * t) / r ^ 2 := by
       simp only [u, v, dot_add_left, dot_add_right, dot_smul_left,
         dot_smul_right, dot_symm y x]
-      change (c * (-s * A) + c * (c * C)) + (s * (-s * C) + s * (c * B)) = _
+      change -s * (c * A + s * C) + c * (c * C + s * B) = _
       dsimp [c, s]
       field_simp [hr0] <;> ring
     rw [he, show C * (1 - t ^ 2) + (B - A) * t = 0 by nlinarith [ht], zero_div]
   have hc : crossProduct u v = crossProduct x y := by
     simp only [u, v, LinearMap.map_add₂, map_add, LinearMap.map_smul₂,
-      map_smul, cross_self, smul_zero, zero_add, add_zero,
+      map_smul, LinearMap.add_apply, LinearMap.smul_apply,
+      cross_self, smul_zero, zero_add, add_zero,
       ← cross_anticomm x y]
     funext i
     have hi := congrArg (fun a : ℝ => a * crossProduct x y i) hcs
-    simp only [Pi.add_apply, Pi.neg_apply, Pi.smul_apply, smul_eq_mul]
+    simp only [Pi.add_apply, Pi.neg_apply, Pi.zero_apply, Pi.smul_apply, smul_eq_mul]
     nlinarith [hi]
   refine ⟨u, v, huv, ?_, hc.symm⟩
   simpa [pure, u, v] using h.label_rotation (pure x) (pure y) c s hcs
@@ -167,7 +169,7 @@ private theorem perpendicular_cross_ne {x y : Vec}
   have hp := mul_pos (dot_pos hx) (dot_pos hy)
   simp only [dot, dotProduct_zero, sub_zero, zero_pow, ne_eq, OfNat.ofNat_ne_zero,
     not_false_eq_true] at hw
-  nlinarith
+  exact (ne_of_gt hp) hw.symm
 
 /-- A zero second outer label in the original finite difference forces the
 Jordan zero face. No additive or homogeneous behavior of D is used. -/
@@ -270,7 +272,7 @@ private theorem saturation_estimate (D : E → E → E) (h : PureSuppliers D)
   have hp : pure y + D (pure x) (pure y) - jordan (pure x) c = p := by
     rw [hk, hacj]
     apply Prod.ext
-    · simp [pure, p]; ring
+    · simp [pure, p]
     · rfl
   have hq : pure y - D (pure x) (pure y) + jordan (pure x) c = q := by
     rw [hk, hacj]
@@ -280,16 +282,19 @@ private theorem saturation_estimate (D : E → E → E) (h : PureSuppliers D)
   have hfd : D p c - D q c = (0, (2 * l * A) • y) := by
     have hf := h.difference (pure x) (pure y) c
     rw [finiteDifference, hp, hq, hab, hac] at hf
-    simp only [add_zero, zero_add, jordan_zero_right, smul_zero, add_zero] at hf
+    simp only [add_zero, zero_add, sub_zero, jordan_zero_right, smul_zero] at hf
     have hwperp : dot y w = 0 := cross_perp_right x y
     apply Prod.ext
     · have hs := congrArg Prod.fst hf
-      simp [jordan, pure, hk, hacj, dot_sub_right, dot_smul_right,
-        hwperp, dot_symm y x, hxy] at hs
-      nlinarith [hs]
+      rw [hk, hacj] at hs
+      simp [jordan, pure, dot_sub_right, dot_smul_right,
+        cross_perp_right, dot_symm y x, hxy] at hs
+      change (D p c).1 - (D q c).1 = 0
+      linarith [hs]
     · funext i
       have hv := congrArg (fun a : E => a.2 i) hf
-      simp [jordan, pure, hk, hacj, A, Pi.smul_apply, smul_eq_mul] at hv ⊢
+      simp [jordan, pure, hk, hacj, A, c, dot_smul_right,
+        Pi.smul_apply, smul_eq_mul] at hv ⊢
       nlinarith [hv]
   have hnc : lift n c = (1 / Y) • y := by
     funext i
@@ -326,6 +331,7 @@ private theorem saturation_estimate (D : E → E → E) (h : PureSuppliers D)
         (-sg * k * Y) • x + (-sg / (r * Y)) • w := by
       rw [hL, hnc]
       simp only [LinearMap.map_add₂, LinearMap.map_smul₂, map_smul,
+        LinearMap.add_apply, LinearMap.smul_apply,
         cross_self, smul_zero, zero_add, hcross]
       funext i
       simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul]
@@ -368,7 +374,9 @@ private theorem saturation_estimate (D : E → E → E) (h : PureSuppliers D)
       0 + dot n ((2 * l * A) • y) at hv
     rw [zero_add, dot_sub_right, dot_smul_right, hny] at hv
     dsimp [f, g]
-    linarith [hv]
+    calc
+      _ = 2 * l * A * (Y / r) := by linarith [hv]
+      _ = _ := by ring
   have hh := two_bounded_squares hf hg
   rw [hfg] at hh
   have hh' : l ^ 2 * A ^ 2 * B ≤ A + k ^ 2 * A * B * r ^ 2 := by
@@ -383,7 +391,7 @@ private theorem saturation_estimate (D : E → E → E) (h : PureSuppliers D)
     nlinarith [hmul]
   rw [hrsq] at hh'
   change (1 - k ^ 2) * l ^ 2 * A * B ≤ 1 + k ^ 2 * B
-  apply (mul_le_mul_left hA).mp
+  apply (mul_le_mul_iff_right₀ hA).mp
   nlinarith [hh']
 
 /-- Orthogonal nonzero pure inputs have saturated original output. The proof
@@ -410,12 +418,12 @@ theorem orthogonal_saturation (D : E → E → E) (h : PureSuppliers D)
   have hkle : k ^ 2 ≤ 1 := by
     simp only [lift, pure, zero_smul, add_zero, zero_add,
       dot_smul_left, dot_smul_right] at hb
-    change (W⁻¹ * (k * dot w w)) ^ 2 ≤ dot w w at hb
+    change (k * (W⁻¹ * dot w w)) ^ 2 ≤ dot w w at hb
     rw [← hWsq] at hb
-    have hc : W⁻¹ * (k * W ^ 2) = k * W := by
+    have hc : k * (W⁻¹ * W ^ 2) = k * W := by
       field_simp [hW0] <;> ring
     rw [hc] at hb
-    apply (mul_le_mul_right (sq_pos_of_pos hW)).mp
+    apply (mul_le_mul_iff_left₀ (sq_pos_of_pos hW)).mp
     nlinarith [hb]
   have hkge : 1 ≤ k ^ 2 := by
     by_contra hnot
@@ -438,7 +446,9 @@ used before the conclusion. -/
 theorem pure_pair_saturation (D : E → E → E) (h : PureSuppliers D) (x y : Vec) :
     ∃ k : ℝ, k ^ 2 = 1 ∧ D (pure x) (pure y) = (0, k • crossProduct x y) := by
   by_cases hw : crossProduct x y = 0
-  · exact ⟨1, by norm_num, by simpa [hw] using h.axis_zero (pure x) (pure y) hw⟩
+  · refine ⟨1, by norm_num, ?_⟩
+    rw [h.axis_zero (pure x) (pure y) hw, hw, smul_zero]
+    rfl
   obtain ⟨a, b, hab, hD, hcross⟩ := orthogonalize D h x y
   have ha : a ≠ 0 := by intro ha; apply hw; simpa [ha, LinearMap.map_zero₂] using hcross
   have hb : b ≠ 0 := by intro hb; apply hw; simpa [hb, map_zero] using hcross
@@ -483,8 +493,9 @@ theorem transverse_sign (D : E → E → E) (h : PureSuppliers D)
   have he : D (pure p) (pure q) = D (pure p') (pure q') := by
     have hf := h.difference (pure x) (pure y) (pure z)
     have hf' : D (pure p) (pure q) - D (pure p') (pure q') = 0 := by
-      simpa [finiteDifference, hjy, hjz, hjdy, hjdz, hky, hlz,
-        p, q, p', q', pure, jordan_zero_right, sub_eq_add_neg] using hf
+      simp only [finiteDifference, hjy, hjz, add_zero, zero_add, sub_zero,
+        hjdy, hjdz, smul_zero] at hf
+      simpa [hky, hlz, pure, p, q, p', q'] using hf
     exact sub_eq_zero.mp hf'
   have hsq : dot (crossProduct p q) (crossProduct p q) = dot (crossProduct p' q') (crossProduct p' q') := by
     calc
@@ -531,7 +542,7 @@ private theorem plane_coordinates {x y z : Vec}
     (hxz : dot x z = 0) (hz : z ≠ 0) :
     dot z y ≠ 0 ∨ dot z (crossProduct x y) ≠ 0 := by
   by_contra hn
-  push_neg at hn
+  push Not at hn
   have hc : crossProduct (crossProduct x y) z = 0 := by
     change crossProduct (crossProduct x y) z = 0
     rw [cross_cross_eq_smul_sub_smul]
@@ -543,8 +554,9 @@ private theorem plane_coordinates {x y z : Vec}
       dot (crossProduct x y) z * dot z (crossProduct x y) at hw
   rw [hc, hn.2] at hw
   have hp := mul_pos (dot_pos (perpendicular_cross_ne hx hy hxy)) (dot_pos hz)
-  simp [dot] at hw
-  nlinarith
+  have hzprod : dot (crossProduct x y) (crossProduct x y) * dot z z = 0 := by
+    simpa only [dot, zero_dotProduct, mul_zero, sub_zero] using hw.symm
+  exact (ne_of_gt hp) hzprod
 
 private theorem choose_transverse_parameter {A u v : ℝ}
     (hA : 0 < A) (huv : u ≠ 0 ∨ v ≠ 0) :
@@ -601,9 +613,8 @@ theorem nonunit_row_sign (D : E → E → E) (h : PureSuppliers D)
     have he : dot x (crossProduct z q) = -dot z (crossProduct x y) + t * dot x x * dot z y := by
       simp only [q, map_add, map_smul, dot_add_right, dot_smul_right]
       have ha : dot x (crossProduct z y) = -dot z (crossProduct x y) := by
-        rw [show crossProduct z y = -crossProduct y z from (cross_anticomm y z).symm]
-        simpa [dot, dotProduct_neg] using
-          (congrArg Neg.neg (triple_product_permutation z x y)).symm
+        change x ⬝ᵥ (z ⨯₃ y) = -(z ⬝ᵥ (x ⨯₃ y))
+        rw [triple_product_permutation x z y, ← cross_anticomm x y, dotProduct_neg]
       rw [ha]
       change _ + t * (x ⬝ᵥ (z ⨯₃ (x ⨯₃ y))) = _
       rw [cross_cross_eq_smul_sub_smul']
@@ -634,7 +645,7 @@ private theorem common_nonunit_perpendicular : CommonNonunitPerpendicular := by
   have hv : dot v v = 1 := by
     have hs := EuclideanSpace.real_norm_sq_eq n
     rw [hn] at hs
-    simpa only [one_pow, dot, dotProduct, v, pow_two] using hs.symm
+    simpa only [one_pow, dot, dotProduct, v, pow_two, one_mul] using hs.symm
   have hav : dot a v = 0 := by
     simpa [PiLp.inner_apply, RCLike.inner_apply, dot, dotProduct, v, mul_comm] using han
   have hbv : dot b v = 0 := by
@@ -654,8 +665,11 @@ private theorem common_nonunit_perpendicular : CommonNonunitPerpendicular := by
 private theorem reverse_orientation (D : E → E → E) (h : PureSuppliers D)
     {x y : Vec} {e : ℝ} (he : D (pure x) (pure y) = (0, e • crossProduct x y)) :
     D (pure y) (pure x) = (0, e • crossProduct y x) := by
-  rw [h.antisymmetric (pure x) (pure y), he, ← cross_anticomm x y]
-  simp
+  rw [h.antisymmetric (pure x) (pure y), he]
+  apply Prod.ext
+  · simp
+  · change -(e • crossProduct x y) = e • crossProduct y x
+    rw [← cross_anticomm x y, smul_neg]
 
 private theorem common_nonunit_sign (D : E → E → E) (h : PureSuppliers D)
     (hperp : CommonNonunitPerpendicular) :
@@ -693,12 +707,13 @@ private theorem common_nonunit_sign (D : E → E → E) (h : PureSuppliers D)
   intro a b hab hunit
   by_cases ha : a = 0
   · subst a
-    simpa [pure, LinearMap.map_zero₂] using
-      h.axis_zero (pure 0) (pure b) (LinearMap.map_zero₂ crossProduct b)
+    rw [h.axis_zero (pure 0) (pure b) (LinearMap.map_zero₂ crossProduct b),
+      LinearMap.map_zero₂, smul_zero]
+    rfl
   by_cases hb : b = 0
   · subst b
-    simpa [pure, map_zero] using
-      h.axis_zero (pure a) (pure 0) (map_zero (crossProduct a))
+    rw [h.axis_zero (pure a) (pure 0) (map_zero (crossProduct a)), map_zero, smul_zero]
+    rfl
   rcases hunit with hunit | hunit
   · exact hfirst a b ha hb hab hunit
   · exact reverse_orientation D h (hfirst b a hb ha (by rwa [dot_symm]) hunit)
@@ -728,8 +743,8 @@ private theorem unit_pair_sign (D : E → E → E) (h : PureSuppliers D)
     change dot y y • x - dot x y • y = x
     simp only [hy, hxy, one_smul, zero_smul, sub_zero]
   have hwcy : crossProduct w y = -x := by rw [← cross_anticomm y w, hycw]
-  have htwo : D (pure x) (pure (2 • y)) = (0, (2 * e) • w) := by
-    have hd := hoff x (2 • y)
+  have htwo : D (pure x) (pure ((2 : ℝ) • y)) = (0, (2 * e) • w) := by
+    have hd := hoff x ((2 : ℝ) • y)
       (by simp [dot_smul_right, hxy])
       (Or.inr (by norm_num [dot_smul_left, dot_smul_right, hy]))
     simpa [map_smul, w, smul_smul, mul_comm] using hd
@@ -755,16 +770,18 @@ private theorem unit_pair_sign (D : E → E → E) (h : PureSuppliers D)
     nlinarith [he]
   have hcross : crossProduct p q = (4 * e) • x := by
     simp only [p, q, map_add, LinearMap.map_sub₂, LinearMap.map_smul₂,
-      map_smul, cross_self, hycw, hwcy, smul_zero, zero_add, sub_zero]
+      map_smul, LinearMap.sub_apply, LinearMap.smul_apply, LinearMap.add_apply,
+      cross_self, hycw, hwcy, smul_zero, zero_add, sub_zero]
     funext i
-    simp only [Pi.sub_apply, Pi.add_apply, Pi.neg_apply, Pi.smul_apply, smul_eq_mul]
+    simp only [Pi.sub_apply, Pi.add_apply, Pi.neg_apply, Pi.zero_apply, Pi.smul_apply, smul_eq_mul]
     ring
   have hcross' : crossProduct p' q' = (-4 * e) • x := by
     simp only [p', q', map_sub, LinearMap.map_add₂, LinearMap.map_smul₂,
-      map_smul, cross_self, hycw, hwcy, smul_zero, zero_add, add_zero,
+      map_smul, LinearMap.sub_apply, LinearMap.smul_apply, LinearMap.add_apply,
+      cross_self, hycw, hwcy, smul_zero, zero_add, add_zero,
       sub_zero]
     funext i
-    simp only [Pi.sub_apply, Pi.add_apply, Pi.neg_apply, Pi.smul_apply, smul_eq_mul]
+    simp only [Pi.sub_apply, Pi.add_apply, Pi.neg_apply, Pi.zero_apply, Pi.smul_apply, smul_eq_mul]
     ring
   have hDp : D (pure p) (pure q) = (0, (4 : ℝ) • x) := by
     rw [hoff p q hpq (Or.inl (by rw [hp]; norm_num)), hcross]
@@ -779,19 +796,20 @@ private theorem unit_pair_sign (D : E → E → E) (h : PureSuppliers D)
     have hc : e * (-4 * e) = -4 := by nlinarith [he]
     rw [hc]
   have hjy : jordan (pure x) (pure y) = 0 := by ext i <;> simp [jordan, pure, hxy]
-  have hjtwo : jordan (pure x) (pure (2 • y)) = 0 := by
+  have hjtwo : jordan (pure x) (pure ((2 : ℝ) • y)) = 0 := by
     ext i <;> simp [jordan, pure, dot_smul_right, hxy]
   have hjdy : jordan (pure y) (D (pure x) (pure y)) = 0 := by
     rw [hky, hkneg]
-    ext i <;> simp [jordan, pure, dot_smul_right, hyw, w]
-  have hjdtwo : jordan (pure (2 • y)) (D (pure x) (pure (2 • y))) = 0 := by
+    ext i <;> simp [jordan, pure, dot, dotProduct_neg, dotProduct_smul, dot_cross_self]
+  have hjdtwo : jordan (pure ((2 : ℝ) • y)) (D (pure x) (pure ((2 : ℝ) • y))) = 0 := by
     rw [htwo]
     ext i <;> simp [jordan, pure, dot_smul_left, dot_smul_right, hyw]
   have heq : D (pure p) (pure q) = D (pure p') (pure q') := by
-    have hf := h.difference (pure x) (pure y) (pure (2 • y))
+    have hf := h.difference (pure x) (pure y) (pure ((2 : ℝ) • y))
     have hf' : D (pure p) (pure q) - D (pure p') (pure q') = 0 := by
-      simpa [finiteDifference, hjy, hjtwo, hjdy, hjdtwo, hky, hkneg, htwo,
-        p, q, p', q', pure, w, neg_smul, sub_eq_add_neg] using hf
+      simp only [finiteDifference, hjy, hjtwo, add_zero, zero_add, sub_zero,
+        hjdy, hjdtwo, smul_zero] at hf
+      simpa [hky, hkneg, htwo, neg_smul, pure, p, q, p', q', w, sub_eq_add_neg] using hf
     exact sub_eq_zero.mp hf'
   rw [hDp, hDp'] at heq
   have hxzero : x = 0 := by
