@@ -18,21 +18,21 @@ internal sealed class BrauerZeroMonoidDocument : IScribeDocumentDefinition
                 Call("Option", Call("Matching", Call("Boundary", X("N")))))),
                 "The carrier adjoins a single zero to the set of matchings."),
             Node("zeroMatchingMonoid", All("N", Nat(), And(
-                Eq(Call("MonoidWithZero.toMulZeroOneClass", Call("zeroMatchingMonoid", X("N"))),
-                    Record(Field("mul", N("multiply")),
-                        Field("one", Call("Option.some", Call("identityMatching", X("N")))),
-                Field("zero", N("Option.none")), Field("zero_mul", N("multiply_none_left")),
-                        Field("mul_zero", N("multiply_none_right")))),
-                All("a", Call("ZeroMatching", X("N")), All("b", Call("ZeroMatching", X("N")),
+                And(Eq(Typed(D(1), Call("ZeroMatching", X("N"))),
+                    Call("Option.some", Call("identityMatching", X("N")))),
+                    Eq(Typed(D(0), Call("ZeroMatching", X("N"))), N("Option.none"))),
+                All("a", Call("ZeroMatching", X("N")), All("b", Call("ZeroMatching", X("N")), And(
+                    Eq(Mul(X("a"), X("b")), Call("multiply", X("a"), X("b"))),
                     Eq(Call("multiply", X("a"), X("b")),
                         Call("Option.casesOn", X("a"), N("Option.none"),
                             Fn("d", Matchings(), Call("Option.casesOn", X("b"), N("Option.none"),
-                                Fn("e", Matchings(), Product()))))))))),
-                "The record displays the defining operations and zero laws. Its" +
-                " associativity field is multiply_assoc; the unit laws use " +
+                                Fn("e", Matchings(), Product())))))))))),
+                "These are the literal one, zero and mul fields of zeroMatchingMonoid. Its " +
+                "associativity field is multiply_assoc; the unit laws use " +
                 "composite_left_identity, composite_right_identity and the " +
                 "corresponding zero loop counts. Option.casesOn expands the " +
-                "literal private multiply pattern match."),
+                "literal private multiply pattern match. The zero_mul and mul_zero fields " +
+                "are multiply_none_left and multiply_none_right."),
             Node("some_mul_some", All("N", Nat(), All("d", Matchings(), All("e", Matchings(),
                 Eq(Mul(Typed(Call("Option.some", X("d")), Call("ZeroMatching", X("N"))),
                     Call("Option.some", X("e"))), Product())))),
@@ -80,11 +80,6 @@ internal sealed class BrauerZeroMonoidDocument : IScribeDocumentDefinition
     private static Formula Negate(Formula a) => Seq(Minus, Parenthesized(a));
     private static Formula If(Formula c, Formula a, Formula b) => Call("ite", c, a, b);
     private static Formula Nat() => N("Nat");
-    private static Formula Field(string name, Formula value) =>
-        Seq(Q(name), Sp, Colon, F.Eq, Sp, value);
-    private static Formula Record(params Formula[] fields) => Seq(OpenBrace, Sp,
-        Seq(fields.SelectMany((f, i) => i == 0 ? new[] { f } :
-            new[] { Comma, Sp, f }).ToArray()), Sp, CloseBrace);
     private static DocumentBlock Node(string name, Formula formula, string prose,
         DescribeRole role = DescribeRole.Definition, bool literature = false,
         bool acknowledgeSource = false) => Describe.Lean(

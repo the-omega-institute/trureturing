@@ -33,12 +33,15 @@ internal sealed class PlanarDiagramAlgebraDocument : IScribeDocumentDefinition
                 "single identity diagram with coefficient one. Here identity n " +
                 "is Subtype.mk (identityMatching n) (identity_planar n)."),
             Node("ring", Scope(Eq(Call("ring", X("R"), X("n")), Record(
-                Field("toAddCommGroupWithOne", N("additiveWithOne")), Field("mul_assoc",
-                N("mul_assoc'")),
+                Field("toAddCommGroup", Call("AddCommGroupWithOne.toAddCommGroup",
+                    N("additiveWithOne"))),
+                Field("toAddGroupWithOne", Call("AddCommGroupWithOne.toAddGroupWithOne",
+                    N("additiveWithOne"))), Field("mul_assoc", N("mul_assoc'")),
                 Field("one_mul", N("one_mul'")), Field("mul_one", N("mul_one'")),
                 Field("left_distrib", N("mul_add'")), Field("right_distrib", N("add_mul'")),
                 Field("zero_mul", N("zero_mul'")), Field("mul_zero", N("mul_zero'"))))),
-                "These are the literal Ring record fields. The existing " +
+                "The additive projections expand the inherited additiveWithOne entry. " +
+                "The remaining entries are the literal Ring record fields. The existing " +
                 "multiplication is instMulTL; the loop cocycle gives basis " +
                 "associativity and linear extension gives the ring laws."),
             Node("algebra", Scope(Eq(Call("algebra", X("R"), X("n")),
