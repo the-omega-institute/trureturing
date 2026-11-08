@@ -198,5 +198,11 @@ Its whole-family intervention and sensitivity obligations do not by themselves
 supply the producer-checked source-occurrence selectors. The original theorem
 has empty telescope and type `claim`; entering that one definition exposes
 only private proposition aliases. Recursive entry into those aliases is not
-a supported selector route. The concrete exception and current binding
-readings are recorded in issue #27903. No `declared_validated` audit is claimed.
+a supported selector route. The selected D5 and Reg targets compile with only the standard accepted axiom
+closure. The current scoped report records `declared_unresolved`, no binding
+certificate, and `unclassified_form` with rule `source.selection_missing`.
+The concrete exception is
+[issue #27927](https://github.com/the-omega-institute/trureturing/issues/27927).
+No `declared_validated` audit is claimed. The retained Reg source supplies
+complete mathematical family evidence; legal raw source reconstruction and
+producer-checked binding remain missing.
