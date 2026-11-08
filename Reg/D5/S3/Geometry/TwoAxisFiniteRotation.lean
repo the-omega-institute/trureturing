@@ -31,58 +31,68 @@ private theorem halfturn_firstAxis : halfturn firstAxis = -firstAxis := by
   norm_num [firstAxis, secondAxis, PiLp.inner_apply, Fin.sum_univ_succ,
     RCLike.inner_apply]
 
+private theorem halfturn_ne_one : halfturn ≠ 1 := by
+  intro heq
+  have h := congrArg (fun R : Orthogonal => R firstAxis) heq
+  change halfturn firstAxis = firstAxis at h
+  rw [halfturn_firstAxis] at h
+  have hc := congrArg (fun v : Space => v 0) h
+  change (-1 : ℝ) = 1 at hc
+  norm_num at hc
+
+private theorem halfturn_determinant : determinant halfturn = 1 := by
+  have h0 : secondAxis ≠ 0 := by
+    intro h
+    have hg := axes_gram
+    simp [h] at hg
+  have hline := finrank_span_singleton h0 (K := ℝ)
+  have hd := (ℝ ∙ secondAxis).finrank_add_finrank_orthogonal
+  have hdim : Module.finrank ℝ Space = 3 := by simp [Space]
+  have hortho : Module.finrank ℝ (ℝ ∙ secondAxis)ᗮ = 2 := by omega
+  change determinant (ℝ ∙ secondAxis).reflection = 1
+  rw [determinant, Submodule.det_reflection, hortho]
+  norm_num
+
 namespace Words
 
 abbrev signature : Signature where
   Params := Σ _ : Space, Σ _ : Space, Orthogonal
-  State _ := Orthogonal
+  State _ := List Orthogonal
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ _ := Bool
+  Output _ _ := Orthogonal
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def actual : Realization signature := by
-  classical
-  exact realize signature (fun _ p T => decide (T = p.2.2)) (fun e => nomatch e)
+def actual : Realization signature :=
+  realize signature (fun _ _ l => l.prod) (fun e => nomatch e)
 
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ => false) (fun e => nomatch e)
+  realize signature (fun _ _ _ => 1) (fun e => nomatch e)
 
 abbrev arena : Arena where
   signature := signature
   Law O := ∀ (a b : Space),
     ⟪a, b⟫_ℝ ^ 2 < ‖a‖ ^ 2 * ‖b‖ ^ 2 →
     ∀ (R : Orthogonal), determinant R = 1 →
-      ∃ l : List Orthogonal, IsAxisWord a b l ∧ O.readout () ⟨a, b, R⟩ l.prod = true
+      ∃ l : List Orthogonal, IsAxisWord a b l ∧ O.readout () ⟨a, b, R⟩ l = R
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  obtain ⟨l, hl⟩ := h firstAxis secondAxis axes_gram 1
-    (by change LinearMap.det (1 : Space →ₗ[ℝ] Space) = 1; simp)
-  exact Bool.false_ne_true hl.2
+  obtain ⟨l, hl⟩ := h firstAxis secondAxis axes_gram halfturn halfturn_determinant
+  exact halfturn_ne_one hl.2.symm
 
 private theorem dependence : ObservationalDependence signature actual := by
-  classical
   intro i
-  have hn : halfturn ≠ 1 := by
-    intro heq
-    have h := congrArg (fun R : Orthogonal => R firstAxis) heq
-    change halfturn firstAxis = firstAxis at h
-    rw [halfturn_firstAxis] at h
-    have hc := congrArg (fun v : Space => v 0) h
-    change (-1 : ℝ) = 1 at hc
-    norm_num at hc
-  refine ⟨⟨firstAxis, secondAxis, 1⟩, 1, halfturn, ?_⟩
-  change decide ((1 : Orthogonal) = 1) ≠ decide (halfturn = 1)
-  simp [hn]
+  refine ⟨⟨firstAxis, secondAxis, 1⟩, [], [halfturn], ?_⟩
+  change ([] : List Orthogonal).prod ≠ [halfturn].prod
+  simpa using Ne.symm halfturn_ne_one
 
 def family : Registration arena (type_of% (@two_axis_finite_word)) where
   actual := actual
-  bridge := by simp only [actual, realize, decide_eq_true_eq]
-  variation := ⟨by simpa only [arena, actual, realize, decide_eq_true_eq]
-    using two_axis_finite_word, rejected, rejected_law⟩
+  bridge := Iff.rfl
+  variation := ⟨two_axis_finite_word, rejected, rejected_law⟩
   sensitivity := ⟨fun i => ⟨rejected,
     fun j h => (h (Subsingleton.elim j i)).elim, rfl, rejected_law⟩,
     fun e => nomatch e⟩
@@ -101,9 +111,7 @@ def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := by
-    classical
-    exact some (realize signature (fun _ p T => decide (T = p.2.2)) (fun e => nomatch e))
+  readout := some actual
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -113,11 +121,11 @@ def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_
     definition := none
     coordinates := #[0, 1, 3]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "arg", "body", "arg"]
+      path := #["body", "body", "body", "body", "body", "arg", "body", "arg", "fn", "arg"]
       stateBinder := 0
       functionOperand := false
-      stateOperand := some #["fn", "arg"]
-      booleanPredicate := true }] }
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -224,8 +232,7 @@ def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ p R => p.F (rotatePair R p.p))
-    (fun e => nomatch e))
+  readout := some actual
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
