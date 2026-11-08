@@ -341,7 +341,7 @@ class LifecycleTests(unittest.TestCase):
         self.assertEqual(sentinel.read_text(), "external bytes")
         self.assertEqual(run(self.main, "rev-parse", branch).stdout.strip(), head)
 
-    def test_removal_shares_unchanged_deadline_and_exposes_timeout_stderr(self):
+    def test_removal_shares_normal_deadline_and_exposes_timeout_stderr(self):
         tree = self.root / "deadline"
         self.commit_branch("lane/governance/deadline", tree, 7 * 3600)
         original = subprocess.run
@@ -357,7 +357,7 @@ class LifecycleTests(unittest.TestCase):
                 patch.object(preservation, "time", SimpleNamespace(monotonic=iter([0, 10, 40]).__next__)):
             with self.assertRaisesRegex(protocol.GitFailure, "final-native.*native timeout diagnostic"):
                 preservation.remove_registered(self.main, tree)
-        self.assertEqual(budgets, [290, 260])
+        self.assertEqual(budgets, [1790, 1760])
         protocol.identity(self.main, tree)
         preservation.remove_registered(self.main, tree)
 
