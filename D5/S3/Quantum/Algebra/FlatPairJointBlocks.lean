@@ -8,7 +8,7 @@
 
 module
 
-public import Mathlib.Analysis.InnerProductSpace.Projection.FiniteDimensional
+public import Mathlib.Analysis.InnerProductSpace.PiL2
 
 /-! Complete original-vector block specification. -/
 
