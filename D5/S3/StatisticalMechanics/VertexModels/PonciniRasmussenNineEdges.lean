@@ -30,7 +30,7 @@ elab_rules : term <= expectedType
 private inductive Tree (α : Type) where
   | leaf : α → Tree α
   | node : Tree α → Tree α → Tree α
-open Tree
+open D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.Tree
 private def get {α : Type} : Tree α → Nat → α
   | .leaf a, _ => a
   | .node l r, j => if j % 2 = 0 then get l (j/2) else get r (j/2)
@@ -56,14 +56,44 @@ def outgoingEdges : List (Fin 4862 × Fin 8192) :=
 private def edgeOrder (a b : Fin 4862 × Fin 8192) : Bool :=
   decide (a.1.val*8192+a.2.val ≤ b.1.val*8192+b.2.val)
 
+private def mergeForKernel {α : Type*} (le : α → α → Bool) (xs : List α) : List α → List α :=
+  xs.rec (fun ys => ys) fun x xs smaller ys =>
+    ys.rec (x::xs) fun y ys tail => if le x y then x :: smaller (y::ys) else y :: tail
+private theorem mergeForKernel_eq {α : Type*} (le : α → α → Bool) (xs ys : List α) :
+    mergeForKernel le xs ys = List.merge xs ys le := by
+  induction xs generalizing ys with
+  | nil => simp [mergeForKernel, List.merge]
+  | cons x xs ih =>
+    induction ys with
+    | nil => simp [mergeForKernel, List.merge]
+    | cons y ys ihy =>
+      simp only [mergeForKernel, List.merge]
+      split <;> simp_all [mergeForKernel]
+private def sortForKernel {α : Type*} (le : α → α → Bool) : Nat → List α → List α
+  | 0, xs => xs
+  | k+1, xs =>
+    let h := xs.length / 2
+    if h = 0 then xs else mergeForKernel le (sortForKernel le k (xs.take h)) (sortForKernel le k (xs.drop h))
+termination_by structural k => k
+private theorem sortForKernel_perm {α : Type*} (le : α → α → Bool) (k : Nat) (xs : List α) :
+    (sortForKernel le k xs).Perm xs := by
+  induction k generalizing xs with
+  | zero => exact List.Perm.refl _
+  | succ k ih =>
+    simp only [sortForKernel]
+    split
+    · exact List.Perm.refl _
+    · rw [mergeForKernel_eq]
+      exact (List.merge_perm_append _).trans ((ih _).append (ih _) |>.trans (by rw [List.take_append_drop]))
+
 private theorem sorted_equal :
-    incomingEdges.mergeSort edgeOrder = outgoingEdges.mergeSort edgeOrder := by
+    sortForKernel edgeOrder 16 incomingEdges = sortForKernel edgeOrder 16 outgoingEdges := by
   decide +kernel
 
 /-- Both sparse descriptions have the same edge multiset with multiplicity. -/
 theorem edges_perm : incomingEdges.Perm outgoingEdges :=
-  (List.mergeSort_perm incomingEdges _).symm.trans
-    (sorted_equal ▸ List.mergeSort_perm outgoingEdges _)
+  (sortForKernel_perm edgeOrder 16 incomingEdges).symm.trans
+    (sorted_equal ▸ sortForKernel_perm edgeOrder 16 outgoingEdges)
 
 private theorem sum_flatMap {X Y A : Type*} [AddCommMonoid A]
     (l : List X) (g : X → List Y) (f : Y → A) :
@@ -132,6 +162,7 @@ theorem sparse_sum {A : Type*} [AddCommGroup A] (b : Fin 4862 → A) (v : Fin 81
         if ht : (transition g s).val < 4862 then
           v ⟨s.val,by omega⟩ • b ⟨(transition g s).val,ht⟩ else 0) := by
   have he := (edges_perm.map (fun e => v e.2 • b e.1)).sum_eq
+  unfold incomingEdges outgoingEdges at he
   rw [incoming_sum, outgoing_sum] at he
   rw [sparseHamiltonian_eq]
   simp only [neg_zsmul, Finset.sum_neg_distrib]

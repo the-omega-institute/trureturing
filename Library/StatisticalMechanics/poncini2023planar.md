@@ -5,10 +5,11 @@ year: 2023
 title: Integrability of planar-algebraic models
 doi: 10.1088/1742-5468/acdce7
 url: https://arxiv.org/abs/2206.14462v2
-claim: "Conjecture C.12 gives the eight-vertex transfer matrix as a central factorial polynomial expansion of its principal Hamiltonian."
+claim: "Conjecture B.1 gives a degree formula for the zero-fugacity Temperley–Lieb Hamiltonian; Conjecture C.12 gives a central factorial expansion of the eight-vertex transfer matrix."
 strata_touched:
   - D5/S1/Recurrence/CentralFactorialTransferExpansion
   - D5/S3/StatisticalMechanics/VertexModels/PonciniRasmussenTransferExpansion
+  - D5/S3/StatisticalMechanics/VertexModels/PonciniRasmussenMinpolyRefutation
 license: citation-only
 triage: anchor
 ---
