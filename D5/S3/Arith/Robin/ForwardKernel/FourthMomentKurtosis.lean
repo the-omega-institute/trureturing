@@ -23,6 +23,28 @@ open FourthMomentBandDefs BrownianFourthKernel FourthMomentInterfaceBridge
 noncomputable section
 set_option autoImplicit false
 
+/-- The variance-band asymptotic gives the normalized second profile moment. -/
+theorem dyadicZ_second_moment_tendsto
+    {E g : ℝ → ℝ} {α θ β : ℝ}
+    (hE : LocallyBoundedMeasurable E)
+    (hB : ValidBand α θ β)
+    (hV : CumulativeVarianceBandAsymptoticFor E α β)
+    (hg : ProfileIntegrable g) :
+    Tendsto (fun X : ℝ => ∫ x, dyadicZ E θ g X x ^ 2 ∂dyadicProbabilityMeasure X)
+      atTop (𝓝 ((2 ^ kappa θ - 1) * Q g / Real.log 2)) := by
+  have hm := (DyadicMeanSquareAsymptotic.profile_kernel_dyadic_mean_square_asymptotic
+    hE hB hV hg).div_const (Real.log 2)
+  rw [mul_comm (Q g)] at hm
+  change Tendsto _ atTop (𝓝 ((2 ^ kappa θ - 1) * Q g / Real.log 2)) at hm
+  apply hm.congr'
+  filter_upwards [eventually_gt_atTop (1 : ℝ)] with X hX
+  have hs : 0 ≤ meanSquareScale θ X :=
+    (mul_pos (Real.rpow_pos_of_pos (by linarith : 0 < X) _) (Real.log_pos hX)).le
+  rw [dyadicProbabilityMeasure_integral (by linarith) _]
+  simp_rw [dyadicZ, div_pow, Real.sq_sqrt hs,
+    div_right_comm _ (meanSquareScale θ X) _, intervalIntegral.integral_div]
+  ring
+
 /-- The fourth Brownian mixed-moment limit yields explicit second and fourth moments;
 every nonzero profile has a fourth-moment limit strictly above the Gaussian value. -/
 theorem fixed_dyadic_positive_excess_kurtosis
@@ -49,18 +71,7 @@ theorem fixed_dyadic_positive_excess_kurtosis
   have hκ : 0 < kappa θ := sub_pos.mpr hθ1
   have hl : 0 < Real.log 2 := Real.log_pos (by norm_num)
   refine ⟨?_, ?_, ?_⟩
-  · have hm := (DyadicMeanSquareAsymptotic.profile_kernel_dyadic_mean_square_asymptotic
-      hE hB hV hg).div_const (Real.log 2)
-    rw [mul_comm (Q g)] at hm
-    change Tendsto _ atTop (𝓝 ((2 ^ kappa θ - 1) * Q g / Real.log 2)) at hm
-    apply hm.congr'
-    filter_upwards [eventually_gt_atTop (1 : ℝ)] with X hX
-    have hs : 0 ≤ meanSquareScale θ X :=
-      (mul_pos (Real.rpow_pos_of_pos (by linarith : 0 < X) _) (Real.log_pos hX)).le
-    rw [dyadicProbabilityMeasure_integral (by linarith) _]
-    simp_rw [dyadicZ, div_pow, Real.sq_sqrt hs,
-      div_right_comm _ (meanSquareScale θ X) _, intervalIntegral.integral_div]
-    ring
+  · exact dyadicZ_second_moment_tendsto hE hB hV hg
   · have hM : MomentInterface E θ 4
         (fun s => dyadicMomentConstant θ * kappa θ ^ 2 * brownianW4 s) := by
       refine ⟨fourth_moment_bound_interface hE hB h₄, ?_, hlim⟩
