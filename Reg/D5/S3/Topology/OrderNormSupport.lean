@@ -7,7 +7,6 @@ import Reg.Support.DependentFamily
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
-universe u
 
 namespace Reg.D5.S3.Topology.OrderNormSupport
 
