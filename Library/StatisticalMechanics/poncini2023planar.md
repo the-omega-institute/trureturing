@@ -19,6 +19,25 @@ DOI: 10.1088/1742-5468/acdce7
 
 Source: https://arxiv.org/abs/2206.14462v2
 
+Page 29, equation (4.69), defines the principal Hamiltonian of the
+Temperley–Lieb diagram algebra as $h_0=-\sum_{i=1}^{n-1}e_i$.
+At loop fugacity zero, each closed component in diagram concatenation
+contributes a factor zero. Section 4.7 defines $l^{(n)}_{0,0}$ as the
+degree of this element's minimal polynomial over $\mathbb C$.
+
+Page 37, Appendix B.1, Conjecture B.1, equation (B.13), states, for every
+integer $n\geq 2$,
+
+$$
+l^{(n)}_{0,0}
+=\frac{3^{\lfloor(n+1)/2\rfloor}
++(-1)^n3^{\lfloor(n-1)/2\rfloor}}{2}.
+$$
+
+The preceding table gives degrees $2,3,6,9,18,27$ for $n=2,\ldots,7$.
+This conjecture concerns the Temperley–Lieb Hamiltonian; Conjecture C.12
+below concerns the eight-vertex transfer matrix.
+
 ## Source statement
 
 Page 47, Conjecture C.12:
