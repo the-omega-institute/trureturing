@@ -68,6 +68,7 @@ private theorem kappa_skew (p q : ℝ) : kappaClosed p q = -kappaClosed q p := b
   rw [mul_comm q p, ← H_symm p q]
   ring
 
+set_option maxRecDepth 4096 in
 private theorem ordered_cleared (p q r : ℝ) (hp : 0 < p) (hq : 0 < q) (hr : 0 < r) :
     8*(Q p q r)^3*orderedCoefficient p q r = rawNumerator p q r := by
   have hs1 := Real.sq_sqrt hp.le
@@ -79,7 +80,7 @@ private theorem ordered_cleared (p q r : ℝ) (hp : 0 < p) (hq : 0 < q) (hr : 0 
   unfold orderedCoefficient tauClosed betaClosed psiClosed kappaClosed rawNumerator
   simp_rw [Real.sqrt_mul hp.le, Real.sqrt_mul hq.le, Real.sqrt_mul hr.le]
   field_simp [h1, h2, h3]
-  dsimp [Q, H, betaNumerator]
+  dsimp only [Q]
   ring_nf
   simp only [hs1, hs2, hs3]
   <;> ring
@@ -104,7 +105,7 @@ private theorem ordered_forward (p q r : ℝ) (hp : 0 < p) (hq : 0 < q) (hr : 0 
     <;> ring
   have heq : 8*(Q p q r)^3*
       (orderedCoefficient p q r+orderedCoefficient q r p+orderedCoefficient r p q-Xi p q r/2) = 0 := by
-    linear_combination h1+h2+h3-hsum-hclear
+    linear_combination h1+h2+h3+hsum-hclear
   have hn : 8*(Q p q r)^3 ≠ 0 := mul_ne_zero (by norm_num) (pow_ne_zero _ hQ)
   exact sub_eq_zero.mp ((mul_eq_zero.mp heq).resolve_left hn)
 
@@ -142,9 +143,10 @@ theorem trace_to_ordered (p : Fin 3 → ℝ) (S : Mat) (hS : S.IsHermitian) :
       orderedCubic (fun i j k => orderedCoefficient (p i) (p j) (p k)) S := by
   have hK := moment_kappa_adjoint p S hS
   unfold closedMomentTrace
+  dsimp only
   rw [hK]
   simp [tr, momentMatrix, jMatrix, orderedCubic, orderedCoefficient,
-    Matrix.trace, Matrix.diag, Matrix.mul_apply, Fin.sum_univ_succ,
+    Matrix.trace, Matrix.diag, Matrix.mul_apply, Fin.sum_univ_three,
     Complex.mul_re, Complex.mul_im, beta_symm]
   <;> ring
 
@@ -166,7 +168,7 @@ theorem ordered_to_coordinates (h : Fin 3 → Fin 3 → Fin 3 → ℝ)
   have h21 : S 2 1 = star (S 1 2) := (hS.apply 2 1).symm
   have h02 : S 0 2 = star (S 2 0) := (hS.apply 0 2).symm
   have hdiag (i : Fin 3) : (S i i).im = 0 := Complex.conj_eq_iff_im.mp (hS.apply i i)
-  simp only [orderedCubic, Fin.sum_univ_succ, cubic, matrixPair, cycle,
+  simp only [orderedCubic, Fin.sum_univ_three, cubic, matrixPair, cycle,
     h0, h1, h2, h10, h21, h02, Complex.sq_norm, Complex.normSq_apply,
     Complex.mul_re, Complex.mul_im, Complex.add_re, Complex.conj_re, Complex.conj_im,
     Complex.star_def, hdiag]
@@ -196,7 +198,7 @@ private theorem ordered_pair (p q : ℝ) (hp : 0 < p) (hq : 0 < q) :
 private theorem Xi_swap_last (p q r : ℝ) : Xi p q r = Xi p r q := by
   unfold Xi
   rw [F_swap_last p q r]
-  congr 1 <;> dsimp [Q, H] <;> ring
+  congr 1 <;> (try dsimp [Q, H]) <;> ring
 
 /-- The actual all-positive closed trace-to-coordinate normal form, including
     six ordered distinct-index contributions and every repeated-index term. -/
@@ -209,13 +211,13 @@ theorem closed_trace_normal_form (p q r : ℝ) (hp : 0 < p) (hq : 0 < q) (hr : 0
   · exact ordered_pure q hq
   · exact ordered_pure r hr
   · exact ordered_pair p q hp hq
-  · simpa only [rho_symm q p hq hp] using ordered_pair q p hq hp
+  · simpa [rho_symm q p hq hp] using ordered_pair q p hq hp
   · exact ordered_pair q r hq hr
-  · simpa only [rho_symm r q hr hq] using ordered_pair r q hr hq
+  · simpa [rho_symm r q hr hq] using ordered_pair r q hr hq
   · exact ordered_pair r p hr hp
-  · simpa only [rho_symm p r hp hr] using ordered_pair p r hp hr
+  · simpa [rho_symm p r hp hr] using ordered_pair p r hp hr
   · exact ordered_forward p q r hp hq hr
-  · simpa only [← Xi_swap_last p q r] using ordered_forward p r q hp hr hq
+  · simpa [← Xi_swap_last p q r] using ordered_forward p r q hp hr hq
 
 /-- Positivity of the four finite ordered traces with their actual closed
     moment functions. Integral identification remains outside this theorem. -/
