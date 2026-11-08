@@ -75,7 +75,8 @@ def source_registration : Registration arena
       exact congrArg (fun p : Prop => decide p) (propext (h n d e f))
     · intro h n d e f
       have hh := h n (d,e,f)
-      simpa only [actual, realize, lhs, rhs, decide_eq_decide] using hh
+      change decide (lhs n (d,e,f)) = decide (rhs n (d,e,f)) at hh
+      exact decide_eq_decide.mp hh
   variation := ⟨actual_law,rejected,rejected_law⟩
   sensitivity := by
     constructor
