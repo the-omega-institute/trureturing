@@ -8,7 +8,7 @@ The full-real sharp actual-B lower endpoint
 
 $$\forall x \in \mathbb{R},\; \operatorname{D}\left(x\right) = \sqrt{x} \cdot \operatorname{log}\left(x\right)$$
 
-*Formalization.* `D5/S3/Arith/Robin/RHSharpArithmeticEnvelope.D` (`✓ std3`).
+*Formalization.* `D5/S3/Arith/Robin/Analytic/RHSharpArithmeticEnvelope.D` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -20,7 +20,7 @@ The normalization D is defined on all real endpoints.
 
 $$\forall x \in \mathbb{R},\; \operatorname{B}\left(x\right) = E_{3}(x) + \operatorname{log}\left(\operatorname{log}\left(\operatorname{theta}\left(x\right)\right)\right) - \operatorname{log}\left(\operatorname{log}\left(x\right)\right)$$
 
-*Formalization.* `D5/S3/Arith/Robin/RHSharpArithmeticEnvelope.B` (`✓ std3`).
+*Formalization.* `D5/S3/Arith/Robin/Analytic/RHSharpArithmeticEnvelope.B` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -32,7 +32,7 @@ Here E₃ is Mertens.E₃ and theta is Chebyshev.theta. Both are the canonical a
 
 $$\operatorname{RiemannHypothesis} \Rightarrow \left(\left(\forall epsilon \in \mathbb{R},\; 0 < epsilon \Rightarrow \left(\exists T \in \mathbb{R},\; \forall x \in \mathbb{R},\; T \le x \Rightarrow \left(1 < \operatorname{theta}\left(x\right) \land \left|\operatorname{D}\left(x\right) \cdot \operatorname{B}\left(x\right) + 2\right| < firstLiMass + epsilon\right)\right)\right) \land \left(\left(\forall epsilon \in \mathbb{R},\; 0 < epsilon \Rightarrow \left(\forall Y \in \mathbb{R},\; \exists x \in \mathbb{R},\; \operatorname{max}\left(2, Y\right) \le x \land \left(1 < \operatorname{theta}\left(x\right) \land \left|\operatorname{D}\left(x\right) \cdot \operatorname{B}\left(x\right) + 2 + firstLiMass\right| < epsilon\right)\right)\right) \land \operatorname{liminf}_{x\in \mathbb{R}, x\to \infty} \operatorname{D}\left(x\right) \cdot \operatorname{B}\left(x\right) = -2 - firstLiMass\right)\right)$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/RHSharpArithmeticEnvelope.actual_B_lower_endpoint` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/Analytic/RHSharpArithmeticEnvelope.actual_B_lower_endpoint` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -58,9 +58,9 @@ The resulting signed limit is D(x)*B(x)+2+G(log(x))->0 on ALL real endpoints. Co
 
 ## References
 
-- Truth anchor: `D5/S3/Arith/Robin/RHSharpArithmeticEnvelope.B`
-- Truth anchor: `D5/S3/Arith/Robin/RHSharpArithmeticEnvelope.D`
-- Truth anchor: `D5/S3/Arith/Robin/RHSharpArithmeticEnvelope.actual_B_lower_endpoint`
+- Truth anchor: `D5/S3/Arith/Robin/Analytic/RHSharpArithmeticEnvelope.B`
+- Truth anchor: `D5/S3/Arith/Robin/Analytic/RHSharpArithmeticEnvelope.D`
+- Truth anchor: `D5/S3/Arith/Robin/Analytic/RHSharpArithmeticEnvelope.actual_B_lower_endpoint`
 - Dependency: [D5/S3/Arith/Robin/ThetaTailRobinWitness](ThetaTailRobinWitness.md)
 - Dependency: [D5/S3/Weil/Mertens/Cryptids/Schoenfeld](../../Weil/Mertens/Cryptids/Schoenfeld.md)
 - Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/RHSharpActualEnvelope](../../Weil/Mertens/IntegratedExplicit/RHSharpActualEnvelope.md)

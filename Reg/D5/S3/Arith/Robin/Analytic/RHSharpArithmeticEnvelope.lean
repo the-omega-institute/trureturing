@@ -1,5 +1,5 @@
 import LeanInformationAuditInterface.Contract.Registration
-import D5.S3.Arith.Robin.RHSharpArithmeticEnvelope
+import D5.S3.Arith.Robin.Analytic.RHSharpArithmeticEnvelope
 import Reg.Support.DependentFamily
 
 set_option autoImplicit false
@@ -9,10 +9,10 @@ open Filter Set
 open scoped Topology
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
-open _root_.D5.S3.Arith.Robin.RHSharpArithmeticEnvelope
+open _root_.D5.S3.Arith.Robin.Analytic.RHSharpArithmeticEnvelope
 open _root_.D5.S3.Weil.ZeroData.ActualReciprocalSquareBounds
 
-namespace Reg.D5.S3.Arith.Robin.RHSharpArithmeticEnvelope
+namespace Reg.D5.S3.Arith.Robin.Analytic.RHSharpArithmeticEnvelope
 
 abbrev signature : Signature where
   Params := Unit
@@ -51,4 +51,4 @@ private theorem source_bridge :
    false the law holds for every family. An anchor equality would change the
    source law and is therefore not added. -/
 
-end Reg.D5.S3.Arith.Robin.RHSharpArithmeticEnvelope
+end Reg.D5.S3.Arith.Robin.Analytic.RHSharpArithmeticEnvelope

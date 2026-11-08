@@ -2,7 +2,7 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.Robin;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.Robin.Analytic;
 
 internal sealed class RHSharpArithmeticEnvelopeDocument : IScribeDocumentDefinition
 {
@@ -12,21 +12,21 @@ internal sealed class RHSharpArithmeticEnvelopeDocument : IScribeDocumentDefinit
         Blocks(
             Describe.Lean(
                 DescribeId.Create("arithmetic-normalization"),
-                DeclarationHandle.Create("D5/S3/Arith/Robin/RHSharpArithmeticEnvelope.D"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/Analytic/RHSharpArithmeticEnvelope.D"),
                 H("Square-root logarithmic normalization"),
                 StatementSource.FromAuthor(DDefinition()), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("The normalization D is defined on all real endpoints."))),
                 DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("actual-arithmetic-error"),
-                DeclarationHandle.Create("D5/S3/Arith/Robin/RHSharpArithmeticEnvelope.B"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/Analytic/RHSharpArithmeticEnvelope.B"),
                 H("The actual Mertens and theta error"),
                 StatementSource.FromAuthor(BDefinition()), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("Here E₃ is Mertens.E₃ and theta is Chebyshev.theta. Both are the canonical actual arithmetic functions."))),
                 DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("actual-b-lower-endpoint"),
-                DeclarationHandle.Create("D5/S3/Arith/Robin/RHSharpArithmeticEnvelope.actual_B_lower_endpoint"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/Analytic/RHSharpArithmeticEnvelope.actual_B_lower_endpoint"),
                 H("All-real envelope, arbitrarily late attainment and exact liminf in one result"),
                 StatementSource.FromAuthor(EndpointClaim()), AssessedProvenance.FromRepo(),
                 Blocks(

@@ -1,6 +1,6 @@
-/- GID: D5/S3/Arith/Robin/RHSharpArithmeticEnvelope
+/- GID: D5/S3/Arith/Robin/Analytic/RHSharpArithmeticEnvelope
    generality: I
-   mirror-B: D5/B/S3/Arith/Robin/RHSharpArithmeticEnvelope
+   mirror-B: D5/B/S3/Arith/Robin/Analytic/RHSharpArithmeticEnvelope
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
@@ -26,7 +26,7 @@ open D5.S3.Arith.Robin.CompleteMertensPeak (Q U psiErrorKernel)
 open D5.S3.Weil.ZeroData.ActualReciprocalSquareBounds
 open D5.S3.Weil.Mertens.IntegratedExplicit.RHSharpActualEnvelope
 
-namespace D5.S3.Arith.Robin.RHSharpArithmeticEnvelope
+namespace D5.S3.Arith.Robin.Analytic.RHSharpArithmeticEnvelope
 
 def D (x : ℝ) : ℝ := Real.sqrt x * Real.log x
 def B (x : ℝ) : ℝ := Mertens.E₃ x +
@@ -813,4 +813,4 @@ theorem actual_B_lower_endpoint (hRH : RiemannHypothesis) :
       linarith [(abs_lt.mp hx.2).1]
   exact ⟨henv, hatt, hlim⟩
 
-end D5.S3.Arith.Robin.RHSharpArithmeticEnvelope
+end D5.S3.Arith.Robin.Analytic.RHSharpArithmeticEnvelope
