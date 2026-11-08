@@ -19,8 +19,10 @@ internal sealed class PonciniRasmussenNineEdgesDocument : IScribeDocumentDefinit
                 Call("D5.S3.StatisticalMechanics.PonciniRasmussenCertificateTree.get",
                     N("D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.rows"),
                     Val(X("i"))))),
-                "The lookup uses the shared PonciniRasmussenCertificateTree.get and " +
-                "the single PonciniRasmussenNineHorner.rows table. The index i has " +
+                "The lookup uses the shared " +
+                "D5.S3.StatisticalMechanics.PonciniRasmussenCertificateTree.get and " +
+                "the single D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.rows " +
+                "table. The index i has " +
                 "type Fin 8192 and the returned list has type List Nat."),
             Node("sparseHamiltonian_eq", All("v", Vector(), Eq(Call("sparseHamiltonian", X("v")),
                 Fn("i", Fin(D(8192)), IncomingFold()))),

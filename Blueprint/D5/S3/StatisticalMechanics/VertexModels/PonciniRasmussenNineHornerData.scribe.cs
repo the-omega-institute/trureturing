@@ -15,14 +15,17 @@ internal sealed class PonciniRasmussenNineHornerDataDocument : IScribeDocumentDe
                 "shared D5.S3.StatisticalMechanics.PonciniRasmussenCertificateTree.get " +
                 "function reads the common Tree by parity and division by two. " +
                 "D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.rows is the " +
-                "single incoming row table, also used by NineEdges.incoming. " +
+                "single incoming row table, also used by " +
+                "D5.S3.StatisticalMechanics.PonciniRasmussenNineEdges.incoming. " +
                 "The private v0 through v58 are the integer state trees.")),
 
             Node("rows", Typed(N("rows"), Call(
                 "D5.S3.StatisticalMechanics.PonciniRasmussenCertificateTree.Tree",
                 Call("List", Nat()))),
                 "The literal tree contains 8192 incoming source lists. For i : Fin 8192, " +
-                "PonciniRasmussenCertificateTree.get rows i.val selects the list at i. " +
+                "D5.S3.StatisticalMechanics.PonciniRasmussenCertificateTree.get " +
+                "D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.rows i.val " +
+                "selects the list at i. " +
                 "Its natural source indices retain their multiplicities; " +
                 "sparseHamiltonian reduces them modulo 8192 with Nat.mod_lt."),
 
