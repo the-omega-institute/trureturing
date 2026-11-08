@@ -915,8 +915,9 @@ $f_{1,t}=\phi(b_t)b_t$, $f_{2,t}=\phi(b_t)r_t$.
 
 A finite menu declares finitely many such packets, finitely many
 binary trees with these leaves and operation $\Gamma_t$, finitely
-many pairs of marked words $u,v\in\{3,B\}^*$, and positive rational
-output tolerances. Any fixed finite syntax is allowed, including
+many pairs of original words $u,v\in\mathcal L^*$, and positive
+rational output tolerances. The marked alphabet $\{3,B\}$ is the
+numerical basis; the other two letters are expanded exactly below. Any fixed finite syntax is allowed, including
 mixed packets. A tree leaf has height zero and
 $h(\Gamma(f,g))=1+\max(h(f),h(g))$. These are the actual compact
 relations of [EF, Definition 12.1 and Theorem 12.2], rather than
@@ -932,7 +933,9 @@ $$
 
 A menu may also declare any finite pointwise product
 $k_t=\prod_{j=1}^q\iota(c_{j,t})$, with empty product one.
-The targets are
+For every original word retain
+$v_u=c^{-1/2}P^{1/2}F_{u3}$ with its original emission recursion;
+this extends (1.4) to all four labels. The targets are
 
 $$
 Q_k(u,v)=\langle v_u,M_{k_\tau}v_v\rangle_{m_{\rm ref}},
@@ -979,8 +982,14 @@ $$
 This follows by differentiating
 $[a(x)+a(1-x)]\vartheta(x)=a(x)$. Rational point values and
 derivatives have arbitrary finite error enclosures using elementary
-exponential evaluation and this positive denominator. Outside
-$[0,1]$ the function is exactly zero or one.
+exponential evaluation and this positive denominator. For an explicit exponential error at rational $y\ge0$,
+sum $e^y$ through degree $N$ with $N+2>2y$; its positive omitted
+tail is at most $2y^{N+1}/(N+1)!$. Inverting its interval, whose
+lower endpoint is at least one, encloses $e^{-y}$. This tail tends
+to zero effectively, and rational polynomial evaluation of $P_j$
+then gives every derivative error. On uncertain scalar arguments,
+the next bound $C_{j+1}$ transports these rational-center intervals.
+Outside $[0,1]$ the function is exactly zero or one.
 
 Given rational compact interval $C$ inside rational open interval
 $I$, choose rational transition endpoints strictly between their
@@ -1119,8 +1128,8 @@ used. $\square$
 
 **Theorem 10.2 (acquired finite recursive matrix coefficients).**
 For one allowed packet and successful legal bracket, compute
-$Z_u,r_u$ by Theorem 5.1 for the finite word menu, now choosing
-all step supports in a compact $K\Subset\Omega$. For each finite
+$Z_u,r_u$ from Theorem 5.1 and the finite affine expansion below,
+choosing all step supports in a compact $K\Subset\Omega$. For each finite
 encoded product compute $k,e_k$ by Theorem 10.1 on that $K$.
 On their common rational partition form
 
@@ -1152,7 +1161,25 @@ services, fair refinement stops at finite sourcewise cost for every
 fixed legal finite menu and positive tolerances, on the same
 $\mathcal E_*$ of probability at least $1-\alpha_*$.
 
-*Proof.* The axis omitted by $\Omega$ is Lebesgue-null. Rational
+*Proof.* For the four-label extension use the exact identities
+$f_0=f_1=(3/2)f_B-(1/2)f_3$. Multilinearity of the original
+word recursion expands each fixed $F_{u3}$ as a finite sum
+$\sum_w a_{uw}F_{w3}$ with $w\in\{3,B\}^*$ and rational
+coefficients. Their absolute sum is at most $2^{n(u)}$, where
+$n(u)$ counts the $0,1$ occurrences. Thus
+$v_u=\sum_w a_{uw}v_w$ exactly. Set
+$Z_u=\sum_w a_{uw}Z_w$ and $r_u=\sum_w|a_{uw}|r_w$ from
+Theorem 5.1; this explicitly pays the finite coefficient amplification.
+Self-adjointness of the original heat and reality of every emission
+give the same palindrome identity
+$\|v_u\|_m^2=p(u^Ru3)\le1$ for all original words: move the
+left half of the product in
+$c^{-1}\langle F_{u3},PF_{u3}\rangle_m$ to the right, use
+$F_3=cb$, and read the original word recursion. This also proves
+$[-1,1]$ is a valid initial real enclosure. The affine expansion
+changes no emitted letter or calibration.
+
+The axis omitted by $\Omega$ is Lebesgue-null. Rational
 box steps compactly supported there are consequently dense in raw
 $L^2$, by the same exhaustion and global residual test as in
 Theorem 5.1. This proves that its $Z_u$ search remains total,
