@@ -65,7 +65,7 @@ applies to every coefficient of that same sequence.
 
 The immutable revision 16 export labels both relations conjectures. The
 bounded source qualification in issue #27973 and
-`Library/RecurrenceComposition/mathar2026a386844.md` identifies no complete
+`Library/AnalyticClosure/mathar2026a386844.md` identifies no complete
 prior settlement within its stated readings. General Lagrange inversion and
 coefficient extraction are suppliers, without a target-specific native bridge
 or the full conjunction in their statements. No exhaustive absence or priority

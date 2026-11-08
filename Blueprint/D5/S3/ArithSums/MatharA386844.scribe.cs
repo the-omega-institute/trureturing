@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.ArithSums;
 internal sealed class MatharA386844Document : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/ArithSums/MatharA386844.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/RecurrenceComposition/mathar2026a386844");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/AnalyticClosure/mathar2026a386844");
     private static Formula Call(string name, params Formula[] args) => new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. args]);
     private static Formula Add(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Add, b);
     private static Formula Sub(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Subtract, b);
