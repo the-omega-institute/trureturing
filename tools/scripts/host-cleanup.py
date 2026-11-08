@@ -1084,15 +1084,17 @@ def remnant_cache_candidates(path, cutoff):
         cache = project / ".lake"
         if not directory(cache):
             continue
-        if os.path.lexists(cache / "build"):
+        if (cache / "build").is_dir() and not (cache / "build").is_symlink():
             yield project, cache / "build"
         config = cache / "config"
         if directory(config):
             for index in sorted(config.iterdir()):
-                if (index.name.isascii() and index.name.isdecimal() and directory(index)
-                        and {child.name for child in index.iterdir()} <= {
-                            "lakefile.olean", "lakefile.olean.trace", "lakefile.olean.lock"}):
-                    yield project, index
+                if index.name.isascii() and index.name.isdecimal() and directory(index):
+                    files = list(index.iterdir())
+                    if ({child.name for child in files} <= {
+                            "lakefile.olean", "lakefile.olean.trace", "lakefile.olean.lock"}
+                            and all(stat.S_ISREG(child.lstat().st_mode) for child in files)):
+                        yield project, index
         stamp = cache / ".stratalint-lean-cache-stamp.json"
         if stamp.is_file() and not stamp.is_symlink():
             yield project, stamp

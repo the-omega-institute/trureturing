@@ -96,6 +96,18 @@ class HostRemnantTests(unittest.TestCase):
                 self.assertTrue((target / ".lake/private-notes").exists())
                 self.assertEqual("retained\n", (self.main / "source").read_text())
 
+    def test_generated_cache_names_do_not_admit_source_shaped_entries(self):
+        target = self.remnant(blueprint=False)
+        shutil.rmtree(target / ".lake/build")
+        (target / ".lake/build").write_text("not a generated build directory")
+        config = target / ".lake/config/0/lakefile.olean"
+        config.mkdir(parents=True)
+        (config / "source").write_text("not a compiled configuration file")
+        self.age(target)
+        self.run_sweep()
+        self.assertEqual("not a generated build directory", (target / ".lake/build").read_text())
+        self.assertEqual("not a compiled configuration file", (config / "source").read_text())
+
     def test_remnant_shape_and_unique_bytes_are_retained(self):
         for name, relative, content, reason in (
                 ("source", "D5/Unique.lean", b"unique", "unknown_top_level"),

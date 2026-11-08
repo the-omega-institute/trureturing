@@ -152,7 +152,7 @@ class LifecycleTests(unittest.TestCase):
                 self.assertEqual("dev", run(self.main, "branch", "--show-current").stdout.strip())
 
     def test_missing_pointer_recovery_rejects_foreign_backlink_alias_and_nested_registration(self):
-        for boundary in ("foreign", "backlink", "alias", "nested"):
+        for boundary in ("foreign", "bare", "backlink", "alias", "nested"):
             with self.subTest(boundary=boundary):
                 tree = self.root / boundary
                 self.commit_branch("lane/governance/" + boundary, tree, 7 * 3600)
@@ -161,6 +161,8 @@ class LifecycleTests(unittest.TestCase):
                 requested = tree
                 if boundary == "foreign":
                     run(tree, "init", "--initial-branch=foreign")
+                elif boundary == "bare":
+                    run(self.main, "init", "--bare", tree)
                 elif boundary == "backlink":
                     (metadata / "gitdir").write_text(str(self.root / "foreign/.git") + "\n")
                 elif boundary == "alias":

@@ -41,6 +41,8 @@ def _missing_pointer_identity(source, path, rows, snapshot=None):
     # Cleanup alone can recover an absent checkout pointer. Require the native
     # administration entry's backlink, common directory and HEAD to agree;
     # ordinary reuse/with identity continues to require the checkout pointer.
+    if all(os.path.lexists(path / name) for name in ("HEAD", "objects", "refs")):
+        raise Refused("foreign_repository")
     matches = [row for row in rows if Path(row["worktree"]).resolve() == path]
     if len(matches) != 1 or path.stat().st_dev != path.parent.stat().st_dev:
         raise Refused("repository_identity")
