@@ -77,18 +77,31 @@ both neighboring multiples of four give 2W(m)+2 and 2W(m+1)+2, matching
 W(4m+2)=1+min(W(m),W(m+1)).
 
 Combining with `ThueMorseSignedCut.combined_prefix_signed_lower` gives
-P(n)≤2W(n)≤2C(n). The consumed private helper `prefix_two_costs` proves
-P(2)=2 and C(2)=1 on the literal word `[false,true]`: that word is one
-antipalindrome and is not a palindrome. The signed lower bound and explicit
-mixed factorization establish C; impossibility of zero or one ordinary
-pieces and the ordinary upper bound establish P.
+P(n)≤2W(n)≤2C(n). Within the existential branch of the complete theorem,
+the proof establishes P(2)=2 and C(2)=1 on the literal word `[false,true]`:
+that word is one antipalindrome and is not a palindrome. The signed lower
+bound and explicit mixed factorization establish C; impossibility of zero
+or one ordinary pieces and the ordinary upper bound establish P. These
+native-minimum facts are local proof steps, with no separate finite-instance
+declaration.
 
-`ThueMorseSharpPrefix.sharp_factor_two_prefix` packages the universal bound
-and this positive attainer. Its proof shape is bind-only and its proposed
-admission basis is open-problem-resolution for the complete preregistered
-assertion. `prefix_signed_upper` has content; the finite helper is bind-only
-with a real consumer in the full theorem. No wrapper or new mathematical
-declaration is introduced by this metadata.
+Both retained theorems have `proof_shape: content`. For
+`ThueMorseSharpPrefix.sharp_factor_two_prefix`, inlining the same-delivery
+`prefix_signed_upper` reaches its substantive all-prefix strong induction;
+classification stops at the existing frozen or pinned upstream premises,
+not at that new helper. The thin outer composition does not change this
+classification. The proposed host `admission_basis: open-problem-resolution`
+is for the one complete preregistered A+B assertion. `prefix_signed_upper`
+is its consumed all-prefix auxiliary, used on both the universal bound and
+the native attainer proof paths, with no separate resolution claim.
+
+The module's `utility: none` applies to each retained declaration: the
+all-length upper estimate and the complete sharp uniform comparison are
+unbounded mathematical results. Neither is a checker, numeric reduction,
+bounded enumeration or separately retained certified instance. The finite
+witness is essential evidence inside the complete event, not an independent
+computational deliverable. Computational utility basis, instance, premises,
+result and claim fields are `not-applicable(kind=none)`.
 
 ## Falsifier
 
@@ -107,17 +120,17 @@ The full result is
 [the Lean source](../D5/S1/Words/Palindromes/ThueMorseSharpPrefix.lean).
 The [Scribe source](../Blueprint/D5/S1/Words/Palindromes/ThueMorseSharpPrefix.scribe.cs)
 attaches exactly one `OpenProblemResolutionClaim` of kind `Proved` to that
-full theorem and this dossier's slug. Neither the helper nor the finite
-attainer has a separate resolution claim. The bibliography is the existing
+full theorem and this dossier's slug. The all-prefix auxiliary has no separate resolution claim, and the finite
+attainer remains internal to the full theorem. The bibliography is the existing
 [AKMP Library owner](../Library/Words/ambrozetal2019palindromiclength.md),
 with the same DOI, URL and bibkey as the front matter.
 
-The selected StageA compilation and scoped report cover the target and
-imports, 14 modules and 653 declarations. Their accepted axiom union is
-`Classical.choice`, `Quot.sound`, `propext`, with no `sorryAx`. This records
-the completed compiled source evidence; no fresh compilation or admission
-is claimed by the metadata. The Lean sources are preserved. The source
-mirror, canonical emission and freeze remain pending.
+Verification is scoped to the selected Lean module and its imports, with
+exact statement identities, current source hashes and axiom closures checked
+in the affected scoped report. The accepted axiom boundary is
+`Classical.choice`, `Quot.sound`, `propext`, with no `sorryAx`. These checks
+do not establish independent source/admission approval. Renewed source
+review, canonical emission and freeze remain pending.
 
 The bounded source screen examined the complete arXiv v2 Section 6 and
 relevant definitions, and compared related primary sources including
@@ -163,7 +176,7 @@ v2. The literature screen is bounded: unseen proof bodies, unindexed or
 later solutions, worldwide present openness and global priority remain
 unverified. The quantified A+B is the preregistered reading of the source
 prose in its explicit prefix context, not a printed numbered conjecture.
-Independent source fidelity and admission review remain pending. Successful
+Independent approval of the revised source/admission unit remains pending. Successful
 compilation establishes the formal statement, not global novelty, canonical
 publicization or a completed source-binding certificate. Independent review,
 StageB, triplet review, required CI and normal integration remain necessary

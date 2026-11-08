@@ -111,43 +111,6 @@ theorem prefix_signed_upper (n : ℕ) :
         rw [hw, hn4]
         omega
 
-private theorem prefix_two_costs :
-    FridPrefix.PL (factor 2 0) = 2 ∧ combinedLength (factor 2 0) = 1 := by
-  classical
-  have word : factor 2 0 = [false, true] := by decide
-  have hw : signedWeight (2 : ℤ) = 1 := by
-    have h := signed_weight_arithmetic.2.2.2.2.1 1
-    norm_num [signed_weight_arithmetic.2.1] at h ⊢
-    exact h
-  have hp := prefix_signed_upper 2
-  have hc := (combined_prefix_signed_lower 2).1
-  have hcu : combinedLength (factor 2 0) ≤ 1 := by
-    apply Nat.find_le (show MixedFactors (factor 2 0) 1 from ?_)
-    refine ⟨[[false, true]], word.symm, rfl, ?_⟩
-    intro p hmem
-    have he : p = [false, true] := by simpa using hmem
-    subst p
-    exact ⟨by decide, Or.inr (by decide)⟩
-  have hpl : 2 ≤ FridPrefix.PL (factor 2 0) := by
-    by_contra hlt
-    obtain ⟨ps, hflat, hlen, hpal⟩ :
-        FridPrefix.PalFactors (factor 2 0) (FridPrefix.PL (factor 2 0)) := by
-      unfold FridPrefix.PL
-      exact Nat.find_spec _
-    cases ps with
-    | nil => simp [word] at hflat
-    | cons p ps =>
-      have hps : ps = [] := by
-        have hh : ps.length = 0 := by simp only [List.length_cons] at hlen; omega
-        exact List.length_eq_zero_iff.mp hh
-      subst ps
-      have he : p = [false, true] := by simpa [word] using hflat
-      have hh := (hpal p (by simp)).2.reverse_eq
-      rw [he] at hh
-      simp at hh
-  norm_num [hw] at hp hc
-  exact ⟨by omega, by omega⟩
-
 /-- The factor-two bound for every positive prefix, attained by the same actual minima. -/
 theorem sharp_factor_two_prefix :
     (∀ n : ℕ, 1 ≤ n → FridPrefix.PL (factor n 0) ≤ 2 * combinedLength (factor n 0)) ∧
@@ -158,9 +121,44 @@ theorem sharp_factor_two_prefix :
     have hp := prefix_signed_upper n
     have hc := (combined_prefix_signed_lower n).1
     omega
-  · refine ⟨2, by decide, ?_, ?_⟩
-    · rw [prefix_two_costs.1, prefix_two_costs.2]
-    · rw [prefix_two_costs.1]; decide
+  · classical
+    have word : factor 2 0 = [false, true] := by decide
+    have hw : signedWeight (2 : ℤ) = 1 := by
+      have h := signed_weight_arithmetic.2.2.2.2.1 1
+      norm_num [signed_weight_arithmetic.2.1] at h ⊢
+      exact h
+    have hp := prefix_signed_upper 2
+    have hc := (combined_prefix_signed_lower 2).1
+    have hcu : combinedLength (factor 2 0) ≤ 1 := by
+      apply Nat.find_le (show MixedFactors (factor 2 0) 1 from ?_)
+      refine ⟨[[false, true]], word.symm, rfl, ?_⟩
+      intro p hmem
+      have he : p = [false, true] := by simpa using hmem
+      subst p
+      exact ⟨by decide, Or.inr (by decide)⟩
+    have hpl : 2 ≤ FridPrefix.PL (factor 2 0) := by
+      by_contra hlt
+      obtain ⟨ps, hflat, hlen, hpal⟩ :
+          FridPrefix.PalFactors (factor 2 0) (FridPrefix.PL (factor 2 0)) := by
+        unfold FridPrefix.PL
+        exact Nat.find_spec _
+      cases ps with
+      | nil => simp [word] at hflat
+      | cons p ps =>
+        have hps : ps = [] := by
+          have hh : ps.length = 0 := by simp only [List.length_cons] at hlen; omega
+          exact List.length_eq_zero_iff.mp hh
+        subst ps
+        have he : p = [false, true] := by simpa [word] using hflat
+        have hh := (hpal p (by simp)).2.reverse_eq
+        rw [he] at hh
+        simp at hh
+    norm_num [hw] at hp hc
+    have hP : FridPrefix.PL (factor 2 0) = 2 := by omega
+    have hC : combinedLength (factor 2 0) = 1 := by omega
+    refine ⟨2, by decide, ?_, ?_⟩
+    · rw [hP, hC]
+    · rw [hP]; decide
 
 end D5.S1.Words.Palindromes.ThueMorse
 
