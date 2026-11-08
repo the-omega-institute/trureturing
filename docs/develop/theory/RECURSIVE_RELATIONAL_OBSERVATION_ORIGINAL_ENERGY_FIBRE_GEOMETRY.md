@@ -1749,3 +1749,376 @@ problem.
 [FEA]: RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_FINITE_ENERGY_ACQUISITION.md
 
 ## 追加锚（本行以下为增补区）
+
+## 15. Certified finite-resolution inverse on a high-mass regular quotient
+
+**Definition 15.1 (source, units and numerical premises).** Retain
+Assumption 1.1, Definition 1.2 and all the analytic, all-angle,
+compact-domain and exact-recovery hypotheses of Definition 12.1.
+For numerical statements retain [FEA, Definitions 9.1–9.2,
+Theorems 9.3 and 10.1], [JET, Theorems 15.2 and 16.1], and the
+paid reference computation and retained-record premises of
+[SRO, Definition 21.1 and Theorem 22.1]. These are conditional
+source suppliers, not numerical readings of an original point or
+new formal verification. In particular the full complex selector
+$A=\rho C$, the distinct $C=0$ endpoint, normalized $h$, entire
+operator and form domains, and nonpolar source trace are retained.
+
+Use the reference member $a'=\eta'=1$ at the unknown time
+$\tau=a^2d/\eta$. Throughout this section $h,m,b_t,\Gamma_t,r_t$
+and $s_t$ denote that member's objects, with
+
+$$
+\begin{gathered}
+b_t=g_t,\quad \Gamma_t(f,g)=t\left(\sum_{j=1}^3X_jfX_jg+f_wg_w\right),
+\quad r_t=(1+\Gamma_t(b_t,b_t))^{-1},\\
+s_t=\operatorname{tr}g_t=\|hg_{t/2}\|_2^2,\qquad
+\iota(c)=c/\sqrt{1+c^2}.
+\end{gathered}
+\tag{15.1}
+$$
+
+The reference $h,m$ do not depend on $t$. The positive sign section
+and its quotient coordinates are
+
+$$
+\begin{gathered}
+Q_+=(0,\infty)^3,\qquad q=(u,S,Z),\qquad
+p(q)=(u,0,Z,S)\quad\text{in raw }(x,y,z,w),\\
+q(p)=\left(\sqrt{x^2+y^2},\ |w-xy/2|,\ |z|\right),
+\qquad \nu=q_*m.
+\end{gathered}
+\tag{15.2}
+$$
+
+The last pushforward is for the reference measure; the same letter
+$q$ denotes the quotient map and the coordinates of its positive
+section. The coordinate faces omitted from $Q_+$ have zero mass.
+Every norm of quotient or feature vectors below is the maximum norm.
+On invariant functions the reference energy is precisely
+$t[f_ug_u+(1+u^2/4)f_Sg_S+f_Zg_Z]$, by (6.2).
+
+To describe the original physical interpretation without supplying
+unknown parameters, put $\ell=\sqrt{\eta/a}$. The function on the
+original member represented by (15.2) is
+
+$$
+\begin{gathered}
+q_*(p):=q(\delta_{1/\ell}p)
+ =\left(v/\ell,\ |s|/\ell^2,\ |z|/\ell\right),\qquad
+v=\sqrt{x^2+y^2},\ s=w-xy/2,\\
+q_*=\operatorname{diag}\left(a/\sqrt\eta,\ a/\eta,
+                                  a/\sqrt\eta\right)\pi,
+\qquad \pi=(v/\sqrt a,|s|,|z|/\sqrt a).
+\end{gathered}
+\tag{15.3}
+$$
+
+Here $q_*$ is a function, distinct from the pushforward notation
+in (15.2). Formula (15.3) follows from [W, Theorem 5.2] with
+$s=\ell,\kappa=\eta/a^2$. The observer neither evaluates $\ell$
+nor receives an original $a,\eta,d$ name. Resolution is in these
+canonical reference coordinates. Using half the requested resolution
+below also gives that requested Euclidean resolution in dimension
+three, since $\|x\|_2\le\sqrt3\|x\|_\infty$.
+
+Choose the exhaustive countable family of rational nested packets
+with the computable cutoff recipe [FEA, Definition 9.2], rather
+than an unspecified sparse subfamily. At time $t$ retain those with
+$\overline I_2\cap\{0,s_t\}=\varnothing$. Include every finite
+binary tree over their leaves $\phi(b_t)b_t,\phi(b_t)r_t$ with
+operation $\Gamma_t$, including mixed packets. Let $E_t$ be the
+regular-frame set (12.3) for this family and $E_t^+$ its image in
+$Q_+$. Numerical enumeration tests packet legality uniformly on a
+rational bracket $J=[L,U]$ by [FEA, (9.6)], using its computed
+interval for all $s_t$, $t\in J$.
+
+[JET]: RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_SOURCE_JET_CERTIFICATION.md
+[SRO]: RECURSIVE_RELATIONAL_OBSERVATION_SOURCE_RELATIVE_ORDER.md
+
+**Theorem 15.2 (source-complete finite compact inverse).** Under
+Definition 15.1, fix rational $\epsilon>0$, $0<\delta<1$ and
+$0<\alpha<1$. From the unchanged original record and the stated
+paid services one can return, on one event of probability at least
+$1-\alpha$, all of the following after sourcewise finite record
+and computation cost:
+
+1. A strict positive rational bracket $0<L<\tau<U$ and a finite
+   union $K$ of closed rational three-boxes compactly contained in
+   $Q_+$, with a rational certificate $\nu(K)>1-\delta$.
+   Each box carries one specified rank-three frame (12.3), with
+   its plateau, packet legality and strictly positive Gram
+   determinant certified throughout that box for every $t\in J$.
+2. A finite menu $c_{1,t},\ldots,c_{m,t}$ consisting only of the
+   admissible compact trees just defined, and a positive rational
+   $\sigma$, for which $z_t=(\iota(c_{1,t}),\ldots,\iota(c_{m,t}))$
+   satisfies
+
+$$
+q,q'\in K,\ t,s\in J,\ \|q-q'\|_\infty\ge\epsilon
+ \quad\Longrightarrow\quad
+ \|z_t(q)-z_s(q')\|_\infty>\sigma.
+\tag{15.4}
+$$
+
+3. Finitely many rational prototypes $q_j\in K$, rational vectors
+   $a_j\in[-1,1]^m$, a rational $t_0\in J$ and a finite decoder
+   $D(y)\in\{q_j\}$ such that, for every actual $q\in K,t\in J$,
+
+$$
+\|y-z_t(q)\|_\infty\le\sigma/16
+ \quad\Longrightarrow\quad \|D(y)-q\|_\infty<\epsilon
+\qquad(y\in\mathbb Q^m).
+\tag{15.5}
+$$
+
+For arbitrary positive real mass and confidence tolerances, use
+positive rational subtargets at most those tolerances, as specified
+in [FEA, Definition 14.3]. The finite input is these subtargets or
+a representation from which they can be obtained.
+
+The bracket, compact and finite menu can depend on the record.
+No unlocalized $b$ or $r$ observation is in this menu. Statement
+(15.5) is conditional on legitimately supplied feature values;
+the record consumer is the multiplier-coefficient construction
+[FEA, §14], not a claim that the hidden feature vector is observed.
+
+*Proof.* First obtain the single original-record event and the
+arbitrarily narrow strict brackets using [SRO, Theorems 21.2–22.1]
+and [FEA, Theorem 2.1]. More explicitly divide $\alpha$ into positive
+rational startup and acquisition budgets with sum at most $\alpha$.
+The event is [SRO, (SRO.153)], intersected with its probability-one
+startup-termination event. All subsequent statements are deterministic
+on that event. There marker intervals converge to the actual $c>0$,
+probability errors tend to zero, and successful brackets shrink to
+$\tau$. The exact-law suppliers are statements about the same source;
+no exact word law is passed to the search. The common event for the
+consumer and all adaptive choices is spelled out in [FEA, Theorem
+14.1].
+
+The first additional point is separation by compact trees alone.
+Suppose $q,q'\in E_t^+$ have equal values of every such tree.
+Write $B=b_t(q)>0$. By the definition of $E_t$, $B\ne s_t$.
+If $b_t(q')\ne B$, an exhaustive rational packet can place $B$
+in its plateau with outer closure avoiding $0,s_t,b_t(q')$.
+Its first leaf equals $B$ at $q$ and zero at $q'$, a contradiction.
+Thus the $b_t$ values agree. A plateau containing this common value
+has second leaf equal to $r_t$ at both points, so the $r_t$ values
+agree as well. Theorem 13.1 now gives equal quotient coordinates.
+Conversely Theorem 12.2 gives invariance of every tree under the
+actual common symmetries. The encoding $\iota$ is injective, so the
+encoded trees alone separate $E_t^+$. The scalar values in this
+argument are mathematical values in a proof, not extra sensor ports.
+The ability to choose arbitrarily narrow outer intervals follows
+from the exhaustive rational family; mere coverage by a sparse family
+would not prove this step.
+
+Next construct mass and regularity certificates. Set
+$H_\circ(u,S,Z)=h(u,0,Z,S)$. Cylindrical Fubini, rotational
+invariance and the two actual full-source reflections give
+
+$$
+d\nu=8\pi uH_\circ(u,S,Z)^2\,du\,dS\,dZ,
+\qquad \nu(Q_+)=1.
+\tag{15.6}
+$$
+
+The factor is $2\pi$ from the angle and $4$ from the two signs;
+the cylindrical Jacobian is $u$. The joint full-source reflection
+$J_s$ used in (3.3), after rotational reduction, supplies the $S$
+sign. This uses no independent raw $s$ reflection. Absolute
+continuity of $m=h^2\mu$ makes the axis and both sign faces null.
+The density in (15.6) is positive and smooth on $Q_+$.
+
+For any finite rational box union compactly inside $Q_+$ its mass
+has arbitrary-precision rational enclosures. Embed its section in
+slightly larger raw rational boxes with $x>0$. The constructed
+$h$ values and $C^1$ bounds [JET, Theorems 15.2–16.1] give
+bounds and a modulus for $8\pi uH_\circ^2$ by the product rule;
+$\pi$ has elementary convergent rational enclosures. Partition by
+all box endpoints, subdivide, and sum cell volumes times outward
+density intervals. Interiors are counted once and boundary overlaps
+are null. The modulus makes the upper-minus-lower sum tend to zero.
+This is a finite compact integral of the original reference density,
+not a new probability or conditional-law supplier.
+
+Enumerate closed rational boxes $B\Subset Q_+$ with rational
+surrounding boxes and frame names $(n,ij)$ from (12.3). Require
+$\overline I_2$ legal on $J$, $b_t(B)\Subset I_{0,n}$, and
+$\inf_{B,t\in J}\det G^{n,ij}_t>0$, each with explicit rational
+strict margins. Gram entries are themselves finite trees.
+[FEA, Theorem 10.1] and [JET, §§15–16] construct the interval
+tests, including every finite spatial and time derivative order
+needed. Raw section evaluation is at $(u,0,Z,S)$, on surrounding
+boxes with $x>0$; no derivative across the axis is requested.
+On each fixed surrounding box the constants remain fixed while
+cells and time brackets shrink. Thus these are finite tests and
+can recognize every true strict instance.
+
+At $\tau$, the open set $E_\tau^+$ is conull by Theorem 12.2.
+Every one of its points lies in the interior of a sufficiently
+small rational box carrying one positive frame and a plateau.
+All its strict margins persist on that closed box and on some
+time neighborhood of $\tau$. Such boxes cover $E_\tau^+$.
+Increasing finite unions therefore have masses tending to one.
+A finite union with mass strictly greater than $1-\delta$ exists,
+and its finitely many frame conditions persist on a common positive
+time neighborhood. Fair search over finite box unions, frames,
+bracket refinements and precisions recognizes both those conditions
+and a strict lower mass bound. No mass modulus for the exceptional
+set, source neighborhood or infinity is assumed, and no zero
+determinant must be decided. This is the effective mass-exhaustion
+method of [JET, §9] applied to the actual rank-three frames of this
+volume; its rank-two chart is not promoted to a global inverse.
+
+Fix such an accepted $K$. At true time $\tau$ the compact set
+
+$$
+A_{\epsilon/2}=\{(q,q')\in K^2:
+                           \|q-q'\|_\infty\ge\epsilon/2\}
+\tag{15.7}
+$$
+
+is separated by the encoded trees. If nonempty, finitely many of
+these trees have a maximum absolute difference with strictly
+positive minimum $g$ on (15.7): their nonzero-difference open sets
+cover this compact. Include also all finitely many trees used in
+the regularity certificates. All their packets are legal at $\tau$.
+The constructed spatial and time moduli imply a positive cross-time
+gap on (15.7) after sufficiently narrowing $J$. This compactness
+argument proves existence for the following finite search; neither
+$g$ nor the cover is an input or an output certificate. If (15.7)
+is empty, the far-pair requirement is vacuous.
+
+Here is the numerical certificate actually returned. Partition $K$
+into finitely many closed rational rectangular cells $C_a$ with
+disjoint interiors and maximum-norm diameter at most $\eta$. For
+every menu coordinate compute a rational interval $I_{ia}$ enclosing
+all $z_{i,t}(q)$ for $q\in C_a,t\in J$. The intervals are computed
+by [FEA, Theorem 10.1], with its syntax-dependent finite jet orders,
+the extra spatial order of [JET, (16.6)] and its constructed time
+modulus. Compute from rational endpoints
+
+$$
+U_{ab}=\max_{q\in C_a,q'\in C_b}\|q-q'\|_\infty.
+\tag{15.8}
+$$
+
+For each ordered cell pair with $U_{ab}\ge\epsilon$, require some
+$i$ with $\operatorname{dist}(I_{ia},I_{ib})>\sigma$ for a proposed
+rational $0<\sigma<1$. All other pairs are ignored. These are finite
+rational strict comparisons, and immediately prove (15.4), including
+independent $t,s\in J$. They check remote branches, not only a
+local inverse Jacobian.
+
+For termination use only the existence margin $g$ above. Choose
+$\eta<\epsilon/8$. If $U_{ab}\ge\epsilon$, the rational cell
+centers have distance at least $\epsilon-2\eta>\epsilon/2$.
+At $\tau$ some selected coordinate differs there by at least $g$.
+Finer cells, a narrower acquired bracket and finer evaluation
+precision make each entire cell interval lie within $g/8$ of its
+true center value at $\tau$. Consequently every relevant interval
+pair has gap at least $3g/4$, and any rational
+$0<\sigma<\min(1,g/2)$ passes. If (15.7) is empty, all pairs
+already have $U_{ab}<\epsilon$ and there is no gap test to pass.
+An enumeration over finite legal menus, grids, margins, brackets
+and precisions therefore accepts. Every test is truncated at a
+finite precision and returns inconclusive if undecided; fair
+interleaving revisits each candidate. It never waits for an equality
+to be resolved. Thus a finite uniform remote-pair margin is generated,
+not assumed from smoothness, a local rank theorem or a free cover.
+
+Finally put $h_0=\sigma/16$. Narrow the bracket further and refine
+a rational cell cover of $K$ to obtain rational centers $q_j\in K$
+and rational feature approximants $a_j\in[-1,1]^m$ satisfying
+
+$$
+\begin{gathered}
+\|a_j-z_{t_0}(q_j)\|_\infty\le h_0/4,\qquad t_0\in J\cap\mathbb Q,\\
+\forall q\in K\ \forall t\in J\ \exists j:
+                       \|z_t(q)-a_j\|_\infty\le h_0.
+\end{gathered}
+\tag{15.9}
+$$
+
+The second assertion is certified cell by cell using the computed
+spatial and time moduli and the center evaluation error. All these
+bounds can be made smaller than the positive target $h_0$; prior
+certificates persist on a narrower bracket. Clipping $a_j$ to the
+cube does not increase its evaluation error.
+Define $D(y)$ to minimize $\|y-a_j\|_\infty$, breaking ties by
+index. This is a finite rational comparison. If the premise of
+(15.5) holds, a covering prototype has distance at most $2h_0$
+from $y$, as does the selected prototype. Therefore
+
+$$
+\|z_t(q)-z_{t_0}(D(y))\|_\infty
+ \le h_0+2h_0+h_0/4<\sigma.
+\tag{15.10}
+$$
+
+Contraposition of (15.4) proves (15.5). Only actual feature images
+are used in this implication; arbitrary compatible numerical vectors
+are not declared realizable. All searches used finitely many strict
+certificates at a successful stage. Their existence with strict slack,
+the total cited finite services and the one cofinal original schedule
+prove sourcewise finite stopping on the stated event. $\square$
+
+**Proposition 15.3 (essential compact and unit boundaries).** No
+fixed finite admissible compact-tree menu separates the whole regular
+positive quotient at a fixed true time, even at a fixed positive
+resolution. Nor does Theorem 15.2 give a physical-unit inverse
+without independent scale calibration.
+
+*Proof.* Each symbol is compactly supported on the punctured source
+by Theorem 12.2. The quotient image of the union of finitely many
+supports is compact, hence bounded. Outside it every menu symbol
+and its encoding vanish. Choose two exterior open boxes in $Q_+$
+separated by any prescribed positive distance. The positive density
+(15.6) and conullness of $E_\tau^+$ give regular points in both,
+with the same zero feature vector. Thus even restriction to the
+conull regular set cannot remove the global exterior obstruction.
+The high-mass compact restriction is essential.
+
+For the unit assertion, [W, Theorem 5.2] gives identical original
+word laws for $(a,\eta,d)$ and $(a/s^2,\eta/s^4,d)$, while dilation
+rescales physical coordinates by $s$ and $s^2$. The numerical
+reference coordinates (15.3) are unchanged under the corresponding
+model transport. Thus labels identify these canonical units and
+cannot select an independent physical length scale. The theorem
+uses no original parameter names to break this ambiguity. $\square$
+
+**Definition 15.4 (correspondence, antecedents and remaining domain).**
+The new relation is the finite original-source inverse (15.4)–(15.5)
+with constructed mass and rank-three certificates. The exact branch
+classification and measured quotient are Theorems 12.2–14.1; the
+finite jet and local tree services are [JET, §§15–16] and [FEA, §10];
+the original-label startup and same-record schedules are [SRO,
+§§21–22]. They are reused, not restated as new rank, regularity or
+startup theorems. Finite-subcover reasoning and interval subdivision
+are classical intermediate methods; the numerical pair test (15.8)
+and its original-source correspondence carry the effective conclusion.
+The energy-coordinate precedent [HIN, Theorem 3.4 and Remark 3.5]
+has the hypotheses and noninjectivity limitation recorded in Definition
+14.2 and supplies no global branch or numerical certificate here.
+The source-specific composite and its finite consumer [FEA, §14]
+are repo-derived ordinary conditional deductions; no world-priority
+or new Lean/kernel claim is made.
+
+All outputs retain the original $e$-start, first $2d$ read, later
+$d$ gaps, actual calibration, label semantics, null repairs and fresh
+conditional noise on the same path. Full endpoint, domain, form and
+source trace are transported, not replaced by a punctured or
+Friedrichs surrogate. Numerical reference evaluation is a paid
+mathematical service, not a point sensor or an action on the specimen.
+A decoder does not assimilate hidden state data. No exact hidden
+trajectory, removed angle or signs, physical scale, global inverse
+outside $K$, uniform separating depth or complexity, finite expected
+cost, or installed throughput is asserted. An actual-current-return
+memory producer is still unresolved. The existing exclusion of exact
+fixed finite-bit all-word predictive memory is a separate prior
+result, not a new consequence claimed here. Mutual recovery of all
+spatial, temporal, boundary and memory interfaces remains beyond
+this finite inverse.
+
+## 追加锚（本行以下为增补区）

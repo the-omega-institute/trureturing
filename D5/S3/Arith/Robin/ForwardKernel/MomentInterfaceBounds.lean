@@ -46,7 +46,7 @@ theorem normalized_even_moment_bound
   have hi : IntegrableOn (fun x => |increment E (s * x ^ θ) x| ^ (2 * m))
       (Icc X (2 * X)) := by
     simpa only [abs_pow, id_eq, Pi.mul_apply, IntegrableOn] using
-      (FourthMomentMovingBounds.increment_pow_integrableOn (μ := volume) hE
+      (VarianceTransfer.increment_pow_integrableOn (μ := volume) hE
         (K := Icc X (2 * X)) isCompact_Icc (continuous_const.mul hpow)
         continuous_id (2 * m)).abs
   have hpoint (x : ℝ) (hx : x ∈ Icc X (2 * X)) :
