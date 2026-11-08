@@ -105,15 +105,18 @@ internal sealed class FlatPairJointBlocksDocument : IScribeDocumentDefinition
             Paragraph(Text(
                 "Let e be unit in the original W, let K,L be skew, and suppose " +
                 "-K squared-L squared=I+beta P(e), where P(e)x=inner(e,x)e. " +
-                "A complete flat-pair classification would apply directly to W when beta=0. " +
-                "Its frame would give dim W=2c+4h and therefore even dimension.")),
+                "The flat-pair classification applies directly to W when beta=0. " +
+                "Its complete frame gives dim W=2c+4h and therefore even dimension.")),
             Paragraph(Text(
                 "When beta=-1, pairing the square identity with e gives " +
                 "the sum of the squared norms of Ke and Le equal to zero. Both vectors vanish. " +
                 "Skewness then preserves the original line through e and its actual orthogonal " +
                 "complement. On that complement P(e) vanishes, so the restricted original K,L " +
                 "satisfy the flat identity. This includes a zero complement. A flat frame there " +
-                "can be adjoined to the original fixed vector e.")),
+                "can be adjoined to the original fixed vector e. More precisely, every " +
+                "orthonormal basis of that actual complement extends to an orthonormal basis " +
+                "of W whose first vector is e and whose other vectors are those same " +
+                "complement vectors. Every x in W is inner(e,x)e plus a vector in this complement.")),
             Paragraph(Text(
                 "For beta=1 the following implication is conditional on an explicit original core: " +
                 "v=Ke,w=Le are orthonormal, Kv=-e,Kw=0,Lv=0,Lw=-e. Skewness gives " +
@@ -122,7 +125,11 @@ internal sealed class FlatPairJointBlocksDocument : IScribeDocumentDefinition
                 "of the original U orthogonal; it is not an additional premise. Since e belongs " +
                 "to U, P(e) vanishes there, and restricting the original square identity derives " +
                 "flatness of the actual restrictions. A flat frame of that complement, including " +
-                "the zero complement, can then be adjoined to the original triple.")),
+                "the zero complement, can then be adjoined to the original triple. Every " +
+                "orthonormal basis of the actual complement extends to a complete orthonormal " +
+                "basis of W with first vectors e,Ke,Le and unchanged complement vectors. " +
+                "Every original x is inner(e,x)e+inner(Ke,x)Ke+inner(Le,x)Le plus a vector " +
+                "in that same complement. Thus the adjoined flat frame spans the original W.")),
             Paragraph(Text(
                 "Conversely, on the same original W an orthogonal assembly of flat blocks gives I. " +
                 "Adjoining a fixed unit line gives I-P(e). Adjoining the stated orthonormal triple " +
