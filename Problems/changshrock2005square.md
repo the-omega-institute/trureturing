@@ -29,7 +29,7 @@ $V=\prod_{i=1}^L(vI+D_i)$ and $T=VH$, including $J_{L,1}$.
 The coefficient ring is $\mathbb Z[q,v]$ and all $L\ge2$ are included.
 At $L=2$ the two transverse bonds coincide and both factors are retained.
 
-## Statement echo
+### Statement echo
 
 | Source clause | Lean counterpart |
 | --- | --- |
@@ -91,6 +91,35 @@ kernel-checked.
 
 ## Triage
 
-The all-width polynomial eigenvector statement is proved by `result`.
-Amplitudes, the second eigenvalue y, Klein-bottle strips and physical
-realization are outside this statement.
+1. **Proved (kernel-checked):** Chang–Shrock's square-lattice conjecture
+   (5.18) for every width $L\ge2$, by `ChangShrockToroidalSquare.result`:
+   the degree-$(L-1)$ toroidal square transfer matrix has the eigenvalue
+   $v^{L-1}(v+q)$ (Tutte form $x$).
+2. **Proved (kernel-checked), reused:** the honeycomb module's alternating
+   vector, its annihilation by every cyclic join and its scaling by the
+   longitudinal product; this lane makes those lemmas public at their owner.
+3. **Open:** the second square eigenvalue (5.19), $y$ (Potts form
+   $v^{L}(v+1)$), observed for $L=3,4$ only.
+4. **Open:** amplitudes of these eigenvalues in the partition function, and
+   the Klein-bottle strips.
+
+### What the settlement shows
+
+The square and honeycomb conjectures have one proof. The alternating vector
+over the all-singleton states is killed by every join along a cyclic bond,
+whatever the bond pattern, so any toroidal strip whose transverse operator is
+a product of $(I+vJ_{i,i+1})$ factors fixes it, and the eigenvalue is the
+longitudinal factor $v^{L-1}(v+q)$ raised to the number of longitudinal
+layers per period: one for the square strip, two for the honeycomb strip.
+The triangular strip, whose transfer matrix is built from width-$(L+1)$
+operators and an identification, does not have this form, so the argument
+does not transfer to it without a separate analysis.
+
+## ASSUMED-UNVERIFIED
+
+Literature completeness and worldwide priority are unverified; the bounded
+screen of #28063 and #28163 was carried out by the orchestrator and was not
+exhaustive. The information-escape registration of `result` is unfinished
+(`declared_unresolved`, IE-C050), recorded in issue #28118. No claim is made
+about amplitudes, the eigenvalue $y$, Klein-bottle or triangular strips, or
+physical systems.
