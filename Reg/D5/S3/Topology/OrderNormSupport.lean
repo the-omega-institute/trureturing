@@ -1,4 +1,5 @@
 import D5.S3.Topology.OrderNormSupport
+import Reg.D5.S3.Topology.OrderUnitNorm
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
 
@@ -11,6 +12,7 @@ noncomputable section
 namespace Reg.D5.S3.Topology.OrderNormSupport
 
 open _root_.D5.S3.Topology.OrderUnitNorm
+open _root_.Reg.D5.S3.Topology.OrderUnitNorm
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 
 abbrev supportSourceScope.{u} := type_of% (@Data.positive_norm_support.{u})
