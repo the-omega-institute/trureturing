@@ -22,6 +22,10 @@ $$\forall \operatorname{r} : \mathbb{N} , 1 \leq \operatorname{r} \to \exists \o
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/EdgeLabeling/WildNumber/Result.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/anders-foster-greenwood-garcia-krawzik-2025-wild-number-greedy-gap` (proved) by `D5/S3/Combinatorics/EdgeLabeling/WildNumber/Result.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"anders-foster-greenwood-garcia-krawzik-2025-wild-number-greedy-gap","declaration_gid":"D5/S3/Combinatorics/EdgeLabeling/WildNumber/Result.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Katie Anders; Briana Foster-Greenwood; Rebecca Garcia; Naomi Krawzik (2025). *The Wild Number of an Edge-Colored Graph*. DOI: [10.48550/arXiv.2508.06711](https://doi.org/10.48550/arXiv.2508.06711). URL: <https://arxiv.org/abs/2508.06711v1>.
