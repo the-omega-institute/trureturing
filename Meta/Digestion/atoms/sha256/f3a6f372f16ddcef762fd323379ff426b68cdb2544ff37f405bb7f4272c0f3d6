@@ -1,0 +1,4 @@
+**定义 1.1（纸面范围及外卷编号）。** 本卷为纸面数学论证（PAPER），不主张 Lean 形式验证。下文“三标签卷”指 [AURIC C128：三标签正性与同一原有向关系的刚性](AURIC_C128_THREE_LABEL_POSITIVITY_AND_ORIGINAL_RELATION_RIGIDITY.md)，“正交迹续卷”指 [AURIC C128：正交迹与整支持角续卷](AURIC_C128_ORTHOGONAL_TRACE_AND_CORNER_RELATIONS_CONTINUATION.md)，“闭三角卷”指 [C128：闭合三角形与稀疏伸缩关系](AURIC_C128_CLOSED_TRIANGLE_AND_SPARSE_SCALE_RELATIONS.md)。外卷的定义、定理与公式编号始终属于所指原卷；本卷第 2–5 章的编号只用于本卷。
+
+本卷只从同一原平方的正性、固定点及任意指定小窗口恢复同一原 $S$ 的单位，并说明辅助完成中的镜面不必保持原域。总映射入口保持三标签卷约定 1.1、定义 8.2–8.4 与闭三角卷定义 476.1 的全部原对象和实际来源；无限维不替换为有限截面，完成仅作证明工具。一般同一 $S$ 的 JB 识别、旧 $D$ 的恢复及完整物理消费者继续承担第 3 章所列未付接口。
+

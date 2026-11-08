@@ -1,0 +1,39 @@
+**命题 C-88.1（既有整数区间计数与容量的对应）。** 设整数 $m\ge1$ 满足
+$mX,mY,mZ\in\mathbb Z$，置 $K=m\kappa$。与这些均值相容的非负整数五模式表恰为
+
+$$
+\begin{aligned}
+n_0&=m-mX-mY-mZ+K,&n_1&=mX-K,\\
+n_2&=mZ,&n_3&=mY-K,&n_{13}&=K,
+\end{aligned}
+\tag{C88.1}
+$$
+
+其中 $K$ 遍历闭整数区间
+$m\kappa_-\le K\le m\kappa_+$。因而单纤维表数及连续容量满足
+
+$$
+N_m=1+mw=1+\frac{m\mathcal A}{2\pi},\qquad
+\mathcal C_{\max}
+=2\sqrt{\frac{\mathcal A}{2\pi r}
+\left(1-\frac{\mathcal A}{2\pi r}\right)}.
+\tag{C88.2}
+$$
+
+证明。此处直接消费
+[《金字塔关联与原生续卷》数学引文 9.2](AURIC_FIB_ATOM_PYRAMID_CORRELATION_AND_NATIVE_CONTINUATION.md#九整数概率格点与合法历史是不同计数)
+的固定可见点提升数
+$1+\min(U,V)-\max(0,U+V+W-m)$。
+其标签 $(0,2,3,5,25)$ 对应这里的 $(0,1,2,3,13)$，
+参数为 $(U,V,W,k)=(mX,mY,mZ,K)$；
+[《基础公式》定义 12.1、数学引文 12.2](AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS.md#十二整数回路计数与原生窗口历史两种数列)
+及[《辛预测完成》§35.6](SYMPLECTIC_PREDICTIVE_COMPLETION.md#356-选择的辛体积先验与整数概率格)
+给相同逆式与宽度桥。为明确本处计数对象，式 (C88.1) 的和为 $m$，
+占位和分别为 $mX,mY,mZ$，且每个表由最后一格 $K$ 唯一决定。
+五格非负恰给上述区间；因 $mr=m-mZ$ 也是整数，两端均为整数，
+所以点数是 $m\kappa_+-m\kappa_-+1=1+mw$。
+面积式由式 (C84.6)，容量式由 C-85.3 代入，未另立一种整数计数结果。证毕。
+
+$N_m$ 数的是计数表，不是其有序排列或原生历史数，也不是相位连续的量子态数或测量次数。
+本章把既有计数供应连接到同一个宽度的连续最优值；整数制备精度另有限制。
+

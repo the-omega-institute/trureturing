@@ -1,0 +1,91 @@
+**Theorem 57.3 (the two complete native slow-time limits).**
+For both signs and every fixed original parameter, uniformly on each
+$0<z_0\le z\le z_1<\infty$, in operator norm on the entire original
+base,
+
+$$
+\begin{aligned}
+\frac{e^{z\xi_\kappa/h_{\rm unit,\kappa}}}{w_{\rm unit,\kappa}}
+ C_{{\rm unit},\kappa}(z/h_{\rm unit,\kappa})
+ &\longrightarrow q_{\rm unit}(z)\Pi_{\rm unit},\\
+\frac{e^{z\xi_\kappa/h_{\rm raw,\kappa}}}{w_{\rm raw,\kappa}}
+ [C_{{\rm raw},\kappa}(z/h_{\rm raw,\kappa})
+                  -F_\kappa(z/h_{\rm raw,\kappa})]
+ &\longrightarrow q_{\rm raw}(z)\Pi_{\rm raw},\\
+q_\sigma(z)&=\frac1{\sqrt{2\pi\sinh(2\omega_\sigma z)}},\qquad
+F_\kappa(t)=J^*e^{-tL_\kappa}J=e^{-t\overline L_\kappa}.
+\end{aligned}
+\tag{57.10}
+$$
+
+In the first line $\xi_\kappa$ is its UNIT height center; in the
+second it is its RAW height center, always exactly Definition 38.2.
+
+Proof. Use the same $\chi$ as in Lemma 57.2. The exact identity
+
+$$
+\begin{aligned}
+e^{t\xi_\kappa}[C_{\sigma,\kappa}(t)-F_\kappa(t)]
+={}&\sum_N e^{-t(\Lambda_{\sigma,N}-\xi_\kappa)}
+ [1-\chi(\Lambda_{\sigma,N}-\xi_\kappa)]J^*P_{\sigma,\kappa,N}J\\
+ &+J^*[f_t(\mathsf A)-f_t(\mathsf B)]J
+\end{aligned}
+\tag{57.11}
+$$
+
+follows by spectral calculus; its first sum is finite at each
+nonzero parameter. This decomposition cancels the entire free
+high-energy contribution before taking a boundary normalization.
+With $t=z/h$, (57.5) divided by $w=\alpha_\sigma d\sqrt h$
+is at most
+
+$$
+C h^{-1/2}(1+z_1/h)^4e^{-\epsilon_0z_0/(4h)}\longrightarrow0.
+\tag{57.12}
+$$
+
+For any fixed initial number of terms in (57.11), (41.1) and
+Theorem 56.3 give the correctly propagated limit
+
+$$
+\frac1w e^{-z(\Lambda_{\sigma,N}-\xi_\kappa)/h}
+                 J^*P_{\sigma,\kappa,N}J
+ \longrightarrow b_{N-1}e^{-(2N-1)\omega_\sigma z}\Pi_\sigma.
+\tag{57.13}
+$$
+
+This convergence is uniform on the stated compact $z$ interval.
+The cutoff equals one in the low factor $1-\chi$ at these fixed
+indices for small parameters. Lemma 57.1 controls the entire
+remaining low-energy sum uniformly, and (57.12) already controlled
+all the other levels and modes of the actual full dynamics.
+Taking the index cutoff to infinity gives
+
+$$
+\begin{aligned}
+\sum_{m\ge0}b_{2m}e^{-(4m+1)\omega_\sigma z}
+ &=\frac{e^{-\omega_\sigma z}}{\sqrt\pi}
+          (1-e^{-4\omega_\sigma z})^{-1/2}\\
+ &=q_\sigma(z).
+\end{aligned}
+\tag{57.14}
+$$
+
+This proves the compensated limit for both families. For UNIT,
+$w=\alpha_{\rm unit}\sqrt h$ and $\|F_\kappa(t)\|=e^{-\lambda t}$,
+so
+
+$$
+\sup_{z_0\le z\le z_1}
+ \frac{e^{z\xi_\kappa/h}}w\|F_\kappa(z/h)\|
+ \le\frac{1}{\alpha_{\rm unit}\sqrt h}
+       e^{-(\lambda-\xi_\kappa)z_0/h}\longrightarrow0.
+\tag{57.15}
+$$
+
+It can therefore be added back in UNIT, proving the first line of
+(57.10). It cannot be added back in RAW, as the next result shows.
+The averaging error $o(h)$ has only been used in a fixed-index
+$L^2$ comparison and uniform min-max counting. No $o(h)$
+whole-semigroup error has been divided by $w$. $\square$
+

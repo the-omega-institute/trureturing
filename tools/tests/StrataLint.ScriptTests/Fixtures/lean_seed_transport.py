@@ -44,7 +44,7 @@ exit "${FAKE_BUILD_EXIT:-0}"
         helper_dir.mkdir(parents=True, exist_ok=True)
         # Exercise the production shell entry point with its declared transport
         # dependencies in the fixture repository.
-        for name in ("lean-cache-publish.sh", "cache_material.py", "lean_cache.py", "lean_cache_release.py", "lean_cache_topology.py", "lean_actions.py"):
+        for name in ("lean-cache-publish.sh", "cache_material.py", "lean_cache.py", "lean_cache_release.py", "lean_cache_release_io.py", "lean_cache_topology.py", "lean_actions.py"):
             shutil.copy2(PUBLISH.with_name(name), helper_dir / name)
         prepare_release_report(self.root)
         shutil.copy2(ROOT / "Makefile", self.root / "Makefile")
@@ -70,6 +70,15 @@ exit "${FAKE_BUILD_EXIT:-0}"
     def transport_environment(self, run="123", **extra):
         head = subprocess.check_output(["git", "-C", str(self.root), "rev-parse", "HEAD"], text=True).strip()
         dev = {"name": "dev", "protected": True, "commit": {"sha": head}}
+        observed = {}
+        if "FAKE_CLOCK_STEP" in extra:
+            # Observe native prerequisites after all fixture setup/commits. The
+            # virtual clock probes transport/I/O, independently of Git startup.
+            observed = dict(FAKE_NATIVE_HEAD=head + "\n",
+                FAKE_NATIVE_STATUS=subprocess.check_output(
+                    ["git", "-C", str(self.root), "status", "--porcelain"], text=True),
+                FAKE_NATIVE_TRACKED_STATUS=subprocess.check_output(
+                    ["git", "-C", str(self.root), "status", "--porcelain", "--untracked-files=no"], text=True))
         return {**os.environ, "PATH": str(self.bin) + os.pathsep + os.environ["PATH"],
             "HOME": str(self.root), "FAKE_BUILD_LOG": str(self.root / "build-runs"),
             "FAKE_REMOTE": str(self.remote), "GITHUB_SHA": head, "GITHUB_RUN_ID": run,
@@ -77,7 +86,7 @@ exit "${FAKE_BUILD_EXIT:-0}"
             "FAKE_DEV_COMPARE": json.dumps({"status": "identical", "merge_base_commit": {"sha": head}}),
             "FAKE_REPORT_FACTORY": str(ROOT / "tools/tests/StrataLint.ScriptTests/Fixtures/lean_seed_support.py"),
             "GITHUB_RUN_ATTEMPT": "1", "GITHUB_EVENT_NAME": "schedule", "GITHUB_REF": "refs/heads/dev",
-            "STRATALINT_CHECK_SUCCEEDED": "true", "STRATALINT_ACTIONS_CACHE_SEEDED": "", **extra}
+            "STRATALINT_CHECK_SUCCEEDED": "true", "STRATALINT_ACTIONS_CACHE_SEEDED": "", **observed, **extra}
 
     def transport(self, verb, run="123", arguments=(), **extra):
         return subprocess.run(["bash", str(self.publisher), verb, "--repository", str(self.root), *arguments],
@@ -124,6 +133,108 @@ exit "${FAKE_BUILD_EXIT:-0}"
 
     def test_linked_production_fetch_refuses_before_gh_or_lake_writes(self):
         self.assert_linked_fetch_guarded()
+
+    def cleanup_fault_environment(self):
+        write(self.bin / "sitecustomize.py", """
+import os, pathlib, tempfile
+original = tempfile.TemporaryDirectory.cleanup
+def cleanup(stage):
+    original(stage)
+    if pathlib.Path(stage.name).name.startswith("lean-fetch-"):
+        root = pathlib.Path(os.environ["FAKE_CLEANUP_ROOT"])
+        assert (root / ".lake/build/lib/lean/D5/A.olean").read_text() == "locally-produced-olean"
+        (root / "cleanup-fault").write_text("post-install cleanup OSError")
+        raise OSError("injected post-install cleanup failure")
+tempfile.TemporaryDirectory.cleanup = cleanup
+""")
+        return dict(PYTHONPATH=str(self.bin), FAKE_CLEANUP_ROOT=str(self.root))
+
+    def backup_cleanup_fault_environment(self):
+        write(self.bin / "sitecustomize.py", """
+import os, pathlib, shutil
+original = shutil.rmtree
+def cleanup(path, *args, **kwargs):
+    if pathlib.Path(path).name.startswith(".release-backup-"):
+        root = pathlib.Path(os.environ["FAKE_CLEANUP_ROOT"])
+        assert (root / ".lake/build/lib/lean/D5/A.olean").read_text() == "locally-produced-olean"
+        (root / "cleanup-fault").write_text("backup cleanup OSError")
+        raise OSError("private backup cleanup diagnostic")
+    return original(path, *args, **kwargs)
+shutil.rmtree = cleanup
+""")
+        return dict(PYTHONPATH=str(self.bin), FAKE_CLEANUP_ROOT=str(self.root))
+
+    def test_committed_backup_cleanup_keeps_fetch_result(self):
+        self.assertEqual(0, self.transport("publish").returncode)
+        shutil.copy2(ROOT / "tools/scripts/maintenance_log.py", self.root / "tools/scripts/maintenance_log.py")
+        result = self.transport("fetch", arguments=("--refresh-stale",),
+            **self.backup_cleanup_fault_environment(),
+            TRURETURING_MAINTENANCE_LOG_DIR=str(self.root / "logs"))
+        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+        receipts = [json.loads(line.partition(" ")[2]) for line in result.stdout.splitlines()
+                    if line.startswith("LEAN_CACHE_FETCH ")]
+        self.assertEqual(1, len(receipts))
+        self.assertEqual("unpacked", receipts[0]["status"])
+        self.assertEqual("private backup cleanup diagnostic", receipts[0]["cleanup_error"])
+        self.assertTrue(pathlib.Path(receipts[0]["retained_backup"]).is_dir())
+        self.assertNotIn("LEAN_CACHE_FETCH_WARNING", result.stdout)
+        rows = [json.loads(line) for file in (self.root / "logs").glob("*.jsonl") for line in file.read_text().splitlines()]
+        warning = next(row for row in rows if row.get("status") == "cleanup-deferred")
+        self.assertEqual(("cleanup", "OSError", "OSError"),
+                         tuple(warning[key] for key in ("phase", "error_type", "reason_code")))
+        self.assertEqual((0, "unpacked"), (rows[-1]["exit_code"], rows[-1]["status"]))
+        self.assertNotIn("private backup cleanup diagnostic", json.dumps(rows))
+        self.assertEqual("locally-produced-olean", (self.root / ".lake/build/lib/lean/D5/A.olean").read_text())
+
+    def test_post_install_cleanup_warning_keeps_fetch_result(self):
+        self.assertEqual(0, self.transport("publish").returncode)
+        shutil.rmtree(self.root / ".lake/build")
+        result = self.transport("fetch", **self.cleanup_fault_environment())
+        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+        receipts = [json.loads(line.partition(" ")[2]) for line in result.stdout.splitlines()
+                    if line.startswith("LEAN_CACHE_FETCH ")]
+        self.assertEqual("unpacked", receipts[-1]["status"])
+        warnings = [json.loads(line.partition(" ")[2]) for line in result.stdout.splitlines()
+                    if line.startswith("LEAN_CACHE_FETCH_WARNING ")]
+        self.assertEqual(["cleanup-deferred"], [row["status"] for row in warnings])
+        self.assertTrue((self.root / "cleanup-fault").is_file())
+        self.assertEqual("locally-produced-olean", (self.root / ".lake/build/lib/lean/D5/A.olean").read_text())
+
+    def ensure_post_install_cleanup_consumer(self):
+        for relative, content in json.loads(self.native_setup.read_text()).items():
+            write(self.root / relative, content)
+        shutil.copy2(ROOT / "tools/scripts/maintenance_log.py", self.root / "tools/scripts/maintenance_log.py")
+        self.commit_fixture()
+        self.assertEqual(0, self.transport("publish").returncode)
+        if self.initially_warm:
+            write(self.root / ".lake/build/lib/lean/D5/A.olean", "old active bytes")
+            write(self.root / ".lake/build/.release-refreshed-at", "2000-01-01T00:00:00+00:00")
+        else:
+            shutil.rmtree(self.root / ".lake/build")
+        fault = self.backup_cleanup_fault_environment() if self.backup_cleanup else self.cleanup_fault_environment()
+        environment = self.transport_environment(**self.local_environment(), **fault,
+            TRURETURING_MAINTENANCE_SCRIPT="ensure-cache", TRURETURING_MAINTENANCE_REPOSITORY=str(self.root),
+            TRURETURING_MAINTENANCE_LOG_DIR=str(self.root / "logs"))
+        environment.pop("TRURETURING_MAINTENANCE_RUN_ID", None)
+        result = subprocess.run(["dotnet", self.native_cli, "worktree", "ensure-cache", "--path", str(self.root)],
+            cwd=self.root, env=environment, capture_output=True, text=True, timeout=60)
+        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+        receipt = json.loads(next(line.partition(" ")[2] for line in result.stdout.splitlines()
+                                 if line.startswith("LEAN_CACHE ")))
+        self.assertEqual("unpacked", receipt["archive_status"], result.stdout)
+        self.assertEqual("warm", receipt["project_olean_state"])
+        self.assertEqual("warm", receipt["mathlib_olean_state"])
+        self.assertTrue((self.root / "cleanup-fault").is_file())
+        self.assertEqual("locally-produced-olean", (self.root / ".lake/build/lib/lean/D5/A.olean").read_text())
+        rows = [json.loads(line) for file in (self.root / "logs").glob("*.jsonl") for line in file.read_text().splitlines()]
+        final = next(row for row in rows if row["event"] == "run_finished" and row["script"] == "ensure-cache")
+        self.assertEqual((0, "unpacked", False, "none"),
+            tuple(final[key] for key in ("exit_code", "archive_status", "degraded", "cache_fallback")))
+        warning = next(row for row in rows if row.get("status") == "cleanup-deferred")
+        self.assertEqual(("cleanup", "OSError"), (warning["phase"], warning["error_type"]))
+        self.assertNotIn("private backup cleanup diagnostic", json.dumps(rows))
+        fetched = next(row for row in rows if row["event"] == "run_finished" and row.get("operation") == "fetch")
+        self.assertEqual((0, "unpacked"), (fetched["exit_code"], fetched["status"]))
 
     def test_main_production_fetch_reaches_release_listing(self):
         log = self.root / "main-gh-calls"
@@ -256,6 +367,13 @@ clock = 0
 time.monotonic = lambda: clock
 def run(args, *rest, **kwargs):
     global clock
+    root = str(pathlib.Path(os.environ["FAKE_REMOTE"]).parent.resolve())
+    if args[:3] == ["git", "-C", root]:
+        field = {("rev-parse", "--verify", "HEAD"): "FAKE_NATIVE_HEAD",
+                 ("status", "--porcelain"): "FAKE_NATIVE_STATUS",
+                 ("status", "--porcelain", "--untracked-files=no"): "FAKE_NATIVE_TRACKED_STATUS"}.get(tuple(args[3:]))
+        if field:
+            return subprocess.CompletedProcess(args, 0, os.environ[field], "")
     if args[0] != "gh": return original(args, *rest, **kwargs)
     with (pathlib.Path(os.environ["FAKE_REMOTE"]).parent / "gh-budgets").open("a") as log:
         log.write(json.dumps({"args": args[1:], "timeout": kwargs.get("timeout")}) + "\\n")
@@ -270,7 +388,23 @@ def run(args, *rest, **kwargs):
     # Infrastructure hang guard for the pre-fix unbounded call. Whether the
     # production owner supplied a timeout, not elapsed time, decides the test.
     kwargs.setdefault("timeout", 1)
-    try: return original(args, *rest, **kwargs)
+    try:
+        if "FAKE_PREPARATION_PHASE" in os.environ or "FAKE_FETCH_PHASE" in os.environ:
+            # Local I/O probes run the exact nonblocking transport fake inline;
+            # their injected clock advances at reads, independent of startup.
+            import contextlib, io, runpy, shutil, sys
+            from unittest.mock import patch
+            stdout, stderr, status = io.StringIO(), io.StringIO(), 0
+            with contextlib.redirect_stdout(stdout), contextlib.redirect_stderr(stderr), patch.object(sys, "argv", args):
+                try:
+                    runpy.run_path(shutil.which(args[0]), run_name="__main__")
+                except SystemExit as error:
+                    status = error.code or 0
+            result = subprocess.CompletedProcess(args, status, stdout.getvalue(), stderr.getvalue())
+            if kwargs.get("check"):
+                result.check_returncode()
+            return result
+        return original(args, *rest, **kwargs)
     finally:
         # Protected-content queries are instantaneous in this transport-clock fixture.
         if args[1] != "api" or "/releases/" in args[2]:
@@ -298,11 +432,14 @@ def record(**event):
 def copytree(source, target, *args, **kwargs):
     record(operation="copytree", source=str(source), target=str(target))
     raise OSError(errno.ENOSPC, "no space for a duplicate unpacked tree")
-original_extract, original_rename = tarfile.TarFile.extractall, pathlib.Path.rename
-def extract(archive, path, *args, **kwargs):
+import sys
+sys.path.insert(0, os.environ["FAKE_RELEASE_HELPER"])
+import lean_cache_release_io
+original_extract, original_rename = lean_cache_release_io.extract_members, pathlib.Path.rename
+def extract(archive, path, members, deadline):
     record(operation="extract", path=str(path))
-    result = original_extract(archive, path, *args, **kwargs)
-    for member in archive.getmembers():
+    result = original_extract(archive, path, members, deadline)
+    for member in members:
         if member.isfile():
             status = (pathlib.Path(path) / member.name).stat()
             record(operation="material", name=member.name, device=status.st_dev, inode=status.st_ino)
@@ -317,10 +454,11 @@ def rename(source, target):
                 and not source.parent.name.startswith(".release-backup-"))):
         raise OSError(errno.EIO, "injected rename failure")
     return original_rename(source, target)
-shutil.copytree, tarfile.TarFile.extractall, pathlib.Path.rename = copytree, extract, rename
+shutil.copytree, lean_cache_release_io.extract_members, pathlib.Path.rename = copytree, extract, rename
 ''')
         (self.root / "install-events").unlink(missing_ok=True)
-        return {"PYTHONPATH": str(self.bin), "FAKE_INSTALL_LOG": str(self.root / "install-events"),
+        return {"PYTHONPATH": str(self.bin), "FAKE_RELEASE_HELPER": str(self.publisher.parent),
+                "FAKE_INSTALL_LOG": str(self.root / "install-events"),
                 "FAKE_INSTALL_FAILURE": failure}
 
     def installation_events(self):
@@ -472,6 +610,61 @@ shutil.copytree, tarfile.TarFile.extractall, pathlib.Path.rename = copytree, ext
                 self.assertEqual(1, result.returncode, result.stdout + result.stderr)
                 self.assertIn("invalid cache member", result.stdout)
                 self.assertEqual([], list((self.root / ".lake").iterdir()))
+
+    def test_fetch_local_deadlines_preserve_active_cache_and_name_the_phase(self):
+        material = self.root / ".lake/build/lib/lean/D5/A.olean"
+        material.write_bytes(random.Random(41).randbytes(3 * 1024 * 1024))
+        self.assertEqual(0, self.transport("publish").returncode)
+        self.three_parts(next(self.remote.iterdir()))
+        write(self.root / ".lake/build/keep.txt", "old build")
+        write(self.root / ".lake/lean-report-seed-base.json", "old base")
+        lake = self.root / ".lake"
+        before = {str(path.relative_to(lake)): path.read_bytes() for path in lake.rglob("*") if path.is_file()}
+        shutil.copy2(ROOT / "tools/scripts/maintenance_log.py", self.root / "tools/scripts/maintenance_log.py")
+        for phase in ("part_validation", "reassembly", "archive_validation", "tar_scan", "extraction"):
+            with self.subTest(phase=phase):
+                environment = self.deadline_probe(1)
+                with (self.bin / "sitecustomize.py").open("a") as probe:
+                    probe.write('''
+import sys
+original_open = pathlib.Path.open
+class TimedFetchReader:
+    def __init__(self, source): self.source = source
+    def __getattr__(self, name): return getattr(self.source, name)
+    def __enter__(self): return self
+    def __exit__(self, *args): return self.source.__exit__(*args)
+    def read(self, size=-1):
+        global clock
+        block = self.source.read(size)
+        if block and getattr(sys.modules.get("__main__"), "CURRENT_PHASE", None) == os.environ["FAKE_FETCH_PHASE"]:
+            with original_open(pathlib.Path(os.environ["FAKE_REMOTE"]).parent / "fetch-reads", "a") as log:
+                log.write(str(len(block)) + "\\n")
+            clock = 2
+        return block
+def open_path(path, mode="r", *args, **kwargs):
+    source = original_open(path, mode, *args, **kwargs)
+    return TimedFetchReader(source) if mode == "rb" and path.name.startswith("lean-build.tgz") else source
+pathlib.Path.open = open_path
+''')
+                (self.root / "fetch-reads").unlink(missing_ok=True)
+                logs = self.root / "logs"
+                log = logs / "lean-cache-publish.jsonl"
+                log.unlink(missing_ok=True)
+                result = self.transport("fetch", arguments=("--refresh-stale",), **environment,
+                    FAKE_FETCH_PHASE=phase, TRURETURING_MAINTENANCE_LOG_DIR=str(logs))
+                self.assertEqual(1, result.returncode, result.stdout + result.stderr)
+                self.assertIn("deadline exhausted", result.stdout)
+                self.assertEqual(before, {str(path.relative_to(lake)): path.read_bytes()
+                    for path in lake.rglob("*") if path.is_file()})
+                consumed = sum(map(int, (self.root / "fetch-reads").read_text().splitlines()))
+                self.assertGreater(consumed, 0)
+                self.assertLessEqual(consumed, 1024 * 1024)
+                rows = [json.loads(line) for line in log.read_text().splitlines()]
+                self.assertEqual("fetch", rows[-1]["operation"])
+                self.assertEqual("production", next(row["mode"] for row in rows if "mode" in row))
+                self.assertEqual(phase, rows[-1]["stage"])
+                self.assertEqual("timeout", rows[-1]["error_type"])
+                self.assertTrue(any("phase_duration_seconds" in row for row in rows))
 
     def preparation_deadline_probe(self, phase):
         # Small incompressible material reaches archive hashing and multipart

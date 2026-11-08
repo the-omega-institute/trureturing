@@ -1,0 +1,90 @@
+**Theorem 35.2 (complete-domain fixed-index collapse).**
+For every fixed positive integer $N$, every fixed original $s\in\mathbb R$,
+$b>0$ and $g>0$, and through either sign of $\kappa\to0$,
+
+$$
+\begin{aligned}
+\Lambda_{{\rm raw},N}(\kappa,\tau_s)&\longrightarrow e(gc_s),\\
+\Lambda_{{\rm unit},N}(\kappa,\tau_b)&\longrightarrow
+ e\!\left(gc_0G_{\beta b}(0)\right).
+\end{aligned}
+\tag{35.2}
+$$
+
+Proof. Put $M=c_s$ or $M=c_0G_{\beta b}(0)$ as appropriate, and $c=gM$.
+Equation (32.9) gives numbers $\eta_\kappa\to0$ such that
+$W_\sigma\le M\phi+\eta_\kappa$ everywhere. The complete-domain
+inequality (33.3) therefore gives
+
+$$
+\mathfrak q_{\sigma,\kappa}[f]
+ \ge \bigl(e(c)-g\eta_\kappa\bigr)\|f\|_2^2
+ \qquad(f\in\mathcal F_\kappa).
+\tag{35.3}
+$$
+
+Its Fourier justification keeps the entire square
+$(nA_\kappa+mB_\kappa+\kappa j b_\kappa)^2$ in every summand.
+Thus this bound includes arbitrary compensating hidden frequencies
+and gives the required lower bound for every ordered eigenvalue.
+
+For the upper bound choose $N$ real normalized functions
+$F_1,\ldots,F_N\in C_c^\infty((-1,1))$ with pairwise disjoint supports.
+Use the actual $D\in(-\pi,\pi)$ chart and the same length as in (33.4):
+
+$$
+\ell_\kappa=
+\begin{cases}a\tau_s^{1/4},&\mathrm{raw},\\
+\sqrt a,&\mathrm{unit},\end{cases}
+\qquad
+f_{i,\kappa}(k,\theta,v,D)
+ =\frac{u_c(k)}{2\pi\sqrt{\ell_\kappa}}
+                  F_i(D/\ell_\kappa).
+\tag{35.4}
+$$
+
+These are orthonormal for the original raw measure: the visible volume
+is $(2\pi)^2$, the hidden Jacobian is $\ell_\kappa$, and
+$\|u_c\|_{L^2(dk)}=\|F_i\|_{L^2(dx)}=1$.
+Scalar Dirichlet approximation of $u_c$ puts every $f_{i,\kappa}$ in
+the original completed domain. Their supports avoid the circle seam.
+Both the kinetic and multiplier cross forms between distinct $i$ vanish
+by disjoint support. For each $i$ the exact kinetic energy is
+
+$$
+T_\kappa[f_{i,\kappa}]
+ =\varepsilon^2\|u_c'\|_2^2
+  +\frac{a^2}{\ell_\kappa^2}\|F_i'\|_2^2
+                 \int_I b_\kappa^2u_c^2\,dk.
+\tag{35.5}
+$$
+
+No cross term has been dropped from $Q_\kappa$: these trial functions
+are constant in both visible angles, so its action on them is exactly
+$\kappa b_\kappa\partial_D$. The lower bound (35.3), in contrast,
+has no such restriction.
+
+The second term of (35.5) tends to zero. On the union of the supports,
+$\rho(D)/r_s\le\ell_\kappa/r_s=\tau_s^{-1/4}\to0$ in the raw
+regime; in the unit regime $\rho(D)\le\ell_\kappa\to0$.
+The uniform field limits (32.9) consequently give, for all $i\le N$,
+
+$$
+\int W_\sigma|f_{i,\kappa}|^2\,d\mu
+ \longrightarrow M\int_I\phi u_c^2\,dk,
+\qquad
+\mathfrak q_{\sigma,\kappa}[f_{i,\kappa}]\longrightarrow e(c).
+\tag{35.6}
+$$
+
+Since $N$ is fixed and the cross forms vanish, the supremum of the
+Rayleigh quotient on their $N$-dimensional span tends to $e(c)$.
+The form-domain min-max principle, [Teschl, Theorem 4.10,
+printed pp.118--119](https://www.mat.univie.ac.at/~gerald/ftp/book-schroe/schroe.pdf),
+now gives the upper bound for the $N$th full eigenvalue. Its hypotheses
+are selfadjointness, semiboundedness and the discrete ordered spectrum,
+all supplied by (35.1); it requires neither invariant trial subspaces
+nor a common operator domain as $\kappa$ varies. Together with (35.3)
+this proves (35.2). All estimates use $a=|\kappa|$ or the uniform
+two-sided coefficient bounds. $\square$
+

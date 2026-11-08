@@ -153,4 +153,53 @@ theorem archimedean_source_application.{u} : archimedeanSourceScope.{u} :=
 #print axioms quantitative_source_application
 #print axioms archimedean_source_application
 
+
+/-- The original arbitrary carrier, cone and unit; no dimension or completeness fields. -/
+abbrev rigiditySourceScope.{u} := type_of% (@Data.identity_dominated_scalar.{u})
+
+abbrev rigidityCandidate.{u} (p : Inputs.{u}) :=
+  letI := p.normed
+  letI := p.space
+  p.E →ₗ[ℝ] p.E
+
+abbrev rigiditySignature.{u} : Signature where
+  Params := Inputs.{u}
+  State := rigidityCandidate
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output := fun _ => rigidityCandidate
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def rigidityActual.{u} : Realization rigiditySignature.{u} :=
+  realize rigiditySignature (fun _ _ op => op) (fun e => nomatch e)
+
+abbrev rigidityArena.{u} : Arena where
+  signature := rigiditySignature.{u}
+  Law R := ∀ p : Inputs.{u},
+    letI := p.normed
+    letI := p.space
+    ∀ (P : p.E →ₗ[ℝ] p.E) (c : ℝ),
+      (∀ v ∈ p.data.cone, P v ∈ p.data.cone ∧ v - P v ∈ p.data.cone) →
+      P p.data.unit = c • p.data.unit →
+      ∀ v : p.E, R.readout () p P v = c • v
+
+theorem rigidity_source_bridge.{u} :
+    rigiditySourceScope.{u} ↔ rigidityArena.{u}.Law rigidityActual.{u} := by
+  constructor
+  · intro h p
+    letI := p.normed
+    letI := p.space
+    exact h p.data
+  · intro h E normed space A
+    exact h ⟨E, normed, space, A⟩
+
+theorem rigidity_actual_positive.{u} : rigidityArena.{u}.Law rigidityActual.{u} :=
+  rigidity_source_bridge.mp (@Data.identity_dominated_scalar.{u})
+
+#print axioms rigidity_source_bridge
+#print axioms rigidity_actual_positive
+
+
 end Reg.D5.S3.Topology.OrderUnitNorm

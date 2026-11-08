@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:ac4d31af14a22dbdcbaa27246a4c36b00091149cf441321f42ff1d43ca823655
+  normalized_sha256: sha256:ac4d31af14a22dbdcbaa27246a4c36b00091149cf441321f42ff1d43ca823655
+cas_ref: sha256:ac4d31af14a22dbdcbaa27246a4c36b00091149cf441321f42ff1d43ca823655
+coverage_gids:
+  - gid: D5/S3/QuadraticForms/RealThreePathPolar.bounded_integer_linear_zero
+    target_statement_id: sha256:7d59798dedd4ec5b6b4ac54c9007c8a0361315ac74588496d412a695aa8d3285
+receipts:
+  unresolved_subitems: []

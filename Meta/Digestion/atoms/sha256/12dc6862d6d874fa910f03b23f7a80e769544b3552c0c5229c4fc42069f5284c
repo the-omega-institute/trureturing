@@ -1,0 +1,64 @@
+**定理 8.5（完整候选的 Born、仪器、更新、联合与时间后果）。** 若同一原 $\Omega$ 满足定义 8.1–8.4 的相应全部原条件，则既有消费者给下列完整条件链；原词卷的三标签恢复和辅助存在等价只支付各自接口，不替代其他前件。
+
+证明。首先，若从定义 5.1 出发，定理 6.1 已按 §6 的次序给完整数学比较；若直接给定 (8.2)，其前两行给 $K(J_a\xi_\alpha,J_b\xi_\alpha)=g_\alpha(a,b)$，共同 $K$ 给三标签正表，定理 2.1 恢复同一个旧 $D$。随后沿原词卷 §§388、399–403 的相应入口使用定理 380.1、引理 366.1、定理 366.2、推论 364.1 和定理 358.1；实际采用仍须定义 8.2–8.4 的全部对应。它们恢复可见零与单位、旧 $D$ 两侧单位、准确原质量、可见线性、全配方正性及有界性，得到同一最小复 Hilbert 表示 $H,F,\pi$：
+
+$$
+\begin{aligned}
+\pi(a\circ b)&=\tfrac12(\pi(a)\pi(b)+\pi(b)\pi(a)),\\
+\pi(D(a,b))&=\tfrac{\mathrm i}{2}[\pi(a),\pi(b)],\\
+\alpha(a)&=\langle F\xi_\alpha,\pi(a)F\xi_\alpha\rangle,
+\qquad \|F\xi_\alpha\|^2=m_\alpha.
+\end{aligned}
+\tag{8.7}
+$$
+
+$\pi$ 忠实、保序单位且对原序单位范数等距。原 $a\cdot b=a\circ b-\mathrm iD(a,b)$ 的完成是相应 $C^*$ 代数；不宣称它是全部 $B(H)$。只有原 $E$ 在原序单位范数下完备时，才有 $\pi(E)$ 等于该代数的全部自伴部。原 SC、导子律、曲率、有限块密度、中心和原正 $q$ 权运输直接沿原词卷 §§358–360、定义 391.1 的原前件；$q$ 比较权不改成 Born 概率权。
+
+在另已绑定的原有限全矩阵域，或定义 8.4 的指定正规域，原准备对应 $\sigma\ge0$、$\operatorname{Tr}\sigma=m$，原事件 $e$ 对应效果 $E_e$，从而
+
+$$
+\mu(e)=\operatorname{Tr}(\sigma E_e).
+\tag{8.8}
+$$
+
+同源读取使用母卷定理 12.2／7.2、Fourier 卷 §§9.10–9.13、10.11 的原菜单对应；没有反过来用 Born 假设证明裸源的菜单来源。谱分解是数学表示，不生成实际纯准备；$m=0$ 不归一。
+
+其次，定义 8.3 的原前接已经给 $\beta_r$；实际参考关系经固定源卷定理 59.1、67.1 及 §68 给其 CP 和完整有限槽过程比较。由该卷 §§50–51、63、68、72 所消费的 [C129 §§5.2–5.4](AURIC_C129_HISTORY_KERNEL_EXTENSION_QUANTUM_RELATIONS.md)，以及 [父位置卷](AURIC_C139_PARENT_SENSITIVE_READ_TREE_AND_GAIN_RECOVERY_BOUNDARY.md) 定理 8.3，在上述有限全矩阵或指定正规前对偶域，取得原分支的 CP、迹不增加对偶
+
+$$
+\begin{aligned}
+\Phi_e(\sigma)&=\sum_a L_{ea}\sigma L_{ea}^{\dagger},\\
+E_e&=\sum_a L_{ea}^{\dagger}L_{ea}\le I,\\
+\mu(e)&=\operatorname{Tr}\Phi_e(\sigma)=\operatorname{Tr}(\sigma E_e).
+\end{aligned}
+\tag{8.9}
+$$
+
+有限全矩阵情形的 Kraus 和为有限和；非有限情形沿所供应正规域的适用分解及收敛意义，不外推无条件可数公式。完整 typed 菜单的原单位分区给
+$\sum_e\beta_e(u_{B_e})=u_A$，故总输出迹保持。各输出 $B_e$、失败、停止、销毁和返回仍各有原类型，不把它们默认为同一物理直和。数学 Kraus 指标也不自动是原细记录；识别 $L_{ea}$ 与原 $K_j$ 仍须定义 8.4 的全过程校准。
+
+再次，对每条实际可复合有限历史，回溯的反变复合对偶为
+
+$$
+\sigma_h=\Phi_{j_n}\circ\cdots\circ\Phi_{j_1}(\sigma),
+\qquad \mu(h)=\operatorname{Tr}\sigma_h.
+\tag{8.10}
+$$
+
+当原细分支全校准给出 $K_j$ 时，$K_h=K_{j_n}\cdots K_{j_1}$，且 $\sigma_h=K_h\sigma K_h^{\dagger}$。这直接消费固定源卷 §§50–51、63、68、72 和父位置卷 (8.6)–(8.8)，包含原合法自适应选择和已供应的实际并行联合。更新仅在 $\mu(h)>0$ 时为 $\sigma_h/\mu(h)$；零质量分支的记录、类型和合法未来仍保留。粗事件只能沿真实分组接头相加其实际细历史，不从相同效果推同一输出。
+
+Lüders 的额外条件可用成熟 Kraus 论证明确看出。设原投影效果为 $P$，在同一个已校准输出空间上，原 CP 分支保持 $\operatorname{ran}P$ 每条输入射线。由 $\sum_aL_a^{\dagger}L_a=P$，对 $v\in\ker P$ 有 $\sum_a\|L_av\|^2=0$，故 $L_a=L_aP$。对 $v\in\operatorname{ran}P$，输出正和只支持在 $\mathbb Cv$，使每个 $L_av\in\mathbb Cv$；对独立 $v,w$ 再用 $v+w$，其线性性使各 $L_a$ 在该子空间上只能是固定标量 $c_a$。一维情形也直接如此，故 $L_a=c_aP$，且非零 $P$ 时 $\sum_a|c_a|^2=1$。于是 $\Phi_P(\sigma)=P\sigma P$；$P=0$ 时为零映射。仅有重复可测性或有限统计匹配没有提供这个像射线／输出前件。
+
+对于定义 8.4 的同一个实际非零联合，忠实交换局部像 $M_d,M_n$ 的乘法给 $M_d\otimes M_n\to\mathcal C$ 的含幺 $*$-同态；原联合生成使之满射，$M_{dn}$ 的单纯性和非零性使之单射。因此联合代数为 $M_{dn}$。载体表示为 $\mathbb C^d\otimes\mathbb C^n\otimes\mathcal K$，联合代数作用为 $M_{dn}\otimes I_{\mathcal K}$；有限载体时 $\mathcal K=\mathbb C^r$，$r\ge1$。$r=1$ 或一般不可约重数一需要原重数条件。这个成熟推导消费原词卷定义 391.1、父位置卷定理 8.3 的实际联合前件；分别相同的边缘或分别存在的准备不提供共同联合。
+
+最后，在已供应的原强连续酉群与原时钟、作用量单位下，沿同一消费者的时间桥得自伴 $H$ 和
+
+$$
+U(t)=e^{-\mathrm i tH/\hbar},\qquad
+\mathrm i\hbar\frac{d\psi}{dt}=H\psi,\qquad
+\mathrm i\hbar\frac{d\sigma}{dt}=[H,\sigma].
+\tag{8.11}
+$$
+
+有限维为酉群生成元的通常结论；无限维沿原强连续酉群的自伴生成元，向量导数限于其定义域，密度导数限于相应迹类可微域。有限算术词及其稠密性、辅助随机钟或 CP 均不供应这个物理时间群、相位实现、能量或 $\hbar$。原非离散和无限历史结论仍只在定义 8.4 的相应全部前件下使用。至此每项均经既有消费者连接，未以某一局部结果代替整份原来源。∎
+
