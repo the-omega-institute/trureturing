@@ -36,9 +36,38 @@ abbrev arena : Arena where
       A+s.length=E j ∧ _root_.D5.S1.Words.RichWordTypeIOccurrence.Occ w j ∧
         Left s j ∧ Right t w j)
 
+private theorem marker_reads :
+    Occ (decorated [] [] []) 0 ∧ ¬ Occ (decorated [] [] []) 2 := by
+  have hge : ∀ j, j ≤ E j := by
+    intro j
+    induction j with
+    | zero => simp [E]
+    | succ j ih =>
+      have hpos : ∀ c : Input, 0 < (eta c).length := by decide
+      have := hpos (u j)
+      simp only [E]
+      omega
+  constructor
+  · apply (_root_.D5.S1.Words.RichWordOutputDecoder.occurrence_decoder
+      [] [] [] 0 (by simp) (by simp)).mpr
+    refine ⟨0, ?_, ?_⟩
+    · simp [E, _root_.D5.S1.Words.RichWordTypeIOccurrence.Occ,
+        _root_.D5.S1.Words.AbelianBorders.AbelianBorderQuestionDefs.factor, Left, Right]
+    · intro j hj
+      have := hge j
+      simp only [List.length_nil, Nat.add_zero] at hj
+      omega
+  · intro ho
+    obtain ⟨j,hj,_⟩ := (_root_.D5.S1.Words.RichWordOutputDecoder.occurrence_decoder
+      [] [] [] 2 (by simp) (by simp)).mp ho
+    have he : E j = 2 := by simpa using hj.1.symm
+    have hjlt : j < 3 := by have := hge j; omega
+    have htable : ∀ i : Fin 3, E i.val ≠ 2 := by decide
+    exact htable ⟨j,hjlt⟩ he
+
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  have ho : Occ (decorated [] [] []) 0 := by unfold Occ decorated; decide
+  have ho := marker_reads.1
   have hr := (_root_.D5.S1.Words.RichWordOutputDecoder.occurrence_decoder
     [] [] [] 0 (by simp) (by simp)).mp ho
   exact (h [] [] [] 0 (by simp) (by simp)).mpr hr
@@ -62,8 +91,7 @@ def family : Registration arena
     refine ⟨([],[],[]),0,2,?_⟩
     change Occ (decorated [] [] []) 0 ≠ Occ (decorated [] [] []) 2
     intro h
-    exact (by unfold Occ decorated; decide : ¬ Occ (decorated [] [] []) 2)
-      (Eq.mp h (by unfold Occ decorated; decide : Occ (decorated [] [] []) 0))
+    exact marker_reads.2 (Eq.mp h marker_reads.1)
 
 noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S1.Words.RichWordOutputDecoder.occurrence_decoder)
