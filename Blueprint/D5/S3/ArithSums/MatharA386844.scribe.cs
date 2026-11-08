@@ -68,7 +68,7 @@ internal sealed class MatharA386844Document : IScribeDocumentDefinition
             Node("A", "Complete ordinary series", Seq(F.Id("A"), Eq, Seq(F.Sum, Underscore, Grp(Seq(n, Eq, D(0))), Caret, Grp(Infty), Sp, Mul(Seq(Open, Aval(n), Colon, Q, Close), new Formula.Power(z, n)))),
                 "A belongs to Q[[z]] and has rational coefficient a(n) at every natural index. It is an ordinary formal power series, with no convergence assumption."),
             Node("D", "Iterated formal derivative", All("j", Nat, All("f", seriesType, Seq(Call("D", j, f), Eq,
-                Seq(new Formula.Power(Call("derivative"), j), Open, f, Close)))),
+                Seq(new Formula.Power(F.Id("derivative"), j), Open, f, Close)))),
                 "The superscript on derivative denotes function iteration. D(0,f)=f."),
             Node("op", "Finite polynomial differential operator", All("r", Nat, All("p", finitePolys, All("f", seriesType,
                 Seq(Call("op", r, p, f), Eq, Sum(j, r, Mul(Call("p", j), Call("D", j, f))))))),

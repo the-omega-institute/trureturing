@@ -56,7 +56,7 @@ A belongs to Q[[z]] and has rational coefficient a(n) at every natural index. It
 
 **Definition 1.5 (Iterated formal derivative).**
 
-$$\forall j:\mathbb{N}, \forall f:\mathbb{Q}[[z]], \operatorname{D}\left(j, f\right)=\operatorname{derivative}\left(\right)^{j}(f)$$
+$$\forall j:\mathbb{N}, \forall f:\mathbb{Q}[[z]], \operatorname{D}\left(j, f\right)=derivative^{j}(f)$$
 
 *Formalization.* `D5/S3/ArithSums/MatharA386844.D` (`✓ std3`).
 
