@@ -104,10 +104,10 @@ private theorem local_history_measurable (n : ℕ) (a : ℕ × (Fin n → ℕ)) 
         (ih.prodMk ((measurable_pi_apply (clippedIndex a.1 a.2 t)).comp measurable_snd))
   exact measurable_pi_iff.mpr fun j => hr _
 
+include heff in
 /-- On each finite source slice every ordinary epoch-history event is an event
     of the initial state and coins strictly before the actual next-block cut.
     Source coordinates may also be observed; the next gap is excluded. -/
-include heff in
 theorem actual_history_locality
     (I : Ω → S) (τ : Ω → ℕ) (K : Ω → ℕ → ℕ) (ξ : Ω → ℕ → R)
     (n : ℕ) (B : Set ((ℕ × (Fin n → ℕ)) × (Fin (n + 1) → S)))
@@ -199,9 +199,9 @@ private theorem history_fixed_gap_step (n : ℕ)
   simpa only [← hE] using actual_past_step P I τ K ξ labels update η.toMeasure w f ρ
     A C heff hrow hI hτ hK hξ hprimitive n D hD s hs k T hT
 
+include heff hrow hI hτ hK hξ hprimitive in
 /-- Summing all gaps gives the ordinary-past row identity for the same actual
     execution. The history can also retain every previous source gap. -/
-include heff hrow hI hτ hK hξ hprimitive in
 theorem actual_history_step (n : ℕ)
     (B : Set ((ℕ × (Fin n → ℕ)) × (Fin (n + 1) → S)))
     (hB : MeasurableSet B) (s : S)
@@ -237,9 +237,9 @@ theorem actual_history_step (n : ℕ)
       hI hτ hK hξ hprimitive n B hB s hstate k T hT, mul_assoc]
   exact ENNReal.tsum_mul_left
 
+include heff hrow hI hτ hK hξ hprimitive in
 /-- The ordinary-past integral identity, written as a countable state sum.
     It holds for every measurable history event, including null histories. -/
-include heff hrow hI hτ hK hξ hprimitive in
 theorem actual_ordinary_past (n : ℕ)
     (H : Set (Fin (n + 1) → S)) (hH : MeasurableSet H)
     (T : Set S) (hT : MeasurableSet T) :
@@ -268,6 +268,8 @@ theorem actual_ordinary_past (n : ℕ)
       {ω | epochHistory labels update I τ K ξ n ω ∈ H} ∩
         {ω | epoch labels update (I ω) (ξ ω) (τ ω) (K ω) (n + 1) ∈ T} := by
     ext ω
+    simp only [Set.mem_iUnion, F, E, B, observedHistory, Set.mem_inter_iff,
+      Set.mem_preimage, Set.mem_singleton_iff, Set.mem_setOf_eq]
     change (∃ s, (_ ∧ _ = s) ∧ _) ↔ _ ∧ _
     constructor
     · rintro ⟨s, ⟨h, _⟩, ht⟩; exact ⟨h, ht⟩
@@ -284,10 +286,10 @@ def prefixMass (ν : PMF S) (U : S → PMF S) : (l : ℕ) → (Fin l → S) → 
   | 0, _ => 1
   | n + 1, x => ν (x 0) * ∏ j : Fin n, U (x j.castSucc) (x j.succ)
 
+include heff hrow hI hτ hK hξ hprimitive in
 /-- Every finite actual state prefix, including the empty one, has the row
     product derived from the first wait and subsequent gaps. No process law is
     assumed in addition to the primitive deterministic-coordinate interface. -/
-include heff hrow hI hτ hK hξ hprimitive in
 theorem actual_state_prefix (l : ℕ) (x : Fin l → S) :
     P {ω | ∀ j : Fin l, epoch labels update (I ω) (ξ ω) (τ ω) (K ω) j.val = x j} =
       prefixMass (w.bind fun u => η.bind fun s => (zeroRow A u s).bind C)
@@ -300,13 +302,13 @@ theorem actual_state_prefix (l : ℕ) (x : Fin l → S) :
     induction n with
     | zero =>
       intro x
-      have he : {ω | epochHistory labels update I τ K ξ 0 ω = x} =
-          {ω | epoch labels update (I ω) (ξ ω) (τ ω) (K ω) 0 ∈ {x 0}} := by
+      have he : {ω : Ω | epochHistory labels update I τ K ξ 0 ω = x} =
+          {ω : Ω | epoch labels update (I ω) (ξ ω) (τ ω) (K ω) 0 ∈ ({x 0} : Set S)} := by
         ext ω
         simp only [Set.mem_setOf_eq, Set.mem_singleton_iff]
         constructor
         · intro h; exact congrFun h 0
-        · intro h; funext j; have : j = 0 := Subsingleton.elim _ _; subst j; exact h
+        · intro h; funext j; have : j = 0 := Fin.ext (by omega); subst j; exact h
       rw [he, actual_initial_law P I τ K ξ labels update η w f ρ A C heff hrow
         hI hτ hξ hprimitive {x 0} (measurableSet_singleton _)]
       simp only [PMF.toMeasure_apply_singleton _ _ (measurableSet_singleton _),
@@ -356,15 +358,15 @@ theorem actual_state_prefix (l : ℕ) (x : Fin l → S) :
     rw [he]
     exact hp n x
 
+include heff hrow hI hτ hK hξ hprimitive in
 /-- Every joint source/state cylinder on the actual run has its literal
     first-wait factor and all of its subsequent gap/word factors. -/
-include heff hrow hI hτ hK hξ hprimitive in
 theorem actual_source_cylinders (n : ℕ) (a : ℕ × (Fin n → ℕ))
     (x : Fin (n + 1) → S) :
     P (observedHistory labels update I τ K ξ n ⁻¹' {(a, x)}) =
       w a.1 * (η.bind fun s => (zeroRow A a.1 s).bind C) (x 0) *
         ∏ j : Fin n, (f (a.2 j) * ((zeroRow A (a.2 j) (x j.castSucc)).bind C) (x j.succ)) := by
-  induction n generalizing a x with
+  induction n with
   | zero =>
     let D : Set (S × (Fin (a.1 + 1) → R)) :=
       (fun p => word labels update a.1 p.1 p.2) ⁻¹' {x 0}
@@ -373,23 +375,27 @@ theorem actual_source_cylinders (n : ℕ) (a : ℕ × (Fin n → ℕ))
     have he : observedHistory labels update I τ K ξ 0 ⁻¹' {(a, x)} =
         sourceSlice τ K 0 a ∩ rawPrefix I ξ (a.1 + 1) ⁻¹' D := by
       ext ω
-      simp only [observedHistory, Set.mem_preimage, Set.mem_singleton_iff,
-        Prod.mk.injEq, Set.mem_inter_iff, sourceSlice, Set.mem_setOf_eq]
       constructor
-      · rintro ⟨⟨hu, _⟩, hx⟩
-        refine ⟨⟨hu, fun j => Fin.elim0 j⟩, ?_⟩
-        have h := congrFun hx 0
-        change epoch labels update (I ω) (ξ ω) (τ ω) (K ω) 0 = x 0 at h
-        rw [(actual_words labels update _ _ _ _).1, hu] at h
-        exact h
-      · rintro ⟨⟨hu, _⟩, hx⟩
-        refine ⟨⟨hu, Subsingleton.elim _ _⟩, ?_⟩
-        funext j
-        have : j = 0 := Subsingleton.elim _ _
-        subst j
-        change epoch labels update (I ω) (ξ ω) (τ ω) (K ω) 0 = x 0
-        rw [(actual_words labels update _ _ _ _).1, hu]
-        exact hx
+      · intro hω
+        change observedHistory labels update I τ K ξ 0 ω = (a, x) at hω
+        have hu := congrArg (fun p : (ℕ × (Fin 0 → ℕ)) × (Fin (0 + 1) → S) => p.1.1) hω
+        change τ ω = a.1 at hu
+        have hx := congrFun (congrArg Prod.snd hω) 0
+        change epoch labels update (I ω) (ξ ω) (τ ω) (K ω) 0 = x 0 at hx
+        rw [(actual_words labels update _ _ _ _).1, hu] at hx
+        exact ⟨⟨hu, fun j => Fin.elim0 j⟩, hx⟩
+      · intro hω
+        have hu : τ ω = a.1 := hω.1.1
+        have hx : word labels update a.1 (I ω) (fun j => ξ ω j.val) = x 0 := hω.2
+        change observedHistory labels update I τ K ξ 0 ω = (a, x)
+        apply Prod.ext
+        · exact Prod.ext hu (funext fun j => Fin.elim0 j)
+        · funext j
+          have hj : j = 0 := Fin.ext (by omega)
+          subst j
+          change epoch labels update (I ω) (ξ ω) (τ ω) (K ω) 0 = x 0
+          rw [(actual_words labels update _ _ _ _).1, hu]
+          exact hx
     have hp := hprimitive 0 a (a.1 + 1) 0 D Set.univ hD MeasurableSet.univ
     have hw := congrArg (fun μ : Measure S => μ {x 0})
       (initial_word_law labels update ρ A C heff hrow η a.1)
@@ -415,7 +421,7 @@ theorem actual_source_cylinders (n : ℕ) (a : ℕ × (Fin n → ℕ))
           {ω | epoch labels update (I ω) (ξ ω) (τ ω) (K ω) (n + 1) ∈ {x (Fin.last (n + 1))}} := by
       ext ω
       simp only [observedHistory, Set.mem_preimage, Set.mem_singleton_iff,
-        Prod.mk.injEq, Set.mem_inter_iff, Set.mem_setOf_eq]
+        Prod.ext_iff, Set.mem_inter_iff, Set.mem_setOf_eq]
       constructor
       · rintro ⟨⟨hu, hv⟩, hx⟩
         exact ⟨⟨⟨⟨hu, funext fun j => congrFun hv j.castSucc⟩,
