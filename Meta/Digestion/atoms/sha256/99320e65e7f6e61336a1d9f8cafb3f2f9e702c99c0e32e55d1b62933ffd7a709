@@ -1,0 +1,26 @@
+#### 定理 7.1：单态稳定子面与转向面
+
+对单位 $n$，定义
+
+$$
+\pi_n:\Lambda^2W\to T_nS^2,\qquad
+\pi_n(\beta)=(\star^{-1}\beta)\times n.
+$$
+
+则每个 $\beta$ 唯一分解为
+
+$$
+\boxed{\beta=\lambda\star n+n\wedge v,\quad v\perp n,\quad
+\pi_n(\beta)=v,\quad \|\beta\|^2=\lambda^2+\|v\|^2.}
+$$
+
+特别地，$\ker\pi_n=\mathbb R\star n$。
+
+**证明。**
+
+取正交定向基 $(n,u_1,u_2)$。 $u_1\wedge u_2=\star n,n\wedge u_1,n\wedge u_2$ 构成 $\Lambda^2W$ 的正交单位基。 第一项对应旋转轴 $n$，故在 $n$ 上作用为零。 对 $v\perp n$， $\pi_n(n\wedge v)=(n\times v)\times n=v$。 逐基展开给分解、唯一性、范数与核。
+
+$\square$
+
+这与最新 OTF-005 的轴面分解一致。[\[2\]](#ref-otf5) 单态所决定的 $\star n$ 是绕自身方向的生成面； 把该态转往别处所需的面由 $n\wedge\dot n$ 给出。 一个方向不自动确定横向的零相位： 若旋转等变地给每个 $n$ 选非零 $v(n)\perp n$， 绕 $n$ 的半周转动既固定 $n$ 又把 $v(n)$ 变成 $-v(n)$，产生矛盾。
+
