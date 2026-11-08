@@ -238,7 +238,7 @@ private lemma exists_unitary_common (s : ℕ) :
       ∀ i, U i 0 = (1 / Real.sqrt (s+1 : ℝ) : ℝ) := by
   let v : EuclideanSpace ℂ (Fin (s+1)) := WithLp.toLp 2
     (fun _ => ((1 / Real.sqrt (s+1 : ℝ) : ℝ) : ℂ))
-  have hn : (s+1 : ℝ) ≠ 0 := by positivity
+  have hn : (s+1 : ℝ) ≠ 0 := Nat.cast_add_one_ne_zero s
   have hr : Real.sqrt (s+1 : ℝ) ≠ 0 := Real.sqrt_ne_zero'.mpr (by positivity)
   have hr2 := Real.sq_sqrt (show 0 ≤ (s+1 : ℝ) by positivity)
   have hv : ‖v‖ = 1 := by
