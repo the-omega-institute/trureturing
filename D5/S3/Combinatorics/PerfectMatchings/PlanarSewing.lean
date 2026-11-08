@@ -55,11 +55,11 @@ reconnect_path: proof_shape=bind-only; consumers=D5.S3.Combinatorics.PerfectMatc
 capSurgery_path: proof_shape=bind-only; consumers=D5.S3.Combinatorics.PerfectMatchings.PlanarSewing.capSurgery_component_iff
 Patch: proof_shape=bind-only; consumers=D5.S3.Combinatorics.PerfectMatchings.PlanarSewing.cap_component, D5.S3.Combinatorics.PerfectMatchings.PlanarSewing.patch_mate
 patch_mate: proof_shape=bind-only; consumers=D5.S3.Combinatorics.PerfectMatchings.PlanarSewing.cap_component
-cap_component: proof_shape=bind-only; consumers=D5.S3.Combinatorics.PerfectMatchings.PlanarSewing.survivor_component
-survivor_component: proof_shape=bind-only; consumers=D5.S3.Combinatorics.PerfectMatchings.PlanarSewing.capSurgery_component_iff
+cap_component: proof_shape=content; consumers=D5.S3.Combinatorics.PerfectMatchings.PlanarSewing.survivor_component
+survivor_component: proof_shape=content; consumers=D5.S3.Combinatorics.PerfectMatchings.PlanarSewing.capSurgery_component_iff
 capSurgery_component_iff: proof_shape=content; consumers=D5.S3.Combinatorics.PerfectMatchings.PlanarSewing.capSurgery_comap
 matchingSetoid: proof_shape=bind-only; consumers=D5.S3.Combinatorics.PerfectMatchings.PlanarSewing.capSurgery_comap, D5.S3.Combinatorics.PerfectMatchings.PlanarSewing.composite_planar
-capSurgery_comap: proof_shape=bind-only; consumers=D5.S3.Combinatorics.PerfectMatchings.PlanarSewing.sewn_comap
+capSurgery_comap: proof_shape=content; consumers=D5.S3.Combinatorics.PerfectMatchings.PlanarSewing.sewn_comap
 seamLeft: proof_shape=bind-only; consumers=D5.S3.Combinatorics.PerfectMatchings.PlanarSewing.flat_seam_left, D5.S3.Combinatorics.PerfectMatchings.PlanarSewing.graphEquiv._proof_4
 seamRight: proof_shape=bind-only; consumers=D5.S3.Combinatorics.PerfectMatchings.PlanarSewing.flat_seam_right, D5.S3.Combinatorics.PerfectMatchings.PlanarSewing.graphEquiv._proof_4
 seamSetoid: proof_shape=bind-only; consumers=D5.S3.Combinatorics.PerfectMatchings.PlanarSewing.composite_planar, D5.S3.Combinatorics.PerfectMatchings.PlanarSewing.graphStep_setoid
@@ -68,12 +68,12 @@ seam_skip_right: proof_shape=bind-only; consumers=D5.S3.Combinatorics.PerfectMat
 rel_sup_left: proof_shape=bind-only; consumers=D5.S3.Combinatorics.PerfectMatchings.PlanarSewing.graphStep_setoid, D5.S3.Combinatorics.PerfectMatchings.PlanarSewing.seam_reduction
 rel_sup_right: proof_shape=bind-only; consumers=D5.S3.Combinatorics.PerfectMatchings.PlanarSewing.graphStep_setoid, D5.S3.Combinatorics.PerfectMatchings.PlanarSewing.seam_reduction
 rel_map: proof_shape=bind-only; consumers=D5.S3.Combinatorics.PerfectMatchings.PlanarSewing.seam_reduction
-seam_reduction: proof_shape=bind-only; consumers=D5.S3.Combinatorics.PerfectMatchings.PlanarSewing.sewn_comap
-sewn_comap: proof_shape=bind-only; consumers=D5.S3.Combinatorics.PerfectMatchings.PlanarSewing.sewn_planar
+seam_reduction: proof_shape=content; consumers=D5.S3.Combinatorics.PerfectMatchings.PlanarSewing.sewn_comap
+sewn_comap: proof_shape=content; consumers=D5.S3.Combinatorics.PerfectMatchings.PlanarSewing.sewn_planar
 gapEmbedding: proof_shape=bind-only; consumers=D5.S3.Combinatorics.PerfectMatchings.PlanarSewing.composite_planar, D5.S3.Combinatorics.PerfectMatchings.PlanarSewing.flat_outer
 gapEmbedding_step: proof_shape=bind-only; consumers=D5.S3.Combinatorics.PerfectMatchings.PlanarSewing.sewn_planar
 seamSetoid_zero: proof_shape=bind-only; consumers=D5.S3.Combinatorics.PerfectMatchings.PlanarSewing.sewn_planar
-sewn_planar: proof_shape=bind-only; consumers=D5.S3.Combinatorics.PerfectMatchings.PlanarSewing.composite_planar
+sewn_planar: proof_shape=content; consumers=D5.S3.Combinatorics.PerfectMatchings.PlanarSewing.composite_planar
 appendPartner: proof_shape=bind-only; consumers=D5.S3.Combinatorics.PerfectMatchings.PlanarSewing.appendMatching, D5.S3.Combinatorics.PerfectMatchings.PlanarSewing.appendMatching._proof_1
 appendPartner_left: proof_shape=bind-only; consumers=D5.S3.Combinatorics.PerfectMatchings.PlanarSewing.appendMatching._proof_1, D5.S3.Combinatorics.PerfectMatchings.PlanarSewing.appendMatching._proof_4
 appendPartner_right: proof_shape=bind-only; consumers=D5.S3.Combinatorics.PerfectMatchings.PlanarSewing.appendMatching._proof_1, D5.S3.Combinatorics.PerfectMatchings.PlanarSewing.appendMatching._proof_4
@@ -97,7 +97,7 @@ identityNC: proof_shape=bind-only; consumers=D5.S3.Combinatorics.PerfectMatching
 identity_planar: proof_shape=content; consumers=D5.S3.Combinatorics.PerfectMatchings.PlanarDiagramAlgebra.identity, D5.S3.Combinatorics.PerfectMatchings.PlanarDiagramAlgebra.mul_one'
 capReconnection: proof_shape=bind-only; consumers=D5.S3.Combinatorics.PerfectMatchings.PlanarSewing.cupcap_planar_succ
 swap_val: proof_shape=bind-only; consumers=D5.S3.Combinatorics.PerfectMatchings.PlanarSewing.cupcap_planar_succ
-cupcap_planar_succ: proof_shape=bind-only; consumers=D5.S3.Combinatorics.PerfectMatchings.PlanarSewing.cupcap_planar
+cupcap_planar_succ: proof_shape=content; consumers=D5.S3.Combinatorics.PerfectMatchings.PlanarSewing.cupcap_planar
 cupcap_planar: proof_shape=content; consumers=D5.S3.Combinatorics.PerfectMatchings.PlanarDiagramAlgebra.generator._proof_3
 -/
 import D5.S3.Combinatorics.PerfectMatchings.OrderedMatchingCore

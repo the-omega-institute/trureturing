@@ -8,7 +8,7 @@ internal sealed class PonciniRasmussenNineEdgesDocument : IScribeDocumentDefinit
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Reindexing the generator edges", H("Reindexing the generator edges"), Blocks(
-            Paragraph(Text("Incoming and outgoing lists contain pairs (target,source), with source embedded in Fin(8192). Multiplicities remain present. Kernel reduction checks equality of their sorted lists; mergeSort permutation transfers the exact finite sum. The calculation applies to every additive commutative group.")),
+            Paragraph(Text("Incoming and outgoing lists contain pairs (target,source), with source embedded in Fin(8192). Multiplicities remain present. Kernel reduction checks the sorted source blocks and their successive merges. The structural merge evaluator agrees with List.merge, whose permutation theorem transfers the exact finite sum. The calculation applies to every additive commutative group.")),
             Describe.Lean(DescribeId.Create("incoming"), DeclarationHandle.Create("D5/S3/StatisticalMechanics/VertexModels/PonciniRasmussenNineEdges.incoming"),
                 H("incoming"), StatementSource.FromAuthor(Disp(All("i", Call("Fin", Num(8192)), Equal(Call("incoming", Id("i")), Call("get", Id("rows"), Call("val", Id("i"))))))),
                 AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("The fixed binary tree contains the same incoming source lists used by sparseHamiltonian."))), DescribeRole.Definition),

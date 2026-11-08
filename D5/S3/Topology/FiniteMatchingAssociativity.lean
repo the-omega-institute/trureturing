@@ -74,7 +74,7 @@ tripleInventory: proof_shape=bind-only; consumers=D5.S3.Topology.FiniteMatchingA
 rotateTriple: proof_shape=bind-only; consumers=D5.S3.Topology.FiniteMatchingAssociativity.rotateTripleEquiv, D5.S3.Topology.FiniteMatchingAssociativity.rotateTripleEquiv._proof_1
 unrotateTriple: proof_shape=bind-only; consumers=D5.S3.Topology.FiniteMatchingAssociativity.rotateTripleEquiv, D5.S3.Topology.FiniteMatchingAssociativity.rotateTripleEquiv._proof_1
 rotateTripleEquiv: proof_shape=bind-only; consumers=D5.S3.Topology.FiniteMatchingAssociativity.internalLoopCount_cocycle
-triple_card: proof_shape=bind-only; consumers=D5.S3.Topology.FiniteMatchingAssociativity.internalLoopCount_cocycle
+triple_card: proof_shape=content; consumers=D5.S3.Topology.FiniteMatchingAssociativity.internalLoopCount_cocycle
 internalLoopCount_cocycle: proof_shape=content; consumers=D5.S3.Topology.FiniteMatchingAssociativity.internalLoopCount_pos_assoc
 internalLoopCount_pos_assoc: proof_shape=content; consumers=D5.S3.Topology.BrauerZeroMonoid.multiply_assoc
 -/
