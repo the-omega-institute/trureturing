@@ -7,11 +7,16 @@
    digest: A noisy Strange qutrit saturates the purity bound with eight Wigner coordinates. -/
 
 import D5.S3.Quantum.Algebra.WeylDisplacementTrace
+import D5.S3.Quantum.Algebra.WeylPhaseArithmetic
 import D5.S3.Entropy.EntropyEquality
 import Mathlib.LinearAlgebra.Matrix.PosDef
 
+/-! # Saturation outside dimension-multiple coordinate supports -/
+
+set_option backward.isDefEq.respectTransparency false
+
 noncomputable section
-open scoped BigOperators Matrix
+open scoped BigOperators Matrix ComplexOrder
 open D5.S3.Observer.WindowRegister
 open D5.S3.Quantum.Algebra.WeylDisplacement
 open D5.S3.Entropy.MaxEntropy
@@ -51,12 +56,13 @@ def IsMUBKD {I L : Type} [Fintype I] [DecidableEq I]
 computational basis. The dual operators are `card I • S l` as in Eq. (20). -/
 def IsGross {I L : Type} [Fintype I] [DecidableEq I]
     (S : L → Matrix I I ℂ) : Prop :=
-  ∃ n : ℕ, 0 < n ∧ ∃ q : Fin n → ℕ,
-    (∀ k, 3 ≤ q k ∧ Odd (q k)) ∧ ∃ hq : ∀ k, NeZero (q k),
-    ∃ basis : I ≃ ((k : Fin n) → ZMod (q k)),
-    ∃ labels : L ≃ (((k : Fin n) → ZMod (q k)) × ((k : Fin n) → ZMod (q k))),
+  ∃ q : ℕ, 0 < q ∧ Odd q ∧ ∃ hq : NeZero q,
+    ∃ n : ℕ, 0 < n ∧ ∃ basis : I ≃ (Fin n → ZMod q),
+    ∃ labels : L ≃ ((Fin n → ZMod q) × (Fin n → ZMod q)),
     ∃ U : Matrix I I ℂ, Uᴴ * U = 1 ∧ ∀ l,
-      S l = U * (fun i j => grossTensor n q hq (labels l).1 (labels l).2 (basis i) (basis j)) * Uᴴ
+      S l = U * (show Matrix I I ℂ from fun i j =>
+        grossTensor n (fun _ => q) (fun _ => hq)
+          (labels l).1 (labels l).2 (basis i) (basis j)) * Uᴴ
 
 /-- The union of the two source classes, without an arbitrary-frame replacement. -/
 def IsSourceFrame {I L : Type} [Fintype I] [DecidableEq I]
@@ -78,7 +84,7 @@ def coordinateEntropy {L : Type} [Fintype L] (Q : L → ℂ) : ℝ :=
 endpoints. Q positivity includes zero and also asserts that the complex law is real. -/
 def claim : Prop :=
   ∀ (I L : Type) [Fintype I] [DecidableEq I] [Fintype L],
-    2 ≤ Fintype.card I → ∀ (S : L → Matrix I I ℂ), IsSourceFrame S →
+    0 < Fintype.card I → ∀ (S : L → Matrix I I ℂ), IsSourceFrame S →
     ∀ rho : Matrix I I ℂ, rho.PosSemidef → Matrix.trace rho = 1 →
     let Q := fun l => coordinate rho (S l)
     let tau := (Matrix.trace (rho * rho)).re
@@ -99,5 +105,161 @@ private theorem root_cube : windowRoot 3 ^ 3 = 1 :=
 private theorem root_sum : 1 + windowRoot 3 + windowRoot 3 ^ 2 = 0 := by
   have h := (windowRoot_isPrimitiveRoot 3).geom_sum_eq_zero (by norm_num : 1 < 3)
   simpa [Finset.sum_range_succ, pow_zero, pow_one, add_assoc] using h
+
+private theorem root_star : star (windowRoot 3) = windowRoot 3 ^ 2 := by
+  have hn := (windowRoot_isPrimitiveRoot 3).norm'_eq_one (by norm_num : 3 ≠ 0)
+  have hm : star (windowRoot 3) * windowRoot 3 = 1 := by
+    simpa [hn] using RCLike.conj_mul (windowRoot 3)
+  have hc : windowRoot 3 ^ 2 * windowRoot 3 = 1 := by
+    simpa [pow_succ] using root_cube
+  exact mul_right_cancel₀ ((windowRoot_isPrimitiveRoot 3).ne_zero (by norm_num)) (hm.trans hc.symm)
+
+private theorem sum_three {A : Type*} [AddCommMonoid A] (f : ZMod 3 → A) :
+    ∑ i, f i = f 0 + f 1 + f 2 := by
+  exact Fin.sum_univ_three f
+
+private theorem origin_qutrit : grossOrigin 3 =
+    (1 / 3 : ℂ) • (!![1, 0, 0; 0, 0, 1; 0, 1, 0] : Matrix (ZMod 3) (ZMod 3) ℂ) := by
+  have h20 : (2 : ZMod 3) ≠ 0 := by decide
+  have h21 : (2 : ZMod 3) ≠ 1 := by decide
+  have hn1 : (-1 : ZMod 3) = 2 := by decide
+  have hn2 : (-2 : ZMod 3) = 1 := by decide
+  ext i j
+  fin_cases i <;> fin_cases j
+  all_goals norm_num [h20, h21, hn1, hn2, grossOrigin, grossDisplacement, displacement, shiftMatrix, clockMatrix,
+    Matrix.circulant_apply, Matrix.mul_apply, Matrix.diagonal_apply, Matrix.one_apply,
+    Matrix.add_apply, Pi.add_apply, Fin.val_ofNat,
+    pow_two, sum_three, Matrix.smul_apply, Pi.smul_apply, Finset.sum_apply,
+    smul_eq_mul, ZMod.val_natCast, ZMod.val_ofNat, ZMod.val_zero, ZMod.val_one]
+  all_goals ring_nf
+  all_goals simp only [root_cube,
+    ← D5.S3.Quantum.Algebra.WeylPhaseArithmetic.windowRoot_pow_mod (M := 3) 4,
+    ← D5.S3.Quantum.Algebra.WeylPhaseArithmetic.windowRoot_pow_mod (M := 3) 5,
+    ← D5.S3.Quantum.Algebra.WeylPhaseArithmetic.windowRoot_pow_mod (M := 3) 6,
+    ← D5.S3.Quantum.Algebra.WeylPhaseArithmetic.windowRoot_pow_mod (M := 3) 7,
+    ← D5.S3.Quantum.Algebra.WeylPhaseArithmetic.windowRoot_pow_mod (M := 3) 8]
+  all_goals norm_num
+  all_goals first | linear_combination (1 / 9 : ℂ) * root_sum | exact root_sum
+
+private theorem rho_density : rho.PosSemidef ∧ Matrix.trace rho = 1 := by
+  let v : ZMod 3 → ℂ := ![0, 1, -1]
+  have hg : rho = (1 / 4 : ℝ) • (1 : Matrix (ZMod 3) (ZMod 3) ℂ) +
+      (1 / 8 : ℝ) • Matrix.vecMulVec v (star v) := by
+    ext i j
+    fin_cases i <;> fin_cases j <;>
+      norm_num [rho, v, Matrix.vecMulVec, Matrix.one_apply, Matrix.add_apply, Pi.smul_apply, smul_eq_mul]
+  refine ⟨?_, ?_⟩
+  · rw [hg]
+    exact (Matrix.PosSemidef.one.smul (by norm_num : (0 : ℝ) ≤ 1 / 4)).add
+      ((Matrix.posSemidef_vecMulVec_self_star v).smul (by norm_num : (0 : ℝ) ≤ 1 / 8))
+  · norm_num [rho, Matrix.trace, Matrix.diag_apply, sum_three]
+
+private theorem rho_purity : Matrix.trace (rho * rho) = (3 / 8 : ℂ) := by
+  norm_num [rho, Matrix.trace, Matrix.diag_apply, Matrix.mul_apply, sum_three,
+    Fin.sum_univ_succ]
+
+private def singleEquiv : ZMod 3 ≃ (Fin 1 → ZMod 3) where
+  toFun i := fun _ => i
+  invFun f := f 0
+  left_inv _ := rfl
+  right_inv f := by funext k; fin_cases k; rfl
+
+private theorem qutrit_frame_allowed :
+    IsSourceFrame (fun p : ZMod 3 × ZMod 3 => grossLocal 3 p.1 p.2) := by
+  apply Or.inr
+  refine ⟨3, by norm_num, by decide, inferInstance, 1, by norm_num,
+    singleEquiv, singleEquiv.prodCongr singleEquiv, 1, by simp, ?_⟩
+  intro p
+  simp [grossTensor, singleEquiv, Fin.prod_univ_succ]
+
+private def law (p : ZMod 3 × ZMod 3) : ℂ := if p = (0, 0) then 0 else 1 / 8
+
+set_option maxHeartbeats 2000000 in
+private theorem qutrit_coordinates (p : ZMod 3 × ZMod 3) :
+    coordinate rho (grossLocal 3 p.1 p.2) = law p := by
+  have h20 : (2 : ZMod 3) ≠ 0 := by decide
+  have h21 : (2 : ZMod 3) ≠ 1 := by decide
+  have hn1 : (-1 : ZMod 3) = 2 := by decide
+  have hn2 : (-2 : ZMod 3) = 1 := by decide
+  obtain ⟨a, b⟩ := p
+  fin_cases a <;> fin_cases b
+  all_goals norm_num [coordinate, grossLocal, origin_qutrit, grossDisplacement,
+    displacement, shiftMatrix, clockMatrix, rho, Matrix.trace, Matrix.diag_apply,
+    Matrix.mul_apply, Matrix.conjTranspose_apply, Matrix.diagonal_apply,
+    Matrix.circulant_apply, Matrix.one_apply, Matrix.smul_apply, Matrix.add_apply,
+    Pi.add_apply, Pi.smul_apply, smul_eq_mul, sum_three, Fin.sum_univ_succ,
+    ZMod.val_natCast, ZMod.val_ofNat, ZMod.val_zero, ZMod.val_one, pow_two,
+    root_star, law, h20, h21, hn1, hn2]
+  all_goals ring_nf
+  all_goals simp only [root_cube,
+    ← D5.S3.Quantum.Algebra.WeylPhaseArithmetic.windowRoot_pow_mod (M := 3) 4,
+    ← D5.S3.Quantum.Algebra.WeylPhaseArithmetic.windowRoot_pow_mod (M := 3) 5,
+    ← D5.S3.Quantum.Algebra.WeylPhaseArithmetic.windowRoot_pow_mod (M := 3) 6,
+    ← D5.S3.Quantum.Algebra.WeylPhaseArithmetic.windowRoot_pow_mod (M := 3) 7,
+    ← D5.S3.Quantum.Algebra.WeylPhaseArithmetic.windowRoot_pow_mod (M := 3) 8,
+    ← D5.S3.Quantum.Algebra.WeylPhaseArithmetic.windowRoot_pow_mod (M := 3) 9,
+    ← D5.S3.Quantum.Algebra.WeylPhaseArithmetic.windowRoot_pow_mod (M := 3) 10,
+    ← D5.S3.Quantum.Algebra.WeylPhaseArithmetic.windowRoot_pow_mod (M := 3) 11,
+    ← D5.S3.Quantum.Algebra.WeylPhaseArithmetic.windowRoot_pow_mod (M := 3) 12,
+    ← D5.S3.Quantum.Algebra.WeylPhaseArithmetic.windowRoot_pow_mod (M := 3) 13,
+    ← D5.S3.Quantum.Algebra.WeylPhaseArithmetic.windowRoot_pow_mod (M := 3) 14,
+    ← D5.S3.Quantum.Algebra.WeylPhaseArithmetic.windowRoot_pow_mod (M := 3) 15,
+    ← D5.S3.Quantum.Algebra.WeylPhaseArithmetic.windowRoot_pow_mod (M := 3) 16,
+    ← D5.S3.Quantum.Algebra.WeylPhaseArithmetic.windowRoot_pow_mod (M := 3) 17,
+    ← D5.S3.Quantum.Algebra.WeylPhaseArithmetic.windowRoot_pow_mod (M := 3) 18,
+    ← D5.S3.Quantum.Algebra.WeylPhaseArithmetic.windowRoot_pow_mod (M := 3) 19,
+    ← D5.S3.Quantum.Algebra.WeylPhaseArithmetic.windowRoot_pow_mod (M := 3) 20,
+    ← D5.S3.Quantum.Algebra.WeylPhaseArithmetic.windowRoot_pow_mod (M := 3) 21,
+    ← D5.S3.Quantum.Algebra.WeylPhaseArithmetic.windowRoot_pow_mod (M := 3) 22,
+    ← D5.S3.Quantum.Algebra.WeylPhaseArithmetic.windowRoot_pow_mod (M := 3) 23,
+    ← D5.S3.Quantum.Algebra.WeylPhaseArithmetic.windowRoot_pow_mod (M := 3) 24]
+  all_goals norm_num
+  all_goals first
+    | linear_combination (-1 / 24 : ℂ) * root_sum
+    | linear_combination (1 / 24 : ℂ) * root_sum
+    | linear_combination (-1 / 8 : ℂ) * root_sum
+    | linear_combination (1 / 8 : ℂ) * root_sum
+
+private theorem law_nonneg (p : ZMod 3 × ZMod 3) :
+    (law p).im = 0 ∧ 0 ≤ (law p).re := by
+  by_cases h : p = (0, 0) <;> norm_num [law, h]
+
+private theorem law_sum : ∑ p, law p = 1 := by
+  norm_num [Fintype.sum_prod_type, sum_three, law,
+    show (2 : ZMod 3) ≠ 0 by decide]
+
+private theorem law_support : coordinateSupport law = 8 := by
+  classical
+  have h : (Finset.univ.filter fun p => law p ≠ 0) =
+      (Finset.univ : Finset (ZMod 3 × ZMod 3)).erase (0, 0) := by
+    ext p
+    simp [law]
+  rw [coordinateSupport, h]
+  norm_num
+
+private theorem law_entropy : coordinateEntropy law = Real.log 8 := by
+  norm_num [coordinateEntropy, shannonEntropy, Fintype.sum_prod_type, sum_three,
+    law, Real.negMulLog, Real.log_div, show (2 : ZMod 3) ≠ 0 by decide]
+  ring
+
+/-- The only-dimension-multiples assertion fails in the source's own qutrit frame. -/
+theorem result : ¬ claim := by
+  intro h
+  have hc : (fun p : ZMod 3 × ZMod 3 => coordinate rho (grossLocal 3 p.1 p.2)) = law :=
+    funext qutrit_coordinates
+  have ht : (Matrix.trace (rho * rho)).re = (3 / 8 : ℝ) := by
+    rw [rho_purity]
+    norm_num
+  have he : coordinateEntropy law = -Real.log (3 / 8 : ℝ) + Real.log 3 := by
+    rw [law_entropy, Real.log_div (by norm_num) (by norm_num)]
+    ring
+  have hh := h (ZMod 3) (ZMod 3 × ZMod 3) (by norm_num)
+    (fun p => grossLocal 3 p.1 p.2) qutrit_frame_allowed rho rho_density.1 rho_density.2
+  simp only [hc, ht] at hh
+  have hsat := hh law_nonneg law_sum (by norm_num) (by norm_num) (by simpa using he)
+  obtain ⟨delta, hd1, hd3, hd⟩ := hsat
+  rw [law_support] at hd
+  norm_num at hd3 hd
+  omega
 
 end D5.S3.Quantum.Magic.ThioSaturationRefutation
