@@ -40,13 +40,17 @@ internal sealed class KageyMajorIndexFirstLetterDocument : IScribeDocumentDefini
                     + "Exact-descent inclusion–exclusion selects major index k. Only S=U={k} contributes "
                     + "to the highest coefficients, which are 1/k! and 1/(k+1)!. Scaling by these factorials "
                     + "gives monic Q and P of the required degrees. The source's n=k endpoint is retained.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("kagey-2021-first-letter-expectation-conjectures-5-1-5-2"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
         DescribeId.Create("kagey-major-" + name.ToLowerInvariant()),
         DeclarationHandle.Create(Root + name), H(title), StatementSource.FromAuthor(Disp(formula)),
-        provenance, Blocks(Paragraph(Text(prose))), role);
+        provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula V(string name) => F.Id(name);
     private static Formula Naturals => Seq(Mathbb, Grp(V("N")));

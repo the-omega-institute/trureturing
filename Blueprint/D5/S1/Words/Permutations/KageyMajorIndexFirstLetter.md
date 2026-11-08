@@ -60,6 +60,10 @@ $$\forall k \in \mathbb{N},\; 0 < k \implies \exists P \in \operatorname{Polynom
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/Permutations/KageyMajorIndexFirstLetter.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/kagey-2021-first-letter-expectation-conjectures-5-1-5-2` (proved) by `D5/S1/Words/Permutations/KageyMajorIndexFirstLetter.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"kagey-2021-first-letter-expectation-conjectures-5-1-5-2","declaration_gid":"D5/S1/Words/Permutations/KageyMajorIndexFirstLetter.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Peter Kagey (2021). *Expected value of letters of permutations with a given number of k-cycles*. DOI: [10.48550/arXiv.2112.05281](https://doi.org/10.48550/arXiv.2112.05281). URL: <https://arxiv.org/abs/2112.05281v1>.
