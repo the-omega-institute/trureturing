@@ -2274,3 +2274,313 @@ $$
 **定义 192.2（完整白话）。** 候选仍是同一对原对象的正表和同一份响应的正反平方配平。现在只拿一个原投影和一个把它与补角互换的原翻转，直接问旧响应能是什么。正表和零读取先把响应逼到第三个方向，但最初还容许方向系数缩小。再挑一份有限的补角标签：配平右侧的读数固定不动，两侧正表的预算却能精确算出。如果系数真的缩小，就能选到一次有限比较，让两侧预算的总和小于右侧固定读数，发生矛盾。所以旧响应必须自己生成一根单位长度的第三轴，三根轴彼此正交，组成一个二阶量子截面的 Jordan 几何。这不需要原角藏有最小投影，也不先把所有响应关进一个标量矩阵小世界。把这三根轴放进已给环境的结合乘法，会出现携带两种相反取向的有限包络；它在这个小包络里相容，还不能说明整个原世界的所有二阶截面都选到同一取向。下一步仍要从原配平中证明不同行的系数怎样接起来、旧响应怎样遵守相加，然后才能完整接上已有量子乘法推导。独立公理数未减少，原实际准备、仪器、联合、全部未来和真实返回，以及物理钟和作用量，也仍须来自同一个原世界。
 
 ## 追加锚（本行以下为增补区）
+
+
+## 193. 带权原行的零预算形状
+
+**定义 193.1（同一候选中的原投影与翻转）。** 保持 188.1 的完整候选、指定复 C* 背景 $A=M_2(N)$ 以及可能不完备的原稠密 Jordan 域 $E$。若原 $P,F\in E$ 满足
+
+$$
+P^2=P,\qquad F^2=u,\qquad P\circ F=F/2,
+$$
+
+则称 $(P,F)$ 为本条所研究的原投影—翻转对。记 $Q=u-P$。由 $PFP=0$、$FPF=Q$，$P,Q,PF,FP$ 在环境中构成矩阵单位，给 $A\simeq M_2(PAP)$ 的准确坐标；在此坐标中 $P=p$、$F=v$。这里只重写整个原域、评价与旧映射，不假设旧 $D$ 协变，亦不要求这些环境矩阵单位逐个属于原 $E$。取任意 $0<\alpha\le\beta$，记实际旧值 $T=D(\alpha P,\beta F)$；未将它识别成 $\alpha\beta D(P,F)$。
+
+**定理 193.2（带权行的形状与上预算）。** 在 193.1 下，存在唯一自伴收缩 $W\in PAP$，使上述准确矩阵坐标中的同一旧值满足
+
+$$
+T=\frac{\alpha\beta}{2}
+\begin{pmatrix}0&iW\\-iW&0\end{pmatrix}.
+\tag{193.1}
+$$
+
+因此
+
+$$
+(2P-u)\circ T=F\circ T=0,\qquad
+0\le T^2\le\frac{\alpha^2\beta^2}{4}u.
+\tag{193.2}
+$$
+
+证明。在 $PAP$ 的忠实表示中用全部第二块支撑向量读取原 P2，得
+
+$$
+T=\begin{pmatrix}A&B\\B^*&0\end{pmatrix},\qquad A=A^*.
+$$
+
+置 $a=\alpha p$、$b=\beta v$，选 $0<\theta\le\pi/4$，使 $\sin2\theta=\alpha/\beta$，记 $k=\cos2\theta$。由已付 185.1 的标签旋转，原输入
+
+$$
+r=a\cos\theta-b\sin\theta,\qquad
+s=a\sin\theta+b\cos\theta
+$$
+
+满足 $D(r,s)=T$，且准确已知乘法给
+
+$$
+r\circ s=-\frac{\alpha\beta}{2}
+\begin{pmatrix}k^2&-k\\-k&1\end{pmatrix}.
+\tag{193.3}
+$$
+
+它消灭每个向量 $\xi=(\eta,k\eta)$。对这些数学正读取，直接消费 (188.3) 的零预算论证，即两份实际 PB $(r,s,0)$、$(s,r,0)$，得 $\phi_\xi(r\circ T)=\phi_\xi(s\circ T)=0$。反解已知实旋转，亦得 $\phi_\xi(a\circ T)=\phi_\xi(b\circ T)=0$。置 $A_\eta=\langle\eta,A\eta\rangle$、$B_\eta=\operatorname{Re}\langle\eta,B\eta\rangle$，两式准确为
+
+$$
+A_\eta+kB_\eta=0,\qquad
+kA_\eta+(1+k^2)B_\eta=0.
+\tag{193.4}
+$$
+
+系数行列式为 $1$，故全部 $A_\eta=B_\eta=0$。固定算子的 Hermitian 极化给 $A=0$、$B^*=-B$，于是唯一写成 (193.1)，其中 $W=W^*$。
+
+以 $\zeta=(\varepsilon\eta,i\eta)$ 读取原 $(\alpha p,\beta v)$ 的 P2。置 $n=\|\eta\|^2$，则
+
+$$
+(\alpha\beta\varepsilon)^2|\langle\eta,W\eta\rangle|^2
+\le\alpha^2\beta^2\varepsilon^2(1+\varepsilon^2)n^2.
+$$
+
+对非零实 $\varepsilon$ 约去公共因子，并令这个已知数值参数足够小，得到 $|\langle\eta,W\eta\rangle|\le\|\eta\|^2$。自伴性和忠实表示给 $\|W\|\le1$，继而得 (193.2)。全部读取的合法性仍来自 129.1 的原准确锥，不是新增实际准备。零代数的结论平凡。∎
+
+## 194. 带权行的反向预算不需要齐次性
+
+**定理 194.1（每一份带权旧值自己饱和）。** 在 193.1 的原条件下，193.2 中的同一个系数还满足
+
+$$
+W^2=1_{PAP},\qquad T^2=\frac{\alpha^2\beta^2}{4}u.
+\tag{194.1}
+$$
+
+这仍只描述该份实际旧值，不比较不同权重的系数。
+
+证明。已付单位仿射平面零值给 $D(\alpha P,tQ)=0$。对每个有限实 $t$，准确 PB $(\alpha P,\beta F,tQ)$ 因 $F\circ T=0$ 而成为
+
+$$
+D(\beta F+T,tQ+\alpha\beta F/2)
+-D(\beta F-T,tQ-\alpha\beta F/2)
+=-\frac{t\alpha\beta}{2}F.
+\tag{194.2}
+$$
+
+取 $\varepsilon>0$、$t=\alpha\beta/(2\varepsilon)$，用 $\zeta=(\eta,\varepsilon\eta)$ 读取。记 $n=\|\eta\|^2$、$m=\|W\eta\|^2$、$L_\pm=1\pm i\alpha W/2$。正外层两输入的作用向量为
+
+$$
+\beta(\varepsilon L_+\eta,L_-\eta),\qquad
+\alpha\beta(\varepsilon\eta/2,\eta),
+$$
+
+负外层则为
+
+$$
+\beta(\varepsilon L_-\eta,L_+\eta),\qquad
+\alpha\beta(-\varepsilon\eta/2,0).
+$$
+
+两份第一向量的模平方均为 $\beta^2(1+\varepsilon^2)(n+\alpha^2m/4)$；第二向量的模平方分别为 $\alpha^2\beta^2(1+\varepsilon^2/4)n$ 和 $\alpha^2\beta^2\varepsilon^2n/4$。两个实内积分别为 $\alpha\beta^2(1+\varepsilon^2/2)n$ 和 $-\alpha\beta^2\varepsilon^2n/2$。因此准确实 Gram 预算为
+
+$$
+\begin{aligned}
+\Delta_+
+&=\alpha^2\beta^4\left[\frac{\varepsilon^2n^2}{4}+\frac{\alpha^2nm}{4}(1+\varepsilon^2)(1+\varepsilon^2/4)\right],\\
+\Delta_-
+&=\alpha^2\beta^4\left[\frac{\varepsilon^2n^2}{4}+\frac{\alpha^2nm}{16}\varepsilon^2(1+\varepsilon^2)\right].
+\end{aligned}
+\tag{194.3}
+$$
+
+(194.2) 的右端读取为固定数 $-\alpha^2\beta^2n/2$，故两次 P2 给
+
+$$
+\frac{\alpha^2\beta^2n}{2}
+\le\sqrt{\Delta_+}+\sqrt{\Delta_-}.
+\tag{194.4}
+$$
+
+已知右端在数值参数 $\varepsilon\to0$ 时趋于 $\alpha^2\beta^2\sqrt{nm}/2$。若 $m<n$，某个有限正 $\varepsilon$ 已违反 (194.4)。所以 $m\ge n$；由 193.2 的收缩界又有 $m\le n$。固定算子的极化与忠实表示遂给 $W^*W=1$，再用自伴性得 (194.1)。零向量不被删除。没有对随参数改变的未知 $D$ 取极限，也没有对 $D$ 作缩放展开。∎
+
+## 195. 两条由旧响应生成的带权新行
+
+**定义 195.1（种子与两条内生指定行）。** 回到 188.1 的原 $p,v$，直接消费 188.2。置
+
+$$
+h=2p-u,\qquad j=2D(p,v),\qquad
+\rho=\sqrt2-1,\qquad c=\cos(\pi/8),\quad s=\sin(\pi/8),
+$$
+
+$$
+\gamma=\sqrt{1+\rho^6},\qquad \beta_0=\frac{\gamma}{2\rho}.
+$$
+
+原 $h,v,j$ 的平方均为 $u$ 且两两 Jordan 正交。记
+
+$$
+T_+=cv+sj,\quad T_-=cv-sj,\qquad
+E_+=sv-cj,\quad E_-=-sv-cj,
+$$
+
+$$
+P_\pm=\frac{u+E_\pm}{2},\qquad
+F_+=\frac{T_+-\rho^3h}{\gamma},\qquad
+F_-=\frac{T_-+\rho^3h}{\gamma}.
+\tag{195.1}
+$$
+
+这些仅为原实线性组合，故均在可能不完备的 $E$。已知乘法直接给 $P_\pm^2=P_\pm$、$F_\pm^2=u$ 和 $P_\pm\circ F_\pm=F_\pm/2$；且 $0<\rho<\beta_0$。非零代数中 $P_+-P_-=sv\ne0$，故是两条不同的原行。它们依赖同一份种子旧输出 $j$，不是任意外部指定的两行。
+
+**定理 195.2（五份准确配平识别两个实际旧值）。** 同一旧 $D$ 必须满足
+
+$$
+\boxed{
+Y_+:=D(\rho P_+,\beta_0 F_+)=\frac{h+\rho^3T_+}{4},\qquad
+Y_-:=D(\rho P_-,\beta_0 F_-)=\frac{h-\rho^3T_-}{4}.}
+\tag{195.2}
+$$
+
+种子已付以后，跨输入证明只消费一份母 PB、两行各两份零预算 PB 及原 P2；不需要 194.1 的附加反向 PB，不预设有限三轴子代数对 $D$ 输出闭合。
+
+证明。置 $q=u-p$、$\ell=\rho s$、$m_0=\sqrt2\ell$、$C_0=\ell p+m_0q$。已付单位仿射平面零值给 $D(p,C_0)=0$。准确 PB $(p,v,C_0)$ 的位移为 $\nu=j/2-\ell p$、$\omega=v/2$，其外层输入为
+
+$$
+a_\pm=v\pm j/2\mp\ell p,\qquad
+b_\pm=C_0\pm v/2.
+$$
+
+因此
+
+$$
+D(a_+,b_+)-D(a_-,b_-)
+=\frac{\ell-m_0}{2}v=-\frac{\rho^3c}{2}v.
+\tag{195.3}
+$$
+
+由 $s=\rho c$、$\rho^2+2\rho=1$，准确标签恒等式为
+
+$$
+\begin{aligned}
+(ca_++sb_+,-sa_++cb_+)&=(\beta_0F_+,\rho P_+),\\
+(ca_--sb_-,sa_-+cb_-)&=(\beta_0F_-,\rho P_-).
+\end{aligned}
+$$
+
+两次已付 SO$(2)$ 标签旋转和反对称性使 $D(a_\pm,b_\pm)=-Y_\pm$。故母 PB 准确连接这两份未知旧值：
+
+$$
+Y_+-Y_-=\frac{\rho^3c}{2}v.
+\tag{195.4}
+$$
+
+对两条新行消费 193.2 的形状与上预算，得
+
+$$
+E_\pm\circ Y_\pm=F_\pm\circ Y_\pm=0,\qquad
+Y_\pm^2\le\frac{\gamma^2}{16}u.
+\tag{195.5}
+$$
+
+为明确此处确实只用四份附加 PB，选 $0<\tau<\pi/4$，使 $\sin2\tau=\rho/\beta_0$，置
+
+$$
+r_\pm=\rho P_\pm\cos\tau-\beta_0F_\pm\sin\tau,\qquad
+s_\pm=\rho P_\pm\sin\tau+\beta_0F_\pm\cos\tau.
+$$
+
+四份就是 $(r_+,s_+,0)$、$(s_+,r_+,0)$、$(r_-,s_-,0)$、$(s_-,r_-,0)$。其内层旧值由真实旋转分别为 $Y_\pm,-Y_\pm$，零输入值为零；不是自由指派。193.3 的核读取让四份外层预算消失，支付 (195.5) 的方向约束；该条余下 P2 读取支付平方上界。
+
+## 196. 三个正交方向与一个共同残差
+
+**证明 195.2 的续段。** 置 $M=(Y_++Y_-)/2$、$\delta=\rho^3c/4$。由 (195.4)，$Y_+=M+\delta v$、$Y_-=M-\delta v$。将 $E_\pm$ 代入 (195.5)，得到
+
+$$
+s(v\circ M)-c(j\circ M)+\delta s u=0,\qquad
+-s(v\circ M)-c(j\circ M)+\delta s u=0.
+$$
+
+相减与相加分别给
+
+$$
+v\circ M=0,\qquad j\circ M=\frac{\rho^3s}{4}u.
+\tag{196.1}
+$$
+
+再将 $F_+$ 代入 $F_+\circ Y_+=0$，消费 (196.1)，即有
+
+$$
+0=\frac{\rho^3(s^2+c^2)}{4}u-\rho^3(h\circ M),
+\qquad h\circ M=\frac14u.
+$$
+
+定义同一个原自伴残差
+
+$$
+R=M-\frac14h-\frac{\rho^3s}{4}j.
+$$
+
+于是 $h\circ R=v\circ R=j\circ R=0$，且
+
+$$
+Y_+=Y_+^0+R,\quad Y_-=Y_-^0+R,\qquad
+Y_+^0=\frac{h+\rho^3T_+}{4},\quad
+Y_-^0=\frac{h-\rho^3T_-}{4}.
+\tag{196.2}
+$$
+
+这时才比较平方；没有将 $R$ 预先放进三轴线性包。三轴关系给 $(Y_\pm^0)^2=\gamma^2u/16$，并使 $Y_\pm^0\circ R=0$。所以由 (195.5)，
+
+$$
+\boxed{0\le R^2=Y_\pm^2-\frac{\gamma^2}{16}u\le0.}
+\tag{196.3}
+$$
+
+故 $R^2=0$。环境 C* 范数恒等式使自伴 $R=0$，代回 (196.2) 得 (195.2)。全部输入、输出、残差及五次配平标签均在原 $E$，仅对已知环境运算和数学正读取使用表示；不完备性不造成额外前件。∎
+
+## 197. 共同系数的准确范围与更大结构
+
+**定义 197.1（这两条带权行所共享的取向）。** 在 188.2 的原坐标中，置 $K=\operatorname{diag}(Z,Z)=ihvj$，则 $j=iKhv$。它与 $h,v,j$ 及本条全部已知输入 $P_\pm,F_\pm$ 交换。由已知结合乘法，
+
+$$
+E_+F_+=-\frac{iK}{\gamma}(h+\rho^3T_+),\qquad
+E_-F_-=-\frac{iK}{\gamma}(h-\rho^3T_-).
+$$
+
+因为 $[P_\pm,F_\pm]=E_\pm F_\pm$、$\rho\beta_0=\gamma/2$，195.2 准确成为
+
+$$
+D(\rho P_\pm,\beta_0F_\pm)
+=\frac{iK}{2}[\rho P_\pm,\beta_0F_\pm].
+\tag{197.1}
+$$
+
+两份实际旧值确实使用同一个种子系数 $K$。这是对两份内生指定带权行的识别，不是完整旧乘法公式。
+
+这两份角不要求最小投影：由 $E_\pm\circ h=0$，环境中的 $U_\pm=(u+E_\pm h)/\sqrt2$ 为酉元，且 $U_\pm pU_\pm^*=P_\pm$。故 $P_\pm A P_\pm\simeq pAp\simeq N$；$N$ 没有最小投影时，这些角同样没有最小投影。此为已知投影坐标，不使用 $D$ 的酉协变，也不要求 $U_\pm$ 为原操作。
+
+原输入权重不能免费拿掉。本条没有支付
+
+$$
+D(\rho P_\pm,\beta_0F_\pm)
+=\rho\beta_0D(P_\pm,F_\pm).
+\tag{197.2}
+$$
+
+194.1 使每份带权行各有单位系数，也不比较不同权重的系数。与此同时，三轴只保证 $K$ 在 190.3 的小包络中中央。已知 Jordan 二次表示在环境中满足 $U_x(y)=xyx$（$x^2=u$），所以
+
+$$
+U_hU_vU_j(y)=KyK.
+\tag{197.3}
+$$
+
+其在整个 $A_{\rm sa}$ 上为恒等映射，才等价于 $Z$ 在整个 $N$ 中中央；本条只在三轴生成的有限包络中给这一恒等，未支付任意 $N$ 系数。Alfsen–Shultz，[*Orientation in operator algebras*](https://pmc.ncbi.nlm.nih.gov/articles/PMC22571/)，DOI [10.1073/pnas.95.12.6596](https://doi.org/10.1073/pnas.95.12.6596)，在其 von Neumann 论域中定义三标架时还要求三反射复合为恒等。其动力对应入口已经要求线性映射到斜序导子；这些成熟结果不能代替本题从原 PB 支付 (197.2)、全域反射恒等或旧 $D$ 的线性。
+
+一般单位平移、纯态作用纤维 $\mathsf F$ 和同一旧 $D$ 的分别可加仍未得。179.1、180.1 的消费者保持原条件：先支付相应 $\mathsf F$ 或实双线性，P2 才提升全部有限原复 Gram 正性，完整 PB 才接回原 R、同一结合乘法及后续量子结构。本条的有限跨行结果不替换整条量子起源目标，也不替代一般 JB 原域到复 C* 背景的未证桥。
+
+## 198. 新增内容与完整白话
+
+**定义 198.1（归属、前件与简化）。** 193.2、194.1、195.2 的上述推导归为 $\texttt{repo-derived}$：带权旋转的零读取支付完整输出块形状，一份附加 PB 支付每份带权行自己的反向预算；一份母 PB 与四份零预算 PB 再将两个实际旧值接成同一个残差，最后以正平方夹零分别识别它们。未假设输出闭合、旧 $D$ 的齐次性、可加性、连续性或协变；原域不需要完备，角不需要最小投影。原 188.2、185.1、129.1 直接复用。忠实表示、矩阵单位、Gram 行列式、Hermitian 极化及自伴平方为零的结论均是成熟中间工具；Jordan/JC 背景仍参照 Hanche-Olsen–Størmer，[*Jordan Operator Algebras*](https://hanche.folk.ntnu.no/joa/joa-m.pdf)。不主张文献穷尽或历史优先权。
+
+独立公理条件数未减少。简化在于不再分别猜测两个输出的实现者，也不先证明整个 $D$ 线性；用同一实际母配平和三轴方向约束，把全部未识别部分合为一个自伴 $R$，以 $0\le R^2\le0$ 一次消去。特殊权重和输入对种子旧输出的依赖仍是结论的准确范围，不升格为新公理。
+
+原 $\Omega/\mathrm{native}$、全词 $K/J/q$、父位置和 ready 类型、原中心与不等维块、全部零／不等／次归一质量、实际准备与完整菜单、共同记录与真正分组遗忘、全仪器及其环境和全部输出、实际相关联合与递归同源参考、全部合法顺序／自适应／并行历史及每个仍合法未来、停止／拒绝／销毁、同数两侧与真实逆向返回，均保持 128.1 的原量词。数学坐标、环境酉元和正泛函不供应实际操作或准备；正质量 Born 比例仍为 $\alpha(e_r)/m_\alpha$，零质量不归一。CountRead 无穷、非离散记录、正常性与前对偶、物理钟、能量及共同 $\hbar$ 均守原来源条件。
+
+**定义 198.2（完整白话）。** 候选仍是同一对原对象的正表，以及同一份响应的正反平方配平。先把一条投影和翻转带上权重，正表与零读取仍会把它的响应限制在第三方向，另一次有限配平又阻止这个方向缩短；这还不说明换权重后方向一定相同。真正的新连接是拿原来已经产生的第三轴，构造两个具体的新窗口。一次配平准确规定两份新响应相差多少，四次零预算配平限制它们各自能伸出的方向，正表再限制它们的平方大小。两份响应若还藏着共同偏差，这份偏差就必须同时垂直于三根轴；平方展开后，它的平方既不能为负，又不能大于零，所以偏差只能消失。这样，两份带固定权重的真实响应分别被确定，确实沿用种子窗口的同一个取向，而不是先假设所有输出都关在三轴里。接通的仍是这两个由旧响应生成的带权窗口；权重还不能任意拿掉，其他原窗口和任意环境系数也尚未全部接通。因此还须继续从原配平证明共同性与相加，才能完整接回通常量子乘法。独立公理数没有减少，全部实际准备、仪器、联合、合法未来、真实返回及物理钟和作用量仍须来自同一个原世界。
+
+## 追加锚（本行以下为增补区）
