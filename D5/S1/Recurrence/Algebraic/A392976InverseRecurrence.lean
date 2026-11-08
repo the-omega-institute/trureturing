@@ -39,7 +39,13 @@ def DFinite (B : PowerSeries ℚ) : Prop :=
     ∑ j : Fin (d + 1), (p j : PowerSeries ℚ) *
       (derivative (R := ℚ))^[j.val] B = 0
 
-private def H : Polynomial ℚ := Polynomial.derivative f
+private def H : Polynomial ℚ :=
+  1 - 2*Polynomial.X - 6*Polynomial.X^2 + 5*Polynomial.X^4
+
+private theorem derivative_f : Polynomial.derivative f = H := by
+  norm_num [H, f, Polynomial.derivative_mul, Polynomial.derivative_pow,
+    Polynomial.derivative_sub, map_ofNat, map_natCast]
+  ring
 private def theta (B : PowerSeries ℚ) : PowerSeries ℚ := X * derivative (R := ℚ) B
 private def op (w : ℕ → ℕ → ℚ) (B : PowerSeries ℚ) : PowerSeries ℚ :=
   ∑ k ∈ Finset.range 6, X^k *
@@ -117,6 +123,7 @@ private def wU : ℕ → ℕ → ℚ
   | _, _ => 0
 
 set_option maxHeartbeats 4000000 in
+-- The finite exact polynomial expressions require an enlarged elaboration budget.
 private def num : ℕ → Polynomial ℚ
   | 0 => (1) * Polynomial.X^1
   | 1 => (1) * Polynomial.X^1 +
@@ -222,13 +229,14 @@ private def num : ℕ → Polynomial ℚ
   | _ => 0
 
 set_option maxHeartbeats 4000000 in
+-- The finite exact polynomial expressions require an enlarged elaboration budget.
 private theorem num_recurrence (j : ℕ) (hj : j < 4) :
     num (j + 2) = f * (H * Polynomial.derivative (num (j + 1)) -
-      (2*j+1 : ℕ) * (Polynomial.derivative H * num (j + 1))) := by
+      ((2*j+1 : ℕ) : Polynomial ℚ) * (Polynomial.derivative H * num (j + 1))) := by
   have hs : j = 0 ∨ j = 1 ∨ j = 2 ∨ j = 3 := by omega
   rcases hs with rfl | rfl | rfl | rfl <;> norm_num [num, H, f, Polynomial.derivative_mul,
     Polynomial.derivative_pow, Polynomial.derivative_sub, Polynomial.derivative_add,
-    Polynomial.derivative_smul, smul_eq_mul] <;> ring
+    Polynomial.derivative_smul, smul_eq_mul, map_ofNat, map_natCast] <;> ring
 
 private theorem inverse_right : (f : PowerSeries ℚ).subst U = X :=
   PowerSeries.subst_substInvOfIsUnit_right _ f_zero _
@@ -247,18 +255,17 @@ private theorem theta_transport (B : PowerSeries ℚ) :
       (f : PowerSeries ℚ) * derivative (R := ℚ) (B.subst (f : PowerSeries ℚ)) := by
   have hf : HasSubst (f : PowerSeries ℚ) := .of_constantCoeff_zero f_zero
   rw [theta, subst_mul hf, subst_X hf, derivative_subst hf]
-  rw [derivative_coe]
-  dsimp [H]
+  rw [derivative_coe, derivative_f]
   ring
 
 private theorem coe_nat (n : ℕ) : ((n : Polynomial ℚ) : PowerSeries ℚ) = n :=
-  Polynomial.coeToPowerSeries.ringHom.map_natCast n
+  map_natCast Polynomial.coeToPowerSeries.ringHom n
 
 private theorem scaled_step (B : PowerSeries ℚ) (d : ℕ) (N : Polynomial ℚ)
     (h : (H : PowerSeries ℚ)^(d + 1) * B.subst (f : PowerSeries ℚ) = N) :
     (H : PowerSeries ℚ)^(d + 3) * (theta B).subst (f : PowerSeries ℚ) =
       (f * (H * Polynomial.derivative N -
-        (d + 1 : ℕ) * (Polynomial.derivative H * N)) : Polynomial ℚ) := by
+        ((d + 1 : ℕ) : Polynomial ℚ) * (Polynomial.derivative H * N)) : Polynomial ℚ) := by
   have hd := congrArg (derivative (R := ℚ)) h
   simp only [Derivation.leibniz, derivative_pow, derivative_coe,
     Nat.add_sub_cancel, Nat.cast_add, Nat.cast_one, smul_eq_mul] at hd
@@ -272,7 +279,11 @@ private theorem scaled_iterates (j : ℕ) (hj : j < 5) :
       (theta^[j + 1] U).subst (f : PowerSeries ℚ) = (num (j + 1) : Polynomial ℚ) := by
   induction j with
   | zero =>
-    simpa [Function.iterate_one, inverse_left, num, f] using theta_transport U
+    have h := theta_transport U
+    rw [inverse_left, derivative_X, mul_one] at h
+    simpa only [Function.iterate_one, pow_one] using
+      h.trans (by norm_num [num, f, Polynomial.coe_add, Polynomial.coe_mul,
+        Polynomial.coe_sub, Polynomial.coe_pow, coe_nat]; ring)
   | succ j ih =>
     have h := scaled_step (theta^[j + 1] U) (2*j) (num (j + 1)) (ih (by omega))
     rw [num_recurrence j (by omega)]
@@ -281,13 +292,15 @@ private theorem scaled_iterates (j : ℕ) (hj : j < 5) :
       congr 1 <;> omega
 
 set_option maxHeartbeats 4000000 in
+-- The finite exact polynomial expressions require an enlarged elaboration budget.
+set_option maxRecDepth 65536 in
 private theorem polynomial_certificate :
     (∑ k ∈ Finset.range 6, f^k *
       ∑ j ∈ Finset.range 6,
         Polynomial.C (wU k j) * num j * H^(if j = 0 then 9 else 10 - 2*j)) = 0 := by
-  norm_num [Finset.sum_range_succ, wU, num, H, f, Polynomial.derivative_mul,
-    Polynomial.derivative_pow, Polynomial.derivative_sub, Polynomial.derivative_add,
-    Polynomial.derivative_smul, smul_eq_mul]
+  norm_num [Finset.sum_range_succ, wU]
+  simp only [num, H, f]
+  norm_num only [map_ofNat, map_natCast]
   ring
 
 private theorem common_denominator (j : ℕ) (hj : j < 6) :
@@ -333,7 +346,7 @@ private theorem inverse_operator : op wU U = 0 := by
         intro j hj
         rw [common_denominator j (Finset.mem_range.mp hj)]
       _ = 0 := by simpa only [map_sum, map_mul, map_pow, Polynomial.coeToPowerSeries.ringHom_apply,
-          Polynomial.coe_C, mul_assoc] using hcert
+          Polynomial.coe_C, Polynomial.coe_zero, mul_assoc] using hcert
   have hh : (H : PowerSeries ℚ) ≠ 0 := by
     intro h
     have hz := congrArg constantCoeff h
@@ -344,6 +357,7 @@ private theorem inverse_operator : op wU U = 0 := by
   simpa only [subst_comp_subst_apply hf hu, inverse_right, X_subst, ← coe_substAlgHom hu, map_zero] using h
 
 set_option maxHeartbeats 4000000 in
+-- The finite exact polynomial expressions require an enlarged elaboration budget.
 private theorem operator_shift (B : PowerSeries ℚ) : op wU (X * B) = X * op wA B := by
   norm_num [op, wU, wA, Finset.sum_range_succ, Function.iterate_succ_apply',
     theta, Derivation.leibniz, derivative_X, derivative_one, map_add, map_mul,
@@ -399,6 +413,7 @@ private def p : ℕ → Polynomial ℚ
   | _ => 0
 
 set_option maxHeartbeats 4000000 in
+-- The finite exact polynomial expressions require an enlarged elaboration budget.
 private theorem normal_form (B : PowerSeries ℚ) :
     op wA B = ∑ j : Fin 6, (p j.val : PowerSeries ℚ) * (derivative (R := ℚ))^[j.val] B := by
   norm_num [op, wA, p, Finset.sum_range_succ, Fin.sum_univ_succ,
@@ -413,7 +428,7 @@ private theorem dfinite : DFinite A := by
   · refine ⟨⟨5, by decide⟩, ?_⟩
     intro hz
     change p 5 = 0 at hz
-    have h := congrArg (Polynomial.coeff 5) hz
+    have h := congrArg (fun q : Polynomial ℚ => q.coeff 5) hz
     norm_num [p] at h
   · exact (normal_form A).symm.trans A_operator
 
