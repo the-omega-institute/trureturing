@@ -903,10 +903,6 @@ theorem finite_certificate : (a 0 : ℤ) = 0 ∧ (a 1 : ℤ) = 11 ∧ (a 2 : ℤ
     (a 11 : ℤ) = 2248141575290880 := by
   refine ⟨by simp [a, Legal], ?_⟩
   simp only [counting_bridge]
-  change total (v 0) = 11 ∧ total (v 1) = 80 ∧ total (v 2) = 2688 ∧ total (v 3) = 78336 ∧
-    total (v 4) = 2469888 ∧ total (v 5) = 76447744 ∧ total (v 6) = 2385772544 ∧
-    total (v 7) = 74291609600 ∧ total (v 8) = 2315406802944 ∧ total (v 9) = 72144847372288 ∧
-    total (v 10) = 2248141575290880
   simp only [
     total_table 0 (by omega), initial_table0, total_table 1 (by omega), initial_table1,
     total_table 2 (by omega), initial_table2, total_table 3 (by omega), initial_table3,
