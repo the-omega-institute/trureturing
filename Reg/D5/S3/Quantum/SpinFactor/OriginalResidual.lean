@@ -5,8 +5,8 @@ import D5.S3.Quantum.SpinFactor.OriginalResidual
 /-! Source-equivalent equality readouts for the residual statements.
 
 Factories retain every original premise. Their relation witness is an explicit
-parameter, not a closed original-P2/PB instance. `sourceSelection = none` carries
-no raw source-selector binding evidence. These terms supply no validation claim.
+parameter, not a closed original-P2/PB instance. Source selectors designate the
+original equality readouts. A selector alone supplies no validation claim.
 -/
 
 noncomputable section
@@ -106,7 +106,17 @@ def registration (D₀ : E → E → E) (hP₀ : P2 D₀) (hPB₀ : PB D₀)
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := some E
-  sourceSelection := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.SpinFactor.OriginalResidual
+    definition := none
+    coordinates := #[]
+    readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "body", "body", "body", "fn",
+        "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -169,7 +179,17 @@ def registration (D₀ : E → E → E) (hP₀ : P2 D₀) (hPB₀ : PB D₀)
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := some E
-  sourceSelection := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.SpinFactor.OriginalResidual
+    definition := none
+    coordinates := #[]
+    readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "body", "body", "body", "fn",
+        "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -225,7 +245,22 @@ def registration :
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := some ℝ
-  sourceSelection := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.SpinFactor.OriginalResidual
+    definition := none
+    coordinates := #[]
+    readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "fn", "arg", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false },
+      { path := #["body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "arg", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -281,7 +316,16 @@ def registration (D₀ : E → E → E) (hP₀ : P2 D₀) (hPB₀ : PB D₀)
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := some E
-  sourceSelection := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.SpinFactor.OriginalResidual
+    definition := none
+    coordinates := #[]
+    readouts := #[{ path := #["body", "body", "body", "body", "arg", "body", "arg",
+        "body", "body", "body", "body", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
