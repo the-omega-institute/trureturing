@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:1640838d96376af42e67c40c27544ae8fcc97c23a2a8f3bea86eceedc7ed8c11
   normalized_sha256: sha256:1640838d96376af42e67c40c27544ae8fcc97c23a2a8f3bea86eceedc7ed8c11
 cas_ref: sha256:1640838d96376af42e67c40c27544ae8fcc97c23a2a8f3bea86eceedc7ed8c11
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Quantum/SpinChains/TokenBlockLocalDefect.result
+    target_statement_id: sha256:a3c965b44cf43a2c86616ca949d4407087a87fb5bfc1702cbcf76af53d1a70b4
 receipts:
   unresolved_subitems: []
