@@ -1,0 +1,35 @@
+**推论 174.1（同一原代数的完整结论）。** 定理 167.2 的双线性、原 R、结合星乘法及 (167.4) 均成立。
+
+证明。本节恢复 167 的原元素记号，$\rho(a)$ 表示原 $a$ 的忠实坐标。对全部原 $a,b$ 的 (167.3) 已确立，右侧是实双线性；$\rho$ 单射使原 $D$ 分别实双线性。也在此时才得到 $K_\varepsilon(\rho a,\rho b)\in\rho(E)$。因此 $S-iD$ 的实部、虚部都在原域，其复双线性延拓满足
+
+$$
+\rho_{\mathbb C}(a\star b)=
+\begin{cases}
+\rho(a)\rho(b),&\varepsilon=-1,\\
+\rho(b)\rho(a),&\varepsilon=+1.
+\end{cases}
+\tag{174.1}
+$$
+
+$\rho_{\mathbb C}(a+ib)=\rho(a)+i\rho(b)$ 忠实，通常／相反的环境乘法均结合，故原 $E+iE$ 对相应乘法闭合、含原单位且结合，原共轭为其星运算。结合律的实部准确给
+
+$$
+(a\circ b)\circ c-D(D(a,b),c)
+=a\circ(b\circ c)-D(a,D(b,c))
+\quad(a,b,c\in E).
+\tag{174.2}
+$$
+
+两边每个内层旧值及外层输入仍在原 $E$。没有以完成后的乘法替换原调用。本分支只有相对于指定 $j$ 的一个固定符号，故 (174.1) 给原复化的通常或相反乘法闭合；不通过转置改动 $j$。这不消去本卷 162.1 的多中央混合符号障碍，也未将该例的定向乘法误写成原坐标通常乘法。
+
+对任意有限原 $a_1,\ldots,a_m$、复系数 $\lambda_r$，置 $T=\sum_r\lambda_ra_r\in E+iE$。准确复用本卷 153.1、161.1 及静态重构卷 66.1 的正平方子论证，并在当前原域核对其所需的正元归属：
+
+$$
+\sum_{r,s}\bar\lambda_r\lambda_s
+\bigl(\alpha(a_r\circ a_s)-i\alpha D(a_r,a_s)\bigr)
+=\alpha_{\mathbb C}(T^*\star T)\ge0.
+\tag{174.3}
+$$
+
+这里 $T^*\star T\in E$，在忠实坐标中是 $\rho_{\mathbb C}(T)^*\rho_{\mathbb C}(T)$ 或 $\rho_{\mathbb C}(T)\rho_{\mathbb C}(T)^*$，皆为正；168.1 反映正性，故它在同一原锥 $C$。不等式来自同一原 $\alpha$ 的正性。所有评价标签和 $m_\alpha=\alpha(u)$ 原样保留；质量零时 $|\alpha(a)|\le m_\alpha N(a)$ 使评价全零，不除以质量。不等、次归一和奇异原评价也不例外。这完成定理 167.2 的全部结论。∎
+
