@@ -613,13 +613,16 @@ private unsafe def kingFillProof (target : Expr) : MetaM Expr := do
   unless input.isAppOfArity ``Occupancy.fill 4 do throwError "Expected fill application"
   unless rhs.isAppOfArity ``Option.some 2 do throwError "Expected successful fill"
   let args := input.getAppArgs
-  let rawTy := args[0]!; let key := args[1]!
+  let rawTy := args[0]!
+  let key := args[1]!
   let xs := args[2]!
   let initial := args[3]!
   let finalTree := rhs.getAppArgs[1]!
   let nativeKey ← evalExpr (RawVertex → List Bool) (← inferType key) key
   let nativeXs ← evalExpr (List RawVertex) (← inferType xs) xs
   let cache ← IO.mkRef (mkPtrMap : PtrMap (Occupancy RawVertex) Expr)
+  -- Retain shared subtrees through projections from their checked state declaration.
+  let fresh ← IO.mkRef (mkPtrMap : PtrMap (Occupancy RawVertex) Unit)
   let rec quoteTree (t : Occupancy RawVertex) : MetaM Expr := do
     if let some e := (← cache.get).find? t then return e
     let e ← match t with
@@ -630,7 +633,17 @@ private unsafe def kingFillProof (target : Expr) : MetaM Expr := do
           | some a => pure (mkApp2 (mkConst ``Option.some [.zero]) rawTy (← quoteRawVertex a))
         pure (mkApp4 (mkConst ``Occupancy.node [.zero]) rawTy ve (← quoteTree l) (← quoteTree r))
     cache.modify (·.insert t e)
+    fresh.modify (·.insert t ())
     return e
+  let branch := mkApp (mkConst ``Occupancy.branch [.zero]) rawTy
+  let rec rebase (t : Occupancy RawVertex) (ref : Expr) : MetaM Unit := do
+    unless ((← fresh.get).find? t).isSome do return
+    match t with
+    | .empty => pure ()
+    | .node _ l r =>
+      cache.modify (·.insert t ref)
+      rebase l (mkApp2 branch (mkConst ``Bool.false) ref)
+      rebase r (mkApp2 branch (mkConst ``Bool.true) ref)
   let fill := mkApp2 (mkConst ``Occupancy.fill [.zero]) rawTy key
   let someTree := mkApp (mkConst ``Option.some [.zero]) (← inferType initial)
   let mut current := initial
@@ -645,9 +658,11 @@ private unsafe def kingFillProof (target : Expr) : MetaM Expr := do
     let (chunk, next, nextExpr, step) ← withFreshCache do
       let some next := Occupancy.fill nativeKey block nativeTree | throwError "Fill rejected an insertion"
       let chunk ← mkListLit rawTy (← block.mapM quoteRawVertex)
+      fresh.set mkPtrMap
       let quoted ← quoteTree next
       if quoted.hasMVar || quoted.hasFVar then throwError "Expected a closed occupancy value"
       let nextExpr ← mkAuxDefinitionFor (← mkAuxDeclName (kind := `_kingFillState)) quoted (zetaDelta := true) (compile := false)
+      rebase next nextExpr
       let result := mkApp someTree nextExpr
       let eq ← mkEq (mkApp2 fill chunk current) result
       let step ← kingChecked eq (← mkEqRefl result)
@@ -663,6 +678,8 @@ private unsafe def kingFillProof (target : Expr) : MetaM Expr := do
   let listProof ← kingListProof (← mkEq xs assembled)
   let mapper ← withLocalDeclD `l (← inferType xs) fun l => mkLambdaFVars #[l] (mkApp2 fill l initial)
   mkEqTrans (← mkAppM ``congrArg #[mapper, listProof]) proof
+
+
 open Lean Meta in
 local elab "king_kernel_all" : tactic => do
   Lean.Elab.Tactic.closeMainGoalUsing `king_kernel_all fun expected _ => do
