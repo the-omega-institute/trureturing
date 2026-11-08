@@ -87,7 +87,7 @@ private theorem local_history_eq (labels : Set S) (update : S → Bool → R →
   exact hstate j.val (by omega)
 
 section Measurability
-variable [MeasurableSpace Ω] [MeasurableSpace S] [MeasurableSpace R]
+variable [MeasurableSpace S] [MeasurableSpace R]
     (labels : Set S) (update : S → Bool → R → S)
     (heff : ∀ b, Measurable (fun p : S × R => effective labels update p.1 b p.2))
 
@@ -325,7 +325,8 @@ theorem actual_state_prefix (l : ℕ) (x : Fin l → S) :
         exact congrFun hω (Fin.last n)
       have he : {ω | epochHistory labels update I τ K ξ (n + 1) ω = x} =
           (observedHistory labels update I τ K ξ n ⁻¹' B) ∩
-            {ω | epoch labels update (I ω) (ξ ω) (τ ω) (K ω) (n + 1) ∈ {x (Fin.last (n + 1))}} := by
+            {ω : Ω | epoch labels update (I ω) (ξ ω) (τ ω) (K ω) (n + 1) ∈
+              ({x (Fin.last (n + 1))} : Set S)} := by
         ext ω
         change (_ = x) ↔ (_ = xp) ∧ _ = _
         constructor
@@ -418,7 +419,8 @@ theorem actual_source_cylinders (n : ℕ) (a : ℕ × (Fin n → ℕ))
     have he : observedHistory labels update I τ K ξ (n + 1) ⁻¹' {(a, x)} =
         (observedHistory labels update I τ K ξ n ⁻¹' B) ∩
           {ω | K ω n = a.2 (Fin.last n)} ∩
-          {ω | epoch labels update (I ω) (ξ ω) (τ ω) (K ω) (n + 1) ∈ {x (Fin.last (n + 1))}} := by
+          {ω : Ω | epoch labels update (I ω) (ξ ω) (τ ω) (K ω) (n + 1) ∈
+            ({x (Fin.last (n + 1))} : Set S)} := by
       ext ω
       simp only [observedHistory, Set.mem_preimage, Set.mem_singleton_iff,
         Prod.ext_iff, Set.mem_inter_iff, Set.mem_setOf_eq]
