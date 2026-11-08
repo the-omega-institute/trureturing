@@ -16,6 +16,8 @@ The reverse implication identifies the chosen orientation with the fixed Pauli p
 
 The conclusion concerns the complete specified finite spin model. A Pauli matrix representation is a mathematical realization of its products, cone, norm and evaluations. It supplies no physical preparation, instrument, channel, resource cost or realization of a complete original source.
 
+The matrix coordinates use the generic QubitBloch scalarB and B_formula_core APIs. ActualPureQubitGeometry supplies Hermitian reconstruction and the PSD Bloch norm bound. CommutingMidpoint.bloch_hermitian and bloch_physical supply Hermiticity and positivity in trace-one Bloch normalization; positive scalar multiplication gives every positive mass, with the zero-mass case handled explicitly. These supplier applications preserve the original observable, density, cone and norm.
+
 **Definition 1.1 (Original carrier).**
 
 $$E = \operatorname{Prod}\left(\mathbb{R}, \operatorname{Fin}\left(3\right) \to \mathbb{R}\right)$$
@@ -344,7 +346,8 @@ For every D satisfying the original P2 and PB, the endpoint returns one global O
 - Truth anchor: `D5/S3/Quantum/SpinFactor/OriginalClassification.toFamily`
 - Truth anchor: `D5/S3/Quantum/SpinFactor/OriginalClassification.unit`
 - Dependency: [D5/S3/Quantum/Algebra/PauliFixedProductFamily](../Algebra/PauliFixedProductFamily.md)
-- Dependency: [D5/S3/Quantum/Measurement/FourQubitParentConstruction](../Measurement/FourQubitParentConstruction.md)
+- Dependency: [D5/S3/Quantum/CommutingMidpoint](../CommutingMidpoint.md)
+- Dependency: [D5/S3/Quantum/Measurement/Bloch/QubitBloch](../Measurement/Bloch/QubitBloch.md)
 - Dependency: [D5/S3/Quantum/SpinFactor/OriginalDContract](OriginalDContract.md)
 - Dependency: [D5/S3/Quantum/SpinFactor/OriginalPureRigidity](OriginalPureRigidity.md)
 - Dependency: [D5/S3/Quantum/SpinFactor/OriginalResidual](OriginalResidual.md)

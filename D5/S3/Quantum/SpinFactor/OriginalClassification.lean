@@ -8,7 +8,8 @@
 
 import Mathlib.Geometry.Euclidean.Angle.Unoriented.CrossProduct
 import D5.S3.Quantum.Algebra.PauliFixedProductFamily
-import D5.S3.Quantum.Measurement.FourQubitParentConstruction
+import D5.S3.Quantum.Measurement.Bloch.QubitBloch
+import D5.S3.Quantum.CommutingMidpoint
 import D5.S3.Quantum.SpinFactor.OriginalDContract
 import D5.S3.Quantum.SpinFactor.OriginalPureRigidity
 import D5.S3.Quantum.SpinFactor.OriginalResidual
@@ -182,9 +183,17 @@ private theorem fixed_crossD (opposite : Bool) (a b : E) :
   cases opposite <;> simp [fixed_coordinates, sign,
     _root_.D5.S3.Quantum.SpinFactor.OriginalDContract.crossD]
 
-private theorem phi_hermitian (a : E) : (phi a).IsHermitian :=
-  _root_.D5.S3.Quantum.Measurement.FourQubitParentConstruction.scalarB_hermitian
-    a.1 (euclideanVec a.2)
+private theorem phi_hermitian (a : E) : (phi a).IsHermitian := by
+  have h := (_root_.D5.S3.Quantum.CommutingMidpoint.bloch_hermitian
+    ((2 : ℝ) • euclideanVec a.2)).add
+    (Matrix.isHermitian_one.smul
+      (show IsSelfAdjoint ((a.1 - 1 / 2 : ℝ) : ℂ) by simp [IsSelfAdjoint]))
+  convert h using 1
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    simp [phi, _root_.D5.S3.Quantum.Measurement.FourQubitParentConstruction.scalarB,
+      _root_.D5.S3.Quantum.Measurement.FourQubitParentConstruction.B_formula_core,
+      _root_.D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix] <;> ring
 
 private theorem phi_star (a : E) : (phi a)ᴴ = phi a := (phi_hermitian a).eq
 
@@ -195,17 +204,56 @@ private theorem phi_product (opposite : Bool) (a b : E) :
     simp [product, phi, euclideanVec, jordan_coordinates, fixed_coordinates, sign,
       _root_.D5.S3.Quantum.SpinFactor.OriginalDContract.dot,
       _root_.D5.S3.Quantum.SpinFactor.OriginalDContract.cross, dotProduct,
-      _root_.D5.S3.Quantum.Measurement.FourQubitParentConstruction.scalarB, _root_.D5.S3.Quantum.Measurement.FourQubitParentConstruction.B_formula, Matrix.mul_apply, Fin.sum_univ_two,
+      _root_.D5.S3.Quantum.Measurement.FourQubitParentConstruction.scalarB, _root_.D5.S3.Quantum.Measurement.FourQubitParentConstruction.B_formula_core, Matrix.mul_apply, Fin.sum_univ_two,
       PiLp.inner_apply, Fin.sum_univ_three, RCLike.inner_apply,
       cross_apply, Complex.mul_re, Complex.mul_im] <;> ring
 
 private theorem density_positive (m : ℝ) (v : Vec) :
     (density m v).PosSemidef ↔ vnorm v ≤ m := by
-  rw [density, _root_.D5.S3.Quantum.Measurement.FourQubitParentConstruction.half_scalarB_posSemidef_iff,
-    euclideanVec_norm]
+  have he : density m v =
+      _root_.D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix
+        m (euclideanVec v) := by
+    ext i j
+    fin_cases i <;> fin_cases j <;>
+      simp [density, _root_.D5.S3.Quantum.Measurement.FourQubitParentConstruction.scalarB,
+        _root_.D5.S3.Quantum.Measurement.FourQubitParentConstruction.B_formula_core,
+        _root_.D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix] <;> ring
+  rw [he]
+  constructor
+  · intro h
+    simpa only [
+      _root_.D5.S3.Quantum.Information.ActualPureQubitCostInfimum.bloch_blochMatrix,
+      _root_.D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix_trace,
+      Complex.ofReal_re, euclideanVec_norm] using
+      _root_.D5.S3.Quantum.Information.ActualPureQubitCostInfimum.norm_bloch_le_trace_of_posSemidef _ h
+  · intro h
+    have hm : 0 ≤ m := (show 0 ≤ vnorm v by
+      rw [← euclideanVec_norm]; exact norm_nonneg _).trans h
+    by_cases hz : m = 0
+    · have hv : euclideanVec v = 0 := norm_eq_zero.mp (by
+        rw [euclideanVec_norm]; exact le_antisymm (hz ▸ h) (by
+          rw [← euclideanVec_norm]; exact norm_nonneg _))
+      convert (Matrix.PosSemidef.zero : (0 : Mat).PosSemidef) using 1
+      ext i j
+      fin_cases i <;> fin_cases j <;>
+        simp [hz, hv,
+          _root_.D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix]
+    · have hp : 0 < m := lt_of_le_of_ne hm (Ne.symm hz)
+      have hr : ‖m⁻¹ • euclideanVec v‖ ≤ 1 := by
+        rw [norm_smul, Real.norm_eq_abs, abs_of_pos (inv_pos.mpr hp),
+          euclideanVec_norm]
+        exact (inv_mul_le_iff₀ hp).mpr (by simpa using h)
+      have hs := (_root_.D5.S3.Quantum.CommutingMidpoint.bloch_physical
+        (m⁻¹ • euclideanVec v) hr).smul
+          (show (0 : ℂ) ≤ (m : ℂ) by exact_mod_cast hm)
+      convert hs using 1
+      ext i j
+      fin_cases i <;> fin_cases j <;>
+        simp [_root_.D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix,
+          Complex.ofReal_inv] <;> field_simp <;> ring
 
 private theorem density_mass (m : ℝ) (v : Vec) : (density m v).trace = (m : ℂ) := by
-  simp [density, _root_.D5.S3.Quantum.Measurement.FourQubitParentConstruction.scalarB, _root_.D5.S3.Quantum.Measurement.FourQubitParentConstruction.B_formula, Matrix.trace, Fin.sum_univ_two]
+  simp [density, _root_.D5.S3.Quantum.Measurement.FourQubitParentConstruction.scalarB, _root_.D5.S3.Quantum.Measurement.FourQubitParentConstruction.B_formula_core, Matrix.trace, Fin.sum_univ_two]
   ring
 
 private theorem evaluation_positive (m : ℝ) (v : Vec) :
@@ -291,7 +339,7 @@ private theorem trace_evaluate (m : ℝ) (v : Vec) (a : E) :
     simp [density, phi, euclideanVec, evaluate,
       _root_.D5.S3.Quantum.SpinFactor.OriginalDContract.dot,
       _root_.D5.S3.Quantum.Measurement.FourQubitParentConstruction.scalarB,
-      _root_.D5.S3.Quantum.Measurement.FourQubitParentConstruction.B_formula,
+      _root_.D5.S3.Quantum.Measurement.FourQubitParentConstruction.B_formula_core,
       Matrix.trace, Matrix.mul_apply, Fin.sum_univ_two, PiLp.inner_apply,
       dotProduct, Fin.sum_univ_three, RCLike.inner_apply, Complex.mul_re, Complex.mul_im] <;> ring
 
@@ -305,7 +353,7 @@ private theorem original_order_interval (a : E) (r : ℝ) :
     fin_cases i <;> fin_cases j <;>
       simp [phi, euclideanVec,
         _root_.D5.S3.Quantum.Measurement.FourQubitParentConstruction.scalarB,
-        _root_.D5.S3.Quantum.Measurement.FourQubitParentConstruction.B_formula] <;> ring
+        _root_.D5.S3.Quantum.Measurement.FourQubitParentConstruction.B_formula_core] <;> ring
   have hp : (r : ℂ) • (1 : Mat) + phi a =
       _root_.D5.S3.Quantum.Measurement.FourQubitParentConstruction.scalarB
         (r + a.1) (euclideanVec a.2) := by
@@ -313,10 +361,24 @@ private theorem original_order_interval (a : E) (r : ℝ) :
     fin_cases i <;> fin_cases j <;>
       simp [phi, euclideanVec,
         _root_.D5.S3.Quantum.Measurement.FourQubitParentConstruction.scalarB,
-        _root_.D5.S3.Quantum.Measurement.FourQubitParentConstruction.B_formula] <;> ring
-  rw [hm, hp,
-    _root_.D5.S3.Quantum.Measurement.FourQubitParentConstruction.scalarB_posSemidef_iff,
-    _root_.D5.S3.Quantum.Measurement.FourQubitParentConstruction.scalarB_posSemidef_iff,
+        _root_.D5.S3.Quantum.Measurement.FourQubitParentConstruction.B_formula_core] <;> ring
+  have scalar_iff (t : ℝ) (v : Vec) :
+      (_root_.D5.S3.Quantum.Measurement.FourQubitParentConstruction.scalarB
+        t (euclideanVec v)).PosSemidef ↔ vnorm v ≤ t := by
+    have he : (2 : ℂ) • density t v =
+        _root_.D5.S3.Quantum.Measurement.FourQubitParentConstruction.scalarB
+          t (euclideanVec v) := by simp [density, smul_smul]
+    constructor
+    · intro h
+      exact (density_positive t v).mp (by
+        simpa [density] using h.smul (show (0 : ℂ) ≤ 1 / 2 by
+        apply Complex.nonneg_iff.mpr
+        norm_num [Complex.div_re, Complex.div_im]))
+    · intro h
+      rw [← he]
+      exact ((density_positive t v).mpr h).smul (by norm_num)
+  rw [hm, hp, scalar_iff, scalar_iff,
+    ← euclideanVec_norm (-a.2), ← euclideanVec_norm a.2,
     show euclideanVec (-a.2) = -euclideanVec a.2 from rfl,
     norm_neg, euclideanVec_norm]
   constructor
@@ -335,24 +397,33 @@ private theorem density_surjective (ρ : Mat) (hρ : ρ.PosSemidef) :
     (_root_.D5.S3.Quantum.Information.ActualPureQubitCostInfimum.bloch ρ) i
   have he : ρ = density m v := by
     calc
-      ρ = _root_.D5.S3.Quantum.Measurement.FourQubitParentConstruction.scalarB
-          (ρ.trace.re / 2) ((1 / 2 : ℝ) • euclideanVec v) :=
-        _root_.D5.S3.Quantum.Measurement.FourQubitParentConstruction.hermitian_decomposition
-          ρ hρ.isHermitian
+      ρ = _root_.D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix
+          ρ.trace.re
+          (_root_.D5.S3.Quantum.Information.ActualPureQubitCostInfimum.bloch ρ) :=
+        (_root_.D5.S3.Quantum.Information.ActualPureQubitCostInfimum.bloch_geometry_of_isHermitian
+          ρ hρ.isHermitian).1
       _ = density m v := by
         ext i j
         fin_cases i <;> fin_cases j <;>
-          simp [m, density,
+          simp [m, v, density, euclideanVec,
+            _root_.D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix,
             _root_.D5.S3.Quantum.Measurement.FourQubitParentConstruction.scalarB,
-            _root_.D5.S3.Quantum.Measurement.FourQubitParentConstruction.B_formula] <;> ring
+            _root_.D5.S3.Quantum.Measurement.FourQubitParentConstruction.B_formula_core] <;> ring
   refine ⟨m, v, (density_positive m v).mp ?_, he⟩
   exact he ▸ hρ
 
 private theorem phi_positive (a : E) : (phi a).PosSemidef ↔ cone a := by
-  rw [phi,
-    _root_.D5.S3.Quantum.Measurement.FourQubitParentConstruction.scalarB_posSemidef_iff,
-    euclideanVec_norm]
-  rfl
+  have he : (2 : ℂ) • density a.1 a.2 = phi a := by
+    simp [density, phi, smul_smul]
+  constructor
+  · intro h
+    exact (density_positive a.1 a.2).mp (by
+      simpa [density, phi] using h.smul (show (0 : ℂ) ≤ 1 / 2 by
+        apply Complex.nonneg_iff.mpr
+        norm_num [Complex.div_re, Complex.div_im]))
+  · intro h
+    rw [← he]
+    exact ((density_positive a.1 a.2).mpr h).smul (by norm_num)
 
 private theorem gram_trace (opposite : Bool) (m : ℝ) (v : Vec) (a b : E) :
     (evaluate m v (jordan a b) : ℂ) -
