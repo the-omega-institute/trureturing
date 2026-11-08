@@ -1,0 +1,18 @@
+**Proposition 206.2 (corrected interior and persistent-boundary criteria).** A uniformly interior point of $\mathscr P_u$ has feasible matrices of actual label rank $2+d$ arbitrarily close to it. Consequently, if $\mathscr P_u^{\mathrm{act}}=\varnothing$, then
+
+$$
+\inf_{y,x}\lambda_{y,x}(A)=0\qquad(A\in\mathscr P_u).
+\tag{206.4}
+$$
+
+For $A_0\in\mathscr P_u$, retain the persistent direction space $\mathscr V_u$ of (200.7). Then
+
+$$
+\mathscr Q_u\subseteq M(A_0)+M(\mathscr V_u).
+\tag{206.5}
+$$
+
+If all $d\times d$ minors vanish throughout the affine space on the right, there is no feasible family of actual rank $2+d$. A nonzero such minor somewhere on that affine space is necessary for such a family, but does not by itself establish pointwise feasibility. For $d=0$, the empty minor equals one and every feasible family already has the required rank.
+
+*Proof.* The perturbation bound in Proposition 200.2 applies to every zero-sum direction. For $d=1$, take $D=N(1,0)^{\mathsf T}$; the first entry of $M(A_0+tD)$ has nonzero linear coefficient. For $d=2$, take $D=N$; then $M(A_0+tD)=M(A_0)+tI_2$, whose determinant is a monic quadratic in $t$. Avoiding the finitely many roots gives arbitrarily small feasible perturbations of full restricted rank, and (205.3) gives their actual label rank. The case $d=0$ needs no perturbation. This proves (206.4) by contraposition, since a positive infimum is uniform interior. Applying $M$ to (200.8) gives (206.5); maximal minors and (206.3) give the remaining assertions. For an actual host fixed by a spanning seed, Proposition 206.1 makes the emptiness premise impossible. Thus these obstruction criteria constrain proposed host or boundary data; they do not construct a missing seed. $\square$
+

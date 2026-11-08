@@ -1,0 +1,98 @@
+**Proposition 208.2 (a finite native-source budget for each $BjB$ residual).** Under Definition 208.1, all terms in (208.3) are finite, and
+
+$$
+0\le\chi,\qquad
+0\le v\chi\le G_0-v
+\quad\text{almost everywhere}.
+\tag{208.4}
+$$
+
+For every $j\in\mathcal L$ the exact residual identity and lower bound are
+
+$$
+\frac{\Delta(D)_{BjB}}{\pi_j}
+=\mathbb E_{\nu_j}\bigl[(s-p)(t-p)\bigr],
+\qquad
+\Delta(D)_{BjB}\ge\frac{\pi_j}{2}(A_j+B_j-H_j).
+\tag{208.5}
+$$
+
+If $k_j<\infty$, then also
+
+$$
+\Delta(D)_{BjB}\ge
+\frac{\pi_j}{2}\left[(1+k_j)A_j+B_j-\frac3{16}k_j\right].
+\tag{208.6}
+$$
+
+*Proof.* Let $\mathsf P(x,dy)$ be the actual gap-$d$ Markov kernel of $P$. Conservation gives $\mathsf P(x,G)=1$. Self-adjointness makes $m(dx)\mathsf P(x,dy)$ symmetric, so the original conditional law of $Z_{2d}$ given $Z_{3d}=x$ is
+
+$$
+\frac{g(y)}{v(x)}\mathsf P(x,dy).
+\tag{208.7}
+$$
+
+Its total mass is one. This is the reversal of the original source-start law, while the conditional law of $Z_{4d}$ given $Z_{3d}=x$ is $\mathsf P(x,dy)$. Both statements use the original $g$ and $P$.
+
+Cauchy–Schwarz for $\mathsf P(x,dy)$ gives $v^2=(Pg)^2\le P(g^2)$, and $g^2\le G_0g$ gives $P(g^2)\le G_0v$. These prove (208.4). Also $0\le s,t\le1$, and
+
+$$
+\pi_j\mathbb E_{\nu_j}\chi
+=\int_{D_j}v\chi\,dm
+\le G_0m(D_j)-\pi_j<\infty.
+\tag{208.8}
+$$
+
+Consequently $A_j,B_j$ are finite, and $0\le H_j\le\mathbb E_{\nu_j}\chi/4<\infty$. No lower bound on $v$ over $G$ is used.
+
+The pair calibrations give the two exact conditional means
+
+$$
+\begin{aligned}
+\pi_j\mathbb E_{\nu_j}s
+ &=Q_{12}(u_B,u_j)=Q_{12}(p,f_j)=p\pi_j,\\
+\pi_j\mathbb E_{\nu_j}t
+ &=Q_{23}(u_j,u_B)=Q_{23}(f_j,p)=p\pi_j.
+\end{aligned}
+\tag{208.9}
+$$
+
+Self-adjointness in the first step of the actual triple gives
+
+$$
+\mathcal C(u_B,u_j,u_B)
+=\int_G P(gu_B)u_jPu_B\,dm
+=\pi_j\mathbb E_{\nu_j}st.
+\tag{208.10}
+$$
+
+The baseline is $\mathcal C(p,f_j,p)=p^2\pi_j$. Subtraction and (208.9) prove the identity in (208.5).
+
+For almost every $x$, put $R_x(y)=g(y)/v(x)$. Its mean under $\mathsf P(x,dy)$ is one and its centered second moment is $\chi(x)$. The elementary covariance Cauchy–Schwarz estimate yields
+
+$$
+\begin{aligned}
+s(x)-t(x)
+ &=\int_G(R_x(y)-1)(u_B(y)-t(x))\,\mathsf P(x,dy),\\
+(s(x)-t(x))^2&\le\chi(x)t(x)(1-t(x)).
+\end{aligned}
+\tag{208.11}
+$$
+
+This classical conditional covariance inequality is an intermediate estimate. Combining it with the exact algebraic identity
+
+$$
+2\mathbb E_{\nu_j}[(s-p)(t-p)]
+=A_j+B_j-\mathbb E_{\nu_j}(s-t)^2
+\tag{208.12}
+$$
+
+proves the lower bound in (208.5). Finally (208.9) implies
+
+$$
+\mathbb E_{\nu_j}t(1-t)=p(1-p)-A_j=\frac3{16}-A_j.
+\tag{208.13}
+$$
+
+When $k_j<\infty$, this gives $H_j\le k_j(3/16-A_j)$, proving (208.6). The weighted estimate (208.8), rather than any global bounded likelihood ratio, supplies integrability. $\square$
+

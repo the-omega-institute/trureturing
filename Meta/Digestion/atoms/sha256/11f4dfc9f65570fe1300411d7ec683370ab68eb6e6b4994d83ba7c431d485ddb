@@ -1,0 +1,12 @@
+**Corollary 200.3 (a necessary boundary condition for rank obstruction).** If $\mathscr P_u^{\mathrm{full}}=\varnothing$, then
+
+$$
+\inf_{y\in\mathcal L,\ x\in G}\lambda_{y,x}(A)=0
+\qquad\text{for every }A\in\mathscr P_u.
+\tag{200.5}
+$$
+
+Thus a rank-three or rank-four obstruction cannot be certified by inspecting a single feasible matrix that happens to lie on a boundary. Every feasible matrix must fail the uniform interior condition, either through an attained pointwise zero or through a sequence of positive values tending to zero. The latter asymptotic boundary is distinct from an exact active constraint.
+
+*Proof.* If the infimum in (200.5) were positive for some feasible $A$, that $A$ would belong to $\mathscr P_u^{\mathrm{ui}}$, and Proposition 200.2 would produce a full-column-rank feasible matrix. \(\square\)
+
