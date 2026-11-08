@@ -1,0 +1,168 @@
+**定理 7.1（无需响应正交的有限面积下预算）。** 对原 $a,b\in E$，记 $d=D(a,b)$、$c=a\circ b$。若
+
+$$
+[a^2,b]=[b^2,a]=0,\qquad [d^2,a]=[d^2,b]=0,
+\tag{7.1}
+$$
+
+则完整原 P2、PB 给出算子不等式
+
+$$
+\boxed{a^2b^2-c^2\le d^2.}
+\tag{7.2}
+$$
+
+本条不单独断言相反的不等式，也不从 (7.1) 宣告 $a\circ d=b\circ d=0$ 或 $[c,d]=0$。
+
+证明。令
+
+$$
+B_0=C^*(u,a,b,d^2),\qquad Z_0=C^*(u,a^2,b^2,c,d^2).
+$$
+
+结合展开给 $[a,c]=[a^2,b]/2=0$、$[b,c]=[b^2,a]/2=0$，所以 $Z_0\subset Z(B_0)$。这里加入的是 $d^2$，没有把 $d$ 加入生成元，也不要求 $Z_0$ 在包含 $d$ 的代数中中央。
+
+若 $B_0=0$，结论直接成立。否则固定 $Z_0$ 的任意字符 $\chi$，按 201.1 取对应非零中央商，写
+
+$$
+\chi(a^2)=\alpha,\quad \chi(b^2)=\beta,\quad
+\chi(c)=\gamma,\quad \chi(d^2)=\delta^2,\quad\delta\ge0.
+$$
+
+对全部实 $s,t$ 的 $(sa+tb)^2\ge0$ 保证字符实 Gram 半正定。选择一个实 SO$(2)$ 旋转对角化它，并用同一角度旋转原标签，得到 $\xi,\eta\in E$。185.1 给实际旧值 $D(\xi,\eta)=d$。令 $e=\xi\circ\eta$；只在当前商中有
+
+$$
+\bar\xi^2=X^2u,\qquad \bar\eta^2=Y^2u,\qquad
+\bar e=0,\qquad \overline{d^2}=\delta^2u,\qquad
+X^2Y^2=\alpha\beta-\gamma^2.
+\tag{7.3}
+$$
+
+若 $XY=0$，该字符上的目标是 $0\le\delta^2$，已经成立。以下取 $X,Y>0$，允许 $\delta=0$。没有定义 $\bar d$ 或商上的 $D$。
+
+先对当前商的任意态，拉回 $B_0$ 并正延拓到整个 $A$，记为 $\phi$。它满足 $\phi(e^2)=0$。使用成熟的态 Cauchy–Schwarz：对自伴 $g$、实 $\kappa$，
+
+$$
+\phi((g-\kappa u)^2)=0
+\quad\Longrightarrow\quad
+\phi(gw)=\phi(wg)=\kappa\phi(w)\quad(w\in A).
+\tag{7.4}
+$$
+
+这不要求 $g$ 与 $w$ 交换。两次实际原 PB 分别为
+
+$$
+\begin{aligned}
+D(\eta+d,e)-D(\eta-d,-e)&=-2\eta\circ d,\\
+D(\xi-d,e)-D(\xi+d,-e)&=2\xi\circ d.
+\end{aligned}
+\tag{7.5}
+$$
+
+第二式使用 $D(\eta,\xi)=-d$。每份外层的第二输入平方在 $\phi$ 下读零，所以 P2 使四份实际旧输出分别读零。因而每个这样的延拓态均满足
+
+$$
+\phi(\xi\circ d)=\phi(\eta\circ d)=0.
+\tag{7.6}
+$$
+
+这里得到的是指定读取上的等式，不是原算子正交。
+
+任取有限 $\lambda>0$，置 $T=\sqrt{1+\lambda^2X^2}$。在当前商中，$e_1=\bar\xi/X$、$e_2=\bar\eta/Y$ 是反交换自伴单位。令
+
+$$
+n=-\frac{\lambda X}{T}e_1+\frac1T e_2,\qquad
+m=\frac1T e_1+\frac{\lambda X}{T}e_2.
+\tag{7.7}
+$$
+
+则 $n^2=m^2=u$、$n\circ m=0$。$mnm=-n$ 保证 $n$ 有正负两个谱值。选取 $\psi(n)=1$ 的商态；支撑态 Cauchy–Schwarz 给 $\psi(m)=0$，反解得到
+
+$$
+\psi(\bar\xi)=-\lambda X^2/T,\qquad
+\psi(\bar\eta)=Y/T.
+\tag{7.8}
+$$
+
+拉回并延拓此态到整个 $A$，仍记为 $\phi$。原标签
+
+$$
+n_0=-\frac\lambda T\xi+\frac1{TY}\eta
+$$
+
+满足 $\phi((n_0-u)^2)=0$。将 (7.4) 用于 $n_0$ 和实际 $d$，再用 (7.6)，得
+
+$$
+\phi(d)=\phi(n_0\circ d)=0,\qquad \phi(d^2)=\delta^2.
+\tag{7.9}
+$$
+
+第二式来自已纳入 $B_0$ 的平方，不丢掉 $d$ 的跨输入中心纤维分量。又因为 $\phi((\xi^2-X^2u)^2)=0$，即使尚未证明 $[\xi^2,d]=0$，也有
+
+$$
+\phi(\xi^2\circ d)=X^2\phi(d)=0.
+\tag{7.10}
+$$
+
+现在取实际原第三标签 $z=Tu+\lambda\xi$。185.1 的同轴仿射零行给 $D(\xi,z)=0$。第三次原 PB 的全部位移及外层为
+
+$$
+\begin{aligned}
+\nu&=d-T\xi-\lambda\xi^2,&\omega&=e,\\
+U_\pm&=\eta\pm\nu,&V_\pm&=z\pm e,\\
+D(U_+,V_+)-D(U_-,V_-)&=-2\eta\circ\nu-2z\circ e.
+\end{aligned}
+\tag{7.11}
+$$
+
+全局 $e$ 始终保留在原标签中；只在当前读取上，(7.4) 消去含 $e$ 的交叉项。同一个态给全部所需读数：
+
+$$
+\begin{aligned}
+\phi(\nu^2)
+&=\delta^2+T^2X^2+\lambda^2X^4
+ +2T\lambda X^2\phi(\xi)
+ -2T\phi(\xi\circ d)-2\lambda\phi(\xi^2\circ d)\\
+&=\delta^2+X^2,\\
+\phi(\eta\circ\nu)&=-\lambda X^2Y/T,&
+\phi(z^2)&=1,\\
+\phi(\eta\circ z)&=Y,&
+\phi(\nu\circ z)&=-\lambda X^2/T.
+\end{aligned}
+\tag{7.12}
+$$
+
+因此两份完整原 P2 预算准确为
+
+$$
+\begin{aligned}
+\phi(V_\pm^2)&=1,\\
+\phi(U_\pm^2)&=X^2+Y^2+\delta^2\mp2\lambda X^2Y/T,\\
+\phi(U_\pm\circ V_\pm)&=Y\mp\lambda X^2/T,\\
+\Delta_\pm
+&=\phi(U_\pm^2)\phi(V_\pm^2)
+ -\phi(U_\pm\circ V_\pm)^2
+ =X^2/T^2+\delta^2.
+\end{aligned}
+\tag{7.13}
+$$
+
+(7.11) 右端在同一态下的读数为 $2\lambda X^2Y/T$。分别应用 P2，再取三角不等式，得
+
+$$
+\frac{2\lambda X^2Y}{T}\le2\sqrt{X^2/T^2+\delta^2},
+\qquad
+\lambda^2X^2(X^2Y^2-\delta^2)\le X^2+\delta^2.
+\tag{7.14}
+$$
+
+若 $X^2Y^2>\delta^2$，一个满足
+
+$$
+\lambda^2>\frac{X^2+\delta^2}{X^2(X^2Y^2-\delta^2)}
+$$
+
+的有限实数已给矛盾。所以 $X^2Y^2\le\delta^2$。每个中央字符均满足这一结论，而 $d^2-(a^2b^2-c^2)\in Z_0$；字符分离交换 C* 代数的正序，得到 (7.2)。∎
+
+这条桥与 235.2 的区别是承重的：不先有响应正交，改由两次零第三输入 PB 支付读取级交叉零值；保留 $d^2$ 支付二阶读数，第三次有限 PB 才给面积下界。没有将输入中心纤维上的对角读零误当作原算子零，没有要求未知外层留在 $B_0$，没有对未知 $D$ 取极限。
+
