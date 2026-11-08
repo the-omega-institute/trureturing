@@ -1572,3 +1572,538 @@ $\max\{1,\lfloor C_\delta\sqrt j\rfloor\}\le\max\{1,C_\delta\}\sqrt j$。
 模型的数学适用条件仍是本卷 A1–A7、OTF001 的有限复合与仪器语义、OTF002 的自旋程序、OTF003 的实际效果菜单，以及 OTF005、OTF006、OTF007 各自的来源、控制、参考和记忆边界。若从 OMEGAQ020 第 8 节或 AURIC 的条件表示供应这些接口，必须另满足同一实际来源、相关张量准备、完整完全正过程、指定仪器及全部历史的条件；中央响应卷定义 52.1–52.2 的七项消费者条件不被本定理免除。特别是相干程序准备、指定总自旋耦合和任意允许联合输入的可取得性均是模型前提。$N$ 只计仪器槽数；由 (12.6)–(12.9) 不推出物理秒数、能量、时钟、无限历史实现或新的经验性结论。
 
 ## 追加锚（本行以下为增补区）
+## 13. 同一运行的混合参考获取与实际返回
+
+**本批导航。** 本批在原有 §12 之后固定一个原始场任务，并给出同一运行中的有限获取、解码、实际终端输出与约化完全正控制器的统一证书。§13 给出原始槽接口、全部记录与资源以及构造的完整证明；§14 分离实际等距输出类和一般约化 CPTP 类，并给出后者的全球必要下界；§15 说明文献对应、适用边界与仍未解决的原始可达区域问题。本批不改判既有条目，也不把一次协议的存在改写为 §12 的最坏情形寿命定理。
+
+### 13.1 原始任务、量词与实际输出
+
+**定义 13.1（固定的原始均匀任务）。** 令 $j\in\frac12\mathbb Z_{>0}$、$D=2j+1$、$R=\operatorname{Sym}^{2j}(\mathbb C^2)$、$\tau_h=|j,h\rangle\langle j,h|$，其中 $h\in S^2$。固定
+$$
+d=\frac1{64},\quad r=\frac14,\quad B_{\rm field}=2,\quad G=1,\quad
+\epsilon=\frac1{16},\quad\beta=\frac1{100},\quad\tau _0=1.
+\tag{13.1}
+$$
+场 $n:U\to S^2$ 的定义域 $U\subset\mathbb R^2$ 是包含两条完整闭轴段 $\{t e_x:|t|\le r\}\cup\{t e_y:|t|\le r\}$ 的开集，$p=0$。$n$ 在 $U$ 上属于 $C^2$ 且秩为二，并满足
+$$
+\|n_{aa}(t e_a)\|\le B_{\rm field}\quad(a=x,y,\ |t|\le r),\qquad
+\|n_x(0)\|,\|n_y(0)\|\le G.
+\tag{13.2}
+$$
+每个点 $z$ 的一次重置供应 $\rho_n(z)=(I+n(z)\cdot\sigma)/2$，重置彼此独立；比较不同 $h$ 时场源的完整概率律不变。$R$ 的初态是唯一含未知 $h$ 的输入，所有设备、初态辅助和控制均不得依赖 $n$ 或 $h$。令
+$$
+D_h(n)=\left(\frac{h\cdot[n(0)\times n_x(0)]}{2},
+\frac{h\cdot[n(0)\times n_y(0)]}{4},0,
+\frac{h\cdot n_y(0)}2\right).
+\tag{13.3}
+$$
+任务要求一个与 $n,h$ 无关的固定有限解码器，在每个这样的 $n$ 和每个 $h$ 上以至少 $1-\beta$ 的概率输出 $\widehat D$，使 $\|\widehat D-D_h(n)\|_\infty\le\epsilon$。这是真实同一运行的有限成功事件，不是有限时间精确重建。
+
+取整数 $N$，使
+$$
+N\ge N_*:=2000(\epsilon d/2)^{-2}=8{,}388{,}608{,}000,\quad
+M=10N,\quad L=M,\quad Q=18N+1,\quad D\ge8{,}000{,}000N^2,
+\tag{13.4}
+$$
+并写 $\eta=\epsilon d/2=1/2048$。每个元组先固定，再比较协议。$L,Q$ 是调用上限；所构造协议恰用 $M$ 个获取槽和 $18N+1$ 次场重置。一般原始比较类允许任意有限混合辅助、量子记忆、先前输出回用及因果反馈，但除至多 $L$ 次指定槽和一次强制终端交换外，其操作在原始标记 $R$ 上均为恒等，不直接读取、旋转、拆分、重置或替换 $R$。初始 $R$ 与其余输入独立；固定 $n$ 后非 $R$ 来源、辅助及操作的完整律对所有 $h$ 相同。程序及解码器均与实际 $n,h$ 无关；场值只能经上述共同重置服务取得。原始仪器仍是
+$$
+\mathcal A(X)=\sum_{b=\pm}\Pi_bX\Pi_b\otimes|b\rangle\langle b|_H,
+\qquad
+\Pi_+=\frac{J\cdot\sigma+(j+1)I}{D},\quad
+\Pi_-=\frac{jI-J\cdot\sigma}{D}.
+\tag{13.5}
+$$
+在本批使用其声明的原生等距输出
+$$
+V=\sum_{b=\pm}\Pi_b\otimes|b\rangle_H|b\rangle_E,
+\tag{13.6}
+$$
+并保留 $R,S,H,E$。式 (13.6) 是本批所需的原生接口假设；它不由抽象 CP 记号自动提供。
+
+**定义 13.2（约化控制器和返回误差）。** $H$ 的 $|+\rangle,|-\rangle$ 是固定原始标签。每次槽后在 $S,H$ 上施行同一个确定性通道 $\mathcal C$，恒等作用于 $R,E$，其 Kraus 算子为
+$$
+L_+=I_S\otimes|+\rangle\langle+|,\qquad
+L_{ab}=\frac{|a\rangle\langle b|_S}{\sqrt2}\otimes|-\rangle\langle-|_H
+\quad(a,b\in\{0,1\}),
+\tag{13.7}
+$$
+$$
+\mathcal C(X)=L_+XL_+^\dagger+\sum_{a,b}L_{ab}XL_{ab}^\dagger .
+\tag{13.8}
+$$
+五个 Kraus 项全部求和；它们的平方和为 $I_{S H}$。$H$ 的每一个原始 $b$、$E$、所有槽输出和控制器记录均留在最终口 $K$；(13.7) 的 Kraus 索引是代数求和指标，不是新原始读数。探针初态为明确供给的 $I_S/2$，没有接入不可见纯化。
+
+在 $M$ 槽后用额外的一次场重置于 $+d e_x$，在同一 $R$ 上执行终端交换
+$$
+U_{\rm term}=\exp\!\left[-\,\frac{i d\tau _0}{2j}\,J\cdot\sigma\right].
+\tag{13.9}
+$$
+该交换不计入 $M$ 个获取槽，计为一个单独的终端接触，其量子输出及其环境均属于 $K$。设同一运行的最终完整态为 $\Omega_{n,h}\in\mathsf D(R\otimes K)$，$\omega_{n,h}=\operatorname{Tr}_R\Omega_{n,h}$，并定义
+$$
+\Delta_{n,h}=D(\Omega_{n,h},\tau_h\otimes\omega_{n,h}).
+\tag{13.10}
+$$
+这里的 $K$ 是实际最终保留口；没有把未观测的 Kraus 指标或一个证明用环境追加为返回系统。
+
+### 13.2 一槽代数与完全的均匀上界
+
+**定理 13.1（同一运行的约化 CP 获取—返回证书）。** 在定义 13.1–13.2 的接口下，令
+$$
+\kappa_D=\frac{2D-1}{2D^2},\qquad
+e_{\rm CP}=\min\{1,M\kappa_D\},\qquad
+\zeta=\min\left\{1,\frac{|d\tau _0|}{\sqrt{D-1}}\right\}.
+\tag{13.11}
+$$
+存在一个只使用上述十个场设置、同一个固定解码器和一个强制终端交换的协议，使得对所有允许的 $n,h$ 及所有 $t>0$，
+$$
+\Pr\!\left[\|\widehat D-D_h(n)\|_\infty>
+\frac{B_{\rm field}d}{4}+\frac{t}{d}\right]
+\le\min\{1,20e^{-Nt^2/32}+e_{\rm CP}\},
+\tag{13.12}
+$$
+且
+$$
+\sup_{n,h}\Delta_{n,h}
+\le\min\{1,2(e_{\rm CP}+\zeta)\}
+\le\min\left\{1,\frac{2M}{D}+2\zeta\right\}.
+\tag{13.13}
+$$
+这些估计的证明只使用 $|t|\le d$ 上的轴向二阶导数界和五个采样点。因此同一协议与估计也适用于仅在包含两条闭 $d$ 轴段的开集上满足对应 $C^2$、秩二及导数条件的场；定义 13.1 的原始任务仍保留完整半径 $r$ 的域及其全部承诺。这只是一个可达证书；它没有声称最优性、匹配的下界、资源支配关系或任何历史新颖性。
+
+**证明。** 先在 $h=z$ 的坐标计算。令 $e=|j,j\rangle$、$f=|j,j-1\rangle$、$m=D-1$，并把 $S$ 的标准基记为 $\uparrow,\downarrow$。直接由 $J_z e=je$、$J_+e=0$、$J_-e=\sqrt{2j}\,f$ 得
+$$
+\begin{aligned}
+\Pi_+(e\otimes\uparrow)&=e\otimes\uparrow,\\
+\Pi_-(e\otimes\uparrow)&=0,\\
+\Pi_+(e\otimes\downarrow)&=\frac{e\otimes\downarrow+\sqrt m\,f\otimes\uparrow}{D},\\
+\Pi_-(e\otimes\downarrow)&=\frac{m\,e\otimes\downarrow-\sqrt m\,f\otimes\uparrow}{D}.
+\end{aligned}
+\tag{13.14}
+$$
+令 $\tau_e=|e\rangle\langle e|$、$\tau_f=|f\rangle\langle f|$、$|++\rangle=|+\rangle_H|+\rangle_E$、$|--\rangle=|-\rangle_H|-\rangle_E$。对一个独立 $I_S/2$ 探针，(13.5)–(13.8) 的完整 $R,S,H,E$ 输出等于
+$$
+\begin{aligned}
+\Omega_z^{(1)}
+={}&\left[
+\frac{|e\uparrow\rangle\langle e\uparrow|}{2}
++\frac{|e\downarrow+\sqrt m\,f\uparrow\rangle
+ \langle e\downarrow+\sqrt m\,f\uparrow|}{2D^2}
+\right]\otimes|++\rangle\langle++|\\
+&+\frac{m^2\tau_e+m\tau_f}{2D^2}
+ \otimes\frac{I_S}{2}\otimes|--\rangle\langle--|.
+\end{aligned}
+\tag{13.15}
+$$
+把同一个 $\mathcal C$ 施于理想 $z$-投影仪器，得到
+$$
+\xi_z=\frac{P_{z,+}}2\otimes|++\rangle\langle++|
++\frac{I_S}{4}\otimes|--\rangle\langle--|,
+\tag{13.16}
+$$
+故理想完整槽态为 $\tau_e\otimes\xi_z$。正负旗标块正交。正块差的迹为 $1/(2D)$；负块差为
+$$
+\frac{-(2D-1)\tau_e+(D-1)\tau_f}{2D^2}\otimes\frac{I_S}{2},
+\tag{13.17}
+$$
+其迹范数为 $(3D-2)/(2D^2)$。因此
+$$
+D(\Omega_z^{(1)},\tau_e\otimes\xi_z)
+=\frac12\left[\frac1{2D}+\frac{3D-2}{2D^2}\right]
+=\kappa_D.
+\tag{13.18}
+$$
+同时旋转 $\Pi_\pm$、$\tau_h$ 和 $P_{h,+}$，而 $\mathcal C$ 的负块是基无关的替换 $S\mapsto I_S/2$，所以 (13.18) 对每个 $h$ 相同。这一步只是在证明中换坐标，没有执行依赖 $h$ 的旋转。
+
+准备 $M$ 个独立 $I/2$ 探针，在每一槽后立即施行 (13.8)。用数学上的混合链把前 $k$ 槽替换成理想槽、其余保持实际槽。每个理想前缀都把 $R$ 留在 $\tau_h$，下一探针仍为 $I/2$；所有较早输出、记忆和旁观者可任意纠缠而不改变 (13.18) 的下一槽计算。共同后缀是全寄存器 CPTP 映射，故三角不等式和迹距离收缩性给出
+$$
+D(\Omega^{(M)}_{n,h},\tau_h\otimes\Xi_{n,h}^{\,i})
+\le\min\{1,M\kappa_D\}=e_{\rm CP}
+\tag{13.19}
+$$
+（右端超过一时取一）。这里没有在实际运行中重置 $R$，也没有把任意受扰动参考替换成 $\tau_h$；混合链只是完整态的比较。
+
+为得到场数据，对四个卫星 $z\in\{+d e_x,-d e_x,+d e_y,-d e_y\}$ 及 $s=\pm1$ 各取 $N$ 个中心—卫星对，在两个场输出上施行
+$$
+Q_s=\frac{I-i s\,\mathrm{SWAP}}{\sqrt2},
+\tag{13.20}
+$$
+保留两个输出而把第二个输出送入标量测试；在 $y$ 的两个卫星上另取各 $N$ 个直接令牌。中心令牌 $8N$ 个、$x$ 卫星每点 $2N$ 个、$y$ 卫星每点 $3N$ 个，共 $18N$ 个场重置，再加上 (13.9) 的一个令牌。若中心与卫星 Bloch 向量为 $a,b$，第二输出的 Bloch 向量为
+$$
+v_{z,s}=\frac{n(0)+n(z)+s\,n(0)\times n(z)}2.
+\tag{13.21}
+$$
+每个选定场输出和一枚 $S$ 探针做标量受控 SWAP：固定标量先取 $|0\rangle$，施行 $H$、受控 SWAP、$H$ 和固定 $Y$ 读出；读出指针及其复制环境均保留。保留所有原生 $b,H,E$ 以及两份部分 SWAP 输出。对每次槽定义
+$$
+X=4\,\mathbf1_{\{b=+\}}Y-1\in\{-5,-1,3\}.
+\tag{13.22}
+$$
+这不是选支或条件归一化。
+
+在理想比较实验中，$b$ 是公平且独立的，$b=+$ 时 $S=P_{h,+}$，$b=-$ 时 $S=I/2$。因而对 Bloch 向量 $v$，
+$$
+\mathbb E[X]=4\cdot\frac12\cdot
+\frac{1+h\cdot v}{2}-1=h\cdot v.
+\tag{13.23}
+$$
+令 $\overline X_{z,s}$ 为八个设置的均值，令 $\overline Z_{y,\pm}$ 为两个直接设置的均值，并令
+$$
+\begin{aligned}
+\widehat C_z&=\overline X_{z,+}-\overline X_{z,-},\\
+\widehat D={}&\left(
+\frac{\widehat C_{+d e_x}-\widehat C_{-d e_x}}{4d},
+\frac{\widehat C_{+d e_y}-\widehat C_{-d e_y}}{8d},
+0,
+\frac{\overline Z_{y,+}-\overline Z_{y,-}}{4d}
+\right).
+\end{aligned}
+\tag{13.24}
+$$
+每个均值只需保存两类计数；忽略某个寄存器参与算术不等于删除它。式 (13.24) 是固定的有限有理解码器。
+
+沿每条轴，中心差分的平均值是区间内一阶导数的平均值。由 (13.2) 积分得其偏差不超过 $B_{\rm field}d/2$；代入 (13.24) 后四个坐标的最大偏差不超过 $B_{\rm field}d/4$。在理想比较实验中，$X$ 的宽度为 $8$，中心化对数矩母函数满足 $\log\mathbb E e^{u(X-\mathbb EX)}\le8u^2$。取 $u=t/16$ 并用 Markov 不等式，每个均值的双侧尾概率不超过 $2e^{-Nt^2/32}$，十个设置并合给 $20e^{-Nt^2/32}$。由 (13.19)，同一个完整记录事件在实际运行和理想比较运行之间的概率差不超过 $e_{\rm CP}$，于是得到 (13.12)。注意这里没有假设实际槽之间独立。
+
+最后使用强制的终端令牌。理想 $\tau_h$ 子空间上，(13.9) 的生成元与 $I_R\otimes h\cdot\sigma/2$ 的差的范数不超过 $1/\sqrt{D-1}$；Duhamel 公式给出理想终端演化误差 $\zeta$。对 (13.19) 两个输入同时施行同一终端通道。实际最终 $\Omega_{n,h}$ 因而与某个 $\tau_h\otimes\omega^{\,i}_{n,h}$ 的距离不超过 $e_{\rm CP}+\zeta$；偏迹收缩给实际 $K$ 边缘 $\omega_{n,h}$ 与 $\omega^{\,i}_{n,h}$ 的同一距离上界。再用三角不等式比较 $\Omega_{n,h}$ 与 $\tau_h\otimes\omega_{n,h}$，得到
+$$
+\Delta_{n,h}\le 2(e_{\rm CP}+\zeta).
+\tag{13.25}
+$$
+所有终端量子输出和环境都仍在 $K$ 中。因为 $\kappa_D<1/D$，(13.13) 随即成立。$\square$
+
+取 $t=\eta$ 时，
+$$
+\frac{B_{\rm field}d}{4}+\frac{\eta}{d}
+=\frac1{128}+\frac1{32}=\frac5{128}<\frac1{16},
+\tag{13.26}
+$$
+且 $N\eta^2\ge2000$、$D\ge8{,}000{,}000N^2$，并有 $D-1>4{,}000{,}000N^2$。式 (13.12) 中 $20e^{-N\eta^2/32}\le20e^{-125/2}<1/1000$，而 $e_{\rm CP}<M/D\le1/(800000N)$，所以失败概率严格小于 $1/100$；(13.13) 仍给出统一的有限返回上界。这些估计包括 $D=8{,}000{,}000N^2$ 的端点。特别地，取
+$$
+N=N_*,\quad D=8{,}000{,}000N_*^2,\quad
+j=(D-1)/2,\quad L=10N_*,\quad Q=18N_*+1
+\tag{13.27}
+$$
+并保留其余参数，得到一个明确非空、有限且获取可行的原始元组。该协议没有声称原生场源、门、校准、噪声汇或物理时钟由这些数学接口自动实现；它们是条件模型前提。
+
+**命题 13.2（资源与原生接口清单）。** 在定理 13.1 的协议中，$R$ 只准备一次，不重置；恰有 $M$ 次 (13.5) 原生槽调用、$M$ 次确定性通道 $\mathcal C$ 调用和一次 (13.9) 终端接触。另准备 $M$ 枚独立混合探针 $I/2$，以及 $M$ 枚标量测试的 $|0\rangle$；这些准备均与 $n,h$ 无关，没有接入其不可见纯化。场重置恰为 $18N+1$，不超过 $Q$；部分 SWAP 门为 $8N$，标量受控 SWAP 为 $M$，标量 Hadamard 为 $2M$，标量读出为 $M$。探针与场令牌合计 $M+(18N+1)=28N+1$ 个 qubit 输出，此外还有维数 $D$ 的原始自旋 $R$、$M$ 枚标量测试 qubit 及全部记录系统。每个槽的 $b,Y$ 原始符号、$M$ 组原生 $H,E$、两份部分 SWAP 输出、标量指针和实际复制/读出环境、二十个 $[0,N]$ 计数器（每个设置的两类计数）、路由/程序/步进/解码工作区全部保留。有限计数与有理解码运算另占这些工作寄存器，不把上述 qubit 小计称为完整辅助维数或全部基本门成本。没有把未使用的上限调用计入，也没有固定有限存储无限历史的主张。若物理实现 $\mathcal C$ 另有实际噪声系统 $F_{\mathcal C}$，则 $F_{\mathcal C}$ 必须加入 $K$ 并重新证明 (13.13)；(13.13) 不因形式上的 Stinespring 环境而自动延伸。
+
+## 14. 实际等距定理与约化类的分离
+
+### 14.1 实际等距定理与约化类的分离
+
+**定理 14.1（带实际完整输出的相干等距返回律）。** 令 $U:R\otimes P\to R\otimes K$ 是一个与 $h$ 无关的等距，且右端就是实际完整返回口；令 $\sigma$ 是任意有限维混合辅助态。写
+$$
+\Omega_h=U(\tau_h\otimes\sigma)U^\dagger,\quad
+\omega_h=\operatorname{Tr}_R\Omega_h,\quad
+\overline\delta=\sup_hD(\Omega_h,\tau_h\otimes\omega_h).
+\tag{14.1}
+$$
+则每个反向对满足
+$$
+D(\omega_h,\omega_{-h})
+\le(1+2\pi\sqrt{2j})\,\overline\delta.
+\tag{14.2}
+$$
+若一个固定解码器在两个目标球上的错误均不超过 $\beta<1/2$，且两球由同一输出记录区分，则
+$$
+\overline\delta\ge\frac{1-2\beta}{1+2\pi\sqrt{2j}}.
+\tag{14.3}
+$$
+
+**证明。** 令 $e_h=|j,h\rangle$，把算子 $U(e_h\otimes I_P)$ 写成
+$$
+U(e_h\otimes I_P)=e_h\otimes F_h+B_h,\qquad
+(\langle e_h|\otimes I)B_h=0.
+\tag{14.4}
+$$
+等距性给出 $F_h^\dagger F_h+B_h^\dagger B_h=I_P$。置 $p_h=\operatorname{Tr}(B_h\sigma B_h^\dagger)$。由效果 $I-\tau_h$ 对 $\Omega_h$ 的测量及迹距离的变分表示，$p_h\le\overline\delta$。把 $X=\Omega_h$ 与 $\tau_h\otimes\omega_h$ 的差按 $R$ 上 $\tau_h$ 的对角、非对角块分解；用 $2\tau_h-I$ 的共轭取出非对角块，得到
+$$
+\|F_h\sigma B_h^\dagger\|_1\le\overline\delta.
+\tag{14.5}
+$$
+于是
+$$
+\|B_h\sigma\|_1
+\le\|F_h\sigma B_h^\dagger\|_1+
+\|B_h\sigma B_h^\dagger\|_1
+\le2\overline\delta .
+\tag{14.6}
+$$
+令 $m=2j$，在相干坐标
+$$
+e(z)=(1+|z|^2)^{-m/2}(|0\rangle+z|1\rangle)^{\otimes m}
+\tag{14.7}
+$$
+上，把 $F(z)$ 看作 $F_h$ 的算子值函数。相干切向量计算给出
+$$
+\|\partial_{\bar z}(F(z)\sigma)\|_1
+\le\frac{2\overline\delta\sqrt m}{1+|z|^2}.
+\tag{14.8}
+$$
+对 (14.8) 逐矩阵元使用 Cauchy–Pompeiu 公式，或在有限维迹类上直接使用同一积分，得到
+$$
+\|(F_0-F_\infty)\sigma\|_1\le2\pi\sqrt m\,\overline\delta.
+\tag{14.9}
+$$
+这里的积分常数来自
+$\frac1\pi\int_{\mathbb C}[(1+|z|^2)|z|]^{-1}d^2z=\pi$；任一反向对可先用固定旋转送到 $0,\infty$。
+
+偏迹消去 $R$ 上的交叉项，故
+$$
+\omega_h=F_h\sigma F_h^\dagger+
+\operatorname{Tr}_R(B_h\sigma B_h^\dagger).
+\tag{14.10}
+$$
+$F_h$ 是收缩，展开第一项并用 (14.9)，再加上两个正余项的迹，得到
+$$
+D(\omega_h,\omega_{-h})
+\le2\pi\sqrt m\,\overline\delta+
+\frac{p_h+p_{-h}}2
+\le(1+2\pi\sqrt m)\overline\delta.
+\tag{14.11}
+$$
+固定解码器把两个分离目标球的输出事件分成一项在两端概率分别至少 $1-\beta$ 和至多 $\beta$，所以其可访问记录的迹距离至少 $1-2\beta$；嵌入 $K$ 后仍由收缩性成立。代入 (14.11) 即得 (14.2)–(14.3)。$\square$
+
+定理 14.1 的载荷假设是“等距”以及“等距的右端是实际完整返回口”。把一个约化 CP 通道写成 Stinespring 等距、再把证明环境当作返回口，并不能满足这些假设。定理 13.1 的 $\mathcal C$ 只有约化的实际输出 $S,H,E$；若一个物理噪声实现保留额外环境，则返回误差必须对扩大的实际 $K$ 重新估计。
+
+**命题 14.2（删除等距假设的获取可行反例）。** 在场
+$$
+n(x,y)=(x,y,\sqrt{1-x^2-y^2})
+\tag{14.12}
+$$
+的半径 $1/3$ 开圆盘内，(13.2) 成立，且 $D_h(n)=(h_2/2,-h_1/4,0,h_2/2)$。在元组 (13.27) 上，定理 13.1 的同一固定解码器在全体 $n,h$ 上成功。若把 (14.2) 错误地用于其约化输出，令 $q=49/50$，则端点分离给出 $D(\omega_+,\omega_-)\ge q$，而 (13.13) 给出
+$$
+\overline\delta\sqrt{D-1}
+\le2M\kappa_D\sqrt{D-1}+2d
+\le\frac{2M}{\sqrt{D-1}}+\frac1{32}
+<\frac{33}{800}<\frac{49}{400}
+\tag{14.13}
+$$
+这里 $D-1>4{,}000{,}000N^2$ 给出上面的严格数值界；又 $\pi<22/7$ 给 $1+2\pi<51/7<8$，且 $\sqrt{D-1}\ge1$，故 $1+2\pi\sqrt{D-1}<8\sqrt{D-1}$。这与错误延伸所需的 $\overline\delta\sqrt{D-1}\ge49/400$ 矛盾。因此删除“实际等距完整输出”不是无害的记号简化。
+
+### 14.2 一般实际 CPTP 的全球必要下界
+
+**定理 14.3（相干全球泄漏控制实际侧输出）。** 令 $\Lambda:R\to R\otimes K$ 是任意与 $h$ 无关的有限维 CPTP 通道，允许任意固定的混合辅助、因果非 $R$ 处理和终端接触均已吸收进 $\Lambda$。置
+$$
+\Omega_h=\Lambda(\tau_h),\quad\omega_h=\operatorname{Tr}_R\Omega_h,\quad
+p_h=\operatorname{Tr}[((I-\tau_h)\otimes I_K)\Omega_h],
+\tag{14.14}
+$$
+$$
+p_*=\sup_h p_h,\qquad
+\overline\delta=\sup_hD(\Omega_h,\tau_h\otimes\omega_h).
+\tag{14.15}
+$$
+则
+$$
+D(\omega_h,\omega_{-h})
+\le\pi\sqrt{2j\,p_*}+\frac{p_h+p_{-h}}2
+\le\pi\sqrt{2j\,\overline\delta}+\overline\delta
+\tag{14.16}
+$$
+对每个 $h$ 成立。这里没有协变性、纯辅助或实际等距输出假设。
+
+**证明。** 取任一有限 Kraus 表示
+$\Lambda(X)=\sum_rA_rXA_r^\dagger$，$\sum_rA_r^\dagger A_r=I$。它只是同一实际通道的代数表示，$r$ 不加入 $K$。对每个 $h$ 写
+$$
+A_re_h=e_h\otimes f_{r,h}+b_{r,h},\qquad
+(\langle e_h|\otimes I)b_{r,h}=0.
+\tag{14.17}
+$$
+把所有 $f_{r,h}$ 堆叠到 $K\otimes\mathbb C^q$，把所有 $b_{r,h}$ 同样堆叠。则
+$$
+\sum_r\|b_{r,h}\|^2=p_h\le\overline\delta.
+\tag{14.18}
+$$
+使用 (14.7) 的相干符号计算，输入导数中平行分量抵消，正交切向量的范数为 $\sqrt{2j}/(1+|z|^2)$。于是堆叠向量满足
+$$
+\|\partial_{\bar z}f(z)\|
+\le\frac{\sqrt{2j\,p_*}}{1+|z|^2}.
+\tag{14.19}
+$$
+Cauchy–Pompeiu 公式给出
+$$
+\|f_h-f_{-h}\|\le\pi\sqrt{2j\,p_*}.
+\tag{14.20}
+$$
+在 $R$ 上取偏迹会消去交叉项，故实际侧边缘分解为
+$$
+\omega_h=Q_h+Z_h,\quad
+Q_h=\sum_r|f_{r,h}\rangle\langle f_{r,h}|,\quad
+Z_h=\operatorname{Tr}_R\sum_r|b_{r,h}\rangle\langle b_{r,h}|,
+\tag{14.21}
+$$
+其中 $Z_h\ge0$ 且 $\operatorname{Tr}Z_h=p_h$。向量恒有范数不超过一，故
+$$
+\frac12\|Q_h-Q_{-h}\|_1\le\|f_h-f_{-h}\|,
+\qquad
+\frac12\|Z_h-Z_{-h}\|_1\le\frac{p_h+p_{-h}}2.
+\tag{14.22}
+$$
+合并 (14.18)–(14.22) 得 (14.16)。这一步没有把 Kraus 指标变成输出，没有接入初始纯化，也没有选支或后选择。$\square$
+
+**推论 14.4（获取可行元组上的正返回排除）。** 若固定解码器在一对反向任务上错误不超过 $\beta$，且目标球相隔大于 $2\epsilon$，置 $a=1-2\beta$，则
+$$
+\overline\delta\ge
+\left(\frac{2a}{\sqrt{\pi^2(2j)+4a}+\pi\sqrt{2j}}\right)^2
+\ge\frac{a^2}{(1+\pi\sqrt{2j})^2}.
+\tag{14.23}
+$$
+证明第一式是令 $x=\sqrt{\overline\delta}$ 解
+$x^2+\pi\sqrt{2j}\,x-a\ge0$；第二式用 $\overline\delta\le1$。对 (13.12) 的固定获取可行协议，取 $a=q=49/50$。若某同一原始控制器在同一元组上还满足
+$$
+\overline\delta\le\delta_{\rm test}:=\frac{q^2}{100D},
+\tag{14.24}
+$$
+则 (14.16) 的右端小于
+$\delta_{\rm test}+\pi\sqrt{(D-1)\delta_{\rm test}}<q/100+4q/10=41q/100<q$，
+矛盾。故 (13.27) 以及整个 (13.4) 可行族上都有一个严格正的排除；它不是把获取任务改成不可行任务。
+
+**推论 14.5（相对于既有成对证书的严格有限增益）。** 固定任一 (13.4) 的元组。比较类仍是：原始 $R$ 只准备一次，场源与任意有限混合辅助在固定 $n$ 时对全部 $h$ 具有同一初始律；一个与 $n,h$ 无关的有限因果控制器及同一个解码器在定义 13.1 的全体场与方向上成功。除至多 $L$ 次总自旋槽及一次强制终端交换外，操作在 $R$ 上均为恒等；允许处理全部非 $R$ 输出、适应性经典与量子记忆以及探针回用。始终用 (13.10) 的同一实际 $R K$ 输出及其实际 $K$ 边缘定义返回误差，并置 $\overline\delta=\sup_{n,h}\Delta_{n,h}$。全部原生 $H,E$、原始 $b,Y$、实际复制、分支、记忆和终端输出保持在 $K$ 中。
+
+这里的整数 $T$ 专指每条运行分支上全部实际 $R$ 接触数的统一上界，不指假设 12.2 的网络符号。每次总自旋槽算一次；终端交换也算一次，故本元组统一可取
+$$
+T=L+1=M+1=10N+1<m:=2j=D-1.
+$$
+控制器若少用获取槽，按其实际调用计数，再加这个强制终端接触；用 $L+1$ 作为共同上界不把未执行的槽算成执行。下述支撑修正对任意足够覆盖实际接触数的整数 $0\le T<m$ 成立，包含本族的统一上界。
+
+固定同一个允许的 $n$ 及满足
+$\|D_{h_0}(n)-D_{h_1}(n)\|_\infty>2\epsilon$ 的一对方向。令其夹角为 $\theta$，并先取 $0<\theta<\pi$，定义
+$$
+u=\cos^2\frac\theta2,\qquad
+s=|\langle j,h_0|j,h_1\rangle|=u^{m/2},\qquad
+\nu=\sqrt{1-s^2},\qquad a=1-2\beta=q=\frac{49}{50}.
+$$
+把已有解码输出按是否落入 $D_{h_0}(n)$ 的闭 $\epsilon$ 球分组，得到同一个实际记录效果，在两端概率分别至少 $1-\beta$ 和至多 $\beta$。固定 $n$ 后只吸收共同的非 $R$ 来源和辅助，完整运行就是一个 $h$ 无关的 CPTP 映射 $\Lambda_n:R\to R K$，包含终端交换。收缩性因而给出必需的二元获取可行域
+$$
+0<a\le D(\tau_{h_0},\tau_{h_1})=\nu.
+$$
+若 $a>\nu$，该对已排除获取，不是可行任务上的返回证书。以下公式及其包络估计实际上对全部 $0<a\le\nu$ 成立；应用本任务时固定取 $a=q$，不改变其成功要求。
+
+在这个可行域上，既有直接混合输出证书为
+$$
+C(s,a)=\frac{\sqrt{\nu^2+s^2a^2}-\nu}{2}.
+\tag{14.25}
+$$
+有限接触支撑参数的完整定义是
+$$
+\eta_T(u)=\sum_{k=T+1}^{m}\binom mk u^{m-k}(1-u)^k,\qquad
+\kappa_T(u)=\frac{\eta_T(u)}{1-u^m}=\frac{\eta_T(u)}{1-s^2}.
+\tag{14.25a}
+$$
+因为 $0<u<1$、$0\le T<m$，并且从 $k=1$ 到 $m$ 的全和为 $1-u^m$，有 $0<\kappa_T\le1$。相应既有二元生存及支撑证书为
+$$
+S_T(s,a)=\frac{b(s,a)}{1-\kappa_T(u)/2},\quad
+b(s,a)=\frac{1-\sqrt{1-s^2\nu^2(1-\gamma)^2}}2,\quad
+\gamma=\sqrt{1-a^2/\nu^2}.
+\tag{14.26}
+$$
+它们的结论是 $\overline\delta\ge C(s,a)$、$\overline\delta\ge S_T(s,a)\ge b(s,a)$，均约束上述同一运行的实际输出。它们不是一个均匀合法优化器。若 $\theta=\pi$，取 $u=s=0,\nu=1,\kappa_T=1$，三份证书均为零，照样纳入比较；$\theta=0$ 不可能给出分离目标。若在其它元组上 $T\ge m$，空尾和取零，支撑修正退为 $S_T=b$，不再声称严格修正。本族无此情形。
+
+**证明。** 先说明两份证书与实际合同的对应，以固定比较对象。对同一 $\Lambda_n$ 的两端输出写 $\Omega_i,\omega_i$，令 $P_i=\tau_{h_i}\otimes\omega_i$、$\Delta_i=D(\Omega_i,P_i)$。上述二元效果在 $\omega_0,\omega_1$ 上的概率记为 $p_0,p_1$，则 $p_0-p_1\ge a$。对任意 $x,y\ge0$，两维秩一计算给
+$$
+\|x\tau_{h_0}-y\tau_{h_1}\|_1
+=\sqrt{\nu^2(x+y)^2+s^2(x-y)^2}.
+$$
+对 $P_0,P_1$ 的 $K$ 因子作该二元测量，仅作为数学比较，两个正交结果块的这个范数之和由二维三角不等式给出
+$D(P_0,P_1)\ge\sqrt{\nu^2+s^2(p_0-p_1)^2}$。
+又 $D(\Omega_0,\Omega_1)\le\nu$，所以
+$\Delta_0+\Delta_1\ge\sqrt{\nu^2+s^2a^2}-\nu$，得到 (14.25)。这是自足的共同通道计算，不使用输出纯度。
+
+式 (14.26) 的 $b$ 精确复用 Buscemi–Sacchi 的 *Information-Disturbance Tradeoff in Quantum State Discrimination*，[修正版本原文](https://arxiv.org/html/quant-ph/0610196v2) 的式 (1)–(3)、(15)、(21)–(25)：两个等先验纯输入、任意返回同一二维信号的二元 CP 仪器，以平均成功率和平均生存失真为指标。对应取该文 $\sin(2\alpha)=s$、$\cos(2\alpha)=\nu$、$t=a/\nu$，则其 $P_t=(1+a)/2$、$\gamma=\sqrt{1-t^2}$，最小平均生存失真即这里的 $b(s,a)$。该函数在 $0\le a\le\nu$ 上非减，故成功率至少 $(1+a)/2$ 时也得到同一必要下界。这里只复用这个二元定理，不声称其最优仪器能由原始槽实现，也不将该生存指标直接等同于实际乘积返回。
+
+为说明支撑因子及指标转换，置 $\psi_i=|j,h_i\rangle$，选相位使 $\langle\psi_0,\psi_1\rangle=s$，并令
+$$
+W_t(h)=\operatorname{span}\{|j,j-k\rangle_h:0\le k\le\min(t,m)\},\quad
+\mathcal S=\operatorname{span}\{\psi_0,\psi_1\},\quad
+v_i=\frac{\psi_{1-i}-s\psi_i}{\nu}.
+$$
+初始 $R$ 支撑在 $W_0(h)$。式 (13.5) 的两个投影在 $J$ 中仿射，而 $J_h,J_\pm$ 每次至多改变一个降低数；它们把 $W_t(h)$ 送入 $W_{t+1}(h)$，对任意联合探针、记忆和相干指针仍成立。所有非 $R$ Kraus 操作保持这个支撑。$J\cdot\sigma$ 的两个本征值为 $j,-(j+1)$，故 (13.9) 是 $\Pi_+,\Pi_-$ 的标量线性组合，同样只增加一个支撑步。对完整有限因果树归纳，包含混合辅助、适应反馈和回用探针，实际参考边缘 $\rho_i=\operatorname{Tr}_K\Omega_i$ 因而支撑在 $W_T(h_i)$。这也说明为何终端接触不能漏计。
+
+相干对称张量展开在降低数 $k$ 上的平方系数为
+$\binom mk u^{m-k}(1-u)^k$。因此
+$\|P_{W_T(h_i)^\perp}v_i\|^2=\kappa_T$。
+令 $\ell_i=1-\langle\psi_i|\rho_i|\psi_i\rangle$、
+$q_i=\operatorname{Tr}(P_{\mathcal S^\perp}\rho_i)$。
+在 $W_T(h_i)\cap\psi_i^\perp$ 上，
+$P_{\mathcal S^\perp}$ 的压缩为
+$I-|P_{W_T(h_i)}v_i\rangle\langle P_{W_T(h_i)}v_i|$，
+其下界为 $\kappa_T I$，而与 $\psi_i$ 的交叉项为零，故
+$q_i\ge\kappa_T\ell_i$，对任意混合 $\rho_i$ 成立。
+
+在数学比较中保留同一个二元记录，并对返回信号使用
+$$
+\Phi(X)=P_{\mathcal S}XP_{\mathcal S}
++\operatorname{Tr}(P_{\mathcal S^\perp}X)\frac{P_{\mathcal S}}2.
+$$
+它是保迹 CP 压缩，保持两个输入和记录概率，把返回失真改为
+$\ell'_i=\ell_i-q_i/2$。限制输入到 $\mathcal S$ 后恰是上述二元来源的仪器域。因此
+$$
+b(s,a)\le\frac{\ell'_0+\ell'_1}{2}
+\le(1-\kappa_T/2)\frac{\ell_0+\ell_1}{2}
+\le(1-\kappa_T/2)\max_i\Delta_i
+\le(1-\kappa_T/2)\overline\delta.
+$$
+这里 $\ell_i\le\Delta_i$ 来自实际 $R K$ 上的效果
+$(I-\tau_{h_i})\otimes I_K$。这证明 (14.26) 的精确支撑证书。分组、偏迹与 $\Phi$ 都只是必要界的比较操作，不是给控制器增加未知方向、直接 $R$ 控制或删除实际输出的许可；没有把 Kraus 指标或初始纯化加入实际端口。
+
+现在对这些证书取整个原始分离对包络。具体地，$\mathcal E_{\rm pair}$ 是所有允许的同场分离对、固定 $a=q$、以及适用于其接触上界 $T\le L+1$ 的上述 $C,b,S_T$ 数值的上确界；没有可用对时上确界取零。即使允许全部整数 $0\le T\le L+1$ 并把二元数值域扩大到全部 $0<a\le\nu$，下面的共同上界仍成立，所以没有以缩小比较域取得增益。每个目标坐标是 $h$ 的线性函数，其行范数不超过 $G/2=1/2$；于是
+$$
+2\epsilon<\|D_{h_0}(n)-D_{h_1}(n)\|_\infty
+\le\frac12\|h_0-h_1\|=\sin\frac\theta2.
+$$
+因 $2\epsilon=1/8$，相干重叠满足
+$$
+s^2=\cos^{4j}\frac\theta2<
+\left(\frac{63}{64}\right)^m.
+\tag{14.27}
+$$
+在全部二元可行域，$\sqrt{\nu^2+s^2a^2}\le1$，所以
+$C\le(1-\nu)/2=s^2/[2(1+\nu)]\le s^2/2$。
+又置 $y=s^2\nu^2(1-\gamma)^2\le s^2$，则
+$b=y/[2(1+\sqrt{1-y})]\le s^2/2$。
+结合 $0<\kappa_T\le1$ 得
+$S_T\le2b\le s^2$。
+因此 $\mathcal E_{\rm pair}\le(63/64)^m$，包括正交对的零值及所有相应原始接触证书。
+
+另一方面，(14.12) 的同场反向对 $\pm e_2$ 的目标距离为一。对任意在整个原始任务上成功的控制器，(14.23) 在这个固定场上的全方向返回上确界成立，因而也约束 $\overline\delta$。由 $a=q$、$m\ge1$ 及 $\pi<4$，
+$$
+\overline\delta\ge\frac{q^2}{(1+\pi\sqrt m)^2}
+>\frac{q^2}{25m}>\frac9{250m}.
+\tag{14.28}
+$$
+二项式展开 $(64/63)^m=(1+1/63)^m$ 给
+$$
+\left(\frac{63}{64}\right)^m
+\le\frac{2\cdot63^2}{m(m-1)}
+<\frac9{250m}\quad\text{当 }m-1>220500.
+\tag{14.29}
+$$
+而 (13.4) 给 $m\ge8{,}000{,}000N^2-1$，同时保证 $L+1<m$ 和这个严格阈值。因此在整个给定的获取可行族上，(14.28) 严格高于上述整个成对证书包络；这些元组的非空均匀获取可行性由定理 13.1 的同一有限协议给出。这个比较只说明全球约化-CPTP 必要关系相对于明确给定的已付证书有严格有限增益，不说明全体成熟定理、最优系数、饱和协议或资源支配关系。$\square$
+
+## 15. 约化类的环境反例、来源对应与剩余缺口
+
+### 15.1 访问外反例、来源对应与剩余缺口
+
+**命题 15.1（一般 CPTP 中的访问外反例）。** 令 $\ell=2j\ge2$。把 $R=\operatorname{Sym}^{\ell}(\mathbb C^2)$ 等距嵌入 $\operatorname{Sym}^{\ell-1}(\mathbb C^2)\otimes\mathbb C^2$，使 $|h\rangle^{\otimes\ell}$ 送到 $|h\rangle^{\otimes(\ell-1)}\otimes|h\rangle_K$。在前一因子施行 universal $(\ell-1)\to\ell$ cloning，保留 $K$。其对对称输入的 CPTP 公式为
+$$
+\mathcal C_{\ell-1\to\ell}(X)=\frac{\ell}{\ell+1}
+P_\ell(X\otimes I_2)P_\ell .
+\tag{15.1}
+$$
+归一化来自 $SU(2)$ 不变性：迹泛函在不可约输入上是迹的常数倍；对 $|0\rangle^{\otimes(\ell-1)}$，两项迹为 $1$ 和 $1/\ell$，乘以 $\ell/(\ell+1)$ 得一。对每个 $h$，输出为
+$$
+\Omega_h=\rho_h\otimes|h\rangle\langle h|_K,\quad
+\rho_h=\frac{\ell}{\ell+1}\tau_h+
+\frac1{\ell+1}|{\rm Dicke}_{\ell,1;h}\rangle
+\langle{\rm Dicke}_{\ell,1;h}|.
+\tag{15.2}
+$$
+Dicke 向量与 $\tau_h$ 正交，所以返回误差为 $1/(\ell+1)$，而 $K$ 的反向边缘距离为一。若仅凭约化 CPTP 性质套用 (14.2)，在 $\ell\ge64$ 时将得到错误的不等式
+$1\le(1+2\pi\sqrt\ell)/(\ell+1)<1$。该通道直接拆分并处理 $R$ 的自旋成分，且把其机器环境约化掉；它不是 (13.5) 的合法槽控制器，也不构成原始任务的反例。它只证明把实际等距定理无条件扩展到抽象 CPTP 的企图必然失败。
+
+**文献与范围。** Werner 的 *Optimal Cloning of Pure States*（[原文](https://arxiv.org/html/quant-ph/9804001v1)） 给出 (15.1) 的对称空间 CP 公式；这里只使用其构造和归一化，不使用最优性。Lemm–Wilde 的 *Information-theoretic limitations on approximate quantum cloning and broadcasting*（[原文](https://arxiv.org/html/1608.07569v2)） 说明对称偏迹与 universal cloning 的恢复对应，但其广播定理的边缘、乘积与度量假设没有移植到本任务。Kretschmann–Schlingemann–Werner 的 *The Information-Disturbance Tradeoff and the Continuity of Stinespring's Representation*（[原文](https://arxiv.org/html/quant-ph/0605009v1)） 需要稳定化或互补通道及解码假设，不能把任意 Stinespring 环境当作实际 $K$。Sacchi 的 *Information-disturbance tradeoff for spin coherent state estimation*（[原文](https://arxiv.org/html/quant-ph/0610246v2)） 使用 Haar 平均操作/估计保真度，和 (13.10) 的均匀实际乘积返回不同。Barnum–Caves–Fuchs–Jozsa–Schumacher 的 exact no-broadcasting（[原文](https://arxiv.org/html/quant-ph/9511010v1)） 只用于说明非对易态的成熟边界，不提供本文的定量界。上述来源均按其公开原文中对应章节或公式使用；没有据此声称文献穷尽或历史新颖性。OTF001–003、005–007 的几何、仪器、控制、记录和时钟前提仅按原卷已声明范围复用；AURIC 的物理源和消费者条件不自动成为本卷额外义务。
+
+**边界与未决问题。** 定理 13.1 的上界是一个固定协议的存在性和资源证书，允许的约化控制器可以有任意有限混合辅助，但不供应其物理噪声汇、校准门或物理时钟。定理 14.1 只适用于实际完整等距输出；定理 14.3 是更大的任意实际 CPTP 类的必要条件，因而可约束原始合法类，却不说明该类能否实现 (15.1) 的访问机制。所有原始 $H,E$、$b,Y$、指针、复制环境和终端输出均已纳入口；没有不可访问初始纯化、$h$ 依赖程序、丢弃固定原生端口或归一化后选择分支。这里的 $\overline\delta$ 是一个协议的实际同一运行返回误差，而非 §12.5 的控制器上确界 $E_j(N)$；终端交换另行计费，故 (12.6)–(12.9) 的最坏情形寿命结论保持原样。
+
+本批真正留下的原始数学缺口是：在保留所有原始 raw-sign 总自旋槽、终端交换和同一完整 $K$ 的条件下，能否证明更强的 $1/\sqrt j$ 返回必要性，或给出合法的较小系数约化 CP 控制器并保持同一个均匀解码器。定理 14.3 的 $1/j$ 级下界与定理 13.1 的 $2M/D+2\zeta$ 上界相容但不匹配；它没有给出共同优化器、完整可达区域或最优系数。
+
+## 追加锚（本行以下为增补区）
