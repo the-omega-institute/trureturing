@@ -32,6 +32,14 @@ The target is the complete eventual conjunction, including the original
 polynomial roots, their limits and all three prefixes. The source's even
 termination observation is outside this target.
 
+## Verified locator
+
+- DOI: https://doi.org/10.5281/zenodo.21678529
+- Journal: https://math.colgate.edu/~integers/aa98/aa98.pdf,
+  Theorem 1 on page 5 and Remark 3 on page 6.
+- Preprint: https://arxiv.org/src/2511.15133v1,
+  Theorem 1 and Remark 4 (`cfrac5`).
+
 ## Bounded literature and reuse evidence
 
 The preregistration in [issue #28129](https://github.com/the-omega-institute/trureturing/issues/28129)
