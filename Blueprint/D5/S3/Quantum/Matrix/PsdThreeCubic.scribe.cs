@@ -17,7 +17,7 @@ internal sealed class PsdThreeCubicDocument : IScribeDocumentDefinition
             Entry("pairEnergy", "pairEnergy",
                 "The weighted real pair energy a(d+e)x^2+b(e+f)y^2+c(f+d)z^2.", DescribeRole.Definition),
             Entry("negative_pair_bound", "negative pair bound",
-                "If the single real quadratic form with diagonal d,e,f and off-diagonal -x,-y,-z is nonnegative on every real vector, its weighted pair energy dominates allowance(a,b,c)xyz. All weights and edges may vanish. A Gram test vector and three-term AM-GM supply the estimate.", DescribeRole.Theorem),
+                "For nonnegative weights a,b,c and edges x,y,z, if the single real quadratic form with diagonal d,e,f and off-diagonal -x,-y,-z is nonnegative on every real vector, its weighted pair energy dominates allowance(a,b,c)xyz. All weights and edges may vanish. A Gram test vector and three-term AM-GM supply the estimate.", DescribeRole.Theorem),
             Entry("allowance_of_p396", "allowance of p396",
                 "For nonnegative a,b,c,k with positive sum of weights, the polynomial bound (a+b+c)k^2 <= 4(a+b+c)(ab+bc+ca)+396abc implies k <= allowance(a,b,c). This is a sufficient comparison and asserts no necessity.", DescribeRole.Theorem),
             Paragraph(Text("The statements concern the explicitly defined closed algebraic kernels. "

@@ -15,11 +15,11 @@ internal sealed class PsdThreeCubicComplexDocument : IScribeDocumentDefinition
             Entry("cycle", "cycle",
                 "The actual oriented complex product S01 S12 S20.", DescribeRole.Definition),
             Entry("matrixPair", "matrixPair",
-                "The three nonnegative pair terms use the original source diagonal real parts and squared complex entry norms.", DescribeRole.Definition),
+                "The three weighted pair terms use the original source diagonal real parts and squared complex entry norms. They are nonnegative for a PSD source and nonnegative weights.", DescribeRole.Definition),
             Entry("cubic", "cubic",
                 "The weighted matrix pair energy plus k times the real part of the oriented source cycle.", DescribeRole.Definition),
             Entry("negative_cycle_gram", "negative cycle gram",
-                "For a complex PSD matrix with negative real cycle, the explicitly scaled vector (xyu,-conj(S01)yv,conj(S01 S12)w) gives a real quadratic-form constraint on the same three diagonal entries. No rank, inverse or external diagonal frame is assumed.", DescribeRole.Theorem),
+                "For a complex PSD matrix, positive x,y with normSq(S01)=x^2 and normSq(S12)=y^2, and real z with Re(S01 S12 S20)=-xyz, the explicitly scaled vector (xyu,-conj(S01)yv,conj(S01 S12)w) gives a nonnegative real quadratic form with the same three diagonal entries. No sign restriction on z, rank, inverse or external diagonal frame is assumed.", DescribeRole.Theorem),
             Entry("cubic_nonneg", "cubic nonneg",
                 "Every complex PSD three by three matrix has nonnegative cubic whenever a,b,c,k are nonnegative and k <= allowance(a,b,c). This includes singular matrices, arbitrary phases and zero weights; the coefficient hypotheses require an independent application-specific proof.", DescribeRole.Theorem),
             Paragraph(Text("The statements concern the explicitly defined closed algebraic kernels. "
