@@ -90,7 +90,49 @@ $$\begin{aligned}\forall s: Seen, (\forall f: (\operatorname{Fin}\left(0\right))
 
 The empty word retains its initial flags. For a nonempty word the first colour updates the flags before the tail is scanned.
 
-**Definition 1.7 (The two boundary labels).**
+**Theorem 1.7 (The first final flag).**
+
+$$\forall n: Nat, (\forall s: Seen, (\forall f: (\operatorname{Fin}\left(n\right)) \to \operatorname{Fin}\left(6\right), ((\operatorname{Prod.fst}\left(\operatorname{finish}\left(s, f\right)\right) = true) \iff ((\operatorname{Prod.fst}\left(s\right) = true) \lor (\exists i: \operatorname{Fin}\left(n\right), (f\left(i\right) = 1))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233175PairStrip.finish_fst` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233175: six-colour complementary-pair exclusion on a two-row strip*. URL: <https://oeis.org/A233175>.
+
+*Commentary.*
+
+The first flag is true exactly when it was initially true or colour one occurs in the word.
+
+**Theorem 1.8 (The second final flag).**
+
+$$\forall n: Nat, (\forall s: Seen, (\forall f: (\operatorname{Fin}\left(n\right)) \to \operatorname{Fin}\left(6\right), ((\operatorname{Prod.snd}\left(\operatorname{finish}\left(s, f\right)\right) = true) \iff ((\operatorname{Prod.snd}\left(s\right) = true) \lor (\exists i: \operatorname{Fin}\left(n\right), (f\left(i\right) = 2))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233175PairStrip.finish_snd` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233175: six-colour complementary-pair exclusion on a two-row strip*. URL: <https://oeis.org/A233175>.
+
+*Commentary.*
+
+The second flag is true exactly when it was initially true or colour two occurs in the word.
+
+**Theorem 1.9 (The earlier-occurrence criterion).**
+
+$$\forall n: Nat, (\forall s: Seen, (\forall f: (\operatorname{Fin}\left(n\right)) \to \operatorname{Fin}\left(6\right), ((\operatorname{good}\left(s, f\right)) \iff (\forall i: \operatorname{Fin}\left(n\right), ((((f\left(i\right) = 2) \lor ((f\left(i\right) = 3) \lor (f\left(i\right) = 4))) \implies ((\operatorname{Prod.fst}\left(s\right) = true) \lor (\exists j: \operatorname{Fin}\left(n\right), ((j < i) \land (f\left(j\right) = 1))))) \land ((f\left(i\right) = 3) \implies ((\operatorname{Prod.snd}\left(s\right) = true) \lor (\exists j: \operatorname{Fin}\left(n\right), ((j < i) \land (f\left(j\right) = 2))))))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233175PairStrip.good_iff` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233175: six-colour complementary-pair exclusion on a two-row strip*. URL: <https://oeis.org/A233175>.
+
+*Commentary.*
+
+Acceptance says that every restricted colour has its required earlier occurrence, unless that colour was already recorded in the initial flags.
+
+**Definition 1.10 (The two boundary labels).**
 
 $$\forall c: Col, (\operatorname{pairs}\left(c\right) = (\operatorname{beta}\left(c\left(0\right)\right), \operatorname{beta}\left(c\left(1\right)\right)))$$
 
@@ -104,7 +146,21 @@ $$\forall c: Col, (\operatorname{pairs}\left(c\right) = (\operatorname{beta}\lef
 
 Here beta is the frozen map D5.S3.Observer.Separation.BooleanRankThreeK4.beta : Fin 6 → Fin 3, beta = ![0,1,2,2,1,0], whose fibres {0,5}, {1,4} and {2,3} are the complementary pairs; a legal bond joins different fibres. Only these labels of the preceding column affect future bonds.
 
-**Definition 1.8 (The literal filtered count).**
+**Theorem 1.11 (Pair-label characterization of bonds).**
+
+$$\forall c: Col, (\forall d: Col, ((\forall r: \operatorname{Fin}\left(2\right), (\forall s: \operatorname{Fin}\left(2\right), ((c\left(r\right) \neq d\left(s\right)) \land (\operatorname{val}\left(c\left(r\right)\right) + \operatorname{val}\left(d\left(s\right)\right) \neq 5)))) \iff (\forall r: \operatorname{Fin}\left(2\right), ((\operatorname{beta}\left(d\left(r\right)\right) \neq \operatorname{beta}\left(c\left(0\right)\right)) \land (\operatorname{beta}\left(d\left(r\right)\right) \neq \operatorname{beta}\left(c\left(1\right)\right))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233175PairStrip.edge_iff` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233175: six-colour complementary-pair exclusion on a two-row strip*. URL: <https://oeis.org/A233175>.
+
+*Commentary.*
+
+Each of the four bonds is legal exactly when its endpoint colours have distinct complementary-pair labels.
+
+**Definition 1.12 (The literal filtered count).**
 
 $$\forall n: Nat, (\operatorname{a}\left(n\right) = \operatorname{Finset.card}\left(\operatorname{Finset.filter}\left(\lambda A: ((\operatorname{Fin}\left(2\right)) \times (\operatorname{Fin}\left(n\right))) \to \operatorname{Fin}\left(6\right) \mapsto ((\exists j: \operatorname{Fin}\left(n\right), ((\operatorname{val}\left(j\right) = 0) \land (A\left((0, j)\right) = 0))) \land ((\forall j: \operatorname{Fin}\left(n\right), ((\operatorname{val}\left(j\right) + 1 < n) \implies (\forall r: \operatorname{Fin}\left(2\right), (\forall s: \operatorname{Fin}\left(2\right), ((A\left((r, j)\right) \neq A\left((s, \operatorname{Fin.mk}\left(\operatorname{val}\left(j\right) + 1\right))\right)) \land (\operatorname{val}\left(A\left((r, j)\right)\right) + \operatorname{val}\left(A\left((s, \operatorname{Fin.mk}\left(\operatorname{val}\left(j\right) + 1\right))\right)\right) \neq 5)))))) \land (\forall p: (\operatorname{Fin}\left(2\right)) \times (\operatorname{Fin}\left(n\right)), ((((A\left(p\right) = 2) \lor ((A\left(p\right) = 3) \lor (A\left(p\right) = 4))) \implies (\exists q: (\operatorname{Fin}\left(2\right)) \times (\operatorname{Fin}\left(n\right)), ((\operatorname{val}\left(\operatorname{Prod.fst}\left(q\right)\right) \cdot n + \operatorname{val}\left(\operatorname{Prod.snd}\left(q\right)\right) < \operatorname{val}\left(\operatorname{Prod.fst}\left(p\right)\right) \cdot n + \operatorname{val}\left(\operatorname{Prod.snd}\left(p\right)\right)) \land (A\left(q\right) = 1)))) \land ((A\left(p\right) = 3) \implies (\exists q: (\operatorname{Fin}\left(2\right)) \times (\operatorname{Fin}\left(n\right)), ((\operatorname{val}\left(\operatorname{Prod.fst}\left(q\right)\right) \cdot n + \operatorname{val}\left(\operatorname{Prod.snd}\left(q\right)\right) < \operatorname{val}\left(\operatorname{Prod.fst}\left(p\right)\right) \cdot n + \operatorname{val}\left(\operatorname{Prod.snd}\left(p\right)\right)) \land (A\left(q\right) = 2)))))))), \operatorname{Finset.univ}\left(\right)\right)\right))$$
 
@@ -116,7 +172,7 @@ $$\forall n: Nat, (\operatorname{a}\left(n\right) = \operatorname{Finset.card}\l
 
 The finite set contains all arrays on Fin 2 times Fin n, filtered by the displayed predicate. The rank r*n+j is the row-major order. The first-entry existential also makes a(0)=0.
 
-**Definition 1.9 (One-column continuation).**
+**Definition 1.13 (One-column continuation).**
 
 $$\forall w: (Seen) \to (Seen) \to (Seen) \to ((\operatorname{Fin}\left(3\right)) \times (\operatorname{Fin}\left(3\right))) \to Int, (\forall q: Seen, (\forall t: Seen, (\forall b: Seen, (\forall p: (\operatorname{Fin}\left(3\right)) \times (\operatorname{Fin}\left(3\right)), (\operatorname{step}\left(w, q, t, b, p\right) = \sum_{c: Col} ((\operatorname{if} ((\forall r: \operatorname{Fin}\left(2\right), ((\operatorname{beta}\left(c\left(r\right)\right) \neq \operatorname{Prod.fst}\left(p\right)) \land (\operatorname{beta}\left(c\left(r\right)\right) \neq \operatorname{Prod.snd}\left(p\right)))) \land ((\operatorname{allowed}\left(t, c\left(0\right)\right)) \land (\operatorname{allowed}\left(b, c\left(1\right)\right)))) \operatorname{then} w\left(q, \operatorname{advance}\left(t, c\left(0\right)\right), \operatorname{advance}\left(b, c\left(1\right)\right), \operatorname{pairs}\left(c\right)\right) \operatorname{else} 0)))))))$$
 
@@ -130,7 +186,7 @@ $$\forall w: (Seen) \to (Seen) \to (Seen) \to ((\operatorname{Fin}\left(3\right)
 
 The sum ranges over all thirty-six columns. Both new colours must avoid both preceding pair labels and satisfy their respective seen-colour flags.
 
-**Definition 1.10 (Continuation vectors).**
+**Definition 1.14 (Continuation vectors).**
 
 $$\begin{aligned}\forall q: Seen, (\forall t: Seen, (\forall b: Seen, (\forall p: (\operatorname{Fin}\left(3\right)) \times (\operatorname{Fin}\left(3\right)), (\operatorname{v}\left(0, q, t, b, p\right) = (\operatorname{if} (t = q) \operatorname{then} 1 \operatorname{else} 0)))))\\\forall k: Nat, (\forall q: Seen, (\forall t: Seen, (\forall b: Seen, (\forall p: (\operatorname{Fin}\left(3\right)) \times (\operatorname{Fin}\left(3\right)), (\operatorname{v}\left(k + 1, q, t, b, p\right) = \operatorname{step}\left(\operatorname{v}\left(k\right), q, t, b, p\right))))))\end{aligned}$$
 
@@ -144,7 +200,7 @@ $$\begin{aligned}\forall q: Seen, (\forall t: Seen, (\forall b: Seen, (\forall p
 
 The parameter q specifies the final top-row flags. The current flags are t and b. At length zero only t=q is required. A positive continuation appends one column.
 
-**Definition 1.11 (Closing the row-major boundary).**
+**Definition 1.15 (Closing the row-major boundary).**
 
 $$\forall w: (Seen) \to (Seen) \to (Seen) \to ((\operatorname{Fin}\left(3\right)) \times (\operatorname{Fin}\left(3\right))) \to Int, (\operatorname{total}\left(w\right) = \sum_{c: Col} (\sum_{q: Seen} ((\operatorname{if} ((c\left(0\right) = 0) \land (\operatorname{allowed}\left(q, c\left(1\right)\right))) \operatorname{then} w\left(q, (false, false), \operatorname{advance}\left(q, c\left(1\right)\right), \operatorname{pairs}\left(c\right)\right) \operatorname{else} 0))))$$
 
@@ -158,7 +214,7 @@ $$\forall w: (Seen) \to (Seen) \to (Seen) \to ((\operatorname{Fin}\left(3\right)
 
 The first top colour is zero. The final top flags q are also the initial bottom flags, since all top-row cells precede the bottom row. Summing over q selects the unique final top record.
 
-**Theorem 1.12 (A finite continuation identity).**
+**Theorem 1.16 (A finite continuation identity).**
 
 $$(\forall q: Seen, (\forall t: Seen, (\forall b: Seen, (\forall p: (\operatorname{Fin}\left(3\right)) \times (\operatorname{Fin}\left(3\right)), (\operatorname{v}\left(7, q, t, b, p\right) = 16 \cdot \operatorname{v}\left(6, q, t, b, p\right) - 32 \cdot \operatorname{v}\left(5, q, t, b, p\right) - 320 \cdot \operatorname{v}\left(4, q, t, b, p\right) + 512 \cdot \operatorname{v}\left(3, q, t, b, p\right) + 2048 \cdot \operatorname{v}\left(2, q, t, b, p\right)))))) \land ((\operatorname{total}\left(\operatorname{v}\left(0\right)\right) = 3) \land ((\operatorname{total}\left(\operatorname{v}\left(1\right)\right) = 8) \land ((\operatorname{total}\left(\operatorname{v}\left(2\right)\right) = 80) \land ((\operatorname{total}\left(\operatorname{v}\left(3\right)\right) = 800) \land ((\operatorname{total}\left(\operatorname{v}\left(4\right)\right) = 8576) \land ((\operatorname{total}\left(\operatorname{v}\left(5\right)\right) = 92672) \land (\operatorname{total}\left(\operatorname{v}\left(6\right)\right) = 1009664)))))))$$
 
@@ -172,7 +228,7 @@ $$(\forall q: Seen, (\forall t: Seen, (\forall b: Seen, (\forall p: (\operatorna
 
 The seven-step identity holds on all 576 states. The listed scalar values concern continuation lengths zero through six. Linearity propagates the identity to every continuation length.
 
-**Theorem 1.13 (Barker's generating function).**
+**Theorem 1.17 (Barker's generating function).**
 
 $$\left(1 - 4 \cdot X\right) \cdot \left(1 - 8 \cdot X - 32 \cdot (X)^{2}\right) \cdot \operatorname{PowerSeries.mk}\left(\lambda n: Nat \mapsto (\operatorname{a}\left(n\right): Int)\right) = X \cdot \left(3 - 28 \cdot X - 16 \cdot (X)^{2} + 224 \cdot (X)^{3}\right) \operatorname{in} \operatorname{PowerSeries}\left(Int\right)$$
 
@@ -197,9 +253,13 @@ The literal filtered count equals total(v(n-1)) at every positive width, by deco
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233175PairStrip.a`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233175PairStrip.advance`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233175PairStrip.allowed`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233175PairStrip.edge_iff`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233175PairStrip.finish`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233175PairStrip.finish_fst`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233175PairStrip.finish_snd`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233175PairStrip.finite_certificate`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233175PairStrip.good`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233175PairStrip.good_iff`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233175PairStrip.pairs`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233175PairStrip.result`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233175PairStrip.step`
