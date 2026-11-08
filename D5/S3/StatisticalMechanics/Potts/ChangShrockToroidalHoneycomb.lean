@@ -123,7 +123,7 @@ private theorem singletonState_injective :
   intro σ τ h
   exact Equiv.ext (congrFun (congrArg Subtype.val h))
 
-private theorem alternatingVector_ne_zero : alternatingVector L ≠ 0 := by
+theorem alternatingVector_ne_zero : alternatingVector L ≠ 0 := by
   classical
   intro h
   have hh := congrArg (fun a : Space L => a (singletonState 1)) h
@@ -171,7 +171,7 @@ private theorem join_singleton_swap (i j : Fin L) (hij : i ≠ j)
     exact congrArg ket heq
   · simp [join, singletonState, hσ, hσ.symm, hi, hj]
 
-private theorem join_alternating (i j : Fin L) (hij : i ≠ j) :
+theorem join_alternating (i j : Fin L) (hij : i ≠ j) :
     join i j (alternatingVector L) = 0 := by
   classical
   simp only [alternatingVector, map_sum]
@@ -200,7 +200,7 @@ private theorem join_alternating (i j : Fin L) (hij : i ≠ j) :
   · intro σ
     simp [mul_assoc]
 
-private theorem list_prod_on_vector {α : Type*} (xs : List α)
+theorem list_prod_on_vector {α : Type*} (xs : List α)
     (A : α → Module.End Coeff (Space L)) (c : α → Coeff) (w : Space L)
     (h : ∀ a ∈ xs, A a w = c a • w) :
     (xs.map A).prod w = (xs.map c).prod • w := by
@@ -240,7 +240,7 @@ private theorem vertical_singleton (σ : Perm (Fin L)) (c : Coeff) :
     (Finsupp.single (singletonState σ) c) (fun i _ => ha i)
   simpa only [← List.ofFn_eq_map, Fin.prod_ofFn, hprod, vertical] using hh
 
-private theorem vertical_alternating :
+theorem vertical_alternating :
     vertical L (alternatingVector L) =
       (v ^ (L - 1) * (v + q)) • alternatingVector L := by
   classical
