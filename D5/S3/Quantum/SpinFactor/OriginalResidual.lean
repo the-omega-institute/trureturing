@@ -9,6 +9,10 @@
 import D5.S3.Quantum.SpinFactor.OriginalDContract
 import D5.S3.Geometry.TwoAxisFiniteRotation
 
+/-! Exact finite residual transport and elimination on the original spin factor. -/
+
+set_option backward.isDefEq.respectTransparency false
+
 noncomputable section
 open scoped BigOperators Matrix InnerProductSpace
 
@@ -17,8 +21,9 @@ namespace D5.S3.Quantum.SpinFactor.OriginalResidual
 open OriginalDContract
 open _root_.D5.S3.Geometry
 
-private theorem dot_nonneg (x : Vec) : 0 ≤ dot x x :=
-  Fintype.sum_nonneg (fun i => mul_self_nonneg (x i))
+private theorem dot_nonneg (x : Vec) : 0 ≤ dot x x := by
+  change 0 ≤ ∑ i : Fin 3, x i * x i
+  exact Finset.sum_nonneg (fun i _ => mul_self_nonneg (x i))
 
 /-- The difference from the fixed pure orientation, in the original output space. -/
 def residual (D : E → E → E) (e s t : ℝ) (x y : Vec) : E :=
@@ -32,11 +37,14 @@ private def rotationLinear (R : TwoAxisFiniteRotation.Orthogonal) : Vec →ₗ[�
   (WithLp.linearEquiv 2 ℝ Vec).toLinearMap ∘ₗ R.toLinearMap ∘ₗ
     (WithLp.linearEquiv 2 ℝ Vec).symm.toLinearMap
 
+private theorem rotationLinear_apply (R : TwoAxisFiniteRotation.Orthogonal) (x : Vec) :
+    rotationLinear R x = rotate R x := rfl
+
 private theorem rotation_dot (R : TwoAxisFiniteRotation.Orthogonal) (x y : Vec) :
     dot (rotate R x) (rotate R y) = dot x y := by
   have h := R.inner_map_map (WithLp.toLp 2 x) (WithLp.toLp 2 y)
   simpa only [dot, rotate, PiLp.inner_apply, Real.inner_apply, dotProduct,
-    WithLp.ofLp_toLp, WithLp.toLp_apply] using h
+    WithLp.ofLp_toLp, PiLp.toLp_apply] using h
 
 private theorem rotation_cross (R : TwoAxisFiniteRotation.Orthogonal)
     (hR : TwoAxisFiniteRotation.determinant R = 1) (x y : Vec) :
@@ -54,7 +62,7 @@ private theorem rotation_cross (R : TwoAxisFiniteRotation.Orthogonal)
   have htriple (u v z : Vec) :
       dot (rotate R u) (cross (rotate R v) (rotate R z)) = dot u (cross v z) := by
     have hmat : (![rotate R u, rotate R v, rotate R z] : Matrix (Fin 3) (Fin 3) ℝ) =
-        (![u, v, z] : Matrix (Fin 3) (Fin 3) ℝ) * M.transpose := by
+        Matrix.of ![u, v, z] * M.transpose := by
       ext i j
       fin_cases i
       · simpa [Matrix.mul_apply, Matrix.mulVec, dotProduct, mul_comm] using (congrFun (hm u) j).symm
@@ -63,6 +71,7 @@ private theorem rotation_cross (R : TwoAxisFiniteRotation.Orthogonal)
     change (rotate R u) ⬝ᵥ ((rotate R v) ⨯₃ (rotate R z)) = u ⬝ᵥ (v ⨯₃ z)
     rw [triple_product_eq_det, triple_product_eq_det, hmat,
       Matrix.det_mul, Matrix.det_transpose, hd, mul_one]
+    rfl
   apply dotProduct_eq_iff.mp
   intro z
   let u : Vec := rotate R⁻¹ z
@@ -141,11 +150,13 @@ private theorem cayley_preimage_laws (e : ℝ) (he : e = 1 ∨ e = -1) (q x : Ve
       funext i <;> fin_cases i <;>
       simp [cayleyPreimage, dot, cross, dotProduct, Fin.sum_univ_three,
         smul_eq_mul, Matrix.vecHead, Matrix.vecTail] <;>
-      field_simp [hd'] <;> simp [Matrix.vecHead, Matrix.vecTail] <;> ring
+      field_simp [hd'] <;> try simp [Matrix.vecHead, Matrix.vecTail]
+    all_goals ring
   · rcases he with rfl | rfl <;>
       simp [cayleyPreimage, dot, cross, dotProduct, Fin.sum_univ_three,
         smul_eq_mul, Matrix.vecHead, Matrix.vecTail] <;>
-      field_simp [hd'] <;> simp [Matrix.vecHead, Matrix.vecTail] <;> ring
+      field_simp [hd'] <;> try simp [Matrix.vecHead, Matrix.vecTail]
+    all_goals ring
 
 private theorem residual_neg (D : E → E → E) (hP : P2 D) (hPB : PB D)
     (e s t : ℝ) (x y : Vec) :
@@ -191,12 +202,16 @@ private theorem cayley_injective (e : ℝ) (q : Vec) :
     have h' : u - v + e • (cross q u - cross q v) = 0 := by
       funext i
       have hi := congrFun h i
-      simp only [Pi.add_apply, Pi.sub_apply, Pi.smul_apply, smul_eq_mul] at hi ⊢
+      simp only [Pi.add_apply, Pi.sub_apply, Pi.smul_apply, Pi.zero_apply,
+        smul_eq_mul] at hi ⊢
+      simp only [cross, cross_apply] at hi ⊢
       linarith
     exact h'
   have hd := congrArg (fun z : Vec => dot (u - v) z) hz
   have hv : dot (u - v) (u - v) = 0 := by
-    simpa only [dot, dotProduct_add, dotProduct_smul, dot_cross_self,
+    have hz : (u - v) ⬝ᵥ cross q (u - v) = 0 := by
+      simpa only [cross_apply, cross] using dot_cross_self q (u - v)
+    simpa only [dot, dotProduct_add, dotProduct_smul, smul_eq_mul, hz,
       mul_zero, add_zero, dotProduct_zero] using hd
   exact sub_eq_zero.mp (dotProduct_self_eq_zero.mp hv)
 
@@ -227,7 +242,9 @@ private theorem axis_cayley_reconstruction (e : ℝ) (he : e = 1 ∨ e = -1)
       simp only [map_sub, LinearMap.sub_apply]
       funext i
       have hi := congrFun hk i
-      simp only [Pi.add_apply, Pi.sub_apply, Pi.smul_apply, smul_eq_mul] at hi ⊢
+      simp only [Pi.add_apply, Pi.sub_apply, Pi.smul_apply, Pi.zero_apply,
+        smul_eq_mul] at hi ⊢
+      simp only [cross, cross_apply] at hi ⊢
       linarith
     have hsq := congrArg (fun u : Vec => dot u u) hv
     have hcx : dot (cross x v) (cross x v) = dot x x * dot v v := by
@@ -329,6 +346,8 @@ private theorem axis_cayley_reconstruction (e : ℝ) (he : e = 1 ∨ e = -1)
           simp only [LinearMap.map_smul₂, LinearMap.smul_apply, dotProduct_smul,
             smul_eq_mul]
           exact congrArg (e * ·) htr
+        simp only [dot, dotProduct_add, dotProduct_smul, dotProduct_zero,
+          smul_eq_mul] at hscalar
         change s * A + t * dot B C +
           e * (dot B (cross B V) + dot B (cross U C)) = 0 at hscalar
         rw [show dot B (cross B V) = 0 from dot_self_cross B V, hUC'] at hscalar
@@ -350,8 +369,8 @@ private theorem axis_cayley_reconstruction (e : ℝ) (he : e = 1 ∨ e = -1)
         change B ⨯₃ ((q ⨯₃ C) - e • V) = _
         simp only [map_sub, map_smul]
         rw [cross_cross_eq_smul_sub_smul', hUC]
-        change dot B C • q - dot B q • C - e • cross B V = _
-        rw [hBq, hqC]
+        change dot B C • q - dot q B • C - e • cross B V = _
+        rw [hqB, hqC]
         rcases he with rfl | rfl <;>
           funext i <;> simp [smul_eq_mul] <;> ring
       rw [hd, haxis, neg_zero]
@@ -389,11 +408,15 @@ private theorem axis_cayley_reconstruction (e : ℝ) (he : e = 1 ∨ e = -1)
       cayley_injective e q ((cayley_preimage_laws e he q y).1.trans hplusC.symm)
     refine ⟨q, ?_, ?_, ?_, ?_⟩
     · rw [← hplusB]
-      simpa only [dot, dotProduct_add, dotProduct_smul, smul_eq_mul, dot_self_cross,
-        mul_zero, add_zero] using hqB
+      change dot q (B + e • cross q B) = t
+      simp only [dot, dotProduct_add, dotProduct_smul, smul_eq_mul]
+      rw [show q ⬝ᵥ cross q B = 0 from dot_self_cross q B, mul_zero, add_zero]
+      exact hqB
     · rw [← hplusC]
-      simpa only [dot, dotProduct_add, dotProduct_smul, smul_eq_mul, dot_self_cross,
-        mul_zero, add_zero] using hqC
+      change dot q (C + e • cross q C) = -s
+      simp only [dot, dotProduct_add, dotProduct_smul, smul_eq_mul]
+      rw [show q ⬝ᵥ cross q C = 0 from dot_self_cross q C, mul_zero, add_zero]
+      exact hqC
     · unfold cayleyImage
       rw [hpreB, ← hU, hxminus, neg_neg]
     · unfold cayleyImage
@@ -414,7 +437,7 @@ theorem local_full_circle (D : E → E → E) (hP : P2 D) (hPB : PB D)
     rw [rotation_cross R hR.1]
     have h : rotationLinear R (s • x + t • y + e • cross x y) =
         s • x + t • y + e • cross x y := congrArg WithLp.ofLp hR.2
-    simpa only [map_add, map_smul] using h
+    simpa only [map_add, map_smul, rotationLinear_apply] using h
   obtain hfix | ⟨q, hqx, hqy, hix, hiy⟩ := axis_cayley_reconstruction e he s t x y
     (rotate R x) (rotate R y) hw (rotation_dot R x x)
     (rotation_dot R x y) hk
@@ -426,7 +449,7 @@ private theorem residual_swap (D : E → E → E) (hP : P2 D)
     (e s t : ℝ) (x y : Vec) :
     residual D e t s y x = -residual D e s t x y := by
   have hc : cross y x = -cross x y := (cross_anticomm x y).symm
-  have hc0 : (0, e • cross y x : E) = -(0, e • cross x y) := by
+  have hc0 : ((0, e • cross y x) : E) = -(0, e • cross x y) := by
     apply Prod.ext <;> simp [hc]
   unfold residual
   rw [p2_skew D hP, hc0]
@@ -466,7 +489,8 @@ private theorem residual_axes_nonparallel (e : ℝ) (he : e = 1 ∨ e = -1)
       have hz := congrArg (fun v : Vec => cross v y) hl
       change (s • x + t • y) ⨯₃ y = 0 ⨯₃ y at hz
       simpa only [LinearMap.map_add₂, LinearMap.map_smul₂, LinearMap.add_apply,
-        LinearMap.smul_apply, cross_self, smul_zero, add_zero, map_zero, LinearMap.zero_apply] using hz
+        LinearMap.smul_apply, cross_self, smul_zero, add_zero, map_zero, LinearMap.zero_apply,
+        cross, cross_apply] using hz
     have hs : s = 0 := (smul_eq_zero.mp hsw).resolve_right hw
     have hy : y ≠ 0 := by intro h; subst y; exact hw (by ext i; fin_cases i <;> simp [cross])
     have hty : t • y = 0 := by simpa only [l, hs, zero_smul, zero_add] using hl
@@ -486,7 +510,7 @@ private theorem residual_axes_nonparallel (e : ℝ) (he : e = 1 ∨ e = -1)
   simp only [dot] at hL hW hlw hwl
   have hn (v : Vec) : ‖WithLp.toLp 2 v‖ ^ 2 = dot v v := by
     rw [← real_inner_self_eq_norm_sq (WithLp.toLp 2 v)]
-    simp [dot, PiLp.inner_apply, Real.inner_apply]
+    rfl
   rw [hn, hn]
   simp only [PiLp.inner_apply, Real.inner_apply]
   change dot (l + e • w) (l - e • w) ^ 2 <
@@ -628,24 +652,24 @@ private theorem probe_coordinate_bound (a Q : ℝ) (n z : Vec)
   obtain ⟨c, hc⟩ : ∃ c : Fin 3, (cycleMatrix c *ᵥ n) i = n j := by
     fin_cases i <;> fin_cases j <;>
       first
-      | exact ⟨0, by simp [cycleMatrix]⟩
-      | exact ⟨1, by simp [cycleMatrix, Matrix.mulVec, dotProduct, Fin.sum_univ_three]⟩
-      | exact ⟨2, by simp [cycleMatrix, Matrix.mulVec, dotProduct, Fin.sum_univ_three]⟩
+      | solve | refine ⟨0, ?_⟩; norm_num [cycleMatrix, Matrix.mulVec, dotProduct, Fin.sum_univ_three]
+      | solve | refine ⟨1, ?_⟩; norm_num [cycleMatrix, Matrix.mulVec, dotProduct, Fin.sum_univ_three]
+      | solve | refine ⟨2, ?_⟩; norm_num [cycleMatrix, Matrix.mulVec, dotProduct, Fin.sum_univ_three]
   let v := cycleMatrix c *ᵥ n
   have hfaces : ∀ k : Fin 4,
       |a + (halfSigns k 0 * v 0 * z 0 + halfSigns k 1 * v 1 * z 1 +
         halfSigns k 2 * v 2 * z 2)| ≤ Q := by
     intro k
     have hk := h k c
-    simpa only [probeRotation, matrixRotation, matrixEquiv, rotate, probeMatrix,
-      ← Matrix.mulVec_mulVec, Matrix.mulVec_diagonal, dot, dotProduct,
-      Fin.sum_univ_three, v] using hk
+    change |a + dot (probeMatrix k c *ᵥ n) z| ≤ Q at hk
+    simpa only [probeMatrix, ← Matrix.mulVec_mulVec, Matrix.mulVec_diagonal, dot,
+      dotProduct, Fin.sum_univ_three, v] using hk
   have h₀ := hfaces 0
   have h₁ := hfaces 1
   have h₂ := hfaces 2
   have h₃ := hfaces 3
-  simp only [halfSigns, Matrix.cons_val_zero, Matrix.cons_val_one,
-    Matrix.cons_val_two, Matrix.cons_val_three, one_mul, neg_one_mul] at h₀ h₁ h₂ h₃
+  norm_num [halfSigns, Matrix.cons_val, Matrix.vecHead, Matrix.vecTail,
+    Function.comp_def] at h₀ h₁ h₂ h₃
   have hi : |a| + |v i * z i| ≤ Q := by
     fin_cases i
     · apply four_faces a (v 0 * z 0) (v 1 * z 1) (v 2 * z 2) Q
@@ -746,6 +770,7 @@ theorem saturated_support_zero (e δ Z : ℝ) (he : e = 1 ∨ e = -1)
           field_simp [hb0]
           nlinarith [congrArg (fun u : ℝ => b * u) hr]
     have hnw : dot n w = 0 := by
+      simp only [n, dot, smul_dotProduct, add_dotProduct, smul_eq_mul]
       change (1 / b) * (dot c w + r * dot p w) = 0
       rw [hcw, hpw]
       ring
@@ -792,7 +817,6 @@ theorem saturated_support_zero (e δ Z : ℝ) (he : e = 1 ∨ e = -1)
           LinearMap.add_apply]
         change (1 / a) • (cross c p + (σ * J) • cross w p) = _
         rw [hcross]
-        rfl
       have hnorm : vnorm (w + cross n p) = J := by
         rw [hnp]
         unfold vnorm
@@ -904,6 +928,7 @@ private theorem orbit_evaluation_bound (D : E → E → E) (hP : P2 D) (hPB : PB
     rw [rotation_dot]
     change (residual D e s t x y).1 + 0 +
       (dot (rotate R n) (residual D e s t x y).2 + e * dot n (cross x y)) = _
+    simp only [dot]
     ring
   have hnR : dot (rotate R n) (rotate R n) = 1 := (rotation_dot R n n).trans hn
   have hb := unit_evaluation_bound D hP (rotate R n) hnR
