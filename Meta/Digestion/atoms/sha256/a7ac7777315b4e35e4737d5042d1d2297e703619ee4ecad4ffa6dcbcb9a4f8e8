@@ -1,0 +1,34 @@
+**定义 120.1（完整候选与准确问题）。** 保留99.1的同一无R原背景、原 $S=\circ,D:E^2\to E$、准确锥与范数、原评价族及其全部质量，和同一个稠密Jordan包含 $E\subset X$。候选仍为实际二表P2与完整原评价PB：
+
+$$
+G_\alpha(a,b)=
+\begin{pmatrix}
+\alpha(a^2)&\alpha(a\circ b)-i\alpha D(a,b)\\
+\alpha(b\circ a)-i\alpha D(b,a)&\alpha(b^2)
+\end{pmatrix}\succeq0,
+\tag{120.1}
+$$
+
+$$
+\begin{aligned}
+Q_\alpha(b,c)&=\alpha(b^2+c^2+2D(b,c)),\\
+r_\pm&=b\pm D(a,b)\mp a\circ c,\qquad
+s_\pm=c\pm a\circ b\pm D(a,c),\\
+\mathsf{PB}:&\quad Q_\alpha(r_+,s_+)=Q_\alpha(r_-,s_-)
+\quad(a,b,c\in E,\ \alpha\in\mathcal P).
+\end{aligned}
+\tag{120.2}
+$$
+
+不输入D的线性、连续性、NN、完整J、P3或R。本节起先讨论一般、可不完备原E；122以后另明确限定完成X有限维，未把有限维移回一般候选。问题是：同一二元约束能否先约束所有真实原投影角，再选择有限模型的数域和几何，而不预选复矩阵？
+
+给定非零原投影 $p\in E$，定义
+
+$$
+U_p=2L_p^2-L_p,\qquad L_pa=p\circ a,\qquad
+X_p=U_pX,\quad E_p=U_pE=E\cap X_p,\quad C_p=C\cap E_p.
+\tag{120.3}
+$$
+
+它们是由原Jordan运算定义的角；“投影角”不是一份已经实现的测量仪器或过程压缩。
+

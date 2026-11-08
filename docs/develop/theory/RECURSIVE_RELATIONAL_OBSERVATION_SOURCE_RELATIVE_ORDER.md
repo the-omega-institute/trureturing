@@ -966,3 +966,1294 @@ theorem implies noncomputability or impossibility for the present family.
 No worldwide priority or new kernel-verification assertion is made.
 
 ## 追加锚（本行以下为增补区）
+
+## 8. Finite certificates on an arbitrary punctured rational compact region
+
+**Definition 8.1 (the regional problem and its inputs).** Retain Definitions
+1.1–1.2 in full, including the original unit-source Green field, selector,
+positive normalized $h$, measure $m=h^2\mu$, entire complex endpoint
+$A=\rho C$, and the distinction $H\ne F$. Write $\mathcal K$ for a
+spatial region, to distinguish it from the operator $K=J_h^{-1}HJ_h$.
+The region is specified as a finite union of nondegenerate closed boxes
+with rational endpoints in the original $(x,y,z,w)$ coordinates, and
+$e\notin\mathcal K$. The empty union is allowed. Put
+
+$$
+G_{\mathcal K}=\sup_{p\in\mathcal K}\frac{v_d(p)}{h(p)}
+\quad(\mathcal K\ne\varnothing),
+\tag{SRO.57}
+$$
+
+where the quotient is its smooth punctured representative. It is finite
+by the admitted punctured regularity and strict positivity of $h$.
+Neither $G_{\mathcal K}$ nor a compact minimum or modulus is an input.
+The numerical access is exactly that of Definition 1.2: total interval
+names for the original finite positive $a,\eta,d$, and the already
+constructed raw $L^2(\mu)$ resolvent, zero-state and source services of
+[D, §§11–12]. In particular a query at any positive time with a name
+returns a finite rational complex box step approximating the actual
+$v_t$, with a certified global norm error. Acceptance below is relative
+to legitimate replies from those services, just as in Theorem 5.1;
+it does not authenticate an arbitrary proposed name.
+
+**Theorem 8.2 (sound and strictly cofinal punctured-compact packets).**
+For every input of Definition 8.1 and every rational $U$, there is a
+uniformly described search through finite rational packets such that:
+
+1. Each individual acceptance test terminates after finitely many
+   legitimate name answers and finite rational operations.
+2. Every accepted packet proves $v_d\le Uh$ $\mu$-almost everywhere on
+   $\mathcal K$. For nonempty $\mathcal K$, the construction actually
+   proves $v_d<Uh$ everywhere there in the smooth representatives.
+3. If $\mathcal K\ne\varnothing$ and $U>G_{\mathcal K}$, fair search
+   eventually accepts. The empty union has an immediate certificate.
+
+No termination at equality, common positive gap, or parameter-uniform
+time bound is asserted. The packets use no pointwise heat evaluator,
+spatial modulus, numerical Harnack constant, positive anchor, or
+numerical compact minimum. Every additional numerical bound needed by
+the test is extracted below from the original names. The proof is given
+in §§9–11; its method is to certify a small *shifted* positive-part
+defect on a slightly larger space-time cylinder. The shift and a
+computed local estimate turn smallness into exact order.
+
+This is the punctured-compact factor named in §6 for the original
+[D, Definition 12.8, (12.31)]. It does not replace or reprove Theorem 5.1,
+and does not supply an exterior certificate or global assembly.
+
+## 9. Rational local geometry and the original-source time bound
+
+**Lemma 9.1 (explicit bounds from a punctured rational cube).** Refine the
+coefficient names to rational brackets
+$0<a_-\le a\le a_+$ and $0<\eta_-\le\eta\le\eta_+$.
+Let
+
+$$
+B=c+[-r,r]^4,\qquad I=c+[-r/2,r/2]^4,
+\qquad c\in\mathbb Q^4,\quad r\in\mathbb Q_{>0},\quad e\notin B.
+\tag{SRO.58}
+$$
+
+Choose a coordinate $j$ with $b=|c_j|-r>0$, and put
+
+$$
+\begin{gathered}
+X_B=|c_x|+r,\qquad
+q_B=\begin{cases}
+b^{-4},&j=x,y,\text{ or }z,\\
+25/(16b^2),&j=w,
+\end{cases}\\
+\lambda_B^0=\frac{\min(a_-,\eta_-)}{2(1+X_B^2)},\qquad
+\Lambda_B^0=2(a_++\eta_+)(1+X_B^2),\qquad
+\nu_B^0=512(a_++\eta_+)(1+q_B).
+\end{gathered}
+\tag{SRO.59}
+$$
+
+These are finite positive rationals. In the original coordinates the
+principal matrix $\mathsf A$ and potential $V$ satisfy on $B$
+
+$$
+\begin{gathered}
+q^{\mathsf T}\mathsf A(p)q
+ =a\big(q_x^2+(q_y+xq_w)^2+q_z^2\big)+\eta q_w^2,\qquad
+V(p)=16\sqrt{a\eta}\,\Gamma(p),\\
+\lambda_B^0\mathbf1\le\mathsf A(p)\le\Lambda_B^0\mathbf1,
+\qquad 0<V(p)\le\nu_B^0.
+\end{gathered}
+\tag{SRO.60}
+$$
+
+Proof. The original fields have zero Haar divergence, so their quadratic
+form gives precisely $-\operatorname{div}(\mathsf A\nabla)-V$ off $e$.
+The shear $q\mapsto(q_x,q_y+xq_w,q_z,q_w)$ and its inverse have squared
+operator norms at most $2(1+X_B^2)$. Applying the coefficient brackets
+proves both matrix inequalities.
+
+If $j$ is a noncentral coordinate, $\varrho^4\ge b^4$. If $j=w$, write
+$s=w-xy/2$ and use
+
+$$
+|w|\le |s|+|xy|/2
+ \le\varrho^2+|(x,y,z)|^2/4\le5\varrho^2/4.
+\tag{SRO.61}
+$$
+
+Thus $\varrho^{-4}\le q_B$ in both cases. The elementary inequality
+$\varrho^{-3}\le1+\varrho^{-4}$ and the original bound
+$\Gamma\le32\varrho^{-3}$ give (SRO.60), since
+$\sqrt{a\eta}\le a_++\eta_+$. A closed coordinate cube avoids zero
+exactly when at least one coordinate has $|c_j|>r$, so the separation
+choice is a finite rational test. No Green-field evaluation or
+coefficient derivative is required. $\square$
+
+**Definition 9.2 (finite coverage evidence).** A geometric packet has
+finitely many pairs $(B_i,I_i)$ of the form (SRO.58), each avoiding $e$.
+For every specified constituent box of $\mathcal K$, include a finite
+rational grid partition of that box. Its coordinate breakpoint lists
+start and end at the given endpoints, are strictly increasing, and each
+closed grid cell must be contained in some $I_i$. Containment is checked
+by its eight endpoint inequalities in dimension four. These finite
+checks imply $\mathcal K\subseteq\bigcup_i I_i$, including all faces.
+They require no decision about membership in a named real set.
+
+Such evidence exists whenever the interiors of the $I_i$ cover
+$\mathcal K$: the finite open cover of each compact constituent box
+has a positive Lebesgue number, so a sufficiently fine rational grid
+has every cell inside one of those interiors. This fact establishes
+completeness of the finite language; a Lebesgue number is not requested
+by the search. Small rational cubes whose half-size interiors cover
+any prescribed point can be chosen inside any open neighborhood of
+that point. Compactness therefore gives a finite such cover inside
+any punctured open neighborhood of $\mathcal K$.
+
+**Lemma 9.3 (a numerical time-interpolation bound for this source).**
+Use the existing scalar name of $D$ in (SRO.40) to find a rational
+$0<\ell<D$, and the original clock name to find $0<d_-\le d$.
+Set
+
+$$
+t_0=d_-/4,\qquad
+J=\frac{t_0^{-1}+4t_0^{-2}}{\ell}.
+\tag{SRO.62}
+$$
+
+For $s,t\ge t_0$, the actual full-endpoint source vectors obey
+
+$$
+\|v_t-v_s\|_{L^2(\mu)}\le J|t-s|.
+\tag{SRO.63}
+$$
+
+Proof. Reuse (SRO.40)–(SRO.41), not a new source construction:
+$v_t=(H+1)e^{-tH}z$ and $\|Hv_t\|_2\le J$ for $t\ge t_0$.
+Positive-time Hilbert differentiability gives
+$\partial_t v_t=-Hv_t$; integration proves (SRO.63).
+The searches for the positive lower brackets terminate because the
+named $D,d$ are strictly positive. The spectral bound uses the
+nonnegative full $H$; the auxiliary $(F+1)^{-1}$ in $z$ does not
+substitute an $F$ heat orbit. $\square$
+
+## 10. A numerical cylinder estimate and the shifted defect
+
+**Lemma 10.1 (an explicit four-dimensional cylinder constant).** On
+$Q=(-1,1)^4\times(-1,0)$ let $Z\ge0$ be a smooth subsolution of
+
+$$
+\partial_\theta Z-\operatorname{div}(\mathsf B\nabla Z)-WZ\le0,
+\quad \lambda\mathbf1\le\mathsf B\le\Lambda\mathbf1,
+\quad 0\le W\le\nu,
+\tag{SRO.64}
+$$
+
+where $\mathsf B$ is symmetric, $\lambda>0$, and the coefficients are
+smooth locally. Put
+
+$$
+L=1+\lambda^{-1}+\Lambda+\nu,\qquad C=2^{42}L^3.
+\tag{SRO.65}
+$$
+
+Then
+
+$$
+\operatorname{ess\,sup}_{(-1/2,1/2)^4\times(-1/2,0)}Z
+ \le C\|Z\|_{L^2(Q)}.
+\tag{SRO.66}
+$$
+
+The same estimate holds for locally uniform, $L^2(Q)$ convergent limits
+of such subsolutions. If the limit is continuous on the closed smaller
+spatial cube at time zero, (SRO.66) holds there too. The constant
+depends only on the displayed bounds, not on coefficient derivatives.
+
+Proof. This is a power-iteration intermediate with all numerical costs
+specified. For $p\ge2$, write $z=Z^{p/2}$, $f=\chi z$ and
+$Y=\int\chi^2z^2$, with $0\le\chi\le1$ compactly supported in space
+and vanishing at the earlier time. The test $p\chi^2Z^{p-1}$ gives
+
+$$
+\frac{dY}{d\theta}+\frac\lambda2\int|\nabla f|^2
+ \le\int\big(2|\chi_\theta|+8\Lambda|\nabla\chi|^2+p\nu\big)Z^p.
+\tag{SRO.67}
+$$
+
+Indeed the initial diffusion coefficient is $4(p-1)/p\ge2$ in
+the $\mathsf B$ metric. Estimate its cross term by
+$4ab\le a^2+4b^2$, leaving at least one copy of
+$\chi^2|\nabla z|_{\mathsf B}^2$. The inequality
+$|\nabla(\chi z)|_{\mathsf B}^2
+ \le2\chi^2|\nabla z|_{\mathsf B}^2+2z^2|\nabla\chi|_{\mathsf B}^2$
+then costs at most a further $\Lambda|\nabla\chi|^2z^2$.
+The displayed $8\Lambda$ bounds the resulting $5\Lambda$.
+The time term uses $|2\chi\chi_\theta|\le2|\chi_\theta|$.
+One can first use $Z+\epsilon>0$: its operator residual is no larger
+than that of $Z$, because $W\ge0$. Letting $\epsilon\downarrow0$
+justifies the power test at zeros.
+
+Take
+
+$$
+\begin{gathered}
+p_j=2(3/2)^j,\qquad R_j=S_j=1/2+2^{-j-1},\\
+Q_j=(-R_j,R_j)^4\times(-S_j,0).
+\end{gathered}
+\tag{SRO.68}
+$$
+
+Product cutoffs supported in $Q_j$, equal to one on $Q_{j+1}$, can
+have $|\nabla\chi_j|^2\le2^{10}4^j$ and
+$|\partial_\theta\chi_j|\le2^6 4^j$. For example each coordinate
+transition has width $2^{-j-2}$ and slope at most twice its reciprocal;
+the time transition has the same width. Piecewise smooth cutoffs are
+valid by approximation. The right-hand coefficient of (SRO.67) is at
+most $2^{14}Lp_j4^j$. Integrating from the earlier zero-cutoff time,
+and using $1+2/\lambda\le3L$, gives
+
+$$
+\sup_\theta\int f_j^2+\iint|\nabla f_j|^2
+ \le H_j\iint_{Q_j} Z^{p_j},\qquad
+H_j=2^{16}L^2p_j4^j.
+\tag{SRO.69}
+$$
+
+Reuse the ordinary compact-support Sobolev inequality
+$\|f\|_4^2\le64\int|\nabla f|^2$ established in the proof of
+Theorem 3.1. Spatial Hölder followed by time integration yields
+
+$$
+\begin{gathered}
+\iint|f_j|^3
+ \le64\left(\sup_\theta\int f_j^2+\iint|\nabla f_j|^2\right)^{3/2},\\
+\|Z\|_{p_{j+1},Q_{j+1}}
+ \le64^{1/p_{j+1}}H_j^{1/p_j}\|Z\|_{p_j,Q_j}.
+\end{gathered}
+\tag{SRO.70}
+$$
+
+Here all norms and integrals are ordinary unweighted Euclidean ones.
+The sums $\sum_j1/p_j=3/2$, $\sum_jj/p_j=3$ and
+$\sum_j1/p_{j+1}=1$ bound the infinite product by
+
+$$
+64\,2^{24}L^3\,2^{3/2}(3/2)^3\,4^3<2^{40}L^3<C.
+\tag{SRO.71}
+$$
+
+For the strict inequality it suffices to use $2^{3/2}<4$ and
+$(3/2)^3<4$. On the intersection cylinder the uniform bounds for
+$p_j\to\infty$ imply the essential-supremum bound: any positive-measure
+set exceeding it would contradict those bounds as $j\to\infty$.
+Limits of subsolutions preserve (SRO.66) by the stated convergence.
+Continuity and approach from the interior reach the closed spatial cube
+and final time. This proves the lemma without importing an unspecified
+local boundedness or Harnack constant. $\square$
+
+**Lemma 10.2 (the actual shifted positive part is admissible).** On any
+punctured positive-time cylinder, set $u_t=v_t-Uh$ for a fixed real $U$.
+For every constant $k>0$, $(u_t+k)_+$ is a continuous subsolution to
+which Lemma 10.1 applies after scaling, with the actual principal
+matrix and the actual positive $V$.
+
+Proof. The source-specific equations, already used in Theorem 4.1
+and [D, §14], are
+
+$$
+\operatorname{div}(\mathsf A\nabla h)+Vh=0,\qquad
+\partial_t v_t=\operatorname{div}(\mathsf A\nabla v_t)+Vv_t.
+\tag{SRO.72}
+$$
+
+They hold in smooth representatives on every such cylinder. For
+$\mathcal P=\partial_t-\operatorname{div}(\mathsf A\nabla)-V$,
+one has $\mathcal Pu=0$ and $\mathcal P(u+k)=-Vk\le0$.
+To justify the truncation, use
+$\phi_\epsilon(s)=(s+\sqrt{s^2+\epsilon^2})/2$.
+Its first derivative is nonnegative, its second derivative is
+nonnegative, and
+$s\phi_\epsilon'(s)-\phi_\epsilon(s)
+ =-\epsilon^2/(2\sqrt{s^2+\epsilon^2})\le0$. Consequently
+
+$$
+\mathcal P\phi_\epsilon(u+k)
+ =-Vk\phi_\epsilon'(u+k)
+   +V\big((u+k)\phi_\epsilon'(u+k)-\phi_\epsilon(u+k)\big)
+   -\phi_\epsilon''(u+k)|\nabla u|_{\mathsf A}^2\le0.
+\tag{SRO.73}
+$$
+
+The smooth nonnegative approximations converge uniformly to $(u+k)_+$,
+and in $L^2$ on each bounded cylinder. Lemma 10.1 therefore applies.
+The sign $-V$ in the original raw operator is essential to this
+particular constant-shift test. No boundary condition on a cube is
+imposed, and no killed heat solution is introduced. $\square$
+
+## 11. The finite acceptance rule, soundness and terminating strict-slack search
+
+**Definition 11.1 (the rational packet and its test).** For nonempty
+$\mathcal K$, start with the terminating bracket extractions in §9.
+A candidate packet contains the finite geometric evidence of
+Definition 9.2, rational $k>0$ and $0<\tau<d_-/2$, positive integers
+$N_i$, and finitely many precision requests and their legitimate raw
+name replies. For each cube set
+
+$$
+\begin{gathered}
+\lambda_i=(\tau/r_i^2)\lambda_{B_i}^0,\qquad
+\Lambda_i=(\tau/r_i^2)\Lambda_{B_i}^0,\qquad
+\nu_i=\tau\nu_{B_i}^0,\\
+L_i=1+\lambda_i^{-1}+\Lambda_i+\nu_i,\qquad
+C_i=2^{42}L_i^3,\\
+t_{ij}=d-\tau+j\tau/N_i\quad(0\le j<N_i).
+\end{gathered}
+\tag{SRO.74}
+$$
+
+All constants in the first two lines are rational. Each $t_{ij}$ has
+a total interval name computed from the same original $d$ name and
+is at least $d-\tau>d/2>t_0$. Request finite raw box steps
+$\widehat h,\widehat v_{ij}$ with certified global errors
+$e_h,e_{ij}$, respectively, and put
+
+$$
+\begin{gathered}
+\delta_i=\max_{0\le j<N_i}(e_{ij}+|U|e_h),\\
+P_{ij}=1_{B_i}
+ \big(\operatorname{Re}\widehat v_{ij}
+           -U\operatorname{Re}\widehat h+k\big)_+,\\
+F_i=\frac1{N_ir_i^4}\sum_{j=0}^{N_i-1}\int_{B_i}P_{ij}^2\,d\mu.
+\end{gathered}
+\tag{SRO.75}
+$$
+
+The constant $k$ is included on *all* of $B_i$, including the portion
+outside both finite approximant supports. This is a rational box-step
+calculation on a finite common partition, so $F_i$ is an exactly
+computable nonnegative rational. Obtain a rational upper square-root
+enclosure $b_i\ge\sqrt{F_i}$, and define
+
+$$
+E_i=b_i+\frac{\delta_i+J\tau/N_i}{r_i^2}.
+\tag{SRO.76}
+$$
+
+An enclosure with arbitrarily small excess requires only finite rational
+arithmetic: start with $[0,1+F_i]$, bisect by comparing the square of
+its midpoint to $F_i$, and stop when the interval width is at most a
+requested positive rational. The upper endpoint is $b_i$; the squared
+endpoint inequalities are a finite certificate.
+
+Accept exactly when the finite rational geometry and positive-bracket
+conditions hold and
+
+$$
+C_iE_i<k\qquad\text{for every }i.
+\tag{SRO.77}
+$$
+
+The packets range over rational centers, radii, grids, $k,\tau$,
+integers $N_i$, requested name precisions and square-root enclosure
+widths. After the initial bracket extractions, enumerate these finite
+data fairly. Reject geometrically invalid candidates before querying
+their source names. Every valid candidate has finitely many positive
+named times, hence finitely many terminating calls to the original
+services. No candidate waits for a test of an unknown real equality.
+One may use the same $\widehat h$ throughout a packet.
+
+**Proposition 11.2 (soundness with the exact Haar and clock factors).**
+Every accepted packet of Definition 11.1 has the conclusions in
+Theorem 8.2(2).
+
+Proof. Work with $u_t=v_t-Uh$. For cube $i$, use only the proof
+coordinates
+
+$$
+p=c_i+r_i y,\qquad t=d+\tau\theta,\qquad
+Z_i(\theta,y)=(u_{d+\tau\theta}(c_i+r_i y)+k)_+.
+\tag{SRO.78}
+$$
+
+Their domain is $(-1,1)^4\times(-1,0)$. The principal matrix is
+$(\tau/r_i^2)\mathsf A(c_i+r_i y)$ and the potential is
+$\tau V(c_i+r_i y)$, so (SRO.60) supplies exactly the constants
+(SRO.74) in Lemma 10.1. The physical/source time is still $t$ with
+the original units; $\theta$ is only a proof variable. The measure
+factors are $d\mu=r_i^4dy$ and $dt=\tau d\theta$.
+
+On the $j$th time bin
+$[-1+j/N_i,-1+(j+1)/N_i)$, compare $Z_i$ with
+$P_{ij}(c_i+r_i y)$. Real projection and positive part are contractions,
+so at $t_{ij}$ their $L^2(B_i,d\mu)$ difference is at most
+$e_{ij}+|U|e_h\le\delta_i$. At any later time in that bin,
+(SRO.63) increases this bound by at most $J\tau/N_i$; the stationary
+$h$ makes no time-interpolation contribution. After the spatial scaling,
+the bound is $(\delta_i+J\tau/N_i)/r_i^2$. The normalized time interval
+has length one. Thus Minkowski's inequality in space-time gives
+
+$$
+\begin{aligned}
+\|Z_i\|_{L^2((-1,1)^4\times(-1,0))}
+ &\le\left(\frac1{N_ir_i^4}
+       \sum_j\int_{B_i}P_{ij}^2\,d\mu\right)^{1/2}
+       +\frac{\delta_i+J\tau/N_i}{r_i^2}\\
+ &\le E_i.
+\end{aligned}
+\tag{SRO.79}
+$$
+
+There is no unaccounted time Jacobian: averaging the physical interval
+of length $\tau$ contributes $1/N_i$ per bin in $\theta$.
+The shift is used only on the finite cube, so it need not be a global
+$L^2$ vector.
+
+Lemma 10.2 supplies the subsolution. Lemma 10.1, and continuity up to
+the final time and the smaller spatial cube, now yield
+
+$$
+(v_d-Uh+k)_+(p)\le C_iE_i<k\quad(p\in I_i),\qquad
+v_d(p)-Uh(p)\le C_iE_i-k<0.
+\tag{SRO.80}
+$$
+
+Finite coverage proves the strict smooth-representative conclusion
+on $\mathcal K$. The raw a.e. inequality follows. Since $h>0$ a.e.,
+$m$ and $\mu$ have the same null sets; all permitted Borel repairs
+preserve it. The source vector and $h$ were selected by the same full
+endpoint before restricting to the local cylinders. No value of $h(e)$,
+no arbitrary value assigned to $g_d(e)$, and no endpoint replacement
+enters the proof. $\square$
+
+**Proposition 11.3 (strict-slack completeness and finite extraction).**
+If $U>G_{\mathcal K}$, the fair search in Definition 11.1 accepts
+after finitely many name answers and finite rational operations.
+
+Proof. On $\mathcal K$ the smooth function $Uh-v_d$ is strictly
+positive, because $h>0$ and $U>v_d/h$ at every point. Compactness and
+joint positive-time punctured continuity imply the existence of a
+rational $k>0$, a bounded open neighborhood $O$ of $\mathcal K$ with
+$e\notin\overline O$, and $\tau_*>0$ such that
+
+$$
+v_t(p)-Uh(p)\le-2k
+\quad(p\in\overline O,\ d-\tau_*\le t\le d),
+\qquad d-\tau_*>0.
+\tag{SRO.81}
+$$
+
+For example first choose $k$ small enough that the margin on the compact
+set is greater than $4k$, and then take a smaller compact collar and
+time interval within that strict inequality. This is an existence
+argument for a successful candidate; no value of that margin, collar,
+continuity modulus or compact minimum is computed, queried, or used
+in acceptance or soundness.
+
+Choose finitely many rational $B_i\subset O$ whose half-size interiors
+cover $\mathcal K$, and the rational grid evidence of Definition 9.2.
+Choose a rational $0<\tau<\min(\tau_*,d_-/2)$. Fix this finite geometry,
+$k$ and $\tau$. All resulting $C_i$ are explicit finite rationals.
+On each entire outer cylinder the exact positive part
+$(v_t-Uh+k)_+$ vanishes. At every sampled time, contraction therefore
+implies $\|P_{ij}\|_{L^2(B_i)}\le\delta_i$, whence
+
+$$
+\sqrt{F_i}\le\delta_i/r_i^2,\qquad
+E_i\le\frac{2\delta_i}{r_i^2}+\zeta_i
+                 +\frac{J\tau}{N_ir_i^2},
+\tag{SRO.82}
+$$
+
+if the square-root enclosure width is at most $\zeta_i>0$.
+First choose $N_i$ so large that
+$C_iJ\tau/(N_ir_i^2)<k/3$. Next request sufficiently small raw name
+errors that $2C_i\delta_i/r_i^2<k/3$, and sufficiently small rational
+$\zeta_i$ that $C_i\zeta_i<k/3$. There are finitely many cubes and
+sample times; totality of the services gives all these replies after
+finitely many queries. The rational bisections terminate. Equations
+(SRO.82) then imply every test (SRO.77).
+
+The rational geometry, shift, backward time, sample counts and precision
+requests just chosen occur in the fair enumeration. Every preceding
+candidate has a finite test, and the initial coefficient, $D$ and clock
+bracket searches terminate by strict positivity. Thus a successful
+packet is reached in finite time relative to the admitted total names.
+This argument provides termination for each strict-slack input without
+requiring a computable index for the successful geometry or a uniform
+bound on the cost of a name reply. Together with Proposition 11.2 and
+the empty-region convention it proves Theorem 8.2. $\square$
+
+## 12. Numerical suppliers, attribution and the remaining global boundary
+
+**Definition 12.1 (the precise additional relation and its source account).**
+Theorem 8.2 and its construction are `repo-derived` ordinary paper
+mathematics conditional on the unchanged analytic suppliers of
+Definition 1.1. The source-specific increment is the sound shifted
+defect test (SRO.75)–(SRO.80), its finite extraction from the actual
+source names, and strict-slack termination on every specified
+punctured rational compact union. The power method itself is a mature
+intermediate, not a claim of new generic parabolic regularity.
+
+| Required item | Supplier and exact use |
+| --- | --- |
+| Actual $h,H,F,D,z,v_t$ and finite box-step names | [D, §§11–12], especially Theorems 12.2–12.4 and (12.4)–(12.8), reused through Definitions 1.1–1.2 and (SRO.40). The source-start law is the deterministic-time full-$H$ law. |
+| Punctured local equations and joint smoothness | The admitted local regularity and positive-time spectral smoothing, already applied in Theorem 4.1 and [D, §14]. They apply only away from $e$; qualitative continuity is used for completeness, not as a numerical service. |
+| Rational ellipticity and bounded positive potential on every candidate cube | Lemma 9.1, derived from the original shear, positive coefficient brackets, rational separation from $e$, and $\Gamma\le32\varrho^{-3}$. |
+| Numerical time interpolation | (SRO.40)–(SRO.41) and Lemma 9.3, with the extracted $\ell,d_-$; no time derivative evaluator is requested. |
+| Numerical local $L^2$ to supremum constant | Lemma 10.1, including every cutoff, energy, Sobolev and product bound; $C_i$ is a rational expression in the displayed local bounds. |
+| Finite defect enclosure and square-root bounds | Rational common box partitions, certified global raw errors, (SRO.63), and rational bisection; the exact scaling factors are in (SRO.79). |
+| Positive denominator in the completeness proof | The existing strict positivity of the original $h$ on the punctured region. Neither a numerical floor nor a positive anchor is extracted or used by acceptance. |
+| Source neighborhood | Theorems 4.1–5.1 are reused as their existing regional service; their trace-cofinal construction is not a new deliverable here. |
+
+The local power-test antecedent is D. G. Aronson,
+[*Harnack, Hölder, Gauss and Widder: Serrin's Parabolic Legacy*,
+arXiv:1611.09417v1](https://arxiv.org/html/1611.09417v1), specifically
+the weak formulation (6), fundamental power inequality referred to as
+(7), and the discussion headed “LOCAL BOUNDEDNESS”. Its equation has
+time coefficient one and divergence-form principal part; the present
+local specialization has a uniformly elliptic matrix and bounded
+zeroth-order term $WZ$. These satisfy the local structural requirements.
+The pinned primary text supplies the method and attribution, not a
+numerical value for its unspecified structural constants. Lemma 10.1
+derives the actual constant needed here. No Gaussian or Harnack theorem
+from that text is applied across the original singular source.
+
+The punctured regularity antecedent already cited in §7 and [D] is
+M. Shubin, [*Essential self-adjointness for semi-bounded magnetic
+Schrödinger operators on non-compact manifolds*,
+arXiv:math/0007019v1](https://arxiv.org/html/math/0007019v1), Lemma 5.1
+and the local cutoff identity (5.3). The lemma assumes a locally
+Lipschitz magnetic one-form and locally bounded scalar potential and
+gives $W^{2,2}_{\rm loc}$ for maximal-domain vectors. The correspondence
+here uses zero magnetic form, the actual smooth elliptic symbol and
+smooth measure on punctured compact sets; repeated local regularity
+is the existing smoothness supplier, not a new numerical estimate.
+The complete-manifold essential-self-adjointness theorem is not used
+to select or identify the endpoint at $e$. Both cited versioned primary
+texts' relevant passages are the literature scope; no broader priority
+or exhaustive literature-search assertion is made.
+
+**Proposition 12.2 (regional scope and unresolved interfaces).** The new
+packets supply the punctured-compact order producer left unpaid in §6.
+They do not supply the exterior producer or the global cofinal
+enumeration of [D, (12.31)]. In particular the following remain distinct:
+the exterior numerical extraction identified in [D, §14], coverage
+and compatibility of all regional interfaces, exact global $N_d$ and
+$M=1+N_d$, and the optional source-maximum identity $N_d=s_d$.
+
+Proof. Every accepted conclusion above has the finite specified region
+$\mathcal K$ as its domain. Neither its geometry nor its proof includes
+an unbounded region or a source-containing neighborhood. The existing
+source service is Theorem 5.1; a remaining exterior service and a proof
+that the selected regions cover all of $G$ are still needed for that
+regional route. The qualitative exterior results and computed norm tail
+of [D, §14] keep their stated numerical boundary. No global order
+conclusion follows from the present finite-domain theorem alone.
+$\square$
+
+The original first read at $2d$, all gaps $d$, selector, emissions
+(SRO.56), full source trace and allowed Borel repairs are unchanged.
+The already supplied finite-observation consumers in the original-word
+geometry volume, §§9–11, retain their capacity, confidence and finite-task
+contracts and acquire no prerequisite involving exact $N_d$ from this
+paper. This construction is a model-side computation from the admitted
+names, not a new passive observation, physical operation, stationary
+preparation, actual instrument, re-entry, joint/reference supplier,
+autonomous factor, or complete quantum-origin result. The conclusions
+are paper deductions; no Lean verification is asserted.
+
+## 追加锚（本行以下为增补区）
+
+## 13. A source-connected numerical denominator on the original group
+
+**Definition 13.1 (fixed source and rational brackets).** Throughout
+§§13–17 retain exactly Definitions 1.1–1.2 and 6.1. Thus the quantifiers
+are every original finite $a,\eta,d>0$ with their original analytic
+suppliers and total names. The Green field has $L\Gamma=\delta_e$,
+$C(w_*)=1$, $h=w_*/\|w_*\|_2$, $m=h^2\mu$, and the entire complex
+conservative endpoint is $D(H)=\{A=\rho C\}$, distinct from $F$.
+The source vector is the actual $v_t=hg_t$ started at $e$, with the
+full-form nonpolar trace (SRO.3). An auxiliary coordinate ball or
+cylinder below is a region of proof for these same objects.
+
+Use Theorem 3.1 to obtain its rational $L_h>0$ and integer $\tau_0$.
+Refine the existing interval names to positive rational brackets
+
+$$
+\begin{gathered}
+a_-\le a\le a_+,\qquad \eta_-\le\eta\le\eta_+,\qquad
+\kappa_-\le\kappa=\sqrt{\eta/a}\le\kappa_+,\\
+d_-\le d\le d_+,\qquad 0<D_-\le D,\qquad
+D=\langle h,h-(F+1)^{-1}h\rangle .
+\end{gathered}
+\tag{SRO.83}
+$$
+
+The last scalar is exactly (SRO.40) and [D, (14.3)], not a differential
+operator. Write $\mathbb B_r$ for the ordinary open Euclidean ball of
+radius $r$ in the original four coordinates. Define the positive
+rational numbers and positive integer
+
+$$
+\begin{gathered}
+M_0=1+2/\kappa_-,\qquad
+r_0=\min\left(\frac1{64},\frac{4^{-\tau_0}}{2M_0}\right),\qquad
+m_0=\frac{L_h}{1+\kappa_+},\\
+\lambda_-=\frac{\min(a_-,\eta_-)}3,\qquad
+\Lambda_+=3\max(a_+,\eta_+),\qquad
+k=\max\left(1,\left\lceil4\Lambda_+/\lambda_-\right\rceil\right),\\
+c_*=m_0\,2^{-7(k+1)},\qquad C_*=\frac{32(k+1)}{r_0}.
+\end{gathered}
+\tag{SRO.84}
+$$
+
+No value of $h(e)$ is introduced by these definitions.
+
+**Theorem 13.2 (a rational exponential floor for this normalized
+zero state).** The constants in (SRO.84) satisfy
+
+$$
+h(p)\ge m_0\quad(0<|p|\le r_0),\qquad
+h(p)\ge c_*\exp(-C_*\varrho(p))\quad(p\ne e).
+\tag{SRO.85}
+$$
+
+They are extracted from the original names and the existing source
+floor, without a numerical Harnack constant or compact minimum.
+
+Proof. For $0<|p|\le r_0$, with $p=(x,y,z,w)$, set
+$s=w-xy/2$ and $R_0=|\Phi_\kappa^{-1}p|$. Since
+$|xy|/2\le r_0^2/4$,
+
+$$
+0<R_0\le |(x,y,z)|+|s|/\kappa
+ <(1+2/\kappa_-)r_0
+ \le4^{-\tau_0}/2<e^{-\tau_0}.
+\tag{SRO.86}
+$$
+
+Here $\tau_0\ge1$. By (SRO.4) and (SRO.20),
+
+$$
+h(p)\ge\frac{L_h\log(1/R_0)}{\sqrt\kappa\,R_0}
+ \ge\frac{L_h}{1+\kappa_+}=m_0.
+\tag{SRO.87}
+$$
+
+The factor $\sqrt\kappa$ is the unitary normalization in (SRO.4).
+The inequality uses $R_0<1$, $\log(1/R_0)\ge1$ and
+$\sqrt\kappa\le1+\kappa_+$.
+
+For propagation, use the left chart $q=pu$. Its Haar Jacobian is one,
+and the fields pull back to
+$\partial_{u_x},\partial_{u_y}+u_x\partial_{u_w},\partial_{u_z}$.
+Denote the principal differential operator by
+$\mathcal D=-P$, with $P$ as in [D, (14.1)]. Thus
+
+$$
+\begin{gathered}
+\mathcal D=\operatorname{div}(\mathsf A(u)\nabla),\qquad
+\mathsf A(u)=
+\begin{pmatrix}
+a&0&0&0\\
+0&a&0&au_x\\
+0&0&a&0\\
+0&au_x&0&\eta+au_x^2
+\end{pmatrix},\\
+\lambda_-\mathbf1\le\mathsf A(u)\le\Lambda_+\mathbf1
+\quad(|u|\le1/4),\qquad
+\sum_i\partial_{u_i}\mathsf A_{ij}=0\quad\text{for every }j .
+\end{gathered}
+\tag{SRO.88}
+$$
+
+The matrix bounds are the original left-chart bounds [D, (14.13)].
+For the last identity, the variable off-diagonal entries occur in rows
+$y,w$, while their only variable is $u_x$; the other variable entry is
+in row $w$. Consequently no coefficient-derivative term enters
+$\mathcal D f=\sum_{ij}\mathsf A_{ij}\partial_{ij}f$.
+In particular
+
+$$
+\begin{aligned}
+\mathcal D(|u|^{-k})
+ &=k|u|^{-k-4}\big((k+2)u^{\mathsf T}\mathsf A(u)u
+                         -|u|^2\operatorname{tr}\mathsf A(u)\big)\\
+ &\ge k|u|^{-k-2}\big((k+2)\lambda_--4\Lambda_+\big)\ge0
+ \quad(0<|u|\le4r_0).
+\end{aligned}
+\tag{SRO.89}
+$$
+
+Here $4r_0\le1/16$. At every punctured point the actual equation
+(SRO.72) gives $\mathcal D h=-Vh\le0$, since
+$V=16\sqrt{a\eta}\Gamma>0$.
+
+Suppose an inductive floor $h\ge m_j$ holds on
+$p\overline{\mathbb B}_{r_0}\setminus\{e\}$, with
+$0<m_j\le m_0$. On $r_0<|u|<4r_0$ put
+
+$$
+b_j(u)=m_j\,
+ \frac{|u|^{-k}-(4r_0)^{-k}}{r_0^{-k}-(4r_0)^{-k}}.
+\tag{SRO.90}
+$$
+
+It has inner value $m_j$, outer value zero, lies between zero and
+$m_j$, and satisfies $\mathcal D b_j\ge0$. On the punctured inner
+sphere the floor follows also by continuity from the ball;
+on the outer sphere positivity of $h$ suffices.
+
+The comparison remains valid when the annulus meets the original
+source. Indeed $w_j=(b_j-h(pu))_+$ vanishes wherever
+$pu\in\mathbb B_{r_0}$, by (SRO.87) and $b_j\le m_j\le m_0$.
+If $p^{-1}e$ lies in the closed annulus, this gives an open neighborhood
+of that point on which $w_j$ is zero. Away from that neighborhood the
+original $h$ is smooth. Extend $w_j$ by zero there. The boundary
+inequalities and the Lipschitz positive-part operation then put
+$w_j\in H^1_0(\{r_0<|u|<4r_0\})$.
+Thus this test is supported away from the source, even when the
+source is on a boundary sphere. The punctured weak inequality gives
+
+$$
+0\le\langle\mathcal D(b_j-h(p\,\cdot)),w_j\rangle
+ =-\int \nabla w_j^{\mathsf T}\mathsf A\nabla w_j
+ \le-\lambda_-\int|\nabla w_j|^2 .
+\tag{SRO.91}
+$$
+
+Approximation by compact smooth tests, with a cutoff on the
+neighborhood where $w_j=0$, justifies the equality for this $H^1_0$
+test. Coercivity and its zero trace imply $w_j=0$.
+No Sobolev membership, differential equation or boundary condition for
+$h$ across $e$ is used. The test concerns the raw principal operator,
+not a new realization of the full endpoint.
+
+On the annulus with $|u|\le2r_0$, the barrier is at least
+$\theta m_j$, where
+
+$$
+\theta=\frac{2^{-k}-4^{-k}}{1-4^{-k}}=\frac1{2^k+1}.
+\tag{SRO.92}
+$$
+
+The old floor on the inner ball and punctured continuity therefore
+give $h\ge\theta m_j$ on
+$p\overline{\mathbb B}_{2r_0}\setminus\{e\}$.
+If $q=pv$, $|v|\le r_0/4$, then for $|u|\le r_0$ the original product
+satisfies
+
+$$
+|vu|\le |v|+|u|+|v_xu_y|
+ \le5r_0/4+r_0^2/4<2r_0.
+\tag{SRO.93}
+$$
+
+Hence an entire ball floor at $p$ supplies an entire ball floor
+$\theta m_j$ at $q$. This permits the next comparison with the same
+inner-boundary data, rather than only a floor at the center.
+
+For $p\ne e$, the original horizontal construction [D, (14.15)]
+joins $e$ to $p$ by at most seven segments of the fields
+$X_1,X_2,X_3$: first the $x,y,z$ displacements, then a four-side
+commutator rectangle of signed central area $w-xy$. Its length obeys
+
+$$
+\ell\le |x|+|y|+|z|+4\sqrt{|w-xy|}<8\varrho(p),
+\qquad |w-xy|\le5\varrho(p)^2/4 .
+\tag{SRO.94}
+$$
+
+For example $|x|+|y|+|z|\le\sqrt3\,\varrho(p)$, and
+$\sqrt3+2\sqrt5<8$. Subdivision into segments of length at most
+$r_0/4$ gives a number of links
+
+$$
+N\le4\ell/r_0+7\le32\varrho(p)/r_0+7 .
+\tag{SRO.95}
+$$
+
+A link along any of these three fields has left increment of ordinary
+Euclidean norm equal to its length. Start with the floor on
+$\overline{\mathbb B}_{r_0}\setminus\{e\}$ and apply (SRO.93) at every
+link. Intermediate balls and path points may meet $e$; (SRO.91)
+already includes that case. The endpoint has $h(p)\ge m_0\theta^N$.
+Since $\theta\ge2^{-(k+1)}$ and $\log2<1$, (SRO.95) implies the second
+inequality in (SRO.85) with precisely $c_*,C_*$ from (SRO.84).
+The expressions $c_*,C_*$ require only rational arithmetic and integer
+powers; the exponential is used only to express the lower bound. $\square$
+
+## 14. A numerical numerator estimate with the original time
+
+**Definition 14.1 (rational exterior constants).** Use the brackets and
+$\lambda_-,\Lambda_+$ of (SRO.83)–(SRO.84). Choose a positive rational
+$\beta$ with $\beta^2\ge a_++\eta_+/4$, and define
+
+$$
+\begin{gathered}
+\tau=\min(d_-/4,1)>0,\qquad V_+=256(a_++\eta_+),\\
+L_* =1+(32\tau\lambda_-)^{-1}
+                    +32\tau\Lambda_++2\tau V_+,\\
+A_*=2^{42}L_*^3(1+128/\tau),\\
+L_+=1+\frac3{16a_-}+\frac{25}{256\eta_-},\qquad
+b_*=1+\beta L_+,\\
+K_*=\frac{4A_*}{c_*}(1+d_+)
+                 \left(1+\frac{\tau}{d_-D_-}\right),\qquad
+T_*=32d_+\beta^2,\\
+s_*=\max(8,2b_*,b_*+\beta,32d_+\beta^2C_*).
+\end{gathered}
+\tag{SRO.96}
+$$
+
+In particular $\tau$ is a rational proof-cylinder length in the
+original time units; it may be smaller than $\min(d/4,1)$.
+The symbol $D_-$ brackets the named scalar $D$, whereas
+$\mathcal D$ remains the operator of (SRO.88).
+
+**Theorem 14.2 (a computed exterior ratio estimate for the actual
+source vector).** For every $p$ with $\varrho(p)\ge s_*$,
+
+$$
+0\le\frac{v_d(p)}{h(p)}
+ \le K_*\exp\left(-\frac{\varrho(p)^2}{T_*}\right).
+\tag{SRO.97}
+$$
+
+The estimate uses the original $v_t$, its existing Gaussian norm tail,
+and the numerical local estimate of Lemma 10.1.
+
+Proof. Put $Q=(-1/4,1/4)^4$. If $\varrho(p)\ge8$, the original
+gauge inequality in [D, §14] gives
+$\varrho(pu)\ge\varrho(p)/2-\varrho(u)\ge1$ for $u\in Q$.
+Thus the whole left chart is punctured and
+$V(pu)\le512\sqrt{a\eta}\le V_+$. For $y\in(-1,1)^4$ and
+$-1<\theta<0$ define
+
+$$
+Z(\theta,y)=v_{d+2\tau\theta}(p(y/4)).
+\tag{SRO.98}
+$$
+
+It is smooth and nonnegative, using exactly the positive-time
+full-endpoint smoothing in [D, §14]. Its equation (SRO.64) has
+
+$$
+\mathsf B(y)=32\tau\mathsf A(y/4),\qquad
+W(\theta,y)=2\tau V(p(y/4)),\qquad
+(\lambda,\Lambda,\nu)
+ =(32\tau\lambda_-,32\tau\Lambda_+,2\tau V_+).
+\tag{SRO.99}
+$$
+
+The factors are $16$ from the spatial dilation and $2\tau$ from time.
+Lemma 10.1 reaches $(\theta,y)=(0,0)$ by continuity.
+Left translation preserves Haar measure; spatial dilation contributes
+$4^{-4}$ and time contributes $2\tau$. Consequently
+
+$$
+\begin{aligned}
+v_d(p)
+ &\le2^{42}L_*^3\sqrt{128/\tau}
+       \left(\int_{d-2\tau}^{d}\int_{pQ}|v_t|^2\,d\mu\,dt\right)^{1/2}\\
+ &\le A_*\left(\int_{d-2\tau}^{d}
+                         \int_{pQ}|v_t|^2\,d\mu\,dt\right)^{1/2}.
+\end{aligned}
+\tag{SRO.100}
+$$
+
+The second step uses $\sqrt x\le1+x$. This supplies a rational value
+for the local numerator constant in [D, (14.17)] from the already
+proved Lemma 10.1. Also $d-2\tau\ge d/2>0$, so the entire cylinder
+uses the original positive-time source orbit.
+
+Use the original intrinsic distance $d_A$ and $\psi$ of
+[D, Definition 14.1]. The straight coordinate path to $u\in Q$ has
+
+$$
+d_A(e,u)\le
+ \sqrt{\frac3{16a}+\frac{25}{256\eta}}\le L_+.
+\tag{SRO.101}
+$$
+
+This is [D, (14.18)] with a rational upper enclosure.
+The function $\psi=((1+\varrho^4)^{1/4}-1)/\beta$ is
+$1$-Lipschitz in $d_A$. If $s=\varrho(p)$, set
+
+$$
+r_s=\frac{s-b_*}{\beta}.
+\tag{SRO.102}
+$$
+
+For $r_s>0$ and every $u\in Q$,
+$\psi(pu)\ge\psi(p)-L_+\ge r_s$. Apply
+[D, Theorem 14.2, (14.5)] with this $r_s$.
+For $d-2\tau\le t\le d$, its time factors give
+
+$$
+\|1_{pQ}v_t\|_2
+ \le\frac{2\sqrt2(1+d/r_s)}{\sqrt{\pi dD}}
+                          e^{-r_s^2/(4d)}.
+\tag{SRO.103}
+$$
+
+Indeed $t\ge d/2$, $t\le d$, and the negative Gaussian exponent is
+largest at $t=d$. Integrating the square over the interval of length
+$2\tau$ in (SRO.100), and dividing by the same normalized $h$ in
+(SRO.85), yields
+
+$$
+\frac{v_d(p)}{h(p)}
+ \le \frac{4A_*}{c_*}\sqrt{\frac{\tau}{\pi dD}}\,
+       (1+d/r_s)\exp\left(C_*s-\frac{r_s^2}{4d}\right).
+\tag{SRO.104}
+$$
+
+For $s\ge s_*$ the following inequalities hold:
+
+$$
+\begin{gathered}
+r_s\ge s/(2\beta),\qquad r_s\ge1,\\
+C_*s-\frac{r_s^2}{4d}
+ \le C_*s-\frac{s^2}{16d_+\beta^2}
+ \le-\frac{s^2}{32d_+\beta^2},\\
+1+d/r_s\le1+d_+,\qquad
+\sqrt{\frac{\tau}{\pi dD}}
+ \le1+\frac{\tau}{d_-D_-}.
+\end{gathered}
+\tag{SRO.105}
+$$
+
+The four lower requirements in $s_*$ respectively ensure a punctured
+chart, the first bound for $r_s$, its lower bound one, and absorption
+of the linear exponent by half the quadratic exponent.
+Equations (SRO.104)–(SRO.105) prove (SRO.97).
+The appearance of $F$ in the named scalar $D$ has not introduced an
+$F$ heat vector, killed source, or off-source initial delta. $\square$
+
+## 15. A finite rational exterior half-threshold packet
+
+**Definition 15.1 (the exterior packet).** An exterior packet consists
+of the legitimate finite name replies and brackets (SRO.83), the
+existing source-floor output $(L_h,\tau_0)$ with its finite
+inequalities from Theorem 3.1, the rational quantities (SRO.84),
+(SRO.96), an integer $n$, and a rational $R$ satisfying
+
+$$
+n\ge\max(s_*,1+2T_*K_*),\qquad n\ge1,\qquad
+R=\max(n,5n^2/4).
+\tag{SRO.106}
+$$
+
+All comparisons and integer powers here are finite rational tests.
+The source-floor and name replies have their stipulated legitimate
+meaning, as in Theorems 5.1 and 8.2. This does not test whether arbitrary
+proposed functions satisfy the analytic suppliers.
+
+**Theorem 15.2 (soundness, finite extraction and termination for every
+original positive triple).** From exactly the analytic and total-name
+suppliers of Definitions 1.1–1.2, for every original finite
+$a,\eta,d>0$ one obtains a finite packet of Definition 15.1.
+Every accepted packet proves, for the same actual source vector,
+
+$$
+v_d(p)<\frac12h(p)\quad
+       (p\notin[-R,R]^4),\qquad R\in\mathbb Q_{>0}.
+\tag{SRO.107}
+$$
+
+In particular the weak order $v_d\le h/2$ holds there $\mu$-almost
+everywhere, or equivalently $g_d\le1/2$ there $m$-almost everywhere,
+for every permitted Borel repair.
+
+Proof. For $s\ge n$, put $y=2T_*K_*>0$. Since $n\ge1+y$,
+$n^2\ge y$, and hence $s^2/T_*\ge2K_*$. The elementary inequality
+$e^x\ge1+x$ for $x\ge0$ and (SRO.97) imply
+
+$$
+\frac{v_d(p)}{h(p)}
+ \le\frac{K_*}{1+\varrho(p)^2/T_*}
+ \le\frac{K_*}{1+2K_*}<\frac12
+ \quad(\varrho(p)\ge n).
+\tag{SRO.108}
+$$
+
+If $\varrho(p)\le n$, then in the original coordinates
+
+$$
+|x|,|y|,|z|\le n,\qquad
+|w|\le|w-xy/2|+|xy|/2\le5n^2/4 .
+\tag{SRO.109}
+$$
+
+Thus that gauge ball is contained in $[-R,R]^4$, proving (SRO.107).
+All its exterior points are away from $e$, so the pointwise assertion
+uses only the smooth representatives. Equivalence of the two a.e.
+orders follows from $h>0$ a.e. and equivalence of the null sets of
+$m$ and $\mu$.
+
+For extraction, interval refinement terminates at finite positive
+lower and finite upper rational brackets for $a,\eta,\kappa,d$.
+The name of $D>0$ is already supplied by (SRO.40), so refinement also
+finds $D_->0$. Theorem 3.1 supplies $L_h,\tau_0$ by its terminating
+construction, retaining the original selector and normalization.
+One may find $\beta$ by increasing positive integers until
+$\beta^2\ge a_++\eta_+/4$. All remaining quantities in (SRO.84),
+(SRO.96) are positive finite rational expressions with nonzero
+denominators. The integer $k$, then an integer $n$ satisfying
+(SRO.106), and finally $R$ require only finite rational arithmetic,
+integer powers and ceilings. No exponential need be numerically
+evaluated: it appears only in the proof (SRO.108).
+These observations prove finite termination separately for each
+original triple, without a parameter-uniform size or time bound.
+
+The barrier comparisons require only the already supplied punctured
+equation and the whole-ball source floor. The numerator requires only
+Lemma 10.1 and the existing full-source Gaussian norm tail. Thus no
+pointwise evaluator, numerical compact minimum, Harnack constant or
+additional physical supplier is an input to this extraction. $\square$
+
+## 16. Same-source regional assembly for the original global upper cut
+
+**Definition 16.1 (a finite global packet with one conclusion).**
+Fix one original input triple and all its services in Definitions
+1.1–1.2. Compute one exterior packet of Definition 15.1, with radius
+$R$. For a rational target $U>1$, a global packet consists of:
+
+1. A source packet accepted by the general test (SRO.55) of Theorem
+   5.1 at this very target $U$, with positive rational source-box
+   radius $\delta_0$.
+2. The rational radius $\delta=\min(\delta_0,R/2)>0$ and the eight
+   rational closed boxes
+
+$$
+\begin{gathered}
+B_j^+=[-R,R]^{j-1}\times[\delta/2,R]\times[-R,R]^{4-j},\\
+B_j^-=[-R,R]^{j-1}\times[-R,-\delta/2]\times[-R,R]^{4-j}
+       \quad(1\le j\le4),\\
+\mathcal K(R,\delta)=\bigcup_{j=1}^4(B_j^+\cup B_j^-).
+\end{gathered}
+\tag{SRO.110}
+$$
+
+3. A punctured-compact packet of Definition 11.1 for precisely
+   $\mathcal K(R,\delta)$, accepted at precisely the same $U$.
+
+The exterior component has target $U$ by combining (SRO.107) with
+the finite rational comparison $1/2<U$. Thus all three regional
+conclusions in a global packet have exactly the same target $U$.
+
+All regional name requests refer to the one fixed input triple and
+its original $h,H,v_t,d$ services. Regional packets may request
+different precisions and use different proof cylinders. They do not
+select different zero states, normalizations, endpoints, clocks or
+source starts. Acceptance checks these references, the finite rational
+geometry (SRO.110), $U>1$, the exterior packet, and the two existing
+finite regional acceptance rules. It does not decide equality between
+functions supplied by independently chosen names.
+
+**Theorem 16.2 (reliable finite global certificates and fair
+strict-slack cofinality).** Under exactly Definitions 1.1–1.2 the
+packets of Definition 16.1 have the following properties.
+
+1. Each individual acceptance test is finite, relative to the
+   stipulated total names.
+2. Every accepted packet proves $v_d\le Uh$ $\mu$-almost everywhere
+   on all $G$, for the original full endpoint and normalization.
+3. For every rational $U>N_d$, where $N_d$ is exactly (SRO.56), a
+   fair search through these finite packets eventually accepts a
+   packet with conclusion $U$.
+4. Fair enumeration over the rational targets and finite packet data
+   therefore yields rational conclusions $U_j$ satisfying
+
+$$
+v_d\le U_jh\quad\mu\text{-a.e. on all }G,\qquad
+\inf_j U_j=N_d .
+\tag{SRO.111}
+$$
+
+This is the certificate obligation [D, (12.31)], without assuming a
+source-maximum identity or a numerical name for $N_d$.
+
+Proof. The fact $N_d\ge1$ is the original mass-one conclusion of
+[D, Proposition 12.7 and Corollary 14.4], with exactly the present
+$m,h,g_d$. Explicitly the conservative full source law has
+$\int g_d\,dm=\operatorname{tr}(T_d1)=1$ and $m(G)=1$.
+Thus every $U>N_d$ already satisfies the rational restriction $U>1$.
+This restriction adds no hypothesis to the source class.
+The same Proposition 12.7, with its full-form trace correspondence,
+gives
+
+$$
+s_d=\operatorname{tr}g_d=\|v_{d/2}\|_2^2\le N_d<\infty .
+\tag{SRO.112}
+$$
+
+These are the existing facts needed to match the two regional
+thresholds with the global target.
+
+Each box in (SRO.110) is nondegenerate, rational and avoids $e$:
+indeed $0<\delta\le R/2$, and one coordinate has absolute value at
+least $\delta/2$. Their union is exactly
+
+$$
+\mathcal K(R,\delta)
+ =\{p\in[-R,R]^4:\|p\|_\infty\ge\delta/2\}.
+\tag{SRO.113}
+$$
+
+Consequently
+
+$$
+G=[-\delta,\delta]^4\cup\mathcal K(R,\delta)
+                          \cup\big(G\setminus[-R,R]^4\big).
+\tag{SRO.114}
+$$
+
+The source box and compact union overlap on
+$\delta/2\le\|p\|_\infty\le\delta$ inside the outer box.
+The compact union includes every outer face
+$\|p\|_\infty=R$; the exterior region begins beyond those faces.
+All inner faces in (SRO.110) are also included. Thus this is a finite
+cover including the source and all interfaces.
+
+An accepted source packet proves order on
+$[-\delta_0,\delta_0]^4$, and hence on the smaller source box.
+Its same trace enclosure in (SRO.55) also gives $s_d<U$.
+An accepted compact packet proves order on every constituent box of
+(SRO.110), with its own finite closed-cell coverage from Definition
+9.2. The exterior packet proves order with $1/2<U$ on the third
+region. The finite union of the regional null exceptions is null.
+This proves the global order in part 2.
+
+For the nonpolar source point the trace assertion is the one in the
+source packet, using the full quasi-continuous form representative.
+No assignment of a value to $h(e)$ or arbitrary Borel representative
+is substituted for that assertion. For the global a.e. inequality the
+source has zero $\mu$ and $m$ mass, but it is retained in the process,
+form domain and trace. On all punctured interfaces the fields are
+literally the same smooth $h,v_d$, not independently patched
+solutions. Their proofs on overlapping sets therefore require no
+extra boundary or matching supplier.
+
+Finiteness of an individual test follows as well. After the single
+terminating exterior extraction, it involves finitely many source
+name replies, rational comparisons in (SRO.55), the rational box
+construction, and the finite compact test (SRO.77). Invalid geometry
+or unequal rational targets is rejected before any unnecessary name
+request. Every requested time and coefficient query belongs to the
+same stipulated total services. Acceptance is relative to their
+legitimate replies, just as for the two reused regional tests.
+
+For cofinality, fix a rational $U>N_d$. Since $s_d\le N_d$, the fair
+source search of Theorem 5.1 has some successful finite packet at
+$U$. Choose any such packet. Its $\delta_0$ determines $\delta$ and
+the particular finite $\mathcal K(R,\delta)$ above.
+
+The smooth punctured representative of $g_d$ satisfies
+$g_d(p)\le N_d$ at every $p\ne e$. To see this from the essential
+bound, if $g_d(p)>N_d$ at one punctured point, continuity gives a
+punctured open ball on which $g_d>q>N_d$. Strict positivity of $h$
+there makes its $m$ measure positive, contrary to the definition of
+$N_d$. This uses no numerical point value or compact minimum.
+It follows that
+
+$$
+G_{\mathcal K(R,\delta)}
+   =\sup_{p\in\mathcal K(R,\delta)}g_d(p)\le N_d<U .
+\tag{SRO.115}
+$$
+
+Theorem 8.2 therefore gives a successful finite compact packet at
+this same $U$ on precisely that region. The exterior packet is already
+available, independently of $U$; its fixed half threshold is enough
+because $U>N_d\ge1$. No exterior service with arbitrary requested
+accuracy is assumed.
+
+For an explicit fair organization, first extract the exterior packet.
+For a fixed target $U$, enumerate all finite source-candidate data of
+(SRO.55) together with finite compact-candidate data of Definition
+11.1. Each source candidate determines the rational region (SRO.110);
+perform its finite source test and, on success, the finite compact
+test for that region. The successful pair just proved exists in this
+language, and every earlier candidate test terminates. Hence this
+search eventually accepts for every $U>N_d$, without testing
+$U=N_d$ or knowing the size of its positive gap.
+
+For global enumeration, enumerate finite tuples containing a rational
+$U>1$ and both candidate packets fairly. Equivalently dovetail the
+finite tests over the rational targets; do not wait for an unsuccessful
+target's entire search to terminate. Each test makes only finitely
+many calls to total names. Every successful finite tuple is eventually
+tested. The preceding completeness proof shows in particular that
+every rational $U>N_d$ appears as an accepted conclusion.
+Soundness implies every accepted $U\ge N_d$, so their infimum is
+$N_d$. There are accepted conclusions because $N_d<\infty$ and
+rationals exist above it. This proves all four assertions. $\square$
+
+## 17. Exact source correspondences and the unchanged calibration consumer
+
+**Definition 17.1 (mathematical antecedents of the additional
+relations).** The source-specific deductions (SRO.85), (SRO.97),
+(SRO.107) and (SRO.111) are repo-derived conditional on Definitions
+1.1–1.2. Their mathematical inputs and uses are exactly:
+
+| Input or intermediate | Correspondence and scope |
+| --- | --- |
+| Original selector, unit Green field, normalized zero state and full complex endpoint | (SRO.1)–(SRO.4), [D, §§11–12], [E, §§109–112], [S, §§115–117, 130–133]. The same $A=\rho C$ and $C(w_*)=1$ determine the denominator throughout; $H$ is never replaced by $F$. |
+| Numerical all-angle source floor | Theorem 3.1 supplies $L_h,\tau_0$. Equations (SRO.86)–(SRO.87) retain its $\sqrt\kappa$ factor when converting to a whole original-coordinate ball. |
+| Propagated denominator | The explicit original left-chart matrix, the attractive sign $\mathcal D h=-Vh\le0$, the radial Hessian calculation and the positive-part energy comparison (SRO.88)–(SRO.95). This is a source-specific floor propagated from a supplied whole ball, rather than a general Harnack theorem. |
+| Numerical local numerator | Lemma 10.1 with exactly (SRO.98)–(SRO.100). The proof time is $\theta$, the original evolution time is $t=d+2\tau\theta$, and the raw Jacobian is $\tau/128$. |
+| Source-vector tail and named $D$ | [D, Theorem 14.2, (14.3)–(14.5)], with $\beta^2\ge a+\eta/4$. Its full-form trace and original source vector are used in (SRO.103). |
+| Source-neighborhood order | Theorem 5.1, specifically the finite test (SRO.55) with the target $U$ of the global packet. |
+| Punctured-compact order | Theorem 8.2 and Definition 11.1, on the eight rational boxes (SRO.110), at that identical $U$. |
+| Thresholds for strict-slack assembly | The existing original mass-one and trace bounds [D, Proposition 12.7 and Corollary 14.4] give $1\le N_d$ and $s_d\le N_d$ for this same source. |
+| Global geometry and compatibility | The rational equalities (SRO.113)–(SRO.114) include all faces. Every regional inequality concerns the fixed $h,v_d,d$; there is no regional rescaling of their normalization or choice of another endpoint. |
+
+The weak comparison in (SRO.91) is the classical positive-part energy
+method for a symmetric uniformly elliptic divergence operator with
+zero boundary test. Its full calculation is included because the
+annulus can meet the original source; only the test, not $h$, is
+extended through that point. Radial barriers, finite path subdivision
+and elementary rational majorants are mature intermediates.
+
+The local power-iteration antecedent remains D. G. Aronson,
+[*Harnack, Hölder, Gauss and Widder: Serrin's Parabolic Legacy*,
+arXiv:1611.09417v1](https://arxiv.org/html/1611.09417v1), weak formulation
+(6), fundamental power inequality (7), and “LOCAL BOUNDEDNESS”.
+Its divergence-form equation has time coefficient one; the raw
+proof cylinder (SRO.98) has exactly that coefficient and the bounded
+potential (SRO.99). The primary text gives the iteration method;
+the numerical value used here is the already proved Lemma 10.1,
+not an unspecified structural constant from the reference.
+The finite-wave and transmutation antecedents for the reused norm
+tail remain [D, Definition 14.5], T. Coulhon and A. Sikora,
+[*Gaussian heat kernel upper bounds via Phragmén–Lindelöf theorem*,
+arXiv:math/0609429v1](https://arxiv.org/html/math/0609429v1),
+Theorem 3.4 and (3.8). No additional heat-kernel or Harnack theorem
+is required in (SRO.85)–(SRO.111).
+
+**Definition 17.2 (the precise consumer and full retained domain).**
+The global upper enumeration of Theorem 16.2 is exactly the upper
+side of [D, Definition 12.8]. Applying that existing implication
+together with its existing lower enumeration in Proposition 12.7
+gives a scalar interval name of the same $N_d$. Thus the calibration
+remains literally $M=1+N_d$, $c=1/(4M)$ and all emissions (SRO.56);
+an exterior or intermediate proof majorant never replaces $M$.
+This is a use of those implications, not a new finite-word or
+finite-energy theorem.
+
+All original finite positive triples remain in the conditional
+domain. The original source space $\Omega$, including its source
+point, every input preparation, event including zero, failure,
+rejection, stop,
+alarm, destruction and return, every record and history, every
+reference and joint object, control and clock, and every legal future,
+keeps its original domain and interpretation. In particular the
+source start is at $e$, the first passive read is at $2d$, all
+subsequent gaps are $d$, and read noise is the original conditionally
+fresh noise on the same undisturbed path. Auxiliary balls, paths,
+cylinders and regional covers only prove deterministic field
+inequalities; they do not select a subfamily of histories, alter
+units, add a physical supplier, or modify any emission or operation.
+The optional identity $N_d=s_d$ is not a premise or conclusion of
+the global-certificate construction.
+
+## 追加锚（本行以下为增补区）

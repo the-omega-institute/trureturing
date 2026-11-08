@@ -1,0 +1,22 @@
+**定义 4.1（中心字符商）。** $Z=Z(X)$ 是闭的、含单位的关联交换 Jordan 子代数（Hanche-Olsen–Størmer, *Jordan Operator Algebras*，下称 HOS1984，Lemma 2.5.3；闭性由乘法连续性）。HOS1984 Theorem 3.2.2 将它等距序同构为 $C(K,\mathbb R)$，$K$ 紧，故字符 $\chi:Z\to\mathbb R$ 分离 $Z$。令
+
+$$
+I_\chi=\overline{\operatorname{span}\{z\circ x:z\in\ker\chi,\ x\in X\}},
+\qquad
+J_\chi=X/I_\chi,
+\tag{4.1}
+$$
+
+并记 $\pi_\chi:X\to J_\chi$ 为商映射。
+
+以下核对商所需的全部条件。中心关联性给 $(z\circ x)\circ y=z\circ(x\circ y)$，所以 $I_\chi$ 是范数闭 Jordan 理想。将 $\chi$ 由实 Hahn–Banach 定理等范数延拓为 $X$ 上的 $\varphi$，有 $\|\varphi\|=\varphi(u)=1$。该泛函正：对 $0\le x\le u$，$\|u-x\|\le1$，于是 $\varphi(x)=1-\varphi(u-x)\ge0$；缩放处理所有正元。对 $z\in\ker\chi$，$\varphi(z^2)=\chi(z^2)=0$，状态 Schwarz 不等式（HOS1984 Lemma 3.6.2）给 $\varphi(z\circ x)=0$。于是 $\varphi(I_\chi)=0$，但 $\varphi(u)=1$，故 $I_\chi$ 是真理想。
+
+HOS1984 Theorem 3.4.2 对范数闭 Jordan 理想的商给出：商乘法和商范数使 $J_\chi$ 成为非零含单位 JB 代数。$\pi_\chi$ 保平方、为正，且 $z-\chi(z)u\in I_\chi$，所以
+
+$$
+\pi_\chi(z)=\chi(z)1\qquad(z\in Z).
+\tag{4.1a}
+$$
+
+这里不声称 $J_\chi$ 是因子，也不声称它的整个中心只有标量。商去的是范数闭 Jordan 理想 $I_\chi$；没有把单位桥定理 19.1 中只具 Lie 结构的 $E/Z_E$ 当作这个 JB 商，也没有要求 $Z_E$ 在 $Z(X)$ 中稠密。
+

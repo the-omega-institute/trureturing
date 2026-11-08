@@ -1,0 +1,77 @@
+**Theorem 12.1 (E6: joint budget and paid-mean converse).** Fix the exact $H_c$, envelope, stationary law and source moment premises. Choose $s_H$ satisfying (2.9), and for a fixed $0<\alpha<1/2$ put
+
+$$
+b=1-2\alpha,
+\quad s_\alpha=\min\left\{s_H,1,\frac{5b}{8\delta}\right\},
+\quad C_\alpha=\frac{b^2}{8B\delta^2}.
+\tag{12.1}
+$$
+
+For every finite integer $M\ge2$, use $L_M,X_M$ from (1.2). Then simultaneously
+
+$$
+\begin{gathered}
+\forall M\in\mathbb Z,\ M\ge2\quad
+\forall s\in(0,s_\alpha)\quad
+\forall\mathcal A\in\mathfrak A_M(e^{-s},\alpha)\quad
+\forall i\in\{0,1\}:\\
+\mathbb E_{i,e^{-s}}^{\mathcal A}T
+\ge C_\alpha\max\left\{s^{-3},\frac{s^{-11}}{L_M^8}\right\}
+\ge C_\alpha\max\left\{s^{-3},\frac{s^{-11}}{X_M^8}\right\}.
+\end{gathered}
+\tag{12.2}
+$$
+
+The single neighborhood depends on the fixed source and risk, and precedes all budgets and machines.
+
+Proof. After choosing $s_H$ from the source moments and fixing $\alpha$, fix any finite $M$ and set $n_M=M-2$, $L=L_M$. This finite positive integer cutoff does not inspect the actual machine. The ceiling and maximum give
+
+$$
+L_M\le1+\frac{2\delta n_M}b=X_M.
+\tag{12.3}
+$$
+
+Indeed $\lceil x\rceil\le x+1$ and $1\le x+1$ for $x\ge0$, including $x=0$.
+
+For $u\ge0$, set $F(u)=(e^u-1)/(e^u+1)$. Its value at zero is zero and $F'(u)=2e^u/(e^u+1)^2\le1/2$, so $F(u)\le u/2$. Also $\log(1+v)\le v$ for $v\ge0$. With $u=n_M\log(1+\delta/(L+1))$,
+
+$$
+\chi_{M,L}\le\frac{n_M}{2}\log\left(1+\frac\delta{L+1}\right)
+\le\frac{n_M\delta}{2(L+1)}\le\frac b4.
+\tag{12.4}
+$$
+
+For $n_M=0$ the left side is exactly zero. For $n_M>0$, $L\ge2\delta n_M/b$ proves the last inequality. On the same neighborhood,
+
+$$
+r_H(e^{-s})\le\frac{2\delta}{\mu_0(e^{-s})}
+\le\frac{2\delta}{5}s\le\frac b4.
+\tag{12.5}
+$$
+
+This uses the actual stationary law and the machine-uniform estimate, rather than a fixed-machine initial $O(s^2)$ estimate.
+
+Consequently (11.2) leaves $b/2$ for the target entropy contribution. Squaring the nonnegative inequality, then using (9.1) and $1-e^{-s}\le s$, gives
+
+$$
+\begin{aligned}
+\frac{b^2}4
+&\le\frac{d_i(e^{-s},L)B(1-e^{-s})\mathbb E_iT}{2}\\
+&\le2B\delta^2s^3\min\{1,(sL)^8\}\mathbb E_iT.
+\end{aligned}
+\tag{12.6}
+$$
+
+The upper coefficient is strictly positive for $s>0,L\ge1$. Dividing by that explicit coefficient, without dividing by exact $d_i$, yields
+
+$$
+\mathbb E_iT\ge\frac{b^2}{8B\delta^2}
+\frac{s^{-3}}{\min\{1,(sL)^8\}}
+=C_\alpha\max\left\{s^{-3},\frac{s^{-11}}{L^8}\right\}.
+\tag{12.7}
+$$
+
+Since $L\le X_M$, replacing only $L^{-8}$ by $X_M^{-8}$ weakens the bound in the asserted direction and proves the second inequality in (12.2).
+
+Every estimate holds for every finite cutoff on one source-only moment neighborhood. The argument therefore applies pointwise to every finite $M=M(s)$, even with unbounded $sL_M$, discontinuous retuning, unrestricted immutable probability precision and arbitrarily small positive transitions. It exchanges no fixed-$M$ limit with $M\to\infty$. If exact $d_i$ were zero for a compliant observer here, (11.2) would contradict the positive residual $b/2$; no zero-denominator convention is used. Reducible supports, initial stopping and closed non-target classes are included by the interfaces. $\square$
+

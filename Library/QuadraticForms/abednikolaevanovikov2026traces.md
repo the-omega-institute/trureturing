@@ -5,9 +5,10 @@ year: 2026
 title: "How characterisations of traces and central elements fail: sharp violation constants via Michelson contrast and noncentrality"
 doi: 10.48550/arXiv.2610.34388
 url: https://arxiv.org/abs/2610.34388v1
-claim: "Section 11.2(5) asks whether the Alhasan–Fawwaz constant is bounded on M_n(C) independently of the positive definite density."
+claim: "Section 11.2(5) asks for a dimension-only Alhasan–Fawwaz bound; Conjecture 11.1, item 8, asks for the exact two-contrast Young envelope in every positive even dimension."
 strata_touched:
   - D5/S3/Quantum/Matrix/AbedNikolaevaNovikovAFDensityBound
+  - D5/S3/Quantum/Matrix/AbedNikolaevaNovikovTwoContrastYoung
 license: citation-only
 triage: anchor
 ---
@@ -57,3 +58,42 @@ quotient set, positive denominators, and the genuine real least upper bound.
 Its matrix argument diagonalizes $|X|$, including its zero eigenspaces, and
 does not require $X$ to be invertible. No sharpness or priority claim is made.
 The original Alhasan–Fawwaz article and worldwide novelty remain unverified.
+
+## Two-contrast Young envelope
+
+Conjecture 11.1, final clause, page 57: “and the lower bound of Proposition 5.22 is the two-contrast envelope of item 8 for even n.”
+
+Section 3.2, page 8:
+
+> For a positive invertible operator $T$ on a Hilbert space with $m=\min\sigma(T)$, $M=\max\sigma(T)$ let
+
+$$
+\kappa(T)=\frac Mm,\qquad \operatorname{OLC}(T)=\tfrac12\ln\kappa(T),\qquad
+\operatorname{OMC}(T)=\tanh\operatorname{OLC}(T)=\frac{M-m}{M+m}.
+$$
+
+Section 3.8, page 12:
+
+> The envelope $V_n(\delta)$ lets the operator variables range over all operators. To see how the violation depends on the operators themselves, we also prescribe their contrast. For a positive variable $A$ we use $\operatorname{OMC}(A)$, for an arbitrary or self-adjoint variable $X$ the contrast $\operatorname{OMC}(|X|)$ of its modulus (for the Peierls--Bogoliubov inequality, item 16, the variables are positive, as in [14]), and we let every operator variable of an item have the same contrast $\delta'\in[0,1]$:
+
+$$
+V_n(\delta,\delta')=\sup\left\{\frac{\mathcal L-\mathcal R}{\mathcal N}:\ \operatorname{OMC}(\rho)=\delta,\ \text{every operator variable of contrast }\delta'\right\}.
+$$
+
+Table 3, item 8, uses arbitrary complex matrices and
+$\mathcal L=\varphi_\rho(|AB^*|)$,
+$\mathcal R=\mathcal N=(\varphi_\rho(|A|^2)+\varphi_\rho(|B|^2))/2$.
+Section 3.1 sets $|X|=(X^*X)^{1/2}$, $\varphi_\rho(X)=\operatorname{Tr}(\rho X)$ and, by default, $\rho>0$ without trace-one normalization.
+
+Proposition 5.22, page 23, states
+$V_n(\delta,\delta')\ge 4\delta\delta'/(1+\delta'^2-2\delta\delta')$
+for every positive even dimension, including $\delta'=1$.
+The repository proof establishes the matching upper bound for arbitrary independently oriented inputs; the repeated two-block construction attains it.
+
+### Scope
+
+The Lean statement uses $n=2r$ with $r\ge1$, $0\le\delta<1$, and $0\le\delta'\le1$.
+It asserts nonemptiness and boundedness of the actual set of relative violations as well as its exact real supremum.
+Singular nonzero inputs are included at $\delta'=1$; singular densities are excluded.
+The sharp odd-dimensional envelope for interior contrasts remains open here.
+The source is arXiv v1. Completeness of the literature screen in issue #22727 is ASSUMED-UNVERIFIED.

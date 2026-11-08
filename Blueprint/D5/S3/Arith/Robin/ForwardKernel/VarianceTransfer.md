@@ -2,9 +2,45 @@
 
 ## Abstract
 
-Compact integrability and square-norm estimates for triangular primitives.
+Compact integrability and square-norm estimates for profile averages.
 
-**Theorem 1.1 (Interval Cauchy-Schwarz).**
+**Theorem 1.1 (Compact bound for continuously parametrized increments).**
+
+Lean statement: `D5/S3/Arith/Robin/ForwardKernel/VarianceTransfer.bounded_increment_comp`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ForwardKernel/VarianceTransfer.bounded_increment_comp` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Let E be locally bounded and measurable, let K be compact, and let the step u and starting point x be continuous real functions on the parameter space. There is M>=0 such that abs(E(x(p)+u(p))-E(x(p)))<=M for every p in K.
+
+**Theorem 1.2 (The unit-interval formula).**
+
+Lean statement: `D5/S3/Arith/Robin/ForwardKernel/VarianceTransfer.profileAverage_eq_unit_integral`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ForwardKernel/VarianceTransfer.profileAverage_eq_unit_integral` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every real length h, including h=0, the normalized profile primitive equals the integral of g(s) times the increment of length s*h over the unit interval, divided by h. The substitution u=s*h proves the identity; totalized division handles zero length.
+
+**Theorem 1.3 (Weighted Cauchy-Schwarz).**
+
+Lean statement: `D5/S3/Arith/Robin/ForwardKernel/VarianceTransfer.profile_cauchy_schwarz`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ForwardKernel/VarianceTransfer.profile_cauchy_schwarz` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+If g is integrable on the unit interval and k is measurable and bounded in absolute value by a nonnegative M, then the square of the integral of g*k is at most the integral of absolute g times the integral of absolute g times k squared. Apply Cauchy-Schwarz to the square root of absolute g and its product with absolute k.
+
+**Theorem 1.4 (Interval Cauchy-Schwarz).**
 
 Lean statement: `D5/S3/Arith/Robin/ForwardKernel/VarianceTransfer.interval_cauchy_schwarz`
 
@@ -16,7 +52,7 @@ Lean statement: `D5/S3/Arith/Robin/ForwardKernel/VarianceTransfer.interval_cauch
 
 For b>0, if f and f squared are integrable on [0,b], the square of the integral of f is at most b times the integral of f squared.
 
-**Theorem 1.2 (Monotonicity of the variance majorant).**
+**Theorem 1.5 (Monotonicity of the variance majorant).**
 
 Lean statement: `D5/S3/Arith/Robin/ForwardKernel/VarianceTransfer.logarithmic_variance_mono`
 
@@ -28,7 +64,19 @@ Lean statement: `D5/S3/Arith/Robin/ForwardKernel/VarianceTransfer.logarithmic_va
 
 The real function t*log(2/t)^2 is increasing on (0,1/16]. Its derivative is log(2/t)^2-2*log(2/t), which is nonnegative on this interval.
 
-**Theorem 1.3 (Compact integrability of increments).**
+**Theorem 1.6 (Integrability of profile-weighted increments).**
+
+Lean statement: `D5/S3/Arith/Robin/ForwardKernel/VarianceTransfer.unit_increment_integrable`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ForwardKernel/VarianceTransfer.unit_increment_integrable` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For a locally bounded measurable E and an integrable unit profile g, the function g(s)*(E(x+s*h)-E(x)) is integrable on the unit interval for every real h and x. Compactness bounds the increment, so multiplication by it preserves integrability.
+
+**Theorem 1.7 (Compact integrability of increments).**
 
 Lean statement: `D5/S3/Arith/Robin/ForwardKernel/VarianceTransfer.increment_comp_integrableOn`
 
@@ -40,7 +88,7 @@ Lean statement: `D5/S3/Arith/Robin/ForwardKernel/VarianceTransfer.increment_comp
 
 If E is locally bounded and measurable, continuous real choices of step and starting point give integrable increments on any compact set, for any Borel measure finite on compact sets. Compact images bound both evaluations of E.
 
-**Theorem 1.4 (Compact integrability of products).**
+**Theorem 1.8 (Compact integrability of products).**
 
 Lean statement: `D5/S3/Arith/Robin/ForwardKernel/VarianceTransfer.increment_product_comp_integrableOn`
 
@@ -52,7 +100,7 @@ Lean statement: `D5/S3/Arith/Robin/ForwardKernel/VarianceTransfer.increment_prod
 
 Two increments of a locally bounded measurable E, each with continuous step and starting point, have integrable product on any compact set with a Borel measure finite on compact sets. This includes rectangular parameter domains used to exchange integrals.
 
-**Theorem 1.5 (Joint square integrability).**
+**Theorem 1.9 (Joint square integrability).**
 
 Lean statement: `D5/S3/Arith/Robin/ForwardKernel/VarianceTransfer.increment_sq_rectangle_integrable`
 
@@ -64,31 +112,19 @@ Lean statement: `D5/S3/Arith/Robin/ForwardKernel/VarianceTransfer.increment_sq_r
 
 On a finite rectangle, the square of an increment is integrable with respect to the product of the two restricted Lebesgue measures when the starting point is the first coordinate and the step is any continuous function of both coordinates.
 
-**Theorem 1.6 (Measurability of triangular primitives).**
+**Theorem 1.10 (Interval L2 and lpNorm conversion).**
 
-Lean statement: `D5/S3/Arith/Robin/ForwardKernel/VarianceTransfer.triangularPrimitive_measurable`
+Lean statement: `D5/S3/Arith/Robin/ForwardKernel/VarianceTransfer.lpNorm_two_eq_intervalL2`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ForwardKernel/VarianceTransfer.triangularPrimitive_measurable` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-For each fixed real length, the triangular primitive of a locally bounded measurable error function is measurable in its starting point.
-
-**Theorem 1.7 (Integrability of triangular squares).**
-
-Lean statement: `D5/S3/Arith/Robin/ForwardKernel/VarianceTransfer.triangularPrimitive_sq_intervalIntegrable`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ForwardKernel/VarianceTransfer.triangularPrimitive_sq_intervalIntegrable` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ForwardKernel/VarianceTransfer.lpNorm_two_eq_intervalL2` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
 *Commentary.*
 
-The square of a fixed-length triangular primitive is integrable on every finite oriented interval. A uniform bound for increments on the parameter rectangle bounds the primitive.
+For an almost everywhere measurable real function on an ordered finite interval, its lpNorm at exponent two on the restricted interval measure equals the square-root interval L2 norm.
 
-**Theorem 1.8 (The reverse triangle inequality).**
+**Theorem 1.11 (The reverse triangle inequality).**
 
 Lean statement: `D5/S3/Arith/Robin/ForwardKernel/VarianceTransfer.interval_l2_reverse_triangle`
 
@@ -100,7 +136,7 @@ Lean statement: `D5/S3/Arith/Robin/ForwardKernel/VarianceTransfer.interval_l2_re
 
 For square-integrable real functions f and g on an ordered interval [a,b], the absolute difference between the square roots of their square integrals is at most the square root of the square integral of f-g. This follows from the two triangle inequalities for the L2 norm.
 
-**Theorem 1.9 (The covariance constant).**
+**Theorem 1.12 (The covariance constant).**
 
 Lean statement: `D5/S3/Arith/Robin/ForwardKernel/VarianceTransfer.integral_min_unit_square`
 
@@ -112,20 +148,9 @@ Lean statement: `D5/S3/Arith/Robin/ForwardKernel/VarianceTransfer.integral_min_u
 
 The iterated integral of min(s,t) over the unit square equals 1/3. Splitting the inner integral at t=s gives s-s^2/2.
 
-**Theorem 1.10 (The small-length estimate).**
-
-Lean statement: `D5/S3/Arith/Robin/ForwardKernel/VarianceTransfer.small_length_triangular_square_bound`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ForwardKernel/VarianceTransfer.small_length_triangular_square_bound` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-If E is locally bounded and measurable and satisfies the short-interval mean-square bound, there is C>0 such that, for every sufficiently large X and every 0<U<=X/16, the integral of B_U(x)^2 over [X,2X] is at most C*X*U^3*log(2*X/U)^2. Cauchy-Schwarz, the substitution u=x*theta, enlargement to a fixed rectangle, and Fubini reduce this to the short-interval bound. Monotonicity of theta*log(2/theta)^2 on (0,1/16] bounds its integral.
-
 ## References
 
+- Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/VarianceTransfer.bounded_increment_comp`
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/VarianceTransfer.increment_comp_integrableOn`
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/VarianceTransfer.increment_product_comp_integrableOn`
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/VarianceTransfer.increment_sq_rectangle_integrable`
@@ -133,7 +158,9 @@ If E is locally bounded and measurable and satisfies the short-interval mean-squ
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/VarianceTransfer.interval_cauchy_schwarz`
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/VarianceTransfer.interval_l2_reverse_triangle`
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/VarianceTransfer.logarithmic_variance_mono`
-- Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/VarianceTransfer.small_length_triangular_square_bound`
-- Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/VarianceTransfer.triangularPrimitive_measurable`
-- Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/VarianceTransfer.triangularPrimitive_sq_intervalIntegrable`
+- Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/VarianceTransfer.lpNorm_two_eq_intervalL2`
+- Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/VarianceTransfer.profileAverage_eq_unit_integral`
+- Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/VarianceTransfer.profile_cauchy_schwarz`
+- Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/VarianceTransfer.unit_increment_integrable`
+- Dependency: [D5/S3/Arith/Robin/ForwardKernel/CrossExponentDefs](CrossExponentDefs.md)
 - Dependency: [D5/S3/Arith/Robin/ForwardKernel/VarianceTransferDefs](VarianceTransferDefs.md)
