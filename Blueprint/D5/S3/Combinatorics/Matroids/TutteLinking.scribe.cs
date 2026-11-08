@@ -63,5 +63,5 @@ internal sealed class TutteLinkingDocument : IScribeDocumentDefinition
     private static Formula All(string name, Formula type, Formula body) => Seq(Forall, Sp, Parenthesized(Seq(V(name), Colon, Sp, type)), Comma, Sp, body);
     private static Formula Some(string name, Formula type, Formula body) => Seq(Exists, Sp, Parenthesized(Seq(V(name), Colon, Sp, type)), Comma, Sp, body);
     private static Formula Let(string name, Formula type, Formula value, Formula body) =>
-        Seq(V("let"), Sp, V(name), Colon, Sp, type, Sp, V(":="), Sp, value, Semi, Sp, body);
+        Seq(V("let"), Sp, V(name), Colon, Sp, type, Sp, Colon, Eq, Sp, value, Semi, Sp, body);
 }
