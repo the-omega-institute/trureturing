@@ -9,9 +9,7 @@
 import Mathlib.Combinatorics.SimpleGraph.Coloring.Vertex
 import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
 import Mathlib.Data.Fintype.EquivFin
-import Mathlib.Data.Fin.VecNotation
-import Mathlib.Tactic.FinCases
-import Mathlib.Tactic.NormNum
+import Mathlib.Tactic
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

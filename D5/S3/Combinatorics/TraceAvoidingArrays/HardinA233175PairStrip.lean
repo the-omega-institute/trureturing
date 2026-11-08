@@ -77,12 +77,7 @@ result: proof_shape=bind-only; consumers=terminal result
 -/
 
 import D5.S3.Observer.Separation.BooleanRankThreeK4
-import Mathlib.Tactic.FinCases
-import Mathlib.Tactic.IntervalCases
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Ring
-import Mathlib.Tactic.Tauto
+import Mathlib.Tactic
 import Mathlib.RingTheory.PowerSeries.Basic
 
 /-!
