@@ -331,7 +331,7 @@ theorem actual_state_prefix [IsProbabilityMeasure P] (l : ℕ) (x : Fin l → S)
       change P {ω | epochHistory labels update I τ K ξ n ω = xp} * _ = _
       rw [ih xp, PMF.toMeasure_apply_singleton _ _ (measurableSet_singleton _),
         Fin.prod_univ_castSucc]
-      rfl
+      simp only [xp, mul_assoc]
   cases l with
   | zero => simp [prefixMass]
   | succ n =>
@@ -350,7 +350,7 @@ theorem actual_source_cylinders (n : ℕ) (a : ℕ × (Fin n → ℕ))
     P (observedHistory labels update I τ K ξ n ⁻¹' {(a, x)}) =
       w a.1 * (η.bind fun s => (zeroRow A a.1 s).bind C) (x 0) *
         ∏ j : Fin n, (f (a.2 j) * ((zeroRow A (a.2 j) (x j.castSucc)).bind C) (x j.succ)) := by
-  induction n with
+  induction n generalizing a x with
   | zero =>
     let D : Set (S × (Fin (a.1 + 1) → R)) :=
       (fun p => word labels update a.1 p.1 p.2) ⁻¹' {x 0}

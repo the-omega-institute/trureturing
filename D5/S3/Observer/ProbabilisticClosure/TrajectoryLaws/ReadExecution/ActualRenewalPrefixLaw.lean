@@ -120,7 +120,7 @@ private theorem zeros_measurable (k : ℕ) :
         (measurable_pi_apply j.castSucc).comp measurable_snd))).prodMk
         ((measurable_pi_apply (Fin.last k)).comp measurable_snd))
 
-private theorem word_measurable (k : ℕ) :
+theorem word_measurable (k : ℕ) :
     Measurable (fun p : S × (Fin (k + 1) → R) => word labels update k p.1 p.2) :=
   (heff true).comp
     (((zeros_measurable labels update heff k).comp

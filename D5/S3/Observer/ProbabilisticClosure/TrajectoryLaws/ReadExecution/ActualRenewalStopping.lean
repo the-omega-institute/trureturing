@@ -122,7 +122,9 @@ private theorem run_absorbed (labels : Set S) (update : S → Bool → R → S)
   obtain ⟨k, rfl⟩ := Nat.exists_eq_add_of_le ht
   induction k with
   | zero => rfl
-  | succ k ih => simp only [Nat.add_succ, run, ih (by omega), if_pos hT]
+  | succ k ih =>
+    change run labels update initial coins wait gaps ((T + k) + 1) = _
+    rw [run, ih (by omega), if_pos hT]
 
 private theorem paid_card (wait : ℕ) (gaps : ℕ → ℕ) (T : ℕ) :
     paidTicks wait gaps T =
