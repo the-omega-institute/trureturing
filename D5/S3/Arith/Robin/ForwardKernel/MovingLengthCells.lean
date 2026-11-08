@@ -8,6 +8,7 @@
 
 import D5.S3.Arith.Robin.ForwardKernel.TriangularMeanSquare
 import Mathlib.Analysis.SpecialFunctions.Pow.Continuity
+import Mathlib.Order.SuccPred.IntervalSucc
 
 /-! Equal cells of the interval [1,2] and their profile mean-square limits. -/
 
@@ -32,6 +33,23 @@ def cellConstant (θ : ℝ) (g : ℝ → ℝ) (n : ℕ) : ℝ :=
   ((1 - θ) * Q g / (n : ℝ)) *
     ∑ j ∈ Finset.range n, cellPoint n j ^ (-θ)
 
+private lemma cell_monotone (n : ℕ) : Monotone (cellPoint n) := by
+  intro i j hij
+  dsimp [cellPoint]
+  exact add_le_add_right (div_le_div_of_nonneg_right (by exact_mod_cast hij) (Nat.cast_nonneg n)) 1
+
+/-- An indicator sum on disjoint equal cells evaluates to the value on its cell. -/
+lemma cell_step_eval {n : ℕ} {u : ℝ} {j : ℕ}
+    (hj : j ∈ Finset.range n) (hu : u ∈ Ioc (cellPoint n j) (cellPoint n (j + 1)))
+    (v : ℕ → ℝ) :
+    (∑ l ∈ Finset.range n,
+      (Ioc (cellPoint n l) (cellPoint n (l + 1))).indicator (fun _ => v l) u) = v j := by
+  rw [Finset.sum_eq_single_of_mem j hj]
+  · exact indicator_of_mem hu _
+  · intro l _ hlj
+    apply indicator_of_notMem
+    exact fun hl => ((cell_monotone n).pairwise_disjoint_on_Ioc_succ hlj).le_bot ⟨hl, hu⟩
+
 theorem cellPoint_mem {n j : ℕ} (hn : 0 < n) (hj : j ≤ n) :
     cellPoint n j ∈ Icc (1 : ℝ) 2 := by
   have hn' : (0 : ℝ) < n := by exact_mod_cast hn
@@ -54,7 +72,7 @@ theorem cellPoint_lt {n : ℕ} (hn : 0 < n) (j : ℕ) :
   have : (0 : ℝ) < n := by exact_mod_cast hn
   linarith [one_div_pos.mpr this]
 
-private lemma fixed_normalizer_ratio {θ c : ℝ} (hc : 0 < c) :
+lemma fixed_normalizer_ratio {θ c : ℝ} (hc : 0 < c) :
     Tendsto (fun X => (X / fixedLength θ c X * lengthLog θ c X) / meanSquareScale θ X)
       atTop (𝓝 ((1 - θ) / c)) := by
   have hz : Tendsto (fun X : ℝ => Real.log c / Real.log X) atTop (𝓝 0) :=

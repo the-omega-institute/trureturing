@@ -188,6 +188,9 @@ domains:
   Recurrence:
     stratum: S1
     definition: Linear recurrence solution spaces, shift eigenstructure, and self-similar weight lifts.
+  RecurrenceAlgebraic:
+    stratum: S1
+    definition: Algebraic formal power series, compositional inverses, and their polynomial-coefficient differential recurrences.
   RecurrenceComposition:
     stratum: S1
     definition: Composition, iteration, and functional equations of recurrence generating series.

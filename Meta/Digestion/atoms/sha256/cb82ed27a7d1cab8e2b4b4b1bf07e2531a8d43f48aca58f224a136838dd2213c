@@ -1,0 +1,8 @@
+对复线性 $\Phi:M_d\to M_e$，以下三项等价：
+
+1.  $\mathsf P_{\rm ref}(\Phi)$ 成立；
+
+2.  $C_\Phi=(\Phi\otimes\operatorname{id}_d)(|\Gamma\rangle\langle\Gamma|)\ge0$， 其中 $|\Gamma\rangle=\sum_{i=1}^d|i\rangle|i\rangle$；
+
+3.  存在有限矩阵族 $K_\mu$，使 $`\Phi(X)=\sum_\mu K_\mu XK_\mu^*`$。
+

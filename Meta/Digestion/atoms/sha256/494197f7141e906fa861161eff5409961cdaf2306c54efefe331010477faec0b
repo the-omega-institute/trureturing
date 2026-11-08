@@ -1,0 +1,33 @@
+**定理 141.1（缺陷在每点的酉邻域上不变）。** 令 $G=\prod_jU(n_j)$。对每个 $Z\in\mathcal A$，存在 $G$ 单位元的开邻域 $V_Z$，满足
+
+$$
+\mathfrak F(UZ)=\mathfrak F(Z)\qquad(U\in V_Z).
+\tag{141.1}
+$$
+
+这包括任意非正规、不可对角化或奇异的 $Z$。
+
+证明。在每个非空块，定义秩一投影的允许集
+
+$$
+\mathcal O_j(Z)=\{p=ee^*:\|e\|=1,\
+       \|(I_{n_j}-p)Z_je\|<4\}.
+\tag{141.2}
+$$
+
+任意有限复矩阵 $Z_j$ 都有复特征向量，故此集合非空。条件也可写成连续量 $\|(I_{n_j}-p)Z_jp\|<4$，所以它在 $\mathbb{CP}^{n_j-1}$ 中开。
+
+这片开集实线性张成 $H_{n_j}(\mathbb C)$。确实，若 Hermitian $H$ 满足 $\operatorname{Tr}(Hp)=0$ 对这片开集成立，则 $e^*He$ 在其单位球面逆像上为零。乘以全部正实半径，得到 $\mathbb C^{n_j}\setminus\{0\}$ 的非空开锥；齐次实二次多项式 $z^*Hz$ 在该开锥为零，故恒为零。固定 Hermitian 二次型极化给 $H=0$。有限维实对偶性于是给张成结论，可选本块 $n_j^2$ 个允许投影构成实基。$n_j=1$ 时其唯一投影直接张成。
+
+合并各块，得 $M=\sum_jn_j^2$ 个原投影 $p_1,\ldots,p_M$，它们是 $J$ 的实基。所有允许条件都是严格的，故存在 $Z$ 的矩阵邻域 $\mathcal N$，使这些固定投影对每个 $W\in\mathcal N$ 仍全部允许。考虑已知光滑群映射
+
+$$
+\Psi:\mathbb R^M\longrightarrow G,\qquad
+\Psi(\theta)=U_{\theta_M,p_M}\cdots U_{\theta_1,p_1}.
+\tag{141.3}
+$$
+
+其原点微分为 $\theta\mapsto i\sum_r\theta_rp_r$，是 $\mathbb R^M$ 到 $\mathfrak g=\bigoplus_j\mathfrak u(n_j)$ 的实线性同构。有限维逆函数定理因此给 $G$ 中的单位元邻域。这个成熟有限乘积坐标方法在母卷 92.2 已用于已知旋转群；这里应用于已知矩阵酉群。
+
+缩小参数邻域，使每个有限前缀乘积 $U_{\theta_r,p_r}\cdots U_{\theta_1,p_1}Z$ 都留在 $\mathcal N$。这由有限个已知连续矩阵乘法在原点的值都是 $Z$ 得到。140.1 遂可逐步实际应用，给 $\mathfrak F(\Psi(\theta)Z)=\mathfrak F(Z)$。取这个参数邻域在 $\Psi$ 下的单位元开像，即得 (141.1)。逆函数定理施于 $\Psi$，从未施于 $\theta\mapsto\Psi(\theta)Z$，所以无需 $Z$ 可逆。所有光滑性均属于已知矩阵群，不属于旧 $D$。∎
+

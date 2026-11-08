@@ -7,6 +7,7 @@
    digest: Compact integrability and profile square-norm estimates control variance transfer. -/
 
 import D5.S3.Arith.Robin.ForwardKernel.VarianceTransferDefs
+import D5.S3.Arith.Robin.ForwardKernel.CrossExponentDefs
 import Mathlib.Analysis.Calculus.Deriv.MeanValue
 import Mathlib.Analysis.Complex.ExponentialBounds
 import Mathlib.MeasureTheory.Function.L2Space
@@ -19,7 +20,7 @@ import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
 namespace D5.S3.Arith.Robin.ForwardKernel.VarianceTransfer
 
 open Set MeasureTheory Filter
-open VarianceTransferDefs
+open VarianceTransferDefs CrossExponentDefs
 
 noncomputable section
 
@@ -157,7 +158,8 @@ private lemma bounded_comp_on_compact {α : Type*} [TopologicalSpace α]
   obtain ⟨M, hM, hbound⟩ := hE.2 a b
   exact ⟨M, hM, fun x hx => hbound _ ⟨ha (mem_image_of_mem f hx), hb (mem_image_of_mem f hx)⟩⟩
 
-private lemma bounded_increment_comp {α : Type*} [TopologicalSpace α]
+/-- Continuous starting points and steps give uniformly bounded increments on compact sets. -/
+lemma bounded_increment_comp {α : Type*} [TopologicalSpace α]
     {E : ℝ → ℝ} (hE : LocallyBoundedMeasurable E) {K : Set α} (hK : IsCompact K)
     {u x : α → ℝ} (hu : Continuous u) (hx : Continuous x) :
     ∃ M : ℝ, 0 ≤ M ∧ ∀ p ∈ K, |increment E (u p) (x p)| ≤ M := by
@@ -165,6 +167,23 @@ private lemma bounded_increment_comp {α : Type*} [TopologicalSpace α]
   obtain ⟨B, hB, hBb⟩ := bounded_comp_on_compact hE hK hx
   exact ⟨A + B, add_nonneg hA hB, fun p hp =>
     (abs_sub _ _).trans (add_le_add (hAb p hp) (hBb p hp))⟩
+
+/-- Every natural power of a continuous moving increment is integrable on compact sets. -/
+lemma increment_pow_integrableOn {A : Type*} [TopologicalSpace A]
+    [MeasurableSpace A] [BorelSpace A] [T2Space A]
+    {μ : Measure A} [IsFiniteMeasureOnCompacts μ]
+    {E : ℝ → ℝ} (hE : LocallyBoundedMeasurable E)
+    {K : Set A} (hK : IsCompact K) {u x : A → ℝ}
+    (hu : Continuous u) (hx : Continuous x) (n : ℕ) :
+    IntegrableOn (fun p => increment E (u p) (x p) ^ n) K μ := by
+  obtain ⟨M, _, hM⟩ := bounded_increment_comp hE hK hu hx
+  apply IntegrableOn.of_bound hK.measure_lt_top
+    ((((hE.1.comp (hx.add hu).measurable).sub
+      (hE.1.comp hx.measurable)).pow_const n).aestronglyMeasurable) (M ^ n)
+  filter_upwards [ae_restrict_mem hK.measurableSet] with p hp
+  simpa only [Real.norm_eq_abs, abs_pow, Function.comp_apply, Pi.sub_apply, Pi.add_apply,
+    increment] using
+    pow_le_pow_left₀ (abs_nonneg _) (hM p hp) n
 
 /-- An integrable unit profile times a fixed rescaled increment is integrable. -/
 theorem unit_increment_integrable {E g : ℝ → ℝ}
@@ -222,23 +241,34 @@ theorem increment_sq_rectangle_integrable {E : ℝ → ℝ} (hE : LocallyBounded
     (K := Icc a b ×ˢ Icc c d) (isCompact_Icc.prod isCompact_Icc) hu continuous_fst hu continuous_fst
   simpa only [pow_two, IntegrableOn] using hi.mono_set (Set.prod_mono Ioc_subset_Icc_self Ioc_subset_Icc_self)
 
+/-- The `L²` norm on an interval is the corresponding `lpNorm` on its restricted measure. -/
+theorem lpNorm_two_eq_intervalL2 {f : ℝ → ℝ} {a b : ℝ} (hab : a ≤ b)
+    (hf : AEStronglyMeasurable f (volume.restrict (Ioc a b))) :
+    lpNorm f 2 (volume.restrict (Ioc a b)) = intervalL2 a b f := by
+  simpa [intervalL2, NNReal.coe_ofNat, NNReal.coe_inv, Real.norm_eq_abs,
+    Real.rpow_two, sq_abs, Real.sqrt_eq_rpow, one_div,
+    intervalIntegral.integral_of_le hab] using
+    lpNorm_nnreal_eq_integral_norm_rpow (p := (2 : NNReal)) (by norm_num) hf
+
 /-- The square-root integral norm satisfies the reverse triangle inequality on an interval. -/
 theorem interval_l2_reverse_triangle {a b : ℝ} (hab : a ≤ b) {f g : ℝ → ℝ}
     (hf : MemLp f 2 (volume.restrict (Ioc a b)))
     (hg : MemLp g 2 (volume.restrict (Ioc a b))) :
     |Real.sqrt (∫ x in a..b, f x ^ 2) - Real.sqrt (∫ x in a..b, g x ^ 2)| ≤
       Real.sqrt (∫ x in a..b, (f x - g x) ^ 2) := by
-  let μ := volume.restrict (Ioc a b)
-  have hn (q : ℝ → ℝ) (hq : AEStronglyMeasurable q μ) :
-      lpNorm q 2 μ = Real.sqrt (∫ x in a..b, q x ^ 2) := by
-    simpa [NNReal.coe_ofNat, NNReal.coe_inv, Real.norm_eq_abs, Real.rpow_two,
-      sq_abs, Real.sqrt_eq_rpow, one_div, intervalIntegral.integral_of_le hab, μ]
-      using lpNorm_nnreal_eq_integral_norm_rpow (p := (2 : NNReal)) (by norm_num) hq
   have hfg := lpNorm_le_lpNorm_add_lpNorm_sub' (f := f) hg (by norm_num : (1 : ENNReal) ≤ 2)
   have hgf := lpNorm_le_lpNorm_add_lpNorm_sub (f := g) hf (by norm_num : (1 : ENNReal) ≤ 2)
-  rw [hn f hf.aestronglyMeasurable, hn g hg.aestronglyMeasurable,
-    hn (f - g) (hf.sub hg).aestronglyMeasurable] at hfg hgf
-  simp only [Pi.sub_apply] at hfg hgf
+  rw [lpNorm_two_eq_intervalL2 hab hf.aestronglyMeasurable,
+    lpNorm_two_eq_intervalL2 hab hg.aestronglyMeasurable,
+    lpNorm_two_eq_intervalL2 hab (hf.sub hg).aestronglyMeasurable] at hfg hgf
+  have hfg' : Real.sqrt (∫ x in a..b, f x ^ 2) ≤
+      Real.sqrt (∫ x in a..b, g x ^ 2) +
+        Real.sqrt (∫ x in a..b, (f x - g x) ^ 2) := by
+    simpa only [intervalL2, Pi.sub_apply] using hfg
+  have hgf' : Real.sqrt (∫ x in a..b, g x ^ 2) ≤
+      Real.sqrt (∫ x in a..b, f x ^ 2) +
+        Real.sqrt (∫ x in a..b, (f x - g x) ^ 2) := by
+    simpa only [intervalL2, Pi.sub_apply] using hgf
   exact abs_le.mpr ⟨by linarith, by linarith⟩
 
 /-- The integral of the covariance kernel min(s,t) on the unit square is one third. -/

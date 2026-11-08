@@ -1,0 +1,4 @@
+**Corollary 199.3 (rank-three and rank-four search interfaces).** In the rank-three branch, $d_u=1$: the radical fibre is described by one zero-sum coefficient column, and a genuine rank-three correction requires that column to be nonzero. In the rank-four branch, $d_u=2$: it is described by two zero-sum columns, and a genuine rank-four correction requires them to be linearly independent. A proposed fixed quotient lift with no feasible matrix of the required column rank cannot realize that rank branch.
+
+The feasible set can be convex even when its full-rank stratum is empty; convex feasibility alone therefore does not produce a radical of the desired dimension. This reduction removes the nonlinear residual equations only after the quotient identity is established and leaves arbitrary partition realization, $F_{64}$, $H43$, SRS\text{-}20, physical succession and Lean/kernel formalization open.
+

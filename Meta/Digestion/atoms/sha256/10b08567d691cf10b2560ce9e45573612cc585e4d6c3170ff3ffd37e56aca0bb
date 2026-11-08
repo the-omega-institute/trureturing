@@ -1,0 +1,11 @@
+**定义 32.1（原二元关系的二层生成空间）。** 在原实空间 $E$ 上，对任意总映射 $D:E^2\to E$ 直接定义
+
+$$
+V_D=\operatorname{span}_{\mathbb R}\{D(D(x,y),z):x,y,z\in E\},
+\qquad
+\mathsf{Reg}(D):\quad D(a,b)\in V_D\quad(a,b\in E).
+\tag{32.1}
+$$
+
+张成指原向量空间内的有限实线性组合，不取任何拓扑闭包，不先要求 $D$ 线性。因为每个二层输出本来也是旧 $D$ 的一个输出，条件准确等价于 $\operatorname{span}_{\mathbb R}\operatorname{ran}D=V_D$。它约束每个旧输出必须由二层旧输出生成，定义中没有中心、谱迹、块分解或辅助括号；原 $E$ 的向量运算仍是明确前件，有限线性组合不解释为实际准备。
+

@@ -1,0 +1,50 @@
+**Proposition 180.1 (seven coordinates generate the common-first residual).** Let
+
+$$
+u_0=u_1=F+v,\qquad u_3=q-2v,\qquad u_B=p
+$$
+
+with the pointwise simplex inequalities, and let $\Delta(u)$ be the residual tensor. Put
+
+$$
+R_{ijk}=\Delta(u)_{ijk}
+\qquad (i,j,k\in\{0,3\}).
+$$
+
+Then all sixty-four residuals vanish if and only if the following seven coordinates vanish:
+
+$$
+R_{000}=R_{003}=R_{030}=R_{033}=R_{300}=R_{303}=R_{330}=0.
+\tag{180.1}
+$$
+
+The omitted eighth coordinate satisfies the identity
+
+$$
+8R_{000}+4R_{003}+4R_{030}+2R_{033}
+ +4R_{300}+2R_{303}+2R_{330}+R_{333}=0.
+\tag{180.2}
+$$
+
+*Proof.* Both the candidate and the prescribed tuple satisfy
+
+$$
+u_1=u_0,
+\qquad
+u_B=\frac{2u_0+u_3}{3},
+$$
+
+because $2F+q=3p$ and $2(F+v)+(q-2v)=3p$. Trilinearity therefore expresses every residual with a $1$ or $B$ label as a fixed linear combination of residuals with labels in $\{0,3\}$, in the same slot. Thus the eight $R_{ijk}$ are sufficient for all sixty-four coordinates.
+
+The coefficient vector $(2,1)$ in the $\{0,3\}$ labels gives, by three-slot trilinearity,
+
+$$
+\sum_{i,j,k\in\{0,3\}}2^{\mathbf1_{i=0}+\mathbf1_{j=0}+\mathbf1_{k=0}}R_{ijk}
+=\mathcal C(2u_0+u_3,2u_0+u_3,2u_0+u_3)
+ -\mathcal C(2f_0+f_3,2f_0+f_3,2f_0+f_3)=0,
+$$
+
+which is exactly (180.2). If the seven coordinates in (180.1) vanish, (180.2) gives $R_{333}=0$, and the preceding span argument gives all sixty-four residuals. The converse is immediate. $\square$
+
+This is a complete equation-count reduction for the common-first slice, not a positivity or nonattainment result. The seven remaining equations are cubic conditions in $v$ with the actual terminal convention; no claim is made that they have only the solution $v=0$. The radical-triviality hypothesis of Corollary 179.3, the general terminal-pair implication, $F_{64}$, $H43$, SRS$\text{-}20$, physical succession and Lean/kernel formalization remain open.
+
