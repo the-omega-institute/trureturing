@@ -11,6 +11,7 @@ import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
 import Mathlib.Dynamics.SymbolicDynamics.Basic
 import Mathlib.Topology.Order.Compact
 import Mathlib.Topology.LocallyFinite
+import Mathlib.Topology.Metrizable.Basic
 import Mathlib.Topology.UniformSpace.HeineCantor
 import Mathlib.Tactic
 
@@ -1107,12 +1108,16 @@ private def restrictIntegerSelector {X : Type*} [PseudoMetricSpace X] (f : X ≃
   fixes_orbit z := by
     change R.map _ = z
     convert R.fixes_orbit z using 1
+    apply congrArg R.map
+    exact Subtype.ext rfl
   integer_equivariant n x := by
     convert R.integer_equivariant n ⟨x.1, fun j => (x.2 j).trans hδε⟩ using 1
+    apply congrArg R.map
+    exact Subtype.ext rfl
 
 /-- One full-domain selector and its literal restrictions to every smaller positive tolerance.
 The metric is explicitly required to induce the native quotient topology. -/
-theorem compact_lec_crossing_selector [CompactSpace K] [MetrizableSpace K]
+theorem compact_lec_crossing_selector [CompactSpace K] [TopologicalSpace.MetrizableSpace K]
     (H : LocalEquiconnection K) (m : MetricSpace (Suspension K))
     (hm : (inferInstance : TopologicalSpace (Suspension K)) = m.toUniformSpace.toTopologicalSpace) :
     letI := m.replaceTopology hm
@@ -1150,6 +1155,9 @@ theorem compact_lec_crossing_selector [CompactSpace K] [MetrizableSpace K]
       rw [he]
       exact selector_translate n (liftHistory x) }
   refine ⟨δstar, hδstar, Rstar, fun δ hδ hbound => ?_⟩
-  exact ⟨restrictIntegerSelector vertical δ δstar hδ.le hδstar.le hbound Rstar, fun _ => rfl⟩
+  refine ⟨restrictIntegerSelector (X := Suspension K)
+    (vertical : Suspension K ≃ₜ Suspension K) δ δstar hδ.le hδstar.le hbound Rstar, ?_⟩
+  intro x
+  rfl
 
 end D5.S1.Dynamics.Shadowing.VerticalSuspensionSelector
