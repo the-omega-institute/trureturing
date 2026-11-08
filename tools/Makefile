@@ -133,6 +133,12 @@ clean-all: export HOST_CLEAN_TMP_ROOT := $(value CLEAN_TMP_ROOT)
 clean-all: export HOST_CLEAN_FORCE := $(value FORCE)
 clean-all: export HOST_CLEAN_VERBOSE := $(value VERBOSE)
 
+# CLEAN_TMP_ROOT selects one temporary root instead of the defaults (/tmp and
+# Python's current temporary directory). Paths with spaces are supported; an
+# archived-system location must be selected explicitly. No system-wide search
+# is performed. CLEAN_MIN_AGE_HOURS applies to artifacts and release staging;
+# staging rollback backups, unknown cache bytes and unrecoverable source stay.
+
 settle-batch:
 	@test -n "$${SETTLE_BATCH_REQUESTS}" || { printf '%s\n' 'SETTLE_BATCH_INPUT_INVALID REQUESTS is required' >&2; exit 2; }; cd "$(REPOSITORY)" && dotnet run --project "$(HERE)/StrataLint.Cli/StrataLint.Cli.csproj" --configuration Release -- settle-batch --requests "$${SETTLE_BATCH_REQUESTS}"
 settle-batch: export SETTLE_BATCH_REQUESTS := $(value REQUESTS)

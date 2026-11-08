@@ -9,7 +9,7 @@ import os
 import subprocess
 import time
 
-from worktree_protocol import GitFailure, Refused, git, git_environment, identity, inventory
+from worktree_protocol import GitFailure, Refused, common, git, git_environment, identity, inventory
 
 
 def finished_operations(metadata):
@@ -31,8 +31,53 @@ def qualify(source, path, stack=None, snapshot=None, deadline=None):
         raise Refused("main_worktree")
     if any(path in Path(row["worktree"]).resolve().parents for row in rows):
         raise Refused("nested_worktree")
-    item, metadata = identity(source, path, snapshot=snapshot)
-    return item
+    if os.path.lexists(path / ".git"):
+        item, _ = identity(source, path, snapshot=snapshot)
+        return item
+    return _missing_pointer_identity(source, path, rows, snapshot)[0]
+
+
+def _missing_pointer_identity(source, path, rows, snapshot=None):
+    # Cleanup alone can recover an absent checkout pointer. Require the native
+    # administration entry's backlink, common directory and HEAD to agree;
+    # ordinary reuse/with identity continues to require the checkout pointer.
+    matches = [row for row in rows if Path(row["worktree"]).resolve() == path]
+    if len(matches) != 1 or path.stat().st_dev != path.parent.stat().st_dev:
+        raise Refused("repository_identity")
+    shared = snapshot[1] if snapshot is not None else common(source)
+    administration = shared / "worktrees"
+    entries = []
+    for metadata in administration.iterdir():
+        if metadata.is_symlink() or not metadata.is_dir():
+            continue
+        backlink = metadata / "gitdir"
+        if backlink.is_symlink() or not backlink.is_file():
+            continue
+        if Path(backlink.read_text().rstrip("\n")) == path / ".git":
+            entries.append(metadata)
+    if len(entries) != 1:
+        raise Refused("git_backlink")
+    metadata = entries[0]
+    if administration.resolve() != administration or metadata.resolve() != metadata:
+        raise Refused("repository_identity")
+    for name in ("commondir", "HEAD"):
+        if (metadata / name).is_symlink() or not (metadata / name).is_file():
+            raise Refused("repository_identity")
+    if (metadata / (metadata / "commondir").read_text().strip()).resolve() != shared:
+        raise Refused("repository_identity")
+    head = git(source, "--git-dir=" + str(metadata), "rev-parse", "--verify", "HEAD^{commit}").stdout.strip()
+    if os.fsdecode(head) != matches[0].get("HEAD"):
+        raise Refused("registration_changed")
+    return matches[0], metadata
+
+
+def registered_committer_time(source, item):
+    """Read the qualified registration's commit even when its pointer is absent."""
+    raw = git(source, "show", "-s", "--format=%ct", item["HEAD"]).stdout.strip()
+    try:
+        return int(raw)
+    except ValueError as error:
+        raise Refused("head_timestamp_unknown") from error
 
 
 def _removal_state(source, path):
@@ -44,10 +89,11 @@ def _removal_state(source, path):
     return f"root={os.path.lexists(path)}, pointer={os.path.lexists(path / '.git')}, registered={registered}"
 
 
-def remove_registered(source, path):
+def remove_registered(source, path, timeout=1800):
     """Remove qualified payload first, then let Git remove its pointer/registration.
 
-    The payload and final native operation share the existing 300-second bound.
+    Payload and final native removal share the caller's bound. None disables
+    that bound for explicit FORCE and the unbounded allocation/sweep entrances.
     Payload failure leaves the root .git file available to ordinary retry; a
     final Git failure can have partial native effects, which are only observed.
     """
@@ -56,16 +102,29 @@ def remove_registered(source, path):
     item = qualify(source, path)
     path = path.resolve()
     source = Path(rows[0]["worktree"]).resolve()
-    deadline = time.monotonic() + 300
-    phase = "payload"
+    deadline = time.monotonic() + timeout if timeout is not None else None
+    phase = "pointer-recovery"
 
     def remaining():
+        if deadline is None:
+            return None
         seconds = deadline - time.monotonic()
         if seconds <= 0:
-            raise subprocess.TimeoutExpired("worktree removal " + phase, 300)
+            raise subprocess.TimeoutExpired("worktree removal " + phase, timeout)
         return seconds
 
     try:
+        if not os.path.lexists(path / ".git"):
+            # Git validates even a double-force removal's pointer. Recreate
+            # only this proven missing pointer, without overwriting any entry
+            # or repairing/pruning other registrations.
+            current_rows = inventory(source)
+            qualify(source, path)
+            _, metadata = _missing_pointer_identity(source, path, current_rows)
+            with (path / ".git").open("x") as pointer:
+                pointer.write("gitdir: " + str(metadata) + "\n")
+            identity(source, path)
+        phase = "payload"
         # Bound argv even for a flat checkout. rm's physical traversal unlinks
         # symlinks, including .lake, without following their external targets.
         with os.scandir(path) as entries:
@@ -162,7 +221,7 @@ def remove(options):
                 outcomes.append(dict(path=str(target), outcome="would_remove",
                                      branch=item.get("branch"), head=item.get("HEAD")))
                 continue
-            remove_registered(main, target)
+            remove_registered(main, target, timeout=None if getattr(options, "force", False) else 1800)
             outcomes.append(dict(path=str(target), outcome="removed",
                                  branch=item.get("branch"), head=item.get("HEAD")))
         except Refused as error:

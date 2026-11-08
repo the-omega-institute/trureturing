@@ -7,7 +7,7 @@ from types import SimpleNamespace
 from worktree_protocol import (GitFailure, Refused, clear_matching_stale, git, git_environment,
                                head_committer_time, head_oid, identity, inventory,
                                mark_stale, reuse, stale_head, value)
-from worktree_preservation import remove_registered
+from worktree_preservation import qualify, registered_committer_time, remove_registered
 
 FOUR_HOURS = 4 * 60 * 60
 SIX_HOURS = 6 * 60 * 60
@@ -50,7 +50,7 @@ def _remove_registered(source, path):
         raise Refused("main_worktree")
     if not any(_same(path, row["worktree"]) for row in rows):
         raise Refused("path_not_registered")
-    remove_registered(main, path)
+    remove_registered(main, path, timeout=None)
 
 
 def _make_scaffold(path):
@@ -198,7 +198,8 @@ def sweep(source, dev, force=False, exclude_paths=()):
         if path in excluded or _same(path, main):
             continue
         try:
-            age = _age(path, now)
+            current = qualify(source, path)
+            age = now - registered_committer_time(source, current)
             if age > SIX_HOURS:
                 if force:
                     _remove_registered(source, path)
