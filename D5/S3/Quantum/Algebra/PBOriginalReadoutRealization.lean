@@ -4,7 +4,7 @@
    mirror-E: none(waiver:registration-template-not-established)
    anchors: [mathlib/module/Mathlib.Analysis.CStarAlgebra.PositiveLinearFunctional]
    utility: none
-   digest: Original positive two-tables pass to coherent compressed readings without extending the response. -/
+   digest: Original positive tables yield coherent readings without extending the response. -/
 
 import D5.S3.Quantum.Algebra.PBActualOuterBudget
 import D5.S3.QuantumStates.GNSCompatibleStateExtension
@@ -22,6 +22,8 @@ set_option relaxedAutoImplicit false
 noncomputable section
 open scoped ComplexOrder InnerProductSpace Matrix
 open Complex
+
+/- Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/28078 -/
 
 namespace D5.S3.Quantum.Algebra.PBOriginalReadoutRealization
 open PBActualOuterBudget
@@ -153,17 +155,17 @@ private theorem cyclic_invariant (φ : A →ₚ[ℂ] ℂ) (B : StarSubalgebra �
   rintro w ⟨c, rfl⟩
   apply Submodule.le_topologicalClosure
   refine ⟨b*c, ?_⟩
-  simp [cyclicOrbit, map_mul, ContinuousLinearMap.mul_apply]
+  simp [cyclicOrbit, map_mul, mul_apply_eq_comp]
 
 private theorem orbit_inner (φ : A →ₚ[ℂ] ℂ) (hφ : φ 1 = 1) (a b : A) :
     inner ℂ (φ.gnsStarAlgHom a (cyclicVector φ))
       (φ.gnsStarAlgHom b (cyclicVector φ)) = φ (star a * b) := by
   rw [← ContinuousLinearMap.adjoint_inner_right,
     ← ContinuousLinearMap.star_eq_adjoint, ← map_star]
-  simpa [map_mul, ContinuousLinearMap.mul_apply] using (normalized_gns φ hφ).2.1 (star a*b)
+  simpa [map_mul, mul_apply_eq_comp] using (normalized_gns φ hφ).2.1 (star a*b)
 
 private theorem central_on_cyclic (φ : A →ₚ[ℂ] ℂ) (hφ : φ 1 = 1)
-    (B C : StarSubalgebra ℂ A) (hCB : C ≤ B)
+    (B C : StarSubalgebra ℂ A)
     (χ : C →⋆ₐ[ℂ] ℂ) (hretain : ∀ c : C, φ c = χ c)
     (hcentral : ∀ (c : C) (b : B), (c : A) * b = b * c)
     (c : C) (v : cyclicSpace φ B) :
@@ -176,14 +178,14 @@ private theorem central_on_cyclic (φ : A →ₚ[ℂ] ℂ) (hφ : φ 1 = 1)
     apply (inner_self_eq_zero (𝕜 := ℂ)).mp
     rw [orbit_inner φ hφ, hrφ]
   have hcξ : φ.gnsStarAlgHom (c : A) (cyclicVector φ) = χ c • cyclicVector φ := by
-    simpa [r, map_sub, map_smul, ContinuousLinearMap.sub_apply,
-      ContinuousLinearMap.smul_apply, sub_eq_zero] using hr
+    simpa [r, map_sub, map_smul, sub_apply,
+      smul_apply, sub_eq_zero] using hr
   apply closure_minimal (s := ((cyclicOrbit φ B).range : Set φ.GNS)) ?_
     (isClosed_eq (φ.gnsStarAlgHom (c : A)).continuous (continuous_id.const_smul (χ c))) v.2
   rintro w ⟨b, rfl⟩
   change φ.gnsStarAlgHom (c : A) (φ.gnsStarAlgHom b (cyclicVector φ)) = _
-  rw [← ContinuousLinearMap.mul_apply, ← map_mul, hcentral, map_mul,
-    ContinuousLinearMap.mul_apply, hcξ, map_smul]
+  rw [← mul_apply_eq_comp, ← map_mul, hcentral, map_mul,
+    mul_apply_eq_comp, hcξ, map_smul]
   rfl
 
 instance realCyclic (φ : A →ₚ[ℂ] ℂ) (B : StarSubalgebra ℂ A) :
@@ -250,9 +252,9 @@ private theorem compressed_unit (φ : A →ₚ[ℂ] ℂ) (B : StarSubalgebra ℂ
 
 private theorem compressed_jordan (φ : A →ₚ[ℂ] ℂ) (B : StarSubalgebra ℂ A)
     (i : E →ₗ[ℝ] A) (J : E →ₗ[ℝ] E →ₗ[ℝ] E)
-    (hJ : ∀ a b, i (J a b) = (1/2 : ℝ) • (i a * i b + i b * i a))
+    (hJ : ∀ a b, i (J a b) = (1 / 2 : ℝ) • (i a * i b + i b * i a))
     (a b : E) (ha : a ∈ knownLabels B i) (hb : b ∈ knownLabels B i) :
-    compressedOp φ B i (J a b) = (1/2 : ℝ) •
+    compressedOp φ B i (J a b) = (1 / 2 : ℝ) •
       ((compressedOp φ B i a).comp (compressedOp φ B i b) +
        (compressedOp φ B i b).comp (compressedOp φ B i a)) := by
   ext v
@@ -267,14 +269,12 @@ private theorem compressed_jordan (φ : A →ₚ[ℂ] ℂ) (B : StarSubalgebra �
   simp only [repr_smul, map_add, map_mul, smul_apply, add_apply, mul_apply_eq_comp]
 
 private def vectorRead (φ : A →ₚ[ℂ] ℂ) (i : E →ₗ[ℝ] A) (v : φ.GNS) : E →ₗ[ℝ] ℝ where
-  toFun c := inner ℝ v (φ.gnsStarAlgHom (i c) v)
+  toFun c := (inner ℂ v (φ.gnsStarAlgHom (i c) v)).re
   map_add' c d := by
-    change inner ℝ v (φ.gnsStarAlgHom (i (c+d)) v) = _
-    rw [map_add, map_add, add_apply, inner_add_right]
+    simp only [map_add, add_apply, inner_add_right, Complex.add_re]
   map_smul' r c := by
-    change inner ℝ v (φ.gnsStarAlgHom (i (r • c)) v) = _
-    rw [map_smul, repr_smul, smul_apply]
-    exact real_inner_smul_right _ _ _
+    simp only [map_smul, repr_smul, smul_apply, inner_smul_right_eq_smul, smul_eq_mul]
+    exact RCLike.smul_re (K := ℂ) r (inner ℂ v (φ.gnsStarAlgHom (i c) v))
 
 private theorem vectorRead_nonneg (φ : A →ₚ[ℂ] ℂ) (i : E →ₗ[ℝ] A)
     (v : φ.GNS) (c : E) (hc : 0 ≤ i c) : 0 ≤ vectorRead φ i v c := by
@@ -282,7 +282,7 @@ private theorem vectorRead_nonneg (φ : A →ₚ[ℂ] ℂ) (i : E →ₗ[ℝ] A)
   change 0 ≤ (inner ℂ v (φ.gnsStarAlgHom (i c) v)).re
   rw [hw, map_mul, map_star, ContinuousLinearMap.star_eq_adjoint,
     mul_apply_eq_comp, ContinuousLinearMap.adjoint_inner_right]
-  exact inner_self_nonneg
+  exact inner_self_nonneg (𝕜 := ℂ) (x := φ.gnsStarAlgHom w v)
 
 private theorem compressed_p2 {P : Type*}
     (J : E →ₗ[ℝ] E →ₗ[ℝ] E) (D : E → E → E)
@@ -300,12 +300,12 @@ private theorem compressed_p2 {P : Type*}
     (inner ℂ v (compressedOp φ B i (J a a) v)).re *
     (inner ℂ v (compressedOp φ B i (J b b) v)).re -
     (inner ℂ v (compressedOp φ B i (J a b) v)).re ^ 2
-  simpa only [compressed_inner] using h
+  simpa only [compressed_inner, vectorRead, LinearMap.coe_mk, AddHom.coe_mk] using h
 
 private def compressedReadout {P : Type*}
     (J : E →ₗ[ℝ] E →ₗ[ℝ] E) (u : E) (D : E → E → E)
     (i : E →ₗ[ℝ] A) (hi : ∀ a, IsSelfAdjoint (i a)) (hu : i u = 1)
-    (hJ : ∀ a b, i (J a b) = (1/2 : ℝ) • (i a * i b + i b * i a))
+    (hJ : ∀ a b, i (J a b) = (1 / 2 : ℝ) • (i a * i b + i b * i a))
     (p : P → E →ₗ[ℝ] ℝ) (hexact : ∀ a, 0 ≤ i a ↔ ∀ q, 0 ≤ p q a)
     (hraw : ∀ q a b, (originalTable J D (p q) a b).PosSemidef)
     (φ : A →ₚ[ℂ] ℂ) (B : StarSubalgebra ℂ A) :
@@ -326,7 +326,7 @@ structure OriginalData (P : Type*) where
   isometry : Isometry i
   selfadjoint : ∀ a, IsSelfAdjoint (i a)
   unit : i u = 1
-  jordan : ∀ a b, i (J a b) = (1/2 : ℝ) • (i a * i b + i b * i a)
+  jordan : ∀ a b, i (J a b) = (1 / 2 : ℝ) • (i a * i b + i b * i a)
   preparation : P → E →ₗ[ℝ] ℝ
   exact_cone : ∀ a, 0 ≤ i a ↔ ∀ q, 0 ≤ preparation q a
   raw_p2 : ∀ q a b, (originalTable J D (preparation q) a b).PosSemidef
@@ -353,9 +353,9 @@ structure SectorCertificate (O : OriginalData (A := A) (E := E) P)
   source_xy : O.i (O.J x y) = xy
   source_xd : O.i (O.J x (O.D x y)) = xd
   source_yd : O.i (O.J y (O.D x y)) = yd
-  read_xx : χ xx = (X^2 : ℝ)
-  read_yy : χ yy = (Y^2 : ℝ)
-  read_dd : χ dd = (δ^2 : ℝ)
+  read_xx : χ xx = (X ^ 2 : ℝ)
+  read_yy : χ yy = (Y ^ 2 : ℝ)
+  read_dd : χ dd = (δ ^ 2 : ℝ)
   read_xy : χ xy = 0
   read_xd : χ xd = 0
   read_yd : χ yd = 0
@@ -365,16 +365,16 @@ def OuterBudgets (O : OriginalData (A := A) (E := E) P)
     {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℝ H]
     {L : Submodule ℝ E} (R : Readout (H := H) O.J O.u O.D L)
     (x y : E) (X Y δ : ℝ) : Prop :=
-  ∀ l t : ℝ, t ≠ 0 → t^2 = l^2*X^2+1 →
+  ∀ l t : ℝ, t ≠ 0 → t ^ 2 = l ^ 2*X ^ 2+1 →
     let z := t • O.u + l • x
     let ν := O.D x y - O.J x z
     let ω := O.J x y + O.D x z
     ∃ v : H, inner ℝ v v = 1 ∧
-      reading R v (O.D (y+ν) (z+ω))^2 ≤ X^2/t^2+δ^2 ∧
-      reading R v (O.D (y-ν) (z-ω))^2 ≤ X^2/t^2+δ^2 ∧
+      reading R v (O.D (y+ν) (z+ω))^2 ≤ X ^ 2/t ^ 2+δ ^ 2 ∧
+      reading R v (O.D (y-ν) (z-ω))^2 ≤ X ^ 2/t ^ 2+δ ^ 2 ∧
       reading R v (O.D (y+ν) (z+ω)) - reading R v (O.D (y-ν) (z-ω)) =
-        2*l*X^2*Y/t ∧
-      l^2*X^2*(X^2*Y^2-δ^2) ≤ X^2+δ^2
+        2*l*X ^ 2*Y/t ∧
+      l ^ 2*X ^ 2*(X ^ 2*Y ^ 2-δ ^ 2) ≤ X ^ 2+δ ^ 2
 
 private theorem compressed_scalar (φ : A →ₚ[ℂ] ℂ) (hφ : φ 1 = 1)
     (B C : StarSubalgebra ℂ A) (hCB : C ≤ B)
@@ -385,7 +385,7 @@ private theorem compressed_scalar (φ : A →ₚ[ℂ] ℂ) (hφ : φ 1 = 1)
     compressedOp φ B i a = r • LinearMap.id := by
   ext v
   rw [compressed_known φ B i a (hsource ▸ hCB c.2), hsource,
-    central_on_cyclic φ hφ B C hCB χ hretain hcentral, hread]
+    central_on_cyclic φ hφ B C χ hretain hcentral, hread]
   simp
 
 private theorem jordan_square {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℝ H]
@@ -398,7 +398,7 @@ private theorem jordan_square {H : Type*} [NormedAddCommGroup H] [InnerProductSp
   simp only [LinearMap.smul_apply, LinearMap.id_apply, LinearMap.add_apply,
     LinearMap.comp_apply] at h
   calc
-    _ = (1/2 : ℝ) • (R.op a (R.op a v) + R.op a (R.op a v)) := by module
+    _ = (1 / 2 : ℝ) • (R.op a (R.op a v) + R.op a (R.op a v)) := by module
     _ = r • v := h.symm
 
 private theorem jordan_cross {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℝ H]
@@ -414,9 +414,9 @@ private theorem jordan_cross {H : Type*} [NormedAddCommGroup H] [InnerProductSpa
 private def normalizedFibre {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℝ H]
     {J : E →ₗ[ℝ] E →ₗ[ℝ] E} {u : E} {D : E → E → E} {L : Submodule ℝ E}
     (R : Readout (H := H) J u D L) (x y : E) (X Y δ : ℝ) (hX : X ≠ 0) (hY : Y ≠ 0)
-    (sx : ∀ v, R.op x (R.op x v) = X^2 • v)
-    (sy : ∀ v, R.op y (R.op y v) = Y^2 • v)
-    (sd : ∀ v, R.op (D x y) (R.op (D x y) v) = δ^2 • v)
+    (sx : ∀ v, R.op x (R.op x v) = X ^ 2 • v)
+    (sy : ∀ v, R.op y (R.op y v) = Y ^ 2 • v)
+    (sd : ∀ v, R.op (D x y) (R.op (D x y) v) = δ ^ 2 • v)
     (cxy : ∀ v, R.op x (R.op y v) = -R.op y (R.op x v))
     (cxd : ∀ v, R.op x (R.op (D x y) v) = -R.op (D x y) (R.op x v))
     (cyd : ∀ v, R.op y (R.op (D x y) v) = -R.op (D x y) (R.op y v)) :
@@ -437,9 +437,9 @@ private def normalizedFibre {H : Type*} [NormedAddCommGroup H] [InnerProductSpac
 private theorem zero_axis {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℝ H]
     [Nontrivial H] {J : E →ₗ[ℝ] E →ₗ[ℝ] E} {u : E} {D : E → E → E}
     {L : Submodule ℝ E} (R : Readout (H := H) J u D L) (x y : E) (X Y δ : ℝ)
-    (sxx : R.op (J x x) = X^2 • LinearMap.id)
-    (syy : R.op (J y y) = Y^2 • LinearMap.id)
-    (sd : ∀ v, R.op (D x y) (R.op (D x y) v) = δ^2 • v)
+    (sxx : R.op (J x x) = X ^ 2 • LinearMap.id)
+    (syy : R.op (J y y) = Y ^ 2 • LinearMap.id)
+    (sd : ∀ v, R.op (D x y) (R.op (D x y) v) = δ ^ 2 • v)
     (hzero : X = 0 ∨ Y = 0) : R.op (D x y) = 0 ∧ δ = 0 := by
   have hq (v : H) : inner ℝ v (R.op (D x y) v) = 0 := by
     have hp := R.p2 v x y
@@ -454,7 +454,7 @@ private theorem zero_axis {H : Type*} [NormedAddCommGroup H] [InnerProductSpace 
   obtain ⟨v, hv⟩ := exists_ne (0 : H)
   have he := sd v
   simp [hd] at he
-  have : δ^2 = 0 := (smul_eq_zero.mp he.symm).resolve_right hv
+  have : δ ^ 2 = 0 := (smul_eq_zero.mp he.symm).resolve_right hv
   nlinarith [sq_nonneg δ]
 
 /-- A single ambient state and its coherent readout, with the actual PB conclusion. -/
@@ -499,15 +499,15 @@ theorem original_piecewise (O : OriginalData (A := A) (E := E) P)
     have scalar (a : E) (c : C) (r : ℝ) (hs : O.i a = c) (hr : χ c = r) :
         R.op a = r • LinearMap.id :=
       compressed_scalar φ hφ B C hCB χ hretain hcentral O.i a c r hs hr
-    have sxx := scalar (O.J x x) S.xx (X^2) S.source_xx S.read_xx
-    have syy := scalar (O.J y y) S.yy (Y^2) S.source_yy S.read_yy
-    have sdd := scalar (O.J (O.D x y) (O.D x y)) S.dd (δ^2) S.source_dd S.read_dd
+    have sxx := scalar (O.J x x) S.xx (X ^ 2) S.source_xx S.read_xx
+    have syy := scalar (O.J y y) S.yy (Y ^ 2) S.source_yy S.read_yy
+    have sdd := scalar (O.J (O.D x y) (O.D x y)) S.dd (δ ^ 2) S.source_dd S.read_dd
     have sxy : R.op (O.J x y) = 0 := by simpa using scalar _ S.xy 0 S.source_xy S.read_xy
     have sxd : R.op (O.J x (O.D x y)) = 0 := by simpa using scalar _ S.xd 0 S.source_xd S.read_xd
     have syd : R.op (O.J y (O.D x y)) = 0 := by simpa using scalar _ S.yd 0 S.source_yd S.read_yd
-    have sx := jordan_square R x S.x_mem (X^2) sxx
-    have sy := jordan_square R y S.y_mem (Y^2) syy
-    have sd := jordan_square R (O.D x y) S.d_mem (δ^2) sdd
+    have sx := jordan_square R x S.x_mem (X ^ 2) sxx
+    have sy := jordan_square R y S.y_mem (Y ^ 2) syy
+    have sd := jordan_square R (O.D x y) S.d_mem (δ ^ 2) sdd
     have cxy := jordan_cross R x y S.x_mem S.y_mem sxy
     have cxd := jordan_cross R x (O.D x y) S.x_mem S.d_mem sxd
     have cyd := jordan_cross R y (O.D x y) S.y_mem S.d_mem syd
@@ -518,7 +518,7 @@ theorem original_piecewise (O : OriginalData (A := A) (E := E) P)
       R := R
       coherent := rfl
       unit_vector := ⟨v, hv⟩
-      central := central_on_cyclic φ hφ B C hCB χ hretain hcentral
+      central := central_on_cyclic φ hφ B C χ hretain hcentral
       zero_branch := zero_axis R x y X Y δ sxx syy sd
       nonzero_branch := ?_ }⟩
     intro hX hY

@@ -19,7 +19,26 @@ internal sealed class GNSCompatibleStateExtensionDocument : IScribeDocumentDefin
                 Paragraph(Text("Positivity gives Cauchy-Schwarz in the pre-GNS carrier. Together with the bound on omega(a* a), normalization implies |omega(a)|<=norm(a). On the directed union choose a stage containing a. Compatibility makes its value independent of the stage; a common maximum stage proves additivity and complex linearity. LinearMap.extendOfNorm extends this contractive functional to A. Its values on a* a remain nonnegative by continuity and density. Every positive element of a C-star algebra is a square of this form, so the extension is positive. A continuous positive functional agreeing on the dense union is equal to this extension.")),
                 Paragraph(Text("For the resulting normalized functional f, use the pinned Mathlib PositiveLinearMap.PreGNS quotient, completion GNS, and representation gnsStarAlgHom. The null ideal and bounded left multiplication are supplied by Mathlib.Analysis.CStarAlgebra.GelfandNaimarkSegal; they are not extra axioms. Omega is the completion image of f.toPreGNS(1). Its norm is one, and the completed expectation inner(Omega,pi(a)Omega) equals f(a). Left multiplication sends Omega to the image of f.toPreGNS(a). The quotient map is surjective and the completion image is dense, so this orbit is cyclic. The theorem concerns this exact completed Hilbert space and this exact extension.")),
                 Paragraph(Text("A nonzero equal coefficient on every finite word cannot be square summable. The words consisting of n repetitions of one fixed letter form an injective sequence. Summability on all words would give summability of the same positive constant along this sequence, contradicting infinitude. Hence finite normalized equal-weight history vectors cannot be extended by placing an infinite clock directly in ell2. This is a compiled application of Memlp and the constant-summability boundary, not an additional state assumption."))),
-            DescribeRole.Theorem))));
+            DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("normalized-gns"),
+                DeclarationHandle.Create("D5/S3/QuantumStates/GNSCompatibleStateExtension.normalized_gns"),
+                H("The normalized state in its actual completed cyclic representation"),
+                StatementSource.FromAuthor(Disp(NormalizedStatement())), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For any positive complex-linear functional f on a unital complex C-star algebra with f(one)=one, the original cyclicVector(f) in the completed GNS space has norm one, its expectation of gnsStarAlgHom(f)(a) is f(a) for every ambient a, and its whole ambient orbit is dense. This same supplier is consumed by PBOriginalReadoutRealization.original_piecewise for a specified-character ambient extension and its B-cyclic closed subspace. Its mathematical statement and proof do not require a dense compatible tower."))),
+                DescribeRole.Theorem))));
+
+    private static Formula NormalizedStatement()
+    {
+        var A=F.Id("A"); var f=F.Id("f"); var a=F.Id("a");
+        var xi=Call("cyclicVector",f); var pi=Call("gnsStarAlgHom",f);
+        var result=Conj(Rel(Call("Norm",xi),Eq,D(1)),
+            All("a",A,Rel(Call("Inner",xi,Call("Apply",pi,a,xi)),Eq,Call("Apply",f,a))),
+            Call("DenseOrbit",pi,xi));
+        return All("A",Call("Type"),Instance(Call("CstarAlgebra",A),
+            Instance(Call("PartialOrder",A),Instance(Call("StarOrderedRing",A),
+            All("f",Call("PositiveLinearFunctional",A),
+                Rel(Rel(Call("Apply",f,D(1)),Eq,D(1)),Implies,result))))));
+    }
 
     private static Formula Call(string name, params Formula[] args) =>
         new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. args]);
