@@ -24,7 +24,7 @@ namespace D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233253TriangleStrip
 
 open HardinA233175PairStrip (Seen allowed advance good finish)
 open D5.S3.Observer.Separation.BooleanRankThreeK4 (beta)
-open HardinA233251TriangleStrip (Transfer)
+open HardinA233251TriangleStrip
 
 abbrev Row := Fin 5 → Fin 6
 abbrev Boundary := Fin 4 → Fin 3
@@ -90,6 +90,7 @@ def rank (p : Boundary) : ℤ :=
   if p 0 = p 2 then (if p 1 = p 3 then 3 else 2) else
     (if p 1 = p 3 then 2 else 0)
 
+set_option maxRecDepth 100000 in
 private theorem valid_next : ∀ s, s.1 = true → ∀ c : Row,
     rowLegal c ∧ good s c → Valid (finish s c) (pairs c) := by
   decide +kernel
@@ -114,17 +115,20 @@ def firstRank : ℤ :=
   ∑ c : Row, if c 0 = 0 ∧ rowLegal c ∧ good (false, false) c ∧
     (finish (false, false) c).2 = true then rank (pairs c) else 0
 
+set_option maxRecDepth 100000 in
 private theorem row_counts : ∀ s p, Valid s p →
     classCount s p true = (if s.2 then 320 + 64 * rank p else 240) ∧
     classCount s p false = (if s.2 then 0 else 32) ∧
     rankCount s p = (if s.2 then 512 + 160 * rank p else 448) := by
   decide +kernel
 
+set_option maxRecDepth 100000 in
 private theorem initial_valid : ∀ c : Row,
     c 0 = 0 ∧ rowLegal c ∧ good (false, false) c →
       Valid (finish (false, false) c) (pairs c) := by
   decide +kernel
 
+set_option maxRecDepth 100000 in
 private theorem initial_counts : firstCount true = 28 ∧ firstCount false = 8 ∧
     firstRank = 44 := by
   decide +kernel
@@ -151,7 +155,9 @@ private theorem v_eq_w (n : ℕ) (s : Seen) (p : Boundary) (h : Valid s p) :
   induction n generalizing s p with
   | zero => simp [Transfer.v, eval, w]
   | succ n ih =>
-    rw [Transfer.v, Transfer.step]
+    rw [v, Transfer.v, Transfer.step]
+    change (∑ c : Row, if rowLegal c ∧ compatible p c ∧ good s c then
+      v n (finish s c) (pairs c) else 0) = _
     have hs : ∀ c : Row, (if rowLegal c ∧ compatible p c ∧ good s c then
         v n (finish s c) (pairs c) else 0) =
         (if rowLegal c ∧ compatible p c ∧ good s c ∧ (finish s c).2 = true
@@ -177,7 +183,9 @@ private theorem v_eq_w (n : ℕ) (s : Seen) (p : Boundary) (h : Valid s p) :
 
 private theorem a_eq_w (n : ℕ) :
     (a (n + 1) : ℤ) = 8 * w n 0 + 28 * w n 1 + 44 * w n 2 := by
-  rw [counting_bridge, Transfer.total]
+  rw [counting_bridge, total, Transfer.total]
+  change (∑ c : Row, if c 0 = 0 ∧ rowLegal c ∧ good (false, false) c then
+    v n (finish (false, false) c) (pairs c) else 0) = _
   have hs : ∀ c : Row, (if c 0 = 0 ∧ rowLegal c ∧ good (false, false) c then
       v n (finish (false, false) c) (pairs c) else 0) =
       (if c 0 = 0 ∧ rowLegal c ∧ good (false, false) c ∧

@@ -131,6 +131,16 @@ private def Legal (R : Row k → Prop) (E : Row k → Row k → Prop)
 private instance {n : ℕ} (s : Seen) (f : Fin n → Row k) : Decidable (normal s f) :=
   inferInstanceAs (Decidable (∀ _ _, (_ → _) ∧ (_ → _)))
 
+omit [NeZero k] in
+private instance instDecidableGood (s : Seen) (c : Row k) : Decidable (good s c) := by
+  induction k generalizing s with
+  | zero => exact isTrue trivial
+  | succ k ih =>
+    change Decidable (allowed s (c 0) ∧ good (advance s (c 0)) (Fin.tail c))
+    haveI := ih (advance s (c 0)) (Fin.tail c)
+    infer_instance
+
+
 variable (R : Row k → Prop) (P : Row k → B) (C : B → Row k → Prop)
 variable [DecidablePred R] [DecidableRel C]
 variable (E : Row k → Row k → Prop) [DecidableRel E]
@@ -144,14 +154,6 @@ private def TailGood : {n : ℕ} → Seen → (B) → (Fin n → Row k) → Prop
   | _ + 1, s, p, f => R (f 0) ∧ C p (f 0) ∧ good s (f 0) ∧
       TailGood (finish s (f 0)) (P (f 0)) (Fin.tail f)
 
-omit [NeZero k] in
-private instance instDecidableGood (s : Seen) (c : Row k) : Decidable (good s c) := by
-  induction k generalizing s with
-  | zero => exact isTrue trivial
-  | succ k ih =>
-    change Decidable (allowed s (c 0) ∧ good (advance s (c 0)) (Fin.tail c))
-    haveI := ih (advance s (c 0)) (Fin.tail c)
-    infer_instance
 
 private instance instDecidableTailGood {n : ℕ} (s : Seen) (p : B) (f : Fin n → Row k) :
     Decidable (TailGood R P C s p f) := by
@@ -163,13 +165,14 @@ private instance instDecidableTailGood {n : ℕ} (s : Seen) (p : B) (f : Fin n �
     haveI := ih (finish s (f 0)) (P (f 0)) (Fin.tail f)
     infer_instance
 
+include edge in
 private theorem tail_iff {n : ℕ} (s : Seen) (p : B) (f : Fin n → Row k) :
     TailGood R P C s p f ↔ normal s f ∧
       (∀ i, R (f i)) ∧
       (∀ (i : Fin n) (h : i.val + 1 < n), E (f i) (f ⟨i.val + 1, h⟩)) ∧
       (∀ (h : 0 < n), C p (f ⟨0, h⟩)) := by
   induction n generalizing s p with
-  | zero => simp [TailGood R P C, normal]
+  | zero => simp [TailGood, normal]
   | succ n ih =>
     have hn : normal s f ↔ good s (f 0) ∧ normal (finish s (f 0)) (Fin.tail f) := by
       simpa only [Fin.cons_self_tail] using normal_cons s (f 0) (Fin.tail f)
@@ -233,6 +236,7 @@ def total (w : Seen → (B) → ℤ) : ℤ :=
   ∑ c : Row k, if c 0 = 0 ∧ R c ∧ good (false, false) c then
     w (finish (false, false) c) (P c) else 0
 
+include edge in
 theorem counting_bridge (n : ℕ) :
     ((Finset.univ.filter (fun A : Fin (n + 1) × Fin k → Fin 6 =>
       (∃ i : Fin (n + 1), i.val = 0 ∧ A (i, 0) = 0) ∧
@@ -409,7 +413,9 @@ private theorem v_eq_w (n : ℕ) (s : Seen) (p : Fin 3 × Fin 3) (h : Valid s p)
   induction n generalizing s p with
   | zero => rfl
   | succ n ih =>
-    rw [Transfer.v, Transfer.step]
+    rw [v, Transfer.v, Transfer.step]
+    change (∑ c : Row, if rowLegal c ∧ compatible p c ∧ good s c then
+      v n (finish s c) (pairs c) else 0) = _
     have hs : ∀ c : Row, (if rowLegal c ∧ compatible p c ∧ good s c then
         v n (finish s c) (pairs c) else 0) =
         (if rowLegal c ∧ compatible p c ∧ good s c ∧ (finish s c).2 = true
@@ -433,7 +439,9 @@ private theorem v_eq_w (n : ℕ) (s : Seen) (p : Fin 3 × Fin 3) (h : Valid s p)
     cases hb : s.2 <;> simp [hb, w] <;> ring
 
 private theorem a_eq_w (n : ℕ) : (a (n + 1) : ℤ) = 2 * w n false + w n true := by
-  rw [counting_bridge, total]
+  rw [counting_bridge, total, Transfer.total]
+  change (∑ c : Row, if c 0 = 0 ∧ rowLegal c ∧ good (false, false) c then
+    v n (finish (false, false) c) (pairs c) else 0) = _
   have hs : ∀ c : Row, (if c 0 = 0 ∧ rowLegal c ∧ good (false, false) c then
       v n (finish (false, false) c) (pairs c) else 0) =
       (if c 0 = 0 ∧ rowLegal c ∧ good (false, false) c ∧
