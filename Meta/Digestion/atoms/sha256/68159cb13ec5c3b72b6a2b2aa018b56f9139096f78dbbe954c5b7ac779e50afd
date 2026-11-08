@@ -1,0 +1,32 @@
+**定理 54.1（不要求原单位轴的原响应负平方）。** 在 53.1 下，$T_a$ 返回 $V_a$。对任意真正原 $b\in V_a$、实 $t,\alpha,\beta$，令 $c=T_a(b)$，则
+
+$$
+\begin{gathered}
+a\circ c=b\circ c=0,\qquad c^2=R\circ b^2,\\
+T_a(tb)=tT_a(b),\qquad T_a(c)=-R\circ b,\\
+T_a(\alpha b+\beta c)=\alpha c-\beta R\circ b.
+\end{gathered}
+\tag{54.1}
+$$
+
+这里不要求 $b^2$ 中央、有限谱或可逆。
+
+证明。第一行准确复用原正交面积式 (16.3)，因而 $c\in V_a$。取 (53.2) 中只含 $R$ 的中央商。$\lambda=0$ 时，24.1 对实际首标签 $a$ 消去所有待比较的响应像，同时 $q_\chi(c)=q_\chi(R)=0$，全部所需等式均成立。
+
+若 $\lambda>0$，置 $r=\sqrt\lambda$、$B=q_\chi(b)$、$J=q_\chi(c)/r$。27.1 对同一个实际 $a$ 直接给
+
+$$
+q_\chi D(a,tb)=tq_\chi(c),\qquad
+q_\chi D(a,c)=-\lambda B.
+\tag{54.2}
+$$
+
+26.2 的良定义像映射 $F_a$ 满足 $F_aB=J$、$F_aJ=-B$ 及全部圆式，27.1 给全部实径向。对实数 $v,w$，若 $\rho=\sqrt{v^2+w^2}>0$，取 $\cos\theta=v/\rho,\sin\theta=w/\rho$，故
+
+$$
+F_a(vB+wJ)=vJ-wB.
+\tag{54.3}
+$$
+
+$\rho=0$ 时由零行成立。实际原 $\alpha b+\beta c$ 属于 $V_a$，其像是 $\alpha B+\beta rJ$；用 $v=\alpha,w=\beta r$，得到最后一式的像。每份像调用都保留同一个实际首标签 $a$，仅使用 26.2 已付的横向第二槽纤维。最后由中央商联合分离，将这些像等式带回原 $E$。没有用未知响应的极限、第一槽代表替换或一般商下降。∎
+

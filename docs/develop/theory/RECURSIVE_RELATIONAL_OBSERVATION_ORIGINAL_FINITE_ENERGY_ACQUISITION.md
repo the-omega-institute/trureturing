@@ -2086,3 +2086,932 @@ used.
 [SW]: https://www.jirka.org/ra/html/sec_stoneweier.html
 
 ## 追加锚（本行以下为增补区）
+
+
+## 15. Represented first-only compilation and finite scalar consumers
+
+**Definition 15.1 (inherited record and new finite syntax).** Retain
+Definitions 9.1–9.2, Theorem 14.1, Definition 14.2 and all the source,
+reference, higher-jet and retained-record premises in them. Retain
+[EF, Definitions 15.1 and 16.1]. A request consists of a finite legal
+old mixed-packet menu, finitely many of its encoded products in
+(9.3), original four-label word pairs and positive rational errors.
+It may also request the finite inverse at rational resolution
+$\epsilon>0$ and mass allowance $0<\delta<1$, together with the
+bounded-coordinate coefficient consumers of Definition 14.2.
+
+The new supplied source relations are only compact first-type leaves
+$\phi(b_t)b_t$ and pure trees with binary operation $\Gamma_t$.
+The finite output calculus is represented scalar computation and
+finite rational polynomials in their encodings. It retains (9.1)'s
+full principal matrix. In particular an unencoded scalar product is
+not a new bare-tree node. The compiler of [EF, Theorem 16.3]
+produces the finite lists and terminal maps, rather than assuming a
+language closed under arbitrary smooth operations at no cost.
+All numerical computations use the reference coefficients $(1,1)$
+on a certified bracket for $\tau=a^2d/\eta$, never numerical
+original parameters or a hidden point.
+
+**Theorem 15.2 (constructed scalar and derivative suppliers for the
+first-only menu).** A fixed finite request has the following finite
+constructions on every certified common legal bracket $J=[L,U]$.
+The auxiliary first-type packets in [EF, Theorem 16.2] are legal
+throughout $J$. All terminal maps $F_c$ of [EF, (16.4)] and every
+finite requested partial derivative have rational error evaluation,
+finite compact range bounds and computable compact moduli. On a
+finite rational compact box union in $\Omega$, the needed pure-tree
+jets, spatial and time bounds are supplied by the existing JET
+construction. In particular the ranges, $L_H$ and decoder precision
+in [EF, (17.3)–(17.4)] are generated from these services.
+
+For a compiled pure tree of height $h$, a safe invocation for spatial
+derivatives through order $j$ uses $b_t$ jets through
+$R=h+j+1$ and the additional spatial bound at order $R+1$,
+exactly as in Theorem 10.1. For compilation of an old tree of height
+$H$, one may consequently use $R\le H+j+2$ and the spatial
+bound through $H+j+3$. Terminal scalar derivatives require the
+base scalar functions only through order $H+j$, apart from a
+further order whenever their modulus is requested. All these are
+finite, explicitly charged orders, without a derivative oracle.
+
+*Proof.* The old cutoff recipe specifies rational transition
+endpoints strictly inside $I_2$. They give the compact scalar
+support enclosure needed in [EF, Theorem 16.2]. Enumerating
+rational nested intervals around that enclosure finds its auxiliary
+packet in finite rational work. Its outer closure is inside the
+old $I_2$, so (9.6) already implies its legality on $J$.
+The derivative bounds and error evaluations (9.4)–(9.5) apply to
+both cutoff recipes at each finitely requested order.
+
+For $R_\psi(x)=\psi(x)/x$ in [EF, (16.2)], choose a rational
+$\Delta>0$ with $\operatorname{supp}\psi$ disjoint from
+$[-2\Delta,2\Delta]$. On $[-\Delta,\Delta]$ all its derivatives
+are exactly zero. On $|x|\ge\Delta$, the derivative formulas for
+$1/x$ have the bounds $j!\Delta^{-j-1}$. Leibniz gives finite
+rational bounds for derivatives of $R_\psi$ on any compact or on
+all of $\mathbb R$. Evaluating uncertain arguments uses these
+bounds and one extra derivative for a modulus; it does not decide
+whether a real argument equals a transition endpoint. For the
+function $D$ in [EF, (16.3)], the zero branch is flat and the
+nonzero branch has $1+y>1/2$. Cutoff derivative bounds and
+$j!2^{j+1}$ for reciprocal derivatives give the same construction.
+Near the branch join one can use its zero value and the generated
+derivative modulus, avoiding a singular interval inversion.
+
+Symbolically differentiate the finite terminal formulas [EF,
+(16.6)], using product and chain rules on scalar expressions.
+Their only reciprocal constituents are these protected ones;
+$\iota$ has denominator $\sqrt{1+x^2}\ge1$. Thus interval
+arithmetic and the explicit scalar derivative recurrences produce
+finite bounds on any declared compact input box. Rational-center
+evaluation to arbitrary error, with one more derivative bound for
+transport, gives an effective uniform modulus. At an old parent,
+terminal derivatives through order $j$ require child derivatives
+through at most $j+1$. Starting from its leaf formula proves the
+$H+j$ assertion by induction. This is finite differentiated syntax,
+not a new numerical estimate for an unspecified smooth function.
+
+Every pure tree is an allowed tree in Theorem 10.1. Its proof
+constructs unencoded values and derivatives before encoding, so
+it also supplies their local range bounds. Its safe jet order is
+$h+j+1$; [EF, (16.5)] gives $h\le H+1$, and [JET, Theorems
+15.2 and 16.1] supply that order and the extra spatial bound.
+These calls retain their higher Green bounds, graph recurrence,
+global names, weak extraction and positive compact lower bound
+for $h$; none is replaced by formal differentiation of numerical
+steps. The scalar map in [EF, (17.3)] uses a generated rational
+$r<1$. Its inverse-encoding denominator is at least
+$\sqrt{1-r^2}>0$ and its Lipschitz bound is generated there.
+Finite scalar differentiation bounds on $[-B^+,B^+]^N$ therefore
+give the stated $L_H$ and any requested rational evaluation error.
+This completes the suppliers required for the inverse transfer.
+$\square$
+
+**Theorem 15.3 (bounded finite first-only polynomial supplier).**
+Fix a finite legal old menu and a finite rational quotient compact
+$K\Subset Q_+$, evaluated on its section in $\Omega$. On a
+certified common legal bracket $J$, each requested product with a
+declared finite number $s$ of factors
+
+$$
+k_t(q)=\prod_{j=1}^s\iota(c_{j,t}(q))
+\tag{15.1}
+$$
+
+has, for each rational $e>0$, a finite pure first-type feature
+vector $y_t=(\iota(C_{1,t}),\ldots,\iota(C_{N,t}))$ and an
+explicit finite rational polynomial
+
+$$
+P(y)=\sum_{l=1}^{M}a_l\prod_{i=1}^Ny_i^{n_{li}},\qquad
+\sup_{[-1,1]^N}|P|\le1,\qquad
+\sup_{K\times J}|k_t-P(y_t)|<e.
+\tag{15.2}
+$$
+
+The empty product is represented exactly by $P=1$. All degrees,
+coefficients, coefficient bit lengths and approximation errors are
+constructed. This is a value approximation after exact compilation;
+no energy operation differentiates it.
+
+*Proof.* Compile the finitely many $c_j$ by [EF, Theorem 16.3]
+and use Theorem 15.2 to bound their pure inputs on $K\times J$.
+Construct the inverse encoding and component maps $H_j$ of [EF,
+(17.3)] on the whole cube. They satisfy
+$H_j(y_t(q))=\iota(c_{j,t}(q))$ on this compact and are globally
+bounded by one. Their generated Lipschitz constants give the
+represented cube map
+
+$$
+H_k(y)=\prod_{j=1}^sH_j(y),\qquad |H_k|\le1,\qquad
+\operatorname{Lip}_\infty(H_k)\le L_k:=\sum_{j=1}^sL_{H_j}.
+\tag{15.3}
+$$
+
+The last inequality is the finite product estimate (10.2), so it
+includes repeated factors. At each tensor grid point $2k/n-\mathbf1$
+evaluate $H_k$ to rational error at most $e_0>0$ and clip to
+$[-1,1]$, obtaining rational $h_k$. Form
+
+$$
+P(y)=\sum_{k\in\{0,\ldots,n\}^N}h_k
+ \prod_{i=1}^N\binom n{k_i}
+ \left(\frac{1+y_i}{2}\right)^{k_i}
+ \left(\frac{1-y_i}{2}\right)^{n-k_i}.
+\tag{15.4}
+$$
+
+This is the same classical tensor Bernstein supplier as (14.13).
+Its weights are nonnegative and sum to one, giving the global
+bound. The binomial variance argument (14.14), now with dimension
+$N$, gives the explicit error
+
+$$
+\|P-H_k\|_{\infty,[-1,1]^N}
+ \le e_0+L_kN/\sqrt n.
+\tag{15.5}
+$$
+
+Choose rational $e_0<e/2$ and an integer square $n$ with
+$L_kN/\sqrt n<e/2$. The strict rational comparison terminates.
+Every grid evaluation uses the protected finite scalar supplier
+of Theorem 15.2. Expanding (15.4) produces exact rational monomial
+coefficients. Degree in each coordinate is at most $n$, total
+degree at most $Nn$, and there are at most $(n+1)^N$ distinct
+monomials after collection, since each exponent lies between zero
+and $n$. There are precisely $(n+1)^N$ grid values before
+collection. The full rational expansion, including any zero
+coefficients, permits computation of all coefficient sizes and
+$A_P=\sum_l|a_l|$; it is not assigned unit cost. The global
+bound comes from the unexpanded positive weights, regardless of
+large expanded coefficients. Substitution of the exact compact
+identity (15.3) proves (15.2). $\square$
+
+**Theorem 15.4 (simultaneous inverse and bounded-coordinate
+polynomials with first-only inputs).** Under Theorem 14.1, for
+rational inverse resolution $\epsilon>0$, mass allowance
+$0<\delta<1$ and any finite family from Definition 14.2, the
+finite inverse can use only finitely many pure first-type features.
+It retains [EF, Theorem 17.1]'s generated positive separation and
+point-input tolerance. For each requested bounded coordinate or
+represented $F$, and each rational $e>0$, its finite menu can
+also be required to have a rational polynomial $P_F$ such that
+
+$$
+\sup_{[-1,1]^N}|P_F|\le1,\qquad
+\sup_{q\in K,t\in J}|F(q)-P_F(y_t(q))|<e.
+\tag{15.6}
+$$
+
+It may be combined with the finitely many polynomials of Theorem
+15.3 on the same $K,J$ and a concatenated pure first-type menu.
+All claims are deterministic on the single event $\mathcal G_\tau$
+of (14.2); a coefficient request still does not reveal point features.
+
+*Proof.* Choose a rational enclosing compact box in $Q_+$ for the
+certified regular compact. Use the supplied finite family moduli
+to choose a positive rational resolution $r\le\epsilon$ at which
+each $F$ oscillates by at most $e/4$ on that box. For the three
+coordinates (14.3) their stated Lipschitz constants supply this
+choice. Keep this $K$ and its frame certificates fixed. Reuse the
+finite separation and prototype construction in the proof of [EF, Theorem
+15.2] at resolution $r$ on this same compact, and transfer its
+finite menu by [EF, Theorem 17.1]. The regular mass certificate
+is retained. Narrow the bracket and refine the spatial cover to produce prototypes $q_j$ and rational first-feature
+approximants $a_j$ with (15.9) of [EF], now for $y_t$, separation
+$\sigma_1$ and $h_1=\sigma_1/16$. The constructed pure-tree
+spatial/time bounds of Theorem 15.2 certify this cover. Adding
+more pure coordinates before this construction is harmless;
+the transferred gap still holds in the maximum norm.
+
+Use the represented scalar formula (14.10) with these prototypes,
+$h_1$, and rational $f_j\in[-1,1]$ approximating $F(q_j)$ to
+error less than $e/4$. Its whole-cube bound is one and its
+Lipschitz constant is at most $2n_p/h_1$. At an actual compact
+feature image there is a covering prototype of weight at least
+$h_1$. Every prototype of positive weight is within feature
+distance less than $2h_1+h_1/4<\sigma_1$ from that image.
+The cross-time separation in [EF, (17.1)] puts its point within
+$r$. Thus the weighted average has error less than $e/2$
+from $F(q)$, uniformly on $K\times J$. This is precisely the
+finite interpolation implication used in (14.10)–(14.12), with
+a generated first-only separation in place of the old one.
+
+Apply the existing rational Bernstein formula (14.13) to this
+scalar map with dimension $N$, choosing square degree $n$ such
+that $(2n_p/h_1)N/\sqrt n<e/4$. Its rational grid values are
+exact once the $f_j,a_j,h_1$ are rational. The polynomial then
+has compact error less than $3e/4<e$ and global bound one,
+as in (14.14). All degrees, expansions and amplification constants
+are finite and computed. This reuses the coordinate polynomial
+supplier of Theorem 14.2, rather than claiming a new qualitative
+density theorem. Theorem 15.3 supplies old product polynomials
+on the same compact. Enlarging the feature list is just adjoining
+unused variables to each earlier polynomial; subsequent bracket
+narrowing preserves all its uniform certificates. The common event
+is Theorem 14.1's, since all these implications are deterministic
+for every accepted finite candidate. $\square$
+
+## 16. Original-word errors, one event and the complete finite bill
+
+**Theorem 16.1 (acquired original-word transfer through first-only
+menus).** Retain the request and all premises of Definition 15.1,
+and Theorem 14.1's common event and paid services.
+For any fixed original finite positive $a,\eta,d$, any finite such
+request has, on $\mathcal G_\tau$, a sourcewise finite construction
+of the following coherent unit: the first-only finite inverse when
+requested, and enclosures for every original four-label word
+coefficient of its declared old encoded products and bounded
+coordinates. All returned enclosures have radius smaller than
+their requested positive rational tolerances.
+
+Concretely take rational $0<\beta\le1$ no larger than all requested
+coefficient tolerances, and freeze a certified $0<c_*\le c$.
+Choose rational
+
+$$
+0<\kappa<\min(\delta,\beta c_*/16),\qquad \nu(K)>1-\kappa.
+\tag{16.1}
+$$
+
+When no inverse mass tolerance is requested, any fixed rational
+$0<\delta<1$ can be used internally. Apply Theorems 15.3–15.4
+with compact errors $e_{\rm app}\le\beta/4$ to obtain, for each
+target $k$, a globally bounded polynomial in pure encodings
+$P_k=\sum_la_l k_l$, where $k_l=\prod_i\iota(C_i)^{n_{li}}$.
+Acquire each monomial for the same actual word pair by Theorem
+10.2. On its common raw computational support $A\Subset\Omega$
+the evaluated radii retain the full formula
+
+$$
+\begin{gathered}
+R_l(u,v)=r_u+r_v+r_ur_v+B_{uv}|A|e_{l,A}+a_l^{\rm arith}(u,v),\\
+r_u=\sum_w|b_{uw}|r_w,\qquad
+\sum_w|b_{uw}|\le2^{n(u)}.
+\end{gathered}
+\tag{16.2}
+$$
+
+Here $b_{uw}$ are the exact marked-word expansion coefficients
+of Theorem 10.2, $n(u)$ counts its $0,1$ labels, and $r_w$ are
+its global word-vector residuals. The polynomial $a_l$ and the
+arithmetic allowance $a_l^{\rm arith}$ are different quantities.
+Return center $\widehat Q_k=\sum_la_l\widehat Q_{k_l}$ and
+radius
+
+$$
+\mathcal R_k(u,v)=e_{\rm app}+2\kappa/c_*
+          +\sum_l|a_l|R_l(u,v)+a_{\rm sum}(u,v).
+\tag{16.3}
+$$
+
+The final sum has explicit rational arithmetic allowance
+$a_{\rm sum}$, zero if exact rational sums are used. Require
+strict tests
+
+$$
+\sum_l|a_l|R_l(u,v)<\beta/4,\qquad
+ a_{\rm sum}(u,v)<\beta/8.
+\tag{16.4}
+$$
+
+Then $\mathcal R_k<3\beta/4<\beta$. This includes scalar
+approximation and evaluation errors, omitted reference mass,
+original word tails, local pure-tree errors, both coefficient
+amplifications and arithmetic. The same actual joint source, law
+and word pair occur in every term.
+
+*Proof.* The positive marker interval and the convergent brackets
+are supplied on $\mathcal G_\tau$ by Theorem 14.1. The high-mass
+regular compact of [EF, Theorem 15.2] can use the smaller target
+$\kappa$ in (16.1). Add all finitely requested old packets and
+narrow the bracket until each is certified legal. Every one was
+legal at the true time, so Theorem 9.3 gives finite strict slack.
+The first-only replacements then add only legal auxiliary packets
+whose outer closures lie inside those old intervals. Theorems
+15.2–15.4 produce one common finite menu, the inverse if requested,
+and the polynomials, all uniformly on a common bracket. This
+construction uses the original marked record only through its
+already certified intervals and finite tests.
+
+For a requested old product set $k(p)=k_\tau(q_*(p))$ in the
+original source representation; for a coordinate set
+$k(p)=F(q_*(p))$. Both are bounded in absolute value by one.
+The polynomial is also bounded by one on the entire source,
+since every actual encoded first-tree value lies in $[-1,1]$.
+Theorem 14.2's actual word estimate (14.15) gives, for every
+original four-label word pair,
+
+$$
+\|v_u\|_m,\|v_v\|_m\le1,\qquad
+0\le v_u,v_v\le c_*^{-1/2}.
+\tag{16.5}
+$$
+
+The exact full-domain source transport sends the reference compact
+to $q_*^{-1}(K)$ and its complement has actual mass less than
+$\kappa$. On this compact the error is at most $e_{\rm app}$;
+on its complement it is at most two. Cauchy–Schwarz inside and
+the actual pointwise word bounds outside therefore give
+
+$$
+|Q_k(u,v)-Q_{P_k}(u,v)|
+ \le e_{\rm app}\|v_u\|_m\|v_v\|_m
+                  +2c_*^{-1}\nu(K^c)
+ \le e_{\rm app}+2\kappa/c_*.
+\tag{16.6}
+$$
+
+This uses the same actual vectors, rather than separately optimal
+bounds from unrelated laws. It is the paid omitted-mass bridge
+of (14.16); a bare unit-vector norm bound would not pay it.
+It also avoids an assumption of uniform approximation over the
+noncompact whole source or a global supremum of unencoded trees.
+
+Every monomial is an allowed encoded product from Definition 9.1
+with only first-type leaves. Its source interpretation follows
+from the exact compiler and the original transport in Theorem
+10.2, so $Q_{P_k}=\sum_la_lQ_{k_l}$ for the same words.
+Theorem 10.2 gives (16.2) and the enclosure for each monomial
+on the same event. Its global residuals pay both source-neighborhood
+and exterior word tails, independently of the geometric compact.
+The raw reference support $A$ need not lie inside the reference
+quotient pullback of $K$: these are distinct approximations with
+distinct paid errors.
+The triangle inequality gives (16.3). For example, with the
+computed $A_{P_k}=\sum_l|a_l|$, requiring every monomial radius
+less than $\beta/[4(1+A_{P_k})]$ is sufficient for (16.4).
+Original $0,1$ expansion amplification remains in $r_u,r_v$,
+and polynomial amplification remains outside $R_l$. Nothing is
+charged only after a cancellation has been presumed. Equations
+(16.1) and (16.4) give the displayed strict final bound.
+
+For finite stopping, first freeze $c_*,\beta,\kappa$. The existing
+compact/frame/separation search has a finite successful tuple with
+strict margins. Compilation adds a finite number of rational packet
+choices, finite trees and finite scalar formulas. On the accepted
+compact/bracket their finite bounds are produced by Theorem 15.2.
+The positive approximation targets in Theorems 15.3–15.4 give a
+finite degree and finitely many scalar evaluations. Freeze those
+polynomials after certification. There is no circular request for
+word accuracy before their amplification constants are known.
+The finitely many now fixed pure monomials are exactly within
+Theorem 10.2, which makes their radii arbitrarily small under
+SRO's original cofinal schedule. Further bracket refinement does
+not spoil any earlier uniform certificate. Exact rational summation
+can set $a_{\rm sum}=0$.
+
+Every candidate strict test is run to a finite precision and returns
+inconclusive when unresolved; fair interleaving revisits candidates
+without waiting indefinitely on equality. The successful finite
+choices have strict slack, so they are recognized at one finite
+stage. Only finitely many reached finite tests precede that stage.
+All deterministic implications hold for every passing candidate on
+(14.2), including adaptively chosen compacts and polynomials.
+Consequently no further statistical event, independence assumption
+or confidence loss is introduced. This proves the claimed finite
+stopping and original-word errors. $\square$
+
+**Definition 16.2 (paid resource correspondence and unresolved
+return interface).** The reference suppliers in Theorems 15.2–16.1
+are the existing full-endpoint, resolvent, global-name, higher-jet
+and weak-extraction services. The source sampling supplier remains
+[SRO, Definition 21.1 and Theorems 21.2–22.1], with the original
+prebudgeted schedules and event (14.2). In particular the identity
+used for marker counters remains exactly
+
+$$
+q_{\rm stat}(3v)=c\,p(v),
+\qquad p(v)=\langle Pb,F_v\rangle_m,
+\tag{16.7}
+$$
+
+with $q_{\rm stat}$ only the stationary mathematical comparison
+law. Unmarked transient frequencies are not substituted for it.
+The actual source remains the undisturbed $e$-start, first read
+$2d$ and subsequent gaps $d$, four original labels, actual
+calibration, permitted null repairs and fresh conditional noise.
+No source restart, extra sensor or hidden point value enters the
+compiler, inverse or coefficient estimates.
+
+The finite bill includes every old cost in Definition 14.3 and,
+in addition, the explicit auxiliary packets and legality tests,
+the expanded tree sizes bounded in [EF, (16.5)], all terminal
+formula sizes and symbolic partial differentiations, the jet and
+extra spatial orders in Theorem 15.2, scalar denominator/range
+certificates and every scalar evaluation precision and modulus,
+raw feature bounds, inverse-encoding margins, $L_H$, decoder
+precision and prototype covers. It includes each Bernstein degree,
+all $(n+1)^N$ grid evaluations, rational expansions, coefficient
+numerator/denominator bit lengths and amplification constants,
+all local symbol errors, global word residuals and arithmetic.
+All unsuccessful finite legality, frame, mass, separation,
+polynomial and coefficient tests are charged too. Counts and
+sizes here describe actual finite syntax, not unit-cost scalar
+or real-number operations. The inequalities give no cost advantage
+for removing a leaf template.
+
+The physical record bill can retain $T=3$: $N+3$ labels through
+$(N+4)d$ and all $4^4=256$ original counters per such packet.
+Startup blocks, repeated original prefixes, rescans, counter bit
+lengths, reference defect certification, retained labels and working
+bits remain charged. When computation proceeds while the stream
+continues, buffering, every intervening label and completion latency
+remain under [SRO, Definition 21.1]'s paid premises. All later
+computation uses retained initial data, without calling a later
+suffix an initial prefix. Sourcewise finiteness on the common
+event gives no source-uniform or expected resource bound, installed
+throughput, fixed memory limit or free retention service.
+
+The full complex $A=\rho C$ endpoint, distinct $C=0$ selector,
+normalized $h$, full original operator and form domains and nonpolar
+source trace persist under the same reference transport. No physical
+units or numerical original $a,\eta,d$ have been obtained. The
+completed information equality is [EF, Theorem 16.4], and the
+retained seed/operation account is [EF, Definition 16.5]. The new
+source-specific deduction is the finite compiler consumed by the
+existing inverse and word estimates, not a new general chain rule,
+quotient classification, rank theorem or qualitative density result.
+The literature scope is that definition's `repo-derived` composite,
+with Bernstein and finite interpolation reused from §14.
+
+The decoder still requires legitimately supplied features at its
+point. A finite list of original-word insertion coefficients does
+not provide such features at an actual return. This static supplier
+change supplies no new ready or throughput service, no producer
+assimilating every label between certified record endpoint $S$ and
+actual return $C$, and no all-history predictive state. Those
+interfaces and the full mutual-recovery goal remain unresolved.
+This statement does not count the previously settled stale-prefix
+or fixed-bit obstructions as new results. All results here remain
+conditional on the stated original analytic source, numerical
+reference and paid resource suppliers.
+
+## 追加锚（本行以下为增补区）
+
+
+## 17. A finite certificate against every depth of a represented bank
+
+**Definition 17.1 (bank request and unchanged numerical suppliers).**
+Retain Definitions 9.1–9.2 and 15.1, Theorem 14.1's single event
+$\mathcal G_\tau$ in (14.2), and precisely the full-endpoint
+reference and paid record services of [JET, §§12–13, 15–16] and
+[SRO, §§21–22]. The finite input is a bank $\mathcal P$ of
+represented scalar packets legal at the actual unknown reference
+time $\tau=a^2d/\eta$. Empty banks are allowed. A legality
+promise is not a passed numerical test: every bank packet used
+in a returned certificate must pass (9.6) on its returned bracket.
+Only the reference coefficients $(1,1)$, rational trial times and
+rational reference coordinates enter deterministic computation.
+Original parameters and values at a hidden physical point are not
+numerical inputs.
+
+For each time $t>0$ at which the bank is legal, let
+$\mathcal T_t(\mathcal P)$ and $\Sigma_{\mathcal P,t}$ have
+exactly [EF, Definition 18.1]'s meaning with $b_t,r_t,\Gamma_t$.
+All finite depths and arbitrary measurable terminal processing are
+included; global $b_t,r_t$ are retained observations and are not
+pure-tree inputs. For a new represented packet $\psi$ write
+
+$$
+\begin{gathered}
+U_t=\psi(b_t)b_t,\qquad W_t=\Gamma_t(U_t,U_t),\\
+c_{1,t}=\Gamma_t(U_t,W_t),\qquad
+c_{2,t}=\Gamma_t(W_t,W_t),\qquad z_{i,t}=\iota(c_{i,t}).
+\end{gathered}
+\tag{17.1}
+$$
+
+A finite coefficient request may specify original four-label word
+pairs, positive rational tolerances, and finite expression templates
+in the bank leaves and the newly selected leaf. Only finitely many
+pure trees and finite products of their encodings may be requested
+at a time. No coefficient of the infinite bank factor, conditional
+expectation oracle, or exact hidden-point feature is assumed.
+
+**Theorem 17.2 (generated, uniform, full-factor gap certificate).**
+Under Definition 17.1, the following finite data and strict tests
+certify a positive rational $\Delta$ such that, simultaneously
+for every $t$ in the returned bracket $J=[L,U]\Subset(0,\infty)$,
+
+$$
+\inf_{F\in L^2(\Sigma_{\mathcal P,t},m)}
+       \|z_{i,t}-F\|_m^2\ge\Delta>0.
+\tag{17.2}
+$$
+
+The same certificate proves noncommutation of conditional
+expectation onto this factor with the full reference $T_t$.
+Soundness requires valid finite input intervals and the successful
+finite tests below; it does not assume a preselected rank witness,
+a uniform unknown margin, or termination of a failed search.
+
+*Proof: finite legal-support data.* Require all bank trace-avoidance
+conditions (9.6), and generate rational $\beta>0$ satisfying
+
+$$
+\beta<\inf S_J,\qquad
+[0,\beta]\cap\overline I_{2,B}=\varnothing\quad(B\in\mathcal P).
+\tag{17.3}
+$$
+
+Here $S_J$ is the computed enclosure of all $s_t$, not a supplied
+exact trace. Choose a new rational nested packet with
+$\overline I_{2,\psi}\Subset(0,\beta)$, with all transition
+endpoints represented as in Definition 9.2. It passes (9.6) by
+(17.3). Its outer closure is disjoint from every bank outer
+closure. On a raw rational closed cube
+$Q=x_0+[-\rho,\rho]^4\Subset\Omega$ inside a larger rational
+box $Q^+\Subset\Omega$, require the computed strict enclosure
+
+$$
+b_t(Q)\Subset I_{0,\psi}\qquad(t\in J).
+\tag{17.4}
+$$
+
+All endpoints and containment margins in (17.3)–(17.4) are
+rational comparisons of certified intervals. In particular
+$Q\subset A_{\beta,t}:=\{0<b_t<\beta\}$ for every $t\in J$.
+Induction by locality [EF, (18.5)] makes every tree of
+$\mathcal T_t(\mathcal P)$ zero on this open set at **all**
+finite depths. No test enumerates that infinite family and no
+uniform spatial support bound for its members is assumed.
+
+*Proof: construction of every finite differential bound.* Select
+$i\in\{1,2\}$ and one raw coordinate $x_l$, and put
+
+$$
+\Psi_t=(b_t,\gamma_t,z_{i,t},x_l).
+\tag{17.5}
+$$
+
+The finite jet order needed for this chart follows directly from
+its actual syntax. A first-type leaf $f(b_t)$ with
+$f(x)=x\psi(x)$ uses $b_t$ derivatives through order $j$ for
+its derivatives through $j$. Differentiating
+$\Gamma_t(f,g)=t\nabla f^{\mathsf T}A_{\rm raw}\nabla g$
+through order $j$ uses child derivatives through at most $j+1$;
+all coefficient derivatives are of the known polynomial matrix
+$A_{\rm raw}$ of (3.7). Hence a pure first-type tree of height
+$h$ uses $b_t$ derivatives through $j+h$. In (17.1), $W_t$
+has height one and each $c_{i,t}$ height two. Values, first and
+second derivatives of the $c_{i,t}$ therefore use orders two,
+three and four respectively. The same chain rule for $\iota$
+adds no $b_t$ derivative order. The $\gamma_t$ component uses
+only orders through three for its Hessian. Thus $R=4$ suffices
+for all center jets and chart derivatives through order two.
+Transporting order-four jet intervals across cells additionally
+requires the constructed spatial bound $B_5$; time transport uses
+$W_{Q^+,4}(L)$. This is the first-only specialization of Theorem
+10.1's construction, rather than a new derivative service.
+
+For clarity, [JET, Theorems 15.2 and 16.1] construct these orders
+with $k=R+1=5$, $p=k+2=7$, $n=2k+4=14$ for the spatial
+instance. Their graph cutoffs require derivatives through $14$
+and their differentiated Green bounds through $n-2=12$.
+The time instance uses $k=4,p=6,n=12$. All are finite instances
+of the existing recurrence, with the actual full-domain graph
+vectors and a computed compact positive lower bound for $h$.
+The weak extraction kernel [JET, (16.2)] has exponent $R+2=6$.
+Its center error for $|\alpha|\le4$ is bounded by
+$4\epsilon M+L_{4,\alpha}\epsilon^{-2-|\alpha|}\delta$;
+choose $\epsilon$ first and the raw norm error $\delta$ second
+to meet each requested jet precision. There is no derivative
+of a numerical step approximation.
+
+At a cell of maximum coordinate radius $r_0$ about a rational
+center at a rational $t_0\in J$, enlarge every center jet interval
+by
+
+$$
+4B_5r_0+W_{Q^+,4}(L)(U-L).
+\tag{17.6}
+$$
+
+This is [JET, (16.6)], on fixed surrounding nested boxes. Cutoff
+bounds through order five, from (9.4)–(9.5), enclose derivatives
+of $f$ through four and their scalar moduli on uncertain $b_t$
+arguments; $f^{(j)}(x)=x\psi^{(j)}(x)+j\psi^{(j-1)}(x)$
+for $j\ge1$. All scalar ranges used here are bounded by the
+computed local $b_t$ range. Differentiating $\iota$ uses the
+protected denominator $\sqrt{1+c^2}\ge1$ and finite rational
+square-root enclosures. The explicit $t$ factors at both tree
+levels are included in interval evaluation. Thus finite product,
+chain and sum expressions give bounds for $\Psi_t,D\Psi_t$
+and its Hessian, uniformly on the stated boxes and bracket,
+as well as their convergent interval values. In particular they
+produce rational $M_1\ge1$ bounding every entry of $D\Psi_t$
+and $M_2\ge0$ bounding every second derivative on $Q^+$.
+They also certify (17.4). No global unencoded-tree supremum is
+needed. Using the more conservative orders of Theorem 15.2
+instead gives another valid finite certificate, with its extra
+work charged.
+
+*Proof: a certified rectangle inside the unused band.* Choose an
+invertible rational $4\times4$ matrix $A$ and rational
+$0<q<1/2$. From center derivative intervals compute an upper
+bound $e_0$ for
+$\sup_{t\in J}\|A^{-1}D\Psi_t(x_0)-I\|_\infty$, and require
+
+$$
+e_0+16\|A^{-1}\|_\infty M_2\rho<q<1/2.
+\tag{17.7}
+$$
+
+The matrix norm is the maximum absolute row sum. Four source
+increments and four matrix entries per row give the factor $16$.
+It follows that $\|A^{-1}D\Psi_t-I\|_\infty<q$ on $Q$.
+For a rational open rectangle $R=\prod_{j=1}^4R_j$ with positive
+side lengths require
+
+$$
+\sup_{t\in J,\ y\in\overline R}
+ \|A^{-1}(y-\Psi_t(x_0))\|_\infty<(1-q)\rho.
+\tag{17.8}
+$$
+
+Center-value intervals and the finitely many rectangle vertices
+give a finite rational upper bound for this supremum. The
+contraction argument (11.5), applied to (17.5), now proves
+$R\subset\Psi_t(Q^\circ)$ for every $t\in J$, with a unique
+inverse in that cube. Indeed the normalized derivative error is
+$q$-Lipschitz, zero at $x_0$ after subtracting $x-x_0$, and
+(17.8) maps the closed cube into its interior. Integration along
+segments also proves injectivity there. Thus this is a common
+four-rectangle, not an inference from center rank alone.
+
+Compute $l_h>0$ below $\inf_Qh$ by [JET, Corollary 5.4]. With
+$D=24M_1^4>0$, the determinant has absolute value at most $D$
+by its $4!$ terms. The same raw measure $m=h^2\mu$ restricted
+to $\Psi_t^{-1}(R)\cap Q$ consequently has density at least
+$l_h^2/D$ in these chart coordinates. By (17.4) its source
+support is contained in $A_{\beta,t}$. Integrating the fourth
+coordinate proves, for each $t\in J$,
+
+$$
+\begin{gathered}
+(b_t,\gamma_t,z_{i,t})_*(\mathbf1_{A_{\beta,t}}m)
+ \ge\lambda\,\mathbf1_{R_1\times R_2\times R_3}(y)\,dy,\\
+\lambda=l_h^2|R_4|/D>0,\qquad
+\Delta=\frac{l_h^2|R_1||R_2||R_3|^3|R_4|}{24D}>0.
+\end{gathered}
+\tag{17.9}
+$$
+
+These constants are generated rational outputs. Other sheets can
+only add mass. There is no subtraction of unknown tails and no
+conditioning on a separately chosen marginal law.
+
+Every element of the full completed bank factor restricts on
+$A_{\beta,t}$ to a Borel function of $(b_t,\gamma_t)$, by
+[EF, Theorem 18.2]'s countable-tuple argument. The calculation
+(18.8) there, with (17.9), gives a lower bound $2\Delta$ and
+therefore (17.2). It applies to arbitrary complex $L^2$ terminal
+functions and remains valid after completion. Finally the compact
+functions $U_t,U_t^2,W_t,U_tW_t,W_t^2$ and the product identity
+[EF, (19.2)] prove the asserted full-domain noncommutation.
+Soundness uses the finite tests, locality and those domain
+identities. The rank theorem is needed only for eventual finding
+of such data. $\square$
+
+## 18. Eventual acquisition, finite original-word consumers and their bill
+
+**Theorem 18.1 (sourcewise finite search on the existing common
+event).** For every fixed original finite $a,\eta,d>0$, every
+fixed finite represented legal bank and every rational confidence
+budget $0<\alpha<1$, there is a fair search under Definition 17.1
+which, on the existing $\mathcal G_\tau$ of probability at least
+$1-\alpha$, stops after finite charged record and computation
+cost with a packet, an index $i$, the finite certificate of
+Theorem 17.2 and its positive rational $\Delta$. It proves
+[EF, (18.3)] and $E_{\mathcal P}T_d\ne T_dE_{\mathcal P}$
+for that same original source. No numerical $a,\eta,d,\tau$
+name, predetermined positive rank margin or new statistical event
+is supplied to this search.
+
+*Proof.* In the reference member at its actual $\tau$, choose
+$\beta$ as in [EF, (18.4)], strictly below $s_\tau$ and below
+the finitely many positive distances of bank outer closures from
+zero. For an empty bank only the trace condition is needed.
+Theorem 9.3 makes (17.3), all bank legality tests and legality of
+a new packet with outer closure in $(0,\beta)$ pass on a
+sufficiently narrow acquired bracket. No effective spatial support
+for the bank or its infinite closure is requested.
+
+[EF, Theorem 9.1] has a nontrivial analytic rank-three determinant
+on its connected reduced domain. The nonempty open band
+$0<b_\tau<\beta$ therefore contains a full-rank point for
+$(b_\tau,\gamma_\tau,\mathcal C_\tau)$ or
+$(b_\tau,\gamma_\tau,\mathcal D_\tau)$. Choose the new
+packet with this value inside its plateau. On that neighborhood
+(17.1) is precisely $\mathcal C_\tau$ or $\mathcal D_\tau$
+at height two, by [EF, (18.6)]. The positive derivative of
+$\iota$ preserves rank. One raw coordinate completes it to
+(17.5). These are existence facts from the same analytic source,
+not finite readings of the selected point.
+
+Openness supplies a rational center and small rational cube
+with (17.4). A rational invertible $A$ can approximate its actual
+chart derivative sufficiently closely. The generated $M_2$ on a
+fixed larger box is finite, so decreasing the cube radius gives
+(17.7) with strict slack. A small rational target rectangle around
+a sufficiently close rational approximation to
+$\Psi_\tau(x_0)$ gives (17.8) with strict slack. All jets,
+bounds and time moduli in (17.6) are finite and produced by the
+existing total services. Narrowing $J$ and increasing finite
+precision therefore preserves these strict tests uniformly on $J$.
+Positivity of $h$ gives the computed $l_h>0$. This proves the
+existence of a finite successful tuple, without naming its margin
+before searching.
+
+Enumerate rational $\beta$, new packet and transition endpoints,
+both indices, complementary coordinates, rational centers, nested
+boxes, invertible matrices, $q$, target rectangles and precision
+levels. Interleave their finite tests with the predeclared startup
+and packet/bracket schedules of Theorem 14.1. At each finite
+precision an undecided test returns inconclusive; no equality or
+false candidate is waited on indefinitely. Revisit every finite
+tuple at increasing precision. On $\mathcal G_\tau$, startup,
+calibration and cofinal bracket acquisition hold together. The
+successful tuple with strict slack is eventually recognized, after
+only finitely many reached finite tests. Every accepted tuple is
+sound for every $t$ in its bracket, so adaptively selecting the
+bank certificate adds neither a new union bound nor an independence
+assumption for nested prefixes. This is the same deterministic
+selection principle as Theorems 11.2 and 14.1.
+
+The full original unitary of [W, Theorem 5.2] and Theorem 2.1
+transports leaves, every energy node, $b,r$, the completed sigma
+algebra, original measure and projection loss. Reference $T_\tau$
+is the transport of original $T_d$ with its entire domains. Thus
+(17.9) proves the requested original-source gap and noncommutation,
+not merely a reference-family analogue. $\square$
+
+**Theorem 18.2 (finite word coefficients of the selected new
+relation).** On the same event and under the same paid premises,
+after Theorem 18.1's selection one can acquire, to any requested
+positive rational errors, every coefficient in any finite request
+of Definition 17.1, including the encoded separating tree itself.
+For a selected encoded product $k$ and original four-label word
+pair $u,v$, retain exactly Theorem 10.2's certificate
+
+$$
+\begin{gathered}
+Q_k(u,v)=\langle v_u,M_{k_\tau}v_v\rangle_m,\\
+\widehat Q_k(u,v)=\int_A\overline{Z_u}Z_vk\,d\mu,\\
+R_k(u,v)=r_u+r_v+r_ur_v+B_{uv}|A|e_k+a_k(u,v),\\
+|Q_k(u,v)-\widehat Q_k(u,v)|\le R_k(u,v),
+\qquad R_k(u,v)<\epsilon_{k,u,v}.
+\end{gathered}
+\tag{18.1}
+$$
+
+In the integrand $k$ denotes the computed rational step for the
+actual encoded product, with certified local error $e_k$ on
+$A\Subset\Omega$ uniformly over the acquired bracket. The
+$Z$'s are raw word-vector steps, their $r$'s are global residuals,
+and $a_k$ is the rational arithmetic allowance, as in (10.3).
+These quantities are distinct from the retained observation $r_t$.
+
+*Proof.* Freeze the returned finite packet description and the
+requested finite expression templates. They define an ordinary
+finite legal first-type menu in Theorem 10.2. The height of a
+further requested tree is its actual finite height, without a
+bound shared by all possible requests. Theorem 10.1, or the
+first-only order recursion in Theorem 17.2, constructs its local
+values, derivative/time moduli and encoded product error on the
+common raw support of the finite word-vector approximants.
+This support need not lie in the strictness cube $Q$, and the
+certificate does not discard its exterior or source-neighborhood
+tails: they are already paid by the global $r_u,r_v$.
+
+For $0,1$ labels the exact expansions
+$f_0=f_1=(3/2)f_B-(1/2)f_3$ give
+$Z_u=\sum_w b_{uw}Z_w$ and
+$r_u=\sum_w|b_{uw}|r_w$ with
+$\sum_w|b_{uw}|\le2^{n(u)}$. The word vectors and all terms
+are from the same actual law; both this amplification and the
+product error in (10.2) remain in (18.1). Bounded encoding gives
+$\|M_{k_\tau}\|\le1$, so exactly the three global residual
+terms and the local integration term of Theorem 10.2 apply.
+For a requested finite rational polynomial of encoded products,
+linear combination additionally costs the computed coefficient
+absolute sum and arithmetic error, exactly (16.2)–(16.4).
+When an old compiled or bounded-coordinate consumer is requested,
+Theorem 16.1 also retains its scalar approximation and omitted-mass
+terms; they cannot be deleted on account of the new gap.
+
+Stop only after the original finite packet validity, $c_->0$,
+both strict calibration guards, all old and new legality tests,
+all chart tests for the gap, all symbol and global-vector
+certificates and every requested radius test have passed.
+For the now fixed finite menu the convergence and strict-slack
+proof of Theorem 10.2 makes all radii arbitrarily small, on
+$\mathcal G_\tau$. A later bracket refinement preserves the
+accepted uniform gap certificate. The selection is among rational
+finite descriptions and all these implications are deterministic
+on the already intersected packet events (14.2); no new failure
+budget or physical rerun is used. This proves sourcewise finite
+stopping of the joint finite request. It does not acquire values
+of $z_{i,t}$ at a hidden realized point or all coefficients of an
+infinite family. $\square$
+
+**Definition 18.3 (complete paid resources, attribution and return
+boundary).** In addition to Definitions 12.3, 14.3 and 16.2's
+existing bills, charge the actual bank descriptions and transition
+widths, their bit lengths, every legality and trace-norm refinement,
+all enumerated finite candidates and failed or inconclusive tests,
+all raw jet precisions and amplified weak-extraction norm requests,
+all higher Green tails, graph cutoff derivatives and recurrences,
+compact denominator/lower-density searches, spatial and time
+interval arithmetic, matrix inversions and their bit lengths,
+cube subdivisions, target rectangles, determinant and positive
+rational gap arithmetic. The selected pure witness has finite
+height two; its two alternatives and any further requested trees
+are charged by their fully expanded syntax and every derivative
+order actually used. A certificate of all depths is an induction
+from (17.3), not a paid enumeration of infinitely many trees.
+No real scalar, differentiation, reference evaluation, search step
+or exact comparison receives unit or zero cost by representation.
+
+The coefficient bill retains all clipped word computations,
+original $0,1$ expansions and coefficient bit lengths, global
+residual searches, raw support partitions, encoded-product errors,
+reference norm names and arithmetic. Any use of §16 additionally
+retains every scalar approximation, mass certificate, polynomial
+degree, grid evaluation and expansion/amplification cost there.
+The observation schedule may still use $T=3$: each such packet
+uses $N+3$ original labels through $(N+4)d$ and all $256$
+four-letter counters. Startup blocks, all reached initial prefixes,
+rescans, counter widths, defect computation, retained records,
+working bits and computation between packets are charged. If the
+stream continues during computation, buffering every intervening
+label, its storage and actual completion latency remain exactly
+[SRO, Definition 21.1]'s paid premises. The successful record is
+an original prefix; a later suffix is never treated as a new start.
+No finite expected, uniform, practical or throughput bound follows
+from sourcewise eventual finite work.
+
+The extra mathematical relation is the finite, generated
+restricted-density certificate for the **entire all-depth bank
+factor**, including global $b,r$. Locality, the rank theorem,
+completed factorization and full spectral-domain identities are
+used with their hypotheses in [EF, §§18–19]; the quantitative
+inverse-chart/density/variance construction is reused from §11,
+and finite original-word acquisition from §§9–10 and 14–16.
+The total precision services [JET, §§12–13] are not a new oracle
+for this bank factor; their established finite reference names
+and [JET, §§15–16]'s arbitrary fixed derivative orders are the
+suppliers used above. This source-specific composite is
+`repo-derived` conditional mathematics. It is not a new general
+conditioning theorem, free-algebra interpretation, finite quotient
+classification or literature-priority claim.
+
+All statements retain the same full complex non-Friedrichs
+$A=\rho C$ endpoint, distinct $C=0$ selector, normalized $h$,
+full operator/form domains and source trace, $e$-start, first $2d$
+read, subsequent $d$ gaps, original $0,1,3,B$ labels, actual
+calibration, permitted null repairs and conditional fresh noise.
+The new packet is a mathematical supplier in the recovered source,
+not a new label, measurement, preparation, reset or control.
+[EF, Theorems 16.4 and 17.1] continue to supply the exhaustive
+first-only family and its finite inverse with their own legitimate
+input requirements. Deeper pure composition of a fixed local
+bank cannot replace that exhaustive family for the task (17.2);
+new source observations or operations need their own correspondence
+and acquisition proofs. No geometry is inferred from bare
+$\alpha,\beta$ syntax, and no bridge to a different source is
+obtained by common dimension, names or numerical encoding.
+
+Existence [EF, Theorem 18.2], finite certificate soundness
+(Theorem 17.2), sourcewise eventual search and finite word
+acquisition (Theorems 18.1–18.2) have separate stated premises.
+None supplies the actual-return feature vector or assimilates
+every label arriving between certified endpoint $S$ and actual
+return $C$. Actual-current-return memory and the full mutual
+recovery of space, time or legal continuation, boundary and memory
+remain unresolved; no stale-prefix forecast is substituted for
+them. These are ordinary conditional proofs without a newly
+performed numerical instance or Lean verification.
+
+## 追加锚（本行以下为增补区）

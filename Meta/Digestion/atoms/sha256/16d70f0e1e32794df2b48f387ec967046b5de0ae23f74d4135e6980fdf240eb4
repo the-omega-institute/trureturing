@@ -1,0 +1,62 @@
+**定理 36.1（同一原行的完整单位偏移消去）。** 在 32.1 下，
+
+$$
+\boxed{D(Sh,b+Lu)=SJb
+\qquad(S,L\in\mathbb R,\ b\in V_h).}
+\tag{36.1}
+$$
+
+证明。35.1 及同一 $J$ 的自身平面公式，使 33.2 对所有 $\rho\in\mathcal R$ 成立。固定 $S>0,L,b$。对实 $\alpha>0$ 定义
+
+$$
+\beta=\frac{S-\alpha L}{1+\alpha^2},\qquad
+\kappa=\frac{\alpha S+L}{1+\alpha^2},\qquad
+\rho(\alpha)=\kappa/\alpha,
+\qquad z=\frac{b-\alpha Jb}{1+\alpha^2},\quad w=z-\alpha Jz,
+$$
+
+并记 $v=\beta-\alpha\kappa,M=\kappa+\alpha\beta$。只取 $\rho(\alpha)\in\mathcal R$ 的参数；33.2 这时准确支付 $F_\alpha(z+\kappa u)=\alpha Jz$。由于
+
+$$
+\beta+\alpha\kappa=S,\qquad\kappa-\alpha\beta=L,
+\qquad z+\alpha Jz=b,
+$$
+
+(34.1) 与自身平面公式化为
+
+$$
+F_S(b+Lu)-SJb=F_v(w+Mu)-vJw.
+\tag{36.2}
+$$
+
+其中 $SJb-vJw=-2\alpha\beta z+2\alpha\kappa Jz$，故没有略掉单位偏移项。直接由实系数计算，
+
+$$
+w^2=b^2,\qquad v^2+M^2=S^2+L^2.
+\tag{36.3}
+$$
+
+令
+
+$$
+\alpha_0=\frac{\sqrt{S^2+L^2}-L}{S}>0.
+$$
+
+它满足 $v(\alpha_0)=0$，且
+
+$$
+\rho(\alpha_0)=\frac{S}{2\alpha_0^2}>0,
+\qquad\rho'(\alpha_0)=-\frac{S}{2\alpha_0^3}\ne0.
+\tag{36.4}
+$$
+
+普通实微分与局部严格单调性，连同 $\mathcal R$ 的稠密性，供应 $\alpha_n\to\alpha_0$ 且 $\rho(\alpha_n)\in\mathcal R$。因此 $v_n\to0$，而 $|M_n|\le\sqrt{S^2+L^2}$、$\|w_n\|=\|Jw_n\|=\|b\|$。用 (32.4) 读取 (36.2)，得固定差的显式界
+
+$$
+\|F_S(b+Lu)-SJb\|
+\le |v_n|\bigl(2\|b\|+\sqrt{S^2+L^2}\bigr)\longrightarrow0.
+\tag{36.5}
+$$
+
+这迫使固定差为零。所有新输入均为实际原元素的有限实线性组合；趋零的是首槽预算，不是未付的响应连续性。第一槽奇性及零行处理 $S\le0$。∎
+
