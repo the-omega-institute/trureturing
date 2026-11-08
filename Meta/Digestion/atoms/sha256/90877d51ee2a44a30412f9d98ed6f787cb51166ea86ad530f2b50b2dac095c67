@@ -1,0 +1,10 @@
+#### 反例 9.2：完美条件条纹仍可来自可分源
+
+令
+
+$$
+\rho_X=\tfrac12(\lvert++\rangle\langle++\rvert+\lvert--\rangle\langle--\rvert).
+$$
+
+对标记测 $X$，它与 $\Phi$ 给同样的两个非归一条件态 $\tau_{\pm}=\tfrac12\lvert\pm\rangle\langle\pm\rvert$。 每个子样本均有单位可见度，未分类的路径态均为 $I/2$。 但 $\rho_X$ 可分。再测标记 $Z$ 并保留路径条件态时， $\Phi$ 给 $\lvert 0\rangle,\lvert 1\rangle$，而 $\rho_X$ 两支均给 $I/2$，于是可区分。 若只保留条件条纹的可见度，两者在 $Z$ 菜单均为零、在 $X$ 菜单均为一， 仍无法区分；这里必须保留条件路径布居等完整记录。
+
