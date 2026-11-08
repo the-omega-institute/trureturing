@@ -9,7 +9,7 @@ open _root_.D5.S3.Quantum.Matrix.PentagonQuarticTrace (Mat reTrace)
 open _root_.D5.S3.Quantum.Matrix.PentagonQuinticTrace
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
-open scoped BigOperators
+open scoped BigOperators ComplexOrder
 namespace Reg.D5.S3.Quantum.Matrix.PentagonQuinticTrace
 noncomputable section
 universe u
@@ -99,7 +99,7 @@ private abbrev arena : Arena where
 private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
   exact @h (ULift.{u} Unit) inferInstance inferInstance (fun _ => 0)
-    (by intro i; simp) (by intro i; simp)
+    (by intro i; exact Matrix.PosSemidef.zero) (by intro i; simp)
 
 private theorem dependence : ObservationalDependence signature actual := by
   intro i

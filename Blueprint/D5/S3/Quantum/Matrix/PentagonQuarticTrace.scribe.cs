@@ -25,7 +25,7 @@ internal sealed class PentagonQuarticTraceDocument : IScribeDocumentDefinition
     private static DocumentBlock Entry(string id, string name, string title, Formula statement,
         string description, string proof) => Describe.Lean(
             DescribeId.Create(id), DeclarationHandle.Create(Prefix + name), H(title),
-            StatementSource.FromAuthor(Disp(statement)), AssessedProvenance.FromRepo(),
+            StatementSource.FromAuthor(Disp(statement)), AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Entropy/mghirbi2026renyi")),
             Blocks(Paragraph(Text(description)), Paragraph(Text(proof))), DescribeRole.Theorem);
 
     private static Formula V(string s) => F.Id(s);
