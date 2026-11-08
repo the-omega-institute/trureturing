@@ -151,4 +151,61 @@ def audit : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 #print axioms family
 #print axioms audit
 
+namespace ProjectorMetric
+
+structure Parameters where
+  E : Type u
+  group : NormedAddCommGroup E
+  space : letI := group; InnerProductSpace ℂ E
+  finite : letI := group; letI := space; FiniteDimensional ℂ E
+
+attribute [instance] Parameters.group Parameters.space Parameters.finite
+
+abbrev signature : Signature where
+  Params := Parameters.{u}
+  State p := p.E × (ℝ → p.E)
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature.{u} :=
+  realize signature (fun _ _ s =>
+    let P := InnerProductSpace.rankOne ℂ s.1 s.1
+    let D := deriv (fun t => InnerProductSpace.rankOne ℂ (s.2 t) (s.2 t)) 0
+    Real.sqrt (LinearMap.trace ℂ _
+      (P.toLinearMap.comp (D.toLinearMap.comp D.toLinearMap))).re)
+    (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature.{u}
+  Law R := ∀ (p : Parameters.{u}) (f : ℝ → p.E) (ψ v : p.E),
+    ‖ψ‖ = 1 → f 0 = ψ → HasDerivAt f v 0 →
+    (∀ᶠ t in 𝓝 (0 : ℝ), ‖f t‖ = 1) →
+    Tendsto (fun t : ℝ => fsAngle ψ (f t) / |t|) (𝓝[≠] 0)
+      (𝓝 (R.readout () p (ψ, f)))
+
+theorem source_bridge : (type_of% (@fs_angle_speed_projector.{u})) ↔
+    arena.{u}.Law actual := by
+  constructor
+  · intro h p f ψ v hψ h₀ hf hunit
+    exact h hψ h₀ hf hunit
+  · intro h E group space finite f ψ v hψ h₀ hf hunit
+    exact h ⟨E, group, space, finite⟩ f ψ v hψ h₀ hf hunit
+
+theorem actual_positive : arena.{u}.Law actual :=
+  source_bridge.mp (@fs_angle_speed_projector.{u})
+
+/- The source equivalence retains the complete finite-dimensional telescope
+and the actual operator derivative. Whole-family variation, observational
+dependence and exact compiler selection remain required for a registration;
+the shared audit boundary is issue 28177. -/
+
+#print axioms source_bridge
+#print axioms actual_positive
+
+end ProjectorMetric
+
 end Reg.D5.S3.Quantum.Foundation.ProjectorRayDifferential
