@@ -106,6 +106,10 @@ $$\exists S : PowerSeries \mathbb{Q} , \operatorname{PowerSeries}.\operatorname{
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Periodic/BalaA281180TotientSquarePeriod.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/balaper-phi2period` (proved) by `D5/S1/Recurrence/Periodic/BalaA281180TotientSquarePeriod.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"balaper-phi2period","declaration_gid":"D5/S1/Recurrence/Periodic/BalaA281180TotientSquarePeriod.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Peter Bala (2026). *OEIS A281180 and its hyperbolic EGF family: totient-square periods*. URL: <https://oeis.org/A281180>.

@@ -54,7 +54,9 @@ internal sealed class BalaA281181TotientSquarePeriodDocument : IScribeDocumentDe
         string prose, DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
         DescribeId.Create("balaa281181totientsquareperiod-" + name.Replace("C", "uppercase-c").Replace("S", "uppercase-s").Replace('.', '-').Replace('_', '-').ToLowerInvariant()),
         DeclarationHandle.Create(Prefix + name[(name.LastIndexOf('.') + 1)..]), H(title), StatementSource.FromAuthor(formula),
-        provenance, Blocks(Paragraph(Text(prose))), role);
+        provenance, Blocks(Paragraph(Text(prose))), role,
+        name == "result" ? new OpenProblemResolutionClaim(
+            ProblemSlugRef.Create("balaper-a281181-phi2period"), ResolutionKind.Proved) : null);
 
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula Qualified(params string[] parts)
