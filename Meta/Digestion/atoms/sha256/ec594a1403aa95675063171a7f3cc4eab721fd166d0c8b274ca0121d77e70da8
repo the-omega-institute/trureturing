@@ -1,0 +1,40 @@
+**定理 55.1（同一原响应生成的中央模块）。** 在 53.1 下，固定原 $b\in V_a$，写 $c=T_a(b)$、$Q=b^2$，并定义原模块
+
+$$
+M_{a,b}=\{s\circ b+t\circ c:s,t\in H\}\subset V_a.
+\tag{55.1}
+$$
+
+则同一原 $T_a$ 保持这个模块，并对全部原 $s,t\in H$ 满足
+
+$$
+T_a(s\circ b+t\circ c)=s\circ c-(t\circ R)\circ b.
+\tag{55.2}
+$$
+
+因此 $T_a|_{M_{a,b}}$ 是 $H$ 线性的，且
+
+$$
+T_a^2x=-R\circ x\qquad(x\in M_{a,b}).
+\tag{55.3}
+$$
+
+特别，$T_a(z\circ b)=z\circ T_a(b)$ 对全部原中央 $z\in H$ 成立，无有限谱前件。
+
+证明。对给定实际 $s,t$，在 (53.2) 中同时加入它们。记 $q_\chi(s)=\sigma1,q_\chi(t)=\tau1$。中央元与原元素的 Jordan 乘积就是环境普通乘积，故真正原 $x=s\circ b+t\circ c$ 属于 $V_a$，且
+
+$$
+q_\chi(x)=\sigma B+\tau q_\chi(c).
+$$
+
+$\lambda=0$ 时，24.1 给 $q_\chi T_a(x)=0$，右端像也为零。若 $\lambda>0$，用 26.2 的固定实际 $a$ 的第二槽纤维，将这个像与真正原 $\sigma b+\tau c$ 的像比较；54.3 给
+
+$$
+q_\chi T_a(x)=\sigma q_\chi(c)-\tau\lambda B
+=q_\chi\bigl(s\circ c-(t\circ R)\circ b\bigr).
+$$
+
+中央商分离给 (55.2)。这个论证没有在原 $E$ 内删除 $s-\sigma u$ 或 $t-\tau u$；这些元素只在相应合法读取中消失。
+
+对 $x=s\circ b+t\circ c$、$y=v\circ b+w\circ c$，分别把它们的给定表示代入 (55.2)，立即得到 $T_a(x+y)=T_a(x)+T_a(y)$ 与 $T_a(z\circ x)=z\circ T_a(x)$。它们是同一个原总映射的等式，故不同系数表示自动给同一结果，不假设模块自由。再将 (55.2) 用于 $s\circ c-(t\circ R)\circ b$，即得 (55.3)。∎
+
