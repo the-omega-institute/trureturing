@@ -38,9 +38,9 @@ smul_mul': proof_shape=bind-only; consumers=D5.S3.Combinatorics.PerfectMatchings
 mul_smul': proof_shape=bind-only; consumers=D5.S3.Combinatorics.PerfectMatchings.PlanarDiagramAlgebra.algebra, D5.S3.Combinatorics.PerfectMatchings.PlanarDiagramAlgebra.mul_assoc'
 basis_mul: proof_shape=bind-only; consumers=D5.S3.Combinatorics.PerfectMatchings.PlanarDiagramAlgebra.basis_assoc, D5.S3.Combinatorics.PerfectMatchings.PlanarDiagramAlgebra.mul_one'
 induction: proof_shape=bind-only; consumers=D5.S3.Combinatorics.PerfectMatchings.PlanarDiagramAlgebra.mul_assoc', D5.S3.Combinatorics.PerfectMatchings.PlanarDiagramAlgebra.mul_one'
-flags: proof_shape=bind-only; consumers=D5.S3.Combinatorics.PerfectMatchings.PlanarDiagramAlgebra.basis_assoc
-basis_assoc: proof_shape=bind-only; consumers=D5.S3.Combinatorics.PerfectMatchings.PlanarDiagramAlgebra.mul_assoc'
-mul_assoc': proof_shape=bind-only; consumers=D5.S3.Combinatorics.PerfectMatchings.PlanarDiagramAlgebra.ring, D5.S3.Combinatorics.PerfectMatchings.PlanarDiagramAlgebra.ring._proof_2
+flags: proof_shape=content  ; consumers=D5.S3.Combinatorics.PerfectMatchings.PlanarDiagramAlgebra.basis_assoc
+basis_assoc: proof_shape=content  ; consumers=D5.S3.Combinatorics.PerfectMatchings.PlanarDiagramAlgebra.mul_assoc'
+mul_assoc': proof_shape=content  ; consumers=D5.S3.Combinatorics.PerfectMatchings.PlanarDiagramAlgebra.ring, D5.S3.Combinatorics.PerfectMatchings.PlanarDiagramAlgebra.ring._proof_2
 one_mul': proof_shape=bind-only; consumers=D5.S3.Combinatorics.PerfectMatchings.PlanarDiagramAlgebra.ring
 mul_one': proof_shape=bind-only; consumers=D5.S3.Combinatorics.PerfectMatchings.PlanarDiagramAlgebra.ring
 additiveWithOne: proof_shape=bind-only; consumers=D5.S3.Combinatorics.PerfectMatchings.PlanarDiagramAlgebra.ring, D5.S3.Combinatorics.PerfectMatchings.PlanarDiagramAlgebra.ring._proof_1

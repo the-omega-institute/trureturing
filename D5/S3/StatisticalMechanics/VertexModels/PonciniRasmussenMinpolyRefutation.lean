@@ -20,12 +20,12 @@ fold_aeval: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniR
 fold_lift: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenMinpolyRefutation.polynomial_annihilates
 polynomial_annihilates: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenMinpolyRefutation.annihilator_aeval
 basisDiagram: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenMinpolyRefutation.annihilator_aeval, D5.S3.StatisticalMechanics.PonciniRasmussenMinpolyRefutation.sparse_lift
-sparse_lift: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenMinpolyRefutation.annihilator_aeval
+sparse_lift: proof_shape=content  ; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenMinpolyRefutation.annihilator_aeval
 annihilator: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenMinpolyRefutation.annihilator_aeval, D5.S3.StatisticalMechanics.PonciniRasmussenMinpolyRefutation.annihilator_degree
-annihilator_aeval: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenMinpolyRefutation.minpoly_nine_bound
+annihilator_aeval: proof_shape=content  ; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenMinpolyRefutation.minpoly_nine_bound
 annihilator_monic: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenMinpolyRefutation.minpoly_nine_bound
 annihilator_degree: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenMinpolyRefutation.minpoly_nine_bound
-minpoly_nine_bound: proof_shape=bind-only; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenMinpolyRefutation.result
+minpoly_nine_bound: proof_shape=content  ; consumers=D5.S3.StatisticalMechanics.PonciniRasmussenMinpolyRefutation.result
 result: proof_shape=content; consumers=terminal(refutes #27843)
 -/
 import D5.S3.Combinatorics.PerfectMatchings.PlanarDiagramAlgebra

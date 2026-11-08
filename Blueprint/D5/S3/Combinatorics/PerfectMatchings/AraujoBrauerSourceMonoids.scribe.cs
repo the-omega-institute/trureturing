@@ -103,5 +103,7 @@ internal sealed class AraujoBrauerSourceMonoidsDocument : IScribeDocumentDefinit
                 H("source_monoids_exist"), StatementSource.FromAuthor(Disp(Seq(Forall, Sp, Parenthesized(Seq(F.Id("n"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))))), Sp, Comma, Sp, Parenthesized(Seq(Exists, Sp, Colon, Sp, F.Id("BrauerSourceMonoid"), Sp, F.Id("n"), Sp, Comma, Sp, F.Id("True"))), Sp, Land, Sp, Parenthesized(Seq(Exists, Sp, Colon, Sp, F.Id("PartialBrauerSourceMonoid"), Sp, F.Id("n"), Sp, Comma, Sp, F.Id("True")))))),
                 AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("The formula gives the quantified statement."))), DescribeRole.Theorem))));
 
+    private static Formula Id(string name) => F.Id(name);
+    private static Formula All(string name, Formula type, Formula body) => new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), type, body);
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
 }

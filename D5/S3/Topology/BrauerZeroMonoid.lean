@@ -24,7 +24,7 @@ multiply: proof_shape=bind-only; consumers=D5.S3.Topology.BrauerZeroMonoid.multi
 multiply_some: proof_shape=bind-only; consumers=D5.S3.Topology.BrauerZeroMonoid.multiply_assoc, D5.S3.Topology.BrauerZeroMonoid.some_mul_some
 multiply_none_left: proof_shape=bind-only; consumers=D5.S3.Topology.BrauerZeroMonoid.multiply_assoc, D5.S3.Topology.BrauerZeroMonoid.zeroMatchingMonoid
 multiply_none_right: proof_shape=bind-only; consumers=D5.S3.Topology.BrauerZeroMonoid.multiply_assoc, D5.S3.Topology.BrauerZeroMonoid.zeroMatchingMonoid
-multiply_assoc: proof_shape=bind-only; consumers=D5.S3.Topology.BrauerZeroMonoid.zeroMatchingMonoid, D5.S3.Topology.BrauerZeroMonoid.zeroMatchingMonoid._proof_3
+multiply_assoc: proof_shape=content  ; consumers=D5.S3.Topology.BrauerZeroMonoid.zeroMatchingMonoid, D5.S3.Topology.BrauerZeroMonoid.zeroMatchingMonoid._proof_3
 zeroMatchingMonoid: proof_shape=bind-only; consumers=D5.S3.Combinatorics.PerfectMatchings.PlanarDiagramAlgebra.flags, D5.S3.Topology.BrauerZeroMonoid.some_mul_some
 some_mul_some: proof_shape=bind-only; consumers=D5.S3.Combinatorics.PerfectMatchings.PlanarDiagramAlgebra.flags
 -/
