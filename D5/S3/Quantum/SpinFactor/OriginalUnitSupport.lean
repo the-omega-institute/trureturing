@@ -6,16 +6,19 @@
    utility: none
    digest: Norm-support readings of an original unit output annihilate its second label. -/
 
-import Mathlib.Analysis.Matrix.PosDef
-import Mathlib.Algebra.QuadraticDiscriminant
-import Mathlib.Analysis.Normed.Operator.Basic
-import Mathlib.LinearAlgebra.BilinearMap
-import Mathlib.Tactic
+module
+
+public import Mathlib.Analysis.Matrix.PosDef
+public import Mathlib.Algebra.QuadraticDiscriminant
+public import Mathlib.Analysis.Normed.Operator.Basic
+public import Mathlib.LinearAlgebra.BilinearMap
+public import Mathlib.Tactic
 
 /-! A unit-row prerequisite on an arbitrary, possibly incomplete original carrier.
 The total relation has no linearity or output-closure assumption. The original
 generated three-axis and affine-identification theorems are not asserted here. -/
 
+@[expose] public section
 noncomputable section
 set_option autoImplicit false
 open scoped Matrix ComplexOrder
@@ -61,7 +64,7 @@ private theorem square_nonneg
     (S : E →ₗ[ℝ] E →ₗ[ℝ] E) (D : E → E → E)
     (P : Set (E →ₗ[ℝ] ℝ)) (hP : P2 S D P)
     (α : E →ₗ[ℝ] ℝ) (hα : α ∈ P) (x : E) : 0 ≤ α (S x x) := by
-  have h := (hP α hα x x).diag_nonneg 0
+  have h := (hP α hα x x).diag_nonneg (i := 0)
   simpa [table] using (Complex.nonneg_iff.mp h).1
 
 private theorem scalar_pair_zero
@@ -82,9 +85,9 @@ private theorem null_square_orthogonal
     B w x = 0 := by
   have hd := discrim_le_zero (a := B x x) (b := 2 * B w x) (c := 0) (fun t : ℝ => by
     have h := hp (w + t • x)
-    simpa [map_add, map_smul, LinearMap.add_apply, LinearMap.smul_apply,
-      smul_eq_mul, hw, hc x w, mul_add, add_mul, mul_comm, mul_left_comm,
-      mul_assoc, ← two_mul, pow_two] using h)
+    simp [map_add, map_smul, LinearMap.add_apply, LinearMap.smul_apply,
+      smul_eq_mul, hw, hc x w] at h
+    nlinarith only [h])
   simp only [discrim, mul_zero, sub_zero] at hd
   nlinarith [sq_nonneg (B w x)]
 
@@ -160,7 +163,7 @@ theorem support_unit_obstruction
   have hinner := scalar_pair_zero S D P hP hc u hu hsep μ k
   have hp := congrArg α (hPB (μ • u) b (k • u))
   have hν : D (μ • u) b - S (μ • u) (k • u) = ν := by
-    simp [ν, h, map_smul, hu, smul_smul]
+    simp [ν, h, map_smul, hu, smul_smul, mul_comm]
   have hω : S (μ • u) b + D (μ • u) (k • u) = ω := by
     simp [ω, map_smul, hu, hinner]
   rw [hν, hω] at hp
@@ -172,7 +175,7 @@ theorem support_unit_obstruction
     change B b h = 0
     change (0 : ℝ) - 0 =
       α (-(2 : ℝ) • S b ν - (2 : ℝ) • S (k • u) ω) at hp
-    simp only [map_sub, map_smul, smul_eq_mul] at hp
+    simp only [map_sub, α.map_smul, smul_eq_mul] at hp
     change 0 - 0 = -(2 : ℝ) * B b ν - 2 * B (k • u) ω at hp
     simp [ν, ω, map_sub, map_smul, LinearMap.sub_apply,
       LinearMap.smul_apply, smul_eq_mul, hBu, hhbu] at hp
