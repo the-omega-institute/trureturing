@@ -20,7 +20,8 @@ open VarianceTransferDefs VarianceTransfer ProfileKernelDefs FourthMomentBandDef
 
 noncomputable section
 
-private lemma increment_pow_integrableOn {A : Type*} [TopologicalSpace A]
+/-- Every natural power of a continuous moving increment is integrable on compact sets. -/
+lemma increment_pow_integrableOn {A : Type*} [TopologicalSpace A]
     [MeasurableSpace A] [BorelSpace A] [T2Space A]
     {μ : Measure A} [IsFiniteMeasureOnCompacts μ]
     {E : ℝ → ℝ} (hE : LocallyBoundedMeasurable E)
