@@ -43,11 +43,12 @@ def horizontal (ψ z : E) : E := z - InnerProductSpace.rankOne ℂ ψ ψ z
 
 private theorem horizontal_norm_sq (ψ z : E) (hψ : ‖ψ‖ = 1) :
     ‖horizontal ψ z‖ ^ 2 = ‖z‖ ^ 2 - ‖inner ℂ ψ z‖ ^ 2 := by
-  rw [horizontal, InnerProductSpace.rankOne_apply, norm_sub_sq]
+  rw [horizontal, InnerProductSpace.rankOne_apply, norm_sub_sq (𝕜 := ℂ)]
   simp only [norm_smul, hψ, mul_one, inner_smul_right]
   rw [← inner_conj_symm z ψ]
-  simp only [Complex.mul_conj, Complex.ofReal_re]
+  simp only [Complex.mul_conj]
   rw [Complex.normSq_eq_norm_sq]
+  simp only [RCLike.ofReal_re]
   ring
 
 private theorem fs_angle_eq_arcsin_horizontal (ψ z : E)
@@ -85,7 +86,7 @@ theorem fs_angle_speed {f : ℝ → E} {ψ v : E}
   have hgn : Tendsto (fun t => ‖g t‖) (𝓝[≠] 0) (𝓝 0) := by
     simpa [hg₀] using hg.continuousAt.norm.tendsto.mono_left nhdsWithin_le_nhds
   have hqn : Tendsto (fun t => q ‖g t‖) (𝓝[≠] 0) (𝓝 1) := by
-    simpa [q] using hq.tendsto.comp hgn
+    simpa [q, Function.comp_def] using hq.tendsto.comp hgn
   have hlimit : Tendsto (fun t : ℝ => fsAngle ψ (f t) / |t|) (𝓝[≠] 0)
       (𝓝 ‖horizontal ψ v‖) := by
     have hm : Tendsto (fun t : ℝ => q ‖g t‖ * (‖g t‖ / |t|))
