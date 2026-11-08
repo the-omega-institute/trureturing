@@ -11,6 +11,15 @@ internal sealed class MacroscopicFreezingDocument : IScribeDocumentDefinition
         H("Uniform freezing of macroscopic lengths"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("scale-conditions"),
+                DeclarationHandle.Create(Prefix + "scale_conditions"),
+                H("Eventual macroscopic scale conditions"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "Assume 0<alpha<theta<beta<1, c>0, M>0, L>=0 and delta>0. For all sufficiently large X, one has X>=4, M*X^theta<=X, L*X^theta/X<=1/2, (4X)^alpha<=c*X^theta, 4*c*X^theta<=(X/2)^beta, and M*X^theta/X<delta. These bounds depend on the constants and exponents, so the same threshold applies to every length function satisfying the corresponding size and derivative bounds."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("freezing-bound"),
                 DeclarationHandle.Create(Prefix + "freezing_bound"),
                 H("Finite freezing error"),
