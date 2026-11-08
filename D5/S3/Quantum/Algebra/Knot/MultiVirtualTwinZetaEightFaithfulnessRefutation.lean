@@ -24,14 +24,9 @@ exempt from four-slot escape registration (CLAUDE.md §3.9).
 The generator inclusions and their carrier are inlined, preserving the
 preregistered expressions without forwarding declarations.
 -/
-import Mathlib.GroupTheory.Commutator.Basic
-import Mathlib.GroupTheory.Perm.Basic
-import Mathlib.Tactic.FinCases
-import Mathlib.Tactic.NormNum
 import Mathlib.GroupTheory.PresentedGroup
 import Mathlib.Basic.Complex.Basic
 import Mathlib.LinearAlgebra.Matrix.GeneralLinearGroup.Defs
-import Mathlib.LinearAlgebra.Matrix.Notation
 
 set_option autoImplicit false
 
