@@ -135,7 +135,7 @@ A natural index $n\ge3$ at which the literal signed sum violates the displayed
 recurrence would contradict the first conjunct of
 `D5/S3/Combinatorics/BinomialBases/MatharA001722.result`.
 A nonzero coefficient of the displayed formal differential expression would
-contradict its second conjunct and the explicit operator certificate.
+contradict the explicit operator certificate used to prove its second conjunct.
 
 ## Evidence
 
