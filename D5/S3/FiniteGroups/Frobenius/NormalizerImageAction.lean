@@ -240,14 +240,7 @@ private def centerTower : IsScalarTower k (Center ρ N) (Image ρ N) :=
 private theorem image_central : Algebra.IsCentral (Center ρ N) (Image ρ N) where
   out a ha := Algebra.mem_bot.mpr ⟨⟨a, ha⟩, rfl⟩
 
-/-- A center-fixed actual automorphism is linear over that very center. This
-is the precise input for Skolem; center-fixedness is used only in this branch. -/
-def centerLinear (h : H) (hz : centerAction ρ N h = 1) :
-    Image ρ N ≃ₐ[Center ρ N] Image ρ N where
-  __ := (alpha ρ N h).toRingEquiv
-  commutes' z := congrArg Subtype.val (AlgEquiv.congr_fun hz z)
-
-/-- SOURCE ONLY: the imported Skolem candidate manufactures the unit. The
+/-- The attributed Skolem-Noether theorem supplies the unit. The
 canonical arbitrary-field obstruction then forces the restricted action to be
 trivial, contradicting hnt. IsSimpleRing is discharged from original-module
 semisimplicity/isotypy in the final theorem below, not assumed there. -/
@@ -300,7 +293,7 @@ private theorem mem_of_center_fixed [Finite N] [Module.Finite k U]
   rw [q_of] at hn
   exact hn
 
-/-- SOURCE ONLY: identifies the entire center kernel in the nontrivial branch. -/
+/-- Identifies the entire center kernel in the nontrivial branch. -/
 private theorem centerAction_ker_eq [Finite N] [Module.Finite k U]
     [IsSimpleRing (Image ρ N)]
     (hfix : ∀ h : H, h ∉ N → ∀ n : N, MulAut.conjNormal h n = n → n = 1)
@@ -324,7 +317,7 @@ private theorem actualTower :
   change q ρ N (algebraMap k (MonoidAlgebra k N) c) x = c • x
   exact congrArg (fun f : Module.End k U => f x) ((q ρ N).commutes c)
 
-/-- SOURCE ONLY: the complement's center kernel is trivial for the original
+/-- The complement's center kernel is trivial for the original
 finite semisimple isotypic module. Simplicity of A follows from the actual image theorem; finite dimensionality of A over k and over Z(A) is derived above.
 The fixed-point-free condition is the actual Frobenius-kernel conjugation
 condition inside H. The complement is an actual subgroup complement inside H.

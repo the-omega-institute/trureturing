@@ -8,7 +8,7 @@ Normal-basis coordinates for covariant field operators over an independent divis
 
 $$\forall K \in Type*,\; \forall F \in Type*,\; \forall D \in Type*,\; \forall U \in Type*,\; [Field\left(K\right)], [Field\left(F\right)], [Algebra\left(K, F\right)], [\operatorname{Module}.\operatorname{Finite}\left(K, F\right)], [IsGalois\left(K, F\right)], [DivisionRing\left(D\right)], [AddCommGroup\left(U\right)], [Module\left(D, U\right)], \forall a \in RingHom\left(F, \operatorname{Module}.\operatorname{End}\left(D, U\right)\right),\; \forall tau \in MonoidHom\left(AlgEquiv\left(K, F, F\right), \operatorname{Module}.\operatorname{End}\left(D, U\right)\right),\; \forall cov \in \left(\forall g \in AlgEquiv\left(K, F, F\right),\; \forall x \in F,\; tau\left(g\right) \cdot a\left(x\right) = a\left(g\left(x\right)\right) \cdot tau\left(g\right)\right),\; \operatorname{Function}.\operatorname{Bijective}\left(\operatorname{FrobeniusOriginalD}.\operatorname{RegularAction}.\operatorname{normalMap}\left(a, tau\right)\right)$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/FiniteGroups/OriginalDRegularAction.normalMap_bijective` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/FiniteGroups/Frobenius/OriginalDRegularAction.normalMap_bijective` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -22,7 +22,7 @@ The field operators install the F-module structure on U, while covariance gives 
 
 $$\forall K \in Type*,\; \forall F \in Type*,\; \forall D \in Type*,\; \forall U \in Type*,\; [Field\left(K\right)], [Field\left(F\right)], [Algebra\left(K, F\right)], [\operatorname{Module}.\operatorname{Finite}\left(K, F\right)], [IsGalois\left(K, F\right)], [DivisionRing\left(D\right)], [AddCommGroup\left(U\right)], [Module\left(D, U\right)], \forall a \in RingHom\left(F, \operatorname{Module}.\operatorname{End}\left(D, U\right)\right),\; \forall tau \in MonoidHom\left(AlgEquiv\left(K, F, F\right), \operatorname{Module}.\operatorname{End}\left(D, U\right)\right),\; \forall cov \in \left(\forall g \in AlgEquiv\left(K, F, F\right),\; \forall x \in F,\; tau\left(g\right) \cdot a\left(x\right) = a\left(g\left(x\right)\right) \cdot tau\left(g\right)\right),\; LinearEquiv\left(\operatorname{RingHom}.\operatorname{id}\left(D\right), U, AlgEquiv\left(K, F, F\right) \to \operatorname{FrobeniusOriginalD}.\operatorname{RegularAction}.\operatorname{fixed}\left(tau\right)\right)$$
 
-*Formalization.* `D5/S3/FiniteGroups/OriginalDRegularAction.regularEquiv` (`✓ std3`).
+*Formalization.* `D5/S3/FiniteGroups/Frobenius/OriginalDRegularAction.regularEquiv` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -34,7 +34,7 @@ The inverse of the normal-basis sum map gives a D-linear equivalence from U to G
 
 $$\forall K \in Type*,\; \forall F \in Type*,\; \forall D \in Type*,\; \forall U \in Type*,\; [Field\left(K\right)], [Field\left(F\right)], [Algebra\left(K, F\right)], [\operatorname{Module}.\operatorname{Finite}\left(K, F\right)], [IsGalois\left(K, F\right)], [DivisionRing\left(D\right)], [AddCommGroup\left(U\right)], [Module\left(D, U\right)], \forall a \in RingHom\left(F, \operatorname{Module}.\operatorname{End}\left(D, U\right)\right),\; \forall tau \in MonoidHom\left(AlgEquiv\left(K, F, F\right), \operatorname{Module}.\operatorname{End}\left(D, U\right)\right),\; \forall cov \in \left(\forall g \in AlgEquiv\left(K, F, F\right),\; \forall x \in F,\; tau\left(g\right) \cdot a\left(x\right) = a\left(g\left(x\right)\right) \cdot tau\left(g\right)\right),\; \forall h \in AlgEquiv\left(K, F, F\right),\; \forall u \in U,\; \forall g \in AlgEquiv\left(K, F, F\right),\; \operatorname{FrobeniusOriginalD}.\operatorname{RegularAction}.\operatorname{regularEquiv}\left(a, tau, cov\right)\left(tau\left(h, u\right), g\right) = \operatorname{FrobeniusOriginalD}.\operatorname{RegularAction}.\operatorname{regularEquiv}\left(a, tau, cov\right)\left(u, \operatorname{Inv}.\operatorname{inv}\left(h\right) \cdot g\right)$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/FiniteGroups/OriginalDRegularAction.regularEquiv_apply_action` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/FiniteGroups/Frobenius/OriginalDRegularAction.regularEquiv_apply_action` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -44,6 +44,7 @@ These coordinates intertwine the actual operators tau(h) with left translation: 
 
 ## References
 
-- Truth anchor: `D5/S3/FiniteGroups/OriginalDRegularAction.normalMap_bijective`
-- Truth anchor: `D5/S3/FiniteGroups/OriginalDRegularAction.regularEquiv`
-- Truth anchor: `D5/S3/FiniteGroups/OriginalDRegularAction.regularEquiv_apply_action`
+- Truth anchor: `D5/S3/FiniteGroups/Frobenius/OriginalDRegularAction.normalMap_bijective`
+- Truth anchor: `D5/S3/FiniteGroups/Frobenius/OriginalDRegularAction.regularEquiv`
+- Truth anchor: `D5/S3/FiniteGroups/Frobenius/OriginalDRegularAction.regularEquiv_apply_action`
+- Dependency: [D5/S3/Factorization/Galois/GaloisVectorDescent](../../Factorization/Galois/GaloisVectorDescent.md)

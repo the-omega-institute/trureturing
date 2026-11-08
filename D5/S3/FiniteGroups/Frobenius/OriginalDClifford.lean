@@ -519,15 +519,3 @@ theorem originalD_finrank_independent_universes
   simp [Subgroup.index, Nat.card_eq_fintype_card]
 
 end D5.S3.FiniteGroups.CliffordDecomposition.Representation
-
-namespace D5.S3.FiniteGroups.CliffordDecomposition.Representation
-set_option pp.universes true in
-#check @originalDRestrictEquivPiIndependent
-set_option pp.universes true in
-#check @originalD_finrank_independent_universes
-#print axioms OriginalDCliffordCandidate.map_isotypicComponent_semilinear
-#print axioms OriginalDCliffordCandidate.originalDTranslate_map_component
-#print axioms originalDActualComponentQuotientEquiv
-#print axioms originalDRestrictEquivPiIndependent
-#print axioms originalD_finrank_independent_universes
-end D5.S3.FiniteGroups.CliffordDecomposition.Representation

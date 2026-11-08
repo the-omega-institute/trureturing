@@ -8,7 +8,7 @@ Frobenius divisibility and actual regular coordinates over the original Schur di
 
 $$\forall k \in Type*,\; \forall G \in Type*,\; \forall V \in Type*,\; [Group\left(G\right)], [Finite\left(G\right)], [Field\left(k\right)], [AddCommGroup\left(V\right)], [Module\left(k, V\right)], \forall N \in Subgroup\left(G\right),\; [\operatorname{Subgroup}.\operatorname{Normal}\left(N\right)], \forall rho \in Representation\left(k, G, V\right),\; [\operatorname{Module}.\operatorname{Finite}\left(k, V\right)], [\operatorname{Representation}.\operatorname{IsIrreducible}\left(rho\right)], \forall hfix \in \left(\forall g \in G,\; \neg (\operatorname{Membership}.\operatorname{mem}\left(N, g\right)) \Rightarrow \left(\forall n \in N,\; \operatorname{MulAut}.\operatorname{conjNormal}\left(g\right)\left(n\right) = n \Rightarrow n = 1\right)\right),\; \forall hnt \in \neg (\operatorname{Representation}.\operatorname{IsTrivial}\left(\operatorname{MonoidHom}.\operatorname{comp}\left(rho, \operatorname{Subgroup}.\operatorname{subtype}\left(N\right)\right)\right)),\; \operatorname{Dvd}.\operatorname{dvd}\left(\operatorname{Subgroup}.\operatorname{index}\left(N\right), \operatorname{Module}.\operatorname{finrank}\left(\operatorname{Module}.\operatorname{End}\left(MonoidAlgebra\left(k, G\right), \operatorname{Representation}.\operatorname{asModule}\left(rho\right)\right), \operatorname{Representation}.\operatorname{asModule}\left(rho\right)\right)\right)$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/FiniteGroups/OriginalDFrobenius.index_dvd_originalD_finrank` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/FiniteGroups/Frobenius/OriginalDFrobenius.index_dvd_originalD_finrank` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -26,7 +26,7 @@ Normal-N invariants are a G-subrepresentation. Global irreducibility and nontriv
 
 $$\forall k \in Type*,\; \forall G \in Type*,\; \forall V \in Type*,\; [Group\left(G\right)], [Finite\left(G\right)], [Field\left(k\right)], [AddCommGroup\left(V\right)], [Module\left(k, V\right)], \forall N \in Subgroup\left(G\right),\; [\operatorname{Subgroup}.\operatorname{Normal}\left(N\right)], \forall rho \in Representation\left(k, G, V\right),\; [\operatorname{Module}.\operatorname{Finite}\left(k, V\right)], [\operatorname{Representation}.\operatorname{IsIrreducible}\left(rho\right)], \forall hfix \in \left(\forall g \in G,\; \neg (\operatorname{Membership}.\operatorname{mem}\left(N, g\right)) \Rightarrow \left(\forall n \in N,\; \operatorname{MulAut}.\operatorname{conjNormal}\left(g\right)\left(n\right) = n \Rightarrow n = 1\right)\right),\; \forall hnt \in \neg (\operatorname{Representation}.\operatorname{IsTrivial}\left(\operatorname{MonoidHom}.\operatorname{comp}\left(rho, \operatorname{Subgroup}.\operatorname{subtype}\left(N\right)\right)\right)),\; \exists C \in Subgroup\left(G\right),\; \operatorname{Subgroup}.\operatorname{IsComplement}'\left(N, C\right) \land \left(\exists S \in Submodule\left(\operatorname{Module}.\operatorname{End}\left(MonoidAlgebra\left(k, G\right), \operatorname{Representation}.\operatorname{asModule}\left(rho\right)\right), \operatorname{Representation}.\operatorname{asModule}\left(rho\right)\right),\; \exists E \in LinearEquiv\left(\operatorname{RingHom}.\operatorname{id}\left(\operatorname{Module}.\operatorname{End}\left(MonoidAlgebra\left(k, G\right), \operatorname{Representation}.\operatorname{asModule}\left(rho\right)\right)\right), \operatorname{Representation}.\operatorname{asModule}\left(rho\right), C \to S\right),\; \forall c \in C,\; \forall v \in \operatorname{Representation}.\operatorname{asModule}\left(rho\right),\; \forall x \in C,\; E\left(\operatorname{OriginalDCliffordCandidate}.\operatorname{originalDTranslate}\left(rho, c, v\right), x\right) = E\left(v, \operatorname{Inv}.\operatorname{inv}\left(c\right) \cdot x\right)\right)$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/FiniteGroups/OriginalDFrobenius.exists_complement_originalD_regular` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/FiniteGroups/Frobenius/OriginalDFrobenius.exists_complement_originalD_regular` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -36,10 +36,12 @@ Under the same hypotheses there exist an actual complement C, a D-submodule S of
 
 First construct equivariant regular coordinates on U for J by normal-basis descent over the faithful actual center. The vector associated with the identity coordinate generates the J-coordinate blocks. Sum its actual translates over C to obtain a D-linear map from C -> S to W. The actual complement factorization and inertia stability show that its image contains every G-translate of U. This image is a k[G]-submodule; irreducibility makes it all of W. The original-D Clifford rank identity gives equality of domain and codomain dimensions, proving bijectivity. Reindexing the actual operator sum proves C-equivariance directly. Thus equality of dimensions is used only after constructing the map, proving surjectivity, and identifying its action.
 
-The equivalence uses the original Schur division ring throughout, without replacing it by the coefficient field or by a commutative division ring.
+The equivalence uses the original Schur division ring throughout, without replacing it by the coefficient field or by a commutative division ring. The useful passage from group action to arithmetic is that a faithful action on the actual component center supplies fixed-field Galois descent and normal-basis coordinates. These coordinates are linear for the original D-action because the center operators commute with D. Clifford induction assembles them into full-complement regular coordinates; each complement coordinate has the same D-dimension, so its order, equal to N.index, divides the total dimension. Hall coprimality, Schur-Zassenhaus, Skolem-Noether, semilinear descent and normal bases are classical results or reused proofs. The formal integration constructs the actual centers, inertia components and equivariant maps together; it makes no global novelty claim.
 
 ## References
 
-- Truth anchor: `D5/S3/FiniteGroups/OriginalDFrobenius.exists_complement_originalD_regular`
-- Truth anchor: `D5/S3/FiniteGroups/OriginalDFrobenius.index_dvd_originalD_finrank`
-- Dependency: [D5/S3/FiniteGroups/OriginalDRegularAction](OriginalDRegularAction.md)
+- Truth anchor: `D5/S3/FiniteGroups/Frobenius/OriginalDFrobenius.exists_complement_originalD_regular`
+- Truth anchor: `D5/S3/FiniteGroups/Frobenius/OriginalDFrobenius.index_dvd_originalD_finrank`
+- Dependency: [D5/S3/FiniteGroups/Frobenius/NormalizerImageAction](NormalizerImageAction.md)
+- Dependency: [D5/S3/FiniteGroups/Frobenius/OriginalDClifford](OriginalDClifford.md)
+- Dependency: [D5/S3/FiniteGroups/Frobenius/OriginalDRegularAction](OriginalDRegularAction.md)

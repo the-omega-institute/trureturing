@@ -713,12 +713,6 @@ theorem exists_complement_originalD_regular
   intro c v x
   exact congrArg eS (hT c v x)
 
-set_option pp.universes true in
-#check @exists_complement_originalD_regular
-#print axioms exists_complement_originalD_regular
 
-set_option pp.universes true in
-#check @index_dvd_originalD_finrank
-#print axioms index_dvd_originalD_finrank
 
 end D5.S3.FiniteGroups.OriginalDFrobenius
