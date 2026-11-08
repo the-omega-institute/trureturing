@@ -11,6 +11,33 @@ internal sealed class FourScaleCovarianceDocument : IScribeDocumentDefinition
         H("Four-scale separation"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("moving-mem-lp"),
+                DeclarationHandle.Create(Prefix + "moving_memLp"),
+                H("Square integrability of moving increments"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "If E is locally bounded and measurable and a>0, then x maps to E(x+s*x^a)-E(x) belongs to L2 on every finite interval (l,r], for every real s."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("average-mem-lp"),
+                DeclarationHandle.Create(Prefix + "average_memLp"),
+                H("Square integrability of averaged moving increments"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For locally bounded measurable E and a>0, the window average of x maps to E(x+s*x^a)-E(x) belongs to L2 on every finite interval (l,r], for all real s and window lengths M. Local integrability makes the window average continuous."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("covariance-of-norm-bounds"),
+                DeclarationHandle.Create(Prefix + "covariance_of_norm_bounds"),
+                H("Averaging and translation bounds control covariance"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "Let f and z be locally square integrable and let M>0. Suppose translated L2 norms of f are bounded by F, the L2 norm of z by Z, the L2 norm of the window average of f by U, the translation difference of z by D, and endpoint-strip norms of f and z by F and S. Under joint integrability of the translated pairing, the absolute integral of f*z over [l,r] is at most U*Z+F*D+2*F*S."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("four-scale-covariance-bound"),
                 DeclarationHandle.Create(Prefix + "four_scale_covariance_bound"),
                 H("Uniform covariance bound"),

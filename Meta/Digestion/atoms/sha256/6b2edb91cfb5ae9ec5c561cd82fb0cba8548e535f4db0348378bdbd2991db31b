@@ -1,0 +1,4 @@
+**引理 58.1（实对称图表在后层的放大）。** 对忠实保单位 Jordan 同态 $\phi:H_d(\mathbb C)\to H_D(\mathbb C)$，存在正整数 $k$、$D=dk$ 及一份后层酉坐标，使全部实对称 $a\in H_d(\mathbb R)$ 满足 $\phi(a)=a\otimes I_k$。这里只识别实对称部分，不对未知 $D$ 或全部复方向作此断言。
+
+证明。置 $p_i=\phi(E_{ii})$、$X_{ij}=E_{ij}+E_{ji}$。$p_i$ 为两两正交且和为单位的非零投影。由 $X_{ij}$ 的原 Peirce 关系，$\phi(X_{ij})$ 只有 $p_i,p_j$ 间的两个伴随块；平方等式 $\phi(X_{ij})^2=p_i+p_j$ 使该块 $v_{ij}:p_j\mathbb C^D\to p_i\mathbb C^D$ 为酉同构。所以全部 $p_i$ 等秩 $k$，$D=dk$。对三个不同指标，原 $X_{ij}\circ X_{j\ell}=X_{i\ell}/2$ 给 $v_{ij}v_{j\ell}=v_{i\ell}$。固定第一块并以 $v_{i1}$ 统一各块坐标，所有 $\phi(X_{ij})$ 就成为 $(E_{ij}+E_{ji})\otimes I_k$；连同 $p_i=E_{ii}\otimes I_k$，实线性给结论。这个有限矩阵计算同时涵盖后层对通常与相反图表的混合；对任意后层自伴元的交叉块也未施加限制。∎
+
