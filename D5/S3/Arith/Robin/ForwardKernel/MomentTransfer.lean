@@ -22,7 +22,8 @@ set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 set_option backward.isDefEq.respectTransparency.types false
 
-private lemma ae_dyadic_mem (X : ℝ) :
+/-- The dyadic probability measure is supported on its closed dyadic interval. -/
+lemma ae_dyadic_mem (X : ℝ) :
     ∀ᵐ x ∂dyadicProbabilityMeasure X, x ∈ Icc X (2 * X) := by
   apply (withDensity_absolutelyContinuous _ _).ae_le
   filter_upwards [ae_restrict_mem measurableSet_Ioc] with x hx
@@ -68,12 +69,14 @@ private lemma product_correction {ι : Type*} (t : Finset ι) {q : ι → ℝ} {
         add_le_add (mul_le_mul habs hqt (abs_nonneg _) (by positivity)) hqi
       _ = _ := by ring
 
-private lemma product_moment_bound {α : Type*} [MeasurableSpace α] {μ : Measure α} {k : ℕ} (hk : 0 < k)
-    {f : Fin k → α → ℝ} {C : ℝ} (hC : 0 ≤ C)
-    (hf : ∀ i, Measurable (f i)) (hi : ∀ i, Integrable (fun x => |f i x| ^ k) μ)
+/-- Hölder bounds a finite product by the product of the individual moment roots. -/
+lemma product_moment_bound {α : Type*} [MeasurableSpace α] {μ : Measure α}
+    {k : ℕ} (hk : 0 < k) {f : Fin k → α → ℝ} {C : Fin k → ℝ}
+    (hC : ∀ i, 0 ≤ C i) (hf : ∀ i, AEStronglyMeasurable (f i) μ)
+    (hi : ∀ i, Integrable (fun x => |f i x| ^ k) μ)
     (hp : Integrable (fun x => ∏ i, |f i x|) μ)
-    (hb : ∀ i, (∫ x, |f i x| ^ k ∂μ) ≤ C) :
-    (∫ x, ∏ i, |f i x| ∂μ) ≤ C := by
+    (hb : ∀ i, (∫ x, |f i x| ^ k ∂μ) ≤ C i) :
+    (∫ x, ∏ i, |f i x| ∂μ) ≤ ∏ i, C i ^ (1 / (k : ℝ)) := by
   have hk0 : (k : ℝ) ≠ 0 := Nat.cast_ne_zero.mpr hk.ne'
   have he (a : ℝ≥0∞) : (a ^ k) ^ (1 / (k : ℝ)) = a := by
     rw [← ENNReal.rpow_natCast, ← ENNReal.rpow_mul]
@@ -81,23 +84,24 @@ private lemma product_moment_bound {α : Type*} [MeasurableSpace α] {μ : Measu
   have h := ENNReal.lintegral_prod_norm_pow_le (μ := μ) Finset.univ
     (f := fun i x => (ENNReal.ofReal |f i x|) ^ k)
     (p := fun _ => 1 / (k : ℝ))
-    (fun i _ => by fun_prop)
+    (fun i _ => by
+      simpa only [Real.norm_eq_abs] using
+        (hf i).norm.aemeasurable.ennreal_ofReal.pow_const k)
     (by simp [hk0]) (fun _ _ => by positivity)
   simp only [he] at h
-  have hl (i : Fin k) : (∫⁻ x, (ENNReal.ofReal |f i x|) ^ k ∂μ) ≤ ENNReal.ofReal C := by
+  have hl (i : Fin k) : (∫⁻ x, (ENNReal.ofReal |f i x|) ^ k ∂μ) ≤ ENNReal.ofReal (C i) := by
     simp_rw [← ENNReal.ofReal_pow (abs_nonneg _)]
     rw [← ofReal_integral_eq_lintegral_ofReal (hi i) (Eventually.of_forall (fun x => by positivity))]
-    · exact ENNReal.ofReal_le_ofReal (hb i)
-  have hc : (∏ _i : Fin k, (ENNReal.ofReal C) ^ (1 / (k : ℝ))) = ENNReal.ofReal C := by
-    simp only [Finset.prod_const, Finset.card_univ, Fintype.card_fin]
-    rw [← ENNReal.rpow_natCast, ← ENNReal.rpow_mul]
-    simp [hk0]
-  have hh : (∫⁻ x, ∏ i, ENNReal.ofReal |f i x| ∂μ) ≤ ENNReal.ofReal C :=
-    h.trans ((Finset.prod_le_prod (fun i _ => ENNReal.rpow_le_rpow (hl i) (by positivity))).trans_eq hc)
+    exact ENNReal.ofReal_le_ofReal (hb i)
+  have hh := h.trans (Finset.prod_le_prod
+    (fun i _ => ENNReal.rpow_le_rpow (hl i) (by positivity : 0 ≤ 1 / (k : ℝ))))
   simp_rw [← ENNReal.ofReal_prod_of_nonneg (fun i _ => abs_nonneg (f i _))] at hh
   rw [← ofReal_integral_eq_lintegral_ofReal hp (Eventually.of_forall
     (fun x => Finset.prod_nonneg (fun i _ => abs_nonneg _)))] at hh
-  · exact (ENNReal.ofReal_le_ofReal_iff hC).mp hh
+  simp_rw [ENNReal.ofReal_rpow_of_nonneg (hC _) (by positivity : 0 ≤ 1 / (k : ℝ))] at hh
+  rw [← ENNReal.ofReal_prod_of_nonneg (fun i _ => Real.rpow_nonneg (hC i) _)] at hh
+  exact (ENNReal.ofReal_le_ofReal_iff
+    (Finset.prod_nonneg (fun i _ => Real.rpow_nonneg (hC i) _))).mp hh
 
 private def momentKernel (E : ℝ → ℝ) {k : ℕ} (e : Fin k → ℝ) (X : ℝ)
     (q : Fin k → ℝ → ℝ → ℝ) (s : Fin k → ℝ) (x : ℝ) : ℝ :=
@@ -204,7 +208,13 @@ private lemma absolute_moment_bound {E : ℝ → ℝ} {X C : ℝ} {k : ℕ} {e :
       _ ≤ ∏ i : Fin k, D i := Finset.prod_le_prod₀
         (fun i _ => abs_nonneg _) (fun i _ => hDb i (s i) (hs i) x hx)
       _ = _ := by simp
-  have hholder := product_moment_bound hk hC hm hip hp (fun i => hb i (s i) (hs i))
+  have hholder := product_moment_bound hk (fun _ => hC)
+    (fun i => (hm i).aestronglyMeasurable) hip hp (fun i => hb i (s i) (hs i))
+  have hconst : (∏ _i : Fin k, C ^ (1 / (k : ℝ))) = C := by
+    simp only [Finset.prod_const, Finset.card_univ, Fintype.card_fin]
+    rw [← Real.rpow_natCast, ← Real.rpow_mul hC]
+    simp [Nat.cast_ne_zero.mpr hk.ne']
+  rw [hconst] at hholder
   have hU : ∀ᵐ x ∂dyadicProbabilityMeasure X,
       ‖dyadicU X x ^ (∑ i, dyadicR (e i))‖ ≤ 2 ^ (∑ i, dyadicR (e i)) := by
     filter_upwards [ae_dyadic_mem X] with x hx
