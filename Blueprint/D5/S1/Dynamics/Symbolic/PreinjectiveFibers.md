@@ -48,6 +48,8 @@ Apply the finite-family encoding to any finite subset of the fiber. Its target c
 
 The statement and collar synthesis are authored here from the native code interface and generic finite-set cardinality results. The mathematical mechanism belongs to classical finite-window symbolic dynamics; no literature novelty is claimed.
 
+For an entropy application, equip the finite alphabet with discrete uniformity, put X=A^Z and let Y be the actual range of code(h). The source X is compact, and continuity of code(h) makes Y compact. Let S be spatial shift by one on X, T its restriction to Y, and π : X → Y the code with its codomain restricted to its range. The original code_shift identity makes π a surjective semiconjugacy. Subtype equality identifies each π-fiber with the complete-output fiber above, with the same explicit finiteness and uniform bound. D5.S1.Dynamics.FiniteFiberEntropy.finite_fiber_entropy therefore gives equal covering entropy for S on X and T on Y, including the empty case. These are spatial shift dynamics; this consequence does not concern iteration of code(h).
+
 ## References
 
 - Truth anchor: `D5/S1/Dynamics/Symbolic/PreinjectiveFibers.collarPair`
