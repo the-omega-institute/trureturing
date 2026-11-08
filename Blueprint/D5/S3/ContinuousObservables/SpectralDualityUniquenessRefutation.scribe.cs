@@ -65,7 +65,10 @@ internal sealed class SpectralDualityUniquenessRefutationDocument : IScribeDocum
                         + "Every dense subset meets this open set and therefore contains a failure "
                         + "of global uniqueness. This refutes the universal extension; the published "
                         + "N>m proposition and the strict N<m case are separate statements."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("vega-coso-spectral-duality-uniqueness"),
+                    ResolutionKind.Refuted)))));
 
     private static Formula ClaimBody()
     {

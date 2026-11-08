@@ -26,6 +26,10 @@ $$\neg \left(\forall \left(N: \mathbb{N}\right), \left(\forall \left(m: \mathbb{
 
 *Proof.* Machine-checked in Lean as `D5/S3/ContinuousObservables/SpectralDualityUniquenessRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/vega-coso-spectral-duality-uniqueness` (refuted) by `D5/S3/ContinuousObservables/SpectralDualityUniquenessRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"vega-coso-spectral-duality-uniqueness","declaration_gid":"D5/S3/ContinuousObservables/SpectralDualityUniquenessRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Juan Antonio Vega Coso (2026). *Axioms and internal rigidity of spectral duality structures*. DOI: [10.48550/arXiv.2610.16454](https://doi.org/10.48550/arXiv.2610.16454). URL: <https://arxiv.org/abs/2610.16454v1>.
