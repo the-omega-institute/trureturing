@@ -165,6 +165,15 @@ include heff hrow in
 private theorem finite_word_law (k : ℕ) (s : S) :
     (Measure.pi fun _ : Fin (k + 1) => ρ).map (word labels update k s) =
       ((zeroRow A k s).bind C).toMeasure := by
+  have hsplit (k : ℕ) : Measurable (fun r : Fin (k + 1) → R =>
+      ((fun j : Fin k => r j.castSucc), r (Fin.last k))) :=
+    (measurable_pi_iff.mpr fun j : Fin k => measurable_pi_apply j.castSucc).prodMk
+      (measurable_pi_apply (Fin.last k))
+  have hpair (k : ℕ) (s : S) (hm : Measurable (zeros labels update k s)) :
+      Measurable (fun r : Fin (k + 1) → R =>
+        (zeros labels update k s (fun j => r j.castSucc), r (Fin.last k))) :=
+    (hm.comp (measurable_pi_iff.mpr fun j : Fin k => measurable_pi_apply j.castSucc)).prodMk
+      (measurable_pi_apply (Fin.last k))
   have hz : ∀ k s, (Measure.pi fun _ : Fin k => ρ).map (zeros labels update k s) =
       (zeroRow A k s).toMeasure := by
     intro k
@@ -184,15 +193,13 @@ private theorem finite_word_law (k : ℕ) (s : S) :
             (Prod.map (zeros labels update k s) id) ∘
               (fun r => (fun j : Fin k => r j.castSucc, r (Fin.last k))) from rfl,
           ← Measure.map_map (hm.prodMap measurable_id)
-            ((measurable_pi_iff.mpr fun j => measurable_pi_apply j.castSucc).prodMk
-              (measurable_pi_apply (Fin.last k))),
+            (hsplit k),
           split_last ρ k, ← Measure.map_prod_map _ _ hm measurable_id, ih, Measure.map_id]
       change (Measure.pi fun _ : Fin (k + 1) => ρ).map
         ((fun p : S × R => effective labels update p.1 false p.2) ∘
           (fun r => (zeros labels update k s (fun j => r j.castSucc), r (Fin.last k)))) = _
       rw [← Measure.map_map (heff false)
-        ((hm.comp (measurable_pi_iff.mpr fun j => measurable_pi_apply j.castSucc)).prodMk
-          (measurable_pi_apply (Fin.last k))), hp]
+        (hpair k s hm), hp]
       exact integrate_step labels update ρ A C heff hrow (zeroRow A k s) false
   have hm : Measurable (zeros labels update k s) :=
     (zeros_measurable labels update heff k).comp
@@ -206,15 +213,13 @@ private theorem finite_word_law (k : ℕ) (s : S) :
         (Prod.map (zeros labels update k s) id) ∘
           (fun r => (fun j : Fin k => r j.castSucc, r (Fin.last k))) from rfl,
       ← Measure.map_map (hm.prodMap measurable_id)
-        ((measurable_pi_iff.mpr fun j => measurable_pi_apply j.castSucc).prodMk
-          (measurable_pi_apply (Fin.last k))),
+        (hsplit k),
       split_last ρ k, ← Measure.map_prod_map _ _ hm measurable_id, hz, Measure.map_id]
   change (Measure.pi fun _ : Fin (k + 1) => ρ).map
     ((fun p : S × R => effective labels update p.1 true p.2) ∘
       (fun r => (zeros labels update k s (fun j => r j.castSucc), r (Fin.last k)))) = _
   rw [← Measure.map_map (heff true)
-    ((hm.comp (measurable_pi_iff.mpr fun j => measurable_pi_apply j.castSucc)).prodMk
-      (measurable_pi_apply (Fin.last k))), hp]
+    (hpair k s hm), hp]
   exact integrate_step labels update ρ A C heff hrow (zeroRow A k s) true
 
 include heff hrow in
@@ -275,10 +280,12 @@ def Primitive (η : Measure S) (w f : PMF ℕ) (ρ : Measure R) : Prop :=
 theorem slice_measurable (hτ : Measurable τ) (hK : ∀ j, Measurable (fun ω => K ω j))
     (n : ℕ) (a : ℕ × (Fin n → ℕ)) : MeasurableSet (sourceSlice τ K n a) :=
   (hτ (measurableSet_singleton _)).inter (by
-    convert (MeasurableSet.iInter fun j : Fin n =>
-      (hK j.val) (measurableSet_singleton (a.2 j))) using 1
-    ext ω
-    simp only [Set.mem_iInter, Set.mem_preimage, Set.mem_singleton_iff, Set.mem_setOf_eq])
+    have he : {ω | ∀ j : Fin n, K ω j.val = a.2 j} =
+        ⋂ j : Fin n, (fun ω => K ω j.val) ⁻¹' {a.2 j} := by
+      ext ω
+      simp only [Set.mem_iInter, Set.mem_preimage, Set.mem_singleton_iff, Set.mem_setOf_eq]
+    rw [he]
+    exact MeasurableSet.iInter fun j : Fin n => (hK j.val) (measurableSet_singleton (a.2 j)))
 
 private theorem slices_disjoint (n : ℕ) :
     Pairwise (Disjoint on sourceSlice τ K n) := by
