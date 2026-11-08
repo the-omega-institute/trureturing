@@ -22,6 +22,10 @@ $$(\exists A: \operatorname{PowerSeries}\left(\mathbb{Q}\right), \operatorname{H
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Algebraic/HannaSelfSubstitutionIntegralityA157675.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/hannasubst-a157675` (proved) by `D5/S1/Recurrence/Algebraic/HannaSelfSubstitutionIntegralityA157675.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hannasubst-a157675","declaration_gid":"D5/S1/Recurrence/Algebraic/HannaSelfSubstitutionIntegralityA157675.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* P. D. Hanna (2009). *OEIS A163921 and A157675: self-substitution integrality conjectures*. URL: <https://oeis.org/A163921/internal>.

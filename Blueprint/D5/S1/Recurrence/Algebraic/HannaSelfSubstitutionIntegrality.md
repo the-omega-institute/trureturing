@@ -48,6 +48,10 @@ $$\forall L: \mathbb{N} \to \mathbb{Q}, \operatorname{HannaLogarithmicPowerClosu
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Algebraic/HannaSelfSubstitutionIntegrality.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/hannasubst` (proved) by `D5/S1/Recurrence/Algebraic/HannaSelfSubstitutionIntegrality.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hannasubst","declaration_gid":"D5/S1/Recurrence/Algebraic/HannaSelfSubstitutionIntegrality.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* P. D. Hanna (2009). *OEIS A163921 and A157675: self-substitution integrality conjectures*. URL: <https://oeis.org/A163921/internal>.

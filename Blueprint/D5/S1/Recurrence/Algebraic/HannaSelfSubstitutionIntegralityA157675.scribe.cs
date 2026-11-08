@@ -26,13 +26,14 @@ internal sealed class HannaSelfSubstitutionIntegralityA157675Document : IScribeD
                 "The exponential input exp(Sum_{n>=1} 2^n*x^n/n) is the integer geometric "
                     + "series (1-2X) inverse. HannaSelfSubstitutionIntegrality.result therefore "
                     + "gives existence and integrality of every solution of the displayed equation.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("hannasubst-a157675"), ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        DescribeRole role, AssessedProvenance provenance, OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create("hanna-self-substitution-a157675-" + name),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
-            provenance, Blocks(Paragraph(Text(prose))), role);
+            provenance, Blocks(Paragraph(Text(prose))), role, resolution);
     private static Formula ClaimBody() => new Formula.Logic(
         Parenthesized(Ex("A", PS(), Solves(V("A")))), FormulaLogicOperator.And,
         Parenthesized(All("A", PS(), new Formula.Logic(Solves(V("A")), FormulaLogicOperator.Implies,

@@ -45,7 +45,8 @@ internal sealed class HannaSelfSubstitutionIntegralityDocument : IScribeDocument
                     + "by the sufficient Dieudonne-Dwork criterion. The operator raises coefficient "
                     + "agreement by one degree. Iteration from 1 determines its unique solution, "
                     + "and every solution coefficient equals an integer iterate coefficient.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("hannasubst"), ResolutionKind.Proved)),
             Node("geometric_input", "Geometric exponential inputs",
                 Disp(All("a", Int(), Integral(Exponential(Call("logSum",
                     Lambda("n", Nat(), App(Q("PowerSeries", "C"),
@@ -56,10 +57,10 @@ internal sealed class HannaSelfSubstitutionIntegralityDocument : IScribeDocument
                 DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        DescribeRole role, AssessedProvenance provenance, OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create("hanna-self-substitution-" + name.Replace('_', '-').ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
-            provenance, Blocks(Paragraph(Text(prose))), role);
+            provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula LogSumFormula()
     {
