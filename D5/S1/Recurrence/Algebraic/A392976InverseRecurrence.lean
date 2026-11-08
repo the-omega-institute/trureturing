@@ -116,6 +116,7 @@ private def wU : ℕ → ℕ → ℚ
   | 5, 5 => 140685548031250
   | _, _ => 0
 
+set_option maxHeartbeats 4000000 in
 private def num : ℕ → Polynomial ℚ
   | 0 => (1) * Polynomial.X^1
   | 1 => (1) * Polynomial.X^1 +
@@ -220,10 +221,12 @@ private def num : ℕ → Polynomial ℚ
       (625) * Polynomial.X^37
   | _ => 0
 
+set_option maxHeartbeats 4000000 in
 private theorem num_recurrence (j : ℕ) (hj : j < 4) :
     num (j + 2) = f * (H * Polynomial.derivative (num (j + 1)) -
-      (2 * (j : ℚ) + 1) • (Polynomial.derivative H * num (j + 1))) := by
-  interval_cases j <;> norm_num [num, H, f, Polynomial.derivative_mul,
+      (2*j+1 : ℕ) * (Polynomial.derivative H * num (j + 1))) := by
+  have hs : j = 0 ∨ j = 1 ∨ j = 2 ∨ j = 3 := by omega
+  rcases hs with rfl | rfl | rfl | rfl <;> norm_num [num, H, f, Polynomial.derivative_mul,
     Polynomial.derivative_pow, Polynomial.derivative_sub, Polynomial.derivative_add,
     Polynomial.derivative_smul, smul_eq_mul] <;> ring
 
@@ -248,16 +251,18 @@ private theorem theta_transport (B : PowerSeries ℚ) :
   dsimp [H]
   ring
 
+private theorem coe_nat (n : ℕ) : ((n : Polynomial ℚ) : PowerSeries ℚ) = n :=
+  Polynomial.coeToPowerSeries.ringHom.map_natCast n
+
 private theorem scaled_step (B : PowerSeries ℚ) (d : ℕ) (N : Polynomial ℚ)
     (h : (H : PowerSeries ℚ)^(d + 1) * B.subst (f : PowerSeries ℚ) = N) :
     (H : PowerSeries ℚ)^(d + 3) * (theta B).subst (f : PowerSeries ℚ) =
       (f * (H * Polynomial.derivative N -
-        (d + 1 : ℚ) • (Polynomial.derivative H * N)) : Polynomial ℚ) := by
+        (d + 1 : ℕ) * (Polynomial.derivative H * N)) : Polynomial ℚ) := by
   have hd := congrArg (derivative (R := ℚ)) h
   simp only [Derivation.leibniz, derivative_pow, derivative_coe,
     Nat.add_sub_cancel, Nat.cast_add, Nat.cast_one, smul_eq_mul] at hd
-  simp only [Polynomial.coe_mul, Polynomial.coe_sub, Polynomial.coe_smul,
-    Algebra.smul_def, map_add, map_natCast, map_one]
+  simp only [Polynomial.coe_mul, Polynomial.coe_sub, coe_nat]
   linear_combination (H : PowerSeries ℚ)^(d + 2) * theta_transport B +
     (f : PowerSeries ℚ) * H * hd -
     (f : PowerSeries ℚ) * (d + 1 : PowerSeries ℚ) * (Polynomial.derivative H : PowerSeries ℚ) * h
@@ -272,7 +277,7 @@ private theorem scaled_iterates (j : ℕ) (hj : j < 5) :
     have h := scaled_step (theta^[j + 1] U) (2*j) (num (j + 1)) (ih (by omega))
     rw [num_recurrence j (by omega)]
     convert h using 1 <;>
-      simp only [Function.iterate_succ_apply', Nat.cast_mul, Nat.cast_ofNat] <;>
+      simp only [Function.iterate_succ_apply', Nat.cast_mul, Nat.cast_add, Nat.cast_ofNat, Nat.cast_one] <;>
       congr 1 <;> omega
 
 set_option maxHeartbeats 4000000 in
@@ -302,15 +307,16 @@ private theorem common_denominator (j : ℕ) (hj : j < 6) :
 
 private theorem inverse_operator : op wU U = 0 := by
   have hf : HasSubst (f : PowerSeries ℚ) := .of_constantCoeff_zero f_zero
-  have hu : HasSubst U := .of_constantCoeff_zero (by simp [U])
-  have hcert := congrArg (algebraMap (Polynomial ℚ) (PowerSeries ℚ)) polynomial_certificate
+  have hu : HasSubst U := .of_constantCoeff_zero (PowerSeries.constantCoeff_substInvOfIsUnit _ _)
+  have hcert := congrArg Polynomial.coeToPowerSeries.ringHom polynomial_certificate
   have hscaled : (H : PowerSeries ℚ)^9 * (op wU U).subst (f : PowerSeries ℚ) = 0 := by
     calc
       _ = ∑ k ∈ Finset.range 6, (f : PowerSeries ℚ)^k *
           ∑ j ∈ Finset.range 6, C (wU k j) *
             ((H : PowerSeries ℚ)^9 * (theta^[j] U).subst (f : PowerSeries ℚ)) := by
         simp only [op, ← coe_substAlgHom hf, map_sum, map_mul, map_pow,
-          substAlgHom_X, AlgHom.commutes, algebraMap_eq, coe_substAlgHom]
+          substAlgHom_X, ← algebraMap_eq, AlgHom.commutes]
+        simp only [algebraMap_eq, coe_substAlgHom]
         simp only [Finset.mul_sum]
         apply Finset.sum_congr rfl
         intro k hk
@@ -326,7 +332,8 @@ private theorem inverse_operator : op wU U = 0 := by
         apply Finset.sum_congr rfl
         intro j hj
         rw [common_denominator j (Finset.mem_range.mp hj)]
-      _ = 0 := by simpa only [map_sum, map_mul, map_pow, Polynomial.algebraMap_C, mul_assoc] using hcert
+      _ = 0 := by simpa only [map_sum, map_mul, map_pow, Polynomial.coeToPowerSeries.ringHom_apply,
+          Polynomial.coe_C, mul_assoc] using hcert
   have hh : (H : PowerSeries ℚ) ≠ 0 := by
     intro h
     have hz := congrArg constantCoeff h
@@ -334,8 +341,9 @@ private theorem inverse_operator : op wU U = 0 := by
   have hz : (op wU U).subst (f : PowerSeries ℚ) = 0 :=
     (mul_eq_zero.mp hscaled).resolve_left (pow_ne_zero _ hh)
   have h := congrArg (fun B : PowerSeries ℚ => B.subst U) hz
-  simpa only [subst_comp_subst_apply hf hu, inverse_right, X_subst, zero_subst] using h
+  simpa only [subst_comp_subst_apply hf hu, inverse_right, X_subst, ← coe_substAlgHom hu, map_zero] using h
 
+set_option maxHeartbeats 4000000 in
 private theorem operator_shift (B : PowerSeries ℚ) : op wU (X * B) = X * op wA B := by
   norm_num [op, wU, wA, Finset.sum_range_succ, Function.iterate_succ_apply',
     theta, Derivation.leibniz, derivative_X, derivative_one, map_add, map_mul,
@@ -357,7 +365,7 @@ private theorem coeff_theta_iterate (B : PowerSeries ℚ) (j n : ℕ) :
 
 private theorem coeff_op (w : ℕ → ℕ → ℚ) (B : PowerSeries ℚ) (n : ℕ) (hn : 5 ≤ n) :
     coeff n (op w B) = ∑ k ∈ Finset.range 6,
-      ∑ j ∈ Finset.range 6, w k j * (n-k : ℚ)^j * coeff (n-k) B := by
+      ∑ j ∈ Finset.range 6, w k j * ((n-k : ℕ) : ℚ)^j * coeff (n-k) B := by
   simp only [op, map_sum]
   apply Finset.sum_congr rfl
   intro k hk
@@ -390,21 +398,48 @@ private def p : ℕ → Polynomial ℚ
   | 5 => (23495312375279) * Polynomial.X^5 + (-73180721424774) * Polynomial.X^6 + (-406745978528262) * Polynomial.X^7 + (-384334715888720) * Polynomial.X^8 + (78200611484375) * Polynomial.X^9 + (140685548031250) * Polynomial.X^10
   | _ => 0
 
+set_option maxHeartbeats 4000000 in
 private theorem normal_form (B : PowerSeries ℚ) :
     op wA B = ∑ j : Fin 6, (p j.val : PowerSeries ℚ) * (derivative (R := ℚ))^[j.val] B := by
   norm_num [op, wA, p, Finset.sum_range_succ, Fin.sum_univ_succ,
     Function.iterate_succ_apply', theta, Derivation.leibniz, derivative_pow,
     derivative_X, derivative_one, map_add, map_mul, map_natCast, map_ofNat,
-    Polynomial.coe_add, Polynomial.coe_mul, Polynomial.coe_pow]
+    Polynomial.coe_add, Polynomial.coe_mul, Polynomial.coe_pow,
+    Polynomial.coe_neg, coe_nat]
   ring
 
 private theorem dfinite : DFinite A := by
   refine ⟨5, fun j => p j.val, ?_, ?_⟩
   · refine ⟨⟨5, by decide⟩, ?_⟩
     intro hz
+    change p 5 = 0 at hz
     have h := congrArg (Polynomial.coeff 5) hz
     norm_num [p] at h
   · exact (normal_form A).symm.trans A_operator
+
+/-- Both inverse compositions, uniqueness, the quotient coefficients, D-finiteness,
+and the exact six-term recurrence at every natural index at least five. -/
+def claim : Prop :=
+  constantCoeff U = 0 ∧
+  (f : PowerSeries ℚ).subst U = X ∧
+  U.subst (f : PowerSeries ℚ) = X ∧
+  (∀ V : PowerSeries ℚ, constantCoeff V = 0 →
+    (f : PowerSeries ℚ).subst V = X → V = U) ∧
+  X * A = U ∧ DFinite A ∧ ∀ n : ℕ, 5 ≤ n →
+    283*(n : ℚ)*(n-1)*(n-2)*(83022305213*n-178385058984)*(n+1)*a n -
+    6*n*(n-1)*(n-2)*(12196786904129*n^2-45110300936020*n+52641391340361)*a (n-1) -
+    6*(n-1)*(n-2)*(67790996421377*n^3-248299346995054*n^2+202497447227007*n+3061418504418)*a (n-2) -
+    2*(n-2)*(192167357944360*n^4-559010679688491*n^3-2120668219560541*n^2+9123363136130610*n-8342981628089220)*a (n-3) +
+    5*(15640122296875*n^5-565964885220500*n^4+4989857715427325*n^3-18667678380008380*n^2+32085126156301848*n-20925325629575136)*a (n-4) +
+    10*(5*n-17)*(5*n-18)*(5*n-21)*(5*n-19)*(22509687685*n-60308240636)*a (n-5) = 0
+
+/-- The complete A392976 assertion for the zero-constant formal inverse. -/
+theorem result : claim := by
+  refine ⟨PowerSeries.constantCoeff_substInvOfIsUnit _ _, inverse_right, inverse_left,
+    ?_, X_A, dfinite, recurrence⟩
+  intro V hV hv
+  exact PowerSeries.eq_substInvOfIsUnit_of_subst_eq_X _ f_zero f_one
+    (.of_constantCoeff_zero hV) hv
 
 end
 end D5.S1.Recurrence.Algebraic.A392976InverseRecurrence
