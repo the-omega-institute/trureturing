@@ -1,0 +1,17 @@
+#### 命题 9.3：正交相关的误差闭合
+
+令 $\delta_j=1-\operatorname{Tr}(\rho C_j)\ge0$，则
+
+$$
+\delta_w\le\delta_u+\delta_v,
+ \qquad \operatorname{Tr}(\rho\Phi)\ge1-\frac{\delta_u+\delta_v}{2}.
+$$
+
+每个可分态还满足 $\operatorname{Tr}[\rho(C_u+C_v)]\le1$。
+
+**证明。**
+
+$C_u,C_v$ 对易且取值 $\pm1$，故其共同谱上 $1-ab\le(1-a)+(1-b)$。 同理，对 $P_j=(I+C_j)/2$ 有 $I-P_uP_v\le(I-P_u)+(I-P_v)$；取期望给两个误差界。 对乘积态，两局部 Bloch 向量长度至多一， Cauchy–Schwarz 给两项相关之和至多一，再以凸性延到可分态。 这是标准稳定子证书的双 qubit 形式。[\[18\]](#ref-toth05)
+
+$\square$
+

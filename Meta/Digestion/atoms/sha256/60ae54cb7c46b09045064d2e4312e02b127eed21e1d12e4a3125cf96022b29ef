@@ -1,0 +1,50 @@
+**Definition 175.1 (the original family and a preserved terminal channel).** Retain the entire original telescope of [Appendix III Definition 155.1](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III_APPENDIX_III.md#155-positive-bb3-inputs-finite-coupled-improvement-and-source-ratio-selection), including Definitions 134.1, 135.1 and 154.1 and all their endpoint, source and analytic suppliers. Thus $\theta=(a,\eta,d,b)$ ranges over every original finite $a,\eta,d>0$ and every permitted everywhere Borel representative $b$ of $g_d$ with $0<b\le M$. The group $G=H^1\times\mathbb R$, its product and raw Haar measure $\mu$, source $e$, unit-source field $\Gamma$, coefficient-one $w_*$, coefficient-positive normalized $h$, actual selector $A_{\rm src}=\rho C_{\rm src}$, full conservative source-inclusive $K$, original units and clock are unchanged. Keep
+
+$$
+\begin{gathered}
+m=h^2\mu,\qquad T_s=e^{-sK},\qquad P=T_d,\qquad g=g_{2d},\\
+M=1+\|g_d\|_\infty,\qquad c=(4M)^{-1},\\
+q=f_3=cb,\qquad p=f_B=\tfrac14,\qquad
+F=f_0=f_1=(\tfrac34-q)/2,\\
+\mathcal C(a_0,a_1,a_2)=\int_Gg\,a_0P(a_1Pa_2)\,dm,\qquad
+\Delta(u)_{yzk}=\mathcal C(u_y,u_z,u_k)-\mathcal C(f_y,f_z,f_k),
+\quad \mathcal L=\{0,1,3,B\}.
+\end{gathered}
+\tag{175.1}
+$$
+
+The original source-start law and the three observation epochs $2d,3d,4d$ are retained, with the same readout at each epoch and the original conditionally independent fresh read noises. Here $q$ denotes the scalar function $f_3$. Let $V=\ker\Lambda_{134}$ be the full first-order kernel in Appendix III (134.11)–(134.12), with all sixty-four constraints and signs $\sigma=(1,-1,0,0)$.
+
+For bounded real Borel representatives $v,w$ and $t\in\mathbb R\setminus\{0\}$, use precisely (158.1):
+
+$$
+u_0=F+tv,\qquad u_1=F-tv,\qquad
+u_3=q+t^2w,\qquad u_B=p-t^2w.
+\tag{175.2}
+$$
+
+Legality means that this tuple belongs to the pointwise simplex at every $x\in G$; equivalently,
+
+$$
+|t v(x)|\le F(x),\qquad
+-q(x)\le t^2w(x)\le p\qquad(x\in G).
+\tag{175.3}
+$$
+
+Indeed, these are exactly the four nonnegativity inequalities, and the four coordinates sum to one. No rotation condition or sign condition is imposed on either function, and $w$ may depend on $t$, $v$ and $\theta$. Every coordinate of $\Delta(u)$ uses this tuple's own terminal $Pu_k$. Put
+
+$$
+\begin{gathered}
+\alpha=(-p,-p,1-p,1-p)
+       =(-\tfrac14,-\tfrac14,\tfrac34,\tfrac34)
+       \quad\text{in the order }(0,1,3,B),\\
+A_\theta(v)=q_{003}(v)
+          =\mathcal C(v,v,q)
+          =c\|T_{d/2}(gv)\|_2^2,\qquad
+\|\Delta(u)\|_{\max}=\max_{y,z,k\in\mathcal L}|\Delta(u)_{yzk}|.
+\end{gathered}
+\tag{175.4}
+$$
+
+The equality defining $A_\theta$ is the existing source-specific identity (134.13)–(134.16), including $Pq=cg$.
+

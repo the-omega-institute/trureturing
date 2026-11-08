@@ -1,0 +1,19 @@
+**定义 180.1（准确的箭头与复用）。** 在 178.1 的 C* 分支和 P2 下，179.1 仅补出 $\mathsf F\Rightarrow$ 同一旧 $D$ 实双线性这一非预付箭头。其余代数消费者直接复用[静态重构卷 32.2、23.1、33.2](AURIC_C128_ARBITRARY_DIMENSIONAL_STATIC_QUANTUM_RECONSTRUCTION.md)，不将既有的有限正表提升、结合子极化或 R 重新列为新定理：
+
+$$
+\begin{gathered}
+\mathsf F+P2
+\xRightarrow{179.1}D\text{ 实双线性}
+\xRightarrow{\text{静态卷 }32.2}
+\text{全部有限原复 Gram 正性},\\
+\text{再取完整原 PB}
+\xRightarrow{\text{静态卷 }23.1,33.2}
+\text{同一原 }\star=\circ-iD\text{ 结合、原 R 及既有单位和范数接口}.
+\tag{180.1}
+\end{gathered}
+$$
+
+参数始终是原 $S(a,b)=a\circ b$、原 $\alpha\circ D$ 及原 $\alpha\circ S$。每个有限表仍读全部原标签，不把人为 $D_K$ 或数学向量态改作原评价或原准备。由此得到原复结合星代数入口，后续 Hilbert 表示、叠加、数学导子和数学幺正流均按既有消费者的前件使用。原正质量有限菜单的 Born 比例仍为 $\alpha(e_r)/m_\alpha$，零质量不归一。数学 C* 表示不提供全部物理可制备态、迹密度、原生张量接口或仪器。
+
+在这份 C* 背景中，由于 (179.1)，待证的 $P2+PB\Rightarrow\mathsf F$ 与原可加性缺口准确相接。不能把这份等价本身当作独立条件减少，也不能说原 PB 的证明只剩例行检查。一般原 JB 载体到此 C* 背景的保同一旧关系桥，仍是另一项义务。167.2 的本质紧理想分支已在自己的前件下解决旧值识别，不需要补加这里的 $\mathsf F$；179.1 也没有将那个理想前件推广为无条件事实。
+

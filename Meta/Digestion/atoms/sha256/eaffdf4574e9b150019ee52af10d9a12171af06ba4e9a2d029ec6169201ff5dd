@@ -1,0 +1,24 @@
+**定义 99.1（原合同、范围与目标）。** 沿用[静态重构卷22.1–22.3](AURIC_C128_ARBITRARY_DIMENSIONAL_STATIC_QUANTUM_RECONSTRUCTION.md)的同一无R背景：实Archimedean序单位空间 $(E,C,u,N)$ 可无限维、不完备；原正实评价族准确决定C并分离E，所有质量 $m_\alpha=\alpha(u)\ge0$ 原样保留。原 $S,D:E^2\to E$ 起初只是总映射。A1要求全部原二标签G为Hermitian PSD，包含全部实缩放、平移、零与重复标签；A2要求相加三表 $(a+b,a,b)$ 的实部在整个 $\mathbb R^3$ 上PSD，并使 $v^*Gv=0,v=(1,-1,-1)$，保留相应排列；A3为 $S(u,u)=u$ 及固定有理 $0<\theta\le1$ 下 $0\le e\le\theta u\Rightarrow S(e,e)\le e$。这里 $G_{\alpha,ij}=\alpha S(a_i,a_j)-\mathrm i\alpha D(a_i,a_j)$。不输入完整复三表正性P3。
+
+只复用该卷无R接口已经恢复的同一Jordan乘法 $a\circ b=S(a,b)$、准确原锥与范数，以及含单位JB完成X；E为X中的稠密Jordan子代数。未知D不先延拓到X，不预付可加、齐次、连续、单位行或平移中性。完整候选仍为 $\mathsf H_{\rm orig}+\mathsf{PB}$：
+
+$$
+\begin{aligned}
+Q_\alpha(b,c)&=\alpha(b^2+c^2+2D(b,c)),\\
+r_t&=b+tD(a,b)-t(a\circ c),\\
+s_t&=c+t(a\circ b)+tD(a,c),\\
+\mathsf{PB}:\quad Q_\alpha(r_1,s_1)&=Q_\alpha(r_{-1},s_{-1})
+\quad(a,b,c\in E,\ \alpha\in\mathcal P).
+\end{aligned}
+\tag{99.1}
+$$
+
+目标仍是同一个旧D的原R：
+
+$$
+(a\circ b)\circ c-D(D(a,b),c)=a\circ(b\circ c)-D(a,D(b,c)).
+\tag{99.2}
+$$
+
+99–101的引理适用于一般原域。102–103另明确限定：**每个原元素分别在X中具有有限谱**，不要求统一谱点数上界、有限维或完备。104–105仅讨论完整 $M_n(\mathbb C)_{\rm sa}$。这些范围条件不加入一般候选，也不计成一般总假设减少；93.1的完整量子比特分类保持原范围。
+

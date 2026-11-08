@@ -1,0 +1,23 @@
+**定理 124.1（同一原评价的有限复矩阵读数）。** 在122.1的识别中，对每个实际原正评价α，唯一存在正矩阵 $\rho_{\alpha,j}\succeq0$ 使
+
+$$
+\alpha(a)=\sum_j\operatorname{Tr}\bigl(\rho_{\alpha,j}\Phi(a)_j\bigr),
+\qquad
+\sum_j\operatorname{Tr}\rho_{\alpha,j}=\alpha(u)=m_\alpha.
+\tag{124.1}
+$$
+
+这不要求先证明高秩旧D线性或满足R。
+
+证明。有限实向量空间 $H_n(\mathbb C)$ 上的实内积 $\operatorname{Tr}(AB)$ 非退化，故α在每块的线性限制唯一由Hermitian矩阵ρ表示。对全部数学秩一正矩阵 $vv^\ast$ 读取α的正性，得到 $v^\ast\rho v\ge0$，所以ρ为正；反向正矩阵的迹配对为正。对原单位代入即得总质量。∎
+
+原实际效果 $0\le e_\ell\le u$ 因而表示为各块的复矩阵效果。仅当原来源确实供应完整菜单 $\sum_\ell e_\ell=u$ 且 $m_\alpha>0$ 时，
+
+$$
+p_\alpha(\ell)=
+\frac{\sum_j\operatorname{Tr}(\rho_{\alpha,j}\Phi(e_\ell)_j)}{m_\alpha}
+\tag{124.2}
+$$
+
+才是这一菜单的Born概率；和为一由同一原菜单直接得到。零质量时全部ρ为零，不做归一。各块权重可以不等，也可以为零。数学上每块的极小投影是复射线 $[v]\in\mathbb{CP}^{n_j-1}$，二维复子空间的射线体是Bloch球面的二级几何；这些是122.1的谱与矩阵后果，不是额外输入复Hilbert空间。实际原评价族不必覆盖全部数学密度矩阵，数学极小投影也不自动成为已实现的仪器。
+

@@ -20,7 +20,7 @@ noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.isDefEq.respectTransparency.types false
 
-private lemma bounded_factor_square_le {f k : ℝ → ℝ} {a b C : ℝ}
+lemma bounded_factor_square_le {f k : ℝ → ℝ} {a b C : ℝ}
     (hab : a ≤ b) (hC : 0 ≤ C)
     (hf : IntervalIntegrable f volume a b)
     (hf2 : IntervalIntegrable (fun u => f u ^ 2) volume a b)

@@ -85,11 +85,11 @@ namespace D5.S3.Divergence.MaityFuruichiDuttaOrderingRefutation
 open Matrix
 open scoped ComplexOrder MatrixOrder
 noncomputable section
-private def rho : Matrix (Fin 2) (Fin 2) ℂ := !![4/5, 0; 0, 1/5]
-private def sigma : Matrix (Fin 2) (Fin 2) ℂ := !![28/125, (6 * Real.sqrt 6 : ℝ) / 125;
+def rho : Matrix (Fin 2) (Fin 2) ℂ := !![4/5, 0; 0, 1/5]
+def sigma : Matrix (Fin 2) (Fin 2) ℂ := !![28/125, (6 * Real.sqrt 6 : ℝ) / 125;
   (6 * Real.sqrt 6 : ℝ) / 125, 97/125]
-private def H : Matrix (Fin 2) (Fin 2) ℂ := !![1, 0; 0, -1]
-private def K : Matrix (Fin 2) (Fin 2) ℂ := !![-23/25, (4 * Real.sqrt 6 : ℝ) / 25;
+def H : Matrix (Fin 2) (Fin 2) ℂ := !![1, 0; 0, -1]
+def K : Matrix (Fin 2) (Fin 2) ℂ := !![-23/25, (4 * Real.sqrt 6 : ℝ) / 25;
   (4 * Real.sqrt 6 : ℝ) / 25, 23/25]
 
 private lemma pair_involutions :
@@ -113,7 +113,7 @@ private lemma pair_affine :
   constructor <;> ext i j <;> fin_cases i <;> fin_cases j <;>
     norm_num [rho, sigma, H, K, Matrix.one_apply, Complex.real_smul] <;> ring
 
-private lemma pair_states : rho.PosDef ∧ rho.trace = 1 ∧
+lemma pair_states : rho.PosDef ∧ rho.trace = 1 ∧
     sigma.PosDef ∧ sigma.trace = 1 ∧ rho * sigma ≠ sigma * rho := by
   have hs : (Real.sqrt 6 : ℂ)^2 = 6 := by
     exact_mod_cast Real.sq_sqrt (show (0:ℝ) ≤ 6 by norm_num)
@@ -139,7 +139,7 @@ private lemma pair_states : rho.PosDef ∧ rho.trace = 1 ∧
     have hp := Real.sqrt_pos.mpr (show (0:ℝ)<6 by norm_num)
     linarith
 
-private lemma pair_cfc (f : ℝ → ℝ) :
+lemma pair_cfc (f : ℝ → ℝ) :
     cfc f rho = ((f (4/5) + f (1/5))/2) • (1:Matrix (Fin 2) (Fin 2) ℂ) +
       ((f (4/5) - f (1/5))/2) • H ∧
     cfc f sigma = ((f (4/5) + f (1/5))/2) • (1:Matrix (Fin 2) (Fin 2) ℂ) +
@@ -197,7 +197,7 @@ private lemma eighth_square :
   rw [← Real.rpow_add hp]
   norm_num
 
-private lemma sandwich_trace :
+lemma sandwich_trace :
     (trace (cfc (fun x:ℝ => x^(2:ℝ))
       (cfc (fun x:ℝ => x^(1/8:ℝ)) sigma * cfc (fun x:ℝ => x^(1/4:ℝ)) rho *
         cfc (fun x:ℝ => x^(1/8:ℝ)) sigma))).re =
@@ -235,7 +235,7 @@ private lemma sandwich_trace :
       _ = 4 := by rw [h2]; norm_num
   rw [h4, h3, h22, h2, h6]
   ring
-private lemma B1_gt : (2/5:ℝ) < renyiRZ (1/2) (1/2) 2 rho sigma := by
+lemma B1_gt : (2/5:ℝ) < renyiRZ (1/2) (1/2) 2 rho sigma := by
   have hv : renyiRZ (1/2) (1/2) 2 rho sigma =
       4 * (1 - Real.sqrt ((2117 + 288 * Real.sqrt 2) / 3125)) := by
     unfold renyiRZ lnr
@@ -250,7 +250,7 @@ private lemma B1_gt : (2/5:ℝ) < renyiRZ (1/2) (1/2) 2 rho sigma := by
   have hsF := Real.sq_sqrt hf
   have hFp := Real.sqrt_nonneg ((2117 + 288 * Real.sqrt 2)/3125)
   nlinarith
-private def A : Matrix (Fin 2) (Fin 2) ℂ := !![7/25, (3 * Real.sqrt 6:ℝ)/25;
+def A : Matrix (Fin 2) (Fin 2) ℂ := !![7/25, (3 * Real.sqrt 6:ℝ)/25;
   (3 * Real.sqrt 6:ℝ)/25, 97/25]
 
 private lemma rho_inverse_half : cfc (fun x:ℝ => x^(-(1/2:ℝ))) rho =
@@ -268,7 +268,7 @@ private lemma rho_inverse_half : cfc (fun x:ℝ => x^(-(1/2:ℝ))) rho =
   ext i j; fin_cases i <;> fin_cases j <;>
     simp [H, Matrix.diagonal, Matrix.one_apply, Complex.real_smul] <;> push_cast <;> ring
 
-private lemma sandwich_A :
+lemma sandwich_A :
     cfc (fun x:ℝ => x^(-(1/2:ℝ))) rho * sigma *
       cfc (fun x:ℝ => x^(-(1/2:ℝ))) rho = A := by
   rw [rho_inverse_half]
@@ -278,14 +278,14 @@ private lemma sandwich_A :
     norm_num [sigma, A, Matrix.mul_apply, Fin.sum_univ_two, Matrix.diagonal] <;>
     push_cast <;> ring_nf <;> norm_num [hs] <;> ring
 
-private lemma A_nonneg : (0:Matrix (Fin 2) (Fin 2) ℂ) ≤ A := by
+lemma A_nonneg : (0:Matrix (Fin 2) (Fin 2) ℂ) ≤ A := by
   rw [← sandwich_A]
   let T := cfc (fun x:ℝ => x^(-(1/2:ℝ))) rho
   have hT : IsSelfAdjoint T := IsSelfAdjoint.cfc
   have hp := pair_states.2.2.1.posSemidef.mul_mul_conjTranspose_same T
   simpa only [← Matrix.star_eq_conjTranspose, hT.star_eq] using hp.nonneg
 
-private lemma A_sqrt : cfc (fun x:ℝ => x^(1/2:ℝ)) A =
+lemma A_sqrt : cfc (fun x:ℝ => x^(1/2:ℝ)) A =
     (5 / Real.sqrt 154:ℝ) • (A + 1) := by
   rw [← CFC.rpow_eq_cfc_real A_nonneg, ← CFC.sqrt_eq_rpow]
   apply CFC.sqrt_unique
@@ -300,7 +300,7 @@ private lemma A_sqrt : cfc (fun x:ℝ => x^(1/2:ℝ)) A =
       push_cast <;> field_simp <;> ring_nf <;> norm_num [h6, h154]
   · exact smul_nonneg (by positivity) (add_nonneg A_nonneg zero_le_one)
 
-private lemma B2_lt : B2 (1/2) 1 rho sigma < (2/5:ℝ) := by
+lemma B2_lt : B2 (1/2) 1 rho sigma < (2/5:ℝ) := by
   have hv : B2 (1/2) 1 rho sigma = 2 - 20 / Real.sqrt 154 := by
     unfold B2
     norm_num only [Real.rpow_one]

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a0069361325fd95b17b74f5545c7ec7a48079cc8ad781bf4d2adc7a77ebe7336
+  normalized_sha256: sha256:a0069361325fd95b17b74f5545c7ec7a48079cc8ad781bf4d2adc7a77ebe7336
+cas_ref: sha256:a0069361325fd95b17b74f5545c7ec7a48079cc8ad781bf4d2adc7a77ebe7336
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Scope disclaimer: this theorem supplies neither cone preserving row flows nor a Jordan derivation law nor complex multiplication. No mathematical construction or implication is asserted in this clause.'
+    previous_atom_id: 958bd182b50e192deffc2d8e97ba5315f812fd883336849103b38532e291ef0f
+    next_atom_id: c77f7482e026fab3aad37ddd6ae454015e4aca68804c1d3f4cc22e04a63e344e
