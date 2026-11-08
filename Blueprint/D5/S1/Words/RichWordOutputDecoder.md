@@ -40,7 +40,7 @@ $$\forall w \in \operatorname{List}\left(\operatorname{Fin}\left(7\right)\right)
 
 *Commentary.*
 
-The proposition records all output occurrences as the entire source occurrence set, exact consecutive-pair correspondence, the weighted length of every corresponding return interval, and attainment plus universal domination of the minimum output gap. decorated(w,s,t) is s eta(w) a t. sourceOcc(w,j) means the actual source window u[j,j+length(w)) equals w. sourceConsecutive is the same source predicate as RichWordTypeIOccurrence.Consecutive. Consecutive means strictly increasing starts with no intervening occurrence, with no nonoverlap condition. W(v) is the sum of image-length(c) times v(c) over all seven letters. Source returnWord(j,k) is the actual interval u[j,k). The return gap has no added decoration length.
+The proposition records all output occurrences as the entire source occurrence set, exact consecutive-pair correspondence, the weighted length of every corresponding return interval, and attainment plus universal domination of the minimum output gap. decorated(w,s,t) is s eta(w) a t, of length W(parikh(w))+1+length(s)+length(t). For s=t=r(n), the six boundary contributions are (1,1,1,3,5,11). sourceOcc(w,j) means the actual source window u[j,j+length(w)) equals w. sourceConsecutive is the same source predicate as RichWordTypeIOccurrence.Consecutive. Consecutive means strictly increasing starts with no intervening occurrence, with no nonoverlap condition. W(v) is the sum of image-length(c) times v(c) over all seven letters. Source returnWord(j,k) is the actual interval u[j,k). The return gap has no added decoration length.
 
 **Theorem 1.4 (Every original Type-I index).**
 
@@ -52,7 +52,7 @@ $$\forall n \in \mathbb{N},\; \forall s \in \operatorname{List}\left(\operatorna
 
 *Commentary.*
 
-For every n >= 0, use any suffix s of r(n) and prefix t of r(n), where the six phase values are (empty,empty,empty,c,cc,ccdcc). Frozen typeI_not_at_origin and the exact witnessed extension sets supply both actual neighbor letters in {n mod 6,6}; both admit r(n). Every source occurrence is therefore retained. The frozen attained componentwise minimum M^n e(6) transfers to the least output return length W(M^n e(6)).
+For every n >= 0, use any suffix s of r(n) and prefix t of r(n), where the six phase values are (empty,empty,empty,c,cc,ccdcc). The source theorem typeI_not_at_origin and the exact witnessed extension sets supply both actual neighbor letters in {n mod 6,6}; both admit r(n). Every source occurrence is therefore retained. The attained componentwise minimum M^n e(6) transfers to the least output return length W(M^n e(6)).
 
 **Theorem 1.5 (Original Type-II indices at least six).**
 
@@ -64,9 +64,9 @@ $$\forall n \in \mathbb{N},\; 6 \le n \Rightarrow \left(\forall s \in \operatorn
 
 *Commentary.*
 
-For original n >= 6 and any suffix s and prefix t of r(n), actual_typeII(n) supplies NativeData(n-6). Its occurrence enumeration and positivity exclude the origin, and its actual context formulas supply both neighbors. Rewriting (n-6)+6=n preserves the original phase and matrix exponent. The frozen attained vector M^n e(0), at source indices position(n-6,2) and position(n-6,3), transfers to the attained output minimum. No Type-II return assertion is made below six.
+For original n >= 6 and any suffix s and prefix t of r(n), actual_typeII(n) supplies NativeData(n-6). Its occurrence enumeration and positivity exclude the origin, and its actual context formulas supply both neighbors. Rewriting (n-6)+6=n preserves the original phase and matrix exponent. The attained vector M^n e(0), at source indices position(n-6,2) and position(n-6,3), transfers to the attained output minimum. No Type-II return assertion is made below six.
 
-The interval identity reuses the original morphic_block helper after an injective encoding of the four output letters into integers; this helper has no UniversalInput premise. All source occurrences, consecutive returns and attained vector minima are reused from the frozen source suppliers. The source scalar inequalities (50), the all-factor ordinary critical-exponent criterion and classification, recurrence and aperiodicity hypotheses for that criterion, and the lower bound are separate inputs. This result does not prove the scalar inequalities or a full ordinary critical exponent.
+The interval identity reuses the original morphic_block helper after an injective encoding of the four output letters into integers; this helper has no UniversalInput premise. All source occurrences, consecutive returns and attained vector minima are reused from the source occurrence theorems. The source scalar inequalities (50), the all-factor ordinary critical-exponent criterion and classification, recurrence and aperiodicity hypotheses for that criterion, and the lower bound are separate inputs. This result does not prove the scalar inequalities or a full ordinary critical exponent.
 
 ## References
 
