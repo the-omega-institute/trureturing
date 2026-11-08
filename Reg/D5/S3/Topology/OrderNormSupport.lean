@@ -2,6 +2,13 @@ import D5.S3.Topology.OrderNormSupport
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
 
+/-! Exact source reconstruction and actual-positive evidence for positive norm support. -/
+
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
+noncomputable section
+universe u
+
 namespace Reg.D5.S3.Topology.OrderNormSupport
 
 open _root_.D5.S3.Topology.OrderUnitNorm
