@@ -105,7 +105,7 @@ internal sealed class ModularNormalizerFactorsDocument : IScribeDocumentDefiniti
                 DeclarationHandle.Create("D5/S3/FiniteGroups/NormalizerCentreIndex/ModularNormalizerFactors.finite_classes"),
                 H("Finite normalizer quotient"), StatementSource.FromAuthor(Disp(OddAll(Call("Finite", Call("NormalizerClass", P()))))),
                 AssessedProvenance.FromRepo(Source),
-                Blocks(Paragraph(Text("The explicit quotient equivalence with Fin 2 proves finiteness."))), DescribeRole.Theorem))));
+                Blocks(Paragraph(Text("Finiteness passes from the finite modular group to the subtype of its normalizer subgroups and then to their conjugacy quotient."))), DescribeRole.Theorem))));
 
     private static Formula X(string name) => F.Id(name);
     private static Formula Q(string owner, string name) => Seq(Operatorname, Grp(X(owner)), Dot, Operatorname, Grp(X(name)));

@@ -30,12 +30,12 @@ Modular.card_C | proof_shape: bind-only | escape_witness: none | Direct frozen d
 Modular.card_p | proof_shape: bind-only | escape_witness: none | Direct frozen dependencies: none | consumers: LegarretaSicaTotaGavioli.coprime_orders, LegarretaSicaTotaGavioli.family_center_index_nat, LegarretaSicaTotaGavioli.family_nc
 Modular.center_card | proof_shape: bind-only | escape_witness: none | Direct frozen dependencies: none | consumers: LegarretaSicaTotaGavioli.family_center_card
 Modular.center_eq_C | proof_shape: bind-only | escape_witness: none | Direct frozen dependencies: none | consumers: Modular.center_card
-Modular.classEquiv | proof_shape: bind-only (definition) | escape_witness: none | Direct frozen dependencies: none | consumers: Modular.finite_classes, Modular.omega_card
+Modular.classEquiv | proof_shape: bind-only (definition) | escape_witness: none | Direct frozen dependencies: none | consumers: Modular.omega_card
 Modular.conj_as_c | proof_shape: bind-only | escape_witness: none | Direct frozen dependencies: none | consumers: Modular.E_le_normalizer, Modular.normalizer_of_C_le, Modular.normalizer_of_le_C, Modular.normalizer_of_neither
 Modular.conj_elt | proof_shape: bind-only | escape_witness: none | Direct frozen dependencies: none | consumers: Modular.conj_as_c
 Modular.elt_eq | proof_shape: bind-only | escape_witness: none | Direct frozen dependencies: none | consumers: Modular.c_injective, Modular.mem_C, Modular.pow_elt, Modular.pow_p
-Modular.finiteP | proof_shape: bind-only | escape_witness: none | Direct frozen dependencies: none | consumers: LegarretaSicaTotaGavioli.family_center_index, LegarretaSicaTotaGavioli.family_finite_classes, LegarretaSicaTotaGavioli.family_nc, LegarretaSicaTotaGavioli.family_omega, LegarretaSicaTotaGavioli.family_s_card
-Modular.finite_classes | proof_shape: content | escape_witness: Modular.pow_elt | Direct frozen dependencies: none | consumers: LegarretaSicaTotaGavioli.family_finite_classes
+Modular.finiteP | proof_shape: bind-only | escape_witness: none | Direct frozen dependencies: none | consumers: LegarretaSicaTotaGavioli.family_center_index, LegarretaSicaTotaGavioli.family_finite_classes, LegarretaSicaTotaGavioli.family_nc, LegarretaSicaTotaGavioli.family_omega, LegarretaSicaTotaGavioli.family_s_card, Modular.finite_classes
+Modular.finite_classes | proof_shape: bind-only | escape_witness: none | Direct frozen dependencies: none | consumers: LegarretaSicaTotaGavioli.family_finite_classes
 Modular.inv_elt | proof_shape: bind-only | escape_witness: none | Direct frozen dependencies: none | consumers: Modular.conj_elt
 Modular.le_E_of_not_C_le | proof_shape: content | escape_witness: Modular.pow_elt | Direct frozen dependencies: none | consumers: Modular.normalizer_of_neither
 Modular.mem_C | proof_shape: bind-only | escape_witness: none | Direct frozen dependencies: none | consumers: Modular.center_eq_C, Modular.normalizer_of_le_C, Modular.normalizer_of_neither, Modular.not_Y_le_C
@@ -68,7 +68,7 @@ Modular.twoTable | proof_shape: bind-only (definition) | escape_witness: none | 
 Modular.twoWitness | proof_shape: bind-only (definition) | escape_witness: none | Direct frozen dependencies: none | consumers: Modular.witnessEquiv
 Modular.witnessEquiv | proof_shape: bind-only (definition) | escape_witness: none | Direct frozen dependencies: none | consumers: Modular.classEquiv, Modular.s_card
 NormalizerClass | proof_shape: bind-only (definition) | escape_witness: none | Direct frozen dependencies: none | consumers: LegarretaSicaTotaGavioli.Small.classEquiv, LegarretaSicaTotaGavioli.Small.classMap, LegarretaSicaTotaGavioli.Small.omega_card, LegarretaSicaTotaGavioli.claim, LegarretaSicaTotaGavioli.family_finite_classes, LegarretaSicaTotaGavioli.result, Modular.classEquiv, Modular.finite_classes, Modular.omega_card, classProd, classProd_injective, classesEquivOfNormal, counts_prod, finite_product_classes, normalizerClassesProductEquiv, omega
-NormalizerWitness | proof_shape: bind-only (definition) | escape_witness: none | Direct frozen dependencies: none | consumers: LegarretaSicaTotaGavioli.Small.classEquiv, LegarretaSicaTotaGavioli.Small.classMap, LegarretaSicaTotaGavioli.Small.normalizerWitness, LegarretaSicaTotaGavioli.Small.s_card, LegarretaSicaTotaGavioli.Small.witnessEquiv, LegarretaSicaTotaGavioli.Small.witness_relation, Modular.all_witness_normal, Modular.classEquiv, Modular.s_card, Modular.twoWitness, Modular.witnessEquiv, NormalizerClass, classProd, classProd_injective, classesEquivOfNormal, counts_prod, normalizerClassesProductEquiv, normalizerProductEquiv, normalizerSetoid, sCard, witnessProd, witnessProd_injective
+NormalizerWitness | proof_shape: bind-only (definition) | escape_witness: none | Direct frozen dependencies: none | consumers: LegarretaSicaTotaGavioli.Small.classEquiv, LegarretaSicaTotaGavioli.Small.classMap, LegarretaSicaTotaGavioli.Small.normalizerWitness, LegarretaSicaTotaGavioli.Small.s_card, LegarretaSicaTotaGavioli.Small.witnessEquiv, LegarretaSicaTotaGavioli.Small.witness_relation, Modular.all_witness_normal, Modular.classEquiv, Modular.finite_classes, Modular.s_card, Modular.twoWitness, Modular.witnessEquiv, NormalizerClass, classProd, classProd_injective, classesEquivOfNormal, counts_prod, normalizerClassesProductEquiv, normalizerProductEquiv, normalizerSetoid, sCard, witnessProd, witnessProd_injective
 centreIndex | proof_shape: bind-only (definition) | escape_witness: none | Direct frozen dependencies: none | consumers: LegarretaSicaTotaGavioli.claim, LegarretaSicaTotaGavioli.family_center_index, LegarretaSicaTotaGavioli.result
 classProd | proof_shape: bind-only (definition) | escape_witness: none | Direct frozen dependencies: none | consumers: classProd_injective, normalizerClassesProductEquiv
 classProd_injective | proof_shape: bind-only | escape_witness: none | Direct frozen dependencies: none | consumers: normalizerClassesProductEquiv
@@ -82,7 +82,7 @@ counts_prod | proof_shape: bind-only | escape_witness: none | Direct frozen depe
 finite_product_classes | proof_shape: bind-only | escape_witness: none | Direct frozen dependencies: D1 | consumers: LegarretaSicaTotaGavioli.family_finite_classes
 normalizerClassesProductEquiv | proof_shape: bind-only (definition) | escape_witness: none | Direct frozen dependencies: D1 | consumers: counts_prod, finite_product_classes
 normalizerProductEquiv | proof_shape: bind-only (definition) | escape_witness: none | Direct frozen dependencies: D1 | consumers: counts_prod, normalizerClassesProductEquiv
-normalizerSetoid | proof_shape: bind-only (definition) | escape_witness: none | Direct frozen dependencies: none | consumers: LegarretaSicaTotaGavioli.Small.classEquiv, LegarretaSicaTotaGavioli.Small.classMap, NormalizerClass, classProd, classProd_injective, classesEquivOfNormal, normalizerClassesProductEquiv
+normalizerSetoid | proof_shape: bind-only (definition) | escape_witness: none | Direct frozen dependencies: none | consumers: LegarretaSicaTotaGavioli.Small.classEquiv, LegarretaSicaTotaGavioli.Small.classMap, Modular.finite_classes, NormalizerClass, classProd, classProd_injective, classesEquivOfNormal, normalizerClassesProductEquiv
 normalizer_prod | proof_shape: bind-only | escape_witness: none | Direct frozen dependencies: none | consumers: normalizerProductEquiv, witnessProd
 omega | proof_shape: bind-only (definition) | escape_witness: none | Direct frozen dependencies: none | consumers: LegarretaSicaTotaGavioli.Small.omega_card, LegarretaSicaTotaGavioli.claim, LegarretaSicaTotaGavioli.family_omega, LegarretaSicaTotaGavioli.family_s_card, LegarretaSicaTotaGavioli.family_strict, LegarretaSicaTotaGavioli.result, Modular.omega_card, counts_prod
 sCard | proof_shape: bind-only (definition) | escape_witness: none | Direct frozen dependencies: none | consumers: LegarretaSicaTotaGavioli.Small.s_card, LegarretaSicaTotaGavioli.claim, LegarretaSicaTotaGavioli.family_omega, LegarretaSicaTotaGavioli.family_s_card, LegarretaSicaTotaGavioli.family_strict, LegarretaSicaTotaGavioli.result, Modular.s_card, counts_prod
@@ -95,6 +95,7 @@ import Mathlib.Algebra.Field.ZMod
 import Mathlib.GroupTheory.SemidirectProduct
 import Mathlib.GroupTheory.SpecificGroups.Cyclic
 import Mathlib.Data.Nat.Choose.Dvd
+import Mathlib.Data.SetLike.Fintype
 import Mathlib.Tactic.LinearCombination
 
 
@@ -747,8 +748,13 @@ theorem s_card (ho : p ≠ 2) : sCard (P p) = 2 := by
 theorem omega_card (ho : p ≠ 2) : omega (P p) = 2 := by
   exact (Nat.card_congr (classEquiv p ho)).trans (by simp)
 
-theorem finite_classes (ho : p ≠ 2) : Finite (NormalizerClass (P p)) :=
-  Finite.of_equiv (Fin 2) (classEquiv p ho).symm
+theorem finite_classes (ho : p ≠ 2) : Finite (NormalizerClass (P p)) := by
+  have : Finite (P p) := finiteP p
+  have : Finite (NormalizerWitness (P p)) := by
+    unfold NormalizerWitness
+    infer_instance
+  unfold NormalizerClass
+  infer_instance
 
 end Modular
 end D5.S3.FiniteGroups.NormalizerCentreIndex.ModularNormalizerFactors
