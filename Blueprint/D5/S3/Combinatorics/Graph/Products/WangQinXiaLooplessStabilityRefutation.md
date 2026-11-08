@@ -82,6 +82,10 @@ $$\neg (\forall (V: Type), \forall (W: Type), [\operatorname{Fintype}\left(V\rig
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Products/WangQinXiaLooplessStabilityRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/wqx-loopless-stability-refutation` (refuted) by `D5/S3/Combinatorics/Graph/Products/WangQinXiaLooplessStabilityRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"wqx-loopless-stability-refutation","declaration_gid":"D5/S3/Combinatorics/Graph/Products/WangQinXiaLooplessStabilityRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Xiaomeng Wang, Yan-Li Qin, Binzhou Xia (2025). *The existence of unexpected automorphisms in direct product graphs*. DOI: [10.48550/arXiv.2509.26170](https://doi.org/10.48550/arXiv.2509.26170). URL: <https://arxiv.org/abs/2509.26170v2>.

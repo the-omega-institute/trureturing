@@ -52,7 +52,11 @@ internal sealed class WangQinXiaLooplessStabilityRefutationDocument : IScribeDoc
     private static DocumentBlock Node(string id, string title, string declaration, DescribeRole role,
         Formula formula, AssessedProvenance provenance, string prose) => Describe.Lean(
             DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration), H(title),
-            StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(prose))), role);
+            StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(prose))), role,
+            declaration == "result"
+                ? new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("wqx-loopless-stability-refutation"), ResolutionKind.Refuted)
+                : null);
 
     private static Formula X(string name) => F.Id(name);
     private static Formula Parenthesized(Formula body) => Seq(Open, body, Close);
