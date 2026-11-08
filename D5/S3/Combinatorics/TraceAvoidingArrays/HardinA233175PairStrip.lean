@@ -107,7 +107,7 @@ def finish : {n : ℕ} → Seen → (Fin n → Fin 6) → Seen
   | 0, s, _ => s
   | _n + 1, s, f => finish (advance s (f 0)) (Fin.tail f)
 
-private theorem finish_fst {n : ℕ} (s : Seen) (f : Fin n → Fin 6) :
+theorem finish_fst {n : ℕ} (s : Seen) (f : Fin n → Fin 6) :
     (finish s f).1 = true ↔ s.1 = true ∨ ∃ i, f i = 1 := by
   induction n generalizing s with
   | zero => simp [finish]
@@ -115,7 +115,7 @@ private theorem finish_fst {n : ℕ} (s : Seen) (f : Fin n → Fin 6) :
     rw [finish, ih]
     simp [advance, Fin.exists_fin_succ, Fin.tail, or_assoc]
 
-private theorem finish_snd {n : ℕ} (s : Seen) (f : Fin n → Fin 6) :
+theorem finish_snd {n : ℕ} (s : Seen) (f : Fin n → Fin 6) :
     (finish s f).2 = true ↔ s.2 = true ∨ ∃ i, f i = 2 := by
   induction n generalizing s with
   | zero => simp [finish]
@@ -123,7 +123,7 @@ private theorem finish_snd {n : ℕ} (s : Seen) (f : Fin n → Fin 6) :
     rw [finish, ih]
     simp [advance, Fin.exists_fin_succ, Fin.tail, or_assoc]
 
-private theorem good_iff {n : ℕ} (s : Seen) (f : Fin n → Fin 6) :
+theorem good_iff {n : ℕ} (s : Seen) (f : Fin n → Fin 6) :
     good s f ↔ ∀ i,
       ((f i = 2 ∨ f i = 3 ∨ f i = 4) →
         s.1 = true ∨ ∃ j, j < i ∧ f j = 1) ∧
@@ -190,7 +190,7 @@ private instance instDecidableCompatible (p : Fin 3 × Fin 3) (c : Col) :
     Decidable (compatible p c) :=
   inferInstanceAs (Decidable (∀ _r : Fin 2, _ ∧ _))
 
-private theorem edge_iff (c d : Col) :
+theorem edge_iff (c d : Col) :
     (∀ r s, c r ≠ d s ∧ (c r).val + (d s).val ≠ 5) ↔ compatible (pairs c) d := by
   have h : ∀ x y : Fin 6, (x ≠ y ∧ x.val + y.val ≠ 5) ↔ beta x ≠ beta y := by
     decide +kernel

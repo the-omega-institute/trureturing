@@ -26,8 +26,16 @@ internal sealed class HardinA233175PairStripDocument : IScribeDocumentDefinition
                 "The empty word is accepted. A nonempty word is accepted exactly when its first colour is allowed and its tail is accepted with the updated flags."),
             Def("finish", "finish", "Final flags of a word", FinishFormula(),
                 "The empty word retains its initial flags. For a nonempty word the first colour updates the flags before the tail is scanned."),
+            Thm("finishfirst", "finish_fst", "The first final flag", FinishFlagFormula(1),
+                "The first flag is true exactly when it was initially true or colour one occurs in the word."),
+            Thm("finishsecond", "finish_snd", "The second final flag", FinishFlagFormula(2),
+                "The second flag is true exactly when it was initially true or colour two occurs in the word."),
+            Thm("goodiff", "good_iff", "The earlier-occurrence criterion", GoodIffFormula(),
+                "Acceptance says that every restricted colour has its required earlier occurrence, unless that colour was already recorded in the initial flags."),
             Def("pairs", "pairs", "The two boundary labels", PairsFormula(),
                 "Here beta is the frozen map D5.S3.Observer.Separation.BooleanRankThreeK4.beta : Fin 6 → Fin 3, beta = ![0,1,2,2,1,0], whose fibres {0,5}, {1,4} and {2,3} are the complementary pairs; a legal bond joins different fibres. Only these labels of the preceding column affect future bonds."),
+            Thm("edgeiff", "edge_iff", "Pair-label characterization of bonds", EdgeIffFormula(),
+                "Each of the four bonds is legal exactly when its endpoint colours have distinct complementary-pair labels."),
             Def("a", "a", "The literal filtered count", CountFormula(),
                 "The finite set contains all arrays on Fin 2 times Fin n, filtered by the displayed predicate. The rank r*n+j is the row-major order. The first-entry existential also makes a(0)=0.", literature: true),
             Def("step", "step", "One-column continuation", StepFormula(),
@@ -99,11 +107,43 @@ internal sealed class HardinA233175PairStripDocument : IScribeDocumentDefinition
                         Call("finish", Call("advance", s, App(f, D(0))), Call("Fin.tail", f))))))]);
     }
 
+    private static Formula FinishFlagFormula(byte flag)
+    {
+        var n = V("n"); var s = V("s"); var f = V("f"); var i = V("i");
+        return All("n", V("Nat"), All("s", V("Seen"), All("f", Arrow(Call("Fin", n), Fin(6)),
+            Iff(Eq(Proj(Call("finish", s, f), flag), V("true")),
+                Or(Eq(Proj(s, flag), V("true")),
+                    Ex("i", Call("Fin", n), Eq(App(f, i), D(flag))))))));
+    }
+
+    private static Formula GoodIffFormula()
+    {
+        var n = V("n"); var s = V("s"); var f = V("f"); var i = V("i"); var j = V("j");
+        Formula Earlier(byte flag) => Or(Eq(Proj(s, flag), V("true")),
+            Ex("j", Call("Fin", n), And(Lt(j, i), Eq(App(f, j), D(flag)))));
+        var body = All("i", Call("Fin", n), And(
+            Imp(Or(Eq(App(f, i), D(2)), Or(Eq(App(f, i), D(3)), Eq(App(f, i), D(4)))), Earlier(1)),
+            Imp(Eq(App(f, i), D(3)), Earlier(2))));
+        return All("n", V("Nat"), All("s", V("Seen"), All("f", Arrow(Call("Fin", n), Fin(6)),
+            Iff(Call("good", s, f), body))));
+    }
+
     private static Formula PairsFormula()
     {
         var c = V("c");
         return All("c", V("Col"), Eq(Call("pairs", c),
             Pair(Call("beta", App(c, D(0))), Call("beta", App(c, D(1))))));
+    }
+
+    private static Formula EdgeIffFormula()
+    {
+        var c = V("c"); var d = V("d"); var r = V("r"); var s = V("s");
+        var x = App(c, r); var y = App(d, s);
+        var left = All("r", Fin(2), All("s", Fin(2),
+            And(Ne(x, y), Ne(Add(Call("val", x), Call("val", y)), D(5)))));
+        var right = All("r", Fin(2), And(Ne(Call("beta", App(d, r)), Call("beta", App(c, D(0)))),
+            Ne(Call("beta", App(d, r)), Call("beta", App(c, D(1))))));
+        return All("c", V("Col"), All("d", V("Col"), Iff(left, right)));
     }
 
     private static Formula Rank(Formula p, Formula n) =>
