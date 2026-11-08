@@ -7,7 +7,7 @@
    digest: Different exponents have vanishing cross moments and strictly positive square correlation. -/
 
 import D5.S3.Arith.Robin.ForwardKernel.FourthMomentKurtosis
-import D5.S3.Arith.Robin.ForwardKernel.CrossExponentOrthogonality
+import D5.S3.Arith.Robin.ForwardKernel.CrossOrderInterface
 import D5.S3.Arith.Robin.ForwardKernel.JointBrownianKernel
 
 namespace D5.S3.Arith.Robin.ForwardKernel.CrossExponentJointMoments
@@ -16,42 +16,11 @@ open Set MeasureTheory Filter
 open scoped Topology BigOperators
 open VarianceTransferDefs ProfileKernelDefs MomentTransferDefs DyadicProbability
 open FourthMomentBandDefs FourthMomentInterfaceBridge
-open MomentTransfer MomentTransferWeights CrossExponentOrthogonality
+open MomentTransfer MomentTransferWeights
 open FourthMomentKurtosis JointBrownianKernel BrownianFourthKernel DyadicMacroMoments MomentInterfaceBounds
 
 noncomputable section
 set_option autoImplicit false
-
-private lemma jointZMoment_cross_eq
-    {E g₁ g₂ : ℝ → ℝ} {a b X : ℝ} (hX : 1 < X) :
-    jointZMoment E a b g₁ g₂ 1 1 X =
-      ((∫ x in X..(2 * X), profileResponse E a g₁ x * profileResponse E b g₂ x / x) /
-        (X ^ (1 - (a + b) / 2) * Real.log X)) / Real.log 2 := by
-  rw [jointZMoment, dyadicProbabilityMeasure_integral (zero_lt_one.trans hX)]
-  simp_rw [pow_one, dyadicZ, div_mul_div_comm]
-  have hX0 : 0 < X := zero_lt_one.trans hX
-  have ha : 0 ≤ meanSquareScale a X :=
-    mul_nonneg (Real.rpow_nonneg hX0.le _) (Real.log_nonneg hX.le)
-  have hb : 0 ≤ meanSquareScale b X :=
-    mul_nonneg (Real.rpow_nonneg hX0.le _) (Real.log_nonneg hX.le)
-  have hs : Real.sqrt (meanSquareScale a X) * Real.sqrt (meanSquareScale b X) =
-      X ^ (1 - (a + b) / 2) * Real.log X := by
-    apply (sq_eq_sq₀ (mul_nonneg (Real.sqrt_nonneg _) (Real.sqrt_nonneg _))
-      (mul_nonneg (Real.rpow_nonneg hX0.le _) (Real.log_nonneg hX.le))).mp
-    have hp : (X ^ (1 - (a + b) / 2)) ^ 2 = X ^ ((1 - a) + (1 - b)) := by
-      rw [← Real.rpow_mul_natCast hX0.le]
-      congr 1
-      ring
-    rw [mul_pow, Real.sq_sqrt ha, Real.sq_sqrt hb, mul_pow, hp,
-      Real.rpow_add hX0]
-    dsimp [meanSquareScale]
-    ring
-  rw [hs]
-  congr 1
-  rw [← intervalIntegral.integral_div]
-  apply intervalIntegral.integral_congr
-  intro x _hx
-  ring
 
 /-- The normalized first cross moment tends to zero under separated variance bands. -/
 theorem jointZ_first_moment_tendsto_zero
@@ -62,50 +31,26 @@ theorem jointZ_first_moment_tendsto_zero
     (hVb : CumulativeVarianceBandAsymptoticFor E α₂ β₂)
     (hg₁ : ProfileIntegrable g₁) (hg₂ : ProfileIntegrable g₂) :
     Tendsto (jointZMoment E a b g₁ g₂ 1 1) atTop (𝓝 0) := by
-  have hgap : 0 < min β₁ b - a := by
-    exact sub_pos.mpr (lt_min hBa.2.2.1 hab)
-  let μ := a + (min β₁ b - a) / 3
-  let ν := a + 2 * (min β₁ b - a) / 3
-  have haμ : a < μ := by dsimp [μ]; linarith
-  have hμν : μ < ν := by dsimp [μ, ν]; linarith
-  have hν : ν < min β₁ b := by dsimp [μ, ν]; linarith
-  obtain ⟨C, hC, hbound⟩ := profile_cross_exponent_two_bands
-    hE hBa hBb hab hVa hVb haμ hμν hν
-  let d := min (μ - a) (min (ν - μ) (b - ν)) / 2
-  have hd : 0 < d := by
-    dsimp [d]
-    have h1 : 0 < μ - a := sub_pos.mpr haμ
-    have h2 : 0 < ν - μ := sub_pos.mpr hμν
-    have h3 : 0 < b - ν := sub_pos.mpr (hν.trans_le (min_le_right _ _))
-    exact div_pos (lt_min h1 (lt_min h2 h3)) (by norm_num)
-  have hlim : Tendsto (fun X : ℝ => X ^ (-d)) atTop (𝓝 0) :=
-    tendsto_rpow_neg_atTop hd
-  apply (tendsto_zero_iff_norm_tendsto_zero).mpr
-  refine squeeze_zero' (f := fun X : ℝ => ‖jointZMoment E a b g₁ g₂ 1 1 X‖)
-    (g := fun X : ℝ => C * profileL1 g₁ * profileL1 g₂ / Real.log 2 * X ^ (-d)) ?_ ?_ ?_
-  · filter_upwards [] with X
-    exact norm_nonneg _
-  · filter_upwards [eventually_ge_atTop (4 : ℝ), hbound] with X hX hEv
-    have hX1 : 1 < X := by linarith
-    rw [jointZMoment_cross_eq hX1]
-    have h := hEv g₁ g₂ hg₁ hg₂
-    have hlog : 0 < Real.log 2 := Real.log_pos (by norm_num)
-    have hN : 0 < X ^ (1 - (a + b) / 2) * Real.log X := by
-      have hlogX : 0 < Real.log X := Real.log_pos (by linarith)
-      positivity
-    calc
-      ‖((∫ x in X..(2 * X), profileResponse E a g₁ x * profileResponse E b g₂ x / x) /
-          (X ^ (1 - (a + b) / 2) * Real.log X)) / Real.log 2‖ ≤
-          (C * profileL1 g₁ * profileL1 g₂ *
-            (X ^ (1 - (a + b) / 2) * Real.log X) * X ^ (-d) /
-            (X ^ (1 - (a + b) / 2) * Real.log X)) / Real.log 2 := by
-        rw [Real.norm_eq_abs, abs_div, abs_div, abs_of_pos hN, abs_of_pos hlog]
-        apply div_le_div_of_nonneg_right _ (le_of_lt hlog)
-        exact div_le_div_of_nonneg_right (by simpa [d] using h) (le_of_lt hN)
-      _ = C * profileL1 g₁ * profileL1 g₂ / Real.log 2 * X ^ (-d) := by
-        field_simp [hN.ne', hlog.ne', (Real.log_pos (by linarith : (1 : ℝ) < X)).ne']
-  · simpa only [mul_zero] using
-      hlim.const_mul (C * profileL1 g₁ * profileL1 g₂ / Real.log 2)
+  have he0 : ∀ i : Fin 2, 0 < (![a, b] : Fin 2 → ℝ) i := by
+    intro i
+    fin_cases i
+    · exact hBa.1.trans hBa.2.1
+    · exact hBb.1.trans hBb.2.1
+  have he1 : ∀ i : Fin 2, (![a, b] : Fin 2 → ℝ) i < 1 := by
+    intro i
+    fin_cases i
+    · exact hBa.2.2.1.trans hBa.2.2.2
+    · exact hBb.2.2.1.trans hBb.2.2.2
+  have hG : ∀ i : Fin 2, ProfileIntegrable ((![g₁, g₂] : Fin 2 → ℝ → ℝ) i) := by
+    intro i
+    fin_cases i
+    · exact hg₁
+    · exact hg₂
+  change Tendsto (fun X => jointZMoment E a b g₁ g₂ 1 1 X) atTop (𝓝 0)
+  simpa only [jointZMoment, pow_one, Fin.prod_univ_two, Matrix.cons_val_zero,
+    Matrix.cons_val_one, mul_zero, integral_zero] using
+    joint_moment_transfer (G := ![g₁, g₂]) hE he0 he1 (by norm_num : 0 < 2) hG
+      (CrossOrderInterface.cross_moment_interface hE hBa hBb hab hVa hVb)
 
 /-- The universal cross-kernel integral vanishes. -/
 theorem cross_exponent_kernel_integral_zero
@@ -119,57 +64,32 @@ theorem cross_exponent_kernel_integral_zero
     ∀ g₁ g₂ : ℝ → ℝ, ProfileIntegrable g₁ → ProfileIntegrable g₂ →
       (∫ s : Fin 2 → ℝ, g₁ (s 0) * g₂ (s 1) * M s ∂cubeMeasure 2) = 0 := by
   intro g₁ g₂ hg₁ hg₂
-  obtain ⟨C₁, hC₁, hb₁⟩ := second_moment_bound_interface hE hBa hVa
-  obtain ⟨C₂, hC₂, hb₂⟩ := second_moment_bound_interface hE hBb hVb
-  let e : Fin 2 → ℝ := ![a, b]
-  let G : Fin 2 → ℝ → ℝ := ![g₁, g₂]
-  have he0 : ∀ i, 0 < e i := by
+  have hJ : JointMomentInterface E ![a, b] M :=
+    ⟨(CrossOrderInterface.cross_moment_interface hE hBa hBb hab hVa hVb).1, hlim⟩
+  have he0 : ∀ i : Fin 2, 0 < (![a, b] : Fin 2 → ℝ) i := by
     intro i
     fin_cases i
     · exact hBa.1.trans hBa.2.1
     · exact hBb.1.trans hBb.2.1
-  have he1 : ∀ i, e i < 1 := by
+  have he1 : ∀ i : Fin 2, (![a, b] : Fin 2 → ℝ) i < 1 := by
     intro i
     fin_cases i
     · exact hBa.2.2.1.trans hBa.2.2.2
     · exact hBb.2.2.1.trans hBb.2.2.2
-  have hG : ∀ i, ProfileIntegrable (G i) := by
-    intro i
-    fin_cases i <;> simp [G, hg₁, hg₂]
-  let C := max C₁ C₂
-  have hC : 0 ≤ C := by
-    dsimp [C]
-    linarith [le_max_left C₁ C₂, le_max_right C₁ C₂]
-  have hb : ∀ i : Fin 2, ∀ᶠ X : ℝ in atTop,
-      ∀ s ∈ Icc (0 : ℝ) 1,
-        (∫ x, |dyadicB E (e i) s x| ^ 2
-          ∂dyadicProbabilityMeasure X) ≤ C := by
+  have hG : ∀ i : Fin 2, ProfileIntegrable ((![g₁, g₂] : Fin 2 → ℝ → ℝ) i) := by
     intro i
     fin_cases i
-    · filter_upwards [hb₁] with X hX s hs
-      exact (hX s hs).trans (le_max_left _ _)
-    · filter_upwards [hb₂] with X hX s hs
-      exact (hX s hs).trans (le_max_right _ _)
-  have hJ : JointMomentInterface E e (fun s => M s) := by
-    refine ⟨⟨C, hC, ?_⟩, ?_⟩
-    · filter_upwards [hb 0, hb 1] with X h0 h1 i s hs
-      fin_cases i
-      · exact h0 s hs
-      · exact h1 s hs
-    · intro s hs
-      simpa [e] using hlim s hs
-  have ht := joint_moment_transfer (e := e) (G := G) hE he0 he1 (by norm_num : 0 < 2) hG hJ
-  have heq : jointZMoment E a b g₁ g₂ 1 1 =
-      (fun X => ∫ x, dyadicZ E a g₁ X x * dyadicZ E b g₂ X x
-        ∂dyadicProbabilityMeasure X) := by
-    funext X
-    simp [jointZMoment, Fin.prod_univ_two]
+    · exact hg₁
+    · exact hg₂
+  have ht := joint_moment_transfer (G := ![g₁, g₂]) hE he0 he1
+    (by norm_num : 0 < 2) hG hJ
   have ht' : Tendsto (jointZMoment E a b g₁ g₂ 1 1) atTop
       (𝓝 (∫ s : Fin 2 → ℝ, g₁ (s 0) * g₂ (s 1) * M s ∂cubeMeasure 2)) := by
-    rw [heq]
-    simpa [e, G] using ht
-  have hz := jointZ_first_moment_tendsto_zero hE hBa hBb hab hVa hVb hg₁ hg₂
-  exact tendsto_nhds_unique ht' hz
+    change Tendsto (fun X => jointZMoment E a b g₁ g₂ 1 1 X) atTop _
+    simpa only [jointZMoment, pow_one, Fin.prod_univ_two, Matrix.cons_val_zero,
+      Matrix.cons_val_one] using ht
+  exact tendsto_nhds_unique ht'
+    (jointZ_first_moment_tendsto_zero hE hBa hBb hab hVa hVb hg₁ hg₂)
 
 /-- The separated-exponent mixed squares have strictly positive limiting covariance. -/
 theorem cross_exponent_squares_positive_correlation

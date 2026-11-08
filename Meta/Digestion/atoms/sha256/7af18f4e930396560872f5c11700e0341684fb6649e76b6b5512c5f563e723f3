@@ -1,0 +1,18 @@
+**Definition 194.1 (weighted mode matrices).** Let $u$ be a full-zero bounded partition, put $r_u=\dim\mathcal W_u$, and choose a basis $(w_1,\ldots,w_{r_u})$ of $\mathcal W_u$. Define linear maps
+
+$$
+\begin{aligned}
+\mathsf L_u:\mathcal W_u&\longrightarrow\mathbb R^{2r_u},
+&\mathsf L_u(h)
+  &=\bigl(\langle h,P(gw_j)\rangle_m,
+          \langle h,P^2(gw_j)\rangle_m\bigr)_{j=1}^{r_u},\\
+\mathsf K_u:\mathcal W_u&\longrightarrow\mathbb R^{2r_u},
+&\mathsf K_u(h)
+  &=\bigl(\langle gh,Pw_j\rangle_m,
+          \langle gh,P^2w_j\rangle_m\bigr)_{j=1}^{r_u}.
+\end{aligned}
+\tag{194.1}
+$$
+
+Changing the basis of $\mathcal W_u$ only applies an invertible change of coordinates to the displayed families, so their kernels are intrinsic.
+
