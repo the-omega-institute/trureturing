@@ -72,6 +72,10 @@ $$\neg \operatorname{D5.S3.Combinatorics.Partitions.AndrewsHopkinsExcedanceParit
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Partitions/AndrewsHopkinsExcedanceParityRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/andrews-hopkins-2026-excedance-parity-positivity` (refuted) by `D5/S3/Combinatorics/Partitions/AndrewsHopkinsExcedanceParityRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"andrews-hopkins-2026-excedance-parity-positivity","declaration_gid":"D5/S3/Combinatorics/Partitions/AndrewsHopkinsExcedanceParityRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* George Andrews, Brian Hopkins (2026). *Excedances and Deficiencies of Integer Partitions*. DOI: [10.48550/arXiv.2611.00435](https://doi.org/10.48550/arXiv.2611.00435). URL: <https://arxiv.org/abs/2611.00435v1>.
