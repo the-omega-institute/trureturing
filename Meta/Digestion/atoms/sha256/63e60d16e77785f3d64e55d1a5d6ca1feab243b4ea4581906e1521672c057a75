@@ -1,0 +1,13 @@
+**定义 59.2（Born 和全词的准确接回）。** W124.1 已给全部原评价的唯一正矩阵表示
+
+$$
+\alpha(b)=\sum_j\operatorname{Tr}(\rho_{\alpha,j}b_j),
+\quad\rho_{\alpha,j}\succeq0,\quad
+\sum_j\operatorname{Tr}\rho_{\alpha,j}=m_\alpha.
+\tag{59.1}
+$$
+
+55.2 不重复取得这份底层读数；它识别与之共存的同一个旧乘法方向。负号块可用转置把相反乘法忠实表示在复 Hilbert 空间上，评价密度与效果同时转置，迹读数不变。只有实际供应完整菜单 $\sum_\ell e_\ell=u$ 且 $m_\alpha>0$ 时才有 $p_\alpha(\ell)=\alpha(e_\ell)/m_\alpha$。零质量不归一，零权块不删除，原 $q$ 不变成 Born 概率。
+
+同一原 R 取得后，A6.3、W73–80 的原代数词还原按其前件适用；有限矩阵群的数学极限没有新增原操作词，更不等于实际 native／全词 $K/J$、具名程序、相干控制和全部合法历史未来已经实现。矩阵相同而原程序不同的对象继续保持原身份。
+

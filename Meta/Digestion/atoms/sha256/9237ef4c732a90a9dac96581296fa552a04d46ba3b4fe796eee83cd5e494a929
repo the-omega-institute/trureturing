@@ -1,0 +1,4 @@
+**定义 61.1（成熟前置与本组综合）。** W99 的数学正读取、W102 的全有限谱单位行、W114 的同一旧自旋分类、W119及 A50–54 的角闭合与完整 PB 继承、W120–127 的无全域 NN／J 有限底层存在分类及 Born 读数都是既有前置，不另计成果。A32.2 与 A23.1 的可加性／P3／R 桥也直接消费。有限矩阵谱分解、极分解、射线空间的通常拓扑和矩阵单位计算是成熟工具；56.1 只在已经付线性的固定行上使用拓扑。Hall，[*An Elementary Introduction to Groups and Representations*, arXiv:math-ph/0005032v1](https://arxiv.org/abs/math-ph/0005032v1)，Theorem 3.9、Theorem 3.16，支持闭矩阵群的有限维 Lie 乘积与交换子闭性；这里不借用无限维 Trotter 域结论或物理可控性。
+
+Baez [arXiv:2006.14741v5，Theorem 12](https://arxiv.org/html/2006.14741v5#Thmthm12) 的线性动力对应、Ayupov 等 [arXiv:1210.1900v2](https://arxiv.org/abs/1210.1900v2) 的逐对共同导子，及 Cabello–Peralta [arXiv:1510.00915v1，Theorem 2.5](https://arxiv.org/abs/1510.00915v1) 的全 C* 域 weak-2-local 对称映射与共同插值均不作为未知旧 $D$ 的免费前件。本组不调用它们来补全域可加性。$\texttt{repo-derived}$ 的纸面综合为：固定有限行与原角分类先识别这些旧行及其同块符号；PB 将它们提升为全域平方读数的精确 Cayley 不变性；有限矩阵生成和 P2 的趋零虚部界认回所有原输入的旧值；(57.1) 则给同时满足全部约化角、同向秩一行及正则性的完整全域边界，并显式定位其 PB／R／加法缺陷。不主张历史优先权、文献穷尽、独立信息下降、最小行数或 Lean kernel 真值。
+
