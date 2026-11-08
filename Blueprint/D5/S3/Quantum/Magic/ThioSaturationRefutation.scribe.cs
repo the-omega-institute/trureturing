@@ -39,16 +39,20 @@ internal sealed class ThioSaturationRefutationDocument : IScribeDocumentDefiniti
             Node("rho", "The known noisy Strange state",
                 "The matrix is [[1/4,0,0],[0,3/8,-1/8],[0,-1/8,3/8]] on ZMod 3. With v=(0,1,-1) it equals I/4+v*v dagger/8=(3I-P)/8, where P|j>=|-j>. This is a known depolarized antisymmetric qutrit ingredient, credited to Gross and the noisy Strange literature in the source note. No new-state or priority claim is made."),
             Node("result", "The universal assertion is false",
-                "Take q=d=3 and one tensor factor. The source operator sum equals P/3. The source coordinates of rho are zero at (0,0) and 1/8 at all other eight labels. The Gram decomposition establishes positivity on all complex vectors, and trace is one. The purity is 3/8, strictly between 1/3 and 1. The full entropy sum, including its zero term, is ln(8)=-ln(3/8)+ln(3). Coordinate support is eight, which is not three times an integer. This allowed instance contradicts the universally quantified assertion over both source classes. It saturates the purity-dependent middle bound, while its entropy exceeds ln(3). No classification of every fixed-purity minimizer or of every other attaining support follows.", false, DescribeRole.Theorem)
+                "Take q=d=3 and one tensor factor. The source operator sum equals P/3. The source coordinates of rho are zero at (0,0) and 1/8 at all other eight labels. The Gram decomposition establishes positivity on all complex vectors, and trace is one. The purity is 3/8, strictly between 1/3 and 1. The full entropy sum, including its zero term, is ln(8)=-ln(3/8)+ln(3). Coordinate support is eight, which is not three times an integer. This allowed instance contradicts the universally quantified assertion over both source classes. It saturates the purity-dependent middle bound, while its entropy exceeds ln(3). No classification of every fixed-purity minimizer or of every other attaining support follows.", false, DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("thio-2026-saturation-support-multiples"),
+                    ResolutionKind.Refuted))
         ), []));
 
     private static DocumentBlock Node(string name, string title, string prose,
-        bool literature = false, DescribeRole role = DescribeRole.Definition) => Describe.Lean(
+        bool literature = false, DescribeRole role = DescribeRole.Definition,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create("thio-" + name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
             H(title), role == DescribeRole.Theorem
                 ? StatementSource.FromAuthor(Disp(new Formula.Not(
                     new Formula.NamedConstant(FormulaIdentifier.Create("claim")))))
                 : StatementSource.WithoutFormula(),
             literature ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 }
