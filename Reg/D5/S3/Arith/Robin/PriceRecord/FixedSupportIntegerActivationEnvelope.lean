@@ -2,7 +2,7 @@ import D5.S3.Arith.Robin.PriceRecord.FixedSupportIntegerActivationEnvelope
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.SingleDependentReadout
 
-/- Source-bound four-slot attempts observe the literal free q in the head
+/-! Source-bound four-slot attempts observe the literal free q in the head
 error, keeping every original hypothesis and every other q occurrence. -/
 noncomputable section
 set_option autoImplicit false
@@ -113,7 +113,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
     norm_num at hp ⊢
     linarith only [hp]
   have hH : 9 < H := by
-    simpa only [H, S, theta, Finset.sum_singleton] using
+    simpa [H, S, theta] using
       (lt_log_iff_exp_lt (by norm_num : (0 : ℝ) < 65537)).mpr hexp
   have hH0 : 0 < H := by linarith
   have hL : 2 < L := by
@@ -141,6 +141,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
     <;> nlinarith only [hL]
   have hquartic : lam * (2 : ℝ) ^ 4 ≤ 1 := by
     dsimp only [lam]
+    rw [show (1 : ℝ) / (H * L) * 2 ^ 4 = 16 / (H * L) by ring]
     apply (div_le_one (mul_pos hH0 hL0)).mpr
     nlinarith only [hH, hL]
   intro h
