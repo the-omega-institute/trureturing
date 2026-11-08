@@ -16,6 +16,8 @@ set_option relaxedAutoImplicit false
 
 noncomputable section
 
+/- Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/28045 -/
+
 namespace D5.S3.Quantum.Algebra.PBActualOuterBudget
 
 variable {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℝ H]
@@ -45,7 +47,7 @@ private theorem supporting_vector [Nontrivial H] (n m : H →ₗ[ℝ] H)
     · exact ⟨w + n w, h, by simp only [map_add, hn]; abel⟩
   obtain ⟨v, hv, hnv⟩ := exists_nonzero
   refine ⟨‖v‖⁻¹ • v, ?_, ?_⟩
-  · simp [norm_smul, abs_of_nonneg (inv_nonneg.mpr (norm_nonneg v)), hv]
+  · simp [norm_smul, hv]
   · simp [hnv]
 
 /-- A symmetric operator anticommuting with a supported symmetry has zero expectation. -/
@@ -112,6 +114,7 @@ private theorem anticommuting_inner (e f : H →ₗ[ℝ] H)
     (hef : ∀ v, e (f v) = -f (e v)) (v : H) : ⟪e v, f v⟫ = 0 := by
   have h := he v (f v)
   rw [hef, inner_neg_right, ← hf v (e v), real_inner_comm (f v) (e v)] at h
+  rw [real_inner_comm]
   linarith
 
 private theorem supporting_readings [Nontrivial H] (e f k : H →ₗ[ℝ] H)
@@ -151,8 +154,7 @@ private theorem supporting_readings [Nontrivial H] (e f k : H →ₗ[ℝ] H)
   have hvv : ⟪v,v⟫ = 1 := by simpa [hv] using real_inner_self_eq_norm_sq v
   have hns : n.IsSymmetric := by
     intro a b
-    simp only [n, LinearMap.add_apply, LinearMap.smul_apply,
-      inner_add_left, inner_smul_left, inner_add_right, inner_smul_right, he a b, hf a b]
+    simp [n, inner_add_left, inner_smul_left, inner_add_right, inner_smul_right, he a b, hf a b]
   have hmv := supported_orthogonal n m hns v hnv hnm
   have hkv : ⟪v,k v⟫ = 0 := by
     apply supported_orthogonal n k hns v hnv
@@ -161,7 +163,7 @@ private theorem supporting_readings [Nontrivial H] (e f k : H →ₗ[ℝ] H)
     module
   have heq : c*⟪v,e v⟫ + s*⟪v,f v⟫ = 1 := by
     have := congrArg (fun w => ⟪v,w⟫) hnv
-    simpa [n, inner_add_right, inner_smul_right, hvv] using this
+    simpa [n, inner_add_right, inner_smul_right, hv] using this
   have hmq : -s*⟪v,e v⟫ + c*⟪v,f v⟫ = 0 := by
     simpa [m, inner_add_right, inner_smul_right] using hmv
   have hce : ⟪v,e v⟫ = c := by
@@ -205,62 +207,62 @@ theorem actual_outer_budget [Nontrivial H]
     (hL : ∀ a ∈ L, ∀ b ∈ L, J a b ∈ L)
     (R : Readout (H := H) J u D L)
     (x y : E) (hx : x ∈ L) (hy : y ∈ L) (hd : D x y ∈ L)
-    (X Y δ λ t : ℝ) (ht : t ≠ 0) (htsq : t^2 = λ^2*X^2+1)
+    (X Y δ l t : ℝ) (ht : t ≠ 0) (htsq : t^2 = l^2*X^2+1)
     (F : Fibre R x y X Y δ) :
-    let z := t • u + λ • x
+    let z := t • u + l • x
     let ν := D x y - J x z
     let ω := J x y + D x z
     ∃ v : H, ⟪v,v⟫ = 1 ∧
       reading R v (D (y+ν) (z+ω))^2 ≤ X^2/t^2+δ^2 ∧
       reading R v (D (y-ν) (z-ω))^2 ≤ X^2/t^2+δ^2 ∧
       reading R v (D (y+ν) (z+ω)) - reading R v (D (y-ν) (z-ω)) =
-        2*λ*X^2*Y/t ∧
-      λ^2*X^2*(X^2*Y^2-δ^2) ≤ X^2+δ^2 := by
-  let z := t • u + λ • x
+        2*l*X^2*Y/t ∧
+      l^2*X^2*(X^2*Y^2-δ^2) ≤ X^2+δ^2 := by
+  let z := t • u + l • x
   let ν := D x y - J x z
   let ω := J x y + D x z
-  have hz : z ∈ L := L.add_mem (L.smul_mem t hu) (L.smul_mem λ hx)
+  have hz : z ∈ L := L.add_mem (L.smul_mem t hu) (L.smul_mem l hx)
   have hzero : D x z = 0 := by
-    simpa [z] using B.affine_zero x 0 t 1 λ
+    simpa [z] using B.affine_zero x 0 t 1 l
   have hν : ν ∈ L := L.sub_mem hd (hL x hx z hz)
   have hω : ω ∈ L := by simpa [ω, hzero] using hL x hx y hy
   have hrp : y+ν ∈ L := L.add_mem hy hν
   have hrm : y-ν ∈ L := L.sub_mem hy hν
   have hsp : z+ω ∈ L := L.add_mem hz hω
   have hsm : z-ω ∈ L := L.sub_mem hz hω
-  have hcs : (-(λ*X)/t)^2 + (1/t)^2 = 1 := by
+  have hcs : (-(l*X)/t)^2 + (1/t)^2 = 1 := by
     field_simp
     nlinarith [htsq]
   obtain ⟨v, hv, he, hf, hk, hee, hff, hkk, hef, hek, hfk⟩ :=
     supporting_readings F.e F.f (R.op (D x y)) F.symmetric_e F.symmetric_f
       (R.symmetric _) F.square_e F.square_f F.cross F.cross_d_left
-      F.cross_d_right δ (-(λ*X)/t) (1/t) F.square_d hcs
+      F.cross_d_right δ (-(l*X)/t) (1/t) F.square_d hcs
   have hωop (w : H) : R.op ω w = 0 := by
     simp only [ω, hzero, add_zero, R.jordan x hx y hy,
       F.reads_x, F.reads_y, LinearMap.smul_apply, LinearMap.add_apply,
       LinearMap.comp_apply, map_smul, F.cross]
     module
-  have hzop (w : H) : R.op z w = t • w + (λ*X) • F.e w := by
+  have hzop (w : H) : R.op z w = t • w + (l*X) • F.e w := by
     simp only [z, map_add, map_smul, R.unit, F.reads_x,
       LinearMap.add_apply, LinearMap.smul_apply, LinearMap.id_apply]
     module
   have hνop (w : H) : R.op ν w = R.op (D x y) w -
-      (t*X) • F.e w - (λ*X^2) • w := by
+      (t*X) • F.e w - (l*X^2) • w := by
     simp only [ν, map_sub, LinearMap.sub_apply, R.jordan x hx z hz,
       LinearMap.smul_apply, LinearMap.add_apply, LinearMap.comp_apply,
       F.reads_x, hzop, map_add, map_smul, F.square_e]
     module
   have hp (w : H) : R.op (y+ν) w = Y • F.f w + R.op (D x y) w -
-      (t*X) • F.e w - (λ*X^2) • w := by
+      (t*X) • F.e w - (l*X^2) • w := by
     simp only [map_add, LinearMap.add_apply, F.reads_y, LinearMap.smul_apply, hνop]
     module
   have hm (w : H) : R.op (y-ν) w = Y • F.f w - R.op (D x y) w +
-      (t*X) • F.e w + (λ*X^2) • w := by
+      (t*X) • F.e w + (l*X^2) • w := by
     simp only [map_sub, LinearMap.sub_apply, F.reads_y, LinearMap.smul_apply, hνop]
     module
-  have hspop (w : H) : R.op (z+ω) w = t • w + (λ*X) • F.e w := by
+  have hspop (w : H) : R.op (z+ω) w = t • w + (l*X) • F.e w := by
     simp [hωop, hzop]
-  have hsmop (w : H) : R.op (z-ω) w = t • w + (λ*X) • F.e w := by
+  have hsmop (w : H) : R.op (z-ω) w = t • w + (l*X) • F.e w := by
     simp [hωop, hzop]
   have sym (a b : H) : ⟪a,b⟫ = ⟪b,a⟫ := real_inner_comm _ _
   have gram_plus : reading R v (J (y+ν) (y+ν)) * reading R v (J (z+ω) (z+ω)) -
@@ -300,7 +302,7 @@ theorem actual_outer_budget [Nontrivial H]
   rw [gram_plus] at pp
   rw [gram_minus] at pm
   have difference : reading R v (D (y+ν) (z+ω)) - reading R v (D (y-ν) (z-ω)) =
-      2*λ*X^2*Y/t := by
+      2*l*X^2*Y/t := by
     rw [← map_sub, hPB x y z, map_smul, map_add,
       reading_jordan R hy hν, reading_jordan R hz hω]
     simp only [reading, LinearMap.coe_mk, AddHom.coe_mk, hωop, inner_zero_right,
@@ -310,12 +312,12 @@ theorem actual_outer_budget [Nontrivial H]
       sym (F.f v) v, hf]
     ring
   refine ⟨v, hv, pp, pm, difference, ?_⟩
-  have bound : (2*λ*X^2*Y/t)^2 ≤ 4*(X^2/t^2+δ^2) := by
+  have bound : (2*l*X^2*Y/t)^2 ≤ 4*(X^2/t^2+δ^2) := by
     rw [← difference]
     nlinarith [sq_nonneg (reading R v (D (y+ν) (z+ω)) +
       reading R v (D (y-ν) (z-ω)))]
   have bound' := (div_le_iff₀ (sq_pos_iff.mpr ht)).mp
-    (show (2*λ*X^2*Y)^2/t^2 ≤ 4*(X^2/t^2+δ^2) by simpa [div_pow] using bound)
+    (show (2*l*X^2*Y)^2/t^2 ≤ 4*(X^2/t^2+δ^2) by simpa [div_pow] using bound)
   have ht0 : t ≠ 0 := ht
   field_simp at bound'
   nlinarith [htsq]
