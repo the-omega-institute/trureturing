@@ -2918,7 +2918,7 @@ $$
 
 These are $m$-marginals; the actual source-start label marginals are controlled by (229.3). The initial hard partition is freely chosen using the full arrays. No spatial preparation, description or computation bound is imposed.
 
-*Proof.* For necessity, projection of (229.3) onto the first two slots, which exist since $r_n\ge1$, gives $M_n\to0$ and $Q_n\to p^2$. The identity following (228.1) gives $J_n\to0$, while $\delta_n\le\ell_n\to0$. Theorem 228.2 already proves $\sum_n\delta_n=\infty$ under precisely these conditions. Since $\delta_n\le\ell_n\le\beta_n$, the caps must have divergent total. This uses the paid original-source necessity without a new spectral or heat assertion.
+*Proof.* For necessity, projection of (229.3) onto the first two slots, which exist since $r_n\ge1$, gives $M_n\to0$ and $Q_n\to p^2$. The identity following (228.1) gives $J_n\to0$, while $\delta_n\le\ell_n\to0$. Theorem 228.2 already proves $\sum_n\delta_n=\infty$ under precisely these conditions. Since $\delta_n\le\ell_n\le\beta_n$, the caps must have divergent total.
 
 Assume henceforth $\sum_n\beta_n=\infty$. For each fixed $k\ge1$, the clipped tail $\sum_{n\ge N}\min(\beta_n,1/k)$ diverges for every finite $N$: either infinitely many terms reach $1/k$, or its tail equals the original divergent tail. Choose consecutive finite time blocks by
 
