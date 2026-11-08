@@ -45,7 +45,7 @@ abbrev codeSignature : Signature where
   finiteAnchor := inferInstance
 
 def codeRejected : Realization codeSignature.{u} :=
-  realize codeSignature (fun _ _ => id) (fun e => nomatch e)
+  realize codeSignature (fun _ _ => id) (fun e => Empty.elim e)
 
 def codeArena : Arena where
   signature := codeSignature.{u}
@@ -59,7 +59,7 @@ private theorem codeRejected_law : ¬ codeArena.{u}.Law codeRejected := by
 
 def codeFamily : Registration codeArena.{u}
     (type_of% (@_root_.D5.S1.Dynamics.Symbolic.GardenOfEden.garden_of_eden.{u})) where
-  actual := realize codeSignature (fun _ P => code P.2.2) (fun e => nomatch e)
+  actual := realize codeSignature (fun _ P => code P.2.2) (fun e => Empty.elim e)
   bridge := Iff.rfl
   variation := ⟨@garden_of_eden.{u}, codeRejected, codeRejected_law⟩
   sensitivity := by
@@ -88,7 +88,7 @@ abbrev countSignature : Signature where
   finiteAnchor := inferInstance
 
 def countRejected : Realization countSignature.{u} :=
-  realize countSignature (fun _ A _ n => Nat.card A ^ n) (fun e => nomatch e)
+  realize countSignature (fun _ A _ n => Nat.card A ^ n) (fun e => Empty.elim e)
 
 def countArena : Arena where
   signature := countSignature.{u}
@@ -115,7 +115,7 @@ private theorem countRejected_law : ¬ countArena.{u}.Law countRejected := by
 def countFamily : Registration countArena.{u}
     (type_of% (@_root_.D5.S1.Dynamics.Symbolic.GardenOfEden.strict_image_prefix_loss.{u})) where
   actual := realize countSignature
-    (fun _ A => @PrefixGrowthEntropy.prefixCount A) (fun e => nomatch e)
+    (fun _ A => @PrefixGrowthEntropy.prefixCount A) (fun e => Empty.elim e)
   bridge := Iff.rfl
   variation := ⟨@strict_image_prefix_loss.{u}, countRejected, countRejected_law⟩
   sensitivity := by
@@ -169,7 +169,7 @@ private theorem erasableRejected_law : ¬ erasableArena.{u}.Law codeRejected := 
 
 def erasableFamily : Registration erasableArena.{u}
     (type_of% (@_root_.D5.S1.Dynamics.Symbolic.GardenOfEden.exists_erasable_words.{u})) where
-  actual := realize codeSignature (fun _ P => code P.2.2) (fun e => nomatch e)
+  actual := realize codeSignature (fun _ P => code P.2.2) (fun e => Empty.elim e)
   bridge := Iff.rfl
   variation := ⟨@exists_erasable_words.{u}, codeRejected, erasableRejected_law⟩
   sensitivity := by
@@ -195,7 +195,7 @@ noncomputable def registration_code : Contract.Registration.{_,_,_,0,0,0,_,_,_,_
   realization := .source codeArena.{u} ⟨codeFamily.{u}⟩
   correspondence := {stage := .evidence, objectStage := .evidence}
   bundleNonempty := .absent
-  readout := some (realize codeSignature.{u} (fun _ P => code P.2.2) (fun e => nomatch e))
+  readout := some (realize codeSignature.{u} (fun _ P => code P.2.2) (fun e => Empty.elim e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -229,7 +229,7 @@ noncomputable def registration_count : Contract.Registration.{_,_,_,0,0,0,_,_,_,
   correspondence := {stage := .evidence, objectStage := .evidence}
   bundleNonempty := .absent
   readout := some (realize countSignature.{u}
-    (fun _ A => @PrefixGrowthEntropy.prefixCount A) (fun e => nomatch e))
+    (fun _ A => @PrefixGrowthEntropy.prefixCount A) (fun e => Empty.elim e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -263,7 +263,7 @@ noncomputable def registration_erasable : Contract.Registration.{_,_,_,0,0,0,_,_
   realization := .source erasableArena.{u} ⟨erasableFamily.{u}⟩
   correspondence := {stage := .evidence, objectStage := .evidence}
   bundleNonempty := .absent
-  readout := some (realize codeSignature.{u} (fun _ P => code P.2.2) (fun e => nomatch e))
+  readout := some (realize codeSignature.{u} (fun _ P => code P.2.2) (fun e => Empty.elim e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
