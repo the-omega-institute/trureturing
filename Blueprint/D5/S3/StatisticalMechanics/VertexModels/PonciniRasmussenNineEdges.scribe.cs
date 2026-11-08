@@ -104,7 +104,8 @@ internal sealed class PonciniRasmussenNineEdgesDocument : IScribeDocumentDefinit
     private static Formula Val(Formula x) => Call("Fin.val", x);
     private static Formula OmegaProof() => Seq(N("by"), Sp, N("omega"));
     private static Formula FinMk(Formula x, Formula proof) => Call("Fin.mk", x, proof);
-    private static Formula Embed(Formula x) => FinMk(Val(x), OmegaProof());
+    private static Formula Embed(Formula x) =>
+        Typed(FinMk(Val(x), OmegaProof()), Fin(D(8192)));
     private static Formula Pair(Formula a, Formula b) => Call("Prod.mk", a, b);
     private static Formula SumOver(string name, Formula type, Formula body) =>
         Call("Finset.sum", Call("Finset.univ"), Fn(name, type, body));
