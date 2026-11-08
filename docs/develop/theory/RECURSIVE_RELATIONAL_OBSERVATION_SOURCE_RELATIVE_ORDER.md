@@ -2511,7 +2511,10 @@ v_b(r)=
 \tag{SRO.131}
 $$
 
-Its actual weighted energy and mass are finite. Indeed (SRO.116)
+Its weighted gradient integral and mass are finite. Until its domain
+membership is established below, energy notation for this trial means
+the integral in (SRO.117), not an assumption of full-form membership.
+Indeed (SRO.116)
 gives $\|F(r,\cdot)\|_2\le cX(r)+B_hr^{1/8}$, so with
 $P_b=(1+2b)(1+E_*b^{1/8}/\ell_b)^2$,
 
