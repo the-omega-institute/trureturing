@@ -140,6 +140,7 @@ private theorem receipt_prefix (seed : I) (source : ℕ → Bool) (coins : ℕ �
       simp only [execute, ha, List.length_append, List.length_singleton,
         List.range_succ, List.map_append, List.map_singleton]
       rw [ih]
+      simp only [List.length_map, List.length_range]
 
 /-- The boundary embeds into the SAME complete carrier using the original two
     labels. No active state, initialization state or phase is added. -/
@@ -183,11 +184,11 @@ theorem execution_normalization (seed : I) (coins : ℕ → R)
   | succ n ih =>
     rw [ActualRenewalStopping.run, ← ih]
     cases ha : (O.execute seed (ActualRenewalStopping.sourceBit wait gaps) coins n).action with
-    | emit c d hd => simp [execute, ha, boundary, labels, output]
+    | emit c d hd => simp [execute, ha, boundary, labels, Set.mem_ofPred_eq, output]
     | read c =>
       have hlen := live_length O seed (ActualRenewalStopping.sourceBit wait gaps) coins n
         (by simp [ha, Action.output])
-      simp [execute, ha, hlen, boundary, labels, output, normalizedUpdate]
+      simp [execute, ha, hlen, boundary, labels, Set.mem_ofPred_eq, output, normalizedUpdate]
 
 private theorem boundary_output (a : Action O.emission) :
     O.output (O.boundary a) = a.output := by
@@ -198,9 +199,11 @@ private theorem stop_spec (seed : I) (source : ℕ → Bool) (coins : ℕ → R)
       (O.execute seed source coins n).action.output ≠ none ∧
       ∀ k < n, (O.execute seed source coins k).action.output = none := by
   letI : MeasurableSpace (Option Bool) := ⊤
-  simpa only [stopIndex, firstHit, Set.mem_ofPred_eq, not_not] using
-    (first_hit_some {a : Option Bool | a ≠ none}
-      (fun k => (O.execute seed source coins k).action.output) n)
+  change firstHit {a : Option Bool | a ≠ none}
+    (fun k => (O.execute seed source coins k).action.output) = some n ↔ _
+  rw [first_hit_some]
+  change (_ ∧ ∀ k < n, ¬ (O.execute seed source coins k).action.output ≠ none) ↔ _
+  simp only [not_not]
 
 private theorem stop_length (seed : I) (source : ℕ → Bool) (coins : ℕ → R)
     (n : ℕ) (hn : O.stopIndex seed source coins = some n) :
@@ -317,7 +320,8 @@ theorem stopping_normalization [Fintype C] [MeasurableSpace I] [MeasurableSpace 
   have heff (s : O.Boundary) (b : Bool) (r : R) :
       ActualRenewalPrefixLaw.effective O.labels O.normalizedUpdate s b r =
         O.normalizedUpdate s b r := by
-    cases s <;> simp [ActualRenewalPrefixLaw.effective, labels, output, normalizedUpdate]
+    cases s <;> simp [ActualRenewalPrefixLaw.effective, labels, Set.mem_ofPred_eq,
+      output, normalizedUpdate]
   have hmeas (b : Bool) : Measurable (fun p : O.Boundary × R =>
       ActualRenewalPrefixLaw.effective O.labels O.normalizedUpdate p.1 b p.2) := by
     simp_rw [heff]
@@ -338,8 +342,14 @@ theorem stopping_normalization [Fintype C] [MeasurableSpace I] [MeasurableSpace 
   · intro s b
     cases b <;> exact (Measure.toPMF_toMeasure _).symm
   · intro d
+    have habs (b : Bool) :
+        ActualRenewalPrefixLaw.effective O.labels O.normalizedUpdate (Sum.inr d) b =
+          fun _ => Sum.inr d := by
+      funext r
+      rw [heff]
+      rfl
     constructor <;> apply PMF.toMeasure_injective <;>
-      simp [A, B, Measure.toPMF_toMeasure, heff, normalizedUpdate, PMF.toMeasure_pure]
+      simp [A, B, Measure.toPMF_toMeasure, habs, PMF.toMeasure_pure]
   · intro seed coins wait gaps
     let source := ActualRenewalStopping.sourceBit wait gaps
     let Z := ActualRenewalStopping.run O.labels O.normalizedUpdate
@@ -354,13 +364,13 @@ theorem stopping_normalization [Fintype C] [MeasurableSpace I] [MeasurableSpace 
         have hterm := ((first_hit_some O.labels Z t).mp ht).1
         cases ho : O.output (Z t) with
         | none => exact False.elim (hterm ho)
-        | some d => simp [ho]
+        | some d => simp [Z, source] at ho; simp [ho]
     · change (O.result seed source coins).map Prod.snd =
         (firstHit O.labels Z).bind (fun t => O.output (Z t))
       rw [hr]
       cases ht : firstHit O.labels Z with
       | none => rfl
-      | some t => cases ho : O.output (Z t) <;> simp [ho]
+      | some t => cases ho : O.output (Z t) <;> simp [Z] at ho <;> simp [ho]
 
 end Machine
 end D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.ReadExecution.OriginalObserverNormalization

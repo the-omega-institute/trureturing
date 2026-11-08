@@ -11,7 +11,7 @@ internal sealed class OriginalObserverNormalizationDocument : IScribeDocumentDef
             Describe.Lean(
                 DescribeId.Create("original-observer-execution-normalization"),
                 DeclarationHandle.Create(
-                    "D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/ReadExecution/OriginalObserverNormalization.Machine.execution_normalization"),
+                    "D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/ReadExecution/OriginalObserverNormalization.execution_normalization"),
                 H("Original actions and boundary simulation"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
@@ -25,7 +25,7 @@ internal sealed class OriginalObserverNormalizationDocument : IScribeDocumentDef
             Describe.Lean(
                 DescribeId.Create("original-observer-stopping-normalization"),
                 DeclarationHandle.Create(
-                    "D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/ReadExecution/OriginalObserverNormalization.Machine.stopping_normalization"),
+                    "D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/ReadExecution/OriginalObserverNormalization.stopping_normalization"),
                 H("Same budget, original stopping receipt and internal label"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
