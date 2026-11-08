@@ -83,7 +83,7 @@ private theorem flat_pair_joint_fiber_relations (A D : F →ₗ[ℝ] F)
     intro x y
     simp only [S, LinearMap.smul_apply, LinearMap.add_apply, Module.End.mul_apply,
       real_inner_smul_left, real_inner_smul_right, inner_add_left, inner_add_right,
-      hA, hD, inner_neg_right, neg_neg]
+      hA, hD, neg_neg]
     ring
   have hP' : P = 1 + D * D := by
     dsimp [P]
@@ -128,7 +128,8 @@ private theorem flat_pair_joint_fiber_relations (A D : F →ₗ[ℝ] F)
     exact ⟨move A hPA hSA, move D hPD hSD⟩
   · intro r s x hx
     rcases hx with ⟨hpx, hsx⟩
-    rw [mem_eigenspace_iff] at hpx hsx
+    replace hpx := mem_eigenspace_iff.mp hpx
+    replace hsx := mem_eigenspace_iff.mp hsx
     change -(A (A x)) = r • x at hpx
     change (- (1 / 2 : ℝ)) • (A (D x) + D (A x)) = s • x at hsx
     have hAA : A (A x) = -r • x := by
@@ -144,7 +145,7 @@ private theorem flat_pair_joint_fiber_relations (A D : F →ₗ[ℝ] F)
     have hmix : A (D x) + D (A x) = (-2 * s) • x := by
       have hh := congrArg (fun y : F => (-2 : ℝ) • y) hsx
       norm_num [smul_smul] at hh
-      simpa only [neg_mul] using hh
+      simpa only [neg_mul, neg_smul] using hh
     have hna : ⟪A x, A x⟫_ℝ = r * ⟪x, x⟫_ℝ := by
       rw [hA, hAA, real_inner_smul_right]
       ring
@@ -160,10 +161,10 @@ private theorem flat_pair_joint_fiber_relations (A D : F →ₗ[ℝ] F)
       linarith
     refine ⟨hAA, hDD, hmix, hna, hnd, hcross, ?_⟩
     intro hn
-    have hposA := real_inner_self_nonneg (A x)
-    have hposD := real_inner_self_nonneg (D x)
+    have hposA : 0 ≤ ⟪A x, A x⟫_ℝ := real_inner_self_nonneg
+    have hposD : 0 ≤ ⟪D x, D x⟫_ℝ := real_inner_self_nonneg
     have hcs := real_inner_mul_inner_self_le (A x) (D x)
-    rw [hna, hnd, hcross, hn] at hposA hposD hcs
+    simp only [hna, hnd, hcross, hn, mul_one] at hposA hposD hcs
     constructor
     · nlinarith
     constructor <;> nlinarith
@@ -265,7 +266,7 @@ private theorem quaternion_orbit_span_data (I J : F →ₗ[ℝ] F)
     intro k; fin_cases k <;> simp [hI2]
   have tableJ : ∀ k : Fin 4, J ((![q, I q, J q, I (J q)] : Fin 4 → F) k) =
       (![J q, -I (J q), -q, I q] : Fin 4 → F) k := by
-    intro k; fin_cases k <;> simp [hJ2, hJI, map_neg, hI2]
+    intro k; fin_cases k <;> simp [hJ2, hJI, map_neg]
   have memv (k : Fin 4) :
       (![q, I q, J q, I (J q)] : Fin 4 → F) k ∈
         Submodule.span ℝ (Set.range (![q, I q, J q, I (J q)] : Fin 4 → F)) :=
@@ -322,7 +323,8 @@ private theorem flat_pair_complement_descent_data (A D : F →ₗ[ℝ] F)
   · intro x y; exact hD x y
   · ext x
     exact DFunLike.congr_fun hflat (x : F)
-  · have hpos : 0 < Module.finrank ℝ V := Nat.pos_of_ne_zero (fun hz => hV (Submodule.finrank_eq_zero.mp hz))
+  · have hpos : 0 < Module.finrank ℝ V :=
+      Nat.pos_of_ne_zero (fun hz => hV (Submodule.finrank_eq_zero.mp hz))
     have hadd := V.finrank_add_finrank_orthogonal
     omega
 
