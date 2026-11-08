@@ -1578,3 +1578,169 @@ original admission/response, full-domain recovery and lower
 realization obligations remain.
 
 ## 追加锚（本行以下为增补区）
+
+## 18. Returned-family confinement in the complete original-coordinate projection
+
+The returned rejection family of GENERAL §16 has an exact equality that
+the equal-cost statements alone do not provide. Fixing the payload
+weight makes the whole retained original-coordinate inventory coincide,
+including the meter and every head, while the request-order information
+remains in the omitted annex. The result below records the corresponding
+continuation boundary in the unchanged source body.
+
+**Definition 18.1 (paired returned cuts and source-body suffix).** Keep
+Assumption 1.2, Definitions 1.3–1.4, and GENERAL Definition 16.1. Fix
+$L\ge2$ and $1\le r<L$, and let $x,y\in\mathcal X_{L,r}$ be two actual
+payloads in the same construction from the same $P_*$. Write
+
+$$
+R_x=H_x^{\rm ret},\qquad h_x=H_x^{\rm pre},\qquad
+h_x^+=H_x^{\rm post},
+$$
+
+and use the analogous notation for $y$. A *paired source-body suffix*
+from $h_x^+$ and $h_y^+$ is a finite pair of the unchanged $F^A$ suffixes
+with the same original Supply/Advance labels, the same supplied source
+bits, and the same branch at every guard. It starts after the actual
+EX13 at $h_x^+$ and $h_y^+$, remains in that unchanged source body, and
+stops before changed final-idle control, annex re-entry, a new scheduler
+entry, or a terminal comparison. Every action in this definition is
+required to have its actual current owner, token, input and source
+permission. Thus the definition supplies no new access or continuation
+right.
+
+**Theorem 18.2 (full $O^+$ confinement at the returned cuts).** For every
+such $L,r,x,y$,
+
+$$
+O^+(R_x)=O^+(R_y),\qquad
+O^+(h_x)=O^+(h_y),\qquad
+O^+(h_x^+)=O^+(h_y^+).
+$$
+
+The equality is coordinatewise: all tape material on ports $0$–$63$,
+the complete ordered meter record and its two heads, every installed
+finite control and code-version coordinate, every latch and token slot,
+and every head position on all $74$ ports agree. The corresponding raw
+states are nevertheless distinct whenever $x\ne y$: their acquired
+rejection records retain different payload-order words on the annex.
+
+Proof. Start at the common actual $P_*$. In the ingress of Definition
+16.1 the tag is $000$, the mode is fixed, and the malformed-recovery
+test fails before the payload is used as a target, offset, source index,
+unary value, program, or loop bound. Consequently the only varying
+operands are copies of the supplied word $w_x$ (and its raw-request
+pair) on the annex ports. All gate bits, lengths, selectors, labels,
+descriptor bases, creation ordinals and callback branches are the same.
+
+Run the phase induction of GENERAL Lemma 16.2, retaining the actual
+operand rather than only its size. A compiled assignment or a word
+macro either has a common operand, or copies a payload bit to an annex
+word and then continues by its fixed framing schedule. Equality tests
+on the two copies exhaust their common length; no test compares $x$ with
+$y$ or branches on their order. The variable native imports have the
+same length and the same number $r$ of one bits. Their intermediate
+testing CTLs can have different receipt prefixes, but they construct no
+old-port cell, change no descriptor, bank parity, finite resource slot,
+or head. At each completed import the receipt difference is zero. The
+remaining channel, rejection, callback, append, ACK, invocation and
+Ready phases have common numeric operands and the common finite control
+schedule. The actual callback checks the received raw request and then
+returns the live slots; it does not restore an imagined snapshot.
+
+It follows by induction over the completed rejection flight that every
+old tape $0$–$63$, every finite control/code-version and latch/token slot,
+and every head position (including the annex heads) is equal at $R_x$ and
+$R_y$. The complete meter equality is the fixed-weight direction of
+GENERAL Proposition 17.5, whose proof uses the exact ordinary-receipt
+update and both marked heads, not just a receipt count. The omitted
+annex tape contents may differ, so this conclusion is exactly equality
+of Definition 1.4's projection rather than equality of raw records.
+
+From each $R_x$ and $R_y$, the later outer01 gate and the original header
+prelude use the same supplied bits and the same current source resources.
+GENERAL Lemma 16.3 states that the prelude changes no port13 byte, has
+the same original control and resource relation, and reaches the first
+IN5 with latch5 equal to $0$ on both runs. Its reads, moves and writes
+on ports $0$–$63$ therefore have identical operands and labels. The
+only first input is the common Supply$(0)$; it overwrites latch5 in both
+runs and leaves the same enabled EX13. Hence all retained coordinates
+are equal at $h_x$, and the identical EX13 row gives equality at
+$h_x^+$. This also agrees with GENERAL Proposition 17.5 at the pre and
+post cut types. ∎
+
+**Theorem 18.3 (same-source continuation in the unchanged body).** Let
+$\kappa$ be any paired source-body suffix of Definition 18.1, with cuts
+$\kappa_x(j)$ and $\kappa_y(j)$ after its $j$th common action. Then, for
+every cut in the suffix,
+
+$$
+O^+(\kappa_x(j))=O^+(\kappa_y(j)).
+$$
+
+The two executions have the same actual action labels, legality, released
+outputs, current owner/token relation and original source-body control at
+each paired cut. This is an $O^+$-projected continuation statement; it
+does not identify their complete $Q$ responses or add an annex readout.
+
+Proof. The base case is Theorem 18.2 at $h_x^+$. In the unchanged
+$F^A$ body, every next row is selected from the retained original control,
+source and workspace data, and the paired suffix supplies the same legal
+input when an IN is required. The body does not read the omitted annex
+payload or use it as a guard. Thus the same original row is enabled in
+both states, with the same label, output release and local successor on
+all retained coordinates. EX, WR, MR, token transfers, source checks,
+ACKs and returns preserve this coordinatewise equality; each actual
+receipt is appended by the same row on the same physical operand. An
+induction on $j$ proves the displayed equality until the explicitly
+excluded changed-idle, annex-entry or terminal boundary. The annex
+request remains a paid retained record throughout, so equality of the
+projection is not an erasure or a new permission. ∎
+
+**Corollary 18.4 (precise recovery consequence).** Let $D$ be any domain
+of actual returned states that contains, for some $x\ne y$ in one
+$\mathcal X_{L,r}$ family, the two paired states at one common cut type
+$R,h,h^+,$ or at one common cut of a paired suffix of Theorem 18.3.
+There is no function $f$ on $O^+(D)$ that recovers the payload $x$ on
+$D$. Moreover, for each
+
+$$
+V\in\{S,B,T,M_J\},
+$$
+
+there is no function $g_V$ on $O^+(D)$ with
+$g_V(O^+(z))=V(z)$ for every $z\in D$.
+
+Proof. Theorem 18.2 and Theorem 18.3 give one common $O^+$ value on the
+paired states, while $x\ne y$. GENERAL Corollary 4.4 gives
+$V(z_x)\ne V(z_y)$ for each of the four views, and GENERAL Proposition
+16.5 identifies the differing raw request as an actually acquired,
+checked and retained field. A function of the common projection cannot
+take two required values. This is a mathematical factorization
+obstruction only: Definition 1.4 grants no actor access to $O^+$, and
+the paid rejection payload, complete records, source permissions,
+callback checks and all resource charges remain in force. ∎
+
+**Convention 18.5 (scope, costs and unresolved interfaces).** The new
+result is restricted to the complete actual GENERAL16 rejection family
+$\mathcal X_{L,r}$, its returned cuts $R_x,h_x,h_x^+$, and paired suffixes
+inside the unchanged $F^A$ body. Equal $O^+$ is not asserted across
+different weights: GENERAL Theorem 17.4 and Proposition 17.5 give the
+meter separation there. No equality or inequality of complete $Q$ maps is
+claimed, and no successful-history, unfinished-annex, changed-return,
+final00, preacquisition, noncanonical, terminal, or current-return route
+is silently included.
+
+All actual source clauses remain those of Definitions 1.2–1.4 and
+GENERAL 16.1: source $u=\beta$, the fixed original apparatus, the whole
+frame, typed rejection, actual callback and complete five-field history
+item. The $2L+15$ external bits, every ingress/import/descriptor/bank/
+channel/ACK/return row, the ordinary receipt and storage bills, and all
+retained old and annex material remain paid. The statement adds no reset,
+point sensor, free throughput, parameter, scheduler entry, source law,
+Lean result, runtime claim, or actor read right. It is a repo-derived
+source-model theorem that closes the $O^+$ confinement interface while
+leaving full-$Q$ recovery and the remaining original-domain obligations
+open.
+
+## 追加锚（本行以下为增补区）
