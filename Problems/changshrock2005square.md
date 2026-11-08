@@ -80,6 +80,15 @@ directly from `ChangShrockToroidalHoneycomb`; no replacement encoding is
 introduced. The accepted kernel axioms are `propext`, `Classical.choice`
 and `Quot.sound`.
 
+The Reg proofs compile, but the source-bound audit is `declared_unresolved`:
+`IE-C050`, `reason=unclassified_form`, `rule=source.coordinate_dependency`,
+`site="missing=1;selected=#[0];scope=3"`. The proof of the width bound occurs
+in the expanded `NeZero L` instance. The selected width coordinate alone
+does not close that dependency. The same template limitation is recorded
+in [issue #28118](https://github.com/the-omega-institute/trureturing/issues/28118).
+This audit remains unfinished; the mathematical eigenvector theorem is
+kernel-checked.
+
 ## Triage
 
 The all-width polynomial eigenvector statement is proved by `result`.

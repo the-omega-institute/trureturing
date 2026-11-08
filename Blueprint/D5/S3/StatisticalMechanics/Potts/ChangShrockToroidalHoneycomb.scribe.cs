@@ -79,7 +79,7 @@ internal sealed class ChangShrockToroidalHoneycombDocument : IScribeDocumentDefi
                     + "projects to zero in this block."),
             Definition("vertical", Width(Eq(Call("vertical", X("L")),
                 At(Q("List", "prod"), At(Q("List", "ofFn"), Fn("i", Sites(),
-                    Add(Mul(N("v"), D(1)), Call("detach", X("i")))))))),
+                    Add(Smul(N("v"), D(1)), Call("detach", X("i")))))))),
                 "This is the ordered longitudinal product V of equation "
                     + "(2.34). List.prod multiplies endomorphisms by composition, in "
                     + "increasing site order.", true),
@@ -87,14 +87,14 @@ internal sealed class ChangShrockToroidalHoneycombDocument : IScribeDocumentDefi
                 Eq(Call("horizontal", X("L"), X("b")),
                     At(Q("List", "prod"), At(Q("List", "ofFn"), Fn("k", Call("Fin", At(Q("Nat",
                         "div"), X("L"), D(2))),
-                        Add(D(1), Mul(N("v"), Call("join",
+                        Add(D(1), Smul(N("v"), Call("join",
                             At(Q("Fin", "ofNat"), X("L"), Offset()),
                             At(Q("Fin", "ofNat"), X("L"), Add(Offset(), D(1)))))))))))),
                 "The Boolean b selects the second bond layer. Its offset is "
                     + "one when true and zero when false. "
                 + "For even L, false pairs sites 0-1, 2-3 and so on; true pairs "
                     + "sites 1-2, 3-4 and the seam L-1 to 0. "
-                + "Fin.ofNat reduces site numbers modulo L. Here Nat.div L 2 is, "
+                + "Fin.ofNat reduces site numbers modulo L. Here Nat.div L 2 is "
                     + "the integer quotient floor(L/2). These are the two honeycomb "
                     + "H operators in equation (2.34).", true),
             Definition("transfer", Width(Eq(Call("transfer", X("L")),
@@ -202,7 +202,7 @@ internal sealed class ChangShrockToroidalHoneycombDocument : IScribeDocumentDefi
             If(Eq(Site("j"), D(0)), Call("ket", At(Q("Function", "update"), At(Q("Subtype",
                 "val"), X("s")), X("j"), Site("i"))), D(0))));
     private static Formula DetachBody() => If(Eq(Site("i"), D(0)),
-        Mul(N("q"), At(Q("Finsupp", "single"), X("s"), D(1))),
+        Smul(N("q"), At(Q("Finsupp", "single"), X("s"), D(1))),
         If(Ex("j", Sites(), And(Ne(X("j"), X("i")), Eq(Site("j"), Site("i")))),
             Call("ket", At(Q("Function", "update"), At(Q("Subtype", "val"), X("s")), X("i"),
                 D(0))), D(0)));
@@ -210,8 +210,8 @@ internal sealed class ChangShrockToroidalHoneycombDocument : IScribeDocumentDefi
         Arrow(new Formula.Relation(D(2), FormulaRelationOperator.LessThanOrEqual, X("L")),
             Arrow(Call("Even", X("L")), Ex("w", Call("Space", X("L")),
                 And(Ne(X("w"), D(0)), Eq(At(Call("transfer", X("L")), X("w")),
-                    Mul(Power(N("v"), Mul(D(2), Sub(X("L"), D(1)))),
-                        Mul(Power(Add(N("v"), N("q")), D(2)), X("w")))))))));
+                    Smul(Mul(Power(N("v"), Mul(D(2), Sub(X("L"), D(1)))),
+                        Power(Add(N("v"), N("q")), D(2))), X("w"))))))));
     private static Formula Offset() => Add(Mul(D(2), At(Q("Fin", "val"), X("k"))), If(X("b"),
         D(1), D(0)));
     private static Formula Site(string name) => At(At(Q("Subtype", "val"), X("s")), X(name));
@@ -251,6 +251,7 @@ internal sealed class ChangShrockToroidalHoneycombDocument : IScribeDocumentDefi
         FormulaBinaryOperator.Add, Parenthesized(b));
     private static Formula Sub(Formula a, Formula b) => new Formula.Binary(Parenthesized(a),
         FormulaBinaryOperator.Subtract, Parenthesized(b));
+    private static Formula Smul(Formula a, Formula b) => At(Q("HSMul", "hSMul"), a, b);
     private static Formula Mul(Formula a, Formula b) => new Formula.Binary(Parenthesized(a),
         FormulaBinaryOperator.Multiply, Parenthesized(b));
     private static Formula Power(Formula a, Formula b) => new Formula.Power(Parenthesized(a),
