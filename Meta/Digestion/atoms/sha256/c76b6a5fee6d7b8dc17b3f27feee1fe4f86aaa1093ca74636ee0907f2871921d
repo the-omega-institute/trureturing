@@ -1,0 +1,31 @@
+**Definition 205.1 (the relation-restricted coefficient matrix).** Fix one original full-zero partition $u$, its host space $\mathcal W_u$, quotient $T_u$, normalized section $S_u$ and radical basis as in Sections 197--199. All spans below are spans of real $m$-classes. Use one coherent linear choice of bounded Borel representatives on $\mathcal W_u$, with $1$ represented by the constant one and the seed represented by a pointwise legal partition; a common $m$-null-set adjustment is allowed in choosing these representatives. Keep this choice fixed for all pointwise inequalities. Write $d=d_u$ and let
+
+$$
+j:\mathbb R^d\longrightarrow\mathcal R_u,
+\qquad j(z)=\sum_{\ell=1}^d z_\ell r_\ell.
+$$
+
+In label order $(0,1,3,B)$, put
+
+$$
+b_1=(1,-1,0,0)^{\mathsf T},\qquad
+b_2=(1,1,1,-3)^{\mathsf T},\qquad
+\mathsf B=(b_1\ b_2),\qquad K=\ker\Phi_f.
+\tag{205.1}
+$$
+
+The baseline identities (191.6), together with $\dim K=2$, give $K=\operatorname{im}\mathsf B$. For $A\in\mathscr A_u$, define
+
+$$
+M(A)=\mathsf B^{\mathsf T}A
+=\begin{pmatrix}
+a_{0\bullet}-a_{1\bullet}\\
+a_{0\bullet}+a_{1\bullet}+a_{3\bullet}-3a_{B\bullet}
+\end{pmatrix},
+\qquad
+W(A)=\operatorname{span}_{\mathbb R}\{u_y(A):y\in\mathcal L\}.
+\tag{205.2}
+$$
+
+Here $M(A)$ is $2\times d$, including the zero-column matrix when $d=0$.
+
