@@ -81,6 +81,7 @@ moves: proof_shape=bind-only; consumers=moves_certificate
 linkKeys: proof_shape=bind-only; consumers=moves_certificate
 moves_certificate: proof_shape=bind-only; consumers=step_fast
 fastStep: proof_shape=bind-only; consumers=step_fast
+weighted_sum: proof_shape=bind-only; consumers=step_fast
 step_fast: proof_shape=bind-only; consumers=table_step0
 tables: proof_shape=bind-only; consumers=table
 table: proof_shape=bind-only; consumers=table_base
@@ -555,6 +556,14 @@ private def fastStep (w : Fin 3 → Fin 3 → Fin 3 → Fin 3 → Fin 3 → Labe
   ((links.getD i #[]).toList.map fun e => ((e % 9 : ℕ) : ℤ) *
     w q r (digit (e / 9) 243) (digit (e / 9) 81) (digit (e / 9) 27)
       ![digit (e / 9) 9, digit (e / 9) 3, digit (e / 9) 1]).sum
+private theorem weighted_sum (es : List ℕ) (g : ℕ → ℤ) :
+    ((es.flatMap fun e => List.replicate (e % 9) (e / 9)).map g).sum =
+      (es.map fun e => ((e % 9 : ℕ) : ℤ) * g (e / 9)).sum := by
+  induction es with
+  | nil => rfl
+  | cons e es ih =>
+    simp only [List.flatMap_cons, List.map_append, List.map_replicate, List.sum_append,
+      List.sum_replicate, List.map_cons, List.sum_cons, nsmul_eq_mul, ih]
 private theorem step_fast (w : Fin 3 → Fin 3 → Fin 3 → Fin 3 → Fin 3 → Labels → ℤ)
     (q r t b c : Fin 3) (p : Labels) (h : Valid q r t b c p) :
     step w q r t b c p = fastStep w q r t b c p := by
@@ -579,8 +588,8 @@ private theorem step_fast (w : Fin 3 → Fin 3 → Fin 3 → Fin 3 → Fin 3 →
       · simp [hd]
     _ = ((linkKeys q r t b c p).map g).sum := by rw [moves_certificate _ _ _ _ _ _ h]
     _ = fastStep w q r t b c p := by
-      simp [linkKeys, fastStep, List.flatMap_def, List.map_flatten, List.sum_flatten,
-        List.map_map, List.map_replicate, List.sum_replicate, nsmul_eq_mul, g]
+      unfold linkKeys fastStep
+      exact weighted_sum _ g
 private def tables : Array (Array (Array ℤ)) := 
   #[#[#[1],#[1,1],#[1,1,1],#[],#[],#[],#[1,1,0,1,1],#[1,1,1,1,1,1],#[],#[1,1,1,1,1,1,1,1,1],#[],#[
   ],#[],#[],#[],#[1,1,0,1,1,0,0,0,0,1,1,0,1,1],#[1,1,1,1,1,1,0,0,0,1,1,1,1,1,1],#[],#[1,1,1,1,1,1,
