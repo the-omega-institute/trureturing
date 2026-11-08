@@ -4,7 +4,7 @@
    mirror-E: none(waiver:formal-power-series-proof)
    anchors: []
    utility: none
-   digest: The zero-constant quintic inverse satisfies the full A392976 recurrence and a nonzero homogeneous differential equation. -/
+   digest: The inverse quintic satisfies the full A392976 recurrence and is D-finite. -/
 
 import D5.S1.Recurrence.A308815DFiniteRecurrence
 
@@ -21,7 +21,7 @@ def f : Polynomial ℚ := Polynomial.X * ((1 - Polynomial.X^2)^2 - Polynomial.X)
 
 private theorem f_zero : constantCoeff (f : PowerSeries ℚ) = 0 := by simp [f]
 private theorem f_one : IsUnit (coeff 1 (f : PowerSeries ℚ)) := by
-  convert isUnit_one (M := ℚ) using 1 <;> norm_num [f, Polynomial.coeff_mul]
+  convert isUnit_one (M := ℚ) using 1; norm_num [f, Polynomial.coeff_mul]
 
 /-- The unique zero-constant formal inverse, over the rational coefficient field. -/
 def U : PowerSeries ℚ := (f : PowerSeries ℚ).substInvOfIsUnit f_one
@@ -261,6 +261,10 @@ private theorem theta_transport (B : PowerSeries ℚ) :
 private theorem coe_nat (n : ℕ) : ((n : Polynomial ℚ) : PowerSeries ℚ) = n :=
   map_natCast Polynomial.coeToPowerSeries.ringHom n
 
+private theorem coe_ofNat (n : ℕ) [Nat.AtLeastTwo n] :
+    ((ofNat(n) : Polynomial ℚ) : PowerSeries ℚ) = ofNat(n) :=
+  map_ofNat Polynomial.coeToPowerSeries.ringHom n
+
 private theorem scaled_step (B : PowerSeries ℚ) (d : ℕ) (N : Polynomial ℚ)
     (h : (H : PowerSeries ℚ)^(d + 1) * B.subst (f : PowerSeries ℚ) = N) :
     (H : PowerSeries ℚ)^(d + 3) * (theta B).subst (f : PowerSeries ℚ) =
@@ -287,9 +291,7 @@ private theorem scaled_iterates (j : ℕ) (hj : j < 5) :
   | succ j ih =>
     have h := scaled_step (theta^[j + 1] U) (2*j) (num (j + 1)) (ih (by omega))
     rw [num_recurrence j (by omega)]
-    convert h using 1 <;>
-      simp only [Function.iterate_succ_apply', Nat.cast_mul, Nat.cast_add, Nat.cast_ofNat, Nat.cast_one] <;>
-      congr 1 <;> omega
+    convert h using 1 <;> simp only [Function.iterate_succ_apply'] <;> congr 1 <;> omega
 
 set_option maxHeartbeats 4000000 in
 -- The finite exact polynomial expressions require an enlarged elaboration budget.
@@ -354,7 +356,8 @@ private theorem inverse_operator : op wU U = 0 := by
   have hz : (op wU U).subst (f : PowerSeries ℚ) = 0 :=
     (mul_eq_zero.mp hscaled).resolve_left (pow_ne_zero _ hh)
   have h := congrArg (fun B : PowerSeries ℚ => B.subst U) hz
-  simpa only [subst_comp_subst_apply hf hu, inverse_right, X_subst, ← coe_substAlgHom hu, map_zero] using h
+  simpa only [subst_comp_subst_apply hf hu, inverse_right, X_subst, ← coe_substAlgHom hu,
+      map_zero] using h
 
 set_option maxHeartbeats 4000000 in
 -- The finite exact polynomial expressions require an enlarged elaboration budget.
@@ -383,7 +386,7 @@ private theorem coeff_op (w : ℕ → ℕ → ℚ) (B : PowerSeries ℚ) (n : �
   simp only [op, map_sum]
   apply Finset.sum_congr rfl
   intro k hk
-  rw [coeff_X_pow_mul', if_pos (by have := Finset.mem_range.mp hk; omega)]
+  rw [coeff_X_pow_mul', ite_eq_left (by have := Finset.mem_range.mp hk; omega)]
   simp only [map_sum, coeff_C_mul, coeff_theta_iterate, mul_assoc]
 
 private theorem recurrence (n : ℕ) (hn : 5 ≤ n) :
@@ -404,24 +407,38 @@ private theorem recurrence (n : ℕ) (hn : 5 ≤ n) :
   linear_combination h
 
 private def p : ℕ → Polynomial ℚ
-  | 0 => Polynomial.C (-826722892323288 : ℚ) * Polynomial.X^3 + Polynomial.C (-3941533408005120 : ℚ) * Polynomial.X^4 + Polynomial.C (702108258284160 : ℚ) * Polynomial.X^5
-  | 1 => Polynomial.C (-2474598487285584 : ℚ) * Polynomial.X^3 + Polynomial.C (-29725035256305912 : ℚ) * Polynomial.X^4 + Polynomial.C (-37619021616684360 : ℚ) * Polynomial.X^5 + Polynomial.C (10842264054320400 : ℚ) * Polynomial.X^6
-  | 2 => Polynomial.C (-487468272050316 : ℚ) * Polynomial.X^3 + Polynomial.C (-18745339188989196 : ℚ) * Polynomial.X^4 + Polynomial.C (-73317780250674234 : ℚ) * Polynomial.X^5 + Polynomial.C (-46696771941891900 : ℚ) * Polynomial.X^6 + Polynomial.C (22139482729590000 : ℚ) * Polynomial.X^7
-  | 3 => Polynomial.C (80011861733460 : ℚ) * Polynomial.X^3 + Polynomial.C (-1128902401445964 : ℚ) * Polynomial.X^4 + Polynomial.C (-19400635956590748 : ℚ) * Polynomial.X^5 + Polynomial.C (-42822888796040886 : ℚ) * Polynomial.X^6 + Polynomial.C (-13455662294384000 : ℚ) * Polynomial.X^7 + Polynomial.C (12623525781600000 : ℚ) * Polynomial.X^8
-  | 4 => Polynomial.C (137479527309760 : ℚ) * Polynomial.X^4 + Polynomial.C (-607506851481168 : ℚ) * Polynomial.X^5 + Polynomial.C (-5424885553010130 : ℚ) * Polynomial.X^6 + Polynomial.C (-7721677106063578 : ℚ) * Polynomial.X^7 + Polynomial.C (-483806081571250 : ℚ) * Polynomial.X^8 + Polynomial.C (2436784456650000 : ℚ) * Polynomial.X^9
-  | 5 => Polynomial.C (23495312375279 : ℚ) * Polynomial.X^5 + Polynomial.C (-73180721424774 : ℚ) * Polynomial.X^6 + Polynomial.C (-406745978528262 : ℚ) * Polynomial.X^7 + Polynomial.C (-384334715888720 : ℚ) * Polynomial.X^8 + Polynomial.C (78200611484375 : ℚ) * Polynomial.X^9 + Polynomial.C (140685548031250 : ℚ) * Polynomial.X^10
+  | 0 => Polynomial.C (-826722892323288 : ℚ) * Polynomial.X^3 + Polynomial.C (-3941533408005120 :
+      ℚ) * Polynomial.X^4 + Polynomial.C (702108258284160 : ℚ) * Polynomial.X^5
+  | 1 => Polynomial.C (-2474598487285584 : ℚ) * Polynomial.X^3 + Polynomial.C (-29725035256305912
+      : ℚ) * Polynomial.X^4 + Polynomial.C (-37619021616684360 : ℚ) * Polynomial.X^5 +
+      Polynomial.C (10842264054320400 : ℚ) * Polynomial.X^6
+  | 2 => Polynomial.C (-487468272050316 : ℚ) * Polynomial.X^3 + Polynomial.C (-18745339188989196
+      : ℚ) * Polynomial.X^4 + Polynomial.C (-73317780250674234 : ℚ) * Polynomial.X^5 +
+      Polynomial.C (-46696771941891900 : ℚ) * Polynomial.X^6 + Polynomial.C (22139482729590000 :
+      ℚ) * Polynomial.X^7
+  | 3 => Polynomial.C (80011861733460 : ℚ) * Polynomial.X^3 + Polynomial.C (-1128902401445964 :
+      ℚ) * Polynomial.X^4 + Polynomial.C (-19400635956590748 : ℚ) * Polynomial.X^5 + Polynomial.C
+      (-42822888796040886 : ℚ) * Polynomial.X^6 + Polynomial.C (-13455662294384000 : ℚ) *
+      Polynomial.X^7 + Polynomial.C (12623525781600000 : ℚ) * Polynomial.X^8
+  | 4 => Polynomial.C (137479527309760 : ℚ) * Polynomial.X^4 + Polynomial.C (-607506851481168 :
+      ℚ) * Polynomial.X^5 + Polynomial.C (-5424885553010130 : ℚ) * Polynomial.X^6 + Polynomial.C
+      (-7721677106063578 : ℚ) * Polynomial.X^7 + Polynomial.C (-483806081571250 : ℚ) *
+      Polynomial.X^8 + Polynomial.C (2436784456650000 : ℚ) * Polynomial.X^9
+  | 5 => Polynomial.C (23495312375279 : ℚ) * Polynomial.X^5 + Polynomial.C (-73180721424774 : ℚ)
+      * Polynomial.X^6 + Polynomial.C (-406745978528262 : ℚ) * Polynomial.X^7 + Polynomial.C
+      (-384334715888720 : ℚ) * Polynomial.X^8 + Polynomial.C (78200611484375 : ℚ) *
+      Polynomial.X^9 + Polynomial.C (140685548031250 : ℚ) * Polynomial.X^10
   | _ => 0
 
 set_option maxHeartbeats 4000000 in
 -- The finite exact polynomial expressions require an enlarged elaboration budget.
 private theorem normal_form (B : PowerSeries ℚ) :
     op wA B = ∑ j : Fin 6, (p j.val : PowerSeries ℚ) * (derivative (R := ℚ))^[j.val] B := by
-  simp only [Fin.sum_univ_succ, Fin.val_zero, Fin.val_succ, p,
-    Polynomial.coe_add, Polynomial.coe_mul, Polynomial.coe_pow, Polynomial.coe_X,
-    Polynomial.coe_C, map_neg, map_ofNat, map_intCast]
+  simp [p, Fin.sum_univ_succ, map_ofNat]
   norm_num [op, wA, Finset.sum_range_succ, Function.iterate_succ_apply',
     theta, Derivation.leibniz, derivative_pow, derivative_X, derivative_one,
     map_add, map_mul, map_natCast, map_ofNat]
+  simp only [coe_ofNat, coe_nat]
   ring
 
 private theorem dfinite : DFinite A := by

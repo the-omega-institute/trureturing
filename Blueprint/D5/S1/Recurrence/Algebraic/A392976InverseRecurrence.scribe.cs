@@ -90,13 +90,13 @@ internal sealed class A392976InverseRecurrenceDocument : IScribeDocumentDefiniti
 
     private static DocumentBlock Node(string name, string title, Formula formula,
         string prose, DescribeRole role) => Describe.Lean(
-            DescribeId.Create("a392976-" + name.ToLowerInvariant()),
+            DescribeId.Create("a392976-" + (name == "A" ? "series" : name == "a" ? "sequence" : name.ToLowerInvariant())),
             DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(prose))), role);
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The zero-constant quintic inverse satisfies the full A392976 recurrence and a nonzero homogeneous differential equation.",
+        "The inverse quintic satisfies the full A392976 recurrence and is D-finite.",
         H("A392976: The Formal Inverse Quintic Recurrence"), Blocks(
             Paragraph(Text("OEIS A392976, https://oeis.org/A392976, defines the sequence by reversion "
                 + "of f(X)=X((1-X^2)^2-X). All series here are formal power series over Q, with "
