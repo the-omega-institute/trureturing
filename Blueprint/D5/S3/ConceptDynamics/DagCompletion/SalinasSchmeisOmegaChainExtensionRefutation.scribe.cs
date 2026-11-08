@@ -63,7 +63,10 @@ internal sealed class SalinasSchmeisOmegaChainExtensionRefutationDocument : IScr
                     + "Zenodo endpoints were blocked, and the original MacNeille completion article was "
                     + "not independently read. Those gaps and literature completeness remain "
                     + "ASSUMED-UNVERIFIED; no worldwide novelty or exhaustive coverage is asserted."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("salinas-omega-chain-extension"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock.Describe Definition(string name, string title, Formula formula,
         AssessedProvenance provenance, string prose) =>
