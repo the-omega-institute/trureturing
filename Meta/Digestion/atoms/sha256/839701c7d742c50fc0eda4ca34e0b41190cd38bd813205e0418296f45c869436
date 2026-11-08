@@ -1,0 +1,32 @@
+**引理 90.2（幅度必须为一）。** 90.1中每个独立对满足 $|\kappa(x,y)|=1$。
+
+证明。先按式(89.1)正交化，再在该原对的适配正交坐标中写 $x=Xe_1,y=Ye_2$，$X,Y>0$，固定此对及其 $\kappa$。对任意有限实 $\lambda>0$ 和固定 $\eta>0$，取
+
+$$
+r=\sqrt{\lambda^2X^2+\eta^2},\qquad
+c=(r,\lambda x),\qquad
+n=(-\lambda X/r,\eta/r,0).
+$$
+
+c与a同轴，所以89.3给 $D(a,c)=0$；$a\circ b=0$。PB外层为
+
+$$
+r_\pm=(\mp\lambda X^2,y\pm\kappa XY e_3\mp rXe_1),\qquad s_\pm=c.
+$$
+
+88.4右端为 $(0,2\lambda X^2y)$。又 $L_nc=\eta e_2$，$L_nr_\pm=y\pm A$，其中 $A=\kappa XY e_3-rXe_1-\lambda X^2n$，故 $A_1=-X\eta^2/r,A_3=\kappa XY$。两外层P2的准确行列式平方根均为
+
+$$
+|L_nr_\pm\times L_nc|=X\eta\sqrt{\eta^4/r^2+\kappa^2Y^2}.
+$$
+
+对PB取同一评价n，三角不等式遂给
+
+$$
+\frac{2\lambda X^2Y\eta}{r}\le2X\eta\sqrt{\eta^4/r^2+\kappa^2Y^2},\qquad
+(1-\kappa^2)\lambda^2X^2Y^2\le\eta^4+\kappa^2Y^2\eta^2.
+\tag{90.2}
+$$
+
+内层原对始终固定。若 $|\kappa|<1$，选一个足够大的有限原 $\lambda$ 即违反末式。没有令未知D趋于极限，也未另付齐次性。∎
+
