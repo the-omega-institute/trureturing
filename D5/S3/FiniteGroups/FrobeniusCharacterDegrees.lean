@@ -7,8 +7,15 @@
    digest: Fixed-point-free conjugation gives the character-degree divisibility dichotomy. -/
 
 /-
+Escape audit unfinished for the five arbitrary-characteristic additions: https://github.com/the-omega-institute/trureturing/issues/27899
 admission_basis: escape-witness
-Direct frozen dependencies: none.
+Frozen baseline inputs (module statement identities):
+D5/S3/FiniteGroups/FiniteCharacterAlgebra @ sha256:5ea5be4246f85df1a6a5a34be414eaa3174509f06a0bb1c923f3d8e8cfff6a55
+D5/S3/FiniteGroups/CliffordConstituents @ sha256:f6e6d286b818f1665d1a59844c6a457c3907fdb4bfcaca1018640dabe80920d7
+D5/S3/FiniteGroups/CliffordDecomposition @ sha256:942e8a07e15758d3a11fe9c6234cbc9507dec0773748704252c247840de4f647
+D5/S3/FiniteGroups/InducedCharacterFormula @ sha256:1c3aec1e0516377c8748f40cb426d2126c6743facaedfe9089323543a1b2e4e2
+D5/S3/FiniteGroups/CharacterDegreeDivisibility @ sha256:ff98a4e5b1afad07cc0f8e78fc943f0c30d1141d02e1e4ebacbf7ee2fa074c68
+D5/S3/FiniteGroups/ComplexCharacterAbelianProducts @ sha256:0f5341f17c27bceb2085721564486b26af2042f25ae947bd7e5d60c092c79fcf
 Module escape_witness: degree_dvd_or_index_dvd_of_fixedPointFree
 Fixed-point-free conjugation forces a nontrivial constituent inertia group to equal the normal kernel; Clifford decomposition yields the dichotomy.
 trivial_of_invariant_fixedPointFree | proof_shape: bind-only | escape_witness: none | consumer: inertia_eq_of_fixedPointFree
@@ -18,6 +25,11 @@ degree_dvd_quotient_card | proof_shape: content | escape_witness: D5.S3.FiniteGr
 inertia_eq_of_fixedPointFree | proof_shape: bind-only | escape_witness: none | consumer: degree_dvd_or_index_dvd_of_fixedPointFree
 restriction_trivial_of_clifford_constituent_trivial | proof_shape: bind-only | escape_witness: none | consumer: degree_dvd_or_index_dvd_of_fixedPointFree
 degree_dvd_or_index_dvd_of_fixedPointFree | proof_shape: content | escape_witness: degree_dvd_or_index_dvd_of_fixedPointFree | consumer: D5.S3.FiniteGroups.BahturinCentronePereiraPeakGroups.BCP31.B_degree_dvd
+trivial_of_equiv_fixedPointFree_of_isAlgClosed | proof_shape: content | escape_witness: trivial_of_equiv_fixedPointFree_of_isAlgClosed | consumer: inertia_eq_of_fixedPointFree_of_isAlgClosed, trivial_of_character_invariant_fixedPointFree_of_isAlgClosed
+trivial_of_character_invariant_fixedPointFree_of_isAlgClosed | proof_shape: content | escape_witness: D5.S3.FiniteGroups.FiniteCharacterAlgebra.TauCeti.exists_trace_one_zero_of_not_nonempty_linearEquiv | consumer: none
+inertia_eq_of_fixedPointFree_of_isAlgClosed | proof_shape: content | escape_witness: trivial_of_equiv_fixedPointFree_of_isAlgClosed | consumer: trivial_restriction_or_index_dvd_of_fixedPointFree_of_isAlgClosed
+restriction_trivial_of_clifford_constituent_trivial_generic | proof_shape: bind-only | escape_witness: none | consumer: trivial_restriction_or_index_dvd_of_fixedPointFree_of_isAlgClosed
+trivial_restriction_or_index_dvd_of_fixedPointFree_of_isAlgClosed | proof_shape: content | escape_witness: trivial_of_equiv_fixedPointFree_of_isAlgClosed | consumer: none
 -/
 
 import Mathlib.Analysis.Complex.Polynomial.Basic
@@ -187,3 +199,414 @@ theorem degree_dvd_or_index_dvd_of_fixedPointFree
 
 end D5.S3.FiniteGroups.FrobeniusCharacterDegrees
 end ScratchSource_CliffordPeak
+
+section ScratchSource_NonabelianInvariant
+
+namespace D5.S3.FiniteGroups.FrobeniusCharacterDegrees
+open CategoryTheory
+
+theorem trivial_of_character_invariant_fixedPointFree
+    {A : Type*} [Group A] [Finite A] (α : MulAut A)
+    (hα : ∀ a : A, α a = a → a = 1)
+    (V : FDRep ℂ A) [Simple V]
+    (hχ : ∀ a : A, V.character (α a) = V.character a) :
+    Representation.IsTrivial V.ρ := by
+  classical
+  letI : Fintype A := Fintype.ofFinite A
+  let ρ' : Representation ℂ A V := V.ρ.comp α.toMonoidHom
+  have hρ : Representation.IsIrreducible V.ρ :=
+    _root_.D5.S3.FiniteGroups.FiniteCharacterAlgebra.FDRep.isIrreducible_of_simple V
+  have hρ' : Representation.IsIrreducible ρ' := by
+    exact (_root_.D5.S3.FiniteGroups.FiniteCharacterAlgebra.TauCeti.isIrreducible_comp_surjective_iff
+      α.toMonoidHom α.surjective V.ρ).2 hρ
+  have hchar : Representation.character ρ' = Representation.character V.ρ := by
+    funext a
+    exact hχ a
+  have horth : (Nat.card A : ℂ)⁻¹ * ∑ a : A, (Representation.character ρ') a *
+      (Representation.character V.ρ) a⁻¹ =
+      if Nonempty (Representation.Equiv V.ρ ρ') then (1 : ℂ) else 0 := by
+    exact Representation.char_orthonormal ρ' V.ρ
+  have hself : (Nat.card A : ℂ)⁻¹ * ∑ a : A, (Representation.character V.ρ) a *
+      (Representation.character V.ρ) a⁻¹ =
+      (1 : ℂ) := by
+    simpa [if_pos (Nonempty.intro (Representation.Equiv.refl V.ρ))] using
+      (Representation.char_orthonormal V.ρ V.ρ)
+  rw [hchar] at horth
+  have hnon : Nonempty (Representation.Equiv V.ρ ρ') := by
+    by_contra hne
+    have hzero : (Nat.card A : ℂ)⁻¹ * ∑ a : A, (Representation.character V.ρ) a *
+        (Representation.character V.ρ) a⁻¹ =
+        (0 : ℂ) := by simpa [hne] using horth
+    exact one_ne_zero (hself.symm.trans hzero)
+  let e : Representation.Equiv V.ρ ρ' := Classical.choice hnon
+  let T : Representation.IntertwiningMap V.ρ ρ' := e.toIntertwiningMap
+  have hT : Function.Bijective T := e.toLinearEquiv.bijective
+  have hTcomp (a : A) : T.toLinearMap ∘ₗ V.ρ a = V.ρ (α a) ∘ₗ T.toLinearMap := by
+    exact T.isIntertwining' a
+  have htrace (a : A) : LinearMap.trace ℂ V (T.toLinearMap ∘ₗ V.ρ a) =
+      LinearMap.trace ℂ V T.toLinearMap := by
+    obtain ⟨b, rfl⟩ := MonoidHom.FixedPointFree.commutatorMap_surjective
+      (φ := α) hα a
+    simp only [MonoidHom.commutatorMap_apply, div_eq_mul_inv, map_mul]
+    change LinearMap.trace ℂ V (T.toLinearMap ∘ₗ V.ρ b ∘ₗ V.ρ ((α b)⁻¹)) =
+      LinearMap.trace ℂ V T.toLinearMap
+    rw [← LinearMap.comp_assoc]
+    rw [hTcomp b]
+    change LinearMap.trace ℂ V ((V.ρ (α b) * T.toLinearMap) * V.ρ ((α b)⁻¹)) =
+      LinearMap.trace ℂ V T.toLinearMap
+    rw [LinearMap.trace_mul_cycle]
+    simp only [← map_mul, inv_mul_cancel, map_one, one_mul]
+  have htrace_mul (m n : A) :
+      LinearMap.trace ℂ V ((V.ρ n * T.toLinearMap) * V.ρ m) =
+        LinearMap.trace ℂ V (V.ρ n * T.toLinearMap) := by
+    calc
+      _ = LinearMap.trace ℂ V ((V.ρ m * V.ρ n) * T.toLinearMap) := by
+        rw [LinearMap.trace_mul_cycle]
+      _ = LinearMap.trace ℂ V ((T.toLinearMap * V.ρ m) * V.ρ n) := by
+        rw [LinearMap.trace_mul_cycle]
+      _ = LinearMap.trace ℂ V (T.toLinearMap * (V.ρ m * V.ρ n)) := by
+        rw [mul_assoc]
+      _ = LinearMap.trace ℂ V (T.toLinearMap * V.ρ (m * n)) := by
+        rw [← map_mul]
+      _ = LinearMap.trace ℂ V T.toLinearMap := htrace (m * n)
+      _ = LinearMap.trace ℂ V (T.toLinearMap * V.ρ n) := (htrace n).symm
+      _ = LinearMap.trace ℂ V (V.ρ n * T.toLinearMap) := by
+        rw [LinearMap.trace_mul_comm]
+  have hgroup (m : A) (a : MonoidAlgebra ℂ A) :
+      LinearMap.trace ℂ V (Representation.asAlgebraHom V.ρ a *
+        (T.toLinearMap * V.ρ m - T.toLinearMap)) = 0 := by
+    induction a using MonoidAlgebra.induction_linear with
+    | zero => simp
+    | add a b ha hb =>
+        simp only [map_add, add_mul, ha, hb, add_zero]
+    | single g c =>
+        have hz : LinearMap.trace ℂ V (V.ρ g *
+            (T.toLinearMap * V.ρ m - T.toLinearMap)) = 0 := by
+          rw [mul_sub, map_sub, ← mul_assoc, htrace_mul m g]
+          exact sub_self _
+        simp [Representation.asAlgebraHom_single, smul_mul_assoc, hz]
+  have has : Function.Surjective (Representation.asAlgebraHom V.ρ) :=
+    _root_.D5.S3.FiniteGroups.FiniteCharacterAlgebra.Representation.asAlgebraHom_surjective_of_isIrreducible
+      V.ρ hρ
+  have htrace_all (m : A) (U : Module.End ℂ V) :
+      LinearMap.trace ℂ V (U * (T.toLinearMap * V.ρ m - T.toLinearMap)) = 0 := by
+    obtain ⟨a, rfl⟩ := has U
+    exact hgroup m a
+  have hzero (m : A) : T.toLinearMap * V.ρ m - T.toLinearMap = 0 := by
+    apply LinearMap.ext
+    intro v
+    apply (Module.forall_dual_apply_eq_zero_iff ℂ _).mp
+    intro f
+    have h := htrace_all m (f.smulRight v)
+    change LinearMap.trace ℂ V ((f.comp
+      (T.toLinearMap * V.ρ m - T.toLinearMap)).smulRight v) = 0 at h
+    rw [LinearMap.trace_smulRight] at h
+    exact h
+  have hconst (m : A) : T.toLinearMap ∘ₗ V.ρ m = T.toLinearMap := by
+    simpa only [Module.End.mul_eq_comp] using sub_eq_zero.mp (hzero m)
+  have hαfix (m : A) : V.ρ (α m) = 1 := by
+    apply LinearMap.ext
+    intro v
+    obtain ⟨w, hw⟩ := hT.2 v
+    have hi := congrArg (fun f => f w) (hTcomp m)
+    have hc := congrArg (fun f => f w) (hconst m)
+    calc
+      V.ρ (α m) v = V.ρ (α m) (T w) := by rw [hw]
+      _ = T (V.ρ m w) := hi.symm
+      _ = T w := hc
+      _ = v := hw
+  constructor
+  intro a
+  obtain ⟨m, rfl⟩ := α.surjective a
+  exact hαfix m
+
+end D5.S3.FiniteGroups.FrobeniusCharacterDegrees
+end ScratchSource_NonabelianInvariant
+
+section ScratchSource_NonabelianDichotomy
+
+namespace D5.S3.FiniteGroups.FrobeniusCharacterDegrees
+open CategoryTheory
+open D5.S3.FiniteGroups.FiniteCharacterAlgebra.TauCeti
+open D5.S3.FiniteGroups.CharacterDegreeDivisibility.TauCeti
+open D5.S3.FiniteGroups.CliffordConstituents.TauCeti
+open D5.S3.FiniteGroups.CliffordDecomposition.TauCeti
+open D5.S3.FiniteGroups.InducedCharacterFormula.TauCeti
+
+variable {K : Type} [Group K] [Finite K] (N : Subgroup K) [N.Normal]
+
+private theorem inertia_eq_of_fixedPointFree_nonabelian
+    (hfix : ∀ g : K, g ∉ N → ∀ n : N, MulAut.conjNormal g n = n → n = 1)
+    (V : FDRep ℂ N) [Simple V] (hV : ¬ Representation.IsTrivial V.ρ) :
+    (MulAction.stabilizer K (toSkeleton V)) = N := by
+  apply le_antisymm
+  · intro g hg
+    by_contra hgN
+    apply hV
+    apply trivial_of_character_invariant_fixedPointFree (MulAut.conjNormal g⁻¹)
+      (hfix g⁻¹ (fun h => hgN (by simpa using N.inv_mem h))) V
+    · intro n
+      convert char_conj_eq_of_mem_inertia hg n using 1
+      congr 1
+      apply Subtype.ext
+      simp
+  · exact le_inertia V
+
+private theorem restriction_trivial_of_clifford_constituent_trivial_nonabelian
+    (W : FDRep ℂ K) (V : FDRep ℂ N) [Finite (K ⧸ (MulAction.stabilizer K (toSkeleton V)))]
+    (e : ℕ) (iso : ((Action.res (FGModuleCat ℂ) (N).subtype).obj W) ≅
+      (D5.S3.FiniteGroups.CliffordDecomposition.FDRep.cliffordSum V e))
+    (hdim : Module.finrank ℂ W = e *
+      ((MulAction.stabilizer K (toSkeleton V))).index * Module.finrank ℂ V)
+    [Representation.IsTrivial V.ρ] :
+    Representation.IsTrivial (W.ρ.comp N.subtype) := by
+  classical
+  letI : Fintype (K ⧸ (MulAction.stabilizer K (toSkeleton V))) := Fintype.ofFinite _
+  constructor
+  intro n
+  apply (_root_.D5.S3.FiniteGroups.InducedCharacterFormula.Representation.char_eq_finrank_iff
+    (W.ρ.comp N.subtype) (isOfFinOrder_of_finite n)).mp
+  have hc := congrFun (FDRep.char_iso iso) n
+  rw [_root_.D5.S3.FiniteGroups.FiniteCharacterAlgebra.FDRep.character_actionRes,
+    _root_.D5.S3.FiniteGroups.CliffordDecomposition.FDRep.character_cliffordSum,
+    finsum_eq_sum_of_fintype] at hc
+  have hv (q : K ⧸ (MulAction.stabilizer K (toSkeleton V))) :
+      ((conjNormalFDRepFunctor (Quotient.out q)).obj V).character n =
+        (Module.finrank ℂ V : ℂ) := by
+    rw [char_conjNormalFDRep]
+    change LinearMap.trace ℂ V (V.ρ _) = _
+    rw [Representation.isTrivial_def, LinearMap.trace_id]
+  simp_rw [hv] at hc
+  simp only [Finset.sum_const, Finset.card_univ, nsmul_eq_mul] at hc
+  change W.character (N.subtype n) = (Module.finrank ℂ W : ℂ)
+  rw [hc, hdim]
+  rw [← Nat.card_eq_fintype_card, ← Subgroup.index_eq_card]
+  push_cast
+  ring
+
+/-
+Escape audit unfinished under https://github.com/the-omega-institute/trureturing/issues/27844.
+The single same-delivery source-level Reg attempt is retained in
+`.scratch/delivery-repair/nonabelian-reg-attempt.lean`; no `declared_validated`
+registration is claimed.
+-/
+
+/- Fixed-point-free conjugation on a normal subgroup gives the nonabelian degree dichotomy. -/
+theorem degree_dvd_or_index_dvd_of_fixedPointFree_nonabelian
+    (hfix : ∀ g : K, g ∉ N → ∀ n : N, MulAut.conjNormal g n = n → n = 1)
+    (W : FDRep ℂ K) [Simple W] :
+    Module.finrank ℂ W ∣ N.index ∨ N.index ∣ Module.finrank ℂ W := by
+  obtain ⟨V, hV, hf, e, he, ⟨iso⟩, hdim⟩ :=
+    (D5.S3.FiniteGroups.InducedCharacterFormula.FDRep.clifford_restrict_finrank (N := N) W)
+  letI := hV
+  letI := hf
+  by_cases ht : Representation.IsTrivial V.ρ
+  · letI := ht
+    letI := restriction_trivial_of_clifford_constituent_trivial_nonabelian N W V e iso hdim
+    left
+    simpa [Subgroup.index_eq_card] using degree_dvd_quotient_card K N W
+  · right
+    rw [inertia_eq_of_fixedPointFree_nonabelian N hfix V ht] at hdim
+    exact ⟨e * Module.finrank ℂ V, by rw [hdim]; ring⟩
+
+end D5.S3.FiniteGroups.FrobeniusCharacterDegrees
+end ScratchSource_NonabelianDichotomy
+
+section ModularFrobeniusAction
+
+namespace D5.S3.FiniteGroups.FrobeniusCharacterDegrees
+open CategoryTheory
+
+/-- A simple representation equivalent to its twist by a fixed-point-free
+ automorphism is trivial, in arbitrary characteristic. -/
+theorem trivial_of_equiv_fixedPointFree_of_isAlgClosed
+    {k : Type*} [Field k] [IsAlgClosed k]
+    {A : Type*} [Group A] [Finite A] (α : MulAut A)
+    (hα : ∀ a : A, α a = a → a = 1)
+    (V : FDRep k A) [Simple V]
+    (e : Representation.Equiv V.ρ (V.ρ.comp α.toMonoidHom)) :
+    Representation.IsTrivial V.ρ := by
+  classical
+  let ρ' : Representation k A V := V.ρ.comp α.toMonoidHom
+  have hρ : Representation.IsIrreducible V.ρ :=
+    _root_.D5.S3.FiniteGroups.FiniteCharacterAlgebra.FDRep.isIrreducible_of_simple V
+  let T : Representation.IntertwiningMap V.ρ ρ' := e.toIntertwiningMap
+  have hT : Function.Bijective T := e.toLinearEquiv.bijective
+  have hTcomp (a : A) : T.toLinearMap ∘ₗ V.ρ a = V.ρ (α a) ∘ₗ T.toLinearMap := by
+    exact T.isIntertwining' a
+  have htrace (a : A) : LinearMap.trace k V (T.toLinearMap ∘ₗ V.ρ a) =
+      LinearMap.trace k V T.toLinearMap := by
+    obtain ⟨b, rfl⟩ := MonoidHom.FixedPointFree.commutatorMap_surjective
+      (φ := α) hα a
+    simp only [MonoidHom.commutatorMap_apply, div_eq_mul_inv, map_mul]
+    change LinearMap.trace k V (T.toLinearMap ∘ₗ V.ρ b ∘ₗ V.ρ ((α b)⁻¹)) =
+      LinearMap.trace k V T.toLinearMap
+    rw [← LinearMap.comp_assoc]
+    rw [hTcomp b]
+    change LinearMap.trace k V ((V.ρ (α b) * T.toLinearMap) * V.ρ ((α b)⁻¹)) =
+      LinearMap.trace k V T.toLinearMap
+    rw [LinearMap.trace_mul_cycle]
+    simp only [← map_mul, inv_mul_cancel, map_one, one_mul]
+  have htrace_mul (m n : A) :
+      LinearMap.trace k V ((V.ρ n * T.toLinearMap) * V.ρ m) =
+        LinearMap.trace k V (V.ρ n * T.toLinearMap) := by
+    calc
+      _ = LinearMap.trace k V ((V.ρ m * V.ρ n) * T.toLinearMap) := by
+        rw [LinearMap.trace_mul_cycle]
+      _ = LinearMap.trace k V ((T.toLinearMap * V.ρ m) * V.ρ n) := by
+        rw [LinearMap.trace_mul_cycle]
+      _ = LinearMap.trace k V (T.toLinearMap * (V.ρ m * V.ρ n)) := by
+        rw [mul_assoc]
+      _ = LinearMap.trace k V (T.toLinearMap * V.ρ (m * n)) := by
+        rw [← map_mul]
+      _ = LinearMap.trace k V T.toLinearMap := htrace (m * n)
+      _ = LinearMap.trace k V (T.toLinearMap * V.ρ n) := (htrace n).symm
+      _ = LinearMap.trace k V (V.ρ n * T.toLinearMap) := by
+        rw [LinearMap.trace_mul_comm]
+  have hgroup (m : A) (a : MonoidAlgebra k A) :
+      LinearMap.trace k V (Representation.asAlgebraHom V.ρ a *
+        (T.toLinearMap * V.ρ m - T.toLinearMap)) = 0 := by
+    induction a using MonoidAlgebra.induction_linear with
+    | zero => simp
+    | add a b ha hb =>
+        simp only [map_add, add_mul, ha, hb, add_zero]
+    | single g c =>
+        have hz : LinearMap.trace k V (V.ρ g *
+            (T.toLinearMap * V.ρ m - T.toLinearMap)) = 0 := by
+          rw [mul_sub, map_sub, ← mul_assoc, htrace_mul m g]
+          exact sub_self _
+        simp [Representation.asAlgebraHom_single, hz]
+  have has : Function.Surjective (Representation.asAlgebraHom V.ρ) :=
+    _root_.D5.S3.FiniteGroups.FiniteCharacterAlgebra.Representation.asAlgebraHom_surjective_of_isIrreducible
+      V.ρ hρ
+  have htrace_all (m : A) (U : Module.End k V) :
+      LinearMap.trace k V (U * (T.toLinearMap * V.ρ m - T.toLinearMap)) = 0 := by
+    obtain ⟨a, rfl⟩ := has U
+    exact hgroup m a
+  have hzero (m : A) : T.toLinearMap * V.ρ m - T.toLinearMap = 0 := by
+    apply LinearMap.ext
+    intro v
+    apply (Module.forall_dual_apply_eq_zero_iff k _).mp
+    intro f
+    have h := htrace_all m (f.smulRight v)
+    change LinearMap.trace k V ((f.comp
+      (T.toLinearMap * V.ρ m - T.toLinearMap)).smulRight v) = 0 at h
+    rw [LinearMap.trace_smulRight] at h
+    exact h
+  have hconst (m : A) : T.toLinearMap ∘ₗ V.ρ m = T.toLinearMap := by
+    simpa only [Module.End.mul_eq_comp] using sub_eq_zero.mp (hzero m)
+  constructor
+  intro a
+  apply LinearMap.ext
+  intro v
+  apply hT.1
+  exact congrArg (fun f => f v) (hconst a)
+
+/-- Character invariance under a fixed-point-free automorphism forces a simple
+ representation to be trivial over an algebraically closed field. -/
+theorem trivial_of_character_invariant_fixedPointFree_of_isAlgClosed
+    {k : Type*} [Field k] [IsAlgClosed k]
+    {A : Type*} [Group A] [Finite A] (α : MulAut A)
+    (hα : ∀ a : A, α a = a → a = 1)
+    (V : FDRep k A) [Simple V]
+    (hχ : ∀ a : A, V.character (α a) = V.character a) :
+    Representation.IsTrivial V.ρ := by
+  let ρ' : Representation k A V := V.ρ.comp α.toMonoidHom
+  have hρ : Representation.IsIrreducible V.ρ :=
+    _root_.D5.S3.FiniteGroups.FiniteCharacterAlgebra.FDRep.isIrreducible_of_simple V
+  have hρ' : Representation.IsIrreducible ρ' :=
+    (_root_.D5.S3.FiniteGroups.FiniteCharacterAlgebra.TauCeti.isIrreducible_comp_surjective_iff
+      α.toMonoidHom α.surjective V.ρ).2 hρ
+  have hchar : _root_.Representation.character V.ρ = ρ'.character := by
+    funext a
+    exact (hχ a).symm
+  obtain ⟨e⟩ :=
+    _root_.D5.S3.FiniteGroups.FiniteCharacterAlgebra.Representation.nonempty_equiv_of_character_eq_of_isIrreducible
+      V.ρ ρ' hρ hρ' hchar
+  exact trivial_of_equiv_fixedPointFree_of_isAlgClosed α hα V e
+
+open D5.S3.FiniteGroups.CliffordConstituents.TauCeti
+
+section CliffordAction
+variable {k : Type*} [Field k]
+variable {K : Type} [Group K] [Finite K] (N : Subgroup K) [N.Normal]
+
+private theorem inertia_eq_of_fixedPointFree_of_isAlgClosed [IsAlgClosed k]
+    (hfix : ∀ g : K, g ∉ N → ∀ n : N, MulAut.conjNormal g n = n → n = 1)
+    (V : FDRep k N) [Simple V] (hV : ¬ Representation.IsTrivial V.ρ) :
+    MulAction.stabilizer K (toSkeleton V) = N := by
+  apply le_antisymm
+  · intro g hg
+    by_contra hgN
+    apply hV
+    obtain ⟨i⟩ := mem_inertia_iff.mp hg
+    obtain ⟨e⟩ := nonempty_fdRepIso_iff.mp ⟨i.symm⟩
+    have he : Representation.Equiv V.ρ
+        (V.ρ.comp (MulAut.conjNormal g⁻¹).toMonoidHom) := e
+    exact trivial_of_equiv_fixedPointFree_of_isAlgClosed (MulAut.conjNormal g⁻¹)
+      (hfix g⁻¹ (fun h => hgN (by simpa using N.inv_mem h))) V he
+  · exact le_inertia V
+
+private theorem restriction_trivial_of_clifford_constituent_trivial_generic
+    (W : FDRep k K) (V : FDRep k N)
+    [Finite (K ⧸ MulAction.stabilizer K (toSkeleton V))]
+    (e : ℕ)
+    (iso : ((Action.res (FGModuleCat k) N.subtype).obj W) ≅
+      D5.S3.FiniteGroups.CliffordDecomposition.FDRep.cliffordSum V e)
+    [Representation.IsTrivial V.ρ] :
+    Representation.IsTrivial (W.ρ.comp N.subtype) := by
+  classical
+  let M := (q : K ⧸ MulAction.stabilizer K (toSkeleton V)) → Fin e →
+    Representation.asModule ((conjNormalFDRepFunctor (Quotient.out q)).obj V).ρ
+  let ρM : Representation k N M := Representation.ofModule' (k := k) (G := N) M
+  have hM (n : N) (x : M) : ρM n x = x := by
+    funext q j
+    let U : FDRep k N := (conjNormalFDRepFunctor (Quotient.out q)).obj V
+    apply (_root_.Representation.asModuleEquiv U.ρ).injective
+    change (_root_.Representation.asModuleEquiv U.ρ) (MonoidAlgebra.single n (1 : k) • x q j) =
+      (_root_.Representation.asModuleEquiv U.ρ) (x q j)
+    rw [Representation.asModuleEquiv_map_smul,
+      Representation.asAlgebraHom_single, one_smul]
+    change V.ρ (MulAut.conjNormal (Quotient.out q)⁻¹ n)
+      ((_root_.Representation.asModuleEquiv U.ρ) (x q j)) = (_root_.Representation.asModuleEquiv U.ρ) (x q j)
+    exact Representation.isTrivial_apply V.ρ _ _
+  have eSum : Representation.Equiv
+      (D5.S3.FiniteGroups.CliffordDecomposition.FDRep.cliffordSum V e).ρ ρM :=
+    _root_.D5.S3.FiniteGroups.FiniteCharacterAlgebra.FDRep.ofShrinkEquiv ρM
+  obtain ⟨eRes⟩ := nonempty_fdRepIso_iff.mp ⟨iso⟩
+  let E : Representation.Equiv (W.ρ.comp N.subtype) ρM := eRes.trans eSum
+  constructor
+  intro n
+  apply LinearMap.ext
+  intro w
+  apply E.toLinearEquiv.injective
+  change E ((W.ρ.comp N.subtype) n w) = E w
+  calc
+    _ = ρM n (E w) :=
+      LinearMap.congr_fun (E.toIntertwiningMap.isIntertwining' n) w
+    _ = E w := hM n (E w)
+
+end CliffordAction
+
+/-- Fixed-point-free outside conjugation forces trivial normal action or index
+ divisibility of a simple representation's dimension, in arbitrary characteristic. -/
+theorem trivial_restriction_or_index_dvd_of_fixedPointFree_of_isAlgClosed
+    {k : Type*} [Field k] [IsAlgClosed k]
+    {K : Type} [Group K] [Finite K] (N : Subgroup K) [N.Normal]
+    (hfix : ∀ g : K, g ∉ N → ∀ n : N, MulAut.conjNormal g n = n → n = 1)
+    (W : FDRep k K) [Simple W] :
+    Representation.IsTrivial (W.ρ.comp N.subtype) ∨
+      N.index ∣ Module.finrank k W := by
+  obtain ⟨V, hV, hf, e, -, ⟨iso⟩, hdim⟩ :=
+    D5.S3.FiniteGroups.InducedCharacterFormula.FDRep.clifford_restrict_finrank (N := N) W
+  letI := hV
+  letI := hf
+  by_cases ht : Representation.IsTrivial V.ρ
+  · letI := ht
+    exact Or.inl (restriction_trivial_of_clifford_constituent_trivial_generic N W V e iso)
+  · right
+    rw [inertia_eq_of_fixedPointFree_of_isAlgClosed N hfix V ht] at hdim
+    exact ⟨e * Module.finrank k V, by rw [hdim]; ring⟩
+
+end D5.S3.FiniteGroups.FrobeniusCharacterDegrees
+end ModularFrobeniusAction

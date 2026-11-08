@@ -1,0 +1,55 @@
+**Proposition 196.2 (joint rank bound and exact-kernel criterion).** If $u$ is a full-zero bounded partition, then
+
+$$
+\mathcal R_u\subseteq\ker\mathsf J_u,
+\qquad
+\operatorname{rank}\mathsf J_u\le2.
+\tag{196.2}
+$$
+
+More precisely,
+
+$$
+\dim\bigl(\ker\mathsf J_u/\mathcal R_u\bigr)
+ =2-\operatorname{rank}\mathsf J_u,
+\tag{196.3}
+$$
+
+and therefore
+
+$$
+\operatorname{rank}\mathsf J_u=2
+\quad\Longleftrightarrow\quad
+\ker\mathsf J_u=\mathcal R_u.
+\tag{196.4}
+$$
+
+In particular, a rank-three candidate has a one-dimensional joint kernel at the saturation value $2$, and a rank-four candidate has a two-dimensional joint kernel at that value. A computed joint rank greater than $2$ rules out a full-zero partition before the nonlinear residual equations are solved.
+
+*Proof.* Proposition 194.2 gives
+
+$$
+\mathcal R_u\subseteq\ker\mathsf L_u
+\cap\ker\mathsf K_u
+=\ker\mathsf J_u.
+$$
+
+Proposition 191.2 gives $\dim\mathcal R_u=r_u-2$. Rank--nullity applied to $\mathsf J_u$ therefore yields
+
+$$
+\operatorname{rank}\mathsf J_u
+ =r_u-\dim\ker\mathsf J_u
+\le r_u-(r_u-2)=2,
+$$
+
+which is (196.2). Since $\mathcal R_u$ is a subspace of $\ker\mathsf J_u$, the quotient in (196.3) is defined, and
+
+$$
+\dim(\ker\mathsf J_u/\mathcal R_u)
+ =\dim\ker\mathsf J_u-\dim\mathcal R_u
+ =(r_u-\operatorname{rank}\mathsf J_u)-(r_u-2)
+ =2-\operatorname{rank}\mathsf J_u.
+$$
+
+This proves (196.3). The equality of kernels in (196.4) is equivalent to the quotient dimension being zero, which by (196.3) is equivalent to joint rank $2$. The rank-three and rank-four statements use $\dim\mathcal R_u=r_u-2$ from Proposition 191.2. The contrapositive of the rank bound gives the exclusion test. $\square$
+

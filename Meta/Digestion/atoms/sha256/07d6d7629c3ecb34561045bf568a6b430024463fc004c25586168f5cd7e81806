@@ -1,0 +1,22 @@
+**Definition 202.1 (transverse rank-one pair).** Let $A$ and $B$ be nonzero rank-one $4\times2$ matrices in $\mathscr A_u$. Choose factorizations
+
+$$
+A=u v^{\mathsf T},
+\qquad
+B=s t^{\mathsf T},
+\qquad
+u,s\in\mathsf H,\quad v,t\in\mathbb R^2.
+\tag{202.1}
+$$
+
+Call $(A,B)$ transverse when
+
+$$
+ u\wedge s\ne0
+\quad\text{and}\quad
+ v\wedge t\ne0.
+\tag{202.2}
+$$
+
+The condition is independent of the nonzero rescalings in the two rank-one factorizations.
+

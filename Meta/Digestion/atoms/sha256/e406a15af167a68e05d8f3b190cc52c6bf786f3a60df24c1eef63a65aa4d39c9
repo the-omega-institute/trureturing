@@ -1,0 +1,28 @@
+**Proposition 176.2 (exact leakage identity for arbitrary directions).** For every original $\theta$, every bounded real Borel $v,w$, and every nonzero real $t$ for which (175.2) is legal, one has
+
+$$
+\frac34\bigl(\Delta(u)_{003}+\Delta(u)_{00B}\bigr)
+-\frac14\bigl(\Delta(u)_{000}+\Delta(u)_{001}\bigr)
+=t\,\ell_{003}(v)+t^2A_\theta(v).
+\tag{176.2}
+$$
+
+Consequently,
+
+$$
+\|\Delta(u)\|_{\max}
+\ge
+\frac{|t|}{2}\,\bigl|\ell_{003}(v)+tA_\theta(v)\bigr|.
+\tag{176.3}
+$$
+
+*Proof.* The affine terminal combination in (175.7) remains $q$ for every $v$ and $w$. The same multilinearity calculation as (175.8), without setting the first-order term to zero, gives
+
+$$
+\sum_{k\in\mathcal L}\alpha_k\Delta(u)_{00k}
+=t\bigl[\mathcal C(v,F,q)+\mathcal C(F,v,q)\bigr]
+ +t^2\mathcal C(v,v,q),
+$$
+
+which is (176.2). The sum of absolute coefficients is $2p+2(1-p)=2$, so the triangle inequality gives (176.3). The calculation never uses a sign, rotation, or invariance condition on $w$. $\square$
+

@@ -1,0 +1,35 @@
+**Proposition 200.2 (uniform interior produces the required radical rank).** Suppose $d_u\le2$ and $\mathscr P_u^{\mathrm{ui}}$ is nonempty. Then
+
+$$
+\mathscr P_u^{\mathrm{full}}
+ :=\{A\in\mathscr P_u:\operatorname{rank}A=d_u\}
+\ne\varnothing.
+\tag{200.4}
+$$
+
+More explicitly, if $A_0\in\mathscr P_u^{\mathrm{ui}}$, then every $D\in\mathscr A_u$ has $A_0+tD\in\mathscr P_u$ for all sufficiently small $|t|$. One may choose $D$ with column rank $d_u$, and then choose such a $t$ for which $A_0+tD$ also has column rank $d_u$.
+
+*Proof.* Let $\varepsilon$ witness (200.3). For $D\in\mathscr A_u$, boundedness of the chosen $r_\ell$ gives a finite constant
+
+$$
+C_D=\sup_{y\in\mathcal L,\ x\in G}
+\left|\sum_{\ell=1}^{d_u}d_{y\ell}r_\ell(x)\right|.
+$$
+
+Whenever $|t|C_D\le\varepsilon$, equation (200.2) gives
+
+$$
+\lambda_{y,x}(A_0+tD)
+\ge \lambda_{y,x}(A_0)-|t|C_D\ge0,
+$$
+
+so $A_0+tD$ remains in $\mathscr P_u$. For $d_u=1$, take any nonzero zero-sum column; only at most one value of $t$ can make that column vanish. For $d_u=2$, take, for example, the two zero-sum columns
+
+$$
+(1,-1,0,0)^{\mathsf T},
+\qquad
+(0,0,1,-1)^{\mathsf T}.
+$$
+
+The $2\times2$ minors of $A_0+tD$ are polynomials in $t$, and the coefficient of $t^2$ in at least one of them is a nonzero $2\times2$ minor of $D$. Hence these minors are not all identically zero, so arbitrarily small admissible $t$ can be chosen with rank two. The case $d_u=0$ is vacuous. \(\square\)
+
