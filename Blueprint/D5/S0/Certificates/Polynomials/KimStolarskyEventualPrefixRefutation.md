@@ -16,7 +16,9 @@ Lean statement: `D5/S0/Certificates/Polynomials/KimStolarskyEventualPrefixRefuta
 
 <!-- scribe-open-problem-resolution-v1 {"problem_slug":"kim-stolarsky-eventual-three-prefix-conjecture","declaration_gid":"D5/S0/Certificates/Polynomials/KimStolarskyEventualPrefixRefutation.result","resolution_kind":"refuted"} -->
 
-*Citation.* Seon-Hong Kim and Kenneth B. Stolarsky (2026). *A Balanced Three or More-term Generalization of Nicomachus' Identity*. DOI: [10.5281/zenodo.21678529](https://doi.org/10.5281/zenodo.21678529). URL: <https://math.colgate.edu/~integers/aa98/aa98.pdf>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* Seon-Hong Kim and Kenneth B. Stolarsky (2026). *A Balanced Three or More-term Generalization of Nicomachus' Identity*. DOI: [10.5281/zenodo.21678529](https://doi.org/10.5281/zenodo.21678529). URL: <https://math.colgate.edu/~integers/aa98/aa98.pdf>.
 
 *Commentary.*
 
