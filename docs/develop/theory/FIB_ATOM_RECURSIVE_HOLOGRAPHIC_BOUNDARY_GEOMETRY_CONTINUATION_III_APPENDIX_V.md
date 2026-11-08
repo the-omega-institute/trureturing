@@ -1807,3 +1807,182 @@ In particular this finite-amplitude hard split does not supply an origin-enclosi
 The statements in §§220–222 are source-specific deductions, `repo-derived` relative to their explicit inherited suppliers. They assert no global novelty, new verification of those suppliers, or Lean/kernel result. They neither attain nor exclude original $F_{64}(\theta)$ for any original $\theta$. Native physical realization would additionally require a correspondence preserving the actual source-inclusive endpoint, source law, measure, readout, successor, histories and clock; none is identified by the mathematical hard partitions and ambient polars above. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 223. Positive-factor hard attenuation from a prescribed certified split
+
+**Theorem 223.1 (fixed-start attenuation with finite moments and a renewed certificate).** Under exactly Definition 220.1, fix any original $\theta$, any particular $E=(S,C,B)\in\mathscr E_\theta$, any finite real $L^1(m)$ list $\Psi$, and any particular $v,h_1,\ldots,h_6$ satisfying all of (221.1). These data are fixed before the following quantifiers. Put
+
+$$
+M_j(u)=\mathcal C(u,e_j,u),\qquad
+D(u)=(D_S(u),D_C(u),D_B(u)),\qquad j\in\{S,C,B\}.
+$$
+
+For every $0<s<1$ and every $\varepsilon,\delta>0$, there is one bounded real whole-$G$ Borel $w$, zero off the same $S$, such that
+
+$$
+\begin{gathered}
+w^2=\mathbf1_S\quad\text{pointwise},\qquad
+w\circ\mathscr R=-w\quad m\text{-a.e.},\qquad
+\int_G\psi w\,dm=0\quad(\psi\in\Psi),\\
+A_j(w)=0\quad(j=S,C,B),\qquad D(w)=s^2D(v),\\
+\max_j|M_j(w)-s^2M_j(v)|<\varepsilon,\\
+\left|m\{w\ne v\}-\frac{1-s}{2}m(S)\right|<\varepsilon,\\
+\max_{1\le l,k\le6}|B_l(w,h_k)-s\delta_{lk}|
+       <\min\{\delta,s/12\}.
+\end{gathered}
+\tag{223.1}
+$$
+
+In particular, writing $J_{lk}=B_l(w,h_k)$, the matrix $J$ is invertible and
+
+$$
+\widetilde h_k=\sum_{a=1}^6h_a(J^{-1})_{ak}\in V^\Psi,
+\qquad B_l(w,\widetilde h_k)=\delta_{lk}.
+\tag{223.2}
+$$
+
+The directions in (223.2) have bounded whole-$G$ Borel representatives supported in $S$ and pointwise odd, so $w,\widetilde h_1,\ldots,\widetilde h_6$ again satisfy all of (221.1), for the same finite $\Psi$. The actual four-cell partition has indicators
+
+$$
+\bigl(\mathbf1_{D^w_0},\mathbf1_{D^w_1},
+      \mathbf1_{D^w_3},\mathbf1_{D^w_B}\bigr)
+ =\bigl((e_S+w)/2,(e_S-w)/2,e_C,e_B\bigr).
+\tag{223.3}
+$$
+
+It belongs to $\mathscr D_{12}(\theta)$ and retains all four own-terminal equalities
+$\mathcal C(w,w,\mathbf1_{D^w_y})=0$, $y=0,1,3,B$. If the unchanged coarse matrix $A_E$ has rank two, its actual four-cell matrix $A^{D^w}$ also has rank two. Every operator, source summand, source-start law, measure, clock and propagated terminal is the one in Definition 220.1.
+
+*Proof.* Work first with real $m$-classes and write $Hz=\sum_{k=1}^6z_kh_k$ and $u(z)=sv+Hz$. The prescribed certificate gives the exact expansion
+
+$$
+Q(u(z))=s^2Q(v)+2sz+Q(Hz),\qquad A(v)=0.
+\tag{223.4}
+$$
+
+Here $Q$ is the six-vector in (220.3); its last three rows are $D$, not $M$. Since $s<1$ and the directions are bounded, a closed nondegenerate six-simplex $T$ containing zero in its interior can be chosen so that $\|u(z)\|_\infty<1$ on $T$. Since $s>0$, a sufficiently small $r>0$ makes the cube $C_r=[-r,r]^6$ lie inside $T$ and gives, for every $z\in C_r$,
+
+$$
+\begin{gathered}
+\|Q(Hz)\|_\infty\le sr/2,\qquad
+\max_j|M_j(u(z))-s^2M_j(v)|<\varepsilon/2,\\
+\frac12\left|\int_GvHz\,dm\right|<\varepsilon,\qquad
+\max_{l,k}|B_l(Hz,h_k)|<\min\{\delta,s/12\}.
+\end{gathered}
+\tag{223.5}
+$$
+
+The first bound follows from the quadratic $O(r^2)$ remainder in (223.4); the other expressions are continuous at zero and vanish there. All of $u(z)$ lies in $V^\Psi$.
+
+The nine ordered quadratic forms $A_j,D_j,M_j$ have, respectively, the actual kernels
+
+$$
+\begin{aligned}
+k^A_j(x,y)&=g(x)p_d(x,y)q_j(y),\\
+k^D_j(x,y)&=r_j(x)p_d(x,y),\\
+k^M_j(x,y)&=g(x)\int_Gp_d(x,t)e_j(t)p_d(t,y)\,dm(t).
+\end{aligned}
+\tag{223.6}
+$$
+
+These kernels are nonnegative and in $L^1(m^2)$. Their masses are $\int gPq_j\,dm$, $\int ge_j\,dm$ and $\int gPe_j\,dm$, respectively, all at most one, by the same conservation and self-adjointness used in (145.10). Thus the bounded-ball rectangular-tensor argument of (145.10) applies to all nine forms, including the middle-slot form with both heat steps retained. Each fixed-input functional $B_l(\,\cdot\,,h_k)$ also has an $L^1(m)$ representer: symmetrize its kernel in (223.6), integrate one variable against bounded $h_k$, and use Fubini.
+
+Approximate each of these nine kernels by a finite linear combination of indicator rectangles with $L^1$ error less than $\tfrac14\min\{sr,\varepsilon\}$. Let $\Phi$ be the finite real $L^1$ list consisting of their one-variable indicator factors, $\Psi$, $v$, and representers for all thirty-six $B_l(\,\cdot\,,h_k)$. If two real functions $a,b$ of absolute value at most one have identical pairings with every member of $\Phi$, then all rectangular approximants have identical quadratic values on $a,b$. Consequently
+
+$$
+\|Q(a)-Q(b)\|_\infty<sr/2,\qquad
+\max_j|M_j(a)-M_j(b)|<\varepsilon/2.
+\tag{223.7}
+$$
+
+We next construct a continuous hard family on $T$ that matches precisely these finitely many linear pairings, using only the original atomless measure. Let $H_+$ be the Borel half-circle section of $S\cap\Omega$ for the half-turn $\mathscr R$. Its reflection is the complementary half up to the null axis, and $\mathscr R$ preserves $m$. For $\phi\in\Phi$ put
+
+$$
+\widehat\phi(x)=\phi(x)-\phi(\mathscr R x),\qquad x\in H_+.
+\tag{223.8}
+$$
+
+Integration of an odd supported function against $\phi$ is integration of its restriction to $H_+$ against $\widehat\phi$. Denote the seven vertices of $T$ by $t^0,\ldots,t^6$ and its barycentric coordinates by $\lambda_0(z),\ldots,\lambda_6(z)$. Choose Borel representatives, repairing a common null set so that all seven vertex functions have absolute value less than one everywhere on $H_+$. For each vertex, apply A. Dvoretzky, A. Wald and J. Wolfowitz, [*Relations among certain ranges of vector measures*, Theorem 4, printed p. 66](https://msp.org/pjm/1951/1-1/pjm-v1-n1-p06-s.pdf), to the two probabilities $(1+u(t^a))/2,(1-u(t^a))/2$ on $H_+$. The measures are $m|_{H_+}$ and the positive and negative parts of the finitely many densities $\widehat\phi$. They are finite and atomless, being absolutely continuous with respect to the original nonatomic $m$. The theorem supplies Borel signs $\zeta^a$ on $H_+$ such that
+
+$$
+\int_{H_+}\widehat\phi\,\zeta^a\,dm
+ =\int_{H_+}\widehat\phi\,u(t^a)\,dm
+ \qquad(\phi\in\Phi,\ 0\le a\le6).
+\tag{223.9}
+$$
+
+Partition $H_+$ into the finitely many joint sign-pattern cells of the $\zeta^a$. On each positive-mass cell $A$, use the proportional subdivision (13) and Lemma 2 of the same paper, printed pp. 66–67, recursively to bisect simultaneously $m|_A$ and all the positive and negative measures just listed. The nested binary subdivisions define a Borel function $\tau_A:A\to[0,1]$ with
+
+$$
+\nu\bigl(A\cap\{\tau_A<t\}\bigr)=t\nu(A)
+\qquad(0\le t\le1)
+\tag{223.10}
+$$
+
+for every listed measure $\nu$, and hence for each signed measure $\widehat\phi\,m$. Indeed each binary word of length $n$ has $2^{-n}$ of every measure of $A$. The resulting identity for dyadic intervals extends to all thresholds by continuity of finite measures; the included measure $m$ makes each threshold fiber null. Null pattern cells can be assigned any fixed signs.
+
+On $A$, cut the $\tau_A$ interval consecutively into lengths $\lambda_0(z),\ldots,\lambda_6(z)$, and use the constant sign $\zeta^a|_A$ on its $a$th interval. Assign endpoints consistently, including $\tau_A=1$ to the last interval. Reflect by negative sign to $\mathscr R H_+$, put zero off $S$, and use the given $v$ on the remaining null subset of $S$. This defines a whole-$G$ Borel hard sign $W(z)$, pointwise of square $e_S$ and odd almost everywhere. Equation (223.10) and the constant signs on each pattern cell give
+
+$$
+\begin{aligned}
+\int_G\phi W(z)\,dm
+ &=\sum_{a=0}^6\lambda_a(z)
+                \int_{H_+}\widehat\phi\,\zeta^a\,dm\\
+ &=\sum_{a=0}^6\lambda_a(z)\int_G\phi u(t^a)\,dm
+  =\int_G\phi u(z)\,dm\qquad(\phi\in\Phi).
+\end{aligned}
+\tag{223.11}
+$$
+
+In particular all the $\Psi$ moments are exactly zero for every parameter. This family is continuous in $L^1(m)$: every cumulative barycentric threshold varies continuously, and (223.10) for $m$ bounds the measure changed by a threshold displacement by $m(A)$ times that displacement. There are finitely many cells and thresholds; reflection preserves this continuity. The $L^1$ kernels in (223.6), or their rectangular approximants followed by an arbitrarily small $L^1$ remainder, make $Q(W(z))$ continuous. This supplies actual continuous parameter dependence for the fixed-point step, rather than inferring it from pointwise purification choices.
+
+On $C_r$ set $F(z)=Q(W(z))-s^2Q(v)$. By (223.7) and (223.11), the error $E(z)=Q(W(z))-Q(u(z))$ obeys $\|E(z)\|_\infty<sr/2$. Equations (223.4)–(223.5) show that the continuous map
+
+$$
+z\longmapsto z-\frac{F(z)}{2s}
+       =-\frac{Q(Hz)+E(z)}{2s}
+\tag{223.12}
+$$
+
+maps $C_r$ into the cube of radius $r/2$. Brouwer's fixed-point theorem, in the form of *Über Abbildung von Mannigfaltigkeiten*, [doi:10.1007/BF01456931](https://doi.org/10.1007/BF01456931), Satz 4, printed p. 115, applies to this continuous self-map of the finite-dimensional cube. A fixed point $z_*$ gives $Q(W(z_*))=s^2Q(v)$. Put $w=W(z_*)$. These are the exact $A$ and $D$ assertions. Equations (223.5) and (223.7) give the strict $M$ estimate. The tests in $\Phi$ also give
+
+$$
+\begin{aligned}
+B_l(w,h_k)&=B_l(u(z_*),h_k)
+              =s\delta_{lk}+B_l(Hz_*,h_k),\\
+m\{w\ne v\}
+ &=\frac12\left(m(S)-\int_Gvw\,dm\right)
+  =\frac{1-s}{2}m(S)-\frac12\int_GvHz_*\,dm.
+\end{aligned}
+\tag{223.13}
+$$
+
+The second identity uses the two pointwise hard signs on exactly the same $S$. The remaining estimates follow from (223.5). Since every entry of $J-sI$ has absolute value less than $s/12$, its row-sum norm is less than $s/2$. Hence $J$ is invertible, proving (223.2); finite linear combinations retain all the stated support, oddness, Borel and moment properties.
+
+Finally the invariant source densities $g_{2d},g_{3d},g_{4d}$ pair to zero with $w$, giving all twelve source marginals of (223.3). Half-turn parity gives $\mathcal C(w,w,w)=0$; $A(w)=0$ then gives all four own-terminal contrasts exactly as in (221.10). The ordered congruence (222.2) gives the rank assertion with the same actual terminal $Pe_C$. These arguments propagate the displayed partition itself; no heat factor is borrowed from a different endpoint.
+
+The source-conditioned deduction is the finite hard realization of the radial target (223.4) from the prescribed certificate, with its simultaneous moments, middle-slot control and label cost. Rectangular approximation reuses (145.10); finite atomless linear purification and the finite-dimensional fixed-point theorem are classical intermediates consumed above, not standalone new results. This is repo-derived relative to the retained original suppliers and asserts no global novelty or Lean/kernel verification. The proof requires no selection of a new starting sign and no stronger hypothesis on the original $\theta$. Its constants and finite choices depend on the given certificate, the finite tests, $s$ and the tolerances. It asserts neither a uniform inverse as these data vary nor a continuous selection of the fixed points. In particular $s=0$ is excluded, and the invertible differential $2sI$ used in (223.12) supplies no zero-endpoint assertion. $\square$
+
+**Corollary 223.2 (finite descent of the six remaining ordered defects).** For the prescribed certified start of Theorem 223.1, define
+
+$$
+R(v)=\max_{j\in\{S,C,B\}}\{|D_j(v)|,|M_j(v)|\}.
+$$
+
+If $R(v)>0$, $0<s<1$ and $0<\varepsilon<(1-s^2)R(v)/2$, any output in (223.1) satisfies
+
+$$
+R(w)<s^2R(v)+\varepsilon
+       <\frac{1+s^2}{2}R(v)<R(v).
+\tag{223.14}
+$$
+
+For every prescribed label budget $\ell>0$, one can choose $s<1$ sufficiently close to one and then $\varepsilon>0$ so that this strict descent and $m\{w\ne v\}<\ell$ hold together. The renewed certificate permits another finite application on the same $E$ and with the same finite $\Psi$ whenever the new $R$ is positive.
+
+*Proof.* The exact $D$ scaling bounds its three absolute values by $s^2R(v)$; the $M$ estimate bounds the other three strictly by $s^2R(v)+\varepsilon$. This proves (223.14). Choose $(1-s)m(S)/2<\ell/2$, then take $\varepsilon<\min\{\ell/2,(1-s^2)R(v)/2\}$. The label estimate in (223.1) gives the budget. Equation (223.2) gives precisely the eligibility needed for finite reuse; no control of the new dual norms across unboundedly many steps is asserted.
+
+These are the six ordered defects in Appendix III (146.12). The twenty-seven coarse equations (146.11) depend only on the unchanged $E$ and are not established by this descent. A nonzero $D_j(v)$ remains nonzero for every allowed $s$; an old zero of $M_j(v)$ need not be preserved by its approximate control. The corollary gives no decrease of the full $64$-coordinate residual norm, no H43 or H51 calibration, origin enclosure, global continuous section or physical successor.
+
+The label cost also restricts repeated use of this particular attenuation. At a fixed $s<1$, every step with error $\varepsilon\le(1-s)m(S)/4$ has label cost greater than $(1-s)m(S)/4$, so sufficiently accurate fixed-factor repetition has nonvanishing cost. More generally, for a hypothetical iteration of these outputs on this same $S$ with factors $s_n$, label costs $c_n$ and errors $\varepsilon_n$, (223.1) gives $(1-s_n)m(S)/2<c_n+\varepsilon_n$. If both $\sum_n c_n$ and $\sum_n\varepsilon_n$ are finite, then $\sum_n(1-s_n)<\infty$, and $\prod_n s_n^2>0$ because every factor is positive and $-\log s_n\le2(1-s_n)$ eventually. The exact $D$ identity then prevents a nonzero initial $D$ from tending to zero along that specific budgeted iteration. This conditional cost consequence concerns only the outputs of Theorem 223.1, not all hard paths. Neither finite descent nor this cost calculation supplies the compatible full-residual-zero endpoint required by (155.31), or resolves universal original hard $F_{64}$ attainment or exclusion. $\square$
+
+## 追加锚（本行以下为增补区）
