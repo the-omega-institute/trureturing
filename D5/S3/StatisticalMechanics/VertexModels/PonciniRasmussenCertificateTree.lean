@@ -24,7 +24,7 @@ get: proof_shape=bind-only; consumers=PonciniRasmussenNineDiagrams.raw,
   PonciniRasmussenNineDiagrams.transition, PonciniRasmussenNineHorner.sparseHamiltonian,
   PonciniRasmussenNineHorner.state, PonciniRasmussenNineEdges.incoming
 -/
-import Lean.Elab.Term
+import Lean
 
 set_option autoImplicit false
 
