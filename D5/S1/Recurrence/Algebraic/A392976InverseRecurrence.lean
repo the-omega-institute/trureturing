@@ -269,7 +269,8 @@ private theorem scaled_step (B : PowerSeries ℚ) (d : ℕ) (N : Polynomial ℚ)
   have hd := congrArg (derivative (R := ℚ)) h
   simp only [Derivation.leibniz, derivative_pow, derivative_coe,
     Nat.add_sub_cancel, Nat.cast_add, Nat.cast_one, smul_eq_mul] at hd
-  simp only [Polynomial.coe_mul, Polynomial.coe_sub, coe_nat, Nat.cast_add, Nat.cast_one]
+  simp only [Polynomial.coe_mul, Polynomial.coe_sub, Polynomial.coe_add,
+    Polynomial.coe_one, coe_nat, Nat.cast_add, Nat.cast_one]
   linear_combination (H : PowerSeries ℚ)^(d + 2) * theta_transport B +
     (f : PowerSeries ℚ) * H * hd -
     (f : PowerSeries ℚ) * (d + 1 : PowerSeries ℚ) * (Polynomial.derivative H : PowerSeries ℚ) * h
@@ -282,7 +283,7 @@ private theorem scaled_iterates (j : ℕ) (hj : j < 5) :
     have h := theta_transport U
     rw [inverse_left, derivative_X, mul_one] at h
     have he : num 1 = f := by norm_num [num, f]; ring
-    simpa only [Function.iterate_one, pow_one, he] using h
+    simpa [he] using h
   | succ j ih =>
     have h := scaled_step (theta^[j + 1] U) (2*j) (num (j + 1)) (ih (by omega))
     rw [num_recurrence j (by omega)]
@@ -415,11 +416,12 @@ set_option maxHeartbeats 4000000 in
 -- The finite exact polynomial expressions require an enlarged elaboration budget.
 private theorem normal_form (B : PowerSeries ℚ) :
     op wA B = ∑ j : Fin 6, (p j.val : PowerSeries ℚ) * (derivative (R := ℚ))^[j.val] B := by
-  norm_num [op, wA, p, Finset.sum_range_succ, Fin.sum_univ_succ,
-    Function.iterate_succ_apply', theta, Derivation.leibniz, derivative_pow,
-    derivative_X, derivative_one, map_add, map_mul, map_natCast, map_ofNat,
-    Polynomial.coe_add, Polynomial.coe_mul, Polynomial.coe_pow,
-    Polynomial.coe_neg, coe_nat, Polynomial.coe_C]
+  simp only [Fin.sum_univ_succ, Fin.val_zero, Fin.val_succ, p,
+    Polynomial.coe_add, Polynomial.coe_mul, Polynomial.coe_pow, Polynomial.coe_X,
+    Polynomial.coe_C, map_neg, map_ofNat, map_intCast]
+  norm_num [op, wA, Finset.sum_range_succ, Function.iterate_succ_apply',
+    theta, Derivation.leibniz, derivative_pow, derivative_X, derivative_one,
+    map_add, map_mul, map_natCast, map_ofNat]
   ring
 
 private theorem dfinite : DFinite A := by
