@@ -1,0 +1,30 @@
+**引理 169.2（原核与实际有限框架）。** 定义
+
+$$
+H_e(z)=ze^*+ez^*\quad(z\perp e),\qquad
+V=\{z\in e^\perp:H_e(z)\in E\},\qquad
+H_0=\mathbb Ce\oplus V.
+\tag{169.2}
+$$
+
+则 $H_0$ 是 $H$ 中稠密的复线性子空间，且每个原 $a\in E$ 保持 $H_0$。每个有限维复 $L\subset H_0$ 的 $P_L$ 是原投影，其全部自伴矩阵均为原标签。
+
+证明。$V$ 首先实线性。对 $0\ne z\in V$，
+
+$$
+k_z=H_e(z)^2/\|z\|^2=P+zz^*/\|z\|^2\in E
+$$
+
+是原秩二投影。由 (169.1)，$H_e(iz)$ 属于这个原全角，故 $iz\in V$；零向量直接处理。又 $zz^*=H_e(z)^2-\|z\|^2P\in E$。于是对 $\xi=\gamma e+z\in H_0$，
+
+$$
+\xi\xi^*=|\gamma|^2P+zz^*+H_e(\bar\gamma z)\in E.
+\tag{169.3}
+$$
+
+对有限 $L\subset H_0$ 作有限 Gram–Schmidt，所得正交基仍在 $H_0$，其秩一投影之和给 $P_L\in E$，随后 (169.1) 供应整个角。
+
+对原自伴 $a$，置 $\beta=\langle e,ae\rangle$、$w=(1-P)ae$。恒等式 $H_e(w)=2a\circ P-2\beta P$ 给 $w\in V$，所以 $ae\in H_0$。再令 $B=(1-P)a(1-P)=U_{1-P}a\in E$。对 $z\in V$，$B\circ H_e(z)=H_e(Bz)/2\in E$，故 $Bz\in V$；而 $az=\langle w,z\rangle e+Bz$，故 $aH_0\subset H_0$。
+
+最后，对任意 $z\perp e$，$H_e(z)\in K(H)_{\rm sa}\subset\rho(X)$。原稠密性给自伴 $a_n\in E$ 范数逼近它，则 $(1-P)a_ne\in V$ 收敛到 $z$。这是对每个目标向量的逼近，不要求全空间有可数稠密集。∎
+

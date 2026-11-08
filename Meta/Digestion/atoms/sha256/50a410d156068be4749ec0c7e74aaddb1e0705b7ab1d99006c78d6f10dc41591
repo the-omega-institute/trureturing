@@ -1,0 +1,21 @@
+固定原 $a$，以下 $H=H_a$。只在已知 JB 完成中令 $U_x=2L_x^2-L_{x^2}$，并对 $\varepsilon\ge0$ 取
+
+$$
+c_\varepsilon=(u+\varepsilon a^2)^{-1/2},\qquad
+F_\varepsilon=U_{c_\varepsilon}(I+\varepsilon U_a).
+\tag{15.5}
+$$
+
+一般 JB 的二次表示 $U_x$ 保正，准确取 Hanche-Olsen–Størmer，[*Jordan operator algebras*](https://hanche.folk.ntnu.no/joa/joa-m.pdf)，Proposition 3.3.6。单生成结合函数演算给 $F_\varepsilon u=U_{c_\varepsilon}(u+\varepsilon a^2)=u$，所以它是正幺收缩。由同一函数演算在算子范数展开，$c_\varepsilon=u-\varepsilon a^2/2+O(\varepsilon^2)$、$U_{c_\varepsilon}=I-\varepsilon L_{a^2}+O(\varepsilon^2)$，故 $F_\varepsilon=I+2\varepsilon H+O(\varepsilon^2)$。成熟有界算子 Euler 乘积极限 $F_{t/(2n)}^n\to e^{tH}$ 表明 $e^{tH}$ 在全部 $t\ge0$ 均为正幺收缩。其 Abel 算子
+
+$$
+R_\lambda=\lambda\int_0^\infty e^{-\lambda t}e^{tH}\,dt
+=\lambda(\lambda I-H)^{-1},\qquad
+\|R_\lambda\|\le1,\quad R_\lambda u=u,\quad
+HR_\lambda=\lambda(R_\lambda-I)
+\tag{15.6}
+$$
+
+对全部 $\lambda>0$ 定义良好。这里的平方根、指数、积分与预解只作数学证明工具，不向原域增添输入、输出或实际操作。
+
+对 Laplace 积分先截断，再作 Riemann 和及指数 Taylor 逼近，得 $R_\lambda$ 属于实多项式 $\mathbb R[H]$ 的算子范数闭包。因此可取实多项式 $q_n$ 使 $q_n(H)\to R_\lambda$，并要求 $q_n(0)=1$：初始逼近作用于非零单位 $u$ 给其常数项趋一，再调整常数项即可。

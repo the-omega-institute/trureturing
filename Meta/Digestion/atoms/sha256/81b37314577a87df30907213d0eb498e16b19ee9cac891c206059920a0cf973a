@@ -1,0 +1,59 @@
+**定义 366.1（同一原数据上的有限 HALF）。** 母卷、框架卷分别指 [C123 母卷](AURIC_NATIVE_RECIPROCAL_COMPARISON_AND_FINITE_ENDPOINT_QUANTUM_C123.md)和[共同框架续卷](AURIC_C128_FRAME_CORNER_RELATIONS_CONTINUATION.md)；词卷指[原词与固定关系卷](AURIC_C128_ORIGINAL_WORD_CALIBRATION_AND_FIXED_RELATION.md)。分别固定母卷 88.1、框架卷 264.1、272.1–272.2 及词卷 333.1 的完整 $B$、另名完整 $\mathsf B_{\rm cl}$，任一记作 $B_*$。$B$ 要求每个所需对象及实际联合的实际准备精确有限正生成，$\mathsf B_{\rm cl}$ 要求其闭正生成；不互换两者，不把数学极限态增加为实际准备。
+
+整个原 $\Omega$、原全语境响应商、已经给定的实双线性 $d_A(a,b)=D^A_ab$、原 $q_A,L_A,\circ_A$ 均固定。仅由框架卷 246.1 使用静态坐标
+
+$$
+E_A=\bigoplus_{s\in S_A}H_{n_s}(\mathbb C),\qquad
+u_A=(I_s)_s,\qquad
+\tau_A=\sum_s\operatorname{Tr}_{n_s},\qquad
+q_A(a,b)=\sum_sw_{A,s}\operatorname{Tr}(a_sb_s),\quad w_{A,s}>0.
+\tag{366.1}
+$$
+
+$\tau_A$ 是每颗 primitive 迹一的规范 Jordan 谱迹，不是 $q_A$ 的任取加权迹；静态坐标未识别原 $D$ 的复取向。选中对象仍恰为 $\operatorname{rank}E_A>p_*$，$p_*=\operatorname{rank}E_P\ge2$。在每个这样的对象的每个高简单块 $t$、$n_t\ge3$，先于考察 $D$ 固定任意有限有序族
+
+$$
+\begin{gathered}
+\mathcal F_{A,t}\subset
+\{(j_te,j_tp):e,p\in\operatorname{Prim}(H_{n_t}(\mathbb C)),
+\ \operatorname{Tr}(ep)=\tfrac12\},\\
+\operatorname{span}_{\mathbb R}
+\{p:(j_te,j_tp)\in\mathcal F_{A,t}\}=H_{n_t}(\mathbb C).
+\end{gathered}
+\tag{366.2}
+$$
+
+这里 $j_t$ 是数学理想包含；第二槽张成的是整个该理想，包含单位方向，不是仅无迹部分。族可冗余，各对象、各块各自有限，原对象域不要求有限。选择只依静态非 $D$ 数据；同一选择同时用于比较所有原 $D$。定理 369.1 给这种族的存在性。
+
+完整保留 (319.1) 的 $\mathsf G_{0h}$：在每个选中对象的全部有序 primitive 对上，若 $\tau_A(e\circ_Ap)\in\{0,\tfrac12\}$，则整份输出满足 $D^A_ep=Q_cD^A_ep$，$c=\operatorname{supp}(e+p)$、$Q_c=2L_c^2-L_c$。另定义
+
+$$
+\begin{aligned}
+\mathsf X_{\rm HQ}:\quad&
+\tau_A(D^A_ep)=0
+&&\bigl(z(e)\ne z(p),\ \max\{n(e),n(p)\}\ge2\bigr),\\
+\mathsf H_{\mathcal F}:\quad&
+\tau_A(D^A_ep)=0
+&&\bigl((e,p)\in\mathcal F_{A,t},\ n_t\ge3\bigr).
+\end{aligned}
+\tag{366.3}
+$$
+
+$\mathsf X_{\rm HQ}$ 逐字保留词卷 (333.2) 的全部原有序跨中心非经典迹域，两个次序分别量化，不限于高块或所选首原子。$\mathsf G_{0h}$ 仍检验其他中心及连接角内外的全部输出，包含原实际联合中的纠缠 primitive。$Q_c$ 不换成 $P_c=4(L_c-L_c^2)$。
+
+原菜单、原 $\mathcal K_A$、实际 $J_0=P^{\otimes2}$ 和先于 $D$ 固定的同一 $t_0=(e_0,p_0,r_0)\in\mathcal K_{J_0}$ 全取框架卷 265.2、272.1，令
+
+$$
+\begin{aligned}
+\sigma_{t_0}:\quad&
+W_{e_0}(p_0)
+=2q_{J_0}(D_{p_0}e_0,r_0)+W_{e_0}(2D_{e_0}p_0),\\
+\mathsf C_{{\rm finHALF},\mathcal F}(B_*):={}&
+B_*+\mathsf G_{0h}+\mathsf X_{\rm HQ}
++\mathsf H_{\mathcal F}+\sigma_{t_0}.
+\end{aligned}
+\tag{366.4}
+$$
+
+其中 $W_e(x)=\|P_ex\|_{q_A}^2/2$，不重选 $t_0$、不缩放 $D,q,W$ 或任何原返回数。相对词卷 $\mathsf C_{\rm HQ}$，全部连续半重叠迹只留下 (366.2) 的有限对：二阶块上的半角迹不再独立要求，高阶块上只要求所选有限族；经典块没有半重叠对。
+
