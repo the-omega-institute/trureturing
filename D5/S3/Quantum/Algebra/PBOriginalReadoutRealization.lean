@@ -467,7 +467,7 @@ private theorem compressed_p2 {P : Type*}
       inner ℝ v (compressedOp φ B i (J a a) v) *
       inner ℝ v (compressedOp φ B i (J b b) v) -
       inner ℝ v (compressedOp φ B i (J a b) v)^2 := by
-  have h := ((original_positive_readings J D {a | 0 ≤ i a} p hexact hraw).1
+  have h := ((original_positive_readings.{_, _, 0, 0} J D {a | 0 ≤ i a} p hexact hraw).1
     (vectorRead φ i v) (vectorRead_nonneg φ i v) a b).2
   change (inner ℂ v (compressedOp φ B i (D a b) v)).re ^ 2 ≤
     (inner ℂ v (compressedOp φ B i (J a a) v)).re *
