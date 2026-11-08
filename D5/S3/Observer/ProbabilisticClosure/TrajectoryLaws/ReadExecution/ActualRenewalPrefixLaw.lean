@@ -96,6 +96,127 @@ private theorem clock_cut (u : ℕ) (K : ℕ → ℕ) (n : ℕ) :
   | zero => simp [clock, cut]
   | succ n ih => simp [clock, cut, Fin.sum_univ_castSucc, ih, Nat.add_assoc]
 
+/-- Distributional iteration of the same zero row; it defines no trajectory. -/
+def zeroRow (A : S → PMF S) : ℕ → S → PMF S
+  | 0, s => PMF.pure s
+  | k + 1, s => (zeroRow A k s).bind A
+
+section FiniteIntegration
+variable [MeasurableSpace S] [Countable S] [MeasurableSingletonClass S]
+    [MeasurableSpace R]
+    (labels : Set S) (update : S → Bool → R → S)
+    (ρ : Measure R) [IsProbabilityMeasure ρ]
+    (A C : S → PMF S)
+    (heff : ∀ b, Measurable (fun p : S × R => effective labels update p.1 b p.2))
+    (hrow : ∀ s b, ρ.map (effective labels update s b) = (if b then C s else A s).toMeasure)
+
+private theorem zeros_measurable (k : ℕ) :
+    Measurable (fun p : S × (Fin k → R) => zeros labels update k p.1 p.2) := by
+  induction k with
+  | zero => exact measurable_fst
+  | succ k ih =>
+    exact (heff false).comp
+      ((ih.comp (measurable_fst.prodMk (measurable_pi_iff.mpr fun j =>
+        (measurable_pi_apply j.castSucc).comp measurable_snd))).prodMk
+        ((measurable_pi_apply (Fin.last k)).comp measurable_snd))
+
+private theorem word_measurable (k : ℕ) :
+    Measurable (fun p : S × (Fin (k + 1) → R) => word labels update k p.1 p.2) :=
+  (heff true).comp
+    (((zeros_measurable labels update heff k).comp
+      (measurable_fst.prodMk (measurable_pi_iff.mpr fun j =>
+        (measurable_pi_apply j.castSucc).comp measurable_snd))).prodMk
+      ((measurable_pi_apply (Fin.last k)).comp measurable_snd))
+
+private theorem split_last (k : ℕ) :
+    (Measure.pi fun _ : Fin (k + 1) => ρ).map
+      (fun r => (fun j : Fin k => r j.castSucc, r (Fin.last k))) =
+    (Measure.pi fun _ : Fin k => ρ).prod ρ := by
+  let e := MeasurableEquiv.piFinSuccAbove (fun _ : Fin (k + 1) => R) (Fin.last k)
+  have hh := (measurePreserving_piFinSuccAbove
+    (fun _ : Fin (k + 1) => ρ) (Fin.last k)).map_eq
+  have hc : (fun r : (Fin (k + 1) → R) =>
+      (fun j : Fin k => r j.castSucc, r (Fin.last k))) = Prod.swap ∘ e := by
+    funext r
+    simp [e, MeasurableEquiv.piFinSuccAbove, Fin.succAbove_last]
+  rw [hc, ← Measure.map_map measurable_swap e.measurable, hh, Measure.prod_swap]
+
+private theorem integrate_step (ν : PMF S) (b : Bool) :
+    (ν.toMeasure.prod ρ).map (fun p => effective labels update p.1 b p.2) =
+      (ν.bind (fun s => if b then C s else A s)).toMeasure := by
+  ext B hB
+  rw [Measure.map_apply (heff b) hB, Measure.prod_apply ((heff b) hB),
+    PMF.toMeasure_bind_apply _ _ _ hB, lintegral_countable']
+  apply tsum_congr
+  intro s
+  rw [PMF.toMeasure_apply_singleton _ _ (measurableSet_singleton _)]
+  have hh := congrArg (fun μ : Measure S => μ B) (hrow s b)
+  rw [Measure.map_apply ((heff b).comp (measurable_const.prodMk measurable_id)) hB] at hh
+  rw [hh, mul_comm]
+
+private theorem finite_word_law (k : ℕ) (s : S) :
+    (Measure.pi fun _ : Fin (k + 1) => ρ).map (word labels update k s) =
+      ((zeroRow A k s).bind C).toMeasure := by
+  have hz : ∀ k s, (Measure.pi fun _ : Fin k => ρ).map (zeros labels update k s) =
+      (zeroRow A k s).toMeasure := by
+    intro k
+    induction k with
+    | zero => intro s; simp [zeros, zeroRow, PMF.toMeasure_pure]
+    | succ k ih =>
+      intro s
+      have hm := (zeros_measurable labels update heff k).comp
+        (show Measurable (fun r : Fin k → R => (s, r)) from
+        measurable_const.prodMk measurable_id)
+      have hp : (Measure.pi fun _ : Fin (k + 1) => ρ).map
+          (fun r => (zeros labels update k s (fun j => r j.castSucc), r (Fin.last k))) =
+          (zeroRow A k s).toMeasure.prod ρ := by
+        rw [show (fun r : (Fin (k + 1) → R) =>
+            (zeros labels update k s (fun j => r j.castSucc), r (Fin.last k))) =
+            (Prod.map (zeros labels update k s) id) ∘
+              (fun r => (fun j : Fin k => r j.castSucc, r (Fin.last k))) from rfl,
+          ← Measure.map_map (hm.prodMap measurable_id) (by fun_prop),
+          split_last ρ k, ← Measure.map_prod_map _ _ hm measurable_id, ih, Measure.map_id]
+      change (Measure.pi fun _ : Fin (k + 1) => ρ).map
+        ((fun p : S × R => effective labels update p.1 false p.2) ∘
+          (fun r => (zeros labels update k s (fun j => r j.castSucc), r (Fin.last k)))) = _
+      rw [← Measure.map_map (heff false) (by fun_prop), hp]
+      exact integrate_step labels update ρ A C heff hrow (zeroRow A k s) false
+  have hm := (zeros_measurable labels update heff k).comp
+    (show Measurable (fun r : Fin k → R => (s, r)) from
+        measurable_const.prodMk measurable_id)
+  have hp : (Measure.pi fun _ : Fin (k + 1) => ρ).map
+      (fun r => (zeros labels update k s (fun j => r j.castSucc), r (Fin.last k))) =
+      (zeroRow A k s).toMeasure.prod ρ := by
+    rw [show (fun r : (Fin (k + 1) → R) =>
+        (zeros labels update k s (fun j => r j.castSucc), r (Fin.last k))) =
+        (Prod.map (zeros labels update k s) id) ∘
+          (fun r => (fun j : Fin k => r j.castSucc, r (Fin.last k))) from rfl,
+      ← Measure.map_map (hm.prodMap measurable_id) (by fun_prop),
+      split_last ρ k, ← Measure.map_prod_map _ _ hm measurable_id, hz, Measure.map_id]
+  change (Measure.pi fun _ : Fin (k + 1) => ρ).map
+    ((fun p : S × R => effective labels update p.1 true p.2) ∘
+      (fun r => (zeros labels update k s (fun j => r j.castSucc), r (Fin.last k)))) = _
+  rw [← Measure.map_map (heff true) (by fun_prop), hp]
+  exact integrate_step labels update ρ A C heff hrow (zeroRow A k s) true
+
+private theorem initial_word_law (η : PMF S) (k : ℕ) :
+    (η.toMeasure.prod (Measure.pi fun _ : Fin (k + 1) => ρ)).map
+      (fun p => word labels update k p.1 p.2) =
+      (η.bind fun s => (zeroRow A k s).bind C).toMeasure := by
+  ext B hB
+  rw [Measure.map_apply (word_measurable labels update heff k) hB,
+    Measure.prod_apply ((word_measurable labels update heff k) hB),
+    PMF.toMeasure_bind_apply _ _ _ hB, lintegral_countable']
+  apply tsum_congr
+  intro s
+  have hh := congrArg (fun μ : Measure S => μ B)
+    (finite_word_law labels update ρ A C heff hrow k s)
+  rw [Measure.map_apply ((word_measurable labels update heff k).comp
+    (measurable_const.prodMk measurable_id)) hB] at hh
+  rw [hh, PMF.toMeasure_apply_singleton _ _ (measurableSet_singleton _), mul_comm]
+
+end FiniteIntegration
+
 section Probability
 variable {Ω : Type*} [MeasurableSpace Ω] [MeasurableSpace S] [MeasurableSpace R]
     (P : Measure Ω) (I : Ω → S) (τ : Ω → ℕ) (K : Ω → ℕ → ℕ) (ξ : Ω → ℕ → R)
@@ -141,16 +262,6 @@ private theorem slices_disjoint (n : ℕ) :
   rintro ω ⟨hu, hv⟩ ⟨hu', hv'⟩
   apply hab
   exact Prod.ext (hu.symm.trans hu') (funext fun j => (hv j).symm.trans (hv' j))
-
-private theorem past_measurable (hI : Measurable I) (hτ : Measurable τ)
-    (hK : ∀ j, Measurable (fun ω => K ω j))
-    (hξ : ∀ j, Measurable (fun ω => ξ ω j)) (n : ℕ)
-    (D : (a : ℕ × (Fin n → ℕ)) → Set (S × (Fin (cut a.1 a.2) → R)))
-    (hD : ∀ a, MeasurableSet (D a)) : MeasurableSet (pastEvent I τ K ξ n D) := by
-  apply MeasurableSet.iUnion
-  intro a
-  exact (slice_measurable τ K hτ hK n a).inter
-    ((hD a).preimage (hI.prodMk (measurable_pi_iff.mpr fun j => hξ j.val)))
 
 /-- Random-cut freshness for every exact raw past event. Countable source
     slices fix the cut before deterministic coordinate independence is used;
@@ -235,6 +346,54 @@ theorem random_cut_freshness (η : Measure S) (w f : PMF ℕ) (ρ : Measure R)
   rw [← ENNReal.tsum_mul_right, ← ENNReal.tsum_mul_right,
     ← measure_iUnion hdisE hE]
   rfl
+
+/-- Initialization is integrated from the actual first wait word. The first
+    PMF is w, independently of the subsequent gap PMF f, and wait zero is kept. -/
+theorem actual_initial_law [Countable S] [MeasurableSingletonClass S]
+    (labels : Set S) (update : S → Bool → R → S)
+    (η : PMF S) (w f : PMF ℕ) (ρ : Measure R) [IsProbabilityMeasure ρ]
+    (A C : S → PMF S)
+    (heff : ∀ b, Measurable (fun p : S × R => effective labels update p.1 b p.2))
+    (hrow : ∀ s b, ρ.map (effective labels update s b) = (if b then C s else A s).toMeasure)
+    (hI : Measurable I) (hτ : Measurable τ)
+    (hξ : ∀ j, Measurable (fun ω => ξ ω j))
+    (hprimitive : Primitive P I τ K ξ η.toMeasure w f ρ)
+    (B : Set S) (hB : MeasurableSet B) :
+    P {ω | epoch labels update (I ω) (ξ ω) (τ ω) (K ω) 0 ∈ B} =
+      (w.bind fun u => η.bind fun s => (zeroRow A u s).bind C).toMeasure B := by
+  let D := fun u : ℕ => (fun p : S × (Fin (u + 1) → R) =>
+    word labels update u p.1 p.2) ⁻¹' B
+  let E := fun u : ℕ => {ω | τ ω = u} ∩ rawPrefix I ξ (u + 1) ⁻¹' D u
+  have hD (u) : MeasurableSet (D u) := (word_measurable labels update heff u) hB
+  have hE (u) : MeasurableSet (E u) := (hτ (measurableSet_singleton u)).inter
+    ((hD u).preimage (hI.prodMk (measurable_pi_iff.mpr fun j => hξ j.val)))
+  have hdis : Pairwise (Disjoint on E) := by
+    intro u v huv
+    apply Set.disjoint_left.mpr
+    rintro ω ⟨hu, _⟩ ⟨hv, _⟩
+    exact huv (hu.symm.trans hv)
+  have hUnion : (⋃ u, E u) =
+      {ω | epoch labels update (I ω) (ξ ω) (τ ω) (K ω) 0 ∈ B} := by
+    ext ω
+    simp only [Set.mem_iUnion, E, D, rawPrefix, Set.mem_inter_iff, Set.mem_setOf_eq,
+      Set.mem_preimage]
+    rw [(actual_words labels update (I ω) (ξ ω) (τ ω) (K ω)).1]
+    constructor
+    · rintro ⟨u, hu, hw⟩
+      subst u
+      exact hw
+    · intro hw
+      exact ⟨τ ω, rfl, hw⟩
+  have hmass (u : ℕ) : P (E u) =
+      w u * (η.bind fun s => (zeroRow A u s).bind C).toMeasure B := by
+    have hp := hprimitive 0 (u, fun j => Fin.elim0 j) (u + 1) 0
+      (D u) Set.univ (hD u) MeasurableSet.univ
+    have hw := congrArg (fun μ : Measure S => μ B)
+      (initial_word_law labels update ρ A C heff hrow η u)
+    rw [Measure.map_apply (word_measurable labels update heff u) hB] at hw
+    simpa [E, D, sourceSlice, rawBlock, hw] using hp
+  rw [← hUnion, measure_iUnion hdis hE, PMF.toMeasure_bind_apply _ _ _ hB]
+  exact tsum_congr hmass
 
 end Probability
 end D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.ReadExecution.ActualRenewalPrefixLaw

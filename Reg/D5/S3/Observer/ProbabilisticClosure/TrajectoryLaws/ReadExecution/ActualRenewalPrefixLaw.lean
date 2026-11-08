@@ -181,4 +181,81 @@ def massRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   continuation := .unknown, familyRecord := none,
   options := #[{ name := `relaxedAutoImplicit, value := .bool false }] }
 
+def initialArena : Arena where
+  signature := massSignature.{u}
+  Law F := ∀ {Ω : Type u} [m : MeasurableSpace Ω] {S : Type v} {R : Type w}
+    [MeasurableSpace S] [MeasurableSpace R]
+    (P : Measure Ω) (I : Ω → S) (τ : Ω → ℕ) (K : Ω → ℕ → ℕ) (ξ : Ω → ℕ → R)
+    [Countable S] [MeasurableSingletonClass S]
+    (L : Set S) (U : S → Bool → R → S)
+    (η : PMF S) (a f : PMF ℕ) (ρ : Measure R) [IsProbabilityMeasure ρ]
+    (A C : S → PMF S)
+    (_ : ∀ b, Measurable (fun p : S × R => effective L U p.1 b p.2))
+    (_ : ∀ s b, ρ.map (effective L U s b) = (if b then C s else A s).toMeasure)
+    (_ : Measurable I) (_ : Measurable τ) (_ : ∀ j, Measurable (fun ω => ξ ω j))
+    (_ : Primitive P I τ K ξ η.toMeasure a f ρ) (B : Set S) (_ : MeasurableSet B),
+    F.readout () ⟨Ω,m,P⟩ {ω | epoch L U (I ω) (ξ ω) (τ ω) (K ω) 0 ∈ B} =
+      (a.bind fun k => η.bind fun s => (zeroRow A k s).bind C).toMeasure B
+
+private theorem initial_rejected : ¬ initialArena.{u,v,w}.Law massRejected := by
+  intro h
+  let E := ULift.{u} Empty
+  let A := ULift.{v} Unit
+  let R := ULift.{w} Unit
+  letI : MeasurableSpace E := ⊤
+  letI : MeasurableSpace A := ⊤
+  letI : MeasurableSpace R := ⊤
+  let I : E → A := fun e => nomatch e.down
+  let τ : E → ℕ := fun e => nomatch e.down
+  let K : E → ℕ → ℕ := fun e => nomatch e.down
+  let ξ : E → ℕ → R := fun e => nomatch e.down
+  let η : PMF A := PMF.pure ⟨()⟩
+  let ρ : Measure R := Measure.dirac ⟨()⟩
+  let U : A → Bool → R → A := fun s _ _ => s
+  have hr : ∀ s b, ρ.map (effective Set.univ U s b) = (PMF.pure s).toMeasure := by
+    intro s b
+    simp [effective, PMF.toMeasure_pure]
+  -- A nonzero initialization measure prevents an empty realization; the
+  -- countermodel instead varies the observed mass of the empty output event.
+  have hh := h (Measure.dirac (⟨()⟩ : ULift.{u} Unit))
+    (fun _ => (⟨()⟩ : A)) (fun _ => 0) (fun _ _ => 0) (fun _ _ => (⟨()⟩ : R))
+    Set.univ U η (PMF.pure 0) (PMF.pure 0) ρ PMF.pure PMF.pure
+    (fun _ => by simpa [effective] using measurable_fst) hr
+    (by fun_prop) (by fun_prop) (fun _ => by fun_prop)
+    (by
+      intro n a l r D B hD hB
+      simp [sourceSlice, rawPrefix, rawBlock, η, PMF.toMeasure_pure,
+        PMF.pure_apply, Fintype.prod_boole, Measure.pi_eq_dirac])
+    ∅ MeasurableSet.empty
+  simpa [massRejected, realize] using hh
+
+def initialRecord : Registration initialArena.{u,v,w} (type_of% (@actual_initial_law.{v,w,u})) where
+  actual := massActual
+  bridge := Iff.rfl
+  variation := ⟨actual_initial_law, massRejected, initial_rejected⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨massRejected, ?_, rfl, initial_rejected⟩
+      intro j hj
+      exact (hj (Subsingleton.elim j i)).elim
+    · intro i; exact nomatch i
+  dependence := massRecord.dependence
+
+def initialRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@actual_initial_law.{v,w,u}) (type_of% (realize massSignature.{u}
+      (fun _ p E => p.P E) (fun e => nomatch e))) Unit Unit := {
+  unitName := `ActualRenewalPrefixLaw.actual_initial_law.__information_unit,
+  realizationName := `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.ReadExecution.ActualRenewalPrefixLaw.initialRecord,
+  realizationSource := none, generated := false,
+  arena := .source ⟨initialArena⟩, objectArena := .source ⟨initialArena⟩,
+  catalog := Lean.Name.anonymous, localNames := false,
+  realization := .source initialArena ⟨initialRecord⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence }, bundleNonempty := .absent,
+  readout := some (realize massSignature.{u} (fun _ p E => p.P E) (fun e => nomatch e)),
+  variation := .absent, sensitivity := .absent, partialSensitivity := none, escapeFrom := none,
+  sourceSelection := none,
+  continuation := .unknown, familyRecord := none,
+  options := #[{ name := `relaxedAutoImplicit, value := .bool false }] }
+
 end Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.ReadExecution.ActualRenewalPrefixLaw
