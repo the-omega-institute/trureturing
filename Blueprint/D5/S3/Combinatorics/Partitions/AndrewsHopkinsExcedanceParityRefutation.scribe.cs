@@ -24,15 +24,18 @@ internal sealed class AndrewsHopkinsExcedanceParityRefutationDocument : IScribeD
             Entry("claim", "claim", "The universal positivity assertion", ClaimFormula(),
                 "The assertion after Corollary 7 and Table 1 in Section 2 quantifies over every natural n at least 12 and asks whether evenCount n is strictly greater than oddCount n. The original statistic and Table 1 fix the even-minus-odd direction despite the inconsistent even/odd labels in the displayed generating functions of Corollary 7.", DescribeRole.Definition, true),
             Entry("result", "result", "The universal assertion is false", new Formula.Not(Local("claim")),
-                "At n = 28, the full even subtype has cardinality 1850 and the full odd subtype has cardinality 1868. Their difference is -18. Hence the strict inequality required by the universal assertion fails. The proof enumerates positive decreasing lists with remaining sum, maximum part and fuel, proves completeness and absence of duplicates, and converts them injectively into actual Nat.Partition values. Completeness follows by sorting an arbitrary partition; positivity bounds its length by its sum and each part by n. Finite subtype cardinalities then equal the filtered enumeration cardinalities. The original Fin-indexed excedance function is evaluated on these actual partitions, and the resulting closed counts are checked by kernel reduction. This establishes a counterexample at 28; it makes no assertion of the globally first counterexample or of worldwide priority.", DescribeRole.Theorem, false)
+                "At n = 28, the full even subtype has cardinality 1850 and the full odd subtype has cardinality 1868. Their difference is -18. Hence the strict inequality required by the universal assertion fails. The proof enumerates positive decreasing lists with remaining sum, maximum part and fuel, proves completeness and absence of duplicates, and converts them injectively into actual Nat.Partition values. Completeness follows by sorting an arbitrary partition; positivity bounds its length by its sum and each part by n. Finite subtype cardinalities then equal the filtered enumeration cardinalities. The original Fin-indexed excedance function is evaluated on these actual partitions, and the resulting closed counts are checked by kernel reduction. This establishes a counterexample at 28; it makes no assertion of the globally first counterexample or of worldwide priority.", DescribeRole.Theorem, false,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("andrews-hopkins-2026-excedance-parity-positivity"),
+                    ResolutionKind.Refuted))
         ), []));
 
     private static DocumentBlock Entry(string id, string name, string title, Formula formula,
-        string text, DescribeRole role, bool literature) => Describe.Lean(
+        string text, DescribeRole role, bool literature, OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create("andrews-hopkins-" + id), DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.FromAuthor(Disp(formula)),
             literature ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
-            Blocks(Paragraph(Text(text))), role);
+            Blocks(Paragraph(Text(text))), role, resolution);
 
     private static Formula PartsFormula() => All("n", N(), All("p", Partition(F.Id("n")),
         Equal(At(Local("decreasingParts"), F.Id("p")),
