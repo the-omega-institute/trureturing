@@ -820,3 +820,101 @@ For each fixed $D_i$, (214.17) makes $m(A(D_j,D_i))>a_t/2$ for every sufficientl
 This is separation within one exact nonlinear full-residual fiber, obtained by retaining the section roots through arbitrary finite refinements. It does not infer nonattainment at residual zero. The approximate-zero noncompactness of Appendix III Proposition 144.1 and the weak-star construction of Appendix IV Theorem 209.5 concern different, varying residuals; neither supplies the equalities defining (214.15). Here those equalities and H51 persist at every refinement by Theorem 214.1. The universal zero-residual and physical succession questions retain exactly their original scope. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 215. Source-start relaxation excludes a fixed chronological hard continuation
+
+**Definition 215.1 (the fixed hard partition and its future centered pair law).** Retain exactly Definition 211.1, including every original $\theta=(a,\eta,d,b)$, the source-start diffusion $Z$ at $e$ in the original clock, the full conservative source-inclusive operator $K$, the probability measure $m$, and $P=T_d$. Let $D=(D_0,D_1,D_3,D_B)$ be any one deterministic pointwise Borel partition of the whole original $G$, fixed for all future reads, and put
+
+$$
+ p=\tfrac14,\qquad v_D=\mathbf1_{D_B}-p,\qquad s_n=(n+2)d\quad(n\ge0).
+$$
+
+At the two epochs $s_n$ and $s_n+d$, use the same partition $D$ and independent fresh read noises conditional on the path. Define the centered $B$-pair statistic
+
+$$
+ J_D(n)=\mathbb E_e\!\left[v_D(Z_{s_n})v_D(Z_{s_n+d})\right]
+       =\int_G g_{s_n}\,v_D\,P v_D\,dm,\qquad
+ E_D=\|T_{d/2}v_D\|_{L^2(m)}^2.
+ \tag{215.1}
+$$
+
+The second factor in (215.1) is the terminal propagated from this same $D$ by the original $P$; no terminal, source law, or clock is restarted or held fixed from another partition.
+
+**Theorem 215.2 (source-start heat relaxation and fixed-partition chronological obstruction).** Under Definition 215.1, for every original $\theta$ and every fixed whole-$G$ partition $D$,
+
+$$
+ \begin{gathered}
+ E_D>0,\qquad \|g_{s_n}-1\|_{L^1(m)}\longrightarrow0,\\[2mm]
+ \left|J_D(n)-E_D\right|\le(1-p)^2\|g_{s_n}-1\|_{L^1(m)}
+       \longrightarrow0,\\[2mm]
+ J_D(n)\longrightarrow E_D,\qquad
+ J_D(n)\ge\tfrac12E_D\quad\text{for all sufficiently large }n.
+ \end{gathered}
+ \tag{215.2}
+$$
+
+For the prescribed original soft readout $f$ of Definition 211.1, the centered $B$ read is $f_B-p=0$ pointwise. Hence its corresponding fresh-noise centered $B$-pair statistic is identically zero at every pair of epochs $(s_n,s_n+d)$. Consequently no fixed deterministic partition $D$ can agree with this stronger complete chronological target at all future epochs. This conclusion applies in particular to any fixed $D$ that also satisfies the original current three-epoch $F_{64}$ equations, if such a $D$ is supplied; it does not assert or deny universal $F_{64}$ attainment.
+
+*Proof.* The full form in Appendix II Theorem 115.3 is conservative and has energy
+
+$$
+ \mathscr E[u]=\int_{G\setminus\{e\}}
+ \left(a\sum_{r=1}^3|X_ru|^2+\eta|\partial_\zeta u|^2\right)dm
+ \tag{215.3}
+$$
+
+on $\mathscr V=\mathscr V_0\dotplus\mathbb C1$. If $u\in\ker K$, then $u\in\mathscr V$ and $\mathscr E[u]=0$. The weak derivatives in (215.3) therefore vanish on the connected punctured group $G\setminus\{e\}$, so the $\mathscr V_0$ component is constant almost everywhere there. Appendix II Theorem 116.2 identifies $\mathscr V_0$ with the zero source-trace subspace; that constant must consequently be zero. Thus
+
+$$
+ \ker K=\mathbb C1.
+ \tag{215.4}
+$$
+
+This is a statement about the full source-inclusive form, not the killed or punctured operator.
+
+By Appendix II Theorem 117.2 and its propagation identity, $g_{s_n}=T_{nd}g_{2d}$. Since $\int g_{2d}\,dm=1$, the vector $h=g_{2d}-1$ is orthogonal to $\ker K$. Let $E_K$ be the spectral resolution of $K$. Equation (215.4) gives $E_K(\{0\})h=0$, and therefore
+
+$$
+ \|g_{s_n}-1\|_2^2
+ =\|T_{nd}h\|_2^2
+ =\int_{(0,\infty)}e^{-2nd\lambda}\,d\langle h,E_K(\lambda)h\rangle_m
+ \longrightarrow0.
+ \tag{215.5}
+$$
+
+Dominated convergence is enough here; no positive spectral gap is used. Because $m(G)=1$, $\|g_{s_n}-1\|_1\le\|g_{s_n}-1\|_2$, proving the first limit in (215.2). The source density in this argument is the actual density from the original source at time zero, as supplied by Appendix II Theorem 117.2.
+
+The Markov property and conditional independence of the two fresh reads give the middle expression in (215.1), with the actual propagated terminal $P\mathbf1_{D_B}$ in the second slot. Self-adjointness of $P=T_d$ gives
+
+$$
+ E_D=\langle v_D,Pv_D\rangle_m.
+ \tag{215.6}
+$$
+
+Since $v_D$ takes only the values $-p$ and $1-p$, $\|v_D\|_\infty\le1-p$. Positivity and the Markov contraction from Appendix II Theorem 115.3 imply $|Pv_D|\le P|v_D|\le1-p$. Hence
+
+$$
+ \begin{aligned}
+ |J_D(n)-E_D|
+ &=\left|\int_G(g_{s_n}-1)v_DPv_D\,dm\right|\\
+ &\le (1-p)^2\|g_{s_n}-1\|_1,
+ \end{aligned}
+ \tag{215.7}
+$$
+
+which proves the convergence assertion.
+
+The class $v_D$ is nonzero: an indicator cannot equal the strict intermediate constant $p$ almost everywhere on a probability space. Spectral calculus for the nonnegative self-adjoint $K$ therefore gives
+
+$$
+ E_D=\int_{[0,\infty)}e^{-d\lambda}\,d\langle v_D,E_K(\lambda)v_D\rangle_m>0,
+ \tag{215.8}
+$$
+
+because the multiplier is strictly positive at every finite spectral value. This is the same injectivity mechanism recorded for $T_s$ in Appendix II Proposition 124.1. The eventual lower bound in (215.2) follows from convergence to the positive number $E_D$.
+
+Finally, for the original soft readout, $f_B=p$ in Definition 211.1, so the centered emission variable $f_B(Z_s)-p$ is zero on every path at every positive epoch. Independent fresh read noise does not change this identity, and its pair statistic is exactly zero. Equation (215.2) makes the fixed hard statistic strictly positive from some future index onward, which proves the chronological exclusion. The argument uses only the fixed partition's own propagated terminal at each hard read and leaves the three-epoch $F_{64}$ question, origin enclosure, compatible summable continuations and physical succession open. The source-specific composition is the relaxation (215.5), the exact heat-norm identity (215.6) and the comparison with the unchanged readout; the spectral-calculus and Markov-semigroup facts cited above are intermediate suppliers rather than standalone claims. $\square$
+
+
+
+## 追加锚（本行以下为增补区）
