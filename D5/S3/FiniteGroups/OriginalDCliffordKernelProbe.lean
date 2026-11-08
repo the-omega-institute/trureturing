@@ -5,13 +5,8 @@ import Mathlib.LinearAlgebra.Dimension.Constructions
 import D5.S3.FiniteGroups.CliffordConstituents
 
 /-!
-UNCOMPILED SOURCE CANDIDATE; not a kernel/admission receipt.
-
-Part I preserves and improves the previous generic candidate. Part II is literal
-insertion source for INSIDE CliffordDecomposition.lean, after its private orbit
-index declarations. It is intentionally not a standalone importable module:
-private names in Part II resolve only in that owning source file. Do not replace
-them by public wrappers or by generated `_private` names.
+Temporary exact-source kernel probe of the original-D Clifford interfaces.
+Source admission and the full Frobenius endpoint remain outside this probe.
 -/
 
 namespace OriginalDCliffordCandidate
@@ -181,9 +176,12 @@ noncomputable def restrictionTranslate (N : Subgroup G) [N.Normal] (g : G) :
     | zero => simp only [map_zero, zero_smul]
     | add a b ha hb => simp only [map_add, add_smul, ha, hb]
     | single n c =>
-      change ρ g (MonoidAlgebra.single n c • x) =
-        MonoidAlgebra.domCongr k k (MulAut.conjNormal g)
-          (MonoidAlgebra.single n c) • ρ g x
+      change ρ g (MonoidAlgebra.single n c • x :
+          _root_.Representation.asModule (ρ.comp N.subtype)) =
+        (MonoidAlgebra.domCongr k k (MulAut.conjNormal g)
+          (MonoidAlgebra.single n c) •
+            (show _root_.Representation.asModule (ρ.comp N.subtype) from ρ g x) :
+          _root_.Representation.asModule (ρ.comp N.subtype))
       rw [MonoidAlgebra.domCongr_single, Representation.single_smul,
         Representation.single_smul]
       change ρ g (c • ρ (n : G) x) =
@@ -231,14 +229,9 @@ theorem originalDTranslate_map_component {N : Subgroup G} [N.Normal]
 end OriginalEndomorphisms
 
 end OriginalDCliffordCandidate
-/-! PART III — independent-universe original-D insertion.
-
-This block is owner-local source for CliffordDecomposition.lean.  It deliberately
-uses the actual `isotypicComponents` and the actual stabilizer of the original-D
-component.  It does not mention the owner-private FDRep/skeleton orbit index.
-The existing `FDRep.ofShrinkEquiv`, `Module.Finite.small`, and `Shrink.linearEquiv`
-APIs remain documented in Part II; this direct actual-component route avoids an
-unproved shrinked-action/ring-transport assumption altogether.
+/-!
+The component index uses the actual original-D submodule stabilizer.
+The scalar, group and representation carrier universes remain independent.
 -/
 namespace D5.S3.FiniteGroups.CliffordDecomposition.Representation
 
@@ -524,6 +517,9 @@ set_option pp.universes true in
 #check @originalDRestrictEquivPiIndependent
 set_option pp.universes true in
 #check @originalD_finrank_independent_universes
+#print axioms OriginalDCliffordCandidate.map_isotypicComponent_semilinear
+#print axioms OriginalDCliffordCandidate.originalDTranslate_map_component
+#print axioms originalDActualComponentQuotientEquiv
 #print axioms originalDRestrictEquivPiIndependent
 #print axioms originalD_finrank_independent_universes
 end D5.S3.FiniteGroups.CliffordDecomposition.Representation
