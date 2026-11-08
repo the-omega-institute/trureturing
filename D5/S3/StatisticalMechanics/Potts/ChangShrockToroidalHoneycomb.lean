@@ -16,6 +16,7 @@ Registration audit (CLAUDE.md §3.9): result is declared_unresolved (IE-C050);
 the unfinished audit is recorded in issue #28118.
 escape_witness: none; admission uses the external open-problem resolution.
 direct_frozen_dependencies: none
+Square.result denotes ChangShrockToroidalSquare.result in the same Potts namespace.
 Coeff: proof_shape=definition; consumers=q,v,Space
 q: proof_shape=definition; consumers=detach,result
 v: proof_shape=definition; consumers=vertical,horizontal,result
@@ -32,14 +33,15 @@ horizontal: proof_shape=definition; consumers=transfer,horizontal_alternating
 transfer: proof_shape=definition; consumers=result
 alternatingVector: proof_shape=definition; consumers=result
 singletonState_injective: proof_shape=bind-only; consumers=alternatingVector_ne_zero
-alternatingVector_ne_zero: proof_shape=bind-only; consumers=result
+alternatingVector_ne_zero: proof_shape=bind-only; consumers=result,Square.result
 detach_singleton: proof_shape=bind-only; consumers=vertical_singleton
 update_swap: proof_shape=bind-only; consumers=join_singleton_swap
 join_singleton_swap: proof_shape=bind-only; consumers=join_alternating
-join_alternating: proof_shape=bind-only; consumers=horizontal_alternating
-list_prod_on_vector: proof_shape=bind-only; consumers=vertical_singleton,horizontal_alternating
+join_alternating: proof_shape=bind-only; consumers=horizontal_alternating,Square.result
+list_prod_on_vector: proof_shape=bind-only; consumers=vertical_singleton,
+  horizontal_alternating,Square.result
 vertical_singleton: proof_shape=bind-only; consumers=vertical_alternating
-vertical_alternating: proof_shape=bind-only; consumers=result
+vertical_alternating: proof_shape=bind-only; consumers=result,Square.result
 horizontal_alternating: proof_shape=bind-only; consumers=result
 result: proof_shape=bind-only; consumers=registered claim #28063
 -/
@@ -123,7 +125,7 @@ private theorem singletonState_injective :
   intro σ τ h
   exact Equiv.ext (congrFun (congrArg Subtype.val h))
 
-private theorem alternatingVector_ne_zero : alternatingVector L ≠ 0 := by
+theorem alternatingVector_ne_zero : alternatingVector L ≠ 0 := by
   classical
   intro h
   have hh := congrArg (fun a : Space L => a (singletonState 1)) h
@@ -171,7 +173,7 @@ private theorem join_singleton_swap (i j : Fin L) (hij : i ≠ j)
     exact congrArg ket heq
   · simp [join, singletonState, hσ, hσ.symm, hi, hj]
 
-private theorem join_alternating (i j : Fin L) (hij : i ≠ j) :
+theorem join_alternating (i j : Fin L) (hij : i ≠ j) :
     join i j (alternatingVector L) = 0 := by
   classical
   simp only [alternatingVector, map_sum]
@@ -200,7 +202,7 @@ private theorem join_alternating (i j : Fin L) (hij : i ≠ j) :
   · intro σ
     simp [mul_assoc]
 
-private theorem list_prod_on_vector {α : Type*} (xs : List α)
+theorem list_prod_on_vector {α : Type*} (xs : List α)
     (A : α → Module.End Coeff (Space L)) (c : α → Coeff) (w : Space L)
     (h : ∀ a ∈ xs, A a w = c a • w) :
     (xs.map A).prod w = (xs.map c).prod • w := by
@@ -240,7 +242,7 @@ private theorem vertical_singleton (σ : Perm (Fin L)) (c : Coeff) :
     (Finsupp.single (singletonState σ) c) (fun i _ => ha i)
   simpa only [← List.ofFn_eq_map, Fin.prod_ofFn, hprod, vertical] using hh
 
-private theorem vertical_alternating :
+theorem vertical_alternating :
     vertical L (alternatingVector L) =
       (v ^ (L - 1) * (v + q)) • alternatingVector L := by
   classical
