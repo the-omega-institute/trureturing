@@ -1868,3 +1868,248 @@ $$
 完整目标还包括一般交换块零值、完整单位平方行、其它首标签和没有这些实际三轴的原域，以及同一旧表的全域双线性、原R与完成运输。三轴和带系数二阶矩阵没有把物理空间规定为三维。实际准备、全部菜单和原质量、整台仪器与环境记录、真相关联合和递归同源参考、全部历史未来、真遗忘和双向真实返回、完整计数、物理钟、能量及共同正尺度，仍必须来自同一个原世界，不能由这份几何或数学嵌套凭空供应。
 
 ## 追加锚（本行以下为增补区）
+
+## 157. 两种实偏移的同一原响应与完整前件
+
+**定义 157.1（原候选、实际三轴与结论域）。** 本节及以下各节完整采用130.1、137.1、147.1的同一原 $(E,C,u,N,\mathcal P,S,D)$。$E$ 是实Archimedean序单位空间，$\mathcal P$ 的正实线性评价分离元素并准确决定 $C$；每份质量 $m_\alpha=\alpha(u)$ 保留原值，包括零、不等和次归一质量。A1保留所有原标签的两条有向Hermitian二表正性；A2保留实际相加三表 $(a+b,a,b)$ 及其排列在整个实三空间的实部半正定性和 $(1,-1,-1)$ 的零二次值；A3保留 $S(u,u)=u$ 及同一固定有理 $0<\vartheta_0\le1$ 上的 $0\le z\le\vartheta_0u\Rightarrow S(z,z)\le z$。全部原P2和完整原PB仍对全部原输入成立。
+
+沿前卷16.1–16.2的同一忠实、含单位、等距且准确保锥JC包含，写
+
+$$
+\begin{gathered}
+E\subset X\subset\mathcal A_{\rm sa},\qquad
+\overline E=X,\qquad\mathcal A=C^*(X),\\
+S(a,b)=a\circ b=(ab+ba)/2,\qquad
+C=E\cap\mathcal A_+,\quad N=\|\cdot\||_E.
+\end{gathered}
+\tag{157.1}
+$$
+
+原 $E$ 可以不完备，$X$ 不必为 $\mathcal A_{\rm sa}$；$D:E^2\to E$ 始终是同一旧总映射。不预付一般齐次、可加、连续、可测、商下降、输入函数演算或完成延拓。固定实际原 $h,e,j=D(h,e)$，直接消费133.1–134.1与147.2–147.3：
+
+$$
+\begin{gathered}
+h^2=e^2=j^2=u,\quad h\circ e=h\circ j=e\circ j=0,\\
+Q=ihej\in Z(\mathcal A),\quad Q^*=Q,\quad Q^2=u,\\
+V_h=\{v\in E:hv=-vh\},\quad
+T=[L_j,L_e],\quad D(h,v)=Tv=iQhv,\quad T^2v=-v,\\
+U_h=2L_h^2-I,\quad
+P_{\rm tr}=(I-U_h)/2,\quad P_{\rm com}=(I+U_h)/2,\\
+\operatorname{Com}_h=P_{\rm com}E=\{c\in E:hc=ch\}.
+\end{gathered}
+\tag{157.2}
+$$
+
+$L_a z=a\circ z$。$T$、两份投影及 $h\circ x$ 都是保持原 $E$ 的有限Jordan表达式。辅助 $Q$ 不要求属于 $E$ 或 $X$；证明中的结合乘法、Hilbert向量及读取代数不扩大原输入域。零原对象的所有等式均为零。
+
+本组定理的完整原值域是
+
+$$
+D(Rh,\mu u+\lambda h+v),\qquad
+D(su+rh,w),\qquad
+R,\mu,\lambda,s,r\in\mathbb R,\quad v,w\in V_h.
+\tag{157.3}
+$$
+
+第二式的第二输入严格为横向；这两个受限域不被合成为 $D(su+rh,\mu u+\lambda h+v)$ 的一般公式。原七项来源合同保持145.1–145.7、155.1及下文167的全部量词。
+
+**定义 157.2（实际锚、原预算与同轴零行）。** 置 $n=u+h$，只用两种实际锚 $(p,q)=(e,j),(j,-e)$。前卷76.1–77.1在同一实际三轴的四维标量窗内准确给
+
+$$
+D(su+rh,tp+\alpha n)=rtq
+\qquad(s,r,t,\alpha\in\mathbb R).
+\tag{157.4}
+$$
+
+这里 $su+rh$ 和 $\alpha u+\alpha h+tp$ 都属于该四维窗；所用叉积是 $h\times p=q$。同时直接复用前卷16.2的全单位行、零输入零值、反对称性及同轴仿射零行，特别是
+
+$$
+D(su,y)=0\quad(y\in E),\qquad
+D(au+bh,cu+dh)=0\quad(a,b,c,d\in\mathbb R).
+\tag{157.5}
+$$
+
+这些是已识别的原值，未由一般输入线性性推得。对同一个数学正读取 $\phi$，完整P2与PB的元素式为
+
+$$
+\begin{gathered}
+B_\phi(a,b)=\phi(a^2)\phi(b^2)-\phi(a\circ b)^2,\qquad
+|\phi D(a,b)|^2\le B_\phi(a,b),\\
+\nu=D(a,b)-a\circ z,\quad\omega=a\circ b+D(a,z),\\
+D(b+\nu,z+\omega)-D(b-\nu,z-\omega)
+=-2b\circ\nu-2z\circ\omega.
+\end{gathered}
+\tag{157.6}
+$$
+
+前卷16.2和本卷123.2的准确锥接口允许环境数学态读取每张原P2；证明不把它们列为实际准备，也不将 $|\phi D|^2$ 换成 $\phi(D^2)$。
+
+## 158. 仿射首标签的完整外层与共享 Gram
+
+**引理 158.1（不删除交换块的仿射预算）。** 固定任意原 $x\in E$ 及实 $s,r$，记
+
+$$
+\begin{gathered}
+a=su+rh,\quad g=D(a,x),\quad
+v=P_{\rm tr}x,\quad k=h\circ x,\quad\theta=s+r,\\
+Z=(1+s\theta)x+r\theta k,\\
+W_+=Z+g-rtp-r\theta tq,\qquad
+W_-=Z-g+rtp-r\theta tq.
+\end{gathered}
+\tag{158.1}
+$$
+
+对157.2的任一锚、每个有限实 $t$ 及同一个数学正读取 $\phi$，有
+
+$$
+\boxed{2|r|\,|\phi(tq+v)|
+\le\sqrt{B_\phi(n,W_+)}+\sqrt{B_\phi(n,W_-)}.}
+\tag{158.2}
+$$
+
+$Z,g,W_\pm$ 的全部交换块均保留。
+
+证明。对每个有限实 $t,\alpha$，在原PB中准确取 $(a,b,z)=(su+rh,tp+\alpha n,x)$。由(157.4)，内值为 $rtq,g$。两份位移和完整外层输入准确为
+
+$$
+\begin{aligned}
+\nu&=rtq-sx-rk,&\omega&=stp+\theta\alpha n+g,\\
+R_+&=t(p+rq)-sx-rk+\alpha n,&
+S_+&=x+g+stp+\theta\alpha n,\\
+R_-&=t(p-rq)+sx+rk+\alpha n,&
+S_-&=x-g-stp-\theta\alpha n.
+\end{aligned}
+\tag{158.3}
+$$
+
+所有标签仍在原 $E$。若 $c=P_{\rm com}x$，则 $k=hc$，$n\circ x=c+hc+v$、$n\circ k=c+hc$；另有 $p\circ q=0,n\circ q=q$。因此完整PB的右端是
+
+$$
+\begin{aligned}
+-2(tp+\alpha n)\circ(rtq-sx-rk)
+-2x\circ(stp+\theta\alpha n+g)
+=2rt\,p\circ k-2x\circ g-2\alpha r(tq+v).
+\end{aligned}
+\tag{158.4}
+$$
+
+其中 $2st\,p\circ x$ 与 $-2st\,x\circ p$ 相消；含 $\alpha$ 的其余项为 $-2\alpha r\{tq+n\circ x-n\circ k\}$。没有删除任何未知旧值。两份外层分别用同一个 $\phi$ 的原P2，给
+
+$$
+\left|\phi(2rt\,p\circ k-2x\circ g)-2\alpha r\phi(tq+v)\right|
+\le\sqrt{B_\phi(R_+,S_+)}+\sqrt{B_\phi(R_-,S_-)}.
+\tag{158.5}
+$$
+
+为处理任意实斜率，包括 $\theta=0$，对固定自伴 $A,B,n$、任意实 $\vartheta$ 作实Gram展开：
+
+$$
+\begin{aligned}
+B_\phi(A+\alpha n,B+\vartheta\alpha n)
+&=B_\phi(A,B)+2\alpha C_\vartheta
++\alpha^2B_\phi(n,B-\vartheta A),\\
+C_\vartheta
+&=\vartheta\phi(A^2)\phi(n\circ B)+\phi(n\circ A)\phi(B^2)\\
+&\quad-\phi(A\circ B)\{\phi(n\circ B)+\vartheta\phi(n\circ A)\}.
+\end{aligned}
+\tag{158.6}
+$$
+
+确实，两份平方读取的系数依次为 $(\phi(A^2),2\phi(n\circ A),\phi(n^2))$ 和 $(\phi(B^2),2\vartheta\phi(n\circ B),\vartheta^2\phi(n^2))$；交叠读取的系数是 $(\phi(A\circ B),\phi(n\circ B)+\vartheta\phi(n\circ A),\vartheta\phi(n^2))$。相乘再减平方，三、四次项各自抵消，二次项恰为所写的Gram式。
+
+正外层取 $A=t(p+rq)-sx-rk,B=x+g+stp,\vartheta=\theta$，所以 $B-\vartheta A=W_+$；负外层取 $A=t(p-rq)+sx+rk,B=x-g-stp,\vartheta=-\theta$，所以 $B-\vartheta A=W_-$。将(158.5)除以 $|\alpha|$，只在这两个显式标量二次式中令 $|\alpha|\to\infty$，得到(158.2)。二次系数为零的根号除后也趋于零，故包括全部退化情形。这不是旧 $D$ 的输入极限。∎
+
+## 159. 正负强度均适用的仿射首标签投影
+
+**定理 159.1（任意原第二输入的横向块）。** 在157.1下，对全部实 $s,r$ 及任意原 $x\in E$，同一个旧响应满足
+
+$$
+\boxed{P_{\rm tr}D(su+rh,x)=rT P_{\rm tr}x.}
+\tag{159.1}
+$$
+
+$r=0$ 包含原单位行，不要求旧输出横向。
+
+证明。$r=0$ 时直接用(157.5)，两边为零。设 $r\ne0$，保持158.1的同一固定 $x,g,v,Z$。在忠实含单位Hilbert表示中取内积第一槽共轭线性。对任一 $\sigma\in\{1,-1\}$，取任意单位向量 $Q\xi=\sigma\xi,h\xi=-\xi$，置 $\eta=q\xi$。149.1–149.5给
+
+$$
+\|\eta\|=1,\quad h\eta=\eta,\quad
+p\xi=-i\sigma\eta,\quad
+\mathfrak p_\eta z=z-\operatorname{Re}\langle\eta,z\rangle\eta.
+\tag{159.2}
+$$
+
+用向量 $(\xi+\delta\eta)/\sqrt{1+\delta^2}$ 的态 $\phi_\delta$。准确复用149.3对任意固定自伴 $W$ 的恒等式
+
+$$
+B_{\phi_\delta}(n,W)
+=\frac{4\delta^2}{(1+\delta^2)^2}
+\|\mathfrak p_\eta(W\xi+\delta W\eta)\|^2.
+\tag{159.3}
+$$
+
+另一方面，$tq+v$ 横向，故其读取为 $2\delta\{t+\operatorname{Re}\langle\eta,v\xi\rangle\}/(1+\delta^2)$。将它和(159.3)代入(158.2)，约去共同正因子，再只对固定向量范数令 $\delta\downarrow0$。由于 $\mathfrak p_\eta(q\xi)=0$、$\mathfrak p_\eta(p\xi)=p\xi$，得到
+
+$$
+\begin{aligned}
+2|r|\left|t+\operatorname{Re}\langle\eta,v\xi\rangle\right|
+\le{}&\|\mathfrak p_\eta((Z+g)\xi)-rtp\xi\|\\
+&+\|\mathfrak p_\eta((Z-g)\xi)+rtp\xi\|.
+\end{aligned}
+\tag{159.4}
+$$
+
+这里一般没有 $Z\xi=v\xi$，也不需要它；共同 $Z$ 只在下一步两份一次项中相消。
+
+记 $w=p\xi$、$z_\pm=\mathfrak p_\eta((Z\pm g)\xi)$，以及实数
+
+$$
+A_\xi=\operatorname{Re}\langle\eta,v\xi\rangle,\quad
+B_\xi=\operatorname{Re}\langle w,g\xi\rangle,\quad
+\epsilon=\operatorname{sgn}(r).
+\tag{159.5}
+$$
+
+$w$ 为单位向量，且 $\operatorname{Re}\langle\eta,w\rangle=0$。150.3的范数一次项给：在(159.4)取 $t=L\to+\infty$，右侧减 $2|r|L$ 的极限是
+
+$$
+-\epsilon\operatorname{Re}\langle w,z_+\rangle
++\epsilon\operatorname{Re}\langle w,z_-\rangle=-2\epsilon B_\xi,
+$$
+
+左侧相应极限是 $2|r|A_\xi$。取 $t=-L\to-\infty$，两侧相应极限分别为 $2\epsilon B_\xi$ 与 $-2|r|A_\xi$。共同 $Z$ 在这两个差式里准确相消。两端一起给
+
+$$
+|r|A_\xi=-\epsilon B_\xi,\qquad
+r\operatorname{Re}\langle\eta,v\xi\rangle
+=-\operatorname{Re}\langle p\xi,g\xi\rangle.
+\tag{159.6}
+$$
+
+这一步明确包括 $r<0$。由(159.2)，等价于
+
+$$
+\operatorname{Im}\langle\eta,g\xi\rangle
+=r\sigma\operatorname{Re}\langle\eta,v\xi\rangle.
+\tag{159.7}
+$$
+
+先取 $(p,q)=(e,j)$，令 $A=\langle j\xi,v\xi\rangle,B=\langle j\xi,g\xi\rangle$。再取 $(p,q)=(j,-e)$，此时 $\eta'=-e\xi=i\sigma j\xi$，相应二次读取是 $A'=-i\sigma A,B'=-i\sigma B$。两份(159.7)分别给 $\operatorname{Im}B=r\sigma\operatorname{Re}A$ 和 $-\sigma\operatorname{Re}B=r\operatorname{Im}A$，故
+
+$$
+B=ir\sigma A,\qquad
+\langle j\xi,(g-ir\sigma v)\xi\rangle=0.
+\tag{159.8}
+$$
+
+令 $F_\sigma=(I+\sigma Q)/2$、$P_\pm=(I\pm h)/2$，只用于数学表示。对固定算子 $F_\sigma P_-j(g-ir\sigma v)P_-F_\sigma$ 使用150.8的普通复极化，(159.8)对全部向量成立即使该算子为零。$j$ 将 $F_\sigma P_-H$ 酉地送到 $F_\sigma P_+H$，于是
+
+$$
+F_\sigma P_+gP_-F_\sigma
+=ir\sigma F_\sigma P_+vP_-F_\sigma.
+\tag{159.9}
+$$
+
+反向块由自伴性为其伴随，准确带相反的 $i$ 号。$Q$ 中央排除跨 $\sigma$ 块；因此两份谱空间共同给 $P_{\rm tr}g=irQhv=rTv$。空谱块无须选择向量，某份负空间为空时 $j$ 的酉对应也使其正空间为空。忠实性返回原元素，得到(159.1)。所有极限都只作用于固定旧值的显式标量或向量式。∎
+
+## 追加锚（本行以下为增补区）
