@@ -61,4 +61,22 @@ public sealed class WorktreeProtocolTests(ITestOutputHelper output)
             Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError));
         Assert.Contains("Ran 1 test", Encoding.UTF8.GetString(result.StandardError));
     }
+
+    [Fact]
+    public void AgentAttributionAndEntranceContractsRemainCovered()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        var root = BuiltCliRoot.Value;
+        foreach (var name in new[] { "agent_state_cases", "agent_state_entrance_cases" })
+        {
+            var script = Path.Combine(root,
+                $"tools/tests/StrataLint.WorktreeContract.Tests/Fixtures/{name}.py");
+            var result = TestProcessRunner.Run("python3", ["-B", script, root], root,
+                TimeSpan.FromSeconds(300), 1024 * 1024);
+            output.WriteLine(Encoding.UTF8.GetString(result.StandardOutput));
+            output.WriteLine(Encoding.UTF8.GetString(result.StandardError));
+            Assert.True(result.ExitCode == 0,
+                Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError));
+        }
+    }
 }
