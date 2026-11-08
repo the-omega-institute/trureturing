@@ -8,7 +8,74 @@
 
 /-
 admission_basis: open-problem-resolution (#27657; Proved)
-escape_witness: none (external open-problem-resolution)
+escape_witness: count_eq_v (the all-length literal continuation-count invariant)
+The all-length counting bridge and two-class transfer use induction, beyond
+finite normalization. Finite single-row decisions supply the numerical premises;
+they are bind-only and are used by the inductive transfer on the result path.
+Direct frozen dependency: D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.Seen
+(statement_id sha256:db13d94501d24f27e6e69604bb633af95ff3309c5698815c44e12d2e52739fce).
+Direct frozen dependency: D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.allowed
+(statement_id sha256:4ee019eb42606605da41b2b090212be244d3bf48d64a2c10dc2d9c6c6f7e6468).
+Direct frozen dependency: D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.advance
+(statement_id sha256:63e23e390cbc7ee42155ce307351f149d901cd9013daee3d6d2eac775e24af71).
+Direct frozen dependency: D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.good
+(statement_id sha256:f68e874b0a22676cb3053202c645a8ce30010dcd695d55f3e7fce272d4ce5989).
+Direct frozen dependency: D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.finish
+(statement_id sha256:ebae2e26fe8811cb0e473a0168c27f49fa151fa2bcecda8ad3ba0c9fabc41a7f).
+Direct frozen dependency: D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.finish_fst
+(statement_id sha256:5859cc0f84f4e6a91313521f32ea6d187c4822bb52d4e438939da5e000940bd5).
+Direct frozen dependency: D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.finish_snd
+(statement_id sha256:1ada14ea452d6f35f959dbbd5a034265c8c6921cd041422cad27ec166a94d24c).
+Direct frozen dependency: D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.good_iff
+(statement_id sha256:59d0ffb034f7f2361718e6d2566eb24417785b9a178f6fcb44f336c1199d3d62).
+Direct frozen dependency: D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.edge_iff
+(statement_id sha256:eb164ba2a30a036eb9157c90341cc0d7664c1e26513ba1fedc8a4964a09ae84a).
+Direct frozen dependency: D5.S3.Observer.Separation.BooleanRankThreeK4.beta
+(statement_id sha256:1abdc5f3db71567fe05de5aabbe80dddeb5ec5179e4ec7fd49fe71e500518481).
+Row: proof_shape=bind-only; consumers=prior, rowLegal, TailGood, step
+prior: proof_shape=bind-only; consumers=normal, prior_zero, prior_succ
+instDecidablePrior: proof_shape=bind-only; consumers=instDecidableNormal
+normal: proof_shape=bind-only; consumers=normal_cons, Legal, tail_iff
+prior_zero: proof_shape=bind-only; consumers=normal_cons
+prior_succ: proof_shape=bind-only; consumers=normal_cons
+normal_cons: proof_shape=bind-only; consumers=tail_iff, counting_bridge
+rowLegal: proof_shape=bind-only; consumers=Legal, TailGood, step, classCount, firstCount
+bonds: proof_shape=bind-only; consumers=Legal, bonds_iff, tail_iff
+Legal: proof_shape=bind-only; consumers=a, counting_bridge
+instDecidableNormal: proof_shape=bind-only; consumers=instDecidableLegal
+instDecidableRowLegal: proof_shape=bind-only; consumers=instDecidableLegal, step, total
+instDecidableBonds: proof_shape=bind-only; consumers=instDecidableLegal
+instDecidableLegal: proof_shape=bind-only; consumers=a
+a: proof_shape=bind-only; consumers=counting_bridge, a_eq_w, zero_count, result
+pairs: proof_shape=bind-only; consumers=bonds_iff, TailGood, step, total, initial_valid
+compatible: proof_shape=bind-only; consumers=bonds_iff, TailGood, step, classCount
+instDecidableCompatible: proof_shape=bind-only; consumers=instDecidableTailGood, step
+bonds_iff: proof_shape=bind-only; consumers=tail_iff, counting_bridge
+TailGood: proof_shape=bind-only; consumers=tail_iff, count, count_eq_v
+instDecidableGood: proof_shape=bind-only; consumers=instDecidableTailGood, step, total
+instDecidableTailGood: proof_shape=bind-only; consumers=count
+tail_iff: proof_shape=content; consumers=counting_bridge
+step: proof_shape=bind-only; consumers=v, count_eq_v, v_eq_w
+v: proof_shape=bind-only; consumers=count_eq_v, counting_bridge, v_eq_w
+count: proof_shape=bind-only; consumers=count_eq_v, counting_bridge
+count_eq_v: proof_shape=content; consumers=counting_bridge
+total: proof_shape=bind-only; consumers=counting_bridge, a_eq_w
+counting_bridge: proof_shape=content; consumers=a_eq_w
+Valid: proof_shape=bind-only; consumers=valid_next, initial_valid, finite_certificate, v_eq_w
+instDecidableValid: proof_shape=bind-only; consumers=valid_next, row_counts, initial_valid
+valid_next: proof_shape=bind-only; consumers=v_eq_w
+classCount: proof_shape=bind-only; consumers=finite_certificate
+firstCount: proof_shape=bind-only; consumers=finite_certificate
+row_counts: proof_shape=bind-only; consumers=finite_certificate
+initial_valid: proof_shape=bind-only; consumers=a_eq_w
+initial_counts: proof_shape=bind-only; consumers=finite_certificate
+finite_certificate: proof_shape=bind-only; consumers=v_eq_w, a_eq_w
+w: proof_shape=bind-only; consumers=v_eq_w, a_eq_w, recurrence, result
+v_eq_w: proof_shape=content; consumers=a_eq_w
+a_eq_w: proof_shape=content; consumers=recurrence, result
+recurrence: proof_shape=content; consumers=result
+zero_count: proof_shape=bind-only; consumers=result
+result: proof_shape=content; consumers=terminal result
 -/
 
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip
