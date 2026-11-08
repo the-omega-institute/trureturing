@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.SpinChains.TokenBlockLocalDefect
 import Reg.Support.SingleDependentReadout
 
+/-! Full dependent-family observations of the physical projection and local energy. -/
+
 namespace Reg.D5.S3.Quantum.SpinChains.TokenBlockLocalDefect
 open _root_.D5.S3.Quantum.SpinChains.TokenBlockLocalDefect
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
@@ -53,6 +55,7 @@ private theorem energy_dependence : ObservationalDependence energySignature actu
     have hh := congrArg (fun g : Space 1 2 1 => g B) (hf π)
     change f ((rankPermutation 1 2 1 0 π).symm B) = f B at hh
     rw [← hab, Equiv.symm_apply_apply] at hh
+    rw [hab] at hh
     norm_num [f, A, B] at hh
   have hpos : 0 < (inner ℂ f (defect 1 2 1 0 f)).re := by
     have hh := result 1 2 1 0 f

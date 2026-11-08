@@ -40,7 +40,7 @@ internal sealed class TokenBlockLocalDefectDocument : IScribeDocumentDefinition
             Paragraph(Text("The equality with the independently defined Johnson exchange Laplacian and with the sum of I minus each unordered block transposition requires a separate incidence and exchange correspondence. The local projection, energy and coercivity statements do not assert that correspondence, complement covariance, the token-adjacency expansion, global occupancy accounting, tensor spectral positivity, or the variational conclusions.")))));
 
     private static DocumentBlock Theorem(string name, string title, Formula formula, string text) =>
-        Describe.Lean(DescribeId.Create("token-block-local-" + name.ToLowerInvariant()),
+        Describe.Lean(DescribeId.Create("token-block-local-" + name.Replace('_', '-').ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(Disp(formula)),
             AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(text))), DescribeRole.Theorem);
 
