@@ -40,19 +40,7 @@ $$(endpoint: \mathbb{R}) = \frac{2}{\sqrt{13}}$$
 
 The sharp retained-signal parameter is 2/√13.
 
-**Definition 1.4 (B).**
-
-$$\forall a \in \operatorname{EuclideanSpace}\left(\mathbb{R}, \operatorname{Fin}\left(3\right)\right),\; \operatorname{B}\left(a\right) = ((a\left(0\right): \mathbb{C})) \cdot (pauliMatrix\left(\operatorname{Pauli.X}\right)) + ((a\left(1\right): \mathbb{C})) \cdot (pauliMatrix\left(\operatorname{Pauli.Y}\right)) + ((a\left(2\right): \mathbb{C})) \cdot (pauliMatrix\left(\operatorname{Pauli.Z}\right))$$
-
-*Formalization.* `D5/S3/Quantum/Measurement/FourQubitParentConstruction.B` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The real coordinates multiply the three Pauli matrices.
-
-**Theorem 1.5 (B_formula).**
+**Theorem 1.4 (B_formula).**
 
 $$\forall a \in \operatorname{EuclideanSpace}\left(\mathbb{R}, \operatorname{Fin}\left(3\right)\right),\; \operatorname{B}\left(a\right) = \begin{pmatrix}(a\left(2\right): \mathbb{C})&(a\left(0\right): \mathbb{C}) - \operatorname{Complex.I} \cdot (a\left(1\right): \mathbb{C})\\(a\left(0\right): \mathbb{C}) + \operatorname{Complex.I} \cdot (a\left(1\right): \mathbb{C})&-(a\left(2\right): \mathbb{C})\end{pmatrix}$$
 
@@ -64,7 +52,7 @@ $$\forall a \in \operatorname{EuclideanSpace}\left(\mathbb{R}, \operatorname{Fin
 
 The Pauli expansion gives these four complex matrix entries.
 
-**Theorem 1.6 (B_zero).**
+**Theorem 1.5 (B_zero).**
 
 $$\operatorname{B}\left((0: \operatorname{EuclideanSpace}\left(\mathbb{R}, \operatorname{Fin}\left(3\right)\right))\right) = (0: \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right))$$
 
@@ -76,7 +64,7 @@ $$\operatorname{B}\left((0: \operatorname{EuclideanSpace}\left(\mathbb{R}, \oper
 
 The zero Bloch vector gives the zero matrix.
 
-**Theorem 1.7 (B_real_smul).**
+**Theorem 1.6 (B_real_smul).**
 
 $$\forall c \in \mathbb{R},\; \forall a \in \operatorname{EuclideanSpace}\left(\mathbb{R}, \operatorname{Fin}\left(3\right)\right),\; \operatorname{B}\left((c) \cdot (a)\right) = (c) \cdot (\operatorname{B}\left(a\right))$$
 
@@ -88,7 +76,7 @@ $$\forall c \in \mathbb{R},\; \forall a \in \operatorname{EuclideanSpace}\left(\
 
 The Bloch matrix is homogeneous for the real scalar action.
 
-**Theorem 1.8 (B_neg).**
+**Theorem 1.7 (B_neg).**
 
 $$\forall a \in \operatorname{EuclideanSpace}\left(\mathbb{R}, \operatorname{Fin}\left(3\right)\right),\; \operatorname{B}\left(-a\right) = -\operatorname{B}\left(a\right)$$
 
@@ -100,7 +88,7 @@ $$\forall a \in \operatorname{EuclideanSpace}\left(\mathbb{R}, \operatorname{Fin
 
 Negating the vector negates its Bloch matrix.
 
-**Theorem 1.9 (B_sum).**
+**Theorem 1.8 (B_sum).**
 
 $$\forall U \in Type,\; \forall s \in \operatorname{Finset}\left(U\right),\; \forall a \in U \to \operatorname{EuclideanSpace}\left(\mathbb{R}, \operatorname{Fin}\left(3\right)\right),\; \operatorname{B}\left(\sum_{i \in s} a\left(i\right)\right) = \sum_{i \in s} \operatorname{B}\left(a\left(i\right)\right)$$
 
@@ -112,7 +100,7 @@ $$\forall U \in Type,\; \forall s \in \operatorname{Finset}\left(U\right),\; \fo
 
 The Bloch expansion commutes with finite sums.
 
-**Theorem 1.10 (norm_sq_coords).**
+**Theorem 1.9 (norm_sq_coords).**
 
 $$\forall a \in \operatorname{EuclideanSpace}\left(\mathbb{R}, \operatorname{Fin}\left(3\right)\right),\; \left\lVert a \right\rVert^{2} = a\left(0\right)^{2} + a\left(1\right)^{2} + a\left(2\right)^{2}$$
 
@@ -124,7 +112,7 @@ $$\forall a \in \operatorname{EuclideanSpace}\left(\mathbb{R}, \operatorname{Fin
 
 The squared Euclidean norm is the sum of the three coordinate squares.
 
-**Theorem 1.11 (trace_B_mul).**
+**Theorem 1.10 (trace_B_mul).**
 
 $$\forall a \in \operatorname{EuclideanSpace}\left(\mathbb{R}, \operatorname{Fin}\left(3\right)\right),\; \forall b \in \operatorname{EuclideanSpace}\left(\mathbb{R}, \operatorname{Fin}\left(3\right)\right),\; \operatorname{Matrix.trace}\left(\operatorname{B}\left(a\right) \cdot \operatorname{B}\left(b\right)\right) = (2 \cdot \operatorname{inner}\left(\mathbb{R}, a, b\right): \mathbb{C})$$
 
@@ -136,19 +124,7 @@ $$\forall a \in \operatorname{EuclideanSpace}\left(\mathbb{R}, \operatorname{Fin
 
 The trace pairing of Bloch matrices is twice the real inner product.
 
-**Definition 1.12 (scalarB).**
-
-$$\forall t \in \mathbb{R},\; \forall a \in \operatorname{EuclideanSpace}\left(\mathbb{R}, \operatorname{Fin}\left(3\right)\right),\; \operatorname{scalarB}\left(t, a\right) = ((t: \mathbb{C})) \cdot ((1: \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right))) + \operatorname{B}\left(a\right)$$
-
-*Formalization.* `D5/S3/Quantum/Measurement/FourQubitParentConstruction.scalarB` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-A scalar identity is added to the traceless Bloch matrix.
-
-**Theorem 1.13 (scalarB_sum).**
+**Theorem 1.11 (scalarB_sum).**
 
 $$\forall U \in Type,\; \forall s \in \operatorname{Finset}\left(U\right),\; \forall t \in U \to \mathbb{R},\; \forall a \in U \to \operatorname{EuclideanSpace}\left(\mathbb{R}, \operatorname{Fin}\left(3\right)\right),\; \operatorname{scalarB}\left(\sum_{j \in s} t\left(j\right), \sum_{j \in s} a\left(j\right)\right) = \sum_{j \in s} \operatorname{scalarB}\left(t\left(j\right), a\left(j\right)\right)$$
 
@@ -160,7 +136,7 @@ $$\forall U \in Type,\; \forall s \in \operatorname{Finset}\left(U\right),\; \fo
 
 Scalar and Bloch coordinates commute with finite sums.
 
-**Theorem 1.14 (scalarB_hermitian).**
+**Theorem 1.12 (scalarB_hermitian).**
 
 $$\forall t \in \mathbb{R},\; \forall a \in \operatorname{EuclideanSpace}\left(\mathbb{R}, \operatorname{Fin}\left(3\right)\right),\; \operatorname{Matrix.IsHermitian}\left(\operatorname{scalarB}\left(t, a\right)\right)$$
 
@@ -172,7 +148,7 @@ $$\forall t \in \mathbb{R},\; \forall a \in \operatorname{EuclideanSpace}\left(\
 
 Real scalar and Bloch coordinates define a Hermitian matrix.
 
-**Theorem 1.15 (hermitian_decomposition).**
+**Theorem 1.13 (hermitian_decomposition).**
 
 $$\forall A \in \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right),\; \operatorname{Matrix.IsHermitian}\left(A\right) \Rightarrow A = \operatorname{scalarB}\left(\frac{\operatorname{Complex.re}\left(\operatorname{Matrix.trace}\left(A\right)\right)}{2}, ((\frac{1}{2}: \mathbb{R})) \cdot (\operatorname{bloch}\left(A\right))\right)$$
 
@@ -184,7 +160,7 @@ $$\forall A \in \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \op
 
 Every Hermitian two by two matrix is reconstructed from its real trace and Bloch coordinates.
 
-**Theorem 1.16 (half_scalarB_double).**
+**Theorem 1.14 (half_scalarB_double).**
 
 $$\forall t \in \mathbb{R},\; \forall a \in \operatorname{EuclideanSpace}\left(\mathbb{R}, \operatorname{Fin}\left(3\right)\right),\; ((\frac{1}{2}: \mathbb{C})) \cdot (\operatorname{scalarB}\left(2 \cdot t, ((2: \mathbb{R})) \cdot (a)\right)) = \operatorname{scalarB}\left(t, a\right)$$
 
@@ -196,7 +172,7 @@ $$\forall t \in \mathbb{R},\; \forall a \in \operatorname{EuclideanSpace}\left(\
 
 Doubling both coordinates and multiplying the matrix by one half gives the original matrix.
 
-**Theorem 1.17 (half_scalarB_complement).**
+**Theorem 1.15 (half_scalarB_complement).**
 
 $$\forall t \in \mathbb{R},\; \forall a \in \operatorname{EuclideanSpace}\left(\mathbb{R}, \operatorname{Fin}\left(3\right)\right),\; ((\frac{1}{2}: \mathbb{C})) \cdot (\operatorname{scalarB}\left(2 - t, -a\right)) = (1: \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right)) - ((\frac{1}{2}: \mathbb{C})) \cdot (\operatorname{scalarB}\left(t, a\right))$$
 
@@ -208,7 +184,7 @@ $$\forall t \in \mathbb{R},\; \forall a \in \operatorname{EuclideanSpace}\left(\
 
 The complementary effect negates the Bloch vector and replaces the scalar by two minus that scalar.
 
-**Theorem 1.18 (scalarB_posSemidef_iff).**
+**Theorem 1.16 (scalarB_posSemidef_iff).**
 
 $$\forall t \in \mathbb{R},\; \forall a \in \operatorname{EuclideanSpace}\left(\mathbb{R}, \operatorname{Fin}\left(3\right)\right),\; \operatorname{Matrix.PosSemidef}\left(\operatorname{scalarB}\left(t, a\right)\right) \Leftrightarrow \left\lVert a \right\rVert \le t$$
 
@@ -220,7 +196,7 @@ $$\forall t \in \mathbb{R},\; \forall a \in \operatorname{EuclideanSpace}\left(\
 
 The determinant and diagonal entries give the necessary bound. At the boundary, the square identity expresses the matrix as a positive multiple of its conjugate-transpose square; adding a nonnegative scalar identity yields sufficiency.
 
-**Theorem 1.19 (half_scalarB_posSemidef_iff).**
+**Theorem 1.17 (half_scalarB_posSemidef_iff).**
 
 $$\forall t \in \mathbb{R},\; \forall a \in \operatorname{EuclideanSpace}\left(\mathbb{R}, \operatorname{Fin}\left(3\right)\right),\; \operatorname{Matrix.PosSemidef}\left(((\frac{1}{2}: \mathbb{C})) \cdot (\operatorname{scalarB}\left(t, a\right))\right) \Leftrightarrow \left\lVert a \right\rVert \le t$$
 
@@ -232,7 +208,7 @@ $$\forall t \in \mathbb{R},\; \forall a \in \operatorname{EuclideanSpace}\left(\
 
 Multiplication by the positive scalar 1/2 preserves the positivity criterion.
 
-**Theorem 1.20 (endpoint_mem_Icc).**
+**Theorem 1.18 (endpoint_mem_Icc).**
 
 $$endpoint \in \operatorname{Set.Icc}\left(0, 1\right)$$
 
@@ -244,7 +220,7 @@ $$endpoint \in \operatorname{Set.Icc}\left(0, 1\right)$$
 
 The sharp endpoint lies in the permitted retention interval.
 
-**Theorem 1.21 (compatible_of_parent).**
+**Theorem 1.19 (compatible_of_parent).**
 
 $$\forall E \in \operatorname{Fin}\left(4\right) \to \left(Bool \to \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right)\right),\; \forall J \in \left(\operatorname{Fin}\left(4\right) \to Bool\right) \to \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right),\; \operatorname{IsPOVM}\left(J\right) \Rightarrow \left(\left(\forall i \in \operatorname{Fin}\left(4\right),\; \forall b \in Bool,\; E\left(i, b\right) = \sum_{(e: \operatorname{Fin}\left(4\right) \to Bool), e\left(i\right) = b} J\left(e\right)\right) \Rightarrow \operatorname{Compatible4}\left(E\right)\right)$$
 
@@ -256,7 +232,7 @@ $$\forall E \in \operatorname{Fin}\left(4\right) \to \left(Bool \to \operatornam
 
 A POVM with these marginal sums establishes compatibility.
 
-**Theorem 1.22 (all_povms_compatible).**
+**Theorem 1.20 (all_povms_compatible).**
 
 $$\forall E \in \operatorname{Fin}\left(4\right) \to \left(Bool \to \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right)\right),\; \left(\forall i \in \operatorname{Fin}\left(4\right),\; \operatorname{IsPOVM}\left(E\left(i\right)\right)\right) \Rightarrow \operatorname{Compatible4}\left(\operatorname{noisy}\left(endpoint, E\right)\right)$$
 
@@ -270,7 +246,6 @@ A compact convex sign decomposition follows from the four-vector inequality and 
 
 ## References
 
-- Truth anchor: `D5/S3/Quantum/Measurement/FourQubitParentConstruction.B`
 - Truth anchor: `D5/S3/Quantum/Measurement/FourQubitParentConstruction.B_formula`
 - Truth anchor: `D5/S3/Quantum/Measurement/FourQubitParentConstruction.B_neg`
 - Truth anchor: `D5/S3/Quantum/Measurement/FourQubitParentConstruction.B_real_smul`
@@ -287,11 +262,11 @@ A compact convex sign decomposition follows from the four-vector inequality and 
 - Truth anchor: `D5/S3/Quantum/Measurement/FourQubitParentConstruction.hermitian_decomposition`
 - Truth anchor: `D5/S3/Quantum/Measurement/FourQubitParentConstruction.noisy`
 - Truth anchor: `D5/S3/Quantum/Measurement/FourQubitParentConstruction.norm_sq_coords`
-- Truth anchor: `D5/S3/Quantum/Measurement/FourQubitParentConstruction.scalarB`
 - Truth anchor: `D5/S3/Quantum/Measurement/FourQubitParentConstruction.scalarB_hermitian`
 - Truth anchor: `D5/S3/Quantum/Measurement/FourQubitParentConstruction.scalarB_posSemidef_iff`
 - Truth anchor: `D5/S3/Quantum/Measurement/FourQubitParentConstruction.scalarB_sum`
 - Truth anchor: `D5/S3/Quantum/Measurement/FourQubitParentConstruction.trace_B_mul`
 - Dependency: [D5/S3/Geometry/FourVectorSignSumBound](../../Geometry/FourVectorSignSumBound.md)
 - Dependency: [D5/S3/Quantum/Information/ActualPureQubitGeometry](../Information/ActualPureQubitGeometry.md)
+- Dependency: [D5/S3/Quantum/Measurement/Bloch/QubitBloch](Bloch/QubitBloch.md)
 - Dependency: [D5/S3/Quantum/QuantumChannels/ConcealmentKernelNecessityRefutation](../QuantumChannels/ConcealmentKernelNecessityRefutation.md)

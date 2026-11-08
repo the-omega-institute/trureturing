@@ -1,0 +1,56 @@
+using static StrataLint.Scribe.DefinitionDsl;
+
+namespace StrataLint.Scribe.Blueprint.D5.S0.Certificates.Quandles;
+
+internal sealed class BraidColoringTransportDocument : IScribeDocumentDefinition
+{
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Rack crossings give invertible coloring transport and satisfy the Yang--Baxter relation.",
+        H("Braid Coloring Transport"),
+        Blocks(
+            Describe.Lean(DescribeId.Create("braid-coloring-transport-crossing"),
+                DeclarationHandle.Create("D5/S0/Certificates/Quandles/BraidColoringTransport.crossing"),
+                H("Rack crossing"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The local crossing sends a pair of rack colors to the acted color and the over-crossing color."))),
+                DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("braid-coloring-transport-crossing-inv"),
+                DeclarationHandle.Create("D5/S0/Certificates/Quandles/BraidColoringTransport.crossingInv"),
+                H("Inverse rack crossing"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The inverse transport uses the rack inverse action and recovers the two boundary colors."))),
+                DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("braid-coloring-transport-crossing-equiv"),
+                DeclarationHandle.Create("D5/S0/Certificates/Quandles/BraidColoringTransport.crossingEquiv"),
+                H("Crossing equivalence"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The crossing and its inverse form an equivalence of the two-color boundary space."))),
+                DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("braid-coloring-transport-crossing-equiv-apply"),
+                DeclarationHandle.Create("D5/S0/Certificates/Quandles/BraidColoringTransport.crossingEquiv_apply"),
+                H("Crossing equivalence evaluation"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Evaluating the bundled equivalence is the rack crossing map."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("braid-coloring-transport-crossing-inv-crossing"),
+                DeclarationHandle.Create("D5/S0/Certificates/Quandles/BraidColoringTransport.crossingInv_crossing"),
+                H("Inverse after crossing"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Applying inverse transport after a crossing returns the original pair."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("braid-coloring-transport-crossing-crossing-inv"),
+                DeclarationHandle.Create("D5/S0/Certificates/Quandles/BraidColoringTransport.crossing_crossingInv"),
+                H("Crossing after inverse"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Applying the crossing after inverse transport returns the original pair."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("braid-coloring-transport-yang-baxter"),
+                DeclarationHandle.Create("D5/S0/Certificates/Quandles/BraidColoringTransport.crossing_yang_baxter"),
+                H("Yang--Baxter transport"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Three successive rack crossings obey the Yang--Baxter relation, by self-distributivity."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("braid-coloring-transport-crossing-card"),
+                DeclarationHandle.Create("D5/S0/Certificates/Quandles/BraidColoringTransport.crossing_card_bijective"),
+                H("Crossing preserves finite cardinality"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For a finite rack, the crossing is a bijection of the finite pair space and therefore preserves its cardinality."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("braid-coloring-transport-crossing-equiv-symm-apply"),
+                DeclarationHandle.Create("D5/S0/Certificates/Quandles/BraidColoringTransport.crossingEquiv_symm_apply"),
+                H("Inverse equivalence evaluation"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Evaluating the inverse of the bundled equivalence is the inverse rack crossing map."))),
+                DescribeRole.Theorem))));
+}

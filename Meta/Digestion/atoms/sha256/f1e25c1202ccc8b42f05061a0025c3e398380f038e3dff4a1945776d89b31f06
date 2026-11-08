@@ -1,0 +1,18 @@
+**Corollary 12.1 (conditional positive-response macroscopic selection).** If the fixed admitted datum satisfies $C_{\rm resp}>0$, then for every prescribed sequence $s_n\downarrow0$ and every actual normalized complex ground-state choice in $D(S)$,
+
+$$
+\begin{aligned}
+E_s&=e_Cg_s^2+o(g_s^2)
+    =\chi_c^2e_Cs^6+o(s^6),
+&\epsilon_c(s)&=\chi_c^2e_Cs^8+o(s^8),\\
+r_s&\longrightarrow\frac{\chi_c^2\beta_C^2}{4a},
+&\inf_\theta\|\mathcal D_{g_s}\psi_s-e^{i\theta}\phi h_C\|_2
+ &\longrightarrow0.
+\end{aligned}
+\tag{12.1}
+$$
+
+The same conclusions hold on any actual weak-zero subsequence at $C_{\rm resp}=0$, without asserting that all, or any, actual choices have such a subsequence.
+
+Proof. For positive response Theorem 6.1 supplies microscopic weak zero for every such actual sequence and choice. Apply Theorem 10.2. The identity $\epsilon_c(s)=s^2E_s$ gives its stated coefficient. At response zero, apply Theorem 10.2 only on the specified weak-zero subsequence. $\square$
+

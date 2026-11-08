@@ -1,0 +1,35 @@
+**Definition 155.1 (the original full-law consumer and the calibrated fiber).** Retain the complete telescope of Definitions 134.1, 135.1 and 154.1, including all inherited endpoint, source and analytic suppliers of Appendix II §§115–117, 123–125 and 133. Thus $\theta=(a,\eta,d,b)$ ranges over every original finite $a,\eta,d>0$ and every permitted everywhere Borel representative $b$ of $g_d$ satisfying $0<b\le M$. The original product on $G=H^1\times\mathbb R$, raw Haar measure $\mu$, source $e$, unit-source field $L\Gamma=\delta_e$, coefficient-one $w_*$, coefficient-positive normalized $h$, actual full self-adjoint endpoint with selector $A_{\rm src}=\rho C_{\rm src}$, and full conservative source-inclusive $K$ are unchanged. Keep
+
+$$
+\begin{gathered}
+m=h^2\mu,\qquad T_s=e^{-sK},\qquad P=T_d,\qquad
+ g_j=P^jg=g_{(2+j)d}\ (j=0,1,2),\qquad g=g_{2d},\\
+M=1+\|g_d\|_\infty,\qquad c=(4M)^{-1},\qquad p=\tfrac14,\\
+f_3=cb,\qquad f_B=p,\qquad f_0=f_1=(\tfrac34-cb)/2,\\
+\mathcal C(u,v,w)=\int_GguP(vPw)\,dm,\qquad
+\Phi_3(u)=(\mathcal C(u_y,u_z,u_w))_{y,z,w\in\mathcal L},\qquad
+\Delta(u)=\Phi_3(u)-\Phi_3(f),\quad \mathcal L=\{0,1,3,B\}.
+\end{gathered}
+\tag{155.1}
+$$
+
+The diffusion starts at the original $e$, with source law $g_{s+r}=T_rg_s$, epochs $2d,3d,4d$, and the same prescribed $f$ at all three epochs with conditionally independent fresh read noises. For a whole-$G$ pointwise Borel partition $D$, write $\Delta(D)=\Delta(\mathbf1_D)$ and $r(D)=\Delta(D)_{BB3}$. Its terminal factors are always its own $P\mathbf1_{D_w}$. Put
+
+$$
+\mathscr F_{154}(\theta)
+ =\{D:\ D\text{ is such a partition and }
+             \mathcal H_{43}(\mathbf1_D)=\mathcal H_{43}(f)\}.
+\tag{155.2}
+$$
+
+By the complement identities in 154.F, membership means all twelve original source marginals, every ordered pair law at each pair of epochs, all six permutations of $013$, and BBB are exact. The governing universal target remains
+
+$$
+\forall\theta\quad F_{64}(\theta),\qquad
+F_{64}(\theta):\ \exists D\text{ one whole-}G
+ \text{ pointwise Borel partition with }\Delta(D)=0.
+\tag{155.3}
+$$
+
+For two actual partitions let $A(D,D')$ be the Borel set where their labels differ. Set $G_0=\|g\|_\infty<\infty$; source propagation and Markov contraction give $\|g_j\|_\infty\le G_0$ for $j=0,1,2$.
+

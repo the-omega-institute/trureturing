@@ -1,0 +1,22 @@
+**定义 379.1（原子对的统一关系与唯一完整候选）。** 分别固定 371.1–371.2 的完整 $B$ 与完整 $\mathsf B_{\rm cl}$，任一记为 $B_*$。同一原 $\Omega,q,D,L,\circ$、原菜单、预选 $t_0$ 和同一原 $\sigma_{t_0}$ 保持。$\operatorname{Prim}(E)$ 表示原 Jordan 代数的非零不可分幂等元集合，不可分意为不能拆成两个非零正交幂等元之和；这是由原乘法和单位定义的整个数学集合，不是一份所选框架，也不赋予其实际准备或操作身份。
+
+对每个原选中对象 $\operatorname{rank}E_X>p_*$，只要求
+
+$$
+\boxed{\mathsf F_{\rm prph}^{>}:\quad
+D^X(e,p)\in E_1(c)\cap\{v:q_X(e+p,v)=0\},\quad
+c=\operatorname{supp}(e+p),\quad
+(e,p)\in\operatorname{Prim}(E_X)^2.}
+\tag{379.1}
+$$
+
+这里 $E_1(c)=Q_cE_X$、$Q_c=2L_c^2-L_c$，管整个支持面。量词包含 $e=p$、全部有序跨中心对及实际联合中的全部数学 primitive。唯一完整候选是
+
+$$
+\boxed{\mathsf C_{\rm prph}(B_*)
+:=B_*+\mathsf F_{\rm prph}^{>}+\sigma_{t_0}.}
+\tag{379.2}
+$$
+
+$\mathsf F_{\rm fsph}^{>}$、$\mathsf G_{0h}$ 及固定谱权重的自比较不另列为输入。原右单位 $D(a,u)=0$ 仍由完整背景的母卷 30.1／67.3 独立供应。新增关系本身不选择框架、重叠角、谱比、中心迹或匹配资料；完整候选仍保留原 sigma 所用的菜单与预选 primitive、半重叠标签。
+

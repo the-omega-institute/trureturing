@@ -1,0 +1,20 @@
+**定义 14.1（同一原载体上的固定核类）。** 沿用定义 1.1–1.4 的原 $E,\mathcal K,K_j,\mathscr B_j,M_i,N_w$ 和 ready。由 II (100.2)，代码的配置集合恰为 $E_{\mathcal C}=\{r\in E:b_7(r)=1\}$；其 $26$ 个坐标及补集的 $63$ 个坐标全部保留。取一个与向量、门、字及历史无关的列随机核
+
+$$
+L(q\mid r)\ge0,\qquad \sum_{q\in E}L(q\mid r)=1,\qquad
+\Pi^L_q(z)=\frac{\sum_{r\in E}L(q\mid r)|z_r|^2}{\|z\|^2}.
+\tag{14.1}
+$$
+
+记 $\mathscr L_{\mathcal C}$ 为满足下列条件的全部这样的核：$\Pi^L$ 在整个非零复向量域上满足原全部分量的 (1.3)，且
+
+$$
+\begin{aligned}
+L(q\mid r)&=\delta_{qr} &&(r\in E_{\mathcal C},\ q\in E),\\
+L(q\mid r)&=0 &&(b_7(q)\ne b_7(r)).
+\end{aligned}
+\tag{14.2}
+$$
+
+第二行同时保留代码与补空间的成员身份，不能只给代码输入上的第一行。这里不先假定细支撑、记录位保持、逐位删除或两位独立；二次对角形式及代码校准是这个比较类明确的前件，不是由未知原响应自动取得的性质。一般有限核模糊化仅是成熟表示工具：在 [Ali–Carmeli–Heinosaari–Toigo, *Commutative POVMs and Fuzzy Observables*, arXiv:0903.0523v1, §5 Definition 2、(13)–(14)](https://arxiv.org/html/0903.0523v1#S5) 中取两个结果空间均为原有限 $E$、锐利效果 $P_r=|e_r\rangle\langle e_r|$、$\mu(r)(A)=\sum_{q\in A}L(q\mid r)$，便有数学效果 $F_q^L=\sum_rL(q\mid r)P_r$ 及 (14.1)。这份表示不供应原物理探测器、随机化操作、准备或过程。
+

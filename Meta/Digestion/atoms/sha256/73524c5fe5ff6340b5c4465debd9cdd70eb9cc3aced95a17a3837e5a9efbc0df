@@ -1,0 +1,11 @@
+**约定 C-75.1（经典中间结果的准确归属）。** 本组椭圆、拼接和相位应用使用以下来源，所引结论不作为新的独立经典定理发表。
+
+| 来源 | 本文实际消费的范围 |
+| --- | --- |
+| Dirk Hasenclever、Markus Scholz，*Comparing measures of association in 2x2 probability tables*，[arXiv:1302.6161v1](https://arxiv.org/abs/1302.6161v1)，Proposition 1、§3.1、Proposition 4 | 正二元概率表的行列重加权轨道及平衡代表；$\Omega$ 完整分类；Yule's Y 为 $(\sqrt\Omega-1)/(\sqrt\Omega+1)$，Yule's Q 为 $(\Omega-1)/(\Omega+1)$；Pearson 在对角对称平衡代表上与 Yule's Y 相等。用于 C-67 的协方差椭圆构造，不把均值 $Y$ 与 Yule's Y 混用，不将平衡充分条件误作所有相等情形的必要条件。 |
+| Samuel N. Cohen、Eliana Fausti，*Hyperbolic contractivity and the Hilbert metric on probability measures*，[arXiv:2309.02413v2](https://arxiv.org/abs/2309.02413v2)，Theorem 2.4、Proposition 4.1 | Theorem 2.4 的 Birkhoff 经典 Hilbert 收缩系数为 $\tanh(\Delta/4)$；Proposition 4.1 给非负矩阵系数的交叉比表达。当前矩阵四格严格正、二维直径为 $|J|$，C-71 连接此系数与规范椭圆轴比并保留完整标量证明。该文较强的双曲距离结果不被说成本章的新收缩原理。 |
+| William K. Wootters，*Entanglement of Formation of an Arbitrary State of Two Qubits*，[arXiv:quant-ph/9709029v2](https://arxiv.org/abs/quant-ph/9709029v2)，式 (2) | 只用明确二部纯态的约化熵定义；在 C-73 的条件底面 $\mathbb C^2\otimes\mathbb C^2$ 上比较熵零与一。该文的一般混态纠缠形成公式不负责从经典概率供应相干、张量分解或物理子系统。 |
+| 原卷 C-12.2、C-12.3、C-13.2–C-14.3 | 四角相位敏感行列式、同概率的乘积与最大纠缠例子、整周期位置相位商及水平度量。C-73 明确复用 $B_\pm$，C-74 保留旧角到新角的负号及两倍度量尺度，不把这些例子与几何重新作为独立发现。 |
+| 本卷 C-60.1–C-61.3、C-64.1–C-65.2 | 实际外部条件总权进入五律，外端活动只计一次；固定均值的对数四角坐标；串并联与连通图抵消；均匀环外部 $A^{n-2}$ 的 Fibonacci 闭式。C-67、C-69、C-72 将这些已有供应连接到规范椭圆，所有来源、端点及条件事件保持相同。 |
+| 《辛预测完成》§35.3–§35.7、§35.14 | 明确振幅符号、$\mathbb{CP}^1$ 辛面积 $2\pi$ 的尺度、真正的固定矩 $T^3$ 约化、正内部度量、局部复对数与事件条件化的区别。精确参数字典为式 (C74.1)，椭圆换元为式 (C74.4)。 |
+
