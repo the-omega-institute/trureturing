@@ -9,8 +9,6 @@
 module
 
 public import D5.S3.Topology.JBAlgebra
-import all D5.S3.Topology.JBAlgebra
-public import Batteries.Tactic.OpenPrivate
 public import Mathlib.Analysis.Normed.Operator.Banach
 public import Mathlib.Analysis.Normed.Ring.Units
 public import Mathlib.Analysis.SpecialFunctions.Pow.Real
@@ -28,7 +26,6 @@ set_option maxHeartbeats 0
 set_option linter.unusedSimpArgs false
 
 open D5.S3.Topology.JBAlgebra
-open private bracket polarized from D5.S3.Topology.JBAlgebra
 
 namespace D5.S3.Topology.JBPositiveShift
 variable {X : Type*} [NormedAddCommGroup X] [NormedSpace ℝ X]
