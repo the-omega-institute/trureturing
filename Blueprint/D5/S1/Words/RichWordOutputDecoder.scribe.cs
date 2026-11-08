@@ -14,9 +14,9 @@ internal sealed class RichWordOutputDecoderDocument : IScribeDocumentDefinition
             Entry("marked_core_recovery", "core", "All-length source reconstruction", Core(),
                 "An occurrence of eta(w)a at the actual boundary E(j) reconstructs the whole source window w. The induction compares the next target marker with the next actual boundary. Either unequal distance would place a marker inside a marker-free image tail. Equality of the actual intervening words then identifies the source letter by dictionary injectivity; equal lengths alone do not identify letters. The empty core is included."),
             Entry("occurrence_decoder", "decoder", "The exact filtered occurrence decoder", Decoder(),
-                "Left(s,j) means s is empty, or j is positive and s is a suffix of q(u(j-1)). Right(t,w,j) means t is a prefix of q(u(j+length(w))). Both decorations are marker-free. The first marker determines a unique source index, the core reconstruction determines w, and the two actual boundary tails determine the filters. Empty s permits the origin. An empty core has coincident first and last highlighted markers. Adjacent markers from eta(0)=a and overlapping windows are retained."),
+                "markerFree(z) means 0 is not a member of z. Left(s,j) means s is empty, or j is positive and s is a suffix of q(u(j-1)). Right(t,w,j) means t is a prefix of q(u(j+length(w))). Both decorations are marker-free. The first marker determines a unique source index, the core reconstruction determines w, and the two actual boundary tails determine the filters. Empty s permits the origin. An empty core has coincident first and last highlighted markers. Adjacent markers from eta(0)=a and overlapping windows are retained."),
             Entry("Transport", "transport", "Exact transport and attained minimum", TransportFormula(),
-                "The proposition records all output occurrences as the entire source occurrence set, exact consecutive-pair correspondence, the weighted length of every corresponding return interval, and attainment plus universal domination of the minimum output gap. Consecutive means strictly increasing starts with no intervening occurrence, with no nonoverlap condition. W(v) is the sum of image-length(c) times v(c) over all seven letters. Source returnWord(j,k) is the actual interval u[j,k). The return gap has no added decoration length.", DescribeRole.Definition),
+                "The proposition records all output occurrences as the entire source occurrence set, exact consecutive-pair correspondence, the weighted length of every corresponding return interval, and attainment plus universal domination of the minimum output gap. decorated(w,s,t) is s eta(w) a t. sourceOcc(w,j) means the actual source window u[j,j+length(w)) equals w. sourceConsecutive is the same source predicate as RichWordTypeIOccurrence.Consecutive. Consecutive means strictly increasing starts with no intervening occurrence, with no nonoverlap condition. W(v) is the sum of image-length(c) times v(c) over all seven letters. Source returnWord(j,k) is the actual interval u[j,k). The return gap has no added decoration length.", DescribeRole.Definition),
             Entry("typeI_transport", "typei", "Every original Type-I index", Family(false),
                 "For every n >= 0, use any suffix s of r(n) and prefix t of r(n), where the six phase values are (empty,empty,empty,c,cc,ccdcc). Frozen typeI_not_at_origin and the exact witnessed extension sets supply both actual neighbor letters in {n mod 6,6}; both admit r(n). Every source occurrence is therefore retained. The frozen attained componentwise minimum M^n e(6) transfers to the least output return length W(M^n e(6))."),
             Entry("typeII_transport", "typeii", "Original Type-II indices at least six", Family(true),
@@ -28,17 +28,17 @@ internal sealed class RichWordOutputDecoderDocument : IScribeDocumentDefinition
         DescribeId.Create("output-"+id), DeclarationHandle.Create(Prefix+name), H(title),
         StatementSource.FromAuthor(F.Disp(body)), AssessedProvenance.FromRepo(),
         Blocks(Paragraph(Text(prose))), role);
-    private static Formula C(string name, params Formula[] xs) => new Formula.Apply(
-        Seq(Operatorname,Grp(F.Id(name))),[..xs]);
+    private static Formula C(string name, params Formula[] xs) => xs.Length==0
+        ? Seq(Operatorname,Grp(F.Id(name)))
+        : new Formula.Apply(Seq(Operatorname,Grp(F.Id(name))),[..xs]);
     private static Formula N() => Seq(Mathbb,Grp(F.Id("N")));
     private static Formula I() => C("List",C("Fin",D(7)));
     private static Formula O() => C("List",C("Fin",D(4)));
     private static Formula All(string name, Formula type, Formula body) =>
-        Seq(Forall,Sp,F.Id(name),Colon,Sp,type,Comma,Sp,body);
+        new Formula.Bind(FormulaQuantifier.ForAll,FormulaIdentifier.Create(name),type,body);
     private static Formula Ex(string name, Formula type, Formula body) =>
-        Seq(Exists,Sp,F.Id(name),Colon,Sp,type,Comma,Sp,body);
+        new Formula.Bind(FormulaQuantifier.Exists,FormulaIdentifier.Create(name),type,body);
     private static Formula Eq(Formula a, Formula b) => new Formula.Relation(a,FormulaRelationOperator.Equal,b);
-    private static Formula Lt(Formula a, Formula b) => new Formula.Relation(a,FormulaRelationOperator.LessThan,b);
     private static Formula Le(Formula a, Formula b) => new Formula.Relation(a,FormulaRelationOperator.LessThanOrEqual,b);
     private static Formula And(Formula a, Formula b) => new Formula.Logic(a,FormulaLogicOperator.And,b);
     private static Formula Imp(Formula a, Formula b) => new Formula.Logic(a,FormulaLogicOperator.Implies,b);
@@ -76,7 +76,7 @@ internal sealed class RichWordOutputDecoderDocument : IScribeDocumentDefinition
     }
     private static Formula Family(bool second)
     {
-        Formula n=F.Id("n"),s=F.Id("s"),t=F.Id("t"), minimum=C("mulVec",C("pow",C("M"),n),C("unit",D(second?0:6)));
+        Formula n=F.Id("n"),s=F.Id("s"),t=F.Id("t"), minimum=C("mulVec",C("pow",C("M"),n),C("unit",D((byte)(second?0:6))));
         Formula body=C("Transport",C(second?"typeII":"typeI",n),s,t,minimum);
         body=All("s",O(),All("t",O(),Imp(C("suffix",s,C("r",n)),Imp(C("prefix",t,C("r",n)),body))));
         return All("n",N(),second?Imp(Le(D(6),n),body):body);

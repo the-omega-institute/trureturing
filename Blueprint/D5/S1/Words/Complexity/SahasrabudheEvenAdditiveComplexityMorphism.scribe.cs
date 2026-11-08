@@ -46,7 +46,7 @@ internal sealed class SahasrabudheEvenAdditiveComplexityMorphismDocument : IScri
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
         AssessedProvenance provenance, DescribeRole role = DescribeRole.Definition,
         OpenProblemResolutionClaim? resolution = null) =>
-        Describe.Lean(DescribeId.Create("sahas-" + name.ToLowerInvariant()),
+        Describe.Lean(DescribeId.Create("sahas-" + name.ToLowerInvariant().Replace('_', '-')),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
             provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
