@@ -11,6 +11,15 @@ internal sealed class MovingEndpointVarianceDocument : IScribeDocumentDefinition
         H("Two moving endpoints"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("two-endpoint-integral-average-pow-le"),
+                DeclarationHandle.Create(Prefix + "two_endpoint_integral_average_pow_le"),
+                H("Shared even-power endpoint average"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "Let e be a positive even integer and E be locally bounded and Borel measurable. Suppose p and q are continuous on [l,r], their derivatives within the interval are at least m>0, and their images lie in [A,B]. Choose a<=b and c<=d so that [a-delta(x),b-delta(x)] lies in [c,d], where delta=q-p. If the integral of D_v(y)^e over [A,B] is at most an integrable F(v) on each averaging interval, then (b-a) times the integral of (E(q)-E(p))^e is at most 2^(e-1)/m times the sum of the integrals of F over [a,b] and [c,d]. The common-endpoint identity, the even-power sum inequality, translation, Fubini, and change of variables give this bound. Exponents two and four yield the square and fourth-moment endpoint estimates."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("two-endpoint-increment-square-le"),
                 DeclarationHandle.Create(Prefix + "two_endpoint_increment_square_le"),
                 H("The two-endpoint square estimate"),

@@ -20,23 +20,6 @@ open VarianceTransferDefs VarianceTransfer ProfileKernelDefs FourthMomentBandDef
 
 noncomputable section
 
-/-- Every natural power of a continuous moving increment is integrable on compact sets. -/
-lemma increment_pow_integrableOn {A : Type*} [TopologicalSpace A]
-    [MeasurableSpace A] [BorelSpace A] [T2Space A]
-    {μ : Measure A} [IsFiniteMeasureOnCompacts μ]
-    {E : ℝ → ℝ} (hE : LocallyBoundedMeasurable E)
-    {K : Set A} (hK : IsCompact K) {u x : A → ℝ}
-    (hu : Continuous u) (hx : Continuous x) (n : ℕ) :
-    IntegrableOn (fun p => increment E (u p) (x p) ^ n) K μ := by
-  obtain ⟨M, _, hM⟩ := bounded_increment_comp hE hK hu hx
-  apply IntegrableOn.of_bound hK.measure_lt_top
-    ((((hE.1.comp (hx.add hu).measurable).sub
-      (hE.1.comp hx.measurable)).pow_const n).aestronglyMeasurable) (M ^ n)
-  filter_upwards [ae_restrict_mem hK.measurableSet] with p hp
-  simpa only [Real.norm_eq_abs, abs_pow, Function.comp_apply, Pi.sub_apply, Pi.add_apply,
-    increment] using
-    pow_le_pow_left₀ (abs_nonneg _) (hM p hp) n
-
 private lemma comparable_fourth_bound {α θ β : ℝ}
     (hB : ValidBand α θ β) :
     ∃ C : ℝ, 0 < C ∧ ∀ {E : ℝ → ℝ} {C₄ : ℝ},
@@ -87,102 +70,6 @@ private lemma comparable_fourth_bound {α θ β : ℝ}
           (mul_nonneg h₄.1 (by positivity)))
         (pow_le_pow_left₀ hl0 hl 2) (sq_nonneg _) (by positivity [h₄.1])
     _ = _ := by ring
-
-private lemma moving_fourth_integral_le {E p p' : ℝ → ℝ}
-    (hE : LocallyBoundedMeasurable E) {l r Y : ℝ}
-    (hlr : l ≤ r) (hY : 1 ≤ Y) (hp : Continuous p)
-    (hdp : ∀ x ∈ Icc l r, HasDerivWithinAt p (p' x) (Icc l r) x)
-    (hlp : ∀ x ∈ Icc l r, 1 ≤ p' x)
-    (himage : MapsTo p (Icc l r) (Icc (1 : ℝ) Y)) (w : ℝ) :
-    (∫ x in l..r, increment E w (p x) ^ 4) ≤
-      ∫ y in (1 : ℝ)..Y, increment E w y ^ 4 := by
-  have hi := increment_pow_integrableOn (μ := volume) hE
-    (K := Icc (1 : ℝ) Y) (u := fun _ => w) isCompact_Icc continuous_const continuous_id 4
-  have hmeas : Measurable (fun y => increment E w y ^ 2) := by
-    simpa only [Function.comp_apply, Pi.sub_apply, Pi.add_apply, increment, id_eq] using
-      ((hE.1.comp (measurable_id.add_const w)).sub hE.1).pow_const 2
-  have hu : MemLp (fun y => increment E w y ^ 2) 2
-      (volume.restrict (Ioc (1 : ℝ) Y)) := by
-    apply (memLp_two_iff_integrable_sq hmeas.aestronglyMeasurable).mpr
-    simpa only [IntegrableOn, ← pow_mul, Nat.reduceMul, id_eq] using
-      hi.mono_set Ioc_subset_Icc_self
-  simpa only [← pow_mul, Nat.reduceMul] using
-    (MovingDifferenceTransfer.square_comp_le hlr hY hmeas
-      hu hp.continuousOn hdp hlp himage).2
-
-private lemma averaged_fourth_integral_le {E p p' : ℝ → ℝ}
-    (hE : LocallyBoundedMeasurable E) {l r Y a b K : ℝ}
-    (hlr : l ≤ r) (hab : a ≤ b) (hY : 1 ≤ Y) (hp : Continuous p)
-    (hdp : ∀ x ∈ Icc l r, HasDerivWithinAt p (p' x) (Icc l r) x)
-    (hlp : ∀ x ∈ Icc l r, 1 ≤ p' x)
-    (himage : MapsTo p (Icc l r) (Icc (1 : ℝ) Y))
-    (hV : ∀ w ∈ Icc a b, (∫ y in (1 : ℝ)..Y, increment E w y ^ 4) ≤ K) :
-    IntervalIntegrable (fun x => ∫ w in a..b, increment E w (p x) ^ 4) volume l r ∧
-      (∫ x in l..r, ∫ w in a..b, increment E w (p x) ^ 4) ≤ (b - a) * K := by
-  have hr : Integrable (fun z : ℝ × ℝ => increment E z.2 (p z.1) ^ 4)
-      ((volume.restrict (Ioc l r)).prod (volume.restrict (Ioc a b))) := by
-    rw [Measure.prod_restrict]
-    exact (increment_pow_integrableOn (μ := volume.prod volume) hE
-      (isCompact_Icc.prod isCompact_Icc) continuous_snd (hp.comp continuous_fst) 4).mono_set (Set.prod_mono Ioc_subset_Icc_self Ioc_subset_Icc_self)
-  constructor
-  · rw [intervalIntegrable_iff_integrableOn_Ioc_of_le hlr]
-    simpa only [IntegrableOn, intervalIntegral.integral_of_le hab] using hr.integral_prod_left
-  · simp_rw [intervalIntegral.integral_of_le hlr, intervalIntegral.integral_of_le hab]
-    rw [integral_integral_swap hr]
-    calc
-      _ ≤ ∫ _w in Ioc a b, K := by
-        apply setIntegral_mono_on hr.integral_prod_right (integrableOn_const (by simp))
-          measurableSet_Ioc
-        intro w hw
-        rw [← intervalIntegral.integral_of_le hlr]
-        exact (moving_fourth_integral_le hE hlr hY hp hdp hlp himage w).trans
-          (hV w ⟨hw.1.le, hw.2⟩)
-      _ = _ := by
-        rw [setIntegral_const, Measure.real, Real.volume_Ioc,
-          ENNReal.toReal_ofReal (sub_nonneg.mpr hab), smul_eq_mul]
-
-private lemma averaged_increment_fourth_le {E : ℝ → ℝ}
-    (hE : LocallyBoundedMeasurable E) {h L : ℝ} (hh : 0 < h)
-    (hL : L ∈ Icc (0 : ℝ) (2 * h)) (x : ℝ) :
-    h * increment E L x ^ 4 ≤
-      8 * (∫ v in (3 * h)..(4 * h), increment E v x ^ 4) +
-      8 * (∫ w in h..(4 * h), increment E w (x + L) ^ 4) := by
-  have hi (a b y : ℝ) : IntervalIntegrable (fun v => increment E v y ^ 4) volume a b :=
-    (increment_pow_integrableOn hE isCompact_uIcc
-      continuous_id continuous_const 4).intervalIntegrable
-  have hishift : IntervalIntegrable (fun v => increment E (v - L) (x + L) ^ 4)
-      volume (3 * h) (4 * h) := by
-    exact (increment_pow_integrableOn hE isCompact_uIcc
-      (continuous_id.sub continuous_const) continuous_const 4).intervalIntegrable
-  have hpoint (v : ℝ) : increment E L x ^ 4 ≤
-      8 * increment E v x ^ 4 + 8 * increment E (v - L) (x + L) ^ 4 := by
-    have hid : increment E L x = increment E v x - increment E (v - L) (x + L) := by
-      unfold increment
-      rw [show x + L + (v - L) = x + v by ring]
-      ring
-    rw [hid]
-    simpa only [sub_eq_add_neg, even_two_mul, neg_pow,
-      show (-1 : ℝ) ^ (4 : ℕ) = 1 by norm_num,
-      one_mul, show (2 : ℝ) ^ (4 - 1 : ℕ) = 8 by norm_num, mul_add] using
-      (show Even (4 : ℕ) from by decide).add_pow_le
-        (a := increment E v x) (b := -increment E (v - L) (x + L))
-  have hm := intervalIntegral.integral_mono_on (by linarith : 3 * h ≤ 4 * h)
-    (intervalIntegrable_const : IntervalIntegrable (fun _ : ℝ => increment E L x ^ 4)
-      volume (3 * h) (4 * h))
-    (((hi _ _ _).const_mul 8).add (hishift.const_mul 8)) (fun v _ => hpoint v)
-  rw [intervalIntegral.integral_const, intervalIntegral.integral_add
-    ((hi _ _ _).const_mul 8) (hishift.const_mul 8)] at hm
-  simp only [intervalIntegral.integral_const_mul, smul_eq_mul] at hm
-  have htrans : (∫ v in (3 * h)..(4 * h), increment E (v - L) (x + L) ^ 4) =
-      ∫ w in (3 * h - L)..(4 * h - L), increment E w (x + L) ^ 4 := by
-    simpa only [sub_eq_add_neg] using intervalIntegral.integral_comp_add_right
-      (fun w : ℝ => increment E w (x + L) ^ 4) (-L)
-  have hmono := intervalIntegral.integral_mono_interval (by linarith [hL.2] : h ≤ 3 * h - L)
-    (by linarith : 3 * h - L ≤ 4 * h - L)
-    (by linarith [hL.1] : 4 * h - L ≤ 4 * h)
-    (Eventually.of_forall (fun _ => (by positivity))) (hi h (4 * h) (x + L))
-  rw [htrans] at hm
-  nlinarith
 
 /-- A fixed-length fourth-moment bound controls every moving increment with parameter in `[0,1]`. -/
 theorem moving_increment_fourth_moment_bound
@@ -235,14 +122,13 @@ theorem moving_increment_fourth_moment_bound
     exact ((hasDerivAt_id x).add
       ((Real.hasDerivAt_rpow_const
         (Or.inl (by linarith [hx.1] : x ≠ 0))).const_mul s)).hasDerivWithinAt
-  obtain ⟨hi1, hb1⟩ := averaged_fourth_integral_le hE hXX
-    (by linarith : 3 * h ≤ 4 * h) (by linarith : 1 ≤ 3 * X) continuous_id
-    (fun x _ => (hasDerivAt_id x).hasDerivWithinAt) (fun _ _ => le_rfl)
-    (fun x hx => ⟨hX.trans hx.1,
-      by simpa only [id_eq] using (show x ≤ 3 * X by linarith [hx.2])⟩)
-    (fun w hw => hV w ⟨by linarith [hw.1], hw.2⟩)
-  obtain ⟨hi2, hb2⟩ := averaged_fourth_integral_le hE hXX
-    (by linarith : h ≤ 4 * h) (by linarith : 1 ≤ 3 * X) hφ hφder
+  have hav := MovingEndpointVariance.two_endpoint_integral_average_pow_le
+    (by decide : Even 4) (by decide) hE hXX
+    (a := 3 * h) (b := 4 * h) (c := h) (d := 4 * h)
+    (m := 1) (A := 1) (B := 3 * X) (p := id) (q := φ) (F := fun _ => V)
+    (by linarith) (by linarith) zero_lt_one continuous_id.continuousOn hφ.continuousOn
+    (fun x _ => (hasDerivAt_id x).hasDerivWithinAt) hφder
+    (fun _ _ => le_rfl)
     (by
       intro x hx
       have hx0 : 0 < x := hX0.trans_le hx.1
@@ -251,22 +137,25 @@ theorem moving_increment_fourth_moment_bound
       linarith)
     (by
       intro x hx
-      exact ⟨by dsimp [φ]; linarith [(hL x hx).1, hx.1],
-        by dsimp [φ]; linarith [(hL x hx).2, hx.2]⟩) hV
-  have hi : IntervalIntegrable (fun x => increment E (s * x ^ θ) x ^ 4) volume X (2 * X) :=
-    (increment_pow_integrableOn hE isCompact_uIcc
-      (continuous_const.mul hpow) continuous_id 4).intervalIntegrable
-  have hav := intervalIntegral.integral_mono_on hXX (hi.const_mul h)
-    ((hi1.const_mul 8).add (hi2.const_mul 8)) (by
+      exact ⟨⟨hX.trans hx.1, by dsimp; linarith [hx.2]⟩,
+        ⟨by dsimp [φ]; linarith [(hL x hx).1, hx.1],
+         by dsimp [φ]; linarith [(hL x hx).2, hx.2]⟩⟩)
+    (by
       intro x hx
-      exact averaged_increment_fourth_le hE hh (hL x hx) x)
-  rw [intervalIntegral.integral_const_mul,
-    intervalIntegral.integral_add (hi1.const_mul 8) (hi2.const_mul 8)] at hav
-  simp only [intervalIntegral.integral_const_mul] at hav
+      dsimp [φ]
+      constructor <;> linarith [(hL x hx).1, (hL x hx).2])
+    intervalIntegrable_const intervalIntegrable_const
+    (fun w hw => hV w ⟨by linarith [hw.1], hw.2⟩) hV
+  norm_num only [Nat.reduceSub, Nat.reducePow, div_one,
+    intervalIntegral.integral_const, smul_eq_mul] at hav
   have hb : (∫ x in X..(2 * X), increment E (s * x ^ θ) x ^ 4) ≤ 32 * V := by
     apply le_of_mul_le_mul_left (a := h) _ hh
     calc
-      _ ≤ 8 * ((4 * h - 3 * h) * V) + 8 * ((4 * h - h) * V) := by linarith
+      _ = (4 * h - 3 * h) *
+          (∫ x in X..(2 * X), (E (φ x) - E (id x)) ^ 4) := by
+        simp only [φ, id_eq, increment]
+        ring
+      _ ≤ _ := hav
       _ = _ := by ring
   simpa only [Even.pow_abs (by decide : Even (4 : ℕ)), V, h, mul_assoc] using hb
 

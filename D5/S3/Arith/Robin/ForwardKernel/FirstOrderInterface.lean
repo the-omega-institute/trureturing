@@ -257,7 +257,7 @@ lemma dyadicB_power_integrable {E : ℝ → ℝ} {θ s X : ℝ}
       (mul_pos (Real.rpow_pos_of_pos (show 0 < id x from zero_lt_one.trans hx1) _)
         (Real.log_pos hx1))).ne')
       (show id x ≠ 0 from (zero_lt_one.trans hx1).ne')
-  have hi := (FourthMomentMovingBounds.increment_pow_integrableOn
+  have hi := (VarianceTransfer.increment_pow_integrableOn
     (μ := volume) hE (K := uIcc X (2 * X))
     (u := fun x => s * x ^ θ) isCompact_uIcc
     (continuous_const.mul (Real.continuous_rpow_const hθ)) continuous_id n).intervalIntegrable

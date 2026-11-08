@@ -76,7 +76,7 @@ theorem dyadicZ_eq_weighted_integral
   field_simp [hs.ne']
   <;> simp only [mul_comm]
 
-private lemma logarithmic_factor_bounds {X x : ℝ} (hX : 4 ≤ X)
+lemma logarithmic_factor_bounds {X x : ℝ} (hX : 4 ≤ X)
     (hx : X ≤ x) (hxx : x ≤ 2 * X) :
     1 ≤ Real.sqrt (Real.log x / Real.log X) ∧
       Real.sqrt (Real.log x / Real.log X) - 1 ≤ Real.log 2 / Real.log X := by

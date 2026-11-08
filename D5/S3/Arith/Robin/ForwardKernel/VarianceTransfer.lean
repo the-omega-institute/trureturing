@@ -168,6 +168,23 @@ lemma bounded_increment_comp {α : Type*} [TopologicalSpace α]
   exact ⟨A + B, add_nonneg hA hB, fun p hp =>
     (abs_sub _ _).trans (add_le_add (hAb p hp) (hBb p hp))⟩
 
+/-- Every natural power of a continuous moving increment is integrable on compact sets. -/
+lemma increment_pow_integrableOn {A : Type*} [TopologicalSpace A]
+    [MeasurableSpace A] [BorelSpace A] [T2Space A]
+    {μ : Measure A} [IsFiniteMeasureOnCompacts μ]
+    {E : ℝ → ℝ} (hE : LocallyBoundedMeasurable E)
+    {K : Set A} (hK : IsCompact K) {u x : A → ℝ}
+    (hu : Continuous u) (hx : Continuous x) (n : ℕ) :
+    IntegrableOn (fun p => increment E (u p) (x p) ^ n) K μ := by
+  obtain ⟨M, _, hM⟩ := bounded_increment_comp hE hK hu hx
+  apply IntegrableOn.of_bound hK.measure_lt_top
+    ((((hE.1.comp (hx.add hu).measurable).sub
+      (hE.1.comp hx.measurable)).pow_const n).aestronglyMeasurable) (M ^ n)
+  filter_upwards [ae_restrict_mem hK.measurableSet] with p hp
+  simpa only [Real.norm_eq_abs, abs_pow, Function.comp_apply, Pi.sub_apply, Pi.add_apply,
+    increment] using
+    pow_le_pow_left₀ (abs_nonneg _) (hM p hp) n
+
 /-- An integrable unit profile times a fixed rescaled increment is integrable. -/
 theorem unit_increment_integrable {E g : ℝ → ℝ}
     (hE : LocallyBoundedMeasurable E) (hg : Integrable g unitMeasure)
