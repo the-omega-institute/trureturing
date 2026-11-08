@@ -84,4 +84,4 @@ The next missing general-unit inference is the original semidefinite approximati
 - Truth anchor: `D5/S3/Quantum/SpinFactor/OriginalUnitSupport.support_unit_obstruction`
 - Truth anchor: `D5/S3/Quantum/SpinFactor/OriginalUnitSupport.unit_row_closed_ball`
 - Truth anchor: `D5/S3/Quantum/SpinFactor/OriginalUnitSupport.unit_row_semidefinite`
-- Dependency: [D5/S3/Topology/OrderUnitNorm](../../Topology/OrderUnitNorm.md)
+- Dependency: [D5/S3/Topology/OrderNormSupport](../../Topology/OrderNormSupport.md)
