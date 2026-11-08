@@ -15,7 +15,6 @@ import Mathlib.Analysis.InnerProductSpace.Projection.Basic
 noncomputable section
 open scoped BigOperators InnerProductSpace
 namespace D5.S3.Quantum.SpinChains.TokenBlockLocalDefect
-set_option maxHeartbeats 800000
 
 abbrev Sites (m s : ℕ) := Fin m × Fin s
 abbrev Outside (m s : ℕ) (i : Fin m) := {u : Sites m s // u.1 ≠ i}
@@ -458,7 +457,7 @@ private lemma fiber_coercivity (m s r : ℕ) (i : Fin m) (R : Finset (Outside m 
         LinearMap.smul_apply, Module.End.one_apply, LinearMap.comp_apply,
         inner_sub_right, inner_smul_right]
       rw [(NativeJohnsonCoercivity.lower s (r-R.card)).adjoint_inner_right]
-      simp [inner_self_eq_norm_sq_to_K, Complex.mul_re, pow_two]
+      simp [inner_self_eq_norm_sq_to_K, Complex.mul_re, pow_two, sub_add_eq_add_sub]
     rw [he] at hh
     change (s : ℝ) * ‖nativeSlice m s r i R hR f -
       NativeJohnsonCoercivity.average s (r-R.card) (nativeSlice m s r i R hR f)‖^2 ≤ _ at hh
@@ -467,7 +466,8 @@ private lemma fiber_coercivity (m s r : ℕ) (i : Fin m) (R : Finset (Outside m 
   · haveI : IsEmpty (Fiber m s r i R) := not_nonempty_iff.mp hn
     have hf : f = 0 := by ext A; exact isEmptyElim A
     have ha : countingAverage m s r i R f = 0 := by ext A; exact isEmptyElim A
-    simp [hf, ha]
+    rw [ha, hf, map_zero]
+    simp
 
 /-- Physical local coercivity for arbitrary complex states, all ranks, and every outside set. -/
 theorem result (m s r : ℕ) (i : Fin m) (f : Space m s r) :
