@@ -93,7 +93,9 @@ private theorem field_continuous (m : DoubleCentralizer ℂ C₀(X, B)) :
   obtain ⟨e, _, he⟩ := local_unit (B := B) K hK
   apply (map_continuous (m.fst e)).continuousAt.congr
   filter_upwards [hKx] with y hy
-  simpa [he y hy] using (actions m e y).1
+  have h := (actions m e y).1
+  rw [he y hy, mul_one] at h
+  exact h
 
 private theorem field_bound (m : DoubleCentralizer ℂ C₀(X, B)) (x : X) :
     ‖field m x‖ ≤ ‖m‖ := by
@@ -110,7 +112,10 @@ private def boundedField (m : DoubleCentralizer ℂ C₀(X, B)) : X →ᵇ B :=
   BoundedContinuousFunction.mkOfBound ⟨field m, field_continuous m⟩ (2 * ‖m‖)
     (fun x y => (dist_le_norm_add_norm _ _).trans <| by
       change ‖field m x‖ + ‖field m y‖ ≤ 2 * ‖m‖
-      simpa [two_mul] using add_le_add (field_bound m x) (field_bound m y))
+      calc
+        ‖field m x‖ + ‖field m y‖ ≤ ‖m‖ + ‖m‖ :=
+          add_le_add (field_bound m x) (field_bound m y)
+        _ = 2 * ‖m‖ := by ring)
 
 private def leftProduct (h : X →ᵇ B) (f : C₀(X, B)) : C₀(X, B) where
   toFun x := h x * f x
