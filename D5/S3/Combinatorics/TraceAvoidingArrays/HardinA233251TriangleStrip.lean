@@ -31,10 +31,10 @@ D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.edge_iff
 statement_id: sha256:eb164ba2a30a036eb9157c90341cc0d7664c1e26513ba1fedc8a4964a09ae84a
 D5.S3.Observer.Separation.BooleanRankThreeK4.beta
 statement_id: sha256:1abdc5f3db71567fe05de5aabbe80dddeb5ec5179e4ec7fd49fe71e500518481
-Transfer.Row: proof_shape=bind-only; consumers=Transfer.normal, Transfer.step
+Transfer.WidthRow: proof_shape=bind-only; consumers=Transfer.normal, Transfer.step
 Transfer.prior: proof_shape=bind-only; consumers=Transfer.normal, Transfer.prior_zero
 Transfer.instDecidablePrior: proof_shape=bind-only; consumers=Transfer.instDecidableNormal
-Transfer.normal: proof_shape=bind-only; consumers=Transfer.normal_cons, Transfer.Legal, normal
+Transfer.normal: proof_shape=bind-only; consumers=Transfer.normal_cons, Transfer.Legal, normal3
 Transfer.prior_zero: proof_shape=bind-only; consumers=Transfer.normal_cons
 Transfer.prior_succ: proof_shape=bind-only; consumers=Transfer.normal_cons
 Transfer.normal_cons: proof_shape=bind-only; consumers=Transfer.tail_iff, Transfer.counting_bridge
@@ -46,30 +46,30 @@ Transfer.TailGood: proof_shape=bind-only; consumers=Transfer.tail_iff, Transfer.
 Transfer.instDecidableTailGood: proof_shape=bind-only; consumers=Transfer.count
 Transfer.tail_iff: proof_shape=bind-only; consumers=Transfer.counting_bridge
 Transfer.step: proof_shape=bind-only; consumers=Transfer.v, v_eq_w
-Transfer.v: proof_shape=bind-only; consumers=Transfer.count_eq_v, v
+Transfer.v: proof_shape=bind-only; consumers=Transfer.count_eq_v, v3
 Transfer.count: proof_shape=bind-only; consumers=Transfer.count_eq_v, Transfer.counting_bridge
 Transfer.count_eq_v: proof_shape=bind-only; consumers=Transfer.counting_bridge
-Transfer.total: proof_shape=bind-only; consumers=Transfer.counting_bridge, total
-Transfer.counting_bridge: proof_shape=bind-only; consumers=counting_bridge
+Transfer.total: proof_shape=bind-only; consumers=Transfer.counting_bridge, total3
+Transfer.counting_bridge: proof_shape=bind-only; consumers=counting_bridge3
 Row: proof_shape=bind-only; consumers=rowLegal
-normal: proof_shape=bind-only; consumers=Legal
+normal3: proof_shape=bind-only; consumers=Legal
 rowLegal: proof_shape=bind-only; consumers=Legal, classCount
 bonds: proof_shape=bind-only; consumers=Legal, bonds_iff
-Legal: proof_shape=bind-only; consumers=a, counting_bridge
+Legal: proof_shape=bind-only; consumers=a, counting_bridge3
 instDecidableNormal: proof_shape=bind-only; consumers=instDecidableLegal
 instDecidableRowLegal: proof_shape=bind-only; consumers=instDecidableLegal, classCount
 instDecidableBonds: proof_shape=bind-only; consumers=instDecidableLegal
 instDecidableLegal: proof_shape=bind-only; consumers=a
-a: proof_shape=bind-only; consumers=counting_bridge, zero_count, result
+a: proof_shape=bind-only; consumers=counting_bridge3, zero_count, result
 pairs: proof_shape=bind-only; consumers=bonds_iff, classCount
 compatible: proof_shape=bind-only; consumers=bonds_iff, classCount
 instDecidableCompatible: proof_shape=bind-only; consumers=classCount
 colour_bond_iff: proof_shape=bind-only; consumers=bonds_iff, valid_next
-bonds_iff: proof_shape=bind-only; consumers=counting_bridge
+bonds_iff: proof_shape=bind-only; consumers=counting_bridge3
 instDecidableGood: proof_shape=bind-only; consumers=classCount, firstCount
-v: proof_shape=bind-only; consumers=v_eq_w
-total: proof_shape=bind-only; consumers=a_eq_w
-counting_bridge: proof_shape=bind-only; consumers=a_eq_w
+v3: proof_shape=bind-only; consumers=v_eq_w
+total3: proof_shape=bind-only; consumers=a_eq_w
+counting_bridge3: proof_shape=bind-only; consumers=a_eq_w
 Valid: proof_shape=bind-only; consumers=row_counts, initial_valid
 instDecidableValid: proof_shape=bind-only; consumers=row_counts, initial_valid
 valid_next: proof_shape=bind-only; consumers=v_eq_w
@@ -109,34 +109,34 @@ open D5.S3.Observer.Separation.BooleanRankThreeK4 (beta)
 namespace Transfer
 
 variable {k : ℕ} [NeZero k] {B : Type}
-private abbrev Row (k : ℕ) := Fin k → Fin 6
+private abbrev WidthRow (k : ℕ) := Fin k → Fin 6
 
-private def prior {n : ℕ} (f : Fin n → Row k) (i : Fin n) (j : Fin k) (d : Fin 6) : Prop :=
+private def prior {n : ℕ} (f : Fin n → WidthRow k) (i : Fin n) (j : Fin k) (d : Fin 6) : Prop :=
   ∃ r k, (r < i ∨ r = i ∧ k < j) ∧ f r k = d
 
-private instance instDecidablePrior {n : ℕ} (f : Fin n → Row k)
+private instance instDecidablePrior {n : ℕ} (f : Fin n → WidthRow k)
     (i : Fin n) (j : Fin k) (d : Fin 6) :
     Decidable (prior f i j d) := inferInstanceAs (Decidable (∃ _ _, _ ∧ _))
 
-def normal {n : ℕ} (s : Seen) (f : Fin n → Row k) : Prop :=
+def normal {n : ℕ} (s : Seen) (f : Fin n → WidthRow k) : Prop :=
   ∀ i j, ((f i j = 2 ∨ f i j = 3 ∨ f i j = 4) → s.1 = true ∨ prior f i j 1) ∧
     (f i j = 3 → s.2 = true ∨ prior f i j 2)
 
-private theorem prior_zero {n : ℕ} (c : Row k) (f : Fin n → Row k) (j : Fin k) (d : Fin 6) :
+private theorem prior_zero {n : ℕ} (c : WidthRow k) (f : Fin n → WidthRow k) (j : Fin k) (d : Fin 6) :
     prior (Fin.cons c f) 0 j d ↔ ∃ k, k < j ∧ c k = d := by
   simp [prior, Fin.exists_fin_succ]
 
-private theorem prior_succ {n : ℕ} (c : Row k) (f : Fin n → Row k)
+private theorem prior_succ {n : ℕ} (c : WidthRow k) (f : Fin n → WidthRow k)
     (i : Fin n) (j : Fin k) (d : Fin 6) :
     prior (Fin.cons c f) i.succ j d ↔ (∃ k, c k = d) ∨ prior f i j d := by
   simp [prior, Fin.exists_fin_succ]
 
-private theorem normal_cons {n : ℕ} (s : Seen) (c : Row k) (f : Fin n → Row k) :
+private theorem normal_cons {n : ℕ} (s : Seen) (c : WidthRow k) (f : Fin n → WidthRow k) :
     normal s (Fin.cons c f) ↔ good s c ∧ normal (finish s c) f := by
   simp only [normal, Fin.forall_fin_succ, Fin.cons_zero, Fin.cons_succ,
     prior_zero, prior_succ, good_iff, finish_fst, finish_snd, or_assoc]
 
-private def Legal (R : Row k → Prop) (E : Row k → Row k → Prop)
+private def Legal (R : WidthRow k → Prop) (E : WidthRow k → WidthRow k → Prop)
     {n : ℕ} (A : Fin n × Fin k → Fin 6) : Prop :=
   (∃ i : Fin n, i.val = 0 ∧ A (i, 0) = 0) ∧
     (∀ i, R (fun j => A (i, j))) ∧
@@ -144,12 +144,12 @@ private def Legal (R : Row k → Prop) (E : Row k → Row k → Prop)
       (fun j => A (⟨i.val + 1, h⟩, j))) ∧
     normal (false, false) (fun i j => A (i, j))
 
-private instance instDecidableNormal {n : ℕ} (s : Seen) (f : Fin n → Row k) :
+private instance instDecidableNormal {n : ℕ} (s : Seen) (f : Fin n → WidthRow k) :
     Decidable (normal s f) :=
   inferInstanceAs (Decidable (∀ _ _, (_ → _) ∧ (_ → _)))
 
 omit [NeZero k] in
-private instance instDecidableGood (s : Seen) (c : Row k) : Decidable (good s c) := by
+private instance instDecidableGood (s : Seen) (c : WidthRow k) : Decidable (good s c) := by
   induction k generalizing s with
   | zero => exact isTrue trivial
   | succ k ih =>
@@ -158,22 +158,22 @@ private instance instDecidableGood (s : Seen) (c : Row k) : Decidable (good s c)
     infer_instance
 
 
-variable (R : Row k → Prop) (P : Row k → B) (C : B → Row k → Prop)
+variable (R : WidthRow k → Prop) (P : WidthRow k → B) (C : B → WidthRow k → Prop)
 variable [DecidablePred R] [DecidableRel C]
-variable (E : Row k → Row k → Prop) [DecidableRel E]
+variable (E : WidthRow k → WidthRow k → Prop) [DecidableRel E]
 variable (edge : ∀ c d, E c d ↔ C (P c) d)
 
 private instance instDecidableLegal {n : ℕ} (A : Fin n × Fin k → Fin 6) :
     Decidable (Legal R E A) :=
   inferInstanceAs (Decidable (_ ∧ _ ∧ _ ∧ _))
 
-private def TailGood : {n : ℕ} → Seen → (B) → (Fin n → Row k) → Prop
+private def TailGood : {n : ℕ} → Seen → (B) → (Fin n → WidthRow k) → Prop
   | 0, _, _, _ => True
   | _ + 1, s, p, f => R (f 0) ∧ C p (f 0) ∧ good s (f 0) ∧
       TailGood (finish s (f 0)) (P (f 0)) (Fin.tail f)
 
 
-private instance instDecidableTailGood {n : ℕ} (s : Seen) (p : B) (f : Fin n → Row k) :
+private instance instDecidableTailGood {n : ℕ} (s : Seen) (p : B) (f : Fin n → WidthRow k) :
     Decidable (TailGood R P C s p f) := by
   induction n generalizing s p with
   | zero => exact isTrue trivial
@@ -184,7 +184,7 @@ private instance instDecidableTailGood {n : ℕ} (s : Seen) (p : B) (f : Fin n �
     infer_instance
 
 include edge in
-private theorem tail_iff {n : ℕ} (s : Seen) (p : B) (f : Fin n → Row k) :
+private theorem tail_iff {n : ℕ} (s : Seen) (p : B) (f : Fin n → WidthRow k) :
     TailGood R P C s p f ↔ normal s f ∧
       (∀ i, R (f i)) ∧
       (∀ (i : Fin n) (h : i.val + 1 < n), E (f i) (f ⟨i.val + 1, h⟩)) ∧
@@ -219,7 +219,7 @@ private theorem tail_iff {n : ℕ} (s : Seen) (p : B) (f : Fin n → Row k) :
     tauto
 
 def step (w : Seen → (B) → ℤ) (s : Seen) (p : B) : ℤ :=
-  ∑ c : Row k, if R c ∧ C p c ∧ good s c then
+  ∑ c : WidthRow k, if R c ∧ C p c ∧ good s c then
     w (finish s c) (P c) else 0
 
 def v : ℕ → Seen → (B) → ℤ
@@ -227,16 +227,16 @@ def v : ℕ → Seen → (B) → ℤ
   | n + 1, s, p => step R P C (v n) s p
 
 private def count (n : ℕ) (s : Seen) (p : B) : ℤ :=
-  ∑ f : Fin n → Row k, if TailGood R P C s p f then 1 else 0
+  ∑ f : Fin n → WidthRow k, if TailGood R P C s p f then 1 else 0
 
 private theorem count_eq_v (n : ℕ) : count R P C n = v R P C n := by
   induction n with
   | zero => funext s p; simp [count, TailGood, v]
   | succ n ih =>
     funext s p
-    rw [count, ← (Fin.consEquiv (fun _ : Fin (n + 1) => Row k)).sum_comp]
+    rw [count, ← (Fin.consEquiv (fun _ : Fin (n + 1) => WidthRow k)).sum_comp]
     rw [Fintype.sum_prod_type]
-    change (∑ c : Row k, ∑ f : Fin n → Row k,
+    change (∑ c : WidthRow k, ∑ f : Fin n → WidthRow k,
       if TailGood R P C s p (Fin.cons c f) then (1 : ℤ) else 0) = _
     change _ = step R P C (v R P C n) s p
     rw [← ih]
@@ -245,13 +245,13 @@ private theorem count_eq_v (n : ℕ) : count R P C n = v R P C n := by
     intro c _
     by_cases h : R c ∧ C p c ∧ good s c
     · simp [TailGood, h.1, h.2.1, h.2.2]
-    · have hn : ∀ f : Fin n → Row k, ¬ TailGood R P C s p (Fin.cons c f) := by
+    · have hn : ∀ f : Fin n → WidthRow k, ¬ TailGood R P C s p (Fin.cons c f) := by
         intro f hf
         exact h ⟨hf.1, hf.2.1, hf.2.2.1⟩
       simp [hn, h]
 
 def total (w : Seen → (B) → ℤ) : ℤ :=
-  ∑ c : Row k, if c 0 = 0 ∧ R c ∧ good (false, false) c then
+  ∑ c : WidthRow k, if c 0 = 0 ∧ R c ∧ good (false, false) c then
     w (finish (false, false) c) (P c) else 0
 
 include edge in
@@ -265,26 +265,26 @@ theorem counting_bridge (n : ℕ) :
       total R P (v R P C n) := by
   change ((Finset.univ.filter (fun A => Legal R E A)).card : ℤ) = _
   rw [Finset.natCast_card_filter]
-  let e : (Fin (n + 1) × Fin k → Fin 6) ≃ (Fin (n + 1) → Row k) :=
+  let e : (Fin (n + 1) × Fin k → Fin 6) ≃ (Fin (n + 1) → WidthRow k) :=
     { toFun := fun A i j => A (i, j)
       invFun := fun f p => f p.1 p.2
       left_inv := fun _ => rfl
       right_inv := fun _ => rfl }
   rw [← e.symm.sum_comp,
-    ← (Fin.consEquiv (fun _ : Fin (n + 1) => Row k)).sum_comp, Fintype.sum_prod_type]
+    ← (Fin.consEquiv (fun _ : Fin (n + 1) => WidthRow k)).sum_comp, Fintype.sum_prod_type]
   unfold total
   apply Finset.sum_congr rfl
   intro c _
   rw [← count_eq_v R P C]
   unfold count
-  have hl : ∀ f : Fin n → Row k,
-      Legal R E (fun p => (Fin.cons c f : Fin (n + 1) → Row k) p.1 p.2) ↔
+  have hl : ∀ f : Fin n → WidthRow k,
+      Legal R E (fun p => (Fin.cons c f : Fin (n + 1) → WidthRow k) p.1 p.2) ↔
         (c 0 = 0 ∧ R c ∧ good (false, false) c) ∧
           TailGood R P C (finish (false, false) c) (P c) f := by
     intro f
     rw [tail_iff R P C E edge, Legal, normal_cons]
     have hz : (∃ i : Fin (n + 1), i.val = 0 ∧
-        (Fin.cons c f : Fin (n + 1) → Row k) i 0 = 0) ↔ c 0 = 0 := by
+        (Fin.cons c f : Fin (n + 1) → WidthRow k) i 0 = 0) ↔ c 0 = 0 := by
       constructor
       · rintro ⟨i, hi, h⟩
         simpa only [show i = 0 from Fin.ext hi, Fin.cons_zero] using h
@@ -309,8 +309,8 @@ theorem counting_bridge (n : ℕ) :
         simpa only [edge, he, Fin.cons_succ] using hp (by omega)
       · intro i hi
         exact hb i (by omega)
-  change (∑ f : Fin n → Row k,
-    if Legal R E (fun p => (Fin.cons c f : Fin (n + 1) → Row k) p.1 p.2) then (1 : ℤ) else 0) = _
+  change (∑ f : Fin n → WidthRow k,
+    if Legal R E (fun p => (Fin.cons c f : Fin (n + 1) → WidthRow k) p.1 p.2) then (1 : ℤ) else 0) = _
   simp_rw [hl]
   by_cases h : c 0 = 0 ∧ R c ∧ good (false, false) c <;> simp [h]
 
@@ -318,7 +318,7 @@ end Transfer
 
 abbrev Row := Fin 3 → Fin 6
 
-private abbrev normal := @Transfer.normal 3
+private abbrev normal3 := @Transfer.normal 3
 
 def rowLegal (c : Row) : Prop :=
   ∀ j : Fin 2, c j.castSucc ≠ c j.succ ∧ (c j.castSucc).val + (c j.succ).val ≠ 5
@@ -331,10 +331,10 @@ private def Legal {n : ℕ} (A : Fin n × Fin 3 → Fin 6) : Prop :=
     (∀ i, rowLegal (fun j => A (i, j))) ∧
     (∀ (i : Fin n) (h : i.val + 1 < n), bonds (fun j => A (i, j))
       (fun j => A (⟨i.val + 1, h⟩, j))) ∧
-    normal (false, false) (fun i j => A (i, j))
+    normal3 (false, false) (fun i j => A (i, j))
 
 private instance instDecidableNormal {n : ℕ} (s : Seen) (f : Fin n → Row) :
-    Decidable (normal s f) :=
+    Decidable (normal3 s f) :=
   inferInstanceAs (Decidable (∀ _ _, (_ → _) ∧ (_ → _)))
 private instance instDecidableRowLegal (c : Row) : Decidable (rowLegal c) :=
   inferInstanceAs (Decidable (∀ _, _ ∧ _))
@@ -370,10 +370,10 @@ private instance instDecidableGood (s : Seen) (c : Row) : Decidable (good s c) :
   unfold good
   infer_instance
 
-private abbrev v := Transfer.v rowLegal pairs compatible
-private abbrev total := Transfer.total rowLegal pairs
+private abbrev v3 := Transfer.v rowLegal pairs compatible
+private abbrev total3 := Transfer.total rowLegal pairs
 
-private theorem counting_bridge (n : ℕ) : (a (n + 1) : ℤ) = total (v n) := by
+private theorem counting_bridge3 (n : ℕ) : (a (n + 1) : ℤ) = total3 (v3 n) := by
   exact Transfer.counting_bridge rowLegal pairs compatible bonds bonds_iff n
 
 def Valid (s : Seen) (p : Fin 3 × Fin 3) : Prop :=
@@ -429,15 +429,15 @@ private def w : ℕ → Bool → ℤ
   | n + 1, false => 8 * w n false + 20 * w n true
 
 private theorem v_eq_w (n : ℕ) (s : Seen) (p : Fin 3 × Fin 3) (h : Valid s p) :
-    v n s p = w n s.2 := by
+    v3 n s p = w n s.2 := by
   induction n generalizing s p with
   | zero => rfl
   | succ n ih =>
-    rw [v, Transfer.v, Transfer.step]
+    rw [v3, Transfer.v, Transfer.step]
     change (∑ c : Row, if rowLegal c ∧ compatible p c ∧ good s c then
-      v n (finish s c) (pairs c) else 0) = _
+      v3 n (finish s c) (pairs c) else 0) = _
     have hs : ∀ c : Row, (if rowLegal c ∧ compatible p c ∧ good s c then
-        v n (finish s c) (pairs c) else 0) =
+        v3 n (finish s c) (pairs c) else 0) =
         (if rowLegal c ∧ compatible p c ∧ good s c ∧ (finish s c).2 = true
           then (1 : ℤ) else 0) * w n true +
         (if rowLegal c ∧ compatible p c ∧ good s c ∧ (finish s c).2 = false
@@ -459,11 +459,11 @@ private theorem v_eq_w (n : ℕ) (s : Seen) (p : Fin 3 × Fin 3) (h : Valid s p)
     cases hb : s.2 <;> simp [hb, w] <;> ring
 
 private theorem a_eq_w (n : ℕ) : (a (n + 1) : ℤ) = 2 * w n false + w n true := by
-  rw [counting_bridge, total, Transfer.total]
+  rw [counting_bridge3, total3, Transfer.total]
   change (∑ c : Row, if c 0 = 0 ∧ rowLegal c ∧ good (false, false) c then
-    v n (finish (false, false) c) (pairs c) else 0) = _
+    v3 n (finish (false, false) c) (pairs c) else 0) = _
   have hs : ∀ c : Row, (if c 0 = 0 ∧ rowLegal c ∧ good (false, false) c then
-      v n (finish (false, false) c) (pairs c) else 0) =
+      v3 n (finish (false, false) c) (pairs c) else 0) =
       (if c 0 = 0 ∧ rowLegal c ∧ good (false, false) c ∧
         (finish (false, false) c).2 = true then (1 : ℤ) else 0) * w n true +
       (if c 0 = 0 ∧ rowLegal c ∧ good (false, false) c ∧

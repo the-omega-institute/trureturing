@@ -197,7 +197,9 @@ internal sealed class HardinA233253TriangleStripDocument : IScribeDocumentDefini
         i == 0 ? new[] { Word(part) } : new[] { Dot, Word(part) }).ToArray());
     private static Formula Word(string name) => Seq(Operatorname, Grp(V(name)));
     private static Formula V(string name) => F.Id(name);
-    private static Formula Num(int n) => D(n.ToString().Select(c => (byte)(c - '0')).ToArray());
+    private static Formula Num(int n) =>
+        D(n.ToString(System.Globalization.CultureInfo.InvariantCulture)
+            .Select(c => (byte)(c - '0')).ToArray());
     private static Formula Fin(byte n) => Call("Fin", Num(n));
     private static Formula Index(byte n, byte bound) => Typed(Num(n), Fin(bound));
     private static Formula App(Formula f, params Formula[] args) =>

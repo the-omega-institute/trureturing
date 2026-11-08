@@ -156,12 +156,12 @@ internal sealed class HardinA233251TriangleStripDocument : IScribeDocumentDefini
         var zero = Parenthesized(Seq(D(0), Colon, Sp, ApplyName("Fin", V("k"))));
         var colourZero = Parenthesized(Seq(D(0), Colon, Sp, Fin(6)));
         var condition = And(Eq(App(c, zero), colourZero), And(App(V("R"), c), Good(s, c)));
+        var sum = SumOver("c", RowType(), Conditional(condition,
+            App(V("w"), Finish(s, c), App(V("P"), c)), Cast(D(0))));
+        var identity = Eq(TransferCall("total", V("R"), V("P"), V("w")), sum);
         return All("k", NatType(), PositiveWidth(All("B", Qualified("Type"),
             All("R", Arrow(RowType(), Qualified("Prop")), All("P", Arrow(RowType(), V("B")),
-            Instance("DecidablePred", V("R"),
-            All("w", WeightType(), Eq(TransferCall("total", V("R"), V("P"), V("w")),
-                SumOver("c", RowType(), Conditional(condition,
-                    App(V("w"), Finish(s, c), App(V("P"), c)), Cast(D(0)))))))))));
+            Instance("DecidablePred", V("R"), All("w", WeightType(), identity)))))));
     }
     private static Formula TransferBridgeFormula()
     {
