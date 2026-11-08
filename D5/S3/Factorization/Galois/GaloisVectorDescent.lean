@@ -4,9 +4,10 @@
    mirror-E: none(waiver:algebraically-proved)
    anchors: []
    utility: none
-   digest: Arbitrary-dimensional semilinear Galois vector spaces have invariant bases and canonical effective descent. -/
+   digest: Invariant bases and canonical effective descent for semilinear Galois vector spaces. -/
 
 import Mathlib.Algebra.Algebra.RestrictScalars
+import Mathlib.Algebra.Module.Submodule.Equiv
 import Mathlib.FieldTheory.Galois.IsGaloisGroup
 import Mathlib.LinearAlgebra.Basis.VectorSpace
 import Mathlib.LinearAlgebra.Basis.Submodule
@@ -141,7 +142,7 @@ private def baseSMulCommClass : SMulCommClass G K V where
 /-- The K-submodule V^G, using Mathlib's representation-invariant submodule. -/
 abbrev fixedSubmodule : Submodule K V :=
   letI : SMulCommClass G K V := baseSMulCommClass G K L V
-  (DistribMulAction.toModuleEnd K V (S := G)).invariants
+  Representation.invariants (DistribMulAction.toModuleEnd K V (S := G))
 
 /-- An invariant vector has K-valued coordinates in any fixed L-basis;
 conversely K-linear combinations of fixed basis vectors are invariant. -/
@@ -169,7 +170,7 @@ private def fixedBasis {ι : Type*} (b : Basis ι L V)
     (hb : ∀ (g : G) (i : ι), g • b i = b i) :
     Basis ι K (fixedSubmodule G K L V) :=
   (b.restrictScalars K).map
-    (Submodule.ofEq _ _ (span_fixed_basis_eq_fixedSubmodule G K L V b hb))
+    (LinearEquiv.ofEq _ _ (span_fixed_basis_eq_fixedSubmodule G K L V b hb))
 
 /-- Effective semilinear Galois vector-space descent: the canonical map
 `L ⊗[K] V^G → V`, `a ⊗ w ↦ a • (w : V)`, is an L-linear equivalence.
