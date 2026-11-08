@@ -28,14 +28,13 @@ internal sealed class PBActualOuterBudgetDocument : IScribeDocumentDefinition
     private static Formula All(string s, Formula t, Formula b) => new Formula.Bind(FormulaQuantifier.ForAll,FormulaIdentifier.Create(s),t,b);
     private static Formula Ex(string s, Formula t, Formula b) => new Formula.Bind(FormulaQuantifier.Exists,FormulaIdentifier.Create(s),t,b);
     private static Formula Eq(Formula a, Formula b) => global::StrataLint.Scribe.DefinitionDsl.Equal(a,b);
-    private static Formula Le(Formula a, Formula b) => new Formula.Relation(a,FormulaRelationOperator.LessOrEqual,b);
-    private static Formula Lt(Formula a, Formula b) => new Formula.Relation(a,FormulaRelationOperator.LessThan,b);
-    private static Formula And(Formula a, Formula b) => new Formula.Logic(a,FormulaLogicOperator.And,b);
+    private static Formula Le(Formula a, Formula b) => new Formula.Relation(a,FormulaRelationOperator.LessThanOrEqual,b);
+        private static Formula And(Formula a, Formula b) => new Formula.Logic(a,FormulaLogicOperator.And,b);
     private static Formula Imp(Formula a, Formula b) => new Formula.Logic(a,FormulaLogicOperator.Implies,b);
     private static Formula Mul(Formula a, Formula b) => global::StrataLint.Scribe.DefinitionDsl.Multiply(a,b);
     private static Formula Add(Formula a, Formula b) => global::StrataLint.Scribe.DefinitionDsl.Add(a,b);
     private static Formula Sub(Formula a, Formula b) => global::StrataLint.Scribe.DefinitionDsl.Subtract(a,b);
-    private static Formula Div(Formula a, Formula b) => new Formula.Binary(a,FormulaBinaryOperator.Divide,b);
+    private static Formula Div(Formula a, Formula b) => new Formula.Fraction(a,b);
     private static Formula Sq(Formula a) => C("pow",a,N(2));
     private static Formula Conj(params Formula[] xs) => xs.Aggregate(And);
     private static Formula Statement()

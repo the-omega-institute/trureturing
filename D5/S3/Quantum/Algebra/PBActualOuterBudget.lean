@@ -205,8 +205,7 @@ theorem actual_outer_budget [Nontrivial H]
     (hL : ∀ a ∈ L, ∀ b ∈ L, J a b ∈ L)
     (R : Readout (H := H) J u D L)
     (x y : E) (hx : x ∈ L) (hy : y ∈ L) (hd : D x y ∈ L)
-    (X Y δ λ t : ℝ) (hX : 0 < X) (hY : 0 < Y)
-    (hλ : 0 < λ) (ht : 0 < t) (htsq : t^2 = λ^2*X^2+1)
+    (X Y δ λ t : ℝ) (ht : t ≠ 0) (htsq : t^2 = λ^2*X^2+1)
     (F : Fibre R x y X Y δ) :
     let z := t • u + λ • x
     let ν := D x y - J x z
@@ -292,10 +291,14 @@ theorem actual_outer_budget [Nontrivial H]
     nlinarith [htsq, sq_nonneg X, sq_nonneg δ]
   have pp := R.p2 v (y+ν) (z+ω)
   have pm := R.p2 v (y-ν) (z-ω)
-  change reading R v (D (y+ν) (z+ω))^2 ≤ _ at pp
-  change reading R v (D (y-ν) (z-ω))^2 ≤ _ at pm
-  rw [← gram_plus] at pp
-  rw [← gram_minus] at pm
+  change reading R v (D (y+ν) (z+ω))^2 ≤
+    reading R v (J (y+ν) (y+ν)) * reading R v (J (z+ω) (z+ω)) -
+      reading R v (J (y+ν) (z+ω))^2 at pp
+  change reading R v (D (y-ν) (z-ω))^2 ≤
+    reading R v (J (y-ν) (y-ν)) * reading R v (J (z-ω) (z-ω)) -
+      reading R v (J (y-ν) (z-ω))^2 at pm
+  rw [gram_plus] at pp
+  rw [gram_minus] at pm
   have difference : reading R v (D (y+ν) (z+ω)) - reading R v (D (y-ν) (z-ω)) =
       2*λ*X^2*Y/t := by
     rw [← map_sub, hPB x y z, map_smul, map_add,
@@ -311,9 +314,9 @@ theorem actual_outer_budget [Nontrivial H]
     rw [← difference]
     nlinarith [sq_nonneg (reading R v (D (y+ν) (z+ω)) +
       reading R v (D (y-ν) (z-ω)))]
-  have bound' := (div_le_iff₀ (sq_pos_of_pos ht)).mp
+  have bound' := (div_le_iff₀ (sq_pos_iff.mpr ht)).mp
     (show (2*λ*X^2*Y)^2/t^2 ≤ 4*(X^2/t^2+δ^2) by simpa [div_pow] using bound)
-  have ht0 : t ≠ 0 := ne_of_gt ht
+  have ht0 : t ≠ 0 := ht
   field_simp at bound'
   nlinarith [htsq]
 
