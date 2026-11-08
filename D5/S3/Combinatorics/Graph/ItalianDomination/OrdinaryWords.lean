@@ -24,7 +24,7 @@ proof_shape: lineOK_gap_iff: content; escape_witness: lineOK_classify
 proof_shape: splitOn_no_separator: bind-only; escape_witness: none
 proof_shape: joinZero_eq: bind-only; escape_witness: none
 proof_shape: joinZero_split: bind-only; escape_witness: none
-proof_shape: lineOK_intercalate: bind-only; escape_witness: none
+proof_shape: lineOK_intercalate: content; escape_witness: lineOK_split_zero
 proof_shape: chosen_card: bind-only; escape_witness: none
 proof_shape: residual_card: bind-only; escape_witness: none
 proof_shape: ordinaryFamily_card: content; escape_witness: ordinaryFamilyEquiv

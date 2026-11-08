@@ -18,7 +18,7 @@ proof_shape: rootedRefinedCycle_card: content; escape_witness: rootedRefinedCycl
 proof_shape: refined_cycle_marking_count: content; escape_witness: rootedRefinedCycle_card
 proof_shape: labelCount_sum: bind-only; escape_witness: none
 proof_shape: weight_eq_labelCount: bind-only; escape_witness: none
-proof_shape: zeroFree_twos_le_ones: bind-only; escape_witness: none
+proof_shape: zeroFree_twos_le_ones: content; escape_witness: zeroFreeDeficit_iff
 proof_shape: zeroContaining_inventory_bounds: content; escape_witness: lineOK_gap_iff
 proof_shape: zeroContaining_parameter_equations: content; escape_witness: zeroContaining_inventory_bounds
 proof_shape: zeroContaining_all_exceptional: content; escape_witness: lineOK_gap_iff
