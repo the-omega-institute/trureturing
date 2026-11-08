@@ -224,10 +224,13 @@ def zeroReadout : Realization scalarSignature :=
 
 theorem zeroReadout_rejected : ¬ injectiveArena.Law zeroReadout := by
   intro h
-  have he := h 1 0 0 0 (by simp [zeroReadout, realize, scalarB, B_formula])
+  have he := h 1 0 0 0 (by
+    change (0 : Mat) = scalarB 0 0
+    ext i j
+    fin_cases i <;> fin_cases j <;> simp [scalarB, B_formula])
   norm_num at he
 
-def injectiveEvidence : Registration injectiveArena (type_of% @scalarB_injective) where
+noncomputable def injectiveEvidence : Registration injectiveArena (type_of% @scalarB_injective) where
   actual := scalarActual
   bridge := Iff.rfl
   variation := ⟨scalarB_injective, zeroReadout, zeroReadout_rejected⟩
@@ -235,7 +238,7 @@ def injectiveEvidence : Registration injectiveArena (type_of% @scalarB_injective
     injectiveArena.Law scalarActual zeroReadout zeroReadout_rejected
   dependence := scalarDependence
 
-def injectiveRegistration :
+noncomputable def injectiveRegistration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
       (@scalarB_injective) (Realization scalarSignature) Unit Unit := {
   unitName := `Reg.D5.S3.Quantum.Measurement.BiasedTrineJointMeasurabilityThreshold.ScalarInjective.unit

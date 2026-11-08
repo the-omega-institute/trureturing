@@ -1,0 +1,80 @@
+**证明 216.2 的续段。** 保持这个固定 $\pi,X,Y,z$，选择原标签
+
+$$
+c=Xu+a\in E.
+\tag{218.1}
+$$
+
+它只是单位与原 $a$ 的有限实线性组合；185.1 的同仿射轴零值准确给 $D(a,c)=0$，不使用输入平移或 $D$ 的线性。因为 $a\circ b=b\circ d=0$，完整原 PB $(a,b,c)$ 的元素式成为
+
+$$
+\begin{aligned}
+r_+&=b+d-a\circ c,& r_-&=b-d+a\circ c,\\
+D(r_+,c)-D(r_-,c)&=2b\circ(a\circ c)=2a^2b.
+\end{aligned}
+\tag{218.2}
+$$
+
+最后一步用的是已知环境乘法：$a\circ c=Xa+a^2$，$b$ 与 $a^2$ 交换。所有标签 $c,r_+,r_-$ 都在原 $E$；这里只调用这份原 PB 和它的两张外层原 P2。
+
+记 $\sigma_1=\begin{pmatrix}0&1\\1&0\end{pmatrix}$、$\sigma_2=\begin{pmatrix}0&-i\\i&0\end{pmatrix}$、$\sigma_3=\operatorname{diag}(1,-1)$。对任意有限 $\varepsilon>0$，取未归一数学向量 $\xi_\varepsilon=(\varepsilon,1)$。在 (217.5) 的坐标中，固定输入的作用准确为
+
+$$
+\begin{aligned}
+\pi(c)\xi_\varepsilon&=(2X\varepsilon,0),\\
+\pi(r_+)\xi_\varepsilon
+ &=\bigl(Y-iz-2X^2\varepsilon,\ (Y+iz)\varepsilon\bigr),\\
+\pi(r_-)\xi_\varepsilon
+ &=\bigl(Y+iz+2X^2\varepsilon,\ (Y-iz)\varepsilon\bigr).
+\end{aligned}
+\tag{218.3}
+$$
+
+取 $\omega_{\xi_\varepsilon}$ 的任意一份正延伸 $\phi_\varepsilon$，并在此次比较中始终使用它。其质量为 $1+\varepsilon^2$，无需归一。两张外层表的实 Gram 行列式相同，准确等于
+
+$$
+\begin{aligned}
+\Delta_\pm
+&=\|\pi(r_\pm)\xi_\varepsilon\|^2
+  \|\pi(c)\xi_\varepsilon\|^2
+  -\bigl(\operatorname{Re}\langle
+      \pi(r_\pm)\xi_\varepsilon,\pi(c)\xi_\varepsilon
+    \rangle\bigr)^2\\
+&=4X^2\varepsilon^2
+   \bigl[z^2+\varepsilon^2(Y^2+z^2)\bigr].
+\end{aligned}
+\tag{218.4}
+$$
+
+可直接看到这一消去：第二向量是实数倍的第一坐标向量，故 Gram 面积只留下第一向量第一坐标的虚部平方 $z^2$ 及第二坐标的模平方 $\varepsilon^2(Y^2+z^2)$；实部中的 $Y\mp2X^2\varepsilon$ 被准确减去。
+
+(218.2) 右端的同一读取是 $4X^2Y\varepsilon$。两次 P2 和三角不等式因此给
+
+$$
+4X^2Y\varepsilon
+\le 4X\varepsilon
+  \sqrt{z^2+\varepsilon^2(Y^2+z^2)},\qquad
+X^2Y^2\le z^2+\varepsilon^2(Y^2+z^2).
+\tag{218.5}
+$$
+
+若 $z^2<X^2Y^2$，取一个有限正参数满足
+
+$$
+0<\varepsilon^2<\frac{X^2Y^2-z^2}{Y^2+z^2};
+\tag{218.6}
+$$
+
+分母因 $Y>0$ 严格为正。这个单独的数学读取就与 (218.5) 矛盾，故 $z^2\ge X^2Y^2$。结合 (217.6) 得 $z^2=X^2Y^2$。
+
+这里 $a,b,d,c,r_+,r_-$ 及两份未知外层旧输出始终固定；变化的仅是读取向量及其正延伸。预算里的 $X,Y,z$ 是固定有限数，分别由固定输入像及固定旧输出像决定。论证只选择一次满足 (218.6) 的有限读取，不取任何未知 $D$ 输入、输出或延伸的极限，也不假定各延伸随 $\varepsilon$ 相容、连续或可测。
+
+于是每个非零不可约表示 $\pi$ 都消灭固定自伴元 $d^2-a^2b^2\in B$，包括先前处理的退化情形。C* 代数的不可约表示分离自伴元，所以 $d^2=a^2b^2$。这一步只分离固定元素，不定义商上的 $D$。又反交换使 $a^2,b^2$ 交换，故 $a^2b^2=a^2\circ b^2\in E$，而 $`(ab)^*(ab)=a^2b^2`$。由 C* 范数恒等式及原等距性，
+
+$$
+N(d)^2=\|d^2\|_A=\|a^2b^2\|_A=\|ab\|_A^2.
+\tag{218.7}
+$$
+
+216.2 得证；零代数的结论直接成立。∎
+
