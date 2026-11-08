@@ -1162,7 +1162,7 @@ Proof. Induction over the actual zero updates identifies $Y_0$ with the word of 
 
 $$
 \begin{aligned}
-P\{\omega:\ &\tau(\omega)=u,\ K_j(\omega)=v_j\ (j<n),\
+P\{\omega:\ &\tau(\omega)=u,\ K_j(\omega)=v_j\ (j<n),\\
              &Y_j(\omega)=x_j\ (0\le j\le n)\}\\
 &=w(u)\,(\eta\mathbin{\mathrm{bind}}J_u)(x_0)
        \prod_{j<n}\bigl(f(v_j)J_{v_j}(x_j)(x_{j+1})\bigr).
