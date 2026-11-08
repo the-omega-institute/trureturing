@@ -10,7 +10,7 @@ module
 
 public import D5.S3.Quantum.Matrix.HsfThreeLevelScalarBinding
 
-/-! UNCOMPILED source candidate. These are the literal closed resolvent
+/-! These are the literal closed resolvent
    moments, with the original factor order and K-adjoint sign. This module
    connects their finite trace expression to the closed cubic. The equality
    of these closed functions with the original integrals, differentiation
@@ -194,7 +194,8 @@ private theorem ordered_pair (p q : ℝ) (hp : 0 < p) (hq : 0 < q) :
   linarith only [h]
 
 private theorem Xi_swap_last (p q r : ℝ) : Xi p q r = Xi p r q := by
-  unfold Xi F
+  unfold Xi
+  rw [F_swap_last p q r]
   congr 1 <;> dsimp [Q, H] <;> ring
 
 /-- The actual all-positive closed trace-to-coordinate normal form, including

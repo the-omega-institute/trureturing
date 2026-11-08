@@ -10,11 +10,9 @@ module
 
 public import D5.S3.Quantum.Matrix.HsfThreeLevelCoefficients
 
-/-! UNCOMPILED source candidate. The P396 input is a fallible completed
-   mathematical source, whose separate independent audit is not read here.
-   Standard ring/positivity proof bodies below still require real compilation.
-   No native computation, reflection framework, new axiom or heartbeat override.
-   No original integral identity or full HSF theorem is claimed. -/
+/-! A factored boundary polynomial and positive symmetric monomials form the
+   scalar certificate. The closed algebraic kernel is distinct from its
+   identification with integral kernels and the original HSF derivative. -/
 
 @[expose] public section
 noncomputable section

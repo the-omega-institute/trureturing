@@ -7,7 +7,7 @@ internal sealed class HsfThreeLevelTraceBridgeDocument : IScribeDocumentDefiniti
     private const string Module = "D5/S3/Quantum/Matrix/HsfThreeLevelTraceBridge";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Uncompiled mathematical source candidate: complex PSD3 cubic geometry and exact scalar coefficients.",
+        "Complex PSD3 cubic geometry and exact scalar coefficients.",
         H("HsfThreeLevelTraceBridge"),
         Blocks(
             Entry("tauClosed", "tauClosed",
@@ -17,7 +17,7 @@ internal sealed class HsfThreeLevelTraceBridgeDocument : IScribeDocumentDefiniti
             Entry("psiClosed", "psiClosed",
                 "The literal closed moment p^2q^2sqrt(pq)(p+q)/H^3.", DescribeRole.Definition),
             Entry("betaNumerator", "betaNumerator",
-                "The explicit differentiated three-resolvent numerator G, before division by the positive H factors.", DescribeRole.Definition),
+                "The explicit rational-kernel numerator G, before division by the positive H factors.", DescribeRole.Definition),
             Entry("betaClosed", "betaClosed",
                 "The literal closed moment sqrt(pq)r^3G/(2H(p,q)H(q,r)^2H(r,p)^2).", DescribeRole.Definition),
             Entry("orderedCoefficient", "orderedCoefficient",
@@ -29,7 +29,7 @@ internal sealed class HsfThreeLevelTraceBridgeDocument : IScribeDocumentDefiniti
             Entry("jMatrix", "jMatrix",
                 "The second source-dependent moment with entry sum over k of beta(p_i,p_j;p_k)S_ik S_kj.", DescribeRole.Definition),
             Entry("closedMomentTrace", "closedMomentTrace",
-                "The four original ordered traces 4Tr(XJv)-4Tr(XXPsi)-(2/27)Tr(XXX)-3Tr(XK* K), using the literal closed moment functions.", DescribeRole.Definition),
+                "The four closed ordered traces 4Tr(XJv)-4Tr(XXPsi)-(2/27)Tr(XXX)-3Tr(XK* K), using the literal closed moment functions.", DescribeRole.Definition),
             Entry("orderedCubic", "orderedCubic",
                 "The full sum over all 27 ordered triples, with the real part of the original three source factors.", DescribeRole.Definition),
             Entry("trace_to_ordered", "trace to ordered",
@@ -40,12 +40,10 @@ internal sealed class HsfThreeLevelTraceBridgeDocument : IScribeDocumentDefiniti
                 "At all positive levels, the four finite closed-moment traces equal the actual rho/Xi coordinate cubic, with both cycle orientations and all repeated-index terms.", DescribeRole.Theorem),
             Entry("closed_trace_nonneg", "closed trace nonneg",
                 "The four finite closed-moment traces are nonnegative for every complex PSD three by three source and all positive levels. Equality with the original integrals and the original HSF derivative is a separate unfinished bridge.", DescribeRole.Theorem),
-            Paragraph(Text("These are source candidates, not compiled or frozen results. "
-                + "The scalar P396 source was inspected as fallible mathematical input; "
-                + "its separate independent audit was not read. No novelty is claimed. "
-                + "The commutant equality classification, original integral-to-moment bridge "
-                + "and original HSF derivative/source bridge remain unformalized here. "
-                + "Required Lean, axiom, Scribe and registration checks have not run.")))));
+            Paragraph(Text("The statements concern the explicitly defined closed algebraic kernels. "
+                + "The commutant equality classification, identification with the original integrals, "
+                + "dominated differentiation and original HSF derivative/source bridge remain outside these results. "
+                + "No assertion about arbitrary matrix dimension or literature novelty follows.")))));
 
     private static DocumentBlock Entry(string name, string title, string text, DescribeRole role) =>
         Describe.Lean(DescribeId.Create("hsfthreeleveltracebridge-" + name.Replace('_', '-').ToLowerInvariant()),

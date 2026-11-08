@@ -12,7 +12,7 @@ public import Mathlib.Analysis.MeanInequalities
 public import Mathlib.Analysis.Real.Sqrt
 public import Mathlib.Tactic
 
-/-! UNCOMPILED source candidate. The quadratic-form premise below is used
+/-! The quadratic-form premise below is used
    with the actual complex PSD matrix in PsdThreeCubicComplex. It is not a
    supplied diagonal frame or a hypothesis asserting cubic nonnegativity.
    The argument is elementary Gram geometry and scalar AM-GM; no literature

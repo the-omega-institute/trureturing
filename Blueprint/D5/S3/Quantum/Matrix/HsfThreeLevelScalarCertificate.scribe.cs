@@ -7,7 +7,7 @@ internal sealed class HsfThreeLevelScalarCertificateDocument : IScribeDocumentDe
     private const string Module = "D5/S3/Quantum/Matrix/HsfThreeLevelScalarCertificate";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Uncompiled mathematical source candidate: complex PSD3 cubic geometry and exact scalar coefficients.",
+        "Complex PSD3 cubic geometry and exact scalar coefficients.",
         H("HsfThreeLevelScalarCertificate"),
         Blocks(
             Entry("monomialSymmetric", "monomialSymmetric",
@@ -58,12 +58,10 @@ internal sealed class HsfThreeLevelScalarCertificateDocument : IScribeDocumentDe
                 "The explicit quotient certificate is nonnegative on every nonnegative triple.", DescribeRole.Theorem),
             Entry("certificate_pos", "certificate pos",
                 "The central positive term ensures strict positivity of the quotient on every positive triple.", DescribeRole.Theorem),
-            Paragraph(Text("These are source candidates, not compiled or frozen results. "
-                + "The scalar P396 source was inspected as fallible mathematical input; "
-                + "its separate independent audit was not read. No novelty is claimed. "
-                + "The commutant equality classification, original integral-to-moment bridge "
-                + "and original HSF derivative/source bridge remain unformalized here. "
-                + "Required Lean, axiom, Scribe and registration checks have not run.")))));
+            Paragraph(Text("The statements concern the explicitly defined closed algebraic kernels. "
+                + "The commutant equality classification, identification with the original integrals, "
+                + "dominated differentiation and original HSF derivative/source bridge remain outside these results. "
+                + "No assertion about arbitrary matrix dimension or literature novelty follows.")))));
 
     private static DocumentBlock Entry(string name, string title, string text, DescribeRole role) =>
         Describe.Lean(DescribeId.Create("hsfthreelevelscalarcertificate-" + name.Replace('_', '-').ToLowerInvariant()),

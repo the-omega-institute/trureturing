@@ -11,7 +11,7 @@ module
 public import D5.S3.Quantum.Matrix.HsfBalancedSpectralCertificate
 public import D5.S3.Quantum.Matrix.PsdThreeCubicComplex
 
-/-! UNCOMPILED source candidate. rho reuses the canonical repeated-index
+/-! rho reuses the canonical repeated-index
    coefficient, with the positive common level scale divided out. Xi is the
    literal 6*C_actual coefficient, not twice that coefficient. Definitions
    here have only positive H denominators on positive levels, so collisions
@@ -103,7 +103,7 @@ private theorem F_reverse (p q r : ℝ) : F p q r = F r q p := by
   unfold F
   congr 1 <;> ring
 
-private theorem F_swap_last (p q r : ℝ) : F p q r = F p r q := by
+theorem F_swap_last (p q r : ℝ) : F p q r = F p r q := by
   unfold F
   congr 1 <;> ring
 

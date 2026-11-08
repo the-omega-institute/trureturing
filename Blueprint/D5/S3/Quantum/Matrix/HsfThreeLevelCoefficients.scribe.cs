@@ -7,7 +7,7 @@ internal sealed class HsfThreeLevelCoefficientsDocument : IScribeDocumentDefinit
     private const string Module = "D5/S3/Quantum/Matrix/HsfThreeLevelCoefficients";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Uncompiled mathematical source candidate: complex PSD3 cubic geometry and exact scalar coefficients.",
+        "Complex PSD3 cubic geometry and exact scalar coefficients.",
         H("HsfThreeLevelCoefficients"),
         Blocks(
             Entry("H", "H",
@@ -40,6 +40,8 @@ internal sealed class HsfThreeLevelCoefficientsDocument : IScribeDocumentDefinit
                 "The actual pair coefficient is symmetric in its two positive levels.", DescribeRole.Theorem),
             Entry("rho_self", "rho self",
                 "The actual pair coefficient vanishes on a level collision.", DescribeRole.Theorem),
+            Entry("F_swap_last", "F symmetry",
+                "The scalar triangle numerator is unchanged when its last two levels are exchanged.", DescribeRole.Theorem),
             Entry("F_nonneg", "F nonneg",
                 "The actual triangle numerator is nonnegative for every positive triple. Its 118 positive ordered-chamber monomials and permutation symmetry establish the sign; this gives no sign to a complex source cycle.", DescribeRole.Theorem),
             Entry("Xi_nonneg", "Xi nonneg",
@@ -62,12 +64,10 @@ internal sealed class HsfThreeLevelCoefficientsDocument : IScribeDocumentDefinit
                 "Exact binding of the scaled cycle numerator to commonDen times the actual Xi.", DescribeRole.Theorem),
             Entry("p396_scaled", "p396 scaled",
                 "The degree-seventy-two polynomial is exactly commonDen^3 times the actual coefficient comparison margin. This normalization alone does not assert its sign.", DescribeRole.Theorem),
-            Paragraph(Text("These are source candidates, not compiled or frozen results. "
-                + "The scalar P396 source was inspected as fallible mathematical input; "
-                + "its separate independent audit was not read. No novelty is claimed. "
-                + "The commutant equality classification, original integral-to-moment bridge "
-                + "and original HSF derivative/source bridge remain unformalized here. "
-                + "Required Lean, axiom, Scribe and registration checks have not run.")))));
+            Paragraph(Text("The statements concern the explicitly defined closed algebraic kernels. "
+                + "The commutant equality classification, identification with the original integrals, "
+                + "dominated differentiation and original HSF derivative/source bridge remain outside these results. "
+                + "No assertion about arbitrary matrix dimension or literature novelty follows.")))));
 
     private static DocumentBlock Entry(string name, string title, string text, DescribeRole role) =>
         Describe.Lean(DescribeId.Create("hsfthreelevelcoefficients-" + name.Replace('_', '-').ToLowerInvariant()),

@@ -11,7 +11,7 @@ module
 public import D5.S3.Quantum.Matrix.PsdThreeCubic
 public import Mathlib.Analysis.Matrix.PosDef
 
-/-! UNCOMPILED source candidate. There is no rank, phase, radius, invertibility
+/-! There is no rank, phase, radius, invertibility
    or supplied-frame restriction. The Gram witness is constructed directly
    from entries of the original matrix; it uses no source factorization.
    This theorem is abstract in its coefficients. Its HSF specialization still

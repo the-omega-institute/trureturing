@@ -7,7 +7,7 @@ internal sealed class PsdThreeCubicDocument : IScribeDocumentDefinition
     private const string Module = "D5/S3/Quantum/Matrix/PsdThreeCubic";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Uncompiled mathematical source candidate: complex PSD3 cubic geometry and exact scalar coefficients.",
+        "Complex PSD3 cubic geometry and exact scalar coefficients.",
         H("PsdThreeCubic"),
         Blocks(
             Entry("root3", "root3",
@@ -20,12 +20,10 @@ internal sealed class PsdThreeCubicDocument : IScribeDocumentDefinition
                 "If the single real quadratic form with diagonal d,e,f and off-diagonal -x,-y,-z is nonnegative on every real vector, its weighted pair energy dominates allowance(a,b,c)xyz. All weights and edges may vanish. A Gram test vector and three-term AM-GM supply the estimate.", DescribeRole.Theorem),
             Entry("allowance_of_p396", "allowance of p396",
                 "For nonnegative a,b,c,k with positive sum of weights, the polynomial bound (a+b+c)k^2 <= 4(a+b+c)(ab+bc+ca)+396abc implies k <= allowance(a,b,c). This is a sufficient comparison and asserts no necessity.", DescribeRole.Theorem),
-            Paragraph(Text("These are source candidates, not compiled or frozen results. "
-                + "The scalar P396 source was inspected as fallible mathematical input; "
-                + "its separate independent audit was not read. No novelty is claimed. "
-                + "The commutant equality classification, original integral-to-moment bridge "
-                + "and original HSF derivative/source bridge remain unformalized here. "
-                + "Required Lean, axiom, Scribe and registration checks have not run.")))));
+            Paragraph(Text("The statements concern the explicitly defined closed algebraic kernels. "
+                + "The commutant equality classification, identification with the original integrals, "
+                + "dominated differentiation and original HSF derivative/source bridge remain outside these results. "
+                + "No assertion about arbitrary matrix dimension or literature novelty follows.")))));
 
     private static DocumentBlock Entry(string name, string title, string text, DescribeRole role) =>
         Describe.Lean(DescribeId.Create("psdthreecubic-" + name.Replace('_', '-').ToLowerInvariant()),

@@ -10,7 +10,7 @@ module
 
 public import D5.S3.Quantum.Matrix.HsfThreeLevelScalarIdentity
 
-/-! UNCOMPILED source candidate. The exact positive-level coefficients are
+/-! The exact positive-level coefficients are
    discharged here, including all collisions. There is no hypothesis that
    assumes the desired matrix sign. This is the closed cubic theorem; the
    original integral-to-moment and HSF derivative bridges remain separate.
@@ -18,6 +18,8 @@ public import D5.S3.Quantum.Matrix.HsfThreeLevelScalarIdentity
 
 @[expose] public section
 noncomputable section
+
+open scoped ComplexOrder
 
 namespace D5.S3.Quantum.Matrix.HsfThreeLevelCoefficients
 
@@ -45,7 +47,7 @@ theorem coefficient_domination (p q r : ℝ) (hp : 0 < p) (hq : 0 < q) (hr : 0 <
   have hc := rho_nonneg r p hr hp
   by_cases hall : p = q ∧ q = r
   · rcases hall with ⟨rfl, rfl⟩
-    simp [Xi_self, rho_self r hr, allowance, root3]
+    simp [Xi_self, rho_self p hp, allowance, root3]
   · have hs : 0 < rho p q+rho q r+rho r p := by
       by_cases hpq : p = q
       · have hqr : q ≠ r := by intro h; exact hall ⟨hpq, h⟩
