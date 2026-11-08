@@ -358,4 +358,179 @@ theorem unit_row_nonzero_scalar (D : E → E → E) (hP : P2 D) (hPB : PB D)
   rw [hd, hz]
   rfl
 
+private theorem jordan_scalar (l : ℝ) (b : E) : jordan (l, 0) b = l • b := by
+  apply Prod.ext
+  · simp [jordan, dot, smul_eq_mul]
+  · funext i
+    simp [jordan]
+
+private theorem jordan_comm (a b : E) : jordan a b = jordan b a := by
+  apply Prod.ext
+  · simp [jordan, dot, dotProduct_comm, mul_comm, add_comm]
+  · simp [jordan, add_comm]
+
+private def jordanLinear (a : E) : E →ₗ[ℝ] E where
+  toFun := jordan a
+  map_add' b c := by
+    apply Prod.ext
+    · simp [jordan, dot, dotProduct_add]
+      ring
+    · funext i
+      simp [jordan]
+      ring
+  map_smul' r b := by
+    apply Prod.ext
+    · simp [jordan, dot, dotProduct_smul, smul_eq_mul]
+      ring
+    · funext i
+      simp [jordan, smul_eq_mul]
+      ring
+
+private theorem pb_scalar_labels (D : E → E → E) (hPB : PB D)
+    (l : ℝ) (b c : E) (hb : D (l, 0) b = 0) (hc : D (l, 0) c = 0) :
+    D (b - l • c) (c + l • b) = D (b + l • c) (c - l • b) := by
+  have hsum : (2 : ℝ) • jordan b (-(l • c)) +
+      (2 : ℝ) • jordan c (l • b) = 0 := by
+    have h1 : jordan b (-(l • c)) = -(l • jordan b c) := by
+      change jordanLinear b (-(l • c)) = _
+      rw [map_neg, map_smul]
+      rfl
+    have h2 : jordan c (l • b) = l • jordan b c := by
+      change jordanLinear c (l • b) = _
+      rw [map_smul]
+      change l • jordan c b = _
+      rw [jordan_comm]
+    rw [h1, h2]
+    simp
+  have h := (pb_iff_finite_difference D).mp hPB (l, 0) b c
+  simp only [finiteDifference, hb, hc, jordan_scalar, zero_sub, add_zero, sub_zero] at h
+  rw [add_assoc, hsum, add_zero] at h
+  exact sub_eq_zero.mp h
+
+private theorem label_cayley (D : E → E → E) (hPB : PB D) (l : ℝ) (b c : E)
+    (hb : D (l, 0) ((1 / (1 + l ^ 2)) • (b + l • c)) = 0)
+    (hc : D (l, 0) ((1 / (1 + l ^ 2)) • (c - l • b)) = 0) :
+    D b c = D (((1 - l ^ 2) / (1 + l ^ 2)) • b +
+      ((2 * l) / (1 + l ^ 2)) • c)
+      (((1 - l ^ 2) / (1 + l ^ 2)) • c - ((2 * l) / (1 + l ^ 2)) • b) := by
+  have hden : 1 + l ^ 2 ≠ 0 := by positivity
+  let b0 := (1 / (1 + l ^ 2)) • (b + l • c)
+  let c0 := (1 / (1 + l ^ 2)) • (c - l • b)
+  have h := pb_scalar_labels D hPB l b0 c0 hb hc
+  have h1 : b0 - l • c0 = b := by
+    ext <;> simp [b0, c0, smul_eq_mul] <;> field_simp <;> ring
+  have h2 : c0 + l • b0 = c := by
+    ext <;> simp [b0, c0, smul_eq_mul] <;> field_simp <;> ring
+  have h3 : b0 + l • c0 = ((1 - l ^ 2) / (1 + l ^ 2)) • b +
+      ((2 * l) / (1 + l ^ 2)) • c := by
+    ext <;> simp [b0, c0, smul_eq_mul] <;> field_simp <;> ring
+  have h4 : c0 - l • b0 = ((1 - l ^ 2) / (1 + l ^ 2)) • c -
+      ((2 * l) / (1 + l ^ 2)) • b := by
+    ext <;> simp [b0, c0, smul_eq_mul] <;> field_simp <;> ring
+  simpa only [h1, h2, h3, h4] using h
+
+private theorem pb_equal_labels (D : E → E → E) (hP : P2 D) (hPB : PB D)
+    (a b : E) (hab : D a b = 0) : D (b - jordan a b) (b + jordan a b) = 0 := by
+  have hsum : (2 : ℝ) • jordan b (-jordan a b) +
+      (2 : ℝ) • jordan b (jordan a b) = 0 := by
+    have hneg : jordan b (-jordan a b) = -jordan b (jordan a b) :=
+      (jordanLinear b).map_neg _
+    rw [hneg]
+    simp
+  have h := (pb_iff_finite_difference D).mp hPB a b b
+  simp only [finiteDifference, hab, zero_sub, add_zero, sub_zero] at h
+  rw [add_assoc, hsum, add_zero] at h
+  apply zero_of_eq_neg
+  exact (sub_eq_zero.mp h).trans (p2_skew D hP _ _)
+
+/-- All scalar multiples of the original unit have zero rows, including pure-vector labels. -/
+theorem unit_rows (D : E → E → E) (hP : P2 D) (hPB : PB D) (q : ℝ) (b : E) :
+    D (q, 0) b = 0 := by
+  by_cases ht : b.1 = 0
+  · rcases b with ⟨t, y⟩
+    change t = 0 at ht
+    subst t
+    by_cases hq : q = 0
+    · subst q
+      exact (p2_zero_rows D hP).1 _
+    by_cases hy : y = 0
+    · subst y
+      exact p2_scalar_pair D hP q 0
+    have hyy : dot y y ≠ 0 := by
+      intro h
+      exact hy (dotProduct_self_eq_zero.mp h)
+    let r : ℝ := Real.sqrt 2
+    have hrpos : 0 < r := by dsimp [r]; positivity
+    have hr : r ≠ 0 := ne_of_gt hrpos
+    have hr2 : r ^ 2 = 2 := by norm_num [r]
+    let a : E := (0, (q / dot y y) • y)
+    let v : E := (0, (1 / r) • y)
+    have hv : v = (dot y y / (r * q)) • a := by
+      apply Prod.ext
+      · simp [v, a]
+      · funext i
+        simp [v, a, smul_eq_mul]
+        field_simp
+    have hav : D a v = 0 := by
+      rw [hv]
+      exact (p2_proportional D hP _ a).2
+    have hj : jordan a v = (q / r, 0) := by
+      apply Prod.ext
+      · simp [a, v, jordan, dot, smul_dotProduct, dotProduct_smul]
+        change q / dot y y * (1 / r * dot y y) = q / r
+        field_simp
+      · simp [a, v, jordan]
+    let A : E := (-q / r, (1 / r) • y)
+    let B : E := (q / r, (1 / r) • y)
+    have hA : v - jordan a v = A := by rw [hj]; ext <;> simp [v, A]
+    have hB : v + jordan a v = B := by rw [hj]; ext <;> simp [v, B]
+    have hAB : D A B = 0 := by
+      simpa only [hA, hB] using pb_equal_labels D hP hPB a v hav
+    let m := r - 1
+    have hmlo : 0 < m := by dsimp [m]; nlinarith
+    have hmhi : m < 1 := by dsimp [m]; nlinarith
+    have hden : 1 + m ^ 2 ≠ 0 := by positivity
+    have hb0 : ((1 / (1 + m ^ 2)) • (A + m • B)).1 ≠ 0 := by
+      change (1 / (1 + m ^ 2)) * (-q / r + m * (q / r)) ≠ 0
+      have he : -q / r + m * (q / r) = (q / r) * (m - 1) := by ring
+      rw [he]
+      exact mul_ne_zero (one_div_ne_zero hden)
+        (mul_ne_zero (div_ne_zero hq hr) (sub_ne_zero.mpr (ne_of_lt hmhi)))
+    have hc0 : ((1 / (1 + m ^ 2)) • (B - m • A)).1 ≠ 0 := by
+      change (1 / (1 + m ^ 2)) * (q / r - m * (-q / r)) ≠ 0
+      have he : q / r - m * (-q / r) = (q / r) * (1 + m) := by ring
+      rw [he]
+      exact mul_ne_zero (one_div_ne_zero hden)
+        (mul_ne_zero (div_ne_zero hq hr) (by linarith))
+    have h := label_cayley D hPB m A B
+      (unit_row_nonzero_scalar D hP hPB m _ _ hb0)
+      (unit_row_nonzero_scalar D hP hPB m _ _ hc0)
+    have hC : (1 - m ^ 2) / (1 + m ^ 2) = 1 / r := by
+      field_simp
+      dsimp [m]
+      linear_combination -(r - 1) * hr2
+    have hS : 2 * m / (1 + m ^ 2) = 1 / r := by
+      field_simp
+      dsimp [m]
+      linear_combination hr2
+    rw [hC, hS] at h
+    have hx : (1 / r) • A + (1 / r) • B = (0, y) := by
+      apply Prod.ext
+      · simp [A, B, smul_eq_mul]
+        ring
+      · funext i
+        simp [A, B, smul_eq_mul]
+        field_simp
+        linear_combination y i * hr2
+    have hu : (1 / r) • B - (1 / r) • A = (q, 0) := by
+      apply Prod.ext
+      · simp [A, B, smul_eq_mul]
+        field_simp
+        linear_combination q * hr2
+      · funext i
+        simp [A, B, smul_eq_mul]
+    rw [hx, hu, hAB] at h
+    rw [p2_skew D hP (0, y) (q, 0), ← h, neg_zero]
+  · exact unit_row_nonzero_scalar D hP hPB q b.1 b.2 ht
+
 end D5.S3.Quantum.SpinFactor.OriginalDContract
