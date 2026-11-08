@@ -192,6 +192,10 @@ $$(\left(1 - 32 \cdot \operatorname{PowerSeries}.\operatorname{X}\right) \cdot \
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233253TriangleStrip.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/hardin233253` (proved) by `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233253TriangleStrip.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hardin233253","declaration_gid":"D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233253TriangleStrip.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233253: six-colour complementary-pair exclusion on a five-column strip*. URL: <https://oeis.org/A233253>.

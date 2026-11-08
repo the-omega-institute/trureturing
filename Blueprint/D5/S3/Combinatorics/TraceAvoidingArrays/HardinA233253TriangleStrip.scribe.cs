@@ -63,7 +63,7 @@ internal sealed class HardinA233253TriangleStripDocument : IScribeDocumentDefini
                 + "rank sum is 512+160r. From the other sector, 32 rows stay there, "
                 + "240 enter the fully seen sector and their rank sum is 448. The "
                 + "initial counts are eight and 28, with fully seen rank sum 44."),
-            Thm("result", "result", "Barker's identity", ResultFormula(),
+            Resolution("result", "result", "Barker's identity", ResultFormula(),
                 "The continuations from length zero have form F without colour two, and U+rZ "
                 + "in the fully seen sector. At length zero, F=U=1 and Z=0. The one-row "
                 + "identities give F'=32F+240U+448Z, U'=320U+512Z and Z'=64U+160Z. "
@@ -84,6 +84,14 @@ internal sealed class HardinA233253TriangleStripDocument : IScribeDocumentDefini
             DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(Source),
             Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
+
+    private static DocumentBlock Resolution(string id, string name, string title,
+        Formula formula, string prose) => Describe.Lean(DescribeId.Create(id),
+            DeclarationHandle.Create(Prefix + name), H(title),
+            StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(Source),
+            Blocks(Paragraph(Text(prose))), DescribeRole.Theorem,
+            new OpenProblemResolutionClaim(ProblemSlugRef.Create("hardin233253"),
+                ResolutionKind.Proved));
 
     private static Formula RowFormula()
     {
