@@ -24,7 +24,7 @@ internal sealed class MatharA001722Document : IScribeDocumentDefinition
                 "Set B(n)=(-1)^n times the Taylor translate at -5 of the falling product of length n+2. The Hasse derivative coefficient formula gives coeff(2,B(n))=a(n), directly from the signed sum. Multiplication of the falling product by its next factor gives B(n+1)=B(n)(n+7-X). The combination B(m+3)-3(m+8)B(m+2)+(3m^2+45m+169)B(m+1)-(m+7)^3 B(m) equals -X^3 B(m); taking its second coefficient proves the recurrence. For the ordinary series, the fourth-order operator has coefficient polynomials p(0)=-18+254z-1029z^2, p(1)=1-24z+253z^2-1019z^3, p(2)=-3z^2+54z^3-289z^4, p(3)=3z^4-30z^5 and p(4)=-z^6. All higher p(j) are zero. Coefficient extraction reduces its equation to the recurrence multiplied by n+1. The two boundary coefficients use a(0)=1, a(1)=18 and a(2)=251. Thus every coefficient vanishes and p(4) is nonzero.", DescribeRole.Theorem)), []));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose, DescribeRole role) =>
-        Describe.Lean(DescribeId.Create("mathar-a001722-" + name),
+        Describe.Lean(DescribeId.Create("mathar-a001722-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
             AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), role);
 

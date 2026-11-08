@@ -55,14 +55,11 @@ private noncomputable def shifted (n : ℕ) : Polynomial ℤ :=
   C ((-1 : ℤ)^n) * taylor (-5) (falling (n + 2))
 
 private theorem falling_degree (N : ℕ) : (falling N).natDegree ≤ N := by
-  induction N with
-  | zero => simp [falling]
-  | succ N ih =>
-    have hf : falling (N+1) = falling N * (X - C (N : ℤ)) := by
-      simp only [falling, Finset.prod_range_succ]
-    rw [hf]
-    exact (natDegree_mul_le).trans (Nat.add_le_add ih
-      (le_of_eq (natDegree_X_sub_C (N : ℤ))))
+  have hp := Polynomial.natDegree_prod_le (R := ℤ) (Finset.range N)
+    (fun i : ℕ => (X - C (i : ℤ) : Polynomial ℤ))
+  simpa only [falling, natDegree_X_sub_C, Finset.sum_const, Finset.card_range,
+    smul_eq_mul, mul_one] using hp
+
 
 private theorem shifted_coeff (n : ℕ) : (shifted n).coeff 2 = a n := by
   have hd : (hasseDeriv 2 (falling (n+2))).natDegree < n+1 := by
