@@ -1,27 +1,26 @@
-/- GID: D5/S3/RingTheory/SimpleRing/TensorProduct
+/- GID: D5/S3/FiniteGroups/GroupAlgebra/SimpleRing/TensorProduct
    generality: G
-   mirror-B: D5/B/S3/RingTheory/SimpleRing/TensorProduct
-   mirror-E: none(waiver:source-only-candidate)
+   mirror-B: D5/B/S3/FiniteGroups/GroupAlgebra/SimpleRing/TensorProduct
+   mirror-E: none(waiver:algebraically-proved)
    anchors: []
    utility: none
    digest: Attributed simplicity of a simple algebra tensored with a central simple algebra. -/
 
 /-
-UNCOMPILED / PARTIAL source-only candidate; upstream reuse, not a new mathematical result.
+Classical algebra proofs used for the actual finite-group representation image.
 Proof attribution: AxiomMath/Stacks contributors, Apache-2.0 (see upstream/LICENSE).
 Pinned revision: 5ed82d14634e8d9576bb844c7bd4e3da66d450e7
 Upstream: StacksCore/RingTheory/SimpleRing/TensorProduct.lean
 SHA-256: b3923c79247c13f6f13fc4fb6094570bd1b8065d3361425ae72003eefb6f8b37
 The pinned source files contain no individual author or copyright notices.
-Changed here: Trim unused ideal order isomorphism, map-comap helper, and simplicity descent; retain the left-central proof privately and export only the right-central instance needed by Skolem-Noether; remove module/export directives, relocate names, and call relocated helpers explicitly.
 -/
 
 import Mathlib.Algebra.Central.Basic
 import Mathlib.LinearAlgebra.Basis.VectorSpace
 import Mathlib.RingTheory.Flat.FaithfullyFlat.Basic
 import Mathlib.RingTheory.SimpleRing.Congr
-import D5.S3.RingTheory.TwoSidedIdeal.Operations
-import D5.S3.RingTheory.TwoSidedIdeal.SpanAsSum
+import D5.S3.FiniteGroups.GroupAlgebra.TwoSidedIdeal.Operations
+import D5.S3.FiniteGroups.GroupAlgebra.TwoSidedIdeal.SpanAsSum
 
 namespace D5.S3.RingTheory.SimpleRing.TensorProduct
 

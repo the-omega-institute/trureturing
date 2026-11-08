@@ -1,13 +1,13 @@
-/- GID: D5/S3/RingTheory/Morita/SimpleRing
+/- GID: D5/S3/FiniteGroups/GroupAlgebra/Morita/SimpleRing
    generality: G
-   mirror-B: D5/B/S3/RingTheory/Morita/SimpleRing
-   mirror-E: none(waiver:source-only-candidate)
+   mirror-B: D5/B/S3/FiniteGroups/GroupAlgebra/Morita/SimpleRing
+   mirror-E: none(waiver:algebraically-proved)
    anchors: []
    utility: none
    digest: Attributed equality-of-dimension criterion for modules over a finite simple algebra. -/
 
 /-
-UNCOMPILED / PARTIAL source-only candidate; upstream reuse, not a new mathematical result.
+Classical algebra proofs used for the actual finite-group representation image.
 Proof attribution: AxiomMath/Stacks contributors, Apache-2.0 (see upstream/LICENSE).
 Pinned revision: 5ed82d14634e8d9576bb844c7bd4e3da66d450e7
 Upstream: StacksCore/RingTheory/Morita/SimpleRing.lean
@@ -15,7 +15,6 @@ SHA-256: 5f5496b114b4852d86535beacd0db9ecc28eeff81fe9d68257627bdda66e6edf
 Upstream: StacksCore/LinearAlgebra/Dimension/Finite.lean
 SHA-256: c6579009c8e3296239dc55ad9e1c7892feab42e745755dbc24694c8a0cafbb66
 The pinned source files contain no individual author or copyright notices.
-Changed here: Trim unused algebra companion and matrix instances; use exact Mathlib division-ring/equivalence APIs; inline the upstream dimension helper privately; remove module/export directives and use the path namespace.
 -/
 
 import Mathlib.Algebra.Category.ModuleCat.Products

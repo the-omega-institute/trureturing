@@ -1,14 +1,14 @@
-/- GID: D5/S3/FiniteGroups/OriginalDFrobenius
+/- GID: D5/S3/FiniteGroups/Frobenius/OriginalDFrobenius
    generality: G
-   mirror-B: D5/B/S3/FiniteGroups/OriginalDFrobenius
+   mirror-B: D5/B/S3/FiniteGroups/Frobenius/OriginalDFrobenius
    mirror-E: none(waiver:algebraically-proved)
    anchors: []
    utility: none
    digest: Frobenius divisibility over the original Schur division ring. -/
 
-import D5.S3.FiniteGroups.OriginalDClifford
-import D5.S3.FiniteGroups.NormalizerImageAction
-import D5.S3.FiniteGroups.OriginalDRegularAction
+import D5.S3.FiniteGroups.Frobenius.OriginalDClifford
+import D5.S3.FiniteGroups.Frobenius.NormalizerImageAction
+import D5.S3.FiniteGroups.Frobenius.OriginalDRegularAction
 import Mathlib.GroupTheory.SchurZassenhaus
 import Mathlib.GroupTheory.Sylow
 import Mathlib.RepresentationTheory.Invariants

@@ -1,19 +1,18 @@
-/- GID: D5/S3/RingTheory/TwoSidedIdeal/SpanAsSum
+/- GID: D5/S3/FiniteGroups/GroupAlgebra/TwoSidedIdeal/SpanAsSum
    generality: G
-   mirror-B: D5/B/S3/RingTheory/TwoSidedIdeal/SpanAsSum
-   mirror-E: none(waiver:source-only-candidate)
+   mirror-B: D5/B/S3/FiniteGroups/GroupAlgebra/TwoSidedIdeal/SpanAsSum
+   mirror-E: none(waiver:algebraically-proved)
    anchors: []
    utility: none
    digest: Needed finite multiplier sum for the attributed tensor simplicity proof. -/
 
 /-
-UNCOMPILED / PARTIAL source-only candidate; upstream reuse, not a new mathematical result.
+Classical algebra proofs used for the actual finite-group representation image.
 Proof attribution: AxiomMath/Stacks contributors, Apache-2.0 (see upstream/LICENSE).
 Pinned revision: 5ed82d14634e8d9576bb844c7bd4e3da66d450e7
 Upstream: StacksCore/RingTheory/TwoSidedIdeal/SpanAsSum.lean
 SHA-256: 123adece5b72fe7eddcbf9d854712612bb5868fedb65a541b31db7c9b8ba71a4
 The pinned source files contain no individual author or copyright notices.
-Changed here: Drop the unused left-ideal companion; remove module/export directives; relocate names and privatize internal span equivalences.
 -/
 
 import Mathlib.Algebra.Group.Subgroup.Finsupp

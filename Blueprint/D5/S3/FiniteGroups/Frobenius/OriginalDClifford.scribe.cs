@@ -1,0 +1,15 @@
+using static StrataLint.Scribe.DefinitionDsl;
+
+namespace StrataLint.Scribe.Blueprint.D5.S3.FiniteGroups.Frobenius;
+
+internal sealed class OriginalDCliffordDocument : IScribeDocumentDefinition
+{
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Clifford decomposition with the original endomorphism division ring.", H("Clifford decomposition with the original endomorphism division ring."),
+        Blocks(
+            Paragraph(Text("Constituent conjugacy is reused from CliffordConstituents; direct sums and isotypic decomposition are from Mathlib. The integration retains the original endomorphism ring and constructs component transport and the inertia-coset correspondence. It requires no commutative replacement of D or additional decomposition assumption.")),
+            Describe.Lean(DescribeId.Create("originaldclifford-commutingdirectsumequiv"), DeclarationHandle.Create("D5/S3/FiniteGroups/Frobenius/OriginalDClifford.commutingDirectSumEquiv"), H("commutingDirectSumEquiv"), StatementSource.FromLean(), AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("Fully invariant isotypic submodules are stable under every commuting scalar action. The direct-sum map is consequently linear over the independent commuting scalar semiring."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("originaldclifford-map-isotypiccomponent-semilinear"), DeclarationHandle.Create("D5/S3/FiniteGroups/Frobenius/OriginalDClifford.map_isotypicComponent_semilinear"), H("map isotypicComponent semilinear"), StatementSource.FromLean(), AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("A semilinear automorphism of a module transports its isotypic component to the component of the transported submodule. Transport the defining family and use the inverse for the reverse inclusion."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("originaldclifford-originaldtranslate-map-component"), DeclarationHandle.Create("D5/S3/FiniteGroups/Frobenius/OriginalDClifford.originalDTranslate_map_component"), H("originalDTranslate map component"), StatementSource.FromLean(), AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("The actual group operator is linear over the original Schur division ring, because endomorphisms of the group-algebra module commute with it. Semilinear transport identifies its image component."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("originaldclifford-originald-finrank-independent-universes"), DeclarationHandle.Create("D5/S3/FiniteGroups/Frobenius/OriginalDClifford.originalD_finrank_independent_universes"), H("originalD finrank independent universes"), StatementSource.FromLean(), AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("The actual inertia subgroup is the stabilizer of the chosen isotypic component. Its cosets correspond bijectively to the components. The resulting product equivalence is linear over D = Module.End k[G] rho.asModule. Taking dimensions gives the original-D Clifford product formula, with independent field, group and carrier universes."))), DescribeRole.Theorem))));
+}

@@ -1,3 +1,11 @@
+/- GID: D5/S3/FiniteGroups/Frobenius/NormalizerImageAction
+   generality: G
+   mirror-B: D5/B/S3/FiniteGroups/Frobenius/NormalizerImageAction
+   mirror-E: none(waiver:algebraically-proved)
+   anchors: []
+   utility: none
+   digest: Actual normalizer and center actions on a restricted representation image. -/
+
 import Mathlib.Algebra.Algebra.Equiv
 import Mathlib.Algebra.Algebra.Tower
 import Mathlib.Algebra.Central.Defs
@@ -9,14 +17,10 @@ import Mathlib.LinearAlgebra.Matrix.FiniteDimensional
 import Mathlib.RepresentationTheory.Basic
 import Mathlib.RingTheory.SimpleRing.Field
 import D5.S3.FiniteGroups.FrobeniusInnerActionObstruction
-import D5.S3.RingTheory.SkolemNoether
-import D5.S3.FiniteGroups.FiniteIsotypicImageSimple
+import D5.S3.FiniteGroups.GroupAlgebra.SkolemNoether
+import D5.S3.FiniteGroups.Frobenius.FiniteIsotypicImageSimple
 
 /-!
-This module is kernel-checked. The Skolem import is the attributed local port of
-the pinned upstream theorem, and its five-module import closure is compiled by
-the same target.
-
 The actual module is U throughout. In particular, the last theorem installs the
 restricted group-algebra action on U by compHom; its semisimplicity/isotypy inputs
 refer to precisely that action. No scalar extension, characteristic restriction,
@@ -25,8 +29,7 @@ chosen action on the image, covariance hypothesis, or supplied inner unit occurs
 Reuse: Mathlib's conjNormal (including normality and inverse preservation),
 domCongr, conjAlgEquiv, rangeRestrict, and centerCongr. Skolem proof attribution:
 AxiomMath/Stacks contributors, Apache-2.0, pinned upstream revision
-5ed82d14634e8d9576bb844c7bd4e3da66d450e7; see the sibling candidate's source notices.
-The existing FiniteIsotypicImageSimple.lean is used without modification.
+5ed82d14634e8d9576bb844c7bd4e3da66d450e7; see GroupAlgebra/SkolemNoether.lean for exact source hashes.
 -/
 
 noncomputable section
@@ -322,8 +325,7 @@ private theorem actualTower :
   exact congrArg (fun f : Module.End k U => f x) ((q ρ N).commutes c)
 
 /-- SOURCE ONLY: the complement's center kernel is trivial for the original
-finite semisimple isotypic module. Simplicity of A is DERIVED using the preserved
-companion candidate; finite dimensionality of A over k and over Z(A) is derived above.
+finite semisimple isotypic module. Simplicity of A follows from the actual image theorem; finite dimensionality of A over k and over Z(A) is derived above.
 The fixed-point-free condition is the actual Frobenius-kernel conjugation
 condition inside H. The complement is an actual subgroup complement inside H.
 No assumption supplies a center action, covariance, inner implementer, or

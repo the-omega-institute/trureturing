@@ -2,7 +2,7 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.FiniteGroups;
+namespace StrataLint.Scribe.Blueprint.D5.S3.FiniteGroups.Frobenius;
 
 internal sealed class OriginalDRegularActionDocument : IScribeDocumentDefinition
 {
@@ -21,7 +21,7 @@ internal sealed class OriginalDRegularActionDocument : IScribeDocumentDefinition
     private static DocumentBlock Node(string name, string id, Formula statement,
         DescribeRole role, params string[] paragraphs) =>
         Describe.Lean(DescribeId.Create(id),
-            DeclarationHandle.Create("D5/S3/FiniteGroups/OriginalDRegularAction." + name),
+            DeclarationHandle.Create("D5/S3/FiniteGroups/Frobenius/OriginalDRegularAction." + name),
             H(name.Replace('_', ' ')), StatementSource.FromAuthor(Disp(statement)),
             AssessedProvenance.FromRepo(), Blocks(paragraphs.Select(p => Paragraph(Text(p))).ToArray()), role);
 

@@ -1,3 +1,11 @@
+/- GID: D5/S3/FiniteGroups/Frobenius/OriginalDClifford
+   generality: G
+   mirror-B: D5/B/S3/FiniteGroups/Frobenius/OriginalDClifford
+   mirror-E: none(waiver:algebraically-proved)
+   anchors: []
+   utility: none
+   digest: Clifford decomposition over the original Schur division ring with independent universes. -/
+
 import Mathlib.RingTheory.SimpleModule.Isotypic
 import Mathlib.Algebra.DirectSum.Module
 import Mathlib.Algebra.Module.Submodule.Equiv
@@ -5,8 +13,8 @@ import Mathlib.LinearAlgebra.Dimension.Constructions
 import D5.S3.FiniteGroups.CliffordConstituents
 
 /-!
-Temporary exact-source kernel probe of the original-D Clifford interfaces.
-Source admission and the full Frobenius endpoint remain outside this probe.
+The restricted isotypic components carry the original Schur division-ring action.
+Their actual inertia cosets index an equivariant product decomposition.
 -/
 
 namespace OriginalDCliffordCandidate

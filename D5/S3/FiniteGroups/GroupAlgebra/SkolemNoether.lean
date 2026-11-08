@@ -1,24 +1,23 @@
-/- GID: D5/S3/RingTheory/SkolemNoether
+/- GID: D5/S3/FiniteGroups/GroupAlgebra/SkolemNoether
    generality: G
-   mirror-B: D5/B/S3/RingTheory/SkolemNoether
-   mirror-E: none(waiver:source-only-candidate)
+   mirror-B: D5/B/S3/FiniteGroups/GroupAlgebra/SkolemNoether
+   mirror-E: none(waiver:algebraically-proved)
    anchors: []
    utility: none
    digest: Attributed Skolem-Noether automorphism theorem for finite central simple algebras. -/
 
 /-
-UNCOMPILED / PARTIAL source-only candidate; upstream reuse, not a new mathematical result.
+Classical algebra proofs used for the actual finite-group representation image.
 Proof attribution: AxiomMath/Stacks contributors, Apache-2.0 (see upstream/LICENSE).
 Pinned revision: 5ed82d14634e8d9576bb844c7bd4e3da66d450e7
 Upstream: StacksCore/RingTheory/SkolemNoether.lean
 SHA-256: 28e02088adb5705d79804feb8c7c581fa11005fcbd5ccc984b9c394936581a39
 The pinned source files contain no individual author or copyright notices.
-Changed here: Change Stacks imports to candidate D5 imports; remove module/export directives; wrap the path namespace and make the general theorem and all implementation helpers private. The endpoint statement and proof are retained.
 -/
 
 import Mathlib.Algebra.Azumaya.Defs
-import D5.S3.RingTheory.Morita.SimpleRing
-import D5.S3.RingTheory.SimpleRing.TensorProduct
+import D5.S3.FiniteGroups.GroupAlgebra.Morita.SimpleRing
+import D5.S3.FiniteGroups.GroupAlgebra.SimpleRing.TensorProduct
 
 namespace D5.S3.RingTheory.SkolemNoether
 

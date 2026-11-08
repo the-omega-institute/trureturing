@@ -1,5 +1,5 @@
 /- GID: D5/S3/Factorization/Galois/GaloisVectorDescent
-   generality: I
+   generality: G
    mirror-B: D5/B/S3/Factorization/Galois/GaloisVectorDescent
    mirror-E: none(waiver:algebraically-proved)
    anchors: []
@@ -15,12 +15,19 @@ import Mathlib.LinearAlgebra.TensorProduct.Basis
 import Mathlib.RepresentationTheory.Invariants
 
 /-!
+Proof method: Qiuzhen-CFSG contributors, Qiuzhen-CFSG/CFSG, Apache-2.0.
+Pinned revision: 0c6635528a02dd46f2e93e2ade0c4ac647ad1eb7
+Upstream: Theory/Representation/FiniteFieldSemilinearDisplacement/Descent.lean
+SHA-256: 88372d6b2a7d0c4ef321d78bee826c6bb1ca6dfbd4539687a3e0e038b80cf47f
+The invariant-generation argument is adapted to independent universes and a
+Galois-group action; canonical tensor descent uses Mathlib base-change maps.
+
 Effective semilinear descent for an arbitrary-dimensional vector space. The finite
 sum below is not divided by the order of the group. The group law on V and
 `SMulDistribClass G L V` are essential: this is a genuine semilinear action,
 not a projective action or a cocycle condition assumed to have a solution.
 
-The new proof is invariant generation by twisted orbit sums and Artin
+The argument is invariant generation by twisted orbit sums and Artin
 independence, followed by descent of the coordinates of an invariant basis.
 Basis extraction, scalar restriction, and tensor base change reuse Mathlib.
 -/

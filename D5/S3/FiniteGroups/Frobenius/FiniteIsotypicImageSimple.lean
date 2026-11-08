@@ -1,3 +1,11 @@
+/- GID: D5/S3/FiniteGroups/Frobenius/FiniteIsotypicImageSimple
+   generality: G
+   mirror-B: D5/B/S3/FiniteGroups/Frobenius/FiniteIsotypicImageSimple
+   mirror-E: none(waiver:algebraically-proved)
+   anchors: []
+   utility: none
+   digest: Simplicity of the actual algebra image on a finite isotypic semisimple module. -/
+
 import Mathlib.Algebra.Algebra.Tower
 import Mathlib.LinearAlgebra.Matrix.ToLin
 import Mathlib.RingTheory.Finiteness.Basic

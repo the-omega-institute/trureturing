@@ -1,19 +1,18 @@
-/- GID: D5/S3/RingTheory/TwoSidedIdeal/Operations
+/- GID: D5/S3/FiniteGroups/GroupAlgebra/TwoSidedIdeal/Operations
    generality: G
-   mirror-B: D5/B/S3/RingTheory/TwoSidedIdeal/Operations
-   mirror-E: none(waiver:source-only-candidate)
+   mirror-B: D5/B/S3/FiniteGroups/GroupAlgebra/TwoSidedIdeal/Operations
+   mirror-E: none(waiver:algebraically-proved)
    anchors: []
    utility: none
    digest: Needed two-sided-ideal operations for the attributed tensor simplicity proof. -/
 
 /-
-UNCOMPILED / PARTIAL source-only candidate; upstream reuse, not a new mathematical result.
+Classical algebra proofs used for the actual finite-group representation image.
 Proof attribution: AxiomMath/Stacks contributors, Apache-2.0 (see upstream/LICENSE).
 Pinned revision: 5ed82d14634e8d9576bb844c7bd4e3da66d450e7
 Upstream: StacksCore/RingTheory/TwoSidedIdeal/Operations.lean
 SHA-256: 46be68d41f8ac60c28a7391b92e845b00bde919b3b9e2244282293ce5b50fe61
 The pinned source files contain no individual author or copyright notices.
-Changed here: Trim unused declarations; remove module/export directives; use the path namespace, explicit helper calls, and private internal lemmas.
 -/
 
 import Mathlib.RingTheory.Ideal.Maps

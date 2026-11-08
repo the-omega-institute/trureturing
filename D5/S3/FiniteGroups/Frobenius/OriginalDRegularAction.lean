@@ -1,6 +1,6 @@
-/- GID: D5/S3/FiniteGroups/OriginalDRegularAction
-   generality: I
-   mirror-B: D5/B/S3/FiniteGroups/OriginalDRegularAction
+/- GID: D5/S3/FiniteGroups/Frobenius/OriginalDRegularAction
+   generality: G
+   mirror-B: D5/B/S3/FiniteGroups/Frobenius/OriginalDRegularAction
    mirror-E: none(waiver:algebraically-proved)
    anchors: []
    utility: none

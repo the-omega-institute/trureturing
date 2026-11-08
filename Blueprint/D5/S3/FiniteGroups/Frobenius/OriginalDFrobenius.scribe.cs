@@ -2,7 +2,7 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.FiniteGroups;
+namespace StrataLint.Scribe.Blueprint.D5.S3.FiniteGroups.Frobenius;
 
 internal sealed class OriginalDFrobeniusDocument : IScribeDocumentDefinition
 {
@@ -18,12 +18,12 @@ internal sealed class OriginalDFrobeniusDocument : IScribeDocumentDefinition
             Node("exists_complement_originalD_regular", RegularStatement(),
                 "Under the same hypotheses there exist an actual complement C, a D-submodule S of W, and a D-linear equivalence E : W -> (C -> S) satisfying E(rho(c)v)(x) = E(v)(c^(-1)x). This is an equivalence for the actual complement operators, with inverse on the left of the index.",
                 "First construct equivariant regular coordinates on U for J by normal-basis descent over the faithful actual center. The vector associated with the identity coordinate generates the J-coordinate blocks. Sum its actual translates over C to obtain a D-linear map from C -> S to W. The actual complement factorization and inertia stability show that its image contains every G-translate of U. This image is a k[G]-submodule; irreducibility makes it all of W. The original-D Clifford rank identity gives equality of domain and codomain dimensions, proving bijectivity. Reindexing the actual operator sum proves C-equivariance directly. Thus equality of dimensions is used only after constructing the map, proving surjectivity, and identifying its action.",
-                "The equivalence uses the original Schur division ring throughout, without replacing it by the coefficient field or by a commutative division ring."))));
+                "The equivalence uses the original Schur division ring throughout, without replacing it by the coefficient field or by a commutative division ring. The useful passage from group action to arithmetic is that a faithful action on the actual component center supplies fixed-field Galois descent and normal-basis coordinates. These coordinates are linear for the original D-action because the center operators commute with D. Clifford induction assembles them into full-complement regular coordinates; each complement coordinate has the same D-dimension, so its order, equal to N.index, divides the total dimension. Hall coprimality, Schur-Zassenhaus, Skolem-Noether, semilinear descent and normal bases are classical results or reused proofs. The formal integration constructs the actual centers, inertia components and equivariant maps together; it makes no global novelty claim."))));
 
     private static DocumentBlock Node(string name, Formula statement, params string[] paragraphs) =>
         Describe.Lean(DescribeId.Create(name == "index_dvd_originalD_finrank" ?
                 "original-d-frobenius-rank" : "original-d-frobenius-regular"),
-            DeclarationHandle.Create("D5/S3/FiniteGroups/OriginalDFrobenius." + name),
+            DeclarationHandle.Create("D5/S3/FiniteGroups/Frobenius/OriginalDFrobenius." + name),
             H(name.Replace('_', ' ')), StatementSource.FromAuthor(Disp(statement)),
             AssessedProvenance.FromRepo(), Blocks(paragraphs.Select(p => Paragraph(Text(p))).ToArray()),
             DescribeRole.Theorem);
