@@ -4,8 +4,6 @@
 
 Fixed-support two-layer integer activation envelope.
 
-The finite construction has passed native Lean elaboration and kernel compilation. Scoped axiom and registration evidence are checked separately. No freeze, independent review or RH conclusion is asserted. This is one source implementation, not an independent review triplet. Local library search found the probability, logarithm and finite-tail suppliers used below; it did not locate a whole construction in the inspected scope. This is neither universal absence nor a claim of literature novelty.
-
 Let S be any finite set of natural primes. The domain is all a:N->N with a(p)>=1 for p in S, and no restriction on a(p) outside S. Its image is exactly {OwnClockFixedSupport.phi(S,cast(a))-baseline(S)} over that whole domain; C is the sInf of that image. No selected image, attained minimum or near-minimizer is substituted. Put H=theta(S), L=log(H), U=sum_S (a(p)-1)log(p), D=sum_S -log(1-p^(-(a(p)+1))), and J_lambda=lambda*U+D. The original benefit, baseline and Euler constant are retained. The consumed normalization is exactly F=phi(S,cast(a))-baseline(S)=log(1+log(1+U/H)/L)+D. Write A1=sum_S min(lambda*log(p),p^-2) and A2=sum_S min(lambda*log(p),p^-3).
 
 **Theorem 1.1 (Uniform ceiling, three, two and one construction).**
@@ -42,7 +40,7 @@ Let X=1/lambda. The q hypotheses imply X>=16. For Q=sqrt(X/log(X)), the scalar l
 
 The exact source normalization, global scalar defect and all-vector sublevel proof are adapted in this same owner. For u=U/H>=0,L>=1, the public rational logarithm bounds give 0<=log(1+log(1+u)/L)<=u/L and deficit <=u^2/L. If F<r, Real.abs_exp_sub_one_le is applied first at r and then at s=log(1+u), giving s<=2Lr<=1 and u<=4Lr. Both exponential divided-difference steps remain on the proof path. Thus F>=J_lambda-16Lr^2 in this branch; F>=r handles the other branch. No vector is discarded from the lower image.
 
-The all-one vector proves nonemptiness, and F>=0 proves boundedness below by zero. le_csInf transfers the pointwise lower minimum; csInf_le, membership of the constructed vector and F<=J_lambda transfer the upper estimate. These order and scalar helpers are consumed bindings, not separate claimed contributions. This source implements exactly depth K=3, not a parameterized finite-depth family or an infinite-depth lower theorem. It retains the exact quartic free-q condition. No optimized cutoff, cubic PNT tail, theta-PNT proof, asymptotic limit or freeze artifact is included. The mirrored Reg source audits the literal q observation in the head error with all hypotheses retained; its producer state is reported separately from kernel compilation.
+The all-one vector proves nonemptiness, and F>=0 proves boundedness below by zero. le_csInf transfers the pointwise lower minimum; csInf_le, membership of the constructed vector and F<=J_lambda transfer the upper estimate. These order and scalar helpers are consumed bindings, not separate claimed contributions. This source implements exactly depth K=3, not a parameterized finite-depth family or an infinite-depth lower theorem. It retains the exact quartic free-q condition. No optimized cutoff, cubic PNT tail, theta-PNT proof, asymptotic limit is included.
 
 ## References
 

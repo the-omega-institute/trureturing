@@ -12,11 +12,7 @@ import D5.S3.Arith.Robin.EulerLayer.EulerLayerRootSecondOrder
 import Mathlib.Order.Interval.Finset.Nat
 import Mathlib.Analysis.Real.Sqrt
 
-/-! Native Lean elaboration and kernel compilation of this finite construction
-have succeeded. This owner is not frozen; independent prefreeze review and
-publication are separate from the scoped source checks.
-
-The integer image retains every supported-admissible natural vector. Only the
+/-! The integer image retains every supported-admissible natural vector. Only the
 constructed trial vector is set to zero off support. No cardinal-three,
 prime-prefix, record, minimizing-vector or asymptotic premise occurs here.
 The scalar and conditional-infimum steps are paid bindings. The new

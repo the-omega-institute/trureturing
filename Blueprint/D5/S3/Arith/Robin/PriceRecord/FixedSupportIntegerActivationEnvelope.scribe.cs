@@ -12,14 +12,6 @@ internal sealed class FixedSupportIntegerActivationEnvelopeDocument : IScribeDoc
         H("A finite construction in the complete nonlinear integer image"),
         Blocks(
             Paragraph(Text(
-                "The finite construction has passed native Lean elaboration and kernel "
-                + "compilation. Scoped axiom and registration evidence are checked separately. "
-                + "No freeze, independent review or RH conclusion is asserted. This is one "
-                + "source implementation, not an independent review triplet. Local library "
-                + "search found the probability, logarithm and finite-tail suppliers used below; "
-                + "it did not locate a whole construction in the inspected scope. This is "
-                + "neither universal absence nor a claim of literature novelty.")),
-            Paragraph(Text(
                 "Let S be any finite set of natural primes. The domain is all a:N->N "
                 + "with a(p)>=1 for p in S, and no restriction on a(p) outside S. Its image "
                 + "is exactly {OwnClockFixedSupport.phi(S,cast(a))-baseline(S)} over that "
@@ -115,8 +107,6 @@ internal sealed class FixedSupportIntegerActivationEnvelopeDocument : IScribeDoc
                         + "This source implements exactly depth K=3, not a parameterized "
                         + "finite-depth family or an infinite-depth lower theorem. It retains the exact quartic free-q condition. "
                         + "No optimized cutoff, cubic PNT tail, theta-PNT proof, asymptotic "
-                        + "limit or freeze artifact is included. The mirrored Reg source audits "
-                        + "the literal q observation in the head error with all hypotheses retained; "
-                        + "its producer state is reported separately from kernel compilation."))),
+                        + "limit is included."))),
                 DescribeRole.Theorem))));
 }
