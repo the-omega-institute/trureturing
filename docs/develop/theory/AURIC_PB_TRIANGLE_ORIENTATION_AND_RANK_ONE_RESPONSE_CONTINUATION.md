@@ -2186,10 +2186,10 @@ $$
 \begin{aligned}
 \Delta_+
 &=\frac{\varepsilon^2n^2}{4}
-\frac{nm}{4}(1+\varepsilon^2)(1+\varepsilon^2/4),\\
++\frac{nm}{4}(1+\varepsilon^2)(1+\varepsilon^2/4),\\
 \Delta_-
 &=\frac{\varepsilon^2n^2}{4}
-\frac{nm}{16}\varepsilon^2(1+\varepsilon^2).
++\frac{nm}{16}\varepsilon^2(1+\varepsilon^2).
 \end{aligned}
 \tag{189.3}
 $$
