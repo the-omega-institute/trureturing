@@ -30,12 +30,12 @@ abbrev signature : Signature where
   finiteAnchor := inferInstance
 
 def actual : Realization signature.{u} :=
-  realize signature (fun _ P => P.2.2.1) (fun e => nomatch e)
+  realize signature (fun _ P => P.2.2.1) (fun e => Empty.elim e)
 
 def constantTarget : Realization signature.{u} :=
   realize signature (fun _ P x =>
     if hn : 0 < P.2.2.2.1 then P.2.2.2.2 ⟨0, hn⟩ else P.2.2.1 x)
-    (fun e => nomatch e)
+    (fun e => Empty.elim e)
 
 def arena : Arena where
   signature := signature.{u}
@@ -98,7 +98,7 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena.{u} ⟨family.{u}⟩
   correspondence := {stage := .evidence, objectStage := .evidence}
   bundleNonempty := .absent
-  readout := some (realize signature.{u} (fun _ P => P.2.2.1) (fun e => nomatch e))
+  readout := some (realize signature.{u} (fun _ P => P.2.2.1) (fun e => Empty.elim e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none

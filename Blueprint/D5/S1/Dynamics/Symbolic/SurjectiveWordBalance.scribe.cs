@@ -11,7 +11,6 @@ internal sealed class SurjectiveWordBalanceDocument : IScribeDocumentDefinition
         LibraryNoteRef.Create("D5/L/Entropy/hellouinsalotorma2025frequencies");
     private static Formula Id(string s) => F.Id(s);
     private static Formula Nat => Seq(Mathbb, Grp(Id("N")));
-    private static Formula Int => Seq(Mathbb, Grp(Id("Z")));
     private static Formula Arr(Formula a, Formula b) => Seq(Open, a, Sp, To, Sp, b, Close);
     private static Formula Add(Formula a, Formula b) => Seq(a, Sp, Plus, Sp, b);
     private static Formula Call(string s, params Formula[] args)
