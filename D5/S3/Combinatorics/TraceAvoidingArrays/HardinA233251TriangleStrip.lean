@@ -122,7 +122,8 @@ def normal {n : ℕ} (s : Seen) (f : Fin n → WidthRow k) : Prop :=
   ∀ i j, ((f i j = 2 ∨ f i j = 3 ∨ f i j = 4) → s.1 = true ∨ prior f i j 1) ∧
     (f i j = 3 → s.2 = true ∨ prior f i j 2)
 
-private theorem prior_zero {n : ℕ} (c : WidthRow k) (f : Fin n → WidthRow k) (j : Fin k) (d : Fin 6) :
+private theorem prior_zero {n : ℕ} (c : WidthRow k) (f : Fin n → WidthRow k)
+    (j : Fin k) (d : Fin 6) :
     prior (Fin.cons c f) 0 j d ↔ ∃ k, k < j ∧ c k = d := by
   simp [prior, Fin.exists_fin_succ]
 
@@ -310,7 +311,8 @@ theorem counting_bridge (n : ℕ) :
       · intro i hi
         exact hb i (by omega)
   change (∑ f : Fin n → WidthRow k,
-    if Legal R E (fun p => (Fin.cons c f : Fin (n + 1) → WidthRow k) p.1 p.2) then (1 : ℤ) else 0) = _
+    if Legal R E (fun p => (Fin.cons c f : Fin (n + 1) → WidthRow k) p.1 p.2)
+      then (1 : ℤ) else 0) = _
   simp_rw [hl]
   by_cases h : c 0 = 0 ∧ R c ∧ good (false, false) c <;> simp [h]
 
