@@ -12,7 +12,7 @@ $$\forall n \in \mathbb{N},\; \forall pi \in \operatorname{Equiv.Perm}\left(\ope
 
 *Formalization.* `D5/S1/Words/Permutations/KageyMajorIndexFirstLetter.maj` (`✓ std3`).
 
-*Citation.* Peter Kagey (2021). *Expected value of letters of permutations with a given number of k-cycles*. URL: <https://arxiv.org/abs/2112.05281v1>.
+*Citation.* Peter Kagey (2021). *Expected value of letters of permutations with a given number of k-cycles*. DOI: [10.48550/arXiv.2112.05281](https://doi.org/10.48550/arXiv.2112.05281). URL: <https://arxiv.org/abs/2112.05281v1>.
 
 *Commentary.*
 
@@ -24,7 +24,7 @@ $$\forall n \in \mathbb{N},\; \forall k \in \mathbb{N},\; \operatorname{count}\l
 
 *Formalization.* `D5/S1/Words/Permutations/KageyMajorIndexFirstLetter.count` (`✓ std3`).
 
-*Citation.* Peter Kagey (2021). *Expected value of letters of permutations with a given number of k-cycles*. URL: <https://arxiv.org/abs/2112.05281v1>.
+*Citation.* Peter Kagey (2021). *Expected value of letters of permutations with a given number of k-cycles*. DOI: [10.48550/arXiv.2112.05281](https://doi.org/10.48550/arXiv.2112.05281). URL: <https://arxiv.org/abs/2112.05281v1>.
 
 *Commentary.*
 
@@ -36,7 +36,7 @@ $$\forall n \in \mathbb{N},\; \forall k \in \mathbb{N},\; \operatorname{E}\left(
 
 *Formalization.* `D5/S1/Words/Permutations/KageyMajorIndexFirstLetter.E` (`✓ std3`).
 
-*Citation.* Peter Kagey (2021). *Expected value of letters of permutations with a given number of k-cycles*. URL: <https://arxiv.org/abs/2112.05281v1>.
+*Citation.* Peter Kagey (2021). *Expected value of letters of permutations with a given number of k-cycles*. DOI: [10.48550/arXiv.2112.05281](https://doi.org/10.48550/arXiv.2112.05281). URL: <https://arxiv.org/abs/2112.05281v1>.
 
 *Commentary.*
 
@@ -48,7 +48,7 @@ $$claim = (\forall k \in \mathbb{N},\; 0 < k \implies \exists P \in \operatornam
 
 *Formalization.* `D5/S1/Words/Permutations/KageyMajorIndexFirstLetter.claim` (`✓ std3`).
 
-*Citation.* Peter Kagey (2021). *Expected value of letters of permutations with a given number of k-cycles*. URL: <https://arxiv.org/abs/2112.05281v1>.
+*Citation.* Peter Kagey (2021). *Expected value of letters of permutations with a given number of k-cycles*. DOI: [10.48550/arXiv.2112.05281](https://doi.org/10.48550/arXiv.2112.05281). URL: <https://arxiv.org/abs/2112.05281v1>.
 
 *Commentary.*
 
@@ -62,7 +62,7 @@ $$\forall k \in \mathbb{N},\; 0 < k \implies \exists P \in \operatorname{Polynom
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Peter Kagey (2021). *Expected value of letters of permutations with a given number of k-cycles*. URL: <https://arxiv.org/abs/2112.05281v1>.
+*Acknowledgement.* Peter Kagey (2021). *Expected value of letters of permutations with a given number of k-cycles*. DOI: [10.48550/arXiv.2112.05281](https://doi.org/10.48550/arXiv.2112.05281). URL: <https://arxiv.org/abs/2112.05281v1>.
 
 *Commentary.*
 

@@ -8,7 +8,7 @@ internal sealed class KageyMajorIndexFirstLetterDocument : IScribeDocumentDefini
 {
     private const string Root = "D5/S1/Words/Permutations/KageyMajorIndexFirstLetter.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/PermutationPatterns/kagey2021majorindex");
+        LibraryNoteRef.Create("D5/L/PermutationPatterns/kagey2021firstletter");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Major-index first-letter expectations have the monic rational form of Conjecture 5.2.",

@@ -8,7 +8,7 @@
 
 /-
 admission_basis: open-problem-resolution (#19720; Proved)
-result: proof_shape: content; escape_witness: none (open-problem-resolution).
+result: proof_shape: content; escape_witness: countPoly_eval_descent.
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/21383.
 The first-letter expression is inlined. It equals (PSW.word π).headD 0;
 the one-line-word owner is in S3, so its literal expression is used here.
