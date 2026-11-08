@@ -104,7 +104,8 @@ internal sealed class A392976InverseRecurrenceDocument : IScribeDocumentDefiniti
                 + "carrier of the published integer sequence. The inverse has constant coefficient zero; "
                 + "both formal compositions are X. No analytic branch is selected. The offset is zero. "
                 + "The secondary offset three does not set the recurrence threshold. Every recurrence "
-                + "index is a natural number at least five, and subtraction in a sequence argument is "
+                + "index is a natural number at least five, representing every integer in that range, "
+                + "and subtraction in a sequence argument is "
                 + "natural subtraction. The function castQ embeds a natural number into Q. "
                 + "Substitution uses the polynomial f as its formal power series.")),
             Node("f", "The quintic polynomial",

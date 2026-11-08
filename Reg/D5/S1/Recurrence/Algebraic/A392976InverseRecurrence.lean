@@ -26,7 +26,7 @@ def rejected : Realization signature := realize signature
   (fun _ _ n => if n = 5 then 1 else 0) (fun e => nomatch e)
 
 /-- The inverse, quotient, D-finiteness and every recurrence index are retained. -/
-def arena : Arena where
+abbrev arena : Arena where
   signature := signature
   Law R :=
   constantCoeff U = 0 ∧
@@ -94,7 +94,10 @@ def registration : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   escapeFrom := none
   sourceSelection := some {
     owner := `D5.S1.Recurrence.Algebraic.A392976InverseRecurrence
-    definition := some `D5.S1.Recurrence.Algebraic.A392976InverseRecurrence.claim
+    definition := some {
+      owner := `D5.S1.Recurrence.Algebraic.A392976InverseRecurrence
+      name := `D5.S1.Recurrence.Algebraic.A392976InverseRecurrence.claim
+      path := #[] }
     coordinates := #[]
     readouts := #[
       { path := #["arg", "arg", "arg", "arg", "arg", "arg", "body", "body", "fn", "arg", "fn", "arg", "fn", "arg", "fn", "arg", "fn", "arg", "fn", "arg", "arg"]
