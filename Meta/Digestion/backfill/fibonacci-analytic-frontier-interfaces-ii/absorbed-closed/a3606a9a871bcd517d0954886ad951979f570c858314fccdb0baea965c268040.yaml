@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:a3606a9a871bcd517d0954886ad951979f570c858314fccdb0baea965c268040
   normalized_sha256: sha256:a3606a9a871bcd517d0954886ad951979f570c858314fccdb0baea965c268040
 cas_ref: sha256:a3606a9a871bcd517d0954886ad951979f570c858314fccdb0baea965c268040
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Weil/ZeroInfinitude/ExplicitFormulaObstruction.isNontrivialZero_infinite
+    target_statement_id: sha256:a946d28dc763c8f3a94cf2e9c7ee0f03b159623576255ffbcfd375ac6dd566ac
 receipts:
   unresolved_subitems: []

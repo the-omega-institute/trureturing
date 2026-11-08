@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:8c1695b5b18a0424b5da8e2eedf465d216a5e339b4230c1eba621aeacf11ba28
   normalized_sha256: sha256:8c1695b5b18a0424b5da8e2eedf465d216a5e339b4230c1eba621aeacf11ba28
 cas_ref: sha256:8c1695b5b18a0424b5da8e2eedf465d216a5e339b4230c1eba621aeacf11ba28
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Analytic/Isolation/RiemannZetaPositiveRealSign.riemannZeta_ofReal_sign
+    target_statement_id: sha256:dbaa4a12cccc9e2097ddad13fc2795f2abdb7548e864c5bf12af3214b8f4f0e9
 receipts:
   unresolved_subitems: []
