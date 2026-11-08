@@ -358,7 +358,8 @@ private theorem restriction_trivial_of_clifford_constituent_trivial_generic
   apply E.toLinearEquiv.injective
   change E ((W.ρ.comp N.subtype) n w) = E w
   calc
-    _ = ρM n (E w) := _root_.Representation.IntertwiningMap.isIntertwining E.toIntertwiningMap n w
+    _ = ρM n (E w) :=
+      LinearMap.congr_fun (E.toIntertwiningMap.isIntertwining' n) w
     _ = E w := hM n (E w)
 
 end CliffordAction
