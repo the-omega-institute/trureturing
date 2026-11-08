@@ -7,6 +7,7 @@
    digest: Inner implementations on simple finite group-algebra quotients force augmentation. -/
 
 import Mathlib.Algebra.Field.ULift
+import D5.S3.ArithUnits.MinacNguyenTanQuestion35
 import D5.S3.FiniteGroups.FrobeniusCharacterDegrees
 import Mathlib.RingTheory.SimpleRing.Basic
 import Mathlib.RingTheory.SimpleModule.WedderburnArtin
@@ -20,6 +21,7 @@ namespace D5.S3.FiniteGroups.FrobeniusInnerActionObstruction
 open CategoryTheory
 open scoped TensorProduct _root_.MonoidAlgebra
 open FrobeniusCharacterDegrees
+open D5.S3.ArithUnits.MinacNguyenTanQuestion35 (augmentation)
 
 private theorem ofModule'_action
     {k G M : Type*} [Field k] [Group G] [AddCommGroup M]
@@ -172,10 +174,6 @@ theorem trivial_of_inner_image
     rfl
   rw [hmap]
   exact Representation.isTrivial_apply W.ρ n _
-
-/-- The augmentation of the finite group algebra. -/
-noncomputable def augmentation (k N : Type*) [Field k] [Group N] :
-    MonoidAlgebra k N →ₐ[k] k := MonoidAlgebra.lift k k N 1
 
 /-- Over any field, a fixed-point-free automorphism cannot act inner on a
 nonaugmentation finite-dimensional simple quotient of the group algebra. -/
