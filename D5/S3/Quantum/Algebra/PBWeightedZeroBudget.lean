@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Quantum/Algebra/PBWeightedZeroBudget
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.LinearAlgebra.Matrix.PosDef]
+   anchors: [mathlib/module/Mathlib.Analysis.Matrix.PosDef]
    utility: none
    digest: Original positive pair tables and balancing constrain the same weighted response. -/
 
