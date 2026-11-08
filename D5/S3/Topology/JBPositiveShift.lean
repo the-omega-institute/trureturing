@@ -9,6 +9,7 @@
 module
 
 public import D5.S3.Topology.JBAlgebra
+public import Batteries.Tactic.OpenPrivate
 public import Mathlib.Analysis.Normed.Operator.Banach
 public import Mathlib.Analysis.Normed.Ring.Units
 public import Mathlib.Analysis.SpecialFunctions.Pow.Real
@@ -25,6 +26,7 @@ set_option linter.unusedSimpArgs false
 
 namespace D5.S3.Topology.JBPositiveShift
 open D5.S3.Topology.JBAlgebra
+open private bracket polarized from D5.S3.Topology.JBAlgebra
 variable {X : Type*} [NormedAddCommGroup X] [NormedSpace ℝ X]
 variable {S : X →ₗ[ℝ] X →ₗ[ℝ] X} {u : X}
 
@@ -34,29 +36,7 @@ private lemma jlinear (A : Data X S u) (a b c d : X) :
   (S a (S (S b c) d) - S (S b c) (S a d)) +
   (S b (S (S c a) d) - S (S c a) (S b d)) +
   (S c (S (S a b) d) - S (S a b) (S c d)) = 0 := by
-  let _ : NonUnitalNonAssocCommRing X :=
-    { (inferInstance : AddCommGroup X) with
-      mul := fun x y => S x y
-      left_distrib := fun x y z => (S x).map_add y z
-      right_distrib := fun x y z => congrArg (fun f : X →ₗ[ℝ] X => f z) (S.map_add x y)
-      zero_mul := fun x => congrArg (fun f : X →ₗ[ℝ] X => f x) S.map_zero
-      mul_zero := fun x => (S x).map_zero
-      mul_comm := A.symm }
-  let _ : IsCommJordan X := ⟨A.jordan⟩
-  have h := congrArg (fun f : AddMonoid.End X => f d)
-    (two_nsmul_lie_lmul_lmul_add_add_eq_zero a b c)
-  simp only [two_smul, Ring.lie_def] at h
-  change ((S a (S (S b c) d) - S (S b c) (S a d)) +
-  (S b (S (S c a) d) - S (S c a) (S b d)) +
-  (S c (S (S a b) d) - S (S a b) (S c d))) +
-  ((S a (S (S b c) d) - S (S b c) (S a d)) +
-  (S b (S (S c a) d) - S (S c a) (S b d)) +
-  (S c (S (S a b) d) - S (S a b) (S c d))) = 0 at h
-  have hz : (2 : ℝ) • ((S a (S (S b c) d) - S (S b c) (S a d)) +
-  (S b (S (S c a) d) - S (S c a) (S b d)) +
-  (S c (S (S a b) d) - S (S a b) (S c d))) = 0 := by
-    simpa only [two_smul] using h
-  exact (smul_eq_zero.mp hz).resolve_left (by norm_num)
+  simpa only [bracket] using polarized A a b c d
 
 theorem fundamental_identity (A : Data X S u) (a b v : X) :
     quadratic S (quadratic S a b) v = quadratic S a (quadratic S b (quadratic S a v)) := by
