@@ -9,6 +9,7 @@
 module
 
 public import D5.S3.Topology.JBAlgebra
+import all D5.S3.Topology.JBAlgebra
 public import Batteries.Tactic.OpenPrivate
 public import Mathlib.Analysis.Normed.Operator.Banach
 public import Mathlib.Analysis.Normed.Ring.Units
@@ -17,6 +18,8 @@ public import Mathlib.Tactic.LinearCombination
 public import Mathlib.Tactic.FieldSimp
 public import Mathlib.Tactic.Positivity
 
+/-! Original-norm positive square shifts and their ambient quadratic inverses. -/
+
 @[expose] public section
 noncomputable section
 set_option autoImplicit false
@@ -24,9 +27,10 @@ set_option maxRecDepth 10000
 set_option maxHeartbeats 0
 set_option linter.unusedSimpArgs false
 
-namespace D5.S3.Topology.JBPositiveShift
 open D5.S3.Topology.JBAlgebra
 open private bracket polarized from D5.S3.Topology.JBAlgebra
+
+namespace D5.S3.Topology.JBPositiveShift
 variable {X : Type*} [NormedAddCommGroup X] [NormedSpace ℝ X]
 variable {S : X →ₗ[ℝ] X →ₗ[ℝ] X} {u : X}
 
@@ -195,136 +199,246 @@ theorem fundamental_identity (A : Data X S u) (a b v : X) :
   have h152 := jlinear A b b v (S (S (S a a) a) a)
   have h153 := jlinear A b b v (S (S a a) (S a a))
   have h154 := congrArg (fun z : X => (S z v)) (jlinear A (S a a) (S a a) b b)
-  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply, LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h154
+  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply,
+    LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h154
   have h155 := congrArg (fun z : X => (S z v)) (jlinear A (S a a) (S a b) b a)
-  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply, LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h155
+  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply,
+    LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h155
   have h156 := congrArg (fun z : X => (S z v)) (jlinear A (S a a) a a (S b b))
-  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply, LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h156
+  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply,
+    LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h156
   have h157 := congrArg (fun z : X => (S z v)) (jlinear A (S a a) a b (S a b))
-  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply, LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h157
+  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply,
+    LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h157
   have h158 := congrArg (fun z : X => (S z v)) (jlinear A (S a a) b b (S a a))
-  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply, LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h158
+  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply,
+    LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h158
   have h159 := congrArg (fun z : X => (S z v)) (jlinear A (S a b) a a (S a b))
-  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply, LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h159
+  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply,
+    LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h159
   have h160 := congrArg (fun z : X => (S z v)) (jlinear A (S a b) a b (S a a))
-  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply, LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h160
+  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply,
+    LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h160
   have h161 := congrArg (fun z : X => (S z v)) (jlinear A a a a (S (S a b) b))
-  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply, LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h161
+  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply,
+    LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h161
   have h162 := congrArg (fun z : X => (S z v)) (jlinear A a a a (S (S b b) a))
-  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply, LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h162
+  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply,
+    LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h162
   have h163 := congrArg (fun z : X => (S z v)) (jlinear A a a b (S (S a b) a))
-  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply, LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h163
+  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply,
+    LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h163
   have h164 := congrArg (fun z : X => (S z b)) (jlinear A (S (S a a) v) a b a)
-  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply, LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h164
+  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply,
+    LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h164
   have h165 := congrArg (fun z : X => (S z b)) (jlinear A (S (S a v) a) a b a)
-  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply, LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h165
+  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply,
+    LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h165
   have h166 := congrArg (fun z : X => (S z b)) (jlinear A (S a a) (S a b) v a)
-  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply, LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h166
+  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply,
+    LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h166
   have h167 := congrArg (fun z : X => (S z b)) (jlinear A (S a a) (S a v) b a)
-  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply, LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h167
+  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply,
+    LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h167
   have h168 := congrArg (fun z : X => (S z b)) (jlinear A (S a a) a a (S b v))
-  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply, LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h168
+  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply,
+    LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h168
   have h169 := congrArg (fun z : X => (S z b)) (jlinear A (S a a) a b (S a v))
-  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply, LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h169
+  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply,
+    LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h169
   have h170 := congrArg (fun z : X => (S z b)) (jlinear A (S a a) a v (S a b))
-  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply, LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h170
+  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply,
+    LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h170
   have h171 := congrArg (fun z : X => (S z b)) (jlinear A (S a a) b v (S a a))
-  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply, LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h171
+  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply,
+    LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h171
   have h172 := congrArg (fun z : X => (S z b)) (jlinear A (S a b) a a (S a v))
-  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply, LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h172
+  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply,
+    LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h172
   have h173 := congrArg (fun z : X => (S z b)) (jlinear A (S a b) a v (S a a))
-  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply, LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h173
+  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply,
+    LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h173
   have h174 := congrArg (fun z : X => (S z b)) (jlinear A (S a v) a a (S a b))
-  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply, LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h174
+  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply,
+    LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h174
   have h175 := congrArg (fun z : X => (S z b)) (jlinear A (S a v) a b (S a a))
-  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply, LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h175
+  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply,
+    LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h175
   have h176 := congrArg (fun z : X => (S z b)) (jlinear A (S b v) a a (S a a))
-  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply, LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h176
+  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply,
+    LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h176
   have h177 := congrArg (fun z : X => (S z b)) (jlinear A a a a (S (S a b) v))
-  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply, LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h177
+  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply,
+    LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h177
   have h178 := congrArg (fun z : X => (S z b)) (jlinear A a a a (S (S a v) b))
-  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply, LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h178
+  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply,
+    LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h178
   have h179 := congrArg (fun z : X => (S z b)) (jlinear A a a a (S (S b v) a))
-  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply, LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h179
+  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply,
+    LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h179
   have h180 := congrArg (fun z : X => (S z b)) (jlinear A a a b (S (S a v) a))
-  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply, LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h180
+  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply,
+    LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h180
   have h181 := congrArg (fun z : X => (S z b)) (jlinear A a a v (S (S a a) b))
-  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply, LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h181
+  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply,
+    LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h181
   have h182 := congrArg (fun z : X => (S z b)) (jlinear A a a v (S (S a b) a))
-  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply, LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h182
+  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply,
+    LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h182
   have h183 := congrArg (fun z : X => (S (S b v) z)) (jlinear A (S a a) a b a)
-  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply, LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h183
+  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply,
+    LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h183
   have h184 := congrArg (fun z : X => (S (S b v) z)) (jlinear A (S a b) a a a)
-  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply, LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h184
+  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply,
+    LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h184
   have h185 := congrArg (fun z : X => (S (S z b) v)) (jlinear A a a a (S a b))
-  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply, LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h185
+  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply,
+    LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h185
   have h186 := congrArg (fun z : X => (S (S z v) b)) (jlinear A a a a (S a b))
-  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply, LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h186
+  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply,
+    LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h186
   have h187 := congrArg (fun z : X => (S (S b v) z)) (jlinear A a a a (S a b))
-  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply, LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h187
+  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply,
+    LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h187
   have h188 := congrArg (fun z : X => (S (S b v) z)) (jlinear A a a b (S a a))
-  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply, LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h188
+  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply,
+    LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h188
   have h189 := congrArg (fun z : X => (S (S z b) b)) (jlinear A (S a a) a v a)
-  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply, LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h189
+  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply,
+    LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h189
   have h190 := congrArg (fun z : X => (S (S b b) z)) (jlinear A (S a a) a v a)
-  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply, LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h190
+  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply,
+    LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h190
   have h191 := congrArg (fun z : X => (S (S z b) b)) (jlinear A (S a v) a a a)
-  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply, LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h191
+  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply,
+    LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h191
   have h192 := congrArg (fun z : X => (S (S b b) z)) (jlinear A (S a v) a a a)
-  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply, LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h192
+  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply,
+    LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h192
   have h193 := congrArg (fun z : X => (S (S z b) b)) (jlinear A a a a (S a v))
-  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply, LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h193
+  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply,
+    LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h193
   have h194 := congrArg (fun z : X => (S (S b b) z)) (jlinear A a a a (S a v))
-  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply, LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h194
+  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply,
+    LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h194
   have h195 := congrArg (fun z : X => (S (S z b) b)) (jlinear A a a v (S a a))
-  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply, LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h195
+  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply,
+    LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h195
   have h196 := congrArg (fun z : X => (S (S b b) z)) (jlinear A a a v (S a a))
-  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply, LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h196
+  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply,
+    LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h196
   have h197 := congrArg (fun z : X => (S (S (S z b) b) v)) (jlinear A a a a a)
-  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply, LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h197
+  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply,
+    LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h197
   have h198 := congrArg (fun z : X => (S (S (S z b) v) b)) (jlinear A a a a a)
-  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply, LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h198
+  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply,
+    LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h198
   have h199 := congrArg (fun z : X => (S (S (S z v) b) b)) (jlinear A a a a a)
-  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply, LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h199
+  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply,
+    LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h199
   have h200 := congrArg (fun z : X => (S (S (S b b) v) z)) (jlinear A a a a a)
-  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply, LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h200
+  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply,
+    LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h200
   have h201 := congrArg (fun z : X => (S (S z b) (S b v))) (jlinear A a a a a)
-  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply, LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h201
+  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply,
+    LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h201
   have h202 := congrArg (fun z : X => (S z a)) (jlinear A (S a a) b b (S a v))
-  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply, LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h202
+  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply,
+    LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h202
   have h203 := congrArg (fun z : X => (S z a)) (jlinear A (S a a) b v (S a b))
-  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply, LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h203
+  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply,
+    LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h203
   have h204 := congrArg (fun z : X => (S z a)) (jlinear A (S a b) a b (S a v))
-  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply, LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h204
+  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply,
+    LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h204
   have h205 := congrArg (fun z : X => (S z a)) (jlinear A (S a b) a v (S a b))
-  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply, LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h205
+  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply,
+    LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h205
   have h206 := congrArg (fun z : X => (S z a)) (jlinear A (S a b) b v (S a a))
-  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply, LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h206
+  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply,
+    LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h206
   have h207 := congrArg (fun z : X => (S z a)) (jlinear A (S a v) a b (S a b))
-  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply, LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h207
+  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply,
+    LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h207
   have h208 := congrArg (fun z : X => (S z a)) (jlinear A (S a v) b b (S a a))
-  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply, LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h208
+  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply,
+    LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h208
   have h209 := congrArg (fun z : X => (S z a)) (jlinear A (S b v) a a (S a b))
-  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply, LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h209
+  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply,
+    LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h209
   have h210 := congrArg (fun z : X => (S z a)) (jlinear A (S b v) a b (S a a))
-  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply, LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h210
+  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply,
+    LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h210
   have h211 := congrArg (fun z : X => (S z a)) (jlinear A a a b (S (S a b) v))
-  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply, LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h211
+  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply,
+    LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h211
   have h212 := congrArg (fun z : X => (S z a)) (jlinear A a a b (S (S b v) a))
-  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply, LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h212
+  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply,
+    LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h212
   have h213 := congrArg (fun z : X => (S z a)) (jlinear A a a v (S (S a b) b))
-  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply, LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h213
+  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply,
+    LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h213
   have h214 := congrArg (fun z : X => (S z a)) (jlinear A a a v (S (S b b) a))
-  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply, LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h214
+  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply,
+    LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h214
   have h215 := congrArg (fun z : X => (S z a)) (jlinear A a b b (S (S a a) v))
-  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply, LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h215
+  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply,
+    LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h215
   have h216 := congrArg (fun z : X => (S z a)) (jlinear A a b v (S (S a b) a))
-  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply, LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h216
+  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply,
+    LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h216
   have h217 := congrArg (fun z : X => (S (S z v) a)) (jlinear A (S a b) a a b)
-  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply, LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h217
-  simp only [quadratic, map_add, map_sub, map_smul, LinearMap.add_apply, LinearMap.sub_apply, LinearMap.smul_apply, RingHom.id_apply]
+  simp only [map_add, map_sub, map_smul, map_zero, LinearMap.add_apply, LinearMap.sub_apply,
+    LinearMap.smul_apply, LinearMap.zero_apply, RingHom.id_apply] at h217
+  simp only [quadratic, map_add, map_sub, map_smul, LinearMap.add_apply, LinearMap.sub_apply,
+    LinearMap.smul_apply, RingHom.id_apply]
   simp only [A.symm] at *
-  linear_combination (norm := module) ((((((((-10 : ℝ) • h0 + ((2 : ℝ) • h1 + (4 : ℝ) • h2)) + ((16 : ℝ) • h3 + ((-8 : ℝ) • h4 + (10 : ℝ) • h5))) + (((-4 : ℝ) • h6 + ((2 : ℝ) • h7 + (2 : ℝ) • h8)) + (((2 : ℝ) • h9 + (1 : ℝ) • h10) + ((2 : ℝ) • h11 + (-2 : ℝ) • h12)))) + ((((-1 : ℝ) • h13 + ((-1 : ℝ) • h14 + (-2 : ℝ) • h15)) + (((1 : ℝ) • h16 + (1 : ℝ) • h17) + ((-2 : ℝ) • h18 + (2 : ℝ) • h19))) + (((-2 : ℝ) • h20 + ((2 : ℝ) • h21 + (1 : ℝ) • h22)) + (((-2 : ℝ) • h23 + (-2 : ℝ) • h24) + ((-5 : ℝ) • h25 + (-1 : ℝ) • h26))))) + (((((-14 : ℝ) • h27 + ((2 : ℝ) • h28 + (5/2 : ℝ) • h29)) + ((2 : ℝ) • h30 + ((-1/2 : ℝ) • h31 + (10 : ℝ) • h32))) + (((-14 : ℝ) • h33 + ((4 : ℝ) • h34 + (-28 : ℝ) • h35)) + (((4 : ℝ) • h36 + (20 : ℝ) • h37) + ((24 : ℝ) • h38 + (-14 : ℝ) • h39)))) + ((((-12 : ℝ) • h40 + ((4 : ℝ) • h41 + (10 : ℝ) • h42)) + (((-2 : ℝ) • h43 + (-10 : ℝ) • h44) + ((-4 : ℝ) • h45 + (-6 : ℝ) • h46))) + (((2 : ℝ) • h47 + ((-2 : ℝ) • h48 + (14 : ℝ) • h49)) + (((-4 : ℝ) • h50 + (10 : ℝ) • h51) + ((-6 : ℝ) • h52 + (-2 : ℝ) • h53)))))) + ((((((12 : ℝ) • h54 + ((-12 : ℝ) • h55 + (4 : ℝ) • h56)) + ((-3 : ℝ) • h57 + ((-4 : ℝ) • h58 + (1 : ℝ) • h59))) + (((6 : ℝ) • h60 + ((-2 : ℝ) • h61 + (12 : ℝ) • h62)) + (((-6 : ℝ) • h63 + (2 : ℝ) • h64) + ((-1 : ℝ) • h65 + (5 : ℝ) • h66)))) + ((((-2 : ℝ) • h67 + ((2 : ℝ) • h68 + (-4 : ℝ) • h69)) + (((-2 : ℝ) • h70 + (2 : ℝ) • h71) + ((-4 : ℝ) • h72 + (-4 : ℝ) • h73))) + (((-4 : ℝ) • h74 + ((2 : ℝ) • h75 + (1/4 : ℝ) • h76)) + (((1/2 : ℝ) • h77 + (-1/2 : ℝ) • h78) + ((3/4 : ℝ) • h79 + (1 : ℝ) • h80))))) + (((((2 : ℝ) • h81 + ((2 : ℝ) • h82 + (2 : ℝ) • h83)) + (((-18 : ℝ) • h84 + (-10 : ℝ) • h85) + ((1 : ℝ) • h86 + (-3 : ℝ) • h87))) + (((14 : ℝ) • h88 + ((2 : ℝ) • h89 + (8 : ℝ) • h90)) + (((-2 : ℝ) • h91 + (1/2 : ℝ) • h92) + ((3 : ℝ) • h93 + (-4 : ℝ) • h94)))) + ((((-4 : ℝ) • h95 + ((4 : ℝ) • h96 + (12 : ℝ) • h97)) + (((2 : ℝ) • h98 + (2 : ℝ) • h99) + ((-4 : ℝ) • h100 + (2 : ℝ) • h101))) + (((-2 : ℝ) • h102 + ((11 : ℝ) • h103 + (-4 : ℝ) • h104)) + (((-2 : ℝ) • h105 + (-16 : ℝ) • h106) + ((-20 : ℝ) • h107 + (4 : ℝ) • h108))))))) + (((((((16 : ℝ) • h109 + ((16 : ℝ) • h110 + (16 : ℝ) • h111)) + ((-4 : ℝ) • h112 + ((-2 : ℝ) • h113 + (4 : ℝ) • h114))) + (((2 : ℝ) • h115 + ((2 : ℝ) • h116 + (-2 : ℝ) • h117)) + (((-1 : ℝ) • h118 + (-12 : ℝ) • h119) + ((-2 : ℝ) • h120 + (-10/3 : ℝ) • h121)))) + ((((14/3 : ℝ) • h122 + ((-2/3 : ℝ) • h123 + (5/3 : ℝ) • h124)) + (((2/3 : ℝ) • h125 + (-4/3 : ℝ) • h126) + ((2/3 : ℝ) • h127 + (1/3 : ℝ) • h128))) + (((1 : ℝ) • h129 + ((-3 : ℝ) • h130 + (-14 : ℝ) • h131)) + (((-2 : ℝ) • h132 + (2 : ℝ) • h133) + ((6 : ℝ) • h134 + (-2 : ℝ) • h135))))) + (((((1 : ℝ) • h136 + ((2 : ℝ) • h137 + (1 : ℝ) • h138)) + ((-6 : ℝ) • h139 + ((-2 : ℝ) • h140 + (-1 : ℝ) • h141))) + (((1/2 : ℝ) • h142 + ((1 : ℝ) • h143 + (1 : ℝ) • h144)) + (((-7 : ℝ) • h145 + (6 : ℝ) • h146) + ((1 : ℝ) • h147 + (2 : ℝ) • h148)))) + ((((-2 : ℝ) • h149 + ((4 : ℝ) • h150 + (2 : ℝ) • h151)) + (((1 : ℝ) • h152 + (3/4 : ℝ) • h153) + ((2 : ℝ) • h154 + (4 : ℝ) • h155))) + (((-1/2 : ℝ) • h156 + ((-2 : ℝ) • h157 + (-1/2 : ℝ) • h158)) + (((10 : ℝ) • h159 + (6 : ℝ) • h160) + ((4/3 : ℝ) • h161 + (-5/3 : ℝ) • h162)))))) + ((((((4 : ℝ) • h163 + ((-4 : ℝ) • h164 + (8 : ℝ) • h165)) + ((4 : ℝ) • h166 + ((-4 : ℝ) • h167 + (-1 : ℝ) • h168))) + (((6 : ℝ) • h169 + ((-2 : ℝ) • h170 + (3 : ℝ) • h171)) + (((-6 : ℝ) • h172 + (-10 : ℝ) • h173) + ((10 : ℝ) • h174 + (-2 : ℝ) • h175)))) + ((((2 : ℝ) • h176 + ((-4/3 : ℝ) • h177 + (4/3 : ℝ) • h178)) + (((-2 : ℝ) • h179 + (-4 : ℝ) • h180) + ((-4 : ℝ) • h181 + (-4 : ℝ) • h182))) + (((-2 : ℝ) • h183 + ((-10 : ℝ) • h184 + (-4/3 : ℝ) • h185)) + (((-4/3 : ℝ) • h186 + (-2/3 : ℝ) • h187) + ((1 : ℝ) • h188 + (4 : ℝ) • h189))))) + (((((-7 : ℝ) • h190 + ((-4 : ℝ) • h191 + (1 : ℝ) • h192)) + (((8/3 : ℝ) • h193 + (-13/3 : ℝ) • h194) + ((-2 : ℝ) • h195 + (13/2 : ℝ) • h196))) + (((-2/3 : ℝ) • h197 + ((20/3 : ℝ) • h198 + (-2 : ℝ) • h199)) + (((3 : ℝ) • h200 + (-4 : ℝ) • h201) + ((1 : ℝ) • h202 + (18 : ℝ) • h203)))) + ((((20 : ℝ) • h204 + ((-12 : ℝ) • h205 + (-6 : ℝ) • h206)) + (((-12 : ℝ) • h207 + (-3 : ℝ) • h208) + ((4 : ℝ) • h209 + (4 : ℝ) • h210))) + (((8 : ℝ) • h211 + ((-2 : ℝ) • h212 + (-8 : ℝ) • h213)) + (((1 : ℝ) • h214 + (-2 : ℝ) • h215) + ((-24 : ℝ) • h216 + (-16 : ℝ) • h217))))))))
+  linear_combination (norm := module) ((((((((-10 : ℝ) • h0 + ((2 : ℝ) • h1 + (4 : ℝ) • h2)) +
+    ((16 : ℝ) • h3 + ((-8 : ℝ) • h4 + (10 : ℝ) • h5))) + (((-4 : ℝ) • h6 + ((2 : ℝ) • h7 + (2 : ℝ)
+    • h8)) + (((2 : ℝ) • h9 + (1 : ℝ) • h10) + ((2 : ℝ) • h11 + (-2 : ℝ) • h12)))) + ((((-1 : ℝ) •
+    h13 + ((-1 : ℝ) • h14 + (-2 : ℝ) • h15)) + (((1 : ℝ) • h16 + (1 : ℝ) • h17) + ((-2 : ℝ) • h18
+    + (2 : ℝ) • h19))) + (((-2 : ℝ) • h20 + ((2 : ℝ) • h21 + (1 : ℝ) • h22)) + (((-2 : ℝ) • h23 +
+    (-2 : ℝ) • h24) + ((-5 : ℝ) • h25 + (-1 : ℝ) • h26))))) + (((((-14 : ℝ) • h27 + ((2 : ℝ) • h28
+    + (5/2 : ℝ) • h29)) + ((2 : ℝ) • h30 + ((-1/2 : ℝ) • h31 + (10 : ℝ) • h32))) + (((-14 : ℝ) •
+    h33 + ((4 : ℝ) • h34 + (-28 : ℝ) • h35)) + (((4 : ℝ) • h36 + (20 : ℝ) • h37) + ((24 : ℝ) • h38
+    + (-14 : ℝ) • h39)))) + ((((-12 : ℝ) • h40 + ((4 : ℝ) • h41 + (10 : ℝ) • h42)) + (((-2 : ℝ) •
+    h43 + (-10 : ℝ) • h44) + ((-4 : ℝ) • h45 + (-6 : ℝ) • h46))) + (((2 : ℝ) • h47 + ((-2 : ℝ) •
+    h48 + (14 : ℝ) • h49)) + (((-4 : ℝ) • h50 + (10 : ℝ) • h51) + ((-6 : ℝ) • h52 + (-2 : ℝ) •
+    h53)))))) + ((((((12 : ℝ) • h54 + ((-12 : ℝ) • h55 + (4 : ℝ) • h56)) + ((-3 : ℝ) • h57 + ((-4
+    : ℝ) • h58 + (1 : ℝ) • h59))) + (((6 : ℝ) • h60 + ((-2 : ℝ) • h61 + (12 : ℝ) • h62)) + (((-6 :
+    ℝ) • h63 + (2 : ℝ) • h64) + ((-1 : ℝ) • h65 + (5 : ℝ) • h66)))) + ((((-2 : ℝ) • h67 + ((2 : ℝ)
+    • h68 + (-4 : ℝ) • h69)) + (((-2 : ℝ) • h70 + (2 : ℝ) • h71) + ((-4 : ℝ) • h72 + (-4 : ℝ) •
+    h73))) + (((-4 : ℝ) • h74 + ((2 : ℝ) • h75 + (1/4 : ℝ) • h76)) + (((1/2 : ℝ) • h77 + (-1/2 :
+    ℝ) • h78) + ((3/4 : ℝ) • h79 + (1 : ℝ) • h80))))) + (((((2 : ℝ) • h81 + ((2 : ℝ) • h82 + (2 :
+    ℝ) • h83)) + (((-18 : ℝ) • h84 + (-10 : ℝ) • h85) + ((1 : ℝ) • h86 + (-3 : ℝ) • h87))) + (((14
+    : ℝ) • h88 + ((2 : ℝ) • h89 + (8 : ℝ) • h90)) + (((-2 : ℝ) • h91 + (1/2 : ℝ) • h92) + ((3 : ℝ)
+    • h93 + (-4 : ℝ) • h94)))) + ((((-4 : ℝ) • h95 + ((4 : ℝ) • h96 + (12 : ℝ) • h97)) + (((2 : ℝ)
+    • h98 + (2 : ℝ) • h99) + ((-4 : ℝ) • h100 + (2 : ℝ) • h101))) + (((-2 : ℝ) • h102 + ((11 : ℝ)
+    • h103 + (-4 : ℝ) • h104)) + (((-2 : ℝ) • h105 + (-16 : ℝ) • h106) + ((-20 : ℝ) • h107 + (4 :
+    ℝ) • h108))))))) + (((((((16 : ℝ) • h109 + ((16 : ℝ) • h110 + (16 : ℝ) • h111)) + ((-4 : ℝ) •
+    h112 + ((-2 : ℝ) • h113 + (4 : ℝ) • h114))) + (((2 : ℝ) • h115 + ((2 : ℝ) • h116 + (-2 : ℝ) •
+    h117)) + (((-1 : ℝ) • h118 + (-12 : ℝ) • h119) + ((-2 : ℝ) • h120 + (-10/3 : ℝ) • h121)))) +
+    ((((14/3 : ℝ) • h122 + ((-2/3 : ℝ) • h123 + (5/3 : ℝ) • h124)) + (((2/3 : ℝ) • h125 + (-4/3 :
+    ℝ) • h126) + ((2/3 : ℝ) • h127 + (1/3 : ℝ) • h128))) + (((1 : ℝ) • h129 + ((-3 : ℝ) • h130 +
+    (-14 : ℝ) • h131)) + (((-2 : ℝ) • h132 + (2 : ℝ) • h133) + ((6 : ℝ) • h134 + (-2 : ℝ) •
+    h135))))) + (((((1 : ℝ) • h136 + ((2 : ℝ) • h137 + (1 : ℝ) • h138)) + ((-6 : ℝ) • h139 + ((-2
+    : ℝ) • h140 + (-1 : ℝ) • h141))) + (((1/2 : ℝ) • h142 + ((1 : ℝ) • h143 + (1 : ℝ) • h144)) +
+    (((-7 : ℝ) • h145 + (6 : ℝ) • h146) + ((1 : ℝ) • h147 + (2 : ℝ) • h148)))) + ((((-2 : ℝ) •
+    h149 + ((4 : ℝ) • h150 + (2 : ℝ) • h151)) + (((1 : ℝ) • h152 + (3/4 : ℝ) • h153) + ((2 : ℝ) •
+    h154 + (4 : ℝ) • h155))) + (((-1/2 : ℝ) • h156 + ((-2 : ℝ) • h157 + (-1/2 : ℝ) • h158)) +
+    (((10 : ℝ) • h159 + (6 : ℝ) • h160) + ((4/3 : ℝ) • h161 + (-5/3 : ℝ) • h162)))))) + ((((((4 :
+    ℝ) • h163 + ((-4 : ℝ) • h164 + (8 : ℝ) • h165)) + ((4 : ℝ) • h166 + ((-4 : ℝ) • h167 + (-1 :
+    ℝ) • h168))) + (((6 : ℝ) • h169 + ((-2 : ℝ) • h170 + (3 : ℝ) • h171)) + (((-6 : ℝ) • h172 +
+    (-10 : ℝ) • h173) + ((10 : ℝ) • h174 + (-2 : ℝ) • h175)))) + ((((2 : ℝ) • h176 + ((-4/3 : ℝ) •
+    h177 + (4/3 : ℝ) • h178)) + (((-2 : ℝ) • h179 + (-4 : ℝ) • h180) + ((-4 : ℝ) • h181 + (-4 : ℝ)
+    • h182))) + (((-2 : ℝ) • h183 + ((-10 : ℝ) • h184 + (-4/3 : ℝ) • h185)) + (((-4/3 : ℝ) • h186
+    + (-2/3 : ℝ) • h187) + ((1 : ℝ) • h188 + (4 : ℝ) • h189))))) + (((((-7 : ℝ) • h190 + ((-4 : ℝ)
+    • h191 + (1 : ℝ) • h192)) + (((8/3 : ℝ) • h193 + (-13/3 : ℝ) • h194) + ((-2 : ℝ) • h195 +
+    (13/2 : ℝ) • h196))) + (((-2/3 : ℝ) • h197 + ((20/3 : ℝ) • h198 + (-2 : ℝ) • h199)) + (((3 :
+    ℝ) • h200 + (-4 : ℝ) • h201) + ((1 : ℝ) • h202 + (18 : ℝ) • h203)))) + ((((20 : ℝ) • h204 +
+    ((-12 : ℝ) • h205 + (-6 : ℝ) • h206)) + (((-12 : ℝ) • h207 + (-3 : ℝ) • h208) + ((4 : ℝ) •
+    h209 + (4 : ℝ) • h210))) + (((8 : ℝ) • h211 + ((-2 : ℝ) • h212 + (-8 : ℝ) • h213)) + (((1 : ℝ)
+    • h214 + (-2 : ℝ) • h215) + ((-24 : ℝ) • h216 + (-16 : ℝ) • h217))))))))
 
 
 private lemma unit_mem (a : X) : u ∈ generated S u a :=
@@ -468,7 +582,8 @@ private theorem ambient_bijective (A : Data X S u) (z a c : X)
   · intro x y hxy
     calc
       x = quadratic S a (quadratic S (S c c) (quadratic S a x)) := (hs x).symm
-      _ = quadratic S a (quadratic S (S c c) (quadratic S a y)) := congrArg (fun v => quadratic S a (quadratic S (S c c) v)) hxy
+      _ = quadratic S a (quadratic S (S c c) (quadratic S a y)) := congrArg (fun v => quadratic S
+        a (quadratic S (S c c) v)) hxy
       _ = y := hs y
   · intro y
     exact ⟨quadratic S (S c c) (quadratic S a y),hs y⟩
@@ -502,7 +617,8 @@ theorem positive_shift_generated_inverse (A : Data X S u) (z : X) (t : ℝ) (ht 
   rw [inv_eq_one_div]
   exact (le_div_iff₀ ht).mpr (by nlinarith only [hb1])
 
-/-- Positive square shifts have bijective quadratic representations on the entire original carrier. -/
+/-- Positive square shifts have bijective quadratic representations on the entire original
+  carrier. -/
 theorem positive_shift_quadratic_bijective (A : Data X S u) (z : X) (t : ℝ) (ht : 0 < t) :
     Function.Bijective (quadratic S (S z z + t • u)) := by
   obtain ⟨b,hb,hinv,_⟩ := positive_shift_generated_inverse A z t ht
