@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:786c886b376476ee34450516df82c7f70ac1d6b93a3738745fbc72daf6784c49
   normalized_sha256: sha256:786c886b376476ee34450516df82c7f70ac1d6b93a3738745fbc72daf6784c49
 cas_ref: sha256:786c886b376476ee34450516df82c7f70ac1d6b93a3738745fbc72daf6784c49
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Quantum/SpinFactor/OriginalDContract.unit_rows
+    target_statement_id: sha256:6ccf028bf66ad186da4da6522a6c27ba2b7da775935f20291c44abbd506cbbc1
 receipts:
   unresolved_subitems: []
