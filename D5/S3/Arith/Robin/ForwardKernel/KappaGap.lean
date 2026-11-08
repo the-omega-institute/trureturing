@@ -40,11 +40,11 @@ private lemma zero_real_parts_bddAbove :
   rintro r ⟨ρ, hρ, rfl⟩
   exact hρ.2.2.le
 
-private lemma zero_re_le_abscissa {ρ : ℂ} (hρ : IsNontrivialZero ρ) :
+lemma zero_re_le_abscissa {ρ : ℂ} (hρ : IsNontrivialZero ρ) :
     ρ.re ≤ zeroAbscissa :=
   le_csSup zero_real_parts_bddAbove ⟨ρ, hρ, rfl⟩
 
-private lemma zeroAbscissa_nonnegative : 0 ≤ zeroAbscissa := by
+lemma zeroAbscissa_nonnegative : 0 ≤ zeroAbscissa := by
   obtain ⟨ρ, hρ⟩ :=
     D5.S3.Weil.ZeroInfinitude.ExplicitFormulaObstruction.isNontrivialZero_infinite.nonempty
   exact hρ.2.1.le.trans (zero_re_le_abscissa hρ)
