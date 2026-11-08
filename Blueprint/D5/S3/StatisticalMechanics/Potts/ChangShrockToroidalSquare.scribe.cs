@@ -84,7 +84,9 @@ internal sealed class ChangShrockToroidalSquareDocument : IScribeDocumentDefinit
                         + "eigenvalue x; equation (5.21) gives precisely this Potts form. "
                         + "The polynomial theorem uses no division or specialization. "
                         + "It makes no claim about amplitudes or the second eigenvalue y."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("changshrock2005square"), ResolutionKind.Proved)))));
 
     private static Formula Width(Formula body) => All("L", Nat(),
         Seq(OpenBracket, Call("NeZero", X("L")), CloseBracket, Sp, body));
