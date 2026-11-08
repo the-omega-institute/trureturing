@@ -119,7 +119,8 @@ private theorem r_failure (n : ℕ) (hres : parameter n % 7 = 4)
       ((2 * (m : ℝ) + 1) * (2 * (m : ℝ) + 2) / 2 +
         (1 + (m : ℝ) * ((m : ℝ) + 1) / 2) * x) = 0 := by
     have hsq := (sq_eq_zero_iff).mp hroot
-    simpa [rOdd, triangular, m, hshift, Nat.cast_add, Nat.cast_mul, add_assoc] using hsq
+    norm_num [rOdd, triangular, m, hshift, Nat.cast_add, Nat.cast_mul] at hsq
+    nlinarith [hsq]
   have hy : y - 4 = (2 * (m : ℝ) - 6) / ((m : ℝ) ^ 2 + m + 2) := by
     apply (eq_div_iff (ne_of_gt hD)).2
     dsimp [y]
