@@ -24,7 +24,7 @@ any complex inner product space, hence in the original two-dimensional H_J.
 This is the infinitesimal-distance part of OmegaQ-020, Theorem 7.3. The original
 right-multiplication Pauli representation, its differential-projector tensor,
 the curvature of the Berry connection, and the global loop/Stokes/gauge bridge
-are separate obligations. No global phase or full-atom closure is asserted.
+are separate mathematical obligations. No global phase formula is asserted.
 -/
 
 noncomputable section
