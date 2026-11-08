@@ -1,0 +1,47 @@
+**定理 50.2（P2 支付任意原投影角的输出闭合）。** 在定义 50.1 的同一原 JB 接口上，P2 单独推出
+
+$$
+E_p=E\cap X_p,\qquad \overline{E_p}^{\,N}=X_p,
+\qquad D(E_p,E_p)\subset E_p.
+\tag{50.2}
+$$
+
+当 $p\ne0$ 时，$X_p$ 是单位为 $p$ 的 JB 代数，正锥为 $X_p\cap X_+$；$E_p$ 的序单位范数正是 $N|_{E_p}$。当 $p=0$ 时，$E_p=X_p=0$，限制的旧 $D$ 恒零。这不是任意输入对的压缩相容律。
+
+证明。成熟 JB Peirce 接口给：$U_p$ 是有界正线性投影，$U_pu=p$，其像 $X_p$ 是闭 Jordan 子代数，单位为 $p$，锥为 $X_p\cap X_+$。这些只要求 $X$ 为 JB、$p$ 为投影，不要求 special 或 JBW；其代数 Peirce 分解和二次表示正性分别取 Hanche-Olsen–Størmer §2.6、Proposition 3.3.6。因 $U_p$ 是原乘法的多项式，它保持 $E$。若 $x\in E\cap X_p$，投影性给 $x=U_px\in U_p(E)$，反向包含显然。对任意 $x\in X_p$，用原 $a_n\to x$ 得 $U_pa_n\to x$，故 $E_p$ 在 $X_p$ 中稠密；这里逼近的是已知有界 $U_p$，没有延拓 $D$。
+
+对 $x\in X_p$，若 $-ru\le x\le ru$，施加正映射 $U_p$ 得 $-rp\le x\le rp$。反向由 $0\le p\le u$ 得 $-ru\le x\le ru$。取下确界即知角范数和原完成范数相等。$p\ne0$ 时，角内 JB 函数演算因此给
+
+$$
+0\le a^2\le N(a)^2p\qquad(a\in E_p).
+\tag{50.3}
+$$
+
+P2 的 Hermitian 性和原评价分离性先给 $D(a,a)=0$、$D(a,b)=-D(b,a)$，包括零标签。固定任意原 $a,b\in E_p$，只固定一个旧输出 $d=D(a,b)\in E$。P2 在复系数 $(1,\mathrm i)$ 和 $(1,-\mathrm i)$ 上分别给
+
+$$
+\alpha(a^2+b^2+2d)\ge0,\qquad
+\alpha(a^2+b^2-2d)\ge0\qquad(\alpha\in\mathcal P).
+$$
+
+原族准确决定 $C$，再用 (50.3)，得到原序界
+
+$$
+-cp\le d\le cp,\qquad c=\frac{N(a)^2+N(b)^2}{2}.
+\tag{50.4}
+$$
+
+此处没有除以任何质量，也没有把 $D$ 的相加输入展开。
+
+只对这两个固定元素 $p,d$ 取 $B=\operatorname{JB}_X(u,p,d)$，即它们与单位生成的范数闭 Jordan 子代数。$B$ 继承范数，因而是完备 JB 代数；非单位生成元只有 $p,d$。$B$ 与 $X$ 在 $B$ 上的正序相同：含单位 JB 代数的正性由同一单生成函数演算决定，等价地由 $x\ge0\Longleftrightarrow\|x-\|x\|u\|\le\|x\|$ 决定，而两者单位与范数相同。因此 (50.4) 也是 $B$ 中的序界。
+
+Shirshov–Cohn 的 JB 版本（van de Wetering，Definition 2.23、Theorem 3.5）适用于这个完备、至多两个元素及单位生成的 $B$，给忠实等距 Jordan 表示 $j:B\hookrightarrow B(\mathcal H)_{\rm sa}$。可以令 $j(u)=I$：初始像单位 $Q=j(u)$ 是投影，$Qj(x)+j(x)Q=2j(x)$ 使每个 $j(x)$ 支撑于 $Q$，限制到 $Q\mathcal H$ 即得含单位表示。表示保平方及正序，且由等距性和同一范数判据反映正序。
+
+置 $P=j(p)$、$T=j(d)+cP$。$P$ 为正交投影，(50.4) 给 $0\le T\le2cP$。对任意 $\xi\in(I-P)\mathcal H$，有 $0\le\langle\xi,T\xi\rangle\le0$，故正算子平方根满足 $T^{1/2}\xi=0$，进而 $T\xi=0$。自伴性也使 $(I-P)T=0$，所以 $T=PTP$，从而 $j(d)=Pj(d)P$。Jordan 表示保持二次表示，故
+
+$$
+j(U_pd)=U_{j(p)}j(d)=Pj(d)P=j(d).
+$$
+
+忠实性给 $U_pd=d$，而 $d\in E$，故 $d\in E_p$。$c=0$ 时 (50.4) 已直接给 $d=0$。$p=0$ 时 $U_p=0$，P2 的零标签和原分离性给 $D(0,0)=0$，全部结论成立。证明只表示 $B$，既未表示任意 $X$，也未假设 $D$ 保持 $B$，或把 $j(d)$ 认作交换子。∎
+
