@@ -195,6 +195,7 @@ private theorem normal_line {x y z : Vec} (hw : crossProduct x y ≠ 0)
   have hwz : crossProduct w z = 0 := by
     change crossProduct (crossProduct x y) z = 0
     rw [cross_cross_eq_smul_sub_smul]
+    change dot x z • y - dot y z • x = 0
     simp only [hxz, hyz, zero_smul, sub_zero]
   have he : dot w w • z = dot w z • w := by
     have ht := cross_cross_eq_smul_sub_smul' w w z
@@ -319,7 +320,8 @@ private theorem saturation_estimate (D : E → E → E) (h : PureSuppliers D)
     have hcross : crossProduct w y = -B • x := by
       change crossProduct (crossProduct x y) y = -B • x
       rw [cross_cross_eq_smul_sub_smul]
-      simp [hxy, B, dot, neg_smul]
+      change dot x y • y - dot y y • x = -B • x
+      simp only [hxy, zero_smul, zero_sub, B, neg_smul]
     have he : crossProduct (lift n (-sg * l * A, y + sg • (k • w - r • x))) (lift n c) =
         (-sg * k * Y) • x + (-sg / (r * Y)) • w := by
       rw [hL, hnc]
@@ -499,7 +501,9 @@ theorem transverse_sign (D : E → E → E) (h : PureSuppliers D)
     exact triple_product_permutation z x y
   have hcrosscross : dot (crossProduct x y) (crossProduct x z) = dot x x * dot y z := by
     have hc := cross_dot_cross x y x z
-    simpa [hxz, hxy, dot] using hc
+    change dot (crossProduct x y) (crossProduct x z) =
+      dot x x * dot y z - dot x z * dot y x at hc
+    simpa only [hxz, zero_mul, sub_zero] using hc
   have hexpand :
       dot (crossProduct p q) (crossProduct p q) - dot (crossProduct p' q') (crossProduct p' q') =
         4 * (1 + k * l * dot x x) * (l - k) * dot y z * dot x (crossProduct y z) := by
@@ -531,7 +535,8 @@ private theorem plane_coordinates {x y z : Vec}
   have hc : crossProduct (crossProduct x y) z = 0 := by
     change crossProduct (crossProduct x y) z = 0
     rw [cross_cross_eq_smul_sub_smul]
-    simp [hxz, dot_symm y z, hn.1]
+    change dot x z • y - dot y z • x = 0
+    simp only [hxz, dot_symm y z, hn.1, zero_smul, sub_zero]
   have hw := cross_dot_cross (crossProduct x y) z (crossProduct x y) z
   change dot (crossProduct (crossProduct x y) z) (crossProduct (crossProduct x y) z) =
     dot (crossProduct x y) (crossProduct x y) * dot z z -
@@ -587,7 +592,9 @@ theorem nonunit_row_sign (D : E → E → E) (h : PureSuppliers D)
         zero_add, dot_smul_right]
       change t * (x ⬝ᵥ (y ⨯₃ (x ⨯₃ y))) = _
       rw [cross_cross_eq_smul_sub_smul']
-      simp [dotProduct_sub, dotProduct_smul, hxy, dot, mul_comm, mul_left_comm, mul_assoc]
+      change t * dot x (dot y y • x - dot x y • y) = _
+      simp only [dot_sub_right, dot_smul_right, hxy, mul_zero, sub_zero]
+      ring
     rw [he]
     exact mul_ne_zero (mul_ne_zero (ne_of_gt ht) (ne_of_gt (dot_pos hx))) (ne_of_gt (dot_pos hy))
   have htz : dot x (crossProduct z q) ≠ 0 := by
@@ -600,8 +607,10 @@ theorem nonunit_row_sign (D : E → E → E) (h : PureSuppliers D)
       rw [ha]
       change _ + t * (x ⬝ᵥ (z ⨯₃ (x ⨯₃ y))) = _
       rw [cross_cross_eq_smul_sub_smul']
-      simp [dotProduct_sub, dotProduct_smul, hxz, dot_symm x y, hxy, dot,
-        mul_comm, mul_left_comm, mul_assoc]
+      change -dot z (crossProduct x y) +
+        t * dot x (dot z y • x - dot x z • y) = _
+      simp only [dot_sub_right, dot_smul_right, hxz, zero_mul, sub_zero]
+      ring
     rw [he]
     exact ht2
   obtain ⟨m, hm, hmq⟩ := pure_pair_saturation D h x q
@@ -716,7 +725,8 @@ private theorem unit_pair_sign (D : E → E → E) (h : PureSuppliers D)
   have hycw : crossProduct y w = x := by
     change crossProduct y (crossProduct x y) = x
     rw [cross_cross_eq_smul_sub_smul']
-    simpa [hy, hxy, dot]
+    change dot y y • x - dot x y • y = x
+    simp only [hy, hxy, one_smul, zero_smul, sub_zero]
   have hwcy : crossProduct w y = -x := by rw [← cross_anticomm y w, hycw]
   have htwo : D (pure x) (pure (2 • y)) = (0, (2 * e) • w) := by
     have hd := hoff x (2 • y)
