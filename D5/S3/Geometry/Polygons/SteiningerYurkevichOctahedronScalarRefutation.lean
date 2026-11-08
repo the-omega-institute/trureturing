@@ -11,6 +11,8 @@ result:
   escape_witness: none
   admission_basis: open-problem-resolution (#27498; Refuted)
   Direct frozen dependencies:
+    D5/S3/Combinatorics/Geometry/CrossPolytopeFaceCounts.Ambient
+      statement_id: sha256:3d3ac3730482c6fb291c79e02d908aac38414aced691ae03897f7264f2b0aef1
     D5/S3/Combinatorics/Geometry/CrossPolytopeFaceCounts.crossHull
       statement_id: sha256:5cac71d308903ebcb88e2f7dc13402d044098dba5a3f99b1e911f2cd7fefd5cf
     D5/S3/Quantum/Entanglement/SymmetricBellPolytopeNotCrossPolytope.crossPolytope
@@ -29,8 +31,6 @@ and statements using it are content; the remaining helpers are bind-only.
 -/
 import D5.S3.Combinatorics.Geometry.CrossPolytopeFaceCounts
 import D5.S3.Quantum.Entanglement.SymmetricBellPolytopeNotCrossPolytope
-import Mathlib.LinearAlgebra.UnitaryGroup
-import Mathlib.Analysis.Normed.Module.Convex
 
 namespace D5.S3.Geometry.Polygons.SteiningerYurkevichOctahedronScalarRefutation
 

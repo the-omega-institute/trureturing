@@ -38,6 +38,12 @@ As $\Diam$ and $\square$ are samurai functions, so is $\frak{o}$. We conjecture 
 which would yield another proof of the Nieuwland number of the Octahedron.
 ```
 
+Printed page 1 specifies the vertices:
+
+```tex
+Let $\OOO \subseteq \R^3$ be the Octahedron with vertices at $(e_1,e_2,e_3,-e_1,-e_2,-e_3)$, where $e_i$ denotes the $i$-th Cartesian unit vector.
+```
+
 On printed page 2 the projection domain is:
 
 ```tex
