@@ -74,12 +74,16 @@ private theorem actions (m : DoubleCentralizer ℂ C₀(X, B)) (f : C₀(X, B)) 
     pointUnit x x * m.fst (pointUnit x) x at heq
   rw [he, mul_one, one_mul] at heq
   constructor
-  · have h := congrArg (fun g : C₀(X, B) => g x) (m.central (pointUnit x) f)
+  · change m.fst f x = m.fst (pointUnit x) x * f x
+    have h := congrArg (fun g : C₀(X, B) => g x) (m.central (pointUnit x) f)
     change m.snd (pointUnit x) x * f x = pointUnit x x * m.fst f x at h
-    simpa [he, heq, field] using h.symm
-  · have h := congrArg (fun g : C₀(X, B) => g x) (m.central f (pointUnit x))
+    rw [he, one_mul, heq] at h
+    exact h.symm
+  · change m.snd f x = f x * m.fst (pointUnit x) x
+    have h := congrArg (fun g : C₀(X, B) => g x) (m.central f (pointUnit x))
     change m.snd f x * pointUnit x x = f x * m.fst (pointUnit x) x at h
-    simpa [he, field] using h
+    rw [he, mul_one] at h
+    exact h
 
 private theorem field_continuous (m : DoubleCentralizer ℂ C₀(X, B)) :
     Continuous (field m) := by
@@ -228,7 +232,8 @@ private theorem multiplier_bijective :
     have hx := congrArg
       (fun m : DoubleCentralizer ℂ C₀(X, B) => m.fst (pointUnit x) x) heq
     change h x * pointUnit x x = k x * pointUnit x x at hx
-    simpa [(pointUnit_spec (B := B) x).2] using hx
+    rw [(pointUnit_spec (B := B) x).2, mul_one, mul_one] at hx
+    exact hx
   · intro m
     obtain ⟨h, hh, _⟩ := representation m
     refine ⟨h, ?_⟩
@@ -251,7 +256,8 @@ private theorem equivalence_isometry :
     intro x
     have hx := (hk.1 (pointUnit x) x).1
     change h x * pointUnit x x = k x * pointUnit x x at hx
-    simpa [(pointUnit_spec (B := B) x).2] using hx.symm
+    rw [(pointUnit_spec (B := B) x).2, mul_one, mul_one] at hx
+    exact hx.symm
   exact (hkh ▸ hk.2).symm
 
 /-- Both pointwise actions hold for every complex element vanishing at infinity. -/
