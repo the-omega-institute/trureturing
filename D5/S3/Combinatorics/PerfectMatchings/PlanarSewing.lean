@@ -535,4 +535,67 @@ theorem composite_planar {n : ℕ} (M N : NCMatching (2*n)) :
   · exact False.elim ((toMatching Q).fixedPointFree a he)
   · exact he
 
+private def identityNC (n : ℕ) : NCMatching (2*n) where
+  partner := Fin.revPerm
+  involutive x := Fin.rev_rev x
+  noFixed x := by
+    intro h
+    have he := congrArg Fin.val h
+    simp only [Fin.revPerm_apply, Fin.val_rev] at he
+    omega
+  noncrossing a b hab hba hends := by
+    simp only [Fin.revPerm_apply, Fin.lt_def, Fin.val_rev] at hends
+    have ha := a.isLt
+    have hb := b.isLt
+    change a.val < b.val at hab
+    omega
+
+theorem identity_planar (n : ℕ) :
+    ∃ Q : NCMatching (2*n), toMatching Q = identityMatching n := by
+  refine ⟨identityNC n,?_⟩
+  apply matching_ext
+  rintro ⟨b,i⟩
+  apply (boundaryEquiv n).injective
+  change boundaryEquiv n ((boundaryEquiv n).symm
+    ((identityNC n).partner (boundaryEquiv n (b,i)))) = boundaryEquiv n (!b,i)
+  rw [Equiv.apply_symm_apply]
+  apply Fin.ext
+  change (Fin.revPerm (boundaryEquiv n (b,i))).val = (boundaryEquiv n (!b,i)).val
+  simp only [Fin.revPerm_apply, Fin.val_rev]
+  cases b <;> simp only [Bool.not_false, Bool.not_true, boundary_top, boundary_bottom] <;> omega
+
+/-- Reconnect an adjacent pair while retaining the new adjacent cup. -/
+def capReconnection {m : ℕ} (M : NCMatching (m+2)) (j : Fin (m+1)) : NCMatching (m+2) where
+  partner := capConjugate M j
+  involutive := capConjugate_involutive M j
+  noFixed := capConjugate_noFixed M j
+  noncrossing x y hxy hyx hends := by
+    by_cases hxa : x = j.castSucc
+    · subst x
+      rw [capConjugate_left] at hyx
+      have h₁ : j.val < y.val := hxy
+      have h₂ : y.val < j.val+1 := hyx
+      omega
+    by_cases hxb : x = j.succ
+    · subst x
+      rw [capConjugate_right] at hyx
+      have h₁ : j.val+1 < y.val := hxy
+      have h₂ : y.val < j.val := hyx
+      omega
+    by_cases hya : y = j.castSucc
+    · subst y
+      rw [capConjugate_left] at hends
+      have h₁ : j.val < (capConjugate M j x).val := hyx
+      have h₂ : (capConjugate M j x).val < j.val+1 := hends
+      omega
+    by_cases hyb : y = j.succ
+    · subst y
+      rw [capConjugate_right] at hends
+      have h₁ : j.val+1 < (capConjugate M j x).val := hyx
+      have h₂ : (capConjugate M j x).val < j.val := hends
+      omega
+    rw [capConjugate_reconnect M j x hxa hxb] at hyx hends
+    rw [capConjugate_reconnect M j y hya hyb] at hends
+    exact reconnect_noncrossing M j x y hxa hxb hya hyb hxy hyx hends
+
 end D5.S3.Combinatorics.PerfectMatchings.PlanarSewing
