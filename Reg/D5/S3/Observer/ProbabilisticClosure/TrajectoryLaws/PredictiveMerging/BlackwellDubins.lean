@@ -105,25 +105,25 @@ private theorem toy_predictive (n : ℕ) :
     Measure.dirac_prod_dirac] <;> rfl
 
 private theorem toy_marginals_ne :
-    toyLaw.map (rejected.readout () (Toy, 0)) ≠ toyLaw.map (past Toy 0) := by
+    toyLaw.{u}.map (rejected.{u}.readout () (Toy.{u}, 0)) ≠
+      toyLaw.{u}.map (past.{u} Toy.{u} 0) := by
   classical
-  have hread : rejected.readout () (Toy, 0) = fun _ => past Toy 0 basePath := rfl
-  have hdiff : past Toy 0 basePath ≠ past Toy 0 counterPath := by
+  have hread : rejected.{u}.readout () (Toy.{u}, 0) =
+      fun _ => past.{u} Toy.{u} 0 basePath.{u} := rfl
+  have hdiff : past.{u} Toy.{u} 0 basePath.{u} ≠
+      past.{u} Toy.{u} 0 counterPath.{u} := by
     intro heq
-    have hh := congrArg (fun p : Past Toy 0 => (p ⟨0, by simp⟩).down) heq
+    have hh := congrArg (fun p : Past.{u} Toy.{u} 0 => (p ⟨0, by simp⟩).down) heq
     change (basePath.{u} 0).down = !(basePath.{u} 0).down at hh
     have hb : ∀ b : Bool, b ≠ !b := by decide
     exact hb _ hh
   intro heq
   rw [hread] at heq
-  have hh := congrArg (fun μ : Measure (Past Toy 0) => μ {past Toy 0 counterPath}) heq
-  have hdiff' : past Toy 0 counterPath ≠ past Toy 0 basePath := by
-    intro h
-    exact hdiff h.symm
-  have hzero_one : (0 : ℝ≥0∞) = 1 := by
-    simpa [toyLaw, Measure.map_const, Measure.map_dirac' (toy_past_measurable 0),
-      Pi.single_apply, hdiff, hdiff'] using hh
-  exact zero_ne_one hzero_one
+  have hh := congrArg (fun μ : Measure (Past.{u} Toy.{u} 0) =>
+    μ {past.{u} Toy.{u} 0 counterPath.{u}}) heq
+  apply hdiff
+  simpa [toyLaw, Measure.map_const, Measure.map_dirac' (toy_past_measurable.{u} 0),
+    Pi.single_apply] using hh
 
 private theorem rejected_change : ¬ changeArena.{u}.Law rejected := by
   intro h
