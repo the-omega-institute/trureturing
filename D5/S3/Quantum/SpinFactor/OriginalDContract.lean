@@ -4,8 +4,9 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.LinearAlgebra.CrossProduct]
    utility: none
-   digest: Directed positivity and finite phase balance force the original unit and label relations.
+   digest: Directed positivity and finite phase balance force the original unit and label relations. -/
 
+/-
 This module records the exact original-domain contract used by the H2 classification.
 The arbitrary original map is kept as a total function.  No regularity, unit row,
 translation, bilinearity, or source-realisation premise is hidden in the definitions.
