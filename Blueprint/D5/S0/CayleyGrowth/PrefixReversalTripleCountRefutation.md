@@ -46,6 +46,10 @@ $$\neg (\forall q \in \operatorname{Fin}\left(4\right),\; \exists C \in \mathbb{
 
 *Proof.* Machine-checked in Lean as `D5/S0/CayleyGrowth/PrefixReversalTripleCountRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/prefix-reversal-triple-count` (refuted) by `D5/S0/CayleyGrowth/PrefixReversalTripleCountRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"prefix-reversal-triple-count","declaration_gid":"D5/S0/CayleyGrowth/PrefixReversalTripleCountRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Saúl A. Blanco, Mikhail P. Golubyatnikov, Elena V. Konstantinova, Natalia V. Maslova, Luka A. Nikiforov (2026). *Generating the symmetric group by three prefix reversals*. DOI: [10.46298/dmtcs.16975](https://doi.org/10.46298/dmtcs.16975). URL: <https://arxiv.org/abs/2511.16959v3>.
