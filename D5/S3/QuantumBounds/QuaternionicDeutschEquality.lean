@@ -151,8 +151,7 @@ private theorem self (x : Q) : h.inner x x = (‖x‖ ^ 2 : ℝ) := by
   rw [h.self_real, h.self_re]
 
 @[simp] private theorem zero_left (x : Q) : h.inner 0 x = 0 := by
-  apply add_left_cancel (a := h.inner 0 x)
-  simpa only [add_zero, zero_add] using (h.add_left 0 0 x).symm
+  exact map_zero (AddMonoidHom.mk' (fun a : Q => h.inner a x) (fun a b => h.add_left a b x))
 
 @[simp] private theorem smul_left (x y : Q) (q : ℍ) :
     h.inner ((MulOpposite.op q) • x) y = star q * h.inner x y := by
@@ -173,21 +172,13 @@ private theorem norm_smul (x : Q) (q : ℍ) : ‖(MulOpposite.op q) • x‖ = �
   rw [h.conjugate_symmetry, h.add_left, star_add,
     ← h.conjugate_symmetry x y, ← h.conjugate_symmetry x z]
 
-@[simp] private theorem neg_left (x y : Q) : h.inner (-x) y = -h.inner x y := by
-  have hz := h.add_left x (-x) y
-  rw [add_neg_cancel, h.zero_left] at hz
-  exact eq_neg_of_add_eq_zero_right hz.symm
-
-@[simp] private theorem neg_right (x y : Q) : h.inner x (-y) = -h.inner x y := by
-  rw [h.conjugate_symmetry, h.neg_left, star_neg, ← h.conjugate_symmetry x y]
-
 @[simp] private theorem sub_left (x y z : Q) :
     h.inner (x - y) z = h.inner x z - h.inner y z := by
-  simp only [sub_eq_add_neg, h.add_left, h.neg_left]
+  exact map_sub (AddMonoidHom.mk' (fun a : Q => h.inner a z) (fun a b => h.add_left a b z)) x y
 
 @[simp] private theorem sub_right (x y z : Q) :
     h.inner x (y - z) = h.inner x y - h.inner x z := by
-  simp only [sub_eq_add_neg, h.add_right, h.neg_right]
+  exact map_sub (AddMonoidHom.mk' (h.inner x) (h.add_right x)) y z
 
 private theorem unit_norm {x : Q} (hx : x ≠ 0) : ‖unitVector x‖ = 1 := by
   rw [unitVector, h.norm_smul, Quaternion.norm_coe, Real.norm_eq_abs,
