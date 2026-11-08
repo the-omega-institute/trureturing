@@ -54,7 +54,7 @@ theorem cellPoint_lt {n : ℕ} (hn : 0 < n) (j : ℕ) :
   have : (0 : ℝ) < n := by exact_mod_cast hn
   linarith [one_div_pos.mpr this]
 
-private lemma fixed_normalizer_ratio {θ c : ℝ} (hc : 0 < c) :
+lemma fixed_normalizer_ratio {θ c : ℝ} (hc : 0 < c) :
     Tendsto (fun X => (X / fixedLength θ c X * lengthLog θ c X) / meanSquareScale θ X)
       atTop (𝓝 ((1 - θ) / c)) := by
   have hz : Tendsto (fun X : ℝ => Real.log c / Real.log X) atTop (𝓝 0) :=

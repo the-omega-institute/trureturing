@@ -14,7 +14,7 @@ Lean statement: `D5/S3/Arith/Robin/ForwardKernel/CrossExponentJointMoments.joint
 
 *Commentary.*
 
-Let E be locally bounded and Borel measurable, with variance-band asymptotics on bands 0<alpha1<a<beta1<1 and 0<alpha2<b<beta2<1, and assume a<b. For any two integrable profiles, the dyadic expectation of the normalized product of their profile responses tends to zero. The proof uses the three-scale power saving for the profile cross integral and the exact product of the two normalization scales.
+Let E be locally bounded and Borel measurable, with variance-band asymptotics on bands 0<alpha1<a<beta1<1 and 0<alpha2<b<beta2<1, and assume a<b. For any two integrable profiles, the dyadic expectation of the normalized product of their profile responses tends to zero. The zero cross-moment interface follows from the two variance bands, and joint moment transfer carries it to the two integrable profile responses.
 
 **Theorem 1.2 (Vanishing universal cross kernel).**
 
@@ -26,7 +26,7 @@ Lean statement: `D5/S3/Arith/Robin/ForwardKernel/CrossExponentJointMoments.cross
 
 *Commentary.*
 
-Let E be locally bounded and Borel measurable, with variance-band asymptotics on bands 0<alpha1<a<beta1<1 and 0<alpha2<b<beta2<1, and assume a<b. Suppose that for every (s,t) in the closed unit square, the dyadic expectation of U_X^{r_a+r_b} B_{a,X}(s) B_{b,X}(t) tends to M(s,t), where U_X=x/X and r_a=(1-a)/2, r_b=(1-b)/2. Then the integral of g1(s)g2(t)M(s,t) over the unit square is zero for every pair of real integrable profiles. Joint moment transfer identifies this integral with the vanishing first cross moment, and uniqueness of limits gives the conclusion.
+Let E be locally bounded and Borel measurable, with variance-band asymptotics on bands 0<alpha1<a<beta1<1 and 0<alpha2<b<beta2<1, and assume a<b. Suppose that for every (s,t) in the closed unit square, the dyadic expectation of U_X^{r_a+r_b} B_{a,X}(s) B_{b,X}(t) tends to M(s,t), where U_X=x/X and r_a=(1-a)/2, r_b=(1-b)/2. Then the integral of g1(s)g2(t)M(s,t) over the unit square is zero for every pair of real integrable profiles. The second-moment bounds of the zero cross-moment interface also bound this proposed kernel. Joint moment transfer identifies its profile integral with the first cross moment, and uniqueness of limits gives zero.
 
 **Theorem 1.3 (Positive correlation of mixed squares).**
 
@@ -47,6 +47,6 @@ These are conditional results on abstract interfaces. Nothing here establishes t
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/CrossExponentJointMoments.cross_exponent_kernel_integral_zero`
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/CrossExponentJointMoments.cross_exponent_squares_positive_correlation`
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/CrossExponentJointMoments.jointZ_first_moment_tendsto_zero`
-- Dependency: [D5/S3/Arith/Robin/ForwardKernel/CrossExponentOrthogonality](CrossExponentOrthogonality.md)
+- Dependency: [D5/S3/Arith/Robin/ForwardKernel/CrossOrderInterface](CrossOrderInterface.md)
 - Dependency: [D5/S3/Arith/Robin/ForwardKernel/FourthMomentKurtosis](FourthMomentKurtosis.md)
 - Dependency: [D5/S3/Arith/Robin/ForwardKernel/JointBrownianKernel](JointBrownianKernel.md)
