@@ -2,7 +2,9 @@ fingerprints:
   raw_sha256: sha256:6db8f34efc6534218e081184018d9f896103b4e64e36fbb16d4f12b48ccf5060
   normalized_sha256: sha256:6db8f34efc6534218e081184018d9f896103b4e64e36fbb16d4f12b48ccf5060
 cas_ref: sha256:6db8f34efc6534218e081184018d9f896103b4e64e36fbb16d4f12b48ccf5060
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Quantum/SpinFactor/OriginalResidual.residual_rotation_invariant
+    target_statement_id: sha256:9f5f60646b5f65872e0dd19a384f16e9d1fa51af8879ef511358d3ae3b761bed
 receipts:
   unresolved_subitems: []
   chain_atoms:

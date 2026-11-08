@@ -5,5 +5,7 @@ cas_ref: sha256:049d306ef18c65947f4965dd204fde5122690977f8670b94e63aef22d438dce2
 coverage_gids:
   - gid: D5/S3/Quantum/SpinFactor/OriginalClassification.complete_classification
     target_statement_id: sha256:d968db0ce1c9154e1e4c428a7d33e56cc252f4ee1df7effedf92bdc98c287617
+  - gid: D5/S3/Quantum/SpinFactor/OriginalClassification.complete_consequences
+    target_statement_id: sha256:eb411d4e20895cb17771415f45bd40929df5b6d2a8f759169aeb70efa681b542
 receipts:
   unresolved_subitems: []
