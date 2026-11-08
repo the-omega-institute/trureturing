@@ -6,7 +6,7 @@
    utility: none
    digest: The whole matrix C0 algebra is nonzero and has no two-sided identity; whole selfadjoint ideal sections detect the ambient Jordan annihilator pointwise. -/
 
-import D5.S3.ContinuousObservables.C128IdealJordan
+import D5.S3.ContinuousObservables.C128ZeroExtension
 import Mathlib.Analysis.CStarAlgebra.Matrix
 import Mathlib.Analysis.CStarAlgebra.CStarMatrix
 import Mathlib.Analysis.SpecificLimits.Basic
@@ -20,7 +20,73 @@ open scoped Topology ZeroAtInfty ComplexOrder
 
 namespace D5.S3.ContinuousObservables.C128IdealConsequences
 
-open C0Multipliers C128ZeroExtension C128IdealJordan
+open C0Multipliers C128ZeroExtension
+
+/-- The whole ambient selfadjoint space. -/
+abbrev X := selfAdjoint C(Y, MatrixFiber)
+
+/-- All selfadjoint continuous fields vanishing outside the original open domain. -/
+def I : Submodule ℝ X where
+  carrier := {r | (r.val : C(Y, MatrixFiber)) ∈ wholeIdeal}
+  zero_mem' := wholeIdeal.zero_mem
+  add_mem' hr hs := wholeIdeal.add_mem hr hs
+  smul_mem' c r hr := by
+    intro y hy
+    change c • r.val y = 0
+    rw [hr y hy, smul_zero]
+
+private def extendSelfAdjoint (f : selfAdjoint SourceAlgebra) : I :=
+  ⟨⟨extensionHom f.val, by
+      change star (extensionHom f.val) = extensionHom f.val
+      rw [← map_star, selfAdjoint.star_val_eq]⟩,
+    by
+      change extensionHom f.val ∈ (wholeIdeal : Set C(Y, MatrixFiber))
+      rw [← whole_zero_extension.2.1]
+      exact ⟨f.val, rfl⟩⟩
+
+private def restrictSelfAdjoint (r : I) : selfAdjoint SourceAlgebra :=
+  ⟨restriction ⟨r.val.val, r.property⟩, by
+    apply ZeroAtInftyContinuousMap.ext
+    intro t
+    change star (r.val.val (inclusion t)) = r.val.val (inclusion t)
+    exact congrArg (fun g : C(Y, MatrixFiber) => g (inclusion t)) r.val.property⟩
+
+/-- Restriction on the whole ideal, with zero extension as its inverse. -/
+def j : I ≃ₗᵢ[ℝ] selfAdjoint SourceAlgebra where
+  toFun := restrictSelfAdjoint
+  invFun := extendSelfAdjoint
+  left_inv r := by
+    apply Subtype.ext
+    apply Subtype.ext
+    exact whole_zero_extension.2.2.2.1 ⟨r.val.val, r.property⟩
+  right_inv f := by
+    apply Subtype.ext
+    apply ZeroAtInftyContinuousMap.ext
+    intro t
+    exact whole_zero_extension.2.2.2.2.1 f.val t
+  map_add' r s := by
+    apply Subtype.ext
+    apply ZeroAtInftyContinuousMap.ext
+    intro t
+    rfl
+  map_smul' c r := by
+    apply Subtype.ext
+    apply ZeroAtInftyContinuousMap.ext
+    intro t
+    rfl
+  norm_map' r := by
+    have h := whole_zero_extension.1.dist_eq
+      (restriction ⟨r.val.val, r.property⟩) 0
+    simp only [map_zero, dist_zero_right] at h
+    rw [show extensionHom (restriction ⟨r.val.val, r.property⟩) = r.val.val from
+      whole_zero_extension.2.2.2.1 ⟨r.val.val, r.property⟩] at h
+    exact h.symm
+
+/-- The original real Jordan product in the ambient space. -/
+def S (a b : X) : X :=
+  ⟨(1 / 2 : ℝ) • (a.val * b.val + b.val * a.val), by
+    simp only [selfAdjoint.mem_iff, star_smul, star_trivial, star_add, star_mul,
+      selfAdjoint.star_val_eq, add_comm]⟩
 
 private theorem upper_interval_subset : Ioo (1 / 5 : ℝ) (1 / 4) ⊆ sourceDomain := by
   intro t ht
@@ -73,7 +139,7 @@ theorem annihilator_iff (a : X) :
   · intro h t
     let r : I := j.symm (localSelfAdjoint t)
     have hr : r.val.val (inclusion t) = 1 := by
-      have he := whole_selfadjoint_ideal.2.2.2.1 r t
+      have he : (j r).val t = r.val.val (inclusion t) := rfl
       rw [show j r = localSelfAdjoint t from j.apply_symm_apply _] at he
       exact he.symm.trans (localSelfAdjoint_value t)
     have he := congrArg (fun b : X => b.val (inclusion t)) (h r)
