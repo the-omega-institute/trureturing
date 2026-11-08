@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Partitions;
 internal sealed class AndrewsHopkinsExcedanceParityRefutationDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/Partitions/AndrewsHopkinsExcedanceParityRefutation.";
-    private static LibraryNoteRef Source => LibraryNoteRef.Create("D5/L/Combinatorics/andrewshopkins2026excedances");
+    private static LibraryNoteRef Source => LibraryNoteRef.Create("D5/L/PermutationPatterns/andrewshopkins2026excedances");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The original one-based excedance statistic gives more odd than even partitions at n = 28.",

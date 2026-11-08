@@ -86,7 +86,7 @@ the kernel-checked negation.
   the public `result : ¬ claim`. The compiled closure consists of
   `Classical.choice`, `Quot.sound` and `propext`.
 - The corresponding Blueprint Scribe binds its Refuted resolution claim
-  to this same result. The Library note records the source sign caveat.
+  to this same result. The [Library note](../Library/PermutationPatterns/andrewshopkins2026excedances.md) records the source sign caveat.
 
 The public result is the designated refutation result (`basis=refutes`)
 and is exempt from four-slot escape registration (CLAUDE.md §3.9).
