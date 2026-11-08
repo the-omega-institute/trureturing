@@ -4,6 +4,9 @@ namespace StrataLint.Scribe.Blueprint.D5.S0.Certificates.Polynomials;
 
 internal sealed class KimStolarskyEventualPrefixRefutationDocument : IScribeDocumentDefinition
 {
+    private static readonly LibraryNoteRef Source =
+        LibraryNoteRef.Create("D5/L/Certificates/kimstolarsky2026nicomachus");
+
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The odd-root continued-fraction conjecture fails on an unbounded arithmetic progression of indices.",
         H("The eventual three-prefix conjecture is false"),
@@ -22,7 +25,7 @@ internal sealed class KimStolarskyEventualPrefixRefutationDocument : IScribeDocu
                     "D5/S0/Certificates/Polynomials/KimStolarskyEventualPrefixRefutation.result"),
                 H("No common eventual threshold exists"),
                 StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
+                AssessedProvenance.FromLiterature(Source),
                 Blocks(
                     Paragraph(Text(
                         "Put m=10^(4n+2). The shifted R polynomial is the square of "
@@ -48,6 +51,9 @@ internal sealed class KimStolarskyEventualPrefixRefutationDocument : IScribeDocu
                         + "about the L or Q prefixes, or the even case, follows. "
                         + "The formal proof derives the contradiction for every "
                         + "R root; its root-limit hypothesis need not be used."))),
-                DescribeRole.Theorem)),
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("kim-stolarsky-eventual-three-prefix-conjecture"),
+                    ResolutionKind.Refuted))),
         []));
 }
