@@ -94,6 +94,10 @@ $$\forall (n : \mathbb{N}) (j : \mathbb{N}) , 3 \leq n \to j \leq 2 * n \to (\op
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/ItalianDomination/CycleDeficit.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/shao-zhao-italian-cycle-closed-form` (proved) by `D5/S3/Combinatorics/Graph/ItalianDomination/CycleDeficit.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"shao-zhao-italian-cycle-closed-form","declaration_gid":"D5/S3/Combinatorics/Graph/ItalianDomination/CycleDeficit.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Pingping Shao; Chengye Zhao (2026). *Counting Weight-k Italian Dominating Sets on Trees and Cycles*. DOI: [10.48550/arXiv.2610.00108](https://doi.org/10.48550/arXiv.2610.00108). URL: <https://arxiv.org/abs/2610.00108v1>.

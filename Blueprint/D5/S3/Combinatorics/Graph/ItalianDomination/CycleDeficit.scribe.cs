@@ -33,14 +33,18 @@ internal sealed class CycleDeficitDocument : IScribeDocumentDefinition
                 "claim", DescribeRole.Definition, AssessedProvenance.FromRepo(Source)),
             Node("result", "result", Disp(Seq(Forall, Sp, Parenthesized(Seq(F.Id("n"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))))), Sp, Parenthesized(Seq(F.Id("j"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))))), Sp, Comma, Sp, D(3), Sp, Leq, Sp, F.Id("n"), Sp, To, Sp, F.Id("j"), Sp, Leq, Sp, D(2), Sp, Star, Sp, F.Id("n"), Sp, To, Sp, Parenthesized(Seq(W("dI"), Sp, F.Id("n"), Sp, Parenthesized(Seq(D(2), Sp, Star, Sp, F.Id("n"), Sp, Minus, Sp, F.Id("j"))), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("Q"))))), Sp, Eq, Sp, W("closedForm"), Sp, F.Id("n"), Sp, F.Id("j"))),
                 "Complement each label f(i) to 2−f(i). A pair of consecutive twos must be flanked by zeros; every zero-free gap is either exactly [2,2] or has no adjacent twos. Marking a zero gives ordered gaps, and removing the mark multiplies the count by the number of zeros, even for periodic words. Weak compositions distribute the ones; subsets of insertion slots place the isolated twos. The all-exceptional case contributes three labelled shifts. Marking a one counts the class without zeros. The disjoint classes yield the displayed identity.",
-                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))),
+                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("shao-zhao-italian-cycle-closed-form"),
+                    ResolutionKind.Proved))),
         []));
 
     private static DocumentBlock Node(string id, string title, Formula formula, string prose,
-        string declaration, DescribeRole role, AssessedProvenance provenance) =>
+        string declaration, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("cycle-" + id), DeclarationHandle.Create(Prefix + declaration),
             H(title), StatementSource.FromAuthor(formula), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula W(string name) => Seq(Operatorname, Grp(F.Id(name)));
