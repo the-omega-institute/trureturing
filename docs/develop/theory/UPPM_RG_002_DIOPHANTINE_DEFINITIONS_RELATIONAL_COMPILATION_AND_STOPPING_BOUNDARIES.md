@@ -2339,3 +2339,422 @@ $$
 实际点及其标号来自 [Brox 固定源码的 “The quadratic-field elliptic curve”](https://github.com/JoseBrox/diophantine-z-q_improvements/blob/61b82ccacfbefdff3d6e7cf986d6e6279afa1372/papers/trace_heights/aggregate_trace_height_20261108_v9.tex)，变换与形式群工具为上述 Silverman 的经典结果。这里的推导补出该固定数据的局部次数、具体极小模型、初始深度及所有精度的二进阶，不作一般局部理论或文献优先权的主张。它不求奇素数地方的精确阶，不补出完整的 $\mathbb Z/\mathbb Q$ 定义或物理对应；§§13–14 的一般联合返回结论及其余边界继续沿用。$\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 16. 实际共同周期的二次对数主阶、交叉因子吸收与加权入口余项
+
+**定义 16.1（共同局部阶与入口）。** 本节保持定义 11.1、13.1 的实际 $F,E_0,P_1,P_2,U_v(r),q(B,r;M)$，赋值仍取 $\operatorname{ord}_v(\mathfrak m_v)=1$。沿用 $a,b,c$ 的正实根，另记
+
+$$
+\begin{gathered}
+a^2=2,\quad b^2=3-a,\quad c^2=3+a,\quad bc=\sqrt7,\\
+K=F(i),\qquad [i](X,Y)=(-X,iY),\qquad i^2=-1.
+\end{gathered}
+\tag{16.1}
+$$
+
+这里 $K$ 专指本节的复乘扩域，不是定义 11.1 中暂用同一字母的二次域。对一个 $v\mid p$，先置 $\delta_{p,v}(r)=\operatorname{lcm}(d_{v,1}(r),d_{v,2}(r))$。下面证明它与 $v$ 无关，随后记为 $\delta_p(r)$。对 $p\ne2,7$ 定义
+
+$$
+\begin{aligned}
+n_p&=\operatorname{lcm}\bigl(\operatorname{ord}(\overline P_1),
+                         \operatorname{ord}(\overline P_2)\bigr),\\
+t_p&=\min_{j=1,2}\operatorname{ord}_v
+               \bigl(t([n_p]P_j)\bigr),\qquad t=-X/Y.
+\end{aligned}
+\tag{16.2}
+$$
+
+横线是原好约化模型 $E_0$ 在同一个 $k_v$ 中的约化，$\overline O=O$ 的阶取 $1$；参数在此式中只用于已经约化为 $O$ 的点。所有 $[n_p]P_j$ 非零，故 $t_p$ 是有限正整数。记
+
+$$
+\begin{gathered}
+\mathcal G_H=\{p\le H:p\ne2,7\},\qquad
+h_0=\widehat h(P_1)=\widehat h(P_2),\qquad C_E=2\log2,\\
+A=64h_0,\qquad B=8C_E,\qquad
+b_p(H)=v_p(\delta_p(H)),\qquad
+W(H)=\sum_{p\in\mathcal G_H}(t_p-1)\log p.
+\end{gathered}
+\tag{16.3}
+$$
+
+高度为绝对对数高度及 §12 的典范高度归一化，特别地复用 (12.7) 对所有代数点的 $h(xT)\le2\widehat h(T)+C_E$，不另换比较常数。高度的共轭不变性及 (12.8) 给出 $0<h_0\le\log82/2$。
+
+**命题 16.2（实际符号轨道严格运输原过滤）。** $F/\mathbb Q$ 是次数 $8$ 的 $D_4$ Galois 扩张；每个自同构把有序点对 $(P_1,P_2)$ 变为其带独立符号的排列。若 $g(v)=w$，则完备域同构诱导
+
+$$
+g(U_v(r))=U_w(r)\qquad(r\ge1).
+\tag{16.4}
+$$
+
+因而 $\delta_{p,v}(r)$ 与 $v\mid p$ 无关，并且对所有 $B_0\ge2$、整数 $r,M\ge1$，有原对象的精确接口
+
+$$
+\begin{aligned}
+q(B_0,r;M)&=\operatorname{lcm}\bigl(M,\{\delta_p(r):p\le B_0\}\bigr),\\
+\bigl([m]P_j\in U_v(r)\text{ 对所有 }p\le B_0,v\mid p,j\bigr)
+&\ \Longleftrightarrow\ \delta_p(r)\mid m\text{ 对所有 }p\le B_0.
+\end{aligned}
+\tag{16.5}
+$$
+
+第二行对所有 $m\in\mathbb Z$ 成立，包括零和负数。
+
+**证明。** $F$ 是 $Z^4-6Z^2+7$ 的分裂域，根为 $\pm b,\pm c$，且 $a=3-b^2$。§15 已给出 $[F:\mathbb Q]=8$。自同构固定 $a$ 时独立改变 $b,c$ 的符号；反转 $a$ 时交换 $b,c$ 并可独立改变符号。这八个作用给出上述二面体群。由定义 11.1 的坐标，$b$ 或 $c$ 换号恰将相应点取负，$a$ 换号并交换 $b,c$ 则交换两点。Galois 群在 $p$ 上的地方间传递，且完备域同构保整数归一化赋值。
+
+奇素数处原方程在 $\mathbb Q$ 上定义，参数 $t$ 也在 $\mathbb Q$ 上定义，故约化为 $O$ 与 $\operatorname{ord}_v(t)\ge r$ 同时运输。二进处将原先选定的极小模型共轭，仍为极小整模型；它与目标地方原先选定的极小模型之间正是 §15 所用的保单位元整变换。式 (15.25)–(15.26) 表明形式参数互为首项系数为单位的整级数，因而保每个 $\mathfrak m^r$，不是只保第一层。这给出 (16.4)，不改变原同构或原过滤。对子群取负不改变成员条件；排列两点不改变两个阶的最小公倍数。因此共同阶与地方无关。最后在有限商群中 $[m]P_j\in U_v(r)$ 当且仅当 $d_{v,j}(r)\mid m$；代回定义 (13.2) 得证。$\square$
+
+**定理 16.3（非分歧奇素数的全部精确阶）。** 对 $p\ne2,7$，$F$ 及 $K$ 在 $p$ 上均不分歧，$e_v=1$，(16.2) 的 $n_p,t_p$ 与地方无关。对每个 $r\ge1$，
+
+$$
+\delta_p(r)=n_p p^{\max(0,r-t_p)}.
+\tag{16.6}
+$$
+
+更精确地，对非零整数 $m$，两点同时属于 $U_v(r)$ 的充要条件是 $n_p\mid m$ 且
+
+$$
+t_p+v_p(m/n_p)\ge r.
+\tag{16.7}
+$$
+
+$m=0$ 时同时成员条件恒成立。
+
+**证明。** 在 $\mathbb Z[1/14]$ 上先添 $a$，再添 $b,c$；各平方根的被开方元素是单位，其二次方程导数也是单位，因为 $(3-a)(3+a)=7$。这些有限 étale 扩张说明只有 $2,7$ 能分歧；再添 $i$ 不增加奇素数分歧。$E_0$ 的判别式为 $64$，故所有奇素数处好约化。约化阶有限，且倍数约化为 $O$ 当且仅当相应的阶整除该整数。因此两点同时约化为 $O$ 当且仅当 $n_p\mid m$。
+
+对这些地方，$1>e_v/(p-1)=1/(p-1)$。Silverman 的形式对数定理 [IV.6.4](https://www.math.ens.psl.eu/~obenoist/refs/Silverman.pdf) 在整个第一层给出保赋值的群同构到 $\mathfrak m_v$。保赋值也可直接由对数及逆指数在每个 $\mathfrak m_v^r$ 上互逆得出。若 $s_j=\operatorname{ord}_v(t([n_p]P_j))$，则对任意非零整数 $u$，
+
+$$
+\operatorname{ord}_v(t([u n_p]P_j))=s_j+v_p(u).
+\tag{16.8}
+$$
+
+所有参数非零：否则某个非零整数倍的实际非挠点为 $O$，违背域嵌入的单射性及 Brox 的非挠性。共同最小深度因此是 $t_p+v_p(u)$。命题 16.2 运输约化及深度，给出 $n_p,t_p$ 的地方无关性。式 (16.7) 的最小正解为 (16.6)；取负不改赋值，零倍另行成立。$\square$
+
+**定理 16.4（实际半点、共同 Frobenius 核及下降支持）。** 对每个 $p\ne2,7$，令 $\pi$ 为 $E_0/\mathbb F_p$ 的 $p$ 次 Frobenius，$a_p=p+1-\#E_0(\mathbb F_p)$。置
+
+$$
+\begin{aligned}
+\varepsilon_p&=-1\quad\Longleftrightarrow\quad
+ \left(\frac2p\right)=\left(\frac7p\right)=-1,
+ \qquad \varepsilon_p=1\text{ 在其余情形},\\
+C_p&=
+\begin{cases}
+(p+1)^2-a_p^2,&\varepsilon_p=1,\\
+(p-1)^2+a_p^2,&\varepsilon_p=-1.
+\end{cases}
+\end{aligned}
+\tag{16.9}
+$$
+
+在同一个 $\overline{\mathbb F}_p$ 中，$\overline P_1,[i]\overline P_1,\overline P_2,[i]\overline P_2$ 都属于同一个群
+
+$$
+[2]G_p,\qquad
+G_p=\ker(\pi^2-[\varepsilon_p]),\qquad
+\#G_p=C_p,\quad \#[2]G_p=C_p/4\le p^2.
+\tag{16.10}
+$$
+
+特别地，这是整数整除式而非大小比较：
+
+$$
+n_p\mid C_p/4,\qquad n_p\le p^2.
+\tag{16.11}
+$$
+
+若 $p\ge11$，$n_p$ 的每个素因子均严格小于 $p$；小素数的实际值为
+
+$$
+n_3=2,\qquad n_5=5.
+\tag{16.12}
+$$
+
+**证明（半点及同一个核）。** 从 Brox 固定源码 “The quadratic-field elliptic curve” 中的 $R_0=(1+a,2a)$ 及其共轭，经原归一化取得一对半点
+
+$$
+R_1=\left(\frac{1+a}{b^2},\frac{2a}{b^3}\right),\qquad
+R_2=\left(\frac{1-a}{c^2},\frac{-2a}{c^3}\right),\qquad
+[2]R_j=P_j.
+\tag{16.13}
+$$
+
+其合法性也由 $E$ 上的 $R_0$ 代入及定义 11.1 的保群同构直接保证；两点的纵坐标符号同时按共轭运输。这对半点与原点对具有相同的带符号排列作用。
+
+在 $v\mid p$ 取算术 Frobenius $g\in\operatorname{Gal}(F/\mathbb Q)$。若 $g(a)=a$，则 $g$ 分别给 $b,c$ 换号，故 $g^2$ 为恒等。若 $g(a)=-a$，写 $g(b)=u c,g(c)=v b$，其中 $u,v\in\{1,-1\}$；于是 $g^2$ 同时把 $b,c$ 乘以 $uv$，且 $g(bc)=uv\,bc$。在不分歧的二次子域中，$g(a)/a=(2/p)$、$g(bc)/(bc)=(7/p)$。因此 $g^2$ 对两个半点的共同作用恰为 $[\varepsilon_p]$。约化与 Frobenius 相容，故两者的约化都在 $G_p$ 中；这同时处理剩余次数为 $1,2,4$ 的情形，而没有假设所有半点已在 $\mathbb F_{p^2}$ 上。
+
+无论 $p\bmod4$ 如何，$\pi^2$ 与 $[i]$ 交换，因为 $i^{p^2}=i$；故 $G_p$ 及其倍二像均在 $[i]$ 下稳定。Frobenius 特征多项式及 Hasse 界给出 $\deg(\pi^2-[\varepsilon_p])=C_p$。该同源的微分是 $-\varepsilon_p$，非零，故可分，几何核确有 $C_p$ 个点。$E_0[2]=\{O,(0,0),(1,0),(-1,0)\}$ 都在 $\mathbb F_p$ 上，故全在 $G_p$ 中。$p$ 为奇数保证倍二可分且其核正好这四点，因此有限群 $G_p$ 的倍二像的阶为 $C_p/4$。由 Lagrange 定理，两点的阶及其最小公倍数整除这个整数。
+
+这里使用的经典工具仅是 Silverman [III.6、V.2.3.1、V.3–4](https://www.math.ens.psl.eu/~obenoist/refs/Silverman.pdf) 的同源、Frobenius 和普通/超奇异分类；$\varepsilon_p$ 来自实际 $D_4$ 作用，不是普通性的判据。由 $a_p^2\le4p$，两种符号均有 $C_p\le(p+1)^2\le4p^2$，得大小界。
+
+**证明（支持与小素数）。** 对 $\varepsilon_p=1$，$a_p$ 是偶数，因为有理二挠群使 $4\mid\#E_0(\mathbb F_p)$，于是
+
+$$
+\frac{C_p}{4}=
+ \frac{p+1-a_p}{2}\,\frac{p+1+a_p}{2}.
+\tag{16.14}
+$$
+
+当 $p\ge7$ 时，两因子均为正整数，且至多 $(p+1+2\sqrt p)/2<p$。若 $\varepsilon_p=-1$ 且 $p\equiv3\pmod4$，则 $E_0$ 超奇异，$a_p=0$，从而 $C_p/4=((p-1)/2)^2$，仍只有严格较小的素因子。$a_p=0$ 也由 $x$ 与 $-x$ 的二次特征和相消直接得到。
+
+剩下 $p\equiv1\pmod4$ 的普通情形。经典 CM 描述在此给出 $\pi=u+vi\in\mathbb Z[i]$，$u^2+v^2=p$、$a_p=2u$：普通约化的自同源环的有理代数是二次域，包含 $\mathbb Q(i)$，而 $\mathbb Z[i]$ 已是其极大整环。这是对这条 $j=1728$ 曲线使用的中间结构；普通性由 V.4 的 Hasse 不变量判据确定，不用于 $p\equiv3\pmod4$。于是
+
+$$
+\frac{C_p}{4}
+=\frac{p+1-2v}{2}\,\frac{p+1+2v}{2}.
+\tag{16.15}
+$$
+
+两因子是正整数，$p\ge7$ 时同样严格小于 $p$。这些整数因子分解而非单独的 $n_p\le p^2$，才给出下降支持。
+
+$p=3$ 时 $\varepsilon_3=1,a_3=0$，且实际 $X_j\equiv-1$、$Y_j\equiv0$，两点约化都是非零二挠点，故 $n_3=2$。$p=5$ 时 $(2/5)=(7/5)=-1$；在 $\mathbb F_5$ 逐个 $X$ 的 $X^3-X$ 为 $0,0,1,4,0$，故 $\#E_0(\mathbb F_5)=8,a_5=-2$，得到 $C_5/4=5$。原坐标分母在 $5$ 为单位，两点均为仿射点而非 $O$；它们属于阶 $5$ 的倍二像群，故各自阶为 $5$。这证明两个例外及全部支持声明。$\square$
+
+**命题 16.5（实际七进共同周期）。** $7$ 上有两个地方，均有 $e_v=f_v=2$。原定义的全部共同阶为
+
+$$
+\delta_7(r)=2\,7^{\lceil(r-1)/2\rceil}\qquad(r\ge1).
+\tag{16.16}
+$$
+
+**证明。** 在 $\mathbb Q_7$ 中选 $a\equiv3\pmod7$ 的平方根。由 $(3-a)(3+a)=7$，$3-a$ 的 $7$ 进赋值为 $1$，$3+a\equiv6$ 是剩余非平方单位。因而添 $b$ 给出二次全分歧扩张，添 $c$ 给出二次非分歧扩张，合成局部次数 $4$、$e=f=2$；另一个 $a$ 的根给出另一个地方。全局次数 $8$ 保证恰有这两个地方。在选定地方记 $v(7)=2$，则 $v(b)=1,v(c)=0$。
+
+原坐标为 $X_1=(115-27a)/56,Y_1=(-660+417a)/(32b^3)$ 及其同时共轭 $X_2=(115+27a)/56,Y_2=(-660-417a)/(32c^3)$。在 $a\equiv3$ 的地方，$115-27a$、$-660+417a$ 均为单位，所以
+
+$$
+v(X_1)=-2,\qquad v(Y_1)=-3,\qquad v(t(P_1))=1.
+\tag{16.17}
+$$
+
+这先判定 $P_1$ 约化为 $O$。对另一点使用确切恒等式
+
+$$
+X_2+1=\frac{9(19+3a)}{56},\qquad
+(19+3a)(19-3a)=7^3,\qquad
+(-660+417a)(-660-417a)=87822=2\cdot3^2\cdot7\cdot17\cdot41.
+\tag{16.18}
+$$
+
+其中 $19-3a$ 与 $-660+417a$ 为单位，故 $v(X_2+1)=4,v(Y_2)=2$；$P_2$ 约化为 $T=(-1,0)$。其倍二斜率 $(3X_2^2-1)/(2Y_2)$ 的赋值为 $-2$，分子模 $7$ 为 $2$；倍二公式遂给出 $v(X([2]P_2))=-4,v(Y([2]P_2))=-6$，所以 $[2]P_2$ 的形式深度为 $2$。$[2]P_1$ 的深度仍为 $1$。
+
+因此共同约化入口整数是 $2$，共同入口深度为 $1$，而两个点的个别深度并不相同。这里 $1>e/(7-1)=1/3$，形式对数在第一层即保赋值。对非零偶整数 $m=2u$，共同最小深度恰为 $1+2v_7(u)$；对奇整数，第二点仍约化为 $T$，不在第一层。另一地方由命题 16.2 运输并交换两点，给出相同条件。零倍自动合格，负倍同样适用。故最小正合格整数为 (16.16)。每乘一个 $7$ 增加的两层来自 $v(7)=2$，不是将形式群高度当作分歧指数。$\square$
+
+**定理 16.6（四个实际方向限制共同过深入口）。** 对所有 $p\ne2,7$，有无条件的同一实际入口界
+
+$$
+(t_p-v_p(n_p))\log p\le64h_0p+8C_E=Ap+B.
+\tag{16.19}
+$$
+
+此式允许 $t_p>1$，不预设单点或同时 Wieferich 素数的稀疏性。
+
+**证明（高度与独立性）。** $F$ 全实且次数 $8$，故 $[K:\mathbb Q]=16$。Brox 固定源码的 `lem:independent` 已证明原 $P_1,P_2$ 在 $\mathbb Z[i]$ 上模挠独立，本节直接复用。于是
+
+$$
+T_1=P_1,\quad T_2=[i]P_1,\quad T_3=P_2,\quad T_4=[i]P_2
+\tag{16.20}
+$$
+
+任何非平凡整数线性组合均非挠。令 $\langle S,T\rangle=(\widehat h(S+T)-\widehat h(S)-\widehat h(T))/2$。典范高度的二次性、双线性及 Galois 不变性使用 Silverman VIII.9.3；$[i]$ 是高度等距，因为它把横坐标乘以 $-1$，并与倍二交换。因而 $\langle P_j,[i]P_j\rangle=\langle[i]P_j,-P_j\rangle=0$。此外，固定 $a,b,i$ 而反转 $c$ 的 $K$-自同构固定前两个方向、反转后两个方向；每个跨两点的配对等于其相反数，也为零。共轭不变性给出四个方向的高度全为 $h_0$。因此对所有整数 $z_k$，
+
+$$
+\widehat h\left(\sum_{k=1}^4[z_k]T_k\right)
+=h_0\sum_{k=1}^4z_k^2.
+\tag{16.21}
+$$
+
+由 (12.8) 知 $h_0\le\log82/2$，由非挠性和正定性知 $h_0>0$；不需要重新证明高度比较或计算完整 Mordell–Weil 群。
+
+**证明（同一个有限群中的短关系）。** 对 $K$ 的地方 $w$，以下 $U_w(r)$ 仅指原整方程在 $K_w$ 上约化为 $O$ 且原参数深度至少为 $r$ 的子群；其与 $E_0(F_v)$ 的交仍为原 $U_v(r)$。固定一个 $w\mid v\mid p$ 的 $K$ 地方。$K_w/\mathbb Q_p$ 不分歧，故其整数赋值在 $F_v$ 上仍是原赋值，且 $[K_w:\mathbb Q_p]=f_w\ge1$。在这同一个剩余域的代数闭包中，四个 $T_k$ 的约化由 (16.10) 同属大小至多 $p^2$ 的群 $[2]G_p$。取 $L=\lfloor\sqrt p\rfloor$。$(L+1)^4>p^2$，所以把 $(L+1)^4$ 个向量 $z\in\{0,\ldots,L\}^4$ 映到 $\sum[z_k]\overline T_k$，必有两个不同向量同像。作差取得 $z\ne0$、$|z_k|\le L$，使实际全局点
+
+$$
+R=\sum_{k=1}^4[z_k]T_k\in E_0(K)
+\tag{16.22}
+$$
+
+在 $w$ 约化为 $O$。独立性保证 $R$ 非挠且非零；(16.21) 给出 $\widehat h(R)\le4h_0L^2\le4h_0p$。
+
+**证明（同一关系的局部与全局账）。** 每个 $[n_p]T_k$ 在 $w$ 都属于 $U_w(t_p)$：对原两点是定义，对 $[i]$ 方向由形式群自同构保深度得到。因此同一个 $[n_p]R$ 属于 $U_w(t_p)$。$R$ 自身已经在第一层，可使用保赋值形式对数，得到
+
+$$
+s:=\operatorname{ord}_w(t(R))\ge t_p-v_p(n_p).
+\tag{16.23}
+$$
+
+具体地，$\log([n_p]R)=n_p\log(R)$，所以其赋值为 $s+v_p(n_p)$，不能把 $n_p$ 的 $p$ 因子遗漏。形式展开在这个好整模型上给出 $\operatorname{ord}_w(x(R))=-2s$。在绝对高度公式中取 $|p|_w=p^{-1}$，这一处的权重为 $f_w/16$，故该处非负贡献为 $2s f_w\log p/16$，而其它各处的 $\log\max(1,|x(R)|)$ 均非负。于是
+
+$$
+\begin{aligned}
+(t_p-v_p(n_p))\log p
+&\le s\log p\le8h(x(R))\\
+&\le16\widehat h(R)+8C_E
+\le64h_0p+8C_E.
+\end{aligned}
+\tag{16.24}
+$$
+
+若左端非正，同一不等式仍成立。这里局部读数、抽屉所得关系及高度估计始终是一个 $R$、一个 $w$ 及原同一对点；没有把不同地方、不同关系的分别最优值拼接。$\square$
+
+**定理 16.7（实际共同周期的有限下界与匹配主阶）。** 对所有整数 $H\ge2,M\ge1$，原共同周期满足
+
+$$
+\log q(H,H;M)
+\ge H\sum_{p\in\mathcal G_H}\log p
+ -64h_0\sum_{p\in\mathcal G_H}p
+ -8C_E\,\#\mathcal G_H.
+\tag{16.25}
+$$
+
+令 $\mathcal P(H)=\prod_{p\le H}p$。对所有整数 $H\ge7$ 及所有 $M\ge1$，还有真正的整除上包络
+
+$$
+q(H,H;M)\mid
+ \operatorname{lcm}\bigl(M,5\mathcal P(H)^{H-1}\bigr).
+\tag{16.26}
+$$
+
+因而每个固定 $M$ 都有无条件的
+
+$$
+\log q(H,H;M)
+=H\vartheta(H)+O\left(\frac{H^2}{\log H}\right)
+\sim H^2\qquad(H\to\infty).
+\tag{16.27}
+$$
+
+误差常数可依赖固定 $M$ 及本节固定点；(16.26) 的阈值 $7$ 与 $M$ 无关。
+
+**证明（下界来自实际自身分量）。** 由 (16.6)，对每个 $p\in\mathcal G_H$，
+
+$$
+\begin{aligned}
+v_p(q(H,H;M))&\ge b_p(H)
+=v_p(n_p)+\max(0,H-t_p)\\
+&\ge H-(t_p-v_p(n_p)).
+\end{aligned}
+\tag{16.28}
+$$
+
+把这些不同素数的实际自身指数乘以 $\log p$ 后相加，再用 (16.19)，即得 (16.25)。右侧某一项若为负，只是一个仍有效的下界，不会删掉其原量词。这一步没有使用 $C_p$ 或任何较大消去数的最小公倍数作下界。
+
+**证明（跨地方素因子的整除上界）。** 对 $p\in\mathcal G_H$，$t_p\ge1$，且由下降支持和 (16.12)，$v_p(n_p)=0$，唯一例外为 $v_5(n_5)=1$。因此来自 (16.6) 自身的 $p$ 指数不超过 $H-1$，在 $p=5$ 处不超过 $H$。来自 $n_p$ 的其它素因子均不超过 $H$，而 $n_p\le p^2\le H^2$ 保证每个这样的 $\ell$ 指数至多 $2\log H/\log\ell\le2\log H/\log2\le H-1$，最后一个不等式对 $H\ge7$ 成立。
+
+§15 给出 $\delta_2(H)=2^{\kappa(H)}$，$\kappa(H)=\max(0,\lceil(H-15)/8\rceil)\le H-1$。命题 16.5 给出 $\delta_7(H)=2\cdot7^{\lceil(H-1)/2\rceil}$，其两个指数同样不超过 $H-1$。故每个实际 $\delta_p(H)$ 都整除 $5\mathcal P(H)^{H-1}$；结合 (16.5) 得 (16.26)。共同整数在这里由最小公倍数承担，大小不等式没有被改写为未经证明的整除式。
+
+**证明（闭合主阶）。** 经典素数定理及其分部求和后果给出 $\vartheta(H)\sim H$、$\pi(H)=O(H/\log H)$、$\sum_{p\le H}p=O(H^2/\log H)$。其原始来源是 Hadamard，*Sur la distribution des zéros de la fonction ζ(s) et ses conséquences arithmétiques*，Bull. Soc. Math. France 24，199–220，[DOI:10.24033/bsmf.545](https://doi.org/10.24033/bsmf.545)；以及 de la Vallée Poussin，*Recherches analytiques sur la théorie des nombres premiers*，Ann. Soc. Sci. Bruxelles 20，183–256。这里只用无条件素数定理，不用 RH 或其误差估计。
+
+从 (16.25) 减去 $H\vartheta(H)$，遗漏的 $2,7$ 只产生 $O(H)$；余下损失是 $O(H^2/\log H)$。从 (16.26) 则有 $\log q\le\log M+\log5+(H-1)\vartheta(H)$。两边夹住实际同一个 $q$，得到 (16.27)。$\square$
+
+**定理 16.8（最终自身指数分解与加权次阶的精确身份）。** 可取一个与 $M$ 无关的结构阈值
+
+$$
+H_*=82^{128}.
+\tag{16.29}
+$$
+
+对每个整数 $H\ge H_*$，每一素数的最大指数最终由它自己的地方取得，精确地
+
+$$
+q(H,H;M)=\operatorname{lcm}\left(M,\prod_{p\le H}p^{b_p(H)}\right)
+\quad\text{对所有 }M\ge1,
+\tag{16.30}
+$$
+
+其中
+
+$$
+\begin{aligned}
+b_2(H)&=\kappa(H),&b_7(H)&=\left\lceil\frac{H-1}{2}\right\rceil,\\
+b_p(H)&=H-t_p+v_p(n_p)\quad&&(p\in\mathcal G_H).
+\end{aligned}
+\tag{16.31}
+$$
+
+对固定 $M$，还须越过一个依赖 $M$ 的阈值才能删去 (16.30) 的 $M$。例如约定 $P^+(1)=1$、空集最大值为零，取
+
+$$
+H_M=\max\left(H_*,P^+(M),8v_2(M)+15,
+ 2\max_{\ell\text{ 奇素数}}v_\ell(M)+1\right).
+\tag{16.32}
+$$
+
+则所有整数 $H\ge H_M$ 均有完整的次阶恒等式
+
+$$
+\begin{aligned}
+\log q(H,H;M)
+={}&(H-1)(\vartheta(H)-\log2-\log7)-W(H)\\
+ &+\log5+b_2(H)\log2+b_7(H)\log7.
+\end{aligned}
+\tag{16.33}
+$$
+
+特别地，本节证明的加权入口余项范围为
+
+$$
+\begin{aligned}
+0\le W(H)
+&\le A\sum_{p\in\mathcal G_H}p+B\,\#\mathcal G_H
+ +\log5-\sum_{p\in\mathcal G_H}\log p\\
+&=O(H^2/\log H)\qquad(H\ge H_*).
+\end{aligned}
+\tag{16.34}
+$$
+
+本条不给 $W$ 更强的平均界，尤其不将 $t_p$ 替换为 $1$。
+
+**证明（入口阈值与最终吸收）。** 对 $p\in\mathcal G_H$，由 (16.19) 和 (16.12)、下降支持，$v_p(n_p)\le1$。函数 $x/\log x$ 在 $x\ge3$ 上递增，故
+
+$$
+t_p\le\frac{Ap+B}{\log p}+v_p(n_p)
+\le\frac{AH}{\log H}+\frac B{\log3}+1.
+\tag{16.35}
+$$
+
+$A\le32\log82$，而 $H\ge82^{128}$ 保证 $AH/\log H\le H/4$；$B/\log3+1<12\le H/4$。所以每个 $p\in\mathcal G_H$ 的入口都已满足 $t_p\le H/2$，从而 $b_p(H)\ge H/2$，并可在 (16.6) 中去掉截断。这是同时控制所有 $p\le H$ 的量词，不是对每个固定 $p$ 分别取阈值。
+
+跨地方的因子只来自 $n_p$ 及 $\delta_7$ 中的因子 $2$；它们的素数支持在 $H$ 内，指数至多 $2\log H/\log2$。对 $H\ge256$，
+
+$$
+\kappa(H)\ge\frac{H-15}{8}\ge\frac{2\log H}{\log2},\qquad
+\left\lceil\frac{H-1}{2}\right\rceil
+ \ge\frac{2\log H}{\log2},\qquad
+\frac H2\ge\frac{2\log H}{\log2}.
+\tag{16.36}
+$$
+
+这些不等式在 $256$ 处成立，左右差的导数随后为正。因此每个交叉素因子已被相同素数自身的 $b_\ell(H)$ 吸收，包括 $2,7$。另一方面 $p^{b_p(H)}\mid\delta_p(H)$ 本来就是实际阶的自身分量。因此 $\operatorname{lcm}_{p\le H}\delta_p(H)$ 与 $\prod_{p\le H}p^{b_p(H)}$ 相互整除，得 (16.30)。阈值极不锐利，但只依赖原固定数据，完全独立于 $M$。
+
+若 $H\ge H_M$，$M$ 的所有素因子都不超过 $H$；对奇素数，其所需指数由 $b_p(H)\ge H/2$ 或 $b_7(H)\ge(H-1)/2$ 覆盖；对 $2$ 则由 $b_2(H)\ge(H-15)/8$ 覆盖。因此 $M$ 整除自身分量乘积，可以删去最小公倍数中的 $M$。这是固定模数的另一个阈值，不能与结构阈值混同。
+
+**证明（不丢线性项的恒等式）。** 对 $H\ge H_M$，(16.31) 给出
+
+$$
+\begin{aligned}
+\sum_{p\in\mathcal G_H}b_p(H)\log p
+&=(H-1)\sum_{p\in\mathcal G_H}\log p
+ -\sum_{p\in\mathcal G_H}(t_p-1)\log p
+ +\sum_{p\in\mathcal G_H}v_p(n_p)\log p\\
+&=(H-1)(\vartheta(H)-\log2-\log7)-W(H)+\log5.
+\end{aligned}
+\tag{16.37}
+$$
+
+最后一项恰为 $\log5$，因为只有 $n_5$ 含自身素数且 $v_5(n_5)=1$。加上二进、七进自身分量便是 (16.33)。等价地，从二次基线减去实际周期，完整损失为
+
+$$
+\begin{aligned}
+H\vartheta(H)-\log q(H,H;M)
+={}&W(H)+\vartheta(H)+(H-1)(\log2+\log7)\\
+&-b_2(H)\log2-b_7(H)\log7-\log5.
+\end{aligned}
+\tag{16.38}
+$$
+
+其中 $\vartheta(H)$ 这一线性主阶项不能省略。对 (16.19) 移项，有 $(t_p-1)\log p\le Ap+B+(v_p(n_p)-1)\log p$；逐个素数相加并用同一个 $\log5$ 恒等式即得 (16.34)，再用素数定理完成其阶估计。
+
+用白话说，原问题要求一把整数钥匙同时打开两个点在全部地方、全部指定深度的锁。Galois 对称使同一有理素数上各把锁的共同条件相同；半点使四个方向落在一个较小的有限群中。四维整数盒比这个群大时，必有一个不长的全局组合落进同一局部单位元邻域。若原点对的共同入口过深，这个组合也被迫过深，而它的全局高度付不起这么大的一个局部贡献。这限制的是两点和复乘方向的同一个实现。
+
+每个好素数自己的地方于是提供约 $H$ 个该素数因子，损失由实际 $t_p$ 精确记录。其它地方夹带的该素数因子只有对数多个，最终被自身分量完全吸收。故所有素数的 $H\log p$ 成本相加，得到二次的 $H\vartheta(H)$；没有将一个较大消去数的增长移植给实际周期。尚未控制得更细的部分正是 $W(H)$：本节只用全局高度支付它的总上界，没有证明入口深度的更强平均规律。
+
+本节的固定数据、半点及 $\mathbb Z[i]$ 模挠独立性引自 [Brox 固定提交 `61b82ccacfbefdff3d6e7cf986d6e6279afa1372` 的原始源码](https://github.com/JoseBrox/diophantine-z-q_improvements/blob/61b82ccacfbefdff3d6e7cf986d6e6279afa1372/papers/trace_heights/aggregate_trace_height_20261108_v9.tex)。所引 Silverman 经典结果按非分歧奇素数、七进 $r>e/(p-1)$、可分核及普通/超奇异条件分别使用；二进原过滤及精确阶只复用 §15。文献重合核对限于该固定源码、Silverman 上述章节及本卷 §§11–15：新增综合是原点对的共同入口界、实际周期上下界闭合和 (16.33) 的精确余项身份，不主张全领域原创优先权。这些结论的对象仅是此处固定数据的实际共同周期，不扩张为完整的 $\mathbb Z/\mathbb Q$ 定义或物理同构。$\square$
+
+## 追加锚（本行以下为增补区）
