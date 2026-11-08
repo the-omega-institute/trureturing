@@ -16,7 +16,7 @@ Lean statement: `D5/S3/Arith/Robin/ForwardKernel/FourthMomentKurtosis.dyadicZ_se
 
 *Commentary.*
 
-For locally bounded Borel measurable E, a valid exponent band 0<alpha<theta<beta<1 with the cumulative variance asymptotic, and a measurable integrable real profile g, E[Z_X^2] tends to (2^(1-theta)-1)*Q(g)/log(2). The profile mean-square asymptotic is divided by log(2), and the square of the normalizing square root equals X^(1-theta)*log(X) for X>1.
+For locally bounded Borel measurable E, a valid exponent band 0<alpha<theta<beta<1 with the cumulative variance asymptotic, and a measurable integrable real profile g, E[Z_X^2] tends to (2^(1-theta)-1)*Q(g)/log(2). Apply moment transfer at order two to the variance-band interface with kernel kappa*dyadicMacroMoment(kappa)*min(s,t). Its profile-weighted integral is kappa*dyadicMacroMoment(kappa)*Q(g), since the Brownian pair kernel integrates to Q(g). The formula dyadicMacroMoment(kappa)=(2^kappa-1)/(kappa*log(2)) gives the stated limit.
 
 **Theorem 1.2 (Second and fourth moments with strict excess kurtosis).**
 
@@ -39,6 +39,7 @@ This conclusion is conditional on the fourth-order Brownian interface. It does n
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/FourthMomentKurtosis.dyadicZ_second_moment_tendsto`
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/FourthMomentKurtosis.fixed_dyadic_positive_excess_kurtosis`
 - Dependency: [D5/S3/Arith/Robin/ForwardKernel/BrownianFourthKernel](BrownianFourthKernel.md)
-- Dependency: [D5/S3/Arith/Robin/ForwardKernel/DyadicMeanSquareAsymptotic](DyadicMeanSquareAsymptotic.md)
 - Dependency: [D5/S3/Arith/Robin/ForwardKernel/FourthMomentInterfaceBridge](FourthMomentInterfaceBridge.md)
 - Dependency: [D5/S3/Arith/Robin/ForwardKernel/MomentTransfer](MomentTransfer.md)
+- Dependency: [D5/S3/Arith/Robin/ForwardKernel/ProfileQuadraticForm](ProfileQuadraticForm.md)
+- Dependency: [D5/S3/Arith/Robin/ForwardKernel/SecondOrderInterface](SecondOrderInterface.md)
