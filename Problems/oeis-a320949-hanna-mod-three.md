@@ -5,7 +5,7 @@ doi: null
 url: https://oeis.org/A320949
 triage: theorem
 motivation_gids:
-  - D5/S1/Recurrence/Invariants/HannaA320949ModThree.result
+  - D5/S3/ArithSums/HannaA320949ModThree.result
 ---
 
 # Hanna's OEIS A320949 modulo-three conjecture
@@ -22,7 +22,7 @@ and states that $a(n)=[x^n]A(x)$ satisfies $a(n)=0\pmod 3$ for every $n>0$. The 
 
 | source clause | Lean counterpart |
 | --- | --- |
-| $A\in\mathbb Q[[x]]$ | `D5/S1/Recurrence/Invariants/HannaA320949ModThree.term` and `claim` |
+| $A\in\mathbb Q[[x]]$ | `D5/S3/ArithSums/HannaA320949ModThree.term` and `claim` |
 | $A(0)=1$ and the coefficientwise generating equation | `IsGF` |
 | existence of a rational solution | the existential conjunct of `claim` |
 | every rational solution is covered | the universal implication in `claim` |
@@ -34,7 +34,7 @@ The named `term` and `IsGF` definitions retain the source expressions; the auxil
 
 ## Motivation
 
-Issue [#21890](https://github.com/the-omega-institute/trureturing/issues/21890) records the source statement, proof route, and literature screen. The settling declaration is `D5/S1/Recurrence/Invariants/HannaA320949ModThree.result` and its resolution is Proved.
+Issue [#21890](https://github.com/the-omega-institute/trureturing/issues/21890) records the source statement, proof route, and literature screen. The settling declaration is `D5/S3/ArithSums/HannaA320949ModThree.result` and its resolution is Proved.
 
 ## Gap
 
@@ -50,7 +50,7 @@ A rational solution of the displayed equation with a positive coefficient not eq
 
 ## Evidence
 
-The kernel-checked declaration `D5/S1/Recurrence/Invariants/HannaA320949ModThree.result` proves `claim`. The module has generality `I` for the fixed square exponent and modulus three. Its axiom closure is contained in `{propext, Classical.choice, Quot.sound}`. The source note is `Library/ArithUnits/hanna2018a320949.md`; literature completeness is `ASSUMED-UNVERIFIED` because the source is OEIS-only and no arXiv or journal settlement was identified in the recorded screen.
+The kernel-checked declaration `D5/S3/ArithSums/HannaA320949ModThree.result` proves `claim`. The module has generality `I` for the fixed square exponent and modulus three. Its axiom closure is contained in `{propext, Classical.choice, Quot.sound}`. The source note is `Library/ArithUnits/hanna2018a320949.md`; literature completeness is `ASSUMED-UNVERIFIED` because the source is OEIS-only and no arXiv or journal settlement was identified in the recorded screen.
 
 The escape audit for `D5.S1.Recurrence.Invariants.HannaA320949ModThree.result` is unfinished: [#22543](https://github.com/the-omega-institute/trureturing/issues/22543) identifies the missing faithful enrolled four-slot template for the conjunction of rational generating-function existence and nested universal integer divisibility. The same issue records unfinished source reconstruction, variation, sensitivity and observational-dependence evidence for the public owner lemmas `D5.S3.ArithSums.HannaA301310Divisibility.coeff_cast` and `D5.S3.ArithSums.HannaA301310Divisibility.eval_diff_iter_apply`. No Reg registration for these targets is delivered.
 

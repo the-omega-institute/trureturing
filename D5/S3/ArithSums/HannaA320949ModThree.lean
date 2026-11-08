@@ -1,6 +1,6 @@
-/- GID: D5/S1/Recurrence/Invariants/HannaA320949ModThree
+/- GID: D5/S3/ArithSums/HannaA320949ModThree
    generality: I
-   mirror-B: D5/B/S1/Recurrence/Invariants/HannaA320949ModThree
+   mirror-B: D5/B/S3/ArithSums/HannaA320949ModThree
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
    utility: none

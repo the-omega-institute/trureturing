@@ -2,11 +2,11 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S1.Recurrence.Invariants;
+namespace StrataLint.Scribe.Blueprint.D5.S3.ArithSums;
 
 internal sealed class HannaA320949ModThreeDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S1/Recurrence/Invariants/HannaA320949ModThree.";
+    private const string Prefix = "D5/S3/ArithSums/HannaA320949ModThree.";
     private static readonly LibraryNoteRef Source =
         LibraryNoteRef.Create("D5/L/ArithUnits/hanna2018a320949");
 
