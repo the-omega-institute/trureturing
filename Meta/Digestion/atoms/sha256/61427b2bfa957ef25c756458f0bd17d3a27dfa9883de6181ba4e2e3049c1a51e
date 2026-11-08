@@ -1,0 +1,26 @@
+#### 命题 7.2：端点、最短扇形与非唯一的实际门
+
+设单位 $a,b$ 不平行，$\theta=\arccos(a\cdot b)\in(0,\pi)$，
+
+$$
+u=\frac{b-(a\cdot b)a}{\sin\theta},\quad
+c=a\times u,\quad \Sigma=\frac\theta2\,a\wedge u.
+$$
+
+单位平面扇形从 $a$ 到 $b$ 的有向面积是 $\Sigma$，对应门
+
+$$
+U_{ab}=\exp(-i\theta\sigma_c/2)
+=\frac{(1+a\cdot b)I-i\sigma_{a\times b}}{\sqrt{2(1+a\cdot b)}}
+$$
+
+满足 $`U_{ab}P_aU_{ab}^*=P_b`$。 端点还容许全部 $e^{-i\chi\sigma_b/2}U_{ab}$，故不能恢复唯一的实际门。
+
+**证明。**
+
+参数化扇形 $X(r,t)=r(\cos t\,a+\sin t\,u)$，$0\le r\le1,0\le t\le\theta$。 有 $\partial_rX\wedge\partial_tX=r\,a\wedge u$，积分得到 $\Sigma$。 Pauli 关系使指数为 $\cos(\theta/2)I-i\sin(\theta/2)\sigma_c$； 半角恒等式给显示分式。已证 Rodrigues 公式把 $a$ 旋转到 $b$。 任意主角 $\phi\in[0,\pi]$ 的轴旋转若把 $a$ 送到 $b$， 则 $a\cdot b=\cos\phi+(1-\cos\phi)(a\cdot d)^2\ge\cos\phi$， 故 $\theta\le\phi$；所构造的垂直轴达到下界。 绕 $b$ 的任意后续旋转固定 $P_b$，所以显示族共享端点。
+
+$\square$
+
+垂足 $C=(a\cdot b)a$ 是 $a,b$ 的确定函数，不是额外自由数据。 若 $b=-a$，转向平面不唯一；若 $b=a$，最短门可取恒等而实际历史仍可闭路。 两端点上的 $\sin\theta$、$\sin\theta/2$ 与 $\theta/2$ 分别是平行四边形、三角形与单位扇形的面积模， 球面闭路的立体角又是另一种量。
+
