@@ -1,0 +1,20 @@
+**定义 1.2（固定原响应背景）。** 沿原词卷定义 399.1，$E$ 是原实响应空间，$\circ$ 是固定原对称实双线性乘法，$u\circ a=a$。全部原实线性评价组成分离 $E$ 的族 $\mathcal P$，并定义原正锥和原质量：
+
+$$
+\begin{gathered}
+E_+=\{c\in E:\alpha(c)\ge0\ (\alpha\in\mathcal P)\},\qquad
+m_\alpha=\alpha(u)\ge0,\\
+(\forall a\in E)(\exists r\ge0)\quad -ru\le a\le ru.
+\end{gathered}
+\tag{1.1}
+$$
+
+同一个旧 $D:E\times E\to E$ 初始只是处处定义的映射，不预设可加、齐次、连续、交替或单位零关系。对全部原评价记
+
+$$
+g_\alpha(a,b)=\alpha(a\circ b)-\mathrm i\alpha(D(a,b)).
+\tag{1.2}
+$$
+
+标签量化全部 $E$，包含零、重复、全部实缩放及实平移。响应标签 $ra+sb$ 是原数学空间中的元素，不意味着可以制备新的准备或实施新的操作。§3 的有限维反例检验这套恢复背景的逻辑强度，不声称它是原 $\Omega$ 的实际实现。
+

@@ -1,0 +1,13 @@
+**Definition 14.1 (short field and positive actual charge).** For $0<s<1$, retain every actual normalized complex ground-state choice $\psi_s\in D(S)$ from (1.7), and put
+
+$$
+\begin{aligned}
+u_s&=|\psi_s|,&F_s^+&=\mathcal U_su_s=|F_s|,\\
+D_s&=W_{s^2}-W_1\ge0,&U_s^{<}&=s^5D_s\circ\Xi_s,\\
+A_s(K)&=\int_K\phi(k_0+\varepsilon sr)U_s^{<}(\xi)F_s^+(\xi)d\xi.
+\end{aligned}
+\tag{14.1}
+$$
+
+The symbol $A_s(K)$ here is a scalar charge, distinct from the Friedrichs operator $A_s$ of (2.2). Its domain is each fixed compact Lebesgue measurable $K\subset\mathbb R^4$ of positive measure, with $s$ small enough that $K\subset\Omega_s$. P (102.5) gives $u_s>0$ almost everywhere, $u_s\in D(S)$, $\|u_s\|_2=1$, and $(aS-g_sW_{s^2})u_s=E_su_s$. Thus taking the modulus preserves an actual ground state in the original full complex problem. For each fixed $s>0$, $D_s$ is a bounded nonnegative real multiplier by P Proposition 70.2; no uniform bound for this unscaled multiplier as $s\downarrow0$ is asserted.
+

@@ -1,0 +1,20 @@
+**定义 27.1（同一原关系的平方候选）。** 取定义 8.1 的同一纯实总映射入口；它已按既有 8.2、6.1 识别原 $E$ 为同一含单位 JB 完成 $X$ 中的稠密实 Jordan 子代数；原 $E$ 可以不完备。保持原 $C,u,N,P$、完整来源合同及实际共轭，旧 $D:E^2\to E$ 起初仅为反对称总映射。保持原实部换括号式
+
+$$
+\mathrm R:\quad (a\circ b)\circ c-a\circ(b\circ c)
+=D(D(a,b),c)-D(a,D(b,c))\qquad(a,b,c\in E),
+$$
+
+只增加一项原全域二元平方关系
+
+$$
+\begin{aligned}
+\mathrm{PY}:\quad D(a,b)^2&=B(a,b),\\
+B(a,b)&=\tfrac12\bigl(U_a(b^2)+U_b(a^2)\bigr)-(a\circ b)^2,
+\qquad U_a=2L_a^2-L_{a^2}.
+\end{aligned}
+\tag{27.1}
+$$
+
+不另付 FR、O、复正二表、旧 $D$ 的线性连续性、完整原域、迹、前对偶、投影供应或输出覆盖。$B$ 是同一原 Jordan 乘法中的多项式，不定义为某个预先存在的交换子平方。
+

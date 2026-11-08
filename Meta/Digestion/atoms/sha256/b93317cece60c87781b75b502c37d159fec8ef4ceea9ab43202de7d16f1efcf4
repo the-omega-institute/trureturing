@@ -1,0 +1,27 @@
+**定理 114.1（完整分类，不预付NN或P3）。** 在108.1的指定背景中，P2加完整PB有解，当且仅当 $\dim H=\dim V\in\{0,1,3\}$ 且 $V=H$。维数0、1时恰有 $D=0$；维数3时恰有两个全域旧关系，在任一固定定向正交坐标中为
+
+$$
+D(su+x,tu+y)=\varepsilon\,x\times y,\qquad
+\varepsilon\in\{1,-1\}.
+\tag{114.1}
+$$
+
+所有实际标量输入、任意幅度及退化标签均包含在内。同一个旧D的中央平移中性、实双线性、连续性、NN、PY、Jacobi、全部有限原复Gram正性及原R都成为结论。
+
+证明。113.1先取得完整原域及其维数。维数0、1时所有输入向量部共线，108.2使旧D全零；原Jordan乘法分别同构于 $\mathbb R$、$\mathbb R\oplus\mathbb R$ 的逐点乘法。维数3时，此时才可调用已证明的完整原域定理93.1，得到全部旧输入的114.1及其完整关系。辅助B并未被未经证明地外推成所有旧D；旧D的大幅和标量输入由93.1本身支付。98.2的NN前提没有在本证明中预付。
+
+反向，前两种交换乘法及三维两种Pauli乘法均满足实际P2与PB：设 $\star=\circ-iD$、$z=b+ic$，同一原复化中有
+
+$$
+Q_\alpha(b,c)=\alpha_{\mathbb C}(z^\ast\star z),\qquad
+r_t+is_t=z+it(a\star z),
+$$
+
+$$
+Q_\alpha(r_t,s_t)
+=\alpha_{\mathbb C}\bigl(z^\ast\star(u+t^2a^2)\star z\bigr).
+\tag{114.2}
+$$
+
+右边对t为偶函数。正性及全部有限Gram在通常乘法中由 $\alpha_{\mathbb C}(Z^\ast Z)\ge0$，在相反乘法中由 $\alpha_{\mathbb C}(ZZ^\ast)\ge0$ 取得，正评价任意质量原样保留。结合乘法直接给原R；NN、PY和Jacobi也由同一交换子或零关系得到。∎
+

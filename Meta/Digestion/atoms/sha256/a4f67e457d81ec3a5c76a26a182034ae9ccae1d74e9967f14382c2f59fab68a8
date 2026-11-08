@@ -1,0 +1,41 @@
+**命题 11.4（The labelled $K_{7,1,1,1}$ application）。** For every
+labelled realization of $H=K_{7,1,1,1}$, all conclusions of Corollary
+11.3 hold on its original complete complex $k=5s$-token carrier at
+every even $s\geq2$. Every induced open neighborhood is nonbipartite,
+and $H$ has no modulus-one least adjacency eigenvector. Thus it lies
+outside both the locally bipartite-neighborhood class of §7 and the
+flat-least-mode class of Assumption 3.1.
+
+Proof. Its four nonempty parts have even total size $m=10$, and its
+dominant part has $P=7>3=R$. There are no isolates. Theorem 11.2
+applies with $k=mS=10S=5s$ at every $S\geq1$, retaining all ten
+original blocks. The open neighborhood of any vertex contains one
+vertex from each of three other parts. These three vertices form a
+triangle, which rules out bipartiteness at every vertex.
+
+For the flat-mode assertion write $a=A(H)$. Vectors supported on the
+seven-vertex part with coordinate sum zero form a six-dimensional
+zero eigenspace. Vectors supported on the three singleton vertices
+with coordinate sum zero form a two-dimensional eigenspace of
+eigenvalue $-1$. The orthogonal complement consists of vectors
+constant on the seven-vertex part and constant on the three
+singletons. In the orthonormal basis given by the normalized indicators
+of those two sets, the adjacency matrix on that complement is
+
+$$
+\begin{pmatrix}0&\sqrt{21}\\\sqrt{21}&2\end{pmatrix},
+\qquad \operatorname{spec}(a)
+=\{0\ (6\text{ times}),\ -1\ (2\text{ times}),\ 1-\sqrt{22},\ 1+\sqrt{22}\}.
+\tag{11.14}
+$$
+
+The two eigenvalues of the displayed matrix are the roots of
+$\theta^2-2\theta-21=0$. Since $\sqrt{22}>2$, the least eigenvalue
+is $\lambda=1-\sqrt{22}<-1$, with a one-dimensional eigenspace in
+that complement. A complex least eigenvector therefore has a common
+coordinate $c$ on the seven-vertex part and $d$ on each singleton,
+satisfying $\lambda c=3d$. If every coordinate had modulus one, this
+would force $|\lambda|=3$, hence $\sqrt{22}=4$, contrary to
+$22\ne16$. Thus Assumption 3.1 fails as well. $\square$
+
+

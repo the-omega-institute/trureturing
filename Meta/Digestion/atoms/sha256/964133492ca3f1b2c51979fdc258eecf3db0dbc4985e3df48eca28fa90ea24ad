@@ -1,0 +1,26 @@
+**定义 88.1（同一原域与候选范围）。** 数学分类沿用[静态重构卷](AURIC_C128_ARBITRARY_DIMENSIONAL_STATIC_QUANTUM_RECONSTRUCTION.md)定义22.1的无R静态对象与A1–3接口，其同一Jordan乘法按该卷2.1–2.2认回。完整实际来源合同只在95.2接回时逐项保留，不宣称本有限模型是一份完整CountRead原Ω的实例。此处另明确限定用于分类的原域本身为完整的
+
+$$
+E=\mathbb Ru\oplus\mathbb R^3,\quad u=(1,0),\quad
+(s,x)\circ(t,y)=(st+x\cdot y,sy+tx),\quad
+C=\{(s,x):s\ge|x|\},\quad N(s,x)=|s|+|x|.
+\tag{88.1}
+$$
+
+原评价取全部 $\alpha_{m,v}(s,x)=ms+v\cdot x$，$m\ge|v|$，包含零、不等及次归一质量。旧 $D:E^2\to E$ 起初只是一张总映射。不给D可加、齐次、连续、单位行、平移中性、PY、NN、J或R；不使用81.1的附加条件，也不输入82.1的复有限词读数。固定空间取向后记通常叉积为 $x\times y$，这只是数学坐标，不是原D的定义。
+
+保留同一旧D的二标签正性P2，新增关系仅取静态卷22.3的全评价平方配平：
+
+$$
+\begin{aligned}
+Q_\alpha(b,c)&=\alpha(b^2+c^2+2D(b,c)),\\
+r_t&=b+tD(a,b)-t(a\circ c),\qquad
+s_t=c+t(a\circ b)+tD(a,c),\\
+\mathsf{PB}:&\qquad Q_\alpha(r_1,s_1)=Q_\alpha(r_{-1},s_{-1})
+\quad(a,b,c\in E,\ \alpha\in\mathcal P).
+\end{aligned}
+\tag{88.2}
+$$
+
+所有输入、输出仍在同一原E。PB只取 $t=\pm1$；下面变化的是其原标签参数，不偷加连续时间等式、相位操作或共同实现者。完整H2原域是实质模型前提，不将其有限维性移回一般原来源。
+

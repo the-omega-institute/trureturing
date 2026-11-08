@@ -1,0 +1,57 @@
+#### 定理 9.1：标记 qubit 的终端菜单分类
+
+在上述前件下，以下两项等价：
+
+$$
+\begin{split}
+ & [E,F]=0\qquad(\forall E,F\in\mathcal E);\\
+ & \forall\rho_{AM}\quad\exists\omega_{AM}\text{ 可分},\qquad
+       \rho\equiv_{\mathcal E}\omega.
+\end{split}
+$$
+
+若菜单含两个不对易效果，则 Bell 态 $\Phi=\lvert\Phi^+\rangle\langle\Phi^+\rvert$、 $\lvert\Phi^+\rangle=(\lvert 00\rangle+\lvert 11\rangle)/\sqrt2$ 的完整条件记录唯一确定 $\Phi$，即使竞争解释允许任意混合态。
+
+**证明。**
+
+若全部效果对易，取共同正交本征基 $\lvert 0\rangle,\lvert 1\rangle$，令
+
+$$
+P_j=\lvert j\rangle\langle j\rvert,\qquad
+ \Delta_M(\rho)=\sum_{j=0}^1(I\otimes P_j)\rho(I\otimes P_j)
+               =\sum_{j=0}^1\tau_j\otimes P_j,
+ \quad \tau_j=(I\otimes\langle j\rvert)\rho(I\otimes\lvert j\rangle).
+$$
+
+各 $\tau_j\ge0$ 且总迹为一，故 $\Delta_M(\rho)$ 可分。 对任意路径算子 $O$ 及菜单效果 $E$，
+
+$$
+\operatorname{Tr}[(O\otimes E)\Delta_M(\rho)]
+   =\operatorname{Tr}[(O\otimes\sum_jP_jEP_j)\rho]
+   =\operatorname{Tr}[(O\otimes E)\rho].
+$$
+
+这正是全部非归一条件态相同。
+
+反之，qubit 效果写成 $E=aI+b\sigma_n$、$F=dI+e\sigma_m$， 其中 $b,e>0$，$n,m$ 为单位实向量。 不对易等价于 $n\times m\ne0$。 校准的 $a,b,d,e$ 和已记录的 $\rho_A$ 给出
+
+$$
+\tau(\sigma_n)=\frac{\tau(E)-a\rho_A}{b},\qquad
+ \tau(\sigma_m)=\frac{\tau(F)-d\rho_A}{e}.
+$$
+
+这是记录的线性重组，没有新增物理测量。 Bell 记录满足 $\tau_\Phi(X)=X^{\mathsf T}/2$； 故任一兼容态 $\omega$ 满足
+
+$$
+\operatorname{Tr}(\omega C_n)=\operatorname{Tr}(\omega C_m)=1,
+ \qquad C_v=\sigma_v^{\mathsf T}\otimes\sigma_v.
+$$
+
+这里转置相对于定义 $\Phi$ 的共同基。 $I-C_v\ge0$，且 $\operatorname{Tr}[\omega(I-C_v)]=\|(I-C_v)^{1/2}\omega^{1/2}\|_2^2=0$ （$`\|X\|_2^2=\operatorname{Tr}(X^*X)`$）， 所以 $\omega$ 的支撑位于 $C_n,C_m$ 的共同 $+1$ 子空间。
+
+任意双 qubit 向量唯一写为 $(I\otimes X)\lvert\Phi^+\rangle$。 它被 $C_v$ 固定等价于 $\sigma_vX\sigma_v=X$，即 $[X,\sigma_v]=0$。 展开 $X=x_0I+z\cdot\sigma$，$z\in\mathbb C^3$； 同时对易要求 $n\times z=m\times z=0$。 两轴不平行迫使 $z=0$，因此共同子空间只有 Bell 射线。 迹一性给 $\omega=\Phi$，它不可分，证明反向及唯一性。
+
+$\square$
+
+这一分类没有说“不对易菜单能认证每一个源的纠缠”； 它说这样的菜单已能认证某些源，而对易菜单对任何源都做不到。 判据计算的是效果之间是否对易：一个单独的非投影 POVM 也可能已有不对易效果，不能把“单个设置”一概等同于“单根轴”。 效果不对易不等价于 POVM 之间不可联合测量；本定理保留维数与校准信任。 单个正交擦除基的可分替身是上述前向的特例。 经典相关能够复现条件条纹的现象已有实验研究； 最新预印本进一步严格区分完整擦除记录、独立最优辨路量与额外联合记录。 本定理仅将这些边界压成 qubit 实际菜单上的等价命题， 不作基础量子公理或历史首创的声明。[\[17\]](#ref-gogo05), [\[16\]](#ref-siddiqui)
+

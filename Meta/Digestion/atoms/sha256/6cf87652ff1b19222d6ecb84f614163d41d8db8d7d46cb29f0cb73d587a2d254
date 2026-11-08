@@ -1,0 +1,42 @@
+**Proposition 188.1 (source-span radical triviality).** Retain Definition 175.1 and Definition 179.1. Let $u$ be a bounded pointwise partition whose sixty-four residuals all vanish. Suppose that there are real coefficients $(\gamma_y)_{y\in\mathcal L}$ such that
+
+$$
+q=\sum_{y\in\mathcal L}\gamma_yu_y
+$$
+
+as an $m$-class. Then
+
+$$
+\operatorname{Rad}_1(\mathcal W_u)
+\cap\operatorname{Rad}_2(\mathcal W_u)
+\cap\operatorname{Rad}_3(\mathcal W_u)=\{0\}
+$$
+
+as $m$-classes. Consequently, every such full-zero partition has the common-first form
+
+$$
+u_0=u_1=F+v,
+\qquad
+u_3=q-2v,
+\qquad
+u_B=p
+$$
+
+for a bounded real Borel $m$-class $v$ satisfying the pointwise simplex inequalities.
+
+*Proof.* Let $h$ belong to the displayed intersection. By the coefficient hypothesis, both $h$ and $q$ belong to $\mathcal W_u$. The first radical condition, with its two arguments chosen as $h$ and $q$, gives
+
+$$
+0=\mathcal C(h,h,q)=q_{003}(h).
+$$
+
+The source-specific energy identity retained in (175.4) gives
+
+$$
+q_{003}(h)=c\,\|T_{d/2}(gh)\|_2^2.
+$$
+
+Since $c>0$, this vanishes only when $h=0$ as an $m$-class. The common intersection is therefore trivial, and Corollary 179.3 gives the stated common-first representation. $\square$
+
+The span hypothesis is weaker than a prescribed pointwise identity for $u_3+u_B$: the latter, together with the partition sum, supplies $q$ in $\mathcal W_u$, while Proposition 188.1 uses only the resulting $m$-class witness. Thus any full-zero partition with a source-span witness has no radical escape, even when its terminal labels have no retained affine channel.
+

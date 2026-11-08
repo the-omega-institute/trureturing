@@ -1,0 +1,60 @@
+**Theorem 175.2 (full-family exclusion and a directional residual bound).** For every original $\theta$, every bounded real Borel $v$ with $[v]\in V\setminus\{0\}$, every real $t\ne0$, and every bounded real Borel $w$ for which (175.2) is legal on the whole $G$, the exact identity and bound are
+
+$$
+\frac34\bigl(\Delta(u)_{003}+\Delta(u)_{00B}\bigr)
+-\frac14\bigl(\Delta(u)_{000}+\Delta(u)_{001}\bigr)
+=t^2 A_\theta(v),
+\tag{175.5}
+$$
+
+$$
+\|\Delta(u)\|_{\max}
+\ge \frac{t^2}{2}q_{003}(v)
+=\frac{t^2c}{2}\|T_{d/2}(gv)\|_2^2>0.
+\tag{175.6}
+$$
+
+Consequently all sixty-four original residuals cannot vanish simultaneously anywhere in this nonzero family. The quantifiers include every legal real amplitude and all legal compensators, including sign-changing, non-invariant and amplitude-dependent ones.
+
+*Proof.* The prescribed affine readout and the exact cancellations in (175.2) give, pointwise on the original whole $G$,
+
+$$
+\begin{aligned}
+\sum_{k\in\mathcal L}\alpha_k u_k
+&=u_3+u_B-p\sum_{k\in\mathcal L}u_k
+=q+p-p=q,\\
+\sum_{k\in\mathcal L}\alpha_k f_k&=q.
+\end{aligned}
+\tag{175.7}
+$$
+
+Apply the existing joint-law multilinearity (134.10), (155.1) to these finite linear combinations of terminal labels:
+
+$$
+\begin{aligned}
+\sum_{k\in\mathcal L}\alpha_k\Delta(u)_{00k}
+&=\mathcal C(F+tv,F+tv,q)-\mathcal C(F,F,q)\\
+&=t\bigl[\mathcal C(v,F,q)+\mathcal C(F,v,q)\bigr]
+  +t^2\mathcal C(v,v,q)\\
+&=t\ell_{003}(v)+t^2q_{003}(v)
+=t^2A_\theta(v).
+\end{aligned}
+\tag{175.8}
+$$
+
+The identification of the linear term is exactly (134.11), since $\sigma_3=0$, and it vanishes because $[v]\in V$. The quadratic term is exactly the already supplied positive energy (134.13); its strictness requires $[v]\ne0$, $g>0$ almost everywhere, and the original full heat operator. No new spectral assertion is needed.
+
+In the first line of (175.8), the sum on the left contains the four actual factors $Pu_k$. Only their linear combination is simplified: $\sum_k\alpha_kPu_k=Pq=cg$. No individual perturbed terminal is identified with $cg$, and the first observation density remains $g=g_{2d}$. Thus the calculation retains each tuple's own terminal in every residual.
+
+Writing out the four coefficients yields (175.5). Finally,
+
+$$
+t^2A_\theta(v)
+\le\sum_{k\in\mathcal L}|\alpha_k|\,|\Delta(u)_{00k}|
+\le\bigl(2p+2(1-p)\bigr)\|\Delta(u)\|_{\max}
+=2\|\Delta(u)\|_{\max}.
+\tag{175.9}
+$$
+
+This proves (175.6). The proof uses no small-amplitude expansion with a remainder, parity restriction, invariant representative replacement, or restriction on $w$ beyond the stated boundedness and whole-$G$ legality. $\square$
+

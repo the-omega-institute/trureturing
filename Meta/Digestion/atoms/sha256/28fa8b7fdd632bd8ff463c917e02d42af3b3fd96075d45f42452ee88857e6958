@@ -1,0 +1,37 @@
+**定义 45.1（整球面上的有限上下文事件）。** 令 $\mu$ 为 $S^2$ 上的归一化面积测度，固定
+
+$$
+\begin{gathered}
+x=\frac{\sqrt5-1}{2},\qquad \theta=\frac{3\pi}{5},\qquad e_z=(0,0,1),\\
+u_-=(-2x\sqrt x,0,2x-1),\qquad
+A=R_{e_z}(\theta),\qquad C=R_{u_-}(-\theta),\\
+G_4=A,\qquad G_5=C,\qquad
+B_w=G_{e_m}\cdots G_{e_1}\quad(w=e_1\cdots e_m\in\{4,5\}^{<\infty}),\qquad B_\epsilon=I.
+\end{gathered}
+\tag{45.1}
+$$
+
+字仍按先后调用书写。对球面函数置 $U_gh(n)=h(gn)$，因此 $U_gU_k=U_{kg}$，并定义
+
+$$
+\begin{aligned}
+R(z)&=z^3-x^2z^2+x^2z-1,\\
+PF(n)&=\int_{S^2}F\,d\mu+
+ \left(3\int_{S^2}vF(v)\,d\mu(v)\right)\cdot n,\\
+\Delta_wF(n)&=R(U_A)U_{B_w}F(n)\\
+ &=F(B_wA^3n)+x^2F(B_wAn)-F(B_wn)-x^2F(B_wA^2n).
+\end{aligned}
+\tag{45.2}
+$$
+
+这里的算子次序固定为 $R(U_A)U_{B_w}$，函数参数次序固定为 $B_wA^j n$。有限上下文事件是：存在一个有限集合 $W\subset\{4,5\}^{<\infty}$、$\epsilon\in W$，以及一个实数 $K>0$，使
+
+$$
+\|F-PF\|_{L^2(\mu)}
+\le K\max_{w\in W}\|\Delta_wF\|_{L^2(\mu)}
+\quad\text{对每个连续实函数 }F:S^2\longrightarrow[0,1].
+\tag{45.3}
+$$
+
+同一个 $W,K$ 在全部 $F$ 之前选定；不附加次数、秩、Lipschitz 常数或共同连续模量的界。每个范数都在整个球面上取，有限的是上下文字集，不是球面采样点集。
+

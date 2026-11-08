@@ -64,12 +64,12 @@ internal static class WorktreeProtocolCommand
                         else
                         {
                             if (line.Length >= 64 * 1024)
-                                throw new InvalidOperationException("qualification row exceeded 65536 characters");
+                                throw new InvalidOperationException("protocol row exceeded 65536 characters");
                             line.Append(buffer[index]);
                         }
                     }
                 }
-                if (line.Length != 0) throw new InvalidOperationException("incomplete qualification row:"
+                if (line.Length != 0) throw new InvalidOperationException("incomplete protocol row:"
                     + CleanLanesCommand.BoundedDiagnostic(line.ToString()));
                 return 0;
             });
@@ -133,10 +133,10 @@ internal static class WorktreeProtocolCommand
     {
         var assembly = typeof(WorktreeProtocolCommand).Assembly;
         var program = new StringBuilder("import base64, sys, types\n");
-        // Dependency order: both operations import protocol; preservation's
-        // commit_snapshot import consumes publication. These modules use only
+        // Dependency order: protocol imports the publication and preservation
+        // adapters. These modules use only
         // host Python standard-library modules and native Git beyond this set.
-        foreach (var name in new[] { "worktree_protocol", "worktree_publication", "worktree_preservation", "worktree_host_cleanup", "worktree_pool" })
+        foreach (var name in new[] { "maintenance_log", "worktree_protocol", "worktree_publication", "worktree_preservation", "worktree_host_cleanup", "worktree_pool" })
         {
             using var stream = assembly.GetManifestResourceStream($"WorktreeProtocol.{name}.py")
                 ?? throw new InvalidOperationException($"worktree adapter module is unavailable: {name}");

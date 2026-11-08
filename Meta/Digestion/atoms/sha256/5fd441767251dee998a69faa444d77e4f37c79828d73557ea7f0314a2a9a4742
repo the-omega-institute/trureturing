@@ -1,0 +1,27 @@
+**定义 C-60.1（不含三个局部活动的外部矩阵）。** 固定中心 $i$，写 $L=i-1$、$C=i$、$R=i+1$。沿避开 $C$ 的环路，从 $L$ 到 $R$ 依次为
+
+$$
+L,r_1,r_2,\ldots,r_{n-3},R,
+\qquad r_k=i-1-k\pmod n.
+$$
+
+这条路径有 $n-2$ 条边、$n-3$ 个内部顶点。复用 C-7.9 的兼容矩阵，改记
+
+$$
+J=\begin{pmatrix}1&1\\1&0\end{pmatrix},\qquad
+D_j=\operatorname{diag}(1,\lambda_j),\qquad
+H_i=J D_{r_1}J D_{r_2}\cdots J D_{r_{n-3}}J.
+\tag{C60.1}
+$$
+
+$H_i$ 的行是 $B_L$，列是 $B_R$。它不含 $\lambda_L,\lambda_C,\lambda_R$。令 $s_0=x,s_{n-2}=y$，则等价的逐格定义为
+
+$$
+H_i(x,y)=\sum_{s_1,\ldots,s_{n-3}\in\{0,1\}}
+\left(\prod_{k=1}^{n-3}\lambda_{r_k}^{s_k}\right)
+\left(\prod_{k=0}^{n-3}J_{s_k,s_{k+1}}\right).
+\tag{C60.2}
+$$
+
+因此每格是固定两个端点后外部填充的精确总权。
+
