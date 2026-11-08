@@ -16,7 +16,7 @@ noncomputable section
 namespace Reg.D5.S3.Quantum.Information.Pauli.OriginalSpinConsumers
 
 abbrev signature : Signature where
-  Params := Bool × E
+  Params := Σ _ : Bool, E
   State _ := E
   Role := Unit
   finiteRole := inferInstance
@@ -37,7 +37,7 @@ def rejected : Realization signature := realize signature
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ (opposite : Bool) (D : Relation),
-    (∀ a b, D a b = R.readout () (opposite, a) b) →
+    (∀ a b, D a b = R.readout () ⟨opposite, a⟩ b) →
       Consequences D ∧ MatrixInterfaces opposite D
 
 private def ex : E := (0, ![1, 0, 0])
@@ -63,7 +63,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
 
 private theorem actual_dependence : ObservationalDependence signature actual := by
   intro i
-  refine ⟨(false, ex), 0, ey, ?_⟩
+  refine ⟨⟨false, ex⟩, 0, ey, ?_⟩
   intro h
   have hz := congrArg (fun a : E => a.2 2) h
   norm_num [actual, realize, ex, ey,
