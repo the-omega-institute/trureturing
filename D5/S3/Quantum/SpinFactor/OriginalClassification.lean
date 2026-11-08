@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Quantum/SpinFactor/OriginalClassification
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.LinearAlgebra.CrossProduct, D5/S3/Quantum/SpinFactor/OriginalDContract, D5/S3/Quantum/SpinFactor/OriginalPureRigidity, D5/S3/Quantum/SpinFactor/OriginalResidual, D5/S3/Geometry/TwoAxisFiniteRotation, D5/S3/Quantum/Algebra/PauliFixedProductFamily, D5/S3/Quantum/Measurement/FourQubitParentConstruction]
+   anchors: [mathlib/module/Mathlib.LinearAlgebra.CrossProduct]
    utility: none
    digest: Complete original-D H2 classification with both Pauli orientations and same-D consequences. -/
 
