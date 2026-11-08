@@ -1,0 +1,44 @@
+**引理 140.1（允许方向上的整圆不变性）。** 固定 $Z\in\mathcal A$ 与第 $j$ 块秩一 $p=ee^*$。若
+
+$$
+\|qZ_je\|<4,\qquad q=I_{n_j}-p,
+\tag{140.1}
+$$
+
+则对每个实 $\theta$，原缺陷满足
+
+$$
+\mathfrak F(U_{\theta,p}Z)=\mathfrak F(Z),\qquad
+U_{\theta,p}=u+(e^{i\theta}-1)p.
+\tag{140.2}
+$$
+
+证明。对实 $t$ 置 $A_t=(u-itp)^{-1}$，本块为 $q+\alpha p$、$\alpha=(1-it)^{-1}$，其他块为单位。写 $Z_0=A_tZ=x_0+iy_0$，令 $v=qZ_je$、$w=qZ_j^*e$，则
+
+$$
+qx_{0,j}e=(v+\bar\alpha w)/2,\qquad
+qy_{0,j}e=(v-\bar\alpha w)/(2i).
+\tag{140.3}
+$$
+
+由 $\|v\|<4$，可选有限 $T>0$，使全部 $|t|>T$ 均有 $\|v\|+\|w\|/\sqrt{1+t^2}<4$。于是两连接范数都严格小于二。138.1 对演员 $tp$ 和这两个原输入分别给 $F(tp,x_0)=F(tp,y_0)=0$，无论其他块分量多大。139.1 因而给
+
+$$
+\begin{aligned}
+\mathfrak F((u+itp)(u-itp)^{-1}Z)&=\mathfrak F(Z),\\
+(u+itp)(u-itp)^{-1}&=U_{2\arctan t,p}.
+\end{aligned}
+\tag{140.4}
+$$
+
+负号一侧准确为 $(u-itp)Z_0=Z$。这里只送入 $D$ 各矩阵的原 Hermitian 实部和虚部。
+
+还须支付所有相位，不能用稠密性代替未知缺陷的连续性。令 $\theta_0=2\arctan T<\pi$、$\delta=\pi-\theta_0>0$。已取得 (140.2) 的相位包括 $(\pi-\delta,\pi)$ 与 $(-\pi,-\pi+\delta)$。并且对任意已作用的 $W=U_{\theta,p}Z$，
+
+$$
+qW_je=qZ_je,\qquad qW_j^*e=e^{-i\theta}qZ_j^*e.
+\tag{140.5}
+$$
+
+所以同一个 $T$ 适用于同一 $p$ 的整条相位轨道。给定 $0<\gamma<2\delta$，选 $a,b\in(0,\delta)$、$a+b=\gamma$。两个已允许相位 $\pi-a,\pi-b$ 之和模 $2\pi$ 恰为 $-\gamma$；逐次用 (140.4) 与 (140.5)，给 $-\gamma$ 的缺陷不变性。两个允许负相位 $-\pi+a,-\pi+b$ 同理给 $+\gamma$。零相位直接成立。任意实 $\theta$ 选正整数 $N$ 使 $|\theta/N|<2\delta$，再精确作用 $N$ 次这个短相位，即得 (140.2)。每次都使用同一实际旧映射、同一允许界和有限矩阵乘法。∎
+
