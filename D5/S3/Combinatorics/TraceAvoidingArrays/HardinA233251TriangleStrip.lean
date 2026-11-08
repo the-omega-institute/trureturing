@@ -8,61 +8,79 @@
 
 /-
 admission_basis: open-problem-resolution (#27657; Proved)
-Registration audit (CLAUDE.md §3.9): finite_certificate is declared_unresolved (IE-C050);
-the unfinished audit is recorded in issue #27943.
-escape_witness: none (the settlement of the external open problem is the new content; every declaration below is bind-only)
-Finite single-row decisions supply the numerical premises consumed on the result path.
-Direct frozen dependency: D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.Seen
-(statement_id sha256:db13d94501d24f27e6e69604bb633af95ff3309c5698815c44e12d2e52739fce).
-Direct frozen dependency: D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.allowed
-(statement_id sha256:4ee019eb42606605da41b2b090212be244d3bf48d64a2c10dc2d9c6c6f7e6468).
-Direct frozen dependency: D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.advance
-(statement_id sha256:63e23e390cbc7ee42155ce307351f149d901cd9013daee3d6d2eac775e24af71).
-Direct frozen dependency: D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.good
-(statement_id sha256:f68e874b0a22676cb3053202c645a8ce30010dcd695d55f3e7fce272d4ce5989).
-Direct frozen dependency: D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.finish
-(statement_id sha256:ebae2e26fe8811cb0e473a0168c27f49fa151fa2bcecda8ad3ba0c9fabc41a7f).
-Direct frozen dependency: D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.finish_fst
-(statement_id sha256:5859cc0f84f4e6a91313521f32ea6d187c4822bb52d4e438939da5e000940bd5).
-Direct frozen dependency: D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.finish_snd
-(statement_id sha256:1ada14ea452d6f35f959dbbd5a034265c8c6921cd041422cad27ec166a94d24c).
-Direct frozen dependency: D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.good_iff
-(statement_id sha256:59d0ffb034f7f2361718e6d2566eb24417785b9a178f6fcb44f336c1199d3d62).
-Direct frozen dependency: D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.edge_iff
-(statement_id sha256:eb164ba2a30a036eb9157c90341cc0d7664c1e26513ba1fedc8a4964a09ae84a).
-Direct frozen dependency: D5.S3.Observer.Separation.BooleanRankThreeK4.beta
-(statement_id sha256:1abdc5f3db71567fe05de5aabbe80dddeb5ec5179e4ec7fd49fe71e500518481).
-Row: proof_shape=bind-only; consumers=prior, rowLegal, TailGood, step
-prior: proof_shape=bind-only; consumers=normal, prior_zero, prior_succ
-instDecidablePrior: proof_shape=bind-only; consumers=instDecidableNormal
-normal: proof_shape=bind-only; consumers=normal_cons, Legal, tail_iff
-prior_zero: proof_shape=bind-only; consumers=normal_cons
-prior_succ: proof_shape=bind-only; consumers=normal_cons
-normal_cons: proof_shape=bind-only; consumers=tail_iff, counting_bridge
-rowLegal: proof_shape=bind-only; consumers=Legal, TailGood, step, classCount, firstCount
-bonds: proof_shape=bind-only; consumers=Legal, bonds_iff, tail_iff
+escape_witness: none
+Registration audits retain their exact scoped-report states; see issue #27943.
+Direct frozen dependency:
+D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.Seen
+statement_id: sha256:db13d94501d24f27e6e69604bb633af95ff3309c5698815c44e12d2e52739fce
+Direct frozen dependency:
+D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.allowed
+statement_id: sha256:4ee019eb42606605da41b2b090212be244d3bf48d64a2c10dc2d9c6c6f7e6468
+Direct frozen dependency:
+D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.advance
+statement_id: sha256:63e23e390cbc7ee42155ce307351f149d901cd9013daee3d6d2eac775e24af71
+Direct frozen dependency:
+D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.good
+statement_id: sha256:f68e874b0a22676cb3053202c645a8ce30010dcd695d55f3e7fce272d4ce5989
+Direct frozen dependency:
+D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.finish
+statement_id: sha256:ebae2e26fe8811cb0e473a0168c27f49fa151fa2bcecda8ad3ba0c9fabc41a7f
+Direct frozen dependency:
+D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.finish_fst
+statement_id: sha256:5859cc0f84f4e6a91313521f32ea6d187c4822bb52d4e438939da5e000940bd5
+Direct frozen dependency:
+D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.finish_snd
+statement_id: sha256:1ada14ea452d6f35f959dbbd5a034265c8c6921cd041422cad27ec166a94d24c
+Direct frozen dependency:
+D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.good_iff
+statement_id: sha256:59d0ffb034f7f2361718e6d2566eb24417785b9a178f6fcb44f336c1199d3d62
+Direct frozen dependency:
+D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.edge_iff
+statement_id: sha256:eb164ba2a30a036eb9157c90341cc0d7664c1e26513ba1fedc8a4964a09ae84a
+Direct frozen dependency:
+D5.S3.Observer.Separation.BooleanRankThreeK4.beta
+statement_id: sha256:1abdc5f3db71567fe05de5aabbe80dddeb5ec5179e4ec7fd49fe71e500518481
+Transfer.Row: proof_shape=bind-only; consumers=Transfer.normal, Transfer.step
+Transfer.prior: proof_shape=bind-only; consumers=Transfer.normal, Transfer.prior_zero
+Transfer.instDecidablePrior: proof_shape=bind-only; consumers=Transfer.instDecidableNormal
+Transfer.normal: proof_shape=bind-only; consumers=Transfer.normal_cons, Transfer.Legal, normal
+Transfer.prior_zero: proof_shape=bind-only; consumers=Transfer.normal_cons
+Transfer.prior_succ: proof_shape=bind-only; consumers=Transfer.normal_cons
+Transfer.normal_cons: proof_shape=bind-only; consumers=Transfer.tail_iff, Transfer.counting_bridge
+Transfer.Legal: proof_shape=bind-only; consumers=Transfer.counting_bridge
+Transfer.instDecidableNormal: proof_shape=bind-only; consumers=Transfer.instDecidableLegal
+Transfer.instDecidableGood: proof_shape=bind-only; consumers=Transfer.step, Transfer.total
+Transfer.instDecidableLegal: proof_shape=bind-only; consumers=Transfer.counting_bridge
+Transfer.TailGood: proof_shape=bind-only; consumers=Transfer.tail_iff, Transfer.count
+Transfer.instDecidableTailGood: proof_shape=bind-only; consumers=Transfer.count
+Transfer.tail_iff: proof_shape=bind-only; consumers=Transfer.counting_bridge
+Transfer.step: proof_shape=bind-only; consumers=Transfer.v, v_eq_w
+Transfer.v: proof_shape=bind-only; consumers=Transfer.count_eq_v, v
+Transfer.count: proof_shape=bind-only; consumers=Transfer.count_eq_v, Transfer.counting_bridge
+Transfer.count_eq_v: proof_shape=bind-only; consumers=Transfer.counting_bridge
+Transfer.total: proof_shape=bind-only; consumers=Transfer.counting_bridge, total
+Transfer.counting_bridge: proof_shape=bind-only; consumers=counting_bridge
+Row: proof_shape=bind-only; consumers=rowLegal
+normal: proof_shape=bind-only; consumers=Legal
+rowLegal: proof_shape=bind-only; consumers=Legal, classCount
+bonds: proof_shape=bind-only; consumers=Legal, bonds_iff
 Legal: proof_shape=bind-only; consumers=a, counting_bridge
 instDecidableNormal: proof_shape=bind-only; consumers=instDecidableLegal
-instDecidableRowLegal: proof_shape=bind-only; consumers=instDecidableLegal, step, total
+instDecidableRowLegal: proof_shape=bind-only; consumers=instDecidableLegal, classCount
 instDecidableBonds: proof_shape=bind-only; consumers=instDecidableLegal
 instDecidableLegal: proof_shape=bind-only; consumers=a
-a: proof_shape=bind-only; consumers=counting_bridge, a_eq_w, zero_count, result
-pairs: proof_shape=bind-only; consumers=bonds_iff, TailGood, step, total, initial_valid
-compatible: proof_shape=bind-only; consumers=bonds_iff, TailGood, step, classCount
-instDecidableCompatible: proof_shape=bind-only; consumers=instDecidableTailGood, step
-bonds_iff: proof_shape=bind-only; consumers=tail_iff, counting_bridge
-TailGood: proof_shape=bind-only; consumers=tail_iff, count, count_eq_v
-instDecidableGood: proof_shape=bind-only; consumers=instDecidableTailGood, step, total
-instDecidableTailGood: proof_shape=bind-only; consumers=count
-tail_iff: proof_shape=bind-only; consumers=counting_bridge
-step: proof_shape=bind-only; consumers=v, count_eq_v, v_eq_w
-v: proof_shape=bind-only; consumers=count_eq_v, counting_bridge, v_eq_w
-count: proof_shape=bind-only; consumers=count_eq_v, counting_bridge
-count_eq_v: proof_shape=bind-only; consumers=counting_bridge
-total: proof_shape=bind-only; consumers=counting_bridge, a_eq_w
+a: proof_shape=bind-only; consumers=counting_bridge, zero_count, result
+pairs: proof_shape=bind-only; consumers=bonds_iff, classCount
+compatible: proof_shape=bind-only; consumers=bonds_iff, classCount
+instDecidableCompatible: proof_shape=bind-only; consumers=classCount
+colour_bond_iff: proof_shape=bind-only; consumers=bonds_iff, valid_next
+bonds_iff: proof_shape=bind-only; consumers=counting_bridge
+instDecidableGood: proof_shape=bind-only; consumers=classCount, firstCount
+v: proof_shape=bind-only; consumers=v_eq_w
+total: proof_shape=bind-only; consumers=a_eq_w
 counting_bridge: proof_shape=bind-only; consumers=a_eq_w
-Valid: proof_shape=bind-only; consumers=valid_next, initial_valid, finite_certificate, v_eq_w
-instDecidableValid: proof_shape=bind-only; consumers=valid_next, row_counts, initial_valid
+Valid: proof_shape=bind-only; consumers=row_counts, initial_valid
+instDecidableValid: proof_shape=bind-only; consumers=row_counts, initial_valid
 valid_next: proof_shape=bind-only; consumers=v_eq_w
 classCount: proof_shape=bind-only; consumers=finite_certificate
 firstCount: proof_shape=bind-only; consumers=finite_certificate
@@ -70,7 +88,7 @@ row_counts: proof_shape=bind-only; consumers=finite_certificate
 initial_valid: proof_shape=bind-only; consumers=a_eq_w
 initial_counts: proof_shape=bind-only; consumers=finite_certificate
 finite_certificate: proof_shape=bind-only; consumers=v_eq_w, a_eq_w
-w: proof_shape=bind-only; consumers=v_eq_w, a_eq_w, recurrence, result
+w: proof_shape=bind-only; consumers=v_eq_w, recurrence
 v_eq_w: proof_shape=bind-only; consumers=a_eq_w
 a_eq_w: proof_shape=bind-only; consumers=recurrence, result
 recurrence: proof_shape=bind-only; consumers=result
@@ -80,7 +98,12 @@ result: proof_shape=bind-only; consumers=terminal result
 
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip
 import D5.S3.Observer.Separation.BooleanRankThreeK4
-import Mathlib.Tactic
+import Mathlib.Tactic.FinCases
+import Mathlib.Tactic.IntervalCases
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.Ring
+import Mathlib.Tactic.Tauto
 import Mathlib.RingTheory.PowerSeries.Basic
 
 /-! Literal array counting and a two-class continuation transfer. -/
@@ -88,7 +111,8 @@ import Mathlib.RingTheory.PowerSeries.Basic
 open scoped BigOperators
 namespace D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip
 
-open HardinA233175PairStrip (Seen allowed advance good finish finish_fst finish_snd good_iff edge_iff)
+open HardinA233175PairStrip
+  (Seen allowed advance good finish finish_fst finish_snd good_iff edge_iff)
 open D5.S3.Observer.Separation.BooleanRankThreeK4 (beta)
 
 namespace Transfer
@@ -99,7 +123,8 @@ private abbrev Row (k : ℕ) := Fin k → Fin 6
 private def prior {n : ℕ} (f : Fin n → Row k) (i : Fin n) (j : Fin k) (d : Fin 6) : Prop :=
   ∃ r k, (r < i ∨ r = i ∧ k < j) ∧ f r k = d
 
-private instance instDecidablePrior {n : ℕ} (f : Fin n → Row k) (i : Fin n) (j : Fin k) (d : Fin 6) :
+private instance instDecidablePrior {n : ℕ} (f : Fin n → Row k)
+    (i : Fin n) (j : Fin k) (d : Fin 6) :
     Decidable (prior f i j d) := inferInstanceAs (Decidable (∃ _ _, _ ∧ _))
 
 def normal {n : ℕ} (s : Seen) (f : Fin n → Row k) : Prop :=
@@ -128,7 +153,8 @@ private def Legal (R : Row k → Prop) (E : Row k → Row k → Prop)
       (fun j => A (⟨i.val + 1, h⟩, j))) ∧
     normal (false, false) (fun i j => A (i, j))
 
-private instance {n : ℕ} (s : Seen) (f : Fin n → Row k) : Decidable (normal s f) :=
+private instance instDecidableNormal {n : ℕ} (s : Seen) (f : Fin n → Row k) :
+    Decidable (normal s f) :=
   inferInstanceAs (Decidable (∀ _ _, (_ → _) ∧ (_ → _)))
 
 omit [NeZero k] in
@@ -146,7 +172,8 @@ variable [DecidablePred R] [DecidableRel C]
 variable (E : Row k → Row k → Prop) [DecidableRel E]
 variable (edge : ∀ c d, E c d ↔ C (P c) d)
 
-private instance {n : ℕ} (A : Fin n × Fin k → Fin 6) : Decidable (Legal R E A) :=
+private instance instDecidableLegal {n : ℕ} (A : Fin n × Fin k → Fin 6) :
+    Decidable (Legal R E A) :=
   inferInstanceAs (Decidable (_ ∧ _ ∧ _ ∧ _))
 
 private def TailGood : {n : ℕ} → Seen → (B) → (Fin n → Row k) → Prop
@@ -265,7 +292,8 @@ theorem counting_bridge (n : ℕ) :
           TailGood R P C (finish (false, false) c) (P c) f := by
     intro f
     rw [tail_iff R P C E edge, Legal, normal_cons]
-    have hz : (∃ i : Fin (n + 1), i.val = 0 ∧ (Fin.cons c f : Fin (n + 1) → Row k) i 0 = 0) ↔ c 0 = 0 := by
+    have hz : (∃ i : Fin (n + 1), i.val = 0 ∧
+        (Fin.cons c f : Fin (n + 1) → Row k) i 0 = 0) ↔ c 0 = 0 := by
       constructor
       · rintro ⟨i, hi, h⟩
         simpa only [show i = 0 from Fin.ext hi, Fin.cons_zero] using h
@@ -314,7 +342,8 @@ private def Legal {n : ℕ} (A : Fin n × Fin 3 → Fin 6) : Prop :=
       (fun j => A (⟨i.val + 1, h⟩, j))) ∧
     normal (false, false) (fun i j => A (i, j))
 
-private instance instDecidableNormal {n : ℕ} (s : Seen) (f : Fin n → Row) : Decidable (normal s f) :=
+private instance instDecidableNormal {n : ℕ} (s : Seen) (f : Fin n → Row) :
+    Decidable (normal s f) :=
   inferInstanceAs (Decidable (∀ _ _, (_ → _) ∧ (_ → _)))
 private instance instDecidableRowLegal (c : Row) : Decidable (rowLegal c) :=
   inferInstanceAs (Decidable (∀ _, _ ∧ _))
@@ -332,7 +361,8 @@ def pairs (c : Row) : Fin 3 × Fin 3 := (beta (c 1), beta (c 2))
 def compatible (p : Fin 3 × Fin 3) (c : Row) : Prop :=
   p.1 ≠ beta (c 0) ∧ p.2 ≠ beta (c 1)
 
-private instance instDecidableCompatible (p : Fin 3 × Fin 3) (c : Row) : Decidable (compatible p c) :=
+private instance instDecidableCompatible (p : Fin 3 × Fin 3) (c : Row) :
+    Decidable (compatible p c) :=
   inferInstanceAs (Decidable (_ ∧ _))
 
 theorem colour_bond_iff (x y : Fin 6) : (x ≠ y ∧ x.val + y.val ≠ 5) ↔ beta x ≠ beta y := by
@@ -349,7 +379,6 @@ private instance instDecidableGood (s : Seen) (c : Row) : Decidable (good s c) :
   unfold good
   infer_instance
 
-private abbrev step := Transfer.step rowLegal pairs compatible
 private abbrev v := Transfer.v rowLegal pairs compatible
 private abbrev total := Transfer.total rowLegal pairs
 

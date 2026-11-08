@@ -127,9 +127,9 @@ def family : Registration arena (type_of% @finite_certificate) where
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     (@finite_certificate) (Realization signature) Type Unit where
   unitName :=
-    `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.FiniteCertificate.auditUnit
+    `Reg.A233251FiniteCertificate.auditUnit
   realizationName :=
-    `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.FiniteCertificate.family
+    ``family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -194,7 +194,7 @@ def family : Registration arena (type_of% @colour_bond_iff) where
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual rejected rejected_law
   dependence := by
-    intro i
+    intro ⟨⟩
     exact ⟨(), 0, 1, by decide +kernel⟩
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
@@ -337,10 +337,10 @@ def family : Registration arena (type_of% @Transfer.counting_bridge) where
     · intro e
       exact nomatch e
   dependence := by
-    intro i
+    intro ⟨⟩
     exact ⟨sample, 0, 1, by decide +kernel⟩
 
-def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+def audit : Contract.Registration.{_, _, _, 0, 0, 0, 1, 0, 0, 0, 0, 0}
     (@Transfer.counting_bridge) (Realization signature) Type Unit where
   unitName := `Reg.A233251TransferBridge.auditUnit
   realizationName :=

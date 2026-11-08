@@ -96,10 +96,17 @@ internal sealed class HardinA233251TriangleStripDocument : IScribeDocumentDefini
     private static Formula SeenType() => Qualified(ScannerRoot + "Seen");
     private static Formula Fn(string name, Formula type, Formula body) =>
         Seq(LambdaLower, Sp, V(name), Colon, Sp, type, Sp, Mapsto, Sp, Parenthesized(body));
-    private static Formula GenericParameters(Formula body) => All("k", NatType(),
-        All("B", Qualified("Type"), All("R", Arrow(RowType(), Qualified("Prop")),
-        All("P", Arrow(RowType(), V("B")),
-        All("C", Arrow(V("B"), Arrow(RowType(), Qualified("Prop"))), body)))));
+    private static Formula Instance(string name, Formula argument, Formula body) =>
+        Seq(OpenBracket, ApplyName(name, argument), CloseBracket, Sp, body);
+    private static Formula GenericParameters(Formula body, bool positiveWidth = false)
+    {
+        var parameters = All("B", Qualified("Type"),
+            All("R", Arrow(RowType(), Qualified("Prop")),
+            All("P", Arrow(RowType(), V("B")),
+            All("C", Arrow(V("B"), Arrow(RowType(), Qualified("Prop"))),
+                Instance("DecidablePred", V("R"), Instance("DecidableRel", V("C"), body))))));
+        return All("k", NatType(), positiveWidth ? PositiveWidth(parameters) : parameters);
+    }
     private static Formula NormalParameters(Formula body) => All("k", NatType(),
         All("n", NatType(), All("s", SeenType(),
         All("f", Arrow(ApplyName("Fin", V("n")), RowType()), body))));
@@ -151,9 +158,10 @@ internal sealed class HardinA233251TriangleStripDocument : IScribeDocumentDefini
         var condition = And(Eq(App(c, zero), colourZero), And(App(V("R"), c), Good(s, c)));
         return All("k", NatType(), PositiveWidth(All("B", Qualified("Type"),
             All("R", Arrow(RowType(), Qualified("Prop")), All("P", Arrow(RowType(), V("B")),
+            Instance("DecidablePred", V("R"),
             All("w", WeightType(), Eq(TransferCall("total", V("R"), V("P"), V("w")),
                 SumOver("c", RowType(), Conditional(condition,
-                    App(V("w"), Finish(s, c), App(V("P"), c)), Cast(D(0))))))))));
+                    App(V("w"), Finish(s, c), App(V("P"), c)), Cast(D(0)))))))))));
     }
     private static Formula TransferBridgeFormula()
     {
@@ -179,8 +187,8 @@ internal sealed class HardinA233251TriangleStripDocument : IScribeDocumentDefini
         var identity = Eq(Cast(ApplyName("Finset.card", filter)),
             TransferCall("total", V("R"), V("P"),
                 TransferCall("v", V("R"), V("P"), V("C"), n)));
-        return GenericParameters(PositiveWidth(All("E", Arrow(RowType(),
-            Arrow(RowType(), Qualified("Prop"))), Imp(edge, All("n", NatType(), identity)))));
+        return GenericParameters(All("E", Arrow(RowType(), Arrow(RowType(), Qualified("Prop"))),
+            Instance("DecidableRel", V("E"), Imp(edge, All("n", NatType(), identity)))), true);
     }
     private static Formula ColourBondFormula()
     {

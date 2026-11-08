@@ -15,7 +15,8 @@ internal sealed class HardinA233253TriangleStripDocument : IScribeDocumentDefini
     private const string Transfer =
         "D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.Transfer.";
     private const string Beta = "D5.S3.Observer.Separation.BooleanRankThreeK4.beta";
-    private static LibraryNoteRef Source => LibraryNoteRef.Create("D5/L/Automata/hardin2013a233253");
+    private static LibraryNoteRef Source =>
+        LibraryNoteRef.Create("D5/L/Automata/hardin2013a233253");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Barker's generating function for the literal normalized five-column strip.",
@@ -187,7 +188,7 @@ internal sealed class HardinA233253TriangleStripDocument : IScribeDocumentDefini
             Call("PowerSeries.mk", Fn("n", Q("Nat"), Cast(CallLocal("a", V("n"))))));
         var right = Mul(Mul(Num(4), x), Add(Sub(Num(9), Mul(Num(1120), x)),
             Mul(Num(30720), Pow(x, Num(2)))));
-        return Typed(Eq(left, right), Call("PowerSeries", Q("Int")));
+        return Eq(Typed(left, Call("PowerSeries", Q("Int"))), right);
     }
 
     private static Formula N(string name) => Q(Root + "." + name);
@@ -199,7 +200,8 @@ internal sealed class HardinA233253TriangleStripDocument : IScribeDocumentDefini
     private static Formula Num(int n) => D(n.ToString().Select(c => (byte)(c - '0')).ToArray());
     private static Formula Fin(byte n) => Call("Fin", Num(n));
     private static Formula Index(byte n, byte bound) => Typed(Num(n), Fin(bound));
-    private static Formula App(Formula f, params Formula[] args) => new Formula.Apply(f, [.. args]);
+    private static Formula App(Formula f, params Formula[] args) =>
+        new Formula.Apply(f, [.. args]);
     private static Formula Call(string name, params Formula[] args) => App(Q(name), args);
     private static Formula Parenthesized(Formula f) => Seq(Open, f, Close);
     private static Formula Typed(Formula f, Formula type) =>

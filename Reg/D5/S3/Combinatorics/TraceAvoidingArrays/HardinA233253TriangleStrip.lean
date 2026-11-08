@@ -38,6 +38,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   have hb := congrArg (PowerSeries.coeff 0) h
   simpa [PowerSeries.coeff_mul, h0] using hb
 
+set_option maxRecDepth 100000 in
 def family : Registration arena (type_of% @result) where
   actual := actual
   bridge := Iff.rfl
@@ -45,11 +46,14 @@ def family : Registration arena (type_of% @result) where
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual rejected rejected_law
   dependence := by
-    intro i
+    intro ⟨⟩
     refine ⟨(), 0, 1, ?_⟩
     change a 0 ≠ a 1
-    unfold a
-    decide +kernel
+    have h0 : a 0 = 0 := by unfold a; decide +kernel
+    intro he
+    have h1 : a 1 = 0 := he ▸ h0
+    have hh := congrArg (PowerSeries.coeff 1) result
+    norm_num [PowerSeries.coeff_mul, h0, h1] at hh
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     (@result) (Realization signature) Type Unit where
@@ -128,9 +132,9 @@ def family : Registration arena (type_of% @finite_certificate) where
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     (@finite_certificate) (Realization signature) Type Unit where
   unitName :=
-    `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233253TriangleStrip.FiniteCertificate.auditUnit
+    `Reg.A233253FiniteCertificate.auditUnit
   realizationName :=
-    `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233253TriangleStrip.FiniteCertificate.family
+    ``family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩

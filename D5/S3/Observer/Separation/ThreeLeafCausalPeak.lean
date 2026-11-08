@@ -6,7 +6,14 @@
    utility: none
    digest: Modular three-leaf promises have uniformly bounded cut costs and unbounded causal-tree peak. -/
 
-import Mathlib
+import Mathlib.Data.ZMod.Basic
+import Mathlib.SetTheory.Cardinal.Finite
+import Mathlib.Data.Fintype.EquivFin
+import Mathlib.Data.Fintype.Pi
+import Mathlib.Order.Lattice.Nat
+import Mathlib.Tactic.Positivity
+import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.Ring
 
 noncomputable section
 namespace D5.S3.Observer.Separation.ThreeLeafCausalPeak
