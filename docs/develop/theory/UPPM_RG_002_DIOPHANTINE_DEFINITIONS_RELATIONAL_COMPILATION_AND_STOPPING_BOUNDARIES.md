@@ -577,3 +577,217 @@ V13 固定源码的SHA-256为
 <a id="ref-auric"></a>
 
 \[12\] The Omega Institute, AURIC $\Omega$ 静态相融纤维理论。固定提交下第4–5节的响应商、约束赋值和可实现边界；本轮未审查全篇及全部形式化依赖。 <https://github.com/the-omega-institute/trureturing/blob/69a777d001b184cfce81bed62bad140fb93706d2/docs/develop/theory/AURIC_OMEGA_STATIC_COMPATIBILITY_FIBER_THEORY.md>.
+## 11. 实际共轭椭圆点的联合返回与绝对密度
+
+**定义 11.1（固定的共轭点与实归一化）。** 令
+
+$$
+\begin{gathered}
+K=\mathbb Q(\sqrt2),\qquad \sigma(\sqrt2)=-\sqrt2,\qquad
+ d=3-\sqrt2,\quad d'=3+\sqrt2,\\
+E:y^2=x^3-d^2x,\qquad E^\sigma:y^2=x^3-(d')^2x,\\
+R_0=(1+\sqrt2,2\sqrt2),\qquad
+P=2R_0=\left(\frac{57-28\sqrt2}{8},\frac{-660+417\sqrt2}{32}\right),\\
+E_0:Y^2=X^3-X.
+\end{gathered}
+$$
+
+在这两个实嵌入中均取正平方根，定义实椭圆曲线群同构
+
+$$
+\begin{aligned}
+\phi_d:E(\mathbb R)&\longrightarrow E_0(\mathbb R),&
+ (x,y)&\longmapsto\left(\frac{x}{d},\frac{y}{d\sqrt d}\right),\\
+\phi_{d'}:E^\sigma(\mathbb R)&\longrightarrow E_0(\mathbb R),&
+ (x,y)&\longmapsto\left(\frac{x}{d'},\frac{y}{d'\sqrt{d'}}\right),
+\end{aligned}
+$$
+
+两者均把无穷远点映到无穷远点 $O$。记
+
+$$
+P_1=\phi_d(P),\qquad P_2=\phi_{d'}(P^\sigma),\qquad
+Q=(P_1,P_2),\qquad C=E_0(\mathbb R)^0.
+$$
+
+$C$ 是以 $O$ 为单位元的实连通分支，即 $X\ge1$ 的无界支连同 $O$；它作为紧群同构于 $\mathbb R/\mathbb Z$。记 $\mu$ 为 $C^2$ 上的归一化 Haar 概率，$[n]Q=([n]P_1,[n]P_2)$。这里的曲线、倍点和归一化映射取自 Brox 的固定源码中 “The quadratic-field elliptic curve” 一节：[aggregate trace height，提交 `61b82ccacfbefdff3d6e7cf986d6e6279afa1372`](https://github.com/JoseBrox/diophantine-z-q_improvements/blob/61b82ccacfbefdff3d6e7cf986d6e6279afa1372/papers/trace_heights/aggregate_trace_height_20261108_v9.tex)。
+
+**定义 11.2（固定的局部条件、同余类与计数对象）。** 取任意固定的有限指标集 $S$，允许 $S=\varnothing$。对每个 $v\in S$，固定一个紧 Hausdorff 交换拓扑群 $K_v$、点 $P_v\in K_v$ 及开子群 $U_v\le K_v$，群运算用加法记号。定义
+
+$$
+d_v=\operatorname{ord}_{K_v/U_v}(P_v+U_v),\qquad
+D=\operatorname{lcm}_{v\in S}d_v,
+$$
+
+空集时约定 $D=1$。再固定整数 $M\ge1$、$a\in\mathbb Z$，并置
+
+$$
+g=\gcd(M,D),\qquad L=\operatorname{lcm}(M,D).
+$$
+
+对固定的 Borel 集 $W\subseteq C^2$ 和正整数 $N$，定义
+
+$$
+A_W(N)=\#\{1\le n\le N: n\equiv a\pmod M,
+\ [n]P_v\in U_v\ (v\in S),\ [n]Q\in W\}.
+$$
+
+计数中的所有点、群、子群、$M,a,W$ 均先固定，再令 $N\to\infty$；各条件共享同一个整数 $n$。
+
+**定理 11.3（实际共轭点的全环面分布与精确局部相容性）。** 对定义 11.1 的固定点，有
+
+$$
+\overline{\{[n]Q:n\in\mathbb Z\}}=C^2.
+$$
+
+对每个固定的 $M\ge1$、$a\in\mathbb Z$，序列 $([a+Mk]Q)_{k\ge0}$ 在 $C^2$ 上按 $\mu$ 等分布；确切地，对每个连续函数 $f:C^2\to\mathbb C$，
+
+$$
+\lim_{H\to\infty}\frac1H\sum_{k=0}^{H-1}f([a+Mk]Q)
+=\int_{C^2}f\,d\mu.
+$$
+
+因此若 $G=\overline{\mathbb ZQ}$，则 $G=G^0=C^2$，实际轨道闭包的分支数 $|G/G^0|=1$。
+
+对定义 11.2 的每一组固定局部数据，下列条件等价：
+
+1. $g\mid a$。
+2. 存在正整数 $n$，使 $n\equiv a\pmod M$ 且所有 $[n]P_v\in U_v$。
+3. 对每个 $T\ge0$ 及每个 $C^2$ 中的开单位元邻域 $B$，存在整数 $n>T$，使 $n\equiv a\pmod M$、所有 $[n]P_v\in U_v$，且 $[n]Q\in B$。
+
+更一般地，若 $g\mid a$，每个固定的非空开集 $V\subseteq C^2$ 都有满足这些同余和局部条件的任意晚返回，即对每个 $T\ge0$ 均有相应的 $n>T$ 使 $[n]Q\in V$。对每个固定的边界满足 $\mu(\partial_{C^2}W)=0$ 的 Borel 集 $W$，有以全部正整数为分母的自然密度公式
+
+$$
+\lim_{N\to\infty}\frac{A_W(N)}{N}
+=
+\begin{cases}
+\displaystyle\frac{\mu(W)}{\operatorname{lcm}(M,D)},&\gcd(M,D)\mid a,\\[6pt]
+0,&\gcd(M,D)\nmid a.
+\end{cases}
+$$
+
+上述结论的目标为先固定的集合 $W$ 或非空开集 $V$，局部子群也先固定；它不包含随 $n$ 任意缩小的目标。所给极限不指定首个命中指标、差异度的显式上界或未给定局部群的周期数值，也不指定有效高度比较的加性常数或高度与极点不等式。对一个另有可判定成员检验的固定返回条件，存在性与逐项搜索的终止性可以结合；缺少本条给出的数值首命中界，不表示这种有限搜索不可计算。本条的联合返回结论不包含 $\mathsf H_{\mathbb Z/\mathbb Q}$ 的证明，也不包含 Born 规则或量子理论的重建。
+
+本条是将上述固定点的算术独立性、经典等分布与局部同余组合所得的具体综合推导。所用非挠性与更强的 $\mathbb Z[i]$ 模挠独立性由 Brox 上述一节证明；字符判据与等分布是经典中间结果，不作为新的算术或等分布定理主张优先权。经典来源为 [Kronecker 字符判据，固定修订 47528](https://encyclopediaofmath.org/index.php?title=Kronecker_theorem&oldid=47528) 与 H. Weyl，*Über die Gleichverteilung von Zahlen mod. Eins*，[DOI:10.1007/BF01475864](https://doi.org/10.1007/BF01475864)；字符求和与连续逼近的同类论证亦见本库 [ARITHMETIC_BOUNDARY_QUANTIZATION，第 35.4–35.8 条](ARITHMETIC_BOUNDARY_QUANTIZATION.md)。
+
+**证明。** 首先 $d,d'>0$，故上述正实归一化有定义。代入得 $R_0\in E(K)$；切线斜率为 $3-\sqrt2/4$，倍点公式给出所列 $P$。直接化简归一化横坐标，得到
+
+$$
+X(P_1)=\frac{115-27\sqrt2}{56}>1,\qquad
+X(P_2)=\frac{115+27\sqrt2}{56}>1.
+$$
+
+第一个严格不等式来自 $59>27\sqrt2$，第二个随即成立。因此 $P_1,P_2\in C$，$Q\in C^2$。
+
+使用 Brox “The quadratic-field elliptic curve” 一节已经证明的非挠性与独立性，其所需整数系数特例是
+
+$$
+[r]P_1+[s]P_2\text{ 为挠点},\quad (r,s)\in\mathbb Z^2
+\quad\Longrightarrow\quad r=s=0.
+$$
+
+源文的独立性证明在 $K(i)$ 上利用 $d,d'$ 的平方类独立性：两者的范数均为 $7$，且 $dd'=7$ 在 $K$ 中不是平方；正的 $K$ 元素若在 $K(i)$ 中是平方，则已在 $K$ 中是平方。因此存在固定 $\sqrt d$ 而反转 $\sqrt{d'}$ 符号的自同构，它固定 $P_1$、把 $P_2$ 变为 $-P_2$。对模挠关系作用此自同构并相减，得到 $[2s]P_2$ 为挠点；非挠性迫使 $s=0$，再得 $r=0$。这些平方类与换号步骤均为上述来源中的论证。这里仅复用它们给出的整数独立性，不需要计算完整 Mordell–Weil 群或复乘结构。
+
+选择同一个紧群同构 $\theta:C\to\mathbb R/\mathbb Z$，并选 $\alpha_1,\alpha_2\in\mathbb R$，使 $\theta(P_j)=\alpha_j+\mathbb Z$。对任意非零 $m=(m_1,m_2)\in\mathbb Z^2$，有
+
+$$
+m_1\alpha_1+m_2\alpha_2\notin\mathbb Q.
+$$
+
+否则乘以一个正分母 $q$，得到 $[qm_1]P_1+[qm_2]P_2=O$，与整数独立性矛盾。特别地，对任意 $M\ge1$，
+
+$$
+z_m=\exp\bigl(2\pi i M(m_1\alpha_1+m_2\alpha_2)\bigr)\ne1.
+$$
+
+令 $\chi_m$ 为 $C^2$ 上经 $\theta^2$ 对应于 $m$ 的字符。几何级数给出
+
+$$
+\begin{aligned}
+\frac1H\sum_{k=0}^{H-1}\chi_m([a+Mk]Q)
+&=\exp\bigl(2\pi i a(m_1\alpha_1+m_2\alpha_2)\bigr)
+\frac{1-z_m^H}{H(1-z_m)},\\
+\left|\frac1H\sum_{k=0}^{H-1}\chi_m([a+Mk]Q)\right|
+&\le\frac{2}{H|1-z_m|}\longrightarrow0.
+\end{aligned}
+$$
+
+非平凡字符的 Haar 积分为零：将积分平移一个字符值不为 $1$ 的群元素，即知积分等于自身乘以该字符值。平凡字符的平均与积分均为 $1$。有限字符线性组合构成含常数、对复共轭封闭且分离点的代数，由 Stone–Weierstrass 定理一致稠密于 $C(C^2)$。对连续 $f$ 用这样的组合一致逼近，平均误差和积分误差各不超过一致逼近误差，于是得到所述连续函数等分布。这也说明 $a<0$ 无碍；起始有限多个非正指标不影响任一正尾的极限。
+
+每个非空开集 $V\subseteq C^2$ 有正 Haar 测度：若其测度为零，紧性给出的有限个平移覆盖会使 $\mu(C^2)=0$。在 $V$ 内取一个非负连续函数 $f$，使其支集包含于 $V$，且在某个非空开集上严格为正，则 $\int f\,d\mu>0$。等分布说明任一上述进程有无穷多个落在 $V$ 内的项；删去有限项后仍成立。因此每一进程的正尾均稠密，取 $a=0,M=1$ 即得 $\overline{\mathbb ZQ}=C^2$。$C^2$ 连通，故 $G/G^0$ 平凡。
+
+为从连续函数推广到边界零测的 $W$，注意
+
+$$
+W^\circ\subseteq W\subseteq\overline W,\qquad
+\mu(W^\circ)=\mu(W)=\mu(\overline W).
+$$
+
+紧度量空间上的 Haar 概率为正则 Borel 测度。对 $W^\circ$ 和 $\overline W$ 作内外逼近，并用连续函数分离闭集，可对每个 $\varepsilon>0$ 选择连续 $f_-,f_+$，使
+
+$$
+0\le f_-\le\mathbf1_W\le f_+\le1,\qquad
+\int(f_+-f_-)\,d\mu<\varepsilon.
+$$
+
+对二者应用连续等分布，再夹逼并令 $\varepsilon\downarrow0$，得到沿每个固定进程的 $W$ 访问比例为 $\mu(W)$。$W=\varnothing$ 或 $W=C^2$ 也直接满足此结论。
+
+现在处理局部条件。每个开子群 $U_v$ 的陪集构成开覆盖，紧性给出有限子覆盖，所以 $K_v/U_v$ 有限，$d_v$ 是有限正整数。由元素阶的定义，对任意 $n\in\mathbb Z$，
+
+$$
+[n]P_v\in U_v\iff d_v\mid n,
+\qquad
+\bigl([n]P_v\in U_v\text{ 对所有 }v\in S\bigr)\iff D\mid n.
+$$
+
+$S=\varnothing$ 时右侧是 $1\mid n$，恰好对应空合取。于是局部条件与指定同余类合为
+
+$$
+n\equiv a\pmod M,\qquad n\equiv0\pmod D.
+$$
+
+有解必有 $g\mid a$。反之若 $g\mid a$，写 $n=Dt$，则
+
+$$
+(D/g)t\equiv a/g\pmod{M/g}
+$$
+
+有解，因为 $D/g$ 与 $M/g$ 互素；模数为 $1$ 时条件自动成立。任取一个解 $n_0$，两解之差同时被 $M,D$ 整除，故全部整数解恰为一个模 $L$ 的类 $n_0+L\mathbb Z$。它包含任意大的正整数。这里得到的是最小公倍数 $L$，不要求各局部周期之间或它们与 $M$ 互素。
+
+若 $g\mid a$，取唯一代表 $b\in\{1,\ldots,L\}$ 满足 $b\equiv n_0\pmod L$；其全部正解为 $b+Lk$，$k\ge0$。在 $1\le n\le N$ 中的解数 $H_N$ 满足
+
+$$
+H_N=N/L+O(1),\qquad H_N/N\longrightarrow1/L.
+$$
+
+用已经证明的进程等分布，得到
+
+$$
+\frac{A_W(N)}{N}
+=\frac{H_N}{N}\,
+\frac1{H_N}\sum_{k=0}^{H_N-1}\mathbf1_W([b+Lk]Q)
+\longrightarrow\frac{\mu(W)}L,
+$$
+
+其中只需对足够大、$H_N>0$ 的 $N$ 写此式。不相容时不存在任何满足局部与同余条件的整数，故每个 $A_W(N)=0$。对不要求边界零测的非空开集 $V$，改用上述支撑于 $V$ 的非负连续函数，仍得沿 $b+Lk$ 的无穷多次访问，因此有任意晚返回。取 $V=B$ 证明条件 1 推出条件 3；条件 3 取 $T=0,B=C^2$ 即推出条件 2，而条件 2 已证明推出条件 1。密度公式和全部等价关系成立。
+
+最后，固定源码中实际点的另一写法与本条完全对应。令
+
+$$
+\begin{gathered}
+u=3-2\sqrt2,\qquad d_0=75-53\sqrt2=u^2d,\\
+P_0=\left(\frac{1641-1160\sqrt2}{8},
+\frac{-123720+87483\sqrt2}{32}\right)
+=\bigl(u^2x(P),u^3y(P)\bigr).
+\end{gathered}
+$$
+
+由于 $u=3-2\sqrt2>0$ 且 $u^\sigma=3+2\sqrt2>0$，正根满足 $\sqrt{d_0}=u\sqrt d$ 及其共轭等式。因此
+
+$$
+\left(\frac{x(P_0)}{d_0},\frac{y(P_0)}{d_0\sqrt{d_0}}\right)=P_1,
+$$
+
+共轭归一化则等于 $P_2$。这些恒等式由 $({\sqrt2})^2=2$ 直接展开得到。$d_0,P_0$ 见 [Glazer 固定源码，提交 `9c0b3aba60d90fdcac82115f0582a6f52f1054f7`](https://github.com/elliotglazer/diophantine-z-q/blob/9c0b3aba60d90fdcac82115f0582a6f52f1054f7/manuscripts/quartic_v13.tex) 的固定数据；同稿 `v5:real-progression-bridge` 使用一般轨道闭包 $G$ 及其分支数，后面的实际构造使用 $m_0=|G/G^0|$。这里对上述实际共轭点证明了 $G=C^2$，故该实分支数为 $1$，局部条件的剩余障碍精确为 $\gcd(M,D)\mid a$。此对应与联合返回证明只使用所指明的固定数据和独立性，不以该稿全部算术结论为前提。$\square$
+
+## 追加锚（本行以下为增补区）
