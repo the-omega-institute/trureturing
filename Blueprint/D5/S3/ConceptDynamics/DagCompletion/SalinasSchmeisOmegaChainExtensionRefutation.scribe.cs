@@ -40,7 +40,10 @@ internal sealed class SalinasSchmeisOmegaChainExtensionRefutationDocument : IScr
                     + "of one incomparable point is above the other. An omega-chain partition supplies such "
                     + "a strict successor, and order embeddings transfer the resulting comparisons back to "
                     + "the fork, producing a contradiction."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("salinas-omega-chain-extension"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock.Describe Definition(string name, string title, Formula formula,
         AssessedProvenance provenance, string prose) =>

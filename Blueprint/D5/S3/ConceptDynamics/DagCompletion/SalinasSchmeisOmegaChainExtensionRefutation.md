@@ -58,6 +58,10 @@ $$\neg (\forall P \in Type,\; \forall pOrder \in \operatorname{PartialOrder}\lef
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/DagCompletion/SalinasSchmeisOmegaChainExtensionRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/salinas-omega-chain-extension` (refuted) by `D5/S3/ConceptDynamics/DagCompletion/SalinasSchmeisOmegaChainExtensionRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"salinas-omega-chain-extension","declaration_gid":"D5/S3/ConceptDynamics/DagCompletion/SalinasSchmeisOmegaChainExtensionRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Remi Salinas Schmeis (2026). *General Criterion for a Poset to Admit a Partition Into omega-Chains*. URL: <https://arxiv.org/abs/2610.29056v1>.
