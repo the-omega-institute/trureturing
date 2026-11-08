@@ -3234,3 +3234,302 @@ $$
 因而本卷原对数实窗和满足 (17.44) 的高密度情形，是同一有限预算的较弱推论；$\delta$ 在这里可以是任意正数，不沿用旧的 $0<\gamma<1/4$ 限制。一般的次平方根对数深度只保证 $X^{1-o(1)}$ 型计数，不能把它说成具有任意指定对数损失的高密度界。本推导不需要另一个 David 参数桥，也不改动旧高度法已有结论；未满足 (17.39) 的自适应深度或其它缩靶安排不由本条处理。$\square$
 
 ## 追加锚（本行以下为增补区）
+## 18. 实际自身阶段的移动质量与目标一致相对渐近
+
+**定义 18.1（平方根对数阶段与移动质量）。** 保持定义 17.1 的 $F,E_0,P_1,P_2$、正实嵌入、圆坐标 $\theta$、$\alpha$、全部有限地方的 $U_v$、原过滤及相容目标 (17.4)。固定 $M\ge1$、$a_0\in\mathbb Z$，并取
+
+$$
+\begin{aligned}
+h(n)&=\max\left(2,\left\lfloor c_0\sqrt{\log(n+2)}\right\rfloor\right),\\
+\rho(n)&=(n+2)^{-\beta}(\log(n+2))^{-\gamma},
+\end{aligned}
+\tag{18.1}
+$$
+
+其中 $c_0>0$、$\beta,\gamma\ge0$ 且 $\beta+\gamma>0$。对 $u\in a_0+M\widehat{\mathbb Z}$、$z=(z_1,z_2)\in\mathbb T^2$，令
+
+$$
+\begin{aligned}
+S_X(u,z)=\#\{n\in\mathbb Z:\;&X<n\le2X,\ n\equiv a_0\pmod M,\\
+&\|\theta([n]P_j)-z_j\|_{\mathbb T}<\rho(n)\quad(j=1,2),\\
+&[n]P_j-\eta_{v,j}(u)\in U_v(h(n))\\
+&\hspace{20mm}(p\le h(n),\ v\mid p,\ j=1,2)\},\\
+L_X&=4\sum_{X<n\le2X}
+ \frac{\rho(n)^2}{q(h(n),h(n);M)}.
+\end{aligned}
+\tag{18.2}
+$$
+
+这里 $X$ 为正整数，$S_X$ 是每个整数使用自身 $h(n)$ 和自身半径的实际命中数，$L_X$ 使用同一实际模数的移动质量；右端不把任意阶段的模数替换成一个共同的上界。
+
+**定理 18.2（严格充分区域内的移动质量渐近）。** 令 $A,\mu$ 为定理 17.2 中的固定常数，并置
+
+$$
+\Delta=1-(\mu+1)c_0^2-(2\mu+2)\beta.
+\tag{18.3}
+$$
+
+若 $\Delta>0$，则
+
+$$
+\lim_{X\to\infty}
+\sup_{\substack{u\in a_0+M\widehat{\mathbb Z}\\z\in\mathbb T^2}}
+\left|\frac{S_X(u,z)}{L_X}-1\right|=0.
+\tag{18.4}
+$$
+
+条件 (18.3) 是充分条件；本条不主张其必要性、端点有效性、任何数值效率或常数最优性。
+
+**证明（每个阶段的准确剩余类与固定半径估计）。** 记
+
+$$
+q_H=q(H,H;M).
+\tag{18.5}
+$$
+
+若 $H$ 是 $h(n)$ 在某个整数区间上的值，则 (17.25) 的有限商等价和定义 14.2 的 CRT 给出唯一的剩余类 $b_H\pmod {q_H}$，使该区间内的全部有限地方条件及 $M$-同余恰好等价于 $n\equiv b_H\pmod {q_H}$。这里 $b_H$ 依赖 $u$，但 $q_H$ 不依赖 $u,z$。对任意整数端点 $A_0<B_0$，该区间中的允许项准确地是
+
+$$
+N_H(A_0,B_0)=
+\left\lfloor\frac{B_0-b_H}{q_H}\right\rfloor-
+\left\lfloor\frac{A_0-b_H}{q_H}\right\rfloor,
+\qquad
+\left|N_H(A_0,B_0)-\frac{B_0-A_0}{q_H}\right|<1.
+\tag{18.6}
+$$
+
+这保留严格左端、包含右端、任意空剩余类块及真实的 floor 长度。
+
+Dick–Pillichshammer，*Digital Nets and Sequences: Discrepancy Theory and Quasi-Monte Carlo Integration*，定义 3.13（印刷页 72）和定理 3.26（印刷页 84）仍提供 (12.11) 的二维 Erdős–Turán–Koksma 频率权重接口：
+
+$$
+r(m)=\max(1,|m_1|)\max(1,|m_2|),
+\tag{18.7}
+$$
+
+小盒的局部零频误差另由 Faifman–Rudnick，*Statistics of the zeros of zeta functions in families of hyperelliptic curves over a finite field*，Compositio Mathematica **146** (2010)，81–101，[作者公开原文](https://www.math.tau.ac.il/~rudnick/papers/compositio%20offprint.pdf)，[DOI 10.1112/S0010437X09004308](https://doi.org/10.1112/S0010437X09004308)，§4 印刷页 90 的 (4.1)–(4.4) 提供。该处对任意长度 $0<|I|<1$ 及整数 $J\ge1$ 给出实三角多项式的逐点夹逼、准确均值及 Fourier 系数误差；这里不使用随后要求 $J|I|>1$ 的 Proposition 4.1。
+
+对 $0<r\le1/4$ 和整数 $J\ge2$，记 $I_j=\{x\in\mathbb T:\|x-z_j\|_{\mathbb T}<r\}$、$\delta_J=(J+1)^{-1}$、$e(t)=\exp(2\pi it)$，并以 $\widehat f(m)=\int_{\mathbb T}f(x)e(-mx)\,dx$ 归一化 Fourier 系数。将上述长度 $2r$、中心为 $0$ 的多项式平移到 $z_j$，记为 $p_j^\pm=p_{j,r,z_j}^\pm$；平移不改变均值及系数模。它们的次数不超过 $J$，且
+
+$$
+\widehat p_j^\pm(0)=2r\pm\delta_J,\qquad
+\left|\widehat p_j^\pm(m)-\widehat{\mathbf 1_{I_j}}(m)\right|\le\delta_J
+\quad(0<|m|\le J).
+$$
+
+原文的闭区间外 $p_j^-\le0$，区间内 $p_j^+\ge1$；连续性使边界也分别满足 $p_j^-\le0$、$p_j^+\ge1$，故同一对多项式对严格开区间仍有 $p_j^-\le\mathbf 1_{I_j}\le p_j^+$ 且 $p_j^+\ge0$。开、闭端点不影响积分；对 $m\ne0$，
+
+$$
+\widehat{\mathbf 1_{I_j}}(m)
+=e(-mz_j)\frac{\sin(2\pi mr)}{\pi m},\qquad
+|\widehat p_j^\pm(m)|
+\le\min\left(2r,\frac1{\pi|m|}\right)+\delta_J
+\quad(0<|m|\le J).
+$$
+
+用它们的乘积和一次 inclusion–exclusion 组合
+
+$$
+P_{r,z}^{+}=p_{1}^{+}p_{2}^{+},\qquad
+P_{r,z}^{-}=p_{1}^{-}p_{2}^{+}+p_{1}^{+}p_{2}^{-}-p_{1}^{+}p_{2}^{+}
+$$
+
+得到每坐标次数不超过 $J$ 的二维上下式，即 Fourier 支撑满足 $\|m\|_\infty\le J$，不要求总次数不超过 $J$。四种点是否属于两个区间的逐项检查给出
+
+$$
+P_{r,z}^{-}(x)\le
+\mathbf 1_{\{\|x_j-z_j\|_{\mathbb T}<r,\ j=1,2\}}(x)
+\le P_{r,z}^{+}(x).
+\tag{18.8}
+$$
+
+两坐标的积分相乘，给出准确零频
+
+$$
+\widehat P_{r,z}^+(0)=4r^2+4r\delta_J+\delta_J^2,\qquad
+\widehat P_{r,z}^-(0)=4r^2-4r\delta_J-3\delta_J^2.
+$$
+
+由 $\delta_J\le J^{-1}$ 即得下式第一界。存在绝对常数 $C_0$，对两种符号同时有
+
+$$
+\left|\widehat P_{r,z}^{\pm}(0)-4r^2\right|
+\le C_0\left(\frac rJ+\frac1{J^2}\right),
+\qquad
+\sum_{0<\|m\|_\infty\le J}
+\left|\widehat P_{r,z}^{\pm}(m)\right|
+\le C_0(1+\log J)^2.
+\tag{18.9}
+$$
+
+对第二界，一维零频的绝对值不超过 $2r+\delta_J$，非零系数由上述 $\min(2r,(\pi|m|)^{-1})+\delta_J$ 控制。对 $m_1,m_2$ 取乘积，且 $P_{r,z}^-$ 只有三个乘积项，故 (18.9) 的和由
+
+$$
+\left(\,r+\sum_{j=1}^{J}\frac1j+\frac{J}{J}\right)^2
+\le C(1+\log J)^2
+\tag{18.10}
+$$
+
+得到。这里的实际系数界保留 (18.7) 的调和频率权重，而不是把频率数目 $O(J^2)$ 当作系数和。
+
+固定 $H,r$，把区间内的 $N=N_H(A_0,B_0)$ 个允许项写成 $n_k=b_H+q_H(k_0+k)$。对每个非零 $m$，几何和及定理 17.2 的 (17.5) 给出
+
+$$
+\left|\sum_{k=0}^{N-1}e^{2\pi i m\cdot(n_k\alpha)}\right|
+\le\min\left(N,\frac1{2\|q_Hm\cdot\alpha\|_{\mathbb T}}\right)
+\le\frac1{2A}q_H^{\mu}J^{\mu}
+\quad(0<\|m\|_\infty\le J).
+\tag{18.11}
+$$
+
+起点只贡献模为 $1$ 的因子。将 (18.9) 插入 (18.8)，并同时使用 (18.11)，得到对任意起点、中心 $z$ 和任意 $N$（包括 $N=0$）的一致估计
+
+$$
+\left|
+\#\{0\le k<N:n_k\alpha\in\mathcal B(z,r)\}-4r^2N
+\right|
+\le C_1\left[
+N\left(\frac rJ+\frac1{J^2}\right)
++A^{-1}q_H^{\mu}J^{\mu}(1+\log J)^2
+\right],
+\tag{18.12}
+$$
+
+其中 $\mathcal B(z,r)$ 是两个圆距离都小于 $r$ 的开盒。式 (18.12) 是本节唯一使用的局部估计；它来自上述区间多项式的 (18.8)–(18.10)、(17.5) 的实际频率分离和几何和，不使用相邻 $q_H$ 的比值。
+
+**证明（阶段跳点、变半径和所有短块）。** 取 $X$ 足够大，令 $K=\lceil\log X\rceil\le X$，按整数切点定义
+
+$$
+\begin{aligned}
+t_k&=\left\lfloor X+\frac{kX}{K}\right\rfloor
+\quad(0\le k\le K),\\
+I_k&=(t_k,t_{k+1}]\cap\mathbb Z
+\quad(0\le k<K).
+\end{aligned}
+\tag{18.13}
+$$
+
+这里 $t_0=X$、$t_K=2X$，各 $I_k$ 不交且并集为 $(X,2X]\cap\mathbb Z$。将每个 $I_k$ 与阶段集合 $\{n\in\mathbb Z:h(n)=H\}$ 相交，丢弃空的整数交集，把所有非空交集编号为 $I_\nu$。由 $h$ 的单调性，每个 $I_\nu$ 仍为连续整数块；明确定义
+
+$$
+A_\nu=\min I_\nu-1,\qquad B_\nu=\max I_\nu.
+$$
+
+于是 $A_\nu,B_\nu\in\mathbb Z$，$I_\nu=(A_\nu,B_\nu]\cap\mathbb Z$，且对包含该块的 $I_k$ 有
+
+$$
+\#I_\nu=B_\nu-A_\nu
+\le t_{k+1}-t_k\le\frac XK+1.
+$$
+
+由于
+
+$$
+\sqrt{\log(2X+2)}-\sqrt{\log(X+2)}\longrightarrow0,
+\tag{18.14}
+$$
+
+足够大时 $(X,2X]$ 至多遇到一个 $h$ 的跳点，所以所得非空整数块的数目 $m_X$ 满足 $m_X\le2K+2$。跳点可以落在任意一个小区间内；所有非空整数块，包括短阶段块及其中允许剩余类计数 $N_\nu=0$ 的块，都保留在下面的求和中。
+
+在 $(X,2X]$ 上，$\rho$ 的对数导数满足
+
+$$
+\left|\frac{d}{dx}\log\rho(x)\right|
+\le\frac{\beta+\gamma/\log(X+2)}{X+2}.
+\tag{18.15}
+$$
+
+每个 $n\in I_\nu$ 满足 $A_\nu+1\le n\le B_\nu$，而 $\rho$ 单调递减，故同一 $I_\nu$ 内的最大、最小半径准确地是
+
+$$
+r_\nu^+=\rho(A_\nu+1),\qquad r_\nu^-=\rho(B_\nu)
+\tag{18.16}
+$$
+
+由 (18.15) 和 $B_\nu-A_\nu\le X/K+1$，它们满足 $r_\nu^+/r_\nu^-=1+O(K^{-1}+X^{-1})=1+O(K^{-1})$，常数只依赖 $\beta,\gamma$。取 $X$ 足够大使 $r_\nu^+\le1/4$。嵌套性给出
+
+$$
+\mathcal B(z,r_\nu^-)
+\subseteq\mathcal B(z,\rho(n))
+\subseteq\mathcal B(z,r_\nu^+)
+\quad(n\in I_\nu).
+\tag{18.17}
+$$
+
+令 $H_\nu$ 为该区间的阶段，$q_\nu=q_{H_\nu}$，$N_\nu=N_{H_\nu}(A_\nu,B_\nu)$，并令 $S_\nu$ 表示 $S_X(u,z)$ 在 $I_\nu$ 内的贡献；再置
+
+$$
+L_\nu=4\sum_{n\in I_\nu}\frac{\rho(n)^2}{q_\nu}.
+\tag{18.18}
+$$
+
+将 (18.12) 对 $r_\nu^-$ 和 $r_\nu^+$ 各用一次，再用 (18.17) 夹住真实的变半径命中数。结合 $\#I_\nu=B_\nu-A_\nu$、(18.6) 及 (18.16)，得到
+
+$$
+\begin{aligned}
+|S_\nu-L_\nu|\le C_2\bigg(&K^{-1}L_\nu+(r_\nu^+)^2
+ +N_\nu\left(\frac{r_\nu^+}{J}+\frac1{J^2}\right)\\
+&+A^{-1}q_+^{\mu}J^{\mu}(1+\log J)^2\bigg),
+\end{aligned}
+\tag{18.19}
+$$
+
+其中 $q_+=q(h(2X),h(2X);M)$。第一项支付同一小区间内的真实半径变化；第二项来自 (18.6) 的 $|N_\nu-(B_\nu-A_\nu)/q_\nu|<1$，乘以任一端点面积后不超过 $4(r_\nu^+)^2$；最后一项对短块也成立，因为 (18.11) 使用的是 $\min(N,\cdots)$，没有把长块的相对差异度假定为短块的相对估计。若 $N_\nu=0$，则 $S_\nu=0$ 且 $(B_\nu-A_\nu)/q_\nu<1$，从而 $L_\nu\le4(r_\nu^+)^2$，仍由同一 floor 余项控制。
+
+记 $\underline r=\rho(2X)$、$\overline r=\rho(X+1)$，并取
+
+$$
+J=\left\lceil\underline r^{-2}\right\rceil.
+\tag{18.20}
+$$
+
+这些端点半径之比由 (18.15) 有界。所有 $I_\nu$ 构成 $(X,2X]\cap\mathbb Z$ 的不交分割，故 $\sum_\nu(B_\nu-A_\nu)=X$。又 $q_\nu\mid q_+$，所以
+
+$$
+L_X=\sum_\nu L_\nu
+\ge\frac{4X\underline r^2}{q_+},
+\qquad
+N_\nu\le\frac{B_\nu-A_\nu}{q_\nu}+1.
+\tag{18.21}
+$$
+
+把 (18.19) 对所有 $\nu$ 相加。由 $J\ge\underline r^{-2}$、(18.21)、$m_X\le2K+2$ 及端点半径比的有界性，得到
+
+$$
+\frac{|S_X-L_X|}{L_X}
+\le C_3\left[
+\frac1K+\underline r+\frac{Kq_+}{X}
++\frac{Kq_+^{\mu+1}\underline r^{-(2\mu+2)}
+ (1+\log(1/\underline r))^2}{X}
+\right].
+\tag{18.22}
+$$
+
+这里没有丢掉任一阶段的初项：所有 $+1$ 都由 (18.6) 保留，并在 (18.21) 后形成 $Kq_+/X$ 及同阶的更小项；所有短、空剩余类块都在 (18.19) 中以绝对误差计入。特别是 (18.22) 不需要 $q_+/q_-$ 或任何相邻阶段模数比有界。
+
+**证明（严格区域与统一量词）。** 定理 16.7 对固定 $M$ 给出
+
+$$
+\frac{\log q_+}{\log X}\longrightarrow c_0^2,
+\qquad
+-\frac{\log\underline r}{\log X}\longrightarrow\beta.
+\tag{18.23}
+$$
+
+其中 $h(2X)=c_0\sqrt{\log X}+o(\sqrt{\log X})$；对数因子 $\gamma$ 只贡献 $O(\log\log X)$。因此 (18.3) 蕴涵
+
+$$
+\frac1{\log X}\log\left(
+\frac{q_+^{\mu+1}\underline r^{-(2\mu+2)}}{X}
+\right)
+\longrightarrow-\Delta<0.
+\tag{18.24}
+$$
+
+乘以 $K=\lceil\log X\rceil$ 和 (18.22) 中的调和对数因子不改变这个严格负的幂指数。又由 $\Delta>0$ 得 $c_0^2+2\beta<1$，所以 $q_+/X\to0$、$\underline r\to0$，且 (18.22) 的右端趋于零。估计中的常数只依赖固定的 $M,a_0,c_0,\beta,\gamma,A,\mu$ 及原算术数据，不依赖 $u,z$；故得到 (18.4)。同时 (18.21) 表明 $L_X\to\infty$，其幂指数至少为 $1-c_0^2-2\beta>0$。
+
+用白话说，把二倍区间按阶段跳点和 $\log X$ 个短小片段切开，每片只用一个真实模数和两个相邻的真实半径。经典 ETK 的调和频率权重把一片的非零频率误差压到 $q_H^\mu J^\mu$ 乘对数平方；选 $J$ 为最小半径的平方倒数后，全部片段的总误差正是 (18.24) 所支付的量。一个阶段即使只剩很短的一截，仍按绝对误差处理；真正的 floor 初项也单独留下并由 $Kq_+/X$ 吸收。因此计数的主项是每个整数自身的 $4\rho(n)^2/q(h(n),h(n);M)$ 之和，而不是用最深阶段模数或端点半径偷换出来的粗界。
+
+本条只是在固定的实际共轭点、原有限地方过滤、原共同整数及全部相容目标上作条件性综合；$A,\mu$ 沿用定理 17.2，未求数值。它不声称完整的 $\mathbb Z/\mathbb Q$ 定义、量子物理起源、实际算法效率或必要边界，也不把条件区域外的行为判作失败。$\square$
+
+## 追加锚（本行以下为增补区）
