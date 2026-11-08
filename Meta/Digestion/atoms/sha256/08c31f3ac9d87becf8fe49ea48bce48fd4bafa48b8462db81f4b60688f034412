@@ -1,0 +1,13 @@
+**Assumption 2.2 (All-integer source envelope).** The supplied envelope is
+
+$$
+\begin{gathered}
+k^9\le F_i(k)\le Bk^9\quad(i=0,1),\\
+1\le\frac{H(k)}{k^9}\le1+\frac\delta k
+\qquad\text{for every integer }k\ge1.
+\end{gathered}
+\tag{2.3}
+$$
+
+The finite-observer continuation, Definition 23.1 and equation (23.3), supplies this premise and attributes its envelope proof to its owning source's Theorem 15.5. Both other supplied source texts retain it. No finite set of evaluations substitutes for its universal integer quantifier.
+

@@ -1,0 +1,4 @@
+## 171. Exact compensation of one nonlinear residual coordinate
+
+The rotation-odd common kernel from Section 170 makes every specified linear successor readout vanish, but Proposition 158.2 leaves a strictly positive quadratic $(0,0,3)$ term. That term can be cancelled exactly by a legal terminal correction on a positive-measure invariant set. The construction records the compensator cost and makes no claim about the remaining residual coordinates.
+

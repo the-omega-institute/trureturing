@@ -1,0 +1,17 @@
+**Definition 193.1 (weighted candidate-span mode spaces).** For a bounded full-zero partition $u$, define
+
+$$
+\begin{aligned}
+\mathcal M_u
+  &=\operatorname{span}_{\mathbb R}
+    \{P(gw),P^2(gw):w\in\mathcal W_u\},\\
+\mathcal N_u
+  &=\operatorname{span}_{\mathbb R}
+    \{Pw,P^2w:w\in\mathcal W_u\}
+    \subset L^2(m;\mathbb R).
+\end{aligned}
+\tag{193.1}
+$$
+
+Here products such as $gw$ are pointwise products of bounded representatives, and the heat contraction places all displayed functions in $L^2(m)$.
+

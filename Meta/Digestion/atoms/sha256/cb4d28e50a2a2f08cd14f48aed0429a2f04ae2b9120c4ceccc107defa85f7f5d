@@ -1,0 +1,34 @@
+**推论 14.3（A pendant leaf at every vertex of an arbitrary core）。**
+Let $F$ be any nonempty finite connected simple unit-weight graph.
+For every $v\in V(F)$ retain a core vertex $c_v$ and adjoin one
+distinct leaf $\ell_v$ whose only neighbor is $c_v$. Let
+$H=F\mathbin\circ K_1$ have exactly the core edges of $F$ and
+these leaf edges. Then every conclusion of Theorem 14.2 holds on
+the original complete complex half-filled carrier of $H$ at every
+integer $S\geq1$, including a one-vertex core.
+
+Proof. Write $r=|V(F)|\geq1$. The graph $H$ is finite, simple,
+connected and unit-weight, of even order $m=2r\geq2$.
+For a core vertex,
+
+$$
+H[N_H(c_v)]=F[N_F(v)]\ \sqcup\ \{\ell_v\}.
+\tag{14.15}
+$$
+
+Indeed $\ell_v$ is adjacent only to $c_v$, which is outside the
+open neighborhood; no other leaf is adjacent to $c_v$.
+The singleton component in (14.15) is bipartite, regardless of the
+other components. For a leaf $\ell_v$, its open neighborhood is
+the singleton $\{c_v\}$, also bipartite. Thus Definition 14.1 holds
+at every vertex. Theorem 14.2 applies with the original $2r$ fibres
+of size $2S$, $k=2rS$, positive adjacency, original projection and
+actual whole-carrier minimum. When $r=1$, $H=K_2$, so this includes
+$m=2$ and $S=1$, without an outside vertex or a core edge.
+Some of these applications are also supplied by previous hypotheses:
+if $F$ is a tree, $H$ is a tree and hence a block graph, covered by
+Corollary 13.3; clique cores of order at least four are the supplied
+Proposition 12.4. The assertion here permits every connected core;
+it does not assert that every corona lies outside the prior domains.
+$\square$
+

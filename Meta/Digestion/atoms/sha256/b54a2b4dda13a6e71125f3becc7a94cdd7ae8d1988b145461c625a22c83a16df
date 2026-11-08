@@ -1,0 +1,18 @@
+
+
+For the converse, start with any probability vectors and bijection in Definition 14.1. Summing its nonnegative right side over all triples and all four output labels gives total mass one. The marginal of each source and every source pair are
+
+$$
+\mu_i=\frac12(q_i^0+q_i^1),\qquad
+\nu_{ij}(s,t)=\frac14\bigl(q_i^0(s)+q_i^1(s)\bigr)
+                         \bigl(q_j^0(t)+q_j^1(t)\bigr)
+=\mu_i(s)\mu_j(t).
+\tag{14.11}
+$$
+
+Hence the source pairs are independent, and their positive supports are exactly $T_i\times T_j$. Disjoint block supports imply that the bit triple at every positive source triple is $(u,v,u+v)$ for a unique $(u,v)$. The maps (14.2) use precisely the two permitted incident sources and all return $h(u,v)$ there. Set each active kernel row to the point mass at that map value. Extend each other row by any normalized probability vector. Multiplying these kernels with the source marginal of (14.1) in (10.1) gives exactly the joint law (14.1) with $A=B=C=X$. Thus arbitrary within-block stochastic source noise is allowed, without any shared output randomness. Every zero-marginal pair has zero contribution for each of its extensions, so the arbitrary completions cannot alter this law. For an existing realization with (14.1), Theorem 11.1 forces the same active rows, and (14.2) identifies their labels.
+
+Finally $X$ is uniform on four symbols, and the source law given $X=h(u,v)$ is the threefold product of $q_1^u,q_2^v,q_3^{u+v}$. Therefore $H(S_1,S_2,S_3\mid X)=e_1+e_2+e_3$. The sources determine $X$, so their triple entropy is $H(X)$ plus that conditional entropy. Each $B_i$ is a fair bit determined by $S_i$, and $S_i$ conditional on $B_i=b$ has law $q_i^b$, giving $H(S_i)=\log2+e_i$. These are precisely the standard entropy chain and disjoint-mixture identities used in §§11–12. They prove (14.3) and $C_{\rm src}=3\log2-\log4=\log2=H(X)/2$. The point-source special case is Proposition 12.1 with $G=\mathbb F_2$; the necessity and the reconstruction (14.10) concern arbitrary original finite source alphabets.
+
+The classical independent-source triangle premises in Fritz, *Beyond Bell's theorem: correlation scenarios*, [arXiv:1206.5115v2](https://arxiv.org/abs/1206.5115v2), Definition 2.12 and Lemma 2.14, require the full source product. Likewise Renou et al., *Limits on correlations in networks for quantum and no-signaling resources*, [arXiv:1901.08287v1](https://arxiv.org/abs/1901.08287v1), Theorems 1–2, impose independent network sources. Neither independent-source hypothesis is substituted for (14.4): at the equality classified here $C_{\rm src}=\log2>0$, although every source pair is independent. The likelihood-space and posterior-support reconstruction above is a repo-derived consequence of the same-law equality criterion in Theorem 11.1, using weighted orthogonality, selector supports and binary parity as attributed intermediate tools. ∎
+

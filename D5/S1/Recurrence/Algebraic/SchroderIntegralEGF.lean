@@ -7,17 +7,18 @@
    digest: A338193 EGF coefficients equal Kurkov's two-index recurrence. -/
 
 /-
-The primitive and its two coefficient identities are public for EGF constructions.
-Escape audit unfinished:
-https://github.com/the-omega-institute/trureturing/issues/21972
-Declaration names below are relative to this module.
-primitive: proof_shape: bind-only; consumer: derivative_primitive
-primitive_zero: proof_shape: bind-only; consumer: BalaA281181TotientSquarePeriod.BalaPolynomialSystem.constant_H
-derivative_primitive: proof_shape: bind-only; consumer: BalaA281181TotientSquarePeriod.BalaPolynomialSystem.derivative_H
+Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/25663;
+primitive_zero and derivative_primitive.
+primitive_zero: proof_shape: bind-only; escape_witness: none;
+consumers: BalaQuarticEGFEventualDivisibility.integral_agree, source_exists_unique,
+sourceSinh_constant and source_system.
+derivative_primitive: proof_shape: bind-only; escape_witness: none;
+consumer: BalaQuarticEGFEventualDivisibility.source_system.
+Direct frozen dependencies for these two declarations: none.
 -/
 
-import D5.S1.Recurrence.Residue.IntegralEGFComposition
 import D5.S1.Recurrence.Residue.QuarticEGFFixedPoint
+import D5.S1.Recurrence.Residue.IntegralEGFComposition
 import Mathlib.RingTheory.PowerSeries.Schroder
 import Mathlib.RingTheory.PowerSeries.NoZeroDivisors
 
@@ -238,5 +239,8 @@ theorem egf_coeff_eq_f (n : ℕ) (hn : 1 ≤ n) :
   change eCoeff A (m+1) = (f 0 m : ℚ)
   rw [← hBA, ← eCoeff_derivative, B_derivative, F_coeff]
 
+
+#print axioms egf_coeff_eq_f
+#print axioms original_exists_unique
 
 end D5.S1.Recurrence.Algebraic.SchroderIntegralEGF

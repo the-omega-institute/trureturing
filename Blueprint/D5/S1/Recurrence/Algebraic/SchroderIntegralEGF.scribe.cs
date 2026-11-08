@@ -14,6 +14,17 @@ internal sealed class SchroderIntegralEGFDocument : IScribeDocumentDefinition
         "The EGF coefficients in OEIS A338193 equal Kurkov's two-index recurrence.",
         H("An Integral EGF And Schroeder Rows"),
         Blocks(
+            FormulaNode("primitive", "Formal integral with zero constant coefficient", PrimitiveFormula(),
+                "For a rational series S, the constant coefficient is zero and coefficient n at positive n is coeff(n-1,S)/n.",
+                DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
+            FormulaNode("primitive_zero", "The integral has zero constant coefficient",
+                All("S", PS(), Equal(Call("constantCoeff", Call("primitive", V("S"))), D(0))),
+                "The selected formal primitive has constant coefficient zero.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
+            FormulaNode("derivative_primitive", "Differentiation recovers the integrand",
+                All("S", PS(), Equal(Call("derivative", Call("primitive", V("S"))), V("S"))),
+                "Differentiating the zero-constant formal primitive recovers the rational series S.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
             Note("f", "Kurkov's recurrence",
                 "Set f(j,0)=1. For positive m, the boundary is "
                 + "f(0,m)=f(0,m-1)+m f(1,m-1). For positive j and m, use "
@@ -69,6 +80,28 @@ internal sealed class SchroderIntegralEGFDocument : IScribeDocumentDefinition
                 DescribeRole.Theorem, new OpenProblemResolutionClaim(
                     ProblemSlugRef.Create("oeis-a338193-egf-coefficients"),
                     ResolutionKind.Proved)))));
+
+    private static DocumentBlock FormulaNode(string name, string title, Formula formula, string prose,
+        DescribeRole role, AssessedProvenance provenance) =>
+        Describe.Lean(DescribeId.Create("a338193-" + name.Replace('_', '-').ToLowerInvariant()),
+            DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(Disp(formula)),
+            provenance, Blocks(Paragraph(Text(prose))), role);
+    private static Formula V(string name) => F.Id(name);
+    private static Formula Rat() => Seq(Mathbb, Grp(V("Q")));
+    private static Formula Nat() => Seq(Mathbb, Grp(V("N")));
+    private static Formula PS() => Call("PowerSeries", Rat());
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
+    private static Formula All(string name, Formula type, Formula body) =>
+        Seq(Forall, Sp, V(name), Colon, Sp, type, Comma, Sp, body);
+    private static Formula PrimitiveFormula()
+    {
+        var n = V("n"); var series = V("S");
+        var body = Seq(V("if"), Sp, Parenthesized(Equal(n, D(0))), Sp, V("then"), Sp,
+            D(0), Sp, V("else"), Sp, new Formula.Fraction(
+                Call("coeff", Subtract(n, D(1)), series), Parenthesized(Seq(n, Colon, Sp, Rat()))));
+        var lambda = Parenthesized(Seq(V("fun"), Sp, n, Colon, Sp, Nat(), Sp, Mapsto, Sp, body));
+        return All("S", PS(), Equal(Call("primitive", series), Call("mk", lambda)));
+    }
 
     private static Formula CoefficientIdentity() => Disp(Seq(
         Forall, Sp, F.Id("n"), Sp, InMacro, Sp, Mathbb, Grp(F.Id("N")), Comma, Sp,

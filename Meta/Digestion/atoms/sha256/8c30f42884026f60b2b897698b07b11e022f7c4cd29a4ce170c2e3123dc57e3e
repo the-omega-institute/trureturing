@@ -1,0 +1,49 @@
+**假设 C-94.3（实际成对输入及读口）。** 一次完整试验实际接收
+$\rho\otimes\rho$，即同一密度算子的两份独立制备，并允许执行下述联合测量。
+相同的两个单份边缘不作为乘积输入的替代条件；也不假设未知态克隆。
+此处只规定单轮来源，跨轮独立同分布另在取得成本定理中规定。
+
+在 $\mathcal K=(\mathbb C_A^2\otimes\mathbb C_B^2)^{\otimes2}$ 上，写基向量为
+$|a,b,a',b'\rangle$，定义
+
+$$
+F_A|a,b,a',b'\rangle=|a',b,a,b'\rangle,\qquad
+F_B|a,b,a',b'\rangle=|a,b',a',b\rangle.
+\tag{C94.7}
+$$
+
+等价地，在重排
+$R|a,b,a',b'\rangle=|a,a'\rangle\otimes|b,b'\rangle$ 后，
+$F_A$ 是第一对因子的交换，$F_B$ 是第二对的交换。
+二者自伴、平方为恒等，且交换不同坐标所以彼此对易。
+令 $s,t\in\{+1,-1\}$，定义
+
+$$
+P_s^A=(I+sF_A)/2,\qquad P_t^B=(I+tF_B)/2,
+\qquad\Pi_{st}=P_s^AP_t^B.
+\tag{C94.8}
+$$
+
+它们满足 $\Pi_{st}^\dagger=\Pi_{st}=\Pi_{st}^2$；
+若符号对不同，至少一个因子的异号投影相乘为零，故四个投影正交，且
+$\sum_{s,t}\Pi_{st}=I_{16}$。令 $J=\iota\otimes\iota$，实际五维双副本测量的效果为
+
+$$
+Q_{st}=J\Pi_{st}J^\dagger,\qquad
+Q_{\mathrm f}=I_{25}-P_{\mathrm b}\otimes P_{\mathrm b}.
+\tag{C94.9}
+$$
+
+因 $J^\dagger J=I_{16}$，四个 $Q_{st}$ 仍是互相正交的正投影，
+其和为 $JJ^\dagger=P_{\mathrm b}\otimes P_{\mathrm b}$，与正投影 $Q_{\mathrm f}$ 相加为恒等。
+故这是包含底面选择失败在内的完整五结果测量。
+定义未条件化概率
+
+$$
+q_{st}=\operatorname{Tr}[Q_{st}(\rho\otimes\rho)],\qquad
+q_{\mathrm f}=\operatorname{Tr}[Q_{\mathrm f}(\rho\otimes\rho)].
+\tag{C94.10}
+$$
+
+这里的“失败”包括恰一份及两份都未进入底面的全部情况。
+

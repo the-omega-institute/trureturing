@@ -1,0 +1,17 @@
+**定理 343.2（内在中心读数及选择独立性）。** 记原最小中心单位为 $z_s=j_s(I_{n_s})$。在 343.1 的同一背景中，整个原输出满足
+
+$$
+\begin{aligned}
+D^A(z_s,b)&=F_s(b)z_s,&
+F_s(b)&=\frac{\tau_A(D^A(z_s,b))}{n_s},\\
+\mathcal R_A(b)&:=\sum_s\frac{\tau_A(D^A(z_s,b))}{n_s}z_s,&
+D^A(a,b)&=\bigoplus_s\gamma_s\,\mathrm i[a_s,b_s]+a\circ\mathcal R_A(b),\\
+\mathcal R_A(u_A)&=0,&D^A(u_A,b)&=\mathcal R_A(b)\in Z(E_A).
+\end{aligned}
+\tag{343.7}
+$$
+
+$F_s$ 和 $\mathcal R_A$ 不依赖证明中选择的参考、目标或转置坐标；$n_s\ge2$ 时 $\gamma_s$ 在固定原块坐标中也唯一。
+
+证明。将 $a=z_s$ 代入 (343.1)：该中心的交换子为零，其他每个中心的第一坐标为零，故整输出恰为 $F_s(b)z_s$。其规范迹为 $n_sF_s(b)$，给出选择无关的读数。对所有 $s$ 求和即得其余式。固定这些 $F_s$ 后，两个正常形之差为 $(\gamma_s-\gamma'_s)\mathrm i[x,y]$；每个 $n_s\ge2$ 块都有不交换的 Hermitian $x,y$，故系数相等。中心单位的置换和 Jordan 坐标变换保留迹及上述中心元。∎
+

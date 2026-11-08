@@ -4,7 +4,47 @@
 
 The EGF coefficients in OEIS A338193 equal Kurkov's two-index recurrence.
 
-**Remark 1.1 (Kurkov's recurrence).**
+**Definition 1.1 (Formal integral with zero constant coefficient).**
+
+$$\forall S: \operatorname{PowerSeries}\left(\mathbb{Q}\right), \operatorname{primitive}\left(S\right) = \operatorname{mk}\left((fun n: \mathbb{N} \mapsto if (n = 0) then 0 else \frac{\operatorname{coeff}\left(n - 1, S\right)}{(n: \mathbb{Q})})\right)$$
+
+*Formalization.* `D5/S1/Recurrence/Algebraic/SchroderIntegralEGF.primitive` (`✓ std3`).
+
+*Citation.* Vaclav Kotesovec; Mikhail Kurkov (2024). *OEIS A338193, an integral-defined exponential generating function and Kurkov's recurrence*. URL: <https://oeis.org/A338193>.
+
+*Commentary.*
+
+For a rational series S, the constant coefficient is zero and coefficient n at positive n is coeff(n-1,S)/n.
+
+**Theorem 1.2 (The integral has zero constant coefficient).**
+
+$$\forall S: \operatorname{PowerSeries}\left(\mathbb{Q}\right), \operatorname{constantCoeff}\left(\operatorname{primitive}\left(S\right)\right) = 0$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Algebraic/SchroderIntegralEGF.primitive_zero` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Vaclav Kotesovec; Mikhail Kurkov (2024). *OEIS A338193, an integral-defined exponential generating function and Kurkov's recurrence*. URL: <https://oeis.org/A338193>.
+
+*Commentary.*
+
+The selected formal primitive has constant coefficient zero.
+
+**Theorem 1.3 (Differentiation recovers the integrand).**
+
+$$\forall S: \operatorname{PowerSeries}\left(\mathbb{Q}\right), \operatorname{derivative}\left(\operatorname{primitive}\left(S\right)\right) = S$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Algebraic/SchroderIntegralEGF.derivative_primitive` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Vaclav Kotesovec; Mikhail Kurkov (2024). *OEIS A338193, an integral-defined exponential generating function and Kurkov's recurrence*. URL: <https://oeis.org/A338193>.
+
+*Commentary.*
+
+Differentiating the zero-constant formal primitive recovers the rational series S.
+
+**Remark 1.4 (Kurkov's recurrence).**
 
 Lean statement: `D5/S1/Recurrence/Algebraic/SchroderIntegralEGF.f`
 
@@ -15,42 +55,6 @@ Lean statement: `D5/S1/Recurrence/Algebraic/SchroderIntegralEGF.f`
 *Commentary.*
 
 Set f(j,0)=1. For positive m, the boundary is f(0,m)=f(0,m-1)+m f(1,m-1). For positive j and m, use f(j,m)=f(j-1,m)+m(f(j,m-1)+f(j+1,m-1)). Recursion first decreases m, then j; all values are natural numbers.
-
-**Definition 1.2 (Formal primitive).**
-
-$$\forall (S : PowerSeries \mathbb{Q}) , primitive S = \operatorname{PowerSeries}.\operatorname{mk} (fun n : \mathbb{N} \mapsto if n = 0 then 0 else \operatorname{PowerSeries}.\operatorname{coeff} (n - 1) S / (n : \mathbb{Q}))$$
-
-*Formalization.* `D5/S1/Recurrence/Algebraic/SchroderIntegralEGF.primitive` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The formal primitive divides the preceding coefficient by its positive degree and has constant coefficient zero.
-
-**Theorem 1.3 (Zero constant coefficient).**
-
-$$\forall (S : PowerSeries \mathbb{Q}) , \operatorname{PowerSeries}.\operatorname{constantCoeff} (primitive S) = 0$$
-
-*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Algebraic/SchroderIntegralEGF.primitive_zero` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The primitive starts at zero.
-
-**Theorem 1.4 (Derivative of the primitive).**
-
-$$\forall (S : PowerSeries \mathbb{Q}) , \operatorname{PowerSeries}.\operatorname{derivative} (primitive S) = S$$
-
-*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Algebraic/SchroderIntegralEGF.derivative_primitive` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-Differentiating cancels each positive degree denominator.
 
 **Remark 1.5 (The original integral equation).**
 

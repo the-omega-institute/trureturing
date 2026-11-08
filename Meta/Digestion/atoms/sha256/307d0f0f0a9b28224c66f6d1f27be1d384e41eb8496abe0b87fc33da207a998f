@@ -1,0 +1,38 @@
+**Corollary 170.2 (an infinite-dimensional common kernel with collapsing heat energy).** The space $V_-$, and therefore $W_\infty$, is infinite-dimensional. More explicitly, there are linearly independent bounded real Borel functions $v_n$ such that
+
+$$
+v_n\in W_\infty,\qquad \|v_n\|_\infty=1,
+\qquad 0<q_{003}(v_n)
+ \le c\int_{B_n}g^2\,dm\longrightarrow0,
+\tag{170.4}
+$$
+
+where each $B_n$ is the support of $v_n$ up to an $m$-null set.
+
+*Proof.* Choose a Borel set $U\subset G\setminus N$ with $m(U)>0$ and $U\cap J U=\varnothing$; such a set exists in a sufficiently small neighborhood of any point off the rotation axis, using the full local support of $m$ from Appendix III §136. Choose pairwise disjoint Borel subsets $A_n\subset U$ with $m(A_n)>0$ and $m(A_n)\to0$, and put
+
+$$
+B_n=A_n\cup J A_n,
+\qquad v_n=\mathbf1_{A_n}-\mathbf1_{J A_n}.
+\tag{170.5}
+$$
+
+The sets in (170.5) are disjoint in each pair, $J^*v_n=-v_n$, and $\|v_n\|_\infty=1$. The pairwise disjointness of the $A_n$ and of their images makes the $v_n$ linearly independent. Since $m$ is $J$-invariant, $m(B_n)\to0$; since $g\in L^2(m)$, absolute continuity gives $\int_{B_n}g^2\,dm\to0$. Proposition 170.1 puts every $v_n$ in $W_\infty$. Finally Proposition 134.2 and the $L^2$ contraction of $T_{d/2}$ give
+
+$$
+0<q_{003}(v_n)=c\|T_{d/2}(gv_n)\|_2^2
+\le c\|gv_n\|_2^2
+ =c\int_{B_n}g^2\,dm\longrightarrow0.
+$$
+
+Thus the full infinite-horizon common kernel contains nonzero bounded directions of unit sup norm with vanishing heat-energy infimum. This does not construct a physical successor, prove density of the successor orbit, produce a nonlinear residual-zero family, a legal simplex or $H43$ partition, or settle $SRS\text{-}20$, $F_{64}$ or a Lean/kernel theorem. $\square$
+
+By Proposition 167.2, $H_{\mathrm{cal}}=W^\perp$ for the concrete first-order kernel. The functions above lie in $W^\perp\cap\mathcal C_R^\perp$ and are nonzero, so
+
+$$
+\overline{\mathcal C_R}^{\,H}\ne H_{\mathrm{cal}}.
+\tag{170.6}
+$$
+
+Thus the concrete rotation-invariant successor stack is not dense in the calibrated Hilbert space; this conclusion is specific to the stated Section 166 readout and does not extend to an arbitrary successor or a physical realization.
+

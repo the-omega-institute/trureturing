@@ -1,0 +1,19 @@
+**定义 350.1（唯一新增候选）。** 分别取 342.1–342.2 的完整 $B$ 与完整 $\mathsf B_{\rm cl}$，任一记为 $B_*$。保留同一原 $\Omega,q,D,L,\circ$、同一原菜单、同一预选 $t_0$、整个原 $\mathsf G_{0h}$ 及同一原 $\sigma_{t_0}$。只以如下关系替换中心迹前件：
+
+$$
+\boxed{\mathsf T_{\rm self}^{>}:\qquad
+q_X\bigl(a,D^X(a,a)\bigr)=0
+\quad\left(\operatorname{rank}E_X>p_*,\quad0\le a\le u_X\right).}
+\tag{350.1}
+$$
+
+唯一完整候选为
+
+$$
+\mathsf C_{\rm self}(B_*)
+:=B_*+\mathsf G_{0h}+\mathsf T_{\rm self}^{>}+\sigma_{t_0}.
+\tag{350.2}
+$$
+
+$a$ 是原有序空间的数学效果，不由这个量词补造实际准备或实际操作。原 $D$ 仍是同一二元实双线性关系，$q$ 仍是原正比较；(350.1) 只比较第一输入和两次自输入的输出，不是向量式 $D(a,a)=0$，也不是其平方范数。它不在公理资料中点名中心、规范迹、匹配原子、补偿、来源基或参考剖面。
+

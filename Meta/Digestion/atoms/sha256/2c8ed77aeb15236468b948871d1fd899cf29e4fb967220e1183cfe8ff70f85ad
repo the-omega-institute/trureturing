@@ -1,0 +1,27 @@
+**Proposition 167.3 (successor preservation and calibration-plane invariance).** Let $P:H\to H$ be bounded and self-adjoint, and suppose $P(L^\infty(G,m;\mathbb R))\subseteq L^\infty(G,m;\mathbb R)$. Then
+
+$$
+P(V_\infty)\subseteq V_\infty
+\quad\Longleftrightarrow\quad
+P(W)\subseteq W.
+\tag{167.3}
+$$
+
+*Proof.* Assume first that $P(V_\infty)\subseteq V_\infty$. Proposition 167.2 and boundedness of $P$ give $P(W^\perp)\subseteq W^\perp$. If $w\in W$ and $u\in W^\perp$, then self-adjointness gives
+
+$$
+\langle Pw,u\rangle_H=\langle w,Pu\rangle_H=0.
+$$
+
+Therefore $Pw\in(W^\perp)^\perp=W$, proving $P(W)\subseteq W$.
+
+Conversely, let $v\in V_\infty$. The $L^\infty$-preservation hypothesis gives $Pv\in L^\infty$. For $w\in W$, self-adjointness and $P(W)\subseteq W$ give
+
+$$
+\langle Pv,w\rangle_H=\langle v,Pw\rangle_H=0.
+$$
+
+Thus $Pv\in W^\perp$, and hence $Pv\in V_\infty$. $\square$
+
+For the original heat operator, the hypotheses of Proposition 167.3 are inherited: $P=T_d=e^{-dK}$ is bounded self-adjoint on $H$, and the Markov semigroup preserves bounded real functions. Proposition 167.3 is therefore a conditional closure equivalence, not a claim that the actual Section 166 plane is already $P$-invariant.
+
