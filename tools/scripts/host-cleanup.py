@@ -298,7 +298,7 @@ def inspect_candidate(path, cutoff, protected, repository=None, reclaim=True, re
         return dict(reason="rollout_shape")
     if remnant and not stat.S_ISDIR(root_stat.st_mode):
         return dict(reason="not_directory")
-    if reclaim and root_stat.st_dev != path.parent.stat().st_dev:
+    if (reclaim or cache_only) and root_stat.st_dev != path.parent.stat().st_dev:
         return dict(reason="mount")
     digest = hashlib.sha256()
     apparent_bytes = 0

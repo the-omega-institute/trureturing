@@ -69,7 +69,7 @@ class HostRemnantTests(unittest.TestCase):
         self.assertEqual("unrecoverable Blueprint source", unique.read_text())
 
     def test_partial_remnant_cache_reclamation_preserves_boundaries(self):
-        for boundary in ("git", "symlink", "recent", "mount", "activity", "top-source"):
+        for boundary in ("git", "symlink", "recent", "mount", "root-mount", "activity", "top-source"):
             with self.subTest(boundary=boundary):
                 target = self.remnant(boundary, blueprint=False)
                 build = target / ".lake/build"
@@ -86,7 +86,9 @@ class HostRemnantTests(unittest.TestCase):
                 lstat = Path.lstat
                 def mounted(path):
                     info = lstat(path)
-                    if boundary != "mount" or path != build / "object":
+                    selected = ((boundary == "mount" and path == build / "object")
+                                or boundary == "root-mount" and (path == build or build in path.parents))
+                    if not selected:
                         return info
                     fields = {name: getattr(info, name) for name in dir(info) if name.startswith("st_")}
                     return types.SimpleNamespace(**dict(fields, st_dev=info.st_dev + 1))
