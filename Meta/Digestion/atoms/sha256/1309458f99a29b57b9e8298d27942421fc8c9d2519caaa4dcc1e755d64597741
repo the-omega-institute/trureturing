@@ -1,0 +1,54 @@
+**定理 194.1（每一份带权旧值自己饱和）。** 在 193.1 的原条件下，193.2 中的同一个系数还满足
+
+$$
+W^2=1_{PAP},\qquad T^2=\frac{\alpha^2\beta^2}{4}u.
+\tag{194.1}
+$$
+
+这仍只描述该份实际旧值，不比较不同权重的系数。
+
+证明。已付单位仿射平面零值给 $D(\alpha P,tQ)=0$。对每个有限实 $t$，准确 PB $(\alpha P,\beta F,tQ)$ 因 $F\circ T=0$ 而成为
+
+$$
+D(\beta F+T,tQ+\alpha\beta F/2)
+-D(\beta F-T,tQ-\alpha\beta F/2)
+=-\frac{t\alpha\beta}{2}F.
+\tag{194.2}
+$$
+
+取 $\varepsilon>0$、$t=\alpha\beta/(2\varepsilon)$，用 $\zeta=(\eta,\varepsilon\eta)$ 读取。记 $n=\|\eta\|^2$、$m=\|W\eta\|^2$、$L_\pm=1\pm i\alpha W/2$。正外层两输入的作用向量为
+
+$$
+\beta(\varepsilon L_+\eta,L_-\eta),\qquad
+\alpha\beta(\varepsilon\eta/2,\eta),
+$$
+
+负外层则为
+
+$$
+\beta(\varepsilon L_-\eta,L_+\eta),\qquad
+\alpha\beta(-\varepsilon\eta/2,0).
+$$
+
+两份第一向量的模平方均为 $\beta^2(1+\varepsilon^2)(n+\alpha^2m/4)$；第二向量的模平方分别为 $\alpha^2\beta^2(1+\varepsilon^2/4)n$ 和 $\alpha^2\beta^2\varepsilon^2n/4$。两个实内积分别为 $\alpha\beta^2(1+\varepsilon^2/2)n$ 和 $-\alpha\beta^2\varepsilon^2n/2$。因此准确实 Gram 预算为
+
+$$
+\begin{aligned}
+\Delta_+
+&=\alpha^2\beta^4\left[\frac{\varepsilon^2n^2}{4}+\frac{\alpha^2nm}{4}(1+\varepsilon^2)(1+\varepsilon^2/4)\right],\\
+\Delta_-
+&=\alpha^2\beta^4\left[\frac{\varepsilon^2n^2}{4}+\frac{\alpha^2nm}{16}\varepsilon^2(1+\varepsilon^2)\right].
+\end{aligned}
+\tag{194.3}
+$$
+
+(194.2) 的右端读取为固定数 $-\alpha^2\beta^2n/2$，故两次 P2 给
+
+$$
+\frac{\alpha^2\beta^2n}{2}
+\le\sqrt{\Delta_+}+\sqrt{\Delta_-}.
+\tag{194.4}
+$$
+
+已知右端在数值参数 $\varepsilon\to0$ 时趋于 $\alpha^2\beta^2\sqrt{nm}/2$。若 $m<n$，某个有限正 $\varepsilon$ 已违反 (194.4)。所以 $m\ge n$；由 193.2 的收缩界又有 $m\le n$。固定算子的极化与忠实表示遂给 $W^*W=1$，再用自伴性得 (194.1)。零向量不被删除。没有对随参数改变的未知 $D$ 取极限，也没有对 $D$ 作缩放展开。∎
+
