@@ -23,21 +23,14 @@ namespace D5.S3.Quantum.Matrix.PentagonQuinticTrace
 
 variable {n : Type*} [Fintype n] [DecidableEq n]
 
-private def leftPath (A : Fin 5 → Mat n) (i : Fin 5) := A (i+4) * A (i+3)
-private def rightPath (A : Fin 5 → Mat n) (i : Fin 5) := A (i+1) * A (i+2)
-private def leftD (A : Fin 5 → Mat n) (i : Fin 5) := A (i+4)^2 - A (i+4)*A i
-private def rightD (A : Fin 5 → Mat n) (i : Fin 5) := A (i+1)^2 - A (i+1)*A i
-private def leftF (A : Fin 5 → Mat n) (i : Fin 5) := A (i+4)^2 - A i*A (i+4)
-private def rightF (A : Fin 5 → Mat n) (i : Fin 5) := A (i+1)^2 - A i*A (i+1)
-
 /-- The four even quadratic operators, in the certificate's fixed order. -/
 def even (A : Fin 5 → Mat n) (i : Fin 5) : Fin 4 → Mat n :=
-  ![leftPath A i + rightPath A i, leftD A i + rightD A i,
-    leftF A i + rightF A i, A i^2 - A (i+4)^2 - A (i+1)^2]
+  ![(A (i + 4) * A (i + 3)) + (A (i + 1) * A (i + 2)), (A (i + 4)^2 - A (i + 4) * A i) + (A (i + 1)^2 - A (i + 1) * A i),
+    (A (i + 4)^2 - A i * A (i + 4)) + (A (i + 1)^2 - A i * A (i + 1)), A i^2 - A (i + 4)^2 - A (i + 1)^2]
 
 /-- The three odd quadratic operators; their product order is significant. -/
 def odd (A : Fin 5 → Mat n) (i : Fin 5) : Fin 3 → Mat n :=
-  ![leftPath A i - rightPath A i, leftD A i - rightD A i, leftF A i - rightF A i]
+  ![(A (i + 4) * A (i + 3)) - (A (i + 1) * A (i + 2)), (A (i + 4)^2 - A (i + 4) * A i) - (A (i + 1)^2 - A (i + 1) * A i), (A (i + 4)^2 - A i * A (i + 4)) - (A (i + 1)^2 - A i * A (i + 1))]
 
 /-- The seven explicit quadratics from the rational LDL factorization. -/
 def square (A : Fin 5 → Mat n) (i : Fin 5) : Fin 7 → Mat n :=
@@ -111,6 +104,30 @@ private lemma word_reverse (A : Fin 5 → Mat n) (hA : ∀ i, (A i).IsHermitian)
   have hs : ∀ i, (A i)ᴴ = A i := fun i => (hA i).eq
   simpa [word, reTrace, Matrix.conjTranspose_mul, hs, Matrix.mul_assoc] using h.symm
 
+private lemma word_reverse1 (A : Fin 5 → Mat n) (hA : ∀ i, (A i).IsHermitian)
+    (a b c d e : Fin 5) : word (A a) (A b) (A c) (A d) (A e) =
+      word (A d) (A c) (A b) (A a) (A e) := by
+  rw [word_reverse A hA a b c d e]
+  exact word_rot _ _ _ _ _
+
+private lemma word_reverse2 (A : Fin 5 → Mat n) (hA : ∀ i, (A i).IsHermitian)
+    (a b c d e : Fin 5) : word (A a) (A b) (A c) (A d) (A e) =
+      word (A c) (A b) (A a) (A e) (A d) := by
+  rw [word_reverse A hA a b c d e]
+  exact word_rot2 _ _ _ _ _
+
+private lemma word_reverse3 (A : Fin 5 → Mat n) (hA : ∀ i, (A i).IsHermitian)
+    (a b c d e : Fin 5) : word (A a) (A b) (A c) (A d) (A e) =
+      word (A b) (A a) (A e) (A d) (A c) := by
+  rw [word_reverse A hA a b c d e]
+  exact word_rot3 _ _ _ _ _
+
+private lemma word_reverse4 (A : Fin 5 → Mat n) (hA : ∀ i, (A i).IsHermitian)
+    (a b c d e : Fin 5) : word (A a) (A b) (A c) (A d) (A e) =
+      word (A a) (A e) (A d) (A c) (A b) := by
+  rw [word_reverse A hA a b c d e]
+  exact word_rot4 _ _ _ _ _
+
 private lemma word_zero1 (a b c d e : Mat n) (h : a*b=0) : word a b c d e = 0 := by
   simp only [word, ← Matrix.mul_assoc, h, zero_mul, tr_zero]
 private lemma word_zero2 (a b c d e : Mat n) (h : b*c=0) : word a b c d e = 0 := by
@@ -127,30 +144,34 @@ private lemma reverse_zero (a b : Mat n) (ha : a.IsHermitian) (hb : b.IsHermitia
   simpa only [Matrix.conjTranspose_mul, ha.eq, hb.eq, Matrix.conjTranspose_zero] using
     congrArg Matrix.conjTranspose h
 private lemma zero_products (A : Fin 5 → Mat n)
-    (hA : ∀ i, (A i).IsHermitian) (hz : ∀ i, A i * A (i+2)=0) :
-    A 0*A 2=0 ∧ A 2*A 0=0 ∧ A 1*A 3=0 ∧ A 3*A 1=0 ∧ A 2*A 4=0 ∧ A 4*A 2=0 ∧
-    A 3*A 0=0 ∧ A 0*A 3=0 ∧ A 4*A 1=0 ∧ A 1*A 4=0 := by
-  have h02 : A 0*A 2=0 := hz 0
-  have h13 : A 1*A 3=0 := hz 1
-  have h24 : A 2*A 4=0 := hz 2
-  have h30 : A 3*A 0=0 := hz 3
-  have h41 : A 4*A 1=0 := hz 4
+    (hA : ∀ i, (A i).IsHermitian) (hz : ∀ i, A i * A (i + 2) = 0) :
+    A 0 * A 2=0 ∧ A 2 * A 0=0 ∧ A 1 * A 3=0 ∧ A 3 * A 1=0 ∧ A 2 * A 4=0 ∧ A 4 * A 2=0 ∧
+    A 3 * A 0=0 ∧ A 0 * A 3=0 ∧ A 4 * A 1=0 ∧ A 1 * A 4=0 := by
+  have h02 : A 0 * A 2=0 := hz 0
+  have h13 : A 1 * A 3=0 := hz 1
+  have h24 : A 2 * A 4=0 := hz 2
+  have h30 : A 3 * A 0=0 := hz 3
+  have h41 : A 4 * A 1=0 := hz 4
   exact ⟨h02, reverse_zero _ _ (hA 0) (hA 2) h02, h13, reverse_zero _ _ (hA 1) (hA 3) h13,
     h24, reverse_zero _ _ (hA 2) (hA 4) h24, h30, reverse_zero _ _ (hA 3) (hA 0) h30,
     h41, reverse_zero _ _ (hA 4) (hA 1) h41⟩
 
 private def totalFifth (A : Fin 5 → Mat n) : ℝ := ∑ i, word (A i) (A i) (A i) (A i) (A i)
 private def edge41 (A : Fin 5 → Mat n) : ℝ := ∑ i,
-  word (A i) (A i) (A i) (A i) (A (i+1)) + word (A i) (A (i+1)) (A (i+1)) (A (i+1)) (A (i+1))
+  (word (A i) (A i) (A i) (A i) (A (i + 1)) + word (A i) (A (i + 1)) (A (i + 1)) (A (i + 1)) (A (i + 1)))
+
 private def edge32 (A : Fin 5 → Mat n) : ℝ := ∑ i,
-  word (A i) (A i) (A i) (A (i+1)) (A (i+1)) + word (A i) (A i) (A (i+1)) (A (i+1)) (A (i+1))
+  (word (A i) (A i) (A i) (A (i + 1)) (A (i + 1)) + word (A i) (A i) (A (i + 1)) (A (i + 1)) (A (i + 1)))
+
 private def alternate (A : Fin 5 → Mat n) : ℝ := ∑ i,
-  word (A i) (A i) (A (i+1)) (A i) (A (i+1)) + word (A (i+1)) (A (i+1)) (A i) (A (i+1)) (A i)
+  (word (A i) (A i) (A (i + 1)) (A i) (A (i + 1)) + word (A (i + 1)) (A (i + 1)) (A i) (A (i + 1)) (A i))
+
 private def centre (A : Fin 5 → Mat n) : ℝ := ∑ i,
-  word (A i) (A i) (A (i+1)) (A i) (A (i+4))
+  word (A i) (A i) (A (i + 1)) (A i) (A (i + 4))
 private def leaf (A : Fin 5 → Mat n) : ℝ := ∑ i,
-  word (A (i+4)) (A (i+4)) (A i) (A (i+1)) (A i) +
-  word (A (i+1)) (A (i+1)) (A i) (A (i+4)) (A i)
+  (word (A (i + 4)) (A (i + 4)) (A i) (A (i + 1)) (A i) +
+  word (A (i + 1)) (A (i + 1)) (A i) (A (i + 4)) (A i))
+
 private def cycle (A : Fin 5 → Mat n) : ℝ := word (A 0) (A 1) (A 2) (A 3) (A 4)
 
 -- Each call expands one quadratic Gram entry, never matrix coordinates.
@@ -159,15 +180,16 @@ local macro "normalize_pentagon5" A:ident hA:ident hz:ident : tactic =>
     obtain ⟨h02,h20,h13,h31,h24,h42,h30,h03,h41,h14⟩ := zero_products $A $hA $hz
     have hs : ∀ i, (($A) i)ᴴ = ($A) i := fun i => (($hA) i).eq
     simp only [totalFifth, edge41, edge32, alternate, centre, leaf, cycle, sum_five,
-      even, odd, leftPath, rightPath, leftD, rightD, leftF, rightF,
-      Matrix.cons_val_zero, Matrix.cons_val_succ, Matrix.cons_val_fin_one,
+      even, odd,
+      Matrix.cons_val,
       Fin.reduceAdd, pairing, pow_two]
     try simp only [Matrix.conjTranspose_sub, Matrix.conjTranspose_add, Matrix.conjTranspose_mul, hs]
     simp only [mul_add, add_mul, sub_mul, mul_sub, Matrix.mul_assoc, tr_add, tr_sub]
-    simp only [← word_eq]
+    try simp only [← word_eq]
     simp only [word_zero1,word_zero2,word_zero3,word_zero4,word_zero5,
       h02,h20,h13,h31,h24,h42,h30,h03,h41,h14,
-      word_rot,word_rot2,word_rot3,word_rot4,word_reverse $A $hA]
+      word_rot,word_rot2,word_rot3,word_rot4,word_reverse $A $hA,
+      word_reverse1 $A $hA,word_reverse2 $A $hA,word_reverse3 $A $hA,word_reverse4 $A $hA]
     ring))
 
 private def gramE (A : Fin 5 → Mat n) (j k : Fin 4) : ℝ :=
@@ -176,97 +198,97 @@ private def gramO (A : Fin 5 → Mat n) (j k : Fin 3) : ℝ :=
   ∑ i, pairing (A i) (odd A i j) (odd A i k)
 
 private lemma gram_e00 (A : Fin 5 → Mat n)
-    (hA : ∀ i, (A i).IsHermitian) (hz : ∀ i, A i * A (i+2)=0) :
+    (hA : ∀ i, (A i).IsHermitian) (hz : ∀ i, A i * A (i + 2) = 0) :
     gramE A 0 0 = leaf A + 10 * cycle A := by
   unfold gramE
   normalize_pentagon5 A hA hz
 
 private lemma gram_e01 (A : Fin 5 → Mat n)
-    (hA : ∀ i, (A i).IsHermitian) (hz : ∀ i, A i * A (i+2)=0) :
+    (hA : ∀ i, (A i).IsHermitian) (hz : ∀ i, A i * A (i + 2) = 0) :
     gramE A 0 1 = 2 * centre A := by
   unfold gramE
   normalize_pentagon5 A hA hz
 
 private lemma gram_e02 (A : Fin 5 → Mat n)
-    (hA : ∀ i, (A i).IsHermitian) (hz : ∀ i, A i * A (i+2)=0) :
+    (hA : ∀ i, (A i).IsHermitian) (hz : ∀ i, A i * A (i + 2) = 0) :
     gramE A 0 2 = 2 * centre A - leaf A := by
   unfold gramE
   normalize_pentagon5 A hA hz
 
 private lemma gram_e03 (A : Fin 5 → Mat n)
-    (hA : ∀ i, (A i).IsHermitian) (hz : ∀ i, A i * A (i+2)=0) :
+    (hA : ∀ i, (A i).IsHermitian) (hz : ∀ i, A i * A (i + 2) = 0) :
     gramE A 0 3 = -2 * centre A := by
   unfold gramE
   normalize_pentagon5 A hA hz
 
 private lemma gram_e11 (A : Fin 5 → Mat n)
-    (hA : ∀ i, (A i).IsHermitian) (hz : ∀ i, A i * A (i+2)=0) :
+    (hA : ∀ i, (A i).IsHermitian) (hz : ∀ i, A i * A (i + 2) = 0) :
     gramE A 1 1 = edge41 A - alternate A + 2 * centre A - 2 * leaf A := by
   unfold gramE
   normalize_pentagon5 A hA hz
 
 private lemma gram_e12 (A : Fin 5 → Mat n)
-    (hA : ∀ i, (A i).IsHermitian) (hz : ∀ i, A i * A (i+2)=0) :
+    (hA : ∀ i, (A i).IsHermitian) (hz : ∀ i, A i * A (i + 2) = 0) :
     gramE A 1 2 = edge41 A - edge32 A + 2 * centre A - leaf A := by
   unfold gramE
   normalize_pentagon5 A hA hz
 
 private lemma gram_e13 (A : Fin 5 → Mat n)
-    (hA : ∀ i, (A i).IsHermitian) (hz : ∀ i, A i * A (i+2)=0) :
+    (hA : ∀ i, (A i).IsHermitian) (hz : ∀ i, A i * A (i + 2) = 0) :
     gramE A 1 3 = -2 * edge41 A + edge32 A + alternate A + leaf A := by
   unfold gramE
   normalize_pentagon5 A hA hz
 
 private lemma gram_e22 (A : Fin 5 → Mat n)
-    (hA : ∀ i, (A i).IsHermitian) (hz : ∀ i, A i * A (i+2)=0) :
+    (hA : ∀ i, (A i).IsHermitian) (hz : ∀ i, A i * A (i + 2) = 0) :
     gramE A 2 2 = edge41 A - edge32 A := by
   unfold gramE
   normalize_pentagon5 A hA hz
 
 private lemma gram_e23 (A : Fin 5 → Mat n)
-    (hA : ∀ i, (A i).IsHermitian) (hz : ∀ i, A i * A (i+2)=0) :
+    (hA : ∀ i, (A i).IsHermitian) (hz : ∀ i, A i * A (i + 2) = 0) :
     gramE A 2 3 = -2 * edge41 A + 2 * edge32 A := by
   unfold gramE
   normalize_pentagon5 A hA hz
 
 private lemma gram_e33 (A : Fin 5 → Mat n)
-    (hA : ∀ i, (A i).IsHermitian) (hz : ∀ i, A i * A (i+2)=0) :
+    (hA : ∀ i, (A i).IsHermitian) (hz : ∀ i, A i * A (i + 2) = 0) :
     gramE A 3 3 = totalFifth A + edge41 A - 2 * edge32 A := by
   unfold gramE
   normalize_pentagon5 A hA hz
 
 private lemma gram_o00 (A : Fin 5 → Mat n)
-    (hA : ∀ i, (A i).IsHermitian) (hz : ∀ i, A i * A (i+2)=0) :
+    (hA : ∀ i, (A i).IsHermitian) (hz : ∀ i, A i * A (i + 2) = 0) :
     gramO A 0 0 = leaf A - 10 * cycle A := by
   unfold gramO
   normalize_pentagon5 A hA hz
 
 private lemma gram_o01 (A : Fin 5 → Mat n)
-    (hA : ∀ i, (A i).IsHermitian) (hz : ∀ i, A i * A (i+2)=0) :
+    (hA : ∀ i, (A i).IsHermitian) (hz : ∀ i, A i * A (i + 2) = 0) :
     gramO A 0 1 = 2 * centre A := by
   unfold gramO
   normalize_pentagon5 A hA hz
 
 private lemma gram_o02 (A : Fin 5 → Mat n)
-    (hA : ∀ i, (A i).IsHermitian) (hz : ∀ i, A i * A (i+2)=0) :
+    (hA : ∀ i, (A i).IsHermitian) (hz : ∀ i, A i * A (i + 2) = 0) :
     gramO A 0 2 = 2 * centre A - leaf A := by
   unfold gramO
   normalize_pentagon5 A hA hz
 
 private lemma gram_o11 (A : Fin 5 → Mat n)
-    (hA : ∀ i, (A i).IsHermitian) (hz : ∀ i, A i * A (i+2)=0) :
+    (hA : ∀ i, (A i).IsHermitian) (hz : ∀ i, A i * A (i + 2) = 0) :
     gramO A 1 1 = edge41 A - alternate A - 2 * centre A + 2 * leaf A := by
   unfold gramO
   normalize_pentagon5 A hA hz
 
 private lemma gram_o12 (A : Fin 5 → Mat n)
-    (hA : ∀ i, (A i).IsHermitian) (hz : ∀ i, A i * A (i+2)=0) :
+    (hA : ∀ i, (A i).IsHermitian) (hz : ∀ i, A i * A (i + 2) = 0) :
     gramO A 1 2 = edge41 A - edge32 A - 2 * centre A + leaf A := by
   unfold gramO
   normalize_pentagon5 A hA hz
 
 private lemma gram_o22 (A : Fin 5 → Mat n)
-    (hA : ∀ i, (A i).IsHermitian) (hz : ∀ i, A i * A (i+2)=0) :
+    (hA : ∀ i, (A i).IsHermitian) (hz : ∀ i, A i * A (i + 2) = 0) :
     gramO A 2 2 = edge41 A - edge32 A := by
   unfold gramO
   normalize_pentagon5 A hA hz
@@ -309,7 +331,7 @@ private def row0 (A : Fin 5 → Mat n) : ℝ :=
   word (A 0) (A 4) (A 4) (A 4) (A 4)
 
 private lemma row_0 (A : Fin 5 → Mat n)
-    (hA : ∀ i, (A i).IsHermitian) (hz : ∀ i, A i * A (i+2)=0) :
+    (hA : ∀ i, (A i).IsHermitian) (hz : ∀ i, A i * A (i + 2) = 0) :
     row A 0 = row0 A := by
   unfold row row0
   normalize_pentagon5 A hA hz
@@ -344,7 +366,7 @@ private def row1 (A : Fin 5 → Mat n) : ℝ :=
   word (A 1) (A 2) (A 3) (A 3) (A 2)
 
 private lemma row_1 (A : Fin 5 → Mat n)
-    (hA : ∀ i, (A i).IsHermitian) (hz : ∀ i, A i * A (i+2)=0) :
+    (hA : ∀ i, (A i).IsHermitian) (hz : ∀ i, A i * A (i + 2) = 0) :
     row A 1 = row1 A := by
   unfold row row1
   normalize_pentagon5 A hA hz
@@ -379,7 +401,7 @@ private def row2 (A : Fin 5 → Mat n) : ℝ :=
   word (A 2) (A 3) (A 4) (A 4) (A 3)
 
 private lemma row_2 (A : Fin 5 → Mat n)
-    (hA : ∀ i, (A i).IsHermitian) (hz : ∀ i, A i * A (i+2)=0) :
+    (hA : ∀ i, (A i).IsHermitian) (hz : ∀ i, A i * A (i + 2) = 0) :
     row A 2 = row2 A := by
   unfold row row2
   normalize_pentagon5 A hA hz
@@ -414,7 +436,7 @@ private def row3 (A : Fin 5 → Mat n) : ℝ :=
   word (A 3) (A 4) (A 4) (A 4) (A 4)
 
 private lemma row_3 (A : Fin 5 → Mat n)
-    (hA : ∀ i, (A i).IsHermitian) (hz : ∀ i, A i * A (i+2)=0) :
+    (hA : ∀ i, (A i).IsHermitian) (hz : ∀ i, A i * A (i + 2) = 0) :
     row A 3 = row3 A := by
   unfold row row3
   normalize_pentagon5 A hA hz
@@ -449,13 +471,13 @@ private def row4 (A : Fin 5 → Mat n) : ℝ :=
   word (A 4) (A 4) (A 4) (A 4) (A 4)
 
 private lemma row_4 (A : Fin 5 → Mat n)
-    (hA : ∀ i, (A i).IsHermitian) (hz : ∀ i, A i * A (i+2)=0) :
+    (hA : ∀ i, (A i).IsHermitian) (hz : ∀ i, A i * A (i + 2) = 0) :
     row A 4 = row4 A := by
   unfold row row4
   normalize_pentagon5 A hA hz
 
 private lemma sum_fifth (A : Fin 5 → Mat n)
-    (hA : ∀ i, (A i).IsHermitian) (hz : ∀ i, A i * A (i+2)=0) :
+    (hA : ∀ i, (A i).IsHermitian) (hz : ∀ i, A i * A (i + 2) = 0) :
     reTrace ((∑ i, A i)^5) = totalFifth A + 5 * edge41 A + 5 * edge32 A +
       5 * alternate A + 10 * centre A + 5 * leaf A + 10 * cycle A := by
   have split : reTrace ((∑ i, A i)^5) = ∑ i, row A i := by
@@ -493,20 +515,24 @@ private lemma ldl_at (A : Fin 5 → Mat n) (hA : ∀ i, (A i).IsHermitian) (i : 
       pairing (A i) (odd A i 0) (odd A i 2) -
       pairing (A i) (odd A i 1) (odd A i 2) := by
   change (∑ k, weight k * pairing (A i) (square A i k) (square A i k)) = _
-  simp only [sum_seven, square, weight, Matrix.cons_val_zero, Matrix.cons_val_succ,
-    Matrix.cons_val_fin_one, pairing_add_left, pairing_add_right,
+  simp only [sum_seven, square, weight, Matrix.cons_val, pairing_add_left, pairing_add_right,
     pairing_sub_left, pairing_sub_right, pairing_smul_left, pairing_smul_right,
     pairing_comm (A i) _ _ (hA i)]
   ring
 
 private lemma certificate_sum (A : Fin 5 → Mat n)
-    (hA : ∀ i, (A i).IsHermitian) (hz : ∀ i, A i * A (i+2)=0) :
+    (hA : ∀ i, (A i).IsHermitian) (hz : ∀ i, A i * A (i + 2) = 0) :
     (∑ i, ∑ k, weight k * weightedSquare (A i) (square A i k)) =
       15 * totalFifth A - 5 * edge41 A - 5 * edge32 A -
       5 * alternate A - 10 * centre A - 5 * leaf A - 10 * cycle A := by
   simp_rw [ldl_at A hA]
   simp only [Finset.sum_add_distrib, Finset.sum_sub_distrib, ← Finset.mul_sum,
-    ← gramE, ← gramO]
+    ]
+  change 2 * gramE A 0 0 + 5 * gramE A 1 1 + 5 * gramE A 2 2 +
+    15 * gramE A 3 3 - 4 * gramE A 0 1 + (7/2 : ℝ) * gramE A 0 2 +
+    6 * gramE A 0 3 - (5/2 : ℝ) * gramE A 1 2 + gramE A 1 3 +
+    13 * gramE A 2 3 + 3 * gramO A 0 0 + gramO A 1 1 +
+    (1/2 : ℝ) * gramO A 2 2 - 2 * gramO A 0 1 + gramO A 0 2 - gramO A 1 2 = _
   rw [gram_e00 A hA hz, gram_e01 A hA hz, gram_e02 A hA hz, gram_e03 A hA hz,
     gram_e11 A hA hz, gram_e12 A hA hz, gram_e13 A hA hz, gram_e22 A hA hz,
     gram_e23 A hA hz, gram_e33 A hA hz, gram_o00 A hA hz, gram_o01 A hA hz,
@@ -516,7 +542,7 @@ private lemma certificate_sum (A : Fin 5 → Mat n)
 /-- The exact seven-square identity. Hermiticity suffices for the identity;
 positive semidefiniteness is essential for its nonnegative-square consequence. -/
 theorem pentagon_quintic_sos (A : Fin 5 → Mat n)
-    (hA : ∀ i, (A i).IsHermitian) (hz : ∀ i, A i * A (i+2)=0) :
+    (hA : ∀ i, (A i).IsHermitian) (hz : ∀ i, A i * A (i + 2) = 0) :
     16 * (∑ i, reTrace (A i^5)) - reTrace ((∑ i, A i)^5) =
       ∑ i, ∑ k, weight k * weightedSquare (A i) (square A i k) := by
   rw [certificate_sum A hA hz, sum_fifth A hA hz, ← totalFifth_eq]
@@ -525,7 +551,7 @@ theorem pentagon_quintic_sos (A : Fin 5 → Mat n)
 /-- The universal sharp fifth-moment inequality for finite complex PSD matrices
 with distance-two zero products. Empty dimensions and singular matrices are included. -/
 theorem pentagon_quintic_trace_le (A : Fin 5 → Mat n)
-    (hA : ∀ i, (A i).PosSemidef) (hz : ∀ i, A i * A (i+2)=0) :
+    (hA : ∀ i, (A i).PosSemidef) (hz : ∀ i, A i * A (i + 2) = 0) :
     reTrace ((∑ i, A i)^5) ≤ 16 * ∑ i, reTrace (A i^5) := by
   have h := pentagon_quintic_sos A (fun i => (hA i).isHermitian) hz
   have hn : 0 ≤ ∑ i, ∑ k, weight k * weightedSquare (A i) (square A i k) := by
@@ -542,10 +568,12 @@ theorem pentagon_quintic_trace_le (A : Fin 5 → Mat n)
 private def sharpTuple (i : Fin 5) : Mat (Fin 1) := if i=0 ∨ i=1 then 1 else 0
 private lemma sharp_facts :
     (∀ i, (sharpTuple i).PosSemidef) ∧
-    (∀ i, sharpTuple i * sharpTuple (i+2)=0) ∧
+    (∀ i, sharpTuple i * sharpTuple (i + 2) = 0) ∧
     (∑ i, reTrace (sharpTuple i^5)) = 2 ∧ reTrace ((∑ i, sharpTuple i)^5) = 32 := by
   refine ⟨?_, ?_, ?_, ?_⟩
-  · intro i; fin_cases i <;> simp [sharpTuple]
+  · intro i; fin_cases i <;> simp only [sharpTuple, Fin.isValue, zero_ne_one,
+      one_ne_zero, or_self, if_true, if_false] <;>
+      first | exact Matrix.PosSemidef.one | exact Matrix.PosSemidef.zero
   · intro i; fin_cases i <;> norm_num [sharpTuple]
   · rw [sum_five]; norm_num [sharpTuple, reTrace, Matrix.trace]
   · rw [sum_five]; norm_num [sharpTuple, reTrace, Matrix.trace]; rfl
@@ -553,7 +581,7 @@ private lemma sharp_facts :
 /-- Any coefficient below sixteen fails already for two equal adjacent scalar PSD matrices. -/
 theorem constant_sixteen_sharp (c : ℝ) (hc : c<16) :
     ∃ A : Fin 5 → Mat (Fin 1), (∀ i, (A i).PosSemidef) ∧
-      (∀ i, A i * A (i+2)=0) ∧
+      (∀ i, A i * A (i + 2) = 0) ∧
       c * (∑ i, reTrace (A i^5)) < reTrace ((∑ i, A i)^5) := by
   obtain ⟨hA,hz,hT,hS⟩ := sharp_facts
   refine ⟨sharpTuple,hA,hz,?_⟩

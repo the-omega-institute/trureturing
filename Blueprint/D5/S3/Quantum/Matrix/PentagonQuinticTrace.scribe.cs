@@ -41,9 +41,7 @@ internal sealed class PentagonQuinticTraceDocument : IScribeDocumentDefinition
     private static Formula A(int k = 0) => At("A", Shift(k));
     private static Formula Sum(Formula x) => Seq(F.Sum, Underscore, Grp(V("i"), Colon, Fin5()), Sp, x);
     private static Formula Tr(Formula x) => Call("ReTr", x);
-    private static Formula Hs(Formula x) => Call("hsSq", x);
     private static Formula Pow(Formula x, byte p) => new Formula.Power(Seq(Open, x, Close), D(p));
-    private static Formula Frac(byte a, byte b) => new Formula.Fraction(D(a), D(b));
     private static Formula Add(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Add, b);
     private static Formula Sub(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Subtract, b);
     private static Formula Mul(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Multiply, b);
