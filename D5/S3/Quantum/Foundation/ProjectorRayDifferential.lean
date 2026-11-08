@@ -8,6 +8,7 @@
 
 import D5.S3.QuantumBounds.FubiniStudyRecordTime
 import Mathlib.Analysis.InnerProductSpace.Calculus
+import Mathlib.Analysis.InnerProductSpace.Trace
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.InverseDeriv
 import Mathlib.Analysis.Calculus.Deriv.Slope
 import Mathlib.Tactic.NormNum
@@ -48,7 +49,7 @@ private theorem horizontal_norm_sq (ψ z : E) (hψ : ‖ψ‖ = 1) :
   rw [← inner_conj_symm z ψ]
   simp only [Complex.mul_conj]
   rw [Complex.normSq_eq_norm_sq]
-  simp only [RCLike.ofReal_re]
+  change ‖z‖ ^ 2 - 2 * (‖inner ℂ ψ z‖ ^ 2) + ‖inner ℂ ψ z‖ ^ 2 = _
   ring
 
 private theorem fs_angle_eq_arcsin_horizontal (ψ z : E)
@@ -102,6 +103,79 @@ theorem fs_angle_speed {f : ℝ → E} {ψ v : E}
     rw [← horizontal_norm_sq ψ v hψ, Real.sqrt_sq (norm_nonneg _)]
   simpa [hv] using hlimit
 
+private def projectorVelocity (ψ v : E) : E →L[ℂ] E :=
+  InnerProductSpace.rankOne ℂ ψ v + InnerProductSpace.rankOne ℂ v ψ
+
+private theorem rank_one_bilinear : IsBoundedBilinearMap ℝ
+    (fun p : E × E => InnerProductSpace.rankOne ℂ p.1 p.2) where
+  add_left x y z := by ext w; simp [InnerProductSpace.rankOne_apply, smul_add]
+  smul_left c x y := by ext w; simp [InnerProductSpace.rankOne_apply, smul_comm]
+  add_right x y z := by ext w; simp [InnerProductSpace.rankOne_apply, add_smul]
+  smul_right c x y := by ext w; simp [InnerProductSpace.rankOne_apply, smul_comm]
+  bound := ⟨1, zero_lt_one, fun x y => by simp⟩
+
+private theorem projector_curve_hasDerivAt {f : ℝ → E} {ψ v : E}
+    (h₀ : f 0 = ψ) (hf : HasDerivAt f v 0) :
+    HasDerivAt (fun t => InnerProductSpace.rankOne ℂ (f t) (f t))
+      (projectorVelocity ψ v) 0 := by
+  simpa [IsBoundedBilinearMap.toContinuousLinearMap_apply, h₀, projectorVelocity]
+    using (rank_one_bilinear (E := E)).toContinuousLinearMap.hasDerivAt_of_bilinear
+      (fun _ => hf) (fun _ => hf)
+
+private theorem unit_curve_tangent {f : ℝ → E} {ψ v : E}
+    (h₀ : f 0 = ψ) (hf : HasDerivAt f v 0)
+    (hunit : ∀ᶠ t in 𝓝 (0 : ℝ), ‖f t‖ = 1) : (inner ℂ ψ v).re = 0 := by
+  letI : InnerProductSpace ℝ E := InnerProductSpace.rclikeToReal ℂ E
+  have hc : HasDerivAt (fun t => ‖f t‖ ^ 2) 0 0 :=
+    (hasDerivAt_const (0 : ℝ) (1 : ℝ)).congr_of_eventuallyEq
+      (hunit.mono fun t ht => by simp [ht])
+  have h := hf.norm_sq.unique hc
+  change 2 * (inner ℂ (f 0) v).re = 0 at h
+  rw [h₀] at h
+  linarith
+
+private theorem trace_projector_velocity [FiniteDimensional ℂ E]
+    (ψ v : E) (hψ : ‖ψ‖ = 1) (ht : (inner ℂ ψ v).re = 0) :
+    LinearMap.trace ℂ E ((InnerProductSpace.rankOne ℂ ψ ψ).toLinearMap.comp
+      ((projectorVelocity ψ v).toLinearMap.comp (projectorVelocity ψ v).toLinearMap)) =
+      (‖horizontal ψ v‖ ^ 2 : ℂ) := by
+  let D := projectorVelocity ψ v
+  have hconj : inner ℂ v ψ = -inner ℂ ψ v := by
+    rw [← inner_conj_symm ψ v]
+    apply Complex.ext <;> simp [ht]
+  have ha : D ψ = horizontal ψ v := by
+    simp [D, projectorVelocity, horizontal, InnerProductSpace.rankOne_apply,
+      inner_self_eq_norm_sq_to_K, hψ, hconj, sub_eq_add_neg, add_comm]
+  have hs (x y : E) : inner ℂ x (D y) = inner ℂ (D x) y := by
+    simp only [D, projectorVelocity, ContinuousLinearMap.add_apply,
+      InnerProductSpace.rankOne_apply, inner_add_left, inner_add_right,
+      inner_smul_left, inner_smul_right, inner_conj_symm]
+    ring
+  rw [LinearMap.trace_comp_comm']
+  change LinearMap.trace ℂ E (((D.comp D).comp
+    (InnerProductSpace.rankOne ℂ ψ ψ)).toLinearMap) = _
+  rw [InnerProductSpace.comp_rankOne, InnerProductSpace.trace_rankOne]
+  change inner ℂ ψ (D (D ψ)) = _
+  rw [hs, ha, inner_self_eq_norm_sq_to_K]
+  simp
+
+/-- The original ray-distance speed is the square root of the real projector
+tensor evaluated on the actual derivative of the moving rank-one projection.
+The derivative is taken in the operator norm, not prescribed by a metric. -/
+theorem fs_angle_speed_projector [FiniteDimensional ℂ E] {f : ℝ → E} {ψ v : E}
+    (hψ : ‖ψ‖ = 1) (h₀ : f 0 = ψ) (hf : HasDerivAt f v 0)
+    (hunit : ∀ᶠ t in 𝓝 (0 : ℝ), ‖f t‖ = 1) :
+    let P := InnerProductSpace.rankOne ℂ ψ ψ
+    let D := deriv (fun t => InnerProductSpace.rankOne ℂ (f t) (f t)) 0
+    Tendsto (fun t : ℝ => fsAngle ψ (f t) / |t|) (𝓝[≠] 0)
+      (𝓝 (Real.sqrt (LinearMap.trace ℂ E
+        (P.toLinearMap.comp (D.toLinearMap.comp D.toLinearMap))).re)) := by
+  dsimp only
+  rw [(projector_curve_hasDerivAt h₀ hf).deriv,
+    trace_projector_velocity ψ v hψ (unit_curve_tangent h₀ hf hunit)]
+  simpa [horizontal_norm_sq ψ v hψ] using fs_angle_speed hψ h₀ hf hunit
+
 #print axioms fs_angle_speed
+#print axioms fs_angle_speed_projector
 
 end D5.S3.Quantum.Foundation.ProjectorRayDifferential

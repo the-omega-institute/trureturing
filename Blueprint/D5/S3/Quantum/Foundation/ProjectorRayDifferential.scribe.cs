@@ -27,6 +27,19 @@ internal sealed class ProjectorRayDifferentialDocument : IScribeDocumentDefiniti
                 Imp(Call("HasDerivAt", f, v, D(0)), Imp(curveUnit,
                     Call("Tendsto", distanceQuotient, Call("puncturedNhds", D(0)),
                         Call("nhds", speed))))))))));
+        Formula movingProjector = Seq(t, Mapsto, Sp, Call("rankOne", C,
+            Call("apply", f, t), Call("apply", f, t)));
+        Formula projectorDerivative = Call("deriv", movingProjector, D(0));
+        Formula projectorSpeed = Call("sqrt", Call("re", Call("trace", C, e,
+            Call("comp", Call("rankOne", C, psi, psi),
+                Call("comp", projectorDerivative, projectorDerivative)))));
+        Formula projectorStatement = context(Seq(OpenBracket,
+            Call("FiniteDimensional", C, e), CloseBracket, Sp,
+            All("f", curve, All("p", e, All("v", e,
+                Imp(Eqn(Norm(psi), D(1)), Imp(Eqn(Call("apply", f, D(0)), psi),
+                    Imp(Call("HasDerivAt", f, v, D(0)), Imp(curveUnit,
+                        Call("Tendsto", distanceQuotient, Call("puncturedNhds", D(0)),
+                            Call("nhds", projectorSpeed)))))))))));
         return DocumentDefinition.Create(ScribeNode.Create(
             "The infinitesimal Fubini-Study speed follows from the original angle distance.",
             H("Ray distance and horizontal velocity"), Blocks(
@@ -38,8 +51,11 @@ internal sealed class ProjectorRayDifferentialDocument : IScribeDocumentDefiniti
                     "This uses Mathlib's actual rankOne operator, acting as inner(p,z) times p. For unit p the residual is orthogonal to the complex line through p. The definition is not a prescribed metric.", true),
                 Item("fs_angle_speed", "Metric speed of a differentiable unit curve", statement,
                     "Let f(0) = p with norm(p) = 1, let f have real derivative v at zero, and require norm(f(t)) = 1 only in a neighbourhood of zero. Then fsAngle(p,f(t))/abs(t) tends, through nonzero real t, to sqrt(norm(v)^2 - norm(inner(p,v))^2). The curve may have arbitrary vertical phase velocity; the projection removes it. The zero horizontal-velocity case is included."),
+                Item("fs_angle_speed_projector", "The same speed from the actual projector derivative", projectorStatement,
+                    "In finite complex dimension let P = rankOne(p,p), and let D be the real derivative at zero of t mapped to rankOne(f(t),f(t)), in the normed space of continuous complex-linear operators. Under the same curve hypotheses, the limit is sqrt(Re Tr(P composed with D composed with D)). The displayed formula expands these two local abbreviations. The rankOne operators are coerced to linear maps for the trace; this does not alter their action."),
                 Paragraph(Text("The derivation uses the exact identity fsAngle(p,z) = arcsin(norm(z - rankOne(p,p) z)) for unit p and z. The residual of the curve has derivative v - inner(p,v) p. Its difference quotients converge in norm. The continuous extension of arcsin(r)/r at zero has value one, which transfers this limit to the angle distance. This establishes the local distance normalization without defining the metric to equal the desired formula.")),
-                Paragraph(Text("This gives the infinitesimal amplitude metric in OmegaQ-020 Theorem 7.3. Relating it to the sphere tensor also requires the original sigma_z = -L_e R_z representation, the actual derivative of P_n, its traced tensor and tangent pairing, and the identification of its real part with this speed squared and its imaginary part with oriented sphere area. The connection and global phase formula additionally require the local section differential, A = i inner(psi,dpsi), dA = -2 Im Q with the stated orientation, Stokes on suitable smooth or piecewise smooth patchwise surfaces, transition winding, and the closed-loop result modulo 2 pi. The local distance result alone proves none of these global statements. No literature originality is claimed.")))));
+                Paragraph(Text("The moving-projector derivative is rankOne(p,v) + rankOne(v,p), obtained from the bounded real-bilinear rankOne map. Differentiating the local unit-norm condition gives Re inner(p,v) = 0, so D(p) is the horizontal velocity. Symmetry of D and the upstream rankOne trace formula give Tr(P D D) = norm(horizontal(p,v))^2. This identifies the diagonal real projector tensor with the speed measured by the original angle, without prescribing that speed as a definition.")),
+                Paragraph(Text("This gives the infinitesimal amplitude metric in OmegaQ-020 Theorem 7.3. Relating it to the sphere tensor still requires the original sigma_z = -L_e R_z representation, its identification with rankOne on the original H_J, the actual derivative of P_n, and the sphere tangent formula Q(v,w) = (dot(v,w) + i dot(n,cross(v,w)))/4 for every unit n and both tangent vectors. The connection and global phase formula additionally require the local section differential, A = i inner(psi,dpsi), dA = -2 Im Q with the stated orientation, Stokes on suitable smooth or piecewise smooth patchwise surfaces, transition winding, solid-angle ambiguity by 4 pi, and the closed-loop result modulo 2 pi. The local distance result alone proves none of these global statements. No literature originality is claimed.")))));
     }
 
     private static Formula R => Seq(Mathbb, Grp(F.Id("R")));

@@ -11,8 +11,8 @@ the actual curve, derivative and neighbourhood unit-norm hypotheses.
 
 The dependent-family evidence includes an explicit rejected whole family and
 two distinct observations in the same two-dimensional amplitude space.
-It is not a validated Contract.Registration: compiler occurrence/coordinate
-evidence and the outer typed contract remain required. A signature that
+The outer typed contract requires current compiler occurrence/coordinate
+evidence before it can be called validated. A signature that
 discards the amplitude carrier cannot replace these operands.
 The unfinished binding is tracked at
 https://github.com/the-omega-institute/trureturing/issues/28177.
@@ -81,14 +81,20 @@ private def base : testParameters.{u}.E := EuclideanSpace.single ⟨0⟩ 1
 private def transverse : testParameters.{u}.E := EuclideanSpace.single ⟨1⟩ 1
 
 private theorem base_norm : ‖base.{u}‖ = 1 := by
-  simp [base, EuclideanSpace.single, PiLp.norm_single]
+  change ‖(EuclideanSpace.single (⟨0⟩ : ULift.{u} (Fin 2)) (1 : ℂ))‖ = 1
+  rw [PiLp.norm_single]
+  exact norm_one
 
 private theorem transverse_norm : ‖transverse.{u}‖ = 1 := by
-  simp [transverse, EuclideanSpace.single, PiLp.norm_single]
+  change ‖(EuclideanSpace.single (⟨1⟩ : ULift.{u} (Fin 2)) (1 : ℂ))‖ = 1
+  rw [PiLp.norm_single]
+  exact norm_one
 
 private theorem base_transverse_inner : inner ℂ base.{u} transverse = 0 := by
-  simp [base, transverse, EuclideanSpace.inner_single_left,
-    EuclideanSpace.single, PiLp.single_apply]
+  change inner ℂ (EuclideanSpace.single (⟨0⟩ : ULift.{u} (Fin 2)) (1 : ℂ))
+    (EuclideanSpace.single (⟨1⟩ : ULift.{u} (Fin 2)) (1 : ℂ)) = 0
+  rw [EuclideanSpace.inner_single_left]
+  simp [EuclideanSpace.single, PiLp.single_apply]
 
 private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
@@ -117,5 +123,32 @@ def family : Registration arena.{u} (type_of% (@fs_angle_speed.{u})) where
     · intro e
       exact nomatch e
   dependence := dependence
+
+def audit : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@fs_angle_speed.{u}) (Realization signature.{u}) Unit Unit where
+  unitName := `D5.S3.Quantum.Foundation.ProjectorRayDifferential.fs_angle_speed.audit
+  realizationName := `Reg.D5.S3.Quantum.Foundation.ProjectorRayDifferential.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ s =>
+    Real.sqrt (‖s.2‖ ^ 2 - ‖inner ℂ s.1 s.2‖ ^ 2)) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := none
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms family
+#print axioms audit
 
 end Reg.D5.S3.Quantum.Foundation.ProjectorRayDifferential
