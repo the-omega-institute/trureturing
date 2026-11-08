@@ -8,6 +8,109 @@
 /-
 admission_basis: open-problem-resolution (#28235; Proved)
 escape_witness: none
+Direct frozen dependency: D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.finish_fst
+statement_id: sha256:5859cc0f84f4e6a91313521f32ea6d187c4822bb52d4e438939da5e000940bd5
+Direct frozen dependency: D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.finish_snd
+statement_id: sha256:1ada14ea452d6f35f959dbbd5a034265c8c6921cd041422cad27ec166a94d24c
+Direct frozen dependency: D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.Seen
+statement_id: sha256:db13d94501d24f27e6e69604bb633af95ff3309c5698815c44e12d2e52739fce
+Direct frozen dependency: D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.good
+statement_id: sha256:f68e874b0a22676cb3053202c645a8ce30010dcd695d55f3e7fce272d4ce5989
+Direct frozen dependency: D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.finish
+statement_id: sha256:ebae2e26fe8811cb0e473a0168c27f49fa151fa2bcecda8ad3ba0c9fabc41a7f
+Direct frozen dependency: D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.advance
+statement_id: sha256:63e23e390cbc7ee42155ce307351f149d901cd9013daee3d6d2eac775e24af71
+Direct frozen dependency: D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.allowed
+statement_id: sha256:4ee019eb42606605da41b2b090212be244d3bf48d64a2c10dc2d9c6c6f7e6468
+Direct frozen dependency: D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.edge_iff
+statement_id: sha256:4d4e785867304fa77fbca15a07f7a717f558f3596c78b4383f15b9582e1e045e
+Direct frozen dependency: D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.good_iff
+statement_id: sha256:59d0ffb034f7f2361718e6d2566eb24417785b9a178f6fcb44f336c1199d3d62
+Direct frozen dependency: D5.S3.Observer.Separation.BooleanRankThreeK4.beta
+statement_id: sha256:1abdc5f3db71567fe05de5aabbe80dddeb5ec5179e4ec7fd49fe71e500518481
+Col: proof_shape=bind-only; consumers=instFintypeCol
+Labels: proof_shape=bind-only; consumers=pairs
+colEquiv: proof_shape=bind-only; consumers=instFintypeCol
+instFintypeCol: proof_shape=bind-only; consumers=step
+seen: proof_shape=bind-only; consumers=advance_seen
+next: proof_shape=bind-only; consumers=advance_seen
+instDecidableAllowed: proof_shape=bind-only; consumers=instDecidableAdmissible
+instDecidableGood: proof_shape=bind-only; consumers=instDecidableTailGood
+advance_seen: proof_shape=bind-only; consumers=finish_seen
+next_mono: proof_shape=bind-only; consumers=endLevel_mono
+label_next: proof_shape=bind-only; consumers=valid_next
+endLevel: proof_shape=bind-only; consumers=endLevel_mono
+endLevel_mono: proof_shape=bind-only; consumers=tailGood_cons
+finish_seen: proof_shape=bind-only; consumers=counting_bridge
+normal: proof_shape=bind-only; consumers=normal_iff
+earlier_iff: proof_shape=bind-only; consumers=normal_iff
+normal_iff: proof_shape=bind-only; consumers=legal_iff
+Legal: proof_shape=bind-only; consumers=instDecidableLegal
+instDecidableNormal: proof_shape=bind-only; consumers=instDecidableLegal
+instDecidableLegal: proof_shape=bind-only; consumers=a
+a: proof_shape=bind-only; consumers=counting_bridge
+pairs: proof_shape=bind-only; consumers=bonds_iff
+compatible: proof_shape=bind-only; consumers=instDecidableCompatible
+instDecidableCompatible: proof_shape=bind-only; consumers=instDecidableAdmissible
+bonds_iff: proof_shape=bind-only; consumers=legal_iff
+chain: proof_shape=bind-only; consumers=chain_tail
+chain_tail: proof_shape=bind-only; consumers=legal_iff
+legal_iff: proof_shape=bind-only; consumers=counting_bridge
+TailGood: proof_shape=bind-only; consumers=instDecidableTailGood
+instDecidableChain: proof_shape=bind-only; consumers=instDecidableTailGood
+instDecidableTailGood: proof_shape=bind-only; consumers=count
+admissible: proof_shape=bind-only; consumers=instDecidableAdmissible
+instDecidableAdmissible: proof_shape=bind-only; consumers=step
+tailGood_cons: proof_shape=bind-only; consumers=count_eq_v
+step: proof_shape=bind-only; consumers=v
+v: proof_shape=bind-only; consumers=count_eq_v
+count: proof_shape=bind-only; consumers=instDecidableLegal
+count_eq_v: proof_shape=bind-only; consumers=counting_bridge
+total: proof_shape=bind-only; consumers=counting_bridge
+counting_bridge: proof_shape=bind-only; consumers=finite_certificate
+Valid: proof_shape=bind-only; consumers=instDecidableValid
+instDecidableValid: proof_shape=bind-only; consumers=table_base
+valid_next: proof_shape=bind-only; consumers=v_table
+initial_valid: proof_shape=bind-only; consumers=total_recurrence
+flagIndex: proof_shape=bind-only; consumers=table
+tables: proof_shape=bind-only; consumers=table
+table: proof_shape=bind-only; consumers=table_base
+table_base: proof_shape=bind-only; consumers=v_table
+table_step0: proof_shape=bind-only; consumers=table_steps
+table_step1: proof_shape=bind-only; consumers=table_steps
+table_step2: proof_shape=bind-only; consumers=table_steps
+table_step3: proof_shape=bind-only; consumers=table_steps
+table_step4: proof_shape=bind-only; consumers=table_steps
+table_step5: proof_shape=bind-only; consumers=table_steps
+table_step6: proof_shape=bind-only; consumers=table_steps
+table_step7: proof_shape=bind-only; consumers=table_steps
+table_step8: proof_shape=bind-only; consumers=table_steps
+table_step9: proof_shape=bind-only; consumers=table_steps
+table_step10: proof_shape=bind-only; consumers=table_steps
+table_steps: proof_shape=bind-only; consumers=v_table
+v_table: proof_shape=bind-only; consumers=vector_certificate
+table_certificate: proof_shape=bind-only; consumers=vector_certificate
+vector_certificate: proof_shape=bind-only; consumers=vector_recurrence
+vector_recurrence: proof_shape=bind-only; consumers=total_recurrence
+total_recurrence: proof_shape=bind-only; consumers=error_recurrence
+total_table: proof_shape=bind-only; consumers=finite_certificate
+initial_table0: proof_shape=bind-only; consumers=finite_certificate
+initial_table1: proof_shape=bind-only; consumers=finite_certificate
+initial_table2: proof_shape=bind-only; consumers=finite_certificate
+initial_table3: proof_shape=bind-only; consumers=finite_certificate
+initial_table4: proof_shape=bind-only; consumers=finite_certificate
+initial_table5: proof_shape=bind-only; consumers=finite_certificate
+initial_table6: proof_shape=bind-only; consumers=finite_certificate
+initial_table7: proof_shape=bind-only; consumers=finite_certificate
+initial_table8: proof_shape=bind-only; consumers=finite_certificate
+initial_table9: proof_shape=bind-only; consumers=finite_certificate
+initial_table10: proof_shape=bind-only; consumers=finite_certificate
+finite_certificate: proof_shape=bind-only; consumers=error_vanish
+err: proof_shape=bind-only; consumers=error_recurrence
+error_recurrence: proof_shape=bind-only; consumers=error_vanish
+error_vanish: proof_shape=bind-only; consumers=recurrence
+recurrence: proof_shape=bind-only; consumers=result
+result: proof_shape=bind-only; consumers=terminal result
 -/
 module
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip
@@ -28,6 +131,13 @@ open HardinA233175PairStrip
 open D5.S3.Observer.Separation.BooleanRankThreeK4 (beta)
 private abbrev Col := Fin 3 → Fin 6
 private abbrev Labels := Fin 3 → Fin 3
+private def colEquiv : (Fin 6 × Fin 6 × Fin 6) ≃ Col where
+  toFun p := ![p.1, p.2.1, p.2.2]
+  invFun d := (d 0, d 1, d 2)
+  left_inv _ := rfl
+  right_inv d := by ext i; fin_cases i <;> rfl
+private instance instFintypeCol : Fintype Col :=
+  Fintype.ofEquiv (Fin 6 × Fin 6 × Fin 6) colEquiv
 private def seen (s : Fin 3) : Seen := (decide (0 < s.val), decide (1 < s.val))
 private def next (s : Fin 3) (x : Fin 6) : Fin 3 :=
   max s (if x = 1 then 1 else if x = 2 then 2 else 0)
@@ -313,9 +423,9 @@ private theorem counting_bridge (n : ℕ) : (a (n + 1) : ℤ) = total (v n) := b
                   (fun i => f i 1))) (d 2)
             · rw [advance_seen _ _ hc]
               simp [ht, hm, hb, hc, ite_and]
-            · simp [ht, hm, hb, hc, ite_and]
-          · simp [ht, hm, hb, ite_and]
-        · simp [ht, hm, ite_and]
+            · simp [ht, hm, hb, hc]
+          · simp [ht, hm, hb]
+        · simp [ht, hm]
       · simp [ht]
     · simp [Fin.cons_zero, hd]
   · rw [Finset.sum_comm]
@@ -542,68 +652,50 @@ private def table (k : ℕ) (q r t b c : Fin 3) (p : Labels) : ℤ :=
   let i := (flagIndex.getD (81 * t.val + 27 * q.val + 9 * b.val + 3 * r.val + c.val) 0)
   ((tables.getD k #[]).getD i #[]).getD
     (9 * (p 0).val + 3 * (p 1).val + (p 2).val) 0
+local macro "check_states" : tactic => `(tactic| {
+  simp only [Fin.forall_fin_succ_pi, Fin.forall_fin_zero_pi]
+  intro q r t b c
+  fin_cases q <;> fin_cases r <;> fin_cases t <;> fin_cases b <;> fin_cases c
+  all_goals (intro x; fin_cases x <;> decide +kernel) })
+set_option Elab.async false
 set_option maxRecDepth 100000
 set_option maxHeartbeats 100000000
 private theorem table_base : ∀ q r t b c p, Valid q r t b c p →
     table 0 q r t b c p = v 0 q r t b c p := by
-  intro q r t b c
-  fin_cases q <;> fin_cases r <;> fin_cases t <;> fin_cases b <;> fin_cases c
-  all_goals decide +kernel
+  check_states
 private theorem table_step0 : ∀ q r t b c p, Valid q r t b c p →
     table 1 q r t b c p = step (table 0) q r t b c p := by
-  intro q r t b c
-  fin_cases q <;> fin_cases r <;> fin_cases t <;> fin_cases b <;> fin_cases c
-  all_goals decide +kernel
+  check_states
 private theorem table_step1 : ∀ q r t b c p, Valid q r t b c p →
     table 2 q r t b c p = step (table 1) q r t b c p := by
-  intro q r t b c
-  fin_cases q <;> fin_cases r <;> fin_cases t <;> fin_cases b <;> fin_cases c
-  all_goals decide +kernel
+  check_states
 private theorem table_step2 : ∀ q r t b c p, Valid q r t b c p →
     table 3 q r t b c p = step (table 2) q r t b c p := by
-  intro q r t b c
-  fin_cases q <;> fin_cases r <;> fin_cases t <;> fin_cases b <;> fin_cases c
-  all_goals decide +kernel
+  check_states
 private theorem table_step3 : ∀ q r t b c p, Valid q r t b c p →
     table 4 q r t b c p = step (table 3) q r t b c p := by
-  intro q r t b c
-  fin_cases q <;> fin_cases r <;> fin_cases t <;> fin_cases b <;> fin_cases c
-  all_goals decide +kernel
+  check_states
 private theorem table_step4 : ∀ q r t b c p, Valid q r t b c p →
     table 5 q r t b c p = step (table 4) q r t b c p := by
-  intro q r t b c
-  fin_cases q <;> fin_cases r <;> fin_cases t <;> fin_cases b <;> fin_cases c
-  all_goals decide +kernel
+  check_states
 private theorem table_step5 : ∀ q r t b c p, Valid q r t b c p →
     table 6 q r t b c p = step (table 5) q r t b c p := by
-  intro q r t b c
-  fin_cases q <;> fin_cases r <;> fin_cases t <;> fin_cases b <;> fin_cases c
-  all_goals decide +kernel
+  check_states
 private theorem table_step6 : ∀ q r t b c p, Valid q r t b c p →
     table 7 q r t b c p = step (table 6) q r t b c p := by
-  intro q r t b c
-  fin_cases q <;> fin_cases r <;> fin_cases t <;> fin_cases b <;> fin_cases c
-  all_goals decide +kernel
+  check_states
 private theorem table_step7 : ∀ q r t b c p, Valid q r t b c p →
     table 8 q r t b c p = step (table 7) q r t b c p := by
-  intro q r t b c
-  fin_cases q <;> fin_cases r <;> fin_cases t <;> fin_cases b <;> fin_cases c
-  all_goals decide +kernel
+  check_states
 private theorem table_step8 : ∀ q r t b c p, Valid q r t b c p →
     table 9 q r t b c p = step (table 8) q r t b c p := by
-  intro q r t b c
-  fin_cases q <;> fin_cases r <;> fin_cases t <;> fin_cases b <;> fin_cases c
-  all_goals decide +kernel
+  check_states
 private theorem table_step9 : ∀ q r t b c p, Valid q r t b c p →
     table 10 q r t b c p = step (table 9) q r t b c p := by
-  intro q r t b c
-  fin_cases q <;> fin_cases r <;> fin_cases t <;> fin_cases b <;> fin_cases c
-  all_goals decide +kernel
+  check_states
 private theorem table_step10 : ∀ q r t b c p, Valid q r t b c p →
     table 11 q r t b c p = step (table 10) q r t b c p := by
-  intro q r t b c
-  fin_cases q <;> fin_cases r <;> fin_cases t <;> fin_cases b <;> fin_cases c
-  all_goals decide +kernel
+  check_states
 private theorem table_steps (k : Fin 11) : ∀ q r t b c p, Valid q r t b c p →
     table (k.val + 1) q r t b c p = step (table k.val) q r t b c p := by
   fin_cases k
@@ -644,9 +736,7 @@ private theorem table_certificate : ∀ q r t b c p, Valid q r t b c p →
       + 436207616 * table 3 q r t b c p
       + 805306368 * table 2 q r t b c p
       - 4294967296 * table 1 q r t b c p := by
-  intro q r t b c
-  fin_cases q <;> fin_cases r <;> fin_cases t <;> fin_cases b <;> fin_cases c
-  all_goals decide +kernel
+  check_states
 private theorem vector_certificate : ∀ q r t b c p, Valid q r t b c p →
     v 11 q r t b c p =
       48 * v 10 q r t b c p
@@ -746,28 +836,17 @@ private theorem total_table (k : ℕ) (hk : k ≤ 11) : total (v k) = total (tab
   · simp only [ite_eq_left h]
     exact v_table k hk _ _ _ _ _ _ (initial_valid d q r h)
   · simp only [ite_eq_right h]
-private theorem initial_table0 : total (table 0) = 11 := by
-  decide +kernel
-private theorem initial_table1 : total (table 1) = 80 := by
-  decide +kernel
-private theorem initial_table2 : total (table 2) = 2688 := by
-  decide +kernel
-private theorem initial_table3 : total (table 3) = 78336 := by
-  decide +kernel
-private theorem initial_table4 : total (table 4) = 2469888 := by
-  decide +kernel
-private theorem initial_table5 : total (table 5) = 76447744 := by
-  decide +kernel
-private theorem initial_table6 : total (table 6) = 2385772544 := by
-  decide +kernel
-private theorem initial_table7 : total (table 7) = 74291609600 := by
-  decide +kernel
-private theorem initial_table8 : total (table 8) = 2315406802944 := by
-  decide +kernel
-private theorem initial_table9 : total (table 9) = 72144847372288 := by
-  decide +kernel
-private theorem initial_table10 : total (table 10) = 2248141575290880 := by
-  decide +kernel
+private theorem initial_table0 : total (table 0) = 11 := by decide +kernel
+private theorem initial_table1 : total (table 1) = 80 := by decide +kernel
+private theorem initial_table2 : total (table 2) = 2688 := by decide +kernel
+private theorem initial_table3 : total (table 3) = 78336 := by decide +kernel
+private theorem initial_table4 : total (table 4) = 2469888 := by decide +kernel
+private theorem initial_table5 : total (table 5) = 76447744 := by decide +kernel
+private theorem initial_table6 : total (table 6) = 2385772544 := by decide +kernel
+private theorem initial_table7 : total (table 7) = 74291609600 := by decide +kernel
+private theorem initial_table8 : total (table 8) = 2315406802944 := by decide +kernel
+private theorem initial_table9 : total (table 9) = 72144847372288 := by decide +kernel
+private theorem initial_table10 : total (table 10) = 2248141575290880 := by decide +kernel
 /-- Initial coefficients of the literal filtered count, including its empty convention. -/
 theorem finite_certificate : (a 0 : ℤ) = 0 ∧
     (a 1 : ℤ) = 11 ∧
