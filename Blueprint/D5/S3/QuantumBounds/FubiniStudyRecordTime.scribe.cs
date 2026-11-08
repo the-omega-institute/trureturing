@@ -54,8 +54,7 @@ internal sealed class FubiniStudyRecordTimeDocument : IScribeDocumentDefinition
                         + "InnerProductSpace.comp_rankOne, InnerProductSpace.trace_rankOne and "
                         + "LinearMap.trace_comp_comm' then give Re Tr(P(0) D D) = "
                         + "norm(v) squared-abs(inner(psi,v)) squared. Thus the same speed is "
-                        + "sqrt(Re Tr(P(0) D D)); this is reuse of those identities and calculus "
-                        + "results, without an additional mathematical declaration.")),
+                        + "sqrt(Re Tr(P(0) D D)), by those identities and calculus results.")),
                     Paragraph(Text(
                         "This amplitude calculation does not supply the original real algebra's "
                         + "complex Hilbert structure H_J, J=L_e, or the identification of "
