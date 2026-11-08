@@ -5,8 +5,7 @@ import Mathlib.RingTheory.SimpleModule.WedderburnArtin
 import Mathlib.RingTheory.SimpleRing.Congr
 import Mathlib.RingTheory.SimpleRing.Matrix
 
-/- Source candidate only: not elaborated or compiled.
-   The new bridge constructs a bijection from the bicommutant onto the actual
+/- The bridge constructs a bijection from the bicommutant onto the actual
    action range. The two matrix arguments below are direct library applications.
    No hypothesis asserts image simplicity or an unproved equivalence. -/
 

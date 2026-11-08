@@ -13,10 +13,9 @@ import D5.S3.RingTheory.SkolemNoether
 import D5.S3.FiniteGroups.FiniteIsotypicImageSimple
 
 /-!
-UNCOMPILED SOURCE CANDIDATE. No elaboration, kernel check, or axiom-closure check
-has been run. The Skolem import is the source-only sibling candidate, not a
-theorem installed in the canonical tree. Its five-module import closure must be
-integrated and checked by the owning compiler lane before this file is evidence.
+This module is kernel-checked. The Skolem import is the attributed local port of
+the pinned upstream theorem, and its five-module import closure is compiled by
+the same target.
 
 The actual module is U throughout. In particular, the last theorem installs the
 restricted group-algebra action on U by compHom; its semisimplicity/isotypy inputs
