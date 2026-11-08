@@ -74,9 +74,12 @@ valid_next: proof_shape=bind-only; consumers=v_table
 initial_valid: proof_shape=bind-only; consumers=total_recurrence
 flagIndex: proof_shape=bind-only; consumers=table
 links: proof_shape=bind-only; consumers=fastStep
-sum_col: proof_shape=bind-only; consumers=step_fast
-pairs_vec: proof_shape=bind-only; consumers=step_fast
 digit: proof_shape=bind-only; consumers=fastStep
+key: proof_shape=bind-only; consumers=moves
+digit_key: proof_shape=bind-only; consumers=step_fast
+moves: proof_shape=bind-only; consumers=moves_certificate
+linkKeys: proof_shape=bind-only; consumers=moves_certificate
+moves_certificate: proof_shape=bind-only; consumers=step_fast
 fastStep: proof_shape=bind-only; consumers=step_fast
 step_fast: proof_shape=bind-only; consumers=table_step0
 tables: proof_shape=bind-only; consumers=table
@@ -517,15 +520,34 @@ private def links : Array (Array ℕ) :=
   6560],#[],#[6398,6560],#[6326,6344,6380,6398,6488,6506,6542,6560],#[6326,6488],#[],#[6326],#[
   6326,6335],#[6443,6452],#[],#[6443],#[],#[6326,6344],#[6326],#[6362,6443],#[6326,6407],#[6326,
   6335,6353,6362,6407,6416,6434,6443]]
-private theorem sum_col (f : Col → ℤ) :
-    (∑ d : Col, f d) = ∑ x : Fin 6, ∑ y : Fin 6, ∑ z : Fin 6, f ![x,y,z] := by
-  rw [← colEquiv.sum_comp, Fintype.sum_prod_type]
-  simp only [Fintype.sum_prod_type, colEquiv]
-  rfl
-private theorem pairs_vec (x y z : Fin 6) :
-    pairs ![x,y,z] = ![beta x,beta y,beta z] := by
-  ext i; fin_cases i <;> rfl
 private def digit (k d : ℕ) : Fin 3 := ⟨k / d % 3, Nat.mod_lt _ (by omega)⟩
+private def key (t b c : Fin 3) (p : Labels) : ℕ :=
+  243*t.val + 81*b.val + 27*c.val + 9*(p 0).val + 3*(p 1).val + (p 2).val
+private theorem digit_key : ∀ (t b c : Fin 3) (p : Labels),
+    digit (key t b c p) 243 = t ∧ digit (key t b c p) 81 = b ∧
+    digit (key t b c p) 27 = c ∧
+    ![digit (key t b c p) 9, digit (key t b c p) 3, digit (key t b c p) 1] = p := by
+  decide +kernel
+private def moves (q r t b c : Fin 3) (p : Labels) : Multiset ℕ :=
+  ((Finset.univ.filter (admissible q r t b c p)).val.map fun d =>
+    key (next t (d 0)) (next b (d 1)) (next c (d 2)) (pairs d))
+private def linkKeys (q r t b c : Fin 3) (p : Labels) : Multiset ℕ :=
+  let i := (flagIndex.getD (81*t.val+27*q.val+9*b.val+3*r.val+c.val) 0)*27 +
+    9*(p 0).val+3*(p 1).val+(p 2).val
+  ((links.getD i #[]).toList.flatMap fun e => List.replicate (e % 9) (e / 9) : List ℕ)
+local macro "check_states" : tactic => `(tactic| {
+  simp only [Fin.forall_fin_succ_pi, Fin.forall_fin_zero_pi]
+  intro q r t b c
+  fin_cases q <;> fin_cases r <;> fin_cases t <;> fin_cases b <;> fin_cases c
+  all_goals first
+    | (intro x y z h; exfalso
+       rcases h with ⟨htq, hqb, hbr, hrc, _, _, _⟩; omega)
+    | (intro x; fin_cases x <;> decide +kernel) })
+set_option Elab.async false
+set_option maxRecDepth 100000
+set_option maxHeartbeats 100000000
+private theorem moves_certificate : ∀ q r t b c p, Valid q r t b c p →
+    moves q r t b c p = linkKeys q r t b c p := by check_states
 private def fastStep (w : Fin 3 → Fin 3 → Fin 3 → Fin 3 → Fin 3 → Labels → ℤ)
     (q r t b c : Fin 3) (p : Labels) : ℤ :=
   let i := (flagIndex.getD (81*t.val+27*q.val+9*b.val+3*r.val+c.val) 0)*27 +
@@ -533,26 +555,32 @@ private def fastStep (w : Fin 3 → Fin 3 → Fin 3 → Fin 3 → Fin 3 → Labe
   ((links.getD i #[]).toList.map fun e => ((e % 9 : ℕ) : ℤ) *
     w q r (digit (e / 9) 243) (digit (e / 9) 81) (digit (e / 9) 27)
       ![digit (e / 9) 9, digit (e / 9) 3, digit (e / 9) 1]).sum
-set_option Elab.async false
-set_option maxRecDepth 100000
-set_option maxHeartbeats 100000000
-private theorem step_fast (w : Fin 3 → Fin 3 → Fin 3 → Fin 3 → Fin 3 → Labels → ℤ) :
-    ∀ q r t b c p, Valid q r t b c p →
-      step w q r t b c p = fastStep w q r t b c p := by
-  simp only [Fin.forall_fin_succ_pi, Fin.forall_fin_zero_pi]
-  intro q r t b c
-  fin_cases q <;> fin_cases r <;> fin_cases t <;> fin_cases b <;> fin_cases c
-  all_goals first
-    | (intro x y z h; exfalso; rcases h with ⟨htq, hqb, hbr, hrc, _, _, _⟩; omega)
-    | (intro x y z
-       fin_cases x <;> fin_cases y <;> fin_cases z
-       all_goals
-         intro h
-         first
-         | (exfalso; rcases h with ⟨_, _, _, _, h0, h1, h2⟩; omega)
-         | (norm_num [step, sum_col, admissible, compatible, seen, next, beta,
-             pairs_vec, allowed, Fin.sum_univ_succ, Fin.forall_fin_succ,
-             fastStep, links, flagIndex, digit] <;> ring))
+private theorem step_fast (w : Fin 3 → Fin 3 → Fin 3 → Fin 3 → Fin 3 → Labels → ℤ)
+    (q r t b c : Fin 3) (p : Labels) (h : Valid q r t b c p) :
+    step w q r t b c p = fastStep w q r t b c p := by
+  let g (k : ℕ) := w q r (digit k 243) (digit k 81) (digit k 27)
+    ![digit k 9, digit k 3, digit k 1]
+  calc
+    step w q r t b c p = ((moves q r t b c p).map g).sum := by
+      simp only [moves, Multiset.map_map, Function.comp_def]
+      change (∑ d : Col, if admissible q r t b c p d then
+        w q r (next t (d 0)) (next b (d 1)) (next c (d 2)) (pairs d) else 0) =
+        ∑ d ∈ Finset.univ.filter (admissible q r t b c p),
+          g (key (next t (d 0)) (next b (d 1)) (next c (d 2)) (pairs d))
+      rw [Finset.sum_filter]
+      apply Finset.sum_congr rfl
+      intro d _
+      by_cases hd : admissible q r t b c p d
+      · simp only [hd, ite_true]
+        dsimp [g]
+        rcases digit_key (next t (d 0)) (next b (d 1)) (next c (d 2)) (pairs d) with
+          ⟨h0,h1,h2,h3⟩
+        rw [h0,h1,h2,h3]
+      · simp [hd]
+    _ = ((linkKeys q r t b c p).map g).sum := by rw [moves_certificate _ _ _ _ _ _ h]
+    _ = fastStep w q r t b c p := by
+      simp [linkKeys, fastStep, List.flatMap_def, List.map_flatten, List.sum_flatten,
+        List.map_map, List.map_replicate, List.sum_replicate, nsmul_eq_mul, g]
 private def tables : Array (Array (Array ℤ)) := 
   #[#[#[1],#[1,1],#[1,1,1],#[],#[],#[],#[1,1,0,1,1],#[1,1,1,1,1,1],#[],#[1,1,1,1,1,1,1,1,1],#[],#[
   ],#[],#[],#[],#[1,1,0,1,1,0,0,0,0,1,1,0,1,1],#[1,1,1,1,1,1,0,0,0,1,1,1,1,1,1],#[],#[1,1,1,1,1,1,
@@ -665,14 +693,6 @@ private def table (k : ℕ) (q r t b c : Fin 3) (p : Labels) : ℤ :=
   let i := (flagIndex.getD (81 * t.val + 27 * q.val + 9 * b.val + 3 * r.val + c.val) 0)
   ((tables.getD k #[]).getD i #[]).getD
     (9 * (p 0).val + 3 * (p 1).val + (p 2).val) 0
-local macro "check_states" : tactic => `(tactic| {
-  simp only [Fin.forall_fin_succ_pi, Fin.forall_fin_zero_pi]
-  intro q r t b c
-  fin_cases q <;> fin_cases r <;> fin_cases t <;> fin_cases b <;> fin_cases c
-  all_goals first
-    | (intro x y z h; exfalso
-       rcases h with ⟨htq, hqb, hbr, hrc, _, _, _⟩; omega)
-    | (intro x; fin_cases x <;> decide +kernel) })
 local macro "check_step" : tactic => `(tactic| {
   intro q r t b c p h
   rw [step_fast _ q r t b c p h]
@@ -926,8 +946,7 @@ private theorem error_vanish (k : ℕ) : err (k + 2) = 0 := by
       have e3 : k - 6 + 5 = k - 3 + 2 := by omega
       have e4 : k - 6 + 4 = k - 4 + 2 := by omega
       have e5 : k - 6 + 3 = k - 5 + 2 := by omega
-      have e6 : k - 6 + 2 = k - 6 + 2 := by omega
-      rw [e0,e1,e2,e3,e4,e5,e6,h1,h2,h3,h4,h5,h6] at hr
+      rw [e0,e1,e2,e3,e4,e5,h1,h2,h3,h4,h5,h6] at hr
       simpa using hr
 private theorem recurrence (n : ℕ) (hn : 6 ≤ n) :
     (a n : ℤ) = 32 * a (n - 1) + 64 * a (n - 2) -
