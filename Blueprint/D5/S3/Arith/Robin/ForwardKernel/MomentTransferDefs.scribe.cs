@@ -83,6 +83,33 @@ internal sealed class MomentTransferDefsDocument : IScribeDocumentDefinition
                     "There is a nonnegative constant C such that, for all sufficiently large X and every s in [0,1], the integral of abs(B(s,x))^k is at most C. The specified limit function M is measurable, and each weighted mixed moment at a tuple in the unit cube converges to M at that tuple as X tends to infinity."))),
                 DescribeRole.Definition),
             Describe.Lean(
+                DescribeId.Create("joint-dyadic-mixed-moment"),
+                DeclarationHandle.Create(Prefix + "jointDyadicMixedMoment"),
+                H("Joint weighted mixed moment"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For a finite family of exponents e_i, the joint mixed moment integrates U_X raised to the sum of r(e_i), times the product of B for the corresponding exponents and parameters, against the dyadic logarithmic measure."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("joint-moment-interface"),
+                DeclarationHandle.Create(Prefix + "JointMomentInterface"),
+                H("Joint moment interface"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "One nonnegative constant eventually bounds the absolute kth moment of every increment family, uniformly over the unit interval. At every point of the unit cube the joint weighted mixed moment converges to the specified kernel M. No measurability condition on M outside the cube is imposed."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("joint-z-moment"),
+                DeclarationHandle.Create(Prefix + "jointZMoment"),
+                H("Mixed normalized response moment"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The mixed response moment integrates Z for the first exponent and profile to power p, times Z for the second exponent and profile to power q, against the dyadic logarithmic measure."))),
+                DescribeRole.Definition),
+            Describe.Lean(
                 DescribeId.Create("brownian-w4"),
                 DeclarationHandle.Create(Prefix + "brownianW4"),
                 H("Fourth Brownian kernel"),

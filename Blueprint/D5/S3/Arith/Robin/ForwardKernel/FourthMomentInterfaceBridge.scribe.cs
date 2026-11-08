@@ -28,10 +28,8 @@ internal sealed class FourthMomentInterfaceBridgeDocument : IScribeDocumentDefin
                     Paragraph(Text(
                         "The moving-increment estimate bounds the unnormalized integral "
                         + "by K*C4*X*(X^theta)^2*log(X)^2, with K depending only on "
-                        + "the exponent band. On [X,2X], both x>=X and "
-                        + "x^theta*log(x)>=X^theta*log(X). Dividing by these lower "
-                        + "bounds and by log(2) gives C=(K/log(2))*C4. "
-                        + "Continuous moving steps and compact boundedness of E give "
-                        + "the integrability needed for comparison."))),
+                        + "the exponent band. The shared even-moment normalization "
+                        + "estimate with m=2 and raw constant K*C4 gives "
+                        + "C=(K*C4)/log(2)."))),
                 DescribeRole.Theorem))));
 }
