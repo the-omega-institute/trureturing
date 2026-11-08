@@ -48,6 +48,10 @@ $$(\exists A \in \operatorname{PowerSeries}\left(\mathbb{Q}\right),\; \operatorn
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Invariants/HannaA320949ModThree.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a320949-hanna-mod-three` (proved) by `D5/S1/Recurrence/Invariants/HannaA320949ModThree.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a320949-hanna-mod-three","declaration_gid":"D5/S1/Recurrence/Invariants/HannaA320949ModThree.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Paul D. Hanna (2018). *OEIS A320949, generating function with square exponents*. URL: <https://oeis.org/A320949>.
