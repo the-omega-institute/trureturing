@@ -1166,3 +1166,1176 @@ $$
 上述 $L,v$、弧盒和全部局部条件均先固定。泛指的局部群的周期 $d_v$ 是输入数据，本节没有给未指定群计算周期。$W$ 控制指标长度，不估算表示或检验各项的计算成本。目标是所定义的圆坐标弧盒；一般 Borel 集、任意横坐标矩形、移动或缩小目标以及随 $n$ 加深的局部条件需要各自的额外论证。式 (12.6)–(12.9) 是坐标高度的有效界，不给出聚合迹高度自身的有效加性常数。本节也不给出 $\mathsf H_{\mathbb Z/\mathbb Q}$ 的完整表示与双向正确性证明，不给出无前提的量子起源或 Born 规则推导。
 
 ## 追加锚（本行以下为增补区）
+
+## 13. 实际共轭点在增长有限位与加深局部精度下的同整数缩靶返回
+
+**定义 13.1（实际局部子群、精确周期与增长安排）。** 固定定义 11.1 的实际非挠点 $P_1,P_2\in E_0(F)$，其中
+
+$$
+E_0:Y^2=X^3-X,\qquad
+F=\mathbb Q(\sqrt2,\sqrt{3-\sqrt2},\sqrt{3+\sqrt2}),\qquad
+d_F=[F:\mathbb Q]\le8.
+$$
+
+正实根及指定实嵌入沿用第 11–12 节；$\theta,\alpha$ 与圆距离沿用定义 12.1。实际点的原始来源是 Brox，[固定源码的 “The quadratic-field elliptic curve” 一节](https://github.com/JoseBrox/diophantine-z-q_improvements/blob/61b82ccacfbefdff3d6e7cf986d6e6279afa1372/papers/trace_heights/aggregate_trace_height_20261108_v9.tex)，这里只复用其所列点、非挠性及第 12 节已使用的整数模挠独立性。
+
+对每个有限位 $v\mid p$，记 $F_v$ 的整数环、极大理想及剩余域为 $\mathcal O_v,\mathfrak m_v,k_v$，固定 $\operatorname{ord}_v(\varpi_v)=1$，并置
+
+$$
+e_v=\operatorname{ord}_v(p)\ge1,\qquad
+f_v=[k_v:\mathbb F_p],\qquad
+\sum_{v\mid p}e_vf_v=d_F.
+$$
+
+当 $p$ 为奇素数时，使用原方程 $E_0$。当 $v\mid2$ 时，固定一个极小整 Weierstrass 模型 $\mathcal E_v$ 及保单位元的 $F_v$-同构 $\iota_v:E_0\to\mathcal E_v$；奇素数处记 $\mathcal E_v=E_0$、$\iota_v=\mathrm{id}$。令 $\widehat{\mathcal E}_v$ 为该整模型的形式群，$\psi_v:\widehat{\mathcal E}_v(\mathfrak m_v)\to\mathcal E_{v,1}(F_v)$ 为形式参数给出的群同构，参数为 $t_v=-x_v/y_v$，$t_v(O)=0$。这里 $\mathcal E_{v,1}(F_v)$ 是约化为单位元的点群。对整数 $r\ge1$ 定义
+
+$$
+U_v(r)=\iota_v^{-1}
+ \bigl(\psi_v(\widehat{\mathcal E}_v(\mathfrak m_v^r))\bigr)
+ \ \le E_0(F_v).
+\tag{13.1}
+$$
+
+这是实际单位元邻域中的形式子群。等价地，先要求 $\iota_v(R)\in\mathcal E_{v,1}(F_v)$，再要求其形式参数属于 $\mathfrak m_v^r$；不把任意仿射点上的坐标比值不等式当作本定义。极小模型与此同构分别使用 Silverman，*The Arithmetic of Elliptic Curves*，第二版，[VII.1.3、VII.2.2 及 IV §3](https://www.math.ens.psl.eu/~obenoist/refs/Silverman.pdf)；相关文字澄清见作者的[勘误](https://www.math.brown.edu/johsilve/AEC/AECErrata.pdf)中印刷页 122–124、188–191 的条目。
+
+定义精确有限阶及共同周期
+
+$$
+\begin{aligned}
+d_{v,j}(r)&=\operatorname{ord}_{E_0(F_v)/U_v(r)}(P_j+U_v(r)),
+ &&j=1,2,\\
+A_2&=\operatorname{lcm}_{v\mid2,\ j=1,2}d_{v,j}(1),\\
+q(B,r;M)&=\operatorname{lcm}
+ \bigl(M,\{d_{v,j}(r):p\le B,\ v\mid p,\ j=1,2\}\bigr),
+ &&B\in\mathbb R_{\ge2},\quad M,r\in\mathbb Z_{\ge1}.
+\end{aligned}
+\tag{13.2}
+$$
+
+上述商群的有限性在定理 13.2 的证明中给出。素数求和、乘积均只取有理素数，记
+
+$$
+\vartheta(B)=\sum_{p\le B}\log p,\qquad
+\pi(B)=\#\{p:p\le B\}.
+$$
+
+固定 $M\ge1$ 及 $0<\gamma<1/4$。对正整数 $n$ 置
+
+$$
+\begin{aligned}
+h(n)&=\max\left(2,\left\lfloor(\log\log(n+16))^{1/3}\right\rfloor\right),\\
+\rho(n)&=(\log(n+2))^{-\gamma},\\
+q_n&=q(h(n),h(n);M),\qquad D_n=q(h(n),h(n);1).
+\end{aligned}
+\tag{13.3}
+$$
+
+所有对数均为自然对数。成功整数集合是
+
+$$
+\begin{split}
+\mathcal S_{M,\gamma}=\{n\in\mathbb Z_{\ge1}:\
+&M\mid n,\quad
+\|\theta([n]P_j)\|_{\mathbb T}<\rho(n)\quad(j=1,2),\\
+&[n]P_j\in U_v(h(n))
+\quad(p\le h(n),\ v\mid p,\ j=1,2)\}.
+\end{split}
+\tag{13.4}
+$$
+
+其中素数截止、局部深度和实半径都取同一个整数 $n$ 自身的值。
+
+**定理 13.2（这对实际点的共享周期整除式及数值包络）。** 定义 13.1 中每个 $U_v(r)$ 都是有限指数开子群，并且对所有 $B\ge2$、整数 $r,M\ge1$ 有真正的整数整除式
+
+$$
+q(B,r;M)\ \mid\
+ M A_2\,2^{r-1}
+ \prod_{3\le p\le B}
+ \left[p^{r-1}\prod_{v\mid p}\#E_0(k_v)\right].
+\tag{13.5}
+$$
+
+由此有数值不等式
+
+$$
+\log q(B,r;M)
+\le \log(MA_2)+(r-1)\log2
+ +(r+7)\vartheta(B)+8(\log4)\pi(B).
+\tag{13.6}
+$$
+
+特别地，若 $h\ge2$ 为整数，令 $c_0=28+8\log4+\log2$，则
+
+$$
+\log q(h,h;M)\le4h^2+c_0h+\log(MA_2).
+\tag{13.7}
+$$
+
+若 $B\le B'$、$r\le r'$，则 $q(B,r;M)\mid q(B',r';M)$。对任意整数 $m$，精确的同步等价为
+
+$$
+\begin{split}
+q(B,r;M)\mid m
+\quad\Longleftrightarrow\quad
+&M\mid m\ \text{且}\\
+&[m]P_j\in U_v(r)
+ \quad(p\le B,\ v\mid p,\ j=1,2).
+\end{split}
+\tag{13.8}
+$$
+
+**证明。** 先说明定义中的局部群确实存在且指数有限。整模型的形式群律及逆元级数的系数都在 $\mathcal O_v$ 中，因而 $\widehat{\mathcal E}_v(\mathfrak m_v^r)$ 是子群，形式坐标使其成为单位元的开邻域。其像及经 $\iota_v$ 拉回的像也都是开子群。$F_v$ 是有限扩张的 $p$ 进局部紧域，$\mathbb P^2(F_v)$ 紧，故其中闭子集 $E_0(F_v)$ 紧。一个紧群的开子群具有有限指数：其开陪集构成开覆盖，有限子覆盖给出有限个陪集。因此所有 $d_{v,j}(r)$ 及 $A_2$ 都是有限正整数。此处在 $v\mid2$ 不要求好约化，也不把整个商群误认成特殊纤维的非奇异点群；任何实际约化类型均由紧性和固定极小模型处理。
+
+Silverman 上述第二版 IV.2.3(a) 给出整系数乘法级数
+
+$$
+[p]_{\widehat{\mathcal E}_v}(T)=pT+\sum_{\nu\ge2}a_\nu T^\nu,
+\qquad a_\nu\in\mathcal O_v.
+$$
+
+若 $\operatorname{ord}_v(t)\ge s\ge1$，级数收敛，且
+
+$$
+\operatorname{ord}_v([p]t)
+\ge\min(e_v+s,2s)\ge s+1.
+\tag{13.9}
+$$
+
+零参数的赋值取 $+\infty$，所以上式也包括乘积为单位元的情形。反复应用得到
+
+$$
+[p^{r-1}]U_v(1)\subseteq U_v(r),\qquad
+d_{v,j}(r)\mid p^{r-1}d_{v,j}(1).
+\tag{13.10}
+$$
+
+这只使用 $e_v\ge1$，故分歧无需排除；非线性项若相消只会提高赋值。另一方面 $U_v(r+1)\subseteq U_v(r)$，故商映射给出 $d_{v,j}(r)\mid d_{v,j}(r+1)$。
+
+原曲线 $E_0$ 的判别式为 $64$，故每个奇素数处的原模型在任意 $F_v$ 上均为好约化的极小整模型，包括分歧的有限扩张。由 Silverman VII.2.1 的约化正合列和 VII.2.2 的形式群识别，
+
+$$
+E_0(F_v)/U_v(1)\simeq E_0(k_v)\qquad(p\ne2).
+$$
+
+因此两个点的 $d_{v,j}(1)$ 都整除同一个整数 $\#E_0(k_v)$，从而
+
+$$
+d_{v,j}(r)\mid p^{r-1}\#E_0(k_v)\qquad(p\ne2).
+\tag{13.11}
+$$
+
+对固定奇素数 $p$，整数 $p^{r-1}\prod_{v\mid p}\#E_0(k_v)$ 同时被所有 $d_{v,j}(r)$ 整除；两个点共享群阶，不需要把群阶平方。对 $p=2$，式 (13.10) 使 $A_2\,2^{r-1}$ 同时被所有相应阶整除。再乘 $M$，式 (13.5) 的右端同时被取最小公倍数的每一项整除，故得到该整除式。不同素数的群阶可以有共同因子，证明只需要它们的乘积是共同倍数。
+
+数值估计另作如下处理。在奇特征域 $k_v$ 上，每个横坐标至多对应两个纵坐标，再加无穷远点，所以
+
+$$
+\#E_0(k_v)\le2p^{f_v}+1\le4p^{f_v}.
+\tag{13.12}
+$$
+
+这是足够的初等点数上界，不需要 Hasse 界。由 $\sum_{v\mid p}e_vf_v=d_F\le8$，有 $\sum_{v\mid p}f_v\le8$ 及 $\#\{v:v\mid p\}\le8$。因此
+
+$$
+\begin{aligned}
+\sum_{v\mid p}\log\#E_0(k_v)&\le8\log4+8\log p,\\
+\log q(B,r;M)
+&\le\log(MA_2)+(r-1)\log2
+ +\sum_{3\le p\le B}\bigl((r+7)\log p+8\log4\bigr).
+\end{aligned}
+$$
+
+放大求和范围即为式 (13.6)。式 (13.12) 只用于大小比较；没有把 $4p^{f_v}$ 当成实际群阶的整数倍数。
+
+为给出式 (13.7) 的具体常数，使用经典二项式方法的以下初等估计。对整数 $m\ge2$，每个 $\lceil m/2\rceil<p\le m$ 的素数都整除 $\binom m{\lfloor m/2\rfloor}$，所以
+
+$$
+\vartheta(m)\le\vartheta(\lceil m/2\rceil)+m\log2.
+$$
+
+由 $\vartheta(1)=0$ 归纳得 $\vartheta(m)\le4m$：归纳步的右端至多 $4\lceil m/2\rceil+m\log2\le4m$，最后一个不等式对所有 $m\ge2$ 成立。又有 $\pi(m)\le m$。将 $B=r=h$ 代入式 (13.6)，便得
+
+$$
+\log q(h,h;M)
+\le\log(MA_2)+(h-1)\log2+4h(h+7)+8h\log4
+\le4h^2+c_0h+\log(MA_2).
+$$
+
+最后，子群随深度递减，地方集合随截止增长，故各精确阶及其最小公倍数具有所述整除嵌套。一个元素在商群中的精确阶为 $d$，恰意味着其第 $m$ 倍为零当且仅当 $d\mid m$；对所有地方、两个点及 $M$ 同时应用即得式 (13.8)。$\square$
+
+**定理 13.3（自身阶段的定量缩靶与每个二倍区间的多重命中）。** 对定义 13.1 的任意固定 $M\ge1$、$0<\gamma<1/4$，共同周期是次多对数的：
+
+$$
+\lim_{n\to\infty}\frac{\log q_n}{\log\log n}=0,
+\qquad
+\text{即对每个 }\eta>0,\quad q_n\le(\log n)^\eta
+\ \text{最终成立}.
+\tag{13.13}
+$$
+
+存在依赖于这些固定数据的整数 $X_0$，使每个整数 $X\ge X_0$ 都满足
+
+$$
+\#\bigl(\mathcal S_{M,\gamma}\cap(X,2X]\bigr)
+\ge \frac{X\,\rho(2X)^2}{4q_{2X}}.
+\tag{13.14}
+$$
+
+进一步，对每个固定 $\varepsilon>0$，存在整数 $X_\varepsilon$，使所有整数 $X\ge X_\varepsilon$ 都有
+
+$$
+\#\bigl(\mathcal S_{M,\gamma}\cap(X,2X]\bigr)
+\ge\frac{X}{(\log X)^{2\gamma+\varepsilon}}.
+\tag{13.15}
+$$
+
+一个明确但未数值求值的充分起点判据如下。置
+
+$$
+H=h(2X),\qquad R=\rho(2X),\qquad
+Q_X=MA_2\exp(4H^2+c_0H).
+$$
+
+若整数 $X$ 满足
+
+$$
+0<R\le\tfrac12,\qquad
+X\ge4Q_X,\qquad
+\log\frac{X}{2Q_X}\ge2^{16}Q_X^2R^{-4},
+\tag{13.16}
+$$
+
+则式 (13.14) 成立。若此外满足
+
+$$
+X\ge3,\qquad
+Q_X\le(\log X)^{\varepsilon/2},\qquad
+(\log X)^{\varepsilon/2}\ge4\cdot2^{2\gamma},
+\tag{13.17}
+$$
+
+则式 (13.15) 也成立。所有这些不等式对充分大的 $X$ 均成立。
+
+**证明。** 函数 $h$ 不减且趋于无穷，$\rho$ 递减且趋于零。由式 (13.7) 和 $h(n)=O((\log\log n)^{1/3})$，
+
+$$
+0\le\log q_n
+\le\log(MA_2)+4h(n)^2+c_0h(n)
+=O_{M,A_2}((\log\log n)^{2/3})
+=o(\log\log n),
+$$
+
+得到式 (13.13)。同时 $q_n\mid q_{n'}$ 当 $n\le n'$。
+
+固定满足式 (13.16) 的 $X$，记 $q=q_{2X}$，于是 $q\le Q_X$。区间 $(X,2X]$ 中全部 $q$ 的倍数恰为
+
+$$
+n_k=q\left(\left\lfloor\frac Xq\right\rfloor+1+k\right),
+\quad 0\le k<N,\qquad
+N=\left\lfloor\frac{2X}q\right\rfloor-\left\lfloor\frac Xq\right\rfloor.
+\tag{13.18}
+$$
+
+由 $X\ge4Q_X\ge2q$，
+
+$$
+N\ge\frac Xq-1\ge\frac{X}{2q},\qquad
+\log N\ge\log\frac X{2q}\ge\log\frac X{2Q_X}
+\ge2^{16}Q_X^2R^{-4}\ge256q^2.
+\tag{13.19}
+$$
+
+现在只对这个固定的有限块调用定理 12.2，取其整数步长 $L=q$、项数 $N$ 及起点
+
+$$
+\beta=q\left(\left\lfloor\frac Xq\right\rfloor+1\right)\alpha
+\quad\text{于 }\mathbb T^2.
+$$
+
+式 (13.19) 保证该定理的前件 $N\ge\exp(256L^2)$，并且其一致于 $\beta$ 的差异度界给出
+
+$$
+\mathcal D_N(\beta,q)
+<\frac{128q}{\sqrt{\log N}}
+\le\frac{R^2}{2}.
+\tag{13.20}
+$$
+
+在定义 12.1 的 $[0,1)^2$ 代表坐标中使用半开盒 $[0,R)\times[0,R)$，其面积是 $R^2$。因为 $R\le1/2$，该盒中的每个圆坐标均具有严格小于 $R$ 的圆距离；零端点也满足严格不等式，右端点被排除。由式 (13.20)，满足两个实端条件的 $n_k$ 数量严格大于
+
+$$
+N(R^2-R^2/2)=\frac{NR^2}{2}
+\ge\frac{XR^2}{4q}.
+\tag{13.21}
+$$
+
+这里使用原坐标中的单个盒子，故没有跨切口分割或端点误差。虽然整个对称圆邻域的面积更大，这个内盒已经给出所需下界。
+
+每个被计入的同一个整数 $n=n_k$ 还满足 $q_{2X}\mid n$。由式 (13.8)，它同时满足 $M\mid n$ 以及全部 $p\le H$、$v\mid p$、$j=1,2$ 的 $[n]P_j\in U_v(H)$。又因 $n\le2X$，
+
+$$
+h(n)\le H,\qquad
+U_v(H)\subseteq U_v(h(n)),\qquad
+\|\theta([n]P_j)\|_{\mathbb T}<R\le\rho(n).
+\tag{13.22}
+$$
+
+所以每个被计入的整数均属于其自身阶段的 $\mathcal S_{M,\gamma}$，包括可能跨过 $h$ 跳跃点的区间。式 (13.21) 于是推出式 (13.14)。没有把不同地方的返回整数拼在一起，也没有把随 $n$ 移动的条件直接代入固定盒的计数定义。
+
+还须验证充分起点确实存在。写 $t=\log X$。由 $H=O((\log t)^{1/3})$，
+
+$$
+\log Q_X=O_{M,A_2}((\log t)^{2/3})=o(\log t),
+\qquad Q_X=t^{o(1)}.
+$$
+
+于是 $X\ge4Q_X$ 最终成立，且
+
+$$
+\log\frac X{2Q_X}\sim t,\qquad
+2^{16}Q_X^2R^{-4}
+=2^{16}Q_X^2(\log(2X+2))^{4\gamma}
+=t^{4\gamma+o(1)}=o(t).
+\tag{13.23}
+$$
+
+最后一步准确使用 $4\gamma<1$。又有 $0<R\le1/2$ 最终成立，故式 (13.16) 的全部条件最终成立；这证明了每个充分大二倍区间的结论，而不只是某个区间子序列。
+
+对固定 $\varepsilon>0$，式 (13.13) 的同一包络给出式 (13.17) 最终成立。$X\ge3$ 时 $\log(2X+2)\le2\log X$，所以在该判据下
+
+$$
+\begin{aligned}
+4q_{2X}(\log(2X+2))^{2\gamma}
+&\le4Q_X(2\log X)^{2\gamma}\\
+&\le(\log X)^{2\gamma+\varepsilon}.
+\end{aligned}
+$$
+
+代入式 (13.14) 即得式 (13.15)。$\square$
+
+**推论 13.4（每个固定地方的最终加入及逐点局部趋零）。** $\mathcal S_{M,\gamma}$ 无界。对每个固定有限位 $v\mid p$ 和每个固定整数 $r_0\ge1$，存在 $N(v,r_0)$，使所有满足 $n\in\mathcal S_{M,\gamma}$、$n\ge N(v,r_0)$ 的整数都满足
+
+$$
+p\le h(n),\qquad h(n)\ge r_0,\qquad
+[n]P_j\in U_v(r_0)\quad(j=1,2).
+\tag{13.24}
+$$
+
+因而对任意趋于无穷的成功整数序列 $n_k\in\mathcal S_{M,\gamma}$，同一个序列在指定实嵌入和每个固定有限位上均有
+
+$$
+[n_k]P_j\longrightarrow O\quad(j=1,2).
+\tag{13.25}
+$$
+
+这里的量词是先固定 $v,r_0$，再取足够大的 $k$；不要求一个指标同时越过无限多个地方的全部阈值。任意无界成功集合的递增枚举满足此结论；若仅给一个不趋于无穷的无界序列，则对它的任意趋于无穷子序列有同一结论。没有非零固定整数 $m$ 能使 $[m]P_j$ 在某一个固定有限位属于所有 $U_v(r)$，即使只要求其中一个 $j$。
+
+**证明。** 式 (13.15) 的右端随 $X\to\infty$ 趋于无穷，故成功集合无界。由于 $h(n)\to\infty$，最终有 $h(n)\ge\max(p,r_0)$；定义 (13.4) 和子群嵌套即给出式 (13.24)。形式参数中的 $\mathfrak m_v^r$ 是趋于零的邻域基，故 $U_v(r)$ 是 $O$ 的邻域基且 $\bigcap_{r\ge1}U_v(r)=\{O\}$。实端则由 $\rho(n)\to0$ 和 $\theta$ 为拓扑群同构得到。
+
+最后，$P_j$ 在每个 $E_0(F_v)$ 中仍非挠：域嵌入 $F\hookrightarrow F_v$ 诱导单射 $E_0(F)\hookrightarrow E_0(F_v)$，倍点与域扩张交换；若局部有 $[m]P_j=O$、$m\ne0$，单射会给出全局同一挠关系，违背上述 Brox 固定点的非挠性。因此一个非零固定 $m$ 不可能落入该交集。这也说明式 (13.25) 的整数确实需要随精度改变。$\square$
+
+**定理 13.5（任意固定同余类的最终障碍）。** 对不预加同余约束的实际局部周期 $D_n$，每个固定整数 $M\ge1$ 最终都满足
+
+$$
+M\mid D_n.
+\tag{13.26}
+$$
+
+具体地，对任意固定阶段 $t\ge1$ 及任意 $a\in\mathbb Z$，存在整数 $m$ 满足
+
+$$
+m\equiv a\pmod M,\qquad
+[m]P_j\in U_v(h(t))
+\quad(p\le h(t),\ v\mid p,\ j=1,2)
+\tag{13.27}
+$$
+
+的充要条件恰为 $\gcd(M,D_t)\mid a$。相容时，整数解是模 $\operatorname{lcm}(M,D_t)$ 的唯一类，且有任意大的正整数解。当 $t$ 充分大时，这一相容条件化为 $M\mid a$。
+
+特别地，若 $M\nmid a$，只有有限多个整数 $n\ge1$ 能同时满足 $n\equiv a\pmod M$ 和其自身阶段的全部局部条件，因此加上实端缩靶后仍至多有限多个。若 $M\mid a$，同余条件就是 $M\mid n$，定理 13.3 的计数下界适用。
+
+**证明。** 固定素数 $\ell$，取任一 $v\mid\ell$ 及 $j=1$。令 $b_r=d_{v,1}(r)$。由式 (13.10) 及嵌套，
+
+$$
+b_1\mid b_r\mid b_1\ell^{r-1},\qquad b_r\mid b_{r+1}.
+\tag{13.28}
+$$
+
+若 $\operatorname{ord}_\ell(b_r)$ 有界，则存在固定 $K\ge0$ 使所有 $b_r\mid b_1\ell^K$。于是同一个非零整数 $b_1\ell^K$ 使
+
+$$
+[b_1\ell^K]P_1\in\bigcap_{r\ge1}U_v(r)=\{O\},
+$$
+
+与推论 13.4 证明中的局部非挠性矛盾。因此 $\operatorname{ord}_\ell(b_r)\to\infty$；这里使用了其不减性。这一论证也适用于 $\ell=2$ 的固定极小模型，不要求局部对数的精确公式。
+
+对 $M$ 的每个素因子幂 $\ell^a\mid M$，固定一个这样的 $v$ 并选深度 $r_\ell$ 使 $\ell^a\mid d_{v,1}(r_\ell)$。当 $h(n)\ge\max_{\ell\mid M}(\ell,r_\ell)$ 时，所有这些地方均已加入，且深度足够，故各 $\ell^a$ 均整除 $D_n$。这些素因子幂互素，得到式 (13.26)；$M=1$ 时结论直接成立。
+
+对固定阶段 $t$，式 (13.8) 的 $M=1$ 情形把全部局部条件精确化为 $D_t\mid m$。经典整数 CRT 给出
+
+$$
+m\equiv a\pmod M,\quad m\equiv0\pmod{D_t}
+\quad\text{可解}\quad\Longleftrightarrow\quad
+\gcd(M,D_t)\mid a,
+$$
+
+以及相容时的唯一允许类；加上该类的正周期即得任意大的正整数解。此处先固定阶段 $t$ 再求 $m$；并未声称任意阶段指标 $t$ 自己就是解。由式 (13.26)，最终 $\gcd(M,D_t)=M$。若再要求自身阶段，即在式 (13.27) 取 $t=m=n$，则充分大的 $n$ 必须满足 $M\mid n$；它与 $n\equiv a\pmod M$ 相容恰需 $M\mid a$。所以非零模类的最终障碍不能由实端等分布消除。$\square$
+
+本节的承重结论是对第 11 节实际点和第 12 节统一差异度的固定数据定量综合：式 (13.5) 的共享整数周期、式 (13.14)–(13.15) 的自身阶段多重命中，以及式 (13.26) 的最终同余障碍。极小模型、形式群过滤、约化正合列和 CRT 均为所引经典中间结果；初等有限域点数与二项式素数估计只承担上界，不作为一般局部理论或分布理论的新结果。$A_2$ 依赖已固定的 $2$ 进模型及实际点，本节未求其数值；充分起点由式 (13.16)–(13.17) 指定而未数值求值，任意同余类达到式 (13.26) 的起点也未求值。这里没有周期最优性、一般理论原创或文献优先权的主张。
+
+用白话说，实端的两个圆像两只同时转动的表盘，有限位则像越来越多、刻度越来越细的局部放大镜。所有放大镜要求的返回整数先通过实际商群的阶合成一个共同步长；在奇素数处，两只表盘对应的点共用同一个有限群阶，坏约化和分歧也被固定模型中的形式群吸收。把一个二倍区间的右端点当作临时标尺，就可以先要求这整个区间中最深的局部精度和最小的实端窗口，再沿共同步长数实端命中。步长只按次多对数速度增长，实端窗口缩小得足够慢，差异度误差最终小于窗口面积，因此区间中仍留下定量多个整数。每个留下的整数同时通过所有检查，而且通过的是比它自身要求更强的条件；随着这些整数走向无穷，每一个固定放大镜最终都会加入并无限加深。这里不断改变的是返回整数，没有一个非零整数被宣称能一次达到全部无限精度；任意固定非零同余类还会被最终的局部整除要求排除。
+
+这些结论的实端目标严格采用定义 12.1 的圆距离，有限端严格采用式 (13.1) 的实际形式子群，增长速度和 $\gamma<1/4$ 是本节所证的充分安排。它们不提供任意更快增长安排或一般移动目标的结论，也不估计表示与检验返回整数的计算成本。结果不包含 $\mathsf H_{\mathbb Z/\mathbb Q}$ 的完整表示与双向证明，不包含 Born 规则或量子理论的重建。
+
+## 追加锚（本行以下为增补区）
+
+## 14. 实际共轭点的全部相容目标、统一命中与完全显式起点
+
+**定义 14.1（共同整数目标与自身阶段）。** 全部算术数据、正实根、指定实嵌入、圆坐标 $\theta$、极小整模型、同构 $\iota_v$、形式子群 $U_v(r)$ 及函数 $h,\rho$ 严格沿用定义 11.1、12.1、13.1。特别地，有限位取数域 $F$ 的全部有限位，实端只取已指定的嵌入。置
+
+$$
+\widehat{\mathbb Z}=\varprojlim_{m\ge1}\mathbb Z/m\mathbb Z,
+\qquad
+\mathcal K_f=\prod_{v\text{ 有限}}E_0(F_v)^2,
+\qquad
+\nu(n)=\bigl(([n]P_1,[n]P_2)\bigr)_v.
+\tag{14.1}
+$$
+
+逆极限的指标按整除排序；$\mathcal K_f$ 用普通乘积拓扑，每个因子的单位元均为 $O$，全体单位元记为 $\boldsymbol O$。这里不使用受限乘积拓扑。整数按其全部相容剩余类嵌入 $\widehat{\mathbb Z}$，$u\equiv a\pmod m$ 表示其模 $m$ 坐标为 $a$。经典 profinite CRT 给出
+
+$$
+a+m\widehat{\mathbb Z}
+=\{u\in\widehat{\mathbb Z}:u\equiv a\pmod m\}.
+\tag{14.2}
+$$
+
+对 $u\in\widehat{\mathbb Z}$、有限位 $v$ 和 $j=1,2$，令 $b_{v,j,r}$ 为 $u$ 模 $d_{v,j}(r)$ 的任意整数代表，定义
+
+$$
+\{\eta_{v,j}(u)\}
+=\bigcap_{r\ge1}\bigl([b_{v,j,r}]P_j+U_v(r)\bigr),
+\qquad
+\eta(u)=\bigl((\eta_{v,1}(u),\eta_{v,2}(u))\bigr)_v,
+\qquad H=\eta(\widehat{\mathbb Z}).
+\tag{14.3}
+$$
+
+交集的非空性、唯一性及代表无关性在下述定理的证明中给出。对正整数 $t$ 定义阶段商与其指定元素
+
+$$
+\begin{aligned}
+G_t&=\prod_{\substack{p\le h(t),\ v\mid p\\j=1,2}}
+ E_0(F_v)/U_v(h(t)),\\
+g_t&=(P_j+U_v(h(t)))_{p,v,j},\qquad
+C_t=\langle g_t\rangle\le G_t.
+\end{aligned}
+\tag{14.4}
+$$
+
+记 $\pi_t:\mathcal K_f\to G_t$ 为自然投影。$C_t$ 的阶为式 (13.3) 的 $D_t$。对固定整数 $M\ge1$、$a\in\mathbb Z$、$0<\gamma<1/4$、$u\in\widehat{\mathbb Z}$ 和 $z=(z_1,z_2)\in\mathbb T^2$，定义
+
+$$
+\begin{split}
+\mathcal S(u,z;a,M,\gamma)=\{n\in\mathbb Z_{\ge1}:\
+&n\equiv a\pmod M,\qquad
+\|\theta([n]P_j)-z_j\|_{\mathbb T}<\rho(n)\quad(j=1,2),\\
+&[n]P_j-\eta_{v,j}(u)\in U_v(h(n))
+\quad(p\le h(n),\ v\mid p,\ j=1,2)\}.
+\end{split}
+\tag{14.5}
+$$
+
+所有条件都由同一个正整数 $n$ 承担。目标 $u,z$ 在计数时固定，$h(n),\rho(n)$ 则取该整数自身的阶段。
+
+**定理 14.2（全部相容目标上的实际数据定量综合）。** 对定义 14.1 的固定数据，$\eta$ 是延拓 $\nu$ 的唯一连续群同态，且为单射及到 $H$ 的拓扑群同构。有限端的准确目标空间为
+
+$$
+H=\overline{\nu(\mathbb Z)}
+=\{y\in\mathcal K_f:\pi_t(y)\in C_t\text{ 对每个 }t\ge1\}.
+\tag{14.6}
+$$
+
+这里“目标”指整数轨道的极限目标。对每个整数 $N\ge1$，指定实两圆和全部有限端的联合正尾闭包满足
+
+$$
+\begin{aligned}
+\overline{\{(n\alpha,\nu(n)):n\ge N\}}
+ &=\mathbb T^2\times H,\\
+\overline{\{(n\alpha,\nu(n)):n\ge N,\ n\equiv a\pmod M\}}
+ &=\mathbb T^2\times\eta(a+M\widehat{\mathbb Z}).
+\end{aligned}
+\tag{14.7}
+$$
+
+第一行的紧群，其单位连通分支是 $\mathbb T^2\times\{\boldsymbol O\}$，分量群拓扑同构于 $\widehat{\mathbb Z}$。有限阶段的准确相容条件为
+
+$$
+\begin{split}
+\exists n\in\mathbb Z:\quad n\equiv a\pmod M,
+\quad\pi_t(\nu(n))=\pi_t(\eta(u))
+\quad\Longleftrightarrow\quad
+u\equiv a\pmod{\gcd(M,D_t)}.
+\end{split}
+\tag{14.8}
+$$
+
+相容时，解为模 $q(h(t),h(t);M)=\operatorname{lcm}(M,D_t)$ 的唯一类，有任意大的正整数解。不相容的完整目标，即 $u\not\equiv a\pmod M$，只允许有限多个自身阶段的成功整数。
+
+局部初始常数和共同周期有完全数值的上界
+
+$$
+A_2\le2^{40},\qquad
+q(h,h;M)\le M\exp(32h^2)\quad(h\in\mathbb Z,\ h\ge2).
+\tag{14.9}
+$$
+
+取
+
+$$
+s=\tfrac12-2\gamma>0,\qquad m=\log M,\qquad
+T=\left(\frac{1024}{s}\right)^3+\frac{16m}{s}+16,
+\qquad
+X_0(M,\gamma)=\left\lceil\exp(\exp T)\right\rceil.
+\tag{14.10}
+$$
+
+则对每个 $u\equiv a\pmod M$、每个 $z\in\mathbb T^2$ 和每个整数 $X\ge X_0(M,\gamma)$，同时有
+
+$$
+\begin{aligned}
+\#\bigl(\mathcal S(u,z;a,M,\gamma)\cap(X,2X]\bigr)
+&\ge\frac{X\rho(2X)^2}{4q(h(2X),h(2X);M)}\\
+&\ge\frac{X}{4M\exp(32h(2X)^2)(\log(2X+2))^{2\gamma}}.
+\end{aligned}
+\tag{14.11}
+$$
+
+对每个 $\varepsilon>0$，存在仅依赖 $M,\gamma,\varepsilon$ 的整数 $X_\varepsilon$，使对所有上述相容 $u,a$、所有 $z$ 和所有整数 $X\ge X_\varepsilon$ 有
+
+$$
+\#\bigl(\mathcal S(u,z;a,M,\gamma)\cap(X,2X]\bigr)
+\ge\frac{X}{(\log X)^{2\gamma+\varepsilon}}.
+\tag{14.12}
+$$
+
+这些计数界的起点不依赖目标；允许不同目标使用不同的见证整数。
+
+逆极限与 CRT 在这里是经典中间结构；其拓扑事实可参见 Stacks Project，[Definition 5.22.1、Lemma 5.22.2，tag 08ZW](https://stacks.math.columbia.edu/tag/08ZW)。实际点及其非挠性、整数模挠独立性的来源仍为 Brox，[固定源码 “The quadratic-field elliptic curve” 及 `lem:independent`](https://github.com/JoseBrox/diophantine-z-q_improvements/blob/61b82ccacfbefdff3d6e7cf986d6e6279afa1372/papers/trace_heights/aggregate_trace_height_20261108_v9.tex)。Glazer 的[固定源码 `v5:real-progression-bridge`](https://github.com/elliotglazer/diophantine-z-q/blob/9c0b3aba60d90fdcac82115f0582a6f52f1054f7/manuscripts/quartic_v13.tex)已给出先于后续同余模数选取的定性实安全界；本定理不以该定性结论或其完整算术构造为新增结果。本条在 §§11–13 上增加的综合是实际数据的全部相容目标、目标一致的自身阶段计数，以及式 (14.9)–(14.11) 中不含未求值局部常数的包络和起点；不主张文献优先权。
+
+**证明（共同有限目标的构造）。** 式 (13.10) 的整除嵌套保证 $d_{v,j}(r)\mid d_{v,j}(r+1)$。若改变 $b_{v,j,r}$ 的代表，所加的整数倍恰使 $[b_{v,j,r}]P_j+U_v(r)$ 不变；不同深度的这些非空陪集也相互嵌套。$E_0(F_v)$ 紧，$U_v(r)$ 是开闭子群，故陪集是紧闭集，其交集非空。由于 $U_v(r)$ 是 $O$ 的邻域基且交为 $\{O\}$，交集至多含一个点。这证明式 (14.3) 良定义。
+
+对每个 $v,j,r$，$\eta_{v,j}(u)$ 模 $U_v(r)$ 的值恰为
+
+$$
+[u\bmod d_{v,j}(r)]P_j+U_v(r).
+\tag{14.13}
+$$
+
+此有限商上的映射是连续群同态。子群 $U_v(r)$ 构成邻域基，故 $\eta_{v,j}$ 连续；式 (14.13) 对所有深度成立又保证加法相容，因此 $\eta$ 是到普通乘积的连续群同态。整数 $n$ 的各坐标交集含 $[n]P_j$，所以 $\eta(n)=\nu(n)$。
+
+阶段元 $g_t$ 的阶是其坐标阶的最小公倍数，恰为 $D_t$。于是
+
+$$
+\pi_t(\eta(u))=(u\bmod D_t)g_t,\qquad
+\ker(\pi_t\circ\eta)=D_t\widehat{\mathbb Z}.
+\tag{14.14}
+$$
+
+定理 13.5 表明：每个正整数 $b$ 最终整除 $D_t$，并且 $D_t\mid D_{t'}$ 当 $t\le t'$。因此这些阶段周期在全部模数中关于整除关系共尾。若 $\eta(u)=\boldsymbol O$，式 (14.14) 给出 $u\equiv0\pmod{D_t}$ 对所有 $t$ 成立，继而 $u\equiv0\pmod b$ 对每个 $b$ 成立，即 $u=0$。故 $\eta$ 单射。
+
+整数在 $\widehat{\mathbb Z}$ 中稠密：一个基本开条件只规定有限多个相容剩余类，归并到这些模数的最小公倍数后可取一个整数代表。$\widehat{\mathbb Z}$ 是有限离散群的逆极限，因而紧 Hausdorff。连续映射 $\eta$ 的像紧且在 Hausdorff 群 $\mathcal K_f$ 中闭，整数的稠密性遂给出 $H=\overline{\nu(\mathbb Z)}$。两个连续延拓若在整数上相同，则在稠密性和 Hausdorff 性下处处相同；这给出唯一性。紧空间到 Hausdorff 空间的连续单射是到其像的同胚，故 $\eta$ 的逆映射也连续。
+
+还可直接从有限阶段检验一个候选 $y\in\mathcal K_f$。若 $\pi_t(y)\in C_t$ 对所有 $t$ 成立，令 $b_t\pmod{D_t}$ 为使 $\pi_t(y)=b_tg_t$ 的唯一剩余类。阶段之间的自然商映射给出
+
+$$
+b_{t'}\equiv b_t\pmod{D_t}\qquad(t\le t').
+\tag{14.15}
+$$
+
+共尾性把这组剩余类唯一补成 $u\in\widehat{\mathbb Z}$：对任意模数 $b$，选 $b\mid D_t$，取 $b_t$ 的模 $b$ 像即可，嵌套性保证选择无关。于是 $y$ 和 $\eta(u)$ 在所有阶段商中相同。每个有限位和每个固定深度最终进入这些商，故各坐标之差属于所有 $U_v(r)$，从而 $y=\eta(u)$。反向包含由式 (14.14) 直接成立，证明式 (14.6)。
+
+等价的 gcd-CRT 检验还能解释哪些看似独立的局部要求实际上相容。对有限多个三元组 $i=(v,j,r)$，先要求给定目标在商 $E_0(F_v)/U_v(r)$ 中属于 $P_j$ 生成的循环子群，再将其唯一写成 $b_iP_j$，其中 $b_i$ 只在模 $d_i=d_{v,j}(r)$ 下确定。共同整数存在的充要条件是
+
+$$
+b_i\equiv b_{i'}\pmod{\gcd(d_i,d_{i'})}\quad\text{对所有 }i,i'\text{ 成立}.
+\tag{14.16}
+$$
+
+这是一般整数 CRT：将各模数分解成素数幂，同一素数处只须较小幂上的剩余类一致，再用互素 CRT 合并；解是模 $\operatorname{lcm}_i d_i$ 的唯一类。加入 $n\equiv a\pmod M$ 时，把 $(M,a)$ 作为另一项即可。对一个完整阶段，所有局部要求已经合成模 $D_t$ 的类 $u\bmod D_t$，所以加入 $M,a$ 后的充要条件正是式 (14.8)。任意独立指定的局部点即使分别落在各自的循环闭包中，也仍须通过这些共同剩余类检验。
+
+若 $u\not\equiv a\pmod M$，由定理 13.5 取 $t_0$ 使 $M\mid D_t$ 对所有 $t\ge t_0$ 成立。此时式 (14.8) 必不相容。一个自身阶段成功整数 $n\ge t_0$ 会在 $t=n$ 时满足该式左侧，矛盾。因此至多 $n<t_0$ 能成功。这没有求出 $t_0$ 的数值。
+
+**证明（消去局部初始常数）。** 对 $v\mid2$，仍用定义 13.1 中已固定的极小整广义 Weierstrass 模型 $\mathcal E_v$，不另换子群。为避免与曲线名 $E_0$ 混淆，记 $\mathcal E_{v,0}(F_v)$ 为非奇异约化点的逆像，$\mathcal E_{v,1}(F_v)$ 为约化至单位元的点群。Silverman，*The Arithmetic of Elliptic Curves* 第二版，[VII 的章首假设、VII.2.1–2.2 及 VII.6.1（印刷页 200）](https://www.math.ens.psl.eu/~obenoist/refs/Silverman.pdf)适用于这里：$F_v$ 是特征零的完备离散赋值域，其剩余域有限且完美。所引 VII.6.1 的结论是，分裂乘法约化时分量群阶为 $-\operatorname{ord}_v(j)$，其余情形阶至多 $4$；该定理没有剩余特征至少 $5$ 的假设。相关形式群和约化记号按作者[印刷页 122–124、188–191 的勘误](https://www.math.brown.edu/johsilve/AEC/AECErrata.pdf)理解。
+
+实际曲线的 $j$ 不变量是 $1728$，在每个 $F_v$ 上均整。若一个极小整模型有乘法约化，VII.5.1 给出 $\operatorname{ord}_v(\Delta)>0$、$\operatorname{ord}_v(c_4)=0$，于是 $j=c_4^3/\Delta$ 有负赋值，与此整性矛盾。因此尤其排除了 VII.6.1 的分裂乘法例外，且
+
+$$
+c_v=[\mathcal E_v(F_v):\mathcal E_{v,0}(F_v)]\le4.
+\tag{14.17}
+$$
+
+由 VII.2.1 的约化正合列、VII.2.2 的形式群识别以及原来固定的 $\iota_v$，有
+
+$$
+\begin{aligned}
+\mathcal E_{v,0}(F_v)/\mathcal E_{v,1}(F_v)
+ &\simeq\widetilde{\mathcal E}_{v,\mathrm{ns}}(k_v),\\
+G_v^\circ:=\#(E_0(F_v)/U_v(1))
+ &=c_v\,\#\widetilde{\mathcal E}_{v,\mathrm{ns}}(k_v).
+\end{aligned}
+\tag{14.18}
+$$
+
+符号 $G_v^\circ$ 在这里仅是有限群阶的整数记号，不表示连通分支。约化后的广义方程仍是
+
+$$
+y^2+\bar a_1xy+\bar a_3y
+=x^3+\bar a_2x^2+\bar a_4x+\bar a_6.
+$$
+
+对每个 $x\in k_v$，这是关于 $y$ 的首一二次多项式，至多有两个根；这在特征 $2$ 及不可分情形也成立。再加唯一的无穷远点，所有约化点至多 $2\#k_v+1$，非奇异点更不超过此数。因此即使存在 wild 分歧或加法约化，也有
+
+$$
+G_v^\circ\le4(2\cdot2^{f_v}+1)\le2^{f_v+4}.
+\tag{14.19}
+$$
+
+两个点的 $d_{v,j}(1)$ 均整除同一个真实商群阶 $G_v^\circ$。因此
+
+$$
+A_2\mid\prod_{v\mid2}G_v^\circ,
+\qquad
+A_2\le\prod_{v\mid2}G_v^\circ
+\le2^{\sum_{v\mid2}f_v+4\#\{v:v\mid2\}}
+\le2^{40},
+\tag{14.20}
+$$
+
+最后使用 $\sum_{v\mid2}e_vf_v=d_F\le8$、$e_v,f_v\ge1$。这里仅第一式是整除式；$A_2\le2^{40}$ 是数值不等式，没有断言 $A_2\mid2^{40}$。同样，数值上界 $2^{f_v+4}$ 不被当作群阶的倍数。
+
+深度增加仍完全复用式 (13.9)–(13.10) 的整系数乘法级数，故式 (13.5) 的共享周期整除式无需改变。将 $A_2$ 的数值上界用于式 (13.7)，并用
+
+$$
+\log2<\tfrac7{10},\qquad
+c_0=28+17\log2<40,
+$$
+
+得到对整数 $h\ge2$ 有
+
+$$
+\log q(h,h;M)
+<\log M+4h^2+40h+28
+\le\log M+32h^2.
+\tag{14.21}
+$$
+
+第一条对数估计可由 $\exp(7/10)>1+7/10+(7/10)^2/2+(7/10)^3/6>2$ 得到；最后一个不等式来自
+
+$$
+28h^2-40h-28=28(h-2)^2+72(h-2)+4\ge0.
+$$
+
+这证明式 (14.9)，无需计算实际局部阶，也未对特征 $2$ 的模型作短方程假设。
+
+**证明（完全显式的共同起点）。** 固定整数 $X\ge X_0(M,\gamma)$，置
+
+$$
+t=\log\log X,\qquad H_X=h(2X),\qquad
+R=\rho(2X),\qquad Q_X=M\exp(32H_X^2).
+\tag{14.22}
+$$
+
+这里 $t\ge T$，特别地 $t\ge16$、$st\ge16$、$m\le st/16$、$t^{1/3}\ge1024/s$。其中 $st\ge16$ 由 $t\ge(1024/s)^3$ 和 $0<s<1/2$ 即得。$X\ge16$ 时，$2X+16\le3X$ 且 $\log(3X)\le2\log X$，故
+
+$$
+\log\log(2X+16)\le t+\log2<t+1,
+\qquad H_X^2\le(t+1)^{2/3}\le2t^{2/3}.
+\tag{14.23}
+$$
+
+最大值中的常数 $2$ 不妨碍该界，因为 $(t+1)^{1/3}>2$。因此
+
+$$
+\log Q_X=m+32H_X^2
+\le m+64t^{2/3}
+\le\frac{st}{16}+\frac{st}{16}
+=\frac{st}{8}.
+\tag{14.24}
+$$
+
+由 $s<1/2$、$t\ge16$，有 $\log(4Q_X)\le2+st/8\le t$，也有 $\log(2Q_X)\le t$。又 $e^t\ge2t$，故
+
+$$
+X\ge4Q_X,\qquad
+\log\frac{X}{2Q_X}\ge e^t-t\ge\tfrac12e^t.
+\tag{14.25}
+$$
+
+对 $X\ge3$，$\log(2X+2)\le2\log X=2e^t$，而 $4\gamma=1-2s$，所以
+
+$$
+\begin{aligned}
+2^{16}Q_X^2R^{-4}
+&\le2^{16+4\gamma}\exp\bigl((s/4+4\gamma)t\bigr)\\
+&\le2^{17}\exp\bigl((1-7s/4)t\bigr)
+\le\tfrac12e^t.
+\end{aligned}
+\tag{14.26}
+$$
+
+末步成立是因为 $7st/4\ge28>18\log2$。结合式 (14.25) 得到无需任何未知常数的充分不等式
+
+$$
+0<R<1,\qquad X\ge4Q_X,\qquad
+\log\frac{X}{2Q_X}\ge2^{16}Q_X^2R^{-4}.
+\tag{14.27}
+$$
+
+此处没有声称 $R\le1/2$；对任意小的正 $\gamma$，式 (14.10) 也不需要推出该条件。
+
+**证明（目标一致计数及自身阶段下降）。** 设 $u\equiv a\pmod M$，记
+
+$$
+D=D_{2X},\qquad q=\operatorname{lcm}(M,D)
+=q(H_X,H_X;M)\le Q_X.
+$$
+
+由式 (14.8)，联立 $n\equiv a\pmod M$ 与 $n\equiv u\pmod D$ 给出模 $q$ 的唯一整数类，取其代表 $0\le c<q$。该类在 $(X,2X]$ 中恰为
+
+$$
+\begin{aligned}
+n_k&=c+q(k_0+k),\qquad
+k_0=\left\lfloor\frac{X-c}{q}\right\rfloor+1,\quad 0\le k<K,\\
+K&=\left\lfloor\frac{2X-c}{q}\right\rfloor
+-\left\lfloor\frac{X-c}{q}\right\rfloor
+\ge\frac Xq-1\ge\frac X{2q}.
+\end{aligned}
+\tag{14.28}
+$$
+
+式 (14.27) 保证
+
+$$
+\log K\ge\log\frac X{2q}
+\ge2^{16}Q_X^2R^{-4}\ge256q^2.
+\tag{14.29}
+$$
+
+对这个有限块，以 $L=q$、$N=K$ 和 $\beta=(c+qk_0)\alpha$ 直接调用定理 12.2 的极端差异度，得到
+
+$$
+\mathcal D_K(\beta,q)
+<\frac{128q}{\sqrt{\log K}}
+\le\frac{R^2}{2}.
+\tag{14.30}
+$$
+
+前件 $K\ge\exp(256L^2)$ 已由式 (14.29) 验证，起点 $\beta$ 可任意，未作星差异度转换。
+
+为在所有 $z$ 上保留同一个常数，逐坐标选取一个不跨切口的半开区间 $I_j\subset[0,1)$，长度恰为 $R$，其圆像包含于 $\{x:\|x-z_j\|_{\mathbb T}<R\}$。下面给出包括端点的选择。若 $R>1/2$，该圆邻域为全圆，取 $I_j=[0,R)$。若 $0<R\le1/2$，取 $z_j$ 的代表 $w\in[0,1)$：当 $w+R\le1$ 时取 $[w,w+R)$；否则令
+
+$$
+\delta=\min((1-w)/2,R/2)>0,
+\qquad I_j=[w-R+\delta,w+\delta).
+\tag{14.31}
+$$
+
+后一情形 $w>1-R\ge R$，所以区间在 $[0,1)$ 内，且其每一点与 $w$ 的通常距离严格小于 $R$。前一情形的右端点被排除，亦有严格不等式。因此 $I_1\times I_2$ 是定义 12.1 中的单个盒子，面积 $R^2$，并处于所需开目标内；不必把跨切口圆弧分成多个盒子。
+
+由式 (14.30)，在此盒中的整数数量严格大于 $KR^2/2\ge XR^2/(4q)$。这些整数全部满足 $n\equiv u\pmod{D_{2X}}$，所以式 (14.13)–(14.14) 给出
+
+$$
+[n]P_j-\eta_{v,j}(u)\in U_v(H_X)
+\qquad(p\le H_X,\ v\mid p,\ j=1,2).
+\tag{14.32}
+$$
+
+对每一个被计入的同一个 $n\le2X$，有 $h(n)\le H_X$、$U_v(H_X)\subseteq U_v(h(n))$、$R\le\rho(n)$。其模 $M$ 的条件也已满足，故它属于式 (14.5) 的自身阶段成功集合。这一步同时减少地方集合和降低深度，包含区间跨过 $h$ 跳点的情形。于是得到式 (14.11) 的第一行，第二行由 $q\le Q_X$ 得到。
+
+对任意固定 $\varepsilon>0$，式 (14.23) 表明
+
+$$
+\log(4Q_X)+2\gamma\log2
+\le\log4+m+64t^{2/3}+2\gamma\log2
+\le\varepsilon t
+\quad\text{对充分大的 }t\text{ 成立}.
+\tag{14.33}
+$$
+
+这个充分大阈值仅含 $M,\gamma,\varepsilon$。故 $4q(\log(2X+2))^{2\gamma}\le(\log X)^{2\gamma+\varepsilon}$，式 (14.12) 随之成立，且对 $u,z,a$ 一致。
+
+**证明（联合闭包与几何含义）。** 式 (14.12) 的右端趋于无穷，每个相容目标都有趋于无穷的成功整数序列。沿任意这样的序列，实端由 $\rho(n)\to0$ 得到 $n\alpha\to z$；对每个固定 $v\mid p$ 和深度 $r$，最终有 $h(n)\ge\max(p,r)$，从而式 (14.5) 给出 $[n]P_j-\eta_{v,j}(u)\in U_v(r)$。由于这些子群为邻域基，有限端在每个固定坐标上趋于 $\eta(u)$，即在普通乘积拓扑中收敛。这证明式 (14.7) 的右侧包含于左侧，且可以删去任意有限的整数前缀。反向包含是因为每个轨道点已在相应的闭集内：$H$ 紧闭，$a+M\widehat{\mathbb Z}$ 紧闭，其 $\eta$ 像也紧闭。第一行取 $M=1$ 即得。
+
+$\widehat{\mathbb Z}$ 完全不连通，故 $H$ 亦然；$\mathbb T^2$ 连通。任一连通子集投影到 $H$ 后只能是单点，反之 $\mathbb T^2\times\{\eta(u)\}$ 连通。因此这些恰为全部连通分支，单位分支和分量群分别如所述；后者的同构由投影到 $H$ 再取 $\eta^{-1}$ 给出。
+
+用白话说，同一个整数驱动两个实表盘，也驱动每个有限位上的离散刻度。实表盘的目标可以在两只圆上连续移动；有限刻度的目标却不是逐个随意挑选的旋钮。一个 profinite 整数是一份对所有模数彼此一致的剩余类说明书，它不是一个额外的普通整数。局部商只能读到说明书的有限一页；两个地方若共同看见某个模数，就必须在那一页给出同一答案。式 (14.16) 正是这项共同整数检查，式 (14.6) 说明通过全部有限阶段检查恰好刻画全部极限目标。
+
+在一个二倍区间中，先按右端点规定最深的有限检查和最小的实窗口。相容性把有限检查并为一个整数类，沿这个类数两只实表盘落入目标盒的次数；统一差异度把目标盒放在哪里都能承受的误差压到面积的一半以下。局部上界保证共同步长增长得足够慢，式 (14.10) 则给出不依赖目标位置的数值充分起点。留下的每个整数通过比自身阶段更强的检查，故也通过自身阶段。随着见证整数增大，每个固定有限放大镜最终加入并不断加深，同时实表盘趋向指定位置；这正是乘积拓扑所要求的无限极限，而不是在某个有限整数上完成无限精度。
+
+一致性指的是同一条计数下界及同一个起点适用于全部相容目标。不同目标可以有不同的见证整数，并不要求一个整数同时落入所有目标。若 $u$ 不可计算，以上存在性证明也没有提供读取其全部剩余类的可计算算法。有限阶段是有限个精确商条件；无限目标是这些条件的相容极限，两者的量词不同。
+
+本定理的数值起点规模极大，不声称可实用计算或给出最优阶，也不计算精确局部阶或不相容类的排除阈值。目标空间只含指定实两圆和 $H$，不是全部实嵌入上的断言，也不是任意独立局部目标、球面或 solenoid 的断言。目标 $u,z$ 固定；结论不涵盖任意逐整数移动目标或更快的局部增长安排。它不包含完整的 $\mathbb Z/\mathbb Q$ 定义、素数模式与高度的额外桥梁，亦不包含量子起源的证明。$\square$
+
+## 追加锚（本行以下为增补区）
+
+## 15. 实际共轭点的二进极小整模型与全部精度的精确共同周期
+
+**定义 15.1（实际局部域及根的固定）。** 沿用定义 11.1、13.1 的 $F,E_0,P_1,P_2$，不改变正实根所确定的全局点。记
+
+$$
+a=\sqrt2,\qquad b=\sqrt{3-a},\qquad c=\sqrt{3+a},
+\qquad F=\mathbb Q(a,b,c).
+\tag{15.1}
+$$
+
+先任取 $v\mid2$，将这些全局元素映入 $L=F_v=\mathbb Q_2(a,b,c)$。令 $h$ 是 $\mathbb Q_2$ 中满足 $h^2=-7$、$h\equiv1\pmod4$ 的唯一根，并在 $L$ 中定义
+
+$$
+i=\frac{bc}{h},\qquad
+\zeta=\frac{1+i}{a},\qquad
+\lambda=\zeta-1,\qquad
+u=b-\zeta,\qquad
+\varpi=\frac{u}{\lambda}.
+\tag{15.2}
+$$
+
+记 $\mathcal O,\mathfrak m,k$ 为 $L$ 的整数环、极大理想和剩余域；非零元素的赋值取离散整数归一化 $v_L(\mathfrak m)=1$，零的赋值为 $+\infty$。定义中 $h$ 的存在性和 $\varpi$ 的赋值在下面的实际域计算中给出。
+
+**定理 15.2（实际二进域的次数、分歧及全实边界）。** $F$ 的全局次数恰为 $8$，在 $2$ 上只有一个地方 $v$，并且
+
+$$
+[L:\mathbb Q_2]=8,\qquad e_v=8,\qquad f_v=1,
+\qquad k=\mathbb F_2,\qquad v_L(\varpi)=1.
+\tag{15.3}
+$$
+
+局部域 $L$ 含有式 (15.2) 的 $i$，满足 $i^2=-1$；全局域 $F$ 却是全实域，因而 $i\notin F$。这里“局部含有 $i$”不改变定义 11.1 的实嵌入。
+
+**证明。** 对 $H(Z)=Z^2+7$，有 $v_2(H(1))=3>2v_2(H'(1))=2$。Hensel 提升给出 $h\in1+4\mathbb Z_2$；另一根为 $-h\in3+4\mathbb Z_2$，所以该根唯一。也可在本项计算内直接用收敛二项式级数
+
+$$
+h=\sum_{n\ge0}\binom{1/2}{n}(-8)^n.
+$$
+
+对 $n\ge1$，第 $n$ 项的 $2$ 进赋值为 $2n-v_2(n!)\ge n+1$，故该级数收敛、属于 $1+4\mathbb Z_2$，且平方为 $1-8=-7$。这给出所用 Hensel 根的具体指定。
+
+由于 $b^2c^2=7$，式 (15.2) 给出 $i^2=-1$，继而
+
+$$
+\zeta^2=i,\qquad \zeta^4=-1,\qquad
+\zeta+\zeta^{-1}=a.
+$$
+
+令 $M=\mathbb Q_2(\zeta)=\mathbb Q_2(a,i)$。$\lambda=\zeta-1$ 满足
+
+$$
+\lambda^4+4\lambda^3+6\lambda^2+4\lambda+2=0.
+\tag{15.4}
+$$
+
+这是 $2$-Eisenstein 多项式，故 $[M:\mathbb Q_2]=4$，$M$ 全分歧，$\lambda$ 为其素元。以 $v_M(\lambda)=1$ 归一化，有
+
+$$
+v_M(2)=4,\qquad v_M(a)=2,\qquad v_M(1-i)=2.
+$$
+
+最后一个等式也由 $(1-i)^2=-2i$ 直接得到。因 $c=hi/b$，有 $L=M(b)$，所以 $[L:M]\le2$。为决定这一剩余扩张而不预设分歧，考察
+
+$$
+(3-i-a)(3-i+a)=6(1-i),\qquad
+(3-i+a)-(3-i-a)=2a.
+$$
+
+乘积与差的 $v_M$ 赋值都为 $6$。若两因子的赋值不同，差的赋值等于较小者，即较小者为 $6$，则乘积赋值大于 $12$，矛盾。因此两者赋值相同，均为 $3$，特别地
+
+$$
+v_M(3-a-i)=3.
+\tag{15.5}
+$$
+
+将 $v_M$ 延拓到 $L$，暂仍记为 $w$，使 $w|_M=v_M$。由
+
+$$
+(b-\zeta)(b+\zeta)=3-a-i,\qquad
+(b+\zeta)-(b-\zeta)=2\zeta
+$$
+
+可同样判定两因子的 $w$ 赋值相等：若不等，较小者须为 $4$，而乘积赋值不可能为 $3$。故
+
+$$
+w(b-\zeta)=w(b+\zeta)=\frac32.
+$$
+
+$M$ 上的值群因此至少扩大两倍，而扩张次数至多为 $2$。于是 $[L:M]=e(L/M)=2$、$f(L/M)=1$，且 $v_L=2w$。从而 $e(L/\mathbb Q_2)=8$、$f(L/\mathbb Q_2)=1$，并且
+
+$$
+v_L(u)=3,\qquad v_L(\lambda)=2,\qquad
+v_L(u/\lambda)=1.
+\tag{15.6}
+$$
+
+这已经对任取的 $v\mid2$ 证明了局部次数为 $8$。而定义 13.1 给出的全局上界为 $[F:\mathbb Q]\le8$，故由 $\sum_{v\mid2}[F_v:\mathbb Q_2]=[F:\mathbb Q]$ 可知全局次数恰为 $8$，且只有这一个地方。
+
+任意嵌入 $F\hookrightarrow\mathbb C$ 都将 $a$ 送到 $\pm\sqrt2$，将 $b,c$ 送到正数 $3\mp\sqrt2$ 的某个平方根，所以三个生成元的像均为实数。故 $F$ 全实。$h$ 是完备域 $\mathbb Q_2$ 中选出的元素，表达式 $bc/h$ 只断言属于 $L$，不声称属于 $F$。$\square$
+
+**定义 15.3（完全指定的广义模型）。** 在定理 15.2 的唯一二进域中置
+
+$$
+s=\zeta(1+a),\qquad t=1-i.
+$$
+
+对 $E_0:Y^2=X^3-X$ 使用保单位元的坐标变换
+
+$$
+X=u^2x+i,\qquad
+Y=u^3y+u^2sx+t.
+\tag{15.7}
+$$
+
+记其逆向给出的同构为 $\iota_*:E_0\to\mathcal E_*$，其中
+
+$$
+\mathcal E_*:\quad y^2+a_1xy+a_3y
+=x^3+a_2x^2+a_4x+a_6,
+\tag{15.8}
+$$
+
+系数全部指定为
+
+$$
+\begin{aligned}
+a_1&=\frac{2\zeta(1+a)}u,&
+a_2&=\frac{-2ia}{u^2},&
+a_3&=\frac{2(1-i)}{u^3},\\
+a_4&=\frac{-2a(1+2a)}{u^4},&
+a_6&=0.
+\end{aligned}
+\tag{15.9}
+$$
+
+这里 $u,\zeta,i$ 均由式 (15.2) 固定，不需要另外选择单位或素元。
+
+**定理 15.4（该模型整且极小）。** 定义 15.3 的各系数、判别式及不变量满足
+
+$$
+\begin{gathered}
+(v_L(a_1),v_L(a_2),v_L(a_3),v_L(a_4),v_L(a_6))
+=(5,6,3,0,+\infty),\\
+\Delta_* =\frac{64}{u^{12}},\qquad v_L(\Delta_*)=12,
+\qquad c_{4,*}=\frac{48}{u^4},\quad v_L(c_{4,*})=20,
+\qquad c_{6,*}=0.
+\end{gathered}
+\tag{15.10}
+$$
+
+$\mathcal E_*$ 是 $L$ 上的极小整广义 Weierstrass 模型。特别地，不能再经任何保单位元的坐标变换得到判别式赋值更小的整模型。
+
+**证明。** 将式 (15.7) 代入原方程，广义 Weierstrass 变换公式给出
+
+$$
+\begin{aligned}
+ua_1&=2s,&u^2a_2&=3i-s^2,&u^3a_3&=2t,\\
+u^4a_4&=-1+3i^2-2st,&
+u^6a_6&=i^3-i-t^2.
+\end{aligned}
+\tag{15.11}
+$$
+
+这些是 Silverman，*The Arithmetic of Elliptic Curves*，第二版，[III §1，Table 3.1（印刷页 45）](https://www.math.ens.psl.eu/~obenoist/refs/Silverman.pdf) 的实际代入。利用
+
+$$
+s^2=i(3+2a),\qquad \zeta(1-i)=a,\qquad t^2=-2i
+$$
+
+即得式 (15.9)。定理 15.2 给出 $v_L(2)=8$、$v_L(a)=v_L(1-i)=4$、$v_L(u)=3$；$1+a$ 和 $1+2a$ 均为单位。因此系数赋值逐项为式 (15.10) 所列，模型整。原模型的 $\Delta=64,c_4=48,c_6=0$ 及同一张变换表给出其余等式。这里尚未使用极小性。
+
+下面排除全部进一步整缩放。若 $\mathcal E_*$ 非极小，取一个真正使判别式赋值最小的整模型，其存在只用非负整数赋值的良序性。Silverman [VII.1.3(d)（印刷页 187）](https://www.math.ens.psl.eu/~obenoist/refs/Silverman.pdf) 保证从整模型到该极小模型的变换可写成
+
+$$
+x=\eta^2x'+R,\qquad
+y=\eta^3y'+\eta^2Sx'+T,
+\qquad \eta,R,S,T\in\mathcal O,\quad\eta\ne0.
+\tag{15.12}
+$$
+
+判别式赋值变为 $12-12v_L(\eta)\ge0$。非极小假设强制 $v_L(\eta)=1$；不存在更大的正整数可选。这一步只对假设存在的较小模型应用该经典命题，没有将待证模型的极小性作前提。
+
+新系数整尤其要求下列三个分子分别属于 $\mathfrak m^2,\mathfrak m^4,\mathfrak m^6$：
+
+$$
+\begin{aligned}
+N_2&=a_2-Sa_1+3R-S^2,\\
+N_4&=a_4-Sa_3+2Ra_2-(T+RS)a_1+3R^2-2ST,\\
+N_6&=Ra_4+R^2a_2+R^3-Ta_3-T^2-RTa_1.
+\end{aligned}
+\tag{15.13}
+$$
+
+在 $k=\mathbb F_2$ 中先看 $N_4$：只有 $a_4$ 和 $3R^2$ 可能非零，且 $\bar a_4=1$，所以 $\bar R=1$。再看 $N_2$ 得 $\bar S=1$。最后 $N_6$ 的约化为 $1+1-\bar T^2$，故 $T\in\mathfrak m$。
+
+式 (15.10) 与这些整性给出
+
+$$
+a_4+3R^2-Sa_3\in\mathfrak m^4.
+\tag{15.14}
+$$
+
+事实上，$N_4$ 中被略去的三项赋值分别至少为 $14,5,9$。再用恒等式
+
+$$
+N_6-(RSa_3-T^2)
+=R(a_4+3R^2-Sa_3)-2R^3+R^2a_2-Ta_3-RTa_1,
+\tag{15.15}
+$$
+
+右侧各项赋值至少为 $4,8,6,4,6$。由 $N_6\in\mathfrak m^6$ 得到
+
+$$
+RSa_3-T^2\in\mathfrak m^4.
+\tag{15.16}
+$$
+
+然而 $R,S$ 是单位，故 $v_L(RSa_3)=3$；$T^2$ 的赋值为偶数或 $+\infty$。若 $v_L(T)=1$，差的赋值为 $2$；若 $v_L(T)\ge2$ 或 $T=0$，差的赋值为 $3$。两种情形均与式 (15.16) 矛盾。故没有判别式更小的整模型，极小性得证。$\square$
+
+**定理 15.5（正确标号两点的初始深度、全整数倍及模型无关性）。** 对 $j=1,2$，$\iota_*(P_j)$ 都约化至 $O$，并且以 $t_*=-x/y$ 为形式参数时，
+
+$$
+v_L(t_*(\iota_*(P_j)))=15.
+\tag{15.17}
+$$
+
+沿用定义 13.1 已允许的任意极小整模型 $\mathcal E_v$、原来固定的保单位元同构 $\iota_v$ 及其参数 $t_v$。对每个非零整数 $m$，有
+
+$$
+\iota_v([m]P_j)\in\mathcal E_{v,1}(L),\qquad
+v_L\bigl(t_v(\iota_v([m]P_j))\bigr)
+=15+8v_2(m),\qquad j=1,2.
+\tag{15.18}
+$$
+
+这里 $v_2(m)=v_2(|m|)$；$m=0$ 时两点的倍数都是 $O$，参数赋值为 $+\infty$。对所有整数 $r\ge1$，定义 13.1 的原有子群及精确阶满足
+
+$$
+\begin{aligned}
+[m]P_j\in U_v(r)
+&\quad\Longleftrightarrow\quad
+2^{\kappa(r)}\mid m\qquad(m\in\mathbb Z),\\
+d_{v,1}(r)=d_{v,2}(r)
+&=2^{\kappa(r)},\qquad
+\kappa(r)=\max\left(0,\left\lceil\frac{r-15}{8}\right\rceil\right).
+\end{aligned}
+\tag{15.19}
+$$
+
+因此两个点在该二进地方的共同精确返回周期也是 $2^{\kappa(r)}$。这些结论对原先任意极小模型和原同构成立，没有改定义 (13.1) 的过滤。
+
+**证明（先判约化，再求参数）。** 按定义 11.1 的标号，实际坐标是
+
+$$
+\begin{aligned}
+X(P_1)&=\frac{115-27a}{56},&
+Y(P_1)&=\frac{-660+417a}{32b^3},\\
+X(P_2)&=\frac{115+27a}{56},&
+Y(P_2)&=\frac{-660-417a}{32c^3}.
+\end{aligned}
+\tag{15.20}
+$$
+
+特别地，$P_2$ 的纵坐标含 $-417a$，不是 $P_1$ 的纵坐标只替换分母。$b,c$ 均为单位；$115\pm27a$ 为单位；$v_L(660)=16$、$v_L(417a)=4$。故两个点均有
+
+$$
+v_L(X)=-24,\qquad v_L(Y)=-36.
+\tag{15.21}
+$$
+
+由式 (15.7) 的逆变换
+
+$$
+x=\frac{X-i}{u^2},\qquad
+y=\frac{Y-s(X-i)-t}{u^3},
+$$
+
+因 $i,s$ 为单位、$v_L(t)=4$，分子中最低赋值项分别唯一为 $X,Y$，得到
+
+$$
+v_L(x)=-30,\qquad v_L(y)=-45.
+\tag{15.22}
+$$
+
+将射影坐标 $[x:y:1]$ 乘以 $\varpi^{45}$，三个坐标的赋值依次为 $15,0,45$，所以约化恰为 $[0:1:0]=O$。这先建立了约化核的成员资格，随后才可用 $-x/y$ 作为形式参数，得其赋值 $15$。这里没有用一个仿射比值的正赋值替代约化至 $O$ 的检验。
+
+**证明（全部整数倍的精确深度）。** 在这个整模型的形式群上，Silverman [IV.2.3(a) 及 VII.2.2](https://www.math.ens.psl.eu/~obenoist/refs/Silverman.pdf) 给出整系数级数及约化核识别
+
+$$
+[n](T)=nT+\sum_{\ell\ge2}c_{n,\ell}T^\ell,
+\qquad c_{n,\ell}\in\mathcal O,\qquad n\in\mathbb Z.
+\tag{15.23}
+$$
+
+形式群、形式逆元和约化记号按作者[印刷页 122–124、188–191 的勘误](https://www.math.brown.edu/johsilve/AEC/AECErrata.pdf)理解。若 $v_L(T)=s_0>8$，对倍点而言，线性项赋值为 $8+s_0$，其余各项赋值至少为 $2s_0>8+s_0$；级数收敛且最低项唯一，故
+
+$$
+v_L([2](T))=s_0+8.
+\tag{15.24}
+$$
+
+若 $n$ 为奇整数，包括负奇整数，线性项系数为单位，其赋值为 $s_0$，严格小于其余各项的赋值。因此 $v_L([n](T))=s_0$。将任意 $m\ne0$ 唯一写成 $m=2^kn$，其中 $k=v_2(m)\ge0$、$n$ 为奇整数，从初始 $s_0=15$ 反复应用式 (15.24)，始终留在 $s_0>8$ 的范围内，给出 $15+8k$。每一步参数均非零，且倍点与该形式群的识别交换。
+
+**证明（回到任意原极小模型）。** 比较 $\mathcal E_*$ 与定义 13.1 中已固定的 $\mathcal E_v$，使用的正是 $\iota_*\circ\iota_v^{-1}$，所以也涵盖原同构的任意选择。两者均已证明或已假定为极小整模型；Silverman [VII.1.3(b)](https://www.math.ens.psl.eu/~obenoist/refs/Silverman.pdf) 此时才给出
+
+$$
+x=\varepsilon^2x_v+R_0,\qquad
+y=\varepsilon^3y_v+\varepsilon^2S_0x_v+T_0,
+\qquad \varepsilon\in\mathcal O^\times,\quad R_0,S_0,T_0\in\mathcal O.
+\tag{15.25}
+$$
+
+该齐次线性坐标变换及其逆变换的系数都整、行列式均为单位，并固定 $O$。故一个点在某一模型约化至 $O$ 当且仅当它在另一模型约化至 $O$。
+
+还须检查全部深度，而不仅是约化核。令 $Z=t_v$，$W=-1/y_v$。形式展开 $W=W(Z)\in Z^3\mathcal O[[Z]]$ 的首项为 $Z^3$，来自 VII.2.2 所用的 IV.1.1 展开。代入式 (15.25)，得到确切的参数变换
+
+$$
+t_*
+=\frac{\varepsilon^2Z+R_0W(Z)}
+ {\varepsilon^3-\varepsilon^2S_0Z-T_0W(Z)}
+=\varepsilon^{-1}Z+Z^2\mathcal O[[Z]].
+\tag{15.26}
+$$
+
+分母常数项为单位，所以此式具有整系数；逆坐标变换同理给出 $Z=\varepsilon t_*+t_*^2\mathcal O[[t_*]]$。两式均在 $\mathfrak m$ 上收敛，且线性项赋值严格小于其余项，因而两参数的非零赋值完全相同。由此对每个 $r\ge1$，两个极小模型拉回 $\mathfrak m^r$ 所得的子群相同。这证明式 (15.18) 确实使用原来的 $U_v(r)$，而非另设的过滤。
+
+最后，对 $m\ne0$，成员条件就是 $15+8v_2(m)\ge r$，等价于 $v_2(m)\ge\kappa(r)$；$m=0$ 时两边也都成立。商群中 $P_j$ 的阶是满足该条件的最小正整数，故为式 (15.19)。两个点的阶相同，取最小公倍数不再增大周期。特别地，$1\le r\le15$ 时周期为 $1$，$16\le r\le23$ 时为 $2$，$24\le r\le31$ 时为 $4$；边界 $r=15,16,23,24$ 均由同一公式包含。$\square$
+
+**推论 15.6（接回 $A_2$ 与共同整数周期）。** 定义 (13.2) 的实际初始常数为 $A_2=1$。令
+
+$$
+D_{\mathrm{odd}}(B,r)
+=\operatorname{lcm}\{d_{w,j}(r):3\le p\le B,\ w\mid p,\ j=1,2\},
+\tag{15.27}
+$$
+
+空集的最小公倍数取 $1$。对所有实数 $B\ge2$ 及整数 $r,M\ge1$，原共同周期精确写成
+
+$$
+q(B,r;M)
+=\operatorname{lcm}\bigl(M,2^{\kappa(r)},D_{\mathrm{odd}}(B,r)\bigr).
+\tag{15.28}
+$$
+
+特别地，$2\le B<3$ 时 $q(B,r;M)=\operatorname{lcm}(M,2^{\kappa(r)})$。在任意 $B\ge2$ 时，其 $2$ 进指数满足
+
+$$
+v_2(q(B,r;M))
+=\max\bigl(v_2(M),\kappa(r),v_2(D_{\mathrm{odd}}(B,r))\bigr).
+\tag{15.29}
+$$
+
+**证明。** 定理 15.2 给出唯一的 $v\mid2$，定理 15.5 给出 $d_{v,1}(1)=d_{v,2}(1)=1$，故 $A_2=1$。将二进地方的精确阶代入原定义 (13.2)，即得式 (15.28)，其最小公倍数的素数赋值公式给出式 (15.29)。对式 (13.3) 的自身阶段，只需代入 $B=r=h(n)$，二进条目便为 $2^{\kappa(h(n))}$；原来所有地方仍由同一个整数承担。
+
+用白话说，先找对量尺，再读返回精度。原短方程虽然整，却不是这里的极小量尺；式 (15.7) 把它换成已排除进一步整缩放的模型。两个实际点在这把量尺下都已经落入单位元的第 $15$ 层。乘一个奇整数保持所在层数，每多乘一个 $2$ 就准确加深 $8$ 层。因此精度不超过 $15$ 时每个整数倍都合格；要求第 $16$ 层就必须取偶数倍，直到第 $23$ 层仍只须偶数倍；第 $24$ 层才开始要求 $4$ 的倍数。两个点的刻度完全相同，所以共同返回不增加额外因子。
+
+改变极小坐标只把局部参数换成首项系数为单位的整级数，且逆级数同样整；这正是不同极小量尺给出相同层数的原因。它不允许使用非极小模型的层数来替换定义 13.1。式 (15.28) 只求出了二进地方这一条目的全部精确值：奇素数地方的阶仍可含有 $2$ 的幂，所以 $2^{\kappa(r)}$ 不必是 $q$ 的完整 $2$-主部分。
+
+实际点及其标号来自 [Brox 固定源码的 “The quadratic-field elliptic curve”](https://github.com/JoseBrox/diophantine-z-q_improvements/blob/61b82ccacfbefdff3d6e7cf986d6e6279afa1372/papers/trace_heights/aggregate_trace_height_20261108_v9.tex)，变换与形式群工具为上述 Silverman 的经典结果。这里的推导补出该固定数据的局部次数、具体极小模型、初始深度及所有精度的二进阶，不作一般局部理论或文献优先权的主张。它不求奇素数地方的精确阶，不补出完整的 $\mathbb Z/\mathbb Q$ 定义或物理对应；§§13–14 的一般联合返回结论及其余边界继续沿用。$\square$
+
+## 追加锚（本行以下为增补区）
