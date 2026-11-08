@@ -6,7 +6,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.EdgeLabeling.WildNumbe
 
 internal sealed class WheelCertificateDocument : IScribeDocumentDefinition
 {
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/GraphInvariants/andersfostergreenwoodgarciakrawzik2025wildnumber");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/FiniteGeometry/andersfostergreenwoodgarciakrawzik2025wildnumber");
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "All terminal greedy runs on the four-colored wheel have six edges.", H("WheelCertificate"), Blocks(
             Describe.Lean(DescribeId.Create("wild-number-wheelcertificate-elist"),

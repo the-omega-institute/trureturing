@@ -6,7 +6,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.EdgeLabeling.WildNumbe
 
 internal sealed class ResultDocument : IScribeDocumentDefinition
 {
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/GraphInvariants/andersfostergreenwoodgarciakrawzik2025wildnumber");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/FiniteGeometry/andersfostergreenwoodgarciakrawzik2025wildnumber");
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Every greedy output on the star family has an additive gap r.", H("Result"), Blocks(
             Describe.Lean(DescribeId.Create("wild-number-result-claim"),

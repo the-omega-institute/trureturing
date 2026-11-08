@@ -6,7 +6,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.EdgeLabeling.WildNumbe
 
 internal sealed class GreedyDocument : IScribeDocumentDefinition
 {
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/GraphInvariants/andersfostergreenwoodgarciakrawzik2025wildnumber");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/FiniteGeometry/andersfostergreenwoodgarciakrawzik2025wildnumber");
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Finite edge-colored graphs and their greedy color-connecting sets.", H("Greedy"), Blocks(
             Describe.Lean(DescribeId.Create("wild-number-greedy-coloredges"),
