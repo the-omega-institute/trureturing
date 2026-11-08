@@ -2257,3 +2257,838 @@ The optional identity $N_d=s_d$ is not a premise or conclusion of
 the global-certificate construction.
 
 ## 追加锚（本行以下为增补区）
+
+## 18. Fixed-reference data for an original-label startup
+
+**Definition 18.1 (one reference member, without original parameter advice).**
+Retain Definitions 1.1–1.2 and 6.1, and write
+[W] for [Original Word Geometry Recovery](RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_WORD_GEOMETRY_RECOVERY.md)
+and [FEA] for [Original Finite Energy Acquisition](RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_FINITE_ENERGY_ACQUISITION.md).
+In §§18–20 every analytic object belongs to the single reference member
+$a=\eta=\kappa=1$. Its coefficients are fixed rational inputs to the
+existing numerical constructions, rather than measurements of the
+running source. In particular use the actual $h,H,K,m,T_t,\mathscr V$
+and source trace of (SRO.1)–(SRO.4). The entire complex domain remains
+$\mathscr V=\mathscr V_0\dotplus\mathbb C1$ and the operator selector
+remains $A=\rho C$. Put
+
+$$
+\begin{gathered}
+c_h=c,\qquad \ell(r)=\log(1/r),\qquad X(r)=\ell(r)+\rho,
+\qquad F(r,\omega)=r f_h(r\omega),\\
+F(r,\cdot)=cX(r)e_0+Z(r,\cdot),\qquad
+\|Z(r,\cdot)\|_2\le B_h r^{1/8}\quad(r\le e^{-(T+3)}),\\
+F(r,\omega)\ge L_h\ell(r)\quad(r\le e^{-\tau_0}),\qquad
+0<c_-\le c\le c_+,\qquad |\rho|\le R_\rho.
+\end{gathered}
+\tag{SRO.116}
+$$
+
+Here $B_h,T,c_-,c_+,R_\rho,L_h,\tau_0$ are exactly the computed
+outputs (SRO.6), (SRO.18)–(SRO.20), (SRO.38). The symbol $c$ in
+§§18–20 is a source coefficient, not the emission calibration of §21.
+The angular formula (SRO.5) gives
+$\|e_0\|_2=1$ and $1/16\le e_0\le1$ with ordinary surface measure.
+Indeed its minimum is $\sqrt3/\pi^2>1/16$ and its maximum is
+$1/N_0<1$. No pointwise derivative estimate for $Z$ is an input.
+
+For a pulled-back full-form vector $v$, the exact reference energy and
+measure are
+
+$$
+\mathscr E[v]=\int_{\mathbb R^4} f_h^2\,
+                  \overline{\nabla v}\cdot A(Z)\nabla v\,dZ,
+\qquad dm=f_h^2dZ,
+\tag{SRO.117}
+$$
+
+where $A$ has the quadratic form (SRO.10) at $\kappa=1$.
+If $r=|Z|\le1$, its shear and inverse shear have norm at most
+$1+r/2$, so
+
+$$
+\|A(Z)\|,\ \|A(Z)^{-1}\|\le(1+r/2)^2\le1+2r.
+\tag{SRO.118}
+$$
+
+These are statements about the actual angular weight and principal
+matrix. All capacities below are for (SRO.117) on the full domain,
+not for a radial comparison diffusion or a part process.
+
+**Definition 18.2 (finite rational constants).** Define
+
+$$
+\begin{gathered}
+d_* =\min(L_h,c_-/32),\qquad E_* =2B_h/c_-,\qquad
+D_* =8c_+^2B_h/d_*^3,\\
+K_-=67+4D_*,\qquad K_+=5+9E_*+5E_*^2,
+\qquad K_\Sigma=K_-+K_+.
+\end{gathered}
+\tag{SRO.119}
+$$
+
+Choose integers
+
+$$
+\begin{gathered}
+N_0\ge\max\{6,2\tau_0,2(T+3),4(R_\rho+K_\Sigma+1)\},
+\qquad \Lambda_0=4^{N_0},\\
+N_1\ge4(K_\Sigma+1),\qquad \beta=2^{N_1},\\
+a_*=c_-^2/4,\quad b_*=c_+^2,\quad
+d_-=c_-^2,\quad d_+=c_+^2(N_1/2+K_\Sigma),\\
+c_Q=\frac{d_-}{(\beta-1)b_*^2(1+N_1)},\qquad
+C_Q=\frac{\beta d_+}{(\beta-1)a_*^2},\qquad
+J\ge\max\{2,8C_Q/c_Q\}\quad(J\text{ integer}),\\
+c_H=\frac{c_Q}{8J},\qquad C_H=2C_Q,\qquad
+t_H=\frac1{J\Lambda_0},\\
+A\ge\max\{2,8C_H/c_H\}\quad(A\text{ integer}),\qquad
+T_0=\min\{t_H/A,A^{-2}\}.
+\end{gathered}
+\tag{SRO.120}
+$$
+
+Every output in (SRO.119)–(SRO.120) is a positive rational or an
+integer obtained by finite arithmetic and ceilings from the existing
+reference names. The construction does not ask for a heat-kernel
+constant, a capacity of the unknown original member, or a small-time
+modulus as additional data. The estimates below justify these
+particular thresholds on their whole indicated ranges.
+
+## 19. A bounded additive error for the actual shifted point capacity
+
+**Theorem 19.1 (effective original-form capacity increments).** For the
+reference member of Definition 18.1, let
+
+$$
+\mathsf C(\lambda)=\operatorname{Cap}_\lambda(\{e\})
+ =\inf_{v\in\mathscr V,\ \operatorname{tr}v=1}
+          \{\mathscr E[v]+\lambda\|v\|_m^2\}
+ =\lambda d_\lambda.
+\tag{SRO.121}
+$$
+
+The infimum can be over real vectors or complex vectors with trace
+one. With the constants of Definition 18.2, for every real
+$\lambda\ge\Lambda_0$,
+
+$$
+\begin{gathered}
+c^2\bigl(\tfrac12\log\lambda+\rho-K_-\bigr)
+ \le\mathsf C(\lambda)
+ \le c^2\bigl(\tfrac12\log\lambda+\rho+K_+\bigr),\\
+a_*\log\lambda\le\mathsf C(\lambda)\le b_*\log\lambda,
+\qquad
+d_-\le\mathsf C(\beta\lambda)-\mathsf C(\lambda)\le d_+.
+\end{gathered}
+\tag{SRO.122}
+$$
+
+Proof. The capacity identity and the trace-one minimization are
+[S, Theorem 116.2, (116.4), (116.7)]. In particular the constraint
+is the legitimate full-form source trace. To estimate this exact
+infimum, first suppose
+$\ell(r)\ge\max\{\tau_0,T+3,2R_\rho+2,1\}$ and set
+
+$$
+I(r)=\int_{S^3}\frac{e_0^4}{F(r,\omega)^2}\,d\omega.
+\tag{SRO.123}
+$$
+
+Both $F$ and $cXe_0$ are at least $d_*\ell$. The elementary
+derivative bound for $x^{-2}$ on $[d_*\ell,\infty)$, followed by
+Cauchy–Schwarz on the sphere, gives
+
+$$
+\begin{aligned}
+I(r)&\le\frac1{c^2X(r)^2}
+       +\frac{2B_h r^{1/8}}{d_*^3\ell(r)^3}\\
+&\le\frac{1+D_*r^{1/8}/\ell(r)}{c^2X(r)^2}.
+\end{aligned}
+\tag{SRO.124}
+$$
+
+Here $\|e_0^4\|_2\le1$, since $e_0\le1$ and $\|e_0\|_2=1$,
+and $X\le2\ell$. Thus the error coefficient in (SRO.124) is
+computed from the actual remainder, without replacing its angular
+dependence by a radial weight.
+
+Take first a real or complex full-form core vector
+$v\in\mathbb C1+C_c^\infty(G\setminus\{e\})$ with trace one.
+In the chart put $p(r)=\int_{S^3}e_0^2v(r\omega)\,d\omega$.
+It equals one for all sufficiently small $r$. Angular
+Cauchy–Schwarz, for the first inequality in the $A$ metric, gives
+
+$$
+\begin{aligned}
+\mathscr E[v;B_b]&\ge
+ \int_0^b\frac{r|p'(r)|^2}{(1+2r)I(r)}\,dr,\\
+\|v\|_{m,B_b}^2&\ge
+ \int_0^b\frac{r|p(r)|^2}{I(r)}\,dr.
+\end{aligned}
+\tag{SRO.125}
+$$
+
+Indeed $p'=\int e_0^2\omega\cdot\nabla v$ and the dual angular
+factor is
+$\int e_0^4F^{-2}\omega^TA^{-1}\omega\le(1+2r)I(r)$;
+polar integration of the other factor is exactly (SRO.117).
+The second inequality is the same calculation without derivatives.
+No radiality of $v$ or $h$ has been assumed.
+
+Set $b=\lambda^{-1/2}$, $\ell_b=\log(1/b)$ and
+$B=\ell_b+\rho$. The thresholds in (SRO.120), using
+$1/2<\log2<1$, imply all the preceding restrictions on $r\le b$,
+as well as $B\ge1$, $B\le2\ell_b$ and $b\le1/2$.
+Since $r^{1/8}/\ell(r)$ increases with $r$ on this range, put
+
+$$
+\delta_b=(1+2b)(1+D_*b^{1/8}/\ell_b)-1.
+\tag{SRO.126}
+$$
+
+Discard only the nonnegative energy and mass outside $B_b$.
+The change $r=be^{-u}$ in (SRO.125) then gives
+
+$$
+\mathscr E[v]+\lambda\|v\|_m^2\ge
+\frac{c^2}{1+\delta_b}\int_0^\infty
+ (B+u)^2\bigl(|p_u|^2+e^{-2u}|p|^2\bigr)\,du,
+\qquad p(\infty)=1.
+\tag{SRO.127}
+$$
+
+The one-dimensional estimate needed here is elementary. On $[1,\infty)$,
+Cauchy–Schwarz with $\int_1^\infty(B+u)^{-2}du=(B+1)^{-1}$
+bounds the derivative contribution below by
+$(B+1)|1-p(1)|^2$. On $[0,1]$, write
+$p(1)=p(u)+\int_u^1p'(v)dv$ and integrate its squared bound to get
+
+$$
+|p(1)|^2\le2\int_0^1(|p|^2+|p_u|^2)du
+ \le16\int_0^1(|p_u|^2+e^{-2u}|p|^2)du.
+\tag{SRO.128}
+$$
+
+The last inequality uses $e^2<8$. Consequently the integral in
+(SRO.127) is at least
+
+$$
+\begin{aligned}
+\inf_{z\in\mathbb C}\{(B+1)|1-z|^2+(B^2/16)|z|^2\}
+&\ge B+1-16(B+1)^2/B^2\\
+&\ge B-63.
+\end{aligned}
+\tag{SRO.129}
+$$
+
+This is minimization of two positive quadratic terms; the same bound
+holds for real $z$. Also $b\ell_b\le1$, whence
+
+$$
+\delta_b B\le4b\ell_b+4D_*b^{1/8}\le4+4D_*.
+\tag{SRO.130}
+$$
+
+Equations (SRO.127)–(SRO.130) give
+$\mathscr E_\lambda[v]\ge c^2(B-K_-)$.
+This extends to every full-form vector with trace one: the supplied
+core is dense in the full form norm, its trace is continuous, and
+each approximant can be adjusted to trace exactly one by adding a
+constant tending to zero. For a fixed $\lambda>0$ the shifted and
+unit-shifted norms are equivalent. The left sides therefore converge.
+This passage uses the entire source summand, including the constant;
+it imposes no zero trace on the vector being bounded. It proves the
+lower bound in (SRO.122) for arbitrary global competitors.
+
+For the upper bound take the source-containing trial
+
+$$
+v_b(r)=
+\begin{cases}
+1-B/X(r),&0<r<b,\\
+0,&r\ge b.
+\end{cases}
+\tag{SRO.131}
+$$
+
+Its actual weighted energy and mass are finite. Indeed (SRO.116)
+gives $\|F(r,\cdot)\|_2\le cX(r)+B_hr^{1/8}$, so with
+$P_b=(1+2b)(1+E_*b^{1/8}/\ell_b)^2$,
+
+$$
+\begin{aligned}
+\mathscr E[v_b]&\le c^2P_b B^2\int_0^b\frac{dr}{rX(r)^2}
+                 =c^2P_b B,\\
+\lambda\|v_b\|_m^2&\le
+ c^2(1+E_*)^2\int_0^\infty e^{-2u}u^2du
+                 =c^2(1+E_*)^2/4.
+\end{aligned}
+\tag{SRO.132}
+$$
+
+We justify its full-form membership and trace, rather than inferring
+them from an ordinary radial limit. For $0<\varepsilon<b$, let
+$a_\varepsilon=v_b(\varepsilon)>0$ and set
+$v_\varepsilon=\min\{v_b/a_\varepsilon,1\}$.
+It is one on $r\le\varepsilon$, zero on $r\ge b$, and continuous
+at both interfaces. Smoothing its two corners away from $e$ gives
+compactly supported smooth full-form functions constant one near $e$;
+their convergence in the weighted form norm follows from ordinary
+local $H^1$ approximation on the two punctured collars. Such functions
+belong to the regular core of [S, Theorem 115.3] and have trace one.
+As $\varepsilon\downarrow0$, $a_\varepsilon\to1$ and
+
+$$
+\mathscr E[v_\varepsilon-v_b]
+\le\mathscr E[v_b;B_\varepsilon]
+ +(a_\varepsilon^{-1}-1)^2\mathscr E[v_b]\longrightarrow0.
+\tag{SRO.133}
+$$
+
+The mass difference tends to zero by dominated convergence, since
+$0\le v_\varepsilon,v_b\le1$ and $m(G)=1$.
+Closedness and continuity of the actual source trace prove
+$v_b\in\mathscr V$, $\operatorname{tr}v_b=1$. A fixed-width radial
+cutoff is not needed at this positive-capacity point.
+
+Expanding $P_b$ and using $B\le2\ell_b$, $b\le1/2$,
+$\ell_b\ge1$, $b\ell_b\le1$, gives
+
+$$
+(P_b-1)B\le4+8E_*+4E_*^2.
+\tag{SRO.134}
+$$
+
+Adding the mass term in (SRO.132) is at most $c^2K_+$ beyond
+$c^2B$. This proves the upper bound in (SRO.122).
+The trial estimates an infimum in the original global form; it does
+not prepare a new physical state or replace the complete semigroup.
+
+The choice of $N_0$ implies
+$\log\lambda\ge4(R_\rho+K_\Sigma+1)$, so the asserted
+$a_*,b_*$ bounds follow from the first line of (SRO.122).
+Apply its two bounds at $\lambda$ and $\beta\lambda$ before
+replacing $c,\rho$ by brackets. Their common coefficient and intercept
+give
+
+$$
+c^2(\tfrac12\log\beta-K_\Sigma)
+\le\mathsf C(\beta\lambda)-\mathsf C(\lambda)
+\le c^2(\tfrac12\log\beta+K_\Sigma).
+\tag{SRO.135}
+$$
+
+Since $N_1/4\le\tfrac12\log\beta\le N_1/2$, (SRO.120)
+proves the $d_-,d_+$ assertions. The cancellation involves one actual
+source, not independently bracketed capacities of different members.
+In particular a mere multiplicative comparison with $\log\lambda$
+would not supply (SRO.135). $\square$
+
+## 20. Positive spectral filters and a numerical small-time producer
+
+**Theorem 20.1 (same-source heat bounds and uniform contraction).**
+With the constants (SRO.119)–(SRO.120), the actual reference source
+trace satisfies
+
+$$
+\frac{c_H}{t\log^2(1/t)}\le s_t\le
+\frac{C_H}{t\log^2(1/t)}\quad(0<t\le t_H),\qquad
+s_{At}\le\tfrac12s_t\quad(0<t\le T_0).
+\tag{SRO.136}
+$$
+
+Thus Definition 18.2 is a terminating rational producer of a uniform
+small-time contraction tuple for the original complete reference
+source, with no uncomputed analytic constant.
+
+Proof. We first specify the actual source spectral measure and its
+domain passages. Let $b_\lambda$ be the equilibrium potential of
+[S, (116.1)–(116.4)] and set
+$q_\lambda=b_\lambda/\mathsf C(\lambda)\in\mathscr V$.
+The exact identity is
+$\mathscr E_\lambda[q_\lambda,v]=\operatorname{tr}v$ for every
+$v\in\mathscr V$. Let $E_K$ denote the spectral resolution of the
+same complete $K$ and define the positive measure
+
+$$
+d\mu_\partial(x)=(1+x)^2d\langle q_1,E_K(x)q_1\rangle_m,
+\qquad x\ge0.
+\tag{SRO.137}
+$$
+
+Since $q_1\in\mathscr V$, its integral against $(1+x)^{-1}$ is
+finite. The measure is therefore locally finite and its indicated
+resolvent integrals exist. The form representation and spectral
+calculus give
+$q_\lambda=(K+1)(K+\lambda)^{-1}q_1$.
+For example this follows by inserting the right side into the shifted
+pairing on bounded spectral windows, then passing in the full form
+norm; its multiplier is bounded in that norm. Uniqueness of the
+shifted Riesz representer identifies it with $q_\lambda$.
+Similarly the entrance identity
+$\langle g_t,v\rangle_m=\operatorname{tr}(T_tv)$ gives
+$g_t=(K+1)e^{-tK}q_1$. Positive-time spectral smoothing puts this
+vector in $D(K)$ and permits its trace pairing with $q_1$.
+Consequently
+
+$$
+\begin{gathered}
+s_t=\int e^{-tx}\,d\mu_\partial(x),\\
+R(\lambda):=\int\frac{d\mu_\partial(x)}{\lambda+x}
+   =\operatorname{tr}q_\lambda=\frac1{\mathsf C(\lambda)},\qquad
+Q(\lambda):=\int\frac{d\mu_\partial(x)}{(\lambda+x)^2}
+   =\|q_\lambda\|_m^2.
+\end{gathered}
+\tag{SRO.138}
+$$
+
+All equalities follow first for bounded spectral truncations. The
+form-integrable majorant $(1+x)$ against the finite spectral measure
+of $q_1$, and positive-time bounded multipliers, justify the limits.
+These formulas also agree with the actual source resolvent
+[S, (116.13)] and the raw source vector [D, (12.8)]. They do not
+assign values at $e$ to a kernel defined only almost everywhere.
+The functional calculus used here is the established spectral theorem;
+its precise reference is given in Definition 23.1.
+
+Subtract two positive resolvent filters, keeping their common measure:
+
+$$
+\begin{aligned}
+R(\lambda)-R(\beta\lambda)
+&=\frac{\mathsf C(\beta\lambda)-\mathsf C(\lambda)}
+        {\mathsf C(\lambda)\mathsf C(\beta\lambda)}\\
+&=(\beta-1)\lambda\int
+ \frac{d\mu_\partial(x)}{(\lambda+x)(\beta\lambda+x)}.
+\end{aligned}
+\tag{SRO.139}
+$$
+
+The last expression lies between
+$(\beta-1)\lambda Q(\lambda)/\beta$ and
+$(\beta-1)\lambda Q(\lambda)$. In (SRO.122),
+$\log(\beta\lambda)\le(1+N_1)\log\lambda$ and
+$\log(\beta\lambda)\ge\log\lambda$ for $\lambda\ge\Lambda_0$.
+The size and increment bounds therefore give exactly
+
+$$
+\frac{c_Q}{\lambda\log^2\lambda}\le Q(\lambda)\le
+\frac{C_Q}{\lambda\log^2\lambda}
+\quad(\lambda\ge\Lambda_0).
+\tag{SRO.140}
+$$
+
+This uses finite differences with a positive integrand; it never
+differentiates an asymptotic or a comparable pair of functions.
+
+For $x>J\lambda$, one has
+$(\lambda+x)^{-2}\le4(J\lambda+x)^{-2}$.
+The upper bound in (SRO.140) at $J\lambda$ and the choice of $J$
+show that at least
+$c_Q/(2\lambda\log^2\lambda)$ of $Q(\lambda)$ comes from
+$[0,J\lambda]$. Since the integrand there is at most $\lambda^{-2}$,
+
+$$
+\mu_\partial([0,J\lambda])\ge
+       \frac{c_Q\lambda}{2\log^2\lambda}.
+\tag{SRO.141}
+$$
+
+At $t=(J\lambda)^{-1}$, (SRO.138), $e^{-1}>1/4$ and
+$\log\lambda\le\log(1/t)$ prove the lower bound in (SRO.136).
+For the upper bound use
+$e^{-y}\le2/(1+y)^2$, $y\ge0$, to obtain
+$s_t\le2t^{-2}Q(1/t)$, which gives its stated $C_H$.
+The elementary exponential inequality follows already from
+$e^y\ge1+y+y^2/2\ge(1+y)^2/2$.
+The time threshold $t_H$ ensures every use of (SRO.140) is within its
+proved half-line. In particular both estimates concern the same
+source spectral measure, including the contribution of every global
+excursion of the full process.
+
+Finally $t\le T_0$ gives $At\le t_H$ and
+$\log(1/(At))\ge\tfrac12\log(1/t)$, since $t\le A^{-2}$.
+The ratio of the two heat bounds is at most
+$4C_H/(Ac_H)\le1/2$. This holds for every positive $t$ below
+$T_0$, rather than just on a finite grid. $\square$
+
+## 21. Finite startup from the unchanged original four labels
+
+**Definition 21.1 (the original record, deterministic blocks and bill).**
+Now allow every unknown original finite $a,\eta,d>0$, with
+$\tau=a^2d/\eta$. Neither those parameters nor a clock, source
+capacity or calibration packet is supplied to the observer.
+The running source is exactly Definition 6.1: it starts at $e$, has
+the original full endpoint, and uses the actual prescribed four
+emissions with fresh conditionally independent noise along the same
+undisturbed path. Number its labels here from one:
+$Y_k$ is the label at original time $(k+1)d$, $k\ge1$.
+Thus this $Y_k$ is [D, (8.3)]'s $Y_{k-1}$. The first read is $2d$.
+For a deterministic integer $n\ge1$, put
+
+$$
+Z_n=\frac1n\sum_{k=n+1}^{2n}\mathbf1\{Y_k=3\}.
+\tag{SRO.142}
+$$
+
+The observer has the fixed-reference computation of §§18–20 and
+the existing total reference names [D, §§11–12]. Every such call,
+precision refinement, integer power, rational comparison, read,
+counter, retained label and working bit is charged. This is the paid
+numerical and retained-record setting of [W, Definitions 9.6, 17.3,
+21.1] and [FEA, §7]. It supplies no action on the specimen.
+If computation occurs while the stream continues, all observations
+queued during it, storage and completion latency are charged too.
+A computation that finishes after its tested block uses the retained
+original prefix, never a new source start. Each reached finite
+computation has finite work and storage; no installed throughput,
+fixed memory bound or free controller is inferred from the proof.
+
+**Theorem 21.2 (computable original-label startup for every unknown
+positive clock).** For every rational $0<\alpha<1$, one program in
+Definition 21.1, without any input depending on the unknown original
+parameters, stops almost surely after finitely many original labels
+and finite charged computation. It returns a positive rational $L$
+such that, for every original $\tau>0$,
+
+$$
+\mathbb P_\tau\{\sigma<\infty,\ 0<L\le\tau\}\ge1-\alpha.
+\tag{SRO.143}
+$$
+
+Here $\sigma$ includes all reads consumed before the result is
+available. There is no assertion of finite expected cost, a uniform
+practical bound, or full recovery of the original parameters.
+
+Proof. Use the exact entire-domain scaling of [W, Theorem 5.2] and
+[FEA, Theorem 2.1]. It sends the original triple to $(1,1,\tau)$,
+preserving the complete selector, form trace, probability normalization,
+entrance, calibration and all chronological word laws. This is a
+correspondence for analysis, not a physical change of clock or source.
+Write $N_\tau=\|g_\tau^{\rm ref}\|_\infty$ and
+$c_\tau=1/[4(1+N_\tau)]$. The retained inequality
+$s_\tau\le N_\tau$ is [D, Proposition 12.7] and Definition 6.1;
+no equality of these numbers is used. Self-adjointness and entrance
+composition, with the indexing of Definition 21.1, give
+
+$$
+\begin{gathered}
+\mathbb E_\tau\mathbf1\{Y_k=3\}
+ =c_\tau\langle g_{(k+1)\tau},g_\tau\rangle_m
+ =c_\tau s_{(k+2)\tau},\\
+\mathbb E_\tau Z_n\le c_\tau s_{(n+3)\tau}
+ \le\frac{s_{(n+3)\tau}}{4s_\tau}.
+\end{gathered}
+\tag{SRO.144}
+$$
+
+The first equality is the original one-letter marginal, not a
+stationary initialization. Monotonicity of $s$ follows from its
+positive spectral representation. Its strict positivity follows also
+from the entrance identity and mass one.
+
+All choices in the following schedule are deterministic functions of
+$\alpha$ and the fixed-reference producer. For $j\ge1$ set
+
+$$
+\alpha_j=\alpha2^{-j},\qquad \varepsilon_j=2^{-j},\qquad
+\delta_j=4\alpha_j\varepsilon_j,\qquad S_0=C_H/T_0.
+\tag{SRO.145}
+$$
+
+Since $T_0\le1/4$ and $T_0\le t_H$, (SRO.136) gives
+$s_{T_0}\le S_0$. Choose strictly increasing positive integers $k_j$
+with $2^{-k_j}\le\delta_j$. Choose strictly increasing integers
+$m_j\ge2$ such that, with $r_j=2^{-m_j}$,
+
+$$
+\begin{gathered}
+r_j\le\min\{T_0,2^{-j}\},\qquad
+r_j\le r_{j-1}/2\quad(j>1),\\
+\frac{c_H2^{m_j}}{m_j^2}>\frac{S_0}{\delta_j}.
+\end{gathered}
+\tag{SRO.146}
+$$
+
+Integer enumeration terminates because $2^m/m^2\to\infty$.
+Every test is rational. Since $\log2<1$, the lower heat bound gives
+$s_{r_j}>S_0/\delta_j$. Finally choose strictly increasing integers
+$n_j\ge\max\{j,A^{k_j}-3,1\}$. These powers and indices have
+finite bit lengths at each finite stage. No small-time reference
+value, supremum or derivative is being guessed by this schedule.
+
+For $0<t\le r_j$, if $A^{k_j}t\le T_0$, iteration of (SRO.136)
+gives $s_{A^{k_j}t}/s_t\le2^{-k_j}$. If instead
+$A^{k_j}t>T_0$, monotonicity gives
+$s_{A^{k_j}t}/s_t\le s_{T_0}/s_{r_j}$. Thus in both cases
+
+$$
+\frac{s_{A^{k_j}t}}{s_t}\le
+ \max\{2^{-k_j},s_{T_0}/s_{r_j}\}\le\delta_j
+ \quad(0<t\le r_j).
+\tag{SRO.147}
+$$
+
+Using $n_j+3\ge A^{k_j}$ in (SRO.144), Markov's inequality gives
+
+$$
+\sup_{0<\tau\le r_j}
+ \mathbb P_\tau\{Z_{n_j}>\varepsilon_j\}
+ \le\frac{\delta_j}{4\varepsilon_j}=\alpha_j.
+\tag{SRO.148}
+$$
+
+This requires no independence between labels, blocks or stages.
+Test the blocks in order, stopping at the first index $J$ with
+$Z_{n_J}>\varepsilon_J$, and return $L=r_J$. For each fixed true
+$\tau$, define the common event
+
+$$
+\mathcal A_\tau=
+ \bigcap_{j:\ \tau\le r_j}\{Z_{n_j}\le\varepsilon_j\}.
+\qquad \mathbb P_\tau(\mathcal A_\tau)\ge1-\sum_j\alpha_j
+ =1-\alpha.
+\tag{SRO.149}
+$$
+
+On this event a returned $r_J$ is strictly below $\tau$.
+The original-start one-marker ergodic theorem [D, Theorem 8.2]
+gives, on a probability-one event,
+$n^{-1}\sum_{k=1}^n\mathbf1\{Y_k=3\}\to c_\tau>0$.
+Subtract the averages through $n$ and $2n$ to obtain
+$Z_n\to c_\tau$ on the same event. As $n_j\to\infty$ and
+$\varepsilon_j\to0$, a successful $J$ is almost surely finite.
+Combining this event with (SRO.149) proves (SRO.143).
+
+As a rule on the label filtration, its tested prefix length is
+$\sigma_{\rm test}=2n_J$; the event of success at a tested stage
+is measurable from that prefix. Each preceding numerical search and
+block count terminates, so only finitely many finite computations
+are executed almost surely. In a continuing physical stream the
+actual completion index $\sigma$ can exceed $\sigma_{\rm test}$.
+Finite completion latency at each reached finite computation and
+the original fixed $d>0$ give a finite number of intervening reads;
+retaining or counting them is part of the bill in Definition 21.1.
+Enlarging the stopping prefix to that completion index changes
+neither the tested statistics nor $L$ nor event (SRO.149).
+For a completed prefix of length $\sigma$, its last original read
+is at $(\sigma+1)d$, corresponding to $(\sigma+1)\tau$ in the
+reference. No source-dependent bound on this bill is supplied.
+The mathematical computation does not certify the physical
+installation of the charged storage and processing resources.
+$\square$
+
+## 22. Same-record composition with the existing finite consumers
+
+**Theorem 22.1 (deterministic lower-bound branches and a common event).**
+Fix positive rational budgets $\alpha_{\rm st},\alpha_{\rm acq}$
+with sum less than one. Run Theorem 21.2 with $\alpha_{\rm st}$;
+its possible returned values $r_j$ are deterministic.
+Using only the existing fixed-reference numerical services, one can
+predefine, for every $j$, the packet schedules of [W, §§9.6, 17, 20]
+and [FEA, Definition 6.2] for all sources with $\tau\ge r_j$.
+After selection of the startup branch, those existing consumers may
+use the same retained initial original record. Their conclusions and
+sourcewise finite-stopping statements hold together with startup on
+one event of probability at least
+$1-\alpha_{\rm st}-\alpha_{\rm acq}$.
+The claim concerns their declared finite tasks and exact inherited
+resource assumptions, not an all-history or growing-menu uniform
+recovery statement.
+
+Proof. Write the reference defect as
+
+$$
+D_v(l)=d^{\rm ref}_{1/(vl)}
+ =\int_{(0,\infty)}\frac{x}{x+1/(vl)}\,
+                d\langle h,E_F(x)h\rangle,
+\qquad v\ge1,\quad l>0.
+\tag{SRO.150}
+$$
+
+This is the existing defect, not a new numerical oracle. The exact
+original-domain scaling [W, (5.3)] gives
+$d^{\rm orig}_{1/(vd)}=D_v(\tau)$.
+Since $F\ge0$, $\ker F=0$ and $\|h\|_2=1$, (SRO.150) implies
+
+$$
+0<D_v(l)<1,\qquad
+l\le\tau\ \Longrightarrow\ D_v(l)\le D_v(\tau),\qquad
+D_v(l)\longrightarrow1\quad(v\longrightarrow\infty).
+\tag{SRO.151}
+$$
+
+The fixed-reference algorithm [D, Theorem 11.4, (11.30)] computes
+$D_v(r_j)$ at arbitrary precision from the known coefficients $1,1$
+and the rational discount $1/(vr_j)$, with its stated global error
+certificate. It therefore finds a strictly positive rational lower
+bound for $D_4(r_j)$ and arbitrarily close rational lower bounds
+for every $D_v(r_j)$. These bounds are valid lower bounds for the
+actual defects whenever $r_j\le\tau$. This is where the earned
+lower time bound is consumed. No actual original coefficient or
+clock name has been obtained or used.
+
+Here is the connection to the named full-counter schedule of [W,
+Assumption 17.1] and the adequate schedule of [FEA, Definition 6.2].
+For each deterministic branch $j$, fix once
+$0<D_{0,j}^-\le D_4(r_j)$. Assign, for example, packet budgets
+$\beta_{j,s}=\alpha_{\rm acq}2^{-j-s}$, $j,s\ge1$.
+For any predeclared finite horizon $T_s$, threshold $t_s>0$ and
+packet budget $\beta_{j,s}$, choose $N_s$ and a reference lower
+enclosure $D_{N_s,j}^-\le D_{N_s}(r_j)$ so that
+
+$$
+\frac{2T_s+1}{4N_s}
+ +2\frac{1-D_{N_s,j}^-}{D_{N_s,j}^-}
+ <D_{0,j}^-\left(\frac{\beta_{j,s}t_s}{4^{T_s+1}}\right)^2.
+\tag{SRO.152}
+$$
+
+This is exactly the sufficient rational version of [W, (9.4)].
+Enumerate increasing integers and enclosure precisions until the
+strict test passes, with any prescribed lower bound on $N_s$.
+The search terminates: $D_N(r_j)\to1$, the first term tends to
+zero, and the enclosures can be refined rather than held at a loose
+fixed value. The search is entirely deterministic before consulting
+the packet's labels. One can enforce increasing initial record
+lengths, $N_s\ge2^s4^{T_s}$, and $t_s\to0$ at the named refinement
+levels. In particular $T_s=3$ and $t_s=2^{-s}$ supply the adequate
+FEA schedule, whose two limits are $t_s\to0$ and $4^3/N_s\to0$.
+For [W, §17], use its declared fair $(r_s,k_s)$ schedule and
+$T_s=2r_s+3$, refining at each fixed $r_s$. These choices are not
+conclusions of FEA; they are generated upstream by (SRO.150)–(SRO.152).
+
+The sparse schedule [W, Assumption 20.1] is reused literally with
+the same branch lower defect $D_{0,j}^-$ and reference lower
+enclosures for $D_{v_s}(r_j)$. Its finite search (20.2) first chooses
+$v_s$ with small defect ratio and then $N_s$ for the remaining
+variance term. Equations (SRO.151) and the total reference names
+give precisely its termination premises, including arbitrary lower
+record-length requirements. The fair lag/refinement schedule and
+its fixed-lag strict-slack argument remain [W, Theorem 20.2]; no
+replacement sampling or independence hypothesis is made.
+If several of these schedules are used together, divide
+$\beta_{j,s}$ between them, or enumerate their packet requests with
+an additional summable index. Their combined allowance remains
+$\alpha_{\rm acq}$.
+
+The selection issue requires a joint event. Fix the true $\tau$ for
+the following proof, without supplying it to the program. For every
+deterministic branch satisfying $r_j\le\tau$, all the preceding
+packet inputs are valid actual-source lower certificates. Let
+$\mathcal E_{j,s}$ be its existing packet event; it has unconditional
+original probability at least $1-\beta_{j,s}$ for that source.
+On the same original record define
+
+$$
+\mathcal G_\tau=\mathcal A_\tau\cap
+ \bigcap_{j:\ r_j\le\tau}\ \bigcap_s\mathcal E_{j,s}.
+\qquad
+\mathbb P_\tau(\mathcal G_\tau)
+ \ge1-\alpha_{\rm st}-\alpha_{\rm acq}.
+\tag{SRO.153}
+$$
+
+Intersect also the probability-one startup termination event if
+needed. On $\mathcal G_\tau$ the selected $J$ is finite and is a
+valid branch, so every packet in its schedule is correct. No event
+for an invalid branch is needed, and no probability is conditioned
+on the observed value of $J$. The countable union bound is over
+deterministic programs and their original prefixes; unselected
+branches need not actually be computed.
+
+Execute only the selected branch, extending and retaining the same
+record from $e$. Existing labels may be rescanned for new horizons
+and lags at the charged costs [W, Definitions 17.3, 21.1]. A later
+suffix is not reinterpreted as an initial record. Packet lengths
+can be chosen at least the tested startup length $2n_j$; if actual
+startup computation finishes later, all required earlier prefixes
+are still available by the declared paid retention. On the common
+event, [W, Definition 9.8 and Theorems 17.2, 20.2] and [FEA,
+Theorems 6.3, 10.2, 12.1] now apply to their respective finite
+menus and guards. Their finite searches retain their original
+reference producers and strict-slack conditions. Summing finitely
+many reached finite bills gives the claimed sourcewise finite
+execution on this event. Taking both budgets as half of a desired
+total budget yields that total confidence without a fresh specimen.
+$\square$
+
+## 23. Source correspondence, antecedents and remaining recovery boundary
+
+**Definition 23.1 (the new relation and its mathematical antecedents).**
+The additional analytic relation is the bounded additive capacity
+estimate (SRO.122) for the actual normalized source, with common
+coefficient $c_h^2$ and intercept $c_h^2\rho$. Its numerical
+consequence is the all-small-time producer (SRO.136). The original
+label consumer (SRO.143) and deterministic-branch composition
+(SRO.153) use that producer without source-dependent advice.
+Their correspondences are:
+
+| Supplier | Exact use and boundary |
+| --- | --- |
+| (SRO.1)–(SRO.6), [S, §§115–117] | The actual $A=\rho C$ endpoint, normalized $h$, probability measure, full energy and continuous nonpolar source trace. The complete source summand is used in the variational problem and all limits. |
+| (SRO.18)–(SRO.20), (SRO.38) | Computed common $c_h,\rho$ brackets, the angular $L^2$ cylinder remainder and all-angle floor. They supply the inverse-angular-weight error in (SRO.124); their derivations are reused. |
+| (SRO.10), [S, (131.13)–(131.16)] | The exact unit-Jacobian reference chart and shear matrix. The explicit $1+2r$ bound approaches one and contributes a bounded additive error; a fixed coarse ellipticity factor would not give the same cancellation. |
+| [S, (116.4), (116.7), (116.13)] | The exact shifted equilibrium potential, its full-form Riesz identity and source resolvent. Formula (SRO.137) constructs their common spectral measure without assuming a pointwise kernel at $e$. |
+| [W, Theorem 5.2], [FEA, Theorem 2.1] | Entire-domain and original-word transport to $(1,1,a^2d/\eta)$, including the first $2d$ read, source start, trace and exact emissions. This is an analytic correspondence, not a new control. |
+| [D, Theorem 8.2; Proposition 12.7] | Actual $e$-start marker convergence and the inequality $s_t\le\|g_t\|_\infty$. Only that inequality is used for (SRO.144), never source maximality. |
+| [D, Theorem 11.4; §§11–12], [W, §§9.6, 17, 20], [FEA, Definition 6.2] | Charged fixed-reference names and the existing packet schedules. Monotonicity in (SRO.151) and the countable deterministic branches supply their defect/cofinal prerequisites on one event; selection is not treated as independence. |
+
+Weighted Cauchy–Schwarz, one-dimensional quadratic minimization,
+closed-form approximation, positive spectral functional calculus,
+Markov's inequality and countable subadditivity are established
+intermediate methods. Their calculations and numerical losses needed
+here are included in §§19–22; none is proposed as a new general
+theorem. For the spectral steps the primary reference is G. Teschl,
+[*Mathematical Methods in Quantum Mechanics: With Applications to
+Schrödinger Operators*, Graduate Studies in Mathematics 99, AMS,
+2009, author's online edition](https://www.mat.univie.ac.at/~gerald/ftp/book-schroe/schroe.pdf),
+§3.1, Theorems 3.1 and 3.7, (3.18), (3.25)–(3.27),
+(3.50)–(3.52). Its self-adjoint operator is the present nonnegative
+full $K$; its vector measure is that of $q_1\in\mathscr V$.
+The form-integrability and positive-time multipliers in the proof of
+Theorem 20.1 check the unbounded-function domains required there.
+No Tauberian differentiation, unspecified weighted regularity
+constant or quantitative exit estimate is imported.
+
+The source-specific capacity error, its explicit finite filters and
+the original-label startup/composition are repo-derived ordinary
+mathematical deductions from the stated source suppliers. They are
+not claims of worldwide priority or newly verified Lean statements.
+FEA's finite recursive menus, JET's already constructed jets and
+strictness certificates, and W's exact reconstruction results remain
+their own results; they are not counted again as increments here.
+
+**Definition 23.2 (the retained full source and the unpaid stronger
+interfaces).** The original space $\Omega$, source and preparation,
+full complex operator and form domains, trace, all endpoints, actual
+joint objects and histories, every input and output including zero,
+failure, rejection, stop, alarm, destruction and return, references,
+clocks, legal controls and futures retain their original meanings and
+domains. The only new observation rule is a computation on the
+original four-label record; it does not alter emissions, demand a
+chosen marker, condition away a failure, reset, add a sensor, or
+choose a source transition. Fixed-reference numerical computation is
+paid computation on the precisely declared family. It is not
+original coefficient, clock, capacity or exact-law advice.
+
+Theorem 21.2 supplies a finite rational lower time certificate, with
+almost sure termination and the stated sourcewise confidence.
+Theorem 22.1 supplies the specified defect/cofinal and same-record
+bridge for the already proved finite consumers, including their
+unchanged reference computations, error certificates and bill.
+It does not turn W's fixed-frame precision refinement into zero
+ambient leakage: [W, Proposition 9.7] and its positive singleton
+leakage retain their force. Growing dictionaries, horizons, rare
+histories and menus still require the displayed accumulated-error
+and conditioning controls of [W, Definition 9.8]; cofinal acquisition
+alone does not provide those uniform estimates. Likewise the finite
+FEA/JET consumers do not supply an effective global quotient inverse,
+an independent native source interpretation, physical installation
+of their processing resources, or recovery of every spatial, temporal,
+boundary and memory interface. These stronger relations remain
+separate obligations. No finite expected bill, source-uniform sample
+bound, exact numerical original parameters, or identity $N_t=s_t$
+is asserted by the startup theorem.
+
+## 追加锚（本行以下为增补区）
