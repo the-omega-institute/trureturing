@@ -81,5 +81,21 @@ internal sealed class OriginalDContractDocument : IScribeDocumentDefinition
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("For every total D satisfying P2 and PB, every real q and every original b, D((q,0),b) = 0. This includes pure-vector b, q = 0, and zero vectors. The pure-vector case uses proportional inner labels and equal b,c to obtain a zero outer pair; a finite Cayley label substitution with parameter sqrt(2)-1 connects it to the desired scalar/vector pair. Its two inner scalar parts are nonzero, so the preceding unit-row result applies. No limit or homogeneity of D is used."))),
-                DescribeRole.Theorem)))));
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("original-d-rotation"),
+                DeclarationHandle.Create("D5/S3/Quantum/SpinFactor/OriginalDContract.label_rotation"),
+                H("Every exact SO(2) label rotation preserves the original relation"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every D satisfying P2 and PB, every two real numbers C,S with C squared plus S squared equal to one, and all original b,c, D(b,c) = D(C b + S c, C c - S b). Thus C = cos(phi), S = sin(phi) covers every real angle. Cayley substitution gives every circle point except the half-turn; two exact quarter-turns give that last case. The unknown D is never differentiated or taken to a limit."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("original-d-collinear"),
+                DeclarationHandle.Create("D5/S3/Quantum/SpinFactor/OriginalDContract.collinear_zero"),
+                H("Collinear vector parts give zero for every scalar part"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every D satisfying P2 and PB and all original a,b whose vector parts have zero cross product, D(a,b) = 0. A zero first vector part is an original unit row. Otherwise the vector parts are proportional; an explicit unit-circle label rotation removes the first vector part, so the same unit-row result applies. All zero vectors, proportionality signs, and scalar values remain included."))),
+                DescribeRole.Theorem))));
 }
