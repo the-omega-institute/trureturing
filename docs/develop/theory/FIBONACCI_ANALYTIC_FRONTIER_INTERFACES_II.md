@@ -2178,3 +2178,111 @@ $$
 证明。$\mathcal T_{4/5,1}=\mathcal T$；在 $[X,2X]$ 上 $\log X\le\log x\le\log X+\log2$、$x^{1/10}\le2^{1/10}X^{1/10}$，减小 $c$ 即把阈值 $c\sqrt{S_X}$ 换成 $cx^{1/10}\sqrt{\log x}$。证毕。
 
 **范围。** 推论 493.4–493.5 以 Montgomery–Soundararajan 猜想 1 的 $K=2,4$ 情形为条件；该文定理 3 另以强相关估计 (20) 为条件；对 $K=4$ 的长度范围至多为 $H\le N^{1/4}$，不覆盖推论 493.5 所需的 $H\asymp N^{4/5}$。Goldston–Yıldırım [Higher correlations of divisor sums related to primes II: variations of the error term in the prime number theorem, Proc. London Math. Soc. 95 (2007), 199–247] 定理 3 在 GRH 下对 $\log^{14}N\ll h\ll N^{1/7-\varepsilon}$ 的固定长度 $h$ 给出两个符号的存在性；Kaczorowski–Pintz [Oscillatory properties of arithmetical functions. I, Acta Math. Hungar. 48 (1986), 173–185；II, 49 (1987), 441–453] 研究算术函数余项的振荡与变号，不给出这里每个充分大二倍区间中的正比例结论。对固定长度，由足够强的 Montgomery–Soundararajan 矩渐近推出两侧正比例是第二、第四矩配合 Paley–Zygmund 论证的直接推论；本节的区别在于移动长度 $sx^\theta$、任意实值 $L^1$ 剖面与原价格权，并且只用第四矩上界 (493.1) 与方差渐近 (490.2)，给出每个充分大二倍区间中两侧的统一正比例。de la Bretèche–Fiorilli [On a conjecture of Montgomery and Soundararajan, Math. Ann. 381 (2021), 575–591] 给出加权偶矩下界，不提供这里所需的第四矩上界 (493.1)。定理 493.3 不给出渐近正态性或随机过程意义下的收敛。
+
+## 追加锚（本行以下为增补区）
+
+## 494. 固定二倍区间归一化下的矩传递与正超额峰度
+
+沿用 §490 的 $E,D_u,\rho_x,\mathcal T_{\theta,g},Q(g),S_X$ 与 §493 的概率测度 $d\mu_X=dx/(x\log2)$（$[X,2X]$ 上）及 $Z_X=\mathcal T_{\theta,g}/\sqrt{S_X}$。固定 $0<\theta<1$，令
+
+$$
+\kappa=1-\theta,\qquad r=\frac\kappa2,\qquad U_X(x)=\frac xX,\qquad
+B_X(s,x)=\frac{D_{sx^\theta}(x)}{\sqrt{x^\theta\log x}}\quad(0\le s\le1,\ X\le x\le2X).
+$$
+
+由 $E$ 的 Borel 可测性，$(s,x)\mapsto B_X(s,x)$ 联合 Borel 可测。对整数 $k\ge1$，记 $c_k=\int_1^2u^{kr}\frac{du}{u\log2}=\dfrac{2^{kr}-1}{kr\log2}$。
+
+**$k$ 阶矩接口。** 称 $E$ 满足 $(\mathrm M_k)$，若
+
+(a) 存在 $C_k$，使对充分大的 $X$，$\sup_{0\le s\le1}\mathbb E_{\mu_X}|B_X(s)|^k\le C_k$；
+
+(b) 对每个 $\mathbf s=(s_1,\dots,s_k)\in[0,1]^k$，极限
+
+$$
+M_k(\mathbf s)=\lim_{X\to\infty}\mathbb E_{\mu_X}\Bigl[U_X^{kr}\prod_{j=1}^kB_X(s_j)\Bigr]
+\tag{494.1}
+$$
+
+存在。
+
+$M_k$ 作为可测函数的逐点极限是可测的；由 (a) 与 Hölder 不等式，$\bigl|\mathbb E_{\mu_X}[U_X^{kr}\prod_jB_X(s_j)]\bigr|\le2^{kr}\prod_j(\mathbb E|B_X(s_j)|^k)^{1/k}\le2^{kr}C_k$，故 $|M_k|\le2^{kr}C_k$。
+
+**定理 494.1（矩传递）。** 设 $E$ 局部有界 Borel 可测且满足 $(\mathrm M_k)$，$g\in L^1(0,1)$ 实值。则
+
+$$
+\lim_{X\to\infty}\mathbb E_{\mu_X}Z_X^k=\int_{[0,1]^k}\Bigl(\prod_{j=1}^kg(s_j)\Bigr)M_k(\mathbf s)\,d\mathbf s .
+\tag{494.2}
+$$
+
+证明。由 (490.1)，
+
+$$
+Z_X(x)=U_X(x)^r\,L_X(x)\int_0^1g(s)B_X(s,x)\rho_x(sx^\theta)\,ds,\qquad L_X(x)=\sqrt{\frac{\log x}{\log X}} .
+$$
+
+在 $[X,2X]$ 上 $1\le L_X\le\sqrt{1+\log2/\log X}$；由 §481 的显式 $w$，$1-4u/x\le\rho_x(u)\le1$（$0\le u\le x^\theta$，$x$ 充分大），故 $\eta_X=\sup_{x,s}\bigl|L_X(x)\rho_x(sx^\theta)-1\bigr|\to0$。展开 $k$ 次方并对 $(s_1,\dots,s_k)$ 用 Fubini，
+
+$$
+\mathbb E_{\mu_X}Z_X^k=\int_{[0,1]^k}\Bigl(\prod_jg(s_j)\Bigr)\,\mathbb E_{\mu_X}\Bigl[U_X^{kr}\prod_j\bigl(L_X\rho_x(s_jx^\theta)\bigr)B_X(s_j)\Bigr]d\mathbf s ,
+$$
+
+Fubini 的合法性由 $\int_{[0,1]^k}\prod_j|g(s_j)|\,\mathbb E_{\mu_X}\bigl[U_X^{kr}\prod_j|L_X\rho_x(s_jx^\theta)|\,|B_X(s_j)|\bigr]d\mathbf s\le2^{kr}(1+\eta_X)^kC_k\|g\|_1^k<\infty$ 给出（Hölder 不等式同上）。把每个因子 $L_X\rho_x(s_jx^\theta)$ 换成 $1$ 的误差逐点至多 $\bigl((1+\eta_X)^k-1\bigr)U_X^{kr}\prod_j|B_X(s_j)|$，积分后至多 $\bigl((1+\eta_X)^k-1\bigr)2^{kr}C_k\|g\|_1^k\to0$。余下 $\int\prod_jg(s_j)\,\mathbb E_{\mu_X}[U_X^{kr}\prod_jB_X(s_j)]\,d\mathbf s$：被积函数逐点收敛到 $\prod_jg(s_j)M_k(\mathbf s)$，且受可积函数 $2^{kr}C_k\prod_j|g(s_j)|$ 控制；由控制收敛定理得 (494.2)。证毕。
+
+**Brownian 接口。** 对偶数 $k=2m$，令 $\mathcal P_k$ 为 $\{1,\dots,k\}$ 的全部完美配对（共 $(k-1)!!$ 个），并令
+
+$$
+W_k(\mathbf s)=\sum_{\pi\in\mathcal P_k}\ \prod_{\{i,j\}\in\pi}\min(s_i,s_j),\qquad W_k=0\ (k\ \text{奇}).
+$$
+
+由 Isserlis（Wick）公式，$W_k(\mathbf s)=\mathbb E\prod_jB(s_j)$，$B$ 为标准 Brownian 运动。称 $E$ 满足 Brownian 型 $(\mathrm M_k)$，若 $(\mathrm M_k)$ 成立且 $M_k=c_k\kappa^{k/2}W_k$。
+
+**定理 494.2（固定二倍区间归一化的正超额峰度）。** 设 $E$ 局部有界 Borel 可测，(490.2) 与 (493.1) 在指数带 $\alpha<\theta<\beta$ 上成立，且对每个 $\mathbf s\in[0,1]^4$，
+
+$$
+\lim_{X\to\infty}\mathbb E_{\mu_X}\Bigl[U_X^{2\kappa}\prod_{j=1}^4B_X(s_j)\Bigr]=c_4\kappa^2\,W_4(\mathbf s),\qquad c_4=\frac{2^{2\kappa}-1}{2\kappa\log2} .
+\tag{494.3}
+$$
+
+则对每个实值 $g\in L^1(0,1)$，
+
+$$
+\lim_{X\to\infty}\mathbb E_{\mu_X}Z_X^2=\frac{(2^\kappa-1)\,Q(g)}{\log2},\qquad
+\lim_{X\to\infty}\mathbb E_{\mu_X}Z_X^4=\frac{3\kappa\,(2^{2\kappa}-1)\,Q(g)^2}{2\log2} .
+\tag{494.4}
+$$
+
+若 $g$ 不几乎处处为零，令 $a=\kappa\log2$，则
+
+$$
+\frac{\lim_X\mathbb E_{\mu_X}Z_X^4}{\bigl(\lim_X\mathbb E_{\mu_X}Z_X^2\bigr)^2}=3\cdot\frac a2\coth\frac a2>3 .
+\tag{494.5}
+$$
+
+证明。第一式是定理 490.6 除以 $\log2$。对第二式验证 $(\mathrm M_4)$：(b) 即 (494.3)；(a) 由引理 493.1 的第一式得到——在 $[X,2X]$ 上 $x^\theta\log x\ge X^\theta\log X$，故
+
+$$
+\mathbb E_{\mu_X}|B_X(s)|^4\le\frac{1}{\log2}\cdot\frac{1}{X\,(X^\theta\log X)^2}\int_X^{2X}|D_{sx^\theta}(x)|^4\,dx\ll C_4 ,
+$$
+
+对 $s\in[0,1]$ 一致。由定理 494.1（$k=4$），$\lim\mathbb E Z_X^4=c_4\kappa^2\int_{[0,1]^4}\prod_jg(s_j)W_4(\mathbf s)\,d\mathbf s$。对 $W_4$ 的每个配对 $\pi$，由 $0\le\min\le1$ 与 $g\in L^1$ 得绝对可积性，再由 Fubini，$\int\prod_jg(s_j)\prod_{\{i,j\}\in\pi}\min(s_i,s_j)\,d\mathbf s=Q(g)^2$；三个配对给出 $3Q(g)^2$（这是 Isserlis 公式对 $\int_0^1g(s)B(s)\,ds$ 的计算），即 (494.4) 第二式。若 $g$ 不几乎处处为零，则 $Q(g)>0$（定理 490.6 的证明），比值为
+
+$$
+\frac{3\kappa(2^{2\kappa}-1)\log2}{2(2^\kappa-1)^2}=\frac{3a\,(e^a+1)}{2(e^a-1)}=3\cdot\frac a2\coth\frac a2 ,
+$$
+
+而 $y\coth y>1$（$y>0$）等价于 $\tanh y<y$。证毕。
+
+若 $g$ 不几乎处处为零，(494.5) 说明 (494.3) 下 $Z_X$ 的二阶、四阶矩极限不是任何中心高斯分布的矩：中心高斯变量的四阶矩恰为二阶矩平方的 $3$ 倍。超额峰度 $3\bigl(\frac a2\coth\frac a2-1\bigr)$ 只依赖 $\theta$，与剖面 $g$ 无关；它是尺度混合的一般机制的显式值：对独立的标准高斯 $N$ 与满足 $\mathbb E\sigma^4<\infty$ 的非常数正尺度 $\sigma$，$\mathbb E(\sigma N)^4/(\mathbb E(\sigma N)^2)^2-3=3\operatorname{Var}(\sigma^2)/(\mathbb E\sigma^2)^2>0$（Andrews–Mallows [Scale mixtures of normal distributions, J. Roy. Statist. Soc. B 36 (1974), 99–102]），这里尺度为 $U^r$。由关于概率测度 $|g(s)|ds/\|g\|_1$ 的 Jensen 不等式，$\sup_{X\ge X_0}\mathbb E_{\mu_X}|Z_X|^4\le\sup_{X\ge X_0}2^{4r}(1+\eta_X)^4C_4\|g\|_1^4<\infty$（$C_4$ 为 $k=4$ 时 (a) 的常数），故 $\mathbb E[Z_X^2\mathbf 1_{\{Z_X^2>R\}}]\le\mathbb EZ_X^4/R$，$\{Z_X^2\}_{X\ge X_0}$ 一致可积（$X_0$ 充分大），任何分布极限的二阶矩等于 (494.4) 的第一式；若再有 $Z_X^4$ 的一致可积性，即可由上述矩比较排除高斯分布极限。推论 494.3 在完整接口下给出极限分布。
+
+**推论 494.3（尺度混合极限）。** 设对每个 $k\ge1$，Brownian 型 $(\mathrm M_k)$ 成立。令 $U$ 在 $[1,2]$ 上有密度 $1/(u\log2)$，$G\sim N(0,\kappa Q(g))$ 与 $U$ 独立。则对每个 $k$，$\mathbb E_{\mu_X}Z_X^k\to\mathbb E\,(U^rG)^k$；$Z_X$ 依分布收敛到 $U^rG$，其特征函数为
+
+$$
+\lim_{X\to\infty}\mathbb E_{\mu_X}e^{itZ_X}=\frac1{\log2}\int_1^2\exp\Bigl(-\frac{t^2\kappa Q(g)}2\,u^{\kappa}\Bigr)\frac{du}u ;
+\tag{494.6}
+$$
+
+若 $g$ 不几乎处处为零，则 $\mu_X\{Z_X>0\}\to\frac12$，$\mu_X\{Z_X<0\}\to\frac12$。
+
+证明。偶数 $k$ 时，与定理 494.2 的证明相同，对 $W_k$ 的每个配对用 Fubini 得 $Q(g)^{k/2}$，配对数为 $(k-1)!!$（Isserlis 公式），故由定理 494.1，$\lim\mathbb E Z_X^k=c_k\kappa^{k/2}(k-1)!!\,Q(g)^{k/2}=\mathbb E U^{kr}\cdot\mathbb E G^k=\mathbb E(U^rG)^k$；奇数阶两边都为 $0$。在 $U$ 上取条件期望，$\mathbb Ee^{tU^rG}=\mathbb E\exp\bigl(\frac{t^2\kappa Q(g)}2U^{2r}\bigr)\le\exp\bigl(\frac{t^2\kappa Q(g)}22^{2r}\bigr)$，故 $U^rG$ 的分布由矩唯一确定。对任意 $X_n\to\infty$，由矩方法（Billingsley, Probability and Measure, 3rd ed., Theorem 30.2）得 $Z_{X_n}$ 依分布收敛到 $U^rG$，从而 $Z_X$ 依分布收敛。(494.6) 由在 $U$ 上取条件期望得到。若 $Q(g)>0$，$U^rG$ 关于 $0$ 对称且 $\mathbb P(U^rG=0)=0$，故 $(0,\infty)$ 与 $(-\infty,0)$ 都是极限分布的连续集，其概率都是 $\frac12$，由 portmanteau 定理得结论。证毕。
+
+**范围。** 定理 494.1、494.2 与推论 494.3 是抽象接口上的结论；对 $E=\psi-\mathrm{id}$，(494.3) 与推论 494.3 所需的 Brownian 型接口都未被证明。Montgomery–Soundararajan [Primes in short intervals, Comm. Math. Phys. 252 (2004), 589–617] 猜想 1 关于固定加法长度 $H=H(N)$、$n\le N$ 变动时的单长度矩，不直接提供 (494.3)：后者涉及四个不同移动长度 $s_jx^\theta$ 的混合矩及其与宏观位置 $U_X$ 的渐近独立性。Leung [Joint distribution of primes in multiple short intervals, Adv. Math. 490 (2026), 110847] 在 RH 与 LI 下研究比例长度 $\delta x$ 的多个不交区间，采用对数取样 $\frac1{\log X}\int_2^X(\cdots)\frac{dx}x$，得到 $\delta\to0$ 时的高斯近似；其单个移动区间的结果另设 QLI，取 $\log x$ 在 $[U,2U]$ 上均匀分布、$\delta=o(1)$ 且 $\log(1/\delta)=o(\log U)$（该文定理 10.1）。两者的取样都不是本节 $[X,2X]$ 上的 $dx/(x\log2)$，长度也不是幂次 $x^\theta$，且都不处理移动价格核。本节的新内容限于：带宏观权 $U_X^{kr}$ 的矩传递对任意实值 $L^1$ 剖面与原价格权成立，以及由此得到的显式常数 (494.4)–(494.6)；尺度混合本身是经典机制。矩方法、Isserlis 公式与 Hölder、Fubini、控制收敛都是标准工具。

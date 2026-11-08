@@ -107,7 +107,7 @@ private theorem coefficient_sum (n : ℕ) :
       exact ((1-X-X^2+X^3 : ℂ[X])^n).sum_over_range'
         (fun _ => by simp) (3*n+1) (by omega)
 
-private theorem power_sum_sq_le (p : ℂ[X]) (M : ℝ)
+theorem power_sum_sq_le (p : ℂ[X]) (M : ℝ)
     (hM : ∀ z : ℂ, ‖z‖ = 1 → ‖p.eval z‖ ≤ M) (n : ℕ) :
     (∑ i ∈ (p^n).support, ‖(p^n).coeff i‖)^2 ≤
       ((p^n).support.card : ℝ) * M^(2*n) := by
@@ -190,7 +190,7 @@ private theorem upper_bound (n : ℕ) : (a n : ℝ) ≤ (3*(n:ℝ)+1)*radius^n :
     nlinarith
   exact (sq_le_sq₀ (Nat.cast_nonneg _) (mul_nonneg (by positivity) hp)).mp hsq
 
-private theorem degree_root_limit : Tendsto (fun n : ℕ => (3*(n:ℝ)+1)^(1/(n:ℝ))) atTop (𝓝 1) := by
+theorem degree_root_limit : Tendsto (fun n : ℕ => (3*(n:ℝ)+1)^(1/(n:ℝ))) atTop (𝓝 1) := by
   have hn : Tendsto (fun n : ℕ => 3*(n:ℝ)+1) atTop atTop := by
     exact Tendsto.atTop_add
       (Tendsto.const_mul_atTop (by norm_num : (0:ℝ) < 3) tendsto_natCast_atTop_atTop)
