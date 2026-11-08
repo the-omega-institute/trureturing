@@ -34,7 +34,7 @@ private def actual : Realization signature :=
 
 private abbrev arena : Arena where
   signature := signature
-  Law F := ∀ (p : Fin 3 → ℝ) (S : Mat) (hS : S.IsHermitian), F.readout () () (closedMomentTrace p S, orderedCubic (fun i j k => orderedCoefficient (p i) (p j) (p k)) S)
+  Law R := ∀ (p : Fin 3 → ℝ) (S : Mat) (hS : S.IsHermitian), R.readout () () (closedMomentTrace p S, orderedCubic (fun i j k => orderedCoefficient (p i) (p j) (p k)) S)
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
@@ -93,7 +93,7 @@ private def actual : Realization signature :=
 
 private abbrev arena : Arena where
   signature := signature
-  Law F := ∀ (h : Fin 3 → Fin 3 → Fin 3 → ℝ)
+  Law R := ∀ (h : Fin 3 → Fin 3 → Fin 3 → ℝ)
     (S : Mat) (hS : S.IsHermitian) (a b c k : ℝ)
     (h0 : h 0 0 0 = 0) (h1 : h 1 1 1 = 0) (h2 : h 2 2 2 = 0)
     (ha0 : h 0 0 1+h 0 1 0+h 1 0 0 = a)
@@ -103,7 +103,7 @@ private abbrev arena : Arena where
     (hc2 : h 2 2 0+h 2 0 2+h 0 2 2 = c)
     (hc0 : h 0 0 2+h 0 2 0+h 2 0 0 = c)
     (hf : h 0 1 2+h 1 2 0+h 2 0 1 = k/2)
-    (hr : h 0 2 1+h 2 1 0+h 1 0 2 = k/2), F.readout () () (orderedCubic h S, cubic a b c k S)
+    (hr : h 0 2 1+h 2 1 0+h 1 0 2 = k/2), R.readout () () (orderedCubic h S, cubic a b c k S)
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
@@ -162,8 +162,8 @@ private def actual : Realization signature :=
 
 private abbrev arena : Arena where
   signature := signature
-  Law F := ∀ (p q r : ℝ) (hp : 0 < p) (hq : 0 < q) (hr : 0 < r)
-    (S : Mat) (hS : S.IsHermitian), F.readout () () (closedMomentTrace ![p, q, r] S, closedCubic p q r S)
+  Law R := ∀ (p q r : ℝ) (hp : 0 < p) (hq : 0 < q) (hr : 0 < r)
+    (S : Mat) (hS : S.IsHermitian), R.readout () () (closedMomentTrace ![p, q, r] S, closedCubic p q r S)
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
@@ -222,8 +222,8 @@ private def actual : Realization signature :=
 
 private abbrev arena : Arena where
   signature := signature
-  Law F := ∀ (p q r : ℝ) (hp : 0 < p) (hq : 0 < q) (hr : 0 < r)
-    (S : Mat) (hS : S.PosSemidef), F.readout () () (0, closedMomentTrace ![p, q, r] S)
+  Law R := ∀ (p q r : ℝ) (hp : 0 < p) (hq : 0 < q) (hr : 0 < r)
+    (S : Mat) (hS : S.PosSemidef), R.readout () () (0, closedMomentTrace ![p, q, r] S)
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h

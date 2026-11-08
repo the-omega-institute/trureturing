@@ -34,11 +34,11 @@ private def actual : Realization signature :=
 
 private abbrev arena : Arena where
   signature := signature
-  Law F := ∀ (a b c d e f x y z : ℝ)
+  Law R := ∀ (a b c d e f x y z : ℝ)
     (ha : 0 ≤ a) (hb : 0 ≤ b) (hc : 0 ≤ c)
     (hx : 0 ≤ x) (hy : 0 ≤ y) (hz : 0 ≤ z)
     (hgram : ∀ u v w : ℝ, 0 ≤ d*u^2+e*v^2+f*w^2-
-      2*(x*u*v+y*v*w+z*w*u)), F.readout () () (allowance a b c * (x*y*z), pairEnergy a b c d e f x y z)
+      2*(x*u*v+y*v*w+z*w*u)), R.readout () () (allowance a b c * (x*y*z), pairEnergy a b c d e f x y z)
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
@@ -97,10 +97,10 @@ private def actual : Realization signature :=
 
 private abbrev arena : Arena where
   signature := signature
-  Law F := ∀ (a b c k : ℝ)
+  Law R := ∀ (a b c k : ℝ)
     (ha : 0 ≤ a) (hb : 0 ≤ b) (hc : 0 ≤ c) (hk : 0 ≤ k)
     (hs : 0 < a+b+c)
-    (hcert : (a+b+c)*k^2 ≤ 4*(a+b+c)*(a*b+b*c+c*a)+396*a*b*c), F.readout () () (k, allowance a b c)
+    (hcert : (a+b+c)*k^2 ≤ 4*(a+b+c)*(a*b+b*c+c*a)+396*a*b*c), R.readout () () (k, allowance a b c)
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h

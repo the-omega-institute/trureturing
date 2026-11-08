@@ -34,15 +34,15 @@ private def actual : Realization signature :=
 
 private abbrev arena : Arena where
   signature := signature
-  Law F := ∀ (S : Mat) (hS : S.PosSemidef) (x y z : ℝ)
+  Law R := ∀ (S : Mat) (hS : S.PosSemidef) (x y z : ℝ)
     (hx : 0 < x) (hy : 0 < y)
     (ha : Complex.normSq (S 0 1) = x^2)
     (hb : Complex.normSq (S 1 2) = y^2)
-    (hcycle : (cycle S).re = -(x*y*z)), ∀ u v w : ℝ, F.readout () () (0, (S 0 0).re*u^2+(S 1 1).re*v^2+(S 2 2).re*w^2- 2*(x*u*v+y*v*w+z*w*u))
+    (hcycle : (cycle S).re = -(x*y*z)), ∀ u v w : ℝ, R.readout () () (0, (S 0 0).re*u^2+(S 1 1).re*v^2+(S 2 2).re*w^2- 2*(x*u*v+y*v*w+z*w*u))
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  exact h (Matrix.vecMulVec (fun _ : Fin 3 => (1 : ℂ)) (fun _ => 1)) (by simpa using Matrix.posSemidef_vecMulVec_self_star (fun _ : Fin 3 => (1 : ℂ))) 1 1 (-1) (by norm_num) (by norm_num) (by norm_num [Matrix.vecMulVec, Complex.normSq_apply]) (by norm_num [Matrix.vecMulVec, Complex.normSq_apply]) (by norm_num [cycle, Matrix.vecMulVec]) 0 0 0
+  exact h (Matrix.vecMulVec (fun _ : Fin 3 => (1 : ℂ)) (fun _ => 1)) (by simpa only [Matrix.vecMulVec, Pi.star_apply, star_one] using Matrix.posSemidef_vecMulVec_self_star (fun _ : Fin 3 => (1 : ℂ))) 1 1 (-1) (by norm_num) (by norm_num) (by norm_num [Matrix.vecMulVec, Complex.normSq_apply]) (by norm_num [Matrix.vecMulVec, Complex.normSq_apply]) (by norm_num [cycle, Matrix.vecMulVec]) 0 0 0
 
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
@@ -97,9 +97,9 @@ private def actual : Realization signature :=
 
 private abbrev arena : Arena where
   signature := signature
-  Law F := ∀ (S : Mat) (hS : S.PosSemidef) (a b c k : ℝ)
+  Law R := ∀ (S : Mat) (hS : S.PosSemidef) (a b c k : ℝ)
     (ha : 0 ≤ a) (hb : 0 ≤ b) (hc : 0 ≤ c) (hk : 0 ≤ k)
-    (hcoeff : k ≤ allowance a b c), F.readout () () (0, cubic a b c k S)
+    (hcoeff : k ≤ allowance a b c), R.readout () () (0, cubic a b c k S)
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h

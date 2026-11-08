@@ -34,7 +34,7 @@ private def actual : Realization signature :=
 
 private abbrev arena : Arena where
   signature := signature
-  Law F := ∀ (p q r : ℝ) (hp : 0 ≤ p) (hq : 0 ≤ q) (hr : 0 ≤ r), F.readout () () (0, positiveCertificate p q r)
+  Law R := ∀ (p q r : ℝ) (hp : 0 ≤ p) (hq : 0 ≤ q) (hr : 0 ≤ r), R.readout () () (0, positiveCertificate p q r)
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
@@ -93,7 +93,7 @@ private def actual : Realization signature :=
 
 private abbrev arena : Arena where
   signature := signature
-  Law F := ∀ (p q r : ℝ) (hp : 0 < p) (hq : 0 < q) (hr : 0 < r), F.readout () () (0, positiveCertificate p q r)
+  Law R := ∀ (p q r : ℝ) (hp : 0 < p) (hq : 0 < q) (hr : 0 < r), R.readout () () (0, positiveCertificate p q r)
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
