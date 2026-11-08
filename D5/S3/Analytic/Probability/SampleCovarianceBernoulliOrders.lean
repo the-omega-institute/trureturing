@@ -239,8 +239,8 @@ private lemma exists_unitary_common (s : ℕ) :
   let v : EuclideanSpace ℂ (Fin (s+1)) := WithLp.toLp 2
     (fun _ => ((1 / Real.sqrt (s+1 : ℝ) : ℝ) : ℂ))
   have hn : (s+1 : ℝ) ≠ 0 := Nat.cast_add_one_ne_zero s
-  have hr : Real.sqrt (s+1 : ℝ) ≠ 0 := Real.sqrt_ne_zero'.mpr (by positivity)
-  have hr2 := Real.sq_sqrt (show 0 ≤ (s+1 : ℝ) by positivity)
+  have hr : Real.sqrt (s+1 : ℝ) ≠ 0 := Real.sqrt_ne_zero'.mpr (Nat.cast_add_one_pos s)
+  have hr2 := Real.sq_sqrt (Nat.cast_add_one_pos s).le
   have hv : ‖v‖ = 1 := by
     have hsq : ‖v‖^2 = 1 := by
       rw [EuclideanSpace.norm_sq_eq]
@@ -281,10 +281,12 @@ private lemma common_eq_unitary_rankOne (s : ℕ) (c : ℂ) :
     simp [ite_mul, mul_ite]
   rw [Matrix.of_apply, he, hcol, hcol]
   simp only [Complex.star_def, Complex.conj_ofReal]
-  have hr2 := Real.sq_sqrt (show 0 ≤ (s+1 : ℝ) by positivity)
-  have hr : Real.sqrt (s+1 : ℝ) ≠ 0 := Real.sqrt_ne_zero'.mpr (by positivity)
+  have hr2 := Real.sq_sqrt (Nat.cast_add_one_pos s).le
+  have hr : Real.sqrt (s+1 : ℝ) ≠ 0 := Real.sqrt_ne_zero'.mpr (Nat.cast_add_one_pos s)
   have hc : (Real.sqrt (s+1 : ℝ) : ℂ)^2 = (s+1 : ℕ) := by exact_mod_cast hr2
-  have hrc : (Real.sqrt (s+1 : ℝ) : ℂ) ≠ 0 := by exact_mod_cast hr
+  have hrc : (Real.sqrt (s+1 : ℝ) : ℂ) ≠ 0 := by
+    exact Complex.ofReal_ne_zero.mpr hr
+
   push_cast
   field_simp
   push_cast at hc
@@ -389,7 +391,7 @@ private lemma poly_common_order (s : ℕ) (c : ℝ) (hc : c ≠ 0) :
     intro G K
     rw [D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Noise.poly_coeff_map]
     exact Polynomial.X_pow_dvd_iff.mp (pairDet_common_lower s c G K) j hj
-  have ha : (s+1:ℝ)*c ≠ 0 := mul_ne_zero (by positivity) hc
+  have ha : (s+1:ℝ)*c ≠ 0 := mul_ne_zero (Nat.cast_add_one_ne_zero s) hc
   have horder := diagonal_witness_order s ((s+1:ℝ)*c) ha
   have he := pairDet_common_witness s (c:ℂ)
   have hn : (((s+1:ℝ)*c : ℝ):ℂ) = (s+1:ℕ)*(c:ℂ) := by push_cast; ring
@@ -567,7 +569,9 @@ lemma evalNoise_polyAt {n : ℕ} (ε : ℝ) (A C G K : Matrix (Fin n) (Fin n) �
       (MvPolynomial.C (ε:ℂ))).symm
 lemma polyAt_ne_zero {n : ℕ} (A C : Matrix (Fin n) (Fin n) ℂ) (ε : ℝ) (hε : ε ≠ 0) :
     polyAt A C ε ≠ 0 := by
-  have hεC : (ε:ℂ) ≠ 0 := by exact_mod_cast hε
+  have hεC : (ε:ℂ) ≠ 0 := by
+    exact Complex.ofReal_ne_zero.mpr hε
+
   let G : Matrix (Fin n) (Fin n) ℂ := (ε:ℂ)⁻¹ • (1-A)
   let K : Matrix (Fin n) (Fin n) ℂ := (ε:ℂ)⁻¹ • (-C)
   have hA : A+(ε:ℂ) • G = 1 := by
@@ -742,8 +746,8 @@ private lemma gaussian_noiseFamily_log_remainder_tendsto {n N : ℕ} (m : ℝ) (
     have hi := hb ε hε
     have hh : |∫ x, Real.log ‖(fun {n : ℕ} (p : MvPolynomial (Fin n) ℂ) (x : Fin n → ℝ) => MvPolynomial.eval (fun i => (x i : ℂ)) p) ((∑ j : Fin (N+1), MvPolynomial.C ((ε : ℂ)^(j : ℕ)) * q j)) x‖ ∂(fun n m v => Measure.pi (fun _ : Fin n => gaussianReal m v)) n m v| ≤
         ∫ x, |Real.log ‖(fun {n : ℕ} (p : MvPolynomial (Fin n) ℂ) (x : Fin n → ℝ) => MvPolynomial.eval (fun i => (x i : ℂ)) p) ((∑ j : Fin (N+1), MvPolynomial.C ((ε : ℂ)^(j : ℕ)) * q j)) x‖| ∂(fun n m v => Measure.pi (fun _ : Fin n => gaussianReal m v)) n m v := by
-      simpa only [Real.norm_eq_abs] using norm_integral_le_integral_norm
-        (fun x => Real.log ‖(fun {n : ℕ} (p : MvPolynomial (Fin n) ℂ) (x : Fin n → ℝ) => MvPolynomial.eval (fun i => (x i : ℂ)) p) ((∑ j : Fin (N+1), MvPolynomial.C ((ε : ℂ)^(j : ℕ)) * q j)) x‖)
+      exact abs_integral_le_integral_abs
+
     exact hh.trans hi.2
   have hden : Tendsto (fun ε : ℝ => Real.log (1/ε)) (𝓝[>] 0) atTop := by
     simpa only [one_div, Real.log_inv, Function.comp_def] using tendsto_neg_atBot_atTop.comp Real.tendsto_log_nhdsGT_zero
@@ -773,7 +777,9 @@ lemma gaussian_noiseFamily_log_order {n N : ℕ} (m : ℝ) (v : ℝ≥0) (hv : v
         ∂(fun n m v => Measure.pi (fun _ : Fin n => gaussianReal m v)) n m v) / Real.log (1/ε)) := by
     filter_upwards [hne, self_mem_nhdsWithin, hden.eventually (eventually_gt_atTop 0)]
       with ε hε hεpos hdenpos
-    have hεne : (ε : ℂ) ≠ 0 := by exact_mod_cast (ne_of_gt hεpos)
+    have hεne : (ε : ℂ) ≠ 0 := by
+      exact Complex.ne_zero_of_re_pos hεpos
+
     rw [gaussian_mv_log_scalar m v hv _ hε _ (pow_ne_zero _ hεne), norm_pow,
       Complex.norm_real, Real.norm_eq_abs, abs_of_pos hεpos, Real.log_pow]
     have hlog : Real.log ε = -Real.log (1/ε) := by simp

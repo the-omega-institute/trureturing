@@ -357,8 +357,8 @@ lemma gaussian_polynomial_log_coeff_lower (m : ℝ) (v : ℝ≥0) (hv : v ≠ 0)
     Real.log ‖p.coeff j‖ - p.natDegree * (Real.log 2 + rootLogCost m v) ≤
       ∫ x : ℝ, Real.log ‖p.eval (x : ℂ)‖ ∂gaussianReal m v := by
   have hp : p ≠ 0 := by
-    intro h
-    simp [h] at hj
+    exact Ne.symm (ne_of_apply_ne (fun p => p.coeff j) fun a => hj (id (Eq.symm a)))
+
   have hb := Polynomial.norm_coeff_le_choose_mul_mahlerMeasure j p
   have hc : (p.natDegree.choose j : ℝ) ≤ (2 : ℝ)^p.natDegree := by
     exact_mod_cast Nat.choose_le_two_pow p.natDegree j
@@ -696,7 +696,9 @@ lemma pairDet_rankOne_witness_order {s : ℕ} (a : ℝ) (ha : a ≠ 0) :
     (Polynomial.C ((a : ℂ) * star (a : ℂ)) +
       Polynomial.X * Polynomial.C ((a : ℂ)+star (a : ℂ)) + Polynomial.X^2)^s *
     (Polynomial.X^2 - Polynomial.C ((a : ℂ)*star (a : ℂ)))^s
-  have haC : (a : ℂ) ≠ 0 := by exact_mod_cast ha
+  have haC : (a : ℂ) ≠ 0 := by
+    exact Complex.ofReal_ne_zero.mpr ha
+
   have hq0 : Q.coeff 0 ≠ 0 := by
     change Polynomial.constantCoeff Q ≠ 0
     dsimp only [Q]

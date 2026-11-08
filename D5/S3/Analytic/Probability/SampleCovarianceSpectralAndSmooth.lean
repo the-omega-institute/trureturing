@@ -514,7 +514,7 @@ private lemma log_two_copy_normalized_gram_det (n : ℕ) (hn : 0 < n)
       (∑ ij : Fin n × Fin n,
         Real.log |gramEigenvalue n A ij.1 / n - gramEigenvalue n C ij.2 / n|) +
         (n : ℝ)^2 * Real.log n := by
-  have hnR : (n : ℝ) ≠ 0 := by exact_mod_cast hn.ne'
+  have hnR : (n : ℝ) ≠ 0 := Nat.cast_ne_zero.mpr hn.ne'
   rw [log_two_copy_gram_det n A C h, ← Fintype.sum_prod_type']
   have hpair (ij : Fin n × Fin n) :
       Real.log |gramEigenvalue n A ij.1 - gramEigenvalue n C ij.2| =
@@ -567,7 +567,7 @@ private lemma logarithmicEnergy_mean_eq_log_det (n : ℕ) (hn : 0 < n)
         simp only [probReal_univ, one_smul]
   rw [hdet]
   congr 1
-  have hnR : (n : ℝ) ≠ 0 := by exact_mod_cast hn.ne'
+  have hnR : (n : ℝ) ≠ 0 := Nat.cast_ne_zero.mpr hn.ne'
   field_simp [hnR]
   ring
 end
@@ -674,7 +674,7 @@ lemma logarithmicEnergy_mean_eq_log_det_of_moments (n : ℕ) (hn : 0 < n)
   intro ij
   apply ((hr ij).sub (integrable_const (Real.log n))).congr
   filter_upwards [h] with AC hAC
-  have hnR : (n : ℝ) ≠ 0 := by exact_mod_cast hn.ne'
+  have hnR : (n : ℝ) ≠ 0 := Nat.cast_ne_zero.mpr hn.ne'
   rw [← sub_div, abs_div, abs_of_pos (by exact_mod_cast hn : (0:ℝ) < n),
     Real.log_div (abs_ne_zero.mpr (sub_ne_zero.mpr (hAC ij.1 ij.2))) hnR]
   rfl
@@ -853,8 +853,8 @@ private lemma gaussian_polynomial_ae_nonzero (m : ℝ) (v : ℝ≥0) (hv : v ≠
 
 private lemma realConsEquiv_apply (n : ℕ) (z : ℝ × (Fin n → ℝ)) :
     ((MeasurableEquiv.piFinSuccAbove (fun _ : Fin (n+1) => ℝ) 0).symm) z = Fin.cons z.1 z.2 := by
-  simp [ MeasurableEquiv.piFinSuccAbove_symm_apply,
-    Fin.insertNthEquiv, Fin.insertNth_zero]
+  exact (MeasurableEquiv.symm_apply_eq (MeasurableEquiv.piFinSuccAbove (fun x => ℝ) 0)).mpr rfl
+
 
 private lemma realConsEquiv_preserving (n : ℕ) (m : ℝ) (v : ℝ≥0) :
     MeasurePreserving (((MeasurableEquiv.piFinSuccAbove (fun _ : Fin (n+1) => ℝ) 0).symm))

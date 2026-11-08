@@ -224,7 +224,9 @@ private lemma sum_gramEigenvalue_integrals (n : ℕ) (μ : Measure ℂ) [IsProba
   simp [pow_two]
 private lemma firstMoment_mean_eq_one (n : ℕ) (hn : 0 < n) (μ : Measure ℂ) [IsProbabilityMeasure μ]
     (hμ : EntryLaw μ) : firstMoment (meanSpectralMeasure n hn μ) = 1 := by
-  have hnR : (0:ℝ) < n := by exact_mod_cast hn
+  have hnR : (0:ℝ) < n := by
+    exact Nat.cast_pos'.mpr hn
+
   have hmax (A : Matrix (Fin n) (Fin n) ℂ) (i : Fin n) :
       max (gramEigenvalue n A i / n) 0 = gramEigenvalue n A i / n :=
     max_eq_left (div_nonneg (gramEigenvalue_nonneg n A i) hnR.le)
@@ -244,7 +246,9 @@ private lemma firstMoment_mean_eq_one (n : ℕ) (hn : 0 < n) (μ : Measure ℂ) 
     sum_gramEigenvalue_integrals n μ hμ]
   have he : (n:ℝ)^2 / n = n := by field_simp [hnR.ne']
   rw [he]
-  have hcast : ENNReal.ofReal (n:ℝ) = (n:ℝ≥0∞) := by simp
+  have hcast : ENNReal.ofReal (n:ℝ) = (n:ℝ≥0∞) := by
+    exact ENNReal.ofReal_natCast n
+
   rw [hcast, ENNReal.inv_mul_cancel (by exact_mod_cast hn.ne') (by simp)]
   simp
 end
@@ -735,7 +739,7 @@ private lemma smooth_penalizedEnergy_identity (n : ℕ) (hn : 0 < n) (ε : ℝ) 
     D5.S3.Analytic.Probability.SampleCovarianceLogEnergyRefutation.Transport.smooth_log_integral n ε hε]
   rw [← EReal.coe_one, ← EReal.coe_add]
   congr 1
-  have hnR : (n:ℝ) ≠ 0 := by exact_mod_cast hn.ne'
+  have hnR : (n:ℝ) ≠ 0 := Nat.cast_ne_zero.mpr hn.ne'
   unfold D5.S3.Analytic.Probability.SampleCovarianceLogEnergyRefutation.Energy.E
   field_simp [hnR]
   ring
@@ -755,7 +759,9 @@ theorem result : ¬ claim := by
   have h := (hclaim (D5.S3.Analytic.Probability.SampleCovarianceSpectralAndSmooth.Smooth.smoothLaw ε) (D5.S3.Analytic.Probability.SampleCovarianceSpectralAndSmooth.Smooth.smoothLaw_EntryLaw ε)).1 1
   rw [smooth_penalizedEnergy_identity 3 (by norm_num) ε hε.ne',
     smooth_penalizedEnergy_identity 2 (by norm_num) ε hε.ne'] at h
-  have hr : D5.S3.Analytic.Probability.SampleCovarianceLogEnergyRefutation.Energy.E 3 ε ≤ D5.S3.Analytic.Probability.SampleCovarianceLogEnergyRefutation.Energy.E 2 ε := by exact_mod_cast h
+  have hr : D5.S3.Analytic.Probability.SampleCovarianceLogEnergyRefutation.Energy.E 3 ε ≤ D5.S3.Analytic.Probability.SampleCovarianceLogEnergyRefutation.Energy.E 2 ε := by
+    exact EReal.coe_le_coe_iff.mp h
+
   exact not_le_of_gt hinc hr
 end
 end D5.S3.Analytic.Probability.SampleCovarianceLogEnergyRefutation
