@@ -1,5 +1,5 @@
 /- GID: D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/MatrixAverages
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/MatrixAverages
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
