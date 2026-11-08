@@ -64,7 +64,7 @@ internal sealed class SurjectiveWordBalanceDocument : IScribeDocumentDefinition
         Describe.Lean(DescribeId.Create("word-balance"),
             DeclarationHandle.Create(Owner + "surjective_word_balance"),
             H("Every finite output fiber has the same exact size"), StatementSource.FromAuthor(St(
-                Alphabet, Seq(OpenBracket, Call("Finite", Id("A")), CloseBracket, Comma),
+                Alphabet, Seq(Grp(), OpenBracket, Call("Finite", Id("A")), CloseBracket, Comma),
                 All("k", Nat), All("h", Rule),
                 Seq(Call("Function.Surjective", Call("BipermutativeLift.code", Id("h"))), Sp, Rightarrow),
                 All("n", Nat), All("w", Word(Id("n"))),
