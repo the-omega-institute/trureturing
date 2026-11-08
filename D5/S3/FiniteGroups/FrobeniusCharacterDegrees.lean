@@ -634,7 +634,7 @@ noncomputable def extRep (ρ : Representation k G V) :
     extRep ρ g (e ⊗ₜ[k] v) = e ⊗ₜ[k] ρ g v := by
   rfl
 
-private noncomputable def originalModule (ρ : Representation k G V) :
+noncomputable def originalModule (ρ : Representation k G V) :
     Module (MonoidAlgebra k G) (E ⊗[k] V) := by
   let ρE : Representation E G (E ⊗[k] V) :=
     extRep ρ
@@ -692,7 +692,7 @@ private theorem pure_image_linear
 
 /-- Scalar extension retains semisimple, isotypic support for the original group algebra.
 This asserts no semisimplicity for the extended group algebra. -/
-private theorem ext_isotypic
+theorem ext_isotypic
     (ρ : Representation k G V)
     (hρ : IsSimpleModule (MonoidAlgebra k G) ρ.asModule) :
     letI : Module (MonoidAlgebra k G) (E ⊗[k] V) := originalModule ρ
@@ -734,14 +734,14 @@ private theorem ext_isotypic
   · exact (IsIsotypicOfType.of_isotypicComponent_eq_top htop).of_linearEquiv_type
       (Submodule.topEquiv : S0 ≃ₗ[MonoidAlgebra k G] ρ.asModule)
 
-private def supported
+def supported
     (A B S0 X : Type*) [Ring A] [Ring B]
     [AddCommGroup X] [Module B X]
     [AddCommGroup S0] [Module A S0] (φ : A →+* B) : Prop :=
   letI : Module A X := Module.compHom X φ
   IsSemisimpleModule A X ∧ IsIsotypicOfType A X S0
 
-private theorem supported_submodule
+theorem supported_submodule
     {A B S0 X : Type*} [Ring A] [Ring B]
     [AddCommGroup X] [Module B X]
     [AddCommGroup S0] [Module A S0]
