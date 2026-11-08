@@ -71,7 +71,7 @@ matrices of every finite dimension, including the empty dimension. The
 quintic certificate gives
 
 $$
-\operatorname{Tr}\Bigl(\sum_i A_i\Bigr)^5
+\operatorname{Tr}\!\left[\Bigl(\sum_i A_i\Bigr)^5\right]
 \le16\sum_i\operatorname{Tr}(A_i^5),\qquad
 A_i\succeq0,\quad A_iA_{i+2}=0.
 $$

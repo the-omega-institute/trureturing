@@ -55,15 +55,15 @@ internal sealed class PentagonQuinticTraceDocument : IScribeDocumentDefinition
         Seq(Open, All("i", Fin5(), Eq(Mul(A(), A(2)), D(0))), Close));
     private static Formula T() => Sum(Tr(Pow(A(), 5)));
     private static Formula S5() => Tr(Pow(Sum(A()), 5));
-    private static Formula Bound() => Le(S5(), Mul(D(16), T()));
-    private static Formula Sos() => Eq(Sub(Mul(D(16), T()), S5()),
+    private static Formula Bound() => Le(S5(), Mul(D(1,6), T()));
+    private static Formula Sos() => Eq(Sub(Mul(D(1,6), T()), S5()),
         Sum(Seq(F.Sum, Underscore, Grp(V("k"), Colon, Call("Fin", D(7))), Sp,
-            Mul(At("w", V("k")), Call("weightedSquare", A(), Call("B", V("i"), V("k"))))));
+            Mul(At("w", V("k")), Call("weightedSquare", A(), Call("B", V("i"), V("k")))))));
     private static Formula General(Formula p, bool psd) => All("n", V("Type"),
         Seq(OpenBracket, Call("Fintype", V("n")), CloseBracket, Sp,
             OpenBracket, Call("DecidableEq", V("n")), CloseBracket, Sp,
             All("A", Seq(Fin5(), To, Sp, Matrix(V("n"))), Imp(Assumptions(psd), p))));
-    private static Formula Sharp() => All("c", Real(), Imp(Lt(V("c"), D(16)),
+    private static Formula Sharp() => All("c", Real(), Imp(Lt(V("c"), D(1,6)),
         Seq(Exists, Sp, V("A"), Colon, Sp, Fin5(), To, Sp, Matrix(Call("Fin", D(1))), Comma, Sp,
             And(Assumptions(true), Lt(Mul(V("c"), T()), S5())))));
 }

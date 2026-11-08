@@ -12,6 +12,8 @@ $$\forall n: Type, [\operatorname{Fintype}\left(n\right)] [\operatorname{Decidab
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* Nidhal Mghirbi and Seth Douglas (2026). *The Lovasz number is not alone: a continuum of Renyi points in the entanglement-assisted spectrum of graphs*. DOI: [10.48550/arXiv.2610.20775](https://doi.org/10.48550/arXiv.2610.20775). URL: <https://arxiv.org/abs/2610.20775v1>.
+
 *Commentary.*
 
 Let n be any finite type with decidable equality and let A(i) be arbitrary complex matrices on n, for i in Fin 5. All index additions are modulo five. Assume that every A(i) is Hermitian and A(i)A(i+2)=0. Write ReTr for the real part of the ordinary, unnormalized trace and hsSq(B)=ReTr(B adjoint B). Set F(i)=A(i+4)+A(i+1), R(i)=A(i)^2-(A(i)F(i)+F(i)A(i))/2, and C(i)=A(i)A(i+1)-A(i+1)A(i). The identity and the five aggregation identities are attributed to the supplied mathematical source pentagon-quartic-joint-source/proof.txt, SHA-256 83ef9890d59944d8f6789d3e73dff4695ab3999c76d3e9b440eed74b40812280. No positive-semidefinite hypothesis is used.
@@ -26,11 +28,13 @@ $$\forall n: Type, [\operatorname{Fintype}\left(n\right)] [\operatorname{Decidab
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* Nidhal Mghirbi and Seth Douglas (2026). *The Lovasz number is not alone: a continuum of Renyi points in the entanglement-assisted spectrum of graphs*. DOI: [10.48550/arXiv.2610.20775](https://doi.org/10.48550/arXiv.2610.20775). URL: <https://arxiv.org/abs/2610.20775v1>.
+
 *Commentary.*
 
 Every Hilbert--Schmidt square is nonnegative, since B adjoint B is positive semidefinite. The four coefficients 1, 1/2, 3/4 and 5/8 are positive, so the certificate gives the dimension-independent inequality. The empty finite type is included. No rank restriction, projection reduction, real-entry assumption, invertibility or simultaneous diagonalization is used.
 
-The supplied analytic positive Schatten duality argument at the conjugate exponents 4 and 4/3 converts this bound into sum Tr((P(i) X P(i))^(4/3)) <= 2 Tr(X^(4/3)) for X positive semidefinite and projections with P(i)P(i+2)=0. The primary source arXiv:2610.20775v1, Section 3.1, equation (11), uses the graph normalization 1/theta_alpha=sup min_i Z_(1-alpha). With this normalization, substituting X=sigma^(3/4) gives theta_(1/4)(C5)=5/2. The primary Proposition 3.3(ii) and flat witness then give the plateau [1/4,2]. These Schatten and graph consequences are analytic only here; this module proves the integer quartic matrix statements. The full curve for 0<alpha<1/4 remains open, and no literature priority is asserted.
+The supplied analytic positive Schatten duality argument at the conjugate exponents 4 and 4/3 converts this bound into sum Tr((P(i) X P(i))^(4/3)) <= 2 Tr(X^(4/3)) for X positive semidefinite and projections with P(i)P(i+2)=0. The primary source arXiv:2610.20775v1, Section 3.1, equation (11), uses the graph normalization 1/theta_alpha=sup min_i Z_(1-alpha). With this normalization, substituting X=sigma^(3/4) gives theta_(1/4)(C5)=5/2. The primary Proposition 3.3(ii) and flat witness then give the plateau [1/4,2]. These Schatten and graph consequences are analytic only here; this module proves the integer quartic matrix statements. This is the quartic consequence; higher-degree analytic plateau improvements are outside this module. The full curve remains open, and no literature priority is asserted.
 
 **Theorem 1.3 (Every smaller coefficient fails).**
 
@@ -39,6 +43,8 @@ $$\forall c: \mathbb{R}, c < 8 \Rightarrow \exists A: \operatorname{Fin}\left(5\
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Matrix/PentagonQuarticTrace.constant_eight_sharp` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
+
+*Acknowledgement.* Nidhal Mghirbi and Seth Douglas (2026). *The Lovasz number is not alone: a continuum of Renyi points in the entanglement-assisted spectrum of graphs*. DOI: [10.48550/arXiv.2610.20775](https://doi.org/10.48550/arXiv.2610.20775). URL: <https://arxiv.org/abs/2610.20775v1>.
 
 *Commentary.*
 
