@@ -2703,7 +2703,14 @@ Q_n&=\int_Gg_nu_nP(u_{n+1})\,dm.&
 \tag{228.1}
 $$
 
-Thus $\delta_n\le\ell_n$ and $J_n=Q_n-pM_n-pM_{n+1}+p^2$. The second factor in $J_n$ is the actual propagated terminal $P\mathbf1_{B_{n+1}}$ from the next partition. More generally, let $k_d(x,y)$ be the symmetric original transition kernel supplied by Appendix II Definition 123.1. For $r\ge0$ and $\mathbf y=(y_0,\ldots,y_r)\in\mathcal L^{r+1}$ define the actual source-start hard and unchanged-soft window coefficients
+Thus $\delta_n\le\ell_n$. Using $P1=1$, self-adjointness, $g_{n+1}=Pg_n$ and $\int_Gg_n\,dm=1$, expansion gives
+
+$$
+J_n=Q_n-p(M_n+p)-p(M_{n+1}+p)+p^2
+=Q_n-pM_n-pM_{n+1}-p^2.
+$$
+
+The original soft readout $f_B=p$ has marginal target $p$, raw adjacent-pair target $p^2$ and centered adjacent-pair target $0$. Thus $M_n$ and $Q_n-p^2$ are the actual marginal and raw-pair discrepancies, and $M_n\to0$, $Q_n\to p^2$ is equivalent to $M_n\to0$, $J_n\to0$. The second factor in $Q_n$ is the actual propagated terminal $P\mathbf1_{B_{n+1}}$ from the next partition; in $J_n$ it is the centered terminal $P(v_{n+1})=P\mathbf1_{B_{n+1}}-p$. More generally, let $k_d(x,y)$ be the symmetric original transition kernel supplied by Appendix II Definition 123.1. For $r\ge0$ and $\mathbf y=(y_0,\ldots,y_r)\in\mathcal L^{r+1}$ define the actual source-start hard and unchanged-soft window coefficients
 
 $$
 \begin{aligned}
