@@ -14,6 +14,10 @@ triage: anchor
 
 # Finite Tutte linking
 
+## Verified locator
+
+https://arxiv.org/abs/1101.5621v1
+
 The primary source is Henning Bruhn and Paul Wollan,
 *Finite connectivity in infinite matroids*, arXiv:1101.5621v1.
 Page 1 defines the finite connectivity function by
