@@ -96,21 +96,6 @@ internal sealed class OrderUnitNormDocument : IScribeDocumentDefinition
             StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
 
-    private static Formula SupportStatement()
-    {
-        var e = Id("E"); var a = Id("a"); var beta = Id("beta");
-        var A = Id("A"); var u = Call("unit", A); var n = Call("orderNorm", A);
-        var betaLaws = And(All("x", Call("cone", A), Le(F.D(0), Apply(beta, Id("x")))),
-            Eq(Apply(beta, u), F.D(1)),
-            All("x", e, Le(Call("abs", Apply(beta, Id("x"))), Apply(n, Id("x")))),
-            Eq(Call("abs", Apply(beta, a)), Apply(n, a)));
-        var exists = new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create("beta"),
-            Call("RealLinearReadings", e), betaLaws);
-        return All("E", Id("Types"), Implies(Call("RealNormedVectorSpace", e),
-            All("A", Call("ConeUnitData", e), All("a", e,
-                Implies(new Formula.Relation(a, FormulaRelationOperator.NotEqual, F.D(0)), exists)))));
-    }
-
     private static Formula CoreStatement()
     {
         var n = Id("n"); var v = Id("v"); var w = Id("w"); var a = Id("a");

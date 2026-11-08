@@ -25,7 +25,7 @@ internal sealed class OrderNormSupportDocument : IScribeDocumentDefinition
     {
         var e = F.Id("E"); var a = F.Id("a"); var beta = F.Id("beta");
         var A = F.Id("A"); var u = Call("unit", A); var n = Call("orderNorm", A);
-        var betaLaws = And(All("x", Call("cone", A), Le(F.D(0), Apply(beta, Id("x"))),
+        var betaLaws = And(All("x", Call("cone", A), Le(F.D(0), Apply(beta, Id("x")))),
             Eq(Apply(beta, u), F.D(1)),
             All("x", e, Le(Call("abs", Apply(beta, Id("x"))), Apply(n, Id("x")))),
             Eq(Call("abs", Apply(beta, a)), Apply(n, a)));
