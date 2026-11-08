@@ -2180,29 +2180,48 @@ second term. Each integral is an exact finite polynomial integral
 on rational box intersections. Theorem 15.2 at order $R+1$
 constructs $M$ for $h,v_{t_0}$. This proves the raw jet service.
 
-A compact lower bound $l_Q>0$ for $h$ is produced by Corollary
-5.4; for box unions use the minimum of finitely many such bounds.
-On a fixed surrounding box let $M_h$ bound derivatives of $h$
-through order $R$, and let $M_v,D_v$ be (15.9) at order $R$.
-Define $B_0=M_v/l_Q$, $W_0=D_v/l_Q$, and for $1\le j\le R$
+Choose fixed rational boxes $Q\Subset S\Subset S^+\Subset\Omega$.
+Corollary 5.4 produces $l_Q>0$ below $\inf_{\overline S}h$;
+for finite box unions take the minimum of these lower bounds.
+Apply Theorem 15.2 on $S,S^+$ to construct
+
+$$
+M_h=C_{S,R+1},\qquad M_v=M_{S,R+1}(L),\qquad
+D_v=D_{S,R}(L).
+$$
+
+The spatial instance has $k=R+1$, $p=R+3$, $n=2R+6$ in
+(15.3)–(15.9): it uses cutoff derivatives through $2R+6$ and
+Green bounds $G_j$ through $2R+4$, all constructed there and in
+Theorem 2.2. The time-difference instance keeps $k=R$; the same
+$M_h$ also bounds its required derivatives of $h$ through $R$.
+Define $B_0=M_v/l_Q$, $W_0=D_v/l_Q$, and separately compute
 
 $$
 \begin{aligned}
 B_j&=\max\left\{B_{j-1},
- \frac{M_v+M_h\sum_{i=1}^j\binom jiB_{j-i}}{l_Q}\right\},\\
+ \frac{M_v+M_h\sum_{i=1}^j\binom jiB_{j-i}}{l_Q}\right\}
+ &&(1\le j\le R+1),\\
 W_j&=\max\left\{W_{j-1},
- \frac{D_v+M_h\sum_{i=1}^j\binom jiW_{j-i}}{l_Q}\right\}.
+ \frac{D_v+M_h\sum_{i=1}^j\binom jiW_{j-i}}{l_Q}\right\}
+ &&(1\le j\le R).
 \end{aligned}
 \tag{16.5}
 $$
 
-Leibniz in $v_t=hg_t$ proves the $B_j$ bounds. Apply the same
-identity to $v_t-v_s=h(g_t-g_s)$ and (15.2) to prove (16.1)
-with $W_{Q,R}=W_R$. The multiindex coefficient sum at fixed
-length $i$ is $\binom ji$, which justifies these scalar recurrences.
+Leibniz in $v_t=hg_t$ proves that $B_j$ bounds every derivative
+of $g_t$ through order $j$ on $\overline S$, uniformly for
+$t\in J$, for each $0\le j\le R+1$. Apply the same identity
+to $v_t-v_s=h(g_t-g_s)$ through order $R$ and (15.2) to prove
+(16.1) with $W_{Q,R}=W_R$. The multiindex coefficient sum at
+fixed length $i$ is $\binom ji$, which justifies these scalar
+recurrences, whose right sides use only smaller indices.
 Point jets of the quotient are computed in increasing order by
 (5.7), refining until the positive denominator and required widths
-are certified. No derivative of an approximate raw step is used.
+are certified. Only raw point jets through $R$ are extracted;
+their error (16.4) uses the constructed $C^{R+1}$ bound, also
+sufficient for $B_{R+1}$. No derivative of an approximate raw
+step or point evaluation at order $R+1$ is used.
 
 For example, if a center jet interval at $x_0,t_0$ has radius $e$,
 then its value anywhere in a cell of maximum coordinate radius
@@ -2213,8 +2232,10 @@ $$
 \tag{16.6}
 $$
 
-for every derivative of length at most $R$, using bounds on a
-fixed larger box. This is an explicit uniform modulus. Finite
+for every derivative of length at most $R$: each of its four
+first coordinate derivatives is bounded by the constructed
+$B_{R+1}$ on the surrounding box, and its time increment is
+bounded by $W_R$. This is an explicit uniform modulus. Finite
 products, reciprocal expressions with certified positive
 denominators, and declared cutoff derivatives can now be evaluated
 by interval arithmetic with (16.6). Bounds stay fixed on the

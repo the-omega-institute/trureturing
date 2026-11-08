@@ -1080,6 +1080,15 @@ assertion inductively. In particular values and first spatial
 derivative bounds for all trees use at most $H+2$ derivatives of
 $b_t$; second derivatives for the charts in §11 use at most $H+3$.
 Taking the largest required order in the finite menu is finite.
+More precisely, to enclose tree derivatives through a declared
+order $j\ge0$, take $R=\max_c(\operatorname{ht}(c)+j+1)$
+over the nonempty finite list being differentiated; an empty list
+needs no jet call. Center jets and time moduli use order $R$.
+Transporting those jet intervals across cells uses the additional
+spatial bound $B_{R+1}$ constructed from [JET, Theorem 15.2] at
+$k=R+1$. Thus the respective spatial-bound orders for values,
+first derivatives and second derivatives of a height-$H$ tree are
+$H+2,H+3,H+4$, while their jet orders are $H+1,H+2,H+3$.
 
 [JET, Theorems 15.2 and 16.1] construct all these $b_t$ jets,
 compact bounds and time moduli from the original full reference
@@ -1091,10 +1100,12 @@ higher derivatives as an extra service. Work on slightly larger
 fixed rational boxes; refine $K$ into boxes with closures there.
 
 At each rational cell center and rational $t_0\in J$ compute the
-needed $b_{t_0}$ jets. Enlarge every interval by its constructed
-time error $W_{Q,R}(L)(U-L)$ and spatial error
-$4B_{R+1}\rho$ from [JET, (16.5)–(16.6)], where $\rho$ is
-the maximum coordinate covering radius. Evaluate the finite
+needed $b_{t_0}$ jets through $R$. Enlarge every interval by its
+constructed time error $W_{Q,R}(L)(U-L)$ and spatial error
+$4B_{R+1}\rho$ from [JET, (16.5)–(16.6)]. Here $B_{R+1}$
+is that quotient bound through $R+1$, distinct from the cutoff
+coefficients in (9.4), and $\rho$ is the maximum coordinate
+covering radius. Evaluate the finite
 differentiated expressions of the tree by interval arithmetic.
 Derivatives of the cutoffs are evaluated from (9.4), with (9.5)
 at one higher order supplying their moduli on uncertain scalar
@@ -1262,7 +1273,9 @@ Select an invertible rational $4\times4$ matrix $A$, rational
 $0<q<1/2$ and rational bounds $M_1\ge1,M_2$ for all entries
 of $D\Psi_t$ and its second derivatives on the larger box,
 uniformly for $t\in J$. Theorem 10.1's differentiated construction
-provides these bounds; this tree has height one. Let $e_0$
+provides these bounds; this tree has height one, so for the chart
+and its derivatives through order two take $R=4$, spatial bound
+$B_5$ and time modulus $W_4$ from [JET, (16.5)]. Let $e_0$
 be an interval-arithmetic upper bound for
 $\sup_{t\in J}\|A^{-1}D\Psi_t(x_0)-I\|_\infty$.
 Accept only if
@@ -1512,7 +1525,8 @@ time is an accounting identity, not a numerically acquired clock.
 
 Additional finite work includes all cited reference supplier work,
 coefficient derivatives and tail quadratures to the required finite
-orders, higher graph recurrences, weak-kernel integrations with their
+orders, higher graph recurrences including the extra spatial order
+$R+1$ in [JET, (16.6)], weak-kernel integrations with their
 amplified raw precisions, compact denominator searches, trace norm
 evaluations, clipped word computations and global residual tests,
 cutoff derivative recursion, interval differentiation, finite grids,
