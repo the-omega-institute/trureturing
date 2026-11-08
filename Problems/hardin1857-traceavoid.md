@@ -31,13 +31,22 @@ R. H. Hardin's four OEIS entries A185761–A185764 count labeled binary arrays o
 
 The external assertions are preregistered in [issue #21313](https://github.com/the-omega-institute/trureturing/issues/21313) and its companion registrations #21314, #21315 and #21316. The source acknowledgement is `Library/Certificates/hardin2011tracearrays.md`. The four settling results are `HardinA185761Recurrence.result`, `HardinA185762Recurrence.result`, `HardinA185763Recurrence.result` and `HardinA185764Recurrence.result`.
 
+The canonical Scribe resolution for this shared problem is the named set hosted by `HardinA185761Recurrence.result`, with the other three results as additional members. It maps the external questions as follows:
+
+| External question | OEIS entry | Resolution member |
+| --- | --- | --- |
+| [#21313](https://github.com/the-omega-institute/trureturing/issues/21313) | A185761 | `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA185761Recurrence.result` |
+| [#21314](https://github.com/the-omega-institute/trureturing/issues/21314) | A185762 | `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA185762Recurrence.result` |
+| [#21315](https://github.com/the-omega-institute/trureturing/issues/21315) | A185763 | `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA185763Recurrence.result` |
+| [#21316](https://github.com/the-omega-institute/trureturing/issues/21316) | A185764 | `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA185764Recurrence.result` |
+
 ## Gap
 
 The OEIS formula fields describe these recurrences and generating functions as empirical. The missing argument is a proof that the literal finite-array counts are transported by a finite transfer matrix and therefore satisfy the displayed identities for every allowed length. Literature-search completeness remains `ASSUMED-UNVERIFIED`.
 
 ## Route
 
-`TransferMatrix.cont_matrix` and `TransferMatrix.card_matrix` establish the finite-state continuation and weighted-lumping identities for an arbitrary finite row carrier, pair predicate, triple predicate, classifier, matrix and initial distribution. Each width-specific module encodes a binary row by a finite integer, proves the row-pair and row-triple certificate tables, identifies the literal array count with the transfer count, and propagates the tabulated matrix relation. The resulting polynomial relation yields the recurrence and coefficient comparison yields the formal generating function. The A185761 module additionally proves the quadratic-root closed form from the same recurrence and initial values.
+`TransferMatrix.arrayOKIffGood` identifies the neighboring-trace predicate with the local row conditions. `TransferMatrix.cardMatrix` establishes the finite-state counting identity under weighted lumping for an arbitrary finite row carrier, pair predicate, triple predicate, classifier, matrix and initial distribution. Each width-specific module encodes a binary row by a finite integer, proves the row-pair and row-triple certificate tables, identifies the literal array count with the transfer count, and propagates the tabulated matrix relation. The resulting polynomial relation yields the recurrence and coefficient comparison yields the formal generating function. The A185761 module additionally proves the quadratic-root closed form from the same recurrence and initial values.
 
 ## Falsifier
 
@@ -45,13 +54,13 @@ A binary array satisfying the stated predicate and violating one of the claimed 
 
 ## Evidence
 
-The kernel declarations are the four `result` theorems named above and the shared declarations `TransferMatrix.cont_matrix`, `TransferMatrix.card_matrix`, `TransferMatrix.arrayOK_iff_good` and `TransferMatrix.vector_relation_shift`. Their axiom closures are contained in `{propext, Classical.choice, Quot.sound}`. The independent checker is pinned to [commit `4aacaa6dcac239db3faa47e926b414bd36926b9b`](https://github.com/the-omega-institute/trureturing-experiments/tree/4aacaa6dcac239db3faa47e926b414bd36926b9b/docs/reports/hardin-2011-trace-avoiding-binary-arrays) at `docs/reports/hardin-2011-trace-avoiding-binary-arrays/check.py`; its SHA-256 is `b0b3e420b409da7ffd019866e25ae1caacffe313fdf72eb785056424bf5eb979`.
+The kernel declarations are the four `result` theorems named above and the shared declarations `TransferMatrix.arrayOKIffGood`, `TransferMatrix.cardMatrix`, `TransferMatrix.scalarRelationShift` and `TransferMatrix.tabulatedPowers`. Their axiom closures are contained in `{propext, Classical.choice, Quot.sound}`. The independent checker is pinned to [commit `4aacaa6dcac239db3faa47e926b414bd36926b9b`](https://github.com/the-omega-institute/trureturing-experiments/tree/4aacaa6dcac239db3faa47e926b414bd36926b9b/docs/reports/hardin-2011-trace-avoiding-binary-arrays) at `docs/reports/hardin-2011-trace-avoiding-binary-arrays/check.py`; its SHA-256 is `b0b3e420b409da7ffd019866e25ae1caacffe313fdf72eb785056424bf5eb979`.
 
 ## Triage
 
 1. **Proved (kernel-checked):** all four published recurrences and formal OGFs hold on their exact printed domains for the literal labeled arrays, by `HardinA185761Recurrence.result`, `HardinA185762Recurrence.result`, `HardinA185763Recurrence.result` and `HardinA185764Recurrence.result`.
 2. **Proved (kernel-checked):** A185761 has the displayed quadratic-root closed form for every $n\ge1$, by the final conjunct of `HardinA185761Recurrence.claim` and its `result` proof.
-3. **Proved (kernel-checked):** the common finite-state counting theorem applies to every finite row carrier, pair/triple admissibility predicates and classifier satisfying the weighted-lumping and initial-distribution hypotheses, by `TransferMatrix.card_matrix` and its continuation lemmas.
+3. **Proved (kernel-checked):** the common finite-state counting theorem applies to every finite row carrier, pair/triple admissibility predicates and classifier satisfying the weighted-lumping and initial-distribution hypotheses, by `TransferMatrix.cardMatrix`.
 4. **Proved (kernel-checked):** the A185763 threshold $n\ge7$ is sharp: the preceding count is $75192$, while the recurrence expression at $n=6$ is $75200$; the A185764 threshold $n\ge10$ is sharp: the preceding count is $60758008$, while the recurrence expression at $n=9$ is $60757864$. The counts are the kernel-checked initial conjuncts in the corresponding `claim` definitions, and the displayed arithmetic is the finite threshold check.
 5. **Computed:** the independent checker matches all 200 published terms per entry, literal small-array enumerations, exact certificate residuals and 142 applicable parent-table cells. Command: `python3 /Users/auric/trureturing-experiments/docs/reports/hardin-2011-trace-avoiding-binary-arrays/check.py`; exit code `0`; final line `ALL_CHECKS_OK`; script SHA-256 `b0b3e420b409da7ffd019866e25ae1caacffe313fdf72eb785056424bf5eb979`.
 6. **Computed:** the source-certificate check matches all four Lean matrices, initial multiplicities and classifiers on valid full row pairs; the recorded widths have complement-orbit state counts $3$, $8$, $20$ and $52$, and full pair-state counts $16$, $40$, $104$ and $264$.
