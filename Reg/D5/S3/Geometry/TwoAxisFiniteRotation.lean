@@ -34,8 +34,8 @@ private theorem halfturn_firstAxis : halfturn firstAxis = -firstAxis := by
 namespace Words
 
 abbrev signature : Signature where
-  Params := Space × Space × Orthogonal
-  State _ := List Orthogonal
+  Params := Σ _ : Space, Σ _ : Space, Orthogonal
+  State _ := Orthogonal
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
@@ -45,8 +45,7 @@ abbrev signature : Signature where
 
 def actual : Realization signature := by
   classical
-  exact realize signature (fun _ p l => decide (IsAxisWord p.1 p.2.1 l ∧ l.prod = p.2.2))
-    (fun e => nomatch e)
+  exact realize signature (fun _ p T => decide (T = p.2.2)) (fun e => nomatch e)
 
 def rejected : Realization signature :=
   realize signature (fun _ _ _ => false) (fun e => nomatch e)
@@ -56,14 +55,16 @@ abbrev arena : Arena where
   Law O := ∀ (a b : Space),
     ⟪a, b⟫_ℝ ^ 2 < ‖a‖ ^ 2 * ‖b‖ ^ 2 →
     ∀ (R : Orthogonal), determinant R = 1 →
-      ∃ l : List Orthogonal, O.readout () (a, b, R) l = true
+      ∃ l : List Orthogonal, IsAxisWord a b l ∧ O.readout () ⟨a, b, R⟩ l.prod = true
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  obtain ⟨l, hl⟩ := h firstAxis secondAxis axes_gram 1 (by change LinearMap.det (1 : Space →ₗ[ℝ] Space) = 1; simp)
-  exact Bool.false_ne_true hl
+  obtain ⟨l, hl⟩ := h firstAxis secondAxis axes_gram 1
+    (by change LinearMap.det (1 : Space →ₗ[ℝ] Space) = 1; simp)
+  exact Bool.false_ne_true hl.2
 
 private theorem dependence : ObservationalDependence signature actual := by
+  classical
   intro i
   have hn : halfturn ≠ 1 := by
     intro heq
@@ -73,20 +74,13 @@ private theorem dependence : ObservationalDependence signature actual := by
     have hc := congrArg (fun v : Space => v 0) h
     change (-1 : ℝ) = 1 at hc
     norm_num at hc
-  refine ⟨(firstAxis, secondAxis, 1), [], [halfturn], ?_⟩
-  intro heq
-  have hnil : actual.readout i (firstAxis, secondAxis, 1) [] = true := by
-    change decide (IsAxisWord firstAxis secondAxis [] ∧ ([] : List Orthogonal).prod = 1) = true
-    simp [IsAxisWord]
-  have hsingle : actual.readout i (firstAxis, secondAxis, 1) [halfturn] = true :=
-    heq.symm.trans hnil
-  have hp : IsAxisWord firstAxis secondAxis [halfturn] ∧ [halfturn].prod = 1 :=
-    of_decide_eq_true hsingle
-  exact hn (by simpa only [List.prod_singleton] using hp.2)
+  refine ⟨⟨firstAxis, secondAxis, 1⟩, 1, halfturn, ?_⟩
+  change decide ((1 : Orthogonal) = 1) ≠ decide (halfturn = 1)
+  simp [hn]
 
 def family : Registration arena (type_of% (@two_axis_finite_word)) where
   actual := actual
-  bridge := by simp only [arena, actual, realize, decide_eq_true_eq]
+  bridge := by simp only [actual, realize, decide_eq_true_eq]
   variation := ⟨by simpa only [arena, actual, realize, decide_eq_true_eq]
     using two_axis_finite_word, rejected, rejected_law⟩
   sensitivity := ⟨fun i => ⟨rejected,
@@ -109,8 +103,7 @@ def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_
   bundleNonempty := .absent
   readout := by
     classical
-    exact some (realize signature
-      (fun _ p l => decide (IsAxisWord p.1 p.2.1 l ∧ l.prod = p.2.2)) (fun e => nomatch e))
+    exact some (realize signature (fun _ p T => decide (T = p.2.2)) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -120,10 +113,10 @@ def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_
     definition := none
     coordinates := #[0, 1, 3]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "arg", "body"]
-      stateBinder := 5
+      path := #["body", "body", "body", "body", "body", "arg", "body", "arg"]
+      stateBinder := 0
       functionOperand := false
-      stateOperand := none
+      stateOperand := some #["fn", "arg"]
       booleanPredicate := true }] }
   continuation := .unknown
   familyRecord := none
@@ -135,12 +128,16 @@ namespace Transport
 
 universe u
 
-structure Parameters where
-  Y : Type u
-  F : (Space × Space) → Y
-  p : Space × Space
-  a : Space
-  b : Space
+abbrev Parameters :=
+  Σ Y : Type u, Σ _ : (Space × Space) → Y, Σ _ : Space × Space, Σ _ : Space, Space
+
+namespace Parameters
+abbrev Y (q : Parameters.{u}) := q.1
+abbrev F (q : Parameters.{u}) := q.2.1
+abbrev p (q : Parameters.{u}) := q.2.2.1
+abbrev a (q : Parameters.{u}) := q.2.2.2.1
+abbrev b (q : Parameters.{u}) := q.2.2.2.2
+end Parameters
 
 abbrev signature : Signature where
   Params := Parameters.{u}
@@ -160,7 +157,7 @@ def rejected : Realization signature.{u} :=
 
 abbrev arena : Arena where
   signature := signature.{u}
-  Law O := ∀ (Y : Type u) (F : (Space × Space) → Y) (p : Space × Space)
+  Law O := ∀ {Y : Type u} (F : (Space × Space) → Y) (p : Space × Space)
     (a b : Space),
     ⟪a, b⟫_ℝ ^ 2 < ‖a‖ ^ 2 * ‖b‖ ^ 2 →
     (∀ (Q : Orthogonal), determinant Q = 1 → ∀ (T : Orthogonal),
@@ -169,12 +166,8 @@ abbrev arena : Arena where
     ∀ (R : Orthogonal), determinant R = 1 →
       O.readout () ⟨Y, F, p, a, b⟩ R = F p
 
-private def normParameters : Parameters.{u} where
-  Y := ULift.{u} ℝ
-  F p := ⟨‖p.1‖⟩
-  p := (firstAxis, 0)
-  a := firstAxis
-  b := secondAxis
+private def normParameters : Parameters.{u} :=
+  ⟨ULift.{u} ℝ, fun p => ⟨‖p.1‖⟩, (firstAxis, 0), firstAxis, secondAxis⟩
 
 private theorem norm_local :
     ∀ (Q : Orthogonal), determinant Q = 1 → ∀ (T : Orthogonal),
@@ -188,7 +181,7 @@ private theorem norm_local :
 
 private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
-  have heq := h normParameters.{u}.Y normParameters.{u}.F normParameters.{u}.p
+  have heq := h (Y := normParameters.{u}.Y) normParameters.{u}.F normParameters.{u}.p
     normParameters.{u}.a normParameters.{u}.b axes_gram norm_local
     1 (by change LinearMap.det (1 : Space →ₗ[ℝ] Space) = 1; simp)
   have hnorm := congrArg ULift.down heq
@@ -196,12 +189,8 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   exact (zero_ne_one : (0 : ℝ) ≠ 1)
     (by simpa only [norm_zero, firstAxis_norm] using hnorm)
 
-private def coordinateParameters : Parameters.{u} where
-  Y := ULift.{u} ℝ
-  F p := ⟨p.1 0⟩
-  p := (firstAxis, 0)
-  a := firstAxis
-  b := secondAxis
+private def coordinateParameters : Parameters.{u} :=
+  ⟨ULift.{u} ℝ, fun p => ⟨p.1 0⟩, (firstAxis, 0), firstAxis, secondAxis⟩
 
 private theorem dependence : ObservationalDependence signature.{u} actual := by
   intro i
