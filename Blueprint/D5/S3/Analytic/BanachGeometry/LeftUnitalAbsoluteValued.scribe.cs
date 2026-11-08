@@ -39,8 +39,7 @@ internal sealed class LeftUnitalAbsoluteValuedDocument : IScribeDocumentDefiniti
                         + "to every nonzero vector. Mathlib homothety identities give both "
                         + "exact operator norms.")),
                     Paragraph(Text(
-                        "This is precisely the Banach-space inference in OmegaQ020 Lemma 3.3, "
-                        + "source atom 29ed2981b018d6907b6e32cfb28541e5381f264c21324ce7190c551a824ecc1f. "
+                        "This is precisely the Banach-space inference in OmegaQ020 Lemma 3.3. "
                         + "The source starts with the real vector space mathcal A and seminorm p; "
                         + "its null space is p inverse of zero and its quotient norm must be "
                         + "norm([a])=p(a). Constructing that exact quotient, descending the "
@@ -61,8 +60,6 @@ internal sealed class LeftUnitalAbsoluteValuedDocument : IScribeDocumentDefiniti
                         "The mathematical source attributes the absolute-valued algebra "
                         + "background to Rodriguez Palacios, One-sided division absolute valued "
                         + "algebras, Publicacions Matematiques 36(2B), 925-954. The result is "
-                        + "a source formalization; no literature originality is claimed. "
-                        + "Its faithful Reg source reconstruction is separate from a complete "
-                        + "four-slot registration; any unfinished audit is tracked in issue 28177."))),
+                        + "a source formalization; no literature originality is claimed."))),
                 DescribeRole.Theorem))));
 }
