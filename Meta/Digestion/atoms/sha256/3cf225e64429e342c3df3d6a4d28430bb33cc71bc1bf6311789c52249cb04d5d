@@ -1,0 +1,16 @@
+**推论 40.2（全部完整事件的原局部复效果）。** 在同一条件下，对每个原 $f,w$ 存在唯一复 Hermitian 效果 $0\preceq F_{f,w}\preceq I_L$，满足
+
+$$
+\begin{aligned}
+\sum_{w\in\Omega_{10}}F_{f,w}&=I_L,\\
+c_{f,w}(A,B)&=m_0\langle V(A)-V(B),F_{f,w}(V(A)-V(B))\rangle,\\
+P_w(K_fK_av)&=\langle K_av,F_{f,w}K_av\rangle
+\quad(a\in\mathsf A).
+\end{aligned}
+\tag{40.12}
+$$
+
+证明。定理 39.3 的每个实正收缩 $C_{f,w}$ 与 $u$ 交换。余下扇区的复结构为 $J=(u-\operatorname{Re}\rho I)/\operatorname{Im}\rho$，故 $C_{f,w}$ 与 $J$ 交换，是复线性的 Hermitian 正收缩。经 $R$ 运输到 $L$ 得 $F_{f,w}$，其完整和为单位，比较公式由 (39.11)、(40.1) 得到。单字处与 (38.6) 相等，且 $m_0>0$，才可在这个等式中消去共同因子；原比较数并未重缩放。
+
+唯一性可在生成实空间上极化：若两个效果给所有配方差相同的二次值，其差的极化在各 $F([a])$ 上为零，因其张成整个 $W$ 而恒零。所有零事件仍为正效果中的零值；没有以非零成功事件替换完整和。∎
+

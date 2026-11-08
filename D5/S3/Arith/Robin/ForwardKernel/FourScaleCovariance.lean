@@ -36,7 +36,7 @@ private lemma pairing_le {f g : ℝ → ℝ} {l r : ℝ} (hlr : l ≤ r)
   simpa only [Real.norm_eq_abs, Real.rpow_two, sq_abs, ← Real.sqrt_eq_rpow,
     intervalIntegral.integral_of_le hlr, intervalL2] using hn
 
-private lemma moving_memLp {E : ℝ → ℝ} (hE : LocallyBoundedMeasurable E)
+lemma moving_memLp {E : ℝ → ℝ} (hE : LocallyBoundedMeasurable E)
     {a s : ℝ} (ha : 0 < a) (l r : ℝ) :
     MemLp (movingIncrement E a s) 2 (volume.restrict (Ioc l r)) := by
   have hu : Continuous (fun x : ℝ => s * x ^ a) :=
@@ -46,7 +46,7 @@ private lemma moving_memLp {E : ℝ → ℝ} (hE : LocallyBoundedMeasurable E)
   apply (memLp_two_iff_integrable_sq hm.aestronglyMeasurable).mpr
   exact (TranslationStripBounds.moving_sq_integrable hE ha l r).1
 
-private lemma average_memLp {E : ℝ → ℝ} (hE : LocallyBoundedMeasurable E)
+lemma average_memLp {E : ℝ → ℝ} (hE : LocallyBoundedMeasurable E)
     {a s M l r : ℝ} (ha : 0 < a) :
     MemLp (windowAverage M (movingIncrement E a s)) 2
       (volume.restrict (Ioc l r)) := by
@@ -95,7 +95,7 @@ private lemma translated_memLp {f : ℝ → ℝ} {l r v : ℝ} (hlr : l ≤ r)
   exact (intervalIntegrable_iff_integrableOn_Ioc_of_le hlr).mp
     (by simpa using hs.comp_add_right v)
 
-private lemma covariance_of_norm_bounds {f z : ℝ → ℝ} {l r M F Z U D S : ℝ}
+lemma covariance_of_norm_bounds {f z : ℝ → ℝ} {l r M F Z U D S : ℝ}
     (hlr : l ≤ r) (hM : 0 < M) (hF0 : 0 ≤ F) (hU0 : 0 ≤ U)
     (hfi : ∀ A B, MemLp f 2 (volume.restrict (Ioc A B)))
     (hzi : ∀ A B, MemLp z 2 (volume.restrict (Ioc A B)))
