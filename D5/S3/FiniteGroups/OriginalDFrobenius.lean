@@ -169,14 +169,15 @@ private theorem center_covariance (g : G) (z : Center r L) :
   rw [hinv]
 
 include ht in
-private theorem actual_complement_rank [Finite L] [Module.Finite k M] [Nontrivial M]
+private theorem actual_complement_regular [Finite L] [Module.Finite k M] [Nontrivial M]
     [Module.Finite D M]
     (hsemi : letI := actualModule r L; IsSemisimpleModule k[L] M)
     (hiso : letI := actualModule r L; IsIsotypic k[L] M)
     (hfix : ∀ g : G, g ∉ L → ∀ n : L, MulAut.conjNormal g n = n → n = 1)
     (hnt : ¬ Representation.IsTrivial ((representation r).comp L.subtype))
     (J : Subgroup G) [Finite J] (hJ : L.IsComplement' J) :
-    Nat.card J ∣ Module.finrank D M := by
+    ∃ (S : Submodule D M) (E : M ≃ₗ[D] (J → S)),
+      ∀ (j : J) (u : M) (g : J), E (t j u) g = E u (j⁻¹ * g) := by
   classical
   letI := actualModule r L
   letI : IsScalarTower k k[L] M := by
@@ -203,7 +204,7 @@ private theorem actual_complement_rank [Finite L] [Module.Finite k M] [Nontrivia
   letI : FaithfulSMul J F := by
     constructor
     intro g h he
-    apply (MonoidHom.ker_eq_bot_iff.mp hc)
+    apply (c.ker_eq_bot_iff.mp hc)
     apply AlgEquiv.ext
     change ∀ x : F, c g x = c h x at he
     exact he
@@ -216,11 +217,33 @@ private theorem actual_complement_rank [Finite L] [Module.Finite k M] [Nontrivia
   let a : F →+* Module.End D M := centerDAction r L t ht
   have cov (g : Gal(F/K)) (z : F) : tau g * a z = a (g z) * tau g := by
     obtain ⟨j, rfl⟩ := e.surjective g
+    simp only [tau, MonoidHom.comp_apply, MulEquiv.coe_toMonoidHom, e.symm_apply_apply]
     change t (j : G) * a z = a ((e j) z) * t (j : G)
     exact center_covariance r L t ht (j : G) z
-  let E := FrobeniusOriginalD.RegularAction.regularEquiv a tau cov
-  rw [Nat.card_congr e.toEquiv]
-  exact ⟨Module.finrank D (FrobeniusOriginalD.RegularAction.fixed tau), by
+  let EG := FrobeniusOriginalD.RegularAction.regularEquiv a tau cov
+  let EJ : M ≃ₗ[D] (J → FrobeniusOriginalD.RegularAction.fixed tau) :=
+    EG ≪≫ₗ LinearEquiv.piCongrLeft' D
+      (fun _ : Gal(F/K) => FrobeniusOriginalD.RegularAction.fixed tau) e.symm.toEquiv
+  refine ⟨FrobeniusOriginalD.RegularAction.fixed tau, EJ, ?_⟩
+  intro j u g
+  change EG (t (j : G) u) (e g) = EG u (e (j⁻¹ * g))
+  have htau : tau (e j) = t (j : G) := by simp [tau]
+  rw [← htau, FrobeniusOriginalD.RegularAction.regularEquiv_apply_action]
+  rw [map_mul, map_inv]
+
+include ht in
+private theorem actual_complement_rank [Finite L] [Module.Finite k M] [Nontrivial M]
+    [Module.Finite D M]
+    (hsemi : letI := actualModule r L; IsSemisimpleModule k[L] M)
+    (hiso : letI := actualModule r L; IsIsotypic k[L] M)
+    (hfix : ∀ g : G, g ∉ L → ∀ n : L, MulAut.conjNormal g n = n → n = 1)
+    (hnt : ¬ Representation.IsTrivial ((representation r).comp L.subtype))
+    (J : Subgroup G) [Finite J] (hJ : L.IsComplement' J) :
+    Nat.card J ∣ Module.finrank D M := by
+  classical
+  obtain ⟨S, E, _⟩ := actual_complement_regular r L t ht hsemi hiso hfix hnt J hJ
+  letI : Fintype J := Fintype.ofFinite J
+  exact ⟨Module.finrank D S, by
     rw [E.finrank_eq, Module.finrank_pi_fintype]
     simp [Nat.card_eq_fintype_card]⟩
 
@@ -229,7 +252,7 @@ end ActualCenter
 private theorem isotypic_of_semilinear
     {R S : Type*} [Ring R] [Ring S]
     {X Y : Type*} [AddCommGroup X] [AddCommGroup Y] [Module R X] [Module S Y]
-    (alpha : R ≃+* S) (e : X ≃ₛₗ[alpha.toRingHom] Y) (h : IsIsotypic S Y) :
+    (alpha : R ≃+* S) (e : X ≃ₛₗ[(alpha : R →+* S)] Y) (h : IsIsotypic S Y) :
     IsIsotypic R X := by
   letI := RingHomInvPair.of_ringEquiv alpha
   letI := RingHomInvPair.of_ringEquiv_symm alpha
@@ -268,13 +291,15 @@ private theorem le_inertia : N ≤ H ρ σ hσ := by
   apply le_antisymm
   · rintro _ ⟨x, hx, rfl⟩
     have hm := (P ρ σ).smul_mem (MonoidAlgebra.of k N ⟨n, hn⟩) hx
-    simpa only [MonoidAlgebra.of_apply, Representation.single_smul, one_smul,
-      MonoidHom.comp_apply, Representation.asModuleEquiv, LinearEquiv.refl_apply] using hm
+    simp only [MonoidAlgebra.of_apply, Representation.single_smul, one_smul] at hm
+    dsimp [Representation.asModuleEquiv, LinearEquiv.refl] at hm
+    exact hm
   · intro x hx
     refine ⟨ρ n⁻¹ x, ?_, ?_⟩
     · have hm := (P ρ σ).smul_mem (MonoidAlgebra.of k N ⟨n⁻¹, N.inv_mem hn⟩) hx
-      simpa only [MonoidAlgebra.of_apply, Representation.single_smul, one_smul,
-        MonoidHom.comp_apply, Representation.asModuleEquiv, LinearEquiv.refl_apply] using hm
+      simp only [MonoidAlgebra.of_apply, Representation.single_smul, one_smul] at hm
+      dsimp [Representation.asModuleEquiv, LinearEquiv.refl] at hm
+      exact hm
     · exact Representation.self_inv_apply ρ n x
 
 private theorem action_mem (h : H ρ σ hσ) (u : U ρ σ hσ) :
@@ -326,8 +351,9 @@ private def componentDAction : H ρ σ hσ →* Module.End (Module.End k[G] ρ.a
 private def componentRestrictionEquiv :
     letI := NormalizerImageAction.actualModule (componentAction ρ σ hσ)
       (N.subgroupOf (H ρ σ hσ))
-    (U ρ σ hσ) ≃ₛₗ[(MonoidAlgebra.domCongr k k
-      (Subgroup.subgroupOfEquivOfLe (le_inertia ρ σ hσ))).toRingEquiv.toRingHom] (P ρ σ) := by
+    (U ρ σ hσ) ≃ₛₗ[((MonoidAlgebra.domCongr k k
+      (Subgroup.subgroupOfEquivOfLe (le_inertia ρ σ hσ))).toRingEquiv :
+        k[N.subgroupOf (H ρ σ hσ)] →+* k[N])] (P ρ σ) := by
   letI := NormalizerImageAction.actualModule (componentAction ρ σ hσ)
     (N.subgroupOf (H ρ σ hσ))
   refine { toFun := fun u => u
@@ -338,7 +364,7 @@ private def componentRestrictionEquiv :
            map_smul' := ?_ }
   intro b u
   induction b using MonoidAlgebra.induction_linear with
-  | zero => simp only [zero_smul, map_zero]; rfl
+  | zero => simp only [zero_smul, map_zero]
   | add b c hb hc => simpa only [map_add, add_smul] using congrArg₂ (· + ·) hb hc
   | single n c =>
     apply Subtype.ext
@@ -379,15 +405,16 @@ private theorem component_isotypic :
 private instance component_nontrivial : Nontrivial (U ρ σ hσ) := by
   letI : IsSimpleModule k[N] σ.asSubmodule :=
     D5.S3.FiniteGroups.FiniteCharacterAlgebra.Subrepresentation.isSimpleModule_asSubmodule_iff.mpr hσ
-  exact Submodule.nontrivial_iff_ne_bot.mpr
-    (bot_lt_isotypicComponent k[N] (Representation.asModule (ρ.comp N.subtype)) σ.asSubmodule).ne'
+  have hp : Nontrivial (P ρ σ) := Submodule.nontrivial_iff_ne_bot.mpr
+    (bot_lt_isotypicComponent σ.asSubmodule).ne'
+  exact hp
 
 private instance componentDFinite : Module.Finite (Module.End k[G] ρ.asModule) (U ρ σ hσ) := by
+  classical
   let D := Module.End k[G] ρ.asModule
-  letI : Module.Finite D ρ.asModule := Module.Finite.of_restrictScalars_finite k D ρ.asModule
-  letI : Module.Finite D (Representation.asModule (ρ.comp N.subtype)) := by
-    change Module.Finite D ρ.asModule
-    infer_instance
+  letI : DivisionRing D := inferInstance
+  have hfin : Module.Finite D ρ.asModule := Module.Finite.of_restrictScalars_finite k D ρ.asModule
+  letI : Module.Finite D (Representation.asModule (ρ.comp N.subtype)) := hfin
   exact Module.Finite.of_injective (U ρ σ hσ).subtype Subtype.val_injective
 
 private instance component_comm : SMulCommClass k (Module.End k[G] ρ.asModule) (U ρ σ hσ) where
@@ -395,12 +422,171 @@ private instance component_comm : SMulCommClass k (Module.End k[G] ρ.asModule) 
     apply Subtype.ext
     change c • d u.val = d (c • u.val)
     have hd := d.map_smul (MonoidAlgebra.single (1 : G) c) u.val
-    simpa only [Representation.single_smul, map_one, Module.End.one_apply] using hd.symm
+    simp only [Representation.single_smul, map_one, Module.End.one_apply] at hd
+    dsimp [Representation.asModuleEquiv, LinearEquiv.refl] at hd
+    exact hd.symm
+
+private def globalDAction : G →* Module.End (Module.End k[G] ρ.asModule) ρ.asModule where
+  toFun g := (originalDTranslate ρ g).toLinearMap
+  map_one' := by
+    ext x
+    change ρ 1 x = x
+    simp
+  map_mul' g h := by
+    ext x
+    change ρ (g * h) x = ρ g (ρ h x)
+    rw [map_mul]
+    rfl
+
+private theorem component_to_full_regular [Finite G]
+    (C : Subgroup G) (hC : N.IsComplement' C)
+    (S : Submodule (Module.End k[G] ρ.asModule) (U ρ σ hσ))
+    (E : U ρ σ hσ ≃ₗ[Module.End k[G] ρ.asModule]
+      (C.subgroupOf (H ρ σ hσ) → S))
+    (hE : ∀ (j : C.subgroupOf (H ρ σ hσ)) (u : U ρ σ hσ)
+      (g : C.subgroupOf (H ρ σ hσ)),
+      E (componentDAction ρ σ hσ j u) g = E u (j⁻¹ * g)) :
+    ∃ T : ρ.asModule ≃ₗ[Module.End k[G] ρ.asModule] (C → S),
+      ∀ (c : C) (v : ρ.asModule) (x : C),
+        T (globalDAction ρ c v) x = T v (c⁻¹ * x) := by
+  classical
+  let D := Module.End k[G] ρ.asModule
+  letI : DivisionRing D := inferInstance
+  letI : Module.Finite D ρ.asModule := Module.Finite.of_restrictScalars_finite k D ρ.asModule
+  letI : Fintype C := Fintype.ofFinite C
+  let J := C.subgroupOf (H ρ σ hσ)
+  letI : Fintype J := Fintype.ofFinite J
+  let incl : U ρ σ hσ →ₗ[D] ρ.asModule := (U ρ σ hσ).subtype
+  let b : S →ₗ[D] U ρ σ hσ := E.symm.toLinearMap.comp (LinearMap.single D (fun _ : J => S) 1)
+  let A := globalDAction ρ
+  let T : (C → S) →ₗ[D] ρ.asModule := {
+    toFun := fun f => ∑ c : C, A (c : G) (incl (b (f c)))
+    map_add' := by intro f g; simp [map_add, Finset.sum_add_distrib]
+    map_smul' := by intro d f; simp [map_smul, Finset.smul_sum] }
+  have hsingle (c : C) (s : S) :
+      T (Pi.single c s) = A (c : G) (incl (b s)) := by
+    change (∑ x : C, A (x : G) (incl (b ((Pi.single c s : C → S) x)))) = _
+    rw [Finset.sum_eq_single c]
+    · simp
+    · intro x _ hx; simp [Pi.single_eq_of_ne hx]
+    · simp
+  have hbase (j : J) (s : S) :
+      componentDAction ρ σ hσ j (b s) = E.symm (Pi.single j s) := by
+    apply E.injective
+    rw [E.apply_symm_apply]
+    funext x
+    rw [hE]
+    have hb : E (b s) = (Pi.single (1 : J) s : J → S) := E.apply_symm_apply _
+    rw [hb]
+    change (Pi.single (1 : J) s : J → S) (j⁻¹ * x) = (Pi.single j s : J → S) x
+    by_cases hx : x = j
+    · subst x; simp
+    · simp [Pi.single_apply, hx, Ne.symm hx, inv_mul_eq_one]
+  have hu (u : U ρ σ hσ) :
+      u = ∑ j : J, componentDAction ρ σ hσ j (b (E u j)) := by
+    simp_rw [hbase]
+    have hs : (∑ j : J, Pi.single j (E u j)) = E u := by
+      ext j
+      simp [Finset.sum_apply, Pi.single_apply]
+    calc
+      u = E.symm.toLinearMap (∑ j : J, Pi.single j (E u j)) := by
+        rw [hs]; exact (E.symm_apply_apply u).symm
+      _ = _ := map_sum E.symm.toLinearMap _ _
+  let R := LinearMap.range T
+  have hCU (c : C) (u : U ρ σ hσ) : A (c : G) (incl u) ∈ R := by
+    rw [hu u, map_sum, map_sum]
+    apply R.sum_mem
+    intro j _
+    let cj : C := c * ⟨((j : H ρ σ hσ) : G), j.property⟩
+    have he : A (c : G) (incl (componentDAction ρ σ hσ j (b (E u j)))) =
+        T (Pi.single cj (E u j)) := by
+      rw [hsingle]
+      change A (c : G) (A (((j : H ρ σ hσ) : G)) (incl (b (E u j)))) =
+        A ((c : G) * ((j : H ρ σ hσ) : G)) (incl (b (E u j)))
+      rw [map_mul]
+      rfl
+    rw [he]
+    exact LinearMap.mem_range_self T _
+  have hGU (g : G) (u : U ρ σ hσ) : A g (incl u) ∈ R := by
+    obtain ⟨⟨c, n⟩, he, _⟩ := hC.symm.existsUnique g
+    rw [← he, map_mul, Module.End.mul_apply]
+    let nh : H ρ σ hσ := ⟨n.val, le_inertia ρ σ hσ n.property⟩
+    exact hCU c (componentDAction ρ σ hσ nh u)
+  have hstable (g : G) (v : ρ.asModule) (hv : v ∈ R) : A g v ∈ R := by
+    obtain ⟨f, rfl⟩ := hv
+    change A g (∑ c : C, A (c : G) (incl (b (f c)))) ∈ R
+    rw [map_sum]
+    apply R.sum_mem
+    intro c _
+    rw [← Module.End.mul_apply, ← map_mul]
+    exact hGU (g * (c : G)) (b (f c))
+  let Rg : Submodule k[G] ρ.asModule := {
+    carrier := R
+    zero_mem' := R.zero_mem
+    add_mem' := R.add_mem
+    smul_mem' := by
+      intro a v hv
+      change a • v ∈ R
+      induction a using MonoidAlgebra.induction_linear with
+      | zero => simpa using R.zero_mem
+      | add a b ha hb => simpa only [add_smul] using R.add_mem ha hb
+      | single g c =>
+        have hm := (R.restrictScalars k).smul_mem c (hstable g v hv)
+        simp only [Representation.single_smul]
+        dsimp [Representation.asModuleEquiv, LinearEquiv.refl]
+        exact hm }
+  have hRg : Rg ≠ ⊥ := by
+    intro hbot
+    obtain ⟨u, hu0⟩ := exists_ne (0 : U ρ σ hσ)
+    have huR := hGU 1 u
+    rw [map_one, Module.End.one_apply] at huR
+    have huRg : incl u ∈ Rg := huR
+    rw [hbot] at huRg
+    exact hu0 (Subtype.ext huRg)
+  have htop : Rg = ⊤ := (eq_bot_or_eq_top Rg).resolve_left hRg
+  have hsurj : Function.Surjective T := by
+    apply LinearMap.range_eq_top.mp
+    ext v
+    change v ∈ Rg ↔ v ∈ (⊤ : Submodule D ρ.asModule)
+    rw [htop]
+    simp
+  have hdim : Module.finrank D (C → S) = Module.finrank D ρ.asModule := by
+    rw [Module.finrank_pi_fintype]
+    simp only [Finset.sum_const, Finset.card_univ, nsmul_eq_mul]
+    rw [originalD_finrank_independent_universes ρ σ hσ, E.finrank_eq,
+      Module.finrank_pi_fintype]
+    simp only [Finset.sum_const, Finset.card_univ, nsmul_eq_mul]
+    have hc : Fintype.card C = (H ρ σ hσ).index * Fintype.card J := by
+      rw [← Nat.card_eq_fintype_card, ← Nat.card_eq_fintype_card,
+        ← hC.symm.index_eq_card,
+        ← (restrict_complement N C (H ρ σ hσ) (le_inertia ρ σ hσ) hC).symm.index_eq_card]
+      exact (N.relIndex_mul_index (le_inertia ρ σ hσ)).symm.trans (Nat.mul_comm _ _)
+    rw [hc]
+    simpa only [Nat.cast_id] using (Nat.mul_assoc (H ρ σ hσ).index (Fintype.card J)
+      (Module.finrank D S))
+  let T' := LinearEquiv.ofBijective T
+    ⟨(LinearMap.injective_iff_surjective_of_finrank_eq_finrank hdim).mpr hsurj, hsurj⟩
+  refine ⟨T'.symm, ?_⟩
+  intro c v x
+  have heq : T (fun x => T'.symm v (c⁻¹ * x)) = A (c : G) (T (T'.symm v)) := by
+    change (∑ x : C, A (x : G) (incl (b (T'.symm v (c⁻¹ * x))))) =
+      A (c : G) (∑ x : C, A (x : G) (incl (b (T'.symm v x))))
+    rw [map_sum]
+    simp_rw [← Module.End.mul_apply, ← map_mul]
+    symm
+    exact Fintype.sum_equiv (Equiv.mulLeft c) _ _ (fun _ => by simp)
+  have heq' : T'.symm (A (c : G) v) = fun x => T'.symm v (c⁻¹ * x) := by
+    apply T'.injective
+    change T (T'.symm (A (c : G) v)) = T (fun x => T'.symm v (c⁻¹ * x))
+    rw [heq]
+    change T' (T'.symm (A (c : G) v)) = A (c : G) (T' (T'.symm v))
+    rw [T'.apply_symm_apply, T'.apply_symm_apply]
+  exact congrFun heq' x
 
 private theorem invariants_bot
     (hnt : ¬ Representation.IsTrivial (ρ.comp N.subtype)) :
-    (ρ.comp N.subtype).invariants = ⊥ := by
-  let S : Subrepresentation ρ := ⟨(ρ.comp N.subtype).invariants,
+    (_root_.Representation.invariants (ρ.comp N.subtype)) = ⊥ := by
+  let S : Subrepresentation ρ := ⟨(_root_.Representation.invariants (ρ.comp N.subtype)),
     fun g _ hx => Representation.le_comap_invariants ρ N g hx⟩
   have hS : S ≠ ⊤ := by
     intro htop
@@ -421,7 +607,7 @@ private theorem component_nontrivial_on_N
   intro htriv
   letI := htriv
   have hz (u : U ρ σ hσ) : u = 0 := by
-    have hu : (u.val : V) ∈ (ρ.comp N.subtype).invariants := by
+    have hu : (u.val : V) ∈ (_root_.Representation.invariants (ρ.comp N.subtype)) := by
       intro n
       let n' : N.subgroupOf (H ρ σ hσ) := ⟨⟨n.val, le_inertia ρ σ hσ n.property⟩, n.property⟩
       have hn := Representation.IsTrivial.out (ρ :=
@@ -447,8 +633,10 @@ theorem index_dvd_originalD_finrank
     N.index ∣ Module.finrank (Module.End k[G] ρ.asModule) ρ.asModule := by
   classical
   letI : Nontrivial V :=
-    D5.S3.FiniteGroups.FiniteCharacterAlgebra.Representation.IsIrreducible.nontrivial inferInstance
-  obtain ⟨σ, hσ⟩ := exists_isAtom (ρ.comp N.subtype)
+    D5.S3.FiniteGroups.FiniteCharacterAlgebra.Representation.IsIrreducible.nontrivial (ρ := ρ) inferInstance
+  obtain ⟨σ, hσ⟩ :=
+    D5.S3.FiniteGroups.FiniteCharacterAlgebra.TauCeti.Representation.exists_isAtom (ρ.comp N.subtype)
+  letI : DivisionRing (Module.End k[G] ρ.asModule) := inferInstance
   let H := originalDActualInertia ρ σ hσ
   let L := N.subgroupOf H
   have hNH : N ≤ H := le_inertia ρ σ hσ
@@ -462,7 +650,9 @@ theorem index_dvd_originalD_finrank
       apply Subtype.ext
       exact congrArg (fun z : L => ((z : H) : G)) hn
     have hone := hfix (h : G) hh n₀ hn₀
-    exact Subtype.ext (Subtype.ext (congrArg Subtype.val hone))
+    apply Subtype.ext
+    apply Subtype.ext
+    exact congrArg (fun z : N => (z : G)) hone
   have hrank : L.index ∣ Module.finrank (Module.End k[G] ρ.asModule)
       (originalDBaseComponent ρ σ hσ) := by
     rw [hJ.symm.index_eq_card]
@@ -473,6 +663,59 @@ theorem index_dvd_originalD_finrank
   rw [originalD_finrank_independent_universes ρ σ hσ,
     ← N.relIndex_mul_index hNH, Nat.mul_comm (N.relIndex H) H.index]
   exact Nat.mul_dvd_mul_left H.index hrank
+
+/-- The actual complement acts as a direct sum of its left regular representation,
+over the original, possibly noncommutative Schur division ring. -/
+theorem exists_complement_originalD_regular
+    [Finite G] {k : Type uk} [Field k] {V : Type uV} [AddCommGroup V] [Module k V]
+    (N : Subgroup G) [N.Normal] (ρ : Representation k G V)
+    [FiniteDimensional k V] [ρ.IsIrreducible]
+    (hfix : ∀ g : G, g ∉ N → ∀ n : N, MulAut.conjNormal g n = n → n = 1)
+    (hnt : ¬ Representation.IsTrivial (ρ.comp N.subtype)) :
+    ∃ C : Subgroup G, N.IsComplement' C ∧
+      ∃ (S : Submodule (Module.End k[G] ρ.asModule) ρ.asModule)
+        (E : ρ.asModule ≃ₗ[Module.End k[G] ρ.asModule] (C → S)),
+        ∀ (c : C) (v : ρ.asModule) (x : C),
+          E (originalDTranslate ρ c v) x = E v (c⁻¹ * x) := by
+  classical
+  letI : Nontrivial V :=
+    D5.S3.FiniteGroups.FiniteCharacterAlgebra.Representation.IsIrreducible.nontrivial (ρ := ρ) inferInstance
+  obtain ⟨σ, hσ⟩ :=
+    D5.S3.FiniteGroups.FiniteCharacterAlgebra.TauCeti.Representation.exists_isAtom (ρ.comp N.subtype)
+  let D := Module.End k[G] ρ.asModule
+  letI : DivisionRing D := inferInstance
+  let H := originalDActualInertia ρ σ hσ
+  let L := N.subgroupOf H
+  have hNH : N ≤ H := le_inertia ρ σ hσ
+  obtain ⟨C, hC⟩ := exists_complement N hfix
+  let J := C.subgroupOf H
+  have hJ : L.IsComplement' J := restrict_complement N C H hNH hC
+  have hfixH : ∀ h : H, h ∉ L → ∀ n : L, MulAut.conjNormal h n = n → n = 1 := by
+    intro h hh n hn
+    let n₀ : N := ⟨((n : H) : G), n.property⟩
+    have hn₀ : MulAut.conjNormal (h : G) n₀ = n₀ := by
+      apply Subtype.ext
+      exact congrArg (fun z : L => ((z : H) : G)) hn
+    have hone := hfix (h : G) hh n₀ hn₀
+    apply Subtype.ext
+    apply Subtype.ext
+    exact congrArg (fun z : N => (z : G)) hone
+  obtain ⟨S, E, hE⟩ := actual_complement_regular (componentAction ρ σ hσ) L
+    (componentDAction ρ σ hσ) (fun _ _ => rfl)
+    (component_semisimple ρ σ hσ) (component_isotypic ρ σ hσ) hfixH
+    (component_nontrivial_on_N ρ σ hσ hnt) J hJ
+  obtain ⟨T, hT⟩ := component_to_full_regular ρ σ hσ C hC S E hE
+  let incl : U ρ σ hσ →ₗ[D] ρ.asModule := (U ρ σ hσ).subtype
+  let S' := S.map incl
+  let eS : S ≃ₗ[D] S' := S.equivMapOfInjective incl Subtype.val_injective
+  let T' := T ≪≫ₗ LinearEquiv.piCongrRight (fun _ : C => eS)
+  refine ⟨C, hC, S', T', ?_⟩
+  intro c v x
+  exact congrArg eS (hT c v x)
+
+set_option pp.universes true in
+#check @exists_complement_originalD_regular
+#print axioms exists_complement_originalD_regular
 
 set_option pp.universes true in
 #check @index_dvd_originalD_finrank
