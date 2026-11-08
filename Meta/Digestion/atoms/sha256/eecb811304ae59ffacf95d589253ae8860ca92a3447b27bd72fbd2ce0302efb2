@@ -1,0 +1,38 @@
+**命题 76.1（同一投影贫乏原域上的 PB 删除反模型）。** 在 (75.1) 的同一个原 $E,S,C,u,N,\mathcal P$ 上，定义
+
+$$
+D_0(a,b)=
+\begin{cases}
+\kappa(a,b),&a,b\in I,\\
+0,&\text{其他输入对}.
+\end{cases}
+\tag{76.1}
+$$
+
+这是满足 $\mathsf H_{\rm orig}$ 的全部数学关系及完整种子识别的原值总映射；它不满足 PB，也不满足全原域可加性。因此删除 PB 后，种子不能传播到全部原输入。本反模型不声称供应完整实际来源。
+
+证明。每一对的二表要么是标准 C* 复 Gram 表，要么是 $D_0=0$ 的实 Gram 表，两者均正。标准 $S$ 的实相加三角和小效果收缩保持；反对称性使实相加差的复平方也为零。因此没有删去 $\mathsf H_{\rm orig}$ 的其他关系。
+
+记 $X_2=\left(\begin{smallmatrix}0&1\\1&0\end{smallmatrix}\right)$、$Y_2=\left(\begin{smallmatrix}0&-\mathrm i\\\mathrm i&0\end{smallmatrix}\right)$、$Z_2=\operatorname{diag}(1,-1)$，取原函数 $f(t)=t(1-t)$ 及实际原三标签
+
+$$
+a=u+fX_2,\qquad b=f(I_2+Z_2),\qquad c=0.
+$$
+
+此时 $a\notin I$、$b\in I$、$D_0(a,b)=0$，故 PB 的 $v=0$、$w=a\circ b=b+f^2X_2\in I$。其元素有限差分左侧为
+
+$$
+D_0(b,w)-D_0(b,-w)=2\kappa(b,w)=-2f^3Y_2\ne0,
+\tag{76.2}
+$$
+
+右侧 $-2b\circ v-2c\circ w=0$；全部正评价能检测这个失配。另一方面
+
+$$
+D_0(u+fX_2,b)=0,\quad D_0(u,b)=0,\quad
+D_0(fX_2,b)=f^2Y_2\ne0,
+\tag{76.3}
+$$
+
+所以同一个旧有向二元关系确实不尊重原相加。这里没有保留 PB，因而不是完整父候选的反模型。∎
+

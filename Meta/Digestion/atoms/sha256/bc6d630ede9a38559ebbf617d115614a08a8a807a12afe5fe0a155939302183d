@@ -1,0 +1,28 @@
+#### 推论 6.9：同一比较的正锥与可读性
+
+$$
+E_+=\{F^2:F=F^*\},\qquad E_+\cap(-E_+)=\{0\},
+$$
+
+且 $E_+$ 对迹配对自对偶：
+
+$$
+G\in E_+\iff\operatorname{Tr}(GF)\ge0\quad\forall F\in E_+.
+$$
+
+每个非零 $G\in E_+$ 都满足 $\operatorname{Tr}G>0$。
+
+**证明。**
+
+自伴平方的本征值非负；反之，对正算子的两个非负本征值取平方根， 得到自伴平方根。正锥及其负锥只能在两个本征值全零时相交。 若 $F=sI+\sigma_z$、$G=tI+\sigma_w$ 都正，则
+
+$$
+\operatorname{Tr}(FG)=2(st+B(z,w))\ge2(st-\lVert z\rVert\lVert w\rVert)\ge0.
+$$
+
+若 $G\notin E_+$ 且 $w\ne0$，取 $F=I-\sigma_{w/\lVert w\rVert}$， 得到 $\operatorname{Tr}(FG)=2(t-\lVert w\rVert)<0$。 若 $w=0,t<0$，取 $F=I$ 即可。最后非零正算子至少有一个正本征值，故迹为正。
+
+$\square$
+
+幅度集合 $A$ 与正对象集合 $E_+$ 类型不同。$q(-x)=q(x)$ 表示幅度反向不产生负读数， 而 $G,-G$ 同为正对象只可能 $G=0$。两者都由显示关系表达，不需赋予负幅度“负存在”的含义。
+

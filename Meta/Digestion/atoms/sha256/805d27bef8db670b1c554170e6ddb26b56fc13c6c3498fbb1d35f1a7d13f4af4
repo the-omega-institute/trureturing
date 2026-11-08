@@ -1,0 +1,48 @@
+#### 定理 6.12：从幅度到方向的准确相位商
+
+对 $x\ne0$ 定义
+
+$$
+r_e(x)=\frac{\bar x e x}{q(x)}\in W.
+$$
+
+它是单位方向。对归一幅度 $x,y$，有
+
+$$
+r_e(x)=r_e(y)\iff y=e^{\phi e}x=e^{\phi J}x
+\quad\text{对某个 }\phi\in\mathbb R.
+$$
+
+该映射满射，所以
+
+$$
+S^1\longrightarrow S^3\longrightarrow S^2,
+\qquad \mathbb P(H_J)=\mathbb{CP}^1\cong S(W).
+$$
+
+并有
+
+$$
+P_{r_e(x)}y=\frac{h(x,y)}{q(x)}\,x,\qquad
+\operatorname{Tr}(P_{r_e(x)}P_{r_e(y)})
+=\frac{|h(x,y)|^2}{q(x)q(y)}.
+$$
+
+右端系数均按前述左复标量约定作用。
+
+**证明。**
+
+共轭和范数乘性给 $r_e(x)\in W$、$q(r_e(x))=1$。 已证共轭覆盖全部三维旋转，所以 $\bar x e x$ 在单位幅度上取遍单位球。 若归一 $x,y$ 具有相同方向，置 $u=y\bar x$，则 $q(u)=1$ 且 $ue=eu$。 由纯部乘法式，$e$ 的中心化子恰为 $\mathbb R\mathbf 1+\mathbb Re$； 其中单位元恰为 $\cos\phi\mathbf 1+e\sin\phi$，得到纤维式。 反向把 $y=e^{\phi e}x$ 代入即可。 一般非零幅度先除以 $\sqrt{q(x)}$，故相同方向恰对应同一复射线。
+
+结合性给 $x r_e(x)=e x$，于是
+
+$$
+\sigma_{r_e(x)}x=-e(xr_e(x))=-e(e x)=x.
+$$
+
+秩一投影 $P_{r_e(x)}$ 的像因此是复线 $\mathbb Cx$；正交投影的系数由 $h(x,y-\lambda x)=0$ 唯一确定为 $\lambda=h(x,y)/q(x)$。 两个秩一投影的迹乘积遂为所示平方模。
+
+$\square$
+
+射线商并不等于原零读出商：$\mathbf 1$ 与 $e$ 有相同的 $r_e$， 但原带参考表达式给 $q(\mathbf 1+\mathbf 1)=4$、$q(e+\mathbf 1)=2$。 因此实际相位参考若仍可使用，必须作为内部对象保留； 只有经过上述相位不变读出的菜单才将这些幅度识别为同一纯态。 一般复 $d$ 维幅度的射线空间为 $\mathbb{CP}^{d-1}$，局部用 $d-1$ 个复坐标表示， 实维为 $2d-2$；本节三维球面的方向表示只对应 $d=2$。
+
