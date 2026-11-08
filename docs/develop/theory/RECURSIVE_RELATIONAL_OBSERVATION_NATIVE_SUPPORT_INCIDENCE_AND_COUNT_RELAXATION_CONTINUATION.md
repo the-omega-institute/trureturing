@@ -4436,3 +4436,254 @@ installed states at the original execution caps, without a physical
 memory or service-realization conclusion.
 
 ## 追加锚（本行以下为增补区）
+
+## 48. 实际第三行见证与继承后继的联合支撑界
+
+**定义 48.1（同一原图的链、私有坐标与实际回复词）。** 固定定义 44.1
+中的任意 $L\ge4$、$n=L+3$、正整数位置 $s_1<\cdots<s_n$ 及原成本
+$c_i=s_i+4$。固定满足假设 21.1 的一张完整图 $P$：每个同一输入均分别满足
+查询上限 $n$ 与字母上限 $W=\sum_i c_i$。保留所有安装状态、固定起点、
+坐标与后继、自适应次序、付费认证后查询及重复，以及可能不一致的 union cycles。
+设定义 45.1 的连续终端 gap 为 $B=(a,n)$，$1\le a\le L-3$，且
+$Z=\{z_0,\ldots,L-1\}\ne\varnothing$。沿用其 $R,t,r_0,\iota,s$，
+定义 44.1 的 $e_p,g_w,\xi_w,\nu$ 及定义 47.1 的 $\kappa$，不另分配这些量。
+
+记 $S_z$ 为实际零轴在 $q_z$ 的支撑，$0\le z\le L-1$。
+在 $q_{z_0}$ 选择一条实际 $(2,z_0-2)$ 历史，支撑为 $T_{z_0}$。
+两支撑不可比较，故可固定 $x\in S_{z_0}\setminus T_{z_0}$。
+按引理 45.2 沿共同零后继延伸所选上侧历史，得到 $T_z$，$z\in Z$。
+每次查询均在两条当时支撑之外，并把同一坐标加入两支撑。因此
+
+$$
+\begin{gathered}
+T_z=T_{z_0}\cup(S_z\setminus S_{z_0}),\qquad
+x\in S_z\setminus T_z\quad(z\in Z),\\
+r_z=\delta(q_z,1),\qquad
+\widehat S_z=S_z\cup\{i(q_z)\},\qquad
+\widehat T_z=T_z\cup\{i(q_z)\},\\
+(1,z,\widehat S_z,r_z),\quad(3,z-2,\widehat T_z,r_z)
+\quad\text{均由实际活历史见证},\qquad
+x\notin\widehat T_z.
+\end{gathered}
+\tag{SI.303}
+$$
+
+上式四元组依次记录 hits、zeros、支撑和宿主。特别地，$z=L-1$ 时
+$\widehat S_z,\widehat T_z$ 是实际 one-children 的支撑，未引入深度 $L$
+的活零轴。引理 45.2 同时给出全图无 row-$0/3$ sharing。
+
+回复词 $0^u1^v$ 只指从 $P$ 的原固定起点依次取得这些回复的实际前缀，
+不指定被查询坐标。本文所用词的每个前缀都满足 hits 小于四、zeros 小于 $L$；
+[SI，定理 2.2][SI] 的 freshness 和固定后继律使其逐步具有一致的实际完成。
+定义整数区间
+
+$$
+\mathcal W=\{w\in\mathbb Z:z_0-1\le w\le L-3\},\qquad
+\mathcal J=\{z\in\mathbb Z:z_0+1\le z\le L-1\}.
+\tag{SI.304}
+$$
+
+它们均有 $s-1$ 个元素；$s=1$ 时均为空。由
+$z_0\ge\max(3,a+1)$，$\mathcal W\subseteq\{r_0,\ldots,L-3\}$。
+
+**定理 48.2（避开指定宿主的第三行注入与第二行额外支撑）。** 对定义 48.1
+中的任意同一原图，有
+
+$$
+\begin{aligned}
+\sum_{w\in\mathcal W}\xi_w+
+\sum_{z\in\mathcal J}e_{(1,z)}&\ge s-1,\\
+e_{(2,w+1)}&\ge1\qquad(w\in\mathcal W),\\
+\sum_{w\in\mathcal W}(g_w+\xi_w)&\ge2(s-1).
+\end{aligned}
+\tag{SI.305}
+$$
+
+本定理的支撑与后继供应为 [SI，定理 2.2 及 (SI.7)][SI]、引理 45.2。
+新增内容是以下实际宿主注入及其与第二行支撑的联合计数；有限集合的注入计数本身
+是通常的基数原理。它不要求每次碰撞具有不同的付费辨别器。
+
+证明。对每个 $w\in\mathcal W$，取实际词 $0^w111$ 的末端宿主 $v_w$。
+其活 cell 为 $(3,w)$，支撑包含 $S_{w+1}$，因而包含 $x$。
+不同 $w$ 的 $v_w$ 互异，否则同一宿主具有相同 hits、不同 zeros 的两条活历史，
+违反 (SI.7)。若 $v_w$ 全局不共享，则计入 $\xi_w$。
+若它还宿主另一个活 cell，无 row-$0/3$ sharing 排除 row zero，
+hit gap one 排除 row two，同 hits 排斥排除另一 row-three cell。
+因此唯一可能的另一 cell 是 $(1,z)$，且 (SI.7) 强迫
+
+$$
+z\ge w+2\ge z_0+1,\qquad z\le L-1,
+\quad\text{即 }z\in\mathcal J.
+\tag{SI.306}
+$$
+
+对这样的 $z$，指定宿主 $r_z$ 已由 (SI.303) 宿主 $(3,z-2)$。
+若 $z>w+2$，等式 $v_w=r_z$ 会把两个不同的 row-three cells 放在同一宿主，
+与同 hits 排斥矛盾。若 $z=w+2$，这两个 row-three cells 相同，
+但 $v_w$ 的上述支撑含 $x$，而 $r_z$ 的继承支撑 $\widehat T_z$ 不含 $x$。
+[SI，定理 2.2(2)][SI] 禁止同一 cell、同一宿主具有两个不同支撑。
+故在两种情形均有
+
+$$
+v_w\ne r_z,\qquad
+v_w\in F_{(1,z)}\setminus\{r_z\}.
+\tag{SI.307}
+$$
+
+各 $F_{(1,z)}$ 彼此不交，其删去指定宿主后的大小恰为 $e_{(1,z)}$。
+这些集合与全局不共享的 row-three 宿主集合不交；不同 $w$ 的后一集合也不交。
+于是互异的实际状态 $v_w$ 注入这些容量之并，证明 (SI.305) 的第一行。
+这里没有把 $F_{(1,z)}$ 的完整大小冒充其额外容量。
+
+再对每个 $w\in\mathcal W$，取实际词 $0^{w+1}11$ 的末端历史。
+其 cell 为 $(2,w+1)$。它在前 $w+2$ 次查询后的支撑恰为 $S_{w+2}$，
+因为 $0^{w+1}1$ 与零轴的 $0^{w+2}$ 是同一实际前缀的两个活 children。
+故末端支撑包含 $S_{w+2}$，从而含 $x$。
+当 $w\le L-4$，相同 cell 在 $q_{w+3}$ 有继承支撑 $T_{w+3}$，不含 $x$。
+当 $w=L-3$，从 $q_{L-1}$ 的实际上侧 $(2,L-3)$ 历史取零回复，得到
+
+$$
+(2,L-2,\widehat T_{L-1},\delta(q_{L-1},0)),\qquad
+x\notin\widehat T_{L-1}.
+\tag{SI.308}
+$$
+
+这是活的 row-two child；不需要其下侧零回复仍活。
+在两种情形，同一 row-two cell 都有一条含 $x$ 和一条不含 $x$ 的实际支撑。
+[SI，定理 2.2][SI] 因而给出 $a_{(2,w+1)}\ge2$、
+$b_{(2,w+1)}\ge2$，证明第二行。
+
+最后 $w\mapsto w+2$ 是 $\mathcal W$ 到 $\mathcal J$ 的双射，故
+
+$$
+\begin{aligned}
+\sum_{w\in\mathcal W}(g_w+\xi_w)
+&=\sum_{z\in\mathcal J}e_{(1,z)}
+  +\sum_{w\in\mathcal W}\xi_w
+  +\sum_{w\in\mathcal W}e_{(2,w+1)}\\
+&\ge(s-1)+(s-1).
+\end{aligned}
+\tag{SI.309}
+$$
+
+第一行注入只使用 row-one 额外宿主与全局不共享的 row-three 宿主；
+第二行使用不同 cells 的 row-two excess。后者与前者是不同的求和项，
+没有把一份已支付另一需求的容量再次相加。所有历史、支撑及后继都属于最初固定的
+$P$；没有合并独立优化器或重新指定支撑。$\square$
+
+## 49. 完整原链的额外 reserve 与终端 gap 补偿
+
+**定理 49.1（原长链的统一严格补偿）。** 对定义 48.1 的每张原图，保留
+完整 $R$ 与唯一全局 $\nu$，有
+
+$$
+\boxed{\quad
+\kappa\ge s-1,\qquad
+E_B-D_B\ge1+\iota,\qquad
+m-4L\ge R+\nu+1+\iota.
+\quad}
+\tag{SI.310}
+$$
+
+特别地，(SI.302) 对其中每个 $L\ge7$、每个原成本元组、
+每个 $1\le a\le L-4$ 及每条非空实际后缀均成立。
+
+证明。记 $H_w=g_w+\xi_w$，$r_0\le w\le L-3$。
+共有 $t$ 个下标，其中 $s-1$ 个属于 $\mathcal W$。
+对这些下标用定理 48.2，对其余下标用引理 44.2；其末端版本适用，
+因为引理 45.2 已排除全图的 row-$0/3$ sharing。于是
+
+$$
+\sum_{w=r_0}^{L-3}H_w
+\ge 2(s-1)+\bigl(t-(s-1)\bigr)=t+s-1.
+\tag{SI.311}
+$$
+
+定理 45.3 的 reserve 划分在此原图上仍逐项适用。
+$g_w$ 使用 row-one 与 row-two 的不同 cells，深度为 $w+3\le L$；
+$\xi_w$ 使用 $C$ 中不同的全局不共享 row-three 宿主族。
+两个内部非共同对角线 $L+1,L+2$ 各提供一个 $E_{\rm out}$ 单位，
+与所有这些 $g_w$ 分离；当 $a=1$ 时，深度二另提供一个分离单位 $\iota$。
+因此复用该划分并保留 (SI.311) 中的全部额外量，得到
+
+$$
+E_{\rm out}+\xi
+\ge\sum_{w=r_0}^{L-3}H_w+2+\iota
+\ge t+s+1+\iota.
+\tag{SI.312}
+$$
+
+按 (SI.300) 减去 $t+2+\iota$，即得 $\kappa\ge s-1$。
+再将它分别代入同图恒等式 (SI.290) 与 (SI.301)：
+
+$$
+\begin{aligned}
+E_B-D_B&=\kappa+2+\iota-s\ge1+\iota,\\
+m-4L&=R+\nu+\kappa+2+\iota-s\ge R+\nu+1+\iota.
+\end{aligned}
+\tag{SI.313}
+$$
+
+由于 $R,\nu\ge0$，也有 $R+\nu+\kappa\ge s-1\ge s-2-\iota$，
+这正给出 (SI.302) 的全部量词。全局 $\nu$ 只在原恒等式中出现一次，
+没有按碰撞或下标分摊；证明甚至不需消耗它或 $R$ 来支付该链。
+$s=1$ 时 (SI.311) 的加强下标集为空，同一推导仍成立。
+
+本定理是定理 48.2 与既有 disjoint reserve 的同图综合推论，属于
+repo-derived 数学推导；引理 44.2、定理 45.3 的基准 reserve、
+(SI.301)、$3L+6$ 下界及 span-six 结论均作为既有供应使用。
+新增承重步骤是 (SI.307)--(SI.309) 的联合实际容量，而非重复局部付费证书。
+$\square$
+
+## 50. 原 min$(K,L)=4$ 家族的执行最小值
+
+**定理 50.1（原双上限下的完整阈值四家族）。** 设 $K,L\ge4$、
+$\min(K,L)=4$、$n=K+L-1$。对每个正整数位置元组
+$s_1<\cdots<s_n$，令 $c_i=s_i+4$、$W=\sum_i c_i$。
+则每张满足假设 21.1、在每个同一输入上分别满足 $t_P\le n$ 与 $J_P\le W$
+的完整原图至少有 $KL$ 个安装运行状态，并且
+
+$$
+\boxed{m_{\rm exec}(c,K)=KL.}
+\tag{SI.314}
+$$
+
+这里的最小值严格采用 [CP，定义 4.1][CP]，仍计入未使用安装状态、
+认证后付费查询和重复；不附加 read-once、无环、子集和唯一性或服务实现假设。
+
+证明。先取 $K=4$。$L=4,5,6$ 的精确值复用定理 46.2。
+对 $L\ge7$，反设一张原图有 $m<4L$。
+推论 23.2 已补偿所有非终端 gaps，并把唯一可能的正 deficit 定位为连续终端
+$B=(a,n)$，$1\le a\le L-3$。这正是定义 45.1 的范围。
+若 $Z=\varnothing$，定理 45.3 给出 $D_B\le E_B$；
+若 $Z\ne\varnothing$，定理 49.1 给出更强的 $E_B-D_B\ge1+\iota$。
+两种情形都与正 deficit 矛盾。故任意此类原图均有 $m\ge4L$。
+此论证复用 (SI.164) 的完整原图计数，未舍弃其他 gaps、cut excess 或未活状态。
+
+[PCA，定理 26.1][PCA] 的原固定次序 grid 对每个相同的原成本元组安装
+$4L$ 个 Boolean 运行状态，在每个输入上查询一个无重复坐标前缀，
+同时满足 $n,W$ 两个上限。它是原问题中已有的可行图，故
+$m_{\rm exec}(c,4)\le4L$。上下界合并给出 $K=4$ 时的 (SI.314)。
+
+若 $L=4$、$K\ge4$，用推论 23.1 的输入互补，并逐状态交换回复与输出终端。
+变换后的阈值参数为 $(K',L')=(4,K)$；固定起点、坐标、安装状态及每个对应输入的
+实际状态序列不变。因此查询数与原加权收费分别保持，两上限仍对同一对应输入成立。
+应用已经证明的 $K'=4$ 结论并变换回来，得到 $m_{\rm exec}(c,K)=4K$。
+这不是对两张分别优化的图合并资源界。
+
+式 (SI.314) 解决 [CP，(CP.28)][CP] 的整个 $\min(K,L)=4$ 子族；
+$\min(K,L)\ge5$ 的 CP.28 仍未由此论证决定。
+[CP，推论 4.2][CP] 与 [SI，约定 1.3][SI] 的原 full-fiber 对应仍将同一最小值
+送到原准备状态数 $KL+4+r$，其各次 paid profile front 与原 literal 成本保持原义。
+该对应继续以原来源纤维、原完整 entry、独立 reader 和所给服务为前提；
+安装状态基数不决定物理内存、服务实现或另一个无限预算最小值。
+
+本定理是原执行模型内的 repo-derived 结论；grid、互补对称、小规模精确值和
+原 native offset 均为供应，新增下界依赖定理 48.2 的实际联合支撑界。
+文献适用范围仍有明确区别：[Bryant，§2 定义 1][Bryant] 要求非终端边上的变量
+下标严格增加；[Cook、Edmonds、Medabalimi、Pitassi，§2.1][CEMP] 使用无环图，
+其 semantic read-once 类还限制每条一致 accepting path 的变量出现次数。
+这些限制均未加入假设 21.1，也未将相应受限模型下界迁移到这里。
+上述有限注入和实际后继论证不主张全球文献优先性。$\square$
+
+## 追加锚（本行以下为增补区）
