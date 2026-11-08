@@ -202,7 +202,7 @@ private lemma number_U (N : ℕ) : number N * U N - U N * number N = U N := by
 private lemma number_L (N : ℕ) : number N * L N - L N * number N = -L N := by
   simpa only [L, number, Matrix.toEuclideanLin, map_sub, map_neg, Matrix.toLpLin_mul_same, Module.End.mul_eq_comp] using
     congrArg Matrix.toEuclideanLin (number_lowering N)
-private lemma adjoint_U (N : ℕ) : (U N).adjoint = L N := by
+lemma adjoint_U (N : ℕ) : (U N).adjoint = L N := by
   rw [U, ← Matrix.toEuclideanLin_conjTranspose_eq_adjoint, minus_eq_adjoint]
   rfl
 private lemma inner_U (N : ℕ) (v w : Space N) :
@@ -342,7 +342,7 @@ private lemma primitive_data {N t : ℕ} (hN : 0 < N) {v : Space N}
     (hv : v ∈ primitive N t) (hne : v ≠ 0) :
     (sl2 N hN).HasPrimitiveVectorWith v ((N : ℂ) - 2 * t) :=
   ⟨hne, primitive_weight hv, hv.2⟩
-private lemma primitive_degree {N t : ℕ} {v : Space N} (hv : v ∈ primitive N t)
+lemma primitive_degree {N t : ℕ} {v : Space N} (hv : v ∈ primitive N t)
     (hne : v ≠ 0) : 2 * t ≤ N := by
   have h := congrArg (fun A : Module.End ℂ (Space N) => A v) (commutator N)
   simp only [LinearMap.sub_apply, Module.End.mul_apply, (show L N v = 0 from hv.2), map_zero, sub_zero,
@@ -358,7 +358,7 @@ private lemma primitive_degree {N t : ℕ} {v : Space N} (hv : v ∈ primitive N
   have hvp : 0 < ‖v‖ ^ 2 := sq_pos_of_pos (norm_pos_iff.mpr hne)
   have : (2 * t : ℝ) ≤ N := by nlinarith [sq_nonneg ‖U N v‖]
   exact_mod_cast this
-private lemma primitive_recurrence {N t : ℕ} {v : Space N}
+lemma primitive_recurrence {N t : ℕ} {v : Space N}
     (hv : v ∈ primitive N t) (q : ℕ) :
     L N ((U N ^ (q + 1)) v) =
       (((q : ℂ) + 1) * ((N : ℂ) - 2 * t - q)) • ((U N ^ q) v) := by
@@ -373,7 +373,7 @@ private lemma primitive_recurrence {N t : ℕ} {v : Space N}
       cases q with
       | zero => simp [U_zero, L_zero]
       | succ q => simp [U_zero, L_zero]
-private lemma primitive_endpoint {N t : ℕ} (ht : 2 * t ≤ N)
+lemma primitive_endpoint {N t : ℕ} (ht : 2 * t ≤ N)
     {v : Space N} (hv : v ∈ primitive N t) :
     (U N ^ (N - 2 * t + 1)) v = 0 := by
   by_cases hne : v = 0
@@ -443,7 +443,7 @@ private lemma primitive_inner_power {N t : ℕ} (ht : 2 * t ≤ N)
         rw [Nat.cast_sub (by omega : q ≤ N - 2 * t), Nat.cast_sub ht]
         push_cast
         ring
-private lemma primitive_orthogonal {N t t' : ℕ} {v w : Space N}
+lemma primitive_orthogonal {N t t' : ℕ} {v w : Space N}
     (hv : v ∈ primitive N t) (hw : w ∈ primitive N t') (ht : t ≠ t') :
     inner ℂ v w = 0 := by
   rw [PiLp.inner_apply]
@@ -478,7 +478,7 @@ private lemma inner_power_unequal {N t t' : ℕ}
       rw [pow_succ' (U N) q, Module.End.mul_apply]
       rw [inner_U, primitive_recurrence hw r, inner_smul_right,
         ih r (by omega), mul_zero]
-private lemma inner_power_orthogonal {N t t' : ℕ}
+lemma inner_power_orthogonal {N t t' : ℕ}
     {v w : Space N} (hv : v ∈ primitive N t) (hw : w ∈ primitive N t')
     (hvw : inner ℂ v w = 0) (q r : ℕ) :
     inner ℂ ((U N ^ q) v) ((U N ^ r) w) = 0 := by
@@ -587,7 +587,7 @@ private lemma U_injective_rank {N t : ℕ} (ht : 2 * t < N) {v : Space N}
   by_contra hv0
   have hpos := mul_pos hp (sq_pos_of_pos (norm_pos_iff.mpr hv0))
   linarith [sq_nonneg ‖L N v‖]
-private lemma rank_split (N t : ℕ) :
+lemma rank_split (N t : ℕ) :
     (rankSpace N t).map (U N) ⊔ primitive N (t + 1) = rankSpace N (t + 1) := by
   apply le_antisymm
   · apply sup_le
@@ -614,7 +614,7 @@ private lemma rank_split_disjoint (N t : ℕ) :
 def previousChoose (N : ℕ) : ℕ → ℕ
   | 0 => 0
   | t + 1 => N.choose t
-private lemma primitive_zero_eq (N : ℕ) : primitive N 0 = rankSpace N 0 := by
+lemma primitive_zero_eq (N : ℕ) : primitive N 0 = rankSpace N 0 := by
   apply le_antisymm inf_le_left
   intro v hv
   exact ⟨hv, L_rank_zero hv⟩
