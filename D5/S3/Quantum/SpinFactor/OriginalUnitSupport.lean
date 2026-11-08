@@ -13,7 +13,7 @@ public import Mathlib.Algebra.QuadraticDiscriminant
 public import Mathlib.Analysis.Normed.Operator.Basic
 public import Mathlib.LinearAlgebra.BilinearMap
 public import Mathlib.Tactic
-public import D5.S3.Topology.OrderUnitNorm
+public import D5.S3.Topology.OrderNormSupport
 
 /-! A unit-row prerequisite on an arbitrary, possibly incomplete original carrier.
 The total relation has no linearity or output-closure assumption. The original
