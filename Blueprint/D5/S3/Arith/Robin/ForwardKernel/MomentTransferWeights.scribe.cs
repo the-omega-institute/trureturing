@@ -15,6 +15,15 @@ internal sealed class MomentTransferWeightsDocument : IScribeDocumentDefinition
                 + "profile on the unit interval, and write r=(1-theta)/2, U=x/X, "
                 + "B(s,x)=D_(s*x^theta)(x)/sqrt(x^theta*log(x)).")),
             Describe.Lean(
+                DescribeId.Create("logarithmic-factor-bounds"),
+                DeclarationHandle.Create(Prefix + "logarithmic_factor_bounds"),
+                H("Uniform logarithmic bounds"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For X>=4 and X<=x<=2X, sqrt(log(x)/log(X)) is at least one and exceeds one by at most log(2)/log(X)."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("dyadic-z-eq-weighted-integral"),
                 DeclarationHandle.Create(Prefix + "dyadicZ_eq_weighted_integral"),
                 H("The normalized weighted integral"),
