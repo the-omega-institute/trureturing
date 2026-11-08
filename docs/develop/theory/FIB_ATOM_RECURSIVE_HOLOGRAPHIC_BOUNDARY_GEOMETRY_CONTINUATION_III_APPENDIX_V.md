@@ -2681,3 +2681,366 @@ This determinant identity holds for nonsymmetric $H_\lambda$ as well. Equation (
 For $\lambda<1$ it is the comparison readout, and hence its target marginal, pair and triple laws, that changes. It is not the original $\mathscr D_{12}(\theta)$ constraint with $f$ retained: (227.5) gives the changed right-hand sides. The original law at $\lambda=1$ and its rank-two slice remain exactly those of III135.1–III135.2. The local radius (227.4) provides neither continuation to $1$ nor compatible choices or summable label motion across $\lambda$. It supplies no simultaneous original nine-form zero, no original twenty-seven coarse equations, and no physical-successor correspondence. The complete original $F_{64}$ attainment or exclusion problem at $\lambda=1$, and the physical-successor problem, therefore remain unresolved by these local changed-comparison results. $\square$
 
 ## 追加锚（本行以下为增补区）
+## 228. Slow original chronological schedules and the sharp motion budget
+
+**Definition 228.1 (moving readouts on the original source process).** Retain exactly Definition 211.1, including every original $\theta=(a,\eta,d,b)$, its endpoint and analytic suppliers, source $e$, coefficient-one state, positive normalized $h$, full conservative source-inclusive nonnegative self-adjoint $K$, $m=h^2\mu$, original clock and source-start diffusion. Put
+
+$$
+P=T_d,\qquad s_n=(n+2)d,\qquad g_n=g_{s_n},\qquad p=\tfrac14,\qquad C=1-p=\tfrac34.
+$$
+
+Let $(D_n)_{n\ge0}$ be any deterministic pointwise whole-$G$ Borel four-label partition, fixed independently of the realized path. Write $B_n=D_{n,B}$, $u_n=\mathbf1_{B_n}$, $v_n=u_n-p$, and
+
+$$
+\begin{aligned}
+\rho_n&=\|g_n-1\|_{L^1(m)},&
+\delta_n&=m(B_n\mathbin\triangle B_{n+1}),\\
+\ell_n&=m\{x:\operatorname{label}_{D_n}(x)\ne\operatorname{label}_{D_{n+1}}(x)\},\\
+M_n&=\int_Gg_nv_n\,dm,&
+J_n&=\int_Gg_nv_nP(v_{n+1})\,dm,\\
+Q_n&=\int_Gg_nu_nP(u_{n+1})\,dm.&
+\end{aligned}
+\tag{228.1}
+$$
+
+Thus $\delta_n\le\ell_n$. Using $P1=1$, self-adjointness, $g_{n+1}=Pg_n$ and $\int_Gg_n\,dm=1$, expansion gives
+
+$$
+J_n=Q_n-p(M_n+p)-p(M_{n+1}+p)+p^2
+=Q_n-pM_n-pM_{n+1}-p^2.
+$$
+
+The original soft readout $f_B=p$ has marginal target $p$, raw adjacent-pair target $p^2$ and centered adjacent-pair target $0$. Thus $M_n$ and $Q_n-p^2$ are the actual marginal and raw-pair discrepancies, and $M_n\to0$, $Q_n\to p^2$ is equivalent to $M_n\to0$, $J_n\to0$. The second factor in $Q_n$ is the actual propagated terminal $P\mathbf1_{B_{n+1}}$ from the next partition; in $J_n$ it is the centered terminal $P(v_{n+1})=P\mathbf1_{B_{n+1}}-p$. More generally, let $k_d(x,y)$ be the symmetric original transition kernel supplied by Appendix II Definition 123.1. For $r\ge0$ and $\mathbf y=(y_0,\ldots,y_r)\in\mathcal L^{r+1}$ define the actual source-start hard and unchanged-soft window coefficients
+
+$$
+\begin{aligned}
+\mathsf H_{n,r}(\mathbf y)&=\int g_n(x_0)\prod_{j<r}k_d(x_j,x_{j+1})\prod_{j=0}^r\mathbf1_{D_{n+j,y_j}}(x_j)\,dm^{r+1},\\
+\mathsf S_{n,r}(\mathbf y)&=\int g_n(x_0)\prod_{j<r}k_d(x_j,x_{j+1})\prod_{j=0}^rf_{y_j}(x_j)\,dm^{r+1}.
+\end{aligned}
+\tag{228.2}
+$$
+
+The product is empty when $r=0$. It uses the actual different partition at every slot and, in particular, every actual own terminal.
+
+**Theorem 228.2 (forced escape and the exact divergent-budget boundary).** For every original $\theta$ and every schedule of Definition 228.1, set
+
+$$
+E_n=\|T_{d/2}v_n\|_2^2,\qquad
+H_n=|J_n|+\tfrac9{16}\rho_n+\tfrac34\delta_n.
+\tag{228.3}
+$$
+
+Then $\rho_n\to0$ and
+
+$$
+|J_n-E_n|\le\tfrac9{16}\rho_n+\tfrac34\delta_n,\qquad
+0\le E_n\le H_n,\qquad
+|M_n|\le\sqrt{H_n}+\tfrac34\rho_n.
+\tag{228.4}
+$$
+
+For every $L<\infty$,
+
+$$
+\|E_K([0,L])v_n\|_2^2\le e^{dL}H_n.
+\tag{228.5}
+$$
+
+If $\delta_n\to0$, then
+
+$$
+J_n\to0\quad\Longleftrightarrow\quad u_n\longrightarrow p\ \text{weak-star in }L^\infty(m).
+\tag{228.6}
+$$
+
+Under these equivalent conditions, $M_n\to0$ automatically, and
+
+$$
+\|v_n\|_2^2\to\tfrac3{16},\qquad
+\|E_K([0,L])v_n\|_2^2\to0,\qquad
+\|E_K((L,\infty))v_n\|_2^2\to\tfrac3{16}.
+\tag{228.7}
+$$
+
+For every fixed Borel $A\subseteq G$,
+
+$$
+m(B_n\mathbin\triangle A)\longrightarrow\tfrac14+\tfrac12m(A).
+\tag{228.8}
+$$
+
+Consequently $(u_n)$ has no $L^1$-convergent subsequence and $\sum_n\delta_n=\infty$; hence finite total full-label motion $\sum_n\ell_n<\infty$ cannot match even the original centered $B$ marginal and adjacent-pair targets.
+
+There is a sharp converse. For every prescribed sequence of finite numbers $\beta_n\ge0$, a deterministic whole-$G$ Borel schedule exists with
+
+$$
+\ell_n\le\beta_n,\qquad \ell_n\to0,\qquad
+\mathsf H_{n,r}(\mathbf y)-\mathsf S_{n,r}(\mathbf y)\to0
+\tag{228.9}
+$$
+
+for every fixed $r$ and every $\mathbf y\in\mathcal L^{r+1}$, if and only if $\sum_n\beta_n=\infty$. The constructed schedule has $m(B_n)=p$ at every epoch. Thus (228.9) is finite-window asymptotic agreement with the unchanged original soft law, including all four labels; it asserts neither exact finite-epoch equality nor an infinite-record total-variation identity.
+
+*Proof.* The source relaxation $\rho_n\to0$ is (215.5), with the source still starting at $e$ and $g_n=T_{nd}g_{2d}$. Put $C_n=\langle v_n,Pv_{n+1}\rangle_m$. Since $\|v_n\|_\infty\le C$, the Markov contraction gives
+
+$$
+|J_n-C_n|\le C^2\rho_n=\tfrac9{16}\rho_n.
+$$
+
+Self-adjointness gives
+
+$$
+|C_n-E_n|=|\langle Pv_n,v_{n+1}-v_n\rangle_m|
+\le C\|v_{n+1}-v_n\|_1=C\delta_n.
+$$
+
+This proves the first two bounds in (228.4). Since $T_{d/2}1=1$ and $\|1\|_2=1$,
+
+$$
+|m(B_n)-p|=|\langle1,v_n\rangle_m|\le\sqrt{E_n},\qquad
+|M_n-\langle1,v_n\rangle_m|\le C\rho_n,
+$$
+
+which proves the last bound. Spectral calculus for $K$ gives (228.5).
+
+Assume first $\delta_n\to0$ and $J_n\to0$. Then $H_n\to0$. For $\phi\in L^2(m)$ and finite $L$,
+
+$$
+|\langle v_n,\phi\rangle|\le e^{dL/2}\sqrt{H_n}\|\phi\|_2+
+C\|(I-E_K([0,L]))\phi\|_2.
+$$
+
+First let $n\to\infty$, then $L\to\infty$, to obtain weak $L^2$ convergence $v_n\to0$. Truncating an arbitrary $L^1$ test and using $\|v_n\|_\infty\le C$ gives weak-star convergence, proving the forward implication in (228.6). Conversely, if $v_n\to0$ weak-star, the kernel sections $k_d(x,\cdot)$ belong to $L^1(m)$ almost everywhere, so $Pv_{n+1}(x)\to0$ almost everywhere. They are bounded by $C$, hence converge to zero in $L^1(m)$. Therefore
+
+$$
+|J_n|\le C\|Pv_{n+1}\|_1+C^2\rho_n\longrightarrow0,
+$$
+
+which proves the reverse implication without any common-partition assumption.
+
+Writing $q_n=m(B_n)$ gives
+
+$$
+\|v_n\|_2^2=p^2+(1-2p)q_n,\qquad |q_n-p|\le\sqrt{H_n},
+$$
+
+so the first limit in (228.7) follows; the second is (228.5), and the third follows by subtracting it from the total norm. Weak-star convergence in (228.6) gives
+
+$$
+m(B_n\mathbin\triangle A)=q_n+m(A)-2\int_Au_n\,dm,
+$$
+
+which proves (228.8). An $L^1$-convergent subsequence of indicators has an almost-everywhere subsequence converging to an indicator, contradicting its weak-star limit $p\in(0,1)$. If $\sum\delta_n<\infty$, then $(u_n)$ is $L^1$-Cauchy, the same contradiction. Since $\delta_n\le\ell_n$, finite full-label motion is also impossible.
+
+It remains to prove the sharp construction. Choose increasing finite Borel partitions $(\mathcal P_k)_{k\ge1}$ generating the Borel sigma algebra modulo $m$-null sets. In each positive-mass cell $C\in\mathcal P_k$, use a fixed coordinate quantile and the order $0,1,3,B$ to construct a Borel partition $F^k$ satisfying
+
+$$
+m(F^k_y\cap C)=\int_Cf_y\,dm\qquad(y\in\mathcal L).
+\tag{228.10}
+$$
+
+The quantiles exist because $m$ is nonatomic and absolutely continuous in the original coordinates; null cells receive one fixed label. This is the deterministic common-partition construction of Appendix II Proposition 123.2.
+
+For a cell $C\in\mathcal P_k$ and $y\ne z$, put $S_{C,yz}=C\cap F^k_y\cap F^{k+1}_z$. The equality of the $y$-masses of $F^k$ and $F^{k+1}$ on $C$ says that total mass entering and leaving each label agrees. Choose nested coordinate-quantile subsets $S_{C,yz}(t)\subseteq S_{C,yz}$ of mass $t\,m(S_{C,yz})$. Relabel $S_{C,yz}(t)$ from $y$ to $z$ and leave the other points unchanged; call the resulting partition $F^k(t)$, $0\le t\le1$. It has the cell masses (228.10), joins $F^k$ to $F^{k+1}$, and, with $L_k=\sum_{C,y\ne z}m(S_{C,yz})$,
+
+$$
+m\{\operatorname{label}_{F^k(t)}\ne\operatorname{label}_{F^k(t')}\}
+=L_k|t-t'|.
+\tag{228.11}
+$$
+
+If $\sum\beta_n=\infty$, then $\sum_n\min(\beta_n,c)=\infty$ for every $c>0$. Traverse the $k$th curve at the original consecutive epochs using increments
+
+$$
+\gamma_{n,k}=\min(\beta_n,1/k),\qquad
+t_{n+1}=\min(1,t_n+\gamma_{n,k}/L_k)
+$$
+
+when $L_k>0$, and pass directly to the next endpoint when $L_k=0$. Every stage finishes in finitely many epochs, so the stage index tends to infinity. Equations (228.11) give $\ell_n\le\beta_n$ and $\ell_n\le1/k$ while in stage $k$, hence $\ell_n\to0$. All choices depend only on $\theta$, the fixed partitions and $\beta$, never on the realized path.
+
+Every current and future partition from an epoch in stage $k$ has the cell masses (228.10) on $\mathcal P_k$, because later grids refine $\mathcal P_k$. Define
+
+$$
+W_r(x_0,\ldots,x_r)=\prod_{j<r}k_d(x_j,x_{j+1}),\qquad
+W_{r,k}=\mathbb E[W_r\mid\mathcal P_k^{\otimes(r+1)}].
+$$
+
+The finite-algebra martingale approximation gives $\|W_r-W_{r,k}\|_1\to0$. Against $W_{r,k(n)}$, cellwise factorization and (228.10) make the hard and soft reference integrals exactly equal. Replacing $W_r$ by $W_{r,k(n)}$ costs at most $\|W_r-W_{r,k(n)}\|_1$ for each integral; replacing the reference initial density $1$ by the actual $g_n$ costs at most $\rho_n$. Therefore
+
+$$
+|\mathsf H_{n,r}(\mathbf y)-\mathsf S_{n,r}(\mathbf y)|
+\le2\rho_n+2\|W_r-W_{r,k(n)}\|_1\longrightarrow0.
+\tag{228.12}
+$$
+
+For each fixed $r$, summing (228.12) over the finitely many words gives total-variation convergence of the whole window. In particular the $B$ marginal and $BB$ pair converge to the unchanged soft values, so $J_n\to0$; the schedule also has $m(B_n)=\int f_B\,dm=p$ at every epoch.
+
+If $\sum\beta_n<\infty$ and a schedule satisfying (228.9) existed, then $\sum\delta_n\le\sum\ell_n\le\sum\beta_n<\infty$. The $r=0$ and $r=1$ windows would give $J_n\to0$, while $\ell_n\to0$ gives $\delta_n\to0$, contradicting the already proved infinite-motion conclusion. This proves the iff statement. The spectral projection estimate uses the bounded Borel functional calculus for a nonnegative self-adjoint operator, as in Gerald Teschl, *Mathematical Methods in Quantum Mechanics*, §3.1, Theorem 3.1 and (3.17)–(3.18), https://www.mat.univie.ac.at/~gerald/ftp/book-schroe/schroe.pdf. The kernel, quantile and conditional-expectation intermediates are the original suppliers just cited; no extra regularity, selection, stationary restart, random state or changed clock is used. $\square$
+
+This theorem is a paper-level, source-relative composition. It does not prove or exclude the original fixed-three-epoch $F_{64}$ predicate, exact coarse27 equations, simultaneous odd $A/D/M$ equations, the fixed-epoch cross-neighborhood summable-to-zero correction, exact all-epoch matching of every label, native physical identification or physical succession. It also makes no Lean/kernel or global novelty claim. Mathematical heat energy and label motion are the quantities in (228.3) and (228.1), not physical energy or physical cost.
+
+## 追加锚（本行以下为增补区）
+## 229. Prescribed accuracy at every original start with arbitrary finite windows
+
+**Definition 229.1 (preassigned windows and accuracy).** Retain all original data and suppliers of Definitions 211.1 and 228.1, including every permitted $\theta=(a,\eta,d,b)$, coefficient-one state, source $e$, full source-inclusive conservative $K$, $m=h^2\mu$, $P=T_d$, $s_n=(n+2)d$, actual $g_n=g_{s_n}$ and unchanged four-label $f$ with $f_B=p=1/4$. Prescribe arrays
+
+$$
+0\le\beta_n<\infty,\qquad \epsilon_n>0,\quad \epsilon_n\longrightarrow0,
+\qquad r_n\in\{1,2,\ldots\}\quad(n\ge0).
+\tag{229.1}
+$$
+
+Each $r_n$ is finite; no common bound is imposed. For one deterministic whole-$G$ Borel schedule $D=(D_n)_{n\ge0}$, use exactly the laws $\mathsf H_{n,r_n}$ and $\mathsf S_{n,r_n}$ in (228.2), and set
+
+$$
+\operatorname{TV}_n(D,f)
+ =\frac12\sum_{\mathbf y\in\mathcal L^{r_n+1}}
+ |\mathsf H_{n,r_n}(\mathbf y)-\mathsf S_{n,r_n}(\mathbf y)|.
+\tag{229.2}
+$$
+
+Every hard slot uses the actual $D_{n+j}$ and its own propagated terminal. All starts refer to the same original $e$-start process; the comparison retains the original conditionally independent soft reads.
+
+**Theorem 229.2 (the prescribed finite-window motion-budget classification).** For every original $\theta$ and every arrays (229.1), there exists one deterministic pointwise whole-$G$ Borel four-label schedule, depending only on $\theta$ and the preassigned arrays and independently of realized paths, such that
+
+$$
+\ell_n\le\beta_n\quad(n\ge0),\qquad \ell_n\longrightarrow0,
+\qquad \operatorname{TV}_n(D,f)\le\epsilon_n\quad(n\ge0),
+\tag{229.3}
+$$
+
+if and only if $\sum_{n\ge0}\beta_n=\infty$. In the affirmative case the schedule can also satisfy
+
+$$
+m(D_{n,y})=\int_G f_y\,dm\qquad(n\ge0,\ y\in\mathcal L).
+\tag{229.4}
+$$
+
+These are $m$-marginals; the actual source-start label marginals are controlled by (229.3). The initial hard partition is freely chosen using the full arrays. No spatial preparation, description or computation bound is imposed.
+
+*Proof.* For necessity, projection of (229.3) onto the first two slots, which exist since $r_n\ge1$, gives $M_n\to0$ and $Q_n\to p^2$. The identity following (228.1) gives $J_n\to0$, while $\delta_n\le\ell_n\to0$. Theorem 228.2 already proves $\sum_n\delta_n=\infty$ under precisely these conditions. Since $\delta_n\le\ell_n\le\beta_n$, the caps must have divergent total.
+
+Assume henceforth $\sum_n\beta_n=\infty$. For each fixed $k\ge1$, the clipped tail $\sum_{n\ge N}\min(\beta_n,1/k)$ diverges for every finite $N$: either infinitely many terms reach $1/k$, or its tail equals the original divergent tail. Choose consecutive finite time blocks by
+
+$$
+\begin{aligned}
+N_1&=0,\\
+N_{k+1}&=\min\left\{N>N_k:
+ A_k:=\sum_{n=N_k}^{N-1}\min(\beta_n,1/k)\ge1\right\},\\
+a_{n,k}&=\min(\beta_n,1/k)\quad(N_k\le n<N_{k+1}).
+\end{aligned}
+\tag{229.5}
+$$
+
+Here $A_k$ denotes the sum at the chosen endpoint. Every endpoint is finite, $N_k\to\infty$, and the blocks depend only on the caps. In particular they are chosen before the spatial refinements below.
+
+Take increasing finite Borel partitions $(\mathcal R_j)_{j\ge1}$ generating the original coordinate Borel sigma algebra modulo null sets. For each start define its actual finite-dimensional density
+
+$$
+W_n(x_0,\ldots,x_{r_n})
+ =g_n(x_0)\prod_{j<r_n}k_d(x_j,x_{j+1}).
+\tag{229.6}
+$$
+
+Appendix II Definition 123.1 supplies the original transition kernel and entrance densities. Iterated conservation gives $W_n\ge0$, $W_n\in L^1(m^{\otimes(r_n+1)})$ and $\int W_n\,dm^{\otimes(r_n+1)}=1$. For each fixed $n$, the product algebras generated by $\mathcal R_j^{\otimes(r_n+1)}$ increase to the product Borel sigma algebra modulo null sets. Consequently
+
+$$
+\left\|W_n-
+ \mathbb E_{m^{\otimes(r_n+1)}}[W_n\mid\mathcal R_j^{\otimes(r_n+1)}]
+ \right\|_1\longrightarrow0\quad(j\to\infty).
+\tag{229.7}
+$$
+
+This is the classical increasing-sigma-field $L^1$ convergence theorem, Rick Durrett, *Probability: Theory and Examples*, fifth-edition manuscript, Theorem 4.6.8, printed p. 247/PDF p. 255, https://services.math.duke.edu/~rtd/PTE/PTE5_011119.pdf, applied with $X=W_n$ on the indicated product probability space. It is used only as an intermediate in this original-source argument, as is the actual-density approximation in 212.D.
+
+Each block contains finitely many starts, each with a finite $r_n$. Thus choose strictly increasing indices $j_k$ and put $\mathcal P_k=\mathcal R_{j_k}$ so that simultaneously
+
+$$
+\widehat W_{n,k}:=\mathbb E[W_n\mid\mathcal P_k^{\otimes(r_n+1)}],
+\qquad \|W_n-\widehat W_{n,k}\|_1<\epsilon_n
+\quad(N_k\le n<N_{k+1}).
+\tag{229.8}
+$$
+
+Only finitely many convergences (229.7) are required at each step. This choice imposes no relation between $r_n$, $\epsilon_n$ and the length of a time block.
+
+For every $k$, use the balanced coordinate-quantile construction (228.10), from Appendix II Proposition 123.2, to obtain a whole-$G$ Borel partition $F^k$ with
+
+$$
+m(F^k_y\cap C)=\int_C f_y\,dm
+\qquad(C\in\mathcal P_k,\ y\in\mathcal L).
+\tag{229.9}
+$$
+
+For completeness, on each positive-mass cell cut consecutive first-coordinate quantile slices in order $0,1,3,B$ with these four masses. Their sum is $m(C)$. The distribution of that coordinate under the restriction of $m$ to any Borel remainder is continuous, because $m\ll\mu$ and coordinate hyperplanes are null. Hence every prescribed slice mass exists. Assign null cells one fixed label and endpoints consistently. This proves (229.9) for every label with pointwise Borel pieces.
+
+Use the interpolation (228.11) between $F^k$ and $F^{k+1}$; its full-label balance can be checked directly. On $C\in\mathcal P_k$ put $S_{C,yz}=C\cap F^k_y\cap F^{k+1}_z$, for $y\ne z$. Since $\mathcal P_{k+1}$ refines $\mathcal P_k$, both endpoints have the masses (229.9), so
+
+$$
+\sum_{z\ne y}m(S_{C,yz})=\sum_{z\ne y}m(S_{C,zy}).
+\tag{229.10}
+$$
+
+In every $S_{C,yz}$ choose nested Borel coordinate-quantile subsets $S_{C,yz}(t)$ of mass $t\,m(S_{C,yz})$, with empty and full endpoints. Relabel these subsets from $y$ to $z$. The sets $S_{C,yz}$ are disjoint, so this defines a pointwise partition $F^k(t)$, with $F^k(0)=F^k$ and $F^k(1)=F^{k+1}$. For every label its mass in $C$ changes by $t$ times the incoming mass minus $t$ times the outgoing mass; (229.10) makes that change zero. Also, putting $L_k=\sum_{C,y\ne z}m(S_{C,yz})\le1$, nestedness gives
+
+$$
+m\{\operatorname{label}_{F^k(t)}\ne\operatorname{label}_{F^k(t')}\}
+ =L_k|t-t'|.
+\tag{229.11}
+$$
+
+Zero-mass transition sets may be included only at the full endpoint; they affect neither balance nor motion. Thus this construction also covers $L_k=0$ without division by $L_k$.
+
+Now define the single schedule on each block, including its common endpoint, by
+
+$$
+t_{n,k}=\frac1{A_k}\sum_{i=N_k}^{n-1}a_{i,k},\qquad
+D_n=F^k(t_{n,k})\quad(N_k\le n\le N_{k+1}).
+\tag{229.12}
+$$
+
+The definitions agree at $N_{k+1}$ because both give $F^{k+1}$. For every edge in block $k$, (229.11) gives
+
+$$
+\ell_n=L_k\frac{a_{n,k}}{A_k}
+ \le\min(\beta_n,1/k)\quad(N_k\le n<N_{k+1}).
+\tag{229.13}
+$$
+
+This proves the cap bounds and vanishing motion, including zero caps and arbitrarily large finite caps. The label-balance calculation and (229.9) give (229.4). More strongly, if $n$ belongs to block $k$, every partition $D_i$ with $i\ge n$ has (229.9) on $\mathcal P_k$: its own block has index at least $k$, and summing the finer-cell balances gives the asserted coarser-cell balances.
+
+Fix any such $n$. For each word $\mathbf y\in\mathcal L^{r_n+1}$ write
+
+$$
+U_{n,\mathbf y}(x)=\prod_{j=0}^{r_n}\mathbf1_{D_{n+j,y_j}}(x_j),
+\qquad V_{n,\mathbf y}(x)=\prod_{j=0}^{r_n}f_{y_j}(x_j).
+\tag{229.14}
+$$
+
+On each product cell of $\mathcal P_k^{\otimes(r_n+1)}$, Fubini and the just-proved balances give equal integrals of these two products. Since $\widehat W_{n,k}$ is constant on each positive-mass product cell,
+
+$$
+\int\widehat W_{n,k}U_{n,\mathbf y}\,dm^{\otimes(r_n+1)}
+ =\int\widehat W_{n,k}V_{n,\mathbf y}\,dm^{\otimes(r_n+1)}.
+\tag{229.15}
+$$
+
+Both product families are nonnegative and sum to $1$ over all words, pointwise. Subtract (229.15) from the original hard and soft coefficients, sum absolute values, and use this normalization to obtain the dimension-independent estimate
+
+$$
+\begin{aligned}
+\operatorname{TV}_n(D,f)
+&\le\frac12\int|W_n-\widehat W_{n,k}|
+ \sum_{\mathbf y}(U_{n,\mathbf y}+V_{n,\mathbf y})\,dm^{\otimes(r_n+1)}\\
+&=\|W_n-\widehat W_{n,k}\|_1<\epsilon_n.
+\end{aligned}
+\tag{229.16}
+$$
+
+Every start is in one finite block. The same schedule therefore meets all inequalities simultaneously, even when its windows overlap or cross arbitrarily many block boundaries. The argument applies (229.7) separately before choosing each grid; it never substitutes a changing $r_n$ into a fixed-$r$ limit. All choices use only the original data and the full prescribed arrays, with no additional random state or path adaptation.
+
+Equation (229.16) approximates the actual density $g_n\prod k_d$ directly, so it has no $\rho_n$ term. In particular arbitrary positive $\epsilon_n$ smaller than $\rho_n$ are allowed. The source-relaxation term in (228.12) is a limitation of that comparison with initial density $1$, not a lower bound on attainable finite-window accuracy here. The additional freedom used here is the preassigned-array-dependent spatial refinement and freely prepared initial partition; no mixing rate is required for sufficiency.
+
+This repo-derived quantified composition serves the original moving-readout laws (228.2). The kernel and nonatomic-coordinate suppliers, balanced realizations and interpolation are reused; the additional conclusion is prescribed accuracy at every original start for one compatible schedule and arbitrary individually finite windows. It is not a new general purification theorem or a global novelty claim. The construction gives no prescribed initial partition, online generation, effective algorithm, source-uniform computation, exact finite-epoch equality or infinite-record total-variation assertion. It preserves the narrower scopes of §§211–228 and supplies no original fixed-common-partition $F_{64}$ or exact coarse27 solution, joint odd $A/D/M$ equations, fixed-epoch cross-neighborhood summable-to-zero correction, native physical source/successor/clock identification or physical installation. These are ordinary paper conclusions, with no Lean/kernel claim and no identification of label motion with physical energy or cost. $\square$
+
+## 追加锚（本行以下为增补区）

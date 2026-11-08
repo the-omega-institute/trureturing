@@ -8,13 +8,13 @@
 
 import D5.S3.Arith.Robin.ForwardKernel.LocalVarianceBand
 import D5.S3.Arith.Robin.ForwardKernel.FixedLengthCovariance
-import Mathlib.Analysis.Calculus.MeanValue
+import D5.S3.Arith.Robin.ForwardKernel.FourthTransfer.MacroscopicEndpointGeometry
 
 namespace D5.S3.Arith.Robin.ForwardKernel.MacroscopicFreezing
 
 open Set MeasureTheory Filter
 open scoped Topology BigOperators
-open VarianceTransferDefs MacroscopicVarianceDefs MovingLengthCells
+open VarianceTransferDefs MacroscopicVarianceDefs MovingLengthCells FourthTransfer.MacroscopicEndpointGeometry
 
 noncomputable section
 
@@ -34,40 +34,14 @@ private lemma macro_comparison_bound
       40 * R * Real.log X * (3 * (r + M * X ^ θ - l) + 16 * ε * X) := by
   have hX0 : 0 < X := by linarith
   have hH : 0 < X ^ θ := Real.rpow_pos_of_pos hX0 _
-  have hxmem (x : ℝ) (hx : x ∈ Icc l r) : x / X ∈ Icc (1 : ℝ) 2 :=
-    ⟨(le_div_iff₀ hX0).2 (by linarith [hx.1]),
-      (div_le_iff₀ hX0).2 (by linarith [hx.2])⟩
-  have had : DifferentiableOn ℝ a (Icc (1 : ℝ) 2) := ha.1.differentiableOn (by norm_num)
-  have hda (x : ℝ) (hx : x ∈ Icc l r) :=
-    (had (x / X) (hxmem x hx)).hasDerivWithinAt
-  have hcomp (x : ℝ) (hx : x ∈ Icc l r) :
-      HasDerivWithinAt (fun x => a (x / X))
-        (derivWithin a (Icc (1 : ℝ) 2) (x / X) / X) (Icc l r) x := by
-    convert (hda x hx).comp x ((hasDerivAt_id x).div_const X).hasDerivWithinAt
-      (fun y hy => hxmem y hy) using 1 <;> simp [div_eq_mul_inv, Function.comp_def]
-  have hdq (x : ℝ) (hx : x ∈ Icc l r) :
-      HasDerivWithinAt (fun x => x + X ^ θ * a (x / X))
-        (1 + X ^ θ * (derivWithin a (Icc (1 : ℝ) 2) (x / X) / X)) (Icc l r) x :=
-    (hasDerivWithinAt_id x _).add ((hcomp x hx).const_mul _)
-  have hdp (x : ℝ) (_hx : x ∈ Icc l r) :
-      HasDerivWithinAt (fun x => x + X ^ θ * c) 1 (Icc l r) x :=
-    ((hasDerivAt_id x).add_const _).hasDerivWithinAt
+  obtain ⟨q', hp, hq, hdp, hdq, hdq_lower, h_image⟩ :=
+    macro_endpoint_geometry ha hM hX0 hl hlr hr hc hMX hLX
   have hbound := LocalVarianceBand.local_endpoint_bound hE hB hlr
     (show l ≤ r + M * X ^ θ by nlinarith [mul_nonneg hM hH.le]) hR (by norm_num : (0 : ℝ) < 1 / 2)
     hX hε (by linarith) (by linarith) hlo hhi hV
-    (fun x hx => (hdp x hx).continuousWithinAt)
-    (fun x hx => (hdq x hx).continuousWithinAt) hdp hdq (by
+    hp hq hdp hdq (by
       intro x hx
-      have hd := (abs_le.1 (ha.2.2 (x / X) (hxmem x hx))).1
-      have hh := mul_le_mul_of_nonneg_left hd hH.le
-      have hh' := (div_le_div_of_nonneg_right hh hX0.le)
-      constructor
-      · norm_num
-      · ring_nf at hh' hLX ⊢
-        linarith) (by
-      intro x hx
-      have hav := ha.2.1 (x / X) (hxmem x hx)
-      constructor <;> constructor <;> nlinarith [hx.1, hx.2, hc.1, hc.2, hav.1, hav.2]) (by
+      exact ⟨by norm_num, hdq_lower x hx⟩) h_image (by
       intro x hx
       convert hgap x hx using 1
       congr 1
@@ -111,26 +85,12 @@ theorem freezing_bound (hE : LocallyBoundedMeasurable E) (hB : ValidBand α θ �
       (by nlinarith [hu.1]) (mul_le_mul_of_nonneg_right (cellPoint_lt hn j).le hX0.le)
       (by nlinarith [hv.2]) (ha.2.1 _ hu) (by positivity) hV hMX hLX hlo hhi
     intro x hx
-    have hxm : x / X ∈ Icc (cellPoint n j) (cellPoint n (j + 1)) :=
-      ⟨(le_div_iff₀ hX0).2 (by simpa using hx.1), (div_le_iff₀ hX0).2 hx.2⟩
-    have hab := (convex_Icc (1 : ℝ) 2).norm_image_sub_le_of_norm_derivWithin_le
-      (ha.1.differentiableOn (by norm_num)) (fun u hu => by
-        simpa only [Real.norm_eq_abs] using ha.2.2 u hu) hu
-      (show x / X ∈ Icc (1 : ℝ) 2 from ⟨hu.1.trans hxm.1, hxm.2.trans hv.2⟩)
-    simp only [Real.norm_eq_abs, abs_of_nonneg (sub_nonneg.2 hxm.1)] at hab
-    have hd : x / X - cellPoint n j ≤ 1 / n := by linarith [hxm.2]
-    have hh := mul_le_mul_of_nonneg_left (hab.trans
-      (mul_le_mul_of_nonneg_left hd hL)) hH.le
-    rw [abs_mul, abs_of_pos hH]
     calc
-      _ ≤ X ^ θ * (L * (1 / n)) := hh
+      _ ≤ X ^ θ * L / (n : ℝ) := macro_cell_gap_le ha hL hX0 hn hjn x hx
       _ ≤ (1 + L) * X ^ θ / n := by
         have : 0 ≤ X ^ θ / (n : ℝ) := by positivity
-        calc
-          _ = L * (X ^ θ / (n : ℝ)) := by ring
-          _ ≤ (1 + L) * X ^ θ / n := by
-            ring_nf at this ⊢
-            linarith
+        ring_nf at this ⊢
+        linarith
   have hs := Finset.sum_le_sum hj
   simp only [Finset.sum_const, Finset.card_range, nsmul_eq_mul] at hs
   unfold freezingError
@@ -141,7 +101,8 @@ theorem freezing_bound (hE : LocallyBoundedMeasurable E) (hB : ValidBand α θ �
   field_simp
   <;> ring
 
-private lemma scale_conditions (hB : ValidBand α θ β)
+/-- The macroscopic and endpoint scales eventually satisfy all band and smallness bounds. -/
+lemma scale_conditions (hB : ValidBand α θ β)
     {c M L δ : ℝ} (hc : 0 < c) (hM : 0 < M) (hL : 0 ≤ L) (hδ : 0 < δ) :
     ∀ᶠ X : ℝ in atTop, 4 ≤ X ∧ M * X ^ θ ≤ X ∧ L * X ^ θ / X ≤ 1 / 2 ∧
       (4 * X) ^ α ≤ c * X ^ θ ∧ 4 * (c * X ^ θ) ≤ (X / 2) ^ β ∧

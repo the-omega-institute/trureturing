@@ -17,15 +17,6 @@ internal sealed class FourthMomentMovingBoundsDocument : IScribeDocumentDefiniti
                 + "C4*Y*u^2*log(Y/u)^2 throughout the exponent band "
                 + "Y^alpha<=u<=Y^beta for all sufficiently large Y.")),
             Describe.Lean(
-                DescribeId.Create("increment-pow-integrable-on"),
-                DeclarationHandle.Create(Prefix + "increment_pow_integrableOn"),
-                H("Powers of moving increments on compact sets"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text(
-                    "Let E be locally bounded and Borel measurable, and let u and x be continuous real functions on a Hausdorff Borel space with a measure finite on compact sets. For every compact set K and natural number n, the function (E(x(p)+u(p))-E(x(p)))^n is integrable on K."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
                 DescribeId.Create("moving-increment-fourth-moment-bound"),
                 DeclarationHandle.Create(Prefix + "moving_increment_fourth_moment_bound"),
                 H("Uniform moving-increment fourth moments"),
@@ -47,10 +38,10 @@ internal sealed class FourthMomentMovingBoundsDocument : IScribeDocumentDefiniti
                         + "length interval to [h,4h]. Fubini reduces the "
                         + "transported term to fixed lengths w. The map "
                         + "x to x+s*x^theta has derivative at least one "
-                        + "and image inside [1,3X], so the existing expanding "
-                        + "change-of-variable estimate, applied to D_w squared, "
-                        + "bounds each transported fourth moment by its "
-                        + "fixed-length fourth moment. The exponent band "
+                        + "and image inside [1,3X]. The shared even-power "
+                        + "endpoint average with exponent four and lower "
+                        + "derivative bound one controls both terms by "
+                        + "fixed-length fourth moments. The exponent band "
                         + "contains all lengths in [h,4h] at Y=3X eventually. "
                         + "The resulting two averaged bounds are divided by h."))),
                 DescribeRole.Theorem),

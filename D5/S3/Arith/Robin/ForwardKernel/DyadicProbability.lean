@@ -8,6 +8,7 @@
 
 import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
 import Mathlib.MeasureTheory.Integral.Bochner.ContinuousLinearMap
+import Mathlib.MeasureTheory.Measure.HasOuterApproxClosed
 
 /-! The logarithmic probability measure on a dyadic interval. -/
 
@@ -82,6 +83,78 @@ theorem dyadicProbabilityMeasure_univ {X : ℝ} (hX : 0 < X) :
 theorem dyadicProbabilityMeasure_isProbabilityMeasure {X : ℝ} (hX : 0 < X) :
     IsProbabilityMeasure (dyadicProbabilityMeasure X) :=
   ⟨dyadicProbabilityMeasure_univ hX⟩
+
+/-- Scaling a positive dyadic interval to [1,2] preserves logarithmic probability. -/
+theorem dyadic_position_map {X : ℝ} (hX : 0 < X) :
+    Measure.map (fun x : ℝ => x / X) (dyadicProbabilityMeasure X) =
+      dyadicProbabilityMeasure 1 := by
+  let _ := dyadicProbabilityMeasure_isProbabilityMeasure hX
+  let _ := dyadicProbabilityMeasure_isProbabilityMeasure (by norm_num : (0 : ℝ) < 1)
+  apply ext_of_forall_integral_eq_of_IsFiniteMeasure
+  intro f
+  rw [integral_map (by fun_prop : Measurable (fun x : ℝ => x / X)).aemeasurable
+    f.continuous.aestronglyMeasurable]
+  rw [dyadicProbabilityMeasure_integral hX,
+    dyadicProbabilityMeasure_integral (by norm_num : (0 : ℝ) < 1)]
+  congr 1
+  have he : (fun x : ℝ => f (x / X) / x) =
+      (fun x : ℝ => X⁻¹ * ((fun u : ℝ => f u / u) (x / X))) := by
+    funext x
+    simp only
+    field_simp
+  rw [he, intervalIntegral.integral_const_mul,
+    intervalIntegral.inv_mul_integral_comp_div (f := fun u : ℝ => f u / u) X]
+  simp [hX.ne']
+
+/-- Logarithmic mass of a closed subinterval of [1,2]. -/
+theorem block_mass {u v : ℝ} (hu : 1 ≤ u) (huv : u ≤ v) (hv : v ≤ 2) :
+    (dyadicProbabilityMeasure 1).real (Icc u v) = Real.log (v / u) / Real.log 2 := by
+  have hr : (dyadicProbabilityMeasure 1).restrict (Icc u v) =
+      (volume.restrict (Ioc u v)).withDensity
+        (fun x : ℝ => ENNReal.ofReal (1 / (x * Real.log 2))) := by
+    rw [dyadicProbabilityMeasure, restrict_withDensity measurableSet_Icc,
+      restrict_Ioc_eq_restrict_Icc, Measure.restrict_restrict measurableSet_Icc]
+    norm_num only [mul_one]
+    rw [inter_eq_left.mpr (Icc_subset_Icc hu hv), ← restrict_Ioc_eq_restrict_Icc]
+  have hp : ∀ᵐ x ∂volume.restrict (Ioc u v), 0 ≤ 1 / (x * Real.log 2) := by
+    filter_upwards [ae_restrict_mem measurableSet_Ioc] with x hx
+    exact one_div_nonneg.mpr (mul_nonneg (by linarith [hx.1])
+      (Real.log_pos (by norm_num)).le)
+  have hi := integral_withDensity_eq_integral_toReal_smul (μ := volume.restrict (Ioc u v))
+    (f := fun x : ℝ => ENNReal.ofReal (1 / (x * Real.log 2)))
+    (g := fun _ : ℝ => (1 : ℝ)) density_measurable
+    (Filter.Eventually.of_forall (fun _ => ENNReal.ofReal_lt_top))
+  have he : (∫ x in Ioc u v, (ENNReal.ofReal (1 / (x * Real.log 2))).toReal • (1 : ℝ)) =
+      (∫ x in u..v, 1 / (x * Real.log 2)) := by
+    rw [intervalIntegral.integral_of_le huv]
+    apply integral_congr_ae
+    filter_upwards [hp] with x hx
+    rw [ENNReal.toReal_ofReal hx, smul_eq_mul, mul_one]
+  rw [he] at hi
+  rw [integral_const, smul_eq_mul, mul_one] at hi
+  rw [← hr] at hi
+  simp only [Measure.real, Measure.restrict_apply MeasurableSet.univ, univ_inter] at hi
+  change ((dyadicProbabilityMeasure 1) (Icc u v)).toReal = _
+  rw [hi]
+  simp_rw [div_mul_eq_div_div]
+  rw [intervalIntegral.integral_div,
+    integral_one_div_of_pos (by linarith : 0 < u) (by linarith : 0 < v)]
+
+/-- Closed and left-open position indicators agree almost everywhere. -/
+theorem position_indicator_Icc_ae_eq_Ioc {X : ℝ} (hX : 0 < X)
+    (u v : ℝ) (f : ℝ → ℝ) :
+    (fun x => (Icc u v).indicator f (x / X)) =ᵐ[dyadicProbabilityMeasure X]
+      (fun x => (Ioc u v).indicator f (x / X)) := by
+  let _ : NullSingletonClass (dyadicProbabilityMeasure 1) := by
+    unfold dyadicProbabilityMeasure
+    infer_instance
+  have he : (Ioc u v : Set ℝ) =ᵐ[dyadicProbabilityMeasure 1] Icc u v := Ioc_ae_eq_Icc
+  have hi : ∀ᵐ y ∂Measure.map (fun x : ℝ => x / X) (dyadicProbabilityMeasure X),
+      (Icc u v).indicator f y = (Ioc u v).indicator f y := by
+    rw [dyadic_position_map hX]
+    filter_upwards [he] with y hy
+    simp only [indicator_apply, hy]
+  exact ae_of_ae_map (by fun_prop) hi
 
 end
 end D5.S3.Arith.Robin.ForwardKernel.DyadicProbability
