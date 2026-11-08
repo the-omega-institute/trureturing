@@ -21,11 +21,8 @@ The conclusion refutes the joint integer-row existence and positive-index conten
 it does not prove global integer-row existence or the infinite parity family.
 -/
 
-import Mathlib.Tactic.NormNum
 import Mathlib.Algebra.GCDMonoid.Finset
 import Mathlib.Algebra.Polynomial.Basic
-import Mathlib.Data.Nat.Choose.Basic
-import Mathlib.Data.Rat.Cast.Order
 import Mathlib.NumberTheory.Divisors
 
 namespace D5.S0.Certificates.CopelandA131758PolynomialContentRefutation
