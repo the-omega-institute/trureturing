@@ -19,7 +19,7 @@ Direct frozen dependencies (declaration statement_ids):
 none (direct prerequisites are unfrozen or pinned upstream)
 Tree: proof_shape=bind-only; consumers=PonciniRasmussenCertificateTree.get,
   PonciniRasmussenNineDiagrams.rawData, PonciniRasmussenNineDiagrams.transitions,
-  PonciniRasmussenNineHorner.rows, PonciniRasmussenNineHorner.v0 through v58
+  PonciniRasmussenNineHorner.rows, PonciniRasmussenNineHorner.v0
 get: proof_shape=bind-only; consumers=PonciniRasmussenNineDiagrams.raw,
   PonciniRasmussenNineDiagrams.transition, PonciniRasmussenNineHorner.sparseHamiltonian,
   PonciniRasmussenNineHorner.state, PonciniRasmussenNineEdges.incoming

@@ -12,8 +12,10 @@ internal sealed class PonciniRasmussenNineDiagramsDocument : IScribeDocumentDefi
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Nine-strand matching coordinates", H("Nine-strand matching coordinates"), Blocks(
             Paragraph(Text("There are 4862 indexed noncrossing matchings. The actual " +
-                "private matching, get and transitions constants supply the " +
-                "decoded involution and literal transition tree. Circular order" +
+                "private matching and transitions constants supply the decoded " +
+                "involution and literal transition tree. Both tables use " +
+                "D5.S3.StatisticalMechanics.PonciniRasmussenCertificateTree.Tree " +
+                "and its shared get function. Circular order" +
                 " lists top ports left to right and bottom ports right to left." +
                 " Transition value 4862 denotes a loop.")),
 

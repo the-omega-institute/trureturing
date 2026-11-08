@@ -16,9 +16,12 @@ internal sealed class PonciniRasmussenNineEdgesDocument : IScribeDocumentDefinit
                 " additive commutative group.")),
 
             Node("incoming", All("i", Fin(D(8192)), Eq(Call("incoming", X("i")),
-                Call("get", N("rows"), Val(X("i"))))),
-                "The private get and rows are the binary lookup and literal " +
-                "incoming lists in this module."),
+                Call("D5.S3.StatisticalMechanics.PonciniRasmussenCertificateTree.get",
+                    N("D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.rows"),
+                    Val(X("i"))))),
+                "The lookup uses the shared PonciniRasmussenCertificateTree.get and " +
+                "the single PonciniRasmussenNineHorner.rows table. The index i has " +
+                "type Fin 8192 and the returned list has type List Nat."),
             Node("sparseHamiltonian_eq", All("v", Vector(), Eq(Call("sparseHamiltonian", X("v")),
                 Fn("i", Fin(D(8192)), IncomingFold()))),
                 "List.foldl adds the coefficient at each source index, then the" +

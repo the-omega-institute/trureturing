@@ -12,9 +12,19 @@ internal sealed class PonciniRasmussenNineHornerDataDocument : IScribeDocumentDe
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Integer data for nine strands", H("Integer data for nine strands"), Blocks(
             Paragraph(Text("The 4862 diagram coordinates are embedded in Fin 8192. The " +
-                "private get function reads a binary tree by parity and " +
-                "division by two. The private rows and v0 through v58 are the " +
-                "literal source lists and integer trees of this module.")),
+                "shared D5.S3.StatisticalMechanics.PonciniRasmussenCertificateTree.get " +
+                "function reads the common Tree by parity and division by two. " +
+                "D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.rows is the " +
+                "single incoming row table, also used by NineEdges.incoming. " +
+                "The private v0 through v58 are the integer state trees.")),
+
+            Node("rows", Typed(N("rows"), Call(
+                "D5.S3.StatisticalMechanics.PonciniRasmussenCertificateTree.Tree",
+                Call("List", Nat()))),
+                "The literal tree contains 8192 incoming source lists. For i : Fin 8192, " +
+                "PonciniRasmussenCertificateTree.get rows i.val selects the list at i. " +
+                "Its natural source indices retain their multiplicities; " +
+                "sparseHamiltonian reduces them modulo 8192 with Nat.mod_lt."),
 
             Node("annihilatorCoefficients", Eq(N("annihilatorCoefficients"), Coefficients()),
                 "These 58 integers are in highest-degree-first order."),
@@ -23,7 +33,8 @@ internal sealed class PonciniRasmussenNineHornerDataDocument : IScribeDocumentDe
                     Fn("s", IntType(), Fn("j", Nat(), Add(X("s"), At(X("v"),
                         FinMk(Call("Nat.mod", X("j"), D(8192)),
                             Call("Nat.mod_lt", X("j"), OmegaProof())))))),
-                    D(0), Call("get", N("rows"), Val(X("i")))))))),
+                    D(0), Call("D5.S3.StatisticalMechanics.PonciniRasmussenCertificateTree.get",
+                        N("rows"), Val(X("i")))))))),
                 "The sum retains repeated source coordinates and uses the " +
                 "negative Hamiltonian sign."),
             Node("hornerValue", Eq(N("hornerValue"), Call("List.foldl",
@@ -34,7 +45,8 @@ internal sealed class PonciniRasmussenNineHornerDataDocument : IScribeDocumentDe
                 "The callback adds c only at the identity coordinate. Its " +
                 "initial function is constant zero."),
             Node("state", All("k", Nat(), Eq(Call("state", X("k")), Fn("i", Fin(D(8192)),
-                Call("get", StateTree(), Val(X("i")))))),
+                Call("D5.S3.StatisticalMechanics.PonciniRasmussenCertificateTree.get",
+                    StateTree(), Val(X("i")))))),
                 "The match has branches 0 through 57; every other natural number selects v58."))));
     private static Formula Coefficients() => Seq(OpenBracket, D(1), Comma, Sp, D(0), Comma, Sp,
                 D(-163), Comma, Sp, D(0), Comma, Sp, D(12285), Comma, Sp, D(0), Comma, Sp,
