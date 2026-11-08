@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/ConceptDynamics/DagCompletion/SalinasSchmeisOmegaChainExtensionRefutation
    mirror-E: none(waiver:kernel-checked-refutation)
    anchors: []
-   utility: kind=certified-instance; basis=refutes=gid:D5/S3/ConceptDynamics/DagCompletion/SalinasSchmeisOmegaChainExtensionRefutation.claim; result=D5/S3/ConceptDynamics/DagCompletion/SalinasSchmeisOmegaChainExtensionRefutation.result; claim=D5/S3/ConceptDynamics/DagCompletion/SalinasSchmeisOmegaChainExtensionRefutation.claim
+   utility: none
    digest: Refutes least omega-chain-partitionable extensions using a fork and two incompatible models. -/
 
 /- result: proof_shape: bind-only; escape_witness: none.
@@ -18,8 +18,8 @@
    Definitions: IsOmegaChain, OmegaPartitionable, IsExtension, claim, Fork, forkOrder,
      Rays, rayLe, rayOrder, Tail, tailLe, tailOrder, forkRay, intoRays, forkTail,
      intoTail, rayEmbed, evenEmbed, oddEmbed.
-   The public result is the designated refutation result (`basis=refutes`) and is exempt
-   from four-slot escape registration (CLAUDE.md §3.9).
+   Escape audit unfinished for result: https://github.com/the-omega-institute/trureturing/issues/28004.
+   The symbolic refutation has utility: none and no utility-refutation audit exemption.
    The source definitions and Question 2.32 quotation are recorded in the Scribe and
    Library note for arXiv:2610.29056v1. The public claim keeps the source's literal
    partition and induced-order conventions; the proof uses the displayed constructions. -/
