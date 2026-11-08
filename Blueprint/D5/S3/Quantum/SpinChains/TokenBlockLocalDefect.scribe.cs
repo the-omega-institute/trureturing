@@ -11,7 +11,7 @@ internal sealed class TokenBlockLocalDefectDocument : IScribeDocumentDefinition
         I = F.Id("i"), R = F.Id("R"), V = F.Id("f");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The original complex subset carrier splits by actual outside occupied sets, with additive source and predecessor rank equations and coefficient-one block lowering.",
+        "The physical block projection is counting average on each actual outside occupied set, and the coefficient-one local defect controls the complete complex residual.",
         H("Outside-occupancy coordinates for the local Boolean defect"), Blocks(
             Paragraph(Text("Let Omega=Fin(m)×Fin(s), fix i in Fin(m), and let O_i consist of those vertices whose first coordinate differs from i. Rank(m,s,r) is the type of all r-element subsets of Omega; Space(m,s,r) is its complex counting Euclidean space. PreviousRank consists of subsets T with card(T)+1=r, and PreviousSpace uses the same counting convention. Thus at r=0 the predecessor type is empty, rather than the rank-zero singleton.")),
             Paragraph(Text("Every outside index R is an actual finset of O_i. Fiber(R) consists of inside finsets A with card(R)+card(A)=r. PreviousFiber(R) instead requires card(R)+card(A)+1=r. Invalid source ranks therefore give empty fibers automatically. In particular, an outside set of cardinality greater than r does not acquire a spurious rank-zero state through truncated subtraction. Distinct outside sets of the same size remain distinct summands.")),
@@ -30,9 +30,19 @@ internal sealed class TokenBlockLocalDefectDocument : IScribeDocumentDefinition
                 Call("starProjection",Call("invariantSubspace",M,S,Rk,I))))),
             Paragraph(Text("For a permutation pi of Fin(s), rankPermutation maps each occupied subset by prodExtendRight(i,pi): it sends (i,a) to (i,pi(a)) and fixes every outside vertex. permutationAction is the counting linear isometry obtained by pulling coefficients back along the inverse of that subset permutation. invariantSubspace is the fixed subspace of all these actions, and projection is its orthogonal starProjection. This definition imposes no invariance hypothesis on f and uses no averaging formula.")),
             Paragraph(Text("The inverse subset map sends (R,A) to the disjoint union of the outside inclusion of R and {(i,a):a in A}. No coefficient or norm is rescaled. Hence the inner product of f and g is the sum, over all actual R, of the counting inner products of their restrictions; the same identity holds for squared norms. The predecessor decomposition includes the fibers card(R)+s+1=r even though they have no source states. A coefficient-one lowering map must have zero output on these fibers.")),
-            Paragraph(Text("The intended local estimate on the complete carrier is s‖f−P_i f‖²≤Re⟨f,D_i f⟩. Here P_i is independently the orthogonal projection onto the vectors fixed by every permutation of block i. In these coordinates a block permutation fixes R and permutes A. Equal-cardinality subset transitivity makes its invariant vectors precisely the functions constant in A separately for each R. Orthogonality to the zero-sum functions identifies P_i with the counting average on each nonempty fiber.")),
+            Theorem("projection_counting_slices", "Counting slices of the independent projection", ProjectionSlices(),
+                "In these coordinates a block permutation fixes every vertex of R and maps A by the same inside permutation. Any two equal-cardinality inside subsets are related by a permutation, so the fixed vectors are precisely the functions constant on each entire fiber. The residual from its counting average has zero sum on every fiber and is orthogonal to every such fixed vector, using the complex conjugate in the first inner-product argument. Orthogonal-projection uniqueness identifies the independently defined starProjection. The inverse invC has value zero at zero; empty fibers are zero dimensional and need no nonzero-cardinality assumption."),
+            Theorem("energy", "The exact physical energy", Energy(),
+                "Write q=tsub(r,card(R)), where tsub is natural truncated subtraction. Whenever a source fiber is inhabited its additive rank equation gives card(A)=q, so the original block-number polynomial acts by q(s+1−q). Empty source fibers contribute zero even when this scalar is outside the valid occupancy range. The adjoint identity gives Re⟨f,L_i*L_i f⟩=‖L_i f‖² on the full predecessor counting space. The displayed identity keeps every original predecessor coordinate, with no weights or normalization factors."),
+            Theorem("result", "Physical local coercivity", Result(),
+                "Apply NativeJohnsonCoercivity.result with N=s and rank q separately on each inhabited source fiber. The exact counting equivalence preserves its norm and average, and the coefficient-one insertion formula intertwines its lowering with the physical lowering slice. Empty source fibers have zero lowering slice, including predecessor fibers with card(R)+s+1=r. Summing the native estimates and using the exact energy and projection formulas gives the physical bound for every complex f. It includes odd s, all total-rank endpoints, and nonsymmetric inputs; no graph, parity, unit norm or factorization premise is used."),
             Paragraph(Text("For q=r−card(R) with card(R)≤r and q≤s, the fiber is exactly NativeJohnsonCoercivity.Rank(s,q). Insertion inside the block preserves R, so the physical lowering restricted to this fiber is NativeJohnsonCoercivity.lower(s,q), including its coefficient one. Counting inner products determine the corresponding adjoint. The block number is q on this fiber; consequently the physical defect restricts to NativeJohnsonCoercivity.defect(s,q). NativeJohnsonCoercivity.result then supplies the local estimate on that fiber. Summing uses the same f in every restriction and introduces no probability weights or binomial factors.")),
-            Paragraph(Text("A complete identification also requires the equality with the Johnson Laplacian and the sum of I minus each unordered block transposition. The subset partition and physical definitions alone do not establish those identities, the projection identity, or the physical estimate. They do not assert complement covariance, the token-adjacency expansion, global occupancy and norm accounting, tensor spectral positivity, or the variational conclusions. The local objects use no graph, parity, unit-norm, factorization or input-symmetry hypothesis.")))));
+            Paragraph(Text("The equality with the independently defined Johnson exchange Laplacian and with the sum of I minus each unordered block transposition requires a separate incidence and exchange correspondence. The local projection, energy and coercivity statements do not assert that correspondence, complement covariance, the token-adjacency expansion, global occupancy accounting, tensor spectral positivity, or the variational conclusions.")))));
+
+    private static DocumentBlock Theorem(string name, string title, Formula formula, string text) =>
+        Describe.Lean(DescribeId.Create("token-block-local-" + name.ToLowerInvariant()),
+            DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(Disp(formula)),
+            AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(text))), DescribeRole.Theorem);
 
     private static DocumentBlock Node(string name, string title, Formula formula) =>
         Describe.Lean(DescribeId.Create("token-block-local-" + name.ToLowerInvariant()),
@@ -53,6 +63,29 @@ internal sealed class TokenBlockLocalDefectDocument : IScribeDocumentDefinition
     private static Formula Params(Formula body) =>
         All(M, Call("Nat"), All(S, Call("Nat"), All(Rk, Call("Nat"), All(I, Call("Fin", M), body))));
     private static Formula Space(bool previous) => Call(previous ? "PreviousSpace" : "Space", M,S,Rk);
+    private static Formula NormSq(Formula x) => new Formula.Power(Call("norm", x), D(2));
+    private static Formula States(Formula body) => Params(All(V, Space(false), body));
+    private static Formula Sliced(Formula f) => Call("split",M,S,Rk,I,f,R);
+    private static Formula ProjectionSlices()
+    {
+        var a=F.Id("A"); var b=F.Id("B");
+        var fiber=Call("Fiber",M,S,Rk,I,R);
+        var sum=Seq(new Formula.Subscript(F.Sum,Seq(b,Colon,Sp,fiber)),Sp,At(Sliced(V),b));
+        return States(All(R,Call("Finset",Call("Outside",M,S,I)),
+            Eq(Sliced(Call("projection",M,S,Rk,I,V)),Call("toLp",D(2),
+                Seq(a,Mapsto,Mul(Call("invC",Call("ofNatC",Call("card",fiber))),sum))))));
+    }
+    private static Formula Energy()
+    {
+        var q=Call("ofNatR",Call("tsub",Rk,Call("card",R)));
+        var sum=Seq(new Formula.Subscript(F.Sum,Seq(R,Colon,Sp,Call("Finset",Call("Outside",M,S,I)))),
+            Sp,Mul(Mul(q,Sub(Add(Call("ofNatR",S),D(1)),q)),NormSq(Sliced(V))));
+        return States(Eq(Call("re",Call("innerC",V,Call("defect",M,S,Rk,I,V))),
+            Sub(sum,NormSq(Call("lower",M,S,Rk,I,V)))));
+    }
+    private static Formula Result() => States(new Formula.Relation(
+        Mul(Call("ofNatR",S),NormSq(Sub(V,Call("projection",M,S,Rk,I,V)))),
+        FormulaRelationOperator.LessThanOrEqual,Call("re",Call("innerC",V,Call("defect",M,S,Rk,I,V)))));
     private static Formula SiteSplit() => All(M, Call("Nat"), All(S, Call("Nat"),
         All(I, Call("Fin", M), Seq(Call("siteSplit", M,S,I), Colon, Sp,
         Call("Equiv",Call("SumType",Call("Outside", M,S,I),Call("Fin", S)),Call("Sites", M,S))))));

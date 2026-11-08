@@ -15,6 +15,7 @@ import Mathlib.Analysis.InnerProductSpace.Projection.Basic
 noncomputable section
 open scoped BigOperators InnerProductSpace
 namespace D5.S3.Quantum.SpinChains.TokenBlockLocalDefect
+set_option maxHeartbeats 800000
 
 abbrev Sites (m s : ℕ) := Fin m × Fin s
 abbrev Outside (m s : ℕ) (i : Fin m) := {u : Sites m s // u.1 ≠ i}
@@ -291,7 +292,8 @@ private lemma assemble_permutation (m s : ℕ) (i : Fin m)
   simp only [assemble, Finset.map_map]
   rw [← he, Finset.map_map]
   congr 1
-  ext u
+  apply Function.Embedding.ext
+  intro u
   rcases u with u | a
   · exact Equiv.Perm.prodExtendRight_apply_ne π u.property u.val.2
   · simp [siteSplit, e]
@@ -303,7 +305,7 @@ private lemma action_slices_forward (m s r : ℕ) (i : Fin m)
       split m s r i f R A := by
   rw [split_apply, split_apply]
   change f ((rankPermutation m s r i π).symm _) = f _
-  congr 1
+  apply congrArg (fun S : Rank m s r => f S)
   apply (rankPermutation m s r i π).injective
   rw [Equiv.apply_symm_apply]
   apply Subtype.ext
@@ -374,12 +376,13 @@ theorem projection_counting_slices (m s r : ℕ) (i : Fin m) (f : Space m s r)
     by_cases h : Nonempty (Fiber m s r i R)
     · let A₀ := Classical.choice h
       have hc := (invariant_iff_constant m s r i w).mp hw R
+      rw [map_sub, hv]
+      change inner ℂ (split m s r i f R -
+        countingAverage m s r i R (split m s r i f R)) (split m s r i w R) = 0
       rw [PiLp.inner_apply]
-      simp only [map_sub, hv, PiLp.sub_apply, PiLp.toLp_apply, RCLike.inner_apply]
+      simp only [RCLike.inner_apply]
       simp_rw [hc _ A₀]
       have hz := sum_sub_average m s r i R (split m s r i f R)
-      change (∑ A, split m s r i w R A₀ * starRingEnd ℂ
-        ((split m s r i f R - countingAverage m s r i R (split m s r i f R)) A)) = 0
       rw [← Finset.mul_sum, ← map_sum, hz, map_zero, mul_zero]
     · haveI : IsEmpty (Fiber m s r i R) := not_nonempty_iff.mp h
       rw [PiLp.inner_apply]
@@ -388,5 +391,94 @@ theorem projection_counting_slices (m s r : ℕ) (i : Fin m) (f : Space m s r)
   change split m s r i ((invariantSubspace m s r i).starProjection f) R = _
   rw [hp, hv]
   rfl
+
+private lemma number_polynomial_slices (m s r : ℕ) (i : Fin m) (f : Space m s r)
+    (R : Finset (Outside m s i)) :
+    split m s r i (number m s r i (((s : ℂ)+1) • f - number m s r i f)) R =
+      (((r-R.card : ℕ) : ℂ) * ((s : ℂ)+1-(r-R.card : ℕ))) • split m s r i f R := by
+  ext A
+  rw [number_slices]
+  simp only [map_sub, map_smul, PiLp.sub_apply, PiLp.smul_apply, smul_eq_mul]
+  rw [number_slices]
+  have hq : A.val.card = r-R.card := by have := A.property; omega
+  rw [hq]
+  ring
+
+/-- Exact physical energy, with the entire original predecessor norm. -/
+theorem energy (m s r : ℕ) (i : Fin m) (f : Space m s r) :
+    (inner ℂ f (defect m s r i f)).re =
+      (∑ R : Finset (Outside m s i),
+        ((r-R.card : ℕ) : ℝ) * ((s : ℝ)+1-(r-R.card : ℕ)) * ‖split m s r i f R‖^2) -
+        ‖lower m s r i f‖^2 := by
+  have he : inner ℂ f (number m s r i (((s : ℂ)+1) • f - number m s r i f)) =
+      ∑ R : Finset (Outside m s i),
+        (((r-R.card : ℕ) : ℂ) * ((s : ℂ)+1-(r-R.card : ℕ))) *
+          inner ℂ (split m s r i f R) (split m s r i f R) := by
+    rw [← (split m s r i).inner_map_map, PiLp.inner_apply]
+    apply Finset.sum_congr rfl
+    intro R _
+    rw [number_polynomial_slices, inner_smul_right]
+  unfold defect
+  simp only [LinearMap.sub_apply, LinearMap.comp_apply, LinearMap.smul_apply,
+    Module.End.one_apply, inner_sub_right]
+  rw [(lower m s r i).adjoint_inner_right, inner_self_eq_norm_sq_to_K, he]
+  simp [Complex.re_sum, inner_self_eq_norm_sq_to_K, Complex.mul_re, pow_two]
+
+private lemma average_native (m s r : ℕ) (i : Fin m) (R : Finset (Outside m s i))
+    (hR : R.card ≤ r) (f : FiberSpace m s r i R) :
+    nativeSlice m s r i R hR (countingAverage m s r i R f) =
+      NativeJohnsonCoercivity.average s (r-R.card) (nativeSlice m s r i R hR f) := by
+  ext A
+  change (Fintype.card (Fiber m s r i R) : ℂ)⁻¹ * ∑ B, f B =
+    (Fintype.card (NativeJohnsonCoercivity.Rank s (r-R.card)) : ℂ)⁻¹ *
+      ∑ B, nativeSlice m s r i R hR f B
+  rw [Fintype.card_congr (fiberNativeEquiv m s r i R hR)]
+  congr 1
+  exact ((fiberNativeEquiv m s r i R hR).symm.sum_comp (fun B => f B)).symm
+
+private lemma fiber_coercivity (m s r : ℕ) (i : Fin m) (R : Finset (Outside m s i))
+    (f : FiberSpace m s r i R) :
+    (s : ℝ) * ‖f-countingAverage m s r i R f‖^2 ≤
+      ((r-R.card : ℕ) : ℝ) * ((s : ℝ)+1-(r-R.card : ℕ)) * ‖f‖^2 -
+        ‖fiberLower m s r i R f‖^2 := by
+  classical
+  by_cases hn : Nonempty (Fiber m s r i R)
+  · obtain ⟨A⟩ := hn
+    have hA := A.property
+    have hc := Finset.card_le_univ A.val
+    simp only [Fintype.card_fin] at hc
+    have hR : R.card ≤ r := by omega
+    have hq : r-R.card ≤ s := by omega
+    let g := nativeSlice m s r i R hR f
+    have hh := NativeJohnsonCoercivity.result s (r-R.card) hq g
+    have he : (inner ℂ g (NativeJohnsonCoercivity.defect s (r-R.card) g)).re =
+        ((r-R.card : ℕ) : ℝ) * ((s : ℝ)+1-(r-R.card : ℕ)) * ‖g‖^2 -
+          ‖NativeJohnsonCoercivity.lower s (r-R.card) g‖^2 := by
+      simp only [NativeJohnsonCoercivity.defect, LinearMap.sub_apply,
+        LinearMap.smul_apply, Module.End.one_apply, LinearMap.comp_apply,
+        inner_sub_right, inner_smul_right]
+      rw [(NativeJohnsonCoercivity.lower s (r-R.card)).adjoint_inner_right]
+      simp [inner_self_eq_norm_sq_to_K, Complex.mul_re, pow_two]
+    rw [he] at hh
+    change (s : ℝ) * ‖nativeSlice m s r i R hR f -
+      NativeJohnsonCoercivity.average s (r-R.card) (nativeSlice m s r i R hR f)‖^2 ≤ _ at hh
+    rw [← average_native, ← map_sub, ← lower_native] at hh
+    simpa only [LinearIsometryEquiv.norm_map, g] using hh
+  · haveI : IsEmpty (Fiber m s r i R) := not_nonempty_iff.mp hn
+    have hf : f = 0 := by ext A; exact isEmptyElim A
+    have ha : countingAverage m s r i R f = 0 := by ext A; exact isEmptyElim A
+    simp [hf, ha]
+
+/-- Physical local coercivity for arbitrary complex states, all ranks, and every outside set. -/
+theorem result (m s r : ℕ) (i : Fin m) (f : Space m s r) :
+    (s : ℝ) * ‖f-projection m s r i f‖^2 ≤ (inner ℂ f (defect m s r i f)).re := by
+  rw [energy, ← (split m s r i).norm_map (f-projection m s r i f),
+    PiLp.norm_sq_eq_of_L2, Finset.mul_sum,
+    ← (previousCountingSplit m s r i).norm_map (lower m s r i f),
+    PiLp.norm_sq_eq_of_L2, ← Finset.sum_sub_distrib]
+  apply Finset.sum_le_sum
+  intro R _
+  simpa only [map_sub, PiLp.sub_apply, projection_counting_slices, lower_slices,
+    countingAverage] using fiber_coercivity m s r i R (split m s r i f R)
 
 end D5.S3.Quantum.SpinChains.TokenBlockLocalDefect
