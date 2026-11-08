@@ -1,0 +1,40 @@
+**定义 11.1（完整原候选与条件窗口）。** 保持 1.1、6.1 的原对象 $(E,C,u,N,\mathcal P,S,D)$，准确锥 $C=\{x:\alpha(x)\ge0\ (\alpha\in\mathcal P)\}$ 与分离评价；允许原质量 $\alpha(u)$ 为零、不等或次归一。A1 是全部实际有向 Hermitian 二表正性；A2 是相加三表 $(a+b,a,b)$ 及其排列的实部半正定，并保留指定向量 $(1,-1,-1)$ 的零二次值；A3 是 $S(u,u)=u$ 及同一固定有理 $0<\theta\le1$ 上的 $0\le e\le\theta u\Rightarrow S(e,e)\le e$。消费既有 $S(a,b)=a\circ b$，指定数学分支仍为 200.1 的含单位复 C* 代数 $A$ 与可能不完备、在 $A_{\rm sa}$ 中范数稠密的原含单位实 Jordan 子代数 $E$。全部原 P2 保持
+
+$$
+\begin{pmatrix}
+\alpha(a^2)&\alpha(a\circ b)-i\alpha D(a,b)\\
+\alpha(b\circ a)-i\alpha D(b,a)&\alpha(b^2)
+\end{pmatrix}\succeq0.
+\tag{11.1}
+$$
+
+完整 PB 保持同一原元素等式
+
+$$
+\begin{aligned}
+\nu&=D(a,b)-a\circ c,&\omega&=a\circ b+D(a,c),\\
+D(b+\nu,c+\omega)-D(b-\nu,c-\omega)
+&=-2b\circ\nu-2c\circ\omega .
+\end{aligned}
+\tag{11.2}
+$$
+
+不加入 $D$ 的可加、输入齐次、连续、可测、协变、一般单位平移、输出闭合、商上下降、$\mathsf F$ 或原 R。128.1、206.1 与 9.2 的全部原来源量词保持不变；数学正读取不成为实际准备。
+
+固定任意原 $h^2=u$、任意 $0<r<1$，仍用同一个
+
+$$
+V_h=\{b\in E:h\circ b=0\},\qquad G(b)=D(rh,b)/r.
+\tag{11.3}
+$$
+
+本批只在条件定理中考察原 $b,c\in V_h$ 的共同强度：
+
+$$
+b^2=\alpha R,\qquad c^2=\beta R,\qquad b\circ c=\gamma R,
+\qquad R\in E\cap A_+,\quad \alpha,\beta\ge0,\quad\gamma\in\mathbb R.
+\tag{11.4}
+$$
+
+$R$ 不必标量、可逆或有限谱；不要求 $b,c$ 通勤，不要求它们属于同一个 $\operatorname{span}_{\mathbb R}\{b,G(b)\}$。条件 (11.4) 不是添加给全部原输入的新公理。原全域目标仍是旧 $D$ 的分别可加与 128.5 的原 R。
+

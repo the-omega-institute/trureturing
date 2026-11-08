@@ -1,0 +1,64 @@
+**定理 20.1（一般原候选的全部径向一致）。** 在 16.1 下，对任意原 $h^2=u$、任意固定 $0<r<1$，同一原 $G(b)=D(rh,b)/r$ 满足
+
+$$
+G(tb)=tG(b)\quad(b\in V_h,\ t\in\mathbb R),\qquad
+D(rh,D(rh,b))=-r^2b.
+\tag{20.1}
+$$
+
+因此对全部实 $\alpha,\beta$，
+
+$$
+G(\alpha b+\beta G(b))=\alpha G(b)-\beta b.
+\tag{20.2}
+$$
+
+证明。先取 $t>0$，记 $j=G(b),k=G(tb),R=b^2=j^2,L=1+r^2$。由 16.3，$k^2=t^2R$、$h\circ k=b\circ k=0$。取实际原标签
+
+$$
+v=(b-rj)/\sqrt L,\quad \ell=(rb+j)/\sqrt L,\quad
+x_\pm=tb\pm rk,\quad
+y_+=\sqrt L b,\quad y_-=((1-r^2)b-2rj)/\sqrt L.
+$$
+
+19.1 给 $G(v)=\ell$。PB $(rh,tb,v)$ 的实际位移为 $rk,r\ell$，右端为零，且 $v\pm r\ell=y_\pm$，所以
+
+$$
+K=D(x_+,y_+)=D(x_-,y_-).
+\tag{20.3}
+$$
+
+第一原对的完整 Gram 是
+
+$$
+\begin{pmatrix}Lt^2&t\sqrt L\\t\sqrt L&L\end{pmatrix}R.
+$$
+
+18.2 已支付的单坐标入口给
+
+$$
+K^2=r^2Lt^2R^2,\qquad
+b\circ K=k\circ K=0,\qquad [R,K]=0.
+\tag{20.4}
+$$
+
+$[R,K]=0$ 也由 $b$ 与 $K$ 反交换直接得到，不预付任意旧值的中央性。第二原对 $x=x_-,y=y_-$ 的平方为 $Lt^2R,LR$，且 $R$ 与 $x,y$ 交换；结合 (20.4)，17.1 的四个交换前件全部成立，故
+
+$$
+\mathcal A_-:=x^2y^2-(x\circ y)^2\le K^2.
+$$
+
+另一方面，$q=k\circ j$ 满足 $[R,q]=0$、$-tR\le q\le tR$，准确来自 $k^2=t^2R,j^2=R$ 和 $(k\pm tj)^2\ge0$。230.1 的已知乘法展开在当前原标签上给
+
+$$
+\begin{aligned}
+x\circ y&=((1-r^2)tR+2r^2q)/\sqrt L,\\
+\mathcal A_--K^2&=\frac{4r^2}{L}(tR-q)(tR+r^2q)\ge0.
+\end{aligned}
+\tag{20.5}
+$$
+
+两边相夹使缺陷为零。令 $\zeta=tR-q$，则 $0\le\zeta\le2tR$，交换正元第二因子满足 $tR+r^2q\ge(1-r^2)tR$。因此 $\zeta tR=0$，继而 $0\le\zeta^2\le2\zeta tR=0$。故 $\zeta=0$、$(k-tj)^2=2t\zeta=0$，得到 $k=tj$。没有删除零支撑或取逆 $R$。
+
+负 $t$ 用原奇性，零 $t$ 用零行。现在才用 $G(rj)=rG(j)$，由 19.1 得 $D(rh,D(rh,b))=rG(rj)=-r^2b$。全部实平面公式由已付圆作用与径向式接出；不从归一化负平方单独除去未知输入权重。∎
+

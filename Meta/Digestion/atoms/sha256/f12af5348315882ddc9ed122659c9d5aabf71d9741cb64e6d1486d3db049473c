@@ -1,0 +1,53 @@
+**定理 35.1（任意原横向标签的全实强度一致）。** 在 32.1 下，同一映射 (34.2) 满足
+
+$$
+\boxed{D(rh,b)=rJb\qquad(r\in\mathbb R,\ b\in V_h).}
+\tag{35.1}
+$$
+
+没有 $b^2\in Z(X)$ 的前件，也包含端点与任意大第一输入 $rh$。
+
+证明。先固定 $0<r<2$ 及原 $b$。由稠密性选
+
+$$
+\rho_n\in\mathcal R_1,\quad \rho_n\to r/2,\quad \rho_n<r,
+\qquad
+\alpha_n=\sqrt{r/\rho_n-1},\quad\kappa_n=\alpha_n\rho_n.
+$$
+
+取真正原标签
+
+$$
+z_n=\frac{b-\alpha_nJb}{1+\alpha_n^2},\qquad
+w_n=z_n-\alpha_nJz_n,
+\qquad\mu_n=2\rho_n-r.
+$$
+
+自身圆给 $z_n+\alpha_nJz_n=b$。33.1 与 34.2 支付内响应 $F_{\alpha_n}(z_n+\kappa_nu)=\alpha_nJz_n$，故 (34.1) 用 $\beta=\rho_n$ 成为
+
+$$
+F_r(b)-F_{\mu_n}(w_n+2\kappa_nu)=-2\kappa_nw_n.
+\tag{35.2}
+$$
+
+这里待证的 $F_r(b)$ 始终固定，另一份旧输出仍保留完整实际第二标签。已知自身平面运算准确给
+
+$$
+w_n=\frac{(1-\alpha_n^2)b-2\alpha_nJb}{1+\alpha_n^2},
+\qquad w_n^2=b^2,
+\qquad
+\alpha_n\to1,\quad\kappa_n\to r/2,\quad w_n\to-Jb.
+$$
+
+由 (32.4)，
+
+$$
+\|F_{\mu_n}(w_n+2\kappa_nu)\|
+\le |\mu_n|(\|b\|+2|\kappa_n|)\longrightarrow0.
+\tag{35.3}
+$$
+
+因此 (35.2) 迫使固定输出 $F_r(b)=rJb$。如果它与 $rJb$ 的差范数正，取一个足够大的有限 $n$，(35.2)–(35.3) 与已知系数的误差就会矛盾；没有假设 $D$ 对变动标签连续。
+
+再作有限倍增。若已知 (35.1) 对 $0<r<L$ 成立，这些 $F_r/r$ 都准确等于同一 $J$，故 33.1 的一般规则适用于每个 $\rho\in\mathcal R\cap(0,L)$。对任意固定 $0<r<2L$，重作上段，选 $\rho_n\to r/2$ 且 $\rho_n\in\mathcal R\cap(0,L)$，即得同一结论；内响应的外层强度 $\alpha_n$ 无须小于 $L$，因为 33.2 本来允许任意 $s$。从 $L=2$ 出发，任意有限正 $r$ 经有限次倍增覆盖。原第一槽奇性处理负 $r$，P2 零对角处理 $r=0$。∎
+

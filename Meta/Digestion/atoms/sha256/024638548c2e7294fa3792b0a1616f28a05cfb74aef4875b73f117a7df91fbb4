@@ -1,0 +1,29 @@
+**定义 16.1（一般 JB 原资料与较弱载体）。** 本批独立采用三角卷 128.1、240.1 的同一原 $(E,C,u,N,\mathcal P,S,D)$：$E$ 是含单位实 Archimedean 序单位空间，正实线性评价族 $\mathcal P$ 分离原元素并准确决定原锥，
+
+$$
+x\in C\ \Longleftrightarrow\ \alpha(x)\ge0\quad(\alpha\in\mathcal P).
+$$
+
+全部原质量 $m_\alpha=\alpha(u)$ 保持，包括零、不等和次归一质量。A1 是全部实际有向 Hermitian 二表正性；A2 是相加三表 $(a+b,a,b)$ 及其排列的实部半正定，并保留 $(1,-1,-1)$ 的零二次值；A3 是 $S(u,u)=u$，以及同一固定有理 $0<\theta\le1$ 上的 $0\le e\le\theta u\Rightarrow S(e,e)\le e$。全部原 P2 保持式 (11.1)，完整原 PB 保持式 (11.2) 对全部原 $a,b,c$ 成立。无 R 接口是
+
+$$
+S(a,b)=a\circ b,\qquad
+E\subset X,\quad \overline E^{\|\cdot\|_X}=X,\quad
+C=E\cap X_+,\quad N=\|\cdot\|_X|_E,
+\tag{16.1}
+$$
+
+其中 $X$ 是任意含单位实 JB 代数，$E$ 可不完备。$D:E^2\to E$ 始终是同一原总映射；不另加可加、输入齐次、连续、可测、协变、一般单位平移、输出闭合、商下降、完成延拓、$\mathsf F$ 或原 R。128.1、206.1、250.1 的全部来源量词保留。
+
+三角卷 240.2、248.1 已由这个一般候选给出忠实、含单位、等距且保锥并反映锥的 Jordan 包含 $j:X\to A_{\rm sa}$。以下只沿单射重记原元素、评价及旧值 $j(D(a,b))$，得到
+
+$$
+E\subset A_{\rm sa},\qquad
+\overline E=j(X),\qquad
+C=E\cap A_+,\qquad N=\|\cdot\|_A|_E,\qquad
+a\circ b=(ab+ba)/2.
+\tag{16.2}
+$$
+
+不要求 $\overline E=A_{\rm sa}$，不要求 $j(X)=A_{\rm sa}$。$X=0$ 时全部结论直接成立，单列零对象，不选态。本批在这个较弱域中重新支付后续推导的入口；0–15 的原条件和结算保持，不把它们的较强载体前件静默改写。
+

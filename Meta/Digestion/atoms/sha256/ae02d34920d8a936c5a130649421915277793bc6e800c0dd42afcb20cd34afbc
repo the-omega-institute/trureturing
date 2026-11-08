@@ -1,0 +1,11 @@
+**定义 24.2（标量像零行的准确消费）。** [《原多项式零响应与 Cayley 原域边界》](AURIC_ORIGINAL_POLYNOMIAL_ZERO_RESPONSES_AND_CAYLEY_DOMAIN_BOUNDARIES.md) 定理 4.2、推论 5.1 已对这样的 $q$ 给出
+
+$$
+\bar a=\kappa\bar b+\mu1
+\quad\Longrightarrow\quad qD(a,b)=0
+\qquad(\kappa,\mu\in\mathbb R).
+\tag{24.2}
+$$
+
+这里消费的是任意实际原代表的像零值，不是全域商响应。原标签间的 SO$(2)$ 旋转仍由 185.1 保持同一实际旧值；原 $D(a,Tu+\lambda a)=0$ 直接取既有同轴仿射零行。以下先支付像中的面积与一个固定实际首标签的第二槽纤维，才在那条行上定义像映射。没有从 (24.2) 预取一般纤维一致性。
+

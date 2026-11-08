@@ -1,0 +1,19 @@
+**定理 18.1（较弱域中的标量入口面积）。** 在 16.1 下，若原 $a,b$ 满足 $a\circ b\in\mathbb Ru$ 或 $a^2-b^2\in\mathbb Ru$，则同一 $d=D(a,b)$ 满足
+
+$$
+a\circ d=b\circ d=0,\qquad
+d^2=a^2b^2-(a\circ b)^2.
+\tag{18.1}
+$$
+
+证明。若 $a\circ b=\tau u$，PB $(a,b,0)$ 的两个外层第二标签为 $\pm\tau u$，全单位行使两份旧值为零，故 $b\circ d=0$；交换输入得到 $a\circ d=0$。若平方差为标量，实际 SO$(2)$ 旋转 $x=(a+b)/\sqrt2,y=(b-a)/\sqrt2$ 保持旧值，且 $x\circ y=(b^2-a^2)/2$ 是标量。上一情形给 $x\circ d=y\circ d=0$，反解实旋转即得原输入的正交。没有把非正交输入直接送入 216.2。
+
+两种输入条件都使 $[a^2,b]=[b^2,a]=0$，正交形状又给 $[d^2,a]=[d^2,b]=0$，所以 17.1 给面积下界。相反上界另行支付：在
+
+$$
+B=C^*(u,a,b,d),\qquad
+Z=C^*(u,a^2,b^2,a\circ b,d^2)\subset Z(B)
+$$
+
+取任一非零中央商。中央像写为 $\alpha u,\beta u,\gamma u,\delta^2u$。这里 $d$ 确实列为生成元，故可取其商像；当 $\delta>0$，$\bar d^2=\delta^2u$ 允许选 $\bar d$ 某个绝对值为 $\delta$ 的谱值支撑态。延拓到 $A$ 后，原 $(a,b)$ 的 P2 给 $\delta^2\le\alpha\beta-\gamma^2$。$\delta=0$ 时同一不等式由输入实 Gram 正性成立。字符分离 $Z$ 给算子面积上界，与 17.1 相夹得等号。∎
+
