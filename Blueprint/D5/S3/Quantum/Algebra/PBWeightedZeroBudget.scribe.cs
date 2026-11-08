@@ -50,7 +50,17 @@ internal sealed class PBWeightedZeroBudgetDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text("Keep OriginalTables, the independent RotationInvariant hypothesis and the ambient inclusion conditions just stated. Take original P,F with iota(P) a selfadjoint projection, arbitrary 0<alpha<=beta, any real theta, and any ambient z satisfying iota(S(r,s))z=0 for the exact r,s above. Put T=D(alpha P,beta F) and Q=1-iota(P). Then Q iota(T)Q=0 and both z*iota(S(P,T))z and z*iota(S(F,T))z are zero. The support conclusion uses the preceding theorem at the actual inputs alpha P,beta F and multiplier Q. The two directional conclusions apply the weighted rotated theorem to every positive compressed read and separate the norm-positive cone.")),
-                    Paragraph(Text("This statement applies to arbitrary projection-flip pairs in the original full C* carrier once the explicit rotated-product kernel is verified. It proves no existence or uniqueness of a corner coefficient W, no contraction or square upper bound, no same-W reverse budget and no involutory seed. The projection-flip identities and exact angle still have to produce the required kernels; full corner reconstruction, the saturation step and both endogenous rows remain additional mathematical obligations. No output-span premise, crossweight comparison or scaling of D occurs."))),
+                    Paragraph(Text("This statement applies to arbitrary projection-flip pairs in the original full C* carrier once the explicit rotated-product kernel is verified. It proves no existence or uniqueness of a corner coefficient W, no contraction or square upper bound, no same-W reverse budget and no involutory seed. The projection-flip theorem below supplies the kernel for the exact angle; full corner reconstruction, the saturation step and both endogenous rows remain additional mathematical obligations. No output-span premise, crossweight comparison or scaling of D occurs."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("actual-projection-flip-weighted-kernel"),
+                DeclarationHandle.Create("D5/S3/Quantum/Algebra/PBWeightedZeroBudget.projection_flip_weighted_compressions"),
+                H("The projection-flip identities supply the kernel at all ordered positive weights"),
+                StatementSource.FromAuthor(F.Disp(ProjectionFlipStatement())),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("Keep OriginalTables, the independent RotationInvariant hypothesis, and a real linear iota into an arbitrary unital complex C* algebra with its star order. Now require the complete inherited product formula iota(S(x,y))=(iota(x)iota(y)+iota(y)iota(x))/2 and the exact inherited cone. For original P,F put p=iota(P), v=iota(F), and assume p is a selfadjoint projection, v^2=1 and pv+vp=v. For every 0<alpha<=beta define theta(alpha,beta)=arcsin(alpha/beta)/2, k=cos(theta)^2-sin(theta)^2 and z=p+k vp. The conclusion gives Q iota(T)Q=0 and both z*iota(S(P,T))z=z*iota(S(F,T))z=0 for the literal same T=D(alpha P,beta F). No compressed-kernel hypothesis is left in this theorem.")),
+                    Paragraph(Text("The relation pv+vp=v and p^2=p give pvp=0. Set c=cos(theta), s=sin(theta). The exact angle gives alpha=2 beta s c, including alpha=beta. The inherited product computes the rotated product as beta^2 s c times ((4s^2 c^2)p+(c^2-s^2)v-1). Since 4s^2 c^2+(c^2-s^2)^2=1, this product annihilates z by pvp=0 and v^2=1. All of these multiplications are ambient calculations, and the rotated D labels remain real linear combinations in E. Applying the preceding compression theorem therefore pays the actual support and two directional compression equations for every original projection-flip pair and every allowed weight. Identifying the full corner coefficient, its contraction and its same-value saturation remain separate obligations; no involutory seed or endogenous row value follows from this partial result alone."))),
                 DescribeRole.Theorem))));
 
     private static Formula V(string name) => Id(name);
@@ -112,4 +122,26 @@ internal sealed class PBWeightedZeroBudgetDocument : IScribeDocumentDefinition
                     Imp(Call("PositiveOrderedWeights",alpha,beta),All("z",V("A"),
                         Imp(Zero(Multiply(Call("iota",S(r,s)),z)),result))))))))))));
     }
+    private static Formula ProjectionFlipStatement()
+    {
+        var p=V("P"); var f=V("F"); var alpha=V("alpha"); var beta=V("beta");
+        var ip=Call("iota",p); var iff=Call("iota",f);
+        var theta=Call("theta",alpha,beta); var c=Call("cos",theta); var ss=Call("sin",theta);
+        var k=Subtract(Multiply(c,c),Multiply(ss,ss));
+        var z=Add(ip,Multiply(k,Multiply(iff,ip))); var q=Subtract(Num(1),ip);
+        var t=D(Multiply(alpha,p),Multiply(beta,f));
+        Formula result=And(Zero(Multiply(Multiply(q,Call("iota",t)),q)),
+            And(Zero(Compress(z,S(p,t))),Zero(Compress(z,S(f,t)))));
+        result=Imp(Call("PositiveOrderedWeights",alpha,beta),result);
+        result=All("beta",V("R"),result); result=All("alpha",V("R"),result);
+        result=Imp(Equal(Add(Multiply(ip,iff),Multiply(iff,ip)),iff),result);
+        result=Imp(Equal(Multiply(iff,iff),Num(1)),result);
+        result=Imp(Call("IsStarProjection",ip),result);
+        result=All("F",V("E"),result); result=All("P",V("E"),result);
+        result=Imp(Call("ExactConeAndJordanProduct",V("iota"),V("S"),V("C")),result);
+        result=All("iota",Call("RealLinearMaps",V("E"),V("A")),result);
+        result=All("A",V("UnitalComplexCStarAlgebrasWithStarOrder"),result);
+        return Scope(Imp(Call("RotationInvariant",V("D")),result));
+    }
+
 }

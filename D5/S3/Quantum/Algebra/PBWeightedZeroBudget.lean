@@ -9,7 +9,7 @@
 module
 
 public import Mathlib.Analysis.Matrix.PosDef
-public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Inverse
 public import Mathlib.Analysis.CStarAlgebra.ContinuousFunctionalCalculus.Order
 public import Mathlib.Analysis.Convex.Cone.Dual
 public import Mathlib.Analysis.Normed.Operator.Mul
@@ -275,6 +275,76 @@ theorem weighted_compressed_directions (H : OriginalTables S D C evaluation)
   refine ⟨?_, ambient_eq_zero _ (fun g hg => (reads g hg).1),
     ambient_eq_zero _ (fun g hg => (reads g hg).2)⟩
   simpa only [star_sub, star_one, hP.isSelfAdjoint.star_eq] using hsupport
+
+omit [PartialOrder A] [StarOrderedRing A] in
+private theorem projection_flip_kernel (p f : A) (hp : p * p = p) (hf : f * f = 1)
+    (hpf : p * f + f * p = f)
+    (c s β : ℝ) (hcs : c ^ 2 + s ^ 2 = 1) :
+    let α := 2*β*s*c
+    let k := c^2-s^2
+    let r := c • (α • p) - s • (β • f)
+    let t := s • (α • p) + c • (β • f)
+    ((1/2 : ℝ) • (r*t+t*r)) * (p+k • (f*p)) = 0 := by
+  dsimp only
+  have hfp : f*p = f-p*f := by
+    apply eq_sub_iff_add_eq.mpr
+    simpa only [add_comm] using hpf
+  have hpfp : p*(f*p)=0 := by
+    rw [hfp, mul_sub, ← mul_assoc, hp, sub_self]
+  have hffp : f*(f*p)=p := by rw [← mul_assoc,hf,one_mul]
+  have hid : 4*s^2*c^2+(c^2-s^2)^2=1 := by
+    nlinarith [congrArg (fun x : ℝ => x^2) hcs]
+  have hg : (1/2 : ℝ) •
+      ((c • ((2*β*s*c) • p) - s • (β • f)) *
+        (s • ((2*β*s*c) • p) + c • (β • f)) +
+       (s • ((2*β*s*c) • p) + c • (β • f)) *
+        (c • ((2*β*s*c) • p) - s • (β • f))) =
+      (β^2*s*c) • ((4*s^2*c^2) • p + (c^2-s^2) • f - 1) := by
+    simp only [mul_add,add_mul,mul_sub,sub_mul,smul_mul_assoc,mul_smul_comm,
+      smul_smul,hp,hf,hfp]
+    module
+  rw [hg, show 4*s^2*c^2=1-(c^2-s^2)^2 by linarith [hid], smul_mul_assoc]
+  suffices h : ((1-(c^2-s^2)^2) • p + (c^2-s^2) • f - 1) *
+      (p+(c^2-s^2) • (f*p)) = 0 by rw [h,smul_zero]
+  simp only [sub_mul,add_mul,mul_add,smul_mul_assoc,mul_smul_comm,
+    hp,hpfp,hffp,one_mul,smul_zero]
+  module
+
+
+/-- The original projection-flip geometry supplies the actual kernel at every
+positive ordered pair of weights; no extra kernel premise is needed. -/
+theorem projection_flip_weighted_compressions (H : OriginalTables S D C evaluation)
+    (rotation : RotationInvariant D)
+    (ι : E →ₗ[ℝ] A) (hC : ∀ x, x ∈ C ↔ 0 ≤ ι x)
+    (hS : ∀ x y, ι (S x y) = (1/2 : ℝ) • (ι x * ι y + ι y * ι x))
+    (P F : E) (hP : IsStarProjection (ι P))
+    (hF : ι F * ι F = 1) (hPF : ι P * ι F + ι F * ι P = ι F)
+    (α β : ℝ) (hα : 0 < α) (hαβ : α ≤ β) :
+    let θ := Real.arcsin (α / β) / 2
+    let k := Real.cos θ ^ 2 - Real.sin θ ^ 2
+    let z := ι P + k • (ι F * ι P)
+    (1 - ι P) * ι (D (α • P) (β • F)) * (1 - ι P) = 0 ∧
+      star z * ι (S P (D (α • P) (β • F))) * z = 0 ∧
+        star z * ι (S F (D (α • P) (β • F))) * z = 0 := by
+  let θ := Real.arcsin (α / β) / 2
+  have hβ : 0 < β := hα.trans_le hαβ
+  have hangle : Real.sin (2*θ) = α / β := by
+    rw [show 2*θ = Real.arcsin (α/β) by dsimp [θ]; ring]
+    exact Real.sin_arcsin (by have hd := div_pos hα hβ; linarith) ((div_le_one hβ).mpr hαβ)
+  have halpha : α = 2*β*Real.sin θ*Real.cos θ := by
+    rw [Real.sin_two_mul] at hangle
+    have hh := (div_eq_iff (ne_of_gt hβ)).mp hangle.symm
+    nlinarith [hh]
+  have hsq (x : E) : ι (S x x) = ι x * ι x := by rw [hS]; module
+  apply weighted_compressed_directions H rotation ι hC hsq P F hP α β θ hα hαβ
+  change ι (S (Real.cos θ • (α • P) - Real.sin θ • (β • F))
+    (Real.sin θ • (α • P) + Real.cos θ • (β • F))) *
+      (ι P + (Real.cos θ ^ 2 - Real.sin θ ^ 2) • (ι F * ι P)) = 0
+  rw [hS]
+  simp only [map_sub,map_add,map_smul]
+  rw [halpha]
+  exact projection_flip_kernel (ι P) (ι F) hP.isIdempotentElem hF hPF
+    (Real.cos θ) (Real.sin θ) β (Real.cos_sq_add_sin_sq θ)
 
 end Ambient
 

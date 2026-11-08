@@ -98,4 +98,7 @@ theorem weighted_read_source_application : type_of% (@weighted_rotated_direction
 theorem null_input_source_application : type_of% (@response_compression_of_annihilation.{u,v,w}) :=
   @response_compression_of_annihilation.{u,v,w}
 
+theorem projection_flip_source_application : type_of% (@projection_flip_weighted_compressions.{u,v,w}) :=
+  @projection_flip_weighted_compressions.{u,v,w}
+
 end Reg.D5.S3.Quantum.Algebra.PBWeightedZeroBudget
