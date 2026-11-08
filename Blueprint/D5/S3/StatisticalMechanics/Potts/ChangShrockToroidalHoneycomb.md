@@ -104,7 +104,7 @@ Space L is the free module of polynomial coefficients on the native degree L-1 d
 
 **Definition 1.8 (ket).**
 
-$$\forall (L: \mathbb{N}), ([\operatorname{NeZero}\left(L\right)] \forall (f: (\operatorname{Fin}\left(L\right)) \to (\operatorname{Fin}\left(L\right))), (\operatorname{ket}\left(f\right) = \operatorname{ite}\left(\operatorname{Native}\left(L, f\right), \operatorname{single}\left(\operatorname{subtype}\left(f\right), 1\right), 0\right)))$$
+$$\forall (L: \mathbb{N}), ([\operatorname{NeZero}\left(L\right)] \forall (f: (\operatorname{Fin}\left(L\right)) \to (\operatorname{Fin}\left(L\right))), (\operatorname{ket}\left(f\right) = \operatorname{dite}\left(\operatorname{Native}\left(L, f\right), ((h: \operatorname{Native}\left(L, f\right)) \mapsto \operatorname{single}\left(\operatorname{Subtype}.\operatorname{mk}\left(f, h\right), 1\right)), ((h: \operatorname{Not}\left(\operatorname{Native}\left(L, f\right)\right)) \mapsto 0)\right)))$$
 
 *Formalization.* `D5/S3/StatisticalMechanics/Potts/ChangShrockToroidalHoneycomb.ket` (`✓ std3`).
 
@@ -114,7 +114,7 @@ $$\forall (L: \mathbb{N}), ([\operatorname{NeZero}\left(L\right)] \forall (f: (\
 
 *Commentary.*
 
-A native connectivity word gives its unit basis vector. A word outside this degree block gives zero; the subtype proof carries no extra state information.
+A native connectivity word gives its unit basis vector: dite binds h : Native L f, and Subtype.mk f h is the native state. A word outside this degree block gives zero.
 
 **Definition 1.9 (join).**
 
@@ -166,7 +166,7 @@ $$\forall (L: \mathbb{N}), ([\operatorname{NeZero}\left(L\right)] \forall (b: \o
 
 *Commentary.*
 
-The Boolean b selects the second bond layer. Its offset is one when true and zero when false. Thus false pairs sites 0-1, 2-3 and so on; true pairs sites 1-2, 3-4 and the seam L-1 to 0. Fin.ofNat reduces site numbers modulo L. Here div(L,2) denotes Nat.div L 2, the integer quotient floor(L/2). These are the two honeycomb H operators in equation (2.34).
+The Boolean b selects the second bond layer. Its offset is one when true and zero when false. For even L, false pairs sites 0-1, 2-3 and so on; true pairs sites 1-2, 3-4 and the seam L-1 to 0. Fin.ofNat reduces site numbers modulo L. Here div(L,2) denotes Nat.div L 2, the integer quotient floor(L/2). These are the two honeycomb H operators in equation (2.34).
 
 **Definition 1.13 (transfer).**
 
@@ -182,7 +182,7 @@ Equation (2.35) defines T=(V Htwo)(V Hone). The operator acts on the full native
 
 **Definition 1.14 (alternatingVector).**
 
-$$\forall (L: \mathbb{N}), ([\operatorname{NeZero}\left(L\right)] \operatorname{alternatingVector}\left(L\right) = \sum_{s \in \operatorname{Perm}\left(\operatorname{Fin}\left(L\right)\right)} \operatorname{single}\left(\operatorname{subtype}\left(s\right), (\operatorname{val}\left(\operatorname{Equiv}.\operatorname{Perm}.\operatorname{sign}\left(s\right)\right): \operatorname{Coeff})\right))$$
+$$\forall (L: \mathbb{N}), ([\operatorname{NeZero}\left(L\right)] \operatorname{alternatingVector}\left(L\right) = \sum_{s \in \operatorname{Perm}\left(\operatorname{Fin}\left(L\right)\right)} ((\operatorname{val}\left(\operatorname{Equiv}.\operatorname{Perm}.\operatorname{sign}\left(s\right)\right): \operatorname{Coeff})) \cdot (\operatorname{ket}\left(\operatorname{Equiv}.\operatorname{toFun}\left(s\right)\right)))$$
 
 *Formalization.* `D5/S3/StatisticalMechanics/Potts/ChangShrockToroidalHoneycomb.alternatingVector` (`✓ std3`).
 

@@ -7,10 +7,8 @@
    digest: The alternating labelled connectivity vector yields the honeycomb degree L-1 eigenvalue. -/
 
 import Mathlib.GroupTheory.Perm.Sign
-import Mathlib.LinearAlgebra.Finsupp.LinearCombination
 import Mathlib.Algebra.MvPolynomial.Basic
 import Mathlib.Algebra.BigOperators.Fin
-import Mathlib.Tactic.Ring
 
 /-!
 admission_basis: open-problem-resolution (#28063; Proved)

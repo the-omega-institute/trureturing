@@ -39,9 +39,10 @@ internal sealed class ChangShrockToroidalHoneycombDocument : IScribeDocumentDefi
                 Call("Finsupp", Call("State", X("L")), N("Coeff")))),
                 "Space L is the free module of polynomial coefficients on the native degree L-1 diagrams."),
             Definition("ket", Width(All("f", Arrow(Sites(), Sites()),
-                Eq(Call("ket", X("f")), If(Call("Native", X("L"), X("f")),
-                    Call("single", Call("subtype", X("f")), D(1)), D(0))))),
-                "A native connectivity word gives its unit basis vector. A word outside this degree block gives zero; the subtype proof carries no extra state information."),
+                Eq(Call("ket", X("f")), Call("dite", Call("Native", X("L"), X("f")),
+                    Fn("h", Call("Native", X("L"), X("f")), Call("single", At(Q("Subtype", "mk"), X("f"), X("h")), D(1))),
+                    Fn("h", Call("Not", Call("Native", X("L"), X("f"))), D(0)))))),
+                "A native connectivity word gives its unit basis vector: dite binds h : Native L f, and Subtype.mk f h is the native state. A word outside this degree block gives zero."),
             Definition("join", Width(All("i", Sites(), All("j", Sites(),
                 Eq(Call("join", X("i"), X("j")), Call("linearCombination", N("Coeff"),
                     Fn("s", Call("State", X("L")), JoinBody())))))),
@@ -63,7 +64,7 @@ internal sealed class ChangShrockToroidalHoneycombDocument : IScribeDocumentDefi
                             Call("ofNat", X("L"), Offset()),
                             Call("ofNat", X("L"), Add(Offset(), D(1)))))))))))),
                 "The Boolean b selects the second bond layer. Its offset is one when true and zero when false. "
-                + "Thus false pairs sites 0-1, 2-3 and so on; true pairs sites 1-2, 3-4 and the seam L-1 to 0. "
+                + "For even L, false pairs sites 0-1, 2-3 and so on; true pairs sites 1-2, 3-4 and the seam L-1 to 0. "
                 + "Fin.ofNat reduces site numbers modulo L. Here div(L,2) denotes Nat.div L 2, the integer quotient floor(L/2). These are the two honeycomb H operators in equation (2.34).", true),
             Definition("transfer", Width(Eq(Call("transfer", X("L")),
                 Mul(Mul(Call("vertical", X("L")), Call("horizontal", X("L"), N("true"))),
@@ -71,7 +72,7 @@ internal sealed class ChangShrockToroidalHoneycombDocument : IScribeDocumentDefi
                 "Equation (2.35) defines T=(V Htwo)(V Hone). The operator acts on the full native labelled degree L-1 block, including double-block states.", true),
             Definition("alternatingVector", Width(Eq(Call("alternatingVector", X("L")),
                 Seq(Script(Sum, "s", Call("Perm", Sites())), Sp,
-                    Call("single", Call("subtype", X("s")), Par(Seq(Call("val", At(Q("Equiv", "Perm", "sign"), X("s"))), Colon, Sp, N("Coeff"))))))),
+                    Mul(Par(Seq(Call("val", At(Q("Equiv", "Perm", "sign"), X("s"))), Colon, Sp, N("Coeff"))), Call("ket", At(Q("Equiv", "toFun"), X("s"))))))),
                 "Equiv.Perm.sign takes values in the units of the integers; its value is cast into Coeff. The sum runs over all permutations of the L symbols. Its singleton-state coefficient is the integer sign, embedded in Coeff. "
                 + "The identity permutation contributes coefficient one, and no other permutation represents that labelled singleton diagram."),
             Describe.Lean(DescribeId.Create("result"), DeclarationHandle.Create(Prefix + "result"),
