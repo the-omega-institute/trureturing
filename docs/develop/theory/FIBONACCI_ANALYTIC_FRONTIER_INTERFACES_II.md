@@ -2497,3 +2497,99 @@ $$
 因此，在相应的 (490.2) 下，§494–§495 各接口中总阶数为一和二的部分都是定理：$M_1=0$、$M_{2,0}=c_{2,0}\kappa_1\min$、$M_{0,2}=c_{0,2}\kappa_2\min$、$M_{1,1}\equiv0$（这加强了定理 495.2 的几乎处处结论），所需的一、二阶矩界也已给出。总阶数三及更高的绝对矩界与相应混合矩极限仍需额外假设，包括 Brownian 型接口所要求的奇阶极限为零；四阶情形还涉及 (493.1) 型上界及四阶混合矩极限。
 
 **范围。** 本节以 (490.2) 为条件，不涉及素数余项 $E=\psi-\mathrm{id}$ 的算术证明。固定长度方差到比例长度或移动长度的转移已有先例：Goldston [Notes on pair correlation of zeros and prime numbers, arXiv:math/0412313] §9 用 Saffari–Vaughan 论证讨论比例窗与加法窗方差的定性等价；Bui–Keating–Smith [On the variance of sums of arithmetic functions over primes in short intervals and pair correlation for $L$-functions in the Selberg class, J. London Math. Soc. 94 (2016), 161–185] 的定理 $C_1$、$D_1$ 在固定加法窗与比例窗之间转移方差；Chan [Higher moments of primes in short intervals I, arXiv:math/0409530v2 (2004)] 定理 3.1、4.1 在 RH 与定量矩假设下转移固定长度与比例长度的偶矩，方法可追溯到 Saffari–Vaughan。极化恢复两点相关是已知工具（Leung 2026 附注 2.3）。本节在上述转移方法下给出：只用定性的一致 $o(1)$ 假设 (490.2)、对局部有界 Borel $E$ 的局部移动端点估计（引理 496.1(iii)，保留区间长度 $|J|$）与冻结误差 (496.3)，由此对一般宏观变长 $X^\theta a(x/X)$ 与连续宏观权得到带权协方差 (496.4)，以及对时间参数一致的二阶接口 (496.6) 和推论 496.5 对 §494–§495 接口的削减。
+
+## 追加锚（本行以下为增补区）
+
+## 497. 固定尺度四阶矩到移动长度的传递
+
+沿用 §494 的 $\mu_X,U_X,B_X,\kappa,r,c_k$ 与 §496 的 $h=X^\theta$、$\varepsilon_X$ 记号；$E$ 局部有界 Borel 可测，$0<\alpha<\theta<\beta<1$。令 $d\nu(u)=du/(u\log2)$（$1\le u\le2$），
+
+$$
+\widetilde B_X(c,x)=\frac{D_{ch}(x)}{\sqrt{h\log X}}\qquad(c\ge0,\ X\le x\le2X),
+$$
+
+$W_3\equiv0$，$W_4(c_1,c_2,c_3,c_4)=\kappa^2\bigl[\min(c_1,c_2)\min(c_3,c_4)+\min(c_1,c_3)\min(c_2,c_4)+\min(c_1,c_4)\min(c_2,c_3)\bigr]$。
+
+**局部四阶能量假设 $(\mathrm L_4)$。** 存在 $C_4$ 与 $\varepsilon'_X\to0$，使对充分大的 $X$、一切 $X/2\le A\le B\le4X$ 与 $(4X)^\alpha\le v\le(X/2)^\beta$，
+
+$$
+\int_A^B|D_v(y)|^4\,dy\le C_4\,v^2(\log X)^2\bigl(B-A+\varepsilon'_XX\bigr).
+\tag{497.1}
+$$
+
+**固定尺度假设 $(\mathrm F_k)$（$k=3,4$）。** 对每个 $M>0$、$\mathbf c\in[0,M]^k$ 与 $1\le u<v\le2$，
+
+$$
+\lim_{X\to\infty}\mathbb E_{\mu_X}\Bigl[\mathbf 1_{[u,v]}(U_X)\prod_{j=1}^k\widetilde B_X(c_j)\Bigr]=\nu([u,v])\,W_k(\mathbf c).
+\tag{497.2}
+$$
+
+$(\mathrm F_4)$ 是固定长度 $c_1h,\dots,c_4h$ 的联合四阶矩的 Wick 渐近，带有宏观位置的区间权，是下面证明直接使用的形式；$(\mathrm F_3)$ 是相应三阶混合矩的消失。单一长度的四阶矩渐近不决定 $(\mathrm F_4)$：边际矩不决定混合矩。
+
+**引理 497.1（$L^4$ 移动端点估计）。** 设 $(\mathrm L_4)$，$R$ 满足 (496.2)，$I$ 为紧区间，$p,q\in C^1(I)$，$p',q'\ge m>0$，$p(I),q(I)\subset J\subset[X/2,4X]$，$|q-p|\le R$。则
+
+$$
+\int_I|E(q(x))-E(p(x))|^4\,dx\le\frac{656}{3}\cdot\frac{C_4}m\,R^2(\log X)^2\bigl(|J|+\varepsilon'_XX\bigr).
+\tag{497.3}
+$$
+
+证明。令 $\delta=q-p$。对 $v\in[2R,3R]$，$E(q)-E(p)=D_v(p)-D_{v-\delta}(q)$ 且 $v-\delta\in[R,4R]$。由 $|a-b|^4\le8(|a|^4+|b|^4)$，对 $v\in[2R,3R]$ 取平均并对 $x\in I$ 积分；与引理 496.1(ii) 的证明相同地换元与使用 Tonelli，得
+
+$$
+\int_I|E(q)-E(p)|^4\le\frac8{mR}\Bigl(\int_{2R}^{3R}\!\!\int_J|D_v|^4+\int_R^{4R}\!\!\int_J|D_w|^4\Bigr)\le\frac{8C_4}{mR}(\log X)^2\bigl(|J|+\varepsilon'_XX\bigr)\Bigl(\int_{2R}^{3R}v^2dv+\int_R^{4R}v^2dv\Bigr),
+$$
+
+而 $\int_{2R}^{3R}v^2+\int_R^{4R}v^2=\bigl(\frac{19}3+21\bigr)R^3=\frac{82}3R^3$。证毕。
+
+**引理 497.2（四阶冻结与一致矩界）。** 设 $(\mathrm L_4)$。固定 $M\ge1$、$L\ge0$。
+
+(i) 对 $a\in C^1([1,2])$，$0\le a\le M$，$|a'|\le L$，令 $f_{a,X}(x)=D_{h\,a(x/X)}(x)$。则对充分大的 $X$（门槛只依赖 $E,\alpha,\theta,\beta,M,L$），$\mathbb E_{\mu_X}\bigl|f_{a,X}/\sqrt{h\log X}\bigr|^4\le K_M:=1312\,C_4M^2/\log2$；特别地 $\sup_{0\le c\le M}\mathbb E_{\mu_X}|\widetilde B_X(c)|^4\le K_M$。
+
+(ii) 沿用引理 496.2 的分块 $u_j=1+j/n$、$I_j=[u_jX,u_{j+1}X]$ 与冻结函数 $F_{a,n,X}=D_{h\,a(u_j)}$（$x\in I_j$）。则对每个固定 $n$，
+
+$$
+\limsup_{X\to\infty}\ \sup_a\ \mathbb E_{\mu_X}\Bigl|\frac{f_{a,X}-F_{a,n,X}}{\sqrt{h\log X}}\Bigr|^4\le\frac{1312\,C_4(1+L)^2}{3\,n^2\log2} .
+\tag{497.4}
+$$
+
+证明。在 $[X,2X]$ 上 $d\mu_X\le dx/(X\log2)$。(i) 取 $p(x)=x$、$q(x)=x+h\,a(x/X)$、$R=Mh$、$m=\frac12$、$J=[X,2X+Mh]$（对充分大的 $X$，$q'\ge\frac12$、$Mh\le X$、$\varepsilon'_X\le1$，且 $R$ 满足 (496.2)），由引理 497.1，$\int_X^{2X}|f_{a,X}|^4\le\frac{1312}3C_4M^2h^2(\log X)^2\cdot3X$，除以 $X\log2\cdot h^2(\log X)^2$ 即得。$c$ 为常数时取 $a\equiv c$。(ii) 在 $I_j$ 上取 $p(x)=x+h\,a(u_j)$、$q(x)=x+h\,a(x/X)$、$R=(1+L)h/n$、$m=\frac12$、$J_j=[u_jX,u_{j+1}X+Mh]$，与引理 496.2 的证明相同，条件对充分大的 $X$ 成立。由引理 497.1，$\int_{I_j}|f-F|^4\le\frac{1312}3C_4R^2(\log X)^2(X/n+Mh+\varepsilon'_XX)$。对 $j$ 求和并除以 $X\log2\cdot h^2(\log X)^2$，得 $\frac{1312C_4(1+L)^2}{3n^2\log2}\bigl(1+nMh/X+n\varepsilon'_X\bigr)$，对固定 $n$ 令 $X\to\infty$。证毕。
+
+冻结误差为 $O(n^{-2})$，因为引理 497.1 保留了区间长度 $|J|$。
+
+**定理 497.3（四阶以内的移动长度传递）。** 设 $(\mathrm L_4)$，$k\in\{3,4\}$，$(\mathrm F_k)$ 成立。设 $b_1,\dots,b_k\in C^1([1,2])$，$0\le b_j\le M$，$|b_j'|\le L$，$w\in C([1,2])$ 实值。则
+
+$$
+\lim_{X\to\infty}\mathbb E_{\mu_X}\Bigl[w(U_X)\prod_{j=1}^k\frac{D_{h\,b_j(U_X)}(x)}{\sqrt{h\log X}}\Bigr]=\int_1^2w(u)\,W_k\bigl(b_1(u),\dots,b_k(u)\bigr)\,d\nu(u).
+\tag{497.5}
+$$
+
+证明。令 $A_j=f_{b_j,X}/\sqrt{h\log X}$、$G_j=F_{b_j,n,X}/\sqrt{h\log X}$。由引理 497.2(i)，$\|A_j\|_{L^4(\mu_X)}\le K_M^{1/4}$；对 $G_j$，在每块上对 $p(x)=x$、$q(x)=x+h\,b_j(u_\ell)$、$R=Mh$、$m=\frac12$、$J_\ell=[u_\ell X,u_{\ell+1}X+Mh]$ 用引理 497.1，得 $\mathbb E_{\mu_X}|G_j|^4\le\frac{1312C_4M^2}{3\log2}(1+nMh/X+n\varepsilon'_X)\le K_M$（对固定 $n$ 与充分大的 $X$）。又$\limsup_X\|A_j-G_j\|_{L^4(\mu_X)}\le\bigl(\frac{1312C_4(1+L)^2}{3\log2}\bigr)^{1/4}n^{-1/2}$。由望远镜恒等式 $\prod_jA_j-\prod_jG_j=\sum_i(A_i-G_i)\prod_{j<i}A_j\prod_{j>i}G_j$ 与关于概率测度 $\mu_X$ 的 Hölder 不等式（$k$ 个 $L^k$ 因子，且 $\|\cdot\|_{L^k}\le\|\cdot\|_{L^4}$），$\limsup_X\|\prod_jA_j-\prod_jG_j\|_{L^1(\mu_X)}\le C'n^{-1/2}$，$C'$ 只依赖 $C_4,K_M,L,k$；乘以 $\|w\|_\infty$ 即控制 $\mathbb E[w(U_X)(\prod_jA_j-\prod_jG_j)]$。令 $w_n=w(u_j)$（$u_j\le u<u_{j+1}$），则 $|\mathbb E[(w-w_n)(U_X)\prod_jG_j]|\le\omega_w(1/n)K_M^{k/4}$。在每块上 $G_j=\widetilde B_X(b_j(u_j))$，由 $(\mathrm F_k)$（区间 $[u_j,u_{j+1}]$），
+
+$$
+\mathbb E_{\mu_X}\Bigl[w_n(U_X)\prod_jG_j\Bigr]=\sum_{j'}w(u_{j'})\,\mathbb E_{\mu_X}\Bigl[\mathbf 1_{[u_{j'},u_{j'+1}]}(U_X)\prod_j\widetilde B_X\bigl(b_j(u_{j'})\bigr)\Bigr]\longrightarrow\sum_{j'}w(u_{j'})\,\nu([u_{j'},u_{j'+1}])\,W_k\bigl(\mathbf b(u_{j'})\bigr)
+$$
+
+（块的公共端点是 $\mu_X$-零集）。$W_k\circ\mathbf b$ 在 $[1,2]$ 上连续，右边是 $\int_1^2w\,W_k(\mathbf b)\,d\nu$ 的 Riemann 和。先令 $X\to\infty$，再令 $n\to\infty$。证毕。
+
+**推论 497.4（§494 的三、四阶接口）。** 设 $(\mathrm L_4)$。
+
+(a) 若 $(\mathrm F_4)$ 成立，则 (494.3) 成立：对每个 $\mathbf s\in[0,1]^4$，$\mathbb E_{\mu_X}[U_X^{2\kappa}\prod_jB_X(s_j)]\to c_4\kappa^2\sum_\pi\prod_{\{i,j\}\in\pi}\min(s_i,s_j)$；且 $\sup_{s\in[0,1]}\mathbb E_{\mu_X}|B_X(s)|^4$ 对充分大的 $X$ 有界，故 $(\mathrm M_4)$ 以这一 Brownian 核成立。
+
+(b) 若 $(\mathrm F_3)$ 成立，则 $(\mathrm M_3)$ 以 $M_3\equiv0$ 成立。
+
+证明。在 $[X,2X]$ 上，$B_X(s,x)=\lambda_X(x)\,u^{-\theta/2}\,D_{h\,su^\theta}(x)/\sqrt{h\log X}$，其中 $u=x/X$、$\lambda_X(x)=\sqrt{\log X/\log x}$，$\sup_{[X,2X]}|\lambda_X^k-1|\to0$。取 $b_j(u)=s_ju^\theta$（$0\le b_j\le2$、$|b_j'|\le1$）。由引理 497.2(i)，$\mathbb E|B_X(s)|^4\le K_2$，并且把 $\prod_j\lambda_X$ 换成 $1$ 的误差至多 $\sup|\lambda_X^k-1|\cdot2^{kr}K_2^{k/4}\to0$。对 $k=4$，由定理 497.3（$w(u)=u^{2\kappa}u^{-2\theta}$），极限为 $\int_1^2u^{2\kappa-2\theta}W_4(s_1u^\theta,\dots,s_4u^\theta)\,d\nu=\kappa^2\sum_\pi\prod\min(s_i,s_j)\int_1^2u^{2\kappa}\,d\nu=c_4\kappa^2\sum_\pi\prod\min(s_i,s_j)$，因为 $W_4$ 关于其变量二次齐次。对 $k=3$，取 $w(u)=u^{3r-3\theta/2}$，由 $W_3\equiv0$ 得极限为零，且 $\sup_s\mathbb E|B_X(s)|^3\le K_2^{3/4}$，这给出 $(\mathrm M_3)$ 的 (a) 部分。证毕。
+
+**引理 497.5（由固定长度四阶渐近推出 (493.1) 与 $(\mathrm L_4)$）。** 设存在常数 $\mathsf B$，使在 $Y^\alpha\le v\le Y^\beta$ 上一致地
+
+$$
+\int_1^Y|D_v(x)|^4\,dx=3v^2\int_1^Y\Bigl(\log\frac yv+\mathsf B\Bigr)^2dy+o\Bigl(Yv^2\log^2\frac Yv\Bigr)\qquad(Y\to\infty).
+\tag{497.6}
+$$
+
+则 (493.1) 与 $(\mathrm L_4)$ 都成立。（在所述误差精度下，把 $\mathsf B$ 换成任何其他常数只改变 $O(Yv^2\log(Y/v))$，(497.6) 保留常规的次项形式，并不确定 $\mathsf B$。）
+
+证明。由 $\log(Y/v)\ge(1-\beta)\log Y\to\infty$ 与 $\int_1^Y\log^2(y/v)\,dy=v\int_{1/v}^{Y/v}\log^2t\,dt\le Y(\log^2(Y/v)+2)+2v$，主项为 $O(Yv^2\log^2(Y/v))$，给出 (493.1)。对 $X/2\le A\le B\le4X$、$(4X)^\alpha\le v\le(X/2)^\beta$，$v$ 对 $Y=A$ 与 $Y=B$ 都在带内；两式相减，主项 $3v^2\int_A^B(\log(y/v)+\mathsf B)^2dy\le3v^2(B-A)(2\log X+|\mathsf B|)^2\le13v^2(\log X)^2(B-A)$（$X$ 充分大），误差为 $o(Xv^2\log^2X)$。证毕。
+
+于是，在 (490.2)、(497.6) 与 $(\mathrm F_4)$ 下，定理 494.2 的全部假设成立，其结论成立：二、四阶矩极限，以及 $g$ 不几乎处处为零时的超额峰度 $3(\frac a2\coth\frac a2-1)$；§494 中依赖移动长度与宏观权的四阶接口被约化为固定长度的陈述 (497.6) 与 $(\mathrm F_4)$。$(\mathrm F_3)$ 另给出三阶接口。
+
+**范围。** (497.6)、$(\mathrm F_3)$、$(\mathrm F_4)$ 对 $E=\psi-\mathrm{id}$ 未被证明。Montgomery–Soundararajan [Primes in short intervals, Comm. Math. Phys. 252 (2004), 589–617] 猜想 1（$K=4$）是单一长度 $H$ 的四阶矩渐近，与 (497.6) 同型，但不给出不同长度 $c_jh$ 的联合矩 $(\mathrm F_4)$；其定理 3 在强 Hardy–Littlewood 型相关误差假设下对 $\log N\le H\le N^{1/K}$ 给出带显式误差的公式，相对渐近在 $N^\eta\le H\le N^{1/K-\delta}$ 一类内部范围上成立。Chan [Higher moments of primes in short intervals I, arXiv:math/0409530v2 (2004)] 定理 3.1、4.1 在 RH 与定量矩假设下，于相应的内部参数范围上转移单一固定长度与比例长度的偶矩；Leung [Joint distribution of primes in multiple short intervals, Adv. Math. 490 (2026), 110847] 处理不交区间。本节在 §496 的端点与冻结方法下给出：$L^4$ 端点估计 (497.3)、$O(n^{-2})$ 的四阶冻结误差 (497.4)、带宏观区间权的固定尺度混合矩到移动长度的传递（定理 497.3），以及由此对 §494 三、四阶接口的约化。Isserlis 配对结构、Hölder 不等式与 Riemann 和逼近都是标准工具。
