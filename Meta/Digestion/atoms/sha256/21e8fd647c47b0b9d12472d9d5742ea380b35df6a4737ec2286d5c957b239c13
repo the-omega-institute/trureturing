@@ -1,0 +1,18 @@
+**定义 26.1（固定实际首标签的像横向槽）。** 固定实际 $a\in E$ 与实 $0<r<1$，要求 $\bar a^2=r^21$。令
+
+$$
+V_{q,a}=\{z\in E:\bar a\circ\bar z=0\},\qquad
+H_a(z)=D(a,z)/r\in E.
+\tag{26.1}
+$$
+
+25.2 的零交叠情形给，对每个 $z\in V_{q,a}$，
+
+$$
+qH_a(z)^2=\bar z^2,\quad
+\bar z\circ qH_a(z)=\bar a\circ qH_a(z)=0.
+\tag{26.2}
+$$
+
+$H_a$ 保持这个实际原标签集合；没有要求 $a/r$ 在原域中平方为 $u$。
+
