@@ -122,7 +122,7 @@ internal sealed class NativeWeightedBaseRankSaturationDocument : IScribeDocument
         Formula setE = Call("Set", e);
         Formula body = Seq(OpenBrace, F.Id("x"), Sp, Mid, Sp,
             F.Id("x"), Sp, InMacro, Sp, m, Dot, F.Id("E"), Sp, Land, Sp,
-            Call("w", F.Id("x")), Sp, Leq, Sp, t, CloseBrace);
+            Leq(Call("w", F.Id("x")), t), CloseBrace);
         return Disp(All("E", typeU,
             All("M", matroidE,
                 All("w", new Formula.TypeArrow(e, real),
