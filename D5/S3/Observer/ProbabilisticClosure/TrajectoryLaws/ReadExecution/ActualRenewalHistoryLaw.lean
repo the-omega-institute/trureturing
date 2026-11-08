@@ -342,7 +342,7 @@ theorem actual_state_prefix (l : ℕ) (x : Fin l → S) :
       change P {ω | epochHistory labels update I τ K ξ n ω = xp} * _ = _
       rw [ih xp, PMF.toMeasure_apply_singleton _ _ (measurableSet_singleton _),
         Fin.prod_univ_castSucc]
-      simp only [xp, mul_assoc]
+      simp only [xp, Fin.castSucc_zero, Fin.castSucc_succ, Fin.succ_last, mul_assoc]
   cases l with
   | zero =>
     have hmass : P Set.univ = 1 := by
@@ -422,26 +422,39 @@ theorem actual_source_cylinders (n : ℕ) (a : ℕ × (Fin n → ℕ))
           {ω : Ω | epoch labels update (I ω) (ξ ω) (τ ω) (K ω) (n + 1) ∈
             ({x (Fin.last (n + 1))} : Set S)} := by
       ext ω
-      simp only [observedHistory, Set.mem_preimage, Set.mem_singleton_iff,
-        Prod.ext_iff, Set.mem_inter_iff, Set.mem_setOf_eq]
       constructor
-      · rintro ⟨⟨hu, hv⟩, hx⟩
-        exact ⟨⟨⟨⟨hu, funext fun j => congrFun hv j.castSucc⟩,
-          funext fun j => congrFun hx j.castSucc⟩, congrFun hv (Fin.last n)⟩,
-          congrFun hx (Fin.last (n + 1))⟩
-      · rintro ⟨⟨⟨⟨hu, hv⟩, hx⟩, hk⟩, hy⟩
-        refine ⟨⟨hu, ?_⟩, ?_⟩
+      · intro hω
+        change observedHistory labels update I τ K ξ (n + 1) ω = (a, x) at hω
+        have hu : τ ω = a.1 := congrArg (fun p => p.1.1) hω
+        have hv : (fun j : Fin (n + 1) => K ω j.val) = a.2 :=
+          congrArg (fun p => p.1.2) hω
+        have hx : epochHistory labels update I τ K ξ (n + 1) ω = x :=
+          congrArg Prod.snd hω
+        refine ⟨⟨?_, congrFun hv (Fin.last n)⟩, congrFun hx (Fin.last (n + 1))⟩
+        change observedHistory labels update I τ K ξ n ω = (ap, xp)
+        exact Prod.ext (Prod.ext hu (funext fun j => congrFun hv j.castSucc))
+          (funext fun j => congrFun hx j.castSucc)
+      · rintro ⟨⟨hp, hk⟩, hy⟩
+        change observedHistory labels update I τ K ξ n ω = (ap, xp) at hp
+        have hu : τ ω = a.1 := congrArg (fun p => p.1.1) hp
+        have hv : (fun j : Fin n => K ω j.val) = (fun j => a.2 j.castSucc) :=
+          congrArg (fun p => p.1.2) hp
+        have hx : epochHistory labels update I τ K ξ n ω = xp :=
+          congrArg Prod.snd hp
+        change observedHistory labels update I τ K ξ (n + 1) ω = (a, x)
+        apply Prod.ext
+        · apply Prod.ext hu
+          funext j
+          exact Fin.lastCases hk (fun j => congrFun hv j) j
         · funext j
-          refine Fin.lastCases hk (fun j => congrFun hv j) j
-        · funext j
-          refine Fin.lastCases hy (fun j => congrFun hx j) j
+          exact Fin.lastCases hy (fun j => congrFun hx j) j
     rw [he, history_fixed_gap_step labels update P I τ K ξ η w f ρ A C heff hrow
       hI hτ hK hξ hprimitive n B hB (xp (Fin.last n)) hstate
       (a.2 (Fin.last n)) {x (Fin.last (n + 1))} (measurableSet_singleton _)]
     rw [show P (observedHistory labels update I τ K ξ n ⁻¹' B) = _ from ih ap xp,
       PMF.toMeasure_apply_singleton _ _ (measurableSet_singleton _),
       Fin.prod_univ_castSucc]
-    simp only [ap, xp, mul_assoc]
+    simp only [ap, xp, Fin.castSucc_zero, Fin.castSucc_succ, Fin.succ_last, mul_assoc]
 
 end Probability
 end D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.ReadExecution.ActualRenewalHistoryLaw
