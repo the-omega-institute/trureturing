@@ -37,7 +37,7 @@ internal sealed class PlanarDiagramAlgebraDocument : IScribeDocumentDefinition
                 H("instMulTL"), StatementSource.FromAuthor(Disp(RingAll("R", All("n", Id("Nat"), All("a", Call("TL", Id("R"), Id("n")), All("b", Call("TL", Id("R"), Id("n")), Equal(Call("Multiply", Id("a"), Id("b")), Call("bilinear", Id("a"), Id("b"))))))))),
                 AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("The multiplication field sends (a,b) to bilinear(a)(b). Bilinear is the two successive Finsupp lifts of basisProduct(d,e): one composite basis vector when the internal loop count is zero, and zero otherwise."))), DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("instonetl"), DeclarationHandle.Create("D5/S3/Combinatorics/PerfectMatchings/PlanarDiagramAlgebra.instOneTL"),
-                H("instOneTL"), StatementSource.FromAuthor(Disp(RingAll("R", All("n", Id("Nat"), Equal(Id("One"), Call("single", Call("identity", Id("n")), Num(1))))))),
+                H("instOneTL"), StatementSource.FromAuthor(Disp(RingAll("R", All("n", Id("Nat"), Equal(Call("One", Call("TL", Id("R"), Id("n"))), Call("single", Call("identity", Id("n")), Num(1))))))),
                 AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("Identity(n) is identityMatching(n) equipped with the noncrossing witness identity_planar(n)."))), DescribeRole.Definition))));
 
     private static Formula Id(string name) => F.Id(name);
