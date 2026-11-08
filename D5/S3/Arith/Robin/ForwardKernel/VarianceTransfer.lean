@@ -158,7 +158,8 @@ private lemma bounded_comp_on_compact {α : Type*} [TopologicalSpace α]
   obtain ⟨M, hM, hbound⟩ := hE.2 a b
   exact ⟨M, hM, fun x hx => hbound _ ⟨ha (mem_image_of_mem f hx), hb (mem_image_of_mem f hx)⟩⟩
 
-private lemma bounded_increment_comp {α : Type*} [TopologicalSpace α]
+/-- Continuous starting points and steps give uniformly bounded increments on compact sets. -/
+lemma bounded_increment_comp {α : Type*} [TopologicalSpace α]
     {E : ℝ → ℝ} (hE : LocallyBoundedMeasurable E) {K : Set α} (hK : IsCompact K)
     {u x : α → ℝ} (hu : Continuous u) (hx : Continuous x) :
     ∃ M : ℝ, 0 ≤ M ∧ ∀ p ∈ K, |increment E (u p) (x p)| ≤ M := by
