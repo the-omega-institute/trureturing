@@ -35,8 +35,15 @@ Theorem 1 attributes the result to W. T. Tutte. The original bibliographic
 source is *Menger's theorem for matroids*, Journal of Research of the National
 Bureau of Standards, Section B, 69B (1965), page 49,
 DOI [10.6028/jres.069B.002](https://doi.org/10.6028/jres.069B.002).
-The original full text has not been read here; the verified theorem locator
-is Bruhn and Wollan's Theorem 1. The arXiv text is cited, not redistributed.
+The original full text gives the one-element deletion-or-contraction
+preservation alternative in Section 3.7 on page 52 and the finite induction
+in Section 4 on pages 52–53. It is available from
+https://nvlpubs.nist.gov/nistpubs/jres/69B/jresv69Bn1-2p49_A1b.pdf.
+Tutte's rank convention is defined by circuit-hitting dendroids in his
+companion *Lectures on Matroids*; its connectivity formula carries an
+additional one. Bruhn and Wollan's Theorem 1 supplies the directly matching
+modern rank and cut convention used here. The source texts are cited,
+not redistributed.
 
 The proof reuses the repository's finite native matroid intersection theorem
 and native contraction, deletion, closure and rank identities. No external
