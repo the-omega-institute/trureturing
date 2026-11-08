@@ -10,7 +10,7 @@ Paul D. Hanna, OEIS A320949 revision 12 (2018-11-25), states verbatim: "G.f. A(x
 
 $$\forall A \in \operatorname{PowerSeries}\left(\mathbb{Q}\right),\; \forall j \in \mathbb{N},\; \operatorname{term}\left(A, j\right) = (1 + X)^{(j)^{2}} \cdot \operatorname{inv}\left((1 + A)^{j + 1}\right)$$
 
-*Formalization.* `D5/S1/Recurrence/Invariants/HannaA320949ModThree.term` (`✓ std3`).
+*Formalization.* `D5/S3/ArithSums/HannaA320949ModThree.term` (`✓ std3`).
 
 *Citation.* Paul D. Hanna (2018). *OEIS A320949, generating function with square exponents*. URL: <https://oeis.org/A320949>.
 
@@ -22,7 +22,7 @@ The source summand is (1+x)^(n^2)/(1+A(x))^(n+1). Under IsGF(A), the series 1+A 
 
 $$\forall A \in \operatorname{PowerSeries}\left(\mathbb{Q}\right),\; \operatorname{IsGF}\left(A\right) = ((\operatorname{constantCoeff}\left(A\right) = 1) \land (\forall k \in \mathbb{N},\; \operatorname{HasSum}\left((j: \mathbb{N} \mapsto \operatorname{coeff}\left(k, \operatorname{term}\left(A, j\right)\right)), \operatorname{coeff}\left(k, 1\right)\right)))$$
 
-*Formalization.* `D5/S1/Recurrence/Invariants/HannaA320949ModThree.IsGF` (`✓ std3`).
+*Formalization.* `D5/S3/ArithSums/HannaA320949ModThree.IsGF` (`✓ std3`).
 
 *Citation.* Paul D. Hanna (2018). *OEIS A320949, generating function with square exponents*. URL: <https://oeis.org/A320949>.
 
@@ -34,7 +34,7 @@ IsGF(A) fixes the constant coefficient and requires, for every natural degree k,
 
 $$\operatorname{claim} = ((\exists A \in \operatorname{PowerSeries}\left(\mathbb{Q}\right),\; \operatorname{IsGF}\left(A\right)) \land (\forall A \in \operatorname{PowerSeries}\left(\mathbb{Q}\right),\; (\operatorname{IsGF}\left(A\right)) \implies (\forall n \in \mathbb{N},\; (0 < n) \implies (\exists z \in \mathbb{Z},\; \operatorname{coeff}\left(n, A\right) = (3 \cdot z: \mathbb{Q})))))$$
 
-*Formalization.* `D5/S1/Recurrence/Invariants/HannaA320949ModThree.claim` (`✓ std3`).
+*Formalization.* `D5/S3/ArithSums/HannaA320949ModThree.claim` (`✓ std3`).
 
 *Citation.* Paul D. Hanna (2018). *OEIS A320949, generating function with square exponents*. URL: <https://oeis.org/A320949>.
 
@@ -46,11 +46,11 @@ The proposition asserts existence of a rational solution and says that every rat
 
 $$(\exists A \in \operatorname{PowerSeries}\left(\mathbb{Q}\right),\; \operatorname{IsGF}\left(A\right)) \land (\forall A \in \operatorname{PowerSeries}\left(\mathbb{Q}\right),\; (\operatorname{IsGF}\left(A\right)) \implies (\forall n \in \mathbb{N},\; (0 < n) \implies (\exists z \in \mathbb{Z},\; \operatorname{coeff}\left(n, A\right) = (3 \cdot z: \mathbb{Q}))))$$
 
-*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Invariants/HannaA320949ModThree.result` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/ArithSums/HannaA320949ModThree.result` (`✓ std3`). ∎
 
-*Resolves.* `Problems/oeis-a320949-hanna-mod-three` (proved) by `D5/S1/Recurrence/Invariants/HannaA320949ModThree.result`.
+*Resolves.* `Problems/oeis-a320949-hanna-mod-three` (proved) by `D5/S3/ArithSums/HannaA320949ModThree.result`.
 
-<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a320949-hanna-mod-three","declaration_gid":"D5/S1/Recurrence/Invariants/HannaA320949ModThree.result","resolution_kind":"proved"} -->
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a320949-hanna-mod-three","declaration_gid":"D5/S3/ArithSums/HannaA320949ModThree.result","resolution_kind":"proved"} -->
 
 *Source.* Repository-derived.
 
@@ -62,13 +62,13 @@ Finite Newton expansion of the even polynomial t ↦ choose(t^2,k) gives an inte
 
 ## References
 
-- Truth anchor: `D5/S1/Recurrence/Invariants/HannaA320949ModThree.IsGF`
-- Truth anchor: `D5/S1/Recurrence/Invariants/HannaA320949ModThree.claim`
-- Truth anchor: `D5/S1/Recurrence/Invariants/HannaA320949ModThree.result`
-- Truth anchor: `D5/S1/Recurrence/Invariants/HannaA320949ModThree.term`
-- Dependency: [D5/S1/Recurrence/Invariants/AbsoluteReciprocalGeometricParity](AbsoluteReciprocalGeometricParity.md)
-- Dependency: [D5/S1/Recurrence/Invariants/PowerSeriesNormalizedContraction](PowerSeriesNormalizedContraction.md)
-- Dependency: [D5/S1/Recurrence/Invariants/UnitReversionSquareParity](UnitReversionSquareParity.md)
-- Dependency: [D5/S1/Recurrence/Residue/CompositionalSquareDyadicDenominators](../Residue/CompositionalSquareDyadicDenominators.md)
-- Dependency: [D5/S1/Recurrence/Residue/ContinuedFractionOddSquare](../Residue/ContinuedFractionOddSquare.md)
-- Dependency: [D5/S3/ArithSums/HannaA301310Divisibility](../../../S3/ArithSums/HannaA301310Divisibility.md)
+- Truth anchor: `D5/S3/ArithSums/HannaA320949ModThree.IsGF`
+- Truth anchor: `D5/S3/ArithSums/HannaA320949ModThree.claim`
+- Truth anchor: `D5/S3/ArithSums/HannaA320949ModThree.result`
+- Truth anchor: `D5/S3/ArithSums/HannaA320949ModThree.term`
+- Dependency: [D5/S1/Recurrence/Invariants/AbsoluteReciprocalGeometricParity](../../S1/Recurrence/Invariants/AbsoluteReciprocalGeometricParity.md)
+- Dependency: [D5/S1/Recurrence/Invariants/PowerSeriesNormalizedContraction](../../S1/Recurrence/Invariants/PowerSeriesNormalizedContraction.md)
+- Dependency: [D5/S1/Recurrence/Invariants/UnitReversionSquareParity](../../S1/Recurrence/Invariants/UnitReversionSquareParity.md)
+- Dependency: [D5/S1/Recurrence/Residue/CompositionalSquareDyadicDenominators](../../S1/Recurrence/Residue/CompositionalSquareDyadicDenominators.md)
+- Dependency: [D5/S1/Recurrence/Residue/ContinuedFractionOddSquare](../../S1/Recurrence/Residue/ContinuedFractionOddSquare.md)
+- Dependency: [D5/S3/ArithSums/HannaA301310Divisibility](HannaA301310Divisibility.md)
