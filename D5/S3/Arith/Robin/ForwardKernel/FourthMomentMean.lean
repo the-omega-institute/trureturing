@@ -78,7 +78,8 @@ private lemma primitive_le_of_average {E : ℝ → ℝ} {θ s X M U F : ℝ}
         by rw [hconst (by linarith [hv.1])]; exact Real.sqrt_le_sqrt (by linarith [hv.2])⟩)
   simpa only [mul_one, mul_zero, add_zero] using h
 
-private lemma moving_primitive_bound {E : ℝ → ℝ} {α θ β ν : ℝ}
+/-- Short averaging bounds every moving-increment primitive uniformly in its length parameter. -/
+lemma moving_primitive_bound {E : ℝ → ℝ} {α θ β ν : ℝ}
     (hE : LocallyBoundedMeasurable E) (hB : ValidBand α θ β)
     (hV : CumulativeVarianceBandAsymptoticFor E α β)
     (hθν : θ < ν) (hνβ : ν < β) :
