@@ -17,7 +17,7 @@ internal sealed class ChangShrockToroidalHoneycombDocument : IScribeDocumentDefi
             Definition("Coeff", Eq(N("Coeff"), Call("MvPolynomial", Call("Fin", D(2)), Z())),
                 "Coeff is the polynomial ring over the integers with two independent variables indexed by Fin 2."),
             Definition("q", Eq(N("q"), Call("MvPolynomialX", D(0))),
-                "The first polynomial indeterminate is the Potts component weight q."),
+                "MvPolynomialX denotes MvPolynomial.X. The first polynomial indeterminate is the Potts component weight q."),
             Definition("v", Eq(N("v"), Call("MvPolynomialX", D(1))),
                 "The second polynomial indeterminate is the Potts bond weight v."),
             Definition("Adjacent", All("L", Nat(), All("i", Sites(), All("j", Sites(),
@@ -36,20 +36,20 @@ internal sealed class ChangShrockToroidalHoneycombDocument : IScribeDocumentDefi
                 Call("Native", X("L"), X("f"))))),
                 "State L retains the labelled connectivity word, with a proof that it is native. Equal words are the same diagram, including the two descriptions of a double block."),
             Definition("Space", Width(Eq(Call("Space", X("L")),
-                Call("Finsupp", Call("State", X("L")), N("Coeff"))))),
+                Call("Finsupp", Call("State", X("L")), N("Coeff")))),
                 "Space L is the free module of polynomial coefficients on the native degree L-1 diagrams."),
             Definition("ket", Width(All("f", Arrow(Sites(), Sites()),
                 Eq(Call("ket", X("f")), If(Call("Native", X("L"), X("f")),
-                    Call("single", Call("subtype", X("f")), D(1)), D(0)))))),
+                    Call("single", Call("subtype", X("f")), D(1)), D(0))))),
                 "A native connectivity word gives its unit basis vector. A word outside this degree block gives zero; the subtype proof carries no extra state information."),
             Definition("join", Width(All("i", Sites(), All("j", Sites(),
                 Eq(Call("join", X("i"), X("j")), Call("linearCombination", N("Coeff"),
-                    Fn("s", Call("State", X("L")), JoinBody()))))))),
+                    Fn("s", Call("State", X("L")), JoinBody())))))),
                 "Joining sites already in the same block changes nothing. An unmarked block takes the other block's mark when they merge. "
                 + "Two different marks cannot be identified. The linear extension is over Coeff; s denotes the underlying connectivity word."),
             Definition("detach", Width(All("i", Sites(),
                 Eq(Call("detach", X("i")), Call("linearCombination", N("Coeff"),
-                    Fn("s", Call("State", X("L")), DetachBody())))))),
+                    Fn("s", Call("State", X("L")), DetachBody()))))),
                 "Closing the unmarked singleton multiplies by q. A site of a marked double block detaches to an unmarked singleton. "
                 + "Removing a marked singleton loses a bridge and therefore projects to zero in this block."),
             Definition("vertical", Width(Eq(Call("vertical", X("L")),
@@ -67,12 +67,12 @@ internal sealed class ChangShrockToroidalHoneycombDocument : IScribeDocumentDefi
                 + "Fin.ofNat reduces site numbers modulo L. These are the two honeycomb H operators in equation (2.34)."),
             Definition("transfer", Width(Eq(Call("transfer", X("L")),
                 Mul(Mul(Call("vertical", X("L")), Call("horizontal", X("L"), N("true"))),
-                    Mul(Call("vertical", X("L")), Call("horizontal", X("L"), N("false"))))))),
+                    Mul(Call("vertical", X("L")), Call("horizontal", X("L"), N("false")))))),
                 "Equation (2.35) defines T=(V Htwo)(V Hone). The operator acts on the full native labelled degree L-1 block, including double-block states.", true),
             Definition("alternatingVector", Width(Eq(Call("alternatingVector", X("L")),
                 Seq(Script(Sum, "s", Call("Perm", Sites())), Sp,
                     Call("single", Call("subtype", X("s")), Call("IntCast", Call("PermSign", X("s"))))))),
-                "The sum runs over all permutations of the L symbols. Its singleton-state coefficient is the integer sign, embedded in Coeff. "
+                "PermSign denotes Equiv.Perm.sign followed by coercion to the integers; IntCast embeds that integer into Coeff. The sum runs over all permutations of the L symbols. Its singleton-state coefficient is the integer sign, embedded in Coeff. "
                 + "The identity permutation contributes coefficient one, and no other permutation represents that labelled singleton diagram."),
             Describe.Lean(DescribeId.Create("result"), DeclarationHandle.Create(Prefix + "result"),
                 H("The eigenvalue at every even width"), StatementSource.FromAuthor(Disp(ResultFormula())),
@@ -92,7 +92,7 @@ internal sealed class ChangShrockToroidalHoneycombDocument : IScribeDocumentDefi
         Ex("s", Call("Perm", Sites()), Ex("i", Sites(), Ex("j", Sites(),
             And(Ne(X("i"), X("j")), And(Call("Adjacent", X("i"), X("j")),
                 And(Eq(At(X("s"), X("i")), D(0)),
-                    Eq(X("f"), Call("update", X("s"), X("i"), At(X("s"), X("j"))))))))));
+                    Eq(X("f"), Call("update", X("s"), X("i"), At(X("s"), X("j")))))))))));
     private static Formula JoinBody() => If(Eq(Site("i"), Site("j")), Call("single", X("s"), D(1)),
         If(Eq(Site("i"), D(0)), Call("ket", Call("update", X("s"), X("i"), Site("j"))),
             If(Eq(Site("j"), D(0)), Call("ket", Call("update", X("s"), X("j"), Site("i"))), D(0))));
@@ -101,7 +101,7 @@ internal sealed class ChangShrockToroidalHoneycombDocument : IScribeDocumentDefi
         If(Ex("j", Sites(), And(Ne(X("j"), X("i")), Eq(Site("j"), Site("i")))),
             Call("ket", Call("update", X("s"), X("i"), D(0))), D(0)));
     private static Formula ResultFormula() => All("L", Nat(),
-        Arrow(new Formula.Relation(D(2), X("L"), FormulaRelationOperator.LessThanOrEqual),
+        Arrow(new Formula.Relation(D(2), FormulaRelationOperator.LessThanOrEqual, X("L")),
             Arrow(Call("Even", X("L")), Ex("w", Call("Space", X("L")),
                 And(Ne(X("w"), D(0)), Eq(At(Call("transfer", X("L")), X("w")),
                     Mul(Power(N("v"), Mul(D(2), Sub(X("L"), D(1)))),
@@ -138,5 +138,5 @@ internal sealed class ChangShrockToroidalHoneycombDocument : IScribeDocumentDefi
     private static Formula Ex(string name, Formula type, Formula body) => Seq(Exists, Sp, Bound(name, type), Comma, Sp, Par(body));
     private static Formula Fn(string name, Formula type, Formula body) => Par(Seq(Bound(name, type), Sp, Mapsto, Sp, body));
     private static Formula SetOf(string name, Formula type, Formula body) => Seq(OpenBrace, Bound(name, type), Sp, Mid, Sp, body, CloseBrace);
-    private static Formula Script(Formula op, string name, Formula type) => Seq(op, Subscript(Seq(X(name), Sp, InMacro, Sp, type)));
+    private static Formula Script(Formula op, string name, Formula type) => new Formula.Subscript(op, Seq(X(name), Sp, InMacro, Sp, type));
 }

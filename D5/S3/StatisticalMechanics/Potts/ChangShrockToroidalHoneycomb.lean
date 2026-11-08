@@ -16,6 +16,32 @@ import Mathlib.Tactic.Ring
 admission_basis: open-problem-resolution (#28063; Proved)
 escape_witness: the signed singleton sum is killed by each cyclic join.
 direct_frozen_dependencies: none
+Coeff: proof_shape=definition; consumers=q,v,Space
+q: proof_shape=definition; consumers=detach,result
+v: proof_shape=definition; consumers=vertical,horizontal,result
+Adjacent: proof_shape=definition; consumers=Native
+Native: proof_shape=definition; consumers=State,ket
+State: proof_shape=definition; consumers=Space
+Space: proof_shape=definition; consumers=transfer,result
+singletonState: proof_shape=definition; consumers=alternatingVector
+ket: proof_shape=definition; consumers=join,detach
+join: proof_shape=definition; consumers=horizontal,join_singleton_swap
+detach: proof_shape=definition; consumers=vertical,detach_singleton
+vertical: proof_shape=definition; consumers=transfer,vertical_singleton
+horizontal: proof_shape=definition; consumers=transfer,horizontal_alternating
+transfer: proof_shape=definition; consumers=result
+alternatingVector: proof_shape=definition; consumers=result
+singletonState_injective: proof_shape=bind-only; consumers=alternatingVector_ne_zero
+alternatingVector_ne_zero: proof_shape=bind-only; consumers=result
+detach_singleton: proof_shape=bind-only; consumers=vertical_singleton
+update_swap: proof_shape=bind-only; consumers=join_singleton_swap
+join_singleton_swap: proof_shape=bind-only; consumers=join_alternating
+join_alternating: proof_shape=content; consumers=horizontal_alternating
+list_prod_on_vector: proof_shape=content; consumers=vertical_singleton,horizontal_alternating
+vertical_singleton: proof_shape=bind-only; consumers=vertical_alternating
+vertical_alternating: proof_shape=bind-only; consumers=result
+horizontal_alternating: proof_shape=bind-only; consumers=result
+result: proof_shape=content; consumers=registered claim #28063
 -/
 
 set_option autoImplicit false
