@@ -2,8 +2,13 @@
 import json
 import os
 from pathlib import Path
+import shlex
+import shutil
+import signal
+import socket
 import subprocess
 import sys
+import threading
 import unittest
 from unittest.mock import patch
 
@@ -21,6 +26,108 @@ class AgentEntranceTests(unittest.TestCase):
     make = cases.AgentStateTests.make
     local = cases.AgentStateTests.local
     saved = cases.AgentStateTests.saved
+
+    def test_with_reminder_reaches_caller_while_child_waits_for_release(self):
+        tree = self.root / "waiting"
+        child = ("import socket, sys; s = socket.socket(socket.AF_UNIX); "
+                 "s.connect(sys.argv[1]); s.sendall(b'ready'); s.recv(1); "
+                 "print('child-only'); print('child-error', file=sys.stderr); raise SystemExit(17)")
+        with cases.agent("codex:waiting"):
+            self.create("waiting", tree)
+            entrances = {
+                "direct": [sys.executable, "-B", str(cases.ROOT / "tools/scripts/worktree/worktree_protocol.py"),
+                           "--source", str(self.main)],
+                "embedded": [shutil.which("dotnet"), str(cases.ROOT /
+                             "tools/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll"), "worktree"],
+            }
+            for entrance, command in entrances.items():
+                with self.subTest(entrance=entrance), socket.socket(socket.AF_UNIX) as listener:
+                    address = str(self.root / (entrance + ".sock"))
+                    listener.bind(address)
+                    listener.listen(1)
+                    listener.settimeout(20)
+                    errors, reminder = [], threading.Event()
+                    process = subprocess.Popen(command + ["with", "--path", str(tree), "--",
+                        sys.executable, "-c", child, address], cwd=self.main,
+                        env=cases.protocol.git_environment(), text=True, stdout=subprocess.PIPE,
+                        stderr=subprocess.PIPE, start_new_session=True)
+
+                    def read_errors():
+                        for line in process.stderr:
+                            errors.append(line)
+                            if line.startswith("WORKTREE_AGENT_PENDING "):
+                                reminder.set()
+
+                    reader = threading.Thread(target=read_errors)
+                    reader.start()
+                    try:
+                        with listener.accept()[0] as connection:
+                            connection.settimeout(20)
+                            self.assertEqual(connection.recv(5), b"ready")
+                            try:
+                                self.assertTrue(reminder.wait(10),
+                                    entrance + ": no reminder visible while child is active")
+                                self.assertIsNone(process.poll())
+                            finally:
+                                connection.sendall(b"x")
+                        process.wait(timeout=20)
+                        reader.join(timeout=20)
+                        self.assertFalse(reader.is_alive())
+                        self.assertEqual(process.returncode, 17)
+                        self.assertEqual(process.stdout.read(), "child-only\n")
+                        error = "".join(errors)
+                        self.assertEqual(error.count("WORKTREE_AGENT_PENDING "), 1)
+                        self.assertIn('"pending": 1', error)
+                        self.assertIn(str(tree), error)
+                        self.assertEqual(error.count("child-error\n"), 1)
+                        self.assertLess(error.index("WORKTREE_AGENT_PENDING "), error.index("child-error\n"))
+                    finally:
+                        if process.poll() is None:
+                            os.killpg(process.pid, signal.SIGKILL)
+                        process.wait(timeout=20)
+                        reader.join(timeout=20)
+                        process.stdout.close()
+                        process.stderr.close()
+
+    def check_explicit_source_summary(self, fail_checkout):
+        invoking, tree = self.root / "invoking", self.root / "target-tree"
+        cases.run(self.root, "clone", "--no-local", self.main, invoking)
+        environment = {}
+        if fail_checkout:
+            bin_dir = self.root / "fail-bin"
+            bin_dir.mkdir()
+            launcher = bin_dir / "git"
+            launcher.write_text('#!/bin/bash\nif [[ "$1" == reset ]]; then echo injected-early-checkout >&2; exit 42; fi\n'
+                                'exec ' + shlex.quote(shutil.which("git")) + ' "$@"\n')
+            launcher.chmod(0o755)
+            environment["PATH"] = str(bin_dir) + os.pathsep + os.environ["PATH"]
+        with cases.agent("codex:target"):
+            result = self.cli("worktree", "--kind", "governance", "--name", "target", "--path", tree,
+                "--source", "../main" if fail_checkout else self.main, "--base", self.base,
+                "--skip-restore", cwd=invoking, check=False, env=environment)
+            self.assertEqual(result.returncode, 2 if fail_checkout else 0, result.stdout + result.stderr)
+            if fail_checkout:
+                self.assertEqual(result.stdout, "")
+                self.assertIn("injected-early-checkout", result.stderr)
+                self.assertFalse((tree / "lean-toolchain").exists())
+            else:
+                self.assertEqual(json.loads(result.stdout)["status"], "succeeded")
+            self.assertEqual(self.saved(tree)["creator"], "codex:target")
+            self.assertEqual(result.stderr.count("WORKTREE_AGENT_PENDING "), 1)
+            self.assertIn('"complete": true', result.stderr)
+            self.assertIn('"pending": 1', result.stderr)
+            self.assertIn(str(tree), result.stderr)
+            target = json.loads(self.cli("worktree", "pending").stdout)
+            unrelated = json.loads(self.cli("worktree", "pending", cwd=invoking).stdout)
+            self.assertEqual([row["path"] for row in target["pending"]], [str(tree)])
+            self.assertTrue(unrelated["complete"])
+            self.assertEqual(unrelated["pending"], [])
+
+    def test_explicit_source_creation_summary_uses_target_clone(self):
+        self.check_explicit_source_summary(fail_checkout=False)
+
+    def test_explicit_source_retained_failure_summary_uses_target_clone(self):
+        self.check_explicit_source_summary(fail_checkout=True)
 
     def test_observation_with_preserves_allocation_stdout_and_exit(self):
         tree = self.root / "wrapped"
