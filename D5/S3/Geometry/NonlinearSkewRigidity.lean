@@ -145,7 +145,7 @@ private theorem exists_local_linear_model {r : ℝ} (hr : 0 < r) (hr1 : r < 1)
     refine ⟨t⁻¹ • (F (v + t • w) - F v), ?_⟩
     intro b hb
     rw [real_inner_smul_right, hg _ hsmall b hb, real_inner_smul_right]
-    field_simp
+    rw [mul_neg, inv_mul_cancel_left₀ ht.ne']
   choose f hf using hex
   let T : W →ₗ[ℝ] W :=
     { toFun := f
