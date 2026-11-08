@@ -42,6 +42,19 @@ internal sealed class BiasedTrineJointMeasurabilityThresholdDocument : IScribeDo
                     + "Supplemental Material TeX lines 151–158. The definition gives a real value "
                     + "for every real b; the compatibility theorem concerns the stated physical domain."),
             Describe.Lean(
+                DescribeId.Create("scalar-b-injective"),
+                DeclarationHandle.Create(Module + ".scalarB_injective"),
+                H("Unique scalar and Pauli coordinates"),
+                StatementSource.FromAuthor(Disp(ScalarInjectiveFormula())),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The original coordinate comparison is available to other matrix applications. "
+                        + "Equality of scalarB(t,a) and scalarB(u,v) forces t = u and a = v: "
+                        + "the two real diagonal entries determine the scalar and third coordinate, "
+                        + "and the real and imaginary upper-right entries determine the first two coordinates. "
+                        + "The parent and marginal arguments below use this same declaration."))),
+                DescribeRole.Lemma),
+            Describe.Lean(
                 DescribeId.Create("sum-strings"),
                 DeclarationHandle.Create(Module + ".sum_strings"),
                 H("A sum over the eight Boolean strings"),
@@ -177,6 +190,16 @@ internal sealed class BiasedTrineJointMeasurabilityThresholdDocument : IScribeDo
         return All("A", Seq(Qualified("Type"), Star),
             All("inst", At(Qualified("AddCommMonoid"), X("A")),
                 All("f", Arrow(strings, X("A")), Equal(left, right))));
+    }
+
+    private static Formula ScalarInjectiveFormula()
+    {
+        Formula Scalar(Formula t, Formula a) => At(
+            Qualified("D5", "S3", "Quantum", "Measurement", "FourQubitParentConstruction", "scalarB"), t, a);
+        return All("t", Reals(), All("u", Reals(), All("a", Vectors(), All("v", Vectors(),
+            Arrow(Equal(Scalar(X("t"), X("a")), Scalar(X("u"), X("v"))),
+                new Formula.Logic(Equal(X("t"), X("u")), FormulaLogicOperator.And,
+                    Equal(X("a"), X("v"))))))));
     }
 
     private static Formula ResultFormula() => All("b", Reals(), All("η", Reals(),
