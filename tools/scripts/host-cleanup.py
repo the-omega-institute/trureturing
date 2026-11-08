@@ -273,9 +273,11 @@ class RefRecovery:
 
 
 def inspect_candidate(path, cutoff, protected, repository=None, reclaim=True, remnant=False, recovery=None,
-                      verify_recovery=True, rollout_files=None):
+                      verify_recovery=True, rollout_files=None, cache_only=False):
     """Fingerprint owned, inactive trees without following links or crossing mounts."""
     path = Path(path).absolute()
+    if cache_only and path.resolve() != path:
+        return dict(reason="symlink")
     if path.name == ".git" and not reclaim:
         return dict(reason="repository")
     if not isinstance(protected, ProtectedPaths):
@@ -296,7 +298,7 @@ def inspect_candidate(path, cutoff, protected, repository=None, reclaim=True, re
         return dict(reason="rollout_shape")
     if remnant and not stat.S_ISDIR(root_stat.st_mode):
         return dict(reason="not_directory")
-    if reclaim and root_stat.st_dev != path.parent.stat().st_dev:
+    if (reclaim or cache_only) and root_stat.st_dev != path.parent.stat().st_dev:
         return dict(reason="mount")
     digest = hashlib.sha256()
     apparent_bytes = 0
@@ -313,7 +315,7 @@ def inspect_candidate(path, cutoff, protected, repository=None, reclaim=True, re
             return dict(reason="mount")
         if rollout_files is not None and entry != path and not stat.S_ISREG(info.st_mode):
             return dict(reason="rollout_shape")
-        if remnant and stat.S_ISLNK(info.st_mode):
+        if (remnant or cache_only) and stat.S_ISLNK(info.st_mode):
             return dict(reason="symlink")
         if getattr(info, "st_flags", 0) & PROTECTED_FLAGS:
             return dict(reason="protected_flag")
@@ -350,6 +352,8 @@ def inspect_candidate(path, cutoff, protected, repository=None, reclaim=True, re
             if rollout_files is not None and tuple(names) != rollout_files:
                 return dict(reason="rollout_shape")
             if not reclaim and ".git" in names:
+                return dict(reason="repository")
+            if cache_only and {"HEAD", "objects", "refs"}.issubset(names):
                 return dict(reason="repository")
             if remnant:
                 if ".git" in names or {"HEAD", "objects", "refs"}.issubset(names):
@@ -428,7 +432,8 @@ def rename_exclusive(source, destination):
 
 
 def clean_candidate(path, cutoff, protected, delete=False, repository=None, activity=None,
-                    reclaim=True, refresh_activity=False, remnant=False, recovery=None, rollout_files=None):
+                    reclaim=True, refresh_activity=False, remnant=False, recovery=None, rollout_files=None,
+                    cache_only=False):
     path = Path(path).absolute()
     result = dict(path=str(path), action="kept", reason=None, apparent_bytes=0)
     removal_started = False
@@ -445,6 +450,8 @@ def clean_candidate(path, cutoff, protected, delete=False, repository=None, acti
             kwargs["reclaim"] = False
         if rollout_files is not None:
             kwargs["rollout_files"] = rollout_files
+        if cache_only:
+            kwargs["cache_only"] = True
         def observe(protection, **options):
             return inspect_candidate(path, cutoff, protection, **kwargs, **options)
         before = observe(protected)
@@ -482,6 +489,8 @@ def clean_candidate(path, cutoff, protected, delete=False, repository=None, acti
                 remove_tree(path)
             else:
                 path.unlink()
+            if os.path.lexists(path):
+                raise OSError("deletion returned with residue: " + str(path))
             result["action"] = "removed"
     except BlockingIOError:
         result["reason"] = "cache_busy"
@@ -510,6 +519,9 @@ def clean_candidate(path, cutoff, protected, delete=False, repository=None, acti
                               else "restore_failed", restore_detail=str(error))
         if owned_recovery is not None:
             owned_recovery.close()
+        if result["action"] == "failed":
+            retained = isolated if isolated is not None and os.path.lexists(isolated) else original
+            result.update(retained_path=str(retained), residue_exists=os.path.lexists(retained))
     return result
 
 
@@ -1039,6 +1051,55 @@ def containing_repository(path):
     return None
 
 
+def remnant_cache_candidates(path, cutoff):
+    """Select Lake's generated paths while retaining package repositories/source.
+
+    Lake defaults place build products in .lake/build, and compiled workspace
+    configurations in .lake/config/<package index>/lakefile.olean{,.trace,.lock}.
+    The cache stamp is written by LeanWorktreePins. Other .lake bytes are retained.
+    """
+    device = path.parent.stat().st_dev
+    def directory(entry):
+        if not os.path.lexists(entry):
+            return False
+        info = entry.lstat()
+        return (stat.S_ISDIR(info.st_mode) and info.st_dev == device and info.st_uid == os.getuid()
+                and info.st_mtime <= cutoff and not getattr(info, "st_flags", 0) & PROTECTED_FLAGS)
+    if not directory(path) or path.resolve() != path:
+        return
+    if {child.name for child in path.iterdir()} - {".lake", "Blueprint"}:
+        return
+    lake = path / ".lake"
+    if not directory(lake):
+        return
+    projects = [path]
+    packages = lake / "packages"
+    if directory(packages):
+        for package in sorted(packages.iterdir()):
+            if directory(package) and any(
+                    (package / name).is_file() and not (package / name).is_symlink()
+                    for name in ("lakefile.lean", "lakefile.toml")):
+                projects.append(package)
+    for project in projects:
+        cache = project / ".lake"
+        if not directory(cache):
+            continue
+        if (cache / "build").is_dir() and not (cache / "build").is_symlink():
+            yield project, cache / "build"
+        config = cache / "config"
+        if directory(config):
+            for index in sorted(config.iterdir()):
+                if index.name.isascii() and index.name.isdecimal() and directory(index):
+                    files = list(index.iterdir())
+                    if ({child.name for child in files} <= {
+                            "lakefile.olean", "lakefile.olean.trace", "lakefile.olean.lock"}
+                            and all(stat.S_ISREG(child.lstat().st_mode) for child in files)):
+                        yield project, index
+        stamp = cache / ".stratalint-lean-cache-stamp.json"
+        if stamp.is_file() and not stamp.is_symlink():
+            yield project, stamp
+
+
 def artifact_lakes(path, protected, worktrees, unobservable):
     """Find private cache roots without splitting ordinary siblings or entering Git metadata.
 
@@ -1163,7 +1224,9 @@ def clean_artifacts(options, caller, disk_descriptor, inventory, lanes_exit, cod
         if result["action"] == "failed":
             print(json.dumps(dict(event="host_cleanup_warning", path=result["path"],
                                   action=result["action"], reason=result["reason"],
-                                  diagnostic=result.get("detail") or result["reason"])), file=sys.stderr)
+                                  diagnostic=result.get("detail") or result["reason"],
+                                  retained_path=result.get("retained_path", result["path"]),
+                                  residue_exists=result.get("residue_exists"))), file=sys.stderr)
             if LOG is not None:
                 LOG.emit("host_cleanup_warning", path=result["path"], action=result["action"],
                          reason=result["reason"])
@@ -1214,6 +1277,32 @@ def clean_artifacts(options, caller, disk_descriptor, inventory, lanes_exit, cod
                                          repository=main_checkout, activity=lambda: fresh_protection(path.parent),
                                          remnant=True, recovery=recovery)
                 record("worktree_remnant", result)
+                if result["action"] == "kept" and result["reason"] in (
+                        "lake_content", "repository", "blueprint_unrecoverable"):
+                    # Full-remnant deletion requires recoverable Blueprint and
+                    # no source/Git. Reclaim only recognized generated subtrees
+                    # when the qualified sibling retains those other bytes.
+                    for project, cache in list(remnant_cache_candidates(path, cutoff)):
+                        _, release = worktree_modules()
+                        try:
+                            with ExitStack() as guards:
+                                guards.enter_context(release.cache_guard(path))
+                                if project != path:
+                                    guards.enter_context(release.cache_guard(project))
+                                def cache_activity():
+                                    protection = fresh_protection(path)
+                                    if path in ProtectedPaths(protection):
+                                        protection.add(cache)
+                                    return protection
+                                result = clean_candidate(cache, cutoff, protections["sshx"], options.delete,
+                                    repository=main_checkout, activity=cache_activity,
+                                    reclaim=False, cache_only=True)
+                        except BlockingIOError:
+                            result = dict(path=str(cache), action="kept", reason="cache_busy", apparent_bytes=0)
+                        except OSError as error:
+                            result = dict(path=str(cache), action="failed", reason="cache_unavailable",
+                                          detail=str(error), apparent_bytes=0)
+                        record("worktree_remnant_cache", result)
         attempted_rollout_groups = set()
         for category, path in candidates(codex, sshx, roots, on_error=inventory_failure):
             if path in seen:
@@ -1254,7 +1343,8 @@ def clean_artifacts(options, caller, disk_descriptor, inventory, lanes_exit, cod
                         clean_staging(lake)
     except OSError as error:
         inventory_error = str(error)
-    failed = inventory_error is not None or lanes_exit != 0
+    failed = inventory_error is not None or lanes_exit != 0 or any(
+        count for key, count in counts.items() if key.endswith(":failed"))
     emit("host_cleanup_summary", mode="delete" if options.delete else "dry_run",
          min_age_hours=options.min_age_hours, counts=dict(counts), skipped=dict(skipped),
          candidate_apparent_bytes=apparent_bytes, worktree_exit=lanes_exit,
