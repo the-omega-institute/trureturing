@@ -49,10 +49,10 @@ private theorem rejected_law : ¬ arena.Law rejected := by
     norm_num [ey, vnorm,
       _root_.D5.S3.Quantum.SpinFactor.OriginalDContract.vnorm,
       _root_.D5.S3.Quantum.SpinFactor.OriginalDContract.dot]
-  let α : ContractEvaluation :=
+  let α : _root_.D5.S3.Quantum.SpinFactor.OriginalDContract.Evaluation :=
     { mass := 1, vector := ey.2, positive := hnorm }
   have hb := (h false (fun _ _ => 0) (fun _ _ => rfl)).1.pb α ex ex ey
-  norm_num [
+  norm_num [α,
     _root_.D5.S3.Quantum.SpinFactor.OriginalDContract.PB,
     _root_.D5.S3.Quantum.SpinFactor.OriginalDContract.squareReadout,
     _root_.D5.S3.Quantum.SpinFactor.OriginalDContract.phaseR,
@@ -85,7 +85,7 @@ def family : Registration arena (type_of% (@same_D_consequences)) where
   dependence := actual_dependence
 
 def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@same_D_consequences) (Realization signature) Unit Unit := {
+    (@same_D_consequences) (Realization signature) Type Unit := {
   unitName := `D5.S3.Quantum.Information.Pauli.OriginalSpinConsumers.same_D_consequences.information_unit
   realizationName := `Reg.D5.S3.Quantum.Information.Pauli.OriginalSpinConsumers.family
   realizationSource := none
@@ -104,7 +104,7 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := none
+  escapeFrom := some E
   sourceSelection := some {
     owner := `D5.S3.Quantum.Information.Pauli.OriginalSpinConsumers
     definition := none

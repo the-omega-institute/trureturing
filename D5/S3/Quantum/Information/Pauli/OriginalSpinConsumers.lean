@@ -29,9 +29,6 @@ abbrev vnorm : Vec → ℝ :=
 abbrev Mat := Matrix (Fin 2) (Fin 2) ℂ
 abbrev Relation := E → E → E
 
-abbrev ContractEvaluation :=
-  _root_.D5.S3.Quantum.SpinFactor.OriginalDContract.Evaluation
-
 private def euclideanVec (v : Vec) : EuclideanSpace ℝ (Fin 3) := toLp 2 v
 
 private theorem dot_euclidean (x y : Vec) :
