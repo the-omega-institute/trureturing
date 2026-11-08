@@ -77,7 +77,7 @@ internal sealed class FixedSupportIntegerActivationEnvelopeDocument : IScribeDoc
                         + "with 0<r<=1, 2Lr<=1, q>=2 and lambda*q^4<=1 satisfies the finite "
                         + "bounds min(r,A1+A2-2lambda*log(1/lambda)-16Lr^2)<=C and "
                         + "C<=A1+A2+lambda*q*(log(1/lambda)+1)+4/q^3. "
-                        + "There is no card(S)>=3 assumption: a support such as {17} is "
+                        + "There is no card(S)>=3 assumption: a support such as {65537} is "
                         + "not excluded by the statement. No RH, PNT, record, minimizer "
                         + "or prime-prefix premise is present.")),
                     Paragraph(Text(
