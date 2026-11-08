@@ -13,6 +13,7 @@ import Mathlib.Analysis.Normed.Module.HahnBanach
 import Mathlib.Analysis.InnerProductSpace.Projection.Basic
 import Mathlib.Analysis.InnerProductSpace.Positive
 import Mathlib.Analysis.Matrix.PosDef
+import Mathlib.Analysis.CStarAlgebra.Matrix
 
 /-! Coherent original-label readings of one ambient state. -/
 
@@ -89,12 +90,13 @@ private theorem quadratic_read (J : E →ₗ[ℝ] E →ₗ[ℝ] E) (D : E → E 
 
 /-- Exact original cone positivity transfers the whole Hermitian two-table to
 any mathematical positive functional, including the zero functional. -/
-private theorem positive_read_p2 {P : Type*}
+private theorem positive_table_transfer {P : Type*}
     (J : E →ₗ[ℝ] E →ₗ[ℝ] E) (D : E → E → E)
-    (i : E →ₗ[ℝ] A) (p : P → E →ₗ[ℝ] ℝ)
-    (hexact : ∀ a, 0 ≤ i a ↔ ∀ q, 0 ≤ p q a)
+    (C : Set E) (p : P → E →ₗ[ℝ] ℝ)
+    (hexact : ∀ a, a ∈ C ↔ ∀ q, 0 ≤ p q a)
     (hraw : ∀ q a b, (originalTable J D (p q) a b).PosSemidef)
-    (f : E →ₗ[ℝ] ℝ) (hf : ∀ a, 0 ≤ i a → 0 ≤ f a) (a b : E) :
+    (f : E →ₗ[ℝ] ℝ) (hf : ∀ a, a ∈ C → 0 ≤ f a) (a b : E) :
+    (originalTable J D f a b).PosSemidef ∧
     f (D a b)^2 ≤ f (J a a) * f (J b b) - f (J a b)^2 := by
   have hzero (c : E) (hc : ∀ q, p q c = 0) : f c = 0 := by
     have hp := hf c ((hexact c).mpr (fun q => (hc q).ge))
@@ -126,9 +128,165 @@ private theorem positive_read_p2 {P : Type*}
       <;> ring
     apply Complex.nonneg_iff.mpr
     exact ⟨by rwa [← quadratic_read J D f a b z herm], hzreal.symm⟩
+  refine ⟨hmat, ?_⟩
   have hdet := (Complex.nonneg_iff.mp hmat.det_nonneg).1
   simp [originalTable, Matrix.det_fin_two, hs, hd] at hdet
   nlinarith
+
+/-- Original labels in the Peirce two-space: literally the inverse image of
+`{x | JX (i k) x = x}`, not a quotient or a new carrier. -/
+def originalCorner {X : Type*} [AddCommGroup X] [Module ℝ X]
+    (i : E →ₗ[ℝ] X) (JX : X →ₗ[ℝ] X →ₗ[ℝ] X) (k : E) : Submodule ℝ E :=
+  (LinearMap.ker (JX (i k) - LinearMap.id)).comap i
+
+section MatrixCorner
+open scoped Matrix.Norms.L2Operator
+
+variable {X : Type*} [NormedAddCommGroup X] [NormedSpace ℝ X]
+variable {n : Type*} [Fintype n] [DecidableEq n]
+
+/-- The supplied actual closed finite complex matrix corner. Its carrier is the
+original Peirce subspace, its norm is inherited, and its response is the original D.
+The construction of this interface from a real JB completion is not asserted. -/
+structure ActualMatrixCorner (J : E →ₗ[ℝ] E →ₗ[ℝ] E) (D : E → E → E)
+    (C : Set E) (i : E →ₗᵢ[ℝ] X) (JX : X →ₗ[ℝ] X →ₗ[ℝ] X) (k : E)
+    (n : Type*) [Fintype n] [DecidableEq n] where
+  inherited_jordan : ∀ a b, i (J a b) = JX (i a) (i b)
+  unit_mem : k ∈ originalCorner i.toLinearMap JX k
+  jordan_closed : ∀ a b : originalCorner i.toLinearMap JX k,
+    J a b ∈ originalCorner i.toLinearMap JX k
+  response_closed : ∀ a b : originalCorner i.toLinearMap JX k,
+    D a b ∈ originalCorner i.toLinearMap JX k
+  matrix : originalCorner i.toLinearMap JX k ≃ₗ[ℝ] selfAdjoint (Matrix n n ℂ)
+  norm_matrix : ∀ a, ‖(matrix a : Matrix n n ℂ)‖ = ‖a‖
+  unit_matrix : (matrix ⟨k, unit_mem⟩ : Matrix n n ℂ) = 1
+  jordan_matrix : ∀ a b,
+    (matrix ⟨J a b, jordan_closed a b⟩ : Matrix n n ℂ) =
+      (1 / 2 : ℝ) • ((matrix a : Matrix n n ℂ) * matrix b +
+        (matrix b : Matrix n n ℂ) * matrix a)
+  exact_cone : ∀ a, (a : E) ∈ C ↔ (matrix a : Matrix n n ℂ).PosSemidef
+
+variable {J : E →ₗ[ℝ] E →ₗ[ℝ] E} {D : E → E → E} {C : Set E}
+variable {i : E →ₗᵢ[ℝ] X} {JX : X →ₗ[ℝ] X →ₗ[ℝ] X} {k : E}
+
+/-- Bilinear restriction of the original Jordan product. -/
+def cornerJordan (R : ActualMatrixCorner J D C i JX k n) :
+    originalCorner i.toLinearMap JX k →ₗ[ℝ]
+      originalCorner i.toLinearMap JX k →ₗ[ℝ] originalCorner i.toLinearMap JX k where
+  toFun a := {
+    toFun b := ⟨J a b, R.jordan_closed a b⟩
+    map_add' b c := Subtype.ext (by simp)
+    map_smul' r b := Subtype.ext (by simp) }
+  map_add' a b := by ext c; simp
+  map_smul' r a := by ext b; simp
+
+/-- Literal restriction of the same arbitrary total response. -/
+def cornerResponse (R : ActualMatrixCorner J D C i JX k n)
+    (a b : originalCorner i.toLinearMap JX k) : originalCorner i.toLinearMap JX k :=
+  ⟨D a b, R.response_closed a b⟩
+
+/-- Matrix action on the Euclidean L2 space, including the empty index type. -/
+def cornerOp (R : ActualMatrixCorner J D C i JX k n)
+    (a : originalCorner i.toLinearMap JX k) :
+    EuclideanSpace ℂ n →L[ℂ] EuclideanSpace ℂ n :=
+  Matrix.toEuclideanCLM (R.matrix a : Matrix n n ℂ)
+
+/-- A corner-local real-linear vector functional; no ambient extension is chosen. -/
+def cornerVectorRead (R : ActualMatrixCorner J D C i JX k n)
+    (v : EuclideanSpace ℂ n) : originalCorner i.toLinearMap JX k →ₗ[ℝ] ℝ where
+  toFun a := (inner ℂ v (cornerOp R a v)).re
+  map_add' a b := by simp [cornerOp, map_add, inner_add_right]
+  map_smul' r a := by
+    simp [cornerOp, map_smul, inner_smul_right, RCLike.real_smul_eq_coe_mul]
+
+private theorem corner_vector {P : Type*}
+    (p : P → E →ₗ[ℝ] ℝ) (hexact : ∀ a, a ∈ C ↔ ∀ q, 0 ≤ p q a)
+    (hraw : ∀ q a b, (originalTable J D (p q) a b).PosSemidef)
+    (R : ActualMatrixCorner J D C i JX k n) (v : EuclideanSpace ℂ n) :
+    (∀ a, (a : E) ∈ C → 0 ≤ cornerVectorRead R v a) ∧
+    (∀ a, inner ℂ v (cornerOp R a v) = (cornerVectorRead R v a : ℂ)) ∧
+    cornerVectorRead R v ⟨k, R.unit_mem⟩ = ‖v‖ ^ 2 ∧
+    (∀ a, cornerVectorRead R v (cornerJordan R a a) = ‖cornerOp R a v‖ ^ 2) ∧
+    (∀ a b, cornerVectorRead R v (cornerJordan R a b) =
+      (inner ℂ (cornerOp R a v) (cornerOp R b v)).re) ∧
+    (∀ a b,
+      (originalTable (cornerJordan R) (cornerResponse R) (cornerVectorRead R v) a b).PosSemidef ∧
+      cornerVectorRead R v (cornerResponse R a b) ^ 2 ≤
+        ‖cornerOp R a v‖ ^ 2 * ‖cornerOp R b v‖ ^ 2 -
+          (inner ℂ (cornerOp R a v) (cornerOp R b v)).re ^ 2) := by
+  have hs (a) : (cornerOp R a).IsSymmetric :=
+    ((R.matrix a).property.map Matrix.toEuclideanCLM).isSymmetric
+  have hp (a) (ha : (a : E) ∈ C) : 0 ≤ cornerVectorRead R v a := by
+    have h := (R.exact_cone a).mp ha
+    have h' := h.re_dotProduct_nonneg (WithLp.ofLp v)
+    simpa [cornerVectorRead, cornerOp, Matrix.toEuclideanCLM, Matrix.toLpLin_apply,
+      EuclideanSpace.inner_eq_star_dotProduct, dotProduct_comm] using h'
+  have hj (a b) : cornerOp R (cornerJordan R a b) = (1 / 2 : ℝ) •
+      (cornerOp R a * cornerOp R b + cornerOp R b * cornerOp R a) := by
+    change Matrix.toEuclideanCLM (R.matrix ⟨J a b, R.jordan_closed a b⟩ : Matrix n n ℂ) = _
+    rw [R.jordan_matrix]
+    simp [cornerOp]
+  have hc (a b) : cornerVectorRead R v (cornerJordan R a b) =
+      (inner ℂ (cornerOp R a v) (cornerOp R b v)).re := by
+    change (inner ℂ v (cornerOp R (cornerJordan R a b) v)).re = _
+    rw [hj]
+    simp only [ContinuousLinearMap.smul_apply, ContinuousLinearMap.add_apply,
+      ContinuousLinearMap.mul_apply, inner_smul_right, inner_add_right]
+    rw [← hs a v (cornerOp R b v), ← hs b v (cornerOp R a v)]
+    rw [inner_re_symm (𝕜 := ℂ) (cornerOp R b v) (cornerOp R a v)]
+    simp
+    <;> ring
+  refine ⟨hp, ?_, ?_, ?_, hc, ?_⟩
+  · intro a
+    apply Complex.ext
+    · simp [cornerVectorRead]
+    · simpa using (hs a).im_inner_self_apply v
+  · change (inner ℂ v (cornerOp R ⟨k, R.unit_mem⟩ v)).re = _
+    simp [cornerOp, R.unit_matrix, inner_self_eq_norm_sq_to_K]
+  · intro a
+    rw [hc, inner_self_eq_norm_sq_to_K]
+    simp
+  · intro a b
+    let q : P → originalCorner i.toLinearMap JX k →ₗ[ℝ] ℝ := fun q =>
+      (p q).comp (originalCorner i.toLinearMap JX k).subtype
+    have ht := positive_table_transfer (cornerJordan R) (cornerResponse R)
+      {a | (a : E) ∈ C} q (fun a => hexact a)
+      (fun q a b => hraw q a b) (cornerVectorRead R v) hp a b
+    refine ⟨ht.1, ?_⟩
+    simpa only [hc, inner_self_eq_norm_sq_to_K, Complex.ofReal_re] using ht.2
+
+/-- Whole original directed P2 for every cone-positive mathematical functional,
+with its determinant and the literal same-D finite matrix-corner vector readings. -/
+theorem original_positive_readings {P : Type*}
+    (J : E →ₗ[ℝ] E →ₗ[ℝ] E) (D : E → E → E) (C : Set E)
+    (p : P → E →ₗ[ℝ] ℝ) (hexact : ∀ a, a ∈ C ↔ ∀ q, 0 ≤ p q a)
+    (hraw : ∀ q a b, (originalTable J D (p q) a b).PosSemidef) :
+    (∀ (f : E →ₗ[ℝ] ℝ), (∀ a, a ∈ C → 0 ≤ f a) → ∀ a b,
+      (originalTable J D f a b).PosSemidef ∧
+      f (D a b)^2 ≤ f (J a a) * f (J b b) - f (J a b)^2) ∧
+    (∀ (X : Type*) [NormedAddCommGroup X] [NormedSpace ℝ X]
+      (i : E →ₗᵢ[ℝ] X) (JX : X →ₗ[ℝ] X →ₗ[ℝ] X) (k : E)
+      (n : Type*) [Fintype n] [DecidableEq n]
+      (R : ActualMatrixCorner J D C i JX k n) (v : EuclideanSpace ℂ n),
+      (∀ a, (a : E) ∈ C → 0 ≤ cornerVectorRead R v a) ∧
+      (∀ a, inner ℂ v (cornerOp R a v) = (cornerVectorRead R v a : ℂ)) ∧
+      cornerVectorRead R v ⟨k, R.unit_mem⟩ = ‖v‖ ^ 2 ∧
+      (∀ a, cornerVectorRead R v (cornerJordan R a a) = ‖cornerOp R a v‖ ^ 2) ∧
+      (∀ a b, cornerVectorRead R v (cornerJordan R a b) =
+        (inner ℂ (cornerOp R a v) (cornerOp R b v)).re) ∧
+      (∀ a b,
+        (cornerJordan R a b : E) = J a b ∧ (cornerResponse R a b : E) = D a b ∧
+        (originalTable (cornerJordan R) (cornerResponse R) (cornerVectorRead R v) a b).PosSemidef ∧
+        cornerVectorRead R v ⟨D a b, R.response_closed a b⟩ ^ 2 ≤
+          ‖cornerOp R a v‖ ^ 2 * ‖cornerOp R b v‖ ^ 2 -
+            (inner ℂ (cornerOp R a v) (cornerOp R b v)).re ^ 2)) := by
+  refine ⟨fun f hf a b => positive_table_transfer J D C p hexact hraw f hf a b, ?_⟩
+  intro X _ _ i JX k n _ _ R v
+  obtain ⟨hp, hr, hu, hs, hc, ht⟩ := corner_vector p hexact hraw R v
+  exact ⟨hp, hr, hu, hs, hc, fun a b => ⟨rfl, rfl, (ht a b).1, (ht a b).2⟩⟩
+
+#print axioms original_positive_readings
+end MatrixCorner
 
 /-- The closed B-cyclic subspace of a single ambient GNS representation. -/
 def cyclicOrbit (φ : A →ₚ[ℂ] ℂ) (B : StarSubalgebra ℂ A) : B →ₗ[ℂ] φ.GNS where
@@ -291,8 +449,8 @@ private theorem compressed_p2 {P : Type*}
       inner ℝ v (compressedOp φ B i (J a a) v) *
       inner ℝ v (compressedOp φ B i (J b b) v) -
       inner ℝ v (compressedOp φ B i (J a b) v)^2 := by
-  have h := positive_read_p2 J D i p hexact hraw (vectorRead φ i v)
-    (vectorRead_nonneg φ i v) a b
+  have h := (positive_table_transfer J D {a | 0 ≤ i a} p hexact hraw
+    (vectorRead φ i v) (vectorRead_nonneg φ i v) a b).2
   change (inner ℂ v (compressedOp φ B i (D a b) v)).re ^ 2 ≤
     (inner ℂ v (compressedOp φ B i (J a a) v)).re *
     (inner ℂ v (compressedOp φ B i (J b b) v)).re -
