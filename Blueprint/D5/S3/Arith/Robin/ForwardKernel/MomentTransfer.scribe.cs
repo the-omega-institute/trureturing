@@ -11,6 +11,30 @@ internal sealed class MomentTransferDocument : IScribeDocumentDefinition
         H("Moment transfer"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("joint-moment-transfer"),
+                DeclarationHandle.Create(Prefix + "joint_moment_transfer"),
+                H("Joint moment transfer for a finite family of profiles"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text(
+                        "Fix a positive integer k, exponents e_i strictly between zero and one, "
+                        + "and real integrable profiles G_i. If E is measurable and bounded on compact "
+                        + "intervals, the absolute kth moments of the normalized increments are "
+                        + "eventually uniformly bounded over every index and unit parameter, and "
+                        + "the joint position-weighted mixed moments converge at every point of the "
+                        + "unit cube to M, then the moment of the product of normalized profile "
+                        + "responses converges to the cube integral of product_i G_i(s_i) times M(s).")),
+                    Paragraph(Text(
+                        "Expand the finite product of profile integrals and apply Fubini. "
+                        + "Generalized Holder bounds the absolute mixed increment moment by "
+                        + "2 raised to the sum of r(e_i), times the common moment bound. Apply the "
+                        + "price estimate to each exponent and sum their absolute errors to obtain "
+                        + "one vanishing error bound. Replacing all price factors by one has "
+                        + "vanishing integral error; dominated convergence gives the remaining limit. "
+                        + "Only measurability of the approximating kernels is needed."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("moment-transfer"),
                 DeclarationHandle.Create(Prefix + "moment_transfer"),
                 H("Moment transfer for every positive integer order"),
@@ -27,12 +51,8 @@ internal sealed class MomentTransferDocument : IScribeDocumentDefinition
                         + "price-weighted response converges to the integral of product_i g(s_i)*M(s) "
                         + "over the k-dimensional unit cube.")),
                     Paragraph(Text(
-                        "Expand the kth power by integral_fintype_prod_eq_pow and apply Fubini. "
-                        + "Generalized Holder, using ENNReal.lintegral_prod_norm_pow_le, bounds the "
-                        + "absolute mixed increment moment by 2^(k*r)*C. Replacing each normalized "
-                        + "price factor by one changes the profile moment by at most "
-                        + "((1+eta(X))^k-1)*2^(k*r)*C*||g||_1^k, which tends to zero. "
-                        + "The remaining cube integral converges by dominated convergence, with "
-                        + "integrable majorant 2^(k*r)*C*product_i |g(s_i)|."))),
+                        "Apply joint moment transfer to the constant exponent and constant profile "
+                        + "families. Their joint increment moments equal the original mixed moments, "
+                        + "and the product of normalized responses is the kth power."))),
                 DescribeRole.Theorem))));
 }
