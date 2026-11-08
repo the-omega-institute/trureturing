@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Algebra;
 internal sealed class PBOriginalReadoutRealizationDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "A single ambient state gives a coherent reading of every original label, and its selected central sector supplies the actual PB outer budgets.",
+        "Cone-positive functionals and actual finite matrix corners read the whole original directed two-table; a single ambient state also supplies coherent central-sector outer budgets.",
         H("Original labels, positive two-tables, and a selected central sector"),
         Blocks(Describe.Lean(DescribeId.Create("original-positive-readings"),
             DeclarationHandle.Create("D5/S3/Quantum/Algebra/PBOriginalReadoutRealization.original_positive_readings"),
