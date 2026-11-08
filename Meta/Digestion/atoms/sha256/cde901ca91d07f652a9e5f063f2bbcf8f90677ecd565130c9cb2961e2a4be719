@@ -1,0 +1,52 @@
+**定义 128.1（原候选与续卷接口）。** 本卷承接 [《任意维小窗口单位桥》](AURIC_ARBITRARY_DIMENSIONAL_SMALL_WINDOW_UNIT_BRIDGE.md) 的定义 64.1、119.1、120.1–120.3，沿用其编号。固定同一原实 Archimedean 序单位空间 $(E,C,u,N)$、同一原正实线性评价族 $\mathcal P$、同一总映射 $S,D:E^2\to E$。原评价分离 $E$，且
+
+$$
+x\in C\quad\Longleftrightarrow\quad\alpha(x)\ge0\quad(\alpha\in\mathcal P),
+\qquad m_\alpha=\alpha(u).
+\tag{128.1}
+$$
+
+保留全部零、不等与次归一质量，不将全部数学态认作实际准备。原 A1 要求全部实际有向 Hermitian 二表正性；原 A2 要求相加三表 $(a+b,a,b)$ 及其排列的实部在 $\mathbb R^3$ 上半正定，且原指定向量 $(1,-1,-1)$ 的二次值为零；原 A3 为 $S(u,u)=u$，并对同一个固定有理数 $0<\theta\le1$ 要求 $0\le e\le\theta u\Rightarrow S(e,e)\le e$。直接使用无 $R$ 接口已经得到的同一乘法 $a\circ b=S(a,b)$ 与忠实、等距、含单位、稠密 Jordan 包含
+
+$$
+E\subset X,\qquad C=E\cap X_+,\qquad N=\|\cdot\|_X|_E,
+\tag{128.2}
+$$
+
+其中 $X$ 是含单位实 JB 代数。以下定理只消费这个既有接口和下列两个条件，不重新证明该接口。P2 是全部原 $a,b,\alpha$ 的
+
+$$
+\begin{pmatrix}
+\alpha(a^2)&\alpha(a\circ b)-i\alpha D(a,b)\\
+\alpha(b\circ a)-i\alpha D(b,a)&\alpha(b^2)
+\end{pmatrix}\succeq0.
+\tag{128.3}
+$$
+
+令
+
+$$
+\begin{aligned}
+Q_\alpha(b,c)&=\alpha\bigl(b^2+c^2+2D(b,c)\bigr),\\
+r_\pm&=b\pm D(a,b)\mp a\circ c,\\
+s_\pm&=c\pm a\circ b\pm D(a,c).
+\end{aligned}
+$$
+
+完整 PB 是对全部原 $a,b,c\in E$、$\alpha\in\mathcal P$ 要求
+
+$$
+Q_\alpha(r_+,s_+)=Q_\alpha(r_-,s_-).
+\tag{128.4}
+$$
+
+不另加 $D$ 的可加、齐次、连续、酉协变、中央平移、NN、Jacobi、全部有限 Gram 正性或完成延拓。原目标仍是同一个旧 $D$ 的分别可加及全部原输入上的
+
+$$
+(a\circ b)\circ c-D(D(a,b),c)
+=a\circ(b\circ c)-D(a,D(b,c)).
+\tag{128.5}
+$$
+
+原 $\Omega/\mathrm{native}$、全词 $K/J/q$、父位置和 ready 类型、原中心与不等维块、实际准备与完整效果菜单、共同记录与真正分组遗忘、全仪器及其环境和全部输出、实际相关联合与递归同源参考、全部合法顺序／自适应／并行历史及每个仍合法未来、停止／拒绝／销毁、同数两侧与真实逆向返回，均保持母卷的原量词。完整 CountRead 无穷、正常性与前对偶、物理钟、能量及共同 $\hbar$ 仍各有其原来源前件；有限数学角不截断这些量词。
+
