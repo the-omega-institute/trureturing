@@ -39,12 +39,12 @@ internal sealed class RationalIntervalRetractionDocument : IScribeDocumentDefini
             + "their supports are finite. W(x)>0 exactly when B(x) is nonempty. For Q(s)=s/(1+s), set R(x)=Q(A(x)/W(x)) in that case. If B(x) is empty, the entire sequence lies strictly in one cap; R(x) is zero on the lower cap and one on the upper cap.")),
         Desc("R_lower_cylinder", "Lower cap cylinder estimate",
             St(Seq(All("x", Id("P")), All("j", ZZ), X(Id("j")), Lt, Fr(1,2), Rightarrow, Sp,
-                Rof(Id("x")), Le, Sp, D(8), Pow(D(2), Seq(Minus, Id("j"))))),
+                Rof(Id("x")), Le, Sp, D(8), Cdot, Sp, Pow(D(2), Seq(Minus, Id("j"))))),
             "For a nonempty marker block [a,b], the quotient lies between 2^(-b)/2 and 2*2^(-a). The coordinate condition forces b>=j and hence a>=j-2. "
                 + "Thus Q(A/W)<=A/W<=8*2^(-j). Empty-marker sequences in this cylinder are in the lower cap."),
         Desc("R_upper_cylinder", "Upper cap cylinder estimate",
             St(Seq(All("x", Id("P")), All("j", ZZ), Fr(1,2), Lt, X(Id("j")), Rightarrow, Sp,
-                D(1), Minus, Rof(Id("x")), Le, Sp, D(8), Pow(D(2), Id("j")))),
+                D(1), Minus, Rof(Id("x")), Le, Sp, D(8), Cdot, Sp, Pow(D(2), Id("j")))),
             "The coordinate condition forces a<=j and b<=j+2, so A/W>=2^(-j-2)/2. Then 1-Q(A/W)=1/(1+A/W)<=8*2^j. "
                 + "Empty-marker sequences in this cylinder are in the upper cap."),
         Desc("continuous_R", "Continuity on the entire closed domain",
