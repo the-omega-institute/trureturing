@@ -1,0 +1,41 @@
+# Original labels, positive two-tables, and a selected central sector
+
+## Abstract
+
+A single ambient state gives a coherent reading of every original label, and its selected central sector supplies the actual PB outer budgets.
+
+**Theorem 1.1 (Coherent realization with zero and nonzero axis branches).**
+
+$$\forall A \in Type,\; \forall E \in Type,\; \forall P \in Type,\; [\operatorname{CstarAlgebra}\left(A\right)][\operatorname{PartialOrder}\left(A\right)][\operatorname{StarOrderedRing}\left(A\right)][\operatorname{NormedAddCommGroup}\left(E\right)][\operatorname{NormedSpace}\left(\operatorname{Real}\left(\right), E\right)]\forall O \in \operatorname{OriginalData}\left(A, E, P\right),\; \forall B \in \operatorname{StarSubalgebra}\left(\operatorname{Complex}\left(\right), A\right),\; \forall C \in \operatorname{StarSubalgebra}\left(\operatorname{Complex}\left(\right), A\right),\; \left(\operatorname{PB}\left(\operatorname{J}\left(O\right), \operatorname{D}\left(O\right)\right) \land \left(\operatorname{BDerivedInterface}\left(\operatorname{J}\left(O\right), \operatorname{u}\left(O\right), \operatorname{D}\left(O\right)\right) \land \left(\operatorname{Closed}\left(C\right) \land \left(\operatorname{Included}\left(C, B\right) \land \left(\forall c \in C,\; \forall b \in B,\; \operatorname{val}\left(c\right) \cdot \operatorname{val}\left(b\right) = \operatorname{val}\left(b\right) \cdot \operatorname{val}\left(c\right)\right)\right)\right)\right)\right) \Rightarrow \left(\left(\operatorname{Subsingleton}\left(A\right) \Rightarrow \left(\left(\forall a \in E,\; a = 0\right) \land \left(\forall a \in E,\; \forall b \in E,\; \operatorname{D}\left(O, a, b\right) = 0\right)\right)\right) \land \left(\forall chi \in \operatorname{StarCharacter}\left(C, \operatorname{Complex}\left(\right)\right),\; \forall x \in E,\; \forall y \in E,\; \forall X \in \operatorname{Real}\left(\right),\; \forall Y \in \operatorname{Real}\left(\right),\; \forall delta \in \operatorname{Real}\left(\right),\; \operatorname{SectorCertificate}\left(O, B, C, chi, x, y, X, Y, delta\right) \Rightarrow \operatorname{Nonempty}\left(\operatorname{Realization}\left(O, B, C, chi, x, y, X, Y, delta\right)\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Algebra/PBOriginalReadoutRealization.original_piecewise` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+OriginalData retains the original real normed label space E, its bilinear Jordan product J, unit u, and arbitrary total response D:E times E to E. Its supplied inclusion i into an arbitrary unital complex C-star algebra A is real linear, isometric and self-adjoint valued, maps u to one, and satisfies i(J(a,b))=(i(a)i(b)+i(b)i(a))/2. E need not be complete or dense in the whole self-adjoint part of A. The original preparation family is arbitrary and its cone is exact: i(a) is positive exactly when every original preparation evaluates a nonnegatively. Every original directed Hermitian two-table is positive semidefinite. No mass is divided or normalized; zero, unequal and subnormalized original masses remain in the domain.
+
+B and C are unital star subalgebras of the same A, C is norm closed, C is contained in B, and every element of C commutes with every element of B. The theorem accepts a specified unital star character chi:C to the complex scalars. Its existence forces this character branch to be proper. Hahn-Banach extends the continuous character functional with its norm preserved. Norm one and value one imply positivity, giving one ambient state phi which retains this chi. The original normalized_gns declaration supplies the norm-one cyclic vector in the completed GNS space. No independent extension is selected for each reading vector.
+
+cyclicSpace(phi,B) is the norm closure of the range of b mapped to pi(b)xi in that one ambient GNS representation. It contains xi and is B invariant. For c in C, retention makes pi(c-chi(c)one)xi have zero squared norm. Centrality propagates this equality along the B orbit and continuity passes it to its closed span, so pi(c)v=chi(c)v for every vector in cyclicSpace. Its real Hilbert space is nontrivial because xi has norm one.
+
+compressedOp sends every original a in E to the orthogonal compression of pi(i(a)) to that single cyclicSpace, regarded as a real linear operator. This map is linear and symmetric on all original labels, including unknown outer D outputs. It reads u as the identity. The known Jordan domain is exactly L=i inverse image of B; invariance proves the Jordan law there. No closure, descent, additivity, homogeneity or extension of D is introduced.
+
+For complex coefficients z and w, the original quadratic label is normSq(z)J(a,a)+normSq(w)J(b,b)+2 Re(conjugate(z)w)J(a,b)+2 Im(conjugate(z)w)D(a,b). Hermitian original tables determine the reversed readings. Their positivity and the exact original cone make this label positive in A. Every mathematical positive functional therefore reads the same whole two-table positively. The determinant gives f(D(a,b)) squared at most f(J(a,a))f(J(b,b))-f(J(a,b)) squared. Applying this to the actual ambient vector expectation and then the compression proves Readout.p2 for every pair of original labels and every vector, including zero. Mathematical vector expectations are not identified with original preparations.
+
+SectorCertificate contains six actual elements xx,yy,dd,xy,xd,yd of C, wired respectively to i(J(x,x)), i(J(y,y)), i(J(D(x,y),D(x,y))), i(J(x,y)), i(J(x,D(x,y))) and i(J(y,D(x,y))). It requires the original x,y,D(x,y) to lie in L. The specified character reads the first three as X squared, Y squared and delta squared, and the last three as zero. Scalarization and the local Jordan law prove the represented square and anticommutation relations. Global ambient anticommutation is not a premise: the three central cross elements may be nonzero globally.
+
+When X=0 or Y=0, raw all-vector P2 forces every diagonal expectation of op(D(x,y)) to vanish. Symmetry makes that operator zero, and its represented square on the nontrivial cyclic space gives delta=0. This branch uses no involutions. When X and Y are both nonzero, normalize only the mathematical represented axes by real scalars to construct Fibre of the same Readout. X and Y may be unequal and delta may be zero. This normalization supplies no new original input, physical inverse or operation.
+
+The nonzero branch directly applies PBActualOuterBudget.actual_outer_budget to this constructed R and Fibre, the same original J,u,D,x,y, original PB and the complete six-field BDerivedInterface. For every real lambda,t with t nonzero and t squared=lambda squared X squared+1, write z=t u+lambda x, nu=D(x,y)-J(x,z), omega=J(x,y)+D(x,z). It obtains one unit vector reading both actual outer original labels D(y+nu,z+omega) and D(y-nu,z-omega), each with squared budget X squared/t squared+delta squared, their difference 2 lambda X squared Y/t, and lambda squared X squared(X squared Y squared-delta squared) at most X squared+delta squared. Omega may be globally nonzero; only its operator reading is killed. Unknown outer D outputs remain original labels and need not belong to L.
+
+For the zero algebra A, faithfulness makes every original label and every original D value zero, independently of a character or normalized state. This is the first conjunct of the theorem. The second conjunct constructs the specified-character realization whenever its premises are supplied.
+
+The abstract JB-to-JC carrier and Albert exclusion, full B183.2/184/185.1, the derivation of SectorCertificate from original PB or orthogonality, source pairwise anticommutation, full raw 200/202, saturation and separation remain separate unpaid boundaries. The six-field BDerivedInterface remains explicit derived debt. This result asserts the conditional realization bridge and its finite actual outer budgets; it supplies neither those source interfaces nor final source-host coverage. No freezing or coverage status is asserted.
+
+## References
+
+- Truth anchor: `D5/S3/Quantum/Algebra/PBOriginalReadoutRealization.original_piecewise`
+- Dependency: [D5/S3/Quantum/Algebra/PBActualOuterBudget](PBActualOuterBudget.md)
+- Dependency: [D5/S3/QuantumStates/GNSCompatibleStateExtension](../../QuantumStates/GNSCompatibleStateExtension.md)
