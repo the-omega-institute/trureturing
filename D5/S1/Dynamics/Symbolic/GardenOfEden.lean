@@ -1,22 +1,21 @@
-/- GID: D5/S1/Dynamics/Symbolic/GardenOfEdenCollar
+/- GID: D5/S1/Dynamics/Symbolic/GardenOfEden
    generality: G
-   mirror-B: D5/B/S1/Dynamics/Symbolic/GardenOfEdenCollar
+   mirror-B: D5/B/S1/Dynamics/Symbolic/GardenOfEden
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Finite collars allow local collision replacement in every ambient context. -/
+   digest: Surjectivity is equivalent to finite-difference preinjectivity for finite alphabets. -/
 
 import D5.S1.Dynamics.Symbolic.PermutativeLifts.BipermutativePreinjectivity
 import D5.S1.Dynamics.Symbolic.PrefixGrowthEntropy
-import Mathlib.Tactic
 
-/-! Finite-collar replacement for arbitrary two-sided local rules. -/
+/-! The Moore–Myhill theorem for arbitrary two-sided local rules. -/
 
 set_option autoImplicit false
 
 noncomputable section
 
-namespace D5.S1.Dynamics.Symbolic.GardenOfEdenCollar
+namespace D5.S1.Dynamics.Symbolic.GardenOfEden
 
 open Set Function
 open PermutativeLifts.BipermutativeLift
@@ -326,21 +325,20 @@ private theorem prefixCount_le_of_erasable [Fintype A]
   simpa only [Nat.card_eq_fintype_card, Fintype.card_prod, Fintype.card_fun,
     Fintype.card_fin, hb] using hc
 
-/-- A native finite collision forces a strict loss in the logarithmic growth
-of actual image prefixes. The limiting rate concerns spatial prefixes of
-complete images, rather than temporal entropy of the local-code map. -/
-theorem strict_image_prefix_loss [Finite A] (hq : 2 ≤ Nat.card A)
-    (hnot : ¬ Preinjective h) :
-    ∃ r : ℝ, r < Real.log (Nat.card A : ℝ) ∧
-      Filter.Tendsto
-        (fun n : ℕ => Real.log (PrefixGrowthEntropy.prefixCount (imageRay h) n : ℝ) / n)
-        Filter.atTop (nhds r) := by
-  classical
+private theorem image_count_pos [Finite A] [Nonempty A] (N : ℕ) :
+    (0 : ℝ) < PrefixGrowthEntropy.prefixCount (imageRay h) N := by
+  have : Nonempty (ImagePrefix h N) :=
+    ⟨⟨fun i => code h (fun _ => Classical.choice ‹Nonempty A›) (i : ℕ),
+      fun _ => Classical.choice ‹Nonempty A›, rfl⟩⟩
+  rw [prefixCount_eq]
+  exact_mod_cast (Nat.card_pos (α := ImagePrefix h N))
+
+private theorem image_prefix_growth [Finite A] [Nonempty A] :
+    ∃ r : ℝ, Filter.Tendsto
+      (fun n : ℕ => Real.log (PrefixGrowthEntropy.prefixCount (imageRay h) n : ℝ) / n)
+      Filter.atTop (nhds r) := by
   let : Fintype A := Fintype.ofFinite A
   let : UniformSpace A := ⊥
-  have hq' : 2 ≤ Fintype.card A := by simpa only [Nat.card_eq_fintype_card] using hq
-  haveI : Nonempty A := Fintype.card_pos_iff.mp (by omega)
-  obtain ⟨m, hm, p, q, hpq, herase⟩ := exists_erasable_words hnot
   have hne : (imageRay h).Nonempty :=
     ⟨fun n => code h (fun _ => Classical.choice ‹Nonempty A›) n,
       fun _ => Classical.choice ‹Nonempty A›, fun _ => rfl⟩
@@ -352,42 +350,58 @@ theorem strict_image_prefix_loss [Finite A] (hq : 2 ≤ Nat.card A)
     simpa only [SymbolicDynamics.FullShift.shift_apply, Nat.cast_add, Nat.cast_one] using hx (1 + n)
   obtain ⟨r, _, _, hlim, _⟩ :=
     PrefixGrowthEntropy.prefix_growth_entropy (imageRay h) hne hinv
-  let B := Fintype.card A ^ m - 1
-  have hpow : 1 < Fintype.card A ^ m := one_lt_pow' (by omega) hm.ne'
-  have hBpos : (0 : ℝ) < B := by dsimp [B]; exact_mod_cast (show 0 < Fintype.card A ^ m - 1 by omega)
-  have hqpos : (0 : ℝ) < Fintype.card A := by exact_mod_cast (show 0 < Fintype.card A by omega)
-  have hcountpos (N : ℕ) : (0 : ℝ) < PrefixGrowthEntropy.prefixCount (imageRay h) N := by
-    obtain ⟨z, hz⟩ := hne
-    haveI : Nonempty (ImagePrefix h N) := by
-      obtain ⟨x, hx⟩ := hz
-      exact ⟨⟨fun i => code h x (i : ℕ), x, rfl⟩⟩
-    rw [prefixCount_eq]
-    exact_mod_cast (Nat.card_pos (α := ImagePrefix h N))
+  exact ⟨r, hlim⟩
+
+private theorem rate_le_of_block_bound {f : ℕ → ℕ} {r : ℝ} {m B C : ℕ}
+    (hf : ∀ n, (0 : ℝ) < f n)
+    (hlim : Filter.Tendsto (fun n : ℕ => Real.log (f n : ℝ) / n) Filter.atTop (nhds r))
+    (hm : 0 < m) (hB : 0 < B) (hC : 0 < C)
+    (hbound : ∀ n, f (n * m) ≤ B ^ n * C) : r ≤ Real.log B / m := by
   have hmul : Filter.Tendsto (fun n : ℕ => n * m) Filter.atTop Filter.atTop :=
     Filter.tendsto_atTop_mono (fun n => show n ≤ n * m by nlinarith) Filter.tendsto_id
   have hrhs : Filter.Tendsto
-      (fun n : ℕ => ((n : ℝ) * Real.log B + (k + 1 : ℕ) * Real.log (Fintype.card A)) /
-        ((n : ℝ) * m)) Filter.atTop (nhds (Real.log B / m)) := by
+      (fun n : ℕ => ((n : ℝ) * Real.log B + Real.log C) / ((n : ℝ) * m))
+      Filter.atTop (nhds (Real.log B / m)) := by
     simpa only [zero_add, add_zero, mul_comm, add_comm] using
-      (tendsto_add_mul_div_add_mul_atTop_nhds
-        ((k + 1 : ℕ) * Real.log (Fintype.card A)) 0 (Real.log B)
+      (tendsto_add_mul_div_add_mul_atTop_nhds (Real.log C) 0 (Real.log B)
         (d := (m : ℝ)) (by exact_mod_cast hm.ne'))
-  have hle : r ≤ Real.log B / m := by
-    apply le_of_tendsto_of_tendsto (hlim.comp hmul) hrhs
-    apply Filter.Eventually.of_forall
-    intro n
-    dsimp only [Function.comp_def]
-    have hc := prefixCount_le_of_erasable hm p q hpq herase n
-    have hlog : Real.log (PrefixGrowthEntropy.prefixCount (imageRay h) (n * m) : ℝ) ≤
-        (n : ℝ) * Real.log B + (k + 1 : ℕ) * Real.log (Fintype.card A) := by
-      calc
-        _ ≤ Real.log ((B : ℝ) ^ n * (Fintype.card A : ℝ) ^ (k + 1)) :=
-          Real.log_le_log (hcountpos _) (by exact_mod_cast hc)
-        _ = _ := by
-          rw [Real.log_mul (pow_pos hBpos n).ne' (pow_pos hqpos (k + 1)).ne',
-            Real.log_pow, Real.log_pow]
-    simpa only [Nat.cast_mul] using div_le_div_of_nonneg_right hlog
-      (show (0 : ℝ) ≤ (n : ℝ) * m by positivity)
+  apply le_of_tendsto_of_tendsto (hlim.comp hmul) hrhs
+  apply Filter.Eventually.of_forall
+  intro n
+  dsimp only [Function.comp_def]
+  have hlog : Real.log (f (n * m) : ℝ) ≤ (n : ℝ) * Real.log B + Real.log C := by
+    calc
+      _ ≤ Real.log ((B : ℝ) ^ n * C) := Real.log_le_log (hf _)
+        (by exact_mod_cast hbound n)
+      _ = _ := by
+        rw [Real.log_mul (by positivity) (by positivity), Real.log_pow]
+  simpa only [Nat.cast_mul] using div_le_div_of_nonneg_right hlog
+    (show (0 : ℝ) ≤ (n : ℝ) * m by positivity)
+
+/-- A native finite collision forces a strict loss in the logarithmic growth
+of actual image prefixes. The limiting rate concerns spatial prefixes of
+complete images, rather than temporal entropy of the local-code map. -/
+theorem strict_image_prefix_loss [Finite A] (hq : 2 ≤ Nat.card A)
+    (hnot : ¬ Preinjective h) :
+    ∃ r : ℝ, r < Real.log (Nat.card A : ℝ) ∧
+      Filter.Tendsto
+        (fun n : ℕ => Real.log (PrefixGrowthEntropy.prefixCount (imageRay h) n : ℝ) / n)
+        Filter.atTop (nhds r) := by
+  classical
+  let : Fintype A := Fintype.ofFinite A
+  have hq' : 2 ≤ Fintype.card A := by simpa only [Nat.card_eq_fintype_card] using hq
+  have : Nonempty A := Fintype.card_pos_iff.mp (by omega)
+  obtain ⟨m, hm, p, q, hpq, herase⟩ := exists_erasable_words hnot
+  obtain ⟨r, hlim⟩ := image_prefix_growth (h := h)
+  let B := Fintype.card A ^ m - 1
+  have hpow : 1 < Fintype.card A ^ m := one_lt_pow' (by omega) hm.ne'
+  have hBpos : (0 : ℝ) < B := by
+    dsimp [B]
+    exact_mod_cast (show 0 < Fintype.card A ^ m - 1 by omega)
+  have hle : r ≤ Real.log B / m :=
+    rate_le_of_block_bound (image_count_pos (h := h)) hlim hm
+      (by exact_mod_cast hBpos)
+      (pow_pos (by omega) _) (prefixCount_le_of_erasable hm p q hpq herase)
   have hstrict : Real.log B / (m : ℝ) < Real.log (Fintype.card A) := by
     have hlt : (B : ℝ) < (Fintype.card A : ℝ) ^ m := by
       exact_mod_cast (show B < Fintype.card A ^ m by dsimp [B]; omega)
@@ -397,4 +411,211 @@ theorem strict_image_prefix_loss [Finite A] (hq : 2 ≤ Nat.card A)
       (by simpa only [mul_comm] using hlog)
   exact ⟨r, by simpa only [Nat.card_eq_fintype_card] using hle.trans_lt hstrict, hlim⟩
 
-end D5.S1.Dynamics.Symbolic.GardenOfEdenCollar
+private theorem missing_word_of_not_surjective [Finite A]
+    (hns : ¬ Surjective (code h)) :
+    ∃ m : ℕ, 0 < m ∧ ∃ p : Fin m → A,
+      ∀ (x : ℤ → A) (t : ℤ), (fun j : Fin m => code h x (t + (j : ℕ))) ≠ p := by
+  classical
+  let : TopologicalSpace A := ⊥
+  have : DiscreteTopology A := ⟨rfl⟩
+  have hclosed : IsClosed (range (code h)) := (isCompact_range (continuous_code h)).isClosed
+  obtain ⟨y, hy⟩ : ∃ y : ℤ → A, y ∉ range (code h) := by
+    simpa only [Surjective, mem_range, not_forall] using hns
+  obtain ⟨s, U, hU, hsub⟩ := isOpen_pi_iff.mp hclosed.isOpen_compl y hy
+  obtain ⟨a, ha⟩ := s.finite_toSet.bddBelow
+  obtain ⟨b, hb⟩ := s.finite_toSet.bddAbove
+  let m := (max a b - a + 1).toNat
+  have hm : 0 < m := by dsimp [m]; omega
+  have hlen : (m : ℤ) = max a b - a + 1 := by dsimp [m]; omega
+  let p : Fin m → A := fun j => y (a + (j : ℕ))
+  refine ⟨m, hm, p, ?_⟩
+  intro x t he
+  let x' := SymbolicDynamics.FullShift.shift (t - a) x
+  have hmatch : code h x' ∈ (s : Set ℤ).pi U := by
+    intro i hi
+    have hai : a ≤ i := ha hi
+    have hbi : i ≤ b := hb hi
+    let j : Fin m := ⟨(i - a).toNat, by omega⟩
+    have hj : a + (j : ℕ) = i := by dsimp [j]; omega
+    have heq := congrFun he j
+    change code h x (t + (j : ℕ)) = y (a + (j : ℕ)) at heq
+    have hout : code h x' i = y i := by
+      dsimp [x']
+      rw [code_shift]
+      change code h x (t - a + i) = y i
+      rw [← hj]
+      convert heq using 1
+      congr 1
+      omega
+    rw [hout]
+    exact (hU i hi).2
+  exact (hsub hmatch) ⟨x', rfl⟩
+
+private theorem prefixCount_le_of_missing_word [Fintype A]
+    {m : ℕ} (hm : 0 < m) (p : Fin m → A)
+    (hmissing : ∀ (x : ℤ → A) (t : ℤ),
+      (fun j : Fin m => code h x (t + (j : ℕ))) ≠ p) (n : ℕ) :
+    PrefixGrowthEntropy.prefixCount (imageRay h) (n * m) ≤
+      (Fintype.card A ^ m - 1) ^ n := by
+  classical
+  let B := {w : Fin m → A // w ≠ p}
+  let source (u : ImagePrefix h (n * m)) : ℤ → A := Classical.choose u.property
+  have hsource (u : ImagePrefix h (n * m)) (i : Fin (n * m)) :
+      code h (source u) (i : ℕ) = u.val i :=
+    congrFun (Classical.choose_spec u.property) i
+  let key : ImagePrefix h (n * m) → (Fin n → B) := fun u j =>
+    ⟨fun r => code h (source u) ((j.val * m : ℕ) + (r : ℕ)), hmissing _ _⟩
+  have hkey : Injective key := by
+    intro u v he
+    apply Subtype.ext
+    funext i
+    have hj : i.val / m < n := (Nat.div_lt_iff_lt_mul hm).mpr i.isLt
+    let j : Fin n := ⟨i.val / m, hj⟩
+    let r : Fin m := ⟨i.val % m, Nat.mod_lt _ hm⟩
+    have hr := congrFun (congrArg Subtype.val (congrFun he j)) r
+    have hi : i.val / m * m + i.val % m = i.val := Nat.div_add_mod' i.val m
+    change code h (source u) ((i.val / m * m : ℕ) + (i.val % m : ℕ)) =
+      code h (source v) ((i.val / m * m : ℕ) + (i.val % m : ℕ)) at hr
+    simp only [← Nat.cast_add, hi] at hr
+    exact (hsource u i).symm.trans (hr.trans (hsource v i))
+  have hb : Fintype.card B = Fintype.card A ^ m - 1 := by
+    dsimp only [B]
+    rw [Fintype.card_subtype_compl (fun w : Fin m → A => w = p)]
+    simp
+  rw [prefixCount_eq]
+  have hc := Nat.card_le_card_of_injective key hkey
+  simpa only [Nat.card_eq_fintype_card, Fintype.card_fun, Fintype.card_fin, hb] using hc
+
+private theorem prefixCount_lower_of_preinjective [Fintype A] [Nonempty A]
+    (hpre : Preinjective h) (n : ℕ) :
+    Fintype.card A ^ n ≤ PrefixGrowthEntropy.prefixCount (imageRay h) (n + (k + 1)) := by
+  classical
+  let c : ℤ → A := fun _ => Classical.choice ‹Nonempty A›
+  let lift (w : Fin n → A) := writeWord w (k + 1 : ℕ) c
+  let key : (Fin n → A) → ImagePrefix h (n + (k + 1)) := fun w =>
+    ⟨fun i => code h (lift w) (i : ℕ), lift w, rfl⟩
+  have hkey : Injective key := by
+    intro w v he
+    have hfin : FiniteDifference (lift w) (lift v) := by
+      apply (finite_Ico (k + 1 : ℤ) ((k + 1 : ℤ) + n)).subset
+      intro i hi
+      by_contra hout
+      apply hi
+      dsimp [lift, writeWord]
+      rw [dite_eq_right (by simpa only [mem_Ico, Nat.cast_add, Nat.cast_one] using hout),
+        dite_eq_right (by simpa only [mem_Ico, Nat.cast_add, Nat.cast_one] using hout)]
+    have hcode : code h (lift w) = code h (lift v) := by
+      funext i
+      by_cases hi : 0 ≤ i ∧ i < n + (k + 1 : ℕ)
+      · let j : Fin (n + (k + 1)) := ⟨i.toNat, by omega⟩
+        have hj := congrFun (congrArg Subtype.val he) j
+        simpa only [key, j, Int.natCast_toNat_eq_self.mpr hi.1] using hj
+      · apply congrArg h
+        funext j
+        have hj := j.isLt
+        change writeWord w (k + 1 : ℕ) c (i + (j : ℕ)) =
+          writeWord v (k + 1 : ℕ) c (i + (j : ℕ))
+        dsimp only [writeWord]
+        rw [dite_eq_right (by omega), dite_eq_right (by omega)]
+    have hinput := hpre hfin hcode
+    funext j
+    have hj := congrFun hinput ((k + 1 : ℕ) + (j : ℕ))
+    simpa only [lift, writeWord_at] using hj
+  rw [prefixCount_eq]
+  have hc := Nat.card_le_card_of_injective key hkey
+  simpa only [Nat.card_eq_fintype_card, Fintype.card_fun, Fintype.card_fin] using hc
+
+private theorem prefixCount_full [Fintype A] [Nonempty A]
+    (hsurj : Surjective (code h)) (n : ℕ) :
+    PrefixGrowthEntropy.prefixCount (imageRay h) n = Fintype.card A ^ n := by
+  classical
+  have hfull : ImagePrefix h n = univ := by
+    apply eq_univ_of_forall
+    intro w
+    let c : ℤ → A := fun _ => Classical.choice ‹Nonempty A›
+    obtain ⟨x, hx⟩ := hsurj (writeWord w 0 c)
+    refine ⟨x, ?_⟩
+    funext i
+    have hi := writeWord_at w 0 c i
+    simpa only [hx, zero_add] using hi
+  rw [prefixCount_eq, hfull, Nat.card_univ]
+  simp only [Nat.card_eq_fintype_card, Fintype.card_fun, Fintype.card_fin]
+
+private theorem rate_ge_of_preinjective [Fintype A] [Nonempty A]
+    (hpre : Preinjective h) {r : ℝ}
+    (hlim : Filter.Tendsto
+      (fun n : ℕ => Real.log (PrefixGrowthEntropy.prefixCount (imageRay h) n : ℝ) / n)
+      Filter.atTop (nhds r)) : Real.log (Fintype.card A) ≤ r := by
+  have hqpos : (0 : ℝ) < Fintype.card A := by exact_mod_cast Fintype.card_pos
+  have hlower : Filter.Tendsto
+      (fun n : ℕ => (n : ℝ) * Real.log (Fintype.card A) / (n + (k + 1 : ℕ)))
+      Filter.atTop (nhds (Real.log (Fintype.card A))) := by
+    simpa only [zero_add, mul_one, one_mul, div_one, mul_comm, add_comm] using
+      (tendsto_add_mul_div_add_mul_atTop_nhds 0 ((k + 1 : ℕ) : ℝ)
+        (Real.log (Fintype.card A)) (d := (1 : ℝ)) one_ne_zero)
+  apply le_of_tendsto_of_tendsto hlower (hlim.comp (Filter.tendsto_add_atTop_nat (k + 1)))
+  apply Filter.Eventually.of_forall
+  intro n
+  have hc := prefixCount_lower_of_preinjective hpre n
+  have hlog : (n : ℝ) * Real.log (Fintype.card A) ≤
+      Real.log (PrefixGrowthEntropy.prefixCount (imageRay h) (n + (k + 1)) : ℝ) := by
+    calc
+      _ = Real.log ((Fintype.card A : ℝ) ^ n) := (Real.log_pow _ _).symm
+      _ ≤ _ := Real.log_le_log (pow_pos hqpos _) (by exact_mod_cast hc)
+  simpa only [Function.comp_def, Nat.cast_add] using
+    div_le_div_of_nonneg_right hlog (show (0 : ℝ) ≤ n + (k + 1 : ℕ) by positivity)
+
+/-- The Moore–Myhill Garden-of-Eden theorem for arbitrary finite-alphabet
+two-sided local rules, using the original native surjectivity and
+finite-difference preinjectivity predicates. Empty and singleton alphabets
+are included. -/
+theorem garden_of_eden [Finite A] (k : ℕ) (h : (Fin (k + 2) → A) → A) :
+    Surjective (code h) ↔ Preinjective h := by
+  classical
+  by_cases hA : Subsingleton A
+  · have : Subsingleton A := hA
+    constructor
+    · intro _ x y _ _
+      exact Subsingleton.elim x y
+    · intro _ y
+      exact ⟨y, Subsingleton.elim _ _⟩
+  have : Nontrivial A := not_subsingleton_iff_nontrivial.mp hA
+  let : Fintype A := Fintype.ofFinite A
+  have hq : 2 ≤ Fintype.card A := Fintype.one_lt_card_iff_nontrivial.mpr inferInstance
+  have hqNat : 2 ≤ Nat.card A := by simpa only [Nat.card_eq_fintype_card] using hq
+  constructor
+  · intro hsurj
+    by_contra hnot
+    obtain ⟨r, hr, hlim⟩ := strict_image_prefix_loss hqNat hnot
+    have hfull : Filter.Tendsto
+        (fun n : ℕ => Real.log (PrefixGrowthEntropy.prefixCount (imageRay h) n : ℝ) / n)
+        Filter.atTop (nhds (Real.log (Fintype.card A))) := by
+      refine (tendsto_const_nhds : Filter.Tendsto
+        (fun _ : ℕ => Real.log (Fintype.card A)) Filter.atTop _).congr' ?_
+      filter_upwards [Filter.eventually_ge_atTop 1] with n hn
+      rw [prefixCount_full hsurj, Nat.cast_pow, Real.log_pow]
+      exact (mul_div_cancel_left₀ (Real.log (Fintype.card A))
+        (by exact_mod_cast (show n ≠ 0 by omega))).symm
+    have he := tendsto_nhds_unique hlim hfull
+    exact (ne_of_lt (by simpa only [Nat.card_eq_fintype_card] using hr)) he
+  · intro hpre
+    by_contra hns
+    obtain ⟨m, hm, p, hmissing⟩ := missing_word_of_not_surjective hns
+    obtain ⟨r, hlim⟩ := image_prefix_growth (h := h)
+    have hlower := rate_ge_of_preinjective hpre hlim
+    let B := Fintype.card A ^ m - 1
+    have hpow : 1 < Fintype.card A ^ m := one_lt_pow' (by omega) hm.ne'
+    have hBpos : 0 < B := by dsimp [B]; omega
+    have hupper : r ≤ Real.log B / m :=
+      rate_le_of_block_bound (image_count_pos (h := h)) hlim hm hBpos (by norm_num : 0 < 1)
+        (fun n => by simpa only [mul_one] using prefixCount_le_of_missing_word hm p hmissing n)
+    have hlt : (B : ℝ) < (Fintype.card A : ℝ) ^ m := by
+      exact_mod_cast (show B < Fintype.card A ^ m by dsimp [B]; omega)
+    have hlog := Real.log_lt_log (by exact_mod_cast hBpos) hlt
+    rw [Real.log_pow] at hlog
+    have hstrict : Real.log B / (m : ℝ) < Real.log (Fintype.card A) :=
+      (div_lt_iff₀ (by exact_mod_cast hm : (0 : ℝ) < m)).mpr
+        (by simpa only [mul_comm] using hlog)
+    exact (not_lt_of_ge hlower) (hupper.trans_lt hstrict)
+
+end D5.S1.Dynamics.Symbolic.GardenOfEden
