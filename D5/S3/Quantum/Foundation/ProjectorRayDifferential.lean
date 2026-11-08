@@ -38,13 +38,13 @@ open D5.S3.QuantumBounds.FubiniStudyRecordTime (fsAngle)
 variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℂ E]
 
 /-- The component orthogonal to the unit amplitude's complex line. -/
-def horizontal (ψ z : E) : E := z - inner ℂ ψ z • ψ
+def horizontal (ψ z : E) : E := z - InnerProductSpace.rankOne ℂ ψ ψ z
 
 private theorem horizontal_norm_sq (ψ z : E) (hψ : ‖ψ‖ = 1) :
     ‖horizontal ψ z‖ ^ 2 = ‖z‖ ^ 2 - ‖inner ℂ ψ z‖ ^ 2 := by
-  rw [horizontal, norm_sub_sq]
+  rw [horizontal, InnerProductSpace.rankOne_apply, norm_sub_sq]
   simp only [norm_smul, hψ, mul_one, inner_smul_right]
-  rw [← inner_conj_symm ψ z]
+  rw [← inner_conj_symm z ψ]
   simp only [Complex.mul_conj, Complex.ofReal_re]
   rw [Complex.normSq_eq_norm_sq]
   ring
@@ -54,7 +54,9 @@ private theorem fs_angle_eq_arcsin_horizontal (ψ z : E)
     fsAngle ψ z = Real.arcsin ‖horizontal ψ z‖ := by
   rw [fsAngle, Real.arccos_eq_arcsin (norm_nonneg _)]
   congr 1
-  rw [← horizontal_norm_sq ψ z hψ, hz, one_pow, Real.sqrt_sq (norm_nonneg _)]
+  have he := horizontal_norm_sq ψ z hψ
+  rw [hz, one_pow] at he
+  rw [← he, Real.sqrt_sq (norm_nonneg _)]
 
 /-- The metric speed of a differentiable unit-amplitude curve, measured by the
 original Fubini-Study angle. No gauge choice for the curve is required. -/
