@@ -17,6 +17,50 @@ internal sealed class BrownianFourthKernelDocument : IScribeDocumentDefinition
                 + "min(s0,s1)min(s2,s3), min(s0,s2)min(s1,s3), and "
                 + "min(s0,s3)min(s1,s2).")),
             Describe.Lean(
+                DescribeId.Create("pair-kernel"),
+                DeclarationHandle.Create(Prefix + "pairKernel"),
+                H("Profile-weighted Brownian pair"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For a real profile g and two coordinates s0,s1, pairKernel "
+                    + "is g(s0)g(s1)min(s0,s1), the profile-weighted Brownian "
+                    + "covariance kernel."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("pair-kernel-integrable"),
+                DeclarationHandle.Create(Prefix + "pairKernel_integrable"),
+                H("Integrability of a profile pair"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For every measurable integrable real profile g on the unit interval, "
+                    + "g(s)g(t)min(s,t) is integrable on the unit square."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("integral-pair-kernel"),
+                DeclarationHandle.Create(Prefix + "integral_pairKernel"),
+                H("Integral of a profile pair"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For every measurable integrable real profile g on the unit interval, "
+                    + "the integral of g(s)g(t)min(s,t) over the unit square equals Q(g)."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("pair-product-integrable-and-integral"),
+                DeclarationHandle.Create(Prefix + "pair_product_integrable_and_integral"),
+                H("Factorization over disjoint coordinate pairs"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "Let F and H be integrable real functions on the unit square, "
+                    + "and let e be any permutation of the four coordinates. "
+                    + "The function F(s(e(0)),s(e(1)))H(s(e(2)),s(e(3))) is integrable "
+                    + "on the unit four-cube, and its integral is the product "
+                    + "of the integrals of F and H."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("brownian-w4-integral"),
                 DeclarationHandle.Create(Prefix + "brownianW4_integral"),
                 H("Integral of the fourth Brownian kernel"),
@@ -40,11 +84,9 @@ internal sealed class BrownianFourthKernelDocument : IScribeDocumentDefinition
                 Blocks(Paragraph(Text(
                     "For every kappa>0, the ratio "
                     + "3*kappa*(2^(2*kappa)-1)*log(2)/(2*(2^kappa-1)^2) "
-                    + "is strictly greater than three. Put a=kappa*log(2)>0. "
-                    + "Factoring exp(2a)-1 reduces the assertion to "
-                    + "2(exp(a)-1)<a(exp(a)+1). The difference on the right "
-                    + "minus the left vanishes at zero and has derivative "
-                    + "1+(a-1)exp(a)>0; the strict tangent-line inequality "
-                    + "1-a<exp(-a) proves this derivative bound."))),
+                    + "is strictly greater than three. For U with density du/(u*log(2)) "
+                    + "on [1,2], strict positive covariance of the positive powers "
+                    + "U^kappa and U^kappa gives E[U^(2*kappa)]>E[U^kappa]^2. "
+                    + "Evaluating these power moments gives the displayed ratio."))),
                 DescribeRole.Theorem))));
 }

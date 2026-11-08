@@ -65,6 +65,27 @@ def MomentInterface
         (fun X : ℝ => dyadicMixedMoment E θ X k s)
         atTop (𝓝 (M s))
 
+/-- A mixed increment moment with one exponent for each factor. -/
+def jointDyadicMixedMoment {k : ℕ} (E : ℝ → ℝ) (e : Fin k → ℝ)
+    (X : ℝ) (s : Fin k → ℝ) : ℝ :=
+  ∫ x, dyadicU X x ^ (∑ i, dyadicR (e i)) *
+    ∏ i, dyadicB E (e i) (s i) x ∂dyadicProbabilityMeasure X
+
+/-- Uniform absolute moments and joint mixed-moment limits on the unit cube. -/
+def JointMomentInterface {k : ℕ} (E : ℝ → ℝ) (e : Fin k → ℝ)
+    (M : (Fin k → ℝ) → ℝ) : Prop :=
+  (∃ C : ℝ, 0 ≤ C ∧ ∀ᶠ X : ℝ in atTop,
+    ∀ i : Fin k, ∀ s ∈ Icc (0 : ℝ) 1,
+      (∫ x, |dyadicB E (e i) s x| ^ k ∂dyadicProbabilityMeasure X) ≤ C) ∧
+  ∀ s : Fin k → ℝ, (∀ i, s i ∈ Icc (0 : ℝ) 1) →
+    Tendsto (fun X : ℝ => jointDyadicMixedMoment E e X s) atTop (𝓝 (M s))
+
+/-- A mixed moment of two normalized profile responses. -/
+def jointZMoment (E : ℝ → ℝ) (a b : ℝ) (g₁ g₂ : ℝ → ℝ)
+    (p q : ℕ) (X : ℝ) : ℝ :=
+  ∫ x, dyadicZ E a g₁ X x ^ p * dyadicZ E b g₂ X x ^ q
+    ∂dyadicProbabilityMeasure X
+
 /-- The sum of the three pairings of the Brownian covariance kernel. -/
 def brownianW4 (s : Fin 4 → ℝ) : ℝ :=
   min (s 0) (s 1) * min (s 2) (s 3) +
