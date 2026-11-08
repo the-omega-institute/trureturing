@@ -13,6 +13,9 @@ import Mathlib.LinearAlgebra.Dimension.Constructions
 import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
 import Mathlib.LinearAlgebra.FreeModule.Finite.Matrix
 
+/-! The classical finite Galois skew-group algebra acts as the full endomorphism algebra.
+Artin independence recovers coefficients; the Galois degree computes both dimensions. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -51,7 +54,7 @@ private theorem skewAction_eq_linearCombination (s : SkewMonoidAlgebra L G) :
   rfl
 
 private theorem skewAction_injective : Function.Injective (skewAction K L G) := by
-  letI : FaithfulSMul G L := IsGaloisGroup.faithful K
+  let : FaithfulSMul G L := IsGaloisGroup.faithful K
   have independent : LinearIndependent L
       (fun g : G => (MulSemiringAction.toAlgHom K L g).toLinearMap) :=
     (linearIndependent_algHom_toLinearMap K L L).comp
@@ -76,13 +79,16 @@ def equiv [Finite G] : SkewMonoidAlgebra L G ≃ₐ[K] Module.End K L := by
       Module.finrank K (Module.End K L) := by
     calc
       _ = Module.finrank K (G →₀ L) := coefficients.finrank_eq
-      _ = Fintype.card G * Module.finrank K L := Module.finrank_finsupp
+      _ = Fintype.card G * Module.finrank K L := by
+        rw [Module.finrank, Module.finrank, rank_finsupp, ← Cardinal.mk_toNat_eq_card,
+          Cardinal.toNat_mul, Cardinal.toNat_lift, Cardinal.toNat_lift]
       _ = Module.finrank K L * Module.finrank K L := by rw [card_degree]
       _ = Module.finrank K (Module.End K L) :=
         (Module.finrank_linearMap K K L L).symm
   exact AlgEquiv.ofBijective (skewAction K L G)
     ⟨skewAction_injective K L G,
-      (LinearMap.injective_iff_surjective_of_finrank_eq_finrank dimensions).mp
+      (LinearMap.injective_iff_surjective_of_finrank_eq_finrank dimensions
+        (f := (skewAction K L G).toLinearMap)).mp
         (skewAction_injective K L G)⟩
 
 /-- The canonical algebra equivalence retains the prescribed action of each single term. -/
