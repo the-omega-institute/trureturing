@@ -1587,3 +1587,393 @@ $$
 这些结论的实端目标严格采用定义 12.1 的圆距离，有限端严格采用式 (13.1) 的实际形式子群，增长速度和 $\gamma<1/4$ 是本节所证的充分安排。它们不提供任意更快增长安排或一般移动目标的结论，也不估计表示与检验返回整数的计算成本。结果不包含 $\mathsf H_{\mathbb Z/\mathbb Q}$ 的完整表示与双向证明，不包含 Born 规则或量子理论的重建。
 
 ## 追加锚（本行以下为增补区）
+
+## 14. 实际共轭点的全部相容目标、统一命中与完全显式起点
+
+**定义 14.1（共同整数目标与自身阶段）。** 全部算术数据、正实根、指定实嵌入、圆坐标 $\theta$、极小整模型、同构 $\iota_v$、形式子群 $U_v(r)$ 及函数 $h,\rho$ 严格沿用定义 11.1、12.1、13.1。特别地，有限位取数域 $F$ 的全部有限位，实端只取已指定的嵌入。置
+
+$$
+\widehat{\mathbb Z}=\varprojlim_{m\ge1}\mathbb Z/m\mathbb Z,
+\qquad
+\mathcal K_f=\prod_{v\text{ 有限}}E_0(F_v)^2,
+\qquad
+\nu(n)=\bigl(([n]P_1,[n]P_2)\bigr)_v.
+\tag{14.1}
+$$
+
+逆极限的指标按整除排序；$\mathcal K_f$ 用普通乘积拓扑，每个因子的单位元均为 $O$，全体单位元记为 $\boldsymbol O$。这里不使用受限乘积拓扑。整数按其全部相容剩余类嵌入 $\widehat{\mathbb Z}$，$u\equiv a\pmod m$ 表示其模 $m$ 坐标为 $a$。经典 profinite CRT 给出
+
+$$
+a+m\widehat{\mathbb Z}
+=\{u\in\widehat{\mathbb Z}:u\equiv a\pmod m\}.
+\tag{14.2}
+$$
+
+对 $u\in\widehat{\mathbb Z}$、有限位 $v$ 和 $j=1,2$，令 $b_{v,j,r}$ 为 $u$ 模 $d_{v,j}(r)$ 的任意整数代表，定义
+
+$$
+\{\eta_{v,j}(u)\}
+=\bigcap_{r\ge1}\bigl([b_{v,j,r}]P_j+U_v(r)\bigr),
+\qquad
+\eta(u)=\bigl((\eta_{v,1}(u),\eta_{v,2}(u))\bigr)_v,
+\qquad H=\eta(\widehat{\mathbb Z}).
+\tag{14.3}
+$$
+
+交集的非空性、唯一性及代表无关性在下述定理的证明中给出。对正整数 $t$ 定义阶段商与其指定元素
+
+$$
+\begin{aligned}
+G_t&=\prod_{\substack{p\le h(t),\ v\mid p\\j=1,2}}
+ E_0(F_v)/U_v(h(t)),\\
+g_t&=(P_j+U_v(h(t)))_{p,v,j},\qquad
+C_t=\langle g_t\rangle\le G_t.
+\end{aligned}
+\tag{14.4}
+$$
+
+记 $\pi_t:\mathcal K_f\to G_t$ 为自然投影。$C_t$ 的阶为式 (13.3) 的 $D_t$。对固定整数 $M\ge1$、$a\in\mathbb Z$、$0<\gamma<1/4$、$u\in\widehat{\mathbb Z}$ 和 $z=(z_1,z_2)\in\mathbb T^2$，定义
+
+$$
+\begin{split}
+\mathcal S(u,z;a,M,\gamma)=\{n\in\mathbb Z_{\ge1}:\
+&n\equiv a\pmod M,\qquad
+\|\theta([n]P_j)-z_j\|_{\mathbb T}<\rho(n)\quad(j=1,2),\\
+&[n]P_j-\eta_{v,j}(u)\in U_v(h(n))
+\quad(p\le h(n),\ v\mid p,\ j=1,2)\}.
+\end{split}
+\tag{14.5}
+$$
+
+所有条件都由同一个正整数 $n$ 承担。目标 $u,z$ 在计数时固定，$h(n),\rho(n)$ 则取该整数自身的阶段。
+
+**定理 14.2（全部相容目标上的实际数据定量综合）。** 对定义 14.1 的固定数据，$\eta$ 是延拓 $\nu$ 的唯一连续群同态，且为单射及到 $H$ 的拓扑群同构。有限端的准确目标空间为
+
+$$
+H=\overline{\nu(\mathbb Z)}
+=\{y\in\mathcal K_f:\pi_t(y)\in C_t\text{ 对每个 }t\ge1\}.
+\tag{14.6}
+$$
+
+这里“目标”指整数轨道的极限目标。对每个整数 $N\ge1$，指定实两圆和全部有限端的联合正尾闭包满足
+
+$$
+\begin{aligned}
+\overline{\{(n\alpha,\nu(n)):n\ge N\}}
+ &=\mathbb T^2\times H,\\
+\overline{\{(n\alpha,\nu(n)):n\ge N,\ n\equiv a\pmod M\}}
+ &=\mathbb T^2\times\eta(a+M\widehat{\mathbb Z}).
+\end{aligned}
+\tag{14.7}
+$$
+
+第一行的紧群，其单位连通分支是 $\mathbb T^2\times\{\boldsymbol O\}$，分量群拓扑同构于 $\widehat{\mathbb Z}$。有限阶段的准确相容条件为
+
+$$
+\begin{split}
+\exists n\in\mathbb Z:\quad n\equiv a\pmod M,
+\quad\pi_t(\nu(n))=\pi_t(\eta(u))
+\quad\Longleftrightarrow\quad
+u\equiv a\pmod{\gcd(M,D_t)}.
+\end{split}
+\tag{14.8}
+$$
+
+相容时，解为模 $q(h(t),h(t);M)=\operatorname{lcm}(M,D_t)$ 的唯一类，有任意大的正整数解。不相容的完整目标，即 $u\not\equiv a\pmod M$，只允许有限多个自身阶段的成功整数。
+
+局部初始常数和共同周期有完全数值的上界
+
+$$
+A_2\le2^{40},\qquad
+q(h,h;M)\le M\exp(32h^2)\quad(h\in\mathbb Z,\ h\ge2).
+\tag{14.9}
+$$
+
+取
+
+$$
+s=\tfrac12-2\gamma>0,\qquad m=\log M,\qquad
+T=\left(\frac{1024}{s}\right)^3+\frac{16m}{s}+16,
+\qquad
+X_0(M,\gamma)=\left\lceil\exp(\exp T)\right\rceil.
+\tag{14.10}
+$$
+
+则对每个 $u\equiv a\pmod M$、每个 $z\in\mathbb T^2$ 和每个整数 $X\ge X_0(M,\gamma)$，同时有
+
+$$
+\begin{aligned}
+\#\bigl(\mathcal S(u,z;a,M,\gamma)\cap(X,2X]\bigr)
+&\ge\frac{X\rho(2X)^2}{4q(h(2X),h(2X);M)}\\
+&\ge\frac{X}{4M\exp(32h(2X)^2)(\log(2X+2))^{2\gamma}}.
+\end{aligned}
+\tag{14.11}
+$$
+
+对每个 $\varepsilon>0$，存在仅依赖 $M,\gamma,\varepsilon$ 的整数 $X_\varepsilon$，使对所有上述相容 $u,a$、所有 $z$ 和所有整数 $X\ge X_\varepsilon$ 有
+
+$$
+\#\bigl(\mathcal S(u,z;a,M,\gamma)\cap(X,2X]\bigr)
+\ge\frac{X}{(\log X)^{2\gamma+\varepsilon}}.
+\tag{14.12}
+$$
+
+这些计数界的起点不依赖目标；允许不同目标使用不同的见证整数。
+
+逆极限与 CRT 在这里是经典中间结构；其拓扑事实可参见 Stacks Project，[Definition 5.22.1、Lemma 5.22.2，tag 08ZW](https://stacks.math.columbia.edu/tag/08ZW)。实际点及其非挠性、整数模挠独立性的来源仍为 Brox，[固定源码 “The quadratic-field elliptic curve” 及 `lem:independent`](https://github.com/JoseBrox/diophantine-z-q_improvements/blob/61b82ccacfbefdff3d6e7cf986d6e6279afa1372/papers/trace_heights/aggregate_trace_height_20261108_v9.tex)。Glazer 的[固定源码 `v5:real-progression-bridge`](https://github.com/elliotglazer/diophantine-z-q/blob/9c0b3aba60d90fdcac82115f0582a6f52f1054f7/manuscripts/quartic_v13.tex)已给出先于后续同余模数选取的定性实安全界；本定理不以该定性结论或其完整算术构造为新增结果。本条在 §§11–13 上增加的综合是实际数据的全部相容目标、目标一致的自身阶段计数，以及式 (14.9)–(14.11) 中不含未求值局部常数的包络和起点；不主张文献优先权。
+
+**证明（共同有限目标的构造）。** 式 (13.10) 的整除嵌套保证 $d_{v,j}(r)\mid d_{v,j}(r+1)$。若改变 $b_{v,j,r}$ 的代表，所加的整数倍恰使 $[b_{v,j,r}]P_j+U_v(r)$ 不变；不同深度的这些非空陪集也相互嵌套。$E_0(F_v)$ 紧，$U_v(r)$ 是开闭子群，故陪集是紧闭集，其交集非空。由于 $U_v(r)$ 是 $O$ 的邻域基且交为 $\{O\}$，交集至多含一个点。这证明式 (14.3) 良定义。
+
+对每个 $v,j,r$，$\eta_{v,j}(u)$ 模 $U_v(r)$ 的值恰为
+
+$$
+[u\bmod d_{v,j}(r)]P_j+U_v(r).
+\tag{14.13}
+$$
+
+此有限商上的映射是连续群同态。子群 $U_v(r)$ 构成邻域基，故 $\eta_{v,j}$ 连续；式 (14.13) 对所有深度成立又保证加法相容，因此 $\eta$ 是到普通乘积的连续群同态。整数 $n$ 的各坐标交集含 $[n]P_j$，所以 $\eta(n)=\nu(n)$。
+
+阶段元 $g_t$ 的阶是其坐标阶的最小公倍数，恰为 $D_t$。于是
+
+$$
+\pi_t(\eta(u))=(u\bmod D_t)g_t,\qquad
+\ker(\pi_t\circ\eta)=D_t\widehat{\mathbb Z}.
+\tag{14.14}
+$$
+
+定理 13.5 表明：每个正整数 $b$ 最终整除 $D_t$，并且 $D_t\mid D_{t'}$ 当 $t\le t'$。因此这些阶段周期在全部模数中关于整除关系共尾。若 $\eta(u)=\boldsymbol O$，式 (14.14) 给出 $u\equiv0\pmod{D_t}$ 对所有 $t$ 成立，继而 $u\equiv0\pmod b$ 对每个 $b$ 成立，即 $u=0$。故 $\eta$ 单射。
+
+整数在 $\widehat{\mathbb Z}$ 中稠密：一个基本开条件只规定有限多个相容剩余类，归并到这些模数的最小公倍数后可取一个整数代表。$\widehat{\mathbb Z}$ 是有限离散群的逆极限，因而紧 Hausdorff。连续映射 $\eta$ 的像紧且在 Hausdorff 群 $\mathcal K_f$ 中闭，整数的稠密性遂给出 $H=\overline{\nu(\mathbb Z)}$。两个连续延拓若在整数上相同，则在稠密性和 Hausdorff 性下处处相同；这给出唯一性。紧空间到 Hausdorff 空间的连续单射是到其像的同胚，故 $\eta$ 的逆映射也连续。
+
+还可直接从有限阶段检验一个候选 $y\in\mathcal K_f$。若 $\pi_t(y)\in C_t$ 对所有 $t$ 成立，令 $b_t\pmod{D_t}$ 为使 $\pi_t(y)=b_tg_t$ 的唯一剩余类。阶段之间的自然商映射给出
+
+$$
+b_{t'}\equiv b_t\pmod{D_t}\qquad(t\le t').
+\tag{14.15}
+$$
+
+共尾性把这组剩余类唯一补成 $u\in\widehat{\mathbb Z}$：对任意模数 $b$，选 $b\mid D_t$，取 $b_t$ 的模 $b$ 像即可，嵌套性保证选择无关。于是 $y$ 和 $\eta(u)$ 在所有阶段商中相同。每个有限位和每个固定深度最终进入这些商，故各坐标之差属于所有 $U_v(r)$，从而 $y=\eta(u)$。反向包含由式 (14.14) 直接成立，证明式 (14.6)。
+
+等价的 gcd-CRT 检验还能解释哪些看似独立的局部要求实际上相容。对有限多个三元组 $i=(v,j,r)$，先要求给定目标在商 $E_0(F_v)/U_v(r)$ 中属于 $P_j$ 生成的循环子群，再将其唯一写成 $b_iP_j$，其中 $b_i$ 只在模 $d_i=d_{v,j}(r)$ 下确定。共同整数存在的充要条件是
+
+$$
+b_i\equiv b_{i'}\pmod{\gcd(d_i,d_{i'})}\quad\text{对所有 }i,i'\text{ 成立}.
+\tag{14.16}
+$$
+
+这是一般整数 CRT：将各模数分解成素数幂，同一素数处只须较小幂上的剩余类一致，再用互素 CRT 合并；解是模 $\operatorname{lcm}_i d_i$ 的唯一类。加入 $n\equiv a\pmod M$ 时，把 $(M,a)$ 作为另一项即可。对一个完整阶段，所有局部要求已经合成模 $D_t$ 的类 $u\bmod D_t$，所以加入 $M,a$ 后的充要条件正是式 (14.8)。任意独立指定的局部点即使分别落在各自的循环闭包中，也仍须通过这些共同剩余类检验。
+
+若 $u\not\equiv a\pmod M$，由定理 13.5 取 $t_0$ 使 $M\mid D_t$ 对所有 $t\ge t_0$ 成立。此时式 (14.8) 必不相容。一个自身阶段成功整数 $n\ge t_0$ 会在 $t=n$ 时满足该式左侧，矛盾。因此至多 $n<t_0$ 能成功。这没有求出 $t_0$ 的数值。
+
+**证明（消去局部初始常数）。** 对 $v\mid2$，仍用定义 13.1 中已固定的极小整广义 Weierstrass 模型 $\mathcal E_v$，不另换子群。为避免与曲线名 $E_0$ 混淆，记 $\mathcal E_{v,0}(F_v)$ 为非奇异约化点的逆像，$\mathcal E_{v,1}(F_v)$ 为约化至单位元的点群。Silverman，*The Arithmetic of Elliptic Curves* 第二版，[VII 的章首假设、VII.2.1–2.2 及 VII.6.1（印刷页 200）](https://www.math.ens.psl.eu/~obenoist/refs/Silverman.pdf)适用于这里：$F_v$ 是特征零的完备离散赋值域，其剩余域有限且完美。所引 VII.6.1 的结论是，分裂乘法约化时分量群阶为 $-\operatorname{ord}_v(j)$，其余情形阶至多 $4$；该定理没有剩余特征至少 $5$ 的假设。相关形式群和约化记号按作者[印刷页 122–124、188–191 的勘误](https://www.math.brown.edu/johsilve/AEC/AECErrata.pdf)理解。
+
+实际曲线的 $j$ 不变量是 $1728$，在每个 $F_v$ 上均整。若一个极小整模型有乘法约化，VII.5.1 给出 $\operatorname{ord}_v(\Delta)>0$、$\operatorname{ord}_v(c_4)=0$，于是 $j=c_4^3/\Delta$ 有负赋值，与此整性矛盾。因此尤其排除了 VII.6.1 的分裂乘法例外，且
+
+$$
+c_v=[\mathcal E_v(F_v):\mathcal E_{v,0}(F_v)]\le4.
+\tag{14.17}
+$$
+
+由 VII.2.1 的约化正合列、VII.2.2 的形式群识别以及原来固定的 $\iota_v$，有
+
+$$
+\begin{aligned}
+\mathcal E_{v,0}(F_v)/\mathcal E_{v,1}(F_v)
+ &\simeq\widetilde{\mathcal E}_{v,\mathrm{ns}}(k_v),\\
+G_v^\circ:=\#(E_0(F_v)/U_v(1))
+ &=c_v\,\#\widetilde{\mathcal E}_{v,\mathrm{ns}}(k_v).
+\end{aligned}
+\tag{14.18}
+$$
+
+符号 $G_v^\circ$ 在这里仅是有限群阶的整数记号，不表示连通分支。约化后的广义方程仍是
+
+$$
+y^2+\bar a_1xy+\bar a_3y
+=x^3+\bar a_2x^2+\bar a_4x+\bar a_6.
+$$
+
+对每个 $x\in k_v$，这是关于 $y$ 的首一二次多项式，至多有两个根；这在特征 $2$ 及不可分情形也成立。再加唯一的无穷远点，所有约化点至多 $2\#k_v+1$，非奇异点更不超过此数。因此即使存在 wild 分歧或加法约化，也有
+
+$$
+G_v^\circ\le4(2\cdot2^{f_v}+1)\le2^{f_v+4}.
+\tag{14.19}
+$$
+
+两个点的 $d_{v,j}(1)$ 均整除同一个真实商群阶 $G_v^\circ$。因此
+
+$$
+A_2\mid\prod_{v\mid2}G_v^\circ,
+\qquad
+A_2\le\prod_{v\mid2}G_v^\circ
+\le2^{\sum_{v\mid2}f_v+4\#\{v:v\mid2\}}
+\le2^{40},
+\tag{14.20}
+$$
+
+最后使用 $\sum_{v\mid2}e_vf_v=d_F\le8$、$e_v,f_v\ge1$。这里仅第一式是整除式；$A_2\le2^{40}$ 是数值不等式，没有断言 $A_2\mid2^{40}$。同样，数值上界 $2^{f_v+4}$ 不被当作群阶的倍数。
+
+深度增加仍完全复用式 (13.9)–(13.10) 的整系数乘法级数，故式 (13.5) 的共享周期整除式无需改变。将 $A_2$ 的数值上界用于式 (13.7)，并用
+
+$$
+\log2<\tfrac7{10},\qquad
+c_0=28+17\log2<40,
+$$
+
+得到对整数 $h\ge2$ 有
+
+$$
+\log q(h,h;M)
+<\log M+4h^2+40h+28
+\le\log M+32h^2.
+\tag{14.21}
+$$
+
+第一条对数估计可由 $\exp(7/10)>1+7/10+(7/10)^2/2+(7/10)^3/6>2$ 得到；最后一个不等式来自
+
+$$
+28h^2-40h-28=28(h-2)^2+72(h-2)+4\ge0.
+$$
+
+这证明式 (14.9)，无需计算实际局部阶，也未对特征 $2$ 的模型作短方程假设。
+
+**证明（完全显式的共同起点）。** 固定整数 $X\ge X_0(M,\gamma)$，置
+
+$$
+t=\log\log X,\qquad H_X=h(2X),\qquad
+R=\rho(2X),\qquad Q_X=M\exp(32H_X^2).
+\tag{14.22}
+$$
+
+这里 $t\ge T$，特别地 $t\ge16$、$st\ge16$、$m\le st/16$、$t^{1/3}\ge1024/s$。其中 $st\ge16$ 由 $t\ge(1024/s)^3$ 和 $0<s<1/2$ 即得。$X\ge16$ 时，$2X+16\le3X$ 且 $\log(3X)\le2\log X$，故
+
+$$
+\log\log(2X+16)\le t+\log2<t+1,
+\qquad H_X^2\le(t+1)^{2/3}\le2t^{2/3}.
+\tag{14.23}
+$$
+
+最大值中的常数 $2$ 不妨碍该界，因为 $(t+1)^{1/3}>2$。因此
+
+$$
+\log Q_X=m+32H_X^2
+\le m+64t^{2/3}
+\le\frac{st}{16}+\frac{st}{16}
+=\frac{st}{8}.
+\tag{14.24}
+$$
+
+由 $s<1/2$、$t\ge16$，有 $\log(4Q_X)\le2+st/8\le t$，也有 $\log(2Q_X)\le t$。又 $e^t\ge2t$，故
+
+$$
+X\ge4Q_X,\qquad
+\log\frac{X}{2Q_X}\ge e^t-t\ge\tfrac12e^t.
+\tag{14.25}
+$$
+
+对 $X\ge3$，$\log(2X+2)\le2\log X=2e^t$，而 $4\gamma=1-2s$，所以
+
+$$
+\begin{aligned}
+2^{16}Q_X^2R^{-4}
+&\le2^{16+4\gamma}\exp\bigl((s/4+4\gamma)t\bigr)\\
+&\le2^{17}\exp\bigl((1-7s/4)t\bigr)
+\le\tfrac12e^t.
+\end{aligned}
+\tag{14.26}
+$$
+
+末步成立是因为 $7st/4\ge28>18\log2$。结合式 (14.25) 得到无需任何未知常数的充分不等式
+
+$$
+0<R<1,\qquad X\ge4Q_X,\qquad
+\log\frac{X}{2Q_X}\ge2^{16}Q_X^2R^{-4}.
+\tag{14.27}
+$$
+
+此处没有声称 $R\le1/2$；对任意小的正 $\gamma$，式 (14.10) 也不需要推出该条件。
+
+**证明（目标一致计数及自身阶段下降）。** 设 $u\equiv a\pmod M$，记
+
+$$
+D=D_{2X},\qquad q=\operatorname{lcm}(M,D)
+=q(H_X,H_X;M)\le Q_X.
+$$
+
+由式 (14.8)，联立 $n\equiv a\pmod M$ 与 $n\equiv u\pmod D$ 给出模 $q$ 的唯一整数类，取其代表 $0\le c<q$。该类在 $(X,2X]$ 中恰为
+
+$$
+\begin{aligned}
+n_k&=c+q(k_0+k),\qquad
+k_0=\left\lfloor\frac{X-c}{q}\right\rfloor+1,\quad 0\le k<K,\\
+K&=\left\lfloor\frac{2X-c}{q}\right\rfloor
+-\left\lfloor\frac{X-c}{q}\right\rfloor
+\ge\frac Xq-1\ge\frac X{2q}.
+\end{aligned}
+\tag{14.28}
+$$
+
+式 (14.27) 保证
+
+$$
+\log K\ge\log\frac X{2q}
+\ge2^{16}Q_X^2R^{-4}\ge256q^2.
+\tag{14.29}
+$$
+
+对这个有限块，以 $L=q$、$N=K$ 和 $\beta=(c+qk_0)\alpha$ 直接调用定理 12.2 的极端差异度，得到
+
+$$
+\mathcal D_K(\beta,q)
+<\frac{128q}{\sqrt{\log K}}
+\le\frac{R^2}{2}.
+\tag{14.30}
+$$
+
+前件 $K\ge\exp(256L^2)$ 已由式 (14.29) 验证，起点 $\beta$ 可任意，未作星差异度转换。
+
+为在所有 $z$ 上保留同一个常数，逐坐标选取一个不跨切口的半开区间 $I_j\subset[0,1)$，长度恰为 $R$，其圆像包含于 $\{x:\|x-z_j\|_{\mathbb T}<R\}$。下面给出包括端点的选择。若 $R>1/2$，该圆邻域为全圆，取 $I_j=[0,R)$。若 $0<R\le1/2$，取 $z_j$ 的代表 $w\in[0,1)$：当 $w+R\le1$ 时取 $[w,w+R)$；否则令
+
+$$
+\delta=\min((1-w)/2,R/2)>0,
+\qquad I_j=[w-R+\delta,w+\delta).
+\tag{14.31}
+$$
+
+后一情形 $w>1-R\ge R$，所以区间在 $[0,1)$ 内，且其每一点与 $w$ 的通常距离严格小于 $R$。前一情形的右端点被排除，亦有严格不等式。因此 $I_1\times I_2$ 是定义 12.1 中的单个盒子，面积 $R^2$，并处于所需开目标内；不必把跨切口圆弧分成多个盒子。
+
+由式 (14.30)，在此盒中的整数数量严格大于 $KR^2/2\ge XR^2/(4q)$。这些整数全部满足 $n\equiv u\pmod{D_{2X}}$，所以式 (14.13)–(14.14) 给出
+
+$$
+[n]P_j-\eta_{v,j}(u)\in U_v(H_X)
+\qquad(p\le H_X,\ v\mid p,\ j=1,2).
+\tag{14.32}
+$$
+
+对每一个被计入的同一个 $n\le2X$，有 $h(n)\le H_X$、$U_v(H_X)\subseteq U_v(h(n))$、$R\le\rho(n)$。其模 $M$ 的条件也已满足，故它属于式 (14.5) 的自身阶段成功集合。这一步同时减少地方集合和降低深度，包含区间跨过 $h$ 跳点的情形。于是得到式 (14.11) 的第一行，第二行由 $q\le Q_X$ 得到。
+
+对任意固定 $\varepsilon>0$，式 (14.23) 表明
+
+$$
+\log(4Q_X)+2\gamma\log2
+\le\log4+m+64t^{2/3}+2\gamma\log2
+\le\varepsilon t
+\quad\text{对充分大的 }t\text{ 成立}.
+\tag{14.33}
+$$
+
+这个充分大阈值仅含 $M,\gamma,\varepsilon$。故 $4q(\log(2X+2))^{2\gamma}\le(\log X)^{2\gamma+\varepsilon}$，式 (14.12) 随之成立，且对 $u,z,a$ 一致。
+
+**证明（联合闭包与几何含义）。** 式 (14.12) 的右端趋于无穷，每个相容目标都有趋于无穷的成功整数序列。沿任意这样的序列，实端由 $\rho(n)\to0$ 得到 $n\alpha\to z$；对每个固定 $v\mid p$ 和深度 $r$，最终有 $h(n)\ge\max(p,r)$，从而式 (14.5) 给出 $[n]P_j-\eta_{v,j}(u)\in U_v(r)$。由于这些子群为邻域基，有限端在每个固定坐标上趋于 $\eta(u)$，即在普通乘积拓扑中收敛。这证明式 (14.7) 的右侧包含于左侧，且可以删去任意有限的整数前缀。反向包含是因为每个轨道点已在相应的闭集内：$H$ 紧闭，$a+M\widehat{\mathbb Z}$ 紧闭，其 $\eta$ 像也紧闭。第一行取 $M=1$ 即得。
+
+$\widehat{\mathbb Z}$ 完全不连通，故 $H$ 亦然；$\mathbb T^2$ 连通。任一连通子集投影到 $H$ 后只能是单点，反之 $\mathbb T^2\times\{\eta(u)\}$ 连通。因此这些恰为全部连通分支，单位分支和分量群分别如所述；后者的同构由投影到 $H$ 再取 $\eta^{-1}$ 给出。
+
+用白话说，同一个整数驱动两个实表盘，也驱动每个有限位上的离散刻度。实表盘的目标可以在两只圆上连续移动；有限刻度的目标却不是逐个随意挑选的旋钮。一个 profinite 整数是一份对所有模数彼此一致的剩余类说明书，它不是一个额外的普通整数。局部商只能读到说明书的有限一页；两个地方若共同看见某个模数，就必须在那一页给出同一答案。式 (14.16) 正是这项共同整数检查，式 (14.6) 说明通过全部有限阶段检查恰好刻画全部极限目标。
+
+在一个二倍区间中，先按右端点规定最深的有限检查和最小的实窗口。相容性把有限检查并为一个整数类，沿这个类数两只实表盘落入目标盒的次数；统一差异度把目标盒放在哪里都能承受的误差压到面积的一半以下。局部上界保证共同步长增长得足够慢，式 (14.10) 则给出不依赖目标位置的数值充分起点。留下的每个整数通过比自身阶段更强的检查，故也通过自身阶段。随着见证整数增大，每个固定有限放大镜最终加入并不断加深，同时实表盘趋向指定位置；这正是乘积拓扑所要求的无限极限，而不是在某个有限整数上完成无限精度。
+
+一致性指的是同一条计数下界及同一个起点适用于全部相容目标。不同目标可以有不同的见证整数，并不要求一个整数同时落入所有目标。若 $u$ 不可计算，以上存在性证明也没有提供读取其全部剩余类的可计算算法。有限阶段是有限个精确商条件；无限目标是这些条件的相容极限，两者的量词不同。
+
+本定理的数值起点规模极大，不声称可实用计算或给出最优阶，也不计算精确局部阶或不相容类的排除阈值。目标空间只含指定实两圆和 $H$，不是全部实嵌入上的断言，也不是任意独立局部目标、球面或 solenoid 的断言。目标 $u,z$ 固定；结论不涵盖任意逐整数移动目标或更快的局部增长安排。它不包含完整的 $\mathbb Z/\mathbb Q$ 定义、素数模式与高度的额外桥梁，亦不包含量子起源的证明。$\square$
+
+## 追加锚（本行以下为增补区）
