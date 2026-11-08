@@ -878,3 +878,685 @@ supplied-access obligation in Definition 6.2. These ordinary theory
 proofs have not been checked by the Lean kernel.
 
 ## 追加锚（本行以下为增补区）
+
+## 9. Declared finite recursive menus on the original interface
+
+**Definition 9.1 (inherited source and numerical scope).** Retain
+Definitions 1.1–1.2 and 6.2, the analytic source hypotheses of
+[EF, Assumption 1.1], and the compact localization, entire-domain
+and exact multiplier suppliers of [W, §§22–24] and [EF, §§12–14].
+Use [JET, §§1–5, 8–14, 15–16] only with the reference coefficients
+$(1,1)$ and rational trial times. Actual $a,\eta,d$, physical source
+coordinates and the invariant $\tau=a^2d/\eta$ are unavailable as
+numerical sensor inputs. The only information about $\tau$ used
+here is a bracket certified by Theorem 2.1 from an allowed packet.
+The reference $h,H,m$ do not depend on the trial read gap $t$.
+Write
+
+$$
+\begin{gathered}
+b_t=g_t,\qquad
+\gamma_t=t\,\nabla b_t^{\mathsf T}A_{\rm raw}\nabla b_t,
+\qquad r_t=(1+\gamma_t)^{-1},\\
+\Gamma_t(f,g)=t\,\nabla f^{\mathsf T}A_{\rm raw}\nabla g,
+\qquad s_t=\operatorname{tr}g_t=\|hg_{t/2}\|_2^2.
+\end{gathered}
+\tag{9.1}
+$$
+
+The matrix is precisely (3.7), including its central derivative.
+Thus $\gamma_t=\Gamma_t(b_t,b_t)$; its symbol is distinct from
+the original Green coefficient. A declared rational scalar packet
+has the nested rational intervals of [W, Definition 22.1], together
+with the fixed cutoff recipe in Definition 9.2. Its legality at
+$t$ means $\overline I_2\cap\{0,s_t\}=\varnothing$.
+The leaves are the original compact functions
+$f_{1,t}=\phi(b_t)b_t$, $f_{2,t}=\phi(b_t)r_t$.
+
+A finite menu declares finitely many such packets, finitely many
+binary trees with these leaves and operation $\Gamma_t$, finitely
+many pairs of marked words $u,v\in\{3,B\}^*$, and positive rational
+output tolerances. Any fixed finite syntax is allowed, including
+mixed packets. A tree leaf has height zero and
+$h(\Gamma(f,g))=1+\max(h(f),h(g))$. These are the actual compact
+relations of [EF, Definition 12.1 and Theorem 12.2], rather than
+new formal generators or a different source model.
+
+For a real tree symbol $c$ use the fixed bounded injective encoding
+
+$$
+\iota(c)=\frac{c}{\sqrt{1+c^2}}\in(-1,1),\qquad
+\iota'(c)=(1+c^2)^{-3/2}>0.
+\tag{9.2}
+$$
+
+A menu may also declare any finite pointwise product
+$k_t=\prod_{j=1}^q\iota(c_{j,t})$, with empty product one.
+The targets are
+
+$$
+Q_k(u,v)=\langle v_u,M_{k_\tau}v_v\rangle_{m_{\rm ref}},
+\tag{9.3}
+$$
+
+transported to the actual original member by Theorem 2.1.
+They are original-word matrix coefficients of already recovered
+multipliers. The encodings are injective on each real symbol,
+so they preserve its completed measurable information. They
+are mathematical insertions; their values are not extra labels.
+
+[JET]: RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_SOURCE_JET_CERTIFICATION.md
+[EF]: RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_ENERGY_FIBRE_GEOMETRY.md
+
+**Definition 9.2 (a smooth rationally specified packet recipe).**
+The following supplies every finite cutoff derivative used below.
+For $x>0$ let $a(x)=e^{-1/x}$, and put $a(x)=0$ for $x\le0$.
+Set $P_0(X)=1$ and recursively
+
+$$
+P_{j+1}(X)=X^2(P_j(X)-P_j'(X)),\quad
+B_j=\sum_l|[X^l]P_j|\,l!,\quad
+\vartheta(x)=\frac{a(x)}{a(x)+a(1-x)}.
+\tag{9.4}
+$$
+
+On $0<x<1$, $a^{(j)}(x)=e^{-1/x}P_j(1/x)$ and
+$|a^{(j)}|\le B_j$, since $X^le^{-X}\le l!$. These derivatives
+tend to zero at $x=0$: the same exponential-series estimate with
+power $l+1$ bounds each term by $(l+1)!/X$ as $X\to\infty$.
+Thus $a$ and $\vartheta$ are $C^\infty$ with their constant
+extensions at the transition endpoints. On $[0,1]$ the denominator
+of $\vartheta$ is at least $e^{-2}>1/9$, because one argument
+is at least $1/2$ and $e<3$. Consequently derivative bounds are
+computed by $C_0=1$ and
+
+$$
+C_j=9\left(B_j+2\sum_{l=1}^j\binom jl B_l C_{j-l}\right)
+\quad(j\ge1).
+\tag{9.5}
+$$
+
+This follows by differentiating
+$[a(x)+a(1-x)]\vartheta(x)=a(x)$. Rational point values and
+derivatives have arbitrary finite error enclosures using elementary
+exponential evaluation and this positive denominator. Outside
+$[0,1]$ the function is exactly zero or one.
+
+Given rational compact interval $C$ inside rational open interval
+$I$, choose rational transition endpoints strictly between their
+endpoints, and a plateau containing a neighborhood of $C$.
+Multiply the increasing and decreasing affine rescalings of
+$\vartheta$ on those two transition intervals. This gives a
+$[0,1]$-valued $C^\infty$ cutoff equal to one near $C$, with
+support compactly contained in $I$. Its $j$th derivative bound
+is the finite Leibniz sum of the $C_l$ times the indicated inverse
+transition widths to their derivative powers. Use this construction
+for $\phi$ with $C=\overline I_1,I=I_2$ and for $\sigma$ with
+$C=\overline I_0,I=I_1$. All additional transition endpoints are
+part of the finite rational declaration. Other explicit cutoff
+recipes are admissible when their values and every required finite
+derivative bound are constructed with the same error guarantees;
+the adjective smooth alone is not a numerical representation.
+
+**Theorem 9.3 (legal packet certification without an exact time
+input).** For any rational $0<L<U$, the reference services produce
+a rational interval $S_J$ containing every $s_t$, $t\in J=[L,U]$.
+As $J$ shrinks to a fixed positive $\tau$ and deterministic
+precisions increase, its width tends to zero. A packet is certified
+legal throughout $J$ by the finite strict tests
+
+$$
+0\notin\overline I_2,\qquad S_J\cap\overline I_2=\varnothing.
+\tag{9.6}
+$$
+
+Every finite collection legal at the actual source eventually passes
+these tests along arbitrarily narrow successful statistical brackets.
+
+*Proof.* Compute $s_{t_0}=\|v_{t_0/2}\|_2^2$ at rational
+$t_0\in J$ from its global name with a rational enclosing interval
+$S_0$ of radius $e_s$. Use (3.5) with lower time $L/2$ to obtain
+rational $G,C$ satisfying $\|v_r\|\le G$ and
+$\|v_r-v_{r'}\|\le C|r-r'|$ for $r,r'\ge L/2$.
+The same raw source vector is used in (3.1) and [JET, (4.5)].
+Then
+
+$$
+|s_t-s_{t_0}|\le2GC|t/2-t_0/2|
+                         \le GC(U-L).
+\tag{9.7}
+$$
+
+Enlarge $S_0$ by this last rational radius. This is $S_J$.
+The full trace identity in (9.1) is [W, (22.1)] and the original
+source Riesz identity, not evaluation of $b$ at an assigned point.
+The positive distance between each fixed legal outer closure and
+$\{0,s_\tau\}$ proves eventual success. Theorem 2.1 supplies
+arbitrarily narrow brackets on the same event as the record
+calibration. Neither (9.6) nor (9.7) computes or assumes
+$N_d=\|g_d\|_\infty=s_d$; $c$ continues to be enclosed from
+the original marker counts, with its actual $N_d$. $\square$
+
+## 10. Constructed finite tree errors and original-word acquisition
+
+**Theorem 10.1 (finite tree symbols uniformly over the acquired
+bracket).** Fix a finite declared menu, a certified legal bracket
+$J=[L,U]$, and a compact finite rational box union
+$K\Subset\Omega$. On a common finite rational partition of $K$
+the reference services produce steps $k$ with $|k|\le1$ and an
+evaluated rational error $e_k$ such that
+
+$$
+\sup_{t\in J}\|k_t-k\|_{\infty,K}\le e_k.
+\tag{10.1}
+$$
+
+For every fixed true positive time and finite menu, $e_k$ can be
+made arbitrarily small by refining the statistical bracket and
+deterministic computation on this fixed compact. All high derivative,
+spatial and time constants used by this construction are generated.
+No effective global support or global supremum of an unencoded tree
+is an input.
+
+*Proof.* If a tree has height $H$, its derivatives through order $j$
+use derivatives of $b_t$ only through order $j+H+1$. For a leaf,
+$r_t$ uses one derivative of $b_t$; the other operations are scalar
+composition and multiplication. A $\Gamma_t$ node differentiates
+each child once and multiplies with $tA_{\rm raw}$, proving the
+assertion inductively. In particular values and first spatial
+derivative bounds for all trees use at most $H+2$ derivatives of
+$b_t$; second derivatives for the charts in §11 use at most $H+3$.
+Taking the largest required order in the finite menu is finite.
+
+[JET, Theorems 15.2 and 16.1] construct all these $b_t$ jets,
+compact bounds and time moduli from the original full reference
+endpoint. Their construction uses differentiated Green bounds at
+the finitely many higher orders actually needed, the finite weak
+tests and graph recurrence, global source names, and a computed
+positive compact lower bound for $h$. It does not assume the desired
+higher derivatives as an extra service. Work on slightly larger
+fixed rational boxes; refine $K$ into boxes with closures there.
+
+At each rational cell center and rational $t_0\in J$ compute the
+needed $b_{t_0}$ jets. Enlarge every interval by its constructed
+time error $W_{Q,R}(L)(U-L)$ and spatial error
+$4B_{R+1}\rho$ from [JET, (16.5)–(16.6)], where $\rho$ is
+the maximum coordinate covering radius. Evaluate the finite
+differentiated expressions of the tree by interval arithmetic.
+Derivatives of the cutoffs are evaluated from (9.4), with (9.5)
+at one higher order supplying their moduli on uncertain scalar
+arguments. Leibniz and the chain rule give only finite sums and
+products. For $r_t$, evaluate the reciprocal derivative recurrence
+from $(1+\gamma_t)r_t=1$; the exact denominator is at least one,
+so intersect its interval with $[1,\infty)$ before inversion.
+The same applies to $\sqrt{1+c^2}$ in (9.2); real square-root
+bisection has a known positive denominator. These operations
+construct interval values and derivative bounds, including the
+explicit $t$ factors at every energy node.
+
+On the fixed larger boxes all these constants are finite and
+constructed. Jet precision and cell radii can therefore be reduced
+until, for fixed sufficiently narrow $J$, every output interval
+is as narrow as its actual bracket variation permits. As $J$
+shrinks to the true time, its time contribution tends to zero by
+the computed moduli. Choose rational center values within the
+output intervals, clipping to $[-1,1]$. The largest certified
+endpoint distance bounds the uniform encoding error on each
+cell. For products use
+
+$$
+\left|\prod_{j=1}^q a_j-\prod_{j=1}^q b_j\right|
+ \le\sum_{j=1}^q|a_j-b_j|\qquad(|a_j|,|b_j|\le1).
+\tag{10.2}
+$$
+
+Thus the sum of the individual encoding errors is an evaluated
+$e_k$ for the product; clipping also preserves this bound. This
+proves (10.1) and its convergence. It is legitimate to return an
+inconclusive error when a bracket is still too wide. No infinite
+expression, global quotient inverse or finite separating depth is
+used. $\square$
+
+**Theorem 10.2 (acquired finite recursive matrix coefficients).**
+For one allowed packet and successful legal bracket, compute
+$Z_u,r_u$ by Theorem 5.1 for the finite word menu, now choosing
+all step supports in a compact $K\Subset\Omega$. For each finite
+encoded product compute $k,e_k$ by Theorem 10.1 on that $K$.
+On their common rational partition form
+
+$$
+\begin{gathered}
+\widehat Q_k(u,v)=\int_K\overline{Z_u}Z_vk\,d\mu,\qquad
+B_{uv}\ge\|\overline{Z_u}Z_v\|_{\infty,K},\\
+R_k(u,v)=r_u+r_v+r_ur_v+B_{uv}|K|e_k+a_k(u,v).
+\end{gathered}
+\tag{10.3}
+$$
+
+Here $a_k$ is an explicit rational arithmetic allowance, zero for
+exact rational sums. Simultaneously on the original event
+$\mathcal E$ of (1.6),
+
+$$
+|Q_k(u,v)-\widehat Q_k(u,v)|\le R_k(u,v).
+\tag{10.4}
+$$
+
+Stopping is legal only after packet validity, $c_->0$, both strict
+calibration tests, all trace-avoidance tests (9.6), all symbol and
+vector certificates, and every requested radius test have passed.
+Inconclusive outputs retain the bound $[-1,1]$ for these real
+matrix coefficients. Under Definition 6.2's adequate legally
+supplied cofinal schedule and all inherited source/reference
+services, fair refinement stops at finite sourcewise cost for every
+fixed legal finite menu and positive tolerances, on the same
+$\mathcal E_*$ of probability at least $1-\alpha_*$.
+
+*Proof.* The axis omitted by $\Omega$ is Lebesgue-null. Rational
+box steps compactly supported there are consequently dense in raw
+$L^2$, by the same exhaustion and global residual test as in
+Theorem 5.1. This proves that its $Z_u$ search remains total,
+without discarding an unmeasured vector tail. A finite set of
+supports fits in a common such $K$.
+
+The full original transport intertwines $\Gamma_d$ with
+$\Gamma_\tau$ on all smooth arguments, by the derivative identities
+in Theorem 2.1. It therefore intertwines every declared packet,
+tree and encoding by induction. The trace is transported as well;
+(9.6) certifies the actual source packet. This proves the original
+source interpretation of (9.3), with the original calibration and
+marked word vectors, rather than a new reference experiment.
+
+The multiplier norm is at most one. The two global word-vector
+replacements cost at most $r_u+r_v+r_ur_v$, exactly as in the proof
+of Theorem 6.1. The remaining integral is supported in $K$ and
+costs at most $B_{uv}|K|e_k$ by (10.1); its rational sum and
+arithmetic allowance give (10.3). This proves (10.4). In particular
+it pays both the source neighborhood and the exterior through the
+global vector residuals. Although unencoded compact trees are
+bounded in each instance, their uncomputed global bounds never
+enter (10.3). This is why a bounded injective encoding suffices.
+
+For eventual stopping fix sufficiently accurate approximations to
+the finitely many actual word vectors first, so their supports,
+$K$ and $B_{uv}$ are fixed. Choose $e_k$ small for this finite
+list of constants. Theorem 10.1 supplies finite choices of local
+jets and grids and a sufficiently narrow bracket with strict
+slack for every symbol test. Theorem 9.3 supplies slack for each
+fixed legal packet. The proof of Theorem 6.3 supplies late original
+packets, clipped trial words and strict global vector residuals
+with all $r_u$ small. Thus all tests can be made strictly smaller
+than their positive tolerances at one finite stage.
+
+Enumerate these finite rational candidates and increasing precision
+levels, interleaving the first finitely many tests with later
+predeclared packets as in Theorem 6.3. Each test has finite work;
+undecided strict tests return inconclusive at that precision.
+Every successful finite choice is eventually tested at sufficient
+precision. All deterministic implications hold on the single event
+$\mathcal E_*$. The same event therefore permits adaptive selection
+of compacts, brackets and accepted candidates without a new union
+bound or a retry of the physical experiment. No independence of
+nested records is needed. $\square$
+
+## 11. A searched quantitative chart for a first higher compact entry
+
+**Theorem 11.1 (finite uniform local strictness certificate).**
+On a certified legal bracket $J=[L,U]$, the following finite data
+and tests certify a positive rational lower bound $\delta$ for
+
+$$
+\inf_{F\in L^2(\overline{\sigma(b_t,\gamma_t)}^{\,m},m)}
+       \|z_t-F\|_m^2\ge\delta>0
+\qquad\text{for every }t\in J,
+\tag{11.1}
+$$
+
+where $z_t=\iota(e_{ij,t})$ for one actual first higher compact
+entry $ij\in\{12,22\}$, $e_{ij,t}=\Gamma_t(f_{i,t},f_{j,t})$.
+Neither the packet, the index nor the sign of an uncomputed minor
+is preselected as a witness. The tests use the original reference
+services and computed finite-order moduli of Theorem 10.1.
+
+*Proof: a finite quantitative chart.* Choose a rational closed
+cube $Q=x_0+[-r,r]^4\Subset\Omega$ inside a larger fixed rational
+box. Choose a raw coordinate index $l$ and form
+
+$$
+\Psi_t(x)=(b_t(x),\gamma_t(x),z_t(x),x_l).
+\tag{11.2}
+$$
+
+Select an invertible rational $4\times4$ matrix $A$, rational
+$0<q<1/2$ and rational bounds $M_1\ge1,M_2$ for all entries
+of $D\Psi_t$ and its second derivatives on the larger box,
+uniformly for $t\in J$. Theorem 10.1's differentiated construction
+provides these bounds; this tree has height one. Let $e_0$
+be an interval-arithmetic upper bound for
+$\sup_{t\in J}\|A^{-1}D\Psi_t(x_0)-I\|_\infty$.
+Accept only if
+
+$$
+e_0+16\|A^{-1}\|_\infty M_2r<q<1/2.
+\tag{11.3}
+$$
+
+The factor $16$ pays four coordinate increments and four matrix
+entries per row. Hence $\|A^{-1}D\Psi_t-I\|_\infty<q$ on
+$Q$, for all $t\in J$. The local map is injective there by
+integration along segments and has invertible derivative.
+
+Choose rational open intervals $R_1,R_2,R_3,R_4$ of positive
+length, let $R=\prod_iR_i$, and certify by finite interval bounds
+that
+
+$$
+\sup_{t\in J,\ y\in\overline R}
+       \|A^{-1}(y-\Psi_t(x_0))\|_\infty < (1-q)r.
+\tag{11.4}
+$$
+
+Such a bound uses only center-value intervals and the vertices
+of the rational rectangle. For each $y\in R$ put
+$E_t(x)=A^{-1}(\Psi_t(x)-\Psi_t(x_0))-(x-x_0)$.
+The map
+
+$$
+x\longmapsto x_0+A^{-1}(y-\Psi_t(x_0))-E_t(x)
+\tag{11.5}
+$$
+
+is a $q$ contraction of $Q$ into its interior by (11.4), since
+$E_t(x_0)=0$. Its fixed point is the unique inverse of $y$ in
+$Q$. Thus $R\subset\Psi_t(Q^\circ)$ for every $t\in J$.
+This proves the common target rectangle numerically; mere
+nonzero center rank would not certify (11.4).
+
+Compute a rational $l_h>0$ below $\inf_Qh$ by [JET, Corollary
+5.4]. A determinant upper bound is $D=24M_1^4$, by its $4!$
+Leibniz terms. Under the actual smooth chart the restricted raw
+source measure has density
+
+$$
+\frac{h(\Psi_t^{-1}y)^2}{|\det D\Psi_t(\Psi_t^{-1}y)|}
+                              \ge l_h^2/D\qquad(y\in R).
+\tag{11.6}
+$$
+
+Integrating its fourth coordinate gives the following lower bound
+for the *full* joint law of the same source functions:
+
+$$
+(b_t,\gamma_t,z_t)_*m\ \ge\
+ \lambda\,\mathbf1_{R_1\times R_2\times R_3}(y)\,dy,
+\qquad \lambda=l_h^2|R_4|/D>0.
+\tag{11.7}
+$$
+
+The inequality is domination of nonnegative measures. Other
+source sheets can add mass; no global density or separate-sheet
+conditional law is assumed. This uses raw coordinates and $h^2$
+on the same realization, without an inserted Jacobian or unrelated
+marginal distribution.
+
+*Proof: the full completed factor.* Every completed-factor $L^2$
+function has an uncompleted measurable version modulo an $m$-null
+set, hence a Borel version $F(b_t,\gamma_t)$ by Doob–Dynkin for
+the standard Borel target $\mathbb R^2$. For any such function,
+(11.7) implies
+
+$$
+\begin{aligned}
+\int|z_t-F(b_t,\gamma_t)|^2dm
+ &\ge\lambda\int_{R_1\times R_2}\int_{R_3}|v-F(y_1,y_2)|^2
+                                      dv\,dy_1dy_2\\
+ &\ge\frac{\lambda|R_1||R_2||R_3|^3}{12}.
+\end{aligned}
+\tag{11.8}
+$$
+
+The last inequality follows by writing $v$ as its interval
+midpoint plus its centered increment; the cross integral vanishes,
+the centered square integral is $|R_3|^3/12$, and the remaining
+square is nonnegative. It holds for every Borel $F$, including
+ones with infinite restricted integral. Take the infimum over the
+full completed $L^2$ factor. The rational output
+
+$$
+\delta=\lambda|R_1||R_2||R_3|^3/24
+\tag{11.9}
+$$
+
+is strictly positive and satisfies (11.1), with slack. Its squared
+distance is that from conditional expectation onto the full old
+factor, rather than any finite feature span. $\square$
+
+**Theorem 11.2 (sourcewise terminating strict search from the
+original finite interface).** Assume all source suppliers in
+Definition 9.1, including [EF, Theorem 9.1], and the adequate
+legally supplied cofinal packet schedule of Definition 6.2.
+There is a fair search which, on the same $\mathcal E_*$ as
+Theorem 10.2, stops at finite record and computation cost with a
+legal rational packet, an index $ij\in\{12,22\}$, finite chart
+data passing (11.3)–(11.4), and positive rational $\delta$ such
+that at the actual original source
+
+$$
+\left\|\iota(\Gamma_d(f_i,f_j))-
+ \mathbb E_m[\iota(\Gamma_d(f_i,f_j))\mid
+                 \overline{\sigma(b,\gamma)}^{\,m}]\right\|_m^2
+ \ge\delta>0.
+\tag{11.10}
+$$
+
+Soundness of any accepted certificate requires only its valid
+packet and finite successful tests; eventual termination additionally
+requires the rank theorem, adequate schedule and all numerical
+services just stated. The search does not designate $T_dr$, a
+specified successor, or a specified transported symbol as a witness.
+
+*Proof.* In the reference member at its actual $\tau$, [EF,
+Theorem 9.1] supplies an actual point of rank three for either
+$(b,\gamma,\mathcal C)$ or $(b,\gamma,\mathcal D)$, where
+$\mathcal C=\Gamma_\tau(b,\gamma)$ and
+$\mathcal D=\Gamma_\tau(\gamma,\gamma)$. This is the already
+proved all-positive existential rank theorem. On its open rank
+set $db\ne0$, so a point can be chosen with $b$ avoiding $0$
+and $s_\tau$. Choose rational nested packet intervals and the
+cutoff of Definition 9.2 so the point lies inside the plateau.
+On a neighborhood of that point the original identities are
+
+$$
+e_{12}=-r_\tau^2\mathcal C,\qquad
+e_{22}=r_\tau^4\mathcal D.
+\tag{11.11}
+$$
+
+Wedging with $db\wedge d\gamma$ kills derivatives of the
+$r_\tau$ coefficients. At least one entry therefore still has
+rank three with $(b,\gamma)$. The nonzero $\iota'$ in (9.2)
+preserves that rank. Rotation invariance and the source-slice
+formula of [JET, §6] identify this as actual raw rank three in
+four dimensions. One complementary raw coordinate then completes
+(11.2) to an invertible derivative. Nonvanishing is open, so a
+rational center in $\Omega$ can be chosen there.
+
+Approximate that derivative by rational invertible $A$ and fix a
+larger rational box with the computed derivative constants. A
+sufficiently small rational cube around the center makes (11.3)
+strict at the actual time. A sufficiently small positive rational
+rectangle around a rational approximation to $\Psi_\tau(x_0)$
+makes (11.4) strict. The time moduli in [JET, §16] and the finite
+expressions in Theorem 10.1 keep these strict tests valid throughout
+a sufficiently narrow rational bracket containing $\tau$. The
+trace-avoidance test has a strict margin by Theorem 9.3. Its
+positive denominator and determinant estimates are computed,
+not assumed. No effective lower bound on the unknown initial
+rank margin was needed to prove existence of these finite choices.
+
+Enumerate rational packets, both entries, complementary coordinates,
+centers, nested boxes, invertible rational matrices, rational $q$,
+rectangles and finite precision requests. Interleave their finite
+tests with the predeclared packets and bracket searches of Theorem
+6.3. Each test terminates or reports inconclusive at its current
+precision, so a false candidate is never waited on indefinitely.
+The strict successful choices above are eventually recognized at
+sufficient precision on $\mathcal E_*$. Equation (11.9) then gives
+the output. Conditional on the valid finite packet, every accepted
+chart works for every time in its bracket. Hence adaptive candidate
+selection incurs no separate confidence loss. Transporting (11.8)
+by the original full-domain unitary preserves $m$, the tree symbols,
+the encoded target, completed old factor and squared distance.
+This proves (11.10) for the actual source and completes the search
+proof. The index and numerical lower bound can depend on that
+source; no common positive lower bound or resource bound is asserted.
+$\square$
+
+## 12. Combined finite consumers, costs and exact boundaries
+
+**Theorem 12.1 (one common event for acquisition and strict
+selection).** Under the hypotheses of Theorem 11.2, the search can
+return its strict packet and then acquire, to any fixed positive
+rational tolerances, finitely many coefficients (9.3) of that
+packet's encoded separating entry, its declared finite further
+trees, and their finite pointwise products. This output and every
+accepted coefficient satisfy (10.4) and (11.10) on the same
+$\mathcal E_*$ of probability at least $1-\alpha_*$. The declared
+finite syntax of the further trees may be fixed as a function of
+the returned finite packet description. There is no finite uniform
+separating depth or effective global quotient inverse conclusion.
+
+*Proof.* Once the strict search stops, its output is one of the
+countably enumerated rational packets and has positive legality
+margins. Apply Theorem 10.2 to the resulting finite menu. Its
+soundness is deterministic on each valid packet event; it holds for
+every finite candidate passing its tests, with no candidate-specific
+exceptional event. On $\mathcal E_*$ the adequate schedule has
+arbitrarily late packets, the marker and probability errors tend
+to zero, and every required rational bracket eventually passes.
+The convergence and fair-search arguments of Theorems 10.2 and
+11.2 consequently apply to the selected menu on that very event.
+No selection-dependent new record schedule, failure allowance or
+physical rerun is introduced. The maximum of finitely many used
+initial record lengths is finite. $\square$
+
+**Proposition 12.2 (why two shortcuts do not certify this result).**
+A finite feature-regression residual has the wrong inequality
+direction for (11.10), and mere compact smoothness does not supply
+the numerical global bounds needed for an unencoded version of
+(10.3).
+
+*Proof.* If $V$ is a finite feature span inside the full old-factor
+$L^2$ space $S$, then $\operatorname{dist}(z,V)^2\ge
+\operatorname{dist}(z,S)^2$. A positive residual against $V$
+therefore need not imply any loss against $S$. For a concrete
+bounded example take $X$ uniform on $[-1,1]$, $S=L^2(\sigma(X))$,
+$V=\operatorname{span}(1,X)$ and $z=X^2$. Its finite residual is
+$\mathbb E[(X^2-1/3)^2]=1/5-1/9=4/45>0$, whereas its full
+factor loss is zero. This is why (11.8) bounds the integral for
+every Borel function of the old pair.
+
+For the other shortcut, take any smooth bump supported inside a
+fixed open ball and equal to one at its center. Multiplying it by
+an arbitrary positive constant preserves compact smoothness but
+makes its supremum and derivatives arbitrarily large. More
+specifically a finite collection of inspected compact regions
+cannot exclude such a bump in a disjoint ball. A promise of compact
+support alone supplies neither its numerical size nor an effective
+support location. In (10.3), the bounded encoding and global vector
+residuals pay the omitted region; the constructed local jets pay
+only the fixed $K$. The qualitative compact localization supplied
+by [W, Lemma 22.2] is retained for exact domains and recovery,
+without using it as an unproved numerical global bound. $\square$
+
+**Definition 12.3 (the complete bill and retained distinctions).**
+The observation bill remains Definition 7.1: $N+T$ labels through
+$(N+T+1)d$, including the original first $2d$ lead-in, original
+counter representation and all defect construction/validation
+costs. The sufficient $T=3$ packet option remains available;
+long query words and higher tree depth here add deterministic work.
+For repeated nested packets retain and pay their actual initial
+segments and counters according to the original schedule. Physical
+time is an accounting identity, not a numerically acquired clock.
+
+Additional finite work includes all cited reference supplier work,
+coefficient derivatives and tail quadratures to the required finite
+orders, higher graph recurrences, weak-kernel integrations with their
+amplified raw precisions, compact denominator searches, trace norm
+evaluations, clipped word computations and global residual tests,
+cutoff derivative recursion, interval differentiation, finite grids,
+rational partitions, square-root evaluation, both-entry chart
+searches, matrix inversions, determinant bounds and rational density
+and loss arithmetic. Every requested precision and every failed
+finite candidate tested is charged. There is no measured runtime,
+practical-computation, polynomial-cost or parameter-uniform bound.
+
+Sound finite certification, sourcewise eventual stopping and a
+produced adequate schedule are separate assertions. Definitions
+1.2 and 6.2's legally supplied capacity/cofinal premises are not
+constructed from bare labels by these theorems. A packet with
+valid but permanently loose defects can remain inconclusive, as
+already shown after (6.3). No search here repairs that missing
+access by hidden path readings, resets, controls or new reference
+measurements. No numerical instance of the acquisition or strict
+search has been executed here.
+
+The exact recursive multipliers and common-symmetry measured
+quotient are the published [EF, Theorems 12.2–14.1]; qualitative
+strict compact enlargement is [EF, Theorem 10.2]. The additional
+results here are the original-interface finite error transport and
+the searched positive quantitative certificate for an actual first
+higher compact entry. [JET, §§8–14] already constructs all-parameter
+joint-density names, two-sided defects and complete positive
+heat-factor tests; these are not recounted as a new defect oracle.
+The local joint-law lower bound (11.7) serves a different consumer
+and avoids claiming a numerical old-factor inverse. In particular
+neither noncommutation nor (11.10) selects $T_dr$ or any specified
+successor sign.
+
+## 13. Source correspondence and literature status of the finite increment
+
+**Definition 13.1 (dependencies and applicability).** The following
+are the precise source correspondences of §§9–12. All are ordinary
+conditional mathematics under the inherited analytic suppliers.
+
+| Supplier | Use and boundary |
+| --- | --- |
+| This volume, Theorems 2.1, 5.1, 6.1, 6.3 and Definition 6.2 | Statistical invariant-time brackets, global clipped word vectors, matrix-coefficient error accounting, one common event and the paid adequate schedule. They do not supply an exact numerical original parameter. |
+| [JET, Theorems 2.2, 3.2, 5.2–5.4, 8.2, 15.2 and 16.1] | Original differentiated Green coefficients, full-domain weak tests and graph constants, positive compact denominators, and the finite-order spatial/time precision producer actually consumed by each tree and chart. |
+| [R, Theorems 12.2–12.4], [W, (22.1)], [SRO, (SRO.3)] | The exact full-resolvent and source-vector normalization, global norm names and trace $s_t=\|hg_{t/2}\|^2$. No replacement of $N_d$ by $s_d$ or of $H$ by $F$ is made. |
+| [W, Theorem 5.2, Definition 22.1, Lemma 22.2, Theorem 22.3] | Entire complex endpoint, both coefficients, form, source trace, scalar packet properness and actual compact multipliers. Their transport takes each energy tree and its bounded encoding to the same original source. |
+| [EF, Theorems 9.1, 10.2, 12.2 and 14.1] | Existing disjunctive all-positive rank, qualitative first-entry strictness, recursive compact recovery and the full common-symmetry measured quotient. No uniform finite depth or effective inverse is extracted. |
+| [JET, §§9–11] | Prior quantitative chart, same-source change-of-variables and completed-projection methods. Equations (11.3)–(11.9) construct a common-time rectangle and its lower density for this higher compact target, rather than assuming a conditional-density service. |
+| `D5/S3/ConceptDynamics/Prediction/ConditionalExpectationOptimality.lean`, `conditional_expectation_minimizes_mean_square_error`, and the private projection helpers identified in [JET, Definition 14.1] | Existing projection foundations; no original numerical chart, high-order source modulus or finite acquisition bridge is inferred from them. No duplicate Lean declaration is introduced. |
+
+The source-specific synthesis is `repo-derived`: certified scalar
+trace avoidance, the syntax-dependent uniform tree error producer,
+its consumption by the existing finite word vectors, and the
+rank-supplied finite search for (11.10). Its intermediate methods
+are the already identified local elliptic estimates, elementary
+smooth transitions, finite chain rules, Banach contraction,
+change of variables, Fubini and conditional projection. The
+contraction and chart hypotheses are checked directly in
+(11.3)–(11.6); the uniform conditional-variance lower estimate is
+proved in (11.8). No new external theorem with unchecked hypotheses
+or unrestricted computable disintegration is invoked. The original
+regularity literature and its precise hypotheses are recorded in
+[JET, Definition 7.3]; all numerical higher-order constants used
+here are generated in [JET, §§15–16]. No global novelty or fresh
+Lean/kernel verification is claimed.
+
+The actual $e$-start, complete original endpoint/domain/form/trace,
+source measure, calibration, four labels, first $2d$ read and later
+$d$ reads, and their conditional fresh noise are preserved on the
+same path. The neighboring seminorm-to-quantum geometry theory
+supplies no automatic common-source identification for these
+objects, and none is used. This finite acquisition theorem supplies
+neither physical controls nor pointwise observation of the acquired
+symbols. Full economical mutual recovery of space, time or lawful
+continuation, boundary and memory remains the active RRO goal;
+these finite syntax and strictness results do not complete it.
+
+[SRO]: RECURSIVE_RELATIONAL_OBSERVATION_SOURCE_RELATIVE_ORDER.md
+
+## 追加锚（本行以下为增补区）

@@ -2250,7 +2250,8 @@ $e$-start, first read $2d$, later gaps $d$, four labels and conditional
 noise remain intact. Numerical reference coordinates are proof
 and computation variables, never readings of the realized path.
 No jet query has been numerically executed here and no new Lean
-verification is asserted. The finite-order supplier changes none
-of the distinct successor-sign and old-factor questions of §13.
+verification is asserted. The finite-order supplier does not identify a specified successor
+or $T_dr$ as a witnessing vector; qualitative strict compact-energy
+enlargement remains [FG, Theorem 10.2].
 
 ## 追加锚（本行以下为增补区）
