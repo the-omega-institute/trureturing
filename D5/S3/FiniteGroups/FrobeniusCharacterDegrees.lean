@@ -7,7 +7,8 @@
    digest: Fixed-point-free conjugation gives the character-degree divisibility dichotomy. -/
 
 /-
-Escape audit unfinished for the five arbitrary-characteristic additions: https://github.com/the-omega-institute/trureturing/issues/27899
+Escape audit unfinished for the older five arbitrary-characteristic additions only: https://github.com/the-omega-institute/trureturing/issues/27899
+Current audit gap (exactly these two targets): D5.S3.FiniteGroups.FrobeniusCharacterDegrees.extRep_apply_tmul and D5.S3.FiniteGroups.FrobeniusCharacterDegrees.trivial_restriction_or_index_dvd_of_fixedPointFree. Audit compilation exit: 2; not declared_validated. https://github.com/the-omega-institute/trureturing/issues/27999
 admission_basis: escape-witness
 Frozen baseline inputs (module statement identities):
 D5/S3/FiniteGroups/FiniteCharacterAlgebra @ sha256:5ea5be4246f85df1a6a5a34be414eaa3174509f06a0bb1c923f3d8e8cfff6a55
