@@ -8,7 +8,7 @@ internal sealed class BarkerCyclicRepetitionCountingDocument : IScribeDocumentDe
 {
     private const string Prefix = "D5/S1/Words/Patterns/BarkerCyclicRepetitionCounting.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/RecurrenceComposition/barker2019a268943");
+        LibraryNoteRef.Create("D5/L/Certificates/barker2019a268943");
     private const string NameQuote =
         "OEIS A268943, revision 8, unpaginated NAME (%N): \"Number of length-n 0..7 arrays "
         + "with no repeated value unequal to the previous repeated value plus one mod 7+1.\" ";
