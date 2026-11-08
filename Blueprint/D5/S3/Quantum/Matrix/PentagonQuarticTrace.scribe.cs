@@ -54,8 +54,9 @@ internal sealed class PentagonQuarticTraceDocument : IScribeDocumentDefinition
     private static Formula Lt(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThan, b);
     private static Formula And(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.And, b);
     private static Formula Imp(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.Implies, b);
-    private static Formula Assumptions() => And(All("i", Fin5(), Call("IsHermitian", A())),
-        All("i", Fin5(), Eq(Mul(A(), A(2)), D(0))));
+    private static Formula Assumptions() => And(
+        Seq(Open, All("i", Fin5(), Call("IsHermitian", A())), Close),
+        Seq(Open, All("i", Fin5(), Eq(Mul(A(), A(2)), D(0))), Close));
     private static Formula T() => Sum(Tr(Pow(A(), 4)));
     private static Formula S4() => Tr(Pow(Sum(A()), 4));
     private static Formula Bound() => Le(S4(), Mul(D(8), T()));
