@@ -116,9 +116,7 @@ $$(\forall n:\mathbb{N}, 3 \le n \implies R_{3}(n)=0) \land (\forall n:\mathbb{N
 
 The literal coefficient identity identifies A with (1+w)^3/(1-5w), where w has zero constant term and z(1+w)^3=w(1-w)^2. Lagrange substitution supplies this all-index bridge. The transported numerator identities give O3 A=8z+532z^2 and O2 A=-8z. Coefficient extraction gives the stated guarded recurrences, including their endpoints. Applying theta-1 to the second forcing identity and cancelling z^2 gives the ordinary differential operator with coefficients 420; 3612z-177; 4593z^2-1209z+6; 1539z^3-943z^2+29z; 135z^4-145z^3+10z^2. Its constant coefficient polynomial 420 is nonzero. All substitutions and derivatives are formal.
 
-All eleven theorem proofs are bind-only under the repository's inlining and normalization rule. The auxiliary declarations have actual live consumers; result settles the named external conjunction under the open-problem-resolution admission basis. No new proof technique or escape witness is claimed. The source and bounded literature scope are recorded in the Library note and matching Problems dossier; worldwide openness and priority remain unverified.
-
-The retained Reg mirror supplies a compiled typed DependentFamily registration for the literal summand and the same full conjunction. The outer Contract registration and source-occurrence binding remain unfinished under the linked issue https://github.com/the-omega-institute/trureturing/issues/27973#issuecomment-6718421807. The family proof does not supply declared_validated status.
+The order-four operator is a witness to D-finiteness; no minimality or analytic convergence is asserted. Revision 16 supplies the two conjectured recurrence formulas but does not specify their onsets. The domains n>=3 and n>=2 are the natural-lag interpretations used here. The source and bounded literature scope are recorded in the Library note and matching Problems dossier; worldwide openness and priority remain unverified.
 
 ## References
 
