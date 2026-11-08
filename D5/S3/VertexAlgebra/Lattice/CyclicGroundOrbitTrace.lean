@@ -256,4 +256,16 @@ theorem corrected_ground_cycle_power_trace
       exact hdvd ((cycle_index_eq_self_iff D g a m hm hperiod n i).mp hi')
     simp [hdvd, hi]
 
+abbrev corrected_ground_cycle_power_statement : Prop :=
+  type_of% (@corrected_ground_cycle_power_trace)
+
+theorem corrected_ground_cycle_power_trace_observed (s : Bool) :
+    (s = true) ↔
+      (if s then corrected_ground_cycle_power_statement else False) := by
+  cases s
+  · simp
+  · have h : corrected_ground_cycle_power_statement :=
+      corrected_ground_cycle_power_trace
+    simpa using h
+
 end D5.S3.VertexAlgebra.Lattice.CyclicGroundOrbitTrace

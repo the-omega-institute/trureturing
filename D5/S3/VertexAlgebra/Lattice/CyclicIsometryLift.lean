@@ -287,6 +287,17 @@ theorem corrected_ground_single (D : LatticeData) (g : Charge D ≃+ Charge D)
   rw [phase_sign D g hg, ← complexSign_add]
   simpa only [map_one] using corrected_single D g hg chi a 1
 
+abbrev corrected_ground_single_statement : Prop :=
+  type_of% (@corrected_ground_single)
+
+theorem corrected_ground_single_observed (s : Bool) :
+    (s = true) ↔
+      (if s then corrected_ground_single_statement else False) := by
+  cases s
+  · simp
+  · have h : corrected_ground_single_statement := corrected_ground_single
+    simpa using h
+
 /-- The actual phase accumulated by a power on a charged ground state. -/
 def correctedGroundPhase (D : LatticeData) (g : Charge D ≃+ Charge D)
     (chi : Charge D →+ F₂) (n : ℕ) (a : Charge D) : ℂ :=
@@ -308,6 +319,17 @@ theorem corrected_ground_pow_single (D : LatticeData) (g : Charge D ≃+ Charge 
       corrected_ground_single D g hg]
     simp only [correctedGroundPhase, Finset.prod_range_succ,
       Function.iterate_succ_apply', smul_smul]
+
+abbrev corrected_ground_pow_single_statement : Prop :=
+  type_of% (@corrected_ground_pow_single)
+
+theorem corrected_ground_pow_single_observed (s : Bool) :
+    (s = true) ↔
+      (if s then corrected_ground_pow_single_statement else False) := by
+  cases s
+  · simp
+  · have h : corrected_ground_pow_single_statement := corrected_ground_pow_single
+    simpa using h
 
 private theorem corrected_compatible (D : LatticeData) (g : Charge D ≃+ Charge D)
     (hg : ∀ a b, bilinear D (g a) (g b) = bilinear D a b)

@@ -30,29 +30,41 @@ abbrev signature : Signature where
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ _ := Prop
+  Output _ _ := Bool
   Anchor := Empty
   finiteAnchor := inferInstance
 
 def actual : Realization signature :=
-  realize signature (fun _ _ s => if s then Statement else False) (fun e => nomatch e)
+  realize signature (fun _ _ s => decide (s = true)) (fun e => nomatch e)
 
 def rejected : Realization signature :=
   realize signature (fun _ _ _ => False) (fun e => nomatch e)
 
 abbrev arena : Arena where
   signature := signature
-  Law r := r.readout () () true
+  Law r := ∀ s : Bool,
+    (r.readout () () s = true) ↔ (if s then Statement else False)
+
+private theorem bridge :
+    (type_of% (@corrected_ground_cycle_power_trace_observed)) ↔ arena.Law actual := by
+  constructor
+  · intro h s
+    simpa [actual, realize] using h s
+  · intro h s
+    simpa [actual, realize] using h s
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  change False at h
-  exact h
+  have hs : Statement := corrected_ground_cycle_power_trace
+  have hf : False := by
+    simpa [rejected, realize] using (h true).mpr hs
+  exact hf
 
-def family : Registration arena (type_of% (@corrected_ground_cycle_power_trace)) where
+def family : Registration arena
+    (type_of% (@corrected_ground_cycle_power_trace_observed)) where
   actual := actual
-  bridge := Iff.rfl
-  variation := ⟨corrected_ground_cycle_power_trace, rejected, rejected_law⟩
+  bridge := bridge
+  variation := ⟨bridge.mp corrected_ground_cycle_power_trace_observed, rejected, rejected_law⟩
   sensitivity := by
     constructor
     · intro i
@@ -64,13 +76,11 @@ def family : Registration arena (type_of% (@corrected_ground_cycle_power_trace))
   dependence := by
     intro _
     refine ⟨(), true, false, ?_⟩
-    intro h
-    have hf : False := Eq.mp h corrected_ground_cycle_power_trace
-    exact hf
+    simp [actual, realize]
 
 def registration :
     Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-      (@corrected_ground_cycle_power_trace)
+      (@corrected_ground_cycle_power_trace_observed)
       (Realization signature) Unit Unit where
   unitName := `Reg.D5.S3.VertexAlgebra.Lattice.CyclicGroundOrbitTrace.unit
   realizationName := `Reg.D5.S3.VertexAlgebra.Lattice.CyclicGroundOrbitTrace.family
@@ -93,11 +103,11 @@ def registration :
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "arg", "arg", "arg", "arg", "arg", "arg", "arg"]
-      stateBinder := 1
+      path := #["body", "fn", "arg"]
+      stateBinder := 0
       functionOperand := false
-      stateOperand := none
-      booleanPredicate := false }] }
+      stateOperand := some #["fn", "arg"]
+      booleanPredicate := true }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
