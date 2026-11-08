@@ -6,6 +6,13 @@
    utility: none
    digest: The signed Stirling coefficient sequence A001722 satisfies Mathar's recurrence and is D-finite as an ordinary rational formal power series. -/
 
+/-!
+The source is OEIS A001722, revision 26, formula field:
+https://oeis.org/A001722/internal?fmt=text
+The Crstici signed Stirling sum is the definition. Mathar's conjecture asks for
+both the displayed recurrence and D-finiteness of its ordinary series.
+-/
+
 import Mathlib.Algebra.Polynomial.Taylor
 import Mathlib.RingTheory.PowerSeries.Derivative
 import Mathlib.Tactic.Ring
@@ -17,7 +24,7 @@ open scoped BigOperators
 namespace D5.S3.Combinatorics.BinomialBases.MatharA001722
 open Polynomial
 
-noncomputable def falling (N : ℕ) : Polynomial ℤ :=
+private noncomputable def falling (N : ℕ) : Polynomial ℤ :=
   ∏ i ∈ Finset.range N, (X - C (i : ℤ))
 
 /-- Signed first-kind Stirling numbers, defined by the falling product. -/
@@ -31,14 +38,14 @@ noncomputable def a (n : ℕ) : ℤ :=
 /-- Ordinary formal generating series over the rationals. -/
 noncomputable def G : PowerSeries ℚ := PowerSeries.mk (fun n => (a n : ℚ))
 
-noncomputable def D : PowerSeries ℚ → PowerSeries ℚ := PowerSeries.derivative
+private noncomputable def D : PowerSeries ℚ → PowerSeries ℚ := PowerSeries.derivative
 
-def Recurrence : Prop := ∀ n : ℕ, 3 ≤ n →
+private def Recurrence : Prop := ∀ n : ℕ, 3 ≤ n →
   a n + 3 * (-(n : ℤ) - 5) * a (n - 1) +
     (3 * (n : ℤ)^2 + 27 * (n : ℤ) + 61) * a (n - 2) -
     ((n : ℤ) + 4)^3 * a (n - 3) = 0
 
-def DFinite : Prop := ∃ (r : ℕ) (p : ℕ → Polynomial ℚ),
+private def DFinite : Prop := ∃ (r : ℕ) (p : ℕ → Polynomial ℚ),
   (∃ j : ℕ, j ≤ r ∧ p j ≠ 0) ∧
   (∑ j ∈ Finset.range (r + 1), (p j : PowerSeries ℚ) * (D^[j]) G) = 0
 
@@ -94,7 +101,7 @@ private theorem recurrence_forward (m : ℕ) :
       C (((m : ℤ)+7)^3)*shifted m = - (X^3 * shifted m) := by
     rw [show m+3 = (m+2)+1 by omega, shifted_step,
       show m+2 = (m+1)+1 by omega, shifted_step, shifted_step]
-    simp only [Nat.cast_add, Nat.cast_one, Nat.cast_ofNat, map_add, map_mul, map_pow,
+    simp only [Nat.cast_add, Nat.cast_one, map_add, map_mul, map_pow,
       map_ofNat, C_1]
     ring
   have hc := congrArg (fun p : Polynomial ℤ => p.coeff 2) hp
@@ -113,7 +120,7 @@ private theorem initial : a 0 = 1 ∧ a 1 = 18 ∧ a 2 = 251 := by
     Polynomial.coeff_X, Polynomial.coeff_C, Polynomial.coeff_one, Nat.choose]
 
 /-- A nonzero fourth-order homogeneous differential operator. -/
-noncomputable def op : ℕ → Polynomial ℚ
+private noncomputable def op : ℕ → Polynomial ℚ
   | 0 => -18 + 254 * X - 1029 * X^2
   | 1 => 1 - 24 * X + 253 * X^2 - 1019 * X^3
   | 2 => -3 * X^2 + 54 * X^3 - 289 * X^4
@@ -165,18 +172,23 @@ private theorem annihilates :
       norm_num [Nat.ascFactorial_succ, h0, h1, h2] at *
     all_goals first | linear_combination 3*hr0 | linear_combination 4*hr1 |
       linear_combination 5*hr2 | linear_combination 6*hr3
-  · obtain ⟨m, rfl⟩ := Nat.exists_eq_add_of_le (show 6 ≤ n by omega)
+  · obtain ⟨m, hm⟩ := Nat.exists_eq_add_of_le (show 6 ≤ n by omega)
+    rw [show n = m+6 by omega]
     have hr := recurrence_rational (m+4)
-    simp [Nat.add_sub_assoc, Nat.ascFactorial_succ, Nat.cast_add, Nat.cast_mul] at hr ⊢
+    simp (disch := omega) [Nat.add_sub_assoc, Nat.ascFactorial_succ,
+      Nat.cast_add, Nat.cast_mul, Nat.add_assoc] at hr ⊢
     linear_combination ((m : ℚ)+7)*hr
 
 /-- Both original clauses of Mathar's conjecture, for the literal signed sum. -/
 theorem result : claim := by
   constructor
   · intro n hn
-    obtain ⟨m, rfl⟩ := Nat.exists_eq_add_of_le hn
+    obtain ⟨m, hm⟩ := Nat.exists_eq_add_of_le hn
+    rw [show n = m+3 by omega]
     have h := recurrence_forward m
-    convert h using 1 <;> push_cast <;> ring_nf <;> simp [Nat.add_sub_assoc]
+    convert h using 1
+    simp [Nat.add_sub_assoc, Nat.cast_add]
+    ring
   · refine ⟨4, op, ⟨4, le_rfl, ?_⟩, annihilates⟩
     simp [op]
 
