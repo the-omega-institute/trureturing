@@ -23,7 +23,8 @@ internal sealed class BalaA281440TotientSquarePeriodDocument : IScribeDocumentDe
         DescribeId.Create("balaa281440totientsquareperiod-" + name.Replace("C", "uppercase-c").Replace("S", "uppercase-s").Replace('.', '-').Replace('_', '-').ToLowerInvariant()),
         DeclarationHandle.Create(Prefix + name[(name.LastIndexOf('.') + 1)..]), H(title), StatementSource.FromAuthor(formula),
         provenance, Blocks(Paragraph(Text(prose))), role,
-        null);
+        name == "result" ? new OpenProblemResolutionClaim(
+            ProblemSlugRef.Create("balaper-a281440-phi2period"), ResolutionKind.Proved) : null);
 
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula Qualified(params string[] parts)

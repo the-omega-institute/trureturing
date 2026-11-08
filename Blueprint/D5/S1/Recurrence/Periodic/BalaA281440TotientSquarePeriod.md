@@ -22,6 +22,10 @@ $$\exists (H C : PowerSeries \mathbb{Q}) , \operatorname{PowerSeries}.\operatorn
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Periodic/BalaA281440TotientSquarePeriod.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/balaper-a281440-phi2period` (proved) by `D5/S1/Recurrence/Periodic/BalaA281440TotientSquarePeriod.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"balaper-a281440-phi2period","declaration_gid":"D5/S1/Recurrence/Periodic/BalaA281440TotientSquarePeriod.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Peter Bala (2026). *OEIS A281180 and its hyperbolic EGF family: totient-square periods*. URL: <https://oeis.org/A281180>.
