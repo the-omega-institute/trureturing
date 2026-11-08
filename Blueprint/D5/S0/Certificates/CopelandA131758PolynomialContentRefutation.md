@@ -88,6 +88,10 @@ $$\neg ((\forall n \in \mathrm{Nat},\; \exists row \in \operatorname{Fin}\left(n
 
 *Proof.* Machine-checked in Lean as `D5/S0/Certificates/CopelandA131758PolynomialContentRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/copeland-a131758` (refuted) by `D5/S0/Certificates/CopelandA131758PolynomialContentRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"copeland-a131758","declaration_gid":"D5/S0/Certificates/CopelandA131758PolynomialContentRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Tom Copeland (2008). *OEIS A131758: Coefficients of numerators of rational functions whose binomial transforms give the normalized polylogarithms Li(-n,t)/n!*. URL: <https://oeis.org/A131758>.

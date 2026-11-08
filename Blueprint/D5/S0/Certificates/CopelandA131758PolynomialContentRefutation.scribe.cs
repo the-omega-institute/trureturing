@@ -57,13 +57,16 @@ internal sealed class CopelandA131758PolynomialContentRefutationDocument : IScri
                 + "row to equal 1. The proposed divisor count D 8 equals 2, a contradiction. "
                 + "The proof uses only propext, Classical.choice and Quot.sound. It does not "
                 + "prove an infinite family or a replacement content formula.",
-                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("copeland-a131758"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string id, string title, Formula formula, string prose,
-        string declaration, DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        string declaration, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create("copeland-" + id), DeclarationHandle.Create(Prefix + declaration),
             H(title), StatementSource.FromAuthor(formula), provenance,
-            Blocks([.. prose.Split('\n').Select(static line => Paragraph(Text(line)))]), role);
+            Blocks([.. prose.Split('\n').Select(static line => Paragraph(Text(line)))]), role, resolution);
 
     private static Formula CoefficientFormula()
     {
