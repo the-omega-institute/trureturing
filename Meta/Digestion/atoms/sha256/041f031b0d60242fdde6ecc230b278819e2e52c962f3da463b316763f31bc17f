@@ -1,0 +1,58 @@
+**引理 71.2（任意原背景的完整理想行）。** 加上完整 PB 和 (70.1) 的种子识别后，
+
+$$
+D(a,b)=\kappa(a,b)\quad(a\in E,\ b\in I).
+\tag{71.3}
+$$
+
+证明。固定任意原 $a$；对 $b\in I$ 置 $F_b=D(a,b)-\kappa(a,b)\in I$。这一步由 71.1 和乘子理想性支付，$F_0=0$。在同一次完整 PB 中取原 $b,c\in I$，令
+
+$$
+v=D(a,b)-a\circ c,\qquad w=a\circ b+D(a,c).
+$$
+
+吸收及 Jordan 理想性给 $v,w\in I$，所以两次外层旧调用都在已识别的 $I^2$ 内。只对这些外层值使用种子公式，并与已知 $\kappa$ 的同一个配平相减，得到
+
+$$
+b\circ F_b+c\circ F_c+
+\kappa(b,F_c)+\kappa(F_b,c)=0.
+\tag{71.4}
+$$
+
+这里比较配平的平方恒等式准确为：对 $Z=b+\mathrm ic$，
+
+$$
+\begin{gathered}
+Q_\kappa(b,c):=b^2+c^2+2\kappa(b,c)=Z^*Z,\\
+(1\pm\mathrm ia)Z
+=b\pm\bigl(\kappa(a,b)-a\circ c\bigr)
++\mathrm i\bigl[c\pm\bigl(a\circ b+\kappa(a,c)\bigr)\bigr],\\
+\bigl((1+\mathrm ia)Z\bigr)^*\bigl((1+\mathrm ia)Z\bigr)
+=Z^*(1+a^2)Z
+=\bigl((1-\mathrm ia)Z\bigr)^*\bigl((1-\mathrm ia)Z\bigr).
+\tag{71.5}
+\end{gathered}
+$$
+
+这些比较输入在此全属于 $A$。展开已知 Jordan 平方与双线性 $\kappa$ 后，PB 除以四正是 $b\circ v+c\circ w+\kappa(b,w)+\kappa(v,c)=0$；减去 (71.5) 给 (71.4)。没有拆开任何尚未知的旧 $D$。
+
+取 $c=0$，再代回 (71.4)，分别得
+
+$$
+b\circ F_b=0,\qquad
+\kappa(b,F_c)+\kappa(F_b,c)=0\quad(b,c\in I).
+\tag{71.6}
+$$
+
+先设 $b\ge0$。由 $bF_b=-F_bb$ 得 $b^2F_b=F_bb^2$；对已知正算子 $b^2$ 作平方根函数演算，$F_b$ 与 $b=\sqrt{b^2}$ 交换，故 $bF_b=F_bb=0$。在 $M(A)$ 的任意忠实含单位表示中，固定自伴算子 $F_b$ 因而只支撑在 $\ker b$。若 $\xi\in\ker b$，数学向量读取的同一个 P2 给
+
+$$
+\langle D(a,b)\xi,\xi\rangle=0,
+\qquad \langle\kappa(a,b)\xi,\xi\rangle=0.
+\tag{71.7}
+$$
+
+第二式直接由 $b\xi=0$ 得出。故 $F_b$ 在其整个支撑上的二次读取为零，极化这个固定算子给 $F_b=0$。
+
+任意自伴 $b\in I$ 的正负部分 $b_+,b_-\in A_{\rm sa}=I$ 都是原输入；上段已给 $F_{b_+}=F_{b_-}=0$。在 (71.6) 中分别取 $c=b_+,b_-$，得到 $F_b$ 与两者交换，因而与 $b$ 交换。再由 $b\circ F_b=0$ 得 $bF_b=F_bb=0$。重复 (71.7) 的零预算与固定算子极化，得 $F_b=0$。原反对称性同时识别 $I\times E$。此证明没有使用旧 $D$ 的可加性、极限、全域谱封闭或原秩一投影。∎
+
