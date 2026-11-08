@@ -10,7 +10,7 @@ import Mathlib.GroupTheory.Perm.Sign
 import Mathlib.LinearAlgebra.Finsupp.LinearCombination
 import Mathlib.Algebra.MvPolynomial.Basic
 import Mathlib.Algebra.BigOperators.Fin
-import Mathlib.Tactic
+import Mathlib.Tactic.Ring
 
 /-!
 admission_basis: open-problem-resolution (#28063; Proved)
@@ -29,8 +29,8 @@ open Equiv
 /-- The two independent Potts variables over the integers. -/
 abbrev Coeff := MvPolynomial (Fin 2) ℤ
 
-def q : Coeff := MvPolynomial.X 0
-def v : Coeff := MvPolynomial.X 1
+noncomputable def q : Coeff := MvPolynomial.X 0
+noncomputable def v : Coeff := MvPolynomial.X 1
 
 /-- Adjacency on the cyclic slice, including the seam. -/
 def Adjacent {L : ℕ} (i j : Fin L) : Prop :=
@@ -54,6 +54,7 @@ private def singletonState (σ : Perm (Fin L)) : State L := ⟨σ, Or.inl ⟨σ,
 
 /-- A basis vector; diagrams outside this degree block are projected to zero. -/
 def ket (f : Fin L → Fin L) : Space L :=
+  open Classical in
   if h : Native L f then Finsupp.single ⟨f, h⟩ 1 else 0
 
 /-- Join current components; distinct marked components cannot be joined in this block. -/
@@ -91,10 +92,6 @@ def alternatingVector (L : ℕ) [NeZero L] : Space L :=
   ∑ σ : Perm (Fin L),
     Finsupp.single (singletonState σ) (((Perm.sign σ : ℤˣ) : ℤ) : Coeff)
 
-private theorem ket_singleton (σ : Perm (Fin L)) :
-    ket (σ : Fin L → Fin L) = Finsupp.single (singletonState σ) 1 := by
-  simp [ket, Native, singletonState]
-
 private theorem singletonState_injective :
     Function.Injective (singletonState : Perm (Fin L) → State L) := by
   intro σ τ h
@@ -106,27 +103,25 @@ private theorem alternatingVector_ne_zero : alternatingVector L ≠ 0 := by
   have hh := congrArg (fun a : Space L => a (singletonState 1)) h
   have hcoeff : alternatingVector L (singletonState 1) = 1 := by
     simp [alternatingVector, Finsupp.single_apply, singletonState_injective.eq_iff]
-  simpa [hcoeff] using hh
+  simp [hcoeff] at hh
 
 private theorem detach_singleton (i : Fin L) (σ : Perm (Fin L)) (c : Coeff) :
     detach i (Finsupp.single (singletonState σ) c) =
       (if σ i = 0 then q else 0) • Finsupp.single (singletonState σ) c := by
   classical
-  have h : ¬ ∃ j, j ≠ i ∧ σ j = σ i := by
-    rintro ⟨j, hji, hj⟩
-    exact hji (σ.injective hj)
   by_cases hi : σ i = 0 <;>
-    simp [detach, singletonState, hi, h, smul_smul, mul_comm]
+    simp [detach, singletonState, hi, mul_comm]
 
+omit [NeZero L] in
 private theorem update_swap (σ : Perm (Fin L)) (i j : Fin L) (hij : i ≠ j) :
     Function.update (σ * swap i j : Perm (Fin L)) j (σ j) =
       Function.update (σ : Fin L → Fin L) i (σ j) := by
   funext x
   by_cases hxi : x = i
-  · subst x; simp [hij, Perm.mul_apply]
+  · subst x; simp [hij]
   by_cases hxj : x = j
-  · subst x; simp [hij, Perm.mul_apply]
-  simp [Function.update_of_ne, hxi, hxj, Perm.mul_apply,
+  · subst x; simp [hij.symm]
+  simp [Function.update_of_ne, hxi, hxj,
     swap_apply_of_ne_of_ne hxi hxj]
 
 private theorem join_singleton_swap (i j : Fin L) (hij : i ≠ j)
@@ -139,15 +134,16 @@ private theorem join_singleton_swap (i j : Fin L) (hij : i ≠ j)
   have hsw' : (σ * swap i j) j = σ i := by simp [Perm.mul_apply]
   by_cases hi : σ i = 0
   · have hj : σ j ≠ 0 := by intro h; exact hσ (hi.trans h.symm)
-    simp [join, singletonState, hsw, hsw', hσ, hσ.symm, hi, hj,
-      update_swap σ i j hij]
+    simp only [join, Finsupp.linearCombination_single, one_smul, singletonState,
+      hsw, hsw', hi, hj, Ne.symm hj, ↓reduceIte]
+    exact congrArg ket (update_swap σ i j hij)
   by_cases hj : σ j = 0
-  · have heq := update_swap (σ * swap i j) j i hij.symm
-    have hback : σ * swap i j * swap j i = σ := by
-      rw [swap_comm j i, mul_assoc, swap_mul_self, mul_one]
-    simp only [hback, hsw'] at heq
-    simp [join, singletonState, hsw, hsw', hσ, hσ.symm, hi, hj, heq]
-  · simp [join, singletonState, hsw, hsw', hσ, hσ.symm, hi, hj]
+  · have heq := update_swap σ j i hij.symm
+    rw [swap_comm j i] at heq
+    simp only [join, Finsupp.linearCombination_single, one_smul, singletonState,
+      hsw, hsw', hi, hj, Ne.symm hi, ↓reduceIte]
+    exact congrArg ket heq
+  · simp [join, singletonState, hσ, hσ.symm, hi, hj]
 
 private theorem join_alternating (i j : Fin L) (hij : i ≠ j) :
     join i j (alternatingVector L) = 0 := by
@@ -165,11 +161,11 @@ private theorem join_alternating (i j : Fin L) (hij : i ≠ j) :
         Finsupp.single (singletonState τ) c = c • Finsupp.single (singletonState τ) 1 := by
       simp
     dsimp [f]
-    rw [hs, hsingle, hsingle, map_smul, map_smul,
+    rw [hs, hsingle σ, hsingle (σ * swap i j), map_smul, map_smul,
       join_singleton_swap i j hij σ]
     simp
   · intro σ _ h
-    have hh : swap i j = (1 : Perm (Fin L)) := mul_left_cancel (by simpa using h)
+    have hh : swap i j = (1 : Perm (Fin L)) := mul_left_cancel (a := σ) (by simpa only [mul_one] using h)
     have hh' := congrArg (fun τ : Perm (Fin L) => τ i) hh
     simp at hh'
     exact hij hh'.symm
@@ -215,7 +211,7 @@ private theorem vertical_singleton (σ : Perm (Fin L)) (c : Coeff) :
   have hh := list_prod_on_vector (List.finRange L)
     (fun i => v • (1 : Module.End Coeff (Space L)) + detach i) a
     (Finsupp.single (singletonState σ) c) (fun i _ => ha i)
-  simpa [vertical, List.map_finRange, Fin.prod_ofFn, hprod] using hh
+  simpa only [← List.ofFn_eq_map, Fin.prod_ofFn, hprod, vertical] using hh
 
 private theorem vertical_alternating :
     vertical L (alternatingVector L) =
@@ -223,7 +219,7 @@ private theorem vertical_alternating :
   classical
   simp only [alternatingVector, map_sum, vertical_singleton, Finset.smul_sum]
 
-private theorem horizontal_alternating (second : Bool) (hL : 2 ≤ L) :
+private theorem horizontal_alternating (second : Bool) :
     horizontal L second (alternatingVector L) = alternatingVector L := by
   classical
   let A : Fin (L / 2) → Module.End Coeff (Space L) := fun k =>
@@ -234,25 +230,37 @@ private theorem horizontal_alternating (second : Bool) (hL : 2 ≤ L) :
         (Fin.ofNat L (2 * k.val + (if second then 1 else 0) + 1)) := by
     intro h
     have hh := congrArg Fin.val h
-    simp only [Fin.val_ofNat] at hh
     have hk := k.isLt
-    cases second <;> simp at hh <;> omega
+    change (2 * k.val + if second then 1 else 0) % L =
+      (2 * k.val + (if second then 1 else 0) + 1) % L at hh
+    have hkbound : 2 * k.val + 1 < L := by omega
+    cases second
+    · change (2 * k.val) % L = (2 * k.val + 1) % L at hh
+      rw [Nat.mod_eq_of_lt (by omega), Nat.mod_eq_of_lt hkbound] at hh
+      omega
+    · change (2 * k.val + 1) % L = (2 * k.val + 2) % L at hh
+      rw [Nat.mod_eq_of_lt hkbound] at hh
+      by_cases he : 2 * k.val + 2 = L
+      · rw [he, Nat.mod_self] at hh; omega
+      · rw [Nat.mod_eq_of_lt (by omega)] at hh; omega
   have ha : ∀ k, A k (alternatingVector L) = (1 : Coeff) • alternatingVector L := by
     intro k
-    simp [A, join_alternating _ _ (hne k)]
+    change alternatingVector L + v • (join _ _) (alternatingVector L) = _
+    rw [join_alternating _ _ (hne k)]
+    simp
   have hh := list_prod_on_vector (List.finRange (L / 2)) A (fun _ => 1)
     (alternatingVector L) (fun k _ => ha k)
-  simpa [horizontal, A, List.map_finRange] using hh
+  simpa [← List.ofFn_eq_map, horizontal, A] using hh
 
 /-- Every even honeycomb width has the source eigenvalue in the native degree L-1 block. -/
-theorem result (L : ℕ) (hL : 2 ≤ L) (hEven : Even L) :
+theorem result (L : ℕ) (hL : 2 ≤ L) (_hEven : Even L) :
     letI : NeZero L := ⟨by omega⟩
     ∃ w : Space L, w ≠ 0 ∧ transfer L w = (v ^ (2 * (L - 1)) * (v + q) ^ 2) • w := by
-  letI : NeZero L := ⟨by omega⟩
+  let : NeZero L := ⟨by omega⟩
   refine ⟨alternatingVector L, alternatingVector_ne_zero, ?_⟩
   simp only [transfer, Module.End.mul_apply]
-  rw [horizontal_alternating false hL, vertical_alternating, map_smul,
-    horizontal_alternating true hL, map_smul, vertical_alternating, smul_smul]
+  rw [horizontal_alternating false, vertical_alternating, map_smul,
+    horizontal_alternating true, map_smul, vertical_alternating, smul_smul]
   congr 1
   rw [pow_mul]
   ring
