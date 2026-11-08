@@ -8,7 +8,7 @@ internal sealed class HannaA381361AllOddDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S1/Recurrence/Parity/HannaA381361AllOdd.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/RecurrenceComposition/hanna2025a381361");
+        LibraryNoteRef.Create("D5/L/Certificates/hanna2025a381361");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Every exponential coefficient of Hanna's implicit rational series is an odd integer.",
