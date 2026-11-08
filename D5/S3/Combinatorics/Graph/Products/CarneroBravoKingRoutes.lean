@@ -674,7 +674,8 @@ private unsafe def kingFillProof (target : Expr) : MetaM Expr := do
   let mut proof ← kingChecked (← mkEq (mkApp2 fill assembled current) rhs) (← mkEqRefl rhs)
   for (chunk, previous, next, step) in steps.reverse do
     proof ← mkAppM ``checked_fill_append #[key, chunk, assembled, previous, next, finalTree, step, proof]
-    assembled ← mkAppM ``List.append #[chunk, assembled]
+    let suffix ← mkAppM ``List.append #[chunk, assembled]
+    assembled ← mkAuxDefinitionFor (← mkAuxDeclName (kind := `_kingFillSuffix)) suffix (zetaDelta := true) (compile := false)
   let listProof ← kingListProof (← mkEq xs assembled)
   let mapper ← withLocalDeclD `l (← inferType xs) fun l => mkLambdaFVars #[l] (mkApp2 fill l initial)
   mkEqTrans (← mkAppM ``congrArg #[mapper, listProof]) proof
@@ -700,7 +701,8 @@ local elab "king_kernel_all" : tactic => do
       let name ← withOptions (Lean.Elab.async.set · false) <|
         mkAuxLemma [] target proof
       pf ← mkAppM ``checked_all_append #[f, chunk, assembled, mkConst name, pf]
-      assembled ← mkAppM ``List.append #[chunk, assembled]
+      let suffix ← mkAppM ``List.append #[chunk, assembled]
+      assembled ← mkAuxDefinitionFor (← mkAuxDeclName (kind := `_kingAllSuffix)) suffix (zetaDelta := true) (compile := false)
     let target ← mkEq xs assembled
     let proof ← kingReductionProof target
     let name ← withOptions (Lean.Elab.async.set · false) <|
