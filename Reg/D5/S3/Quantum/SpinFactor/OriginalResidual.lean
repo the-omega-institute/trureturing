@@ -110,7 +110,8 @@ def registration (D₀ : E → E → E) (hP₀ : P2 D₀) (hPB₀ : PB D₀)
     owner := `D5.S3.Quantum.SpinFactor.OriginalResidual
     definition := none
     coordinates := #[]
-    readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body",
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body",
         "body", "body", "body", "body", "body", "body", "fn",
         "fn"]
       stateBinder := 0
@@ -183,7 +184,8 @@ def registration (D₀ : E → E → E) (hP₀ : P2 D₀) (hPB₀ : PB D₀)
     owner := `D5.S3.Quantum.SpinFactor.OriginalResidual
     definition := none
     coordinates := #[]
-    readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body",
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body",
         "body", "body", "body", "body", "body", "body", "fn",
         "fn"]
       stateBinder := 0
@@ -249,13 +251,15 @@ def registration :
     owner := `D5.S3.Quantum.SpinFactor.OriginalResidual
     definition := none
     coordinates := #[]
-    readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body",
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body",
         "body", "body", "body", "fn", "arg", "fn", "fn"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none
       booleanPredicate := false },
-      { path := #["body", "body", "body", "body", "body", "body", "body",
+      {
+      path := #["body", "body", "body", "body", "body", "body", "body",
         "body", "body", "body", "arg", "fn", "fn"]
       stateBinder := 0
       functionOperand := true
@@ -320,7 +324,8 @@ def registration (D₀ : E → E → E) (hP₀ : P2 D₀) (hPB₀ : PB D₀)
     owner := `D5.S3.Quantum.SpinFactor.OriginalResidual
     definition := none
     coordinates := #[]
-    readouts := #[{ path := #["body", "body", "body", "body", "arg", "body", "arg",
+    readouts := #[{
+      path := #["body", "body", "body", "body", "arg", "body", "arg",
         "body", "body", "body", "body", "fn", "fn"]
       stateBinder := 0
       functionOperand := true
