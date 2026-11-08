@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:a7161134919262ce46c310510ab86c1cd64fa7349494154663e22d293c1ff6ed
   normalized_sha256: sha256:a7161134919262ce46c310510ab86c1cd64fa7349494154663e22d293c1ff6ed
 cas_ref: sha256:a7161134919262ce46c310510ab86c1cd64fa7349494154663e22d293c1ff6ed
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Geometry/TwoAxisFiniteRotation.two_axis_finite_word
+    target_statement_id: sha256:ab2c2c55480e6fb2f92b6f1317f888c4bfd7b5e05ad5aa04082e5d74e48edf21
 receipts:
   unresolved_subitems: []
