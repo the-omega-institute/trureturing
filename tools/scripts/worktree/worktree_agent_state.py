@@ -204,10 +204,10 @@ def summary(source):
                         if matches and row["status"] != "released":
                             result["pending"].append(row | {"matched_by": matches})
                         if row["creator"] is None or row["status"] == "unavailable":
-                            result["unknown"].append(dict(path=str(path), reason="creator_unknown" if
+                            result["unknown"].append(dict(path=str(path), branch=row["branch"], reason="creator_unknown" if
                                 row["creator"] is None else row["reason"]))
                     except Exception as error:
-                        result["unknown"].append(dict(path=str(path), reason=str(error)[:256]))
+                        result["unknown"].append(dict(path=str(path), branch=item.get("branch"), reason=str(error)[:256]))
         except Exception as error:
             result["unknown"].append(dict(reason=str(error)[:256]))
     result["complete"] &= not result["unknown"]
@@ -220,6 +220,11 @@ def summary(source):
         print("  maintain: cd " + path + "; make worktree-checkpoint MESSAGE=FILE; "
               "release: make worktree-stale WORKTREE_PATH=" + path + "; "
               "remove: make worktree-remove NAMES=" + shlex.quote(Path(row["path"]).name),
+              file=sys.stderr, flush=True)
+    if not result["complete"]:
+        print("  incomplete view: inspect unknown paths; maintain in the selected tree with "
+              "make worktree-checkpoint MESSAGE=FILE; release with make worktree-stale WORKTREE_PATH=DIR; "
+              'remove with make worktree-remove NAMES="DIR". Supply a supported session identity when unknown.',
               file=sys.stderr, flush=True)
     return result
 
