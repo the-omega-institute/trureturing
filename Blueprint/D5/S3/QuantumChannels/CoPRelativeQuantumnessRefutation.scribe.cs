@@ -14,9 +14,6 @@ internal sealed class CoPRelativeQuantumnessRefutationDocument : IScribeDocument
         "A completely positive, trace-preserving qubit channel that preserves commuting density matrices increases relative quantumness at alpha zero. The exact trace arguments of the logarithms are 50401283/7340144 before the channel and 1879639/266240 afterwards.",
         H("Relative quantumness can increase under a commutativity-preserving channel"),
         Blocks(
-            Node("density", "Density matrices", DensityFormula(),
-                "A density matrix on C^d is a positive semidefinite complex d by d matrix with trace one. PSD denotes Matrix.PosSemidef and Tr is the complex matrix trace.",
-                "IsDensity", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("reg", "Regularization", RegularizationFormula(),
                 RegularizationQuote + " Here d is a natural number, A is a complex d by d matrix, and epsilon is real. The division epsilon/d is real division after casting d to the reals; I is the identity matrix and scalar multiplication is by a real scalar. The conjecture uses 0 < epsilon < 1.",
                 "reg", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
@@ -180,13 +177,6 @@ internal sealed class CoPRelativeQuantumnessRefutationDocument : IScribeDocument
     private static Formula Density(Formula a) => Call("IsDensity", a);
     private static Formula Reg(Formula epsilon, Formula a) => Call("reg", epsilon, a);
     private static Formula Quantumness(Formula a, Formula b) => Call("Q", a, b);
-
-    private static Formula DensityFormula()
-    {
-        Formula d = F.Id("d"), a = F.Id("A");
-        return Disp(All(d, Naturals(), All(a, Mat(d),
-            Iff(Density(a), And(Call("PSD", a), Equal(Call("Tr", a), D(1)))))));
-    }
 
     private static Formula RegularizationFormula()
     {

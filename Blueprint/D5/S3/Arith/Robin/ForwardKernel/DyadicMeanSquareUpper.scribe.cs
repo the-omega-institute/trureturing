@@ -19,6 +19,15 @@ internal sealed class DyadicMeanSquareUpperDocument : IScribeDocumentDefinition
                 + "ShortIntervalMeanSquareBound hypothesis; no separate Riemann "
                 + "hypothesis is used.")),
             Describe.Lean(
+                DescribeId.Create("discrepancy-locally-bounded-measurable"),
+                DeclarationHandle.Create(Prefix + "discrepancy_locallyBoundedMeasurable"),
+                H("Regularity of the Chebyshev error"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The function psi(x)-x is measurable and bounded in absolute value on every closed finite interval. Measurability comes from the measurability of the complete Chebyshev error; monotonicity and nonnegativity of psi give the compact bound."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("forward-kernel-dyadic-mean-square-upper"),
                 DeclarationHandle.Create(Prefix + "forward_kernel_dyadic_mean_square_upper"),
                 H("The dyadic upper estimate"),
@@ -30,7 +39,9 @@ internal sealed class DyadicMeanSquareUpperDocument : IScribeDocumentDefinition
                         + "the integral of forwardResponse(x)^2/x over [X,2X] "
                         + "is at most C*X^(1/5)*log(X)^2.")),
                     Paragraph(Text(
-                        "The substitution u=theta*x expresses the response as "
+                        "The complete response is the profile response with E=psi-id, "
+                        + "exponent 4/5, and constant profile one. "
+                        + "The substitution u=theta*x expresses this profile response as "
                         + "sqrt(x)*x/H(x)^2 times the integral of D(x,theta) "
                         + "multiplied by w((1+theta)*x)/w(x), for "
                         + "0<=theta<=H(x)/x. Positivity and monotonicity of w "

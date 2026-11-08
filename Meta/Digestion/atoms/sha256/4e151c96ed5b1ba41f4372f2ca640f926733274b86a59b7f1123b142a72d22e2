@@ -1,0 +1,29 @@
+**Definition 209.1 (a weak-star calibrated sequence).** Retain Definition 208.1, all of the original telescope of Appendix III Definitions 154.1 and 155.1, and the original source, clock, measure, operator and own-terminal convention. Fix one original $\theta$. Let $D_n=(D_{n,i})_{i\in\mathcal L}$ be deterministic whole-$G$ Borel partitions satisfying exactly (208.1), and write $u_{n,i}=\mathbf1_{D_{n,i}}$. Assume only
+
+$$
+u_{n,i}\overset{*}{\rightharpoonup}f_i\quad\text{in }L^\infty(G,m)
+\qquad(i\in\mathcal L).
+\tag{209.1}
+$$
+
+For $a\in\mathbb R^{\mathcal L}$ put
+
+$$
+h_{n,a}=\sum_i a_i u_{n,i},\qquad
+t_{n,a}=Ph_{n,a},\qquad
+s_{n,a}=\frac{P(gh_{n,a})}{v},
+\tag{209.2}
+$$
+
+and define $G_{j,n}^\pm$, $H_{\chi,j,n}$ and $M_{j,n}$ from (208.15) with $u_j$ replaced by $u_{n,j}$. Thus $\pi_j$ remains the fixed number in (208.2), because (208.1) preserves the middle marginal. Put
+
+$$
+w=v\chi,\qquad
+\xi_j=\frac1{\pi_j}\int_G f_jw\,dm,\qquad
+\Lambda_j(a,b)=\frac1{\pi_j}\int_G f_jw\,P(F_{a\odot b})\,dm
+\quad(a,b\in K_{\rm rel}).
+\tag{209.3}
+$$
+
+No bounded global likelihood ratio, compact $L^2$ heat operator, source-span witness or parameter-uniform constant is included in this definition.
+

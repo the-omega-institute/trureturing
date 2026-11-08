@@ -1,0 +1,43 @@
+**定理 43.2（无 Born 校准的原事件范数间隙）。** 在定义 43.1 的条件下，令
+
+$$
+m_S=\sup_{\psi\in S(H)}P_S(\psi),\qquad
+\delta_P=\min\{m_S:S\subseteq\Omega_{10},\ m_S>0\}.
+\tag{43.4}
+$$
+
+则 $0<\delta_P\le1$。若 $e\in\mathcal E_{\rm term}$ 由 $(f,S)$ 实现，则
+
+$$
+\|e\|_{\rm op}=m_S,
+\qquad e\ne0\ \Longrightarrow\ \|e\|_{\rm op}\ge\delta_P.
+\tag{43.5}
+$$
+
+$\delta_P$ 只依赖同一个固定探测器响应，与字长和所选未来字无关；本定理不使用 II79.1、关系 (37.2)、比较合同 38.2 或任何预先给定的整体 Born 律。
+
+证明。每个 $P_S$ 在单位球面上连续、相位不变，且 $0\le P_S\le1$。标签集有限，所以所有子集的 $m_S$ 只有有限多个值。完整事件有 $m_{\Omega_{10}}=1$，因而正值集合非空，最小值严格正。这是存在性的有限最小值，不附带其数值或可由有限查询取得该最小值的结论。
+
+固定 (43.3) 的 $e,f,S$ 及任意单位 $\psi\in H$。由 (43.1)，可取原字 $p_n$ 和单位复标量 $\lambda_n$，使 $\lambda_nK_{p_n}v_0\to\psi$。相位不变性与线性性给
+
+$$
+\begin{aligned}
+P_S(K_f\lambda_nK_{p_n}v_0)
+ &=P_S(K_fK_{p_n}v_0)\\
+ &=\langle\lambda_nK_{p_n}v_0,
+       e\lambda_nK_{p_n}v_0\rangle.
+\end{aligned}
+\tag{43.6}
+$$
+
+两边连续，故 $P_S(K_f\psi)=\langle\psi,e\psi\rangle$ 对全部单位 $\psi$ 成立。这一步用的是原制备射线在整个 $H$ 中的密度，并非为闭包中的射线增设实际制备。原 $K_f$ 在 $H$ 上酉，双射地作用于单位球面，所以
+
+$$
+\|e\|_{\rm op}
+=\sup_{\psi\in S(H)}\langle\psi,e\psi\rangle
+=\sup_{\psi\in S(H)}P_S(K_f\psi)=m_S.
+\tag{43.7}
+$$
+
+正效果非零当且仅当其范数正，由 (43.4) 得间隙。证明只需要各被实现事件的对应 (43.3)，不先替各单标签建立效果表示。∎
+

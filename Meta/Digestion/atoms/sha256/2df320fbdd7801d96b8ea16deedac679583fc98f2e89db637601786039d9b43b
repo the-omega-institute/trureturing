@@ -1,0 +1,33 @@
+**定义 98.1（同一原自旋背景与完整二元前件）。** 保留定义 64.1 的同一原 $\Omega,E,C,u,N,P,S,D$、准确原锥及全部原来源合同。仅在定义 32.1 所指定的自旋分支工作：同一个已识别的 JB 完成为 $X=\mathbb Ru\oplus H$，$H$ 是实 Hilbert 空间，$V=E\cap H$ 在 $H$ 中稠密，原 $E=\mathbb Ru\oplus V$ 可以不完备。指定识别准确保持
+
+$$
+\begin{aligned}
+(su+x)\circ(tu+y)&=(st+\langle x,y\rangle)u+sy+tx,\\
+C&=\{su+x\in E:s\ge\|x\|\},\qquad
+N(su+x)=|s|+\|x\|,\qquad u=(1,0).
+\end{aligned}
+\tag{98.1}
+$$
+
+这里 $\circ=S$，不是另选乘法；自旋识别是本条的明确背景，不是从一般 JB 已推出的结论。原正实线性评价族 $P$ 分离 $E$ 并准确决定 $C$；全部零、不等及次归一质量 $m_\alpha=\alpha(u)$ 保留。旧 $D:E^2\to E$ 起初仅为总映射。对全部原 $\alpha,a,b$ 要求实际有向表
+
+$$
+\begin{pmatrix}
+\alpha(a^2)&\alpha(a\circ b)-\mathrm i\alpha(D(a,b))\\
+\alpha(b\circ a)-\mathrm i\alpha(D(b,a))&\alpha(b^2)
+\end{pmatrix}\succeq0,
+\qquad a^2=a\circ a,
+\tag{98.2}
+$$
+
+以及同一个原映射的
+
+$$
+D(a,D(a,b))=K_ab,\qquad
+K_a=L_a^2-L_{a^2},\qquad L_ac=a\circ c
+\quad(a,b\in E).
+\tag{98.3}
+$$
+
+二表的两个方向都是实际值。PY、Jacobi、$R$、A、旧 $D$ 的可加性、齐次性、连续性、中央平移、原域完备性及完成新输入均不作前提。以下只在明确的消费者中另加旧 $\mathrm J_\perp$；原一般 JB 的目标不被这个指定分支替代。
+

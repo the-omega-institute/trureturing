@@ -1,0 +1,43 @@
+**Proposition 199.2 (convex feasibility and exact residual closure).** The set $\mathscr P_u$ is convex. Every $A\in\mathscr P_u$ gives a pointwise legal partition with
+
+$$
+\sum_yu_y(A)=1,
+\qquad
+T_u(u_y(A))=f_y,
+\qquad
+\Delta(u(A))_{yzk}=0
+\quad\text{for all }y,z,k.
+\tag{199.3}
+$$
+
+Conversely, every pointwise legal label family in $\mathcal W_u$ with quotient labels $T_u(\widetilde u_y)=f_y$ has a unique coefficient matrix $A\in\mathscr P_u$ and is given by (199.1). Its radical corrections span all of $\mathcal R_u$ exactly when
+
+$$
+\operatorname{rank}A=d_u.
+\tag{199.4}
+$$
+
+*Proof.* For each label $y$ and each point in the chosen representatives, the inequality
+
+$$
+S_u(f_y)+\sum_{\ell=1}^{d_u}a_{y\ell}r_\ell\ge0
+$$
+
+is an affine half-space condition on the entries of $A$. Intersecting these conditions with the affine linear subspace (199.2) proves convexity.
+
+Because $\sum_yf_y=1$ and $S_u(1)=1$, equation (199.2) gives
+
+$$
+\sum_yu_y(A)=S_u\left(\sum_yf_y\right)+\sum_y\rho_y(A)=1.
+$$
+
+Each $\rho_y(A)$ lies in $\mathcal R_u$, so Proposition 198.2 applies: the pointwise simplex conditions imply that all residuals vanish. The identity for $T_u$ follows from $T_uS_u=\operatorname{id}$ and $T_u(\mathcal R_u)=0$.
+
+Conversely, let $(\widetilde u_y)$ be as stated. Then
+
+$$
+\widetilde\rho_y=\widetilde u_y-S_u(f_y)\in\ker T_u=\mathcal R_u,
+$$
+
+and the basis of $\mathcal R_u$ gives unique coefficients $a_{y\ell}$. Summing the family and using $S_u(1)=1$ gives (199.2), while pointwise legality gives the defining inequalities of $\mathscr P_u$. The corrections span $\mathcal R_u$ exactly when their coefficient row vectors span $\mathbb R^{d_u}$, which is equivalent to the column-rank condition (199.4). $\square$
+

@@ -25,6 +25,11 @@ internal sealed class BooleanCollectiveLaddersDocument : IScribeDocumentDefiniti
             Node("Z", "Centered occupancy", Centered(), DescribeRole.Definition, AssessedProvenance.FromRepo(Feinsilver)),
             Node("rankSpace", "Homogeneous rank space", Rank(), DescribeRole.Definition, AssessedProvenance.FromLiterature(Feinsilver)),
             Node("primitive", "Every primitive vector", Primitive(), DescribeRole.Definition, AssessedProvenance.FromLiterature(Feinsilver)),
+            Node("occupiedSet", "The zero-bit subset", OccupiedSubset(false), DescribeRole.Definition, AssessedProvenance.FromRepo(Feinsilver)),
+            Node("occupiedSet_card", "Counting occupancy", OccupiedSubset(true), DescribeRole.Theorem, AssessedProvenance.FromRepo(Feinsilver)),
+            Node("configurationEquiv", "All configurations as subsets", ConfigurationCoordinates(false), DescribeRole.Definition, AssessedProvenance.FromRepo(Feinsilver)),
+            Node("rankConfigurationEquiv", "Fixed-rank configurations as subsets", ConfigurationCoordinates(true), DescribeRole.Definition, AssessedProvenance.FromRepo(Feinsilver)),
+            Node("site_entry", "The original site matrix entries", SiteEntries(), DescribeRole.Theorem, AssessedProvenance.FromRepo(Feinsilver)),
             Node("finitePrimitiveStrings", "The finite strings", Strings(), DescribeRole.Definition, AssessedProvenance.FromLiterature(Feinsilver)),
             Node("result", "Span and exact primitive-string identities", Result(), DescribeRole.Theorem, AssessedProvenance.FromLiterature(Feinsilver)),
             Node("previousChoose", "Previous binomial coefficient", Previous(), DescribeRole.Definition, AssessedProvenance.FromRepo(Feinsilver)),
@@ -42,6 +47,11 @@ internal sealed class BooleanCollectiveLaddersDocument : IScribeDocumentDefiniti
             Node("native_decomposition", "Multiplicity, complete basis and native intertwiners", FullResult(), DescribeRole.Theorem, AssessedProvenance.FromRepo(Srinivasan, Feinsilver)),
             Paragraph(Text("The raising and lowering maps are Matrix.toEuclideanLin of the existing PronkoFredkinAntiAdjointExpansion.totalPlus and totalMinus, using the existing sigmaPlus, sigmaMinus and site operators. Their tensor multiplication is reused from StabilizerPairLocalUnitaryInequivalence.tensor_mul. The proof derives the concrete commutator and complex adjoint relation. At each rank, orthogonal decomposition into the image of the preceding rank and its complement constructs primitive generators; induction proves full span. Thus neither a complete basis nor a homogeneous complement is an assumption. The pinned mathlib sl₂ primitive-vector theorems supply the recurrence and terminal zero for positive site counts; the empty-site carrier is handled directly by the zero collective maps. All natural S, including S=0, and primitive strings of spin zero are included.")),
             Paragraph(Text("In the formulas, powers act by composition, ⟪v,w⟫ is complex Hermitian inner product, and scalars act on the left. Subtraction in the natural quantities d = 2S−2t and S−t is truncated; the lowering coefficient and weight are interpreted in ℂ after casting their natural operands. The notation scalar·vector denotes complex scalar multiplication. descFactorial(d,q) is the natural descending product ∏_{a=0}^{q−1}(d−a), equal to d!/(d−q)! when q≤d. The zero-power and zero-deficit cases are included. The result permits any primitive vector, without a reality restriction or a restriction to the permutation-invariant sector.")),
+            Paragraph(Text("For arbitrary natural N and t, occupiedSet and configurationEquiv identify bit-zero configurations with finsets of Fin(N). rankConfigurationEquiv restricts this bijection to rankConfigurations(N,t) = {x : Configuration(N) | occupancy(x)=t} and rankSubsets(N,t) = {A : Finset(Fin(N)) | card(A)=t}. The displayed maps suppress only subtype proof fields. The native fixed-cardinality application uses N=s directly, including odd s, with no enlargement of the Boolean carrier.")),
+            Paragraph(Text("Let C(s,r) = {A : Finset(Fin(s)) | card(A)=r}, and let H(s,r) = EuclideanSpace(ℂ,C(s,r)) carry counting inner product. Write e_r = rankConfigurationEquiv(s,r). For arbitrary complex f in H(s,r), define E_r f(x)=f(e_r(x)) when occupancy(x)=r and zero otherwise. Reindexing the finite counting sum proves ⟪E_r f,E_r g⟫=⟪f,g⟫ and ‖E_r f‖=‖f‖. For an arbitrary Boolean vector v, restriction is R_r v(A)=v(e_r⁻¹(A)), and E_r R_r v is exactly the mask equal to v at occupancy r and zero elsewhere. The mask fixes every vector in rankSpace(s,r). Thus the Hilbert-space identification uses the counting identity and zero extension; the linear rankEquiv alone is not an isometry assertion.")),
+            Paragraph(Text("The lowering target is C⁻(s,r) = {T : Finset(Fin(s)) | card(T)+1=r}. Define W_r f(T)=∑_{u∈Fin(s),u∉T} f(insert(u,T)), with every coefficient equal to one. Zero extension E⁻_r from this target uses the condition occupancy(x)+1=r and occupiedSet(x); it also preserves complex counting inner products and norms. The original site_entry formula gives L(s)v(x)=∑_{i∈Fin(s)} if x(i)=1 then v(update(x,i,0)) else 0. Since occupiedSet(update(x,i,0))=insert(i,occupiedSet(x)), this yields the exact correspondence L(s)E_r f=E⁻_r W_r f. At r=0 the target C⁻(s,0) is empty and this lowering is zero; it is not replaced by a second rank-zero layer through truncated subtraction.")),
+            Paragraph(Text("For r≤s, the counting cardinality of C(s,r) is choose(s,r)>0. Define P_r f to be the constant function with value choose(s,r)⁻¹∑_{A∈C(s,r)}f(A). The sum of f−P_r f is zero, so P_r is the orthogonal projection onto the complex line of constant functions. With W_r viewed as its actual complex linear map and W_r* its adjoint, put D_r=r(s−r+1)I−W_r*W_r. The adjoint identity and the counting norms give Re⟪f,D_r f⟫=r(s−r+1)‖f‖²−‖W_r f‖². These interface identities apply also at r=0 and r=s, and at s=1.")),
+            Paragraph(Text("The remaining coercivity target is Re⟪f,D_r f⟫≥s‖f−P_r f‖² for s≥1 and r≤s. Its fixed-rank spectral derivation is not supplied by these interfaces. The first missing step is a finite decomposition E_r f=∑_{0≤t≤min(r,s−r)}U(s)^(r−t)v_t with v_t in primitive(s,t), obtained from the original arbitrary-N primitive_strings_span after the rank mask. Completion also requires identifying the t=0 component with the actual average and composing the original recurrence and orthogonality. No Johnson gap, parent-atom coverage, full energy, density or confinement conclusion follows from the interface identities alone.")),
             Paragraph(Text("For each rank t≤S, the dimension is derived as choose(2S,t)−previousChoose(2S,t), where previousChoose(N,0)=0 and previousChoose(N,t+1)=choose(N,t). Fixed-occupancy configurations are identified with t-element subsets, and the actual rank space is identified with the complex function space on these subsets. The commutator and adjoint identity prove injectivity of U below the middle rank. Orthogonal splitting of rank t+1 into U(rank t) and its primitive subspace then gives the dimension formula; no rank multiplicity is assumed.")),
             Paragraph(Text("Write d=2S−2t=2(S−t), and let b(t,a) be the selected orthonormal primitive basis. StringIndex(S) consists of (t,(a,k)) with t in Fin(S+1), a in Fin(dim P(2S,t)), and k in Fin(d+1). The normalized vector is U^k b(t,a) divided by its positive real norm, as a complex scalar. Its squared unnormalized norm is k!·descFactorial(d,k), so every position in every selected string is nonzero. Orthogonality and the primitive spanning theorem prove that these normalized vectors form a complete orthonormal basis, rather than assuming a complete family or a unitary.")),
             Paragraph(Text("CopyIndex(S) is the dependent pair (t,a), and NativeIndex(S) is ((t,a),r), with r in Fin(d+1). EuclideanSpace(ℂ,NativeIndex(S)) is the finite Hilbert direct sum, over all primitive copies, of native spin-(S−t) spaces. The native basis vector at ((t,a),r) is the normalized string at (t,(a,Fin.rev(r))). Thus r=d−k=2j−k, including d=0. The coordinate unitary is constructed from this complete basis. nativeMatrix is the dependent block diagonal of the supplied native matrices; nativeU uses PrecessionSpinOneSeparableBound.Jplus, nativeL its conjugate transpose, and nativeZ its Jz. The raising matrix entry is sqrt(r·(d+1−r)) at row r−1, column r; the lowering entry is sqrt((r+1)·(d−r)) at row r+1, column r. Entries outside the range vanish, and Jz has weight d/2−r. Equivalently on ascending normalized strings, U has coefficient sqrt((k+1)·(d−k)), L has coefficient sqrt(k·(d−k+1)), and Z has weight −(S−t)+k. Both endpoints, all multiplicities and spin zero are included.")),
@@ -59,6 +69,11 @@ internal sealed class BooleanCollectiveLaddersDocument : IScribeDocumentDefiniti
                 "Z" => "The identity shift centers occupancy at half of N, using complex scalar division.",
                 "rankSpace" => "Homogeneous vectors have support only at the stated occupancy.",
                 "primitive" => "A primitive vector is homogeneous and is annihilated by the actual lowering map.",
+                "occupiedSet" => "This is the finset of exactly the coordinates whose bit is zero, for arbitrary N.",
+                "occupiedSet_card" => "The cardinality of that original zero-bit finset equals occupancy, without a parity hypothesis.",
+                "configurationEquiv" => "The original equivalence sends x to its zero-bit subset; its inverse puts zero at members and one elsewhere.",
+                "rankConfigurationEquiv" => "The original equivalence restricts to occupancy-t configurations and cardinality-t finsets, including empty fibers. Its subtype maps are the same configurationEquiv and inverse; it is an equivalence of counting indices, not a claim that an arbitrary linear equivalence preserves the norm.",
+                "site_entry" => "Each site entry is the chosen local matrix entry times the Kronecker equality factors at every other coordinate.",
                 "finitePrimitiveStrings" => "All primitive vacua are included, including the spin-zero sector t=S; q=0 is retained.",
                 "previousChoose" => "Rank zero has previousChoose(N,0)=0; successor ranks use the preceding binomial coefficient.",
                 "primitive_multiplicity" => "The dimension formula is proved for every natural S and t≤S, using actual subspaces and operators.",
@@ -138,6 +153,36 @@ internal sealed class BooleanCollectiveLaddersDocument : IScribeDocumentDefiniti
         var body=new Formula.Logic(Mem(v,P(n,t)),FormulaLogicOperator.Iff,
             And(Mem(v,Call("rankSpace",n,t)),Eq(At(Call("L",n),v),D(0))));
         return All("N",N(),All("t",N(),All("v",V(n),body)));
+    }
+    private static Formula OccupiedSubset(bool cardinality)
+    {
+        var n=F.Id("N"); var x=F.Id("x"); var i=F.Id("i");
+        var subset=new Formula.SetBuilder(i,i,Seq(Call("Fin",n),Sp,Land,Sp,Eq(At(x,i),D(0))));
+        return All("N",N(),All("x",Config(n),cardinality
+            ? Eq(Call("card",Call("occupiedSet",x)),Call("occupancy",x))
+            : Eq(Call("occupiedSet",x),subset)));
+    }
+    private static Formula ConfigurationCoordinates(bool fixedRank)
+    {
+        var n=F.Id("N");var t=F.Id("t");var x=F.Id("x");var a=F.Id("A");var i=F.Id("i");
+        var index= fixedRank ? Call("rankConfigurations",n,t) : Config(n);
+        var subsets= fixedRank ? Call("rankSubsets",n,t) : Call("Finset",Call("Fin",n));
+        var e=fixedRank ? Call("rankConfigurationEquiv",n,t) : Call("configurationEquiv",n);
+        var forward=All("x",index,Eq(At(e,x),Call("occupiedSet",x)));
+        var backward=All("A",subsets,All("i",Call("Fin",n),
+            Eq(At(At(Call("inverse",e),a),i),Call("ite",Mem(i,a),D(0),D(1)))));
+        var body=And(forward,backward);
+        return All("N",N(),fixedRank?All("t",N(),body):body);
+    }
+    private static Formula SiteEntries()
+    {
+        var n=F.Id("N");var i=F.Id("i");var j=F.Id("j");var a=F.Id("A");var x=F.Id("x");var y=F.Id("y");
+        var others=Call("erase",Call("univ",Call("Fin",n)),i);
+        var factor=Seq(new Formula.Subscript(F.Prod,Seq(j,Sp,InMacro,Sp,others)),Sp,
+            Call("ite",Eq(At(x,j),At(y,j)),D(1),D(0)));
+        var matrix=Call("Matrix",Call("Fin",D(2)),Call("Fin",D(2)),C());
+        return All("N",N(),All("i",Call("Fin",n),All("A",matrix,All("x",Config(n),All("y",Config(n),
+            Eq(At(At(Call("site",n,i,a),x),y),Mul(At(At(a,At(x,i)),At(y,i)),factor)))))));
     }
     private static Formula Strings()
     {
