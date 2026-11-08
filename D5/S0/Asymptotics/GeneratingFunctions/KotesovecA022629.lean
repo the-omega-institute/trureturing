@@ -32,6 +32,7 @@ proof_shape: coefficient_pos = bind-only; consumers: weighted_distinct_subset_lo
 proof_shape: weighted_distinct_subset_log_sandwich = bind-only; consumers: all_exponents.
 proof_shape: all_exponents = bind-only; consumers: KotesovecA022629.result, KotesovecA092484.result, KotesovecA265840.result, KotesovecA265841.result, KotesovecA265842.result.
 proof_shape: result = bind-only; external named settlement.
+proof_shape: partitions = bind-only; consumers: coefficient_expansion, exp_sum_bound, count_exp_bound, count_log_bound, product_log_upper, factorial_witness, coefficient_pos, weighted_distinct_subset_log_sandwich.
 The general coefficient expression is inline; a retains the source expression.
 The triangular sum is inline: DivisorNimBoundArithmetic.triangle is at S3.
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/21754.
@@ -58,7 +59,7 @@ def claim : Prop :=
     (fun n : ℕ => Real.log (a n : ℝ) / (Real.sqrt ((n : ℝ) / 2) * (Real.log (2 * (n : ℝ)) - 2)))
     Filter.atTop (nhds (1 : ℝ))
 
-private def partitions (n : ℕ) : Finset (Finset ℕ) :=
+def partitions (n : ℕ) : Finset (Finset ℕ) :=
   ((Icc 1 n).powerset).filter (fun s => ∑ k ∈ s, k = n)
 
 private theorem subset_monomial (r : ℕ) (s : Finset ℕ) :
