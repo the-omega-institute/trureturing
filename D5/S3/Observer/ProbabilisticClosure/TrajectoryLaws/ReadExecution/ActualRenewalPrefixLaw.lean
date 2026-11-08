@@ -343,7 +343,7 @@ theorem random_cut_freshness (η : Measure S) (w f : PMF ℕ) (ρ : Measure R)
     simp only [hsplit, pastEvent, E, Set.iUnion_inter]
   rw [← hUnion, measure_iUnion hdisF hF]
   simp_rw [hmassF]
-  rw [← ENNReal.tsum_mul_right, ← ENNReal.tsum_mul_right,
+  rw [ENNReal.tsum_mul_right, ENNReal.tsum_mul_right,
     ← measure_iUnion hdisE hE]
   rfl
 
