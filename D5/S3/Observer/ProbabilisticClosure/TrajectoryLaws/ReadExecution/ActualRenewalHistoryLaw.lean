@@ -138,4 +138,288 @@ theorem actual_history_locality
     rwa [he]
 
 end Measurability
+section Probability
+variable [MeasurableSpace Ω] [MeasurableSpace S] [MeasurableSpace R]
+    [Countable S] [MeasurableSingletonClass S]
+    (labels : Set S) (update : S → Bool → R → S)
+    (P : Measure Ω) (I : Ω → S) (τ : Ω → ℕ) (K : Ω → ℕ → ℕ) (ξ : Ω → ℕ → R)
+    (η : PMF S) (w f : PMF ℕ) (ρ : Measure R) [IsProbabilityMeasure ρ]
+    (A C : S → PMF S)
+    (heff : ∀ b, Measurable (fun p : S × R => effective labels update p.1 b p.2))
+    (hrow : ∀ s b, ρ.map (effective labels update s b) = (if b then C s else A s).toMeasure)
+    (hI : Measurable I) (hτ : Measurable τ)
+    (hK : ∀ j, Measurable (fun ω => K ω j))
+    (hξ : ∀ j, Measurable (fun ω => ξ ω j))
+    (hprimitive : Primitive P I τ K ξ η.toMeasure w f ρ)
+
+/-- Joint observation of just the past source coordinates and actual states. -/
+def observedHistory (n : ℕ) (ω : Ω) :
+    (ℕ × (Fin n → ℕ)) × (Fin (n + 1) → S) :=
+  ((τ ω, fun j => K ω j.val), epochHistory labels update I τ K ξ n ω)
+
+private theorem history_event_measurable (n : ℕ)
+    (B : Set ((ℕ × (Fin n → ℕ)) × (Fin (n + 1) → S)))
+    (hB : MeasurableSet B) :
+    MeasurableSet (observedHistory labels update I τ K ξ n ⁻¹' B) := by
+  obtain ⟨D, hD, hE⟩ := actual_history_locality labels update heff I τ K ξ n B hB
+  change MeasurableSet {ω | ((τ ω, fun j : Fin n => K ω j.val),
+    epochHistory labels update I τ K ξ n ω) ∈ B}
+  rw [hE]
+  exact MeasurableSet.iUnion fun a =>
+    (slice_measurable τ K hτ hK n a).inter
+      ((hD a).preimage (hI.prodMk (measurable_pi_iff.mpr fun j => hξ j.val)))
+
+private theorem epoch_event_measurable (n : ℕ) (T : Set S) (hT : MeasurableSet T) :
+    MeasurableSet {ω | epoch labels update (I ω) (ξ ω) (τ ω) (K ω) n ∈ T} := by
+  exact history_event_measurable labels update I τ K ξ heff hI hτ hK hξ n
+    ((fun p => p.2 (Fin.last n)) ⁻¹' T)
+    (hT.preimage ((measurable_pi_apply (Fin.last n)).comp measurable_snd))
+
+private theorem history_fixed_gap_step (n : ℕ)
+    (B : Set ((ℕ × (Fin n → ℕ)) × (Fin (n + 1) → S)))
+    (hB : MeasurableSet B) (s : S)
+    (hstate : ∀ ω ∈ observedHistory labels update I τ K ξ n ⁻¹' B,
+      epoch labels update (I ω) (ξ ω) (τ ω) (K ω) n = s)
+    (k : ℕ) (T : Set S) (hT : MeasurableSet T) :
+    P ((observedHistory labels update I τ K ξ n ⁻¹' B) ∩ {ω | K ω n = k} ∩
+      {ω | epoch labels update (I ω) (ξ ω) (τ ω) (K ω) (n + 1) ∈ T}) =
+    P (observedHistory labels update I τ K ξ n ⁻¹' B) * f k *
+      ((zeroRow A k s).bind C).toMeasure T := by
+  obtain ⟨D, hD, hE⟩ := actual_history_locality labels update heff I τ K ξ n B hB
+  change observedHistory labels update I τ K ξ n ⁻¹' B = _ at hE
+  have hs : ∀ ω ∈ pastEvent I τ K ξ n D,
+      epoch labels update (I ω) (ξ ω) (τ ω) (K ω) n = s := by
+    rw [← hE]
+    exact hstate
+  simpa only [← hE] using actual_past_step P I τ K ξ labels update η.toMeasure w f ρ
+    A C heff hrow hI hτ hK hξ hprimitive n D hD s hs k T hT
+
+/-- Summing all gaps gives the ordinary-past row identity for the same actual
+    execution. The history can also retain every previous source gap. -/
+theorem actual_history_step (n : ℕ)
+    (B : Set ((ℕ × (Fin n → ℕ)) × (Fin (n + 1) → S)))
+    (hB : MeasurableSet B) (s : S)
+    (hstate : ∀ ω ∈ observedHistory labels update I τ K ξ n ⁻¹' B,
+      epoch labels update (I ω) (ξ ω) (τ ω) (K ω) n = s)
+    (T : Set S) (hT : MeasurableSet T) :
+    P ((observedHistory labels update I τ K ξ n ⁻¹' B) ∩
+      {ω | epoch labels update (I ω) (ξ ω) (τ ω) (K ω) (n + 1) ∈ T}) =
+    P (observedHistory labels update I τ K ξ n ⁻¹' B) *
+      (f.bind fun k => (zeroRow A k s).bind C).toMeasure T := by
+  let E := observedHistory labels update I τ K ξ n ⁻¹' B
+  let F := fun k => E ∩ {ω | K ω n = k} ∩
+    {ω | epoch labels update (I ω) (ξ ω) (τ ω) (K ω) (n + 1) ∈ T}
+  have hF (k : ℕ) : MeasurableSet (F k) :=
+    ((history_event_measurable labels update I τ K ξ heff hI hτ hK hξ n B hB).inter
+      ((hK n) (measurableSet_singleton k))).inter
+      (epoch_event_measurable labels update I τ K ξ heff hI hτ hK hξ (n + 1) T hT)
+  have hdis : Pairwise (Disjoint on F) := by
+    intro k l hkl
+    apply Set.disjoint_left.mpr
+    rintro ω ⟨⟨_, hk⟩, _⟩ ⟨⟨_, hl⟩, _⟩
+    exact hkl (hk.symm.trans hl)
+  have hUnion : (⋃ k, F k) = E ∩
+      {ω | epoch labels update (I ω) (ξ ω) (τ ω) (K ω) (n + 1) ∈ T} := by
+    ext ω
+    simp only [F, Set.mem_iUnion, Set.mem_inter_iff, Set.mem_setOf_eq]
+    constructor
+    · rintro ⟨k, ⟨hE, _⟩, hT⟩; exact ⟨hE, hT⟩
+    · rintro ⟨hE, hT⟩; exact ⟨K ω n, ⟨hE, rfl⟩, hT⟩
+  rw [← hUnion, measure_iUnion hdis hF, PMF.toMeasure_bind_apply _ _ _ hT]
+  simp_rw [show ∀ k, P (F k) = P E * f k * ((zeroRow A k s).bind C).toMeasure T from
+    fun k => history_fixed_gap_step labels update P I τ K ξ η w f ρ A C heff hrow
+      hI hτ hK hξ hprimitive n B hB s hstate k T hT, mul_assoc]
+  exact ENNReal.tsum_mul_left
+
+/-- The ordinary-past integral identity, written as a countable state sum.
+    It holds for every measurable history event, including null histories. -/
+theorem actual_ordinary_past (n : ℕ)
+    (H : Set (Fin (n + 1) → S)) (hH : MeasurableSet H)
+    (T : Set S) (hT : MeasurableSet T) :
+    P ({ω | epochHistory labels update I τ K ξ n ω ∈ H} ∩
+      {ω | epoch labels update (I ω) (ξ ω) (τ ω) (K ω) (n + 1) ∈ T}) =
+    ∑' s, P ({ω | epochHistory labels update I τ K ξ n ω ∈ H} ∩
+      {ω | epoch labels update (I ω) (ξ ω) (τ ω) (K ω) n = s}) *
+        (f.bind fun k => (zeroRow A k s).bind C).toMeasure T := by
+  let B := fun s : S => (Prod.snd ⁻¹' H) ∩
+    (fun p : (ℕ × (Fin n → ℕ)) × (Fin (n + 1) → S) => p.2 (Fin.last n)) ⁻¹' {s}
+  have hB (s : S) : MeasurableSet (B s) :=
+    (hH.preimage measurable_snd).inter ((measurableSet_singleton s).preimage
+      ((measurable_pi_apply (Fin.last n)).comp measurable_snd))
+  let E := fun s : S => observedHistory labels update I τ K ξ n ⁻¹' B s
+  let F := fun s : S => E s ∩
+    {ω | epoch labels update (I ω) (ξ ω) (τ ω) (K ω) (n + 1) ∈ T}
+  have hF (s : S) : MeasurableSet (F s) :=
+    (history_event_measurable labels update I τ K ξ heff hI hτ hK hξ n (B s) (hB s)).inter
+      (epoch_event_measurable labels update I τ K ξ heff hI hτ hK hξ (n + 1) T hT)
+  have hdis : Pairwise (Disjoint on F) := by
+    intro s t hst
+    apply Set.disjoint_left.mpr
+    rintro ω ⟨⟨_, hs⟩, _⟩ ⟨⟨_, ht⟩, _⟩
+    exact hst (hs.symm.trans ht)
+  have hUnion : (⋃ s, F s) =
+      {ω | epochHistory labels update I τ K ξ n ω ∈ H} ∩
+        {ω | epoch labels update (I ω) (ξ ω) (τ ω) (K ω) (n + 1) ∈ T} := by
+    ext ω
+    change (∃ s, (_ ∧ _ = s) ∧ _) ↔ _ ∧ _
+    constructor
+    · rintro ⟨s, ⟨h, _⟩, ht⟩; exact ⟨h, ht⟩
+    · rintro ⟨h, ht⟩
+      exact ⟨epoch labels update (I ω) (ξ ω) (τ ω) (K ω) n, ⟨h, rfl⟩, ht⟩
+  rw [← hUnion, measure_iUnion hdis hF]
+  apply tsum_congr
+  intro s
+  exact actual_history_step labels update P I τ K ξ η w f ρ A C heff hrow
+    hI hτ hK hξ hprimitive n (B s) (hB s) s (fun ω h => h.2) T hT
+
+/-- Nonnegative mass of a finite state word; length zero is the empty prefix. -/
+def prefixMass (ν : PMF S) (U : S → PMF S) : (l : ℕ) → (Fin l → S) → ℝ≥0∞
+  | 0, _ => 1
+  | n + 1, x => ν (x 0) * ∏ j : Fin n, U (x j.castSucc) (x j.succ)
+
+/-- Every finite actual state prefix, including the empty one, has the row
+    product derived from the first wait and subsequent gaps. No process law is
+    assumed in addition to the primitive deterministic-coordinate interface. -/
+theorem actual_state_prefix [IsProbabilityMeasure P] (l : ℕ) (x : Fin l → S) :
+    P {ω | ∀ j : Fin l, epoch labels update (I ω) (ξ ω) (τ ω) (K ω) j.val = x j} =
+      prefixMass (w.bind fun u => η.bind fun s => (zeroRow A u s).bind C)
+        (fun s => f.bind fun k => (zeroRow A k s).bind C) l x := by
+  have hp : ∀ (n : ℕ) (x : Fin (n + 1) → S),
+      P {ω | epochHistory labels update I τ K ξ n ω = x} =
+        (w.bind fun u => η.bind fun s => (zeroRow A u s).bind C) (x 0) *
+          ∏ j : Fin n, (f.bind fun k => (zeroRow A k (x j.castSucc)).bind C) (x j.succ) := by
+    intro n
+    induction n with
+    | zero =>
+      intro x
+      have he : {ω | epochHistory labels update I τ K ξ 0 ω = x} =
+          {ω | epoch labels update (I ω) (ξ ω) (τ ω) (K ω) 0 ∈ {x 0}} := by
+        ext ω
+        simp only [Set.mem_setOf_eq, Set.mem_singleton_iff]
+        constructor
+        · intro h; exact congrFun h 0
+        · intro h; funext j; have : j = 0 := Subsingleton.elim _ _; subst j; exact h
+      rw [he, actual_initial_law P I τ K ξ labels update η w f ρ A C heff hrow
+        hI hτ hξ hprimitive {x 0} (measurableSet_singleton _)]
+      simp only [PMF.toMeasure_apply_singleton _ _ (measurableSet_singleton _),
+        Fin.prod_univ_zero, mul_one]
+    | succ n ih =>
+      intro x
+      let xp : Fin (n + 1) → S := fun j => x j.castSucc
+      let B : Set ((ℕ × (Fin n → ℕ)) × (Fin (n + 1) → S)) :=
+        Prod.snd ⁻¹' {xp}
+      have hB : MeasurableSet B := (measurableSet_singleton xp).preimage measurable_snd
+      have hstate : ∀ ω ∈ observedHistory labels update I τ K ξ n ⁻¹' B,
+          epoch labels update (I ω) (ξ ω) (τ ω) (K ω) n = xp (Fin.last n) := by
+        intro ω hω
+        exact congrFun hω (Fin.last n)
+      have he : {ω | epochHistory labels update I τ K ξ (n + 1) ω = x} =
+          (observedHistory labels update I τ K ξ n ⁻¹' B) ∩
+            {ω | epoch labels update (I ω) (ξ ω) (τ ω) (K ω) (n + 1) ∈ {x (Fin.last (n + 1))}} := by
+        ext ω
+        change (_ = x) ↔ (_ = xp) ∧ _ = _
+        constructor
+        · intro h; exact ⟨funext fun j => congrFun h j.castSucc, congrFun h (Fin.last _)⟩
+        · rintro ⟨h, ht⟩
+          funext j
+          refine Fin.lastCases ?_ (fun j => ?_) j
+          · exact ht
+          · exact congrFun h j
+      rw [he, actual_history_step labels update P I τ K ξ η w f ρ A C heff hrow
+        hI hτ hK hξ hprimitive n B hB (xp (Fin.last n)) hstate
+        {x (Fin.last (n + 1))} (measurableSet_singleton _)]
+      change P {ω | epochHistory labels update I τ K ξ n ω = xp} * _ = _
+      rw [ih xp, PMF.toMeasure_apply_singleton _ _ (measurableSet_singleton _),
+        Fin.prod_univ_castSucc]
+      rfl
+  cases l with
+  | zero => simp [prefixMass]
+  | succ n =>
+    have he : {ω | ∀ j : Fin (n + 1),
+        epoch labels update (I ω) (ξ ω) (τ ω) (K ω) j.val = x j} =
+        {ω | epochHistory labels update I τ K ξ n ω = x} := by
+      ext ω
+      exact ⟨fun h => funext h, fun h => congrFun h⟩
+    rw [he]
+    exact hp n x
+
+/-- Every joint source/state cylinder on the actual run has its literal
+    first-wait factor and all of its subsequent gap/word factors. -/
+theorem actual_source_cylinders (n : ℕ) (a : ℕ × (Fin n → ℕ))
+    (x : Fin (n + 1) → S) :
+    P (observedHistory labels update I τ K ξ n ⁻¹' {(a, x)}) =
+      w a.1 * (η.bind fun s => (zeroRow A a.1 s).bind C) (x 0) *
+        ∏ j : Fin n, (f (a.2 j) * ((zeroRow A (a.2 j) (x j.castSucc)).bind C) (x j.succ)) := by
+  induction n with
+  | zero =>
+    let D : Set (S × (Fin (a.1 + 1) → R)) :=
+      (fun p => word labels update a.1 p.1 p.2) ⁻¹' {x 0}
+    have hD : MeasurableSet D := (word_measurable labels update heff a.1)
+      (measurableSet_singleton _)
+    have he : observedHistory labels update I τ K ξ 0 ⁻¹' {(a, x)} =
+        sourceSlice τ K 0 a ∩ rawPrefix I ξ (a.1 + 1) ⁻¹' D := by
+      ext ω
+      simp only [observedHistory, Set.mem_preimage, Set.mem_singleton_iff,
+        Prod.mk.injEq, Set.mem_inter_iff, sourceSlice, Set.mem_setOf_eq]
+      constructor
+      · rintro ⟨⟨hu, _⟩, hx⟩
+        refine ⟨⟨hu, fun j => Fin.elim0 j⟩, ?_⟩
+        have h := congrFun hx 0
+        change epoch labels update (I ω) (ξ ω) (τ ω) (K ω) 0 = x 0 at h
+        rw [(actual_words labels update _ _ _ _).1, hu] at h
+        exact h
+      · rintro ⟨⟨hu, _⟩, hx⟩
+        refine ⟨⟨hu, Subsingleton.elim _ _⟩, ?_⟩
+        funext j
+        have : j = 0 := Subsingleton.elim _ _
+        subst j
+        change epoch labels update (I ω) (ξ ω) (τ ω) (K ω) 0 = x 0
+        rw [(actual_words labels update _ _ _ _).1, hu]
+        exact hx
+    have hp := hprimitive 0 a (a.1 + 1) 0 D Set.univ hD MeasurableSet.univ
+    have hw := congrArg (fun μ : Measure S => μ {x 0})
+      (initial_word_law labels update ρ A C heff hrow η a.1)
+    rw [Measure.map_apply (word_measurable labels update heff a.1)
+      (measurableSet_singleton _),
+      PMF.toMeasure_apply_singleton _ _ (measurableSet_singleton _)] at hw
+    change (η.toMeasure.prod (Measure.pi fun _ : Fin (a.1 + 1) => ρ)) D = _ at hw
+    rw [he]
+    simpa only [rawBlock, Set.preimage_univ, Set.inter_univ, measure_univ,
+      Fin.prod_univ_zero, mul_one, hw] using hp
+  | succ n ih =>
+    let ap : ℕ × (Fin n → ℕ) := (a.1, fun j => a.2 j.castSucc)
+    let xp : Fin (n + 1) → S := fun j => x j.castSucc
+    let B : Set ((ℕ × (Fin n → ℕ)) × (Fin (n + 1) → S)) := {(ap, xp)}
+    have hB : MeasurableSet B := measurableSet_singleton _
+    have hstate : ∀ ω ∈ observedHistory labels update I τ K ξ n ⁻¹' B,
+        epoch labels update (I ω) (ξ ω) (τ ω) (K ω) n = xp (Fin.last n) := by
+      intro ω hω
+      exact congrFun (congrArg Prod.snd hω) (Fin.last n)
+    have he : observedHistory labels update I τ K ξ (n + 1) ⁻¹' {(a, x)} =
+        (observedHistory labels update I τ K ξ n ⁻¹' B) ∩
+          {ω | K ω n = a.2 (Fin.last n)} ∩
+          {ω | epoch labels update (I ω) (ξ ω) (τ ω) (K ω) (n + 1) ∈ {x (Fin.last (n + 1))}} := by
+      ext ω
+      simp only [observedHistory, Set.mem_preimage, Set.mem_singleton_iff,
+        Prod.mk.injEq, Set.mem_inter_iff, Set.mem_setOf_eq]
+      constructor
+      · rintro ⟨⟨hu, hv⟩, hx⟩
+        exact ⟨⟨⟨⟨hu, funext fun j => congrFun hv j.castSucc⟩,
+          funext fun j => congrFun hx j.castSucc⟩, congrFun hv (Fin.last n)⟩,
+          congrFun hx (Fin.last (n + 1))⟩
+      · rintro ⟨⟨⟨⟨hu, hv⟩, hx⟩, hk⟩, hy⟩
+        refine ⟨⟨hu, ?_⟩, ?_⟩
+        · funext j
+          refine Fin.lastCases hk (fun j => congrFun hv j) j
+        · funext j
+          refine Fin.lastCases hy (fun j => congrFun hx j) j
+    rw [he, history_fixed_gap_step labels update P I τ K ξ η w f ρ A C heff hrow
+      hI hτ hK hξ hprimitive n B hB (xp (Fin.last n)) hstate
+      (a.2 (Fin.last n)) {x (Fin.last (n + 1))} (measurableSet_singleton _)]
+    rw [show P (observedHistory labels update I τ K ξ n ⁻¹' B) = _ from ih ap xp,
+      PMF.toMeasure_apply_singleton _ _ (measurableSet_singleton _),
+      Fin.prod_univ_castSucc]
+    simp only [ap, xp, mul_assoc]
+
+end Probability
 end D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.ReadExecution.ActualRenewalHistoryLaw
