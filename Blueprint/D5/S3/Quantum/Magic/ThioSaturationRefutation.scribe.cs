@@ -45,7 +45,10 @@ internal sealed class ThioSaturationRefutationDocument : IScribeDocumentDefiniti
     private static DocumentBlock Node(string name, string title, string prose,
         bool literature = false, DescribeRole role = DescribeRole.Definition) => Describe.Lean(
             DescribeId.Create("thio-" + name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
-            H(title), role == DescribeRole.Theorem ? StatementSource.FromLean() : StatementSource.WithoutFormula(),
+            H(title), role == DescribeRole.Theorem
+                ? StatementSource.FromAuthor(Disp(new Formula.Not(Parenthesized(
+                    Qualified("D5", "S3", "Quantum", "Magic", "ThioSaturationRefutation", "claim")))))
+                : StatementSource.WithoutFormula(),
             literature ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
             Blocks(Paragraph(Text(prose))), role);
 }
