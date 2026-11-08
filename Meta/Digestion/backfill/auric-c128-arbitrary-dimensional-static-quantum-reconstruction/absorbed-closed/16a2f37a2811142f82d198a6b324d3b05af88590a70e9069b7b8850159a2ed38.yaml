@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:16a2f37a2811142f82d198a6b324d3b05af88590a70e9069b7b8850159a2ed38
   normalized_sha256: sha256:16a2f37a2811142f82d198a6b324d3b05af88590a70e9069b7b8850159a2ed38
 cas_ref: sha256:16a2f37a2811142f82d198a6b324d3b05af88590a70e9069b7b8850159a2ed38
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/ContinuousObservables/C128IdealConsequences.annihilator_iff
+    target_statement_id: sha256:37c508f3be67a8d05ac3b8cba16c8094a5bbb91d47ac5a4a4e4505643e5db3ad
 receipts:
   unresolved_subitems: []
