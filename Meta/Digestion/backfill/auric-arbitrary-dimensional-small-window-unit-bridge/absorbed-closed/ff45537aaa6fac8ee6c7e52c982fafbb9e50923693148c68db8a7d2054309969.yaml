@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:ff45537aaa6fac8ee6c7e52c982fafbb9e50923693148c68db8a7d2054309969
   normalized_sha256: sha256:ff45537aaa6fac8ee6c7e52c982fafbb9e50923693148c68db8a7d2054309969
 cas_ref: sha256:ff45537aaa6fac8ee6c7e52c982fafbb9e50923693148c68db8a7d2054309969
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Quantum/Algebra/UnitBridgeRawGeometry.original_four_components
+    target_statement_id: sha256:faae521eb875246148d40787adec67b24ddcbf585129c57a963b3d5dd4b68c17
 receipts:
   unresolved_subitems: []
