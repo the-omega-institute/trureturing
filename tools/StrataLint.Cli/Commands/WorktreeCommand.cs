@@ -113,14 +113,18 @@ internal static class WorktreeCommand
             return ValidateBranch(arguments.Skip(1).ToArray());
         }
 
-        var result = Create(repositoryRoot, arguments, runner, out var summarySource);
-        return WorktreeAgentStateCommand.After(summarySource, runner, () => result);
+        var result = Create(repositoryRoot, arguments, runner, out var summarySource,
+            out var reportAgentState);
+        return reportAgentState
+            ? WorktreeAgentStateCommand.After(summarySource, runner, () => result)
+            : result;
     }
 
     private static CommandResult Create(string repositoryRoot, IReadOnlyList<string> arguments,
-        IWorktreeProcessRunner runner, out string summarySource)
+        IWorktreeProcessRunner runner, out string summarySource, out bool reportAgentState)
     {
         summarySource = repositoryRoot;
+        reportAgentState = false;
         WorktreeOptions? options = null;
         string? requestedBase = null;
         string? invokingDirectory = null;
@@ -135,6 +139,7 @@ internal static class WorktreeCommand
         try
         {
             options = ParseArguments(repositoryRoot, arguments);
+            reportAgentState = true;
             summarySource = options.Source;
             if (runner is ProductionWorktreeProcessRunner production)
                 runner = production.WithEnvironment(WorktreeProtocolCommand.InitializationEnvironment(options.Source));

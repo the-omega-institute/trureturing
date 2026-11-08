@@ -74,6 +74,7 @@ public sealed partial class MakeWorkflowTests
         "worktree",
         "worktree-clean",
         "worktree-remove",
+        "worktree-pending",
         "worktree-checkpoint",
         "worktree-publish",
         "worktree-finalize",
