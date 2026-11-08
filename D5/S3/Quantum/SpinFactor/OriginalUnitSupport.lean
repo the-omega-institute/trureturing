@@ -224,4 +224,138 @@ theorem support_unit_obstruction
   rw [hbh] at he
   exact (mul_eq_zero.mp he).resolve_left hZ
 
+
+private theorem p2_skew_original
+    (S : E →ₗ[ℝ] E →ₗ[ℝ] E) (D : E → E → E)
+    (P : Set (E →ₗ[ℝ] ℝ)) (hP : P2 S D P)
+    (hsep : ∀ x, (∀ α ∈ P, α x = 0) → x = 0) (a b : E) :
+    D b a = -D a b := by
+  apply eq_neg_iff_add_eq_zero.mpr
+  apply hsep
+  intro α hα
+  have h := congrArg Complex.im ((hP α hα a b).1.apply 0 1)
+  simp [table] at h
+  simpa only [map_add] using (by linarith : α (D b a) + α (D a b) = 0)
+
+private def quadraticElement (S : E →ₗ[ℝ] E →ₗ[ℝ] E)
+    (D : E → E → E) (a b : E) (z : Fin 2 → ℂ) : E :=
+  ((z 0).re ^ 2 + (z 0).im ^ 2) • S a a +
+  ((z 1).re ^ 2 + (z 1).im ^ 2) • S b b +
+  (2 * ((z 0).re * (z 1).re + (z 0).im * (z 1).im)) • S a b +
+  (2 * ((z 0).re * (z 1).im - (z 0).im * (z 1).re)) • D a b
+
+private theorem quadratic_read
+    (S : E →ₗ[ℝ] E →ₗ[ℝ] E) (D : E → E → E)
+    (hc : ∀ x y, S x y = S y x) (hsk : ∀ a b, D b a = -D a b)
+    (β : E →ₗ[ℝ] ℝ) (a b : E) (z : Fin 2 → ℂ) :
+    star z ⬝ᵥ (table S D β a b *ᵥ z) =
+      (β (quadraticElement S D a b z) : ℂ) := by
+  have hself (x : E) : D x x = 0 := by
+    have h := hsk x x
+    have hz : (2 : ℝ) • D x x = 0 := by rw [two_smul]; exact eq_neg_iff_add_eq_zero.mp h
+    exact (smul_eq_zero.mp hz).resolve_left (by norm_num)
+  apply Complex.ext <;>
+    simp [table, quadraticElement, dotProduct, Matrix.mulVec, Fin.sum_univ_two,
+      hself, hsk a b, hc b a, map_add, map_smul, smul_eq_mul,
+      Complex.mul_re, Complex.mul_im, Complex.conj_re, Complex.conj_im] <;> ring
+
+private theorem positive_p2
+    (S : E →ₗ[ℝ] E →ₗ[ℝ] E) (D : E → E → E)
+    (P : Set (E →ₗ[ℝ] ℝ)) (hP : P2 S D P)
+    (hc : ∀ x y, S x y = S y x)
+    (hsep : ∀ x, (∀ α ∈ P, α x = 0) → x = 0)
+    (C : Set E) (hexact : ∀ x, x ∈ C ↔ ∀ α ∈ P, 0 ≤ α x) :
+    P2 S D {β | ∀ x ∈ C, 0 ≤ β x} := by
+  have hsk := p2_skew_original S D P hP hsep
+  intro β hβ a b
+  have hself (x : E) : D x x = 0 := by
+    have h := hsk x x
+    have hz : (2 : ℝ) • D x x = 0 := by rw [two_smul]; exact eq_neg_iff_add_eq_zero.mp h
+    exact (smul_eq_zero.mp hz).resolve_left (by norm_num)
+  apply Matrix.PosSemidef.of_dotProduct_mulVec_nonneg
+  · ext i j
+    fin_cases i <;> fin_cases j <;>
+      simp [table, Matrix.conjTranspose_apply, hself, hsk a b, hc b a]
+  · intro z
+    rw [quadratic_read S D hc hsk]
+    have hw : quadraticElement S D a b z ∈ C := by
+      apply (hexact _).mpr
+      intro α hα
+      have h := (hP α hα a b).dotProduct_mulVec_nonneg z
+      rw [quadratic_read S D hc hsk] at h
+      exact_mod_cast h
+    exact_mod_cast hβ _ hw
+
+private theorem pb_any_reading
+    (S : E →ₗ[ℝ] E →ₗ[ℝ] E) (D : E → E → E)
+    (P : Set (E →ₗ[ℝ] ℝ)) (hPB : PB S D P)
+    (hc : ∀ x y, S x y = S y x)
+    (hsep : ∀ x, (∀ α ∈ P, α x = 0) → x = 0) :
+    PB S D Set.univ := by
+  intro β _ a b c
+  have hp := congrArg β (finite_difference S D P hPB hc hsep a b c)
+  let ν := D a b - S a c
+  let ω := S a b + D a c
+  change squareReadout S D β (b + ν) (c + ω) =
+    squareReadout S D β (b - ν) (c - ω)
+  change β (D (b + ν) (c + ω) - D (b - ν) (c - ω)) =
+    β (-(2 : ℝ) • S b ν - (2 : ℝ) • S c ω) at hp
+  simp only [map_sub, map_smul, smul_eq_mul] at hp
+  simp only [squareReadout, map_add, map_sub, LinearMap.add_apply,
+    LinearMap.sub_apply]
+  rw [hc ν b, hc ω c]
+  linarith only [hp]
+
+/-- Exact-cone extension of the original support obstruction excludes every
+closed semidefinite norm ball. The nonzero support telescope remains explicit;
+no existence of such a state or output is inferred. -/
+theorem positive_support_unit_boundary
+    (S : E →ₗ[ℝ] E →ₗ[ℝ] E) (D : E → E → E)
+    (P : Set (E →ₗ[ℝ] ℝ)) (hP : P2 S D P) (hPB : PB S D P)
+    (hc : ∀ x y, S x y = S y x) (u : E) (hu : ∀ x, S u x = x)
+    (hsq : ∀ x, ‖S x x‖ = ‖x‖ ^ 2)
+    (hsep : ∀ x, (∀ α ∈ P, α x = 0) → x = 0)
+    (C : Set E) (hexact : ∀ x, x ∈ C ↔ ∀ α ∈ P, 0 ≤ α x)
+    (μ : ℝ) (b : E) (β : E →ₗ[ℝ] ℝ)
+    (hβ : ∀ x ∈ C, 0 ≤ β x) (hβu : β u = 1)
+    (hβnorm : ∀ x, |β x| ≤ ‖x‖)
+    (Z : ℝ) (hZ : Z ≠ 0) (hread : β (D (μ • u) b) = Z)
+    (hnorm : |Z| = ‖D (μ • u) b‖) :
+    μ ≠ 0 ∧ ∀ t : ℝ, |t| < ‖b - t • u‖ := by
+  let Q : Set (E →ₗ[ℝ] ℝ) := {γ | ∀ x ∈ C, 0 ≤ γ x}
+  have hQ : P2 S D Q := positive_p2 S D P hP hc hsep C hexact
+  have hBQ : PB S D Q := fun γ _ => pb_any_reading S D P hPB hc hsep γ (Set.mem_univ _)
+  have hPQ : P ⊆ Q := by
+    intro α hα x hx
+    exact (hexact x).mp hx α hα
+  have hsepQ : ∀ x, (∀ α ∈ Q, α x = 0) → x = 0 := by
+    intro x hx
+    exact hsep x (fun α hα => hx α (hPQ hα))
+  have hβQ : β ∈ Q := hβ
+  have hb := (support_unit_obstruction S D Q hQ hBQ hc u hu hsq hsepQ
+    μ b β hβQ hβu hβnorm Z hZ hread hnorm).2
+  have hd := determinant_bound S D Q hQ hc β hβQ (μ • u) b
+  rw [hread] at hd
+  simp [map_smul, hu, hβu, hb, smul_eq_mul] at hd
+  constructor
+  · intro hμ
+    rw [hμ] at hd
+    exact hZ (by nlinarith [sq_nonneg Z])
+  · intro t
+    by_contra hnot
+    have hn : ‖b - t • u‖ ≤ |t| := le_of_not_gt hnot
+    have hbnd : β (S (b - t • u) (b - t • u)) ≤ t ^ 2 := by
+      calc
+        β (S (b - t • u) (b - t • u)) ≤ |β (S (b - t • u) (b - t • u))| := le_abs_self _
+        _ ≤ ‖S (b - t • u) (b - t • u)‖ := hβnorm _
+        _ = ‖b - t • u‖ ^ 2 := hsq _
+        _ ≤ |t| ^ 2 := by nlinarith [norm_nonneg (b - t • u), abs_nonneg t]
+        _ = t ^ 2 := sq_abs t
+    have hbu : S b u = b := (hc b u).trans (hu b)
+    simp [map_sub, map_smul, LinearMap.sub_apply, LinearMap.smul_apply,
+      smul_eq_mul, hu, hbu, hb, hβu] at hbnd
+    have hbs : β (S b b) ≤ 0 := by nlinarith only [hbnd]
+    have hprod := mul_nonpos_of_nonneg_of_nonpos (sq_nonneg μ) hbs
+    exact hZ (by nlinarith [sq_nonneg Z])
+
 end D5.S3.Quantum.SpinFactor.OriginalUnitSupport
