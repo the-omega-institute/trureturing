@@ -1,3 +1,11 @@
+/- GID: D5/S1/Dynamics/Shadowing/IntervalObstruction/Basic
+   generality: G
+   mirror-B: D5/B/S1/Dynamics/Shadowing/IntervalObstruction/Basic
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Strict all-time forward Bowen bounds, exact interval pullbacks and monotone trapping. -/
+
 import D5.S1.Dynamics.Shadowing.UniformTracing
 import Mathlib.Data.Fintype.Prod
 import Mathlib.Data.Set.Card

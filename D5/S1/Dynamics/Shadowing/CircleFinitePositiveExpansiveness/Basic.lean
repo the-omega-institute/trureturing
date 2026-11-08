@@ -1,3 +1,11 @@
+/- GID: D5/S1/Dynamics/Shadowing/CircleFinitePositiveExpansiveness/Basic
+   generality: G
+   mirror-B: D5/B/S1/Dynamics/Shadowing/CircleFinitePositiveExpansiveness/Basic
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Actual quotient-metric circle arcs, exact pullbacks, small crossings and strict turns. -/
+
 import D5.S1.Dynamics.Shadowing.IntervalObstruction
 import Mathlib.Analysis.Normed.Group.AddCircle
 import Mathlib.Analysis.Convex.Contractible

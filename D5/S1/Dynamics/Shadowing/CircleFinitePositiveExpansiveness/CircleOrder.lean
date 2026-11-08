@@ -1,3 +1,11 @@
+/- GID: D5/S1/Dynamics/Shadowing/CircleFinitePositiveExpansiveness/CircleOrder
+   generality: G
+   mirror-B: D5/B/S1/Dynamics/Shadowing/CircleFinitePositiveExpansiveness/CircleOrder
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Two-target accessibility through actual full or proper iterate images on the circle. -/
+
 import D5.S1.Dynamics.Shadowing.CircleFinitePositiveExpansiveness.Basic
 
 /-!

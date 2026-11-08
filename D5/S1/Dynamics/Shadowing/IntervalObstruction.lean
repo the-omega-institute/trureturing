@@ -1,3 +1,11 @@
+/- GID: D5/S1/Dynamics/Shadowing/IntervalObstruction
+   generality: G
+   mirror-B: D5/B/S1/Dynamics/Shadowing/IntervalObstruction
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Every continuous nondegenerate compact real-interval selfmap fails finite positive expansivity. -/
+
 import D5.S1.Dynamics.Shadowing.IntervalObstruction.Basic
 
 open Set Function Filter

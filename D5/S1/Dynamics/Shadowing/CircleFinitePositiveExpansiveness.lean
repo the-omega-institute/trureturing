@@ -1,3 +1,11 @@
+/- GID: D5/S1/Dynamics/Shadowing/CircleFinitePositiveExpansiveness
+   generality: G
+   mirror-B: D5/B/S1/Dynamics/Shadowing/CircleFinitePositiveExpansiveness
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Uniform finite positive expansivity implies positive expansivity for every continuous circle selfmap. -/
+
 import D5.S1.Dynamics.Shadowing.CircleFinitePositiveExpansiveness.CircleOrder
 import Mathlib.Topology.MetricSpace.Pseudo.Lemmas
 import Mathlib.Topology.SeparatedMap
@@ -350,26 +358,6 @@ theorem Histories.extend_crossing_turn {f : Circle → Circle} {η ε : ℝ}
   exact H.extend_transit_fold hf B E L R D q hBA hE
     (hL.trans interior_subset) (hR.trans interior_subset) hd hFL hFR hsmall
 
-/-- The full-image branch genuinely uses the two distinct turns: a one-turn
-seam may be inaccessible even when the image is the whole circle. No specified
-turn is incorrectly inferred to be crossed. This is a single proved extension
-step in this branch, not an assumed global ability to extend histories. -/
-theorem Histories.extend_of_full_image {f : Circle → Circle} {η : ℝ} {ι : Type*}
-    (H : Histories f η ι) (hf : Continuous f) (hfin : FinitelyPositiveExpansive f)
-    (hloc : ¬IsLocallyInjective f) (hη : 0 < η) (hη8 : η ≤ 1 / 8)
-    {q : ℕ} (hfull : f^[q] '' (H.terminal : Set Circle) = univ) :
-    ∃ H' : Histories f η (ι × Bool), H'.time = H.time + q + 1 := by
-  obtain ⟨F, hF, hFf, c, d, hcd, hc, hd⟩ := two_distinct_lifted_turns hf hfin hloc
-  obtain ⟨G, hG, hGf, v, hv, hbelow, habove⟩ :=
-    two_target_crossing_of_full_image (hf.iterate q) H.terminal hfull
-      (project c) (project d) hcd
-  obtain ⟨ε, hε, N, _, hB⟩ := id hfin
-  rcases hv with hv | hv
-  · exact H.extend_crossing_turn hf hε hη hη8 hB hG hGf hF hFf
-      hv.symm hc hbelow habove
-  · exact H.extend_crossing_turn hf hε hη hη8 hB hG hGf hF hFf
-      hv.symm hd hbelow habove
-
 /-- Under precisely the original hypotheses and failure of local injectivity,
 one of the two genuine turns is accessible from the current terminal arc.
 The actual crossing construction doubles the histories, including its final
@@ -455,28 +443,6 @@ theorem surjective (f : Circle → Circle) (hf : Continuous f)
   rw [← hA]
   intro x hx
   exact ⟨x, by simp⟩
-
-/-- Every actual arc has arbitrarily late images with macroscopic separation.
-The image is classified as either the whole circle or a genuine proper arc;
-the separation scale is the original strict all-time Bowen bound's scale. -/
-theorem arbitrarily_late_macroscopic_arc {f : Circle → Circle} (hf : Continuous f)
-    {ε : ℝ} {N : ℕ} (hε : 0 < ε) (hB : ForwardBowenBound f univ ε N)
-    (A : Arc) (M : ℕ) :
-    ∃ n ≥ M, f^[n] '' (A : Set Circle) = univ ∨
-      ∃ B : Arc, f^[n] '' (A : Set Circle) = (B : Set Circle) ∧
-        ∃ x ∈ (B : Set Circle), ∃ y ∈ (B : Set Circle), ε ≤ dist x y := by
-  have hfib := finite_fibres isCompact_univ hB hε
-  obtain ⟨n, hn, x, hx, y, hy, hsep⟩ := arbitrarily_late_separation hB
-    (mapsTo_univ f univ) hε hfib (subset_univ _) A.infinite M
-  refine ⟨n, hn, ?_⟩
-  by_cases hfull : f^[n] '' (A : Set Circle) = univ
-  · exact Or.inl hfull
-  · have hinf := infinite_iterate_image (mapsTo_univ f univ) hfib
-      (subset_univ _) A.infinite n
-    obtain ⟨B, hBA⟩ := arc_of_compact_connected (A.compact.image (hf.iterate n))
-      (A.connected.image (f^[n]) (hf.iterate n).continuousOn) hinf hfull
-    exact Or.inr ⟨B, hBA, f^[n] x, hBA.subset (mem_image_of_mem _ hx),
-      f^[n] y, hBA.subset (mem_image_of_mem _ hy), hsep⟩
 
 /-- Compactness turns actual local injectivity into one uniform radius.
 This supplies a geometric scale, not an additional assumption in the original
