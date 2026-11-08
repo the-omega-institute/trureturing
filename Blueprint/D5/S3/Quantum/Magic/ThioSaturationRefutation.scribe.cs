@@ -6,7 +6,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Magic;
 internal sealed class ThioSaturationRefutationDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Quantum/Magic/ThioSaturationRefutation.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Quantum/thio2026saturation");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Quantum/thio2026tight");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "An actual complex noisy Strange qutrit has eight nonzero Gross-Wigner coordinates and saturates the fixed-purity natural-log entropy bound.",
@@ -19,7 +19,7 @@ internal sealed class ThioSaturationRefutationDocument : IScribeDocumentDefiniti
             Node("grossLocal", "Local Gross operators",
                 "Conjugating the origin operator by the source displacement gives S_ab. The dagger is the complex conjugate transpose. The dual operator is q*S_ab, as in Eq. (20).", true),
             Node("grossTensor", "Odd-local tensor frames",
-                "For n local systems of a common odd dimension q, the matrix entries are products of the corresponding local S entries. The Hilbert basis is the dependent product of the residue bases and the coordinate labels are a pair of such products.", true),
+                "The matrix entries are products of the local S entries for a family of local dimensions. IsGross specializes this construction to n factors of a common odd dimension q. The Hilbert basis is the dependent product of the residue bases and the coordinate labels are a pair of such products.", true),
             Node("columnProjector", "Basis projectors",
                 "A column vector of an orthonormal basis gives its complex rank-one projector by the outer product with its conjugate."),
             Node("IsMUBKD", "The complete MUB-KD source class",
@@ -35,7 +35,7 @@ internal sealed class ThioSaturationRefutationDocument : IScribeDocumentDefiniti
             Node("coordinateEntropy", "Entropy including zero entries",
                 "The Shannon sum uses Real.negMulLog at every coordinate's real part. This uses the natural logarithm and its zero term is exactly zero. Positivity and realness are separate hypotheses in the assertion.", true),
             Node("claim", "Only dimension-multiple supports at saturation",
-                "Appendix A A1.p8.1 asks: Whether these are the only possible D-values for which saturation occurs is not clear in general. The preceding values are D=delta*d, 1<=delta<=d. The assertion quantifies over every finite complex Hilbert basis of positive dimension, every finite coordinate carrier, both source classes, and every complex positive-semidefinite trace-one state. Every coordinate must be real and nonnegative, including zero; the law sums to one. Purity lies in the closed interval [1/d,1], so both endpoints are retained. Equality refers to H(Q)=-ln(Tr(rho squared))+ln(d). The conclusion requires an integer delta between one and d whose dimension multiple is the coordinate support.", true),
+                "Appendix A A1.p8.1 asks: Whether these are the only possible D-values for which saturation occurs is not clear in general. The preceding values are D=delta*d, 1<=delta<=d. The assertion quantifies over every finite complex Hilbert basis of positive dimension, every finite coordinate carrier, both source classes, and every complex positive-semidefinite trace-one state. Every coordinate must be real and nonnegative, including zero. Source coordinates obey Eq. (10); no extra normalization premise is imposed on the assertion. Purity lies in the closed interval [1/d,1], so both endpoints are retained. Equality refers to H(Q)=-ln(Tr(rho squared))+ln(d). The conclusion requires an integer delta between one and d whose dimension multiple is the coordinate support.", true),
             Node("rho", "The known noisy Strange state",
                 "The matrix is [[1/4,0,0],[0,3/8,-1/8],[0,-1/8,3/8]] on ZMod 3. With v=(0,1,-1) it equals I/4+v*v dagger/8=(3I-P)/8, where P|j>=|-j>. This is a known depolarized antisymmetric qutrit ingredient, credited to Gross and the noisy Strange literature in the source note. No new-state or priority claim is made."),
             Node("result", "The universal assertion is false",
@@ -45,7 +45,7 @@ internal sealed class ThioSaturationRefutationDocument : IScribeDocumentDefiniti
     private static DocumentBlock Node(string name, string title, string prose,
         bool literature = false, DescribeRole role = DescribeRole.Definition) => Describe.Lean(
             DescribeId.Create("thio-" + name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
-            H(title), StatementSource.FromLean(),
+            H(title), role == DescribeRole.Theorem ? StatementSource.FromLean() : StatementSource.WithoutFormula(),
             literature ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
             Blocks(Paragraph(Text(prose))), role);
 }

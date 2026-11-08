@@ -89,7 +89,6 @@ def claim : Prop :=
     let Q := fun l => coordinate rho (S l)
     let tau := (Matrix.trace (rho * rho)).re
     (∀ l, (Q l).im = 0 ∧ 0 ≤ (Q l).re) →
-    (∑ l, Q l) = 1 →
     (Fintype.card I : ℝ)⁻¹ ≤ tau → tau ≤ 1 →
     coordinateEntropy Q = -Real.log tau + Real.log (Fintype.card I) →
     ∃ delta : ℕ, 1 ≤ delta ∧ delta ≤ Fintype.card I ∧
@@ -126,20 +125,20 @@ private theorem origin_qutrit : grossOrigin 3 =
   have hn2 : (-2 : ZMod 3) = 1 := by decide
   ext i j
   fin_cases i <;> fin_cases j
-  all_goals norm_num [h20, h21, hn1, hn2, grossOrigin, grossDisplacement, displacement, shiftMatrix, clockMatrix,
+  all_goals norm_num [h20, h21, Ne.symm h20, Ne.symm h21, hn1, hn2, ZMod, Fin.ext_iff, Fin.neg_def, grossOrigin, grossDisplacement, displacement, shiftMatrix, clockMatrix,
     Matrix.circulant_apply, Matrix.mul_apply, Matrix.diagonal_apply, Matrix.one_apply,
     Matrix.add_apply, Pi.add_apply, Fin.val_ofNat,
     pow_two, sum_three, Matrix.smul_apply, Pi.smul_apply, Finset.sum_apply,
     smul_eq_mul, ZMod.val_natCast, ZMod.val_ofNat, ZMod.val_zero, ZMod.val_one]
+  all_goals try simp +decide only [↓reduceIte, Ne.symm h20, Ne.symm h21]
   all_goals ring_nf
-  all_goals simp only [root_cube,
+  all_goals try simp only [root_cube,
     ← D5.S3.Quantum.Algebra.WeylPhaseArithmetic.windowRoot_pow_mod (M := 3) 4,
     ← D5.S3.Quantum.Algebra.WeylPhaseArithmetic.windowRoot_pow_mod (M := 3) 5,
-    ← D5.S3.Quantum.Algebra.WeylPhaseArithmetic.windowRoot_pow_mod (M := 3) 6,
-    ← D5.S3.Quantum.Algebra.WeylPhaseArithmetic.windowRoot_pow_mod (M := 3) 7,
-    ← D5.S3.Quantum.Algebra.WeylPhaseArithmetic.windowRoot_pow_mod (M := 3) 8]
-  all_goals norm_num
-  all_goals first | linear_combination (1 / 9 : ℂ) * root_sum | exact root_sum
+    ← D5.S3.Quantum.Algebra.WeylPhaseArithmetic.windowRoot_pow_mod (M := 3) 6]
+  all_goals norm_num [h20, h21, Ne.symm h20, Ne.symm h21, hn1, hn2, ZMod, Fin.ext_iff, Fin.neg_def, map_ofNat]
+  all_goals try simp +decide only [↓reduceIte, Ne.symm h20, Ne.symm h21]
+  all_goals first | linear_combination (1 / 9 : ℂ) * root_sum | linear_combination root_sum
 
 private theorem rho_density : rho.PosSemidef ∧ Matrix.trace rho = 1 := by
   let v : ZMod 3 → ℂ := ![0, 1, -1]
@@ -147,7 +146,8 @@ private theorem rho_density : rho.PosSemidef ∧ Matrix.trace rho = 1 := by
       (1 / 8 : ℝ) • Matrix.vecMulVec v (star v) := by
     ext i j
     fin_cases i <;> fin_cases j <;>
-      norm_num [rho, v, Matrix.vecMulVec, Matrix.one_apply, Matrix.add_apply, Pi.smul_apply, smul_eq_mul]
+      norm_num [rho, v, Matrix.vecMulVec, Matrix.one_apply, Matrix.add_apply,
+        Pi.smul_apply, smul_eq_mul]
   refine ⟨?_, ?_⟩
   · rw [hg]
     exact (Matrix.PosSemidef.one.smul (by norm_num : (0 : ℝ) ≤ 1 / 4)).add
@@ -170,11 +170,12 @@ private theorem qutrit_frame_allowed :
   refine ⟨3, by norm_num, by decide, inferInstance, 1, by norm_num,
     singleEquiv, singleEquiv.prodCongr singleEquiv, 1, by simp, ?_⟩
   intro p
-  simp [grossTensor, singleEquiv, Fin.prod_univ_succ]
+  simp [grossTensor, singleEquiv]
 
 private def law (p : ZMod 3 × ZMod 3) : ℂ := if p = (0, 0) then 0 else 1 / 8
 
 set_option maxHeartbeats 2000000 in
+-- The nine identities expand matrix products over three residue indices.
 private theorem qutrit_coordinates (p : ZMod 3 × ZMod 3) :
     coordinate rho (grossLocal 3 p.1 p.2) = law p := by
   have h20 : (2 : ZMod 3) ≠ 0 := by decide
@@ -189,36 +190,19 @@ private theorem qutrit_coordinates (p : ZMod 3 × ZMod 3) :
     Matrix.circulant_apply, Matrix.one_apply, Matrix.smul_apply, Matrix.add_apply,
     Pi.add_apply, Pi.smul_apply, smul_eq_mul, sum_three, Fin.sum_univ_succ,
     ZMod.val_natCast, ZMod.val_ofNat, ZMod.val_zero, ZMod.val_one, pow_two,
-    root_star, law, h20, h21, hn1, hn2]
+    root_star, law, h20, h21, hn1, hn2, ZMod, Fin.ext_iff, Fin.neg_def, map_ofNat]
+  all_goals try simp +decide only [↓reduceIte, Ne.symm h20, Ne.symm h21]
   all_goals ring_nf
-  all_goals simp only [root_cube,
+  all_goals try simp only [
     ← D5.S3.Quantum.Algebra.WeylPhaseArithmetic.windowRoot_pow_mod (M := 3) 4,
     ← D5.S3.Quantum.Algebra.WeylPhaseArithmetic.windowRoot_pow_mod (M := 3) 5,
     ← D5.S3.Quantum.Algebra.WeylPhaseArithmetic.windowRoot_pow_mod (M := 3) 6,
-    ← D5.S3.Quantum.Algebra.WeylPhaseArithmetic.windowRoot_pow_mod (M := 3) 7,
     ← D5.S3.Quantum.Algebra.WeylPhaseArithmetic.windowRoot_pow_mod (M := 3) 8,
-    ← D5.S3.Quantum.Algebra.WeylPhaseArithmetic.windowRoot_pow_mod (M := 3) 9,
     ← D5.S3.Quantum.Algebra.WeylPhaseArithmetic.windowRoot_pow_mod (M := 3) 10,
-    ← D5.S3.Quantum.Algebra.WeylPhaseArithmetic.windowRoot_pow_mod (M := 3) 11,
-    ← D5.S3.Quantum.Algebra.WeylPhaseArithmetic.windowRoot_pow_mod (M := 3) 12,
-    ← D5.S3.Quantum.Algebra.WeylPhaseArithmetic.windowRoot_pow_mod (M := 3) 13,
-    ← D5.S3.Quantum.Algebra.WeylPhaseArithmetic.windowRoot_pow_mod (M := 3) 14,
-    ← D5.S3.Quantum.Algebra.WeylPhaseArithmetic.windowRoot_pow_mod (M := 3) 15,
-    ← D5.S3.Quantum.Algebra.WeylPhaseArithmetic.windowRoot_pow_mod (M := 3) 16,
-    ← D5.S3.Quantum.Algebra.WeylPhaseArithmetic.windowRoot_pow_mod (M := 3) 17,
-    ← D5.S3.Quantum.Algebra.WeylPhaseArithmetic.windowRoot_pow_mod (M := 3) 18,
-    ← D5.S3.Quantum.Algebra.WeylPhaseArithmetic.windowRoot_pow_mod (M := 3) 19,
-    ← D5.S3.Quantum.Algebra.WeylPhaseArithmetic.windowRoot_pow_mod (M := 3) 20,
-    ← D5.S3.Quantum.Algebra.WeylPhaseArithmetic.windowRoot_pow_mod (M := 3) 21,
-    ← D5.S3.Quantum.Algebra.WeylPhaseArithmetic.windowRoot_pow_mod (M := 3) 22,
-    ← D5.S3.Quantum.Algebra.WeylPhaseArithmetic.windowRoot_pow_mod (M := 3) 23,
-    ← D5.S3.Quantum.Algebra.WeylPhaseArithmetic.windowRoot_pow_mod (M := 3) 24]
-  all_goals norm_num
-  all_goals first
-    | linear_combination (-1 / 24 : ℂ) * root_sum
-    | linear_combination (1 / 24 : ℂ) * root_sum
-    | linear_combination (-1 / 8 : ℂ) * root_sum
-    | linear_combination (1 / 8 : ℂ) * root_sum
+    ← D5.S3.Quantum.Algebra.WeylPhaseArithmetic.windowRoot_pow_mod (M := 3) 12]
+  all_goals norm_num [h20, h21, Ne.symm h20, Ne.symm h21, hn1, hn2, ZMod, Fin.ext_iff, Fin.neg_def, map_ofNat]
+  all_goals try simp +decide only [↓reduceIte, Ne.symm h20, Ne.symm h21]
+  all_goals linear_combination (-1 / 24 : ℂ) * root_sum
 
 private theorem law_nonneg (p : ZMod 3 × ZMod 3) :
     (law p).im = 0 ∧ 0 ≤ (law p).re := by
@@ -238,15 +222,33 @@ private theorem law_support : coordinateSupport law = 8 := by
   norm_num
 
 private theorem law_entropy : coordinateEntropy law = Real.log 8 := by
-  norm_num [coordinateEntropy, shannonEntropy, Fintype.sum_prod_type, sum_three,
-    law, Real.negMulLog, Real.log_div, show (2 : ZMod 3) ≠ 0 by decide]
-  ring
+  classical
+  let J := {p : ZMod 3 × ZMod 3 // p ≠ (0, 0)}
+  let f : J → ℝ := fun p => (law p.1).re
+  have hcard : Fintype.card J = 8 := by
+    simp [J, Fintype.card_subtype_compl]
+  have hsum : ∑ p : J, law p.1 = 1 := by
+    have h := Fintype.sum_eq_add_sum_subtype_ne law (0, 0)
+    rw [law_sum] at h
+    simpa [law, J] using h.symm
+  have hp : (∀ p, 0 ≤ f p) ∧ ∑ p, f p = 1 := by
+    refine ⟨fun p => (law_nonneg p.1).2, ?_⟩
+    have h := congrArg Complex.re hsum
+    simpa [f] using h
+  have : Nonempty J := ⟨⟨(0, 1), by decide⟩⟩
+  have hu : f = fun _ => (Fintype.card J : ℝ)⁻¹ := by
+    funext p
+    norm_num [f, law, p.2, hcard]
+  have he := (D5.S3.Entropy.EntropyEquality.entropy_eq_log_card_iff_uniform f hp).mpr hu
+  have hz := Fintype.sum_eq_add_sum_subtype_ne (fun p => Real.negMulLog (law p).re) (0, 0)
+  calc
+    coordinateEntropy law = shannonEntropy f := by
+      simpa [coordinateEntropy, shannonEntropy, f, law, J] using hz
+    _ = Real.log 8 := by simpa [hcard] using he
 
 /-- The only-dimension-multiples assertion fails in the source's own qutrit frame. -/
 theorem result : ¬ claim := by
   intro h
-  have hc : (fun p : ZMod 3 × ZMod 3 => coordinate rho (grossLocal 3 p.1 p.2)) = law :=
-    funext qutrit_coordinates
   have ht : (Matrix.trace (rho * rho)).re = (3 / 8 : ℝ) := by
     rw [rho_purity]
     norm_num
@@ -255,8 +257,8 @@ theorem result : ¬ claim := by
     ring
   have hh := h (ZMod 3) (ZMod 3 × ZMod 3) (by norm_num)
     (fun p => grossLocal 3 p.1 p.2) qutrit_frame_allowed rho rho_density.1 rho_density.2
-  simp only [hc, ht] at hh
-  have hsat := hh law_nonneg law_sum (by norm_num) (by norm_num) (by simpa using he)
+  simp only [qutrit_coordinates, ht] at hh
+  have hsat := hh law_nonneg (by norm_num) (by norm_num) (by simpa using he)
   obtain ⟨delta, hd1, hd3, hd⟩ := hsat
   rw [law_support] at hd
   norm_num at hd3 hd

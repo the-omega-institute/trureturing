@@ -1,8 +1,9 @@
 ---
-bibkey: thio2026saturation
-authors: Jonathan J. Thio, Stephan De Bievre, Crispin H. W. Barnes, and David R. M. Arvidsson-Shukur
+bibkey: thio2026tight
+authors: Jonathan J. Thio, Stephan De Bièvre, Crispin H. W. Barnes, and David R. M. Arvidsson-Shukur
 year: 2026
 title: Tight Quasiprobabilistic Entropic Uncertainty Relations for Discrete Quantum Systems
+doi: null
 url: https://arxiv.org/abs/2611.04009v1
 claim: Appendix A asks whether only coordinate supports D=delta*d can saturate the fixed-purity Shannon bound.
 strata_touched:
@@ -52,5 +53,5 @@ The application uses rho=(3I-P)/8, where P|j>=|-j> in dimension three.
 This is a known depolarized antisymmetric qutrit state, rather than a new
 state construction. Its eight-coordinate saturation addresses the particular
 Thio support question. No priority or global novelty claim, or classification
-of all attaining states at every purity, is made. The citations and brief
+of all attaining states at every purity, is made. The primary preprint is distributed under CC BY 4.0. The citations and brief
 quotation are attribution; no third-party source code or document is copied.
