@@ -41,7 +41,7 @@ internal sealed class LeftUnitalAbsoluteValuedDocument : IScribeDocumentDefiniti
                     Paragraph(Text(
                         "This is precisely the Banach-space inference in OmegaQ020 Lemma 3.3, "
                         + "source atom 29ed2981b018d6907b6e32cfb28541e5381f264c21324ce7190c551a824ecc1f. "
-                        + "The original physical carrier is the real space A with seminorm p; "
+                        + "The source starts with the real vector space mathcal A and seminorm p; "
                         + "its null space is p inverse of zero and its quotient norm must be "
                         + "norm([a])=p(a). Constructing that exact quotient, descending the "
                         + "same multiplication and readable unit, and extending them to its "
