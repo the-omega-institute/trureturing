@@ -108,6 +108,24 @@ class HostRemnantTests(unittest.TestCase):
         self.assertEqual("not a generated build directory", (target / ".lake/build").read_text())
         self.assertEqual("not a compiled configuration file", (config / "source").read_text())
 
+    def test_package_cache_respects_outer_workspace_guard_and_fresh_activity(self):
+        target = self.remnant(blueprint=False)
+        (target / ".lake/unknown").write_text("retain")
+        package = target / ".lake/packages/package"
+        build = package / ".lake/build"
+        build.mkdir(parents=True)
+        (package / "lakefile.toml").write_text('name = "package"\n')
+        (build / "payload").write_text("generated")
+        self.age(target)
+        with fixtures.release.cache_guard(target):
+            self.run_sweep()
+        self.assertTrue((build / "payload").exists(), "outer workspace guard must protect package build")
+        def activity(*args, **kwargs):
+            return {target} if len(args) > 1 else set()
+        with patch.object(cleanup, "active_paths", side_effect=activity):
+            self.run_sweep(active=None)
+        self.assertTrue((build / "payload").exists(), "fresh workspace cwd must protect package build")
+
     def test_remnant_shape_and_unique_bytes_are_retained(self):
         for name, relative, content, reason in (
                 ("source", "D5/Unique.lean", b"unique", "unknown_top_level"),

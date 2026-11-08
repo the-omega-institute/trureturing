@@ -1285,9 +1285,17 @@ def clean_artifacts(options, caller, disk_descriptor, inventory, lanes_exit, cod
                     for project, cache in list(remnant_cache_candidates(path, cutoff)):
                         _, release = worktree_modules()
                         try:
-                            with release.cache_guard(project):
+                            with ExitStack() as guards:
+                                guards.enter_context(release.cache_guard(path))
+                                if project != path:
+                                    guards.enter_context(release.cache_guard(project))
+                                def cache_activity():
+                                    protection = fresh_protection(path)
+                                    if path in ProtectedPaths(protection):
+                                        protection.add(cache)
+                                    return protection
                                 result = clean_candidate(cache, cutoff, protections["sshx"], options.delete,
-                                    repository=main_checkout, activity=lambda: fresh_protection(cache),
+                                    repository=main_checkout, activity=cache_activity,
                                     reclaim=False, cache_only=True)
                         except BlockingIOError:
                             result = dict(path=str(cache), action="kept", reason="cache_busy", apparent_bytes=0)
