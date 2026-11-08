@@ -8,7 +8,7 @@ internal sealed class FrobeniusCharacterDegreesDocument : IScribeDocumentDefinit
 {
     private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/FiniteGroups/tauceti2026finitecharacters");
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Fixed-point-free conjugation constrains simple complex degrees, with a trace-rigidity bridge for nonabelian kernels.",
+        "Fixed-point-free conjugation gives a structural alternative for simple representations in every characteristic and integer degree dichotomies over the complex numbers.",
         H("Degrees over normal subgroups"),
         Blocks(Node("degree_square_le_card", "The degree-square bound", Square(),
             "The group algebra maps onto the endomorphism algebra of a simple representation. Comparing dimensions bounds the square of its degree by the group order."),
