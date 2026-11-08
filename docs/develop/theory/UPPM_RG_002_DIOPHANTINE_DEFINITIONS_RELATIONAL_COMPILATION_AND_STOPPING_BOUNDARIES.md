@@ -791,3 +791,378 @@ $$
 共轭归一化则等于 $P_2$。这些恒等式由 $({\sqrt2})^2=2$ 直接展开得到。$d_0,P_0$ 见 [Glazer 固定源码，提交 `9c0b3aba60d90fdcac82115f0582a6f52f1054f7`](https://github.com/elliotglazer/diophantine-z-q/blob/9c0b3aba60d90fdcac82115f0582a6f52f1054f7/manuscripts/quartic_v13.tex) 的固定数据；同稿 `v5:real-progression-bridge` 使用一般轨道闭包 $G$ 及其分支数，后面的实际构造使用 $m_0=|G/G^0|$。这里对上述实际共轭点证明了 $G=C^2$，故该实分支数为 $1$，局部条件的剩余障碍精确为 $\gcd(M,D)\mid a$。此对应与联合返回证明只使用所指明的固定数据和独立性，不以该稿全部算术结论为前提。$\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 12. 实际共轭点的显式低频分离、统一差异度与矩形等待界
+
+**定义 12.1（不变微分圆坐标、差异度与弧盒）。** 沿用定义 11.1 的实际点 $P_1,P_2$、单位分支 $C$ 和 $Q=(P_1,P_2)$，固定正实根的选择。在 $E_0:Y^2=X^3-X$ 上取不变微分 $\omega=dX/(2Y)$，并置
+
+$$
+\Omega=\int_1^\infty\frac{dx}{\sqrt{x^3-x}},\qquad
+\mathbb T=\mathbb R/\mathbb Z,\qquad
+\theta(R)=\frac1\Omega\int_O^R\omega\pmod{\mathbb Z}.
+$$
+
+积分沿 $C$，定向取 $\omega$ 为正；路径的不同选择只改变整周期。约定 $\theta(O)=0$。$C$ 上不变微分的整周期为 $\Omega$，故 $\theta:C\to\mathbb T$ 是紧群同构。记
+
+$$
+\alpha=(\theta(P_1),\theta(P_2)),\qquad
+\|u\|_{\mathbb T}=\min_{m\in\mathbb Z}|\widetilde u-m|,
+$$
+
+其中 $\widetilde u$ 是 $u\in\mathbb T$ 的任一实代表。所有对数均为自然对数。对整数 $L,H\ge1$ 定义
+
+$$
+\lambda_L(H)=
+\min_{\substack{h=(h_1,h_2)\in\mathbb Z^2\\0<\|h\|_\infty\le H}}
+\|L(h_1\alpha_1+h_2\alpha_2)\|_{\mathbb T}.
+$$
+
+零频率 $h=(0,0)$ 不进入此最小值；它在字符平均中恒为 $1$。对任意起点 $\beta\in\mathbb T^2$，令 $z_k=\beta+kL\alpha$，$k\in\mathbb Z$。把 $z_k$ 取为 $[0,1)^2$ 中的代表，定义归一化极端差异度
+
+$$
+\mathcal D_N(\beta,L)=
+\sup_{\substack{0\le s_j\le t_j\le1\\j=1,2}}
+\left|
+\frac1N\#\{0\le k<N:z_k\in[s_1,t_1)\times[s_2,t_2)\}
+-(t_1-s_1)(t_2-s_2)
+\right|,
+\qquad N\in\mathbb Z_{\ge1}.
+$$
+
+这里的盒子不要求以原点为顶点，空盒也允许。这正是 Dick–Pillichshammer，*Digital Nets and Sequences: Discrepancy Theory and Quasi-Monte Carlo Integration*，[所引预印本](https://web.maths.unsw.edu.au/~josefdick/preprints/DP_book_preprint.pdf) 印刷页 72、定义 3.13 的极端差异度。
+
+令 $q:\mathbb R\to\mathbb T$ 为商映射。长度 $0<\ell\le1$ 的半开弧和开弧分别指 $q([c,c+\ell))$ 与 $q((c,c+\ell))$；跨过坐标切口 $0$ 时仍按这一定义，不把它截成较短的弧。长度 $1$ 的半开弧是全圆，长度 $1$ 的开弧是去掉 $q(c)$ 的圆；全圆本身也允许作为一个弧因子。长度 $0$ 的半开弧与开弧均约定为空集，单点集合的 Haar 测度为 $0$。弧盒 $\mathcal B=I_1\times I_2\subseteq\mathbb T^2$ 的面积是两因子长度的乘积，全圆因子的长度为 $1$。对应的圆坐标目标为 $B_C=(\theta\times\theta)^{-1}(\mathcal B)\subseteq C^2$，其 Haar 面积等于 $|\mathcal B|$。下面的正面积结论也适用于改变弧端点开闭的盒子，因为它们包含面积任意接近自身面积的内部半开弧盒。
+
+高度采用绝对对数射影高度。若数域 $F_*$ 含有 $U,V$，则
+
+$$
+h([U:V])=\frac1{[F_*:\mathbb Q]}
+\sum_w[F_{*,w}:\mathbb Q_w]\log\max(|U|_w,|V|_w).
+$$
+
+有限处的绝对值延拓 $|p|_p=p^{-1}$，实处用通常绝对值，复处用通常模且局部次数为 $2$。此定义与数域和齐次代表的选择无关。对有限 $x$ 写 $h(x)=h([x:1])$，并约定 $x(O)=\infty=[1:0]$、$h(\infty)=0$。典范高度采用 Silverman，*The Arithmetic of Elliptic Curves*，第二版，[VIII.9.1 与 VIII.9.3](https://www.math.ens.psl.eu/~obenoist/refs/Silverman.pdf) 的归一化
+
+$$
+\widehat h(R)=\frac12\lim_{m\to\infty}4^{-m}h(x([2^m]R)).
+$$
+
+**定理 12.2（实际点的完全显式频率分离与统一起点估计）。** 对定义 12.1 的 $\alpha$，所有整数 $L,H\ge1$ 都满足
+
+$$
+\lambda_L(H)\ge\exp(-128L^2H^2).
+$$
+
+对所有 $\beta\in\mathbb T^2$ 和整数 $N\ge\exp(256L^2)$，有一致于起点的估计
+
+$$
+\mathcal D_N(\beta,L)
+<\frac{73L}{\sqrt{\log N}}
+\le\frac{128L}{\sqrt{\log N}}.
+$$
+
+这是一组固定算术数据的复合显式估计。非挠性与模挠独立性复用 Brox，[固定提交 `61b82ccacfbefdff3d6e7cf986d6e6279afa1372`](https://github.com/JoseBrox/diophantine-z-q_improvements/blob/61b82ccacfbefdff3d6e7cf986d6e6279afa1372/papers/trace_heights/aggregate_trace_height_20261108_v9.tex) 的 “The quadratic-field elliptic curve” 一节，尤其 `lem:independent`；所需的只是其整数系数特例。典范高度的二次性与下述 Erdős–Turán–Koksma 不等式是既有中间结果。显式加性高度常数和它们对本条固定点的组合在证明中给出，不使用未指定常数的聚合迹高度强制性估计。
+
+**证明。** 先核对圆坐标的周期与距离。$C$ 的两条实半支各自贡献
+
+$$
+\int_1^\infty\frac{dx}{2\sqrt{x^3-x}}=\frac\Omega2.
+$$
+
+因此沿整圆积分为 $\Omega$。不变微分的平移不变性使积分模周期成为群同态；沿正定向走完一圈时积分严格增加一个周期，故它为一一对应的圆群坐标。它把归一化 Haar 测度送到 $\mathbb T$ 的长度测度。代换 $x=t^{-2}$ 给出完全显式的周期上界
+
+$$
+\Omega=2\int_0^1\frac{dt}{\sqrt{1-t^4}}
+<2\int_0^1\frac{dt}{\sqrt{1-t}}=4.
+$$
+
+若 $R\in C$ 且 $X=x(R)>1$，从 $R$ 到 $O$ 的同一半支弧长小于半个周期，所以它就是较短的积分弧。于是
+
+$$
+\|\theta(R)\|_{\mathbb T}
+=\frac1{2\Omega}\int_X^\infty\frac{dx}{\sqrt{x^3-x}}
+>\frac1{\Omega\sqrt X}
+>\frac1{4\sqrt X}.
+\tag{12.1}
+$$
+
+第一个严格不等式使用 $x^3-x<x^3$ 及 $\int_X^\infty x^{-3/2}\,dx=2/\sqrt X$。$O$ 的圆距离为 $0$；另一个端点 $(1,0)$ 的圆距离为 $1/2$，不对这两点使用式 (12.1)。
+
+现在给出高度误差的具体常数。倍点横坐标在射影线上由四次齐次式
+
+$$
+A(U,V)=(U^2+V^2)^2,\qquad
+B(U,V)=4UV(U^2-V^2),\qquad
+x([2]R)=[A(U,V):B(U,V)]
+\tag{12.2}
+$$
+
+表示，其中 $x(R)=[U:V]$。仿射公式来自 $x([2]R)=(x^2+1)^2/(4x(x^2-1))$；在 $O$ 与二挠点处用同一齐次式延拓。以下整数系数恒等式还保证 $A,B$ 没有共同的射影零点：
+
+$$
+\begin{aligned}
+16U^7&=(16U^3-12UV^2)A-(5U^2V+3V^3)B,\\
+16V^7&=(16V^3-12U^2V)A+(3U^3+5UV^2)B.
+\end{aligned}
+\tag{12.3}
+$$
+
+例如第一式右侧两部分展开为 $16U^7+20U^5V^2-8U^3V^4-12UV^6$ 与 $20U^5V^2-8U^3V^4-12UV^6$ 之差；第二式交换 $U,V$，同时注意 $B(V,U)=-B(U,V)$，即得。
+
+在每个有限处，把坐标除以模最大的非零坐标，归一化为 $\max(|U|_w,|V|_w)=1$。整数系数与超度量不等式给出上界 $\max(|A|_w,|B|_w)\le1$。式 (12.3) 中左侧至少一项的模为 $|2|_w^4$，右侧系数的模不超过 $1$，故
+
+$$
+|2|_w^4\le\max(|A|_w,|B|_w)\le1.
+\tag{12.4}
+$$
+
+在任一实或复嵌入同样归一化。交换坐标后，输出的模为 $|(1+t^2)^2|$ 与 $|4t(1-t^2)|$，其中 $|t|\le1$。它们都不超过 $8$。若第一项小于 $1/4$，则 $|1+t^2|<1/2$，从而 $|t|>1/\sqrt2$ 且 $|1-t^2|>3/2$，第二项大于 $3\sqrt2$。因此在所有无穷处都有
+
+$$
+\frac14\le\max(|A|,|B|)\le8.
+\tag{12.5}
+$$
+
+由齐次性，式 (12.4)–(12.5) 控制 $h(x([2]R))-4h(x(R))$。无穷处的归一化权重之和为 $1$，而乘积公式给出
+
+$$
+\frac1{[F_*:\mathbb Q]}\sum_{w\text{ 有限}}[F_{*,w}:\mathbb Q_w]\log|2|_w=-\log2.
+$$
+
+故对所有代数点，包括 $O$ 与挠点，都有
+
+$$
+4h(x(R))-6\log2
+\le h(x([2]R))
+\le4h(x(R))+3\log2.
+\tag{12.6}
+$$
+
+把相邻两项的差乘以 $4^{-m-1}$ 后求和，利用 $\sum_{m\ge0}4^{-m-1}=1/3$，得到
+
+$$
+h(x(R))\le2\widehat h(R)+2\log2,\qquad
+2\widehat h(R)\le h(x(R))+\log2.
+\tag{12.7}
+$$
+
+这里极限的归一化与 Silverman 第二版 VIII.9.1（Tate 命题，印刷页 247–248）一致；其 VIII.9.3（印刷页 248–249）在全体代数点上给出非负性、$\widehat h([m]R)=m^2\widehat h(R)$ 及平行四边形恒等式。本证明以式 (12.6)–(12.7) 替换一般高度比较中的未指定加性误差。
+
+定义 11.1 的两点都定义在指定实嵌入的数域
+
+$$
+F=\mathbb Q(\sqrt2,\sqrt{3-\sqrt2},\sqrt{3+\sqrt2}),
+\qquad e=[F:\mathbb Q]\le8.
+$$
+
+它们的横坐标是
+
+$$
+X_1=\frac{115-27\sqrt2}{56},\qquad
+X_2=\frac{115+27\sqrt2}{56}.
+$$
+
+二者均大于 $1$，且其本原不可约整系数多项式为
+
+$$
+448T^2-1840T+1681.
+$$
+
+事实上两根之和为 $115/28$、积为 $1681/448$；系数互素，判别式为 $2\cdot432^2$，不是有理平方。因此绝对高度的最小多项式公式给出
+
+$$
+h(X_1)=h(X_2)
+=\frac12\log(448X_1X_2)=\log41.
+$$
+
+结合式 (12.7)，得到
+
+$$
+\widehat h(P_1)+\widehat h(P_2)\le\log82.
+\tag{12.8}
+$$
+
+取 $0<\|h\|_\infty\le H$，令
+
+$$
+R=[Lh_1]P_1+[Lh_2]P_2,\qquad \Delta=L^2H^2\ge1.
+$$
+
+Brox 上述模挠独立性保证 $R$ 非挠，因此 $R\ne O$，也不等于二挠点 $(1,0)$。由于 $C$ 是子群，$R\in C$，故 $X=x(R)>1$，可以使用式 (12.1)。典范高度的平行四边形恒等式与非负性给出
+
+$$
+\begin{aligned}
+\widehat h(R)
+&\le2L^2\bigl(h_1^2\widehat h(P_1)+h_2^2\widehat h(P_2)\bigr)\\
+&\le2\Delta\log82.
+\end{aligned}
+$$
+
+这里没有用分别可达的最优值代替联合值；不等式来自对同一对点 $[Lh_1]P_1,[Lh_2]P_2$ 的平行四边形公式，舍去其差的非负高度。$R\in E_0(F)$，而 $h([X:1])$ 的每一个局部项都非负。指定实嵌入的权重是 $1/e$，于是 $\log X\le e h(X)\le8h(X)$。再用式 (12.7)，得到带有全部加性常数的界
+
+$$
+\log X\le32\Delta\log82+16\log2.
+\tag{12.9}
+$$
+
+将其代入式 (12.1)，并使用 $\theta(R)=L(h_1\alpha_1+h_2\alpha_2)$，得到
+
+$$
+\begin{aligned}
+\|Lh\cdot\alpha\|_{\mathbb T}
+&>\exp(-16\Delta\log82-10\log2)\\
+&\ge\exp\bigl(-(16\log41+26\log2)\Delta\bigr)\\
+&>\exp(-128\Delta).
+\end{aligned}
+\tag{12.10}
+$$
+
+最后一步只需 $41<2^6$ 与 $\log2<1$：$16\log41+26\log2<122<128$。对有限个非零频率取最小值即得所需分离；无需给出完整 Mordell–Weil 群或重新证明算术独立性。
+
+接着使用 Dick–Pillichshammer 上述预印本印刷页 84、定理 3.26 的极端差异度不等式。在维数 $2$，置 $r(h)=\max(1,|h_1|)\max(1,|h_2|)$，其准确形式为
+
+$$
+\mathcal D_N(\beta,L)
+\le\frac94\left(
+\frac2{H+1}
++\sum_{0<\|h\|_\infty\le H}\frac1{r(h)}
+\left|\frac1N\sum_{k=0}^{N-1}\exp(2\pi i h\cdot z_k)\right|
+\right).
+\tag{12.11}
+$$
+
+所有指数均可用任意实代表计算。对于 $u=Lh\cdot\alpha\ne0$ 于 $\mathbb T$，几何级数及 $|\sin(\pi u)|\ge2\|u\|_{\mathbb T}$ 给出
+
+$$
+\left|\frac1N\sum_{k=0}^{N-1}\exp(2\pi i h\cdot z_k)\right|
+\le\frac2{N|1-\exp(2\pi i u)|}
+\le\frac1{2N\|u\|_{\mathbb T}}.
+\tag{12.12}
+$$
+
+正弦下界来自 $\sin$ 在 $[0,\pi/2]$ 上的凹性；起点 $\beta$ 只贡献模为 $1$ 的因子。故式 (12.11) 为
+
+$$
+\mathcal D_N(\beta,L)
+\le\frac9{2(H+1)}+\frac{9S_H}{8N\lambda_L(H)},\qquad
+S_H=\left(1+2\sum_{j=1}^H\frac1j\right)^2-1\le8H^2.
+\tag{12.13}
+$$
+
+最后一个不等式由 $\sum_{j=1}^H1/j\le H$ 及 $4H^2+4H\le8H^2$ 得到。令 $t=\log N\ge256L^2$，选
+
+$$
+H=\left\lfloor\frac{\sqrt t}{16L}\right\rfloor\ge1.
+$$
+
+由频率分离，$N\lambda_L(H)\ge\exp(t-128L^2H^2)\ge\exp(t/2)$。又 $H+1>\sqrt t/(16L)$，且 $e^{t/2}\ge t^2/8$，所以
+
+$$
+\begin{aligned}
+\frac9{2(H+1)}&<\frac{72L}{\sqrt t},\\
+\frac{9S_H}{8N\lambda_L(H)}
+&\le\frac{9t}{256L^2}e^{-t/2}
+\le\frac9{32L^2t}
+\le\frac9{512}\frac L{\sqrt t}.
+\end{aligned}
+$$
+
+末步使用 $L\ge1$ 与 $\sqrt t\ge16L$。因为 $72+9/512<73$，得到所述严格的 $73$ 界，也得到 $128$ 界。全部估计均与 $\beta$ 无关。$\square$
+
+**定理 12.3（固定正面积弧盒的显式块等待与局部同步）。** 设 $L\ge1$ 为整数，$0<v\le1$，并令
+
+$$
+W(L,v)=2^{\left\lceil 2^{15}L^2/v^2\right\rceil}.
+$$
+
+对任意 $\beta\in\mathbb T^2$、任意整数 $k_0$ 及每个固定的定义 12.1 弧盒 $\mathcal B$，若 $|\mathcal B|\ge v$，则
+
+$$
+\{\beta+(k_0+j)L\alpha:0\le j<W(L,v)\}\cap\mathcal B\ne\varnothing.
+\tag{12.14}
+$$
+
+因此每个 $W(L,v)$ 项的连续进程块都命中该盒子。这里允许半开、开、跨切口或全圆因子；不要求 $O$ 在目标中。
+
+具体应用于定义 11.2 的固定局部数据，仍置 $g=\gcd(M,D)$、$L=\operatorname{lcm}(M,D)$，其中各 $d_v$ 与 $D$ 取该定义的值。若 $g\nmid a$，不存在任何整数同时满足指定同余和全部局部条件。若 $g\mid a$，令 $b\in\{1,\ldots,L\}$ 为定理 11.3 的唯一允许类代表。对任意 $k_0\ge0$，从第一允许项 $n_*=b+Lk_0$ 开始的 $W=W(L,v)$ 项中，存在同一个正整数
+
+$$
+n=n_*+Lj,\qquad 0\le j<W,
+$$
+
+使
+
+$$
+n\equiv a\pmod M,\qquad
+[n]P_v\in U_v\quad(v\in S),\qquad
+[n]Q\in B_C,
+\qquad
+0\le n-n_*\le L(W-1)<LW.
+\tag{12.15}
+$$
+
+对任意整数阈值 $T\ge0$，还有严格向前的正整数结论
+
+$$
+T<n\le T+LW
+\tag{12.16}
+$$
+
+并同时满足式 (12.15) 的前三组条件。若沿全部整数解 $b+L\mathbb Z$ 考察而不预加正性要求，式 (12.16) 对任意 $T\in\mathbb Z$ 也成立。式 (12.15) 的起点是第一允许项，式 (12.16) 的起点是任意整数阈值，二者端点分别为严格的间隙 $<LW$ 和闭的上界 $\le T+LW$。
+
+**证明。** $\log2>1/2$，因为 $\int_1^2 dx/x>1/2$。由 $W$ 的定义，
+
+$$
+\log W\ge2^{15}(\log2)L^2/v^2
+\ge2^{14}L^2/v^2\ge256L^2.
+$$
+
+定理 12.2 中保留的 $73$ 界因而给出，对每个起点 $\gamma\in\mathbb T^2$，
+
+$$
+\mathcal D_W(\gamma,L)
+<\frac{73L}{\sqrt{\log W}}
+\le\frac{73}{128}v
+<\frac34v.
+\tag{12.17}
+$$
+
+先设两个因子均为半开弧或全圆。将各弧的左端点平移到 $0$ 后，盒子成为 $[0,\ell_1)\times[0,\ell_2)$，全圆对应 $\ell_j=1$；这一次坐标平移同时吸收到起点 $\gamma=\beta+k_0L\alpha-(q(c_1),q(c_2))$ 中。不需要把跨切口盒子分成四块。因此式 (12.17) 直接给出
+
+$$
+\#\{0\le j<W:\beta+(k_0+j)L\alpha\in\mathcal B\}
+\ge W\bigl(|\mathcal B|-\mathcal D_W(\gamma,L)\bigr)>0.
+$$
+
+若有开弧因子，在其参数区间内各缩进一个正数 $\varepsilon$，取内部半开弧；全圆因子保持全圆。长度 $1$ 的去点开弧也可如此缩进。所得半开弧盒包含于原盒，且面积随缩进量趋于 $0$ 而趋于原面积，故可以选择面积大于 $3v/4$ 的内部半开弧盒。对它再次平移并用式 (12.17)，访问数仍严格大于 $0$。任意其他端点开闭约定也由同一内部盒论证得到。面积为零的退化盒不满足 $v>0$ 的前件，未被用来推出命中。由此证明式 (12.14)，且其中任意块的起点已经由 $\beta+k_0L\alpha$ 统一处理。
+
+局部部分直接使用定理 11.3 中已经证明的精确等价
+
+$$
+\bigl(n\equiv a\pmod M\ \text{且}\ [n]P_v\in U_v\ (v\in S)\bigr)
+\iff n\in b+L\mathbb Z
+$$
+
+（相容时），以及不相容时解集为空的结论。正整数允许项恰为 $b+Lk$，$k\ge0$。令 $\beta=n_*\alpha$，对 $k_0=0$ 的式 (12.14) 应用，即有某个 $0\le j<W$ 使 $(n_*+Lj)\alpha\in\mathcal B$。这同一个 $n=n_*+Lj$ 既属于允许类，又使 $[n]Q\in B_C$，从而得到式 (12.15) 的全部联合条件与端点。空局部集 $S=\varnothing$ 时 $D=1$，论证不变。
+
+最后，对任意整数 $T$，第一项严格大于 $T$ 的整数允许项是
+
+$$
+n_0=b+L\left(\left\lfloor\frac{T-b}{L}\right\rfloor+1\right),
+\qquad T<n_0\le T+L.
+$$
+
+从它开始应用 $W$ 项命中结论，所得 $n$ 满足
+
+$$
+T<n_0\le n\le n_0+L(W-1)\le T+LW.
+$$
+
+当 $T\ge0$ 时 $n_0>0$，其对应允许项指标非负，故得到正整数版本。$\square$
+
+定理 12.2–12.3 的新增综合推导是实际固定共轭点的显式数值链，而不是一般高度理论、Erdős–Turán–Koksma 不等式、CRT 或定性紧群回返的新版本。第 11 节给出实际点的定性分布；[ARITHMETIC_BOUNDARY_QUANTIZATION，第 35.11 条](ARITHMETIC_BOUNDARY_QUANTIZATION.md) 给出依赖旋转的定性向前有界间隙。这些定性结论没有提供本节的数值常数。Glazer 的[固定源码 `9c0b3aba60d90fdcac82115f0582a6f52f1054f7`](https://github.com/elliotglazer/diophantine-z-q/blob/9c0b3aba60d90fdcac82115f0582a6f52f1054f7/manuscripts/quartic_v13.tex) 只在这里承担第 11 节已给出的固定数据对应；本节不以其完整算术构造为前提，也不主张新的算术独立性或文献优先权。
+
+用白话说，这两个实际点每走相同的 $L$ 步，就在两个圆坐标上同时前进一次。显式高度界阻止低频整数关系无限贴近整数，字符平均因而有统一误差；固定的正面积弧盒最终不能在整块进程中一直空着。局部条件先把可用整数筛成一个类，返回定理再在这个类内选中同一个整数，所以不是给不同条件各找一个见证。
+
+上述 $L,v$、弧盒和全部局部条件均先固定。泛指的局部群的周期 $d_v$ 是输入数据，本节没有给未指定群计算周期。$W$ 控制指标长度，不估算表示或检验各项的计算成本。目标是所定义的圆坐标弧盒；一般 Borel 集、任意横坐标矩形、移动或缩小目标以及随 $n$ 加深的局部条件需要各自的额外论证。式 (12.6)–(12.9) 是坐标高度的有效界，不给出聚合迹高度自身的有效加性常数。本节也不给出 $\mathsf H_{\mathbb Z/\mathbb Q}$ 的完整表示与双向正确性证明，不给出无前提的量子起源或 Born 规则推导。
+
+## 追加锚（本行以下为增补区）
