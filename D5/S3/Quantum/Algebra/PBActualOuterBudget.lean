@@ -231,7 +231,7 @@ theorem actual_outer_budget [Nontrivial H]
   have hsp : z+ω ∈ L := L.add_mem hz hω
   have hsm : z-ω ∈ L := L.sub_mem hz hω
   have hcs : (-(l*X)/t)^2 + (1/t)^2 = 1 := by
-    field_simp
+    field_simp [ht]
     nlinarith [htsq]
   obtain ⟨v, hv, he, hf, hk, hee, hff, hkk, hef, hek, hfk⟩ :=
     supporting_readings F.e F.f (R.op (D x y)) F.symmetric_e F.symmetric_f
@@ -269,28 +269,28 @@ theorem actual_outer_budget [Nontrivial H]
       reading R v (J (y+ν) (z+ω))^2 = X^2/t^2+δ^2 := by
     rw [reading_jordan R hrp hrp, reading_jordan R hsp hsp, reading_jordan R hrp hsp]
     rw [hp, hspop]
-    simp only [inner_add_left, inner_sub_left, inner_smul_left,
-      inner_add_right, inner_sub_right, inner_smul_right]
-    rw [hv, he, hf, hk, hee, hff, hkk, hef, hek, hfk,
+    simp only [inner_add_left, inner_sub_left, real_inner_smul_left,
+      inner_add_right, inner_sub_right, real_inner_smul_right]
+    simp only [hv, he, hf, hk, hee, hff, hkk, hef, hek, hfk,
       sym (F.e v) v, sym (F.f v) v, sym (R.op (D x y) v) v,
       sym (F.f v) (F.e v), sym (R.op (D x y) v) (F.e v),
       sym (R.op (D x y) v) (F.f v)]
-    rw [he, hf, hk, hef, hek, hfk]
-    field_simp
-    nlinarith [htsq, sq_nonneg X, sq_nonneg δ]
+    simp only [he, hf, hk, hef, hek, hfk]
+    field_simp [ht]
+    linear_combination (Y^2*t^2+δ^2*t^2+X^2*((t^2-l^2*X^2)^2+(t^2-l^2*X^2)+1))*htsq
   have gram_minus : reading R v (J (y-ν) (y-ν)) * reading R v (J (z-ω) (z-ω)) -
       reading R v (J (y-ν) (z-ω))^2 = X^2/t^2+δ^2 := by
     rw [reading_jordan R hrm hrm, reading_jordan R hsm hsm, reading_jordan R hrm hsm]
     rw [hm, hsmop]
-    simp only [inner_add_left, inner_sub_left, inner_smul_left,
-      inner_add_right, inner_sub_right, inner_smul_right]
-    rw [hv, he, hf, hk, hee, hff, hkk, hef, hek, hfk,
+    simp only [inner_add_left, inner_sub_left, real_inner_smul_left,
+      inner_add_right, inner_sub_right, real_inner_smul_right]
+    simp only [hv, he, hf, hk, hee, hff, hkk, hef, hek, hfk,
       sym (F.e v) v, sym (F.f v) v, sym (R.op (D x y) v) v,
       sym (F.f v) (F.e v), sym (R.op (D x y) v) (F.e v),
       sym (R.op (D x y) v) (F.f v)]
-    rw [he, hf, hk, hef, hek, hfk]
-    field_simp
-    nlinarith [htsq, sq_nonneg X, sq_nonneg δ]
+    simp only [he, hf, hk, hef, hek, hfk]
+    field_simp [ht]
+    linear_combination (Y^2*t^2+δ^2*t^2+X^2*((t^2-l^2*X^2)^2+(t^2-l^2*X^2)+1))*htsq
   have pp := R.p2 v (y+ν) (z+ω)
   have pm := R.p2 v (y-ν) (z-ω)
   change reading R v (D (y+ν) (z+ω))^2 ≤
@@ -307,9 +307,9 @@ theorem actual_outer_budget [Nontrivial H]
       reading_jordan R hy hν, reading_jordan R hz hω]
     simp only [reading, LinearMap.coe_mk, AddHom.coe_mk, hωop, inner_zero_right,
       add_zero, F.reads_y, LinearMap.smul_apply, hνop,
-      inner_sub_right, inner_smul_left, inner_smul_right]
-    rw [sym (F.f v) (R.op (D x y) v), hfk, sym (F.f v) (F.e v), hef,
-      sym (F.f v) v, hf]
+      inner_sub_right, real_inner_smul_left, real_inner_smul_right]
+    simp only [sym (R.op (D x y) v) (F.f v), hfk, sym (F.f v) (F.e v), hef,
+      sym (F.f v) v, hf, smul_eq_mul]
     ring
   refine ⟨v, hv, pp, pm, difference, ?_⟩
   have bound : (2*l*X^2*Y/t)^2 ≤ 4*(X^2/t^2+δ^2) := by
@@ -318,8 +318,8 @@ theorem actual_outer_budget [Nontrivial H]
       reading R v (D (y-ν) (z-ω)))]
   have bound' := (div_le_iff₀ (sq_pos_iff.mpr ht)).mp
     (show (2*l*X^2*Y)^2/t^2 ≤ 4*(X^2/t^2+δ^2) by simpa [div_pow] using bound)
-  have ht0 : t ≠ 0 := ht
-  field_simp at bound'
-  nlinarith [htsq]
+  field_simp [ht] at bound'
+  rw [htsq] at bound'
+  nlinarith [bound']
 
 end D5.S3.Quantum.Algebra.PBActualOuterBudget
