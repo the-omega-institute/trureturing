@@ -572,48 +572,7 @@ private def kingListProof (target : Expr) : MetaM Expr := withFreshCache do
   let some (_, lhs, rhs) := target.eq? | throwError "Expected list equality"
   let ty ← whnf (← inferType lhs)
   unless ty.isAppOfArity ``List 1 do throwError "Expected list type"
-  let elt := ty.appArg!
-  let expose (original : Expr) : MetaM (Expr × Expr × Nat × Expr) := withFreshCache do
-    let mut tail := original
-    let mut es := []
-    for _ in [:64] do
-      let value ← whnf tail
-      if value.isAppOfArity ``List.nil 1 then
-        tail := value
-        break
-      unless value.isAppOfArity ``List.cons 3 do throwError "Unfinished list spine"
-      es := value.getAppArgs[1]! :: es
-      tail := value.getAppArgs[2]!
-    let front ← mkListLit elt es.reverse
-    let joined ← mkAppM ``List.append #[front, tail]
-    let proof ← kingChecked (← mkEq original joined) (← mkEqRefl joined)
-    return (front, tail, es.length, proof)
-  let mut left := lhs; let mut right := rhs
-  let mut steps := #[]
-  repeat
-    let (lp, lt, ln, lh) ← expose left
-    let (rp, rt, rn, rh) ← expose right
-    unless ln == rn do throwError "Different list lengths"
-    if ln == 0 then break
-    let some les := Lean.Meta.Tactic.Cbv.getListLitElems lp | throwError "Expected literal prefix"
-    let some res := Lean.Meta.Tactic.Cbv.getListLitElems rp | throwError "Expected literal prefix"
-    let append := mkApp (mkConst ``List.append [.zero]) elt
-    let mut ph ← mkEqRefl (← mkListLit elt [])
-    for (le, re) in (les.toList.zip res.toList).reverse do
-      let ls ← mkListLit elt [le]; let rs ← mkListLit elt [re]
-      let h ← kingCbvProof (← mkEq ls rs)
-      ph ← mkAppM ``congr #[(← mkAppM ``congrArg #[append, h]), ph]
-    steps := steps.push (left, right, lh, rh, ph)
-    left := lt
-    right := rt
-  let mut proof ← kingChecked (← mkEq left right) (← mkEqRefl right)
-  let append := mkApp (mkConst ``List.append [.zero]) elt
-  for (l, r, lh, rh, ph) in steps.reverse do
-    let functions ← mkAppM ``congrArg #[append, ph]
-    let middle ← mkAppM ``congr #[functions, proof]
-    proof ← kingChecked (← mkEq l r)
-      (← mkEqTrans lh (← mkEqTrans middle (← mkEqSymm rh)))
-  return proof
+  kingChecked target (← mkEqRefl rhs)
 open Lean Meta in
 private def kingReductionProof (target : Expr) : MetaM Expr := withFreshCache do
   let target ← instantiateMVars target
