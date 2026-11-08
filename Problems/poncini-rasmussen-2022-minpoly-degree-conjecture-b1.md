@@ -91,8 +91,11 @@ about 1777 s of kernel time in total, with a peak resident set of 6.6 GB on an
    $E=\sum_{j=1}^{4}\varepsilon_j\,2\cos(\pi j/9)$, $\varepsilon_j\in\{-1,0,1\}$
    (exact cyclotomic arithmetic in $\mathbb Z[z]/(\Phi_{18})$). The Lean result
    proves only the upper bound.
-4. **Computed:** the formula holds at $n=8$ and $n=10$ (degrees $54$ and
-   $162$, Krylov ranks modulo two primes).
+4. **Computed (lower bounds only):** at $n=8$ and $n=10$ the Krylov ranks of
+   $h_n$ at the unit, modulo two primes, are $54$ and $162$, equal to the
+   values of (B.13). A rank modulo a prime bounds the degree over $\mathbb Q$
+   from below only; no annihilator of that degree was computed for these $n$,
+   so the equalities there are unverified.
 5. **Open:** the all-$n$ classification. The free-fermion picture predicts that
    (B.13) holds exactly when $n$ is a power of two, an odd prime, or twice an
    odd prime, and fails for every other $n\ge9$ because of cyclotomic
