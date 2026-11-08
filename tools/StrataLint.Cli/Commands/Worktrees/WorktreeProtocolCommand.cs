@@ -77,14 +77,14 @@ internal static class WorktreeProtocolCommand
             Encoding.UTF8.GetString(result.StandardError), result.ExitCode);
     }
 
-    internal static IReadOnlyDictionary<string, string> InitializationEnvironment(string root)
+    internal static IReadOnlyDictionary<string, string> InitializationEnvironment(string root, TimeSpan? timeout = null)
     {
         // Export ambient names and generated policy values only; ambient values stay local.
         using var program = new EmbeddedProgramFile(Program.Value
             + "import json\np = sys.modules['worktree_protocol']\n"
             + "print(json.dumps(dict(Inherited=list(p.inherited_environment()), Scoped=p.scoped_process_environment())))\n");
         var result = new ProductionWorktreeProcessRunner().Run("python3", ["-I", "-B", program.FilePath],
-            root, BoundedProcessRunner.HangDetectionBudget);
+            root, timeout ?? BoundedProcessRunner.HangDetectionBudget);
         if (result.ExitCode != 0)
             throw new InvalidOperationException(Encoding.UTF8.GetString(result.StandardError));
         var policy = JsonSerializer.Deserialize<InitializationPolicy>(result.StandardOutput)

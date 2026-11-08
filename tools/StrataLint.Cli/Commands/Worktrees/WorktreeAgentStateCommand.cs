@@ -10,9 +10,12 @@ internal static class WorktreeAgentStateCommand
     internal static CommandResult After(string root, IWorktreeProcessRunner runner, Func<CommandResult> operation)
     {
         var anchor = root;
+        var auxiliary = runner;
         try
         {
-            var inventory = runner.Run("git", ["worktree", "list", "--porcelain", "-z"], root, TimeSpan.FromSeconds(5));
+            if (runner is ProductionWorktreeProcessRunner production)
+                auxiliary = production.WithEnvironment(WorktreeProtocolCommand.InitializationEnvironment(root, TimeSpan.FromSeconds(4)));
+            var inventory = auxiliary.Run("git", ["worktree", "list", "--porcelain", "-z"], root, TimeSpan.FromSeconds(4));
             var first = Encoding.UTF8.GetString(inventory.StandardOutput).Split('\0')[0];
             if (inventory.ExitCode == 0 && first.StartsWith("worktree ", StringComparison.Ordinal))
                 anchor = first["worktree ".Length..];
@@ -21,7 +24,7 @@ internal static class WorktreeAgentStateCommand
         var result = operation();
         try
         {
-            var pending = WorktreeProtocolCommand.Run(anchor, ["pending"], runner, TimeSpan.FromSeconds(6));
+            var pending = WorktreeProtocolCommand.Run(anchor, ["pending"], auxiliary, TimeSpan.FromSeconds(6));
             return result with { Error = result.Error + pending.Error + (!pending.Success || pending.Error.Length == 0
                 ? "WORKTREE_AGENT_WARNING pending summary unavailable\n" : string.Empty) };
         }

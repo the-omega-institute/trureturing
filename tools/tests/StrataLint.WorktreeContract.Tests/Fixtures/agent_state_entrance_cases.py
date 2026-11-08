@@ -120,6 +120,17 @@ class AgentEntranceTests(unittest.TestCase):
             self.assertIn("auxiliary-injected-failure", result.stderr)
             self.assertFalse(self.local(tree).exists())
 
+    def test_creation_summary_uses_source_clone_despite_ambient_git_directory(self):
+        tree = self.root / "scoped"
+        with cases.agent("codex:scoped"):
+            result = self.cli("worktree", "--kind", "governance", "--name", "scoped", "--path", tree,
+                "--base", self.base, "--skip-restore", env={"GIT_DIR": str(self.root / "remote.git")})
+            self.assertEqual(json.loads(result.stdout)["status"], "succeeded")
+            self.assertEqual(self.saved(tree)["creator"], "codex:scoped")
+            self.assertIn('"pending": 1', result.stderr)
+            self.assertIn(str(tree), result.stderr)
+            self.assertEqual(result.stderr.count("WORKTREE_AGENT_PENDING "), 1)
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
