@@ -874,8 +874,11 @@ H_\sigma=\{\xi:h\xi=-\xi,\ Q\xi=-\sigma\xi\},
 \qquad \sigma\in\{1,-1\},
 $$
 
-并取非零 $\xi\in H_\sigma$、$\eta=j\xi$。若 $\phi_\delta$ 是向量
-$(\xi+\delta\eta)/(1+\delta^2)^{1/2}$ 的正读取，则对每个固定自伴 $v$ 有精确式
+沿用125.1的内积约定：第一槽共轭线性。取单位向量 $\xi\in H_\sigma$，
+令 $\eta=j\xi$，则 $\eta$ 也为单位向量，且 $h\eta=\eta$、
+$\langle\xi,\eta\rangle=0$。对 $\delta>0$，取单位向量
+$(\xi+\delta\eta)/(1+\delta^2)^{1/2}$ 的正读取 $\phi_\delta$，
+则对每个固定自伴 $v$ 有精确式
 
 $$
 B_{\phi_\delta}(n,v)=
@@ -886,7 +889,7 @@ B_{\phi_\delta}(n,v)=
 \tag{137.8}
 $$
 
-记 $P_\eta w=w-\operatorname{Re}\langle\eta,w\rangle\eta$。在137.7中先固定
+记实正交投影 $P_\eta w=w-\operatorname{Re}\langle\eta,w\rangle\eta$。在137.7中先固定
 $s$，约去 $2\delta/(1+\delta^2)$，令 $\delta\downarrow0$，得到
 
 $$
@@ -898,40 +901,88 @@ $$
 \tag{137.9}
 $$
 
-先取 $(p,q)=(e,j)$。由 $e\xi=i\sigma\eta$、$j\xi=\eta$，两边在
-$s\to+\infty$ 与 $s\to-\infty$ 的一次项均由固定向量范数给出；绝对值的两侧导数相夹，得到
+先取 $(p,q)=(e,j)$。由 $e\xi=i\sigma\eta$、$j\xi=\eta$，记
 
 $$
 \begin{aligned}
 w_+&:=P_\eta((x+k+d)\xi),&w_-&:=P_\eta((x+k-d)\xi),\\
 P_\eta((e+j)\xi)&=i\sigma\eta,&P_\eta((e-j)\xi)&=i\sigma\eta,\\
-\left.\frac{d}{ds}\right|_{+\infty}
-\bigl(\|w_+-s i\sigma\eta\|+\|w_-+s i\sigma\eta\|\bigr)
-&=\operatorname{Re}\langle-i\sigma\eta,w_+\rangle
+A&:=\langle\eta,z\xi\rangle,&D_0&:=\langle\eta,d\xi\rangle .
+\end{aligned}
+$$
+
+对任意固定向量 $w$ 和单位向量 $v$，在 $s\to+\infty$ 或 $s\to-\infty$
+时都有 $\|sv+w\|/|s|\to1$，并且
+
+$$
+\|sv+w\|-|s|
+=\frac{2s\operatorname{Re}\langle v,w\rangle+\|w\|^2}
+ {\|sv+w\|+|s|}
+=\operatorname{sgn}(s)\operatorname{Re}\langle v,w\rangle+o(1).
+$$
+
+此有理化等式也适用于 $w=0$，不需对范数求导。分别取
+$v=-i\sigma\eta,w=w_+$ 及 $v=i\sigma\eta,w=w_-$，得到两尾的常数偏移式
+
+$$
+\begin{aligned}
+F(s)&:=\|w_+-s i\sigma\eta\|+\|w_-+s i\sigma\eta\|\\
+&=2|s|+\operatorname{sgn}(s)C+o(1),\\
+C&:=\operatorname{Re}\langle-i\sigma\eta,w_+\rangle
  +\operatorname{Re}\langle i\sigma\eta,w_-\rangle
-=-2\sigma\operatorname{Im}D_0 .
+ =-2\sigma\operatorname{Im}D_0 .
 \end{aligned}
 \tag{137.10a}
 $$
 
-$s\to+\infty$ 给出一个导数方向的界，而 $s\to-\infty$ 给出反向界；两侧
-主斜率相同，故显示的一次系数必须相等。
+最后一式中，两份 $x+k$ 项抵消，实投影减去的项不改变相应内积的虚部。
+式(137.9)准确成为 $2|s+\operatorname{Re}A|\le F(s)$。在正尾比较常数项给
+$2\operatorname{Re}A\le C$；在负尾，左侧为 $-2s-2\operatorname{Re}A$，
+右侧为 $-2s-C+o(1)$，所以 $-2\operatorname{Re}A\le-C$，即
+$2\operatorname{Re}A\ge C$。合并得
 
 $$
-\operatorname{Re}A=-\sigma\operatorname{Im}D_0,
-\qquad
-A:=\langle\eta,z\xi\rangle,\quad D_0:=\langle\eta,d\xi\rangle .
+\operatorname{Re}A=-\sigma\operatorname{Im}D_0 .
 \tag{137.10}
 $$
 
-同一计算使用第二锚 $(p,q)=(j,-e)$，其 $q\xi=-i\sigma\eta$，给出
+当 $x=0$ 时，原P2给 $d=0$，且 $k=z=0$，所以 $w_+=w_-=0$、
+$A=D_0=C=0$、$F(s)=2|s|$；上述两尾比较仍逐式成立。
+
+对第二锚 $(p,q)=(j,-e)$，重新取单位向量
+$\eta'=q\xi=-i\sigma\eta$，配套使用向量
+$(\xi+\delta\eta')/(1+\delta^2)^{1/2}$ 的正读取 $\phi'_\delta$ 以及
+实正交投影 $P_{\eta'}w=w-\operatorname{Re}\langle\eta',w\rangle\eta'$。
+因 $p\xi=i\sigma\eta'$、$q\xi=\eta'$，式(137.8)–(137.9)以这份读取
+和投影逐式成立。具体记
+
+$$
+\begin{aligned}
+w'_\pm&:=P_{\eta'}((x+k\pm d)\xi),\\
+A'&:=\langle\eta',z\xi\rangle=i\sigma A,\qquad
+D'_0:=\langle\eta',d\xi\rangle=i\sigma D_0,\\
+F_{\eta'}(s)&:=\|w'_+-s i\sigma\eta'\|+\|w'_-+s i\sigma\eta'\|\\
+&=2|s|+\operatorname{sgn}(s)C'+o(1),\qquad
+C'=-2\sigma\operatorname{Im}D'_0 .
+\end{aligned}
+$$
+
+这里 $A',D'_0$ 的相位来自第一槽共轭线性。此时
+$2|s+\operatorname{Re}A'|\le F_{\eta'}(s)$，同一正、负尾比较分别给
+$2\operatorname{Re}A'\le C'$ 与 $2\operatorname{Re}A'\ge C'$。于是
+$\operatorname{Re}A'=-\sigma\operatorname{Im}D'_0$，即
+$-\sigma\operatorname{Im}A=-\operatorname{Re}D_0$，得到
 
 $$
 \operatorname{Re}D_0=\sigma\operatorname{Im}A.
 \tag{137.11}
 $$
 
-故
+两式先给单位 $\xi\in H_\sigma$ 上的
+$\langle j\xi,(d+i\sigma z)\xi\rangle=0$。固定原 $x$ 后，$d,z$ 都固定，
+$\xi\mapsto\langle\xi,j(d+i\sigma z)\xi\rangle$ 是固定有界算子的二次型。
+对任意非零 $\xi\in H_\sigma$，其值等于 $\|\xi\|^2$ 乘以单位向量
+$\xi/\|\xi\|$ 处的值；在零向量处也为零。因此
 
 $$
 \langle j\xi,(d+i\sigma z)\xi\rangle=0
@@ -940,7 +991,8 @@ $$
 $$
 
 这里的顺序是先取显式 $\alpha$ 主项，再取固定向量态的 $\delta$ 极限，最后
-取显式 $s$ 的两条尾部；没有缩放未知旧响应或给它添加连续性。
+取显式 $s$ 的两条尾部，再用固定算子二次型的齐次性扩至全部向量；没有
+缩放未知旧响应或使用它的齐次性、连续性。
 
 对137.12作普通复极化。由于 $Q$ 在整个 $\mathcal A$ 中中央，$d,z$ 没有
 相反 $Q$ 扇区之间的块；而 $j$ 将 $H_\sigma$ 等距映到相应的 $h=+1$
