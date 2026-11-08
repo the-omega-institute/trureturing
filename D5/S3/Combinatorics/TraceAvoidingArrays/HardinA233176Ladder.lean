@@ -656,7 +656,10 @@ local macro "check_states" : tactic => `(tactic| {
   simp only [Fin.forall_fin_succ_pi, Fin.forall_fin_zero_pi]
   intro q r t b c
   fin_cases q <;> fin_cases r <;> fin_cases t <;> fin_cases b <;> fin_cases c
-  all_goals (intro x; fin_cases x <;> decide +kernel) })
+  all_goals first
+    | (intro x y z h; exfalso
+       rcases h with ⟨htq, hqb, hbr, hrc, _, _, _⟩; omega)
+    | (intro x; fin_cases x <;> decide +kernel) })
 set_option Elab.async false
 set_option maxRecDepth 100000
 set_option maxHeartbeats 100000000
