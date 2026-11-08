@@ -36,21 +36,10 @@ The claim omits the source's additional null-complement requirement, so its
 negation also rules out the extension with that stronger requirement.
 The published N > m proposition and fixed-level uniqueness are outside this result.
 -/
-import Mathlib.LinearAlgebra.Matrix.Notation
-import Mathlib.Tactic.FinCases
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Ring
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.FunProp
 
-import Mathlib.Data.Finset.Basic
-import Mathlib.LinearAlgebra.Matrix.DotProduct
-import Mathlib.LinearAlgebra.FiniteDimensional.Basic
 import Mathlib.Topology.Instances.Matrix
 import Mathlib.Topology.Instances.Real.Lemmas
-import Mathlib.Topology.Algebra.Module.FiniteDimension
+import Mathlib.Tactic.LinearCombination
 
 /-! # An open two-parameter obstruction to global uniqueness. -/
 
