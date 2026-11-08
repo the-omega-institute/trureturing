@@ -11,7 +11,7 @@ import D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.ReadExecution.ActualRe
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
-open Classical MeasureTheory ProbabilityTheory Finset
+open Classical MeasureTheory ProbabilityTheory Finset Function
 open scoped ENNReal BigOperators
 
 namespace D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.ReadExecution.ActualRenewalHistoryLaw
@@ -91,6 +91,7 @@ variable [MeasurableSpace Ω] [MeasurableSpace S] [MeasurableSpace R]
     (labels : Set S) (update : S → Bool → R → S)
     (heff : ∀ b, Measurable (fun p : S × R => effective labels update p.1 b p.2))
 
+include heff in
 private theorem local_history_measurable (n : ℕ) (a : ℕ × (Fin n → ℕ)) :
     Measurable (localHistory labels update n a) := by
   have hr (t : ℕ) : Measurable (fun p : S × (Fin (cut a.1 a.2) → R) =>
@@ -106,6 +107,7 @@ private theorem local_history_measurable (n : ℕ) (a : ℕ × (Fin n → ℕ)) 
 /-- On each finite source slice every ordinary epoch-history event is an event
     of the initial state and coins strictly before the actual next-block cut.
     Source coordinates may also be observed; the next gap is excluded. -/
+include heff in
 theorem actual_history_locality
     (I : Ω → S) (τ : Ω → ℕ) (K : Ω → ℕ → ℕ) (ξ : Ω → ℕ → R)
     (n : ℕ) (B : Set ((ℕ × (Fin n → ℕ)) × (Fin (n + 1) → S)))
@@ -157,6 +159,7 @@ def observedHistory (n : ℕ) (ω : Ω) :
     (ℕ × (Fin n → ℕ)) × (Fin (n + 1) → S) :=
   ((τ ω, fun j => K ω j.val), epochHistory labels update I τ K ξ n ω)
 
+include heff hI hτ hK hξ in
 private theorem history_event_measurable (n : ℕ)
     (B : Set ((ℕ × (Fin n → ℕ)) × (Fin (n + 1) → S)))
     (hB : MeasurableSet B) :
@@ -169,12 +172,14 @@ private theorem history_event_measurable (n : ℕ)
     (slice_measurable τ K hτ hK n a).inter
       ((hD a).preimage (hI.prodMk (measurable_pi_iff.mpr fun j => hξ j.val)))
 
+include heff hI hτ hK hξ in
 private theorem epoch_event_measurable (n : ℕ) (T : Set S) (hT : MeasurableSet T) :
     MeasurableSet {ω | epoch labels update (I ω) (ξ ω) (τ ω) (K ω) n ∈ T} := by
   exact history_event_measurable labels update I τ K ξ heff hI hτ hK hξ n
     ((fun p => p.2 (Fin.last n)) ⁻¹' T)
     (hT.preimage ((measurable_pi_apply (Fin.last n)).comp measurable_snd))
 
+include heff hrow hI hτ hK hξ hprimitive in
 private theorem history_fixed_gap_step (n : ℕ)
     (B : Set ((ℕ × (Fin n → ℕ)) × (Fin (n + 1) → S)))
     (hB : MeasurableSet B) (s : S)
@@ -196,6 +201,7 @@ private theorem history_fixed_gap_step (n : ℕ)
 
 /-- Summing all gaps gives the ordinary-past row identity for the same actual
     execution. The history can also retain every previous source gap. -/
+include heff hrow hI hτ hK hξ hprimitive in
 theorem actual_history_step (n : ℕ)
     (B : Set ((ℕ × (Fin n → ℕ)) × (Fin (n + 1) → S)))
     (hB : MeasurableSet B) (s : S)
@@ -233,6 +239,7 @@ theorem actual_history_step (n : ℕ)
 
 /-- The ordinary-past integral identity, written as a countable state sum.
     It holds for every measurable history event, including null histories. -/
+include heff hrow hI hτ hK hξ hprimitive in
 theorem actual_ordinary_past (n : ℕ)
     (H : Set (Fin (n + 1) → S)) (hH : MeasurableSet H)
     (T : Set S) (hT : MeasurableSet T) :
@@ -280,7 +287,8 @@ def prefixMass (ν : PMF S) (U : S → PMF S) : (l : ℕ) → (Fin l → S) → 
 /-- Every finite actual state prefix, including the empty one, has the row
     product derived from the first wait and subsequent gaps. No process law is
     assumed in addition to the primitive deterministic-coordinate interface. -/
-theorem actual_state_prefix [IsProbabilityMeasure P] (l : ℕ) (x : Fin l → S) :
+include heff hrow hI hτ hK hξ hprimitive in
+theorem actual_state_prefix (l : ℕ) (x : Fin l → S) :
     P {ω | ∀ j : Fin l, epoch labels update (I ω) (ξ ω) (τ ω) (K ω) j.val = x j} =
       prefixMass (w.bind fun u => η.bind fun s => (zeroRow A u s).bind C)
         (fun s => f.bind fun k => (zeroRow A k s).bind C) l x := by
@@ -333,7 +341,12 @@ theorem actual_state_prefix [IsProbabilityMeasure P] (l : ℕ) (x : Fin l → S)
         Fin.prod_univ_castSucc]
       simp only [xp, mul_assoc]
   cases l with
-  | zero => simp [prefixMass]
+  | zero =>
+    have hmass : P Set.univ = 1 := by
+      simpa only [Set.mem_univ, Set.setOf_true, measure_univ] using
+        actual_initial_law P I τ K ξ labels update η w f ρ A C heff hrow
+          hI hτ hξ hprimitive Set.univ MeasurableSet.univ
+    simpa only [prefixMass, Fin.forall_fin_zero, Set.setOf_true] using hmass
   | succ n =>
     have he : {ω | ∀ j : Fin (n + 1),
         epoch labels update (I ω) (ξ ω) (τ ω) (K ω) j.val = x j} =
@@ -345,6 +358,7 @@ theorem actual_state_prefix [IsProbabilityMeasure P] (l : ℕ) (x : Fin l → S)
 
 /-- Every joint source/state cylinder on the actual run has its literal
     first-wait factor and all of its subsequent gap/word factors. -/
+include heff hrow hI hτ hK hξ hprimitive in
 theorem actual_source_cylinders (n : ℕ) (a : ℕ × (Fin n → ℕ))
     (x : Fin (n + 1) → S) :
     P (observedHistory labels update I τ K ξ n ⁻¹' {(a, x)}) =

@@ -15,7 +15,7 @@ import Mathlib.Algebra.BigOperators.Fin
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
-open Classical MeasureTheory ProbabilityTheory Finset
+open Classical MeasureTheory ProbabilityTheory Finset Function
 open scoped ENNReal BigOperators
 
 namespace D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.ReadExecution.ActualRenewalPrefixLaw
@@ -110,6 +110,7 @@ variable [MeasurableSpace S] [Countable S] [MeasurableSingletonClass S]
     (heff : ∀ b, Measurable (fun p : S × R => effective labels update p.1 b p.2))
     (hrow : ∀ s b, ρ.map (effective labels update s b) = (if b then C s else A s).toMeasure)
 
+include heff in
 private theorem zeros_measurable (k : ℕ) :
     Measurable (fun p : S × (Fin k → R) => zeros labels update k p.1 p.2) := by
   induction k with
@@ -120,6 +121,7 @@ private theorem zeros_measurable (k : ℕ) :
         (measurable_pi_apply j.castSucc).comp measurable_snd))).prodMk
         ((measurable_pi_apply (Fin.last k)).comp measurable_snd))
 
+include heff in
 theorem word_measurable (k : ℕ) :
     Measurable (fun p : S × (Fin (k + 1) → R) => word labels update k p.1 p.2) :=
   (heff true).comp
@@ -138,9 +140,10 @@ private theorem split_last (k : ℕ) :
   have hc : (fun r : (Fin (k + 1) → R) =>
       (fun j : Fin k => r j.castSucc, r (Fin.last k))) = Prod.swap ∘ e := by
     funext r
-    simp [e, MeasurableEquiv.piFinSuccAbove, Fin.succAbove_last]
+    simp [e, MeasurableEquiv.piFinSuccAbove, Fin.succAbove_last, Fin.init]
   rw [hc, ← Measure.map_map measurable_swap e.measurable, hh, Measure.prod_swap]
 
+include heff hrow in
 private theorem integrate_step (ν : PMF S) (b : Bool) :
     (ν.toMeasure.prod ρ).map (fun p => effective labels update p.1 b p.2) =
       (ν.bind (fun s => if b then C s else A s)).toMeasure := by
@@ -154,6 +157,7 @@ private theorem integrate_step (ν : PMF S) (b : Bool) :
   rw [Measure.map_apply ((heff b).comp (measurable_const.prodMk measurable_id)) hB] at hh
   rw [hh, mul_comm]
 
+include heff hrow in
 private theorem finite_word_law (k : ℕ) (s : S) :
     (Measure.pi fun _ : Fin (k + 1) => ρ).map (word labels update k s) =
       ((zeroRow A k s).bind C).toMeasure := by
@@ -199,6 +203,7 @@ private theorem finite_word_law (k : ℕ) (s : S) :
   rw [← Measure.map_map (heff true) (by fun_prop), hp]
   exact integrate_step labels update ρ A C heff hrow (zeroRow A k s) true
 
+include heff hrow in
 theorem initial_word_law (η : PMF S) (k : ℕ) :
     (η.toMeasure.prod (Measure.pi fun _ : Fin (k + 1) => ρ)).map
       (fun p => word labels update k p.1 p.2) =
@@ -252,8 +257,9 @@ def Primitive (η : Measure S) (w f : PMF ℕ) (ρ : Measure R) : Prop :=
 
 theorem slice_measurable (hτ : Measurable τ) (hK : ∀ j, Measurable (fun ω => K ω j))
     (n : ℕ) (a : ℕ × (Fin n → ℕ)) : MeasurableSet (sourceSlice τ K n a) :=
-  (hτ (measurableSet_singleton _)).inter
-    (MeasurableSet.iInter fun j => (hK j.val) (measurableSet_singleton _))
+  (hτ (measurableSet_singleton _)).inter (by
+    simpa only [Set.iInter_ofPred] using
+      (MeasurableSet.iInter fun j : Fin n => (hK j.val) (measurableSet_singleton (a.2 j))))
 
 private theorem slices_disjoint (n : ℕ) :
     Pairwise (Disjoint on sourceSlice τ K n) := by
