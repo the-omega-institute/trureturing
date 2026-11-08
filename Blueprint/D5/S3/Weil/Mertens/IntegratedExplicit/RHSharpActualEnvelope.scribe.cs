@@ -49,14 +49,14 @@ internal sealed class RHSharpActualEnvelopeDocument : IScribeDocumentDefinition
                         "Apply mapClusterPt_one_atTop_pow on this compact product, followed by "
                         + "MapClusterPt.continuousAt_comp and MapClusterPt.frequently. Every neighborhood of M "
                         + "contains F(g^n) for arbitrarily large natural n. This requires neither linear independence "
-                        + "nor a rate, shrinking target, finite-dimensional torus, or uniform continuity wrapper.")),
+                        + "nor a rate or shrinking target.")),
                     Paragraph(Text(
                         "WholeFormula gives exactly G(y)=Re(exp(-y/2)*actualH(y))+residual(y) for y>0, "
                         + "where residual(y)=exp(-y/2)*(log(2*pi)-trivialT(y)). The complete trivial-zero bounds "
                         + "0<=trivialT(y)<=1-log(2) for y>=0 imply residual(y)->0. Complex.abs_re_le_norm "
                         + "controls the real phase error directly. Eventual control follows from the norm bound. "
                         + "For recurrence, combine a phase error below epsilon/2 with the residual below epsilon/2 "
-                        + "and the required lower bound on n. No separate reality or conjugation exposure is needed."))),
+                        + "and the required lower bound on n. The real-part estimate transfers the complex phase recurrence to G."))),
                 DescribeRole.Theorem))));
 
     private static Formula Real => Seq(Mathbb, Grp(F.Id("R")));
