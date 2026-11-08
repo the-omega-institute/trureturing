@@ -185,7 +185,9 @@ private theorem intersect_latitudes {a b : Space} (ha : ‖a‖ = 1) (hb : ‖b�
   let c := (t - d ^ 2) / q
   have hc0 : 0 ≤ c := div_nonneg (sub_nonneg.mpr ht0) hq.le
   have hc1 : c ≤ 1 := (div_le_one hq).mpr (by dsimp [q]; linarith)
-  have hcq : 0 ≤ q * (1 - c ^ 2) := mul_nonneg hq.le (by nlinarith)
+  have hc2 : c ^ 2 ≤ 1 := by
+    simpa only [pow_two, mul_one] using mul_self_le_mul_self hc0 hc1
+  have hcq : 0 ≤ q * (1 - c ^ 2) := mul_nonneg hq.le (sub_nonneg.mpr hc2)
   let z := Real.sqrt (q * (1 - c ^ 2))
   have hz : z ^ 2 = q * (1 - c ^ 2) := Real.sq_sqrt hcq
   obtain ⟨n, hn, han, hbn⟩ := unit_perpendicular_pair a b
@@ -237,6 +239,7 @@ private theorem nearby_reachable {a b : Space} (ha : ‖a‖ = 1) (hb : ‖b‖ 
       ∃ R : Orthogonal, R ∈ wordGroup a b ∧ R a = y := by
   let δ := 1 - ⟪a, b⟫_ℝ ^ 2
   have hδ : 0 < δ := sub_pos.mpr hab
+  have hδeq : δ + ⟪a, b⟫_ℝ ^ 2 = 1 := by dsimp [δ]; ring
   refine ⟨δ, hδ, ?_⟩
   intro y hy hnear
   apply cap_reachable ha hb hab hy
@@ -245,8 +248,9 @@ private theorem nearby_reachable {a b : Space} (ha : ‖a‖ = 1) (hb : ‖b‖ 
     ring
   have hsquare := mul_self_lt_mul_self (dist_nonneg (x := a) (y := y)) hnear
   have hδ1 : δ ≤ 1 := by dsimp [δ]; nlinarith [sq_nonneg ⟪a, b⟫_ℝ]
-  have hδsq : δ ^ 2 ≤ δ := by nlinarith
-  nlinarith
+  have hδsq : δ ^ 2 ≤ δ := by
+    simpa only [pow_two, mul_one] using mul_le_mul_of_nonneg_left hδ1 hδ.le
+  nlinarith [hδeq]
 
 private theorem sphere_orbit {a b : Space} (ha : ‖a‖ = 1) (hb : ‖b‖ = 1)
     (hab : ⟪a, b⟫_ℝ ^ 2 < 1) (y : Space) (hy : ‖y‖ = 1) :
