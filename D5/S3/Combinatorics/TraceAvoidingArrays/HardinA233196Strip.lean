@@ -100,7 +100,7 @@ def allowed (s : Seen) (c : Fin 8) : Prop :=
   ((c = 2 ∨ c = 3 ∨ c = 4 ∨ c = 5 ∨ c = 6) → s.1 = true) ∧
     ((c = 3 ∨ c = 4 ∨ c = 5) → s.2.1 = true) ∧ (c = 4 → s.2.2 = true)
 
-private instance instDecidableAllowed (s : Seen) (c : Fin 8) : Decidable (allowed s c) :=
+instance instDecidableAllowed (s : Seen) (c : Fin 8) : Decidable (allowed s c) :=
   inferInstanceAs (Decidable ((_ → _) ∧ (_ → _) ∧ (_ → _)))
 
 def advance (s : Seen) (c : Fin 8) : Seen :=
@@ -114,7 +114,7 @@ def finish : {n : ℕ} → Seen → (Fin n → Fin 8) → Seen
   | 0, s, _ => s
   | _n + 1, s, f => finish (advance s (f 0)) (Fin.tail f)
 
-private theorem finish_fst {n : ℕ} (s : Seen) (f : Fin n → Fin 8) :
+theorem finish_fst {n : ℕ} (s : Seen) (f : Fin n → Fin 8) :
     (finish s f).1 = true ↔ s.1 = true ∨ ∃ i, f i = 1 := by
   induction n generalizing s with
   | zero => simp [finish]
@@ -122,7 +122,7 @@ private theorem finish_fst {n : ℕ} (s : Seen) (f : Fin n → Fin 8) :
     rw [finish, ih]
     simp [advance, Fin.exists_fin_succ, Fin.tail, or_assoc]
 
-private theorem finish_snd {n : ℕ} (s : Seen) (f : Fin n → Fin 8) :
+theorem finish_snd {n : ℕ} (s : Seen) (f : Fin n → Fin 8) :
     (finish s f).2.1 = true ↔ s.2.1 = true ∨ ∃ i, f i = 2 := by
   induction n generalizing s with
   | zero => simp [finish]
@@ -130,7 +130,7 @@ private theorem finish_snd {n : ℕ} (s : Seen) (f : Fin n → Fin 8) :
     rw [finish, ih]
     simp [advance, Fin.exists_fin_succ, Fin.tail, or_assoc]
 
-private theorem finish_third {n : ℕ} (s : Seen) (f : Fin n → Fin 8) :
+theorem finish_third {n : ℕ} (s : Seen) (f : Fin n → Fin 8) :
     (finish s f).2.2 = true ↔ s.2.2 = true ∨ ∃ i, f i = 3 := by
   induction n generalizing s with
   | zero => simp [finish]
@@ -138,7 +138,7 @@ private theorem finish_third {n : ℕ} (s : Seen) (f : Fin n → Fin 8) :
     rw [finish, ih]
     simp [advance, Fin.exists_fin_succ, Fin.tail, or_assoc]
 
-private theorem good_iff {n : ℕ} (s : Seen) (f : Fin n → Fin 8) :
+theorem good_iff {n : ℕ} (s : Seen) (f : Fin n → Fin 8) :
     good s f ↔ ∀ i,
       ((f i = 2 ∨ f i = 3 ∨ f i = 4 ∨ f i = 5 ∨ f i = 6) →
         s.1 = true ∨ ∃ j, j < i ∧ f j = 1) ∧
@@ -156,7 +156,7 @@ private theorem good_iff {n : ℕ} (s : Seen) (f : Fin n → Fin 8) :
 def beta (c : Fin 8) : Fin 4 :=
   Fin.ofNat 4 (Nat.min c.val (7 - c.val))
 
-private theorem colour_bond_iff (x y : Fin 8) :
+theorem colour_bond_iff (x y : Fin 8) :
     (x ≠ y ∧ x.val + y.val ≠ 7) ↔ beta x ≠ beta y := by
   revert x y
   decide +kernel
@@ -170,7 +170,7 @@ def prior {n : ℕ} (f : Fin n → WidthRow k)
     (i : Fin n) (j : Fin k) (d : Fin 8) : Prop :=
   ∃ r k, (r < i ∨ r = i ∧ k < j) ∧ f r k = d
 
-private instance instDecidablePrior {n : ℕ} (f : Fin n → WidthRow k)
+instance instDecidablePrior {n : ℕ} (f : Fin n → WidthRow k)
     (i : Fin n) (j : Fin k) (d : Fin 8) :
     Decidable (prior f i j d) := inferInstanceAs (Decidable (∃ _ _, _ ∧ _))
 
@@ -180,23 +180,23 @@ def widthNormal {n : ℕ} (s : Seen) (f : Fin n → WidthRow k) : Prop :=
     ((f i j = 3 ∨ f i j = 4 ∨ f i j = 5) → s.2.1 = true ∨ prior f i j 2) ∧
     (f i j = 4 → s.2.2 = true ∨ prior f i j 3)
 
-private theorem prior_zero {n : ℕ} (c : WidthRow k) (f : Fin n → WidthRow k)
+theorem prior_zero {n : ℕ} (c : WidthRow k) (f : Fin n → WidthRow k)
     (j : Fin k) (d : Fin 8) :
     prior (Fin.cons c f) 0 j d ↔ ∃ k, k < j ∧ c k = d := by
   simp [prior, Fin.exists_fin_succ]
 
 omit [NeZero k] in
-private theorem prior_succ {n : ℕ} (c : WidthRow k) (f : Fin n → WidthRow k)
+theorem prior_succ {n : ℕ} (c : WidthRow k) (f : Fin n → WidthRow k)
     (i : Fin n) (j : Fin k) (d : Fin 8) :
     prior (Fin.cons c f) i.succ j d ↔ (∃ k, c k = d) ∨ prior f i j d := by
   simp [prior, Fin.exists_fin_succ]
 
-private theorem normal_cons {n : ℕ} (s : Seen) (c : WidthRow k) (f : Fin n → WidthRow k) :
+theorem normal_cons {n : ℕ} (s : Seen) (c : WidthRow k) (f : Fin n → WidthRow k) :
     widthNormal s (Fin.cons c f) ↔ good s c ∧ widthNormal (finish s c) f := by
   simp only [widthNormal, Fin.forall_fin_succ, Fin.cons_zero, Fin.cons_succ,
     prior_zero, prior_succ, good_iff, finish_fst, finish_snd, finish_third, or_assoc]
 
-private def widthLegal (R : WidthRow k → Prop) (E : WidthRow k → WidthRow k → Prop)
+def widthLegal (R : WidthRow k → Prop) (E : WidthRow k → WidthRow k → Prop)
     {n : ℕ} (A : Fin n × Fin k → Fin 8) : Prop :=
   (∃ i : Fin n, i.val = 0 ∧ A (i, 0) = 0) ∧
     (∀ i, R (fun j => A (i, j))) ∧
@@ -204,12 +204,12 @@ private def widthLegal (R : WidthRow k → Prop) (E : WidthRow k → WidthRow k 
       (fun j => A (⟨i.val + 1, h⟩, j))) ∧
     widthNormal (false, false, false) (fun i j => A (i, j))
 
-private instance widthInstDecidableNormal {n : ℕ} (s : Seen) (f : Fin n → WidthRow k) :
+instance widthInstDecidableNormal {n : ℕ} (s : Seen) (f : Fin n → WidthRow k) :
     Decidable (widthNormal s f) :=
   inferInstanceAs (Decidable (∀ _ _, (_ → _) ∧ (_ → _) ∧ (_ → _)))
 
 omit [NeZero k] in
-private instance widthInstDecidableGood (s : Seen) (c : WidthRow k) : Decidable (good s c) := by
+instance widthInstDecidableGood (s : Seen) (c : WidthRow k) : Decidable (good s c) := by
   induction k generalizing s with
   | zero => exact isTrue trivial
   | succ k ih =>
@@ -223,17 +223,17 @@ variable [DecidablePred R] [DecidableRel C]
 variable (E : WidthRow k → WidthRow k → Prop) [DecidableRel E]
 variable (edge : ∀ c d, E c d ↔ C (P c) d)
 
-private instance widthInstDecidableLegal {n : ℕ} (A : Fin n × Fin k → Fin 8) :
+instance widthInstDecidableLegal {n : ℕ} (A : Fin n × Fin k → Fin 8) :
     Decidable (widthLegal R E A) :=
   inferInstanceAs (Decidable (_ ∧ _ ∧ _ ∧ _))
 
-private def TailGood : {n : ℕ} → Seen → (B) → (Fin n → WidthRow k) → Prop
+def TailGood : {n : ℕ} → Seen → (B) → (Fin n → WidthRow k) → Prop
   | 0, _, _, _ => True
   | _ + 1, s, p, f => R (f 0) ∧ C p (f 0) ∧ good s (f 0) ∧
       TailGood (finish s (f 0)) (P (f 0)) (Fin.tail f)
 
 
-private instance instDecidableTailGood {n : ℕ} (s : Seen) (p : B) (f : Fin n → WidthRow k) :
+instance instDecidableTailGood {n : ℕ} (s : Seen) (p : B) (f : Fin n → WidthRow k) :
     Decidable (TailGood R P C s p f) := by
   induction n generalizing s p with
   | zero => exact isTrue trivial
@@ -245,7 +245,7 @@ private instance instDecidableTailGood {n : ℕ} (s : Seen) (p : B) (f : Fin n �
 
 omit [DecidablePred R] [DecidableRel C] [DecidableRel E] in
 include edge in
-private theorem tail_iff {n : ℕ} (s : Seen) (p : B) (f : Fin n → WidthRow k) :
+theorem tail_iff {n : ℕ} (s : Seen) (p : B) (f : Fin n → WidthRow k) :
     TailGood R P C s p f ↔ widthNormal s f ∧
       (∀ i, R (f i)) ∧
       (∀ (i : Fin n) (h : i.val + 1 < n), E (f i) (f ⟨i.val + 1, h⟩)) ∧
@@ -279,19 +279,19 @@ private theorem tail_iff {n : ℕ} (s : Seen) (p : B) (f : Fin n → WidthRow k)
     simp only [Fin.forall_fin_succ, Fin.tail, Fin.mk_zero, Nat.zero_lt_succ, forall_const]
     tauto
 
-private def widthStep (w : Seen → (B) → ℤ) (s : Seen) (p : B) : ℤ :=
+def widthStep (w : Seen → (B) → ℤ) (s : Seen) (p : B) : ℤ :=
   ∑ c : WidthRow k, if R c ∧ C p c ∧ good s c then
     w (finish s c) (P c) else 0
 
-private def widthV : ℕ → Seen → (B) → ℤ
+def widthV : ℕ → Seen → (B) → ℤ
   | 0, _, _ => 1
   | n + 1, s, p => widthStep R P C (widthV n) s p
 
-private def count (n : ℕ) (s : Seen) (p : B) : ℤ :=
+def count (n : ℕ) (s : Seen) (p : B) : ℤ :=
   ∑ f : Fin n → WidthRow k, if TailGood R P C s p f then 1 else 0
 
 omit [NeZero k] in
-private theorem count_eq_v (n : ℕ) : count R P C n = widthV R P C n := by
+theorem count_eq_v (n : ℕ) : count R P C n = widthV R P C n := by
   induction n with
   | zero => funext s p; simp [count, TailGood, widthV]
   | succ n ih =>
@@ -312,12 +312,12 @@ private theorem count_eq_v (n : ℕ) : count R P C n = widthV R P C n := by
         exact h ⟨hf.1, hf.2.1, hf.2.2.1⟩
       simp [hn, h]
 
-private def widthTotal (w : Seen → (B) → ℤ) : ℤ :=
+def widthTotal (w : Seen → (B) → ℤ) : ℤ :=
   ∑ c : WidthRow k, if c 0 = 0 ∧ R c ∧ good (false, false, false) c then
     w (finish (false, false, false) c) (P c) else 0
 
 include edge in
-private theorem width_counting_bridge (n : ℕ) :
+theorem width_counting_bridge (n : ℕ) :
     ((Finset.univ.filter (fun A : Fin (n + 1) × Fin k → Fin 8 =>
       (∃ i : Fin (n + 1), i.val = 0 ∧ A (i, 0) = 0) ∧
       (∀ i, R (fun j => A (i, j))) ∧
