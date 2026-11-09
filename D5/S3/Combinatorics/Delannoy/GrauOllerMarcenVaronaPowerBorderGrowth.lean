@@ -321,9 +321,7 @@ private def powBorder (n : ℕ) : ℕ := n^n
 private noncomputable def L (n : ℕ) : ℝ := ((n:ℝ)-1) * Real.log (1-1/(n:ℝ))
 
 private theorem powBorder_ne (n : ℕ) : powBorder n ≠ 0 := by
-  cases n
-  case zero => simp [powBorder]
-  case succ n => exact pow_ne_zero _ (Nat.succ_ne_zero n)
+  exact Nat.ne_of_gt (Nat.pow_self_pos (n := n))
 
 private theorem A_power_eq (n : ℕ) (hn : 1 ≤ n) :
     A powBorder n = (((n-1:ℕ):ℝ) / n)^(n-1) := by

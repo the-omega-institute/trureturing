@@ -89,6 +89,8 @@
      consumers: q_splits_roots.
    qAB_pos: proof_shape: bind-only; escape_witness: none;
      consumers: qAB_roots_lt, speyer_variance_bound, g_normalized_bernoulli_multiset.
+     External consumer: D5.S3.Combinatorics.Delannoy.GrauOllerMarcenVaronaFactorialBorderGrowth.Q_nonneg.
+     Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/22168
    qAB_roots_lt: proof_shape: bind-only; escape_witness: none;
      consumers: q_splits_roots.
    q_splits_roots: proof_shape: bind-only; escape_witness: none;
@@ -534,7 +536,7 @@ private lemma qAB_splits (a b : ℕ) (hab : a ≤ b) : (qAB a b).Splits := by
   rw [H_reflect_transport] at hs
   exact (splits_mul_iff_right (by simp : C ((-1:ℝ)^a) ≠ 0) (Splits.C _)).mp hs
 
-private lemma qAB_pos (a b : ℕ) (x : ℝ) (hx : -1 ≤ x) : 0 < (qAB a b).eval x := by
+lemma qAB_pos (a b : ℕ) (x : ℝ) (hx : -1 ≤ x) : 0 < (qAB a b).eval x := by
   simp only [qAB, eval_finsetSum, eval_mul, eval_C, eval_pow, eval_add, eval_X, eval_one]
   apply sum_pos'
   · intro j hj

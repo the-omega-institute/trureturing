@@ -10,14 +10,15 @@
 admission_basis: open-problem-resolution (#19938; Proved)
 escape_witness: none (admission is the external named problem settlement)
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/22168
-Direct frozen dependencies: D5/S3/Combinatorics/Matroids/SpeyerUniformNormality.qAB.
+Direct frozen dependencies: D5/S3/Combinatorics/Matroids/SpeyerUniformNormality.qAB,
+D5/S3/Combinatorics/Matroids/SpeyerUniformNormality.qAB_pos.
 qAB declaration statement_id: sha256:29896652822aaa7119e8470a97a0a75560731fffc4cbfc489026fab990c39f29.
 The recurrence and additive-limit statements use the conventions of #19938 and #19939.
 The literal recurrence defines the unit-border array; proofs use qAB evaluated at one.
 All declarations have utility none: unbounded identities, estimates and limits.
 D5.S3.Combinatorics.Delannoy.GrauOllerMarcenVaronaFactorialBorderGrowth.diagonal_convolution: proof_shape: content; escape_witness: none; Direct frozen dependencies: none.
 D5.S3.Combinatorics.Delannoy.GrauOllerMarcenVaronaFactorialBorderGrowth.Q_of_gt: proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: qAB.
-D5.S3.Combinatorics.Delannoy.GrauOllerMarcenVaronaFactorialBorderGrowth.Q_nonneg: proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: qAB.
+D5.S3.Combinatorics.Delannoy.GrauOllerMarcenVaronaFactorialBorderGrowth.Q_nonneg: proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: qAB, qAB_pos.
 D5.S3.Combinatorics.Delannoy.GrauOllerMarcenVaronaFactorialBorderGrowth.W_le_M: proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none.
 D5.S3.Combinatorics.Delannoy.GrauOllerMarcenVaronaFactorialBorderGrowth.Q_scaled_bound: proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: qAB.
 D5.S3.Combinatorics.Delannoy.GrauOllerMarcenVaronaFactorialBorderGrowth.Q_scaled_limit: proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: qAB.
@@ -59,7 +60,7 @@ end D5.S3.Combinatorics.Delannoy.GrauOllerMarcenVaronaFactorialBorderGrowth
 namespace D5.S3.Combinatorics.Delannoy.GrauOllerMarcenVaronaFactorialBorderGrowth
 open Finset Filter Topology Asymptotics
 open scoped BigOperators
-open D5.S3.Combinatorics.Matroids.SpeyerUniformNormality (qAB)
+open D5.S3.Combinatorics.Matroids.SpeyerUniformNormality (qAB qAB_pos)
 
 @[simp] private theorem f_zero (b : ℕ → ℕ) (n : ℕ) : f b 0 n = b n := by simp [f]
 @[simp] private theorem f_zero_right (b : ℕ → ℕ) (m : ℕ) : f b m 0 = b m := by
@@ -291,10 +292,10 @@ noncomputable def Q (n k : ℕ) : ℝ :=
 theorem Q_nonneg (n k : ℕ) : 0 ≤ Q n k := by
   unfold Q
   split_ifs
-  · simp only [qAB, Polynomial.eval_finsetSum, Polynomial.eval_mul, Polynomial.eval_C,
-    Polynomial.eval_pow, Polynomial.eval_add, Polynomial.eval_X, Polynomial.eval_one,
-    one_add_one_eq_two, Nat.cast_mul, mul_comm _ ((2:ℝ)^_), ← mul_assoc]; positivity
-  · positivity
+  · apply div_nonneg
+    · exact (qAB_pos k n 1 (by norm_num)).le
+    · positivity
+  · exact le_rfl
 
 theorem W_le_M (k : ℕ) : W k ≤ M k := by
   unfold W M
