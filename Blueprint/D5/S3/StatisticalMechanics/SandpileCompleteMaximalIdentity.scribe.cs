@@ -8,7 +8,7 @@ internal sealed class SandpileCompleteMaximalIdentityDocument : IScribeDocumentD
 {
     private const string Module = "D5/S3/StatisticalMechanics/SandpileCompleteMaximalIdentity";
     private static LibraryNoteRef Source =>
-        LibraryNoteRef.Create("D5/L/StatisticalMechanics/gaoli2020sandpileidentity");
+        LibraryNoteRef.Create("D5/L/FiniteGroups/gaoli2020sandpileidentity");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "For i,j at least two, the maximal stable configuration lies in the reduced integer Laplacian image at every sink of K_i square P_j exactly for K_4 square P_2.",

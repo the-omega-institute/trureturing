@@ -16,7 +16,7 @@ Yibo Gao and Rupert Li, *Compatible recurrent identities of the sandpile group a
 
 > For $i,j \in \mathbb{Z}_{>1}$, the only graph $K_i \cp P_j$ which has the complete maximal identity property is $K_4 \cp P_2$.
 
-The source macro `\cp` denotes the Cartesian product, written $\square$ below; $P_j$ has $j$ vertices. The source defines the maximal stable configuration by $m_G(v)=\deg_G(v)-1$ and the complete maximal identity property by requiring that this configuration be the recurrent identity for every choice of sink (`Paper/Preliminaries.tex`, lines 19–29; `Paper/CMIP.tex`, lines 8–10 and 37–41). The definitions and source identifier are also recorded in [the literature note](../Library/StatisticalMechanics/gaoli2020sandpileidentity.md).
+The source macro `\cp` denotes the Cartesian product, written $\square$ below; $P_j$ has $j$ vertices. The source defines the maximal stable configuration by $m_G(v)=\deg_G(v)-1$ and the complete maximal identity property by requiring that this configuration be the recurrent identity for every choice of sink (`Paper/Preliminaries.tex`, lines 19–29; `Paper/CMIP.tex`, lines 8–10 and 37–41). The definitions and source identifier are also recorded in [the literature note](../Library/FiniteGroups/gaoli2020sandpileidentity.md).
 
 Issue [#26439](https://github.com/the-omega-institute/trureturing/issues/26439) fixes the reduced-Laplacian reading. For $i,j\in\mathbb N$ with $i,j\ge2$, let $G=K_i\square P_j$, let $L_s$ be its integer Laplacian with the row and column of $s$ removed, and let $m_s$ be the restriction of $m_G$ to the non-sink vertices. The proposition `claim` is
 
