@@ -45,7 +45,8 @@ private noncomputable def signedNormalMinusOne (sign : ℂ) (left right : Vertex
     {operator : VertexOperator ℂ Fock // ∀ index vector,
       (operator [[index]]) vector =
         (∑ᶠ offset : ℕ, (left [[-(offset : ℤ) - 1]]) ((right [[index + offset]]) vector)) +
-        sign • (∑ᶠ offset : ℕ, (right [[index - offset - 1]]) ((left [[offset]]) vector))} := D5.S3.VertexAlgebra.SignedFieldNormalProductLocality.signedNormalMinusOne sign left right
+        sign • (∑ᶠ offset : ℕ, (right [[index - offset - 1]]) ((left [[offset]]) vector))} :=
+  D5.S3.VertexAlgebra.SignedFieldNormalProductLocality.signedNormalMinusOne sign left right
 
 private theorem signedNormal_translation (sign : ℂ) (translation : Module.End ℂ Fock)
     (left right : VertexOperator ℂ Fock)
@@ -64,9 +65,15 @@ private theorem signedNormal_translation (sign : ℂ) (translation : Module.End 
     simp [dividedDerivative, LaurentSeries.hasseDeriv_zero]
   have normal : (D5.S3.VertexAlgebra.SignedFieldResidueLocality.residueField sign (-1) left right).operator =
       (signedNormalMinusOne sign left right).1 := by
-    simpa only [Int.natCast_zero, neg_zero, zero_sub, zeroDerivative,
-      signedNormalMinusOne] using
-      D5.S3.VertexAlgebra.SignedFieldResidueLocality.negativeResidue sign left right 0
+    have result :=
+  D5.S3.VertexAlgebra.SignedFieldResidueLocality.negativeResidue
+      sign left right 0
+    change (D5.S3.VertexAlgebra.SignedFieldResidueLocality.residueField
+      sign (-1) left right).operator =
+        (D5.S3.VertexAlgebra.SignedFieldNormalProductLocality.signedNormalMinusOne
+          sign (dividedDerivative 0 left) right).1 at result
+    rw [zeroDerivative] at result
+    exact result
   simpa only [normal] using
     D5.S3.VertexAlgebra.SignedFieldResidueLocality.residue_translation
       sign (-1) left right translation leftLaw rightLaw index

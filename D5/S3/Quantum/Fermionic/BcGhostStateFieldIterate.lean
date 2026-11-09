@@ -25,6 +25,8 @@ import D5.S3.Quantum.Fermionic.BcGhostStateFieldLocality
 import D5.S3.VertexAlgebra.StateFieldResidueReconstruction
 import D5.S3.VertexAlgebra.BinomialKernelDelta
 
+/-! Generic signed residues reconstructed as actual occupation-state fields. -/
+
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 open scoped BigOperators VertexOperator
@@ -44,11 +46,14 @@ open private parity_ket from D5.S3.Quantum.Fermionic.CountableOccupationFock
 noncomputable section
 namespace D5.S3.Quantum.Fermionic.BcGhostStateFieldIterate
 
-private def residueLeft (r n : ℤ) (a b vector : Fock) : Fock := D5.S3.VertexAlgebra.SignedFieldResidueLocality.residueLeft r n (Y a) (Y b) vector
+private def residueLeft (r n : ℤ) (a b vector : Fock) : Fock :=
+  D5.S3.VertexAlgebra.SignedFieldResidueLocality.residueLeft r n (Y a) (Y b) vector
 
-private def residueRight (r n : ℤ) (a b vector : Fock) : Fock := D5.S3.VertexAlgebra.SignedFieldResidueLocality.residueRight r n (Y a) (Y b) vector
+private def residueRight (r n : ℤ) (a b vector : Fock) : Fock :=
+  D5.S3.VertexAlgebra.SignedFieldResidueLocality.residueRight r n (Y a) (Y b) vector
 
-private def residueCoefficient (s : ℂ) (r n : ℤ) (a b vector : Fock) : Fock := D5.S3.VertexAlgebra.SignedFieldResidueLocality.residueCoefficient s r n (Y a) (Y b) vector
+private def residueCoefficient (s : ℂ) (r n : ℤ) (a b vector : Fock) : Fock :=
+  D5.S3.VertexAlgebra.SignedFieldResidueLocality.residueCoefficient s r n (Y a) (Y b) vector
 
 private structure ResidueField (s : ℂ) (r : ℤ) (a b : Fock) where
   operator : VertexOperator ℂ Fock
@@ -58,11 +63,12 @@ private structure ResidueField (s : ℂ) (r : ℤ) (a b : Fock) where
   right_finite : ∀ n vector, Function.HasFiniteSupport (fun offset : ℕ =>
     (((-1 : ℂ) ^ offset) * integerBinomial r offset) • ((Y b) [[r + n - offset]]) (((Y a) [[offset]]) vector))
 
-private def residueField (s : ℂ) (r : ℤ) (a b : Fock) : ResidueField s r a b := {
-  operator := D5.S3.VertexAlgebra.SignedFieldResidueLocality.residueField s r (Y a) (Y b) |>.operator
-  coefficient := D5.S3.VertexAlgebra.SignedFieldResidueLocality.residueField s r (Y a) (Y b) |>.coefficient
-  left_finite := D5.S3.VertexAlgebra.SignedFieldResidueLocality.residueField s r (Y a) (Y b) |>.left_finite
-  right_finite := D5.S3.VertexAlgebra.SignedFieldResidueLocality.residueField s r (Y a) (Y b) |>.right_finite }
+private def residueField (s : ℂ) (r : ℤ) (a b : Fock) : ResidueField s r a b :=
+  let field := D5.S3.VertexAlgebra.SignedFieldResidueLocality.residueField s r (Y a) (Y b)
+  { operator := field.operator
+    coefficient := field.coefficient
+    left_finite := field.left_finite
+    right_finite := field.right_finite }
 
 private theorem binomial (value : ℤ → ℤ → Module.End ℂ Fock) (order : ℕ) (first second : ℤ) : ((deltaEnd ^ order) value) first second = ∑ offset ∈ Finset.range (order + 1), (((-1 : ℂ) ^
     offset) * (order.choose offset : ℂ)) • value (first + (order : ℤ) - offset) (second + offset) := by
@@ -73,21 +79,35 @@ private theorem residue_translation (s : ℂ) (r : ℤ) (a b : Fock) (index : �
   exact D5.S3.VertexAlgebra.SignedFieldResidueLocality.residue_translation s r (Y a) (Y b)
     (BcGhostVirasoro.L (-1)) (stateField_translation.2 a) (stateField_translation.2 b) index
 
-private theorem residue_creation (s : ℂ) (r : ℤ) (a b : Fock) : (((residueField s r a b).operator) [[-1]]) vacuum = ((Y a) [[r]]) b ∧ ∀ index : ℤ, 0 ≤ index → (((residueField s r a b).operator) [[index]]) vacuum = 0 := by
-
-    have rightZero (index : ℤ) : residueRight r index a b vacuum = 0 := by
-      unfold residueRight; apply finsum_eq_zero_of_forall_eq_zero; intro offset; rw [stateField_creation.2.2.1 a offset (by omega)]
+private theorem residue_creation (s : ℂ) (r : ℤ) (a b : Fock) :
+    (((residueField s r a b).operator) [[-1]]) vacuum = ((Y a) [[r]]) b ∧
+    ∀ index : ℤ, 0 ≤ index →
+      (((residueField s r a b).operator) [[index]]) vacuum = 0 := by
+  have rightZero (index : ℤ) : residueRight r index a b vacuum = 0 := by
+    unfold residueRight D5.S3.VertexAlgebra.SignedFieldResidueLocality.residueRight
+    apply finsum_eq_zero_of_forall_eq_zero
+    intro offset
+    rw [stateField_creation.2.2.1 a offset (by omega)]
+    simp
+  constructor
+  · rw [(residueField s r a b).coefficient, residueCoefficient,
+      D5.S3.VertexAlgebra.SignedFieldResidueLocality.residueCoefficient,
+      ← residueLeft, ← residueRight, rightZero, smul_zero, sub_zero]
+    unfold residueLeft D5.S3.VertexAlgebra.SignedFieldResidueLocality.residueLeft
+    rw [finsum_eq_single _ 0]
+    · simp [integerBinomial, stateField_creation.2.1 b]
+    · intro offset distinct
+      rw [stateField_creation.2.2.1 b (-1 + (offset : ℤ)) (by omega)]
       simp
-    constructor
-    · rw [(residueField s r a b).coefficient, residueCoefficient, rightZero, smul_zero, sub_zero]
-      unfold residueLeft; rw [finsum_eq_single _ 0]
-      · simp [integerBinomial, stateField_creation.2.1 b]
-      · intro offset distinct
-        rw [stateField_creation.2.2.1 b (-1 + (offset : ℤ)) (by omega)]; simp
-    · intro index nonnegative
-      rw [(residueField s r a b).coefficient, residueCoefficient, rightZero, smul_zero, sub_zero]; unfold residueLeft
-      apply finsum_eq_zero_of_forall_eq_zero; intro offset; rw [stateField_creation.2.2.1 b (index + (offset : ℤ)) (by omega)]; simp
-
+  · intro index nonnegative
+    rw [(residueField s r a b).coefficient, residueCoefficient,
+      D5.S3.VertexAlgebra.SignedFieldResidueLocality.residueCoefficient,
+      ← residueLeft, ← residueRight, rightZero, smul_zero, sub_zero]
+    unfold residueLeft D5.S3.VertexAlgebra.SignedFieldResidueLocality.residueLeft
+    apply finsum_eq_zero_of_forall_eq_zero
+    intro offset
+    rw [stateField_creation.2.2.1 b (index + (offset : ℤ)) (by omega)]
+    simp
 
 private theorem signed_uniqueness (operator : VertexOperator ℂ Fock)
     (sign : Finset ℕ → ℂ)
@@ -129,10 +149,12 @@ private theorem signed_uniqueness (operator : VertexOperator ℂ Fock)
       order + (order : ℤ) - offset) (-1 + offset) vacuum) = (operator [[index]]) (ket state) := by
       rw [Finset.sum_eq_single 0]
       · simp only [pow_zero, Nat.choose_zero_right, Nat.cast_one, mul_one, one_smul, Nat.cast_zero, sub_zero, add_zero, show index - (order : ℤ) + order = index by omega,
-        signedComm, LinearMap.sub_apply, LinearMap.smul_apply, Module.End.mul_apply, vacuumZero, map_zero, smul_zero, sub_zero, stateField_creation.2.1 (ket state)]
+        signedComm,
+      D5.S3.VertexAlgebra.SignedFieldNormalProductLocality.signedComm, LinearMap.sub_apply, LinearMap.smul_apply, Module.End.mul_apply, vacuumZero, map_zero, smul_zero, sub_zero, stateField_creation.2.1 (ket state)]
       · intro offset member distinct
         have vanish : ((Y (ket state)) [[-1 + (offset : ℤ)]]) vacuum = 0 := stateField_creation.2.2.1 (ket state) _ (by omega)
-        simp only [signedComm, LinearMap.sub_apply, LinearMap.smul_apply, Module.End.mul_apply, vanish, vacuumZero, map_zero, smul_zero, sub_self]
+        simp only [signedComm,
+      D5.S3.VertexAlgebra.SignedFieldNormalProductLocality.signedComm, LinearMap.sub_apply, LinearMap.smul_apply, Module.End.mul_apply, vanish, vacuumZero, map_zero, smul_zero, sub_self]
       · simp
     rw [simplify] at coefficient; exact coefficient
   have endZero (index : ℤ) : (operator [[index]]) = 0 := by
@@ -155,11 +177,12 @@ private theorem residueLocality (a b c : Fock) (p q t : ℕ)
     (hc : parity c = (-1 : ℂ) ^ t • c) (r : ℤ) :
     ∃ N, delta^[N] (signedComm ((-1 : ℂ) ^ ((p + q) * t))
       (residueField ((-1 : ℂ) ^ (p * q)) r a b).operator (Y c)) = 0 := by
-  have result := D5.S3.VertexAlgebra.SignedFieldResidueLocality.residue_locality
+  have result :=
+  D5.S3.VertexAlgebra.SignedFieldResidueLocality.residue_locality
     ((-1 : ℂ) ^ (p * q)) ((-1 : ℂ) ^ (p * t)) ((-1 : ℂ) ^ (q * t))
     (Y a) (Y b) (Y c) (stateField_locality a c p t ha hc)
     (stateField_locality b c q t hb hc) (stateField_locality a b p q ha hb) r
-  simpa only [← pow_add, ← Nat.add_mul] using result
+  simpa only [← pow_add, ← Nat.add_mul, signedComm, residueField] using result
 
 private theorem residueClosure (a b : Fock) (p q : ℕ)
     (ha : parity a = (-1 : ℂ) ^ p • a)
@@ -213,7 +236,8 @@ private theorem residueClosure (a b : Fock) (p q : ℕ)
         signedComm ((-1 : ℂ) ^ ((p + q) * S.card)) field (Y (ket S)) -
           signedComm ((-1 : ℂ) ^ ((p + q) * S.card)) (Y product) (Y (ket S)) := by
       funext i j
-      simp only [signedComm, difference, map_sub, Pi.sub_apply, mul_sub, sub_mul,
+      simp only [signedComm,
+      D5.S3.VertexAlgebra.SignedFieldNormalProductLocality.signedComm, difference, map_sub, Pi.sub_apply, mul_sub, sub_mul,
         smul_sub]
       abel
     refine ⟨degree, ?_⟩
