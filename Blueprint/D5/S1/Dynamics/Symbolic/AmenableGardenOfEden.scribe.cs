@@ -40,6 +40,41 @@ internal sealed class AmenableGardenOfEdenDocument : IScribeDocumentDefinition
     private static Formula Mul(Formula x, Formula y) => Seq(x, Sp, Star, Sp, y);
     private static Formula Coord => Mul(Seq(Id("t"), Caret, Grp(Minus, D(1))), Id("g"));
 
+    private static Formula Ex(string s, Formula t) => Seq(Exists, Sp, Id(s), Colon, Sp, t, Comma);
+    private static Formula Card(Formula x) => Call("card", x);
+    private static Formula Pow(Formula x, Formula y) => Seq(Grp(x), Caret, Grp(y));
+    private static Formula AlphabetCard => Call("Nat.card", Id("A"));
+    private static Formula FiniteAlphabet => Seq(Grp(), OpenBracket, Call("Finite", Id("A")), CloseBracket, Comma);
+    private static Formula Pad => Mul(Id("F"), Call("insert", D(1), Call("union", Id("S"), Id("C"))));
+    private static Formula PatternCount => Call("Nat.card", Call("ImagePatterns", Id("S"), Id("φ"), Id("F")));
+    private static Formula AvoidanceBound => Mul(
+        Pow(Seq(Pow(AlphabetCard, Card(Id("C"))), Sp, Minus, Sp, D(1)), Card(Id("T"))),
+        Pow(AlphabetCard, Seq(Card(Pad), Sp, Minus, Sp, Mul(Card(Id("T")), Card(Id("C"))))));
+    private static Formula CollisionStatement => St(Setup, FiniteAlphabet, LocalSetup,
+        Seq(All("x", Config), All("y", Config), Id("x"), Sp, Neq, Sp, Id("y"), Sp, Land, Sp,
+            Call("Set.Finite", Call("disagreement", Id("x"), Id("y"))), Sp, Land, Sp,
+            Code(Id("x")), Sp, Eq, Sp, Code(Id("y")), Sp, Rightarrow),
+        Seq(Ex("C", Call("Finset", Id("G"))), Ex("p", Arr(Id("C"), Id("A"))),
+            Ex("q", Arr(Id("C"), Id("A"))), Id("p"), Sp, Neq, Sp, Id("q"), Sp, Land),
+        Seq(Open, All("t", Id("G")), All("z", Config), Open, All("c", Id("C")),
+            Call("z", Mul(Id("t"), Id("c"))), Sp, Eq, Sp, Call("p", Id("c")), Close,
+            Sp, Rightarrow, Sp, Code(Call("writePattern", Id("C"), Id("q"), Id("t"), Id("z"))),
+            Sp, Eq, Sp, Code(Id("z")), Close, Sp, Land),
+        Seq(All("F", Call("Finset", Id("G"))), Ex("T", Call("Finset", Id("G"))),
+            Id("T"), Sp, Subseteq, Sp, Id("F"), Sp, Land),
+        Seq(Open, All("t", Id("T")), All("r", Id("T")), Id("t"), Sp, Neq, Sp, Id("r"),
+            Sp, Rightarrow, Sp, All("c", Id("C")), All("e", Id("C")),
+            Mul(Id("t"), Id("c")), Sp, Neq, Sp, Mul(Id("r"), Id("e")), Close, Sp, Land),
+        Seq(Card(Id("F")), Sp, Le, Sp, Mul(Card(Id("T")), Pow(Card(Id("C")), D(2))), Sp, Land),
+        Seq(Mul(Card(Id("T")), Card(Id("C"))), Sp, Le, Sp, Card(Pad), Sp, Land),
+        Seq(PatternCount, Sp, Le, Sp, AvoidanceBound));
+    private static Formula GardenStatement => St(Setup, FiniteAlphabet,
+        Seq(Call("MeasurableSpace", Id("G")), Colon, Eq, Call("discrete"), Comma),
+        Seq(Call("NeBot", Call("maxFoelner", Seq(Id("G"), Caret, Grp(Mathrm, Grp(Id("op")))),
+            Call("Measure.count", Id("G")))), Sp, Rightarrow), LocalSetup,
+        Seq(Call("Function.Surjective", Call("localMap", Id("S"), Id("φ"))), Sp, Iff, Sp,
+            Call("Preinjective", Id("S"), Id("φ"))));
+
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Surjectivity and finite-disagreement preinjectivity coincide for full cellular maps over every finite alphabet on every discrete group with a nontrivial right counting Følner filter.",
         H("Full cellular maps on groups"), Blocks(
@@ -53,7 +88,7 @@ internal sealed class AmenableGardenOfEdenDocument : IScribeDocumentDefinition
                     Sp, Eq, Sp, Call("φ", Seq(Open, Id("s"), Sp, Mapsto, Sp,
                         Call("x", Mul(Id("g"), Id("s"))), Close))))),
             AssessedProvenance.FromLiterature(Source), Blocks(
-                Paragraph(Text("The neighborhood coordinates multiply on the right. Left translation of a configuration therefore commutes with the map."))),
+                Paragraph(Text("All products are written in the displayed order. The neighborhood coordinates multiply on the right. Left translation of a configuration therefore commutes with the map."))),
             DescribeRole.Definition),
         Describe.Lean(DescribeId.Create("finite-disagreement-preinjectivity"), DeclarationHandle.Create(Owner + "Preinjective"),
             H("Preinjectivity on finite disagreements"), StatementSource.FromAuthor(St(Setup, LocalSetup,
@@ -62,7 +97,7 @@ internal sealed class AmenableGardenOfEdenDocument : IScribeDocumentDefinition
                     Sp, Rightarrow, Sp, Code(Id("x")), Sp, Eq, Sp, Code(Id("y")), Sp, Rightarrow, Sp,
                     Id("x"), Sp, Eq, Sp, Id("y")))),
             AssessedProvenance.FromLiterature(Source), Blocks(
-                Paragraph(Text("Two configurations with finite disagreement and equal complete images must be equal. "
+                Paragraph(Text("The disagreement set is exactly {g | x(g)≠y(g)}. Two configurations with finite disagreement and equal complete images must be equal. "
                     + "Equality of images is equality at every group element."))), DescribeRole.Definition),
         Describe.Lean(DescribeId.Create("actual-image-patterns"), DeclarationHandle.Create(Owner + "ImagePatterns"),
             H("Jointly realized image patterns"), StatementSource.FromAuthor(St(Setup, LocalSetup,
@@ -83,7 +118,7 @@ internal sealed class AmenableGardenOfEdenDocument : IScribeDocumentDefinition
                 Paragraph(Text("On the translate t*C the new value at g is p(t⁻¹*g); outside that translate it is the original value. "
                     + "The coordinate t⁻¹*g is unique and keeps the order of multiplication explicit."))), DescribeRole.Definition),
         Describe.Lean(DescribeId.Create("collision-replacement-count"), DeclarationHandle.Create(Owner + "collision_replacement_count"),
-            H("Uniform replacement and actual-image counting from a collision"), StatementSource.FromLean(),
+            H("Uniform replacement and actual-image counting from a collision"), StatementSource.FromAuthor(CollisionStatement),
             AssessedProvenance.FromLiterature(Source), Blocks(
                 Paragraph(Text("For distinct configurations x,y with finite disagreement and Φ(x)=Φ(y), there are a finite C and distinct patterns p,q on C. "
                     + "Whenever an ambient z has pattern p on t*C, replacing that pattern by q preserves the complete image Φ(z), for every t and z. "
@@ -99,7 +134,7 @@ internal sealed class AmenableGardenOfEdenDocument : IScribeDocumentDefinition
                     + "Equal records force equal inputs on every window used to compute the restriction to F, hence equal actual image patterns. "
                     + "This injection gives the count without selecting independent output coordinates."))), DescribeRole.Theorem),
         Describe.Lean(DescribeId.Create("amenable-garden-of-eden"), DeclarationHandle.Create(Owner + "garden_of_eden"),
-            H("Surjectivity is equivalent to finite-disagreement preinjectivity"), StatementSource.FromLean(),
+            H("Surjectivity is equivalent to finite-disagreement preinjectivity"), StatementSource.FromAuthor(GardenStatement),
             AssessedProvenance.FromLiterature(Source), Blocks(
                 Paragraph(Text("Give G the discrete measurable structure. Assume NeBot(maxFoelner(Gᵐᵒᵖ,Measure.count)), "
                     + "where the opposite group acts by (op a) • g = g*a. For every finite S and every rule φ, "

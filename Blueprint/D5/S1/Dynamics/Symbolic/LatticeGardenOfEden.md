@@ -42,7 +42,19 @@ $$\begin{aligned}\forall u: \operatorname{Universe}(),\forall A: \operatorname{T
 
 One complete configuration x must realize the entire pattern p simultaneously. The count imagePatternCount(F,S,φ) is Nat.card of this actual image-pattern type. It does not count independent local witnesses or arbitrary compatible patches.
 
-**Theorem 1.4 (A finite collision forces strict logarithmic image loss).**
+**Theorem 1.4 (A packing count gives a uniform logarithmic deficit).**
+
+$$\begin{aligned}\forall a: \mathbb{N},\forall b: \mathbb{N},\forall k: \mathbb{N},\forall u: \mathbb{N},\forall v: \mathbb{N},\forall f: \mathbb{N},\\2 \le a \land 0 < b \land 0 < v \land 0 < f \land\\v \le k * {b}^{2} \land k * b \le u \land\\f \le {{a}^{b} - 1}^{k} * {a}^{u - k * b} \Rightarrow\\0 < (\operatorname{cast}(b) * \operatorname{Real.log}(\operatorname{cast}(a)) - \operatorname{Real.log}(\operatorname{cast}({a}^{b} - 1)))/{\operatorname{cast}(b)}^{2} \land\\\operatorname{Real.log}(\operatorname{cast}(f))/\operatorname{cast}(v) \le (\operatorname{cast}(u)/\operatorname{cast}(v)) * \operatorname{Real.log}(\operatorname{cast}(a)) - (\operatorname{cast}(b) * \operatorname{Real.log}(\operatorname{cast}(a)) - \operatorname{Real.log}(\operatorname{cast}({a}^{b} - 1)))/{\operatorname{cast}(b)}^{2}\end{aligned}$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Dynamics/Symbolic/LatticeGardenOfEden.logarithmic_packing_bound` (`✓ std3`). ∎
+
+*Citation.* Simon Wacker (2016). *The Garden of Eden Theorem for Cellular Automata on Group Sets*. DOI: [10.1007/978-3-319-44365-2_7](https://doi.org/10.1007/978-3-319-44365-2_7). URL: <https://arxiv.org/html/1603.07272v2>.
+
+*Commentary.*
+
+For natural a,b,k,u,v,f with a≥2, b,v,f positive, v≤k*b², k*b≤u and f≤(a^b−1)^k*a^(u−k*b), put δ=(b*log(a)−log(a^b−1))/b². Then δ>0 and log(f)/v≤(u/v)*log(a)−δ. This scalar estimate has no group hypothesis and applies to both lattice boxes and arbitrary-group finite-pattern counts.
+
+**Theorem 1.5 (A finite collision forces strict logarithmic image loss).**
 
 $$\begin{aligned}\forall u: \operatorname{Universe}(),\forall A: \operatorname{Type}(u),\\{}[\operatorname{Finite}(A)],\\\forall d: \mathbb{N},\\1 \le d \Rightarrow\\\forall S: \operatorname{Finset}((\operatorname{Fin}(d) \to \mathbb{Z})),\\\forall \varphi: ((S \to A) \to A),\\2 \le \operatorname{Nat.card}(A) \Rightarrow\\\forall x: ((\operatorname{Fin}(d) \to \mathbb{Z}) \to A),\\\forall y: ((\operatorname{Fin}(d) \to \mathbb{Z}) \to A),\\\operatorname{Set.Finite}(\operatorname{disagreement}(x, y)) \Rightarrow \operatorname{localMap}(S, \varphi, x) = \operatorname{localMap}(S, \varphi, y) \Rightarrow x \neq y \Rightarrow\\\exists c: \mathbb{R},\\c < \operatorname{Real.log}(\operatorname{cast}(\operatorname{Nat.card}(A))) \land\\\exists N: \mathbb{N},\\\forall n: \mathbb{N},\\N \le n \Rightarrow\operatorname{Real.log}(\operatorname{cast}(\operatorname{imagePatternCount}(\operatorname{box}(d, n + 1), S, \varphi)))/\operatorname{pow}(\operatorname{cast}(n + 1), d) \le c\end{aligned}$$
 
@@ -60,7 +72,7 @@ A maximal disjoint family of translates with centers in a finite F covers the po
 
 The supplied lattice-box geometry makes every fixed finite padding have volume ratio tending to one. The positive deficit [b log(card(A))−log(card(A)^b−1)]/b² therefore yields a uniform eventual strict upper bound. The box-through-boundary estimates are due to Tom Ole Diem. They control the padding volume; the collision and packing arguments supply the strict image-count deficit.
 
-**Theorem 1.5 (Surjectivity is equivalent to preinjectivity in every finite rank).**
+**Theorem 1.6 (Surjectivity is equivalent to preinjectivity in every finite rank).**
 
 $$\begin{aligned}\forall u: \operatorname{Universe}(),\forall A: \operatorname{Type}(u),\\{}[\operatorname{Finite}(A)],\\\forall d: \mathbb{N},\forall S: \operatorname{Finset}((\operatorname{Fin}(d) \to \mathbb{Z})),\forall \varphi: ((S \to A) \to A),\\\operatorname{Function.Surjective}(\operatorname{localMap}(S, \varphi)) \iff \operatorname{Preinjective}(S, \varphi)\end{aligned}$$
 
@@ -84,5 +96,6 @@ This is the classical Moore–Myhill equivalence specialized to finite-dimension
 - Truth anchor: `D5/S1/Dynamics/Symbolic/LatticeGardenOfEden.Preinjective`
 - Truth anchor: `D5/S1/Dynamics/Symbolic/LatticeGardenOfEden.garden_of_eden`
 - Truth anchor: `D5/S1/Dynamics/Symbolic/LatticeGardenOfEden.localMap`
+- Truth anchor: `D5/S1/Dynamics/Symbolic/LatticeGardenOfEden.logarithmic_packing_bound`
 - Truth anchor: `D5/S1/Dynamics/Symbolic/LatticeGardenOfEden.strict_image_box_loss`
 - Dependency: [D5/S1/Dynamics/Symbolic/GardenOfEden](GardenOfEden.md)
