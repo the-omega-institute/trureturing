@@ -34,7 +34,8 @@ internal sealed class ActualKernelGlobalStrictPositivityDocument : IScribeDocume
         Formula at(Formula a) => new Formula.Apply(x, [a]);
         Formula gram = Seq(i, Comma, Sp, j, Sp, Mapsto, Sp,
             Call("ofReal", Call("K", Subtract(at(j), at(i)))));
-        return Disp(new Formula.Logic(Call("RiemannHypothesis"), FormulaLogicOperator.Implies,
+        return Disp(new Formula.Logic(Seq(Operatorname, Grp(F.Id("RiemannHypothesis"))),
+            FormulaLogicOperator.Implies,
             All("n", Seq(Mathbb, Grp(F.Id("N"))),
                 All("x", Seq(Call("Fin", n), Sp, To, Sp, Mathbb, Grp(F.Id("R"))),
                     new Formula.Logic(Call("Injective", x), FormulaLogicOperator.Implies,

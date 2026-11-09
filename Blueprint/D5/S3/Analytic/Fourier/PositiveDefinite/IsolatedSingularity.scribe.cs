@@ -47,7 +47,7 @@ internal sealed class IsolatedSingularityDocument : IScribeDocumentDefinition
         Formula singular = Seq(Neg, Sp, bound(D(0)));
         Formula strict = All("n", nat, All("x", map(Call("Fin", n), v),
             Imp(Call("Injective", x), Call("PosDef", gram(x)))));
-        return Disp(All("V", Call("Type"), Seq(
+        return Disp(All("V", Seq(Operatorname, Grp(F.Id("Type"))), Seq(
             OpenBracket, Call("NormedAddCommGroup", v), CloseBracket, Comma, Sp,
             All("k", map(v, complex), Imp(positive, Imp(regular, Imp(singular, strict)))))));
     }
