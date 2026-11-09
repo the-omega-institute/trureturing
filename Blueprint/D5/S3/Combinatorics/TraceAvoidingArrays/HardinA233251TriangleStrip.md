@@ -232,6 +232,62 @@ $$\left(1 - 8 \cdot X\right) \cdot \left(1 - 48 \cdot X\right) \cdot \operatorna
 
 Let U(k) and V(k) be the continuation counts with and without colour two already seen. Then U(0)=V(0)=1, U(k+1)=48U(k), and V(k+1)=8V(k)+20U(k). Decomposing the literal arrays into their first row and tail gives a(k+1)=U(k)+2V(k). Consequently a(n+3)=56a(n+2)-384a(n+1), with a(1)=3 and a(2)=104. Coefficient comparison proves the displayed identity in integer power series; every natural count is cast to an integer before forming the series.
 
+**Definition 1.17 (The literal legality predicate at any width).**
+
+$$\forall k: \operatorname{Nat}, ([\operatorname{NeZero}\left(k\right)] \forall R: ((\operatorname{Fin}\left(k\right)) \to \operatorname{Fin}\left(6\right)) \to \operatorname{Prop}, (\forall E: ((\operatorname{Fin}\left(k\right)) \to \operatorname{Fin}\left(6\right)) \to ((\operatorname{Fin}\left(k\right)) \to \operatorname{Fin}\left(6\right)) \to \operatorname{Prop}, (\forall n: \operatorname{Nat}, (\forall A: ((\operatorname{Fin}\left(n\right)) \times (\operatorname{Fin}\left(k\right))) \to \operatorname{Fin}\left(6\right), (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233251TriangleStrip}.\operatorname{widthLegal}\left(R, E, A\right) = ((\exists i: \operatorname{Fin}\left(n\right), ((\operatorname{Fin}.\operatorname{val}\left(i\right) = 0) \land (A\left((i, (0: \operatorname{Fin}\left(k\right)))\right) = (0: \operatorname{Fin}\left(6\right))))) \land ((\forall i: \operatorname{Fin}\left(n\right), (R\left(\lambda j: \operatorname{Fin}\left(k\right) \mapsto (A\left((i, j)\right))\right))) \land ((\forall i: \operatorname{Fin}\left(n\right), (\forall h: \operatorname{Fin}.\operatorname{val}\left(i\right) + 1 < n, (E\left(\lambda j: \operatorname{Fin}\left(k\right) \mapsto (A\left((i, j)\right)), \lambda j: \operatorname{Fin}\left(k\right) \mapsto (A\left((\operatorname{Fin}.\operatorname{mk}\left(\operatorname{Fin}.\operatorname{val}\left(i\right) + 1, h\right), j)\right))\right)))) \land (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233251TriangleStrip}.\operatorname{widthNormal}\left((\operatorname{Bool}.\operatorname{false}, \operatorname{Bool}.\operatorname{false}), \lambda i: \operatorname{Fin}\left(n\right) \mapsto (\lambda j: \operatorname{Fin}\left(k\right) \mapsto (A\left((i, j)\right)))\right))))))))))$$
+
+*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233251TriangleStrip.widthLegal` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233251: six-colour complementary-pair exclusion on a three-column strip*. URL: <https://oeis.org/A233251>.
+
+*Commentary.*
+
+The first cell is zero, each row satisfies R, consecutive rows satisfy E, and the shared scanner imposes row-major normalization. The Fin.val projections and typed finite zeroes are explicit.
+
+**Definition 1.18 (Deciding row-major normalization).**
+
+$$\forall k: \operatorname{Nat}, (\forall n: \operatorname{Nat}, (\forall s: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233175PairStrip}.\operatorname{Seen}, (\forall f: (\operatorname{Fin}\left(n\right)) \to (\operatorname{Fin}\left(k\right)) \to \operatorname{Fin}\left(6\right), ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233251TriangleStrip}.\operatorname{widthInstDecidableNormal}\left(s, f\right): \operatorname{Decidable}\left((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233251TriangleStrip}.\operatorname{widthNormal}\left(s, f\right))\right)) = \operatorname{inferInstanceAs}\left((\operatorname{Decidable}\left((\forall i: \operatorname{Fin}\left(n\right), (\forall j: \operatorname{Fin}\left(k\right), ((((f\left(i\right)\left(j\right) = (2: \operatorname{Fin}\left(6\right))) \lor ((f\left(i\right)\left(j\right) = (3: \operatorname{Fin}\left(6\right))) \lor (f\left(i\right)\left(j\right) = (4: \operatorname{Fin}\left(6\right))))) \implies ((\operatorname{Prod}.\operatorname{fst}\left(s\right) = \operatorname{Bool}.\operatorname{true}) \lor (\exists r: \operatorname{Fin}\left(n\right), (\exists t: \operatorname{Fin}\left(k\right), (((r < i) \lor ((r = i) \land (t < j))) \land (f\left(r\right)\left(t\right) = (1: \operatorname{Fin}\left(6\right)))))))) \land ((f\left(i\right)\left(j\right) = (3: \operatorname{Fin}\left(6\right))) \implies ((\operatorname{Prod}.\operatorname{snd}\left(s\right) = \operatorname{Bool}.\operatorname{true}) \lor (\exists r: \operatorname{Fin}\left(n\right), (\exists t: \operatorname{Fin}\left(k\right), (((r < i) \lor ((r = i) \land (t < j))) \land (f\left(r\right)\left(t\right) = (2: \operatorname{Fin}\left(6\right)))))))))))\right))\right)))))$$
+
+*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233251TriangleStrip.widthInstDecidableNormal` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233251: six-colour complementary-pair exclusion on a three-column strip*. URL: <https://oeis.org/A233251>.
+
+*Commentary.*
+
+The defining expression is inferInstanceAs for the displayed finite universal quantification and its two implications.
+
+**Definition 1.19 (Deciding a row scan at any width).**
+
+$$\begin{aligned}\forall s: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233175PairStrip}.\operatorname{Seen}, (\forall c: (\operatorname{Fin}\left(0\right)) \to \operatorname{Fin}\left(6\right), ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233251TriangleStrip}.\operatorname{widthInstDecidableGood}\left(s, c\right): \operatorname{Decidable}\left((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233175PairStrip}.\operatorname{good}\left(s, c\right))\right)) = \operatorname{Decidable}.\operatorname{isTrue}\left(\operatorname{True}.\operatorname{intro}\right)))\\\forall k: \operatorname{Nat}, (\forall s: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233175PairStrip}.\operatorname{Seen}, (\forall c: (\operatorname{Fin}\left(k + 1\right)) \to \operatorname{Fin}\left(6\right), ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233251TriangleStrip}.\operatorname{widthInstDecidableGood}\left(s, c\right): \operatorname{Decidable}\left((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233175PairStrip}.\operatorname{good}\left(s, c\right))\right)) = \operatorname{instDecidableAnd}\left(\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233175PairStrip}.\operatorname{instDecidableAllowed}\left(s, c\left((0: \operatorname{Fin}\left(k + 1\right))\right)\right), \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233251TriangleStrip}.\operatorname{widthInstDecidableGood}\left(\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233175PairStrip}.\operatorname{advance}\left(s, c\left((0: \operatorname{Fin}\left(k + 1\right))\right)\right), \operatorname{Fin}.\operatorname{tail}\left(c\right)\right)\right))))\end{aligned}$$
+
+*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233251TriangleStrip.widthInstDecidableGood` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233251: six-colour complementary-pair exclusion on a three-column strip*. URL: <https://oeis.org/A233251>.
+
+*Commentary.*
+
+These are the zero and successor equations of the defining induction on k. The successor uses the original allowed decision and the recursive tail decision with the advanced flags; no positive-width instance is required.
+
+**Definition 1.20 (Deciding the literal legality predicate).**
+
+$$\forall k: \operatorname{Nat}, ([\operatorname{NeZero}\left(k\right)] \forall R: ((\operatorname{Fin}\left(k\right)) \to \operatorname{Fin}\left(6\right)) \to \operatorname{Prop}, (\forall E: ((\operatorname{Fin}\left(k\right)) \to \operatorname{Fin}\left(6\right)) \to ((\operatorname{Fin}\left(k\right)) \to \operatorname{Fin}\left(6\right)) \to \operatorname{Prop}, ([\operatorname{DecidablePred}\left(R\right)] [\operatorname{DecidableRel}\left(E\right)] \forall n: \operatorname{Nat}, (\forall A: ((\operatorname{Fin}\left(n\right)) \times (\operatorname{Fin}\left(k\right))) \to \operatorname{Fin}\left(6\right), ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233251TriangleStrip}.\operatorname{widthInstDecidableLegal}\left(R, E, A\right): \operatorname{Decidable}\left((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233251TriangleStrip}.\operatorname{widthLegal}\left(R, E, A\right))\right)) = \operatorname{inferInstanceAs}\left((\operatorname{Decidable}\left(((\exists i: \operatorname{Fin}\left(n\right), ((\operatorname{Fin}.\operatorname{val}\left(i\right) = 0) \land (A\left((i, (0: \operatorname{Fin}\left(k\right)))\right) = (0: \operatorname{Fin}\left(6\right))))) \land ((\forall i: \operatorname{Fin}\left(n\right), (R\left(\lambda j: \operatorname{Fin}\left(k\right) \mapsto (A\left((i, j)\right))\right))) \land ((\forall i: \operatorname{Fin}\left(n\right), (\forall h: \operatorname{Fin}.\operatorname{val}\left(i\right) + 1 < n, (E\left(\lambda j: \operatorname{Fin}\left(k\right) \mapsto (A\left((i, j)\right)), \lambda j: \operatorname{Fin}\left(k\right) \mapsto (A\left((\operatorname{Fin}.\operatorname{mk}\left(\operatorname{Fin}.\operatorname{val}\left(i\right) + 1, h\right), j)\right))\right)))) \land (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233251TriangleStrip}.\operatorname{widthNormal}\left((\operatorname{Bool}.\operatorname{false}, \operatorname{Bool}.\operatorname{false}), \lambda i: \operatorname{Fin}\left(n\right) \mapsto (\lambda j: \operatorname{Fin}\left(k\right) \mapsto (A\left((i, j)\right)))\right)))))\right))\right))))))$$
+
+*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233251TriangleStrip.widthInstDecidableLegal` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233251: six-colour complementary-pair exclusion on a three-column strip*. URL: <https://oeis.org/A233251>.
+
+*Commentary.*
+
+The defining expression is inferInstanceAs for the four displayed conjuncts, using the deciding instances for R and E.
+
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233251TriangleStrip.Row`
@@ -245,6 +301,10 @@ Let U(k) and V(k) be the continuation counts with and without colour two already
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233251TriangleStrip.pairs`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233251TriangleStrip.result`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233251TriangleStrip.rowLegal`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233251TriangleStrip.widthInstDecidableGood`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233251TriangleStrip.widthInstDecidableLegal`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233251TriangleStrip.widthInstDecidableNormal`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233251TriangleStrip.widthLegal`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233251TriangleStrip.widthNormal`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233251TriangleStrip.widthStep`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233251TriangleStrip.widthTotal`

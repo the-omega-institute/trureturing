@@ -497,3 +497,205 @@ For fixed $m\ge2$ and fixed $j\in\{1,\ldots,m\}$, letting $Q$ increase makes bot
 The exact restricted optimum and same-table losses are repo-derived ordinary mathematics. The actual-record, literal-mask, first-zero and source-realization interfaces are reused from §§1–2 and the pinned suppliers of §9.1; Theorem 6.1 owns the unrestricted singleton fee. The state-identification and parity-query interfaces cited in §9.2 supply terminology and comparison boundaries, not a transferred optimum: arbitrary subset queries do not supply the paid cyclic positions or the actual words in (11.6). This result concerns $k=Qm$, $Q\ge2$, $m\ge2$ and only the first-window singleton indices $1\le j\le m$, with the same phase table on all INITIAL tails and both free values. It does not settle arbitrary phase layouts, mixed-tail tables or Open Problem 10.1, and it makes no worldwide novelty or exhaustive-absence claim.
 
 ## 追加锚（本行以下为增补区）
+
+## 12. The phase-zero singleton on every proper coprime width
+
+**Definition 12.1 (the immutable phase-zero table).** Retain the original matched reader, complete actual-history prior, independent absorbing bottom, alphabets and paid endpoint observations of §§1–2. Suppose
+
+$$
+k\ge2,\qquad 2\le m<k,\qquad T=k+1,\qquad \gcd(m,T)=1.
+\tag{12.1}
+$$
+
+For distinct labels $A,B$ and any prescribed label $\beta$, fix the one INITIAL table
+
+$$
+f_0(v,\theta_j,s)=
+\begin{cases}
+B,&j=0,\\
+A,&1\le j\le k,
+\end{cases}
+\qquad
+v\in\mathbb F_2,\quad 0\le s<k,\qquad
+f_0(\bot)=\beta.
+\tag{12.2}
+$$
+
+Here $\theta_j=-j\pmod T$ is the original history's phase. The table is the same on both free values and every INITIAL tail; $\beta$ need not differ from either legal label. Let $C_{\rm ad}(f_0)$ be the minimum worst actual emitted-complete-block fee over all successful adaptive controllers. Let $C_{\rm pre}(f_0)$ impose the additional requirement that every emitted sequence be a prefix of one fixed literal block stream, common to both free values and every actual source. Stopping and decoding may depend on the source's own chronological endpoint archive, including its free initial value. These are the unrestricted adaptive and GLOBAL meanings of Definition 11.1, applied to (12.2). Every issued block, including every wait and every padding bit in its complete word, is charged. Initial bottom can stop freely with $\beta$.
+
+**Theorem 12.2 (closed phase-zero fee and common literal attainment).** For Definition 12.1, separately for both original alphabets,
+
+$$
+\boxed{\displaystyle
+C_{\rm ad}(f_0)=C_{\rm pre}(f_0)=\left\lceil\frac{k}{m}\right\rceil.}
+\tag{12.3}
+$$
+
+The same minimum holds on each free-value fibre separately. A single stream attaining it is specified below using only $k,m$, with a decoder using only complete endpoints. Its legality includes all actual INITIAL tails and all cross-block seams. The adaptive lower bound includes arbitrary literal actions, rejecting words, waits and early stopping.
+
+**Proof (actual sources and the all-adaptive lower bound).** Put
+
+$$
+d=\left\lceil\frac{k}{m}\right\rceil\ge2,\qquad
+a=(d-1)m,\qquad r=k-a\in\{1,\ldots,m\}.
+\tag{12.4}
+$$
+
+Every original record used in the proof is jointly attainable by the history $W(v,j,s)$ in §1. In particular, for each specified $v,j,s$, that one legal complete-block history realizes its value, length phase and tail together. Its witnessing length is not revealed to the controller. Since $m<k$, every literal $m$-bit word is internally legal, so the two original action alphabets coincide; their common cross-block forbidden-run rule still applies.
+
+Fix either free initial value $v$ and any correct adaptive controller. Its root cannot stop, since the actual records at indices zero and $k$ have unequal labels $B,A$. Its first literal bit must be zero: otherwise the actual sources $W(v,0,k-1)$ and $W(v,k,k-1)$ both reject immediately. They then have the same completed root output $\bot$, the same remembered free value and the same issued word. Absorption makes every future endpoint archive identical. Neither early stopping nor any further words can return their different immutable INITIAL labels. This is the forced-root-zero interface of §2 applied to (12.2), including the possibility of a rejecting root in the larger alphabet.
+
+Now use the actual tail-zero pair $W(v,0,0)$ and $W(v,k,0)$. Index zero's active continuation positions begin with $0,k,k+1$, and index $k$ first becomes active at $k-1,k$. The forced root zero suppresses position zero. For any integer $b<d$,
+
+$$
+bm\le(d-1)m<k,\qquad bm-1\le k-2.
+\tag{12.5}
+$$
+
+Thus, throughout the first $b$ whole blocks, every emitted one has coefficient zero at both sources. They have the same initial value and tail; along equal archives the adaptive controller issues the same next whole word. Their current tails remain equal bit by bit. Every successful endpoint therefore has the same value at both sources, and any forbidden run rejects both simultaneously. A common rejection remains absorbing and cannot distinguish their labels. Induction keeps the entire available chronological archives equal through every depth below $d$. Stopping there returns the same label on two differently labelled actual sources. No correct controller can have worst fee below $d$. This is precisely the paid-arrival argument of §2 with $J=k$; it does not assume a predetermined continuation or give free displacement. It proves $C_{\rm ad}(f_0)\ge d$ on each value fibre, and hence on their union. The initial-bottom label plays no role in this legal-source obstruction.
+
+**Proof (the nondivisible case and its chronological decoder).** Suppose $m\nmid k$, so $1\le r<m$. The coprime hypothesis excludes $r=m-1$: that equality would give $T=k+1=dm$ and hence $\gcd(m,T)=m>1$. Consequently
+
+$$
+m\ge3,\qquad 1\le r\le m-2.
+\tag{12.6}
+$$
+
+Define the complete literal words
+
+$$
+Z=0^m,\qquad P=0^{m-1}1,\qquad
+F=1^{r+1}0^{m-r-1},
+\tag{12.7}
+$$
+
+and issue the one stream
+
+$$
+\underbrace{Z\mid\cdots\mid Z}_{d-2\text{ whole blocks}}
+\ \mid\ P\ \mid\ F.
+\tag{12.8}
+$$
+
+When $d=2$ the displayed waiting part is empty and $P$ is the root. All three words in (12.7) have length exactly $m$. The final zeros have positive length by (12.6), and are actually emitted before observing its endpoint. The charge is $(d-2)+1+1=d$, including every uninformative waiting block.
+
+Each $Z$ has empty mask. The sole one of $P$ is at absolute continuation position $a-1$, giving the full INITIAL mask $\{a-1,a\}$. The ones of $F$ occupy the actual consecutive positions $a,a+1,\ldots,k$. Their same-block edge XOR is
+
+$$
+\mathop{\triangle}_{t=a}^{k}\{t,t+1\}\pmod T
+=\{a,k+1\}\pmod T
+=\{a,0\}.
+\tag{12.9}
+$$
+
+Its trailing zeros add no charge. This computation uses precisely the actual final block, including its wrap at position $k$, rather than observations of its constituent bits. The indices $0,a-1,a$ are distinct, with $1\le a-1<a\le k-1$.
+
+Let $y_b$ denote the actual successful endpoint after $b$ emitted blocks, with $y_0=v$, and retain
+
+$$
+p=y_{d-1}\oplus y_{d-2},\qquad
+q=y_d\oplus y_{d-1}.
+\tag{12.10}
+$$
+
+Every earlier endpoint equals $v$. Equations (12.7)–(12.9) give the full two final differences on each original phase:
+
+$$
+\begin{array}{c|cc}
+\text{INITIAL index }j&p&q\\ \hline
+0&0&1\\
+a-1&1&0\\
+a&1&1\\
+j\notin\{0,a-1,a\}&0&0.
+\end{array}
+\tag{12.11}
+$$
+
+Return $B$ exactly when $(p,q)=(0,1)$, and $A$ otherwise. Equivalently, after the actually recorded penultimate difference zero, the helper $a$ has been excluded on that same archive, and the final mask restricts to the singleton zero. On penultimate difference one both candidates already have label $A$. The fixed stream may nevertheless issue $F$ there too; (12.11) decodes these sources correctly. All entries come from the one stream on each source; no observation or exclusion is borrowed from another branch. Only the free value and complete endpoints are used, so the rule is identical on both free-value fibres.
+
+The use of the chronological archive in (12.10) is essential for this stream. At indices zero and $a-1$, the final scalar is the same $v\oplus1$, while the penultimate scalars are $v$ and $v\oplus1$, respectively. The actual sources $W(v,0,0)$ and $W(v,a-1,0)$ supply the two different INITIAL labels. Thus replacing (12.10) by a decoder of the final scalar alone would be false. For a concrete literal instance, $k=7,m=5$ gives $00001\mid11100$: the actual histories $0^{40}$ and $0^{20}$ have INITIAL indices zero and four, respectively, and their endpoint pairs are $(0,1)$ and $(1,1)$. Both histories have free value zero, tail zero and complete five-bit cuts. This witness concerns the displayed stream's decoder.
+
+It remains to check its actual seams. The first issued bit is zero, whether it belongs to a waiting $Z$ or to $P$, and clears every old tail, including $k-1$. Each waiting block ends zero. The word $P$ has terminal tail one. Its final one and the leading run of $F$ form exactly $r+2$ consecutive ones, and
+
+$$
+r+2\le m<k.
+\tag{12.12}
+$$
+
+The remaining $m-r-1\ge1$ actual zeros of $F$ clear that tail. All earlier runs after the root zero are shorter. This proves legality for every actual source and every INITIAL tail, including $d=2$ and $m=k-1$ without a different seam convention. Both original alphabets admit these internally legal whole words. No post-stop cleanup or extra endpoint is required.
+
+**Proof (divisible widths and complete-mask coverage).** Suppose $m\mid k$. Write $k=dm$, where $d\ge2$, so $r=m$ in (12.4). The stream below has exactly $d$ complete words and length $k$ bits. Since it starts zero, phase zero's position zero is suppressed and its next active position $k$ is not emitted. Its entire difference signature is therefore zero.
+
+If $m$ is even, set
+
+$$
+U=(01)^{m/2}
+\quad\text{and issue}\quad
+\underbrace{U\mid\cdots\mid U}_{d\text{ whole blocks}}.
+\tag{12.13}
+$$
+
+At block index $t\in\{0,\ldots,d-1\}$, its actual one positions are $tm+1,tm+3,\ldots,(t+1)m-1$. Their disjoint edges give exactly
+
+$$
+E_t=\{tm+1,tm+2,\ldots,(t+1)m\}.
+\tag{12.14}
+$$
+
+These masks are pairwise disjoint and their union is $\{1,\ldots,k\}$. Every nonzero INITIAL index therefore gives a one difference at one of the recorded endpoints. Every word starts zero and ends one, so the root clears every INITIAL tail and no subsequent seam joins two ones. All runs are legal.
+
+If $m$ is odd, then $m\ge3$. Define
+
+$$
+R=(01)^{(m-1)/2}0,\qquad
+S=(10)^{(m-1)/2}1,
+\quad\text{and issue}\quad
+R\ \mid\ \underbrace{S\mid\cdots\mid S}_{d-1\text{ whole blocks}}.
+\tag{12.15}
+$$
+
+The root ones occur at $1,3,\ldots,m-2$, giving
+
+$$
+E_0=\{1,\ldots,m-1\}.
+\tag{12.16}
+$$
+
+For $1\le t<d$, the ones of its one actual word $S$ occur at $tm,tm+2,\ldots,(t+1)m-1$. Their edges are disjoint within that word and give
+
+$$
+E_t=\{tm,tm+1,\ldots,(t+1)m\}.
+\tag{12.17}
+$$
+
+Thus the root covers indices $1,\ldots,m-1$, the next word covers $m,\ldots,2m$, and all later words continue the coverage through $k=dm$. Every $E_t$ excludes zero, and
+
+$$
+\bigcup_{t=0}^{d-1}E_t=\{1,\ldots,k\}.
+\tag{12.18}
+$$
+
+Adjacent $S$ masks overlap at their shared boundary index. Such an index gives difference one at two separate endpoints; those readings are both retained, not XORed into one final observation. There is no cancellation between different chronological coordinates. The root starts and ends zero; each $S$ alternates internally and starts and ends one. The root-to-$S$ seam is safe, and any later $S$-to-$S$ seam forms a run of exactly two ones. Since $k=dm\ge2m\ge6$, these runs are strictly below $k$. The final tail one is legal and requires no further block.
+
+For either parity of $m$, compute the actual differences $\delta_b=y_b\oplus y_{b-1}$ for $1\le b\le d$. Return $B$ precisely when all these differences are zero; otherwise return $A$. Phase zero has that all-zero signature, and (12.14) or (12.18) supplies at least one nonzero chronological coordinate for each other phase. This proves the decoder for every INITIAL phase on both values. The first zero has cleared every old tail, and the seam calculations cover every word actually issued. Exactly $d$ whole blocks are charged. In particular the divisibility case is not obtained by substituting $r=m$ into (12.7), whose padding exponent would be negative.
+
+Finally, on initially rejected histories return their assigned $\beta$ before issuing any word. This is the empty prefix of the same GLOBAL stream. Rejected prior histories actually exist in both alphabets: sufficiently many consecutive $1^m$ complete blocks reach a forbidden cross-block run, even though each such block is internally legal. Their free output is the independent symbol $\bot$, not either legal value. Every legal history instead survives the displayed $d$-word stream and receives its immutable label. Consequently $C_{\rm pre}(f_0)\le d$. Combining this with the all-adaptive lower bound and $C_{\rm ad}\le C_{\rm pre}$ proves (12.3) and the corresponding equalities on each free-value fibre. $\square$
+
+## 13. Source correspondence and the remaining INITIAL objective
+
+**Mathematical citation 13.1 (exact overlap and the closed evaluation).** The actual-history witnesses, forced root zero, charged arrival and actual path masks in Theorem 12.2 are the interfaces of §§1–2 and their pinned suppliers in Sources 9.1. The proof uses the original matched coefficient law and original whole words on their actual joint prior.
+
+For comparison with binary laws normalized to have label $A$ at index zero, exchange the label names: take their baseline $A_{\rm source}=B$, their other label $B_{\rm source}=A$, and hence their nonbaseline set $H=\{1,\ldots,k\}$ and last index $J=k$. This is the same immutable table, not a different target. The exact correspondences are as follows.
+
+- At $m=2$, coprimality makes $k$ even and properness gives $k\ge4$. Theorem 4.1 with that label exchange already gives the adaptive value $\max\{2,k/2\}=k/2$. Its adaptive value is credited reuse. Stream (12.13) additionally exhibits the required one GLOBAL stream on both free values and all INITIAL tails.
+- When $m\mid k$, write $k=dm$, $d\ge2$. The [prefix-deadline law, Theorem 3.1](https://github.com/the-omega-institute/trureturing/blob/785db9da5282938375cc4c1b917fcac6ce311af9/docs/develop/theory/KBONACCI_PREFIX_DEADLINE_AND_WRAP_COST.md) already gives the adaptive value $d$. In its notation $h=D=d$, $b_0=m-1$, $b_t=m$ for $1\le t<d$, and $z=1$. If $m$ is even the first count is odd and releases its earlier-window condition; if $m$ is odd and $d\ge3$, count $b_1=m$ releases it. For odd $m$ and $d=2$, the last count is odd and equals $z$ modulo two. In every case its $\varepsilon=0$ and its guardrail includes depth $d$. Equations (12.13)–(12.18) give simultaneous GLOBAL attainment, rather than treating a branch-dependent deadline tree as a common stream.
+- In the strip $m<k<2m$, equality $k=2m-1$ is excluded by $\gcd(m,k+1)=1$. Hence $2m>k+1$, $m\ge3$, and the [same source's Theorem 6.1](https://github.com/the-omega-institute/trureturing/blob/785db9da5282938375cc4c1b917fcac6ce311af9/docs/develop/theory/KBONACCI_PREFIX_DEADLINE_AND_WRAP_COST.md) already gives adaptive value two for this table: $H$ contains $k>m$, so its one-block clause does not apply. Formula (12.8) with no waiting blocks gives one common optimal stream here, including the near-critical case.
+- On $m\ge3$, $k\ge2m$ and $\gcd(m,k+1)=1$, [Theorem 62.2 of the INITIAL target theory](https://github.com/the-omega-institute/trureturing/blob/785db9da5282938375cc4c1b917fcac6ce311af9/docs/develop/theory/KBONACCI_INITIAL_TARGET_COST_THEORY.md) already supplies the exact adaptive structural minimum for arbitrary immutable INITIAL targets. Its table here is $F_v(j,s)=B$ at $j=0$ and $A$ otherwise, for both $v$ and all $s$. Theorem 12.2 evaluates that minimum in closed form as $\min\mathcal C_0=\min\mathcal C_1=\lceil k/m\rceil$. The structural minimum's arbitrary-target adaptive scope is credited in full; it is not an unresolved existence problem. Its independent child choices do not by themselves supply the one GLOBAL stream, which is proved here by the literal constructions.
+
+The phase-zero result is a repo-derived closed evaluation with a single optimal GLOBAL realization across all the stated proper coprime widths. Its width-two, divisible-width and upper-strip adaptive values have the direct source specializations just listed; the remaining guarded adaptive values are evaluations of the supplied structural minimum. The ordinary proof adds the simultaneous literal masks, charged calendar and seams needed for (12.3), without a worldwide priority or exhaustive literature-absence claim. Sources 9.2 retain their original state-identification and parity-query comparison boundaries; no optimum from a machine with different action access or costs is transferred.
+
+Theorem 3.1 of this volume owns the unit-width phase-label law, outside (12.1). Theorem 6.1 owns the nonzero singleton indices and is not restated as a companion result. Critical widths, wider widths and noncoprime phase orbits retain their supplied hypotheses. At $k=2$ no integer $m$ satisfies $2\le m<k$. The full-history and mask arguments here require (12.1); no all-phase coprime source witness is asserted for a noncoprime orbit.
+
+The phase-zero singleton gap described in §10 is resolved on (12.1) by (12.3). The arbitrary attainable INITIAL-record objective of Open Problem 10.1 remains broader: arbitrary tail-dependent tables, arbitrary multilabel layouts, the remaining parameter regions, and exact GLOBAL compatibility for arbitrary targets are not consequences of this singleton law. The arbitrary-target adaptive structural slice of the cited Theorem 62.2 and all other already settled source slices retain their scope. The same-table equality here does not identify $C_{\rm ad}$ with $C_{\rm pre}$ for those broader targets.
+
+## 追加锚（本行以下为增补区）
