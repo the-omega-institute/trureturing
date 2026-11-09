@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Quantum/Algebra/PBIdempotentSupport
    mirror-E: none(waiver:registration-template-not-established)
-   anchors: [mathlib/module/Mathlib.LinearAlgebra.Matrix.PosDef]
+   anchors: [mathlib/module/Mathlib.Analysis.Matrix.PosDef]
    utility: none
    digest: Original directed positive two-tables force quantitative ambient idempotent support. -/
 
