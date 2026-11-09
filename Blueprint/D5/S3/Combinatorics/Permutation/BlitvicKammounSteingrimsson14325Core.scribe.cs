@@ -11,7 +11,7 @@ internal sealed class BlitvicKammounSteingrimsson14325CoreDocument : IScribeDocu
         LibraryNoteRef.Create("D5/L/PermutationPatterns/blitvickammounsteingrimsson2026patterns");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The prescribed 14325 comparisons force the first and last ranks for every positive packing size.",
+        "The prescribed 14325 permutations correspond exactly to rank assignments on the endpoint-deleted grid.",
         H("Exact source structure of 14325 packings"),
         Blocks(
             Paragraph(Text("The zero-based pattern is (0,3,2,1,4), overlap is two, "
@@ -36,12 +36,22 @@ internal sealed class BlitvicKammounSteingrimsson14325CoreDocument : IScribeDocu
                 + "with rank zero and one with the greatest rank; packing_bounds "
                 + "forces the two endpoint equalities. Thus deleting these endpoints "
                 + "removes two forced ranks, without any symmetry or labeling factor."),
-            Paragraph(Text("The remaining grid has xₜ=aₜ₊₁<yₜ=cₜ<zₜ=bₜ, with "
-                + "increasing x and z chains. An exact rank-assignment/grid bijection "
-                + "and first-z insertion/deletion bijection are still required to "
-                + "identify the actual cardinality with the transfer rows. The present "
-                + "theorems prove endpoint constraints and do not claim that cardinality "
-                + "identity, either modular conclusion, or completion of issue 28504.")))));
+            Node("count_eq_grid", "Exact cardinality after removing endpoints", CountFormula(),
+                "For every natural j≥1, the actual count equals the number of grid "
+                + "rank assignments. GridPacking consists of permutations q of 3j "
+                + "ranks, indexed so that q(3t+2), q(3t+1), q(3t) are xₜ, yₜ, zₜ. "
+                + "Each column satisfies xₜ<yₜ<zₜ, and both x and z increase across "
+                + "successive columns. The map packingGridEquiv removes positions "
+                + "0 and 3j+1 and subtracts one from each remaining rank. Its inverse "
+                + "adds one to every grid rank and inserts the forced ranks 0 and "
+                + "3j+1. The column and horizontal inequalities recover all four "
+                + "comparisons of every window, including the first and last windows. "
+                + "The two maps are inverse on actual permutations, so no labeling "
+                + "or symmetry factor occurs."),
+            Paragraph(Text("A first-z insertion/deletion bijection is still required "
+                + "to identify this grid cardinality with the transfer rows. Neither "
+                + "modular conclusion for the actual count follows from the "
+                + "endpoint-deletion equality alone.")))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose) =>
         Describe.Lean(DescribeId.Create("bks14325-" + name.Replace('_', '-')),
@@ -71,4 +81,8 @@ internal sealed class BlitvicKammounSteingrimsson14325CoreDocument : IScribeDocu
             Seq(W(F.Id("x")), Sp, Leq, Sp, W(Last))))));
     private static Formula ExtremaFormula() => Disp(Guarded(Call("Perm", Finite),
         Both(Equal(W(D(0)), D(0)), Equal(W(Last), Last))));
+    private static Formula CountFormula() => Disp(All("j", Natural,
+        Imply(Seq(D(1), Sp, Leq, Sp, F.Id("j")),
+            Equal(Call("count", F.Id("pattern"), D(2), F.Id("j")),
+                Call("Nat.card", Call("GridPacking", F.Id("j")))))));
 }

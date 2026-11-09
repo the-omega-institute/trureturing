@@ -135,4 +135,267 @@ theorem packing_extrema (j : ℕ) (hj : 1 ≤ j)
   simp only [Fin.le_def] at hlow hhigh
   constructor <;> omega
 
+/-- The endpoint-deleted grid: indices `3t+2,3t+1,3t` are x, y, z.
+Only the column chains and the two horizontal chains are prescribed. -/
+def Grid (j : ℕ) (q : Equiv.Perm (Fin (3 * j))) : Prop :=
+  (∀ t (ht : t < j),
+    q ⟨3 * t + 2, by omega⟩ < q ⟨3 * t + 1, by omega⟩ ∧
+    q ⟨3 * t + 1, by omega⟩ < q ⟨3 * t, by omega⟩) ∧
+  (∀ t (ht : t + 1 < j),
+    q ⟨3 * t + 2, by omega⟩ < q ⟨3 * t + 5, by omega⟩ ∧
+    q ⟨3 * t, by omega⟩ < q ⟨3 * t + 3, by omega⟩)
+
+/-- Actual rank assignments to the grid, without a symmetry quotient. -/
+def GridPacking (j : ℕ) := {q : Equiv.Perm (Fin (3 * j)) // Grid j q}
+
+private def addEndsFun {N : ℕ} (q : Equiv.Perm (Fin N)) (x : Fin (N + 2)) :
+    Fin (N + 2) :=
+  if h0 : x.val = 0 then 0
+  else if hlast : x.val = N + 1 then ⟨N + 1, by omega⟩
+  else ⟨(q ⟨x.val - 1, by omega⟩).val + 1, by have := (q ⟨x.val - 1, by omega⟩).isLt; omega⟩
+
+private theorem addEndsFun_inv {N : ℕ} (q : Equiv.Perm (Fin N))
+    (x : Fin (N + 2)) : addEndsFun q.symm (addEndsFun q x) = x := by
+  by_cases h0 : x.val = 0
+  · have hx : x = 0 := Fin.ext h0
+    subst x
+    simp [addEndsFun]
+  · by_cases hl : x.val = N + 1
+    · simp [addEndsFun, h0, hl]
+      exact Fin.ext hl.symm
+    · have hm : x.val - 1 < N := by omega
+      have hq := (q ⟨x.val - 1, hm⟩).isLt
+      have hne : (q ⟨x.val - 1, hm⟩).val + 1 ≠ N + 1 := by omega
+      simp only [addEndsFun, h0, hl, ↓reduceDIte, Nat.add_eq_zero_iff,
+        one_ne_zero, and_false, hne, Nat.add_sub_cancel]
+      have he := q.symm_apply_apply ⟨x.val - 1, hm⟩
+      apply Fin.ext
+      change (q.symm (q ⟨x.val - 1, hm⟩)).val + 1 = x.val
+      rw [he]
+      simp only [Fin.val_mk]
+      omega
+
+private def addEnds {N : ℕ} (q : Equiv.Perm (Fin N)) : Equiv.Perm (Fin (N + 2)) where
+  toFun := addEndsFun q
+  invFun := addEndsFun q.symm
+  left_inv := addEndsFun_inv q
+  right_inv := addEndsFun_inv q.symm
+
+private theorem addEnds_middle {N : ℕ} (q : Equiv.Perm (Fin N)) (i : Fin N) :
+    (addEnds q ⟨i.val + 1, by omega⟩).val = (q i).val + 1 := by
+  have hi := i.isLt
+  simp [addEnds, addEndsFun, show i.val ≠ N by omega]
+
+private def removeEndsFun {N : ℕ} (w : Equiv.Perm (Fin (N + 2)))
+    (h0 : w 0 = 0) (hl : w ⟨N + 1, by omega⟩ = ⟨N + 1, by omega⟩)
+    (x : Fin N) : Fin N :=
+  ⟨(w ⟨x.val + 1, by omega⟩).val - 1, by
+    have hx := x.isLt
+    have hw := (w ⟨x.val + 1, by omega⟩).isLt
+    have hn : (w ⟨x.val + 1, by omega⟩).val ≠ N + 1 := by
+      intro he
+      have := w.injective ((Fin.ext he).trans hl.symm)
+      have := congrArg Fin.val this
+      simp only [Fin.val_mk] at this
+      omega
+    omega⟩
+
+private theorem removeEnds_pos {N : ℕ} (w : Equiv.Perm (Fin (N + 2)))
+    (h0 : w 0 = 0) (x : Fin N) : 0 < (w ⟨x.val + 1, by omega⟩).val := by
+  have hx := x.isLt
+  by_contra h
+  have he : w ⟨x.val + 1, by omega⟩ = w 0 := by
+    rw [h0]
+    apply Fin.ext
+    simp only [Fin.val_zero]
+    omega
+  have := congrArg Fin.val (w.injective he)
+  simp only [Fin.val_zero] at this
+  omega
+
+private noncomputable def removeEnds {N : ℕ} (w : Equiv.Perm (Fin (N + 2)))
+    (h0 : w 0 = 0) (hl : w ⟨N + 1, by omega⟩ = ⟨N + 1, by omega⟩) :
+    Equiv.Perm (Fin N) :=
+  Equiv.ofBijective (removeEndsFun w h0 hl) (by
+    apply (Finite.injective_iff_bijective).mp
+    intro x y hxy
+    have hp := removeEnds_pos w h0 x
+    have hq := removeEnds_pos w h0 y
+    have he := congrArg Fin.val hxy
+    change (w ⟨x.val + 1, by omega⟩).val - 1 =
+      (w ⟨y.val + 1, by omega⟩).val - 1 at he
+    have hw : w ⟨x.val + 1, by omega⟩ = w ⟨y.val + 1, by omega⟩ :=
+      Fin.ext (by omega)
+    have hv := congrArg Fin.val (w.injective hw)
+    change x.val + 1 = y.val + 1 at hv
+    apply Fin.ext
+    omega)
+
+private theorem removeEnds_middle {N : ℕ} (w : Equiv.Perm (Fin (N + 2)))
+    (h0 : w 0 = 0) (hl : w ⟨N + 1, by omega⟩ = ⟨N + 1, by omega⟩)
+    (i : Fin N) : (removeEnds w h0 hl i).val + 1 =
+      (w ⟨i.val + 1, by omega⟩).val := by
+  have := removeEnds_pos w h0 i
+  change (w ⟨i.val + 1, by omega⟩).val - 1 + 1 = _
+  omega
+
+private theorem add_removeEnds {N : ℕ} (w : Equiv.Perm (Fin (N + 2)))
+    (h0 : w 0 = 0) (hl : w ⟨N + 1, by omega⟩ = ⟨N + 1, by omega⟩) :
+    addEnds (removeEnds w h0 hl) = w := by
+  ext x
+  by_cases hz : x.val = 0
+  · have hx : x = 0 := Fin.ext hz
+    subst x
+    simpa [addEnds, addEndsFun] using congrArg Fin.val h0.symm
+  · by_cases ht : x.val = N + 1
+    · have hx : x = ⟨N + 1, by omega⟩ := Fin.ext ht
+      have hw : w x = ⟨N + 1, by omega⟩ := (congrArg w hx).trans hl
+      simpa [addEnds, addEndsFun, hz, ht] using congrArg Fin.val hw.symm
+    · have hx : x.val - 1 < N := by have := x.isLt; omega
+      have he := removeEnds_middle w h0 hl ⟨x.val - 1, hx⟩
+      have hi : (⟨(⟨x.val - 1, hx⟩ : Fin N).val + 1, by omega⟩ : Fin (N + 2)) = x :=
+        Fin.ext (by simp only [Fin.val_mk]; omega)
+      rw [hi] at he
+      simpa [addEnds, addEndsFun, hz, ht] using he
+
+private theorem addEnds_injective {N : ℕ} : Function.Injective (@addEnds N) := by
+  intro q r h
+  ext i
+  have he := congrArg (fun w : Equiv.Perm (Fin (N + 2)) =>
+    (w ⟨i.val + 1, by omega⟩).val) h
+  rw [addEnds_middle, addEnds_middle] at he
+  omega
+
+private theorem addEnds_rank {N : ℕ} (q : Equiv.Perm (Fin N)) (i : ℕ) (hi : i < N) :
+    rank (addEnds q) (i + 1) = (q ⟨i, hi⟩).val + 1 := by
+  have hb : i + 1 < N + 2 := by omega
+  simp only [rank, dif_pos hb]
+  exact addEnds_middle q ⟨i, hi⟩
+
+private theorem grid_addEnds_iff (j : ℕ) (q : Equiv.Perm (Fin (3 * j))) :
+    WindowChain j (rank (addEnds q)) ↔ Grid j q := by
+  have hm (i a : ℕ) (ha : a < 3 * j) (he : i = a + 1) :
+      rank (addEnds q) i = (q ⟨a, ha⟩).val + 1 := by
+    rw [he]
+    exact addEnds_rank q a ha
+  constructor
+  · intro h
+    constructor
+    · intro t ht
+      obtain ⟨ha, hb, hc, hd⟩ := h t ht
+      have h3 := hm (3 * t + 3) (3 * t + 2) (by omega) (by omega)
+      have h2 := hm (3 * t + 2) (3 * t + 1) (by omega) (by omega)
+      have h1 := hm (3 * t + 1) (3 * t) (by omega) (by omega)
+      rw [h3, h2] at hb
+      rw [h2, h1] at hc
+      simp only [Fin.lt_def]
+      exact ⟨by omega, by omega⟩
+    · intro t ht
+      have he := (h (t + 1) ht).1
+      have hd := (h t (by omega)).2.2.2
+      have h0 := hm (3 * (t + 1)) (3 * t + 2) (by omega) (by omega)
+      have h3 := hm (3 * (t + 1) + 3) (3 * t + 5) (by omega) (by omega)
+      have h1 := hm (3 * t + 1) (3 * t) (by omega) (by omega)
+      have h4 := hm (3 * t + 4) (3 * t + 3) (by omega) (by omega)
+      rw [h0, h3] at he
+      rw [h1, h4] at hd
+      simp only [Fin.lt_def]
+      exact ⟨by omega, by omega⟩
+  · rintro ⟨hc, hh⟩ t ht
+    obtain ⟨hxy, hyz⟩ := hc t ht
+    simp only [Fin.lt_def] at hxy hyz
+    have h3 := hm (3 * t + 3) (3 * t + 2) (by omega) (by omega)
+    have h2 := hm (3 * t + 2) (3 * t + 1) (by omega) (by omega)
+    have h1 := hm (3 * t + 1) (3 * t) (by omega) (by omega)
+    refine ⟨?_, ?_, ?_, ?_⟩
+    · by_cases ht0 : t = 0
+      · subst t
+        rw [h3]
+        simp [rank, addEnds, addEndsFun]
+      · have ha := (hh (t - 1) (by omega)).1
+        simp only [Fin.lt_def] at ha
+        have h0 := hm (3 * t) (3 * (t - 1) + 2) (by omega) (by omega)
+        have hq : (q ⟨3 * (t - 1) + 5, by omega⟩).val =
+            (q ⟨3 * t + 2, by omega⟩).val := by
+          apply congrArg (fun i : Fin (3 * j) => (q i).val)
+          apply Fin.ext
+          change 3 * (t - 1) + 5 = 3 * t + 2
+          omega
+        rw [hq] at ha
+        rw [h0, h3]
+        omega
+    · rw [h3, h2]; omega
+    · rw [h2, h1]; omega
+    · by_cases hlast : t + 1 < j
+      · have ha := (hh t hlast).2
+        simp only [Fin.lt_def] at ha
+        have h4 := hm (3 * t + 4) (3 * t + 3) (by omega) (by omega)
+        rw [h1, h4]
+        omega
+      · have he : 3 * t + 4 = 3 * j + 1 := by omega
+        rw [h1, he]
+        have hq := (q ⟨3 * t, by omega⟩).isLt
+        simpa [rank, addEnds, addEndsFun] using Nat.add_lt_add_right hq 1
+
+private def sourceTransport (j : ℕ) (hj : 1 ≤ j) :
+    Equiv.Perm (Fin (5 + (j - 1) * 3)) ≃ Equiv.Perm (Fin (3 * j + 2)) :=
+  (finCongr (by omega : 5 + (j - 1) * 3 = 3 * j + 2)).permCongr
+
+private theorem sourceTransport_rank (j : ℕ) (hj : 1 ≤ j)
+    (w : Equiv.Perm (Fin (5 + (j - 1) * 3))) :
+    rank (sourceTransport j hj w) = rank w := by
+  funext i
+  by_cases hi : i < 5 + (j - 1) * 3
+  · have hi' : i < 3 * j + 2 := by omega
+    simp [rank, hi, hi', sourceTransport, Equiv.permCongr_apply]
+  · have hi' : ¬ i < 3 * j + 2 := by omega
+    simp [rank, hi, hi']
+
+private theorem normalized_endpoints (j : ℕ) (hj : 1 ≤ j)
+    (w : SourcePacking pattern 2 j) :
+    sourceTransport j hj w.val 0 = 0 ∧
+      sourceTransport j hj w.val ⟨3 * j + 1, by omega⟩ = ⟨3 * j + 1, by omega⟩ := by
+  have he := packing_extrema j hj w.val w.property
+  constructor
+  · apply Fin.ext
+    simpa [sourceTransport, Equiv.permCongr_apply] using he.1
+  · apply Fin.ext
+    simpa [sourceTransport, Equiv.permCongr_apply] using he.2
+
+/-- Delete the two forced endpoint ranks, preserving every literal comparison. -/
+noncomputable def packingGridEquiv (j : ℕ) (hj : 1 ≤ j) :
+    SourcePacking pattern 2 j ≃ GridPacking j where
+  toFun w := by
+    let v := sourceTransport j hj w.val
+    have he := normalized_endpoints j hj w
+    let q := removeEnds v he.1 he.2
+    refine ⟨q, (grid_addEnds_iff j q).mp ?_⟩
+    rw [show addEnds q = v from add_removeEnds v he.1 he.2]
+    rw [show rank v = rank w.val from sourceTransport_rank j hj w.val]
+    exact (packing_chain_iff j w.val).mp w.property
+  invFun q := by
+    let w := (sourceTransport j hj).symm (addEnds q.val)
+    refine ⟨w, (packing_chain_iff j w).mpr ?_⟩
+    have he := sourceTransport_rank j hj w
+    have hw : sourceTransport j hj w = addEnds q.val :=
+      (sourceTransport j hj).apply_symm_apply _
+    rw [hw] at he
+    rw [← he]
+    exact (grid_addEnds_iff j q.val).mpr q.property
+  left_inv w := by
+    apply Subtype.ext
+    apply (sourceTransport j hj).injective
+    simp only [Equiv.apply_symm_apply]
+    exact add_removeEnds _ _ _
+  right_inv q := by
+    apply Subtype.ext
+    apply addEnds_injective
+    simp only [Equiv.apply_symm_apply]
+    exact add_removeEnds _ _ _
+
+/-- The actual source count is exactly the number of grid rank assignments. -/
+theorem count_eq_grid (j : ℕ) (hj : 1 ≤ j) :
+    count pattern 2 j = Nat.card (GridPacking j) := by
+  exact Nat.card_congr (packingGridEquiv j hj)
+
 end D5.S3.Combinatorics.Permutation.BlitvicKammounSteingrimsson14325Core
