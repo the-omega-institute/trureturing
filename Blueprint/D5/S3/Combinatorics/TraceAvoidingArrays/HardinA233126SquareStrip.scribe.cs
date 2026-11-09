@@ -10,6 +10,8 @@ internal sealed class HardinA233126SquareStripDocument : IScribeDocumentDefiniti
         "D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233126SquareStrip.";
     private const string Owner =
         "D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.";
+    private const string RowOwner =
+        "D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233253TriangleStrip.";
     private const string Scanner =
         "D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.";
     private const string Gid =
@@ -27,10 +29,6 @@ internal sealed class HardinA233126SquareStripDocument : IScribeDocumentDefiniti
                 + "qualified Lean names. Fin.val explicitly converts a finite index or colour "
                 + "to Nat. Nat.div denotes natural quotient and Nat.mod its nonnegative "
                 + "remainder; neither operation occurs in these definitions.")),
-            Entry("row", "Row", "Rows", Eq(Name(Root + "Row"), Arrow(Fin(5), Fin(6))),
-                "A row contains five individual colours."),
-            Entry("horizontal", "rowLegal", "Horizontal bonds", Horizontal(),
-                "Fin.castSucc and Fin.succ select consecutive columns."),
             Entry("vertical", "bonds", "Vertical bonds", Vertical(),
                 "Only equal columns in consecutive rows are joined. Diagonals are free."),
             Entry("count", "a", "The literal filtered finite count", Count(),
@@ -94,20 +92,11 @@ internal sealed class HardinA233126SquareStripDocument : IScribeDocumentDefiniti
                 : AssessedProvenance.FromRepo(Source),
             Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
 
-    private static Formula Horizontal()
-    {
-        var c = V("c"); var j = V("j");
-        var x = At(c, Call("Fin.castSucc", j));
-        var y = At(c, Call("Fin.succ", j));
-        return All("c", Name(Root + "Row"), Eq(Call(Root + "rowLegal", c),
-            All("j", Fin(4), And(Ne(x, y), Ne(Add(Val(x), Val(y)), D(5))))));
-    }
-
     private static Formula Vertical()
     {
         var c = V("c"); var d = V("d"); var j = V("j");
         var x = At(c, j); var y = At(d, j);
-        return All("c", Name(Root + "Row"), All("d", Name(Root + "Row"),
+        return All("c", Name(RowOwner + "Row"), All("d", Name(RowOwner + "Row"),
             Eq(Call(Root + "bonds", c, d), All("j", Fin(5),
                 And(Ne(x, y), Ne(Add(Val(x), Val(y)), D(5)))))));
     }
@@ -117,7 +106,7 @@ internal sealed class HardinA233126SquareStripDocument : IScribeDocumentDefiniti
         var n = V("n"); var a = V("A");
         var arrays = Arrow(Product(Call("Fin", n), Fin(5)), Fin(6));
         var predicate = Fn("A", arrays, Call(Owner + "widthLegal",
-            Name(Root + "rowLegal"), Name(Root + "bonds"), a));
+            Name(RowOwner + "rowLegal"), Name(Root + "bonds"), a));
         var universe = Typed(Name("Finset.univ"), Call("Finset", arrays));
         return All("n", Name("Nat"), Eq(Call(Root + "a", n),
             Call("Finset.card", Call("Finset.filter", predicate, universe))));
@@ -131,14 +120,14 @@ internal sealed class HardinA233126SquareStripDocument : IScribeDocumentDefiniti
     private static Formula Labels()
     {
         var c = V("c"); var j = V("j");
-        return All("c", Name(Root + "Row"), Eq(Call(Root + "labels", c),
+        return All("c", Name(RowOwner + "Row"), Eq(Call(Root + "labels", c),
             Fn("j", Fin(5), Call("D5.S3.Observer.Separation.BooleanRankThreeK4.beta", At(c, j)))));
     }
 
     private static Formula Compatible()
     {
         var p = V("p"); var c = V("c"); var j = V("j");
-        return All("p", PairRow(), All("c", Name(Root + "Row"),
+        return All("p", PairRow(), All("c", Name(RowOwner + "Row"),
             Eq(Call(Root + "compatible", p, c), All("j", Fin(5),
                 Ne(At(p, j), Call("D5.S3.Observer.Separation.BooleanRankThreeK4.beta",
                     At(c, j)))))));
@@ -186,12 +175,12 @@ internal sealed class HardinA233126SquareStripDocument : IScribeDocumentDefiniti
     private static Formula ClassCount()
     {
         var s = V("s"); var p = V("p"); var k = V("k"); var c = V("c");
-        var condition = And(Call(Root + "rowLegal", c),
+        var condition = And(Call(RowOwner + "rowLegal", c),
             And(Call(Root + "compatible", p, c), And(Call(Scanner + "good", s, c),
                 Eq(Call(Root + "boundaryClass", Call(Scanner + "finish", s, c),
                     Call(Root + "labels", c)), k))));
         return All("s", Seen(), All("p", PairRow(), All("k", Fin(7),
-            Eq(Call(Root + "classCount", s, p, k), SumOver("c", Name(Root + "Row"),
+            Eq(Call(Root + "classCount", s, p, k), SumOver("c", Name(RowOwner + "Row"),
                 Typed(Conditional(condition, D(1), D(0)), Name("Int")))))));
     }
 
@@ -199,11 +188,11 @@ internal sealed class HardinA233126SquareStripDocument : IScribeDocumentDefiniti
     {
         var k = V("k"); var c = V("c");
         var condition = And(Eq(At(c, Typed(D(0), Fin(5))), Typed(D(0), Fin(6))),
-            And(Call(Root + "rowLegal", c), And(Call(Scanner + "good", Flags(), c),
+            And(Call(RowOwner + "rowLegal", c), And(Call(Scanner + "good", Flags(), c),
                 Eq(Call(Root + "boundaryClass", Call(Scanner + "finish", Flags(), c),
                     Call(Root + "labels", c)), k))));
         return All("k", Fin(7), Eq(Call(Root + "firstCount", k),
-            SumOver("c", Name(Root + "Row"),
+            SumOver("c", Name(RowOwner + "Row"),
                 Typed(Conditional(condition, D(1), D(0)), Name("Int")))));
     }
 

@@ -53,10 +53,7 @@ statement_id: sha256:1abdc5f3db71567fe05de5aabbe80dddeb5ec5179e4ec7fd49fe71e5005
 _private.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.0.D5.S3.Combinatorics.
 TraceAvoidingArrays.HardinA233251TriangleStrip.WidthRow
 statement_id: sha256:63d18919d9321000a9a3541c82cd4a7aa88a0da2c26ce61e51d7cede756ff789
-Row: proof_shape=bind-only; consumers=rowLegal, bonds, a, classCount, firstCount, colour_sum
-rowLegal: proof_shape=bind-only; consumers=a, counting_bridge, classCount, firstCount, valid_next
 bonds: proof_shape=bind-only; consumers=a, bonds_iff, counting_bridge
-decidableRowLegal: proof_shape=bind-only; consumers=a, classCount, firstCount, valid_next
 decidableBonds: proof_shape=bind-only; consumers=a, counting_bridge
 a: proof_shape=bind-only; consumers=a_eq_w, shifted_count, result
 labels: proof_shape=bind-only; consumers=bonds_iff, v, total, classCount, firstCount, initial_valid
@@ -77,7 +74,6 @@ class_fibres: proof_shape=bind-only; consumers=row_counts
 label_sum: proof_shape=bind-only; consumers=row_counts
 row_counts: proof_shape=bind-only; consumers=finite_certificate
 initial_valid: proof_shape=bind-only; consumers=a_eq_w
-colour_sum: proof_shape=bind-only; consumers=initial_counts
 initial_counts: proof_shape=bind-only; consumers=finite_certificate
 finite_certificate: proof_shape=bind-only; consumers=v_eq_w, a_eq_w
 w: proof_shape=bind-only; consumers=v_eq_w, a_eq_w, shifted_count, result
@@ -92,6 +88,7 @@ result: proof_shape=bind-only; consumers=terminal result (#28572)
 
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233253TriangleStrip
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255LiteralBridge
 import D5.S3.Observer.Separation.BooleanRankThreeK4
 import Mathlib.Tactic.FinCases
@@ -105,22 +102,18 @@ namespace D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233126SquareStrip
 open HardinA233175PairStrip (Seen good finish)
 open HardinA233251TriangleStrip
   (widthLegal widthV widthStep widthTotal width_counting_bridge colour_bond_iff)
+open HardinA233253TriangleStrip (Row rowLegal)
+open private instDecidableRowLegal sum_rows from
+  D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233253TriangleStrip
 open HardinA233255LiteralBridge (rowFinish rowWeight scanner_fibres)
 open D5.S3.Observer.Separation.BooleanRankThreeK4 (beta)
 
 attribute [local instance 2000] HardinA233251TriangleStrip.widthInstDecidableGood
 attribute [local instance 2000] Pi.instFintype
 
-abbrev Row := Fin 5 → Fin 6
-
-def rowLegal (c : Row) : Prop :=
-  ∀ j : Fin 4, c j.castSucc ≠ c j.succ ∧ (c j.castSucc).val + (c j.succ).val ≠ 5
-
 def bonds (c d : Row) : Prop :=
   ∀ j : Fin 5, c j ≠ d j ∧ (c j).val + (d j).val ≠ 5
 
-private instance decidableRowLegal (c : Row) : Decidable (rowLegal c) :=
-  inferInstanceAs (Decidable (∀ _, _ ∧ _))
 private instance decidableBonds (c d : Row) : Decidable (bonds c d) :=
   inferInstanceAs (Decidable (∀ _, _ ∧ _))
 
@@ -218,20 +211,8 @@ private theorem initial_valid : ∀ c : Row,
   simp only [Fin.forall_fin_succ_pi, Fin.forall_fin_zero_pi]
   decide +kernel
 
-private theorem colour_sum (g : Row → ℤ) :
-    (∑ c, g c) = ∑ a : Fin 6, ∑ b : Fin 6, ∑ c : Fin 6, ∑ d : Fin 6, ∑ e : Fin 6,
-      g ![a, b, c, d, e] := by
-  let e : Row ≃ Fin 6 × Fin 6 × Fin 6 × Fin 6 × Fin 6 :=
-    { toFun := fun q => (q 0, q 1, q 2, q 3, q 4)
-      invFun := fun t => ![t.1, t.2.1, t.2.2.1, t.2.2.2.1, t.2.2.2.2]
-      left_inv := by intro q; ext j; fin_cases j <;> rfl
-      right_inv := by rintro ⟨a, b, c, d, e⟩; rfl }
-  rw [← e.symm.sum_comp, Fintype.sum_prod_type]
-  simp only [Fintype.sum_prod_type]
-  rfl
-
 private theorem initial_counts : ∀ k, firstCount k = ![8, 0, 8, 4, 8, 4, 4] k := by
-  simp only [firstCount, colour_sum]
+  simp only [firstCount, sum_rows]
   decide +kernel
 
 /-- The exact single-row transitions and first-row distribution. -/
