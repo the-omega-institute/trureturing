@@ -99,7 +99,7 @@ def reading {J : E →ₗ[ℝ] E →ₗ[ℝ] E} {u : E} {D : E → E → E}
   map_add' a b := by simp [inner_add_right]
   map_smul' r a := by simp [inner_smul_right]
 
-private theorem reading_jordan {J : E →ₗ[ℝ] E →ₗ[ℝ] E} {u : E} {D : E → E → E}
+theorem reading_jordan {J : E →ₗ[ℝ] E →ₗ[ℝ] E} {u : E} {D : E → E → E}
     {L : Submodule ℝ E} (R : Readout (H := H) J u D L)
     {a b : E} (ha : a ∈ L) (hb : b ∈ L) (v : H) :
     reading R v (J a b) = ⟪R.op a v, R.op b v⟫ := by
