@@ -258,7 +258,7 @@ A=\{T-3,T-2\},\qquad \{T-4\},
 \tag{3.14}
 $$
 
-and one connected complement of size $T-3\ge5$. In (2.7) the second cut now leaves a singleton left arm; again all chord endpoints stay in the connected complement. The only equal pair is $A$, and the singleton has the sole zero column. The actual word $R=011$ has charge $\{T-5,T-3\}$ by (3.11), so it separates $A$. The columns after $R$ are distinct in this case as well.
+and one connected complement of size $T-3\ge5$. In (2.7) the second cut now leaves a singleton component; again all chord endpoints stay in the connected complement. The only equal pair is $A$, and the singleton has the sole zero column. The actual word $R=011$ has charge $\{T-5,T-3\}$ by (3.11), so it separates $A$. The columns after $R$ are distinct in this case as well.
 
 Thus deleting the paid coordinates leaves precisely the stated residual collisions, and one final literal row repairs all of them at the same shortened horizon. This deletion-and-repair relation is the additional structural step consumed by the phase decoder; the supplied tree, incidence criterion and charge identities are its reused inputs.
 
