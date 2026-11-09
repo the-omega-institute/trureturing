@@ -738,4 +738,253 @@ private lemma paired_rank_bound (M : Matroid E) {A B X Y C : Set E}
   have hc := partition_card hAB (hCR.trans sdiff_subset)
   omega
 
+private lemma normalize_bases (M : Matroid E) {A B : Set E} (hA : M.IsBase A) (hB : M.IsBase B) :
+    let I := A ∩ B
+    let R := (A ∪ B) \ I
+    let N := (M ／ I) ↾ R
+    N.IsBase (A \ B) ∧ N.IsBase (B \ A) ∧
+      N.E = (A \ B) ∪ (B \ A) ∧ Disjoint (A \ B) (B \ A) := by
+  classical
+  dsimp only
+  have hI : M.Indep (A ∩ B) := hA.indep.subset inter_subset_left
+  have hca : (M ／ (A ∩ B)).IsBase (A \ B) := by
+    apply hI.contract_isBase_iff.mpr
+    constructor
+    · convert hA using 1 <;> ext e <;> simp only [mem_union, mem_sdiff, mem_inter_iff] <;> tauto
+    · exact Set.disjoint_left.mpr (by intro e he hf; exact he.2 hf.2)
+  have hcb : (M ／ (A ∩ B)).IsBase (B \ A) := by
+    apply hI.contract_isBase_iff.mpr
+    constructor
+    · convert hB using 1 <;> ext e <;> simp only [mem_union, mem_sdiff, mem_inter_iff] <;> tauto
+    · exact Set.disjoint_left.mpr (by intro e he hf; exact he.2 hf.1)
+  have hR : (A ∪ B) \ (A ∩ B) ⊆ (M ／ (A ∩ B)).E := by
+    rw [contract_ground]
+    exact sdiff_subset_sdiff_left (union_subset hA.subset_ground hB.subset_ground)
+  refine ⟨?_, ?_, ?_, ?_⟩
+  · apply (isBase_restrict_iff hR).mpr
+    exact hca.isBasis_ground.isBasis_subset (by intro e he; exact ⟨Or.inl he.1, fun hf => he.2 hf.2⟩) hR
+  · apply (isBase_restrict_iff hR).mpr
+    exact hcb.isBasis_ground.isBasis_subset (by intro e he; exact ⟨Or.inr he.1, fun hf => he.2 hf.1⟩) hR
+  · rw [restrict_ground_eq]
+    ext e
+    simp only [mem_union, mem_sdiff, mem_inter_iff]
+    tauto
+  · exact Set.disjoint_left.mpr (by intro e he hf; exact he.2 hf.1)
+
+private lemma reconstruct_exchange (N : Matroid E) {A B X Y C : Set E}
+    (hA : N.IsBase A) (hB : N.IsBase B)
+    (hAB : Disjoint A B) (hE : N.E = A ∪ B)
+    (hX : X ⊆ A \ B) (hY : Y ⊆ B \ A)
+    (hC1 : (N ／ X ＼ Y).IsBase C) (hC2 : (N✶ ／ X ＼ Y).IsBase C)
+    (hcap : (A ∩ C).ncard + X.ncard ≤ (N.eRk (X ∪ Y)).toNat) :
+    ∃ U V : Set E, U ⊆ A \ B ∧ V ⊆ B \ A ∧ X ⊆ U ∧ Y ⊆ V ∧
+      U.ncard = V.ncard ∧ U.ncard ≤ (N.eRk (X ∪ Y)).toNat ∧
+      N.IsBase ((A \ U) ∪ V) ∧ N.IsBase ((B \ V) ∪ U) := by
+  classical
+  have hd := disjoint_left.mp hAB
+  have hXS : X ⊆ A := hX.trans sdiff_subset
+  have hdualA : N✶.IsBase A := by
+    convert hB.compl_isBase_dual using 1
+    rw [hE]
+    ext e
+    simp only [mem_sdiff, mem_union]
+    constructor
+    · intro he; exact ⟨Or.inl he, fun hb => hd he hb⟩
+    · tauto
+  have lift {K : Matroid E} (hKE : K.E = N.E) (hKA : K.IsBase A) (hKC : (K ／ X ＼ Y).IsBase C) :
+      K.IsBase (C ∪ X) := by
+    have hu : (A \ X) ∪ X = A := sdiff_union_of_subset hXS
+    have hc : (K ／ X).IsBase (A \ X) :=
+      (hKA.indep.subset hXS).contract_isBase_iff.mpr
+        ⟨by simpa only [hu] using hKA, disjoint_sdiff_left⟩
+    have hYco : (K ／ X).Coindep Y := by
+      apply coindep_iff_subset_compl_isBase.mpr
+      refine ⟨A \ X, hc, ?_⟩
+      intro e hy
+      have hyA : e ∉ A := (hY hy).2
+      refine ⟨?_, fun he => hyA he.1⟩
+      rw [contract_ground]
+      rw [hKE]
+      exact ⟨hB.subset_ground (hY hy).1, fun hx => hyA (hXS hx)⟩
+    exact ((hKA.indep.subset hXS).contract_isBase_iff.mp
+      (hYco.delete_isBase_iff.mp hKC).1).1
+  have hCG := hC1.subset_ground
+  simp only [delete_ground, contract_ground] at hCG
+  have hCN : C ⊆ A ∪ B := by
+    intro e he
+    exact hE ▸ (hCG he).1.1
+  have hCX : Disjoint C X := disjoint_left.mpr (by intro e hc hx; exact (hCG hc).1.2 hx)
+  have hCY : Disjoint C Y := disjoint_left.mpr (by intro e hc hy; exact (hCG hc).2 hy)
+  have hH1 := lift rfl hA hC1
+  have hH2 := (lift (show N✶.E = N.E from dual_ground) hdualA hC2).compl_isBase_of_dual
+  let U := (A ∩ C) ∪ X
+  let V := B \ C
+  have hEq1 : (B \ V) ∪ U = C ∪ X := by
+    ext e
+    have hcn := @hCN e
+    simp only [V, U, mem_union, mem_sdiff, mem_inter_iff] at hcn ⊢
+    tauto
+  have hEq2 : (A \ U) ∪ V = N.E \ (C ∪ X) := by
+    rw [hE]
+    ext e
+    have hxa := @hXS e
+    simp only [V, U, mem_union, mem_sdiff, mem_inter_iff]
+    constructor
+    · intro he
+      rcases he with he | he
+      · exact ⟨Or.inl he.1, by tauto⟩
+      · exact ⟨Or.inr he.1, by intro hh; rcases hh with hh | hh; exact he.2 hh; exact hd (hxa hh) he.1⟩
+    · tauto
+  have hU : U ⊆ A \ B := by
+    intro e he
+    rcases he with he | he
+    · exact ⟨he.1, fun hb => hd he.1 hb⟩
+    · exact hX he
+  have hV : V ⊆ B \ A := by
+    intro e he
+    exact ⟨he.1, fun ha => hd ha he.1⟩
+  have hYV : Y ⊆ V := by
+    intro e hy
+    exact ⟨(hY hy).1, fun hc => disjoint_left.mp hCY hc hy⟩
+  have hHdiff : (C ∪ X) \ B = U := by
+    ext e
+    have hcn := @hCN e
+    have hxa := @hX e
+    simp only [U, mem_sdiff, mem_union, mem_inter_iff] at *
+    tauto
+  have hBdiff : B \ (C ∪ X) = V := by
+    ext e
+    have hxa := @hX e
+    simp only [V, mem_sdiff, mem_union] at *
+    tauto
+  have hcard := hB.ncard_sdiff_comm hH1
+  rw [hHdiff, hBdiff] at hcard
+  have hUcard : U.ncard = (A ∩ C).ncard + X.ncard :=
+    ncard_union_eq (hCX.mono_left inter_subset_right)
+  exact ⟨U, V, hU, hV, subset_union_right, hYV, hcard.symm,
+    (by rw [hUcard]; exact hcap), (by rw [hEq2]; exact hH2),
+    (by rw [hEq1]; exact hH1)⟩
+
+private lemma lift_exchange (M : Matroid E) {A B U V : Set E}
+    (hA : M.IsBase A) (hB : M.IsBase B)
+    (hU : U ⊆ A \ B) (hV : V ⊆ B \ A)
+    (hExA : ((M ／ (A ∩ B)) ↾ ((A ∪ B) \ (A ∩ B))).IsBase (((A \ B) \ U) ∪ V))
+    (hExB : ((M ／ (A ∩ B)) ↾ ((A ∪ B) \ (A ∩ B))).IsBase (((B \ A) \ V) ∪ U)) :
+    M.IsBase ((A \ U) ∪ V) ∧ M.IsBase ((B \ V) ∪ U) := by
+  classical
+  have hI : M.Indep (A ∩ B) := hA.indep.subset inter_subset_left
+  have hca : (M ／ (A ∩ B)).IsBase (A \ B) := by
+    apply hI.contract_isBase_iff.mpr
+    constructor
+    · convert hA using 1 <;> ext e <;> simp only [mem_union, mem_sdiff, mem_inter_iff] <;> tauto
+    · exact Set.disjoint_left.mpr (by intro e he hf; exact he.2 hf.2)
+  have hR : (A ∪ B) \ (A ∩ B) ⊆ (M ／ (A ∩ B)).E := by
+    rw [contract_ground]
+    exact sdiff_subset_sdiff_left (union_subset hA.subset_ground hB.subset_ground)
+  have lift {C : Set E}
+      (hC : ((M ／ (A ∩ B)) ↾ ((A ∪ B) \ (A ∩ B))).IsBase C) :
+      M.IsBase (C ∪ (A ∩ B)) := by
+    have hcb : (M ／ (A ∩ B)).IsBase C :=
+      ((isBase_restrict_iff hR).mp hC).isBase_of_isBase_subset hca
+        (by intro e he; exact ⟨Or.inl he.1, fun hf => he.2 hf.2⟩)
+    exact (hI.contract_isBase_iff.mp hcb).1
+  have hLA := lift hExA
+  have hLB := lift hExB
+  have hEqA : (((A \ B) \ U) ∪ V) ∪ (A ∩ B) = (A \ U) ∪ V := by
+    ext e
+    have hu := @hU e
+    simp only [mem_union, mem_sdiff, mem_inter_iff] at hu ⊢
+    tauto
+  have hEqB : (((B \ A) \ V) ∪ U) ∪ (A ∩ B) = (B \ V) ∪ U := by
+    ext e
+    have hv := @hV e
+    simp only [mem_union, mem_sdiff, mem_inter_iff] at hv ⊢
+    tauto
+  exact ⟨by simpa only [hEqA] using hLA, by simpa only [hEqB] using hLB⟩
+
+private lemma disjoint_prescribed_exchange (N : Matroid E) {A B X Y : Set E}
+    (hA : N.IsBase A) (hB : N.IsBase B)
+    (hAB : Disjoint A B) (hE : N.E = A ∪ B)
+    (hX : X ⊆ A \ B) (hY : Y ⊆ B \ A) :
+    ∃ U V : Set E, U ⊆ A \ B ∧ V ⊆ B \ A ∧ X ⊆ U ∧ Y ⊆ V ∧
+      U.ncard = V.ncard ∧ U.ncard ≤ (N.eRk (X ∪ Y)).toNat ∧
+      N.IsBase ((A \ U) ∪ V) ∧ N.IsBase ((B \ V) ∪ U) := by
+  classical
+  have hdualA : N✶.IsBase A := by
+    convert hB.compl_isBase_dual using 1
+    rw [hE]
+    ext e
+    simp only [mem_sdiff, mem_union]
+    have hd := Set.disjoint_left.mp hAB
+    constructor
+    · intro he; exact ⟨Or.inl he, fun hb => hd he hb⟩
+    · tauto
+  have hXS : X ⊆ A := hX.trans sdiff_subset
+  have hdisj : Disjoint (A \ X) X := disjoint_sdiff_left
+  have hu : (A \ X) ∪ X = A := sdiff_union_of_subset hXS
+  have hc1 : (N ／ X).IsBase (A \ X) :=
+    (hA.indep.subset hXS).contract_isBase_iff.mpr ⟨by simpa only [hu] using hA, hdisj⟩
+  have hc2 : (N✶ ／ X).IsBase (A \ X) :=
+    (hdualA.indep.subset hXS).contract_isBase_iff.mpr ⟨by simpa only [hu] using hdualA, hdisj⟩
+  have hCY : Disjoint (A \ X) Y := by
+    exact disjoint_left.mpr (by intro e he hy; exact (hY hy).2 he.1)
+  have del {K : Matroid E} (hc : K.IsBase (A \ X)) : (K ＼ Y).IsBase (A \ X) := by
+    rw [delete_isBase_iff]
+    exact hc.isBasis_ground.isBasis_subset (subset_sdiff.mpr ⟨hc.subset_ground, hCY⟩) sdiff_subset
+  have hground : (N ／ X ＼ Y).E = (N✶ ／ X ＼ Y).E := by
+    simp only [delete_ground, contract_ground, dual_ground]
+  obtain ⟨C, c, d, hC1, hC2, hsplit, hmin1, hmin2⟩ :=
+    finite_integral_weight_splitting
+      (N ／ X ＼ Y) (N✶ ／ X ＼ Y) hground ⟨A \ X, del hc1, del hc2⟩
+      (fun e => if e ∈ A \ X then 1 else 0)
+  have hcap := paired_rank_bound N hA hB hAB hE hXS (hY.trans sdiff_subset)
+    hdualA hC1 hC2 (del hc1) c d hsplit hmin1 hmin2
+  exact reconstruct_exchange N hA hB hAB hE hX hY hC1 hC2 hcap
+
+/-- Rank-bounded simultaneous prescribed exchange, for arbitrary finite native matroids. -/
+theorem exists_prescribed_exchange (M : Matroid E) {A B X Y : Set E}
+    (hA : M.IsBase A) (hB : M.IsBase B)
+    (hX : X ⊆ A \ B) (hY : Y ⊆ B \ A) :
+    ∃ U V : Set E, U ⊆ A \ B ∧ V ⊆ B \ A ∧ X ⊆ U ∧ Y ⊆ V ∧
+      U.ncard = V.ncard ∧ U.ncard ≤ (M.eRk (X ∪ Y)).toNat ∧
+      M.IsBase ((A \ U) ∪ V) ∧ M.IsBase ((B \ V) ∪ U) := by
+  classical
+  let I := A ∩ B
+  let R := (A ∪ B) \ I
+  let N := (M ／ I) ↾ R
+  obtain ⟨ha, hb, hNE, hab⟩ := normalize_bases M hA hB
+  have hx : X ⊆ (A \ B) \ (B \ A) := by
+    intro e he
+    exact ⟨hX he, fun hf => (hX he).2 hf.1⟩
+  have hy : Y ⊆ (B \ A) \ (A \ B) := by
+    intro e he
+    exact ⟨hY he, fun hf => (hY he).2 hf.1⟩
+  obtain ⟨U, V, hU, hV, hXU, hYV, hcard, hcap, hExA, hExB⟩ :=
+    disjoint_prescribed_exchange N ha hb hab hNE hx hy
+  have hUa : U ⊆ A \ B := hU.trans sdiff_subset
+  have hVb : V ⊆ B \ A := hV.trans sdiff_subset
+  have hSR : X ∪ Y ⊆ R := by
+    intro e he
+    rcases he with he | he
+    · exact ⟨Or.inl (hX he).1, fun hf => (hX he).2 hf.2⟩
+    · exact ⟨Or.inr (hY he).1, fun hf => (hY he).2 hf.1⟩
+  have hrank : (N.eRk (X ∪ Y)).toNat ≤ (M.eRk (X ∪ Y)).toNat := by
+    change (((M ／ I) ↾ R).eRk (X ∪ Y)).toNat ≤ _
+    rw [restrict_eRk_eq _ hSR]
+    have hadd : ((M ／ I).eRk (X ∪ Y)).toNat + (M.eRk I).toNat =
+        (M.eRk ((X ∪ Y) ∪ I)).toNat := by
+      rw [← ENat.natCast_inj, Nat.cast_add, FiniteIntersection.cast_toNat_eRk,
+        FiniteIntersection.cast_toNat_eRk, FiniteIntersection.cast_toNat_eRk]
+      exact FiniteIntersection.contract_eRk_add M I (X ∪ Y)
+    have hle : (M.eRk ((X ∪ Y) ∪ I)).toNat ≤
+        (M.eRk (X ∪ Y)).toNat + (M.eRk I).toNat := by
+      rw [← ENat.natCast_le_natCast, Nat.cast_add, FiniteIntersection.cast_toNat_eRk,
+        FiniteIntersection.cast_toNat_eRk, FiniteIntersection.cast_toNat_eRk]
+      exact M.eRk_union_le_eRk_add_eRk (X ∪ Y) I
+    omega
+  obtain ⟨hLA, hLB⟩ := lift_exchange M hA hB hUa hVb hExA hExB
+  exact ⟨U, V, hUa, hVb, hXU, hYV, hcard, hcap.trans hrank, hLA, hLB⟩
+
+#print axioms exists_prescribed_exchange
+
 end D5.S3.Combinatorics.Matroids.PrescribedExchange
