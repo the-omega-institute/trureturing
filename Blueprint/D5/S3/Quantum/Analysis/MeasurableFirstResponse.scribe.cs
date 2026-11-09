@@ -11,7 +11,7 @@ internal sealed class MeasurableFirstResponseDocument : IScribeDocumentDefinitio
         H("Sharp first response of the original measurable evolution"), Blocks(
             Paragraph(Text("Let E be a complex Banach space in any universe, including the trivial space. S is the original NonautonomousDysonPhillips.Contraction E: a strongly continuous contraction semigroup on nonnegative real times with identity at zero. Fix a real T>=0. For each real s, B(s) and H(s) are bounded complex-linear endomorphisms of E. For each fixed vector z separately, s maps to B(s)z and to H(s)z are AE strongly measurable for real Lebesgue measure restricted to Icc(0,T). The scalar functions g,h are nonnegative and integrable on this interval and dominate the operator norms pointwise there.")),
             Paragraph(Text("Write U_Q(t,r)=MeasurableNonautonomousDysonPhillips.measurableEvolution(S,Q,t,r), the SAME native realization of the original ordered vector Bochner series. Write G_k(r,t)=the actual interval integral of k from r to t. Define V(B,H,t,r,x)=response(S,B,H,t,r,x) as the actual interval Bochner integral of U_B(t,s)H(s)U_B(s,r)x. These definitions introduce neither a new evolution nor an assumed response formula.")),
-            Disp(Eq(V(), Call("intervalIntegral", Call("volume"), X("r"), X("t"), Integrand()))),
+            Paragraph(Math(Disp(Eq(V(), Call("intervalIntegral", Call("volume"), X("r"), X("t"), Integrand()))))),
             Describe.Lean(DescribeId.Create("native-sharp-response-and-uniform-signed-derivative"),
                 DeclarationHandle.Create("D5/S3/Quantum/Analysis/MeasurableFirstResponse.uniform_signed_response"),
                 H("Actual first response, sharp second-order defect and uniform signed derivative"),
@@ -39,6 +39,7 @@ internal sealed class MeasurableFirstResponseDocument : IScribeDocumentDefinitio
     private static Formula Le(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
     private static Formula Lt(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThan, b);
     private static Formula Eq(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.Equal, b);
+    private static Formula Smul(Formula a, Formula b) => Call("smul", a, b);
     private static Formula Norm(Formula a) => new Formula.Norm(a);
     private static Formula Arrow(Formula a, Formula b) => new Formula.TypeArrow(a, b);
     private static Formula Clm => Call("ComplexCLM", E, E);
