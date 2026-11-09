@@ -24,7 +24,7 @@ D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233251TriangleStrip.Row
 (statement_id sha256:b7c502e020b34fb16b6f45eb8f4662622d3137215aa86d5133861c790e91cd34).
 Direct frozen dependency:
 D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233176Ladder.pairs
-(statement_id PAIRS_SID).
+(statement_id sha256:1082b02d9e62b47407e60e2c9bfbe8f9e6eef2db0b64d1d41f79f2f2492840ff).
 Direct frozen dependency:
 D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233251TriangleStrip.colour_bond_iff
 (statement_id sha256:b9273762bbccc68fc56c48c38b8aba02a46a50a53bfbbe70a660fd21867d6be8).
