@@ -1,0 +1,32 @@
+**定理 52.3（Riesz 闭环与正交复结构等价）。** 设 $\omega$ 连续且反对称。以下条件等价：
+
+1. $\mathsf Q_{\mathrm R}$ 成立；
+2. $H_{\mathbb R}$ 上存在正交复结构 $J$，满足 $J^2=-I$、$J^*=-J$，且 $\omega(u,v)=g(Ju,v)$；
+3. $H_{\mathbb R}$ 的关系映射满足无坐标恒等式
+   $$
+   \omega^\flat g^\sharp\omega^\flat=-g^\flat,
+   $$
+   其中 $g^\flat(u)=g(u,\cdot)$，$g^\sharp$ 是 Riesz 逆映射，$\omega^\flat(u)=\omega(u,\cdot)$。
+
+**证明。** 令 $A$ 是 $\omega$ 的 Riesz 算子，故 $r_v=Av$、$\omega(u,v)=g(Au,v)$，反对称性给出 $A^*=-A$。若 $\mathsf Q_{\mathrm R}$ 成立，则
+
+$$
+g(Au,Av)=\omega(u,Av)=g(u,v),
+$$
+
+所以 $A^*A=I$，从而 $-A^2=I$，即 $A^2=-I$。令 $J=A$ 即得条件 2。反向若条件 2 成立，令 $\omega(u,v)=g(Ju,v)$，则 $r_v=Jv$，并且
+
+$$
+\omega(u,r_v)=g(Ju,Jv)=g(u,v).
+$$
+
+最后，$\omega^\flat=g^\flat A$，故
+
+$$
+\omega^\flat g^\sharp\omega^\flat=g^\flat A^2=-g^\flat,
+$$
+
+说明条件 1 与条件 3 等价。证毕。
+
+这比直接写 $A^2=-I$ 更接近关系本体，但它仍然包含 Riesz 表示和代表元复合；因此不能宣称已经变成纯粹的有限点代数公理。有限支撑关系上的闭环若要延拓到完备 Hilbert 空间，必须另证稠密性、连续性和有界性。
+

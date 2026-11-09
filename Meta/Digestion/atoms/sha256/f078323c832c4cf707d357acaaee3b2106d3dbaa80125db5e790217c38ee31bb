@@ -1,0 +1,9 @@
+**定义 52.1（关系代表元）。** 令 $(H_{\mathbb R},g)$ 是 Q0 的实 Hilbert 表示，令 $\omega$ 是连续反对称双线性关系。对每个 $v\in H_{\mathbb R}$，由 Riesz 表示定理定义唯一的关系代表元 $r_v$：
+
+$$
+g(r_v,z)=\omega(v,z)
+\qquad\text{对所有 }z\in H_{\mathbb R}.
+$$
+
+这里 $v\mapsto r_v$ 由原有实自比较 $g$ 和新增反对称比较 $\omega$ 唯一确定，不作为第三个外部对象加入。
+
