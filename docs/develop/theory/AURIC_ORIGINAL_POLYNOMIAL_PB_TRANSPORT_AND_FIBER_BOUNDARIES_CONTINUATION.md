@@ -4479,3 +4479,417 @@ $$
 保持原域的动力、实际门和相位及逆、可逆一参数群、物理钟与单位、强酉实现、生成元域、Hamiltonian能量、共同仪器和同一个正 $\hbar$ 继续保持同源。原 $\sigma,t_0,d$、固定域、resolvent和 $3s+r\le1$ 不与本组着色或多项式参数混同。七项须在同一原世界共同实现，不能分别另选来源。即使以后在一般原域证明 $w=0$，后续全域旧乘法、概率、仪器、相关联合、全部合法历史／未来／真实返回及物理尺度的原桥仍须逐项连接；本组没有完成、否定或缩减完整量子起源目标。
 
 ## 追加锚（本行以下为增补区）
+
+## 154. 同一实际输入的投影基锚定与准确未证接头
+
+**约定 154.1（原响应、已构造乘法与实际标签）。** 原问题仍取[平方丛卷51.1、61–64][AP-SQ]的完整截面原域及同一未知总映射 $D:E^2\to E$，保留准确锥、原单位、范数、全部A1–A3、两向P2和全部实际三元组PB，以及全部零、不等、次归一质量。基空间为任意非空紧Hausdorff空间，固定有限秩 $n\ge3$。先用既有取向构造同一复代数丛 $M$，取 $E=M_{\rm sa}$，在该乘法中写
+
+$$
+r\circ t=(rt+tr)/2,\qquad K(r,t)=i[r,t]/2.
+\tag{154.1}
+$$
+
+这不预设旧 $D=K$，也不预设旧 $D$ 线性、连续、局部、协变或下降。这里 $K$ 是已知候选，与物理来源中的共同全词核 $K$ 区分。对任意总响应，实际 $\mathrm{PB}(a;b,d)$ 的标签为
+
+$$
+v=D(a,b)-a\circ d,\quad w=a\circ b+D(a,d),\qquad
+r_\pm=b\pm v,\quad s_\pm=d\pm w.
+\tag{154.2}
+$$
+
+原平方PB与响应差版准确为
+
+$$
+\begin{gathered}
+q_D(r_++is_+)=q_D(r_-+is_-),\qquad
+q_D(r+it)=r^2+t^2+2D(r,t),\\
+D(r_+,s_+)-D(r_-,s_-)=-2b\circ v-2d\circ w.
+\end{gathered}
+\tag{154.3}
+$$
+
+原评价分离使这些成为元素等式。展开平方差即见两式等价；平方版左端减右端的残差是响应差版残差的两倍。
+
+**命题 154.2（一个实际截断取得完整投影基）。** 给定任意实际 $a\in E$ 及 $x_0\in X$，存在图 $O\ni x_0$、实连续截断 $h$ 和图内常值秩一投影 $p_1,\ldots,p_{n^2}$，使
+
+$$
+0\le h\le1,\quad h=1\text{ 于 }x_0\text{ 邻域},\quad
+\operatorname{supp}h\subset O,\qquad
+\operatorname{span}_{\mathbb R}\{p_j\}=H_n(\mathbb C).
+\tag{154.4}
+$$
+
+令 $q_j=hp_j$ 于图内、图外延零，则它们是同一原域中的实际截面，且 $D(a,q_j)=K(a,q_j)$ 是完整截面等式。
+
+证明。在乘法图中取 $a_0=a(x_0)$ 的秩一特征投影 $p_0$。对附近秩一 $p$，有
+
+$$
+\|(1-p)a(x)p\|\le\|a(x)-a_0\|+2\|a_0\|\,\|p-p_0\|.
+\tag{154.5}
+$$
+
+缩小 $O$ 和 $p_0$ 附近开放投影片 $V$，使右端对全部 $x\in O,p\in V$ 小于 $1<2$。[平方丛卷55.1证明中55.9之后][AP-SQ]的开放投影片张成性质给 $n^2$ 个实基投影；紧Hausdorff正规性给同一个 $h$。
+
+完整截面域中，图内常值矩阵乘支撑截断后延零，故点评价满射。在 $h(x)\ne0$ 处，对原实际标签 $(q_j,a)$ 应用[OP80.1、82.1、83.1][AP-OP]：首像为 $h(x)p_j$，连接为 $(1-p_j)a(x)p_j$。OP83.1允许任意实首系数、任意对角部分、任意补空间及其他块背景和全部实际原代表；不删除 $a$ 的背景。其共同符号按已构造取向给154.1，故 $D(q_j,a)(x)=K(q_j,a)(x)$。
+
+在 $h(x)=0$ 处，按[平方丛卷41.4、62.1][AP-SQ]，当前完整 $E$ 本身是含单位实JB环境，锥与范数准确，$\pi=\operatorname{ev}_x:E\to H_n(\mathbb C)$ 是满Jordan商，原域包含取恒等即满足OP80.1。任选该纤维中 $a(x)$ 的秩一特征投影 $p$，则 $\pi q_j=0=0p$ 且 $\|(1-p)a(x)p\|=0<2$；对同一实际 $(q_j,a)$ 直接应用[OP83.1][AP-OP]的 $\mu=0$ 情形及其全部实际原代表结论，得 $D(q_j,a)(x)=0=K(q_j,a)(x)$。这里 $p$ 只是商内数学投影，无须实际提升或连续选择；没有替换原输入，也不先设 $D$ 下降。原反对称性及点评价分离合并全部点，得到完整截面等式。只使用已知截面 $a$ 的连续性，未使用未知 $D$ 的输入连续性。∎
+
+**说明 154.3（基完备与迹相容分开）。** 对上述实际锚，尚需从原关系推出
+
+$$
+\mathsf{TS}_j:\quad
+\operatorname{Tr}_{x_0}\{D(a,b)(x_0)p_j+b(x_0)D(a,q_j)(x_0)\}=0.
+\tag{154.6}
+$$
+
+若这些等式全部成立，154.2及迹循环恒等式 $\operatorname{Tr}(bK(a,p))=-\operatorname{Tr}(K(a,b)p)$ 给 $\operatorname{Tr}_{x_0}(\Delta p_j)=0$，其中 $\Delta=(D(a,b)-K(a,b))(x_0)$。投影实基及迹配对非退化性给 $\operatorname{Tr}_{x_0}(\Delta^2)=0$，遂有 $\Delta=0$。这只是充分性，不把154.6添成原公理。以下构造检验一组指定有限PB关系的推理边界。
+
+## 155. 固定有理矩阵、同一旧值与严格正余量
+
+**定义 155.1（实际矩阵模型）。** 取一点基空间及完整 $E=H_4(\mathbb C)$，使用通常乘法、单位 $I_4$、正锥、算子范数和全部数学正读取 $\gamma(T)=\operatorname{Tr}(\rho T)$，$\rho\ge0$，质量不归一。置
+
+$$
+\sigma_x=\begin{pmatrix}0&1\\1&0\end{pmatrix},\quad
+\sigma_y=\begin{pmatrix}0&-i\\i&0\end{pmatrix},\quad
+\sigma_z=\begin{pmatrix}1&0\\0&-1\end{pmatrix},\qquad
+c=\frac{12}{13},\quad s=\frac5{13},\quad B=\frac5{24}=\frac{s}{2c},
+\tag{155.1}
+$$
+
+$$
+a=\frac{\sigma_z}{2}\oplus\frac{\sigma_z}{2},\qquad
+b=B\sigma_x\oplus\left(\frac{I_2}{2}+\sigma_x\right),\qquad
+q_0=\frac{I_2+c\sigma_z+s\sigma_y}{2}\oplus0
+=\frac{(5e_1+ie_2)(5e_1+ie_2)^*}{26}.
+\tag{155.2}
+$$
+
+这里 $e_j$ 为 $\mathbb C^4$ 标准基，故 $q_0$ 是秩一投影。对全部秩一 $q$，$\|(1-q)aq\|\le\|a\|=1/2<1$。预定旧行值为零、全部秩一行值为 $K$，并据此定义同一实际PB的标签
+
+$$
+\begin{gathered}
+C=a\circ b,\quad G(q)=K(a,q),\quad v(q)=-a\circ q,\quad w(q)=C+G(q),\\
+r_\varepsilon(q)=b+\varepsilon v(q),\quad
+s_\varepsilon(q)=q+\varepsilon w(q),\qquad
+R(q)=-2b\circ v(q)-2q\circ w(q),\quad\varepsilon=\pm1.
+\end{gathered}
+\tag{155.3}
+$$
+
+Pauli乘法及 $Bc=s/2$ 给
+
+$$
+\begin{gathered}
+C=0\oplus\sigma_z/4,\quad G(q_0)=s\sigma_x/4\oplus0,\\
+v(q_0)=-(\sigma_z+cI_2)/4\oplus0,\quad
+w(q_0)=s\sigma_x/4\oplus\sigma_z/4,\\
+b\circ v(q_0)=-s\sigma_x/8\oplus0,\quad
+q_0\circ w(q_0)=s\sigma_x/8\oplus0,\quad R(q_0)=0,\\
+\operatorname{Tr}(bG(q_0))=Bs/2=s^2/(4c)=25/624>0.
+\end{gathered}
+\tag{155.4}
+$$
+
+**引理 155.2（非奇异实铅笔留出P2余量）。** 对自伴 $r,t$、单位向量 $\xi$，记
+
+$$
+g_{r,t}(\xi)=\|r\xi\|^2\|t\xi\|^2-
+\bigl(\operatorname{Re}\langle r\xi,t\xi\rangle\bigr)^2.
+\tag{155.5}
+$$
+
+若全部非零实组合 $\mu r+\nu t$ 可逆，则 $g_{r,t}(\xi)>0$：实Cauchy–Schwarz等号会使两个向量实线性相关，产生消去 $\xi$ 的非零实组合，矛盾。反过来，所有单位向量上的严格正性也排除任何非零实组合奇异。
+
+在 $q_0$，外行的两块准确为
+
+$$
+\begin{gathered}
+r_\varepsilon^{(1)}=B\sigma_x-\varepsilon(\sigma_z+cI_2)/4,\quad
+s_\varepsilon^{(1)}=(I_2+c\sigma_z+s\sigma_y)/2+\varepsilon s\sigma_x/4,\\
+r_\varepsilon^{(2)}=I_2/2+\sigma_x,\qquad s_\varepsilon^{(2)}=\varepsilon\sigma_z/4.
+\end{gathered}
+\tag{155.6}
+$$
+
+使用 $\det(xI+y\cdot\sigma)=x^2-|y|^2$，得两个负定实二次式
+
+$$
+\begin{aligned}
+\det(\mu r_\varepsilon^{(1)}+\nu s_\varepsilon^{(1)})
+&=-\frac{s^2}{16}\left\{\mu^2+
+\left(\nu+\varepsilon\frac{4B}{s}\mu\right)^2\right\},\\
+\det(\mu r_\varepsilon^{(2)}+\nu s_\varepsilon^{(2)})
+&=-3\mu^2/4-\nu^2/16.
+\end{aligned}
+\tag{155.7}
+$$
+
+第一式可由单位及Pauli系数 $-\varepsilon\mu c/4+\nu/2$、$\mu B+\varepsilon\nu s/4$、$\nu s/2$、$-\varepsilon\mu/4+\nu c/2$ 直接展开；两式对 $(\mu,\nu)\ne(0,0)$ 严格负。紧单位球面及两个符号给
+
+$$
+g_0=\min_{\varepsilon,\|\xi\|=1}
+g_{r_\varepsilon(q_0),s_\varepsilon(q_0)}(\xi)>0.
+\tag{155.8}
+$$
+
+已知155.3的连续性、$R(q_0)=0$ 及155.4的严格正迹，给秩一投影开放邻域 $U\ni q_0$，对全部 $q\in U$、符号和单位向量同时有
+
+$$
+g_{r_\varepsilon(q),s_\varepsilon(q)}(\xi)\ge g_0/2,\qquad
+\|R(q)\|^2/4<g_0/4,\qquad \operatorname{Tr}(bG(q))>0.
+\tag{155.9}
+$$
+
+于是外行输出 $C_\varepsilon(q)=\varepsilon R(q)/2$ 的纯向量P2行列式大于 $g_0/4$。其对角非负，二表严格正；外值之差为 $R(q)$。这些是构造的连续函数，不是未知旧响应的正则性假设。
+
+任意 $\rho\ge0$ 的谱分解将相应二表写成纯向量正二表的有限非负和，故覆盖全部质量 $\operatorname{Tr}\rho$；零质量给零表，全程不作质量除法。旧行输出零有实Gram正性，标准行输出 $K$ 有复Gram正性。这里没有拼接一般复三表，也没有生产物理准备。∎
+
+## 156. 三十三张实际二维平面的严格选择
+
+**引理 156.1（旧、正、负三平面分离）。** 置
+
+$$
+\Pi_0=\operatorname{span}_{\mathbb R}(a,b),\qquad
+\Pi_\varepsilon(q)=\operatorname{span}_{\mathbb R}(r_\varepsilon(q),s_\varepsilon(q)).
+\tag{156.1}
+$$
+
+旧平面的两块行列式为
+
+$$
+\det(\mu a_1+\nu b_1)=-\mu^2/4-B^2\nu^2,\qquad
+\det(\mu a_2+\nu b_2)=-\mu^2/4-3\nu^2/4.
+\tag{156.2}
+$$
+
+故旧平面每个非零元可逆，且 $a,b$ 实独立；155.9同样保证所有外平面为二维、每个非零元可逆。
+
+在 $q_0$，外行第二块为 $r_\varepsilon^{(2)}=b_2$、$s_\varepsilon^{(2)}=\varepsilon a_2/2$。若 $\Pi_\varepsilon(q_0)=\Pi_0$，将 $r_\varepsilon=\alpha a+\beta b$ 逐块比较，第二块的 $a_2,b_2$ 独立迫使 $\alpha=0,\beta=1$；第一块遂迫使 $v(q_0)=0$，与155.4矛盾。若 $\Pi_+(q_0)=\Pi_-(q_0)$，写 $s_-=\alpha r_++\beta s_+$，第二块迫使 $\alpha=0,\beta=-1$，但 $s_-+s_+=2q_0\ne0$。三者两两不同。
+
+在实Hilbert空间 $(E,\langle X,Y\rangle=\operatorname{Tr}(XY))$ 中，令 $L_\varepsilon(q):\mathbb R^2\to E$ 的两列为外行，其平面的正交投影为 $L_\varepsilon(L_\varepsilon^*L_\varepsilon)^{-1}L_\varepsilon^*$。独立性保证Gram逆存在，故平面连续。取三个基点平面的两两不交Grassmann邻域，缩小 $U$，使全部正外平面、全部负外平面分别落入各自邻域，旧平面在第三邻域。因此任意 $q,q'\in U$ 均有 $\Pi_+(q)\ne\Pi_-(q')$，且外平面均异于 $\Pi_0$。∎
+
+**引理 156.2（固定平面的坏集无内点）。** 对任意固定二维实平面 $\Pi$ 及符号，集合
+
+$$
+F_{\Pi,\varepsilon}=\{q\in U:\Pi_\varepsilon(q)=\Pi\}
+\tag{156.3}
+$$
+
+相对闭且无内点。闭性来自156.1的连续性。为证后者，定义实线性 $K_a(X)=i[a,X]/2$。迹循环性给 $\langle X,K_aY\rangle=-\langle K_aX,Y\rangle$，故
+
+$$
+\langle X,(I\pm K_a)X\rangle=\|X\|_{\rm HS}^2.
+\tag{156.4}
+$$
+
+于是 $I\pm K_a$ 核零，有限维使之可逆。若 $q\in F_{\Pi,\varepsilon}$，必要地 $s_\varepsilon(q)=(I+\varepsilon K_a)q+\varepsilon C\in\Pi$，故
+
+$$
+F_{\Pi,\varepsilon}\subset
+(I+\varepsilon K_a)^{-1}(\Pi-\varepsilon C).
+\tag{156.5}
+$$
+
+右端是实仿射二维空间，线性包维数至多三。若坏集含非空开放投影片，该投影片就全部包含在右端，从而其线性包至多三维；但任意非空开放秩一投影片张成实维十六的 $E$，矛盾。这里使用的是坏集包含于仿射空间的必要方向，未将其误作等价。
+
+所用开放张成性质可由迹零化核对：若Hermitian $H$ 在开放投影片上满足 $\operatorname{Tr}(Hq)=0$，则 $z^*Hz$ 在投影逆像这个非空实开集上恒零。实二次多项式恒零及极化给 $H=0$。因而真线性子空间与投影片的交也闭且无内点。∎
+
+**命题 156.3（完整基与全部平面互异）。** 从 $q_1=q_0$ 开始，已选 $m<16$ 个实独立锚时，避开其真线性包及全部 $F_{\Pi_\eta(q_j),\varepsilon}$，其中 $j\le m$、$\eta,\varepsilon=\pm1$。有限个相对闭无内点集不能覆盖非空开集：逐一移除时，每个非空开集仍留有非空开子集。故可选下一 $q_{m+1}\in U$。新锚的两外平面彼此不同且异于旧平面由156.1保证，与以前全部外平面的区别由所避坏集保证。递归至十六个即得实基，且 $\Pi_0$ 与三十二张 $\Pi_\varepsilon(q_j)$ 两两不同。此证明不需要迹水平互异，也不以“通常位置”代替存在论证。∎
+
+## 157. 每张平面的有向面积定义一个总响应
+
+**定理 157.1（全部实换基协变的有限关系反例）。** 对156.3的锚存在同一个总映射 $\widehat D:E^2\to E$，具有全部数学A1–A3、全部正读取P2，并对每个实 $2\times2$ 矩阵 $T$（包括奇异矩阵）满足
+
+$$
+\widehat D\!\left(T\binom XY\right)=\det(T)\widehat D(X,Y).
+\tag{157.1}
+$$
+
+它保持全部秩一行、交换零行、标量零行，满足全部十六个实际 $\mathrm{PB}(a;b,q_j)$ 和全部标量演员PB；然而 $\widehat D(a,b)=0$，且每个 $\mathsf{TS}_j$ 都失败，其中首读数为 $25/624$。
+
+证明，先定义总响应。在 $\Pi_0$ 以有序基 $(a,b)$ 取面积输出 $0$；在 $\Pi_\varepsilon(q_j)$ 以有序基 $(r_\varepsilon(q_j),s_\varepsilon(q_j))$ 取面积输出 $C_{j,\varepsilon}=\varepsilon R(q_j)/2$。对实独立输入 $X,Y$，若其平面是上述某张异常平面，唯一写成
+
+$$
+X=\alpha r+\beta s,\quad Y=\gamma r+\delta s,\qquad
+\widehat D(X,Y)=(\alpha\delta-\beta\gamma)C_{\Pi}.
+\tag{157.2}
+$$
+
+其他独立输入取 $K(X,Y)$；全部依赖输入统一取零，与 $K$ 一致。独立输入的张成平面唯一，三十三张平面互异且各基独立，所以定义无冲突。单个向量可属于多个平面，唯一性并不依赖向量所属平面唯一。
+
+若 $T$ 可逆，输入的张成平面不变；异常分支的系数矩阵左乘 $T$，行列式相乘，默认分支则由 $K$ 的交替双线性给157.1。若 $T$ 奇异，输出对依赖，等式两边均零；原输入依赖时对任何 $T$ 也均零。因此157.1覆盖所有实矩阵。特别得到每槽实齐次、反对称、每槽奇性、$SO(2)$相位不变，以及每张实二维平面内部的剪切、放缩和全部换基一致性。
+
+对任意正读取，写输出为 $C'$ 的二表为
+
+$$
+M_\gamma(r,t;C')=
+\begin{pmatrix}\gamma(r^2)&\gamma(r\circ t)-i\gamma(C')\\
+\gamma(r\circ t)+i\gamma(C')&\gamma(t^2)\end{pmatrix}.
+\tag{157.3}
+$$
+
+Jordan实Gram部分按任意实 $T$ 合同变换；虚部为 $\gamma(C')\begin{pmatrix}0&-i\\i&0\end{pmatrix}$，二维反对称矩阵满足 $TJT^{\mathsf T}=\det(T)J$。故包括奇异 $T$ 在内，
+
+$$
+M_\gamma\!\left(T\binom rt;\det(T)C'\right)
+=T M_\gamma(r,t;C')T^{\mathsf T}.
+\tag{157.4}
+$$
+
+155.9已使所有异常外基表正，旧基表有实Gram正性，合同遂使每张异常平面全部独立对的P2成立。其余对有标准复Gram正性，依赖对的零输出有实Gram正性。155.2的正和论证给全部未归一质量和零质量，两向表由换序同样成立，故A1准确支付。
+
+每个异常平面的每个非零元都可逆，所以异常独立对不含非零秩一输入。任意 $\lambda p$ 秩一行（含 $\lambda=0$）遂保持 $K$。若异常独立对交换，则有共同特征向量；其两个实特征值总有一组非全零实系数使组合为零。输入独立保证该组合矩阵非零，却消去该向量，与非奇异性矛盾。因此全部交换对默认 $K=0$；同生成元实多项式行、全部标量及单位零行也保持。
+
+A2只读同一固定Jordan实部：任意实系数的二次值为 $\gamma((\sum t_j a_j)^2)\ge0$，相加三表 $(x+y,x,y)$ 的向量 $(1,-1,-1)$ 及所有排列准确给零。A3由 $I_4^2=I_4$ 及谱演算的 $0\le e\le\vartheta I_4\Rightarrow e^2\le e$ 给出，保留同一固定有理 $0<\vartheta\le1$。不由此声称一般复三表正性。
+
+秩一行已付，故155.3确是该总映射从同一个旧值 $\widehat D(a,b)=0$ 生成的实际标签；157.2给两外值之差 $R(q_j)$，同时支付十六次实际PB。各迹读数均为 $\operatorname{Tr}(bG(q_j))>0$，首个由155.4为 $25/624$。没有为不同调用另换内值。
+
+对标量演员 $\lambda I_4$，两内值均零，外对由 $(b,d)$ 分别经 $\begin{pmatrix}1&-\lambda\\\lambda&1\end{pmatrix}$、$\begin{pmatrix}1&\lambda\\-\lambda&1\end{pmatrix}$ 产生。两行列式均为 $1+\lambda^2$，157.1使两外响应相等；PB右端 $2\lambda b\circ d-2\lambda d\circ b=0$。故全部标量演员PB成立。∎
+
+**命题 157.2（同一个三维实窗口中的共同边可加性失败）。** 对157.1的同一总响应，置
+
+$$
+V=\operatorname{span}_{\mathbb R}(a,b,q_0),\qquad
+\Pi_t=\operatorname{span}_{\mathbb R}(a,b+tq_0)\quad(t\in\mathbb R).
+\tag{157.5}
+$$
+
+则 $\dim_{\mathbb R}V=3$，且存在 $t\in\{1,\ldots,33\}$，使 $\Pi_t$ 不属于157.1的三十三张异常平面，并有
+
+$$
+\widehat D(a,b+tq_0)-\widehat D(a,b)-t\widehat D(a,q_0)
+=K(a,b)=-\frac B2\sigma_y\oplus\left(-\frac12\sigma_y\right)\ne0.
+\tag{157.6}
+$$
+
+证明。155.2式中的 $q_0$ 是非零秩一投影，而156.2式保证旧平面 $\Pi_0$ 的每个非零元可逆，故 $q_0\notin\Pi_0$。结合 $a,b$ 实独立，得到 $a,b,q_0$ 实独立，因而 $V$ 恰为三维。
+
+对每个实 $t$，$a,b+tq_0$ 独立，故 $\Pi_t$ 确为二维。若 $\Pi_t=\Pi_s$，则 $b+tq_0=\alpha a+\beta(b+sq_0)$；比较这三个独立向量的系数，得 $\alpha=0,\beta=1,t=s$。所以各平面两两不同，所有非零 $t$ 还满足 $\Pi_t\ne\Pi_0$。
+
+异常平面共三十三张，其中一张为旧平面 $\Pi_0$。因此 $t\in\{1,\ldots,33\}$ 的三十三张互异候选平面至多命中其余三十二张，至少一张非异常。这只是有限鸽巢存在证明，不指定或枚举哪个 $t$ 可用。
+
+对选定的 $t$，总响应的默认分支给 $\widehat D(a,b+tq_0)=K(a,b+tq_0)=K(a,b)+tK(a,q_0)$；同时 $\widehat D(a,b)=0$，秩一行给 $\widehat D(a,q_0)=K(a,q_0)$。相减即为157.6，非零值由155.2式的Pauli乘法得到。这里展开的是已知双线性 $K$，没有展开或假定未知响应可加；157.1的实齐次性还给 $t\widehat D(a,q_0)=\widehat D(a,tq_0)$，故这准确检出以 $a$ 为共同边、在第二槽将 $b$ 与 $tq_0$ 相加时的失败。所有输入 $a,b,q_0,tq_0,b+tq_0$ 均在同一 $V$ 中。∎
+
+这里只限制输入所在的实线性窗口；未要求 $V$ 对乘法或PB标签生成闭合，也不将它解释为物理三维空间。原完整PB及一般旧 $D$ 的研究目标保持。
+
+两张平面可以交于一条线；该线上依赖对都输出零，不迫使它们各自的面积输出满足跨平面关系。GL(2)是构造时额外保持的更强对称，不声称由原PB已经推出。
+
+## 158. 一条原PB用奇异铅笔检出同一总响应
+
+**命题 158.1（已知内行与准确实际端点）。** 对157.1的同一 $\widehat D$，取
+
+$$
+P=E_{11},\quad Z_0=a+ib,\quad Z=(I_4+iP)^{-1}Z_0=u+id,
+\qquad u=u^*,\ d=d^*.
+\tag{158.1}
+$$
+
+此处 $u$ 是实际自伴标签，单位仍为 $I_4$。两内行 $\widehat D(P,u),\widehat D(P,d)$ 都等于 $K$。直接计算 $Z_0^*Z_0$ 的两块为 $(1/4+B^2)I_2-B\sigma_y$、$3I_2/2+\sigma_x-\sigma_y$，故
+
+$$
+\|Z_0\|^2=\max\{(1/2+B)^2,\ 3/2+\sqrt2\}<4.
+\tag{158.2}
+$$
+
+这里 $1/2+B=17/24<1$ 且 $\sqrt2<3/2$。因 $\|(I_4+iP)^{-1}\|\le1$，有 $\|u\|,\|d\|\le\|Z\|<2$，两连接 $\|(1-P)uP\|,\|(1-P)dP\|$ 均严格小于二，也准确落在OP83.1的实际小连接范围，未删背景。
+
+将这两个已知内值代入154.2，得到
+
+$$
+v+iw=iPZ,\qquad r_++is_+=(I_4+iP)Z=Z_0,\qquad
+r_-+is_-=UZ_0,\quad U=(I_4-iP)(I_4+iP)^{-1}=\operatorname{diag}(-i,1,1,1).
+\tag{158.3}
+$$
+
+正端实际标签恰为 $(a,b)$。写负端 $UZ_0=x+iy$，其第一块为
+
+$$
+x_1=\begin{pmatrix}0&k\\\bar k&-1/2\end{pmatrix},\qquad
+y_1=\begin{pmatrix}-1/2&k\\\bar k&0\end{pmatrix},\qquad k=B(1-i)/2,
+\tag{158.4}
+$$
+
+所以
+
+$$
+f(t):=\det(x_1+ty_1)=t/4-(B^2/2)(1+t)^2,\quad
+f(0)=-B^2/2<0,\quad f(1)=1/4-2B^2=47/288>0.
+\tag{158.5}
+$$
+
+连续性给 $t_0\in(0,1)$ 使第一块奇异；第二块未被 $U$ 改动，为 $x_2=a_2,y_2=b_2$，其行列式 $-1/4-3t_0^2/4<0$。故 $x+t_0y$ 奇异且非零。此外 $a_2,b_2$ 独立，故 $x,y$ 独立。其二维平面包含非零奇异元，不可能等于任何异常平面，因此负端响应默认 $K(x,y)$。
+
+标准 $K$ 满足全部PB：对任意自伴演员 $A$ 及输入 $W$，已知内行给外端 $(I_4\pm iA)W$，两份 $q_K$ 均为 $W^*(I_4+A^2)W$。本调用与标准表共用两个内值及负外值，只将正外值从 $K(a,b)$ 改为零，故响应差版残差为
+
+$$
+\mathcal R_D=-K(a,b)=\frac B2\sigma_y\oplus\frac12\sigma_y\ne0,\qquad
+\langle\xi,\mathcal R_D\xi\rangle=1/2,\quad \xi=(0,0,1,i)/\sqrt2.
+\tag{158.6}
+$$
+
+原平方PB残差准确为 $q_{\widehat D}(Z_0)-q_{\widehat D}(UZ_0)=2\mathcal R_D=-2K(a,b)$，同一向量读数为 $1$。这条实际调用排除所定义的该份延续，不排除所有其他延续，也不是完整PB反模型。∎
+
+## 159. 同转相位、完整来源与原目标的保留
+
+**命题 159.1（相位改写不增加第二检测）。** 仅用反对称和每槽奇性，固定实际演员 $a$，将 $(b,d)$ 改成 $(-d,b)$。154.2给 $v'=-w,w'=v$，故 $r_\pm'=-s_\pm,s_\pm'=r_\pm$，两外响应及PB右端均不变。若 $e=D(a,b)-K(a,b)$、$g=D(a,d)-K(a,d)$、$Z=b+id$、$T=e+ig$，则 $Z'=iZ,T'=iT$，且
+
+$$
+(iZ)^*(iT)+(iT)^*(iZ)=Z^*T+T^*Z,\qquad q_D(i(r+it))=q_D(r+it).
+\tag{159.1}
+$$
+
+因此同转只是同一实际关系的改写，不供应独立实部检测，也不能用一个抽象核内的误差替代实际总响应。∎
+
+**约定 159.2（所有来源的无删减合取）。** 本组完整合取[本卷153.2、147.3][AP-PB]及其所纳入[SF105.1第1–7项全文、式105.1–105.7、SF96.1][AP-SF]和全部逐项上游定义、源身份、原域、对象、条件、实现、质量与量词。平方丛分支严格完整合取[平方丛卷64.1–64.3、47.1–47.13及48.1–48.3][AP-SQ]的全部候选、合同、公式、重构等价与七项条件消费者，包括根、静默及其他静态分支。各原文规定的固定上游版本身份不变；以下展开与原文同时合取，不以展开代替全文。
+
+① 仍是唯一原 $\Omega/\mathrm{native}$、同一原 $E,C,u,N,\mathcal P,S,D$。具名可取得标签、全原向量与指定跨评价配对、同一共同全词 $K/J/q$、全部 $z,w$、空词及任意有限词长、parent／ready、原总映射先实际复合再取有限复线性包、合法控制、原门及相干准备均保持。数学迹、Gram、GNS及本模型的 $\widehat D$ 不替换指定共同网络，不生产任意向量准备或全 $B(H)$ 可取得像。
+
+② 原态、事件、准确效果区间、完整Born菜单与接受归属、共同根、抽签、mark、C12/A12/BI12、预定有限强度、P9每个分支及独立 $W_e$、原 $g^*,d_s^*$ 读取顺序、AS/EC、菜单外OB、忠实二维到三维适配器、固定支持全质量及每个中间切口均保留。全部零、不等、次归一、中央、经典、不等维及静默质量保留；只有正确完整菜单和严格正总质量处归一，角菜单另需原条件化与正支持质量，更新另需严格正输出质量。
+
+③ 每个实际非零真正相关联合仍须同一共同实现、忠实同向交换局部腿、旧局部乘法、共同生成分离、重数、全部真正相关输入、中央对、实际复制及每层同源参考。消费者要求的局部全矩阵前件不删；分别可达、相同边缘、辅助张量或共同数学取向不代付联合。
+
+④ 每条typed原细分支的全部合法前后接、每份完整输出的每个仍合法未来、未归一回溯、反变复合、typed分区、全未来自然性、质量运输和原箭头商下降均保持。CP仍取完整同标签单位区间比较或整台实际递归参考；系统、整个环境、成功／失败／细记录／输入输出port／post-port及真遗忘、返回、合法复合都在同一可再应用规则类。每条根箭头、每个所需有限深度、每个正精度、忠实同向系统和参考腿、三个实际投影及单位实张成、支持内补、全部相关正输入、精确累计支持及交织夹界均保留；不要求一条物理无限链，不以形式参考代实际参考。
+
+⑤ 整台仪器的全输入运输、完整typed菜单和接受端、全部环境及输出未来、真分组遗忘、AC、精确 $N_u$、X/Xs、每份原平方根可执行词及接受条件保持。逐支CP及完整typed单位分区才给TP；Lüders另需同一完整输出的投影效果、像内每条射线保持及完整校准。失败和零分支保类型、记录及未来；异类型不免费并成物理直和。同效果或概率不代付全输出。
+
+⑥ 全部合法顺序／自适应／并行历史、环境、参考、细记录、泄漏、停止／拒绝／销毁、真分组遗忘、同数两侧及逆向真实双向返回、读后同一完整活动输入的全未来CountRead、活动ready、接受叶活动输出、第一消费者及具名分析词到全菜单接线均保持。两条负提升活路分别受控及相干聚合、精确 $B$ 与闭 $B_{\rm cl}$、两只独立九叶彩票、第九空程序、十六拒绝叶、相干 $I_3/3$ 返回保持。初始取得、有限树、被动精确解码和既有有限返回校准守原平稳、同源、同初始版本及实际域，不替代全未来Return。未定义请求仍未定义；无限或非离散记录、可数可加、正常性、指定前对偶及收敛另由原扩展来源承担。密度、迹类和Kraus均守原合格表示及收敛域。
+
+⑦ 原全域乘法、保持可能不完备原域的流、实际门与相位及实际逆、同一过程的连续可逆CPTP一参数群、物理钟与单位、强连续酉实现、生成元域、Hamiltonian能量、共同仪器、共同作用量及同一个正 $\hbar$ 均保持。原 $\sigma,t_0,d$、固定域、resolvent和 $3s+r\le1$ 仍取原设备、参数和量纲；数学参数不生产物理钟。Schrödinger、密度及Heisenberg方程只在同一已识别乘法与各自可微域消费。七项必须在唯一原世界共同实现，不能逐项更换来源。
+
+**说明 159.3（原分类与一般预算仍有准确边界）。** 原任意紧基上，合法旧响应强制复类型及连续乘法取向的既有结论保留；取向存在判据不等于认回任意给定旧响应的全部值。平方丛64的完整候选及重构仍保留 $\overline{L(X)}=X$，或明确另用56.2的 $\mathsf T_D$ 条件。56.1仍是 $\forall W\,\forall x_0\,\exists(O,h,f)$ 下同一旧值 $D(hx(W),hy(W))(x_0)=D(x(W),y(W))(x_0)$ 的受限比较；没有升级为任意截断或全部同像标签下降。55.1只运输实际截断 $hW$，原关系推出56.1的前件仍未证，本组既未证明也未反驳它。
+
+准确说，沿64的原记号与完整定义，原候选与其重构保持为
+
+$$
+\begin{gathered}
+\Gamma_{\rm fin}+[\overline L=X]+\mathsf H_{\rm fin}(D)+\mathcal C_{47}(\Omega;S,D)\\
+\Longleftrightarrow\quad
+\Gamma_{\rm fin}+[\overline L=X]+[\mathfrak J_x\cong_J H_n(\mathbb C)\ (\forall x)]+
+\exists!\sigma\in\Gamma(X,\mathcal O_{\rm alg}),\quad
+D=K_\sigma\ \land\ \mathcal C_{47}(\Omega;S,K_\sigma).
+\end{gathered}
+\tag{159.2}
+$$
+
+$\Gamma_{\rm fin}$、$\mathcal C_{47}$ 等仍取原完整定义。唯一性相对于给定旧 $D$，不声称全体数学取向唯一，也不把完整来源变成取向无关的自由附加数据。
+
+一般原域从完整PB生产TS、识别全部旧值、去除稠密前件，以及147.1、153.2所述同一 $T(q)-2(a+u)\circ H=2\delta$ 在146同一 $\ell$ 和全部实际正分量质量下的目标相关联合预算或实际运输，均仍未解决。一般不完备、无原子、不可分原域、一般JB／type III、表示及全物理消费者不由此有限实例分类。未从原关系取得的共同实现者、加权迹等式或GL(2)律不作为原问题新增输入。
+
+## 160. 面积几何的关系增量与完整中文图景
+
+**定义 160.1（新增结果的归属与范围）。** 本组 $\texttt{repo-derived}$ 纸面综合是：用同一总映射中三十三张互异实际二维平面的有向面积，实现完整投影实基的十六个共享旧内值PB，保留全实配对矩阵协变、全部P2及秩一／交换行，却使全部所选TS读数严格正；再用非零奇异铅笔把另一条已知内行的实际PB接回旧行，明确检出这份构造。开放投影片张成、迹配对、Pauli乘法、谱演算、Gram正性、有限维紧性和二维面积行列式律均为复用工具，不另计新增定理或全球优先成果。
+
+准确的不蕴含关系仅是“这些已列数学关系及十六个指定实际PB，不推出所选TS”；完整PB仍可能通过更多共用标签关系迫使TS，另一组有限调用也未被排除。158只排除所定义的该份延续，不证明所有延续均失败。本组不制造物理producer，不宣称原公理的新推论、完整PB反模型、全分类、文献穷尽、kernel证明或世界来源认证。
+
+白话说，一对实独立输入确定一张二维平面。在这张平面上，本构造只指定一份有向面积的输出；以后无论怎样剪切、放缩、旋转或换坐标，答案都按面积行列式变化，所以平面内部的线性关系已经全部一致。两个向量退化到一条线上时面积为零，也与所有奇异换坐标一致。这比仅检查旋转多，但没有替原问题增加一条必须服从的新物理公理。
+
+十六个投影探针构成完整线性读数基，每个探针的秩一行和相应直接PB都在同一张总响应表里正确，共用同一个旧答案；每张二表也对全部数学正读取和所有质量正确。然而旧答案与标准答案的迹偏差仍严格非零。探针的线性完备只是说“若全部正确迹读数为零，就能读出误差为零”，并不自动使读数归零，也不把这些投影变成正权组成的物理完整菜单。
+
+不同二维平面可交于一条线；在线上面积都为零，并不能强迫两张平面的面积输出在跨平面相加时配合。157.2中，三根边已足以暴露跨平面相加不一致，全部输入同处一个三维实线性窗口。缺少的是跨平面共享实际标签的联合关系。158的额外检验把正端准确接到原旧行，负端则因含非零奇异方向落在所有异常平面之外，于是标准区域与旧答案直接相遇，读出非零残差并排除该构造。完整PB能否在原一般域中组织足够的这种关系，仍是原来的研究问题。即使静态数学接头补齐，原世界的准备、完整菜单、相关共同实现、全过程及全未来、真实返回和物理钟仍各须上述完整来源。
+
+[AP-PB]: https://github.com/the-omega-institute/trureturing/blob/39a0505470ea889dd9d4301ad60cd9506a5e8b58/docs/develop/theory/AURIC_ORIGINAL_POLYNOMIAL_PB_TRANSPORT_AND_FIBER_BOUNDARIES_CONTINUATION.md
+[AP-SQ]: https://github.com/the-omega-institute/trureturing/blob/39a0505470ea889dd9d4301ad60cd9506a5e8b58/docs/develop/theory/AURIC_ZERO_DIMENSIONAL_CENTER_SQUARE_ORBIT_RECONSTRUCTION.md
+[AP-OP]: https://github.com/the-omega-institute/trureturing/blob/39a0505470ea889dd9d4301ad60cd9506a5e8b58/docs/develop/theory/AURIC_ORIGINAL_POLYNOMIAL_ZERO_RESPONSES_AND_CAYLEY_DOMAIN_BOUNDARIES.md
+[AP-SF]: https://github.com/the-omega-institute/trureturing/blob/39a0505470ea889dd9d4301ad60cd9506a5e8b58/docs/develop/theory/AURIC_SEMIFINITE_ORIGINAL_RESPONSE_AND_CENTRAL_POLAR_GEOMETRY.md
+
+## 追加锚（本行以下为增补区）
