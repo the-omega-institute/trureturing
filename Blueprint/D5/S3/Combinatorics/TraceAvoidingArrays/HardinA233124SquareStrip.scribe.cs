@@ -236,8 +236,6 @@ internal sealed class HardinA233124SquareStripDocument : IScribeDocumentDefiniti
         Seq(Parenthesized(a), Sp, Implies, Sp, Parenthesized(b));
     private static Formula And(Formula a, Formula b) =>
         Seq(Parenthesized(a), Sp, Land, Sp, Parenthesized(b));
-    private static Formula Or(Formula a, Formula b) =>
-        Seq(Parenthesized(a), Sp, Lor, Sp, Parenthesized(b));
     private static Formula Conditional(Formula c, Formula y, Formula n) =>
         Parenthesized(Seq(Q("if"), Sp, Parenthesized(c), Sp, Q("then"), Sp, y,
             Sp, Q("else"), Sp, n));
