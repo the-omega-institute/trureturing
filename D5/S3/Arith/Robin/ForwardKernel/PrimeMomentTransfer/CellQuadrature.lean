@@ -29,7 +29,7 @@ private theorem p_one_cell (F : ℕ → ℝ) (n : ℕ) :
         ⟨hx.1.le, hx.2⟩]
     _ = _ := by simp
 
-private theorem p_step_integrable (F : ℕ → ℝ) (a b : ℝ) (_ha : 0 ≤ a) :
+theorem floor_step_intervalIntegrable (F : ℕ → ℝ) (a b : ℝ) (_ha : 0 ≤ a) :
     IntervalIntegrable (fun x => F ⌊x⌋₊) volume a b := by
   let K := ⌊max a b⌋₊
   let C := ∑ n ∈ Finset.range (K + 1), |F n|
@@ -46,7 +46,7 @@ private theorem p_integer_cells (F : ℕ → ℝ) (a b : ℕ) (hab : a ≤ b) :
   calc
     _ = ∑ n ∈ Finset.Ico a b, ∫ x in (n : ℝ)..((n+1:ℕ) : ℝ), F ⌊x⌋₊ :=
       (intervalIntegral.sum_integral_adjacent_intervals_Ico hab
-        (fun n _ => p_step_integrable F _ _ (Nat.cast_nonneg n))).symm
+        (fun n _ => floor_step_intervalIntegrable F _ _ (Nat.cast_nonneg n))).symm
     _ = _ := by
       apply Finset.sum_congr rfl
       intro n _
@@ -63,15 +63,15 @@ private theorem p_partial_cell (F : ℕ → ℝ) (y : ℝ) (hy : 0 ≤ y) :
         ⟨hx.1.le, hx.2.trans (Nat.lt_floor_add_one y)⟩]
     _ = _ := by simp
 
-private theorem p_cell_primitive (F : ℕ → ℝ) (a : ℕ) (y : ℝ)
+theorem floor_step_integral (F : ℕ → ℝ) (a : ℕ) (y : ℝ)
     (hay : (a : ℝ) ≤ y) :
     (∫ x in (a : ℝ)..y, F ⌊x⌋₊) =
       (∑ n ∈ Finset.Ico a ⌊y⌋₊, F n)+(y-⌊y⌋₊)*F ⌊y⌋₊ := by
   have hy : 0 ≤ y := (Nat.cast_nonneg a).trans hay
   have haf : a ≤ ⌊y⌋₊ := (Nat.le_floor_iff hy).mpr hay
   have hi := intervalIntegral.integral_add_adjacent_intervals
-    (p_step_integrable F (a : ℝ) ⌊y⌋₊ (Nat.cast_nonneg a))
-    (p_step_integrable F (⌊y⌋₊ : ℝ) y (Nat.cast_nonneg _))
+    (floor_step_intervalIntegrable F (a : ℝ) ⌊y⌋₊ (Nat.cast_nonneg a))
+    (floor_step_intervalIntegrable F (⌊y⌋₊ : ℝ) y (Nat.cast_nonneg _))
   rw [p_integer_cells F a ⌊y⌋₊ haf, p_partial_cell F y hy] at hi
   exact hi.symm
 
@@ -133,10 +133,10 @@ private theorem p_cell_prefix (N A : ℝ) (F : ℕ → ℝ) (hN : 2 ≤ N) (hA :
     (Nat.floor_le_floor hz2).trans (Nat.floor_le_ceil _)
   have hNc : ⌊N⌋₊ ≤ ⌈2*N⌉₊ := hnf.trans hfc
   have hi := intervalIntegral.integral_add_adjacent_intervals
-    (p_step_integrable F (⌊N⌋₊ : ℝ) N (Nat.cast_nonneg _))
-    (p_step_integrable F N z hN0)
+    (floor_step_intervalIntegrable F (⌊N⌋₊ : ℝ) N (Nat.cast_nonneg _))
+    (floor_step_intervalIntegrable F N z hN0)
   rw [p_partial_cell F N hN0,
-    p_cell_primitive F ⌊N⌋₊ z ((Nat.floor_le hN0).trans hzN)] at hi
+    floor_step_integral F ⌊N⌋₊ z ((Nat.floor_le hN0).trans hzN)] at hi
   have hs : (∑ n ∈ Finset.Ico ⌊N⌋₊ ⌊z⌋₊, F n) + F ⌊z⌋₊ =
       F ⌊N⌋₊ + ∑ n ∈ Finset.Ioc ⌊N⌋₊ ⌊z⌋₊, F n :=
     (Finset.sum_Ico_add_eq_sum_Icc (f := F) hnf).trans
@@ -187,7 +187,7 @@ theorem cell_quadrature (N A B : ℝ) (F : ℕ → ℝ) (w : ℝ → ℝ)
       (fun _ _ => mem_univ _)
   have hv : BoundedVariationOn v univ := ne_top_of_le_ne_top hw.1 hvar
   have hρ : IntegrableOn ρ (Ioc (⌊N⌋₊ : ℝ) ⌈2*N⌉₊) :=
-    (p_step_integrable F (⌊N⌋₊ : ℝ) ⌈2*N⌉₊ (Nat.cast_nonneg _)).1.indicator
+    (floor_step_intervalIntegrable F (⌊N⌋₊ : ℝ) ⌈2*N⌉₊ (Nat.cast_nonneg _)).1.indicator
       measurableSet_Ioc
   have hm := bv_discrepancy_bound ⌊N⌋₊ ⌈2*N⌉₊ c ρ v (3*A) U
     (eVariationOn w univ).toReal hab (by positivity) hU ENNReal.toReal_nonneg

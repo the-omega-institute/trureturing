@@ -1,0 +1,19 @@
+**定义 48.1（完整量子候选）。** 令 $\Gamma_J(X,\mathfrak J;\Omega)$ 表示41.1–41.2的模型、准确原评价及对象同一性，完整候选为
+
+$$
+\Gamma_J+[\overline L=X]+\mathsf H_{\mathfrak J}(D)
++\mathcal C_{\rm src}(\Omega;S,D).
+\tag{48.1}
+$$
+
+它准确等价于
+
+$$
+\Gamma_J+[\overline L=X]
++\exists!\sigma\in\Gamma(X,\mathcal O_{\rm alg}(\mathfrak J)),\quad
+D=K_\sigma,\quad\mathcal C_{\rm src}(\Omega;S,K_\sigma).
+\tag{48.2}
+$$
+
+来源谓词约束同一个旧响应，不能当作与取向无关的自由附加数据。“存在唯一”是相对于给定 $D$；不声称静态模型唯一选择一份响应，也不声称每份数学取向都有实际物理实现。
+
