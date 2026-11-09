@@ -13,6 +13,8 @@ internal sealed class HardinA233124SquareStripDocument : IScribeDocumentDefiniti
     private const string Triangle =
         "D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip";
     private const string PairMap = "D5.S3.Observer.Separation.BooleanRankThreeK4.beta";
+    private const string PairLabels =
+        "D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233176Ladder.pairs";
     private const string Prefix =
         "D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233124SquareStrip.";
     private static LibraryNoteRef Source =>
@@ -162,7 +164,8 @@ internal sealed class HardinA233124SquareStripDocument : IScribeDocumentDefiniti
         var s = V("s"); var p = V("p"); var k = V("k"); var c = V("c");
         var condition = And(At(Q(Triangle + ".rowLegal"), c), And(Call("compatible", p, c),
             And(At(Q(Scanner + ".good"), s, c), Eq(
-                Call("boundaryClass", At(Q(Scanner + ".finish"), s, c), At(Q("D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233176Ladder.pairs"), c)), k))));
+                Call("boundaryClass", At(Q(Scanner + ".finish"), s, c),
+                    At(Q(PairLabels), c)), k))));
         return All("s", Seen(), All("p", Labels(), All("k", Fin(3),
             Eq(Call("classCount", s, p, k), SumOver("c", Row(),
                 Conditional(condition, Z(1), Z(0)))))));
@@ -173,7 +176,7 @@ internal sealed class HardinA233124SquareStripDocument : IScribeDocumentDefiniti
         var condition = And(Eq(At(c, Index(0)), Colour(0)),
             And(At(Q(Triangle + ".rowLegal"), c),
                 And(At(Q(Scanner + ".good"), EmptySeen(), c), Eq(Call("boundaryClass",
-                    At(Q(Scanner + ".finish"), EmptySeen(), c), At(Q("D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233176Ladder.pairs"), c)), k))));
+                    At(Q(Scanner + ".finish"), EmptySeen(), c), At(Q(PairLabels), c)), k))));
         return All("k", Fin(3), Eq(Call("firstCount", k),
             SumOver("c", Row(), Conditional(condition, Z(1), Z(0)))));
     }
