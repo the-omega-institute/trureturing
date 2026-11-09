@@ -1868,3 +1868,410 @@ $$
 用白话说，先给每个周期倍数一笔确定的底款，再在更远的素数上平均赚取对数增益。原行格关系提供了一把对全部地方都相同的尺：$k=1$ 已是共同质量最小的两行。只要它在某个 $t$ 达到平均保证，其它所有 $k$ 就在同一个 $t$ 一起达标；有限初段容不下持续变大的保证，所以达标的 $t$ 必须无界。所给下界仍远小于平方高度尺度。
 
 ## 追加锚（本行以下为增补区）
+
+## 63. 实际中央特征子群的同地方扭曲与全深度循环性
+
+**定义 63.1（精确局部特征与交过滤）。** 保持定义 51.1、53.1、58.1、60.1 的全部原数据。特别地，$F=\mathbb Q(a,b,c)$、$a^2=2$、$b^2=3-a$、$c^2=3+a$、实际半点 $Q_j$、独立原点 $P_j=[2]Q_j$、原整方程 $E_0:y^2=x^3-x$、所有原地方及过滤均不变。取
+
+$$
+S_0=\{p>7:p\bmod56\in\{31,47,55\}\},\qquad
+D_p=(p+1)/4.
+\tag{63.1}
+$$
+
+固定 $p\in S_0$ 和原地方 $v\mid p$。原 $F_v/\mathbb Q_p$ 不分歧，分解群由原算术 Frobenius $g_v$ 生成。沿用一次作用的实际中央符号 $\epsilon=\epsilon_p$，定义
+
+$$
+T_v=\{S\in E_0(F_v):g_vS=[\epsilon]S\},\qquad
+K_v(j)=T_v\cap U_v(j)\quad(j\ge1).
+\tag{63.2}
+$$
+
+这里要求的是完备域中点的精确等式，不是约化后的特征条件。$[2]T_v$ 表示倍二像，尚不把整个 $U_v(j)$ 放入这个像，也不把 $E_0(F_v)$ 的商当作特征子群的商。
+
+**定理 63.2（原实际半点的全深度循环环境）。** 在定义 63.1 的每个原地方，两种实际符号均满足
+
+$$
+Q_1,Q_2\in T_v,\qquad P_1,P_2\in[2]T_v,\qquad
+K_v(j)\subseteq[2]T_v\quad(j\ge1).
+\tag{63.3}
+$$
+
+因此可定义有限群
+
+$$
+C_v(j)=[2]T_v/K_v(j),\qquad
+C_v(j)\simeq\mathbb Z/(D_pp^{j-1})\mathbb Z.
+\tag{63.4}
+$$
+
+同一个 $F_v$ 内存在单位 $d\in\mathbb Z_p^\times$、$s\in F_v^\times$、$s^2=d$，使单位二次扭曲
+
+$$
+E^{(d)}:Y^2=X^3-d^2X,\qquad
+\phi_d(X,Y)=(X/d,Y/(ds))
+\tag{63.5}
+$$
+
+将 $E^{(d)}(\mathbb Q_p)$ 同构到 $T_v$，并将其第 $j$ 形式层同构到 $K_v(j)$。此识别保留原赋值、原整 $x$ 分母的深度及原地方权重 $f_v/8$；不变更全局点或全局基域。
+
+**证明。** 原 (53.8)–(53.9) 从实际坐标给出精确符号作用。这里 $\chi_2(p)=\chi_7(p)=1$，故 $g_v$ 固定 $a$，并有
+
+$$
+g_v(b)=\epsilon b,\qquad g_v(c)=\epsilon c.
+\tag{63.6}
+$$
+
+将它直接代入原
+
+$$
+Q_1=((1+a)/b^2,2a/b^3),\qquad
+Q_2=((1-a)/c^2,-2a/c^3)
+$$
+
+得到 $g_vQ_j=[\epsilon]Q_j$，没有二挠平移项。由于 $F$ 由 $a,b,c$ 生成，正号时 $g_v=1$、$F_v=\mathbb Q_p$、$f_v=1$；负号时 $g_v$ 的阶为 $2$、$F_v/\mathbb Q_p$ 为不分歧二次扩张、$f_v=2$。所以这一步同时确定了实际局部域与两个实际半点的精确特征关系，而非由剩余域中的符号反推它们。倍二给出 (63.3) 的前两个包含。
+
+正号时取 $d=s=1$；此时 $T_v=E_0(\mathbb Q_p)$。负号时取任意剩余类非平方的单位 $d\in\mathbb Z_p^\times$。不分歧二次扩张的唯一性允许在同一个 $F_v$ 中取 $s^2=d$，且 $g_v(s)=-s$。对 $E^{(d)}(\mathbb Q_p)$ 中的点，(63.5) 使横坐标固定、纵坐标取负，故其像在 $T_v$ 中。反向，$S=(x,y)\in T_v$ 满足
+
+$$
+x\in\mathbb Q_p,\qquad g_v(y)=-y,\qquad
+X=dx\in\mathbb Q_p,\quad Y=ds\,y\in\mathbb Q_p.
+\tag{63.7}
+$$
+
+这些坐标满足 $E^{(d)}$；$O$ 及 $y=0$ 的二挠点也包括在内。该单位坐标变换是保持单位元的曲线同构，故是群同构。这证明两种符号下的全部 $T_v$ 识别，不要求原 $Q_j$ 或 $P_j$ 为全局 $\mathbb Q$ 有理点。
+
+原模型和这个单位扭曲都在 $p>7$ 好约化。若 $t=-x/y$、$t_d=-X/Y$ 是各自的形式参数，则对非零形式点 $S$ 准确有
+
+$$
+t(\phi_dS)=s\,t_d(S),\qquad
+\operatorname{ord}_v x(\phi_dS)=v_p(X(S)),\qquad
+\operatorname{ord}_v t(\phi_dS)=v_p(t_d(S)).
+\tag{63.8}
+$$
+
+最后两式使用 $d,s$ 为单位及 $e_v=1$。因此扭曲的第 $j$ 形式层正好映到 $K_v(j)$。当负号出现时，整个 $U_v(j)$ 的形式对数是秩二的 $\mathbb Z_p$ 模，而 $K_v(j)$ 对应秩一的 $p^j\mathbb Z_p$；不能将二者相等或将整个 $U_v(j)$ 包含于 $T_v$。
+
+在扭曲的第一形式层，$1>1/(p-1)$ 是严格形式对数阈值。Silverman，*The Arithmetic of Elliptic Curves*，第二版，[IV.6.3–6.4，印刷页 131–132；VII.2.1–2.2，印刷页 188–191](https://www.math.ens.psl.eu/~obenoist/refs/Silverman.pdf)，给出约化正合列及保赋值形式对数。用于当前扭曲时，每个第 $j$ 层对应加法群 $p^j\mathbb Z_p$，特别有
+
+$$
+K_v(1)/K_v(j)\simeq\mathbb Z/p^{j-1}\mathbb Z,\qquad
+[2]:K_v(j)\longrightarrow K_v(j)\text{ 为自同构}.
+\tag{63.9}
+$$
+
+这已证明 $K_v(j)\subseteq[2]T_v$，现在才使用 (63.4) 的商。作者[第二版勘误](https://www.math.brown.edu/johsilve/AEC/AECErrata.pdf)对 IV.6.3(a) 的修正区分分式域收敛和整环收敛；这里始终在严格保赋值阈值内，不使用无阈值的整环收敛断言。
+
+将 (63.5) 在同一地方约化，正号给出 $E_0(\mathbb F_p)$，负号给出
+
+$$
+\phi_{\bar d}\bigl(\widetilde E^{(d)}(\mathbb F_p)\bigr)
+=\ker(\pi_p+1)\subset\widetilde E_0(k_v).
+\tag{63.10}
+$$
+
+反向包含同样由 (63.7) 的剩余域版本得到；负号时 $k_v=\mathbb F_{p^2}$。两种符号合写为 $G=\ker(\pi_p-[\epsilon])$。扭曲的好约化正合列遂给出满射 $T_v\to G$，其核恰为 $K_v(1)$。原 (58.5) 已在这个同一个特殊纤维内证明
+
+$$
+[2]G\simeq\mathbb Z/D_p\mathbb Z,\qquad p\nmid D_p.
+\tag{63.11}
+$$
+
+此处直接引用该超奇异有限群计算，包括负中央符号；不重做完整素于 $p$ 挠点与 Weil 配对的论证。其成熟输入为 Silverman III.6.4、III.8.1，配对值域为标准 $\mu_m$，挠点指阶整除 $m$ 的点，按作者页 69、93–98 的勘误理解。
+
+倍二像在约化下的像为 $[2]G$；由于已经证明 $K_v(1)\subseteq[2]T_v$，其核就是 $K_v(1)$。对每个 $j\ge1$ 因而有正合列
+
+$$
+0\longrightarrow K_v(1)/K_v(j)
+\longrightarrow C_v(j)
+\longrightarrow[2]G\longrightarrow0.
+\tag{63.12}
+$$
+
+两端分别为阶 $p^{j-1}$ 和 $D_p$ 的循环群，且两阶互素。在有限交换群的主部分解中，$p$ 主部正是左端，素于 $p$ 的部分同构于右端，故中项循环且阶为 $D_pp^{j-1}$。这证明 (63.4) 的全部深度。
+
+这里的扭曲仅识别同一原地方的特征子群。原 $F_v$、原 $U_v(j)$、原 $b_v$ 和 $f_v$ 均仍保留；尤其负号地方虽然用一个 $\mathbb Q_p$ 点群描述，贡献仍乘原 $f_v/8=2/8$。没有把全局独立的两点变为一个点的 CM 倍数。
+
+用白话说，正号半点住在原局部有理点群里，负号半点住在同一地方的反不变部分里。后者可用一个单位扭曲的有理点群准确描述，深度不会改变。半点的倍二像在第一层之外已经循环，第一层之内又只有一个 $p$ 进方向；两部分的阶互素，所以每一个深度的整个倍二商仍然循环。新增的是这对实际半点与原全深度过滤的接口，属 repo-derived 综合；局部扭曲、有限交换群和形式群均为内部成熟输入。$\square$
+
+## 64. 全部大素数与全部深度的线性平均预算
+
+**定义 64.1（实际共同周期与带权周期质量）。** 固定任意整数 $M\ge1$、$H\ge7$，仍取原 $q=q_H=q(H,H;M)$。对每个 $p>H$、原地方 $v\mid p$ 和 $j\ge1$，先在原有限商中定义
+
+$$
+A_v(j)=E_0(F_v)/U_v(j),\qquad
+\Gamma_{vj}(q)=\langle[q]P_1+U_v(j),[q]P_2+U_v(j)\rangle,\qquad
+r_{vj}=\exp\Gamma_{vj}(q).
+\tag{64.1}
+$$
+
+平凡群的指数取 $1$。这里的指数是消去全部群元素的最小正整数，不是子群在环境群中的指数。原共同周期接口 (16.5)–(16.6) 给出
+
+$$
+r_{vj}=\operatorname{lcm}_{i=1,2}
+ \operatorname{ord}_{A_v(j)}([q]P_i+U_v(j))
+=\frac{\delta_p(j)}{\gcd(\delta_p(j),q)}.
+\tag{64.2}
+$$
+
+仍保留 $v$ 指标，并在每个实际地方求权重。$p\in S_0$ 时，(63.3) 使 $\Gamma_{vj}(q)$ 嵌入 $C_v(j)$，所以
+
+$$
+|\Gamma_{vj}(q)|=r_{vj},\qquad
+r_{vj}\mid D_pp^{j-1}.
+\tag{64.3}
+$$
+
+实际群可为环境循环群的真子群；不将 $r_{vj}$ 写成 $D_pp^{j-1}$。在 $j=1$，$r_{v1}$ 正是 (60.3) 的 $r_{v,H}$。一般支持上只定义精确指数，不断言群阶等于指数。
+
+对任意素数集合 $\Sigma\subseteq\{p>7\}$、实数 $R\ge0$，定义包含全部深度的质量
+
+$$
+W_{\Sigma,H}(R)
+=\sum_{\substack{p>H,\ p\in\Sigma\\v\mid p,\ j\ge1:\ r_{vj}\le R}}
+ \frac{f_v\log p}{8},\qquad
+W_{\Sigma,H}(R)=0\quad(0\le R<1),
+\tag{64.4}
+$$
+
+并对整数 $r\ge1$ 置
+
+$$
+a_{\Sigma,H}(r)=W_{\Sigma,H}(r)-W_{\Sigma,H}(r-1).
+\tag{64.5}
+$$
+
+$M$ 对这些记号的影响只通过原 $q_H$，未另选共同周期。对整数 $t,N\ge1$，定义对应的原共同质量及其有限平均
+
+$$
+\begin{aligned}
+F_{\Sigma,H}(t)
+&=\frac18\sum_{\substack{p>H\\p\in\Sigma}}\log p
+ \sum_{v\mid p}f_v\min\{b_v([qt]P_1),b_v([qt]P_2)\},\qquad t\ge1,\\
+\mathcal M_{\Sigma,H}(N)&=\frac1N\sum_{t=1}^N F_{\Sigma,H}(t),\qquad N\ge1.
+\end{aligned}
+\tag{64.6}
+$$
+
+在这个消费者内直接引用 (62.5)–(62.6)：它们来自原 003 定理 50.2、(50.5)–(50.6)，逐地方适用于全部原整 $x$ 分母。故对每个同一 $t$，(64.6) 正是 $G_\Sigma(H;qt,1)$，也是全部非零整数 $k$ 上 $G_\Sigma(H;qt,k)$ 的最小值；全部地方同时由 $k=1$ 取得。这里仅对该最小共同质量求上界，不将它解释为任意移动 $k$ 的上界，也不另立通用最小关系命题。
+
+**定理 64.2（原超奇异标量支持的完整平均上界）。** 每个固定 $R$ 的 (64.4) 都是有限和，对任意上述 $\Sigma$ 有完整平均身份
+
+$$
+\mathcal M_{\Sigma,H}(N)
+=\frac1N\sum_{r=1}^N a_{\Sigma,H}(r)
+ \left\lfloor\frac Nr\right\rfloor.
+\tag{64.7}
+$$
+
+特别地，所有整数 $M\ge1,H\ge7,N\ge1$ 和实数 $R\ge1$ 同时满足
+
+$$
+\begin{aligned}
+W_{S_0,H}(R)&\le12h_0q_H^2R^2+8(\log2)R,\\
+\mathcal M_{S_0,H}(N)&\le24h_0q_H^2N
+ +8(\log2)(1+\log N).
+\end{aligned}
+\tag{64.8}
+$$
+
+这里 $p$ 始终遍历对应支持内的全部 $p>H$，$j$ 始终遍历全部正整数；没有 $p\le N$ 或深度上限。
+
+**证明（有限性与原质量身份）。** 对任何满足 $r_{vj}\le R$ 的三元组 $(p,v,j)$，令 $r=r_{vj}$。精确指数的定义给出
+
+$$
+[qr]P_1,[qr]P_2\in U_v(j).
+\tag{64.9}
+$$
+
+对固定 $R$，只涉及有限个非零全局点 $[qs]P_1$，$1\le s\le\lfloor R\rfloor$。它们由原高度 $h_0q^2s^2>0$ 保证非挠、非零。在 $p>H\ge7$，原深度恰为 $b_v$，所以 (64.9) 使 $v$ 属于其中一个点的分母支持，并使 $j\le b_v([qr]P_1)$。有限点集的分母支持与各赋值都有限，故 (64.4) 有限；对 $R<1$ 和空支持结论也成立。这一步不使用循环性，因而包括完整支持。
+
+对每个固定 $t$，同一个有限商中的群指数给出准确条件
+
+$$
+[qt]P_1,[qt]P_2\in U_v(j)
+\quad\Longleftrightarrow\quad r_{vj}\mid t.
+\tag{64.10}
+$$
+
+共同深度是这些条件在 $j\ge1$ 上的指示函数之和。用原 $f_v\log p/8$ 求和，得到
+
+$$
+F_{\Sigma,H}(t)
+=\sum_{\substack{p>H,\ p\in\Sigma\\v\mid p,\ j\ge1}}
+ \frac{f_v\log p}{8}\,\mathbf1_{r_{vj}\mid t}
+=\sum_{r\mid t}a_{\Sigma,H}(r).
+\tag{64.11}
+$$
+
+全部非零项已由有限分母支付；也可先对非负和应用 Tonelli，再用刚证的有限性。对 $1\le t\le N$ 求和即得 (64.7)。这里只能截去 $r>N$：即使 $p>N$，实际子群的 $r_{vj}$ 仍可能不超过 $N$，这样的地方及全部合格深度均留在 (64.7) 中。
+
+**证明（整个有限短关系点集的高度）。** 现在只取 $\Sigma=S_0$。固定 $R\ge1$，置 $L=\lfloor\sqrt R\rfloor$。对每个满足 $r_{vj}\le R$ 的三元组，(64.3) 给出实际群阶 $|\Gamma_{vj}(q)|=r_{vj}\le R$。将 $(L+1)^2>R$ 个向量
+
+$$
+(u_1,u_2)\in\{0,\ldots,L\}^2
+\quad\longmapsto\quad[u_1q]P_1+[u_2q]P_2+U_v(j)
+\tag{64.12}
+$$
+
+映入这个实际群，必有不同向量同像。它们的差 $m=(m_1,m_2)$ 满足
+
+$$
+m\ne0,\qquad |m_1|,|m_2|\le L,\qquad
+S_m=[q](m_1P_1+m_2P_2)\in U_v(j).
+\tag{64.13}
+$$
+
+这个短关系可随 $p,v,j$ 改变。为支付这种改变，取整个全局点集
+
+$$
+\mathcal S_L=\{S_m:m\in\mathbb Z^2\setminus\{0\},\ |m_1|,|m_2|\le L\}.
+\tag{64.14}
+$$
+
+原 (16.21) 与原 (49.8) 对每个这样的实际 $F$ 点给出
+
+$$
+\widehat h(S_m)=h_0q^2(m_1^2+m_2^2)>0,\qquad
+\log\|B(S_m)\|\le h_0q^2(m_1^2+m_2^2)+\log2.
+\tag{64.15}
+$$
+
+特别没有把某一地方最优点的高度当作一个共同点的高度。对每个三元组在固定有限系数集内选取一个满足 (64.13) 的 $m$。固定 $m,v$ 后，分派给它的不同 $j$ 都不超过 $b_v(S_m)$；因此这些层的总权重至多为 $f_vb_v(S_m)\log p/8$。逐个 $m$ 支付其整个原分母，再对全部系数求和，得到
+
+$$
+\begin{aligned}
+W_{S_0,H}(R)
+&\le\sum_{\substack{m\ne0\\|m_1|,|m_2|\le L}}
+ \log\|B(S_m)\|\\
+&\le\frac23h_0q^2L(L+1)(2L+1)^2
+ +4(\log2)L(L+1).
+\end{aligned}
+\tag{64.16}
+$$
+
+这里系数 $m$ 与 $-m$ 的点也都支付，不依赖去重节省。求和恒等式来自 $\sum_{u=-L}^Lu^2=L(L+1)(2L+1)/3$；非零系数的个数为 $(2L+1)^2-1=4L(L+1)$。由于 $L\ge1$，$L+1\le2L$、$2L+1\le3L$，且 $L^2\le R$，(64.16) 给出
+
+$$
+\frac23L(L+1)(2L+1)^2\le12L^4\le12R^2,
+\qquad4L(L+1)\le8L^2\le8R.
+\tag{64.17}
+$$
+
+这正是 (64.8) 的第一式。证明逐层支付全部满足 $r_{vj}\le R$ 的原地方，不以 $p$ 的大小换取有限性。
+
+**证明（有限分部求和）。** 为简化此段记号，令 $W=W_{S_0,H}$、$a=a_{S_0,H}$、$A=12h_0q^2$、$B=8\log2$，并写 $\mathfrak h_N=\sum_{r=1}^N1/r$。由 (64.7) 及非负性，
+
+$$
+\begin{aligned}
+\mathcal M_{S_0,H}(N)
+&\le\sum_{r=1}^N\frac{a(r)}r\\
+&=\frac{W(N)}N+
+ \sum_{r=1}^{N-1}\frac{W(r)}{r(r+1)}\\
+&\le AN+B+A\sum_{r=1}^{N-1}\frac r{r+1}
+ +B\sum_{r=1}^{N-1}\frac1{r+1}\\
+&=A(2N-\mathfrak h_N)+B\mathfrak h_N\\
+&\le2AN+B(1+\log N).
+\end{aligned}
+\tag{64.18}
+$$
+
+代回 $A,B$ 即得第二式，$N=1$ 的空和也包括在内。常数来自原准确高度与有限系数总和，对全部 $H,N,M$ 统一，无需假设 $H$ 充分大。
+
+短关系与高度法的成熟先例为 Akbary–Murty，*Reduction mod p of Subgroups of the Mordell–Weil Group of an Elliptic Curve*，*International Journal of Number Theory* **5** (2009), 465–487，[Proposition 1.2、作者 PDF §8，页 24–25](https://www.cs.uleth.ca/~akbary/npr.pdf)。该文先用有限约化群中的碰撞找到短关系，再对全部可能关系的分母和高度计数；其陈述在 $E(\mathbb Q)$ 和第一约化层，不能直接用于原 $F$、所有深度或这里的带权质量。这里采用的中间方法属于 literature-attested；(63.4)、原独立性和 (64.13)–(64.16) 另行给出同一原地方、全部深度和 $f_v/8$ 的对应。高度常数使用原 (16.21)、(49.8) 的归一化，不移用该文页 25 的高度归一化或隐含常数。
+
+用白话说，共同周期小不代表环境群小，但在这个循环环境里，它确实代表两点实际生成的群小。两个系数各只需试到周期的平方根，就能找到一个原全局组合进入指定深度。不同地方可以挑到不同组合，所以必须将整个有限组合集的高度付清。付清后周期质量至多二次；平均中一个周期只出现约 $N/r$ 次，于是得到线性 $N$ 预算。这个原全深度共同质量消费者是 repo-derived 综合，经典碰撞、群论和分部求和不另作一般新理论。$\square$
+
+## 65. 完整支持的次二次平均与剩余周期质量
+
+**定理 65.1（原完整共同分母的精确缺口）。** 在定义 64.1 中取
+
+$$
+\Sigma_{\rm all}=\{p:p>7\},\qquad
+\Sigma_{\rm rem}=\Sigma_{\rm all}\setminus S_0.
+\tag{65.1}
+$$
+
+下标 $\mathrm{all}$、$\mathrm{rem}$ 分别表示把这两集合代入 $W_{\Sigma,H}$、$a_{\Sigma,H}$、$F_{\Sigma,H}$、$\mathcal M_{\Sigma,H}$。对每个固定的 $M\ge1,H\ge7$，令 $q=q_H$ 在以下极限中保持不变，则
+
+$$
+\begin{aligned}
+\mathcal M_{\mathrm{all},H}(N)=o(q^2N^2)\quad(N\to\infty)
+&\quad\Longleftrightarrow\quad
+W_{\mathrm{all},H}(R)=o(q^2R^3)\quad(R\to\infty)\\
+&\quad\Longleftrightarrow\quad
+W_{\mathrm{rem},H}(R)=o(q^2R^3)\quad(R\to\infty).
+\end{aligned}
+\tag{65.2}
+$$
+
+完整支持在每个有限阶段已有粗预算，置 $m=\lfloor R\rfloor$，则
+
+$$
+W_{\mathrm{all},H}(R)
+\le h_0q^2\frac{m(m+1)(2m+1)}6+m\log2.
+\tag{65.3}
+$$
+
+这里的完整量是原全部 $p>H$ 的尾部最小共同质量；所有 $v\mid p$ 和所有深度都在内。特别没有将其改为仅 $S_0$ 的质量。
+
+**证明。** 定理 64.2 的有限性和身份 (64.7) 没有使用循环性，故对 $\Sigma_{\mathrm{all}}$ 和 $\Sigma_{\mathrm{rem}}$ 都成立。在 (64.9) 中按精确值 $r_{vj}=s$ 分组；每组均由同一个非零全局点 $[qs]P_1$ 的分母支付全部地方及层。原高度上界给出
+
+$$
+W_{\mathrm{all},H}(R)
+\le\sum_{s=1}^m\log\|B([qs]P_1)\|
+\le\sum_{s=1}^m(h_0q^2s^2+\log2),
+\tag{65.4}
+$$
+
+即 (65.3)。这只是三次量级上界，不能将其首项换成 $o(q^2R^3)$。
+
+现把 (64.7) 用于完整支持，暂记 $W=W_{\mathrm{all},H}$、$a=a_{\mathrm{all},H}$、$\mathcal M=\mathcal M_{\mathrm{all},H}$。因 $\lfloor N/r\rfloor\ge1$ 对 $1\le r\le N$ 成立，有
+
+$$
+W(N)\le N\mathcal M(N).
+\tag{65.5}
+$$
+
+若 $\mathcal M(N)=o(q^2N^2)$，即得 $W(N)=o(q^2N^3)$。对实数 $R$，$W(R)=W(\lfloor R\rfloor)$ 且 $\lfloor R\rfloor/R\to1$，故实数版本也成立。
+
+反向，假设 $W(R)=o(q^2R^3)$。给定任意 $\eta>0$，存在整数 $R_0=R_0(\eta,H,M)$，使所有整数 $r\ge R_0$ 都满足 $W(r)\le\eta q^2r^3$。对 $N\ge R_0$，仍用有限分部求和，得到
+
+$$
+\begin{aligned}
+\mathcal M(N)
+&\le\frac{W(N)}N+\sum_{r=1}^{N-1}\frac{W(r)}{r(r+1)}\\
+&\le C_0+\eta q^2\left(N^2+
+ \sum_{r=R_0}^{N-1}\frac{r^2}{r+1}\right)\\
+&\le C_0+\frac32\eta q^2N^2,
+\end{aligned}
+\tag{65.6}
+$$
+
+其中 $C_0=\sum_{1\le r<R_0}W(r)/(r(r+1))$ 是固定的有限数，末步用 $r^2/(r+1)\le r$。除以 $q^2N^2$ 后取上极限，再令 $\eta\downarrow0$，即得完整平均的次二次结论。这证明第一个等价；它用的是非负质量的标准分部求和，未提供周期质量的小量估计。
+
+两素数支持不相交，所以准确有
+
+$$
+\begin{aligned}
+W_{\mathrm{all},H}(R)
+ &=W_{S_0,H}(R)+W_{\mathrm{rem},H}(R),\\
+\mathcal M_{\mathrm{all},H}(N)
+ &=\mathcal M_{S_0,H}(N)+\mathcal M_{\mathrm{rem},H}(N).
+\end{aligned}
+\tag{65.7}
+$$
+
+(64.8) 给出固定阶段的 $W_{S_0,H}(R)=o(q^2R^3)$ 与 $\mathcal M_{S_0,H}(N)=o(q^2N^2)$。结合非负性，得到第二个等价；同理 (65.2) 也等价于 $\mathcal M_{\mathrm{rem},H}(N)=o(q^2N^2)$。等价中的所有极限均固定 $H,M$；这里没有对完整支持取得随 $N$ 移动的 $H$ 或 $M$ 上的统一小量。$\square$
+
+在完整支持中，精确指数 $r_{vj}$ 仅保证两个生成元都被同一个整数消去；一个两生成元有限交换群的阶可达 $r_{vj}^2$。因此“小指数”不能直接给出 (64.12) 所需的“小群阶”。定理 63.2 在 $S_0$ 上消除了这个区别，其他非标量地方及普通标量地方没有从该定理取得同样的全深度循环结论。即使某个环境群不循环，实际两点仍可能生成循环子群；这里既没有排除这种情况，也没有证明它在剩余支持上足够普遍。
+
+故完整支持尚缺的是 (65.2) 中剩余周期质量的严格次三次增长，或能够推出它的联合算术约束；(65.3) 恰停在三次量级。低周期处的质量包括 $p>R$ 乃至 $p>N$ 的原地方，不能靠删去它们缩小缺口。单独的剩余域群阶、分别最优的局部短关系、支持的素数密度或各点分母的大质量，都不补足这个条件。
+
+来源与新增范围。定理 63.2 消费原 (53.8)–(53.9)、(58.5)；定理 64.2 消费原 (62.5)–(62.6)、002 (16.21) 及 003 (49.8)。实际半点与独立性沿用原 Brox 固定源码，未重作或变更。Silverman 的约化正合列、严格形式对数、完整素于 $p$ 挠点和标准 Weil 配对，以及 Akbary–Murty 的短关系/高度方法，均为 literature-attested 内部输入。定理 65.1 的一般非负分部求和是成熟步骤，新增范围为它与原全部深度、精确地方权重及实际共同周期的完整接口和剩余支持分解，属 repo-derived 综合，不主张全球文献优先性。
+
+用白话说，受限支持上的循环性确实把平均预算降了一阶，而且所有大素数、所有深度都已计入。但是完整 gcd 还含有其余地方；现在可以准确说出剩下要证明什么：周期不超过 $R$ 的那些地方和深度，总质量相对于 $q_H^2R^3$ 的比值必须趋于零。这里证明的是这个条件与完整次二次平均的等价，没有证明条件本身。线性上界也只约束同一个 $k=1$ 的最小共同质量，不给出任意移动 $k$ 的上界、每个 $t$ 的线性界或任何未另证的密度一结论。原短共振的同时实现、原 $p_H(\alpha)$、原 (31.2)、负 $\vartheta$ 阶段的调和和发散及原覆盖目标均仍保留各自的未解义务。
+
+---
+
+## 追加锚（本行以下为增补区）
