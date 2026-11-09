@@ -30,6 +30,8 @@ D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.widthTotal
 statement_id: sha256:1599dea1e937fc19cabeaa107a371a30c86b0526bfd9a251a1fcb71ebcab5ee3
 D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.width_counting_bridge
 statement_id: sha256:b0ee269255efb9d46abe0df07b64609eafbc4ff070b1edfd59fae14859fc955d
+D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.Valid
+statement_id: sha256:214fcd95916dbdaa9b9ace506c545eeb309580e42df33d25224d324be358ccb9
 D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.colour_bond_iff
 statement_id: sha256:b9273762bbccc68fc56c48c38b8aba02a46a50a53bfbbe70a660fd21867d6be8
 D5.S3.Observer.Separation.BooleanRankThreeK4.beta
@@ -49,8 +51,6 @@ instDecidableGood: proof_shape=bind-only; consumers=classCount, firstCount
 v2: proof_shape=bind-only; consumers=counting_bridge, v_eq_w
 total2: proof_shape=bind-only; consumers=counting_bridge, a_eq_w
 counting_bridge: proof_shape=bind-only; consumers=a_eq_w
-Valid: proof_shape=bind-only; consumers=valid_next, row_counts, initial_valid
-instDecidableValid: proof_shape=bind-only; consumers=valid_next, row_counts
 valid_next: proof_shape=bind-only; consumers=v_eq_w
 classCount: proof_shape=bind-only; consumers=finite_certificate
 firstCount: proof_shape=bind-only; consumers=finite_certificate
@@ -82,7 +82,7 @@ namespace D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233123SquareStrip
 
 open HardinA233175PairStrip (Seen Col good finish pairs)
 open HardinA233251TriangleStrip
-  (widthNormal widthStep widthV widthTotal width_counting_bridge colour_bond_iff)
+  (widthNormal widthStep widthV widthTotal width_counting_bridge colour_bond_iff Valid)
 open D5.S3.Observer.Separation.BooleanRankThreeK4 (beta)
 
 def rowLegal (c : Col) : Prop :=
@@ -131,12 +131,6 @@ private abbrev total2 := widthTotal rowLegal pairs
 
 private theorem counting_bridge (n : ℕ) : (a (n + 1) : ℤ) = total2 (v2 n) := by
   exact width_counting_bridge rowLegal pairs compatible bonds bonds_iff n
-
-def Valid (s : Seen) (p : Fin 3 × Fin 3) : Prop :=
-  s.1 = true ∧ p.1 ≠ p.2 ∧ (s.2 = false → p.1 ≠ 2 ∧ p.2 ≠ 2)
-
-private instance instDecidableValid (s : Seen) (p : Fin 3 × Fin 3) : Decidable (Valid s p) :=
-  inferInstanceAs (Decidable (_ ∧ _ ∧ (_ → _ ∧ _)))
 
 private theorem valid_next : ∀ s p, Valid s p → ∀ c : Col,
     rowLegal c ∧ compatible p c ∧ good s c → Valid (finish s c) (pairs c) := by

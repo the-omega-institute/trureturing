@@ -49,13 +49,11 @@ internal sealed class HardinA233123SquareStripDocument : IScribeDocumentDefiniti
                 "BooleanRankThreeK4.beta has fibres {0,5}, {1,4}, {2,3}. Its value for each "
                 + "preceding colour must differ from the next colour's value in that column. "
                 + "HardinA233175PairStrip.pairs c is literally (beta (c 0), beta (c 1))."),
-            Def("valid", "Valid", "The reachable boundary invariant", ValidFormula(),
-                "Seen is Bool times Bool, recording whether colours 1 and 2 have occurred. "
-                + "After the first row, 1 has occurred and the two boundary pair labels "
-                + "differ. Before 2 has occurred neither label is 2. Every allowed next row "
-                + "preserves this invariant."),
             Def("classcount", "classCount", "One-row class counts", ClassCountFormula(),
-                "The shared good predicate checks the row in column order using allowed "
+                "HardinA233251TriangleStrip.Valid s p says that 1 has been seen, the "
+                + "boundary labels differ, and before 2 is seen neither label is 2. "
+                + "Seen is Bool times Bool, tracking occurrences of colours 1 and 2. "
+                + "The shared good predicate checks the row in column order using allowed "
                 + "and advance. The shared finish function returns its final seen flags."),
             Def("firstcount", "firstCount", "First-row class counts", FirstCountFormula(),
                 "The first colour is zero and both initial seen flags are false."),
@@ -143,16 +141,6 @@ internal sealed class HardinA233123SquareStripDocument : IScribeDocumentDefiniti
                 Ne(Proj(p, 2), Call(PairMap, App(c, Index(1))))))));
     }
 
-    private static Formula ValidFormula()
-    {
-        var s = V("s"); var p = V("p");
-        return All("s", Seen(), All("p", Boundary(), Eq(Self("Valid", s, p),
-            And(Eq(Proj(s, 1), Bool(true)), And(Ne(Proj(p, 1), Proj(p, 2)),
-                Imp(Eq(Proj(s, 2), Bool(false)),
-                    And(Ne(Proj(p, 1), Typed(D(2), Fin(3))),
-                        Ne(Proj(p, 2), Typed(D(2), Fin(3))))))))));
-    }
-
     private static Formula ClassCountFormula()
     {
         var s = V("s"); var p = V("p"); var b = V("b"); var c = V("c");
@@ -177,7 +165,7 @@ internal sealed class HardinA233123SquareStripDocument : IScribeDocumentDefiniti
     private static Formula CertificateFormula()
     {
         var s = V("s"); var p = V("p");
-        var rows = All("s", Seen(), All("p", Boundary(), Imp(Self("Valid", s, p),
+        var rows = All("s", Seen(), All("p", Boundary(), Imp(Call(Transfer + "Valid", s, p),
             And(Eq(Self("classCount", s, p, Bool(true)),
                     Conditional(Proj(s, 2), Int(1, 2), Int(4))),
                 Eq(Self("classCount", s, p, Bool(false)),
