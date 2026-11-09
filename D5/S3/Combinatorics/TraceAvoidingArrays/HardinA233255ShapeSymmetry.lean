@@ -152,7 +152,14 @@ def shapeEquiv : Fin 16 ≃ Shape where
 
 private theorem representative_canonical (p : Boundary) (hp : proper p) :
     representatives (classOf p) = (canonical p hp).val := by
-  exact representatives_complete p hp
+  have hc : classOf (canonical p hp).val = classOf p := by
+    unfold classOf
+    rw [normalize_fixed (canonical p hp)]
+    rfl
+  have h := congrArg Subtype.val (shapeEquiv.apply_symm_apply (canonical p hp))
+  change representatives (classOf (canonical p hp).val) = (canonical p hp).val at h
+  rw [hc] at h
+  exact h
 
 /-- The actual proper seven-cell pair-row fibres define every matrix entry. -/
 def K : Matrix (Fin 16) (Fin 16) ℤ := fun i j =>

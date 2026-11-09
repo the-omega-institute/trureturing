@@ -71,7 +71,7 @@ def family : Registration arena (type_of% @result) where
   dependence := by
     intro i
     exact ⟨(), ⟨1, by decide⟩, ⟨2, by decide⟩, actual_dependence⟩
-def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     (@result) (Realization signature) Type Unit where
   unitName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255Recurrence.auditUnit
   realizationName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255Recurrence.family

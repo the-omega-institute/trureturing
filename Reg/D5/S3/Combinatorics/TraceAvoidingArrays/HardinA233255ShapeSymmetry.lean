@@ -77,7 +77,7 @@ def rejected : Realization signature :=
   realize signature (fun _ n p => pairV n (true, true) p + 1) (fun e => nomatch e)
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ (n : ℕ) (p : Boundary) (hp : proper p),
+  Law R := ∀ (n : ℕ) (p : Boundary) (_hp : proper p),
     R.readout () n p = F n (classOf p)
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
@@ -160,8 +160,15 @@ def family : Registration arena (type_of% @literal_canonical_bridge) where
     intro i
     refine ⟨1, 0, 1, ?_⟩
     change F 1 0 ≠ F 1 1
+    have h0 := completed_transfer_bridge 1 ![0, 1, 0, 1, 0, 1] (by decide +kernel)
+    have h1 := completed_transfer_bridge 1 ![0, 1, 0, 1, 0, 2] (by decide +kernel)
+    have hc0 : classOf ![0, 1, 0, 1, 0, 1] = 0 := by decide +kernel
+    have hc1 : classOf ![0, 1, 0, 1, 0, 2] = 1 := by decide +kernel
+    rw [hc0] at h0
+    rw [hc1] at h1
+    rw [← h0, ← h1]
     decide +kernel
-def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     (@literal_canonical_bridge) (Realization signature) Type Unit where
   unitName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255ShapeSymmetry.Literal.auditUnit
   realizationName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255ShapeSymmetry.Literal.family
