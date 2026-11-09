@@ -21,13 +21,10 @@ reused from PGroupProjectiveNormRing at their original source location.
 The converse uses the unnormalised, CommRing-generic
 LinearMap.sumOfConjugatesEquivariant, not equivariantProjection.
 
-This is a reconstruction of the classical projectivity/trace-one criterion;
-the supplied source context is Aljadeff--Ginosar (1996), Lemma 4, and
+This reconstructs the classical projectivity/trace-one criterion. The
+supplied attribution is Aljadeff--Ginosar (1996), Lemma 4, and
 Aljadeff--Kassel, https://arxiv.org/abs/math/0012038. No literature novelty
 or independent bibliographic verification is claimed here.
-
-SOURCE CANDIDATE: UNCOMPILED. Native integration must elaborate this module
-with the accompanying visibility/factoring patch before claiming a theorem.
 -/
 
 set_option autoImplicit false
@@ -76,6 +73,7 @@ theorem projective_iff_projective_and_conjugation_trace_one (ρ : Representation
           intro r v
           exact congrFun (map_smul S r v) (1 : G) }
     have ht (g : G) (v : V) : t (ρ g v) = S v g := by
+      change S (ρ g v) 1 = S v g
       have he := congrFun
         (Representation.IntertwiningMap.isIntertwining ρ
           (rightTranslate (R := R) (P := G) (W := V)) S g v) (1 : G)
