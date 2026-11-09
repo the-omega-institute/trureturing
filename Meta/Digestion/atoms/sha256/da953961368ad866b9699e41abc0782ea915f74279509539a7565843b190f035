@@ -1,0 +1,42 @@
+**定理 59.3（扭曲 GNS 全局化）。** TPC 给出一个 Hilbert 空间 \(H_\varphi\)、一个按对象分解的 Hilbert 纤维族和一个射影运输表示 \(\pi\)，满足
+
+$$
+\pi(\delta_h)\pi(\delta_g)
+=\alpha(h,g)\pi(\delta_{hg}),
+\qquad
+\pi(\delta_g)^*=\pi(\delta_g^*),
+\tag{59.3}
+$$
+
+并且所有由有限二元比较组成的 Gram 矩阵半正定。
+
+证明。令
+
+$$
+N_\varphi=\{a:\varphi(a^*a)=0\}.
+$$
+
+Cauchy–Schwarz 不等式由 \(\varphi((a+tb)^*(a+tb))\ge0\) 的判别式得到，故 \(N_\varphi\) 是左理想。商空间
+
+$$
+H_0=\mathbb C_\alpha[\mathcal G]/N_\varphi,
+\qquad
+\langle[a],[b]\rangle=\varphi(a^*b)
+$$
+
+是预 Hilbert 空间；取完备化得到 \(H_\varphi\)。左乘定义
+
+$$
+\pi(c)[a]=[ca].
+$$
+
+左理想性质使其良定义，式(59.2)给出 \(\pi(c)^*=\pi(c^*)\)。把(59.1)代入即可得到(59.3)。对任意有限族 \(a_1,\ldots,a_n\)，矩阵
+
+$$
+\bigl[\varphi(a_i^*a_j)\bigr]_{i,j}
+$$
+
+是 Gram 矩阵，因为对任意复系数 \(z_i\)，其二次型等于 \(\varphi((\sum_i z_i a_i)^*(\sum_j z_j a_j))\ge0\)。取 \(a_i\) 为有限箭头及其复合，得到所有有限二元比较表的半正定性。证毕。
+
+因此 TPC 不是先假定 Hilbert 坐标再检查关系，而是从同一个正平方泛函同时构造 Hilbert 几何和射影相位运输。
+

@@ -1,0 +1,15 @@
+**候选公理 59.2（扭曲正比较，TPC）。** 要求存在一个线性泛函 \(\varphi:\mathbb C_\alpha[\mathcal G]\to\mathbb C\)，满足
+
+$$
+\boxed{
+\varphi(a^*a)\ge0\quad\text{对所有有限支持 }a,
+\qquad
+\varphi(\delta_{1_x})=1\text{ 对每个实际对象 }x,
+\qquad
+[\alpha]\ne0.
+}
+\tag{TPC}
+$$
+
+这里的 \(\alpha\) 不是外部相位函数，而是同一批比较运输的中心结合缺陷；\([\alpha]\ne0\) 是关系神经的非分裂类。TPC 只有一个真正的局部要求：扭曲关系代数上的平方非负。若研究经典或严格平坦分支，则把最后一项退化为 \([\alpha]=0\)。
+

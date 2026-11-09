@@ -1,0 +1,28 @@
+**定义 59.1（中心扭曲关系代数）。** 取定义58.1的路径群胚 \(\mathcal G\)，以及由比较运输定义的归一化中心 cocycle \(\alpha\)。在有限支持形式和上定义
+
+$$
+\mathbb C_\alpha[\mathcal G]
+=\left\{\sum_g c_g\,\delta_g\right\},
+$$
+
+本节的 \(\mathbb C\) 不是新的外部原语：TPC 在 C4-H 已选出的复结构上书写，复标量是内部 \(J\) 生成的中心；若尚未选出 C4-H，应把这里的系数环保留为一般中心并只得到中心扭曲代数。
+
+其中可复合箭头的乘法为
+
+$$
+\delta_h\delta_g
+=\alpha(h,g)\delta_{hg},
+\qquad
+\delta_h\delta_g=0\quad\text{(不可复合时)}.
+\tag{59.1}
+$$
+
+单位箭头给出局部单位。定义伴随
+
+$$
+\delta_g^*=overline{\alpha(g^{-1},g)}\,\delta_{g^{-1}}.
+\tag{59.2}
+$$
+
+归一化和 cocycle 恒等式保证乘法结合、伴随满足 \((ab)^*=b^*a^*\)。有限对象截断时可把所有局部单位相加成整体单位；一般情形按有限支持逐块计算。
+
