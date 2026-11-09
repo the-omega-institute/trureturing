@@ -1,0 +1,34 @@
+**定义 15.1（同一原候选与生成环境）。** 沿用定义 1.1、配平主卷 128.1–128.2 的同一原资料 $(E,C,u,N,\mathcal P,S,D)$。全部原 A1–A3 保留：所有原有向 Hermitian 二表正性，相加三表及其排列的实部半正定与指定相加差的零二次值，$S(u,u)=u$，以及同一固定有理 $0<\theta\le1$ 的小效果窗平方收缩。已取得的 Jordan 乘法为 $S(a,b)=a\circ b$；$E$ 是自身含单位实 JB 完成 $X$ 中的稠密含单位实 Jordan 子代数，$C=E\cap X_+$，$N=\|\cdot\|_X|_E$。原正实评价分离 $E$ 并准确决定 $C$，全部零、不等、次归一质量 $m_\alpha=\alpha(u)$ 保留。
+
+使用配平主卷 248.1、250.1 已付的忠实、含单位、等距、锥准确 Jordan 包含 $j:X\to A_{\rm sa}$，将元素与其像认同，并取 $A=C^\ast(j(X))$。因此
+
+$$
+a\circ b=\frac{ab+ba}{2},\qquad [a,b]=ab-ba
+\quad(a,b\in X).
+\tag{15.1}
+$$
+
+这里只要求 $E$ 稠密于 $X$，不要求 $X=A_{\rm sa}$ 或 $E$ 稠密于 $A_{\rm sa}$。环境结合乘法用于数学读取，不预先等于原候选待恢复的 $\circ-\mathrm iD$，也不要求 $E+\mathrm iE$ 对环境乘法闭合。所有响应仍是同一个总映射 $D:E^2\to E$ 的旧值。
+
+保留每个原 $a,b,\alpha$ 的完整 P2，其行列式界为
+
+$$
+|\alpha(D(a,b))|^2
+\le\alpha(a^2)\alpha(b^2)-\alpha(a\circ b)^2.
+\tag{15.2}
+$$
+
+全部原三元组的完整 PB 取配平主卷 (128.6) 的等价元素式：
+
+$$
+\begin{aligned}
+\nu&=D(a,b)-a\circ c,&
+\omega&=a\circ b+D(a,c),\\
+D(b+\nu,c+\omega)-D(b-\nu,c-\omega)
+&=-2b\circ\nu-2c\circ\omega .
+\end{aligned}
+\tag{15.3}
+$$
+
+不增加未知 $D$ 的可加、齐次、连续、可测、酉协变、单位或中央平移、商下降、完成延拓、NN、Jacobi 或原 $R$。除总映射本有的原输出外，不加任何有限窗口、角、生成子代数或线性张成的响应闭合前件；不先供应原投影、原单位平方轴、根或逆。
+

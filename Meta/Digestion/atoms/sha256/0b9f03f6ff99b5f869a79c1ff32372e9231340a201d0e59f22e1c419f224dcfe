@@ -1,0 +1,12 @@
+## 7. 数学来源与对应范围
+
+[1] P. Jordan and J. von Neumann, *On Inner Products in Linear, Metric Spaces*, Annals of Mathematics 36 (1935), 719–723, [DOI:10.2307/1968653](https://doi.org/10.2307/1968653)。标准平行四边形极化步骤用于定理 2.1 内部；相同重构的形式库接口见钉版 Mathlib 的 `Analysis/InnerProductSpace/OfNorm.lean`。
+
+[2] R. Mosseri and R. Dandoloff, *Geometry of entangled states, Bloch spheres and Hopf fibrations*, [quant-ph/0108137](https://arxiv.org/abs/quant-ph/0108137)。仅用于复二维振幅与相位商的几何对应。
+
+[3] P. Busch, *Quantum states and generalized observables: a simple proof of Gleason's theorem*, [quant-ph/9909073](https://arxiv.org/abs/quant-ph/9909073)。全效果上的一致可加评价，不是任意受限读口的结论。
+
+[4] J. Watrous, *The Theory of Quantum Information*, Chapter 2, Theorem 2.22, [公开章节](https://cs.uwaterloo.ca/~watrous/TQI/TQI.2.pdf)。完全正映射的等价表示；本稿不从无参考的单系统标量预算直接调用它。
+
+**内容对应。**母卷 C133 定理 2.2–2.3、V78 续卷第 6 节与 V79 第 3 节给三读相位、已有正几何中的事件重编码及极化工具。本卷的承重增量是从未预给范数或二元形式的连续忠实标量权重，以 (S) 同时恢复二次几何和三读闭合，以及该候选的六边形失败证书、全输入有限倍数反模型和准确首个失败倍数。上述均为来源明确的仓内推导，不提出文献优先权主张。
+

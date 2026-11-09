@@ -1,0 +1,31 @@
+#### 定理 12.5：Hopf 读出与复射线
+
+$X(q)$ 为单位纯转向，读出覆盖整个 $S(W)$。两份单位振幅读出相同，当且仅当
+
+$$
+r=q\,j(e^{i\theta})
+$$
+
+对某个 $\theta$ 成立。因此
+
+$$
+\boxed{S^1\longrightarrow S^3\longrightarrow S^2,\qquad
+\mathbb CP^1\cong S^2.}
+$$
+
+**证明。**
+
+共轭保持纯转向与范数。对任一单位 $X\ne-\iota$，取
+
+$$
+q=\frac{1-X\iota }{\sqrt{2(1+\kappa(X,\iota ))}}.
+$$
+
+它范数一，且 $q\iota =Xq$，因此 $q\iota q^*=X$。对 $X=-\iota$，取单位 $v\perp \iota$ 即可。
+
+若 $q\iota q^*=r\iota r^*$，则 $q^*r$ 与 $\iota$ 交换。纯转向部分与 $\iota$ 的交换子为零，按 (10.7) 必平行于 $\iota$，所以 $q^*r\in\mathbb C_\iota$。它范数一，恰为所列相位。反向直接成立。
+
+$\square$
+
+因此保留内容的连续相位圈由原来源的稳定关系决定。把全部单位四元数都当成无差别标量，会把不同内容一起合并，违背同一读出。三维 $W$ 是内容嵌入空间；其纯态球面二维，单位振幅球面三维，去掉一个相位维后恰好二维。
+

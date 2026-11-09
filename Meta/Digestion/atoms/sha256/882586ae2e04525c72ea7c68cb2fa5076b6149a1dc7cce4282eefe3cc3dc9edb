@@ -1,0 +1,18 @@
+**命题 2.4（五点条件消去全部乘法缺陷）。**$\mathrm{N}_5$ 蕴涵 $\mathrm{BR}$。
+
+**证明。**对称性使 $B$ 对称。总质量为零、支撑至多五点的自由向量 $w=\sum_i\alpha_i\delta_{x_i}$ 满足
+
+$$
+B(w,w)=-\frac12\sum_{i,j}\alpha_i\alpha_jc(x_i,x_j)\ge0.
+$$
+
+每个 $D_k(a,u)$ 支撑至多四点，故 (2.4) 取相同矩形后为三个非负数之和等于零，特别 $B(D(a,u),D(a,u))=0$。对任意标签 $z$ 和实数 $\lambda$，向量 $D(a,u)+\lambda e_z$ 支撑于 $\{a\cdot u,a,u,1,z\}$，故
+
+$$
+0\le B(D+\lambda e_z,D+\lambda e_z)
+=2\lambda B(D,e_z)+\lambda^2B(e_z,e_z).
+\tag{2.6}
+$$
+
+有限系数的一次项若不为零，取符号相反且足够小的 $\lambda$ 即矛盾。因此 $B(D,e_z)=0$；对称性给反向配对也为零。任意 $z$ 张成 $E$，所以 $D\in\mathcal N$。此证明不主张五是最小点数。
+

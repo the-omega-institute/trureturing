@@ -1,0 +1,42 @@
+**Corollary 178.2 (exact rigidity in the preserved terminal plane).** Under the hypotheses of Proposition 178.1, if all sixty-four residuals vanish, then
+
+$$
+u_0=u_1=F,
+\qquad
+u_3=q,
+\qquad
+u_B=p
+$$
+
+as $m$-classes. Thus the preserved terminal-pair slice of the arbitrary-partition fibre contains only the original partition.
+
+*Proof.* Use Proposition 178.1 first with
+
+$$
+a^{(01)}=(1,-1,0,0),
+$$
+
+and then with
+
+$$
+a^{(3B)}=(2,0,1,-3).
+$$
+
+The baseline identities $f_0-f_1=0$ and $2f_0+f_3-3f_B=2F+q-3p=0$ show that both vectors are admissible. Vanishing of all residuals and (178.1) force
+
+$$
+u_0-u_1=0,
+\qquad
+2u_0+u_3-3u_B=0
+$$
+
+as $m$-classes. Since $u_3+u_B=q+p$ and the four labels sum to one,
+
+$$
+2u_0=1-q-p=2F,
+$$
+
+so $u_0=u_1=F$. Substitution into the second relation and $u_3+u_B=q+p$ gives $u_B=p$ and $u_3=q$. $\square$
+
+This closes the exact-zero question on the preserved terminal-pair slice, including arbitrary first-label partitions and arbitrary pointwise representatives. It does not prove that a full zero outside the symmetric family must preserve $u_3+u_B=q+p$; establishing or refuting that implication is the next arbitrary-partition gap. The result also leaves $F_{64}$, $H43$, SRS$\text{-}20$, physical succession and Lean/kernel formalization open.
+

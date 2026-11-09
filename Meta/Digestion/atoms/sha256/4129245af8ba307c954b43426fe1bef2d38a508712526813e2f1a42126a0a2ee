@@ -1,0 +1,25 @@
+**定义 9.8（F：同一实现的原细记录与指定双返回）。** 在定理 10.2 的载体上，支撑、中心及角均按同一原效果空间的运输解释。每个原实际成功箭头 $x:o\to p$ 有同一实现的原有限细标签端口及实际遗忘
+
+$$
+\widehat T_x(v)=(S_{x,\lambda}v)_{\lambda\in\Lambda_x},\qquad
+ d_p\widehat T_x=T_x=\sum_{\lambda\in\Lambda_x}S_{x,\lambda}.
+\tag{9.7}
+$$
+
+每个非零 $S=S_{x,\lambda}$ 有原指定实际返回 $U$、原正数 $q$ 以及位于单一原中心块内的非零支撑 $P,Q$，与 [C118，定义 140.1，式 (140.2)–(140.5)](AURIC_COMPOSITE_COMPARISON_REFERENCE_FREE_FILTER_RELATIONS_V96_CONTINUATION.md) 完全相同：
+
+$$
+\begin{gathered}
+P=\operatorname{supp}S^\dagger(I),\quad
+Q=\operatorname{supp}S(I),\quad
+S(X)=QS(PXP)Q,\quad U(Y)=PU(QYQ)P,\\
+US(X)=qX\ (X\in P\mathcal A_oP),\qquad
+SU(Y)=qY\ (Y\in Q\mathcal A_pQ).
+\end{gathered}
+\tag{9.8}
+$$
+
+$U$ 是原 TNI 事件；反向资料也留在指定族中。F 量化原标签箭头、遗忘、返回及全部合法有限接续。零支不需返回。它没有预设 Kraus 秩，也不把数学 Kraus 指标当作原记录。
+
+所有继承的指定返回、准确校准、控制词及有限回路资料连同其原实现、原成功因素和读口均保留。它们原来声明的等式或统计条件仍按同一原词解释；不能用另一台同效果设备顶替。新构造词拥有自己的实现身份。这个保留条件不由“两个矩阵相等”产生新的原端口，也不要求原先未供应的 C118 校准包已经存在。
+

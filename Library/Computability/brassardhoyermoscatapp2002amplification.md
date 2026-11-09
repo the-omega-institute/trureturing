@@ -13,6 +13,10 @@ triage: anchor
 
 # Task focus is success amplitude, rather than state purity
 
+## Verified locator
+
+https://arxiv.org/abs/quant-ph/0005055
+
 The primary preprint is https://arxiv.org/pdf/quant-ph/0005055, with the
 rotation identity in equation (8) and the complexity conclusions in
 Theorems 2–3. The published chapter is in *Quantum Computation and

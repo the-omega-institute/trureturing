@@ -1,0 +1,13 @@
+### 定理 6.3（理想锐读出为何给出 Lüders 更新）
+
+设完全正分支 $\mathcal I$ 的效果是投影 $P$，即 $\operatorname{Tr}\mathcal I(\rho)=\operatorname{Tr}(P\rho)$。再要求对每个单位 $\psi\in\operatorname{Ran} P$，$\mathcal I(\lvert \psi\rangle\langle \psi\rvert)=\lvert \psi\rangle\langle \psi\rvert$。则
+
+$$
+\mathcal I(\rho)=P\rho P.
+$$
+
+**证明。**
+写 $\mathcal I(\rho)=\sum_rK_r\rho K_r^*$。效果等式给 $\sum K_r^*K_r=P$，所以每个 $K_r$ 在 $\ker P$ 上为零。对 $\psi\in\operatorname{Ran} P$，一组正秩一项之和支撑于 $\mathbb C\psi$，迫使每个 $K_r\psi$ 均与 $\psi$ 共线。一个线性映射若保持子空间内每一条射线，就在该子空间上为标量：比较任意两个独立向量及其和即可。故 $K_r=c_rP$，且 $P\ne0$ 时 $\sum|c_r|^2=1$。代回即得结论；$P=0$ 时所有 $K_r=0$。
+
+这里没有预设单 Kraus 算子。额外的理想性条件是“不改变该结果子空间内部的每条射线”；只要求结果可重复，还允许在子空间内作非平凡酉旋转，并不足以指定 Lüders 仪器。
+

@@ -1,0 +1,31 @@
+#### 定理 8.3（任意纯态族的线性包络下界）
+
+若纯态族 $\mathcal F$ 可由上述固定信道精确恢复，则
+
+$$
+\boxed{m\ge\dim\operatorname{span}\{\psi:P_\psi\in\mathcal F\}.}
+$$
+
+**证明。**
+
+取族中 $r$ 个线性独立的 $\psi_i$，令 $\sigma_i=\mathcal E(P_{\psi_i})$。
+对 $\sigma_i$ 谱分解，由纯输出的极端性，每个正权重谱向量 $v_i$ 都满足
+$\mathcal R(P_{v_i})=P_{\psi_i}$。
+写解码器的 Kraus 等距
+
+$$
+Wv=\sum_\alpha K_\alpha v\otimes\lvert \alpha\rangle.
+$$
+
+输出为纯态意味着 $Wv_i=\psi_i\otimes\eta_i$，其中 $\|\eta_i\|=1$。
+若 $\sum_i c_i\psi_i\otimes\eta_i=0$，在第一因子上逐个作用于 $\psi_i$ 对偶的线性泛函，
+得到 $c_i\eta_i=0$，故全部系数为零。
+于是 $Wv_i$ 及 $v_i$ 线性独立，压缩空间至少 $r$ 维。
+
+□
+
+每个态秩一，不表示整个纯态族只需一维载体。
+另一方面，若只要求重现一个事先已知的边缘密度矩阵，
+解码器可直接制备它，即使它混合也可从一维输入产生。
+要让单态秩成为恢复下界，应要求保全它与内部参考的相关性。
+

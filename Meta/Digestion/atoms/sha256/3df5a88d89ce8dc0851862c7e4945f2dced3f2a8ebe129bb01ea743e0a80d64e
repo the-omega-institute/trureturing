@@ -1,0 +1,35 @@
+**定义 16.1（只取 PY+NN 的同一原背景）。** 记 $\mathsf B$ 为 W32.1 中去掉 $\mathrm J_\perp$ 后的背景：保留 W27.1 的纯实入口、实际共轭和全部原来源合同，已识别的同一 Jordan 完成为 $X=\mathbb Ru\oplus H$，$H$ 为实 Hilbert 空间，原 $E=\mathbb Ru\oplus V$，$V=E\cap H$ 在 $H$ 中稠密。具体地，
+
+$$
+\begin{aligned}
+S(su+x,tu+y)&=(st+\langle x,y\rangle)u+sy+tx,\\
+C&=E\cap\{su+x:s\ge\|x\|\},\qquad N(su+x)=|s|+\|x\|.
+\end{aligned}
+\tag{16.1}
+$$
+
+原 $\mathcal P$ 仍分离 $E$ 并准确决定 $C$，全部原质量和 $q$ 保持。旧 $D:E^2\to E$ 起初只是反对称总映射。在全部原 $a,b$ 上要求
+
+$$
+\begin{aligned}
+D(a,b)^2&=\tfrac12\bigl(U_a(b^2)+U_b(a^2)\bigr)-S(a,b)^2\quad(\mathrm{PY}),\\
+D(a,D(a,b))&=(L_a^2-L_{a^2})b\quad(\mathrm{NN}),\\
+a^2&=S(a,a),\qquad L_ab=S(a,b),\qquad U_a=2L_a^2-L_{a^2}.
+\end{aligned}
+\tag{16.2}
+$$
+
+不要求完整 R、$\mathrm J_\perp$、跨平面相加、连续性或原完备性。W32.2 只用上述 PY+NN 的子证明，准确给
+
+$$
+\begin{gathered}
+D(su+x,tu+y)=\kappa(x,y)\in V,\qquad
+\kappa(x,y)\perp x,y,\\
+\|\kappa(x,y)\|^2=\|x\|^2\|y\|^2-\langle x,y\rangle^2,\qquad
+\kappa(x,\kappa(x,y))=\langle x,y\rangle x-\|x\|^2y.
+\end{gathered}
+\tag{16.3}
+$$
+
+$\kappa$ 反对称、分别实齐次，并满足 W32.2 的同平面行列式及剪切规律；这些不等于跨平面加性。符号 $\kappa$ 只是旧 $D$ 的纯向量值，不是原 native 核 $K$ 的改定义。不从保留的实际合同倒借未知 $D$ 的正则性；下列静态证明只使用明确列出的数学前件。
+

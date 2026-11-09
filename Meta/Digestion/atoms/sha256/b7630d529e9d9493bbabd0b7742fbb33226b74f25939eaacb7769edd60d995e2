@@ -1,0 +1,42 @@
+**Proposition 164.4 (finite-prefix escape does not imply a common infinite escape).** There is an abstract positive quadratic form and a countable readout stack for which every finite-prefix unit sphere has zero infimum, while the exact infinite kernel has a positive coercivity infimum. Take
+
+$$
+\mathcal Y=\ell^\infty(\mathbb N_0),
+\qquad
+Q(x)=x_0^2+\sum_{k=1}^{\infty}2^{-k}x_k^2,
+$$
+
+and let $\mathscr S_j(x)=x_{j+1}$. Then
+
+$$
+Y_{\le n}=\bigcap_{j=0}^{n}\ker\mathscr S_j
+$$
+
+contains every unit vector $e_k$ with $k\ge n+2$. Hence
+
+$$
+\inf\{Q(x):x\in Y_{\le n},\ \|x\|_\infty=1\}=0,
+$$
+
+and the particular choice $e_{n+2}$ gives the displayed diagonal bound
+
+$$
+Q(e_{n+2})=2^{-(n+2)}\longrightarrow0.
+$$
+
+On the other hand,
+
+$$
+Y_\infty=\bigcap_{j=0}^{\infty}\ker\mathscr S_j
+ =\operatorname{span}\{e_0\},
+$$
+
+and every unit vector in $Y_\infty$ has $Q(x)=1$. Thus
+
+$$
+\inf\{Q(x):x\in Y_\infty,\ \|x\|_\infty=1\}=1.
+\tag{164.5}
+$$
+
+This is a logical separation example, not a model of the FIB heat form. It shows that the passage from all finite prefixes to the common infinite kernel requires an additional compactness, correction, or exact-common-kernel argument.
+

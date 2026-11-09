@@ -1,0 +1,37 @@
+**Theorem 147.5 (a regular interior zero for every original tuple).** For every original $\theta\in\Theta$, there are a Borel function $u_*:G\to(0,1)$, a number $\epsilon>0$, and seven bounded real Borel directions $e_1,\ldots,e_7$ such that
+
+$$
+\epsilon\le u_*\le1-\epsilon,\qquad
+\mathcal F(u_*)=0,\qquad
+A:=\left.D_t\mathcal F\left(u_*+\sum_{j=1}^7t_je_j\right)\right|_{t=0}
+\text{ is invertible}.
+\tag{147.17}
+$$
+
+*Proof.* Choose $v_0,L,s,h_*$ from Lemma 147.4 and an odd $N>3L$. Apply Lemma 147.3 to $c=-q(v_0)$, obtaining $w,h_1,h_2,h_3\in V_N$. Distinct positive angular frequencies have zero polar cross-pairings, as in Corollary 133.3, since their weights are invariant and $P$ preserves sectors. Thus $v=v_0+w$ satisfies
+
+$$
+q(v)=0,\qquad B_j(v,h_k)=\delta_{jk}.
+\tag{147.18}
+$$
+
+The function $v$ is odd. Invariance of the three source marginals gives $L(v)=0$. Rotation invariance of the original trilinear form gives $\tau(v)=\tau(-v)=-\tau(v)$, so $\tau(v)=0$. Choose a sufficiently small $\lambda>0$ and put $u_*=p+\lambda v$, giving the first two assertions of (147.17). Bounded Borel representatives, repaired on one common null set, give the pointwise interior bounds on all of $G$.
+
+Self-adjointness of $P$ and differentiation of the original trilinear form give
+
+$$
+D\tau(v)[h]=\mathcal C(h,v,v)+\mathcal C(v,h,v)+\mathcal C(v,v,h)
+            =\int hH_v\,dm.
+\tag{147.19}
+$$
+
+For odd $v$, the density $H_v$ is even. On the three odd directions $h_k$, the linear and cubic differentials therefore vanish, while the pair differentials at $\lambda v$ are the invertible matrix $2\lambda I_3$ by (147.18). On even directions all pair differentials vanish. Use the three invariant even directions $g_0,g_1,g_2$ and the even direction $h_*$. Their linear differential has the positive-definite three-by-three Gram matrix of Lemma 147.2, and its $h_*$ column is zero. Its cubic differential in that last column is
+
+$$
+\lambda^2\int h_*H_v\,dm
+ =\lambda^2\int h_*H_{v_0}\,dm\ne0.
+\tag{147.20}
+$$
+
+In the ordered directions $(g_0,g_1,g_2,h_*,h_1,h_2,h_3)$ and with the pair rows placed last, the full differential is block triangular with invertible diagonal blocks. This proves (147.17). Every direction is a function on the original $G$; no additional state, randomness or operation has been added. $\square$
+

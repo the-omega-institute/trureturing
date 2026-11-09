@@ -1,0 +1,29 @@
+**Definition 31.1 (the fixed left coordinate).** With the original $p,V,\mu$ of (2.7), put
+
+$$
+g_0=Vp/\mu,\qquad
+G_jg=\int_0^\infty\mathsf Q_j(t)g\,dt
+\tag{31.1}
+$$
+
+on inputs and in norms for which this integral converges. The coordinate is exactly R (8.3): $\langle g_0,f\rangle=\mu^{-1}\int Vpf$. P §§87–88 and Entire-height response escape Theorem 3.1 give
+
+$$
+\begin{gathered}
+|g_0(\xi)|\le C(1+\mathfrak d(\xi))^{-10},\quad
+ g_0\in L^1\cap L^2,\quad \langle g_0,p\rangle=1,\\
+G_0g_0=p/(\gamma\mu),\qquad
+\gamma\mathcal N_0g_0=g_0,
+\qquad \mathfrak d(\xi)=d_E(0,\xi).
+\end{gathered}
+\tag{31.2}
+$$
+
+The identities follow from the specified reconstruction of $Vp$ and its adjoint; they introduce no arbitrary zero-energy inverse. Homogeneous volume growth seven implies
+
+$$
+r^ng_0\in L^p\quad\text{if }(10-n)p>7,
+\qquad r^ng_0\in L^\infty\quad(0\le n\le5).
+\tag{31.3}
+$$
+

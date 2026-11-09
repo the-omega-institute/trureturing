@@ -1,0 +1,4 @@
+## 163. Finite-horizon successor closure remains non-coercive
+
+The R5-007 distinction between a current readout, a well-defined successor and a static state can be stated directly on the calibrated function space. The next result adds a finite successor horizon to the observation map of §162; it does not choose a physical successor operation.
+

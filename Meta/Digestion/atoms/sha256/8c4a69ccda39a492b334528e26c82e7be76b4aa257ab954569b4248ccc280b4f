@@ -1,0 +1,4 @@
+**命题 62.1（恢复不要求图表封闭）。** 取 $J_0=H_3(\mathbb C)$，以 $a\mapsto\operatorname{diag}(a,a^{\mathsf T})$ 嵌入 $J_1=H_6(\mathbb C)$，其后使用标准 $M_6\otimes M_{2^n}$ 自伴链。全域取 $D(a,b)=(ab-ba)/(2i)$，则满足57.1，但 $J_0$ 一般不对 $D$ 封闭。
+
+证明。全原域从 $J_1$ 起就是标准代数矩阵核，PY、NN和完整Jacobi逐式成立。对初始 $a,b$ 的像，输出是 $\operatorname{diag}(C(a,b),-C(a,b)^{\mathsf T})$，当 $[a,b]\ne0$ 时不能为任何 $\operatorname{diag}(c,c^{\mathsf T})$。因此不能在新背景下照搬50.2中依赖标准复 $*$-链的级保持结论。∎
+

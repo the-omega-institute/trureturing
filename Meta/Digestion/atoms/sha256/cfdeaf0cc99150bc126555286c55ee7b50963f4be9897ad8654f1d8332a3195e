@@ -1,0 +1,19 @@
+### 16.6　两个可检验的理论后果
+
+完整局部 CPTP 操作并遗忘全部结果时，
+
+$$
+\operatorname{Tr}_B[(\operatorname{id}\otimes\mathcal E_B)(\rho_{AB})]=\operatorname{Tr}_B\rho_{AB},
+$$
+
+由 $\sum K_\mu^*K_\mu=I$ 直接推出无信号性。后选择不属于该命题。
+
+正半内积 $\langle X,Y\rangle_\rho=\operatorname{Tr}(\rho X^*Y)$ 的 Cauchy–Schwarz 不等式给
+
+$$
+\operatorname{Var}_\rho(H)\operatorname{Var}_\rho(K)
+\ge\left|\frac1{2i}\operatorname{Tr}(\rho[H,K])\right|^2.
+$$
+
+不确定性来自同一正比较与非交换乘法，不需要另立一条概率公理。
+

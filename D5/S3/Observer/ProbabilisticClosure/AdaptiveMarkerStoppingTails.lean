@@ -70,6 +70,12 @@ def zeroReplay {Seed : Type*} [MeasurableSpace Seed] (policy : Policy Seed)
       let actions := zeroReplay policy seed n
       policy.choose seed actions (List.replicate n false) :: actions
 
+theorem zero_replay_length {Seed : Type*} [MeasurableSpace Seed]
+    (policy : Policy Seed) (seed : Seed) (n : ℕ) : (zeroReplay policy seed n).length = n := by
+  induction n with
+  | zero => rfl
+  | succ n ih => simpa [zeroReplay] using congrArg Nat.succ ih
+
 def actualQueryCount {Seed : Type*} [MeasurableSpace Seed] (policy : Policy Seed)
     (seed : Seed) (source : Source) (n : ℕ) : ℕ :=
   (actualRun policy seed source n).actions.length
@@ -488,11 +494,7 @@ theorem adaptive_marker_stopping_tails
     | succ n ih =>
       exact (measurable_of_countable (fun p : Bool × List Bool => p.1 :: p.2)).comp
         ((hchoose.comp (measurable_id.prodMk (ih.prodMk measurable_const))).prodMk ih)
-  have hlen (u : Seed) : ∀ n, (zeroReplay policy u n).length = n := by
-    intro n
-    induction n with
-    | zero => rfl
-    | succ n ih => simpa [zeroReplay] using congrArg Nat.succ ih
+  have hlen (u : Seed) (n : ℕ) := zero_replay_length policy u n
   have hcounts (actions : List Bool) :
       sideCount actions false + sideCount actions true = actions.length := by
     induction actions with

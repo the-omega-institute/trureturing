@@ -1,0 +1,17 @@
+### 命题 5.3（原记录的归一化）
+
+若原事件族 $\Phi_j:M_{d_j}\to M_m$ 各满足候选，并另有完整记录约束 $\sum_j\Phi_j(I)=I$，则态方向过程
+
+$$
+\mathcal T_j(\rho)=\sum_\alpha A_{j\alpha}\rho A_{j\alpha}^*,
+ \qquad \sum_{j,\alpha}A_{j\alpha}^*A_{j\alpha}=I
+$$
+
+构成完整 CP 仪器。各支迹不增，总输出保迹。
+
+**证明。**
+令 $E_j=\Phi_j(I)=\sum_\alpha A_{j\alpha}^*A_{j\alpha}\ge0$，则
+$I-E_j=\sum_{k\ne j}E_k\ge0$。迹循环给 $\operatorname{Tr}\mathcal T_j(\rho)=\operatorname{Tr}(\rho E_j)$，即得支迹界与总保迹。
+
+概率本身需要一致的效果评价。对全部 $0\le E\le I$ 给 $p(E)\ge0$，满足 $p(I)=1$，且 $E+F\le I$ 时 $p(E+F)=p(E)+p(F)$；同一效果在不同完整测试中赋同值。
+

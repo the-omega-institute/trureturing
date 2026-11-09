@@ -40,6 +40,15 @@ internal sealed class SaturatedActualHistoriesDocument : IScribeDocumentDefiniti
                 + "counts, with multiplicity, the positions assigned to the specified control. "
                 + "TerminatesIn counts subsequent reads in the global actual-slot relation "
                 + "and retains the fixed terminal label.")),
+            Describe.Lean(DescribeId.Create("saturated-actual-histories-fin-equiv-val"),
+                DeclarationHandle.Create("D5/S3/ObserverMemory/Algorithms/SaturatedActualHistories.fin_equiv_val"),
+                H("Finite residues preserve natural values"),
+                StatementSource.FromAuthor(Disp(FinEquivValStatement())),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For every nonzero natural modulus m and x in Fin m, Mathlib's "
+                    + "ZMod.finEquiv sends x to a residue with the same natural value."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("saturated-actual-history-result"),
                 DeclarationHandle.Create("D5/S3/ObserverMemory/Algorithms/SaturatedActualHistories.result"),
                 H("Complete histories, slot injection and row packing"),
@@ -64,6 +73,11 @@ internal sealed class SaturatedActualHistoriesDocument : IScribeDocumentDefiniti
                     + "per control. At P=1 the complete trees have height zero and no such "
                     + "subsequent positions."))),
                 DescribeRole.Theorem))));
+
+    private static Formula FinEquivValStatement() => All("m", N,
+        Seq(OpenBracket, Call("NeZero", V("m")), CloseBracket, Sp,
+            All("x", Call("Fin", V("m")),
+                EqF(Call("val", Call("finEquiv", V("m"), V("x"))), Call("val", V("x"))))));
 
     private static Formula Statement()
     {

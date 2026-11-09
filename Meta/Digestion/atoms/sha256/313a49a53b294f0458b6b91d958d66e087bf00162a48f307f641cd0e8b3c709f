@@ -1,0 +1,49 @@
+**Theorem 138.1 (a fixed-terminal exact sign).** For every original $\theta$ and every fixed $E=(S,C,B)\in\mathscr E_\theta$, there is a whole-$G$ Borel function $v$ such that
+
+$$
+v^2=\mathbf1_S\quad\text{everywhere},\qquad
+v\circ R_\pi=-v\quad m\text{-a.e.},\qquad Q_E(v)=0.
+\tag{138.1}
+$$
+
+The cells $C,B$ and $q_E$ are unchanged. If $S\cap N=\varnothing$, oddness may hold everywhere. If $S$ meets $N$, everywhere oddness and the everywhere identity $v^2=\mathbf1_S$ are incompatible.
+
+*Proof.* Theorem 137.1 supplies bounded odd real tests $u_+,u_-$ supported in $S$ with $Q_E(u_+)>0>Q_E(u_-)$. Scale them into the unit ball without changing these strict signs. Their classes have Borel representatives which are exactly odd on $S\setminus N$: take representatives on the half-circle section $S\cap F$ and extend by reflection. Set them to zero elsewhere for the moment.
+
+On the finite atomless standard Borel space $S\cap F$, signs are weak-star dense in the unit ball. To see the precise instance needed here, take refining finite Borel partitions generating its sigma-algebra. For a unit-ball function $u$ and each atom $A$, split $A$ into a Borel set of $m$-measure $\int_A(1+u)/2\,dm$ and its complement. Give the two pieces signs $+1,-1$. This matches $\int_Au\,dm$ exactly. Approximation of any $L^1$ test by simple functions from the refining partitions proves weak-star convergence. Reflect these signs oddly to $S\setminus N$ and give value zero outside $S$. The same convergence holds on $G$, since every $L^1$ pairing there reduces to a pairing on the section and its reflection.
+
+The actual ordered kernel for $Q_E$ is
+
+$$
+a_E(x,y)=g(x)p_d(x,y)q_E(y)\ge0,\qquad
+\|a_E\|_{L^1(m^2)}=\int_GgPq_E\,dm\le1.
+\tag{138.2}
+$$
+
+For bounded weak-star convergent tests, approximation of $a_E$ in $L^1$ by finite sums $\sum_l a_l(x)b_l(y)$, with $a_l,b_l\in L^1(m)$, proves convergence of their quadratic values. Indeed each tensor pairing is the product of the two convergent scalar integrals, and the error is bounded by the kernel's $L^1$ approximation error uniformly on the unit ball. Thus the approximating Borel signs contain $\sigma_+,\sigma_-$ with
+
+$$
+Q_E(\sigma_+)>0>Q_E(\sigma_-).
+$$
+
+They are signs on $S\setminus N$, are exactly odd there and vanish outside $S$.
+
+Let $A\subset S\cap F$ be their disagreement set. Choose nested Borel subsets $A_t\subset A$, $0\le t\le1$, with $A_0=\varnothing$, $A_1=A$ and $m(A_t)=t\,m(A)$. Such a family follows, for example, by the continuous distribution of the $r$ coordinate restricted to $A$, using endpoint assignments at $t=0,1$; its coordinate level sets are null. Starting from $\sigma_+$, switch to $\sigma_-$ on $A_t$ and $RA_t$. The resulting signs $\sigma_t$ satisfy
+
+$$
+\|\sigma_t-\sigma_s\|_1=4m(A)|t-s|.
+\tag{138.3}
+$$
+
+If $m(A)=0$ the endpoint quadratic values would agree, so this case cannot occur. The actual bilinear formula, self-adjointness and the Markov contraction give, on the unit ball,
+
+$$
+|Q_E(u)-Q_E(v)|
+\le2\|g\|_\infty\|q_E\|_\infty\|u-v\|_1.
+\tag{138.4}
+$$
+
+For the first difference term use $\|P(q_Eu)\|_\infty\le\|q_E\|_\infty$; for the second move $P$ to $gv$ and use $\|P(gv)\|_\infty\le\|g\|_\infty$. Hence $t\mapsto Q_E(\sigma_t)$ is continuous. The intermediate value theorem gives an exact zero.
+
+Give that zero sign the value $+1$ on $S\cap N$ and zero on $N\setminus S$. Since $N$ is invariant, Borel and null, this repairs the pointwise square identity without changing the quadratic value or almost-everywhere oddness. At a fixed point $x\in S\cap N$, everywhere oddness would require $v(x)=-v(x)$, hence $v(x)=0$, whereas the square identity requires $|v(x)|=1$. This proves the obstruction and the stated boundary. No additional finite constraints on the exact sign are asserted. $\square$
+

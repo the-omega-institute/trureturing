@@ -81,6 +81,18 @@ internal sealed class ScalarCycleRowErrorDocument : IScribeDocumentDefinition
             Node("cycle","Every direction of a full simple cycle","CycleRates",FiniteBind(All("Q",Call("KilledGenerator",bset),All("eta",r,
                 Iff(Call("CycleRates",q,eta),cycle)))),
                 "An injective cyclic list has length n+3, hence at least three. Both ordered directions of every cycle edge satisfy the lower bound, while all other labels and rates remain arbitrary.",DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("forest-leaf"),
+                DeclarationHandle.Create(Prefix + "forest_not_two_neighbors"),
+                H("A finite nonempty forest has a vertex with at most one neighbor"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For every type W with Finite and Nonempty, every simple graph G on W and "
+                    + "every proof that G is acyclic, it is false that every vertex x has two "
+                    + "distinct neighbors y,z. There is no connectedness assumption. The "
+                    + "connected component of any vertex is a finite tree; if all vertices "
+                    + "had two distinct neighbors, its degree-one vertex would give a contradiction. "
+                    + "The same statement supplies isolated-or-leaf reduction for native "
+                    + "independence realizations of forests."))), DescribeRole.Theorem),
             Node("lower","Universal actual-tree lower bound","cycle_row_error_lower_bound",lower,
                 "Restrict the original tree to vertices carrying cycle labels. If every such vertex had a neighbour of each adjacent cycle label, cycle degree two and injectivity would give two distinct actual neighbours at every vertex of this induced forest. A finite nonempty forest component has a leaf, a contradiction. Thus an actual original row misses an adjacent cycle class, has row sum zero there, and differs from its specified coarse rate by at least eta. No missing-neighbour hypothesis, connected-fibre hypothesis, diagonal condition or killing equality is assumed.",DescribeRole.Theorem),
             Node("path","The entire sharp path family","sharpPath",All("k",C("Nat"),All("eta",r,All("he",Lt(D(0),eta),

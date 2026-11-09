@@ -1,0 +1,82 @@
+**定理 111.1（完整原候选及法向测试域）。** 分别在原 $B$ 与原 $\mathsf B_{\rm cl}$ 上，
+
+$$
+\begin{aligned}
+\mathsf C_{\rm zero}(B_*)
+ &\Longleftrightarrow\mathsf C_{\rm fib}(B_*)
+ \Longleftrightarrow\mathsf C_{\rm cut}(B_*)
+ \Longleftrightarrow\mathsf C_{\rm co}(B_*),\\
+\mathsf C_{\rm zero}(B)
+ &\Longleftrightarrow B+\mathrm Z+\mathrm{SC}+\mathrm{SJ},\\
+\mathsf C_{\rm zero}(\mathsf B_{\rm cl})
+ &\Longleftrightarrow\mathsf B_{\rm cl}+\mathsf Q+\mathrm{SC}+\mathrm{SJ}.
+\end{aligned}
+\tag{111.1}
+$$
+
+完整原有限 QM 接口及其各自准备条件均保持。固定各中心块切口秩的流形 $M$ 后，(110.1) 的三元组域为 $E\times\nu M$，与同纤维域自然光滑对应；本次公式缩短没有再减少参数域维数。
+
+证明。定理 110.2 逐原对象及实际联合应用，再消费定理 108.1 即得 (111.1)。定义 103.1 的原有限补谱表示保持原样：任意与 $D$ 无关的原实基、所需完整谱框架、原二次及双线性输入表、总秩一时的单位测试和零对象空表均保留。没有从新公式推断更小有限菜单。
+
+完整背景此时才按母卷定理 64.2 或 71.3 的路由恢复共同原曲率与同一 $D$ 的复乘法。由本卷定理 98.1、102.1、108.1，在相容坐标中
+
+$$
+E_A\cong\bigoplus_sH_{n_s}(\mathbb C),\qquad
+D_ab=\tfrac i2[a,b],\qquad
+a\cdot b=a\circ b-iD_ab.
+\tag{111.2}
+$$
+
+最后一式在复化上解释。原正评价的双对偶运输仍给 Born 形式及原质量
+
+$$
+\alpha(e)=\tau_A(\rho_\alpha e),\qquad
+\tau_A(\rho_\alpha)=\alpha(u_A).
+\tag{111.3}
+$$
+
+原自伴随可观察量的数学谱分解给谱概率，不将全部数学投影供应成新增实际读口。原不等正块权、经典中心和次归一质量均保留。实际复张量仍只作用于原已声明联合；全事件 R 和完整相关准备锥给所有原事件 CP/TNI、完整测试 TP。原 AC、精确 $N_u$、Xs 和所用合法连线给原有限平方根词。原 F、细化、遗忘、具名同数支持双返回和全部合法有限历史逐项按原条件消费。闭准备分支仍沿母卷定理 72.1 只给闭覆盖，不为极限态新增实际准备身份。连续物理时钟、作用量单位、旧输出校准及任意独立仪器的共同组装仍需原有条件。
+
+下面把候选放回切口整体。对有限 EJA 的每个简单块固定幂等元秩，令 $M$ 为所得流形的乘积。成熟的投影流形结论给
+
+$$
+T_cM=E_{1/2}(c)=\operatorname{im}P_c,\qquad
+\nu_cM=N_c.
+\tag{111.4}
+$$
+
+此处法空间使用原 $q$。该识别在裸有限 EJA 上已有：微分 $c^2=c$ 给 $v=2c\circ v$；反之若 $v\in E_{1/2}(c)$，内导子 $K=4[L_v,L_c]$ 满足
+
+$$
+Kc=4\{v\circ c-c\circ(v\circ c)\}=v,
+\qquad \gamma(t)=e^{tK}c.
+\tag{111.5}
+$$
+
+$\gamma(t)$ 保持幂等及各块秩，且 $\gamma'(0)=v$。这是成熟方法，参见 Cho-Ho Chu, *Grassmann manifolds of Jordan algebras*, Arch. Math. 87 (2006), 179–192，[DOI](https://doi.org/10.1007/s00013-005-1670-x)、[原文](https://www.math.u-szeged.hu/~stacho/HTM2/PUB/arcvm.pdf)，Proposition 3.2、Theorem 3.4。其 $A_1(c)$ 按 $2L_c$ 的特征值命名，对应这里的 $E_{1/2}(c)$；其 JBW-factor 度量与对称性结论只逐有限简单块使用。原正 Frobenius 型的 Peirce 正交性给 (111.4) 的原法空间，不以文献规范迹替换原 $q$。
+
+因此新域及与旧域的对应为
+
+$$
+\begin{aligned}
+\mathcal Z_M
+ &=\{(c,a,n):c\in M,\ a\in E,\ n\in\nu_cM\}
+ \cong E\times\nu M,\\
+(c,a,n)&\longmapsto(c,a,a+n),\\
+(c,a,b)&\longmapsto(c,a,b-a).
+\end{aligned}
+\tag{111.6}
+$$
+
+由 (110.2) 与 (110.9)，这个域对应还保持两种原关系的成立，未重新指定作用。若 $N=\dim E$、$r=\dim M$，则固定切口时维数 $2N-r$，总域维数 $2N$，与定理 108.2 完全相同。新公式简化的是输入条件与平移项，不是进一步降维。
+
+在同一原 $\mathsf F_{\rm zero}$ 下，(107.2) 给零余量商上的正交概复结构 $J_c=2D_c$，满足 $J_c^2=-I$ 与 $J_{u-c}=-J_c$。完整背景完成 (111.2) 后，才有
+
+$$
+M=\prod_s\operatorname{Gr}_{\mathbb C}(k_s,n_s),\qquad
+r=2\sum_sk_s(n_s-k_s),
+\tag{111.7}
+$$
+
+以及相应 Grassmann 复结构与 Kähler 性；裸局部 Spin7 例仍沿命题 100.3 保留，不能由逐切口平方关系替代完整曲率。三维有限图景直接沿命题 108.3：在角单位 $e$、$c=(e+Z)/2$ 的数学角内，第一输入 $a=\alpha e+xX+yY+zZ$ 任意，零余量第二输入为 $n=\beta e+wZ$，而 $J_cX=-Y,\ J_cY=X$。这里的 $e$ 不是整个原单位，数学角不供应实际 $M_2$、时钟或新操作。∎
+

@@ -1,0 +1,2 @@
+**Remark 8.3 (The order-two identity fails for a three-qubit state).** The identity of Theorem 7.1 at $\mathtt q=3$ is not an identity of all pure states. For the W state $\psi_W=3^{-1/2}(|001\rangle+|010\rangle+|100\rangle)$, Iizuka and Nishida (arXiv:2502.07995, §2 and §2.2) give $S^{(3)}_2(\psi_W)=\log3$ and $\mathrm{GM}^{(3)}_2(\psi_W)=\log\tfrac{5\sqrt5}{9}=\tfrac12\log\tfrac{125}{81}\ne0$, and $\mathrm{GM}^{(3)}_2$ is the left side of Theorem 7.1 at $\mathtt q=3$. The Gaussian replica reduction is therefore essential. Stance: the value is literature-attested (§9).
+

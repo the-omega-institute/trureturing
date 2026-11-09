@@ -1,0 +1,55 @@
+**Theorem 40.2 (exact actual equation retaining the full complement).** On each prescribed sequence $s\downarrow0$ with actual $\epsilon_c(s)=o(s^4)$, take every actual normalized complex ground-state choice and let $f_s=\mathcal T_s\mathcal U_s\psi_s$. Define the justified $L^2$ vectors
+
+$$
+\begin{aligned}
+R_m&=\mathcal N_mg_0+\mathcal N_{m-1}g_1\qquad(m=2,3,4),\\
+\delta_{0,s}&=\mathcal B_s(h_s)^*g_0-\sum_{m=0}^4s^m\mathcal N_mg_0,\\
+\delta_{1,s}&=\mathcal B_s(h_s)^*g_1-\sum_{j=0}^3s^j\mathcal N_jg_1.
+\end{aligned}
+\tag{40.3}
+$$
+
+Then $\|\delta_{0,s}\|_2+s\|\delta_{1,s}\|_2=o(s^4)$ and, exactly,
+
+$$
+\begin{aligned}
+0&=\langle(I-\gamma\mathcal B_s(h_s)^*)(g_0+sg_1),f_s\rangle\\
+&=-\gamma\sum_{m=2}^4s^m\langle R_m,f_s\rangle
+-\gamma\langle\delta_{0,s}+s\delta_{1,s},f_s\rangle.
+\end{aligned}
+\tag{40.4}
+$$
+
+In particular, with $\alpha_s=\langle g_0,f_s\rangle$, $z_s=f_s-\alpha_sp$,
+
+$$
+\begin{gathered}
+\langle g_0,z_s\rangle=0,\\
+\sum_{m=2}^4s^m
+\left[\alpha_s\langle R_m,p\rangle+\langle R_m,z_s\rangle\right]
+=-\langle\delta_{0,s}+s\delta_{1,s},f_s\rangle=o(s^4).
+\end{gathered}
+\tag{40.5}
+$$
+
+The remainder is uniform over actual normalized choices along each such fixed-datum sequence.
+
+Proof. Theorem 33.2 and the actual-height application of Theorem 29.2 give $\|\delta_{0,s}\|_2=o(s^4)$, as in Corollary 33.3. Theorems 39.1 and 40.1 give $s\|\delta_{1,s}\|_2=o(s^4)$. Every $R_m$ is $L^2$ by Theorems 33.2 and 38.2.
+
+The original actual equation is precisely (33.6): $f_s=\gamma\mathcal B_s(h_s)f_s$, $\|f_s\|_2=1$, on the transported original operator domain. At $h_s>0$ it is a bounded-operator equation. Pairing against the fixed $L^2$ vector $g_0+sg_1$ therefore needs no native form-domain membership of the test. Substituting (40.3) gives
+
+$$
+\begin{aligned}
+(I-\gamma\mathcal B_s(h_s)^*)(g_0+sg_1)
+&=Ag_0+s(Ag_1-\gamma\mathcal N_1g_0)\\
+&\quad-\gamma\sum_{m=2}^4s^m(\mathcal N_mg_0+\mathcal N_{m-1}g_1)
+-\gamma(\delta_{0,s}+s\delta_{1,s}).
+\end{aligned}
+\tag{40.6}
+$$
+
+The first two terms vanish by (31.2) and (37.1), canceling precisely orders zero and one. This proves (40.4). Since $\langle g_0,p\rangle=1$, substitution of $f_s=\alpha_sp+z_s$ gives (40.5), retaining every complement pairing. Unit norm bounds the remainder by its $L^2$ norm independently of the actual choice.
+
+The second-, third- and fourth-order rows have not been canceled. No vanishing, parity, reality, positive $L^2$ gap or polynomial rate of $z_s$ is used. No scalar is identified with, substituted for or used to redefine (24.5)'s $C_4=D_4-h[\Upsilon]$. In particular this identity gives no conclusion $cC_4=0$. The adjoint pairing is the classical Hilbert-space identity, applied here to the exact original actual equation, never a trial state. $\square$
+
+

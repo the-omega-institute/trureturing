@@ -1,0 +1,54 @@
+**定理 123.1（原量子接口与较小关系域）。** 对两条原完整背景分别有
+
+$$
+\begin{aligned}
+\mathsf C_{\rm vec}(B_*)
+ &\Longleftrightarrow\mathsf C_{\rm idem}(B_*)
+ \Longleftrightarrow\mathsf C_{\rm co}(B_*),\\
+\mathsf C_{\rm vec}(B)
+ &\Longleftrightarrow B+\mathrm Z+\mathrm{SC}+\mathrm{SJ},\\
+\mathsf C_{\rm vec}(\mathsf B_{\rm cl})
+ &\Longleftrightarrow\mathsf B_{\rm cl}+\mathsf Q+\mathrm{SC}+\mathrm{SJ}.
+\end{aligned}
+\tag{123.1}
+$$
+
+固定 $c,p$ 的各简单块秩向量 $\mathbf k,\mathbf l$ 后，新关系域为 $M_{\mathbf k}\times M_{\mathbf l}$，维数为 $r_{\mathbf k}+r_{\mathbf l}$；旧 (118.1) 的相应分量维数为 $N+r_{\mathbf l}$。非零对象上严格少 $N-r_{\mathbf k}>0$ 个数学域参数。这里同时改变了标量关系与向量关系的值域，不由参数计数推出独立信息或实际认证成本减少。
+
+证明。定理 122.2 逐全部原对象及实际联合应用，再消费定理 120.1，给 (123.1)。域维数沿定理 119.1，且 $u\in\ker P_c$ 给 $r_{\mathbf k}<N$；零对象两域均为点。
+
+同一原切口间有共同切向量 $V(c,p)=2D_cp=-2D_pc$。在 $T_cM=E_{1/2}(c)$ 上，$J_c=2D_c$ 的限制满足 $J_c^2=-I$，并对每一个允许的原正 Frobenius 型正交。$c$ 与 $u-c$ 的切空间相同、$J_{u-c}=-J_c$。完整原背景完成复矩阵重建后，才把这些分量识别为复 Grassmann 流形的乘积及其相容 Kähler 几何。
+
+在一个已重建原块的二阶数学角中，以角单位 $e$、Pauli 三轴 $\boldsymbol\sigma=(X,Y,Z)$ 写
+
+$$
+c=\tfrac12(e+\mathbf n\cdot\boldsymbol\sigma),\qquad
+p=\tfrac12(e+\mathbf m\cdot\boldsymbol\sigma),\qquad
+|\mathbf n|=|\mathbf m|=1.
+\tag{123.2}
+$$
+
+原 $D_ab=i[a,b]/2$ 给
+
+$$
+2D_cp=-\tfrac12(\mathbf n\times\mathbf m)\cdot\boldsymbol\sigma,
+\qquad
+J_c(\mathbf v\cdot\boldsymbol\sigma)
+=-(\mathbf n\times\mathbf v)\cdot\boldsymbol\sigma
+\quad(\mathbf v\perp\mathbf n).
+\tag{123.3}
+$$
+
+第一条向量关系就是叉积同时垂直于两条原方向；第二条是横向平面内再转一次恰为反向。同一原正块权 $w$ 的读数仍为
+
+$$
+W_c(p)=\tfrac w4|\mathbf n\times\mathbf m|^2.
+\tag{123.4}
+$$
+
+$e$ 不充当整个原单位；数学三维截面不供应实际二阶对象、器件或时钟。裸 Spin7 模型由命题 100.3 与定理 122.2 同样满足局部向量关系，所以仅靠这两式不能删去完整实际联合、推断复矩阵分类或把逐点概复结构认作可积复结构。
+
+完整原量子消费者没有另换来源：原 $\circ,D$ 给同一复乘法 $a\cdot b=a\circ b-iD_ab$；完整 X 及原重建给 $E_A\cong\bigoplus_sH_{n_s}(\mathbb C)$，保持原 $q(x,y)=\sum_sw_s\operatorname{Tr}(x_sy_s)$、$w_s>0$。同一原正评价通过正双对偶运输给 Born 形式 $\alpha(e)=\tau_A(\rho_\alpha e)$ 与原次归一质量 $\tau_A(\rho_\alpha)=\alpha(u_A)$。原已声明实际联合才给实际复张量；全事件 R 在完整联合准备锥上的正性给原事件 CP/TNI，完整测试给 TP。AC、精确 $N_u$、Xs 与所用合法连线给原有限平方根词；F、细粗记录、遗忘、原失败完成、停止与具名支持双返回逐原合法历史保持。闭准备分支仍只给闭覆盖。理想投影更新、独立仪器共同组装和连续物理时间所需的各自原接口不会由局部向量恒等式新增；作用量单位也没有被推出。
+
+反向取满足各自完整原背景与原单位尺度合同的标准复矩阵模型，$D_ab=i[a,b]/2$，$q=\sum_sw_s\operatorname{Tr}(x_sy_s)$ 保留任意原正块权。交换子在投影 $c$ 处切向，且 $4D_c^2p=-[c,[c,p]]=-P_cp$，故全部 (122.1) 成立；原过程、参考、准备、记录和联合仍用该模型原合同，不能从矩阵代数的数学存在补造实际设备。∎
+

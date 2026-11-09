@@ -54,7 +54,43 @@ $$\forall (n : \mathbb{N}) , \operatorname{thueMorse} (2 \cdot n + 1) = \operato
 
 Page 2 defines the Thue-Morse sequence by t₀ = 0, t₂ₙ = tₙ, and t₂ₙ₊₁ = 1 − tₙ for n ≥ 0. Boolean false and true encode zero and one.
 
-**Definition 1.5 (The literal factor at a natural start).**
+**Definition 1.5 (Adjacent transition).**
+
+$$\forall n\in\mathbb{N}, \operatorname{transition}(n)=\operatorname{ite}(\operatorname{thueMorse}(n)=\operatorname{thueMorse}(n+1), 0, 1)$$
+
+*Formalization.* `D5/S1/Words/Complexity/ThueMorseReducedAbelianOdd.transition` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The transition is zero for equal adjacent letters and one otherwise.
+
+**Theorem 1.6 (Aligned pairs alternate).**
+
+$$\forall n\in\mathbb{N}, \operatorname{transition}(2\times n)=1$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Words/Complexity/ThueMorseReducedAbelianOdd.transition_two_mul` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Every pair at an even start consists of opposite letters.
+
+**Theorem 1.7 (Odd transitions complement the smaller transition).**
+
+$$\forall n\in\mathbb{N}, \operatorname{transition}(2\times n+1)=\operatorname{natSub}(1, \operatorname{transition}(n))$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Words/Complexity/ThueMorseReducedAbelianOdd.transition_two_mul_add_one` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The odd-start transition complements the transition at half the index, with natural subtraction.
+
+**Definition 1.8 (The literal factor at a natural start).**
 
 $$\forall length, start\in\mathbb{N}, \operatorname{factor}(length, start) = List.map(i \mapsto \operatorname{thueMorse}(start + i), List.range(length)).$$
 
@@ -66,7 +102,7 @@ $$\forall length, start\in\mathbb{N}, \operatorname{factor}(length, start) = Lis
 
 List.range lists the indices from zero through length minus one in order. Mapping each index to thueMorse(start+i) gives the actual factor, including the empty list when length is zero.
 
-**Definition 1.6 (Collapse every maximal constant run).**
+**Definition 1.9 (Collapse every maximal constant run).**
 
 $$\forall word\in List(\operatorname{Bool}), \operatorname{runCompress}(word) = List.destutter((a, b: \operatorname{Bool}) \mapsto a \neq b, word).$$
 
@@ -78,7 +114,7 @@ $$\forall word\in List(\operatorname{Bool}), \operatorname{runCompress}(word) = 
 
 This is Mathlib's List.destutter applied with the inequality relation on Boolean letters. It retains one letter from each maximal constant run and sends the empty list to the empty list.
 
-**Definition 1.7 (Count false first and true second).**
+**Definition 1.10 (Count false first and true second).**
 
 $$\forall word\in List(\operatorname{Bool}), \operatorname{parikh}(word) = (List.count(false, word), List.count(true, word)).$$
 
@@ -90,7 +126,7 @@ $$\forall word\in List(\operatorname{Bool}), \operatorname{parikh}(word) = (List
 
 Both coordinates are natural numbers. List.count counts occurrences of the specified Boolean letter, with false in the first coordinate and true in the second.
 
-**Definition 1.8 (The Parikh vector after run reduction).**
+**Definition 1.11 (The Parikh vector after run reduction).**
 
 $$\forall length, start\in\mathbb{N}, \operatorname{reducedParikh}(length, start) = \operatorname{if}(\operatorname{thueMorse}(start), (\operatorname{natDiv}(\operatorname{if}(length = 0, 0, 1 + Finset.sum(Finset.range(length - 1), i \mapsto \operatorname{if}(\operatorname{thueMorse}(start + i) = \operatorname{thueMorse}(start + i + 1), 0, 1))), 2), \operatorname{if}(length = 0, 0, 1 + Finset.sum(Finset.range(length - 1), i \mapsto \operatorname{if}(\operatorname{thueMorse}(start + i) = \operatorname{thueMorse}(start + i + 1), 0, 1))) - \operatorname{natDiv}(\operatorname{if}(length = 0, 0, 1 + Finset.sum(Finset.range(length - 1), i \mapsto \operatorname{if}(\operatorname{thueMorse}(start + i) = \operatorname{thueMorse}(start + i + 1), 0, 1))), 2)), (\operatorname{if}(length = 0, 0, 1 + Finset.sum(Finset.range(length - 1), i \mapsto \operatorname{if}(\operatorname{thueMorse}(start + i) = \operatorname{thueMorse}(start + i + 1), 0, 1))) - \operatorname{natDiv}(\operatorname{if}(length = 0, 0, 1 + Finset.sum(Finset.range(length - 1), i \mapsto \operatorname{if}(\operatorname{thueMorse}(start + i) = \operatorname{thueMorse}(start + i + 1), 0, 1))), 2), \operatorname{natDiv}(\operatorname{if}(length = 0, 0, 1 + Finset.sum(Finset.range(length - 1), i \mapsto \operatorname{if}(\operatorname{thueMorse}(start + i) = \operatorname{thueMorse}(start + i + 1), 0, 1))), 2))).$$
 
@@ -102,7 +138,7 @@ $$\forall length, start\in\mathbb{N}, \operatorname{reducedParikh}(length, start
 
 Here runs(length,start) counts maximal constant runs in the indicated factor. Run reduction is alternating, so a false initial letter gives r-floor(r/2) false letters and floor(r/2) true letters; a true initial letter reverses those coordinates. The displayed natDiv operation is natural-number floor division, exactly Lean's Nat.div.
 
-**Theorem 1.9 (The arithmetic and literal reduced Parikh vectors agree).**
+**Theorem 1.12 (The arithmetic and literal reduced Parikh vectors agree).**
 
 $$\forall length, start\in\mathbb{N}, \operatorname{reducedParikh}(length, start) = \operatorname{parikh}(\operatorname{runCompress}(\operatorname{factor}(length, start))).$$
 
@@ -114,7 +150,7 @@ $$\forall length, start\in\mathbb{N}, \operatorname{reducedParikh}(length, start
 
 List induction proves the alternating counts after literal run compression. A second induction identifies the list run count with the transition sum used by the arithmetic definition. The identity holds at every natural length and start, including length zero.
 
-**Definition 1.10 (Reduced abelian equivalence at a common length).**
+**Definition 1.13 (Reduced abelian equivalence at a common length).**
 
 $$\forall length, start1, start2\in\mathbb{N}, \operatorname{ReducedAbelianEquivalent}(length, start1, start2) \iff \operatorname{reducedParikh}(length, start1) = \operatorname{reducedParikh}(length, start2).$$
 
@@ -126,7 +162,7 @@ $$\forall length, start1, start2\in\mathbb{N}, \operatorname{ReducedAbelianEquiv
 
 Two factors of the same supplied length are equivalent precisely when the Parikh vectors of their run reductions are equal.
 
-**Definition 1.11 (The canonical code for a reduced abelian class).**
+**Definition 1.14 (The canonical code for a reduced abelian class).**
 
 $$\forall length, start\in\mathbb{N}, \operatorname{reducedAbelianCode}(length, start) = (\operatorname{if}(length = 0, 0, 1 + Finset.sum(Finset.range(length - 1), i \mapsto \operatorname{if}(\operatorname{thueMorse}(start + i) = \operatorname{thueMorse}(start + i + 1), 0, 1))), \operatorname{if}(\operatorname{Odd}(\operatorname{if}(length = 0, 0, 1 + Finset.sum(Finset.range(length - 1), i \mapsto \operatorname{if}(\operatorname{thueMorse}(start + i) = \operatorname{thueMorse}(start + i + 1), 0, 1)))), \operatorname{thueMorse}(start), false)).$$
 
@@ -138,7 +174,7 @@ $$\forall length, start\in\mathbb{N}, \operatorname{reducedAbelianCode}(length, 
 
 The run count is always retained. For even run count the two initial letters have the same reduced Parikh vector, so the Boolean coordinate is canonically false; for odd run count it records the actual first letter.
 
-**Theorem 1.12 (Reduced Parikh equality is exactly code equality).**
+**Theorem 1.15 (Reduced Parikh equality is exactly code equality).**
 
 $$\forall length, start1, start2\in\mathbb{N}, \operatorname{ReducedAbelianEquivalent}(length, start1, start2) \iff \operatorname{reducedAbelianCode}(length, start1) = \operatorname{reducedAbelianCode}(length, start2).$$
 
@@ -150,7 +186,7 @@ $$\forall length, start1, start2\in\mathbb{N}, \operatorname{ReducedAbelianEquiv
 
 The coordinate sum recovers the run count. With equal run counts, the two alternating Parikh vectors agree automatically in the even case and agree exactly when their initial letters agree in the odd case. This is the class-code equivalence.
 
-**Definition 1.13 (Reduced abelian classes over all natural starts).**
+**Definition 1.16 (Reduced abelian classes over all natural starts).**
 
 $$\forall length\in\mathbb{N}, \operatorname{reducedAbelianClasses}(length) = \{(a, b) \mid (a \leq length \land b \leq length) \land (\exists start\in\mathbb{N}, \operatorname{reducedParikh}(length, start) = (a, b))\}.$$
 
@@ -162,7 +198,7 @@ $$\forall length\in\mathbb{N}, \operatorname{reducedAbelianClasses}(length) = \{
 
 The finite ambient square contains coordinate pairs from zero through length. Filtering it by existence of an arbitrary natural start retains exactly every reduced Parikh vector that occurs anywhere in the infinite word. No prefix bound or sampling hypothesis appears.
 
-**Definition 1.14 (Reduced abelian complexity).**
+**Definition 1.17 (Reduced abelian complexity).**
 
 $$\forall length\in\mathbb{N}, \operatorname{R}(length) = \operatorname{card}(\operatorname{reducedAbelianClasses}(length)).$$
 
@@ -174,7 +210,7 @@ $$\forall length\in\mathbb{N}, \operatorname{R}(length) = \operatorname{card}(\o
 
 R(length) is the cardinality of the all-start finite class set, matching the source definition rather than the number seen in a chosen prefix.
 
-**Theorem 1.15 (Odd indices reflect to half length).**
+**Theorem 1.18 (Odd indices reflect to half length).**
 
 $$\forall n\in\mathbb{N}, \operatorname{R}(2 \times n + 1) = \operatorname{R}(n + 1).$$
 
@@ -194,7 +230,7 @@ For every factor, the explicit start 2^(start+length+1)+start gives a factor wit
 
 Reflection is therefore a bijection on the canonical codes. The code equivalence transfers that bijection to reduced Parikh classes, and taking finite cardinalities proves the equality for every n.
 
-**Theorem 1.16 (Length two has three reduced abelian classes).**
+**Theorem 1.19 (Length two has three reduced abelian classes).**
 
 $$\operatorname{R}(2) = 3.$$
 
@@ -206,7 +242,7 @@ $$\operatorname{R}(2) = 3.$$
 
 The three reduced Parikh classes are (1,0), (0,1), and (1,1), witnessed at starts 5, 1, and 0.
 
-**Theorem 1.17 (Power of two plus one has complexity three).**
+**Theorem 1.20 (Power of two plus one has complexity three).**
 
 $$\forall k\in\mathbb{N}, \operatorname{R}(2^{k} + 1) = 3.$$
 
@@ -237,3 +273,6 @@ A kernel-decided certificate constructs and exhausts the three length-two classe
 - Truth anchor: `D5/S1/Words/Complexity/ThueMorseReducedAbelianOdd.thueMorse_two_mul`
 - Truth anchor: `D5/S1/Words/Complexity/ThueMorseReducedAbelianOdd.thueMorse_two_mul_add_one`
 - Truth anchor: `D5/S1/Words/Complexity/ThueMorseReducedAbelianOdd.thueMorse_zero`
+- Truth anchor: `D5/S1/Words/Complexity/ThueMorseReducedAbelianOdd.transition`
+- Truth anchor: `D5/S1/Words/Complexity/ThueMorseReducedAbelianOdd.transition_two_mul`
+- Truth anchor: `D5/S1/Words/Complexity/ThueMorseReducedAbelianOdd.transition_two_mul_add_one`

@@ -1,0 +1,6 @@
+# Actual critical solvability and conditional microscopic disappearance
+
+This companion proves an additional constraint from the actual native eigen-equation: if the unscaled spectral energies tend to $L$ and the unitary microscopic states tend weakly to $cp$, then $c(L-C_{\rm resp})=0$. At a fixed admitted datum with positive response, this forces zero microscopic weak profile, zero local mass, vanishing rescaled horizontal and potential energies, and distance $\sqrt2$ from the unit critical orbit. The states retain norm one. All assertions are ordinary conditional mathematics under the precise analytic antecedents below.
+
+Write P for [Native full-state weak binding](FIB_NATIVE_LONG_TIME_PHASE_WEAK_BINDING.md), R for [Native exact-critical energy response and scale alternatives](FIB_NATIVE_EXACT_CRITICAL_ENERGY_RESPONSE_AND_SCALE_ALTERNATIVES.md), including its current §§14–15, and N for *Strict nonaffine response at the native critical scale*. Their existing matching energy theorem, negative branch, response construction, strict affine gap, exact parameter images and negative-response occurrence receive their original credit. The complete original sign, occurrence and every-ground-state decision remains the target; positive and zero response occurrence still depend on an unevaluated canonical sign.
+

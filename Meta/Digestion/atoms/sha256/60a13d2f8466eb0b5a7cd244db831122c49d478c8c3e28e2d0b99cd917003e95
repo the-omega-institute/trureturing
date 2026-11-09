@@ -1,0 +1,14 @@
+**引理 13.2（双向小费用控制全部行列）。**若有 $\mathrm{DT}$，且 $d(x,y),d(y,x)\le\delta$，则对全部 $z$，
+
+$$
+\begin{aligned}
+|d(x,z)-d(y,z)|&\le\delta,\\
+|d(z,x)-d(z,y)|&\le\delta,\\
+|c(x,z)-c(y,z)|&\le\delta(2d(y,z)+\delta),\\
+|c(z,x)-c(z,y)|&\le\delta(2d(z,y)+\delta).
+\end{aligned}
+\tag{13.2}
+$$
+
+**证明。**三角条件分别给 $d(x,z)\le\delta+d(y,z)$ 及 $d(y,z)\le\delta+d(x,z)$；列方向交换相应输入。再用平方差分解，以及两数之和不超过较指定一项的两倍加 $\delta$，得到后两式。这是非负实数的运算，不使用自由空间中尚未正定的 $B$ 的 Cauchy–Schwarz 不等式。
+

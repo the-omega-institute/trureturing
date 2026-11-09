@@ -3883,3 +3883,704 @@ For the bounded source correspondence, the full realizable domain in (38.1) uses
 The first-loss obligation still compares $N_{\mathrm{geo}}(\xi)+\kappa\xi$ with every admissible $M_\sigma(w,\xi)$ for all realizable feedbacks on the preceding levels, and must determine the actual equality preimage there. Both signs, mixed effects $r>t_\sigma$, singular effects and all actual unitary lifts remain part of that obligation; the cap and trace-triangle comparisons of Sections 24--37 apply only within their stated hypotheses. The new strict core competitors do not exclude an earlier mixed or nonlocal loss. The exact first boundary, endpoint inclusion or exclusion, all first competing minimizers, the behavior immediately after that boundary, and the determinant-zero variation case remain unresolved. A zero of $\mathscr D$, a cap boundary, or the end of a sufficient screen is not identified with the first loss. At distance four the scalar comparator is attained, and so are the displayed strict competitors and their fixed-feedback effect minima; no global core minimizer is selected by these statements. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 39. Original first-transition endpoints and a selected level-eighteen-fifths obstruction
+
+**Definition 39.1 (two original first boundaries).** Use the original
+$\mathcal K=\operatorname{Dens}_2\times U(4)$, ordinary transpose,
+$g,\rho,f=g-\kappa\rho$ and $m$ of source Definition 11.1 and
+Definition 33.1. In particular
+
+$$
+ \rho(E,U)=\min_{\sigma\in\{+,-\},\ |\lambda|=1}
+ \bigl(\|E-E_\sigma\|_{\mathrm F}^2
+             +\|U-\lambda U_\sigma\|_{\mathrm F}^2\bigr).
+\tag{39.1}
+$$
+
+For $0<\xi\le4$ retain exactly $N(\xi)=N_{\mathrm{geo}}(\xi)$
+of (38.2) and its unique scalar argument $\delta_\circ(\xi/2)$
+from Theorem 37.5. Write
+
+$$
+\begin{aligned}
+ t&=\xi/2,& \delta&=\delta_\circ(t),& q&=t-\delta,&p&=1-q,\\
+ x&=1-\delta/2,& y&=\sqrt{1-x^2},\\
+ w_\tau&=(x+\tau iy,x-\tau iy,1,1),&
+ \psi_\tau&=\sqrt p\,b_+-\tau i\sqrt q\,b_-,\\
+ \mathcal G_\xi
+ &=\left\{\left(\overline{\psi_\tau}\,
+                    \overline{\psi_\tau}^{\dagger},
+             \lambda\operatorname{diag}(w_\tau)U_+\right):
+                  \tau\in\{+1,-1\},\ |\lambda|=1\right\},\\
+ \mathcal A_\xi
+ &=\{(E,U)\in\mathcal K:\rho(E,U)=\xi,\ f(E,U)=m(\xi)\}.
+\end{aligned}
+\tag{39.2}
+$$
+
+All square roots denote their nonnegative real values. Theorem 37.5
+supplies $x,y,p,q>0$ and $f=N(\xi)$, $\rho=\xi$ on
+$\mathcal G_\xi$. Thus $m(\xi)\le N(\xi)$, but equality is not
+part of this definition. The circles in (39.2) retain every actual
+feedback representative; their only identification is the one common
+scalar phase in (39.1). The orientation $\tau$ is distinct from
+the optimizer sign $\sigma$ in that joint minimum.
+
+Define subsets of $(0,4)$ by
+
+$$
+\begin{aligned}
+ \mathcal B
+ &=\{\xi:\exists X\in\mathcal K,\ \rho(X)=\xi,
+                    \ X\notin\mathcal G_\xi,\ f(X)\le N(\xi)\},\\
+ \mathcal S
+ &=\{\xi:m(\xi)<N(\xi)\},\\
+ \alpha&=\inf\mathcal B,\qquad \beta=\inf\mathcal S,
+ \qquad \inf\varnothing=+\infty.
+\end{aligned}
+\tag{39.3}
+$$
+
+Here $\mathcal B$ is exactly the failure set for
+$\mathcal A_\xi=\mathcal G_\xi$: if the value is strictly smaller,
+an attained global minimizer lies outside $\mathcal G_\xi$; if the
+values coincide, its extra points are precisely additional global
+minimizers. Conversely the displayed witness either lowers the value
+or is such an additional minimizer. In particular
+$\mathcal S\subseteq\mathcal B$. The boundaries $\alpha$ and
+$\beta$ therefore concern, respectively, exhaustive geometric equality
+and strict value loss in the full original domain.
+
+**Theorem 39.2 (inward accessibility of every original point).**
+For every $X\in\mathcal K$ with $0<\rho(X)=\xi\le9$, and every
+sequence $\eta_n<\xi$ tending to $\xi$, there are, for all sufficiently
+large $n$, original pairs $X_n\to X$ with $\rho(X_n)=\eta_n$.
+The attained envelope $m$ is lower semicontinuous on $(0,9]$ and
+continuous from the left at every such level. The existing comparator
+$N$, the scalar argument in (39.2), and the compact sets
+$\mathcal G_\xi$ are continuous on $(0,4]$; for the last assertion
+use the Hausdorff metric induced by the product Frobenius norm.
+
+*Proof.* Choose one sign $\sigma$ and one scalar $\lambda_0$
+attaining (39.1) at $X=(E,U)$. Put
+$a=\|E-E_\sigma\|_{\mathrm F}^2$ and choose a spectral decomposition
+
+$$
+ (\lambda_0U_\sigma)^\dagger U
+       =Z\operatorname{diag}(e^{i\theta_1},\ldots,e^{i\theta_4})Z^\dagger,
+ \qquad Z\in U(4),\quad -\pi\le\theta_j\le\pi.
+\tag{39.4}
+$$
+
+For $0\le s\le1$ set
+
+$$
+\begin{aligned}
+ E_s&=(1-s)E+sE_\sigma,\\
+ U_s&=\lambda_0U_\sigma Z
+       \operatorname{diag}(e^{i(1-s)\theta_1},\ldots,
+                            e^{i(1-s)\theta_4})Z^\dagger,\\
+ b(s)&=(1-s)^2a+\sum_{j=1}^4[2-2\cos((1-s)\theta_j)].
+\end{aligned}
+\tag{39.5}
+$$
+
+Convexity keeps $E_s$ positive with trace one, including when $E$
+is mixed or singular. The matrix $U_s$ is one actual unitary and
+$X_0=X$. Evaluating the original distance at the same chosen sign
+and scalar gives $\rho(X_s)\le b(s)$ and $b(0)=\xi$.
+For every $s>0$, $b(s)<b(0)$: the effect term strictly decreases
+if $a>0$, and each nonzero $|\theta_j|\le\pi$ gives a strictly
+decreasing chordal term. At least one of these terms is nonzero
+because $\xi>0$. This argument does not require the chosen sign
+or scalar to remain minimizing along the curve. In particular it
+includes a sign tie, a zero feedback trace and eigenvalues $-1$.
+
+The true joint minimum $r(s)=\rho(X_s)$ is continuous, with
+$r(0)=\xi$ and $r(s)<\xi$ for $s>0$. For every fixed small
+$s_0>0$, its image on $[0,s_0]$ contains $[r(s_0),\xi]$.
+For $\eta<\xi$ sufficiently close to $\xi$, let $s(\eta)$ be
+the first time in $[0,1]$ that $r(s)=\eta$. It exists by the
+intermediate value theorem and compactness of a nonempty level
+preimage. For each $s_0>0$, eventually $s(\eta)\le s_0$; hence
+$s(\eta)\to0$ as $\eta\uparrow\xi$. The pairs
+$X_{s(\eta_n)}$ prove accessibility without replacing the joint
+minimum by a fixed sign branch.
+
+Theorem 35.2 gives compact nonempty original levels and attained
+minima throughout $(0,9]$. For any converging sequence of levels,
+choose global minimizers and a subsequence realizing the lower limit
+of their values. Compactness of $\mathcal K$ gives a further limit
+$X_*$ at the limiting level, so continuity of $f,\rho$ yields
+$m(\xi)\le f(X_*)=\liminf m(\eta_n)$. This proves lower
+semicontinuity. Apply accessibility to a global minimizer at $\xi$.
+The nearby lower-level pairs have values tending to $m(\xi)$,
+giving the reverse upper-limit inequality from the left. Thus
+
+$$
+ \lim_{\eta\uparrow\xi}m(\eta)=m(\xi),\qquad 0<\xi\le9.
+\tag{39.6}
+$$
+
+For comparator continuity, use its existing expression (38.2).
+Write $\ell(t)=\max(0,t-1)$ and
+$\delta=\ell(t)+[t-\ell(t)]a$, $0\le a\le1$.
+The function $H^+_\delta(t-\delta)$ is continuous on this fixed
+compact parameter interval, locally uniformly for $0<t\le2$.
+Its minimum therefore varies continuously: differences of minima
+are bounded by the supremum of differences of the objectives.
+For a convergent sequence of parameters, any limit of scalar
+minimizers minimizes the limiting objective. Uniqueness in Theorem
+37.5 identifies that limit, proving continuity of
+$\delta_\circ(t)$. Consequently all entries in (39.2) are
+continuous functions of $\xi,\lambda$ for each of the two
+orientations. Uniform continuity on compact parameter neighborhoods
+and on the scalar circle proves Hausdorff continuity of
+$\mathcal G_\xi$. No original minimizing branch has been assumed.
+$\square$
+
+**Theorem 39.3 (strict obstruction at the selected geometric minimum
+of original level $18/5$).** Put $t_*=9/5$ and
+
+$$
+ \delta_*^{\mathrm g}=\delta_\circ(t_*),\qquad
+ x_*=1-\delta_*^{\mathrm g}/2,\qquad
+ q_*=2x_*-\frac15,\quad p_*=\frac65-2x_*,\quad
+ y_*=\sqrt{1-x_*^2}.
+\tag{39.7}
+$$
+
+This is the existing selected geometric minimum, and
+
+$$
+ \frac13<x_*<\frac12,\qquad
+ \mathscr D(x_*,p_*)< -\frac{q_*}{56}<0,
+ \qquad m(18/5)<N(18/5),
+\tag{39.8}
+$$
+
+where $\mathscr D$ is exactly (36.43). Each pair in
+$\mathcal G_{18/5}$ has arbitrarily close original rank-one
+competitors at exactly the same joint distance, with strictly smaller
+$g$ and $f$. Their actual feedback diagonals belong to $\mathcal O$.
+Moreover $\mathcal S$ contains an interval $(18/5-\varepsilon,18/5]$
+for some $\varepsilon>0$.
+
+*Proof.* For fixed $t_*$, the scalar interval in (37.20) becomes
+$1/10\le x\le3/5$ under $\delta=2(1-x)$. Set
+
+$$
+\begin{aligned}
+ p(x)&=\frac65-2x,&q(x)&=2x-\frac15,&y(x)&=\sqrt{1-x^2},\\
+ S(x)&=2(c+hx)\sqrt{p(x)}+2hy(x)\sqrt{q(x)},\\
+ V(x)&=d^2p(x)+e^2q(x)-S(x)^2,\qquad D_0=d^2-e^2=4h+8s.
+\end{aligned}
+\tag{39.9}
+$$
+
+Theorem 37.5 makes $V(x)-18\kappa/5$ exactly the strictly convex
+scalar objective whose unique minimizer is $x_*$. In its interior,
+
+$$
+\begin{aligned}
+ V'(x)&=-2[D_0+S(x)S'(x)],\\
+ S'(x)&=2h\sqrt p-\frac{2(c+hx)}{\sqrt p}
+              -\frac{2hx\sqrt q}{y}+\frac{2hy}{\sqrt q}.
+\end{aligned}
+\tag{39.10}
+$$
+
+The rational half-angle bounds of source (22.13) imply
+
+$$
+ \frac7{10}<h<\frac34,\quad \frac9{10}<c<1,\quad
+ \frac38<s<\frac25,\quad
+ 0<c-h<\frac14,\quad s^2>\frac17,\quad
+ \frac{29}5<D_0<\frac{31}5.
+\tag{39.11}
+$$
+
+At $x=1/3$, one has $p=8/15$, $q=7/15$,
+$y=2\sqrt2/3>9/10$ and $hy=2/3$.
+The positive-square comparisons
+$7/10<\sqrt p<3/4$ and $\sqrt q<7/10$ give
+
+$$
+\begin{aligned}
+ 0<S(1/3)&<\frac{15}{8}+\frac{14}{15}<3,\\
+ S'(1/3)&>\frac{49}{50}-\frac{25}{7}
+                       -\frac7{18}+\frac{40}{21}
+          =-\frac{242}{225}>-\frac65.
+\end{aligned}
+\tag{39.12}
+$$
+
+Thus $D_0+SS'>29/5-18/5=11/5>0$, so $V'(1/3)<0$.
+At $x=1/2$, $p=1/5$, $q=4/5$ and $y=\sqrt3/2$. Here
+
+$$
+\begin{aligned}
+ S(1/2)&=\frac{2c+h+2h\sqrt3}{\sqrt5}
+                       >\frac{92}{45}>2,\\
+ S'(1/2)&=\frac{2h}{\sqrt5}-2(c+h/2)\sqrt5
+                  -\frac{4h}{\sqrt{15}}+\frac{h\sqrt{15}}2\\
+ &<\frac34-5-\frac7{10}+\frac{11}{8}
+       =-\frac{143}{40}<-\frac72.
+\end{aligned}
+\tag{39.13}
+$$
+
+For the first bound use $\sqrt3>3/2$ and $\sqrt5<9/4$;
+for the second use $2<\sqrt5$, $\sqrt{15}<4$ and
+$h\sqrt{15}/2=\sqrt{15/8}<11/8$.
+Consequently $D_0+SS'<31/5-7=-4/5<0$, so $V'(1/2)>0$.
+Strict scalar convexity now locates its unique minimum strictly
+between these two arguments. This proves the first assertion of
+(39.8) for the selected point, rather than for an arbitrary
+geometric competitor.
+
+Evaluate (36.43) with $p=p(x)$, $q=q(x)$ on
+$1/3\le x\le1/2$, and abbreviate $\alpha_0=c-h$.
+Here $q\ge7/15$, $y^2\ge3/4$ and
+$1/(\sqrt q\,y)<2$. Also
+
+$$
+ \frac{x^2}{(1+x)q}\le\frac5{24},\qquad
+ \frac{x^2}{1+x}\le\frac16,\qquad hx+c>1.
+\tag{39.14}
+$$
+
+The first ratio increases on this interval: its derivative has
+positive denominator and numerator $x(9x-2)/5$; its value at $1/2$
+is $5/24$. The second ratio also increases. Inserting these bounds
+into $L_a$ gives
+
+$$
+ 0<\frac{L_a}{q}
+ =\frac{hx^2}{(1+x)q}\frac{\alpha_0\sqrt p}{hx+c}
+       +\frac{hx^2}{1+x}\frac1{\sqrt q\,y}
+ <\frac5{128}+\frac14=\frac{37}{128}<\frac13.
+\tag{39.15}
+$$
+
+For $L_b$, use $\sqrt p<3/4$, $\sqrt q<9/10$,
+$y>6/7$, $hy>3/5$ and
+$h^2x-s^2<1/4-1/7=3/28$. If this last numerator is nonpositive,
+$L_b\le\alpha_0\sqrt p<3/16$. If it is positive, then
+
+$$
+ L_b<\frac3{16}+\frac3{28}\frac32
+              =\frac{39}{112}<\frac38.
+\tag{39.16}
+$$
+
+Since $L_a/q>0$, both cases imply
+
+$$
+ \frac{\mathscr D}{q}=\frac{L_a}{q}L_b-s^2
+                      <\frac18-\frac17=-\frac1{56}.
+\tag{39.17}
+$$
+
+All the square-root bounds used here follow by squaring positive
+rational endpoints; $h^2=1/2$ is exact. This proves the strict
+obstruction in particular at $x_*$.
+
+We verify its original realization at that same selected point.
+For either $\tau$ and every $|\lambda|=1$, use (39.2) with
+$x=x_*$, $p=p_*$, $q=q_*$. Before multiplication by $\lambda$,
+the actual diagonal data are
+
+$$
+ A=2(1+x_*),\quad B=2y_*,\quad
+ P=2(hx_*+c),\quad Q=2\tau ihy_*.
+\tag{39.18}
+$$
+
+The effect is positive, normalized and rank one. Its relative phase
+$-\tau i=P\bar Q/(|P||Q|)$ aligns the amplitudes of this one
+feedback. Its two original sign branches, including the effect term,
+are
+
+$$
+ \rho_+=\frac{18}{5},\qquad
+ \rho_--\rho_+
+   =2\left(\frac{17}{5}-2x_*-2y_*\right)>\frac45>0,
+\tag{39.19}
+$$
+
+since $x_*+y_*\le\sqrt2<3/2$.
+Thus (36.42) holds strictly and the true joint distance is $18/5$.
+Theorem 37.5 gives $f=N(18/5)$ at these pairs.
+
+For explicit nearby competitors, let
+$k=s\sqrt{q_*}/L_a>0$, with $L_a$ evaluated at this selected
+point. Specialize the actual curve of Theorem 36.5 to $a=kb$ and
+write its real parameter as $b$. Thus, near $b=0$, put
+
+$$
+\begin{aligned}
+ X_b&=-\cos b\cos(kb)
+       +\sqrt{(1+x_*)^2-\cos^2b\sin^2(kb)},&
+ Y_b&=\sqrt{1-X_b^2},\\
+ w_{\tau,b}&=(e^{ikb}(X_b+\tau iY_b),
+               e^{ikb}(X_b-\tau iY_b),e^{i\tau b},e^{-i\tau b}),\\
+ U_{\lambda,\tau,b}&=\lambda\operatorname{diag}(w_{\tau,b})U_+,\\
+ P_{\lambda,b}&=2\lambda(hX_be^{ikb}+c\cos b),&
+ Q_{\lambda,\tau,b}&=2\lambda\tau(ihY_be^{ikb}-s\sin b),\\
+ \psi_{\lambda,\tau,b}&=\sqrt{p_*}\,b_+
+       +\frac{P_{\lambda,b}\overline{Q_{\lambda,\tau,b}}}
+              {|P_{\lambda,b}||Q_{\lambda,\tau,b}|}
+                                      \sqrt{q_*}\,b_-,&
+ E_{\lambda,\tau,b}&=\overline{\psi_{\lambda,\tau,b}}\,
+                     \overline{\psi_{\lambda,\tau,b}}^{\dagger}.
+\end{aligned}
+\tag{39.20}
+$$
+
+The square roots are positive near zero, and both amplitudes are
+nonzero there. Every diagonal entry has modulus one, so this is an
+actual unitary, shared by the entire normalized effect. The same
+$w_{\tau,b}$ determines $A,B,P,Q$. In particular (36.48) gives
+$A=2(1+x_*)$ identically; the population and purity are unchanged.
+The strict sign gap (39.19) persists by continuity, proving
+$\rho(E_{\lambda,\tau,b},U_{\lambda,\tau,b})=18/5$ for all
+sufficiently small $b$. The common scalar cancels from the effect
+phase; there are no coordinate phases being quotiented.
+
+The existing expansion (36.54)--(36.55), applied to (39.20), gives
+
+$$
+ \sqrt{p_*}|P_{\lambda,b}|+\sqrt{q_*}|Q_{\lambda,\tau,b}|
+       -S(x_*)=-\frac{\mathscr D}{L_a}b^2+o(b^2)>0
+\tag{39.21}
+$$
+
+for every sufficiently small nonzero $b$, for both orientations.
+The exact same-feedback identity (23.12), attained by the effect
+phase in (39.20), therefore gives a strictly smaller $g$; the exact
+unchanged distance gives a strictly smaller $f$. These compare
+against the attained selected minimum $N(18/5)$, proving
+$m(18/5)<N(18/5)$.
+
+At the base, $A<3<A_0$, $B<2<23/6$ and
+$A+B=2(1+x_*+y_*)>4$. All three strict inequalities persist
+along (39.20), so the feedbacks lie in $\mathcal O$. This is an
+actual strict competitor and does not assert attainment of its
+core infimum. Finally (39.6) and continuity of $N$ preserve the
+strict value gap on a left neighborhood of $18/5$, proving the last
+assertion. $\square$
+
+**Theorem 39.4 (the original algebraic correspondence).** In real and
+imaginary matrix coordinates, the graphs of $\rho,f,m,N$, the
+relations $(\xi,X)$ with $X\in\mathcal A_\xi$ or
+$X\in\mathcal G_\xi$, and the sets $\mathcal B,\mathcal S$ are
+semialgebraic over the field of real algebraic numbers. The boundaries
+in (39.3) are finite real algebraic numbers and satisfy
+
+$$
+                 0<\alpha\le\beta<\frac{18}{5}.
+\tag{39.22}
+$$
+
+*Proof.* Here is the bridge to actual original matrices. Use
+$V=UU_+^\dagger$ with its full real and imaginary entries and
+$V^\dagger V=I_4$, and use
+
+$$
+ F=\begin{pmatrix}p&z\\\bar z&1-p\end{pmatrix},\quad
+ 0\le p\le1,\quad |z|^2\le p(1-p),\qquad
+ E=(TFT^\dagger)^{\mathsf T},\quad U=VU_+.
+\tag{39.23}
+$$
+
+These polynomial constraints describe exactly
+$\operatorname{Dens}_2\times U(4)$: unitary conjugation and ordinary
+transpose preserve positivity and trace, and $T$ is unitary.
+No feedback entries, effect ranks or signs have been discarded.
+Set $w_j=V_{jj}$ and introduce real $A,B\ge0$ with
+
+$$
+ A^2=|w_1+w_2+w_3+w_4|^2,\qquad
+ B^2=|w_1-w_2+i(w_3-w_4)|^2.
+\tag{39.24}
+$$
+
+These equations select precisely the original trace moduli, including
+their zeros. With $P,Q$ from (23.2), the exact same-object formulas
+are
+
+$$
+\begin{aligned}
+ \epsilon&=2[p(1-p)-|z|^2],\\
+ g&=d^2p+e^2(1-p)-p|P|^2-(1-p)|Q|^2
+                                      -2\operatorname{Re}(Pz\bar Q),\\
+ \rho&=\min\{10-2p-2A,\ 8+2p-2B\}-\epsilon.
+\end{aligned}
+\tag{39.25}
+$$
+
+The graph of the last minimum is a finite disjunction: its value
+is no larger than either branch and equals at least one. Thus it
+includes sign ties and the common impurity subtraction with their
+original meanings. All other expressions are polynomials in real
+coordinates, with (39.24) as auxiliary equations and inequalities.
+In particular no positive square-root columns at singular $E$ are
+needed; source (22.1) justifies their exact cancellation in $g$.
+
+The fixed entries of $T,U_\pm$ and $h,c,s,d,e$ are algebraic by
+source (6.3), (6.7) and the half-angle formulas. The root formula of
+Theorem 21.3 makes $\kappa$ algebraic as well. Consequently (39.23)--
+(39.25) and $f=g-\kappa\rho$ have real algebraic coefficients.
+For every attained level the value graph has the exact description
+
+$$
+\begin{aligned}
+ v=m(\xi)\quad\Longleftrightarrow\quad
+ &\bigl[\exists X\in\mathcal K:\rho(X)=\xi,\ f(X)=v\bigr]\\
+ &\text{and}\quad
+ \bigl[\forall X'\in\mathcal K:\rho(X')=\xi
+                                      \Longrightarrow f(X')\ge v\bigr].
+\end{aligned}
+\tag{39.26}
+$$
+
+Similarly use the compact interval (37.20), the displayed expression
+$H^+_\delta(t-\delta)$ and existential attainment plus a universal
+lower bound to describe $N$. Each radicand in that expression is
+represented by a variable $r\ge0$, $r^2$ equal to that radicand;
+thus no extra root sign enters. The same relation with the minimizing
+$\delta$ free describes its unique argument. Formula (39.2),
+with $\lambda\bar\lambda=1$ and its two orientations, then gives
+$\mathcal G$ semialgebraically. Equality to (39.26) gives
+$\mathcal A$. Projection, complement and the comparisons in
+(39.3) describe $\mathcal B,\mathcal S$.
+
+These are applications of real quantifier elimination to the verified
+original relations. The general projection, compact-minimum and
+one-dimensional finiteness tools are the same intermediates used in
+[AURIC_COMPATIBLE_PREDICTIVE_WAVES_AND_RELATIONAL_SPECTRA_VII.md
+§§130--132](AURIC_COMPATIBLE_PREDICTIVE_WAVES_AND_RELATIONAL_SPECTRA_VII.md).
+In the primary statements, Basu,
+[*Algorithms in Real Algebraic Geometry: A Survey*,
+arXiv:1409.1534v1, §2.1, Theorem 2.1](https://arxiv.org/pdf/1409.1534v1),
+gives quantifier elimination for first-order polynomial sign formulas;
+Guo--Kim--Jiao--Pham,
+[*On types of KKT points in polynomial optimization*,
+arXiv:2004.12315v1, §2.1, Theorem 2.1](https://arxiv.org/html/2004.12315v1),
+gives semialgebraic projection and its finite Boolean closure.
+The coefficient-preserving formulation applies over the real closed
+field of real algebraic numbers and then in its extension $\mathbb R$.
+Hence the resulting one-variable descriptions use algebraic
+coefficients. A Boolean description in one variable changes truth
+only at roots of its finitely many nonzero polynomials. It follows
+that all finite component endpoints are algebraic and that there are
+only finitely many components. This is a use of those general tools,
+not a new projection or compact-minimum theorem.
+
+Theorems 34.3 and 37.5 identify the full minimizing set with
+$\mathcal G_\xi$ on some initial positive interval, so neither bad
+set meets that interval. Theorem 39.3 puts a left neighborhood of
+$18/5$ in $\mathcal S$. Both sets are nonempty, and
+$\mathcal S\subseteq\mathcal B$. Their infima therefore obey
+(39.22) and are finite component endpoints of their semialgebraic
+sets. The algebraicity assertion follows. This provides no evaluated
+polynomial or selected numerical value for either boundary.
+$\square$
+
+**Theorem 39.5 (endpoint geometric optimality and exhaustive-equality
+alternatives).** At both $b=\alpha$ and $b=\beta$,
+
+$$
+ m(b)=N(b),\qquad \mathcal G_b\subseteq\mathcal A_b,
+ \qquad \lim_{\xi\to b}m(\xi)=m(b).
+\tag{39.27}
+$$
+
+In particular neither boundary belongs to $\mathcal S$.
+Below $\alpha$ the entire minimizing set is $\mathcal G_\xi$;
+below $\beta$, and at $\beta$, the value is $N(\xi)$.
+At either boundary the exact profile of Theorem 36.2 consequently
+satisfies
+
+$$
+ M_\sigma(w,b)\ge N(b)+\kappa b
+ \quad\text{for every realizable }w\text{ and every admissible sign }\sigma.
+\tag{39.28}
+$$
+
+The maximal initial positive-distance prefix on which
+$\mathcal A_\xi=\mathcal G_\xi$ is $(0,\alpha)$ if
+$\mathcal A_\alpha\setminus\mathcal G_\alpha\ne\varnothing$,
+and $(0,\alpha]$ otherwise. In the latter case there is
+$\varepsilon_\alpha>0$ such that every
+$\alpha<\xi<\alpha+\varepsilon_\alpha$ has an actual nongeometric
+global minimizer. In the former case an additional endpoint minimizer
+is attained; persistence of such a minimizer to the right does not
+follow from endpoint equality alone. There is
+$\varepsilon_\beta>0$ such that
+
+$$
+        m(\xi)<N(\xi)\qquad
+                  (\beta<\xi<\beta+\varepsilon_\beta).
+\tag{39.29}
+$$
+
+*Proof.* Definition (39.3), attainment, and the feasible set
+$\mathcal G_\xi$ imply the asserted equality of minimizing sets
+for $0<\xi<\alpha$ and of values for $0<\xi<\beta$.
+Left continuity (39.6) and continuity of $N$ prove equality of
+values at both endpoints. Every pair in $\mathcal G_b$ attains
+that value at the exact original distance, proving its global
+optimality there. Applying the original-pair lower bound at $b$
+to each of the attainable fixed-feedback effect minima (36.6)
+proves (39.28), retaining both admissible signs and every actual
+lift. Conversely those inequalities and geometric attainment imply
+the same endpoint value equality.
+
+For any sequence $\xi_n\to b$, compactness gives the lower
+semicontinuity inequality of Theorem 39.2, while geometric feasibility
+and continuity give the upper inequality
+
+$$
+ m(b)\le\liminf m(\xi_n)
+       \le\limsup m(\xi_n)\le\lim N(\xi_n)=N(b)=m(b).
+\tag{39.30}
+$$
+
+This proves full value continuity specifically at these endpoints;
+right accessibility of every original point has not been asserted.
+
+At $\alpha$, (39.27) identifies membership in $\mathcal B$
+exactly with an additional attained endpoint minimizer. This decides
+whether the initial exhaustive prefix includes its endpoint.
+If $\alpha\notin\mathcal B$, finiteness of the components of
+$\mathcal B$, its nonemptiness, and its infimum $\alpha$ force
+an interval immediately to the right to belong to $\mathcal B$.
+At any such level, either $m<N$, in which case every global minimizer
+is nongeometric, or $m=N$, in which case the witness in (39.3)
+is an additional global minimizer. This proves the claimed existence.
+If $\alpha\in\mathcal B$, it may instead be an isolated point
+of that set; finite-component semialgebraicity does not exclude this.
+Since $\beta\notin\mathcal S$, the same finite-component argument
+forces a right interval in $\mathcal S$, proving (39.29).
+These implications do not identify $\alpha$ with $\beta$.
+$\square$
+
+**Theorem 39.6 (actual minimizing branches and endpoint limits).**
+For either $b=\alpha$ or $b=\beta$, every sequence of actual
+global minimizers at levels $\xi_n\to b$ has a convergent
+subsequence, and every such limit belongs to $\mathcal A_b$.
+There is a sufficiently short interval $(b,b+\varepsilon)$ on which
+one can choose a real analytic semialgebraic branch
+
+$$
+ \xi\longmapsto X(\xi)=(E(\xi),U(\xi))\in\mathcal A_\xi
+\tag{39.31}
+$$
+
+of actual original matrices, with an actual limit
+$X_b\in\mathcal A_b$ as $\xi\downarrow b$.
+At $b=\beta$ this branch is strictly below $N$ at every level
+of the interval. At $b=\alpha$ with
+$\mathcal A_\alpha=\mathcal G_\alpha$, the branch can be chosen
+nongeometric throughout that interval and has $X_\alpha\in
+\mathcal G_\alpha$. More generally, whenever all levels in such
+an interval have nongeometric global minimizers, a branch (39.31)
+can be chosen among them.
+
+If $\mathcal A_b=\mathcal G_b$, every choice of global minimizers
+approaching $b$ has distance to $\mathcal G_\xi$ tending to zero.
+If a sequence instead remains at product Frobenius distance at least
+$\eta>0$ from $\mathcal G_{\xi_n}$, a subsequential limit is an
+additional actual minimizer in
+$\mathcal A_b\setminus\mathcal G_b$.
+
+*Proof.* Compactness supplies subsequential limits. Equations
+(39.27)--(39.30) and continuity of $\rho,f$ put each limit at
+$\rho=b$, $f=N(b)=m(b)$, proving actual endpoint attainment.
+Hausdorff continuity of $\mathcal G_\xi$ preserves any fixed
+positive separation. If $\mathcal A_b=\mathcal G_b$ but the
+distance did not tend to zero, compactness would give just such a
+separated subsequential limit, a contradiction. The product norm
+here tests separation from the full scalar orbits in (39.2); it
+does not replace the original metric (39.1).
+
+For selection use the semialgebraic relation of actual matrices
+proved in Theorem 39.4, with nonempty compact fibers
+$F(\xi)=\mathcal A_\xi$ and the semialgebraic submap
+$\widetilde F(\xi)=\mathcal A_\xi\cap\mathcal G_\xi$.
+Extend both by the empty set outside $(0,4)$.
+Drusvyatskiy--Lewis,
+[*Semi-algebraic functions have small subdifferentials*,
+arXiv:1004.0368v1, Theorem 2.25 and Corollary 2.27](https://arxiv.org/html/1004.0368v1),
+trivialize a semialgebraic set-valued graph over a finite partition
+of its domain, compatibly with a semialgebraic submap. Specifically
+these statements require a semialgebraic graph and, for the theorem,
+a continuous semialgebraic projection; the coordinate projection
+from our actual graph satisfies this. No finite-fiber, genericity or
+smooth-minimizer hypothesis is required. Finiteness of the parameter
+partition allows $(b,b+\varepsilon)$ to lie in one part after
+shrinking. Its trivialization is a semialgebraic homeomorphism
+
+$$
+ \Theta:\operatorname{gph}F|_{(b,b+\varepsilon)}
+                \longrightarrow (b,b+\varepsilon)\times Y,
+ \qquad
+ \Theta(\operatorname{gph}\widetilde F)
+                =(b,b+\varepsilon)\times\widetilde Y,
+ \quad \widetilde Y\subseteq Y,
+\tag{39.32}
+$$
+
+preserving the first coordinate. Fixing $y_0\in Y$ gives
+$(\xi,X(\xi))=\Theta^{-1}(\xi,y_0)$, a continuous
+semialgebraic section. When nongeometric minimizers are required,
+the fibers $F\setminus\widetilde F$ are nonempty throughout the
+interval, so $Y\setminus\widetilde Y\ne\varnothing$; choose
+$y_0$ there. At $\beta$, (39.29) makes every fiber strictly
+nongeometric. At $\alpha$ without additional endpoint minimizers,
+Theorem 39.5 supplies the needed nongeometric right-hand fibers.
+
+Apply Drusvyatskiy--Ioffe--Lewis,
+[*Generic minimizing behavior in semi-algebraic optimization*,
+arXiv:1504.07694v1, Theorem 3.4](https://arxiv.org/html/1504.07694v1),
+to this single-valued semialgebraic section on a real interval.
+Its analytic constant-rank stratification leaves a smaller full
+interval adjacent to $b$ on which the section is real analytic.
+This applies to the already selected section, and requires none of
+the finite-valued or small-graph hypotheses of that paper's later
+selection and Sard results. For a bounded real coordinate of the
+section, assign arbitrary endpoint values on a closed subinterval
+$[b,b+\varepsilon/2]$. The extended function is semialgebraic.
+Guo--Kim--Jiao--Pham, §2.1, Lemma 2.2 cited in Theorem 39.4,
+partitions that interval into finitely many pieces where it is
+constant or strictly monotone. Consequently it has a finite
+one-sided limit at $b$. All real and imaginary matrix coordinates
+are bounded by compactness of $\mathcal K$; taking their finitely
+many limits gives $X_b\in\mathcal K$. The first paragraph puts
+it in $\mathcal A_b$, and in $\mathcal G_b$ when that is the
+whole endpoint minimizing set. These branches consist of actual
+$E,U$; the derived $w,A,B,P,Q$ always belong to that same $U$.
+The limit may lie on a boundary of $\mathcal O$ and need not
+attain $N_{\mathcal O}(b)$. $\square$
+
+**Unresolved mathematical obligations 39.7.** The inequalities
+$0<\alpha\le\beta<18/5$, algebraicity and endpoint geometric
+optimality do not evaluate either boundary, prove their coincidence,
+or determine either full equality preimage. The outstanding comparison
+remains the ordering of every admissible
+$M_\sigma(w,\xi)$ against $N(\xi)+\kappa\xi$ on the preceding
+levels, with its attained original equality cases. It includes mixed
+and singular effects, both optimizer signs, all actual unitary lifts,
+and any additional nonlocal minimizing branch. The analytic sections
+in Theorem 39.6 supply existence and endpoint limits, not their
+explicit identification or exhaustion. An additional separated
+endpoint pair is forced only under the stated positive-separation
+hypothesis; coalescence with the geometric family remains possible.
+No core-infimum attainment or generic nondegeneracy is implied.
+A zero of $\mathscr D$ still requires higher-order and global
+comparison, and is not identified with either first boundary.
+
+## 追加锚（本行以下为增补区）

@@ -1,0 +1,127 @@
+**Theorem 7.2 (Uniform fixed-parameter second-order relation).**
+For fixed admissible $a,h$, uniformly over all the allocation
+entries in (6.12),
+
+$$
+\begin{aligned}
+\mathcal A_{j,N}(z)
+ &=M+\frac{\chi_{j,N}}N+\frac{\Psi_{j,N}(z)}{N^2}
+                                      +O_{a,h}(N^{-3}),\\
+V_N&=M+\frac{\chi_N}N+\frac{\Psi_N}{N^2}
+                                      +O_{a,h}(N^{-3}).
+\end{aligned}
+\tag{7.3}
+$$
+
+Every sufficiently large exact minimizer has, in addition,
+$\Psi_{j,N}(z)=\Psi_N$. Equality of these second coefficients
+alone is not asserted to suffice for exact minimality.
+
+**Proof.** First allow arbitrary $e,o$ in (6.2), keeping balanced
+tails. Put $z=e-o$ and $\delta_i=\sigma+z_i$ as before, but use
+
+$$
+B_i=m^2\varphi+r^2(d-o_i)+4e_i.
+\tag{7.4}
+$$
+
+The squared-source-degree numerator at core $i$ is exactly
+$\alpha m^2N+B_i$, and its degree is exactly
+$\alpha N+\delta_i$. At a tail write
+$q_k=\beta N+\nu_k$. Its squared-degree numerator is $q_k+3$.
+Thus the law energy in (1.2) is exactly
+
+$$
+H(x_G)=N\sum_i
+ \frac{\alpha m^2N+B_i}{(\alpha N+\delta_i)^2}
+                   +N\sum_k\frac{\beta N+\nu_k+3}
+                                          {(\beta N+\nu_k)^2}.
+\tag{7.5}
+$$
+
+The offsets $\varphi,\delta_i,B_i,\nu_k$ are bounded in terms
+of fixed $a,h$ alone. Expanding each positive denominator gives
+
+$$
+\begin{aligned}
+N\frac{\alpha m^2N+B_i}{(\alpha N+\delta_i)^2}
+={}&\frac{m^2}{\alpha}
+ +\frac{B_i-2m^2\delta_i}{\alpha^2N}
+ +\frac{3m^2\delta_i^2-2B_i\delta_i}{\alpha^3N^2}
+ +O_{a,h}(N^{-3}),\\
+N\frac{\beta N+\nu_k+3}{(\beta N+\nu_k)^2}
+={}&\frac1\beta+\frac{3-\nu_k}{\beta^2N}
+ +\frac{\nu_k^2-6\nu_k}{\beta^3N^2}
+ +O_{a,h}(N^{-3}).
+\end{aligned}
+\tag{7.6}
+$$
+
+The constant sum is $m^3/\alpha+n/\beta=S_j=M$. The coefficient
+of $N^{-1}$ is $nb_j+dc_j$: this follows either by summing (7.6)
+and using $\sum e_i=n$, $\sum o_i=d$, $\sum\nu_k=-\sigma$,
+or from the exact first variation in Lemma 2.3. In the latter
+calculation the exceptional counts are $n$ connectors and $d$
+missing-one sources and all ordinary prices vanish.
+
+For balanced tails, their offsets consist of $n-t$ copies of
+$\gamma-t/n$ and $t$ copies of $\gamma+1-t/n$. Consequently
+
+$$
+\sum_k\nu_k=n\gamma,\qquad
+\sum_k\nu_k^2=n\gamma^2+\frac{t(n-t)}n,
+\tag{7.7}
+$$
+
+including $t=0$. This proves the tail term $U_{j,N}/\beta^3$.
+
+It is essential to expand the actual square root as well.
+For the actual edge ratios, all of which are $O_{a,h}(N^{-1})$,
+Taylor's theorem gives, uniformly,
+
+$$
+W(G)=H(x_G)-\frac N4
+       \sum_{ui\in E}\frac{d_G(u)^4}{d_G(i)^4}
+                                      +O_{a,h}(N^{-4}).
+\tag{7.8}
+$$
+
+Indeed the remainder per edge after the fourth power is
+$O(N^{-6})$, there are $aN$ edges, and the exterior factor is
+$N$. At core $i$ the fourth-power numerator is
+$Fm^4+(d-o_i)r^4+16e_i=\alpha m^4N+O_{a,h}(1)$.
+At tail $k$ it is $q_k+15=\beta N+O_{a,h}(1)$. Hence
+
+$$
+\frac N4\sum_{ui\in E}\frac{d_G(u)^4}{d_G(i)^4}
+ =\frac1{4N^2}\left(\frac{m^5}{\alpha^3}
+                               +\frac n{\beta^3}\right)
+                                      +O_{a,h}(N^{-3}).
+\tag{7.9}
+$$
+
+For a core-optimal allocation (6.9),
+$B_i=B_i^0+(4-r^2)\ell_i$ and
+$\sum_i\ell_i\delta_i=L(z)\delta_0$. Substitution in (7.6)
+and (7.8)--(7.9) gives exactly (7.2), proving the first line of
+(7.3).
+
+There are finitely many $j$, values of $d$, and $z$. The tail
+remainders $t$ also lie in a fixed finite set. All denominators
+stay bounded below by a positive multiple of $N$ for one common
+threshold. Taylor's remainders can therefore be bounded by one
+constant on all these entries, including all actual minimizing
+allocations and all their label assignments. Taking the finite
+minimum in the exact identity (6.12) proves the second line of
+(7.3).
+
+The rational numbers in (7.2) range over a finite set as $N$
+varies: $d$ and $t$ each range over a finite set, and the rest
+of the formula is fixed on that data. A positive difference
+$\Psi_{j,N}(z)-\Psi_N$ therefore has a positive lower bound
+independent of $N$. In (7.3) this strict $N^{-2}$ difference
+exceeds the uniform $O(N^{-3})$ error eventually. Thus no such
+entry is an exact minimizer. This proves the necessary secondary
+selection, without replacing the exact comparison (6.12) by its
+second-order truncation. ∎
+

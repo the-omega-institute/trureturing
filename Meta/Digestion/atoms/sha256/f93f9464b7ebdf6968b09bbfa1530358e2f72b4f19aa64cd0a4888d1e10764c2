@@ -1,0 +1,54 @@
+**引理 211.1（没有自身能量读回的简单块漂移）。** 设简单有限 EJA $T$ 的秩为 $n\ge3$，原 $q_T$ 为任意正 Frobenius 型，$\tau_T$ 为规范谱迹。设原实双线性 $D$ 满足右单位 $D_au_T=0$，并只满足定义 203.1 的正交、二原子内部和半角角外三层。则存在一个实数 $\lambda$，使
+
+$$
+\begin{gathered}
+D_ep=\lambda p\qquad(e,p\text{ primitive},\ e\perp p),\\
+D_aa=\lambda\bigl(\tau_T(a)a-\tau_T(a^2)u_T\bigr).
+\end{gathered}
+\tag{211.1}
+$$
+
+这里未要求半角自身读回、SC、交替性、导子或斜伴随。定义
+
+$$
+\delta(a,b)=D_ab-\lambda\bigl(\tau_T(a)b-\tau_T(a\circ b)u_T\bigr).
+\tag{211.2}
+$$
+
+则 $\delta$ 交替、在每个共同谱框架子代数上消失，且 $\delta_au_T=0$。
+
+证明。定理 181.1 给 $D_ep=k_{ep}p$ 与框架对角式。固定 primitive $e$，成熟分类给 $T_0(e)$ 简单；其秩为 $n-1\ge2$。线性算子 $D_e|_{T_0(e)}$ 把每颗 primitive 送入自身直线。定理 188.1 证明中的 Peirce 标量引理因此给
+
+$$
+k_{ep}=\kappa(e)\quad(p\perp e),\qquad
+D_ee=-\kappa(e)(u_T-e).
+\tag{211.3}
+$$
+
+取 frame 中三颗 $e,s,t$，以及 $y^2=e+s$、$p_\pm=(e+s\pm y)/2$。由 (211.3)，
+
+$$
+D_e(e+s)=-\kappa(e)(u_T-e-s),\qquad
+P_eD_ep_+=-P_eD_ep_-.
+\tag{211.4}
+$$
+
+所以两份半角角外关系在同一读回 $t$ 上具有相同左能量和相同右能量；相减得 $q_T(D_ye,t)=0$。切口换为 $s$ 亦得 $q_T(D_ys,t)=0$。对该 frame 中其余原子 $r$，$r\perp p_\pm$，故
+
+$$
+D_yr=\bigl(\kappa(p_+)-\kappa(p_-)\bigr)r.
+$$
+
+把右单位 $D_yu_T=0$ 与 $t$ 配对，前两项已为零，其余框架项只有 $r=t$ 有贡献，原正范数遂给 $\kappa(p_+)=\kappa(p_-)$。在 frame $p_+,p_-,t,\ldots$ 上换用正规 Peirce 边 $e-s$，其正反半角恰为 $e,s$，同一计算给 $\kappa(e)=\kappa(s)$。因此任何正交 primitive 的 $\kappa$ 相同。
+
+任取两颗不同且不正交的 primitive $e,f$。Nomura Proposition 2.6 的成熟三维角构造把二者放在同一个秩二支撑 $c$ 内；$n\ge3$ 时可取 primitive $t\le u_T-c$。刚证的正交结论给 $\kappa(e)=\kappa(t)=\kappa(f)$。相等及正交情形已覆盖，故 $\kappa$ 在全部 primitive 上为同一个常数 $\lambda$。对任意自身谱分解 $a=\sum_i a_ie_i$，(211.3) 与正交式直接给
+
+$$
+D_aa
+=-\lambda\sum_i a_i^2(u_T-e_i)
++\lambda\sum_{i\ne j}a_ia_je_j
+=\lambda\bigl(\tau_T(a)a-\tau_T(a^2)u_T\bigr).
+$$
+
+(211.2) 的对角为零，极化给交替；其正交原子值为零，故共同框架上全零。右单位直接代入取得。∎
+

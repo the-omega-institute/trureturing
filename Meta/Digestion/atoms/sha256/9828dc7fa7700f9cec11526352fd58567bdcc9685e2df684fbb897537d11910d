@@ -1,0 +1,83 @@
+**定理 131.1（受限旗域及准确的简化范围）。** 裸有限 EJA 上的新测试域为
+
+$$
+\mathcal T_2(E)=\{(c,p,r):c^2=c,\ \operatorname{rank}_E(c)\le2,\ p\in\operatorname{Prim}(E),\ r^2=r,\ P_cr=0\}.
+\tag{131.1}
+$$
+
+它是 (127.1) 的严格秩限制；当原总 Jordan 秩至多二时，两域相同；当原总秩至少三时，全部总秩至少三的主切口分层被删除。零对象两域皆空。
+
+仅在完整原量子重构后，固定同一原表示 $E\cong\bigoplus_tH_{n_t}(\mathbb C)$，保留中央标签及 $q(x,y)=\sum_tw_t\operatorname{Tr}(x_ty_t)$、$w_t>0$。原子 $p$ 位于块 $s$，主切口的块秩为 $k_t$，则分层精确为
+
+$$
+\mathcal T_{2;s,\mathbf k,\mathbf a,\mathbf b}
+\cong\mathbb {CP}^{n_s-1}\times
+\prod_t\frac{U(n_t)}{U(a_t)\times U(k_t-a_t)\times U(b_t)\times U(n_t-k_t-b_t)},
+\qquad\sum_tk_t\le2.
+\tag{131.2}
+$$
+
+各分母秩非负，$U(0)$ 取平凡群。这是 (127.3) 的原四扇区对应，未把裸 EJA 的 primitive 预先称为复射线。其每个分层的实维数仍为
+
+$$
+d_{s,\mathbf k,\mathbf a,\mathbf b}
+=2(n_s-1)+\sum_t\{n_t^2-a_t^2-(k_t-a_t)^2-b_t^2-(n_t-k_t-b_t)^2\}.
+\tag{131.3}
+$$
+
+设 $E\ne0$，$n_{\max}=\max_tn_t$，并定义
+
+$$
+f(n,k)=n^2-\left\lceil k^2/2\right\rceil-\left\lceil(n-k)^2/2\right\rceil,
+\qquad g(n)=\max_{0\le k\le n}f(n,k).
+$$
+
+相对定义 126.1 的旧原子三元域，两域最大分层维数准确为
+
+$$
+\begin{aligned}
+M_{\rm prim}&=2(n_{\max}-1)+\sum_tg(n_t),\\
+M_2&=2(n_{\max}-1)+\max_{\substack{0\le k_t\le n_t\\\sum_tk_t\le2}}\sum_tf(n_t,k_t).
+\end{aligned}
+\tag{131.4}
+$$
+
+单个复块 $H_n(\mathbb C)$ 上，最大连续维数严格下降当且仅当 $n\ge7$；$1\le n\le6$ 两个最大值相同。多个原块用 (131.4) 比较，不将单块阈值直接推广。
+
+证明。原秩不超过二的幂等元恰为零、一个 primitive、或两个正交 primitive 之和；总秩至少三时，原单位本身已给一个被删主切口，且仍有原子 $p$ 与读回 $r=0$，故删域确实严格。反之总秩至多二时没有任何可删切口。
+
+复表示中 $P_cr=0$ 等价于两个投影交换。(127.5)–(127.6) 的四个有序正交扇区及其逆映射 $c=\Pi_{11}+\Pi_{10}$、$r=\Pi_{11}+\Pi_{01}$ 原样给 (131.2)，只限制 $\sum_tk_t$。忘掉 $r$ 仍是 (127.7) 的关联丛，纤维为逐块 $\operatorname{Gr}_{\mathbb C}(a_t,k_t)\times\operatorname{Gr}_{\mathbb C}(b_t,n_t-k_t)$，不宣称全局平凡。群与稳定子维数给 (131.3)。
+
+两个和为 $k$ 的非负整数的平方和，最小为 $\lceil k^2/2\rceil$，由相差至少二时移一单位使平方和下降可证；同理处理 $n-k$。因此固定 $k$ 最大维数正是 $f(n,k)$。原子块 $s$ 独立选择，且两域的全部秩分层有限，遂得 (131.4)。无秩限制时，四个非负扇区秩之和为 $n$，平方和在尽量平衡时最小。由此
+
+$$
+g(2m)=4m^2-2\left\lceil m^2/2\right\rceil,\qquad
+g(2m+1)=3m(m+1).
+\tag{131.5}
+$$
+
+对 $n\ge2$，限制 $k\le2$ 的最大值为 $f(n,2)$：直接相减，$f(n,1)-f(n,0)$ 在偶数 $n$ 时为 $n-2$，在奇数 $n$ 时为 $n-1$；$f(n,2)-f(n,1)$ 分别为 $n-2$、$n-3$，在相应范围均非负。将 (131.5) 与 $f(n,2)$ 相减，得到
+
+$$
+\begin{aligned}
+g(2m)-f(2m,2)
+&=\begin{cases}(m-2)^2,&m\text{ 偶},\\(m-1)(m-3),&m\text{ 奇},\end{cases}&&m\ge1,\\
+g(2m+1)-f(2m+1,2)&=(m-1)(m-2),&&m\ge1.
+\end{aligned}
+\tag{131.6}
+$$
+
+$n=1$ 单独有两最大值均为零；(131.6) 则给所述准确阈值。
+
+纯经典 $E=\mathbb R^m$、$m\ge1$ 时，新域点数为
+
+$$
+|\mathcal T_2(\mathbb R^m)|
+=m\left(1+m+\binom m2\right)2^m,
+\qquad
+|\mathcal T_{\rm primtri}(\mathbb R^m)|=m4^m.
+\tag{131.7}
+$$
+
+因为 $p$ 有 $m$ 种，$c$ 是至多两元素的坐标子集，$r$ 是任意坐标子集。两域连续维数都为零，点数在 $m\ge3$ 时严格减少，在 $m=1,2$ 时相等。特别 $E=\mathbb R$ 有四个点。∎
+

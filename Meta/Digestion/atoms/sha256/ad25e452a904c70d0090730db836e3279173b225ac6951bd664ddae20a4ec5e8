@@ -1,0 +1,155 @@
+**Theorem 32.1 (native long-time local and circle limits).**
+Write $p_\kappa(t,y)=p_\kappa(t,o,y)$. If $\kappa\to0$ through either
+sign, $t\to\infty$, and $r=a\sqrt t\to0$, then
+
+$$
+\sup_{k,\theta,v,D}\left|
+r e^{\lambda t}p_\kappa(t,k,\theta,v,D)
+-\frac{\phi(k_0)\phi(k)}{(2\pi)^2\sqrt{4\pi\beta}}
+ \sum_{h\in\mathbb Z}
+ \exp\!\left(-\frac{(D+2\pi h)^2}{4\beta r^2}\right)
+\right|\longrightarrow0.
+\tag{32.1}
+$$
+
+Represent $D$ in $[-\pi,\pi]$ in this formula; the sum is periodic.
+If instead $a^2t\to b\in(0,\infty)$, then uniformly on $\Omega$,
+
+$$
+e^{\lambda t}p_\kappa(t,k,\theta,v,D)
+\longrightarrow
+\frac{\phi(k_0)\phi(k)}{(2\pi)^2}G_{\beta b}(D).
+\tag{32.2}
+$$
+
+Proof. Use precisely the scalar operators and complete Fourier
+decomposition of [G, (26.5), (26.12)--(26.14)]. Their resolved frequency
+is $\eta=(n,m,\kappa j)$, not $(n,m,j)$. The part with $(n,m)\ne(0,0)$
+satisfies, for all sufficiently large $t$,
+
+$$
+e^{\lambda t}\sup_y\left|
+\frac1{(2\pi)^3}\sum_{(n,m)\ne(0,0),j}
+ e^{i(n\theta+mv+jD)}K_{\kappa,(n,m,\kappa j)}(t;k_0,k)
+\right|
+\le Ce^{-dt}(1+r^{-1})
+\tag{32.3}
+$$
+
+for fixed $d>0$. Indeed the separation inequality preceding [G, (26.14)]
+extracts a fixed exponential from the nonzero visible frequency; the
+remaining three sums are bounded by the same integral comparison as
+there. This justifies absolute summation and is uniform up to both
+height faces.
+
+For the remaining modes put $q=\kappa j$ and consider
+$H_I+q^2b_\kappa^2$, where $H_I=-\varepsilon^2\partial_k^2$ is
+Dirichlet. Denote its first eigenvalue and positive normalized
+eigenfunction by $\Lambda_\kappa(q)$ and $v_{\kappa,q}$. Uniformly for
+small $|q|$ and small $|\kappa|$,
+
+$$
+\begin{aligned}
+\Lambda_\kappa(q)&=\lambda+\beta_\kappa q^2+O(q^4),
+&\beta_\kappa&=\int_I b_\kappa^2\phi^2\,dk\longrightarrow\beta,\\
+\|v_{\kappa,q}-\phi\|_{H^2(I)}&\le Cq^2.
+\end{aligned}
+\tag{32.4}
+$$
+
+Here is a direct justification of the perturbative estimate. Bounded
+real multiplication leaves the scalar Dirichlet form closed (the
+relative form bound in Teschl's Theorem 6.24 is zero). Its operator
+domain is fixed as well: in the form representation equation the bounded
+term can be moved to the $L^2$ right side, leaving exactly the defining
+equation for membership in $D(H_I)$. Min-max gives
+$\lambda\le\Lambda_\kappa(q)\le\lambda+Cq^2$ and second eigenvalue
+at least $4\lambda$. Take $|q|$ small so the first is below $2\lambda$.
+Existence follows from scalar compactness; the first eigenfunction can
+be chosen positive by the one-dimensional Dirichlet equation and is
+simple by the constant-Wronskian argument. Write
+$v=z\phi+h$ with $h\perp\phi$ and $z>0$. Projecting its equation gives
+
+$$
+(H_I-\Lambda_\kappa(q))h
+ =-q^2(1-|\phi\rangle\langle\phi|)(b_\kappa^2v).
+$$
+
+The inverse on $\phi^\perp$ has uniformly bounded norm from $L^2$ to
+$H^2\cap H_0^1$, since that spectrum starts at $4\lambda$ and
+$\Lambda<2\lambda$. Hence $\|h\|_{H^2}\le Cq^2$ and
+$z=1+O(q^4)$. Projection onto $\phi$ now gives (32.4).
+Sobolev embedding makes its eigenfunction error uniform in height.
+
+For $|q|$ in this small fixed interval the scalar kernel is
+
+$$
+K_{\kappa,(0,0,q)}(t;k_0,k)
+ =e^{-t\Lambda_\kappa(q)}v_{\kappa,q}(k_0)v_{\kappa,q}(k)
+  +R_{\kappa,q}(t;k_0,k),
+\qquad |R_{\kappa,q}|\le C e^{-4\lambda t}.
+\tag{32.5}
+$$
+
+For the last bound, split off fixed positive smoothing intervals at both
+ends of the semigroup. Scalar domination by $h_I$, obtained by the
+bounded-potential Trotter formula, bounds their evaluation norms
+uniformly. The remaining semigroup on the complement of its first
+eigenfunction has norm at most $e^{-4\lambda(t-2\delta)}$.
+Absorb the fixed $e^{8\lambda\delta}$ in $C$. No infinite sum of the
+unsummed remainder bound in (32.5) is taken.
+
+In the regime $r\to0$, set $z_j=rj$. On $|z_j|\le R$ one has
+$q^2=z_j^2/t$, and therefore, uniformly on this set and in $k$,
+
+$$
+e^{\lambda t}K_{\kappa,(0,0,\kappa j)}(t;k_0,k)
+ -\phi(k_0)\phi(k)e^{-\beta z_j^2}\longrightarrow0.
+\tag{32.6}
+$$
+
+The number of these summands times $r$ is bounded for each fixed $R$.
+For the tails use [G, (26.12)] with
+$\Psi(x)=x^2$ for $x\le1$ and $x^{2/3}$ for $x\ge1$.
+Where $a|j|\le1$, its exponential is bounded by $Ce^{-c z_j^2}$.
+Thus its $r$-weighted sum over $|z_j|>R$ tends uniformly to zero as
+$R\to\infty$, by the elementary Gaussian integral comparison on a
+lattice of spacing $r\to0$. Where $a|j|>1$, that weighted sum is at most
+
+$$
+Cr e^{-ct}+C\sqrt t\int_1^\infty e^{-ct x^{2/3}}\,dx
+\longrightarrow0.
+$$
+
+The comparison Gaussian has the same Gaussian tail bound. Taking
+$\kappa\to0$ first and $R\to\infty$ second proves
+
+$$
+r\sum_j\sup_k\left|
+e^{\lambda t}K_{\kappa,(0,0,\kappa j)}(t;k_0,k)
+-\phi(k_0)\phi(k)e^{-\beta r^2j^2}\right|\longrightarrow0.
+\tag{32.7}
+$$
+
+The Fourier coefficients of the periodized Gaussian, computed by
+integrating its translates on $\mathbb R$, give the identity
+
+$$
+G_{\beta r^2}(D)=\frac1{\sqrt{4\pi\beta}\,r}
+ \sum_{h\in\mathbb Z}e^{-(D+2\pi h)^2/(4\beta r^2)}.
+\tag{32.8}
+$$
+
+Combining (32.7), (32.3) and the original prefactor $(2\pi)^{-3}$
+proves (32.1). The visible zero modes supply a factor $2\pi G$, so
+the remaining visible normalization is $(2\pi)^{-2}$.
+
+For $a^2t\to b>0$, each fixed $j$ in (32.4)--(32.5) converges instead
+to $\phi(k_0)\phi(k)e^{-\beta b j^2}$. There is a summable dominator:
+for $a\le1$, $\Psi(a|j|)/a^2\ge\Psi(|j|)$, and eventually
+$a^2t\ge b/2$. Thus [G, (26.12)] bounds the summand by
+$Ce^{-cb\Psi(|j|)/2}$, uniformly in height. Dominated summation and
+(32.3) prove (32.2). These arguments cover arbitrary sequences satisfying
+the stated scales, so all convergences also hold uniformly when time is
+in a fixed bounded window about either prescribed cutoff. $\square$
+

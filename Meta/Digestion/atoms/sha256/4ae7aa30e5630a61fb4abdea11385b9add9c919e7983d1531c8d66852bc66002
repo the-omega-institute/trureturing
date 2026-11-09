@@ -1,0 +1,20 @@
+**Lemma 147.2 (three independent source marginals).** The functions $g,Pg,P^2g$ are linearly independent in $L^2(m)$.
+
+*Proof.* Suppose $A_0g+A_1Pg+A_2P^2g=0$ for a nonzero real coefficient vector. Spectral calculus for $K$ says that the spectral measure of $g$ is supported on the zeros, for $\lambda\ge0$, of
+
+$$
+A_0+A_1e^{-d\lambda}+A_2e^{-2d\lambda}.
+\tag{147.3}
+$$
+
+There are at most two such zeros. Write $g=\sum_{\lambda\in E}v_\lambda$, where $E$ is this finite set and $Kv_\lambda=\lambda v_\lambda$. For every $0<s<2d$, the original propagation identity gives $g=T_{2d-s}g_s$. Each $T_t$ is injective. Applying the spectral projection outside $E$ therefore shows that $g_s$ has no component outside $E$, and applying the projections onto its members gives
+
+$$
+g_s=\sum_{\lambda\in E}e^{(2d-s)\lambda}v_\lambda
+\longrightarrow r:=\sum_{\lambda\in E}e^{2d\lambda}v_\lambda
+\quad\hbox{in }L^2(m)\quad(s\downarrow0).
+\tag{147.4}
+$$
+
+The original continuous source-start paths of Theorem 117.2 give $\int\psi g_s\,dm\to\psi(e)$ for every $\psi\in C_c(G)$. Since $m(G)=1$, (147.4) implies that the finite measure $r\,m$ equals $\delta_e$. This contradicts $m(\{e\})=0$. Thus (147.3) cannot arise. In particular, the Gram matrix of the three bounded functions $g_j$ is positive definite. $\square$
+

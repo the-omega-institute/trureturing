@@ -1,0 +1,45 @@
+**定理 195.1（共同实际对象中的有限放大）。** 在任一完整 $B_*$ 中，对每个非零原对象 $A$ 和任意正整数 $N$，存在由有限次原身份参考迭代取得的同一个实际对象 $A^\sharp$，以及原含幺 Jordan/$D$ 单射 $\eta:E_A\to E_{A^\sharp}$，使
+
+$$
+\operatorname{rank}E_{A^\sharp}\ge N.
+\tag{195.1}
+$$
+
+该结论不消费任何配平、SC、导子或复张量重构条件。
+
+证明。选 $m$ 使 $2^m\ge N$。母卷定理 30.1 或引理 67.3 逐次供应固定实际对象
+
+$$
+A_0=A,\qquad A_j=A_{j-1}P^{\otimes k_j},
+\qquad k_j\ge1,\quad 1\le j\le m.
+\tag{195.2}
+$$
+
+每次只固定已供应的一份参考执行和其中一个完整 $P$ 位置，其余位置沿原参考配置。复合原嵌入得到 $\eta:A\to A_m$，以及同一个 $A_m$ 中的 $m$ 个原含幺 Jordan 单射 $j_\ell:E_P\to E_{A_m}$。这些嵌入保留原 $D$；构造不要求另有独立实际 $P^{\otimes m}$。
+
+取 $P$ 中两颗正交 primitive $s_0,s_1$ 及相应数学归一纯态 $\beta_0,\beta_1$，满足 $\beta_b(s_b)=1$。先固定 $A$ 的任一数学归一态。对每个二值字 $\varepsilon\in\{0,1\}^m$，逐次消费母卷 (57.6) 的有限正和延拓，或定理 69.1 在固定实际联合上的闭正锥延拓，得到 $A_m$ 上的数学归一态 $\gamma_\varepsilon$，满足
+
+$$
+\gamma_\varepsilon\bigl(j_\ell(s_{\varepsilon_\ell})\bigr)=1
+\qquad(1\le\ell\le m).
+\tag{195.3}
+$$
+
+在 $B$ 中使用有限正生成；在另名 $\mathsf B_{\rm cl}$ 中只在各已固定的实际对象上取数学极限。延拓保留前一次整个数学态，再指定新参考边缘，所以全部 $2^m$ 个模式在同一个预先固定的 $A_m$ 中取得；数学纯态、正和和极限不成为新实际准备。
+
+令 $h_\varepsilon\ge0$ 为 $\gamma_\varepsilon$ 关于原 $q_{A_m}$ 的密度。归一性和 (195.3) 给
+
+$$
+q_{A_m}\bigl(h_\varepsilon,u-j_\ell(s_{\varepsilon_\ell})\bigr)=0.
+\tag{195.4}
+$$
+
+正元零内积的成熟 Jordan 正交判据作用于 $h_\varepsilon$ 的正谱展开，说明其每颗正谱值 primitive 都同时位于所有 $j_\ell(s_{\varepsilon_\ell})$ 之下。取其中一颗为 $t_\varepsilon$。若 $\varepsilon\ne\varepsilon'$，二字在某个位置 $\ell$ 不同；$j_\ell(s_0),j_\ell(s_1)$ 是正交幂等元，故 $t_\varepsilon\perp t_{\varepsilon'}$。于是
+
+$$
+\operatorname{rank}E_{A_m}\ge2^m\ge N.
+\tag{195.5}
+$$
+
+同一论证也说明原 Jordan 单射不会降低总秩：一个 frame 的像是非零正交幂等元，在各像之下各取一颗 primitive 即得不少于原 frame 的正交族。这是从单射与 Jordan 保持推出的性质，不是 primitive 或秩保持前提。取 $A^\sharp=A_m$ 即得结论。零对象的后续数学恒等式直接平凡处理。∎
+

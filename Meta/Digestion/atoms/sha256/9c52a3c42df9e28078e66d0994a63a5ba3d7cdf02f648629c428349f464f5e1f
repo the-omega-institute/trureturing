@@ -1,0 +1,107 @@
+**Lemma 26.3 (two uniform matrix certificates).** Define the intervals
+
+$$
+J_+=[1/2,11/3],\qquad J_-=[1/2,23/6]
+\tag{26.5}
+$$
+
+and, for $t$ in the corresponding interval, put
+
+$$
+\begin{aligned}
+D_+(t)&=d^2-\gamma(8-2t),&
+F_+(t)&=e^2-\gamma(10-2t),\\
+D_-(t)&=d^2-\gamma(10-2t),&
+F_-(t)&=e^2-\gamma(8-2t),\\
+M_\sigma(t)&=
+\begin{pmatrix}
+D_\sigma(t)-a_\sigma(t)^2&-a_\sigma(t)b_\sigma(t)\\
+-a_\sigma(t)b_\sigma(t)&F_\sigma(t)-b_\sigma(t)^2
+\end{pmatrix},
+\qquad \sigma\in\{+,-\}.
+\end{aligned}
+\tag{26.6}
+$$
+
+Both matrices are positive definite throughout their closed intervals.
+In particular, for every $w\in\mathcal T$ and every $p\in[0,1]$,
+
+$$
+\begin{aligned}
+A(w)\in J_+&\quad\Longrightarrow\quad
+G(w,p)>\gamma r_+(w,p)\ge\gamma r(w,p),\\
+B(w)\in J_-&\quad\Longrightarrow\quad
+G(w,p)>\gamma r_-(w,p)\ge\gamma r(w,p).
+\end{aligned}
+\tag{26.7}
+$$
+
+Proof. All four amplitudes $a_\sigma,b_\sigma$ are positive on the
+stated intervals, as follows directly from (22.13). The bounds
+$d^2>9$, $e^2>4$ and $t\ge0$ imply
+$D_\sigma>0$ and $F_\sigma>0$. Write
+
+$$
+\Delta_\sigma(t)=\det M_\sigma(t)
+=D_\sigma F_\sigma-F_\sigma a_\sigma^2-D_\sigma b_\sigma^2.
+\tag{26.8}
+$$
+
+Each determinant is a concave polynomial on its interval. To check
+this with explicit signs, let
+
+$$
+a_0=2(c-h)>0,\qquad b_0=2(h-s)>0,
+\qquad
+D_{\sigma,0}=D_\sigma(0),\quad
+F_{\sigma,0}=F_\sigma(0),
+\tag{26.9}
+$$
+
+where the formulas (26.6) also define the values at $0$.
+Twice differentiating (26.8) gives
+
+$$
+\begin{aligned}
+\Delta_+''(t)
+&=8\gamma^2-2F_{+,0}h^2-2D_{+,0}s^2
+  -8\gamma(a_0h-es)-12\gamma(h^2+s^2)t,\\
+\Delta_-''(t)
+&=8\gamma^2-2F_{-,0}h^2-2D_{-,0}s^2
+  +8\gamma(dh-b_0s)-12\gamma(h^2+s^2)t.
+\end{aligned}
+\tag{26.10}
+$$
+
+Here $D_{\sigma,0}>0$, $h^2=1/2$, $es<1$ and $dh<5/2$;
+the latter two inequalities follow from (22.13), also giving
+$e<11/5$ and $s<2/5$. Since
+$F_{+,0}>18/5$ and $F_{-,0}>92/25$, (26.10) yields, for $t\ge0$,
+
+$$
+\begin{aligned}
+\Delta_+''(t)
+&<\frac8{625}-\frac{18}{5}+\frac8{25}<0,\\
+\Delta_-''(t)
+&<\frac8{625}-\frac{92}{25}+\frac45<0.
+\end{aligned}
+\tag{26.11}
+$$
+
+It remains to check the four interval endpoints. The following table
+uses only the rational half-angle bounds (22.13). In each row its
+entries $x,y,z,v_0$ mean, at the indicated $\sigma,t$,
+
+$$
+D_\sigma-a_\sigma^2>x>0,\qquad
+F_\sigma>y>0,\qquad
+D_\sigma<z,\qquad 0<b_\sigma<v_0.
+\tag{26.12}
+$$
+
+| $\sigma,t$ | $x$ | $y$ | $z$ | $v_0$ | $xy-zv_0^2$ |
+| --- | --- | --- | --- | --- | --- |
+| $+,1/2$ | $97/10$ | $219/50$ | $1037/100$ | $199/100$ | $1419763/10^6$ |
+| $+,11/3$ | $29/20$ | $116/25$ | $531/50$ | $39/50$ | $33349/125000$ |
+| $-,1/2$ | $181/100$ | $223/50$ | $1029/100$ | $17/20$ | $25523/40000$ |
+| $-,23/6$ | $256/25$ | $473/100$ | $211/20$ | $53/25$ | $12741/12500$ |

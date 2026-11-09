@@ -4,6 +4,14 @@
 
 Square-summable centered Gaussian quadratic series converge in L4 with exact second and fourth moments.
 
+Complete positive-U localization: explicit integral budgets. For g(m,M,y)=exp(-(y-M)^2/(4*m))/sqrt(4*pi*m), m>0, this owner's centralMoment_two_mul at sigma=sqrt(2*m) and n=1,2 gives integral (y-M)^2*g=2*m and integral (y-M)^4*g=12*m^2; integral g=1 follows from the Gaussian probability measure. All polynomial integrals are integrable by the pinned Gaussian monomial results before integral linearity is used. The existing RemyDegenne/brownian-motion Apache-2.0 attribution, commit 0d5b6eb928e616d3b1f774ad7d233c167d9f42c9, applies unchanged. No independent moment theorem or registration certificate is being added.
+
+Use d_m, u, K and V from the ActualZeroLaplace signed application, b(y)=(4*y+11)*exp(y/2), gamma>10, D=gamma+10 and m>=1. Completing the square gives exp(t*y)*d_m(y)=exp(m*t^2+16*m*t)*g(m,16*m+2*m*t,y). With z=y-17*m, the bounds 4*y+11<=81*m+2*z^2 and u^2+gamma^2+1<=gamma^2+2+z^2/(2*m^2) yield on y>0 the nonnegative majorant 2*exp(33*m/4)*(81*m+2*z^2)*(gamma^2+2+z^2/(2*m^2))*g(m,17*m,y). Its whole-line integral is exactly 2*exp(33*m/4)*(85*m*(gamma^2+2)+93), using the second and fourth moments including the z^4 term. This is <=300*m*D^2*exp(33*m/4). Restriction of the nonnegative majorant pays integral_{y>0} b*V and hence the central closed interval J=[4*m,28*m]; passage from [0,infinity) to (0,infinity) uses only the null Lebesgue singleton zero.
+
+The density split g(m,M,y)=sqrt(2)*exp(-(y-M)^2/(8*m))*g(2*m,M,y), with sqrt(2)<=3/2, pays the positive exterior. If y>=0 lies outside the CLOSED J, then |y-18*m|>=10*m. Since |Re(H(y))|<=2*exp(y), tilt by one and split at M=18*m give the pointwise majorant 6*exp(9*m/2)*(D^2+(y-18*m)^2/(2*m^2))*g(2*m,18*m,y). Its whole-line integral is 6*exp(9*m/2)*(D^2+2/m)<=12*D^2*exp(9*m/2). The inequalities use the literal strict exterior y<4*m or y>28*m, without losing either central endpoint.
+
+On the entire negative axis y<0, |Re(H(y))|<=2 and |y-16*m|>=16*m. The same split at M=16*m yields 6*exp(-32*m)*(D^2+(y-16*m)^2/(4*m^2))*g(2*m,16*m,y). Its full integral is 6*exp(-32*m)*(D^2+1/m)<=8*D^2*exp(-32*m). Restriction and integral comparison are justified by these actual nonnegative integrable majorants and the integrability of |Re(H)|*V supplied in ActualZeroLaplace. Finally J-complement is the disjoint union ([0,infinity) minus J) union (-infinity,0). Thus the two exterior budgets cover every real point outside J; no schematic tail, sign restriction or unproved decay premise is substituted.
+
 **Theorem 1.1 (Scalar central even moments).**
 
 $$\forall mu \in \mathbb{R},\; \forall sigma \in NNReal,\; \forall n \in \mathbb{N},\; \operatorname{centralMoment}\left(id, 2 \cdot n, \operatorname{gaussianReal}\left(mu, sigma^{2}\right)\right) = sigma^{2 \cdot n} \cdot \operatorname{doubleFactorial}\left({2 \cdot n-1}\right)$$

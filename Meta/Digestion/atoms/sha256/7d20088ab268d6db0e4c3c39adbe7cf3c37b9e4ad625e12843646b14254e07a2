@@ -1,0 +1,20 @@
+**命题 84.1（分别删除标定与正交不作用）。** 在完整 $B$ 上，$\mathrm Z_\pi+\mathrm O_\pi$ 不强制 SJ；$\mathrm Z_\pi+\mathrm{SJ}$ 不强制 $\mathrm O_\pi$。反模型均保留全部原准备、质量、过程、失败、细记录、返回及合法有限历史。
+
+证明。删除 SJ 时用定理 42.2 的全背景族 $D=t\delta$，$\delta_ab=i[a,b]/2$。对每个原对象，正交原子在矩阵乘法下相乘为零，故 $\mathrm O_\pi$；内导子保正给 $\mathrm Z_\pi$。在原 AC 效果的整个原指针空间上，直接计算 $D_d^2=t^2(L_d^2-L_d)$，而 $L_d^2-L_d\ne0$，所以 SJ 当且仅当 $t^2=1$。
+
+删除 $\mathrm O_\pi$ 时用定理 42.3 的原输入扭转 $D_ab=\delta_{\Gamma_A(a)}b$。其中 $\Gamma_P=\operatorname{Ad}_{\operatorname{diag}(1,-1,1)}$ 固定原 $d=e_{11}$，故整个原 $D_d=\delta_d$，直接满足 SJ；每个 $D_a$ 仍是内导子，故全 Z 及 $\mathrm Z_\pi$ 成立。在原三阶块的前二阶数学角取
+
+$$
+p=\frac15\begin{pmatrix}1&2\\2&4\end{pmatrix},\qquad
+r=\frac15\begin{pmatrix}4&-2\\-2&1\end{pmatrix}.
+$$
+
+它们在整个三阶块中仍是正交原始幂等元，而
+
+$$
+F_P(p,r)=\frac{6i}{25}\begin{pmatrix}0&1\\-1&0\end{pmatrix}\ne0.
+\tag{84.1}
+$$
+
+该角没有成为实际 $M_2$ 对象；全联合延拓及全部过程资料取定理 33.3 的同一标签规则。∎
+

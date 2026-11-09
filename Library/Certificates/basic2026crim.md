@@ -4,18 +4,20 @@ authors: Ina Bašić; Eric Gottlieb; Matjaž Krnc
 year: 2026
 title: "CRIM: A Natural Game on Integer Partitions"
 doi: 10.48550/arXiv.2606.16828
-claim: Section 3 defines row deletion and conjugate-row-conjugate column deletion; printed Conjectures 2 and 3 give Sprague–Grundy formulas for square and near-square rectairs.
+url: https://arxiv.org/abs/2606.16828v1
+claim: Section 3 defines row deletion and conjugate-row-conjugate column deletion; printed Conjectures 2 and 3 give Sprague–Grundy formulas for square and near-square rectairs; Section 5, Question 1 asks for all losing four-part positions.
 strata_touched:
   - D5/S0/Certificates/Games/CrimGrundyRefutation
   - D5/S0/Certificates/Games/CrimRectairSquareBoundaryRefutation
+  - D5/S3/Combinatorics/Games/CrimFourPartClassification
 license: citation-only
 triage: anchor
 ---
 
 # CRIM and the printed near-square formula
 
-Rendered pages 4, 5, 8 and 18 of https://arxiv.org/pdf/2606.16828v1
-were inspected on 2026-09-10. Page 4 defines partitions as decreasing lists
+Pages 4, 5, 8, 17 and 18 of https://arxiv.org/pdf/2606.16828v1
+contain the following definitions and questions. Page 4 defines partitions as decreasing lists
 of positive integers; the only partition of zero is the empty list.
 Conjugation lists column heights. Section 3 on page 8 deletes an arbitrary
 row, or takes the conjugate of a row deletion in the conjugate partition.
@@ -42,6 +44,18 @@ no related publication identifiers. A bounded title query in Crossref
 did not identify a journal version. Broader web queries were obstructed
 or returned unrelated results, so no exhaustive literature claim is made.
 
+## Four-part positions
+
+Section 5, Question 1, p. 17 states:
+
+> Which partitions consisting of four parts are losing?
+
+A partition has positive parts in nonincreasing order. For four parts write
+[a,b,c,d] with a ≥ b ≥ c ≥ d ≥ 1. Losing refers to normal play and is
+equivalent to Grundy value zero. The four-clause classification in
+CrimFourPartClassification is a repository-derived answer, not a formula
+asserted in the source. It treats all such quadruples without a width bound.
+
 ## Prior unverified posting
 
 Shivam Patel posted a reader calculation on 2026-08-20 at
@@ -57,7 +71,7 @@ establishes only the computation checked by the Lean kernel.
 ## Verified locator
 
 - DOI: https://doi.org/10.48550/arXiv.2606.16828
-- URL: https://arxiv.org/abs/2606.16828
+- URL: https://arxiv.org/abs/2606.16828v1
 - Version and scope: https://arxiv.org/pdf/2606.16828v1, printed pages 4,
-  5, 8 and 18; Conjectures 2 and 3 and the partition, rectair and move
+  5, 8, 17 and 18; Question 1, Conjectures 2 and 3 and the partition, rectair and move
   definitions.

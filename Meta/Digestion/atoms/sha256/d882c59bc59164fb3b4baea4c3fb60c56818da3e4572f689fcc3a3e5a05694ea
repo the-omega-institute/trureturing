@@ -1,0 +1,16 @@
+**命题 62.2（无限次正反混合的确切障碍）。** 若每一级都是 $J_n=H_{3\cdot2^n}(\mathbb C)$、$a\mapsto\operatorname{diag}(a,a^{\mathsf T})$，则这个原 Jordan 并不存在满足57.1的 $D$。
+
+证明。反设存在。61.1先给同一 $A_{\rm alg}=E+iE$ 的相容 pre-$C^*$ 乘法及完成 $A$。只在这一步以后使用成熟包络：Hanche-Olsen–Størmer [*Jordan operator algebras*](https://hanche.folk.ntnu.no/joa/joa-m.pdf)，Theorem7.1.8(ii)给JB到C*的Jordan同态的唯一 $*$ 延拓；Remark7.4.15用于无一维表示的 $M_d$，给 $C_u^*(H_d(\mathbb C))=M_d\oplus M_d^{\rm op}$。以转置把第二份相反代数写成通常矩阵，得到有限包络及原包含
+
+$$
+B_n=M_{d_n}\oplus M_{d_n},\qquad j_n(a)=(a,a^{\mathsf T}),\qquad
+\kappa_n(x,y)=(\operatorname{diag}(x,y),\operatorname{diag}(y,x)).
+\tag{62.1}
+$$
+
+$\kappa_n$ 是忠实保单位 $*$ 同态，并且 $\kappa_nj_n=j_{n+1}\theta_n$，其中 $\theta_n$ 正是指定原混合嵌入。$J_n\to A_{\rm sa}$ 的已知Jordan包含由7.1.8延到 $\rho_n:B_n\to A$；各 $j_n(J_n)$ 生成 $B_n$，使这些延拓相容。因为 $B_n$ 有限维，其被 $j_n(J_n)$ 生成的代数已经等于整个 $B_n$，所以 $\rho_n(B_n)$ 实际落在原 $A_{\rm alg}$。于是代数并 $B_{\rm alg}=\varinjlim(B_n,\kappa_n)$ 有保单位满同态 $\rho:B_{\rm alg}\to A_{\rm alg}$：像包含整个 $E$，而 $A_{\rm alg}$ 就是它的复线性张成。
+
+$B_{\rm alg}$ 是代数单的。任取非零双边理想 $I$，取其中非零元并放进某个 $B_n$。该有限两块满矩阵代数的矩阵单位使 $I$ 含某一块单位 $e=(1,0)$ 或 $(0,1)$。$\kappa_n(e)$ 在下一层两颗满矩阵块中都非零，因此下一层有限矩阵单位已经从它生成全单位，故 $1\in I$。所以 $\rho$ 的核零，$\rho$ 是代数同构；这里不把闭理想与代数理想混用，也不需要AF完成的单性定理。
+
+再令 $\tau_n(x,y)=(y^{\mathsf T},x^{\mathsf T})$。它是复线性反自同构，逐点固定 $j_n(J_n)$，且与全部 $\kappa_n$ 相容，故在 $B_{\rm alg}$ 上给反自同构 $\tau$。经 $\rho$ 搬到 $A_{\rm alg}$ 后，它逐点固定 $E$；$A_{\rm alg}=E+iE$ 使它就是恒等。恒等同时反乘法迫使 $A_{\rm alg}$ 交换，因而其Jordan乘法结合。但原 $H_3(\mathbb C)$ 中 $p=E_{11}$、$x=E_{12}+E_{21}$ 满足 $(p^2)\circ x-p\circ(p\circ x)=x/4\ne0$，矛盾。故原三个关系不容许这条无限混合链；有限一次混合的62.1并未被排除。∎
+

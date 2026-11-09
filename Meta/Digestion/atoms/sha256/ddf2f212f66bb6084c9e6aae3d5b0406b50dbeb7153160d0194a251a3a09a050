@@ -1,0 +1,27 @@
+**引理 22.3（两个范数类的相位规范形）。**自然约化给
+
+$$
+A/4A\simeq O/4O,\qquad O/2O\simeq\mathbb F_4.
+$$
+
+$O/4O$ 的单位群有十二个元素；范数映射到 $(\mathbb Z/4\mathbb Z)^\times=\{1,3\}$ 是满射，其六元核恰为六个不同的 $\mu _6$ 剩余类。因此，对任意 $a\in A$、$a\notin2A$，乘某个 $\mu _6$ 相位后，模四可规范为
+
+$$
+a\equiv1\pmod{4A}\quad\text{若 }N(a)\equiv1,
+\qquad
+a\equiv\eta\pmod{4A}\quad\text{若 }N(a)\equiv3.
+\tag{22.9}
+$$
+
+**证明。**局部化中 $3$ 模四可逆，故不改变模四商。$x^2+x+1$ 在 $\mathbb F_2$ 无根，故二次商是 $\mathbb F_4$。单位约化到 $\mathbb F_4^\times$；核为四个主单位 $1+2x$，$x\in\mathbb F_4$，每个非零约化类有四个提升，故共有 $3\cdot4=12$ 个单位。
+
+共轭模二为 Frobenius $x\mapsto x^2$，所以
+
+$$
+N(1+2x)\equiv1+2(x+x^2)
+=1+2\operatorname{Tr}_{\mathbb F_4/\mathbb F_2}(x)\pmod4.
+\tag{22.10}
+$$
+
+迹满射，例如 $\operatorname{Tr}(\zeta)=1$；范数也满射，另可直接用 $N(\eta)=3$。范数核因此有六元。$\mu _3$ 模二给三个不同非零元素；同一 $\mu _3$ 元的正负号模四之差为二乘一个单位，非零。因此六个 $\mu _6$ 类两两不同且范数均为一，已穷尽核。范数一类可乘相位化成一；范数三类除以单位 $\eta$ 后属于核，故可乘相位化成 $\eta$。$\square$
+

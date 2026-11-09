@@ -73,7 +73,7 @@ private lemma pair_deficit (u v : ℝ) (hu : 0 ≤ u) (hv : 0 ≤ v)
     nlinarith [sq_nonneg ((u^2-v^2)^2)]
   exact (sq_le_sq₀ (by positivity : 0 ≤ u+v) hr).mp (hsq.trans ht)
 
-private lemma scaled_pair_deficit (u v a t : ℝ) (hu : 0 ≤ u) (hv : 0 ≤ v)
+lemma scaled_pair_deficit (u v a t : ℝ) (hu : 0 ≤ u) (hv : 0 ≤ v)
     (ha : 0 < a) (hu2 : u^2=a^2+t) (hv2 : v^2=a^2-t) :
     u+v ≤ 2*a-t^2/(4*a^3) := by
   have hh := pair_deficit (u/a) (v/a) (div_nonneg hu ha.le) (div_nonneg hv ha.le)

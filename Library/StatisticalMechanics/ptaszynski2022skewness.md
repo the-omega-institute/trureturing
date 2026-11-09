@@ -5,12 +5,14 @@ year: 2022
 title: "Bounds on skewness and kurtosis of steady-state currents"
 doi: 10.1103/PhysRevE.106.024119
 url: https://arxiv.org/abs/2204.08421v4
-claim: "The paper derives bounds on the skewness and kurtosis of steady-state currents for several classes of systems; for unicyclic Markovian networks it infers numerically that the extremal values are attained when all clockwise rates are equal but one, and on that topology finds the minimum skewness -(8-8N+N^2)/(16(N-1)^2) of a unidirectional N-state cycle at a = 1/(N-1); in the limit N -> infinity it gives the minimum kurtosis -(1+sqrt(5))/10 for a = A/N, A = (3-sqrt(5))/2, and the minimum of skewness plus kurtosis -8/27 for A = 1/2."
+claim: "The paper derives bounds on the skewness and kurtosis of steady-state currents for several classes of systems; for unicyclic Markovian networks it infers numerically that the extremal values are attained when all clockwise rates are equal but one, and on that topology finds the minimum skewness -(8-8N+N^2)/(16(N-1)^2) of a unidirectional N-state cycle at a = 1/(N-1); in the limit N -> infinity it gives the minimum kurtosis -(1+sqrt(5))/10 for a = A/N, A = (3-sqrt(5))/2, and the minimum of skewness plus kurtosis -8/27 for A = 1/2; it lists the product of skewness and kurtosis in [-0.054, 1] (eq. produni), the lower value approximate."
 strata_touched:
   - D5/S3/StatisticalMechanics/UnicyclicSkewnessMinimum
   - D5/S3/StatisticalMechanics/UnicyclicKurtosisLowerBound
   - D5/S3/StatisticalMechanics/UnicyclicSkewnessPlusKurtosisLowerBound
   - D5/S3/StatisticalMechanics/UnicyclicSkewnessMinusKurtosisUpperBound
+  - D5/S3/StatisticalMechanics/UnicyclicSkewnessMinusKurtosisLowerBound
+  - D5/S3/StatisticalMechanics/UnicyclicSkewnessTimesKurtosisLowerBound
 license: citation-only
 triage: anchor
 ---
@@ -85,3 +87,25 @@ process, prove renewal asymptotics, or assert a physical $N=1$ case.
 The independently inspected literature scopes found no exact supplier;
 this is not a worldwide priority claim. The journal body and some
 citation-list memberships remain unverified.
+
+## Exact skewness-minus-kurtosis lower endpoint
+
+The same primary v4 source and hash, `main.tex` line 431, state
+
+> $\min(\mathcal S-\mathcal K)=3(107-51\sqrt{17})/2048$
+> for $A=(5+\sqrt{17})/4$.
+
+The detailed display and Figure 6 determine the sign used here; the
+conflicting summary at line 133 remains as described above. The asserted
+lower endpoint concerns the same scaled current cumulant ratios and the
+same numerical extremal-topology conjecture. Its universal positive-rate
+inequality and greatest-lower-bound interpretation do not assume that
+conjectured topology.
+
+For the explicit finite approximation with inverse rates $\alpha$ and
+$N-1$ copies of $(1-\alpha)/(N-1)$, take
+$\alpha=(9-\sqrt{17})/16$. Its relative exceptional rate is
+$A/(N-1)$ with $A=(1-\alpha)/\alpha=(5+\sqrt{17})/4$.
+This is a directly evaluated positive finite family; it is not identified
+with the source's finite $A/N$ family. The domain and physical-interpretation
+limits above also apply to this lower endpoint.

@@ -1,0 +1,234 @@
+**Lemma 9.1 (The relaxed-sublevel bootstrap).** For every sufficiently
+large $a$ depending only on $R$, every law with $H(x)\le M+1$ has a
+partition $C\dot\cup D=[s]$ with the following properties. Write
+
+$$
+\begin{gathered}
+|C|=m=a+j,\quad r=m-1,\quad |D|=n=h+1-j,\\
+u_c=j/r,\quad \alpha=(a-1)/r,\quad
+\beta=j/(rn),\quad \eta=\beta^{-1},\\
+t_k=y_k\ (k\in D),\quad u=\sum_{k\in D}t_k,\quad
+c=\min_{i\in C}y_i,\quad \delta=\max_{k\in D}t_k.
+\end{gathered}
+\tag{9.2}
+$$
+
+Then $2\le j\le J$, $\kappa^2/j^2>5/2$,
+$u>\ell_j=(j-1)/(m-2)$, and
+
+$$
+u=O_R(a^{-1/2}),\qquad
+c\ge1-O_R(a^{-1/2}),\qquad
+\delta\le\beta(1+O_R(a^{-1/4})).
+\tag{9.3}
+$$
+
+The partition is the threshold partition determined by the actual
+marginals. There is no hypothesis on the positive support of $x$.
+
+**Proof.** Growing Lemma 7.1 applies on the enlarged sublevel: the
+comparison $S_1$ gives
+$M+1\le S_1+1\le a^3+C_0a^2$ eventually, uniformly in (9.1).
+Its threshold is $b/a$, with $b=4C_0$, and its core floor is
+$c_0=(8C_0+1)^{-1}$. In particular it gives $1\le j\le J$,
+$t_k<b/a$, $y_i\ge c_0$ on $C$, $u=O_R(a^{-1/2})$, and, for
+$v=a\mathbb P(T\cap D\ne\varnothing)$,
+
+$$
+\begin{gathered}
+v\ge c_R>0,\qquad v\le j+O_R(a^{-1/2}),\\
+\frac{H-B_0(a)}{a^2}
+\ge\kappa^2/v+2v+2j-2-O_R(a^{-1/2}).
+\end{gathered}
+\tag{9.4}
+$$
+
+This invocation uses the stated $a^3+C_0a^2$ sublevel of Growing
+Lemma 7.1, rather than the exact-minimum sublevel of Growing Lemma 15.2.
+For $1\le k\le J$, direct expansion of $S_k$ gives
+
+$$
+\frac{S_k-B_0(a)}{a^2}=g_k(\kappa)+O_R(a^{-1/2}),\qquad
+g_k(\kappa)=\kappa^2/k+4k-2.
+\tag{9.5}
+$$
+
+Let $\mathcal U(\kappa)=\min_{k\le J}g_k(\kappa)$ and
+$\phi_j(\kappa)=\min_{0<w\le j}
+(\kappa^2/w+2w+2j-2)$. Growing Theorem 7.2's scalar evaluation
+identifies $\min_j\phi_j=\mathcal U$ on this interval. Clipping
+$v$ to $w=\min(v,j)$ in (9.4), and using
+$H\le M+1\le\min_{k\le J}S_k+1$, gives
+
+$$
+0\le\phi_j(\kappa)-\mathcal U(\kappa)
+\le O_R(a^{-1/2})+a^{-2}.
+\tag{9.6}
+$$
+
+At a zero of this difference in $[7/2,R]$, the scalar phase formula
+excludes $j=1$. For $j=2$ it gives $\kappa^2/j^2\ge49/16$;
+for $j\ge3$ it gives $\kappa^2/j^2\ge4(j-1)/j\ge8/3$.
+Consequently the minimum of $\phi_j-\mathcal U$ on the finite union
+
+$$
+\{(\kappa,1):7/2\le\kappa\le R\}
+\ \cup\!
+\bigcup_{j=2}^J
+\{(\kappa,j):7/2\le\kappa\le R,\ \kappa^2/j^2\le5/2\}
+\tag{9.7}
+$$
+
+is a positive $R$-only number. The functions are explicit continuous
+functions on these compact sets; empty sets are omitted. Choosing $a$
+so that the right side of (9.6) is smaller than this number proves the
+index and margin assertions. This compactness concerns a fixed ratio
+interval and a bounded finite index set, not laws at fixed $a,h$.
+
+For this same actual $j$, use $H\le S_j+1$ in (9.4)--(9.5).
+On $0<w\le j$, the derivative of $\kappa^2/w+2w$ is at most
+$-1/2$. Hence $j-w=O_R(a^{-1/2})$, and
+$v=j+O_R(a^{-1/2})$. Since $au\ge v$ and
+$a\ell_j=j-1+O_R(a^{-1})$, this proves $u>\ell_j$.
+
+We give the residual bootstrap on this enlarged sublevel explicitly.
+For the same law set
+
+$$
+\begin{gathered}
+B=|T\cap D|,\quad L=|T\cap C|,\quad K=L+B,\quad A=\{B>0\},\\
+\mathfrak a=mr(2m-1),\quad \mathfrak b=3m^2-3m+1,\quad d=2m-1,\\
+Q(l)=(m-l)(r-l)(2m-1+l)=\mathfrak a-\mathfrak b l+l^3,\\
+f_u(y)=r^2/y-d(j-1+u)/y^2,\quad \bar y=(a-u)/m,\\
+\mathcal S_f=\sum_{i\in C}f_u(y_i)-m f_u(\bar y),\\
+\mathcal B(w)=\frac{r^2m^2}{a-w}
+             -\frac{dm^3(j-1+w)}{(a-w)^2},\qquad
+\mathcal A(u)=\frac{\mathcal B(0)-\mathcal B(u)}u,\\
+\gamma=\eta^2-\mathfrak a+\mathcal A(u).
+\end{gathered}
+\tag{9.8}
+$$
+
+On $c_0\le y\le1$, differentiation gives $f_u''(y)\ge a^2$
+eventually. Also, uniformly on $0\le w\le u$,
+
+$$
+\begin{gathered}
+\mathcal B'(w)=-a^2+O_R(a),\qquad
+\mathcal A(u)=a^2+O_R(a),\\
+z_*:=\frac{n^2}{j^2a}=\frac{\kappa^2}{j^2}+O_R(a^{-1/2}),\qquad
+\eta^2/a^3=z_*+O_R(a^{-1}),\\
+(\mathfrak a-\mathcal A(u))/a^3=2+O_R(a^{-1}),\qquad
+\gamma\ge a^3/4,\quad \gamma=O_R(a^3).
+\end{gathered}
+\tag{9.9}
+$$
+
+The incidence identities (Growing (15.12)--(15.14)) are algebraic
+identities and inequalities for this actual law. With
+$I_i=\mathbf1_{i\in T}$ and
+
+$$
+\rho_i=(1-I_i)d(r-L)+I_i(m-L)(m-L-1)\ge0,
+\tag{9.10}
+$$
+
+they read
+
+$$
+\begin{gathered}
+\sum_{i\in C}\rho_i=Q(L),\qquad
+\mathbb E\rho_i=\mathbb E[L^2I_i]-r^2y_i+d(j-1+u),\\
+H\ge H_D+\mathcal B(u)+\mathbb E Q(L)+\mathcal S_f,\\
+ru-j\le m\mathbb E[B-1;A]+\mathbb E[L;A].
+\end{gathered}
+\tag{9.11}
+$$
+
+Here $H_D=\mathbb E[K^2\sum_{k\in T\cap D}t_k^{-2};A]$.
+Nonnegativity in (9.10) follows from the consecutive integer factors,
+including $L=m$. For $K\ge L$, dropping the nonnegative difference
+$K^2-L^2$ and using $y_i^{-2}\ge1$ proves the middle line of
+(9.11). Strong Jensen gives
+$\mathcal S_f\ge(a^2/2)\sum_{i\in C}(y_i-\bar y)^2$.
+
+For $B>0$ define
+
+$$
+\begin{aligned}
+V_T&=\sum_{k\in T\cap D}t_k^{-1},\\
+\mathcal G_T
+&=K^2\sum_{k\in T\cap D}t_k^{-2}+Q(L)-\mathcal A(u)B
+  -2\eta V_T+\gamma B-\frac\gamma r\{m(B-1)+L\}.
+\end{aligned}
+\tag{9.12}
+$$
+
+The actual marginal identity gives $\mathbb E[V_T;A]=n$.
+Substitution in (9.11), using $\gamma\ge0$, yields
+
+$$
+\begin{gathered}
+H\ge E_j+\mathbb E[\mathcal G_T;A]
+              +\mathbb E[Q(L);A^c]+\mathcal S_f,\\
+E_j=\mathcal B(0)+2\eta n-j\gamma/r=S_j+O_R(a).
+\end{gathered}
+\tag{9.13}
+$$
+
+The last equality follows from
+$\mathcal B(0)=a^3+2ja^2+O_R(a)$,
+$j(\mathfrak a-\mathcal A(u))/r=2ja^2+O_R(a)$ and
+$m^3r/(a-1)=a^3+4ja^2+O_R(a)$.
+For a tail singleton, $\mathcal G_{\{k\}}=(t_k^{-1}-\eta)^2$.
+For every other type with $B>0$, completing reciprocal squares gives
+
+$$
+\mathcal G_T\ge
+\eta^2(1-B/K^2)-\mathcal A(u)(B-1)
+-\mathfrak b L+L^3-\frac\gamma r(K-1).
+\tag{9.14}
+$$
+
+If $2\le K\le\sqrt a$, then $B/K^2\le1/2$ and all negative
+terms after the first are $O_R(a^{5/2})$. Thus (9.14) is at least
+$a^3/4$ eventually. If $K>\sqrt a$, the actual threshold
+$t_k<b/a$ gives $K^2t_k^{-1}>4\eta$ eventually. Using $Q(L)\ge0$
+in (9.12) instead gives
+
+$$
+\mathcal G_T\ge\frac{BK^2a^2}{2b^2}-\mathcal A(u)B
+            +\gamma\left(1-\frac{K-1}r\right).
+\tag{9.15}
+$$
+
+For $K\le m$ the last term is nonnegative; for $K>m$ its negative
+part is at most $\gamma n/r=O_R(a^{5/2})$, whereas the first
+term then has order at least $a^4$. In both cases (9.15) is at
+least $a^3/(4b^2)$ eventually. This covers every $K\le s$.
+
+All three residuals in (9.13) are therefore nonnegative. Since
+$H\le M+1\le S_j+1$, their sum is $O_R(a)$; the added constant
+one has been retained in this comparison. It follows that
+
+$$
+p_2:=\mathbb P(A,K\ge2)=O_R(a^{-2}),\qquad
+\sum_{i\in C}(y_i-\bar y)^2=O_R(a^{-1}).
+\tag{9.16}
+$$
+
+As $\bar y=1-O_R(a^{-1})$, this gives the core bound in (9.3).
+Put $x_k=x_{\{k\}}$. Then $0\le t_k-x_k\le p_2$.
+If $w=\eta t_k\ge1$, we have $x_k\ge t_k/2$ eventually,
+since $\eta p_2=O_R(a^{-1/2})$. Its singleton square implies
+
+$$
+\frac\eta2\frac{(w-1)^2}{w}
+\le x_k(t_k^{-1}-\eta)^2\le O_R(a).
+\tag{9.17}
+$$
+
+Thus $(w-1)^2/w=O_R(a^{-1/2})$, so $w-1=O_R(a^{-1/4})$.
+Labels with $t_k<\beta$ already obey the asserted upper bound.
+This proves (9.3) for the positive-excess sublevel. ∎
+

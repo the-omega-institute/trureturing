@@ -1,0 +1,54 @@
+**命题 12.4（A clique with a distinct pendant leaf at every vertex）。**
+For every integer $r\geq4$, let $H_r$ have core vertices
+$c_1,\ldots,c_r$ forming $K_r$ and distinct leaves
+$\ell_1,\ldots,\ell_r$, with the sole leaf edges
+$\{c_i,\ell_i\}$. All ground-vector, positive-gap, operator and
+normalized-mass conclusions of (12.2) and (12.15) hold on the original
+complete complex carrier at every even $s\geq2$. This family is
+supplied by neither the locally bipartite-neighborhood condition of
+§7, the flat-least-mode condition of §§3–6, nor the complete
+multipartite result of Corollary 11.3.
+
+Proof. The graph is finite, simple, connected and unit-weight, of
+even order $m=2r$. Its graph blocks are its core $K_r$ and the $r$
+bridges $\{c_i,\ell_i\}$. Each vertex belongs to one of these
+$K_2$ blocks, so $U=V(H_r)$, even at $r=4$. Theorem 12.2 and
+Corollary 12.3 apply at every integer $S\geq1$, with the original
+$2r$ fibres of size $s=2S$ and global filling $k=2rS=rs$.
+
+At a core vertex $c_i$, the induced open neighborhood is the disjoint
+union of $K_{r-1}$ on the other core vertices and the isolated vertex
+$\ell_i$. Since $r-1\geq3$, it contains a triangle and is not
+bipartite. Thus Definition 7.1 fails, regardless of the independent
+neighborhood at each leaf. This failure applies for every $r\geq4$.
+
+For the flat-mode hypothesis, order the adjacency coordinates as
+cores and leaves. Its matrix is
+
+$$
+a=\begin{pmatrix}\boldsymbol1\boldsymbol1^{\mathsf T}-I&I\\I&0\end{pmatrix}.
+\tag{12.16}
+$$
+
+Put $\theta=(-1-\sqrt5)/2<-1$. Choose nonzero $x\in\mathbb R^r$
+with $\sum_i x_i=0$ and set $y=x/\theta$. Since
+$\theta^2+\theta=1$, (12.16) gives
+$a(x,y)=(-x+y,x)=\theta(x,y)$. Hence the actual least eigenvalue
+$\lambda$ of $a$ satisfies $\lambda\leq\theta<-1$. But its leaf
+equations for any eigenvector $z$ are
+$\lambda z_{\ell_i}=z_{c_i}$. If every coordinate had modulus one,
+these equations would force $|\lambda|=1$, a contradiction. This
+rules out complex as well as real flat least modes, so the conditional
+flat-mode suppliers, including Theorem 6.2, do not apply.
+
+Finally, in any complete multipartite graph two distinct nonadjacent
+vertices belong to the same part. Here $\ell_1$ is nonadjacent to
+both $c_2$ and $\ell_2$, while $c_2$ is adjacent to $\ell_2$.
+The first two relations would put all three in one part and forbid
+the last edge. Thus $H_r$ is not complete multipartite for any of
+these $r$, even with arbitrary labelled or unequal parts. Corollary
+11.3 therefore supplies none of these all-even conclusions. The
+odd-scale statements of §§8–9 concern a different scale parity.
+The assertions follow without an energy formula or a numerical gap.
+$\square$
+

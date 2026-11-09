@@ -1,0 +1,29 @@
+**定义 1.1（完整对象与固定来源）。** 数学对象严格取 [II][II]、[III][III]、[V][V] 的提交 `46927cc328c58a872092e1d1c3bf102e48fa0426`；基射线轨道与双校准等价取 [X][X] 的提交 `23685bdfb56448e5ef165613a4353b4157cd076b`；全部校准后的选择取 [IX][IX] 的提交 `25318cfe8b6293b3d631371c8882923b69310893`。令
+
+$$
+\begin{gathered}
+E=\{s\subseteq\{1,\ldots,9\}:s\text{ 无相邻占据}\},\quad
+b_k(s)=\mathbf1_{k\in s},\quad |E|=89,\\
+\mathcal K=\mathbb C^E=V_{12}^{\mathbf1},\quad
+X=\mathbb P(\mathcal K)=\mathbb{CP}^{88},\quad
+b_{-1}b_0=10,\quad b_{10}b_{11}b_{12}=010,\\
+H=V_8^{\mathbf1},\quad \dim_{\mathbb C}H=13,\quad
+J:H\otimes\mathbb C^2\longrightarrow\mathcal K,\quad
+R_0\psi=J(\psi,0),\\
+\mathcal C=\operatorname{ran}J,\quad \dim_{\mathbb C}\mathcal C=26,
+\quad \dim_{\mathbb C}\mathcal C^\perp=63.
+\end{gathered}
+\tag{1.1}
+$$
+
+$e_s$ 是原配置正交基，内积和复结构不变。唯一实际 ready 是
+$e_{\rm r}=R_0e_{00100}$。由 V (1.2) 的字面嵌入
+$\mathcal E(e_\beta,s,i)=|10\,\beta\,0s0\,i010\rangle$，这里
+
+$$
+e_{\rm r}=e_{\{3,7\}},\qquad b_8({\rm r})=b_9({\rm r})=0.
+\tag{1.2}
+$$
+
+这只是原 ready 的地址辨认，没有增加确定性概率校准。
+

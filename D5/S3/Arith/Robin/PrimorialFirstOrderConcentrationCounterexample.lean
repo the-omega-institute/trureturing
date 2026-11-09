@@ -176,7 +176,7 @@ theorem exact_zero_quadratic_bound
   rw [hFTC, Real.norm_eq_abs, intervalIntegral.integral_const_mul, integral_id] at hn
   simpa [mul_div_assoc] using hn
 
-private theorem exp_moment_integrable {q : ℝ} (hq : 0 < q) (n : ℕ) :
+theorem exp_moment_integrable {q : ℝ} (hq : 0 < q) (n : ℕ) :
     IntegrableOn (fun v : ℝ => v ^ n * Real.exp (-q * v)) (Ioi 0) := by
   have hG : IntegrableOn (fun v : ℝ => Real.exp (-v) * v ^ n) (Ioi 0) := by
     simpa [Real.rpow_natCast] using

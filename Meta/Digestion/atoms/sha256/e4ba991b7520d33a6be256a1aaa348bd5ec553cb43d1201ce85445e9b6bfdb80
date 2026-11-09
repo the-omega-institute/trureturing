@@ -1,0 +1,33 @@
+**引理 2.2（次三次增长的格点 Poisson 刚性）。**若 $Q:\mathbb Z^d\to\mathbb R$ 满足
+
+$$
+\Delta_0Q=C_0,\quad |Q(n)|\le C(1+\|n\|)^\alpha,\quad\alpha<3,
+\qquad
+\Delta_0=\sum_{i=1}^d(T_{e_i}+T_{-e_i}-2I),
+$$
+
+则 $Q$ 是至多二次的普通多项式。
+
+**证明。**可稍增指数使 $2<\alpha<3$。置 $H(n)=Q(n)-C_0\|n\|_2^2/(2d)$，则 $\Delta_0H=0$，且 $H$ 保持该增长界。令 $P=(2d)^{-1}\sum_{v=\pm e_i}T_v$、$L=P-I$、$\delta_v=T_v-I$。调和函数 $h$ 满足 $L(h^2)=(2d)^{-1}\sum_v(\delta_vh)^2$，其各差分仍调和。迭代即 Lippner–Mangoubi 的平方差分恒等式：
+
+$$
+L^k(H^2)=\frac1{(2d)^k}\sum_{v_1,\ldots,v_k}
+(\delta_{v_1}\cdots\delta_{v_k}H)^2\ge0.
+\tag{2.1}
+$$
+
+有限二项展开给 $P^N(H^2)\ge\binom N3L^3(H^2)$。将 $P^N$ 记作最近邻对称随机游走 $S_N$ 的有限平均。六次矩展开中，时间指标只出现一次的项均因中心性消失；其余项最多有三个不同时间指标，所以 $\mathbb E\|S_N\|^6=O_d(N^3)$。矩不等式及 $2\alpha<6$ 给
+
+$$
+P^N(H^2)(x)=\mathbb EH(x+S_N)^2=O_x(N^\alpha).
+$$
+
+除以 $\binom N3$ 再取极限，得 $L^3(H^2)=0$。由平方和 (2.1)，各三重坐标差分都为零。故 $b_{ij}=\delta_{e_i}\delta_{e_j}H$ 为常数。令 $a_i=\delta_{e_i}H(0)$，正负整数的离散递推共同给
+
+$$
+H(n)=H(0)+\sum_i a_in_i+\sum_i b_{ii}\frac{n_i(n_i-1)}2
++\sum_{i<j}b_{ij}n_in_j.
+$$
+
+加回二次项即得结论。随机游走只是有限算术平均，不是原系统的随机操作。引理是既有调和多项式方法的应用，不认领该方法为新内容。
+

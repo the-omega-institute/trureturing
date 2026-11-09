@@ -1,0 +1,31 @@
+**定理 16.2（实际右梳中的三角超额放大）。**对任意 $a,b,c$ 和 $N\ge1$，置 $A_\sigma=H_N^\sigma(a;1)$、$B_\sigma=H_N^\sigma(b;1)$、$C_\sigma=H_N^\sigma(c;1)$，则
+
+$$
+3^{-N}\sum_{\sigma\in\Sigma_N}
+\Delta(A_\sigma,B_\sigma,C_\sigma)^2
+\ge N\Delta(a,b,c)^2.
+\tag{16.2}
+$$
+
+因此至少一条相位历史满足 $\Delta(A_\sigma,B_\sigma,C_\sigma)\ge\sqrt N\,\Delta(a,b,c)$。所有这些标签都属于同一个 $\langle a,b,c\rangle$。
+
+**证明。**在有限相位集合上取概率权 $3^{-N}$，并记其标量 $\ell^2$ 范数为 $\|\cdot\|_{2,N}$。对每个 $\sigma$，非负实数的定义立即给
+
+$$
+d(A_\sigma,C_\sigma)
+\le d(A_\sigma,B_\sigma)+d(B_\sigma,C_\sigma)
++\Delta(A_\sigma,B_\sigma,C_\sigma).
+\tag{16.3}
+$$
+
+这里只把缺失的三角关系逐项写成带实际超额的恒真不等式。由有限实数组的单调性、Minkowski 以及定理 9.2，
+
+$$
+\sqrt N\,d(a,c)
+\le\sqrt N\,d(a,b)+\sqrt N\,d(b,c)
++\bigl\|\Delta(A_\sigma,B_\sigma,C_\sigma)\bigr\|_{2,N}.
+\tag{16.4}
+$$
+
+若原超额为零，(16.2) 来自非负性；若为正，将前三项移项并平方即得 (16.2)。有限集合上最大值不小于其均方根，给单条历史的结论。证明只消费完整 (R) 已供应的精确右梳费用，不使用 $d$ 的三角不等式、核的对称性、正定性或 $\Gamma_N$ 的运算同态。
+

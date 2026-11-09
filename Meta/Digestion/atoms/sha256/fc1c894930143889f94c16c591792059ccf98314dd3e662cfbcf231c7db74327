@@ -1,0 +1,20 @@
+**定义 166.1（共同谱框架候选）。** 完整 $B$ 与另名完整 $\mathsf B_{\rm cl}$ 分别保留定义 160.1 的同一原背景，任一记为 $B_*$。原 $E,q,L,D,\tau$ 及 $P_c=4(L_c-L_c^2)$、$N_c=\ker P_c$、$T_c=\operatorname{im}P_c$、$W_c(x)=\|P_cx\|_q^2/2$ 不变。唯一候选为 $\mathsf C_{\rm fr}(B_*)=B_*+\mathsf F_{\rm fr}$，其中
+
+$$
+\boxed{\mathsf F_{\rm fr}:\qquad
+W_c(p)=2q(D_pc,r)+W_c(2D_cp)}
+\tag{166.1}
+$$
+
+只在下列域要求成立：$c^2=c$、$\operatorname{rank}_Ec\in\{1,2\}$，$p,r$ 为整个 $E$ 的 primitive；秩一时
+
+$$
+\tau(c\circ p)\in\{0,\tfrac12\},\qquad P_cr=0,
+\qquad \tau(c\circ p)=0\ \Longrightarrow\ P_pr=0;
+\tag{166.2}
+$$
+
+秩二时仍只取 $p\le c,r=p$。零重叠意味着 $c\perp p$；新增的选域限制使 $r=c$、$r=p$ 或 $r\perp c,p$，所以这三颗原子位于同一个完整谱框架。半重叠层不限制 $P_pr$。这是从 $\mathsf F_{0,h}$ 中删除不与输入相容的零层读回，没有加入模型条件或先给导子律、SC、斜伴随与第一槽单位。
+
+所有原对象和实际联合、同一原 $\Omega,q,D,L$、相关准备、零及次归一质量、不等正块权、设备身份、整个 AC、精确 $N_u$、X/Xs、全事件 R、F、失败、细记录、遗忘、具名同数支持双返回、反向资料和全部原合法有限顺序、自适应、并行历史均保留。X 仍是原含幺 Jordan/$D$ 嵌入、单向交叉零、乘积张成及每对实际准备的实际乘积准备；规范谱迹只选数学测试域。
+

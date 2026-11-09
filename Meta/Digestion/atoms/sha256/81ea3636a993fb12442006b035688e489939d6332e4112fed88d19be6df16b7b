@@ -1,0 +1,19 @@
+#### 定理 6.2：由正核构造比较空间
+
+复正核 $K$ 可表示为复 Hilbert 空间中向量的内积。
+
+**证明。**
+
+取对象符号的有限复线性组合，定义
+
+$$
+\left\langle\sum_i\alpha_i[u_i],\sum_j\beta_j[v_j]\right\rangle
+=\sum_{i,j}\bar\alpha_i\beta_jK(u_i,v_j).
+$$
+
+全有限正性保证半正定。Cauchy–Schwarz 不等式使零范数子空间与全部向量正交，所以商掉它得到内积空间；再完备化。符号的像满足 $\langle[u],[v]\rangle=K(u,v)$。
+
+$\square$
+
+这一步导出表示空间；它不强制实际对象集合提供该空间的所有向量、全部算子或所有准备，后者是 C1 的接口范围。
+

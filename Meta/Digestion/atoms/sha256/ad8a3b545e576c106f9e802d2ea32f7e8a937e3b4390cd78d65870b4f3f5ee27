@@ -1,0 +1,41 @@
+**Theorem 39.4 (prepared native current-term consequence).** Apply the
+contract of Definition 30.1 to the known-alpha, beta-left recorder and use
+the prepared family of Proposition 37.1. Its explicit marker is
+
+$$
+C=\langle\beta,\alpha\rangle,\qquad
+M=\langle\langle C,\alpha\rangle,\alpha\rangle
+=\langle\langle\langle\beta,\alpha\rangle,\alpha\rangle,\alpha\rangle,
+$$
+
+with four leaves. The preparation has exactly $3k+4$ native events, each
+insertion has exactly two legal native events, and a full assignment has
+grade $5k+4$. At every macro-cut on this family, public $A$ computes the
+same $U_{k,A}$ used by the native decoder, and the coding word is literally
+$K=J$ after the fixed preparation. No new encoding or canonical native
+representative is introduced.
+
+Let $d_{\rm native}$ be the largest actual POP/APPEND bill of one of the two
+native suffix events over all prepared orders and assignments, and let $L$
+include the preparation, every settled macro-cut, both native subcuts and
+every intermediate edit word. The induced labelled-bit recorder has
+
+$$
+D_{\rm code}\le2d_{\rm native},\qquad
+ d_{\rm native}\ge
+\left\lceil\frac12\left\lceil\log_2\left(1+\frac{k\,2^{k-L}}{10}\right)\right\rceil\right\rceil.
+\tag{IV.118}
+$$
+
+For $L\le k+c$ this is the corresponding logarithmic necessary condition
+with $k/(10\,2^c)$. The equality $K=J$ is at every macro-cut; the two
+subevent bills are both included in the logical bill, while U acquisition,
+address navigation, reconstruction, scratch, source access and all other
+physical service remain separately paid. Preparation cost is charged on the
+native side and is not hidden in the insertion suffix sum. The native bound
+is a necessary condition for this prepared restriction, not an all-native
+update algorithm or a claim about a common cube embedding. In particular,
+combining $D_{\rm code}\le2$ with (IV.115) gives only the optional prepared
+consequence that $L=k$ and $d_{\rm native}=1$ cannot hold for $k\ge30$;
+the general bound (IV.118) is the result retained here.
+

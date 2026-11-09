@@ -10,6 +10,8 @@ import os
 from pathlib import Path
 import re
 import sys
+import subprocess
+import tempfile
 
 MANIFEST = 'lean-report-inputs.json'
 LOADER = 'tools/scripts/report/lean-report-selection.py'
@@ -249,14 +251,177 @@ class Selection:
                    for path in changed_paths for value in values)
 
 
+
+# The optional Git-blob memo has the same eligibility and on-disk format as
+# the shell entry. Keep hashing in the consumer process instead of starting
+# interpreters for each manifest, memo and coordinate operation.
+def coordinate_hashes(producer, resident, sources, config):
+    if any(not re.fullmatch(r'[0-9a-f]{64}', value)
+           for value in (producer, resident, sources, config)):
+        raise ValueError('coordinates require producer, resident, sources, config SHA-256')
+    common = (f'repository_inspector_sha256={resident}\n'
+              f'lean_sources_sha256={sources}\nlean_config_sha256={config}\n')
+    pair = 'schema=stratalint-lean-report-input-v1\n' + f'producer_sha256={producer}\n' + common
+    repository = 'schema=stratalint-lean-report-repository-input-v1\n' + common
+    return (hashlib.sha256(pair.encode('ascii')).hexdigest(),
+            hashlib.sha256(repository.encode('ascii')).hexdigest())
+
+
+def _memo_trusted(root):
+    info = root.stat()
+    return root.is_dir() and info.st_uid == os.getuid() and not info.st_mode & 0o022
+
+
+def _read_memo(path):
+    memo = {}
+    if path.exists():
+        with path.open('r', encoding='ascii', newline='') as source:
+            for line in source:
+                fields = line[:-1].split(' ')
+                if (not line.endswith('\n') or len(fields) != 2
+                        or not re.fullmatch(r'(?:[0-9a-f]{40}|[0-9a-f]{64})', fields[0])
+                        or not re.fullmatch(r'[0-9a-f]{64}', fields[1]) or fields[0] in memo):
+                    raise ValueError('malformed memo')
+                memo[fields[0]] = fields[1]
+    return memo
+
+
+def _prepare_memo(repository, root):
+    if root is None:
+        return {}, {}, False
+    try:
+        status = subprocess.check_output(['git', '-C', str(repository), 'status',
+            '--porcelain=v1', '-z', '--untracked-files=all'], stderr=subprocess.DEVNULL)
+        index = subprocess.check_output(['git', '-C', str(repository), 'ls-files',
+            '-s', '-z'], stderr=subprocess.DEVNULL)
+        root.mkdir(parents=True, mode=0o700, exist_ok=True)
+        if not _memo_trusted(root):
+            return {}, {}, False
+        memo_file = root / 'memo.v1'
+        if memo_file.exists() and not memo_file.is_file():
+            return {}, {}, False
+        memo = _read_memo(memo_file)
+        records = status.split(b'\0')
+        dirty, position = set(), 0
+        while position < len(records) and records[position]:
+            record = records[position]
+            position += 1
+            if len(record) < 4 or record[2:3] != b' ':
+                raise ValueError('malformed git status')
+            dirty.add(record[3:])
+            if b'R' in record[:2] or b'C' in record[:2]:
+                if position >= len(records) or not records[position]:
+                    raise ValueError('malformed git rename status')
+                dirty.add(records[position])
+                position += 1
+        eligible = {}
+        for record in index.split(b'\0'):
+            if not record:
+                continue
+            header, separator, relative = record.partition(b'\t')
+            fields = header.split(b' ')
+            if not separator or len(fields) != 3:
+                raise ValueError('malformed git index')
+            mode, oid, stage = fields
+            if stage == b'0' and mode in (b'100644', b'100755') and relative not in dirty:
+                value = oid.decode('ascii')
+                if (not re.fullmatch(r'(?:[0-9a-f]{40}|[0-9a-f]{64})', value)
+                        or relative in eligible):
+                    raise ValueError('malformed stage-zero git index')
+                eligible[relative] = value
+        return eligible, memo, True
+    except (OSError, UnicodeError, ValueError, subprocess.SubprocessError):
+        return {}, {}, False
+
+
+def _store_memo(root, updates):
+    if not updates:
+        return
+    temporary = None
+    try:
+        if not _memo_trusted(root):
+            return
+        memo_file = root / 'memo.v1'
+        if memo_file.exists() and not memo_file.is_file():
+            return
+        # Merge against the latest snapshot just as the shell writer did.
+        memo = _read_memo(memo_file)
+        memo.update(updates)
+        with tempfile.NamedTemporaryFile(mode='w', encoding='ascii', newline='',
+                prefix='.memo.v1.tmp.', dir=root, delete=False) as output:
+            temporary = Path(output.name)
+            for oid in sorted(memo):
+                output.write(f'{oid} {memo[oid]}\n')
+        if _memo_trusted(root):
+            os.replace(temporary, memo_file)
+    except (OSError, UnicodeError, ValueError):
+        pass  # This optional optimization never replaces a current input read.
+    finally:
+        if temporary is not None:
+            try:
+                temporary.unlink(missing_ok=True)
+            except OSError:
+                pass
+
+
+def input_coordinates(repository, memo_root=None):
+    inputs = Selection(repository)
+    inputs.validate('lean-report')
+    repository = inputs.root
+    if memo_root is None:
+        value = os.environ.get('STRATALINT_LEAN_INPUT_MEMO_ROOT')
+        if not value:
+            base = os.environ.get('XDG_CACHE_HOME')
+            if base:
+                value = str(Path(base) / 'stratalint-lean-input-memo')
+            elif os.environ.get('HOME'):
+                value = str(Path(os.environ['HOME']) / '.cache/stratalint-lean-input-memo')
+        memo_root = Path(value) if value else None
+    else:
+        memo_root = Path(memo_root)
+    eligible, memo, enabled = _prepare_memo(repository, memo_root)
+    updates, digests = {}, []
+    for group in ('report_modules', 'config_inputs'):
+        manifest = hashlib.sha256()
+        for relative in inputs.expand(group):
+            path = inputs.safe_file(relative)
+            oid = eligible.get(os.fsencode(relative))
+            sha = memo.get(oid) if oid else None
+            if sha is None:
+                with open(path, 'rb') as source:
+                    sha = hashlib.file_digest(source, 'sha256').hexdigest()
+                if oid:
+                    updates[oid] = sha
+            manifest.update(sha.encode('ascii') + b'  ' + relative.encode('utf-8') + b'\n')
+        digests.append(manifest.hexdigest())
+    if enabled:
+        _store_memo(memo_root, updates)
+    producer = inputs.compatibility()
+    sources, config = digests
+    pair, repository_id = coordinate_hashes(producer, producer, sources, config)
+    return dict(repository=repository_id, producer=producer, sources=sources, config=config, input=pair)
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('command', choices=('validate', 'modules', 'producer-paths',
-        'scribe-producer-paths', 'snapshot', 'scribe-affected'))
-    parser.add_argument('--repository', required=True)
+        'scribe-producer-paths', 'snapshot', 'scribe-affected', 'address', 'coordinates'))
+    parser.add_argument('--repository')
+    parser.add_argument('hashes', nargs='*')
     parser.add_argument('--output')
     args = parser.parse_args()
     try:
+        if args.command == 'coordinates':
+            if len(args.hashes) != 4:
+                raise ValueError('coordinates requires four SHA-256 values')
+            print(' '.join(coordinate_hashes(*args.hashes)))
+            return 0
+        if not args.repository or args.hashes:
+            raise ValueError('--repository is required')
+        if args.command == 'address':
+            values = input_coordinates(args.repository)
+            print(' '.join(values[key] for key in ('repository', 'producer', 'sources', 'config')))
+            return 0
         selection = Selection(args.repository)
         scope = 'scribe-content' if args.command.startswith('scribe-') else 'lean-report'
         selection.validate(scope)

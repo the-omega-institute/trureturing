@@ -1,0 +1,6 @@
+**定义 31.2（两条校准桥的不同前件）。** 定理 25.2 的乘积准备、已知忠实下界和效果独立性消费非零误差，给逐原记录的定量近似及保迹比较记忆。定理 28.3 消费固定相关来源的精确三阶零式，只给来源记忆支撑上的精确 $\operatorname{id}_H\otimes\mathrm{CP}$；保迹性或固定细记录率另按定理 29.2、式 (31.3) 判定。它不是定理 25.2 的噪声版本，也不由精确零式给近零稳定常数。
+
+[相界卷引理 141.2](RECURSIVE_RELATIONAL_OBSERVATION_PHASE_BOUNDARY.md#1413-满秩附加态强制相干子系统运输) 的忠实附加态／秩一 Choi 机制作为已有精确因子化供应保留；这里的不同关系是 (28.11) 的同源三阶积分和 (28.13)–(28.15) 的共轭变量系数分离，它在不要求 steering 满像时控制原输入支撑的全部记忆列。设计矩、Kraus 表示、纯满 Schmidt 层析条件均按各自所引先例使用，不将这些中间工具单列为新增结果。
+
+[C122 定理 5.6–5.8](AURIC_INTERNAL_BINARY_RECIPROCITY_AND_EXPLICIT_RECONNECTION_C122.md#thm-c122-finite-tomography) 的系统通道层析及实际恢复证书仍需其自己的同通道、确定性实现与误差前件，不从 (29.2) 的率读数得到全 $\Psi_j$。FIB [定理 143.2 与命题 144.2](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III_APPENDIX_III.md#143-joint-density-on-the-same-exact-rank-two-common-partitions) 的同见证全 $64$ 坐标逼近不供应这里的精确零式；[C123 §§18–20](AURIC_NATIVE_RECIPROCAL_COMPARISON_AND_FINITE_ENDPOINT_QUANTUM_C123.md#18-保留原返回尺度的指定-lorentz-比较群) 的原返回尺度及指定 $H^0$ 分类也不供应新的准备、仪器或合法操作。各结果的来源、量词和操作域分别保留。
+

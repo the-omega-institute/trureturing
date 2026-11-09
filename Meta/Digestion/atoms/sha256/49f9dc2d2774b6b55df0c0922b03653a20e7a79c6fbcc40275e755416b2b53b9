@@ -1,0 +1,10 @@
+**命题 54.1（两个轴与第三个响应方向）。** 在恢复后的单个原 $M_2$ 角内取归一数学迹，$p=\mathbf v\cdot\boldsymbol\sigma\in V$，测试 $t_z=\sigma_z,t_x=\sigma_x$ 均为原输出。无论整个角的共同取向符号为何，都有
+
+$$
+\|D(p,t_z)\|_2^2+\|D(p,t_x)\|_2^2
+=v_x^2+2v_y^2+v_z^2=\|p\|_2^2+v_y^2.
+\tag{54.1}
+$$
+
+证明。消费已恢复的同号叉积 $D(\mathbf v\cdot\boldsymbol\sigma,\mathbf w\cdot\boldsymbol\sigma)=-\varepsilon(\mathbf v\times\mathbf w)\cdot\boldsymbol\sigma$ 及 Pauli 迹正交式，即得等式；两个测试为原输出由 (44.2) 及其循环式给出。一个轴漏掉沿自身的方向，两个不平行的轴消去该共同盲向；本角中 (53.1) 可取 $C=1$，沿 $x$ 或 $z$ 方向达到等号。这是同一有限响应角中的数学框架，不把局部三维结构推广成物理空间，也不把这个常数推广到任意维数或任意因子。∎
+

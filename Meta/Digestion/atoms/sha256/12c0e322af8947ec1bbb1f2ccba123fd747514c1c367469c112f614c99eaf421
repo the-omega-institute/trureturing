@@ -1,0 +1,41 @@
+### 定义 20.1（同一正分支的误差坐标）
+
+完整保留定义 15.1 的原 $H=\mathbb C^d$、有限输出 $K$、指定等距 $J$、同一个正复线性 $T$、正确效果 $T^\dagger(I_K)=E\in[0,I_H]$、实际精确有限射影二阶设计及其指定读回。令
+
+$$
+\begin{aligned}
+A&=\sqrt E,& P&=\operatorname{supp}E,& r&=\operatorname{rank}E,& k&=\dim K,\\
+M&=\|E\|_{\mathrm{op}},&t&=\operatorname{Tr}E,&s&=\operatorname{Tr}A,\\
+L(X)&=JAXAJ^\dagger,&\delta&=Q_{\mathscr D}(E)-R_{\mathscr D,J}(T),&D&=d(d+1)\delta.
+\end{aligned}
+\tag{20.1}
+$$
+
+记 $\Pi=JJ^\dagger$、$F=JPJ^\dagger$、$F^\perp=I_K-F$，并定义
+
+$$
+\ell_0=\operatorname{Tr}[(I_K-\Pi)T(I_H)],\qquad
+\lambda=\operatorname{Tr}[F^\perp T(I_H)].
+\tag{20.2}
+$$
+
+$F$ 是目标平方根分支的输出支撑，不只是指定读回空间。恒等式
+
+$$
+F^\perp=(I_K-\Pi)+J(I_H-P)J^\dagger
+\tag{20.3}
+$$
+
+使 $\lambda$ 同时计入 $JH$ 外以及 $J(\ker E)$ 内的全部方向。
+
+对任意复线性映射，采用不带 $1/2$ 的范数约定
+
+$$
+\|\Phi\|_\diamond
+=\sup_{n\ge1}\ \sup_{\|X\|_1=1}
+\|(\Phi\otimes\operatorname{id}_{M_n})(X)\|_1.
+\tag{20.4}
+$$
+
+内层包括任意复矩阵输入。此处参考因子属于数学范数的量词，不要求放大后的 $T$ 保正，也不表示实际供应了参考系统。
+

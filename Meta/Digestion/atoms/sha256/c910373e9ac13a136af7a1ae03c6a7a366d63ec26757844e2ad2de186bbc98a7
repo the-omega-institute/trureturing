@@ -1,0 +1,26 @@
+**定义 10.1（全域资源下确界）。** 固定整数 $k\ge2$，完整采用定义 8.1、9.1 的收费 A 合同与世界域
+
+$$
+\mathcal C_k=(0,\infty)^k\times\bigl([0,\infty)^k\setminus\{0\}\bigr),
+\qquad R=c\ell^{\mathsf T}.
+$$
+
+初始 $c$、固定量具 $\ell$ 及其非空支撑均未知。每次制备供应同一个未知 $c$，立即强制取得并支付精确初读 $D=\ell^{\mathsf T}c>0$，包括空运行。每个动作是内部不含 $1^k$、长度恰为 $k+1$ 的实际二进制窗口，端点作用为 $E_{p,t}=e_t r_p^{\mathsf T}$，其中 $0\le p,t<k$、$p+t\le k$；每个完整窗口后立即强制取得并支付一次精确读数。零读数照常收费，窗口交界处杀死对象及其后的零态也属合法历史。各运行依次进行；离开对象后不得恢复或回访，没有复制、重置、窗口内部读取、免费动作或额外观察。
+
+记 $\mathcal A_k=\mathfrak P_A(\mathcal C_k)$。竞争协议包括所有依赖完整实际历史的确定性规则，只要求在每个世界上逐点有限终止并精确输出初始 $R$，不要求连续、可测、可计算或共同终止上界，也不限制另外两种资源。沿用逐世界计数 $P_\Pi,W_\Pi,N_\Pi$，恒有 $N_\Pi=P_\Pi+W_\Pi$。定义三个分别优化的最坏值
+
+$$
+\begin{aligned}
+p_k&=\inf_{\Pi\in\mathcal A_k}\sup_{(c,\ell)\in\mathcal C_k}P_\Pi(c,\ell),\\
+w_k&=\inf_{\Pi\in\mathcal A_k}\sup_{(c,\ell)\in\mathcal C_k}W_\Pi(c,\ell),\\
+n_k&=\inf_{\Pi\in\mathcal A_k}\sup_{(c,\ell)\in\mathcal C_k}N_\Pi(c,\ell).
+\end{aligned}
+$$
+
+上确界允许为 $+\infty$，空协议类的下确界也约定为 $+\infty$。前缀记号仍为
+
+$$
+u_j=r_{k-j},\qquad C_j=u_j^{\mathsf T}c=\sum_{i=0}^{j-1}c_i
+\quad(1\le j\le k),\qquad C_0=0.
+$$
+

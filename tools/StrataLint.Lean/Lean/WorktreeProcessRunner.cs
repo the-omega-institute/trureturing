@@ -1,5 +1,7 @@
 using StrataLint.Runtime;
 using StrataLint.Engine;
+using System.Diagnostics;
+using System.Globalization;
 
 namespace StrataLint.EngineeringScope;
 
@@ -49,7 +51,10 @@ internal sealed class ProductionWorktreeProcessRunner(CancellationToken cancella
             var result = BoundedProcessRunner.Run(fileName, arguments, workingDirectory, timeout,
                 64 * 1024 * 1024, environment: environment,
                 standardOutput: observation?.Output(standardOutput) ?? standardOutput,
-                standardError: observation?.Error(standardError) ?? standardError, cancellationToken: cancellationToken);
+                standardError: observation?.Error(standardError) ?? standardError, cancellationToken: cancellationToken,
+                interruptBeforeKill: fileName == "/bin/bash" && arguments.Count > 1
+                    && arguments[0] == LeanArchiveFetch.ScriptPath(workingDirectory) && arguments[1] == "fetch"
+                    ? InterruptArchive : null);
             observation?.Boundary("cache-child", "finish", fileName, arguments, workingDirectory, result.ExitCode);
             return result;
         }
@@ -76,4 +81,15 @@ internal sealed class ProductionWorktreeProcessRunner(CancellationToken cancella
         string workingDirectory,
         TimeSpan timeout) =>
         Run(fileName, arguments, workingDirectory, timeout, null, null);
+
+    private static void InterruptArchive(Process process)
+    {
+        if (OperatingSystem.IsWindows()) return;
+        // The archive shell execs Python. Let its existing BaseException rollback
+        // and owned transport settlement complete before the runner's hard stop.
+        _ = BoundedProcessRunner.Run("/bin/kill", ["-TERM", process.Id.ToString(CultureInfo.InvariantCulture)],
+            process.StartInfo.WorkingDirectory, TimeSpan.FromSeconds(5), 4096);
+        if (!process.WaitForExit(5000))
+            throw new InvalidOperationException("archive interruption did not settle before the hard stop");
+    }
 }

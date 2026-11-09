@@ -1,0 +1,41 @@
+### 152.C. Exact bounded corrections retaining the six functionals
+
+Choose pairwise disjoint infinite sets of positive odd frequencies, for example
+
+$$
+S_0=\{16k+1:k\ge0\},\quad
+S_1=\{16k+3:k\ge0\},\quad
+S_3=\{16k+5:k\ge0\}.
+\tag{152.28}
+$$
+
+On each $X_{E,S_a}$ the finite-dimensional sphere argument (147.6)–(147.8) applies after every finite homogeneous constraint, because 152.A supplies its exact all-pencil hypothesis. More explicitly, for each unit coefficient vector choose a five-dimensional negative subspace in the constrained space. A finite cover of the coefficient sphere supplies a finite-dimensional sum $F$ on which every unit pencil has at least five eigenvalues at most $-\delta$, for one $\delta>0$. For a target $v\in\mathbb R^3$, minimize $\|q(x)-v\|^2$ on the radius-$R$ sphere in $F$, with $R^2>\|v\|/\delta$. If $\lambda=q(x)-v\ne0$, its five-dimensional negative spectral space contains a nonzero $w$ satisfying $B_r(x,w)=0$ for all three $r$ and $(x,w)_F=0$. Along the normalized curve $R(x+sw)/\|x+sw\|$, the second derivative is
+
+$$
+4\left(q_\lambda(w)
+   -\frac{\lambda\cdot q(x)}{R^2}\|w\|^2\right)
+ \le4\|\lambda\|\|w\|^2
+           \left(-\delta+\frac{\|v\|}{R^2}\right)<0.
+\tag{152.29}
+$$
+
+Here $\lambda\cdot q(x)=\|\lambda\|^2+\lambda\cdot v\ge-\|\lambda\|\|v\|$. This contradicts minimality. Thus $q(W)=\mathbb R^3$ for each such constrained subspace $W$. This invocation of the existing correction argument finds an actual vector in a finite-dimensional space.
+
+For each $a\in I$, choose $x\in X_{E,S_a}$ from (152.27) and dual tests $h_1,\ldots,h_6$ for its six functionals, with evaluation matrix the identity. Denote these functionals, as functions of their base vector, by $\ell_i(x)(h)$, $i=1,\ldots,6$. Impose on $z\in X_{E,S_a}$ precisely the finite constraints
+
+$$
+\ell_i(z)(h_k)=0\quad(1\le i,k\le6),\qquad
+B_r(x,z)=0\quad(r\in\mathcal R).
+\tag{152.30}
+$$
+
+The preceding surjectivity gives a $z$ satisfying these constraints and $q(z)=-q(x)$. Set $x_a=x+z$. Then
+
+$$
+q_r(x_a)=0\quad(r\in\mathcal R),\qquad
+\ell_i(x_a)(h_k)=\delta_{ik}.
+\tag{152.31}
+$$
+
+Thus each $x_a$ is bounded, Borel, supported in $E$, odd, has finitely many angular frequencies in $S_a$, and has six independent ordered functionals. These are internal evaluation and polar constraints, not additional moments in (152.8). Distinct $a$ have zero ordered pair cross-pairings by (152.28).
+

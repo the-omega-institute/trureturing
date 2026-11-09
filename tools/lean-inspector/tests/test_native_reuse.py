@@ -16,7 +16,7 @@ class NativeLocalReportConsumerTests:
         policy = json.loads((self.root / 'lean-report-inputs.json').read_text())
         policy['report_execution'] = EXECUTION
         self.write('lean-report-inputs.json', json.dumps(policy))
-        for name in ('lean_cache_release.py', 'lean_cache_topology.py', 'cache_material.py'):
+        for name in ('lean_cache_release.py', 'lean_cache_release_io.py', 'lean_cache_topology.py', 'cache_material.py'):
             self.copy('tools/scripts/worktree/' + name)
         # Make owns the real native report build; only Release transport is replaced.
         compiler_seed = self.compiler_seed
@@ -104,27 +104,30 @@ class NativeReportConsumerTests:
             return data
 
         # Hold the shared prerequisite inside Lake's lookup/create gap until
-        # another consumer either contends on graphFetch or creates it again.
+        # an independent consumer contends on graphFetch or creates it again.
         # Observe the real mutex with a try-lock; never infer overlap from time.
         config = self.root / 'lakefile.toml'
         config.write_text(config.read_text().replace(
             'name = "LeanInformationAudit"\n',
             'name = "LeanInformationAudit"\nneeds = ["leanInspector/compilerRegistrationGate"]\n'))
         producer_config = self.root / 'tools/lean-inspector/lakefile.lean'
-        source = producer_config.read_text().replace('Std.Mutex', 'RegistrationMutex')
+        source = producer_config.read_text().replace(
+            'graphFetch : CompilerMutex Unit', 'graphFetch : RegistrationMutex Unit').replace(
+            '← CompilerMutex.new ()', '← RegistrationMutex.new ()')
         schedule = '''
 structure RegistrationSchedule where
   state : Std.Mutex (Nat × Nat)
+  firstRegistration : IO.Promise Unit
   release : IO.Promise String
 
 package_facet compilerRegistrationState (_pkg : Package) : RegistrationSchedule := do
-  Job.async do return ⟨← Std.Mutex.new (0, 0), ← IO.Promise.new⟩
+  Job.async do return ⟨← Std.Mutex.new (0, 0), ← IO.Promise.new, ← IO.Promise.new⟩
 
 structure RegistrationMutex (α : Type) where
-  inner : Std.Mutex α
+  inner : CompilerMutex α
 
 def RegistrationMutex.new (value : α) : BaseIO (RegistrationMutex α) :=
-  return ⟨← Std.Mutex.new value⟩
+  return ⟨← CompilerMutex.new value⟩
 
 def RegistrationMutex.atomically [Monad m] [MonadLiftT BaseIO m] [MonadLiftT FetchM m] [MonadFinally m]
     (mutex : RegistrationMutex α) (action : IO.Ref α → m β) : m β := do
@@ -141,12 +144,32 @@ def RegistrationMutex.atomically [Monad m] [MonadLiftT BaseIO m] [MonadLiftT Fet
       (registered, waiting - 1)
 
 '''
+        contender = '''
+package_facet compilerRegistrationContender (pkg : Package) : Unit := do
+  let schedule ← (← fetch <| (← getWorkspace).root.facet `compilerRegistrationState).await
+  let reportState ← (← fetch <| pkg.facet `reportBatch).await
+  let some registry := (← getWorkspace).findModule? `LeanInformationAudit.TemplateEnrollment
+    | error "missing fixture enrollment module"
+  Job.async do
+    discard <| IO.wait schedule.firstRegistration.result!
+    let enrollment ← reportState.graphFetch.atomically fun _ =>
+      JobM.runFetchM registry.exportInfo.fetch
+    discard <| enrollment.await
+
+'''
         if 'import Std.Sync.Mutex\n' not in source:
             source = 'import Std.Sync.Mutex\n' + source
         batch = 'package_facet reportBatch (_pkg : Package) : ReportState := do\n'
+        inputs = 'package_facet reportInputs (pkg : Package) : FilePath := do\n'
+        enrollment = '      let enrollment ← reportState.graphFetch.atomically fun _ =>\n'
+        self.assertEqual(source.count(inputs), 1)
+        self.assertEqual(source.count(enrollment), 1)
         producer_config.write_text(source.replace(
             'private structure ReportState where', schedule + 'private structure ReportState where').replace(
-            batch, batch + '  discard <| (← fetch <| (← getWorkspace).root.facet `compilerRegistrationState).await\n'))
+            batch, batch + '  discard <| (← fetch <| (← getWorkspace).root.facet `compilerRegistrationState).await\n').replace(
+            inputs, contender + inputs).replace(enrollment,
+                '      let contender ← JobM.runFetchM <| fetch <| pkg.facet `compilerRegistrationContender\n'
+                '      deps := deps.add contender\n' + enrollment))
         with producer_config.open('a') as target:
             target.write('''\ntarget compilerRegistrationGate pkg : Unit := do
   let root ← repositoryDir pkg
@@ -155,12 +178,19 @@ def RegistrationMutex.atomically [Monad m] [MonadLiftT BaseIO m] [MonadLiftT Fet
     let (registered, waiting) ← state.get
     state.set (registered + 1, waiting)
     IO.FS.withFile (root / "compiler-registrations") .append fun out => out.putStrLn "registered"
+    if registered == 0 then schedule.firstRegistration.resolve ()
     if registered > 0 then schedule.release.resolve "duplicate"
     else if waiting > 0 then schedule.release.resolve "contended"
   let reason ← IO.wait schedule.release.result!
   IO.FS.writeFile (root / "compiler-registration-sync") reason
   return Job.nil
 ''')
+        # Like the other direct-entry consumers, restore only the supplied
+        # compiler material. Lake still builds every private project/report
+        # output from cold and validates the modified contract traces.
+        self.ensure()
+        self.restore_compiler()
+        self.check_cold_project(self)
         initial = entry('initial', env=dict(self.env, STRATALINT_ACCEPT_COLD_BUILD='1'))
         sync = self.root / 'compiler-registration-sync'
         registrations = self.root / 'compiler-registrations'
@@ -196,7 +226,11 @@ def RegistrationMutex.atomically [Monad m] [MonadLiftT BaseIO m] [MonadLiftT Fet
         targets = ['leanInspector/LeanInformationAudit', 'leanInspector/reportInspector',
                    'leanInspectorInterface/LeanInformationAuditInterface', 'reg/Reg']
         self.reg_package()
-        self.build()  # Restore the native fixture's private compiler stage.
+        # Restore the same compiler materials without producing an unrelated
+        # report before this case has installed its production configuration.
+        self.ensure()
+        self.restore_compiler()
+        self.check_cold_project(self)
         root_config = self.root / 'lakefile.toml'
         source = root_config.read_text()
         start = source.index('[[lean_lib]]\nname = "LeanInformationAudit"\n')
@@ -241,15 +275,18 @@ def RegistrationMutex.atomically [Monad m] [MonadLiftT BaseIO m] [MonadLiftT Fet
         self.env['STRATALINT_LEAN_BUILD_TARGETS'] = json.dumps(targets)
         output = self.root / '.lake/build/stratalint/raw-lean-report.json'
 
-        def entry(phase):
-            result = self.guarded_command(['make', 'lean-report', 'LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build'], env=self.env)
+        def entry(phase, *, env=None):
+            result = self.guarded_command(['make', 'lean-report', 'LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build'],
+                env=self.env if env is None else env)
             logs = Path(str(output) + '.logs')
             paths = [path for path in logs.iterdir() if path.is_file()]
             self.record_result(phase, dict(exit_code=result.returncode,
                 stdout=result.stdout, stderr=result.stderr, targets=targets), paths)
             return result
 
-        initial = entry('production-initial')
+        self.assertFalse(output.exists(), '[FAIL] configured_report_must_start_cold')
+        self.assertEqual(self.stamps(), {}, '[FAIL] no_report_before_configured_production')
+        initial = entry('production-initial', env=dict(self.env, STRATALINT_ACCEPT_COLD_BUILD='1'))
         self.assertEqual(initial.returncode, 0, initial.stdout + initial.stderr)
         expected = output.read_bytes()
         report_stamps = self.stamps()
@@ -335,7 +372,9 @@ def RegistrationMutex.atomically [Monad m] [MonadLiftT BaseIO m] [MonadLiftT Fet
             policy['producer_scopes']['lean-report']['include'].append(dict(pattern=path, optional=False))
         self.write('lean-report-inputs.json', json.dumps(policy))
         compiler_seed = self.compiler_seed
-        self.build()  # installs the collection's private compiler stage
+        self.ensure()
+        self.restore_compiler()
+        self.check_cold_project(self)
         # Observe the real entry's Lake calls without replacing compilation.
         calls = self.root / 'entry-lake-calls.jsonl'
         self.write('entry-tools/lake', '#!/usr/bin/env python3\nimport json, os, sys\n'
@@ -351,7 +390,9 @@ def RegistrationMutex.atomically [Monad m] [MonadLiftT BaseIO m] [MonadLiftT Fet
         def clear_calls():
             calls.write_text('')
         output = self.root / '.lake/build/stratalint/raw-lean-report.json'
-        first = self.inspect(phase='initial-publication')
+        self.assertEqual(self.stamps(), {}, '[FAIL] first_entry_must_produce_its_cold_report')
+        first = self.inspect(phase='initial-publication',
+                             env=dict(self.env, STRATALINT_ACCEPT_COLD_BUILD='1'))
         fact = self.root / 'build/lean-cache/build-work.json'
         self.assertTrue(fact.is_file(), '[FAIL] invocation_work_fact')
         self.assertIn('phase=report status=completed', first.stderr)

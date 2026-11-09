@@ -1,0 +1,27 @@
+### 5.4　投影更新、联合系统与连续演化
+
+在同一输入输出空间上，若事件效果为投影 $P$，且其像内每条纯态射线都由原事件保持，则原更新为 $\Phi(\rho)=P\rho P$。 证明是：$\sum_jK_j^*K_j=P$ 先给 $K_j=K_jP$；每条射线保持使每个 $K_j$ 在 $\operatorname{Ran}P$ 上为标量。 对独立向量及其和使用线性性，标量必与向量无关，故 $K_j=c_jP$。 当 $P\ne0$ 时 $\sum_j|c_j|^2=1$；当 $P=0$ 时全部分支为零。 仅有结果可重复还容许像内的旋转，不能替代每条射线保持。
+
+两组原可观察代数若为 $M_d(\mathbb C),M_m(\mathbb C)$，其保幺元的 $*$-嵌入互相交换且共同生成非零联合代数， 则乘法映射给满的 $*$-同态
+
+$$
+M_d(\mathbb C)\otimes M_m(\mathbb C)\longrightarrow\mathcal A_{AB}.
+$$
+
+源代数是简单代数 $M_{dm}(\mathbb C)$；保幺元与非零排除全核，因此这就是同构。 若联合代数还是 $B(\mathcal H_{AB})$，则得到完整的 Hilbert 张量分解。 若未给这一完备性，表示还可带有未读出的重数空间： $\mathcal H_{AB}\simeq\mathbb C^d\otimes\mathbb C^m\otimes\mathbb C^r$，联合代数作用为 $M_{dm}\otimes I_r$。 两个观察者的局部记录本身不排除这项重数。
+
+最后，取式 (3) 的同一校准接口（全部比较校准与 $U$ 协变）的单分支时间族 $A_t$，要求其读出商构成连续一参数群。 过程定理已给 $\widehat A_t$ 的复线性与等距；群律给逆，故 $\widehat A_t$ 是幺正群。 无需再额外假定线性时间演化。群律使全部 $\widehat A_t$ 交换，有限维可同时酉对角化； 各对角元是 $\mathbb R$ 到单位圆的连续乘法特征，因而形如 $e^{i\omega_k t}$。于是
+
+$$
+\widehat A_t=e^{tK},\qquad K^*=-K.
+$$
+
+取作用量单位 $\hbar>0$，令 $\mathsf H=i\hbar K$，得到
+
+$$
+i\hbar\dot\psi=\mathsf H\psi,\qquad
+ i\hbar\dot\rho=[\mathsf H,\rho].
+$$
+
+具体生成元、时间尺度、实际门菜单与可制备态集合仍由原来源决定。 反向，每个标准有限复量子模型都给出互易响应、$U=e^{2\pi i/3}I$、上述分支校准与效果评价。 因此这是可以双向核对的有限条件重构；它不凭局部读数指定唯一全局态 $\omega$。
+

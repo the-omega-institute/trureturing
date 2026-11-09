@@ -1,0 +1,43 @@
+**命题 8.2（原任意事件的缺口在因子化，纸笔）。**P9、独立 $W_e$／校准及有限共有标量层析，只在它们已经声明的准备域上承担职责；它们不能被当作原任意切口响应已线性通过 $\Sigma_\xi$ 的定义。在不先假设这种因子化的本节应用中，原任意事件 $e$ 的实线性下降义务准确写为
+
+$$
+\begin{gathered}
+V=\mathbb R^{(\mathsf X)},\qquad
+M:V\longrightarrow\operatorname{Herm}_{27}(\mathbb C),\quad
+M(\delta_\xi)=\Sigma_\xi,\\
+A_e:V\longrightarrow\mathbb R,\quad A_e(\delta_\xi)=a^{\rm old}(\xi,e),
+\qquad
+\ker M\subseteq\ker A_e.
+\end{gathered}
+\tag{8.2}
+$$
+
+$\mathsf X$ 是具有这些相同类型读口的原标签域，两个映射仅在形式自由实向量空间上线性延伸；这不把形式线性组合当作实际准备。有限探针至多恢复 $M(\delta_\xi)$。若只要求任意函数因子化，另须旧响应在每个 $\Sigma$ 纤维上恒定；此条件比 (8.2) 的线性下降条件弱，不能混称。
+
+证明。原 P9 的变量 $x,y\in M_{\rm in}$ 是原配方向量标签；母卷定理 9.1 给 $F_{\rm out}L_j=K_jF_{\rm in}$ 及 $\sum_jK_j^*K_j=I$。与之分开的
+
+$$
+W_e(x)=\sum_{j\in e}Q_{\rm out}(L_jx)
+=\langle Fx,E_eFx\rangle,\qquad
+p_x(e)=W_e(x)/Q_{\rm in}(x)\quad(Q_{\rm in}(x)>0)
+\tag{8.3}
+$$
+
+才把同一个原事件的向量准备概率接回去。母卷 §§5.3、9.2 只在原实际纯准备生成的实际混合域上，用未归一逐分支仿射性延伸过程；它们明确没有声称每个原任意切口都是这种混合。若用“谱分解存在”代替实际生成，就增加了准备来源。定理 1.6 的十二投影只识别两个已经表示的态，不能免除这一步。
+
+若 $A_e=\ell_eM$，则 $Mv=0$ 必有 $A_ev=0$。反之，(8.2) 使 $\ell_e(Mv):=A_ev$ 与所选 $v$ 无关，给出 $\operatorname{im}M$ 上的实线性泛函。特别地，$\Sigma_\xi=\Sigma_{\xi'}$ 要求 $a^{\rm old}(\xi,e)=a^{\rm old}(\xi',e)$；若只满足后一个纤维条件，可定义集合函数，却尚未得到它保持所有实线性关系。有限新探针的相等没有检验这些旧响应条件。
+
+以下局部模型仅解释这个原接口缺口。令标签为
+
+$$
+(\tau,z),\qquad \tau\succeq0\text{ 于 }\mathbb C^3,\quad
+w=\operatorname{Tr}\tau,\quad E=Q_1,\quad
+|z|\le\min\{\operatorname{Tr}(\tau E),\operatorname{Tr}(\tau(I_3-E))\}.
+\tag{8.4}
+$$
+
+所有新增读数取 $\operatorname{Tr}(J\tau J^*P)$，不依赖 $z$；一只具名旧二结果测试的接受与补质量取
+$\operatorname{Tr}(\tau E)+z$、$\operatorname{Tr}(\tau(I_3-E))-z$。两者非负且和为 $w$。校准的向量标签为 $(vv^*,0)$，它们的实际未归一混合取 $(\sum_a\lambda_av_av_a^*,0)$，原 P9、Kraus 分支、$W_e$ 和向量校准在这个子域使用原量子模型。对 $\tau=I_3/3$、$z=\pm\epsilon$、$0<\epsilon<1/3$，所有新增读数相同，旧接受质量分别为 $1/3\pm\epsilon$；这两个标签没有被定义成上述实际混合标签。
+
+该模型只覆盖标量新增读数、一只旧二结果测试、指定向量和实际混合。它没有供应原全 AS、门、共同框架、联合、参考或完整历史；若某项共有旧探针已包括此旧接受事件，对两个标签强加该探针绑定就会排除它。因而它不是满足完整原来源包的反模型，也不证明完整包的逻辑独立性。它精确显示：未给旧任意响应的纤维相容时，不能从新层析及向量校准偷渡该相容。下面改用实际接线直接取得所需原事件质量，不将 (8.2) 添作准备生成公理。$\square$
+

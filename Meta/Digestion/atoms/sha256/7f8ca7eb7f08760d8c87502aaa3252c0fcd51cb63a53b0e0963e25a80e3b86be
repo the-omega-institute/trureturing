@@ -1,0 +1,24 @@
+**定义 C-71.1（正射线上的边界响应）。** 输入为正向量 $v=(v_0,v_1)$，整体正倍数视为同一射线，用
+
+$$
+x=\log(v_0/v_1)\in\mathbb R
+$$
+
+表示其比例。对 $H=\left(\begin{smallmatrix}a&b\\c&d\end{smallmatrix}\right)>0$，输出向量 $Hv$ 也正，定义输出比例函数
+
+$$
+F_H(x)=\log\frac{ae^x+b}{ce^x+d}.
+\tag{C71.1}
+$$
+
+两个输入正射线的 Hilbert 距离在二维恰为
+
+$$
+d_{\rm Hil}(u,v)
+=\log\frac{\max(u_0/v_0,u_1/v_1)}{\min(u_0/v_0,u_1/v_1)}
+=\left|\log\frac{u_0}{u_1}-\log\frac{v_0}{v_1}\right|.
+\tag{C71.2}
+$$
+
+这是正锥的射影距离，不是欧氏平面中任意两个向量的距离。
+

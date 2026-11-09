@@ -1,0 +1,31 @@
+**引理 186.2（唯一被截断的下降尾及其入口质量）。** 全部上升支撑上的 $\gamma_{\rm f}$ 不超过 $L_{\rm f}$。下降半周期 $(\tau,T_0)$ 内，$\gamma_{\rm b}$ 严格递增，并且恰在
+
+$$
+t_L=T_0-\frac2\alpha\arctan(\alpha/L)\in(\tau,T_0)
+\tag{186.3}
+$$
+
+等于 $L$。原强度与截断强度在 $[0,t_L]$ 一致，而
+
+$$
+r_L=p(t_L)=\frac{a\alpha^2}{L^2+\alpha^2}>0.
+\tag{186.4}
+$$
+
+证明。在一个上升半周期以 $u=\tan(\alpha t/2)$ 表示相对周期时间，$0<u<\infty$，利用 $1-a=d^2$ 得
+
+$$
+\gamma_{\rm f}=\frac{a\alpha u}{1+d^2u^2}
+\le\frac{a\alpha}{2d}=L_{\rm f},
+\tag{186.5}
+$$
+
+因为 $1+d^2u^2\ge2du$，等号在 $u=1/d$。周期性使 $[T_0,4]$ 的上升支撑也服从同一界。下降段令 $\beta=\alpha(T_0-t)/2\in(0,\pi/2)$，则
+
+$$
+p(t)=a\sin^2\beta,\qquad \gamma_{\rm b}(t)=\alpha\cot\beta.
+\tag{186.6}
+$$
+
+后者从零严格增至无穷。解 $\alpha\cot\beta=L$ 得 (186.3)，再用 $\sin^2(\arctan z)=z^2/(1+z^2)$ 得 (186.4)。其余时段反向强度为零，(186.5) 保证前向强度未截断，故在指定前缀两个完整出发规则一致。∎
+

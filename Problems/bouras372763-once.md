@@ -33,7 +33,18 @@ The numerical values are already published in OEIS data and in Bouras, *A New Pr
 
 ## Gap
 
-The exact target is the uniqueness conjecture. A global classification of all occurrences and Conjecture 1 are separate assertions.
+The exact formal target is the uniqueness conjecture. An earlier prose proof
+and full correction appear in
+[Antonio Gracia Llorente, *Factorial Cancellation in Polynomial Continued Fractions*](../Library/Factorization/gracia2026factorial.md),
+Theorem 6.4, equation (48), p. 20, in the original Zenodo version published
+2026-10-20, DOI
+[10.5281/zenodo.23506866](https://doi.org/10.5281/zenodo.23506866).
+It states that $2,3$ are absent, $11$ occurs exactly twice at $10,21$, and
+every other prime at least $5$ occurs exactly once. This deposited result is
+earlier than the repository module's first addition in
+[`2051b723ea335883f43eb9e7e940dad3f3da0fae`](https://github.com/the-omega-institute/trureturing/commit/2051b723ea335883f43eb9e7e940dad3f3da0fae)
+(2026-10-26). The Lean refutation uses the repeated-$11$ witness; it does not
+formalize that global classification or Conjecture 1.
 
 ## Route
 
@@ -62,20 +73,34 @@ Exact nested evaluation, nonzero tails, agreement with the published data and th
 | Prime $11$ has the two admissible indices $10$ and $21$, refuting uniqueness. | Proved: kernel-checked `result`, using its local evaluations `hten` and `htwentyone`. | Complete binding claim; a single repeated prime suffices. |
 | At $n=10$, $D=55$ and $\gcd(D,10!)=5$; at $n=21$, $D=121$ and $\gcd(D,21!)=11$. The fractions have nonzero tails and reduced denominator $11$. | Computed: the experiment entry above, exit $0$, SHA-256 as given. | The two indices are within the exact-evaluation range. The fractions are $72847/11$ and $153407898057891727/11$. |
 | Primes $2$ and $3$ occur zero times, $11$ twice at $10,21$, and every other prime at most $10000$ once. | Computed: the experiment entry above, exit $0$, SHA-256 as given. | Only $3 \le n \le 20000$; this is no assertion about later indices. |
-| Exact global multiplicity two for $11$ and one for every other prime at least $5$. | Open: no uniform formal proof is delivered. | Unbounded indices. |
-| Conjecture 1: every term is $1$ or prime. | Open: this refutation does not prove or disprove it. | Entire sequence. |
+| Exact global multiplicity two for $11$ and one for every other prime at least $5$. | Earlier prose proof: Gracia Llorente, Theorem 6.4; not formalized by this refutation. | Unbounded indices. |
+| Conjecture 1: every term is $1$ or prime. | Not settled by this refutation. | Entire sequence. |
 | Literature completeness and publication priority. | Open; ASSUMED-UNVERIFIED: the source readings below do not establish exhaustive coverage. | The repeated numerical witness is already published. |
 
 ### What the settlement shows
 
 Proved: the uniqueness assertion fails because the same prime denominator survives at two distinct admissible indices. Kernel evaluation in `result` supplies both values.
 Computed: for the two witnesses, $D=6n-5$ takes the values $55$ and $121$, while factorial cancellation leaves denominator $11$ in both cases. The finite occurrence window supports a corrected classification with $11$ exceptional.
-Open: the unbounded corrected classification, global exclusion of $2,3$, and Conjecture 1 require their own arguments. Any use of Conjecture 2 as a uniqueness hypothesis loses that hypothesis. Assertions about existence of prime occurrences alone are not settled here; consequences for arguments using the conjecture require checking each such argument.
+The unbounded corrected classification and global exclusion of $2,3$ are given
+in Gracia Llorente, Theorem 6.4, but are not formalized here. Conjecture 1 is
+not settled by this refutation. Any use of Conjecture 2 as a uniqueness
+hypothesis loses that hypothesis. Assertions about existence of prime
+occurrences alone are not settled by the Lean refutation; consequences for
+arguments using the conjecture require checking each such argument.
 
 ### Literature status
 
-The preregistration records source and literature checks by its Claude Code orchestrator: the OEIS entry, Adamczewski's *OEIS Open* (arXiv:2608.11941), the Epoch OEIS benchmark, the AlphaProof Nexus results, formal-conjectures, and the repository screen. Its searched scope yielded no explicit settlement. Bouras's arXiv:2509.09745v1, Table 2, and the OEIS data already contain the repeated $11$. These are source and literature readings, not a claim of a new numerical discovery.
+Gracia Llorente's original deposited Theorem 6.4 is an earlier reference for
+the refutation and gives a stronger global occurrence classification.
+Bouras's arXiv:2509.09745v1, Table 2, and the OEIS data already contain the
+repeated $11$. Neither the repeated numerical witness nor the mathematical
+refutation is claimed as a new discovery by this formalization.
 
 ## ASSUMED-UNVERIFIED
 
-Completeness of the external literature search and any assertion that this formal refutation is unpublished remain ASSUMED-UNVERIFIED. Finite computations do not prove the unbounded corrected classification. The correspondence between the published expression and the formal definitions is source fidelity, rather than a theorem about publication text.
+Completeness of the external literature search and priority over all other
+sources remain ASSUMED-UNVERIFIED; the earlier deposited reference above is
+established. Finite computations do not prove the unbounded corrected
+classification. The correspondence between the published expression and the
+formal definitions is source fidelity, rather than a theorem about publication
+text.

@@ -1,0 +1,12 @@
+**定义 87.1（保原比较与保原质量的坐标对应）。** 定理 85.2 的表示保原 Jordan 锥和单位，原 $g_A^0$ 不因此被替换为 $q_A$ 或通常迹。以规范 Jordan 迹 $\tau_A=\sum_s\operatorname{Tr}_{n_s}$ 表示原评价时，直接复用 (29.4)、(11.1) 的同一运输：$g_A^0(x,y)=\tau_A((B_Ax)\circ y)$，$B_A$ 是同锥的正自同构；原准备的 $g_A^0$-Riesz 向量 $x_\alpha$ 对应 $\rho_\alpha=B_Ax_\alpha\ge0$，满足
+
+$$
+\alpha(a)=\tau_A(\rho_\alpha a),\qquad
+\tau_A(\rho_\alpha)=\alpha(u_A).
+\tag{87.1}
+$$
+
+此处只是既有运输在 (85.3) 坐标中的调用，没有除以原成功质量。原零概率、零准备和零中心分量保留，数学归一切片不改变任何原准备。
+
+单位适配 $q_A,q_B,q_J$ 的 Frobenius 配对在简单复块上分别是正迹权；全中心权自由按 [V96 §§28–32](AURIC_COMPOSITE_COMPARISON_FINITE_WITNESSES_COMMON_QUANTUM_SCALE_V96.md#28-实际联合内积的全部自由只在中心权重) 复用。写为 $q_A(a,c)=\sum_s w_s\operatorname{Tr}(a_sc_s)$、$q_B(b,d)=\sum_t v_t\operatorname{Tr}(b_td_t)$、$q_J(X,Y)=\sum_{st}W_{st}\operatorname{Tr}(X_{st}Y_{st})$ 时，只得 $w_s,v_t,W_{st}>0$，不从本推导得到 $W_{st}=w_sv_t$ 或该数组秩一。逐扇区转置保这些迹配对；也没有 $B_J=B_A\otimes B_B$ 的结论。
+

@@ -1,0 +1,40 @@
+**定理 22.9（十二射线有限关系）。**在命题 22.8 的实际框架及上述锐利概率条件下，固定一份满足 $p(S)=1$ 的原准备、参考和历史，记 $f(x)=p(P_x)$。则
+
+$$
+f(h_{\sigma\rho\tau})+f(r_{\sigma\rho\tau})
+=f(q_{\sigma\rho\tau}),
+\tag{22.19}
+$$
+
+$$
+\sum_{\sigma,\rho,\tau}f(q_{\sigma\rho\tau})=4,\qquad
+\sum_{\sigma,\rho,\tau}f(h_{\sigma\rho\tau})=3,\qquad
+\sum_{\sigma,\rho,\tau}f(r_{\sigma\rho\tau})=1.
+\tag{22.20}
+$$
+
+特别地，置 $A_\tau=\sum_{\sigma,\rho}f(q_{\sigma\rho\tau})$，有
+
+$$
+\boxed{A_\tau=1+\sum_{\sigma,\rho}f(r_{\sigma\rho\tau}),\qquad
+1\le A_\tau\le2,\qquad \sum_\tau A_\tau=4.}
+\tag{22.21}
+$$
+
+**证明。**由 $p(S)=1$ 及完整测试、非负、粗粒化，$p(I-S)=0$，故 $p(P_{e_3})=0$、$p(T)=1$，嵌入后的其余外部列也均为零。比较命题 22.8 中补列**逐列相同**的两份完整框架，消去这些补列，得
+
+$$
+f(h)+f(r)=f(q)+p(P_{e_3})=f(q).
+$$
+
+固定 $(\sigma,\rho)$ 的三色框架给 $\sum_\tau f(q)=p(S)=1$；四组求和为四。固定 $\tau$ 的四路框架给 $\sum_{\sigma,\rho}f(h)=p(T)=1$；三组求和为三。(22.19) 对十二个标签求和得 $\sum f(r)=1$。只对固定 $\tau$ 求和即得 (22.21) 第一式。各 $r$ 的非负性及全体和为一给上下界；$\sum_\tau A_\tau=4$ 来自三色框架。$\square$
+
+该证明只用有限框架和同一全载体投影的概率，不用态连续性、Born 前件、任意等效果实现的识别或概率压缩。特别地，没有证明
+
+$$
+f(h)=\tfrac34 f(q),\qquad f(r)=\tfrac14 f(q).
+\tag{22.22}
+$$
+
+这两式的系数是相应几何角压缩的平方长度，但本节没有把它们当作点击概率。若另外已有原角上的通常 Born 态，则四符号求和满足 $\sum_{\sigma,\rho}P_{q_{\sigma\rho\tau}}=(4/3)S$，由迹评价得 $A_\tau=4/3$。定理 22.9 只得区间 $[1,2]$，没有推出这个精确值、QC 或整个菜单的唯一 Born 响应；不将它称为 Gleason 证书。
+

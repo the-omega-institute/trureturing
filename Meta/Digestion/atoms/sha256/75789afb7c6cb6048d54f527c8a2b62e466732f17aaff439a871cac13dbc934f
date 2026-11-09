@@ -1,0 +1,22 @@
+**定义 2.2（原生切口支持相容 L）。** 新关系只要求
+
+$$
+\boxed{\quad
+\mathrm L:\quad
+(0,1)\in\Gamma_k(\Pi)
+\ \Longleftrightarrow\
+(1,0)\in\Gamma_k(\Pi)
+\quad(1\le k\le9).
+\quad}
+\tag{2.3}
+$$
+
+它允许一个原切口双向封闭，也允许双向都有正响应；排除一侧封闭而另一侧仍能穿过的情形。两方向的见证可以是不同配置对，不要求 $s\rightsquigarrow q$ 时必有 $q\rightsquigarrow s$，更不要求二者数值相等。令
+
+$$
+\mathscr C_{\mathrm L}=\{\Pi\in\mathscr C_{\rm end}:\mathrm L\}.
+\tag{2.4}
+$$
+
+完整数学候选是 $\Pi\in\mathscr C_{\mathrm L}$ 加原实际 R。L 不提 $O,D$，不指定任何 $T_\Pi(q\mid s)$ 必须取 $0$、$1$ 或其它预定数值；其两个允许分支的区别将在定理 3.1 中实际保留。
+

@@ -1,0 +1,59 @@
+**Lemma 4.1 (supported complement coercivity).** Fix sufficiently small $\delta>0$ such that $|r|\le3\delta/s$ lies between both original faces and $3\nu\delta<1/4$. Put $R=\delta/s$. For every complex canonical vector $u$ supported in $|r|\le2R$, define
+
+$$
+\alpha(u)=\frac{b(p,u)}{b[p]}=\frac{\int Vp u}{\mu},\qquad v=u-\alpha(u)p.
+\tag{4.1}
+$$
+
+There are $c_1,C>0$ uniform over sufficiently small fixed $\delta$ such that, for sufficiently small $s$ (allowed to depend on $\delta$),
+
+$$
+\widetilde q_s^c[u]\ge c_1 b[v]-Cs^2\|u\|_2^2,
+\qquad \widetilde q_s^c=q_s^c\circ\mathcal T_s^{-1}.
+\tag{4.2}
+$$
+
+Proof. This is the local estimate of R Lemma 8.1; its full complex argument will also specify the extension used in the solvability proof. Choose even $\rho\in C_c^\infty(\mathbb R)$, $0\le\rho\le1$, one on $[-2,2]$ and zero outside $[-3,3]$. Define
+
+$$
+d_{s,\delta}(r)=
+\begin{cases}
+\rho(sr/\delta)((1+\beta_sr)^{-2}-1),&|r|<3\delta/s,\\
+0,&|r|\ge3\delta/s.
+\end{cases}
+\tag{4.3}
+$$
+
+Evaluate the rational expression only in its nonsingular branch. Define an estimating form on $\mathcal Q_E$ by
+
+$$
+\widehat q_{s,\delta}[u]
+ =h[u]+a\int d_{s,\delta}|Yu|^2
+ -\chi\int(\beta_sV_1+\beta_s^2V_2+\lambda s^2V_{\rm t}+\mathcal R_s)|u|^2
+ -a\lambda s^2\|u\|_2^2.
+\tag{4.4}
+$$
+
+It agrees exactly with the native sheared form on supported $u$ in the lemma. It is an estimating extension, not a replacement native operator. Uniformly in small fixed $\delta$,
+
+$$
+|d_{s,\delta}|\le C\delta,\quad
+|d_{s,\delta}|\le C|\beta_sr|\rho(sr/\delta),\quad
+|d_{s,\delta}+2\beta_sr\rho(sr/\delta)|
+ \le C\beta_s^2r^2\rho(sr/\delta).
+\tag{4.5}
+$$
+
+The weak equation for $p$ proves (4.1). Also $Vp\in L^2$, so $|\alpha(u)|\le C\|u\|_2$, $\|v\|_2\le C\|u\|_2$, $b(p,v)=0$ and $h[u]=h[v]\ge a\theta b[v]$. These identities hold for complex $u$.
+
+Decompose the kinetic perturbation on $u=\alpha p+v$ using (4.5). Its base linear integral vanishes by parity; its remaining base term is bounded by $Cs^2|\alpha|^2 A$. Its cross term is bounded by $Cs|\alpha|\sqrt{b[v]}$ using $rYp\in L^2$, and its $v$ diagonal is bounded below by $-C\delta b[v]$. In the $V_1$ term the base is zero by parity, the cross is bounded by $Cs|\alpha|\sqrt{b[v]}$ by (3.6), and the diagonal by $Cs b[v]$ by (3.4). For $V_2,V_{\rm t}$ the respective bounds are $Cs^2|\alpha|^2$, $Cs^2|\alpha|\sqrt{b[v]}$ and $Cs^2 b[v]$. Keep the residual on $u$, bounded by $Cs^{5/2}\|u\|_2^2$, and keep the threshold subtraction exactly. Therefore
+
+$$
+\widehat q_{s,\delta}[u]
+ \ge(a\theta-C\delta-Cs)b[v]
+       -Cs|\alpha|\sqrt{b[v]}-Cs^2(|\alpha|^2+\|u\|_2^2).
+\tag{4.6}
+$$
+
+Choose $\delta$ small, then $s$ small. Young's scalar inequality and $|\alpha|\le C\|u\|_2$ prove (4.2). $\square$
+

@@ -1,0 +1,18 @@
+**定理 239.2（两个完整原背景中的量子等价）。** 同一原签名上有
+
+$$
+\begin{aligned}
+B_*+\mathsf F_{\rm pair}
+&\Longleftrightarrow B_*+\mathsf F_{\rm gen}
+\Longleftrightarrow B_*+\mathsf F_{\rm rec}
+\Longleftrightarrow B_*+\mathsf F_{\rm cut},\\
+\mathsf C_{\rm pair}(B)
+&\Longleftrightarrow B+\mathrm Z+\mathrm{SC}+\mathrm{SJ},\\
+\mathsf C_{\rm pair}(\mathsf B_{\rm cl})
+&\Longleftrightarrow\mathsf B_{\rm cl}+\mathsf Q+\mathrm{SC}+\mathrm{SJ}.
+\end{aligned}
+\tag{239.2}
+$$
+
+证明。选中目标均秩至少四，定理 239.1 逐原目标给等价，余下直接消费定理 232.2。取得旧互易后才使用定理 223.1 的旋转角外桥补回全部切向奇部；随后在同一原 $J,i,j_0,\mathcal V_N$ 上由定理 214.1 的交叉零和分离恢复全域 SC，再按定理 215.1 消去原径向与跨块余量，取得全部幂等元平方。$\mathsf Q$ 保持母卷定义 67.2 的全部原量词，原世界不重选。∎
+

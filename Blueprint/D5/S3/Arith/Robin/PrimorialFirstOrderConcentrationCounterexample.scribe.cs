@@ -14,7 +14,9 @@ internal sealed class PrimorialFirstOrderConcentrationCounterexampleDocument
                 + "and let r(v) be its logarithmic derivative. For epsilon>0 take "
                 + "delta=exp(-1/epsilon^2), h(v)=epsilon*delta*(1-exp(-v/delta)), "
                 + "F(v)=Phi(v)*exp(h(v)), and S(v)=r(v)+epsilon*exp(-v/delta). "
-                + "The concentration width delta is chosen much smaller than the first-order error epsilon.")),
+                + "The concentration width delta is chosen much smaller than the first-order error epsilon. "
+                + "The public exp_moment_integrable theorem is an arbitrary-positive-rate supplier "
+                + "consumed by the signed factorial Laplace proof.")),
             Describe.Lean(
                 DescribeId.Create("original-profile-concentration-counterexample"),
                 DeclarationHandle.Create(

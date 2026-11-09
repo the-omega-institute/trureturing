@@ -1,0 +1,58 @@
+**定理 86.1（所有活动质量的未除法恒等式）。** 在约定 84.1 的每个完整原来源与同一个给定 ready 上，
+
+$$
+\begin{gathered}
+v_1=2c\sin(\alpha/2)J R_{3\alpha/2}p,\qquad
+v_6=2c\cos(\alpha/2)R_{3\alpha/2}p,\\
+\langle v_1,v_6\rangle=0,\qquad
+\|v_1\|^2=x\rho^2,\qquad
+\|v_6\|^2=(7x-4)\rho^2,\\
+\operatorname{tr}_{V_s}(L_s^\dagger L_s)=2+\|N\|_{\rm HS}^2,\\
+\boxed{\frac{\Delta_1}{x}+\frac{\Delta_6}{7x-4}
+=\rho^2\bigl(\operatorname{tr}_{V_s}(L_s^\dagger L_s)-2\bigr).}
+\end{gathered}
+\tag{86.1}
+$$
+
+此处 $7x-4=x^3(2-x)>0$；$\rho=0$ 也包括在内，没有除以 $\rho$。
+
+证明。平面旋转的差公式给
+
+$$
+R_{2t}-R_t=2\sin(t/2)J R_{3t/2}.
+\tag{86.2}
+$$
+
+$t=\alpha$ 给 $v_1$。$t=6\alpha$ 时，$9\alpha-3\alpha/2=9\pi/2$，故 $R_{9\alpha}=J R_{3\alpha/2}$；又 $\sin(3\alpha)=-\cos(\alpha/2)$，于是 $v_6=2c\cos(\alpha/2)R_{3\alpha/2}p$，符号如 (86.1)。$J$ 是原正交四分之一转，故两向量正交，包括 $p=0$。
+
+手算系数只用原黄金恒等式：$\cos\alpha=-x/2$、$c^2=x^3$、$x^2=1-x$、$x^3=2x-1$。因此
+
+$$
+\begin{aligned}
+4c^2\sin^2(\alpha/2)&=x^3(2+x)
+=(2x-1)(2+x)=x,\\
+4c^2\cos^2(\alpha/2)&=x^3(2-x)
+=(2x-1)(2-x)=7x-4>0.
+\end{aligned}
+\tag{86.3}
+$$
+
+在原正交 $P\perp K$ 上，(84.2) 给
+
+$$
+\|C\|_{\rm HS}^2
+=\|J\|_{\rm HS}^2+\|NJ\|_{\rm HS}^2
+=2+\|N\|_{\rm HS}^2.
+\tag{86.4}
+$$
+
+实际 $T_{rs}$ 的等距性把左边准确识别为**整个原 $V_s$** 的 $\operatorname{tr}(L_s^\dagger L_s)$，没有按秩或维数归一。若 $\rho>0$，令 $e=R_{3\alpha/2}p/\rho$、$f=Je$，这是 $P$ 的原正交基。由 (85.2)、(86.3)，
+
+$$
+\frac{\Delta_6}{7x-4}=\rho^2\|Ne\|^2,\qquad
+\frac{\Delta_1}{x}=\rho^2\|Nf\|^2.
+\tag{86.5}
+$$
+
+相加并用 $\|Ne\|^2+\|Nf\|^2=\|N\|_{\rm HS}^2$ 即得 (86.1)。若 $\rho=0$，两个 $v$ 均为零，两边都为零，独立完成退化情形；并未定义退化基或除以零。∎
+

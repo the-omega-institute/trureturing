@@ -1,0 +1,9 @@
+**推论 3.1（可见群与负型核）。**$a\sim b\iff c(a,b)=0$ 是对聚合及标记相容的等价关系。$M/{\sim}\cong F(M)$ 是无挠的 $\mathbb Z[\omega]$-模，且 $-[a]=[Ua+U^2a]$、$U^3a\sim a$。对实数 $\lambda_i$，若 $\sum_i\lambda_i=0$，则
+
+$$
+\sum_{i,j}\lambda_i\lambda_jc(a_i,a_j)
+=-2\left\|\sum_i\lambda_iF(a_i)\right\|^2\le0.
+$$
+
+**证明。**逐项由 (1.1) 得到。$\sqrt c$ 因而是伪度量。数学商、标量扩张及完成均不供应原始撤销、任意准备或极限操作，也不删除档案。
+

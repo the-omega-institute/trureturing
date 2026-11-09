@@ -2,7 +2,18 @@
 set -u -o pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd -P)"
+if [[ -f "$ROOT/tools/scripts/lib/maintenance-log-lib.sh" ]]; then
+  source "$ROOT/tools/scripts/lib/maintenance-log-lib.sh"
+fi
+if declare -F maintenance_log_begin >/dev/null; then
+  maintenance_log_begin warm-donor "$ROOT" "$$" "$PPID"
+fi
+
 cd "$ROOT"
+
+finish_maintenance_log() {
+  if declare -F maintenance_log_finish >/dev/null; then maintenance_log_finish "$1"; fi
+}
 
 receipt() {
   local status="$1"
@@ -20,6 +31,7 @@ receipt() {
 branch="$(git symbolic-ref --quiet --short HEAD 2>/dev/null)"
 if [[ "$branch" != "dev" ]]; then
   receipt skipped precondition "branch is not dev"
+  finish_maintenance_log 0
   exit 0
 fi
 
@@ -27,10 +39,12 @@ tree_status="$(git status --porcelain --untracked-files=normal)"
 status_rc=$?
 if (( status_rc != 0 )); then
   receipt failed precondition "git status failed"
+  finish_maintenance_log "$status_rc"
   exit "$status_rc"
 fi
 if [[ -n "$tree_status" ]]; then
   receipt skipped precondition "worktree is not clean"
+  finish_maintenance_log 0
   exit 0
 fi
 
@@ -38,6 +52,7 @@ git pull --ff-only origin dev
 pull_rc=$?
 if (( pull_rc != 0 )); then
   receipt failed pull "git pull --ff-only origin dev failed"
+  finish_maintenance_log "$pull_rc"
   exit "$pull_rc"
 fi
 
@@ -46,6 +61,7 @@ if [[ -f "$ROOT/.lake/build/stratalint/raw-lean-report.json" ]]; then
   refresh_rc=$?
   if (( refresh_rc != 0 )); then
     receipt failed refresh "stale seed refresh failed"
+    finish_maintenance_log "$refresh_rc"
     exit "$refresh_rc"
   fi
 fi
@@ -54,7 +70,11 @@ make -C "$ROOT" lean
 lean_rc=$?
 if (( lean_rc != 0 )); then
   receipt failed lean "make lean failed"
+  finish_maintenance_log "$lean_rc"
   exit "$lean_rc"
 fi
 
 receipt warmed complete
+receipt_rc=$?
+finish_maintenance_log "$receipt_rc"
+exit "$receipt_rc"

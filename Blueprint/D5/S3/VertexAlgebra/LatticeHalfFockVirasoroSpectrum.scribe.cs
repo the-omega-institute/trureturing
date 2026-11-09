@@ -1,5 +1,7 @@
 using StrataLint.Scribe;
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.VertexAlgebra;
 
@@ -17,6 +19,14 @@ internal sealed class LatticeHalfFockVirasoroSpectrumDocument : IScribeDocumentD
             Paragraph(Text("The direct central proof computes the normal cutoff change, proves finite support for its scalar boundary for every integer sign, reindexes only the actual finite sums, and contracts inverse-Gram trace to rank. It does not use a scalar-rigidity branch or import the research Sugawara excerpt.")),
             Paragraph(Text("Support for p and rawL_m p is established separately in the mixed normal-sum calculation. The scalar term sum_j (j+1/2)(m+j+1/2)(1_(j>=0)-1_(m+j>=0)) equals (2m^3+m)/12 and is consumed by the actual operator contraction.")),
             Paragraph(Text("Creation multiplication at variable (i,k) raises L0 energy by k+1/2. Power induction and finite exponent-vector induction prove the monomial law; linearity extends it to arbitrary finite sums. Ground need not be a VOA vacuum.")),
+            Describe.Lean(
+                DescribeId.Create("latticehalffockvirasorospectrum-sum-ico-id"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeHalfFockVirasoroSpectrum.sum_Ico_id"),
+                H("The linear sum over a signed integer interval"),
+                StatementSource.FromAuthor(Disp(IntervalSumFormula())),
+                AssessedProvenance.FromRepo(Architecture),
+                Blocks(Paragraph(Text("The complex casts of the integers in a half-open interval sum to the interval length times the average endpoint; this identity supplies the linear part of the quadratic boundary sum."))),
+                DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("latticehalffockvirasorospectrum-rawl-virasoro"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeHalfFockVirasoroSpectrum.rawL_virasoro"),
@@ -64,4 +74,26 @@ internal sealed class LatticeHalfFockVirasoroSpectrumDocument : IScribeDocumentD
             Paragraph(Text("DN p.13 displays a c_mn integrality assertion conflicting with its displayed logarithmic generating function. For F(x,y)=-log((sqrt(1+x)+sqrt(1+y))/2), write its logarithm argument as 1+(x+y)/4-(x*x+y*y)/16 plus terms of total degree at least three. The expansion -log(1+u)=-u+u*u/2 plus higher terms gives F=-(x+y)/4+3*(x*x+y*y)/32+x*y/16 plus higher terms. Thus c10=c01=-1/4 and c11=1/16 are rational. Ordered m,n coefficients and their derivatives must retain both ordered mixed contributions. This is a derived correction, not a published erratum and not an implemented Delta operator.")),
             Paragraph(Text("Charged theta fields, corrected fractional normal products, all-state twisted locality/Jacobi, Y_theta(omega) identification, twisted intertwiners, holomorphic extension, Leech/Monster, anomaly/fusion, full CFT, string theory and the AdS/CFT bridge remain subsequent obligations.")),
             Paragraph(Ref("D5/L/VertexAlgebra/flm1988monster")))));
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
+
+    private static Formula IntervalSumFormula()
+    {
+        var a = F.Id("a");
+        var b = F.Id("b");
+        var x = F.Id("x");
+        var integers = Seq(Mathbb, Sp, F.Id("Z"));
+        var complexes = Seq(Mathbb, Sp, F.Id("C"));
+        Formula Cast(Formula value) => Parenthesized(Seq(
+            new Formula.Apply(Seq(Operatorname, Grp(Seq(F.Id("Int"), Dot, F.Id("cast")))), [value]),
+            Colon, Sp, complexes));
+        var interval = Seq(Operatorname, Grp(F.Id("Finset")), Dot,
+            Operatorname, Grp(F.Id("Ico")), Parenthesized(Seq(a, Comma, Sp, b)));
+        var sum = Seq(Sum, Underscore, Grp(Seq(x, InMacro, Sp, interval)), Sp, Cast(x));
+        var numerator = Seq(Parenthesized(Seq(Cast(a), Plus, Cast(b), Minus, D(1))),
+            Sp, Cdot, Sp, Parenthesized(Seq(Cast(b), Minus, Cast(a))));
+        return Seq(Forall, Sp, Parenthesized(Seq(a, Colon, integers)), Comma, Sp,
+            Forall, Sp, Parenthesized(Seq(b, Colon, integers)), Comma, Sp,
+            a, Sp, Le, Sp, b, Sp, Longrightarrow, Sp,
+            sum, Sp, Eq, Sp, Frac, Grp(numerator), Grp(D(2)));
+    }
 }

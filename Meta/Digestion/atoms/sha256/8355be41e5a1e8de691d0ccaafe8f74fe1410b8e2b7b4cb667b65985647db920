@@ -1,0 +1,39 @@
+**定理 33.3（只删除 II 的全背景族）。** 存在保持完整 C126 的全部非 II 条款及完整 tagged CP 菜单的模型，S 在同一原 AC 效果上成立，但 II 和原 D 失败。该族可取为无实际 $M_2$ 的 $\mathcal D_3$ 签名。
+
+**证明。** 在定理 33.1 的带原因子标签模型中，给每个原生成矩阵块选择一个酉算子 $v$。直接和取逐块直和，实际张量取原因子算子的张量，原重括号及交换按同一因子标签运输；经典副本复制同一选择。不同原对象即使同维也没有因此被识别，这正是原 tagged 模型的对象约定。因此得到每个对象的 Jordan 自同构 $\Gamma_A=\operatorname{Ad}_{v_A}$，满足原实际接口上的
+
+$$
+\Gamma_{AB}\iota_A=\iota_A\Gamma_A,\qquad
+\Gamma_{AB}\iota_B=\iota_B\Gamma_B.
+\tag{33.3}
+$$
+
+可以具体取 $P=\mathbb C\oplus M_3$，其 AC 效果是 $p=e_{11}$，在该三阶块选择 $v_P=\operatorname{diag}(1,-1,1)$，经典分量为一。其他原生成块任意选酉，随后按上述规则延拓。保留定理 33.1 的全部 $q/L$、原状态、器件、完整 CP 仪器、AC、参考、群、记录、失败、原概率、返回和有限合法历史；原有向数据另指定为
+
+$$
+D^{A,\Gamma}_ab=\delta^A_{\Gamma_A(a)}b
+=\frac i2[\Gamma_A(a),b].
+\tag{33.4}
+$$
+
+它在每个对象上实双线性且属于完整 $\mathfrak k_A$，所以 I 成立。由 (33.3)，局部 $D$ 保持和交叉 $D=0$ 对每个实际联合对象成立；例如 $\Gamma_{AB}(a\otimes I)=\Gamma_A(a)\otimes I$，与 $I\otimes b$ 交换。没有要求任何原 CP 器件与 $\Gamma$ 交换，原过程菜单也不作这种限制。P/G、精确 $N$、X 的其他条款、Xs、全事件 R 和 F 仍由原完整复过程数据满足。普通复坐标是这些模型的初始定义，不由 (33.4) 重构。
+
+$v_P$ 与 $p$ 及全块单位交换，故 $\Gamma_P(d_0)=d_0$，S 由 (31.4) 成立。为检验 II，在上述三阶块的数学前二阶角内取
+
+$$
+h=e_{11}-e_{22},\qquad x=e_{12}+e_{21},\qquad K=\delta_x\in\mathfrak k_P.
+$$
+
+$\Gamma h=h$、$Kh\ne0$、$\Gamma(Kh)=-Kh$，且 $\delta_{Kh}\ne0$。Jacobi 恒等式给
+
+$$
+[K,D_h^\Gamma]=[\delta_x,\delta_h]=\delta_{Kh},
+\qquad
+D^\Gamma_{Kh}=-\delta_{Kh},
+\tag{33.5}
+$$
+
+所以 II 失败。原 D 同样失败：在这两个元上 $D_h^\Gamma=\delta_h$、$D_x^\Gamma=-\delta_x$，故曲率和为 $2[L_h,L_x]\ne0$。也可在 $a=h+x$ 上直接看到 $D_a^\Gamma a\ne0$。这些是纸笔矩阵恒等式，数学角没有变成实际对象。
+
+全部原 $q_K$ 支持返回、反向资料、返回的失败完成、实际粗细记录和任何合法有限接续，都仍取定理 33.1 的丰富 CP 模型；(33.4) 不改变它们。对象取 $\mathcal D_3$ 时 (33.3) 的直接和/张量构造仍在该域，故可同时没有任何实际 $M_2$。此例只分离 II，未声称现存 CP 滤片或原供给消失。∎
+

@@ -1,0 +1,178 @@
+**Proposition 40.5 (a fixed-feedback mixed counterexample at distance $25/8$).**
+Set
+
+$$
+\begin{aligned}
+ w_0&=\left(\frac{1+i\sqrt{15}}4,
+             \frac{1-i\sqrt{15}}4,1,1\right),&
+ U_0&=\operatorname{diag}(w_0)U_+,\\
+ F_{\mathrm p}&=\begin{pmatrix}
+ 15/16&i\sqrt{15}/16\\-i\sqrt{15}/16&1/16
+ \end{pmatrix},&
+ F_{\mathrm m}&=\begin{pmatrix}
+ 7/8&i\sqrt3/8\\-i\sqrt3/8&1/8
+ \end{pmatrix},\\
+ E_j&=(TF_jT^\dagger)^{\mathsf T},& j&\in\{\mathrm p,\mathrm m\}.
+\end{aligned}
+\tag{40.26}
+$$
+
+These are actual original pairs with
+$\rho(E_{\mathrm p},U_0)=\rho(E_{\mathrm m},U_0)=25/8$.
+The effect $E_{\mathrm p}$ has rank one and $E_{\mathrm m}$ is
+positive definite. Every rank-one original effect $E$ at this same
+$U_0$ and original level satisfies
+
+$$
+ f(E_{\mathrm m},U_0)
+    < f(E_{\mathrm p},U_0)-\frac7{640}
+    \le f(E,U_0)-\frac7{640}.
+\tag{40.27}
+$$
+
+Thus universal prescribed-level purification at unchanged actual
+feedback fails, even inside $\mathcal C_{34}$.
+This statement concerns one fixed feedback and one level; it asserts
+no mixed optimality for the all-feedback geometric or full-domain problem.
+
+*Proof.* Every entry of $w_0$ has modulus one, so $U_0$ is an
+actual unitary, of geometric shape $x=1/4$, $y=\sqrt{15}/4$.
+The matrices in (40.26) are Hermitian with trace one and positive
+diagonal entries. Their determinants are respectively zero and
+$1/16$, proving the stated positivity and ranks after the prescribed
+unitary conjugation and ordinary transpose.
+The actual common data are
+
+$$
+ A=5/2,\quad B=\sqrt{15}/2,\quad
+ P=u=2c+h/2,\quad Q=iv,\quad v=h\sqrt{15}/2.
+\tag{40.28}
+$$
+
+For both effects the positive-branch coordinates satisfy
+$r^2+|z|^2=1/16$:
+these are $1/256+15/256$ for $F_{\mathrm p}$ and
+$1/64+3/64$ for $F_{\mathrm m}$.
+Equation (36.10) gives the positive distance $3+2/16=25/8$.
+For every effect the negative feedback-distance term alone is
+$8-\sqrt{15}>4$, so the positive sign is unique for both displayed
+pairs and for every other effect on this fixed-feedback level.
+No negative-sign pure competitor has been omitted.
+
+At this level a pure effect must have
+$r=r^2+|z|^2=1/16$ by positivity with determinant zero.
+Its best possible coherence phase is $z=i\sqrt{15}/16$,
+since the actual $P$ is positive and $Q$ is positive imaginary.
+Thus $E_{\mathrm p}$ minimizes over every pure effect at this same
+feedback and original level, not just over one chosen orientation.
+For the two aligned effects the exact identity (23.12) gives
+
+$$
+\begin{aligned}
+ b&=u^2-v^2-D_0=\frac14+c-7s-2h,\\
+ 16\bigl[g(E_{\mathrm m},U_0)-g(E_{\mathrm p},U_0)\bigr]
+   &=b+(c+s+1/4)(15-6\sqrt5).
+\end{aligned}
+\tag{40.29}
+$$
+
+For completeness, $s>3/8$ follows from
+$\sqrt2<10/7$ and $s^2=(2-\sqrt2)/4>1/7>9/64$.
+Also $c<1$, $2h>7/5$ and $0<15-6\sqrt5<8/5$;
+the last bounds follow by squaring the positive rational comparisons
+$\sqrt5<5/2$ and $\sqrt5>67/30$.
+Since $c+s+1/4>0$, the last line of (40.29) is strictly smaller than
+
+$$
+ \frac{13}{5}c-\frac{27}{5}s+\frac{13}{20}-2h
+ <\frac{13}{5}-\frac{81}{40}+\frac{13}{20}-\frac75
+ =-\frac7{40}.
+\tag{40.30}
+$$
+
+This proves (40.27) for $g$ and hence for $f$, since all compared
+objects have the identical original distance.
+All amplitudes, both sign tests and both effects have used the one
+actual $U_0$. Theorem 40.2 can nevertheless improve this mixed pair
+by a pure pair with a changed geometric feedback; (40.27) does not
+compare such different feedbacks. $\square$
+
+**Mathematical source correspondence 40.6.** The mixed comparison uses
+the original same-object identities (23.9)--(23.12), the exact
+prescribed-level arcs and their equality preimage in Theorem 36.2,
+and the conditional same-feedback construction (36.20).
+Its final scalar ordering and pure equality classification are
+Theorem 37.5; neither the cap profiles nor the scalar selector is
+replaced. The selected-feedback identity (40.17) additionally uses
+scalar stationarity to control the actual mixed effect arc, as shown
+in (40.19). These are fixed-record, joint-distance deductions.
+
+For the primary-literature correspondence,
+Gregoratti--Werner, [*Quantum Lost and Found*, quant-ph/0209025v1,
+Proposition 8 and (16)--(21)](https://arxiv.org/html/quant-ph/0209025v1#ThmThe8),
+optimize correction fidelity for a fixed Kraus decomposition.
+Their intermediate operator is $t_j=\operatorname{diag}(R_0b_j)$
+here, in input dimension four. Their correction bound and equality
+form do not impose this producer's joint distance, compare its
+feedbacks at a prescribed level, or imply same-feedback purification.
+Buscemi--Chiribella--D'Ariano,
+[*Inverting Quantum Decoherence by Classical Feedback from the Environment*,
+quant-ph/0504195v5, (6) and (9)](https://arxiv.org/html/quant-ph/0504195v5),
+supply the four-dimensional rank-two correlation example:
+their Heisenberg matrix is $\overline{R_0R_0^\dagger}$,
+consistent with their Schrödinger transpose.
+This correspondence does not change the ordinary transpose of the
+effects in the present model.
+
+Thompson's prescribed complex-diagonal and singular-value theorem,
+in the formulation of Jasper--Loreaux--Weiss,
+[*Thompson's theorem for compact operators and diagonals of unitary operators*,
+arXiv:1602.08435v1, Theorem 1.3](https://arxiv.org/html/1602.08435v1#S1.Thmtheorem3),
+gives exactly $\mathcal W$ when all four singular values are one,
+as applied in source Theorem 23.2. It supplies realizability, not
+any prescribed-level ordering. The paths and diagnostic in this
+section instead have the direct actual unitary realizations displayed
+above. None of these general literature inputs states the geometric
+mixed comparison or the selected-feedback endpoint/value identity.
+
+**Unresolved mathematical obligations 40.7.** Theorem 40.2 removes
+mixed competitors inside $\mathcal C_{34}$ at $0<\xi\le4$ from
+the full comparison problem. Theorem 40.4 excludes only mixed
+minimizing branches that approach the selected feedback graph in its
+specified relative range. At either $b=\alpha$ or $b=\beta$,
+if $\mathcal A_b=\mathcal G_b$, Theorem 39.6 and Theorem 40.4
+imply that all global minimizers on sufficiently nearby levels are
+pure. This does not exclude coalescing pure competing branches.
+If there are additional endpoint minimizers, separated mixed limits
+are not excluded by that argument.
+
+The outstanding original comparison is still
+
+$$
+ M_\sigma(w,\xi)\ge N_{\mathrm{geo}}(\xi)+\kappa\xi
+\tag{40.31}
+$$
+
+for every realizable $w\in\mathcal W$ and every admissible original
+sign on the required preceding levels, together with its complete
+attained equality preimage in actual $\operatorname{Dens}_2\times U(4)$.
+Every mixed arc, singular endpoint, zero amplitude, sign tie and
+actual unitary lift outside the proved neighborhood remains subject
+to that comparison. The geometric comparison beyond level four is
+also not established here. Sections 38--39 already give strict
+full-domain competitors below the selected geometric value at
+positive levels below four; (40.31) cannot hold through that entire
+range. No all-$\mathcal W$ certificate is asserted.
+
+The exact evaluation of $\alpha$ and $\beta$, their possible
+coincidence, the full equality sets at both boundaries, the inclusion
+or exclusion of the exhaustive-equality endpoint, the identities
+and exhaustion of the first competing actual branches, and the
+required right-side behavior beyond their existing conditional
+conclusions remain unresolved. The determinant-zero case of the
+phase variation still needs its higher-order and global comparison.
+An effect-arc margin, a local purity neighborhood, a scalar threshold,
+an unattained core-infimum tie or a strict failure window is not a
+selected first-loss boundary. The full original first-loss goal is
+unchanged.
+

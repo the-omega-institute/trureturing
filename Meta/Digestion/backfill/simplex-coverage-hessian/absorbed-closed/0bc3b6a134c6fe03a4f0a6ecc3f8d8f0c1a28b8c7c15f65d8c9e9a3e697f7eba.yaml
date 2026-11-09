@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:0bc3b6a134c6fe03a4f0a6ecc3f8d8f0c1a28b8c7c15f65d8c9e9a3e697f7eba
+  normalized_sha256: sha256:0bc3b6a134c6fe03a4f0a6ecc3f8d8f0c1a28b8c7c15f65d8c9e9a3e697f7eba
+cas_ref: sha256:0bc3b6a134c6fe03a4f0a6ecc3f8d8f0c1a28b8c7c15f65d8c9e9a3e697f7eba
+coverage_gids:
+  - gid: D5/S3/Resource/SimplexCoverageRoot.spanningPolynomial_root_concaveOn
+    target_statement_id: sha256:c90261075abd07b6c73ed08320297e5c5a7599d6f2ad811e7b3c9fee010b358e
+receipts:
+  unresolved_subitems: []

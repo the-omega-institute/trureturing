@@ -1,0 +1,11 @@
+using static StrataLint.Scribe.DefinitionDsl;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Circle.FourNegative.SecondPeakA2;
+internal sealed class QEightStructuralDocument : IScribeDocumentDefinition
+{
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Second peak: unbounded q-8 selector", H("QEightStructural"),
+        Blocks(Paragraph(Text("For P>=3, put p=2^P,h=2^H,j=(26p+12) mod 33 and v=(256p+9-20j)/33. The exact congruence gives 33v+20j=256p+9, hence 1<=v<=8p. With m=hj,M=h(12p-1),before=true, the actual integer remainder is R=5v-1+h(192p+33j). The first old and new endpoints are 10v-2+h(384p+66j) and 20v-2+h(4992p+66j). Bounds 0<=j<=32 and h>=1 prove both lower bounds and both upper slacks against A-1=8448hp+4. Every other old and new endpoint and its slack has nonnegative coefficients after p=u+8,h=w+1; the physical heads K and SW remain distinct.")),
+            Paragraph(Text("For p=8 the residue is j=22<4p; above 8, j<=32<4p. Since 12p-1=3*2^(P+2)-1, predecessor-mask inclusion proves Submask j (12p-1). Multiplication by 2^H shifts both bit masks. At p=4 the single affine branch v=5,m=44h,M=46h,before=false works for every h>=1. Its first fresh endpoint is 4440h+88, including the full late subtraction of 2A. The literal mask 44&46=44 also shifts dyadically. Strict stock bounds and integer-to-natural casts complete the original Good predicate.")),
+            Paragraph(Text("Finite consumes this structural theorem in every corresponding parameter branch without retaining a positive witness table. The unchanged original A2 endpoint is the consumer; the entire Circle objective and official delivery remain open.")),
+            Describe.Lean(DescribeId.Create("q-eight-dyadic-good"), DeclarationHandle.Create("D5/S3/Combinatorics/Circle/FourNegative/SecondPeakA2/QEightStructural.q_eight_dyadic_good"), H("q_eight_dyadic_good"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("For every natural P,H with 2<=P there exist natural v,m,M and before:Bool such that Good (2^P) 8 (2^H) v m M before. Good includes 1<=v, 2v<=4pq, m<M, 2M<8hpq, literal Submask m M, and every original old/new physical window."))), DescribeRole.Theorem)), []));
+}
