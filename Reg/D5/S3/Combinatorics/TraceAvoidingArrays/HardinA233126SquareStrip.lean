@@ -3,7 +3,7 @@ import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip
 import D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 import Reg.Support.SingleDependentReadout
 import LeanInformationAuditInterface.Contract.Registration
-import Mathlib.Tactic.Linarith
+import Lean.Elab.Tactic.Omega
 
 /-! Four-slot registration of the literal five-column recurrence. -/
 
@@ -33,9 +33,11 @@ abbrev arena : Arena where
   signature := signature
   Law R := ∀ n : ℕ,
     (R.readout () () (n + 7) : ℤ) =
-      544 * R.readout () () (n + 6) - 82944 * R.readout () () (n + 5) +
-        5144576 * R.readout () () (n + 4) - 146800640 * R.readout () () (n + 3) +
-        1879048192 * R.readout () () (n + 2) - 8589934592 * R.readout () () (n + 1)
+      544 * (R.readout () () (n + 6) : ℤ) - 82944 * (R.readout () () (n + 5) : ℤ) +
+        5144576 * (R.readout () () (n + 4) : ℤ) -
+        146800640 * (R.readout () () (n + 3) : ℤ) +
+        1879048192 * (R.readout () () (n + 2) : ℤ) -
+        8589934592 * (R.readout () () (n + 1) : ℤ)
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
@@ -47,7 +49,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
       1879048192 * ((a (0 + 2) + 1 : ℕ) : ℤ) -
         8589934592 * ((a (0 + 1) + 1 : ℕ) : ℤ) at hb
   simp only [Nat.cast_add, Nat.cast_one] at hb
-  linarith
+  omega
 
 def family : Registration arena (type_of% @result) where
   actual := actual
@@ -60,8 +62,8 @@ def family : Registration arena (type_of% @result) where
     refine ⟨(), 0, 1, ?_⟩
     change a 0 ≠ a 1
     have hz : a 0 = 0 := by
-      simp [a,
-        _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.widthLegal]
+      unfold a
+      decide +kernel
     have hp : 0 < a 1 := by
       unfold a
       apply Finset.card_pos.mpr
