@@ -1000,3 +1000,517 @@ $$
 对指定 $\omega=\alpha$，原 (17.5) 已支付有限型前提，因此 (29.5)、(30.2) 及以上条件性消费者均适用；仍未证明实际 $p_H(\alpha)$ 满足 (31.2)，也未证明存在满足 (30.3) 的发散子族。因此没有据此裁定实际 $\nu(R(\alpha))$。新的算术充分接口是实际前两条截断极小乘积在这些原 $H$ 箱中的最大值是否具有发散总和，而非要求每块覆盖保持正比例。原定理 23.1 的有限型完整零测比较方向必使 (31.3) 中的全部凝聚和收敛；这与其一阶质量发散相容，也不把该必要条件倒置为零测充分条件。$\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 32. 原周期的交替坐标与统一有限型比较方向
+
+**定义 32.1（与实半径无关的原周期子序列）。** 保持原卷 [UPPM-RG 002](UPPM_RG_002_DIOPHANTINE_DEFINITIONS_RELATIONAL_COMPILATION_AND_STOPPING_BOUNDARIES.md) 定义 20.1、21.1 及本卷定义 24.1 的全部有限地方、原过滤、$M,a_0,A,Y,\nu$ 与实际共同周期 $q_H=q(H,H;M)$。以下取原对数端点
+
+$$
+\beta=0,\qquad c_0=1,\qquad
+h(n)=\max(2,\lfloor\sqrt{\log(n+2)}\rfloor),\qquad
+\rho(n)=(\log(n+2))^{-\gamma},\quad\gamma>0.
+\tag{32.1}
+$$
+
+由原 (16.27)，可先固定一个整数 $H_0\ge7$，使 $q_{H_0}\ge4$ 且
+
+$$
+\frac9{10}H^2\le\log q_H\le\frac{11}{10}H^2
+\qquad(H\in\mathbb Z,\ H\ge H_0).
+\tag{32.2}
+$$
+
+这个选择不涉及 $\gamma$。令
+
+$$
+H_s=2^sH_0,\qquad Q_s=q_{H_s},\qquad
+\iota(s)=\begin{cases}1,&s\text{ 偶},\\2,&s\text{ 奇},\end{cases}
+\qquad(s\ge0).
+\tag{32.3}
+$$
+
+原整除嵌套和 (32.2) 给出
+
+$$
+Q_s\mid Q_{s+1},\qquad Q_s^3\le Q_{s+1}\le Q_s^5,
+\qquad Q_s^9\le Q_{s+2}\le Q_s^{25}.
+\tag{32.4}
+$$
+
+事实上，$\log Q_{s+1}\ge(18/5)H_s^2\ge3\log Q_s$，而 $\log Q_{s+1}\le(22/5)H_s^2\le5\log Q_s$。以通常实数级数定义固定提升
+
+$$
+w_i=\sum_{\substack{s\ge0\\\iota(s)=i}}\frac1{Q_s},\qquad
+\omega_i=w_i\pmod1,\qquad \omega=(\omega_1,\omega_2).
+\tag{32.5}
+$$
+
+由 $Q_0\ge4$ 与 (32.4)，这些级数绝对收敛。$H_s,Q_s$ 只定义此比较方向；每个实际事件仍使用自身的 $q_{h(n)}$，不以此子序列替换原过滤。
+
+**定理 32.2（全部整数频率的有限型下界与有理独立）。** 定义 32.1 的同一个 $\gamma$ 无关方向满足
+
+$$
+\|k\cdot\omega\|_{\mathbb T}\ge c_\omega\|k\|_\infty^{-125}
+\qquad(0\ne k\in\mathbb Z^2),\qquad
+c_\omega=\frac1{2C^{25}}>0,\quad C=\max(Q_0,4^5).
+\tag{32.6}
+$$
+
+因而 $1,w_1,w_2$ 在 $\mathbb Q$ 上线性无关；更换实提升也保持这一性质。指数 $125$ 不主张最优。
+
+**证明。** (32.4) 使每个相邻比值至少为 $16$，所以对每个 $v\ge0$，经典有理级数的几何尾估计在这里给出
+
+$$
+\sum_{t>v}\frac1{Q_t}\le\frac2{Q_{v+1}}.
+\tag{32.7}
+$$
+
+固定任意 $k\ne0$，置 $B=\|k\|_\infty\ge1$。取最小的 $s\ge0$ 使 $Q_s\ge4B$，并写
+
+$$
+P_s=\sum_{t=0}^s\frac{k_{\iota(t)}}{Q_t}\in Q_s^{-1}\mathbb Z,
+\qquad T_s=\sum_{t>s}\frac{k_{\iota(t)}}{Q_t},\qquad
+k\cdot w=P_s+T_s.
+\tag{32.8}
+$$
+
+这里前缀的分母整除 $Q_s$，且
+
+$$
+|T_s|\le\frac{2B}{Q_{s+1}}
+\le\frac{2B}{Q_s^3}\le\frac1{2Q_s^2}<\frac12.
+\tag{32.9}
+$$
+
+若 $P_s\notin\mathbb Z$，则 $\|P_s\|_{\mathbb T}\ge1/Q_s$，圆距离的三角不等式给出
+
+$$
+\|k\cdot\omega\|_{\mathbb T}
+\ge\frac1{Q_s}-|T_s|\ge\frac1{2Q_s}.
+\tag{32.10}
+$$
+
+若 $P_s\in\mathbb Z$，交替安排保证尾部的首个非零系数位于某个 $t\in\{s+1,s+2\}$。其绝对值至少为 $1$，此后尾项由同一个 $B$ 控制：
+
+$$
+\left|\sum_{v>t}\frac{k_{\iota(v)}}{Q_v}\right|
+\le\frac{2B}{Q_{t+1}}\le\frac1{2Q_t}.
+\tag{32.11}
+$$
+
+最后一步使用 $Q_t\ge Q_s\ge4B$ 与 $Q_{t+1}\ge Q_t^3$。所以 $|T_s|\ge1/(2Q_t)$；又由 (32.9) 的严格 $|T_s|<1/2$，此时圆距离恰为 $|T_s|$。两种前缀情形合起来均有
+
+$$
+\|k\cdot\omega\|_{\mathbb T}\ge\frac1{2Q_{s+2}}.
+\tag{32.12}
+$$
+
+若 $s\ge1$，最小性给 $Q_{s-1}<4B$，故 $Q_s\le Q_{s-1}^5<(4B)^5\le CB^5$；若 $s=0$，直接有 $Q_s=Q_0\le CB^5$。因此所有 $B\ge1$ 都满足 $Q_{s+2}\le Q_s^{25}\le C^{25}B^{125}$，(32.12) 即为 (32.6)。没有把尚未证明为正的有限多个小频率吸收到常数。
+
+任何有理线性关系清除分母后都是 $d+k\cdot w=0$，其中 $d\in\mathbb Z,k\in\mathbb Z^2$。若 $k\ne0$，(32.6) 排除此式；若 $k=0$，则 $d=0$。有理独立性随之成立。前缀分母与尾项分离是经典 Cantor 级数方法在本条内部的中间步骤；这里的综合（repo-derived）是将原实际周期的受控幂增长、两坐标交替及全部频率下界相接，不单立一般级数或独立性定理。$\square$
+
+## 33. 同一有限端上的 character 上包与完整零测
+
+**定义 33.1（辅助整段与有理截断 character）。** 对定义 32.1 的固定方向及每个 $s\ge0$，置
+
+$$
+\mathcal I_s=\{n\in\mathbb Z_{\ge1}:H_s\le h(n)<H_{s+1}\},\qquad
+N_s=\left\lceil\exp(H_{s+1}^2)\right\rceil,\qquad i_s=\iota(s),
+\tag{33.1}
+$$
+
+并用活动坐标的有理截断定义整数 $a_s$：
+
+$$
+\xi_s=\sum_{\substack{0\le t\le s\\\iota(t)=i_s}}\frac1{Q_t}
+=\frac{a_s}{Q_s},\qquad a_s\in\mathbb Z,\qquad
+0<w_{i_s}-\xi_s\le\frac2{Q_{s+2}}.
+\tag{33.2}
+$$
+
+最后一界来自下一次同坐标更新在 $s+2$ 及 (32.7) 的同样几何尾估计。对 $u\in\widehat{\mathbb Z}$，任取 $u\bmod Q_s$ 的整数代表 $b_s$，定义到圆的连续 character
+
+$$
+\chi_s:\widehat{\mathbb Z}\times\mathbb T^2\longrightarrow\mathbb T,
+\qquad \chi_s(u,z)=z_{i_s}-\frac{a_s b_s}{Q_s}\pmod1,
+\qquad
+\delta_s(\gamma)=H_s^{-2\gamma}+\frac{2N_s}{Q_{s+2}}.
+\tag{33.3}
+$$
+
+改变代表 $b_s$ 使 $a_s b_s/Q_s$ 只增加一个整数，所以该式良定义；其有限端因子经过群商 $\mathbb Z/Q_s\mathbb Z$，实端因子是坐标投影。这里使用的是环境紧群的 character 在余类空间 $Y=C_M\times\mathbb T^2$ 上的限制。
+
+**定理 33.2（同一有限型方向在全部正对数指数下完整零测）。** 定义 32.1 的同一个固定 $\omega$ 对每个 $\gamma>0$ 均满足
+
+$$
+\nu(R(\omega))=0,\qquad g_j(\omega)\longrightarrow0,
+\qquad R(\omega)\text{ 为 }Y\text{ 中的稠密 }G_\delta.
+\tag{33.4}
+$$
+
+$E_n(\omega),R(\omega)$ 严格取 (28.1) 的原完整比较事件，$g_j$ 严格取 (28.2) 在该 $\gamma$ 下的全部真实 dyadic 片；原 $h,q_{h(n)},\rho,M,a_0,Y$ 及每次事件的同一个整数均保持不变。
+
+**证明（逐整数、逐纤维的完整上包）。** 若 $n\in\mathcal I_s$，因 $H_s\ge7$，原取整给出
+
+$$
+H_s^2\le\log(n+2)<H_{s+1}^2,\qquad
+n<N_s,\qquad \rho(n)\le H_s^{-2\gamma},\qquad
+Q_s\mid q_{h(n)}.
+\tag{33.5}
+$$
+
+若 $(u,z)\in E_n(\omega)$，则 $n\in A$ 且 $u\equiv n\pmod{q_{h(n)}}$，从而同一个 $u$ 满足 $b_s\equiv n\pmod{Q_s}$。有理截断恰给 $a_s b_s/Q_s=n\xi_s\pmod1$，故
+
+$$
+\begin{aligned}
+\|\chi_s(u,z)\|_{\mathbb T}
+&=\|z_{i_s}-n\xi_s\|_{\mathbb T}\\
+&\le\|z_{i_s}-n\omega_{i_s}\|_{\mathbb T}
+       +n|w_{i_s}-\xi_s|\\
+&<\rho(n)+\frac{2N_s}{Q_{s+2}}\le\delta_s(\gamma).
+\end{aligned}
+\tag{33.6}
+$$
+
+因此在同一完整目标空间上有
+
+$$
+\bigcup_{n\in\mathcal I_s}E_n(\omega)
+\subseteq S_s:=\{(u,z)\in Y:\|\chi_s(u,z)\|_{\mathbb T}<\delta_s(\gamma)\},
+\qquad \nu(S_s)=\min(1,2\delta_s(\gamma)).
+\tag{33.7}
+$$
+
+质量等式来自每个固定 $u$ 纤维中 $z_{i_s}$ 的均匀 Haar 分布，再对 $u$ 积分；不需要有限余类相互独立，也不要求该纤维中实际存在允许整数。原事件仍承担自身的全部有限条件；上包只使用其必然蕴含的模 $Q_s$ 信息。
+
+由 (32.2) 及 $H_{s+2}=4H_s$，
+
+$$
+\frac{N_s}{Q_{s+2}}
+\le2\exp\left(4H_s^2-\frac9{10}\,16H_s^2\right)
+=2e^{-52H_s^2/5}\le e^{-10H_s^2}.
+\tag{33.8}
+$$
+
+末步对 $H_s\ge7$ 成立。又 $H_s=2^sH_0$，所以对每个 $\gamma>0$ 都有 $\sum_s\delta_s(\gamma)<\infty$。
+
+各 $\mathcal I_s$ 两两不交且有限，合起来恰为 $\{n:h(n)\ge H_0\}$；其补集为有限初段。因此无穷多个原整数命中必落入无穷多个这样的整段，$R(\omega)\subseteq\limsup_s S_s$。对每个 $S\ge0$，
+
+$$
+\nu(R(\omega))\le\nu\left(\bigcup_{s\ge S}S_s\right)
+\le2\sum_{s\ge S}\delta_s(\gamma)\longrightarrow0.
+\tag{33.9}
+$$
+
+这是收敛 Borel–Cantelli 的尾并集论证。整段内部允许原 $h$ 的所有中间值，左右边界以 $H_s\le h(n)<H_{s+1}$ 唯一分配；(33.5)–(33.7) 对每一个原整数成立，故全部跳点两侧、非好阶段及全部有限端纤维均已覆盖。定理 28.1 的 (28.4) 随即给出完整 $g_j\to0$，无需重新切分 dyadic 跳点。
+
+**证明（完整共同中心的类别结论）。** 任一非空基本窗 $((b+d\widehat{\mathbb Z})\cap C_M)\times W$ 的有限端由 CRT 给出一个共同整数类 $t\pmod\ell$，其中 $\ell=\operatorname{lcm}(M,d)$。定理 32.2 的有理独立性使每个非零 $k$ 都满足 $\ell k\cdot\omega\notin\mathbb Z$，故经典 Kronecker 定理使 $(t+\ell m)\omega$ 的每条正尾在两圆中稠密。同一个整数的中心 $(n,n\omega)$ 因而在 $Y$ 中尾稠密，且属于自身的 $E_n(\omega)$。每个 $E_n(\omega)$ 开，原半径逐项严格为正，所以每个尾并集 $\bigcup_{n>N}E_n(\omega)$ 开且稠密。紧度量空间 $Y$ 上的 Baire 定理给出 $R(\omega)$ 为稠密 $G_\delta$。这是原定理 20.2、23.1 的共同中心论证对新方向的应用，类别结论不从零一律推得。
+
+Haar 推前、Kronecker、Borel–Cantelli 与 Baire 均为经典中间输入（literature-attested）；其共同中心与文献接口沿用原定理 20.2、23.1。新增综合（repo-derived）是原周期交替截断与同一 $u$ 上良定义的有限实 character 相接，并以可求和整段覆盖完整原整数尾。此方向是比较 $\omega$，不是原 CM 点的实方向 $\alpha$。$\square$
+
+## 34. 严格原阶段窗口、全方向几何发散与同一反模型
+
+**定理 34.1（每个原负阶段的严格 dyadic 窗口下界）。** 固定任意 $\gamma>0$，取 $\beta=0,c_0=1$，保留原 $\mathcal H_- =\{H\ge7:\vartheta(H)<H\}$ 及 (28.2) 的完整权重。对每个充分大的 $H\in\mathcal H_-$，定义
+
+$$
+\mathcal D_H=\{j\in\mathbb Z:j\ge j_0,\quad
+ H^2+H/2\le j\log2\le H^2+H\}.
+\tag{34.1}
+$$
+
+这些窗口对不同整数 $H$ 两两不交，且存在 $c_\gamma>0$，使对所有比较方向 $\omega\in\mathbb T^2$ 同时有
+
+$$
+\#\mathcal D_H\ge\frac{H}{4\log2},\qquad
+g_j(\omega)\ge(H+1)^{-4\gamma}\quad(j\in\mathcal D_H),\qquad
+\boxed{\ \sum_{j\in\mathcal D_H}g_j(\omega)\ge c_\gamma H^{1-4\gamma}.\ }
+\tag{34.2}
+$$
+
+充分大阈值可依赖原固定数据及 $\gamma$，不依赖方向；无须第二逐次极小的额外反共振前提。
+
+**证明（整块处于原阶段且保留 floor 差）。** 定义 (34.1) 的实区间长度为 $H/(2\log2)$，故整数数至少为该长度减一，最终给出第一界。$H^2+H<(H+1)^2+(H+1)/2$，所以不同 $H$ 的窗口不交。若 $j\in\mathcal D_H$、$X=2^j$，则对整块的每个整数 $X<n\le2X$，
+
+$$
+H^2<\log(n+2)\le\log(2X+2)
+\le j\log2+\log3\le H^2+H+\log3<(H+1)^2.
+\tag{34.3}
+$$
+
+这里 $X\ge2$，且 $2X+2\le3X$。因此整块恰为原 $h=H$ 的一个完整片，不跨跳点。其原允许项数和几何尺度为
+
+$$
+J=\left\lfloor\frac{2X-a_0}{M}\right\rfloor
+  -\left\lfloor\frac{X-a_0}{M}\right\rfloor,\qquad
+|MJ-X|<M,\qquad K=\frac{MJ}{q_H}.
+\tag{34.4}
+$$
+
+对充分大 $H$，统一有 $X\ge2M$，故 $MJ\ge X/2>0$。原 (16.26) 在负阶段给出 $q_H\le5M\exp((H-1)\vartheta(H))\le5M\exp(H^2-H)$。所以对窗口内全部 $j$，
+
+$$
+K\ge\frac1{10M}e^{3H/2},\qquad
+r=r_j^-=[\log(2^{j+1}+2)]^{-\gamma}\ge(H+1)^{-2\gamma},\qquad
+Kr^2\ge\frac1{10M}e^{3H/2}(H+1)^{-4\gamma}\longrightarrow\infty.
+\tag{34.5}
+$$
+
+并且一致地 $r<1/4$、$K\ge r$ 最终成立。
+
+**证明（方向无关的三因子下界）。** 对原对偶格 $L=\{(K(a'-q_Hk\cdot\omega),rk):a'\in\mathbb Z,k\in\mathbb Z^2\}$ 的任一非零向量，若 $k=0$，其长度至少为 $K$；若 $k\ne0$，其空间长度至少为 $r$。于是 $\lambda_1,\lambda_2\ge r$。由 (25.1)，$\det L=Kr^2\le\lambda_1\lambda_2\lambda_3\le\lambda_3^3$；(34.5) 使 $\lambda_3>1$ 最终成立。因此
+
+$$
+g_j(\omega)=p_{3,j}^-
+=\min(1,\lambda_1)\min(1,\lambda_2)
+\ge r^2\ge(H+1)^{-4\gamma}.
+\tag{34.6}
+$$
+
+等号中的 $g_j$ 使用的就是整块唯一的真实非空片。将此式对 $\mathcal D_H$ 求和，并用 $H+1\le2H$，即得 (34.2)，例如可取 $c_\gamma=2^{-4\gamma}/(4\log2)$。本条复用原周期上界和本卷格的行列式比较，建立完整原 dyadic 权重的窗口估计；不将一般格论另立为新成果。$\square$
+
+**定理 34.2（含端点的全方向完整几何权重发散）。** 对原对数端点的每个 $0<\gamma\le3/8$ 及每个方向 $\omega\in\mathbb T^2$，有
+
+$$
+\sum_{j\ge j_0}g_j(\omega)=\infty.
+\tag{34.7}
+$$
+
+**证明。** 经典 Littlewood 输入的准确形式是 $\psi(x)-x=\Omega_-(\sqrt x\log\log\log x)$。Platt–Trudgian，*On the first sign change of $\theta(x)-x$*，[arXiv:1407.1914v1 原文](https://arxiv.org/pdf/1407.1914v1)，第 1 页式 (2)，给出更完整的 $\Omega_\pm$ 陈述；$\psi(x)=\sum_{p^m\le x}\log p$。这与原定理 21.2 使用的是同一经典输入，此处不重证或单列一般振荡定理。
+
+因此存在固定 $c>0$ 和无界的实数 $x$，使 $\psi(x)\le x-c\sqrt x\,L(x)$，其中 $L(x)=\log\log\log x$。对这些充分大的 $x$ 置 $\ell=(c/2)\sqrt x\,L(x)$。每个整数 $H\in[x-\ell,x]$ 都满足
+
+$$
+\vartheta(H)\le\psi(H)\le\psi(x)\le x-2\ell<H.
+\tag{34.8}
+$$
+
+所以这些整数均为原负阶段。它们的数量至少为 $\ell-1\ge(c/4)\sqrt x\,L(x)$，且因 $\ell=o(x)$ 而一致地 $x/2\le H\le x$。这里取的是负点之前的区间，只使用 $\psi$ 的单调性，没有向前素数跳跃界。
+
+令 $J(x)=\lfloor(x^2+x)/\log2\rfloor$。上述每个 $\mathcal D_H$ 都包含于 $[j_0,J(x)]$，这些窗口两两不交。对固定 $\gamma$，在 $H\in[x/2,x]$ 上 $H^{1-4\gamma}\ge c'_\gamma x^{1-4\gamma}$，其中 $c'_\gamma>0$。逐窗口复用定理 34.1 的 (34.2)，得到与方向无关的部分和下界
+
+$$
+\begin{aligned}
+\sum_{j=j_0}^{J(x)}g_j(\omega)
+&\ge\sum_{\substack{H\in\mathbb Z\\x-\ell\le H\le x}}
+       \sum_{j\in\mathcal D_H}g_j(\omega)\\
+&\ge C_\gamma x^{3/2-4\gamma}\log\log\log x,
+\qquad C_\gamma>0.
+\end{aligned}
+\tag{34.9}
+$$
+
+当 $0<\gamma<3/8$ 时，幂指数严格正；当 $\gamma=3/8$ 时，剩余的 $\log\log\log x$ 仍趋于无穷。非负项的部分和因而无界，证明 (34.7)。不需要不同负点 $x$ 所给区间相互不交：每次都只是对同一正项部分和作下界，而同一次下界内部的 $\mathcal D_H$ 已两两不交。对 $\gamma>3/8$，(34.9) 不裁定完整级数的敛散。
+
+新增综合（repo-derived）是将 Littlewood 负幅度转为原负阶段的同时计数，并让每个阶段消费 (34.2) 的严格窗口下界；Littlewood、单调性与正项部分和比较均只作中间输入。$\square$
+
+**定理 34.3（同一个有限型方向的趋零、发散与完整零测）。** 对定义 32.1 的同一个固定方向，(32.6) 的常数及指数均不依赖 $\gamma$。对每个 $0<\gamma\le3/8$，原完整比较族同时满足
+
+$$
+\boxed{\quad g_j(\omega)\to0,\qquad
+\sum_{j\ge j_0}g_j(\omega)=\infty,\qquad
+\nu(R(\omega))=0.\quad}
+\tag{34.10}
+$$
+
+$R(\omega)$ 仍是稠密 $G_\delta$，而原逐整数一阶质量仍满足 $\sum_n\nu(E_n(\omega))=\infty$。完整零测与 $g_j\to0$ 本身对全部 $\gamma>0$ 成立。
+
+**证明。** 定理 32.2 已在全部整数频率上给出有限型与有理独立。定理 33.2 对每个 $\gamma>0$ 给出完整零测、类别结论及 $g_j\to0$；定理 34.2 的全方向发散可以用于这个同一方向，得到 (34.10)。原定理 21.2 的准确质量在比较族中与方向无关，见原 (22.2) 及定理 23.1 的质量论证，故原一阶级数仍发散。没有从一阶发散推导几何发散；后者由 (34.2)、(34.8)–(34.9) 独立支付。
+
+这些结论表明，在声明的 $\gamma$ 范围内，即使有统一有限型及完整几何权重和发散，完整原比较事件仍可零测；跨段重复覆盖所需的联合信息不能由这些条件替代。整个构造保留原有限地方、原 $q_H,h,\rho,M,a_0,Y$ 与同一整数，辅助 $H_s,N_s$ 只服务固定比较方向及其上包。该 $\omega$ 没有被认作实际 CM 方向 $\alpha$；原 (17.5) 的 CM 来源桥和实际 $q_H$ 与 $\alpha$ 的联合算术问题仍保留，以上反模型不裁定 $g_j(\alpha)$ 或 $\nu(R(\alpha))$。$\square$
+
+## 追加锚（本行以下为增补区）
+
+## 35. 原负阶段整数计数与严格 dyadic 阶段的几何权重
+
+**定义 35.1（原对数过滤及其负阶段）。** 保持定义 24.1 的全部有限地方过滤、实际共同周期 $q_H$、整数 $M,a_0$、完整目标空间 $Y$、测度 $\nu$ 与同一成功整数，只取 $\beta=0,c_0=1,\gamma>0$。因此仍用原来的
+
+$$
+h(n)=\max\left(2,\left\lfloor\sqrt{\log(n+2)}\right\rfloor\right),
+\qquad \rho_\gamma(n)=(\log(n+2))^{-\gamma}.
+$$
+
+将 (28.1)–(28.2) 中的原量显式记为 $R_\gamma(\omega)$、$g_j^{(\gamma)}(\omega)$ 与 $r_{j,\gamma}^{\pm}$；每片仍使用真实整数个数 $J_{jt}=\#(I_{jt}\cap A)$ 及 $K_{jt}=MJ_{jt}/q_{H_{jt}}$。这只是显示参数，不改变事件、切片、半径或几何权重的定义。对每个 $\gamma>0$，$j_0$ 按定理 28.1 选择，且不依赖方向。沿用原定义 21.1 的全部整数负阶段，并记
+
+$$
+\begin{gathered}
+\vartheta(x)=\sum_{p\le x}\log p,
+\qquad \psi(x)=\sum_{\substack{p\text{ 素数},\ k\ge1\\p^k\le x}}\log p,\\
+\mathcal H_- =\{H\in\mathbb Z:H\ge7,\ \vartheta(H)<H\},
+\qquad A_-(T)=\#\{H\in\mathcal H_-:H\le T\}.
+\end{gathered}
+\tag{35.1}
+$$
+
+严格窗口 $\mathcal D_H$ 始终取定理 34.1 的 (34.1)，其不交性与窗口下界直接使用 (34.2)。以整数 $H_0(\gamma)\ge7$、$c_\gamma>0$ 表示该定理的充分大阈值与常数，二者均不依赖方向。这里只将原负阶段的整数计数接到该严格窗口的原权重上。
+
+**定理 35.2（原完整几何权重的全方向发散）。** 对定义 35.1 的原过滤，无条件有
+
+$$
+\forall\gamma\in(0,1/2)\ \forall\omega\in\mathbb T^2,
+\qquad \sum_{j\ge j_0}g_j^{(\gamma)}(\omega)=\infty.
+\tag{35.2}
+$$
+
+若假设 Riemann 假设（RH），还在端点有
+
+$$
+\forall\omega\in\mathbb T^2,
+\qquad \sum_{j\ge j_0}g_j^{(1/2)}(\omega)=\infty.
+\tag{35.3}
+$$
+
+RH 端点不另假设零点的线性独立性或简单性。
+
+证明。所用整数计数来自 Jerzy Kaczorowski，*Results on the distribution of primes*，J. reine angew. Math. **446** (1994)，89–113，[DOI:10.1515/crll.1994.446.89](https://doi.org/10.1515/crll.1994.446.89)，[原始扫描](https://gdz.sub.uni-goettingen.de/download/pdf/PPN243919689_0446/LOG_0007.pdf)。该文 §3，印刷页 94，Theorem 8 的负向 $\psi$ 计数是：对每个 $0<\varepsilon<1$ 和每个实数 $u\ge0$，无条件有
+
+$$
+\#\{m\in\mathbb N:m\le T,\ \psi(m)<m-u\sqrt m\}
+=\Omega(T^{1-\varepsilon}).
+\tag{35.4}
+$$
+
+这是 literature-attested 的中间输入。这里只取 $u=0$，并只使用其下述含义：存在 $a_\varepsilon>0$ 和一个无界序列 $T_\ell\to\infty$，使该计数至少为 $a_\varepsilon T_\ell^{1-\varepsilon}$。因 $\vartheta(H)\le\psi(H)$，每个整数 $H\ge7$ 若满足 $\psi(H)<H$，就是同一个原负阶段 $H\in\mathcal H_-$。丢弃 $H<7$ 的至多六项并缩小常数，得到
+
+$$
+A_-(T_\ell)\ge a'_\varepsilon T_\ell^{1-\varepsilon}
+\qquad(\ell\text{ 充分大}),\qquad a'_\varepsilon>0.
+\tag{35.5}
+$$
+
+不把 (35.5) 加强为对全部充分大 $T$ 的同一幂次下界。
+
+对 $0<\gamma\le3/8$，全方向发散已由定理 34.2 给出，直接复用该结论。现取 $3/8<\gamma<1/2$，置 $s=4\gamma-1\in(1/2,1)$，并选 $0<\varepsilon<1-s$。由于 $H^{-s}\ge T_\ell^{-s}$ 对 $H\le T_\ell$ 成立，(35.5) 给出
+
+$$
+\begin{aligned}
+\sum_{\substack{H\in\mathcal H_-\\H_0(\gamma)\le H\le T_\ell}}
+ H^{1-4\gamma}
+&\ge T_\ell^{-s}
+ \bigl(A_-(T_\ell)-A_-(H_0(\gamma)-1)\bigr)\\
+&\ge \frac{a'_\varepsilon}{2}
+ T_\ell^{1-s-\varepsilon}\longrightarrow\infty.
+\end{aligned}
+\tag{35.6}
+$$
+
+此处只在 $s>0$ 的范围使用 $H^{-s}\ge T_\ell^{-s}$，不将这一不等式套用到 $s\le0$。
+
+由非负性、定理 34.1 的窗口互不重叠及 (34.2)，对每个方向同时有
+
+$$
+\sum_{j\ge j_0}g_j^{(\gamma)}(\omega)
+\ge\sum_{\substack{H\in\mathcal H_-\\H\ge H_0(\gamma)}}
+ \sum_{j\in\mathcal D_H}g_j^{(\gamma)}(\omega)
+\ge c_\gamma
+ \sum_{\substack{H\in\mathcal H_-\\H\ge H_0(\gamma)}}H^{1-4\gamma}
+=\infty.
+\tag{35.7}
+$$
+
+这证明 (35.2)。用白话说，无条件计数只需在越来越远的位置积累足够多的负阶段整数；每项所付的负幂还不到谐和幂，因此这些位置上的累积下界已迫使总和发散。窗口不重叠使每份贡献只记一次，且同一估计对所有实方向有效。
+
+端点另用同文 §2，印刷页 90，Theorem 1。其负向 $\psi$ 陈述仅以 RH 为假设：对每个实数 $u\ge0$，存在 $C_{\mathrm K}(u)>1$、$b_{\mathrm K}(u)>0$，使每个 $T\ge1$ 都有
+
+$$
+\#\{m\in\mathbb N:T\le m\le C_{\mathrm K}(u)T,
+ \ \psi(m)<m-u\sqrt m\}
+\ge b_{\mathrm K}(u)T.
+\tag{35.8}
+$$
+
+这里 $C_{\mathrm K}(u)$ 是原文的区间伸缩常数，与原过滤中固定为 $1$ 的 $c_0$ 无关。(35.8) 同样仅作 literature-attested 中间输入；取 $u=0$，简记 $C=C_{\mathrm K}(0)$、$b=b_{\mathrm K}(0)$，再取 $T=N/C$，便在 $N\ge C$ 时得到
+
+$$
+A_-(N)\ge\frac bC N-6.
+\tag{35.9}
+$$
+
+因此存在 $a>0$、$N_0\ge7$，使全部 $N\ge N_0$ 满足 $A_-(N)\ge aN$。对这个原整数计数作普通部分求和，得
+
+$$
+\sum_{\substack{H\in\mathcal H_-\\H\le N}}\frac1H
+=\frac{A_-(N)}N+\int_1^N\frac{A_-(t)}{t^2}\,dt
+\ge a\log\frac N{N_0}\longrightarrow\infty.
+\tag{35.10}
+$$
+
+删去有限初段不改变发散。将 $\gamma=1/2$ 的 $H^{1-4\gamma}=1/H$ 及 (35.10) 代入 (35.7) 的窗口求和不等式，便得 (35.3)。普通正项求和及部分求和均为经典中间方法（literature-attested）；这里的 repo-derived 综合是将上述原文整数计数转接到指定原过滤的严格 dyadic 窗口与完整 $g_j$，不另立一般振荡或求和定理。
+
+用白话说，RH 给出的每个伸缩区间内线性个数下界，使负阶段整数集具有正下密度，因而能承担恰好一阶的谐和权重。无条件的 (35.5) 在 $s=1$ 时不能给出 (35.6) 中的正指数；本证明留下 $\gamma=1/2$ 的无条件发散未决，也不由此断言 RH 必要。$\square$
+
+## 36. 零方向的完整收敛界与全方向命题的上界
+
+**定理 36.1（原完整几何权重在零方向的可求和范围）。** 保持定义 35.1 的原过滤。对每个 $\gamma>1/2$，零方向 $0=(0,0)$ 满足
+
+$$
+\begin{gathered}
+0\le g_j^{(\gamma)}(0)
+\le(r_{j,\gamma}^-)^2
+=\bigl(\log(2^{j+1}+2)\bigr)^{-2\gamma},\\
+\sum_{j\ge J}g_j^{(\gamma)}(0)
+\le\frac{(\log2)^{-2\gamma}}{2\gamma-1}\,J^{1-2\gamma}
+\qquad(J\ge\max(j_0,1)),\\
+\sum_{j\ge j_0}g_j^{(\gamma)}(0)<\infty,
+\qquad \nu(R_\gamma(0))=0.
+\end{gathered}
+\tag{36.1}
+$$
+
+因此任何 $\gamma>1/2$ 都不满足“对所有方向 $\omega$，原 $\sum_jg_j^{(\gamma)}(\omega)$ 发散”。
+
+证明。每个真实保留片在零方向的准确公式由定理 27.1 给出：
+
+$$
+p_{3,jt}^-(0)=\min(1,K_{jt})(r_{j,\gamma}^-)^2.
+$$
+
+同一 dyadic 块的各片使用同一个 $r_{j,\gamma}^-$，所以按 (28.2) 取最大值，即有 $g_j^{(\gamma)}(0)\le(r_{j,\gamma}^-)^2$；没有保留片时，空最大值为零，估计仍成立。原半径在 $\beta=0$ 下准确等于 (36.1) 第一行，并且该平方与 $j^{-2\gamma}$ 同阶。由 $\log(2^{j+1}+2)\ge(j+1)\log2$，普通正项积分比较给出
+
+$$
+\begin{aligned}
+\sum_{j\ge J}g_j^{(\gamma)}(0)
+&\le(\log2)^{-2\gamma}\sum_{j\ge J}(j+1)^{-2\gamma}\\
+&\le(\log2)^{-2\gamma}\int_J^\infty x^{-2\gamma}\,dx
+=\frac{(\log2)^{-2\gamma}}{2\gamma-1}J^{1-2\gamma}.
+\end{aligned}
+\tag{36.2}
+$$
+
+加回有限初段即得完整级数收敛，(28.4) 随即给出完整 $R_\gamma(0)$ 零测。这里的原过滤上界比较为 repo-derived，格的准确公式直接复用定理 27.1；一般格论及正项积分比较均为 literature-attested 中间方法。
+
+用白话说，零方向的全部实中心重合，允许整数再多也只贡献同一半径的方块；三因子乘积因而至多是这个半径的平方。平方半径在 dyadic 指标上成为 $j^{-2\gamma}$，超过半端点就可求和。
+
+零方向不满足 (29.1) 的有限型条件，且 $1,0,0$ 在 $\mathbb Q$ 上线性相关。本条给出的是全方向发散命题不能越过 $1/2$ 的上界，不给有限型方向类或实际 CM 方向 $\alpha$ 的锐界。结合定理 35.2，在 RH 下全方向几何权重发散的参数范围恰为 $0<\gamma\le1/2$；无条件端点仍未由这些输入判定。$\square$
+
+## 37. 同一固定有限型方向上的发散与完整零测
+
+**定理 37.1（固定有限型零测方向的几何发散消费者）。** 令 $\omega_*$ 为定义 32.1 中 (32.5) 给出的同一个固定方向。定理 32.2 的 (32.6) 保证它满足 (29.1)，且方向、有限型常数与指数均不依赖 $\gamma$。在定义 35.1 的同一原过滤中，定理 33.2 已给出
+
+$$
+\forall\gamma>0,\qquad \nu(R_\gamma(\omega_*))=0.
+\tag{37.1}
+$$
+
+这个方向无条件同时满足
+
+$$
+\forall\gamma\in(0,1/2),\qquad
+\left\{
+\begin{aligned}
+g_j^{(\gamma)}(\omega_*)&\longrightarrow0,\\
+\sum_{j\ge j_0}g_j^{(\gamma)}(\omega_*)&=\infty,\\
+\nu(R_\gamma(\omega_*))&=0.
+\end{aligned}
+\right.
+\tag{37.2}
+$$
+
+在 RH 下，同一个 $\omega_*$ 还使 (37.2) 在 $\gamma=1/2$ 成立。方向、有限型性及对全部 $\gamma>0$ 的完整零测性分别直接复用定义 32.1、定理 32.2 与定理 33.2，没有额外的方向存在性假设。
+
+证明。固定任意 $\gamma>0$，定理 33.2 直接给出 (37.1) 与 $g_j^{(\gamma)}(\omega_*)\to0$。对 $0<\gamma<1/2$，定理 35.2 的全方向结论直接给同一个 $\omega_*$ 上的级数发散；RH 下再用其端点结论。此处每个 $\gamma$ 都在同一原目标空间及同一固定方向上取值，不随 $\gamma$ 另选方向。于是 (37.2) 完整成立。$\square$
+
+用白话说，原几何权重的总量可以无穷，每块的权重又可以趋零，而同一个有限型方向的完整无限命中集合仍是零测。故即使保留有限型与共同成功整数，也不能只从 $\sum_jg_j=\infty$ 推出满测。本条是定理 32.2、33.2 与 35.2 的原过滤消费者（repo-derived），不新增一般格论或 Borel–Cantelli 定理。
+
+对实际 $\omega=\alpha$，定理 35.2 同样提供无条件严格区间内的级数发散及 RH 下的半端点发散；本条的 $\omega_*$ 不被认作 $\alpha$。实际 $\alpha$ 是否具有足以裁定 $\nu(R_\gamma(\alpha))$ 的跨块联合控制或相应凝聚发散条件，仍是未决桥。
+
+## 追加锚（本行以下为增补区）
