@@ -8,29 +8,29 @@
 
 /-
 admission_basis: escape-witness
-escape_witness: lineOK_gap_iff
+escape_witness: lineOK_classify
 The coefficient count uses the literal preregistered weight sum, constructed directly by Finset.sum.
 Frozen inputs after same-delivery inlining:
   CycleItalianDominationRecurrence.IsItalian: declaration statement_id sha256:9758047395f299db1257334e19147fe19dfb182c18c34bbd41fe742fe8457078.
   ArrowWilfGapData.GapsOn: declaration statement_id sha256:2ec3e595a3a4e7925968c40d0521dfc1c8cac88956d06fc0296eb201e7fd3fb6.
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/27880.
-proof_shape: dI_eq_deficit_card: bind-only; escape_witness: none
-proof_shape: deficit_valid_iff: bind-only; escape_witness: none
-proof_shape: shift_valid_iff: bind-only; escape_witness: none
-proof_shape: labelCount_shift: bind-only; escape_witness: none
-proof_shape: marked_vertex_identity: bind-only; escape_witness: none
-proof_shape: doubleTwoCount_shift: bind-only; escape_witness: none
+proof_shape: dI_eq_deficit_card: bind-only; escape_witness: none; consumer: C.coefficient_zero_partition
+proof_shape: deficit_valid_iff: bind-only; escape_witness: none; consumer: R.zeroFreeDeficit_iff
+proof_shape: shift_valid_iff: bind-only; escape_witness: none; consumer: R.refined_cycle_marking_count
+proof_shape: labelCount_shift: bind-only; escape_witness: none; consumer: R.refined_cycle_marking_count
+proof_shape: marked_vertex_identity: bind-only; escape_witness: none; consumer: R.refined_cycle_marking_count
+proof_shape: doubleTwoCount_shift: bind-only; escape_witness: none; consumer: R.refined_cycle_marking_count
 proof_shape: lineOK_gap_iff: content; escape_witness: lineOK_classify
-proof_shape: splitOn_no_separator: bind-only; escape_witness: none
-proof_shape: joinZero_eq: bind-only; escape_witness: none
-proof_shape: joinZero_split: bind-only; escape_witness: none
-proof_shape: lineOK_intercalate: content; escape_witness: lineOK_split_zero
-proof_shape: chosen_card: bind-only; escape_witness: none
-proof_shape: residual_card: bind-only; escape_witness: none
-proof_shape: ordinaryFamily_card: content; escape_witness: ordinaryFamilyEquiv
-proof_shape: ternary_count_length: bind-only; escape_witness: none
-proof_shape: ordinary_length: bind-only; escape_witness: none
-proof_shape: ordinaryWord_card: content; escape_witness: ordinaryFamily_card
+proof_shape: splitOn_no_separator: content; escape_witness: splitOn_no_separator
+proof_shape: joinZero_eq: bind-only; escape_witness: none; consumer: O.joinZero_split
+proof_shape: joinZero_split: bind-only; escape_witness: none; consumer: R.fixedZeroGap_reconstruction
+proof_shape: lineOK_intercalate: content; escape_witness: lineOK_append_zero
+proof_shape: chosen_card: bind-only; escape_witness: none; consumer: O.ordinaryDataOn_card
+proof_shape: residual_card: bind-only; escape_witness: none; consumer: R.markedGapFamily_card
+proof_shape: ordinaryFamily_card: content; escape_witness: splitOn_no_separator
+proof_shape: ternary_count_length: bind-only; escape_witness: none; consumer: O.ordinary_length
+proof_shape: ordinary_length: bind-only; escape_witness: none; consumer: R.rootedZeroFreeCountEquiv
+proof_shape: ordinaryWord_card: content; escape_witness: splitOn_no_separator
 -/
 
 import D5.S3.Combinatorics.Graph.CycleItalianDominationRecurrence

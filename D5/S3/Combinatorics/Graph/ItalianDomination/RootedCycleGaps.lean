@@ -8,20 +8,20 @@
 
 /-
 admission_basis: escape-witness
-escape_witness: rootedRefinedCycle_card
+escape_witness: lineOK_ofFn
 Frozen inputs after same-delivery inlining:
   CycleItalianDominationRecurrence.IsItalian: declaration statement_id sha256:9758047395f299db1257334e19147fe19dfb182c18c34bbd41fe742fe8457078.
   ArrowWilfGapData.GapsOn: declaration statement_id sha256:2ec3e595a3a4e7925968c40d0521dfc1c8cac88956d06fc0296eb201e7fd3fb6.
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/27880.
-proof_shape: zeroFree_cycle_marking_count: content; escape_witness: ordinaryWord_card
-proof_shape: rootedRefinedCycle_card: content; escape_witness: rootedRefinedCycleEquiv
-proof_shape: refined_cycle_marking_count: content; escape_witness: rootedRefinedCycle_card
-proof_shape: labelCount_sum: bind-only; escape_witness: none
-proof_shape: weight_eq_labelCount: bind-only; escape_witness: none
-proof_shape: zeroFree_twos_le_ones: content; escape_witness: zeroFreeDeficit_iff
-proof_shape: zeroContaining_inventory_bounds: content; escape_witness: lineOK_gap_iff
-proof_shape: zeroContaining_parameter_equations: content; escape_witness: zeroContaining_inventory_bounds
-proof_shape: zeroContaining_all_exceptional: content; escape_witness: lineOK_gap_iff
+proof_shape: zeroFree_cycle_marking_count: content; escape_witness: O.splitOn_no_separator
+proof_shape: rootedRefinedCycle_card: content; escape_witness: lineOK_ofFn
+proof_shape: refined_cycle_marking_count: content; escape_witness: lineOK_ofFn
+proof_shape: labelCount_sum: bind-only; escape_witness: none; consumer: C.noZeroCoefficient_card
+proof_shape: weight_eq_labelCount: bind-only; escape_witness: none; consumer: C.noZeroCoefficient_card
+proof_shape: zeroFree_twos_le_ones: bind-only; escape_witness: none; consumer: C.noZero_count_constraints
+proof_shape: zeroContaining_inventory_bounds: content; escape_witness: lineOK_ofFn
+proof_shape: zeroContaining_parameter_equations: content; escape_witness: lineOK_ofFn
+proof_shape: zeroContaining_all_exceptional: content; escape_witness: lineOK_ofFn
 -/
 
 import D5.S3.Combinatorics.Graph.ItalianDomination.OrdinaryWords
