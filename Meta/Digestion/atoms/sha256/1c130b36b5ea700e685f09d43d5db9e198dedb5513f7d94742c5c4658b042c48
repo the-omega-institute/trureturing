@@ -1,0 +1,20 @@
+**定理 43.3（Stone 生成元和 Schrödinger 方程）。** 若 $U_t$ 是定理 43.2 的强连续一参数酉群，则存在唯一自伴算子 $H$，使
+
+$$
+U_t=e^{-itH}.
+$$
+
+对 $\psi$ 属于 $H$ 的定义域，
+
+$$
+ i\frac{d}{dt}U_t\psi=H U_t\psi,
+$$
+
+即现有的 Schrödinger 时间演化。Heisenberg 图像中可定义
+
+$$
+A(t)=U_t^*AU_t,
+$$
+
+在适当定义域上满足 $\dot A(t)=i[H,A(t)]$。
+
