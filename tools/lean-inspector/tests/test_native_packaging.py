@@ -266,6 +266,27 @@ class NativeCompilerConsumerTests:
         self.assertEqual(self.report()[1:], (report, material))
         self.assertEqual((self.root / 'activity.jsonl').read_text(), '')
 
+        # A utility export can fail after all projections have succeeded.
+        # No later preparation root or native production may start past it.
+        claim = self.root / 'ExternalTwo.lean'
+        original_claim = claim.read_text()
+        claim.write_text('def secondClaim : Prop := missingUtilityDependency\n')
+        self.write('utility.json', json.dumps([dict(row, claimSourceSha256='sha256:' +
+            publication.digest(claim)) if row['claimModule'] == 'ExternalTwo' else row
+            for row in utilities]))
+        self.write('collection-phases.jsonl', '')
+        failed = self.build(success=False)
+        self.assertIn('missingUtilityDependency', failed.stdout + failed.stderr)
+        observations = [json.loads(line) for line in phases.read_text().splitlines()]
+        self.assertEqual([event['module'] for event in observations if
+            event['phase'] == 'lake-prepare-module' and event['boundary'] == 'start'
+            and event['operation'] == 'prepared-report-fetch'], ['D5.A', 'D5.Alone'])
+        self.assertEqual(stamps, self.stamps())
+        self.assertEqual(self.report()[1:], (report, material))
+        self.assertEqual((self.root / 'activity.jsonl').read_text(), '')
+        claim.write_text(original_claim)
+        self.write('utility.json', json.dumps(utilities))
+
         # A shared compiler dependency failure must fail the collection before
         # extraction or publication, retaining the last complete artifacts.
         self.write('D5/B.lean', 'def broken : Nat := missingSharedDependency\n')
@@ -279,6 +300,12 @@ class NativeCompilerConsumerTests:
         starts = [event['module'] for event in observations if
             event['phase'] == 'lake-prepare-module' and event['boundary'] == 'start']
         self.assertEqual(starts, ['D5.A'])
+        self.write('D5/B.lean', 'import D5.A\n')
+        failed = self.build(success=False)
+        self.assertIn('build cycle detected', failed.stdout + failed.stderr)
+        self.assertEqual(stamps, self.stamps())
+        self.assertEqual(self.report()[1:], (report, material))
+        self.assertEqual((self.root / 'activity.jsonl').read_text(), '')
 
     def test_native_facet_supplies_toolchain_environment(self):
         self.env.pop('LEAN_SYSROOT', None)
