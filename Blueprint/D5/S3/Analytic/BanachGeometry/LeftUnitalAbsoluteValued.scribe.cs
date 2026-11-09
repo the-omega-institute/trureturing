@@ -99,14 +99,24 @@ internal sealed class LeftUnitalAbsoluteValuedDocument : IScribeDocumentDefiniti
                         + "is a mathematical proof tool; original faithfulness F is neither "
                         + "used nor extended, and no new physical states are inferred.")),
                     Paragraph(Text(
-                        "The remaining Euclidean-plane argument requires a complex Banach "
-                        + "auxiliary norm preserving all real surjective similarity factors, "
-                        + "the spectrum facts, and one spectral lambda for each x and nonzero y "
-                        + "working for all real alpha,beta, including combinations equal to zero. "
-                        + "The original p squared parallelogram law, its y=0 case and its pullback "
-                        + "are not conclusions of this theorem. The full original Hopf, "
-                        + "orientation, metric, connection and closed-loop clauses remain open. "
-                        + "The auxiliary complex space is not the original physical J.")),
+                        "On any completed carrier that already has these exact hypotheses, "
+                        + "the preceding result supplies surjectivity for every nonzero left "
+                        + "multiplier. The spectral-pencil application can then choose one complex "
+                        + "coordinate for each x and nonzero y and use the same coordinate for every "
+                        + "real alpha and beta, including zero coefficients and dependent pairs. "
+                        + "Its independent-pair boundary forces a nonzero imaginary part, while the "
+                        + "zero-combination branch is handled by the spectrum of the zero operator. "
+                        + "The resulting parallelogram identity is on the original completed norm. "
+                        + "The exact squared-norm parameter map into the pinned "
+                        + "Frechet-von Neumann-Jordan constructor then supplies the compatible real "
+                        + "inner-product structure on that carrier.")),
+                    Paragraph(Text(
+                        "This conditional application does not construct the original seminorm "
+                        + "quotient, descend its multiplication and readable unit, or pull the "
+                        + "parallelogram identity back to the original p squared. Those obligations "
+                        + "remain open, as do the full original Hopf, orientation, metric, "
+                        + "connection and closed-loop clauses. The auxiliary complex space is not "
+                        + "the original physical J.")),
                     Paragraph(Text(
                         "The mathematical source attributes the absolute-valued algebra "
                         + "background to Rodriguez Palacios, One-sided division absolute valued "
