@@ -1,9 +1,9 @@
-/- GID: D5/S3/FiniteGroups/DicyclicSubsetParityRefutation
+/- GID: D5/S3/FiniteGroups/SubsetProducts/DicyclicSubsetParityRefutation
    generality: I
-   mirror-B: D5/B/S3/FiniteGroups/DicyclicSubsetParityRefutation
+   mirror-B: D5/B/S3/FiniteGroups/SubsetProducts/DicyclicSubsetParityRefutation
    mirror-E: none(waiver:exact-parity-obstruction)
    anchors: []
-   utility: kind=certified-instance; basis=refutes=gid:D5/S3/FiniteGroups/DicyclicSubsetParityRefutation.claim; result=D5/S3/FiniteGroups/DicyclicSubsetParityRefutation.result; claim=D5/S3/FiniteGroups/DicyclicSubsetParityRefutation.claim
+   utility: kind=certified-instance; basis=refutes=gid:D5/S3/FiniteGroups/SubsetProducts/DicyclicSubsetParityRefutation.claim; result=D5/S3/FiniteGroups/SubsetProducts/DicyclicSubsetParityRefutation.result; claim=D5/S3/FiniteGroups/SubsetProducts/DicyclicSubsetParityRefutation.claim
    digest: The three product-versus-right-quotient classes cannot all have even cardinality in Dic_12 at subset size four. -/
 
 import Mathlib.GroupTheory.SpecificGroups.Quaternion
@@ -27,7 +27,7 @@ set_option maxRecDepth 4096
 
 noncomputable section
 
-namespace D5.S3.FiniteGroups.DicyclicSubsetParityRefutation
+namespace D5.S3.FiniteGroups.SubsetProducts.DicyclicSubsetParityRefutation
 
 open Finset
 attribute [local instance] Classical.propDecidable
@@ -117,4 +117,4 @@ theorem result : Not claim := by
   obtain ⟨k, hk⟩ := hev
   omega
 
-end D5.S3.FiniteGroups.DicyclicSubsetParityRefutation
+end D5.S3.FiniteGroups.SubsetProducts.DicyclicSubsetParityRefutation

@@ -8,9 +8,9 @@ The linked Lean declarations give the exact affirmative claim and its literal ne
 
 **Definition 1.1 (The full affirmative answer to Question 6.3).**
 
-Lean statement: `D5/S3/FiniteGroups/DicyclicSubsetParityRefutation.claim`
+Lean statement: `D5/S3/FiniteGroups/SubsetProducts/DicyclicSubsetParityRefutation.claim`
 
-*Formalization.* `D5/S3/FiniteGroups/DicyclicSubsetParityRefutation.claim` (`✓ std3`).
+*Formalization.* `D5/S3/FiniteGroups/SubsetProducts/DicyclicSubsetParityRefutation.claim` (`✓ std3`).
 
 *Citation.* Sagar Mandal and Neetu (2026). *Exact and Asymptotic Counts of MSTD, MDTS, and Balanced Sets in Dicyclic Groups*. DOI: [10.48550/arXiv.2602.09073](https://doi.org/10.48550/arXiv.2602.09073). URL: <https://arxiv.org/abs/2602.09073v1>.
 
@@ -24,9 +24,9 @@ sumDominantCount counts subsets with product cardinality strictly larger than ri
 
 **Theorem 1.2 (The instance n = 3 and m = 4 contradicts the conjunction).**
 
-Lean statement: `D5/S3/FiniteGroups/DicyclicSubsetParityRefutation.result`
+Lean statement: `D5/S3/FiniteGroups/SubsetProducts/DicyclicSubsetParityRefutation.result`
 
-*Proof.* Machine-checked in Lean as `D5/S3/FiniteGroups/DicyclicSubsetParityRefutation.result` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/FiniteGroups/SubsetProducts/DicyclicSubsetParityRefutation.result` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -42,5 +42,5 @@ This argument does not identify an individual odd class, enumerate a group table
 
 ## References
 
-- Truth anchor: `D5/S3/FiniteGroups/DicyclicSubsetParityRefutation.claim`
-- Truth anchor: `D5/S3/FiniteGroups/DicyclicSubsetParityRefutation.result`
+- Truth anchor: `D5/S3/FiniteGroups/SubsetProducts/DicyclicSubsetParityRefutation.claim`
+- Truth anchor: `D5/S3/FiniteGroups/SubsetProducts/DicyclicSubsetParityRefutation.result`

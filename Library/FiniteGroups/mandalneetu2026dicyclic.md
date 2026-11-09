@@ -7,7 +7,7 @@ doi: 10.48550/arXiv.2602.09073
 url: https://arxiv.org/abs/2602.09073v1
 claim: "Question 6.3 asks whether S, D and B are all even for n >= 3 and 2 <= m <= 2n."
 strata_touched:
-  - D5/S3/FiniteGroups/DicyclicSubsetParityRefutation
+  - D5/S3/FiniteGroups/SubsetProducts/DicyclicSubsetParityRefutation
 license: citation-only
 triage: anchor
 ---

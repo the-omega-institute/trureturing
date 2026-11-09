@@ -1,10 +1,10 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.FiniteGroups;
+namespace StrataLint.Scribe.Blueprint.D5.S3.FiniteGroups.SubsetProducts;
 
 internal sealed class DicyclicSubsetParityRefutationDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S3/FiniteGroups/DicyclicSubsetParityRefutation.";
+    private const string Prefix = "D5/S3/FiniteGroups/SubsetProducts/DicyclicSubsetParityRefutation.";
     private static readonly LibraryNoteRef Source =
         LibraryNoteRef.Create("D5/L/FiniteGroups/mandalneetu2026dicyclic");
 
