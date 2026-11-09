@@ -201,7 +201,8 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hh := h 0 0 (by decide +kernel)
   change (true, true) = seen (next 0 0) at hh
-  decide +kernel at hh
+  revert hh
+  decide +kernel
 
 def family : Registration arena (type_of% @advance_seen) where
   actual := actual
@@ -271,7 +272,8 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hh := h 1 0
   change (1 : Fin 3) ≤ 0 at hh
-  decide +kernel at hh
+  revert hh
+  decide +kernel
 
 def family : Registration arena (type_of% @next_mono) where
   actual := actual
@@ -342,7 +344,8 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hh := h 0 1 (by decide +kernel)
   change beta 1 ≤ (0 : Fin 3) at hh
-  decide +kernel at hh
+  revert hh
+  decide +kernel
 
 def family : Registration arena (type_of% @label_next) where
   actual := actual
@@ -413,7 +416,8 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hh := h (n := 0) 1 (fun i => Fin.elim0 i)
   change (1 : Fin 3) ≤ 0 at hh
-  decide +kernel at hh
+  revert hh
+  decide +kernel
 
 def family : Registration arena (type_of% @endLevel_mono) where
   actual := actual
@@ -485,7 +489,8 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hh := h (n := 0) 0 (fun i => Fin.elim0 i) (by trivial)
   change (true, true) = seen (endLevel 0 (fun i : Fin 0 => Fin.elim0 i)) at hh
-  decide +kernel at hh
+  revert hh
+  decide +kernel
 
 def family : Registration arena (type_of% @finish_seen) where
   actual := actual
