@@ -23,19 +23,21 @@ statement_id: sha256:63e23e390cbc7ee42155ce307351f149d901cd9013daee3d6d2eac775e2
 Direct frozen dependency: D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.allowed
 statement_id: sha256:4ee019eb42606605da41b2b090212be244d3bf48d64a2c10dc2d9c6c6f7e6468
 Direct frozen dependency: D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.edge_iff
-statement_id: sha256:4d4e785867304fa77fbca15a07f7a717f558f3596c78b4383f15b9582e1e045e
+statement_id: sha256:eb164ba2a30a036eb9157c90341cc0d7664c1e26513ba1fedc8a4964a09ae84a
 Direct frozen dependency: D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.good_iff
 statement_id: sha256:59d0ffb034f7f2361718e6d2566eb24417785b9a178f6fcb44f336c1199d3d62
 Direct frozen dependency: D5.S3.Observer.Separation.BooleanRankThreeK4.beta
 statement_id: sha256:1abdc5f3db71567fe05de5aabbe80dddeb5ec5179e4ec7fd49fe71e500518481
+Direct frozen dependency: D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.instDecidableAllowed
+statement_id: sha256:9e135f0d9ab09759e51e42b0ac88f4af874ef89f0e507400af6cd5a57f0dee70
+Direct frozen dependency: D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.instDecidableGood
+statement_id: sha256:ba47f943ce15475e2c20ac49cf6e7b679d6663cf54500416777fdee7cf97da32
 Col: proof_shape=bind-only; consumers=instFintypeCol
 Labels: proof_shape=bind-only; consumers=pairs
 colEquiv: proof_shape=bind-only; consumers=instFintypeCol
 instFintypeCol: proof_shape=bind-only; consumers=step
 seen: proof_shape=bind-only; consumers=advance_seen
 next: proof_shape=bind-only; consumers=advance_seen
-instDecidableAllowed: proof_shape=bind-only; consumers=instDecidableAdmissible
-instDecidableGood: proof_shape=bind-only; consumers=instDecidableTailGood
 advance_seen: proof_shape=bind-only; consumers=finish_seen
 next_mono: proof_shape=bind-only; consumers=endLevel_mono
 label_next: proof_shape=bind-only; consumers=valid_next
@@ -150,13 +152,6 @@ private instance instFintypeCol : Fintype Col :=
 private def seen (s : Fin 3) : Seen := (decide (0 < s.val), decide (1 < s.val))
 private def next (s : Fin 3) (x : Fin 6) : Fin 3 :=
   max s (if x = 1 then 1 else if x = 2 then 2 else 0)
-private instance instDecidableAllowed (s : Seen) (x : Fin 6) : Decidable (allowed s x) :=
-  inferInstanceAs (Decidable ((_ → _) ∧ (_ → _)))
-private instance instDecidableGood {n : ℕ} (s : Seen) (f : Fin n → Fin 6) :
-    Decidable (good s f) := by
-  induction n generalizing s with
-  | zero => exact isTrue trivial
-  | succ n ih => exact @instDecidableAnd _ _ inferInstance (ih _ _)
 private theorem advance_seen : ∀ s x, allowed (seen s) x →
     advance (seen s) x = seen (next s x) := by
   decide +kernel
