@@ -1,0 +1,22 @@
+**定理 47.2（裸骨架不能选择数域分支）。** 若裸骨架有一个实 Hilbert 实现 $\iota:P\to H_{\mathbb R}$，则它同时有复实现和四元数实现：
+
+$$
+\iota_{\mathbb C}(x)=\iota(x)\otimes 1
+\in H_{\mathbb R}\otimes_{\mathbb R}\mathbb C,
+\qquad
+\iota_{\mathbb H}(x)=\iota(x)\otimes 1
+\in H_{\mathbb R}\otimes_{\mathbb R}\mathbb H.
+$$
+
+三种实现对 $P$ 的成对比较都等于同一个 $K$，并且诱导同一个 $\operatorname{Cl}$。因此仅由裸骨架可证明的命题不能断言“基本标量必为 $\mathbb C$”，也不能断言存在非平凡 $U(1)$ holonomy。
+
+**证明。** 实数嵌入 $r\mapsto r\otimes1$ 保持乘法、加法和共轭；对来自 $H_{\mathbb R}$ 的向量，复内积和四元数内积都退化为原来的实内积。因此
+
+$$
+\langle\iota_{\mathbb C}(x),\iota_{\mathbb C}(y)\rangle=K(x,y),
+\qquad
+\langle\iota_{\mathbb H}(x),\iota_{\mathbb H}(y)\rangle=K(x,y).
+$$
+
+闭包只读取 $P$、$K$ 和有限记录，故标量扩展不改变它。三种模型满足完全相同的裸骨架，而复数和四元数的额外方向在该骨架上没有观测项。证毕。
+
