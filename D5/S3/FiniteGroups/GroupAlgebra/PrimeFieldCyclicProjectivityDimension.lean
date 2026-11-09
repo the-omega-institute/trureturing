@@ -1,7 +1,7 @@
 /- GID: D5/S3/FiniteGroups/GroupAlgebra/PrimeFieldCyclicProjectivityDimension
    generality: G
-   mirror-B: none(source-only-candidate)
-   mirror-E: none(source-only-candidate)
+   mirror-B: D5/B/S3/FiniteGroups/GroupAlgebra/PrimeFieldCyclicProjectivityDimension
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.LinearAlgebra.Trace, mathlib/module/Mathlib.RingTheory.Polynomial.Cyclotomic.Expand]
    utility: none
    digest: A nonzero prime-field representation of C_p × C_p projective on every actual cyclic subgroup has dimension at least 2p. -/
@@ -17,9 +17,10 @@ import Mathlib.Tactic.IntervalCases
 import Mathlib.Tactic.Linarith
 
 /-!
-SOURCE-ONLY CANDIDATE: this file has not been elaborated or compiled.
-The trace import is supplied at the immutable checkpoint
-0e498b289ab1517aeb5c34a145ff6d60298c254a, rather than assumed to be on main.
+For a nonzero finite-dimensional representation over the prime field,
+projectivity on all actual cyclic subgroups forces dimension at least 2p.
+The proof uses a nilpotent chain basis and the prime-field coefficient
+of a commuting operator to select an actual cyclic direction.
 
 All group restrictions below are to actual subgroups. In particular the
 order of (a,1) is computed in the group, independently of its image.
@@ -45,8 +46,8 @@ variable {V : Type uV} [AddCommGroup V] [Module (ZMod p) V]
 private theorem elementary_pow (g : E p) : g ^ p = 1 := by
   have h : p • g.toAdd = 0 := by
     ext <;> simp [nsmul_eq_mul]
-  simpa only [Multiplicative.ofAdd_nsmul, Multiplicative.ofAdd_toAdd,
-    Multiplicative.ofAdd_zero] using congrArg Multiplicative.ofAdd h
+  simpa only [ofAdd_nsmul, ofAdd_toAdd,
+    ofAdd_zero] using congrArg Multiplicative.ofAdd h
 
 private theorem actual_order (g : E p) (hg : g ≠ 1) : orderOf g = p :=
   orderOf_eq_prime (elementary_pow g) hg
@@ -61,7 +62,7 @@ private theorem geometric_norm_polynomial :
 -- The equivalence enumerates the actual subgroup, including when rho g = 1.
 private theorem actual_norm (ρ : Representation (ZMod p) (E p) V)
     (g : E p) (hg : orderOf g = p) :
-    (ρ.comp (Subgroup.zpowers g).subtype).norm = (ρ g - 1) ^ (p - 1) := by
+    Representation.norm (ρ.comp (Subgroup.zpowers g).subtype) = (ρ g - 1) ^ (p - 1) := by
   classical
   let e := finEquivZPowers (isOfFinOrder_of_finite g)
   have hs : (∑ h : Subgroup.zpowers g, ρ (h : E p)) =
@@ -86,7 +87,7 @@ private theorem pow_apply_of_fixed (A : Module.End (ZMod p) V)
 
 private theorem actual_invariant (ρ : Representation (ZMod p) (E p) V)
     (g : E p) (w : V) (hw : ρ g w = w) :
-    w ∈ (ρ.comp (Subgroup.zpowers g).subtype).invariants := by
+    w ∈ Representation.invariants (ρ.comp (Subgroup.zpowers g).subtype) := by
   classical
   intro h
   let e := finEquivZPowers (isOfFinOrder_of_finite g)
@@ -99,11 +100,12 @@ private theorem actual_invariant (ρ : Representation (ZMod p) (E p) V)
 private theorem cyclic_norm_preimage (ρ : Representation (ZMod p) (E p) V)
     (g : E p) (hg : orderOf g = p)
     (hproj : Module.Projective (ZMod p)[Subgroup.zpowers g]
-      (ρ.comp (Subgroup.zpowers g).subtype).asModule)
+      (Representation.asModule (ρ.comp (Subgroup.zpowers g).subtype)))
     (w : V) (hw : ρ g w = w) :
     ∃ v : V, ((ρ g - 1) ^ (p - 1)) v = w := by
   classical
-  let σ := ρ.comp (Subgroup.zpowers g).subtype
+  let σ : Representation (ZMod p) (Subgroup.zpowers g) V :=
+    ρ.comp (Subgroup.zpowers g).subtype
   have hP : IsPGroup p (Subgroup.zpowers g) :=
     IsPGroup.of_card (n := 1) (by
       rw [Nat.card_eq_fintype_card, Fintype.card_zpowers, hg, pow_one])
@@ -118,7 +120,7 @@ private theorem operator_nilpotent (ρ : Representation (ZMod p) (E p) V)
     (g : E p) : (ρ g - 1) ^ p = 0 := by
   have hpow : (ρ g) ^ p = 1 := by rw [← map_pow, elementary_pow, map_one]
   have hpoly : ((X - 1 : (ZMod p)[X]) ^ p) = X ^ p - 1 :=
-    sub_pow_char (X : (ZMod p)[X]) 1
+    by simpa only [one_pow] using sub_pow_char (X : (ZMod p)[X]) 1
   have h := congrArg (Polynomial.aeval (ρ g)) hpoly
   simpa only [map_pow, map_sub, map_one, Polynomial.aeval_X, hpow, one_pow,
     sub_self] using h
@@ -183,7 +185,7 @@ private theorem chain_independent (N : Module.End (ZMod p) V)
     (smul_eq_zero.mp (hsingle.symm.trans hzero)).resolve_right hv
   exact hjc hcj
 
-private def chainPolynomial (c : Fin p → ZMod p) : (ZMod p)[X] :=
+private noncomputable def chainPolynomial (c : Fin p → ZMod p) : (ZMod p)[X] :=
   ∑ i : Fin p, C (c i) * X ^ (i : ℕ)
 
 private theorem eval_chainPolynomial (N : Module.End (ZMod p) V)
@@ -255,8 +257,7 @@ private theorem aeval_apply_of_killed (N : Module.End (ZMod p) V)
   | monomial n c =>
       cases n with
       | zero =>
-          simp [Polynomial.aeval_monomial, Algebra.algebraMap_eq_smul_one,
-            Module.End.mul_apply]
+          simp [Algebra.algebraMap_eq_smul_one]
       | succ n =>
           simp [Polynomial.aeval_monomial, Algebra.algebraMap_eq_smul_one,
             pow_succ, Module.End.mul_apply, hw]
@@ -301,7 +302,7 @@ private theorem prime_field_cancellation [FiniteDimensional (ZMod p) V]
   have hP0 : P.coeff 0 = 0 := by
     simp [P, Polynomial.mul_coeff_zero, hpow0, hc0]
   have hP1 : P.coeff 1 = 0 := by
-    simp [P, Polynomial.mul_coeff_one, hpow0, hpow1, hc0, hk]
+    simp [P, Polynomial.mul_coeff_one, hpow0, hpow1, hc0, hk, Polynomial.coeff_one]
   have hdiv : (X : (ZMod p)[X]) ^ 2 ∣ P := by
     apply Polynomial.X_pow_dvd_iff.mpr
     intro j hj
@@ -328,10 +329,11 @@ private theorem prime_field_cancellation [FiniteDimensional (ZMod p) V]
 private theorem prime_dvd_dimension [FiniteDimensional (ZMod p) V]
     (ρ : Representation (ZMod p) (E p) V) (g : E p) (hg : orderOf g = p)
     (hproj : Module.Projective (ZMod p)[Subgroup.zpowers g]
-      (ρ.comp (Subgroup.zpowers g).subtype).asModule) :
+      (Representation.asModule (ρ.comp (Subgroup.zpowers g).subtype))) :
     p ∣ Module.finrank (ZMod p) V := by
   classical
-  let σ := ρ.comp (Subgroup.zpowers g).subtype
+  let σ : Representation (ZMod p) (Subgroup.zpowers g) V :=
+    ρ.comp (Subgroup.zpowers g).subtype
   obtain ⟨_, D, hD⟩ :=
     (ProjectiveConjugationTrace.projective_iff_projective_and_conjugation_trace_one σ).mp hproj
   have htrace (x : Subgroup.zpowers g) :
@@ -352,7 +354,7 @@ private theorem prime_dvd_dimension [FiniteDimensional (ZMod p) V]
 /-- Every nonzero finite-dimensional prime-field representation of C_p × C_p
 whose restriction to every actual cyclic subgroup is projective has dimension
 at least 2p. This includes p=2 and representations with nontrivial kernel.
-Source-only candidate; no compilation or acceptance is asserted. -/
+No faithfulness or prescribed normal form is assumed. -/
 theorem two_mul_prime_le_finrank_of_cyclic_projective
     [FiniteDimensional (ZMod p) V] [Nontrivial V]
     (ρ : Representation (ZMod p) (Multiplicative (ZMod p × ZMod p)) V)
@@ -367,8 +369,7 @@ theorem two_mul_prime_le_finrank_of_cyclic_projective
   have hrne : r ≠ 1 := by
     intro h
     have he := congrArg (fun g : E p => g.toAdd.1) h
-    exact one_ne_zero (by simpa only [r, Multiplicative.toAdd_ofAdd,
-      Multiplicative.toAdd_one] using he)
+    exact one_ne_zero (by simpa [r] using he)
   have hr : orderOf r = p := actual_order r hrne
   have hrproj := hcyc (Subgroup.zpowers r) inferInstance
   have hdiv := prime_dvd_dimension ρ r hr hrproj
@@ -400,21 +401,20 @@ theorem two_mul_prime_le_finrank_of_cyclic_projective
     rw [← map_pow, elementary_pow, map_one]
   have hTN : Commute T N := by
     change ρ t * (ρ r - 1) = (ρ r - 1) * ρ t
-    rw [mul_sub, sub_mul, mul_one, one_mul, ← map_mul, ← map_mul, mul_comm t r]
+    rw [mul_sub, sub_mul, mul_one, one_mul, ← ρ.map_mul, ← ρ.map_mul, mul_comm t r]
   obtain ⟨a, hcancel, hTtop⟩ := prime_field_cancellation hd N T hN hT v hvtop hTN
   let g : E p := Multiplicative.ofAdd (a, 1)
   have hgne : g ≠ 1 := by
     intro h
     have he := congrArg (fun x : E p => x.toAdd.2) h
-    exact one_ne_zero (by simpa only [g, Multiplicative.toAdd_ofAdd,
-      Multiplicative.toAdd_one] using he)
+    exact one_ne_zero (by simpa [g] using he)
   have hg : orderOf g = p := actual_order g hgne
   have hactual : r ^ a.val * t = g := by
     change Multiplicative.ofAdd (1, 0) ^ a.val * Multiplicative.ofAdd (0, 1) =
       Multiplicative.ofAdd (a, 1)
-    rw [← Multiplicative.ofAdd_nsmul, ← Multiplicative.ofAdd_add]
+    rw [← ofAdd_nsmul, ← ofAdd_add]
     congr 1
-    ext <;> simp [nsmul_eq_mul, ZMod.natCast_zmod_val]
+    ext <;> simp [nsmul_eq_mul]
   have hρg : ρ g = (ρ r) ^ a.val * T := by
     rw [← hactual, map_mul, map_pow]
   have hS : 1 + N = ρ r := by dsimp [N]; abel
