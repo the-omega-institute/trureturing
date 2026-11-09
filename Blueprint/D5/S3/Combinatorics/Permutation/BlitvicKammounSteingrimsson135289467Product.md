@@ -24,6 +24,10 @@ $$count (! [ 0 , 2 , 4 , 1 , 7 , 8 , 3 , 5 , 6 ] : Fin 9 \to Fin 9) 3 1 = 1 \lan
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Permutation/BlitvicKammounSteingrimsson135289467Product.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/bks10-product` (proved) by `D5/S3/Combinatorics/Permutation/BlitvicKammounSteingrimsson135289467Product.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"bks10-product","declaration_gid":"D5/S3/Combinatorics/Permutation/BlitvicKammounSteingrimsson135289467Product.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Natasha Blitvić, Mohammed Slim Kammoun, and Einar Steingrímsson (2026). *Permutations, Pattern Covers, Posets and Positivity: Part I: Patterns and Posets*. DOI: [10.48550/arXiv.2610.29846](https://doi.org/10.48550/arXiv.2610.29846). URL: <https://arxiv.org/abs/2610.29846v1>.
