@@ -50,12 +50,16 @@ internal sealed class HardinA233255PairTransferDocument : IScribeDocumentDefinit
             Node("literal_pair_bridge", "The anchored literal readout", "The existing literal array decomposition and the "
                 + "continuation identity give this equality at every positive height. Fixing its first colour to zero "
                 + "leaves six pair labels with the exact scanner weight, so the first-row sum also counts individual "
-                + "colours. Reducing labelled boundaries to the sixteen canonical proper shapes and aggregating "
+                + "colours. Precisely, for every natural n, a(n+1) is the integer sum over all functions "
+                + "q from Fin 6 to Fin 3 of rowWeight((false,false),q) times "
+                + "pairV(n,rowFinish((false,false),q),q), with a zero summand unless the word "
+                + "obtained by prepending zero to q is proper. Reducing labelled boundaries to "
+                + "the sixteen canonical proper shapes and aggregating "
                 + "the first-row weights by those shapes are further mathematical obligations; "
                 + "this identity asserts no recurrence.", DescribeRole.Theorem))));
 
     private static DocumentBlock Node(string name, string title, string prose, DescribeRole role) =>
         Describe.Lean(DescribeId.Create(name.Replace("_", "-").ToLowerInvariant()),
-            DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromLean(),
+            DeclarationHandle.Create(Prefix + name), H(title), StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), role);
 }
