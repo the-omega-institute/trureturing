@@ -1,0 +1,28 @@
+## 56. 用真实单位接回零端值对
+
+剩下 $a(0)=b(0)=0$。记 $d=D(a,b)$、$P=a\circ b$。原 PB 的第三标签取实际单位 $u$，单位行给位移 $\nu=d-a$、$\omega=P$。实际外层对是
+
+$$
+(b+d-a,u+P),\qquad(b-d+a,u-P).
+\tag{56.1}
+$$
+
+两份第二输入的端值均为 $u$，故均可消费 55 已识别的非零端值对。此时才展开比较映射 $K$ 的已知双线性，使 PB 左端成为 $2K(b,P)$；右端为 $-2b\circ d$。已知矩阵乘法给 $K(b,a\circ b)=-b\circ K(a,b)$，所以
+
+$$
+b\circ[d-K(a,b)]=0,
+\qquad a\circ[d-K(a,b)]=0,
+\tag{56.2}
+$$
+
+第二式由交换原输入取得。写差为 $e_0u+e\cdot\sigma$，其向量部分给
+
+$$
+\alpha e+e_0v=0,\qquad
+\beta e+e_0w=0,
+\quad e_0(\beta v-\alpha w)=0.
+\tag{56.3}
+$$
+
+若 $v\times w\equiv0$，共线像零值直接给结论。若 $\alpha\equiv\beta\equiv0$，36.2 已识别这份无迹对。其余情形 $v\times w$ 非零且 $\alpha,\beta$ 不全为零；此时 $\beta v-\alpha w$ 不可能恒零，否则分别叉乘 $v,w$ 得 $\alpha(v\times w)=\beta(v\times w)=0$，违反实多项式整环性。56.3 遂使 $e_0=0$，再由至少一个非零标量多项式使 $e=0$。全部原对均已识别，定理 51.2 得证。∎
+
