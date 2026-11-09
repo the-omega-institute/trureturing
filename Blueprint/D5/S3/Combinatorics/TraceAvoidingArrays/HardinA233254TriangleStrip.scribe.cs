@@ -154,7 +154,7 @@ internal sealed class HardinA233254TriangleStripDocument : IScribeDocumentDefini
         var owner = Call(Transfer + "widthLegal", N("rowLegal"), bonds, a);
         var literal = And(first, And(horizontal, And(anti, normal)));
         var filter = Call("Finset.filter", Fn("A", arrays, owner), Q("Finset.univ"));
-        return All("n", Q("Nat"), And(All("A", arrays, Eq(owner, literal)),
+        return All("n", Q("Nat"), And(All("A", arrays, Eq(owner, Parenthesized(literal))),
             Eq(CallLocal("a", n), Call("Finset.card", filter))));
     }
     private static Formula ValidFormula()

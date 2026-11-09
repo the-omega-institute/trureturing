@@ -88,13 +88,7 @@ momentCount: proof_shape=bind-only; consumers=full_moments
 firstCount: proof_shape=bind-only; consumers=initial_counts
 firstMoment: proof_shape=bind-only; consumers=initial_counts
 sum_rows: proof_shape=bind-only; consumers=unseen01010_counts
-beta_cons: proof_shape=bind-only; consumers=scan_sum
-labelAdvance: proof_shape=bind-only; consumers=labelFinish
-factor: proof_shape=bind-only; consumers=labelWeight
-labelFinish: proof_shape=bind-only; consumers=scan_sum
-labelWeight: proof_shape=bind-only; consumers=scan_sum
-scan_step: proof_shape=bind-only; consumers=scan_sum
-scan_sum: proof_shape=bind-only; consumers=sum_beta_rows
+scan_sum: proof_shape=bind-only; consumers=sum_beta_rows, reduce_counts, reduce_first
 full_factor: proof_shape=bind-only; consumers=full_weight
 full_advance: proof_shape=bind-only; consumers=full_weight
 full_weight: proof_shape=bind-only; consumers=sum_beta_rows
@@ -177,6 +171,7 @@ result: proof_shape=content; consumers=terminal result
 -/
 
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255LiteralBridge
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip
 import D5.S3.Observer.Separation.BooleanRankThreeK4
 import Mathlib.Tactic.FinCases
@@ -193,6 +188,7 @@ namespace D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233254TriangleStrip
 open HardinA233175PairStrip (Seen allowed advance good finish finish_fst finish_snd good_iff)
 open D5.S3.Observer.Separation.BooleanRankThreeK4 (beta)
 open HardinA233251TriangleStrip
+open HardinA233255LiteralBridge (labelAdvance labelWeight rowFinish rowWeight scanner_fibres)
 abbrev Row := Fin 6 → Fin 6
 abbrev Boundary := Fin 5 → Fin 3
 def rowLegal (c : Row) : Prop :=
@@ -283,85 +279,21 @@ private theorem sum_rows {m : ℕ} (f : (Fin 6 → Fin m) → ℤ) : (∑ c, f c
     ← (Fin.consEquiv (fun _ : Fin 1 => Fin m)).sum_comp,
     Fintype.sum_prod_type]
   simp [Fin.consEquiv, Matrix.empty_eq]
-private theorem beta_cons {n : ℕ} (x : Fin 6) (c : Fin n → Fin 6) :
-        (fun j => beta ((Fin.cons x c : Fin (n + 1) → Fin 6) j)) =
-          Fin.cons (beta x) (fun j => beta (c j)) := by
-  funext j
-  cases j using Fin.cases <;> rfl
-private def labelAdvance (s : Seen) (b : Fin 3) : Seen :=
-  (s.1 || decide (b = 1), s.2 || decide (b = 2))
-private def factor (s : Seen) (b : Fin 3) : ℤ :=
-  if b = 1 then (if s.1 then 2 else 1)
-  else if b = 2 then (if s.1 then (if s.2 then 2 else 1) else 0) else 2
-private def labelFinish : {n : ℕ} → Seen → (Fin n → Fin 3) → Seen
-  | 0, s, _ => s
-  | _n + 1, s, f => labelFinish (labelAdvance s (f 0)) (Fin.tail f)
-private def labelWeight : {n : ℕ} → Seen → (Fin n → Fin 3) → ℤ
-  | 0, _, _ => 1
-  | _n + 1, s, f => factor s (f 0) * labelWeight (labelAdvance s (f 0)) (Fin.tail f)
-private theorem scan_step (s : Seen) (f : Fin 3 → Seen → ℤ) :
-    (∑ x : Fin 6, if allowed s x then f (beta x) (advance s x) else 0) =
-      ∑ b : Fin 3, factor s b * f b (labelAdvance s b) := by
-  rcases s with ⟨x, y⟩
-  cases x <;> cases y <;>
-    simp [Fin.sum_univ_succ, allowed, advance, beta, factor, labelAdvance] <;> ring
 private theorem scan_sum (n : ℕ) (s : Seen) (f : (Fin n → Fin 3) → Seen → ℤ) :
     (∑ c : Fin n → Fin 6, if good s c then
       f (fun j => beta (c j)) (finish s c) else 0) =
-      ∑ b : Fin n → Fin 3, labelWeight s b * f b (labelFinish s b) := by
-  induction n generalizing s with
-  | zero =>
-    simp only [Fintype.sum_unique, finish, labelWeight, labelFinish, one_mul]
-    have hz (c : Fin 0 → Fin 6) :
-        (if good s c then f (fun j => beta (c j)) s else 0) =
-          f (fun j => beta (c j)) s := ite_eq_left True.intro
-    rw [hz]
-    exact congrArg (fun b : Fin 0 → Fin 3 => f b s) (Subsingleton.elim _ _)
-  | succ n ih =>
-    rw [← (Fin.consEquiv (fun _ : Fin (n + 1) => Fin 6)).sum_comp,
-      Fintype.sum_prod_type,
-      ← (Fin.consEquiv (fun _ : Fin (n + 1) => Fin 3)).sum_comp,
-      Fintype.sum_prod_type]
-    simp only [Fin.consEquiv, Equiv.coe_fn_mk, beta_cons, good, finish,
-      labelWeight, labelFinish, Fin.cons_zero, Fin.tail_cons]
-    have hs (x : Fin 6) :
-        (∑ c : Fin n → Fin 6, if allowed s x ∧ good (advance s x) c then
-          f (Fin.cons (beta x) (fun j => beta (c j))) (finish (advance s x) c) else 0) =
-        if allowed s x then ∑ b : Fin n → Fin 3,
-          labelWeight (advance s x) b *
-            f (Fin.cons (beta x) b) (labelFinish (advance s x) b) else 0 := by
-      by_cases hx : allowed s x
-      · simp only [hx, true_and, ite_true]
-        exact ih (advance s x) (fun b t => f (Fin.cons (beta x) b) t)
-      · simp [hx]
-    simp_rw [hs]
-    have hf (x : Fin 6) :
-        (if allowed s x then ∑ b : Fin n → Fin 3,
-          labelWeight (advance s x) b *
-            f (Fin.cons (beta x) b) (labelFinish (advance s x) b) else 0) =
-        ∑ b : Fin n → Fin 3, if allowed s x then labelWeight (advance s x) b *
-          f (Fin.cons (beta x) b) (labelFinish (advance s x) b) else 0 := by
-      by_cases hx : allowed s x <;> simp [hx]
-    simp_rw [hf]
-    rw [Finset.sum_comm]
-    calc
-      _ = ∑ b : Fin n → Fin 3, ∑ x : Fin 3, factor s x *
-          (labelWeight (labelAdvance s x) b *
-            f (Fin.cons x b) (labelFinish (labelAdvance s x) b)) := by
-        apply Finset.sum_congr rfl
-        intro b _
-        exact scan_step s (fun x t => labelWeight t b * f (Fin.cons x b) (labelFinish t b))
-      _ = _ := by rw [Finset.sum_comm]; simp only [mul_assoc]
-private theorem full_factor (b : Fin 3) : factor (true, true) b = 2 := by
+      ∑ b : Fin n → Fin 3, rowWeight s b * f b (rowFinish s b) := by
+  exact scanner_fibres n s (fun st b => f b st)
+private theorem full_factor (b : Fin 3) : labelWeight (true, true) b = 2 := by
   fin_cases b <;> decide +kernel
 private theorem full_advance (b : Fin 3) : labelAdvance (true, true) b = (true, true) := by
   fin_cases b <;> rfl
 private theorem full_weight (n : ℕ) (b : Fin n → Fin 3) :
-    labelWeight (true, true) b = 2 ^ n := by
+    rowWeight (true, true) b = 2 ^ n := by
   induction n with
   | zero => rfl
   | succ n ih =>
-    rw [labelWeight, full_factor, full_advance, ih, pow_succ]
+    rw [rowWeight, full_factor, full_advance, ih, pow_succ]
     ring
 private theorem sum_beta_rows (n : ℕ) (f : (Fin n → Fin 3) → ℤ) :
     (∑ c : Fin n → Fin 6, f (fun j => beta (c j))) =
@@ -612,9 +544,9 @@ private def allFirst (i : Fin 5) : ℤ :=
   ∑ c : Row, if c 0 = 0 ∧ rowLegal c ∧ good (false, false) c ∧
     (finish (false, false) c).2 = decide (i ≠ 0) then weight (pairs c) i else 0
 private def reducedCounts (s : Seen) (p : Boundary) (i : Fin 5) : ℤ :=
-  ∑ b : Fin 6 → Fin 3, labelWeight s b *
+  ∑ b : Fin 6 → Fin 3, rowWeight s b *
     if (∀ j : Fin 5, b j.castSucc ≠ b j.succ) ∧
-      (∀ j : Fin 5, p j ≠ b j.castSucc) ∧ (labelFinish s b).2 = decide (i ≠ 0)
+      (∀ j : Fin 5, p j ≠ b j.castSucc) ∧ (rowFinish s b).2 = decide (i ≠ 0)
     then weight (fun j => b j.succ) i else 0
 private theorem reduce_counts (s : Seen) (p : Boundary) (i : Fin 5) :
     allCounts s p i = reducedCounts s p i := by
@@ -633,20 +565,20 @@ private theorem reduce_counts (s : Seen) (p : Boundary) (i : Fin 5) :
       (∀ j : Fin 5, p j ≠ b j.castSucc) ∧ st.2 = decide (i ≠ 0)
     then weight (fun j => b j.succ) i else 0)
 private def reducedFirst (i : Fin 5) : ℤ :=
-  ∑ b : Fin 5 → Fin 3, labelWeight (false, false) b *
+  ∑ b : Fin 5 → Fin 3, rowWeight (false, false) b *
     if (∀ j : Fin 5, (Fin.cons 0 b : Fin 6 → Fin 3) j.castSucc ≠
       (Fin.cons 0 b : Fin 6 → Fin 3) j.succ) ∧
-      (labelFinish (false, false) b).2 = decide (i ≠ 0)
+      (rowFinish (false, false) b).2 = decide (i ≠ 0)
     then weight b i else 0
 private theorem reduce_first (i : Fin 5) : allFirst i = reducedFirst i := by
   rw [allFirst, ← (Fin.consEquiv (fun _ : Fin 6 => Fin 6)).sum_comp,
     Fintype.sum_prod_type]
   simp only [Fin.consEquiv, Equiv.coe_fn_mk]
   rw [Finset.sum_eq_single (0 : Fin 6)]
-  · change _ = ∑ b : Fin 5 → Fin 3, labelWeight (false, false) b *
+  · change _ = ∑ b : Fin 5 → Fin 3, rowWeight (false, false) b *
       (if (∀ j : Fin 5, (Fin.cons 0 b : Fin 6 → Fin 3) j.castSucc ≠
         (Fin.cons 0 b : Fin 6 → Fin 3) j.succ) ∧
-        (labelFinish (false, false) b).2 = decide (i ≠ 0) then weight b i else 0)
+        (rowFinish (false, false) b).2 = decide (i ≠ 0) then weight b i else 0)
     rw [← scan_sum 5 (false, false) (fun b st =>
       if (∀ j : Fin 5, (Fin.cons 0 b : Fin 6 → Fin 3) j.castSucc ≠
         (Fin.cons 0 b : Fin 6 → Fin 3) j.succ) ∧ st.2 = decide (i ≠ 0)
@@ -659,7 +591,7 @@ private theorem reduce_first (i : Fin 5) : allFirst i = reducedFirst i := by
       norm_num [allowed]
     have hf : finish (false, false) (Fin.cons (0 : Fin 6) c) =
         finish (false, false) c := rfl
-    have hm := beta_cons (0 : Fin 6) c
+    have hm := Fin.comp_cons beta (0 : Fin 6) c
     have hp : rowLegal (Fin.cons (0 : Fin 6) c) ↔
         (∀ j : Fin 5, (Fin.cons 0 (fun k => beta (c k)) : Fin 6 → Fin 3) j.castSucc ≠
           (Fin.cons 0 (fun k => beta (c k)) : Fin 6 → Fin 3) j.succ) := by
