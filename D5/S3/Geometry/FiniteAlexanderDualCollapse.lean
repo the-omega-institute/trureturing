@@ -605,10 +605,6 @@ def dualData :
    finiteDualData c.W c.Qprime (proper_mono c.proper_D c.Qprime_le_D)
      c.QprimeFaces c.QprimeFaces_exact⟩
 
-/-- Only a coordinate ordering for the complementary disk; it does not change
-any primal/dual ground or erase ghost labels from a complement. -/
-def lambdaCoordinates : c.lambda ≃ Fin c.lambda.card := c.lambda.equivFin
-
 /-- The primal second list, reversed and complemented, computes E* -> Q'*. -/
 def firstDual : Sequence c.Estar c.QprimeStar :=
   reverseSequence c.W c.D c.supported_D c.proper_D c.second c.Qprime_le_D

@@ -15,6 +15,7 @@ The present bridge concerns general complexes, not the graph arithmetic.
 import D5.S3.Geometry.FiniteElementaryCollapse
 import D5.S3.Geometry.FiniteComponentClosure.Models
 import Mathlib.Data.List.Forall2
+import Mathlib.Data.List.GetD
 
 /-!
 Finite labeled collapses, deletion/link replay, and extension over a retained
@@ -96,13 +97,6 @@ def frames : {K L : PreAbstractSimplicialComplex V} →
   | _, _, .refl K => [K]
   | _, _, .step P T => P.ambient :: frames T
 
-@[simp] theorem frames_refl (K : PreAbstractSimplicialComplex V) :
-    frames (.refl K : Sequence K K) = [K] := rfl
-
-@[simp] theorem frames_step (P : CollapsePair V) {L : PreAbstractSimplicialComplex V}
-    (T : Sequence P.retained L) :
-    frames (.step P T) = P.ambient :: frames T := rfl
-
 theorem frames_le_source {K L : PreAbstractSimplicialComplex V}
     (S : Sequence K L) : ∀ M ∈ frames S, M ≤ K := by
   induction S with
@@ -123,17 +117,6 @@ theorem frames_length {K L : PreAbstractSimplicialComplex V}
   induction S with
   | refl K => rfl
   | step P S ih => simp [frames, pairs, ih, Nat.add_assoc]
-
-theorem getD_mem_of_lt {α : Type*} {xs : List α} {i : Nat} {d : α}
-    (hi : i < xs.length) : xs.getD i d ∈ xs := by
-  induction xs generalizing i with
-  | nil => simp at hi
-  | cons x xs ih =>
-      cases i with
-      | zero => simp
-      | succ i =>
-          simp only [List.length_cons, Nat.succ_lt_succ_iff] at hi
-          simpa using (List.mem_cons_of_mem x (ih hi))
 
 @[simp] theorem pairs_cast {K L K' L' : PreAbstractSimplicialComplex V}
     (S : Sequence K L) (hK : K = K') (hL : L = L') :
@@ -582,23 +565,13 @@ theorem frames_liftOver
       simp only [Sequence.liftOver, Sequence.frames, Sequence.frames_cast, List.map_cons]
       exact congrArg (List.cons _) (ih (P.retained_le.trans hMD) hvD)
 
-theorem list_getD_map {α β : Type*} (f : α → β) (xs : List α)
-    (i : Nat) (a : α) :
-    (xs.map f).getD i (f a) = f (xs.getD i a) := by
-  induction xs generalizing i with
-  | nil => simp
-  | cons x xs ih =>
-      cases i with
-      | zero => simp
-      | succ i => simpa using ih i
-
 theorem frames_liftOver_getD
     {M N D : PreAbstractSimplicialComplex V} (S : Sequence M N)
     (v : V) (hMD : M ≤ D) (hvD : Fresh v D) (i : Nat) :
     (S.liftOver D v hMD hvD).frames.getD i (D ⊔ cone v M) =
       D ⊔ cone v (S.frames.getD i M) := by
   rw [frames_liftOver]
-  exact list_getD_map (fun L => D ⊔ cone v L) S.frames i M
+  exact List.getD_map S.frames M (fun L => D ⊔ cone v L)
 
 private theorem frames_append_getD_lt_aux
     {K L M : PreAbstractSimplicialComplex V}

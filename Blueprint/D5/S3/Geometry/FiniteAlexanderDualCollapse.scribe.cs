@@ -1,4 +1,3 @@
-// UNCOMPILED SCRIBE SOURCE ATTEMPT. Native emit and rendered fidelity are pending.
 using StrataLint.Engine;
 using static StrataLint.Scribe.DefinitionDsl;
 
@@ -112,9 +111,6 @@ internal sealed class FiniteAlexanderDualCollapseDocument : IScribeDocumentDefin
                 DescribeRole.Theorem),
             Node("finite-output", "dualData", "Finite computed dual memberships",
                 "The four returned finite tables give the exact augmented faces of D dual, E dual, Q dual and the dual after the critical deletion. The critical primal table is computed by erasing sigma from the exact Q table. All four properness proofs follow from the prescribed primal sequences and D properness.",
-                DescribeRole.Definition),
-            Node("coordinates", "lambdaCoordinates", "Ordering only the complementary simplex",
-                "The existing Finset equivalence orders the labels in lambda by Fin of its cardinality. This is a coordinate ordering for a later disk model and never changes W in any dual computation.",
                 DescribeRole.Definition),
             Node("first-dual", "firstDual", "The first dual reduction",
                 "Reversing the second primal sequence produces an actual owner Sequence from E dual to the dual of Q minus sigma. Since D dual is retained, its literal coordinate inclusion is fixed by the realized relative deformation.",
