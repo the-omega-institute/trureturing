@@ -24,7 +24,9 @@ internal sealed class HardinA233170DiagonalStripDocument : IScribeDocumentDefini
                 AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("The private finite_certificate verifies preservation of valid boundary states, the first two continuation weights and the next-step identity, and first-row aggregation totals 10, 800 and 78336. The private continuation_recurrence proves, by induction for every continuation length, the recurrence with coefficients 128, -2816 and 16384. The literal counting bridge transports it to a(n+4)=128 a(n+3)-2816 a(n+2)+16384 a(n+1) for every natural n. Coefficient comparison retains the numerator, and formal inversion is valid because the denominator has constant coefficient one. Thus the identity includes every positive height and the initial coefficients, rather than only an eventual recurrence.")),
                     Paragraph(Text("The scanner Seen, good and finish is reused from HardinA233175PairStrip. The width-independent widthNormal, widthLegal, widthStep, widthV, widthTotal and width_counting_bridge, together with colour_bond_iff, are reused from HardinA233251TriangleStrip. Pair labels are BooleanRankThreeK4.beta, with fibres {0,5}, {1,4}, {2,3}. These reused results supply the literal transfer interface; the four-column continuation certificate and its unbounded induction supply the new combinatorial content. The assertion is about finite combinatorial counts and rational formal series. It makes no claim of global priority."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("hardin233170"),
+                    ResolutionKind.Proved)))));
 
     private static Formula CountFormula()
     {
