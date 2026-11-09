@@ -80,7 +80,7 @@ internal sealed class BlitvicKammounSteingrimsson14325CoreDocument : IScribeDocu
                 + "item says four divides all but these indices and does not explicitly "
                 + "assert the converse; this iff proves the stronger registered exact "
                 + "interpretation. The original narrower modulo-ten issue 21304, its "
-                + "unresolved status and resource boundaries remain unchanged.")))));
+                + "unresolved status and resource boundaries remain unchanged."))));
 
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose) =>
