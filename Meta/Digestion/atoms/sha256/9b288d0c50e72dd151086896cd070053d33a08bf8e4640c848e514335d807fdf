@@ -1,0 +1,32 @@
+**Definition 12.6 (the bounded selector and its non-hit branch).**
+For a fixed finite acquired family of (12.18) that is ready before
+the continuation starts, let $N=\max_{w\in\mathcal F}|w|$.
+Compare the full original prefix with $\mathcal F$ and define
+
+$$
+J=\begin{cases}
+j,&W_j\in\mathcal F\text{ for some }1\le j\le N,\\
+N,&\text{no such prefix occurs},
+\end{cases}
+\qquad
+I=\mathbf1_{\{\exists j\le N:W_j\in\mathcal F\}}.
+\tag{12.22}
+$$
+
+Prefix-freeness makes the hit unique. Thus $J$ is a bounded
+full-label stopping index; $I=0$ is an explicit non-hit result,
+not a low-prediction certificate. A hit at $N$ is distinguished
+from a non-hit at $N$ by $I$. Under $Q$,
+
+$$
+Q(I=1)=\sum_{w\in\mathcal F}q(w)>1-\delta,\qquad
+I=1\Longrightarrow Q_{W_J}^1(3)<t.
+\tag{12.23}
+$$
+
+This is a label-index rule only. Physical noncompletion of any
+operation implementing it is a separate possible outcome and
+produces no claimed completed row. In particular the bound $J\le N$
+is not a bound on real computation, serialization or arrivals
+during that work.
+
