@@ -61,6 +61,15 @@ private theorem actual_law : arena.Law actual := by
 private theorem source_bridge :
     (type_of% (@all_integer_sharp_margin)) ↔ arena.Law actual := Iff.rfl
 
+/-- Every whole-family rejection of this exact conditional law entails RH. -/
+private theorem rejection_requires_rh (bad : Realization signature)
+    (hbad : ¬ arena.Law bad) : RiemannHypothesis := by
+  classical
+  by_contra hnot
+  apply hbad
+  intro hRH
+  exact (hnot hRH).elim
+
 /- Unfinished named audit obligations, with no substitute Contract:
    1. WholeFamilyIntervention: a concrete alternate family, with fixed
       nonintervened coordinates and a proved change in the FULL law.
