@@ -161,4 +161,6 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 
 end FiniteCertificate
 
+end
+
 end Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233125SquareStrip
