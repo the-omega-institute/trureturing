@@ -1,0 +1,29 @@
+**定理 29.2（乘法比较生成张量几何）。** 若 $K_A,K_B$ 是任意有限比较族的 Gram 矩阵，则复合族的 Gram 矩阵为
+
+$$
+K_{A\boxtimes B}=K_A\otimes K_B.
+$$
+
+因为 Kronecker 积保持正半定性，乘法比较公理保持全有限自比较正性。由第 27 节的极化和商完备化，复合空间的乘积子空间等距嵌入
+
+$$
+H_A\widehat\otimes H_B,
+\qquad
+[e_a]\otimes[f_b]\longmapsto[(a,b)].
+$$
+
+交换因子由酉 flip 实现。若 $(e_i)$、$(f_j)$ 是两边的正交框架，则
+
+$$
+p_{\psi\otimes\phi}(e_i\otimes f_j)
+ =|\langle e_i,\psi\rangle|^2|\langle f_j,\phi\rangle|^2,
+$$
+
+且对 $(i,j)$ 求和为 $1$。第 27 节的自由复线性闭包允许
+
+$$
+\Psi=\sum_{i,j}c_{ij}\,e_i\otimes f_j
+$$
+
+这样的非可分离准备；对它应用第 28 节的框架律，就得到纠缠态的联合平方读出。证毕。
+
