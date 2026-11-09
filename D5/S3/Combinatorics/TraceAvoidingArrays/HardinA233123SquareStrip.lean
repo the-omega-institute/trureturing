@@ -38,25 +38,23 @@ D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.width_countin
 statement_id: sha256:a6ad861eda2ca48bc91989542e4b7cc27d81aec8df9a91b8db40c9398c577c72
 D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.Valid
 statement_id: sha256:214fcd95916dbdaa9b9ace506c545eeb309580e42df33d25224d324be358ccb9
-D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.colour_bond_iff
-statement_id: sha256:b9273762bbccc68fc56c48c38b8aba02a46a50a53bfbbe70a660fd21867d6be8
 D5.S3.Observer.Separation.BooleanRankThreeK4.beta
 statement_id: sha256:1abdc5f3db71567fe05de5aabbe80dddeb5ec5179e4ec7fd49fe71e500518481
-rowLegal: proof_shape=bind-only; consumers=Legal, instDecidableRowLegal, a, classCount, firstCount, v2, total2, valid_next, initial_valid, row_counts, initial_counts
+rowLegal: proof_shape=bind-only; consumers=Legal, a, a_eq_w, classCount, counting_bridge, firstCount, initial_counts, initial_valid, instDecidableRowLegal, row_counts, total2, v2, v_eq_w, valid_next, zero_count
 bonds: proof_shape=bind-only; consumers=Legal, instDecidableBonds, a, bonds_iff, counting_bridge, zero_count
 Legal: proof_shape=bind-only; consumers=none (owner alias mirrored by Scribe)
-instDecidableRowLegal: proof_shape=bind-only; consumers=a, firstCount, v2, total2, valid_next, classCount, counting_bridge, initial_valid, row_counts, initial_counts, zero_count
+instDecidableRowLegal: proof_shape=bind-only; consumers=a, a_eq_w, classCount, counting_bridge, firstCount, initial_counts, initial_valid, row_counts, total2, v2, v_eq_w, valid_next, zero_count
 instDecidableBonds: proof_shape=bind-only; consumers=a, counting_bridge, zero_count
-a: proof_shape=bind-only; consumers=counting_bridge, a_eq_w, zero_count, result
-compatible: proof_shape=bind-only; consumers=bonds_iff, v2, classCount
-instDecidableCompatible: proof_shape=bind-only; consumers=v2, classCount
+a: proof_shape=bind-only; consumers=a_eq_w, counting_bridge, recurrence, result, zero_count
+compatible: proof_shape=bind-only; consumers=bonds_iff, classCount, counting_bridge, instDecidableCompatible, row_counts, v2, v_eq_w, valid_next
+instDecidableCompatible: proof_shape=bind-only; consumers=classCount, counting_bridge, row_counts, v2, v_eq_w, valid_next
 bonds_iff: proof_shape=bind-only; consumers=counting_bridge
-v2: proof_shape=bind-only; consumers=counting_bridge, v_eq_w
+v2: proof_shape=bind-only; consumers=a_eq_w, counting_bridge, v_eq_w
 total2: proof_shape=bind-only; consumers=counting_bridge, a_eq_w
 counting_bridge: proof_shape=bind-only; consumers=a_eq_w
 valid_next: proof_shape=bind-only; consumers=v_eq_w
-classCount: proof_shape=bind-only; consumers=finite_certificate
-firstCount: proof_shape=bind-only; consumers=finite_certificate
+classCount: proof_shape=bind-only; consumers=a_eq_w, finite_certificate, v_eq_w
+firstCount: proof_shape=bind-only; consumers=a_eq_w, finite_certificate, v_eq_w
 row_counts: proof_shape=bind-only; consumers=finite_certificate
 initial_valid: proof_shape=bind-only; consumers=a_eq_w
 initial_counts: proof_shape=bind-only; consumers=finite_certificate
