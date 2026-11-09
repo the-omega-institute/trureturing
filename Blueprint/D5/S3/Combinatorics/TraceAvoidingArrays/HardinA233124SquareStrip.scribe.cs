@@ -131,7 +131,8 @@ internal sealed class HardinA233124SquareStripDocument : IScribeDocumentDefiniti
             Call("bonds", RowAt(i), RowAt(next))));
         var normal = Call("normal", EmptySeen(), Fn("i", Fin(n), RowAt(i)));
         return All("n", Q("Nat"), All("A", Arrow(Product(Fin(n), Fin(3)), Fin(6)),
-            Eq(Call("Legal", a), And(first, And(horizontal, And(vertical, normal))))));
+            Eq(Call("Legal", a),
+                Parenthesized(And(first, And(horizontal, And(vertical, normal)))))));
     }
     private static Formula CountFormula()
     {
@@ -156,10 +157,11 @@ internal sealed class HardinA233124SquareStripDocument : IScribeDocumentDefiniti
     {
         var s = V("s"); var p = V("p"); var j = V("j");
         return All("s", Seen(), All("p", Labels(), Eq(Call("Valid", s, p),
-            And(Eq(Proj(s, 1), Q("Bool.true")), And(Ne(At(p, Index(0)), At(p, Index(1))),
+            Parenthesized(And(Eq(Proj(s, 1), Q("Bool.true")),
+                And(Ne(At(p, Index(0)), At(p, Index(1))),
                 And(Ne(At(p, Index(1)), At(p, Index(2))),
                     Imp(Eq(Proj(s, 2), Q("Bool.false")),
-                        All("j", Fin(3), Ne(At(p, j), Index(2))))))))));
+                        All("j", Fin(3), Ne(At(p, j), Index(2)))))))))));
     }
     private static Formula ClassFormula()
     {
