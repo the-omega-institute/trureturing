@@ -64,6 +64,14 @@ internal sealed class StarFormingDissociationRefutationDocument : IScribeDocumen
                     + "neighbour gives a star centred at that selected neighbour. The "
                     + "argument works on any vertex type with decidable equality and adjacency.",
                 DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("h0-reusable-properties"),
+                DeclarationHandle.Create(Prefix + "h0_properties"), H("The original H0 certificate"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The original ten-vertex graph is two-colorable, its selected "
+                    + "six-set is inclusion-minimal two-star-forming, and beta two is at most five. "
+                    + "These are the same proof bodies consumed by result, exposed for arbitrary "
+                    + "port compositions. The public edges, counterGraph and selected definitions "
+                    + "retain the original vertex labels, neighborhoods and selected set."))), DescribeRole.Theorem),
             Node("claim", "Equality on all bipartite finite graphs", ClaimFormula(),
                 "Conjecture 4.2 asserts equality for every bipartite finite graph. "
                     + "Graphs on Fin n cover every finite simple graph up to isomorphism. "

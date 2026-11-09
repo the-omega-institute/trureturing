@@ -9,7 +9,7 @@ internal sealed class CertificateBoundDocument : IScribeDocumentDefinition
         LibraryNoteRef.Create("D5/L/Combinatorics/omega2026starformingcertificates");
     private static DocumentBlock Node(string name, string title, string text,
         DescribeRole role = DescribeRole.Theorem) =>
-        Describe.Lean(DescribeId.Create(name), DeclarationHandle.Create(Prefix + name),
+        Describe.Lean(DescribeId.Create(name.Replace('_', '-').ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
             H(title), StatementSource.WithoutFormula(), AssessedProvenance.FromLiterature(Source),
             Blocks(Paragraph(Text(text))), role);
 
