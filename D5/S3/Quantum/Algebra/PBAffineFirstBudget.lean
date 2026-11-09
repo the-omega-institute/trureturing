@@ -282,14 +282,8 @@ theorem actual_affine_vector_budget
   let P := realPerp η
   have hηη : ⟪η,η⟫ = 1 := by simp [hη]
   have readj (a b : E) (z : H) :
-      reading R z (J a b) = ⟪R.op a z,R.op b z⟫ := by
-    simp only [reading, LinearMap.coe_mk, AddHom.coe_mk,
-      R.jordan a (Submodule.mem_top) b (Submodule.mem_top),
-      LinearMap.smul_apply, LinearMap.add_apply, LinearMap.comp_apply,
-      inner_smul_right, inner_add_right]
-    rw [← R.symmetric a z (R.op b z), ← R.symmetric b z (R.op a z),
-      real_inner_comm]
-    ring
+      reading R z (J a b) = ⟪R.op a z,R.op b z⟫ :=
+    reading_jordan R (Submodule.mem_top) (Submodule.mem_top) z
   have diag (z : H) (ε : ℝ) (hz : R.op h z = ε • z) (he : ε^2 = 1) :
       reading R z v = 0 ∧ reading R z q = 0 := by
     have hk : reading R z k = ε*reading R z x := by
