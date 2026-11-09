@@ -116,6 +116,7 @@ open HardinA233251TriangleStrip
   (Row rowLegal widthLegal widthV widthStep widthTotal width_counting_bridge colour_bond_iff)
 
 attribute [local instance 2000] HardinA233251TriangleStrip.widthInstDecidableGood
+attribute [local instance 2000] Pi.instFintype
 open D5.S3.Observer.Separation.BooleanRankThreeK4 (beta)
 
 -- The column pair labels of the frozen ladder owner.
@@ -256,12 +257,11 @@ private theorem v_eq_w (n : ℕ) (s : Seen) (p : Fin 3 → Fin 3) (h : Valid s p
     simp_rw [hs]
     rw [Finset.sum_add_distrib, Finset.sum_add_distrib,
       ← Finset.sum_mul, ← Finset.sum_mul, ← Finset.sum_mul]
-    have hcounts (k : Fin 3) :
-        (∑ c : Row, if rowLegal c ∧ compatible p c ∧ good s c ∧
-          boundaryClass (finish s c) (labelsOf c) = k then (1 : ℤ) else 0) =
-            transfer (boundaryClass s p) k := by
-      simpa only [classCount] using finite_certificate.1 s p h k
-    rw [hcounts 0, hcounts 1, hcounts 2]
+    suffices hstep : classCount s p 0 * w n 0 + classCount s p 1 * w n 1 +
+        classCount s p 2 * w n 2 = w (n + 1) (boundaryClass s p) by
+      simpa only [classCount] using hstep
+    rw [finite_certificate.1 s p h 0, finite_certificate.1 s p h 1,
+      finite_certificate.1 s p h 2]
     generalize boundaryClass s p = k
     fin_cases k <;> simp [transfer, w]
 
