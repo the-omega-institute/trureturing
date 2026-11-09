@@ -42,8 +42,6 @@ internal sealed class HardinA233124SquareStripDocument : IScribeDocumentDefiniti
             Def("count", "a", "The literal filtered count", CountFormula(),
                 "The filter ranges over every function on Fin n times Fin 3. The "
                 + "first-cell existential is false when n is zero.", true),
-            Def("pairs", "pairs", "Boundary pair labels", PairsFormula(),
-                "The shared beta has fibres {0,5}, {1,4}, {2,3}. Each column retains its label."),
             Def("compatible", "compatible", "Vertical label compatibility", CompatibleFormula(),
                 "Each new label differs from the preceding label in the same column."),
             Def("valid", "Valid", "Reachable boundaries", ValidFormula(),
@@ -128,12 +126,6 @@ internal sealed class HardinA233124SquareStripDocument : IScribeDocumentDefiniti
             At(Q("Finset.filter"), Fn("A", Arrow(Product(Fin(n), Fin(3)), Fin(6)),
                 Call("Legal", a)), Q("Finset.univ")))));
     }
-    private static Formula PairsFormula()
-    {
-        var c = V("c"); var j = V("j");
-        return All("c", Row(), Eq(Call("pairs", c),
-            Fn("j", Fin(3), At(Q(PairMap), At(c, j)))));
-    }
     private static Formula CompatibleFormula()
     {
         var p = V("p"); var c = V("c"); var j = V("j");
@@ -170,7 +162,7 @@ internal sealed class HardinA233124SquareStripDocument : IScribeDocumentDefiniti
         var s = V("s"); var p = V("p"); var k = V("k"); var c = V("c");
         var condition = And(At(Q(Triangle + ".rowLegal"), c), And(Call("compatible", p, c),
             And(At(Q(Scanner + ".good"), s, c), Eq(
-                Call("boundaryClass", At(Q(Scanner + ".finish"), s, c), Call("pairs", c)), k))));
+                Call("boundaryClass", At(Q(Scanner + ".finish"), s, c), At(Q("D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233176Ladder.pairs"), c)), k))));
         return All("s", Seen(), All("p", Labels(), All("k", Fin(3),
             Eq(Call("classCount", s, p, k), SumOver("c", Row(),
                 Conditional(condition, Z(1), Z(0)))))));
@@ -181,7 +173,7 @@ internal sealed class HardinA233124SquareStripDocument : IScribeDocumentDefiniti
         var condition = And(Eq(At(c, Index(0)), Colour(0)),
             And(At(Q(Triangle + ".rowLegal"), c),
                 And(At(Q(Scanner + ".good"), EmptySeen(), c), Eq(Call("boundaryClass",
-                    At(Q(Scanner + ".finish"), EmptySeen(), c), Call("pairs", c)), k))));
+                    At(Q(Scanner + ".finish"), EmptySeen(), c), At(Q("D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233176Ladder.pairs"), c)), k))));
         return All("k", Fin(3), Eq(Call("firstCount", k),
             SumOver("c", Row(), Conditional(condition, Z(1), Z(0)))));
     }

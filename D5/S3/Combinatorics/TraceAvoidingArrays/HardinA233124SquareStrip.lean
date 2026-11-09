@@ -23,6 +23,9 @@ Direct frozen dependency:
 D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233251TriangleStrip.Row
 (statement_id sha256:b7c502e020b34fb16b6f45eb8f4662622d3137215aa86d5133861c790e91cd34).
 Direct frozen dependency:
+D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233176Ladder.pairs
+(statement_id PAIRS_SID).
+Direct frozen dependency:
 D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233251TriangleStrip.colour_bond_iff
 (statement_id sha256:b9273762bbccc68fc56c48c38b8aba02a46a50a53bfbbe70a660fd21867d6be8).
 Direct frozen dependency:
@@ -66,7 +69,6 @@ bonds: proof_shape=bind-only; consumers=Legal, bonds_iff, counting_bridge
 Legal: proof_shape=bind-only; consumers=a, counting_bridge, zero_count
 instDecidableBonds: proof_shape=bind-only; consumers=a, counting_bridge
 a: proof_shape=bind-only; consumers=counting_bridge, a_eq_w, zero_count, result
-pairs: proof_shape=bind-only; consumers=bonds_iff, v, total, classCount
 compatible: proof_shape=bind-only; consumers=bonds_iff, v, classCount
 instDecidableCompatible: proof_shape=bind-only; consumers=v, classCount
 bonds_iff: proof_shape=bind-only; consumers=counting_bridge
@@ -98,6 +100,7 @@ result: proof_shape=content; consumers=terminal result (#28306)
 
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233176Ladder
 import D5.S3.Observer.Separation.BooleanRankThreeK4
 import Mathlib.Tactic
 import Mathlib.RingTheory.PowerSeries.Basic
@@ -115,6 +118,9 @@ open HardinA233251TriangleStrip
 attribute [local instance 2000] HardinA233251TriangleStrip.widthInstDecidableGood
 open D5.S3.Observer.Separation.BooleanRankThreeK4 (beta)
 
+-- The column pair labels of the frozen ladder owner.
+local notation "labelsOf" => HardinA233176Ladder.pairs
+
 def bonds (c d : Row) : Prop :=
   ∀ j : Fin 3, c j ≠ d j ∧ (c j).val + (d j).val ≠ 5
 
@@ -128,23 +134,21 @@ private instance instDecidableBonds (c d : Row) : Decidable (bonds c d) :=
 def a (n : ℕ) : ℕ :=
   (Finset.univ.filter (fun A : Fin n × Fin 3 → Fin 6 => Legal A)).card
 
-def pairs (c : Row) : Fin 3 → Fin 3 := fun j => beta (c j)
-
 def compatible (p : Fin 3 → Fin 3) (c : Row) : Prop :=
   ∀ j, p j ≠ beta (c j)
 
 private instance instDecidableCompatible (p : Fin 3 → Fin 3) (c : Row) :
     Decidable (compatible p c) := inferInstanceAs (Decidable (∀ _, _))
 
-private theorem bonds_iff (c d : Row) : bonds c d ↔ compatible (pairs c) d := by
-  simp only [bonds, colour_bond_iff, compatible, pairs]
+private theorem bonds_iff (c d : Row) : bonds c d ↔ compatible (labelsOf c) d := by
+  simp only [bonds, colour_bond_iff, compatible, HardinA233176Ladder.pairs]
 
-private abbrev v := widthV rowLegal pairs compatible
+private abbrev v := widthV rowLegal labelsOf compatible
 
-private abbrev total := widthTotal rowLegal pairs
+private abbrev total := widthTotal rowLegal labelsOf
 
 private theorem counting_bridge (n : ℕ) : (a (n + 1) : ℤ) = total (v n) :=
-  width_counting_bridge rowLegal pairs compatible bonds bonds_iff n
+  width_counting_bridge rowLegal labelsOf compatible bonds bonds_iff n
 
 def Valid (s : Seen) (p : Fin 3 → Fin 3) : Prop :=
   s.1 = true ∧ p 0 ≠ p 1 ∧ p 1 ≠ p 2 ∧ (s.2 = false → ∀ j, p j ≠ 2)
@@ -159,19 +163,19 @@ def transfer (i k : Fin 3) : ℤ :=
   ![![8, 8, 8], ![0, 24, 16], ![0, 16, 16]] i k
 
 private theorem valid_next : ∀ s p, Valid s p → ∀ c : Row,
-    rowLegal c ∧ compatible p c ∧ good s c → Valid (finish s c) (pairs c) := by
+    rowLegal c ∧ compatible p c ∧ good s c → Valid (finish s c) (labelsOf c) := by
   have hv : ∀ (s : Seen) (c : Row), s.1 = true → rowLegal c → good s c →
-      Valid (finish s c) (pairs c) := by decide +kernel
+      Valid (finish s c) (labelsOf c) := by decide +kernel
   intro s p hp c hc
   exact hv s c hp.1 hc.1 hc.2.2
 
 def classCount (s : Seen) (p : Fin 3 → Fin 3) (k : Fin 3) : ℤ :=
   ∑ c : Row, if rowLegal c ∧ compatible p c ∧ good s c ∧
-    boundaryClass (finish s c) (pairs c) = k then 1 else 0
+    boundaryClass (finish s c) (labelsOf c) = k then 1 else 0
 
 def firstCount (k : Fin 3) : ℤ :=
   ∑ c : Row, if c 0 = 0 ∧ rowLegal c ∧ good (false, false) c ∧
-    boundaryClass (finish (false, false) c) (pairs c) = k then 1 else 0
+    boundaryClass (finish (false, false) c) (labelsOf c) = k then 1 else 0
 
 private theorem row_sum (g : Row → ℤ) :
     (∑ c : Row, g c) =
@@ -210,7 +214,7 @@ private theorem row_counts : ∀ s p, Valid s p → ∀ k,
 
 private theorem initial_valid : ∀ c : Row,
     c 0 = 0 ∧ rowLegal c ∧ good (false, false) c →
-      Valid (finish (false, false) c) (pairs c) := by
+      Valid (finish (false, false) c) (labelsOf c) := by
   decide +kernel
 
 private theorem initial_counts : ∀ k, firstCount k = ![2, 0, 1] k := by
@@ -235,47 +239,49 @@ private theorem v_eq_w (n : ℕ) (s : Seen) (p : Fin 3 → Fin 3) (h : Valid s p
   | succ n ih =>
     rw [v, widthV, widthStep]
     have hs : ∀ c : Row, (if rowLegal c ∧ compatible p c ∧ good s c then
-        v n (finish s c) (pairs c) else 0) =
+        v n (finish s c) (labelsOf c) else 0) =
         (if rowLegal c ∧ compatible p c ∧ good s c ∧
-          boundaryClass (finish s c) (pairs c) = 0 then (1 : ℤ) else 0) * w n 0 +
+          boundaryClass (finish s c) (labelsOf c) = 0 then (1 : ℤ) else 0) * w n 0 +
         (if rowLegal c ∧ compatible p c ∧ good s c ∧
-          boundaryClass (finish s c) (pairs c) = 1 then (1 : ℤ) else 0) * w n 1 +
+          boundaryClass (finish s c) (labelsOf c) = 1 then (1 : ℤ) else 0) * w n 1 +
         (if rowLegal c ∧ compatible p c ∧ good s c ∧
-          boundaryClass (finish s c) (pairs c) = 2 then (1 : ℤ) else 0) * w n 2 := by
+          boundaryClass (finish s c) (labelsOf c) = 2 then (1 : ℤ) else 0) * w n 2 := by
       intro c
       by_cases hc : rowLegal c ∧ compatible p c ∧ good s c
       · rw [ite_eq_left hc, ih _ _ (valid_next s p h c hc)]
-        generalize boundaryClass (finish s c) (pairs c) = k
+        generalize boundaryClass (finish s c) (labelsOf c) = k
         fin_cases k <;> simp [hc]
       · simp only [← and_assoc] at hc ⊢
         simp [hc]
     simp_rw [hs]
     rw [Finset.sum_add_distrib, Finset.sum_add_distrib,
       ← Finset.sum_mul, ← Finset.sum_mul, ← Finset.sum_mul]
-    change classCount s p 0 * w n 0 + classCount s p 1 * w n 1 +
-      classCount s p 2 * w n 2 = _
-    rw [finite_certificate.1 s p h 0, finite_certificate.1 s p h 1,
-      finite_certificate.1 s p h 2]
+    have hcounts (k : Fin 3) :
+        (∑ c : Row, if rowLegal c ∧ compatible p c ∧ good s c ∧
+          boundaryClass (finish s c) (labelsOf c) = k then (1 : ℤ) else 0) =
+            transfer (boundaryClass s p) k := by
+      simpa only [classCount] using finite_certificate.1 s p h k
+    rw [hcounts 0, hcounts 1, hcounts 2]
     generalize boundaryClass s p = k
     fin_cases k <;> simp [transfer, w]
 
 private theorem a_eq_w (n : ℕ) : (a (n + 1) : ℤ) = 2 * w n 0 + w n 2 := by
   rw [counting_bridge, total, widthTotal]
   have hs : ∀ c : Row, (if c 0 = 0 ∧ rowLegal c ∧ good (false, false) c then
-      v n (finish (false, false) c) (pairs c) else 0) =
+      v n (finish (false, false) c) (labelsOf c) else 0) =
       (if c 0 = 0 ∧ rowLegal c ∧ good (false, false) c ∧
-        boundaryClass (finish (false, false) c) (pairs c) = 0 then (1 : ℤ) else 0) *
+        boundaryClass (finish (false, false) c) (labelsOf c) = 0 then (1 : ℤ) else 0) *
           w n 0 +
       (if c 0 = 0 ∧ rowLegal c ∧ good (false, false) c ∧
-        boundaryClass (finish (false, false) c) (pairs c) = 1 then (1 : ℤ) else 0) *
+        boundaryClass (finish (false, false) c) (labelsOf c) = 1 then (1 : ℤ) else 0) *
           w n 1 +
       (if c 0 = 0 ∧ rowLegal c ∧ good (false, false) c ∧
-        boundaryClass (finish (false, false) c) (pairs c) = 2 then (1 : ℤ) else 0) *
+        boundaryClass (finish (false, false) c) (labelsOf c) = 2 then (1 : ℤ) else 0) *
           w n 2 := by
     intro c
     by_cases hc : c 0 = 0 ∧ rowLegal c ∧ good (false, false) c
     · rw [ite_eq_left hc, v_eq_w n _ _ (initial_valid c hc)]
-      generalize boundaryClass (finish (false, false) c) (pairs c) = k
+      generalize boundaryClass (finish (false, false) c) (labelsOf c) = k
       fin_cases k <;> simp [hc]
     · simp only [← and_assoc] at hc ⊢
       simp [hc]
