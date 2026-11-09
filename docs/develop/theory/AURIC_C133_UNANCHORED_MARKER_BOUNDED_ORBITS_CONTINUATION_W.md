@@ -1822,7 +1822,7 @@ $$
 
 实际准备差 $x=Fa-Fb\ne0$ 按同一测试总质量归一时，Born 权重为 $\langle x,E_ex\rangle/\|x\|^2$；总量为零不定义 $0/0$。不从总核的 (S) 推断事件核的 (S)，也不从 $F1=0$ 获得非零准备。
 
-若输入、输出各有上述表示，实际完整有限细分支 $T_{e,r}$ 保持单位，全部输入对与原记录满足
+若输入、输出各取上述最小表示，即 $H_{\rm in}=\overline{\operatorname{span}_{\mathbb C}F_{\rm in}(M_{\rm in})}$、$H_{\rm out}=\overline{\operatorname{span}_{\mathbb C}F_{\rm out}(M_{\rm out})}$，实际完整有限细分支 $T_{e,r}$ 保持单位，全部输入对与原记录满足
 
 $$
 c_e(a,b)=\sum_r c_{\rm out}(T_{e,r}a,T_{e,r}b),\qquad
