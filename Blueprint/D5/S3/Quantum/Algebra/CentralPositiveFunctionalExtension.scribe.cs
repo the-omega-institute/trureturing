@@ -22,7 +22,7 @@ internal sealed class CentralPositiveFunctionalExtensionDocument : IScribeDocume
                         "Let A have exactly the classes CStarAlgebra A, PartialOrder A and StarOrderedRing A. "
                         + "Let X be any real Submodule of A, let hX assert that every element of X is self-adjoint, "
                         + "and let phi be any StrongDual real X, with its inherited norm and topology. "
-                        + "There exist positive continuous complex-linear maps psi_plus and psi_minus from A to Complex "
+                        + "There exist positive continuous complex-linear maps psiPlus and psiMinus from A to Complex "
                         + "whose real difference agrees with phi on every x in X and whose real values at the unit sum to the operator norm of phi.")),
                     Paragraph(Text(
                         "X need not contain the unit, be closed, or be complete. The zero subspace, zero functional, "
@@ -50,8 +50,8 @@ internal sealed class CentralPositiveFunctionalExtensionDocument : IScribeDocume
         var X = F.Id("X");
         var x = F.Id("x");
         var phi = F.Id("phi");
-        var plus = F.Id("psi_plus");
-        var minus = F.Id("psi_minus");
+        var plus = F.Id("psiPlus");
+        var minus = F.Id("psiMinus");
         var real = Call("Real");
         var complex = Call("Complex");
         var positiveMap = Call("PositiveContinuousLinearMap", complex, A, complex);
@@ -62,8 +62,8 @@ internal sealed class CentralPositiveFunctionalExtensionDocument : IScribeDocume
             new Formula.Binary(Call("re", Apply(plus, Call("one", A))),
                 FormulaBinaryOperator.Add, Call("re", Apply(minus, Call("one", A)))),
             Call("norm", phi));
-        var result = Exists("psi_plus", positiveMap,
-            Exists("psi_minus", positiveMap,
+        var result = Exists("psiPlus", positiveMap,
+            Exists("psiMinus", positiveMap,
                 new Formula.Logic(agreement, FormulaLogicOperator.And, mass)));
         var selfadjoint = All("x", X, Call("IsSelfAdjoint", Call("val", x)));
         return All("A", Seq(Call("Type"), Star),
@@ -71,7 +71,7 @@ internal sealed class CentralPositiveFunctionalExtensionDocument : IScribeDocume
             Instance(Call("PartialOrder", A),
             Instance(Call("StarOrderedRing", A),
                 All("X", Call("Submodule", real, A),
-                    All("hX", selfadjoint,
+                    new Formula.Logic(selfadjoint, FormulaLogicOperator.Implies,
                         All("phi", Call("StrongDual", real, X), result)))))));
     }
 

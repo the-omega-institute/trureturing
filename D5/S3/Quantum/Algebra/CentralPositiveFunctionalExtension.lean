@@ -2,13 +2,9 @@
    generality: G
    mirror-B: D5/B/S3/Quantum/Algebra/CentralPositiveFunctionalExtension
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.Analysis.Normed.Module.HahnBanach,
-     mathlib/module/Mathlib.Analysis.Normed.Module.RCLike.Extend,
-     mathlib/module/Mathlib.Analysis.CStarAlgebra.PositiveLinearFunctional]
+   anchors: [mathlib/module/Mathlib.Analysis.Normed.Module.HahnBanach, mathlib/module/Mathlib.Analysis.Normed.Module.RCLike.Extend, mathlib/module/Mathlib.Analysis.CStarAlgebra.PositiveLinearFunctional]
    utility: none
-   digest: Positive ambient extensions of a real self-adjoint-subspace functional with norm-additive mass.
-
-   The ambient product algebra supplies both signs with total unit mass equal to the operator norm. -/
+   digest: Positive ambient extensions of a real self-adjoint-subspace functional with norm-additive mass; the ambient product algebra supplies both signs with total unit mass equal to the operator norm. -/
 
 import Mathlib.Analysis.CStarAlgebra.PositiveLinearFunctional
 import Mathlib.Analysis.Normed.Module.HahnBanach
