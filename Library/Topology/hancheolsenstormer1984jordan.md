@@ -32,3 +32,7 @@ page 83, proves that every quadratic representation preserves the
 square cone, using invertible paths, closedness and positive
 approximation. These statements concern arbitrary JB algebras,
 without a special or finite-dimensional representation assumption.
+
+## Verified locator
+
+https://hanche.folk.ntnu.no/joa/joa-m.pdf
