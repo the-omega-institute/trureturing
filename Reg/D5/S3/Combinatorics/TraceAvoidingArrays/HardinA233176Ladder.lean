@@ -3,7 +3,7 @@ import D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 import Reg.Support.SingleDependentReadout
 import LeanInformationAuditInterface.Contract.Registration
 
-/-! Readout registrations for the ladder generating function and its initial coefficients. -/
+/-! Readout registrations for the ladder generating function, initial coefficients and shared scanner. -/
 
 namespace Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233176Ladder
 
