@@ -3031,3 +3031,426 @@ $$
 ---
 
 ## 追加锚（本行以下为增补区）
+
+## 68. 原周期后的实际 CM 像群阶与全部首入口质量
+
+**定义 68.1（实际像群、群阶分布与原首入口）。** 保持原 002 定义 13.1、命题 16.2、定理 16.3–16.4、(16.21)，原 003 §§49–50 及本卷定义 51.1、53.1、64.1 的全部数据。特别地，$F=\mathbb Q(a,b,c)$ 仍为原八次全实域，$E_0:y^2=x^3-x$、原独立点 $P_1,P_2$、原整 $x$ 分母、全部原地方及 $U_v(j)$ 均不变。对任意整数 $M\ge1,H\ge7$，只取同一个
+
+$$
+q=q_H=q(H,H;M),\qquad
+\rho_p=\frac{n_p}{\gcd(n_p,q)},\qquad
+d_p=t_p+v_p(q)\quad(p>H),
+\tag{68.1}
+$$
+
+其中 $n_p,t_p$ 是原 002 (16.2) 的共同入口，而不是环境消去数。辅助扩域、作用和四个方向仍为
+
+$$
+K=F(i),\quad [K:\mathbb Q]=16,\quad
+\mathcal O=\mathbb Z[i],\quad [i](x,y)=(-x,iy),\qquad
+(T_1,T_2,T_3,T_4)=(P_1,[i]P_1,P_2,[i]P_2).
+\tag{68.2}
+$$
+
+对每个 $w\mid v\mid p>H$，横线仅指当前 $K\hookrightarrow K_w$ 所给的同一个好约化；定义实际有限 CM 像群
+
+$$
+C_w=\mathcal O\,\overline{[q]P_1}
+          +\mathcal O\,\overline{[q]P_2}\subset\widetilde E_0(k_w).
+\tag{68.3}
+$$
+
+这里 $C_w$ 是第一约化层中的实际子群，不是 §67 的扭曲商 $C_w(j)$。其群阶的地方无关性由下条证明，随后记 $c_p=\#C_w$。平凡群的阶和指数均取 $1$。这个 $c_p$ 只在 $p>H\ge7$ 使用，与原 (49.12) 仅在 $2,7$ 定义的入口整数没有重叠。对实数 $Z\ge1$ 定义非负质量
+
+$$
+B_H(Z)=\sum_{\substack{p>H\\c_p\le Z}}d_p\log p,
+\qquad B_H(Z)=0\quad(0\le Z<1).
+\tag{68.4}
+$$
+
+此定义没有 $p$ 的上截断；有限性也是下条的结论。$U_w(j)$、$b_w^K$、$B_K$ 和 $\|B_K\|_K$ 始终沿用 (51.2) 及定义 66.1 的原模型扩域接口。
+
+**定理 68.2（实际群阶支付全部首入口）。** 对全部上述 $H,M$，每个 $p>H$ 的 $c_p$ 与 $w\mid p$ 无关，且
+
+$$
+\exp(C_w)=\rho_p,\qquad
+\rho_p\le c_p\le\rho_p^2.
+\tag{68.5}
+$$
+
+对每个实际 $w\mid p$，存在一个非零整数向量 $z=(z_1,z_2,z_3,z_4)$，满足
+
+$$
+\begin{gathered}
+|z_k|\le\lfloor c_p^{1/4}\rfloor\quad(1\le k\le4),\qquad
+S_z=[q]\sum_{k=1}^4[z_k]T_k\in U_w(d_p),\\
+\widehat h(S_z)=h_0q^2\sum_{k=1}^4z_k^2
+          \le4h_0q^2\sqrt{c_p}.
+\end{gathered}
+\tag{68.6}
+$$
+
+所有这些 $S_z$ 均为真实的非挠全局 $K$ 点。逐素数及全体群阶分布同时满足
+
+$$
+\begin{aligned}
+d_p\log p&\le64h_0q^2\sqrt{c_p}+16\log2
+                       &&(p>H),\\
+B_H(Z)&\le216h_0q^2Z^{3/2}+81(\log2)Z
+                       &&(Z\ge1).
+\end{aligned}
+\tag{68.7}
+$$
+
+两式都支付全部 $1\le j\le d_p$ 的原共同首入口层，不要求 $t_p$ 或 $v_p(q)$ 有任何预设上界，也不要求普通、超奇异或某一种 Frobenius 类型。
+
+**证明（地方运输与共同指数）。** 原 $F/\mathbb Q$ 为 Galois 扩张且全实，所以 $K=F(i)$ 是次数 $16$ 的 Galois 扩张。其自同构限制到 $F$ 后，将 $(P_1,P_2)$ 作带独立符号的排列；这正是原命题 16.2 及 (53.8)–(53.9) 的实际作用。若 $\sigma(w)=w'$，约化运输是两个实际剩余域上的群同构，且 $\sigma(i)=i$ 或 $-i$。它相应地对 $\mathcal O$ 作恒等或共轭，均将整个 $\mathcal O$ 保持为自身。又因 $q$ 为有理整数，遂有
+
+$$
+\sigma(C_w)=C_{w'}.
+\tag{68.8}
+$$
+
+Galois 群在 $p$ 上地方间传递，因此 $\#C_w=c_p$ 与地方无关；这里也包括同一 $v$ 上不同的 $i$ 嵌入。
+
+从 $k_v$ 到 $k_w$ 的域嵌入不改变原约化点的阶。由原 (64.2) 在 $j=1$ 的身份，$\overline{[q]P_1},\overline{[q]P_2}$ 的两个阶的最小公倍数正是 $\rho_p$。整数 $\rho_p$ 因而消去这两个点，也消去它们的 $[i]$ 像及整个 $C_w$。反之，任何消去 $C_w$ 的正整数必须消去原两个生成元，所以被 $\rho_p$ 整除。这证明 $\exp(C_w)=\rho_p$。
+
+原定理 16.4 的下降支持给出 $p\nmid n_p$ 对全部 $p>H\ge7$ 成立，故 $p\nmid\rho_p$。在当前实际好约化曲线上，
+
+$$
+C_w\subseteq\widetilde E_0[\rho_p]
+                    (\overline{k_w}),\qquad
+\#\widetilde E_0[\rho_p](\overline{k_w})=\rho_p^2.
+\tag{68.9}
+$$
+
+第二式直接使用 Silverman，*The Arithmetic of Elliptic Curves* 第二版，[III.6.4(b)，印刷页 86](https://www.math.ens.psl.eu/~obenoist/refs/Silverman.pdf)：特征不整除 $m$ 时，几何 $m$ 挠点群为 $(\mathbb Z/m\mathbb Z)^2$。这里 $m=\rho_p$，使用的是特殊纤维的定理；不从特征零 CM 挠点模的陈述推断好约化后的实际像群。$\rho_p=1$ 时两边均为平凡群，式子仍成立。作者[勘误中印刷页 69 的条目](https://www.math.brown.edu/johsilve/AEC/AECErrata.pdf)说明 $E[m]$ 指阶整除 $m$ 的点，按此含义使用。Lagrange 定理给出有限交换群的指数整除群阶，结合 (68.9) 即得 (68.5)。这既未断言 $c_p=\rho_p$，也未断言 $c_p=\rho_p^2$。
+
+**证明（第一层短关系提升到全部原首入口层）。** 在当前 $w\mid v\mid p$ 取 $L_p=\lfloor c_p^{1/4}\rfloor$。将 $(L_p+1)^4>c_p$ 个向量 $u\in\{0,\ldots,L_p\}^4$ 映到
+
+$$
+\sum_{k=1}^4[u_k]\overline{[q]T_k}\in C_w.
+\tag{68.10}
+$$
+
+两个不同向量必同像；作差得非零 $z$、$|z_k|\le L_p$，使 $S_z$ 在当前 $w$ 约化为 $O$，即 $S_z\in U_w(1)$。由原四方向准确高度 (16.21)，
+
+$$
+\widehat h(S_z)=h_0q^2\sum_{k=1}^4z_k^2>0.
+\tag{68.11}
+$$
+
+因此这个全局点非挠、非零，其形式参数也非零；不会把 $O$ 的无限深度当作有限分母。
+
+接着使用原定理 16.3 的精确深度，而非仅约化消去。由 $n_p\mid\rho_pq$、$p\nmid n_p\rho_p$，对每个原 $v\mid p$ 有
+
+$$
+[\rho_pq]P_1,[\rho_pq]P_2\in U_v(d_p),\qquad
+\min_{\ell=1,2}b_v([\rho_pq]P_\ell)=d_p.
+\tag{68.12}
+$$
+
+这正是 (66.10) 的原入口接口，其推导只用 $p>7$，不依赖 §66 的普通非标量限制。在 $K_w$ 中，整数加法与 $[i]$ 都保每个形式层；后者由原公式 $t([i]T)=it(T)$ 及 $i$ 为单位给出。因此同一个 $z$ 满足
+
+$$
+[\rho_p]S_z=\sum_{k=1}^4[z_k][\rho_pq]T_k
+                       \in U_w(d_p).
+\tag{68.13}
+$$
+
+这里先有 $S_z\in U_w(1)$，才能使用第一形式层内的深度。原定理 16.3 给出 $K_w/\mathbb Q_p$ 不分歧，故 $e_w=1$ 且 $1>e_w/(p-1)$。Silverman [IV.6.3–6.4，印刷页 131–132](https://www.math.ens.psl.eu/~obenoist/refs/Silverman.pdf) 的保赋值形式对数，以及 [VII.2.1–2.2，印刷页 188–191](https://www.math.ens.psl.eu/~obenoist/refs/Silverman.pdf) 对约化核的识别，给出
+
+$$
+b_w^K([\rho_p]S_z)=b_w^K(S_z)+v_p(\rho_p)=b_w^K(S_z).
+\tag{68.14}
+$$
+
+这就是 (66.17) 所用的形式群事实，所有适用条件在当前每个 $p>H$ 都成立。由 (68.13) 得 $b_w^K(S_z)\ge d_p$，证明 (68.6) 的成员关系；高度界由 $\sum z_k^2\le4L_p^2\le4\sqrt{c_p}$ 得出。这里没有在整个约化群上逆掉 $\rho_p$。作者[勘误中印刷页 122–124、131、188–191 的条目](https://www.math.brown.edu/johsilve/AEC/AECErrata.pdf)分别澄清形式逆元与理想幂、IV.6.3(a) 的分式域收敛及约化记号；这里始终处于严格保赋值阈值内，不使用无阈值的整环收敛断言。
+
+**证明（完整全局点族与全部扩域费用）。** 固定 $Z\ge1$，置 $L=\lfloor Z^{1/4}\rfloor\ge1$，先取与地方无关的整个带索引点族
+
+$$
+\mathscr Z_L=\{z\in\mathbb Z^4\setminus\{0\}:|z_k|\le L\},\qquad
+\mathscr P_L(q)=(S_z)_{z\in\mathscr Z_L},\qquad
+S_z=[q]\sum_{k=1}^4[z_k]T_k.
+\tag{68.15}
+$$
+
+每个点均由 (68.11) 保证非挠、非零；即使不对点族去重，也逐个索引支付。对每个 $p>H,c_p\le Z$ 的每个实际 $w\mid p$，(68.6) 在这个固定族中给出一个索引 $z=z(p,w)$，使
+
+$$
+d_p\le b_w^K(S_{z(p,w)}).
+\tag{68.16}
+$$
+
+同一个选择已支付该地方全部 $1,\ldots,d_p$ 层，不是只支付其中一层。不同地方可选择不同的全局点。
+
+原 (51.18)–(51.20) 在这里给出全部费用的准确接口：
+
+$$
+\begin{gathered}
+\sum_{w\mid v}\frac{f_w}{16}=\frac{f_v}{8},\qquad
+\sum_{w\mid p}\frac{f_w}{16}=1,\\
+\log\|B_K(S_z)\|_K
+ =\sum_{\ell\ \mathrm{prime}}\sum_{w\mid\ell}
+             \frac{f_w}{16}b_w^K(S_z)\log\ell
+ \le\widehat h(S_z)+\log2.
+\end{gathered}
+\tag{68.17}
+$$
+
+第一行只用于 $p>H$：$K/F$ 不分歧，局部次数之和为 $2$；不要求 $K/F$ 在每个 $v$ 分裂。第二行是全部有限地方的分母范数，包含可能分歧的地方，其上界支付了全部 $16$ 个 $K\hookrightarrow\mathbb C$ 嵌入的高度分解。它由原 002 (12.7) 对所有代数点的高度比较得到，而不是把仅对 $F$ 点陈述的 003 (49.8) 直接套给 $K$ 点。每个原地方的 $f_v/8$ 都经全部 $w\mid v$ 精确收回，没有减半。
+
+固定一个索引 $z$，把分配给它的 (68.16) 按全部实际 $w$ 求和，其总和不超过该点自己的完整 $K$ 分母。再支付全部索引，得到
+
+$$
+\begin{aligned}
+B_H(Z)
+&=\sum_{\substack{p>H\\c_p\le Z}}\sum_{v\mid p}
+             \sum_{w\mid v}\frac{f_w}{16}d_p\log p\\
+&\le\sum_{z\in\mathscr Z_L}\log\|B_K(S_z)\|_K\\
+&\le h_0q^2\sum_{z\in\mathscr Z_L}\sum_{k=1}^4z_k^2
+                 +(\log2)\#\mathscr Z_L.
+\end{aligned}
+\tag{68.18}
+$$
+
+这也证明无上截断的和有限：每个合格 $p$ 的任一 $w\mid p$ 都在某个非零 $S_z$ 的分母支持中，有限点族的分母只含有限个素理想。故没有用未经证明的素数有限性来交换和，也没有漏掉 $p>Z$ 或任何更大的素数。
+
+纸面有限和准确为
+
+$$
+\begin{aligned}
+\#\mathscr Z_L&=(2L+1)^4-1\le81L^4\le81Z,\\
+\sum_{z\in\mathscr Z_L}\sum_{k=1}^4z_k^2
+ &=4(2L+1)^3\sum_{a=-L}^La^2
+   =\frac43L(L+1)(2L+1)^4\\
+ &\le216L^6\le216Z^{3/2}.
+\end{aligned}
+\tag{68.19}
+$$
+
+末步只用 $L+1\le2L$、$2L+1\le3L$ 和 $L^4\le Z$。代回 (68.18)，即得 (68.7) 的群阶分布界。经典抽屉原理和有限和在此仅服务于原全部首入口消费者，不另立为一般成果。
+
+**证明（逐素数分别支付各地方所选点）。** 对一个固定 $p>H$，在每个 $w\mid p$ 各取 (68.6) 给出的 $S_{z(p,w)}$。由 (68.17)，逐个地方有
+
+$$
+\frac{f_w}{16}d_p\log p
+\le\frac{f_w}{16}b_w^K(S_{z(p,w)})\log p
+\le\log\|B_K(S_{z(p,w)})\|_K
+\le4h_0q^2\sqrt{c_p}+\log2.
+\tag{68.20}
+$$
+
+令 $g_K(p)=\#\{w:w\mid p\}$。由于 $e_w=1$ 且 $\sum_{w\mid p}f_w=16$，有 $g_K(p)\le16$。将刚才的逐地方不等式相加，得到
+
+$$
+d_p\log p
+\le g_K(p)\bigl(4h_0q^2\sqrt{c_p}+\log2\bigr)
+\le64h_0q^2\sqrt{c_p}+16\log2.
+\tag{68.21}
+$$
+
+每个地方所选点都分别支付了一次完整高度；即使两处选择相同，也不据此减免费用。这不是把所有地方的最短关系拼成一个未经存在证明的共同点。$\square$
+
+用白话说，乘过原周期 $q$ 后，两个点连同它们的两个 CM 转向，确实落在同一个有限群里。它有多少元素，与走多少步能统一归零，是两个不同的量；这里只证明后者为 $\rho_p$，前者在 $\rho_p$ 与 $\rho_p^2$ 之间。四个系数各试到群阶的四次方根，便有一个真实短关系。先让这个关系进入第一层，再利用原整数入口与形式群，把它提升到首入口的全部深度。每个地方都可选择不同关系；全体关系点的高度一起支付，才得到不截素数的 $Z^{3/2}$ 质量界。逐素数预算则把每个地方的选择分别结账，所以保留了最多 $16$ 份高度的费用。
+
+## 69. 全部平方范围素数的首入口对数节省
+
+**定义 69.1（原平方范围质量与全部后续层）。** 保持定义 68.1，并沿用原 (64.1)、(64.4) 的 $r_{vj}$ 与 $W_{\mathrm{all},H}$。对实数 $R\ge1$ 定义
+
+$$
+\begin{aligned}
+E_H^{\le R^2}(R)
+ &:=\sum_{\substack{H<p\le R^2\\\rho_p\le R}}d_p\log p,\\
+W_H^{\le R^2}(R)
+ &:=\sum_{\substack{H<p\le R^2\\v\mid p,\ j\ge1:\ r_{vj}\le R}}
+                      \frac{f_v\log p}{8},\\
+D_H(R)
+ &:=\sum_{\substack{p>H,\ a\ge1\\\rho_pp^a\le R}}\log p.
+\end{aligned}
+\tag{69.1}
+$$
+
+$D_H$ 从定义起就包含全部素数支持上的全部合格后续层。$E_H^{\le R^2}$ 保留平方范围内所有原共同首入口，不截入口深度。
+
+**定理 69.2（全部 $H<p\le R^2$ 的临界质量严格小于三次）。** 对全部 $M\ge1,H\ge7$ 和实数 $R\ge1$，有准确身份及后续层预算
+
+$$
+W_H^{\le R^2}(R)=E_H^{\le R^2}(R)+D_H(R),\qquad
+0\le D_H(R)\le\psi(R)\le4(\log2)R.
+\tag{69.2}
+$$
+
+对全部实数 $R\ge2$，进一步有显式界
+
+$$
+\begin{aligned}
+E_H^{\le R^2}(R)
+ &\le\frac{224h_0q^2R^3+56(\log2)R^2}{\log R},\\
+W_H^{\le R^2}(R)
+ &\le\frac{224h_0q^2R^3+56(\log2)R^2}{\log R}
+                         +4(\log2)R.
+\end{aligned}
+\tag{69.3}
+$$
+
+因此对每个固定的 $H,M$，保持同一个 $q=q_H$ 不变，有
+
+$$
+W_H^{\le R^2}(R)=o(q^2R^3)\qquad(R\to\infty).
+\tag{69.4}
+$$
+
+这包括 $R<p\le R^2$ 的全部原支持、$p\mid q$ 的情形及任意过深首入口；没有按普通性或符号类型删去素数。
+
+**证明（精确层数与全部后续层）。** 将原 002 (16.6) 代入 (64.2)。对全部 $p>H\ge7$，已有 $p\nmid n_p$，所以在每个原 $v\mid p$ 准确有
+
+$$
+r_{vj}
+ =\frac{n_pp^{\max(0,j-t_p)}}
+        {\gcd(n_pp^{\max(0,j-t_p)},q)}
+ =\rho_pp^{\max(0,j-d_p)}.
+\tag{69.5}
+$$
+
+这是 (66.9) 的同一代入，不使用该节的特殊支持。故 $\rho_p\le R$ 时恰有 $d_p$ 个首入口层，及满足 $\rho_pp^a\le R$ 的后续层 $a\ge1$；$\rho_p>R$ 时没有合格层。所有原地方的权重之和为 $\sum_{v\mid p}f_v/8=1$。
+
+每个后续层均有 $p^a\le R$，从而 $p\le R\le R^2$。因此全部 $D_H(R)$ 已经落在定义中的平方范围，(69.2) 的身份成立；特别 $R<p\le R^2$ 的质量只有首入口项，但这些项全部保留。由 (66.11) 的同一非负包含，$D_H(R)\le\psi(R)$。经典界 $\psi(R)\le4(\log2)R$ 直接复用 §66 在本消费者中已给出的 Chebyshev 估计及其常数，不重复建立一般素数估计。
+
+**证明（群阶界与逐素数预算合用）。** 对定义中的每个 $\rho_p\le R$，(68.5)、(68.7) 给出
+
+$$
+c_p\le\rho_p^2\le R^2,\qquad
+d_p\log p\le64h_0q^2R+16\log2.
+\tag{69.6}
+$$
+
+所以任意大的原 $t_p$ 及 $v_p(q)$ 均已在左侧支付，未设 $d_p\le R$ 或 $d_p\le\log R/\log p$ 等额外限制。为计算这里的素数个数，只需上述 Chebyshev 界。对 $x\ge4$，将素数按 $p\le\sqrt x$ 与 $p>\sqrt x$ 分开，在本消费者内得到
+
+$$
+\pi(x)\le\sqrt x+\frac{2\vartheta(x)}{\log x}
+\le\sqrt x+8(\log2)\frac{x}{\log x}
+\le7\frac{x}{\log x}.
+\tag{69.7}
+$$
+
+末步使用 $\log x\le\sqrt x$ 及 $1+8\log2<7$。取 $x=R^2$，将 (69.6) 对至多 $\pi(R^2)$ 个素数相加，就有
+
+$$
+E_H^{\le R^2}(R)
+\le\frac{7R^2}{2\log R}
+             \bigl(64h_0q^2R+16\log2\bigr),
+\tag{69.8}
+$$
+
+即 (69.3) 的第一式。加上已单独支付的全部 $D_H(R)$ 得第二式。空支持也满足这些不等式。最后除以 $q^2R^3$，右侧依次为
+
+$$
+\frac{224h_0}{\log R}
+ +\frac{56\log2}{q^2R\log R}
+ +\frac{4\log2}{q^2R^2}\longrightarrow0,
+\tag{69.9}
+$$
+
+证明 (69.4)。$\square$
+
+用白话说，周期不超过 $R$ 时，实际 CM 群阶至多为 $R^2$，所以每个素数连同其全部首入口深度，至多需要一次 $R$ 量级的高度预算。平方范围内只有 $O(R^2/\log R)$ 个素数，全部相加就比三次预算多出一个对数节省。大于 $R$ 而不超过 $R^2$ 的素数仍在这笔账内；过深入口也已由逐素数高度界支付。首入口以后，每增加一层就必须再付一个 $p$ 的周期因子，所以全部后续层只能落在 $p\le R$，合起来另付一个线性 Chebyshev 预算。
+
+## 70. 完整平均缺口精确缩到平方范围以外的首入口
+
+**定义 70.1（未截断的大素数首入口）。** 对定义 68.1、69.1 的同一原数据及实数 $R\ge1$，置
+
+$$
+V_H(R)
+ :=\sum_{\substack{p>\max(H,R^2)\\\rho_p\le R}}d_p\log p.
+\tag{70.1}
+$$
+
+这里没有另设 $p$ 上限；每个固定 $R$ 的有限性由 (68.18) 或原定理 64.2 保证。
+
+**定理 70.2（完整支持的精确剩余条件）。** 对全部 $H\ge7,M\ge1$ 及实数 $R\ge1$，准确有
+
+$$
+W_{\mathrm{all},H}(R)=W_H^{\le R^2}(R)+V_H(R).
+\tag{70.2}
+$$
+
+特别地，原全部深度的精确质量也可写成
+
+$$
+\begin{aligned}
+W_{\mathrm{all},H}(R)
+ &=\sum_{\substack{p>H\\\rho_p\le R}}
+       \left(d_p+\left\lfloor
+             \frac{\log(R/\rho_p)}{\log p}\right\rfloor\right)\log p\\
+ &=E_H^{\le R^2}(R)+V_H(R)+D_H(R).
+\end{aligned}
+\tag{70.3}
+$$
+
+原 (64.6) 的完整 $k=1$ 共同最小质量及平均仍为
+
+$$
+\begin{aligned}
+F_{\mathrm{all},H}(t)
+ &=\frac18\sum_{p>H}\log p\sum_{v\mid p}f_v
+       \min\{b_v([qt]P_1),b_v([qt]P_2)\},\\
+\mathcal M_{\mathrm{all},H}(N)
+ &=\frac1N\sum_{t=1}^NF_{\mathrm{all},H}(t).
+\end{aligned}
+\tag{70.4}
+$$
+
+对每个固定的 $H,M$，在以下各极限中保持同一个 $q=q_H$ 不变，则
+
+$$
+\begin{aligned}
+\mathcal M_{\mathrm{all},H}(N)=o(q^2N^2)
+&\quad\Longleftrightarrow\quad
+W_{\mathrm{all},H}(R)=o(q^2R^3)\\
+&\quad\Longleftrightarrow\quad
+V_H(R)=o(q^2R^3).
+\end{aligned}
+\tag{70.5}
+$$
+
+本条证明该等价及平方范围内的严格小量，没有证明最后一个小量条件。
+
+**证明。** 由 (69.5)，当 $p>R^2\ge R$ 时，不存在 $a\ge1$ 使 $\rho_pp^a\le R$。故这些素数的全部合格层恰为 $\rho_p\le R$ 时的 $1,\ldots,d_p$，其全部原地方的权重之和是 $d_p\log p$。对 $p\le R^2$ 使用定义 69.1 的原全部深度质量，按互不相交的两段素数支持相加，便得 (70.2)；(69.5) 的逐层计数同时给出 (70.3)。边界 $p=R^2$ 属于第一段；$R^2\le H$ 时第一段为空，等式仍成立。各和的有限性由原定理 64.2，或由 $\rho_p\le R\Rightarrow c_p\le R^2$ 与 (68.18) 的有限分母支持保证。
+
+原 003 §§49–50 的分母和逐地方行格关系，经 (62.5)–(62.6) 及 (64.6)，已经把 (70.4) 确认为同一 $t$ 上由同一个 $k=1$ 在全部地方同时取得的最小共同质量；这里直接复用这个接口。完整 floor 身份及完整平均与周期质量小量的等价已由 (64.7)、定理 65.1 证明，对全部 $p>H$ 和全部深度成立，所以 (70.5) 的第一个等价直接引用 (65.2)。另一方面，(70.2)、非负性及定理 69.2 的 (69.4) 表明
+
+$$
+0\le W_{\mathrm{all},H}(R)-V_H(R)
+        =W_H^{\le R^2}(R)=o(q^2R^3).
+\tag{70.6}
+$$
+
+因此 $W_{\mathrm{all},H}(R)/(q^2R^3)$ 与 $V_H(R)/(q^2R^3)$ 同时趋于零，得到第二个等价。这一步没有把随 $R$ 变化的素数截止当作固定支持来交换平均。
+
+最后，由实际群阶上界与 (68.7)，已有但仅有三次量级的尾部界
+
+$$
+0\le V_H(R)\le B_H(R^2)
+       \le216h_0q^2R^3+81(\log2)R^2.
+\tag{70.7}
+$$
+
+它不推出 (70.5) 的最后一个小量条件：除以 $q^2R^3$ 后的首项仍为 $216h_0>0$。逐素数界支付任意深入口，却没有为所有 $p>R^2$ 的这些入口另给总量的对数节省；定理 69.2 的 $\pi(R^2)$ 计数也不覆盖这段无上截断支持。缺少的具体结论正是 (70.1) 的原联合质量 $V_H(R)=o(q^2R^3)$，并非将 $d_p$ 换成 $1$、将 $c_p$ 换成 $\rho_p$，或删除 $p>R^2$ 后所得的弱化命题。$\square$
+
+来源与新增范围。原共同周期、地方运输、全部深度入口、下降支持和四方向准确高度，分别直接复用 002 定义 13.1、命题 16.2、定理 16.3–16.4 与 (16.21)；原整 $x$ 分母及 $k=1$ 全地方最小性复用 003 §§49–50、本卷 (62.5)–(62.6) 与定义 64.1。扩域的全部高度及权重费用用 (51.18)–(51.20)，实际符号轨道用 (53.8)–(53.9)。§§64–67 已支付的支持及平均结论直接保留，不重复交付它们的证明。
+
+外部成熟输入为 Silverman，[*The Arithmetic of Elliptic Curves* 第二版，III.6.4(b)、IV.6.3–6.4、VII.2.1–2.2](https://www.math.ens.psl.eu/~obenoist/refs/Silverman.pdf)，及作者[对应勘误](https://www.math.brown.edu/johsilve/AEC/AECErrata.pdf)：分别在实际特殊纤维、严格非分歧第一形式层和原好约化核中使用。这里不需要另用特征零 CM 挠点模或固定点分母渐近定理。
+
+短关系与分母高度法的原始先例为 Akbary–Murty，[*Reduction mod p of Subgroups of the Mordell-Weil Group of an Elliptic Curve*，Proposition 1.2、§8，作者 PDF 页 2、24–25](https://www.cs.uleth.ca/~akbary/npr.pdf)。该文的 $\Gamma$ 是 $E(\mathbb Q)$ 中的自由子群，$\Gamma_p$ 是第一约化层的像；§8 先在有限像群中碰撞，再支付全部候选关系的分母。它没有直接给出原 $F$ 的全部地方权重、$d_p$ 层的共同首入口或本处平均。这里将其方法作为内部输入，(68.8)–(68.21) 明确承担实际群阶、第一层到原全部入口深度、完整四方向点族及 $f_w/16$ 接回 $f_v/8$ 的桥梁。
+
+新增消费者是原实际数据上的 (68.7)、(69.3) 和 (70.2)–(70.5)，属于 repo-derived 综合；不将抽屉原理、挠点结构、形式群、四方向既有高度或 Chebyshev 方法另列为新一般理论，也不主张全球文献优先性。
+
+用白话说，原完整平均的困难已经可以准确分成两块。所有不超过 $R^2$ 的素数，连同各自任意深的首入口及全部后续层，都已付清，并且相对三次尺度趋于零。剩下的只有大于 $R^2$、首入口周期仍不超过 $R$ 的那些素数，它们的完整入口深度仍必须逐项保留。原完整平均的小量与这笔剩余账的小量严格等价；等价没有自动付清剩余账。
+
+这里的平均始终是原 $k=1$ 全地方共同最小质量的有限平均；没有给出逐个 $t$ 的相同小量、任意移动 $k$ 的上界、一般移动行格的完整 gcd 结论，或随 $N$ 移动的 $H,M$ 上的统一小量。原短共振的同时实现、原 $p_H(\alpha)$、原 (31.2)、负 $\vartheta$ 阶段的调和和发散及原覆盖目标仍各有未闭义务。
+
+---
+
+## 追加锚（本行以下为增补区）
