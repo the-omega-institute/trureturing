@@ -39,7 +39,6 @@ statement_id: sha256:1abdc5f3db71567fe05de5aabbe80dddeb5ec5179e4ec7fd49fe71e5005
 rowLegal: proof_shape=bind-only; consumers=Legal, classCount, firstCount, v2, total2
 bonds: proof_shape=bind-only; consumers=Legal, bonds_iff, counting_bridge
 Legal: proof_shape=bind-only; consumers=a, counting_bridge, zero_count
-instDecidableNormal: proof_shape=bind-only; consumers=instDecidableLegal
 instDecidableColLegal: proof_shape=bind-only; consumers=instDecidableLegal, v2, total2
 instDecidableBonds: proof_shape=bind-only; consumers=instDecidableLegal, counting_bridge
 instDecidableLegal: proof_shape=bind-only; consumers=a
@@ -47,7 +46,6 @@ a: proof_shape=bind-only; consumers=counting_bridge, a_eq_w, zero_count, result
 compatible: proof_shape=bind-only; consumers=bonds_iff, v2, classCount
 instDecidableCompatible: proof_shape=bind-only; consumers=v2, classCount
 bonds_iff: proof_shape=bind-only; consumers=counting_bridge
-instDecidableGood: proof_shape=bind-only; consumers=classCount, firstCount
 v2: proof_shape=bind-only; consumers=counting_bridge, v_eq_w
 total2: proof_shape=bind-only; consumers=counting_bridge, a_eq_w
 counting_bridge: proof_shape=bind-only; consumers=a_eq_w
@@ -98,9 +96,6 @@ def Legal {n : ℕ} (A : Fin n × Fin 2 → Fin 6) : Prop :=
       (fun j => A (⟨i.val + 1, h⟩, j))) ∧
     widthNormal (false, false) (fun i j => A (i, j))
 
-private instance instDecidableNormal {n : ℕ} (s : Seen) (f : Fin n → Col) :
-    Decidable (widthNormal s f) :=
-  inferInstanceAs (Decidable (∀ _ _, (_ → _) ∧ (_ → _)))
 private instance instDecidableColLegal (c : Col) : Decidable (rowLegal c) :=
   inferInstanceAs (Decidable (_ ∧ _))
 private instance instDecidableBonds (c d : Col) : Decidable (bonds c d) :=
@@ -121,10 +116,6 @@ private instance instDecidableCompatible (p : Fin 3 × Fin 3) (c : Col) :
 
 private theorem bonds_iff (c d : Col) : bonds c d ↔ compatible (pairs c) d := by
   simp only [bonds, colour_bond_iff, compatible, pairs, Fin.forall_fin_two]
-
-private instance instDecidableGood (s : Seen) (c : Col) : Decidable (good s c) := by
-  unfold good
-  infer_instance
 
 private abbrev v2 := widthV rowLegal pairs compatible
 private abbrev total2 := widthTotal rowLegal pairs
