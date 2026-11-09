@@ -1,0 +1,22 @@
+**定理 28.3（从框架读出到现有量子测量公理）。** 对任意正交投影 $P_E$，取其像空间的正交基 $(e_i)$，定义
+
+$$
+p_\psi(E):=\sum_{e_i\in E}|\langle e_i,\psi\rangle|^2.
+$$
+
+Parseval 恒等式使该定义与所选基无关，并给出
+
+$$
+p_\psi(E)=\langle\psi,P_E\psi\rangle,
+\qquad
+p_\psi(I)=1,
+$$
+
+以及互斥投影的有限可加性。对有限 POVM $E_i\ge0$、$\sum_iE_i=I$，谱分解和线性延拓给出
+
+$$
+\sum_i\langle\psi,E_i\psi\rangle=1.
+$$
+
+对混合态按凸组合延拓，得到 $p_\rho(E)=\operatorname{tr}(\rho E)$。所以现有的投影 Born 公理和有限 POVM 归一化都从“二次比较 + 正交框架总量为一”推出；平方模不是另加的数值猜测，而是框架相容性强迫的唯一函数。
+
