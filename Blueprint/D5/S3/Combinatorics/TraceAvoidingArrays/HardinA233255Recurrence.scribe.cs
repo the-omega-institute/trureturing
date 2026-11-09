@@ -17,7 +17,7 @@ internal sealed class HardinA233255RecurrenceDocument : IScribeDocumentDefinitio
                 + "the sum of the sixteen completed-state coordinates at continuation height m. The "
                 + "matrix certificate first checks every entry against the actual compatible proper "
                 + "seven-cell row fibres. An extra coordinate retains the exponential correction. "
-                + "The displayed six vectors are checked powers of this actual seventeen-coordinate "
+                + "The six explicit vectors are checked powers of this actual seventeen-coordinate "
                 + "transfer on the all-ones vector. Their exact degree-five vector identity propagates "
                 + "to every height by multiplication with arbitrary further matrix powers.")),
             Describe.Lean(DescribeId.Create("result"), DeclarationHandle.Create(

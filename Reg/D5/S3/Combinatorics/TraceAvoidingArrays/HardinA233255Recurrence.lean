@@ -44,9 +44,12 @@ set_option maxRecDepth 20000 in
 private theorem actual_dependence :
     actual.readout () () ⟨1, by decide⟩ ≠ actual.readout () () ⟨2, by decide⟩ := by
   change (a ⟨1, by decide⟩ : ℤ) ≠ (a ⟨2, by decide⟩ : ℤ)
-  have ha := literal_canonical_bridge 0
+  have ha0 := literal_canonical_bridge 0
   have hb := literal_canonical_bridge 1
-  norm_num [F, Matrix.one_mulVec] at ha
+  have ha : (a ⟨1, by decide⟩ : ℤ) = 528 := by
+    calc
+      _ = (16 : ℤ) * 128^0 + 32 * ∑ i : Fin 16, F 0 i := ha0
+      _ = 528 := by norm_num [F, Matrix.one_mulVec]
   have hF (i : Fin 16) : 0 ≤ F 1 i := by
     simp only [F, pow_one]
     apply mul_nonneg (by norm_num)
@@ -59,7 +62,7 @@ private theorem actual_dependence :
     intro q _
     split_ifs <;> norm_num
   have hs : 0 ≤ ∑ i : Fin 16, F 1 i := Finset.sum_nonneg (fun i _ => hF i)
-  norm_num only [pow_one] at hb
+  simp only [pow_one] at hb
   intro he
   rw [← he] at hb
   linarith
