@@ -46,8 +46,11 @@ theorem partialMinimum_hasFDerivAt {c ν : ℝ} {F : ScalarPoint → ℝ}
   have hp := (fiberMinimizer_spec hF hu).1
   have h := ((hF.smooth.contDiffAt (hF.domain_open.mem_nhds hp)).differentiableAt
     (by norm_num)).hasFDerivAt.comp u (minimizerLift_hasFDerivAt hF hu)
+  change HasFDerivAt (fun u => F (minimizerLift hF u)) (envelopeDerivative hF u) u
   convert h using 1
-  ext v
+  rfl
+  apply ContinuousLinearMap.ext
+  intro v
   have hv : minimizerTangent hF u v =
       (v,(0:ℝ)) + (fderiv ℝ (fiberMinimizer hF) u v) • vertical := by
     simp [vertical]
@@ -67,7 +70,8 @@ theorem partialMinimum_smooth {c ν : ℝ} {F : ScalarPoint → ℝ}
       (minimizerLift_smooth hF) (fun u hu => (fiberMinimizer_spec hF hu).1)
   intro u hu
   apply ContDiffAt.contDiffWithinAt
-  rw [contDiffAt_succ_iff_hasFDerivAt (n := 2)]
+  change ContDiffAt ℝ (↑(2 : ℕ) + 1) (partialMinimum hF) u
+  rw [contDiffAt_succ_iff_hasFDerivAt]
   refine ⟨envelopeDerivative hF,⟨quadrant,quadrant_isOpen.mem_nhds hu,?_⟩,
     hd.contDiffAt (quadrant_isOpen.mem_nhds hu)⟩
   exact fun v hv => partialMinimum_hasFDerivAt hF hv
@@ -92,8 +96,11 @@ theorem minimizer_hessian_orthogonal {c ν : ℝ} {F : ScalarPoint → ℝ}
     (hF.smooth.contDiffAt (hF.domain_open.mem_nhds hp))).comp u
       (minimizerLift_hasFDerivAt hF hu)
   have he := congrArg (fun A : Base →L[ℝ] ℝ => A h) hd.fderiv
-  rw [heq.fderiv_eq] at he
-  simpa [hessian] using he.symm
+  have heq' : (fiberGradient F ∘ minimizerLift hF) =ᶠ[𝓝 u] (fun _ => 0) := by
+    filter_upwards [heq] with v hv
+    exact hv
+  rw [heq'.fderiv_eq] at he
+  simpa [hessian, minimizerLift] using he.symm
 
 theorem minimizer_hessian_vertical_right {c ν : ℝ} {F : ScalarPoint → ℝ}
     (hF : IsLHSCB ν (coneInterior c) (coneBoundary c) F)
@@ -110,7 +117,10 @@ theorem minimizer_hessian_vertical_left {c ν : ℝ} {F : ScalarPoint → ℝ}
     hessian F (minimizerLift hF u) (0,a) (minimizerTangent hF u h) = 0 := by
   have hs := (hF.smooth.contDiffAt
     (hF.domain_open.mem_nhds (fiberMinimizer_spec hF hu).1)).isSymmSndFDerivAt (by norm_num)
-  rw [hessian,hs (0,a) (minimizerTangent hF u h)]
+  unfold hessian
+  change fderiv ℝ (fderiv ℝ F) (u, fiberMinimizer hF u) (0,a)
+    (minimizerTangent hF u h) = 0
+  rw [hs (0,a) (minimizerTangent hF u h)]
   exact minimizer_hessian_vertical_right hF hu h a
 
 theorem partialMinimum_hessian {c ν : ℝ} {F : ScalarPoint → ℝ}
@@ -136,7 +146,7 @@ theorem partialMinimum_hessian {c ν : ℝ} {F : ScalarPoint → ℝ}
   rw [heq.fderiv_eq] at hlval
   have hh : fderiv ℝ (fderiv ℝ (partialMinimum hF)) u h k =
       hessian F (minimizerLift hF u) (minimizerTangent hF u h) (k,0) := by
-    simpa [hessian] using hlval.symm.trans hdval
+    simpa [hessian, minimizerLift] using hlval.symm.trans hdval
   rw [hh]
   have hk : minimizerTangent hF u k = (k,(0:ℝ)) +
       (0,fderiv ℝ (fiberMinimizer hF) u k) := by simp
@@ -152,16 +162,21 @@ theorem diagonal_three_eq {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
       fderiv ℝ (fderiv ℝ (fderiv ℝ F)) p v v v := by
   rw [diagonal,iteratedFDerivWithin_of_isOpen 3 hD hp,
     iteratedFDeriv_succ_apply_right,iteratedFDeriv_two_apply]
+  rfl
 
 theorem partialMinimum_second {c ν : ℝ} {F : ScalarPoint → ℝ}
     (hF : IsLHSCB ν (coneInterior c) (coneBoundary c) F)
     {u : Base} (hu : u ∈ quadrant) (h : Base) :
     diagonal 2 quadrant (partialMinimum hF) u h =
       diagonal 2 (coneInterior c) F (minimizerLift hF u) (minimizerTangent hF u h) := by
-  simp only [diagonal,iteratedFDerivWithin_of_isOpen 2 quadrant_isOpen hu,
-    iteratedFDerivWithin_of_isOpen 2 hF.domain_open (fiberMinimizer_spec hF hu).1,
+  have hp : minimizerLift hF u ∈ coneInterior c := by
+    simpa [minimizerLift] using (fiberMinimizer_spec hF hu).1
+  unfold diagonal
+  rw [iteratedFDerivWithin_of_isOpen 2 quadrant_isOpen hu,
+    iteratedFDerivWithin_of_isOpen 2 hF.domain_open hp,
     iteratedFDeriv_two_apply]
-  exact partialMinimum_hessian hF hu h h
+  rw [iteratedFDeriv_two_apply]
+  simpa [hessian, minimizerLift] using partialMinimum_hessian hF hu h h
 
 theorem partialMinimum_third {c ν : ℝ} {F : ScalarPoint → ℝ}
     (hF : IsLHSCB ν (coneInterior c) (coneBoundary c) F)
