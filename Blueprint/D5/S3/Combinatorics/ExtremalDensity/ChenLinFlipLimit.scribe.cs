@@ -41,7 +41,7 @@ internal sealed class ChenLinFlipLimitDocument : IScribeDocumentDefinition
                     All("a", V("Bool"), All("b", V("Bool"), All("w", Words,
                         Eq(Call("flips", Cons(V("a"), Cons(V("b"), V("w")))),
                             Add(Call("if", Eq(V("a"), V("b")), N(0), N(1)),
-                                Call("flips", Cons(V("b"), V("w"))))))))))),
+                                Call("flips", Cons(V("b"), V("w")))))))))),
                 "The empty word and a singleton have no flips. Every unequal adjacent pair adds "
                 + "one. This agrees with counting internal sources and sinks.", DescribeRole.Definition),
             Node("arc-preserving", "ArcPreserving", "All arc-preserving vertex assignments",
@@ -72,7 +72,7 @@ internal sealed class ChenLinFlipLimitDocument : IScribeDocumentDefinition
                     Imp(Lt(N(0), V("N")), All("R", FinRelation(V("N")),
                         Imp(Call("IsTournament", V("R")),
                             Le(Call("homDensity", V("R"), V("w")),
-                                Pow(Div(N(1), N(2)), Call("length", V("w"))))))))))),
+                                Pow(Div(N(1), N(2)), Call("length", V("w")))))))))),
                 "The bound holds for every positive host order and every tournament relation on "
                 + "that carrier. The arbitrary-host theorem proves that enumeration imposes no "
                 + "restriction.", DescribeRole.Definition),
@@ -138,7 +138,7 @@ internal sealed class ChenLinFlipLimitDocument : IScribeDocumentDefinition
                 + "handles saturation. Every element is nonnegative.", DescribeRole.Definition),
             Node("defect-limit", "defectLimit", "The infimum of the defect spectrum",
                 All("Bad", Arrow(Nat, Arrow(Nat, V("Prop"))),
-                    Eq(Call("defectLimit", V("Bad")), Call("sInf", Call("defectSpectrum", V("Bad")))))),
+                    Eq(Call("defectLimit", V("Bad")), Call("sInf", Call("defectSpectrum", V("Bad"))))),
                 "The spectrum is nonempty and bounded below by zero. Its infimum is at most one.",
                 DescribeRole.Definition),
             Node("integer-sign", "Sign", "The source sign type",
@@ -197,7 +197,7 @@ internal sealed class ChenLinFlipLimitDocument : IScribeDocumentDefinition
                     Imp(All("i", V("V"), Eq(Call("rowsum", AddMatrix(V("A"), Call("transpose", V("A"))), V("i")), V("d"))),
                         Eq(Add(Call("mass", Mul(V("M"), V("A"))),
                             Call("mass", Mul(V("M"), Call("transpose", V("A"))))),
-                            Mul(V("d"), Call("mass", V("M")))))))))),
+                            Mul(V("d"), Call("mass", V("M"))))))))),
                 "Rowsum(A+A^T,i) denotes sum over j of A(i,j)+A(j,i). Expand matrix multiplication, "
                 + "interchange the finite sums, and use this row identity.", DescribeRole.Theorem),
             Node("one-edge-padding", "exists_one_edge_padding", "One of two signs retains the average",
@@ -224,7 +224,7 @@ internal sealed class ChenLinFlipLimitDocument : IScribeDocumentDefinition
                 MatrixFamily(All("R", Relation, Imp(Call("IsTournament", V("R")),
                     All("i", V("V"), All("j", V("V"),
                         Eq(Add(ArcEntry(V("i"), V("j")), ArcEntry(V("j"), V("i"))),
-                            Call("if", Eq(V("i"), V("j")), N(0), Div(N(2), Call("card", V("V"))))))))),
+                            Call("if", Eq(V("i"), V("j")), N(0), Div(N(2), Call("card", V("V")))))))))),
                 "On the diagonal both arcs are absent. Off the diagonal exactly one direction "
                 + "is present and contributes 2/card(V).", DescribeRole.Theorem),
             Node("row-sum", "normalizedArcMatrix_row_sum", "The tournament extension row sum",
@@ -232,7 +232,7 @@ internal sealed class ChenLinFlipLimitDocument : IScribeDocumentDefinition
                     Imp(Call("IsTournament", V("R")), All("i", V("V"),
                         Eq(Call("rowsum", AddMatrix(Call("normalizedArcMatrix", V("R")),
                                 Call("transpose", Call("normalizedArcMatrix", V("R")))), V("i")),
-                            Mul(N(2), PaddingFactor)))))))),
+                            Mul(N(2), PaddingFactor))))))),
                 "There are card(V)-1 off-diagonal entries, each equal to 2/card(V). "
                 + "The diagonal contributes zero.", DescribeRole.Theorem),
             Node("logconvex-growth", "logconvex_geometric_lower", "Log-convexity gives geometric growth",
@@ -281,7 +281,7 @@ internal sealed class ChenLinFlipLimitDocument : IScribeDocumentDefinition
                         Imp(Le(V("K"), V("n")), Imp(Lt(N(0), V("n")),
                             Lt(Div(Call("f", V("n")), V("n")),
                                 Add(Div(Add(Call("flips", V("w")), N(1)),
-                                    Call("length", V("w"))), V("d"))))))))))),
+                                    Call("length", V("w"))), V("d")))))))))))),
                 "A failing TAS inequality supplies an actual finite tournament and q>1. Its order "
                 + "exceeds one, since a one-vertex loopless host has zero transfer for every positive "
                 + "word. Write n=2km+s. Reflection, repetition, and a selected s-edge tail give mass "
@@ -318,8 +318,8 @@ internal sealed class ChenLinFlipLimitDocument : IScribeDocumentDefinition
                                 Pow(Call("card", V("V")), Add(V("k"), N(1))))))))),
                 "SourceHom(R,x) is the subtype of all functions Fin(k+1) → V satisfying "
                 + "SourceArcPreserving: sign +1 requires the forward arc and sign -1 the reverse "
-                + "arc at each edge. SourceDensity_eq proves equality with homDensity after sign "
-                + "encoding. HomDensity_reindex constructs an inverse-preserving bijection of these "
+                + "arc at each edge. sourceDensity_eq proves equality with homDensity after sign "
+                + "encoding. homDensity_reindex constructs an inverse-preserving bijection of these "
                 + "function subtypes along any equivalence of host types and preserves the denominator.",
                 DescribeRole.Definition),
             Node("arbitrary-host", "tas_arbitrary_host", "Enumeration preserves the host quantifier",
@@ -426,16 +426,16 @@ internal sealed class ChenLinFlipLimitDocument : IScribeDocumentDefinition
                 "For the convergence argument, call (k,r) a defect when a length-k orientation "
                 + "with r flips has normalized density q=2^k t(P,T)>1 in some finite host T. "
                 + "For a positive-length defect N>=2. The transfer B for P has mass q. The reflected "
-                + "word W=P reflect(P) has transfer C=B B^T, length 2k, and 2r+1 flips. With x "
+                + "word W=P reflect(P) has transfer C=B B^T, length 2k, and at most 2r+1 flips. With x "
                 + "the all-ones vector, moment(C,x,m)=mass(C^m). The reflection and moment bounds "
                 + "give mass(C^m)>=q^(2m).")),
             Paragraph(Text(
                 "For every n write n=2km+s with 0<=s<2k. The word W repeated m times has "
-                + "2m(r+1)-1 flips when m>=1. Append the tail selected by the padding inequality. "
+                + "at most 2m(r+1) flips. Append the tail selected by the padding inequality. "
                 + "Its normalized density is at least c^s q^(2m), where c=(N-1)/N lies in (0,1). "
-                + "This is at least c^(2k-1) q^(2m), which exceeds one for all sufficiently large m. "
+                + "This is at least c^(2k) q^(2m), which exceeds one for all sufficiently large m. "
                 + "The resulting length-n path is therefore a defect for every sufficiently large n. "
-                + "Its flips are at most 2m(r+1)-1+s, hence at most ((r+1)/k)n+2k. This proves "
+                + "Its flips are at most 2m(r+1)+s, hence at most ((r+1)/k)n+2k. This proves "
                 + "eventual upper propagation f(n)/n < (r+1)/k+delta for every positive delta.")),
             Paragraph(Text(
                 "Let L be the infimum of {1} together with all (r+1)/k from defects. This nonempty "
@@ -483,7 +483,7 @@ internal sealed class ChenLinFlipLimitDocument : IScribeDocumentDefinition
             Imp(Lt(N(0), V("d")), Some("K", Nat, All("n", Nat,
                 Imp(Le(V("K"), V("n")), Imp(Lt(N(0), V("n")),
                     Lt(Div(Call("F", V("n")), V("n")),
-                        Add(Div(Add(V("r"), N(1)), V("k")), V("d"))))))))))));
+                        Add(Div(Add(V("r"), N(1)), V("k")), V("d")))))))))))));
     private static Formula ConvergenceTo(string name, Formula limit) => All("e", Real,
         Imp(Lt(N(0), V("e")), Some("K", Nat, And(Le(N(1), V("K")), All("n", Nat,
             Imp(Le(V("K"), V("n")), Lt(Call("abs", Sub(Div(Call(name, V("n")), V("n")), limit)), V("e"))))))));
