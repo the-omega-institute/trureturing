@@ -10,7 +10,8 @@ import Mathlib.GroupTheory.SpecificGroups.Quaternion
 import Mathlib.Data.Finset.Powerset
 import Mathlib.Data.Finset.Prod
 import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Omega
+import Lean.Elab.Tactic.Omega
+import Mathlib.Algebra.Ring.Parity
 
 /-! Mandal--Neetu, arXiv:2602.09073v1, Question 6.3, Main.tex line 792.
 The source asks about ALL distinct subsets and literal right quotients.
@@ -19,6 +20,8 @@ Source SHA-256: 7ed61ecf73935d71b750c85a2f03f635b3669ae370d87e41f16c653c0e48f959
 uses only trichotomy and the odd total of 495 four-element subsets at n = 3;
 it does not replace the group operation or compute a restricted family.
 -/
+
+set_option maxRecDepth 4096
 
 noncomputable section
 
@@ -69,34 +72,48 @@ private theorem comparison_partition {α : Type*} (s : Finset α) (f g : α → 
     (s := s.filter fun a => ¬ g a < f a) (fun a => f a < g a)
   have hl : ((s.filter fun a => ¬ g a < f a).filter fun a => f a < g a) =
       s.filter (fun a => f a < g a) := by
-    ext a
+    apply Finset.ext
+    intro a
     simp only [mem_filter]
-    omega
+    constructor
+    · rintro ⟨⟨ha, _⟩, hlt⟩
+      exact ⟨ha, hlt⟩
+    · rintro ⟨ha, hlt⟩
+      exact ⟨⟨ha, by omega⟩, hlt⟩
   have he : ((s.filter fun a => ¬ g a < f a).filter fun a => ¬ f a < g a) =
       s.filter (fun a => f a = g a) := by
-    ext a
+    apply Finset.ext
+    intro a
     simp only [mem_filter]
-    omega
+    constructor
+    · rintro ⟨⟨ha, hge⟩, hle⟩
+      exact ⟨ha, by omega⟩
+    · rintro ⟨ha, heq⟩
+      exact ⟨⟨ha, by omega⟩, by omega⟩
   rw [hl, he] at h₂
   omega
+
+private theorem counts_total (G : Type*) [Group G] [Fintype G] [DecidableEq G]
+    (m : ℕ) : sumDominantCount G m + differenceDominantCount G m +
+      balancedCount G m = Nat.choose (Fintype.card G) m := by
+  simpa only [sumDominantCount, differenceDominantCount, balancedCount,
+    card_powersetCard, card_univ] using
+    (comparison_partition ((univ : Finset G).powersetCard m)
+      (fun A => (productSet A).card) (fun A => (rightQuotientSet A).card))
 
 /-- The exact universal statement is false: its instance n = 3, m = 4 is impossible. -/
 theorem result : Not claim := by
   intro h
   obtain ⟨hS, hD, hB⟩ := h 3 (by norm_num) 4 (by norm_num) (by norm_num)
-  have hp := comparison_partition
-    ((univ : Finset (QuaternionGroup 3)).powersetCard 4)
-    (fun A => (productSet A).card) (fun A => (rightQuotientSet A).card)
-  have hc : sumDominantCount (QuaternionGroup 3) 4 +
-      differenceDominantCount (QuaternionGroup 3) 4 +
-      balancedCount (QuaternionGroup 3) 4 = 495 := by
-    calc
-      _ = ((univ : Finset (QuaternionGroup 3)).powersetCard 4).card := hp
-      _ = 495 := by
-        rw [card_powersetCard, card_univ, QuaternionGroup.card]
-        norm_num [Nat.choose]
-  have hev : Even (495 : ℕ) := hc ▸ (hS.add hD).add hB
-  norm_num at hev
+  have hc := counts_total (QuaternionGroup 3) 4
+  have hnum : Nat.choose (Fintype.card (QuaternionGroup 3)) 4 = 495 := by
+    rw [QuaternionGroup.card]
+    norm_num [Nat.choose]
+  have hev : Even (Nat.choose (Fintype.card (QuaternionGroup 3)) 4) :=
+    hc ▸ (hS.add hD).add hB
+  rw [hnum] at hev
+  obtain ⟨k, hk⟩ := hev
+  omega
 
 #print axioms result
 #print claim
