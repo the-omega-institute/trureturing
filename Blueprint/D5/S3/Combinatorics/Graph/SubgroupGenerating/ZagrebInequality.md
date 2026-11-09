@@ -48,6 +48,10 @@ $$\forall G \in \operatorname{Type},\; \forall groupG \in \operatorname{Group}\l
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/SubgroupGenerating/ZagrebInequality.hansen_vukicevic` (`✓ std3`). ∎
 
+*Resolves.* `Problems/das-erfanian-nath-2025-sgb-zagreb-problem310` (proved) by `D5/S3/Combinatorics/Graph/SubgroupGenerating/ZagrebInequality.hansen_vukicevic`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"das-erfanian-nath-2025-sgb-zagreb-problem310","declaration_gid":"D5/S3/Combinatorics/Graph/SubgroupGenerating/ZagrebInequality.hansen_vukicevic","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Shrabani Das; Ahmad Erfanian; Rajat Kanti Nath (2025). *Zagreb indices of subgroup generating bipartite graph*. DOI: [10.48550/arXiv.2501.06124](https://doi.org/10.48550/arXiv.2501.06124). URL: <https://arxiv.org/abs/2501.06124v1>.
@@ -60,9 +64,9 @@ Write m for the square of the group order, k for the number of all subgroups, an
 
 Source correspondence: Das, Erfanian and Nath, arXiv:2501.06124v1, Theorem 3.1 gives the two index formulas using Pr_H(G)=r(H)/m; Theorem 3.2 gives the edge and degree sums; Theorem 3.3 gives the equivalent criterion k times the sum of Pr_H(G) squared at least one. These are known source identities. The formal bridge uses the inherited literal graph, sum_pairCount, edge_count, degree_pair and degree_subgroup directly; the last two are the original supplier declarations made public. Their separate parent delivery and authorship are not claimed here.
 
-Mathlib's sq_sum_le_card_mul_sum_sq states that m squared is at most k times the sum of r(H) squared. Clearing the two positive denominators yields the stated comparison. The candidate answer to the full existential Problem 3.10, printed page 13, is NO. Independent source-fidelity, per-declaration shape and admission evaluation remain pending. The intended admission basis is open-problem-resolution; the producer's bind-only assessment is provisional and claims no new escape content. This theorem makes no claim about arbitrary forests.
+Mathlib's sq_sum_le_card_mul_sum_sq states that m squared is at most k times the sum of r(H) squared. Clearing the two positive denominators yields the stated comparison, so the answer to the full existential Problem 3.10, printed page 13, is NO. All five theorems in this module are bind-only. The private pairEdge_injective and actual_edges are consumed by second_formula; first_formula and second_formula are consumed by hansen_vukicevic. The endpoint's admission basis is open-problem-resolution; neither it nor the consumed helpers supplies new escape content. This theorem makes no claim about arbitrary forests.
 
-The retained Reg mirror compiles but its binding audit is declared_unresolved: IE-C050 ClosedTruthReadout, unclassified_form:source.coordinate_dependency, missing=0;selected=#[3];scope=4. The concrete unfinished-audit exception is https://github.com/the-omega-institute/trureturing/issues/28349#issuecomment-6731659148. The prospective event is https://github.com/the-omega-institute/trureturing/issues/28349#issuecomment-6731353916. Parent integration, freezing, required CI and delivery remain outstanding; the claim metadata identifies the intended candidate resolution and records no official settlement.
+The retained Reg mirror compiles but its binding audit is declared_unresolved: IE-C050 ClosedTruthReadout, unclassified_form:source.coordinate_dependency, missing=0;selected=#[3];scope=4. The concrete unfinished-audit exception is https://github.com/the-omega-institute/trureturing/issues/28349#issuecomment-6731659148. The prospective event is https://github.com/the-omega-institute/trureturing/issues/28349#issuecomment-6731353916. The full resolution metadata names one exact frozen theorem. Final independent publication review, required CI, merge and first-dev verification remain delivery obligations; no official settlement, priority or solved-problem KPI is asserted.
 
 ## References
 
