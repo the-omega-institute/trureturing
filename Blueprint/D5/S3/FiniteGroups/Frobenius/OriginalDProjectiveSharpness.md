@@ -1,14 +1,14 @@
-# Original-D modular sharpness data
+# Original-D modular projectivity counterexample
 
 ## Abstract
 
 A modular dihedral representation separates conjugation freeness from a trivial subgroup action.
 
-**Theorem 1.1 (Full original-D data over F7).**
+**Theorem 1.1 (Nonprojectivity with full original-D hypotheses over F7).**
 
-$$Finite\left(G\right) \land \left(\operatorname{Nat}.\operatorname{card}\left(G\right) = 42 \land \left(FiniteDimensional\left(k, V\right) \land \left(\operatorname{Representation}.\operatorname{IsIrreducible}\left(rho\right) \land \left(\operatorname{Subgroup}.\operatorname{Normal}\left(N\right) \land \left(\left(\forall g \in G,\; \neg (\operatorname{Membership}.\operatorname{mem}\left(N, g\right)) \Rightarrow \left(\forall n \in N,\; \operatorname{MulAut}.\operatorname{conjNormal}\left(g\right)\left(n\right) = n \Rightarrow n = 1\right)\right) \land \left(\neg (\operatorname{Representation}.\operatorname{IsTrivial}\left(\operatorname{MonoidHom}.\operatorname{comp}\left(rho, \operatorname{Subgroup}.\operatorname{subtype}\left(N\right)\right)\right)) \land \left(Finite\left(H\right) \land \left(\operatorname{Nat}.\operatorname{card}\left(H\right) = 7 \land \operatorname{Representation}.\operatorname{IsTrivial}\left(\operatorname{MonoidHom}.\operatorname{comp}\left(rho, \operatorname{Subgroup}.\operatorname{subtype}\left(H\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)$$
+$$Finite\left(G\right) \land \left(\operatorname{Nat}.\operatorname{card}\left(G\right) = 42 \land \left(FiniteDimensional\left(k, V\right) \land \left(\operatorname{Representation}.\operatorname{IsIrreducible}\left(rho\right) \land \left(\operatorname{Subgroup}.\operatorname{Normal}\left(N\right) \land \left(\left(\forall g \in G,\; \neg (\operatorname{Membership}.\operatorname{mem}\left(N, g\right)) \Rightarrow \left(\forall n \in N,\; \operatorname{MulAut}.\operatorname{conjNormal}\left(g\right)\left(n\right) = n \Rightarrow n = 1\right)\right) \land \left(\neg (\operatorname{Representation}.\operatorname{IsTrivial}\left(\operatorname{MonoidHom}.\operatorname{comp}\left(rho, \operatorname{Subgroup}.\operatorname{subtype}\left(N\right)\right)\right)) \land \left(Finite\left(H\right) \land \left(\operatorname{Nat}.\operatorname{card}\left(H\right) = 7 \land \left(\operatorname{Representation}.\operatorname{IsTrivial}\left(\operatorname{MonoidHom}.\operatorname{comp}\left(rho, \operatorname{Subgroup}.\operatorname{subtype}\left(H\right)\right)\right) \land \left(\operatorname{Nat}.\operatorname{card}\left(N\right) = 21 \land \left(\neg (IsUnit\left((\operatorname{Nat}.\operatorname{card}\left(N\right) : k)\right)) \land \neg (\operatorname{Module}.\operatorname{Projective}\left(MonoidAlgebra\left(k, G\right), \operatorname{Representation}.\operatorname{asModule}\left(rho\right)\right))\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/FiniteGroups/Frobenius/OriginalDProjectiveSharpness.originalD_example_data` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/FiniteGroups/Frobenius/OriginalDProjectiveSharpness.originalD_counterexample` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -22,8 +22,12 @@ For irreducibility, let W be a nonzero invariant subspace and choose a nonzero v
 
 The tag-preserving projection from G to the dihedral group with six elements reduces rotation coordinates modulo three. Its kernel H consists of the seven rotations with coordinates divisible by three. The representation factors through this projection, so H acts trivially. H has order seven, while the Frobenius rotation subgroup N has order 21: these are different roles and different subgroups.
 
-The mathematical distinction exposed here is between conjugation on N and the linear action on the representation space. Conjugation is fixed-point-free outside N, yet a subgroup of characteristic order acts trivially on an irreducible representation whose restriction to N is nontrivial. The order-seven subgroup supplies the concrete input for a separate projectivity obstruction over the group algebra. The combined data statement does not itself contain that homological conclusion. The example and its coordinate proof are classical, without a literature novelty claim.
+The mathematical distinction exposed here is between conjugation on N and the linear action on the representation space. Conjugation is fixed-point-free outside N, yet a subgroup of characteristic order acts trivially on an irreducible representation whose restriction to N is nontrivial.
+
+To prove nonprojectivity of the actual full group-algebra module, suppose it were projective and restrict to H. Mathlib's categorical restriction functor preserves projective objects; its equivalence between representations and group-algebra modules identifies the exact module in this example. The first-coordinate functional is an H-equivariant map to the trivial one-dimensional representation. Projectivity lifts this functional through augmentation from the left regular representation. Evaluate the lift at the first coordinate vector to obtain z in F7[H]. Since H fixes that vector, H fixes z under left translation. Evaluating the coefficient of h in h times z shows that every coefficient equals the coefficient of the identity. Augmentation is therefore seven times that coefficient, which is zero in F7, whereas the lifting identity makes it one. This contradiction proves nonprojectivity, with no assumed homological premise.
+
+The full rotation order is 21, whose image in F7 is zero and hence not a unit. Thus OriginalDFrobenius.projective_originalD, the sufficient theorem in OriginalDProjective, cannot simply drop its invertibility assumption. Conjugation freeness and regular complement data do not prevent a characteristic-order subgroup from being invisible to the representation. This single counterexample gives an existential limit on that sufficient theorem; it does not assert that invertibility of the order of N is universally necessary. The example and the augmentation argument are classical, without a literature novelty claim.
 
 ## References
 
-- Truth anchor: `D5/S3/FiniteGroups/Frobenius/OriginalDProjectiveSharpness.originalD_example_data`
+- Truth anchor: `D5/S3/FiniteGroups/Frobenius/OriginalDProjectiveSharpness.originalD_counterexample`
