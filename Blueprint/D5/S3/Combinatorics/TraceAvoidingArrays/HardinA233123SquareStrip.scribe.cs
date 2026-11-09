@@ -37,14 +37,9 @@ internal sealed class HardinA233123SquareStripDocument : IScribeDocumentDefiniti
                 "There is exactly one horizontal bond in a two-column row."),
             Def("bonds", "bonds", "The two vertical bonds", BondsFormula(),
                 "The same column index is used in both consecutive rows."),
-            Def("legal", "Legal", "The literal array predicate", LegalFormula(),
-                "Legal is the published widthLegal predicate specialized to rowLegal and bonds. "
-                + "The first-cell existential fails when n is zero. The shared widthNormal "
-                + "definition says that, at cell (i,j), each required predecessor is at "
-                + "(r,t) with r<i or r=i and t<j. The initial seen flags are both false."),
             Def("count", "a", "The literal filtered count", CountFormula(),
                 "Every function from Fin n times Fin 2 to Fin 6 occurs in Finset.univ. "
-                + "Filtering by the owner widthLegal predicate and taking its cardinality is the sequence definition. "
+                + "Filtering by the owner widthLegal predicate, specialized to rowLegal and bonds, and taking its cardinality is the sequence definition. The shared widthNormal definition says that, at cell (i,j), each required predecessor is at (r,t) with r<i or r=i and t<j; the initial seen flags are both false. "
                 + "Thus a 0 = 0 by the first-cell condition.", true),
             Def("compatible", "compatible", "Boundary compatibility", CompatibleFormula(),
                 "BooleanRankThreeK4.beta has fibres {0,5}, {1,4}, {2,3}. Its value for each "
@@ -113,14 +108,6 @@ internal sealed class HardinA233123SquareStripDocument : IScribeDocumentDefiniti
         var x = App(c, j); var y = App(d, j);
         return All("c", Col(), All("d", Col(), Eq(Self("bonds", c, d),
             All("j", Fin(2), And(Ne(x, y), Ne(Add(Val(x), Val(y)), D(5)))))));
-    }
-
-    private static Formula LegalFormula()
-    {
-        var n = V("n"); var a = V("A");
-        return All("n", Nat(), All("A", ArrayType(n), Eq(Self("Legal", a),
-            Call(Transfer + "widthLegal", Qualified(Root + "rowLegal"),
-                Qualified(Root + "bonds"), a))));
     }
 
     private static Formula CountFormula()

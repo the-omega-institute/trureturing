@@ -36,13 +36,14 @@ D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.widthTotal
 statement_id: sha256:c4c082551693765b0f6c344f5f6ff825120f019a96ec4d79015c10c10bf774d0
 D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.width_counting_bridge
 statement_id: sha256:a6ad861eda2ca48bc91989542e4b7cc27d81aec8df9a91b8db40c9398c577c72
+D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.colour_bond_iff
+statement_id: sha256:b9273762bbccc68fc56c48c38b8aba02a46a50a53bfbbe70a660fd21867d6be8
 D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.Valid
 statement_id: sha256:214fcd95916dbdaa9b9ace506c545eeb309580e42df33d25224d324be358ccb9
 D5.S3.Observer.Separation.BooleanRankThreeK4.beta
 statement_id: sha256:1abdc5f3db71567fe05de5aabbe80dddeb5ec5179e4ec7fd49fe71e500518481
-rowLegal: proof_shape=bind-only; consumers=Legal, a, a_eq_w, classCount, counting_bridge, firstCount, initial_counts, initial_valid, instDecidableRowLegal, row_counts, total2, v2, v_eq_w, valid_next, zero_count
-bonds: proof_shape=bind-only; consumers=Legal, instDecidableBonds, a, bonds_iff, counting_bridge, zero_count
-Legal: proof_shape=bind-only; consumers=none (owner alias mirrored by Scribe)
+rowLegal: proof_shape=bind-only; consumers=a, a_eq_w, classCount, counting_bridge, firstCount, initial_counts, initial_valid, instDecidableRowLegal, row_counts, total2, v2, v_eq_w, valid_next, zero_count
+bonds: proof_shape=bind-only; consumers=instDecidableBonds, a, bonds_iff, counting_bridge, zero_count
 instDecidableRowLegal: proof_shape=bind-only; consumers=a, a_eq_w, classCount, counting_bridge, firstCount, initial_counts, initial_valid, row_counts, total2, v2, v_eq_w, valid_next, zero_count
 instDecidableBonds: proof_shape=bind-only; consumers=a, counting_bridge, zero_count
 a: proof_shape=bind-only; consumers=a_eq_w, counting_bridge, recurrence, result, zero_count
@@ -64,7 +65,7 @@ v_eq_w: proof_shape=content; consumers=a_eq_w
 a_eq_w: proof_shape=content; consumers=recurrence, result
 recurrence: proof_shape=content; consumers=result
 zero_count: proof_shape=bind-only; consumers=result
-result: proof_shape=content; consumers=terminal result (#28348); direct_frozen_dependencies=PairStrip.Col, PairStrip.Seen, PairStrip.finish, PairStrip.good, PairStrip.pairs, TriangleStrip.Valid, TriangleStrip.widthInstDecidableGood, TriangleStrip.widthInstDecidableLegal, TriangleStrip.widthLegal, TriangleStrip.widthNormal, TriangleStrip.widthStep, TriangleStrip.widthTotal, TriangleStrip.widthV, TriangleStrip.width_counting_bridge, BooleanRankThreeK4.beta
+result: proof_shape=content; consumers=terminal result (#28348); direct_frozen_dependencies=PairStrip.Col, PairStrip.Seen, PairStrip.finish, PairStrip.good, PairStrip.pairs, TriangleStrip.Valid, TriangleStrip.widthInstDecidableGood, TriangleStrip.widthInstDecidableLegal, TriangleStrip.widthLegal, TriangleStrip.widthNormal, TriangleStrip.widthStep, TriangleStrip.widthTotal, TriangleStrip.widthV, TriangleStrip.width_counting_bridge, TriangleStrip.colour_bond_iff, BooleanRankThreeK4.beta
 -/
 
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip
@@ -91,9 +92,6 @@ def rowLegal (c : Col) : Prop :=
 
 def bonds (c d : Col) : Prop :=
   ∀ j : Fin 2, c j ≠ d j ∧ (c j).val + (d j).val ≠ 5
-
-def Legal {n : ℕ} (A : Fin n × Fin 2 → Fin 6) : Prop :=
-  widthLegal rowLegal bonds A
 
 private instance instDecidableRowLegal (c : Col) : Decidable (rowLegal c) :=
   inferInstanceAs (Decidable (_ ∧ _))
