@@ -777,3 +777,1094 @@ $$
 这些都是共同质量的上界，允许 $G_{\mathscr N}=0$；既不提供共同正下界，也不证明组合间独立性。两行确实代表原点对的实际组合，但没有由此证明它们同时实现原先选定的短共振。一般非零有限目标的成功余类不必为 $q_H\mathbb Z$，故 (54.9) 不延伸到那些整数。原 $p_H(\alpha)$ 的正下界、原 (31.2)、负 $\vartheta$ 阶段的调和和发散及同一实际 $Y$ 上的满测，均不由这里的上界推出。$\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 55. 标量 Frobenius 的实际半点像与充分饱和入口
+
+**定义 55.1（中央符号、倍二像与合格标量支持）。** 保持定义 51.1、53.1、54.1 的全部原数据，特别保留实际半点 $Q_1,Q_2$、原整数 $n,k$、全部地方及原过滤。记
+
+$$
+\mathscr L=\{p>7:\chi_2(p)=\chi_7(p)=1\}.
+\tag{55.1}
+$$
+
+对 $p\in\mathscr L$，定义 53.1 的实际 Frobenius 系数作用为中央元 $\epsilon_p I$，其中 $\epsilon_p\in\{1,-1\}$。中央元的共轭类只有自身，故这个符号与 $v\mid p$ 的选择无关；以下每次作用仍只在一个固定地方内进行。这里 $\epsilon_p$ 是 Frobenius 本身在实际半点上的符号，不是原 (16.9) 中 Frobenius 平方的符号 $\varepsilon_p$；后一个符号在 $\mathscr L$ 上恒为 $1$。在当前特殊纤维的代数闭包内置
+
+$$
+\begin{gathered}
+G_p^{\mathrm{sc}}=\ker(\pi_p-[\epsilon_p]),\qquad
+N_p=p+1-\epsilon_p a_p,\qquad D_p=N_p/4,\\
+A=[n]P_1,\qquad B=[n]P_2,\qquad
+X=[k]A=T_{n,m_k},\qquad Y=A+[k]B=T_{n,l_k},\\
+\mathcal H_v(n)=\langle\overline A,\overline B\rangle,
+\qquad
+\mathscr C_k=\{p\in\mathscr L:\gcd(k^2,D_p)\mid |k|\},
+\qquad n,k\in\mathbb Z\setminus\{0\}.
+\end{gathered}
+\tag{55.2}
+$$
+
+下条证明 $D_p$ 是正整数。$A,B,X,Y$ 的非挠性直接由原 (16.21) 或 (53.3) 保证，特别不把约化中的 $O$ 当作全局点的零性。$\mathcal H_v(n)$ 仅为两个原点的整数生成群，不添加 CM 生成元，也不假定 $P_2=[i]P_1$。
+
+**定理 55.2（半点把标量充分条件降到 $D_p$ 并控制实际入口）。** 对每个 $p\in\mathscr L$ 和每个固定 $v\mid p$，有
+
+$$
+\begin{gathered}
+\overline Q_1,\overline Q_2\in G_p^{\mathrm{sc}},\qquad
+\#G_p^{\mathrm{sc}}=N_p,\qquad
+G_p^{\mathrm{sc}}[2]=\widetilde E_0[2],\\
+\#[2]G_p^{\mathrm{sc}}=D_p,\qquad
+\mathcal H_v(n)\subseteq[2]G_p^{\mathrm{sc}},\qquad
+p\nmid N_p.
+\end{gathered}
+\tag{55.3}
+$$
+
+对每个非零整数 $k$，若 $p\in\mathscr C_k$，则在 $[2]G_p^{\mathrm{sc}}$ 上
+
+$$
+\ker[k^2]=\ker[k].
+\tag{55.4}
+$$
+
+对全部非零整数 $n$，这个条件给出原两行的同地方入口
+
+$$
+X,Y\in U_v(1)
+\quad\Longleftrightarrow\quad
+A,[k]B\in U_v(1).
+\tag{55.5}
+$$
+
+充分条件证书失败的位置精确为
+
+$$
+p\in\mathscr L\setminus\mathscr C_k
+\quad\Longleftrightarrow\quad
+\exists\text{ 素数 }\ell\mid |k|:
+ v_\ell(D_p)>v_\ell(|k|).
+\tag{55.6}
+$$
+
+右端只判定这个证书失败，不断言实际点的入口或 (55.4) 必然失败。
+
+**证明。** 固定 $v$。定义 53.1 的半点作用给出 $g_vQ_j=[\epsilon_p]Q_j$，约化与算术 Frobenius 相容，故 $\pi_p\overline Q_j=[\epsilon_p]\overline Q_j$。这使用同一个实际半点的作用，不从 $\pi_p^2\overline Q_j=\overline Q_j$ 反推一次 Frobenius 的符号。
+
+以下同源与有限群事实只作为本条实际入口的中间输入。Silverman，*The Arithmetic of Elliptic Curves*，第二版，[III.4.10(c)、III.5.6、III.6.3–6.4、V.1.1、V.2.3–2.3.1](https://www.math.ens.psl.eu/~obenoist/refs/Silverman.pdf)，给出可分同源的核阶、微分判据、次数二次型及 Frobenius 的迹。它们用于当前算子时给出
+
+$$
+\deg(\pi_p-[\epsilon_p])=p+1-\epsilon_p a_p=N_p,
+\qquad d(\pi_p-[\epsilon_p])=-\epsilon_p\ne0.
+\tag{55.7}
+$$
+
+因此同源可分，几何核确有 $N_p$ 个点。原曲线的四个二挠点 $O,(0,0),(1,0),(-1,0)$ 都在 $\mathbb F_p$ 上；Frobenius 固定它们，两个符号在二挠上也都为恒等。因此全二挠都在 $G_p^{\mathrm{sc}}$ 内，而倍二在这个有限群上的核恰是这四点。纤维等势给出 $\#[2]G_p^{\mathrm{sc}}=N_p/4$。又因 $P_j=[2]Q_j$，其约化及全部整数倍都在这个倍二像内，证明所写包含关系。
+
+Hasse 界在 $p>7$ 给出
+
+$$
+0<(\sqrt p-1)^2\le N_p
+\le p+1+2\sqrt p<2p.
+\tag{55.8}
+$$
+
+已经知道 $4\mid N_p$。如果 $p\mid N_p$，(55.8) 便迫使 $N_p=p$，与 $p$ 为奇素数且 $4\mid N_p$ 矛盾。故 $p\nmid N_p$，也有 $p\nmid D_p$。这里没有把 Hasse 大小界单独当作互素结论。
+
+在有限群 $[2]G_p^{\mathrm{sc}}$ 内，若 $[k^2]Z=O$，Lagrange 给出 $\operatorname{ord}(Z)\mid D_p$，同时 $\operatorname{ord}(Z)\mid k^2$。在 $p\in\mathscr C_k$ 时，遂有 $\operatorname{ord}(Z)\mid\gcd(k^2,D_p)\mid |k|$，即 $[k]Z=O$。反向包含恒成立，证明 (55.4)。所用有限群输入见 Milne，[*Group Theory*，版本 4.01，定理 1.26、推论 1.27](https://www.jmilne.org/math/CourseNotes/GT.pdf)；这里只在原点所属的阶 $D_p$ 群内消费它。
+
+若 $X,Y\in U_v(1)$，在同一个约化群内有
+
+$$
+[k]\overline A=O,\qquad
+\overline A+[k]\overline B=O,\qquad
+[k^2]\overline B=O.
+\tag{55.9}
+$$
+
+因 $\overline B\in[2]G_p^{\mathrm{sc}}$，(55.4) 给出 $[k]\overline B=O$，再由第二式得 $\overline A=O$。好约化的核正是原 $U_v(1)$，故得到右侧入口；反向由子群性立即成立。约化核与形式群的经典对应见 Silverman 同书 VII.2.1–2.2。本证明没有在整个 $E_0(F_v)$ 上除以 $k$。
+
+最后，令 $a=v_\ell(|k|)$、$d=v_\ell(D_p)$。整除条件在这个素数上是 $\min(2a,d)\le a$。若 $a=0$ 它恒成立；若 $a>0$，它恰等价于 $d\le a$，这证明 (55.6)。因为 $D_p\mid N_p$，旧的 $\gcd(k^2,N_p)\mid |k|$ 蕴含本条条件；反向不成立的实际例子见命题 57.2。
+
+上述微分判据按作者[第二版勘误](https://www.math.brown.edu/johsilve/AEC/AECErrata.pdf)对 III.5.6(b) 的说明用于非零同源；这里 (55.8) 已排除零同源。实际点及半点的来源仍为 Brox 的[固定源码 “The quadratic-field elliptic curve” 与 `lem:independent`](https://github.com/JoseBrox/diophantine-z-q_improvements/blob/61b82ccacfbefdff3d6e7cf986d6e6279afa1372/papers/trace_heights/aggregate_trace_height_20261108_v9.tex)，归一化及带符号作用直接沿用 (53.1)、(53.8)–(53.9)。本条新增的是这些实际半点对原两行的 $D_p$ 充分入口，属 repo-derived 综合推导，不将有限群或 Frobenius 理论另立为新的一般结果。
+
+用白话说，原点已经是实际半点的两倍，所以它们所处的有限群只需要取整个 Frobenius 核的倍二像，阶数便从 $N_p$ 降为 $N_p/4$。在这个较小群内，只要被 $k^2$ 杀掉的点也被 $k$ 杀掉，两行同时约化为零就能取回原方向 $[n]P_1$ 的入口。这个条件只是一张足够用的证书；证书不合格时，仍须看实际点，不能直接宣布入口失败。$\square$
+
+## 56. 第一形式层内的深度增量与同一个平方分母
+
+**定理 56.1（合格标量支持的无参数对数深度界）。** 对全部 $n,k\in\mathbb Z\setminus\{0\}$、全部 $p\in\mathscr C_k$ 及每个固定 $v\mid p$，置 $a=b_v(A)$、$j=j_v(n,k)=\min\{b_v(X),b_v(Y)\}$。则
+
+$$
+0\le j\le2a,\qquad
+p\nmid k\ \Longrightarrow\ j\le a.
+\tag{56.1}
+$$
+
+若 $j>0$，还有严格的一份深度节省
+
+$$
+a\ge1,\qquad j\le2a-1.
+\tag{56.2}
+$$
+
+这些断言包括 $j=0$ 的情形和负 $n,k$，不要求 $n\in q_H\mathbb Z$。
+
+**证明。** $j=0$ 时 (56.1) 由非负性成立，不使用形式群赋值公式，也不主张 (56.2)。以下假设 $j>0$。由 (55.5)，$A,[k]B\in U_v(1)$，故 $a\ge1$。
+
+本处 $p>7$、$e_v=1$，原好整模型的第一形式层满足严格阈值 $1>e_v/(p-1)$。Silverman 同书 [IV.6.3–6.4、VII.2.2](https://www.math.ens.psl.eu/~obenoist/refs/Silverman.pdf) 的形式对数在这个第一层是保赋值同构；其乘法线性化及原 $b_v(S)=\operatorname{ord}_v t(S)$ 仅对 $S\in U_v(1)\setminus\{O\}$ 使用，给出
+
+$$
+b_v([r]S)=b_v(S)+v_p(r)
+\quad\bigl(0\ne r\in\mathbb Z,\ S\in U_v(1)\setminus\{O\}\bigr).
+\tag{56.3}
+$$
+
+取负保赋值，故 $r$ 可为负。作者勘误对 IV.6.3(a) 区分分式域收敛与整环收敛；这里已在严格保赋值阈值之内，因而不依赖那个未经限制的整环收敛断言。与原定理 16.3 相同，第一层内的非零点及其非零整数倍不会落到 $O$。
+
+写 $k=p^t u$，其中 $t=v_p(|k|)\ge0$、$u\in\mathbb Z\setminus\{0\}$、$p\nmid u$。先对已经进入第一层的 $A$ 使用 (56.3)，得到
+
+$$
+b_v(X)=a+t.
+\tag{56.4}
+$$
+
+若 $t=0$，即得 $j\le a$，且 $a\le2a-1$。
+
+设 $t>0$，置 $C=[u]B$。此刻尚未对 $B$ 或 $C$ 使用形式赋值公式。由 $[k]B\in U_v(1)$，有 $[p^t]\overline C=O$；又因 $\overline C\in[2]G_p^{\mathrm{sc}}$，其阶整除 $D_p$，而 $p\nmid D_p$。故 $\overline C=O$，即 $C$ 确实进入 $U_v(1)$。$C$ 为非挠非零点，所以 $d=b_v(C)\ge1$。现在才可用 (56.3) 得
+
+$$
+b_v([k]B)=b_v([p^t]C)=d+t\ge t+1.
+\tag{56.5}
+$$
+
+若 $a\le t$，则 $b_v(A)=a<d+t=b_v([k]B)$。第一层内形式对数把 $Y=A+[k]B$ 化为两个不同赋值的数之和，因而准确有 $b_v(Y)=a$，再由 (56.4) 得 $j=a\le2a-1$。若 $a>t$，整数性给出 $t\le a-1$，于是
+
+$$
+j\le b_v(X)=a+t\le2a-1.
+\tag{56.6}
+$$
+
+这穷尽 $t>0$ 的情形，并证明 (56.1)–(56.2)。只有先证明 $C\in U_v(1)$ 后才把乘 $p^t$ 的深度增量写成 $t$；$p\nmid D_p$ 用在有限约化群，形式对数用在第一形式层，两步没有混用。
+
+用白话说，乘数里的 $p$ 次幂确实会增加第一行的深度，但第二行也含有同一 $p$ 次幂的项。如果原方向太浅，两个不同深度的项不能相消，第二行就把共同深度截在原深度；如果原方向足够深，那个增量已经小于原深度。两种情形都由同一个原方向的两份深度支付，且共同深度为正时还至少省去一层。这是原两行及合格标量支持的 repo-derived 局部推导，形式群定理仅为内部输入。$\square$
+
+**定义 56.2（联合支持与原分母截取）。** 对固定非零整数 $k$，置
+
+$$
+\mathscr U_k=\mathscr N\sqcup\mathscr C_k,\qquad
+\mathscr V_k=\{p\in\mathscr C_k:p\mid |k|\}.
+\tag{56.7}
+$$
+
+将 (54.2) 的截取记号按同一个乘积公式用于任意素数集合 $\mathscr T$：对整数 $H\ge2$ 及非挠 $S\in E_0(F)$，置
+
+$$
+\begin{aligned}
+B_{\mathscr T,H}(S)&=\prod_{\substack{p>H\\p\in\mathscr T}}\prod_{v\mid p}
+\mathfrak p_v^{b_v(S)},\\
+J_{\mathscr T,H}(n,k)&=\prod_{\substack{p>H\\p\in\mathscr T}}\prod_{v\mid p}
+\mathfrak p_v^{j_v(n,k)},\qquad
+G_{\mathscr T}(H;n,k)=\log\|J_{\mathscr T,H}(n,k)\|.
+\end{aligned}
+\tag{56.8}
+$$
+
+每个乘积因原分母的有限支持而有限；赋值和范数仍为原整 $x$ 分母及 $N_{F/\mathbb Q}^{1/8}$。对整理想，$I\mid J$ 指逐素理想指数不等式 $v_{\mathfrak p}(I)\le v_{\mathfrak p}(J)$。$\mathcal A_H(n,u)$ 继续指原全部地方的完整尾部。
+
+**定理 56.3（合并非标量与合格标量支持只支付同一个平方分母）。** 对全部 $n,k\in\mathbb Z\setminus\{0\}$、全部整数 $H\ge2$，有精细整除式
+
+$$
+\begin{gathered}
+J_{\mathscr U_k,H}(n,k)
+\mid B_{\mathscr U_k,H}(A)\,B_{\mathscr V_k,H}(A)
+\mid B(A)^2,\\
+0\le G_{\mathscr U_k}(H;n,k)
+\le\log\|B_{\mathscr U_k,H}(A)\|
+   +\log\|B_{\mathscr V_k,H}(A)\|\\
+\le2\log\|B(A)\|
+\le2h_0n^2+2\log2.
+\end{gathered}
+\tag{56.9}
+$$
+
+这里两份都是同一个原点 $A=[n]P_1$ 的分母。没有额外的 $\log|k|$ 项，也不另付一份非标量高度。
+
+**证明。** 在 $p\in\mathscr N$ 的每个固定 $v$，直接引用 (54.3) 的 $j_v\le b_v(A)$；在 $p\in\mathscr C_k$ 且 $p\nmid k$ 的每个 $v$，引用 (56.1) 的同一个上界；在 $p\in\mathscr V_k$，引用 $j_v\le2b_v(A)$。这三种支持互不相交，合起来正是
+
+$$
+j_v(n,k)\le
+\bigl(1+\mathbf1_{\mathscr V_k}(p)\bigr)b_v(A)
+\qquad(p\in\mathscr U_k).
+\tag{56.10}
+$$
+
+零共同深度已经包括在这个逐地方不等式内；正共同深度时还可用 (56.2) 的加强，但 (56.9) 无需为它另设截取。逐素理想相乘给出第一个整除式。因为 $\mathscr V_k\subseteq\mathscr U_k$，右侧在每个地方至多使用 $B(A)$ 的两份指数，得到第二个整除式。范数取对数后，地方权重精确为
+
+$$
+\begin{aligned}
+G_{\mathscr U_k}(H;n,k)
+&=\frac18\sum_{\substack{p>H\\p\in\mathscr U_k}}
+\sum_{v\mid p} f_v j_v(n,k)\log p\\
+&\le\frac18\sum_{\substack{p>H\\p\in\mathscr U_k}}
+\sum_{v\mid p} f_v b_v(A)\log p
++\frac18\sum_{\substack{p>H\\p\in\mathscr V_k}}
+\sum_{v\mid p} f_v b_v(A)\log p.
+\end{aligned}
+\tag{56.11}
+$$
+
+原高度上界 (49.8) 及 $\widehat h(A)=h_0n^2$ 给出 (56.9) 最后一行。这一步只复用高度，不重证原尾部或高度理论。若 $\mathscr V_k$ 在 $>H$ 中为空，精细式还给出一次分母预算；一般情形保留两份统一上界。
+
+用白话说，非标量地方和不整除 $k$ 的合格标量地方共同用第一份分母，只有整除 $k$ 的合格标量地方才可能再用第二份。它们都取自同一个 $[n]P_1$，所以联合账目最多是这个点的平方分母，合并以后仍是两份高度。逐地方已经吸收了 $p$ 次幂的增量，无需再把这些增量求和成 $\log|k|$。这个指定族的联合预算是 repo-derived 综合推导，不是对全部标量支持或一般独立点 gcd 的断言。$\square$
+
+**推论 56.4（相对于较小完整尾部的 $2\Gamma_H/k^2$ 界）。** 固定原 $M\ge1$ 及定义 51.1 的全部固定数据，取定理 54.3 的 $C_0,H_1,\epsilon_H^{(3)},\Gamma_H$。对全部整数 $H\ge H_1$、全部 $n\in q_H\mathbb Z\setminus\{0\}$、全部 $k\in\mathbb Z\setminus\{0\}$，两份完整尾部均为正，且
+
+$$
+0\le
+\frac{G_{\mathscr U_k}(H;n,k)}
+{\min\{\mathcal A_H(n,m_k),\mathcal A_H(n,l_k)\}}
+\le\frac{2\Gamma_H}{k^2},\qquad
+\Gamma_H=1+O(H^3/q_H^2)\longrightarrow1.
+\tag{56.12}
+$$
+
+其常数只依赖原固定数据，允许 $k$ 随 $H,n$ 无界移动。分母取完整尾部中的较小者，不改成 $\mathscr U_k$ 类型尾部。
+
+**证明。** 直接引用 (54.11)，两行的完整尾部分别至少为
+
+$$
+(1-\epsilon_H^{(3)})h_0n^2k^2,
+\qquad
+(1-\epsilon_H^{(3)})h_0n^2(1+k^2),
+\tag{56.13}
+$$
+
+二者都严格为正。以它们的共同下界除 (56.9)，再用 $|n|\ge q_H$，得到
+
+$$
+\frac{G_{\mathscr U_k}(H;n,k)}
+{\min\{\mathcal A_H(n,m_k),\mathcal A_H(n,l_k)\}}
+\le
+\frac{2h_0n^2+2\log2}
+{(1-\epsilon_H^{(3)})h_0n^2k^2}
+\le\frac{2\Gamma_H}{k^2}.
+\tag{56.14}
+$$
+
+系数的渐近式、统一性和周期范围完全沿用 (54.8)、(54.13)；这里不重新推导 $H^3$ 尾部预算。原全部地方、二进模型、七进分歧以及同一个 $q_H$ 均保留。
+
+当 $H\ge H_1\ge7$ 时，未计入 $\mathscr U_k$ 的 $>H$ 素数恰为 (55.6) 所刻画的标量证书不合格支持。本推论不给这部分共同分母质量的上界，因而不推出全 gcd 的同一比例。也未给 $\mathscr U_k$ 类型尾部或共同尾部的正质量下界；素数计数密度不能替代 (56.11) 中的带深度分母质量。共同质量允许为零，一般有限目标的成功余类也不改成 $q_H\mathbb Z$。原短共振的同时实现、原 $p_H(\alpha)$ 的正下界、原 (31.2)、负 $\vartheta$ 阶段的调和和发散及原覆盖问题，仍各需其联合算术或覆盖论证。
+
+用白话说，分子至多增长为两份 $n^2$ 高度，分母仍是原来两份完整尾部中较小的一份，其统一主项至少为 $n^2k^2$，所以比例至多为 $2\Gamma_H/k^2$。这只限制所列支持最多能共享多少，没有证明它们实际共享正质量，也没有替遗漏的标量支持支付预算。$\square$
+
+## 57. 原点在 31 处的入口反例与 103 处的合格实例
+
+**命题 57.1（实际原点的标量入口不能无条件成立）。** 在 $p=31$ 取一个满足 $\overline a=8$ 的原地方 $v$。它是标量地方，实际 $\epsilon_{31}=-1$，且
+
+$$
+a_{31}=0,\qquad N_{31}=32,\qquad D_{31}=8.
+\tag{57.1}
+$$
+
+同一实际 $n=k=2$ 满足
+
+$$
+X=[4]P_1\in U_v(1),\qquad
+Y=[2]P_1+[4]P_2\in U_v(1),\qquad
+A=[2]P_1\notin U_v(1).
+\tag{57.2}
+$$
+
+因此这里 $j_v(2,2)>0$ 而 $b_v(A)=0$，且 $31\notin\mathscr C_2$。这个整数 $n=2$ 对任意 $H\ge7$ 都不属于 $q_H\mathbb Z$，故不是原周期范围内的反例。
+
+**证明。** 在 $\mathbb F_{31}$，$8^2=2$，而原被开方元素约化为
+
+$$
+\overline b^{\,2}=3-8=26,\qquad
+\overline c^{\,2}=3+8=11.
+\tag{57.3}
+$$
+
+$26^2=25$、$26^4=5$、$26^8=25$，因而 $26^{15}=25\cdot5\cdot25\cdot26=-1$。又 $26\cdot11=7=10^2$，故 $26,11$ 都是非平方。这给出固定 $a$ 而同时反转 $b,c$ 的实际 Frobenius，故 $\epsilon_{31}=-1$，且 $\chi_2(31)=\chi_7(31)=1$。原扩张在这里不分歧；在二次子域先取 $a\mapsto8$ 再延拓地方，便得到所写实际地方，$b,c$ 的约化位于其二次剩余域。
+
+为求 $a_{31}$，仅使用奇特征下的点数公式
+
+$$
+a_p=-\sum_{x\in\mathbb F_p}\chi(x^3-x).
+\tag{57.4}
+$$
+
+其经典出处为 Silverman 同书 [V.1.3](https://www.math.ens.psl.eu/~obenoist/refs/Silverman.pdf)。当 $p\equiv3\pmod4$ 时，$\chi(-1)=-1$，$x$ 与 $-x$ 的贡献相消，$x=0$ 的贡献为零。因此 $a_{31}=0$，代入定义即得 (57.1)，无需逐点求和。
+
+原坐标直接给出
+
+$$
+x(\overline P_1)=\frac{115-27\cdot8}{56}=22,
+\qquad
+x(\overline P_2)=\frac{115+27\cdot8}{56}=12
+\quad\text{在 }\mathbb F_{31}.
+\tag{57.5}
+$$
+
+这两个横坐标都不为 $0,1,-1$，故两个点的纵坐标都非零，倍点公式可用。原方程上
+
+$$
+x([2]S)=\frac{(x(S)^2+1)^2}{4x(S)(x(S)^2-1)}.
+\tag{57.6}
+$$
+
+代入这两个实际横坐标，分别得到
+
+$$
+\begin{aligned}
+x([2]\overline P_1)&=\frac{28}{3}=-1,\\
+x([2]\overline P_2)&=\frac7{13}=22
+\qquad\text{在 }\mathbb F_{31}.
+\end{aligned}
+\tag{57.7}
+$$
+
+因此 $[2]\overline P_1=T=(-1,0)\ne O$，$\overline P_1$ 的阶恰为 $4$；同时 $[2]\overline P_2=\pm\overline P_1$。于是
+
+$$
+\overline A=T\ne O,\qquad
+\overline X=[4]\overline P_1=O,\qquad
+\overline Y=T+[4]\overline P_2=T+T=O.
+\tag{57.8}
+$$
+
+这证明 (57.2)。全局 $A,X,Y$ 仍由原高度式保证非零，故 $j_v>0$ 与 $b_v(A)=0$ 都是原分母的合法有限深度断言。条件在这里确实失败：$\gcd(2^2,8)=4\nmid2$，具体坏素因子为 $\ell=2$，$v_2(D_{31})=3>1=v_2(k)$。这个例子既显示无条件入口为假，也只在证书不合格处出现，不反驳定理 55.2 或 56.1。
+
+最后，原 (16.12) 的 $n_5=5$ 及 (16.5) 保证 $H\ge7$ 时 $5\mid q_H$，故 $n=2\notin q_H\mathbb Z$。这里的反例是实际原点的局部反例，没有将一个不满足原周期前提的整数冒充周期反例。
+
+用白话说，在这个实际地方，两行乘完以后都落到约化单位元，原方向却停在一个非零二挠点上。被 $k^2$ 消去的残留不能自动被 $k$ 消去，31 处正好把这个障碍实现出来。但原周期早已要求整数带有因子 $5$，所以这里的 $n=2$ 不属于那个周期问题。$\square$
+
+**命题 57.2（103 处的倍二像条件对所有乘数成立）。** 原扩张 $F/\mathbb Q$ 在 $p=103$ 完全分裂，实际 $\epsilon_{103}=1$，且
+
+$$
+a_{103}=0,\qquad N_{103}=104,\qquad D_{103}=26=2\cdot13.
+\tag{57.9}
+$$
+
+因此对全部 $k\in\mathbb Z\setminus\{0\}$ 有 $103\in\mathscr C_k$，定理 55.2、56.1 的入口与深度结论对这里全部非零 $n,k$ 成立。特别地，$k=2$ 时
+
+$$
+\gcd(4,N_{103})=4\nmid2,
+\qquad
+\gcd(4,D_{103})=2\mid2.
+\tag{57.10}
+$$
+
+这是新充分条件严格扩大合格支持的固定素数实例，不断言此处任何组合具有共同正深度。
+
+**证明。** 在 $\mathbb F_{103}$，原根可以同时取为
+
+$$
+\overline a=38,\quad \overline b=45,\quad
+\overline c=12,\quad \overline{bc}=25,
+\tag{57.11}
+$$
+
+因为
+
+$$
+38^2=2,\qquad45^2=68=3-38,\qquad
+12^2=41=3+38,\qquad45\cdot12=25,\qquad25^2=7.
+\tag{57.12}
+$$
+
+所有等式均在这个有限域中。原分裂多项式 $Z^4-6Z^2+7$ 的四根为 $\pm45,\pm12$，互不相同且全在 $\mathbb F_{103}$。原扩张在 $103$ 不分歧，故 Frobenius 在全部根上为恒等，分裂域的分解群平凡。这证明完全分裂及所写实际根的地方实现；其它地方的根由原符号排列运输。实际半点的 Frobenius 也为恒等，故 $\epsilon_{103}=1$，不是另行选取的符号。
+
+因 $103\equiv3\pmod4$，(57.4) 的同一字符配对给出 $a_{103}=0$，遂有 $N_{103}=104$ 和 $D_{103}=26$。$26$ 平方自由；对每个 $\ell\mid |k|$，若 $\ell\mid26$ 则 $v_\ell(26)=1\le v_\ell(|k|)$，若不整除则其指数为零。因此 (55.6) 的失败条件对所有非零 $k$ 都不出现，即 $103\in\mathscr C_k$。直接代入 $k=2$ 给出 (57.10)。这里没有断言条件在任意标量素数都成立，只是用原实际半点实现了一个非空而且严格扩大的支持实例。
+
+用白话说，103 处所有原根都已落在素域中，实际符号为正；整个核的阶为 $104$，但原点只需住在阶为 $26$ 的倍二像里。这个较小阶没有平方因子，所以任意乘数都通过证书，连旧条件挡住的 $k=2$ 也通过了。通过证书只保证前述蕴含关系；它不保证两行真的同时进入约化核，更不保证有正的共同分母质量。
+
+特别地，$H\ge103$ 时这个固定素数不在 $>H$ 尾部，故它不提供随 $H$ 增长的合格尾部支持或正质量。命题 57.1–57.2 是原点上的 repo-derived 实例推导；字符点数、倍点公式和有限群输入仍为上述成熟理论，不主张新的点数公式或全球文献优先性。$\square$
+
+## 追加锚（本行以下为增补区）
+
+## 58. 倍二像的精确统一周期与扩大的同点平方分母预算
+
+**定义 58.1（精确指数证书）。** 保持定义 51.1、53.1、54.1、55.1 的全部原数据。特别地，$F=\mathbb Q(a,b,c)$、$E_0:y^2=x^3-x$、原点 $P_j$、实际半点 $Q_j$、所有地方及原 $U_v$、原整 $x$ 分母、权重 $f_v/8$、$n,k$ 和 $q_H$ 均不变。固定 $p\in\mathscr L$ 及同一个 $v\mid p$，只取一次实际中央符号 $\epsilon=\epsilon_p\in\{1,-1\}$，置
+
+$$
+\begin{gathered}
+G=G_p^{\mathrm{sc}}=\ker(\pi_p-[\epsilon]),\qquad
+N=N_p=p+1-\epsilon a_p,\qquad D=D_p=N/4,\\
+L=[2]G,\qquad e=e_p=\exp L,\\
+A=[n]P_1,\quad B=[n]P_2,\quad X=[k]A,\quad Y=A+[k]B,\qquad
+\mathcal H_v(n)=\langle\overline A,\overline B\rangle\subseteq L.
+\end{gathered}
+\tag{58.1}
+$$
+
+这里 $\pi_p$ 是 $p$ 次幂 Frobenius；$\epsilon$ 仍是它在实际 $Q_j$ 上的一次作用，不是 (51.6) 的平方作用符号。指数指消去有限群中所有元素的最小正整数，平凡群的指数取 $1$。定理 55.2 已给出 $\#G=N$、$\#L=D$、$p\nmid N$ 及所写包含关系。$\mathcal H_v(n)$ 仍只是整数生成群，不要求它为 $\mathbb Z[i]$ 子模。
+
+对每个非零整数 $k$ 定义
+
+$$
+\begin{aligned}
+\mathscr C_k^{\mathrm{exp}}
+ &=\{p\in\mathscr L:\gcd(k^2,e_p)\mid |k|\},\\
+\mathscr U_k^{\mathrm{exp}}&=\mathscr N\sqcup\mathscr C_k^{\mathrm{exp}},\qquad
+\mathscr V_k^{\mathrm{exp}}=\{p\in\mathscr C_k^{\mathrm{exp}}:p\mid |k|\}.
+\end{aligned}
+\tag{58.2}
+$$
+
+任意素数集合上的 $B_{\mathscr T,H}$、$J_{\mathscr T,H}$、$G_{\mathscr T}$ 精确取定义 56.2；$j_v(n,k)=\min\{b_v(X),b_v(Y)\}$。完整尾部 $\mathcal A_H(n,u)$ 仍取定义 50.1，不作类型限制。
+
+**定理 58.2（精确指数扩大原两行的充分入口与平方分母支持）。** 在定义 58.1 的原标量地方，普通支 $p\equiv1\pmod4$ 的当前 CM 作用满足
+
+$$
+\begin{gathered}
+\operatorname{End}_{\overline{\mathbb F}_p}(\widetilde E_0)=\mathcal O=\mathbb Z[i],\qquad
+\pi_p=\alpha+\beta i,\qquad \alpha,\beta\in\mathbb Z,\\
+\alpha^2+\beta^2=p,\qquad 2\alpha=a_p,\qquad
+g=g_p=\gcd(|\alpha-\epsilon|,|\beta|),\\
+G\simeq\mathbb Z/g\mathbb Z\oplus\mathbb Z/(N/g)\mathbb Z,\qquad
+2\mid g,\quad g\mid N/g,\\
+L\simeq\mathbb Z/(g/2)\mathbb Z\oplus\mathbb Z/(N/(2g))\mathbb Z,
+\qquad e=\frac{N}{2g},\qquad D=\frac g2e.
+\end{gathered}
+\tag{58.3}
+$$
+
+这里的 $i$ 来自当前约化作用 $[i](x,y)=(-x,iy)$；换成共轭嵌入只改变 $\beta$ 的符号，不改变 $g,e$。原普通标量地方还有
+
+$$
+\pi_p\equiv1\pmod{4\mathcal O},\qquad
+\epsilon=1\Longrightarrow4\mid g,\qquad
+\epsilon=-1\Longrightarrow v_2(g)=1.
+\tag{58.4}
+$$
+
+超奇异支 $p\equiv3\pmod4$ 对两种实际 $\epsilon$ 均有
+
+$$
+a_p=0,\qquad N=p+1,\qquad
+G\simeq\mathbb Z/2\mathbb Z\oplus\mathbb Z/((p+1)/2)\mathbb Z,
+\qquad L\simeq\mathbb Z/D\mathbb Z,\qquad e=D.
+\tag{58.5}
+$$
+
+这些有限群计算作为原两行消费者的内部输入，给出精确的统一核稳定判据
+
+$$
+\ker([k^2]|_L)=\ker([k]|_L)
+\quad\Longleftrightarrow\quad
+\gcd(k^2,e)\mid |k|.
+\tag{58.6}
+$$
+
+因此 $\mathscr C_k\subseteq\mathscr C_k^{\mathrm{exp}}$。对每个 $p\in\mathscr C_k^{\mathrm{exp}}$、每个固定 $v\mid p$ 和全部非零 $n,k$，原两行满足
+
+$$
+\begin{gathered}
+X,Y\in U_v(1)\quad\Longleftrightarrow\quad A,[k]B\in U_v(1),\\
+0\le j_v(n,k)\le2b_v(A),\qquad
+p\nmid k\Longrightarrow j_v(n,k)\le b_v(A),\\
+j_v(n,k)>0\Longrightarrow b_v(A)\ge1,\quad
+j_v(n,k)\le2b_v(A)-1.
+\end{gathered}
+\tag{58.7}
+$$
+
+对全部 $n,k\in\mathbb Z\setminus\{0\}$、全部整数 $H\ge2$，精细整除及同点预算为
+
+$$
+\begin{gathered}
+J_{\mathscr U_k^{\mathrm{exp}},H}(n,k)
+\mid B_{\mathscr U_k^{\mathrm{exp}},H}(A)
+     B_{\mathscr V_k^{\mathrm{exp}},H}(A)
+\mid B(A)^2,\\
+0\le G_{\mathscr U_k^{\mathrm{exp}}}(H;n,k)
+\le2\log\|B(A)\|\le2h_0n^2+2\log2.
+\end{gathered}
+\tag{58.8}
+$$
+
+取定理 54.3 的同一 $C_0,H_1,\epsilon_H^{(3)},\Gamma_H$，则对全部整数 $H\ge H_1$、$n\in q_H\mathbb Z\setminus\{0\}$ 及 $k\ne0$，有
+
+$$
+0\le
+\frac{G_{\mathscr U_k^{\mathrm{exp}}}(H;n,k)}
+{\min\{\mathcal A_H(n,m_k),\mathcal A_H(n,l_k)\}}
+\le\frac{2\Gamma_H}{k^2},\qquad
+\Gamma_H=1+O(H^3/q_H^2)\longrightarrow1.
+\tag{58.9}
+$$
+
+分母的两份完整尾部均严格为正。常数与 $H,n,k$ 无关，允许 $k$ 无界移动。
+
+对固定普通标量素数，存在某个非零 $k$ 使指数证书合格而 $D$ 证书不合格，当且仅当 $g>2$；超奇异支两个证书相同。对任一固定标量素数，所有非零 $k$ 都通过指数证书，当且仅当 $e$ 平方自由。
+
+**证明。** 先在此消费者内计算统一周期。只使用以下成熟输入：Silverman，*The Arithmetic of Elliptic Curves*，第二版，[III.4.11、III.6.2、III.6.4、III.8.1、V.2.3–2.3.1、V.3.1、V.4.1(a)](https://www.math.ens.psl.eu/~obenoist/refs/Silverman.pdf)，分别提供可分同源的核包含因子分解、对偶与次数、素于特征的完整挠点、Weil 配对及其 Galois 相容性、Frobenius 与普通性。有限交换群的不变因子取 Milne，[*Group Theory*，版本 4.01，§1 的 Summary 1.58](https://www.jmilne.org/math/CourseNotes/GT.pdf)。以下不把这些经典结果另列为新增定理。
+
+由 (55.3)，$G\subseteq\widetilde E_0[N]$，且 $p\nmid N$，故完整挠点结构及有限交换群分解给出
+
+$$
+G\simeq\mathbb Z/d_1\mathbb Z\oplus\mathbb Z/d_2\mathbb Z,
+\qquad d_1\mid d_2,\qquad d_1d_2=N.
+\tag{58.10}
+$$
+
+全二挠在 $G$ 中，所以 $2\mid d_1$。对素于 $p$ 的正整数 $m$，$\widetilde E_0[m]\subseteq G$ 当且仅当 $m\mid d_1$：包含成立时 $G[m]$ 的阶必须为 $m^2$；由 (58.10) 这恰要求 $m\mid d_1,d_2$。反向同样由 $G[m]\subseteq\widetilde E_0[m]$ 及两边同为 $m^2$ 个点得到。因此 $d_1$ 是使完整 $m$ 挠都在 $G$ 中的最大素于 $p$ 的 $m$。
+
+普通支的 CM 对应直接使用 (51.7)–(51.8)：Hasse 系数非零给出普通性；几何自同源环是虚二次序，包含当前忠实的 $\mathbb Z[i]$，而 $\mathbb Z[i]$ 已是 $\mathbb Q(i)$ 的极大整环，故自同源环恰为 $\mathcal O$。于是当前 $\pi_p$ 有唯一的 $\alpha+\beta i$ 表达，范数为 $p$、迹为 $2\alpha$。对素于 $p$ 的 $m$，将 Silverman III.4.11 用于可分的 $[m]$ 和非零的 $\pi_p-[\epsilon]$，得
+
+$$
+\begin{aligned}
+\widetilde E_0[m]\subseteq\ker(\pi_p-[\epsilon])
+&\Longleftrightarrow\pi_p-[\epsilon]=\lambda\circ[m]
+     \quad(\lambda\in\operatorname{End}\widetilde E_0)\\
+&\Longleftrightarrow m\mid\alpha-\epsilon,\quad m\mid\beta.
+\end{aligned}
+\tag{58.11}
+$$
+
+$N=(\alpha-\epsilon)^2+\beta^2$，故 $g^2\mid N$，特别 $p\nmid g$。比较 (58.10)–(58.11) 就得 $d_1=g,d_2=N/g$。倍二对这两个偶阶循环因子分别除去一个因子 $2$，并且第一因子仍整除第二因子；其指数正是第二因子 $N/(2g)$。这证明 (58.3)，包括完整的 $2$ 主部，没有先删去偶挠。
+
+式 (58.4) 需要原曲线自身的四挠点。普通标量地方有 $(2/p)=1$ 且 $p\equiv1\pmod4$。在 $\mathbb F_p$ 取 $s^2=2,z^2=-1$，在原方程上置
+
+$$
+R_0=(z,1-z),\qquad R_1=(1+s,2+s).
+\tag{58.12}
+$$
+
+确有 $(1-z)^2=-2z=z^3-z$，以及 $(2+s)^2=6+4s=(1+s)^3-(1+s)$。两个纵坐标均非零；原倍点公式的切线斜率分别为 $-1-z$、$1+s$，从而
+
+$$
+[2]R_0=(0,0),\qquad[2]R_1=(1,0).
+\tag{58.13}
+$$
+
+右侧是独立二挠点。若 $uR_0+wR_1=O$，先倍二可知 $u,w$ 都为偶数，再用右侧的独立性可知二者均为 $4$ 的倍数。因此 $R_0,R_1$ 生成全部 $16$ 个四挠点，它们都在 $\mathbb F_p$ 上。于是 $\pi_p-1$ 消去完整四挠，再用 (58.11) 的因子分解，得到 $\pi_p-1\in4\mathcal O$。这给出 $\alpha\equiv1\pmod4$、$\beta\equiv0\pmod4$。实际 $\epsilon=1$ 时 $4\mid g$；实际 $\epsilon=-1$ 时 $\alpha+1\equiv2\pmod4$，故 $v_2(g)=1$。这里没有将负中央符号改成正号，也没有断言负号核含完整四挠。
+
+超奇异支不把 $\pi_p$ 本身视为 Gaussian 整数。由 (57.4) 中 $x,-x$ 的字符相消，$a_p=0$，故两个 $\epsilon$ 都有 $N=p+1$。在 (58.10) 中取完整 $\widetilde E_0[d_1]\subseteq G$ 的一组基 $S,T$。Weil 配对的非退化性使 $\zeta=e_{d_1}(S,T)$ 为本原 $d_1$ 次单位根；其 Galois 相容性给出
+
+$$
+\zeta^p=e_{d_1}(\pi_pS,\pi_pT)
+=e_{d_1}([\epsilon]S,[\epsilon]T)
+=\zeta^{\epsilon^2}=\zeta.
+\tag{58.14}
+$$
+
+因此 $d_1\mid p-1$；又 $d_1\mid N=p+1$，所以 $d_1\mid2$。全二挠已给出 $2\mid d_1$，遂有 $d_1=2,d_2=(p+1)/2$。倍二像为阶 $(p+1)/4=D$ 的循环群，证明 (58.5)。这里使用标准完整挠点的 Weil 配对，值域为 $\mu_{d_1}$，不使用一般同源配对的更强值域断言。上述挠点记号及配对按作者[第二版勘误](https://www.math.brown.edu/johsilve/AEC/AECErrata.pdf)中原书页 69、90、93–98 的说明理解，尤其 $E[m]$ 指阶整除 $m$ 的点。
+
+现在求原入口。在两支的循环因子分解中，$L$ 都有一个阶恰为 $e$ 的循环因子。如果 $\gcd(k^2,e)\mid |k|$，任何被 $k^2$ 消去的元素，其阶整除 $\gcd(k^2,e)$，故也被 $k$ 消去。反之，令 $d=\gcd(k^2,e)$；阶 $e$ 的循环因子内有阶恰为 $d$ 的元素，核相等便要求 $d\mid |k|$。这证明 (58.6)。由于 $e\mid D$，旧 $D$ 证书蕴含指数证书。
+
+当 $X,Y\in U_v(1)$ 时，原 (55.9) 在这个固定地方给出 $[k]\overline A=O$、$\overline A+[k]\overline B=O$、$[k^2]\overline B=O$。由 $\overline B\in L$ 及 (58.6)，得到 $[k]\overline B=O$，再得 $\overline A=O$。这正是 (58.7) 的入口，反向仍由子群性。只在 $L$ 内用了核稳定性，没有在整个约化群或局部椭圆曲线群上除以 $k$。
+
+深度部分直接使用定理 56.1 的第一形式层论证 (56.3)–(56.6)。它需要的入口 (55.5) 已由刚证的入口替换；它排除约化 $p$ 挠所用的 $p\nmid D$ 仍由 (55.3) 保证；$p>7,e_v=1$、原形式参数、非挠性和保赋值阈值均相同。因此其 $j\le2b_v(A)$、$p\nmid k$ 时的一份深度，以及正共同深度时节省一层的三个结论，全部给出 (58.7)。这不是把只对旧 $\mathscr C_k$ 陈述的定理无条件用于更大集合，而是对其已写出的局部论证逐项提供同样的入口前提。
+
+精细整除只需原 (56.10)–(56.11) 的逐地方乘积步骤：非标量地方引用 (54.3)；新增合格标量地方引用 (58.7)。参数对应是 $\mathscr U_k\mapsto\mathscr U_k^{\mathrm{exp}}$、$\mathscr V_k\mapsto\mathscr V_k^{\mathrm{exp}}$，而 $A,n,k,b_v,f_v/8$ 都不变。于是在联合支持上仍有
+
+$$
+j_v(n,k)\le
+\bigl(1+\mathbf1_{\mathscr V_k^{\mathrm{exp}}}(p)\bigr)b_v(A).
+\tag{58.15}
+$$
+
+按定义 56.2 的乘积取整除与归一化范数，再引用 (56.9) 的同一个高度上界，即得 (58.8)。这两份分母都来自同一个 $[n]P_1$；无需重造一般整除命题，也没有额外的 $\log|k|$。
+
+最后在 (56.13)–(56.14) 中用 (58.8) 替换原分子上界即可：完整尾部及其 (54.11) 下界丝毫未变，较小完整尾部至少为 $(1-\epsilon_H^{(3)})h_0n^2k^2>0$。同一个 $|n|\ge q_H$ 给出 (58.9)。没有扩大原周期范围，二进、七进和所有其它地方仍在完整尾部内。
+
+为精确比较证书，对任意正整数 $c$ 有
+
+$$
+\gcd(k^2,c)\mid |k|
+\quad\Longleftrightarrow\quad
+\forall\text{ 素数 }\ell\mid |k|:\ v_\ell(c)\le v_\ell(|k|).
+\tag{58.16}
+$$
+
+这是 (55.6) 已用的逐素数判据，取 $c=e,D$ 即可。在固定普通地方，一个给定的 $k$ 新增合格，准确要求
+
+$$
+\left[\forall\ell\mid |k|:\ v_\ell(e)\le v_\ell(|k|)\right]
+\quad\text{且}\quad
+\left[\exists\ell\mid |k|:\ v_\ell(|k|)<v_\ell(D)\right].
+\tag{58.17}
+$$
+
+若 $g=2$，则 $D=e$，无严格扩大。若 $g>2$，由 $g\mid N/g$ 可得 $g/2\mid e$。取任一 $\ell\mid g/2$，令 $k=\ell^{v_\ell(e)}$；这个指数至少为 $1$，而 $D=(g/2)e$ 保证 $v_\ell(D)>v_\ell(e)=v_\ell(k)$。因此该 $k$ 通过指数证书而不通过 $D$ 证书。普通正中央符号由 (58.4) 总有此种严格加强；普通负中央符号的二主部不产生这种差别，是否严格取决于 $g$ 的奇部是否大于 $1$。超奇异支则因 $e=D$ 没有差别。最后，$e$ 平方自由时 (58.16) 对所有非零 $k$ 成立；若 $\ell^2\mid e$，取 $k=\ell$ 即失败。这也包括 $e=1$ 的约定。
+
+用白话说，群的阶只给出一个通用的消去整数；真正需要的是原半点倍二像的最短统一周期。普通地方的两个循环方向可以共享因子，用总阶作周期会把这些重叠也付进证书；精确指数保留全部偶挠后仍能删去这笔重复。入口一旦成立，原形式群和同点平方分母论证便原样接上。核稳定判据对整个 $L$ 是充要的，但对实际更小的 $\mathcal H_v(n)$ 仍只是充分证书；指数证书不合格不等于实际入口必然失败。
+
+这里的新增承重内容是原两行在 $\mathscr U_k^{\mathrm{exp}}$ 上的同地方入口、同点平方分母及完整尾部预算，以及原曲线四挠所落实的严格性条件，属 repo-derived 综合推导。有限交换群、挠点、CM、同源因子分解与 Weil 配对均只在上述消费者内部引用，不主张这些经典工具的新意或全球文献优先性。$\square$
+
+## 59. 1009 处的实际完全分裂、迹号与严格扩大
+
+**命题 59.1（原数据在 1009 处区分两个证书）。** 原扩张 $F/\mathbb Q$ 在素数 $p=1009$ 完全分裂，其实际一次中央符号为 $\epsilon_{1009}=1$。在当前 CM 嵌入下有
+
+$$
+\begin{gathered}
+\pi_{1009}=-15\pm28i,\qquad a_{1009}=-30,\qquad
+N_{1009}=1040,\qquad g_{1009}=4,\\
+G\simeq\mathbb Z/4\mathbb Z\oplus\mathbb Z/260\mathbb Z,\qquad
+[2]G\simeq\mathbb Z/2\mathbb Z\oplus\mathbb Z/130\mathbb Z,\\
+D_{1009}=260,\qquad e_{1009}=130.
+\end{gathered}
+\tag{59.1}
+$$
+
+符号 $\pm$ 只表示两种共轭 CM 嵌入；实际嵌入固定后只取其中一个。特别地，$k=2$ 时
+
+$$
+\gcd(4,260)=4\nmid2,\qquad
+\gcd(4,130)=2\mid2,
+\qquad1009\in\mathscr C_2^{\mathrm{exp}}\setminus\mathscr C_2.
+\tag{59.2}
+$$
+
+更一般地，$1009$ 对所有非零 $k$ 都在 $\mathscr C_k^{\mathrm{exp}}$ 中，而旧 $D$ 证书恰在 $v_2(|k|)=1$ 时失败。
+
+**证明。** 先确定原扩张的实际 Frobenius，再确定原曲线的迹。以下同余均在 $\mathbb F_{1009}$ 内。原 $a=\sqrt2$ 可以取剩余根 $439$，因为
+
+$$
+439^2=2+191\cdot1009,\qquad
+469^2=-1+218\cdot1009.
+\tag{59.3}
+$$
+
+因此 $469$ 也给出当前曲线作用所需的一个 $\sqrt{-1}$。原 $b,c$ 的平方在 $a\mapsto439$ 的地方分别为
+
+$$
+3-439=573,\qquad3+439=442,\qquad573\cdot442\equiv7.
+\tag{59.4}
+$$
+
+二次互反律与补充律取 Stein，[*Elementary Number Theory: Primes, Congruences, and Secrets*，2017-01-23 版本，§4.1、定理 4.1.7](https://wstein.org/ent/ent.pdf)。由 $1009\equiv1\pmod{12}$、$1009\equiv1\pmod4$，且 $1009\equiv54\pmod{191}$、$1009\equiv1\pmod7$，给出
+
+$$
+\begin{aligned}
+\left(\frac{573}{1009}\right)
+&=\left(\frac3{1009}\right)\left(\frac{191}{1009}\right)
+=\left(\frac{54}{191}\right)
+=\left(\frac2{191}\right)\left(\frac3{191}\right)=1,\\
+\left(\frac7{1009}\right)&=\left(\frac1{7}\right)=1.
+\end{aligned}
+\tag{59.5}
+$$
+
+最后一个乘积为 $1$ 是因为 $191\equiv7\pmod8$、$191\equiv-1\pmod{12}$。由 (59.4) 得 $442$ 也是非零平方。于是原分裂多项式 $Z^4-6Z^2+7$ 的四根 $\pm\overline b,\pm\overline c$ 全部在 $\mathbb F_{1009}$ 中且互不相同；取根的符号可使 $\overline{bc}$ 与原 $\sqrt7$ 的所选延拓相容。原扩张在 $1009$ 不分歧，故分解群在全部四根上为恒等，$F$ 完全分裂。特别地，实际 $Q_j\in E_0(F)$ 的约化被 Frobenius 固定，原中央元就是 $+I$，得到实际 $\epsilon_{1009}=1$。这里没有从平方作用推出一次作用，也没有更换原半点。
+
+现由 $1009\equiv1\pmod4$ 及 (58.3) 写实际 $\pi=\alpha+\beta i$。直接的范数恒等式为
+
+$$
+1009=15^2+28^2=(15+28i)(15-28i).
+\tag{59.6}
+$$
+
+Conrad，[*The Gaussian Integers*，§1、定理 6.3、6.6](https://kconrad.math.uconn.edu/blurbs/ugradnumthy/Zinotes.pdf) 给出范数、素数范数的 Gaussian 素元及唯一分解。由此，范数为 $1009$ 的实际 $\pi$ 必是 $15+28i$ 或其共轭的单位倍，单位为 $\pm1,\pm i$。这一步只给出候选的单位与共轭类，并未决定迹号。
+
+迹号由原曲线决定：$s=439,z=469$ 使 (58.12) 的两个实际四挠生成元都在 $\mathbb F_{1009}$ 上，故 (58.4) 强制
+
+$$
+\alpha\equiv1\pmod4,\qquad\beta\equiv0\pmod4.
+\tag{59.7}
+$$
+
+单位 $\pm i$ 的两类把奇数 $15$ 放到虚部，不满足第二个同余；余下 $\alpha=15$ 或 $-15$ 中，只有 $-15\equiv1\pmod4$。因此实际 $\pi=-15\pm28i$，其迹必须为 $-30$。共轭号由当前 $[i]$ 决定，但不影响迹、$g$ 或指数。这不是从范数表示中任意选择正负迹，也无需逐点计数。
+
+现在代入已经确定的实际 $\epsilon=1$：$N=1009+1-(-30)=1040$，$g=\gcd(16,28)=4$。式 (58.3) 遂给出 (59.1)，再直接得到 (59.2)。因为 $130=2\cdot5\cdot13$ 平方自由，指数证书对所有非零 $k$ 成立；$260=2^2\cdot5\cdot13$ 的旧证书按 (58.16) 恰在 $v_2(|k|)=1$ 时失败。所用整数、实际原点及原地方都没有重选。$\square$
+
+(58.8)–(58.9) 因而在一个实际普通标量素数上增加了可用支持；当 $H<1009$ 且 $v_2(|k|)=1$ 时，两个所定义的 $>H$ 支持也由这个素数区分。不过这不证明该地方的共同深度为正，不证明两个共同分母质量严格不同。$H\ge1009$ 时这个固定例已离开 $>H$ 尾部，故它不保证任意大 $H$ 仍有严格扩大。
+
+用白话说，1009 处的总倍二像有 $260$ 个元素，但它的所有元素每走 $130$ 步就统一归零。$k=2$ 的证书只需要这个周期，因此旧群阶证书挡住的实际地方被纳入同一平方分母预算。这个例子证明条件更强，没有提供任何带深度质量的正下界。
+
+未通过指数证书的标量地方仍未取得这里的统一预算；即使证书合格，类型尾部与共同尾部的正分母质量仍未解决。素数合格性或素数计数密度不能代替 $f_vb_v\log p/8$ 的实际分母质量。原短共振的同时实现、原 $p_H(\alpha)$ 的正下界、原 (31.2)、负 $\vartheta$ 阶段的调和和发散及原覆盖目标仍需各自的联合算术与覆盖论证。新增内容是原曲线及原扩张的这个 repo-derived 实例和其消费者；经典挠点、Gaussian 分解与二次互反律均为内部成熟输入。
+
+## 追加锚（本行以下为增补区）
+
+## 60. 原深层周期在标量超奇异尾部的确定性共同质量
+
+**定义 60.1（原周期、实际共同约化周期与完整标量尾部）。** 保持定义 51.1、53.1、54.1、55.1、56.2、58.1 的全部原数据。特别地，$F=\mathbb Q(a,b,c)$ 是原八次全实域，$E_0:y^2=x^3-x$ 是原整方程，$P_1,P_2$ 是原独立非挠点，$Q_j$ 是满足 $[2]Q_j=P_j$ 的原实际半点；不加入 $P_2=[i]P_1$ 的关系。全部地方、原 $U_v(r)$、原整 $x$ 分母 $B$ 及范数 $\|I\|=N_{F/\mathbb Q}(I)^{1/8}$ 均不变。对整数 $H\ge2$、$M\ge1$，严格沿用 [002 定义 13.1 的 (13.2)](UPPM_RG_002_DIOPHANTINE_DEFINITIONS_RELATIONAL_COMPILATION_AND_STOPPING_BOUNDARIES.md#13-实际共轭点在增长有限位与加深局部精度下的同整数缩靶返回)：
+
+$$
+\begin{aligned}
+d_{v,j}(r)&=\operatorname{ord}_{E_0(F_v)/U_v(r)}(P_j+U_v(r)),\\
+q_H&=q(H,H;M)
+=\operatorname{lcm}\bigl(M,\{d_{v,j}(H):p\le H,\ v\mid p,\ j=1,2\}\bigr),\\
+H_*&=82^{128}.
+\end{aligned}
+\tag{60.1}
+$$
+
+这里的 $q_H$ 是深度也等于 $H$ 的原周期，不是第一层共同约化周期的最小公倍数。置
+
+$$
+\begin{gathered}
+S_0=\{p>7:\ p\bmod56\in\{31,47,55\}\},\qquad
+\vartheta_{S_0}(x)=\sum_{\substack{p\le x\\p\in S_0}}\log p,\\
+B_0(H)=\vartheta_{S_0}(4H-1)-\vartheta_{S_0}(H).
+\end{gathered}
+\tag{60.2}
+$$
+
+对每个 $p\in S_0$ 及原地方 $v\mid p$，在同一个约化群内定义
+
+$$
+o_v=\operatorname{lcm}\bigl(\operatorname{ord}(\overline P_1),
+                            \operatorname{ord}(\overline P_2)\bigr),\qquad
+r_{v,H}=\frac{o_v}{\gcd(o_v,q_H)}.
+\tag{60.3}
+$$
+
+约化为 $O$ 的点的阶取 $1$。$o_v$ 是实际两点的共同约化周期，与坏地方的深度阈值 $s_v$ 无关；保留地方指标，不以环境群的阶代替它。
+
+对原两行 $m_k=(k,0)$、$l_k=(1,k)$，仍置 $A=[n]P_1$、$B=[n]P_2$、$X=[k]A$、$Y=A+[k]B$ 及 $j_v(n,k)=\min\{b_v(X),b_v(Y)\}$。本节的完整量就是定义 56.2 在 $S_0$ 上的量：
+
+$$
+G_{S_0,H}(n,k):=G_{S_0}(H;n,k)
+=\frac18\sum_{\substack{p>H\\p\in S_0}}\log p
+             \sum_{v\mid p}f_vj_v(n,k).
+\tag{60.4}
+$$
+
+对有限实数端点 $H\le a\le b$，另记有限带截取
+
+$$
+G_{S_0;(a,b]}(n,k)
+=\frac18\sum_{\substack{a<p\le b\\p\in S_0}}\log p
+             \sum_{v\mid p}f_vj_v(n,k).
+\tag{60.5}
+$$
+
+完整量的求和支持是全部 $p>H$；对每个固定非零 $n,k$，它因原分母的有限支持而有限。有限带只是其中一部分。
+
+**定理 60.2（深层周期自动支付一整段共同第一层）。** 对所有整数 $M\ge1$、$H\ge H_*$，有
+
+$$
+\operatorname{lcm}(1,\ldots,H)\mid q_H.
+\tag{60.6}
+$$
+
+对每个 $p\in S_0$、每个原 $v\mid p$，两种实际中央符号 $\epsilon_p=1,-1$ 均满足
+
+$$
+o_v\mid e_p=D_p=\frac{p+1}{4}.
+\tag{60.7}
+$$
+
+特别地，对任意非零整数 $t,k$，取同一个 $n=q_Ht$。若 $H<p\le4H-1$ 且 $p\in S_0$，则在每个原地方 $v\mid p$ 同时有
+
+$$
+[n]P_1,[n]P_2\in U_v(1),\qquad
+X,Y\in U_v(1),\qquad j_v(n,k)\ge1.
+\tag{60.8}
+$$
+
+因而完整共同尾部满足
+
+$$
+G_{S_0,H}(q_Ht,k)
+\ge G_{S_0;(H,4H-1]}(q_Ht,k)
+\ge B_0(H)
+=\left(\frac38+o(1)\right)H.
+\tag{60.9}
+$$
+
+$S_0$ 在全部素数中的相对密度为 $1/8$；(60.9) 的 $o(1)$ 只依赖固定模数 $56$，与 $M,t,k$ 无关。这里断言实际共同周期整除 $D_p$，不断言 $o_v=D_p$。
+
+**证明。** 首先直接使用 [002 定理 16.8 的 (16.30)–(16.36)](UPPM_RG_002_DIOPHANTINE_DEFINITIONS_RELATIONAL_COMPILATION_AND_STOPPING_BOUNDARIES.md#16-实际共同周期的二次对数主阶交叉因子吸收与加权入口余项)。该上游结论对全部 $H\ge H_*$ 和全部 $M\ge1$ 给出
+
+$$
+q_H=\operatorname{lcm}\left(M,\prod_{\ell\le H}\ell^{b_\ell(H)}\right),
+\qquad
+b_\ell(H)\ge\frac{2\log H}{\log2}
+\ge\left\lfloor\frac{\log H}{\log\ell}\right\rfloor.
+\tag{60.10}
+$$
+
+自身指数的第一个下界分别来自原 $b_2=\kappa(H)$、$b_7=\lceil(H-1)/2\rceil$ 及其余 $b_\ell\ge H/2$，它们的统一比较正是原 (16.36)。因此包括 $2,7$ 在内的每个 $\ell\le H$ 都已提供 $1,\ldots,H$ 所需的全部 $\ell$ 指数。用
+
+$$
+\operatorname{lcm}(1,\ldots,H)
+=\prod_{\ell\le H}\ell^{\lfloor\log H/\log\ell\rfloor}
+$$
+
+即得 (60.6)。这里保留最小公倍数中的 $M$；完全不需要原 (16.32) 的 $H_M$，也不删除或重新估计原深层周期的任何因子。
+
+其次，$S_0$ 的每个剩余类都为 $7\pmod8$ 及 $3\pmod4$。模 $7$ 的非零平方为 $1,2,4$，而 $31,47,55$ 的模 $7$ 剩余分别为 $3,5,6$。二次互反律遂给出
+
+$$
+(2/p)=1,\qquad (7/p)=-(p/7)=1,\qquad p\equiv3\pmod4.
+\tag{60.11}
+$$
+
+反过来，这三个条件经模 $8$ 与模 $7$ 的 CRT 恰给出所写三个模 $56$ 类。因此 $S_0$ 正是原标量支持 $\mathscr L$ 的超奇异支，没有对实际中央符号作额外筛选。
+
+在每个固定 $v$，定理 55.2 让原半点满足 $\overline Q_j\in\ker(\pi_p-[\epsilon_p])$，原两点满足 $\overline P_j\in L=[2]\ker(\pi_p-[\epsilon_p])$。定理 58.2 的超奇异公式 (58.5) 对两种实际 $\epsilon_p$ 都给出 $a_p=0$ 及 $\exp L=\#L=D_p=(p+1)/4$。在这个同一个有限群中，每个实际点的阶整除其指数，故两点的共同周期 $o_v$ 整除 $D_p$。这里仅消费该有限群输入；阶的整除性亦见 Milne，[*Group Theory*，版本 4.01，定理 1.26、推论 1.27](https://www.jmilne.org/math/CourseNotes/GT.pdf)。这证明 (60.7)，没有把原两点说成环境循环群的生成元。
+
+对任何 $p\in S_0$，好约化的核就是原 $U_v(1)$，所以实际整数条件准确为
+
+$$
+\begin{aligned}
+[q_Ht]P_1,[q_Ht]P_2\in U_v(1)
+&\Longleftrightarrow o_v\mid q_Ht\\
+&\Longleftrightarrow r_{v,H}\mid t.
+\end{aligned}
+\tag{60.12}
+$$
+
+约化核及第一形式层的对应是 Silverman，*The Arithmetic of Elliptic Curves*，第二版，[VII.2.1–2.2，印刷页 188–191](https://www.math.ens.psl.eu/~obenoist/refs/Silverman.pdf) 的成熟输入，参数对应始终是原 $F_v,E_0,U_v(1)$。若 $H<p\le4H-1$，则 $D_p$ 是不超过 $H$ 的正整数，故
+
+$$
+o_v\mid D_p\mid\operatorname{lcm}(1,\ldots,H)\mid q_H,
+\qquad r_{v,H}=1.
+\tag{60.13}
+$$
+
+于是同一个 $n=q_Ht$ 在每个原 $v\mid p$ 同时使两原点进入第一层。第一层是子群，故其整数线性组合 $X=[k]A$、$Y=A+[k]B$ 也进入第一层。原点与两行点均由 (53.3) 保证非挠、非零；原整方程在好约化第一层中有 $b_v=\operatorname{ord}_v(-x/y)\ge1$，所以 $j_v\ge1$。这仅使用前向入口，不使用 $\gcd(k^2,D_p)\mid|k|$、$D_p$ 平方自由或反向饱和证书。
+
+现在逐个地方支付范数权重。原 $F$ 在 $p>7$ 不分歧，故 $e_v=1$、$\sum_{v\mid p}f_v=8$。不论实际中央符号给出 $f_v=1$ 还是 $2$，每个带内素数都满足
+
+$$
+\frac18\sum_{v\mid p}f_vj_v(q_Ht,k)\log p
+\ge\frac18\sum_{v\mid p}f_v\log p=\log p.
+\tag{60.14}
+$$
+
+求和得到 (60.9) 的两个不等式。完整量还含带外所有非负贡献；这里只对有限带写出这笔确定性下界。
+
+最后在这个质量消费者内引用固定模 AP 素数定理：Clary–Fabrykowski，*Arithmetic progressions, prime numbers, and squarefree integers*，Czech. Math. J. **54** (2004)，915–927，[印刷页 918，式 (2)](https://dml.cz/bitstream/handle/10338.dmlcz/127940/CzechMathJ_54-2004-4_8.pdf)。其中误差的幂参数取 $4$，模数取 $56$，剩余类取 $31,47,55$；三者均与 $56$ 互素，而 $\varphi(56)=24$。该式给出各类的 $\pi(x;56,a)=\operatorname{li}(x)/24+O(x/\log^4x)$，固定模数处的有限初段可吸收入常数。对这三个类部分求和，存在只依赖模数 $56$ 的常数 $A_0>0$，使
+
+$$
+\vartheta_{S_0}(x)=\frac{x}{8}+R(x),\qquad
+|R(x)|\le A_0\frac{x}{\log^2x}\quad(x\ge2).
+\tag{60.15}
+$$
+
+具体地，$\vartheta_{S_0}(x)=\pi_{S_0}(x)\log x-\int_2^x\pi_{S_0}(u)\,du/u$；主项为 $(x-2)/8$，误差乘 $\log x$ 及其积分都被所写较宽界吸收。于是
+
+$$
+B_0(H)=\frac{3H-1}{8}+O\!\left(\frac{H}{\log^2H}\right)
+=\left(\frac38+o(1)\right)H.
+\tag{60.16}
+$$
+
+同一 AP 定理与全部素数的素数定理给出相对密度 $3/24=1/8$。密度只用于解释已经逐地方取得的质量渐近，没有代替入口证明；该论文的平方自由筛选结论未被使用。
+
+用白话说，原深层周期不只处理 $H$ 以下的地方：它已含有从 $1$ 到 $H$ 的每一个整数周期。这里一段 $H$ 以上的实际素数，其原半点倍二像的周期仍不超过 $H$，所以同一把深层钥匙也自动打开它们的第一层。每个地方都开锁后，付清全部 $f_v/8$，每个素数才确实贡献一份 $\log p$。所得线性 $H$ 量来自原分母，不来自把素数密度当作分母深度。$\square$
+
+## 61. 不相交素数支持上的实际有限平均与额外对数增益
+
+**定义 61.1（同一原周期上的有限平均）。** 对任意整数 $N\ge H\ge H_*$、$M\ge1$ 及任意非零整数列 $\boldsymbol{k}=(k_1,\ldots,k_N)$，置
+
+$$
+\mathcal M_{H,N}(\boldsymbol{k})
+=\frac1N\sum_{t=1}^N G_{S_0,H}(q_Ht,k_t).
+\tag{61.1}
+$$
+
+允许 $k_t$ 随 $t,H,N,M$ 任意移动。每个求和项中的全部地方和两原点始终共用同一个 $n=q_Ht$。
+
+**定理 61.2（确定性质量与额外平均增益相加）。** 存在常数 $C\ge0$，与 $H,N,M,q_H$ 及全部 $k_t$ 无关，使定义 61.1 的每个平均都满足以下有限 floor 下界及其统一后果：
+
+$$
+\begin{aligned}
+\mathcal M_{H,N}(\boldsymbol{k})
+&\ge B_0(H)
+ +\frac1{8N}\sum_{\substack{4H-1<p\le4N-1\\p\in S_0}}
+       \log p\sum_{v\mid p}f_v
+       \left\lfloor\frac N{r_{v,H}}\right\rfloor\\
+&\ge B_0(H)
+ +\frac1N\sum_{\substack{4H-1<p\le4N-1\\p\in S_0}}
+       \log p\left\lfloor\frac{4N}{p+1}\right\rfloor\\
+&\ge B_0(H)+\frac12\log\frac NH-C.
+\end{aligned}
+\tag{61.2}
+$$
+
+空带的和为零，故 $N=H$ 也在量词内。首行保留实际共同周期；后两行只使用 $o_v\mid D_p$，不要求 $o_v=D_p$ 或 $p\nmid q_H$。
+
+**证明。** 在每个固定 $p\in S_0$、$v\mid p$，(60.12) 给出两原点共同第一层的准确整数条件 $r_{v,H}\mid t$。一旦此条件成立，子群性就使任意原两行也进入第一层，故对每个非零 $k_t$ 都有
+
+$$
+j_v(q_Ht,k_t)\ge\mathbf1_{r_{v,H}\mid t},\qquad
+\sum_{t=1}^N\mathbf1_{r_{v,H}\mid t}
+=\left\lfloor\frac N{r_{v,H}}\right\rfloor.
+\tag{61.3}
+$$
+
+这是同一实际地方上的有限计数，不要求不同素数或不同地方的条件独立。更一般地，对每个有限 $Z\ge H$，完整平均都有下界
+
+$$
+\mathcal M_{H,N}(\boldsymbol{k})
+\ge\frac1{8N}\sum_{\substack{H<p\le Z\\p\in S_0}}
+ \log p\sum_{v\mid p}f_v
+ \left\lfloor\frac N{r_{v,H}}\right\rfloor.
+\tag{61.4}
+$$
+
+这里只交换有限个求和，右侧是入口事件供应的第一层质量，不是完整平均的等式。
+
+为合法相加，取 $Z=4N-1$，先把其中的支持分成 $(H,4H-1]$ 与 $(4H-1,4N-1]$。第一带的每个 $r_{v,H}=1$，其 (61.4) 贡献恰为 $B_0(H)$；第二带保留原 floor 计数。这证明 (61.2) 首行。两带没有共同素数，第一带内可能更深的贡献及 $p>4N-1$ 的贡献仍留在完整量中，均未再次计入。
+
+对第二带每个素数，实际周期满足
+
+$$
+1\le r_{v,H}\le o_v\le D_p=\frac{p+1}{4}\le N,
+\qquad
+\left\lfloor\frac N{r_{v,H}}\right\rfloor
+\ge\left\lfloor\frac{4N}{p+1}\right\rfloor.
+\tag{61.5}
+$$
+
+因此逐个 $v$ 降低 floor 后，再用 $\tfrac18\sum_{v\mid p}f_v=1$，得到 (61.2) 第二行。即使 $p$ 已因 $M$ 或其它原周期因子而整除 $q_H$，(60.3)、(61.3)–(61.5) 仍完全有效。
+
+以下仅在这一消费者内把已经取得的有限素数质量换成对数下界。记 $a=4H-1$、$b=4N-1$，则 $b\ge a\ge3$。由 $\lfloor u\rfloor\ge u-1$，第二带的贡献至少为
+
+$$
+4\sum_{\substack{a<p\le b\\p\in S_0}}\frac{\log p}{p+1}
+-\frac{\vartheta_{S_0}(b)-\vartheta_{S_0}(a)}N.
+\tag{61.6}
+$$
+
+利用同一个 (60.15) 作 Stieltjes 部分求和，端点包括关系保持为 $(a,b]$，准确得到
+
+$$
+\begin{aligned}
+\sum_{\substack{a<p\le b\\p\in S_0}}\frac{\log p}{p+1}
+&=\frac18\log\frac{b+1}{a+1}+E(a,b),\\
+E(a,b)&=\frac{R(b)}{b+1}-\frac{R(a)}{a+1}
+       +\int_a^b\frac{R(x)}{(x+1)^2}\,dx.
+\end{aligned}
+\tag{61.7}
+$$
+
+当 $a=b$ 时两边均为零。对全部 $b\ge a\ge3$，同一个误差常数给出
+
+$$
+\begin{aligned}
+|E(a,b)|
+&\le A_0\left(\frac2{\log^2a}
+               +\int_a^b\frac{dx}{x\log^2x}\right)\\
+&\le A_0\left(\frac2{\log^2a}+\frac1{\log a}\right)
+\le C_1,
+\qquad
+C_1=A_0\left(\frac2{\log^2 3}+\frac1{\log3}\right).
+\end{aligned}
+\tag{61.8}
+$$
+
+又有
+
+$$
+0\le\frac{\vartheta_{S_0}(b)-\vartheta_{S_0}(a)}N
+\le\frac{\vartheta_{S_0}(b)}N
+\le4\left(\frac18+\frac{A_0}{\log^2 3}\right)=:C_2.
+\tag{61.9}
+$$
+
+这里 $b/N<4$，而非对固定 $H$ 先令 $N$ 趋于无穷。由于 $(b+1)/(a+1)=N/H$，把 (61.7)–(61.9) 代入 (61.6)，即可取
+
+$$
+C=4C_1+C_2
+\tag{61.10}
+$$
+
+完成 (61.2)。此常数只依赖已经固定的 AP 误差常数；它对全部整数 $N\ge H\ge H_*$ 同时有效，不含 $q_H$、$M$ 或移动参数。这里只引用固定模数的成熟误差估计，不另立一个 AP 定理，也不要求数值明确的误差常数。
+
+用白话说，第一段素数在每个 $t$ 都已交足一份质量；额外平均只向更远的一段素数收费。远处每个实际共同周期不超过 $(p+1)/4$，在前 $N$ 个倍数中恰有一个可写出的 floor 次数保证两点共同进入第一层。三个剩余类的密度乘上这个因子 $4$，才在付清地方权重后给出 $\tfrac12\log(N/H)$；两段质量的支持不交，所以可以相加。$\square$
+
+## 62. 同一整数对全部移动两行的存在性与固定阶段增长
+
+**定理 62.1（共同最小关系在本消费者内的统一选择）。** 取定理 61.2 的同一个常数 $C$。对全部整数 $M\ge1$、$N\ge H\ge H_*$，存在一个整数 $1\le t_N\le N$，使全部非零整数 $k$ 在这个同一个 $n=q_Ht_N$ 上同时满足
+
+$$
+G_{S_0,H}(q_Ht_N,k)
+\ge B_0(H)+\frac12\log\frac NH-C.
+\tag{62.1}
+$$
+
+对每个固定的 $M\ge1$、$H\ge H_*$，存在无界的正整数集合 $\mathcal T_{H,M}$，使
+
+$$
+\forall t\in\mathcal T_{H,M}\quad\forall k\in\mathbb Z\setminus\{0\}:\qquad
+G_{S_0,H}(q_Ht,k)
+\ge B_0(H)+\frac12\log\frac tH-C.
+\tag{62.2}
+$$
+
+特别地，逐 $t$ 的最小值可由同一个 $k=1$ 取得，而且
+
+$$
+\limsup_{t\to\infty}
+\frac{\min_{k\in\mathbb Z\setminus\{0\}}G_{S_0,H}(q_Ht,k)-B_0(H)}{\log t}
+\ge\frac12.
+\tag{62.3}
+$$
+
+所以对任意无限移动非零整数列 $(k_t)_{t\ge1}$，同样有
+
+$$
+\limsup_{t\to\infty}
+\frac{G_{S_0,H}(q_Ht,k_t)-B_0(H)}{\log t}
+\ge\frac12.
+\tag{62.4}
+$$
+
+**证明。** 只在本消费者内复用 [003 定理 50.2 的逐地方行格基无关性及 (50.5)–(50.6)](UPPM_RG_003_CONJUGATE_CM_RESONANCE_RANK_AND_COVERAGE.md#50-原行格约束下的共同尾部纯夹角界与实际剪切族)，以及本卷定义 53.1 的原深度子群性质。参数对应如下：固定同一个 $n$，标准行 $(1,0),(0,1)$ 对应 $A=[n]P_1,B=[n]P_2$；$k=1$ 时的行 $(1,0),(1,1)$ 是 $\mathbb Z^2$ 的另一组基。因此在每个原地方 $v$ 同时有
+
+$$
+j_v(n,1)=\min\{b_v(A),b_v(A+B)\}
+        =\min\{b_v(A),b_v(B)\}.
+\tag{62.5}
+$$
+
+对任意非零整数 $k$，两行 $(k,0),(1,k)$ 都在同一个 $\mathbb Z^2$ 中，原有的子群性质让其线性组合保留两标准行的共同最小深度。所以
+
+$$
+j_v(n,k)\ge\min\{b_v(A),b_v(B)\}=j_v(n,1)
+\quad\text{对全部原 }v\text{ 同时成立}.
+\tag{62.6}
+$$
+
+所引原行格关系使用原整 $x$ 分母的子群 $V_v(a)$，包括 $2,7$ 及所有分歧地方；在本节 $S_0$ 上它又是原好约化过滤 $U_v(a)$。故没有更换分母、地方或深度归一化。中间的 $O$ 仍只用原 $\widetilde b_v(O)=+\infty$ 参与子群论证，原 $A,B,X,Y$ 自身均由非挠性保证分母合法。这不是针对每个地方另外挑选一个 $k$：在全部地方同时取得最小值的始终是 $k=1$。
+
+按原权重对 (62.5)–(62.6) 求和，令
+
+$$
+\begin{aligned}
+\mathcal F_{H,M}(t)&=G_{S_0,H}(q_Ht,1)\\
+&=\frac18\sum_{\substack{p>H\\p\in S_0}}\log p
+        \sum_{v\mid p}f_v
+        \min\{b_v([q_Ht]P_1),b_v([q_Ht]P_2)\}\\
+&=\min_{k\in\mathbb Z\setminus\{0\}}G_{S_0,H}(q_Ht,k).
+\end{aligned}
+\tag{62.7}
+$$
+
+这是完整 $S_0$ 尾部的身份；各行的支持虽可随 $k$ 改变，逐地方非负不等式仍给出所写整体最小值。每个固定 $t\ne0$ 的 $\mathcal F_{H,M}(t)$ 都是有限实数。
+
+现在在 (61.2) 中只取 $k_1=\cdots=k_N=1$，得到
+
+$$
+\frac1N\sum_{t=1}^N\mathcal F_{H,M}(t)
+\ge B_0(H)+\frac12\log\frac NH-C.
+\tag{62.8}
+$$
+
+从有限集合 $\{1,\ldots,N\}$ 选取使 $\mathcal F_{H,M}$ 最大的 $t_N$，最大值至少等于平均值；再用 (62.7) 的逐 $t$ 最小关系，即得同一个 $t_N$ 对全部 $k$ 的 (62.1)。这里没有交换平均与下确界。
+
+固定 $H,M$。当 $N\to\infty$，(62.8) 的右端趋于无穷。对任意固定整数 $T$，有限个数 $\{\mathcal F_{H,M}(t):1\le t\le T\}$ 的最大值有限，所以所有充分大 $N$ 所选的 $t_N$ 都大于 $T$。故这些 $t_N$ 的集合无界，且因为 $t_N\le N$，
+
+$$
+\mathcal F_{H,M}(t_N)
+\ge B_0(H)+\frac12\log\frac NH-C
+\ge B_0(H)+\frac12\log\frac{t_N}H-C.
+\tag{62.9}
+$$
+
+取这些 $t_N$ 的集合为 $\mathcal T_{H,M}$，再用 (62.7)，得到 (62.2)。沿其趋于无穷的子列，将 (62.9) 减去 $B_0(H)$ 并除以 $\log t_N$，右端趋于 $1/2$，证明 (62.3)。任意移动 $k_t$ 都逐项不小于同一个 $\mathcal F_{H,M}(t)$，所以 (62.4) 也成立。$\square$
+
+上述消费者在 $S_0$、$H\ge H_*$、原周期倍数 $n=q_Ht\ne0$ 的范围内取得确定性 $B_0(H)$ 下界，并在同一原周期上取得额外的有限平均和无界子列增益。因此，§56.4、§59 末段关于尚无正质量下界的边界，在这个具体范围内由 (60.9)、(61.2) 与 (62.2) 精确补足；其中 $B_0(H)\sim3H/8$ 保证充分大阶段的线性正质量，未指定 AP 误差常数的数值或其正性起点。
+
+对每个非零 $t$ 新取得的统一下界是 $B_0(H)$；对数 $t$ 的增长只在所证无界集合及 limsup 上断言，不推广成全部 $t$ 的逐项对数增长。这里没有 $n^2$ 比例的共同质量下界，没有对原全 gcd 的上界，也没有把平方自由子集赋予同一个 $1/8$ 密度或同一个 $1/2$ 平均系数。未通过指数证书的标量地方之上界、其余支持的联合估计、原短共振同时实现、原 $p_H(\alpha)$、原 (31.2)、负 $\vartheta$ 阶段的调和和发散及原覆盖目标，均不由这些下界解决。一般非零有限目标的成功余类仍不改成 $q_H\mathbb Z$。
+
+这里承重的是原深层自身指数、实际半点倍二像与原带权分母之间的综合接口，连同不相交支持上的平均增益和同一整数的全参数选择。原 002 的完整高度与周期理论、原 003 的行格关系、本卷的半点及深度结构均直接复用；有限群、形式群、二次互反律与固定模 AP 素数定理只在这些消费者内部承担成熟中间输入，不被另立为新成果。来源范围限于所引原卷、Milne 的所列阶整除条目、Silverman 的所列约化与形式群条目，以及 Clary–Fabrykowski p918 式 (2) 的 AP 输入，不主张全球文献优先权。
+
+用白话说，先给每个周期倍数一笔确定的底款，再在更远的素数上平均赚取对数增益。原行格关系提供了一把对全部地方都相同的尺：$k=1$ 已是共同质量最小的两行。只要它在某个 $t$ 达到平均保证，其它所有 $k$ 就在同一个 $t$ 一起达标；有限初段容不下持续变大的保证，所以达标的 $t$ 必须无界。所给下界仍远小于平方高度尺度。
+
+## 追加锚（本行以下为增补区）
