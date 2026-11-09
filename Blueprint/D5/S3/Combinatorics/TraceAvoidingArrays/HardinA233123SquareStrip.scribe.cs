@@ -63,7 +63,8 @@ internal sealed class HardinA233123SquareStripDocument : IScribeDocumentDefiniti
                 + "From a boundary with 2 seen, twelve rows keep it seen and none forget it. "
                 + "The unique first row is (0,1); it leaves 2 unseen. These are counts of "
                 + "single rows, each drawn from the 36 functions Fin 2 to Fin 6."),
-            Thm("result", "result", "Barker's generating-function identity", ResultFormula(),
+            Resolution("result", "result", "Barker's generating-function identity",
+                ResultFormula(),
                 "Let U(k) count continuations after 2 has been seen, and V(k) those before "
                 + "2 has been seen, under the invariant Valid. The finite certificate gives "
                 + "U(0)=V(0)=1, U(k+1)=12U(k), and V(k+1)=4V(k)+4U(k). The width-generic "
@@ -88,6 +89,14 @@ internal sealed class HardinA233123SquareStripDocument : IScribeDocumentDefiniti
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(Source),
             Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
+
+    private static DocumentBlock Resolution(string id, string name, string title,
+        Formula formula, string prose) =>
+        Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + name), H(title),
+            StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(Source),
+            Blocks(Paragraph(Text(prose))), DescribeRole.Theorem,
+            new OpenProblemResolutionClaim(ProblemSlugRef.Create("hardin233123"),
+                ResolutionKind.Proved));
 
     private static Formula RowLegalFormula()
     {

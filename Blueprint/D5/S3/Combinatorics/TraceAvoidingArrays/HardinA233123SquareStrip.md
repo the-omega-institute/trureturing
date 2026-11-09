@@ -122,6 +122,10 @@ $$((\left(1 - 4 \cdot \operatorname{PowerSeries}.\operatorname{X}\right) \cdot \
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233123SquareStrip.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/hardin233123` (proved) by `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233123SquareStrip.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hardin233123","declaration_gid":"D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233123SquareStrip.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233123: six-colour complementary-pair exclusion on a two-column square strip*. URL: <https://oeis.org/A233123>.
