@@ -1647,3 +1647,198 @@ Akkaoui–Fadli，*New results about quadratic functional equation on semigroups
 白话说，三盏灯的总账可以守恒，但一份复杂的空配方仍可能在这套局部递推中，把外部读数从一盏灯挪到另外两盏。上面的全项公式说明，连所有空配方的有界非负行读数和每个标记锚的精确读数都检查过，也不能仅靠这套递推堵住转移。完整四变量关系还有额外的消去力：只要两个配方在同一实际三点轨道上真的作出相同动作，它们对全部外部比较就相同。尚缺的是把这种消去力覆盖到每个原非结合空括号；没有这座桥，就不能把“空配方之间费用为零”当作“它们对整个世界都是真正的空”。
 
 ## 追加锚（本行以下为增补区）
+
+## 31. 只检验两种单位标记插入的一致次线性条件
+
+**定义 31.1（两族读数条件 S）。**保留定义 1.1 的全部原始对象：有真实双侧单位 $1$ 的任意 magma $M$，任意 $U:M\to M$，以及处处有限、非负、零对角的 $c$。完整 (R) 仍要求
+
+$$
+\forall a,b,u,v\in M:\qquad
+\sum_{k=0}^2c\bigl(a\cdot(U^ku),b\cdot(U^kv)\bigr)=3c(a,b)+3c(u,v).
+$$
+
+置 $p_j=U^j1$、$q(a)=c(a,1)$、$r(a)=c(1,a)$，并对全部 $a,z\in M$、$j\in\{1,2\}$ 定义
+
+$$
+\begin{aligned}
+B(a,z)&=q(a)+r(a)+q(z)+r(z),\\
+\Delta_j(a,z)&=|c(a\cdot p_j,z)-c(a,z)|+|c(z,a\cdot p_j)-c(z,a)|.
+\end{aligned}
+\tag{31.1}
+$$
+
+额外条件为
+
+$$
+\forall\varepsilon>0\ \exists C_\varepsilon\in[0,\infty)\ \forall a,z\in M\ \forall j\in\{1,2\}:\qquad
+\Delta_j(a,z)\le\varepsilon B(a,z)+C_\varepsilon.
+\tag{S}
+$$
+
+同一个有限 $C_\varepsilon$ 必须独立于 $a,z,j$；$B=0$ 也在量词内。只检验将盖一次或两次标记的空输入插在右端这两族比较，不要求任意零费用来源可替换，也不预设对称性、三角、拓扑、固定幂、结合律或 $U1=1$。(S) 是明确增列的一致次线性增长前件，尚未从 (R) 推出；这不声称已证明二者逻辑独立。
+
+白话说，三次成对比较的总账精确配平；再要求两种局部空输入插入造成的双向读数变化，不能随着任意增大的全局比较预算保持正比例增长。它容许标记空输入的有限效应，每个比例容差有一笔共同有限余量，而非要求原模型的插入效应为零。事件完整性、过程接续、联合系统和时间仍分别保留各自的实际前件。
+
+**引理 31.2（真实单位复制中的余项缩放）。**若原模型满足 (S)，则定理 23.2 的实际数组模型，对全部数组 $A,Z\in M^{\Sigma_N}$、$j=1,2$ 和每个 $\varepsilon>0$ 满足
+
+$$
+\Delta_{N,j}(A,Z)\le\varepsilon B_N(A,Z)+\frac{C_\varepsilon}{N}.
+\tag{31.2}
+$$
+
+这里所有下标量均按 (31.1) 在 $c_N$ 和真实数组单位 $\mathbf1$ 上定义，且
+
+$$
+c_N(A,Z)=\frac1{N3^N}\sum_{\sigma\in\Sigma_N}c(A_\sigma,Z_\sigma),\qquad
+U_N^j\mathbf1=(p_j)_{\sigma\in\Sigma_N},\qquad \Sigma_N=\{0,1,2\}^N.
+\tag{31.3}
+$$
+
+**证明。**乘法和标记逐坐标采用原运算，$\mathbf1$ 是常值原单位，故 $A\cdot(U_N^j\mathbf1)$ 的坐标确为 $A_\sigma\cdot p_j$。对两个绝对值分别用有限和的三角不等式，再用原 (S)，得
+
+$$
+\begin{aligned}
+\Delta_{N,j}(A,Z)&\le\frac1{N3^N}\sum_\sigma\Delta_j(A_\sigma,Z_\sigma)\\
+&\le\frac\varepsilon{N3^N}\sum_\sigma B(A_\sigma,Z_\sigma)+\frac{C_\varepsilon}{N}
+=\varepsilon B_N(A,Z)+\frac{C_\varepsilon}{N}.
+\end{aligned}
+$$
+
+预算 $B_N$ 是四个真实单位费用的精确加权和；不要求任一未缩放坐标的费用有统一界，也未把复制来源 $\widetilde\Gamma_N1$ 当作真实单位。证毕。
+
+## 32. 两族次线性读数与完整仿射复几何等价
+
+**定理 32.1（条件 S 的完整分类）。**在定义 31.1 的原始签名及完整 (R) 下，(S) 当且仅当存在复 Hilbert 空间 $H$ 与映射 $F:M\to H$，对全部 $a,b\in M$ 满足
+
+$$
+F1=0,\qquad F(a\cdot b)=Fa+Fb,\qquad
+F(Ua)=\omega Fa+t,\quad t=F(U1),\qquad
+c(a,b)=\|Fa-Fb\|^2,\quad \omega=-\tfrac12+i\tfrac{\sqrt3}{2}.
+\tag{32.1}
+$$
+
+最小空间 $H=\overline{\operatorname{span}_{\mathbb C}F(M)}$ 唯一到唯一的保标签酉同构；零模型、非忠实来源和任意仿射漂移均包含在内。反向可显式选
+
+$$
+C_\varepsilon=(4/\varepsilon+2)\|t\|^2.
+\tag{32.2}
+$$
+
+**证明。**先设 (S)。固定任意原三标签 $a,b,d$，允许重复，使用定理 23.2 的实际复制模型、共同相位补齐和全部自由含幺 $U$-项 $\mathcal T$。只约简双侧单位恒等式，其余实际次序和括号均保留；$U1$ 不约简为 $1$。即使原三标签含 $1$，其来源变量也不与新模型的真实单位合并。
+
+记 $s_N$ 为项 $s$ 在第 $N$ 个数组模型的实际求值。式 (23.8)–(23.9) 给每个固定项有限的、与 $N$ 无关的预算，因而每个固定项对 $s,z$ 的 $B_N(s_N,z_N)$ 有界。取定理 23.2 对全部有序项对的同一个有限值点态收敛子列 $N_\ell\to\infty$，得到 $c_\infty$。非负性、零对角、完整 (R) 及原三标签全部有向比较矩阵同时保留。
+
+令 $p_{\infty,j}=U^j1_{\mathcal T}$。对任意固定 $s,z\in\mathcal T$ 及 $j=1,2$，引理 31.2 沿上述同一子列给
+
+$$
+\Delta_{\infty,j}(s,z)\le\varepsilon B_\infty(s,z)
+\qquad(\varepsilon>0).
+\tag{32.3}
+$$
+
+这是有限个费用、加减与绝对值的极限，$C_\varepsilon/N_\ell\to0$；每个 $\varepsilon$ 的不等式都沿原子列成立，无须另换极限模型。$B_\infty(s,z)$ 有限，令 $\varepsilon\downarrow0$，得到在这个同一模型内
+
+$$
+s\cdot p_{\infty,j}\approx s\qquad(s\in\mathcal T,\ j=1,2),
+\tag{32.4}
+$$
+
+其中 $\approx$ 要求对全部 $z\in\mathcal T$ 的完整行与完整列同时相等。
+
+取 $s=1_{\mathcal T}$ 得 $p_{\infty,j}\approx1_{\mathcal T}$。在[有限正性桥引理 2.3、定理 8.2](AURIC_C133_UNANCHORED_MARKER_FINITE_POSITIVITY_BRIDGE.md)的自由实差空间与双侧根空间 $\mathcal N_\infty$ 中，(32.4) 因而给
+
+$$
+e_{p_{\infty,j}}\in\mathcal N_\infty,\qquad
+e_{s\cdot p_{\infty,j}}-e_s\in\mathcal N_\infty,\qquad
+D(s,p_{\infty,j})=e_{s\cdot p_{\infty,j}}-e_s-e_{p_{\infty,j}}\in\mathcal N_\infty.
+\tag{32.5}
+$$
+
+这正是全部 $s$、两个 $j$ 上的 $\mathrm{UC}$；直接调用所引定理 8.2，取得极限模型的完整仿射 Hilbert 表示。其平方根距离给被保留三标签的
+
+$$
+\sqrt{c(a,d)}\le\sqrt{c(a,b)}+\sqrt{c(b,d)}.
+$$
+
+原三标签任意，原核遂有 $\mathrm{DT}$。定理 14.1 及有限正性桥定理 1.3 给原模型的全部 (32.1) 与最小唯一性。这里不回拉未经证明的运算嵌入，不需要精确零费用条件的极限封闭性，也未使用 $\Omega_\infty(1)=0$ 作为推理前件。定理 14.1 内调用的[续卷 V 定理 1.3](AURIC_C133_THREE_READ_CLOSURE_VISIBLE_COMPLEX_GEOMETRY_CONTINUATION_V.md)仍只在其真实固定单位商的适用域内复用，未将原始 $U$ 假定为保单位。
+
+反向设 (32.1)。置 $v_j=F(p_j)$，则 $v_1=t$、$v_2=(1+\omega)t$，故两个 $\|v_j\|$ 都等于 $T=\|t\|$。对任意 $a,z$，置 $x=Fa$、$y=Fz$；表示的对称性及 Cauchy–Schwarz 给
+
+$$
+\begin{aligned}
+B(a,z)&=2(\|x\|^2+\|y\|^2),\\
+\Delta_j(a,z)&=2\bigl|\|x+v_j-y\|^2-\|x-y\|^2\bigr|\\
+&\le4T\|x-y\|+2T^2\le4T\sqrt{B(a,z)}+2T^2\\
+&\le\varepsilon B(a,z)+(4/\varepsilon+2)T^2.
+\end{aligned}
+\tag{32.6}
+$$
+
+最后一步是 $(\sqrt\varepsilon\sqrt B-2T/\sqrt\varepsilon)^2\ge0$。$B=0$ 时 $x=y=0$，直接有 $\Delta_j=2T^2$；$T=0$ 时两个缺陷都为零；全零模型也包含在内，均未除以费用或向量范数。若从表示出发核对 (R)，实际端点像差为 $(Fa-Fb)+\omega^k(Fu-Fv)$，漂移在差中抵消，三次求和即得完整 (R)。证毕。
+
+## 33. 两族入口的比较范围与未解条件
+
+**命题 33.1（已完成关系类相同，检验族减少）。**在原始完整 (R) 类内，(S)、定理 20.1 的某个统一正幂三角、$\mathrm{DT}$、$\mathrm{UC}$、五点及全有限负型与 (32.1) 等价。这里的简化是仅检验两种单位插入族、一个增长条件及直接的 $C_\varepsilon/N$ 证明，不是严格扩大已完成的 (R) 模型类，也不是减少独立物理前提的数量。
+
+**证明。**定理 32.1、20.1、14.4 与有限正性桥定理 8.2 直接给等价。不能把定理 7.1 直接作用于 $\Delta_j$：该定理要求被消去函数自身满足完整四变量关系，此处未证明两种插入缺陷满足它。新的桥梁是引理 31.2 对真实单位、实际自由项和共同极限的缩放估计。亦未声称正幂三角单独在任意原始 magma 上给 (S)：它约束核，不控制任意单位插入动作。证毕。
+
+**命题 33.2（有限原始核不区分该增长条件）。**任意有限 $M$ 上的有限值核均满足 (S)，但其中有核违反每个正幂三角。
+
+**证明。**有限多个 $\Delta_j$ 有共同上界，可取作每个 $C_\varepsilon$。例如标签 $(1,a,b)$ 上令 $U=I$，$1$ 为双侧单位，非单位间取 $x\cdot y=x$，并令核矩阵为
+
+$$
+\begin{pmatrix}0&0&1\\1&0&0\\2&0&0\end{pmatrix}.
+$$
+
+此时 $p_j=1$，两个缺陷全零，但 $c(1,b)^\alpha=1>c(1,a)^\alpha+c(a,b)^\alpha=0$ 对每个 $\alpha>0$ 成立。它不满足完整 (R)：非零有限核违反命题 2.4 的全局有界结论；不是 (R) 的反模型，也不证明原目标的否定。证毕。
+
+**问题 33.3（保留的充分性缺口）。**(R) 单独是否迫出 (S) 或完整表示，仍未解决。精确条件 $(Z)$，即 $c(s,t)+c(t,s)=0$ 蕴涵对每个 $z$ 有 $c(s,z)=c(t,z)$ 及 $c(z,s)=c(z,t)$，与 (R) 合用是否充分，也仍未解决。一般零漂移条件同样未由本定理取得充分性；(S) 并非从这些未决前件推出。
+
+## 34. 同一候选的几何、事件与过程适用域
+
+**推论 34.1（可见几何与来源接口）。**在定理 32.1 的前件下，可见零费用商的聚合为加法，交换次序和改变括号不改变可见比较；原始档案仍保留。实际纠偏配方
+
+$$
+V(a)=U\bigl(a\cdot p_2\bigr),\qquad F(Va)=\omega Fa
+\tag{34.1}
+$$
+
+给 $120^\circ$ 相位及全有限半正定 Gram。采用第二变量线性的内积约定，三条实际历史 $a\cdot(V^ku)$ 给
+
+$$
+\langle Fa,Fu\rangle=\frac13\sum_{k=0}^2\omega^{-k}q\bigl(a\cdot(V^ku)\bigr).
+\tag{34.2}
+$$
+
+它不限定物理空间三维。若三历史的全部八个子集事件实际对应同一组向量和，有限正性桥命题 6.1 才给其共同强正 Gram 与无三阶干涉。
+
+对每个实际完整有限测试 $C$，总核 $c_*$ 与每个事件核 $c_e$ 须在同一 $M,\cdot,1,U$ 上分别满足原始签名、完整 (R) 和各自的 (S)，并保持原来的完整和式 $\sum_{e\in C}c_e=c_*$。在最小总空间有唯一
+
+$$
+0\le E_e\le I,\qquad \sum_{e\in C}E_e=I,\qquad
+c_e(a,b)=\langle Fa-Fb,E_e(Fa-Fb)\rangle.
+\tag{34.3}
+$$
+
+实际准备差 $x=Fa-Fb\ne0$ 按同一测试总质量归一时，Born 权重为 $\langle x,E_ex\rangle/\|x\|^2$；总量为零不定义 $0/0$。不从总核的 (S) 推断事件核的 (S)，也不从 $F1=0$ 获得非零准备。
+
+若输入、输出各取上述最小表示，即 $H_{\rm in}=\overline{\operatorname{span}_{\mathbb C}F_{\rm in}(M_{\rm in})}$、$H_{\rm out}=\overline{\operatorname{span}_{\mathbb C}F_{\rm out}(M_{\rm out})}$，实际完整有限细分支 $T_{e,r}$ 保持单位，全部输入对与原记录满足
+
+$$
+c_e(a,b)=\sum_r c_{\rm out}(T_{e,r}a,T_{e,r}b),\qquad
+\sum_{e\in C}c_e(a,b)=c_{\rm in}(a,b),\qquad
+c_{\rm out}\bigl(T_{e,r}(V_{\rm in}a),V_{\rm out}(T_{e,r}a)\bigr)=0,
+\tag{34.4}
+$$
+
+其中前两式对全部 $a,b$、末式对全部 $a,e,r$ 成立，细记录读数也须逐记录对应，则有唯一有界复线性 Kraus 延拓 $K_{e,r}F_{\rm in}a=F_{\rm out}(T_{e,r}a)$，且 $\sum_{e,r}K_{e,r}^*K_{e,r}=I$。仅到单位的范数校准不替代全成对校准，保距离不替代共同纠偏相位。
+
+**证明。**几何及 (34.1) 由 (32.1) 和 $1+\omega+\omega^2=0$ 得到，(34.2) 复用式 (21.1)。对总核与每个事件核分别应用定理 32.1，随后直接消费[有限正性桥定理 6.2、对应 6.3](AURIC_C133_UNANCHORED_MARKER_FINITE_POSITIVITY_BRIDGE.md)的完整测试与细过程接口。
+
+[续卷 V 第 6 节](AURIC_C133_THREE_READ_CLOSURE_VISIBLE_COMPLEX_GEOMETRY_CONTINUATION_V.md#6-标准量子接口的来源与结论)的原始分类要求标记固定单位；此处使用有限正性桥的仿射版本与共同 $V$，未将原 $U$ 填入固定单位前件。[续卷 II 第 6 节](AURIC_C133_THREE_READ_CLOSURE_VISIBLE_COMPLEX_GEOMETRY_CONTINUATION_II.md#6-完整事件过程复合与时间)的整数群接口也只在可见加法与共同相位已取得后消费：实际联合须有可见双可加性、复相位平衡和乘积质量，才给复张量嵌入，乘积像稠密才给整个联合空间。聚合加法本身不供应联合张量。
+
+Kraus 形式给数学上的完全正扩张；实际参考系统上的过程等于它仍需原参考接口。全效果域上一致、非负、归一、可加评价在有限维给密度态，无限维还需正规性或相应可数可加；全效果的实际供应仍为前件。实际可逆、保单位、保全部比较及共同纠偏相位的过程给酉表示，一参数群和强连续时间另行供应才给自伴生成元。Lüders 更新仍需结果子空间内的无扰动条件，效果和结果可重复性不单独决定它。非零准备、失败、停止、记录、返回及合法历史均保留原定义；静态几何不供应上述实际操作，也不完成量子起源目标。证毕。
+
+**对应 34.2（数学来源与新增范围）。**有限和的绝对值比较、Cauchy–Schwarz、Young 平方估计和可数有限值对角抽取均为经典工具。已有定理 20.1、23.2、14.1、有限正性桥定理 1.3、8.2 及所引量子接口各按原前件复用。这里的 repo-derived 增量是两种单位插入缺陷的统一次线性界，经真实单位复制产生 $C_\varepsilon/N$，在同一全项极限中取得完整 $\mathrm{UC}$，再由有限三点保持恢复原模型的表示。群上极化的文献条件仍沿用有限正性桥第 11 节所引 de Place Friis–Stetkær，*On the quadratic functional equation on groups*，DOI 10.5486/pmd.2006.3270，Theorem 1.2；只在已有交换群处使用。这里不主张历史新颖性、文献穷尽性或完整物理前提的减少。
+
+## 追加锚（两族单位插入次线性分类；本行以下为增补区）
