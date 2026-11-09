@@ -1,0 +1,15 @@
+**候选公理 56.5（内生二元相容，IPC）。** 量子候选的最小关系层不是“所有边都相等”，而是
+
+$$
+\boxed{
+\begin{gathered}
+R_{g^{-1}}=R_g^{-1},\\
+R_hR_g=\omega(h,g)R_{hg},\\
+\delta\omega=1,\\
+\text{存在一个实际允许的闭路 }\ell\text{ 使其中心 holonomy 不可在允许提升中消去。}
+\end{gathered}}
+\tag{IPC}
+$$
+
+第一行是可逆二元比较，第二、三行是射影层的顺序无关及四元结合，最后一行阻止模型退回严格平坦或完整 pair groupoid 的纯规范相位。几何上，IPC 是一个射影平坦的 Hermitian 比较丛，带有不可约的中心 holonomy；若去掉最后一行，它只是可平凡化的中心扩张。
+

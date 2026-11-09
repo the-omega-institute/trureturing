@@ -1,0 +1,13 @@
+**定义 56.2（顺序无关的三种读法）。** 对可复合箭头 \(g:x\to y\)、\(h:y\to z\)，考虑下面三种条件：
+
+$$
+\begin{aligned}
+\mathrm{Sym}&:\quad \text{只要求允许 }g^{-1},\text{不要求运输复合的数值相等};\\
+\mathrm{SF}&:\quad R_hR_g=R_{hg};\\
+\mathrm{PF}&:\quad [R_h][R_g]=[R_{hg}],
+\end{aligned}
+\tag{56.2}
+$$
+
+其中 \([R]\) 表示模去允许的中心标量。\(\mathrm{Sym}\) 只表达“能反向比较”，\(\mathrm{SF}\) 表达“实际运输完全不依赖路径”，\(\mathrm{PF}\) 表达“可观测射线不依赖路径”。
+
