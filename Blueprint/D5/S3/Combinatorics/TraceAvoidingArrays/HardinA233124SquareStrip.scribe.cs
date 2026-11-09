@@ -33,15 +33,12 @@ internal sealed class HardinA233124SquareStripDocument : IScribeDocumentDefiniti
                 + "division and Nat.mod is the nonnegative remainder, with the Lean "
                 + "zero-divisor conventions n / 0 = 0 and n % 0 = n; neither operation "
                 + "is used in these definitions.")),
-            Def("prior", "prior", "An earlier occurrence", PriorFormula(),
-                "Strict lexicographic order on the row and column indices is row-major order."),
-            Def("normal", "normal", "Normalization with earlier seen flags", NormalFormula(),
-                "The two Boolean flags record earlier occurrences of colours one and two."),
             Def("bonds", "bonds", "Vertical neighbours", BondsFormula(),
                 "The three bonds connect equal column indices in consecutive rows."),
             Def("legal", "Legal", "The literal array predicate", LegalFormula(),
-                "The shared rowLegal is the horizontal predicate of the triangular-strip "
-                + "owner. Only the vertical predicate bonds connects rows here."),
+                "The owner predicate widthLegal is specialized to width three, rowLegal "
+                + "and the vertical predicate bonds. Its widthNormal imposes the stated "
+                + "row-major normalization. The filtered count keeps every array in scope."),
             Def("count", "a", "The literal filtered count", CountFormula(),
                 "The filter ranges over every function on Fin n times Fin 3. The "
                 + "first-cell existential is false when n is zero.", true),
@@ -98,28 +95,6 @@ internal sealed class HardinA233124SquareStripDocument : IScribeDocumentDefiniti
             new OpenProblemResolutionClaim(ProblemSlugRef.Create("hardin233124"),
                 ResolutionKind.Proved));
 
-    private static Formula PriorFormula()
-    {
-        var f = V("f"); var i = V("i"); var j = V("j"); var d = V("d");
-        var r = V("r"); var k = V("k"); var n = V("n");
-        return All("n", Q("Nat"), All("f", Arrow(Fin(n), Row()),
-            All("i", Fin(n), All("j", Fin(3), All("d", Fin(6),
-                Eq(Call("prior", f, i, j, d), Ex("r", Fin(n), Ex("k", Fin(3),
-                    And(Or(Lt(r, i), And(Eq(r, i), Lt(k, j))),
-                        Eq(At(f, r, k), d))))))))));
-    }
-    private static Formula NormalFormula()
-    {
-        var f = V("f"); var s = V("s"); var i = V("i"); var j = V("j");
-        var c = At(f, i, j); var n = V("n");
-        var body = All("i", Fin(n), All("j", Fin(3), And(
-            Imp(Or(Eq(c, Colour(2)), Or(Eq(c, Colour(3)), Eq(c, Colour(4)))),
-                Or(Eq(Proj(s, 1), Q("Bool.true")), Call("prior", f, i, j, Colour(1)))),
-            Imp(Eq(c, Colour(3)),
-                Or(Eq(Proj(s, 2), Q("Bool.true")), Call("prior", f, i, j, Colour(2)))))));
-        return All("n", Q("Nat"), All("s", Seen(), All("f", Arrow(Fin(n), Row()),
-            Eq(Call("normal", s, f), body))));
-    }
     private static Formula BondsFormula()
     {
         var c = V("c"); var d = V("d"); var j = V("j");
@@ -138,10 +113,13 @@ internal sealed class HardinA233124SquareStripDocument : IScribeDocumentDefiniti
         var next = Cast(At(Q("Fin.mk"), Add(Val(i), D(1)), h), Fin(n));
         var vertical = All("i", Fin(n), All("h", Lt(Add(Val(i), D(1)), n),
             Call("bonds", RowAt(i), RowAt(next))));
-        var normal = Call("normal", EmptySeen(), Fn("i", Fin(n), RowAt(i)));
+        var normal = At(Q(Triangle + ".widthNormal"), EmptySeen(),
+            Fn("i", Fin(n), RowAt(i)));
         return All("n", Q("Nat"), All("A", Arrow(Product(Fin(n), Fin(3)), Fin(6)),
-            Eq(Call("Legal", a),
-                Parenthesized(And(first, And(horizontal, And(vertical, normal)))))));
+            And(Eq(Call("Legal", a), At(Q(Triangle + ".widthLegal"),
+                    Q(Triangle + ".rowLegal"), Q(Owner + ".bonds"), a)),
+                Eq(Call("Legal", a),
+                    Parenthesized(And(first, And(horizontal, And(vertical, normal))))))));
     }
     private static Formula CountFormula()
     {
