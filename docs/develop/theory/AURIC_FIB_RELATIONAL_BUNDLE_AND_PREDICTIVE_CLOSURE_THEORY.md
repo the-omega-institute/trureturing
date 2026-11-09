@@ -5352,7 +5352,7 @@ $$
 
 第一条是共同来源的一致性，第二条过强，会把几何压成一条线。量子结构需要前者，不需要后者。
 
-**定义 37.1（有限成对比较相容公理）。** 取一个准备对象集 $P$ 和标量域 $\mathbb K$，其中 $\mathbb K=mathbb R$ 或 $\mathbb C$。对每个有限子集 $S\subset P$ 给出表
+**定义 37.1（有限成对比较相容公理）。** 取一个准备对象集 $P$ 和标量域 $\mathbb K$，其中 $\mathbb K=\mathbb R$ 或 $\mathbb C$。对每个有限子集 $S\subset P$ 给出表
 
 $$
 K_S:S\times S\longrightarrow\mathbb K,
