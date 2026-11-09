@@ -41,7 +41,8 @@ internal sealed class ZigzagTerminalIntervalsDocument : IScribeDocumentDefinitio
                     + "The quotient is by its actual range inside the next layer. beta(D,n,i) is "
                     + "birthOrder: start with 0, append the new vertex at a forward arrow and "
                     + "prepend it at a backward arrow. Every factor dimension, including zero, "
-                    + "equals the corresponding occurrence count.")),
+                    + "equals the corresponding occurrence count. cardBirthFibre(birth,b) is "
+                    + "the cardinality of the subtype of j in Fin r with birth j=b.")),
                 Paragraph(Text(
                     "The construction extends compatible coordinates through an injective arrow "
                     + "using a complement of its image, and through a surjective arrow using a "
@@ -77,29 +78,40 @@ internal sealed class ZigzagTerminalIntervalsDocument : IScribeDocumentDefinitio
     private static Formula Imp(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.Implies, b);
     private static Formula Eq(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.Equal, b);
     private static Formula All(Formula.BoundVariable[] variables, Formula body) =>
-        new Formula.BindMany(FormulaQuantifier.ForAll, variables, body);
+        new Formula.BindMany(FormulaQuantifier.ForAll, [.. variables], body);
     private static Formula Exists(Formula.BoundVariable[] variables, Formula body) =>
-        new Formula.BindMany(FormulaQuantifier.Exists, variables, body);
+        new Formula.BindMany(FormulaQuantifier.Exists, [.. variables], body);
 
     private static Formula ResultFormula()
     {
         Formula u = F.Id("u"), v = F.Id("v"), k = F.Id("K"), d = F.Id("D");
         Formula m = F.Id("m"), n = F.Id("n"), r = F.Id("r"), b = F.Id("birth"), i = F.Id("i");
         Formula length = Call("succ", n);
+        Formula birthType = new Formula.TypeArrow(Call("Fin", r), Call("Fin", length));
         Formula quotient = Call("Quotient", Call("R", d, n, Call("succ", i)),
             Call("range", Call("inclusion", d, n, i)));
         Formula counts = All([Bound("i", Call("Fin", length))],
             Eq(Call("cardBirthFibre", b, Call("beta", d, n, i)), Call("finrank", k, quotient)));
         Formula positive = All([Bound("n", Call("Nat"))], Imp(Eq(m, length),
             Exists([Bound("r", Call("Nat")),
-                Bound("birth", Call("Function", Call("Fin", r), Call("Fin", length))],
+                Bound("birth", birthType)],
                 And(Call("NonemptyNaturalIso", Call("liftedDiagram", d, n, u, v),
                     Call("intervalSum", d, n, r, b, u, v)), counts))));
         Formula empty = Imp(Eq(m, Call("zero")),
             Call("NonemptyNaturalIso", Call("emptyDiagram", k, u, v), Call("emptyIntervalSum", k, u, v)));
-        Formula hypotheses = And(Call("Field", k),
-            And(Call("AllActiveFiniteDimensional", k, d, m),
-                Call("AllActiveForwardInjectiveBackwardSurjective", d, m)));
+        Formula a = F.Id("a"), f = F.Id("f"), g = F.Id("g");
+        Formula current = Call("space", d, a), next = Call("space", d, Call("succ", a));
+        Formula finite = All([Bound("a", Call("Nat"))],
+            Imp(new Formula.Relation(a, FormulaRelationOperator.LessThan, m),
+                Call("FiniteDimensional", k, current)));
+        Formula forward = All([Bound("f", Call("LinearMap", k, current, next))],
+            Imp(Eq(Call("arrow", d, a), Call("inl", f)), Call("Injective", f)));
+        Formula backward = All([Bound("g", Call("LinearMap", k, next, current))],
+            Imp(Eq(Call("arrow", d, a), Call("inr", g)), Call("Surjective", g)));
+        Formula streamlined = All([Bound("a", Call("Nat"))],
+            Imp(new Formula.Relation(Call("succ", a), FormulaRelationOperator.LessThan, m),
+                And(forward, backward)));
+        Formula hypotheses = And(Call("Field", k), And(finite, streamlined));
         return Disp(All([Bound("u", Call("Universe")), Bound("v", Call("Universe")),
             Bound("K", Call("Type", u)), Bound("D", Call("Zigzag", k, v)), Bound("m", Call("Nat"))],
             Imp(hypotheses, And(empty, positive))));
