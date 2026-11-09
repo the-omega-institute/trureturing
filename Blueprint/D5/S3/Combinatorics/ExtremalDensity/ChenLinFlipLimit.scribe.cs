@@ -19,13 +19,16 @@ internal sealed class ChenLinFlipLimitDocument : IScribeDocumentDefinition
                 + "(1/2)^length. Enumeration of the vertices identifies these hosts with arbitrary "
                 + "finite nonempty loopless tournaments. The function f is the maximum of precisely "
                 + "those m in {0,...,k} for which every length-k orientation with fewer than m flips "
-                + "is TAS. The set contains zero. No property at length zero is used.")),
+                + "is TAS. The set contains zero. No property at length zero is used. "
+                + "The motivating question is Question 6.1 in Hao Chen and Yupeng Lin, "
+                + "Oriented Paths with Few Direction Flips Are Tournament Anti-Sidorenko, "
+                + "https://arxiv.org/abs/2609.14655v1.")),
             Node("full-convergence", "FullConvergence", "Convergence over all positive lengths",
                 Iff(V("FullConvergence"), Some("L", Real,
                     All("e", Real, Imp(Lt(N(0), V("e")), Some("K", Nat,
                         And(Le(N(1), V("K")), All("k", Nat, Imp(Le(V("K"), V("k")),
                             Lt(Call("abs", Sub(Div(Call("f", V("k")), V("k")), V("L"))),
-                                V("e"))))))))),
+                                V("e")))))))))),
                 "This is the epsilon/K assertion for the source's exact strict threshold. "
                 + "The positive-length quantifiers retain saturation at f(k)=k.", DescribeRole.Definition),
             Node("threshold-bounded", "f_le", "The saturated threshold is bounded",
@@ -77,6 +80,14 @@ internal sealed class ChenLinFlipLimitDocument : IScribeDocumentDefinition
                 + "a(1)>0, successive moment ratios are nondecreasing, so a(n)>=a(1)^n. "
                 + "This bound holds for every natural repetition count, not only a subsequence.",
                 DescribeRole.Theorem),
+            Node("reflected-powers", "reflected_power_amplification", "Exponential reflected amplification",
+                MatrixFamily(Seq(Instance("Nonempty", V("V")), All("B", Mat,
+                    Imp(Lt(N(1), Call("mass", V("B"))), All("m", Nat,
+                        Le(Pow(Call("mass", V("B")), Mul(N(2), V("m"))),
+                            Call("mass", Pow(Mul(V("B"), Call("transpose", V("B"))), V("m"))))))))),
+                "The all-ones moment is the mass of the matrix power. The Gram matrix is positive "
+                + "semidefinite, its first mass is at least mass(B)^2, and the geometric moment "
+                + "bound gives mass((B B^T)^m)>=mass(B)^(2m) for every m.", DescribeRole.Theorem),
             Paragraph(Text(
                 "For the convergence argument, call (k,r) a defect when a length-k orientation "
                 + "with r flips has normalized density q=2^k t(P,T)>1 in some finite host T. "

@@ -9,8 +9,6 @@
 import D5.S3.ConceptDynamics.GraphIrregularity.LinkIrregularTournamentExistence
 import Mathlib.Analysis.SpecificLimits.Basic
 import Mathlib.LinearAlgebra.Matrix.PosDef
-import Mathlib.Analysis.Matrix.Spectrum
-import Mathlib.Analysis.MeanInequalitiesPow
 import Mathlib.Algebra.QuadraticDiscriminant
 import Mathlib.Algebra.Order.Star.Real
 import Mathlib.Tactic
@@ -347,7 +345,9 @@ private theorem moment_cs (C : Matrix V V ℝ) (hC : C.PosSemidef)
       x ⬝ᵥ ((C ^ (n + 2)) *ᵥ x) := by
     calc
       _ = x ⬝ᵥ (C *ᵥ ((C ^ n) *ᵥ (C *ᵥ x))) := by
-        rw [← ht, Matrix.dotProduct_transpose_mulVec, dotProduct_comm]
+        rw [dotProduct_comm (C *ᵥ x) _]
+        simpa only [ht] using
+          (Matrix.dotProduct_transpose_mulVec C x ((C ^ n) *ᵥ (C *ᵥ x))).symm
       _ = _ := by
         rw [Matrix.mulVec_mulVec, Matrix.mulVec_mulVec, ← pow_succ', ← pow_succ]
   rw [hleft, hright] at hc
@@ -361,6 +361,33 @@ theorem moment_geometric_lower (C : Matrix V V ℝ) (hC : C.PosSemidef)
     (moment C x 1) ^ n ≤ moment C x n := by
   apply logconvex_geometric_lower (moment C x) _ hfirst (moment_cs C hC x hx) n
   simp [moment, ne_of_gt hx]
+
+private theorem moment_ones (C : Matrix V V ℝ) (n : ℕ) :
+    moment C (fun _ => 1) n = mass (C ^ n) := by
+  simp [moment, mass, dotProduct, Matrix.mulVec]
+
+theorem mass_power_geometric (C : Matrix V V ℝ) (hC : C.PosSemidef)
+    [Nonempty V] (hfirst : 0 < mass C) (n : ℕ) :
+    (mass C) ^ n ≤ mass (C ^ n) := by
+  have hnorm : (0 : ℝ) < (fun _ : V => (1 : ℝ)) ⬝ᵥ (fun _ : V => (1 : ℝ)) := by
+    simpa [dotProduct] using (Nat.cast_pos.mpr (Fintype.card_pos (α := V)) :
+      (0 : ℝ) < Fintype.card V)
+  have hp : 0 < moment C (fun _ => 1) 1 := by simpa [moment_ones] using hfirst
+  simpa only [moment_ones, pow_one] using
+    moment_geometric_lower C hC (fun _ => 1) hnorm hp n
+
+/-- A violating finite transfer amplifies exponentially for every natural repetition count. -/
+theorem reflected_power_amplification (B : Matrix V V ℝ) [Nonempty V]
+    (hB : 1 < mass B) (m : ℕ) :
+    (mass B) ^ (2 * m) ≤ mass ((B * Bᵀ) ^ m) := by
+  have hC : (B * Bᵀ).PosSemidef := by
+    simpa using Matrix.posSemidef_self_mul_conjTranspose B
+  have hs := reflected_mass_sq_le B
+  have hpos : 0 < mass (B * Bᵀ) := by nlinarith
+  calc
+    (mass B) ^ (2 * m) = ((mass B) ^ 2) ^ m := by rw [pow_mul]
+    _ ≤ (mass (B * Bᵀ)) ^ m := pow_le_pow_left₀ (sq_nonneg _) hs m
+    _ ≤ mass ((B * Bᵀ) ^ m) := mass_power_geometric _ hC hpos m
 
 end MomentGrowth
 
@@ -433,5 +460,14 @@ theorem convergence_of_defect_propagation (F : ℕ → ℕ) (Bad : ℕ → ℕ �
     linarith⟩
 
 end DefectSpectrum
+
+/-
+The remaining formal bridges to FullConvergence are:
+* expansion of transfer as the count of all arc-preserving maps, including collisions;
+* preservation of flips by reflection and exact flip/length formulas for repeated words;
+* the all-length propagation construction from these bridges and the compiled inequalities;
+* its substitution into convergence_of_defect_propagation for the exact maximum f.
+No theorem of type FullConvergence is declared here.
+-/
 
 end D5.S3.Combinatorics.ExtremalDensity.ChenLinFlipLimit
