@@ -154,8 +154,7 @@ internal sealed class HardinA233176LadderDocument : IScribeDocumentDefinition
     private static Formula Parenthesized(Formula f) => Seq(Open, f, Close);
     private static Formula Fin(Formula n) => Call("Fin", n);
     private static Formula Val(Formula x) => Call("Fin.val", x);
-    private static Formula Number(long n) => D(n.ToString(
-        System.Globalization.CultureInfo.InvariantCulture).Select(c => (byte)(c - '0')).ToArray());
+    private static Formula Number(long n) => Num(n);
     private static Formula Pair(Formula a, Formula b) => Parenthesized(Seq(a, Comma, Sp, b));
     private static Formula Product(Formula a, Formula b) =>
         Seq(Parenthesized(a), Sp, Times, Sp, Parenthesized(b));
