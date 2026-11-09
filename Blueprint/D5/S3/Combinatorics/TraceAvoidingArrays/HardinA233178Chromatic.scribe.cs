@@ -22,8 +22,10 @@ internal sealed class HardinA233178ChromaticDocument : IScribeDocumentDefinition
                 + "a legal pair of consecutive columns, and zero otherwise.", DescribeRole.Definition),
             Node("v", "Continuation readout", "The nth transfer power applied to the constant one "
                 + "vector counts n-column continuations of a specified boundary column.", DescribeRole.Definition),
-            Node("result", "Continuation recurrence beyond the transient", "Every integer linear "
-                + "readout obeys the displayed degree-ten recurrence starting at continuation length eleven. "
+            Node("result", "Continuation recurrence beyond the transient", "For every integer vector w "
+                + "and every natural n, put b(k)=dotProduct(w,v(k)). Then "
+                + "b(n+11)=6*b(n+10)+31*b(n+9)-97*b(n+8)-163*b(n+7) "
+                + "+417*b(n+6)+93*b(n+5)-514*b(n+4)+192*b(n+3)+72*b(n+2)-36*b(n+1). "
                 + "The proof checks the finite continuation certificate and applies the existing "
                 + "TransferMatrix.scalarRelationShift theorem. This is an auxiliary three-label result; "
                 + "it does not by itself prove the normalized six-colour A233178 recurrence.", DescribeRole.Theorem))));

@@ -21,9 +21,11 @@ internal sealed class HardinA233178RecurrenceDocument : IScribeDocumentDefinitio
                 + "The original generic cont_matrix theorem counts all continuations; its "
                 + "pair condition is True, its triple condition tests the last two columns, "
                 + "and its class is the last column. No initial-column multiplicity is lost.", DescribeRole.Theorem),
-            Node("chromatic_recurrence", "All subsequent chromatic widths", "The complete source "
-                + "cardinality bridge and the certified vector identity yield the displayed "
-                + "ten-term recurrence for chromaticCount at widths n+12 for every natural n. "
+            Node("chromatic_recurrence", "All subsequent chromatic widths", "For every natural n, "
+                + "write C(k)=chromaticCount(k). Then "
+                + "C(n+12)=6*C(n+11)+31*C(n+10)-97*C(n+9)-163*C(n+8) "
+                + "+417*C(n+7)+93*C(n+6)-514*C(n+5)+192*C(n+4)+72*C(n+3)-36*C(n+2). "
+                + "The exact source cardinality bridge and the certified vector identity give this relation. "
                 + "The finite vector certificate propagates by arbitrary further matrix powers.", DescribeRole.Theorem),
             Node("result", "The literal FullE theorem", "The theorem proves FullE itself. "
                 + "The chromatic coefficients sum to one, so adding six preserves the unscaled "
