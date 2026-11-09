@@ -3533,3 +3533,382 @@ $$
 本条只是在固定的实际共轭点、原有限地方过滤、原共同整数及全部相容目标上作条件性综合；$A,\mu$ 沿用定理 17.2，未求数值。它不声称完整的 $\mathbb Z/\mathbb Q$ 定义、量子物理起源、实际算法效率或必要边界，也不把条件区域外的行为判作失败。$\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 19. 三维等体积胞给出的实际移动质量区域与误差率
+
+**定义 19.1（原移动质量的几何预算）。** 保持定义 18.1 的全部实际对象与参数：固定的 $F,E_0,P_1,P_2$、正实嵌入、$\theta,\alpha$、全部有限地方的原过滤 $U_v$、$M,a_0,c_0,\beta,\gamma$、原函数 $h,\rho$ 以及 (18.2) 的 $S_X,L_X$ 均不变。特别地，每个成功条件仍由同一个整数 $n$ 实现，目标仍取遍
+
+$$
+u\in a_0+M\widehat{\mathbb Z},\qquad z\in\mathbb T^2.
+$$
+
+令 $A>0,\mu>0$ 为定理 17.2 的固定常数。对正整数 $X$ 和任意实数 $r>0$，定义
+
+$$
+\begin{aligned}
+q_+&=q(h(2X),h(2X);M),\\
+r_X&=\rho(2X),\qquad \overline r_X=\rho(X+1),\\
+T_X(r)&=\max\left\{\frac1X,
+       (AXr^\mu)^{-1/(\mu+1)}\right\},\\
+T_X&=T_X(r_X),\qquad \Theta_X=q_+T_X.
+\end{aligned}
+\tag{19.1}
+$$
+
+$T_X(r)$ 随 $r$ 非增。以上仅定义证明所用的预算，不以端点模数或端点半径替换 $L_X$ 中任何一个整数的自身权重。圆上的 Haar 测度仍使 $\mathbb T$ 的总质量为 $1$，故半径 $r\le1/4$ 的二维开窗质量仍为 $4r^2$。
+
+**定理 19.2（原自身阶段的等体积胞相对渐近与幂误差界）。** 对定义 19.1 的固定数据，存在常数 $C>0$ 和整数 $X_0$，只依赖这些固定数据，而不依赖 $u,z$ 或下面的分块数 $K$，使每个整数 $X\ge X_0$、每个整数 $1\le K\le X$ 在 $\Theta_X\le1/3$ 时均满足
+
+$$
+\sup_{\substack{u\in a_0+M\widehat{\mathbb Z}\\z\in\mathbb T^2}}
+\left|\frac{S_X(u,z)}{L_X}-1\right|
+\le C\left[\frac1K+(K+1)\Theta_X\right].
+\tag{19.2}
+$$
+
+因而，若 $\Theta_X\to0$，则对所有足够大的整数 $X$ 取
+
+$$
+K_X=\left\lceil\Theta_X^{-1/2}\right\rceil
+\tag{19.3}
+$$
+
+可得目标一致的误差上界
+
+$$
+\sup_{\substack{u\in a_0+M\widehat{\mathbb Z}\\z\in\mathbb T^2}}
+\left|\frac{S_X(u,z)}{L_X}-1\right|
+\le C\sqrt{\Theta_X}\longrightarrow0.
+\tag{19.4}
+$$
+
+这里以及下文的 $C$ 可扩大为另一个只依赖固定数据的常数。特别地，令
+
+$$
+\Delta_{\mathrm{geom}}
+=1-(\mu+1)c_0^2-\mu\beta.
+\tag{19.5}
+$$
+
+若 $\Delta_{\mathrm{geom}}>0$，则
+
+$$
+\begin{gathered}
+\Theta_X=X^{-\Delta_{\mathrm{geom}}/(\mu+1)+o(1)},\\
+\sup_{\substack{u\in a_0+M\widehat{\mathbb Z}\\z\in\mathbb T^2}}
+\left|\frac{S_X(u,z)}{L_X}-1\right|
+\le X^{-\Delta_{\mathrm{geom}}/(2(\mu+1))+o(1)},\\
+L_X=X^{1-c_0^2-2\beta+o(1)}\longrightarrow\infty.
+\end{gathered}
+\tag{19.6}
+$$
+
+误差式中的 $o(1)$ 可取为只依赖固定数据的实数序列，不依赖目标；它给出上界，不宣称实际误差具有相等的幂阶。条件 (19.5) 为充分条件，不主张必要性、等号端点或最优性。
+
+**证明（三维格准确保留同一整数与原有限过滤）。** 选定一次 $\alpha\in\mathbb R^2$，作为定义 17.1 中圆坐标向量的实提升；在本证明的格公式中使用此提升。对中心 $z$ 任取实提升，模 $\mathbb Z^2$ 后仍是同一目标。对任意整数 $q\ge1$、$X>0$、$r>0$，取满秩格
+
+$$
+\Lambda(q;X,r)=
+\left\{\left(\frac{qk}{X},
+ \frac{qk\alpha_1-m_1}{r},
+ \frac{qk\alpha_2-m_2}{r}\right):
+ k,m_1,m_2\in\mathbb Z\right\}.
+\tag{19.7}
+$$
+
+其基可取 $(q/X,q\alpha_1/r,q\alpha_2/r)$、$(0,-1/r,0)$、$(0,0,-1/r)$，故协体积准确为
+
+$$
+d_\Lambda=\det\Lambda=\frac{q}{Xr^2}.
+\tag{19.8}
+$$
+
+对任意整数 $b$、整数端点 $A_0<B_0$ 及 $0<r\le1/4$，令
+
+$$
+\begin{aligned}
+\tau&=\left(\frac bX,
+       \frac{b\alpha_1-z_1}{r},
+       \frac{b\alpha_2-z_2}{r}\right),\\
+Q&=(A_0/X,B_0/X]\times(-1,1)^2.
+\end{aligned}
+$$
+
+则有严格端点的精确等式
+
+$$
+\begin{aligned}
+&\#\{n\in\mathbb Z:A_0<n\le B_0,\ n\equiv b\pmod q,
+        \ \|n\alpha_j-z_j\|_{\mathbb T}<r\ (j=1,2)\}\\
+&\hspace{30mm}=\#\bigl((\tau+\Lambda(q;X,r))\cap Q\bigr).
+\end{aligned}
+\tag{19.9}
+$$
+
+事实上，第一坐标给出同一个 $n=b+qk$；后两坐标正好给出 $|n\alpha_j-z_j-m_j|<r$。因 $2r<1$，每个这样的 $n$ 对每个坐标至多有一个 $m_j$，存在性则恰是圆距离条件。没有额外的重数或改变目标的归一化。对实际阶段 $H$，(17.25)、定理 14.2 的 CRT 及 (18.5)–(18.6) 给出真实的 $q=q_H$、$b=b_H$：全部原有限地方条件与 $M$-同余恰好等价于此一个剩余类。于是 (19.9) 计数的是原成功整数的固定半径版本。
+
+**证明（对偶短向量下界与经典覆盖转移）。** 全部长度与对偶均取欧氏约定。由 (19.7) 的三条基向量直接解整数配对条件，得到准确对偶
+
+$$
+\Lambda(q;X,r)^*=
+\left\{\left(\frac Xq(\ell-q\,m\cdot\alpha),
+       rm_1,rm_2\right):\ell\in\mathbb Z,\ m\in\mathbb Z^2\right\}.
+\tag{19.10}
+$$
+
+后两条基要求后两坐标为 $rm_j$，第一条基再要求 $qx/X+q\,m\cdot\alpha\in\mathbb Z$，这同时证明等式的两个方向。对其中任一非零向量，记其欧氏长度为 $t$。若 $m=0$，则 $\ell\ne0$，所以 $t\ge X/q$。若 $m\ne0$，取整数 $s=\|m\|_\infty\ge1$，由 (17.5) 在 $J=s$ 处的下界有
+
+$$
+t\ge rs,\qquad
+ t\ge\frac Xq\|q\,m\cdot\alpha\|_{\mathbb T}
+ \ge\frac{AX}{q^{\mu+1}s^\mu}.
+$$
+
+将第一式取 $\mu$ 次幂，再乘以第二式，得 $t^{\mu+1}\ge AXr^\mu/q^{\mu+1}$。因此最短非零对偶向量长度满足
+
+$$
+\lambda_1(\Lambda^*)\ge
+\min\left\{\frac Xq,
+       \left(\frac{AXr^\mu}{q^{\mu+1}}\right)^{1/(\mu+1)}\right\},
+\qquad
+\frac1{\lambda_1(\Lambda^*)}\le qT_X(r).
+\tag{19.11}
+$$
+
+这里直接复用 W. Banaszczyk，*New bounds in some transference theorems in the geometry of numbers*，Math. Ann. **296** (1993)，625–635，[DOI 10.1007/BF01445125](https://doi.org/10.1007/BF01445125)，[原文](https://gdz.sub.uni-goettingen.de/download/pdf/PPN235181684_0296/LOG_0038.pdf)，§2 印刷页 632 的 Theorem (2.2)。其准确陈述是：任意满秩欧氏格 $\mathcal L\subset\mathbb R^n$ 满足
+
+$$
+\lambda_1(\mathcal L)\,\mu_{\mathrm{cov}}(\mathcal L^*)\le\frac n2.
+$$
+
+原文印刷页 625–626 定义 $\mathcal L^*=\{y:\langle y,\mathcal L\rangle\subset\mathbb Z\}$、$\mathcal L^{**}=\mathcal L$，并以欧氏单位球定义 $\lambda_1$ 和覆盖半径 $\mu_{\mathrm{cov}}$；配对没有 $2\pi$ 因子，也不要求整格或协体积为 $1$。在此取 $\mathcal L=\Lambda^*$、$n=3$，恰好得到
+
+$$
+\mu_{\mathrm{cov}}(\Lambda)
+\le\frac3{2\lambda_1(\Lambda^*)}
+\le\frac32qT_X(r).
+\tag{19.12}
+$$
+
+这是经典转移定理在当前实际格上的代入，不是另一个新转移定理。
+
+**证明（等体积 Voronoi 胞支付所有窗边）。** 以下采用经典的 Voronoi 胞铺砌与边界体积计数法，所需的胞体积和端点事实在此给出完整推导，作为实际移动质量估计的中间步骤。设 $\mathcal L\subset\mathbb R^3$ 满秩，协体积为 $d$，且 $\mu_{\mathrm{cov}}(\mathcal L)\le R\le1$、$R>0$。取闭 Voronoi 胞
+
+$$
+V=\{x\in\mathbb R^3:\|x\|_2\le\|x-\lambda\|_2
+                \text{ 对所有 }\lambda\in\mathcal L\}.
+$$
+
+格的离散性保证每点有最近格点：相对于任一已选格点，只需比较一个有界球内的有限多个格点。因此 $V+\lambda$ 覆盖全空间，且 $V\subset\overline B(0,R)$。两个不同闭胞的交集只能位于到其两个中心等距的平分超平面上。格可数，这些超平面的并为体积零；这里没有声称闭胞作为集合不相交。
+
+取任意半开平行基本域 $P$，则几乎处处有 $\sum_{\lambda\in\mathcal L}\mathbf1_{V+\lambda}=1$。对 $P$ 积分并将非负和换出积分，利用 $P-\lambda$ 不交铺砌全空间，得
+
+$$
+\begin{aligned}
+d=\operatorname{vol}(P)
+&=\sum_{\lambda\in\mathcal L}
+       \int_P\mathbf1_V(x-\lambda)\,dx\\
+&=\sum_{\lambda\in\mathcal L}
+       \int_{P-\lambda}\mathbf1_V(y)\,dy
+ =\operatorname{vol}(V).
+\end{aligned}
+\tag{19.13}
+$$
+
+对任意仿射平移 $\tau+\mathcal L$，以其格点为中心的胞仍有同一体积 $d$、同一覆盖及零体积重叠性质。令 $Q$ 为轴平行盒，三条边长为 $(a,2,2)$、$a\ge0$，各端点可任意开闭。选中所有中心属于 $Q$ 的胞，记其有限并为 $U$，则
+
+$$
+\operatorname{vol}(U)=d\,\#((\tau+\mathcal L)\cap Q).
+$$
+
+选中胞中的每点距其中心至多 $R$。反之，$Q$ 内距边界大于 $R$ 的点所归属的任一最近中心仍在 $Q$ 内，故该点属于 $U$。所以 $U$ 与 $Q$ 的差只可能在边界的闭 $R$ 邻域内；特别地，无论严格端点上是否存在格点，都有上、下包体积
+
+$$
+(a-2R)_+(2-2R)_+^2
+\le\operatorname{vol}(U)
+\le(a+2R)(2+2R)^2,
+\tag{19.14}
+$$
+
+其中 $x_+=\max(x,0)$。当 $a=0$ 时下包为空，盒本身可以为空或处于一个平面内，上包论证仍然有效。若 $a\ge2R$，两个包体积之差准确为
+
+$$
+16aR+16R(1+R^2)\le32(a+1)R.
+$$
+
+若 $a<2R$，下包体积为零，上包体积至多 $16(a+2R)\le64R\le64(a+1)R$。盒体积 $4a$ 也介于两包体积之间，因而一并得到
+
+$$
+\left|\#((\tau+\mathcal L)\cap Q)-\frac{4a}{d}\right|
+\le\frac{64(a+1)R}{d}.
+\tag{19.15}
+$$
+
+这一步用体积零的胞间重叠作积分，完全没有用“盒边界没有格点”的假设。
+
+将 (19.15) 用于 (19.9)。若 $0<B_0-A_0\le X$ 且 $qT_X(r)\le1/3$，可由 (19.12) 取 $R=3qT_X(r)/2\le1/2$，而 $a=(B_0-A_0)/X\le1$。于是固定半径计数满足
+
+$$
+\begin{aligned}
+\left|\#((\tau+\Lambda)\cap Q)
+       -\frac{4(B_0-A_0)r^2}{q}\right|
+&\le64(a+1)\frac{Xr^2}{q}\,
+                 \frac32qT_X(r)\\
+&\le192Xr^2T_X(r).
+\end{aligned}
+\tag{19.16}
+$$
+
+模数 $q$ 在这一局部绝对误差中准确相消。此处先对每个实际模数完成相消；若先取全局最大覆盖半径再累加 $1/q$，会引入本推导并不需要的模数比。式 (19.16) 对 $1\le B_0-A_0\le X$ 内的任意整数长度均成立，不除以 $B_0-A_0$，也不要求区间内存在允许整数。由 (18.6) 产生的真实 floor 差，以及时间半开端点与空间严格端点的差，均已包含在这次对精确计数 (19.9) 的胞边界估计中，不能再将它理解为忽略了初项。
+
+**证明（任意分块数下的实际自身阶段拼接）。** 沿用 (18.13)–(18.17) 的整数分块与半径夹逼，但本证明任取整数 $1\le K\le X$，切点仍为
+
+$$
+t_k=\left\lfloor X+\frac{kX}{K}\right\rfloor
+\quad(0\le k\le K).
+$$
+
+将 $(t_k,t_{k+1}]\cap\mathbb Z$ 与各实际阶段相交，只丢弃空的整数交集；对每个非空交集 $I_\nu$，按原定义取
+
+$$
+\begin{gathered}
+A_\nu=\min I_\nu-1,\qquad B_\nu=\max I_\nu,\\
+\ell_\nu=B_\nu-A_\nu=\#I_\nu,\qquad
+1\le\ell_\nu\le X/K+1,\qquad \ell_\nu\le X.
+\end{gathered}
+\tag{19.17}
+$$
+
+式 (18.14) 乘以固定的 $c_0$ 后仍趋于零，故充分大 $X$ 时 $h$ 在全区间至多有一个阶段跳点。原 $K$ 个非空整数区间因此至多额外分裂一次，非空阶段块的总数满足 $m_X\le K+1$；跳点位置不受限制。每个块，包括只有一个整数的块以及其中允许剩余类计数为零的块，都保留在求和中。
+
+按 (18.16) 置 $r_\nu^+=\rho(A_\nu+1)$、$r_\nu^-=\rho(B_\nu)$。由 (18.15)、$K\le X$ 和 (19.17)，一致地有
+
+$$
+\begin{gathered}
+r_X\le r_\nu^-\le r_\nu^+\le\overline r_X\le1/4,\\
+\frac{r_\nu^+}{r_\nu^-}=1+O(K^{-1}),\qquad
+\frac{\overline r_X}{r_X}\longrightarrow2^\beta.
+\end{gathered}
+\tag{19.18}
+$$
+
+这里使用的是每个块的全部整数上的真实最小、最大半径；不把短块的左端 $A_\nu$ 误当成块内整数。令 $H_\nu$ 为该块阶段、$q_\nu=q(H_\nu,H_\nu;M)$，并用 (18.18) 的 $S_\nu,L_\nu$。原有限过滤的嵌套性只需提供 $q_\nu\mid q_+$，从而 $q_\nu\le q_+$。若 $\Theta_X\le1/3$，则两个端点半径同时满足
+
+$$
+q_\nu T_X(r_\nu^\pm)\le q_+T_X(r_X)=\Theta_X\le1/3.
+$$
+
+分别对 $r_\nu^-$ 与 $r_\nu^+$ 使用 (19.16)。两次局部误差都至多为
+
+$$
+192X(r_\nu^\pm)^2T_X(r_\nu^\pm)
+\le C Xr_X^2T_X,
+\tag{19.19}
+$$
+
+因为 $T_X(r_\nu^\pm)\le T_X$，且 (19.18) 给出全区间半径比的固定上界。由 (18.17)，这两次计数夹住同一块内真实变半径计数 $S_\nu$。同时
+
+$$
+\frac{4\ell_\nu(r_\nu^-)^2}{q_\nu}
+\le L_\nu\le
+\frac{4\ell_\nu(r_\nu^+)^2}{q_\nu},
+$$
+
+上下体积与 $L_\nu$ 的差均至多 $C K^{-1}L_\nu$，这是 (19.18) 的平方半径比所给出的误差。因此每一块都满足
+
+$$
+|S_\nu-L_\nu|
+\le C\left[K^{-1}L_\nu+Xr_X^2T_X\right].
+\tag{19.20}
+$$
+
+这包括没有允许项的块；没有在任何一步除以 $\ell_\nu$ 或其允许项数。
+
+各块不交且覆盖全部 $X$ 个整数，故 $\sum_\nu\ell_\nu=X$、$\sum_\nu L_\nu=L_X$、$\sum_\nu S_\nu=S_X$。又如 (18.21) 一样，原移动质量有不依赖目标的下界
+
+$$
+L_X\ge\frac{4Xr_X^2}{q_+}>0.
+\tag{19.21}
+$$
+
+将 (19.20) 相加，用 $m_X\le K+1$ 后除以 (19.21)，即得
+
+$$
+\frac{|S_X-L_X|}{L_X}
+\le C\left[\frac1K+
+       \frac{(K+1)Xr_X^2T_X}{Xr_X^2/q_+}\right]
+=C\left[\frac1K+(K+1)\Theta_X\right].
+$$
+
+全部常数均不依赖 $b_{H_\nu},u,z,K$，所以可取全部相容目标的上确界，得到 (19.2)。这里只需要实际整除链提供单边模数界，未估计任何相邻 $q_H$ 之比。
+
+**证明（预算平衡与幂区域）。** 由 (19.1) 有 $\Theta_X\ge q_+/X\ge1/X$。若 $\Theta_X\to0$，则 (19.3) 对充分大 $X$ 满足
+
+$$
+1\le K_X\le\sqrt X+1\le X,\qquad
+\frac1{K_X}\le\sqrt{\Theta_X},\qquad
+(K_X+1)\Theta_X\le\sqrt{\Theta_X}+2\Theta_X.
+$$
+
+同时 $\Theta_X\le1/3$ 最终成立，代入 (19.2) 得 (19.4)。平衡的是变半径误差 $K^{-1}$ 与累计胞边界误差 $K\Theta_X$；$K_X$ 只选择证明的分割，完全不改变原 $h,\rho,S_X,L_X$。
+
+还需核实 (19.5) 确实给出 (19.6) 及质量发散。先由 (17.5) 推出所用的 $\mu\ge2$，不额外假设虚拟的指数。对任意正整数 $N$，考虑 $(N+1)^2$ 个数
+
+$$
+\{m\cdot\alpha\}\in[0,1),\qquad m\in\{0,\ldots,N\}^2.
+$$
+
+将 $[0,1)$ 分成 $N^2$ 个等长半开区间，抽屉原理给出两个不同的指标之差 $m'$，满足 $0<\|m'\|_\infty\le N$ 及 $\|m'\cdot\alpha\|_{\mathbb T}<N^{-2}$。用 (17.5) 的 $q=1,J=N$ 得 $AN^{-\mu}<N^{-2}$ 对所有 $N$ 成立。若 $\mu<2$，则这要求固定的 $A>0$ 小于趋于零的 $N^{\mu-2}$，矛盾。故 $\mu\ge2$。
+
+定理 16.7 的实际周期主阶与 (18.1) 给出
+
+$$
+q_+=X^{c_0^2+o(1)},\qquad
+r_X=X^{-\beta+o(1)},\qquad
+(AXr_X^\mu)^{-1/(\mu+1)}
+ =X^{-(1-\mu\beta)/(\mu+1)+o(1)}.
+\tag{19.22}
+$$
+
+因 $\mu>0$、$\beta\ge0$，后一个幂指数严格大于 $-1$，所以它最终支配 $T_X$ 中的 $X^{-1}$ 项。于是
+
+$$
+\Theta_X
+=X^{c_0^2-(1-\mu\beta)/(\mu+1)+o(1)}
+=X^{-\Delta_{\mathrm{geom}}/(\mu+1)+o(1)}.
+\tag{19.23}
+$$
+
+当 $\Delta_{\mathrm{geom}}>0$ 时，这趋于零；(19.4) 给出 (19.6) 的目标一致幂误差上界，固定乘法常数可吸收到指数中的 $o(1)$。
+
+为得到移动质量的准确幂阶，再置 $q_-=q(h(X+1),h(X+1);M)$。实际整除链和半径的单调性给出
+
+$$
+\frac{4Xr_X^2}{q_+}\le L_X
+\le\frac{4X\overline r_X^2}{q_-}.
+\tag{19.24}
+$$
+
+定理 16.7 同样给出 $q_-=X^{c_0^2+o(1)}$，且 $\overline r_X=X^{-\beta+o(1)}$，所以两端共同证明 (19.6) 的质量幂阶。又因 $\mu\ge2$、$c_0>0$，有
+
+$$
+c_0^2+2\beta
+< (\mu+1)c_0^2+\mu\beta<1.
+$$
+
+质量因此趋于无穷。这里对 $q_-$ 的使用只为夹住 $L_X$ 的幂阶，没有把 $q_+/q_-$ 放入误差预算。
+
+与定理 18.2 已给出的充分区域比较，旧条件左端减去新条件左端为 $(\mu+2)\beta$。因此旧严格区域包含于新严格区域；在 $\beta>0$ 的参数部分，新的充分区域严格扩大。例如任取 $0<\beta<1/(2\mu+2)$，区间
+
+$$
+\frac{1-(2\mu+2)\beta}{\mu+1}
+\le c_0^2<\frac{1-\mu\beta}{\mu+1}
+$$
+
+非空且两端为正，其中每个参数均满足新条件而不满足旧严格条件。当 $\beta=0,\gamma>0$ 时，两条幂区域相同，新估计仍包含该对数缩窗情形；$\gamma$ 的贡献只进入 (19.22)–(19.24) 的 $o(1)$。本证明不改变旧充分结论，也不将任一条件外或等号端点的行为判作失败。
+
+用白话说，把同一个整数和两条实轨迹一起放进一个三维格，有限地方的全部条件决定这条轨迹的真实步长。丢番图下界阻止对偶格出现过短的非零向量，经典覆盖转移再阻止原格留下过大的空洞。每个格点周围的 Voronoi 胞体积相等，把胞的体积加起来就得到主项，计数和体积的差只能出现在窗边。先在每个实际阶段的局部误差中相消模数，再把包括极短块在内的边界误差相加，最后平衡分块细度与窗边误差，就得到对原移动质量的一致相对渐近和明确幂误差上界；不需要改变原钥匙，也不需要强迫相邻周期接近。
+
+文献归属上，欧氏覆盖转移为上述 Banaszczyk 定理的直接复用（literature-attested），Voronoi 等体积铺砌、边界体积计数及抽屉原理均为经典结构；它们只在本定理内部承担中间步骤。本条关于原实际自身阶段、原共同整数与全部相容目标的拼接、局部模数相消及 (19.5)–(19.6) 的充分区域和误差率，是这些输入在本卷对象上的综合推导（repo-derived），不主张全领域原创优先权。本结论限于所列固定算术数据的条件性同时逼近与计数，不构成完整的 $\mathbb Z/\mathbb Q$ 丢番图定义、量子物理起源、数值计算效率或最优性结论。$\square$
+
+## 追加锚（本行以下为增补区）
