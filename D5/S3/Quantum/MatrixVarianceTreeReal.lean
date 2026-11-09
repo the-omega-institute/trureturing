@@ -1,3 +1,11 @@
+/- GID: D5/S3/Quantum/MatrixVarianceTreeReal
+   generality: G
+   mirror-B: D5/B/S3/Quantum/MatrixVarianceTreeReal
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: kind=checker; basis=consumer=D5/S3/Quantum/MatrixVarianceTreeReal/family_defect_posSemidef; instance=D5/S3/Quantum/MatrixVarianceTreeReal/commonResponse
+   digest: Real positive-definite matrix weights yield a square-remainder identity and a positive-semidefinite variance certificate. -/
+
 /-
   Real-scalar companion of MatrixVarianceTree.lean.
   This file is kernel-checked with the pinned Mathlib toolchain; the complex
