@@ -369,7 +369,7 @@ theorem two_mul_prime_le_finrank_of_cyclic_projective
   have hrne : r ≠ 1 := by
     intro h
     have he := congrArg (fun g : E p => g.toAdd.1) h
-    exact one_ne_zero (by simpa [r] using he)
+    simp [r] at he
   have hr : orderOf r = p := actual_order r hrne
   have hrproj := hcyc (Subgroup.zpowers r) inferInstance
   have hdiv := prime_dvd_dimension ρ r hr hrproj
@@ -407,7 +407,7 @@ theorem two_mul_prime_le_finrank_of_cyclic_projective
   have hgne : g ≠ 1 := by
     intro h
     have he := congrArg (fun x : E p => x.toAdd.2) h
-    exact one_ne_zero (by simpa [g] using he)
+    simp [g] at he
   have hg : orderOf g = p := actual_order g hgne
   have hactual : r ^ a.val * t = g := by
     change Multiplicative.ofAdd (1, 0) ^ a.val * Multiplicative.ofAdd (0, 1) =
