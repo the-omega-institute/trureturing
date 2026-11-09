@@ -78,12 +78,6 @@ theorem squares_of_supported (A : Data X S u) (p x : X) (hp : S p p = p)
     (∃ a : X, S a a = ‖x‖ • p + x) ∧
     (∃ b : X, S b b = ‖x‖ • p - x) := by
   have hright (v : X) : S v u = v := (A.symm v u).trans (A.unit_mul v)
-  have hUu : quadratic S p u = p := by
-    simp only [quadratic, hright, hp]
-    module
-  have hUx : quadratic S p x = x := by
-    simp only [quadratic, hx, hp]
-    module
   constructor
   · obtain ⟨a, ha⟩ := square_of_ambient_center A (‖x‖ • u + x) ‖x‖ (norm_nonneg _)
       (by simpa only [add_sub_cancel_left] using le_rfl : ‖‖x‖ • u + x - ‖x‖ • u‖ ≤ ‖x‖)
@@ -91,8 +85,7 @@ theorem squares_of_supported (A : Data X S u) (p x : X) (hp : S p p = p)
     refine ⟨b, ?_⟩
     rw [ha] at hb
     rw [← hb]
-    simp only [quadratic, map_add, map_smul, LinearMap.add_apply,
-      LinearMap.smul_apply, hright, hp, hx]
+    simp only [quadratic, map_add, map_smul, hright, hp, hx]
     module
   · obtain ⟨a, ha⟩ := square_of_ambient_center A (‖x‖ • u - x) ‖x‖ (norm_nonneg _)
       (by simpa only [sub_sub_cancel_left, norm_neg] using le_rfl : ‖‖x‖ • u - x - ‖x‖ • u‖ ≤ ‖x‖)
@@ -100,8 +93,7 @@ theorem squares_of_supported (A : Data X S u) (p x : X) (hp : S p p = p)
     refine ⟨b, ?_⟩
     rw [ha] at hb
     rw [← hb]
-    simp only [quadratic, map_sub, map_smul, LinearMap.sub_apply,
-      LinearMap.smul_apply, hright, hp, hx]
+    simp only [quadratic, map_sub, map_smul, hright, hp, hx]
     module
 
 /-- The square of a supported vector has the exact ambient upper bound at the
@@ -110,11 +102,10 @@ theorem corner_square_bound (A : Data X S u) (p a : X) (hp : S p p = p)
     (ha : S p a = a) : ∃ b : X, S b b = ‖a‖ ^ 2 • p - S a a := by
   have hab : S a p = a := (A.symm _ _).trans ha
   have hpol := polarized A p p a a
-  simp only [bracket, hp, ha, hab, A.symm (S a a) p] at hpol
+  simp only [bracket, hp, ha, hab] at hpol
   have hs : S p (S a a) = S a a := by
-    have he : (2 : ℝ) • (S p (S a a) - S a a) = 0 := by
-      module at hpol ⊢
-    exact sub_eq_zero.mp ((smul_eq_zero.mp he).resolve_left (by norm_num))
+    apply sub_eq_zero.mp
+    convert hpol using 1 <;> module
   obtain ⟨b, hb⟩ := (squares_of_supported A p (S a a) hp hs).2
   exact ⟨b, by simpa only [A.square_norm] using hb⟩
 
