@@ -527,7 +527,7 @@ private theorem no_nonnegative_drift (q r : ℕ → ℚ) (c : ℚ) (hc : c < 0)
   have := hn (N + 1 + m)
   nlinarith
 
-private theorem real_recurrence_growth (t : ℕ → ℚ) (k : ℚ) (hk : 3 ≤ k)
+theorem real_recurrence_growth (t : ℕ → ℚ) (k : ℚ) (hk : 3 ≤ k)
     (h0 : 0 < t 0) (h01 : t 0 < t 1) (h1 : t 1 ≤ k * t 0)
     (ht : ∀ n, t (n + 2) = k * t (n + 1) - t n) :
     ∀ n, 0 < t n ∧ t n < t (n + 1) ∧ t (n + 1) ≤ k * t n := by
