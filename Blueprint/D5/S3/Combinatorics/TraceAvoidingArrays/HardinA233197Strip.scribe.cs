@@ -247,8 +247,6 @@ internal sealed class HardinA233197StripDocument : IScribeDocumentDefinition
     private static Formula Initial() => Triple(Q("Bool.false"), Q("Bool.false"), Q("Bool.false"));
     private static Formula Vector(params Formula[] entries) => entries.Reverse().Aggregate(
         Q("Matrix.vecEmpty"), (tail, head) => At(Q("Matrix.vecCons"), head, tail));
-    private static Formula Colours(Formula c, params byte[] ds) => ds.Reverse().Select(
-        d => Eq(c, Colour(d))).Aggregate((tail, head) => Or(head, tail));
     private static Formula Arrow(Formula a, Formula b) =>
         new Formula.TypeArrow(Parenthesized(a), Parenthesized(b));
     private static Formula Eq(Formula a, Formula b) =>
@@ -259,8 +257,6 @@ internal sealed class HardinA233197StripDocument : IScribeDocumentDefinition
         new Formula.Relation(a, FormulaRelationOperator.LessThan, b);
     private static Formula And(Formula a, Formula b) =>
         new Formula.Logic(Parenthesized(a), FormulaLogicOperator.And, Parenthesized(b));
-    private static Formula Or(Formula a, Formula b) =>
-        new Formula.Logic(Parenthesized(a), FormulaLogicOperator.Or, Parenthesized(b));
     private static Formula Imp(Formula a, Formula b) =>
         new Formula.Logic(Parenthesized(a), FormulaLogicOperator.Implies, Parenthesized(b));
     private static Formula Add(Formula a, Formula b) =>
