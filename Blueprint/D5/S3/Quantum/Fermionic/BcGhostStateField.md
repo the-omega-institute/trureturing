@@ -53,3 +53,4 @@ The companion BcGhostStateFieldLocality and BcGhostStateFieldIterate modules est
 - Truth anchor: `D5/S3/Quantum/Fermionic/BcGhostStateField.stateField_translation`
 - Dependency: [D5/S3/Quantum/Fermionic/BcGhostVirasoro](BcGhostVirasoro.md)
 - Dependency: [D5/S3/VertexAlgebra/FieldNormalProduct](../../VertexAlgebra/FieldNormalProduct.md)
+- Dependency: [D5/S3/VertexAlgebra/SignedFields/SignedFieldNormalProductLocality](../../VertexAlgebra/SignedFields/SignedFieldNormalProductLocality.md)

@@ -22,4 +22,5 @@ For every pair of homogeneous original Fock states, every third Fock state and b
 
 - Truth anchor: `D5/S3/Quantum/Fermionic/BcGhostStateFieldIterate.stateField_iterate`
 - Dependency: [D5/S3/Quantum/Fermionic/BcGhostStateFieldLocality](BcGhostStateFieldLocality.md)
+- Dependency: [D5/S3/VertexAlgebra/BinomialKernelDelta](../../VertexAlgebra/BinomialKernelDelta.md)
 - Dependency: [D5/S3/VertexAlgebra/StateFieldResidueReconstruction](../../VertexAlgebra/StateFieldResidueReconstruction.md)
