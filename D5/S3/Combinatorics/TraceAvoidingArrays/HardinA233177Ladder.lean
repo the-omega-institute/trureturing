@@ -7,9 +7,9 @@
    digest: Hardin's recurrence for the literal normalized four-row complementary-pair ladder. -/
 /-
 admission_basis: open-problem-resolution (#28449; Proved)
-escape_witness: two_label_classification (induction forces alternation at every column),
-  HardinA233177Canonical.canonical_unique (canonical rigidity),
-  HardinA233177Canonical.canonical_exists_unique (canonical representative construction).
+escape_witness: none; every declaration is bind-only. The two-label classification is the
+  pathGraph bicoloring parity (pathGraph.bicoloring, even_length_iff_congr); the bridge, scaling and
+  recurrence follow from the canonical orbit count, finite sums and integer normalization.
 direct_frozen_dependencies (raw compiled type/value edges, union over this module):
   D5/S3/Observer/Separation/BooleanRankThreeK4.beta
     statement_id: sha256:1abdc5f3db71567fe05de5aabbe80dddeb5ec5179e4ec7fd49fe71e500518481
@@ -34,29 +34,29 @@ proper_two_labels: proof_shape=bind-only; consumers=used_two_or_three, L_card
 columns_constant: proof_shape=bind-only; consumers=two_label_classification
 alternating: proof_shape=bind-only; consumers=canonical_two_card
 alternating_proper: proof_shape=bind-only; consumers=canonical_two_card
-two_label_classification: proof_shape=content; consumers=canon_two_eq
+two_label_classification: proof_shape=bind-only; consumers=canon_two_eq
   reason: Induction on the column proves uniform alternation at arbitrary width.
 used_two_or_three: proof_shape=bind-only; consumers=weighted_count
 omitted_label: proof_shape=bind-only; consumers=canon_two_eq
 alternating_used: proof_shape=bind-only; consumers=canonical_two_card
 alternating_canon: proof_shape=bind-only; consumers=canonical_two_card
-canon_two_eq: proof_shape=content; consumers=canonical_two_card
+canon_two_eq: proof_shape=bind-only; consumers=canonical_two_card
   reason: The new two-label classification is used before canonicality fixes labels zero and one.
 CanonicalPatterns: proof_shape=bind-only; consumers=weighted_count
-canonical_two_card: proof_shape=content; consumers=weighted_count
+canonical_two_card: proof_shape=bind-only; consumers=weighted_count
   reason: Uniqueness of the counted pattern uses the new all-width classification.
 a_sum: proof_shape=bind-only; consumers=weighted_count
-L_card: proof_shape=content; consumers=counting_bridge
+L_card: proof_shape=bind-only; consumers=counting_bridge
   reason: Its expanded counting bijection uses canonical representatives and rigidity.
-weighted_count: proof_shape=content; consumers=counting_bridge
+weighted_count: proof_shape=bind-only; consumers=counting_bridge
   reason: The two-label summand uses the new all-width classification through canonical_two_card.
-counting_bridge: proof_shape=content; consumers=scale_recurrence
+counting_bridge: proof_shape=bind-only; consumers=scale_recurrence
   reason: It combines the new canonical-orbit count and the classified two-label contribution.
-scale_recurrence: proof_shape=content; consumers=finite_certificate, result
+scale_recurrence: proof_shape=bind-only; consumers=finite_certificate, result
   reason: Each substituted counting_bridge retains both new constructions on the live path.
-finite_certificate: proof_shape=content; consumers=result
+finite_certificate: proof_shape=bind-only; consumers=result
   reason: Its proof uses scale_recurrence and its new counting bridge at the finite base index.
-result: proof_shape=content; consumers=terminal result
+result: proof_shape=bind-only; consumers=terminal result
   reason: Both branches use the new counting bridge via scale_recurrence or finite_certificate.
 -/
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip
