@@ -177,15 +177,13 @@ def rowLegal (c : Row) : Prop :=
   ∀ j : Fin 5, c j.castSucc ≠ c j.succ ∧ (c j.castSucc).val + (c j.succ).val ≠ 5
 private def bonds (c d : Row) : Prop :=
   ∀ j : Fin 5, c j.succ ≠ d j.castSucc ∧ (c j.succ).val + (d j.castSucc).val ≠ 5
-private def Legal {n : ℕ} (A : Fin n × Fin 6 → Fin 6) : Prop :=
-  widthLegal rowLegal bonds A
-private instance instDecidableRowLegal (c : Row) : Decidable (rowLegal c) :=
-  inferInstanceAs (Decidable (∀ _, _ ∧ _))
-private instance instDecidableBonds (c d : Row) : Decidable (bonds c d) :=
-  inferInstanceAs (Decidable (∀ _, _ ∧ _))
+private instance instDecidableRowLegal : DecidablePred rowLegal :=
+  fun c => inferInstanceAs (Decidable (∀ _, _ ∧ _))
+private instance instDecidableBonds : DecidableRel bonds :=
+  fun c d => inferInstanceAs (Decidable (∀ _, _ ∧ _))
 /-- The literal filtered count. The first-cell existential sets `a 0 = 0`. -/
 def a (n : ℕ) : ℕ :=
-  (Finset.univ.filter (fun A : Fin n × Fin 6 → Fin 6 => Legal A)).card
+  (Finset.univ.filter (fun A : Fin n × Fin 6 → Fin 6 => widthLegal rowLegal bonds A)).card
 def pairs (c : Row) : Boundary := fun j => beta (c j.succ)
 def compatible (p : Boundary) (c : Row) : Prop :=
   ∀ j : Fin 5, p j ≠ beta (c j.castSucc)
@@ -196,7 +194,7 @@ private theorem bonds_iff (c d : Row) : bonds c d ↔ compatible (pairs c) d := 
 private abbrev v := widthV rowLegal pairs compatible
 private abbrev total := widthTotal rowLegal pairs
 private theorem counting_bridge (n : ℕ) : (a (n + 1) : ℤ) = total (v n) := by
-  exact width_counting_bridge rowLegal pairs compatible bonds bonds_iff n
+  simpa [a, widthLegal] using width_counting_bridge rowLegal pairs compatible bonds bonds_iff n
 def Valid (s : Seen) (p : Boundary) : Prop :=
   s.1 = true ∧ (∀ j : Fin 4, p j.castSucc ≠ p j.succ) ∧
     (s.2 = false → ∀ j, p j ≠ 2)
@@ -862,7 +860,7 @@ private theorem recurrence (n : ℕ) :
   simp only [w]
   norm_num
   ring
-private theorem zero_count : a 0 = 0 := by simp [a, Legal]
+private theorem zero_count : a 0 = 0 := by simp [a, widthLegal]
 private theorem one_count : (a 1 : ℤ) = 136 := by
   rw [show 1 = 0 + 1 from rfl, counting_bridge]
   have he : total (v 0) = firstCount true + firstCount false := by
