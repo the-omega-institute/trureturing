@@ -14,13 +14,23 @@ Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255Recurrence
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255Recurrence.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/hardin233255` (proved) by `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255Recurrence.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hardin233255","declaration_gid":"D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255Recurrence.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; OEIS Foundation Inc. (2013). *OEIS A233255: seven-column six-colour complementary-pair arrays and an empirical recurrence*. URL: <https://oeis.org/A233255>.
 
 *Commentary.*
 
 For every natural n at least six, a(n) equals 5504 a(n-1) minus 6438912 a(n-2) plus 2774532096 a(n-3) minus 478351982592 a(n-4) plus 27831388078080 a(n-5), in the integers. All six heights belong to the positive source domain. The onset n at least six is the all-positive-predecessors explication; the source labels its recurrence Empirical without an explicit onset. No count at height zero is introduced.
 
 Source: R. H. Hardin, OEIS A233255, The On-Line Encyclopedia of Integer Sequences, OEIS Foundation Inc., https://oeis.org/A233255; source licensing: https://oeis.org/LICENSE. The source statement is a conjectural input, and the formal certificate and literal bridge supply the proof.
+
+Problems/hardin233255.md states the complete original recurrence event, its clause correspondence, proof mechanism, literature boundaries and follow-up questions. Library/Automata/hardin2013a233255.md records the source locators and quotation licence. The resolution concerns the entire literal count at every n at least six.
+
+Information-escape registration remains declared_unresolved for LiteralBridge.scanner_fibres (IE-C050 ClosedTruthReadout reason=unclassified_form rule=source.params), PairTransfer.continuation_pair_bridge and Recurrence.result (each IE-C050 ClosedTruthReadout reason=unclassified_form rule=source.state_binder). The original source-binding certificates are missing. The disclosures are https://github.com/the-omega-institute/trureturing/issues/28328#issuecomment-6732072411 and https://github.com/the-omega-institute/trureturing/issues/28328#issuecomment-6732792448. These three audits are unfinished; they are not validated registrations.
 
 ## References
 
