@@ -4,7 +4,7 @@
    mirror-E: none(waiver:formal-unit-only)
    anchors: [mathlib/module/Mathlib.Analysis.SpecificLimits.Basic, mathlib/module/Mathlib.LinearAlgebra.Matrix.PosDef]
    utility: none
-   digest: Finite tournament path transfer, reflection, padding and the defect-spectrum convergence criterion. -/
+   digest: Convergence of the strict tournament path flip threshold by finite-host amplification. -/
 
 import D5.S3.ConceptDynamics.GraphIrregularity.LinkIrregularTournamentExistence
 import Mathlib.Analysis.SpecificLimits.Basic
@@ -12,8 +12,9 @@ import Mathlib.LinearAlgebra.Matrix.PosDef
 import Mathlib.Algebra.QuadraticDiscriminant
 import Mathlib.Algebra.Order.Star.Real
 import Mathlib.Tactic
+import Mathlib.Data.Vector.Basic
 
-/-! Finite path transfers and the asymptotic defect criterion. -/
+/-! Finite path transfers, defect propagation and source-faithful convergence of the flip threshold. -/
 
 set_option autoImplicit false
 open scoped BigOperators
@@ -214,18 +215,7 @@ theorem reflected_pair_transfer (A : Matrix V V ℝ) (w : List Bool) :
     transfer A (w ++ reflect w) = transfer A w * (transfer A w)ᵀ := by
   rw [transfer_append, transfer_reflect]
 
-theorem transfer_nonneg (A : Matrix V V ℝ) (hA : ∀ i j, 0 ≤ A i j)
-    (w : List Bool) : ∀ i j, 0 ≤ transfer A w i j := by
-  induction w with
-  | nil => intro i j; simp [transfer, Matrix.one_apply]; split_ifs <;> norm_num
-  | cons b w ih =>
-    intro i j
-    change 0 ≤ (step A b * transfer A w) i j
-    apply Finset.sum_nonneg
-    intro x _
-    apply mul_nonneg _ (ih x j)
-    cases b <;> simp [step, hA]
-
+omit [DecidableEq V] in
 /-- A nonnegative reflected transfer has average at least the square of the old average. -/
 theorem reflected_mass_sq_le (B : Matrix V V ℝ) [Nonempty V] :
     (mass B) ^ 2 ≤ mass (B * Bᵀ) := by
@@ -256,6 +246,7 @@ theorem reflected_mass_sq_le (B : Matrix V V ℝ) [Nonempty V] :
   apply (div_le_div_iff₀ (pow_pos hN 2) hN).mpr
   nlinarith
 
+omit [DecidableEq V] in
 /-- A row-sum identity for the sum of forward and backward one-edge transfers. -/
 theorem extension_mass_sum (A M : Matrix V V ℝ) (d : ℝ)
     (hrow : ∀ i, (∑ j, (A i j + A j i)) = d) :
@@ -275,6 +266,7 @@ theorem extension_mass_sum (A M : Matrix V V ℝ) (d : ℝ)
       simp only [Finset.mul_sum]
     _ = _ := by simp_rw [hrow]; simp only [← Finset.sum_mul]; ring
 
+omit [DecidableEq V] in
 /-- Padding is chosen from the two signs using their sum; no specified sign is assumed safe. -/
 theorem exists_one_edge_padding (A M : Matrix V V ℝ) (c : ℝ)
     (hsum : mass (M * A) + mass (M * Aᵀ) = 2 * c * mass M) :
@@ -316,6 +308,7 @@ theorem normalizedArcMatrix_complement (R : V → V → Prop) (hT : IsTournament
     · simp [normalizedArcMatrix, h, hn, hij]
     · simp [normalizedArcMatrix, h, hn, hij]
 
+omit [DecidableEq V] in
 theorem normalizedArcMatrix_row_sum (R : V → V → Prop) (hT : IsTournament R)
     [Nonempty V] (i : V) :
     (∑ j, (normalizedArcMatrix R i j + normalizedArcMatrix R j i)) =
@@ -368,6 +361,7 @@ private theorem transfer_repeatWord (A : Matrix V V ℝ) (w : List Bool) (m : �
     change transfer A (w ++ repeatWord w m) = _
     rw [transfer_append, ih, pow_succ']
 
+omit [Fintype V] [DecidableEq V] in
 private theorem arcPreserving_cons (R : V → V → Prop) (b : Bool) (w : List Bool)
     (φ : Fin ((b :: w).length + 1) → V) :
     ArcPreserving R (b :: w) φ ↔
@@ -406,7 +400,7 @@ private theorem row_transfer_count (R : V → V → Prop) (w : List Bool) (i : V
       cases b <;> simp [step, normalizedArcMatrix, Matrix.transpose_apply]
     rw [hs]
     by_cases h : if b then R i j else R j i
-    · simp [h, ← Finset.mul_sum, mul_assoc]
+    · simp [h, mul_assoc]
     · simp [h]
 
 /-- Matrix multiplication sums over every map, retaining vertex collisions. -/
@@ -462,6 +456,7 @@ theorem logconvex_geometric_lower (a : ℕ → ℝ) (hzero : a 0 = 1) (hone : 0 
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
+omit [DecidableEq V] in
 private theorem semidefinite_cauchy (C : Matrix V V ℝ) (hC : C.PosSemidef)
     (x y : V → ℝ) :
     (x ⬝ᵥ (C *ᵥ y)) ^ 2 ≤ (x ⬝ᵥ (C *ᵥ x)) * (y ⬝ᵥ (C *ᵥ y)) := by
@@ -610,13 +605,324 @@ theorem convergence_of_defect_propagation (F : ℕ → ℕ) (Bad : ℕ → ℕ �
 
 end DefectSpectrum
 
-/-
-The remaining formal bridges to FullConvergence are:
-* expansion of transfer as the count of all arc-preserving maps, including collisions;
-* preservation of flips by reflection and exact flip/length formulas for repeated words;
-* the all-length propagation construction from these bridges and the compiled inequalities;
-* its substitution into convergence_of_defect_propagation for the exact maximum f.
-No theorem of type FullConvergence is declared here.
--/
+/-- Any finite defect propagates to every sufficiently large length. -/
+theorem defect_propagation (w : List Bool) (hk : 0 < w.length) (hbad : ¬ TAS w)
+    (δ : ℝ) (hδ : 0 < δ) :
+    ∃ K : ℕ, ∀ n : ℕ, K ≤ n → 0 < n →
+      (f n : ℝ) / (n : ℝ) < ((flips w : ℝ) + 1) / (w.length : ℝ) + δ := by
+  classical
+  simp only [TAS, not_forall, not_le] at hbad
+  obtain ⟨N, hN, R, hT, hviol⟩ := hbad
+  letI : NeZero N := ⟨by omega⟩
+  let A := normalizedArcMatrix R
+  let B := transfer A w
+  let q := mass B
+  have hq : 1 < q := by
+    have hmul := mul_lt_mul_of_pos_left hviol (by positivity : (0 : ℝ) < 2 ^ w.length)
+    have hid : (2 : ℝ) ^ w.length * (1 / 2 : ℝ) ^ w.length = 1 := by
+      rw [← mul_pow]; norm_num
+    simpa only [q, B, A, mass_transfer_eq_density, hid] using hmul
+  have hNtwo : 1 < N := by
+    by_contra h
+    have heq : N = 1 := by omega
+    subst N
+    have hA : A = 0 := by
+      ext i j
+      have hij : j = i := Subsingleton.elim _ _
+      subst j
+      simp [A, normalizedArcMatrix, hT.1 i]
+    have hB : B = 0 := by
+      cases w with
+      | nil => simp at hk
+      | cons b u => cases b <;> simp [B, transfer, step, hA]
+    have hz : q = 0 := by simp [q, hB, mass]
+    linarith
+  let c : ℝ := ((N : ℝ) - 1) / (N : ℝ)
+  have hNr : (1 : ℝ) < N := by exact_mod_cast hNtwo
+  have hc : 0 < c := div_pos (by linarith) (by positivity)
+  have hc1 : c ≤ 1 := (div_le_one (by positivity : (0 : ℝ) < N)).mpr (by linarith)
+  let d := 2 * w.length
+  have hd : 0 < d := by dsimp [d]; omega
+  let W := w ++ reflect w
+  have hWlen : W.length = d := by simp [W, reflect, d]; omega
+  have hWflip : flips W + 1 ≤ 2 * (flips w + 1) := by
+    have h := flips_append_le w (reflect w)
+    rw [flips_reflect] at h
+    dsimp [W]
+    omega
+  have hpow : 1 < q ^ 2 := by nlinarith
+  have hlarge := (tendsto_pow_atTop_atTop_of_one_lt hpow).const_mul_atTop (pow_pos hc d)
+  obtain ⟨M, hM⟩ := Filter.eventually_atTop.mp (hlarge.eventually_gt_atTop 1)
+  obtain ⟨J, hJ⟩ := exists_nat_one_div_lt (div_pos hδ (by positivity : (0 : ℝ) < d))
+  refine ⟨max (d * M) (J + 1), ?_⟩
+  intro n hn hnpos
+  let m := n / d
+  let s := n % d
+  have hs : s < d := Nat.mod_lt n hd
+  have hdecomp : d * m + s = n := by
+    dsimp [m, s]
+    nlinarith [Nat.mod_add_div n d]
+  have hm : M ≤ m := (Nat.le_div_iff_mul_le hd).mpr (by nlinarith [le_max_left (d * M) (J + 1)])
+  obtain ⟨v, hvlen, hv⟩ := tournament_padding R hT (repeatWord W m) s
+  have hamp : (q ^ 2) ^ m ≤ mass (transfer A (repeatWord W m)) := by
+    simpa only [transfer_repeatWord, W, reflected_pair_transfer, B, q, pow_mul] using
+      reflected_power_amplification B hq m
+  have hmass : 1 < mass (transfer A (repeatWord W m ++ v)) := by
+    have hcs : c ^ d ≤ c ^ s := pow_le_pow_of_le_one hc.le hc1 (by omega)
+    have hbase : 1 < c ^ d * (q ^ 2) ^ m := hM m hm
+    have hstep : c ^ s * (q ^ 2) ^ m ≤ c ^ s * mass (transfer A (repeatWord W m)) :=
+      mul_le_mul_of_nonneg_left hamp (pow_nonneg hc.le s)
+    have htail : c ^ s * mass (transfer A (repeatWord W m)) ≤
+        mass (transfer A (repeatWord W m ++ v)) := by
+      simpa only [A, c, Fintype.card_fin] using hv
+    exact hbase.trans_le
+      ((mul_le_mul_of_nonneg_right hcs (by positivity)).trans (hstep.trans htail))
+  let u := repeatWord W m ++ v
+  have hulen : u.length = n := by
+    simp only [u, List.length_append, repeatWord_length, hWlen, hvlen]
+    nlinarith
+  have hubad : ¬ TAS u := by
+    intro htas
+    have ht := htas N hN R hT
+    have ht' := mul_le_mul_of_nonneg_left ht (by positivity : (0 : ℝ) ≤ 2 ^ u.length)
+    have hid : (2 : ℝ) ^ u.length * (1 / 2 : ℝ) ^ u.length = 1 := by
+      rw [← mul_pow]; norm_num
+    rw [hid, ← mass_transfer_eq_density R u] at ht'
+    exact (not_le_of_gt hmass) ht'
+  have huflip : flips u ≤ 2 * m * (flips w + 1) + s := by
+    have h₁ := flips_append_cost (repeatWord W m) v
+    have h₂ := repeatWord_flips W m
+    have h₃ := Nat.mul_le_mul_left m hWflip
+    rw [hvlen] at h₁
+    dsimp [u]
+    nlinarith
+  have hf : f n ≤ 2 * m * (flips w + 1) + s := by
+    have h := f_le_flips_of_not_tas hubad
+    rw [hulen] at h
+    exact h.trans huflip
+  have hkr : (0 : ℝ) < w.length := by exact_mod_cast hk
+  have hnr : (0 : ℝ) < n := by exact_mod_cast hnpos
+  have hdr : (0 : ℝ) < d := by exact_mod_cast hd
+  have hsn : (s : ℝ) ≤ d := by exact_mod_cast (le_of_lt hs)
+  have hfn : (f n : ℝ) ≤ 2 * (m : ℝ) * ((flips w : ℝ) + 1) + s := by exact_mod_cast hf
+  have hdn : (n : ℝ) = 2 * (w.length : ℝ) * m + s := by
+    have h := congrArg (fun z : ℕ => (z : ℝ)) hdecomp
+    push_cast at h
+    dsimp [d] at h
+    push_cast at h
+    linarith
+  have hscale : ((flips w : ℝ) + 1) / (w.length : ℝ) * n =
+      2 * (m : ℝ) * ((flips w : ℝ) + 1) +
+        ((flips w : ℝ) + 1) / (w.length : ℝ) * s := by
+    rw [hdn]
+    field_simp
+  have hmain : (f n : ℝ) ≤ ((flips w : ℝ) + 1) / (w.length : ℝ) * n + d := by
+    have hnonneg : 0 ≤ ((flips w : ℝ) + 1) / (w.length : ℝ) * s := by positivity
+    linarith
+  have hsmall : (d : ℝ) / (n : ℝ) < δ := by
+    have hJ' : 1 / (n : ℝ) < δ / (d : ℝ) := by
+      apply lt_of_le_of_lt _ hJ
+      apply one_div_le_one_div_of_le (by positivity : (0 : ℝ) < (J : ℝ) + 1)
+      exact_mod_cast (show J + 1 ≤ n by omega)
+    calc
+      (d : ℝ) / (n : ℝ) = (1 / (n : ℝ)) * d := by ring
+      _ < (δ / (d : ℝ)) * d := mul_lt_mul_of_pos_right hJ' hdr
+      _ = δ := div_mul_cancel₀ δ (ne_of_gt hdr)
+  apply lt_of_le_of_lt (div_le_div_of_nonneg_right hmain hnr.le) _
+  rw [add_div, mul_div_cancel_right₀ _ (ne_of_gt hnr)]
+  linarith
+
+/-- The source maximum has a limit over all positive lengths, with no propagation premise. -/
+theorem fullConvergence : FullConvergence := by
+  let Bad : ℕ → ℕ → Prop := fun k r =>
+    ∃ w : List Bool, w.length = k ∧ flips w = r ∧ ¬ TAS w
+  refine ⟨defectLimit Bad, ?_⟩
+  apply convergence_of_defect_propagation f Bad f_le
+  · intro k _ hk
+    exact exists_bad_at_f hk
+  · intro k r hk hbad δ hδ
+    obtain ⟨w, hw, hr, hb⟩ := hbad
+    simpa only [hw, hr] using defect_propagation w (by omega) hb δ hδ
+
+section SourceCorrespondence
+
+/-- The paper's two integer signs. -/
+abbrev Sign := {z : ℤ // z = -1 ∨ z = 1}
+
+private def signEquiv : Bool ≃ Sign where
+  toFun b := if b then ⟨1, Or.inr rfl⟩ else ⟨-1, Or.inl rfl⟩
+  invFun z := decide (z.val = 1)
+  left_inv b := by cases b <;> decide
+  right_inv z := by
+    apply Subtype.ext
+    rcases z.property with h | h <;> simp [h]
+
+private theorem sign_mul (a b : Bool) :
+    (if (signEquiv a : ℤ) * (signEquiv b : ℤ) = -1 then (1 : ℕ) else 0) =
+      if a = b then 0 else 1 := by
+  cases a <;> cases b <;> decide
+
+private theorem sign_pos (a : Bool) : (signEquiv a : ℤ) = 1 ↔ a = true := by
+  cases a <;> decide
+
+/-- Every sign vector and every list of the given length correspond bijectively. -/
+def signVectors (k : ℕ) : {w : List Bool // w.length = k} ≃ (Fin k → Sign) :=
+  (Equiv.vectorEquivFin Bool k).trans (Equiv.piCongrRight fun _ => signEquiv)
+
+/-- Internal vertices are counted by the source condition that adjacent signs multiply to -1. -/
+def sourceFlips {k : ℕ} (x : Fin k → Sign) : ℕ :=
+  ∑ i : Fin k, if h : i.val + 1 < k then
+    (if (x i : ℤ) * (x ⟨i.val + 1, h⟩ : ℤ) = -1 then 1 else 0) else 0
+
+/-- The source arc condition on integer sign vectors, independently of list encoding. -/
+def SourceArcPreserving {k : ℕ} {V : Type*} (R : V → V → Prop) (x : Fin k → Sign)
+    (φ : Fin (k + 1) → V) : Prop :=
+  ∀ i : Fin k, if (x i : ℤ) = 1 then R (φ i.castSucc) (φ i.succ)
+    else R (φ i.succ) (φ i.castSucc)
+
+noncomputable def sourceDensity {k : ℕ} {V : Type*} [Fintype V]
+    (R : V → V → Prop) (x : Fin k → Sign) : ℝ :=
+  (Nat.card {φ : Fin (k + 1) → V // SourceArcPreserving R x φ} : ℝ) /
+    (Fintype.card V : ℝ) ^ (k + 1)
+
+/-- All finite nonempty host types are included, without a prescribed enumeration. -/
+def SourceTAS {k : ℕ} (x : Fin k → Sign) : Prop :=
+  ∀ (V : Type) [Fintype V] [Nonempty V] (R : V → V → Prop),
+    IsTournament R → sourceDensity R x ≤ (1 / 2 : ℝ) ^ k
+
+private theorem flips_eq_index_sum (w : List Bool) :
+    flips w = ∑ i : Fin w.length,
+      if h : i.val + 1 < w.length then
+        (if w[i.val] = w[i.val + 1] then 0 else 1) else 0 := by
+  induction w with
+  | nil => simp [flips]
+  | cons a w ih =>
+    cases w with
+    | nil => simp [flips, Fin.sum_univ_succ]
+    | cons b w =>
+      simp only [List.length_cons, Fin.sum_univ_succ, Fin.val_zero, Fin.val_succ] at *
+      simp [flips, ih, Nat.add_assoc]
+      apply Finset.sum_congr rfl
+      intro i _
+      by_cases h : i.val + 2 ≤ w.length
+      · have h' : i.val + 3 < w.length + 2 := by omega
+        simp [h, h']
+      · have h' : ¬ i.val + 3 < w.length + 2 := by omega
+        simp [h, h']
+
+private theorem signVectors_apply (w : List Bool) (i : Fin w.length) :
+    signVectors w.length ⟨w, rfl⟩ i = signEquiv w[i.val] := rfl
+
+private theorem sourceFlips_eq {k : ℕ} (w : List Bool) (hw : w.length = k) :
+    sourceFlips (signVectors k ⟨w, hw⟩) = flips w := by
+  subst k
+  rw [flips_eq_index_sum]
+  unfold sourceFlips
+  apply Finset.sum_congr rfl
+  intro i _
+  by_cases h : i.val + 1 < w.length
+  · simp only [dif_pos h, signVectors_apply]
+    exact sign_mul _ _
+  · simp only [dif_neg h]
+
+private theorem sourceDensity_eq {k : ℕ} {V : Type*} [Fintype V]
+    (R : V → V → Prop) (w : List Bool) (hw : w.length = k) :
+    sourceDensity R (signVectors k ⟨w, hw⟩) = homDensity R w := by
+  subst k
+  have ha (φ : Fin (w.length + 1) → V) :
+      SourceArcPreserving R (signVectors w.length ⟨w, rfl⟩) φ ↔ ArcPreserving R w φ := by
+    unfold SourceArcPreserving ArcPreserving
+    apply forall_congr'
+    intro i
+    simp only [signVectors_apply]
+    simp only [sign_pos]
+    rfl
+  unfold sourceDensity homDensity homCount
+  congr 2
+  exact Nat.card_congr (Equiv.subtypeEquivRight ha)
+
+private theorem homDensity_reindex {U V : Type*} [Fintype U] [Fintype V]
+    (e : U ≃ V) (R : V → V → Prop) (w : List Bool) :
+    homDensity (fun i j : U => R (e i) (e j)) w = homDensity R w := by
+  let E : {φ : Fin (w.length + 1) → U // ArcPreserving (fun i j => R (e i) (e j)) w φ} ≃
+      {φ : Fin (w.length + 1) → V // ArcPreserving R w φ} := {
+    toFun := fun φ => ⟨fun i => e (φ.val i), φ.property⟩
+    invFun := fun φ => ⟨fun i => e.symm (φ.val i), by simpa [ArcPreserving] using φ.property⟩
+    left_inv := fun φ => by apply Subtype.ext; funext i; exact e.symm_apply_apply _
+    right_inv := fun φ => by apply Subtype.ext; funext i; exact e.apply_symm_apply _ }
+  have hc := Nat.card_congr E
+  simp only [homDensity, homCount, hc, Fintype.card_congr e]
+
+/-- A TAS list satisfies the same density bound in every arbitrary finite nonempty host. -/
+theorem tas_arbitrary_host {V : Type*} [Fintype V] [Nonempty V]
+    (w : List Bool) (h : TAS w) (R : V → V → Prop) (hT : IsTournament R) :
+    homDensity R w ≤ (1 / 2 : ℝ) ^ w.length := by
+  let e := (Fintype.equivFin V).symm
+  have hT' : IsTournament (fun i j : Fin (Fintype.card V) => R (e i) (e j)) := by
+    constructor
+    · exact fun i => hT.1 _
+    · intro i j hij
+      exact hT.2 _ _ (fun heq => hij (e.injective heq))
+  have ht := h (Fintype.card V) Fintype.card_pos _ hT'
+  rwa [homDensity_reindex e R w] at ht
+
+private theorem sourceTAS_iff {k : ℕ} (w : List Bool) (hw : w.length = k) :
+    SourceTAS (signVectors k ⟨w, hw⟩) ↔ TAS w := by
+  subst k
+  constructor
+  · intro h N hN R hR
+    letI : NeZero N := ⟨by omega⟩
+    simpa only [sourceDensity_eq] using h (Fin N) R hR
+  · intro h V _ _ R hR
+    rw [sourceDensity_eq]
+    exact tas_arbitrary_host w h R hR
+
+/-- The source threshold uses integer sign vectors and arbitrary finite hosts. -/
+noncomputable def sourceThresholds (k : ℕ) : Finset ℕ := by
+  classical
+  exact (Finset.range (k + 1)).filter fun m =>
+    ∀ x : Fin k → Sign, sourceFlips x < m → SourceTAS x
+
+private theorem sourceThresholds_eq (k : ℕ) : sourceThresholds k = thresholds k := by
+  classical
+  ext m
+  simp only [sourceThresholds, thresholds, Finset.mem_filter]
+  constructor
+  · rintro ⟨hm, h⟩
+    refine ⟨hm, ?_⟩
+    intro w hw hf
+    apply (sourceTAS_iff w hw).mp
+    apply h (signVectors k ⟨w, hw⟩)
+    rwa [sourceFlips_eq]
+  · rintro ⟨hm, h⟩
+    refine ⟨hm, ?_⟩
+    intro x hf
+    obtain ⟨⟨w, hw⟩, rfl⟩ := (signVectors k).surjective x
+    apply (sourceTAS_iff w hw).mpr
+    apply h w hw
+    rwa [sourceFlips_eq] at hf
+
+private theorem sourceThresholds_nonempty (k : ℕ) : (sourceThresholds k).Nonempty := by
+  rw [sourceThresholds_eq]
+  exact thresholds_nonempty k
+
+/-- The independently defined exact source maximum, including saturation. -/
+noncomputable def sourceF (k : ℕ) : ℕ :=
+  (sourceThresholds k).max' (sourceThresholds_nonempty k)
+
+/-- Both encodings have exactly the same maximum at every length. -/
+theorem sourceF_eq_f (k : ℕ) : sourceF k = f k := by
+  simp only [sourceF, f, sourceThresholds_eq]
+
+/-- The literal source convergence assertion on sign vectors and arbitrary finite hosts. -/
+def SourceFullConvergence : Prop :=
+  ∃ L : ℝ, ∀ ε : ℝ, 0 < ε → ∃ K : ℕ, 1 ≤ K ∧
+    ∀ k : ℕ, K ≤ k → |(sourceF k : ℝ) / (k : ℝ) - L| < ε
+
+/-- Question 6.1, with its original maximum and every positive length. -/
+theorem source_fullConvergence : SourceFullConvergence := by
+  simpa only [SourceFullConvergence, FullConvergence, sourceF_eq_f] using fullConvergence
+
+end SourceCorrespondence
 
 end D5.S3.Combinatorics.ExtremalDensity.ChenLinFlipLimit
