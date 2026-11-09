@@ -9,6 +9,77 @@
 /-
 admission_basis: open-problem-resolution (#28399; Proved)
 escape_witness: none
+Direct frozen dependencies: none.
+Closed, unfrozen dependency: TransferMatrix.scalarRelationShift.
+The six-colour scanner and width transfer fix Fin 6 and two flags; they cannot
+instantiate Fin 8 with three flags. The eight-colour scanner is public and
+consumed by the literal row-major normalization and continuation transfer.
+The pair map uses Fin.ofNat and Nat.min, retaining the literal colour convention.
+Seen: proof_shape=bind-only; consumers=allowed
+allowed: proof_shape=bind-only; consumers=good
+instDecidableAllowed: proof_shape=bind-only; consumers=widthInstDecidableGood
+advance: proof_shape=bind-only; consumers=good
+good: proof_shape=bind-only; consumers=good_iff
+finish: proof_shape=bind-only; consumers=normal_cons
+finish_fst: proof_shape=bind-only; consumers=normal_cons
+finish_snd: proof_shape=bind-only; consumers=normal_cons
+finish_third: proof_shape=bind-only; consumers=normal_cons
+good_iff: proof_shape=bind-only; consumers=normal_cons
+beta: proof_shape=bind-only; consumers=pairs
+colour_bond_iff: proof_shape=bind-only; consumers=bonds_iff
+WidthRow: proof_shape=bind-only; consumers=widthNormal
+prior: proof_shape=bind-only; consumers=widthNormal
+instDecidablePrior: proof_shape=bind-only; consumers=widthInstDecidableNormal
+widthNormal: proof_shape=bind-only; consumers=Legal
+prior_zero: proof_shape=bind-only; consumers=normal_cons
+prior_succ: proof_shape=bind-only; consumers=normal_cons
+normal_cons: proof_shape=bind-only; consumers=tail_iff
+widthLegal: proof_shape=bind-only; consumers=width_counting_bridge
+widthInstDecidableNormal: proof_shape=bind-only; consumers=instDecidableLegal
+widthInstDecidableGood: proof_shape=bind-only; consumers=widthStep
+widthInstDecidableLegal: proof_shape=bind-only; consumers=width_counting_bridge
+TailGood: proof_shape=bind-only; consumers=tail_iff
+instDecidableTailGood: proof_shape=bind-only; consumers=count
+tail_iff: proof_shape=bind-only; consumers=width_counting_bridge
+widthStep: proof_shape=bind-only; consumers=widthV
+widthV: proof_shape=bind-only; consumers=v2
+count: proof_shape=bind-only; consumers=count_eq_v
+count_eq_v: proof_shape=bind-only; consumers=width_counting_bridge
+widthTotal: proof_shape=bind-only; consumers=total2
+width_counting_bridge: proof_shape=bind-only; consumers=counting_bridge
+Row: proof_shape=bind-only; consumers=rowLegal
+rowLegal: proof_shape=bind-only; consumers=Legal
+bonds: proof_shape=bind-only; consumers=Legal
+instDecidableRowLegal: proof_shape=bind-only; consumers=instDecidableLegal
+instDecidableBonds: proof_shape=bind-only; consumers=instDecidableLegal
+Legal: proof_shape=bind-only; consumers=a
+instDecidableLegal: proof_shape=bind-only; consumers=a
+a: proof_shape=bind-only; consumers=result
+pairs: proof_shape=bind-only; consumers=v2
+compatible: proof_shape=bind-only; consumers=v2
+instDecidableCompatible: proof_shape=bind-only; consumers=v2
+bonds_iff: proof_shape=bind-only; consumers=counting_bridge
+v2: proof_shape=bind-only; consumers=v_eq_w
+total2: proof_shape=bind-only; consumers=a_eq_w
+counting_bridge: proof_shape=bind-only; consumers=a_eq_w
+Valid: proof_shape=bind-only; consumers=valid_next
+instDecidableValid: proof_shape=bind-only; consumers=row_counts
+seenClass: proof_shape=bind-only; consumers=classCount
+T: proof_shape=bind-only; consumers=finite_certificate
+classCount: proof_shape=bind-only; consumers=finite_certificate
+firstCount: proof_shape=bind-only; consumers=finite_certificate
+valid_next: proof_shape=bind-only; consumers=v_eq_w
+initial_valid: proof_shape=bind-only; consumers=a_eq_w
+row_counts: proof_shape=bind-only; consumers=finite_certificate
+initial_counts: proof_shape=bind-only; consumers=finite_certificate
+vector_relation: proof_shape=bind-only; consumers=finite_certificate
+finite_certificate: proof_shape=bind-only; consumers=result
+w: proof_shape=bind-only; consumers=a_eq_w
+v_eq_w: proof_shape=bind-only; consumers=a_eq_w
+a_eq_w: proof_shape=bind-only; consumers=recurrence
+recurrence: proof_shape=bind-only; consumers=result
+zero_count: proof_shape=bind-only; consumers=result
+result: proof_shape=bind-only; consumers=terminal result
 -/
 
 import D5.S3.Combinatorics.TraceAvoidingArrays.TransferMatrix
@@ -83,7 +154,7 @@ private theorem good_iff {n : ℕ} (s : Seen) (f : Fin n → Fin 8) :
 
 /-- The four complementary pairs are {0,7}, {1,6}, {2,5}, {3,4}. -/
 def beta (c : Fin 8) : Fin 4 :=
-  if h : c.val < 4 then ⟨c.val, h⟩ else ⟨7 - c.val, by omega⟩
+  Fin.ofNat 4 (Nat.min c.val (7 - c.val))
 
 private theorem colour_bond_iff (x y : Fin 8) :
     (x ≠ y ∧ x.val + y.val ≠ 7) ↔ beta x ≠ beta y := by
@@ -114,6 +185,7 @@ private theorem prior_zero {n : ℕ} (c : WidthRow k) (f : Fin n → WidthRow k)
     prior (Fin.cons c f) 0 j d ↔ ∃ k, k < j ∧ c k = d := by
   simp [prior, Fin.exists_fin_succ]
 
+omit [NeZero k] in
 private theorem prior_succ {n : ℕ} (c : WidthRow k) (f : Fin n → WidthRow k)
     (i : Fin n) (j : Fin k) (d : Fin 8) :
     prior (Fin.cons c f) i.succ j d ↔ (∃ k, c k = d) ∨ prior f i j d := by
@@ -171,6 +243,7 @@ private instance instDecidableTailGood {n : ℕ} (s : Seen) (p : B) (f : Fin n �
     haveI := ih (finish s (f 0)) (P (f 0)) (Fin.tail f)
     infer_instance
 
+omit [DecidablePred R] [DecidableRel C] [DecidableRel E] in
 include edge in
 private theorem tail_iff {n : ℕ} (s : Seen) (p : B) (f : Fin n → WidthRow k) :
     TailGood R P C s p f ↔ widthNormal s f ∧
@@ -217,6 +290,7 @@ private def widthV : ℕ → Seen → (B) → ℤ
 private def count (n : ℕ) (s : Seen) (p : B) : ℤ :=
   ∑ f : Fin n → WidthRow k, if TailGood R P C s p f then 1 else 0
 
+omit [NeZero k] in
 private theorem count_eq_v (n : ℕ) : count R P C n = widthV R P C n := by
   induction n with
   | zero => funext s p; simp [count, TailGood, widthV]
