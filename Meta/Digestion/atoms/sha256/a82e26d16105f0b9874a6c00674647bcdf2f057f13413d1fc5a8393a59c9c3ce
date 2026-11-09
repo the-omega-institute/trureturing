@@ -1,0 +1,69 @@
+## 42. 零槽配平的两张垂直圆盘
+
+继续证明 41.2。对实际原三元组 $(a,0,c)$ 使用完整 PB。P2 给 $D(a,0)=0$，所以位移、两份原外层及右端准确为
+
+$$
+\begin{gathered}
+\nu=-a\circ c,\qquad\omega=d,\qquad
+r_\eta=-\eta a\circ c,\qquad s_\eta=c+\eta d,
+\quad\eta\in\{1,-1\},\\
+D(r_+,s_+)-D(r_-,s_-)=-2c\circ d.
+\end{gathered}
+\tag{42.1}
+$$
+
+所有内外层均属于原 $E$，同一个 $d$ 是实际旧值。两份外层输出各写为 $xF_\eta+O(x^2)$。其端点与一次输入系数是
+
+$$
+\begin{gathered}
+r_\eta(0)=-\eta\lambda\tau u,\qquad s_\eta(0)=\tau u,\\
+[x]r_\eta=-\eta(\lambda C+\tau A),\qquad
+[x]s_\eta=C+\eta H,\qquad H=[x]d.
+\end{gathered}
+$$
+
+对应 (41.3) 的 $T_\eta$ 为
+
+$$
+\begin{aligned}
+T_\eta
+&=\tau[x]r_\eta+\eta\lambda\tau[x]s_\eta
+=\lambda\tau H-\eta\tau^2A,\\
+T_\eta^0&=\mathbf t_\eta\cdot\boldsymbol\sigma,
+\qquad \mathbf t_\eta=\tau(\lambda\mathbf h-\eta\tau\mathbf u).
+\end{aligned}
+\tag{42.2}
+$$
+
+第二输入的 $C$ 在这个真实调用中抵消。由 (41.4)，$F_\eta=\mathbf f_\eta\cdot\boldsymbol\sigma$，且
+
+$$
+\mathbf f_\eta\cdot\mathbf t_\eta=0,\qquad
+|\mathbf f_\eta|\le|\mathbf t_\eta|,\qquad
+\mathbf f_+-\mathbf f_-=-2\tau\mathbf h.
+\tag{42.3}
+$$
+
+最后一式取自同一 PB 的一次系数。因 $\tau\ne0$，定义普通实向量 $\mathbf m=(\mathbf f_++\mathbf f_-)/(2\tau)$。于是 $\mathbf f_+/\tau=\mathbf m-\mathbf h$、$\mathbf f_-/\tau=\mathbf m+\mathbf h$。两条正交关系相减、两条长度平方界相加，分别给
+
+$$
+\begin{gathered}
+\tau\,\mathbf m\cdot\mathbf u=-\lambda|\mathbf h|^2,\\
+|\mathbf m|^2+(1-\lambda^2)|\mathbf h|^2\le\tau^2|\mathbf u|^2.
+\end{gathered}
+\tag{42.4}
+$$
+
+具体地，正交式是 $(\mathbf m-\mathbf h)\cdot(\lambda\mathbf h-\tau\mathbf u)=0$ 和 $(\mathbf m+\mathbf h)\cdot(\lambda\mathbf h+\tau\mathbf u)=0$。$|\lambda|>1$ 时，(42.4) 的第二式单独不能控制 $\mathbf h$；必须同时使用第一式。
+
+令 $z=|\mathbf h|^2$、$w=\tau^2|\mathbf u|^2$。普通 Cauchy–Schwarz 与 (42.4) 给
+
+$$
+\lambda^2z^2\le w|\mathbf m|^2
+\le w\bigl((\lambda^2-1)z+w\bigr),
+\qquad (z-w)(\lambda^2z+w)\le0.
+\tag{42.5}
+$$
+
+若 $\lambda=0$，(42.4) 已直接给 $z\le w$。若 $\lambda\ne0$ 而 $z>w$，则 $z>0$，(42.5) 的两个因子都严格为正，矛盾。所以总有 $z\le w$，即 (41.2)。这也涵盖 $w=0$ 和负 $\tau$。唯一除法是除以非零实常数 $\tau$；没有除以变量 $x$，没有把任何形式商送入 $D$。定理 41.2 得证。∎
+

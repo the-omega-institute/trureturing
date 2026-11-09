@@ -1,0 +1,58 @@
+**定义 20.1（完整原候选、固定单位轴与内部系数）。** 完整采用本卷 15.1 的同一原资料 $(E,C,u,N,\mathcal P,S,D)$、全部 A1–A3、准确锥、全部原 P2 和完整原 PB。具体保留全部原有向 Hermitian 二表，相加三表及其排列的实部半正定与指定相加差的零二次值，$S(u,u)=u$，以及同一固定有理 $0<\theta\le1$ 的小效果窗平方收缩。$S=\circ$ 是已取得的原 Jordan 乘法；$E$ 仅在自身含单位实 JB 完成 $X$ 中范数稠密，可以不完备。沿已付的忠实、含单位、等距、保锥并反映锥的 JC 包含识别元素，记
+
+$$
+E\subset X\subset A_{\rm sa},\qquad A=C^*(X),\qquad
+C=E\cap X_+=E\cap A_+.
+\tag{20.1}
+$$
+
+不要求 $X=A_{\rm sa}$ 或 $E$ 在整个 $A_{\rm sa}$ 中稠密。环境乘法仅用于读取，尚未认同于全原域待恢复的 $\circ-\mathrm iD$。原正实评价分离 $E$ 并准确决定原锥，每个原质量 $m_\alpha=\alpha(u)$ 仍允许为零、不等或次归一。P2 的准确行列式界仍是
+
+$$
+|\alpha(D(a,b))|^2
+\le\alpha(a^2)\alpha(b^2)-\alpha(a\circ b)^2
+\qquad(a,b\in E,\ \alpha\in\mathcal P),
+\tag{20.2}
+$$
+
+不把左端改成 $\alpha(D(a,b)^2)$。全部原三元组的 PB 仍取 (15.3)：$\nu=D(a,b)-a\circ c$、$\omega=a\circ b+D(a,c)$，两份完整外层旧值之差为 $-2b\circ\nu-2c\circ\omega$。全部实际来源与七项消费者完整保留定义 18.2 及下文 24.1 的合同。
+
+固定真正原 $h\in E$、$h^2=u$，定义
+
+$$
+V_h=\{v\in E:h\circ v=0\},\qquad Jv=D(h,v)\quad(v\in V_h).
+\tag{20.3}
+$$
+
+这里的 $J$ 是同一旧总映射的固定行，不是另定义的线性替代。准确复用[中央响应平方卷](AURIC_CENTRAL_RESPONSE_SQUARE_AND_RADIAL_CONSISTENCY.md) 19.1、20.1、35.1 及其 (46.3)：对每个原 $v\in V_h$，置 $j=Jv$，则
+
+$$
+\begin{gathered}
+j\in V_h,\qquad Jj=-v,\qquad j^2=v^2,\qquad v\circ j=0,\\
+J(\alpha v+\beta j)=\alpha j-\beta v,\qquad
+D(th,z)=tJz\quad(z\in V_h),
+\end{gathered}
+\tag{20.4}
+$$
+
+其中 $\alpha,\beta,t$ 为任意实数。前一条加法只在一个输入及其自身响应的平面上使用。还直接采用[谱混合响应卷引理 5.1](AURIC_SPECTRAL_MIXED_RESPONSES_AND_DIRECT_WINDOW_BOUNDARIES.md)：对任意原 $b,c\in V_h$ 和实角 $\varphi$，$\mathcal R_\varphi b=\cos\varphi\,b+\sin\varphi\,Jb$ 满足
+
+$$
+D(\mathcal R_\varphi b,\mathcal R_\varphi c)=D(b,c).
+\tag{20.5}
+$$
+
+这条同步关系不要求两输入共享平方窗口。以下两次特定同步的 PB 演员将完整列出，不重证一般同步定理。
+
+对所选 $v$ 记
+
+$$
+r=v^2=j^2,\qquad
+\mathbb R[r]=\{p(r):p\in\mathbb R[T]\},\qquad r^0=u.
+\tag{20.6}
+$$
+
+这是原单生成交换结合实代数，幂及求值均取已知 Jordan 运算。在环境中 $hv=-vh$、$hj=-jh$、$vj=-jv$，所以 $r$ 与 $h,v,j$ 交换。于是 $c=p(r)$ 与这三个固定元素交换，且 $c\circ v=cv$、$c\circ j=cj$ 都是原横向元素。这里只得固定生成结构内的交换性，不要求 $r$ 或 $c$ 属于整个 $X$ 或 $A$ 的中心。
+
+不另加 $D$ 的全域可加、输入齐次、连续、可测、协变、一般单位或中央平移、NN、Jacobi、原 R、商下降或完成延拓；不加任意有限窗口、小生成代数、内部系数或线性张成的响应闭合。原根、原逆和原谱投影均非前件。$X=0$ 或 $v=0$ 的全部下述公式按原零行解释，不选态、不作归一化。
+
