@@ -1,0 +1,6 @@
+**定理 33.3（从纯化到谱、纠缠与 steering）。** 纯化闭包候选的几何后果是：
+
+1. $\rho_A$ 的非零谱就是任一最小纯化的 Schmidt 权重；$\operatorname{rank}\rho_A=1$ 当且仅当纯化不纠缠；
+2. 在 Schmidt 基上测量 $B$ 的投影 $|i\rangle\langle i|$，以概率 $\lambda_i$ 将 $A$ 条件化为 $|i\rangle_A$，并满足 $\sum_i\lambda_i|i\rangle\langle i|=\rho_A$；
+3. 通过改变 $B$ 上的测量框架，可得到 $\rho_A$ 的其他凸分解。这是有限维 HJW steering 结论，来自同一纯化的辅助酉自由度。
+
