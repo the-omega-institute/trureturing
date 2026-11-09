@@ -14,7 +14,7 @@
 
 **卷号约定。** [谱混合主卷（SM）](AURIC_SPECTRAL_MIXED_RESPONSES_AND_DIRECT_WINDOW_BOUNDARIES.md)为《谱混合响应与直接窗口的边界》，1–87属于该主卷；88–114属于本续卷。`SM27.1`、`SM55`、`SM79.3`等只指主卷的对应声明、章节或公式；区间两端的 `SM` 均保留此义。未加卷名的88–114章号、声明号及公式标号，以及正文中的“本卷”，均指本续卷；各卷同号声明不相互替代。
 
-**来源简称。** “中央响应卷”或“中央卷”指[《中央响应平方与径向一致》](AURIC_CENTRAL_RESPONSE_SQUARE_AND_RADIAL_CONSISTENCY.md)；“中央续卷”指[《中央响应平方与径向一致续卷》](AURIC_CENTRAL_RESPONSE_SQUARE_AND_RADIAL_CONSISTENCY_CONTINUATION.md)；“运输续卷”或“原PB运输续卷”指[《原多项式PB运输与纤维边界续卷》](AURIC_ORIGINAL_POLYNOMIAL_PB_TRANSPORT_AND_FIBER_BOUNDARIES_CONTINUATION.md)；“三角续卷”或“配平三角续卷”指[《配平三角的共同取向与秩一响应续卷》](AURIC_PB_TRIANGLE_ORIENTATION_AND_RANK_ONE_RESPONSE_CONTINUATION.md)；“原多项式零响应卷”指[《原多项式零响应与Cayley域边界》](AURIC_ORIGINAL_POLYNOMIAL_ZERO_RESPONSES_AND_CAYLEY_DOMAIN_BOUNDARIES.md)。XV、C139及C128三标签正性卷沿用各节明确给出的来源，不与本卷同号条目混用。
+**来源简称。** “中央响应卷”或“中央卷”指[《中央响应平方与径向一致》](AURIC_CENTRAL_RESPONSE_SQUARE_AND_RADIAL_CONSISTENCY.md)；“中央续卷”指[《中央响应平方与径向一致续卷》](AURIC_CENTRAL_RESPONSE_SQUARE_AND_RADIAL_CONSISTENCY_CONTINUATION.md)；“运输续卷”或“原PB运输续卷”指[《AURIC 原多项式 PB 输运与纤维边界续卷》](AURIC_ORIGINAL_POLYNOMIAL_PB_TRANSPORT_AND_FIBER_BOUNDARIES_CONTINUATION.md)；“三角续卷”或“配平三角续卷”指[《配平三角的共同取向与秩一响应续卷》](AURIC_PB_TRIANGLE_ORIENTATION_AND_RANK_ONE_RESPONSE_CONTINUATION.md)；“原多项式零响应卷”指[《AURIC：原多项式零响应与 Cayley 原域边界》](AURIC_ORIGINAL_POLYNOMIAL_ZERO_RESPONSES_AND_CAYLEY_DOMAIN_BOUNDARIES.md)。“XV”指[根原则与相干重构第XV续卷](AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_XV.md)；“C139”指[有限返回校准与负载稳定性续卷](AURIC_C139_FINITE_RETURN_CALIBRATION_AND_LOAD_STABILITY_CONTINUATION.md)；“C128三标签正性卷”指[三标签正性与原关系刚性卷](AURIC_C128_THREE_LABEL_POSITIVITY_AND_ORIGINAL_RELATION_RIGIDITY.md)。这些卷的条号不与本卷同号条目混用。
 
 **对象约定。** $E,C,u,N,\mathcal P,S,D$ 始终沿各节准确前件指同一原资料；完整原域、有限商与数学表示分别按其声明使用。辅助谱投影、迹、矩阵坐标及酉元不自动成为实际准备、原过程或物理控制。全部原根、零／不等／次归一质量、七项同源条件及各节所列边界随其原量词保留。
 
@@ -723,7 +723,7 @@ Tq_i=2R\epsilon a_iq_i,\quad Tq_j=2R\epsilon a_jq_j.
 \tag{100.5}
 $$
 
-不要求 $[s,c]=0$，也不要求 $[eq_ie,c]=0$。中央续卷182.2给实际旧值 $D(H,e)=sj$ 及同一 $iHe(sj)=Q$；如SM56中所述，可在182.1以背景 $s$、$\lambda=0,\nu=1,z_0=0$ 支付该框架。中央163.1随后对任意原 $y$ 给
+不要求 $[s,c]=0$，也不要求 $[eq_ie,c]=0$。中央续卷182.2给实际旧值 $D(H,e)=sj$ 及同一 $iHe(sj)=Q$；如SM56中所述，可在182.1以背景 $s$、$\lambda=0,\nu=1,z_0=0$ 支付该框架。中央续卷163.1随后对任意原 $y$ 给
 
 $$
 P_H^-D(T,y)=BiQH P_H^-y,\qquad P_H^-y=(y-HyH)/2.
@@ -1029,7 +1029,7 @@ $$
 
 同一native的全词 $K/J/q$、parent/ready、具名 $J,S,U,D_{\rm network},C,G,M_j,N_j,AS$、原R2与mode网络、参考及实际相关联合保留；$D_{\rm network}$ 不是当前响应 $D$。共同根、mark、C12/A12/BI12、处处预定有限强度、每个P9的独立 $W_e$、AS/EC、菜单外OB及真实忠实2D到3D全质量入口保持。两份独立九叶抽签 $(6,2,0)/9$、$(4,4,0)/9$ 的第九叶空程序、十六拒绝叶和相干 $I_3/3$ 返回仍为原事件；相干返回不是三个经典结果。全部原完整菜单、固定支持全质量、所有已量化中间切口、原 $q$ 零集、AC方向及具名程序身份继续绑定。
 
-**定义 104.3（七项条件后果与其精确入口）。** SM61.1及96.3所完整引用的中央186.1–186.7、194.2、199.2、运输122.1、XV和C139108.1–108.2全部来源合同逐项保留。各项推导使用同一原对象和已经取得的相应桥；本节的新支付只有98.3。
+**定义 104.3（七项条件后果与其精确入口）。** SM61.1及96.3所完整引用的中央续卷186.1–186.7、194.2、199.2、运输122.1、XV和C139108.1–108.2全部来源合同逐项保留。各项推导使用同一原对象和已经取得的相应桥；本节的新支付只有98.3。
 
 1. **复Hilbert、可观测量和叠加。** 当同一旧全域乘法 $\star=\circ-iD$、全部有限旧复Gram、准确锥／单位／范数、所需完成运输及忠实有界表示均已取得时，消费既有复C*／Hilbert表示，原自伴标签成为可观测量。复线性空间给数学叠加；物理可取得的相干准备仍须全词 $K/J/q$、跨评价配对、parent/ready及合法同源控制。98.3不能把单行兼容升级成全 $\star$ 结合或全 $B(H)$ 可取得性；谱向量、商向量及完成新增元不生成准备或原事件。
 2. **原态、效果、质量和Born。** 原正评价在准确效果区间上给未归一正权；实际完整菜单和接受归属、共同根／抽签／mark、C12/A12/BI12、P9及独立 $W_e$、每个中间切口和固定支持的全质量齐备后，只对 $m_\ell>0$ 写 $p_\ell(f)=\ell(f)/m_\ell$。在合格有限全矩阵物理表示，或另有完整正规／指定前对偶接口时，正泛函的既有表示给 $\ell(f)=\operatorname{Tr}(\rho_\ell\pi(f))$、$\operatorname{Tr}\rho_\ell=m_\ell$；零质量不除。中心权、经典混合、经典不等维块及静默块保持。101的中心迹不是Born态，全部数学压缩不供应实际菜单和准备。
