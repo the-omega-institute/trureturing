@@ -1,0 +1,14 @@
+**定义 33.1（纯化闭包候选）。** 对每个有限维系统 $A$ 的正比较状态 $\rho_A\succeq0$、$\operatorname{tr}\rho_A=1$，要求存在辅助系统 $B$ 和单位纯比较 $\Psi_{AB}$，使
+
+$$
+\rho_A=\operatorname{tr}_B|\Psi_{AB}\rangle\langle\Psi_{AB}|.
+$$
+
+在最小辅助维数 $\dim B=\operatorname{rank}\rho_A$ 下，要求同一 $\rho_A$ 的任意两种纯化只相差辅助系统上的酉比较保持：
+
+$$
+|\Phi_{AB}\rangle=(I_A\otimes U_B)|\Psi_{AB}\rangle.
+$$
+
+更大辅助空间中的两种纯化则只要求由辅助等距映射相连。
+
