@@ -356,7 +356,10 @@ internal sealed class ChenLinFlipLimitDocument : IScribeDocumentDefinition
                 + "of a limit for the source maximum, for arbitrary sign placements and every "
                 + "finite nonempty loopless tournament. The argument proves no prescribed limit "
                 + "value and uses neither a bounded host size nor a subsequence restriction.",
-                DescribeRole.Theorem),
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("chen-lin-2026-question-6-1-flip-threshold-limit"),
+                    ResolutionKind.Proved)),
             Node("full-convergence", "FullConvergence", "Convergence over all positive lengths",
                 Iff(V("FullConvergence"), Some("L", Real,
                     All("e", Real, Imp(Lt(N(0), V("e")), Some("K", Nat,
@@ -449,9 +452,10 @@ internal sealed class ChenLinFlipLimitDocument : IScribeDocumentDefinition
                 + "does not determine a numerical value of L.")))));
 
     private static DocumentBlock.Describe Node(string id, string name, string title, Formula formula,
-        string text, DescribeRole role) => Describe.Lean(DescribeId.Create(id),
+        string text, DescribeRole role, OpenProblemResolutionClaim? resolution = null) =>
+        Describe.Lean(DescribeId.Create(id),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(Disp(formula)),
-            AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(text))), role);
+            AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(text))), role, resolution);
 
     private static Formula V(string name) => FormulaDsl.Id(name);
     private static Formula N(int n) => new Formula.Number(n);
