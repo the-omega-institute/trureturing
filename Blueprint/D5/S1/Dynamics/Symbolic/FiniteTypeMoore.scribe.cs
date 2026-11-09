@@ -85,7 +85,7 @@ internal sealed class FiniteTypeMooreDocument : IScribeDocumentDefinition
             + "All products have the displayed order. There is no countability, finite generation or commutativity hypothesis.")),
         Desc("finite-type", "IsFiniteType", "A finite family of native forbidden patterns", St(Setup, XSetup,
             Rel(FiniteType, Iff, Seq(Ex("a", I("A")),
-                Call("LetInhabited", I("A"), I("a")),
+                Seq(I("letI"), Sp, Call("Inhabited", I("A")), Colon, Eq, Call("default", I("a")), Comma),
                 Ex("B", Call("Finset", Call("Pattern", I("A"), I("G")))),
                 Rel(Call("carrier", I("X")), Eq, Call("mulForbidden", I("B")))))),
             "The padding value a is chosen existentially. Every member of B has its own arbitrary finite support and gives a forbidden word on that support. "
@@ -118,9 +118,12 @@ internal sealed class FiniteTypeMooreDocument : IScribeDocumentDefinition
         )));
 
     private static Formula MooreStatement => St(Setup, DiscreteAlphabet,
-        Imp(Call("LetTopMeasurableNeBotMaxFoelnerCountOpposite", I("G")), Seq(XSetup,
-            Imp(Call("Set.Nonempty", Call("carrier", I("X"))),
-            Imp(Seq(Ex("Delta", Call("Finset", I("G"))), Call("SI", I("X"), I("Delta"))),
-            Imp(FiniteType, Seq(TauSetup, Imp(Call("Continuous", I("tau")), Imp(Equivariance,
-                Imp(Call("Surjective", I("tau")), Preinjectivity))))))))));
+        Seq(Call("MeasurableSpace", I("G")), Colon, Eq, Call("discrete"), Comma),
+        Seq(Call("NeBot", Call("maxFoelner", Pow(I("G"), Seq(Mathrm, Grp(I("op")))),
+            Call("Measure.count", I("G")))), Sp, Rightarrow),
+        XSetup, Seq(Call("Set.Nonempty", Call("carrier", I("X"))), Sp, Rightarrow),
+        Seq(Par(Seq(Ex("Delta", Call("Finset", I("G"))), Call("SI", I("X"), I("Delta")))), Sp, Rightarrow),
+        Seq(FiniteType, Sp, Rightarrow), TauSetup,
+        Seq(Call("Continuous", I("tau")), Sp, Rightarrow), Seq(Equivariance, Sp, Rightarrow),
+        Seq(Call("Function.Surjective", I("tau")), Sp, Rightarrow), Preinjectivity);
 }
