@@ -3827,16 +3827,21 @@ $$
 \tag{74.1}
 $$
 
-这里单个椭圆曲线同源 $[\alpha]$ 的度为 $n$，乘积同源的度为 $n^2$；$Z_\alpha$ 是次数 $n^2$ 的有限 étale $K$-概形，有 $n^2$ 个几何点，但这些点不要求逐个 $K$ 有理。令 $\pi_Z:B_Z=\operatorname{Bl}_{Z_\alpha}A\to A$，$E_Z$ 为整个中心理想定义的例外除子；在代数闭包上它是全部 $n^2$ 条例外曲线之和，各重数为 $1$。定义同一极化下的系数
+这里单个椭圆曲线同源 $[\alpha]$ 的度为 $n$，乘积同源的度为 $n^2$；$Z_\alpha$ 是次数 $n^2$ 的有限 étale $K$-概形，有 $n^2$ 个几何点，但这些点不要求逐个 $K$ 有理。令 $\pi_Z:B_Z=\operatorname{Bl}_{Z_\alpha}A\to A$，$E_Z$ 为整个中心理想定义的例外除子；在代数闭包上它是全部 $n^2$ 条例外曲线之和，各重数为 $1$。对任意 ample 实数值除子类 $M\in N^1(A)_{\mathbb R}$（特别包括 ample 有理类），按该输入自身的体积定义系数：
 
 $$
+\begin{aligned}
+\beta_{Z_\alpha}(M)
+&=\frac1{\operatorname{vol}_A(M)}\int_0^\infty
+   \operatorname{vol}_{B_Z}(\pi_Z^*M-tE_Z)\,dt,\\
 \beta_{Z_\alpha}(L_H)
-=\frac1{2d}\int_0^\infty
+&=\frac1{2d}\int_0^\infty
    \operatorname{vol}_{B_Z}(\pi_Z^*L_H-tE_Z)\,dt.
+\end{aligned}
 \tag{74.2}
 $$
 
-此过滤在每个几何中心都要求至少同一个阶；其理想是 $\mathcal I_{Z_\alpha}^k$，不是把单中心系数相加后另除中心数。
+这里 $\operatorname{vol}_A(M)=M^2>0$，第二行是 $M=L_H$、$L_H^2=2d$ 的特例；体积的数值不变性使该系数只依赖 $M$ 的数值类。此过滤在每个几何中心都要求至少同一个阶；其理想是 $\mathcal I_{Z_\alpha}^k$，不是把单中心系数相加后另除中心数。
 
 **定理 74.2（grid 与单中心的精确同源接口）。** 对定义 74.1 的固定同源及全部 (71.1) 的极化，
 
@@ -3884,20 +3889,35 @@ $$
 \operatorname{vol}_{B_Z}
  (\pi_Z^*\Phi_\alpha^*L_H-tE_Z)
 &=n^2\operatorname{vol}_B(\pi^*L_H-tE_o),\\
-\operatorname{vol}_A(\Phi_\alpha^*L_H)&=n^2\operatorname{vol}_A(L_H).
+\operatorname{vol}_A(\Phi_\alpha^*L_H)&=n^2\operatorname{vol}_A(L_H)=n^2(2d).
 \end{aligned}
 \tag{74.6}
 $$
 
-积分后两个 $n^2$ 正好相消，得到 $\beta_{Z_\alpha}(\Phi_\alpha^*L_H)=\beta_H$。对固定中心，曲面体积的二次齐次性和变量替换 $t=cs$ 则给出
+将 (74.6) 及回拉输入自身的体积代入 (74.2)，得到
 
 $$
-\beta_{Z_\alpha}(cL_H)=c\,\beta_{Z_\alpha}(L_H)
-\qquad(c>0).
+\beta_{Z_\alpha}(\Phi_\alpha^*L_H)
+=\frac1{n^2(2d)}\int_0^\infty
+  n^2\operatorname{vol}_B(\pi^*L_H-tE_o)\,dt
+=\beta_H.
+$$
+
+分子积分与分母体积中的两个 $n^2$ 因子因而相消。对固定中心、任意上述 $M$ 和 $c>0$，曲面体积的二次齐次性及变量替换 $t=cs$ 给出
+
+$$
+\begin{aligned}
+\int_0^\infty\operatorname{vol}_{B_Z}(\pi_Z^*(cM)-tE_Z)\,dt
+&=c^3\int_0^\infty\operatorname{vol}_{B_Z}(\pi_Z^*M-sE_Z)\,ds,\\
+\operatorname{vol}_A(cM)&=c^2\operatorname{vol}_A(M),\\
+\beta_{Z_\alpha}(cM)
+&=\frac{c^3}{c^2}\,\beta_{Z_\alpha}(M)
+=c\,\beta_{Z_\alpha}(M).
+\end{aligned}
 \tag{74.7}
 $$
 
-由数值等价 $\Phi_\alpha^*L_H\equiv nL_H$，得到 (74.3) 的最后一式。整个计算将映射度 $n^2$、几何中心数 $n^2$、NS 伸缩 $n$ 和积分参数的伸缩分别保留；$n$ 不是再平方的极化倍数。
+取 $M=L_H$、$c=n$，由数值等价 $\Phi_\alpha^*L_H\equiv nL_H$，得到 (74.3) 的最后一式。整个计算将映射度 $n^2$、几何中心数 $n^2$、NS 伸缩 $n$ 和积分参数的伸缩分别保留；$n$ 不是再平方的极化倍数。
 
 **证明（原点阶、坐标及下降）。** 平坦回拉给出 $\mathfrak m_o\mathcal O_A=\mathcal I_{Z_\alpha}$，并与取幂相容。在每个几何中心，étale 性使两个完成局部环在选定分支后同构，因此回拉截面的单点消失阶等于原点消失阶；对全部分支同时要求它，正是 (74.2) 的完整 grid 理想。比较过滤可按定理 72.2 的方法在相应 blowup 上进行；几何恒等式 (74.5)–(74.6) 已直接给出所需体积系数，不需将不同中心的最优截面拼成一个截面。
 
