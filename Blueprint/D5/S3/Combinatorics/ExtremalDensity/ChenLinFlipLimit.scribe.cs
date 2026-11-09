@@ -8,7 +8,7 @@ internal sealed class ChenLinFlipLimitDocument : IScribeDocumentDefinition
     private const string Prefix = "D5/S3/Combinatorics/ExtremalDensity/ChenLinFlipLimit.";
 
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/GraphInvariants/chenlin2026directionflips");
+        LibraryNoteRef.Create("D5/L/Combinatorics/chenlin2026directionflips");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Finite tournament path defects and convergence",
