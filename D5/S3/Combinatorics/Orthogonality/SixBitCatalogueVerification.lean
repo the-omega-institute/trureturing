@@ -3,10 +3,11 @@
    mirror-B: D5/B/S3/Combinatorics/Orthogonality/SixBitCatalogueVerification
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   utility: kind=checker; basis=terminal=gid:D5/S3/Combinatorics/Orthogonality/SixBitCatalogueVerification.chromatic_number_six; instance=D5/S3/Combinatorics/Orthogonality/SixBitCatalogueVerification.catalogue_proper
+   utility: kind=checker; basis=terminal=gid:D5/S3/Combinatorics/Orthogonality/SixBitCatalogueVerification.actual_chromatic_number_six; instance=D5/S3/Combinatorics/Orthogonality/SixBitCatalogueVerification.catalogue_proper
    digest: Supplied exact six-bit orthogonality catalogue and complete proof transfer. -/
 
 import D5.S3.Combinatorics.Orthogonality.SixBitCatalogueData
+import D5.S3.Combinatorics.Orthogonality.SixBitSubmoduleBridge
 
 set_option maxRecDepth 100000
 set_option maxHeartbeats 0
@@ -51,8 +52,18 @@ theorem chromatic_number_six : graph.chromaticNumber = 15 := by
   exact SimpleGraph.le_chromaticNumber_of_pairwise_adj (by simp) cliqueVertex
     (fun i j h => clique_adjacent i j h)
 
+/-- The complete supplied certificate reaches every actual nonzero binary
+Submodule, including the whole space. The mask theorem is used through the
+proved graph isomorphism, rather than identified with the target by name. -/
+theorem actual_chromatic_number_six :
+    (D5.S3.Combinatorics.Orthogonality.NikandishClique.orthogonalityGraph 6).chromaticNumber = 15 := by
+  exact (SimpleGraph.chromaticNumber_congr
+    D5.S3.Combinatorics.Orthogonality.SixBitSubmoduleBridge.graphIso).symm.trans
+      chromatic_number_six
+
 #print axioms Catalogue.complete
 #print axioms Catalogue.colorable
 #print axioms chromatic_number_six
+#print axioms actual_chromatic_number_six
 
 end BinaryOrthogonality

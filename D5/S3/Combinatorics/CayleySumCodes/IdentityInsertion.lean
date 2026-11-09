@@ -16,6 +16,21 @@ open D5.S3.Combinatorics.CayleySumCodes.TotalPerfectCriterion
 
 variable {G : Type*} [Group G]
 
+private theorem square_singleton_iff (H : Subgroup G) :
+    squares H = {1} ↔ ∀ h ∈ H, h * h = 1 := by
+  constructor
+  · intro he h hh
+    have hm : h * h ∈ squares H := ⟨h, hh, rfl⟩
+    rw [he] at hm
+    exact Set.mem_singleton_iff.mp hm
+  · intro hs
+    ext z
+    constructor
+    · rintro ⟨h, hh, rfl⟩
+      exact Set.mem_singleton_iff.mpr (hs h hh)
+    · intro hz
+      exact ⟨1, H.one_mem, by simpa using (Set.mem_singleton_iff.mp hz).symm⟩
+
 private theorem normal_insert_one (Y : Set G) (hY : NormalSubset Y) :
     NormalSubset (insert 1 Y) := by
   intro a x hx
@@ -34,7 +49,7 @@ theorem graph_eq_iff [Finite G] (Y : Set G) (hY : NormalSubset Y) (h1 : 1 ∉ Y)
   · intro he g
     by_cases hg : g = g⁻¹
     · calc
-        g * g = g * g⁻¹ := by rw [hg]
+        g * g = g * g⁻¹ := congrArg (fun x => g * x) hg
         _ = 1 := by simp
     · have hn : (sumGraph (insert 1 Y) (normal_insert_one Y hY)).Adj g g⁻¹ :=
         ⟨hg, by simp⟩
@@ -63,10 +78,7 @@ theorem result [Finite G] (H : Subgroup G) (Y : Set G) (hY : NormalSubset Y)
     (hH : squares H = {1}) :
     IsTotalPerfectCode (sumGraph (insert 1 Y) (normal_insert_one Y hY)) H ↔
       IsTotalPerfectCode (sumGraph Y hY) H := by
-  have hs (h : G) (hh : h ∈ H) : h * h = 1 := by
-    have hm : h * h ∈ squares H := ⟨h, hh, rfl⟩
-    rw [hH] at hm
-    exact Set.mem_singleton_iff.mp hm
+  have hs := (square_singleton_iff H).mp hH
   have edges (g h : G) (hh : h ∈ H) :
       (sumGraph (insert 1 Y) (normal_insert_one Y hY)).Adj g h ↔
         (sumGraph Y hY).Adj g h := by

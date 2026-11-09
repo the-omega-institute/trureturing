@@ -1,10 +1,10 @@
 /- GID: D5/S3/Combinatorics/CayleySumCodes/QuaternionDihedralCounterexamples
-   generality: S
+   generality: I
    mirror-B: D5/B/S3/Combinatorics/CayleySumCodes/QuaternionDihedralCounterexamples
-   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   mirror-E: none(waiver:kernel-checked-refutation)
    anchors: []
-   utility: none
-   digest: The actual Q8, D8 and proper Q8-times-C3 missing-case counterexamples. -/
+   utility: kind=certified-instance; basis=refutes=gid:D5/S3/Combinatorics/CayleySumCodes/QuaternionDihedralCounterexamples.claim; result=D5/S3/Combinatorics/CayleySumCodes/QuaternionDihedralCounterexamples.result; claim=D5/S3/Combinatorics/CayleySumCodes/QuaternionDihedralCounterexamples.claim
+   digest: The actual Q8 matching refutes singleton-nonsquare total-code necessity. -/
 
 import D5.S3.Combinatorics.CayleySumCodes.TotalPerfectCriterion
 import Mathlib.GroupTheory.SpecificGroups.Quaternion
@@ -14,44 +14,24 @@ import Mathlib.Algebra.Group.Subgroup.Prod
 
 set_option autoImplicit false
 
+
 namespace D5.S3.Combinatorics.CayleySumCodes.QuaternionDihedralCounterexamples
 
 open D5.S3.Combinatorics.CayleySumCodes.TotalPerfectCriterion
 
 abbrev Q8 := QuaternionGroup 2
-abbrev D8 := DihedralGroup 4
-
-/-- The central involution -1 in the actual quaternion group. -/
 def q8Central : Q8 := QuaternionGroup.a 2
-
-/-- The half-turn a squared in the actual dihedral group of order eight. -/
-def d8Central : D8 := DihedralGroup.r 2
-
 def q8Connection : Set Q8 := {1, q8Central}
-def d8Connection : Set D8 := {1, d8Central}
-
 private theorem q8_normal : NormalSubset q8Connection := by decide
-private theorem d8_normal : NormalSubset d8Connection := by decide
 
-/-- Q8 has square set and center exactly {1,-1}, and its graph with this
-connection set is a perfect matching on all eight group vertices. -/
-theorem quaternion_result :
+private theorem quaternion_result :
     squares (⊤ : Subgroup Q8) = q8Connection ∧
     (Subgroup.center Q8 : Set Q8) = q8Connection ∧
     IsTotalPerfectCode (sumGraph q8Connection q8_normal) (⊤ : Subgroup Q8) := by
   refine ⟨Set.ext (by decide), Set.ext (by decide), ?_⟩
   decide
 
-/-- The same missing-case phenomenon in D8, with center and square set
-{1,a squared} and the actual sum graph a perfect matching. -/
-theorem dihedral_result :
-    squares (⊤ : Subgroup D8) = d8Connection ∧
-    (Subgroup.center D8 : Set D8) = d8Connection ∧
-    IsTotalPerfectCode (sumGraph d8Connection d8_normal) (⊤ : Subgroup D8) := by
-  refine ⟨Set.ext (by decide), Set.ext (by decide), ?_⟩
-  decide
-
-private theorem whole_transversal_squares {G : Type*} [Group G]
+theorem whole_transversal_squares {G : Type*} [Group G]
     (hz : (Subgroup.center G : Set G) ⊆ squares (⊤ : Subgroup G))
     (T : Set G) (hn : NormalSubset T)
     (hc : Subgroup.IsComplement T (⊤ : Set G)) :
@@ -69,48 +49,27 @@ private theorem whole_transversal_squares {G : Type*} [Group G]
   rw [he] at hy
   exact (Set.mem_singleton_iff.mp hy).symm ▸ hz hzC
 
-/-- Every normal transversal of Q8 in itself consists of squares. Thus the
-old singleton-nonsquare necessity fails for this actual matching graph. -/
-theorem quaternion_old_necessity_fails (T : Set Q8) (hn : NormalSubset T)
+private theorem quaternion_old_necessity_fails (T : Set Q8) (hn : NormalSubset T)
     (hc : Subgroup.IsComplement T (⊤ : Set Q8)) :
     T ⊆ squares (⊤ : Subgroup Q8) := by
   apply whole_transversal_squares ?_ T hn hc
   rw [quaternion_result.1, quaternion_result.2.1]
 
-/-- D8 also has no normal-transversal nonsquare witness in itself. -/
-theorem dihedral_old_necessity_fails (T : Set D8) (hn : NormalSubset T)
-    (hc : Subgroup.IsComplement T (⊤ : Set D8)) :
-    T ⊆ squares (⊤ : Subgroup D8) := by
-  apply whole_transversal_squares ?_ T hn hc
-  rw [dihedral_result.1, dihedral_result.2.1]
+/-- The singleton-nonsquare necessity of Z Lemma4.1/A Lemma2.3,
+restricted to the complete actual Q8 group. -/
+def claim : Prop :=
+  ∀ (K : Subgroup Q8) (Y : Set Q8) (hn : NormalSubset Y),
+    IsTotalPerfectCode (sumGraph Y hn) K →
+      ∃ T : Set Q8, NormalSubset T ∧ Subgroup.IsComplement T (K : Set Q8) ∧
+        ∃ z ∈ T, z ∈ K ∧ z ∉ squares K
 
-abbrev C3 := Multiplicative (ZMod 3)
-abbrev ProductGroup := Q8 × C3
+/-- The source's actual matching refutes the old necessary condition. -/
+theorem result : Not claim := by
+  intro hc
+  obtain ⟨T, hn, ht, z, hzT, _, hzs⟩ :=
+    hc ⊤ q8Connection q8_normal quaternion_result.2.2
+  exact hzs (quaternion_old_necessity_fails T hn ht hzT)
 
-/-- The genuine proper normal subgroup Q8 times the identity in C3. -/
-def productSubgroup : Subgroup ProductGroup := (⊤ : Subgroup Q8).prod (⊥ : Subgroup C3)
-
-def productConnection : Set ProductGroup :=
-  {(1, 1), (q8Central, 1), (1, Multiplicative.ofAdd 1), (1, Multiplicative.ofAdd 2)}
-
-private theorem product_normal : NormalSubset productConnection := by decide
-
-/-- The third source counterexample is a proper normal subgroup, not only
-the degenerate H=G case: it has the required total perfect-code graph. -/
-theorem product_result : productSubgroup.Normal ∧ productSubgroup ≠ ⊤ ∧
-    IsTotalPerfectCode (sumGraph productConnection product_normal) productSubgroup := by
-  refine ⟨by infer_instance, ?_, ?_⟩
-  · intro he
-    have hn : ((1, Multiplicative.ofAdd 1) : ProductGroup) ∉ productSubgroup := by decide
-    apply hn
-    rw [he]
-    trivial
-  · decide
-
-#print axioms quaternion_result
-#print axioms dihedral_result
-#print axioms quaternion_old_necessity_fails
-#print axioms dihedral_old_necessity_fails
-#print axioms product_result
+#print axioms result
 
 end D5.S3.Combinatorics.CayleySumCodes.QuaternionDihedralCounterexamples

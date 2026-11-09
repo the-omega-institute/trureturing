@@ -37,6 +37,13 @@ internal sealed class SixBitCatalogueVerificationDocument : IScribeDocumentDefin
                 H("full source chromatic number"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(LibraryNoteRef.Create(
                     "D5/L/QuadraticForms/binarysubspace2026complete")),
-                Blocks(Paragraph(Text("The complete positive certificate and the fifteen-clique give chromatic number fifteen for the all-space graph. The historical source proof had four native-evaluation axioms. The current candidate requests kernel reduction for those exact obligations; its accepted axiom closure and normal admission require current successful evidence. This theorem does not supply the separate line-graph result twelve."))), DescribeRole.Theorem)),
-        []));
+                Blocks(Paragraph(Text("The complete positive certificate and the fifteen-clique give chromatic number fifteen for the all-space graph. The historical source proof had four native-evaluation axioms. The current candidate requests kernel reduction for those exact obligations; its accepted axiom closure and normal admission require current successful evidence. This theorem does not supply the separate line-graph result twelve."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("actual-full-submodule-chromatic-number"),
+                DeclarationHandle.Create("D5/S3/Combinatorics/Orthogonality/SixBitCatalogueVerification.actual_chromatic_number_six"),
+                H("Every actual nonzero Submodule"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create(
+                    "D5/L/QuadraticForms/binarysubspace2026complete")),
+                Blocks(Paragraph(Text("The complete proved graph isomorphism transfers the source certificate to the graph on every actual nonzero Submodule of Fin6->ZMod2, including the whole space. Both the fifteen-color upper bound and the actual fifteen-clique are consumed. This target theorem remains pending until the exact original certificate obligations compile without extra axioms and the current normal checks succeed."))), DescribeRole.Theorem)),
+        [DocumentEdge.Dependency.Create(GidRef.Create(
+            "D5/S3/Combinatorics/Orthogonality/SixBitSubmoduleBridge"))]));
 }

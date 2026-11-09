@@ -296,8 +296,10 @@ theorem equivalence :
     apply result
     intro H
     obtain ⟨Y, hn, hp | ht⟩ := hc H
-    · exact PerfectCodeTransversal.to_nlt H Y hn hp
-    · exact NormalTransversal.of_total_code H Y hn ht
+    · obtain ⟨T, hnT, _, hT⟩ :=
+        (PerfectCodeTransversal.exists_iff H).mp ⟨Y, hn, hp⟩
+      exact ⟨T, hnT, hT⟩
+    · exact NormalTransversal.result H Y hn ht
 
 #print axioms result
 #print axioms equivalence

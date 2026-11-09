@@ -28,7 +28,7 @@ def vectorGraph (n : ℕ) : SimpleGraph (VectorVertex n) where
   loopless := ⟨fun _ h => h.1 rfl⟩
 
 def lineGraph (n : ℕ) : SimpleGraph (LineVertex n) :=
-  (orthogonalityGraph n).induce {U | finrank (ZMod 2) U.1 = 1}
+  (orthogonalityGraph n).induce {U : Vertex n | finrank (ZMod 2) U.1 = 1}
 
 def spanVertex (n : ℕ) (v : VectorVertex n) : LineVertex n :=
   ⟨⟨(ZMod 2) ∙ v.1, by simpa using v.2⟩, finrank_span_singleton v.2⟩
@@ -41,7 +41,8 @@ private theorem span_injective (n : ℕ) : Function.Injective (spanVertex n) := 
     rw [← hs]
     exact Submodule.mem_span_singleton_self _
   obtain ⟨c, hc⟩ := Submodule.mem_span_singleton.mp hv
-  have hcases : c = 0 ∨ c = 1 := by fin_cases c <;> simp
+  have hcases : c = 0 ∨ c = 1 := by
+    fin_cases c <;> first | exact Or.inl rfl | exact Or.inr rfl
   rcases hcases with rfl | rfl
   · exact (v.2 (by simpa using hc.symm)).elim
   · exact Subtype.ext (by simpa using hc.symm)
@@ -62,9 +63,9 @@ noncomputable def graphIso (n : ℕ) : vectorGraph n ≃g lineGraph n where
   toEquiv := vertexEquiv n
   map_rel_iff' := by
     intro v w
-    change (vertexEquiv n v ≠ vertexEquiv n w ∧ _) ↔
+    change ((vertexEquiv n v).1 ≠ (vertexEquiv n w).1 ∧ _) ↔
       (v ≠ w ∧ dotProduct v.1 w.1 = 0)
-    rw [(vertexEquiv n).injective.ne_iff]
+    rw [Subtype.val_injective.ne_iff, (vertexEquiv n).injective.ne_iff]
     apply and_congr_right
     intro _
     constructor

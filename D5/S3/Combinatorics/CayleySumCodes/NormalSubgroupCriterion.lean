@@ -134,12 +134,18 @@ theorem result [Finite G] (H : Subgroup G) [H.Normal] :
           have hh := Set.ncard_le_ncard hb.2
           change Nat.card (squares H) ≤ Nat.card ↥(Y ∩ (H : Set G)) at hh
           omega
+        letI : Fintype (squares H) := Fintype.ofFinite (squares H)
         have hsub : Subsingleton (squares H) :=
-          (Nat.card_le_one_iff_subsingleton _).mp (by omega)
+          Fintype.card_le_one_iff_subsingleton.mp (by
+            rw [← Nat.card_eq_fintype_card]
+            omega)
         have hone : (1 : G) ∈ Y ∩ (H : Set G) := hb.2 (square_one H)
         have htw : Nat.card ↥(Y ∩ (H : Set G)) = 2 := hb.1
+        letI : Fintype ↥(Y ∩ (H : Set G)) := Fintype.ofFinite _
         letI : Nontrivial ↥(Y ∩ (H : Set G)) :=
-          (Nat.one_lt_card_iff_nontrivial _).mp (by rw [htw]; decide)
+          Fintype.one_lt_card_iff_nontrivial.mp (by
+            rw [← Nat.card_eq_fintype_card, htw]
+            decide)
         obtain ⟨z, hz⟩ := exists_ne (⟨1, hone⟩ : ↥(Y ∩ (H : Set G)))
         refine Or.inl ⟨z.1, hcent z.2, z.2.2, ?_⟩
         intro hzS

@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Combinatorics/Orthogonality/SixBitSubmoduleBridge
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   utility: none
+   utility: kind=checker; basis=consumer=D5/S3/Combinatorics/Orthogonality/SixBitLineTransfer.result; instance=D5/S3/Combinatorics/Orthogonality/SixBitSubmoduleBridge.bits_dot
    digest: Exact XOR/coordinate, finite-space/submodule and orthogonality graph equivalences. -/
 
 import D5.S3.Combinatorics.Orthogonality.SixBitCatalogue
@@ -58,7 +58,8 @@ def toSubmodule (U : Finset Mask) (hU : BinaryOrthogonality.IsSpace U) :
     exact ⟨BinaryOrthogonality.add x y, hU.2 x hx y hy, bits_add x y⟩
   smul_mem' := by
     intro c x hx
-    have hc : c = 0 ∨ c = 1 := by fin_cases c <;> simp
+    have hc : c = 0 ∨ c = 1 := by
+      fin_cases c <;> first | exact Or.inl rfl | exact Or.inr rfl
     rcases hc with rfl | rfl
     · simpa only [zero_smul] using (show (0 : Coordinates) ∈ bits '' (U : Set Mask) from
         ⟨0, hU.1, bits_zero⟩)
@@ -139,8 +140,9 @@ noncomputable def vertexEquiv : BinaryOrthogonality.Vertex ≃ NikandishClique.V
     apply Subtype.ext
     have he : toSubmodule U.1 U.2.1 = toSubmodule W.1 W.2.1 :=
       congrArg Subtype.val h
-    exact congrArg Subtype.val (spaceEquiv.injective
-      (show spaceEquiv ⟨U.1, U.2.1⟩ = spaceEquiv ⟨W.1, W.2.1⟩ from he))
+    have hs : (⟨U.1, U.2.1⟩ : {S : Finset Mask // BinaryOrthogonality.IsSpace S}) =
+        ⟨W.1, W.2.1⟩ := spaceEquiv.injective he
+    exact congrArg (fun S : {S : Finset Mask // BinaryOrthogonality.IsSpace S} => S.1) hs
   · intro P
     obtain ⟨U, hU⟩ := spaceEquiv.surjective P.1
     have hn : U.1 ≠ {0} := by

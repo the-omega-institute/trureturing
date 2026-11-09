@@ -119,7 +119,9 @@ theorem two_classes [Finite G] (H : Subgroup G) [H.Normal]
       exact ⟨z, (he.symm ▸ Set.mem_singleton z).1, hh⟩
     · exact ⟨1, (hb.2 ⟨1, H.one_mem, by simp⟩).1, H.one_mem⟩
   obtain ⟨z, hzY, hzH⟩ := hz
-  letI : Nontrivial Y := (Nat.one_lt_card_iff_nontrivial Y).mp hsize
+  letI : Fintype Y := Fintype.ofFinite Y
+  letI : Nontrivial Y := Fintype.one_lt_card_iff_nontrivial.mp (by
+    simpa only [Nat.card_eq_fintype_card] using hsize)
   obtain ⟨y, hy⟩ := exists_ne (⟨z, hzY⟩ : Y)
   refine ⟨z, hzY, y.1, y.2, ?_⟩
   intro hconj
