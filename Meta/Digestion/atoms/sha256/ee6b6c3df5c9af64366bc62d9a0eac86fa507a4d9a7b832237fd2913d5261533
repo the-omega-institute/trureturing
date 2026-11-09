@@ -1,0 +1,20 @@
+**定义 88.1（固定来源与同一原资料）。** 本组的 SM 指[前谱混合卷](AURIC_SPECTRAL_MIXED_RESPONSES_AND_DIRECT_WINDOW_BOUNDARIES.md)，A 指[任意维静态卷](AURIC_C128_ARBITRARY_DIMENSIONAL_STATIC_QUANTUM_RECONSTRUCTION.md)，C 指[中央续卷](AURIC_CENTRAL_RESPONSE_SQUARE_AND_RADIAL_CONSISTENCY_CONTINUATION.md)，PT 指[原 PB 运输续卷](AURIC_ORIGINAL_POLYNOMIAL_PB_TRANSPORT_AND_FIBER_BOUNDARIES_CONTINUATION.md)，W 指[单位桥](AURIC_ARBITRARY_DIMENSIONAL_SMALL_WINDOW_UNIT_BRIDGE.md)，R3 指[三标签刚性卷](AURIC_C128_THREE_LABEL_POSITIVITY_AND_ORIGINAL_RELATION_RIGIDITY.md)。SM79–87，尤其 SM79.3，专指[固定公开文本](https://github.com/the-omega-institute/trureturing/blob/2359a7fbd1e23e1d59cf864c78f13bba3aabb54f/docs/develop/theory/AURIC_SPECTRAL_MIXED_RESPONSES_AND_DIRECT_WINDOW_BOUNDARIES.md#79-完整有限-continuous-原域与中央取向候选)的完整有限 continuous 单元；它是本组明确给定的纸面前件。其余仓内引用取[固定源](https://github.com/the-omega-institute/trureturing/tree/6aee3d786c0/docs/develop/theory)。本组不重新证明有限谱窗行、SM79.3或既有量子条件消费者。
+
+保持唯一原 $\Omega/\mathrm{native}$ 及同一 $(E,C,u,N,\mathcal P,S,D)$。明确数学模型类 $\Gamma_{\mathrm{II}_\infty}$ 是任意复 type $\mathrm{II}_\infty$ von Neumann 因子 $M$，给定忠实正规半有限迹 $\tau:M_+\to[0,\infty]$，并取
+
+$$
+E=M_{\rm sa},\qquad C=M_+,\qquad u=1,\qquad
+N(a)=\|a\|,\qquad S(a,b)=a\circ b=\frac{ab+ba}{2}.
+\tag{88.1}
+$$
+
+不要求 Hilbert 空间或预对偶可分，不要求 $M$ 可数可分解或存在忠实正规状态。结合乘法、伴随、极分解、Borel 函数演算及所给迹是模型结构，不是从一般 JB 原域重新推出的结论。$\mathcal P$ 是全部原索引的正实线性评价族，分离 $E$ 并准确决定 $C$：
+
+$$
+a\in C\ \Longleftrightarrow\ (\forall\gamma\in\mathcal P)\ \gamma(a)\ge0,
+\qquad m_\gamma=\gamma(1)\ge0.
+\tag{88.2}
+$$
+
+原索引、相同限制但不同来源的评价、全部零、不等和次归一质量均保留；不把 $\tau$ 加入物理准备族或用它替换原评价。数学正泛函不是实际准备。
+

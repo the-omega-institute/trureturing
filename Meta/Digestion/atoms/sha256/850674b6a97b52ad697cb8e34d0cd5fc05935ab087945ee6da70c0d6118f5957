@@ -1,0 +1,85 @@
+## 53. 非零端值对的同一配平网络
+
+先设 $(a(0),b(0))\ne(0,0)$。用一次实际常数 SO$(2)$ 旋转，使 $\alpha(0),\beta(0)>0$；旋转保持同一旧 $D$ 和 $v\times w$，最后可以撤销。写
+
+$$
+d=D(a,b)=\delta u+z\cdot\sigma.
+$$
+
+$a,b$ 在零点附近均严格正定。52.2 与多项式恒等原理给全区间关系
+
+$$
+v\cdot z=\alpha\delta,\qquad
+w\cdot z=\beta\delta.
+\tag{53.1}
+$$
+
+若 $v\times w\equiv0$，共线像零值已经给 $D=K=0$。否则记
+
+$$
+p=v\cdot w,\quad q=|v|^2,\quad r=|w|^2,
+\quad L=qr-p^2,\quad T=qw-pv.
+\tag{53.2}
+$$
+
+有 $v\cdot T=0$、$w\cdot T=L$；足够小的正开区间上 $q,L>0$。取真实第三标签 $c=\gamma u+\tau A$，其中 $A=v\cdot\sigma$、$\gamma\in\mathbb R$、$\tau\in\mathbb R[x]$；52.1 给 $D(a,c)=0$。两份实际 PB 外层为
+
+$$
+\begin{aligned}
+P_\pm&=[\beta\pm(\delta-\alpha\gamma-\tau q)]u
++[w\pm z\mp(\gamma+\alpha\tau)v]\cdot\sigma,\\
+Q_\pm&=[\gamma\pm(\alpha\beta+p)]u
++[(\tau\pm\beta)v\pm\alpha w]\cdot\sigma.
+\end{aligned}
+\tag{53.3}
+$$
+
+记实际旧输出 $Y_\pm=D(P_\pm,Q_\pm)$。原 PB、已知 Jordan 乘法及 (53.1) 准确给
+
+$$
+Y_+-Y_-=-4\beta\delta u
++2(\tau T-\beta z-\delta w)\cdot\sigma.
+\tag{53.4}
+$$
+
+所以可以写其算术平均为 $su+m\cdot\sigma$，从而
+
+$$
+Y_\pm=(s\mp2\beta\delta)u
++[m\pm(\tau T-\beta z-\delta w)]\cdot\sigma.
+\tag{53.5}
+$$
+
+这只平均两份已经存在的输出，不展开未知 $D$。两份实组合为
+
+$$
+\begin{aligned}
+P_++\alpha Q_+
+&=[\beta(1+\alpha^2)+\delta-\tau q+\alpha p]u\\
+&\quad+[(1+\alpha^2)w+z+(\alpha\beta-\gamma)v]\cdot\sigma,\\
+P_--\alpha Q_-
+&=[\beta(1+\alpha^2)-\delta+\tau q+\alpha p]u\\
+&\quad+[(1+\alpha^2)w-z+(\alpha\beta+\gamma)v]\cdot\sigma.
+\end{aligned}
+\tag{53.6}
+$$
+
+固定目标读取点 $\xi>0$，任意预定有限实数 $t=\tau(\xi)$，取实际多项式
+
+$$
+\tau(x)=t+M(x-\xi).
+\tag{53.7}
+$$
+
+另选 $x_*\ne\xi$ 且 $q(x_*)>0$。选择一个足够大的有限实数 $M$，使 (53.6) 在 $x_*$ 的两份标量项以相反符号严格支配各自向量范数；向量项不依赖 $M$。因此每对 $P_\pm,Q_\pm$ 的实张成都在一个开邻域含定号矩阵。此处 $\alpha(x)$ 仅在每个读取点提供普通实系数。先固定 $M$，此后四份外层标签和两份旧输出都是固定原多项式。
+
+52.2 对每份实际 $Q_\pm,Y_\pm$ 给正交约束，再由固定输出多项式性延到全域。将两式相加，并用 (53.1)–(53.5)，得到
+
+$$
+\boxed{\tau(v\cdot m+\alpha L)
+=\gamma s+\delta(\alpha r-\beta p).}
+\tag{53.8}
+$$
+
+这份关系消费了另一处读取的零余量预算，不只是 PB 的代入改写。$s,m$ 仍随选定的真实第三标签而定，未比较不同标签网络的未知输出。
+
