@@ -22,6 +22,58 @@ is included in this property. -/
 def NLT (H : Subgroup G) : Prop :=
   ∃ T : Set G, NormalSubset T ∧ Subgroup.IsComplement T (H : Set G)
 
+/-- Restrict an actual normal transversal to any intermediate subgroup. The
+subgroup need not be subnormal. This is NLT inheritance, not code inheritance. -/
+theorem restrict (H M : Subgroup G) (hHM : H ≤ M) (hH : NLT H) :
+    NLT (H.subgroupOf M) := by
+  obtain ⟨T, hn, ht⟩ := hH
+  refine ⟨{m : M | m.1 ∈ T}, ?_, ?_⟩
+  · intro a x hx
+    exact hn a.1 x.1 hx
+  · apply Subgroup.isComplement_iff_existsUnique_inv_mul_mem.mpr
+    intro g
+    obtain ⟨s, hs, hu⟩ := Subgroup.isComplement_iff_existsUnique_inv_mul_mem.mp ht g.1
+    have sm : s.1 ∈ M := by
+      have hm : s.1⁻¹ * g.1 ∈ M := hHM hs
+      have he : s.1 = g.1 * (s.1⁻¹ * g.1)⁻¹ := by simp [mul_assoc]
+      rw [he]
+      exact M.mul_mem g.2 (M.inv_mem hm)
+    refine ⟨⟨⟨s.1, sm⟩, s.2⟩, hs, ?_⟩
+    intro z hz
+    apply Subtype.ext
+    apply Subtype.ext
+    exact congrArg Subtype.val (hu ⟨z.1.1, z.2⟩ hz)
+
+/-- A surjective group homomorphism carries a normal transversal to a normal
+transversal whenever its kernel lies in H. In particular this applies to
+G/N and H/N for any normal N contained in H. It does not assert quotient
+inheritance of total perfect coding. -/
+theorem map {K : Type*} [Group K] (f : G →* K) (hf : Function.Surjective f)
+    (H : Subgroup G) (hk : f.ker ≤ H) (hH : NLT H) : NLT (H.map f) := by
+  obtain ⟨T, hn, ht⟩ := hH
+  refine ⟨f '' T, ?_, ?_⟩
+  · rintro a _ ⟨x, hx, rfl⟩
+    obtain ⟨g, rfl⟩ := hf a
+    refine ⟨g * x * g⁻¹, hn g x hx, ?_⟩
+    simp only [map_mul, map_inv]
+  · apply Subgroup.isComplement_iff_existsUnique_inv_mul_mem.mpr
+    intro k
+    obtain ⟨g, rfl⟩ := hf k
+    obtain ⟨t, hh, hu⟩ := Subgroup.isComplement_iff_existsUnique_inv_mul_mem.mp ht g
+    have mem_map (x : G) : f x ∈ H.map f ↔ x ∈ H := by
+      change x ∈ (H.map f).comap f ↔ x ∈ H
+      rw [Subgroup.comap_map_eq_self hk]
+    refine ⟨⟨f t.1, ⟨t.1, t.2, rfl⟩⟩, ?_, ?_⟩
+    · simpa only [map_mul, map_inv] using (mem_map (t.1⁻¹ * g)).mpr hh
+    · rintro z hz
+      obtain ⟨u, huT, huZ⟩ := z.2
+      have hmem : u⁻¹ * g ∈ H := by
+        apply (mem_map _).mp
+        simpa only [map_mul, map_inv, huZ] using hz
+      have eqt : (⟨u, huT⟩ : T) = t := hu ⟨u, huT⟩ hmem
+      apply Subtype.ext
+      exact huZ.symm.trans (congrArg (fun x : T => f x.1) eqt)
+
 private theorem normal_without_one (Y : Set G) (hY : NormalSubset Y) :
     NormalSubset (Y \ {1}) := by
   intro a x hx
@@ -51,15 +103,22 @@ private theorem complement_of_card_one [Finite G] (H : Subgroup G) (T : Set G)
   intro z hz
   exact Subtype.ext (hu z.1 ⟨z.2, (inverse_mem z.1).mp hz⟩)
 
-/-- A total perfect subgroup code always has a normal left transversal.
-In the singleton case it is Y itself. In the two-element case it is Y with
-the identity removed, rather than an incorrect singleton-case assumption. -/
-theorem result [Finite G] (H : Subgroup G) (Y : Set G) (hY : NormalSubset Y)
-    (hc : IsTotalPerfectCode (sumGraph Y hY) H) : NLT H := by
+/-- The actual connection set supplies a transversal exactly according to
+its identity membership: Y in case (a), and Y without 1 in case (b). -/
+theorem transversal_cases [Finite G] (H : Subgroup G) (Y : Set G) (hY : NormalSubset Y)
+    (hc : IsTotalPerfectCode (sumGraph Y hY) H) :
+    ((1 : G) ∉ Y ∧ Subgroup.IsComplement Y (H : Set G)) ∨
+      ((1 : G) ∈ Y ∧ Subgroup.IsComplement (Y \ {1}) (H : Set G)) := by
   classical
   let : Fintype G := Fintype.ofFinite G
   obtain ⟨ho, ha | hb⟩ := (TotalPerfectCriterion.result H Y hY).mp hc
-  · refine ⟨Y, hY, complement_of_card_one H Y ?_⟩
+  · refine Or.inl ⟨?_, complement_of_card_one H Y ?_⟩
+    · intro h1
+      obtain ⟨z, _, hzs, hz⟩ := ha
+      have hm : (1 : G) ∈ Y ∩ (H : Set G) := ⟨h1, H.one_mem⟩
+      rw [hz] at hm
+      have he : (1 : G) = z := Set.mem_singleton_iff.mp hm
+      exact hzs ⟨1, H.one_mem, by simpa using he⟩
     intro g
     by_cases hg : g ∈ H
     · obtain ⟨z, hzH, _, hz⟩ := ha
@@ -73,9 +132,9 @@ theorem result [Finite G] (H : Subgroup G) (Y : Set G) (hY : NormalSubset Y)
         congrArg (fun S : Set G => ↥S) he]
       simp
     · exact ho g hg
-  · refine ⟨Y \ {1}, normal_without_one Y hY, complement_of_card_one H (Y \ {1}) ?_⟩
+  · have h1 : (1 : G) ∈ Y ∧ (1 : G) ∈ H := hb.2 ⟨1, H.one_mem, by simp⟩
+    refine Or.inr ⟨h1.1, complement_of_card_one H (Y \ {1}) ?_⟩
     intro g
-    have h1 : (1 : G) ∈ Y ∧ (1 : G) ∈ H := hb.2 ⟨1, H.one_mem, by simp⟩
     by_cases hg : g ∈ H
     · have he : (Finset.univ.filter (fun y : G => y ∈ Y ∧ y ∈ H)).card = 2 := by
         simpa only [Nat.card_eq_fintype_card, Fintype.card_subtype] using hb.1
@@ -106,6 +165,45 @@ theorem result [Finite G] (H : Subgroup G) (Y : Set G) (hY : NormalSubset Y)
       rw [he]
       exact ho g hg
 
+/-- A total perfect subgroup code always has a normal left transversal.
+In the two-element branch the identity must be removed from Y. -/
+theorem result [Finite G] (H : Subgroup G) (Y : Set G) (hY : NormalSubset Y)
+    (hc : IsTotalPerfectCode (sumGraph Y hY) H) : NLT H := by
+  rcases transversal_cases H Y hY hc with ha | hb
+  · exact ⟨Y, hY, ha.2⟩
+  · exact ⟨Y \ {1}, normal_without_one Y hY, hb.2⟩
+
+/-- The total connection-set size is the subgroup index in case (a) and
+one more than that index in case (b). The extra identity is counted, even
+though self-neighbors are excluded by the graph. -/
+theorem cardinal [Finite G] (H : Subgroup G) (Y : Set G) (hY : NormalSubset Y)
+    (hc : IsTotalPerfectCode (sumGraph Y hY) H) :
+    Nat.card Y = H.index + if (1 : G) ∈ Y then 1 else 0 := by
+  classical
+  rcases transversal_cases H Y hY hc with ha | hb
+  · simpa only [if_neg ha.1, Nat.add_zero] using ha.2.card_left
+  · rw [if_pos hb.1]
+    have hi := hb.2.card_left
+    let : Fintype G := Fintype.ofFinite G
+    have hm : (1 : G) ∈ Finset.univ.filter (fun y : G => y ∈ Y) := by simp [hb.1]
+    have he := Finset.card_erase_of_mem hm
+    have hi' : (Finset.univ.filter (fun y : G => y ∈ Y)).card - 1 = H.index := by
+      rw [← hi, Nat.card_eq_fintype_card, Fintype.card_subtype]
+      rw [← he]
+      congr 1
+      ext y
+      simp only [Finset.mem_erase, Finset.mem_filter, Finset.mem_univ, true_and,
+        Set.mem_diff, Set.mem_singleton_iff]
+      tauto
+    rw [Nat.card_eq_fintype_card, Fintype.card_subtype]
+    have hp := Finset.card_pos.mpr ⟨1, hm⟩
+    omega
+
+#print axioms transversal_cases
+#print axioms cardinal
+
 #print axioms result
+#print axioms restrict
+#print axioms map
 
 end D5.S3.Combinatorics.CayleySumCodes.NormalTransversal

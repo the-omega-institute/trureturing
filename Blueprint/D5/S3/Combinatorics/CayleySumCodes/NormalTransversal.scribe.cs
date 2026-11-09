@@ -33,7 +33,47 @@ internal sealed class NormalTransversalDocument : IScribeDocumentDefinition
                     + "This is the total-code part of Proposition 4.1 in the source; it does "
                     + "not establish code inheritance, quotient total-code inheritance, "
                     + "the separate perfect-code route, or the full arbitrary-finite-group "
-                    + "abelian equivalence."))), DescribeRole.Theorem)),
+                    + "abelian equivalence."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("actual-connection-transversal-cases"),
+                DeclarationHandle.Create(Prefix + "transversal_cases"), H("The specified connection transversal"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromLiterature(Source),
+                Blocks(Paragraph(Text(
+                    "If the identity is absent from Y, Y itself is the actual left transversal. "
+                    + "If the identity belongs to Y, remove it to obtain the transversal. "
+                    + "This distinction retains the exceptional second branch of Theorem 2.1."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("connection-index-cardinality"),
+                DeclarationHandle.Create(Prefix + "cardinal"), H("The additional identity in the count"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromLiterature(Source),
+                Blocks(Paragraph(Text(
+                    "The actual size of Y equals the subgroup index when 1 is absent and "
+                    + "the index plus one when 1 is present. The second branch's additional "
+                    + "identity is retained in the connection-set count although the sum "
+                    + "graph excludes self-neighbors."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("intermediate-subgroup-inheritance"),
+                DeclarationHandle.Create(Prefix + "restrict"), H("Restriction to every intermediate subgroup"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromLiterature(Source),
+                Blocks(Paragraph(Text(
+                    "For H contained in M contained in G, restrict a specified normal "
+                    + "left transversal T to M. Every M-coset representative selected in G "
+                    + "lies in M because its difference from the M-element lies in H. "
+                    + "Conjugation by M preserves the intersection. Thus NLT(H,G) implies "
+                    + "NLT(H,M) for arbitrary intermediate M, without subnormality. This "
+                    + "is Lemma 4.2 of the correction. It is not a statement that quotient "
+                    + "or subgroup total-code inheritance follows from NLT."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("quotient-inheritance"),
+                DeclarationHandle.Create(Prefix + "map"), H("Images under group quotients"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromLiterature(Source),
+                Blocks(Paragraph(Text(
+                    "For a surjective group homomorphism f whose kernel lies in H, the image "
+                    + "of an actual normal transversal is a normal transversal of f(H). "
+                    + "The preimage of f(H) is exactly H, so any two putative image "
+                    + "representatives in the same coset lift to the same original "
+                    + "representative. Surjectivity transports conjugation invariance. "
+                    + "Taking f:G to G/N gives NLT(H/N,G/N) whenever N is normal in G "
+                    + "and contained in H. This is the quotient statement of Lemma 4.3. "
+                    + "It asserts NLT inheritance and supplies no quotient total-code "
+                    + "inheritance theorem."))), DescribeRole.Theorem)),
         [DocumentEdge.Dependency.Create(GidRef.Create(
             "D5/S3/Combinatorics/CayleySumCodes/TotalPerfectCriterion"))]));
 }
