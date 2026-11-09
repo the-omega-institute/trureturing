@@ -27,7 +27,7 @@ def actual : Realization signature :=
   realize signature (fun _ _ n => a n) (fun e => nomatch e)
 
 def rejected : Realization signature :=
-  realize signature (fun _ _ n => a n + 1) (fun e => nomatch e)
+  realize signature (fun _ _ _ => 1) (fun e => nomatch e)
 
 abbrev arena : Arena where
   signature := signature
@@ -42,13 +42,8 @@ abbrev arena : Arena where
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hb := h 0
-  have ha := result 0
-  change ((a (0 + 7) + 1 : ℕ) : ℤ) =
-    544 * ((a (0 + 6) + 1 : ℕ) : ℤ) - 82944 * ((a (0 + 5) + 1 : ℕ) : ℤ) +
-      5144576 * ((a (0 + 4) + 1 : ℕ) : ℤ) - 146800640 * ((a (0 + 3) + 1 : ℕ) : ℤ) +
-      1879048192 * ((a (0 + 2) + 1 : ℕ) : ℤ) -
-        8589934592 * ((a (0 + 1) + 1 : ℕ) : ℤ) at hb
-  simp only [Nat.cast_add, Nat.cast_one] at hb
+  change (1 : ℤ) = 544 * 1 - 82944 * 1 + 5144576 * 1 - 146800640 * 1 +
+    1879048192 * 1 - 8589934592 * 1 at hb
   omega
 
 def family : Registration arena (type_of% @result) where
