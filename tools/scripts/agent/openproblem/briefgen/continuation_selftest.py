@@ -84,7 +84,8 @@ def run(tool):
             assert '--ff-only' not in rework_text
             previous = root/'previous.md'; previous.write_text('Previous Stage A rules.\n')
             result = invoke(); assert result.returncode == 0, result.stderr
-            assert 'git merge --ff-only origin/dev' in out.read_text()
+            text = out.read_text()
+            assert 'git merge --no-edit origin/dev' in text and '--ff-only' not in text
             conclusion['not_run'] = ['make lean']
             assert invoke().returncode == 13
         previous.unlink()

@@ -299,3 +299,227 @@ Equation (3.1) is an upper bound conditional on finite GLOBAL-preset cost. It do
 | [S3] [KBonacci multilabel prefix and terminal cost](https://github.com/the-omega-institute/trureturing/blob/6850a89acdb12d4f17af57dacee2d67e0b514be4/docs/develop/theory/KBONACCI_MULTILABEL_PREFIX_AND_TERMINAL_COST.md) | Section 8, especially Definitions 8.1 and 8.3 and Theorem 8.4 with proof: actual acquired support, paid displacement, strict literal seams and inclusion of the acquired prefix in total fee. No extra one-block cut theorem is claimed here. |
 
 ## 追加锚（本行以下为增补区）
+
+## 5. A guarded GLOBAL k-minus-one ceiling
+
+**定理 5.1（Every finite GLOBAL-preset cost is at most k−1）。** For every pair of integers $m\ge3$ and $k\ge2m$ with $\gcd(m,k+1)=1$, every finite nonempty label set $Y$, every full INITIAL target $f:Q_{k,m}\to Y$, and each $A\in\{A_{\rm all},A_{\rm loc}\}$, under the original source, literal-reader, endpoint, common-stream and paid-resource contracts of Section 1,
+
+$$
+C_{\rm pre}^{A}(f)<\infty
+\quad\Longrightarrow\quad
+C_{\rm pre}^{A}(f)\le k-1.
+\tag{5.1}
+$$
+
+More precisely, every eligible common cut in Definition 2.1 admits one lawful literal stream with uniform worst fee at most $T-2=k-1$, where $T=k+1$. This improves the upper bound in Theorem 3.1 without asserting sharpness.
+
+**证明（reused common cut, value join and actual rows）。** Assume finite cost. Reuse [S1, Theorems 24.2 and 29.2], including their proof bodies, exactly as recorded in Definition 2.1. They supply an eligible
+
+$$
+a=qm+r,\qquad 0\le r<m,\qquad a\le T-2.
+\tag{5.2}
+$$
+
+Put $h=T-qm$. Then $h\ge r+2\ge2$. Retain the ordered labels $\Gamma(j,s)=(f(0,-j,s),f(1,-j,s))$ and $\Lambda(j)=\Gamma(j,0)$ from (2.1). Issue $q$ all-one blocks followed at index $q$ by a parent $B$ whose first zero is at position $r$, counting positions from zero. The eligible bands decode each rejection from that source's own preceding archive. Every survivor has original tail $s<k-a$, and its required ordered label is $\Lambda(j)$.
+
+The parent's bits after its first zero may be chosen freely: every later internal run has length less than $m<k$, and its terminal tail is at most $m-r-1$. The suffix words below begin zero. Thus this is the original common-cut construction on the full INITIAL prior and target.
+
+For $1\le p\le m-1$ define the pulse word and its actual charge edge by
+
+$$
+P_p=0^p1\,0^{m-p-1},\qquad
+F_t^p=\{tm+p,tm+p+1\}\pmod T.
+\tag{5.3}
+$$
+
+By the reused literal-charge interface (2.4), namely [S1, Interface 1.4], the earlier all-one rows are $H_t=\{tm,(t+1)m\}$ for $0\le t<q$. At every index $q+1,\ldots,T-3$ issue the same $P_p$; the choices of $p$ and the paid parent are specified below. The scheduled fee is
+
+$$
+q+1+(T-q-3)=T-2.
+\tag{5.4}
+$$
+
+All indices are valid, including the shortest schedules: $T\ge2m+1\ge7$ and $q\le(T-2)/m\le T-4$. In particular, the two late edges at indices $T-2,T-1$ are distinct suffix edges of the comparison tree, and the actual suffix range starts no later than $T-3$.
+
+**证明（shifted supplied tree and incidence collisions）。** Suppose $h\ge3$ and choose $1\le p\le m-1$ with $p<h$. Consider
+
+$$
+\mathcal S_p=\{H_0,\ldots,H_{q-1},F_{q+1}^p,\ldots,F_{T-1}^p\}.
+\tag{5.5}
+$$
+
+This is the shifted form of the tree construction in [S1, proof of Theorem 51.2], reused in Section 2. Coprimality makes $F_0^p,\ldots,F_{T-1}^p$ exactly the adjacent edges of the physical $T$-cycle. The removed edges $F_0^p,\ldots,F_q^p$ have ordered left endpoints $p,m+p,\ldots,qm+p<T$. Their complementary paths, in ordinary representatives, are exactly
+
+$$
+\begin{aligned}
+C_i&=\{im+p+1,\ldots,(i+1)m+p\} &&(0\le i<q),\\
+C_q&=\{qm+p+1,\ldots,T-1\}\cup\{0,\ldots,p\}.
+\end{aligned}
+\tag{5.6}
+$$
+
+The first interval in $C_q$ may be empty; $p<h$ makes this a literal description without an extra wrap. The $H$ chords connect the paths in a chain. For $q>0$, $H_0$ joins $0\in C_q$ to $m\in C_0$, while $H_t$ joins $tm\in C_{t-1}$ to $(t+1)m\in C_t$ for $1\le t<q$. When $q=0$, there is just one spanning path. Thus $\mathcal S_p$ is connected with $T-1$ edges, hence is a tree on all $T$ INITIAL phases.
+
+Temporarily ignore the parent row. The rows actually retained by the stream are the incidence rows of the forest
+
+$$
+\mathcal G_p=\mathcal S_p\setminus\{F_{T-2}^p,F_{T-1}^p\}.
+\tag{5.7}
+$$
+
+It has three components. The two removed edges have left endpoints
+
+$$
+x_1=T-m+p,\qquad x_2=T-2m+p,
+\tag{5.8}
+$$
+
+where an endpoint $T$ is interpreted as zero. In each $C_i$ with $i<q$, all $H$ attachments use its single vertex $(i+1)m$; $C_q$ attaches at zero. Hence all $H$ endpoints remain in one connected component, and each other component is an interval cut off from one of these paths.
+
+Use the incidence-column criterion already supplied in Section 3 and [S1, proof of Theorem 51.2]. Equal zero columns occur precisely at two isolated vertices. If two distinct vertices have equal nonzero columns, every edge incident to either must contain both; they therefore form a component of size two. Conversely, the two vertices of such a component have equal columns. Components with at least three vertices have distinct nonzero columns, and different such components have disjoint nonzero row supports. The actually acquired parent coordinate can split collisions and cannot merge previously distinct columns.
+
+The following seven cases choose $p$ and $B$ and account for every component. Unless explicitly replaced, use $B=1^r0^{m-r}$, whose actual parent charge is $\{qm,qm+r\}$ when $r>0$, and is zero when $r=0$.
+
+**证明（case (a): $3\le h\le m-2$）。** Set $p=1$, so $1\le p\le m-1$ and $p<h$. The guard implies $q\ge2$. In (5.6), the cuts detach the left intervals
+
+$$
+\begin{aligned}
+&\{(q-1)m+2,\ldots,(q-1)m+h+1\}\subset C_{q-1},\\
+&\{(q-2)m+2,\ldots,(q-2)m+h+1\}\subset C_{q-2}.
+\end{aligned}
+\tag{5.9}
+$$
+
+Each has size $h\ge3$. The connected complement has size $T-2h=qm-h\ge m+2$. All three components have size at least three, so the retained incidence columns already separate every phase. The default parent has first zero exactly at $r$ and needs no additional separating property.
+
+**证明（case (b): $h=m-1\ge3$）。** Here $q\ge2$. If $r>0$, set $p=r$ and retain $B=1^r0^{m-r}$. Eligibility gives $1\le r\le m-3$, hence $1\le p\le m-1$ and $p<h$. If $r=0$, set $p=1$ and $B=01\,0^{m-2}$; its first zero is at position zero and again $p<h$.
+
+Since $x_1=qm+p-1$ and $x_2=(q-1)m+p-1$, each cut isolates the final vertex of the corresponding $C$ path. The detached components are
+
+$$
+\{u\}=\{qm+p\},\qquad \{w\}=\{(q-1)m+p\},
+\tag{5.10}
+$$
+
+and the connected complement has size $T-2\ge3$. The only equal-column pair is $\{u,w\}$. For $r>0$, the actual parent support $\{qm,qm+r\}$ contains $u$ and not $w$. For $r=0$, its support is $\{qm+1,qm+2\}$, which also contains $u$ and not $w$. Thus the one paid parent row distinguishes the only collision while preserving the required first-zero position.
+
+**证明（case (c): $h=m+1$）。** Set $p=m-1$, which satisfies $1\le p\le m-1$ and $p<h$; here $q\ge1$. The first deleted edge is $\{T-1,0\}$ and detaches $\{T-1\}$ from $C_q$. The second cuts at $qm$ and detaches
+
+$$
+\{qm+1,\ldots,qm+m-1\}\subset C_{q-1},
+\tag{5.11}
+$$
+
+of size $m-1$. The connected complement has size $T-m\ge m+1$. For $m\ge4$ there is exactly one singleton and no size-two component, so no parent repair is needed; use the default parent.
+
+For $m=3$, the sole equal pair is $\{qm+1,qm+2\}$. If $r>0$, its possible values are $1,2$, and the default parent support $\{qm,qm+r\}$ splits the pair. If $r=0$, take $B=001$; its actual support $\{qm+2,qm+3\}$ splits the pair. Each parent has first zero exactly at the stipulated $r$.
+
+**证明（case (d): $h=m+2$）。** Coprimality gives $\gcd(m,2)=1$, so $m$ is odd, and $q\ge1$. Choose
+
+$$
+\begin{cases}
+p=m-1,\quad B=1^r0^{m-r-1}1,&0\le r\le m-2,\\
+p=m-2,\quad B=1^{m-1}0,&r=m-1.
+\end{cases}
+\tag{5.12}
+$$
+
+Both choices have $1\le p\le m-1$ and $p<h$. In the first branch the zero run is nonempty, so the parent has first zero at $r$; in the second branch that first zero is at $m-1=r$.
+
+For either choice, the first detached interval is the two-vertex set
+
+$$
+A=\{qm+p+1,qm+p+2\}.
+\tag{5.13}
+$$
+
+The second detached interval is
+
+$$
+\begin{cases}
+\{qm+2,\ldots,qm+m-1\},&p=m-1,\\
+\{qm+1,\ldots,qm+m-2\},&p=m-2.
+\end{cases}
+\tag{5.14}
+$$
+
+It has size $m-2$, and the connected complement has size $T-m\ge m+1$. Since $m$ is odd, $m-2$ is one when $m=3$ and is at least three otherwise; it is never two. Thus $A$ is the only equal-column pair.
+
+For $p=m-1$, $A=\{qm+m,qm+m+1\}$. The actual parent ends in one, so its charge at $qm+m$ is one by (2.4); its charge at $qm+m+1$ is zero, since that vertex is outside the parent's path. These are ordinary representatives below $T$. For $p=m-2$, $A=\{qm+m-1,qm+m\}$, and the parent $1^{m-1}0$ has actual support $\{qm,qm+m-1\}$. This again splits $A$. No other collision remains.
+
+**证明（case (e): $m+3\le h\le2m-1$）。** Set $p=1$ and $d=h-m$, so $p<h$, $p\le m-1$ and $3\le d\le m-1$. Here $q\ge1$. The detached $C_q$ interval is
+
+$$
+\{qm+2,\ldots,qm+d+1\},
+\tag{5.15}
+$$
+
+of size $d$. If $3\le d\le m-2$, the other detached left interval is
+
+$$
+\{(q-1)m+2,\ldots,(q-1)m+d+1\}\subset C_{q-1},
+\tag{5.16}
+$$
+
+also of size $d$. The complement has size $T-2d=(q+1)m-d\ge5$. If $d=m-1$, the cut in $C_{q-1}$ instead leaves its last vertex $\{qm+1\}$ as a singleton; the detached $C_q$ interval has size $m-1$, and the complement has size $T-m\ge m+1$. In both subcases there is no size-two component and at most one singleton. Use the default parent with first zero at $r$; no parent repair is needed.
+
+**证明（case (f): $h\ge2m+1$, $h\ne2m+2$）。** Set $p=1$, so $1\le p\le m-1$ and $p<h$. Both cuts lie in the nonwrapped portion of $C_q$. Its detached left interval and the middle interval between the cuts are
+
+$$
+\{qm+2,\ldots,T-2m+1\},\qquad
+\{T-2m+2,\ldots,T-m+1\},
+\tag{5.17}
+$$
+
+of sizes $h-2m$ and $m$, respectively. The connected complement has size $(q+1)m$. The first size is either one or at least three, since $h=2m+2$ is excluded, and the other two are at least three. The incidence criterion therefore gives separation without a parent repair. The default parent has first zero at $r$. This also covers $q=0$, when $\mathcal S_p$ is a single spanning path and the connected complement is its remaining interval.
+
+**证明（case (g): $h=2m+2$）。** Again coprimality forces $m$ odd. Choose $p$ and $B$ exactly as in (5.12), with the same constraints $1\le p\le m-1$, $p<h$, and first zero at $r$. Both cuts now lie in $C_q$. The detached left component is $A$ from (5.13), the middle component is
+
+$$
+\{qm+p+3,\ldots,qm+m+p+2\},
+\tag{5.18}
+$$
+
+of size $m$, and the remaining connected component has size $(q+1)m$. Consequently $A$ is the only equal-column pair, also when $q=0$. For $p=m-1$, the parent's final one gives charge one at $qm+m$ and zero at $qm+m+1$, the two vertices of $A$. For $p=m-2$, its support $\{qm,qm+m-1\}$ splits $A=\{qm+m-1,qm+m\}$. These are the same actual parent endpoint calculations as in case (d).
+
+These seven cases exhaust $h\ge3$. The omitted values $h=m$ and $h=2m$ would make $T=qm+h$ divisible by $m$, contradicting coprimality. Cases (a) and (b) require $q\ge2$ by $T\ge2m+1$; cases (c)–(e) require $q\ge1$; cases (f) and (g) include $q=0$. The cut positions (5.8) in the literal intervals (5.6) give the displayed component counts. In every case their complement is connected through the retained $H$ chain, or is the remaining path when $q=0$. Every residual collision is split by one actual paid parent row, without an additional block or an independent abstract response row.
+
+**证明（the boundary remainder $h=2$）。** Eligibility forces $r=0$. Coprimality implies $m$ odd, and the guard gives $q\ge2$. Reuse the boundary stream of [S1, Theorem 51.3]: $q$ all-one blocks followed by $L=0^{m-1}1$, but stop one block earlier, at index $T-3$.
+
+In the supplied construction the $q$ rows $H_0,\ldots,H_{q-1}$ and the $L$ rows at $q,\ldots,T-2$ form a spanning tree. Remove its last row, the actual edge $\{T-m-1,T-m\}$. The supplied cycle-path components are $\{im,\ldots,(i+1)m-1\}$ for $0\le i<q$, and $\{qm,\ldots,T-1\}$. The cut lies in the component with $i=q-1$ and detaches exactly
+
+$$
+\{(q-1)m+2,\ldots,qm-1\},
+\tag{5.19}
+$$
+
+of size $m-2$. Its complement remains connected through the supplied chords and has size $T-m+2\ge3$. Since $m$ is odd and at least three, the detached size is one or at least three. There is no two-vertex component and at most one singleton, so the same incidence criterion gives distinct columns after this deletion.
+
+The shortened boundary stream costs
+
+$$
+q+(T-2-q)=T-2.
+\tag{5.20}
+$$
+
+Its first $L$ is still the paid parent with first zero at $r=0$. Thus this is a shortening of the supplied lawful boundary construction, with neither a free parent nor an omitted charge.
+
+**证明（full INITIAL decoder and actual fees）。** Make the applicable choice once from the fixed parameters and eligible cut, independently of every actual source, phase, free INITIAL value and original tail. This specifies a single literal stream. Before the parent, rejection bands are exactly those in (2.3): an all-one rejection at $t<q$ uses $S_t(\beta)$ and $h_t-m\le s<h_t$. Parent rejection uses $S_q(\beta)$ and $h_q-r\le s<h_q$. Each such source decodes the constant ordered pair on its own band from its own earlier chronological archive and returns the component selected by its remembered free INITIAL value. It pays for its rejecting block. Initial $\bot$ returns its independent $f(\bot)$ at fee zero.
+
+Every survivor has original tail $s<k-a$, so $s+qm+r<k$ and it reaches the parent's first zero. Subsequent internal parent runs are safe because $m<k$. Every $P_p$ and $L$ begins zero and has one isolated one; successive suffix blocks therefore safely clear any previous terminal tail, including when a parent ends in one. All displayed words have length $m<k$ and belong to both original alphabets. The actual cross-block rejection during the initial all-one prefix and the parent's leading run is retained.
+
+A survivor computes its own $q$ earlier differences, its own parent difference and its own consecutive suffix differences, using its actual parent endpoint as the first suffix baseline. The preceding separation argument concerns exactly these acquired charge coordinates. For $h\ge3$, the earlier $H$ rows and suffix rows have the columns of $\mathcal G_p$, and the actual parent row splits every remaining pair. At $h=2$, the shortened boundary rows themselves already have distinct columns. Hence the survivor recovers its INITIAL phase parameter $j\in\mathbb Z/T\mathbb Z$ and returns the remembered INITIAL-value component of $\Lambda(j)$. Eligibility makes this precisely $f(v,-j,s)$ for every surviving original tail, not a target on the current state.
+
+Only that source's own scalar endpoints and freely remembered initial value are used. The issued-block count determines displacement from the INITIAL phase without revealing original history length or observing interior bits. Convention 1.2 supplies every jointly realized original $(v,-j,s)$ in this argument; no promise on acquired support replaces the full INITIAL prior. No sibling archive is executed, borrowed or combined. Both values, all phases and all tails receive prefixes of the same literal stream, with archive-dependent early stopping allowed. There is no reset, copy, clearing action outside a paid word, free wait or free calendar displacement.
+
+Every scheduled whole block is charged, including padding, duplicate or waiting words if any, and every rejecting branch pays its rejecting block. Equations (5.4) and (5.20) give maximum scheduled fee $T-2=k-1$; earlier stops only reduce it. Thus (5.1) holds for both $A_{\rm all}$ and $A_{\rm loc}$. ∎
+
+## 6. Mathematical sources and scope of the improved ceiling
+
+**数学引文 6.1（Reused interfaces and the compatibility relation）。** The source-relative status of Theorem 5.1 is `repo-derived`. The common-cut law and ordered value join are reused from [S1, Theorems 24.2 and 29.2] in exactly the form of Definition 2.1. The literal charges are [S1, Interface 1.4] and (2.4). The supplied chord-tree geometry and boundary tree are reused from [S1, proofs of Theorems 51.2–51.3]; the incidence-column criterion is reused from the proof of Theorem 51.2 and Section 3. The earlier deletion-and-repair construction is Theorem 3.1. These are mathematical sources for the proof, without a claim of literature priority.
+
+The additional relation is the compatibility, for every eligible $(q,r)$, of a remainder-dependent pulse position and an actual first-zero parent with injectivity of the retained $H$ rows, the paid parent row and pulse rows only through $T-3$. At $h=2$ it is the injectivity of the shortened supplied boundary stream. Cases (a)–(g) and (5.19) establish this relation, and the full INITIAL decoder consumes it directly at total fee $T-2$. The tree translation, charge identities and incidence criterion are reused inputs to that relation.
+
+**数学引文 6.2（Exact mathematical scope）。** Theorem 5.1 is a conditional upper bound for every finitely attainable full INITIAL GLOBAL-preset target under the guard $m\ge3$, $k\ge2m$, $\gcd(m,k+1)=1$. It establishes neither sharpness nor an exact fee for each target. Theorem 3.1 remains valid. No extension to excluded parameters or conversion from adaptive attainability to GLOBAL attainability follows. The original hidden-history, joint-source, endpoint, own-archive, both-value, all-tail and whole-block fee contracts remain those of Section 1. The conclusion is ordinary paper mathematics, with no external priority or global novelty claim.
+
+## 追加锚（本行以下为增补区）
