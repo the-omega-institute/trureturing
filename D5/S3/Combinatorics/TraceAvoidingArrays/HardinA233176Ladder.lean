@@ -544,17 +544,15 @@ private def linkKeys (q r t b c : Fin 3) (p : Labels) : Multiset ℕ :=
   let i := (flagIndex.getD (81*t.val+27*q.val+9*b.val+3*r.val+c.val) 0)*27 +
     9*(p 0).val+3*(p 1).val+(p 2).val
   ((links.getD i #[]).toList.flatMap fun e => List.replicate (e % 9) (e / 9) : List ℕ)
-local macro "check_states" : tactic => `(tactic| {
-  simp only [Fin.forall_fin_succ_pi, Fin.forall_fin_zero_pi]
-  intro q r t b c x y z h
-  rcases h with ⟨htq, hqb, hbr, hrc, hpt, hpb, hpc⟩
-  fin_cases q <;> fin_cases r <;> try (exfalso; omega)
-  all_goals (fin_cases t <;> try (exfalso; omega))
-  all_goals (fin_cases b <;> try (exfalso; omega))
-  all_goals (fin_cases c <;> try (exfalso; omega))
-  all_goals (fin_cases x <;> try (exfalso; omega))
-  all_goals (fin_cases y <;> try (exfalso; omega))
-  all_goals (fin_cases z <;> first | (exfalso; omega) | decide +kernel) })
+local elab "check_states" : tactic => Lean.Elab.withEnableInfoTree false do
+  Lean.Elab.Tactic.evalTactic (← `(tactic| {
+    simp only [Fin.forall_fin_succ_pi, Fin.forall_fin_zero_pi]
+    intro q r t b c
+    fin_cases q <;> fin_cases r <;> fin_cases t <;> fin_cases b <;> fin_cases c
+    all_goals first
+      | (intro x y z h; exfalso
+         rcases h with ⟨htq, hqb, hbr, hrc, _, _, _⟩; omega)
+      | (intro x; fin_cases x <;> decide +kernel) }))
 set_option maxRecDepth 100000
 set_option maxHeartbeats 100000000
 private theorem moves_certificate : ∀ q r t b c p, Valid q r t b c p →
