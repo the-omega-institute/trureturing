@@ -201,7 +201,7 @@ private theorem v_eq_w (n : ℕ) (s : Seen) (p : Fin 3 × Fin 3) (h : Valid s p)
       intro c
       by_cases hc : rowLegal c ∧ compatible p c ∧ good s c
       · rw [ite_eq_left hc, ih _ _ (valid_next s p h c hc)]
-        cases hb : (finish s c).2 <;> simp [hc, hb]
+        cases (finish s c).2 <;> simp [hc]
       · simp only [← and_assoc] at hc ⊢
         simp [hc]
     simp_rw [hs]
@@ -212,7 +212,8 @@ private theorem v_eq_w (n : ℕ) (s : Seen) (p : Fin 3 × Fin 3) (h : Valid s p)
       show (∑ c : Col, if rowLegal c ∧ compatible p c ∧ good s c ∧
         (finish s c).2 = false then (1 : ℤ) else 0) = (if s.2 then 0 else 4) from
         (finite_certificate.1 s p h).2]
-    cases hb : s.2 <;> simp [hb, w] <;> ring
+    cases s.2 <;> simp [w]
+    ring
 
 private theorem a_eq_w (n : ℕ) : (a (n + 1) : ℤ) = w n false := by
   rw [counting_bridge, total2, widthTotal]
@@ -227,7 +228,7 @@ private theorem a_eq_w (n : ℕ) : (a (n + 1) : ℤ) = w n false := by
     intro c
     by_cases hc : c 0 = 0 ∧ rowLegal c ∧ good (false, false) c
     · rw [ite_eq_left hc, v_eq_w n _ _ (initial_valid c hc)]
-      cases hb : (finish (false, false) c).2 <;> simp [hc, hb]
+      cases (finish (false, false) c).2 <;> simp [hc]
     · simp only [← and_assoc] at hc ⊢
       simp [hc]
   simp_rw [hs]
@@ -278,7 +279,7 @@ theorem result :
     change (a 2 : ℤ) = 4 * 1 + 4 * 1 at h2
     norm_num only at h1 h2
     interval_cases n <;> norm_num only [zero_count, h1, h2,
-      Nat.reduceLeDiff, Nat.reduceSubDiff, Nat.reduceEqDiff, if_true, if_false,
+      Nat.reduceLeDiff, Nat.reduceSubDiff, Nat.reduceEqDiff, ite_true, ite_false,
       Nat.cast_zero, mul_zero, sub_self, add_zero]
 
 end D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233123SquareStrip
