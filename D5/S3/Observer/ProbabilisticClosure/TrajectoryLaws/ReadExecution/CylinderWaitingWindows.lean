@@ -12,6 +12,8 @@ import Mathlib.Topology.Algebra.Monoid
 import Mathlib.Order.Filter.Finite
 import Mathlib.Data.List.OfFn
 import Mathlib.Tactic.Positivity
+import Mathlib.Tactic.Choose
+import Mathlib.Tactic.SimpRw
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

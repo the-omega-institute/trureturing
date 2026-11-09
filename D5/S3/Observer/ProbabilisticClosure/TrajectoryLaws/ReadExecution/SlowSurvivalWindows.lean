@@ -10,7 +10,8 @@ import Mathlib.Analysis.SpecificLimits.Basic
 import Mathlib.Topology.Algebra.Field
 import Mathlib.Tactic.FieldSimp
 import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Omega
+import Lean.Elab.Tactic.Omega
+import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.Ring
 
 set_option autoImplicit false
