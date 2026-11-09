@@ -1,0 +1,33 @@
+#### 定理 6.13：见证所选复轴仅改变表示坐标
+
+对任意单位 $e,e'\in W$，存在单位 $u\in A$，使 $F=L_u$ 满足
+
+$$
+J_{e'}F=FJ_e,\qquad h_{e'}(Fx,Fy)=h_e(x,y),
+$$
+
+$$
+\sigma_z^{e'}F=F\sigma_z^e\quad(\forall z\in W),\qquad
+r_{e'}(Fx)=r_e(x).
+$$
+
+因此无需在见证之外再指定一个物理上优先的复轴。
+
+**证明。**
+
+若 $e'\ne-e$，定义
+
+$$
+u=\frac{\mathbf 1-e'e}{\sqrt{2(1+B(e,e'))}}.
+$$
+
+分母是分子的范数，且 $(\mathbf 1-e'e)e=e+e'=e'(\mathbf 1-e'e)$，故 $e'u=ue$。 若 $e'=-e$，取任意单位 $u\perp e$，纯部反交换仍给 $e'u=ue$。 所以 $J_{e'}L_u=L_uJ_e$。左乘单位元是实等距映射， 从而保持 $h$ 的实部及虚部；它又与全部右乘交换，得到 Pauli 交织式。 最后 $\bar u e'u=e$，所以
+
+$$
+r_{e'}(ux)=\frac{\bar x\bar u e'ux}{q(x)}=r_e(x).
+$$
+
+该证明消除的是表示坐标的额外选择，不删除主候选中忠实见证对的存在条件。
+
+$\square$
+

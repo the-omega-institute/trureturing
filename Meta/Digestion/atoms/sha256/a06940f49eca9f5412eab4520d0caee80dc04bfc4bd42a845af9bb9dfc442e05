@@ -1,0 +1,15 @@
+**Proposition 207.3 (retained statements and replaced candidate-rank conclusions).** Under the fixed-host hypotheses of Definition 205.1, the quotient and fibre descriptions in Sections 197--198, the feasibility and residual closure in Proposition 199.2, and its correction-span equality (199.4) are retained. The coefficient-rank requirements in Corollary 199.3 remain necessary; the exact actual-rank requirement is (205.4). The literal coefficient-rank strata and certificates of Section 200 and Proposition 201.2 retain their coefficient meaning; their candidate-rank interpretations use Propositions 206.2 and 207.1. The candidate-rank sufficiency claims of Corollaries 201.3 and 202.3 are replaced respectively by Propositions 207.1 and 207.2. Proposition 202.2 remains a coefficient-minor identity.
+
+The scalarized feasibility equalities (203.6)--(203.8), the dimension bound of Corollary 203.3, and the envelope equivalences (204.6)--(204.7) are retained. More precisely, in the fixed-column ruling the actual rank is
+
+$$
+2+\operatorname{rank}\bigl((\mathsf B^{\mathsf T}c)z^{\mathsf T}\bigr),
+\tag{207.5}
+$$
+
+and in the fixed-row ruling it is $2+\operatorname{rank}((\mathsf B^{\mathsf T}v)w^{\mathsf T})$. Each is at most three. A projected ruling in (207.1) or (207.2) means its entire inverse image in $\mathscr P_u$; it need not be one of the fixed coefficient rulings tested by Sections 203--204.
+
+*Proof.* Feasibility and tensor closure do not require the lifted labels to span their host, so Proposition 199.2 retains precisely those conclusions. Proposition 205.2 separates its correction-span assertion from the actual rank. Propositions 206.2, 207.1 and 207.2 give the stated replacements, including the impossibility of the global rank-at-most-one route in Corollary 202.3. Substituting $A=c z^{\mathsf T}$ or $A=v w^{\mathsf T}$ into (205.3) proves the ruling ranks, while Sections 203--204 solve exactly their original pointwise inequalities. Finally (206.2) exhibits the additional kernel freedom in a projected ruling's inverse image; (205.9) shows algebraically that this freedom can coexist with coefficient rank two.
+
+All these conclusions presuppose the original full-zero seed and its fixed host. They neither establish pointwise legality of the algebraic examples (205.8) nor construct an original rank-three or rank-four seed. Arbitrary-partition realization, the concrete pointwise evaluation of the host bodies, $F_{64}$, $H43$, SRS$\text{-}20$ and physical succession retain their separate unresolved boundaries. $\square$
+

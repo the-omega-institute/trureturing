@@ -19,15 +19,6 @@ internal sealed class DyadicMeanSquareUpperDocument : IScribeDocumentDefinition
                 + "ShortIntervalMeanSquareBound hypothesis; no separate Riemann "
                 + "hypothesis is used.")),
             Describe.Lean(
-                DescribeId.Create("cumulative-variance-band-asymptotic"),
-                DeclarationHandle.Create(Prefix + "CumulativeVarianceBandAsymptotic"),
-                H("Hypothesis (489.2)"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text(
-                    "Hypothesis (489.2) is the uniform cumulative variance hypothesis for the complete Chebyshev error E(x)=psi(x)-x. It is an assumption: this definition asserts no proof of the variance asymptotic and includes neither a Riemann hypothesis assumption nor a separate regularity condition."))),
-                DescribeRole.Definition),
-            Describe.Lean(
                 DescribeId.Create("discrepancy-locally-bounded-measurable"),
                 DeclarationHandle.Create(Prefix + "discrepancy_locallyBoundedMeasurable"),
                 H("Regularity of the Chebyshev error"),
@@ -48,7 +39,9 @@ internal sealed class DyadicMeanSquareUpperDocument : IScribeDocumentDefinition
                         + "the integral of forwardResponse(x)^2/x over [X,2X] "
                         + "is at most C*X^(1/5)*log(X)^2.")),
                     Paragraph(Text(
-                        "The substitution u=theta*x expresses the response as "
+                        "The complete response is the profile response with E=psi-id, "
+                        + "exponent 4/5, and constant profile one. "
+                        + "The substitution u=theta*x expresses this profile response as "
                         + "sqrt(x)*x/H(x)^2 times the integral of D(x,theta) "
                         + "multiplied by w((1+theta)*x)/w(x), for "
                         + "0<=theta<=H(x)/x. Positivity and monotonicity of w "

@@ -1,0 +1,133 @@
+**引理 165.1（固定元素的P2排零）。** 在161.1的同一环境与实际 $h,Q$ 下，设固定原 $v,\rho$ 满足
+
+$$
+h^2=u,\quad hv=-vh,\quad h\rho=\rho h,\quad v\rho=-\rho v,
+\tag{165.1}
+$$
+
+且固定元素 $g=Tv+\rho=iQhv+\rho$ 对原输入 $(h,x)$、$x=\mu u+\lambda h+v$ 满足全部环境数学态读取的原P2。则 $\rho=0$。这里 $\mu,\lambda$ 为任意实数，包括零；不假设 $v^2$ 全局中央、标量、可逆或有限谱。
+
+证明。零代数无须选态。其余情形定义
+
+$$
+w=h\rho,\qquad\mathcal K=C^*(u,Q,h,v,\rho)\subset\mathcal A.
+\tag{165.2}
+$$
+
+$w$ 自伴。由(165.1)，
+
+$$
+wv=h\rho v=-hv\rho=vh\rho=vw.
+$$
+
+它也与 $h,\rho,Q$ 交换，所以 $w\in Z(\mathcal K)$。另有 $hv^2=v^2h$、$\rho v^2=v^2\rho$，而 $v^2$ 与 $v,Q$ 交换，故
+
+$$
+\boxed{h\rho,\ v^2\in Z(\mathcal K).}
+\tag{165.3}
+$$
+
+这里的中心只属于含这份实际 $\rho$ 的 $\mathcal K$，未提升到整个 $\mathcal A$ 的中心；把 $\rho$ 明列为生成元，正是为了不预付旧 $D$ 的任何输出闭合。
+
+取 $\mathcal K$ 的任意非零不可约表示 $\pi$。由Schur引理，写
+
+$$
+\pi(Q)=\sigma I,\quad\pi(v^2)=b^2I,\quad
+\pi(h\rho)=mI,\qquad
+\sigma\in\{1,-1\},\ b\ge0,\ m\in\mathbb R.
+\tag{165.4}
+$$
+
+令 $H=\pi(h),V=\pi(v)$，则
+
+$$
+H^2=I,\quad HV=-VH,\quad V^2=b^2I,\quad
+\pi(\rho)=mH.
+\tag{165.5}
+$$
+
+若 $b=0$，自伴性给 $V=0$。像代数只由 $H$ 与标量生成，是交换的；不可约性使它为一维，$H=\pm I$。于是 $\pi(x)=\mu I+\lambda H$ 亦为标量。其唯一态拉回 $\mathcal K$ 并延拓到 $\mathcal A$，原 $(h,x)$ 的Gram为零，P2给 $m^2=0$，所以 $m=0$。这个分支也覆盖 $v=0$、$\mu=0$、$\lambda=0$ 的全部交会端点。
+
+设 $b>0$，只在表示中定义
+
+$$
+E_0=V/b,\qquad J_0=i\sigma HE_0.
+\tag{165.6}
+$$
+
+$H,E_0,J_0$ 为两两反交换、自伴且平方为 $I$ 的三轴。为确认读取是真正的二阶像，令 $P_\pm=(I\pm H)/2$。$E_0$ 酉地交换两份非零的 $P_\pm$ 空间；以此识别两份空间后，$H$ 是 $\operatorname{diag}(I,-I)$，$E_0$ 是两个非对角单位。故它们生成的像准确为 $M_2(\mathbb C)\otimes I_{\mathcal L}$。不可约性使重数空间 $\mathcal L$ 为一维，否则其上任一非平凡投影都在交换子中。因此当前像确为不可约 $M_2(\mathbb C)$，并且
+
+$$
+\pi(x)=\mu I+\lambda H+bE_0,\qquad
+\pi(g)=bJ_0+mH.
+\tag{165.7}
+$$
+
+对每个单位实Bloch向量 $(n_x,n_y,n_z)$，二阶密度 $\tfrac12(I+n_xE_0+n_yJ_0+n_zH)$ 为正且迹一，其态分别读取三轴为 $n_x,n_y,n_z$。将此态拉回 $\mathcal K$，再由共同单位C*子代数的态延拓取得 $\mathcal A$ 上的态。该态所读的仍是同一份原 $h,x,g$，包括它们的原平方和原Jordan乘积。
+
+具体地，
+
+$$
+\begin{aligned}
+\pi(x^2)&=(\mu^2+\lambda^2+b^2)I+2\mu\lambda H+2\mu bE_0,\\
+\pi(h\circ x)&=\lambda I+\mu H.
+\end{aligned}
+\tag{165.8}
+$$
+
+所以原P2准确成为
+
+$$
+\boxed{(bn_y+mn_z)^2
+\le b^2+2\mu b n_x+\mu^2(1-n_z^2)
+=(b+\mu n_x)^2+\mu^2n_y^2.}
+\tag{165.9}
+$$
+
+最后一个等号使用 $n_x^2+n_y^2+n_z^2=1$。$\lambda$ 消失来自(165.8)的显式Gram相消，不是对未知响应使用剪切或平移不变性。
+
+若 $0<b<|\mu|$，取
+
+$$
+n_x=-b/\mu,\qquad n_y=0,\qquad
+n_z=\sqrt{1-b^2/\mu^2}>0.
+\tag{165.10}
+$$
+
+右侧为零，故 $m=0$，包括 $\mu$ 的两种符号。
+
+若 $b=|\mu|>0$，对 $0<z<1$ 取
+
+$$
+n_x=-\operatorname{sgn}(\mu)\sqrt{1-z^2},\quad n_y=0,\quad n_z=z.
+$$
+
+(165.9)给
+
+$$
+m^2z^2\le b^2(1-\sqrt{1-z^2})^2,\qquad
+|m|\le\frac{bz}{1+\sqrt{1-z^2}}.
+\tag{165.11}
+$$
+
+只令固定标量表达式的 $z\downarrow0$，得到 $m=0$；没有把端点态或极限输入送入旧 $D$。
+
+若 $b>|\mu|$，置 $q_0=\sqrt{1-\mu^2/b^2}>0$。反设 $m\ne0$，对 $0<z<q_0$ 取
+
+$$
+n_x=-\mu/b,\quad
+n_y=\operatorname{sgn}(m)\sqrt{q_0^2-z^2},\quad n_z=z.
+$$
+
+从(165.9)减去 $b^2n_y^2$，准确得到
+
+$$
+2b|m|\sqrt{q_0^2-z^2}\,z+m^2z^2
+\le(b^2-\mu^2)z^2.
+\tag{165.12}
+$$
+
+除以正 $z$，令 $z\downarrow0$，左侧趋于 $2b|m|q_0>0$，右侧趋于零，矛盾。$\mu=0,b>0$ 也在这个分支，$q_0=1$；没有遗漏零偏移。至此全部不可约表示都有 $m=0$，即 $\pi(\rho)=0$。不可约表示分离C*元素，故 $\rho=0$。∎
+
+证明所用成熟接口的准确出处为Blackadar，[*Operator Algebras*](https://www.bruceblackadar.com/Mathematics/Cycr.pdf)，II.6.1.8（不可约表示的交换子为 $\mathbb CI$）、II.6.3.1（子代数／算子系统的态延拓）、II.6.3.3与II.6.3.5（纯态取范数及态分离），以及II.6.4.9（不可约表示取范数，因而分离元素）。前卷18、72–73已有同类局部C*读取背景；(165.6)–(165.12)在此给出当前固定元素所需的完整计算。这些文献只提供读取工具，不提供新的旧响应身份。全程没有定义商上的 $D$，也没有把 $\pi(D(a,b))$ 写成某个新响应作用在 $\pi(a),\pi(b)$ 上。
+

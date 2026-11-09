@@ -1,0 +1,59 @@
+**约定 91.1（同一个完整原算子类）。** 以下取约定 69.1、[XIII 定义 1.2–1.3][XIII] 的同一个 $\mathfrak K_{\rm r}$，准确保留
+
+$$
+\begin{gathered}
+E=\{q\subseteq\{1,\ldots,9\}:q\text{ 无相邻占据}\},\qquad
+|E|=89,\qquad |\operatorname{Edges}E|=235,\\
+b_{-1}b_0=10,\qquad b_{10}b_{11}b_{12}=010,\\
+\mathcal V=\bigoplus_{q\in E}V_q,\qquad
+\dim_{\mathbb R}V_q=d<\infty,\qquad g=\bigoplus_qg_q>0,\\
+\mathcal L=\bigoplus_qL_q,\qquad L_q\in\operatorname{End}_{\mathbb R}V_q,\\
+T_{qt}:V_t\longrightarrow V_q,\qquad
+T_{tq}=T_{qt}^{-1}=T_{qt}^{\dagger}
+\quad\text{（每条原边的两个方向）}.
+\end{gathered}
+\tag{91.1}
+$$
+
+每条原边只翻转中心 $j\in\{1,\ldots,9\}$，其两个邻位均为零；中心地址不被忘去。全部 $g,L,T$ 是同一组固定数据，$\dagger$ 始终相对于原 $g$。参数与活动块仍为
+
+$$
+\begin{gathered}
+x=\frac{\sqrt5-1}{2},\qquad c=x\sqrt x>0,\qquad
+\alpha=\frac{3\pi}{5},\qquad x+x^2=1,\quad c^2=x^3,\\
+B_j\big|_{V_{q_0}\oplus V_{q_1}}
+=\begin{pmatrix}xI&cT_{q_0q_1}\\cT_{q_1q_0}&x^2I\end{pmatrix},
+\qquad q_1=q_0\cup\{j\},\quad b_j(q_0)=0.
+\end{gathered}
+\tag{91.2}
+$$
+
+其余合法内配置上的阻塞单点、两个边界和严格左响应逐字取
+
+$$
+\begin{gathered}
+B_j|_{V_q}=b_{j-1}(q)b_{j+1}(q)I
+\quad\text{（阻塞单点）},\\
+B_0|_{V_q}=b_1(q)I,\qquad B_{10}|_{V_q}=b_9(q)I,\\
+A_j=\alpha\mathcal L(I+B_j),\qquad U_j=e^{A_j}
+\quad(0\le j\le10).
+\end{gathered}
+\tag{91.3}
+$$
+
+保留全部整算子方程和原 ready 校准：
+
+$$
+\begin{gathered}
+U_j^{10}=I\quad(0\le j\le10),\\
+U_jU_{j+1}U_j=U_{j+1}U_jU_{j+1}\quad(0\le j\le9),\\
+U_jU_k=U_kU_j\quad(0\le j<k\le10,\ k-j\ge2),\\
+r=\{3,7\},\qquad u_*\in V_r,\qquad
+\|u_*\|_{g_r}=1,\qquad
+\operatorname{tr}_{V_r}(L_r^\dagger L_r)=2.
+\end{gathered}
+\tag{91.4}
+$$
+
+十一十回返、十个相邻 Artin 和四十五个远关系均作用在整个 $89d$ 维空间；迹遍历整个原 $V_r$，不按维数或响应秩归一。同一原准备的字域仍为 $\{0,\ldots,10\}^{<\infty}$ 的全部有限正字，空字为恒等，$U_{(j_1,\ldots,j_k)}=U_{j_k}\cdots U_{j_1}$。原 $26+63$ 坐标、阻塞与边界值、给定 $u_*$ 及所有原方向均保留。没有 E1、ready 非退化、循环性、正规性、共同响应核、对数分支或谱带前提，也没有更换原度量或把来源预先取商。定理 77.1 的 ready 原正交 $J\oplus0$ 在下述证明中作为这些前件的既有后果使用。
+

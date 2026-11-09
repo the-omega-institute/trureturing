@@ -8,6 +8,7 @@
 
 import D5.S3.Arith.Robin.ForwardKernel.MellinConvergence
 import D5.S3.Arith.Robin.ForwardKernel.VarianceTransfer
+import D5.S3.Arith.Robin.ForwardKernel.ProfileKernelDefs
 import Mathlib.Analysis.Calculus.Deriv.MeanValue
 import Mathlib.MeasureTheory.Function.L2Space
 
@@ -17,7 +18,7 @@ namespace D5.S3.Arith.Robin.ForwardKernel.DyadicMeanSquareUpper
 
 open Set MeasureTheory
 open VarianceTransfer (interval_cauchy_schwarz logarithmic_variance_mono)
-open VarianceTransferDefs (LocallyBoundedMeasurable CumulativeVarianceBandAsymptoticFor)
+open VarianceTransferDefs (LocallyBoundedMeasurable)
 open OriginalMovingWindowMoment (width weight_pos weight_antitone)
 open MellinWeightedVariation (weight)
 open ActualVonMangoldtBandCompensation (discrepancy)
@@ -32,10 +33,6 @@ set_option backward.isDefEq.respectTransparency.types false
 /-- The uniform Saffari–Vaughan estimate for the complete Chebyshev error. -/
 def ShortIntervalMeanSquareBound : Prop :=
   VarianceTransferDefs.ShortIntervalMeanSquareBoundFor discrepancy
-
-/-- The variance asymptotic (489.2) for the complete Chebyshev error `ψ(x) - x`. -/
-def CumulativeVarianceBandAsymptotic : Prop :=
-  CumulativeVarianceBandAsymptoticFor discrepancy
 
 /-- The complete Chebyshev error is measurable and bounded on every finite interval. -/
 theorem discrepancy_locallyBoundedMeasurable : LocallyBoundedMeasurable discrepancy := by
@@ -148,7 +145,13 @@ private lemma response_theta {x : ℝ} (hx : 0 < x) :
     funext θ
     simp only [increment, show x + θ * x = (1 + θ) * x by ring]
   rw [he] at hs
-  rw [Transport.forwardResponse, ← hs]
+  rw [ProfileKernelDefs.forwardResponse_eq_profileResponse]
+  simp only [ProfileKernelDefs.profileResponse, ProfileKernelDefs.priceRatio,
+    VarianceTransferDefs.increment, one_mul]
+  change Real.sqrt x / width x ^ 2 *
+    (∫ u in (0 : ℝ)..width x,
+      (discrepancy (x + u) - discrepancy x) * (weight (x + u) / weight x)) = _
+  rw [← hs]
   ring
 
 private lemma response_square_le {x : ℝ} (hx : 1 < x) :

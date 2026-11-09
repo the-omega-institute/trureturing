@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:a39c8c5ee2f4e84482f67d405b5abb4ffb8e84b8eef630474cedf3d508e5a2b4
+  normalized_sha256: sha256:a39c8c5ee2f4e84482f67d405b5abb4ffb8e84b8eef630474cedf3d508e5a2b4
+cas_ref: sha256:a39c8c5ee2f4e84482f67d405b5abb4ffb8e84b8eef630474cedf3d508e5a2b4
+coverage_gids:
+  - gid: D5/S3/Entropy/TriangleFourSymbolNecessity.original_law_necessity
+    target_statement_id: sha256:e561b5e393bd008fee12eae26f73554b1893cf6a3ff1384f004b3623fb83e06d
+receipts:
+  unresolved_subitems: []

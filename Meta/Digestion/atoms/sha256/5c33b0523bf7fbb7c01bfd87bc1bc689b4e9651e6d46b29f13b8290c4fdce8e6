@@ -1,0 +1,124 @@
+**定理 235.2（中央输入 Gram 与响应正交的面积桥）。** 取原 $a,b\in E$ 及其同一个旧值 $d=D(a,b)$。若在供应的环境乘法中
+
+$$
+[a^2,b]=[b^2,a]=0,\qquad a\circ d=b\circ d=0,
+\tag{235.1}
+$$
+
+则
+
+$$
+\boxed{d^2=a^2b^2-(a\circ b)^2.}
+\tag{235.2}
+$$
+
+这里不要求 $a\circ b$ 或 $a^2-b^2$ 为标量，不要求输入平方可逆。条件 (235.1) 中的两项响应正交须另有证明，不能由“Gram 中央”这四个字预付。
+
+证明。记 $c=a\circ b$、$B=C^*(u,a,b,d)$。成熟的结合代数展开给
+
+$$
+[a,c]=\tfrac12[a^2,b]=0,\qquad
+[b,c]=\tfrac12[b^2,a]=0.
+$$
+
+两平方因此与 $a,b,c$ 交换。$d$ 与 $a,b$ 反交换，使 $d$ 与 $a^2,b^2,c$ 交换，而 $d^2$ 与 $a,b,d$ 交换。所以
+
+$$
+C_0=C^*(u,a^2,b^2,c,d^2)\subset Z(B).
+\tag{235.3}
+$$
+
+特别，不要求 $a$ 与 $b$ 反交换。下面复用 201.1 的非零中央商、态正延拓及 185.1 的真实标签旋转；这些都是已付中间工具。
+
+固定 $C_0$ 的一个字符。在相应非零商中写
+
+$$
+\bar a^2=\alpha u,\quad \bar b^2=\beta u,\quad
+\bar c=\gamma u,\quad \bar d^2=\delta^2u,
+\qquad \alpha,\beta,\delta\ge0.
+\tag{235.4}
+$$
+
+若 $\delta>0$，取 $\bar d$ 的绝对值为 $\delta$ 的谱值所对应的支撑态，并延到整个 $A$，读取原对 $(a,b)$ 的 P2。若 $\delta=0$，使用输入实 Gram 的正性。两种情形只先给
+
+$$
+0\le\delta^2\le\alpha\beta-\gamma^2.
+\tag{235.5}
+$$
+
+其中 $\delta=0$ 不使右端自动为零。取一个实 SO$(2)$ 角度，对角化这个字符上的实 Gram 矩阵，并将该角度作用于原标签 $a,b$，得到原 $x,y$。185.1 保持 $D(x,y)=d$，而仅在当前商中有
+
+$$
+\bar x^2=X^2u,\quad \bar y^2=Y^2u,\quad
+\overline{x\circ y}=0,\qquad
+X^2Y^2=\alpha\beta-\gamma^2.
+\tag{235.6}
+$$
+
+全局的 $c'=x\circ y$ 仍可能非零。旋转后的 $x^2,y^2,c'$ 属于 $C_0$，且 $x\circ d=y\circ d=0$。若 $XY=0$，(235.5) 已给所需等号。以下取 $X,Y>0$，允许 $\delta=0$。
+
+任取有限 $\lambda>0$，令 $T=\sqrt{1+\lambda^2X^2}$，取原第三标签
+
+$$
+z=Tu+\lambda x\in E.
+$$
+
+185.1 的同轴仿射零值给 $D(x,z)=0$。完整原 PB $(x,y,z)$ 的位移、两份原外层及右端准确为
+
+$$
+\begin{aligned}
+\nu&=d-Tx-\lambda x^2,&\omega&=c',\\
+U_\pm&=y\pm\nu,&V_\pm&=z\pm c',\\
+D(U_+,V_+)-D(U_-,V_-)
+&=-2y\circ\nu-2z\circ c'.
+\end{aligned}
+\tag{235.7}
+$$
+
+只有在当前中央商中，$\bar c'=0$ 才使两份 $\bar V_\pm$ 同为 $\bar z$，右端为 $2\lambda X^2\bar y$。不据此认定两份未知旧输出相同。
+
+置 $e_1=\bar x/X$、$e_2=\bar y/Y$。它们是反交换自伴单位。令
+
+$$
+n=-\frac{\lambda X}{T}e_1+\frac1T e_2,\qquad n^2=u.
+\tag{235.8}
+$$
+
+与 $n$ 反交换的单位 $T^{-1}e_1+(\lambda X/T)e_2$ 保证 $n$ 有两个符号的谱值。取 $\psi(n)=1$ 的数学态。支撑态的 Cauchy–Schwarz 使其对与 $n$ 反交换的自伴元读零，故
+
+$$
+\psi(e_1)=-\lambda X/T,\qquad
+\psi(e_2)=1/T,\qquad \psi(\bar d)=0.
+\tag{235.9}
+$$
+
+把该态拉回 $B$ 并正延拓为整个 $A$ 的数学态 $\phi$。在已知原标签上，202.3–202.4 的同一实 Gram 计算给
+
+$$
+\begin{aligned}
+\phi(V_\pm^2)&=1,\\
+\phi(U_\pm^2)&=X^2+Y^2+\delta^2
+                 \mp\frac{2\lambda X^2Y}{T},\\
+\phi(U_\pm\circ V_\pm)&=Y\mp\frac{\lambda X^2}{T},\\
+\Delta_\pm&:=\phi(U_\pm^2)\phi(V_\pm^2)
+              -\phi(U_\pm\circ V_\pm)^2
+              =\frac{X^2}{T^2}+\delta^2.
+\end{aligned}
+\tag{235.10}
+$$
+
+对两份未知原旧值分别使用 P2，PB 右端的读数为 $2\lambda X^2Y/T$，从而
+
+$$
+\frac{2\lambda X^2Y}{T}
+\le2\sqrt{X^2/T^2+\delta^2},\qquad
+\lambda^2X^2(X^2Y^2-\delta^2)\le X^2+\delta^2.
+\tag{235.11}
+$$
+
+任何严格的 $\delta^2<X^2Y^2$ 都被一个足够大的有限 $\lambda$ 排除，包括 $\delta=0$ 的情形。结合 (235.5)，每个字符均有 $\delta^2=\alpha\beta-\gamma^2$。字符分离 $C_0$，遂得 (235.2)。零代数另由零平方包含。
+
+每次 PB 和 P2 都先在原 $E$ 调用；外层输出不必属于 $B$，由延拓到整个 $A$ 的态分别读取。商只计算已知标签和固定 $d$，没有商上的 $D$，没有对未知响应取极限，也不要求一个对所有字符统一的旋转或 $\lambda$。∎
+
+208.1 先由标量交叠或标量平方差支付正交形状，再用同一面积预算。235.2 则允许正交形状由另一条原关系支付，输入 Gram 可以有多个中央坐标；只将已付面积预算接到这一更一般的入口，不将其前件当作原 P2 的后果。
+

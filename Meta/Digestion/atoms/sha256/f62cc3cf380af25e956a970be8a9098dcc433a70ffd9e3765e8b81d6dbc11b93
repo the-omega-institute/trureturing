@@ -1,0 +1,13 @@
+**Theorem 14.3 (Exact labelled $B=C$ scalar curve).** Let $k>0$, $N>0$, and $0<b<N/2$. Put $A=N-2b$, $F(b)=V(k,A,b,b)$ and
+$$
+M=1+k(2Nb-3b^2),\qquad L=1+2kb(N-2b),\qquad R=1+kb(N-b).
+$$
+Then
+$$
+F'(b)=
+\frac{k^2b(3b-N)\,[N+k(2A^2b+3Ab^2+2b^3)]}{6LRM}.
+$$
+Thus $F'(b)$ is negative, zero or positive exactly as $b<N/3$, $b=N/3$ or $b>N/3$. The unique continuous minimum is at $b=N/3$. The scalar endpoint values and one-sided limits at $0$ and $N/2$ are zero. At $k=0$ the curve is identically zero.
+
+**Proof.** The labelled expression is $[2\log M-\log L-2\log R]/12$. Differentiate the three logarithms and collect the positive common denominator. On the stated interval $A,b,N,L,R,M$ and the bracket in the numerator are positive; only $3b-N$ changes sign. The mean value theorem gives strict decrease on $(0,N/3]$ and strict increase on $[N/3,N/2)$. Continuity at the two scalar endpoints and direct substitution give the two limits. At $k=0$ each logarithm vanishes. ∎
+

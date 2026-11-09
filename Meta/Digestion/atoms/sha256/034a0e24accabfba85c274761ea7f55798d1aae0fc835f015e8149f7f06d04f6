@@ -1,0 +1,36 @@
+#### 定理 10.3：标量固定不保证相位固定
+
+令 $`x_*=sr`$、$`\omega_*=\omega(x_*)`$。级数
+
+$$
+A(x)=\sum_{j=0}^{\infty}\bigl(\omega(F_s^j x)-\omega_*\bigr)
+$$
+
+一致绝对收敛，且 $\operatorname{Lip}(A)\le K/(1-L)$，其中 $K=\operatorname{Lip}(\omega)$。 同胚 $\mathcal H(x,z)=(x,e^{iA(x)}z)$ 满足
+
+$$
+\boxed{\mathcal H\circ T_s=(F_s\times R_{\omega_*})\circ\mathcal H,\quad
+R_{\omega_*}(z)=e^{i\omega_*}z.}
+$$
+
+因此完整模型有固定点，当且仅当 $`\omega_*\in2\pi\mathbb Z`$； 有理非整数 $`\omega_*/2\pi=p/q`$ 给极限 $q$ 周期， 无理比值给极限圆上的稠密旋转。
+
+**证明。**
+
+每项绝对值至多 $`KL^j|x-x_*|\le2KL^j`$，给一致收敛； 逐项比较 $x,y$ 给 Lipschitz 界。 去掉首项得到
+
+$$
+A(x)-A(F_sx)=\omega(x)-\omega_*.
+$$
+
+将其代入 $\mathcal H(T_s(x,z))$ 即得共轭；逆为 $(x,z)\mapsto(x,e^{-iA(x)}z)$。 对迭代求和还给
+
+$$
+z_n=e^{i[n\omega_*+A(x_0)-A(x_n)]}z_0,
+\quad |A(x_n)|\le\frac K{1-L}L^n|x_0-x_*|.
+$$
+
+固定或周期点的基底必须是 $`x_*`$，因为 $F_s^q$ 仍压缩。 余下分类就是圆周旋转：有理转角返回，无理转角的整数倍模 $2\pi$ 稠密。 后者可由鸽巢原理得到任意小的非零整数倍角，再以其倍数逼近任意圆周角。
+
+$\square$
+

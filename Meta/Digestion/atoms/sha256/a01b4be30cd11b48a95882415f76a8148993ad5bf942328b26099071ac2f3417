@@ -1,0 +1,8 @@
+**推论 78.1（同一原四维窗的结合复乘法）。** 在76.1下，原 $B$ 的复化上定义 $a\star b=a\circ b-iD(a,b)$ 并作双复线性延拓。则它与 $M_2(\mathbb C)$ 保单位、保星同构，原锥 $C\cap B$ 对应正矩阵锥。旧 $D$ 在 $B$ 上满足原R及全部有限复Gram正性。
+
+证明。将 $u,h,k,j$ 分别送到 $I,\sigma_x,\sigma_y,-\sigma_z$；77.1及同一Jordan表使 $\star$ 准确对应矩阵乘法，星对应伴随。单位纯方向在环境中具有两个谱值 $\pm1$，故 $su+x\in C$ 当且仅当 $s\ge|x|$，与此矩阵识别的正锥相同。结合律给原R实部式。原正评价的限制经同构为正矩阵泛函，其唯一密度矩阵 $\rho_\alpha\succeq0$ 满足 $\operatorname{Tr}\rho_\alpha=\alpha(u)$；对 $z=\sum_r c_ra_r$，有限Gram二次值为 $\operatorname{Tr}(\rho_\alpha z^*z)\ge0$。∎
+
+这个结合乘法是由同一原 $S,D$ 在 $B$ 的复化上识别的内在乘法；不将一般环境JC包含误报为已经保留这一取向的复结合包含。$C^*(u,U)$ 在既有环境中可以保留相反取向的扇区，77.1并未通过假设取向元全局中央来证明。
+
+若实际效果和同一个完整菜单均在此窗中，且 $m_\alpha=\alpha(u)>0$，其Born概率为 $p_\alpha(\ell)=\operatorname{Tr}(\rho_\alpha e_\ell)/m_\alpha$；零质量不归一，实际准备族不要求覆盖全部密度矩阵。这里不自动供应任何实际仪器、更新、相关联合或时间过程。66.1的CP、Kraus及Lüders、共同张量、全部历史和仍合法未来、真正遗忘与停止拒绝销毁、同数两侧真实逆向返回、CountRead正常性与前对偶、物理钟、Hamiltonian生成元域、能量及共同正 $\hbar$ 各保持其完整来源前件。原 $\Omega/\mathrm{native}$、全词K/J/q、parent/ready、全部质量和中心不等维块、全部准备菜单、仪器环境全部输出及递归同源相关参考均保持。
+

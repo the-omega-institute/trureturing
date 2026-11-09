@@ -1,0 +1,23 @@
+**Definition 204.2 (the fixed-row interval body).** Let $0\ne w\in\mathbb R^2$ and write $h=h_w$. For each label $y$, define extended-real bounds
+
+$$
+ \ell_y(h)=\sup_{x:h(x)>0}\frac{-s_y(x)}{h(x)},
+ \qquad
+ u_y(h)=\inf_{x:h(x)<0}\frac{-s_y(x)}{h(x)},
+\tag{204.4}
+$$
+
+with the conventions $\sup\varnothing=-\infty$ and $\inf\varnothing=+\infty$. Define
+
+$$
+\mathscr V_w^{\mathrm{env}}
+ =\left\{v\in\mathsf H:
+ \begin{array}{l}
+ s_y(x)\ge0\text{ whenever }h(x)=0,\\[2pt]
+ \ell_y(h)\le v_y\le u_y(h)\text{ for every }y\in\mathcal L
+ \end{array}\right\}.
+\tag{204.5}
+$$
+
+All pointwise quantifiers range over the fixed representative domain $G$. The bounds in (204.4) lie in $[-\infty,+\infty]$, whereas every $v_y$ is real. Thus $\ell_y(h)=+\infty$ or $u_y(h)=-\infty$ excludes every real value of that coordinate, even if the two extended bounds are equal. No quotient is taken where its denominator is zero, and no subtraction of infinite bounds is used.
+

@@ -1,0 +1,51 @@
+**Corollary 208.5 (the unpaid $B3B$ direction and the full-zero boundary).** Let $\mathbf1_{\mathcal L}$ denote the all-one coefficient vector and set $\beta=e_B-p\mathbf1_{\mathcal L}$. Then $\beta\in K_{\rm rel}$ and
+
+$$
+\begin{gathered}
+h_\beta=u_B-p,\qquad s_\beta=s-p,\qquad t_\beta=t-p,\\
+G_j^+(\beta,\beta)=A_j,\qquad
+G_j^-(\beta,\beta)=B_j,\qquad
+H_{\chi,j}(\beta,\beta)=H_j,\\
+V_j(\beta,\beta)=\frac3{16},\qquad
+M_j(\beta,\beta)=\frac{\Delta(D)_{BjB}}{\pi_j}.
+\end{gathered}
+\tag{208.25}
+$$
+
+Thus every full-zero hard candidate must satisfy, for each $j$,
+
+$$
+A_j+B_j\le H_j,
+\qquad
+(1+k_j)A_j+B_j\le\frac3{16}k_j
+\quad\text{if }k_j<\infty.
+\tag{208.26}
+$$
+
+For $D\in\mathscr F_{154}(\theta)$ the case $j=B$ is already necessary from the imposed BBB equality. The case $j=3$ bounds the actual unpaid residual $\Delta(D)_{B3B}$, and a strict positive right-hand side in (208.5) or (208.6) excludes that particular $D$ from full-zero attainment. These are conditional exclusion criteria for a given partition; no positive margin over all original pair-calibrated partitions is asserted.
+
+*Proof.* Since $\sum_i f_i=1$ and $f_B=p$, one has $F_\beta=0$. Hard multiplication gives
+
+$$
+h_\beta^2=(1-2p)u_B+p^2,
+\qquad
+F_{\beta\odot\beta}=(1-2p)f_B+p^2=p(1-p)=\frac3{16}.
+\tag{208.27}
+$$
+
+Consequently (208.16) gives $V_j(\beta,\beta)=3/16$. Also
+$P(h_\beta^2)-(Ph_\beta)^2=t(1-t)$, proving the asserted equality for $H_{\chi,j}$. The other form identifications follow from (208.3), (208.5) and (208.14). In particular, the scalar bounds are precisely the $\beta$ direction of the hard-algebra matrix bounds, with the same original source and the same actual terminals.
+
+Appendix III (154.3), (154.32) and Definition 155.1 fix all ordered pairs, the six permutations of $013$ and BBB. They do not impose $B3B$. Pair-sum cancellation expresses that remaining coordinate as
+
+$$
+\Delta(D)_{B3B}=\sum_{i,k\in\{0,1,3\}}\Delta(D)_{i3k},
+\tag{208.28}
+$$
+
+which includes repeated-label entries not individually fixed by (154.32). The two contrast channels in Appendix III (157.2) include exactly $h_\beta=u_B-p$; (208.25) constrains its first-and-third-slot contraction with the actual middle indicator $u_3$. Hence the budget has a consumer beyond the already paid binary BBB coordinate. Applying (208.5) and (208.6) gives (208.26) and the exclusion criterion.
+
+The covariance estimate used in (208.11) and (208.20) is classical Cauchy–Schwarz. The source-specific deduction here combines it with the original reversed law (208.7), the finite weighted bound (208.8), the exact pair calibration and the hard product budget (208.21). Finite linear-moment purification, as in A. Dvoretzky, A. Wald and J. Wolfowitz, *Relations among certain ranges of vector measures*, [doi:10.2140/pjm.1951.1.59](https://doi.org/10.2140/pjm.1951.1.59), Theorem 4, does not by itself preserve the cubic same-partition law with its own propagated terminals.
+
+These necessary inequalities neither construct a full-zero partition nor give a fixed-start successor. They assume no globally bounded or small $\chi$, no source label $q$ in the hard label span, no ideal property of a tensor radical, no positivity of $\mathcal C(r,r,1)$ and no local forward Gram definiteness. Coefficient correction rank, coarse moment rank and actual label-span rank retain their separate meanings; none is identified by this budget. The universal original $F_{64}$ target and the original physical succession question remain unresolved. $\square$
+

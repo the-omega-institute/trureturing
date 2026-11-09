@@ -62,7 +62,7 @@ Follow these steps in order. Do not pass a step until its postcondition holds.
 
 Observation-only requests, including source/atom inspection and issue work, follow CLAUDE.md §6.1 in the main checkout or a suitable existing worktree without creating a worktree or running a build. Do not run the mutation steps below for such a request; if a chosen inspection command requires building the CLI, report that prerequisite or use available source reads instead of treating the build as read-only.
 
-For formalization and digestion writes, first reuse a suitable linked worktree; create one only when isolation is needed. Check Git registration, repository identity, branch/commit and pin compatibility, existing material and cooperative scopes. A dispatcher-assigned lane can satisfy this check; reuse is not limited to dispatcher assignments or the current session.
+For formalization and digestion writes, first reuse a suitable linked worktree; create one only when isolation is needed. Check Git registration, repository identity, branch/commit and pin compatibility, and existing material. A dispatcher-assigned lane can satisfy this check; reuse is not limited to dispatcher assignments or the current session.
 
 Prepare PATH for the mutation commands:
 

@@ -6,7 +6,13 @@
    utility: none
    digest: Canonical purified overlaps of the literal reverse-instance Kraus maps. -/
 
+import D5.S3.Quantum.Foundation.FiniteStateChannel
+import D5.S3.Quantum.PureState.PureStateHandshake
+import D5.S3.QuantumBounds.PeritoTsirelson
+import D5.S3.Quantum.Recovery.BurriReverseDecoder
+import D5.S3.Quantum.Foundation.FiniteKrausChannel
 import D5.S3.Quantum.Recovery.BurriReversePolar
+import D5.S3.Quantum.QuantumChannels.MayerKnillInfidelityScalingCore
 import D5.S3.Quantum.QuantumChannels.MayerZeroFidelityTightness
 
 /-! Canonical purified overlaps for the full source-labelled composite Kraus maps. -/
@@ -61,7 +67,7 @@ theorem purification_overlap (D : E → Matrix A B ℂ) :
     rw [maxEntangled.eq_1]
     rfl
   unfold fidelity recoveredPurification
-  rw [hpur, D5.S3.Quantum.QuantumChannels.MayerZeroFidelityTightness.kraus_survival]
+  rw [hpur, D5.S3.Quantum.QuantumChannels.MayerKnillInfidelityScalingCore.kraus_survival]
   simp_rw [hamplitude, ← Complex.normSq_eq_norm_sq]
   exact labels.sum_comp (fun p => Complex.normSq (Matrix.trace (composite D p) / 2))
 
@@ -164,10 +170,5 @@ theorem canonical_overlap_gap :
   rw [source_overlap, slice_overlap]
   linarith [actual_polynomial_gap]
 
-#print axioms purification_overlap
-#print axioms source_overlap
-#print axioms slice_overlap
-#print axioms canonical_overlap_gap
-#print axioms recovery_channels
 
 end D5.S3.Quantum.Recovery.BurriReverseOverlap

@@ -1,0 +1,19 @@
+**定义 32.1（自旋分支的完整候选）。** 保持 27.1 的同一纯实入口、实际共轭及全部来源合同，另保持 30.1 所声明的同一自旋识别 $X=\mathbb Ru\oplus H$；原 $E\subseteq X$ 仍是稠密含单位实 Jordan 子代数，可以不完备。令 $V=E\cap H$，则 $E=\mathbb Ru\oplus V$，$V$ 在 $H$ 中稠密。旧 $D:E^2\to E$ 起初仅为反对称总映射。保留全原域 PY，将本分支的三元兼容性写为
+
+$$
+\mathrm{NN}:\quad D(a,D(a,b))=H_a b,
+\qquad H_a=L_a^2-L_{a^2},\qquad a,b\in E,
+$$
+
+以及受限循环
+
+$$
+\begin{aligned}
+\mathrm J_\perp:\quad &D(x,D(y,z))+D(y,D(z,x))+D(z,D(x,y))=0,\\
+&x\in V\setminus\{0\},\quad y,z\in V\cap x^\perp.
+\end{aligned}
+\tag{32.1}
+$$
+
+不另付旧 $D$ 的加性、齐次性、连续性、完整 R、任意完成新输入、有限维或输出覆盖。一般 JB 分支仍取 27.1 的完整 PY+R，不将自旋识别消去。
+

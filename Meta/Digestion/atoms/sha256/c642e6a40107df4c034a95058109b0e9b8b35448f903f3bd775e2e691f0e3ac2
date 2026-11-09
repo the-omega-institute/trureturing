@@ -1,0 +1,52 @@
+**引理 173.1（本卷 152.1 的原核域适配）。** 对每个原 $Z\in\mathcal E$，$\mathfrak F(Z)=0$。
+
+证明。复用 152.1 的近范数向量与双侧预算，不借用静态重构卷式 (65.2)–(65.3) 的极分解方向。固定 $Z\ne0$、$M=\|Z\|$ 和单位 $\xi\in H_0$。由 $H_0$ 稠密及已知 $Z$ 有界，单位核向量上的范数上确界仍为 $M$；选单位 $v_n\in H_0$，使
+
+$$
+r_n=\|Zv_n\|>0,\qquad r_n\longrightarrow M,\qquad
+w_n=Zv_n/r_n\in H_0.
+\tag{173.1}
+$$
+
+最后的包含由 170.1 的保持性得到。把 $\xi\mapsto v_n$ 和 $w_n\mapsto\xi$ 分别延成它们至多二维线性包上的酉变换，在正交补取恒等，得 $R_n,L_n\in\mathcal U_0$。这只延拓有限一维等距匹配，不延拓任何无限极因子。于是
+
+$$
+\begin{gathered}
+W_n=L_nZR_n=x_n+iy_n\in\mathcal E,\qquad
+\mathfrak F(W_n)=\mathfrak F(Z),\\
+W_n\xi=r_n\xi,\qquad
+W_n^*\xi=R_n^*Av_n/r_n,\qquad A=Z^*Z.
+\end{gathered}
+\tag{173.2}
+$$
+
+原输入 $x_n,y_n$ 的合法性来自 170.1 的两次有限乘法，残差等式来自 172.1。$A$ 只作为已知环境正算子使用，不送给 $D$。由 $0\le A\le M^2 1$，有 $A^2\le M^2A$；因为 $\langle v_n,Av_n\rangle=r_n^2$，
+
+$$
+\|(A-r_n^2)v_n\|^2
+=\|Av_n\|^2-r_n^4
+\le r_n^2(M^2-r_n^2).
+\tag{173.3}
+$$
+
+置 $\delta_n=\sqrt{M^2-r_n^2}\to0$。由 $R_n^*v_n=\xi$ 和 (173.2)–(173.3)，
+
+$$
+\|W_n^*\xi-r_n\xi\|\le\delta_n,
+\qquad \|y_n\xi\|\le\delta_n/2,
+\qquad \|x_n\xi\|\le\|\operatorname{Re}W_n\|\le M.
+\tag{173.4}
+$$
+
+对这对实际原输入用 (170.3)，得 $|\langle\xi,D(x_n,y_n)\xi\rangle|\le\|x_n\xi\|\|y_n\xi\|$。已知交换子的向量读数也以 Cauchy–Schwarz 满足相同界。因此对所有 $n$，
+
+$$
+|\langle\xi,\mathfrak F(Z)\xi\rangle|
+=|\langle\xi,\mathfrak F(W_n)\xi\rangle|
+\le2\|x_n\xi\|\|y_n\xi\|
+\le M\delta_n\longrightarrow0.
+\tag{173.5}
+$$
+
+左边是一个固定有界自伴残差的同一个固定读数，所以为零。对全部单位 $\xi\in H_0$ 成立；$H_0$ 稠密和固定有界算子的二次型连续性、极化，使该算子为零。$Z=0$ 由原零行处理。这正是 (167.3)。极限只用于已知向量估计和一个固定输出的二次型；没有宣称 $W_n$ 收敛，没有对未知 $D$ 取输入极限，也没有在完成上定义新的 $D$。∎
+

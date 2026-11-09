@@ -1,0 +1,73 @@
+**Proposition 209.2 (the limiting relation budgets).** For every original $\theta$, the function $w$ is integrable and strictly positive almost everywhere. Each $\xi_j$ is finite and positive, each $\Lambda_j$ is a finite positive-definite symmetric form on $K_{\rm rel}$, and
+
+$$
+G_{j,n}^+\longrightarrow0,\qquad
+G_{j,n}^-\longrightarrow0,\qquad
+H_{\chi,j,n}\longrightarrow\Lambda_j
+\quad\text{in matrix norm on }K_{\rm rel}.
+\tag{209.4}
+$$
+
+Consequently, with
+
+$$
+S_{j,n}=G_{j,n}^++G_{j,n}^--H_{\chi,j,n},
+\tag{209.5}
+$$
+
+one has $S_{j,n}\to-\Lambda_j$. There is one index after which all four $S_{j,n}$ are strictly negative definite, simultaneously for every nonzero relation direction.
+
+*Proof.* The reversed conditional law (208.7) gives
+
+$$
+0\le w=v\chi=\frac{P(g^2)}{v}-v\le G_0-v,
+\tag{209.6}
+$$
+
+so $w\in L^1(m)$. The original positive heat kernel and the source-start nonconstancy supplier imply that the conditional variance of $g$ in (208.7) is strictly positive at almost every middle state; hence $w>0$ almost everywhere. Since every $f_j$ is positive and bounded, this proves $0<\xi_j<\infty$.
+
+For $a\in K_{\rm rel}$, (209.1) gives $h_{n,a}\overset{*}{\rightharpoonup}0$. The forward and reversed three-time kernels are integrable probability kernels: the forward one is the density used in Appendix II §123, and the reversed one is obtained from (208.7). Rectangular-tensor approximation in their respective $L^1$ spaces therefore makes their bounded multilinear integrals continuous under componentwise weak-star convergence. Applying this to (209.2) gives
+
+$$
+G_{j,n}^+(a,b)\to0,\qquad G_{j,n}^-(a,b)\to0
+\quad(a,b\in K_{\rm rel}).
+\tag{209.7}
+$$
+
+For the weighted term, $h_{n,a\odot b}\overset{*}{\rightharpoonup}F_{a\odot b}$, while $w\in L^1(m)$. The same two-variable tensor approximation, now for the kernel $w(x)P(x,dy)$, yields
+
+$$
+\frac1{\pi_j}\int_Gu_{n,j}wP(h_{n,a\odot b})\,dm
+\longrightarrow
+\frac1{\pi_j}\int_Gf_jwP(F_{a\odot b})\,dm.
+\tag{209.8}
+$$
+
+The subtracted term in $H_{\chi,j,n}$ is $\mathbb E_{\nu_{j,n}}[\chi t_{n,a}t_{n,b}]$. To control this weighted term, use the original transition density $p_d(x,y)$ of $P$ from Appendix II Definition 123.1. For almost every $x$, its row $p_d(x,\cdot)$ belongs to $L^1(m)$ and has integral one. Thus weak-star convergence gives, for every $a\in K_{\rm rel}$,
+
+$$
+t_{n,a}(x)=\int_Gp_d(x,y)h_{n,a}(y)\,m(dy)
+\longrightarrow\int_Gp_d(x,y)F_a(y)\,m(dy)=0
+\quad\text{for almost every }x.
+$$
+
+Because the $u_{n,i}$ form a hard partition, $|h_{n,a}|\le\|a\|_\infty$, and the Markov property gives $|t_{n,a}|\le\|a\|_\infty$. Since $0\le u_{n,j}\le1$ and $w\in L^1(m)$, dominated convergence with dominator $\|a\|_\infty\|b\|_\infty w$ yields
+
+$$
+\left|\mathbb E_{\nu_{j,n}}[\chi t_{n,a}t_{n,b}]\right|
+=\left|\frac1{\pi_j}\int_Gu_{n,j}w\,t_{n,a}t_{n,b}\,dm\right|
+\le\frac1{\pi_j}\int_Gw\,|t_{n,a}t_{n,b}|\,dm
+\longrightarrow0.
+$$
+
+Combining this with (209.8) and the exact definition (208.15) proves the third limit in (209.4). The coefficient space $K_{\rm rel}$ is finite-dimensional, hence entrywise convergence is matrix-norm convergence.
+
+For $a\ne0$,
+
+$$
+F_{a\odot a}=\sum_i a_i^2f_i>0\quad\text{almost everywhere}.
+\tag{209.9}
+$$
+
+Positivity improvement of $P$ gives $P(F_{a\odot a})>0$ almost everywhere. Thus (209.3) gives $\Lambda_j(a,a)>0$. Symmetry follows from $a\odot b=b\odot a$. Positive definiteness on the unit sphere of the finite-dimensional $K_{\rm rel}$ gives a positive minimum eigenvalue for each $j$; taking the minimum over the four labels and using (209.4) proves the final assertion. The only analytic inputs here are the original positive kernel, the bounded native source and the tensor-continuity mechanism already used for the actual path density; no global likelihood-ratio or compactness assumption has been added. $\square$
+

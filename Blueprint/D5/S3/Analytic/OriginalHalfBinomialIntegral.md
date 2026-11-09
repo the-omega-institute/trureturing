@@ -4,7 +4,31 @@
 
 The literal original half-binomial-square series equals its normalized elliptic sine integral.
 
-**Theorem 1.1 (Summability, integrability and the exact identity including zero).**
+**Definition 1.1 (The normalized central-binomial coefficient).**
+
+$$\operatorname{b}\left(n\right)=\frac{\operatorname{centralBinom}\left(n\right)}{4^{n}}$$
+
+*Formalization.* `D5/S3/Analytic/OriginalHalfBinomialIntegral.b` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every natural n, b(n) is the real central-binomial coefficient divided by 4^n.
+
+**Theorem 1.2 (The half-parameter multichoose coefficient).**
+
+Lean statement: `D5/S3/Analytic/OriginalHalfBinomialIntegral.b_multichoose`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/OriginalHalfBinomialIntegral.b_multichoose` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every natural n, Ring.multichoose (1/2 : Real) n equals b(n). This coefficient identity supplies the binomial power-series step in the integral representation.
+
+**Theorem 1.3 (Summability, integrability and the exact identity including zero).**
 
 Lean statement: `D5/S3/Analytic/OriginalHalfBinomialIntegral.original_series_eq_integral`
 
@@ -22,5 +46,7 @@ This is the classical Euler-Gauss representation of the complete elliptic integr
 
 ## References
 
+- Truth anchor: `D5/S3/Analytic/OriginalHalfBinomialIntegral.b`
+- Truth anchor: `D5/S3/Analytic/OriginalHalfBinomialIntegral.b_multichoose`
 - Truth anchor: `D5/S3/Analytic/OriginalHalfBinomialIntegral.original_series_eq_integral`
 - Dependency: [D5/S3/VertexAlgebra/LatticeHalfFockFiniteCorrection](../VertexAlgebra/LatticeHalfFockFiniteCorrection.md)

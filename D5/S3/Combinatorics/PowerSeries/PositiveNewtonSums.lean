@@ -14,6 +14,7 @@ result:
   admission_basis: open-problem-resolution (#23723; Proved)
   Direct frozen dependencies: none (Mathlib imports only).
   Unfinished four-slot registration: https://github.com/the-omega-institute/trureturing/issues/23747
+  logarithmic_derivative escape audit: https://github.com/the-omega-institute/trureturing/issues/26975
   Reg binding: declared_unresolved; IE-C050 ClosedTruthReadout,
     source.residual_requires_open. No declared_validated claim.
 -/
@@ -289,7 +290,7 @@ private lemma signed_dataSeries_eq : rescale (-1) dataSeries = (1 - X) ^ 5 - 1 :
   rw [dataSeries_eq, map_sub, map_pow, map_add, map_one, rescale_X]
   simp only [map_neg, map_one, neg_one_mul, sub_eq_add_neg]
 
-private lemma logarithmic_derivative (p : ℚ⟦X⟧) (hp : constantCoeff p = 0) :
+lemma logarithmic_derivative (p : ℚ⟦X⟧) (hp : constantCoeff p = 0) :
     PowerSeries.derivative ((PowerSeries.log ℚ).subst p) * (1 + p) =
       PowerSeries.derivative p := by
   let hs := HasSubst.of_constantCoeff_zero' hp
@@ -463,6 +464,5 @@ theorem result :
     exact rational_equation
   · exact recurrence_proof
 
-#print axioms result
 
 end D5.S3.Combinatorics.PowerSeries.PositiveNewtonSums

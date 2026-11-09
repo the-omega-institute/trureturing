@@ -1,0 +1,55 @@
+**证明 216.2 的第一部分。** 固定 $a,b,d$。由 $a\circ b=0$，环境中 $ab=-ba$。在 (128.6) 取原第三输入零，$D(a,0)=0$ 使两份外层的第二输入为零，所以 $b\circ d=0$；交换 $a,b$，再用反对称性，得 $a\circ d=0$。这是母卷 99.3 已用的零输入步骤。因而 $a,b,d$ 两两反交换。
+
+只为读取这个固定三元组，令
+
+$$
+B=C^*(u,a,b,d)\subset A.
+\tag{217.1}
+$$
+
+两两反交换使 $a^2,b^2,d^2$ 分别与三个生成元交换，故都属于 $Z(B)$。这里既没有将 $B_{\rm sa}$ 或 $E\cap B$ 宣告为新的旧 $D$ 论域，也没有断言 $D(E\cap B,E\cap B)\subset B$。
+
+读取所需的延伸如下。若 $\pi:B\to B(H)$ 是非零不可约表示、$\xi\in H$，则 $\omega_\xi(x)=\langle\xi,\pi(x)\xi\rangle$ 是 $B$ 的数学正泛函。对 $\xi\ne0$，先除以 $\|\xi\|^2$，以含单位 C* 子代数的态延伸定理延到 $A$，再乘回 $\|\xi\|^2$；零向量取零泛函。记任意一份这样得到的延伸为 $\widetilde\omega_\xi$。它限制到 $E$ 后对准确原锥为正，故 129.1 给每一对原 $r,s$ 的
+
+$$
+\bigl|\widetilde\omega_\xi D(r,s)\bigr|^2
+\le \widetilde\omega_\xi(r^2)\widetilde\omega_\xi(s^2)
+      -\widetilde\omega_\xi(r\circ s)^2.
+\tag{217.2}
+$$
+
+若 $r,s\in B\cap E$，右边完全由 $\pi(r)\xi,\pi(s)\xi$ 的实 Gram 行列式决定，即使未知旧输出 $D(r,s)$ 不在 $B$ 中，左边仍有定义且受同一个预算约束。每次比较选定一份延伸，用它同时读取 PB 两侧及两张外层表；不在两侧拼接不同泛函，不要求延伸属于原实际准备族。态延伸只延伸泛函，从未延伸旧映射。
+
+由 Schur 引理和平方的中央性，对每个这样的 $\pi$ 有有限非负实数 $X,Y$，使
+
+$$
+\pi(a)^2=X^2I,\qquad \pi(b)^2=Y^2I.
+\tag{217.3}
+$$
+
+若 $X=0$ 或 $Y=0$，相应自伴输入像为零。把任意向量读取延到 $A$，对原 $(a,b)$ 使用 P2，便得所有 $\langle\xi,\pi(d)\xi\rangle=0$，所以 $\pi(d)=0$。于是该表示上已经有 $\pi(d^2-a^2b^2)=0$。
+
+以下取 $X,Y>0$。令 $h=\pi(a)/X$、$v=\pi(b)/Y$，它们是反交换的自伴酉元。分解 $h$ 的正负特征空间，$v$ 在二者之间给酉同构；选择这个同构作坐标，有 $H=\mathbb C^2\otimes H_0$，并且
+
+$$
+h=\sigma_3\otimes I,\qquad v=\sigma_1\otimes I,
+\qquad \pi(d)=\sigma_2\otimes T,\qquad T=T^*.
+\tag{217.4}
+$$
+
+最后一个式子直接由反交换得到：与 $h$ 反交换使 $\pi(d)$ 对角块为零，与 $v$ 反交换使右上块斜自伴，故可写为 $-iT$。又 $-ihv=\sigma_2\otimes I$ 属于 $\pi(B)$，从而 $I\otimes T\in\pi(B)$，并与全部生成元交换。不可约性使 $T=zI$，$z\in\mathbb R$。此时 $\pi(B)=M_2(\mathbb C)\otimes I$，不可约性进一步使 $\dim H_0=1$。因此，在该读取坐标中准确有
+
+$$
+\pi(a)=X\sigma_3,\qquad
+\pi(b)=Y\sigma_1,\qquad
+\pi(d)=z\sigma_2.
+\tag{217.5}
+$$
+
+这是固定三元组的数学表示结论，不是原域中存在归一 Pauli 输入的断言，更不是把旧 $D$ 下降到 $\pi(B)$。以下每个 $D$ 调用仍写在原 $E$ 上。对 $\sigma_2$ 的一个单位特征向量延伸读取原 $(a,b)$，P2 先给上预算
+
+$$
+z^2\le X^2Y^2.
+\tag{217.6}
+$$
+

@@ -4,9 +4,21 @@
 
 Uniform cumulative variance asymptotics give the covariance of fixed increment lengths.
 
-Let E be measurable and bounded on every compact interval. Write D_h(x)=E(x+h)-E(x), V(Y,h)=integral_1^Y D_h(x)^2 dx, h=c*X^(4/5), and ell=log(X/h), where c>0. Assume V(Y,k)/(Y*k*log(Y/k)) tends uniformly to one for Y^(3/4)<=k<=Y^(7/8).
+Let E be measurable and bounded on every compact interval. Write D_h(x)=E(x+h)-E(x), V(Y,h)=integral_1^Y D_h(x)^2 dx, h=c*X^theta, and ell=log(X/h), where c>0 and 0<alpha<theta<beta<1. Assume V(Y,k)/(Y*k*log(Y/k)) tends uniformly to one for Y^alpha<=k<=Y^beta.
 
-**Theorem 1.1 (Fixed multiples enter the variance band).**
+**Theorem 1.1 (Sublinear comparison lengths).**
+
+Lean statement: `D5/S3/Arith/Robin/ForwardKernel/FixedLengthCovariance.length_div_tendsto_zero`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ForwardKernel/FixedLengthCovariance.length_div_tendsto_zero` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every real c and theta<1, the ratio (c*X^theta)/X tends to zero as X tends to infinity.
+
+**Theorem 1.2 (Fixed multiples enter the variance band).**
 
 Lean statement: `D5/S3/Arith/Robin/ForwardKernel/FixedLengthCovariance.shifted_band`
 
@@ -16,9 +28,9 @@ Lean statement: `D5/S3/Arith/Robin/ForwardKernel/FixedLengthCovariance.shifted_b
 
 *Commentary.*
 
-For c,d,q positive and r nonnegative, set h=c*X^(4/5) and Y=d*X+r*h. Eventually Y^(3/4)<=q*h<=Y^(7/8), since the lower and upper ratios tend to zero.
+For alpha<theta<beta and theta<1, c,d,q positive and r nonnegative, set h=c*X^theta and Y=d*X+r*h. Eventually Y^alpha<=q*h<=Y^beta, since the lower and upper ratios tend to zero.
 
-**Theorem 1.2 (Growth of the length logarithm).**
+**Theorem 1.3 (Growth of the length logarithm).**
 
 Lean statement: `D5/S3/Arith/Robin/ForwardKernel/FixedLengthCovariance.length_log_tendsto`
 
@@ -28,9 +40,9 @@ Lean statement: `D5/S3/Arith/Robin/ForwardKernel/FixedLengthCovariance.length_lo
 
 *Commentary.*
 
-For c>0, log(X/(c*X^(4/5))) tends to infinity as X tends to infinity.
+For theta<1 and c>0, log(X/(c*X^theta)) tends to infinity as X tends to infinity.
 
-**Theorem 1.3 (Variance at a shifted endpoint).**
+**Theorem 1.4 (Variance at a shifted endpoint).**
 
 Lean statement: `D5/S3/Arith/Robin/ForwardKernel/FixedLengthCovariance.shifted_variance_tendsto`
 
@@ -42,9 +54,9 @@ Lean statement: `D5/S3/Arith/Robin/ForwardKernel/FixedLengthCovariance.shifted_v
 
 For d,q>0 and r>=0, V(d*X+r*h,q*h)/(X*h*ell) tends to d*q as X tends to infinity.
 
-The endpoint divided by X tends to d. The ratios (d*X+r*h)^(3/4)/(q*h) and q*h/(d*X+r*h)^(7/8) tend to zero, so q*h eventually lies in the variance band. Moreover ell=(1/5)*log(X)-log(c) tends to infinity, while log((d*X+r*h)/(q*h))-ell tends to log(d/q). Multiplying the variance ratio by the endpoint and logarithmic normalization ratios gives the limit.
+The endpoint divided by X tends to d. The ratios (d*X+r*h)^alpha/(q*h) and q*h/(d*X+r*h)^beta tend to zero, so q*h eventually lies in the variance band. Moreover ell=(1-theta)*log(X)-log(c) tends to infinity, while log((d*X+r*h)/(q*h))-ell tends to log(d/q). Multiplying the variance ratio by the endpoint and logarithmic normalization ratios gives the limit.
 
-**Theorem 1.4 (Covariance of two increments).**
+**Theorem 1.5 (Covariance of two increments).**
 
 Lean statement: `D5/S3/Arith/Robin/ForwardKernel/FixedLengthCovariance.fixed_length_covariance_tendsto`
 
@@ -61,6 +73,7 @@ Compact boundedness and measurability make the increment products integrable. Su
 ## References
 
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/FixedLengthCovariance.fixed_length_covariance_tendsto`
+- Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/FixedLengthCovariance.length_div_tendsto_zero`
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/FixedLengthCovariance.length_log_tendsto`
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/FixedLengthCovariance.shifted_band`
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/FixedLengthCovariance.shifted_variance_tendsto`

@@ -67,3 +67,31 @@ is `90243c923231b1a9aa7171d85a534e16606b11fe142ef5ecbb1d14dbaad85805`;
 [the source comparison](https://github.com/the-omega-institute/trureturing/issues/18947).
 That report also records the literature screen. Its completeness and the
 absence of subsequent corrections are `ASSUMED-UNVERIFIED`.
+
+## Both states nondiagonal: 3 November 2026 supplement
+
+Haobo Ma and Wenlin Zhang, *A Tsallis-bound counterexample with both states
+nondiagonal*, 3 November 2026, CC BY 4.0, answers Supriyo Dutta's question
+in correspondence. The supplied TeX source has SHA256
+`10ca4b28ac61b4d8e4ca48c241a93ebe774a7da1ff1c91060a39d18327f368b5`.
+This supplement is distinct from work involving Soumyojyoti Dutta or Tushar.
+
+The common orthogonal matrix U=(1/sqrt(2))[[1,1],[1,-1]] sends the original
+pair to rhohat=(1/10)[[5,3],[3,5]] and
+sigmahat=(1/250)[[125+12sqrt(6),-69],[-69,125-12sqrt(6)]]. Both have trace
+one, determinant 4/25, and eigenvalues 4/5 and 1/5. Their commutator's
+(0,1) entry is -18sqrt(6)/625. Spectral calculus and the three actual
+source functions are invariant under the simultaneous conjugation.
+At alpha=r=1/2, z=2 and q=1, the bound values are unchanged and
+Tsallis is exactly 48/125, strictly below B2, which is strictly below B1.
+
+The complete application, including the common-basis transformation, general
+functional-calculus covariance, source parameter correspondence, exact
+individual-bound and Tsallis calculations, and restricted comparison, is in
+`Blueprint/D5/S3/Divergence/MaityFuruichiDuttaOrderingRefutation.scribe.cs`.
+It reuses `D5/S3/Divergence/MaityFuruichiDuttaOrderingRefutation.lean` and
+the pinned Mathlib functional calculus; it is not another conjecture resolution
+or a separately frozen theorem module.
+Nondiagonality is basis dependent, whereas noncommutation and these values
+are invariant. The source note's written proof and arithmetic script alone
+are not Lean evidence.

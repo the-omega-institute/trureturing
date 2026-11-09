@@ -1,0 +1,18 @@
+**定义 53.2（同一全局中央读取）。** 令 $H=E\cap Z(X)$。它是含单位的交换结合实代数，乘法仍记 $\circ$。28.1 的中央商构造可以同时用于任意有限组 $z_1,\ldots,z_n\in H$：取
+
+$$
+Z=C^*(u,R,z_1,\ldots,z_n)\subset Z(A_0),
+\qquad q_\chi:X\longrightarrow Y_\chi\subset(A_\chi)_{\rm sa}.
+\tag{53.2}
+$$
+
+目标取同一中央 C* 商中 $X$ 的闭 Jordan 像。28.1 的证明已支付每份非零商的 24.1 前件及这些商的联合分离；同一证明逐字用于有限中央生成组，不额外建立商上的总响应。记
+
+$$
+q_\chi(R)=\lambda1,\qquad q_\chi(z_i)=\zeta_i1,
+\qquad 0\le\lambda\le\|a\|^2<1.
+\tag{53.3}
+$$
+
+当 $\lambda>0$，固定的实际首标签始终是 $a$，以 $r=\sqrt\lambda$ 使用 26.1–27.2；26.1 只要求 $q_\chi(a)^2=r^21$，不要求原 $a/r$ 平方为 $u$。当 $\lambda=0$，$q_\chi(a)=0$，24.1 的零像预算使每个实际 $D(a,z)$ 的像为零。所有平方根只用于选择一个实数参数，没有生成新的原谱标签。
+

@@ -13,9 +13,18 @@ internal sealed class FixedLengthCovarianceDocument : IScribeDocumentDefinition
             Paragraph(Text(
                 "Let E be measurable and bounded on every compact interval. Write "
                 + "D_h(x)=E(x+h)-E(x), V(Y,h)=integral_1^Y D_h(x)^2 dx, "
-                + "h=c*X^(4/5), and ell=log(X/h), where c>0. Assume "
+                + "h=c*X^theta, and ell=log(X/h), where c>0 and 0<alpha<theta<beta<1. Assume "
                 + "V(Y,k)/(Y*k*log(Y/k)) tends uniformly to one for "
-                + "Y^(3/4)<=k<=Y^(7/8).")),
+                + "Y^alpha<=k<=Y^beta.")),
+            Describe.Lean(
+                DescribeId.Create("length-div-tendsto-zero"),
+                DeclarationHandle.Create(Prefix + "length_div_tendsto_zero"),
+                H("Sublinear comparison lengths"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For every real c and theta<1, the ratio (c*X^theta)/X tends to zero as X tends to infinity."))),
+                DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("shifted-band"),
                 DeclarationHandle.Create(Prefix + "shifted_band"),
@@ -23,7 +32,7 @@ internal sealed class FixedLengthCovarianceDocument : IScribeDocumentDefinition
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "For c,d,q positive and r nonnegative, set h=c*X^(4/5) and Y=d*X+r*h. Eventually Y^(3/4)<=q*h<=Y^(7/8), since the lower and upper ratios tend to zero."))),
+                    "For alpha<theta<beta and theta<1, c,d,q positive and r nonnegative, set h=c*X^theta and Y=d*X+r*h. Eventually Y^alpha<=q*h<=Y^beta, since the lower and upper ratios tend to zero."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("length-log-tendsto"),
@@ -32,7 +41,7 @@ internal sealed class FixedLengthCovarianceDocument : IScribeDocumentDefinition
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "For c>0, log(X/(c*X^(4/5))) tends to infinity as X tends to infinity."))),
+                    "For theta<1 and c>0, log(X/(c*X^theta)) tends to infinity as X tends to infinity."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("shifted-variance-tendsto"),
@@ -46,10 +55,10 @@ internal sealed class FixedLengthCovarianceDocument : IScribeDocumentDefinition
                         + "tends to d*q as X tends to infinity.")),
                     Paragraph(Text(
                         "The endpoint divided by X tends to d. The ratios "
-                        + "(d*X+r*h)^(3/4)/(q*h) and "
-                        + "q*h/(d*X+r*h)^(7/8) tend to zero, so q*h "
+                        + "(d*X+r*h)^alpha/(q*h) and "
+                        + "q*h/(d*X+r*h)^beta tend to zero, so q*h "
                         + "eventually lies in the variance band. Moreover "
-                        + "ell=(1/5)*log(X)-log(c) tends to infinity, while "
+                        + "ell=(1-theta)*log(X)-log(c) tends to infinity, while "
                         + "log((d*X+r*h)/(q*h))-ell tends to log(d/q). "
                         + "Multiplying the variance ratio by the endpoint "
                         + "and logarithmic normalization ratios gives the limit."))),
