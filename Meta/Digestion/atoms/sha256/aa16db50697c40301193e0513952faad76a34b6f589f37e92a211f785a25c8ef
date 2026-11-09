@@ -1,0 +1,9 @@
+**定理 20.2（正射影核的 Hilbert 实现与规范不变量）。** 对定义 20.1 的 $K$：
+
+1. 存在有限维复 Hilbert 空间和单位向量 $\psi_i$，使 $K_{ij}=\langle\psi_i,\psi_j\rangle$；
+2. $K\mapsto D^*KD$ 恰对应 $\psi_i\mapsto e^{i\theta_i}\psi_i$，所以射影线 $[\psi_i]$、$p_{ij}$ 和 $\omega_{ijk}$ 不变；
+3. 对每个非零四面体，三角相位满足
+   $$
+   \omega_{jkl}\omega_{ikl}^{-1}\omega_{ijl}\omega_{ijk}^{-1}=1.
+   $$
+
