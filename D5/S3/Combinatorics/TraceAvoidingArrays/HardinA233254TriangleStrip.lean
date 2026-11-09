@@ -58,14 +58,23 @@ total: proof_shape=bind-only; consumers=counting_bridge
 counting_bridge: proof_shape=bind-only; consumers=a_eq_w
 Valid: proof_shape=bind-only; consumers=valid_next
 shape: proof_shape=bind-only; consumers=moment
-moment: proof_shape=bind-only; consumers=classCount
+moment: proof_shape=bind-only; consumers=momentCount
 valid_next: proof_shape=bind-only; consumers=initial_valid
 classCount: proof_shape=bind-only; consumers=row_counts
 momentCount: proof_shape=bind-only; consumers=full_moments
 firstCount: proof_shape=bind-only; consumers=initial_counts
 firstMoment: proof_shape=bind-only; consumers=initial_counts
 sum_rows: proof_shape=bind-only; consumers=unseen01010_counts
-sum_beta: proof_shape=bind-only; consumers=sum_beta_rows
+beta_cons: proof_shape=bind-only; consumers=scan_sum
+labelAdvance: proof_shape=bind-only; consumers=labelFinish
+factor: proof_shape=bind-only; consumers=labelWeight
+labelFinish: proof_shape=bind-only; consumers=scan_sum
+labelWeight: proof_shape=bind-only; consumers=scan_sum
+scan_step: proof_shape=bind-only; consumers=scan_sum
+scan_sum: proof_shape=bind-only; consumers=sum_beta_rows
+full_factor: proof_shape=bind-only; consumers=full_weight
+full_advance: proof_shape=bind-only; consumers=full_weight
+full_weight: proof_shape=bind-only; consumers=sum_beta_rows
 sum_beta_rows: proof_shape=bind-only; consumers=full_moments
 labelCount: proof_shape=bind-only; consumers=full_moments
 full_flags: proof_shape=bind-only; consumers=full_moments
@@ -120,126 +129,14 @@ label_21210: proof_shape=bind-only; consumers=label_counts
 label_21212: proof_shape=bind-only; consumers=label_counts
 label_counts: proof_shape=bind-only; consumers=row_counts
 weight: proof_shape=bind-only; consumers=allCounts
-allCounts: proof_shape=bind-only; consumers=unseen01010_counts
-allFirst: proof_shape=bind-only; consumers=initial_row_counts
-rowPartial: proof_shape=bind-only; consumers=unseen01010_partial_00
-firstPartial: proof_shape=bind-only; consumers=initial_partial_00
-unseen01010Data: proof_shape=bind-only; consumers=unseen01010_partial_00
-unseen01010_partial_00: proof_shape=bind-only; consumers=unseen01010_partial
-unseen01010_partial_01: proof_shape=bind-only; consumers=unseen01010_partial
-unseen01010_partial_02: proof_shape=bind-only; consumers=unseen01010_partial
-unseen01010_partial_03: proof_shape=bind-only; consumers=unseen01010_partial
-unseen01010_partial_04: proof_shape=bind-only; consumers=unseen01010_partial
-unseen01010_partial_05: proof_shape=bind-only; consumers=unseen01010_partial
-unseen01010_partial_10: proof_shape=bind-only; consumers=unseen01010_partial
-unseen01010_partial_11: proof_shape=bind-only; consumers=unseen01010_partial
-unseen01010_partial_12: proof_shape=bind-only; consumers=unseen01010_partial
-unseen01010_partial_13: proof_shape=bind-only; consumers=unseen01010_partial
-unseen01010_partial_14: proof_shape=bind-only; consumers=unseen01010_partial
-unseen01010_partial_15: proof_shape=bind-only; consumers=unseen01010_partial
-unseen01010_partial_20: proof_shape=bind-only; consumers=unseen01010_partial
-unseen01010_partial_21: proof_shape=bind-only; consumers=unseen01010_partial
-unseen01010_partial_22: proof_shape=bind-only; consumers=unseen01010_partial
-unseen01010_partial_23: proof_shape=bind-only; consumers=unseen01010_partial
-unseen01010_partial_24: proof_shape=bind-only; consumers=unseen01010_partial
-unseen01010_partial_25: proof_shape=bind-only; consumers=unseen01010_partial
-unseen01010_partial_30: proof_shape=bind-only; consumers=unseen01010_partial
-unseen01010_partial_31: proof_shape=bind-only; consumers=unseen01010_partial
-unseen01010_partial_32: proof_shape=bind-only; consumers=unseen01010_partial
-unseen01010_partial_33: proof_shape=bind-only; consumers=unseen01010_partial
-unseen01010_partial_34: proof_shape=bind-only; consumers=unseen01010_partial
-unseen01010_partial_35: proof_shape=bind-only; consumers=unseen01010_partial
-unseen01010_partial_40: proof_shape=bind-only; consumers=unseen01010_partial
-unseen01010_partial_41: proof_shape=bind-only; consumers=unseen01010_partial
-unseen01010_partial_42: proof_shape=bind-only; consumers=unseen01010_partial
-unseen01010_partial_43: proof_shape=bind-only; consumers=unseen01010_partial
-unseen01010_partial_44: proof_shape=bind-only; consumers=unseen01010_partial
-unseen01010_partial_45: proof_shape=bind-only; consumers=unseen01010_partial
-unseen01010_partial_50: proof_shape=bind-only; consumers=unseen01010_partial
-unseen01010_partial_51: proof_shape=bind-only; consumers=unseen01010_partial
-unseen01010_partial_52: proof_shape=bind-only; consumers=unseen01010_partial
-unseen01010_partial_53: proof_shape=bind-only; consumers=unseen01010_partial
-unseen01010_partial_54: proof_shape=bind-only; consumers=unseen01010_partial
-unseen01010_partial_55: proof_shape=bind-only; consumers=unseen01010_partial
-unseen01010_partial: proof_shape=bind-only; consumers=unseen01010_counts
+allCounts: proof_shape=bind-only; consumers=reduce_counts
+allFirst: proof_shape=bind-only; consumers=reduce_first
+reducedCounts: proof_shape=bind-only; consumers=reduce_counts
+reduce_counts: proof_shape=bind-only; consumers=unseen01010_counts
+reducedFirst: proof_shape=bind-only; consumers=reduce_first
+reduce_first: proof_shape=bind-only; consumers=initial_row_counts
 unseen01010_counts: proof_shape=bind-only; consumers=unseen_counts
-unseen10101Data: proof_shape=bind-only; consumers=unseen10101_partial_00
-unseen10101_partial_00: proof_shape=bind-only; consumers=unseen10101_partial
-unseen10101_partial_01: proof_shape=bind-only; consumers=unseen10101_partial
-unseen10101_partial_02: proof_shape=bind-only; consumers=unseen10101_partial
-unseen10101_partial_03: proof_shape=bind-only; consumers=unseen10101_partial
-unseen10101_partial_04: proof_shape=bind-only; consumers=unseen10101_partial
-unseen10101_partial_05: proof_shape=bind-only; consumers=unseen10101_partial
-unseen10101_partial_10: proof_shape=bind-only; consumers=unseen10101_partial
-unseen10101_partial_11: proof_shape=bind-only; consumers=unseen10101_partial
-unseen10101_partial_12: proof_shape=bind-only; consumers=unseen10101_partial
-unseen10101_partial_13: proof_shape=bind-only; consumers=unseen10101_partial
-unseen10101_partial_14: proof_shape=bind-only; consumers=unseen10101_partial
-unseen10101_partial_15: proof_shape=bind-only; consumers=unseen10101_partial
-unseen10101_partial_20: proof_shape=bind-only; consumers=unseen10101_partial
-unseen10101_partial_21: proof_shape=bind-only; consumers=unseen10101_partial
-unseen10101_partial_22: proof_shape=bind-only; consumers=unseen10101_partial
-unseen10101_partial_23: proof_shape=bind-only; consumers=unseen10101_partial
-unseen10101_partial_24: proof_shape=bind-only; consumers=unseen10101_partial
-unseen10101_partial_25: proof_shape=bind-only; consumers=unseen10101_partial
-unseen10101_partial_30: proof_shape=bind-only; consumers=unseen10101_partial
-unseen10101_partial_31: proof_shape=bind-only; consumers=unseen10101_partial
-unseen10101_partial_32: proof_shape=bind-only; consumers=unseen10101_partial
-unseen10101_partial_33: proof_shape=bind-only; consumers=unseen10101_partial
-unseen10101_partial_34: proof_shape=bind-only; consumers=unseen10101_partial
-unseen10101_partial_35: proof_shape=bind-only; consumers=unseen10101_partial
-unseen10101_partial_40: proof_shape=bind-only; consumers=unseen10101_partial
-unseen10101_partial_41: proof_shape=bind-only; consumers=unseen10101_partial
-unseen10101_partial_42: proof_shape=bind-only; consumers=unseen10101_partial
-unseen10101_partial_43: proof_shape=bind-only; consumers=unseen10101_partial
-unseen10101_partial_44: proof_shape=bind-only; consumers=unseen10101_partial
-unseen10101_partial_45: proof_shape=bind-only; consumers=unseen10101_partial
-unseen10101_partial_50: proof_shape=bind-only; consumers=unseen10101_partial
-unseen10101_partial_51: proof_shape=bind-only; consumers=unseen10101_partial
-unseen10101_partial_52: proof_shape=bind-only; consumers=unseen10101_partial
-unseen10101_partial_53: proof_shape=bind-only; consumers=unseen10101_partial
-unseen10101_partial_54: proof_shape=bind-only; consumers=unseen10101_partial
-unseen10101_partial_55: proof_shape=bind-only; consumers=unseen10101_partial
-unseen10101_partial: proof_shape=bind-only; consumers=unseen10101_counts
 unseen10101_counts: proof_shape=bind-only; consumers=unseen_counts
-initialData: proof_shape=bind-only; consumers=initial_partial_00
-initial_partial_00: proof_shape=bind-only; consumers=initial_partial
-initial_partial_01: proof_shape=bind-only; consumers=initial_partial
-initial_partial_02: proof_shape=bind-only; consumers=initial_partial
-initial_partial_03: proof_shape=bind-only; consumers=initial_partial
-initial_partial_04: proof_shape=bind-only; consumers=initial_partial
-initial_partial_05: proof_shape=bind-only; consumers=initial_partial
-initial_partial_10: proof_shape=bind-only; consumers=initial_partial
-initial_partial_11: proof_shape=bind-only; consumers=initial_partial
-initial_partial_12: proof_shape=bind-only; consumers=initial_partial
-initial_partial_13: proof_shape=bind-only; consumers=initial_partial
-initial_partial_14: proof_shape=bind-only; consumers=initial_partial
-initial_partial_15: proof_shape=bind-only; consumers=initial_partial
-initial_partial_20: proof_shape=bind-only; consumers=initial_partial
-initial_partial_21: proof_shape=bind-only; consumers=initial_partial
-initial_partial_22: proof_shape=bind-only; consumers=initial_partial
-initial_partial_23: proof_shape=bind-only; consumers=initial_partial
-initial_partial_24: proof_shape=bind-only; consumers=initial_partial
-initial_partial_25: proof_shape=bind-only; consumers=initial_partial
-initial_partial_30: proof_shape=bind-only; consumers=initial_partial
-initial_partial_31: proof_shape=bind-only; consumers=initial_partial
-initial_partial_32: proof_shape=bind-only; consumers=initial_partial
-initial_partial_33: proof_shape=bind-only; consumers=initial_partial
-initial_partial_34: proof_shape=bind-only; consumers=initial_partial
-initial_partial_35: proof_shape=bind-only; consumers=initial_partial
-initial_partial_40: proof_shape=bind-only; consumers=initial_partial
-initial_partial_41: proof_shape=bind-only; consumers=initial_partial
-initial_partial_42: proof_shape=bind-only; consumers=initial_partial
-initial_partial_43: proof_shape=bind-only; consumers=initial_partial
-initial_partial_44: proof_shape=bind-only; consumers=initial_partial
-initial_partial_45: proof_shape=bind-only; consumers=initial_partial
-initial_partial_50: proof_shape=bind-only; consumers=initial_partial
-initial_partial_51: proof_shape=bind-only; consumers=initial_partial
-initial_partial_52: proof_shape=bind-only; consumers=initial_partial
-initial_partial_53: proof_shape=bind-only; consumers=initial_partial
-initial_partial_54: proof_shape=bind-only; consumers=initial_partial
-initial_partial_55: proof_shape=bind-only; consumers=initial_partial
-initial_partial: proof_shape=bind-only; consumers=initial_row_counts
 initial_row_counts: proof_shape=bind-only; consumers=initial_counts
 unseen_counts: proof_shape=bind-only; consumers=row_counts
 row_counts: proof_shape=bind-only; consumers=finite_certificate
@@ -312,18 +209,15 @@ private abbrev v := widthV rowLegal pairs compatible
 private abbrev total := widthTotal rowLegal pairs
 private theorem counting_bridge (n : ℕ) : (a (n + 1) : ℤ) = total (v n) := by
   exact width_counting_bridge rowLegal pairs compatible bonds bonds_iff n
-/-- Adjacent boundary labels differ; absent colour two excludes its whole pair. -/
 def Valid (s : Seen) (p : Boundary) : Prop :=
   s.1 = true ∧ (∀ j : Fin 4, p j.castSucc ≠ p j.succ) ∧
     (s.2 = false → ∀ j, p j ≠ 2)
-/-- The eight equality shapes of a proper five-label boundary. -/
 def shape (p : Boundary) : Fin 8 :=
   if p 2 = p 0 then
     if p 3 = p 1 then (if p 4 = p 0 then 0 else 1)
     else (if p 4 = p 0 then 2 else 3)
   else if p 3 = p 0 then (if p 4 = p 1 then 4 else 5)
     else (if p 4 = p 0 then 6 else 7)
-/-- The constant and first three label-transfer moments. -/
 def moment (p : Boundary) : Fin 4 → ℤ :=
   ![1, ![26, 22, 24, 18, 12, 18, 20, 22] (shape p),
     ![564, 456, 516, 354, 222, 366, 426, 462] (shape p),
@@ -353,23 +247,18 @@ private theorem valid_next (s : Seen) (c : Row) (hs : s.1 = true ∨ ∃ i, c i 
     rcases (hb _).mp hp with hh | hh
     · exact htwo _ hh
     · exact hthree _ hh
-/-- Count continuations by the second final flag. -/
 def classCount (s : Seen) (p : Boundary) (b : Bool) : ℤ :=
   ∑ c : Row, if rowLegal c ∧ compatible p c ∧ good s c ∧
     (finish s c).2 = b then 1 else 0
-/-- Sum one boundary moment over fully seen continuations. -/
 def momentCount (s : Seen) (p : Boundary) (i : Fin 4) : ℤ :=
   ∑ c : Row, if rowLegal c ∧ compatible p c ∧ good s c ∧
     (finish s c).2 = true then moment (pairs c) i else 0
-/-- Count first rows by the second final flag. -/
 def firstCount (b : Bool) : ℤ :=
   ∑ c : Row, if c 0 = 0 ∧ rowLegal c ∧ good (false, false) c ∧
     (finish (false, false) c).2 = b then 1 else 0
-/-- Sum a boundary moment over fully seen first rows. -/
 def firstMoment (i : Fin 4) : ℤ :=
   ∑ c : Row, if c 0 = 0 ∧ rowLegal c ∧ good (false, false) c ∧
     (finish (false, false) c).2 = true then moment (pairs c) i else 0
-
 private theorem sum_rows {m : ℕ} (f : (Fin 6 → Fin m) → ℤ) : (∑ c, f c) =
     ∑ a : Fin m, ∑ b : Fin m, ∑ c : Fin m, ∑ d : Fin m, ∑ e : Fin m,
       ∑ g : Fin m, f ![a, b, c, d, e, g] := by
@@ -386,42 +275,100 @@ private theorem sum_rows {m : ℕ} (f : (Fin 6 → Fin m) → ℤ) : (∑ c, f c
     ← (Fin.consEquiv (fun _ : Fin 1 => Fin m)).sum_comp,
     Fintype.sum_prod_type]
   simp [Fin.consEquiv, Matrix.empty_eq]
-
-private theorem sum_beta (f : Fin 3 → ℤ) :
-    (∑ x : Fin 6, f (beta x)) = 2 * ∑ y : Fin 3, f y := by
-  simp [Fin.sum_univ_succ, beta]
-  ring
-
-private theorem sum_beta_rows (n : ℕ) (f : (Fin n → Fin 3) → ℤ) :
-    (∑ c : Fin n → Fin 6, f (fun j => beta (c j))) =
-      2 ^ n * ∑ b : Fin n → Fin 3, f b := by
-  induction n generalizing f with
-  | zero =>
-    simp only [Fintype.sum_unique, pow_zero, one_mul]
-    congr 1
-    funext j
-    exact Fin.elim0 j
-  | succ n ih =>
-    have hc (x : Fin 6) (c : Fin n → Fin 6) :
+private theorem beta_cons {n : ℕ} (x : Fin 6) (c : Fin n → Fin 6) :
         (fun j => beta ((Fin.cons x c : Fin (n + 1) → Fin 6) j)) =
           Fin.cons (beta x) (fun j => beta (c j)) := by
+  funext j
+  cases j using Fin.cases <;> rfl
+private def labelAdvance (s : Seen) (b : Fin 3) : Seen :=
+  (s.1 || decide (b = 1), s.2 || decide (b = 2))
+private def factor (s : Seen) (b : Fin 3) : ℤ :=
+  if b = 1 then (if s.1 then 2 else 1)
+  else if b = 2 then (if s.1 then (if s.2 then 2 else 1) else 0) else 2
+private def labelFinish : {n : ℕ} → Seen → (Fin n → Fin 3) → Seen
+  | 0, s, _ => s
+  | _n + 1, s, f => labelFinish (labelAdvance s (f 0)) (Fin.tail f)
+private def labelWeight : {n : ℕ} → Seen → (Fin n → Fin 3) → ℤ
+  | 0, _, _ => 1
+  | _n + 1, s, f => factor s (f 0) * labelWeight (labelAdvance s (f 0)) (Fin.tail f)
+private theorem scan_step (s : Seen) (f : Fin 3 → Seen → ℤ) :
+    (∑ x : Fin 6, if allowed s x then f (beta x) (advance s x) else 0) =
+      ∑ b : Fin 3, factor s b * f b (labelAdvance s b) := by
+  rcases s with ⟨x, y⟩
+  cases x <;> cases y <;>
+    simp [Fin.sum_univ_succ, allowed, advance, beta, factor, labelAdvance] <;> ring
+private theorem scan_sum (n : ℕ) (s : Seen) (f : (Fin n → Fin 3) → Seen → ℤ) :
+    (∑ c : Fin n → Fin 6, if good s c then
+      f (fun j => beta (c j)) (finish s c) else 0) =
+      ∑ b : Fin n → Fin 3, labelWeight s b * f b (labelFinish s b) := by
+  induction n generalizing s with
+  | zero =>
+    simp only [Fintype.sum_unique, good, finish, labelWeight, labelFinish, one_mul]
+    split
+    · apply congrArg (fun b : Fin 0 → Fin 3 => f b s)
       funext j
-      cases j using Fin.cases <;> rfl
+      exact Fin.elim0 j
+    · contradiction
+  | succ n ih =>
     rw [← (Fin.consEquiv (fun _ : Fin (n + 1) => Fin 6)).sum_comp,
       Fintype.sum_prod_type,
       ← (Fin.consEquiv (fun _ : Fin (n + 1) => Fin 3)).sum_comp,
       Fintype.sum_prod_type]
-    simp only [Fin.consEquiv, Equiv.coe_fn_mk, hc]
-    simp_rw [ih]
-    rw [← Finset.mul_sum, sum_beta, pow_succ]
+    simp only [Fin.consEquiv, Equiv.coe_fn_mk, beta_cons, good, finish,
+      labelWeight, labelFinish, Fin.cons_zero, Fin.tail_cons]
+    have hs (x : Fin 6) :
+        (∑ c : Fin n → Fin 6, if allowed s x ∧ good (advance s x) c then
+          f (Fin.cons (beta x) (fun j => beta (c j))) (finish (advance s x) c) else 0) =
+        if allowed s x then ∑ b : Fin n → Fin 3,
+          labelWeight (advance s x) b *
+            f (Fin.cons (beta x) b) (labelFinish (advance s x) b) else 0 := by
+      by_cases hx : allowed s x
+      · simp only [hx, true_and, ite_true]
+        exact ih (advance s x) (fun b t => f (Fin.cons (beta x) b) t)
+      · simp [hx]
+    simp_rw [hs]
+    have hf (x : Fin 6) :
+        (if allowed s x then ∑ b : Fin n → Fin 3,
+          labelWeight (advance s x) b *
+            f (Fin.cons (beta x) b) (labelFinish (advance s x) b) else 0) =
+        ∑ b : Fin n → Fin 3, if allowed s x then labelWeight (advance s x) b *
+          f (Fin.cons (beta x) b) (labelFinish (advance s x) b) else 0 := by
+      by_cases hx : allowed s x <;> simp [hx]
+    simp_rw [hf]
+    rw [Finset.sum_comm]
+    calc
+      _ = ∑ b : Fin n → Fin 3, ∑ x : Fin 3, factor s x *
+          (labelWeight (labelAdvance s x) b *
+            f (Fin.cons x b) (labelFinish (labelAdvance s x) b)) := by
+        apply Finset.sum_congr rfl
+        intro b _
+        exact scan_step s (fun x t => labelWeight t b * f (Fin.cons x b) (labelFinish t b))
+      _ = _ := by rw [Finset.sum_comm]; simp only [mul_assoc]
+private theorem full_factor (b : Fin 3) : factor (true, true) b = 2 := by
+  fin_cases b <;> decide +kernel
+private theorem full_advance (b : Fin 3) : labelAdvance (true, true) b = (true, true) := by
+  fin_cases b <;> rfl
+private theorem full_weight (n : ℕ) (b : Fin n → Fin 3) :
+    labelWeight (true, true) b = 2 ^ n := by
+  induction n with
+  | zero => rfl
+  | succ n ih =>
+    rw [labelWeight, full_factor, full_advance, ih, pow_succ]
     ring
-
+private theorem sum_beta_rows (n : ℕ) (f : (Fin n → Fin 3) → ℤ) :
+    (∑ c : Fin n → Fin 6, f (fun j => beta (c j))) =
+      2 ^ n * ∑ b : Fin n → Fin 3, f b := by
+  have hg (c : Fin n → Fin 6) : good (true, true) c := by
+    rw [good_iff]
+    intro i
+    exact ⟨fun _ => Or.inl rfl, fun _ => Or.inl rfl⟩
+  have hh := scan_sum n (true, true) (fun b _ => f b)
+  simpa only [ite_eq_left (hg _), full_weight, ← Finset.mul_sum] using hh
 private def labelCount (p : Boundary) (i : Fin 4) : ℤ :=
   ∑ c : Fin 6 → Fin 3,
     if (∀ j : Fin 5, c j.castSucc ≠ c j.succ) ∧
         (∀ j : Fin 5, p j ≠ c j.castSucc)
     then moment (fun j => c j.succ) i else 0
-
 private theorem full_flags (c : Row) :
     good (true, true) c ∧ (finish (true, true) c).2 = true := by
   constructor
@@ -429,16 +376,14 @@ private theorem full_flags (c : Row) :
     intro i
     exact ⟨fun _ => Or.inl rfl, fun _ => Or.inl rfl⟩
   · exact (finish_snd _ _).mpr (Or.inl rfl)
-
 private theorem full_moments (p : Boundary) (i : Fin 4) :
     momentCount (true, true) p i = 64 * labelCount p i := by
   simp only [momentCount, (full_flags _).1, (full_flags _).2, and_true]
-  simp only [rowLegal, colour_bond_iff, compatible, pairs]
+  simp only [rowLegal, colour_bond_iff, compatible]
   exact sum_beta_rows 6 (fun c =>
     if (∀ j : Fin 5, c j.castSucc ≠ c j.succ) ∧
         (∀ j : Fin 5, p j ≠ c j.castSucc)
     then moment (fun j => c j.succ) i else 0)
-
 private theorem label_01010 (i : Fin 4) :
     labelCount ![0, 1, 0, 1, 0] i = ![26, 564, 11832, 247146] i := by
   fin_cases i <;> decide +kernel
@@ -650,8 +595,6 @@ private theorem label_counts (p : Boundary)
   | exact label_21210 i
   | exact label_21212 i
 end
-
-
 private def weight (p : Boundary) : Fin 5 → ℤ :=
   ![1, 1, moment p 1, moment p 2, moment p 3]
 private def allCounts (s : Seen) (p : Boundary) (i : Fin 5) : ℤ :=
@@ -660,575 +603,99 @@ private def allCounts (s : Seen) (p : Boundary) (i : Fin 5) : ℤ :=
 private def allFirst (i : Fin 5) : ℤ :=
   ∑ c : Row, if c 0 = 0 ∧ rowLegal c ∧ good (false, false) c ∧
     (finish (false, false) c).2 = decide (i ≠ 0) then weight (pairs c) i else 0
-private def rowPartial (s : Seen) (p : Boundary) (x y : Fin 6) (i : Fin 5) : ℤ :=
-  ∑ z : Fin 6, ∑ t : Fin 6, ∑ u : Fin 6, ∑ v : Fin 6,
-    let c : Row := ![x, y, z, t, u, v]
-    if rowLegal c ∧ compatible p c ∧ good s c ∧ (finish s c).2 = decide (i ≠ 0)
-    then weight (pairs c) i else 0
-private def firstPartial (x y : Fin 6) (i : Fin 5) : ℤ :=
-  ∑ z : Fin 6, ∑ t : Fin 6, ∑ u : Fin 6, ∑ v : Fin 6,
-    let c : Row := ![x, y, z, t, u, v]
-    if c 0 = 0 ∧ rowLegal c ∧ good (false, false) c ∧
-      (finish (false, false) c).2 = decide (i ≠ 0) then weight (pairs c) i else 0
-private def unseen01010Data : Fin 5 → Fin 6 → Fin 6 → ℤ :=
-  ![
-    ![![0, 0, 0, 0, 0, 0],
-      ![16, 0, 0, 0, 0, 16],
-      ![0, 0, 0, 0, 0, 0],
-      ![0, 0, 0, 0, 0, 0],
-      ![16, 0, 0, 0, 0, 16],
-      ![0, 0, 0, 0, 0, 0]],
-    ![![0, 0, 0, 0, 0, 0],
-      ![72, 0, 96, 0, 0, 72],
-      ![160, 0, 0, 0, 0, 160],
-      ![0, 0, 0, 0, 0, 0],
-      ![72, 0, 96, 0, 0, 72],
-      ![0, 0, 0, 0, 0, 0]],
-    ![![0, 0, 0, 0, 0, 0],
-      ![1568, 0, 1920, 0, 0, 1568],
-      ![3552, 0, 0, 0, 0, 3552],
-      ![0, 0, 0, 0, 0, 0],
-      ![1568, 0, 1920, 0, 0, 1568],
-      ![0, 0, 0, 0, 0, 0]],
-    ![![0, 0, 0, 0, 0, 0],
-      ![32832, 0, 39936, 0, 0, 32832],
-      ![74688, 0, 0, 0, 0, 74688],
-      ![0, 0, 0, 0, 0, 0],
-      ![32832, 0, 39936, 0, 0, 32832],
-      ![0, 0, 0, 0, 0, 0]],
-    ![![0, 0, 0, 0, 0, 0],
-      ![685584, 0, 833376, 0, 0, 685584],
-      ![1560480, 0, 0, 0, 0, 1560480],
-      ![0, 0, 0, 0, 0, 0],
-      ![685584, 0, 833376, 0, 0, 685584],
-      ![0, 0, 0, 0, 0, 0]]
-  ]
-private theorem unseen01010_partial_00 (i : Fin 5) :
-    rowPartial (true, false) ![0, 1, 0, 1, 0] 0 0 i = unseen01010Data i 0 0 := by
-  fin_cases i <;> decide +kernel
-private theorem unseen01010_partial_01 (i : Fin 5) :
-    rowPartial (true, false) ![0, 1, 0, 1, 0] 0 1 i = unseen01010Data i 0 1 := by
-  fin_cases i <;> decide +kernel
-private theorem unseen01010_partial_02 (i : Fin 5) :
-    rowPartial (true, false) ![0, 1, 0, 1, 0] 0 2 i = unseen01010Data i 0 2 := by
-  fin_cases i <;> decide +kernel
-private theorem unseen01010_partial_03 (i : Fin 5) :
-    rowPartial (true, false) ![0, 1, 0, 1, 0] 0 3 i = unseen01010Data i 0 3 := by
-  fin_cases i <;> decide +kernel
-private theorem unseen01010_partial_04 (i : Fin 5) :
-    rowPartial (true, false) ![0, 1, 0, 1, 0] 0 4 i = unseen01010Data i 0 4 := by
-  fin_cases i <;> decide +kernel
-private theorem unseen01010_partial_05 (i : Fin 5) :
-    rowPartial (true, false) ![0, 1, 0, 1, 0] 0 5 i = unseen01010Data i 0 5 := by
-  fin_cases i <;> decide +kernel
-private theorem unseen01010_partial_10 (i : Fin 5) :
-    rowPartial (true, false) ![0, 1, 0, 1, 0] 1 0 i = unseen01010Data i 1 0 := by
-  fin_cases i <;> decide +kernel
-private theorem unseen01010_partial_11 (i : Fin 5) :
-    rowPartial (true, false) ![0, 1, 0, 1, 0] 1 1 i = unseen01010Data i 1 1 := by
-  fin_cases i <;> decide +kernel
-private theorem unseen01010_partial_12 (i : Fin 5) :
-    rowPartial (true, false) ![0, 1, 0, 1, 0] 1 2 i = unseen01010Data i 1 2 := by
-  fin_cases i <;> decide +kernel
-private theorem unseen01010_partial_13 (i : Fin 5) :
-    rowPartial (true, false) ![0, 1, 0, 1, 0] 1 3 i = unseen01010Data i 1 3 := by
-  fin_cases i <;> decide +kernel
-private theorem unseen01010_partial_14 (i : Fin 5) :
-    rowPartial (true, false) ![0, 1, 0, 1, 0] 1 4 i = unseen01010Data i 1 4 := by
-  fin_cases i <;> decide +kernel
-private theorem unseen01010_partial_15 (i : Fin 5) :
-    rowPartial (true, false) ![0, 1, 0, 1, 0] 1 5 i = unseen01010Data i 1 5 := by
-  fin_cases i <;> decide +kernel
-private theorem unseen01010_partial_20 (i : Fin 5) :
-    rowPartial (true, false) ![0, 1, 0, 1, 0] 2 0 i = unseen01010Data i 2 0 := by
-  fin_cases i <;> decide +kernel
-private theorem unseen01010_partial_21 (i : Fin 5) :
-    rowPartial (true, false) ![0, 1, 0, 1, 0] 2 1 i = unseen01010Data i 2 1 := by
-  fin_cases i <;> decide +kernel
-private theorem unseen01010_partial_22 (i : Fin 5) :
-    rowPartial (true, false) ![0, 1, 0, 1, 0] 2 2 i = unseen01010Data i 2 2 := by
-  fin_cases i <;> decide +kernel
-private theorem unseen01010_partial_23 (i : Fin 5) :
-    rowPartial (true, false) ![0, 1, 0, 1, 0] 2 3 i = unseen01010Data i 2 3 := by
-  fin_cases i <;> decide +kernel
-private theorem unseen01010_partial_24 (i : Fin 5) :
-    rowPartial (true, false) ![0, 1, 0, 1, 0] 2 4 i = unseen01010Data i 2 4 := by
-  fin_cases i <;> decide +kernel
-private theorem unseen01010_partial_25 (i : Fin 5) :
-    rowPartial (true, false) ![0, 1, 0, 1, 0] 2 5 i = unseen01010Data i 2 5 := by
-  fin_cases i <;> decide +kernel
-private theorem unseen01010_partial_30 (i : Fin 5) :
-    rowPartial (true, false) ![0, 1, 0, 1, 0] 3 0 i = unseen01010Data i 3 0 := by
-  fin_cases i <;> decide +kernel
-private theorem unseen01010_partial_31 (i : Fin 5) :
-    rowPartial (true, false) ![0, 1, 0, 1, 0] 3 1 i = unseen01010Data i 3 1 := by
-  fin_cases i <;> decide +kernel
-private theorem unseen01010_partial_32 (i : Fin 5) :
-    rowPartial (true, false) ![0, 1, 0, 1, 0] 3 2 i = unseen01010Data i 3 2 := by
-  fin_cases i <;> decide +kernel
-private theorem unseen01010_partial_33 (i : Fin 5) :
-    rowPartial (true, false) ![0, 1, 0, 1, 0] 3 3 i = unseen01010Data i 3 3 := by
-  fin_cases i <;> decide +kernel
-private theorem unseen01010_partial_34 (i : Fin 5) :
-    rowPartial (true, false) ![0, 1, 0, 1, 0] 3 4 i = unseen01010Data i 3 4 := by
-  fin_cases i <;> decide +kernel
-private theorem unseen01010_partial_35 (i : Fin 5) :
-    rowPartial (true, false) ![0, 1, 0, 1, 0] 3 5 i = unseen01010Data i 3 5 := by
-  fin_cases i <;> decide +kernel
-private theorem unseen01010_partial_40 (i : Fin 5) :
-    rowPartial (true, false) ![0, 1, 0, 1, 0] 4 0 i = unseen01010Data i 4 0 := by
-  fin_cases i <;> decide +kernel
-private theorem unseen01010_partial_41 (i : Fin 5) :
-    rowPartial (true, false) ![0, 1, 0, 1, 0] 4 1 i = unseen01010Data i 4 1 := by
-  fin_cases i <;> decide +kernel
-private theorem unseen01010_partial_42 (i : Fin 5) :
-    rowPartial (true, false) ![0, 1, 0, 1, 0] 4 2 i = unseen01010Data i 4 2 := by
-  fin_cases i <;> decide +kernel
-private theorem unseen01010_partial_43 (i : Fin 5) :
-    rowPartial (true, false) ![0, 1, 0, 1, 0] 4 3 i = unseen01010Data i 4 3 := by
-  fin_cases i <;> decide +kernel
-private theorem unseen01010_partial_44 (i : Fin 5) :
-    rowPartial (true, false) ![0, 1, 0, 1, 0] 4 4 i = unseen01010Data i 4 4 := by
-  fin_cases i <;> decide +kernel
-private theorem unseen01010_partial_45 (i : Fin 5) :
-    rowPartial (true, false) ![0, 1, 0, 1, 0] 4 5 i = unseen01010Data i 4 5 := by
-  fin_cases i <;> decide +kernel
-private theorem unseen01010_partial_50 (i : Fin 5) :
-    rowPartial (true, false) ![0, 1, 0, 1, 0] 5 0 i = unseen01010Data i 5 0 := by
-  fin_cases i <;> decide +kernel
-private theorem unseen01010_partial_51 (i : Fin 5) :
-    rowPartial (true, false) ![0, 1, 0, 1, 0] 5 1 i = unseen01010Data i 5 1 := by
-  fin_cases i <;> decide +kernel
-private theorem unseen01010_partial_52 (i : Fin 5) :
-    rowPartial (true, false) ![0, 1, 0, 1, 0] 5 2 i = unseen01010Data i 5 2 := by
-  fin_cases i <;> decide +kernel
-private theorem unseen01010_partial_53 (i : Fin 5) :
-    rowPartial (true, false) ![0, 1, 0, 1, 0] 5 3 i = unseen01010Data i 5 3 := by
-  fin_cases i <;> decide +kernel
-private theorem unseen01010_partial_54 (i : Fin 5) :
-    rowPartial (true, false) ![0, 1, 0, 1, 0] 5 4 i = unseen01010Data i 5 4 := by
-  fin_cases i <;> decide +kernel
-private theorem unseen01010_partial_55 (i : Fin 5) :
-    rowPartial (true, false) ![0, 1, 0, 1, 0] 5 5 i = unseen01010Data i 5 5 := by
-  fin_cases i <;> decide +kernel
-private theorem unseen01010_partial (x y : Fin 6) (i : Fin 5) :
-    rowPartial (true, false) ![0, 1, 0, 1, 0] x y i = unseen01010Data i x y := by
-  fin_cases x <;> fin_cases y <;> first
-  | exact unseen01010_partial_00 i
-  | exact unseen01010_partial_01 i
-  | exact unseen01010_partial_02 i
-  | exact unseen01010_partial_03 i
-  | exact unseen01010_partial_04 i
-  | exact unseen01010_partial_05 i
-  | exact unseen01010_partial_10 i
-  | exact unseen01010_partial_11 i
-  | exact unseen01010_partial_12 i
-  | exact unseen01010_partial_13 i
-  | exact unseen01010_partial_14 i
-  | exact unseen01010_partial_15 i
-  | exact unseen01010_partial_20 i
-  | exact unseen01010_partial_21 i
-  | exact unseen01010_partial_22 i
-  | exact unseen01010_partial_23 i
-  | exact unseen01010_partial_24 i
-  | exact unseen01010_partial_25 i
-  | exact unseen01010_partial_30 i
-  | exact unseen01010_partial_31 i
-  | exact unseen01010_partial_32 i
-  | exact unseen01010_partial_33 i
-  | exact unseen01010_partial_34 i
-  | exact unseen01010_partial_35 i
-  | exact unseen01010_partial_40 i
-  | exact unseen01010_partial_41 i
-  | exact unseen01010_partial_42 i
-  | exact unseen01010_partial_43 i
-  | exact unseen01010_partial_44 i
-  | exact unseen01010_partial_45 i
-  | exact unseen01010_partial_50 i
-  | exact unseen01010_partial_51 i
-  | exact unseen01010_partial_52 i
-  | exact unseen01010_partial_53 i
-  | exact unseen01010_partial_54 i
-  | exact unseen01010_partial_55 i
+private def reducedCounts (s : Seen) (p : Boundary) (i : Fin 5) : ℤ :=
+  ∑ b : Fin 6 → Fin 3, labelWeight s b *
+    if (∀ j : Fin 5, b j.castSucc ≠ b j.succ) ∧
+      (∀ j : Fin 5, p j ≠ b j.castSucc) ∧ (labelFinish s b).2 = decide (i ≠ 0)
+    then weight (fun j => b j.succ) i else 0
+private theorem reduce_counts (s : Seen) (p : Boundary) (i : Fin 5) :
+    allCounts s p i = reducedCounts s p i := by
+  have he (c : Row) :
+      (if rowLegal c ∧ compatible p c ∧ good s c ∧ (finish s c).2 = decide (i ≠ 0)
+        then weight (pairs c) i else 0) =
+      if good s c then
+        (if (∀ j : Fin 5, beta (c j.castSucc) ≠ beta (c j.succ)) ∧
+          (∀ j : Fin 5, p j ≠ beta (c j.castSucc)) ∧ (finish s c).2 = decide (i ≠ 0)
+        then weight (fun j => beta (c j.succ)) i else 0) else 0 := by
+    simp only [rowLegal, colour_bond_iff, compatible, pairs]
+    by_cases hg : good s c <;> simp [hg]
+  simp only [allCounts, he]
+  exact scan_sum 6 s (fun b st =>
+    if (∀ j : Fin 5, b j.castSucc ≠ b j.succ) ∧
+      (∀ j : Fin 5, p j ≠ b j.castSucc) ∧ st.2 = decide (i ≠ 0)
+    then weight (fun j => b j.succ) i else 0)
+private def reducedFirst (i : Fin 5) : ℤ :=
+  ∑ b : Fin 5 → Fin 3, labelWeight (false, false) b *
+    if (∀ j : Fin 5, (Fin.cons 0 b : Fin 6 → Fin 3) j.castSucc ≠
+      (Fin.cons 0 b : Fin 6 → Fin 3) j.succ) ∧
+      (labelFinish (false, false) b).2 = decide (i ≠ 0)
+    then weight b i else 0
+private theorem reduce_first (i : Fin 5) : allFirst i = reducedFirst i := by
+  rw [allFirst, ← (Fin.consEquiv (fun _ : Fin 6 => Fin 6)).sum_comp,
+    Fintype.sum_prod_type]
+  simp only [Fin.consEquiv, Equiv.coe_fn_mk]
+  rw [Finset.sum_eq_single (0 : Fin 6)]
+  · change _ = ∑ b : Fin 5 → Fin 3, labelWeight (false, false) b *
+      (if (∀ j : Fin 5, (Fin.cons 0 b : Fin 6 → Fin 3) j.castSucc ≠
+        (Fin.cons 0 b : Fin 6 → Fin 3) j.succ) ∧
+        (labelFinish (false, false) b).2 = decide (i ≠ 0) then weight b i else 0)
+    rw [← scan_sum 5 (false, false) (fun b st =>
+      if (∀ j : Fin 5, (Fin.cons 0 b : Fin 6 → Fin 3) j.castSucc ≠
+        (Fin.cons 0 b : Fin 6 → Fin 3) j.succ) ∧ st.2 = decide (i ≠ 0)
+      then weight b i else 0)]
+    apply Finset.sum_congr rfl
+    intro c _
+    have hg : good (false, false) (Fin.cons (0 : Fin 6) c) ↔
+        good (false, false) c := by
+      change allowed (false, false) 0 ∧ good (false, false) c ↔ _
+      norm_num [allowed]
+    have hf : finish (false, false) (Fin.cons (0 : Fin 6) c) =
+        finish (false, false) c := rfl
+    have hm := beta_cons (0 : Fin 6) c
+    have hp : rowLegal (Fin.cons (0 : Fin 6) c) ↔
+        (∀ j : Fin 5, (Fin.cons 0 (fun k => beta (c k)) : Fin 6 → Fin 3) j.castSucc ≠
+          (Fin.cons 0 (fun k => beta (c k)) : Fin 6 → Fin 3) j.succ) := by
+      simp only [rowLegal, colour_bond_iff]
+      change (∀ j : Fin 5, (fun k => beta ((Fin.cons 0 c : Row) k)) j.castSucc ≠
+        (fun k => beta ((Fin.cons 0 c : Row) k)) j.succ) ↔ _
+      rw [hm]
+      rfl
+    have hpair : pairs (Fin.cons (0 : Fin 6) c) = (fun j => beta (c j)) := rfl
+    simp only [Fin.cons_zero, hg, hf, hp, hpair, true_and]
+    by_cases hx : good (false, false) c <;> simp [hx]
+  · intro x _ hx
+    apply Finset.sum_eq_zero
+    intro c _
+    simp [hx]
+  · intro hx
+    exact False.elim (hx (Finset.mem_univ 0))
 private theorem unseen01010_counts (i : Fin 5) :
-    allCounts (true, false) ![0, 1, 0, 1, 0] i = ![64, 800, 17216, 360576, 7530048] i := by
-  simp only [allCounts, sum_rows]
-  change (∑ x : Fin 6, ∑ y : Fin 6, rowPartial (true, false) ![0, 1, 0, 1, 0] x y i) = _
-  simp_rw [unseen01010_partial]
+    allCounts (true, false) ![0, 1, 0, 1, 0] i =
+      ![64, 800, 17216, 360576, 7530048] i := by
+  rw [reduce_counts]
+  simp only [reducedCounts, sum_rows]
   fin_cases i <;> decide +kernel
-private def unseen10101Data : Fin 5 → Fin 6 → Fin 6 → ℤ :=
-  ![
-    ![![0, 16, 0, 0, 16, 0],
-      ![0, 0, 0, 0, 0, 0],
-      ![0, 0, 0, 0, 0, 0],
-      ![0, 0, 0, 0, 0, 0],
-      ![0, 0, 0, 0, 0, 0],
-      ![0, 16, 0, 0, 16, 0]],
-    ![![0, 72, 96, 0, 72, 0],
-      ![0, 0, 0, 0, 0, 0],
-      ![0, 160, 0, 0, 160, 0],
-      ![0, 0, 0, 0, 0, 0],
-      ![0, 0, 0, 0, 0, 0],
-      ![0, 72, 96, 0, 72, 0]],
-    ![![0, 1568, 1920, 0, 1568, 0],
-      ![0, 0, 0, 0, 0, 0],
-      ![0, 3552, 0, 0, 3552, 0],
-      ![0, 0, 0, 0, 0, 0],
-      ![0, 0, 0, 0, 0, 0],
-      ![0, 1568, 1920, 0, 1568, 0]],
-    ![![0, 32832, 39936, 0, 32832, 0],
-      ![0, 0, 0, 0, 0, 0],
-      ![0, 74688, 0, 0, 74688, 0],
-      ![0, 0, 0, 0, 0, 0],
-      ![0, 0, 0, 0, 0, 0],
-      ![0, 32832, 39936, 0, 32832, 0]],
-    ![![0, 685584, 833376, 0, 685584, 0],
-      ![0, 0, 0, 0, 0, 0],
-      ![0, 1560480, 0, 0, 1560480, 0],
-      ![0, 0, 0, 0, 0, 0],
-      ![0, 0, 0, 0, 0, 0],
-      ![0, 685584, 833376, 0, 685584, 0]]
-  ]
-private theorem unseen10101_partial_00 (i : Fin 5) :
-    rowPartial (true, false) ![1, 0, 1, 0, 1] 0 0 i = unseen10101Data i 0 0 := by
-  fin_cases i <;> decide +kernel
-private theorem unseen10101_partial_01 (i : Fin 5) :
-    rowPartial (true, false) ![1, 0, 1, 0, 1] 0 1 i = unseen10101Data i 0 1 := by
-  fin_cases i <;> decide +kernel
-private theorem unseen10101_partial_02 (i : Fin 5) :
-    rowPartial (true, false) ![1, 0, 1, 0, 1] 0 2 i = unseen10101Data i 0 2 := by
-  fin_cases i <;> decide +kernel
-private theorem unseen10101_partial_03 (i : Fin 5) :
-    rowPartial (true, false) ![1, 0, 1, 0, 1] 0 3 i = unseen10101Data i 0 3 := by
-  fin_cases i <;> decide +kernel
-private theorem unseen10101_partial_04 (i : Fin 5) :
-    rowPartial (true, false) ![1, 0, 1, 0, 1] 0 4 i = unseen10101Data i 0 4 := by
-  fin_cases i <;> decide +kernel
-private theorem unseen10101_partial_05 (i : Fin 5) :
-    rowPartial (true, false) ![1, 0, 1, 0, 1] 0 5 i = unseen10101Data i 0 5 := by
-  fin_cases i <;> decide +kernel
-private theorem unseen10101_partial_10 (i : Fin 5) :
-    rowPartial (true, false) ![1, 0, 1, 0, 1] 1 0 i = unseen10101Data i 1 0 := by
-  fin_cases i <;> decide +kernel
-private theorem unseen10101_partial_11 (i : Fin 5) :
-    rowPartial (true, false) ![1, 0, 1, 0, 1] 1 1 i = unseen10101Data i 1 1 := by
-  fin_cases i <;> decide +kernel
-private theorem unseen10101_partial_12 (i : Fin 5) :
-    rowPartial (true, false) ![1, 0, 1, 0, 1] 1 2 i = unseen10101Data i 1 2 := by
-  fin_cases i <;> decide +kernel
-private theorem unseen10101_partial_13 (i : Fin 5) :
-    rowPartial (true, false) ![1, 0, 1, 0, 1] 1 3 i = unseen10101Data i 1 3 := by
-  fin_cases i <;> decide +kernel
-private theorem unseen10101_partial_14 (i : Fin 5) :
-    rowPartial (true, false) ![1, 0, 1, 0, 1] 1 4 i = unseen10101Data i 1 4 := by
-  fin_cases i <;> decide +kernel
-private theorem unseen10101_partial_15 (i : Fin 5) :
-    rowPartial (true, false) ![1, 0, 1, 0, 1] 1 5 i = unseen10101Data i 1 5 := by
-  fin_cases i <;> decide +kernel
-private theorem unseen10101_partial_20 (i : Fin 5) :
-    rowPartial (true, false) ![1, 0, 1, 0, 1] 2 0 i = unseen10101Data i 2 0 := by
-  fin_cases i <;> decide +kernel
-private theorem unseen10101_partial_21 (i : Fin 5) :
-    rowPartial (true, false) ![1, 0, 1, 0, 1] 2 1 i = unseen10101Data i 2 1 := by
-  fin_cases i <;> decide +kernel
-private theorem unseen10101_partial_22 (i : Fin 5) :
-    rowPartial (true, false) ![1, 0, 1, 0, 1] 2 2 i = unseen10101Data i 2 2 := by
-  fin_cases i <;> decide +kernel
-private theorem unseen10101_partial_23 (i : Fin 5) :
-    rowPartial (true, false) ![1, 0, 1, 0, 1] 2 3 i = unseen10101Data i 2 3 := by
-  fin_cases i <;> decide +kernel
-private theorem unseen10101_partial_24 (i : Fin 5) :
-    rowPartial (true, false) ![1, 0, 1, 0, 1] 2 4 i = unseen10101Data i 2 4 := by
-  fin_cases i <;> decide +kernel
-private theorem unseen10101_partial_25 (i : Fin 5) :
-    rowPartial (true, false) ![1, 0, 1, 0, 1] 2 5 i = unseen10101Data i 2 5 := by
-  fin_cases i <;> decide +kernel
-private theorem unseen10101_partial_30 (i : Fin 5) :
-    rowPartial (true, false) ![1, 0, 1, 0, 1] 3 0 i = unseen10101Data i 3 0 := by
-  fin_cases i <;> decide +kernel
-private theorem unseen10101_partial_31 (i : Fin 5) :
-    rowPartial (true, false) ![1, 0, 1, 0, 1] 3 1 i = unseen10101Data i 3 1 := by
-  fin_cases i <;> decide +kernel
-private theorem unseen10101_partial_32 (i : Fin 5) :
-    rowPartial (true, false) ![1, 0, 1, 0, 1] 3 2 i = unseen10101Data i 3 2 := by
-  fin_cases i <;> decide +kernel
-private theorem unseen10101_partial_33 (i : Fin 5) :
-    rowPartial (true, false) ![1, 0, 1, 0, 1] 3 3 i = unseen10101Data i 3 3 := by
-  fin_cases i <;> decide +kernel
-private theorem unseen10101_partial_34 (i : Fin 5) :
-    rowPartial (true, false) ![1, 0, 1, 0, 1] 3 4 i = unseen10101Data i 3 4 := by
-  fin_cases i <;> decide +kernel
-private theorem unseen10101_partial_35 (i : Fin 5) :
-    rowPartial (true, false) ![1, 0, 1, 0, 1] 3 5 i = unseen10101Data i 3 5 := by
-  fin_cases i <;> decide +kernel
-private theorem unseen10101_partial_40 (i : Fin 5) :
-    rowPartial (true, false) ![1, 0, 1, 0, 1] 4 0 i = unseen10101Data i 4 0 := by
-  fin_cases i <;> decide +kernel
-private theorem unseen10101_partial_41 (i : Fin 5) :
-    rowPartial (true, false) ![1, 0, 1, 0, 1] 4 1 i = unseen10101Data i 4 1 := by
-  fin_cases i <;> decide +kernel
-private theorem unseen10101_partial_42 (i : Fin 5) :
-    rowPartial (true, false) ![1, 0, 1, 0, 1] 4 2 i = unseen10101Data i 4 2 := by
-  fin_cases i <;> decide +kernel
-private theorem unseen10101_partial_43 (i : Fin 5) :
-    rowPartial (true, false) ![1, 0, 1, 0, 1] 4 3 i = unseen10101Data i 4 3 := by
-  fin_cases i <;> decide +kernel
-private theorem unseen10101_partial_44 (i : Fin 5) :
-    rowPartial (true, false) ![1, 0, 1, 0, 1] 4 4 i = unseen10101Data i 4 4 := by
-  fin_cases i <;> decide +kernel
-private theorem unseen10101_partial_45 (i : Fin 5) :
-    rowPartial (true, false) ![1, 0, 1, 0, 1] 4 5 i = unseen10101Data i 4 5 := by
-  fin_cases i <;> decide +kernel
-private theorem unseen10101_partial_50 (i : Fin 5) :
-    rowPartial (true, false) ![1, 0, 1, 0, 1] 5 0 i = unseen10101Data i 5 0 := by
-  fin_cases i <;> decide +kernel
-private theorem unseen10101_partial_51 (i : Fin 5) :
-    rowPartial (true, false) ![1, 0, 1, 0, 1] 5 1 i = unseen10101Data i 5 1 := by
-  fin_cases i <;> decide +kernel
-private theorem unseen10101_partial_52 (i : Fin 5) :
-    rowPartial (true, false) ![1, 0, 1, 0, 1] 5 2 i = unseen10101Data i 5 2 := by
-  fin_cases i <;> decide +kernel
-private theorem unseen10101_partial_53 (i : Fin 5) :
-    rowPartial (true, false) ![1, 0, 1, 0, 1] 5 3 i = unseen10101Data i 5 3 := by
-  fin_cases i <;> decide +kernel
-private theorem unseen10101_partial_54 (i : Fin 5) :
-    rowPartial (true, false) ![1, 0, 1, 0, 1] 5 4 i = unseen10101Data i 5 4 := by
-  fin_cases i <;> decide +kernel
-private theorem unseen10101_partial_55 (i : Fin 5) :
-    rowPartial (true, false) ![1, 0, 1, 0, 1] 5 5 i = unseen10101Data i 5 5 := by
-  fin_cases i <;> decide +kernel
-private theorem unseen10101_partial (x y : Fin 6) (i : Fin 5) :
-    rowPartial (true, false) ![1, 0, 1, 0, 1] x y i = unseen10101Data i x y := by
-  fin_cases x <;> fin_cases y <;> first
-  | exact unseen10101_partial_00 i
-  | exact unseen10101_partial_01 i
-  | exact unseen10101_partial_02 i
-  | exact unseen10101_partial_03 i
-  | exact unseen10101_partial_04 i
-  | exact unseen10101_partial_05 i
-  | exact unseen10101_partial_10 i
-  | exact unseen10101_partial_11 i
-  | exact unseen10101_partial_12 i
-  | exact unseen10101_partial_13 i
-  | exact unseen10101_partial_14 i
-  | exact unseen10101_partial_15 i
-  | exact unseen10101_partial_20 i
-  | exact unseen10101_partial_21 i
-  | exact unseen10101_partial_22 i
-  | exact unseen10101_partial_23 i
-  | exact unseen10101_partial_24 i
-  | exact unseen10101_partial_25 i
-  | exact unseen10101_partial_30 i
-  | exact unseen10101_partial_31 i
-  | exact unseen10101_partial_32 i
-  | exact unseen10101_partial_33 i
-  | exact unseen10101_partial_34 i
-  | exact unseen10101_partial_35 i
-  | exact unseen10101_partial_40 i
-  | exact unseen10101_partial_41 i
-  | exact unseen10101_partial_42 i
-  | exact unseen10101_partial_43 i
-  | exact unseen10101_partial_44 i
-  | exact unseen10101_partial_45 i
-  | exact unseen10101_partial_50 i
-  | exact unseen10101_partial_51 i
-  | exact unseen10101_partial_52 i
-  | exact unseen10101_partial_53 i
-  | exact unseen10101_partial_54 i
-  | exact unseen10101_partial_55 i
 private theorem unseen10101_counts (i : Fin 5) :
-    allCounts (true, false) ![1, 0, 1, 0, 1] i = ![64, 800, 17216, 360576, 7530048] i := by
-  simp only [allCounts, sum_rows]
-  change (∑ x : Fin 6, ∑ y : Fin 6, rowPartial (true, false) ![1, 0, 1, 0, 1] x y i) = _
-  simp_rw [unseen10101_partial]
+    allCounts (true, false) ![1, 0, 1, 0, 1] i =
+      ![64, 800, 17216, 360576, 7530048] i := by
+  rw [reduce_counts]
+  simp only [reducedCounts, sum_rows]
   fin_cases i <;> decide +kernel
-private def initialData : Fin 5 → Fin 6 → Fin 6 → ℤ :=
-  ![
-    ![![0, 16, 0, 0, 0, 0],
-      ![0, 0, 0, 0, 0, 0],
-      ![0, 0, 0, 0, 0, 0],
-      ![0, 0, 0, 0, 0, 0],
-      ![0, 0, 0, 0, 0, 0],
-      ![0, 0, 0, 0, 0, 0]],
-    ![![0, 120, 0, 0, 0, 0],
-      ![0, 0, 0, 0, 0, 0],
-      ![0, 0, 0, 0, 0, 0],
-      ![0, 0, 0, 0, 0, 0],
-      ![0, 0, 0, 0, 0, 0],
-      ![0, 0, 0, 0, 0, 0]],
-    ![![0, 2384, 0, 0, 0, 0],
-      ![0, 0, 0, 0, 0, 0],
-      ![0, 0, 0, 0, 0, 0],
-      ![0, 0, 0, 0, 0, 0],
-      ![0, 0, 0, 0, 0, 0],
-      ![0, 0, 0, 0, 0, 0]],
-    ![![0, 49344, 0, 0, 0, 0],
-      ![0, 0, 0, 0, 0, 0],
-      ![0, 0, 0, 0, 0, 0],
-      ![0, 0, 0, 0, 0, 0],
-      ![0, 0, 0, 0, 0, 0],
-      ![0, 0, 0, 0, 0, 0]],
-    ![![0, 1028832, 0, 0, 0, 0],
-      ![0, 0, 0, 0, 0, 0],
-      ![0, 0, 0, 0, 0, 0],
-      ![0, 0, 0, 0, 0, 0],
-      ![0, 0, 0, 0, 0, 0],
-      ![0, 0, 0, 0, 0, 0]]
-  ]
-private theorem initial_partial_00 (i : Fin 5) :
-    firstPartial 0 0 i = initialData i 0 0 := by
-  fin_cases i <;> decide +kernel
-private theorem initial_partial_01 (i : Fin 5) :
-    firstPartial 0 1 i = initialData i 0 1 := by
-  fin_cases i <;> decide +kernel
-private theorem initial_partial_02 (i : Fin 5) :
-    firstPartial 0 2 i = initialData i 0 2 := by
-  fin_cases i <;> decide +kernel
-private theorem initial_partial_03 (i : Fin 5) :
-    firstPartial 0 3 i = initialData i 0 3 := by
-  fin_cases i <;> decide +kernel
-private theorem initial_partial_04 (i : Fin 5) :
-    firstPartial 0 4 i = initialData i 0 4 := by
-  fin_cases i <;> decide +kernel
-private theorem initial_partial_05 (i : Fin 5) :
-    firstPartial 0 5 i = initialData i 0 5 := by
-  fin_cases i <;> decide +kernel
-private theorem initial_partial_10 (i : Fin 5) :
-    firstPartial 1 0 i = initialData i 1 0 := by
-  fin_cases i <;> decide +kernel
-private theorem initial_partial_11 (i : Fin 5) :
-    firstPartial 1 1 i = initialData i 1 1 := by
-  fin_cases i <;> decide +kernel
-private theorem initial_partial_12 (i : Fin 5) :
-    firstPartial 1 2 i = initialData i 1 2 := by
-  fin_cases i <;> decide +kernel
-private theorem initial_partial_13 (i : Fin 5) :
-    firstPartial 1 3 i = initialData i 1 3 := by
-  fin_cases i <;> decide +kernel
-private theorem initial_partial_14 (i : Fin 5) :
-    firstPartial 1 4 i = initialData i 1 4 := by
-  fin_cases i <;> decide +kernel
-private theorem initial_partial_15 (i : Fin 5) :
-    firstPartial 1 5 i = initialData i 1 5 := by
-  fin_cases i <;> decide +kernel
-private theorem initial_partial_20 (i : Fin 5) :
-    firstPartial 2 0 i = initialData i 2 0 := by
-  fin_cases i <;> decide +kernel
-private theorem initial_partial_21 (i : Fin 5) :
-    firstPartial 2 1 i = initialData i 2 1 := by
-  fin_cases i <;> decide +kernel
-private theorem initial_partial_22 (i : Fin 5) :
-    firstPartial 2 2 i = initialData i 2 2 := by
-  fin_cases i <;> decide +kernel
-private theorem initial_partial_23 (i : Fin 5) :
-    firstPartial 2 3 i = initialData i 2 3 := by
-  fin_cases i <;> decide +kernel
-private theorem initial_partial_24 (i : Fin 5) :
-    firstPartial 2 4 i = initialData i 2 4 := by
-  fin_cases i <;> decide +kernel
-private theorem initial_partial_25 (i : Fin 5) :
-    firstPartial 2 5 i = initialData i 2 5 := by
-  fin_cases i <;> decide +kernel
-private theorem initial_partial_30 (i : Fin 5) :
-    firstPartial 3 0 i = initialData i 3 0 := by
-  fin_cases i <;> decide +kernel
-private theorem initial_partial_31 (i : Fin 5) :
-    firstPartial 3 1 i = initialData i 3 1 := by
-  fin_cases i <;> decide +kernel
-private theorem initial_partial_32 (i : Fin 5) :
-    firstPartial 3 2 i = initialData i 3 2 := by
-  fin_cases i <;> decide +kernel
-private theorem initial_partial_33 (i : Fin 5) :
-    firstPartial 3 3 i = initialData i 3 3 := by
-  fin_cases i <;> decide +kernel
-private theorem initial_partial_34 (i : Fin 5) :
-    firstPartial 3 4 i = initialData i 3 4 := by
-  fin_cases i <;> decide +kernel
-private theorem initial_partial_35 (i : Fin 5) :
-    firstPartial 3 5 i = initialData i 3 5 := by
-  fin_cases i <;> decide +kernel
-private theorem initial_partial_40 (i : Fin 5) :
-    firstPartial 4 0 i = initialData i 4 0 := by
-  fin_cases i <;> decide +kernel
-private theorem initial_partial_41 (i : Fin 5) :
-    firstPartial 4 1 i = initialData i 4 1 := by
-  fin_cases i <;> decide +kernel
-private theorem initial_partial_42 (i : Fin 5) :
-    firstPartial 4 2 i = initialData i 4 2 := by
-  fin_cases i <;> decide +kernel
-private theorem initial_partial_43 (i : Fin 5) :
-    firstPartial 4 3 i = initialData i 4 3 := by
-  fin_cases i <;> decide +kernel
-private theorem initial_partial_44 (i : Fin 5) :
-    firstPartial 4 4 i = initialData i 4 4 := by
-  fin_cases i <;> decide +kernel
-private theorem initial_partial_45 (i : Fin 5) :
-    firstPartial 4 5 i = initialData i 4 5 := by
-  fin_cases i <;> decide +kernel
-private theorem initial_partial_50 (i : Fin 5) :
-    firstPartial 5 0 i = initialData i 5 0 := by
-  fin_cases i <;> decide +kernel
-private theorem initial_partial_51 (i : Fin 5) :
-    firstPartial 5 1 i = initialData i 5 1 := by
-  fin_cases i <;> decide +kernel
-private theorem initial_partial_52 (i : Fin 5) :
-    firstPartial 5 2 i = initialData i 5 2 := by
-  fin_cases i <;> decide +kernel
-private theorem initial_partial_53 (i : Fin 5) :
-    firstPartial 5 3 i = initialData i 5 3 := by
-  fin_cases i <;> decide +kernel
-private theorem initial_partial_54 (i : Fin 5) :
-    firstPartial 5 4 i = initialData i 5 4 := by
-  fin_cases i <;> decide +kernel
-private theorem initial_partial_55 (i : Fin 5) :
-    firstPartial 5 5 i = initialData i 5 5 := by
-  fin_cases i <;> decide +kernel
-private theorem initial_partial (x y : Fin 6) (i : Fin 5) :
-    firstPartial x y i = initialData i x y := by
-  fin_cases x <;> fin_cases y <;> first
-  | exact initial_partial_00 i
-  | exact initial_partial_01 i
-  | exact initial_partial_02 i
-  | exact initial_partial_03 i
-  | exact initial_partial_04 i
-  | exact initial_partial_05 i
-  | exact initial_partial_10 i
-  | exact initial_partial_11 i
-  | exact initial_partial_12 i
-  | exact initial_partial_13 i
-  | exact initial_partial_14 i
-  | exact initial_partial_15 i
-  | exact initial_partial_20 i
-  | exact initial_partial_21 i
-  | exact initial_partial_22 i
-  | exact initial_partial_23 i
-  | exact initial_partial_24 i
-  | exact initial_partial_25 i
-  | exact initial_partial_30 i
-  | exact initial_partial_31 i
-  | exact initial_partial_32 i
-  | exact initial_partial_33 i
-  | exact initial_partial_34 i
-  | exact initial_partial_35 i
-  | exact initial_partial_40 i
-  | exact initial_partial_41 i
-  | exact initial_partial_42 i
-  | exact initial_partial_43 i
-  | exact initial_partial_44 i
-  | exact initial_partial_45 i
-  | exact initial_partial_50 i
-  | exact initial_partial_51 i
-  | exact initial_partial_52 i
-  | exact initial_partial_53 i
-  | exact initial_partial_54 i
-  | exact initial_partial_55 i
 private theorem initial_row_counts (i : Fin 5) :
     allFirst i = ![16, 120, 2384, 49344, 1028832] i := by
-  simp only [allFirst, sum_rows]
-  change (∑ x : Fin 6, ∑ y : Fin 6, firstPartial x y i) = _
-  simp_rw [initial_partial]
+  rw [reduce_first]
+  unfold reducedFirst
+  simp_rw [← (Fin.consEquiv (fun _ : Fin 5 => Fin 3)).sum_comp,
+    Fintype.sum_prod_type,
+    ← (Fin.consEquiv (fun _ : Fin 4 => Fin 3)).sum_comp,
+    Fintype.sum_prod_type,
+    ← (Fin.consEquiv (fun _ : Fin 3 => Fin 3)).sum_comp,
+    Fintype.sum_prod_type,
+    ← (Fin.consEquiv (fun _ : Fin 2 => Fin 3)).sum_comp,
+    Fintype.sum_prod_type,
+    ← (Fin.consEquiv (fun _ : Fin 1 => Fin 3)).sum_comp,
+    Fintype.sum_prod_type]
   fin_cases i <;> decide +kernel
-
 section
 attribute [local irreducible] allCounts
 private theorem unseen_counts (p : Boundary)
@@ -1248,7 +715,6 @@ private theorem unseen_counts (p : Boundary)
   | exact unseen01010_counts i
   | exact unseen10101_counts i
 end
-
 private theorem row_counts (s : Seen) (p : Boundary) (h : Valid s p) :
     classCount s p true = (if s.2 then 64 * moment p 1 else 800) ∧
     classCount s p false = (if s.2 then 0 else 64) ∧
@@ -1276,7 +742,6 @@ private theorem row_counts (s : Seen) (p : Boundary) (h : Valid s p) :
     · intro i
       rw [full_moments, label_counts p h.2.1]
       fin_cases i <;> rfl
-
 private theorem initial_counts :
     firstCount true = 120 ∧ firstCount false = 16 ∧
       ∀ i : Fin 3, firstMoment i.succ = ![2384, 49344, 1028832] i := by
@@ -1286,8 +751,6 @@ private theorem initial_counts :
   · exact initial_row_counts 2
   · exact initial_row_counts 3
   · exact initial_row_counts 4
-
-/-- One-row transfer moments and the initial-row counts. -/
 theorem finite_certificate :
     (∀ s p, Valid s p →
       classCount s p true = (if s.2 then 64 * moment p 1 else 800) ∧
@@ -1299,7 +762,6 @@ theorem finite_certificate :
     firstCount true = 120 ∧ firstCount false = 16 ∧
       ∀ i : Fin 3, firstMoment i.succ = ![2384, 49344, 1028832] i :=
   ⟨row_counts, initial_counts⟩
-
 private theorem initial_valid (c : Row)
     (hc : c 0 = 0 ∧ rowLegal c ∧ good (false, false) c) :
     Valid (finish (false, false) c) (pairs c) := by
@@ -1313,7 +775,6 @@ private theorem initial_valid (c : Row)
     have hh : allowed (advance (false, false) (c 0)) (c 1) := hc.2.2.2.1
     simpa only [hc.1] using hh
   exact valid_next (false, false) c (Or.inr ⟨1, ht _ hb hg⟩) hc.2
-
 private def w : ℕ → Fin 4 → ℤ
   | 0, i => ![864, 64, 0, 0] i
   | n + 1, i => ![64 * w n 0 + 17216 * w n 1 + 360576 * w n 2 + 7530048 * w n 3,
@@ -1321,7 +782,6 @@ private def w : ℕ → Fin 4 → ℤ
 private def eval (n : ℕ) (s : Seen) (p : Boundary) : ℤ :=
   if s.2 then moment p 1 * w n 1 + moment p 2 * w n 2 + moment p 3 * w n 3
   else w n 0
-
 private theorem v_eq_w (n : ℕ) (s : Seen) (p : Boundary) (h : Valid s p) :
     v (n + 1) s p = eval n s p := by
   induction n generalizing s p with
@@ -1372,7 +832,6 @@ private theorem v_eq_w (n : ℕ) (s : Seen) (p : Boundary) (h : Valid s p) :
         else 7530048) := (finite_certificate.1 s p h).2.2 2
     rw [h1, h2, h3, (finite_certificate.1 s p h).2.1]
     cases hb : s.2 <;> simp [hb, eval, w] <;> ring
-
 private theorem a_eq_w (n : ℕ) :
     (a (n + 2) : ℤ) = 16 * w n 0 + 2384 * w n 1 + 49344 * w n 2 + 1028832 * w n 3 := by
   rw [show n + 2 = (n + 1) + 1 by omega, counting_bridge, total, widthTotal]
@@ -1404,7 +863,6 @@ private theorem a_eq_w (n : ℕ) :
   have h3 : firstMoment 3 = 1028832 := finite_certificate.2.2.2 2
   rw [h1, h2, h3, finite_certificate.2.2.1]
   ring
-
 private theorem recurrence (n : ℕ) :
     (a (n + 6) : ℤ) = 1664 * a (n + 5) - 471040 * a (n + 4) +
       44826624 * a (n + 3) - 1358954496 * a (n + 2) := by
@@ -1416,7 +874,6 @@ private theorem recurrence (n : ℕ) :
   simp only [w]
   norm_num
   ring
-
 private theorem zero_count : a 0 = 0 := by simp [a, Legal]
 private theorem one_count : (a 1 : ℤ) = 136 := by
   rw [show 1 = 0 + 1 from rfl, counting_bridge]
@@ -1430,7 +887,6 @@ private theorem one_count : (a 1 : ℤ) = 136 := by
       simp [hc]
   rw [he, finite_certificate.2.1, finite_certificate.2.2.1]
   norm_num
-
 attribute [local irreducible] a
 open PowerSeries in
 /-- Barker's identity for the literal six-column count, with `a 0 = 0`. -/
@@ -1471,5 +927,4 @@ theorem result :
     interval_cases n <;> norm_num only [zero_count, one_count, h2, h3, h4, h5,
       Nat.reduceLeDiff, Nat.reduceSubDiff, Nat.reduceEqDiff, ite_true, ite_false,
       Nat.cast_zero, mul_zero, sub_self, add_zero, zero_add]
-
 end D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233254TriangleStrip

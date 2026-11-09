@@ -52,7 +52,12 @@ internal sealed class HardinA233254TriangleStripDocument : IScribeDocumentDefini
                 + "ABABA, ABABC, ABACA, ABACB, ABCAB, ABCAC, ABCBA and ABCBC."),
             Def("moment", "moment", "Boundary transfer moments", MomentFormula(),
                 "The four entries are the constant one and the first three moments of "
-                + "the label transfer. A label row has 64 colour lifts."),
+                + "the label transfer. With both scanner flags true, a label row has "
+                + "64 colour lifts. More generally each column has a factor of zero, "
+                + "one or two: pair zero has two choices; pair one has one choice before "
+                + "the first one, then two; pair two is forbidden before one, has one "
+                + "choice before the first two, then two. Multiplying these factors "
+                + "along the label row reproduces the original colour scanner."),
             Def("classcount", "classCount", "Unweighted row counts", ClassCountFormula(),
                 "The final second flag distinguishes the two seen-colour sectors."),
             Def("momentcount", "momentCount", "Weighted row counts", MomentCountFormula(),
