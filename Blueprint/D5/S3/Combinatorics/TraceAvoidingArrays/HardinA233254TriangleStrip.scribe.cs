@@ -134,7 +134,7 @@ internal sealed class HardinA233254TriangleStripDocument : IScribeDocumentDefini
             Fn("i", Call("Fin", n), Fn("j", Fin(6), Cell(i, j))));
         var arrays = Arrow(Product(Call("Fin", n), Fin(6)), Fin(6));
         var filter = Call("Finset.filter", Fn("A", arrays,
-            And(first, And(horizontal, And(anti, normal)))), Call("Finset.univ"));
+            And(first, And(horizontal, And(anti, normal)))), Q("Finset.univ"));
         return All("n", Q("Nat"), Eq(CallLocal("a", n), Call("Finset.card", filter)));
     }
     private static Formula ValidFormula()
