@@ -159,7 +159,7 @@ internal sealed class HardinA233197StripDocument : IScribeDocumentDefinition
                     At(Name("T"), Call("seenClass", s, p), b))))));
         var first = All("b", Fin(D(5)), Eq(Call("firstCount", b), At(InitialVector(), b)));
         var vector = Eq(W(Add(D(1), D(3))), SumOver("j", Fin(D(3)),
-            At(Q("HSMul.hSMul"), At(Vector(Z(4096), Z(-960), Z(64)), j),
+            At(Q("HSMul.hSMul"), At(Vector(Z(4096), new Formula.Negate(Z(960)), Z(64)), j),
                 W(Add(D(1), Val(j))))));
         return And(counts, And(first, vector));
     }
