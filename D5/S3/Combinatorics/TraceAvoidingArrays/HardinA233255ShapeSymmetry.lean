@@ -202,4 +202,144 @@ theorem completed_transfer_bridge (n : ℕ) (p : Boundary) (hp : proper p) :
       ring
     · ring
 
+private def hasTwo {k : ℕ} (q : Fin k → Fin 3) : Prop := ∃ j, q j = 2
+private instance {k : ℕ} (q : Fin k → Fin 3) : Decidable (hasTwo q) :=
+  inferInstanceAs (Decidable (∃ j, q j = 2))
+
+private def alternating : Boundary := ![0, 1, 0, 1, 0, 1]
+private def alternating' : Boundary := ![1, 0, 1, 0, 1, 0]
+private def absentRow (p : Boundary) : PairRow := Fin.cons (p 5) p
+
+set_option maxRecDepth 20000 in
+private theorem unfinished_row : ∀ q : PairRow,
+    rowFinish (true, false) q = (if hasTwo q then (true, true) else (true, false)) ∧
+    rowWeight (true, false) q = (if hasTwo q then 64 else 128) := by
+  decide +kernel
+
+set_option maxRecDepth 20000 in
+private theorem absent_row : ∀ p : Boundary, p = alternating ∨ p = alternating' →
+    (rowProper (absentRow p) ∧ labelCompatible p (absentRow p)) ∧
+    ¬ hasTwo (absentRow p) ∧
+    (∀ q : PairRow, rowProper q ∧ labelCompatible p q → ¬ hasTwo q → q = absentRow p) := by
+  decide +kernel
+
+private theorem incomplete_step (n : ℕ) (p : Boundary)
+    (hp : p = alternating ∨ p = alternating') :
+    2 * pairV (n + 1) (true, false) p = pairV (n + 1) (true, true) p +
+      128 * (2 * pairV n (true, false) p - pairV n (true, true) p) := by
+  rw [pairV, full_step, Finset.mul_sum]
+  have hs := absent_row p hp
+  have hq (q : PairRow) :
+      2 * (if rowProper q ∧ labelCompatible p q then
+        rowWeight (true, false) q * pairV n (rowFinish (true, false) q) (labelBoundary q) else 0) =
+      (if rowProper q ∧ labelCompatible p q then 128 * pairV n (true, true) (labelBoundary q) else 0) +
+      (if q = absentRow p then
+        128 * (2 * pairV n (true, false) p - pairV n (true, true) p) else 0) := by
+    by_cases hl : rowProper q ∧ labelCompatible p q
+    · have hf := (unfinished_row q).1
+      have hw := (unfinished_row q).2
+      by_cases ht : hasTwo q
+      · have hne : q ≠ absentRow p := fun h => hs.2.1 (h ▸ ht)
+        simp only [hl, ite_true, hf, hw, ht, hne, ite_false, add_zero]
+        ring
+      · have he := hs.2.2 q hl ht
+        have hb : labelBoundary q = p := by rw [he]; rfl
+        simp only [hl, ite_true, hf, hw, ht, ite_false, he, hb]
+        simp only [eq_self, ite_true]
+        ring
+    · have hne : q ≠ absentRow p := fun h => hl (h ▸ hs.1)
+      simp [hl, hne]
+  simp_rw [hq]
+  rw [Finset.sum_add_distrib]
+  simp
+
+private theorem incomplete_relation (n : ℕ) (p : Boundary)
+    (hp : p = alternating ∨ p = alternating') :
+    2 * pairV n (true, false) p = pairV n (true, true) p + (128 : ℤ)^n := by
+  induction n with
+  | zero => norm_num [pairV]
+  | succ n ih =>
+    rw [incomplete_step n p hp]
+    have h : 2 * pairV n (true, false) p - pairV n (true, true) p = (128 : ℤ)^n := by
+      linarith
+    rw [h, pow_succ]
+    ring
+
+private def initialFull (q : Boundary) : Prop :=
+  rowProper (Fin.cons 0 q) ∧ q 0 = 1 ∧ hasTwo q
+private instance (q : Boundary) : Decidable (initialFull q) :=
+  inferInstanceAs (Decidable (_ ∧ _ ∧ _))
+
+set_option maxRecDepth 20000 in
+private theorem initial_row : ∀ q : Boundary,
+    (q = alternating' → rowProper (Fin.cons 0 q) ∧
+      rowWeight (false, false) q = 32 ∧ rowFinish (false, false) q = (true, false)) ∧
+    (initialFull q → proper q ∧ rowWeight (false, false) q = 16 ∧
+      rowFinish (false, false) q = (true, true)) ∧
+    (rowProper (Fin.cons 0 q) → q ≠ alternating' → ¬ initialFull q →
+      rowWeight (false, false) q = 0) ∧
+    (q = alternating' → ¬ initialFull q) := by
+  decide +kernel
+
+set_option maxRecDepth 20000 in
+private theorem initial_mass : ∀ i : Fin 16,
+    (∑ q : Boundary, if initialFull q ∧ classOf q = i then (16 : ℤ) else 0) =
+      if i = 0 then 16 else 32 := by
+  decide +kernel
+
+private theorem initial_aggregation (n : ℕ) :
+    (a ⟨n + 1, Nat.succ_pos n⟩ : ℤ) =
+      32 * pairV n (true, false) alternating' +
+        ∑ i : Fin 16, (if i = 0 then 16 else 32) * F n i := by
+  rw [literal_pair_bridge]
+  have hq (q : Boundary) :
+      (if rowProper (Fin.cons 0 q) then
+        rowWeight (false, false) q * pairV n (rowFinish (false, false) q) q else 0) =
+      (if q = alternating' then 32 * pairV n (true, false) alternating' else 0) +
+      (if initialFull q then 16 * F n (classOf q) else 0) := by
+    have h := initial_row q
+    by_cases ha : q = alternating'
+    · have hh := h.1 ha
+      simp only [hh.1, ite_true, hh.2.1, hh.2.2, ha, h.2.2.2 ha, ite_false, add_zero]
+    · by_cases hf : initialFull q
+      · have hh := h.2.1 hf
+        have hl := hf.1
+        simp only [hl, ite_true, hh.2.1, hh.2.2, completed_transfer_bridge n q hh.1,
+          ha, ite_false, hf, zero_add]
+      · by_cases hl : rowProper (Fin.cons 0 q)
+        · simp [hl, h.2.2.1 hl ha hf, ha, hf]
+        · simp [hl, ha, hf]
+  simp_rw [hq]
+  rw [Finset.sum_add_distrib]
+  simp only [Finset.sum_ite_eq', Finset.mem_univ, ite_true]
+  congr 1
+  conv_rhs => simp_rw [← initial_mass, Finset.sum_mul]
+  rw [Finset.sum_comm]
+  apply Finset.sum_congr rfl
+  intro q _
+  by_cases h : initialFull q
+  · simp [h]
+  · simp [h]
+
+/-- Exact all-height formula for the original anchored individual-array count. -/
+theorem literal_canonical_bridge (n : ℕ) :
+    (a ⟨n + 1, Nat.succ_pos n⟩ : ℤ) = (16 : ℤ) * 128^n + 32 * ∑ i : Fin 16, F n i := by
+  rw [initial_aggregation]
+  have hp : proper alternating' := by decide +kernel
+  have hc : classOf alternating' = 0 := by decide +kernel
+  have hr := incomplete_relation n alternating' (Or.inr rfl)
+  rw [completed_transfer_bridge n alternating' hp, hc] at hr
+  have hm : (∑ i : Fin 16, (if i = 0 then (16 : ℤ) else 32) * F n i) =
+      32 * ∑ i : Fin 16, F n i - 16 * F n 0 := by
+    have he (i : Fin 16) : (if i = 0 then (16 : ℤ) else 32) * F n i =
+        32 * F n i - (if i = 0 then 16 * F n 0 else 0) := by
+      split_ifs with h
+      · subst i; ring
+      · ring
+    simp_rw [he]
+    rw [Finset.sum_sub_distrib, ← Finset.mul_sum]
+    simp
+  rw [hm]
+  linarith
+
 end D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255ShapeSymmetry
