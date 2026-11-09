@@ -2114,3 +2114,1783 @@ CP仍需同一整台实际箭头、真正相关联合及递归同源参考；完
 局部旧值身份、数学完成或辅助支撑投影不供应这些实际来源。
 
 ## 追加锚（本行以下为增补区）
+
+## 161. 两种实偏移的同一原响应与完整前件
+
+**定义 161.1（原候选、实际三轴与结论域）。** 本节及以下各节完整采用130.1、137.1、147.1的同一原 $(E,C,u,N,\mathcal P,S,D)$。$E$ 是实Archimedean序单位空间，$\mathcal P$ 的正实线性评价分离元素并准确决定 $C$；每份质量 $m_\alpha=\alpha(u)$ 保留原值，包括零、不等和次归一质量。A1保留所有原标签的两条有向Hermitian二表正性；A2保留实际相加三表 $(a+b,a,b)$ 及其排列在整个实三空间的实部半正定性和 $(1,-1,-1)$ 的零二次值；A3保留 $S(u,u)=u$ 及同一固定有理 $0<\vartheta_0\le1$ 上的 $0\le z\le\vartheta_0u\Rightarrow S(z,z)\le z$。全部原P2和完整原PB仍对全部原输入成立。
+
+沿前卷16.1–16.2的同一忠实、含单位、等距且准确保锥JC包含，写
+
+$$
+\begin{gathered}
+E\subset X\subset\mathcal A_{\rm sa},\qquad
+\overline E=X,\qquad\mathcal A=C^*(X),\\
+S(a,b)=a\circ b=(ab+ba)/2,\qquad
+C=E\cap\mathcal A_+,\quad N=\|\cdot\||_E.
+\end{gathered}
+\tag{161.1}
+$$
+
+原 $E$ 可以不完备，$X$ 不必为 $\mathcal A_{\rm sa}$；$D:E^2\to E$ 始终是同一旧总映射。不预付一般齐次、可加、连续、可测、商下降、输入函数演算或完成延拓。固定实际原 $h,e,j=D(h,e)$，直接消费133.1–134.1与147.2–147.3：
+
+$$
+\begin{gathered}
+h^2=e^2=j^2=u,\quad h\circ e=h\circ j=e\circ j=0,\\
+Q=ihej\in Z(\mathcal A),\quad Q^*=Q,\quad Q^2=u,\\
+V_h=\{v\in E:hv=-vh\},\quad
+T=[L_j,L_e],\quad D(h,v)=Tv=iQhv,\quad T^2v=-v,\\
+U_h=2L_h^2-I,\quad
+P_{\rm tr}=(I-U_h)/2,\quad P_{\rm com}=(I+U_h)/2,\\
+\operatorname{Com}_h=P_{\rm com}E=\{c\in E:hc=ch\}.
+\end{gathered}
+\tag{161.2}
+$$
+
+$L_a z=a\circ z$。$T$、两份投影及 $h\circ x$ 都是保持原 $E$ 的有限Jordan表达式。辅助 $Q$ 不要求属于 $E$ 或 $X$；证明中的结合乘法、Hilbert向量及读取代数不扩大原输入域。零原对象的所有等式均为零。
+
+本组定理的完整原值域是
+
+$$
+D(Rh,\mu u+\lambda h+v),\qquad
+D(su+rh,w),\qquad
+R,\mu,\lambda,s,r\in\mathbb R,\quad v,w\in V_h.
+\tag{161.3}
+$$
+
+第二式的第二输入严格为横向；这两个受限域不被合成为 $D(su+rh,\mu u+\lambda h+v)$ 的一般公式。原七项来源合同保持145.1–145.7、155.1及下文171的全部量词。
+
+**定义 161.2（实际锚、原预算与同轴零行）。** 置 $n=u+h$，只用两种实际锚 $(p,q)=(e,j),(j,-e)$。前卷76.1–77.1在同一实际三轴的四维标量窗内准确给
+
+$$
+D(su+rh,tp+\alpha n)=rtq
+\qquad(s,r,t,\alpha\in\mathbb R).
+\tag{161.4}
+$$
+
+这里 $su+rh$ 和 $\alpha u+\alpha h+tp$ 都属于该四维窗；所用叉积是 $h\times p=q$。同时直接复用前卷16.2的全单位行、零输入零值、反对称性及同轴仿射零行，特别是
+
+$$
+D(su,y)=0\quad(y\in E),\qquad
+D(au+bh,cu+dh)=0\quad(a,b,c,d\in\mathbb R).
+\tag{161.5}
+$$
+
+这些是已识别的原值，未由一般输入线性性推得。对同一个数学正读取 $\phi$，完整P2与PB的元素式为
+
+$$
+\begin{gathered}
+B_\phi(a,b)=\phi(a^2)\phi(b^2)-\phi(a\circ b)^2,\qquad
+|\phi D(a,b)|^2\le B_\phi(a,b),\\
+\nu=D(a,b)-a\circ z,\quad\omega=a\circ b+D(a,z),\\
+D(b+\nu,z+\omega)-D(b-\nu,z-\omega)
+=-2b\circ\nu-2z\circ\omega.
+\end{gathered}
+\tag{161.6}
+$$
+
+前卷16.2和本卷123.2的准确锥接口允许环境数学态读取每张原P2；证明不把它们列为实际准备，也不将 $|\phi D|^2$ 换成 $\phi(D^2)$。
+
+## 162. 仿射首标签的完整外层与共享 Gram
+
+**引理 162.1（不删除交换块的仿射预算）。** 固定任意原 $x\in E$ 及实 $s,r$，记
+
+$$
+\begin{gathered}
+a=su+rh,\quad g=D(a,x),\quad
+v=P_{\rm tr}x,\quad k=h\circ x,\quad\theta=s+r,\\
+Z=(1+s\theta)x+r\theta k,\\
+W_+=Z+g-rtp-r\theta tq,\qquad
+W_-=Z-g+rtp-r\theta tq.
+\end{gathered}
+\tag{162.1}
+$$
+
+对161.2的任一锚、每个有限实 $t$ 及同一个数学正读取 $\phi$，有
+
+$$
+\boxed{2|r|\,|\phi(tq+v)|
+\le\sqrt{B_\phi(n,W_+)}+\sqrt{B_\phi(n,W_-)}.}
+\tag{162.2}
+$$
+
+$Z,g,W_\pm$ 的全部交换块均保留。
+
+证明。对每个有限实 $t,\alpha$，在原PB中准确取 $(a,b,z)=(su+rh,tp+\alpha n,x)$。由(161.4)，内值为 $rtq,g$。两份位移和完整外层输入准确为
+
+$$
+\begin{aligned}
+\nu&=rtq-sx-rk,&\omega&=stp+\theta\alpha n+g,\\
+R_+&=t(p+rq)-sx-rk+\alpha n,&
+S_+&=x+g+stp+\theta\alpha n,\\
+R_-&=t(p-rq)+sx+rk+\alpha n,&
+S_-&=x-g-stp-\theta\alpha n.
+\end{aligned}
+\tag{162.3}
+$$
+
+所有标签仍在原 $E$。若 $c=P_{\rm com}x$，则 $k=hc$，$n\circ x=c+hc+v$、$n\circ k=c+hc$；另有 $p\circ q=0,n\circ q=q$。因此完整PB的右端是
+
+$$
+\begin{aligned}
+-2(tp+\alpha n)\circ(rtq-sx-rk)
+-2x\circ(stp+\theta\alpha n+g)
+=2rt\,p\circ k-2x\circ g-2\alpha r(tq+v).
+\end{aligned}
+\tag{162.4}
+$$
+
+其中 $2st\,p\circ x$ 与 $-2st\,x\circ p$ 相消；含 $\alpha$ 的其余项为 $-2\alpha r\{tq+n\circ x-n\circ k\}$。没有删除任何未知旧值。两份外层分别用同一个 $\phi$ 的原P2，给
+
+$$
+\left|\phi(2rt\,p\circ k-2x\circ g)-2\alpha r\phi(tq+v)\right|
+\le\sqrt{B_\phi(R_+,S_+)}+\sqrt{B_\phi(R_-,S_-)}.
+\tag{162.5}
+$$
+
+为处理任意实斜率，包括 $\theta=0$，对固定自伴 $A,B,n$、任意实 $\vartheta$ 作实Gram展开：
+
+$$
+\begin{aligned}
+B_\phi(A+\alpha n,B+\vartheta\alpha n)
+&=B_\phi(A,B)+2\alpha C_\vartheta
++\alpha^2B_\phi(n,B-\vartheta A),\\
+C_\vartheta
+&=\vartheta\phi(A^2)\phi(n\circ B)+\phi(n\circ A)\phi(B^2)\\
+&\quad-\phi(A\circ B)\{\phi(n\circ B)+\vartheta\phi(n\circ A)\}.
+\end{aligned}
+\tag{162.6}
+$$
+
+确实，两份平方读取的系数依次为 $(\phi(A^2),2\phi(n\circ A),\phi(n^2))$ 和 $(\phi(B^2),2\vartheta\phi(n\circ B),\vartheta^2\phi(n^2))$；交叠读取的系数是 $(\phi(A\circ B),\phi(n\circ B)+\vartheta\phi(n\circ A),\vartheta\phi(n^2))$。相乘再减平方，三、四次项各自抵消，二次项恰为所写的Gram式。
+
+正外层取 $A=t(p+rq)-sx-rk,B=x+g+stp,\vartheta=\theta$，所以 $B-\vartheta A=W_+$；负外层取 $A=t(p-rq)+sx+rk,B=x-g-stp,\vartheta=-\theta$，所以 $B-\vartheta A=W_-$。将(162.5)除以 $|\alpha|$，只在这两个显式标量二次式中令 $|\alpha|\to\infty$，得到(162.2)。二次系数为零的根号除后也趋于零，故包括全部退化情形。这不是旧 $D$ 的输入极限。∎
+
+## 163. 正负强度均适用的仿射首标签投影
+
+**定理 163.1（任意原第二输入的横向块）。** 在161.1下，对全部实 $s,r$ 及任意原 $x\in E$，同一个旧响应满足
+
+$$
+\boxed{P_{\rm tr}D(su+rh,x)=rT P_{\rm tr}x.}
+\tag{163.1}
+$$
+
+$r=0$ 包含原单位行，不要求旧输出横向。
+
+证明。$r=0$ 时直接用(161.5)，两边为零。设 $r\ne0$，保持162.1的同一固定 $x,g,v,Z$。在忠实含单位Hilbert表示中取内积第一槽共轭线性。对任一 $\sigma\in\{1,-1\}$，取任意单位向量 $Q\xi=\sigma\xi,h\xi=-\xi$，置 $\eta=q\xi$。149.1–149.5给
+
+$$
+\|\eta\|=1,\quad h\eta=\eta,\quad
+p\xi=-i\sigma\eta,\quad
+\mathfrak p_\eta z=z-\operatorname{Re}\langle\eta,z\rangle\eta.
+\tag{163.2}
+$$
+
+用向量 $(\xi+\delta\eta)/\sqrt{1+\delta^2}$ 的态 $\phi_\delta$。准确复用149.3对任意固定自伴 $W$ 的恒等式
+
+$$
+B_{\phi_\delta}(n,W)
+=\frac{4\delta^2}{(1+\delta^2)^2}
+\|\mathfrak p_\eta(W\xi+\delta W\eta)\|^2.
+\tag{163.3}
+$$
+
+另一方面，$tq+v$ 横向，故其读取为 $2\delta\{t+\operatorname{Re}\langle\eta,v\xi\rangle\}/(1+\delta^2)$。将它和(163.3)代入(162.2)，约去共同正因子，再只对固定向量范数令 $\delta\downarrow0$。由于 $\mathfrak p_\eta(q\xi)=0$、$\mathfrak p_\eta(p\xi)=p\xi$，得到
+
+$$
+\begin{aligned}
+2|r|\left|t+\operatorname{Re}\langle\eta,v\xi\rangle\right|
+\le{}&\|\mathfrak p_\eta((Z+g)\xi)-rtp\xi\|\\
+&+\|\mathfrak p_\eta((Z-g)\xi)+rtp\xi\|.
+\end{aligned}
+\tag{163.4}
+$$
+
+这里一般没有 $Z\xi=v\xi$，也不需要它；共同 $Z$ 只在下一步两份一次项中相消。
+
+记 $w=p\xi$、$z_\pm=\mathfrak p_\eta((Z\pm g)\xi)$，以及实数
+
+$$
+A_\xi=\operatorname{Re}\langle\eta,v\xi\rangle,\quad
+B_\xi=\operatorname{Re}\langle w,g\xi\rangle,\quad
+\epsilon=\operatorname{sgn}(r).
+\tag{163.5}
+$$
+
+$w$ 为单位向量，且 $\operatorname{Re}\langle\eta,w\rangle=0$。150.3的范数一次项给：在(163.4)取 $t=L\to+\infty$，右侧减 $2|r|L$ 的极限是
+
+$$
+-\epsilon\operatorname{Re}\langle w,z_+\rangle
++\epsilon\operatorname{Re}\langle w,z_-\rangle=-2\epsilon B_\xi,
+$$
+
+左侧相应极限是 $2|r|A_\xi$。取 $t=-L\to-\infty$，两侧相应极限分别为 $2\epsilon B_\xi$ 与 $-2|r|A_\xi$。共同 $Z$ 在这两个差式里准确相消。两端一起给
+
+$$
+|r|A_\xi=-\epsilon B_\xi,\qquad
+r\operatorname{Re}\langle\eta,v\xi\rangle
+=-\operatorname{Re}\langle p\xi,g\xi\rangle.
+\tag{163.6}
+$$
+
+这一步明确包括 $r<0$。由(163.2)，等价于
+
+$$
+\operatorname{Im}\langle\eta,g\xi\rangle
+=r\sigma\operatorname{Re}\langle\eta,v\xi\rangle.
+\tag{163.7}
+$$
+
+先取 $(p,q)=(e,j)$，令 $A=\langle j\xi,v\xi\rangle,B=\langle j\xi,g\xi\rangle$。再取 $(p,q)=(j,-e)$，此时 $\eta'=-e\xi=i\sigma j\xi$，相应二次读取是 $A'=-i\sigma A,B'=-i\sigma B$。两份(163.7)分别给 $\operatorname{Im}B=r\sigma\operatorname{Re}A$ 和 $-\sigma\operatorname{Re}B=r\operatorname{Im}A$，故
+
+$$
+B=ir\sigma A,\qquad
+\langle j\xi,(g-ir\sigma v)\xi\rangle=0.
+\tag{163.8}
+$$
+
+令 $F_\sigma=(I+\sigma Q)/2$、$P_\pm=(I\pm h)/2$，只用于数学表示。对固定算子 $F_\sigma P_-j(g-ir\sigma v)P_-F_\sigma$ 使用150.8的普通复极化，由(163.8)对全部向量成立，遂得该算子为零。$j$ 将 $F_\sigma P_-H$ 酉地送到 $F_\sigma P_+H$，于是
+
+$$
+F_\sigma P_+gP_-F_\sigma
+=ir\sigma F_\sigma P_+vP_-F_\sigma.
+\tag{163.9}
+$$
+
+反向块由自伴性为其伴随，准确带相反的 $i$ 号。$Q$ 中央排除跨 $\sigma$ 块；因此两份谱空间共同给 $P_{\rm tr}g=irQhv=rTv$。空谱块无须选择向量，某份负空间为空时 $j$ 的酉对应也使其正空间为空。忠实性返回原元素，得到(163.1)。所有极限都只作用于固定旧值的显式标量或向量式。∎
+
+## 追加锚（本行以下为增补区）
+
+## 164. 同一份原 PB 给残余的真实反交换关系
+
+**定理 164.1（外层投影的实际消费）。** 对任意实 $\mu,\lambda$ 和原 $v\in V_h$，固定
+
+$$
+\begin{gathered}
+c=\mu u+\lambda h,\quad x=c+v,\quad
+k=hc=\lambda u+\mu h,\\
+g=D(h,x)=Tv+\rho,\qquad
+\rho=P_{\rm com}g\in E,\quad h\rho=\rho h.
+\end{gathered}
+\tag{164.1}
+$$
+
+这里的分解由150.1给出。则同一实际旧输出的残余满足
+
+$$
+\boxed{v\circ\rho=0.}
+\tag{164.2}
+$$
+
+证明。$\mu=0$ 时，前卷18.1对 $h\circ x=\lambda u$ 给 $h\circ g=0$，即152.1的完整旧值 $g=Tv$，故 $\rho=0$。以下取 $\mu\ne0$，只用 $D(h,k)=0$ 的同轴原零值。在完整原PB中取 $(a,b,z)=(h,x,k)$，则
+
+$$
+\begin{aligned}
+\nu&=g-c,&\omega&=k,\\
+(b+\nu,z+\omega)&=(v+g,2k),&
+(b-\nu,z-\omega)&=(2c+v-g,0).
+\end{aligned}
+\tag{164.3}
+$$
+
+负外层第二标签确实为原零标签，其旧值由P2为零。$k^2=c^2$、$x\circ c=c^2+\mu v$，故PB及反对称性准确给
+
+$$
+\begin{aligned}
+D(v+g,2k)&=-2x\circ(g-c)-2k^2
+=-2x\circ g+2\mu v,\\
+\boxed{D(2k,v+g)=2x\circ g-2\mu v.}
+\end{aligned}
+\tag{164.4}
+$$
+
+此时 $v+g$ 尚含 $\rho$，未被当成横向输入。对同一个左侧旧值用163.1，参数一一对应为
+
+$$
+s=2\lambda,\qquad r=2\mu,\qquad y=v+g.
+$$
+
+于是
+
+$$
+P_{\rm tr}D(2k,v+g)
+=2\mu T P_{\rm tr}(v+g)
+=2\mu T(v+Tv)=2\mu(Tv-v).
+\tag{164.5}
+$$
+
+另一方面，展开的只是已知Jordan乘法。由 $h\circ Tv=0$、$v\circ Tv=0$，有
+
+$$
+x\circ g=\mu Tv+c\circ\rho+v\circ\rho.
+\tag{164.6}
+$$
+
+$c\circ\rho$ 与 $h$ 交换，$v\circ\rho$ 与 $h$ 反交换，因而(164.4)右端的横向投影是 $2\mu(Tv-v)+2v\circ\rho$。与(164.5)比较便得(164.2)。这条关系来自两份完整旧外值的PB，随后确由新投影公式消费；没有定义外层候选值来替换它。∎
+
+## 165. 含实际残余的相对中心与全部不可约读取
+
+**引理 165.1（固定元素的P2排零）。** 在161.1的同一环境与实际 $h,Q$ 下，设固定原 $v,\rho$ 满足
+
+$$
+h^2=u,\quad hv=-vh,\quad h\rho=\rho h,\quad v\rho=-\rho v,
+\tag{165.1}
+$$
+
+且固定元素 $g=Tv+\rho=iQhv+\rho$ 对原输入 $(h,x)$、$x=\mu u+\lambda h+v$ 满足全部环境数学态读取的原P2。则 $\rho=0$。这里 $\mu,\lambda$ 为任意实数，包括零；不假设 $v^2$ 全局中央、标量、可逆或有限谱。
+
+证明。零代数无须选态。其余情形定义
+
+$$
+w=h\rho,\qquad\mathcal K=C^*(u,Q,h,v,\rho)\subset\mathcal A.
+\tag{165.2}
+$$
+
+$w$ 自伴。由(165.1)，
+
+$$
+wv=h\rho v=-hv\rho=vh\rho=vw.
+$$
+
+它也与 $h,\rho,Q$ 交换，所以 $w\in Z(\mathcal K)$。另有 $hv^2=v^2h$、$\rho v^2=v^2\rho$，而 $v^2$ 与 $v,Q$ 交换，故
+
+$$
+\boxed{h\rho,\ v^2\in Z(\mathcal K).}
+\tag{165.3}
+$$
+
+这里的中心只属于含这份实际 $\rho$ 的 $\mathcal K$，未提升到整个 $\mathcal A$ 的中心；把 $\rho$ 明列为生成元，正是为了不预付旧 $D$ 的任何输出闭合。
+
+取 $\mathcal K$ 的任意非零不可约表示 $\pi$。由Schur引理，写
+
+$$
+\pi(Q)=\sigma I,\quad\pi(v^2)=b^2I,\quad
+\pi(h\rho)=mI,\qquad
+\sigma\in\{1,-1\},\ b\ge0,\ m\in\mathbb R.
+\tag{165.4}
+$$
+
+令 $H=\pi(h),V=\pi(v)$，则
+
+$$
+H^2=I,\quad HV=-VH,\quad V^2=b^2I,\quad
+\pi(\rho)=mH.
+\tag{165.5}
+$$
+
+若 $b=0$，自伴性给 $V=0$。像代数只由 $H$ 与标量生成，是交换的；不可约性使它为一维，$H=\pm I$。于是 $\pi(x)=\mu I+\lambda H$ 亦为标量。其唯一态拉回 $\mathcal K$ 并延拓到 $\mathcal A$，原 $(h,x)$ 的Gram为零，P2给 $m^2=0$，所以 $m=0$。这个分支也覆盖 $v=0$、$\mu=0$、$\lambda=0$ 的全部交会端点。
+
+设 $b>0$，只在表示中定义
+
+$$
+E_0=V/b,\qquad J_0=i\sigma HE_0.
+\tag{165.6}
+$$
+
+$H,E_0,J_0$ 为两两反交换、自伴且平方为 $I$ 的三轴。为确认读取是真正的二阶像，令 $P_\pm=(I\pm H)/2$。$E_0$ 酉地交换两份非零的 $P_\pm$ 空间；以此识别两份空间后，$H$ 是 $\operatorname{diag}(I,-I)$，$E_0$ 是两个非对角单位。故它们生成的像准确为 $M_2(\mathbb C)\otimes I_{\mathcal L}$。不可约性使重数空间 $\mathcal L$ 为一维，否则其上任一非平凡投影都在交换子中。因此当前像确为不可约 $M_2(\mathbb C)$，并且
+
+$$
+\pi(x)=\mu I+\lambda H+bE_0,\qquad
+\pi(g)=bJ_0+mH.
+\tag{165.7}
+$$
+
+对每个单位实Bloch向量 $(n_x,n_y,n_z)$，二阶密度 $\tfrac12(I+n_xE_0+n_yJ_0+n_zH)$ 为正且迹一，其态分别读取三轴为 $n_x,n_y,n_z$。将此态拉回 $\mathcal K$，再由共同单位C*子代数的态延拓取得 $\mathcal A$ 上的态。该态所读的仍是同一份原 $h,x,g$，包括它们的原平方和原Jordan乘积。
+
+具体地，
+
+$$
+\begin{aligned}
+\pi(x^2)&=(\mu^2+\lambda^2+b^2)I+2\mu\lambda H+2\mu bE_0,\\
+\pi(h\circ x)&=\lambda I+\mu H.
+\end{aligned}
+\tag{165.8}
+$$
+
+所以原P2准确成为
+
+$$
+\boxed{(bn_y+mn_z)^2
+\le b^2+2\mu b n_x+\mu^2(1-n_z^2)
+=(b+\mu n_x)^2+\mu^2n_y^2.}
+\tag{165.9}
+$$
+
+最后一个等号使用 $n_x^2+n_y^2+n_z^2=1$。$\lambda$ 消失来自(165.8)的显式Gram相消，不是对未知响应使用剪切或平移不变性。
+
+若 $0<b<|\mu|$，取
+
+$$
+n_x=-b/\mu,\qquad n_y=0,\qquad
+n_z=\sqrt{1-b^2/\mu^2}>0.
+\tag{165.10}
+$$
+
+右侧为零，故 $m=0$，包括 $\mu$ 的两种符号。
+
+若 $b=|\mu|>0$，对 $0<z<1$ 取
+
+$$
+n_x=-\operatorname{sgn}(\mu)\sqrt{1-z^2},\quad n_y=0,\quad n_z=z.
+$$
+
+(165.9)给
+
+$$
+m^2z^2\le b^2(1-\sqrt{1-z^2})^2,\qquad
+|m|\le\frac{bz}{1+\sqrt{1-z^2}}.
+\tag{165.11}
+$$
+
+只令固定标量表达式的 $z\downarrow0$，得到 $m=0$；没有把端点态或极限输入送入旧 $D$。
+
+若 $b>|\mu|$，置 $q_0=\sqrt{1-\mu^2/b^2}>0$。反设 $m\ne0$，对 $0<z<q_0$ 取
+
+$$
+n_x=-\mu/b,\quad
+n_y=\operatorname{sgn}(m)\sqrt{q_0^2-z^2},\quad n_z=z.
+$$
+
+从(165.9)减去 $b^2n_y^2$，准确得到
+
+$$
+2b|m|\sqrt{q_0^2-z^2}\,z+m^2z^2
+\le(b^2-\mu^2)z^2.
+\tag{165.12}
+$$
+
+除以正 $z$，令 $z\downarrow0$，左侧趋于 $2b|m|q_0>0$，右侧趋于零，矛盾。$\mu=0,b>0$ 也在这个分支，$q_0=1$；没有遗漏零偏移。至此全部不可约表示都有 $m=0$，即 $\pi(\rho)=0$。不可约表示分离C*元素，故 $\rho=0$。∎
+
+证明所用成熟接口的准确出处为Blackadar，[*Operator Algebras*](https://www.bruceblackadar.com/Mathematics/Cycr.pdf)，II.6.1.8（不可约表示的交换子为 $\mathbb CI$）、II.6.3.1（子代数／算子系统的态延拓）、II.6.3.3与II.6.3.5（纯态取范数及态分离），以及II.6.4.9（不可约表示取范数，因而分离元素）。前卷18、72–73已有同类局部C*读取背景；(165.6)–(165.12)在此给出当前固定元素所需的完整计算。这些文献只提供读取工具，不提供新的旧响应身份。全程没有定义商上的 $D$，也没有把 $\pi(D(a,b))$ 写成某个新响应作用在 $\pi(a),\pi(b)$ 上。
+
+## 166. 同时单位偏移、轴偏移与任意实首槽强度
+
+**定理 166.1（同一原轴行的完整受限混合值）。** 在161.1下，对全部实 $R,\mu,\lambda$ 及任意原 $v\in V_h$，
+
+$$
+\boxed{D(Rh,\mu u+\lambda h+v)=RTv.}
+\tag{166.1}
+$$
+
+两种实偏移可同时非零；$v$ 的平方允许非中央、非可逆、奇异或连续谱，范数不受小窗口限制。
+
+证明。先取 $R=1$。150.1给164.1的分解；164.1消费实际 $\mathrm{PB}(h,x,k)$ 得 $v\circ\rho=0$。165.1对这份固定旧输出使用原P2，得到 $\rho=0$，故 $D(h,x)=Tv$。$\mu=0$ 的已付152.1及 $v=0$ 的同轴零行也与此一致。
+
+$R=0$ 时原P2与评价分离给 $D(0,x)=0$。现设 $R\ne0$，固定同一实际旧值
+
+$$
+g=D(Rh,x)=RTv+\rho,\qquad\rho=P_{\rm com}g,
+\tag{166.2}
+$$
+
+其中分解用163.1的 $s=0,r=R$，不是假设第一槽齐次。若 $\mu=0$，$(Rh)\circ x=R\lambda u$；前卷18.1给 $(Rh)\circ g=0$。由于 $R\ne0$ 且 $h\circ g=h\rho$、$h^2=u$，便有 $\rho=0$。
+
+若 $\mu\ne0$，仍令 $c=\mu u+\lambda h,k=hc$，只在原PB中取 $(a,b,z)=(Rh,x,Rk)$。同轴零行给 $D(Rh,Rk)=0$；完整位移与外层为
+
+$$
+\begin{aligned}
+\nu&=g-R^2c,&\omega&=Rk,\\
+(b+\nu,z+\omega)&=((1-R^2)c+v+g,2Rk),\\
+(b-\nu,z-\omega)&=((1+R^2)c+v-g,0).
+\end{aligned}
+\tag{166.3}
+$$
+
+负外层为零。用 $x\circ c=c^2+\mu v$、$k^2=c^2$，再用反对称性，准确得到
+
+$$
+\boxed{D(2Rk,(1-R^2)c+v+g)=2x\circ g-2R^2\mu v.}
+\tag{166.4}
+$$
+
+左侧用163.1，完整参数为 $s=2R\lambda,r=2R\mu,y=(1-R^2)c+v+g$，横向投影是
+
+$$
+2R\mu T(v+RTv)=2R\mu Tv-2R^2\mu v.
+\tag{166.5}
+$$
+
+右侧因 $x\circ g=R\mu Tv+c\circ\rho+v\circ\rho$，横向投影是(166.5)加 $2v\circ\rho$，故仍得 $v\circ\rho=0$。这一步包含负 $R$ 及 $R^2=1$ 的端点，不以第二标签预先横向为条件。
+
+最后，对全部数学态的原P2有
+
+$$
+|\phi(g/R)|^2\le B_\phi(h,x),\qquad
+B_\phi(Rh,x)=R^2B_\phi(h,x).
+\tag{166.6}
+$$
+
+这里除的是固定元素和显式Gram，不是改写 $D(Rh,x)/R$ 为 $D(h,x)$。对 $g/R=Tv+\rho/R$ 用165.1，得到 $\rho/R=0$。所有分支共同证明(166.1)。∎
+
+## 167. 已识别外值、仿射横向整行与两层旧调用
+
+**推论 167.1（同一PB外值的完整识别）。** 对164.1的实际输入，(164.4)的外值完整为
+
+$$
+\boxed{D(2\lambda u+2\mu h,v+Tv)=2\mu(Tv-v).}
+\tag{167.1}
+$$
+
+更一般地，(166.4)的同一个实际外值是
+
+$$
+D\bigl(2R\lambda u+2R\mu h,(1-R^2)(\mu u+\lambda h)+v+RTv\bigr)
+=2R\mu Tv-2R^2\mu v.
+\tag{167.2}
+$$
+
+证明。分别将166.1已识别的同一内值 $g=Tv$、$g=RTv$ 代回(164.4)、(166.4)。$x\circ Tv=\mu Tv$，所以得到所写完整值。即使(167.2)的第二标签带交换部分，识别依据也只是该次实际PB的精确标签；它不被扩张到任意混合第二输入。$R=0$ 时两边均零。∎
+
+**定理 167.2（仿射首标签的原横向整行）。** 对全部实 $s,r$ 和任意原 $w\in V_h$，
+
+$$
+\boxed{D(su+rh,w)=rTw.}
+\tag{167.3}
+$$
+
+证明。取原元素 $v=(w-Tw)/2\in V_h$，由 $T^2=-I$，有 $v+Tv=w$、$Tv-v=Tw$。在(167.1)准确置 $\lambda=s/2,\mu=r/2$，得到(167.3)。$r=0$ 与原单位行一致，$w=0$ 与零输入零值一致，$s=0$ 与166.1的 $\mu=\lambda=0$ 分支一致。这是同一外值已经认回后的消费者，不从163.1的投影值直接删掉未知交换块。∎
+
+**推论 167.3（实际两层原响应）。** 对166.1的每个实际原输入，任意实 $s,r,R$ 都有
+
+$$
+\begin{gathered}
+D(Rh,\mu u+\lambda h+v)=RTv\in E\cap V_h,\\
+D\bigl(su+rh,D(Rh,\mu u+\lambda h+v)\bigr)=-rR v.
+\end{gathered}
+\tag{167.4}
+$$
+
+特别
+
+$$
+\boxed{D(h,D(h,\mu u+\lambda h+v))=-v,\qquad
+D(Rh,D(Rh,\mu u+\lambda h+v))=-R^2v.}
+\tag{167.5}
+$$
+
+证明。内层由166.1识别为同一个原 $RTv$，外层对这份原横向元素用167.2，得到 $rT(RTv)=-rRv$。$T$ 的实线性来自其有限Jordan表达式，并非旧 $D$ 的全域线性前件。零值、负强度和全部偏移端点均包含在等式中。内外标签确实都在不完备原 $E$，但这些数学调用不供应物理准备、可控逆过程或实际双向返回。∎
+
+## 168. 原系数矩阵中的两份对角残余真正为零
+
+**推论 168.1（任意原非交换横向系数的旧矩阵值）。** 使用140.1、142.1、153.2的同一原坐标与旧 $\widetilde D$。对任意原 $z\in\mathfrak b$ 及实 $R,\mu,\lambda$，有
+
+$$
+\boxed{
+\widetilde D\!\left(
+RH,\begin{pmatrix}(\mu+\lambda)u&z\\z^*&(\mu-\lambda)u\end{pmatrix}
+\right)
+=R\begin{pmatrix}0&iz\\-iz^*&0\end{pmatrix}.}
+\tag{168.1}
+$$
+
+证明。令 $v$ 为该矩阵的原非对角部分之逆像，它属于原 $V_h$。140.1的同一坐标把 $\mu u+\lambda h+v$ 送到所写矩阵；153.8把 $Tv$ 送到右侧的 $R=1$ 矩阵。对166.1整体施加该坐标即得结论。这里的 $u$ 为系数单位，$H=\operatorname{diag}(u,-u)$；$z$ 可以是原不完备且非交换的系数域元素，不要求标量或有限谱。∎
+
+因此153.4的 $r_+(A),r_-(A)$ 在 $a=(\mu+\lambda)u,d=(\mu-\lambda)u$ 这个实际域上都为零。所排除的是同一个旧输出的残差，不是候选 $B_\star$ 的残差；166.1也准确给 $D(Rh,x)=B_\star(Rh,x)$，因为 $B_\star(Rh,x)=iRQhv$。这种一致性只在陈述的输入域成立。
+
+## 追加锚（本行以下为增补区）
+
+## 169. 非零缺陷必有有限原预算见证
+
+**推论 169.1（仿射投影的有限反事实）。** 若163.1对某个固定原 $x,s,r$ 失败，则存在有限原标签及有限份原PB/P2构成矛盾见证；不需要对旧 $D$ 取输入极限，也没有统一有限测试表的结论。
+
+证明。$r=0$ 的失败直接违反原单位行。$r\ne0$ 时，由 $Q$ 的中央性、伴随块与150.8的复极化，某份单位 $\xi$ 和两种实际锚之一必使(163.6)失败。沿用163.5，记
+
+$$
+\varepsilon=|r|A_\xi+\operatorname{sgn}(r)B_\xi\ne0.
+\tag{169.1}
+$$
+
+令 $F(t)$ 为(163.4)右侧减左侧。163.6之前的两个显式范数极限准确给
+
+$$
+\lim_{L\to+\infty}F(L)=-2\varepsilon,\qquad
+\lim_{L\to+\infty}F(-L)=2\varepsilon.
+\tag{169.2}
+$$
+
+据 $\varepsilon$ 的符号，先选一个有限正或负 $t$，使 $F(t)<0$。固定该 $t$，163.3的固定向量范数在 $\delta=0$ 连续，故选有限正 $\delta$ 后162.2仍严格失败。再固定这份向量态，162.6给除以 $|\alpha|$ 后的显式极限，所以存在有限大 $|\alpha|$ 使162.5严格失败。最后这份不等式只来自同一次PB和同一读取的两张原P2；其162.3完整外层都在原 $E$。参数依赖具体失败输出，不提供统一资源上界。∎
+
+**推论 169.2（相对中心排零的有限反事实）。** 在165.1的反交换条件已经成立后，若固定 $\rho\ne0$，存在一个数学态对同一原 $(h,x,g)$ 的P2严格给出矛盾。每个见证的Bloch参数均可取有限值。
+
+证明。不可约表示分离给一份 $\pi(\rho)=mH\ne0$，故 $m\ne0$。$b=0$ 时是165.5之后的一维零预算。$0<b<|\mu|$ 时，直接用(165.10)的零预算且 $mn_z\ne0$。
+
+$b=|\mu|>0$ 时，选任一 $0<z<\min(1,|m|/b)$；(165.11)右侧严格小于 $bz<|m|$，即为有限反例。$b>|\mu|$ 时，置 $q_0=\sqrt{1-\mu^2/b^2}$，选
+
+$$
+0<z<\min\left(\frac{q_0}{2},\frac{b|m|q_0}{b^2-\mu^2}\right).
+\tag{169.3}
+$$
+
+则(165.12)除以 $z$ 后的左侧大于 $b|m|q_0$，右侧小于这个数，严格矛盾。$\mu=0$ 仍在该分支。将相应态拉回并延拓，便是原输入及同一原输出的P2见证；$R\ne0$ 时166.6乘回 $R^2>0$ 仍为原 $(Rh,x,g)$ 的严格矛盾。没有把 $V/b$、谱根、无限参数或新态当作旧 $D$ 的输入或物理准备。∎
+
+## 170. 原关系对应、较短几何与一般对角目标的三处缺口
+
+**定义 170.1（承重接口与实际增量）。** 161–169的条件结论归为 $\texttt{repo-derived}$ 综合，不作历史优先权或全仓／全球文献穷尽主张。各个实质接口的供应及真实消费者为：
+
+| 供应 | 准确支付 | 真实消费者 |
+| --- | --- | --- |
+| 前卷16.1–16.2，本卷130.1、137.1 | 同一弱JC包含、准确锥、原域有限Jordan运算及原单位／零行 | 所有原标签的合法性及环境态读取原P2 |
+| 前卷76.1–77.1 | $D(su+rh,tp+\alpha n)=rtq$ 的完整有限四维锚值 | 162.3的一次PB，其未知目标 $g$ 保持固定 |
+| 133.1–134.1，149.3、150.3、150.8 | 已有横向 $T$、全局中央 $Q$、任意输出的Gram、范数一次项和复极化 | 163.1对任意第二输入的仿射首标签投影 |
+| 163.1与实际 $\mathrm{PB}(h,x,hc)$ | 对同一个 $D(2k,v+g)$ 的投影，给 $v\circ\rho=0$ | 含实际 $\rho$ 的读取代数之相对中心165.3 |
+| 全部原P2及Blackadar的读取接口 | 全部不可约读取中的165.9与三个幅度分支 | 同一实际残余为零，得到166.1 |
+| 163.1与实际 $\mathrm{PB}(Rh,x,Rhc)$ | 不假设首槽齐次而识别全部实 $R$ | 166.1及其零值、负值和端点 |
+| 完整166.1及同一次原PB | 167.1–167.2的完整旧外值 | $v=(w-Tw)/2$ 接回167.3的原横向整行 |
+| 166.1、167.3及原 $T^2=-I$ | 内层输出仍是原横向元素 | 167.4–167.5的实际两层原响应 |
+| 140.1、142.1与166.1 | 同一原矩阵坐标保留输入和旧输出 | 168.1的两个实际旧对角块为零 |
+
+前卷18.1的标量交叠正交、77.1的完整标量窗、本卷133.1的横向行及152.1的单轴偏移均直接复用；成熟实Gram、Hilbert范数、固定算子极化、态延拓与不可约表示分离不计作新增理论。新的连接是163.1允许读取仍含实际残余的外层，164.1使残余与 $v$ 反交换，165.1再让原P2排除这份残余。它没有新增数学正性公理或输出闭合公理。
+
+[《原多项式零响应与Cayley域边界》51–58节](AURIC_ORIGINAL_POLYNOMIAL_ZERO_RESPONSES_AND_CAYLEY_DOMAIN_BOUNDARIES.md)已在标量端点Hermitian多项式原域识别全部混合旧值，包括任意两个标量多项式偏置。其51.2通过同一多项式第三标签在两处取得不同约束，再以实际输出的多项式恒等原理连接；零端值对由真实单位接回。这与此处共有“先读实际外层，再回代同一PB”的方法关系，但对象和桥梁不同：该域的无迹部分在标量端点消失，不供应此处实际单位三轴；此处任意原横向输入可带非交换系数，不输入有限多项式性。这里建立的是含实际残余代数的相对中心，然后用全部不可约表示分离；不以两处点值或多项式恒等原理代替该分离，也不重复证明51.2。
+
+几何缩短可精确表为：四系数域仍是同一个 $H_2(\mathfrak b)$；横向块由 $Tv$ 固定以后，在实对角输入域 $c=\mu u+\lambda h$ 上，原先未识别的交换输出分量也被排除。局部二阶Bloch球只在165.3已经证明、并且选定一个不可约读取后出现，不把整个非交换系数空间说成一个普通三维球。简化的是这个实际域上少了一份待解的响应分量，完整原A1–A3、准确锥、P2及PB仍保留；没有减少独立公理数，也没有证明公理独立性、最小公理数或完整量子起源。
+
+**定义 170.2（一般交换部分的具体未付接口）。** 对一般原 $c\in\operatorname{Com}_h$，目标仍为 $\rho_h(c+v)=0$。当前网络有三处明确缺口：
+
+1. 原内值 $D(h,hc)=0$ 只在 $c=\mu u+\lambda h$ 由同轴零行供应。一般 $hc$ 不在该实二维轴片，不能先设它为零来删除PB位移。
+2. 即使另行证明这个内值为零，PB给出的外层首标签 $2hc$ 一般不属于 $\mathbb Ru+\mathbb Rh$；163.1没有读取它的接口。因此(164.5)不能照搬。
+3. 即使以后建立相应联合反交换关系，最后的P2化简165.8–165.9仍使用 $c=\mu u+\lambda h$ 的两个实系数。一般 $c$ 的算子系数与 $v,\rho$ 可不交换，既没有所写标量Gram，也没有已证的同一不可约二阶像；不能把输入边缘或点压缩的相同数值冒充平方和乘积的共同读取。
+
+所以一般 $D(h,c)=0$、$\rho_h(c+v)$ 与 $v$ 无关、一般交换或中央平移、全域分别可加及实双线性仍未证明。旧全域R、P3、全部有限旧复Gram、同一旧结合乘法、商下降、输入函数演算、输入连续性与完成延拓也未由这些受限行得到；无这份实际三轴、无轴、经典及奇数矩阵等原分支不由本证明覆盖。多项式卷的指定域完整结论各守其前件，不能据此把这些一般缺口改称已解。定理167.2的整行公式(167.3)只允许纯横向第二输入，定理166.1与定理167.2不授权任意两个混合输入的公式。这里没有满足完整P2/PB的反模型，故不作独立性或不可能性结论。
+
+## 171. 七项量子消费者的全部原来源条件
+
+**定义 171.1（复Hilbert、可观测量与叠加的来源）。** 完整保持145.1、155.1第1项与静态卷25.1第1行。139–140的 $\mathcal C\cong M_2(\mathcal B)$ 和成熟忠实Hilbert表示仍只给数学载体；166.1、167.3认回的是同一旧 $D$ 的指定原值域。若要把全域表示认作同一原响应的共同乘法，仍须全域 $D=B_\star$，或准确支付静态卷32.2、23.1所需旧双线性、P3和PB等入口。唯一原 $\Omega$、原 $E/S/D$、跨评价配对、具名且可取得的原标签、native、全部原词同一 $q,K,J$、parent/ready、合法控制及实际相干叠加准备，继续由静态卷8.3–8.4、14.2、25.1和三标签卷8.2–8.5、80.1承担。辅助 $Q$、数学纯态与矩阵坐标不制造准备，也不推出全 $B(H)$ 的像、原完备性或任意算子可取得／控制。
+
+**定义 171.2（原态、效果、质量与完整Born菜单）。** 完整保持145.2、155.1第2项及静态卷25.1第2行。原评价、准确效果区间 $E\cap[0,u]$、原事件和接受归属必须属于同一个实际来源；只对实际完整菜单且 $m_\alpha=\alpha(u)>0$ 使用
+
+$$
+p_\alpha(e)=\alpha(e)/m_\alpha.
+\tag{171.1}
+$$
+
+全部零、不等、次归一质量、原 $q$、中心权及中心经典混合、经典不等维块和静默部分均保留；零质量不作除法。原准备、共同根、抽签、mark、$\mathrm C_{12},\mathrm A_{12},\mathrm{BI}_{12}$、预定有限强度尺度、P9分支及独立 $W_e$、全部实际完整菜单、固定支持全质量和全部原中间切口，逐项仍取原合同。数学全部态、效果、二阶密度与165.9的Bloch读取不等于实际准备或菜单齐备，不改变原质量；一般无限维系数域也不被改成有限密度矩阵表。
+
+**定义 171.3（native、真相关联合与张量）。** 完整保持145.3、155.1第3项、静态卷25.1第3行、53.1及单位桥95.2、116.1。全词同一 $K/J$、原交叉零和共同生成分离均须原来源。张量消费者仍要求同一个实际非零共同联合来源、旧局部乘法、满足原消费者局部全矩阵条件的忠实同向交换两腿、共同实现、联合生成与分离、所需重数、全部真正相关输入及全部中心对、经典和不等维块。系统与参考不能分别挑选后冒充一份共同生成；相同边缘、分别可达、数学张量表示或辅助 $Q$ 的两份谱空间都不能代替实际相关联合。$M_2(\mathcal B)$ 是单域数学因子描述，系数非交换本身不赋予物理子系统或真实参考身份；完整目标的无轴等其它原域保留。
+
+**定义 171.4（typed CP与整台递归同源参考）。** 完整保持145.4、155.1第4项及静态卷25.1第4行。原未归一回溯
+
+$$
+\alpha_A(\beta_r b)=\alpha_B^r(b)
+\tag{171.2}
+$$
+
+及每个合法typed前接／后接、反变合法复合、typed分区、全未来自然性和原箭头商下降，均取原合同。CP来自原过程比较或整台实际箭头的递归实际同源二元参考；整台箭头包括系统、整个环境、全部成功／失败／细记录／port／post-port输出，每个输出的所有仍合法未来都在量词内。系统腿与参考腿须共同真支持且忠实同向交换；三实际投影与各自支持内补、共同真实支持上的准确运输、全部相关正输入上的intertwining与夹界、每个所需有限递归深度和累计支持的完整实际链全部保留。支持内补不等于环境补。167.4的两个数学原调用不供应这些箭头、参考、联合运输或CP；143.2的一级序边界也未被升级。
+
+**定义 171.5（整台仪器、Kraus、TP、更新与Lüders）。** 完整保持145.5、155.1第5项及静态卷25.1第5行。原二次Jordan夹心 $\mathcal U_a(b)=2a\circ(a\circ b)-a^2\circ b$ 只是数学接口。全部原输入运输、完整typed输出菜单、整台环境、全部成功／失败／细记录／port／post-port输出及各自所有仍合法未来、原接受端、真正分组遗忘、AC、精确 $N_u$、X/Xs、原平方根词及其接受条件，全部须由原实现保留。TP需要完整单位分区；Lüders另需同一个完整输出的像内射线校准。更新只对正输出质量归一，零分支不删除。有限密度、迹类及算子Kraus公式仅在准确合格的原有限全矩阵域，或另已供应所需正规物理表示、指定前对偶与所需收敛并确实适用的域使用；一般正规子代数只给自身前对偶态及CP对偶。辅助 $V/b$、数学完成中的平方根、二阶态与旧响应识别不供应原平方根词、实际仪器或接受端。
+
+**定义 171.6（全历史、全未来、真遗忘、真实双向返回与CountRead）。** 完整保持145.6、155.1第6项、静态卷8.4、25.1第6行及单位桥的全部原量词：所有合法顺序／自适应／并行历史、每个输出的每个仍合法未来、整个环境、全部细记录与泄漏、停止／拒绝／销毁、真正分组遗忘、同数两侧真实返回和同数逆向真实返回均不得删除。CountRead仍绑定读后同一原完整活动输入及其全未来返回；负提升两条活路的分别控制与相干聚合、具名分析词到原实际完整菜单和接受端的接线仍须原生构造。原 $B$ 的精确正生成与另名 $B_{\rm cl}$ 的闭正生成不混同，两者也不是系数代数 $\mathcal B$。无限历史、无限／非离散记录、可数可加、正常性及指定前对偶各取其原扩展来源。相同矩阵但不同原程序、实际读取顺序、原 $q$-零集与AC方向均保留。167.5的 $-v$ 是同一旧表的两层数学值，不是实际准备、活动ready接头、可取得逆程序或物理双向返回。
+
+**定义 171.7（动力、物理钟、能量与共同正尺度）。** 完整保持145.7、155.1第7项及静态卷25.1第7行。若要使用旧响应动力 $\dot b=2D(H,b)/\hbar$，仍须同一旧全域乘法、保持可能不完备原域的流、实际相位及门序列、同一可逆一参数群、原物理钟、所需强连续酉实现、生成元定义域、Hamiltonian的能量解释、共同作用量、共同正 $\hbar$ 与共同仪器。原 $\sigma,t_0$、固定 $d$、固定域、resolvent与 $3s+r\le1$ 预算仍取该原合同的参数及量词，不与本组仿射标签参数混同。候选数学有界内导子不替代一般无界生成元。$\alpha,t,\delta,z$ 在证明中只选择有限数学读取，$R,s,r,\mu,\lambda$ 只给原实标签；它们不供应物理时间、控制成本、钟能量尺度或跨装置共同 $\hbar$。辅助 $Q$、数学指数、坐标和完成均不产生这些来源。
+
+七项合同因此仍覆盖唯一原世界、全部原质量与完整菜单、真实相关联合和递归参考、整台仪器及环境记录、所有合法历史未来、真遗忘和真实双向返回、完整计数及物理钟和共同尺度。本文的数学条件结论不将这些来源前件视作已经实现。
+
+## 172. 同一份旧残余消去的完整白话
+
+**定义 172.1（实际接线、较短几何与适用边界的直观含义）。** 固定同一个原世界中确实存在的三根轴和同一张旧响应表。每个输入相对 $h$ 都有沿轴交换的部分和横向部分。已经认识的横向部分会被原响应转四分之一圈，写成 $Tv$；问题是加上单位偏移和轴偏移以后，同一份旧输出会不会偷偷多出两块对角残余。不能把分别已知的两种偏移公式直接拼起来，也不能另画一张标准表代替原表。这里用原三轴的四维小窗作两个真实锚：即使首标签同时带单位和轴分量，两个锚仍能在完整配平和同一读取的两张二表预算里，锁住任意第二输入所对应输出的横向块。共同的交换项没有提前删掉，它只在正反大锚的两份一次读数中抵消。随后把目标输出本身放进一次真实配平；这次配平的一条外层第二标签恰为零，另一条外层的首标签恰为刚刚能读取的实仿射轴。读回这份外层，就迫使目标残余与原横向输入反交换。此时才有资格缩小证明用的读取代数：它明确含有那一份实际残余，残余乘回轴和横向平方都在这个代数的中心里。在每个不可约读取中，它们成为两个实幅度，问题便落到真正的二阶矩阵几何。若残余幅度非零，有的幅度区间直接遇到零预算，有的在饱和方向旁稍微转动就超预算，临界等号和零横向块也各有明确见证；每次矛盾都能用有限参数找到。因此那两块原残余确实为零，任意原横向输入同时加上任意实单位偏移、实轴偏移，送进原 $Rh$ 行，输出准确是 $RTv$。再把已认回的旧值代回同一次配平，还能认回带单位偏置首标签对所有纯横向输入的整行；把内层真实输出再送进原 $h$ 行，第二次值就是 $-v$。这对原域不完备、横向平方不中央或带连续谱的情况同样适用，因为证明没有要求把谱根、商元素或极限标签送进旧表。更大的难点仍是一般非标量交换输入：它的内值、外层首标签和最后的共同预算都还缺桥，不能由这些受限公式拼成任意两混合输入的全域公式。几何上少掉的是已陈述域内的一份未知响应分量，原公理及七项实际来源条件一项也没有少；数学态、二阶坐标和两层负号没有替原世界造出准备、整台仪器、真正联合、全未来返回、物理钟或共同作用量。
+
+161–172均为带完整前件的纸面定义、条件定理及证明，不冒领Lean kernel核验、摄入、冻结、独立评审结论或实际量子来源的完成。
+
+## 追加锚（本行以下为增补区）
+
+## 173. 全交换类与混合原值的共同前件
+
+**定义 173.1（同一原域、实际框架与固定旧值）。** 完整保持130.1、137.1、
+147.1和157.1的同一原 $(E,C,u,N,\mathcal P,S,D)$、A1–A3、准确锥、
+全部原正P2和完整原PB。原 $E$ 可以不完备、无限维、不可分且有非交换系数；
+旧 $D:E^2\to E$ 始终是同一个总映射。只沿已付的忠实含单位JC包含
+$E\subset X\subset\mathcal A_{\rm sa}$ 计算已知乘法，$\overline E=X$，
+不要求 $X=\mathcal A_{\rm sa}$。固定实际原框架 $h,e,j=D(h,e)$，
+$h^2=e^2=j^2=u$，三轴两两Jordan正交；134.1的辅助
+$Q=ihej$ 中央、自伴且 $Q^2=u$。不增加别的实际轴。
+
+本节以下以 $\mathcal U_a=2L_a^2-L_{a^2}$ 表示一般Jordan二次表示，
+避免与147.3只对单位平方轴写的 $U_h=2L_h^2-I$ 混淆。
+在原JC环境中 $\mathcal U_a(y)=aya$。对每个原 $x$ 固定
+
+$$
+\begin{gathered}
+P_h^\pm=\tfrac12(I\pm U_h),\qquad
+c=P_h^+x,\quad z=P_h^-x,\quad x=c+z,\\
+t=[L_j,L_e]z=iQhz,\qquad d=D(h,x),\qquad r=d-t,\qquad
+k=h\circ x=h\circ c=hc.
+\end{gathered}
+\tag{173.1}
+$$
+
+133.1与150.1供应
+
+$$
+[h,c]=[h,r]=0,\quad hz=-zh,\quad ht=-th,\quad
+D(h,z)=t,\quad t^2=z^2,\quad z\circ t=0,\quad k^2=c^2.
+\tag{173.2}
+$$
+
+$c,z,t,d,r,k$ 都是原有限Jordan表达式或真正的旧输出；环境式中的
+$Q$ 本身不取得原标签身份。尤其 $r=\rho_h(x)$ 是153.1的同一残差。
+不先给旧 $D$ 可加、一般齐次、连续、可测、商下降或完成延拓。
+
+**定义 173.2（同一读取与原配平）。** 对任意数学正实泛函 $\phi$，沿用123.2
+
+$$
+\begin{gathered}
+B_\phi(a,b)=\phi(a^2)\phi(b^2)-\phi(a\circ b)^2,\qquad
+|\phi D(a,b)|^2\le B_\phi(a,b),\\
+\nu=D(a,b)-a\circ q,\qquad \omega=a\circ b+D(a,q),\\
+D(b+\nu,q+\omega)-D(b-\nu,q-\omega)
+=-2b\circ\nu-2q\circ\omega.
+\end{gathered}
+\tag{173.3}
+$$
+
+每对输出比较共用同一个 $\phi$。准确锥接口使环境态、正延拓及正二次
+读取可以如此读原表；它们不是实际准备。P2的左侧是输出均值的平方，
+不是 $\phi(D(a,b)^2)$。取比例输入直接得
+
+$$
+D(a,\lambda a)=D(a,0)=0\qquad(a\in E,\ \lambda\in\mathbb R).
+\tag{173.4}
+$$
+
+下一定理只需150.1的较小部分
+
+$$
+[h,c]=0\quad\Longrightarrow\quad[h,D(h,c)]=0.
+\tag{173.5}
+$$
+
+它不另假设标量行，也不假设 $[c,D(h,c)]=0$。所有完成、谱、支撑、根和
+逆元仅用于已知乘法及数学读取，从不作为新的 $D$ 输入。
+
+## 174. 原交换第二输入的整个零行
+
+**定理 174.1（全部原 $h$-交换类）。** 在173.1的原背景下，对每个原
+$c\in E$，
+
+$$
+\boxed{[h,c]=0\quad\Longrightarrow\quad D(h,c)=0.}
+\tag{174.1}
+$$
+
+结论包含不定号、非中央平方、无限谱及不完备原域。关于这条旧行的额外
+响应信息只用173.5；证明是[原多项式卷](AURIC_ORIGINAL_POLYNOMIAL_ZERO_RESPONSES_AND_CAYLEY_DOMAIN_BOUNDARIES.md)
+4.2的定点角局部化，不将角压缩误当成全域Jordan同态。
+
+证明。固定原 $c$ 与 $d_0=D(h,c)$，二者都与 $h$ 交换。零代数直接成立。
+对 $\epsilon=\pm1$ 置
+
+$$
+p=\frac{u+\epsilon h}{2},\qquad
+\kappa(v)=\mathcal U_p(v)=pvp,\qquad
+Y=\mathcal U_pX,\quad E_p=\mathcal U_pE,\qquad
+B=\kappa(c),\quad H=\kappa(d_0).
+\tag{174.2}
+$$
+
+$p=0$ 的角直接贡献零。其余 $Y$ 是单位为 $p$ 的JB代数，$E_p$ 是
+$Y$ 中范数稠密的原Jordan子代数。$p$ 和 $\mathcal U_p$ 本身是有限原
+Jordan表达式，所以 $E_p\subset E$，没有添加标签。
+
+先限定压缩的乘法用途。$\kappa$ 对全部 $X$ 正，但一般不保乘法。若
+$v$ 与 $h$ 交换，它在 $p,u-p$ 两块间没有交叉项，故对任意 $w\in X$
+
+$$
+\kappa(v^2)=\kappa(v)^2,\qquad
+\kappa(v\circ w)=\kappa(v)\circ\kappa(w).
+\tag{174.3}
+$$
+
+第二式只要求因子 $v$ 为偶；$w$ 不必为偶。因此当原表的两个输入都偶时，
+$\beta\kappa$ 对它的P2给
+
+$$
+|\beta\kappa D(v,w)|^2
+\le\beta(\kappa(v)^2)\beta(\kappa(w)^2)
+   -\beta(\kappa(v)\circ\kappa(w))^2
+\tag{174.4}
+$$
+
+对每个 $Y$ 上正 $\beta$ 成立。若这样的第二输入 $\kappa(w)=0$，两份
+输入平方规则使右侧为零；正泛函分离才给 $\kappa D(v,w)=0$。
+没有关于非偶输入或一般输出的局部性断言。
+
+先在证明内部支付有符号平方零行。实际上，只要此角的 $B$ 半定，便有
+$H=0$。反设 $H\ne0$，在 $C^*(p,H)\subset p\mathcal A p$ 选择
+$H$ 的非零谱值 $\tau$ 的字符，正延拓为角环境态，限制到 $Y$ 记作
+$\beta$。它满足
+
+$$
+\beta(H)=\tau\ne0,\qquad
+\beta((H-\tau p)^2)=0.
+\tag{174.5}
+$$
+
+取真正原比例第三标签 $q_0=\tau h/2$，173.4给 $D(h,q_0)=0$。
+PB $(h,c,q_0)$ 的两份完整外层及其角像为
+
+$$
+\begin{array}{c|c|c|c}
+R_+&S_+&\kappa R_+&\kappa S_+\\ \hline
+c+d_0-\tau u/2&\tau h/2+hc&B+H-\tau p/2&\epsilon(B+\tau p/2)
+\end{array}
+$$
+
+及
+
+$$
+\begin{array}{c|c|c|c}
+R_-&S_-&\kappa R_-&\kappa S_-\\ \hline
+c-d_0+\tau u/2&\tau h/2-hc&B-H+\tau p/2&-\epsilon(B-\tau p/2).
+\end{array}
+\tag{174.6}
+$$
+
+由174.5，在半内积 $\beta(v\circ w)$ 中两组角输入分别成比例，故两张
+实际P2的输出读取都为零。PB右侧准确是 $-2c\circ d_0$，因为
+$h\circ(h\circ c)=c$；其角像为 $-2B\circ H$。
+Schwarz和174.5给 $\beta(B\circ H)=\tau\beta(B)$，所以 $\beta(B)=0$。
+若 $B$ 为正或负，谱序不等式
+$0\le B^2\le\|B\|(\pm B)$ 给 $\beta(B^2)=0$。
+原 $(h,c)$ 表的174.4于是给 $\tau^2\le0$，矛盾。
+
+这个论证对每个原偶输入及每个非零角都成立。因此若原偶 $q$ 在两角中
+分别半定，$D(h,q)=0$。特别对每个原偶 $v$ 和每个符号 $\eta=\pm1$，
+
+$$
+D(h,\eta v^2)=0.
+\tag{174.7}
+$$
+
+两角可取不同符号，零角及半定元素的零支撑也已包含。这里只用了比例零值，
+没有把两个偏移零值相减来拆未知 $D$。
+
+现在消去一般 $B$ 的符号抵消。固定 $Y$ 的纯态 $\beta$，先设
+$\beta(H)\ne0$。在 $M=Y^{**}$ 中取其最小支撑投影 $f$，
+$\beta(f)=1$ 且 $\mathcal U_f(v)=\beta(v)f$。这些是原多项式卷4.2所用的
+成熟支撑工具：Hanche-Olsen–Størmer，[*Jordan Operator Algebras*](https://hanche.folk.ntnu.no/joa/joa-m.pdf)，
+Theorem4.4.3，以及Hamhalter，[*Pure states on Jordan algebras*](https://dml.cz/bitstream/handle/10338.dmlcz/133911/MathBohem_126-2001-1_7.pdf)，
+§1，页82–83。$f$ 可以只在数学双对偶中存在；不要求原域有最小投影。
+令
+
+$$
+K=\frac{\epsilon H}{2},\qquad \alpha=\beta(K)\ne0,
+\qquad C_0=\frac{\mathcal U_K(f)}{\alpha}.
+\tag{174.8}
+$$
+
+$\mathcal U_K$ 保正，故 $C_0$ 按 $\alpha$ 的符号半定。
+将 $K=\alpha f+v+w$ 作Peirce $1,1/2,0$ 分解；同书Lemma2.6.3给
+
+$$
+\mathcal U_K(f)=\alpha^2 f+\alpha v+(v^2)_0,
+\qquad C_0-K=(v^2)_0/\alpha-w\in M_0(f),
+\qquad\beta((C_0-K)^2)=0.
+\tag{174.9}
+$$
+
+同书Lemma4.1.9的有界集乘法联合强连续性和Theorem4.5.12的Kaplansky
+密度，先在 $Y$ 中给 $|C_0|^{1/2}$ 的有界强逼近，再用 $E_p$ 在 $Y$ 中
+的范数稠密性，给实际原 $v_i\in E_p$。可以取一致范数有界的网，使
+$v_i\to|C_0|^{1/2}$ 强收敛。令
+
+$$
+q_i=\operatorname{sgn}(\alpha)v_i^2\in E_p\subset E,
+\qquad \delta_i=2q_i-\epsilon H,
+\qquad \eta_i=\beta(\delta_i^2)^{1/2}\longrightarrow0.
+\tag{174.10}
+$$
+
+$q_i$ 一致有界并强趋于 $C_0$，最后一式由174.9得到。
+网而非序列保留不可分情形。每个 $q_i$ 都是实际偶有符号平方，故174.7
+已经给全原值 $D(h,q_i)=0$；没有对双对偶标签调用 $D$。
+
+对每个 $i$ 真正使用PB $(h,c,q_i)$，保留两份实际外层
+
+$$
+\begin{aligned}
+R_+^{(i)}&=c+d_0-h\circ q_i,& S_+^{(i)}&=q_i+hc,\\
+R_-^{(i)}&=c-d_0+h\circ q_i,& S_-^{(i)}&=q_i-hc.
+\end{aligned}
+\tag{174.11}
+$$
+
+它们都偶，角像满足
+
+$$
+\kappa S_+^{(i)}-\epsilon\kappa R_+^{(i)}
+=\kappa S_-^{(i)}+\epsilon\kappa R_-^{(i)}=\delta_i.
+\tag{174.12}
+$$
+
+给第二向量加第一向量的实倍数不改Gram行列式。两张实际P2因此各给
+
+$$
+|\beta\kappa D(R_\pm^{(i)},S_\pm^{(i)})|
+\le\beta((\kappa R_\pm^{(i)})^2)^{1/2}\eta_i
+\le M_0\eta_i,
+\tag{174.13}
+$$
+
+其中 $M_0<\infty$ 由固定 $B,H$ 及 $\sup_i\|q_i\|<\infty$ 给出。
+PB右侧角像却始终固定为
+
+$$
+-2B\circ(H-\epsilon q_i)-2q_i\circ(\epsilon B)
+=-2B\circ H.
+\tag{174.14}
+$$
+
+故 $|\beta(B\circ H)|\le M_0\eta_i$，得到 $\beta(B\circ H)=0$。
+这是用每份实际表估计一个固定元素；若固定读取非零，一个足够准确的
+$q_i$ 就已矛盾，不是取 $D$ 的输入或输出极限。
+
+还须处理纯态的零读取。如果 $\beta(H)=\beta(H^2)=0$，Schwarz直接给
+$\beta(B\circ H)=0$。若 $\beta(H)=0$ 而 $\beta(H^2)>0$，取足够小非零实
+$s$，使 $p+sH$ 正且在 $Y$ 中可逆。其二次表示是正锥自同构，所以
+
+$$
+\beta_s(y)=\frac{\beta(\mathcal U_{p+sH}y)}
+ {\beta((p+sH)^2)}
+\tag{174.15}
+$$
+
+仍是纯态。单生成演算给
+
+$$
+\beta_s(H)=\frac{2s\beta(H^2)+s^2\beta(H^3)}
+ {1+s^2\beta(H^2)}\ne0
+\tag{174.16}
+$$
+
+对充分小的非零 $s$ 成立。已经证明的情形使 $\beta_s(B\circ H)=0$；
+$\mathcal U_{p+sH}=I+2sL_H+s^2\mathcal U_H$ 给 $\beta_s\to\beta$ 范数收敛。
+故零读取情形同样成立。这里的逆元和纯态变形仅作用于已知 $Y$，
+不向原域补根、补逆或补准备。纯态分离 $Y$，于是
+
+$$
+B\circ H=0,\qquad BH=-HB.
+\tag{174.17}
+$$
+
+还不能由反交换直接断言 $H=0$。取第二份固定实际调用PB $(c,h,\epsilon c)$。
+173.4给 $D(c,\epsilon c)=0$，反对称性给 $D(c,h)=-d_0$。
+其完整正负外层是
+
+$$
+\begin{aligned}
+a&=h-d_0-\epsilon c^2,&b&=\epsilon c+hc,\\
+a_-&=h+d_0+\epsilon c^2,&b_-&=\epsilon c-hc.
+\end{aligned}
+\tag{174.18}
+$$
+
+四个输入都偶，$\kappa(b_-)=0$；174.4使 $\kappa D(a_-,b_-)=0$。
+PB右侧为 $2h\circ d_0$，故两张固定原表准确给
+
+$$
+\begin{array}{c|c|c}
+\text{第一输入角像}&\text{第二输入角像}&\text{同一旧输出角像}\\ \hline
+\epsilon p&B&H\\
+A:=\epsilon(p-B^2)-H&2\epsilon B&2\epsilon H.
+\end{array}
+\tag{174.19}
+$$
+
+这只是固定实际表的三个角像，不是在角上定义响应。
+
+由174.17，$B^2$ 与 $H$ 交换。对交换C*代数
+$C^*(p,B^2,H)\subset p\mathcal A p$ 的任一字符，写
+$B^2\mapsto v\ge0,H\mapsto\tau$。若 $\tau=0$，所需谱关系已成立。
+若 $\tau\ne0$，正延拓给一个GNS循环单位向量 $\xi$，满足
+$B^2\xi=v\xi,H\xi=\tau\xi$。第一张表给 $|\tau|\le\sqrt v$，故 $v>0$。
+反交换使 $\xi$ 与 $B\xi/\sqrt v$ 正交，二者张成的子空间对 $B,H$ 不变；
+在这份二维空间上
+
+$$
+B=\sqrt v\,\sigma_x,\qquad H=\tau\sigma_z,\qquad
+A=\epsilon(1-v)I-\tau\sigma_z.
+\tag{174.20}
+$$
+
+对实单位向量 $(\cos\theta,\sin\theta)$ 读第二张固定表，置
+$\gamma=\cos2\theta$。旧输出均值为 $2\epsilon\tau\gamma$，两输入作用向量
+的面积绝对值为 $2\sqrt v\,|\epsilon(1-v)\gamma-\tau|$，所以
+
+$$
+|\tau\gamma|\le\sqrt v\,|\epsilon(1-v)\gamma-\tau|
+\quad(-1\le\gamma\le1),\qquad |\tau|\le\sqrt v.
+\tag{174.21}
+$$
+
+若 $v\ne1$，记 $a_0=\epsilon(1-v)\ne0$。
+当 $0<|\tau|\le|a_0|$ 时取 $\gamma=\tau/a_0$，右侧零而左侧非零。
+当 $|\tau|>|a_0|$ 时取 $\gamma=\operatorname{sgn}(a_0\tau)$，得
+$|\tau|\le\sqrt v(|\tau|-|a_0|)$。$v<1$ 时立即矛盾；$v>1$ 时推出
+
+$$
+|\tau|\ge\frac{\sqrt v(v-1)}{\sqrt v-1}
+=\sqrt v(\sqrt v+1)>\sqrt v,
+$$
+
+仍违反第一张表。因此非零 $\tau$ 只能在 $v=1$。字符分离，包括
+$v=0,\tau=0$ 的退化情形，给
+
+$$
+(B^2-p)H=0.
+\tag{174.22}
+$$
+
+最后消去 $v=1$ 上的残余。取真正原输出和标签
+
+$$
+k_0=D(b,a),\qquad g=b\circ a.
+$$
+
+174.19与反对称性给 $\kappa(k_0)=-2\epsilon H$，已知乘法给
+
+$$
+G:=\kappa(g)=2(B-B^3),\qquad GH=HG=0,\qquad A\circ H=-H^2.
+\tag{174.23}
+$$
+
+这里用174.17和174.22；$g,a,b$ 都偶，但 $k_0$ 不要求偶。
+实际PB $(b,a,0)$ 的两份外层完整保留为
+
+$$
+D(a+k_0,g)-D(a-k_0,-g)=-2a\circ k_0.
+\tag{174.24}
+$$
+
+对任意 $Y$ 上正 $\rho$，使用正读取
+$\phi=\rho\circ\mathcal U_H\circ\kappa|_E$。因为 $g$ 偶，174.3使两个
+实际第二平方对角均为
+
+$$
+\phi(g^2)=\rho(HG^2H)=0.
+$$
+
+因此P2消去两份实际输出的 $\phi$ 读取，完全不需要压缩
+$(a\pm k_0)^2$。右侧的混合项则由 $a$ 偶这一因子单独保证
+$\kappa(a\circ k_0)=A\circ\kappa(k_0)$，即使 $k_0$ 不偶仍合法。
+174.24遂给
+
+$$
+0=4\epsilon\rho\bigl(\mathcal U_H(A\circ H)\bigr)
+=-4\epsilon\rho(H^4).
+\tag{174.25}
+$$
+
+正泛函分离得 $H^4=0$，C*范数恒等式给 $H=0$。两角都如此，
+$d_0$ 偶又给 $d_0=\kappa_+(d_0)+\kappa_-(d_0)=0$，定理得证。
+从头至尾只有原有限标签及实际旧输出进入 $D$，没有完成响应、商响应、
+输出局部性或 $D$ 连续性。∎
+
+## 175. 一个实际第三标签的混合扇区预算
+
+**推论 175.1（全部归一扇区读取）。** 对173.1的任意原 $x$，取任一非零
+$p=(u+\epsilon h)/2$，以及 $Y=\mathcal U_pX$ 的任意归一态 $\beta$，
+令 $\phi=\beta\circ\mathcal U_p|_E$。则
+
+$$
+\boxed{
+2|\phi(c\circ r)|\le\sqrt{2\phi(z^2)}
+\left[\sqrt{\phi((c+r/2)^2)}+
+      \sqrt{\phi((c-r/2)^2)}\right].}
+\tag{175.1}
+$$
+
+证明。原标签 $q=(h\circ r)/2=hr/2$ 与 $h$ 交换，所以174.1给
+$D(h,q)=0$。实际PB $(h,x,q)$ 的两份完整外层是
+
+$$
+\begin{aligned}
+R_+&=x+d-r/2=c+r/2+z+t,&S_+&=h(c+r/2),\\
+R_-&=x-d+r/2=c-r/2+z-t,&S_-&=-h(c-r/2).
+\end{aligned}
+\tag{175.2}
+$$
+
+没有删除任何旧外层输出。置 $C_\pm=c\pm r/2$，$Z=\phi(z^2)$，
+$V_\pm=\phi(C_\pm^2)$。扇区读取消去每个奇元素，并使偶、奇作用向量
+正交。又 $(z\pm t)^2=2z^2$，故这些实际输入的准确读数为
+
+$$
+\begin{array}{c|c|c|c}
+&\phi(R_\pm^2)&\phi(S_\pm^2)&\phi(R_\pm\circ S_\pm)\\ \hline
++&V_++2Z&V_+&\epsilon V_+\\
+-&V_-+2Z&V_-&-\epsilon V_-.
+\end{array}
+\tag{175.3}
+$$
+
+因此 $B_\phi(R_\pm,S_\pm)=2ZV_\pm$，不是零预算。
+PB右侧在原域准确为
+
+$$
+-2x\circ d+x\circ r-(hr)\circ(hc)
+=-2x\circ d+z\circ r.
+\tag{175.4}
+$$
+
+最后一步只用 $h$ 与 $c,r$ 交换。扇区读取中
+$\phi(x\circ d)=\phi(c\circ r)$，因为 $c\circ t,z\circ r$ 奇且
+$z\circ t=0$；$\phi(z\circ r)=0$。用同一 $\phi$ 对两份P2及175.4作
+三角不等式，便得175.1。没有第二次纯态插值或未知响应极限。∎
+
+**定义 175.2（同一固定首轴的实际加性缺陷）。** 174.1和133.1使
+
+$$
+r=D(h,c+z)-D(h,c)-D(h,z)=\delta_h(c,z).
+\tag{175.5}
+$$
+
+这只是同一实际首轴及它的偶奇分解上的准确身份，不是把一般
+$D(h,b+c)$ 拆开。175.1保留正 $z^2$ 预算，未使 $c\circ r$ 或 $r$ 为零，
+也未给静态卷89所需全部原首标签、全部原三元组的缺陷中心性。
+
+## 176. 不依赖交换零行的普遍湮灭与强制界
+
+**定理 176.1（同一旧混合输出的支撑桥）。** 只用173.1–173.3，不用174.1，
+对每个原 $x$ 及每个数学正实读取 $\phi$ 有
+
+$$
+|\phi(hr)|^2\le\phi(c^2)\,[\phi(u)+\phi(d^2)].
+\tag{176.1}
+$$
+
+并且在同一原范数下
+
+$$
+\boxed{\|r\|^4\le(1+\|d\|^2)\|\mathcal U_r(c^2)\|
+                  \le(1+\|x\|^2)\|\mathcal U_r(c^2)\|,}
+\tag{176.2}
+$$
+
+$$
+\boxed{\mathcal U_r(c^2)=0\ \Longleftrightarrow\ cr=0
+                         \ \Longleftrightarrow\ r=0.}
+\tag{176.3}
+$$
+
+$cr$ 只是在忠实环境中的乘积，$\mathcal U_r(c^2)$ 则是原有限Jordan
+表达式，不要求 $cr$ 或任何根、逆成为新的 $D$ 输入。
+
+证明。实际PB $(x,h,0)$ 的内值是 $D(x,h)=-d$、$D(x,0)=0$，故两份
+完整外层准确为
+
+$$
+D(h-d,k)-D(h+d,-k)=2h\circ d=2hr.
+\tag{176.4}
+$$
+
+其中 $h\circ t=0$，$k^2=c^2$。保留同一 $\phi$ 的两个准确行列式
+
+$$
+\Delta_-=B_\phi(h-d,k),\qquad
+\Delta_+=B_\phi(h+d,-k).
+$$
+
+两份P2给 $2|\phi(hr)|\le\sqrt{\Delta_-}+\sqrt{\Delta_+}$。
+只丢掉非负的交叉均值平方，再用
+$(\sqrt A+\sqrt B)^2\le2(A+B)$，得到
+
+$$
+\begin{aligned}
+4|\phi(hr)|^2
+&\le2\phi(c^2)\,[\phi((h-d)^2)+\phi((h+d)^2)]\\
+&=4\phi(c^2)\,[\phi(u)+\phi(d^2)],
+\end{aligned}
+\tag{176.5}
+$$
+
+即176.1。这里的 $d^2$ 来自实际输入 $h-d,h+d$ 的平方对角，
+没有把 $|\phi(d)|^2$ 偷换成 $\phi(d^2)$。
+
+对任意环境归一态 $\rho$，取数学正读取
+$\phi=\rho\circ\mathcal U_r|_E$。二次表示保正，所以它可以读取全部原表；
+其质量 $\rho(r^2)$ 可以为零，无须除以该质量。$h,r$ 交换给
+
+$$
+\begin{aligned}
+\phi(hr)&=\rho(hr^3),&\phi(c^2)&=\rho(rc^2r),\\
+\phi(u)+\phi(d^2)&=\rho(r^2+rd^2r)
+& &\le(1+\|d\|^2)\|r\|^2.
+\end{aligned}
+\tag{176.6}
+$$
+
+$hr^3$ 自伴且 $\|hr^3\|=\|r\|^3$。环境态范数化这个固定自伴元素；
+对176.1取态的上确界得
+
+$$
+\|r\|^6\le(1+\|d\|^2)\|r\|^2\|rc^2r\|.
+\tag{176.7}
+$$
+
+$r=0$ 时176.2–176.3直接成立；$r\ne0$ 时才约去 $\|r\|^2$。
+原 $(h,x)$ 的P2及态范数化给 $\|d\|\le\|h\|\|x\|=\|x\|$，
+得到176.2第二界。最后
+
+$$
+\mathcal U_r(c^2)=rc^2r=(cr)^*(cr)\ge0,
+\tag{176.8}
+$$
+
+故它为零等价于 $cr=0$；176.2再给 $r=0$，反向直接成立。∎
+
+**推论 176.2（向横向子空间的固定行控制）。** 同一原值满足
+
+$$
+\|r\|\le\sqrt{1+\|d\|^2}\,\|c\|
+\le\sqrt{1+\|x\|^2}\,\|c\|.
+\tag{176.9}
+$$
+
+证明。176.2与 $\|rc^2r\|\le\|r\|^2\|c\|^2$ 给出结果，
+仍只在 $r\ne0$ 时约去 $\|r\|^2$；零情形直接成立。∎
+
+176.9是在有界 $x$ 集上随 $c\to0$ 的固定行余量控制。它没有比较任意
+两个混合输入的旧值，不能升级为一般 $D$ 输入连续性、单位平移、
+全域加性缺陷的统一次线性增长或实际准备稳定性。在140.1的原矩阵坐标中，
+$c=\operatorname{diag}(a,f)$、$r=\operatorname{diag}(r_+,r_-)$ 时，
+$\mathcal U_r(c^2)=\operatorname{diag}(r_+a^2r_+,r_-f^2r_-)$；
+两份非交换系数均保留，没有取标量迹后丢掉平方。
+
+## 177. 两次相关原调用的条件正交自举
+
+**定理 177.1（交换分解中的充分生产条件）。** 在173.1下，若同一固定原
+$x=c+z$ 还满足
+
+$$
+[c,z]=0,\qquad c\circ r=0,
+\tag{177.1}
+$$
+
+则 $r=0$。174.1已经供应所需 $D(h,h\circ c)=0$；177.1中的两项不是
+这里已经生产出的关系，尤其第一项不从一般偶奇分解推出。
+
+证明。实际PB $(h,x,hc)$ 使用旧内值 $d$ 和已付零值
+$D(h,hc)=0$。其两份完整外层为
+
+$$
+(a,b)=(z+d,2hc),\qquad (a_-,b_-)=(2c+z-d,0).
+\tag{177.2}
+$$
+
+负外层的实际第二标签为零，173.4消去它，所以同一个实际原输出为
+
+$$
+K:=D(a,b)=-2x\circ d+2z\circ c.
+\tag{177.3}
+$$
+
+置 $w=z+t$、$M=z\circ r$。由177.1，$c$ 与 $z,t,w$ 交换，
+$c$ 与 $r$ 反交换，$c^2$ 与 $r$ 交换。于是 $a=r+w,b=2hc$ 的
+实际重叠 $a\circ b=0$，且
+
+$$
+K=2c(z-t)-2M.
+\tag{177.4}
+$$
+
+现在才对这份实际 $(a,b,K)$ 消费前卷18.1：零重叠是其标量入口，故
+
+$$
+b\circ K=0,\qquad K^2=a^2b^2.
+\tag{177.5}
+$$
+
+没有重新证明面积定理，也没有把它应用于一般非零重叠。
+
+$cM=-Mc$，$hM=-Mh$，所以 $hc$ 与 $M$ 交换。177.4的第一项与
+$hc$ Jordan正交，因此
+
+$$
+b\circ K=-4hcM=0,\qquad cM=Mc=0.
+\tag{177.6}
+$$
+
+$(z-t)^2=2z^2$，而 $c$ 与 $z-t$ 交换；177.6使177.4平方的两个混合项
+都为零，得
+
+$$
+K^2=8c^2z^2+4M^2.
+\tag{177.7}
+$$
+
+另一方面，$t\circ r=iQhM$，所以
+
+$$
+\begin{aligned}
+a^2b^2
+&=4c^2\,[r^2+2z^2+2M+2iQhM]\\
+&=8c^2z^2+4c^2r^2.
+\end{aligned}
+\tag{177.8}
+$$
+
+这里 $c^2$ 与 $a$ 交换，且 $c^2M=0$，故所写乘法和消去均合法。
+177.5给 $M^2=c^2r^2$。再乘 $c^2$ 得
+
+$$
+c^4r^2=0=(c^2r)^*(c^2r).
+\tag{177.9}
+$$
+
+$c^2r=0$，因而 $(cr)^*(cr)=rc^2r=0$，即 $cr=0$。
+176.3强迫 $r=0$。也有 $M^2=0$，但不需要倒置 $c$ 或约去它的支撑。
+零 $c$、零 $z$、非可逆或无限谱的情形全由这些恒等式包含。∎
+
+**定义 177.2（一般原重叠与下一联合接口）。** 没有177.1时，同一个实际
+177.2–177.3仍成立，但其重叠准确是
+
+$$
+F:=a\circ b=2h(c\circ r)+h[c,z+t].
+\tag{177.10}
+$$
+
+这是环境乘法的直接展开：$r\circ(2hc)=2h(c\circ r)$，
+$(z+t)\circ(2hc)=h[c,z+t]$。第一项为 $h$-偶，第二项为 $h$-奇；
+二者不能互相抵消。又
+
+$$
+[c,z+t]=(u+iQh)[c,z],\qquad
+(u+iQh)^{-1}=(u-iQh)/2
+\tag{177.11}
+$$
+
+只是在已知环境中的恒等式，不许可向 $D$ 输入该逆元。因此准确地
+
+$$
+F=0\quad\Longleftrightarrow\quad
+c\circ r=0\ \hbox{且}\ [c,z]=0.
+\tag{177.12}
+$$
+
+在已限定 $[c,z]=0$ 的子类，177.1和反向恒等式给
+$r=0\Longleftrightarrow c\circ r=0\Longleftrightarrow F=0$。
+一般 $r=0$ 并不要求 $[c,z]=0$，故不能把177.12写成全域零残差判据。
+
+保留同一个实际 $K$，进一步PB $(a,b,0)$ 和PB $(b,a,0)$ 分别给
+
+$$
+\begin{aligned}
+D(b+K,F)-D(b-K,-F)&=-2b\circ K,\\
+D(a-K,F)-D(a+K,-F)&=2a\circ K.
+\end{aligned}
+\tag{177.13}
+$$
+
+这些只是下一原生产路线的调用接口。譬如同一正读取的P2直接给
+
+$$
+|\phi(b\circ K)|^2\le\phi(F^2)\,[\phi(b^2)+\phi(K^2)],
+\tag{177.14}
+$$
+
+其中 $K^2$ 来自真实输入 $b\pm K$ 的平方。它不是新的独立生产结果，
+也没有消去 $F^2$。一般目标仍是由这些共同出现的实际旧值生产
+$\mathcal U_r(c^2)=0$，或一份足以与176.2合用的严格收缩，或下节所接的
+余量自交换；不能只增加一个未消去的正预算就宣布完成。
+
+## 178. 全态二表仍需两次相关配平的有限诊断
+
+**命题 178.1（一个局部旧值候选的准确排除）。** 在允许的有限特例
+$E=H_4(\mathbb C)=H_2(M_2(\mathbb C))$ 中，令 $X,Y,Z$ 为标准Pauli矩阵，
+$I=I_2$，取标准实际框架
+
+$$
+h=Z\otimes I,\qquad e=X\otimes I,\qquad j=-Y\otimes I,\qquad Q=I_4.
+$$
+
+固定普通实数 $s,v>0$ 且 $s+v\le1$，取实际标签及一个待检验的单表输出
+
+$$
+\begin{gathered}
+c=I\otimes Z,\qquad z=sX\otimes I,\qquad x=c+z,\\
+t=-sY\otimes I,\qquad r=vI\otimes Y,\qquad d=t+r.
+\end{gathered}
+\tag{178.1}
+$$
+
+这份指定 $(h,x,d)$ 表满足每个正读取的P2，且
+$[h,r]=0,[c,z]=0,c\circ r=0,r\ne0$；175.1的所有扇区预算亦成立。
+但若同时保留已付的 $D(h,hc)=0$ 及零输入值，两次相关PB
+$(h,x,hc)$、$(z+d,2hc,0)$ 不可能都成立。
+这是一份局部表信息的诊断，不是完整PB的总映射反模型。
+
+证明。第一输入平方是 $I_4$。记
+
+$$
+P=Z\otimes Z=h\circ x,\qquad
+T=Y\otimes I,\qquad V=X\otimes Z,\qquad J=Y\otimes Y.
+$$
+
+直接乘法给
+
+$$
+x^2=(1+s^2)I_4+2sV,\qquad d=(-s+vJ)T.
+\tag{178.2}
+$$
+
+$J$ 与 $P,T,V,d$ 交换；$P,T,V$ 两两反交换且平方均为 $I_4$。
+在任一非零 $J$-谱扇区 $\eta=\pm1$，对任意态置
+$p_0=\phi(P),q_0=\phi(T),w_0=\phi(V)$。因为
+$(aP+bT+cV)^2=(a^2+b^2+c^2)I_4$，态范数界给
+
+$$
+p_0^2+q_0^2+w_0^2\le1.
+\tag{178.3}
+$$
+
+$|-s+\eta v|\le s+v\le1$，故
+
+$$
+p_0^2+(-s+\eta v)^2q_0^2
+\le1-w_0^2
+\le1+s^2+2sw_0,
+\tag{178.4}
+$$
+
+最后一差恰为 $(w_0+s)^2$。这正是这份原二表的行列式不等式
+$|\phi(d)|^2+\phi(h\circ x)^2\le\phi(h^2)\phi(x^2)$。
+表的全部元素都与 $J$ 交换，任意态在它们上的读取为两个扇区态读取的
+凸组合。数值Hermitian半正定二表的凸性因此给所有态的P2；
+一般正泛函按质量缩放，零质量直接为零。这里未使用输出第二矩。
+$c\circ r=0$ 使175.1左侧为零，右侧非负，所以该预算不排除本表。
+另外 $[r,x]=2ivI\otimes X\ne0$。
+
+若第一份实际PB成立，177.2–177.3强迫同一个原输出
+
+$$
+\begin{gathered}
+a=z+d=s(X-Y)\otimes I+vI\otimes Y,\qquad b=2Z\otimes Z,\\
+K=D(a,b)=2s\bigl[(X+Y)\otimes Z-vX\otimes Y\bigr].
+\end{gathered}
+\tag{178.5}
+$$
+
+Pauli乘法 $XY=iZ,YZ=iX,ZX=iY$ 直接给
+
+$$
+a\circ b=0,\qquad b\circ K=-4svY\otimes X\ne0.
+\tag{178.6}
+$$
+
+第二份真正PB $(a,b,0)$ 的两份完整外层因而是
+
+$$
+D(b+K,0)-D(b-K,0)=-2b\circ K=8svY\otimes X.
+\tag{178.7}
+$$
+
+P2使左侧两个输出都为零，右侧非零，矛盾。这两次调用须消费同一个
+178.5的 $K$，不能分别挑选独立可达的输出预算。
+因此178.1证明的是较弱局部数据不足，并被具名的相关PB排除；
+没有给出违反重构而满足完整全部PB的候选总映射。∎
+
+## 179. 既有标量铅笔对余量自交换的直接应用
+
+**推论 179.1（同一原表的自交换充分接口）。** 在173.1下，对每个原 $x$，
+静态卷引理5.7直接给
+
+$$
+\boxed{[r,x]=0\quad\Longleftrightarrow\quad r=0.}
+\tag{179.1}
+$$
+
+这是一份已有逐对标量铅笔结果的参数应用，不是新的谱定理，
+也没有生产一般 $[r,x]=0$。
+
+证明。反向直接成立。正向利用已付的 $[r,h]=0$；在已知环境的含单位
+C*子代数
+
+$$
+\mathcal A_0=C^*(u,h,x,r,Q)
+\tag{179.2}
+$$
+
+中，$r,Q$ 都中央。任取其非零不可约表示 $\pi$，存在实
+$\lambda$ 和 $\epsilon\in\{1,-1\}$ 使
+$\pi(r)=\lambda I,\pi(Q)=\epsilon I$。令
+
+$$
+p=\pi(h),\qquad q=\pi(x),\qquad
+\delta=\epsilon\pi(d)=\frac i2[p,q]+\epsilon\lambda I.
+\tag{179.3}
+$$
+
+每个 $\pi(\mathcal A_0)$ 的态先拉回 $\mathcal A_0$，再正延拓到
+$\mathcal A$；其限制读取的正是同一实际 $(h,x,d)$ 原P2。
+所以它的二表对角准确为 $p^2,q^2$、实非对角为 $p\circ q$。
+若 $\epsilon=-1$，将数值Hermitian二表复共轭只反转虚非对角符号，
+仍半正定。因此所有这些态对179.3的 $\delta$ 都满足静态卷5.7的准确前件。
+该引理以 $(p,q,\tau)=(\pi(h),\pi(x),\epsilon\lambda)$ 给
+$\epsilon\lambda=0$。不可约表示分离 $\mathcal A_0$，故 $r=0$。
+
+这里只对同一实际原表作表示读取，没有定义表示像上的 $D$，
+没有假设 $D(\epsilon h,x)=\epsilon D(h,x)$。
+静态卷5.7的有界自伴算子、全态二表及实标量余项前件已逐项对应，
+其谱边界子证明不在这里重证。∎
+
+## 180. 已付纯像小标签机制与两种迁移边界
+
+**定义 180.1（完整多项式域与全部实际纯像的不同范围）。** 原多项式卷
+51–58已经在其指定的标量端点矩阵多项式原域中识别全部旧值，包含标量
+背景下的混合桥。该指定域的原式39.2已付，不再作为未解问题。
+该卷59–64进一步给另一份无需多项式输出传播的已付连接。
+
+准确地，保持该卷59.1的同一原 $E,D$ 及有限维满Jordan商
+$\pi:X\to Y$，取非零自旋角 $J=Y_2(p)=\mathbb Rp\oplus H$ 和实际
+$T=\{a\in E:\pi a\in J\}$。对全部实际原代表 $a,b\in T$，只要
+$\pi a=x_0,\pi b=y_0\in H$ 都纯，59.2给
+
+$$
+\pi D(a,b)=B(x_0,y_0).
+\tag{180.1}
+$$
+
+$B$ 是该卷已经构造的交替实双线性面积映射，
+$B_y(v)=B(v,y)$，$B_y^2=-\|y\|^2I+y\otimes y$。
+这里没有未付的纯像幅度或实际代表纤维。
+它不包含任意标量背景的混合纤维。
+
+该连接的承重调用不能误记为多项式唯一延拓。对非零正交纯像
+$x_0,y_0$，固定原未知输出像 $d_0=\pi D(a,b)$；旧纯像正交消费者已给
+$d_0\perp x_0,y_0$。选择一个普通有限实数 $\tau>0$，使
+
+$$
+\tau\|y_0\|\sqrt{1+\|x_0\|^2}<1,\qquad q_0=\tau b\in T.
+\tag{180.2}
+$$
+
+只缩小这个实际第三标签。已有小窗口识别
+$\pi D(a,q_0)=\tau B(x_0,y_0)$，并非假设未知 $D$ 的缩放律。
+同一次原PB的两份外层像是
+
+$$
+R_\pm=y_0\pm d_0,\qquad
+S_\pm=\tau y_0\pm\tau B(x_0,y_0),\qquad
+\|S_\pm\|<1.
+\tag{180.3}
+$$
+
+两份原外层同时进入已付短Gram方向窗口，故都能识别为同一个 $B$；
+PB再由 $B_y^2$ 认回大行 $d_0$。零像由零平方预算处理，非正交纯像由
+实际常数SO$(2)$旋转处理。该卷60–61已证明这些步骤，180.2–180.3只是
+这里的原调用对应，不另计新结果。既不需要向未知输出传播多项式恒等，
+也不需要另假设全域输入连续或齐次。
+
+在该卷62.1明确选择的连续原域
+
+$$
+\begin{gathered}
+E=\{a\in C([0,1],H_2(\mathbb C)):a(0)\in\mathbb RI_2\},\\
+E_0=\{A\in E:\operatorname{tr}A(s)=0\ (s\in[0,1])\}.
+\end{gathered}
+\tag{180.4}
+$$
+
+中，62.2–62.3已经认回每个实际纯像及全部全局无迹输入的共同符号
+交换子；同一连续锚输出把符号固定在 $(0,1]$。63.1的连续标量权重首先
+在纯输入限制上成立。该卷65–71进一步识别严格定号首像与横向纯第二像
+的全部实际代表，不要求全局原单位轴；这条受限点桥保持其准确范围。
+
+该卷72.1–72.2、77.1在180.4的同一个连续原域和同一旧总映射上，现已
+识别全部原输入，包括不定号、非横向及两槽任意连续标量偏置。原式63.2
+和69.2的完整桥因而已付：
+
+$$
+\begin{gathered}
+D(fu+A,gu+B)=D(A,B)
+=\varepsilon_0\frac{\mathrm i}{2}[A,B],\\
+f,g\in C([0,1],\mathbb R),\qquad A,B\in E_0.
+\end{gathered}
+\tag{180.5}
+$$
+
+准确的来源对应是该卷73–76的同一点实际配平，不是把65.2的定号横向
+前件删除后直接套用。73的两份实际仿射／同轴第三标签先消去一般横向
+比较输出的标量部分。74选一个足够大但有限的实际单位标签，使两份
+外层第二像均严格定号；在外层输出纯性尚未建立时，只对这两份实际
+外层同时使用原P2的52.2点约束，再与同一次PB联合取得定号张成对的
+纯性与正交性。75用两次这样的真实大单位配平覆盖任意原混合输入，
+没有以尚未证明的输出纯性作为该步骤的前提。
+
+76随后选择同一个实际仿射第三标签，使正侧外层的两份点像同时纯。
+这时才用62.2认回正侧旧值；负侧无需变纯，它的输出已保持75.3所证的
+纯性与两输入方向正交。同一次PB和这两份相关约束固定原输出的共同
+面积幅度。零点标量像、共线像、零向量及零偏置按该卷的原零像、共线
+零值与分支处理。这里不假设输入正则性、旧 $D$ 缩放、局部性、平移、
+混合商下降或跨点唯一延拓；实际原标签和两份旧外值始终一起保留。
+
+由该卷72.2的全对公式，77.1在整个180.4的原 $E$ 上已经给出实双线性、
+Jacobi、任意连续标量权重 $D(fa,gb)=fgD(a,b)$ 及全部混合点纤维一致性。
+静态卷32.2、23.1的准确前件于是已满足，故原P3、全部有限原复Gram、
+字面原R及同一个 $S-\mathrm iD$ 的结合性均在该指定域支付。
+其复化准确为
+$E+\mathrm iE=\{F\in C([0,1],M_2(\mathbb C)):F(0)\in\mathbb CI_2\}$；
+固定坐标中 $\varepsilon_0=1$ 为通常乘法，$\varepsilon_0=-1$ 为反乘法。
+这些均直接复用该卷72–79，不计作本节或174.1的新增结论。
+
+点标量零行本身仍不是180.5的证明；该桥由以上实际网络另行支付。
+180.4本来就是另一原域，不是完成旧多项式 $D$ 后冒充原响应。
+该域的全局无迹标签在标量端点消失，不提供173.1的实际原单位三轴；
+也没有把该域、纯像或其有限自旋商替换一般非交换系数原域。
+全部原A1–A3、准确锥、P2、完整PB和独立公理数保持，数学点读取和
+标签选择不生产任何实际物理来源。
+
+**命题 180.2（正标量化不保持原平方）。** 在标准完整模型
+$E=H_2(M_2(\mathbb C))$、$D(A,B)=i[A,B]/2$ 中，存在保单位正映射
+$\Psi:E\to H_2(\mathbb C)$ 和实际原 $A,B$，使
+
+$$
+\Psi(A)=\Psi(B)=0,\qquad
+\Psi(D(A,B))\ne0,\qquad\Psi(A^2)\ne\Psi(A)^2.
+\tag{180.6}
+$$
+
+证明。取系数向量态 $\chi$ 满足 $\chi(Z)=1,\chi(X)=\chi(Y)=0$，
+令 $\Psi=\operatorname{id}_2\otimes\chi$，
+$A=I\otimes X,B=Z\otimes Y$。则
+
+$$
+D(A,B)=-Z\otimes Z,\quad
+\Psi D(A,B)=-Z,\quad \Psi(A^2)=I,\quad\Psi(A)^2=0.
+\tag{180.7}
+$$
+
+$\Psi$ 甚至完全正，但不是Jordan同态。标准模型满足原全部静态条件和
+全部PB，准确复用静态卷35.1–35.2的 $\kappa=1$。
+所以不能把任意正系数读取当作有限Jordan商，不能以读取后的输入平方
+替换真实平方对角，更不能据其零像给一般旧响应商下降。此模型的 $D$
+本来就是目标交换子，命题反驳的是迁移规则，不是重构。∎
+
+**命题 180.3（实际连续输出没有自动区间唯一性）。** 有满足全部原静态
+条件和完整PB、带同一实际框架的连续系数原域，其中一份实际旧输出
+在非空开区间为零，却在另一点非零。
+
+证明。明确选择 $E=C([0,1],H_2(\mathbb C))$、通常Jordan乘法及同一
+总映射 $D(a,b)=i[a,b]/2$，仍由静态卷35.1–35.2消费完整模型。
+取实际常轴 $h=Z,e=X,j=-Y$，以及实际连续原标签
+$f(s)=\max(0,s-1/2)$、$a=Z,b=fX$。则
+
+$$
+D(a,b)=-fY.
+\tag{180.8}
+$$
+
+这份固定输出在 $(0,1/2)$ 为零，在 $s=1$ 非零。它是原连续域中的
+真实输出，不是随输入取极限造出的新值。因此一般连续输出不能承接
+原多项式卷52–55的区间恒等传播。该反例不触及式(180.2)–(180.3)的实际
+小第三标签机制；那一机制已经不依赖区间唯一性，也不反驳重构，
+因为此模型已经有标准 $D$。∎
+
+把180.1移到一般原域，仍须逐项供应保所需Jordan乘法及平方对角的
+分离读取、真正可调用的第三标签、两份外层同时进入已识别窗口的条件，
+以及能消去同一旧输出缺陷的辅助关系。正泛函读取本身不能供应这些条件。
+若选择旧的跨读取多项式路线，另须证明同一固定输出的唯一传播律；
+180.3排除了仅以连续性代替该律。若选择新小标签路线，则须验证
+式(180.3)的外层仍是可识别纯像及其面积算子平方律；一般非交换系数不免费
+满足标量自旋几何。两条方法边界均不证明一般生产不可能。
+
+## 181. 承重归属、原生产接口与完整量子来源
+
+**定义 181.1（新增综合与成熟中间工具）。** 174.1的整个交换类局部化、
+176.1的同一旧输出湮灭强制界及177.1的条件相关自举归为
+$\texttt{repo-derived}$ 纸面综合；175.1是174.1的直接混合消费者，
+178.1给该生产路线的局部二表诊断。179.1只是已有静态卷5.7的参数应用，
+180.1–180.5只接回原多项式卷51–79的各自已付范围，不另计为新刚性。
+这些结果不主张历史原创、文献穷尽、独立公理数已经减少或内核认证。
+
+原多项式卷4.2是174.1所局部化的成熟仓内机制，不是可直接套在
+$\kappa$ 上的全域同态定理。174.3明确给每次平方、混合乘法的使用范围；
+最后174.24只需 $g$ 的偶性消去第二平方，只需 $a$ 的偶性处理
+$a\circ k_0$，不假设 $k_0$ 偶。174.8–174.16的支撑、Peirce规则、
+双对偶、Kaplansky密度及强乘法连续性，按原多项式卷4.2所列的
+Hanche-Olsen–Størmer和Hamhalter原条件复用。二次表示保正亦见
+van de Wetering，[*Commutativity in Jordan Operator Algebras*](https://arxiv.org/html/1912.01903v1)，
+Proposition2.21；其JC公式 $\mathcal U_a(b)=aba$ 及本文已付忠实包含
+说明176.6的正读取。正Hahn–Banach延拓、GNS、交换C*字符分离、
+不可约表示分离和有限Pauli代数是成熟中间工具，不各立为新结果。
+177.5直接复用前卷18.1，179.3直接复用静态卷5.7；不把这些既有定理
+改名为新的面积或谱结果。数学引用只供应所列工具，不供应未知原响应
+的可加性或任何实际物理源。
+
+**定义 181.2（一般原生产仍须达到的关系）。** 174.1使153.9在整个
+$c\in\operatorname{Com}_h,z=0$ 分支付清，并使160.1准确成为
+
+$$
+D(h,c+z)=D(h,z),\qquad\text{即 }r=\delta_h(c,z)=0.
+\tag{181.1}
+$$
+
+所有原 $c,z$、非交换系数、一般无限谱和不完备域仍在该目标内。
+176.3给全域充分且必要的原支撑条件
+$\mathcal U_r(c^2)=0$；179.1给另一等价充分接口 $[r,x]=0$。
+177.1只在 $[c,z]=0$ 时把 $c\circ r=0$ 变成充分生产条件，
+177.10明确保留一般非交换重叠。这里没有生产这些一般零关系，
+没有构造满足全部P2/PB却否定它们的完整反模型。
+
+与既有161–172的接线须逐项区分。166.1已付任意原横向 $v$、任意实
+$R,\mu,\lambda$ 的 $D(Rh,\mu u+\lambda h+v)=RTv$；167.2的式167.3已付
+$D(su+rh,w)=rTw$ 的原横向整行。这些公式允许非标量、非可逆及无限谱
+$v^2$，是本节直接复用的既有结果，不是174.1重新生产的仿射结论。
+它们的两种受限输入域仍不合并为任意两混合输入的公式。
+
+170.2所列第一处一般内值缺口现由174.1支付：对每个原偶 $c$，
+$hc=h\circ c$ 仍原且与 $h$ 交换，故 $D(h,hc)=0$。因此177.2的实际
+$\mathrm{PB}(h,c+z,hc)$ 及其剩余外值177.3，已经在全部原偶 $c$
+上合法，不再把这个内零值列为一般未付前件。174.1也直接支付一般
+$D(h,c)=0$，但未支付在混合输入中删除 $c$ 的181.1。
+
+170.2的另外两处缺口仍在：外层首标签 $2hc$ 一般不属于
+$\mathbb Ru+\mathbb Rh$，163.1的仿射投影接口不能读取该一般算子系数
+首标签，因而164.5的横向投影比较不能照搬。即使另获相应联合反交换
+关系，165.8–165.9的全态标量Gram仍使用 $c=\mu u+\lambda h$；一般
+$c$ 与 $z,r$ 可不交换，既未得到同一不可约二阶像，也没有该共同平方
+和乘积的标量读取。176.2的支撑界不生产自己的湮灭子，179.1的余量
+自交换只是充分接口；177.13–177.14保留相关旧外层及正预算，不消去
+一般非零重叠。不能用更多正下界、任意正标量化或分别可达的预算填上
+这两处生产缺口。
+
+余量落入三轴共同交换子的157.2–157.3保持其原生指定域，
+不升级为全局中心。静态卷89仍需全部原首标签和全部原三元组的
+加性缺陷中心性；94–98仍需全输入统一 $A(R)=o(R)$，176.9不是这个
+增长条件。除这里及180.4指定域已经识别的原值外，一般首标签、一般
+无实际原正交框架的域、一般原 $D$ 的双线性、旧P3、全部有限旧复Gram、
+旧R、同一旧结合乘法及原完成运输仍各守准确未付接口。
+候选 $B_\star$、辅助C*完成和已知乘法不代替旧 $D$。
+
+原多项式指定域的全部值和一般有限自旋商的全部实际纯像，已各在
+180.1的准确范围支付；180.4指定连续标量端点域的全部原对及180.5、
+全域实双线性、连续权重、混合点纤维、P3、全部有限复Gram、原R和
+同一个通常／相反结合乘法，也已由原多项式卷72.2、77.1支付。
+这些不再列为未解，亦不将其归功于本节；一般原JB／算子系数的混合
+旧值识别和完整物理来源仍未付，原独立公理数不变。
+
+**定义 181.3（全部原物理接口与几何含义）。** 145.1–145.7、155.1及
+160.3的来源合同逐项完整保持，175.5或任何局部交付均不替代完整目标。
+唯一原 $\Omega$、同一原 $E/D$、原门序列与读出、native、全词同一
+$q,K,J$、parent/ready、原中心及经典／不等维／静默块、一般无原子和
+无限维分支全部保持。实际准备、全部零／不等／次归一质量及同一个
+实际完整菜单保持原量词；Born只在该菜单严格正质量时归一，零质量不
+归一。数学正读取、支撑态、GNS向量和角压缩不生产实际准备或完整菜单。
+
+整台typed仪器及其环境、全部成功／失败／细记录／port／post-port输出，
+原接受端、真正分组遗忘、更新、Kraus、TP、Lüders和CP各守原前件。
+真正相关联合、共同实现、忠实同向交换的腿、共同生成及重数、全部相关
+输入和递归同源参考不由单域矩阵几何制造。全部合法顺序、自适应、并行
+历史，每份输出的每个合法未来，停止／拒绝／销毁／泄漏、同数两侧及
+真实双向返回均在完整原量词内。CountRead的无限与非离散记录、可数
+可加、正常性及指定前对偶没有由范数完成支付。
+
+保持原域的流、实际相位与门序列、物理钟、强连续实现、一般无界生成元
+及其域、Hamiltonian能量解释、作用量和共同正 $\hbar$ 仍须同源供应。
+有限三轴和偶奇角是关系几何，不是把一般原世界缩成有限维量子系统，
+也不是物理三维空间的证明。174.1的几何作用是排除整片交换方向上的
+旧响应；176.3说明混合余量若非零，必须在原交换输入平方上留下非零
+正支撑；177.10说明该支撑生产还须控制同一混合输入的非交换联系。
+这些条件关系推进原问题，却不把数学兼容性或公理前提重述当作
+完整量子物理起源。
+
+## 追加锚（本行以下为增补区）
