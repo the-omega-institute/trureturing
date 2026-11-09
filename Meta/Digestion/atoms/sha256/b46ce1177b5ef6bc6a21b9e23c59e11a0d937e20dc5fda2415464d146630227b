@@ -1,0 +1,38 @@
+**定理 22.2（顺序无关正比较等价于 Hilbert 实现）。** 定义 22.1 等价于存在 Hilbert 空间 $H$ 和映射 $\phi:X\to H$，满足
+
+$$
+K(x,y)=\langle\phi(x),\phi(y)\rangle,\qquad \|\phi(x)\|=1.
+$$
+
+在由所有 $\phi(X)$ 张成的最小闭子空间上，这个实现只差一个唯一的酉变换。
+
+**证明。** 由限制相容性，$K$ 是 $X$ 上的 Hermitian 核。令 $\mathbb C_0^{(X)}$ 为有限支撑形式和，定义
+
+$$
+\left\langle\sum_i a_i\delta_{x_i},\sum_j b_j\delta_{y_j}\right\rangle
+ =\sum_{i,j}\overline{a_i}b_jK(x_i,y_j).
+$$
+
+正性使它成为半内积；商去零范数向量并完备，得到 Hilbert 空间 $H$。令 $\phi(x)$ 为 $\delta_x$ 的等价类，则 $\langle\phi(x),\phi(y)\rangle=K(x,y)$，且 $K(x,x)=1$ 给出单位长度。反向由 Gram 矩阵的恒等式
+
+$$
+\sum_{i,j}\overline{c_i}c_j\langle\phi(x_i),\phi(x_j)\rangle
+=\left\|\sum_i c_i\phi(x_i)\right\|^2\ge0
+$$
+
+立即成立。若 $\phi$ 与 $\psi$ 给出同一核，在有限线性组合上定义 $\sum_i c_i\phi(x_i)\mapsto\sum_i c_i\psi(x_i)$；相同的 Gram 值保证它良定义且保持内积，故在最小闭包之间延为唯一酉变换。证毕。
+
+这一定理给出本轮最简几何结构：对象是复 Hilbert 球面上的单位向量，物理上只能看到射影线 $[\phi(x)]$。二元概率是
+
+$$
+p(x,y)=|K(x,y)|^2,
+$$
+
+而三元闭路保留
+
+$$
+B(x,y,z)=K(x,y)K(y,z)K(z,x).
+$$
+
+$B$ 的相位在逐点相位变换 $\phi(x)\mapsto e^{i\theta_x}\phi(x)$ 下不变。因而“顺序无关”表现为同一 Gram 核的限制相容；相位不是顺序误差，而是射影几何的内生量。
+
