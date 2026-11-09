@@ -52,7 +52,7 @@ internal sealed class CommutingResidualAllStateBudgetDocument : IScribeDocumentD
     private static Formula R(Formula a)=>Call("re",Apply(V("phi"),a));
     private static Formula C(string s)=>Call(s);
     private static Formula J(Formula a,Formula b)=>Call("J",a,b);
-    private static Formula Scale(int denominator,Formula a)=>Call("smul",new Formula.Fraction(D(1),D(denominator)),a);
+    private static Formula Scale(byte denominator,Formula a)=>Call("smul",new Formula.Fraction(D(1),D(denominator)),a);
     private static Formula Chain(params Formula[] a)
     {var b=a[^1];for(var i=a.Length-2;i>=0;i--)b=And(a[i],b);return b;}
     private static Formula Witness()
