@@ -142,6 +142,6 @@ controls are not an enumeration of all partial spreads. It yields the written
 lower bound19, including the deleted characteristic-line graph. Its capacity,
 saturation and characteristic-class deficit restrictions retain their exact
 original hypotheses; surviving profiles are necessary, not asserted realized.
-The current canonical n7 implementation remains unfinished. Exactn7 and a
+The current canonical written lower-bound implementation passed the source-matched45-module report (SHA256 aa51bb24b859aaedf637d4375f1b6a6dc33cc6304ef449c705d903bb0696302c), with only propext, Classical.choice and Quot.sound. It covers all three actual graphs, all full classes and parity, and unique completion of every eight actual finrank-three Lagrangian Submodules. The original explicit trace family proves nonvacuity. All43 new modules passed header checks, Scribe emission, deposit and canonical ledger alignment. These are author/component checks, with full independent review and applicable final-head CI still required. The unfinished registration audit is disclosed precisely in linked issue28398, including exact statements and source hashes; disclosure is not proof, audit completion or a gate waiver. Exactn7 and a
 nineteen-color witness remain open; no paused exclusions or new coloring search have
 been run by this return.
