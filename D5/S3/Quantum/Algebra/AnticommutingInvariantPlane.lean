@@ -1,7 +1,7 @@
 /- GID: D5/S3/Quantum/Algebra/AnticommutingInvariantPlane
    generality: G
    mirror-B: D5/B/S3/Quantum/Algebra/AnticommutingInvariantPlane
-   mirror-E: none(waiver:registration-template-not-established)
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Analysis.InnerProductSpace.Adjoint]
    utility: none
    digest: Anticommuting selfadjoint involutions construct an actual closed orthonormal plane. -/
@@ -9,12 +9,13 @@
 import Mathlib.Analysis.InnerProductSpace.Adjoint
 import Mathlib.Analysis.InnerProductSpace.PiL2
 import Mathlib.Topology.Algebra.StarSubalgebra
+import Mathlib.Analysis.CStarAlgebra.Spectrum
 import D5.S3.Quantum.Algebra.TopologicalSchur
 
 /-! Actual two-vector planes for bounded anticommuting involutions. -/
 
 noncomputable section
-open scoped InnerProductSpace
+open scoped InnerProductSpace CStarAlgebra
 
 namespace D5.S3.Quantum.Algebra.AnticommutingInvariantPlane
 
@@ -22,7 +23,7 @@ variable {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℂ H]
   [CompleteSpace H] [Nontrivial H]
 
 /-- The two vectors are constructed in the original Hilbert space. -/
-theorem exists_closed_plane (A B : H →L[ℂ] H)
+private theorem exists_closed_plane (A B : H →L[ℂ] H)
     (hA : IsSelfAdjoint A) (hB : IsSelfAdjoint B)
     (hAA : A * A = 1) (hBB : B * B = 1) (hAB : A * B = -(B * A)) :
     ∃ v w : H, ‖v‖ = 1 ∧ ‖w‖ = 1 ∧ inner ℂ v w = 0 ∧
@@ -84,12 +85,12 @@ private def reducingAlgebra (W : Submodule ℂ H) : StarSubalgebra ℂ (H →L[�
   one_mem' := by simp
   add_mem' := by
     intro T R hT hR x hx
-    simpa only [ContinuousLinearMap.add_apply, star_add] using
+    simpa only [add_apply, star_add] using
       And.intro (W.add_mem (hT x hx).1 (hR x hx).1)
         (W.add_mem (hT x hx).2 (hR x hx).2)
   mul_mem' := by
     intro T R hT hR x hx
-    simpa only [ContinuousLinearMap.mul_apply, star_mul] using
+    simpa only [mul_apply_eq_comp, star_mul] using
       And.intro (hT (R x) (hR x hx).1).1 (hR (star T x) (hT x hx).2).2
   algebraMap_mem' := by
     intro c x hx
@@ -102,7 +103,7 @@ private def reducingAlgebra (W : Submodule ℂ H) : StarSubalgebra ℂ (H →L[�
 private theorem reducingAlgebra_closed (W : Submodule ℂ H) (hW : IsClosed (W : Set H)) :
     IsClosed (reducingAlgebra W : Set (H →L[ℂ] H)) := by
   change IsClosed {T : H →L[ℂ] H | ∀ x ∈ W, T x ∈ W ∧ star T x ∈ W}
-  simp only [Set.setOf_forall]
+  simp only [Set.ofPred_forall]
   apply isClosed_iInter
   intro x
   apply isClosed_iInter
@@ -112,7 +113,7 @@ private theorem reducingAlgebra_closed (W : Submodule ℂ H) (hW : IsClosed (W :
 
 /-- Closed-subspace irreducibility turns the explicit plane into the whole Hilbert space.
 The third operator is specified by its scalar product formula, rather than by coordinates. -/
-theorem exists_coordinates_of_scalar_product (A B C : H →L[ℂ] H) (z : ℝ)
+private theorem exists_coordinates_of_scalar_product (A B C : H →L[ℂ] H) (z : ℝ)
     (hA : IsSelfAdjoint A) (hB : IsSelfAdjoint B) (hC : IsSelfAdjoint C)
     (hAA : A * A = 1) (hBB : B * B = 1) (hAB : A * B = -(B * A))
     (hCeq : C = (-(Complex.I * (z : ℂ))) • (A * B))
@@ -131,7 +132,7 @@ theorem exists_coordinates_of_scalar_product (A B C : H →L[ℂ] H) (z : ℝ)
   let W := Submodule.span ℂ ({v, w} : Set H)
   have hcInv : ∀ x ∈ W, C x ∈ W := by
     intro x hx
-    rw [hCeq, ContinuousLinearMap.smul_apply, ContinuousLinearMap.mul_apply]
+    rw [hCeq, smul_apply, mul_apply_eq_comp]
     exact W.smul_mem _ (hinv _ (hinv x hx).2).1
   have hgen : ({A, B, C} : Set (H →L[ℂ] H)) ⊆ reducingAlgebra W := by
     intro T hT
@@ -157,7 +158,7 @@ theorem exists_coordinates_of_scalar_product (A B C : H →L[ℂ] H) (z : ℝ)
     simp [f, orthonormal_vecCons_iff, hv, hw, hvw]
   have hsp : ⊤ ≤ Submodule.span ℂ (Set.range f) := by
     have hr : Set.range f = ({v, w} : Set H) := by
-      ext x; simp [f, Fin.exists_fin_two]
+      ext x; simp [f, or_comm]
     rw [hr, ← hWtop]
   let ob := OrthonormalBasis.mk hon hsp
   have he0 (x : H) : ob.repr x 0 = inner ℂ v x := by
@@ -165,16 +166,32 @@ theorem exists_coordinates_of_scalar_product (A B C : H →L[ℂ] H) (z : ℝ)
   have he1 (x : H) : ob.repr x 1 = inner ℂ w x := by
     simp [OrthonormalBasis.repr_apply_apply, ob, f]
   have ha0 (x : H) : ob.repr (A x) 0 = ob.repr x 0 := by
-    rw [he0, ← hA.isSymmetric, hAv, he0]
+    simp only [he0]
+    have hi := hA.isSymmetric v x
+    change inner ℂ (A v) x = inner ℂ v (A x) at hi
+    rw [hAv] at hi
+    exact hi.symm
   have ha1 (x : H) : ob.repr (A x) 1 = -ob.repr x 1 := by
-    rw [he1, ← hA.isSymmetric, hAw, inner_neg_left, he1]
+    simp only [he1]
+    have hi := hA.isSymmetric w x
+    change inner ℂ (A w) x = inner ℂ w (A x) at hi
+    rw [hAw, inner_neg_left] at hi
+    exact hi.symm
   have hb0 (x : H) : ob.repr (B x) 0 = ob.repr x 1 := by
-    rw [he0, ← hB.isSymmetric, hBv, he1]
+    simp only [he0, he1]
+    have hi := hB.isSymmetric v x
+    change inner ℂ (B v) x = inner ℂ v (B x) at hi
+    rw [hBv] at hi
+    exact hi.symm
   have hb1 (x : H) : ob.repr (B x) 1 = ob.repr x 0 := by
-    rw [he1, ← hB.isSymmetric, hBw, he0]
+    simp only [he0, he1]
+    have hi := hB.isSymmetric w x
+    change inner ℂ (B w) x = inner ℂ w (B x) at hi
+    rw [hBw] at hi
+    exact hi.symm
   refine ⟨ob.repr, (fun x => ⟨ha0 x, ha1 x⟩), (fun x => ⟨hb0 x, hb1 x⟩), ?_⟩
   intro x
-  rw [hCeq, ContinuousLinearMap.smul_apply, ContinuousLinearMap.mul_apply, map_smul]
+  rw [hCeq, smul_apply, mul_apply_eq_comp, map_smul]
   constructor
   · change -(Complex.I * (z : ℂ)) * ob.repr (A (B x)) 0 = _
     rw [ha0, hb0]
@@ -187,9 +204,11 @@ private theorem commute_closed_generated (A B C J : H →L[ℂ] H)
       Commute J T := by
   have hgen : ({A, B, C} : Set (H →L[ℂ] H)) ⊆ StarSubalgebra.centralizer ℂ {J} := by
     intro T hT
-    rw [StarSubalgebra.mem_centralizer_iff]
+    change T ∈ StarSubalgebra.centralizer ℂ {J}
+    apply (StarSubalgebra.mem_centralizer_iff ℂ).2
     intro g hg
-    obtain rfl : g = J := Set.mem_singleton_iff.mp hg
+    have hgJ : g = J := Set.mem_singleton_iff.mp hg
+    subst g
     rw [hJ.star_eq]
     suffices Commute J T from ⟨this.eq, this.eq⟩
     simp only [Set.mem_insert_iff, Set.mem_singleton_iff] at hT
@@ -201,11 +220,11 @@ private theorem commute_closed_generated (A B C J : H →L[ℂ] H)
     (show IsClosed (StarSubalgebra.centralizer ℂ {J} : Set (H →L[ℂ] H)) from
       Set.isClosed_centralizer _)
   intro T hT
-  exact (StarSubalgebra.mem_centralizer_iff.mp (hle hT) J (by simp)).1
+  exact ((StarSubalgebra.mem_centralizer_iff ℂ).mp (hle hT) J (by simp)).1
 
 /-- A pairwise anticommuting selfadjoint triple with two involutive axes has
 simultaneous Pauli coordinates under closed-subspace irreducibility. -/
-theorem exists_coordinates (A B C : H →L[ℂ] H)
+private theorem exists_coordinates (A B C : H →L[ℂ] H)
     (hA : IsSelfAdjoint A) (hB : IsSelfAdjoint B) (hC : IsSelfAdjoint C)
     (hAA : A * A = 1) (hBB : B * B = 1)
     (hAB : A * B = -(B * A)) (hAC : A * C = -(C * A)) (hBC : B * C = -(C * B))
@@ -244,14 +263,16 @@ theorem exists_coordinates (A B C : H →L[ℂ] H)
     congr 1
     calc
       A * B * C * B = -(A * B * B * C) := by rw [mul_assoc (A * B) C B, hCB]; noncomm_ring
-      _ = B * (A * B * C) := by rw [← mul_assoc, hBA]; noncomm_ring
+      _ = (B * A) * B * C := by rw [hBA]; noncomm_ring
+      _ = B * (A * B * C) := by noncomm_ring
   have hJC : Commute J C := by
     change J * C = C * J
     simp only [J, smul_mul_assoc, mul_smul_comm]
     congr 1
     calc
       A * B * C * C = -(A * C * B * C) := by rw [mul_assoc A B C, hBC]; noncomm_ring
-      _ = C * (A * B * C) := by rw [← mul_assoc, ← mul_assoc, hCA]; noncomm_ring
+      _ = (C * A) * B * C := by rw [hCA]; noncomm_ring
+      _ = C * (A * B * C) := by noncomm_ring
   obtain ⟨z, hz⟩ := InnerProductSpace.exists_eq_algebraMap_of_isSelfAdjoint_of_commute
     hirr hJ (commute_closed_generated A B C J hJ hJA hJB hJC)
   have hprod : (A * B) * (A * B) = -1 := by
@@ -289,26 +310,41 @@ private theorem normalized_irreducible {R : Type*} [CStarAlgebra R]
       (hK T (StarSubalgebra.le_topologicalClosure _ (StarAlgebra.subset_adjoin ℂ _ hT)))
   let P := (reducingAlgebra K.toSubmodule).comap π
   have hPclosed : IsClosed (P : Set R) :=
-    (reducingAlgebra_closed K.toSubmodule K.isClosed).preimage π.continuous
+    (reducingAlgebra_closed K.toSubmodule K.isClosed).preimage (map_continuous π)
   have hPgen : ({a, b, d} : Set R) ⊆ P := by
     intro t ht
     simp only [Set.mem_insert_iff, Set.mem_singleton_iff] at ht
-    rcases ht with rfl | rfl | rfl
-    · intro x hx
-      have hax := K.toSubmodule.smul_mem X (hmem _ (by simp) x hx)
+    rcases ht with ht | ht | ht
+    · subst t
+      intro x hx
+      have hax := K.toSubmodule.smul_mem (X : ℂ) (hmem ((X⁻¹ : ℝ) • π a) (by simp) x hx)
       have heq : X • ((X⁻¹ : ℝ) • π a) = π a := by rw [smul_smul, mul_inv_cancel₀ hX, one_smul]
       have hax' : π a x ∈ K.toSubmodule := by
-        simpa only [← ContinuousLinearMap.smul_apply, heq] using hax
-      simpa only [(ha.map π).star_eq] using And.intro hax' hax'
-    · intro x hx
-      have hbx := K.toSubmodule.smul_mem Y (hmem _ (by simp) x hx)
+        rw [Complex.coe_smul] at hax
+        change (X • ((X⁻¹ : ℝ) • π a)) x ∈ K.toSubmodule at hax
+        rw [heq] at hax
+        exact hax
+      change π a x ∈ K.toSubmodule ∧ (star (π a)) x ∈ K.toSubmodule
+      rw [(ha.map π).star_eq]
+      exact ⟨hax', hax'⟩
+    · subst t
+      intro x hx
+      have hbx := K.toSubmodule.smul_mem (Y : ℂ) (hmem ((Y⁻¹ : ℝ) • π b) (by simp) x hx)
       have heq : Y • ((Y⁻¹ : ℝ) • π b) = π b := by rw [smul_smul, mul_inv_cancel₀ hY, one_smul]
       have hbx' : π b x ∈ K.toSubmodule := by
-        simpa only [← ContinuousLinearMap.smul_apply, heq] using hbx
-      simpa only [(hb.map π).star_eq] using And.intro hbx' hbx'
-    · intro x hx
-      have hdx := hmem _ (by simp) x hx
-      simpa only [(hd.map π).star_eq] using And.intro hdx hdx
+        rw [Complex.coe_smul] at hbx
+        change (Y • ((Y⁻¹ : ℝ) • π b)) x ∈ K.toSubmodule at hbx
+        rw [heq] at hbx
+        exact hbx
+      change π b x ∈ K.toSubmodule ∧ (star (π b)) x ∈ K.toSubmodule
+      rw [(hb.map π).star_eq]
+      exact ⟨hbx', hbx'⟩
+    · subst t
+      intro x hx
+      have hdx := hmem (π d) (by simp) x hx
+      change π d x ∈ K.toSubmodule ∧ (star (π d)) x ∈ K.toSubmodule
+      rw [(hd.map π).star_eq]
+      exact ⟨hdx, hdx⟩
   have hle := StarSubalgebra.topologicalClosure_minimal (StarAlgebra.adjoin_le hPgen) hPclosed
   rw [hgen] at hle
   rintro T ⟨r, rfl⟩
@@ -341,11 +377,11 @@ theorem positive_branch_coordinates {R : Type*} [CStarAlgebra R]
     simp [B, star_smul, (hb.map π).star_eq]
   have hAA : A * A = 1 := by
     simp only [A, smul_mul_smul_comm, ha2, smul_smul]
-    have : X⁻¹ * X⁻¹ * X ^ 2 = 1 := by field_simp
+    have : X⁻¹ * X⁻¹ * X ^ 2 = 1 := by field_simp [hX.ne']
     rw [this, one_smul]
   have hBB : B * B = 1 := by
     simp only [B, smul_mul_smul_comm, hb2, smul_smul]
-    have : Y⁻¹ * Y⁻¹ * Y ^ 2 = 1 := by field_simp
+    have : Y⁻¹ * Y⁻¹ * Y ^ 2 = 1 := by field_simp [hY.ne']
     rw [this, one_smul]
   have hpab : π a * π b = -(π b * π a) := by simpa using congrArg π hab
   have hpad : π a * π d = -(π d * π a) := by simpa using congrArg π had
@@ -364,14 +400,14 @@ theorem positive_branch_coordinates {R : Type*} [CStarAlgebra R]
   have heb : π b = Y • B := by simp [B, smul_smul, hY.ne']
   refine ⟨z, U, ?_, ?_, hUd⟩
   · intro x
-    rw [hea, ContinuousLinearMap.smul_apply, ← Complex.coe_smul, map_smul]
+    rw [hea, smul_apply, ← Complex.coe_smul, map_smul]
     constructor
     · change (X : ℂ) * U (A x) 0 = _
       rw [(hUa x).1]
     · change (X : ℂ) * U (A x) 1 = _
       rw [(hUa x).2, mul_neg, neg_mul]
   · intro x
-    rw [heb, ContinuousLinearMap.smul_apply, ← Complex.coe_smul, map_smul]
+    rw [heb, smul_apply, ← Complex.coe_smul, map_smul]
     constructor
     · change (Y : ℂ) * U (B x) 0 = _
       rw [(hUb x).1]

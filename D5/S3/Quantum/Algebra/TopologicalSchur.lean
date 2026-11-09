@@ -234,7 +234,7 @@ def IsTopologicallyIrreducible (S : Set (H →L[ℂ] H)) : Prop :=
   ∀ K : ClosedSubmodule ℂ H,
     (∀ T ∈ S, K.toSubmodule ∈ Module.End.invtSubmodule (T : Module.End ℂ H)) → K = ⊥ ∨ K = ⊤
 
-/-- The kernel of an operator commuting with `T` is invariant under `T`. -/
+omit [CompleteSpace H] in
 lemma ker_mem_invtSubmodule_of_commute {G T : H →L[ℂ] H} (h : Commute G T) :
     G.ker ∈ Module.End.invtSubmodule (T : Module.End ℂ H) := by
   refine (Module.End.mem_invtSubmodule_iff_forall_mem_of_mem _).2 fun x hx => ?_
