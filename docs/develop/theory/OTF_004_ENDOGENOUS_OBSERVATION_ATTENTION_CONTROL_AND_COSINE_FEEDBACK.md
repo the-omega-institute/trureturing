@@ -2295,3 +2295,380 @@ $$
 本节没有消去终端作用后的参考边缘项 $q(p)$。§15 的原始完整输出、原生访问类中的共同可达与必要界缺口仍未解决；这里没有给出均匀 $O(M/D)$ 控制器、更强的全类必要尺度、最优系数或完整可达区域。场源、指定门、校准、实际噪声汇和物理时钟仍是条件模型前提；额外实际输出的资格限制属于定理的适用域。
 
 ## 追加锚（本行以下为增补区）
+
+## 17. 两个原生槽的相关补偿与均匀实际返回
+
+**定义 17.1（原始任务内的固定补偿器）。** 固定定义 13.1 的任一元组：$N\ge N_*=8{,}388{,}608{,}000$，$M=L=10N$，$Q=18N+1$，$D=2j+1\ge8{,}000{,}000N^2$。仍取 $d=1/64$、$\tau_0=1$、$t=d\tau_0=1/64$、$r=1/4$、$B_{\rm field}=2$、$G=1$、$\epsilon=1/16$、$\beta=1/100$。场 $n:U\to S^2$ 在包含两条完整闭 $r$ 轴段的开集上为 $C^2$、秩二，并满足 (13.2) 的全部导数界。每次场重置独立供应 $\rho_n(z)=(I+n(z)\cdot\sigma)/2$。唯一初始未知方向资源仍为 $R=\operatorname{Sym}^{2j}(\mathbb C^2)$ 上的 $\tau_h$；固定 $n$ 后，全部非参考来源的完整律对所有 $h$ 相同。目标仍是初始方向的 (13.3)，访问仍限于至多 $L$ 个 (13.6) 原生槽、一次 (13.9) 强制终端交换，其余操作在 $R$ 上为恒等。
+
+采用定义 13.1、假设 12.2 允许的有限因果非 $R$ 处理，以及定义 16.1 的实际约化节点语义。写 $\mathcal E(X)=\operatorname{Tr}(X)I_2/2$，所有被替换的 qubit 仍留在实际口。对三枚非参考 qubit $B,A,F$，置
+$$
+\begin{aligned}
+r_t&=1-\cos t,\qquad s_t=\sin t,\qquad c_t=r_t+i s_t=1-e^{-it},\\
+O_i&=-r_t\left[\sigma_{F,i}
++\frac{\sigma_{B,i}(\sigma_A\cdot\sigma_F)
++\sigma_{A,i}(\sigma_B\cdot\sigma_F)}2\right]
++\frac{s_t}{2}\bigl[(\sigma_B-\sigma_A)\times\sigma_F\bigr]_i
+\quad(i=x,y,z),\\
+\Phi(X)&=\frac{\operatorname{Tr}(X)I_2+
+                 \sum_i\operatorname{Tr}(O_iX)\sigma_i}{2},\\
+\widehat\Phi(X)&=\frac{I_B}{2}\otimes\Phi(X)_A\otimes\frac{I_F}{2}.
+\end{aligned}
+\tag{17.1}
+$$
+不同 qubit 的算子乘积隐含张量积，点积、叉积使用同一固定定向标架。这是一个固定矩阵通道的定义，不含实际 $n,h,D$ 的程序参数。
+
+补偿后缀 $\mathsf S$ 依次如下。准备固定 singlet $|\psi^-\rangle_{BA}=(|\uparrow\downarrow\rangle-|\downarrow\uparrow\rangle)/\sqrt2$，将 $B$ 送入第一个原生槽；对 $H$ 在原始标签基退相干，保留 $H,E$ 和原始符号，仅在负标签上交换 $B,A$。在 $+d e_x$ 独立重置一枚场令牌 $F$，对 $BAF$ 施行 $\widehat\Phi$；将输出 $A$ 送入第二个原生槽，对其 $H$ 作同样退相干，完整保留两组原生记录及其实际副本。随后对 $B,A,F$ 各施行 $\mathcal E$，保留这三枚输出。最后在 $+d e_x$ 另取一枚未经改动的独立纯场令牌 $S_t$，执行规定的 $U_{\rm term}=\exp[-itJ\cdot\sigma/(D-1)]$，再对同一 $S_t$ 施行 $\mathcal E$ 并保留它。没有条件选支或新增校正读数。
+
+记 $Z$ 为两个补偿槽的原始成对标签 $H,E$ 及全部确定性符号副本；$\pi_Z$ 是四个合法历史的均匀比较态，未要求实际标签均匀。固定程序、路由和步进寄存器一并保留；若它们复制标签，归入 $Z$。以 $\sigma_0$ 记三枚替换量子输出和其余固定工作输出的联合固定态；不另外准备工作寄存器的直接实现中，$\sigma_0=(I_2/2)^{\otimes3}$。终端后置 $\sigma_1=\sigma_0\otimes I_{S_t}/2$。这里指定的约化节点没有另行声明的实际环境输出。另一实现若产生额外实际噪声、指针或工作输出，必须纳入 $K$ 并重证完整口界；形式 Kraus 指标及证明用扩张不自动增加实际口，实际存在的输出也不能以此删去。有限复合、CP 仪器和自旋程序仍分别采用 OTF001 假设 2.5–2.7、定理 7.2 与 OTF002 定义 11.1；非 $R$ 处理的许可来自原访问合同，不来自 OTF003 第 11 节所区分的生成代数闭包。
+
+**引理 17.2（固定通道及相关块的三个收缩）。** 式 (17.1) 是对任意相关输入适用的 CPTP 通道。仅在证明坐标中取 $h=z$，令
+$$
+\chi=|\uparrow\downarrow\rangle_{BA},\quad
+\psi=|\uparrow\uparrow\rangle_{BA},\quad
+\rho_v=(I+v\cdot\sigma)/2,\quad
+a=(v_x-i v_y)/2,
+$$
+$$
+A_0=\Phi(|\chi\rangle\langle\chi|\otimes\rho_v),\qquad
+B_0=\Phi(|\chi\rangle\langle\psi|\otimes\rho_v).
+$$
+则
+$$
+(A_0)_{\uparrow\uparrow}=(A_0)_{\downarrow\downarrow}=\frac12,\quad
+(A_0)_{\uparrow\downarrow}=-c_ta,\quad
+(B_0)_{\uparrow\uparrow}=-\frac{c_ta}{2},\quad
+(B_0)_{\downarrow\downarrow}=\frac{c_ta}{2},\quad
+\operatorname{Tr}B_0=0,\quad \|B_0\|_1<1.
+\tag{17.2}
+$$
+
+**证明。** 每个 Pauli 点积的范数至多三，每个叉积分量中的四项范数各至多一，故
+$$
+\|O_i\|\le4r_t+2|s_t|,\qquad
+\sum_i\|O_i\|\le12r_t+6|s_t|
+\le6t^2+6t=\frac{195}{2048}<1.
+\tag{17.3}
+$$
+输出因子在前的非归一 Choi 矩阵为
+$$
+C_\Phi=\frac{I_2\otimes I_8+\sum_i\sigma_i\otimes O_i^{\mathsf T}}2
+\ge\frac{1-195/2048}{2}I_{16}>0,\qquad
+\operatorname{Tr}_{\rm out}C_\Phi=I_8.
+\tag{17.4}
+$$
+由 OTF001 定理 7.2 的 Choi–Kraus 对应及有限酉延拓，$\Phi$ 是固定有限 CPTP 节点；张量附上固定态给出 $\widehat\Phi$。这仅复用标准有限 CP 理论，不赋予直接作用于 $R$ 的恢复操作，也不把证明用延拓宣布为实际返回实现。
+
+在 $|\chi\rangle\langle\chi|\otimes\rho_v$ 上，三个 Pauli 收缩分别为 $h,-h,v$。代入 $O_i$ 得输出 Bloch 向量
+$$
+-r_t[v-(h\cdot v)h]+s_t(h\times v),
+\tag{17.5}
+$$
+从而得到 $A_0$ 的三个矩阵元。对 $|\chi\rangle\langle\psi|\otimes\rho_v$，$A$ 腿的 Pauli 收缩为 $q=(1,-i,0)$，其迹为零，故
+$$
+\operatorname{Tr}[O_z(|\chi\rangle\langle\psi|\otimes\rho_v)]
+=-\frac{r_t}{2}q\cdot v-\frac{s_t}{2}(q\times v)_z
+=-c_ta.
+\tag{17.6}
+$$
+这里 $q\cdot v=2a$、$(q\times v)_z=i q\cdot v$。输出迹为零即给两份相反的对角元。又 $\||\chi\rangle\langle\psi|\otimes\rho_v\|_1=1$，由 (17.1) 和迹范数三角不等式，
+$\|B_0\|_1\le\sum_i\|O_i\|<1$。点积和叉积使 $O$ 在同时定向旋转下为向量，因此通道协变；$h=z$ 只是证明的共同坐标变换，没有实施未知方向旋转。$\square$
+
+**定理 17.3（四条保留历史的补偿界）。** 对任意 $h,v\in S^2$，从独立初始参考 $\tau_h$ 运行定义 17.1 的后缀，以 $v$ 供应两枚独立纯场令牌。其实际完整输出 $\Omega_c$ 满足
+$$
+\left\|\Omega_c-\tau_h\otimes\pi_Z\otimes\sigma_1\right\|_1
+<\frac{73}{D},\qquad
+D_{\rm tr}\!\left(\Omega_c,\tau_h\otimes\operatorname{Tr}_R\Omega_c\right)
+<\frac{80}{D}.
+\tag{17.7}
+$$
+其中 $D_{\rm tr}=\|\cdot\|_1/2$；所有补偿量子输出、原生记录与实际副本均包含在右端口中。
+
+**证明。** 写 $m=D-1$、$\delta=1/D$、$\lambda=\sqrt m/D$，仅取证明坐标 $h=z$，$e=|j,j\rangle$、$f=|j,j-1\rangle$、$\tau_e=|e\rangle\langle e|$、$\tau_f=|f\rangle\langle f|$。由既有 (13.14)，第一槽退相干并按负标签交换后，两条未归一向量为
+$$
+x_+=\frac{e\chi-\delta e\chi'-\lambda f\psi}{\sqrt2},\qquad
+x_-=\frac{(1-\delta)e\chi-\lambda f\psi}{\sqrt2},
+\qquad \chi'=|\downarrow\uparrow\rangle.
+\tag{17.8}
+$$
+负分支省去的只是整体负号；实际概率为 $(1+\delta)/2$、$(1-\delta)/2$，没有重新归一。令 $w=(e\chi-\lambda f\psi)/\sqrt2$，则 $\|x_b-w\|=1/(\sqrt2D)$，$\|x_b\|,\|w\|\le1$。利用
+$\|xx^\dagger-ww^\dagger\|_1\le(\|x\|+\|w\|)\|x-w\|$，
+两条历史合计差小于 $3/D$；再去掉 $ww^\dagger$ 的尾对角项合计只需 $\lambda^2\le1/D$。因此第一槽完整态距下式的迹范数小于 $4/D$：
+$$
+\frac12\sum_{b=\pm}|bb\rangle\langle bb|_{H_1E_1}\otimes
+\left[\tau_e\otimes|\chi\rangle\langle\chi|
+-\lambda\bigl(|e\rangle\langle f|\otimes|\chi\rangle\langle\psi|
++\text{h.c.}\bigr)\right].
+\tag{17.9}
+$$
+实际参考边缘恰为 $(1-\lambda^2)\tau_e+\lambda^2\tau_f$；这个小的边缘误差没有使联合态成为乘积。
+
+经 $\widehat\Phi$ 后，(17.9) 方括号的参考—探针对应为
+$$
+G=\tau_e\otimes A_0-
+\lambda\bigl(|e\rangle\langle f|\otimes B_0+\text{h.c.}\bigr).
+\tag{17.10}
+$$
+以上比较算子一般不是正态，尤其不得把 $\tau_e-\lambda K$ 当成所制备的态。它们只用于线性 Hermitian 比较；实际态始终由指定准备、原生槽和 CPTP 节点产生。保迹正映射由正负分解收缩 Hermitian 算子的迹范数，故这些完整余项可以经真实后缀传播。
+
+先计算第二槽对 $\tau_e\otimes A_0$ 的作用，包含退相干和探针替换，略去相同固定量子因子。两份参考块由 (13.14) 精确给出
+$$
+\begin{aligned}
+G_+^{(0)}
+&=\left(\frac12+\frac1{2D^2}\right)\tau_e
++\frac{\lambda^2}{2}\tau_f
++\lambda\bigl((A_0)_{\uparrow\downarrow}|e\rangle\langle f|
++\text{h.c.}\bigr),\\
+G_-^{(0)}
+&=\frac{m^2}{2D^2}\tau_e+\frac{\lambda^2}{2}\tau_f.
+\end{aligned}
+\tag{17.11}
+$$
+相对于各自的 $\tau_e/2$ 和所显示交叉项，剩余对角块的总迹范数为 $(2D-1)/D^2<2/D$，因而也小于 $4/D$。
+
+为估计 (17.10) 的交叉输入，令 $W_1=\operatorname{span}\{e,f\}$、$P_\pm=|\uparrow/\downarrow\rangle\langle\uparrow/\downarrow|$。由 (13.5) 的角动量系数，
+$$
+\|(\Pi_b-I_R\otimes P_b)P_{W_1\otimes S}\|
+\le\frac2D+\sqrt2\lambda<4\lambda.
+\tag{17.12}
+$$
+具体地，除 (13.14) 外，$\Pi_+(f\uparrow)=(1-\delta)f\uparrow+\lambda e\downarrow$，而
+$\Pi_+(f\downarrow)=2\delta f\downarrow+
+\sqrt{2(m-1)}\,|j,j-2\rangle\uparrow/D$；末项不存在时取零。把 $\Pi_b$ 与 $I_R\otimes P_b$ 各按 $|bb\rangle_{H_2E_2}$ 堆叠成原生和理想等距 $V,W$，得到 $\|(V-W)P_{W_1\otimes S}\|<6\lambda$。交叉输入的迹范数为 $2\lambda\|B_0\|_1$，展开 $VYV^\dagger-WYW^\dagger$ 后，两份完整仪器输出合计差小于
+$24\lambda^2\|B_0\|_1\le24/D$。此估计同时覆盖两个原始标签；后续退相干、量子替换均收缩该差。
+
+理想交叉输入在两个标签的 $e/f$ 系数分别为 $-\lambda(B_0)_{\uparrow\uparrow}$ 和 $-\lambda(B_0)_{\downarrow\downarrow}$。结合 (17.11) 及 (17.2)，第二槽两份首阶系数分别为
+$$
+\lambda\bigl[(A_0)_{\uparrow\downarrow}
+-(B_0)_{\uparrow\uparrow}\bigr]=-\frac{\lambda c_ta}{2},
+\qquad
+-\lambda(B_0)_{\downarrow\downarrow}=-\frac{\lambda c_ta}{2}.
+\tag{17.13}
+$$
+这不是在不同原始标签间平均相反误差。连同第一槽的两份 $1/2$ 比较权重，四条未归一历史各有相同的参考块 $(\tau_e-\lambda K_t)/4$，其中
+$$
+K_t=c_ta|e\rangle\langle f|+\overline{c_ta}|f\rangle\langle e|.
+$$
+第一槽余项、(17.11) 对角余项及交叉仪器余项相加，给第二槽及替换后的实际完整态 $\Theta$：
+$$
+\left\|\Theta-(\tau_e-\lambda K_t)\otimes\pi_Z\otimes\sigma_0\right\|_1
+\le\frac{4+4+24}{D}=\frac{32}{D}.
+\tag{17.14}
+$$
+实际四条历史的概率偏离 $1/4$ 也包含在这个联合界中，没有重置原始标签。
+
+最后令 $\gamma=tD/m$、$z=e^{i\gamma}$、$c_\gamma=1-e^{-i\gamma}$，并以 $c_\gamma$ 替换 $K_t$ 中的 $c_t$ 定义 $K_\gamma$。由原终端谱分解 (16.8)，略去整体相位后 $U_{\rm term}=\Pi_++z\Pi_-$。终端 qubit 的实际替换使完整参考因子准确为
+$$
+\mathcal T_v(X)=\operatorname{Tr}_{S_t}
+[U_{\rm term}(X\otimes\rho_v)U_{\rm term}^\dagger],
+$$
+并在实际口附上 $I_{S_t}/2$，正是 (16.5) 的相关输入语义。由
+$e\downarrow\mapsto(1+mz)e\downarrow/D+\lambda(1-z)f\uparrow$，得到
+$$
+\mathcal T_v(\tau_e)=\tau_e+\lambda K_\gamma
++\lambda^2|c_\gamma|^2(\rho_v)_{\downarrow\downarrow}(\tau_f-\tau_e).
+\tag{17.15}
+$$
+取 $U_0=I_R\otimes(P_++zP_-)$。(17.12) 给
+$\|(U_{\rm term}-U_0)P_{W_1\otimes S_t}\|\le4|c_\gamma|\lambda$；
+而 $\|K_t\|_1=2|c_ta|\le|c_t|$，$U_0$ 的参考边缘作用为恒等。因此
+$$
+\|\mathcal T_v(K_t)-K_t\|_1\le8|c_\gamma||c_t|\lambda,\qquad
+\lambda\|K_\gamma-K_t\|_1
+\le\lambda|\gamma-t|=\frac{t}{D\sqrt m}\le\frac{t}{D}.
+\tag{17.16}
+$$
+由 $|c_\gamma|,|c_t|\le2$、$\lambda^2\le1/D$，(17.15) 的尾对角项和 (17.16) 的交叉演化项分别至多 $8/D$、$32/D$，故
+$$
+\|\mathcal T_v(\tau_e-\lambda K_t)-\tau_e\|_1
+\le\frac{40+t}{D}.
+\tag{17.17}
+$$
+把 (17.14) 余项经同一个实际终端通道传播，得到完整输出与真正乘积态
+$\tau_e\otimes\pi_Z\otimes\sigma_1$ 的迹范数差至多 $(72+t)/D<73/D$。对其实际 $K$ 边缘再用一次收缩性，两项半迹范数的三角不等式给实际边缘返回误差小于 $73/D<80/D$。协变性把计算送到全部 $h,v$。$W_1$ 只限制比较项，实际更高降低数分量均已包含在完整余项内，不假定真实运行永久支撑于 $W_1$。$\square$
+
+**定理 17.4（原始均匀任务的逆维数充分证书）。** 在定义 17.1 的实际约化口假设下，对每个原始允许元组，存在一个与实际 $n,h$ 无关的有限控制器和固定解码器，对全部原始场与全部 $h$ 满足
+$$
+\begin{aligned}
+\Pr[\|\widehat D-D_h(n)\|_\infty\le1/16]&\ge99/100,\\
+D_h(n)&=\left(\frac{h\cdot[n(0)\times n_x(0)]}{2},
+\frac{h\cdot[n(0)\times n_y(0)]}{4},0,\frac{h\cdot n_y(0)}2\right),\\
+\sup_{n,h}D_{\rm tr}(\Omega_{n,h},
+ \tau_h\otimes\operatorname{Tr}_R\Omega_{n,h})
+&\le\min\left\{1,\ 2\cdot10(N-1)\kappa_D+\frac{80}{D}\right\}
+\le\min\left\{1,\frac{10M}{D}\right\},
+\qquad \kappa_D=\frac{2D-1}{2D^2}.
+\end{aligned}
+\tag{17.18}
+$$
+同一通道 (17.1) 对所有元组固定。协议只准备一次 $R$，不重置它；实际使用 $10N-8\le L$ 个原生槽、$18N-16\le Q$ 次场重置及恰一次规定终端交换，包含终端的实际 $R$ 接触数为 $10N-7$。
+
+**证明。** 在既有十设置获取中，每设置取 $N'=N-1$ 个样本，完整复用 (13.7)–(13.8)、(13.20)–(13.24) 的仪器和均值差分解码，仅把均值的已知分母改成 $N'$。不重证既有获取理论：(13.14)–(13.19) 的一槽计算与理想前缀混合链给含全部实际获取输出、记录和解码工作区的前缀态 $\eta$ 及某理想完整态 $\Xi^i$ 满足
+$$
+D_{\rm tr}(\eta,\tau_h\otimes\Xi^i)
+\le e_a:=10(N-1)\kappa_D.
+\tag{17.19}
+$$
+复用定理 13.1 证明中的场偏差和宽度八尾估计，对 $\eta_0=1/2048$ 有
+$$
+\Pr\left[\|\widehat D-D_h(n)\|_\infty>
+ \frac1{128}+\frac{\eta_0}{d}\right]
+\le20e^{-N'\eta_0^2/32}+e_a<\frac1{100}.
+\tag{17.20}
+$$
+确实 $N'\eta_0^2\ge2000-\eta_0^2>1999$，故指数项小于 $1/1000$，且
+$e_a<M/D\le1/(800000N)<1/1000$；阈值为 $5/128<\epsilon$。这直接覆盖 $N=N_*$ 及维数端点，并未对 $N'<N_*$ 误用定理的元组前件。接上 $\mathsf S$ 后，所有旧获取寄存器上均为恒等作用。整个确定性后缀保迹，故旧寄存器的完整边缘及同一解码事件精确保留，复用本卷定理 4.3 的局部边缘保持。
+
+在 (17.19) 两个输入后接同一实际后缀；对乘积输入，完整输出为 $\Omega_c\otimes\Xi^i$，距真实输出至多 $e_a$。实际 $K$ 边缘的相应差也至多 $e_a$。由定理 17.3 及三角不等式，始终与各自实际边缘比较，得到
+$$
+\Delta_{n,h}\le e_a+\frac{80}{D}+e_a,\qquad
+2e_a+\frac{80}{D}\le\frac{2M+60}{D}\le\frac{10M}{D}.
+\tag{17.21}
+$$
+最后用 $\Delta_{n,h}\le1$ 得 (17.18)。中间没有以 $\Xi^i$ 替代最终实际边缘，也没有把理想前缀当成实际参考重置。
+
+资源逐项为：获取的原生槽及 $\mathcal C$ 各 $10(N-1)$ 次，部分 SWAP 为 $8(N-1)$ 次，标量受控 SWAP 为 $10(N-1)$ 次，标量 Hadamard 为 $20(N-1)$ 次，标量读出为 $10(N-1)$ 次，场重置为 $18(N-1)$ 次。后缀增加两个原生槽、一枚 $F$ 和一枚规定终端场令牌，无额外 $R$ 操作；固定 singlet、一次按标签交换、$\widehat\Phi$ 和明示替换均只作用于非 $R$ 系统。于是取得定理所列实际调用数，未使用的上限没有算成已执行调用。
+
+实际 $K$ 保留全部 $10(N-1)$ 组获取 $H,E$ 和原始 $b,Y$，每枚测后探针、每次部分 SWAP 的两份输出、全部场令牌、标量测试 qubit、实际指针与复制/读出系统、二十个 $[0,N-1]$ 计数器、记忆、程序/路由/步进/解码工作区及所声明旁观者；后缀还保留 $B,A,F,S_t$、两组新 $H,E$ 和每份原始符号副本。直接约化实现的获取探针、场及 singlet 输出小计为
+$10(N-1)+18(N-1)+2+2=28N-24$ 枚 qubit，另有 $10(N-1)$ 枚标量测试 qubit、原生记录、全部工作寄存器及维数 $D$ 的参考。这个小计不是总辅助维数或全部基本门成本。
+
+式 (17.13)–(17.17) 给出的是指定原生访问下实际生成再使用相关块的充分构造；§16 的终端替换本身未消去 (17.15) 的参考交叉项。既有自旋系数、获取、标准 CP 理论、收缩性及终端约化语义分别由 (13.14)–(13.24)、OTF001 定理 7.2、本卷定理 12.3 的证明及 (16.5)、(16.8) 供应。这里的结论限于这些数学接口及定义 17.1 的实际口；相干参考准备、纯场源、指定耦合、控制与噪声节点、校准及物理钟仍是模型前提。它不延伸为另一实现的额外实际输出定理，不给定理 14.1 的实际完整等距类添加免费约化，也不改变定理 14.3–14.4 的一般 CPTP 必要界或定理 12.3 的控制器最坏情形量词；不含一般控制器分类、两槽必要性、最优系数或历史优先权结论。$\square$
+
+## 追加锚（本行以下为增补区）
+
+## 18. 固定完整通道的弱信息细化与联合返回
+
+**定义 18.1（原始合同与完整输出）。** 固定定义 13.1、17.1 的原始合同，包括整数 $N\ge8{,}388{,}608{,}000$、$M=L=10N$、$Q=18N+1$、$j\in\frac12\mathbb Z_{>0}$、$D=2j+1\ge8{,}000{,}000N^2$，以及
+$$
+d=t=\frac1{64},\quad \tau_0=1,\quad r=\frac14,\quad
+B_{\rm field}=2,\quad G=1,\quad \epsilon=\frac1{16},\quad\beta=\frac1{100}.
+\tag{18.1}
+$$
+场 $n:U\to S^2$ 在包含两条完整闭 $r$ 轴段的开集上为 $C^2$、秩二；对 $a=x,y$、$|u|\le r$，有 $\|n_{aa}(u e_a)\|\le2$，且 $\|n_x(0)\|,\|n_y(0)\|\le1$。每次重置独立供应纯态 $\rho_n(z)=(I+n(z)\cdot\sigma)/2$。唯一初始未知方向资源为 $R=\operatorname{Sym}^{2j}(\mathbb C^2)$ 上的 $\tau_h$，$h\in S^2$；它只准备一次，初始与其余输入独立。固定 $n$ 后，非 $R$ 来源的完整律对所有 $h$ 相同，设备、辅助准备、有限因果控制器和解码器均不以实际 $n,h$ 为参数，不接入未供应的纯化。目标仍为初始方向的
+$$
+D_h(n)=\left(\frac{h\cdot[n(0)\times n_x(0)]}{2},
+\frac{h\cdot[n(0)\times n_y(0)]}{4},0,\frac{h\cdot n_y(0)}2\right).
+\tag{18.2}
+$$
+访问只允许至多 $L$ 个 (13.6) 原生槽和恰一次 (13.9) 强制终端交换 $\exp[-itJ\cdot\sigma/(D-1)]$；其余操作在同一标记 $R$ 上为恒等，不读取、旋转、拆分、重置或替换它。有限张量复合、CP 仪器、自旋准备及实际非参考处理仍采用定义 17.1 的全部前提。
+
+记定理 17.4 的指定协议为 $\mathsf P_{17}$：十设置获取各取 $N-1$ 个样本，使用 (13.24) 的同一解码器及已知分母 $N-1$，再接定义 17.1 的两槽补偿后缀。记其实际完整输出为 $\Omega_{17}$，非参考口为 $K_{\rm old}$。该口保留全部获取 $H,E,b,Y$、测后探针、每次部分 SWAP 的两个输出、场输出、标量测试 qubit、实际指针和复制/读出系统、二十个计数器、记忆、程序/路由/步进/解码工作区及声明的旁观者；还保留补偿的两组 $H,E$、全部原始副本和 $B,A,F,S_t$。这里采用定义 16.1、17.1 的实际约化口语义；形式扩张不是额外实际输出，另有实际输出的实现须另给完整口估计。
+
+**定义 18.2（固定的二支细化）。** 精确取 (17.1) 的原矩阵 $O_i,\Phi$ 及整个三线输出通道 $\widehat\Phi(X)=I_B/2\otimes\Phi(X)_A\otimes I_F/2$。在假设 12.2 允许的固定已知标架中选定单位向量 $k$，令
+$$
+W=\mathrm{SWAP}_{BA},\qquad Q_0=W\otimes(k\cdot\sigma_F),\qquad
+\mu=I_{BAF}/8,\qquad \alpha=1/2.
+$$
+引入固定正交基 $|s\rangle_T$，$s=\pm1$，并置 $Z_T=\sum_s s|s\rangle\langle s|$，
+$$
+\begin{aligned}
+\Gamma_s(X)&=\frac{\widehat\Phi(X)}2+
+                 \frac{s\alpha}{2}\operatorname{Tr}(Q_0X)\mu,\\
+\Gamma(X)&=\sum_s\Gamma_s(X)\otimes|s\rangle\langle s|
+=\widehat\Phi(X)\otimes\frac{I_T}{2}
+ +\alpha\operatorname{Tr}(Q_0X)\mu\otimes\frac{Z_T}{2}.
+\end{aligned}
+\tag{18.3}
+$$
+$\Gamma$ 的输入维数为八、输出维数为十六，矩阵不依赖 $N,D,n,h$。协议 $\mathsf P_\Gamma$ 只把 $\mathsf P_{17}$ 的这一个 $\widehat\Phi$ 节点换成 $\Gamma$；第二原生槽、$B,A,F$ 的原替换、独立且未经改动的终端令牌和终端交换及替换均保持原样，之后恒等作用于 $T$，不以 $s$ 路由或选支。声明本节点的实际输出恰为 $B,A,F,T$。最终
+$$
+K'=K_{\rm old}\otimes T,\quad
+\omega_\Gamma=\operatorname{Tr}_R\Omega_\Gamma,\quad
+\Delta_\Gamma=D_{\rm tr}(\Omega_\Gamma,\tau_h\otimes\omega_\Gamma),
+\qquad D_{\rm tr}=\tfrac12\|\cdot\|_1.
+\tag{18.4}
+$$
+全部原始历史和两个部分 SWAP 输出始终在此口中。
+
+**定理 18.3（可达细化的完整联合证书；repo-derived）。** 在定义 18.1–18.2 的全部条件下，$\Gamma$ 为 CPTP，且对每个输入矩阵及任意相关辅助系统，偏迹 $T$ 精确恢复整个 $\widehat\Phi$，从而 $\operatorname{Tr}_T\Omega_\Gamma=\Omega_{17}$。令 $v=n(+d e_x)$、$v_k=k\cdot v$、$p_b=(1+b/D)/2$。即使真实获取前缀中的参考已受扰动并与记忆相关，实际最终边缘仍满足
+$$
+\begin{aligned}
+\rho_{H_1E_1T}
+ &=\sum_{b=\pm1}p_b|bb\rangle\langle bb|\otimes
+                  \frac{I_T-b\alpha v_k Z_T/D}{2},\\
+\Pr(b,s)&=\frac{p_b}{2}(1-sb\alpha v_k/D),\qquad
+\rho_T=\frac{I_T-\alpha v_k Z_T/D^2}{2}.
+\end{aligned}
+\tag{18.5}
+$$
+这里的信息来自场；这个显示边缘在固定场时独立于 $h$。对从独立 $\tau_h$ 开始的补偿后缀，沿用定义 17.1 的 $\pi_Z,\sigma_1$，其完整输出满足
+$$
+\left\|\Omega_{c,\Gamma}
+ -\tau_h\otimes\pi_Z\otimes\sigma_1\otimes I_T/2\right\|_1
+ <\frac{74}{D},\qquad
+D_{\rm tr}(\Omega_{c,\Gamma},\tau_h\otimes\operatorname{Tr}_R\Omega_{c,\Gamma})
+ <\frac{80}{D}.
+\tag{18.6}
+$$
+对真实获取前缀接此后缀，同一协议在全部原始场、全部 $h$ 和全部原始元组（包括 $N,D$ 端点）上有
+$$
+\begin{aligned}
+\Pr[\|\widehat D-D_h(n)\|_\infty\le1/16]&\ge99/100,\\
+\sup_{n,h}\Delta_\Gamma
+&\le\min\{1,2e_a+80/D\}\le\min\{1,10M/D\},\\
+e_a&=10(N-1)\kappa_D,\qquad \kappa_D=\frac{2D-1}{2D^2}.
+\end{aligned}
+\tag{18.7}
+$$
+并且存在满足完整场承诺的两个场 $n_+,n_-$，使同一个任意 $h$ 的真实运行满足
+$$
+D_{\rm tr}(\rho_T^+,\rho_T^-)=\frac1{2D^2},\qquad
+D_{\rm tr}(\rho_{H_1E_1T}^+,\rho_{H_1E_1T}^-)=\frac1{2D}.
+\tag{18.8}
+$$
+这些分离随 $D$ 消失，只证明该可达场族上的非恒定性，不给出一致信息量、场重建、固定场的 $h$ 估计或相对于整个旧 $K$ 的额外信息。
+
+**证明。** 先复用 (17.3)–(17.4) 的非归一、输出因子在前的 Choi 界。令 $q=195/2048$，则 $C_{\widehat\Phi}\ge(1-q)I_{64}/8$。由于 $Q_0$ 为范数一的 Hermitian 矩阵，
+$$
+C_{\Gamma_s}=\frac{C_{\widehat\Phi}}2+
+ \frac{s\alpha}{2}\mu\otimes Q_0^{\mathsf T}
+\ge\frac{1-q-\alpha}{16}I_{64}
+=\frac{829}{32768}I_{64}>0.
+\tag{18.9}
+$$
+OTF001 定理 7.2 的有限 Choi–Kraus 对应给完全正性；各支效果为 $(I+s\alpha Q_0)/2$，和为 $I$。故 $\Gamma$ 保迹，而 $\Gamma_++\Gamma_-=\widehat\Phi$ 是全矩阵恒等式，张量任意恒等映射仍成立。后续操作均恒等作用于 $T$，故也给出整个最终旧 $R K_{\rm old}$ 态的精确保持。这是标准仪器扩展的应用：Piani 的 [《Channel Steering》第 II 节定义 1–3、式 (2)](https://arxiv.org/html/1411.0397v1#S2) 中，输入 $C$ 对应输入 $BAF$，旧输出 $B$ 对应输出 $BAF$，附加输出 $A$ 对应 $T$，子通道对应 $\Gamma_s$；第 IX 节区分了输入依赖子通道与输入无关的随机通道。这里不作相干扩展或 steering 主张。
+
+下面计算真正可达的联合差。只在证明坐标取 $h=z$，$k,v$ 也用同一坐标表示；令 $\delta=1/D$、$\lambda=\sqrt{D-1}/D$、$e=|j,j\rangle$、$f=|j,j-1\rangle$。精确复用 (17.8) 的未归一原生向量，$\chi=|\uparrow\downarrow\rangle$、$\chi'=|\downarrow\uparrow\rangle$、$\psi=|\uparrow\uparrow\rangle$：
+$$
+x_+=\frac{e\chi-\delta e\chi'-\lambda f\psi}{\sqrt2},\qquad
+x_-=\frac{(1-\delta)e\chi-\lambda f\psi}{\sqrt2}.
+$$
+$W$ 交换 $\chi,\chi'$ 并固定 $\psi$；$\langle\chi,W\chi\rangle=\langle\chi',W\chi'\rangle=0$，$\langle\chi,W\chi'\rangle=1$，且 $\psi$ 与这两个向量的全部 $W$ 交叉矩阵元为零。因此实际分支的带符号参考收缩恰为
+$$
+L_b:=\operatorname{Tr}_{BA}[(I_R\otimes W)x_bx_b^\dagger],\qquad
+L_+=-\delta\tau_e+\frac{\lambda^2}{2}\tau_f,\quad
+L_-=\frac{\lambda^2}{2}\tau_f.
+\tag{18.10}
+$$
+这些是实际态的线性收缩，未被当成所准备的态。令 $Y_\Gamma,Y$ 为从独立 $\tau_h$ 开始的同一后缀在新、旧节点刚结束时的完整态，暂不写相同的历史副本和固定工作因子。由新鲜 $F=\rho_v$ 的独立性，
+$$
+\begin{aligned}
+Y_\Gamma-Y\otimes I_T/2
+ &=\alpha v_k\sum_b|bb\rangle\langle bb|\otimes
+                      L_b\otimes\mu\otimes Z_T/2,\\
+\|Y_\Gamma-Y\otimes I_T/2\|_1
+ &=\alpha|v_k|(\delta+\lambda^2)\le\kappa_D<1/D.
+\end{aligned}
+\tag{18.11}
+$$
+两条原始历史均在等式中，没有条件归一化。$W$ 与共同旋转交换，故该式覆盖全部 $h,v$，坐标选择不是程序中的未知方向操作。尤其 $\langle\chi,W\chi\rangle=\langle\psi,W\chi\rangle=0$ 消去了源 (17.9) 的首阶相关项，而有限 $D$ 的 $L_b$ 非零。对任一 $Q_0$ 本征态，(18.3) 相对于 $\widehat\Phi\otimes I_T/2$ 的输出迹范数差却为 $\alpha=1/2$；(18.11) 的小量来自这组可达联合输入，不来自随 $D$ 缩小的通道强度，也不只在不可达输入上改变通道。
+
+用同一个实际 CPTP 后缀传播 (18.11)，保留所有输出和原始记录。定理 17.3 的完整 $73/D$ 乘积比较界直接给 (18.6) 的 $74/D$ 界；没有重作其补偿证明。若该乘积比较的迹范数误差为 $a$，偏迹使其实际 $K'$ 边缘的误差至多 $a$，两项半迹范数的三角不等式给自身实际边缘的返回误差至多 $a<74/D<80/D$。$\pi_Z$ 始终只是四历史比较态，未把实际历史宣布为均匀。
+
+真实前缀无需是乘积。对 (17.19) 的两个完整输入施行同一个新后缀，分别由完整输出和实际边缘产生一项 $e_a$，再用 (18.6) 即得 $\Delta_\Gamma\le2e_a+80/D$。定理 17.4 供应其十设置获取、偏差和尾界 (17.20)、端点处理以及 $2e_a+80/D\le10M/D$；全旧通道恒等式精确保留同一解码事件，给出 (18.7)。这里没有实际重置参考，也未以理想边缘代替最终实际边缘。
+
+为在真正受扰前缀上求侧律，令 $\mathcal J_b:R\to RBA$ 为第一补偿槽的子通道，包含固定 singlet、原生投影、原始标签退相干及负标签 $BA$ 交换。共同旋转保持 singlet、原生投影、路由交换和 $I_R\otimes W$，故 $\mathcal J_b^*(I)$ 与 $\mathcal J_b^*(I_R\otimes W)$ 均与全部自旋 $j$ 旋转交换。不可约性使二者为标量。用上述精确向量求标量，得到
+$$
+\mathcal J_b^*(I)=p_b I_R,\qquad
+\mathcal J_b^*(I_R\otimes W)=c_b I_R,\qquad
+c_b=\operatorname{Tr}L_b=-\frac{b p_b}{D}.
+\tag{18.12}
+$$
+这两个效果恒等式也可张量任意旧记忆，故不要求输入参考相干或与记忆独立。固定 $k$ 仅在此不变步骤之后进入 $\Gamma$，未假设 $\Gamma$ 协变。独立 $F$ 和 (18.3) 于是给 $\Pr(b,s)=(p_b+s\alpha v_kc_b)/2$，即 (18.5)。后续操作不作用于 $H_1,E_1,T$，局部保迹边缘保持（定理 4.3）使该律一直成立到终端。每个 $b$ 下两种 $s$ 都有正概率，其律随 $v_k$ 变，因而是输入依赖的随机记录，不能解释为固定独立旗标或原标签的确定性复制；这不声称它优于整个旧输出的信息。
+
+最后取 (14.12) 的 $g(x,y)=(x,y,\sqrt{1-x^2-y^2})$，定义在半径 $1/3$ 的开圆盘上。前两个坐标保证秩二，原点两轴导数范数为一，完整闭 $r$ 轴段上的二阶导数范数为 $(1-u^2)^{-3/2}<2$。取只依赖已知 $k,d$ 的固定正旋转 $O_\pm$，使 $O_\pm g(d,0)=\pm k$，置 $n_\pm=O_\pm g$；全部原始场条件保持。把 $v_k=\pm1$ 代入真实侧律，两种 $T$ 态的差为 $-\alpha Z_T/D^2$，而完整 $H_1E_1T$ 差的各正交块为 $-b p_b\alpha Z_T/D$。取半迹范数并用 $\sum_b p_b=1$，得到 (18.8)。它对同一任意 $h$ 成立，包括两个场产生不同真实获取前缀的情况。$\square$
+
+定理 18.3 的资源条件仍是定理 17.4 的原日程：原生槽 $10N-8\le L$，独立场重置 $18N-16\le Q$，恰一次强制终端交换，共 $10N-7$ 次实际 $R$ 接触；获取的 $\mathcal C$、部分 SWAP、标量受控 SWAP、Hadamard 和标量读出次数分别为 $10(N-1),8(N-1),10(N-1),20(N-1),10(N-1)$。只替换一个固定非 $R$ 节点并多留一个二态寄存器，无额外场源、参考接触或校正读数。全部旧口维数不变，$\dim K'=2\dim K_{\rm old}$；若将 $T$ 编为 qubit，原 $28N-24$ 个获取探针、场及 singlet 输出小计变为 $28N-23$，另有原标量测试、原生记录、工作区和维数 $D$ 的参考，不能把小计当作整体维数或总门数。
+
+本定理的新增关系限于 (18.10)–(18.12) 在源 (17.8) 的实际分支及受扰前缀上的联合后果。原固定补偿器、获取和原返回定理分别由定义 17.1、定理 17.4 和定理 17.3 供应；标准仪器扩展、Choi 余量与有限实现、不变效果的标量性、SWAP 恒等式和收缩性只作中间工具。上述主来源对应不作历史优先权或文献穷尽断言。证书只适用于声明的 $BAF,T$ 约化节点和未改动的后续日程，不是全部环境的返回定理；进一步实际噪声、指针或工作输出必须加入实际口另估。相干参考、独立纯场重置、固定标架、原生耦合、非参考 CP 处理与替换、校准和物理钟仍是前提，不由此取得实验来源。它没有改进原任务的精度、置信度、资源或返回证书，不推得一般控制器或任意扩展的结论，也不改变定理 14.1 的实际完整等距假设、定理 14.3–14.4 的固定场必要界或定理 12.3 的最坏情形量词。
+
+## 追加锚（本行以下为增补区）
