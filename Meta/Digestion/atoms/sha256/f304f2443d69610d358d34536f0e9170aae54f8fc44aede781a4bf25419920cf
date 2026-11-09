@@ -1,0 +1,13 @@
+**引理 3.2（点评价与数学向量读取）。** 对每个 $\omega\in X$，令 $\chi=\operatorname{ev}_\omega:A\to\mathbb C$；下文 $\chi$ 均指这样的点评价。它给满含单位 Jordan 商
+
+$$
+\pi_\chi:E\longrightarrow H_n(\mathbb C),\qquad
+\pi_\chi(a)=a(\omega),\qquad
+\phi_{\chi,\xi}(a)=\xi^*a(\omega)\xi.
+\tag{3.3}
+$$
+
+这些是3.1可用的数学正读取，并分离 $E$。
+
+证明。逐点评价是含单位星同态，保正；每个常值 Hermitian 矩阵都是原输入，故商满。固定自伴 $a$ 的全部二次读数为零时，普通 Hermitian 极化给每个 $a(\omega)=0$，于是 $a=0$。核是闭 Jordan 理想，且这里的完整 JB 环境就是 $E$，故满足 OP80.1 的 $E\subset X_{\rm JB}$、稠密性、准确锥与范数接口。没有定义商上的未知响应，也没有把数学读取加入实际准备族。∎
+
