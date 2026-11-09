@@ -1,0 +1,37 @@
+**命题 54.4（三角反例）。** 取 $H_1=H_2=H_3=\mathbb C$，令
+
+$$
+R_{12}=1,
+\qquad
+R_{23}=1,
+\qquad
+R_{13}=e^{i\theta},
+\qquad 0<\theta<2\pi.
+$$
+
+则定义 54.1 成立，但
+
+$$
+R_{23}R_{12}=1\ne e^{i\theta}=R_{13}.
+$$
+
+因此严格平坦性排除了非零三角相位。量子射线中相同现象由 Bargmann 三重积表示：取
+
+$$
+|a\rangle=|0\rangle,
+\quad
+|b\rangle=\frac{|0\rangle+|1\rangle}{\sqrt2},
+\quad
+|c\rangle=\frac{|0\rangle+i|1\rangle}{\sqrt2},
+$$
+
+则
+
+$$
+\Delta(a,b,c)=
+\langle a|b\rangle\langle b|c\rangle\langle c|a\rangle
+=\frac{1+i}{4},
+$$
+
+其辐角为 $\pi/4$，并且在三个射线代表元分别变换相位时保持不变。故把有向比较本身强行设为严格平坦，会删掉这种射线几何。
+
