@@ -1,19 +1,34 @@
 using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S1.Dynamics.Shadowing;
 
 internal sealed class NorthSouthOrbitClockDocument : IScribeDocumentDefinition
 {
+    private static Formula Id(string s) => F.Id(s);
+    private static Formula All(string s, Formula t) => Seq(Forall, Sp, Id(s), Colon, Sp, t, Comma, Sp);
+    private static Formula Call(string s, params Formula[] args)
+    {
+        var items = new List<Formula> { Seq(Operatorname, Grp(Id(s))), Open };
+        for (var i = 0; i < args.Length; i++) { if (i > 0) items.AddRange([Comma, Sp]); items.Add(args[i]); }
+        items.Add(Close); return Seq([.. items]);
+    }
+    private static Formula HeightFormula() => Seq(
+        All("M", Id("CompactMetricSpace")), All("f", Call("Homeomorphism", Id("M"))),
+        All("N", Id("M")), All("S", Id("M")),
+        Call("Pointwise", Id("f"), Id("N"), Id("S")), Sp, Rightarrow, Sp,
+        Call("Nonempty", Call("StrictHeight", Id("f"), Id("N"), Id("S"))));
+
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Literal pointwise north-south dynamics supplies a continuous strict height through locally finite integer orbit sums.",
         H("A Proper Integer Orbit Clock"),
         Blocks(
             Describe.Lean(
                 DescribeId.Create("pointwise-strict-height"),
-                DeclarationHandle.Create("D5/S1/Dynamics/Shadowing/PointwiseNorthSouth.exists_strictHeight"),
+                DeclarationHandle.Create("D5/S1/Dynamics/Shadowing/NorthSouthOrbitClock.exists_strictHeight"),
                 H("The height is constructed from pointwise dynamics"),
-                StatementSource.FromLean(),
+                StatementSource.FromAuthor(HeightFormula()),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(

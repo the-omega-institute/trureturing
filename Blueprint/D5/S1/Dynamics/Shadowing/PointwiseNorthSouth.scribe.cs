@@ -1,10 +1,37 @@
 using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S1.Dynamics.Shadowing;
 
 internal sealed class PointwiseNorthSouthDocument : IScribeDocumentDefinition
 {
+    private static Formula Id(string s) => F.Id(s);
+    private static Formula All(string s, Formula t) => Seq(Forall, Sp, Id(s), Colon, Sp, t, Comma, Sp);
+    private static Formula Call(string s, params Formula[] args)
+    {
+        var items = new List<Formula> { Seq(Operatorname, Grp(Id(s))), Open };
+        for (var i = 0; i < args.Length; i++) { if (i > 0) items.AddRange([Comma, Sp]); items.Add(args[i]); }
+        items.Add(Close); return Seq([.. items]);
+    }
+    private static Formula Uniform(Formula f, Formula excluded, Formula target) => Seq(
+        All("C", Call("Set", Id("M"))),
+        Open, Call("IsCompact", Id("C")), Sp, Land, Sp,
+        Neg, Sp, Open, excluded, Sp, InMacro, Sp, Id("C"), Close, Close, Sp, Rightarrow, Sp,
+        All("O", Call("Neighborhoods", target)),
+        Exists, Sp, Id("T"), Colon, Sp, Seq(Mathbb, Grp(Id("N"))), Comma, Sp,
+        All("n", Seq(Mathbb, Grp(Id("N")))),
+        Id("T"), Sp, Le, Sp, Id("n"), Sp, Rightarrow, Sp,
+        Call("image", Call("power", f, Id("n")), Id("C")), Sp, Subseteq, Sp, Id("O"));
+    private static Formula StabilityFormula() => Seq(
+        All("M", Id("CompactMetricSpace")), All("f", Call("Homeomorphism", Id("M"))),
+        All("N", Id("M")), All("S", Id("M")),
+        Call("Pointwise", Id("f"), Id("N"), Id("S")), Sp, Rightarrow, Sp,
+        Call("Stable", Id("f"), Id("S")), Sp, Land, Sp,
+        Call("Stable", Call("inverse", Id("f")), Id("N")), Sp, Land, Sp,
+        Open, Uniform(Id("f"), Id("N"), Id("S")), Close, Sp, Land, Sp,
+        Open, Uniform(Call("inverse", Id("f")), Id("S"), Id("N")), Close);
+
     private const string Owner = "D5/S1/Dynamics/Shadowing/PointwiseNorthSouth.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
@@ -15,7 +42,7 @@ internal sealed class PointwiseNorthSouthDocument : IScribeDocumentDefinition
                 DescribeId.Create("stability-and-compact-uniformity"),
                 DeclarationHandle.Create(Owner + "stability_and_compact_uniformity"),
                 H("Stability and uniform attraction are conclusions"),
-                StatementSource.FromLean(),
+                StatementSource.FromAuthor(StabilityFormula()),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(

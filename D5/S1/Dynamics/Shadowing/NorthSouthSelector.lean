@@ -466,15 +466,17 @@ private theorem selector_orbit (h : Pointwise f N S) (c : Control v H) (p : M) :
     norm_num
   have hforward : Tendsto (fun n : ℕ => heights c x (n : ℤ)) atTop (𝓝 (1 : ℝ)) := by
     have hh := v.continuous_value.continuousAt.tendsto.comp (h.forward p hpN hpS)
-    simpa only [Function.comp_def, v.south, heights, x, CompactSelector.trueOrbit,
-      CompactSelector.orbit, zpow_natCast] using hh
+    change Tendsto (fun n : ℕ => v.value ((f ^ (n : ℤ)) p)) atTop (𝓝 (1 : ℝ))
+    simp only [zpow_natCast]
+    simpa only [Function.comp_def, v.south] using hh
   have hbackward : Tendsto (fun n : ℕ => heights c x (-(n : ℤ))) atTop (𝓝 (-1 : ℝ)) := by
     have hh := v.continuous_value.continuousAt.tendsto.comp (h.backward p hpN hpS)
     have he (n : ℕ) : f ^ (-(n : ℤ)) = f.symm ^ n := by
       rw [zpow_neg, zpow_natCast]
       exact (inv_pow f n).symm
-    simpa only [Function.comp_def, v.north, heights, x, CompactSelector.trueOrbit,
-      CompactSelector.orbit, he] using hh
+    change Tendsto (fun n : ℕ => v.value ((f ^ (-(n : ℤ))) p)) atTop (𝓝 (-1 : ℝ))
+    simp only [he]
+    simpa only [Function.comp_def, v.north] using hh
   have hc : ∃ j, Crossing (heights c x) j := by
     rcases crossing_classification (sign_rule c x) with hn | hp | hx
     · have hh : (1 : ℝ) ≤ 0 := le_of_tendsto hforward (Eventually.of_forall fun n => (hn n).le)
@@ -488,8 +490,11 @@ private theorem selector_orbit (h : Pointwise f N S) (c : Control v H) (p : M) :
     change f.symm (CompactSelector.orbit f p (j + 1)) = CompactSelector.orbit f p j
     rw [CompactSelector.orbit_step, f.symm_apply_apply]
   have ha : anchor c x j hj = x.1 j := by
+    have hdiag : (⟨(x.1 j, f.symm (x.1 (j + 1))),
+        (crossing_control c x j hj).1.pair⟩ : H.domain) =
+        ⟨(x.1 j, x.1 j), H.diagonal (x.1 j)⟩ := Subtype.ext (by simp only [he])
     unfold anchor
-    rw [he, H.refl]
+    rw [hdiag, H.refl]
   unfold chart
   rw [ha]
   change (f ^ (-j)) ((f ^ j) p) = p
