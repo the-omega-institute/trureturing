@@ -1,0 +1,14 @@
+**定理 35.2（锥几何的 Jordan 化）。** 在有限维、闭、尖、生成和自对偶齐性的条件下，$V_A$ 上存在一个 Euclidean Jordan 代数结构，使 $C_A$ 正好是平方元锥，序单位是 Jordan 单位。比较自同构成为 Jordan 正性自同构，状态具有谱分解
+
+$$
+x=\sum_i\lambda_i p_i
+$$
+
+其中 $p_i$ 是一组正交 primitive idempotent，$\lambda_i\ge0$。复量子系统
+
+$$
+C_A=M_d(\mathbb C)_+,
+$$
+
+是该候选的一个特例；经典单纯形锥、实对称正定锥和四元数自伴正锥也满足同样的自对偶齐性。证毕（Koecher–Vinberg 表示定理）。
+
