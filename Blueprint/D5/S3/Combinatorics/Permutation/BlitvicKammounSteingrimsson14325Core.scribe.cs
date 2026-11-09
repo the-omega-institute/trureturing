@@ -79,15 +79,19 @@ internal sealed class BlitvicKammounSteingrimsson14325CoreDocument : IScribeDocu
                 + "p=0 and p=i are retained. There is no assertion for j=0. The printed "
                 + "item says four divides all but these indices and does not explicitly "
                 + "assert the converse; this iff proves the stronger registered exact "
-                + "interpretation. The original narrower modulo-ten issue 21304, its "
-                + "unresolved status and resource boundaries remain unchanged."))));
+                + "interpretation."))));
 
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose) =>
         Describe.Lean(DescribeId.Create("bks14325-" + name.Replace('_', '-')),
             DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.FromAuthor(formula),
-            AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
+            AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(prose))), DescribeRole.Theorem,
+            name == "count_mod_ten"
+                ? new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("bks11-14325-whole-event"), ResolutionKind.Proved,
+                    [DeclarationHandle.Create(Prefix + "count_mod_four_iff")])
+                : null);
 
     private static Formula Add(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Add, b);
     private static Formula Sub(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Subtract, b);

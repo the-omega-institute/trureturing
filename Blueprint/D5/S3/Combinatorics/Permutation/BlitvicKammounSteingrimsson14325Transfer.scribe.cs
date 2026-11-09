@@ -121,7 +121,7 @@ internal sealed class BlitvicKammounSteingrimsson14325TransferDocument : IScribe
                 + "boundaries are included. The printed continuation says four divides "
                 + "all but these indices; the exact-exception converse is the stronger "
                 + "registered interpretation. The Core module proves both exact actual-count conclusions using these "
-                + "transfer results. The narrower issue 21304 remains unchanged.")))));
+                + "transfer results.")))));
 
     private static Formula Add(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Add, b);
     private static Formula Mul(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Multiply, b);
