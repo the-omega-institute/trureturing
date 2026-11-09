@@ -74,7 +74,7 @@ internal sealed class HardinA233254TriangleStripDocument : IScribeDocumentDefini
                 + "and 800 enter the fully seen sector. Their moment sums are 17216, "
                 + "360576 and 7530048. Initially the two counts are 16 and 120, with "
                 + "moment sums 2384, 49344 and 1028832."),
-            Thm("result", "result", "Barker's identity", ResultFormula(),
+            Resolution("result", "result", "Barker's identity", ResultFormula(),
                 "After one continuation row the fully seen count has form rU+tZ+uW. "
                 + "Initially (F,U,Z,W)=(864,64,0,0), where F is the other sector. "
                 + "The one-row formulas give F'=64F+17216U+360576Z+7530048W, "
@@ -101,6 +101,14 @@ internal sealed class HardinA233254TriangleStripDocument : IScribeDocumentDefini
             DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(Source),
             Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
+
+    private static DocumentBlock Resolution(string id, string name, string title,
+        Formula formula, string prose) => Describe.Lean(DescribeId.Create(id),
+            DeclarationHandle.Create(Prefix + name), H(title),
+            StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(Source),
+            Blocks(Paragraph(Text(prose))), DescribeRole.Theorem,
+            new OpenProblemResolutionClaim(ProblemSlugRef.Create("hardin233254"),
+                ResolutionKind.Proved));
 
     private static Formula RowFormula()
     {

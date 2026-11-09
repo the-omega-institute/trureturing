@@ -22,7 +22,7 @@ $$\forall M, \operatorname{PosSemidef}\left(M\right) \Rightarrow \operatorname{P
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/PartialTraceMutualInformation.partialTraceLeft_posSemidef` (`✓ std3`). ∎
 
-*Citation.* Zayn Blore (2026). *Partial trace and spectral von Neumann entropy in CsdLean4*. URL: <https://github.com/zblore/csd-lean4/tree/13eda16971c66de4bc9f550e418dd4fdf59a5121/CsdLean4/Mathlib>.
+*Citation.* Zayn Blore (2026). *Partial trace, spectral entropy and general Lie-Trotter products in CsdLean4*. URL: <https://github.com/zblore/csd-lean4>.
 
 *Commentary.*
 
@@ -34,7 +34,7 @@ $$\forall M, \operatorname{PosSemidef}\left(M\right) \Rightarrow \operatorname{P
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/PartialTraceMutualInformation.partialTraceRight_posSemidef` (`✓ std3`). ∎
 
-*Citation.* Zayn Blore (2026). *Partial trace and spectral von Neumann entropy in CsdLean4*. URL: <https://github.com/zblore/csd-lean4/tree/13eda16971c66de4bc9f550e418dd4fdf59a5121/CsdLean4/Mathlib>.
+*Citation.* Zayn Blore (2026). *Partial trace, spectral entropy and general Lie-Trotter products in CsdLean4*. URL: <https://github.com/zblore/csd-lean4>.
 
 *Commentary.*
 
@@ -46,7 +46,7 @@ $$\forall M, \operatorname{trace}\left(\operatorname{partialTraceLeft}\left(M\ri
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/PartialTraceMutualInformation.trace_partialTraceLeft` (`✓ std3`). ∎
 
-*Citation.* Zayn Blore (2026). *Partial trace and spectral von Neumann entropy in CsdLean4*. URL: <https://github.com/zblore/csd-lean4/tree/13eda16971c66de4bc9f550e418dd4fdf59a5121/CsdLean4/Mathlib>.
+*Citation.* Zayn Blore (2026). *Partial trace, spectral entropy and general Lie-Trotter products in CsdLean4*. URL: <https://github.com/zblore/csd-lean4>.
 
 *Commentary.*
 
@@ -58,7 +58,7 @@ $$\forall M, \operatorname{trace}\left(\operatorname{partialTraceRight}\left(M\r
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/PartialTraceMutualInformation.trace_partialTraceRight` (`✓ std3`). ∎
 
-*Citation.* Zayn Blore (2026). *Partial trace and spectral von Neumann entropy in CsdLean4*. URL: <https://github.com/zblore/csd-lean4/tree/13eda16971c66de4bc9f550e418dd4fdf59a5121/CsdLean4/Mathlib>.
+*Citation.* Zayn Blore (2026). *Partial trace, spectral entropy and general Lie-Trotter products in CsdLean4*. URL: <https://github.com/zblore/csd-lean4>.
 
 *Commentary.*
 
@@ -82,7 +82,7 @@ $$\forall i \in \operatorname{Type},\; [\operatorname{Fintype}\left(i\right)] [\
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/PartialTraceMutualInformation.charpoly_conj_unitary` (`✓ std3`). ∎
 
-*Citation.* Zayn Blore (2026). *Partial trace and spectral von Neumann entropy in CsdLean4*. URL: <https://github.com/zblore/csd-lean4/tree/13eda16971c66de4bc9f550e418dd4fdf59a5121/CsdLean4/Mathlib>.
+*Citation.* Zayn Blore (2026). *Partial trace, spectral entropy and general Lie-Trotter products in CsdLean4*. URL: <https://github.com/zblore/csd-lean4>.
 
 *Commentary.*
 
@@ -106,7 +106,7 @@ $$\forall \rho, \sigma, \operatorname{vonNeumannEntropy}\left(\operatorname{prod
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/PartialTraceMutualInformation.vonNeumannEntropy_productState` (`✓ std3`). ∎
 
-*Citation.* Zayn Blore (2026). *Partial trace and spectral von Neumann entropy in CsdLean4*. URL: <https://github.com/zblore/csd-lean4/tree/13eda16971c66de4bc9f550e418dd4fdf59a5121/CsdLean4/Mathlib>.
+*Citation.* Zayn Blore (2026). *Partial trace, spectral entropy and general Lie-Trotter products in CsdLean4*. URL: <https://github.com/zblore/csd-lean4>.
 
 *Commentary.*
 
@@ -118,7 +118,7 @@ $$\forall \rho, \sigma, \operatorname{quantumMutualInformation}\left(\operatorna
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/PartialTraceMutualInformation.quantumMutualInformation_productState` (`✓ std3`). ∎
 
-*Citation.* Zayn Blore (2026). *Partial trace and spectral von Neumann entropy in CsdLean4*. URL: <https://github.com/zblore/csd-lean4/tree/13eda16971c66de4bc9f550e418dd4fdf59a5121/CsdLean4/Mathlib>.
+*Citation.* Zayn Blore (2026). *Partial trace, spectral entropy and general Lie-Trotter products in CsdLean4*. URL: <https://github.com/zblore/csd-lean4>.
 
 *Commentary.*
 
