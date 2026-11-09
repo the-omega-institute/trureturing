@@ -1,7 +1,7 @@
 /- GID: D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255Recurrence
    generality: I
    mirror-B: D5/B/S3/Combinatorics/TraceAvoidingArrays/HardinA233255Recurrence
-   mirror-E: none
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: The original positive-height seven-column count obeys Hardin's recurrence. -/

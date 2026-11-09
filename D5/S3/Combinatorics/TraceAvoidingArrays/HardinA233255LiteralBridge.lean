@@ -1,7 +1,7 @@
 /- GID: D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255LiteralBridge
    generality: G
    mirror-B: D5/B/S3/Combinatorics/TraceAvoidingArrays/HardinA233255LiteralBridge
-   mirror-E: none
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: Exact scanner fibres for literal seven-column complementary-pair arrays. -/

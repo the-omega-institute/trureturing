@@ -1,7 +1,7 @@
 /- GID: D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255PairTransfer
    generality: I
    mirror-B: D5/B/S3/Combinatorics/TraceAvoidingArrays/HardinA233255PairTransfer
-   mirror-E: none
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: Literal positive-height arrays and their exact scanner-weighted pair transfer. -/

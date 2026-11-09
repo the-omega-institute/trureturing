@@ -1,7 +1,7 @@
 /- GID: D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255ShapeSymmetry
    generality: I
    mirror-B: D5/B/S3/Combinatorics/TraceAvoidingArrays/HardinA233255ShapeSymmetry
-   mirror-E: none
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: Completed-scanner continuations depend only on proper canonical boundaries. -/
