@@ -148,7 +148,8 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   change (a ⟨1, Nat.succ_pos 0⟩ : ℤ) =
     (16 : ℤ) * 128^0 + 32 * ∑ i : Fin 16, (F 0 i + 1) at hb
   rw [Finset.sum_add_distrib] at hb
-  norm_num only [Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul, mul_one] at hb
+  norm_num only [Finset.sum_const, Finset.card_univ, Fintype.card_fin,
+    nsmul_eq_mul, mul_one] at hb
   linarith
 def family : Registration arena (type_of% @literal_canonical_bridge) where
   actual := actual
