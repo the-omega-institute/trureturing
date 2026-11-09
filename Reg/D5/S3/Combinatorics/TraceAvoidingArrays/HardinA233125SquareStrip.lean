@@ -13,7 +13,7 @@ open LeanInformationAudit PowerSeries
 
 noncomputable section
 
-attribute [local irreducible] a
+attribute [local irreducible] a classCount firstCount
 
 abbrev signature : Signature :=
   _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℕ) (fun _ => ℕ)
