@@ -55,7 +55,7 @@ internal sealed class PBPolynomialZeroDocument : IScribeDocumentDefinition
     {
         var k = V("k"); var p = V("p");
         var sum = Seq(new Formula.Subscript(Sum, Seq(k, InMacro, Sp, C("support", p))),
-            Parenthesized(Sm(C("coeff", p, k), C("npow", V("J"), V("u"), V("x"), k))));
+            Grp(Sm(C("coeff", p, k), C("npow", V("J"), V("u"), V("x"), k))));
         return Carrier(Product(All("x", E, All("p", Poly, Eq(Ev(p), sum)))));
     }
     private static Formula ZeroStatement()

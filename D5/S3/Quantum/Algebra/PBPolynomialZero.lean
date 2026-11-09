@@ -1,7 +1,7 @@
 /- GID: D5/S3/Quantum/Algebra/PBPolynomialZero
    generality: G
    mirror-B: D5/B/S3/Quantum/Algebra/PBPolynomialZero
-   mirror-E: none(waiver:registration-template-not-established)
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Analysis.Complex.Polynomial.Basic]
    utility: none
    digest: Original PB and explicit rotation, oddness and affine-zero rows force all polynomial pairs to vanish. -/
