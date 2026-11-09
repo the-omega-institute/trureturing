@@ -80,10 +80,10 @@ internal sealed class JBComplexificationDocument : IScribeDocumentDefinition
             Imp(Call("Data", V("X"), V("S"), V("u")), All("a", V("X"),
                 Imp(Call("Bijective", Call("U", V("a"))), Ex("b", V("X"),
                     And(Call("mem", V("b"), Call("generated", V("a"))),
-                        Eq(Call("S", V("a"), V("b")), V("u")))))))));
+                        Eq(Call("S", V("a"), V("b")), V("u"))))))))));
     private static Formula PositivityScope() => All("X", V("CompleteRealNormedSpaces"),
         All("S", Call("RealBilinearMaps", V("X")), All("u", V("X"),
             Imp(Call("Data", V("X"), V("S"), V("u")), All("a", V("X"), All("x", V("X"),
                 Ex("y", V("X"), Eq(Call("U", V("a"), Call("S", V("x"), V("x"))),
-                    Call("S", V("y"), V("y")))))))));
+                    Call("S", V("y"), V("y"))))))))));
 }
