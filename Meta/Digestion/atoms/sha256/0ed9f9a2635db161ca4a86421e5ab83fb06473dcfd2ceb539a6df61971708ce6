@@ -1,0 +1,23 @@
+**定义 20.1（共同正射影比较核）。** 对有限非空指标集 $I$，一个共同正射影比较核是一个矩阵类
+
+$$
+[K],\qquad K\in\mathbb C^{I\times I},\qquad K=K^*,\qquad K\succeq0,\qquad K_{ii}=1,
+$$
+
+其中等价关系为
+
+$$
+K\sim D^*KD,\qquad
+D=\operatorname{diag}(e^{i\theta_i})_{i\in I}.
+$$
+
+对每个子集 $J\subseteq I$，共同实现要求取同一个 $K$ 的限制 $K|_J$；先加入哪几个指标不改变最后得到的限制。可观测的二元比较和三元相位分别记为
+
+$$
+p_{ij}=|K_{ij}|^2,\qquad
+B_{ijk}=K_{ij}K_{jk}K_{ki},\qquad
+\omega_{ijk}=\frac{B_{ijk}}{|B_{ijk}|}
+$$
+
+其中 $B_{ijk}\ne0$ 时才定义 $\omega_{ijk}$。这是一条单一的运动学公理：共同来源上的所有有限比较必须能装进这样的一个正核；它没有把正效应、概率仪器或时间演化偷偷放进来。
+
