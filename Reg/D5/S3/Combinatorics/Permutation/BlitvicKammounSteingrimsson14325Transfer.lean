@@ -212,7 +212,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "fn", "arg", "fn"]
+      path := #["body", "fn", "arg", "arg", "fn"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]
@@ -284,7 +284,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "fn", "arg", "fn"]
+      path := #["body", "fn", "arg", "fn", "arg", "fn"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]
@@ -356,7 +356,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "fn", "arg", "fn"]
+      path := #["body", "fn", "arg", "arg", "arg", "fn"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]

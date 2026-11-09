@@ -71,9 +71,10 @@ internal sealed class BlitvicKammounSteingrimsson14325TransferDocument : IScribe
                 H("The exact dyadic modulo-ten rule for all transfer rows"),
                 StatementSource.FromAuthor(Disp(Seq(Forall, Sp, F.Id("n"), Colon, Sp,
                     Mathbb, Grp(F.Id("N")), Comma, Sp,
-                    new Formula.Apply(F.Id("mod"), [new Formula.Apply(F.Id("rowNat"), [F.Id("n"), D(3)]), D(10)]), Sp, Eq, Sp, F.Id("dyadicResidue"), Grp(Add(F.Id("n"), D(2)))))),
+                    new Formula.Apply(F.Id("mod"), [new Formula.Apply(F.Id("rowNat"), [F.Id("n"), D(3)]), D(1, 0)]), Sp, Eq, Sp, F.Id("dyadicResidue"), Grp(Add(F.Id("n"), D(2)))))),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The notation dyadicResidue(m) means one if m=2ᵏ for some k≥1, and six otherwise. The source row index is j=n+1, so the exception "
+                Blocks(Paragraph(Text("The notation dyadicResidue(m) means one if m=2ᵏ for some k≥1, "
+                    + "and six otherwise. The source row index is j=n+1, so the exception "
                     + "is precisely j+1=2ᵏ with k≥1. For a positive row index, reduce "
                     + "the Catalan formula from ZMod 4 to ZMod 2 through the canonical "
                     + "ring homomorphism. The existing binary_catalan theorem then "
@@ -97,7 +98,7 @@ internal sealed class BlitvicKammounSteingrimsson14325TransferDocument : IScribe
                 Blocks(Paragraph(Text("For every n≥0, four fails to divide row ℕ n 3 "
                     + "exactly when n+2 is a sum of two powers of two with p≤i. "
                     + "The same-exponent case represents a single power of two; "
-                    + "the p=0 case represents odd integers with two occupied bits. "
+                    + "the p=0<i case represents odd integers with two occupied bits. "
                     + "Let s(m) be the sum of the base-two digits of m. The proof "
                     + "establishes s(m+1)+v₂(m+1)=s(m)+1 by binary induction. "
                     + "Kummer's imported digit-sum formula gives v₂(binomial(2m,m))=s(m); "
@@ -113,8 +114,8 @@ internal sealed class BlitvicKammounSteingrimsson14325TransferDocument : IScribe
                 + "whose prescribed length-five windows at starts 1+3t, 0≤t<j, have "
                 + "pattern 14325. Extra occurrences are allowed. Applying this invariant "
                 + "requires a proved insertion/deletion bijection identifying this count "
-                + "with row ℕ (j−1) 3. Natural-to-residue reduction is proved inside the Catalan formula; the actual-count bridge is a separate "
-                + "obligations; no equality to the actual count is claimed here.")),
+                + "with row ℕ (j−1) 3. Natural-to-residue reduction is proved inside "
+                + "the Catalan formula; the actual-count bridge is a separate obligation; no equality to the actual count is claimed here.")),
             Paragraph(Text("The full target also requires residue one modulo ten when "
                 + "j+1=2ᵏ with k≥1, residue six otherwise, and nondivisibility by four "
                 + "if and only if j+1=2ⁱ+2ᵖ with 0≤p≤i. The equal-exponent and p=0 "
