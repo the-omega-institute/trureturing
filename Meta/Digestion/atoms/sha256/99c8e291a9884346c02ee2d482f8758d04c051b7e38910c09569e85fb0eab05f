@@ -1,0 +1,8 @@
+**定义 47.1（裸正关系骨架）。** 一个裸骨架是三元组
+
+$$
+\mathfrak B=(P,K,\operatorname{Cl}),
+$$
+
+其中 $P$ 是对象集，$K:P\times P\to\mathbb R$ 是归一化对称核，所有有限主表半正定，$\operatorname{Cl}$ 是记录幂集上的 extensive、monotone、idempotent 闭包算子。闭包只读取记录和 $K$ 的有限限制，不读取实现它们的坐标、标量域或测量解释。
+
