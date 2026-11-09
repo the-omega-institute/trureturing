@@ -1,0 +1,26 @@
+**定理 21.2（效应可加性导出 Born 赋值）。** 若 $\dim H\ge3$，每个归一化效应赋值 $\nu$ 都存在唯一密度算子 $\rho$ 使
+
+$$
+\nu(E)=\operatorname{Tr}(\rho E)
+\qquad(E\in\mathcal E(H)).
+$$
+
+于是每个 POVM 菜单都给出归一化概率 $\sum_a\nu(E_a)=1$。
+
+**证明。** 先把 $\nu$ 限制在正交投影上。对任意正交投影分解 $I=P_1+\cdots+P_m$，可加性给出 $\sum_i\nu(P_i)=1$；特别地，秩一投影上的函数是一个非负 frame function。$\dim H\ge3$ 时，Gleason 定理给出唯一密度算子 $\rho$，使得 $\nu(P)=\operatorname{Tr}(\rho P)$ 对所有投影 $P$ 成立。
+
+若 $E=\sum_i\lambda_iP_i$ 是谱分解，其中 $0\le\lambda_i\le1$ 且 $P_i$ 两两正交，则可加性给出
+
+$$
+\nu(E)=\sum_i\nu(\lambda_iP_i).
+$$
+
+由第 2 条先对有理数 $\lambda_i$ 得 $\nu(\lambda P)=\lambda\nu(P)$；第 3 条再把它延拓到所有实 $\lambda\in[0,1]$。故
+
+$$
+\nu(E)=\sum_i\lambda_i\operatorname{Tr}(\rho P_i)
+=\operatorname{Tr}(\rho E).
+$$
+
+若 $\rho,\sigma$ 给出同一赋值，则 $\operatorname{Tr}((\rho-\sigma)P)=0$ 对所有秩一投影成立；谱分解或极化恒等式遂得 $\rho=\sigma$。POVM 的归一化由线性迹和 $\sum_aE_a=I$ 立即得到。$\square$
+
