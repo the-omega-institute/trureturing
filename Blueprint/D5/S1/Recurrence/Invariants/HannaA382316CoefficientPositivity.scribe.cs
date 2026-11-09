@@ -23,7 +23,9 @@ internal sealed class HannaA382316CoefficientPositivityDocument : IScribeDocumen
             Node("result", "Every source solution has nonnegative coefficients",
                 Disp(ClaimBody()),
                 "Write A = X * f with constantCoeff f = 1. The normalized equation yields a series g with constantCoeff g = 1, f = subst (X^2) f * g and g = X + subst (X^2) f * subst (X^3) g. Strong induction proves nonnegativity of both coefficient sequences, first for g at each positive degree and then for f. A normalized coefficient contraction supplies existence. These are formal series identities and require no convergence hypothesis.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Note()))),
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Note()),
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("hanna-a382316"),
+                    ResolutionKind.Proved))),
         edges: [
             DocumentEdge.Dependency.Create(GidRef.Create("D5/S1/Recurrence/Invariants/PowerSeriesNormalizedContraction")),
             DocumentEdge.Dependency.Create(GidRef.Create("D5/S1/Recurrence/Invariants/UnitReversionSquareParity")),
@@ -32,10 +34,11 @@ internal sealed class HannaA382316CoefficientPositivityDocument : IScribeDocumen
     private static LibraryNoteRef Note() => LibraryNoteRef.Create("D5/L/Certificates/hanna2025a382316");
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) =>
+        DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? claim = null) =>
         Describe.Lean(DescribeId.Create("hannaa382316-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
-            provenance, Blocks(Paragraph(Text(prose))), role);
+            provenance, Blocks(Paragraph(Text(prose))), role, claim);
 
     private static Formula ClaimBody()
     {

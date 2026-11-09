@@ -34,6 +34,10 @@ $$(\exists A: \operatorname{PowerSeries}\left(\mathbb{Q}\right), \operatorname{I
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Invariants/HannaA382316CoefficientPositivity.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/hanna-a382316` (proved) by `D5/S1/Recurrence/Invariants/HannaA382316CoefficientPositivity.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hanna-a382316","declaration_gid":"D5/S1/Recurrence/Invariants/HannaA382316CoefficientPositivity.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Paul D. Hanna (2025). *OEIS A382316, a generating-function nonnegativity conjecture*. URL: <https://oeis.org/A382316>.
