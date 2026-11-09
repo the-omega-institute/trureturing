@@ -194,4 +194,59 @@ theorem resonant_pair_midpoint (H C c w x y a p : ℤ) (b : Bool)
         ring
       simpa only [heq] using hm'
 
+theorem resonant_target_double {w ell k m : ℕ}
+    (hell : 1 ≤ ell) (hm : m = 2 ^ ell) (hkl : ell ≤ k) :
+    resonantTargetN k ell = 2 * resonantTargetH k ell + 1 := by
+  obtain ⟨_, _, hH, hN⟩ := resonant_target_values hell hm hkl
+  rw [hH, hN]
+  ring
+
+theorem resonant_state_relation {w ell k m : ℕ}
+    (hw : 1 ≤ w) (hell : 1 ≤ ell) (hm : m = 2 ^ ell)
+    (hdiv : w ∣ m - 1) (hlarge : 3 * w + 1 ≤ m) (hkl : ell ≤ k)
+    (l : List (Fin (k + 1))) :
+    resonantSecondState k ell w m l =
+      2 * resonantFirstState k ell w m l -
+        (l.map (resonantCharge k w)).sum +
+        (w : ℤ) * (l.map (resonantEar k)).sum := by
+  obtain ⟨_, hk, _, _, hroom⟩ := resonant_hypotheses_facts hw hell hm hdiv hlarge hkl
+  have h := resonant_prefix_rows (k := k) (seed := w) hk hroom l
+  simp only [resonantFirstState, resonantSecondState]
+  rw [h.2]
+  norm_num [Nat.cast_sub (by omega : 1 ≤ m)]
+  ring
+
+def resonantPrefixEar {k : ℕ} (l : List (Fin (k + 1))) : Bool :=
+  decide ((l.map (resonantEar k)).sum = 1)
+
+def resonantAdaptiveOrientation (w ell k m : ℕ) (hkl : ell ≤ k)
+    (word : List (Fin (k + 1))) : Fin ell → Bool :=
+  fun i => decide (¬ (resonantFirstState k ell w m
+      (word.take (word.idxOf ⟨i.val, by omega⟩)) +
+      (w : ℤ) * (2 : ℤ) ^ i.val ≤
+      corridorUpper (resonantTargetH k ell)
+        ((word.take (word.idxOf ⟨i.val, by omega⟩)).map
+          (resonantCharge k w)).sum
+        (w : ℤ)
+        (resonantPrefixEar (word.take (word.idxOf ⟨i.val, by omega⟩)))))
+
+theorem resonant_state_append {w ell k m : ℕ}
+    (hw : 1 ≤ w) (hell : 1 ≤ ell) (hm : m = 2 ^ ell)
+    (hdiv : w ∣ m - 1) (hlarge : 3 * w + 1 ≤ m) (hkl : ell ≤ k)
+    (l : List (Fin (k + 1))) (j : Fin (k + 1)) :
+    resonantFirstState k ell w m (l ++ [j]) =
+        resonantFirstState k ell w m l +
+          ((m : ℤ) * resonantFirst k w j - (m - 1 : ℕ) * resonantCharge k w j +
+            (w : ℤ) * resonantLowWeight (ell := ell) j) ∧
+    resonantSecondState k ell w m (l ++ [j]) =
+        resonantSecondState k ell w m l +
+          ((m : ℤ) * actualSource (k + 1) (2 * w) j -
+            (m - 1 : ℕ) * resonantCharge k w j -
+            (w : ℤ) * (m - 1 : ℕ) * resonantEar k j +
+            (2 * w : ℤ) * resonantLowWeight (ell := ell) j) := by
+  simp only [resonantFirstState, resonantSecondState, List.map_append,
+    List.sum_append, List.map_cons, List.map_nil, List.sum_cons, List.sum_nil,
+    add_zero]
+  constructor <;> ring
+
 end D5.S3.Combinatorics.Circle.FourNegative.ResonantUniversalInsertion
