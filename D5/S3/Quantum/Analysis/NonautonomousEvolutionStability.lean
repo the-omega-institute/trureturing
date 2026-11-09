@@ -19,7 +19,7 @@ namespace D5.S3.Quantum.Analysis.NonautonomousEvolutionStability
 
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℂ E]
 
-private theorem evaluation_integrable_of_bound {α : Type*} [MeasurableSpace α]
+theorem evaluation_integrable_of_bound {α : Type*} [MeasurableSpace α]
     {μ : Measure α} (D : α → E →L[ℂ] E)
     (hD : ∀ x, AEStronglyMeasurable (fun s => D s x) μ)
     {c : α → ℝ} (hc : Integrable c μ) (hcn : 0 ≤ᵐ[μ] c)

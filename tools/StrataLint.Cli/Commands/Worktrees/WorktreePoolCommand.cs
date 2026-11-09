@@ -12,7 +12,7 @@ internal static class WorktreePoolCommand
         var arguments = new List<string> { "claim", "--branch", options.Branch, "--base", options.Base };
         if (!options.AllowReuseSelection) arguments.AddRange(["--path", options.Path]);
         if (options.SkipRestore) arguments.Add("--skip-restore");
-        var result = WorktreeProtocolCommand.Run(options.Source, arguments, runner, Timeout.InfiniteTimeSpan);
+        var result = WorktreeProtocolCommand.Run(options.Source, arguments, runner, Timeout.InfiniteTimeSpan, reportPending: false);
         if (!result.Success) return result;
         using var receipt = JsonDocument.Parse(result.Output);
         if (receipt.RootElement.GetProperty("status").GetString() == "no_reusable") return result;

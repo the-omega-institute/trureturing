@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Analytic;
 
@@ -7,7 +9,29 @@ internal sealed class OriginalHalfBinomialIntegralDocument : IScribeDocumentDefi
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The literal original half-binomial-square series equals its normalized elliptic sine integral.",
         H("Original Half-Binomial Elliptic Integral"),
-        Blocks(Describe.Lean(
+        Blocks(
+            Describe.Lean(
+                DescribeId.Create("original-half-binomial-normalized-coefficient"),
+                DeclarationHandle.Create("D5/S3/Analytic/OriginalHalfBinomialIntegral.b"),
+                H("The normalized central-binomial coefficient"),
+                StatementSource.FromAuthor(Disp(Seq(Call("b", F.Id("n")), Eq,
+                    Frac, Grp(Call("centralBinom", F.Id("n"))),
+                    Grp(D(4), Caret, Grp(F.Id("n")))))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every natural n, b(n) is the real central-binomial "
+                    + "coefficient divided by 4^n."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("original-half-binomial-multichoose"),
+                DeclarationHandle.Create("D5/S3/Analytic/OriginalHalfBinomialIntegral.b_multichoose"),
+                H("The half-parameter multichoose coefficient"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every natural n, Ring.multichoose (1/2 : Real) n "
+                    + "equals b(n). This coefficient identity supplies the binomial power-series "
+                    + "step in the integral representation."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
             DescribeId.Create("original-half-binomial-elliptic-integral"),
             DeclarationHandle.Create("D5/S3/Analytic/OriginalHalfBinomialIntegral.original_series_eq_integral"),
             H("Summability, integrability and the exact identity including zero"),

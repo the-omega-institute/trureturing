@@ -30,7 +30,7 @@ open private energy_power_grade energy_bound_of_grades from
 open private negative_grade_eq_zero from D5.S3.VertexAlgebra.Energy.OriginalWordEnergy
 open private charged_mode_grade Hm_charged_circle actual_phase from
   D5.S3.VertexAlgebra.Lattice.OriginalChargedEnergy
-open private embed_norm embed_dense sobolev_grade_norm norm_order_mono inclusion_embed from
+open private embed_norm sobolev_grade_norm norm_order_mono inclusion_embed from
   D5.S3.VertexAlgebra.Analysis.OriginalSobolev
 
 open Model
@@ -78,7 +78,7 @@ private theorem base_bound_exists (a : Charge M.D) :
 /-- Fixed before every mode and every input vector, also at zero charge. -/
 def Model.modeConstant (a : Charge M.D) : ℝ := (base_bound_exists M a).choose
 
-private theorem modeConstant_pos (a : Charge M.D) : 0 < M.modeConstant a :=
+theorem modeConstant_pos (a : Charge M.D) : 0 < M.modeConstant a :=
   (base_bound_exists M a).choose_spec.1
 
 private theorem base_bound (a : Charge M.D) (m : ℤ) (v : Carrier M.D) :
@@ -143,14 +143,14 @@ def Model.modeExtension (a : Charge M.D) (k : ℕ) (m : ℤ) :
     M.Sobolev (M.order a+k) →L[ℂ] M.Sobolev k :=
   ((M.embed k).comp (M.mode a m)).extendOfNorm (M.embed (M.order a+k))
 
-private theorem modeExtension_embed (a : Charge M.D) (k : ℕ) (m : ℤ)
+theorem modeExtension_embed (a : Charge M.D) (k : ℕ) (m : ℤ)
     (v : Carrier M.D) :
     M.modeExtension a k m (M.embed (M.order a+k) v) = M.embed k (M.mode a m v) := by
   apply LinearMap.extendOfNorm_eq (embed_dense M _)
   refine ⟨M.modeConstant a * (1+|(m : ℝ)|)^(M.order a+k), fun u => ?_⟩
   simpa only [LinearMap.comp_apply, embed_norm] using higher_bound M a m k u
 
-private theorem modeExtension_norm (a : Charge M.D) (k : ℕ) (m : ℤ) :
+theorem modeExtension_norm (a : Charge M.D) (k : ℕ) (m : ℤ) :
     ‖M.modeExtension a k m‖ ≤ M.modeConstant a * (1+|(m : ℝ)|)^(M.order a+k) := by
   apply LinearMap.opNorm_extendOfNorm_le (embed_dense M _)
     (by have hC := modeConstant_pos M a; positivity)

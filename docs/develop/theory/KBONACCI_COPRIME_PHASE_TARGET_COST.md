@@ -369,3 +369,131 @@ The unit-width law settles every phase labeling, and the proper coprime width-tw
 The remaining structural task is to coordinate which INITIAL distinctions must be settled before their active positions retire, which excluded phase can supply charge in a later actual window, and which literal word realizes that query with the branch's actual terminal tail. Different branches cannot contribute a common filler unless each has actually excluded it, and a safe tail from one representative cannot be combined with a mask from another. Counterexamples 7.1–7.2 exhibit these two constraints concretely. Any extension needs an actual cost-preserving protocol and an all-adaptive lower bound; a generic belief recursion, an algebraic span, a finite table or a weaker prefix-deadline candidate alone does not close the original objective. No unproved general deadline formula is asserted in this volume, and the root-zero restriction is not extended to mixed-tail targets.
 
 ## 追加锚（本行以下为增补区）
+
+## 11. Exact price of requiring every block to start zero
+
+**Definition 11.1 (one fixed table and four block-fee optima).** Let $m\ge2$, $Q\ge2$, $k=Qm$ and $T=Qm+1$. Then $m<k$ and $\gcd(m,T)=1$. Fix $j\in\{1,\ldots,m\}$ and distinct labels $A,B$. On both free initial-value fibers define the single INITIAL table
+
+$$
+f_j(v,\theta_\ell,s)=
+\begin{cases}
+B,&\ell=j,\\
+A,&\ell\ne j,
+\end{cases}
+\qquad
+v\in\mathbb F_2,\quad 0\le\ell\le k,\quad 0\le s<k,
+\qquad f_j(\bot)=\beta,
+\tag{11.1}
+$$
+
+where $\theta_\ell=-\ell\pmod T$ and $\beta$ is any prescribed label, possibly equal to $A$ or $B$. This table is fixed independently of the controller and of every INITIAL tail. Its argument is the original record, not the record after a paid continuation.
+
+Use the complete-history prior, literal actions, endpoint archive and unit charge of §§1–2. Write $C_{\rm ad}$ for the minimum worst fee over all successful adaptive controllers. Write $C_{\rm pre}$ for the minimum with the additional GLOBAL requirement: every actual emitted sequence is a prefix of one fixed literal block stream, common to all sources and both free values; stopping and label decoding may use the actual endpoint archive. Write $C_{0\rm ad}$ and $C_{0\rm pre}$ for the corresponding minima when **every issued block**, at every depth and on every branch, must begin with zero. All four costs below have the same target $f_j$ and the same original source prior. They count every emitted complete block, including all-zero waits and padding, and permit the initial $\bot$ branch to return $\beta$ for free. No bound on controller memory is imposed.
+
+**Theorem 11.2 (exact whole-policy restriction price).** For Definition 11.1, separately in each of the two original alphabets,
+
+$$
+C_{\rm ad}(f_j)=C_{\rm pre}(f_j)=2,
+\qquad
+C_{0\rm ad}(f_j)=C_{0\rm pre}(f_j)=Q+1.
+\tag{11.2}
+$$
+
+These equalities also hold separately on each free value fiber. The unrestricted value two reuses Theorem 6.1 and its first-window literal protocol. The additional content is the exact price of restricting the entire policy, including a lower bound for every restricted adaptive controller and a single GLOBAL stream attaining it on this same table.
+
+**Proof.** Every source record used here has the actual joint witness $W(v,\ell,s)$ of §1: choose one $N\equiv0\pmod m$, $N\equiv-\ell\pmod T$, $N\ge s+2$, put $D=\bigoplus_{i=N-s}^{N-1}c_i$, and use the one history $(v\oplus D)0^{N-s-1}1^s$. Coprimality gives such an $N$. Its value, length phase and terminal tail are jointly the specified ones; the history is legal and cuts into locally legal complete blocks. This supplies every phase at both values and every tail, including the tail-zero pairs below. Initial lengths may differ and are never revealed. Since $m<k$, every length-$m$ word is internally legal, so the two action alphabets coincide for these parameters; all seams must still obey the original forbidden-run rule.
+
+For the unrestricted costs, all hypotheses of Theorem 6.1 hold and $\lceil j/m\rceil=1$, giving the inherited adaptive optimum two. To make its common-stream realization explicit, put
+
+$$
+r=\min\{j,m-1\},\qquad
+R_r=0^r1^{m-r},\qquad L=1\,0^{m-1}.
+\tag{11.3}
+$$
+
+Emit $R_r\mid L$ on every legal source. These are the first-window words of Theorem 6.1, with its early $A$ leaves allowed to receive the same second block as the other leaves. Their full INITIAL masks are $\{r,m\}$ and $\{m,m+1\}$. If $j<m$, return $B$ exactly on difference pair $(1,0)$; if $j=m$, return $B$ exactly on $(1,1)$; return $A$ otherwise. The root starts zero, clearing every old tail, and leaves tail $m-r$. The second block joins only $m-r+1\le m<k$ ones and ends with its $m-1$ actual zeros. Both complete endpoint differences are obtained from the free initial value and the two actual endpoint values. Thus the very same two-block stream works on both free values and all tails. The inherited lower bound and $C_{\rm ad}\le C_{\rm pre}\le2$ give the first equality in (11.2); no new unrestricted singleton law is asserted.
+
+Now fix either free value $v$ and any proposed correct restricted adaptive controller. It cannot stop at the root because (11.1) is nonconstant on this fiber. Let its arbitrary first block be $x_0\cdots x_{m-1}$, with $x_0=0$. For the root-mask calculation only, set $x_m=0$. Its difference-one set $E$ is supported on $\{1,\ldots,m\}$, with
+
+$$
+\mathbf1_E(\ell)=x_{\ell-1}\oplus x_\ell
+\quad(1\le\ell\le m),
+\qquad
+\bigoplus_{\ell=1}^m\mathbf1_E(\ell)=x_0\oplus x_m=0.
+\tag{11.4}
+$$
+
+Thus $E$ has even cardinality and excludes phase index zero. If $j\notin E$, choose $h=0$. If $j\in E$, evenness supplies some $h\in E\setminus\{j\}$. In both cases $h\in\{0,\ldots,m\}\setminus\{j\}$ and the actual sources $W(v,j,0)$ and $W(v,h,0)$ have different INITIAL labels but the same first endpoint difference. They also share the free initial value. The root zero makes their current literal tails equal, so they have one common archive after block one.
+
+Their remaining possible activity before the end of block $Q$ can be listed completely. For any index $1\le\ell<m$, the first active positions $\ell-1,\ell$ have both passed within block one; its next active position is $T+\ell-1=k+\ell>k-1$. Index $m$ has one remaining first-period active position at $m$, but that is exactly the first bit of block two and must be zero. Its next activity is later than $k-1$. Index zero had its position zero suppressed at the root and next becomes active at $k$, just after the first $Q$ blocks. Consequently, for every possible restricted sequence, each index in $\{0,\ldots,m\}$ contributes zero throughout continuation positions $m,\ldots,k-1$.
+
+Along the pair's common archive the adaptive controller issues the same next word on both sources. Each such word starts zero, so it clears their common incoming tail and has no run longer than $m-1<k$; neither source rejects. The listed inactivity makes their next endpoint differences both zero, and their terminal tails remain equal. Induction therefore keeps their entire actual archives equal through all $Q$ paid blocks. Stopping on this archive at any earlier or equal depth would give the same leaf to their different INITIAL labels. Every correct restricted controller must have worst fee at least $Q+1$. The partner $h$ can depend on the controller's root word; the fixed table (11.1) does not. This proves the universal adaptive lower bound on each fiber, rather than merely excluding the unrestricted protocol.
+
+For the matching GLOBAL upper bound, retain $r$ and $R_r$ from (11.3) and define the complete words
+
+$$
+Z=0^m,\qquad F_r=0\,1^r0^{m-r-1}.
+\tag{11.5}
+$$
+
+Use the one stream
+
+$$
+R_r\ \mid\
+\underbrace{Z\mid\cdots\mid Z}_{Q-1\text{ paid blocks}}
+\ \mid\ F_r.
+\tag{11.6}
+$$
+
+Here $1\le r\le m-1$, so every exponent is nonnegative and each displayed word has exactly $m$ bits. Zero exponents denote empty substrings, not omitted endpoints. Every block starts zero. The root mask is $\{r,m\}$, all waiting differences are zero, and the last block starts at paid position $Qm=k=T-1$. Its ones occupy precisely the actual positions $k+1,\ldots,k+r$. Their literal edges telescope modulo $T$ to
+
+$$
+\bigtriangleup_{a=1}^{r}\{k+a,k+a+1\}\pmod T
+=\{k+1,k+r+1\}\pmod T
+=\{0,r\}.
+\tag{11.7}
+$$
+
+Write $a$ for the root difference and $b$ for the final difference. The entire endpoint record on a legal source is
+
+$$
+y_0=v,\qquad
+ y_1=y_2=\cdots=y_Q=v\oplus a,\qquad
+ y_{Q+1}=v\oplus a\oplus b.
+\tag{11.8}
+$$
+
+The full signatures, including all $Q-1$ intervening zero differences, are determined by
+
+$$
+\begin{array}{c|cc}
+\text{INITIAL index }\ell&a&b\\ \hline
+0&0&1\\
+r&1&1\\
+m&1&0\\
+\ell\notin\{0,r,m\}&0&0.
+\end{array}
+\tag{11.9}
+$$
+
+The three distinguished indices are distinct. When $j<m$, $r=j$ and the INITIAL $B$ label is exactly signature $(1,1)$. When $j=m$, $r=m-1$ and that label is exactly $(1,0)$. These rules assign $A$ to every other source, including every phase outside the first window; no current-phase label is substituted for the INITIAL one. All entries and both differences come from this same actual stream on each source. The rule uses $v$ only to recover differences, so (11.6) is common to both free values.
+
+The first zero clears any prescribed old tail, including $k-1$. The root's terminal run is $m-r\le m-1$; the next block starts zero. Every waiting block has actual terminal tail zero. The last block again starts zero and has a run of $r\le m-1<k$ ones. It ends with tail zero if $r<m-1$, and with tail $m-1$ if $r=m-1$; this latter endpoint is legal and needs no cleanup. Thus every legal source, at every INITIAL tail, survives all complete blocks. Every bit of the final padding is emitted. The total charge is exactly $1+(Q-1)+1=Q+1$ on the legal branches of this fixed-length protocol. The initially rejected sources instead return their freely decoded $\beta$ before any block, using the empty prefix of the same GLOBAL stream. There is no reset, intermediate observation, free displacement or branch combination. Together with the adaptive lower bound and $C_{0\rm ad}\le C_{0\rm pre}$, this proves the remaining equalities in (11.2).
+
+On each one of these fixed tables the additive and multiplicative losses are therefore
+
+$$
+\begin{aligned}
+C_{0\rm ad}-C_{\rm ad}
+&=C_{0\rm pre}-C_{\rm pre}=Q-1,\\
+\frac{C_{0\rm ad}}{C_{\rm ad}}
+&=\frac{C_{0\rm pre}}{C_{\rm pre}}=\frac{Q+1}{2}.
+\end{aligned}
+\tag{11.10}
+$$
+
+For fixed $m\ge2$ and fixed $j\in\{1,\ldots,m\}$, letting $Q$ increase makes both losses unbounded. Each comparison keeps one original reader and one immutable table on the two sides; varying $Q$ varies the reader only between comparisons. In particular, the original two-block upper bound and the all-restricted-policy lower bound at least three apply to the same table for every $Q\ge2$. $\square$
+
+The exact restricted optimum and same-table losses are repo-derived ordinary mathematics. The actual-record, literal-mask, first-zero and source-realization interfaces are reused from §§1–2 and the pinned suppliers of §9.1; Theorem 6.1 owns the unrestricted singleton fee. The state-identification and parity-query interfaces cited in §9.2 supply terminology and comparison boundaries, not a transferred optimum: arbitrary subset queries do not supply the paid cyclic positions or the actual words in (11.6). This result concerns $k=Qm$, $Q\ge2$, $m\ge2$ and only the first-window singleton indices $1\le j\le m$, with the same phase table on all INITIAL tails and both free values. It does not settle arbitrary phase layouts, mixed-tail tables or Open Problem 10.1, and it makes no worldwide novelty or exhaustive-absence claim.
+
+## 追加锚（本行以下为增补区）

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:80feace54efbfedc95619b8825cc42faa5c65fc8568987f77a9a23423aee5904
+  normalized_sha256: sha256:80feace54efbfedc95619b8825cc42faa5c65fc8568987f77a9a23423aee5904
+cas_ref: sha256:80feace54efbfedc95619b8825cc42faa5c65fc8568987f77a9a23423aee5904
+coverage_gids:
+  - gid: D5/S3/Geometry/CoefficientBodies/ConvexRankOneRulings.result
+    target_statement_id: sha256:87f76a305ff6d47b294fb6288d3e5df60bd4e3ff53ed16f786d9b171bd4479cd
+receipts:
+  unresolved_subitems: []

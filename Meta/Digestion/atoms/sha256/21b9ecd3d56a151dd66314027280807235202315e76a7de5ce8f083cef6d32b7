@@ -1,0 +1,64 @@
+**定理 130.1（相邻二级角不能异号）。** 在实际 $H_3(\mathbb C)$ 角内，固定任意正交坐标框架 $e_1,e_2,e_3$，令 $p_j=e_je_j^*$、$P_{ij}=p_i+p_j$。则
+
+$$
+\varepsilon(P_{12})=\varepsilon(P_{13})=\varepsilon(P_{23}).
+\tag{130.1}
+$$
+
+证明。先假设 $\eta=\varepsilon(P_{12})$、$\varepsilon(P_{13})=-\eta$，其中 $\eta^2=1$。约定 $X_{ij}=E_{ij}+E_{ji}$、$Y_{ij}=(E_{ij}-E_{ji})/i$。取全部有限的原输入
+
+$$
+a=\frac12p_1,\qquad
+b=-p_1-\frac12p_2+X_{12},\qquad
+c=3p_1+\frac12p_3+X_{13},\qquad
+\xi=(1,2,-2)^T.
+\tag{130.2}
+$$
+
+记 $\phi(t)=\xi^*t\xi$，则 $b\xi=c\xi=e_1$。两个内层输入对分别完全位于 $12$ 角和 $13$ 角，故且仅故可以用 (128.7) 得
+
+$$
+D(a,b)=\frac\eta4Y_{12},\qquad
+D(a,c)=-\frac\eta4Y_{13}.
+$$
+
+在同一次 (128.6) 中，已知乘法给出
+
+$$
+v=-\frac32p_1+\frac\eta4Y_{12}-\frac14X_{13},\qquad
+w=-\frac12p_1+\frac14X_{12}-\frac\eta4Y_{13}.
+\tag{130.3}
+$$
+
+令 $r_\pm=b\pm v$、$s_\pm=c\pm w$、$d_\pm=D(r_\pm,s_\pm)$。不把这两个外层旧值认成交换子。直接相乘得
+
+$$
+v\xi=(-1-i\eta/2,\ i\eta/4,\ -1/4)^T,\qquad
+w\xi=(-i\eta/2,\ 1/4,\ -i\eta/4)^T.
+$$
+
+所以 $\phi(b\circ v)=-1$、$\phi(c\circ w)=0$，同一次有限差分强迫
+
+$$
+\phi(d_+-d_-)=2.
+\tag{130.4}
+$$
+
+另一方面，四个外层向量准确为
+
+$$
+\begin{aligned}
+r_+\xi&=(-i\eta/2,\ i\eta/4,\ -1/4)^T,\\
+s_+\xi&=(1-i\eta/2,\ 1/4,\ -i\eta/4)^T,\\
+r_-\xi&=(2+i\eta/2,\ -i\eta/4,\ 1/4)^T,\\
+s_-\xi&=(1+i\eta/2,\ -1/4,\ i\eta/4)^T.
+\end{aligned}
+\tag{130.5}
+$$
+
+它们的实 Gram 数据为
+
+| 输入对 | $\|r_\pm\xi\|^2$ | $\|s_\pm\xi\|^2$ | $\operatorname{Re}\langle r_\pm\xi,s_\pm\xi\rangle$ | $\Delta_\xi(r_\pm,s_\pm)$ |
+| --- | --- | --- | --- | --- |
+| $+$ | $3/8$ | $11/8$ | $1/4$ | $29/64$ |
+| $-$ | $35/8$ | $11/8$ | $9/4$ | $61/64$ |

@@ -1,0 +1,37 @@
+**定义 81.1（完整附加条件 A 与同一原入口）。** 准确保留定义 64.1 的同一原 $\Omega,E,C,u,N,P,S,D$、实际二元正表 (64.2)、NN (64.3)，以及定义 2.1 所指的全部原来源与消费者合同。原正评价仍包括零质量及不等质量者；不把它们换成归一化态族。由定理 2.2、6.1 得到的 $X$ 仍是同一 $S$ 的忠实含单位 JB 完成，$E\subseteq X$ 是稠密含单位实 Jordan 子代数，$N$ 为完成范数的原限制。允许任意维与原域不完备。以下所有未知关系的输入、输出都在原 $E$，只对已知的 Jordan 乘法使用完成；仍记
+
+$$
+L_a x=a\circ x,\qquad K_a=L_a^2-L_{a^2}:X\longrightarrow X,
+\qquad F_a(b)=D(a,b),\qquad F_a\circ F_a=+K_a|_E.
+\tag{81.1}
+$$
+
+对每个原 $a$ 定义闭实线性子空间
+
+$$
+M_a=\overline{K_a(E)}^{\,X}.
+$$
+
+完整附加条件 A 是对每一对原输入均要求
+
+$$
+\mathrm A:\qquad D(a,b)\in M_a\quad(a,b\in E).
+\tag{81.2}
+$$
+
+等价的纯原域表述是：对全部原 $a,b$ 和全部实 $\varepsilon>0$，存在原见证 $c\in E$，使
+
+$$
+N\!\left(D(a,b)-S(a,S(a,c))+S(S(a,a),c)\right)<\varepsilon.
+\tag{81.3}
+$$
+
+两式等价只用 $K_a(E)\subseteq E$ 与 $N=\|\cdot\||_E$；见证可以依赖 $a,b,\varepsilon$。A 是新增的实际输出约束，不是 $K_a(E)$ 已闭的断言，也不预付 $X=\ker K_a\oplus M_a$、任何有界投影、$D$ 的连续性或完成延拓。初始也不要求 $D$ 可加、齐次、跨行奇、核陪集下降、中央平移中性、PY、R、自旋、因子、矩阵图表或中央切口。仅在下述最后一项另给原完整 Jacobi 条件
+
+$$
+\mathrm J:\qquad
+D(x,D(y,b))+D(y,D(b,x))+D(b,D(x,y))=0
+\quad(x,y,b\in E).
+\tag{81.4}
+$$
+

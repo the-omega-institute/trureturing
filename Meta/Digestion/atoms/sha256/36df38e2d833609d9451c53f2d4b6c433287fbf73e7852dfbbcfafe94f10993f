@@ -1,0 +1,112 @@
+**定理 13.1（有限平方背景上的无正则性刚性）。** 在定义 12.1 下，$\mathsf C^{\mathrm{EJA}}_2$ 使同一个旧 $D$ 实交替双线性，$D(u,a)=0$，并使同一个复化乘法
+
+$$
+ab=S(a,b)-\mathrm iD(a,b)
+\tag{13.1}
+$$
+
+成为一个有限维复 $C^*$ 代数的乘法。原 $E$ 正是其自伴部，原锥是其正锥，全部原有限纯表正，原虚部换括号式成立。这里既不预设 $D$ 的任何正则性，也不更换它的值。
+
+证明。$E=0$ 时全部映射及矩阵为零。以下设 $E\ne0$。由实际二表的 Hermitian 性及原评价分离，得 $D(a,b)=-D(b,a)$、$D(a,a)=0$。$S(0,0)=0$，零对角二表又给 $D(0,a)=0$。有限维双极定理使 $E_+^*=\overline{\operatorname{cone}\mathcal P}$；对固定两个标签，矩阵关于评价线性且正矩阵锥闭，故二表正性传到每个数学正泛函。这只证明不等式，没有增加实际准备。
+
+先在任意对称 $S$、反对称 $D$ 上，把 (12.2) 的三种循环实例联立。置 $A=D(D(a,b),c)$、$B=D(D(b,c),a)$、$C=D(D(c,a),b)$，并置 $T_1=S(S(a,b),c)-S(a,S(b,c))$，$T_2,T_3$ 循环定义。外层反对称性给 $A+B=T_1$、$B+C=T_2$、$C+A=T_3$，$S$ 对称给 $T_1+T_2+T_3=0$。在 $E$ 中作向量加减，得到
+
+$$
+\begin{aligned}
+D(D(a,b),c)&=S(b,S(a,c))-S(a,S(b,c))=[L_b,L_a]c,\\
+D(D(a,b),c)+D(D(b,c),a)+D(D(c,a),b)&=0,
+\qquad L_a c=S(a,c).
+\end{aligned}
+\tag{13.2}
+$$
+
+没有把系数移过未知 $D$，也没有将 $D$ 的输入之和展开。特别是，若 $x$ 本身是一个实际 $D$ 输出，$D(x,\cdot)$ 就是一个内 Jordan 导子，因而实线性、保持各简单分量的谱迹并消灭中心。
+
+下面证明需要的每个非中心方向本身都是这种输出。采用成熟有限 EJA 分解 $E=\bigoplus_s E_s$，各简单分量单位为 $u_s$，秩为 $r_s$，谱迹 $\operatorname{tr}_s$ 将每个 primitive 计为 $1$。置
+
+$$
+Z=\bigoplus_s\mathbb Ru_s,\qquad
+V=\bigoplus_s\ker\operatorname{tr}_s,\qquad E=Z\oplus V.
+\tag{13.3}
+$$
+
+使用谱与 Peirce 几何中的如下成熟事实，并给出所需零对角接口。简单秩至少二的 EJA 的 primitive 流形路径连通，primitive 的 Peirce 零角仍为简单秩少一的 EJA。若 $x_s$ 谱迹零且非零，其谱框架中有正、负特征值。沿连接相应两颗 primitive 的路径，连续函数 $p\mapsto\operatorname{tr}_s(x_s\circ p)$ 取到零。取这样的 $p$，写 $x_s=x_1+x_{1/2}+x_0$：$x_1=0$，半层谱迹零，故零角中的 $x_0$ 谱迹仍零。在零角归纳取得框架 $(e_2,\ldots,e_r)$，再添 $e_1=p$。半层与零角正交，故这些 $e_j$ 对原 $x_s$ 的对角读数也均为零；不要求原 $x_s$ 属于零角，保留的半层正是新框架的非对角部分。秩一时 $x_s=0$。这是标准谱与连通性工具的应用，非另立的零对角一般定理。
+
+在这个框架写 $x_s=\sum_{i<j}x_{ij}$。取互异实数 $\lambda_i$，置
+
+$$
+a_s=\sum_i\lambda_i e_i,\qquad
+b_s=\sum_{i<j}\frac{4x_{ij}}{(\lambda_i-\lambda_j)^2}.
+\tag{13.4}
+$$
+
+$L_{a_s}$、$L_{a_s^2}$ 在 $E_{ij}$ 上的特征值分别为 $(\lambda_i+\lambda_j)/2$、$(\lambda_i^2+\lambda_j^2)/2$。因此
+
+$$
+[L_{b_s},L_{a_s}]a_s
+=S(b_s,a_s^2)-S(a_s,S(b_s,a_s))=x_s.
+\tag{13.5}
+$$
+
+对各分量同时选择 $a_s,b_s$ 并取原直和元素 $a,b$；秩一分量取零。由 (13.2)，对每个 $x\in V$ 都有
+
+$$
+p=D(a,b),\qquad x=D(p,a),\qquad
+D(x,c)=[L_a,L_p]c\quad(c\in E).
+\tag{13.6}
+$$
+
+$p$ 无须先在 $V$。这里取得的是逐元素的实际值域覆盖，而非 $V\subseteq\operatorname{span}\operatorname{ran}D$；后一个较弱陈述不能供应本步骤。
+
+由 (13.6)，$D(x,\cdot)$ 对 $x\in V$ 是保持 $V$、消灭 $Z$ 的实线性 Jordan 导子。反对称性先使 $D|_{V\times V}$ 两槽线性：例如 $D(x+y,v)=-D(v,x+y)=-D(v,x)-D(v,y)$，其中 $v,x,y\in V$，右侧只消费已经线性的左作用 $D(v,\cdot)$；齐次同理。再由 $D(x,c)=D(x,c_V)$，这给出 $x\mapsto D(x,\cdot)$ 在 $V$ 上的实线性。定义辅助算子
+
+$$
+\delta_a(c)=D(a_V,c),\qquad a=a_Z+a_V.
+\tag{13.7}
+$$
+
+$a\mapsto\delta_a$ 实线性，每个 $\delta_a$ 是保单位 Jordan 导子，且 $\delta_a(a)=0$。其指数保持平方锥，故它是斜顺序导子。(13.2) 的循环和在 $V$ 上给 Jacobi，再由中心零作用，得到
+
+$$
+[\delta_a,\delta_b]=[L_b,L_a]=-[L_a,L_b].
+\tag{13.8}
+$$
+
+有限 EJA 的谱范数使它成为含单位 JB 代数；由 (12.1)，这也是原序单位范数。于是准确满足 Alfsen–Shultz 动力对应的两个条件，才调用 Baez 所述 Theorem 12：$E\oplus\mathrm iE$ 有唯一乘法 $a\mathbin{\widetilde\mu}b=S(a,b)-\mathrm i\delta_a(b)$ 的复 $C^*$ 结构。有限维结构定理将它写成 $\bigoplus_sM_{n_s}(\mathbb C)$，其中 $E$ 是整个自伴部，$\delta_a(b)=\mathrm i[a,b]/2$。到这里仍须识别同一个旧 $D$，不能以辅助 $\delta$ 替换它。
+
+任取原 $a,b$。对每个 $c\in V$，反对称性及 (13.7) 给 $D(D(a,b),c)=-\delta_c(D(a,b))=\delta_{D(a,b)}c$。将 (13.2) 与辅助结合代数的同一恒等式相减，得 $\delta_{D(a,b)-\delta_a(b)}c=0$。在每个矩阵块，通勤于全部无迹 Hermitian 元的 Hermitian 元是标量，所以
+
+$$
+D(a,b)=\delta_a(b)+\sum_s r_s(a,b)I_s.
+\tag{13.9}
+$$
+
+不假设这些标量函数具有正则性。下面逐块消灭它们。固定一块，写 $A=a_s,B=b_s,r=r_s(a,b)$。对该块的任意单位列 $\psi$，取数学纯态 $\varphi_\psi$，置
+
+$$
+c_\psi=\left\langle\psi,\tfrac{\mathrm i}{2}[A,B]\psi\right\rangle
+=-\Im\langle A\psi,B\psi\rangle,
+\qquad
+\Delta_\psi=\|A\psi\|^2\|B\psi\|^2-
+                    \Re\langle A\psi,B\psi\rangle^2.
+\tag{13.10}
+$$
+
+内积第一槽共轭线性。原二表正性传到 $\varphi_\psi$，故
+
+$$
+(r+c_\psi)^2\le\Delta_\psi.
+\tag{13.11}
+$$
+
+若 $B$ 奇异，取单位 $\psi\in\ker B$，得 $c_\psi=\Delta_\psi=0$，立即 $r=0$。若 $B$ 可逆，$f(z)=\det(A-zB)$ 是次数 $n_s$ 的实系数多项式：在实轴上矩阵 Hermitian，行列式为实数，故系数实。取其根 $\lambda$ 及单位核列 $\psi$，则 $A\psi=\lambda B\psi$。两个向量相关，故 $\Delta_\psi=c_\psi^2$，且
+
+$$
+c_\psi=\Im(\lambda)\|B\psi\|^2.
+\tag{13.12}
+$$
+
+若有实根，(13.11) 立即给 $r=0$。否则非实根成共轭对；分别取两根的单位核列，因为 $B$ 可逆，两份 $c$ 严格异号。各自的 (13.11) 给 $r(r+2c)\le0$，两个允许区间分别位于非正和非负半轴，交仅为零。这不要求两份 $|c|$ 相等，不要求 $A,B$ 同时实对称，也未引入原准备的共轭操作。故所有 $r_s$ 均零，旧 $D=\delta$ 在全部原输入上成立。
+
+因此 (13.1) 就是辅助构造中已得的同一乘法；$D$ 的实双线性、单位零及虚部换括号随之成立。每个原评价在原平方锥上为正，将其复延拓为正泛函 $\varphi_\alpha$，则任意有限纯表的二次型为 $\varphi_\alpha(z^*z)\ge0$，其中 $z=\sum_jz_j a_j$。所有零质量和奇异表保留，不作除法。∎
+

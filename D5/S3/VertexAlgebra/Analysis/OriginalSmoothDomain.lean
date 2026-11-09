@@ -20,13 +20,11 @@ open scoped BigOperators InnerProductSpace Topology ComplexConjugate
 namespace D5.S3.VertexAlgebra.Analysis.OriginalSmearing
 open LatticeGeneratingFieldLocality LatticePositiveEnergy LatticeInvolution
 open SourceBPZ.OriginalMatterHermitian SmoothCircleFourier
-open private embed_dense embed_injective embed_norm embed_inner inclusion_embed
+open private embed_injective embed_norm embed_inner inclusion_embed
   inclusion_injective inclusion_self inclusion_comp from
   D5.S3.VertexAlgebra.Analysis.OriginalSobolev
 open private Hm_charged_circle actual_phase from
   D5.S3.VertexAlgebra.Lattice.OriginalChargedEnergy
-open private modeExtension_embed from
-  D5.S3.VertexAlgebra.Analysis.OriginalModeExtension
 open private smear_compatible smear_apply vector_summable smear_vector_bound from
   D5.S3.VertexAlgebra.Analysis.OriginalInfiniteSmearing
 open private coefficient_conjugate from

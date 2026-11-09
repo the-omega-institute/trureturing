@@ -35,6 +35,22 @@ internal sealed class HannaDiagonalGhostPowerIntegralityDocument : IScribeDocume
                     + SourceSentence + "\" The exponential is PowerSeries.exp over K, "
                     + "substituted at the positive-degree logarithmic input.",
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
+            Node("exponential_sum_constant", "The constant coefficient is one",
+                Disp(Seq(Context(Seq(V("Type"), Star), "a"),
+                    Equal(App(Q("PowerSeries", "constantCoeff"), Call("exponentialSum", V("a"))), D(1)))),
+                "For every characteristic-zero field K and sequence a, the formal exponential "
+                    + "of the logarithmic input has constant coefficient one.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("exponential_sum_equation", "The formal differential equation",
+                Disp(Seq(Context(Seq(V("Type"), Star), "a"),
+                    Equal(Multiply(V("X"), App(Q("PowerSeries", "derivative"),
+                            Call("exponentialSum", V("a")))),
+                        Multiply(App(Q("HannaDiagonalDerivativeParity", "step"), V("a"), D(0)),
+                            Call("exponentialSum", V("a")))))),
+                "For every characteristic-zero field K and sequence a, multiplying the derivative "
+                    + "of exponentialSum a by X gives HannaDiagonalDerivativeParity.step a 0 "
+                    + "times exponentialSum a. The entry a(0) contributes no constant term.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo()),
             Node("divisorGhost", "The integer divisor-sum ghost",
                 DivisorGhostFormula(),
                 "For an integer sequence b, the nth ghost is the sum of d*b(d) over "
@@ -158,10 +174,10 @@ internal sealed class HannaDiagonalGhostPowerIntegralityDocument : IScribeDocume
     private static Formula Divides(Formula a, Formula b) => Seq(a, Sp, Mid, Sp, b);
     private static Formula Implies(Formula a, Formula b) =>
         new Formula.Logic(Parenthesized(a), FormulaLogicOperator.Implies, Parenthesized(b));
-    private static Formula Context(Formula carrierType) => Seq(Bound("K", carrierType),
+    private static Formula Context(Formula carrierType, string sequence = "C") => Seq(Bound("K", carrierType),
         OpenBracket, Call("Field", V("K")), CloseBracket, Sp,
         OpenBracket, Call("CharZero", V("K")), CloseBracket, Comma, Sp,
-        Bound("C", Seq(Nat(), Sp, To, Sp, V("K"))));
+        Bound(sequence, Seq(Nat(), Sp, To, Sp, V("K"))));
     private static Formula Nat() => Seq(Mathbb, Grp(V("N")));
     private static Formula V(string name) => F.Id(name);
     private static Formula Q(string owner, string name) =>

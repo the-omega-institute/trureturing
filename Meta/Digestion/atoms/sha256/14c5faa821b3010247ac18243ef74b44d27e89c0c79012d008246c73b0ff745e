@@ -1,0 +1,55 @@
+**定理 51.1（保持原量词的限制及其直接消费者）。** 在同一 $\mathsf H_{\rm orig}$ 上，对每个原投影 $p\ne0$，取
+
+$$
+S_p=S|_{E_p^2},\quad D_p=D|_{E_p^2},\quad N_p=N|_{E_p},\quad
+\alpha_p=\alpha|_{E_p},\quad m_{\alpha,p}=\alpha(p),
+\tag{51.1}
+$$
+
+其中评价仍按所有原 $\alpha\in\mathcal P$ 索引，不合并相同限制或删掉零限制。则 $(E_p,C_p,p,N_p,\{\alpha_p\},S_p,D_p)$ 满足 A1–3 的全部静态量词，完成准确为 $X_p$。若原全域另满足完整 PB，限制满足同一完整 PB，所有内外旧值均在 $E_p$，并有以下直接应用：
+
+1. 对任意 $b\in E_p$，若 $b^2\in\operatorname{span}_{\mathbb R}\{p,b\}$，则 W100.1 给 $D(\mu p,b)=0$，$\mu\in\mathbb R$。
+2. 若同一个 $X_p$ 已明确识别为自旋 JB 代数 $\mathbb Rp\oplus H_p$，则 W114.1 直接给 $\dim H_p\in\{0,1,3\}$、$E_p=X_p$，并分类同一个限制 $D_p$：维数 0、1 时恒零；维数 3 时，在任一固定定向正交坐标下恰为
+
+   $$
+   D_p(sp+x,tp+y)=\varepsilon_p x\times y,\qquad \varepsilon_p\in\{1,-1\}.
+   \tag{51.2}
+   $$
+
+   同一限制的实双线性、中央平移中性、全部有限复 Gram 正性、P3 及原 R 均为 W114.1 的结论，不另作前件。
+
+证明。定理 50.2 已给 $E_p$ 的准确原集合、继承的 Jordan 乘法、旧输出闭合、锥、范数和完成。限制评价正且分离 $E_p$，并且
+
+$$
+C_p=\{x\in E_p:\alpha_p(x)\ge0\text{ 对所有原 }\alpha\},\qquad
+0\le m_{\alpha,p}\le m_\alpha,\qquad
+|\alpha_p(x)|\le m_{\alpha,p}N_p(x).
+\tag{51.3}
+$$
+
+最后一式由 $-N_p(x)p\le x\le N_p(x)p$ 取得，故局部质量为零时整个限制为零。原全域质量仍为 $m_\alpha=\alpha(u)$；$\alpha(p)$ 可以为零而 $\alpha(u)>0$，两者不混同，更不等同于原 $q$ 或中心权。这里无归一或新增实际评价。
+
+逐项核对 A1–3：所有 $a,b\in E_p$ 的实际二表就是原表，故 P2 保持，包括零、重复和两条有向项。对任意实 $r,s,t$，$ra+sb$、$a+tp$ 仍是原 $E_p$ 标签，所以全部实缩放和平移量词保留；这只断言标签合法，不断言 $D_p$ 平移中性。原相加三表 $(a+b,a,b)$ 的整个实 $\mathbb R^3$ 正性、复零平方 $v^*Gv=0$、$v=(1,-1,-1)$ 及全部对应排列逐项原样限制。固定点为 $S_p(p,p)=p$。对同一固定正有理 $0<\theta\le1$，若 $0\le e\le\theta p$，则 $0\le e\le\theta u$；原小窗口给 $e^2\le e$，而 $e^2\in E_p$、锥继承，故是角内同一不等式。角的 Archimedean 性由 $X_p$ 的闭正锥和忠实嵌入给出。未借入原 R、未知 $D$ 的任何线性或连续性。
+
+若完整 PB 成立，对全部原 $\alpha$、$a,b,c\in E_p$ 和实 $t$，其原标签准确为
+
+$$
+r_t=b+tD_p(a,b)-tS_p(a,c),\qquad
+s_t=c+tS_p(a,b)+tD_p(a,c).
+\tag{51.4}
+$$
+
+内层 $S_p,D_p$ 在 $E_p$，因而 $r_t,s_t$ 也在其中；外层平方和 $D_p(r_t,s_t)$ 再由定理 50.2 留在其中。于是 $Q_{\alpha_p}(r_1,s_1)=Q_{\alpha_p}(r_{-1},s_{-1})$ 正是原 PB 的同一次评价等式。所有嵌套继续逐层闭合，无需压缩相容律。
+
+此时才消费 W100.1：其 $E,u,X,\mathcal P,D$ 逐项取为 $E_p,p,X_p,\{\alpha_p\},D_p$，原二次元素条件就是第 1 项的条件，全部实 $\mu$ 也保持。
+
+对第 2 项，在给定自旋识别中令 $V_p=E_p\cap H_p$。因 $p\in E_p$，任何 $sp+x\in E_p$ 都有 $x\in V_p$，故 $E_p=\mathbb Rp\oplus V_p$；连续向量部分投影将 $E_p$ 的稠密性传给 $\overline{V_p}=H_p$。乘法、锥、范数准确为
+
+$$
+(sp+x)\circ(tp+y)=(st+\langle x,y\rangle)p+sy+tx,\qquad
+C_p=\{sp+x:s\ge\|x\|\},\qquad N_p(sp+x)=|s|+\|x\|.
+\tag{51.5}
+$$
+
+这逐项满足 W108.1 的原自旋接口及全部 P2、PB 量词。因此直接应用 W114.1，得到所列维数、完备性、旧值分类和局部 P3／R；不重证它的线性桥、第四方向排除或 W93.1 分类，也未把辅助响应识别当成免费前提。$p=0$ 则只取定理 50.2 的零代数，局部质量全零，所有表和 PB／R 均为零，不套用非零自旋单位或归一态论证。∎
+
