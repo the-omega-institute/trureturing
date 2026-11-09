@@ -1,0 +1,13 @@
+在这个提升上，现有量子结构的出现顺序可以明确写成一条条件桥，而不是把它们伪装成 $(\mathrm{PC})$ 的单独推论：
+
+1. **实几何。** $(\mathrm{PSD})$ 对形式差极化出实内积 $g$；$\operatorname{Cl}$ 给出最小关系固定点。
+2. **复几何。** 若存在内生的等距复结构 $J^2=-I$，则
+   $$h(u,v)=g(u,v)+i\,g(Ju,v)$$
+   是复 Hermitian 内积。此 $J$ 是额外的三点以上相位闭环条件，不能从对称性单独得到。
+3. **Born 读数。** 在有限维复空间 $H$ 上取 $V=\operatorname{Herm}(H)$、$C=\{X\succeq0\}$、序单位 $I$ 和配对 $\langle X,Y\rangle=\operatorname{Tr}(XY)$。谱分解给出
+   $$0\leq\operatorname{Tr}(\rho E)\leq1$$
+   对 $\rho\succeq0$, $\operatorname{Tr}\rho=1$, $0\preceq E\preceq I$；把该数解释为概率仍需测量读出规则。
+4. **复合与局部层析。** 对 $H_A\otimes H_B$，$\dim_{\mathbb R}\operatorname{Herm}(H_A\otimes H_B)=d_A^2d_B^2$，产品效果在局部完备时张成整体 Hermitian 空间，故局部读数唯一决定整体状态。
+5. **开放系统。** “所有辅助系统上的正性”是比 $(\mathrm{PSD})$ 更高一层的映射条件；在有限维中它等价于 Choi 矩阵正性和 Kraus 表示。普通正映射（如转置）是反例，不能替代完全正性。
+6. **时间。** 可逆、保迹、连续并满足群律的双正流，经过 Wigner 型实现得到酉群；强连续酉群再由 Stone 给出 $U_t=e^{-itH}$。这些动力学前件不是静态二元比较的结论。
+
