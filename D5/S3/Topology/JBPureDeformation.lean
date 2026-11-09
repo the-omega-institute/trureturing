@@ -11,13 +11,16 @@ module
 public import D5.S3.Topology.JBComplexification
 public import Mathlib.Analysis.Convex.Extreme
 
+/-! Pure-state transport by the quadratic maps of the original JB carrier. -/
+
 @[expose] public section
 noncomputable section
 set_option autoImplicit false
 
 namespace D5.S3.Topology.JBPureDeformation
 open JBAlgebra JBPositiveShift JBComplexification
-open Filter Topology
+open Filter
+open scoped Topology
 
 private theorem projective_extreme {V : Type*} [AddCommGroup V] [Module ℝ V]
     (C : Set V) (m : V →ₗ[ℝ] ℝ)
@@ -85,7 +88,8 @@ variable {S : X →ₗ[ℝ] X →ₗ[ℝ] X} {u : X}
 def states (S : X →ₗ[ℝ] X →ₗ[ℝ] X) (u : X) : Set (X →L[ℝ] ℝ) :=
   {β | (∀ x : X, 0 ≤ β (S x x)) ∧ β u = 1}
 
-private def quadOp (A : Data X S u) (a : X) : X →L[ℝ] X :=
+/-- The continuous quadratic representation on the specified original carrier. -/
+def quadOp (A : Data X S u) (a : X) : X →L[ℝ] X :=
   (2 : ℝ) • ((lmul A a).comp (lmul A a)) - lmul A (S a a)
 
 private theorem positive_mass (A : Data X S u) (β : X →L[ℝ] ℝ)
@@ -96,10 +100,11 @@ private theorem positive_mass (A : Data X S u) (β : X →L[ℝ] ℝ)
   have hz' : β u = 0 := hz.symm
   apply hne
   ext x
+  change β x = 0
   obtain ⟨a, ha⟩ := square_of_ambient_center A (‖x‖ • u + x) ‖x‖ (norm_nonneg x)
-    (by simpa only [add_sub_cancel_left])
+    (by simpa only [add_sub_cancel_left] using (le_rfl : ‖x‖ ≤ ‖x‖))
   obtain ⟨b, hb⟩ := square_of_ambient_center A (‖x‖ • u - x) ‖x‖ (norm_nonneg x)
-    (by simpa only [sub_sub_cancel_left, norm_neg])
+    (by simpa only [sub_sub_cancel_left, norm_neg] using (le_rfl : ‖x‖ ≤ ‖x‖))
   have hpa := hp a
   have hpb := hp b
   rw [ha, map_add, map_smul, hz', smul_zero, zero_add] at hpa
@@ -266,7 +271,8 @@ theorem pure_deformation (A : Data X S u) (β : X →L[ℝ] ℝ)
             ((hc.continuousAt).clm_apply continuousAt_const)
         · simpa only [hp0, ContinuousLinearMap.one_apply, hβ.1.2] using
             (one_ne_zero : (1 : ℝ) ≠ 0)
-      · exact β.continuous_comp.continuousAt.comp hc.continuousAt
+      · exact (ContinuousLinearMap.compL ℝ X X ℝ β).continuous.continuousAt.comp
+          hc.continuousAt
     have hd0 : deformation A β h 0 = β := by
       simp [deformation, hp0, hβ.1.2]
     simpa only [hd0] using hcont.tendsto
