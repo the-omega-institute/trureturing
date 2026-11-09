@@ -137,7 +137,7 @@ private theorem normal_cons {n : ℕ} (s : Seen) (c : WidthRow k) (f : Fin n →
   simp only [widthNormal, Fin.forall_fin_succ, Fin.cons_zero, Fin.cons_succ,
     prior_zero, prior_succ, good_iff, finish_fst, finish_snd, or_assoc]
 
-private def widthLegal (R : WidthRow k → Prop) (E : WidthRow k → WidthRow k → Prop)
+def widthLegal (R : WidthRow k → Prop) (E : WidthRow k → WidthRow k → Prop)
     {n : ℕ} (A : Fin n × Fin k → Fin 6) : Prop :=
   (∃ i : Fin n, i.val = 0 ∧ A (i, 0) = 0) ∧
     (∀ i, R (fun j => A (i, j))) ∧
@@ -145,12 +145,12 @@ private def widthLegal (R : WidthRow k → Prop) (E : WidthRow k → WidthRow k 
       (fun j => A (⟨i.val + 1, h⟩, j))) ∧
     widthNormal (false, false) (fun i j => A (i, j))
 
-private instance widthInstDecidableNormal {n : ℕ} (s : Seen) (f : Fin n → WidthRow k) :
+instance widthInstDecidableNormal {n : ℕ} (s : Seen) (f : Fin n → WidthRow k) :
     Decidable (widthNormal s f) :=
   inferInstanceAs (Decidable (∀ _ _, (_ → _) ∧ (_ → _)))
 
 omit [NeZero k] in
-private instance widthInstDecidableGood (s : Seen) (c : WidthRow k) : Decidable (good s c) := by
+instance widthInstDecidableGood (s : Seen) (c : WidthRow k) : Decidable (good s c) := by
   induction k generalizing s with
   | zero => exact isTrue trivial
   | succ k ih =>
@@ -164,7 +164,7 @@ variable [DecidablePred R] [DecidableRel C]
 variable (E : WidthRow k → WidthRow k → Prop) [DecidableRel E]
 variable (edge : ∀ c d, E c d ↔ C (P c) d)
 
-private instance widthInstDecidableLegal {n : ℕ} (A : Fin n × Fin k → Fin 6) :
+instance widthInstDecidableLegal {n : ℕ} (A : Fin n × Fin k → Fin 6) :
     Decidable (widthLegal R E A) :=
   inferInstanceAs (Decidable (_ ∧ _ ∧ _ ∧ _))
 
