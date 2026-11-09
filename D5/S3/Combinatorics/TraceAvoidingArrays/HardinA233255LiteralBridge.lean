@@ -3,11 +3,10 @@
    mirror-B: D5/B/S3/Combinatorics/TraceAvoidingArrays/HardinA233255LiteralBridge
    mirror-E: none
    anchors: []
-   utility: kind=consumer; basis=consumer=D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255LiteralBridge.literal_pair_bridge
+   utility: kind=consumer; basis=consumer=D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255PairTransfer.literal_pair_bridge
    digest: Exact scanner fibres for literal seven-column complementary-pair arrays. -/
 
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip
-import Mathlib.Tactic
 
 /-! Pair labels retain the scanner transition and the multiplicity of individual colours. -/
 
@@ -50,15 +49,29 @@ private theorem head_fibres (s : Seen) (H : Seen → Fin 3 → ℤ) :
   cases a <;> cases b <;>
     simp [Fin.sum_univ_succ, allowed, advance, beta, labelWeight, labelAdvance] <;> ring
 
+private theorem beta_cons {k : ℕ} (x : Fin 6) (c : Fin k → Fin 6) :
+    (fun j : Fin (k + 1) => beta ((Fin.cons x c : Fin (k + 1) → Fin 6) j)) =
+      Fin.cons (beta x) (fun j => beta (c j)) := by
+  funext j
+  exact Fin.cases rfl (fun _ => rfl) j
+
 /-- Exact weighted pushforward of the original scanner, for every word length and readout. -/
 theorem scanner_fibres (k : ℕ) (s : Seen) (H : Seen → (Fin k → Fin 3) → ℤ) :
     (∑ c : Fin k → Fin 6, if good s c then H (finish s c) (fun j => beta (c j)) else 0) =
       ∑ q : Fin k → Fin 3, rowWeight s q * H (rowFinish s q) q := by
   induction k generalizing s with
-  | zero => simp [good, finish, rowWeight, rowFinish]
+  | zero =>
+    simp [good, finish, rowWeight, rowFinish]
+    congr 1
+    funext j
+    exact Fin.elim0 j
   | succ k ih =>
     rw [← (Fin.consEquiv (fun _ : Fin (k + 1) => Fin 6)).sum_comp,
       Fintype.sum_prod_type]
+    change (∑ x : Fin 6, ∑ c : Fin k → Fin 6,
+      if good s (Fin.cons x c) then H (finish s (Fin.cons x c))
+        (fun j => beta ((Fin.cons x c : Fin (k + 1) → Fin 6) j)) else 0) = _
+    simp only [good, finish, Fin.cons_zero, Fin.tail_cons, beta_cons]
     change (∑ x : Fin 6, ∑ c : Fin k → Fin 6,
       if allowed s x ∧ good (advance s x) c then
         H (finish (advance s x) c) (Fin.cons (beta x) (fun j => beta (c j))) else 0) = _
