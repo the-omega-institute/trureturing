@@ -104,12 +104,24 @@ about 1777 s of kernel time in total, with a peak resident set of 6.6 GB on an
 
 ### What the settlement shows
 
-The conjectured value $\delta_n 3^{\lfloor(n-1)/2\rfloor}$ counts all ternary
-sums of the single-particle energies $2\cos(\pi j/n)$ as distinct. At $n=9$
-the identity $2\cos(\pi/9)=2\cos(2\pi/9)+2\cos(4\pi/9)$ collapses the $81$
-sums to $57$ distinct values, so the minimal polynomial drops to degree $57$. The formula is
-therefore a statement about the rational independence of these cosines,
-which holds for small $n$ and first fails at $n=9$.
+- **Proved (kernel-checked):** at $n=9$ the minimal polynomial of $h_9$ has
+  degree at most $57$, strictly below the conjectured $81$; this is what
+  refutes (B.13).
+- **Computed (not kernel-checked):** the $57$ roots of that annihilator are the
+  distinct values of the ternary sums $\sum_{j=1}^{4}\varepsilon_j\,2\cos(\pi j/9)$;
+  the $81$ sums collapse to $57$ because
+  $2\cos(\pi/9)=2\cos(2\pi/9)+2\cos(4\pi/9)$.
+- **Open (conditional interpretation):** at $n=9$ the conjectured value $81$
+  equals the number $3^4$ of ternary sums of the single-particle energies
+  counted with multiplicity; whether the same match holds for every $n$ is
+  not checked here. Reading (B.13)
+  as a rational-independence criterion for these cosines needs a bridge not
+  proved here: that $h_n$ at the unit is diagonalizable on its cyclic subspace
+  with exactly these sums as eigenvalues, each occurring, for every $n$. With
+  that bridge, (B.13) would hold exactly when the sums are pairwise distinct.
+  Whether $n=9$ is the smallest failure is likewise open: for $n\le8$ only the
+  values of item 4 and the source's own computations are available, and
+  item 4 gives lower bounds only.
 
 ## ASSUMED-UNVERIFIED
 
