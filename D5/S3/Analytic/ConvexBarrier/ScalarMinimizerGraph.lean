@@ -24,16 +24,16 @@ theorem fiberGradient_vertical_invertible {c ν : ℝ} {F : ScalarPoint → ℝ}
     {p : ScalarPoint} (hp : p ∈ coneInterior c) :
     (fderiv ℝ (fiberGradient F) p ∘L ContinuousLinearMap.inr ℝ Base ℝ).IsInvertible := by
   let B := fderiv ℝ (fiberGradient F) p ∘L ContinuousLinearMap.inr ℝ Base ℝ
-  let k := hessian F p vertical vertical
+  let k := fiberHessian F p vertical vertical
   have hk : 0 < k := by
-    change 0 < hessian F p vertical vertical
-    rw [← diagonal_two_eq_hessian hF.domain_open hp vertical]
+    change 0 < fiberHessian F p vertical vertical
+    rw [← diagonal_two_eq_fiberHessian hF.domain_open hp vertical]
     exact hF.hessian_pos p hp vertical (by simp [vertical])
   have hB1 : B 1 = k := by
     dsimp [B,k]
     rw [(fiberGradient_hasFDerivAt
       (hF.smooth.contDiffAt (hF.domain_open.mem_nhds hp))).fderiv]
-    simp [hessian, vertical]
+    simp [fiberHessian, vertical]
   have hBx : ∀ x : ℝ, B x = x*k := by
     intro x
     have h := B.map_smul x (1:ℝ)

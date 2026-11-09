@@ -24,12 +24,12 @@ def fiber (F : ScalarPoint → ℝ) (u : Base) (z : ℝ) : ℝ := F (u,z)
 def vertical : ScalarPoint := (0,1)
 noncomputable def fiberGradient (F : ScalarPoint → ℝ) (p : ScalarPoint) : ℝ :=
   fderiv ℝ F p vertical
-noncomputable def hessian (F : ScalarPoint → ℝ) (p v w : ScalarPoint) : ℝ :=
+noncomputable def fiberHessian (F : ScalarPoint → ℝ) (p v w : ScalarPoint) : ℝ :=
   fderiv ℝ (fderiv ℝ F) p v w
 
-theorem diagonal_two_eq_hessian {D : Set ScalarPoint} (hD : IsOpen D)
+theorem diagonal_two_eq_fiberHessian {D : Set ScalarPoint} (hD : IsOpen D)
     {F : ScalarPoint → ℝ} {p : ScalarPoint} (hp : p ∈ D) (v : ScalarPoint) :
-    diagonal 2 D F p v = hessian F p v v := by
+    diagonal 2 D F p v = fiberHessian F p v v := by
   rw [diagonal,iteratedFDerivWithin_of_isOpen 2 hD hp,iteratedFDeriv_two_apply]
   rfl
 
@@ -81,7 +81,7 @@ theorem fiber_deriv_eq {c ν : ℝ} {F : ScalarPoint → ℝ}
 theorem fiber_second_deriv {c ν : ℝ} {F : ScalarPoint → ℝ}
     (hF : IsLHSCB ν (coneInterior c) (coneBoundary c) F)
     {u : Base} {z : ℝ} (hp : (u,z) ∈ coneInterior c) :
-    deriv (deriv (fiber F u)) z = hessian F (u,z) vertical vertical := by
+    deriv (deriv (fiber F u)) z = fiberHessian F (u,z) vertical vertical := by
   have hu : u ∈ quadrant := ⟨hp.1,hp.2.1⟩
   have hz : z ∈ Ioo (-weight c u.1 u.2) (weight c u.1 u.2) :=
     (scalar_mem_fiber_iff hu _).mp hp
@@ -98,7 +98,7 @@ theorem fiber_second_pos {c ν : ℝ} {F : ScalarPoint → ℝ}
     {u : Base} {z : ℝ} (hp : (u,z) ∈ coneInterior c) :
     0 < (deriv^[2] (fiber F u)) z := by
   have hp' := hF.hessian_pos (u,z) hp vertical (by simp [vertical])
-  rw [diagonal_two_eq_hessian hF.domain_open hp vertical] at hp'
+  rw [diagonal_two_eq_fiberHessian hF.domain_open hp vertical] at hp'
   simpa only [Function.iterate_succ_apply,Function.iterate_zero_apply,
     Function.iterate_one,fiber_second_deriv hF hp] using hp'
 

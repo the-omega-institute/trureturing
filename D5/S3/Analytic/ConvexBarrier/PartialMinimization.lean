@@ -24,7 +24,7 @@ theorem minimizer_fiber_hessian_pos {c ν : ℝ} {F : ScalarPoint → ℝ}
     0 < hessian F (minimizerLift hF u) vertical vertical := by
   have hp : minimizerLift hF u ∈ coneInterior c := by
     simpa [minimizerLift] using (fiberMinimizer_spec hF hu).1
-  rw [← diagonal_two_eq_hessian hF.domain_open hp vertical]
+  rw [← hF.diagonal_two_eq_hessian hp vertical]
   exact hF.hessian_pos _ hp vertical (by simp [vertical])
 
 /-- The derivative of the minimizer is the actual scalar inverse Hessian
@@ -58,7 +58,7 @@ theorem partialMinimum_schur {c ν : ℝ} {F : ScalarPoint → ℝ}
   have hp : minimizerLift hF u ∈ coneInterior c := by
     simpa [minimizerLift] using (fiberMinimizer_spec hF hu).1
   rw [partialMinimum_second hF hu,
-    diagonal_two_eq_hessian hF.domain_open hp]
+    hF.diagonal_two_eq_hessian hp]
   have hv : minimizerTangent hF u h = (h,(0:ℝ)) +
       (fderiv ℝ (fiberMinimizer hF) u h) • vertical := by simp [vertical]
   have hs := (hF.smooth.contDiffAt

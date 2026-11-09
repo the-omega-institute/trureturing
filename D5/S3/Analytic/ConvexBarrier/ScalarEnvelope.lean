@@ -1,4 +1,5 @@
 import D5.S3.Analytic.ConvexBarrier.ScalarMinimizerGraph
+import D5.S3.Analytic.ConvexBarrier.HomogeneousHessian
 
 /-! Envelope derivatives with only a C2 minimizer graph. In particular the
 third derivative below does not differentiate that graph three times.
