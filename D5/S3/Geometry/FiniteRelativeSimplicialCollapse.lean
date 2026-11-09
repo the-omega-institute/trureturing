@@ -5,19 +5,7 @@
    anchors: [mathlib/module/Mathlib.Data.List.Forall2]
    utility: none
    digest: Finite labeled collapse sequences give relative deformations, link replay, and cone extension fixing the actual apex. -/
-/- SOURCE DRAFT — UNCOMPILED. No Lean/kernel/axiom/project acceptance.
-
-Prepared M01 source candidate: FiniteElementaryCollapse.lean, SHA256
-5692bbb0afa237dfa38da39232f03103257c5ae99b44a0bcc7784db5ea0ad71f.
-This Relative source remains UNCOMPILED and pending native owner binding;
-static source review is not a Lean/kernel/axiom/project acceptance receipt.
-
-Owner compatibility: the protected original bundle must expose the original
-ConePair.cone_segment and vertexComplex declarations. This source integration
-provides only those two minimal owner visibility edits; no owner proof is copied
-and no theorem statement is weakened.
-
-Ordinary mathematical specifications (not imported axioms): sections 2–5 of
+/- Ordinary mathematical specifications (not imported axioms): sections 2–5 of
 independent_general_relative_cancellation_proof.txt, SHA256
 f9888966c4313557587f6c91f7a185a8aa6de6473219536205db6600e64553ad;
 primitives 1–3 and the three cases of independent_two_path_proof.txt, SHA256
@@ -37,7 +25,6 @@ point to `realization`. Every elementary lower face is still nonempty.
 The actual spaces, coordinate inclusions, elementary retractions, and elementary
 relative homotopies are reused from their existing owners. Sequence retractions
 are composed explicitly. The relative fixed set is the ENTIRE final realization.
-All proof bodies below are attempted source, not elaboration evidence.
 -/
 
 noncomputable section

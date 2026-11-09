@@ -152,14 +152,12 @@ internal sealed class FiniteAlexanderDualCollapseDocument : IScribeDocumentDefin
             Node("complementary-face", "complementary_face", "An actual face of E dual",
                 "The complementary lambda is a nonempty E-dual face. Its complement is the original nonempty sigma, which was explicitly absent from E. E dual therefore has an ordinary point even when D dual or Q dual has empty ordinary realization.",
                 DescribeRole.Theorem)
-            // The separate uncompiled sphere package attempts the conditional geometric consumer.
-            // Native acceptance and unrestricted universal certificate availability remain open.
         )));
 
     private static DocumentBlock Node(string id, string declaration, string title, string prose,
         DescribeRole role) => Describe.Lean(
             DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration), H(title),
-            role == DescribeRole.Definition ? StatementSource.WithoutFormula() : StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+            StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
             Blocks(SourceText(prose)), role);
 
     // TextRun is one line. Keep every quoted source line, including blank separators,

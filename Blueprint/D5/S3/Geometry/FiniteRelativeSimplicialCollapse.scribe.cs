@@ -156,7 +156,7 @@ internal sealed class FiniteRelativeSimplicialCollapseDocument : IScribeDocument
         DescribeRole role) => Describe.Lean(
         DescribeId.Create(id),
         DeclarationHandle.Create(Prefix + declaration), H(heading),
-        role == DescribeRole.Definition ? StatementSource.WithoutFormula() : StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+        StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
         Blocks(SourceText(prose)), role);
 
     // TextRun is one line. Keep every quoted source line, including blank separators,

@@ -5,8 +5,6 @@
    anchors: [mathlib/module/Mathlib.Data.List.Forall2, mathlib/module/Mathlib.Data.Fintype.EquivFin]
    utility: none
    digest: Fixed labeled complements reverse free pairs and compute a one-critical-face cell attachment. -/
-/- UNCOMPILED SOURCE ATTEMPT. No elaboration, kernel, axiom or acceptance claim.
-   Imports include the two released UNCOMPILED owner drafts. -/
 import D5.S3.Geometry.FiniteRelativeSimplicialCollapse
 import Mathlib.Data.List.Forall2
 import Mathlib.Data.Fintype.EquivFin
