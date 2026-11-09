@@ -52,6 +52,10 @@ Lean statement: `D5/S3/Combinatorics/Graph/SubgroupGenerating/EnergyBounds.resul
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/SubgroupGenerating/EnergyBounds.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/das-2026-nonabelian-sgb-problem49` (proved) by `D5/S3/Combinatorics/Graph/SubgroupGenerating/EnergyBounds.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"das-2026-nonabelian-sgb-problem49","declaration_gid":"D5/S3/Combinatorics/Graph/SubgroupGenerating/EnergyBounds.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Shrabani Das; Ahmad Erfanian; Rajat Kanti Nath (2026). *Various spectra and energies of subgroup generating bipartite graph*. DOI: [10.48550/arXiv.2601.04004](https://doi.org/10.48550/arXiv.2601.04004). URL: <https://arxiv.org/abs/2601.04004v1>.
