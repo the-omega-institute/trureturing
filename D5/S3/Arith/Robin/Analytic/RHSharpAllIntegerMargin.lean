@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: RH-conditional sharp margins over all integers with simultaneous strict-record attainment and real liminf equalities. -/
+   digest: RH-only sharp integer margins, original-record attainment and real liminf. -/
 
 import D5.S3.Arith.Robin.PriceRecord.RHSharpOriginalRecordMargin
 import D5.S3.Arith.Robin.PriceRecord.FullArithmeticCorrectionSecondOrder
@@ -15,14 +15,13 @@ import Mathlib.Analysis.Calculus.Deriv.Slope
 import Mathlib.Order.LiminfLimsup
 import Mathlib.Tactic
 
-/- SOURCE PREPARATION ONLY. UNCOMPILED; no native acceptance claim.
-   RHSharpOriginalRecordMargin is a delivered public supplier. Clock
-   ratios use only the public same-correction second-order estimates; no
-   supplier visibility or frozen-module change is required. The classical
-   all-integer lower constant is attributed to Musin (2020), citing Ramanujan
-   and Robin. Exact equality here additionally consumes its genuine
-   original-record endpoint attainment. No rate, LI, novelty, RH proof or
-   explicit finite 5040 cutoff is claimed. -/
+/-! Sharp all-integer Robin margins under RH.
+
+The proof uses the public original-record endpoint and the identical arithmetic
+correction in both public second-order estimates. The classical all-integer
+lower constant is attributed to Musin, citing Ramanujan and Robin; exact equality
+also uses the genuine original-record endpoint. No rate, LI, novelty, RH proof
+or explicit finite 5040 cutoff is claimed. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -145,8 +144,8 @@ private lemma record_clocks {α : Type*} {l : Filter α}
       exact_mod_cast largestPrime_le (by have := hm x; omega)
     exact hx.trans (Real.log_le_log hp hPm)
   obtain ⟨P0, _, hfull⟩ :=
-    PriceRecord.FullArithmeticCorrectionSecondOrder.price_record_full_arithmetic_correction_second_order
-      1 zero_lt_one
+    PriceRecord.FullArithmeticCorrectionSecondOrder.
+      price_record_full_arithmetic_correction_second_order 1 zero_lt_one
   have hbound : ∀ᶠ x in l,
       |Real.log (largestPrime (m x) : ℝ) *
         (D (largestPrime (m x) : ℝ) * C (m x) - 2 * Real.sqrt 2) +
@@ -408,7 +407,8 @@ private lemma log_attainment (hRH : RiemannHypothesis) (ε : ℝ) (hε : 0 < ε)
 private lemma linear_identity {n : ℕ} (hn : 0 < n) (ha : 1 < Real.log (n : ℝ)) :
     T n = E * D (Real.log (n : ℝ)) * (1 - Real.exp (-robinLogMargin n)) := by
   have hz : 0 < (ArithmeticFunction.sigma 1 n : ℝ) / n :=
-    div_pos (Nat.cast_pos.mpr (ArithmeticFunction.sigma_pos 1 n (ne_of_gt hn))) (Nat.cast_pos.mpr hn)
+    div_pos (Nat.cast_pos.mpr (ArithmeticFunction.sigma_pos 1 n (ne_of_gt hn)))
+      (Nat.cast_pos.mpr hn)
   have hl := Real.log_pos ha
   have hexp : Real.exp (-robinLogMargin n) =
       ((ArithmeticFunction.sigma 1 n : ℝ) / n) / (E * Real.log (Real.log (n : ℝ))) := by
@@ -421,7 +421,6 @@ private lemma linear_identity {n : ℕ} (hn : 0 < n) (ha : 1 < Real.log (n : ℝ
   dsimp [T, D, E]
   field_simp [hl.ne', (Nat.cast_pos.mpr hn).ne',
     Real.exp_ne_zero Real.eulerMascheroniConstant]
-  <;> ring
 
 private lemma linear_le_log {n : ℕ} (hn : 0 < n) (ha : 1 < Real.log (n : ℝ)) :
     T n ≤ E * F n := by
@@ -497,8 +496,7 @@ private lemma linear_lower (hRH : RiemannHypothesis) (ε : ℝ) (hε : 0 < ε) :
 
 /-- All-integer lower envelopes, simultaneous sharp attainment at actual
 strict original records, and paid real liminf equalities. RH is the only
-headline hypothesis. The original-record endpoint is a public imported result;
-this source copy remains UNCOMPILED. -/
+headline hypothesis. The original-record endpoint is a public imported result. -/
 theorem all_integer_sharp_margin (hRH : RiemannHypothesis) :
     (∀ ε : ℝ, 0 < ε → ∃ N : ℕ, ∀ n : ℕ, N ≤ n →
       K - ε < F n ∧ Real.exp Real.eulerMascheroniConstant * K - ε < T n) ∧

@@ -2,13 +2,10 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Arith.Robin.Analytic.RHSharpAllIntegerMargin
 import Reg.Support.DependentFamily
 
-/- SOURCE-ONLY original source/law/readout bridge attempt, UNCOMPILED.
-   No Contract.Registration or declared_validated is asserted. No anchors
-   have been added to manufacture an observational-dependence witness.
-   The all-integer proof now uses the public same-correction second-order
-   supplier through consumed private clock helpers; its complete headline
-   and the law/readout telescope below are unchanged. This is source
-   preparation, not native evidence or an accepted registration. -/
+/- Exact whole-law source mirror with the original F/T readouts and empty
+   anchors. The actual law, literal source bridge, observational dependence
+   and implication from whole-family rejection to RH are proved below.
+   Full four-slot registration is not supplied. -/
 
 noncomputable section
 set_option autoImplicit false
@@ -132,23 +129,11 @@ private theorem actual_dependence : ObservationalDependence signature actual := 
     rw [hz]
     exact ne_of_gt hT
 
-/- Unfinished named audit obligations, with no substitute Contract:
-   1. WholeFamilyIntervention: a concrete alternate family, with fixed
-      nonintervened coordinates and a proved change in the FULL law.
-   2. WholeFamilySensitivity: genuine sensitivity evidence for the two
-      sequence readouts in this eventual/attainment/liminf telescope.
-   3. ObservationalDependence: source-supported dependence on integer state
-      and the distinct F/T observation role; a tautological anchor is invalid.
-   4. SourceSelectionTemplate: an applicable template and exact source/readout
-      selection evidence for these two readouts and the original objective.
-   5. CurrentProducerBinding: native source binding and current accepted
-      declaration/axiom closure for the complete uncompiled consumer theorem.
-   The original-record endpoint supplier is public and delivered. The exact
-   Law above is conditional on RH for EVERY family: under Not RH it holds
-   vacuously. Consequently a rejected alternate family would imply RH.
-   Empty anchors do not supply that rejection or observational dependence.
-   Root owns the exact linked issue after native source finalization. No
-   issue was filed, registration accepted, or judge/tool/Interface/Impl edited.
-   actual_law/source_bridge are bridge drafts, not completed audit evidence. -/
+/- The remaining audit obligations are whole-family intervention and
+   sensitivity, followed by complete enrolled-template source-selection
+   validation. The exact law is conditional on RH for every realization:
+   rejecting any alternate family entails RH by rejection_requires_rh.
+   Empty anchors add no rejection evidence. No Contract.Registration or
+   declared_validated claim is supplied. -/
 
 end Reg.D5.S3.Arith.Robin.Analytic.RHSharpAllIntegerMargin

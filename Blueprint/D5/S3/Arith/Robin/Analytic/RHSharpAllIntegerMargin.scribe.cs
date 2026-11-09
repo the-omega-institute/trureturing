@@ -4,7 +4,7 @@ using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.Robin.Analytic;
 
-// UNCOMPILED source preparation only. No emission, freeze, or native receipt.
+// Exact whole theorem with the original arithmetic readouts and record telescope.
 internal sealed class RHSharpAllIntegerMarginDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
@@ -12,7 +12,7 @@ internal sealed class RHSharpAllIntegerMarginDocument : IScribeDocumentDefinitio
         H("All integers and genuine original-record attainment"),
         Blocks(
             Paragraph(Text(
-                "This UNCOMPILED consumer source uses the public delivered theorem "
+                "This consumer theorem uses the public delivered theorem "
                 + "PriceRecord.RHSharpOriginalRecordMargin.original_record_sharp_lower_endpoint. "
                 + "It reuses that module's exact K=2*sqrt(2)-2-firstLiMass and "
                 + "RHSharpArithmeticEnvelope.D(x)=sqrt(x)*log(x). The imported firstLiMass is "
@@ -133,14 +133,14 @@ internal sealed class RHSharpAllIntegerMarginDocument : IScribeDocumentDefinitio
                 + "The exact firstLiMass_split identifies it with exp(gamma)*K. That literature "
                 + "entry supplies attribution for the lower bound; equality attainment additionally "
                 + "depends on the public original_record_sharp_lower_endpoint theorem. "
-                + "These three consumer copies, including the mathematical proof, Scribe syntax "
-                + "and Reg bridges, remain UNCOMPILED. The imported suppliers have already been delivered. "
-                + "No native acceptance of this consumer, registration, novelty, RH proof or explicit "
-                + "finite 5040 cutoff is claimed. "
-                + "The accompanying Reg draft retains the whole telescope and actual readouts, but "
-                + "whole-family intervention/sensitivity, observational dependence, template evidence "
-                + "and current producer binding remain unfinished. Root owns the linked issue and "
-                + "all native continuation and acceptance of these consumer sources."))
+                + "The exact D5 theorem and Reg mirror pass the native target build. "
+                + "The mirror proves the whole actual law, a literal Iff.rfl source bridge, and "
+                + "observational dependence of both actual readouts on the natural state. It also "
+                + "proves that rejecting any alternate family for this exact RH-conditional law "
+                + "entails RH. Whole-family intervention and sensitivity, and complete enrolled-template "
+                + "source-selection validation, remain unfinished. No accepted four-slot registration "
+                + "or declared_validated status is claimed. No novelty, RH proof or explicit finite "
+                + "5040 cutoff is claimed."))
         )));
 
     private static Formula Real => Seq(Mathbb, Grp(F.Id("R")));
