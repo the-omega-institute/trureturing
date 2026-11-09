@@ -4366,3 +4366,185 @@ $$
 用白话说，即使把同一套人工非实谱的全部误差主部固定下来，把跳跃放回整数且每个整数只许跳一次 $\log n$，再要求对应 Euler 乘积在右半平面单值亚纯并具有同一套简单零点和同一个简单极点，仍能让一套误差只在谐和总量有限的整数上为负，另一套则除谐和总量有限的整数外都为负：窄脉冲让谱留在总时长有限的槽中，槽外由正负微小底色决定符号，固定缓冲的追踪又把这种连续符号差异传到完整整数胞，而实际普通素数及 CM 的联合桥仍未建立。
 
 ## 追加锚（本行以下为增补区）
+
+## 48. 有限素因子 Hall 类的单位 Abel 容量与真实素数识别
+
+**定义 48.1（有限素因子 Hall 条件、独立性与容量）。** 本节局部记号 $A\subset\{2,3,\ldots\}$ 是整数生成元集，不替换定义 24.1 的同余类集合。记 $\mathcal P$ 为真实素数集，$S(a)=\{p\in\mathcal P:p\mid a\}$。称 $A$ 满足有限素因子 Hall 条件 $H(A)$，若对每个有限 $B\subset A$ 都有
+
+$$
+|B|\le\left|\bigcup_{a\in B}S(a)\right|.
+\tag{48.1}
+$$
+
+记 $\mathbb N_0^{(A)}$ 为有限支撑的非负整数指数族；称 $A$ 乘法独立，若
+
+$$
+\iota_A:\mathbb N_0^{(A)}\longrightarrow\mathbb N_{\ge1},\qquad
+(e_a)\longmapsto\prod_{a\in A}a^{e_a}
+\tag{48.2}
+$$
+
+是单射。独立性蕴含 $H(A)$：对 $v(a)=(v_p(a))_{p\in\mathcal P}$，有限独立向量的秩不超过其坐标并集的大小。反向不成立，例如 $A=\{6,36\}$ 满足 $H(A)$（两元的素因子并集为 $\{2,3\}$），却有 $36=6^2$。因此 $H(A)$ 允许重复分解，不能把下式的系数在整个 $H$ 类中写成 $\{0,1\}$。这里的唯一表示只要求在所生成的乘法幺半群内成立，不要求每个正整数都被生成。对 $\operatorname{Re}s>1$ 定义
+
+$$
+Z_A(s)=\prod_{a\in A}(1-a^{-s})^{-1},\qquad
+\mathcal C(A)=\limsup_{\sigma\downarrow1}(\sigma-1)Z_A(\sigma),\qquad
+\Theta_A(x)=\sum_{\substack{a\in A\\a\le x}}\log a.
+\tag{48.3}
+$$
+
+乘积在该半平面的绝对收敛将在下证中说明；容量沿实数 $\sigma>1$ 取上极限，定义不预设亚纯延拓、简单极点或完整 Abel 极限。
+
+**定理 48.2（Hall 类的单位容量刚性及指定遗漏素数的锐亏损）。** 若 $H(A)$ 成立，则对每个实 $\sigma>1$ 有 $Z_A(\sigma)\le\zeta(\sigma)$。若素数 $q\notin A$，更有
+
+$$
+\frac{Z_A(\sigma)}{\zeta(\sigma)}
+\le\frac{1-q^{-\sigma}}{1-(2q)^{-\sigma}},\qquad
+\mathcal C(A)\le\frac{2(q-1)}{2q-1}<1.
+\tag{48.4}
+$$
+
+因此在 $H(A)$ 类中，
+
+$$
+\mathcal C(A)=1\quad\Longleftrightarrow\quad A=\mathcal P.
+\tag{48.5}
+$$
+
+乘法独立只是严格更强的充分子类；特别地，乘法独立类中的同一单位容量等价式由此作为推论保留。对每个指定的 $q$，(48.4) 的两个界均最优，并由
+
+$$
+A_q=(\mathcal P\setminus\{q\})\cup\{2q\}
+\tag{48.6}
+$$
+
+取等。
+
+**证明。** （甲）Euler 展开与系数。任意 $A\subset\mathbb N_{\ge2}$ 都有 $\sum_{a\in A}a^{-\sigma}<\infty$，且
+
+$$
+\sum_{a\in A}\sum_{k\ge1}\frac{|a^{-ks}|}{k}
+\le\frac{1}{1-2^{-\sigma}}\sum_{a\in A}a^{-\sigma}<\infty,
+\qquad \sigma=\operatorname{Re}s>1.
+\tag{48.7}
+$$
+
+在每个闭半平面 $\operatorname{Re}s\ge1+\varepsilon$，右侧可用 $\sigma=1+\varepsilon$ 的可和级数控制。因此对数级数及 Euler 乘积局部一致绝对收敛。有限乘积展开后，以实部 $\sigma$ 的绝对收敛作控制，得到
+
+$$
+Z_A(s)=\sum_{n\ge1}c_A(n)n^{-s},\qquad
+c_A(n)=\#\{e\in\mathbb N_0^{(A)}:\iota_A(e)=n\}.
+\tag{48.8}
+$$
+
+每个系数有限，因为出现的生成元必须整除 $n$，指数也有上界；但在一般 $H(A)$ 中系数可以大于一，例如 $c_{\{6,36\}}(36)=2$。下面的有限匹配给出指定遗漏素数的统一亏损，不使用系数的单值性。
+
+（乙）有限 Hall 匹配及因子比较。固定有限 $F\subset A$，在左侧顶点 $a\in F$ 与右侧素因子集合 $S(a)$ 之间连边。$H(A)$ 直接给出每个 $B\subset F$ 的 Hall 不等式，故有限 Hall 定理给出单射 $\phi_F:F\to\mathcal P$，满足 $\phi_F(a)\mid a$。这里每个有限 $F$ 单独匹配，不把有限条件升级成全局无限匹配。置 $Z_F(\sigma)=\prod_{a\in F}(1-a^{-\sigma})^{-1}$。真实素数的 Euler 乘积给出精确恒等式
+
+$$
+\frac{Z_F(\sigma)}{\zeta(\sigma)}
+=\prod_{a\in F}\frac{1-\phi_F(a)^{-\sigma}}{1-a^{-\sigma}}
+ \prod_{p\notin\phi_F(F)}(1-p^{-\sigma}).
+\tag{48.9}
+$$
+
+补积因 $\sum_p p^{-\sigma}<\infty$ 收敛到正数。由于 $\phi_F(a)\le a$，每个配对因子都在 $(0,1]$ 内，补积的每个因子也如此，故该比值至多为 $1$。
+
+固定 $q\notin A$。若 $q\notin\phi_F(F)$，补积中保留 $1-q^{-\sigma}$，于是比值至多为 $1-q^{-\sigma}$。若 $q=\phi_F(a)$，则 $q\mid a$ 且 $a\ne q$；整数性迫使 $a\ge2q$，该配对因子满足
+
+$$
+\frac{1-q^{-\sigma}}{1-a^{-\sigma}}
+\le\frac{1-q^{-\sigma}}{1-(2q)^{-\sigma}}.
+\tag{48.10}
+$$
+
+第一种情形的界也不大于 (48.10) 的右端。因此每个有限 $F$ 都满足同一遗漏 $q$ 的界。
+
+（丙）无限截断与单位容量。取 $F_X=A\cap[2,X]$。对每个固定实 $\sigma>1$，
+
+$$
+\begin{aligned}
+0\le\log\frac{Z_A(\sigma)}{Z_{F_X}(\sigma)}
+&=\sum_{\substack{a\in A\\a>X}}\sum_{k\ge1}\frac{a^{-k\sigma}}{k}\\
+&\le\frac{1}{1-2^{-\sigma}}\sum_{n>X}n^{-\sigma}
+\longrightarrow0.
+\end{aligned}
+\tag{48.11}
+$$
+
+故 $Z_{F_X}(\sigma)\to Z_A(\sigma)$，有限界传到全体 $A$。各个 $X$ 的匹配可以分别选择，不需要相容，更没有调用全局无限匹配。真实 $\zeta$ 的标准单位留数给出 $\lim_{\sigma\downarrow1}(\sigma-1)\zeta(\sigma)=1$，所以
+
+$$
+\mathcal C(A)
+\le\lim_{\sigma\downarrow1}
+ (\sigma-1)\zeta(\sigma)\frac{1-q^{-\sigma}}{1-(2q)^{-\sigma}}
+=\frac{1-1/q}{1-1/(2q)}=\frac{2(q-1)}{2q-1}.
+\tag{48.12}
+$$
+
+这只需上极限。若 $\mathcal C(A)=1$，就不能遗漏任何素数。此时若还含复合生成元 $a$，则 $S(a)\subset A$，取有限集 $B=S(a)\cup\{a\}$ 得 $|B|=|S(a)|+1>|\bigcup_{b\in B}S(b)|=|S(a)|$，直接违反 $H(A)$；这里没有使用乘法独立。因此 $A=\mathcal P$。反向由 $H(\mathcal P)$ 与 $Z_{\mathcal P}=\zeta$ 立即得到。
+
+（丁）最优性与有限常差。对 (48.6) 的任一有限乘法关系，若 $q$ 为奇素数，先取 $q$ 坐标；$q$ 只出现在生成元 $2q$ 中，故其指数差为零，再逐个素数坐标清零其余指数差。$q=2$ 时 $2q=4$ 的 $2$ 坐标系数为 $2$，同样成立。因此 $A_q$ 乘法独立，因而满足 $H(A_q)$，且在 $\operatorname{Re}s>1$ 精确有
+
+$$
+\frac{Z_{A_q}(s)}{\zeta(s)}=\frac{1-q^{-s}}{1-(2q)^{-s}},\qquad
+\mathcal C(A_q)=\frac{2(q-1)}{2q-1}.
+\tag{48.13}
+$$
+
+故实轴上界和容量上界都取等。另有
+
+$$
+\Theta_{A_q}(x)=\vartheta(x)+\log2\qquad(x\ge2q).
+\tag{48.14}
+$$
+
+有限常差仍不能识别生成元；即使另给真实 $\vartheta(x)\sim x$，也会有 $\Theta_{A_q}(x)\sim x$ 而 $A_q\ne\mathcal P$。识别与锐界的证明未使用素数定理、函数方程或 $Z_A$ 的亚纯延拓。$\square$
+
+**命题 48.3（删去 $H(A)$ 后的单位留数与同一零极点反例）。** 本节另置
+
+$$
+A_0=(\mathcal P\setminus\{3\})\cup\{4,9\}.
+\tag{48.15}
+$$
+
+则 $A_0\ne\mathcal P$，且既不满足 $H(A_0)$ 也不乘法独立，但 $\mathcal C(A_0)=1$。确实 $B=\{2,4\}\subset A_0$ 的素因子并集只有 $\{2\}$，故 $H(A_0)$ 失败；同时 $4=2^2$。其 Euler 函数延拓到 $\operatorname{Re}s>0$ 后，与真实 $\zeta$ 在该半平面具有相同的全部零点、极点及各自重数，且在 $s=1$ 的留数同为 $1$。此外 $\Theta_{A_0}(x)=\vartheta(x)+\log12$ 对 $x\ge9$ 成立。
+
+**证明。** $2,4\in A_0$ 且 $4=2^2$，所以 (48.2) 不是单射，(48.8) 的 $c_{A_0}(4)=2$：生成元 $4$ 一次与生成元 $2$ 两次被重复计数。由绝对收敛的 Euler 因子消去，在 $\operatorname{Re}s>1$ 有
+
+$$
+Z_{A_0}(s)=\zeta(s)R(s),\qquad
+R(s)=\frac{1-3^{-s}}{(1-4^{-s})(1-9^{-s})}.
+\tag{48.16}
+$$
+
+对任意整数 $k\ge2$ 及 $\operatorname{Re}s>0$，$|k^{-s}|<1$，故 $1-k^{-s}$ 不为零。于是 $R$ 在该半平面全纯且处处非零；以 $\zeta R$ 作延拓，便逐点保留 $\zeta$ 的零极点及重数，没有新增零点或极点。并且
+
+$$
+R(1)=\frac{2/3}{(3/4)(8/9)}=1,
+\qquad \operatorname*{Res}_{s=1}Z_{A_0}(s)=1,
+\qquad \mathcal C(A_0)=1.
+\tag{48.17}
+$$
+
+最后，$x\ge9$ 时权重差为 $\log4+\log9-\log3=\log12$。因此重复分解确能补回遗漏素数造成的质量亏损；同一正半平面零极点和单位留数不能代替 $H(A)$。这里没有断言 $Z_{A_0}$ 满足 $\zeta$ 的函数方程，也没有从该反例推出任何负占用结论。$\square$
+
+**注记 48.4（极点阶数、算术前件与实际联合桥）。** 单位 Abel 容量是 (48.3) 的实轴归一化条件，不能由单极点位置或对数导数的单位留数替代。具体说，若一个 Euler 函数在 $1$ 附近有 $Z(s)=C/(s-1)+O(1)$、$C>0$ 的亚纯展开，则
+
+$$
+-\frac{Z'(s)}{Z(s)}=\frac1{s-1}+O(1),\qquad
+\operatorname*{Res}_{s=1}Z(s)=C.
+\tag{48.18}
+$$
+
+当 $Z=Z_A$ 时，上述展开还给出完整实轴 Abel 极限及 $\mathcal C(A)=C$。左侧的留数 $+1$ 记录极点阶数，右侧 $C$ 还取决于函数的归一化和正则因子。独立的 $A_q$ 已使这两种信息分离；而 (48.16) 还使 $-Z_{A_0}'/Z_{A_0}=-\zeta'/\zeta-R'/R$ 的差在 $\operatorname{Re}s>0$ 全纯，同时保持 Euler 函数自身的单位留数，却失去独立性。
+
+§46 的连续模型没有整数生成元 Euler 乘积和有限素因子 Hall 条件这些前件。对确有整数 Euler 结构的人工模型，若供应 $H(A)$ 与精确单位容量，定理 48.2 就锁定 $A=\mathcal P$；乘法独立是其中更强但非必要的充分条件，不必先供应完整函数方程。人工非实主部、实际显式公式中的 $-m_\rho/\rho$ 系数或同一零极点集合，只是各自变换及对数导数层面的约束，不能自动供应 $H(A)$ 或 Euler 函数的单位留数；不同变换的主部也不能未经对应就互换。
+
+本节没有证明原来的 $\sum_{H:\vartheta(H)<H}1/H=\infty$，没有取得 §44 所需的实际负阶段参与长度，也没有支付 §41 在同一 $Y=C_M\times\mathbb T^2$ 上的实际 CM 跨块联合桥。实际 CM 点对、全部原有限地方、原 $q_H$、原过滤和同一个成功整数继续保持原义；识别真实生成元之后，真实 $\vartheta$ 的负谐和占用与同一整数上的 CM 联合成功仍须另外证明。
+
+用白话说，$H(A)$ 只要求每个有限生成元集都能把生成元分配到不同的真实素因子坐标；这个分配只供比较，不说所有整数表示都唯一。把某个真实素数的 Euler 因子移到更大的复合生成元，只能减少实轴上的质量。若素数 $q$ 没有作为生成元出现，有限匹配中它或者空缺，或者只能被分给至少为 $2q$ 的整数；两种情形都受到同一个严格小于满容量的质量上界约束。因而精确满容量迫使每个真实素数都回来，随后 $H(A)$ 自己排除额外复合生成元。删去 $H(A)$ 后，同一个整数可被不同指数族重复计数，$A_0$ 正是靠这种重复把质量补回到一。这里的几何只是非负素因子坐标、有限匹配与容量饱和之间的严格关系，没有赋予它量子起源或物理同构；它也没有控制真实误差在负侧停留多久，更没有给出原 CM 条件与它在同一整数上的联合关系。
+
+来源与新增范围。有限 Hall 匹配是 literature-attested 中间输入：Philip Hall，*On Representatives of Subsets*，*Journal of the London Mathematical Society* **s1-10** (1) (1935), 26–30，DOI [10.1112/jlms/s1-10.37.26](https://doi.org/10.1112/jlms/s1-10.37.26)；所用有限条件是每个左侧子集的邻集大小至少等于其大小，可参见公开的 [Hall's marriage theorem 条件表述](https://en.wikipedia.org/wiki/Hall%27s_marriage_theorem#Combinatorial_formulation)。真实 $\zeta$ 的 Euler 乘积与 $1$ 处单位留数分别见 NIST [DLMF 25.2(iv), (25.2.11)](https://dlmf.nist.gov/25.2#E11) 与 [DLMF 25.2(i)](https://dlmf.nist.gov/25.2#i)，均为成熟输入。本节的 repo-derived 综合范围是把有限素因子 Hall 条件接到 Euler 因子比较，得到指定遗漏 $q$ 的最优亏损、仅用上极限的单位容量识别，并保留实际 $\zeta$ 正半平面零极点和单位留数的删条件反例；乘法独立作为严格更强的可用充分子类，$H(A)$ 的弱化及其边界是本节新增的算术表述。不把 Hall 或 Euler 公式另列为新成果，也不主张全球文献优先性。
+
+## 追加锚（本行以下为增补区）
