@@ -47,7 +47,7 @@ instDecidableNormal: proof_shape=bind-only; consumers=instDecidableLegal
 instDecidableRowLegal: proof_shape=bind-only; consumers=instDecidableLegal
 instDecidableBonds: proof_shape=bind-only; consumers=instDecidableLegal
 instDecidableLegal: proof_shape=bind-only; consumers=a
-a: proof_shape=bind-only; consumers=instDecidableLegal
+a: proof_shape=bind-only; consumers=counting_bridge
 pairs: proof_shape=bind-only; consumers=bonds_iff
 compatible: proof_shape=bind-only; consumers=instDecidableCompatible
 instDecidableCompatible: proof_shape=bind-only; consumers=classCount
@@ -303,12 +303,12 @@ private theorem scan_sum (n : ℕ) (s : Seen) (f : (Fin n → Fin 3) → Seen �
       ∑ b : Fin n → Fin 3, labelWeight s b * f b (labelFinish s b) := by
   induction n generalizing s with
   | zero =>
-    simp only [Fintype.sum_unique, good, finish, labelWeight, labelFinish, one_mul]
-    split
-    · apply congrArg (fun b : Fin 0 → Fin 3 => f b s)
-      funext j
-      exact Fin.elim0 j
-    · contradiction
+    simp only [Fintype.sum_unique, finish, labelWeight, labelFinish, one_mul]
+    have hz (c : Fin 0 → Fin 6) :
+        (if good s c then f (fun j => beta (c j)) s else 0) =
+          f (fun j => beta (c j)) s := ite_eq_left True.intro
+    rw [hz]
+    exact congrArg (fun b : Fin 0 → Fin 3 => f b s) (Subsingleton.elim _ _)
   | succ n ih =>
     rw [← (Fin.consEquiv (fun _ : Fin (n + 1) => Fin 6)).sum_comp,
       Fintype.sum_prod_type,
@@ -617,8 +617,8 @@ private theorem reduce_counts (s : Seen) (p : Boundary) (i : Fin 5) :
         (if (∀ j : Fin 5, beta (c j.castSucc) ≠ beta (c j.succ)) ∧
           (∀ j : Fin 5, p j ≠ beta (c j.castSucc)) ∧ (finish s c).2 = decide (i ≠ 0)
         then weight (fun j => beta (c j.succ)) i else 0) else 0 := by
-    simp only [rowLegal, colour_bond_iff, compatible, pairs]
-    by_cases hg : good s c <;> simp [hg]
+    simp only [rowLegal, colour_bond_iff, compatible]
+    by_cases hg : good s c <;> simp [hg]; rfl
   simp only [allCounts, he]
   exact scan_sum 6 s (fun b st =>
     if (∀ j : Fin 5, b j.castSucc ≠ b j.succ) ∧
@@ -791,11 +791,11 @@ private theorem v_eq_w (n : ℕ) (s : Seen) (p : Boundary) (h : Valid s p) :
       apply Finset.sum_congr rfl
       intro c _
       by_cases hc : rowLegal c ∧ compatible p c ∧ good s c
-      · cases hb : (finish s c).2 <;> simp [hc, hb]
+      · cases hb : (finish s c).2 <;> simp [hc]
       · simp only [← and_assoc] at hc ⊢
         simp [hc]
     rw [he, (finite_certificate.1 s p h).1, (finite_certificate.1 s p h).2.1]
-    cases hb : s.2 <;> simp [eval, w, hb] <;> ring
+    cases hb : s.2 <;> simp [eval, w, hb]; ring
   | succ n ih =>
     rw [v, widthV, widthStep]
     change (∑ c : Row, if rowLegal c ∧ compatible p c ∧ good s c then
@@ -882,7 +882,7 @@ private theorem one_count : (a 1 : ℤ) = 136 := by
     apply Finset.sum_congr rfl
     intro c _
     by_cases hc : c 0 = 0 ∧ rowLegal c ∧ good (false, false) c
-    · cases hb : (finish (false, false) c).2 <;> simp [hc, hb]
+    · cases hb : (finish (false, false) c).2 <;> simp [hc]
     · simp only [← and_assoc] at hc ⊢
       simp [hc]
   rw [he, finite_certificate.2.1, finite_certificate.2.2.1]
