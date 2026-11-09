@@ -398,7 +398,7 @@ end LabelNext
 namespace EndLevelMono
 
 abbrev signature : Signature :=
-  _root_.Reg.Support.SingleDependentReadout.signature (ℕ × Fin 3)
+  _root_.Reg.Support.SingleDependentReadout.signature (Sigma (fun {n : ℕ} => Fin 3))
     (fun p => Fin p.1 → Fin 6) (fun _ => Fin 3)
 
 def actual : Realization signature :=
@@ -410,7 +410,7 @@ def rejected : Realization signature :=
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ {n : ℕ} (s : Fin 3) (f : Fin n → Fin 6),
-    s ≤ R.readout () (n, s) f
+    s ≤ R.readout () ⟨n, s⟩ f
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
@@ -427,7 +427,7 @@ def family : Registration arena (type_of% @endLevel_mono) where
     arena.Law actual rejected rejected_law
   dependence := by
     intro i
-    refine ⟨(1, 0), (fun _ => 0), (fun _ => 2), ?_⟩
+    refine ⟨⟨1, 0⟩, (fun _ => 0), (fun _ => 2), ?_⟩
     change endLevel 0 (fun _ : Fin 1 => (0 : Fin 6)) ≠
       endLevel 0 (fun _ : Fin 1 => (2 : Fin 6))
     decide +kernel
@@ -471,7 +471,7 @@ end EndLevelMono
 namespace FinishSeen
 
 abbrev signature : Signature :=
-  _root_.Reg.Support.SingleDependentReadout.signature (ℕ × Fin 3)
+  _root_.Reg.Support.SingleDependentReadout.signature (Sigma (fun {n : ℕ} => Fin 3))
     (fun p => Fin p.1 → Fin 6) (fun _ => Seen)
 
 def actual : Realization signature :=
@@ -483,7 +483,7 @@ def rejected : Realization signature :=
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ {n : ℕ} (s : Fin 3) (f : Fin n → Fin 6)
-    (_h : good (seen s) f), R.readout () (n, s) f = seen (endLevel s f)
+    (_h : good (seen s) f), R.readout () ⟨n, s⟩ f = seen (endLevel s f)
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
@@ -500,7 +500,7 @@ def family : Registration arena (type_of% @finish_seen) where
     arena.Law actual rejected rejected_law
   dependence := by
     intro i
-    refine ⟨(1, 0), (fun _ => 0), (fun _ => 1), ?_⟩
+    refine ⟨⟨1, 0⟩, (fun _ => 0), (fun _ => 1), ?_⟩
     change finish (seen 0) (fun _ : Fin 1 => (0 : Fin 6)) ≠
       finish (seen 0) (fun _ : Fin 1 => (1 : Fin 6))
     decide +kernel
