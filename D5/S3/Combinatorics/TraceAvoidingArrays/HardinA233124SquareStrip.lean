@@ -45,6 +45,9 @@ transfer: proof_shape=bind-only; consumers=row_counts, finite_certificate, v_eq_
 valid_next: proof_shape=bind-only; consumers=v_eq_w
 classCount: proof_shape=bind-only; consumers=finite_certificate, v_eq_w
 firstCount: proof_shape=bind-only; consumers=finite_certificate, a_eq_w
+row_counts_zero: proof_shape=bind-only; consumers=row_counts
+row_counts_one: proof_shape=bind-only; consumers=row_counts
+row_counts_two: proof_shape=bind-only; consumers=row_counts
 row_counts: proof_shape=bind-only; consumers=finite_certificate
 initial_valid: proof_shape=bind-only; consumers=a_eq_w
 initial_counts: proof_shape=bind-only; consumers=finite_certificate
@@ -291,7 +294,10 @@ def transfer (i k : Fin 3) : ℤ :=
 
 private theorem valid_next : ∀ s p, Valid s p → ∀ c : Row,
     rowLegal c ∧ compatible p c ∧ good s c → Valid (finish s c) (pairs c) := by
-  decide +kernel
+  have hv : ∀ (s : Seen) (c : Row), s.1 = true → rowLegal c → good s c →
+      Valid (finish s c) (pairs c) := by decide +kernel
+  intro s p hp c hc
+  exact hv s c hp.1 hc.1 hc.2.2
 
 def classCount (s : Seen) (p : Fin 3 → Fin 3) (k : Fin 3) : ℤ :=
   ∑ c : Row, if rowLegal c ∧ compatible p c ∧ good s c ∧
@@ -301,9 +307,25 @@ def firstCount (k : Fin 3) : ℤ :=
   ∑ c : Row, if c 0 = 0 ∧ rowLegal c ∧ good (false, false) c ∧
     boundaryClass (finish (false, false) c) (pairs c) = k then 1 else 0
 
+private theorem row_counts_zero : ∀ s p, Valid s p →
+    classCount s p 0 = transfer (boundaryClass s p) 0 := by
+  decide +kernel
+
+private theorem row_counts_one : ∀ s p, Valid s p →
+    classCount s p 1 = transfer (boundaryClass s p) 1 := by
+  decide +kernel
+
+private theorem row_counts_two : ∀ s p, Valid s p →
+    classCount s p 2 = transfer (boundaryClass s p) 2 := by
+  decide +kernel
+
 private theorem row_counts : ∀ s p, Valid s p → ∀ k,
     classCount s p k = transfer (boundaryClass s p) k := by
-  decide +kernel
+  intro s p h k
+  fin_cases k
+  · exact row_counts_zero s p h
+  · exact row_counts_one s p h
+  · exact row_counts_two s p h
 
 private theorem initial_valid : ∀ c : Row,
     c 0 = 0 ∧ rowLegal c ∧ good (false, false) c →
@@ -422,7 +444,9 @@ theorem result :
   · have h1 := a_eq_w 0
     have h2 := a_eq_w 1
     have h3 := a_eq_w 2
-    norm_num [w] at h1 h2 h3
+    change (a 1 : ℤ) = 3 at h1
+    change (a 2 : ℤ) = 80 at h2
+    change (a 3 : ℤ) = 2688 at h3
     interval_cases n <;> norm_num only [zero_count, h1, h2, h3,
       Nat.reduceLeDiff, Nat.reduceSubDiff, Nat.reduceEqDiff, if_true, if_false,
       Nat.cast_zero, mul_zero, sub_self, add_zero]
