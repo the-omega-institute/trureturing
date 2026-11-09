@@ -207,7 +207,8 @@ internal sealed class HardinA233124SquareStripDocument : IScribeDocumentDefiniti
     private static Formula ResultFormula()
     {
         var x = Q("PowerSeries.X"); var n = V("n");
-        var series = At(Q("PowerSeries.mk"), Fn("n", Q("Nat"), Cast(Call("a", n), Q("Int"))));
+        var series = At(Q("PowerSeries.mk"),
+            Fn("n", Q("Nat"), Cast(Call("a", n), Q("Int"))));
         return Eq(Mul(Mul(Sub(D(1), Mul(D(8), x)),
             Add(Sub(D(1), Mul(D(4,0), x)), Mul(D(1,2,8), Pow(x, D(2))))), series),
             Mul(x, Add(Sub(D(3), Mul(D(6,4), x)), Mul(D(1,9,2), Pow(x, D(2))))));
@@ -217,7 +218,8 @@ internal sealed class HardinA233124SquareStripDocument : IScribeDocumentDefiniti
     private static Formula Q(string name) => Seq(name.Split('.').SelectMany((p, i) =>
         i == 0 ? new[] { Seq(Operatorname, Grp(V(p))) }
             : new[] { Dot, Seq(Operatorname, Grp(V(p))) }).ToArray());
-    private static Formula Call(string name, params Formula[] args) => At(Q(Owner + "." + name), args);
+    private static Formula Call(string name, params Formula[] args) =>
+        At(Q(Owner + "." + name), args);
     private static Formula At(Formula f, params Formula[] args) => new Formula.Apply(f, [.. args]);
     private static Formula Fin(byte n) => At(Q("Fin"), D(n));
     private static Formula Fin(Formula n) => At(Q("Fin"), n);
@@ -236,7 +238,8 @@ internal sealed class HardinA233124SquareStripDocument : IScribeDocumentDefiniti
     private static Formula Pair(Formula a, Formula b) => Parenthesized(Seq(a, Comma, Sp, b));
     private static Formula Product(Formula a, Formula b) => Seq(
         Parenthesized(a), Sp, Times, Sp, Parenthesized(b));
-    private static Formula Arrow(Formula a, Formula b) => new Formula.TypeArrow(Parenthesized(a), b);
+    private static Formula Arrow(Formula a, Formula b) =>
+        new Formula.TypeArrow(Parenthesized(a), b);
     private static Formula Eq(Formula a, Formula b) => Seq(a, Sp, F.Eq, Sp, b);
     private static Formula Ne(Formula a, Formula b) => Seq(a, Sp, Neq, Sp, b);
     private static Formula Lt(Formula a, Formula b) => Seq(a, Sp, F.Lt, Sp, b);

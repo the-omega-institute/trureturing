@@ -126,7 +126,9 @@ def family : Registration arena (type_of% @finite_certificate) where
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     (@finite_certificate) (Realization signature) Type Unit where
   unitName :=
-    `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233124SquareStrip.FiniteCertificate.auditUnit
+    Lean.Name.str
+      `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233124SquareStrip.FiniteCertificate
+      "auditUnit"
   realizationName :=
     `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233124SquareStrip.FiniteCertificate.family
   realizationSource := none

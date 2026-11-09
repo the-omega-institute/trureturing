@@ -9,6 +9,52 @@
 /-
 admission_basis: open-problem-resolution (#28306; Proved)
 escape_witness: none
+Single-row numerical premises are consumed by the unbounded class induction.
+
+prior: proof_shape=bind-only; consumers=prior_zero, prior_succ, normal
+instDecidablePrior: proof_shape=bind-only; consumers=instDecidableNormal
+normal: proof_shape=bind-only; consumers=normal_cons, Legal
+prior_zero: proof_shape=bind-only; consumers=normal_cons
+prior_succ: proof_shape=bind-only; consumers=normal_cons
+normal_cons: proof_shape=bind-only; consumers=tail_iff, counting_bridge
+bonds: proof_shape=bind-only; consumers=Legal, bonds_iff
+Legal: proof_shape=bind-only; consumers=a, counting_bridge, zero_count
+instDecidableNormal: proof_shape=bind-only; consumers=instDecidableLegal
+instDecidableRowLegal: proof_shape=bind-only; consumers=instDecidableLegal, step
+instDecidableBonds: proof_shape=bind-only; consumers=instDecidableLegal
+instDecidableLegal: proof_shape=bind-only; consumers=a
+a: proof_shape=bind-only; consumers=counting_bridge, a_eq_w, zero_count, result
+pairs: proof_shape=bind-only; consumers=bonds_iff, step, classCount
+compatible: proof_shape=bind-only; consumers=bonds_iff, TailGood, step
+instDecidableCompatible: proof_shape=bind-only; consumers=step, classCount
+bonds_iff: proof_shape=bind-only; consumers=tail_iff, counting_bridge
+TailGood: proof_shape=bind-only; consumers=tail_iff, count, count_eq_v
+instDecidableGood: proof_shape=bind-only; consumers=instDecidableTailGood, step
+instDecidableTailGood: proof_shape=bind-only; consumers=count
+tail_iff: proof_shape=bind-only; consumers=counting_bridge
+step: proof_shape=bind-only; consumers=v, v_eq_w
+v: proof_shape=bind-only; consumers=count_eq_v, counting_bridge, v_eq_w
+count: proof_shape=bind-only; consumers=count_eq_v, counting_bridge
+count_eq_v: proof_shape=bind-only; consumers=counting_bridge
+total: proof_shape=bind-only; consumers=counting_bridge, a_eq_w
+counting_bridge: proof_shape=bind-only; consumers=a_eq_w
+Valid: proof_shape=bind-only; consumers=valid_next, initial_valid, row_counts
+instDecidableValid: proof_shape=bind-only; consumers=valid_next, row_counts
+boundaryClass: proof_shape=bind-only; consumers=classCount, firstCount, v_eq_w
+transfer: proof_shape=bind-only; consumers=row_counts, finite_certificate, v_eq_w
+valid_next: proof_shape=bind-only; consumers=v_eq_w
+classCount: proof_shape=bind-only; consumers=finite_certificate, v_eq_w
+firstCount: proof_shape=bind-only; consumers=finite_certificate, a_eq_w
+row_counts: proof_shape=bind-only; consumers=finite_certificate
+initial_valid: proof_shape=bind-only; consumers=a_eq_w
+initial_counts: proof_shape=bind-only; consumers=finite_certificate
+finite_certificate: proof_shape=bind-only; consumers=v_eq_w, a_eq_w
+w: proof_shape=bind-only; consumers=v_eq_w, a_eq_w, recurrence, result
+v_eq_w: proof_shape=bind-only; consumers=a_eq_w
+a_eq_w: proof_shape=bind-only; consumers=recurrence, result
+recurrence: proof_shape=bind-only; consumers=result
+zero_count: proof_shape=bind-only; consumers=result
+result: proof_shape=bind-only; consumers=terminal result (#28306)
 -/
 
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip
@@ -22,7 +68,8 @@ import Mathlib.RingTheory.PowerSeries.Basic
 open scoped BigOperators
 namespace D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233124SquareStrip
 
-open HardinA233175PairStrip (Seen allowed advance good finish finish_fst finish_snd good_iff edge_iff)
+open HardinA233175PairStrip
+  (Seen allowed advance good finish finish_fst finish_snd good_iff edge_iff)
 open HardinA233251TriangleStrip (Row rowLegal)
 open D5.S3.Observer.Separation.BooleanRankThreeK4 (beta)
 
@@ -60,7 +107,8 @@ def Legal {n : ℕ} (A : Fin n × Fin 3 → Fin 6) : Prop :=
       (fun j => A (⟨i.val + 1, h⟩, j))) ∧
     normal (false, false) (fun i j => A (i, j))
 
-private instance instDecidableNormal {n : ℕ} (s : Seen) (f : Fin n → Row) : Decidable (normal s f) :=
+private instance instDecidableNormal {n : ℕ} (s : Seen) (f : Fin n → Row) :
+    Decidable (normal s f) :=
   inferInstanceAs (Decidable (∀ _ _, (_ → _) ∧ (_ → _)))
 private instance instDecidableRowLegal (c : Row) : Decidable (rowLegal c) :=
   inferInstanceAs (Decidable (∀ _, _ ∧ _))
@@ -198,7 +246,8 @@ private theorem counting_bridge (n : ℕ) : (a (n + 1) : ℤ) = total (v n) := b
           TailGood (finish (false, false) c) (pairs c) f := by
     intro f
     rw [tail_iff, Legal, normal_cons]
-    have hz : (∃ i : Fin (n + 1), i.val = 0 ∧ (Fin.cons c f : Fin (n + 1) → Row) i 0 = 0) ↔ c 0 = 0 := by
+    have hz : (∃ i : Fin (n + 1), i.val = 0 ∧
+        (Fin.cons c f : Fin (n + 1) → Row) i 0 = 0) ↔ c 0 = 0 := by
       constructor
       · rintro ⟨i, hi, h⟩
         simpa only [show i = 0 from Fin.ext hi, Fin.cons_zero] using h
@@ -293,8 +342,8 @@ private theorem v_eq_w (n : ℕ) (s : Seen) (p : Fin 3 → Fin 3) (h : Valid s p
       intro c
       by_cases hc : rowLegal c ∧ compatible p c ∧ good s c
       · rw [ite_eq_left hc, ih _ _ (valid_next s p h c hc)]
-        generalize hb : boundaryClass (finish s c) (pairs c) = k
-        fin_cases k <;> simp [hc, hb]
+        generalize boundaryClass (finish s c) (pairs c) = k
+        fin_cases k <;> simp [hc]
       · simp only [← and_assoc] at hc ⊢
         simp [hc]
     simp_rw [hs]
@@ -323,8 +372,8 @@ private theorem a_eq_w (n : ℕ) : (a (n + 1) : ℤ) = 2 * w n 0 + w n 2 := by
     intro c
     by_cases hc : c 0 = 0 ∧ rowLegal c ∧ good (false, false) c
     · rw [ite_eq_left hc, v_eq_w n _ _ (initial_valid c hc)]
-      generalize hb : boundaryClass (finish (false, false) c) (pairs c) = k
-      fin_cases k <;> simp [hc, hb]
+      generalize boundaryClass (finish (false, false) c) (pairs c) = k
+      fin_cases k <;> simp [hc]
     · simp only [← and_assoc] at hc ⊢
       simp [hc]
   simp_rw [hs]
@@ -374,6 +423,8 @@ theorem result :
     have h2 := a_eq_w 1
     have h3 := a_eq_w 2
     norm_num [w] at h1 h2 h3
-    interval_cases n <;> norm_num [zero_count, h1, h2, h3]
+    interval_cases n <;> norm_num only [zero_count, h1, h2, h3,
+      Nat.reduceLeDiff, Nat.reduceSubDiff, Nat.reduceEqDiff, if_true, if_false,
+      Nat.cast_zero, mul_zero, sub_self, add_zero]
 
 end D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233124SquareStrip
