@@ -13,7 +13,8 @@ motivation_gids:
 ## Problem
 
 Shrabani Das, Ahmad Erfanian and Rajat Kanti Nath, *Zagreb indices of subgroup
-generating bipartite graph*, arXiv:2501.06124v1, Problem 3.10, printed page 13:
+generating bipartite graph*, arXiv:2501.06124v1, Problem 3.10, printed page 13
+(native HTML anchor `S3.Thmtheorem10`):
 
 > Is there any finite group G such that B(G) does not satisfy Hansen-Vukičević conjecture?
 
