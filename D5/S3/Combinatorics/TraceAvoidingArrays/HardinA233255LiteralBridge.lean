@@ -52,8 +52,7 @@ private theorem head_fibres (s : Seen) (H : Seen → Fin 3 → ℤ) :
 private theorem beta_cons {k : ℕ} (x : Fin 6) (c : Fin k → Fin 6) :
     (fun j : Fin (k + 1) => beta ((Fin.cons x c : Fin (k + 1) → Fin 6) j)) =
       Fin.cons (beta x) (fun j => beta (c j)) := by
-  funext j
-  exact Fin.cases rfl (fun _ => rfl) j
+  exact Fin.comp_cons beta x c
 
 /-- Exact weighted pushforward of the original scanner, for every word length and readout. -/
 theorem scanner_fibres (k : ℕ) (s : Seen) (H : Seen → (Fin k → Fin 3) → ℤ) :
@@ -87,7 +86,9 @@ theorem scanner_fibres (k : ℕ) (s : Seen) (H : Seen → (Fin k → Fin 3) → 
       · simp [h]
     simp_rw [hx]
     rw [Finset.sum_comm]
-    simp_rw [head_fibres]
+    have hhead (q : Fin k → Fin 3) := head_fibres s
+      (fun t a => rowWeight t q * H (rowFinish t q) (Fin.cons a q))
+    simp_rw [hhead]
     rw [Finset.sum_comm,
       ← (Fin.consEquiv (fun _ : Fin (k + 1) => Fin 3)).sum_comp,
       Fintype.sum_prod_type]
@@ -95,6 +96,9 @@ theorem scanner_fibres (k : ℕ) (s : Seen) (H : Seen → (Fin k → Fin 3) → 
     intro q _
     apply Finset.sum_congr rfl
     intro qs _
-    simp [rowWeight, rowFinish, mul_assoc]
+    change labelWeight s q *
+      (rowWeight (labelAdvance s q) qs * H (rowFinish (labelAdvance s q) qs) (Fin.cons q qs)) =
+      rowWeight s (Fin.cons q qs) * H (rowFinish s (Fin.cons q qs)) (Fin.cons q qs)
+    simp only [rowWeight, rowFinish, Fin.cons_zero, Fin.tail_cons, mul_assoc]
 
 end D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255LiteralBridge

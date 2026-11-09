@@ -8,6 +8,8 @@
 
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255LiteralBridge
 
+/-! The labelled transfer retains every individual-colour scanner fibre. -/
+
 open scoped BigOperators
 namespace D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255PairTransfer
 
@@ -81,9 +83,13 @@ private theorem step_pair (w : Seen → Boundary → ℤ) (s : Seen) (p : Bounda
   convert h using 1
   · apply Finset.sum_congr rfl
     intro c _
-    simp only [rowLegal, colour_bond_iff, rowProper, labelCompatible, compatible,
-      labelBoundary, pairs]
-    split_ifs <;> simp_all
+    have hr : rowProper (fun j => beta (c j)) ↔ rowLegal c := by
+      simp only [rowProper, rowLegal, colour_bond_iff]
+    have hc : labelCompatible p (fun j => beta (c j)) ↔ compatible p c := Iff.rfl
+    have hb : labelBoundary (fun j => beta (c j)) = pairs c := rfl
+    simp only [hr, hc, hb]
+    by_cases hg : good s c <;> by_cases hl : rowLegal c ∧ compatible p c <;>
+      simp only [hg, hl, ite_true, ite_false, and_true, and_false]
   · apply Finset.sum_congr rfl
     intro q _
     split_ifs <;> simp_all
@@ -98,8 +104,7 @@ theorem continuation_pair_bridge (n : ℕ) (s : Seen) (p : Boundary) :
     simp_rw [ih]
     rfl
 
-/-- The anchored first row is counted in individual colours, with the full row scanner. -/
-theorem literal_pair_bridge (n : ℕ) :
+private theorem literal_colour_bridge (n : ℕ) :
     (a ⟨n + 1, Nat.succ_pos n⟩ : ℤ) =
       ∑ c : Row, if c 0 = 0 ∧ rowLegal c ∧ good (false, false) c then
         pairV n (finish (false, false) c) (pairs c) else 0 := by
@@ -109,5 +114,52 @@ theorem literal_pair_bridge (n : ℕ) :
   rw [h]
   unfold widthTotal
   simp_rw [continuation_pair_bridge]
+
+private theorem first_fibres (H : Seen → PairRow → ℤ) :
+    (∑ c : Row, if c 0 = 0 ∧ good (false, false) c then
+      H (finish (false, false) c) (fun j => beta (c j)) else 0) =
+    ∑ q : Fin 6 → Fin 3, rowWeight (false, false) q *
+      H (rowFinish (false, false) q) (Fin.cons 0 q) := by
+  rw [← (Fin.consEquiv (fun _ : Fin 7 => Fin 6)).sum_comp, Fintype.sum_prod_type]
+  change (∑ x : Fin 6, ∑ c : Fin 6 → Fin 6,
+    if x = 0 ∧ good (false, false) (Fin.cons x c) then
+      H (finish (false, false) (Fin.cons x c))
+        (fun j => beta ((Fin.cons x c : Row) j)) else 0) = _
+  rw [Finset.sum_eq_single (0 : Fin 6)]
+  · have hh := scanner_fibres 6 (false, false)
+      (fun t q => H t (Fin.cons 0 q))
+    convert hh using 1
+    apply Finset.sum_congr rfl
+    intro c _
+    have hb : (fun j => beta ((Fin.cons 0 c : Row) j)) =
+        Fin.cons 0 (fun j => beta (c j)) := Fin.comp_cons beta 0 c
+    simp [good, finish, HardinA233175PairStrip.allowed,
+      HardinA233175PairStrip.advance, hb]
+  · intro x _ hx
+    simp [hx]
+  · simp
+
+/-- The original literal count is an exact scanner-weighted sum on labelled pair rows. -/
+theorem literal_pair_bridge (n : ℕ) :
+    (a ⟨n + 1, Nat.succ_pos n⟩ : ℤ) =
+      ∑ q : Fin 6 → Fin 3, if rowProper (Fin.cons 0 q) then
+        rowWeight (false, false) q * pairV n (rowFinish (false, false) q) q else 0 := by
+  rw [literal_colour_bridge]
+  have h := first_fibres (fun t q =>
+    if rowProper q then pairV n t (labelBoundary q) else 0)
+  convert h using 1
+  · apply Finset.sum_congr rfl
+    intro c _
+    have hr : rowProper (fun j => beta (c j)) ↔ rowLegal c := by
+      simp only [rowProper, rowLegal, colour_bond_iff]
+    have hb : labelBoundary (fun j => beta (c j)) = pairs c := rfl
+    simp only [hr, hb]
+    by_cases h0 : c 0 = 0 <;> by_cases hg : good (false, false) c <;>
+      by_cases hl : rowLegal c <;> simp [h0, hg, hl]
+  · apply Finset.sum_congr rfl
+    intro q _
+    have hb : labelBoundary (Fin.cons 0 q) = q := rfl
+    simp only [hb]
+    split_ifs <;> simp_all
 
 end D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255PairTransfer
