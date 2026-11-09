@@ -1,0 +1,10 @@
+满足以下三条：
+
+1. **单位与反向：** $\kappa(a,a)=1$，且 $\kappa(b,a)=\overline{\kappa(a,b)}$；
+2. **有限自比较正性：** 对任意有限序列 $a_1,\ldots,a_n$ 和任意 $z_1,\ldots,z_n\in\mathbb C$，
+   $$
+   \operatorname{Self}_\kappa(z):=
+   \sum_{i,j=1}^{n}\overline{z_i}\,\kappa(a_i,a_j)\,z_j\ge0;
+   $$
+3. **同一对象相容：** 重复对象或删去重复对象只按同一二次型的限制处理，不产生新的比较值。
+
