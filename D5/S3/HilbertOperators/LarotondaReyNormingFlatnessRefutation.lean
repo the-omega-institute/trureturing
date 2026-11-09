@@ -18,15 +18,15 @@ The public result is the designated refutation result (`basis=refutes`) and is e
 
 Per-declaration classification (all escape_witness: none):
 pairing: proof_shape: bind-only; consumers: IsNorming,dualNorm,norming_bound,norming_central,norming_traceless,pairing_add,pairing_smul; Direct frozen dependencies: none.
-IsAdInvariantFinsler: proof_shape: bind-only; consumers: bodyNorm_admissible,claim; Direct frozen dependencies: none.
+IsAdInvariantFinsler: proof_shape: bind-only; consumers: claim; Direct frozen dependencies: none.
 dualNorm: proof_shape: bind-only; consumers: IsNorming,norming_bound,norming_central,norming_traceless; Direct frozen dependencies: none.
 IsNorming: proof_shape: bind-only; consumers: claim,norming_central,norming_traceless,result; Direct frozen dependencies: none.
 SpectralData: proof_shape: bind-only; consumers: claim,codiagonal,result; Direct frozen dependencies: none.
 codiagonal: proof_shape: bind-only; consumers: claim,result; Direct frozen dependencies: none.
 claim: proof_shape: bind-only; consumers: result; Direct frozen dependencies: none.
 weight: proof_shape: bind-only; consumers: bodyNorm,bodyNorm_V,bodyNorm_add,bodyNorm_conj,bodyNorm_le,bodyNorm_quadratic,bodyNorm_smul,bodyNorm_strict,bodyNorm_zero,cent_le,rest_le,weight_bdd,weight_bound,weight_le,weight_smul; Direct frozen dependencies: centeredEffect (identity above).
-bodyNorm: proof_shape: bind-only; consumers: bodyNorm_V,bodyNorm_add,bodyNorm_admissible,bodyNorm_conj,bodyNorm_eq_zero,bodyNorm_le,bodyNorm_quadratic,bodyNorm_smul,bodyNorm_strict,bodyNorm_zero,cent_le,line_strict,norming_bound,norming_central,norming_traceless,rest_le,result,weight_le; Direct frozen dependencies: centeredEffect (identity above).
-center_formula: proof_shape: bind-only; consumers: bodyNorm_eq_zero,bodyNorm_quadratic,cent_V,cent_add,cent_conj,cent_line,cent_smul,line_radius,norming_central,rest_V; Direct frozen dependencies: none.
+bodyNorm: proof_shape: bind-only; consumers: bodyNorm_V,bodyNorm_add,bodyNorm_admissible,bodyNorm_conj,bodyNorm_eq_zero,bodyNorm_smul,bodyNorm_strict,bodyNorm_zero,cent_le,line_strict,norming_bound,norming_central,norming_traceless,rest_le,result; Direct frozen dependencies: centeredEffect (identity above).
+center_formula: proof_shape: bind-only; consumers: bodyNorm_eq_zero,bodyNorm_quadratic,cent_V,cent_conj,cent_line,line_radius,norming_central,rest_V; Direct frozen dependencies: none.
 denom_pos: proof_shape: bind-only; consumers: bodyNorm_V,bodyNorm_add,bodyNorm_quadratic,bodyNorm_strict,weight_bound; Direct frozen dependencies: none.
 coeff_nonneg: proof_shape: bind-only; consumers: bodyNorm_add; Direct frozen dependencies: none.
 weight_bound: proof_shape: bind-only; consumers: weight_bdd; Direct frozen dependencies: centeredEffect (identity above).
@@ -53,7 +53,7 @@ J: proof_shape: bind-only; consumers: V,skew_J,skew_V; Direct frozen dependencie
 K: proof_shape: bind-only; consumers: V,cent_V,line_radius,norm_K,norm_rest_V,norming_central,rest_V,skew_K,skew_V; Direct frozen dependencies: none.
 X: proof_shape: bind-only; consumers: cent_line,line_radius,line_strict,norming_central,result,skew_X; Direct frozen dependencies: none.
 T: proof_shape: bind-only; consumers: norming_central,skew_T; Direct frozen dependencies: none.
-V: proof_shape: bind-only; consumers: bodyNorm_V,bodyNorm_quadratic,cent_V,cent_line,line_radius,line_strict,norm_rest_V,norming_central,norming_traceless,rest_V,result,skew_V; Direct frozen dependencies: none.
+V: proof_shape: bind-only; consumers: bodyNorm_V,bodyNorm_quadratic,cent_V,cent_line,line_radius,line_strict,norm_rest_V,norming_central,norming_traceless,rest_V,result; Direct frozen dependencies: none.
 skew_J: proof_shape: bind-only; consumers: skew_V; Direct frozen dependencies: none.
 skew_K: proof_shape: bind-only; consumers: norming_central,skew_V; Direct frozen dependencies: none.
 skew_X: proof_shape: bind-only; consumers: norming_central,result; Direct frozen dependencies: none.
