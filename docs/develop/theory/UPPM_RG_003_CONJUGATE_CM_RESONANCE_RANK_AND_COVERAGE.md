@@ -1950,3 +1950,560 @@ $$
 对实际 CM 方向 $\omega=\alpha$，原 (17.5) 已提供定理 29.2–31.1 的有限型前提。若实际原好阶段权重在 (31.1) 的某个几何分箱中有发散的最大值和，则定理 31.1 已将它接到同一 $Y$ 上的满测；其证明所需的分隔子族和加权二阶步骤均复用 §§30–31。准确未决桥是能否验证实际权重的 (31.2)，或取得在同一 $Y$ 上足以支撑原加权二阶论证的跨块交能量估计。完整标量预算发散尚未提供其中任一项。不要求每对块都统一渐近独立，也不把既有凝聚充分条件称为必要条件。因此实际 $\nu(R_\gamma(\alpha))$ 仍未裁定。所有事件仍使用原全部有限地方、原 $q_H,h,\rho,M,a_0,Y$ 与同一个成功整数。
 
 ## 追加锚（本行以下为增补区）
+
+## 42. 取得谱右边界支付原负阶段的半端点占用
+
+**定义 42.1（取得边界下的同一路径误差与原过滤）。** 保持定义 35.1、24.1 的全部数据：实际 CM 点对、全部有限地方条件、真实共同周期 $q_H$、原 $h,\rho,M,a_0,Y,\nu$ 及同一个成功整数。固定原过滤参数 $\beta=0,c_0=1,\gamma=1/2$，不替换实际 $q_H$ 或实际方向 $\alpha$。令
+
+$$
+ b_\zeta:=\sup\{\operatorname{Re}\rho:\rho\text{ 是 }\zeta(s)\text{ 的非平凡零点}\}.
+\tag{42.1}
+$$
+
+在 Devin 的归一化下写
+
+$$
+E_\pi(x)=\frac{\log x}{x^{b_\zeta}}
+       \bigl(\pi(x)-\operatorname{Li}(x)\bigr),\qquad
+E_\psi(x)=\frac{\psi(x)-x}{x^{b_\zeta}},\qquad
+E_\theta(x)=\frac{\vartheta(x)-x}{x^{b_\zeta}}.
+\tag{42.2}
+$$
+
+若 $b_\zeta>1/2$ 且上确界被某个零点取得，则必有
+$1/2<b_\zeta<1$。记 $b=b_\zeta$，并令 $m_\tau$ 是零点
+$b+i\tau$ 的重数，$\tau>0$ 取互异的正虚部。
+
+**定理 42.2（取得谱边界的全方向半端点发散）。** 在定义 42.1 的原过滤中，以下两条路线分别成立：
+
+1. RH 路线直接复用定理 35.2：对每个 $\omega\in\mathbb T^2$，
+   $\sum_{j\ge j_0}g_j^{(1/2)}(\omega)=\infty$。
+2. 若 $b_\zeta>1/2$ 且存在 $\rho_0$ 使
+   $\zeta(\rho_0)=0$、$\operatorname{Re}\rho_0=b_\zeta$，则存在
+   $\delta>0$、$p>0$ 及整数 $H_1$，使集合
+
+   $$
+   \mathcal H_{\delta}:=
+   \left\{H\ge H_1:\vartheta(H)-H<-\frac{\delta}{2}H^{b}\right\}
+   \subseteq\mathcal H_-
+   \tag{42.3}
+   $$
+
+   满足
+
+   $$
+   \liminf_{N\to\infty}\frac1{\log N}
+   \sum_{\substack{H\in\mathcal H_{\delta}\\H\le N}}\frac1H
+   \ge p>0,
+   \tag{42.4}
+   $$
+
+   并且对每个方向 $\omega\in\mathbb T^2$，
+
+   $$
+   \boxed{\qquad
+   \sum_{j\ge j_0}g_j^{(1/2)}(\omega)=\infty.
+   \qquad}
+   \tag{42.5}
+   $$
+
+**证明。** Devin 的 Theorem 2.1 与其对 $\zeta$ 的 Theorem 3.1 给出
+$E_\pi$ 的对数极限分布 $\mu_\zeta$。当 $b>1/2$ 时，Theorem 3.1 的均值为
+
+$$
+\mathbb E_{\mu_\zeta}X=0,
+\qquad
+\operatorname{Var}_{\mu_\zeta}X
+ =2\sum_{\tau>0}\frac{m_\tau^2}{b^2+\tau^2}>0.
+\tag{42.6}
+$$
+
+求和按互异的正虚部进行并保留零点重数。正方差严格为正，是因为取得边界的零点不可能位于实轴：$\zeta$ 在 $(0,1)$ 没有实零点，所以某个取得边界的零点给出一个 $\tau>0$。这里没有使用 LI、简单零点、统一谱隙或任何额外的零点独立性假设。
+
+同一篇文献的 Lemma 4.7，式 (9)，在 zeta 情形给出
+$\vartheta(x)=\psi(x)-\sqrt{x}+o(\sqrt{x})$；式 (10) 给出同一实际过程的
+
+$$
+E_\pi(x)=E_\psi(x)-x^{1/2-b}+o(1),
+\qquad
+E_\theta(x)=E_\psi(x)-x^{1/2-b}+o\!\left(x^{1/2-b}\right).
+\tag{42.7}
+$$
+
+因此 $b>1/2$ 时 $E_\theta(x)-E_\pi(x)\to0$。对任意有界 Lipschitz 函数，时间平均的差也趋于零，所以 $E_\theta$ 具有同一个对数极限分布 $\mu_\zeta$，均值为 $0$ 且方差严格为正。
+
+取随机变量 $Z$ 服从 $\mu_\zeta$。因 $Z$ 可积、$\mathbb EZ=0$ 而
+$\operatorname{Var}Z>0$，必有
+$\Pr(Z<0)>0$：否则 $Z\ge0$ 几乎处处，零均值会迫使 $Z=0$ 几乎处处，与正方差矛盾。于是可先取 $d_0>0$ 使
+$\Pr(Z<-d_0)>0$，再在 $(0,d_0)$ 中避开分布的至多可数个原子，得到
+
+$$
+\delta\in(0,d_0),\qquad
+p:=\Pr(Z<-\delta)>0,\qquad
+\Pr(Z=-\delta)=0.
+\tag{42.8}
+$$
+
+由有界 Lipschitz 函数从上下两侧逼近区间指标，并用 Devin 的对数极限分布定义，集合
+
+$$
+\mathcal A_\delta:=
+\{x\ge2:\vartheta(x)-x<-\delta x^b\}
+\tag{42.9}
+$$
+
+满足
+
+$$
+\lim_{N\to\infty}\frac1{\log N}
+\int_2^N\mathbf1_{\mathcal A_\delta}(x)\,\frac{dx}{x}=p.
+\tag{42.10}
+$$
+
+这一步只取得严格负阈值的正对数密度，不把它改写成 $1/2$ 或自然密度。
+
+现在把同一实变量 $x$ 送到唯一的整数 $H=\lfloor x\rfloor$。对充分大的 $x\in\mathcal A_\delta$，有 $\vartheta(H)=\vartheta(x)$，且
+
+$$
+\vartheta(H)-H
+ =\vartheta(x)-x+(x-H)
+ <-\delta x^b+1
+ \le-\delta H^b+1
+ <-\frac\delta2H^b<0.
+\tag{42.11}
+$$
+
+故 $H\in\mathcal H_-$。由于每个整数只接收区间 $[H,H+1)$，且
+$\log(1+1/H)\le1/H$，由 (42.10) 得
+
+$$
+\int_2^N\mathbf1_{\mathcal A_\delta}(x)\,\frac{dx}{x}
+\le O(1)+
+\sum_{\substack{H\in\mathcal H_\delta\\H\le N}}
+\log\left(1+\frac1H\right)
+\le O(1)+
+\sum_{\substack{H\in\mathcal H_\delta\\H\le N}}\frac1H.
+\tag{42.12}
+$$
+
+除以 $\log N$ 并取下极限，得到 (42.4)。这一步保留同一个实际整数；连续集合中的不同 $x$ 没有被误当成不同整数。
+
+最后直接消费定理 34.1 的严格窗口。取其在 $\gamma=1/2$ 下的充分大阈值与常数 $c_{1/2}>0$。窗口 $\mathcal D_H$ 对不同 $H$ 两两不交，并且对所有 $\omega$ 同时有
+
+$$
+\sum_{j\in\mathcal D_H}g_j^{(1/2)}(\omega)
+\ge c_{1/2}H^{-1}
+\qquad(H\in\mathcal H_-,\ H\text{ 充分大}).
+\tag{42.13}
+$$
+
+用 $\mathcal H_\delta\subseteq\mathcal H_-$、非负性及 (42.4)，逐方向得到
+
+$$
+\sum_{j\ge j_0}g_j^{(1/2)}(\omega)
+\ge c_{1/2}
+\sum_{H\in\mathcal H_\delta}\frac1H
+=\infty.
+\tag{42.14}
+$$
+
+这也可准确看作定理 40.1 的 (40.9) 对这些负阶段的应用：端点相位在充分大负阶段已有 $\eta_H=1$。这里只使用已付的端点判据，不另立等价的通用定理。RH 分支则仅引用定理 35.2 的 (35.3)，不重复其证明。$\square$
+
+用白话说，取得的最右零点把真实的 $\pi$、$\psi$、$\vartheta$ 误差放在同一条路径上。Devin 的分布结果说这条路径平均为零却有非零波动，所以它在某个严格负阈值以下占有正的对数时间。因为 $\vartheta$ 是阶梯函数，把每个负的实区间压到 $H=\lfloor x\rfloor$ 后，仍得到具有正下谐和质量的原负整数阶段。每个这样的阶段都由 §34.1 支付至少 $c/H$ 的严格窗口预算，于是原完整几何权重在半端点对每个方向发散。
+
+**来源与边界。** Devin，*Chebyshev’s bias for analytic L-functions*，arXiv v4，[原始 PDF](https://arxiv.org/pdf/1706.06394v4)，DOI [10.1017/S0305004119000100](https://doi.org/10.1017/S0305004119000100)，Theorem 2.1、Theorem 3.1、Lemma 4.7 的 (9)–(10) 及 Remark 7(1) 是本条的 literature-attested 中间输入；不在这里重证成熟的极限分布或 Abel/部分求和步骤。zeta 在 $\operatorname{Re}s=1$ 无零点、在 $(0,1)$ 无实零点只用于说明边界范围与正虚部存在。把该分布接到同一实际 $\vartheta$、原负阶段及 §34.1 窗口，是本卷的 repo-derived 消费者。
+
+本条不主张右边界实际取得，不主张 RH，也不声称取得条件在逻辑上严格弱于 RH。若 $b_\zeta>1/2$ 的上确界未被零点取得（包括 $b_\zeta=1$ 或 $1/2<b_\zeta<1$ 仅从左侧逼近的情形），本条不覆盖它；Devin 的 Remark 7(1) 允许边界零点集合为空且分布退化为 $\delta_0$，固定负阈值因而没有由该输入得到。半端点的无条件结论仍未由本条取得。即使 (42.5) 成立，它只给每个方向的完整几何权重和发散；§41 所列实际 $\alpha$ 的跨块联合桥仍未付，不能推出 $\nu(R_{1/2}(\alpha))$ 的满测结论。
+
+## 追加锚（本行以下为增补区）
+
+## 43. 未取得谱边界的移动余谱单侧尺度与固定幂次障碍
+
+**定义 43.1（同一窗口上的真实删对余谱）。** 保持定义 42.1 的原 CM 点对、全部有限地方、实际 $q_H$、原 $h,\rho,M,a_0,Y,\nu$、实际方向 $\alpha$ 及同一个成功整数；原过滤仍为 $\beta=0,c_0=1,\gamma=1/2$。以下谱变量 $\beta_n$ 是零点实部，不是过滤参数 $\beta$。令 $\mathcal Z$ 为 $\zeta$ 的非平凡零点的不同位置集合，每个位置 $\rho$ 的实际重数记为 $m_\rho$，并假设
+
+$$
+b=b_\zeta=\sup_{\rho\in\mathcal Z}\operatorname{Re}\rho>\frac12,
+\qquad \operatorname{Re}\rho<b\quad(\rho\in\mathcal Z).
+\tag{43.1}
+$$
+
+这里 $b\le1$，允许 $b=1$。取任意真实零点序列及任意截断高度
+
+$$
+\rho_n=\beta_n+iG_n\in\mathcal Z,\qquad
+\beta_n\longrightarrow b,\qquad G_n>0,\qquad G_n\longrightarrow\infty,
+\qquad T_n\ge G_n.
+\tag{43.2}
+$$
+
+以下只取 $\log T_n\ge1$ 的尾部。固定 $0<\kappa<1$，记
+
+$$
+\begin{gathered}
+r=\kappa^{-1},\qquad q=\frac{1+r}{2},\qquad d=\frac{r-1}{2},
+\qquad t_n=\log T_n,\\
+I_n=[t_n,rt_n]=[(q-d)t_n,(q+d)t_n],\qquad
+L_n=(r-1)t_n,\\
+m_n=m_{\rho_n},\qquad A_n=\frac{m_n}{|\rho_n|},\qquad
+\delta_n=b-\beta_n\longrightarrow0.
+\end{gathered}
+\tag{43.3}
+$$
+
+只删除选中的两个位置及其全部重数贡献，定义
+
+$$
+\begin{aligned}
+F_n(y)&=\sum_{\substack{\rho\in\mathcal Z,\ |\operatorname{Im}\rho|\le T_n\\
+                 \rho\notin\{\rho_n,\overline{\rho_n}\}}}
+       \frac{m_\rho}{\rho}\,e^{(\rho-\beta_n)y},\\
+(F_n)_+(y)&=\max\{F_n(y),0\},\qquad
+(F_n)_-(y)=\max\{-F_n(y),0\},\\
+M_n^\pm&=\frac1{L_n}\int_{I_n}(F_n)_\pm(y)^2\,dy.
+\end{aligned}
+\tag{43.4}
+$$
+
+共轭位置具有相同重数，截断及删除均保留共轭性，故 $F_n$ 为实值。求和按不同位置，重数只在系数中出现。不要求 $\rho_n$ 在有限截断内实部最右；其他项可以满足 $\operatorname{Re}\rho>\beta_n$。也不假设简单零点、LI、不同零点的统一频差或随机独立性。窗口始终是 (43.3)，没有改用另一个平均区间。
+
+**定理 43.2（移动删对余谱的两侧对数指数）。** 在定义 43.1 下，$M_n^+$ 与 $M_n^-$ 对充分大的 $n$ 均严格为正，且分别满足
+
+$$
+\boxed{\qquad
+\lim_{n\to\infty}\frac{\log M_n^+}{\log T_n}
+=\lim_{n\to\infty}\frac{\log M_n^-}{\log T_n}=0.
+\qquad}
+\tag{43.5}
+$$
+
+即对每个固定 $\eta>0$，充分大的 $n$ 有 $T_n^{-\eta}\le M_n^\pm\le T_n^\eta$。记法 $T_n^{o(1)}$ 在此只指这个对数指数结论，不指趋于某个正数。
+
+**证明。** 所有非平凡零点满足 $0<\operatorname{Re}\rho<1$。先列出证明使用的经典零点输入及其直接后果。设 $N(U)$ 按重数计数 $0<\operatorname{Im}\rho\le U$ 的零点；无条件局部计数给出
+
+$$
+N(U+1)-N(U)\ll\log(U+2)\quad(U\ge2).
+\tag{43.6}
+$$
+
+此处只引用 Maynard–Pratt，*Half-isolated zeros and zero-density estimates*，[arXiv:2206.11729v2](https://arxiv.org/pdf/2206.11729v2)，印刷页 14、Definition 18 后的这一经典估计，不使用该文的 Hypothesis $\mathcal F$ 或条件零密度结论。由单位高度分组及共轭性，
+
+$$
+\begin{gathered}
+\#\{\rho\in\mathcal Z:|\operatorname{Im}\rho|\le W\}
+\ll W\log(W+2)\quad(W\ge2),\\
+m_\rho\ll\log(|\operatorname{Im}\rho|+2),\qquad
+B(T):=\sum_{\substack{\rho\in\mathcal Z\\|\operatorname{Im}\rho|\le T}}
+                  \frac{m_\rho}{|\rho|}
+\ll\log^2(T+2).
+\end{gathered}
+\tag{43.7}
+$$
+
+最后一个估计的高处贡献由 $\sum_{k\le T}\log(k+2)/k$ 控制，低处只有固定有限个零点。此外存在固定 $\gamma_0>0$ 使每个 $\rho\in\mathcal Z$ 都有 $|\operatorname{Im}\rho|\ge\gamma_0$。事实上对 $0<s<1$，将交错级数两两分组得 $\eta(s)>0$，而 $\eta(s)=(1-2^{1-s})\zeta(s)$，故 $\zeta(s)<0$。完成函数 $\xi$ 在 $[0,1]$ 上无零点，端点值均为 $1/2$；若非平凡零点虚部能趋于零，实部的紧性和 $\xi$ 的连续性会给出该实区间上的零点。这里仅用 $\gamma_0>0$，不要求 $\gamma_0>1$，也没有把它当作不同零点之间的距离。
+
+先固定常数
+
+$$
+0<C<\min\left\{\frac q4,\frac d8,\frac{d^2}{16r}\right\},
+\qquad h=\frac{d^2}{8C}-r>0,
+\qquad c=\min\{C\gamma_0^2,h\}>0.
+\tag{43.8}
+$$
+
+这些常数只依赖固定窗口和真实谱的正虚部间隙，尚未选择任何旧根。对 $t\ge1$ 定义正高斯
+
+$$
+g_t(y)=\frac{e^{-(y-qt)^2/(4Ct)}}{\sqrt{4\pi Ct}},
+\qquad
+\Phi_t(y)=\frac{e^{-(y-qt)^2/(8Ct)}}{\sqrt{8\pi Ct}}.
+\tag{43.9}
+$$
+
+高斯积分给出对所有 $z\in\mathbb C$
+
+$$
+\int_{\mathbb R}e^{zy}g_t(y)\,dy=e^{t(qz+Cz^2)},
+\qquad
+\int_{\mathbb R}e^{zy}\Phi_t(y)\,dy=e^{t(qz+2Cz^2)}.
+\tag{43.10}
+$$
+
+可先对实 $z$ 配方，再由两端关于 $z$ 的整性延拓；高斯保证任意紧 $z$ 集上的积分及各阶导数绝对收敛。
+
+先把整个窗外的代价统一支付。令 $u=y/t$，写
+
+$$
+\Psi(u)=-\frac{(u-q)^2}{8C}+|u|.
+$$
+
+由 (43.8)，在 $u<0$ 上 $\Psi'(u)\ge q/(4C)-1>1$，在 $0<u\le1$ 上 $\Psi'(u)\ge d/(4C)+1>1$；在 $u\ge r$ 上 $\Psi'(u)\le1-d/(4C)<-1$。函数在 $u=0$ 连续，且
+
+$$
+\Psi(1)=1-\frac{d^2}{8C}\le-h,
+\qquad \Psi(r)=r-\frac{d^2}{8C}=-h.
+$$
+
+因而 $u\le1$ 时 $\Psi(u)\le-h-(1-u)$，$u\ge r$ 时 $\Psi(u)\le-h-(u-r)$。直接积分得到
+
+$$
+\begin{aligned}
+\int_{\mathbb R\setminus[t,rt]}e^{|y|}\Phi_t(y)\,dy
+&=\frac{t}{\sqrt{8\pi Ct}}
+  \left(\int_{-\infty}^{1}+\int_r^\infty\right)e^{t\Psi(u)}\,du\\
+&\le\frac{2}{\sqrt{8\pi Ct}}e^{-ht}
+\ll_C e^{-ht}.
+\end{aligned}
+\tag{43.11}
+$$
+
+这里的左尾是全部 $y<t$，明确包括 $0\le y<t$，不是只估计 $y<0$。
+
+对每个参与 $F_n$ 的零点置 $a=\operatorname{Re}\rho-\beta_n$、$v=\operatorname{Im}\rho$。有 $-1<a\le\delta_n$。当 $-1\le a\le0$ 时，$qa+2Ca^2=a(q+2Ca)\le0$；当 $0\le a\le\delta_n$ 时，该式至多 $q\delta_n+2C\delta_n^2$。故充分大的 $n$ 对全部项同时有
+
+$$
+qa+2C(a^2-v^2)
+\le q\delta_n+2C\delta_n^2-2C\gamma_0^2
+\le-C\gamma_0^2.
+$$
+
+利用 (43.7)、(43.10)，可得整轴正核均值的界
+
+$$
+\left|\int_{\mathbb R}F_n(y)\Phi_{t_n}(y)\,dy\right|
+\ll t_n^2 T_n^{-C\gamma_0^2}.
+\tag{43.12}
+$$
+
+另一方面 $|a|<1$ 给出对全部实 $y$ 的包络 $|F_n(y)|\le B(T_n)e^{|y|}$。以 (43.11) 限制回同一窗口，得到
+
+$$
+\left|\int_{I_n}F_n(y)\Phi_{t_n}(y)\,dy\right|
+\ll t_n^2 T_n^{-c}.
+\tag{43.13}
+$$
+
+下面从同一余谱抽取一个固定旧根。取任意真实 $\rho_\ast=\sigma_\ast+i\gamma_\ast$，其中 $\gamma_\ast>0$，使
+
+$$
+0<\varepsilon=b-\sigma_\ast<\frac{c}{2r}.
+\tag{43.14}
+$$
+
+由上确界定义和共轭性，可令 $\varepsilon$ 任意小；每次选定后 $\rho_\ast$ 在整个 $n\to\infty$ 过程中保持固定。对 $W>|\gamma_\ast|+1$ 定义
+
+$$
+P_W(z)=\prod_{\substack{\rho\in\mathcal Z,\ |\operatorname{Im}\rho|\le W\\
+                                  \rho\ne\rho_\ast}}
+        \left(1-\frac{z}{\rho-\rho_\ast}\right),
+\qquad D_W=\deg P_W\ll W\log(W+2).
+\tag{43.15}
+$$
+
+乘积按不同位置，无重数重复因子；分母均非零，$P_W(0)=1$。不要求这些分母有随 $W$ 一致的下界。记
+
+$$
+\chi_t(y)=P_W(-\partial_y)g_t(y).
+\tag{43.16}
+$$
+
+对于每个固定阶数 $j$，直接微分有
+
+$$
+\partial_y^j g_t(y)
+=t^{-j/2}Q_{j,C}\!\left(\frac{y-qt}{\sqrt t}\right)g_t(y),
+\qquad
+\frac{g_t(y)}{\Phi_t(y)}
+=\sqrt2\,e^{-(y-qt)^2/(8Ct)},
+$$
+
+其中 $Q_{j,C}$ 是固定多项式。因此对固定的 $W,\rho_\ast,C$，存在与 $t\ge1$、$y$ 无关的有限常数 $K$，使
+
+$$
+|\chi_t(y)|\le K\Phi_t(y),\qquad
+\int_{\mathbb R}e^{zy}\chi_t(y)\,dy
+=P_W(z)e^{t(qz+Cz^2)}.
+\tag{43.17}
+$$
+
+后一式由有限次分部积分得到，所有边界项均由高斯衰减消失。$K$ 可以依赖实际低根之间的距离，不要求它随 $W$ 一致。
+
+现在先固定任意 $B>0$，再取足够大的固定 $W$，使
+
+$$
+C(W-|\gamma_\ast|)^2>D_W+q+C+B.
+\tag{43.18}
+$$
+
+这种 $W$ 存在，因为 (43.15) 的次数为 $O(W\log(W+2))$，而左边随 $W$ 二次增长。对任一高根 $|\operatorname{Im}\rho|>W$，令 $z=\rho-\rho_\ast$。其变换的指数满足
+
+$$
+\operatorname{Re}(qz+Cz^2)
+\le q+C-C(W-|\gamma_\ast|)^2.
+$$
+
+且在 $|\operatorname{Im}\rho|\le T_n$ 内 $|P_W(\rho-\rho_\ast)|\le K_W T_n^{D_W}$。由 (43.7)，无论高根是否比 $\rho_n$ 更靠右，其总贡献的绝对值至多
+
+$$
+\begin{aligned}
+&\sum_{\substack{\rho\in\mathcal Z\\W<|\operatorname{Im}\rho|\le T_n}}
+\frac{m_\rho}{|\rho|}
+|P_W(\rho-\rho_\ast)|
+\left|e^{t_n(q(\rho-\rho_\ast)+C(\rho-\rho_\ast)^2)}\right|\\
+&\hspace{1cm}\ll_W
+ t_n^2 T_n^{D_W+q+C-C(W-|\gamma_\ast|)^2}
+\ll_W t_n^2 T_n^{-B}.
+\end{aligned}
+\tag{43.19}
+$$
+
+这里保留了次数 $D_W$ 和实部增长 $q+C$ 的全部成本；删除其中的选中共轭对只会减小这个绝对值上界。
+
+充分大的 $n$ 有 $G_n>W$，所以选中对不在低根乘积内，旧根仍保留在 $F_n$。将 (43.17) 应用于每个 $z=\rho-\rho_\ast$，低根除 $\rho_\ast$ 外全部被消去，遂有
+
+$$
+\int_{\mathbb R}e^{(\beta_n-\rho_\ast)y}F_n(y)\chi_{t_n}(y)\,dy
+=\frac{m_{\rho_\ast}}{\rho_\ast}+O_W(t_n^2T_n^{-B}).
+\tag{43.20}
+$$
+
+此式利用的是准确抵消
+$e^{(\beta_n-\rho_\ast)y}e^{(\rho-\beta_n)y}=e^{(\rho-\rho_\ast)y}$，不是假设 $\rho_n$ 为截断最右根。还须将抽取限制回原窗。由 (43.17) 以及 $|\operatorname{Re}\rho-\sigma_\ast|<1$，对全部实 $y$ 有
+
+$$
+\left|e^{(\beta_n-\rho_\ast)y}F_n(y)\chi_{t_n}(y)\right|
+\le K B(T_n)e^{|y|}\Phi_{t_n}(y).
+$$
+
+故同一个 (43.11) 给出整个窗外积分为 $O_W(t_n^2T_n^{-h})$。取例如 $B=1$，得到
+
+$$
+\int_{I_n}e^{(\beta_n-\rho_\ast)y}F_n(y)\chi_{t_n}(y)\,dy
+=\frac{m_{\rho_\ast}}{\rho_\ast}+o(1).
+\tag{43.21}
+$$
+
+误差的指数 $h$ 不依赖旧根或多项式；其常数允许依赖它们。此窗外界包括全部 $0\le y<t_n$。
+
+记 $a_\ast=m_{\rho_\ast}/|\rho_\ast|>0$、$\Phi_n=\Phi_{t_n}$。在 $I_n$ 内，由 $\beta_n\le b$ 及 $y>0$，
+
+$$
+\left|e^{(\beta_n-\rho_\ast)y}\right|
+=e^{(\beta_n-\sigma_\ast)y}\le T_n^{r\varepsilon}.
+$$
+
+由 (43.17)、(43.21)，对充分大的 $n$ 有
+
+$$
+J_n:=\int_{I_n}|F_n(y)|\Phi_n(y)\,dy
+\ge\frac{a_\ast}{2K}T_n^{-r\varepsilon}.
+\tag{43.22}
+$$
+
+令 $U_n^\pm=\int_{I_n}(F_n)_\pm\Phi_n$。实值性与正核给出准确恒等式
+
+$$
+U_n^++U_n^-=J_n,\qquad
+U_n^+-U_n^-=\int_{I_n}F_n\Phi_n.
+$$
+
+(43.13) 与 $r\varepsilon<c$ 说明后一项为 $o(T_n^{-r\varepsilon})$。因此两侧分别有
+
+$$
+U_n^\pm\ge\frac{a_\ast}{8K}T_n^{-r\varepsilon}
+\quad(n\text{ 充分大}).
+\tag{43.23}
+$$
+
+最后，高斯积分给出 $\|\Phi_n\|_2^2=(16\pi Ct_n)^{-1/2}$。Cauchy–Schwarz 于是把正核下界送到同一窗上的未加权能量：
+
+$$
+U_n^\pm\le (L_nM_n^\pm)^{1/2}\|\Phi_n\|_2,
+\qquad
+M_n^\pm\gg_{\rho_\ast,W,C,\kappa}
+ t_n^{-1/2}T_n^{-2r\varepsilon}.
+\tag{43.24}
+$$
+
+上界则不需要消根。在 $I_n$ 上，所有项的实指数至多 $r\delta_nt_n$，所以
+
+$$
+|F_n(y)|\ll t_n^2T_n^{r\delta_n},\qquad
+M_n^\pm\ll t_n^4T_n^{2r\delta_n}.
+\tag{43.25}
+$$
+
+因此两侧的对数指数上极限至多为零；对每个满足 (43.14) 的固定旧根，(43.24) 给出下极限至少为 $-2r\varepsilon$。上确界未取得保证有实部任意接近 $b$ 的旧根，令所选固定旧根的 $\varepsilon\downarrow0$，下极限至少为零，得到 (43.5)。这里的量词顺序是
+
+$$
+\kappa,\gamma_0\ \longrightarrow\ C,h,c
+\longrightarrow\ \rho_\ast,\varepsilon
+\longrightarrow\ B,W,P_W,K
+\longrightarrow\ n\to\infty.
+\tag{43.26}
+$$
+
+任意小的 $\varepsilon$ 对应一次固定旧根的极限；没有把随 $n$ 变化的根、多项式或包络常数当作固定常数。$\square$
+
+用白话说，余谱中可以有比选中根更靠右的根，所以不能逐项称它为衰减尾项。这里先用一个正高斯作平均：所有真实零点都离实轴有正距离，频率衰减便使该有符号平均很小。另一方面，固定一个靠近全局右边界的旧根，用有限多项式消去其他低根，再以高斯压低全部高根，可以从余谱中抽出它的非零系数。整个抽取连同窗外误差都被控制在原窗口上，故余谱的加权绝对值不能太小。绝对值平均不小而有符号平均很小，迫使正侧、负侧各自贡献能量。旧根可以任意接近边界，就使两侧能量都不能按 $T_n$ 的任何固定负幂下降；同时实部上确界给出任何固定正幂以下的上界。这仍允许能量缓慢趋零、缓慢增长或振荡。
+
+**推论 43.3（单对相对能量的必要截断尺度）。** 在定义 43.1 下，令
+
+$$
+\mathcal R_n^\pm:=\frac{M_n^\pm}{A_n^2}
+=\frac1{L_nA_n^2}\int_{I_n}(F_n)_\pm(y)^2\,dy.
+\tag{43.27}
+$$
+
+对两种符号分别有
+
+$$
+\boxed{\qquad
+\frac{\log\mathcal R_n^\pm}{\log T_n}
+=2\frac{\log G_n}{\log T_n}+o(1).
+\qquad}
+\tag{43.28}
+$$
+
+因而任一侧的相对能量最终有界，必须满足
+
+$$
+\frac{\log G_n}{\log T_n}\longrightarrow0.
+\tag{43.29}
+$$
+
+特别地，对任意固定 $1\le P<\infty$，若最终有 $G_n\le T_n\le G_n^P$，则
+
+$$
+\liminf_{n\to\infty}
+\frac{\log\mathcal R_n^\pm}{\log T_n}\ge\frac2P>0,
+\qquad \mathcal R_n^+\longrightarrow\infty,
+\quad \mathcal R_n^-\longrightarrow\infty.
+\tag{43.30}
+$$
+
+**证明。** 实际重数为正整数，由 (43.7) 有 $1\le m_n\ll\log(G_n+2)$；并且 $G_n^2\le|\rho_n|^2\le G_n^2+1$。所以
+
+$$
+\log A_n^{-2}
+=2\log G_n+O(\log\log(G_n+2)).
+\tag{43.31}
+$$
+
+由 $T_n\ge G_n\to\infty$，误差除以 $\log T_n$ 后趋零。(43.5) 加上 (43.31) 即为 (43.28)。若 $\mathcal R_n^\pm\le K_0$ 最终成立，则其对数除以 $\log T_n$ 的上极限至多为零；(43.28) 中 $\log G_n/\log T_n\ge0$，迫使 (43.29)。若有固定幂次上限，则 $\log G_n/\log T_n\ge1/P$，故 (43.30) 成立。等价地，对任意固定 $0<\eta<2/P$，(43.5) 给出
+
+$$
+\mathcal R_n^\pm\gg
+\frac{G_n^2T_n^{-\eta}}{\log^2(G_n+2)}
+\ge\frac{G_n^{2-P\eta}}{\log^2(G_n+2)}\longrightarrow\infty.
+\tag{43.32}
+$$
+
+条件 (43.29) 只是必要条件，未证明它足以使任一相对能量有界。$\square$
+
+用白话说，一个高零点自身的系数至多是常数倍的 $\log G_n/G_n$。余谱的两侧能量虽然在 $T_n$ 的对数指数上都是零，但再除以这个很小的单对系数平方，就会付出接近 $G_n^2$ 的放大。只要截断高度至多是 $G_n$ 的某个固定幂，这个代价就无法抵消。因此任何必须让该相对正部或负部 $L^2$ 成本统一有界的路线，都不能在固定幂次截断内完成。这里排除的是具有此必要步骤的路线，不排除控制小坏集、容许稀少尖峰，或按整个真实谱的自然能量尺度组织估计。
+
+附于定理 43.2 与推论 43.3 的来源与范围如下。高斯积分、其有限阶微分包络、有限多项式消根、单位高度零点计数和 Cauchy–Schwarz 都只是成熟的中间输入；新增的 repo-derived 结论是它们对 (43.1)–(43.4) 这一个移动、删选中共轭对、保留实际重数且不假设截断最右的余谱所给出的两侧尺度及 (43.28)–(43.30)。不主张这些中间工具的原创性或该综合的文献优先性。Devin，*Chebyshev’s bias for analytic L-functions*，[arXiv:1706.06394v4](https://arxiv.org/pdf/1706.06394v4)，Proposition 4.5、印刷页 19–20 给出显式公式与平方尾估计；它不直接给出这里的单侧有限窗口结论，也不被用作原负阶段占用的证明。Johnston–Trudgian，*A round of Pintz to celebrate oscillations in sums*，[arXiv:2511.09978v4](https://arxiv.org/pdf/2511.09978v4)，Theorem 1、印刷页 3–4 是带其解析性、增长及简单零点等条件的 Landau–Pintz 绝对均值结果；它没有包含这里删移动共轭对的两侧窗口断言，亦非本证明的输入。
+
+本条没有判定实际 $b$ 是否满足 (43.1)，不改变 §42 的取得边界条件结论，也不把方法障碍升级为原端点反例。尤其 (43.24) 是随截断变化的谱能量下界，不是同一实际 $\vartheta(H)-H$ 在原负阶段的谐和占用下界；没有从它推出 $\sum_{H\in\mathcal H_-}1/H=\infty$。无条件半端点的 $\sum_H\eta_H/H$ 发散仍未由此支付。能否用同一实际谱的小坏集估计，或整体谱自然尺度的联合估计，接回原负阶段及端点预算，仍是实际未付的桥；本条没有声称这些替代路线已经可行。即使端点标量预算发散，§41 的实际 CM 方向跨块联合桥仍须另付，实际 $\nu(R_{1/2}(\alpha))$ 满测仍未裁定。全部这些边界均针对原实际点对、全部有限地方、同一 $q_H$ 和同一个成功整数，没有以替代过滤或随机模型消除原问题。
+
+## 追加锚（本行以下为增补区）
