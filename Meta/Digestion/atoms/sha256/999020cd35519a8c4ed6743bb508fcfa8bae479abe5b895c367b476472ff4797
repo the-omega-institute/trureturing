@@ -1,0 +1,28 @@
+**定理 25.2（正 Dagger 包的直接后果）。** 对每个对象 $A$，空间
+
+$$
+V_A=\operatorname{Hom}(I,A)
+$$
+
+带有内积
+
+$$
+\langle x,y\rangle=x^\dagger y.
+$$
+
+它是有限维 Hilbert 空间。对归一化准备 $x$ 和效应 $E$，
+
+$$
+p_x(E)=x^\dagger E x
+$$
+
+属于 $[0,1]$；若 $E_i$ 是有限 POVM，$\sum_iE_i=1_A$，则
+
+$$
+\sum_i p_x(E_i)=1.
+$$
+
+**证明。** Dagger 公理给共轭对称性和复线性；$x^\dagger x\ge0$ 且零范数商掉后得到内积空间。有限维自动完备。效应正性给 $0\le x^\dagger E x$ 与 $x^\dagger(1_A-E)x$，故 $0\le p_x(E)\le1$；双线性和单位分解给 POVM 归一化。证毕。
+
+这一定理确实同时产生 Hilbert 比较和 Born 型效应读数，但它的关键前提已经是复向量空间、单位、Dagger、效应序和正性。它是第 23 章正比较状态的范畴化表达，不是更少前提的起源证明。
+
