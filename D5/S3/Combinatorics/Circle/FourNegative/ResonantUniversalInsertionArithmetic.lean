@@ -120,6 +120,13 @@ theorem shifted_source_row {w ell k m : ℕ} (hell : 1 ≤ ell)
   rw [hdnew.2.1, hdold.2.1, heqpow, heqdim, hcharge, hmcast]
   ring
 
+theorem shifted_charge_row {w ell k : ℕ} (j : Fin k) :
+    charge (k + ell) w ⟨j.val + ell, by omega⟩ = charge k w j := by
+  change (let z := (w : ℤ) / (2 : ℤ) ^ (k + ell - 1 - (j.val + ell));
+      z / 2 + z % 2) =
+    (let z := (w : ℤ) / (2 : ℤ) ^ (k - 1 - j.val); z / 2 + z % 2)
+  simp only [show k + ell - 1 - (j.val + ell) = k - 1 - j.val by omega]
+
 theorem canonical_second_relation (m w F Y C u b : ℤ)
     (hrel : Y = 2 * F - C + w * b) :
     m * Y - (m - 1) * C - w * (m - 1) * b + 2 * w * u =
@@ -154,5 +161,141 @@ theorem endpoint_shift_formula (m w q F Y C u b r : ℤ)
               ring
             _ = F + w * m * r := by rw [hr]; ring]
       _ = Y + 2 * w * m * r := by rw [hrel]; ring
+
+theorem resonant_hypotheses_facts {w ell k m : ℕ}
+    (hw : 1 ≤ w) (hell : 1 ≤ ell) (hm : m = 2 ^ ell) (hdiv : w ∣ m - 1)
+    (hlarge : 3 * w + 1 ≤ m) (hk : ell ≤ k) :
+    2 ≤ ell ∧ 2 ≤ k ∧ 0 < w ∧ Odd w ∧ w ≤ 2 ^ (k - 1) - 1 := by
+  have hwpos : 0 < w := hw
+  have hm2 : 4 ≤ m := by
+    rw [hm]
+    have hpow : 2 ^ 1 ≤ 2 ^ ell := Nat.pow_le_pow_right (by decide) hell
+    have hpow' : 2 ^ 1 < 3 * w + 1 := by omega
+    omega
+  have hell2 : 2 ≤ ell := by
+    by_contra h
+    have : ell = 1 := by omega
+    subst ell
+    norm_num [hm] at hm2
+  have hk2 : 2 ≤ k := by
+    have hp : 2 ^ ell ≤ 2 ^ k := Nat.pow_le_pow_right (by decide) hk
+    omega
+  have hoddm : Odd (m - 1) := by
+    rw [hm]
+    have hpow : 2 ^ ell = 2 * 2 ^ (ell - 1) := by
+      calc
+        2 ^ ell = 2 ^ ((ell - 1) + 1) := by congr 1 <;> omega
+        _ = 2 ^ (ell - 1) * 2 := by rw [pow_succ]
+        _ = 2 * 2 ^ (ell - 1) := by omega
+    refine ⟨2 ^ (ell - 1) - 1, ?_⟩
+    omega
+  have hoddw : Odd w := Odd.of_dvd_nat hoddm hdiv
+  have hpowk : 2 ^ k = 2 * 2 ^ (k - 1) := by
+    calc
+      2 ^ k = 2 ^ ((k - 1) + 1) := by congr 1 <;> omega
+      _ = 2 ^ (k - 1) * 2 := by rw [pow_succ]
+      _ = 2 * 2 ^ (k - 1) := by omega
+  have hwroom : w ≤ 2 ^ (k - 1) - 1 := by
+    have hpell : 3 * w + 1 ≤ 2 ^ ell := by simpa [hm] using hlarge
+    have hp : 3 * w + 1 ≤ 2 ^ k :=
+      le_trans hpell (Nat.pow_le_pow_right (by decide) hk)
+    rw [hpowk] at hp
+    have hB : 0 < 2 ^ (k - 1) := by positivity
+    by_contra hn
+    have : 2 ^ (k - 1) ≤ w := by omega
+    omega
+  exact ⟨hell2, hk2, hwpos, hoddw, hwroom⟩
+
+theorem resonant_old_modulus_odd {k : ℕ} (hk : 2 ≤ k) :
+    Odd (2 ^ k - 1) := by
+  have hpow : 2 ^ k = 2 * 2 ^ (k - 1) := by
+    calc
+      2 ^ k = 2 ^ ((k - 1) + 1) := by congr 1 <;> omega
+      _ = 2 ^ (k - 1) * 2 := by rw [pow_succ]
+      _ = 2 * 2 ^ (k - 1) := by omega
+  refine ⟨2 ^ (k - 1) - 1, ?_⟩
+  calc
+    2 ^ k - 1 = 2 * 2 ^ (k - 1) - 1 := by rw [hpow]
+    _ = 2 * (2 ^ (k - 1) - 1) + 1 := by
+      have hB : 0 < 2 ^ (k - 1) := by positivity
+      omega
+
+theorem resonant_low_source_row {w ell k m : ℕ}
+    (hell : 1 ≤ ell) (hm : m = 2 ^ ell) (hroom : w ≤ 2 ^ (k - 1) - 1)
+    (hk : 2 ≤ k) (i : Fin ell) :
+    actualSource (k + ell) w ⟨i.val, by omega⟩ = (w : ℤ) * 2 ^ i.val ∧
+      charge (k + ell) w ⟨i.val, by omega⟩ = 0 := by
+  have hroom' : w ≤ 2 ^ ((k + ell) - 1) - 1 := by
+    have hp : 2 ^ (k - 1) ≤ 2 ^ ((k + ell) - 1) :=
+      Nat.pow_le_pow_right (by decide) (by omega)
+    omega
+  have h := digit_data (k + ell) w (by omega) hroom'
+      ⟨i.val, by omega⟩
+  have hi : i.val ≤ ell - 1 := by omega
+  have hexp : k + ell - 1 - i.val ≥ k := by omega
+  have hpow : (w : ℤ) < 2 ^ (k + ell - 1 - i.val) := by
+    have hp : (2 : ℕ) ^ (k - 1) ≤ 2 ^ (k + ell - 1 - i.val) :=
+      Nat.pow_le_pow_right (by decide) (by omega)
+    have hB : 0 < 2 ^ (k - 1) := by positivity
+    have hwlt : w < 2 ^ (k - 1) := by omega
+    have hpz : (2 : ℤ) ^ (k - 1) ≤ (2 : ℤ) ^ (k + ell - 1 - i.val) := by
+      exact_mod_cast hp
+    exact lt_of_lt_of_le (by exact_mod_cast hwlt) hpz
+  have hz : (w : ℤ) / 2 ^ (k + ell - 1 - i.val) = 0 :=
+    Int.ediv_eq_zero_of_lt (by positivity) hpow
+  have hc : charge (k + ell) w ⟨i.val, by omega⟩ = 0 := by
+    simp [charge, hz]
+  rw [hc] at h
+  refine ⟨?_, hc⟩
+  rw [h.2.1]
+  ring
+
+theorem resonant_low_second_row {w ell k : ℕ}
+    (hell : 1 ≤ ell) (hroom : w ≤ 2 ^ (k - 1) - 1) (hk : 2 ≤ k)
+    (i : Fin ell) :
+    actualSource (k + ell + 1) (2 * w) ⟨i.val, by omega⟩ =
+      (2 * w : ℤ) * 2 ^ i.val := by
+  have hroom' : 2 * w ≤ 2 ^ ((k + ell + 1) - 1) - 1 := by
+    have hp : 2 ^ k ≤ 2 ^ ((k + ell + 1) - 1) :=
+      Nat.pow_le_pow_right (by decide) (by omega)
+    have hw : w ≤ 2 ^ (k - 1) - 1 := hroom
+    have hkpow : 2 ^ k = 2 * 2 ^ (k - 1) := by
+      calc
+        2 ^ k = 2 ^ ((k - 1) + 1) := by congr 1 <;> omega
+        _ = 2 ^ (k - 1) * 2 := by rw [pow_succ]
+        _ = 2 * 2 ^ (k - 1) := by omega
+    omega
+  have h := digit_data (k + ell + 1) (2 * w) (by omega) hroom'
+      ⟨i.val, by omega⟩
+  have hi : i.val ≤ ell - 1 := by omega
+  have hexp : k + ell + 1 - 1 - i.val ≥ k := by omega
+  have hpow : (2 * w : ℤ) < 2 ^ ((k + ell + 1) - 1 - i.val) := by
+    have hp : (2 : ℕ) ^ k ≤ 2 ^ ((k + ell + 1) - 1 - i.val) :=
+      Nat.pow_le_pow_right (by decide) (by omega)
+    have hw : 2 * w < 2 ^ k := by
+      have : 2 * w ≤ 2 * (2 ^ (k - 1) - 1) := Nat.mul_le_mul_left 2 hroom
+      have hkpow : 2 ^ k = 2 * 2 ^ (k - 1) := by
+        calc
+          2 ^ k = 2 ^ ((k - 1) + 1) := by congr 1 <;> omega
+          _ = 2 ^ (k - 1) * 2 := by rw [pow_succ]
+          _ = 2 * 2 ^ (k - 1) := by omega
+      have hB : 0 < 2 ^ (k - 1) := by positivity
+      omega
+    have hp' : (2 : ℤ) ^ k ≤ (2 : ℤ) ^ ((k + ell + 1) - 1 - i.val) := by
+      exact_mod_cast hp
+    exact lt_of_lt_of_le (by exact_mod_cast hw) hp'
+  have hz : (2 * w : ℤ) / 2 ^ ((k + ell + 1) - 1 - i.val) = 0 :=
+    Int.ediv_eq_zero_of_lt (by positivity) hpow
+  have hc : charge (k + ell + 1) (2 * w) ⟨i.val, by omega⟩ = 0 := by
+    dsimp [charge]
+    have hz' : (2 * w : ℤ) / 2 ^ (k + ell - i.val) = 0 := by simpa using hz
+    change ((2 * w : ℤ) / 2 ^ (k + ell - i.val)) / 2 +
+      ((2 * w : ℤ) / 2 ^ (k + ell - i.val)) % 2 = 0
+    rw [hz']
+    norm_num
+  rw [hc] at h
+  rw [h.2.1]
+  norm_num [Nat.cast_mul]
+  ring
 
 end D5.S3.Combinatorics.Circle.FourNegative.ResonantUniversalInsertion
