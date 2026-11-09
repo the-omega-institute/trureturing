@@ -84,6 +84,10 @@ $$\neg (\exists C \in \operatorname{Real},\; \forall n \in \operatorname{Nat},\;
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/BarrettLaplacianSpreadSlopeRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/op-bce20` (refuted) by `D5/S3/Combinatorics/SpectralGraph/BarrettLaplacianSpreadSlopeRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"op-bce20","declaration_gid":"D5/S3/Combinatorics/SpectralGraph/BarrettLaplacianSpreadSlopeRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Wayne Barrett; Thomas R. Cameron; Emily Evans; H. Tracy Hall; Mark Kempton (2022). *On the Laplacian spread of digraphs*. DOI: [10.1016/j.laa.2023.01.016](https://doi.org/10.1016/j.laa.2023.01.016). URL: <https://arxiv.org/abs/2206.15410v1>.

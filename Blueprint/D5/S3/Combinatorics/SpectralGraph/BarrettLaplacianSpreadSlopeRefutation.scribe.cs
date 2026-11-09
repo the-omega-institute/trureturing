@@ -28,13 +28,15 @@ internal sealed class BarrettLaplacianSpreadSlopeRefutationDocument : IScribeDoc
                 "Conjecture 20 in the HTML rendering, numbered Conjecture 6.7 on page 16 of the arXiv v1 PDF, states verbatim: “The bound on the Laplacian spread of digraphs given in (3.2) can be reduced to a linear function in n with a slope of 1.” Section 6, page 14, states: “Note that all conjectures are made for unweighted digraphs.” Equation (3.2) on page 6 is sp(Γ) ≤ 5(n−1)/2. One real intercept must work for all n ≥ 2 and all loopless directed graphs; opposite arcs are allowed. The graph relation has no balance or polygonality assumption."),
             Node("result", "Refutation for every real intercept", new Formula.Not(Parenthesized(ClaimBody())),
                 "The Figure 3 graph has adjacency rows 00100, 10111, 11011, 00000 and 00000. The vectors (2,26,−26,−1,−1) and (0,0,0,1,−1) have coordinate sum zero, squared norms 1358 and 2, and Laplacian quadratic values 6816 and zero before normalization. Independent clusters multiply squared norms by m and quadratic values by m². Compact-sphere bounds compare the two normalized values with the supremum and infimum. Choosing a positive integer m > max(0,679C/13) gives spread > 5m + C. No calculation of every eigenvalue is required.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("op-bce20"), ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role = DescribeRole.Definition, AssessedProvenance? provenance = null) =>
+        DescribeRole role = DescribeRole.Definition, AssessedProvenance? provenance = null,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("bce20-" + name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.FromAuthor(Disp(formula)), provenance ?? AssessedProvenance.FromLiterature(Source),
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula V(string name) => StrataLint.Scribe.FormulaDsl.Id(name);
     private static Formula Nat() => Call("Nat");
