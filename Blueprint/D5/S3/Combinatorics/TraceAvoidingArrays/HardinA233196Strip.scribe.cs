@@ -93,7 +93,7 @@ internal sealed class HardinA233196StripDocument : IScribeDocumentDefinition
                 + "from class two they are (0,0,16). The initial vector is (1,0,0). "
                 + "The last identity annihilates the transient zero eigenvalue and gives "
                 + "the quadratic recurrence on every later continuation."),
-            Thm("result", "result", "Barker's generating function", ResultFormula(),
+            Resolution("result", "result", "Barker's generating function", ResultFormula(),
                 "Let w(n) be Matrix.mulVec (T^n) 1. Splitting a literal array into its "
                 + "first row and remaining rows gives a(n+1)=w(n)(0). The finite "
                 + "certificate and TransferMatrix.scalarRelationShift give "
@@ -114,6 +114,14 @@ internal sealed class HardinA233196StripDocument : IScribeDocumentDefinition
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(Source),
             Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
+
+    private static DocumentBlock Resolution(string id, string name, string title,
+        Formula formula, string prose) =>
+        Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + name), H(title),
+            StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(Source),
+            Blocks(Paragraph(Text(prose))), DescribeRole.Theorem,
+            new OpenProblemResolutionClaim(ProblemSlugRef.Create("hardin233196"),
+                ResolutionKind.Proved));
 
     private static Formula AllowedFormula()
     {
