@@ -143,7 +143,7 @@ open HardinA233175PairStrip
   (Seen allowed advance good finish finish_fst finish_snd good_iff)
 open HardinA233251TriangleStrip (Row colour_bond_iff)
 open D5.S3.Observer.Separation.BooleanRankThreeK4 (beta)
-private abbrev Labels := Fin 3 → Fin 3
+abbrev Labels := Fin 3 → Fin 3
 private def colEquiv : (Fin 6 × Fin 6 × Fin 6) ≃ Row where
   toFun p := ![p.1, p.2.1, p.2.2]
   invFun d := (d 0, d 1, d 2)
@@ -151,24 +151,24 @@ private def colEquiv : (Fin 6 × Fin 6 × Fin 6) ≃ Row where
   right_inv d := by ext i; fin_cases i <;> rfl
 private instance instFintypeCol : Fintype Row :=
   Fintype.ofEquiv (Fin 6 × Fin 6 × Fin 6) colEquiv
-private def seen (s : Fin 3) : Seen := (decide (0 < s.val), decide (1 < s.val))
-private def next (s : Fin 3) (x : Fin 6) : Fin 3 :=
+def seen (s : Fin 3) : Seen := (decide (0 < s.val), decide (1 < s.val))
+def next (s : Fin 3) (x : Fin 6) : Fin 3 :=
   max s (if x = 1 then 1 else if x = 2 then 2 else 0)
-private theorem advance_seen : ∀ s x, allowed (seen s) x →
+theorem advance_seen : ∀ s x, allowed (seen s) x →
     advance (seen s) x = seen (next s x) := by
   decide +kernel
-private theorem next_mono (s : Fin 3) (x : Fin 6) : s ≤ next s x := le_max_left _ _
-private theorem label_next : ∀ s x, allowed (seen s) x → beta x ≤ next s x := by
+theorem next_mono (s : Fin 3) (x : Fin 6) : s ≤ next s x := le_max_left _ _
+theorem label_next : ∀ s x, allowed (seen s) x → beta x ≤ next s x := by
   decide +kernel
-private def endLevel : {n : ℕ} → Fin 3 → (Fin n → Fin 6) → Fin 3
+def endLevel : {n : ℕ} → Fin 3 → (Fin n → Fin 6) → Fin 3
   | 0, s, _ => s
   | _ + 1, s, f => endLevel (next s (f 0)) (Fin.tail f)
-private theorem endLevel_mono {n : ℕ} (s : Fin 3) (f : Fin n → Fin 6) :
+theorem endLevel_mono {n : ℕ} (s : Fin 3) (f : Fin n → Fin 6) :
     s ≤ endLevel s f := by
   induction n generalizing s with
   | zero => exact le_refl _
   | succ n ih => exact le_trans (next_mono s (f 0)) (ih _ _)
-private theorem finish_seen {n : ℕ} (s : Fin 3) (f : Fin n → Fin 6)
+theorem finish_seen {n : ℕ} (s : Fin 3) (f : Fin n → Fin 6)
     (h : good (seen s) f) : finish (seen s) f = seen (endLevel s f) := by
   induction n generalizing s with
   | zero => rfl
@@ -251,7 +251,7 @@ private instance instDecidableLegal {n : ℕ} (A : Fin 3 × Fin n → Fin 6) :
 def a (n : ℕ) : ℕ :=
   (Finset.univ.filter (fun A : Fin 3 × Fin n → Fin 6 => Legal A)).card
 attribute [local irreducible] a
-private def pairs (c : Row) : Labels := fun i => beta (c i)
+def pairs (c : Row) : Labels := fun i => beta (c i)
 private def compatible (p : Labels) (c : Row) : Prop :=
   ∀ r s : Fin 3, (r.val ≤ s.val + 1 ∧ s.val ≤ r.val + 1) → beta (c s) ≠ p r
 private instance instDecidableCompatible (p : Labels) (c : Row) :
@@ -513,7 +513,7 @@ private def links : Array (Array ℕ) :=
   6560],#[],#[6398,6560],#[6326,6344,6380,6398,6488,6506,6542,6560],#[6326,6488],#[],#[6326],#[
   6326,6335],#[6443,6452],#[],#[6443],#[],#[6326,6344],#[6326],#[6362,6443],#[6326,6407],#[6326,
   6335,6353,6362,6407,6416,6434,6443]]
-private def digit (k d : ℕ) : Fin 3 := ⟨k / d % 3, Nat.mod_lt _ (by omega)⟩
+def digit (k d : ℕ) : Fin 3 := ⟨k / d % 3, Nat.mod_lt _ (by omega)⟩
 private def key (t b c : Fin 3) (p : Labels) : ℕ :=
   243*t.val + 81*b.val + 27*c.val + 9*(p 0).val + 3*(p 1).val + (p 2).val
 private theorem digit_key : ∀ (t b c : Fin 3) (p : Labels),
@@ -554,7 +554,7 @@ private def fastStep (w : Fin 3 → Fin 3 → Fin 3 → Fin 3 → Fin 3 → Labe
   ((links.getD i #[]).toList.map fun e => ((e % 9 : ℕ) : ℤ) *
     w q r (digit (e / 9) 243) (digit (e / 9) 81) (digit (e / 9) 27)
       ![digit (e / 9) 9, digit (e / 9) 3, digit (e / 9) 1]).sum
-private theorem weighted_sum (es : List ℕ) (g : ℕ → ℤ) :
+theorem weighted_sum (es : List ℕ) (g : ℕ → ℤ) :
     ((es.flatMap fun e => List.replicate (e % 9) (e / 9)).map g).sum =
       (es.map fun e => ((e % 9 : ℕ) : ℤ) * g (e / 9)).sum := by
   induction es with
