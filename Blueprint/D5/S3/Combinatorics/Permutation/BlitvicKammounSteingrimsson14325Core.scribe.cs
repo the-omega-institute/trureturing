@@ -84,5 +84,5 @@ internal sealed class BlitvicKammounSteingrimsson14325CoreDocument : IScribeDocu
     private static Formula CountFormula() => Disp(All("j", Natural,
         Imply(Seq(D(1), Sp, Leq, Sp, F.Id("j")),
             Equal(Call("count", F.Id("pattern"), D(2), F.Id("j")),
-                Call("Nat.card", Call("GridPacking", F.Id("j")))))));
+                Call("card", Call("GridPacking", F.Id("j")))))));
 }

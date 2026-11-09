@@ -155,8 +155,14 @@ Writing $a_t,b_t,c_t$ for positions $3t,3t+1,3t+2$, respectively, each
 window is equivalent to
 $a_t<a_{t+1}<c_t<b_t<b_{t+1}$. These chains force every rank between
 $a_0$ and $b_j$. In an actual permutation those two positions therefore
-have ranks zero and $3j+1$. This establishes the endpoint constraints,
-without claiming a cardinality formula.
+have ranks zero and $3j+1$. Deleting these positions and subtracting one
+from every remaining rank gives an exact bijection with the grid $Q_j$.
+Its columns are $x_t=a_{t+1}<y_t=c_t<z_t=b_t$, and its two horizontal
+chains are the increasing $x_t$ and the increasing $z_t$. In the Lean
+indexing, $q(3t+2),q(3t+1),q(3t)$ are $x_t,y_t,z_t$. The inverse adds
+one to every grid rank and restores the two forced endpoints. Thus
+`count_eq_grid` identifies $A_j$ with `Nat.card (GridPacking j)` for every
+$j\ge1$, with no symmetry or labeling factor.
 
 The transfer module defines $b_1(k)=1$ and
 $b_{n+1}(k)=\sum_{r=1}^k r b_n(r+2)$ on all natural arguments.
@@ -169,8 +175,9 @@ b_{n+1}(2k+1)=-\sum_{r=1}^k b_n(2r+1)
 $$
 
 for $n\ge1$ and $k\ge0$. Identifying $A_j$ with $b_j(3)$ still requires
-the exact endpoint-removal and first-column insertion/deletion
-bijections. The simultaneous formal-series solution, its Catalan
+the first-column insertion/deletion bijection on the grid, including
+the first-$z$ state and its insertion multiplicities. The simultaneous
+formal-series solution, its Catalan
 coefficient identity, and both binary exception-set characterizations
 remain separate mathematical obligations. Neither modular assertion
 for the actual count is claimed as a result here. These contributions

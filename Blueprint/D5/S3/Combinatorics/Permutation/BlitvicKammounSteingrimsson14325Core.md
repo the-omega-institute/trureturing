@@ -2,7 +2,7 @@
 
 ## Abstract
 
-The prescribed 14325 comparisons force the first and last ranks for every positive packing size.
+The prescribed 14325 permutations correspond exactly to rank assignments on the endpoint-deleted grid.
 
 The zero-based pattern is (0,3,2,1,4), overlap is two, and stride is three. The source length 5+(j−1)·3 equals 3j+2 for j≥1. Packs is the existing predicate requiring every strict pairwise comparison in every prescribed window. There is no avoidance condition or quotient, and extra occurrences are allowed.
 
@@ -36,10 +36,25 @@ $$\forall j: \mathbb{N}, (1 \leq j) \implies \forall w: Perm\left(Fin\left(5 + \
 
 For every natural j≥1 and every actual permutation w satisfying Packs, w(0)=0 and w(3j+1)=3j+1. Surjectivity supplies a position with rank zero and one with the greatest rank; packing_bounds forces the two endpoint equalities. Thus deleting these endpoints removes two forced ranks, without any symmetry or labeling factor.
 
-The remaining grid has xₜ=aₜ₊₁<yₜ=cₜ<zₜ=bₜ, with increasing x and z chains. An exact rank-assignment/grid bijection and first-z insertion/deletion bijection are still required to identify the actual cardinality with the transfer rows. The present theorems prove endpoint constraints and do not claim that cardinality identity, either modular conclusion, or completion of issue 28504.
+**Theorem 1.3 (Exact cardinality after removing endpoints).**
+
+$$\forall j: \mathbb{N}, (1 \leq j) \implies count\left(pattern, 2, j\right) = card\left(GridPacking\left(j\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Permutation/BlitvicKammounSteingrimsson14325Core.count_eq_grid` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Natasha Blitvić, Mohammed Slim Kammoun, and Einar Steingrímsson (2026). *Permutations, Pattern Covers, Posets and Positivity: Part I: Patterns and Posets*. DOI: [10.48550/arXiv.2610.29846](https://doi.org/10.48550/arXiv.2610.29846). URL: <https://arxiv.org/abs/2610.29846v1>.
+
+*Commentary.*
+
+For every natural j≥1, the actual count equals the number of grid rank assignments. GridPacking consists of permutations q of 3j ranks, indexed so that q(3t+2), q(3t+1), q(3t) are xₜ, yₜ, zₜ. Each column satisfies xₜ<yₜ<zₜ, and both x and z increase across successive columns. The map packingGridEquiv removes positions 0 and 3j+1 and subtracts one from each remaining rank. Its inverse adds one to every grid rank and inserts the forced ranks 0 and 3j+1. The column and horizontal inequalities recover all four comparisons of every window, including the first and last windows. The two maps are inverse on actual permutations, so no labeling or symmetry factor occurs.
+
+A first-z insertion/deletion bijection is still required to identify this grid cardinality with the transfer rows. Neither modular conclusion for the actual count follows from the endpoint-deletion equality alone.
 
 ## References
 
+- Truth anchor: `D5/S3/Combinatorics/Permutation/BlitvicKammounSteingrimsson14325Core.count_eq_grid`
 - Truth anchor: `D5/S3/Combinatorics/Permutation/BlitvicKammounSteingrimsson14325Core.packing_bounds`
 - Truth anchor: `D5/S3/Combinatorics/Permutation/BlitvicKammounSteingrimsson14325Core.packing_extrema`
 - Dependency: [D5/S3/Combinatorics/Permutation/PackingMaximumRefutation](PackingMaximumRefutation.md)
