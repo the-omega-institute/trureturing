@@ -324,6 +324,23 @@ def shift {X : Type*} [PseudoMetricSpace X] (f : X → X) (δ : ℝ) (n : ℤ) :
     (continuous_apply (j - n)).comp
       (continuous_subtype_val : Continuous (fun x : ClosedPseudoOrbit f δ => x.1)))).subtype_mk _
 
+private theorem shift_zpow {X : Type*} [PseudoMetricSpace X] (f : X → X)
+    (δ : ℝ) (n : ℤ) : (shift f δ 1) ^ n = shift f δ n := by
+  induction n using Int.induction_on with
+  | zero =>
+    ext x j
+    simp [shift]
+  | succ n ih =>
+    rw [zpow_add, zpow_one, ih]
+    ext x j
+    change x.1 ((j + (n : ℤ)) + 1) = x.1 (j + ((n : ℤ) + 1))
+    rw [add_assoc]
+  | pred n ih =>
+    rw [show -(n : ℤ) - 1 = -(n : ℤ) + -1 by omega, zpow_add, zpow_neg_one, ih]
+    ext x j
+    change x.1 ((j + -(n : ℤ)) - 1) = x.1 (j + (-(n : ℤ) + -1))
+    simp only [sub_eq_add_neg, add_assoc]
+
 /-- The weak crossing convention retains both charts at a zero seam. -/
 def Crossing (v : ℤ → ℝ) (j : ℤ) : Prop := v j ≤ 0 ∧ 0 ≤ v (j + 1)
 
@@ -1097,7 +1114,7 @@ structure IntegerSelector {X : Type*} [PseudoMetricSpace X] (f : X ≃ₜ X)
   closed_domain : IsClosed {x : ℤ → X | ∀ j : ℤ, dist (f (x j)) (x (j + 1)) ≤ δ}
   fixes_orbit : ∀ z, map (orbit f δ hδ z) = z
   integer_equivariant : ∀ n : ℤ, ∀ x : ClosedPseudoOrbit f δ,
-    map (shift f δ n x) = (f ^ n) (map x)
+    map (((shift f δ 1) ^ n) x) = (f ^ n) (map x)
 
 private def restrictIntegerSelector {X : Type*} [PseudoMetricSpace X] (f : X ≃ₜ X)
     (δ ε : ℝ) (hδ : 0 ≤ δ) (hε : 0 ≤ ε) (hδε : δ ≤ ε)
@@ -1111,7 +1128,9 @@ private def restrictIntegerSelector {X : Type*} [PseudoMetricSpace X] (f : X ≃
     apply congrArg R.map
     exact Subtype.ext rfl
   integer_equivariant n x := by
-    convert R.integer_equivariant n ⟨x.1, fun j => (x.2 j).trans hδε⟩ using 1
+    have he := R.integer_equivariant n ⟨x.1, fun j => (x.2 j).trans hδε⟩
+    rw [shift_zpow] at he ⊢
+    convert he using 1
     apply congrArg R.map
     exact Subtype.ext rfl
 
@@ -1149,6 +1168,7 @@ theorem compact_lec_crossing_selector [CompactSpace K] [TopologicalSpace.Metriza
       exact selector_orbit H z
     integer_equivariant := by
       intro n x
+      rw [shift_zpow]
       have he : liftHistory (shift vertical δstar n x) = translateHistory n (liftHistory x) :=
         Subtype.ext rfl
       change selector (liftHistory _) = (vertical ^ n) (selector (liftHistory x))

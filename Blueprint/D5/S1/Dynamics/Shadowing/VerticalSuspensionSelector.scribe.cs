@@ -17,12 +17,24 @@ internal sealed class VerticalSuspensionSelectorDocument : IScribeDocumentDefini
                 DeclarationHandle.Create(Owner + "compact_lec_crossing_selector"),
                 H("Every compatible metric and every sufficiently small closed tolerance"),
                 StatementSource.FromAuthor(Seq(
-                    F.Id("CompactMetrizableNonempty"), Open, F.Id("K"), Close, Sp, Land, Sp,
-                    F.Id("LocalEquiconnection"), Open, F.Id("K"), Close, Sp, Rightarrow, Sp,
-                    Forall, Sp, F.Id("d"), Sp, F.Id("CompatibleMetric"), Comma, Sp,
+                    Forall, Sp, F.Id("K"), Comma, Sp,
+                    F.Id("CompactMetrizableNonempty"), Open, F.Id("K"), Close, Sp, Rightarrow, Sp,
+                    Forall, Sp, F.Id("H"), Colon, Sp,
+                    F.Id("LocalEquiconnection"), Open, F.Id("K"), Close, Comma, Sp,
+                    Forall, Sp, F.Id("d"), Colon, Sp, F.Id("CompatibleMetric"),
+                    Open, F.Id("Suspension"), Open, F.Id("K"), Close, Close, Comma, Sp,
                     Exists, Sp, F.Id("deltaStar"), Gt, D(0), Comma, Sp,
                     Exists, Sp, F.Id("Rstar"), Colon, Sp, F.Id("IntegerSelector"),
-                    Open, F.Id("f"), Comma, F.Id("deltaStar"), Close)),
+                    Open, F.Id("vertical"), Comma, F.Id("deltaStar"), Close, Comma, Sp,
+                    Forall, Sp, F.Id("delta"), Comma, Sp,
+                    Open, D(0), Lt, F.Id("delta"), Sp, Land, Sp,
+                    F.Id("delta"), Le, F.Id("deltaStar"), Close, Sp, Rightarrow, Sp,
+                    Exists, Sp, F.Id("R"), Colon, Sp, F.Id("IntegerSelector"),
+                    Open, F.Id("vertical"), Comma, F.Id("delta"), Close, Comma, Sp,
+                    Forall, Sp, F.Id("x"), InMacro, F.Id("ClosedPseudoOrbit"),
+                    Open, F.Id("vertical"), Comma, F.Id("delta"), Close, Comma, Sp,
+                    F.Id("R"), Open, F.Id("x"), Close, Eq,
+                    F.Id("Rstar"), Open, F.Id("inclusion"), Open, F.Id("x"), Close, Close)),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
@@ -42,8 +54,9 @@ internal sealed class VerticalSuspensionSelectorDocument : IScribeDocumentDefini
                         "Pδ is the subtype of ALL functions x:ℤ→M satisfying "
                         + "d(f(x(j)),x(j+1))≤δ for EVERY integer j, with the full product subspace "
                         + "topology. It is closed. Translation by n is an actual homeomorphism of "
-                        + "this same domain. IntegerSelector requires a continuous map R:Pδ→M, "
-                        + "R(orb(z))=z for every z, and R(shift(n,x))=f^n(R(x)) for every integer "
+                        + "this same domain and is proved to equal σ^n for σ=shift(1). "
+                        + "IntegerSelector requires a continuous map R:Pδ→M, "
+                        + "R(orb(z))=z for every z, and R(σ^n(x))=f^n(R(x)) for every integer "
                         + "n and every x. All negative times and errors equal to δ are retained.")),
                     Paragraph(Text(
                         "There is δstar>0 and such an Rstar on Pδstar. For every 0<δ≤δstar, "
