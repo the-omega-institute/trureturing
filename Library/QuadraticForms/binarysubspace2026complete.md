@@ -43,7 +43,11 @@ obligations are catalogue_covers, catalogue_proper, clique_valid and
 clique_adjacent. Historical Lean 4.33.0 provenance includes propext,
 Classical.choice, Quot.sound and four native-evaluation axioms. Current
 compilation must print the actual current transitive closure; a successful
-source transfer does not erase this trust boundary. Generic Catalogue.complete
+source transfer does not erase this historical trust boundary. Current source
+requests `decide +kernel` for the same four predicates and unchanged supplied
+tables; this requests ordinary kernel reduction instead of adding a new native
+axiom. It establishes no current success until compilation and axiom reporting
+actually complete. Generic Catalogue.complete
 and Catalogue.colorable have the standard axiom boundary.
 
 PR1 has the separate exact line result twelve, including its weighted

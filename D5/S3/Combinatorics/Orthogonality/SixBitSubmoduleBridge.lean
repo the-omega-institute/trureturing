@@ -6,7 +6,7 @@
    utility: none
    digest: Exact XOR/coordinate, finite-space/submodule and orthogonality graph equivalences. -/
 
-import D5.S3.Combinatorics.Orthogonality.SixBitCatalogueVerification
+import D5.S3.Combinatorics.Orthogonality.SixBitCatalogue
 import D5.S3.Combinatorics.Orthogonality.NikandishClique
 import Mathlib.Algebra.Module.TransferInstance
 

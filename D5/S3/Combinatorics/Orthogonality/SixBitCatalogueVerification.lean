@@ -13,9 +13,16 @@ set_option maxHeartbeats 0
 
 namespace BinaryOrthogonality
 
-theorem catalogue_covers : dimensionSix.Covers := by native_decide
+/- The supplied Lean 4.33.0 source used native_decide for the following
+four obligations. Its recorded provenance includes the four generated
+catalogue_covers/catalogue_proper/clique_valid/clique_adjacent native axioms.
+That historical evidence is retained in the scientific handoff. Current
+admission instead requires ordinary kernel reduction of these same exact
+predicates and unchanged tables; no native-evaluation axiom is added here.
+These are pending proofs until the current scoped build actually succeeds. -/
+theorem catalogue_covers : dimensionSix.Covers := by decide +kernel
 
-theorem catalogue_proper : dimensionSix.Proper := by native_decide
+theorem catalogue_proper : dimensionSix.Proper := by decide +kernel
 
 theorem fifteen_colorable : graph.Colorable 15 :=
   dimensionSix.colorable catalogue_covers catalogue_proper
@@ -28,7 +35,7 @@ instance (U : Finset Vector) : Decidable (IsSpace U) :=
 
 theorem clique_valid : ∀ i : Fin 15,
     IsSpace (dimensionSix.space (cliqueIndex i)) ∧
-    dimensionSix.space (cliqueIndex i) ≠ {0} := by native_decide
+    dimensionSix.space (cliqueIndex i) ≠ {0} := by decide +kernel
 
 def cliqueVertex (i : Fin 15) : Vertex :=
   ⟨dimensionSix.space (cliqueIndex i), clique_valid i⟩
@@ -36,7 +43,7 @@ def cliqueVertex (i : Fin 15) : Vertex :=
 instance : DecidableRel graph.Adj := fun _ _ => inferInstanceAs (Decidable (_ ∧ _))
 
 theorem clique_adjacent : ∀ i j : Fin 15, i ≠ j →
-    graph.Adj (cliqueVertex i) (cliqueVertex j) := by native_decide
+    graph.Adj (cliqueVertex i) (cliqueVertex j) := by decide +kernel
 
 /-- The full graph on all nonzero binary subspaces in six coordinates. -/
 theorem chromatic_number_six : graph.chromaticNumber = 15 := by
