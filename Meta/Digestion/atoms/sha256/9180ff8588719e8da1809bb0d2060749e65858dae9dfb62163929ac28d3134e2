@@ -1,0 +1,11 @@
+同时要求：
+
+1. **结合相容：** 三系统的两种括号化 $(AB)C$ 与 $A(BC)$ 由保持比较的自然等距同构连接；
+2. **交换相容：** 交换 $A,B$ 的映射保持比较并满足交换两次为恒等；
+3. **局部比较完备：** 有限维中，若两个整体状态对所有产品效应都给出相同读数，则它们相同：
+   $$
+   \operatorname{Tr}\bigl((\rho-\sigma)(E\otimes F)\bigr)=0
+   \quad\text{对所有 }E,F
+   \quad\Longrightarrow\quad \rho=\sigma.
+   $$
+
