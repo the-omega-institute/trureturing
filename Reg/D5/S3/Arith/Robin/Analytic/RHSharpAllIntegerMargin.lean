@@ -2,7 +2,7 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Arith.Robin.Analytic.RHSharpAllIntegerMargin
 import Reg.Support.DependentFamily
 
-/- Exact whole-law source mirror with the original F/T readouts and empty
+/-! Exact whole-law source mirror with the original F/T readouts and empty
    anchors. The actual law, literal source bridge, observational dependence
    and implication from whole-family rejection to RH are proved below.
    Full four-slot registration is not supplied. -/

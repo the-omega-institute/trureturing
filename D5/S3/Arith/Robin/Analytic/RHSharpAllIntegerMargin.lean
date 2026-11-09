@@ -36,6 +36,8 @@ open D5.S3.Arith.Robin.OriginalEndpointPrimeTail (largestPrime)
 open D5.S3.Arith.Robin.Analytic.RHSharpArithmeticEnvelope (D)
 open D5.S3.Arith.Robin.PriceRecord.RHSharpOriginalRecordMargin
   (K original_record_sharp_lower_endpoint)
+open D5.S3.Arith.Robin.PriceRecord.FullArithmeticCorrectionSecondOrder
+  (price_record_full_arithmetic_correction_second_order)
 open D5.S3.Weil.GronwallLowerEnvelope (robinLogMargin)
 open D5.S3.Weil.ZeroData.ActualReciprocalSquareBounds (firstLiMass firstLiMass_split)
 
@@ -144,8 +146,7 @@ private lemma record_clocks {α : Type*} {l : Filter α}
       exact_mod_cast largestPrime_le (by have := hm x; omega)
     exact hx.trans (Real.log_le_log hp hPm)
   obtain ⟨P0, _, hfull⟩ :=
-    PriceRecord.FullArithmeticCorrectionSecondOrder.
-      price_record_full_arithmetic_correction_second_order 1 zero_lt_one
+    price_record_full_arithmetic_correction_second_order 1 zero_lt_one
   have hbound : ∀ᶠ x in l,
       |Real.log (largestPrime (m x) : ℝ) *
         (D (largestPrime (m x) : ℝ) * C (m x) - 2 * Real.sqrt 2) +
