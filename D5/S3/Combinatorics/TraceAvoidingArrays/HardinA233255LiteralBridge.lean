@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Combinatorics/TraceAvoidingArrays/HardinA233255LiteralBridge
    mirror-E: none
    anchors: []
-   utility: kind=consumer; basis=consumer=D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255PairTransfer.literal_pair_bridge
+   utility: none
    digest: Exact scanner fibres for literal seven-column complementary-pair arrays. -/
 
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip

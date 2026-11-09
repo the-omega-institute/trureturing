@@ -3,8 +3,8 @@
    mirror-B: D5/B/S3/Combinatorics/TraceAvoidingArrays/HardinA233255PairTransfer
    mirror-E: none
    anchors: []
-   utility: kind=consumer; basis=consumer=D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255PairTransfer.literal_pair_bridge
-   digest: Literal positive-height seven-column arrays and their exact scanner-weighted pair transfer. -/
+   utility: none
+   digest: Literal positive-height arrays and their exact scanner-weighted pair transfer. -/
 
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255LiteralBridge
 
@@ -133,8 +133,18 @@ private theorem first_fibres (H : Seen → PairRow → ℤ) :
     intro c _
     have hb : (fun j => beta ((Fin.cons 0 c : Row) j)) =
         Fin.cons 0 (fun j => beta (c j)) := Fin.comp_cons beta 0 c
-    simp [good, finish, HardinA233175PairStrip.allowed,
-      HardinA233175PairStrip.advance, hb]
+    have ha : HardinA233175PairStrip.allowed (false, false) (0 : Fin 6) := by decide +kernel
+    have hadv : HardinA233175PairStrip.advance (false, false) (0 : Fin 6) =
+        (false, false) := by decide +kernel
+    have hg : good (false, false) (Fin.cons 0 c) ↔ good (false, false) c := by
+      change (HardinA233175PairStrip.allowed (false, false) 0 ∧
+        good (HardinA233175PairStrip.advance (false, false) 0) c) ↔ good (false, false) c
+      rw [hadv]
+      simp only [ha, true_and]
+    have hf : finish (false, false) (Fin.cons 0 c) = finish (false, false) c := by
+      change finish (HardinA233175PairStrip.advance (false, false) 0) c = _
+      rw [hadv]
+    simp only [hg, hf, hb, eq_self, true_and]
   · intro x _ hx
     simp [hx]
   · simp
