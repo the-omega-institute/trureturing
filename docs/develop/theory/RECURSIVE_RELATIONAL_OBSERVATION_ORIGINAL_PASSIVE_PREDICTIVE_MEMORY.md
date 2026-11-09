@@ -2100,3 +2100,499 @@ At a finite actual completion, the first inequality in (10.26) is the triangle i
 The event-TV normalization agrees with the joint-versus-product total-variation definition of absolute regularity in McDonald, Shalizi and Schervish, [*Estimating beta-mixing coefficients*](https://arxiv.org/html/1109.5998v3), §2.1; their stationary-sample estimator is not used. Ornee and Sun, [*Sampling and Remote Estimation for the Ornstein--Uhlenbeck Process through Queues*](https://arxiv.org/html/1902.03552v4), assumes an Ornstein--Uhlenbeck source and an installed FCFS channel with iid service times; neither source nor service is transferred. Strong Markov conditioning, TV contraction and convexity, Cauchy--Schwarz, spectral dominated convergence, Markov's inequality and countable union bounds are mature intermediates. The contact-to-one-gap composition (10.6), the generated guard (10.13), and the independent-completion row transfer (10.20)--(10.26) are source-specific ordinary deductions and have no fresh Lean verification or worldwide novelty claim.
 
 ## 追加锚（本行以下为增补区）
+
+## 11. Original B-controlled completion and the ready-row consumer
+
+**Definition 11.1 (the retained source and a frozen gate context).**
+Fix an eligible deterministic OPPM9/10 description, its gate $T$
+from (9.2), and an integer horizon $H\ge1$. Retain Assumption 1.1,
+(1.1)--(1.2), and Definition 9.1 for every finite $a,\eta,d>0$
+and every permitted repaired Borel emission. Thus the source is
+still $G=H^1\times\mathbb R$, with its unit-source normalization,
+full complex non-Friedrichs endpoint $A=\rho C$, entire operator
+and form domains and source trace. Its full conservative process,
+not its Friedrichs killed part, starts at $e$. The first read is
+at $2d$, later gaps are $d$, and the original labels $0,1,3,B$
+have fresh conditionally independent read noise, with $f_B=1/4$.
+Use the same $m$, $P_d$, $\beta_d$, and complete-future kernels
+as Definitions 9.1 and 10.1. Suppose the earned bounds are
+
+$$
+\beta_d\le b^+,
+\qquad
+\mathbb E_e\operatorname{TV}(\pi_{Y_{<T}}m,m)\le\eta^+.
+\tag{11.1}
+$$
+
+The gate is almost surely finite by Proposition 6.6. Write
+$\mathsf S$ for the allowed standard Borel pre-gate service state,
+including all relevant pre-gate service randomness. Requiring that
+it carries no source information beyond the stopped full history
+has the following precise meaning. For almost every context
+$\gamma=(u,s)=(Y_{<T},\mathsf S)$, the conditional hidden/read
+future is the original future started at the next-read state
+with law $\pi_um$. Let $\mathbb P^{\rm read}_\nu$ denote this
+joint law of the sampled hidden states and all future labels when
+the next-read state has law $\nu$, transitions are $P_d$, and
+emissions are the original $f_y$. If an already lawful service
+uses auxiliary randomness, require a random element $U$ in a
+standard Borel space with conditional law $\lambda_\gamma$ such
+that
+
+$$
+\mathcal L_e\bigl((X_i,V_i)_{i\ge0},U\mid\gamma\bigr)
+ =\mathbb P^{\rm read}_{\pi_um}\otimes\lambda_\gamma,
+\quad
+X_i=Z_{(T+i+2)d},\quad V_i=Y_{T+i}.
+\tag{11.2}
+$$
+
+In particular the service randomness is independent of the future
+source and original read outcomes conditional on $\gamma$; it
+cannot encode hidden state or unrevealed label distinctions.
+Lawful successive random choices driven by independent randomness
+and the B-prefix can be represented by such a tape. This is a
+condition on an existing service, not permission to add one.
+For a deterministic B-rule, $U$ is a singleton and no auxiliary
+randomness is needed.
+
+For a frozen context use the mathematical comparison
+$Q_\gamma=\mathbb P^{\rm read}_m\otimes\lambda_\gamma$.
+Its label marginal is exactly $Q_\emptyset^\infty$ from (9.1);
+only the initial hidden law has changed. Set
+
+$$
+I_i=\mathbf1_{\{V_i=B\}},\qquad
+W_j=V_0\cdots V_{j-1},\quad W_0=\emptyset,\qquad
+D_{j,H}(w)=\operatorname{TV}(Q_w^H,Q_\emptyset^H).
+\tag{11.3}
+$$
+
+Every $Q_w^H$ conditions on the full original word $w$, including
+all $0/1/3$ distinctions. Neither the predictive history nor the
+retained record is replaced by the B-mask. The comparison has
+no stationary preparation or exact-law query interpretation.
+
+**Definition 11.2 (the entire B-controlled completion condition).**
+For each $j\in\mathbb N_0$, let $\phi_j(\gamma,r,b)$ be a
+measurable $\{0,1\}$-valued function of the frozen context, lawful
+randomness $r$, and a mask prefix $b\in\{0,1\}^j$. The actual
+completion index must satisfy, under the original joint law,
+
+$$
+\begin{gathered}
+J=\inf\{j\in\mathbb N_0:
+       \phi_j(\gamma,U,I_{<j})=1\},\qquad\inf\varnothing=\infty,\\
+\{J=j\}=\{\phi_j(\gamma,U,I_{<j})=1\}
+ \cap\bigcap_{0\le \ell<j}\{\phi_\ell(\gamma,U,I_{<\ell})=0\},\\
+\{J=\infty\}=\bigcap_{j\ge0}
+                 \{\phi_j(\gamma,U,I_{<j})=0\}.
+\end{gathered}
+\tag{11.4}
+$$
+
+Use these same functions to define $J$ under $Q_\gamma$. They
+are the complete rule for whether and when the designated actual
+output completes, including noncompletion. Every finite completion
+event is measurable before the next read at cut $T+j$; at $j=0$
+it uses no post-gate label. Each test may use only service random
+choices already lawfully available at that cut. Representing them
+by a tape supplies neither advance access to future service draws
+nor permission for additional random choices.
+
+Equality with the actual completion index is a substantive timing
+premise. A mask-controlled readiness flag, an independent duration
+of just one service component, or a last B stop test is insufficient
+when other work, stalls, failures or output timing make the actual
+$J$ depend on a post-gate $0/1/3$ distinction. Two full futures
+with the same mask and tape must give the same entire $J$, including
+whether it is infinite. Conditioning away unsuccessful executions
+does not meet (11.4). Full records may still be captured and used;
+the requirement is that their non-B distinctions do not determine
+this completion index.
+
+**Theorem 11.3 (original B-controlled completion transfers the row).**
+Under Definitions 11.1--11.2, for almost every frozen context and
+its comparison law $Q=Q_\gamma$,
+
+$$
+\mathbb E_Q\!\left[
+ \mathbf1_{\{J<\infty\}}D_{J,H}(W_J)\right]
+ \le\beta_d\,\mathbb P_Q(1\le J<\infty)\le\beta_d.
+\tag{11.5}
+$$
+
+The same statement holds after mixing these comparison laws over
+the original distribution of contexts. In the original $e$-start
+law,
+
+$$
+\mathbb E_e\!\left[
+ \mathbf1_{\{J<\infty\}}D_{J,H}(W_J)\right]
+ \le b^++\eta^+,
+\tag{11.6}
+$$
+
+and, for every $\chi>0$,
+
+$$
+\mathbb P_e\{J<\infty,\ D_{J,H}(W_J)>\chi\}
+ \le\frac{b^++\eta^+}{\chi}.
+\tag{11.7}
+$$
+
+Here and below the displayed random variable is defined to be
+zero on $\{J=\infty\}$ without evaluating $W_\infty$ or
+$D_{\infty,H}$. At $J=0$ it is also zero, since
+$Q_{W_0}^H=Q_\emptyset^H$. No assertion is conditioned on finite
+completion, and (11.7) is not a simultaneous row bound for all $j$.
+
+*Proof.* Fix a context $\gamma$. Conditional on the entire hidden
+path and $U$, the original constant emission and fresh read noise
+give, for each $n$ and $b\in\{0,1\}^n$,
+
+$$
+Q(I_{<n}=b\mid(X_i)_{i\ge0},U)
+ =\prod_{i=0}^{n-1}(1/4)^{b_i}(3/4)^{1-b_i}.
+\tag{11.8}
+$$
+
+This follows by summing the other three original emissions to
+$3/4$ at each non-B position. Thus the entire mask is iid
+Bernoulli$(1/4)$ and independent of the hidden path and the tape,
+by cylinder uniqueness. The same statement holds with any initial
+hidden law, hence also conditionally in the actual law (11.2).
+It does not assert independence of the full label sequence from
+the hidden path, or independence of $J$ from that sequence.
+
+Put $a_d(x)=\operatorname{TV}(P_d(x,\cdot),m)$, so
+$0\le a_d\le1$ and $\int a_d\,dm=\beta_d$. For $j\ge1$,
+let $\nu_w$ be the stationary conditional law of the last emitted
+hidden state $X_{j-1}$ given the full word $W_j=w$. The next-read
+state has law $\nu_wP_d$. The one-gap contraction and convexity
+argument (10.17)--(10.18), before its final averaging, gives
+
+$$
+D_{j,H}(w)\le\int_G a_d(x)\,\nu_w(dx).
+\tag{11.9}
+$$
+
+The one gap here is the actual transition from $X_{j-1}$ to
+$X_j$. At $j=0$ there is no last emitted state; its zero loss
+has already been treated separately.
+
+Integrate the finite completion decision over the independent
+tape. By (11.4), there is a function $a_j:\{0,1\}^j\to[0,1]$
+with
+$Q(J=j\mid W_j)=a_j(I_{<j})$. It is the $\lambda_\gamma$ mass
+of tapes for which all earlier tests are zero and test $j$ is
+one. In particular this identity accounts for every earlier
+completion possibility. Using (11.9), the conditional law
+$\nu_{W_j}$, and then (11.8), gives
+
+$$
+\begin{aligned}
+\mathbb E_Q[\mathbf1_{\{J=j\}}D_{j,H}(W_j)]
+ &=\mathbb E_Q[a_j(I_{<j})D_{j,H}(W_j)]\\
+ &\le\mathbb E_Q[a_j(I_{<j})a_d(X_{j-1})]\\
+ &=\mathbb E_Q[a_j(I_{<j})]\int_G a_d\,dm\\
+ &=\beta_d\,Q(J=j).
+\end{aligned}
+\tag{11.10}
+$$
+
+Stationarity supplies $\mathcal L_Q(X_{j-1})=m$; mask independence
+justifies the factorization even though the full word and $J$
+are dependent. Sum (11.10) over $j\ge1$ by nonnegativity. The
+events $\{J=j\}$ are disjoint, not an unweighted union over
+possible indices. Their masses sum to $Q(1\le J<\infty)$.
+Together with the zero contributions at $0$ and infinity this
+proves (11.5), and integration proves its mixed-context version.
+
+For the original-law transfer define the measurable loss
+$F_\gamma(v,r)$ by the countable finite-index expression on the
+left of (11.5), with zero value if the rule never completes.
+It belongs to $[0,1]$. By (11.2) the conditional actual label/tape
+law is $R_u^\infty\otimes\lambda_\gamma$, whereas the comparison
+law is $Q_\emptyset^\infty\otimes\lambda_\gamma$. Definition 9.1
+and kernel contraction give
+
+$$
+\begin{aligned}
+\operatorname{TV}(R_u^\infty\otimes\lambda_\gamma,
+                  Q_\emptyset^\infty\otimes\lambda_\gamma)
+ &\le\operatorname{TV}(\pi_um,m),\\
+\mathbb E_e[F_\gamma\mid\gamma]
+ &\le\beta_d Q_\gamma(1\le J<\infty)
+       +\operatorname{TV}(\pi_um,m).
+\end{aligned}
+\tag{11.11}
+$$
+
+For the second line use (11.5) and the bounded-function form of
+event-TV. The law of $\mathsf S$ adds no hidden information by
+(11.2), so averaging the last term is precisely the expectation
+in (11.1), not a posterior conditioned on completion. Bound the
+probability term by one and use the earned $\beta_d\le b^+$.
+This proves (11.6). Markov's inequality for this same nonnegative
+loss proves (11.7). No row conditioning on the tape or the event
+$\{J=j\}$ has replaced the full-word row $Q_{W_j}^H$. $\square$
+
+**Corollary 11.4 (the OPPM10.6 common event with an additional timing
+route).** Predeclare a countable family of deterministic descriptions
+$\kappa$ as in Corollary 10.6. Each fixes its finite horizon, gate
+start and gate rule, positive rational
+$\chi_\kappa,\epsilon_\kappa,\delta_{{\rm row},\kappa},
+\delta_{{\rm dyn},\kappa},c_{-,\kappa},l_\kappa$,
+its rational guard values $b^+_\kappa,\eta^+_\kappa$, and its
+complete execution and completion rule, including noncompletion.
+All possible finite acquisition/certificate outcomes used for
+selection are accounted for by deterministic descriptions.
+The declared completion rules are random variables on the common
+original probability space with their already lawful service
+randomness; no independence between different descriptions is
+required.
+Assume
+$\sum_\kappa(\delta_{{\rm dyn},\kappa}+
+\delta_{{\rm row},\kappa})<\infty$.
+
+Keep the inherited paid acquisition event $\mathcal A_\tau$ with
+probability at least $1-\alpha$. On this event each selected
+description has earned $c_{-,\kappa}\le c$, $l_\kappa\le\tau$,
+and a genuinely acquired normalized row $\rho_\kappa$ on
+$\mathcal L^{H_\kappa}$, ready at its actual gate $T_\kappa$, with
+
+$$
+\operatorname{TV}(\rho_\kappa,Q_\emptyset^{H_\kappa})
+ \le\zeta_\kappa.
+\tag{11.12}
+$$
+
+The generated bounds remain those of Proposition 9.3 and
+Theorem 10.2, with the same reference names, earned parameters
+and original source. For the fixed source, call a deterministic
+description source-valid when its rational source bounds are
+true, its generated guards satisfy (11.1), and its complete rule
+satisfies either the full independent-$J_\kappa$ premise of
+Theorem 10.5 or Definitions 11.1--11.2. Require each selected
+description, on $\mathcal A_\tau$, to belong to this deterministic
+source-valid family and to pass the same strict tests
+
+$$
+b^+_\kappa+\eta^+_\kappa
+ <\chi_\kappa\delta_{{\rm row},\kappa},
+\qquad
+2\eta^+_\kappa
+ <\epsilon_\kappa\delta_{{\rm dyn},\kappa}.
+\tag{11.13}
+$$
+
+There is one original-law event $\mathcal G_B$ of probability
+at least
+
+$$
+1-\alpha-\sum_\kappa
+ (\delta_{{\rm dyn},\kappa}+\delta_{{\rm row},\kappa})
+\tag{11.14}
+$$
+
+on which the following conditional consumer holds for every
+selected eligible description. Suppose its lawful executor
+actually completes at a finite causal cut
+$C=T_\kappa+J_\kappa$, has captured, retained and assimilated
+every original label $Y_{<C}$, and lawfully outputs a normalized
+row $\rho_{\rm out}$ at horizon $H_\kappa$ with a genuinely
+generated additional error certificate
+$\operatorname{TV}(\rho_{\rm out},\rho_\kappa)
+\le\xi_{\rm actual}$. Then both inequalities (10.26) hold:
+
+$$
+\begin{aligned}
+\operatorname{TV}(Q_{W_{J_\kappa}}^{H_\kappa},\rho_{\rm out})
+ &\le\chi_\kappa+\zeta_\kappa+\xi_{\rm actual},\\
+\operatorname{TV}(R_C^{H_\kappa},\rho_{\rm out})
+ &\le\epsilon_\kappa+\chi_\kappa+\zeta_\kappa
+                  +\xi_{\rm actual}.
+\end{aligned}
+\tag{11.15}
+$$
+
+All additional confidence requirements for acquisition, readiness
+or generated output error must already be included in
+$\mathcal A_\tau$ and charged to $\alpha$. Lawful output includes
+its actual serialization or an already accepted representation
+with its complete backing/permission contract. A row acquired only
+after the gate, an unprocessed archive, or just a mathematical
+normalized vector does not satisfy these premises.
+
+*Proof.* Fix the original source for the analysis. Intersect over
+the deterministic source-valid descriptions passing (11.13),
+rather than a random post-selection list. For each such description let
+$\mathcal D_\kappa$ be OPPM9's complete-future all-cut event from
+Theorem 9.2 and Proposition 9.3. Its failure is less than
+$\delta_{{\rm dyn},\kappa}$ by (11.13). Let
+
+$$
+\mathcal E_\kappa=
+ \{J_\kappa=\infty\}\cup
+ \{J_\kappa<\infty,
+    D_{J_\kappa,H_\kappa}(W_{J_\kappa})\le\chi_\kappa\}.
+\tag{11.16}
+$$
+
+Its failure is less than $\delta_{{\rm row},\kappa}$ by
+Theorem 10.5 for the independent route and by (11.7) for the
+B-controlled route. Include the almost-sure finite-gate events,
+and set $\mathcal G_B$ equal to their intersection with
+$\mathcal A_\tau$ and all these $\mathcal D_\kappa,
+\mathcal E_\kappa$. A countable union bound proves (11.14).
+No independence of calibration, row acquisition, branch selection
+and gate observations is used. On $\mathcal A_\tau$ the selected
+description is one of the source-valid descriptions in this
+intersection; its full execution rule was fixed before its
+post-gate suffix, rather than fitted to that suffix.
+
+At actual finite completion, $\mathcal E_\kappa$ gives the row
+error $D_{J_\kappa,H_\kappa}(W_{J_\kappa})\le\chi_\kappa$.
+For $J_\kappa=0$ this error is exactly zero. Combine it with
+(11.12) and the generated $\xi_{\rm actual}$ by the triangle
+inequality to obtain the first line of (11.15). The full-history
+target at $C$ is $R_{Y_{<T_\kappa}W_{J_\kappa}}^{H_\kappa}$,
+by Theorem 2.1. On $\mathcal D_\kappa$ its distance from
+$Q_{W_{J_\kappa}}^{H_\kappa}$ is at most $\epsilon_\kappa$,
+even at this selected finite index. A second triangle inequality
+proves the second line. At $J_\kappa=\infty$ there is no completed
+output to which either line applies. $\square$
+
+**Proposition 11.5 (a strict timing-class witness in the original
+labels).** For a frozen context with no auxiliary randomness the
+label stopping rule
+
+$$
+J_B=\inf\{j\ge1:Y_{T+j-1}=B\}
+\tag{11.17}
+$$
+
+satisfies Definition 11.2. Under both its stationary comparison
+and the actual conditional future law,
+
+$$
+\mathbb P(J_B>n\mid\gamma)=(3/4)^n\quad(n\ge0),\qquad
+\mathbb P(J_B=j\mid\gamma)=(3/4)^{j-1}/4\quad(j\ge1),
+\qquad\mathbb E[J_B\mid\gamma]=4.
+\tag{11.18}
+$$
+
+Nevertheless it violates the full-label independence premise of
+Theorem 10.5. Hence allowing either that old timing route or the
+B-controlled route is a strict enlargement of the old timing
+class. This is a witness about mathematical timing rules, with
+no serializer attached.
+
+*Proof.* Take $\phi_0=0$ and
+$\phi_j(\gamma,r,b)=b_{j-1}$ for $j\ge1$ in (11.4). Formula
+(11.8), valid for the actual conditional future as well as the
+comparison, gives (11.18), including zero mass at infinity.
+The event $A=\{J_B=1\}=\{Y_T=B\}$ belongs to both the sigma
+algebra of $J_B$ and that of the entire future full labels.
+Its conditional probability is $1/4$. Independence would imply
+$1/4=(1/4)^2$, a contradiction. Thus a rule determined by the
+full labels through their B-mask is still dependent on those
+full labels. This proof uses the original emission law, not an
+auxiliary coin installed as a new source operation.
+
+Noncompletion is also genuinely included in the new class. Take
+$\phi_0=0$, $\phi_1=b_0$, and $\phi_j=0$ for $j\ge2$.
+This mathematical rule returns index $1$ if the first label is B
+and infinity otherwise. Its comparison masses are $1/4$ and
+$3/4$, respectively, and (11.5) bounds its joint error by
+$\beta_d/4$. Removing the infinity branch by conditioning would
+be a different assertion and is not used. Both constructions
+keep every observed non-B value in their full words.
+
+The geometric rule has no finite worst-case label index. Its
+almost-sure finite index and mean four do not establish capture,
+assimilation, serialization, lawful output or physical finite
+completion of any executor. If an executor is proposed, equality
+of its entire actual $J$ with (11.17) is a further obligation;
+a B readiness flag alone proves no such equality. $\square$
+
+**Definition 11.6 (the reduced premise, retained routes and paid
+boundary).** Corollary 11.4 reduces OPPM10's full-label-independent
+completion premise: a complete causal rule driven only by original
+B-mask prefixes and appropriately independent already lawful
+randomness suffices as an alternative. It does not supply that
+rule as an actual service. The independent-$J$ route of
+Theorem 10.5 remains valid. OPPM9's suffix-indexed acquired-row
+route (9.24)--(9.25) also remains valid, including for completion
+rules satisfying neither timing condition, whenever its actual
+current row and generated error are lawfully supplied. Definitions
+9.5 and 10.7 retain their other limits; the additional timing
+route here removes no other premise.
+
+The row event (11.7) is joint with actual finite completion, not
+a guarantee conditional on completion. It has no all-$J$ pathwise
+row conclusion. OPPM9's separate dynamic event is all-cut; only
+that event, not the new row event, permits arbitrary later-cut
+substitution. The ready row in (11.12) must be genuinely acquired,
+normalized, in its declared finite domain, and ready at the actual
+gate. Proposition 10.3's generated nonempty cofinal guarded source
+class is unchanged. No claim is made that a fixed source meets
+every tolerance, or that the guard changes the original gap $d$.
+
+The mask is used only for timing. Every full label through an
+actual completion cut remains captured, retained and assimilated;
+a full archive $Y_{<C}$ still has $C$ original labels and $2C$
+payload bits in the inherited coding. Addresses, counters, timing
+registers, mask extraction, all prior acquired rows, permissions,
+menus, backing, reference descriptions/replies, precisions,
+arithmetic, working storage, copies and output remain charged.
+Shared backing is counted once and distinct copies separately.
+All observations arriving during reference work, computation,
+retention, assimilation and output are included through the actual
+completion, together with write/buffer costs, rescans and latency.
+The full records are not deleted merely because the timing rule
+forgets their non-B distinctions.
+
+These are the bills and limits of Definitions 8.3 and 9.5,
+[OWGR, Definition 21.1 and Proposition 21.2],
+[SRO, Definition 21.1], and [FEA, Definition 16.2]. Those contracts
+supply no installed operation rate relative to $d$. Neither the
+B-mask calculation nor the geometric label law supplies throughput,
+buffering, a write/capture service, an atomic output, an accepted
+pointer interface, a source delay/reset, extra read, point sensor
+or controller. The analytic source contact of §9 is still not an
+observable Return. The finite executor, the full growing-suffix
+assimilation and lawful output interfaces remain separate
+obligations. Space/continuation/boundary/memory mutual recovery
+remains open beyond the stated row/timing reduction. No native
+unbounded finite ordered $\alpha/\beta$ tree, actual $\rho$
+replacement or literal root/address operation is identified with
+this diffusion; no diffusion/native/AURIC identity is supplied.
+
+**Definition 11.7 (source correspondence and attribution).** The
+new timing input is exactly the original constant $f_B=1/4$ and
+the fresh conditional read law (1.2). Theorem 2.1 supplies the
+full-history posterior, and Lemma 10.4 supplies the one-gap
+posterior inequality before averaging. Lemma 6.3 and Proposition
+6.6 supply the original stopped-gate interpretation; Definition
+9.1, Theorem 9.2 and Proposition 9.3 supply the complete-future
+comparison and earned $\eta^+$. Theorem 10.2 supplies the earned
+$b^+$ on the unchanged source, and Corollary 10.6 supplies the
+ready-row consumer extended in (11.15).
+
+The full conservative contact process, its distinct killed domain
+and original source-start density remain those of
+[CONTACT, Theorems 116.3--116.4, (116.11), and Theorem 117.2].
+No contact calculation is replaced by a Bernoulli source model:
+the Bernoulli mask is an actual marginal of its original read law.
+Conditional expectation, cylinder uniqueness, TV contraction and
+convexity, Markov's inequality and countable union bounds are
+established intermediates. The source-specific deductions are
+the selected-row factorization (11.10), its actual-law transfer
+(11.5)--(11.7), the extended consumer (11.14)--(11.15), and the
+strict original-label witness (11.17)--(11.18). They are ordinary
+mathematical deductions with no fresh Lean verification or
+worldwide novelty claim.
+
+## 追加锚（本行以下为增补区）
