@@ -8,8 +8,9 @@
 
 /-
 admission_basis: open-problem-resolution (#28505; Proved)
-escape_witness: v_eq_w, the all-height boundary-class reduction by induction.
-The single-row scanner fibres supply the numerical premises of that induction.
+escape_witness: none; every declaration is bind-only. The all-height reduction v_eq_w
+instantiates Function.Semiconj.iterate_right at the boundary-class map after the
+finite one-step premises (scanner fibres, row_counts, valid_next) are normalized.
 Direct frozen dependencies (declaration statement_ids):
 D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.Seen
 statement_id: sha256:db13d94501d24f27e6e69604bb633af95ff3309c5698815c44e12d2e52739fce
@@ -68,11 +69,11 @@ initial_valid: proof_shape=bind-only; consumers=a_eq_w
 initial_counts: proof_shape=bind-only; consumers=finite_certificate
 finite_certificate: proof_shape=bind-only; consumers=v_eq_w, a_eq_w
 w: proof_shape=bind-only; consumers=v_eq_w, a_eq_w, recurrence, result
-v_eq_w: proof_shape=content; consumers=a_eq_w
-a_eq_w: proof_shape=content; consumers=recurrence, result
-recurrence: proof_shape=content; consumers=result
+v_eq_w: proof_shape=bind-only; consumers=a_eq_w
+a_eq_w: proof_shape=bind-only; consumers=recurrence, result
+recurrence: proof_shape=bind-only; consumers=result
 zero_count: proof_shape=bind-only; consumers=result
-result: proof_shape=content; consumers=terminal result (#28505)
+result: proof_shape=bind-only; consumers=terminal result (#28505)
 -/
 
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip
