@@ -1,0 +1,8 @@
+**推论 491.7（多尺度归一化）。** 设 $0<\theta_1<\dots<\theta_m<1$，$m$ 固定，(490.2) 在包含每个 $\theta_j$ 的开指数带上成立，$g_j\in L^1(0,1)$ 实值，$c_j\in\mathbb R$。则
+
+$$
+\int_X^{2X}\Bigl(\sum_{j=1}^mc_j\frac{\mathcal T_{\theta_j,g_j}(x)}{\sqrt{X^{1-\theta_j}\log X}}\Bigr)^2\frac{dx}x\longrightarrow\sum_{j=1}^mc_j^2\bigl(2^{1-\theta_j}-1\bigr)Q(g_j).
+$$
+
+证明。展开有限平方：对角项由定理 490.6 收敛；非对角项由定理 491.6(i) 趋于零。证毕。
+
