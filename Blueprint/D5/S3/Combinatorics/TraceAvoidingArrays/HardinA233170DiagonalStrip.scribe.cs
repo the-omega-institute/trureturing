@@ -59,7 +59,7 @@ internal sealed class HardinA233170DiagonalStripDocument : IScribeDocumentDefini
         var numerator = Mul(Mul(D(2), x), Add(Sub(D(5), Mul(D(2,4,0), x)), Mul(D(2,0,4,8), Pow(x, D(2)))));
         var denominator = Mul(Sub(D(1), Mul(D(1,6), x)),
             Add(Sub(D(1), Mul(D(1,1,2), x)), Mul(D(1,0,2,4), Pow(x, D(2)))));
-        return Seq(Eq(series, Mul(numerator, Pow(Par(denominator), Seq(Neg, Sp, D(1))))),
+        return Seq(Eq(series, Mul(numerator, Pow(Par(denominator), Num(-1)))),
             Sp, Name("in"), Sp, Call("PowerSeries", V("Rat")));
     }
 
