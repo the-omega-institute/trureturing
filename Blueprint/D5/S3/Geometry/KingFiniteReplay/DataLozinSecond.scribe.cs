@@ -1,6 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Geometry;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Geometry.KingFiniteReplay;
 
 internal sealed class KingFiniteReplayDataLozinSecondDocument : IScribeDocumentDefinition
 {
