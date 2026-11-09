@@ -67,7 +67,7 @@ internal sealed class ZagrebInequalityDocument : IScribeDocumentDefinition
         Formula V = F.Id("V");
         Formula product = LambdaOf("u", V, LambdaOf("v", V, Product()));
         Formula symmetry = LambdaOf("u", V, LambdaOf("v", V,
-            new Formula.Apply(Seq(Operatorname, Grp(Seq(F.Id("mul"), Underscore, F.Id("comm")))),
+            new Formula.Apply(Seq(Operatorname, Grp(Seq(F.Id("mul"), Underscore, Grp(F.Id("comm"))))),
                 [Degree(F.Id("u")), Degree(F.Id("v"))])));
         return Disp(GraphArguments(Equal(
             Typed(Call("endpointProduct", F.Id("g")), new Formula.TypeArrow(Call("Sym2", V), RealType())),

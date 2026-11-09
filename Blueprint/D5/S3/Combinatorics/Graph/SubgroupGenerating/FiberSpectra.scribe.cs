@@ -25,11 +25,11 @@ internal sealed class FiberSpectraDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("sgb-fiberspectra-degree-pair"),
                 DeclarationHandle.Create(Owner + "degree_pair"), H("The degree of every ordered pair"),
                 StatementSource.FromAuthor(DegreeFormula(true)), AssessedProvenance.FromRepo(Source),
-                Blocks(Paragraph(Text("For every finite group and every ordered pair p, with the original Fintype instance for its neighbor-set subtype, the degree of Sum.inl p in the literal sgbGraph is one. Repeated entries are allowed. This is the original supplier declaration; its proof is unchanged."))), DescribeRole.Theorem),
+                Blocks(Paragraph(Text("For every finite group and every ordered pair p, with the original Fintype instance for its neighbor-set subtype, the degree of Sum.inl p in the literal sgbGraph is one. Repeated entries are allowed."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("sgb-fiberspectra-degree-subgroup"),
                 DeclarationHandle.Create(Owner + "degree_subgroup"), H("The degree of every subgroup"),
                 StatementSource.FromAuthor(DegreeFormula(false)), AssessedProvenance.FromRepo(Source),
-                Blocks(Paragraph(Text("For every finite group and every subgroup H, with the original Fintype instance for its neighbor-set subtype, the degree of Sum.inr H in the literal sgbGraph is pairCount H. Every subgroup is included, also when its generating-pair fiber is empty. This is the original supplier declaration; its proof is unchanged."))), DescribeRole.Theorem),
+                Blocks(Paragraph(Text("For every finite group and every subgroup H, with the original Fintype instance for its neighbor-set subtype, the degree of Sum.inr H in the literal sgbGraph is pairCount H. Every subgroup is included, also when its generating-pair fiber is empty."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("sgb-fiberspectra-edge-count"),
                 DeclarationHandle.Create(Owner + "edge_count"), H("One actual edge per ordered pair"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
@@ -47,8 +47,7 @@ internal sealed class FiberSpectraDocument : IScribeDocumentDefinition
         Formula G = F.Id("G"), x = F.Id(pair ? "p" : "H");
         Formula vertex = QCall("Sum", pair ? "inl" : "inr", x);
         Formula graph = Call("sgbGraph", G);
-        Formula domain = pair ? QCall("Prod", "mkType", G, G) : Call("Subgroup", G);
-        if (pair) domain = Seq(G, Times, G);
+        Formula domain = pair ? Seq(G, Sp, Times, Sp, G) : Call("Subgroup", G);
         Formula equality = new Formula.Relation(
             QCall("SimpleGraph", "degree", graph, vertex), FormulaRelationOperator.Equal,
             pair ? D(1) : Call("pairCount", x));

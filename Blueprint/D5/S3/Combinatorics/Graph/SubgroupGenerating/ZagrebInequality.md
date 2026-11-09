@@ -6,7 +6,7 @@ The Zagreb inequality for the complete subgroup-generating graph.
 
 **Definition 1.1 (First Zagreb index).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/SubgroupGenerating/ZagrebInequality.firstZagreb`
+$$\forall V \in \operatorname{Type},\; \forall finiteV \in \operatorname{Fintype}\left(V\right),\; \forall g \in \operatorname{SimpleGraph}\left(V\right),\; (\operatorname{firstZagreb}\left(g\right):\mathbb{R}) = \operatorname{Finset}.\operatorname{sum}\left((\operatorname{Finset}.\operatorname{univ}:\operatorname{Finset}\left(V\right)), \operatorname{fun} (v:V) \mapsto (\operatorname{SimpleGraph}.\operatorname{degree}\left(g, v\right):\mathbb{R})^{2}\right)$$
 
 *Formalization.* `D5/S3/Combinatorics/Graph/SubgroupGenerating/ZagrebInequality.firstZagreb` (`✓ std3`).
 
@@ -18,7 +18,7 @@ For a finite simple graph, the first Zagreb index is the real sum of squared deg
 
 **Definition 1.2 (Unordered endpoint product).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/SubgroupGenerating/ZagrebInequality.endpointProduct`
+$$\forall V \in \operatorname{Type},\; \forall finiteV \in \operatorname{Fintype}\left(V\right),\; \forall g \in \operatorname{SimpleGraph}\left(V\right),\; (\operatorname{endpointProduct}\left(g\right):\operatorname{Sym2}\left(V\right) \to \mathbb{R}) = \operatorname{Sym2}.\operatorname{lift}\left(\langle\operatorname{fun} (u:V) \mapsto \operatorname{fun} (v:V) \mapsto (\operatorname{SimpleGraph}.\operatorname{degree}\left(g, u\right):\mathbb{R}) \cdot (\operatorname{SimpleGraph}.\operatorname{degree}\left(g, v\right):\mathbb{R}), \operatorname{fun} (u:V) \mapsto \operatorname{fun} (v:V) \mapsto \operatorname{mul_{comm}}\left((\operatorname{SimpleGraph}.\operatorname{degree}\left(g, u\right):\mathbb{R}), (\operatorname{SimpleGraph}.\operatorname{degree}\left(g, v\right):\mathbb{R})\right)\rangle\right)$$
 
 *Formalization.* `D5/S3/Combinatorics/Graph/SubgroupGenerating/ZagrebInequality.endpointProduct` (`✓ std3`).
 
@@ -32,7 +32,7 @@ Multiplication of endpoint degrees is symmetric, so it defines a real function o
 
 **Definition 1.3 (Second Zagreb index).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/SubgroupGenerating/ZagrebInequality.secondZagreb`
+$$\forall V \in \operatorname{Type},\; \forall finiteV \in \operatorname{Fintype}\left(V\right),\; \forall g \in \operatorname{SimpleGraph}\left(V\right),\; (\operatorname{secondZagreb}\left(g\right):\mathbb{R}) = \operatorname{Finset}.\operatorname{sum}\left(\operatorname{SimpleGraph}.\operatorname{edgeFinset}\left(g\right), \operatorname{fun} (e:\operatorname{Sym2}\left(V\right)) \mapsto \operatorname{endpointProduct}\left(g, e\right)\right)$$
 
 *Formalization.* `D5/S3/Combinatorics/Graph/SubgroupGenerating/ZagrebInequality.secondZagreb` (`✓ std3`).
 
@@ -44,7 +44,7 @@ The second Zagreb index sums the endpoint product over the actual unordered edge
 
 **Theorem 1.4 (All finite groups).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/SubgroupGenerating/ZagrebInequality.hansen_vukicevic`
+$$\forall G \in \operatorname{Type},\; \forall groupG \in \operatorname{Group}\left(G\right),\; \forall finiteG \in \operatorname{Fintype}\left(G\right),\; \frac{\operatorname{firstZagreb}\left(\operatorname{sgbGraph}\left(G\right)\right)}{(\operatorname{Fintype}.\operatorname{card}\left(\operatorname{Vertex}\left(G\right)\right):\mathbb{R})} \le \frac{\operatorname{secondZagreb}\left(\operatorname{sgbGraph}\left(G\right)\right)}{(\operatorname{Finset}.\operatorname{card}\left(\operatorname{SimpleGraph}.\operatorname{edgeFinset}\left(\operatorname{sgbGraph}\left(G\right)\right)\right):\mathbb{R})}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/SubgroupGenerating/ZagrebInequality.hansen_vukicevic` (`✓ std3`). ∎
 
