@@ -4571,3 +4571,258 @@ $$
 用白话说，临界时原钥匙能打开的目标总量确实发散，并在一列原实际阶段中具有很大的平均命中数。但同一批钥匙可能在某个联合方向上重复覆盖窄带；准确能量、正比例覆盖与三维对偶不出现短向量，恰好是这批钥匙上的三个定量接口。只要无穷多这样的原好阶段覆盖固定正比例，已有零一律便将原无限命中集合提升到满测；仍缺的是实际数据在这些阶段上的统一估计。上述结论不主张临界满测、全序列移动质量发散、最优性、完整 $\mathbb Z/\mathbb Q$ 定义或物理起源。$\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 22. 保留原有限端的方向度量比较、全目标计数与固定点边界
+
+**定义 22.1（只改变实方向的比较族）。** 固定定义 21.1 的临界参数与原实际数据，保留 $M,a_0,A,Y,\nu$、全部有限地方的原过滤及其目标 $\eta(u)$，并保留原来的 $\mathcal H_-,X_H,q_H,J_H,K_H,r_H,m_H$。以下均在 §21 的充分大阶段尾部取 $H\in\mathcal H_-$。仅以参数 $\omega\in\mathbb T^2$ 替换实端方向 $\alpha$。具体地，沿用原 $q_n=q(h(n),h(n);M)$，定义
+
+$$
+\begin{aligned}
+\mathcal B_r(w)&=\{z\in\mathbb T^2:\|w_j-z_j\|_{\mathbb T}<r\ (j=1,2)\},\\
+E_n(\omega)&=
+\begin{cases}
+(n+q_n\widehat{\mathbb Z})\times\mathcal B_{\rho_n}(n\omega),&n\in A,\\
+\varnothing,&n\notin A,
+\end{cases}\\
+F_{n,H}(\omega)&=
+\begin{cases}
+(n+q_H\widehat{\mathbb Z})\times\mathcal B_{r_H}(n\omega),&n\in A,\\
+\varnothing,&n\notin A,
+\end{cases}
+\quad(X_H<n\le2X_H),\\
+V_H(u,z;\omega)&=\sum_{X_H<n\le2X_H}\mathbf1_{F_{n,H}(\omega)}(u,z),
+\qquad R(\omega)=\limsup_{n\to\infty}E_n(\omega).
+\end{aligned}
+$$
+
+阶段计数的有限端仍准确要求同一个整数 $n\in A$ 且 $u\equiv n\pmod{q_H}$。再置
+
+$$
+\begin{gathered}
+\Lambda_H(\omega)=\left\{\left(\frac\ell{K_H},
+ \frac{\ell q_H\omega-b}{r_H}\right):\ell\in\mathbb Z,\ b\in\mathbb Z^2\right\},\\
+\sigma_H(\omega)=\min\left\{K_H,
+ \min_{k\in\mathbb Z^2\setminus\{0\}}
+ \sqrt{K_H^2\|q_Hk\cdot\omega\|_{\mathbb T}^2+r_H^2\|k\|_2^2}\right\}.
+\end{gathered}
+\tag{22.1}
+$$
+
+任取实提升得到同一格；其对偶为 (21.10) 中将 $\alpha$ 换成 $\omega$ 的格，故 $\sigma_H(\omega)=\lambda_1(\Lambda_H(\omega)^*)>0$。归一化方向 Haar 概率记为 $m_{\mathrm{dir}}$，与目标概率 $\nu$ 区分。对每个方向，仍有
+
+$$
+\int_Y V_H(\cdot;\omega)\,d\nu=m_H=4K_Hr_H^2,\qquad
+K_Hr_H^2\ge c e^{2H}H^{-4\gamma},\qquad K_H\to\infty,\quad r_H\to0
+\tag{22.2}
+$$
+
+其中 $c>0$ 只依赖固定数据，后面可统一缩小它。第一式由每个实窗的面积得到，后三项直接复用定理 21.2。这是确定性有限端上的数学参数比较；$\omega=\alpha$ 才是原实端，其他方向不被解释成原曲线点、实际制备权限或随机物理假设。
+
+**定理 22.2（准确有限纤维与严格窗的一致体积夹逼）。** 固定一个阶段和一个方向，简记 $K=K_H,r=r_H,\sigma=\sigma_H(\omega),m=m_H$。对每个 $u\in C_M$，令 $N=N_H(u)$ 为定理 21.2 的真实整数项数，$L=N/K$。则
+
+$$
+N\in\{\lfloor K\rfloor,\lceil K\rceil\},\qquad |L-1|\le K^{-1}.
+\tag{22.3}
+$$
+
+取 $t=3/(2\sigma)$。对全部 $(u,z)\in Y$，包括实窗边界上存在格点的目标，均有
+
+$$
+(L-2t)_+(1-t)_+^2
+\le\frac{V_H(u,z;\omega)}m
+\le(L+2t)(1+t)^2.
+\tag{22.4}
+$$
+
+特别地，当 $\sigma\ge3$ 时，
+
+$$
+\sup_{(u,z)\in Y}\left|\frac{V_H(u,z;\omega)}{m_H}-1\right|
+\le\frac{21}{2\sigma_H(\omega)}+\frac9{4K_H}.
+\tag{22.5}
+$$
+
+**证明（真实初项与半开时间盒）。** 因 $M\mid q_H$ 且 $u\in C_M$，允许整数构成模 $q_H$ 的一个类，已包含 $n\equiv a_0\pmod M$。令 $n_*(u)$ 为此类中不超过 $X_H$ 的最后一个整数。块内允许项准确为
+
+$$
+n_*(u)+\ell q_H\quad(\ell=1,\ldots,N),\qquad
+Q=(0,L]\times(-1,1)^2,\qquad
+\xi=\left(0,\frac{n_*(u)\omega-z}{r}\right).
+\tag{22.6}
+$$
+
+§21 的连续 $J_H$ 项在模 $q_H/M$ 各类中的分配逐类给出 (22.3)，并非只给出几乎处处的项数。第一坐标 $\ell/K\in(0,N/K]$ 恰好选出 $\ell=1,\ldots,N$，因此
+
+$$
+V_H(u,z;\omega)=\#\bigl((\xi+\Lambda_H(\omega))\cap Q\bigr).
+\tag{22.7}
+$$
+
+后两坐标准确表示严格实窗；$2r<1$ 保证每个整数至多对应一个 $b\in\mathbb Z^2$。这保留了 $N_H(u)$、窗前初项及两个时间端点，没有用 $K$ 或 $X_H/q_H$ 代替整数项数。
+
+**证明（严格内缩与常数）。** 复用定理 21.4 所引 Banaszczyk 的欧氏覆盖转移，$\mu_{\mathrm{cov}}(\Lambda_H(\omega))\le t$。以 (22.7) 选中点为中心，取闭 Voronoi 胞的有限并 $U$。每胞体积为 $\det\Lambda_H(\omega)=1/(Kr^2)$；不同胞的重叠只在可数个平分超平面上，所以
+
+$$
+\operatorname{vol}(U)=\frac{V_H(u,z;\omega)}{Kr^2}.
+$$
+
+每个选中胞都在其中心的闭 $t$ 球中，故 $U$ 包含于
+$[-t,L+t]\times[-1-t,1+t]^2$。若 $L>2t$ 且 $t<1$，严格内缩盒
+
+$$
+Q^-=(t,L-t)\times(-1+t,1-t)^2
+$$
+
+中的任一点到任一最近格点的距离至多 $t$，其最近格点因严格内缩而在 $(0,L)\times(-1,1)^2$ 中，必被选中；故 $Q^-\subseteq U$。其他情形取内缩盒为空。两个包体积除以 $4$，用 $m=4Kr^2$ 即得 (22.4)。即使某些格点恰在严格实窗的边上，这个包含关系仍逐点成立；体积零只用于胞间重叠，未用于排除窗边格点。
+
+若 $\sigma\ge3$，则 $0<t\le1/2$。用 (22.3) 展开上包，有
+
+$$
+\begin{aligned}
+(L+2t)(1+t)^2-1
+&\le4t+5t^2+2t^3+\frac{(1+t)^2}{K}
+ \le7t+\frac9{4K},\\
+1-(L-2t)_+(1-t)^2
+&\le1-(1-K^{-1}-2t)(1-t)^2\\
+&=4t-5t^2+2t^3+\frac{(1-t)^2}{K}
+ \le4t+\frac1K.
+\end{aligned}
+$$
+
+这里第二个估计即使 $1-K^{-1}-2t<0$ 仍成立，因为取正部只增大下包。代入 $7t=21/(2\sigma)$ 得 (22.5)。证明对每个平移和每个允许项数给出同一个界，故可直接对不可数的全部目标取上确界，无须对目标取测度交集。$\square$
+
+**定理 22.3（方向坏集预算与全部好阶段的全目标计数）。** 对任一阶段和 $0<d\le K_H$，置 $D=d/r_H$。保留全部非零整数频率，包括非原始频率，将 $\pm k$ 成对计数，有
+
+$$
+\begin{aligned}
+m_{\mathrm{dir}}\{\omega:\sigma_H(\omega)<d\}
+&\le\frac{2d}{K_H}\,2\lfloor D\rfloor(\lfloor D\rfloor+1),\\
+D\ge1\quad&\Longrightarrow\quad
+m_{\mathrm{dir}}\{\omega:\sigma_H(\omega)<d\}
+ \le\frac{8d^3}{K_Hr_H^2}.
+\end{aligned}
+\tag{22.8}
+$$
+
+存在一个 $m_{\mathrm{dir}}$-全测集合 $\Omega\subseteq\mathbb T^2$，使对每个 $\omega\in\Omega$ 和每个实数
+
+$$
+b>b_0:=\frac{4\gamma+1}{3},\qquad d_H(b)=e^{2H/3}H^{-b},
+\tag{22.9}
+$$
+
+沿所有充分大的 $H\in\mathcal H_-$ 都有
+
+$$
+\begin{gathered}
+\sigma_H(\omega)\ge d_H(b)\longrightarrow\infty,\\
+\sup_{(u,z)\in Y}\left|\frac{V_H(u,z;\omega)}{m_H}-1\right|
+ =O_{\omega,b}\!\left(e^{-2H/3}H^b\right).
+\end{gathered}
+\tag{22.10}
+$$
+
+这里阶段阈值可依赖方向与 $b$，不能依赖目标。特别地，对每个这样的方向，在全部充分大的原好阶段，每个目标均有至少一个允许整数，在该整数上同时满足有限端与比较实端；整数可依赖目标。因此 $R(\omega)=Y$，这是逐目标的集合等式。
+
+**证明（Haar 条带与非原始频率）。** 若 $\sigma_H(\omega)<d\le K_H$，则最短向量不能来自 $k=0$，必有
+
+$$
+0<\|k\|_2<D,\qquad \|q_Hk\cdot\omega\|_{\mathbb T}<d/K_H.
+\tag{22.11}
+$$
+
+对每个非零 $k$，$\omega\mapsto q_Hk\cdot\omega\pmod1$ 是到圆的满射紧群同态：任一非零坐标的整数乘法已在圆上满射。因此它将归一化 Haar 推为圆 Haar，无须 $k$ 原始，条带概率恰为 $\min(1,2d/K_H)$。$k$ 与 $-k$ 给出相同条带。所有可能的 $k$ 在 $[-\lfloor D\rfloor,\lfloor D\rfloor]^2\setminus\{0\}$ 内，该方形中的 $\pm$ 对数为 $2\lfloor D\rfloor(\lfloor D\rfloor+1)$。对这些对作并集界得到第一式；当 $D\ge1$ 时，该对数至多 $4D^2$，即得第二式。不删非原始频率，也不要求不同频率独立。
+
+**证明（可求和阈值与全方向集合）。** 固定 $b>b_0$，记 $\eta_b=3b-4\gamma-1>0$。由 (22.2) 及 $r_H<1$，
+
+$$
+\frac{d_H(b)}{K_H}\le c^{-1}e^{-4H/3}H^{4\gamma-b}\to0,
+\qquad \frac{d_H(b)}{r_H}\to\infty.
+$$
+
+所以 (22.8) 的两项适用条件最终均满足，且
+
+$$
+\begin{gathered}
+m_{\mathrm{dir}}\{\sigma_H<d_H(b)\}
+\le\frac8c H^{4\gamma-3b}=\frac8c H^{-1-\eta_b},\\
+m_{\mathrm{dir}}\!\left(\bigcup_{\substack{H\in\mathcal H_-\\H\ge J}}
+ \{\sigma_H<d_H(b)\}\right)
+\le\frac{8}{c\eta_b}(J-1)^{-\eta_b}\quad(J\text{ 充分大}).
+\end{gathered}
+\tag{22.12}
+$$
+
+第二式将阶段子集的和上包为全体整数的和，再用递减函数的积分界。尾界趋零，故坏阶段无限发生的方向集为零测；这正是经典收敛 Borel–Cantelli 的方向，不需阶段独立。对可数个 $b_j=b_0+1/j$ 的全测集合取交，得同一 $\Omega$。任意 $b>b_0$ 可取 $j$ 使 $b_j<b$，于是 $d_H(b_j)\ge d_H(b)$，得到 (22.10) 的第一式对所有这些 $b$ 成立。
+
+再由 $K_H^{-1}\le c^{-1}e^{-2H}H^{4\gamma}=O(e^{-2H/3}H^b)$，将第一式代入 (22.5)，即得第二式。$m_H\to\infty$ 且统一相对误差趋零，故最终对全部 $(u,z)$ 同时有 $V_H(u,z;\omega)\ge m_H/2\ge1$。又 $F_{n,H}(\omega)\subseteq E_n(\omega)$，且 $X_H\to\infty$，每个目标遂有无界的成功整数，得到 $R(\omega)=Y$。此处不使用原固定 $\alpha$ 的零一律或无理独立性。阈值 $b=b_0$ 仅给 $H^{-1}$ 上包，裸指数端点 $d_H=e^{2H/3}$ 仅给 $H^{4\gamma}$ 上包；两者均不由这项收敛估计认证，也不据此判为失败。$\square$
+
+**定理 22.4（全测比较的残余边界与原 CM 点的保证函数）。** 对同一固定有限端和同一好阶段族，集合
+
+$$
+\mathcal G=\bigcap_{j,L\ge1}\ \bigcup_{\substack{H\in\mathcal H_-\\H\ge L}}
+ \{\omega:\sigma_H(\omega)<1/j\}
+\tag{22.13}
+$$
+
+是稠密 $G_\delta$、Haar 零测，且恰有
+
+$$
+\omega\in\mathcal G\quad\Longleftrightarrow\quad
+\liminf_{\substack{H\to\infty\\H\in\mathcal H_-}}\sigma_H(\omega)=0.
+\tag{22.14}
+$$
+
+它与 $1,\omega_1,\omega_2$ 有理线性无关的方向集之交仍是稠密 $G_\delta$。这只刻画任意晚阶段中存在短对偶向量，不否定同一方向另有无穷多个 $\sigma_H\ge\delta>0$ 的阶段。
+
+对原固定向量 $\alpha$，令 $A>0,\mu>0$ 是 (17.5) 已有的有限型常数。该下界给出以下明确保证函数，而非 $\sigma_H(\alpha)$ 的等式：
+
+$$
+\begin{gathered}
+\sigma_H(\alpha)\ge g_H:=\min\left\{K_H,
+ \left(\frac{AK_Hr_H^\mu}{q_H^\mu}\right)^{1/(\mu+1)}\right\},\\
+g_H=X_H^{\Delta_{\mathrm{geom}}/(\mu+1)+o(1)}\longrightarrow0,\\
+\Delta_{\mathrm{geom}}=1-(\mu+1)c_0^2-\mu\beta
+ =-\mu c_0^2-(\mu-2)\beta\le-2c_0^2<0.
+\end{gathered}
+\tag{22.15}
+$$
+
+这里的明确值以原有固定 $A,\mu$ 表示，不提供它们的数值。保证函数趋零既不证明实际 $\sigma_H(\alpha)\to0$，也不证明有限型信息在逻辑上绝不够；它只表明这一既有幂下界的直接代入没有支付原临界阶段的统一正下界。
+
+**证明（类别与测度对照）。** 对每个阶段，(22.1) 将 $\{\sigma_H<1/j\}$ 写成连续圆 character 的严格不等式集的并，因而它是开集；$k=0$ 的常数项只会贡献空集或全空间。若 $\omega$ 有共同有理分母 $a\ge1$，取 $k=(a,0)$，则 $q_Hk\cdot\omega\in\mathbb Z$，故 $\sigma_H(\omega)\le ar_H\to0$。$\mathcal H_-$ 无界，所以 (22.13) 中每个尾并集均含全部有理方向，是开稠密集。经典 Baire 定理给出其可数交稠密，定义直接给出 (22.14)。定理 22.3 的全测集合上 $\sigma_H\to\infty$，与 $\mathcal G$ 不交，故 $\mathcal G$ 零测。
+
+对每个 $k\ne0$，闭集 $\{\omega:k\cdot\omega=0\pmod1\}$ 无内点：沿一个非零坐标任意小地移动即可离开它。其开稠密补集对全部非零整数 $k$ 的可数交，正是 $1,\omega_1,\omega_2$ 有理线性无关的方向集。再用 Baire 即得交集声明；这没有赋予这些残余方向任何有限型保证，也未定位原 $\alpha$。
+
+**证明（原有限型保证与未证关系）。** 对原对偶的任一 $k\ne0$，令 $s=\|k\|_\infty\ge1$，向量长度记为 $v$。由 (17.5)，
+
+$$
+v\ge r_Hs,\qquad v\ge K_H\|q_Hk\cdot\alpha\|_{\mathbb T}
+ \ge\frac{AK_H}{q_H^\mu s^\mu},\qquad
+v^{\mu+1}\ge\frac{AK_Hr_H^\mu}{q_H^\mu}.
+$$
+
+$k=0$ 的非零向量长至少为 $K_H$，故得到 (22.15) 的第一式。§19 已用二维抽屉原理从同一 (17.5) 推出 $\mu\ge2$；定理 16.7、$\log X_H\sim H^2/c_0^2$ 和准确的 $MJ_H=X_H+O(M)$ 又给出
+
+$$
+q_H=X_H^{c_0^2+o(1)},\qquad
+K_H=X_H^{1-c_0^2+o(1)},\qquad r_H=X_H^{-\beta+o(1)}.
+$$
+
+因此 (22.15) 中第二个候选项的指数为 $\Delta_{\mathrm{geom}}/(\mu+1)$。临界等式和 $\mu\ge2$ 使该指数严格负；该项趋零，而 $K_H\to\infty$，所以最小值最终取第二项，得到其余各式。这是 §19 保证下界在当前阶段的代入，作为与度量结论比较的中间步骤，不另称一般算术新定理。
+
+沿用 §21 的充分路线，原固定点仍缺的关系是：证明某个 $\delta>0$ 及无界的 $\mathcal H\subseteq\mathcal H_-$ 满足
+
+$$
+K_H^2\|q_Hk\cdot\alpha\|_{\mathbb T}^2+r_H^2\|k\|_2^2\ge\delta^2
+\quad(H\in\mathcal H,\ k\in\mathbb Z^2\setminus\{0\}).
+\tag{22.16}
+$$
+
+这里只需频率 $0<\|k\|_2<\delta/r_H$，$K_H\ge\delta$ 最终自动成立。定理 21.5 已给出该关系到原 $\nu(R)=1$ 的充分接口；该关系仍只作为充分条件，不声称它是原满测的必要条件。方向全测不保证包含指定的 $\alpha$，残余零测也不保证排除它；本节既未证 $\alpha\in\Omega$，也未证 $\alpha\in\mathcal G$，更未判定实际非塌缩子族或实际共振子族。
+
+文献范围如下。覆盖转移复用 §21 所引 Banaszczyk，*New bounds in some transference theorems in the geometry of numbers*，Math. Ann. 296，625–635，[原文 Theorem (2.2)，印刷页 632](https://gdz.sub.uni-goettingen.de/download/pdf/PPN235181684_0296/LOG_0038.pdf)，采用该文的欧氏整数内积对偶版本；Haar 推前、收敛 Borel–Cantelli 与 Baire 是经典中间输入（literature-attested），不作为新的一般理论成果。相邻来源 Nesharim–Rühr–Shi，*Metric Diophantine approximation with congruence conditions*，[arXiv:1902.01381v2 原文](https://arxiv.org/pdf/1902.01381v2)，印刷页 1 的 Theorem 1.2 先固定模数向量 $N$ 和余类向量 $v$；页 2 的 Theorems 1.3–1.4 固定有限多个同余条件，页 3 的 Dani 同余商亦固定 $N$。即使对全部固定模数作可数全测交，也不从该文的无限近似量词得到这里指定增长 $q_H$、指定阶段和窗口上的一致计数；该文只用于标明相邻适用边界，不充当 (22.10) 的直接输入。本节的新增综合是原实际共同模数、临界质量预算、准确整数纤维与方向坏集估计的联结（repo-derived），不主张一般度量逼近、格转移或类别定理的原创性。
+
+用白话说，保留同一批有限端钥匙、同一把钥匙必须同时满足全部条件，只比较它们在两个实圆上前进的方向。坏方向是某个整数联合方向上的窄带，单条窄带的 Haar 宽度与原模数无关，而可能窄带的条数由实窗尺度控制；原好阶段的大质量使这些坏方向的总预算可求和。因此几乎所有比较方向最终在每个好阶段都对所有目标准确均匀计数。但稠密的零测方向仍可在任意晚的某些阶段发生共振，这并不排除它们另有无穷多非塌缩阶段。原 CM 向量是一根指定方向；全测比较和退化的保证下界都没有决定它是否满足 (22.16)，原临界 $R$ 的结论仍未解决。$\square$
+
+## 追加锚（本行以下为增补区）
