@@ -2955,3 +2955,337 @@ $$
 直观上，尖锐读取把背景的一个高度看成确定值；夹读虽然能改变被读取的向量，却不能使一个双边理想跑出自身。在这份连续谱模型里，所有这样的尖锐读法都经过去掉紧理想的部分，因此任意多但有限的原夹乘与正和仍看不见其中的测试元。正常的非尖锐见证能够看见它，代价是第二平方预算不能被默认为零。这定位了读取路线的缺口，没有把一般原世界压成有限矩阵、补成完备物理域或宣告完整量子起源已经完成。
 
 ## 追加锚（本行以下为增补区）
+
+## 138. 一般原平方局域化与固定的真加性缺陷
+
+**定义 138.1（一般原候选与不变的检测对象）。** 完整采用[三角续卷128.1–128.2、129.1、183.1、240.1及248.1](AURIC_PB_TRIANGLE_ORIENTATION_AND_RANK_ONE_RESPONSE_CONTINUATION.md)的同一原 $\Omega/\mathrm{native}$、$E,C,u,N,\mathcal P,S,D$、A1–A3、准确锥、全部原P2及全部原三元组的FULLPB。$S=\circ$，$E$ 是自身含单位JB完成 $X$ 中稠密的含单位实Jordan子代数，$C=E\cap X_+$、$N=\|\cdot\|_X|_E$。全部零、不等、次归一质量保留。$E$ 允许不完备、无限维、无原子或不可分。消费248.1已付的忠实、含单位、等距且反映锥的JC包含 $j:X\to A_{\rm sa}$；以下省略 $j$，但不要求 $X=A_{\rm sa}$，也不要求 $E+iE$ 对环境结合乘法闭合。
+
+任意固定原 $a,b,c,y\in E$，始终保持
+
+$$
+\begin{gathered}
+s=b+c,\qquad d_s=D(a,s),\quad d_b=D(a,b),\quad d_c=D(a,c),\\
+\delta=\delta_a(b,c)=d_s-d_b-d_c,\\
+w=K_y(\delta)=\delta\circ y^2-y\circ(\delta\circ y).
+\end{gathered}
+\tag{138.1}
+$$
+
+一般目标仍是全部原 $a,b,c,y$ 的 $w=0$。不增加第一实际 $h,e,Q$ 框架；118或134的额外框架不是本节前件。旧 $D:E^2\to E$ 不预设可加、齐次、连续、可测、协变、商下降、单位平移或完成延拓。环境结合表达式只用于读取已定义的原Jordan元素，不定义新的响应。
+
+**定义 138.2（作为中间工具的原正平方供应）。** 若固定 $w\ne0$，成熟态分离给 $X$ 的纯JB态 $\beta$ 使 $\beta(w^2)>0$。对任意这样的 $\beta$，直接复用三角续卷183证明中的(183.4)、有界强稠密性和原平方逼近，以及[中央续卷174.8–174.10](AURIC_CENTRAL_RESPONSE_SQUARE_AND_RADIAL_CONSISTENCY_CONTINUATION.md#174-原交换第二输入的整个零行)的相同逼近工具。它们供应最小支撑 $p\in X^{**}$ 和原收缩元网 $e_i\in E$，使
+
+$$
+\begin{gathered}
+U_p(t)=\beta(t)p\quad(t\in X),\qquad \beta(p)=1,\\
+q_i=e_i^2\in E,\qquad 0\le q_i\le u,\qquad
+q_i\longrightarrow p\quad\text{有界强收敛}.
+\end{gathered}
+\tag{138.2}
+$$
+
+这里 $U_z(t)=2z\circ(z\circ t)-z^2\circ t$；在JC包含中等于 $ztz$，在原域上保正并返回原域。收缩元的选择使用已引单位球强稠密性，再以 $E$ 的范数稠密性逼近并缩回单位球；平方仍是原运算。有界乘法的强连续性给最后的收敛。采用网，不将不可分情形压成序列。此处只引用成熟支撑与密度作下文应用的供应，不另立支撑或密度定理。
+
+取 $\beta$ 到 $A$ 的一个正的态延拓 $\phi$，此处“态”指质量一的数学正泛函，不要求正常性；它在双对偶上有正常延伸。正的保单位子空间态延拓已足够，不使用延拓的纯性或不可约性。在其GNS表示中令 $\|\xi\|=1$，并令 $P$ 为 $p$ 经双对偶Jordan包含和该表示的正常延伸所得投影。支撑关系给
+
+$$
+P\xi=\xi,\qquad P tP=\beta(t)P,\qquad
+P t\xi=\beta(t)\xi\quad(t\in E).
+\tag{138.3}
+$$
+
+$P$ 不必是环境秩一投影。强半范数包括每个原 $z$ 对应的正泛函 $\beta\circ U_z$；在省略表示符号的记法下，$\|(q_i-P)z\xi\|^2=\beta^{**}(U_z((q_i-p)^2))\to0$，所以(138.2)给 $q_i z\xi\to Pz\xi$。特别，同一网可控制 $\xi,a\xi,b\xi,c\xi,y\xi,d_s\xi,d_b\xi,d_c\xi,w\xi$ 及任意指定的有限原向量表。$p,P$ 均不送入 $D$；没有将根、投影、极限或环境有限矩阵框架添入 $E$。
+
+对每个原 $z$，$\beta\circ U_z$ 是三角续卷129.1许可的数学正读取，实际质量是 $\beta(z^2)$，包括零。特别
+
+$$
+\psi_i=\beta\circ U_{q_i},\qquad
+\psi_i(u)=\beta(q_i^2)\in[0,1].
+\tag{138.4}
+$$
+
+不除以这个质量。数学态、GNS向量及这些读取均不供应物理准备。$X=0$ 或 $w=0$ 时无需选择检测态；后续有限PB等式和全部正读取预算仍适用。
+
+## 139. 三张实际PB的有符号返回与六项预算
+
+**定理 139.1（保留辅助缺陷的同一三调用恒等式）。** 在138.1下，取(138.2)的任一原 $q_i$。按顺序使用三次实际调用
+
+$$
+\mathrm{PB}(s;a,q_i),\qquad
+\mathrm{PB}(b;a,q_i),\qquad
+\mathrm{PB}(c;a,q_i),
+\tag{139.1}
+$$
+
+其中记号 $\mathrm{PB}(t;a,q_i)$ 的首槽演员是 $t$，另两槽依次是 $a,q_i$。对这个有重数的三项表 $t=s,b,c$ 定义
+
+$$
+\begin{aligned}
+f_{ti}&=D(t,q_i),&
+v_{ti}&=-d_t-t\circ q_i,& z_{ti}&=t\circ a+f_{ti},\\
+A_{ti}^\pm&=a\pm v_{ti},&
+B_{ti}^\pm&=q_i\pm z_{ti},&
+O_{ti}^\pm&=D(A_{ti}^\pm,B_{ti}^\pm),\\
+\eta_i&=f_{si}-f_{bi}-f_{ci}
+=-\delta_{q_i}(b,c).
+\end{aligned}
+\tag{139.2}
+$$
+
+则准确有
+
+$$
+\boxed{
+O_{si}^+-O_{si}^- -O_{bi}^++O_{bi}^- -O_{ci}^++O_{ci}^-
+=2a\circ\delta-2q_i\circ\eta_i.}
+\tag{139.3}
+$$
+
+三张表的系数依次为 $+1,-1,-1$；即使 $b=c$ 或有其他输入重合，仍保留全部六个输出occurrence及其重数，不将有重数表改成集合。
+
+证明。原P2给反对称性，所以 $D(t,a)=-d_t$。三角续卷(128.6)逐次应用于(139.1)，准确给
+
+$$
+O_{ti}^+-O_{ti}^-
+=-2a\circ v_{ti}-2q_i\circ z_{ti}
+=2a\circ d_t+2a\circ(t\circ q_i)
+ -2q_i\circ(t\circ a)-2q_i\circ f_{ti}.
+\tag{139.4}
+$$
+
+以系数 $+1,-1,-1$ 相加，已知Jordan乘法的实双线性及 $s=b+c$ 消去两个混合乘积和，得到(139.3)。未将任何 $d_t$、$f_{ti}$ 或外层旧输出对输入和拆开；$\eta_i$ 是保留的实际辅助加性缺陷。∎
+
+**推论 139.2（任意质量的实际六预算）。** 对任意数学正实线性读取 $\psi:E\to\mathbb R$，定义六个实际Gram预算
+
+$$
+\Gamma_{ti}^\pm(\psi)
+=\psi((A_{ti}^\pm)^2)\psi((B_{ti}^\pm)^2)
+ -\psi(A_{ti}^\pm\circ B_{ti}^\pm)^2\ge0.
+\tag{139.5}
+$$
+
+则
+
+$$
+\begin{aligned}
+2\bigl|\psi(a\circ\delta-q_i\circ\eta_i)\bigr|
+\le{}&\sqrt{\Gamma_{si}^+(\psi)}+\sqrt{\Gamma_{si}^-(\psi)}\\
+ &+\sqrt{\Gamma_{bi}^+(\psi)}+\sqrt{\Gamma_{bi}^-(\psi)}\\
+ &+\sqrt{\Gamma_{ci}^+(\psi)}+\sqrt{\Gamma_{ci}^-(\psi)}.
+\end{aligned}
+\tag{139.6}
+$$
+
+证明。三角续卷129.1将同一原P2交给任意正读取，对六个实际输出逐个给 $|\psi(O_{ti}^\pm)|\le\sqrt{\Gamma_{ti}^\pm(\psi)}$；再对(139.3)用三角不等式。不归一化 $\psi$，其质量可为任意非负数；零质量由序单位界使 $\psi=0$，两边同为零。质量缩放使每个 $\Gamma$ 按质量平方缩放，故次归一和不等质量也原样包含。特别适用于全部 $\beta\circ U_z$ 及(138.4)的实际质量。∎
+
+**推论 139.3（实际输入与输出的一致范数界）。** 记
+
+$$
+M_t=\|a\|+\|t\|(\|a\|+1),\qquad
+L_t=1+\|t\|(\|a\|+1),\qquad
+T=\|s\|+\|b\|+\|c\|.
+$$
+
+对全部 $i$、$t=s,b,c$ 及两个符号，有
+
+$$
+\begin{gathered}
+\|d_t\|\le\|a\|\|t\|,\quad
+\|f_{ti}\|\le\|t\|,\quad
+\|A_{ti}^\pm\|\le M_t,\quad
+\|B_{ti}^\pm\|\le L_t,\quad
+\|O_{ti}^\pm\|\le M_tL_t,\\
+\|\eta_i\|\le T,\qquad
+\|\delta\|\le\|a\|T,\qquad
+\|w\|\le2\|y\|^2\|a\|T.
+\end{gathered}
+\tag{139.7}
+$$
+
+证明。对任意原 $x,z$，质量一的数学正泛函读取P2给 $|\rho D(x,z)|\le\|x\|\|z\|$；全态取范数得到 $\|D(x,z)\|\le\|x\|\|z\|$。结合 $\|q_i\|\le1$、Jordan乘积的范数界及(139.2)逐项得到结论。这些态无需算子代数正常性。范数界没有给 $\eta_i$ 或任一输出的衰减；(139.3)返回的是带辅助缺陷的 $a\circ\delta$，尚不是 $K_y(\delta)$。∎
+
+## 140. 方差预算的极限、横向Jordan作用与夹读稳定性
+
+**定理 140.1（状态保持局域化的定量预算）。** 固定138.2–138.3的数学态及其同一局域化网。对任意固定原 $t$，令
+
+$$
+\varepsilon_i=\|(q_i-u)\xi\|\longrightarrow0,\qquad
+\operatorname{Var}_\beta(t)=\beta(t^2)-\beta(t)^2,
+$$
+
+并保留实际内值 $f_{ti}=D(t,q_i)$ 的P2上预算
+
+$$
+G_i(t)=\beta(t^2)\beta(q_i^2)-\beta(t\circ q_i)^2.
+\tag{140.1}
+$$
+
+则
+
+$$
+|\beta(f_{ti})|^2\le G_i(t),\qquad
+\boxed{\ |G_i(t)-\operatorname{Var}_\beta(t)|
+\le\|t\|^2(4\varepsilon_i+\varepsilon_i^2).\ }
+\tag{140.2}
+$$
+
+同一表示中的两种作用有不同极限：
+
+$$
+\begin{aligned}
+(t\circ q_i)\xi&\longrightarrow
+\tfrac12\bigl(t\xi+\beta(t)\xi\bigr),\\
+U_{q_i}(t)\xi&\longrightarrow\beta(t)\xi,\\
+\|(t\circ q_i)\xi-\beta(t)\xi\|
+&\longrightarrow\tfrac12\sqrt{\operatorname{Var}_\beta(t)}.
+\end{aligned}
+\tag{140.3}
+$$
+
+此外，对任意一致有界的原自伴元网 $H_i$，即使它是随 $i$ 改变的实际旧输出，仍有
+
+$$
+\boxed{\ |\beta(U_{q_i}(H_i))-\beta(H_i)|
+\le2\varepsilon_i\|H_i\|.\ }
+\tag{140.4}
+$$
+
+证明。置 $\mu=\beta(t)$、$r_i=\beta(t\circ q_i)$、$m_i=\beta(q_i^2)$。GNS的实内积及收缩性给
+
+$$
+|m_i-1|\le2\varepsilon_i,\qquad
+|r_i-\mu|\le\|t\|\varepsilon_i,\qquad
+|\mu|\le\|t\|.
+$$
+
+故 $|r_i^2-\mu^2|\le\|t\|^2(2\varepsilon_i+\varepsilon_i^2)$；代入 $G_i(t)-\operatorname{Var}_\beta(t)=\beta(t^2)(m_i-1)-(r_i^2-\mu^2)$ 即得(140.2)。这是实际P2预算的估计，不是对未知输出作连续性假设。
+
+(138.3)及有界强收敛给 $tq_i\xi\to t\xi$、$q_it\xi\to\beta(t)\xi$，故Jordan作用趋于二者的平均。再用 $q_itq_i\xi\to\beta(t)\xi$ 得二次表示的极限。最后 $\|t\xi-\mu\xi\|^2=\operatorname{Var}_\beta(t)$，得到横向项的准确范数。这里没有把Jordan乘法替换成单侧结合压缩。
+
+对变动的自伴 $H_i$，直接比较同一有界算子的两次向量读取：
+
+$$
+\begin{aligned}
+|\beta(U_{q_i}(H_i))-\beta(H_i)|
+&=|\langle q_i\xi,H_iq_i\xi\rangle-\langle\xi,H_i\xi\rangle|\\
+&\le\|H_i\|\,\|q_i\xi-\xi\|\,(\|q_i\xi\|+1)
+\le2\varepsilon_i\|H_i\|.
+\end{aligned}
+$$
+
+只用 $\|q_i\|\le1$，不对 $H_i$ 或 $D$ 取极限，不使用固定态下夹心的循环性或交换性。∎
+
+**推论 140.2（上预算与实际响应的区别）。** 对 $t=s,b,c$，(140.4)和(139.7)同时适用于全部 $f_{ti}$、$\eta_i$ 及全部六个 $O_{ti}^\pm$。因此这些有界实际输出在 $\beta\circ U_{q_i}$ 下的读取与在 $\beta$ 下的读取之差一致趋零；这没有使其读取本身趋零。若 $\operatorname{Var}_\beta(t)>0$，(140.2)使 $G_i(t)$ 最终至少为该方差的一半，定位了该项P2上预算的不消失部分。这是上预算的正极限，绝不是 $|\beta(f_{ti})|$ 或任一响应的正下界。六个外预算及 $\eta_i$ 仍须按(139.2)、(139.5)保留；本结论没有生产 $\beta(w^2)\le C\varepsilon_i$，也未把(139.6)变成检测器的零预算。
+
+## 141. 全数学PB下的零误差Pauli诊断与原目标边界
+
+**命题 141.1（精确状态保持不强迫单个实际外输出消失）。** 存在满足138.1全部数学A1–A3、P2及所有三元组FULLPB的候选，及已经属于原域的正收缩局域化子，使全部局域化误差为零，而(139.1)中的实际单个外输出及其读取不为零。这里精确否定的只是由状态保持局域化本身推出逐输出压零的无条件推断。
+
+证明。取
+
+$$
+E=X=M_2(\mathbb C)_{\rm sa},\quad
+C=M_2(\mathbb C)_+,\quad u=I,\quad N=\|\cdot\|,
+\quad S(A,B)=A\circ B,\quad D(A,B)=\tfrac i2[A,B],
+\tag{141.1}
+$$
+
+原评价族取全部正实线性泛函及其全部非负质量倍数。它分离原域并准确决定锥。此处是[静态重构卷35.1–35.2](AURIC_C128_ARBITRARY_DIMENSIONAL_STATIC_QUANTUM_RECONSTRUCTION.md#35-全输入缩放交换子族的精确缺陷)、本卷130.4和135.1–135.2既有标准模型的参数对应，不另作分类或新模型供应定理。完整对应如下：
+
+- A1：$S(A,B)-iD(A,B)=AB$，故每张实际有向二表是同一正泛函的复Gram表；$\alpha(V^*V)\ge0$ 给其正性。
+- A2：相加三表及其每个排列的实部是实Gram表；原指定向量 $(1,-1,-1)$ 对应 $(A+B)-A-B=0$，准确给零二次值。
+- A3：$S(u,u)=u$。对原固定有理 $0<\theta\le1$ 及全部 $0\le e\le\theta u$，效果谱演算给 $S(e,e)=e^2\le e$。
+- P2：C*的Cauchy–Schwarz给 $|\alpha(AB)|^2\le\alpha(A^2)\alpha(B^2)$，其中 $\alpha$ 对 $AB$ 使用其正的复线性延伸，且 $\alpha(AB)=\alpha(A\circ B)-i\alpha D(A,B)$。因此原二表及其完整Gram行列式预算成立；不除以质量，零及次归一读取也包含。
+- FULLPB：直接消费135.2的全三元组端点分解。任意原演员 $H$ 和原 $B,C$，置 $\mathcal Z=B+iC$、$v=D(H,B)-H\circ C$、$z=H\circ B+D(H,C)$，则
+
+$$
+\begin{gathered}
+\mathcal Q(B,C)=B^2+C^2+2D(B,C)=\mathcal Z^*\mathcal Z,\qquad
+v+iz=iH\mathcal Z,\\
+(B\pm v)+i(C\pm z)=(I\pm iH)\mathcal Z,\\
+\mathcal Q(B\pm v,C\pm z)=\mathcal Z^*(I+H^2)\mathcal Z.
+\end{gathered}
+\tag{141.2}
+$$
+
+两端是同一元素，故对全部原三元组、全部正读取和全部质量成立。这里复用的是标准模型的全PB恒等式，不是仅满足自作用或单位第三标签的子系统。
+
+采用通常的Pauli矩阵
+
+$$
+\sigma_x=\begin{pmatrix}0&1\\1&0\end{pmatrix},\qquad
+\sigma_y=\begin{pmatrix}0&-i\\i&0\end{pmatrix},\qquad
+\sigma_z=\begin{pmatrix}1&0\\0&-1\end{pmatrix}.
+$$
+
+保持(138.1)的原对象，具体取
+
+$$
+\begin{gathered}
+a=b=\sigma_x,\qquad c=y=\sigma_z,\qquad s=\sigma_x+\sigma_z,\\
+\beta(T)=T_{11},\qquad \xi=(1,0)^T,\qquad
+q_i=p=(u+\sigma_z)/2\quad\text{对全部 }i.
+\end{gathered}
+\tag{141.3}
+$$
+
+$pTp=\beta(T)p$ 对全部 $T$ 成立，$p\xi=\xi$，所以(138.2)–(138.3)的局域化在原域内已经准确，$\varepsilon_i=0$。固定的实际内值为
+
+$$
+\begin{gathered}
+d_s=d_c=\sigma_y,\qquad d_b=0,\qquad
+f_{si}=f_{bi}=\sigma_y/2,\qquad f_{ci}=0,\\
+\delta=0,\qquad w=0,\qquad\eta_i=0.
+\end{gathered}
+\tag{141.4}
+$$
+
+在同一三张表上按(139.2)逐项保留所有六个实际外输出，得到
+
+| 实际调用的 $t$ occurrence | $O_{ti}^+$ | $O_{ti}^-$ |
+| --- | --- | --- |
+| $s=b+c$，系数 $+1$ | $(\sigma_x+\sigma_y-\sigma_z)/4$ | $3(-\sigma_x+\sigma_y+\sigma_z)/4$ |
+| $b=a$，系数 $-1$ | $(\sigma_y-\sigma_z)/4$ | $3(\sigma_y+\sigma_z)/4$ |
+| $c=y$，系数 $-1$ | $(\sigma_x+\sigma_y)/2$ | $(-\sigma_x+\sigma_y)/2$ |
+
+这些值只用 $\sigma_j\sigma_k=\delta_{jk}u+i\sum_l\epsilon_{jkl}\sigma_l$ 和(141.1)相乘。特别，$t=b=a$ 的同一次实际PB具有
+
+$$
+\begin{gathered}
+v_{bi}=-a/2,\qquad z_{bi}=u+\sigma_y/2,\\
+A_{bi}^+=a/2,\quad B_{bi}^+=p+u+\sigma_y/2,\qquad
+A_{bi}^-=3a/2,\quad B_{bi}^-=p-u-\sigma_y/2,\\
+\beta(O_{bi}^+)=-1/4,\qquad
+\beta(O_{bi}^-)=3/4,\qquad
+\beta(O_{bi}^+-O_{bi}^-)=-1.
+\end{gathered}
+\tag{141.5}
+$$
+
+两项决定性的实际P2预算为
+
+$$
+\begin{aligned}
+\beta((A_{bi}^+)^2)&=1/4,&
+\beta((B_{bi}^+)^2)&=17/4,&
+\beta(A_{bi}^+\circ B_{bi}^+)&=0,\\
+\beta((A_{bi}^-)^2)&=9/4,&
+\beta((B_{bi}^-)^2)&=1/4,&
+\beta(A_{bi}^-\circ B_{bi}^-)&=0,\\
+\Gamma_{bi}^+(\beta)&=17/16,&&
+\Gamma_{bi}^-(\beta)=9/16.&&
+\end{aligned}
+\tag{141.6}
+$$
+
+因此即使误差恒为零，这两个实际输出的读取也不趋零；$\beta\circ U_p$ 在这些输出上与 $\beta$ 相同。另一方面，全部三次差值分别为 $\sigma_x-\sigma_y/2-\sigma_z$、$-\sigma_y/2-\sigma_z$、$\sigma_x$，按 $+1,-1,-1$ 相加正好为零，准确符合(139.3)。内层亦有 $G_i(b)=\operatorname{Var}_\beta(b)=1$ 而 $\beta(f_{bi})=0$，直接展示正的上预算不是响应下界。∎
+
+**定义 141.2（非蕴涵的准确范围与承重来源）。** 141.1中的目标是 $\delta=w=0$，并非非零检测器模型。它没有给出满足 $\beta(w^2)>0$ 的反例，因而不反驳使用非零检测态条件的路线，也不反驳先保留相同实际输出作跨调用有符号相消的路线。被否定的恰是仅凭状态保持正局域化，就将这些单个实际外输出逐一当作趋零误差的无条件规则。一般 $D$ 的可加性、任意首标签识别、全原 $K_y(\delta_a(b,c))=0$ 及完整量子起源仍未由139–141支付。
+
+本组承重属于 $\texttt{repo-derived}$ 应用：原平方供应接到三张实际PB的精确返回、六预算、横向方差项与全数学PB的零误差诊断。三角续卷183–184的纯态支撑和原平方逼近、240/248的整个JC包含、129.1的正读取及本卷135.2的标准端点分解均直接复用。成熟支撑来源是Hamhalter，[*Pure states on Jordan algebras*](https://dml.cz/handle/10338.dmlcz/133911)，§1，第83页，DOI 10.21136/MB.2001.133911；有界强稠密和乘法连续性取Hanche-Olsen–Størmer，[*Jordan Operator Algebras*](https://hanche.folk.ntnu.no/joa/joa-m.pdf)，4.1.9、4.4.3、4.5.12。正的态延拓及GNS取137.2已引Blackadar的态延拓接口；这里不要求纯延拓。上述成熟结论只作为中间工具，不计为新贡献；不主张新分类、历史优先权或文献穷尽。[谱混合卷79–87](AURIC_SPECTRAL_MIXED_RESPONSES_AND_DIRECT_WINDOW_BOUNDARIES.md#79-完整有限-continuous-原域与中央取向候选)已支付的完整有限连续类识别亦不在这里重做或宣称仍未解。
+
+**定义 141.3（全部上游七合同与仍缺的原返回）。** 将137.3及其全文引用的中央续卷199.2第1–7项、194.2、186.1–186.7和每项全部上游对象、条件与量词，逐项全文、无删减地合取纳入138–141；该引用不以任何摘要替代原文。唯一原 $\Omega/\mathrm{native}$、全词 $K/J/q/u/N/\mathcal P/S/D$、parent/ready、原可取得标签与合法控制保持；全部零、不等、次归一质量、中心、经典、不等维及静默块保持。数学态与读取不新增原准备、实际完整菜单、接受归属、共同记录、真正分组遗忘、完整仪器及其全部系统环境和成功／失败／细记录／port／post-port输出，亦不新增真正相关联合或每个所需递归深度的同源参考。全部合法顺序／自适应／并行历史、每个输出每个仍合法未来、环境泄漏、停止／拒绝／销毁、同数两侧与真实逆向双向返回保持。CountRead、精确正生成 $B$ 与闭正生成 $B_{\rm cl}$、无限非离散记录、可数可加、正常性及指定前对偶各守原来源；物理钟、流保持原不完备域、能量、共同仪器、共同正 $\hbar$、原固定域、resolvent及预算也各守原合同。
+
+一般原目标仍须在同一 $a,b,c,y,d_s,d_b,d_c,\delta,w$ 上，生产有检测力的实际PB返回和预算，而不是新增公理、局域化供应者或将等价目标换名。若进一步采用两向量或矩阵式标签，仍须同时支付所需标签确属原 $E$ 的供应，以及保留 $\eta_i$ 与全部六个实际输出后的相消和返回；环境中可插值不等于原Jordan域内可取得。139.3没有允许丢弃 $q_i\circ\eta_i$，140.2没有给检测平方的零预算，141.1也不排除依赖非零 $w$、非状态保持读取或其他相关相消的生产路线。
+
+## 追加锚（本行以下为增补区）
