@@ -88,6 +88,10 @@ Lean statement: `D5/S3/FiniteGroups/SubsetProducts/DicyclicSubsetParityRefutatio
 
 *Proof.* Machine-checked in Lean as `D5/S3/FiniteGroups/SubsetProducts/DicyclicSubsetParityRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/mandal-neetu-dicyclic-question-63-refutation` (refuted) by `D5/S3/FiniteGroups/SubsetProducts/DicyclicSubsetParityRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"mandal-neetu-dicyclic-question-63-refutation","declaration_gid":"D5/S3/FiniteGroups/SubsetProducts/DicyclicSubsetParityRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Sagar Mandal and Neetu (2026). *Exact and Asymptotic Counts of MSTD, MDTS, and Balanced Sets in Dicyclic Groups*. DOI: [10.48550/arXiv.2602.09073](https://doi.org/10.48550/arXiv.2602.09073). URL: <https://arxiv.org/abs/2602.09073v1>.
