@@ -1,0 +1,19 @@
+**引理 492.2（保持方差的全局扰动）。** 令 $X_n=10^n$、$h_n=X_n^a$、$k_n=X_n^b$、$A_n^2=X_n\log X_n/\log\log X_n$，取 $n_0$ 使 $n\ge n_0$ 时 $k_n\le X_n/10$，并令
+
+$$
+F(x)=\sum_{n\ge n_0}A_n\,\ell_{h_n,k_n}(x-X_n).
+\tag{492.2}
+$$
+
+则 $F$ 连续、局部有界；当 $Y\to\infty$ 时，对 $0<u\le Y^\beta$ 一致地 $V_F(Y,u)\ll Yu\log Y/\log\log Y$；并且 $F(x)\ll\sqrt x\,(\log x)^{3/2}/\sqrt{\log\log x}$。
+
+证明。第 $n$ 项的支撑为 $[X_n-k_n,X_n+k_n]$，诸支撑两两不交且趋于无穷，故和局部有限，$F$ 连续。充分大时 $Y+u\le2Y$；第 $n$ 项的支撑含于 $[0.9X_n,1.1X_n]$；若它对某个 $x\in[1,Y]$ 的 $F(x)$ 或 $F(x+u)$ 有贡献，则 $0.9X_n\le2Y$，于是 $X_n\le\frac{20}9Y<3Y$。由引理 492.1 与 $L^2$ 三角不等式，$\|D^F_u\|_{L^2[1,Y]}\le\sqrt{Cu}\sum_{X_n\le3Y}A_n$；令 $m=\max\{n:X_n\le3Y\}$，则 $0.3Y<X_m\le3Y$；因 $A_{n+1}/A_n\to\sqrt{10}>2$，充分大时 $\sum_{n_0\le n\le m}A_n\ll A_m$，故 $\sum_{X_n\le3Y}A_n\ll\sqrt{Y\log Y/\log\log Y}$。平方即得方差界。最后，在第 $n$ 项的支撑上 $x\asymp X_n$ 且 $|F(x)|\le A_n\log(k_n/h_n)=(b-a)\sqrt{X_n}(\log X_n)^{3/2}/\sqrt{\log\log X_n}$。证毕。
+
+由于在带内 $\log(Y/u)\ge(1-\beta)\log Y$，引理 492.2 给出 $\sup_{Y^\alpha\le u\le Y^\beta}V_F(Y,u)/(Yu\log(Y/u))\ll1/\log\log Y$。若 $E_0$ 满足 (492.1)，记 $M(Y,u)=Yu\log(Y/u)$、$\varepsilon_0(Y)=\sup_{Y^\alpha\le u\le Y^\beta}|V_{E_0}(Y,u)/M(Y,u)-1|$，则 $\varepsilon_0(Y)\to0$，且 $V_{E_0}/M$ 在带内最终一致有界。由 Cauchy–Schwarz，$|V_{E_0\pm F}-V_{E_0}|\le2\sqrt{V_{E_0}V_F}+V_F$，故
+
+$$
+\sup_{Y^\alpha\le u\le Y^\beta}\frac{|V_{E_0\pm F}(Y,u)-V_{E_0}(Y,u)|}{M(Y,u)}\ll(\log\log Y)^{-1/2},\qquad\sup_{Y^\alpha\le u\le Y^\beta}\Bigl|\frac{V_{E_0\pm F}(Y,u)}{M(Y,u)}-1\Bigr|\le\varepsilon_0(Y)+O\bigl((\log\log Y)^{-1/2}\bigr),
+$$
+
+于是 $E_0+F$ 与 $E_0-F$ 也满足 (492.1)。
+

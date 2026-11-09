@@ -1,0 +1,26 @@
+**定理 496.3（宏观变长的带权协方差）。** 设 $a,b\in C^1([1,2])$ 非负，$w\in C([1,2])$ 实值。则
+
+$$
+\frac1{X^{1+\theta}\log X}\int_X^{2X}w(x/X)\,D_{X^\theta a(x/X)}(x)\,D_{X^\theta b(x/X)}(x)\,dx\longrightarrow\kappa\int_1^2w(u)\min\bigl(a(u),b(u)\bigr)\,du .
+\tag{496.4}
+$$
+
+证明。第一步（固定长度）。固定 $1\le u<v\le2$、$q>0$、$e\ge0$。端点 $Y_X=dX+eh$（$d\in\{u,v\}$）满足 $qh/Y_X^\alpha\to\infty$、$qh/Y_X^\beta\to0$ 与 $\log(Y_X/(qh))/\log X\to\kappa$，故由 (490.2)，$V(dX+eh,qh)/\mathscr N_X\to dq\kappa$，从而 $\mathscr N_X^{-1}\int_{uX+eh}^{vX+eh}D_{qh}^2\to\kappa q(v-u)$。对 $0<c\le d$，由 $D_{dh}(x)-D_{ch}(x)=D_{(d-c)h}(x+ch)$ 得极化恒等式 $2D_{ch}D_{dh}=D_{ch}^2+D_{dh}^2-D_{(d-c)h}(\cdot+ch)^2$（由方差经极化恢复两点相关，见 Leung [Joint distribution of primes in multiple short intervals, Adv. Math. 490 (2026), 110847] 附注 2.3）；第三项的积分区间为 $[uX+ch,vX+ch]$，用上式处理，得
+
+$$
+\mathscr N_X^{-1}\int_{uX}^{vX}D_{ch}D_{dh}\longrightarrow\kappa(v-u)\min(c,d) ;
+\tag{496.5}
+$$
+
+$c=d$ 时第三项为零，$cd=0$ 时乘积为零。
+
+第二步（分块）。取共同的 $M\ge1$、$L\ge0$ 使 $0\le a,b\le M$、$|a'|,|b'|\le L$，沿用引理 496.2 的分块，令 $w_n=w(u_j)$（$u_j\le u<u_{j+1}$）。由 (496.5)，对固定 $n$，$\mathscr N_X^{-1}\int_X^{2X}w_n(x/X)F_{a,n,X}F_{b,n,X}\to q_n=\frac\kappa n\sum_jw(u_j)\min(a(u_j),b(u_j))$，且 $\|F_{a,n,X}\|_{X,2}^2\to\frac\kappa n\sum_ja(u_j)\le M$。
+
+第三步（误差）。由 $wf_af_b-w_nF_aF_b=(w-w_n)f_af_b+w_n\bigl((f_a-F_a)f_b+F_a(f_b-F_b)\bigr)$、Cauchy–Schwarz 与引理 496.2，记 $\omega_w$ 为 $w$ 的连续模、$d_n=\sqrt{120(1+L)/n}$，
+
+$$
+\limsup_X\Bigl|\mathscr N_X^{-1}\int_X^{2X}w(x/X)f_af_b-q_n\Bigr|\le880M\,\omega_w(1/n)+\|w\|_\infty\bigl(\sqrt{880M}+\sqrt M\bigr)d_n .
+$$
+
+又 $\min(a,b)$ 的 Lipschitz 常数至多 $L$，故 $|q_n-\kappa\int_1^2w\min(a,b)|\le\kappa(M\omega_w(1/n)+L\|w\|_\infty/n)$。先令 $X\to\infty$，再令 $n\to\infty$。证毕。
+
