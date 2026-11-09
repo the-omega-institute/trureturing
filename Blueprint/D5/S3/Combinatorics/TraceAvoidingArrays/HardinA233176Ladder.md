@@ -4,7 +4,7 @@
 
 Barker's integer generating function for normalized three-row six-colour ladders.
 
-An array is a function from Fin 3 times Fin n to Fin 6. The first cell has colour zero. Bonds join cells in consecutive columns whose row indices differ by at most one. Each bond excludes equal colours and colours summing to five. Row-major order scans every cell of row zero before row one, and every cell of row one before row two. The strict rank is Fin.val(row)*n+Fin.val(column). Fin.val is the explicit natural coercion throughout. Nat.div denotes natural quotient division and Nat.mod denotes its nonnegative remainder.
+An array is a function from Fin 3 times Fin n to Fin 6. The first cell has colour zero. Bonds join cells in consecutive columns whose row indices differ by at most one. Each bond excludes equal colours and colours summing to five. The equivalence with distinct pair labels is HardinA233251TriangleStrip.colour_bond_iff, and its Row type represents each three-cell column. Row-major order scans every cell of row zero before row one, and every cell of row one before row two. The strict rank is Fin.val(row)*n+Fin.val(column). Fin.val is the explicit natural coercion throughout. Nat.div denotes natural quotient division and Nat.mod denotes its nonnegative remainder.
 
 **Definition 1.1 (Row-major normalization).**
 
@@ -86,4 +86,5 @@ The column transfer has 159 different nonzero state transitions. Its continuatio
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233176Ladder.normal`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233176Ladder.result`
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233175PairStrip](HardinA233175PairStrip.md)
+- Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233251TriangleStrip](HardinA233251TriangleStrip.md)
 - Dependency: [D5/S3/Observer/Separation/BooleanRankThreeK4](../../Observer/Separation/BooleanRankThreeK4.md)
