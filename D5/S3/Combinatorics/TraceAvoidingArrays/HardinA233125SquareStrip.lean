@@ -35,6 +35,12 @@ D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.widthStep
 statement_id: sha256:bd12c5c5928f8822063ec100e0e6e92c5300f5907da4aa64e85595a1ee4c7cb5
 D5.S3.Observer.Separation.BooleanRankThreeK4.beta
 statement_id: sha256:1abdc5f3db71567fe05de5aabbe80dddeb5ec5179e4ec7fd49fe71e500518481
+D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255LiteralBridge.scanner_fibres
+statement_id: sha256:63a356389be3d9bf756c53fb12271299a7668c1123562d84a2e34e78a341fc90
+D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255LiteralBridge.rowFinish
+statement_id: sha256:ded50bd8c5de69b5b2324e575fee135f275ae05b5bb30b328b0e5c0313d86b07
+D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255LiteralBridge.rowWeight
+statement_id: sha256:076a03b0e19556ba67d0faed8d8d552fb3d55e6c40992d9c52c88faad85e373a
 Row: proof_shape=bind-only; consumers=rowLegal, bonds, a
 rowLegal: proof_shape=bind-only; consumers=a, counting_bridge, row_counts
 bonds: proof_shape=bind-only; consumers=a, bonds_iff
@@ -79,6 +85,8 @@ import Mathlib.Tactic.IntervalCases
 import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.Ring
+
+/-! Literal four-column square-strip counts and their all-height class reduction. -/
 
 open scoped BigOperators
 namespace D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233125SquareStrip
@@ -154,13 +162,18 @@ private theorem class_fibres (s : Seen) (p : Fin 4 → Fin 3) (k : Fin 4) :
     classCount s p k = ∑ q : Fin 4 → Fin 3,
       rowWeight s q * if (∀ j : Fin 3, q j.castSucc ≠ q j.succ) ∧
         (∀ j, p j ≠ q j) ∧ boundaryClass (rowFinish s q) q = k then 1 else 0 := by
-  rw [← scanner_fibres 4 s]
+  rw [← scanner_fibres 4 s (fun t q =>
+    if (∀ j : Fin 3, q j.castSucc ≠ q j.succ) ∧
+      (∀ j, p j ≠ q j) ∧ boundaryClass t q = k then (1 : ℤ) else 0)]
   unfold classCount
   apply Finset.sum_congr rfl
   intro c _
   simp only [← colour_bond_iff]
-  by_cases hg : good s c <;>
-    simp [hg, rowLegal, compatible, labels, and_comm, and_left_comm]
+  change (if rowLegal c ∧ compatible p c ∧ good s c ∧
+      boundaryClass (finish s c) (labels c) = k then (1 : ℤ) else 0) =
+    if good s c then (if rowLegal c ∧ compatible p c ∧
+      boundaryClass (finish s c) (labels c) = k then 1 else 0) else 0
+  by_cases hg : good s c <;> simp [hg]
 
 private theorem label_sum (g : (Fin 4 → Fin 3) → ℤ) :
     (∑ q, g q) = ∑ a : Fin 3, ∑ b : Fin 3, ∑ c : Fin 3, ∑ d : Fin 3,
@@ -222,7 +235,7 @@ private theorem v_eq_w (n : ℕ) (s : Seen) (p : Fin 4 → Fin 3) (h : Valid s p
     change (∑ k : Fin 4, classCount s p k * w n k) = _
     simp_rw [finite_certificate.1 s p h]
     generalize boundaryClass s p = k
-    fin_cases k <;> simp [transfer, w, Fin.sum_univ_succ]
+    fin_cases k <;> simp [transfer, w, Fin.sum_univ_succ, add_assoc]
 
 private theorem a_eq_w (n : ℕ) : (a (n + 1) : ℤ) = 4 * w n 0 + 4 * w n 2 + 2 * w n 3 := by
   rw [counting_bridge, total, widthTotal]
@@ -242,7 +255,7 @@ private theorem a_eq_w (n : ℕ) : (a (n + 1) : ℤ) = 4 * w n 0 + 4 * w n 2 + 2
   simp_rw [← Finset.sum_mul]
   change (∑ k : Fin 4, firstCount k * w n k) = _
   simp_rw [finite_certificate.2]
-  simp [Fin.sum_univ_succ]
+  simp [Fin.sum_univ_succ, add_assoc]
 
 private theorem recurrence (n : ℕ) :
     (a (n + 5) : ℤ) = 160 * a (n + 4) - 6144 * a (n + 3) +

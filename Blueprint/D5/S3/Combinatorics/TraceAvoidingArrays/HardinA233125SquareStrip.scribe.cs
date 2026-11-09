@@ -156,8 +156,9 @@ internal sealed class HardinA233125SquareStripDocument : IScribeDocumentDefiniti
         Formula P(byte j) => At(p, Typed(D(j), Fin(4)));
         return All("s", Seen(), All("p", PairRow(),
             Eq(Call(Root + "boundaryClass", s, p), Conditional(Proj(s, false),
-                Conditional(And(Eq(P(0), P(2)), Eq(P(1), P(3))), D(1),
-                    Conditional(Eq(P(0), P(3)), D(3), D(2))), D(0)))));
+                Conditional(And(Eq(P(0), P(2)), Eq(P(1), P(3))), Typed(D(1), Fin(4)),
+                    Conditional(Eq(P(0), P(3)), Typed(D(3), Fin(4)),
+                        Typed(D(2), Fin(4)))), Typed(D(0), Fin(4))))));
     }
 
     private static Formula Transfer()
