@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Under RH original positive-price strict records have a uniform sharp lower Robin-margin endpoint. -/
+   digest: Sharp lower Robin-margin endpoint for original positive-price strict records under RH. -/
 
 import D5.S3.Arith.Robin.Analytic.RHSharpArithmeticEnvelope
 import D5.S3.Arith.Robin.ActualPriceRecordPrimeStructure
@@ -14,6 +14,8 @@ import D5.S3.Arith.Robin.PriceRecord.ActualBalancedCutoff
 import D5.S3.Arith.GoldenResource.GoldenResourceOptimalLayerCount
 import Mathlib.Data.Nat.Prime.Infinite
 import Mathlib.Tactic
+
+/-! Sharp lower Robin-margin control and attainment on original strict records. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -72,12 +74,11 @@ private theorem fullC_leading (epsilon : ℝ) (he : 0 < epsilon) :
   have hZ : 1 + |d| < epsilon * Real.log P := by
     have hh := (div_lt_iff₀ he).mp hsmall
     nlinarith
-  apply (mul_lt_mul_left hL).mp
   nlinarith [htriangle.trans hZ]
 
 private def Pn (x : ℝ) : ℕ := (Nat.primesLE ⌊x⌋₊).sup id
 
-private lemma prefix (x : ℝ) : Nat.primesLE (Pn x) = Nat.primesLE ⌊x⌋₊ := by
+private lemma prime_prefix (x : ℝ) : Nat.primesLE (Pn x) = Nat.primesLE ⌊x⌋₊ := by
   have hPN : Pn x ≤ ⌊x⌋₊ := by
     apply Finset.sup_le
     intro p hp
@@ -94,14 +95,14 @@ private lemma Pn_two {x : ℝ} (hx : 2 ≤ x) : 2 ≤ Pn x := by
   exact Finset.le_sup (f := id) (Nat.mem_primesLE.mpr ⟨Nat.le_floor hx, Nat.prime_two⟩)
 
 private lemma theta_prefix (x : ℝ) : Chebyshev.theta (Pn x : ℝ) = Chebyshev.theta x := by
-  rw [Chebyshev.theta_eq_sum_primesLE_log, Chebyshev.theta_eq_sum_primesLE, prefix]
+  rw [Chebyshev.theta_eq_sum_primesLE_log, Chebyshev.theta_eq_sum_primesLE, prime_prefix]
 
 private lemma B_prefix (x : ℝ) : B (Pn x : ℝ) = B x := by
   have he : Mertens.E₃ (Pn x : ℝ) - Real.log (Real.log (Pn x : ℝ)) =
       Mertens.E₃ x - Real.log (Real.log x) := by
     unfold Mertens.E₃
     rw [Nat.floor_natCast, ← Nat.primesLE_eq_filter_Ioc_zero,
-      ← Nat.primesLE_eq_filter_Ioc_zero, prefix]
+      ← Nat.primesLE_eq_filter_Ioc_zero, prime_prefix]
     ring
   dsimp [B]
   rw [theta_prefix]
@@ -134,7 +135,8 @@ private lemma cutoff_record (x : ℝ) (hx : 2 ≤ x) :
         (by linarith : 1 < (N : ℝ) + 1) hp1 hle
       exact (not_lt_of_ge hh) h
     · intro h
-      apply ActualBalancedCutoff.firstLayerPrice_strictAnti hp1 (by linarith)
+      apply ActualBalancedCutoff.firstLayerPrice_strictAnti hp1
+        (by linarith : 1 < (N : ℝ) + 1)
       have : (p : ℝ) ≤ N := by exact_mod_cast h
       linarith
   obtain ⟨m, hm, hcounts, hopt, hleast⟩ := optimal_layer_count_spec hlambda
@@ -205,9 +207,9 @@ private lemma normalization :
     change (Chebyshev.theta x / x) /
       (Chebyshev.theta (Pn x : ℝ) / (Pn x : ℝ)) = (Pn x : ℝ) / x
     rw [theta_prefix]
-    field_simp [hx0.ne', hP0.ne', ht0] <;> ring
+    field_simp [hx0.ne', hP0.ne', ht0]
   have hlogdiff : Tendsto (fun x : ℝ => Real.log ((Pn x : ℝ) / x)) atTop (𝓝 0) := by
-    simpa only [Real.log_one] using
+    simpa only [Real.log_one, Function.comp_def] using
       (Real.continuousAt_log (by norm_num : (1 : ℝ) ≠ 0)).tendsto.comp hratio
   have hlogratio : Tendsto (fun x : ℝ => Real.log (Pn x : ℝ) / Real.log x) atTop (𝓝 1) := by
     have hh := (hlogdiff.div_atTop Real.tendsto_log_atTop).add_const 1
@@ -217,13 +219,12 @@ private lemma normalization :
     change Real.log ((Pn x : ℝ) / x) / Real.log x + 1 =
       Real.log (Pn x : ℝ) / Real.log x
     rw [Real.log_div (by linarith : (Pn x : ℝ) ≠ 0) (by linarith : x ≠ 0)]
-    field_simp [(Real.log_pos hx).ne'] <;> ring
+    field_simp [(Real.log_pos hx).ne']
+    ring
   have hh := hratio.sqrt.mul hlogratio
   simp only [Real.sqrt_one, one_mul] at hh
   apply hh.congr'
   filter_upwards [eventually_gt_atTop (1 : ℝ)] with x hx
-  change Real.sqrt ((Pn x : ℝ) / x) * (Real.log (Pn x : ℝ) / Real.log x) =
-    D (Pn x : ℝ) / D x
   rw [Real.sqrt_div (Nat.cast_nonneg _), div_mul_div_comm]
   rfl
 
@@ -234,7 +235,7 @@ private lemma B_transfer (hRH : RiemannHypothesis) :
     filter_upwards [(actual_B_lower_endpoint hRH).1 1 zero_lt_one] with x hx
     have hh := abs_sub (D x * B x + 2) 2
     rw [add_sub_cancel_right] at hh
-    norm_num only [abs_ofNat] at hh
+    rw [abs_of_pos (by norm_num : (0 : ℝ) < 2)] at hh
     dsimp [C]
     linarith [le_abs_self firstLiMass, hx.2]
   have he : Tendsto (fun x : ℝ => (D (Pn x : ℝ) / D x - 1) * (D x * B x)) atTop (𝓝 0) := by
@@ -248,7 +249,6 @@ private lemma B_transfer (hRH : RiemannHypothesis) :
   have hD : D x ≠ 0 := mul_ne_zero
     (Real.sqrt_pos.mpr (by linarith : 0 < x)).ne' (Real.log_pos hx).ne'
   field_simp [hD]
-  ring
 
 private lemma margin_identity {m : ℕ} (hm : 2 ≤ m) {lambda : ℝ}
     (hlambda : 0 < lambda)
@@ -319,8 +319,8 @@ theorem original_record_sharp_lower_endpoint (hRH : RiemannHypothesis) :
         dsimp [K]
         ring
       rw [hid]
-      exact (abs_add _ _).trans_lt (by
-        have hh := abs_add (D x * B x + 2 + firstLiMass)
+      exact (abs_add_le _ _).trans_lt (by
+        have hh := abs_add_le (D x * B x + 2 + firstLiMass)
           (D (Pn x : ℝ) * B (Pn x : ℝ) - D x * B x)
         linarith [hc.2.2])
 
