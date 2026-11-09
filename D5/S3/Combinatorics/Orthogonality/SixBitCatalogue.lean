@@ -63,17 +63,17 @@ theorem mask_subset {a b : Nat} (ha : a < 2^64) (h : carrier a ⊆ carrier b) :
 structure Catalogue where
   count : Nat
   positive : 0 < count
-  masks : Array Nat
-  perps : Array Nat
-  colors : Array Nat
-  extensions : Array Nat
+  masks : Nat → Nat
+  perps : Nat → Nat
+  colors : Nat → Nat
+  extensions : Nat → Nat
 
-def Catalogue.mask (D : Catalogue) (i : Fin D.count) := D.masks[i.val]!
-def Catalogue.perp (D : Catalogue) (i : Fin D.count) := D.perps[i.val]!
-def Catalogue.color (D : Catalogue) (i : Fin D.count) := D.colors[i.val]!
+def Catalogue.mask (D : Catalogue) (i : Fin D.count) := D.masks i.val
+def Catalogue.perp (D : Catalogue) (i : Fin D.count) := D.perps i.val
+def Catalogue.color (D : Catalogue) (i : Fin D.count) := D.colors i.val
 def Catalogue.space (D : Catalogue) (i : Fin D.count) := carrier (D.mask i)
 def Catalogue.step (D : Catalogue) (i : Fin D.count) (v : Vector) : Fin D.count :=
-  ⟨D.extensions[i.val * 64 + v.val]! % D.count, Nat.mod_lt _ D.positive⟩
+  ⟨D.extensions (i.val * 64 + v.val) % D.count, Nat.mod_lt _ D.positive⟩
 def Catalogue.zero (D : Catalogue) : Fin D.count := ⟨0, D.positive⟩
 
 def Catalogue.Covers (D : Catalogue) : Prop :=
@@ -148,5 +148,152 @@ theorem Catalogue.colorable (D : Catalogue) (hc : D.Covers) (hp : D.Proper) :
     exact hUW.2 u hu w hw
   exact hp.2.2 _ _ (nezero U) (nezero W) distinct
     (mask_subset (hp.1 _).1 sub) (congrArg Fin.val h)
+
+/-- The exact covering obligation as direct bit tests, before materializing finite sets. -/
+def Catalogue.CoverBitRow (D : Catalogue) (i : Fin D.count) : Prop :=
+  ∀ v : Vector,
+    D.mask i &&& D.mask (D.step i v) = D.mask i ∧
+    (D.mask (D.step i v)).testBit v.val = true ∧
+    ∀ x : Vector, (D.mask (D.step i v)).testBit x.val = true →
+      (D.mask i).testBit x.val = true ∨ (D.mask i).testBit (add x v).val = true
+
+instance (D : Catalogue) (i : Fin D.count) : Decidable (D.CoverBitRow i) :=
+  by unfold Catalogue.CoverBitRow; infer_instance
+
+/-- Direct bit rows prove the unchanged full finite-set covering statement. -/
+theorem Catalogue.covers_of_bit_rows (D : Catalogue)
+    (hz : D.mask D.zero = 1) (h : ∀ i, D.CoverBitRow i) : D.Covers := by
+  constructor
+  · change carrier (D.mask D.zero) = {0}
+    rw [hz, zero_carrier]
+  · intro i v
+    obtain ⟨hs, hv, hx⟩ := h i v
+    refine ⟨?_, (mem_carrier _ _).mpr hv, ?_⟩
+    · intro x hi
+      have hix : (D.mask i).testBit x.val = true := (mem_carrier _ _).mp hi
+      have he := congrArg (fun m => m.testBit x.val) hs
+      rw [Nat.testBit_and, hix] at he
+      exact (mem_carrier _ _).mpr (by simpa using he)
+    · intro x hstep
+      exact (hx x ((mem_carrier _ _).mp hstep)).imp
+        ((mem_carrier _ _).mpr) ((mem_carrier _ _).mpr)
+
+/-- Exact orthogonal-complement bits for one complete catalogue row. -/
+def Catalogue.PerpBitRow (D : Catalogue) (i : Fin D.count) : Prop :=
+  ∀ v : Vector, (D.perp i).testBit v.val = true ↔
+    ∀ u : Vector, (D.mask i).testBit u.val = true → dot u v = 0
+
+instance (D : Catalogue) (i : Fin D.count) : Decidable (D.PerpBitRow i) :=
+  by unfold Catalogue.PerpBitRow; infer_instance
+
+/-- Equivalent order of the full pair test: compare colors before evaluating orthogonality. -/
+def Catalogue.ColorBitRow (D : Catalogue) (i : Fin D.count) : Prop :=
+  ∀ j : Fin D.count, D.color i ≠ D.color j ∨ i = D.zero ∨ j = D.zero ∨
+    D.mask i = D.mask j ∨ D.mask j &&& D.perp i ≠ D.mask j
+
+instance (D : Catalogue) (i : Fin D.count) : Decidable (D.ColorBitRow i) :=
+  by unfold Catalogue.ColorBitRow; infer_instance
+
+/-- The bit verifier entails every original bound, perp and proper-coloring obligation. -/
+theorem Catalogue.proper_of_bit_rows (D : Catalogue)
+    (hb : ∀ i, D.mask i < 2^64 ∧ D.color i < 15)
+    (hp : ∀ i, D.PerpBitRow i) (hc : ∀ i, D.ColorBitRow i) : D.Proper := by
+  refine ⟨hb, ?_, ?_⟩
+  · intro i v
+    simpa only [Catalogue.space, mem_carrier] using hp i v
+  · intro i j hi hj hm ho
+    rcases hc i j with h | h | h | h | h
+    · exact h
+    · exact (hi h).elim
+    · exact (hj h).elim
+    · exact (hm h).elim
+    · exact (h ho).elim
+
+/-- A proof-free Boolean traversal; its specification retains every index. -/
+def checkAll : Nat → (Nat → Bool) → Bool
+  | 0, _ => true
+  | n + 1, f => checkAll n f && f n
+
+theorem checkAll_spec (n : Nat) (f : Nat → Bool) :
+    checkAll n f = true ↔ ∀ i < n, f i = true := by
+  induction n with
+  | zero => simp [checkAll]
+  | succ n ih =>
+    simp only [checkAll, Bool.and_eq_true, ih]
+    constructor
+    · rintro ⟨h, hn⟩ i hi
+      rcases Nat.lt_succ_iff_lt_or_eq.mp hi with hi | rfl
+      · exact h i hi
+      · exact hn
+    · intro h
+      exact ⟨fun i hi => h i (Nat.lt_succ_of_lt hi), h n (Nat.lt_succ_self _)⟩
+
+def Catalogue.coverCheck (D : Catalogue) (i : Nat) : Bool :=
+  checkAll 64 fun v =>
+    let m := D.masks i
+    let e := D.masks (D.extensions (i * 64 + v) % D.count)
+    (m &&& e == m) && e.testBit v &&
+      checkAll 64 (fun x => !e.testBit x || m.testBit x ||
+        m.testBit ((x ^^^ v) % 64))
+
+theorem Catalogue.coverCheck_sound (D : Catalogue) (i : Fin D.count)
+    (h : D.coverCheck i.val = true) : D.CoverBitRow i := by
+  intro v
+  have hv := (checkAll_spec _ _).mp h v.val v.isLt
+  simp only [Bool.and_eq_true, beq_iff_eq] at hv
+  refine ⟨hv.1.1, hv.1.2, ?_⟩
+  intro x hx
+  have hh := (checkAll_spec _ _).mp hv.2 x.val x.isLt
+  change (D.masks (D.extensions (i.val * 64 + v.val) % D.count)).testBit x.val = true at hx
+  simpa [Catalogue.mask, Catalogue.step, add, hx] using hh
+
+def Catalogue.perpCheck (D : Catalogue) (i : Nat) : Bool :=
+  checkAll 64 fun v =>
+    (D.perps i).testBit v ==
+      checkAll 64 (fun u => !(D.masks i).testBit u ||
+        (((List.range 6).map (fun k => (u / 2^k % 2) * (v / 2^k % 2))).sum % 2 == 0))
+
+theorem Catalogue.perpCheck_sound (D : Catalogue) (i : Fin D.count)
+    (h : D.perpCheck i.val = true) : D.PerpBitRow i := by
+  intro v
+  have hv := (checkAll_spec _ _).mp h v.val v.isLt
+  simp only [beq_iff_eq] at hv
+  change (D.perps i.val).testBit v.val = true ↔ _
+  rw [hv, checkAll_spec]
+  constructor
+  · intro hh u hu
+    have hx := hh u.val u.isLt
+    change (D.masks i.val).testBit u.val = true at hu
+    simpa [hu, dot, Catalogue.space, Catalogue.mask] using hx
+  · intro hh u hu
+    by_cases hm : (D.masks i.val).testBit u = true
+    · have hx := hh (⟨u,hu⟩ : Vector) hm
+      simpa [hm, dot] using hx
+    · simp [hm]
+
+def Catalogue.colorCheck (D : Catalogue) (i : Nat) : Bool :=
+  checkAll D.count fun j =>
+    (!(D.colors i == D.colors j)) || (i == 0) || (j == 0) ||
+      (D.masks i == D.masks j) || (!(D.masks j &&& D.perps i == D.masks j))
+
+theorem Catalogue.colorCheck_sound (D : Catalogue) (i : Fin D.count)
+    (h : D.colorCheck i.val = true) : D.ColorBitRow i := by
+  intro j
+  have hh := (checkAll_spec _ _).mp h j.val j.isLt
+  simpa [Catalogue.color, Catalogue.mask, Catalogue.perp, Catalogue.zero,
+    Fin.ext_iff, or_assoc] using hh
+
+/-- A row retains all covering, perp, pair-color and range obligations. -/
+def Catalogue.rowCheck (D : Catalogue) (i : Nat) : Bool :=
+  decide (D.masks i < 2^64) && decide (D.colors i < 15) &&
+    D.coverCheck i && D.perpCheck i && D.colorCheck i
+
+theorem Catalogue.rowCheck_sound (D : Catalogue) (i : Fin D.count)
+    (h : D.rowCheck i.val = true) :
+    D.mask i < 2^64 ∧ D.color i < 15 ∧
+      D.CoverBitRow i ∧ D.PerpBitRow i ∧ D.ColorBitRow i := by
+  simp only [Catalogue.rowCheck, Bool.and_eq_true, decide_eq_true_eq] at h
+  exact ⟨h.1.1.1.1,h.1.1.1.2,D.coverCheck_sound i h.1.1.2,
+    D.perpCheck_sound i h.1.2,D.colorCheck_sound i h.2⟩
 
 end BinaryOrthogonality
