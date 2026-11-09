@@ -80,7 +80,7 @@ namespace D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233123SquareStrip
 
 open HardinA233175PairStrip (Seen Col good finish pairs)
 open HardinA233251TriangleStrip
-  (widthNormal widthStep widthV widthTotal width_counting_bridge colour_bond_iff Valid)
+  (widthNormal widthLegal widthStep widthV widthTotal width_counting_bridge colour_bond_iff Valid)
 open D5.S3.Observer.Separation.BooleanRankThreeK4 (beta)
 
 def rowLegal (c : Col) : Prop :=
@@ -90,18 +90,7 @@ def bonds (c d : Col) : Prop :=
   ∀ j : Fin 2, c j ≠ d j ∧ (c j).val + (d j).val ≠ 5
 
 def Legal {n : ℕ} (A : Fin n × Fin 2 → Fin 6) : Prop :=
-  (∃ i : Fin n, i.val = 0 ∧ A (i, 0) = 0) ∧
-    (∀ i, rowLegal (fun j => A (i, j))) ∧
-    (∀ (i : Fin n) (h : i.val + 1 < n), bonds (fun j => A (i, j))
-      (fun j => A (⟨i.val + 1, h⟩, j))) ∧
-    widthNormal (false, false) (fun i j => A (i, j))
-
-private instance instDecidableColLegal (c : Col) : Decidable (rowLegal c) :=
-  inferInstanceAs (Decidable (_ ∧ _))
-private instance instDecidableBonds (c d : Col) : Decidable (bonds c d) :=
-  inferInstanceAs (Decidable (∀ _, _ ∧ _))
-private instance instDecidableLegal {n : ℕ} (A : Fin n × Fin 2 → Fin 6) : Decidable (Legal A) :=
-  inferInstanceAs (Decidable (_ ∧ _ ∧ _ ∧ _))
+  widthLegal rowLegal bonds A
 
 /-- The literal filtered finite count; the first-cell condition gives the convention `a 0 = 0`. -/
 def a (n : ℕ) : ℕ :=
