@@ -1,0 +1,20 @@
+**引理 498.2（二次关系下的四阶配对缺陷）。** 设 $S$ 为有限集，$\mathcal A$ 为交换实代数，$\ell:\mathcal A\to\mathbb R$ 线性，$\ell(1)=1$，且对 $d\in S$，$\ell(Y_d)=0$、$Y_d^2=aY_d+b$。对 $f_1,\dots,f_4:S\to\mathbb R$，令 $f_A=\prod_{i\in A}f_i$、$T_A=\sum_{d\in S}f_A(d)$、$V_k(f_1,\dots,f_k)=\ell\bigl(\prod_{i\le k}\sum_df_i(d)Y_d\bigr)$，以及有序互异指标和 $R_k(g_1,\dots,g_k)=\sum_{d_1,\dots,d_k\in S\text{ 两两不同}}\prod_jg_j(d_j)\,\ell(Y_{d_1}\cdots Y_{d_k})$。则
+
+$$
+V_2(f_i,f_j)=R_2(f_i,f_j)+bT_{ij},\qquad
+V_3=R_3+a\sum_{\{i,j\}}R_2(f_{ij},f_k)+abT_{123},
+\tag{498.4}
+$$
+
+$$
+\begin{aligned}
+V_4-\sum_\pi\prod_{\{i,j\}\in\pi}V_2(f_i,f_j)={}&R_4-\sum_\pi\prod_{\{i,j\}\in\pi}R_2(f_i,f_j)+a\sum_{\{i,j\}}R_3(f_{ij},f_k,f_l)+a^2\sum_{\pi=\{ij,kl\}}R_2(f_{ij},f_{kl})\\
+&+(a^2-2b)\sum_lR_2(f_{[4]\setminus\{l\}},f_l)+(a^2b-2b^2)T_{1234},
+\end{aligned}
+\tag{498.5}
+$$
+
+其中 $\pi$ 遍历三个完美配对，三个非平凡和分别有 $6,3,4$ 项。
+
+证明。由二次关系，$Y_d^3=(a^2+b)Y_d+ab$、$Y_d^4=(a^3+2ab)Y_d+(a^2b+b^2)$。展开 $V_k$ 并按指标相等关系分类。二、三阶式立即得到。四阶的五种重数类型贡献为：$1{+}1{+}1{+}1$ 给 $R_4$；重复对 $ij$ 的 $2{+}1{+}1$ 给 $aR_3(f_{ij},f_k,f_l)+b\bigl[T_{ij}R_2(f_k,f_l)-R_2(f_{ijk},f_l)-R_2(f_{ijl},f_k)\bigr]$（两个减项来自重复指标不得等于其余两个指标）；配对 $ij\mid kl$ 的 $2{+}2$ 给 $a^2R_2(f_{ij},f_{kl})+b^2(T_{ij}T_{kl}-T_{1234})$；单点 $l$ 的 $3{+}1$ 给 $(a^2+b)R_2(f_{[4]\setminus\{l\}},f_l)$；$4$ 给 $(a^2b+b^2)T_{1234}$。六个 $2{+}1{+}1$ 类型中，每个 $R_2(f_{[4]\setminus\{l\}},f_l)$ 恰被减去三次，合并系数为 $(a^2+b)-3b=a^2-2b$；三个 $2{+}2$ 类型给 $T_{1234}$ 贡献 $-3b^2$，合并系数为 $a^2b-2b^2$。最后把二阶式代入 $\sum_\pi\prod V_2$，项 $b\sum T_{ij}R_2(f_k,f_l)$ 与 $b^2\sum_\pi T_{ij}T_{kl}$ 恰好抵消，得 (498.5)。证毕。
+

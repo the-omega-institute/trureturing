@@ -1,0 +1,12 @@
+**推论 498.6（均方误差即足够）。** 定理 498.1 中的 $\mathrm{HL}_4(\beta)$ 可换成：对每个 $\varepsilon>0$、$M\ge1$、$1\le r\le4$，一致地对 $1\le K\le MN^\beta$、$N\le y\le2N$，
+
+$$
+\sum_{\substack{1\le d_1,\dots,d_r\le K\\ \text{两两不同}}}|E_r(y;\mathbf d)|^2\le C_{\varepsilon,M}N^{1+2\varepsilon}K^r ,
+\tag{498.10}
+$$
+
+其中 $E_r(y;\mathbf d)$ 为 (498.1) 左边的相关误差。
+
+证明。在含 $j$ 个不同位移的重合类型中，中心化展开的一项使用其中 $r$ 个相关位移，其余位移的求和至多给出 $K^{j-r}$。由 Cauchy–Schwarz，$K^{j-r}\sum_{\mathbf d_r}|E_r|\le K^{j-r}K^{r/2}(\sum|E_r|^2)^{1/2}\le C^{1/2}N^{1/2+\varepsilon}K^j$，这正是引理 498.4 所需的误差；分部求和只用 $N\le y\le2N$。其余不变。证毕。
+
+**范围。** 本节的算术结论以 $\mathrm{HL}_4(\beta)$（或 (498.10)）为条件，且只覆盖 $0<\theta<\frac14$，不覆盖 §481 的 $\theta=4/5$；它供应三、四阶接口，不给出全阶联合中心极限。外部输入为：Montgomery–Soundararajan 2004 的定理 1（有限筛矩，(15)）、定理 2 与 (16)（二阶中心化奇异级数平均）、定理 3（单长度矩）；Kuperberg arXiv:2301.06095 定理 1.3（光滑权有限筛矩的配对公式）。Gallagher [On the distribution of primes in short intervals, Mathematika 23 (1976), 4–9] 处理对数长度的 Poisson 统计；Chan [A note on primes in short intervals, Int. J. Number Theory 2 (2006), 105–110] 把逐位移误差弱化为均方误差，推论 498.6 是同一机制在重叠区间混合矩上的形式；Leung [Joint distribution of primes in multiple short intervals, Adv. Math. 490 (2026), 110847] 在 RH 与 LI 下处理比例长度区间与对数取样；Leung [Pseudorandomness of primes at large scales, arXiv:2407.05380] 定理 2.1 在 HL 下给出对数长度（Poisson 区域）的混合矩；de la Bretèche [arXiv:2410.02480] 给出更精细的标量三阶矩分析。不交区间的联合矩经细分与可加性即可延伸到重叠区间，故重叠本身不是区别所在。本节在这些结果之上给出：多项式长度、端点一致的锐截断区间、宏观有界变差权与固定二倍区间连续取样下的三、四阶混合矩（引理 498.3 与定理 498.1），引理 498.2 是证明中所用的显式代数记账；由此在 $\alpha<\theta<\beta<\frac14$ 上推出 $(\mathrm F_3)$、$(\mathrm F_4)$ 与定理 494.2 的结论。
