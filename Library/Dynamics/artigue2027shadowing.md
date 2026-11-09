@@ -54,11 +54,15 @@ The mathematical construction is attributed to the supplied terminal proof
 `9d2c8af332171841b0de2122a8a6d18d3f094b8ee563ff2b50646332144306bc`,
 and its formal route `lean-route.txt`, SHA-256
 `1a51a2083580f57293ae2e0f032afb5257d891328f247d26b97b81b483360a97`.
-The substantive admission basis is resolution of the stated external existence
-question; no literature-priority, comprehensive novelty or official
-acceptance assertion is made. The full vertical suspension selector remains
-a separate theorem and does not substitute for the arbitrary pointwise
-north-south result.
+The substantive admission basis is `escape-witness`: the proof derives stability
+from the literal pointwise assumptions, constructs a strict height, and constructs
+the full selector using crossing interpolation and continuity at arbitrary cap
+histories. These constructions are used in the selector's proof. The external
+existence question is a precisely scoped application of that construction,
+without an `open-problem-resolution` admission claim. No literature-priority,
+comprehensive novelty or official acceptance assertion is made. The full vertical
+suspension selector remains a separate theorem and does not substitute for the
+arbitrary pointwise north-south result.
 
 ## Verified locator
 
