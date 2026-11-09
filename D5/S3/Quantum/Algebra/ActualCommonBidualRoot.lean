@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Quantum/Algebra/ActualCommonBidualRoot
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/Quantum/Algebra/CentralPositiveFunctionalExtension, D5/S3/Topology/JBAlgebra, mathlib/module/Mathlib.Topology.ContinuousMap.Weierstrass, mathlib/module/Mathlib.Analysis.CStarAlgebra.GelfandNaimarkSegal]
+   anchors: [mathlib/module/Mathlib.Topology.ContinuousMap.Weierstrass, mathlib/module/Mathlib.Analysis.CStarAlgebra.GelfandNaimarkSegal]
    utility: none
    digest: A single positive square root in the first-Arens real bidual realizes every actual GNS square root and lies in the closed one-generator subspace. -/
 
