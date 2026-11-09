@@ -102,7 +102,7 @@ private lemma restricted_exp_bound (w t u C : ℝ) (S : Set ℝ) (hS : Measurabl
   rw [integral_indicator hS, integral_const_mul, integral_exp_linear] at h
   exact h
 
-private lemma lower_tail (H w a : ℝ) (hH : 0 ≤ H) (ha0 : 0 ≤ a) (ha2 : a ≤ 2) :
+lemma lower_tail (H w a : ℝ) (hH : 0 ≤ H) (ha0 : 0 ≤ a) (ha2 : a ≤ 2) :
     (∫ y in Iio H, exp (-a * y) ∂gaussian w) ≤ exp (2 * H - 3 * w ^ 2) := by
   have h := restricted_exp_bound w (-a) (-2) (exp ((2 - a) * H))
     (Iio H) measurableSet_Iio (exp_nonneg _) (by
@@ -116,7 +116,7 @@ private lemma lower_tail (H w a : ℝ) (hH : 0 ≤ H) (ha0 : 0 ≤ a) (ha2 : a �
   rw [he] at h
   exact h.trans (exp_le_exp.mpr (by nlinarith [mul_nonneg ha0 hH]))
 
-private lemma upper_tail (w a : ℝ) (ha : 0 ≤ a) :
+lemma upper_tail (w a : ℝ) (ha : 0 ≤ a) :
     (∫ y in Ioi (4 * w ^ 2), exp (-a * y) ∂gaussian w) ≤ exp (-4 * w ^ 2) := by
   have h := restricted_exp_bound w (-a) 4 (exp (-16 * w ^ 2))
     (Ioi (4 * w ^ 2)) measurableSet_Ioi (exp_nonneg _) (by
@@ -129,7 +129,7 @@ private lemma upper_tail (w a : ℝ) (ha : 0 ≤ a) :
   rw [← exp_add] at h
   convert h using 1 <;> congr 1 <;> ring
 
-private lemma integral_three_intervals {E : Type*} [NormedAddCommGroup E]
+lemma integral_three_intervals {E : Type*} [NormedAddCommGroup E]
     [NormedSpace ℝ E] [CompleteSpace E] {μ : Measure ℝ} {f : ℝ → E}
     (hf : Integrable f μ) {l u : ℝ} (hlu : l ≤ u) :
     (∫ y, f y ∂μ) = (∫ y in Icc l u, f y ∂μ) +

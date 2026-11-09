@@ -4,7 +4,19 @@
 
 Angular Fejer kernels, their Fourier transforms, tail bounds, and logarithmic averages.
 
-**Theorem 1.1 (Continuity of the tent weight).**
+**Theorem 1.1 (Convolution with a cosine).**
+
+Lean statement: `D5/S3/Analytic/Fourier/AngularFejerKernel.cosine_convolution`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/Fourier/AngularFejerKernel.cosine_convolution` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+If g is integrable and its angular Fourier transform is the real-valued function w, then convolution of g with cos(gamma u) equals w(gamma) cos(gamma y). Translation of the complex exponential integral gives the identity after taking real parts.
+
+**Theorem 1.2 (Continuity of the tent weight).**
 
 Lean statement: `D5/S3/Analytic/Fourier/AngularFejerKernel.phi_continuous`
 
@@ -16,7 +28,7 @@ Lean statement: `D5/S3/Analytic/Fourier/AngularFejerKernel.phi_continuous`
 
 The Fejer tent Fourier weight is continuous for every real bandwidth.
 
-**Theorem 1.2 (Vanishing outside the bandwidth).**
+**Theorem 1.3 (Vanishing outside the bandwidth).**
 
 Lean statement: `D5/S3/Analytic/Fourier/AngularFejerKernel.phi_eq_zero`
 
@@ -28,7 +40,7 @@ Lean statement: `D5/S3/Analytic/Fourier/AngularFejerKernel.phi_eq_zero`
 
 For positive b, the Fejer tent weight vanishes at every t with absolute value at least b.
 
-**Theorem 1.3 (The height of the Fejer kernel).**
+**Theorem 1.4 (The height of the Fejer kernel).**
 
 Lean statement: `D5/S3/Analytic/Fourier/AngularFejerKernel.K_cap`
 
@@ -40,7 +52,7 @@ Lean statement: `D5/S3/Analytic/Fourier/AngularFejerKernel.K_cap`
 
 For positive b, K(b,v) is at most b/(2*pi) at every real v.
 
-**Theorem 1.4 (Continuity of the Fejer kernel).**
+**Theorem 1.5 (Continuity of the Fejer kernel).**
 
 Lean statement: `D5/S3/Analytic/Fourier/AngularFejerKernel.K_continuous`
 
@@ -52,7 +64,7 @@ Lean statement: `D5/S3/Analytic/Fourier/AngularFejerKernel.K_continuous`
 
 The angular Fejer kernel is continuous for every real bandwidth.
 
-**Theorem 1.5 (Continuity of the notched kernel).**
+**Theorem 1.6 (Continuity of the notched kernel).**
 
 Lean statement: `D5/S3/Analytic/Fourier/AngularFejerKernel.H_continuous`
 
@@ -64,7 +76,7 @@ Lean statement: `D5/S3/Analytic/Fourier/AngularFejerKernel.H_continuous`
 
 The notched Fejer kernel is continuous for every real bandwidth and notch location.
 
-**Theorem 1.6 (Angular and cyclic Fourier conventions).**
+**Theorem 1.7 (Angular and cyclic Fourier conventions).**
 
 Lean statement: `D5/S3/Analytic/Fourier/AngularFejerKernel.aft_fourier`
 
@@ -76,7 +88,7 @@ Lean statement: `D5/S3/Analytic/Fourier/AngularFejerKernel.aft_fourier`
 
 The angular Fourier transform at t equals the cyclic Fourier transform at t/(2*pi).
 
-**Theorem 1.7 (Nonnegativity of the logarithmic envelope).**
+**Theorem 1.8 (Nonnegativity of the logarithmic envelope).**
 
 Lean statement: `D5/S3/Analytic/Fourier/AngularFejerKernel.log_ell_nonneg`
 
@@ -88,7 +100,7 @@ Lean statement: `D5/S3/Analytic/Fourier/AngularFejerKernel.log_ell_nonneg`
 
 For nonnegative u, log(exp(1)+u) is nonnegative.
 
-**Theorem 1.8 (The angular Fejer kernel).**
+**Theorem 1.9 (The angular Fejer kernel).**
 
 Lean statement: `D5/S3/Analytic/Fourier/AngularFejerKernel.fejer_law`
 
@@ -100,7 +112,7 @@ Lean statement: `D5/S3/Analytic/Fourier/AngularFejerKernel.fejer_law`
 
 For every positive bandwidth b, the angular Fejer kernel K(b,v) is nonnegative and integrable with total mass one. Its angular Fourier transform is the triangular function max(0,1-abs(t)/b). For every positive y, its integral over v at least y is at most 2/(pi*b*y).
 
-**Theorem 1.9 (The notched Fejer kernel).**
+**Theorem 1.10 (The notched Fejer kernel).**
 
 Lean statement: `D5/S3/Analytic/Fourier/AngularFejerKernel.notched_fejer_law`
 
@@ -112,7 +124,7 @@ Lean statement: `D5/S3/Analytic/Fourier/AngularFejerKernel.notched_fejer_law`
 
 For positive b and U greater than 2*b, the notched kernel H(b,U,v)=K(b,v)*(1-cos(U*v)) lies between zero and 2*K(b,v), is integrable, and has total mass one. Its angular Fourier transform is phi(b,t)-phi(b,t-U)/2-phi(b,t+U)/2. Its integral over v at least a positive y is at most 4/(pi*b*y).
 
-**Theorem 1.10 (Uniform logarithmic averages).**
+**Theorem 1.11 (Uniform logarithmic averages).**
 
 Lean statement: `D5/S3/Analytic/Fourier/AngularFejerKernel.fejer_log_average`
 
@@ -124,7 +136,7 @@ Lean statement: `D5/S3/Analytic/Fourier/AngularFejerKernel.fejer_log_average`
 
 There is a nonnegative constant C independent of M and y such that, for M and y at least one, K(M,y-u)*log(exp(1)+u) is integrable on the nonnegative half-line and its integral is at most log(exp(1)+y)+C. The bound follows from the finite logarithmic moment of K(1,.) and dilation of the kernel.
 
-**Theorem 1.11 (Logarithmic averages for notched kernels).**
+**Theorem 1.12 (Logarithmic averages for notched kernels).**
 
 Lean statement: `D5/S3/Analytic/Fourier/AngularFejerKernel.notched_log_average`
 
@@ -142,6 +154,7 @@ For each positive b, there is a nonnegative constant depending only on b such th
 - Truth anchor: `D5/S3/Analytic/Fourier/AngularFejerKernel.K_cap`
 - Truth anchor: `D5/S3/Analytic/Fourier/AngularFejerKernel.K_continuous`
 - Truth anchor: `D5/S3/Analytic/Fourier/AngularFejerKernel.aft_fourier`
+- Truth anchor: `D5/S3/Analytic/Fourier/AngularFejerKernel.cosine_convolution`
 - Truth anchor: `D5/S3/Analytic/Fourier/AngularFejerKernel.fejer_law`
 - Truth anchor: `D5/S3/Analytic/Fourier/AngularFejerKernel.fejer_log_average`
 - Truth anchor: `D5/S3/Analytic/Fourier/AngularFejerKernel.log_ell_nonneg`

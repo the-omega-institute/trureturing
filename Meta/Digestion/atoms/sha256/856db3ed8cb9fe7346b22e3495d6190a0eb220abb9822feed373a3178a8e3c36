@@ -1,0 +1,31 @@
+**定义 335.1（只在匹配差上要求谱迹配平）。** 固定一套定义 334.1 的先定资料。原整个选中域仍为 $\operatorname{rank}E_X>p_*$，在其中保留
+
+$$
+\mathsf G_{0h}:\quad
+D^X(e,p)=Q_cD^X(e,p),\qquad
+c=\operatorname{supp}(e+p),\quad Q_c=2L_c^2-L_c,
+\qquad \tau_X(e\circ p)\in\{0,\tfrac12\}
+\tag{335.1}
+$$
+
+的全部有序 primitive 对及整个输出。唯一新的迹关系是
+
+$$
+\boxed{\mathsf Z_{\rm bal}:\quad
+\tau_{K_A}\!\left(D^{K_A}(e_{A,T},z_{A,T}(a))\right)=0
+\qquad(A\ne0,\ T\in\mathcal V_A,\ a\in E_A).}
+\tag{335.2}
+$$
+
+每个目标只有一颗首原子；不同中心对不合并成一颗原子。补偿差及迹均作用在整个实际 $K_A$，不只取目标压缩。令 $m_A=\dim_{\mathbb R}E_A$；336.1 将证明每个所需目标只需至多 $m_A-1$ 条非平凡标量配平。
+
+原菜单、$\mathcal K$、实际 $J_0=P^{\otimes2}$ 和先于 $D$ 固定的同一 $t_0=(e_0,p_0,r_0)\in\mathcal K_{J_0}$ 仍逐字沿用 319.1。保留同一
+
+$$
+\sigma_{t_0}:\quad
+W_{e_0}(p_0)=2q_{J_0}(D_{p_0}e_0,r_0)+W_{e_0}(2D_{e_0}p_0),
+\qquad
+\mathsf C_{\rm bal}(B_*)=B_*+\mathsf G_{0h}+\mathsf Z_{\rm bal}+\sigma_{t_0}.
+\tag{335.3}
+$$
+

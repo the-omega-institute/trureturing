@@ -1,0 +1,64 @@
+**定理 65.1（原子核丰富原域的完整旧值传播）。** 在定义 62.1 的同一个原域、同一个旧 $D$、全部原 P2 与完整 PB 下，62.2 的符号满足
+
+$$
+\boxed{\quad D(a,b)_j=\eta_j\frac i2[a_j,b_j]
+\quad(a,b\in E,\ j\in I).\quad}
+\tag{65.1}
+$$
+
+经典坐标输出恒零；所有不等维、无限、不可分块及任意混合背景同时包括在量词内。右侧作为整个有界自伴元属于原 $E$ 是结论，不是前件。特别不需要另给原 $D$ 的增量控制、连续性、谱可加性、共同导子或任意输入落在有限角中。
+
+证明。零对象及零维坐标取唯一零值。一维坐标中任意两个自伴数的实 Gram 行列式为零，故 (63.3) 已给任意混合背景下的旧输出零。其余在 62.3 的统一取向坐标中证明 $\mathfrak F(Z)=0$。固定原 $Z\in E+iE$ 和坐标 $j$，简记这个坐标的算子为 $Z_j$。下述极分解只在环境 $B(H_j)$ 中作数学构造，不向 $D$ 输入其平方根或部分等距。
+
+置 $P=(Z_j^*Z_j)^{1/2}$、$s=(\ker Z_j)^\perp$。在 $\operatorname{ran}P$ 上以 $V(Px)=Z_jx$ 定义等距，因 $\|Px\|=\|Z_jx\|$ 而良定义；延到其闭包 $s$，再在 $\ker Z_j$ 上置零。这给
+
+$$
+Z_j=VP,\qquad V^*V|_s=I_s.
+\tag{65.2}
+$$
+
+首先对任意 $\xi\in s$ 证明 $\langle\xi,\mathfrak F(Z)_j\xi\rangle=0$。$s$ 对 $P$ 不变，故 $M=\operatorname{span}\{\xi,P\xi\}$ 是 $s$ 中至多二维的复空间，$V|_M$ 是等距。令 $L=M+VM$。将 $VM\to M$ 上已指定的等距 $Vv\mapsto v$ 延为 $L$ 上酉算子：两边子空间维数相等，正交补维数也相等，任选补空间的等距即可。再于 $L^\perp$ 取恒等，得环境酉 $U_j$，满足
+
+$$
+U_jV\xi=\xi,\qquad U_jVP\xi=P\xi,\qquad
+U_jZ_j\xi=P\xi=Z_j^*U_j^*\xi.
+\tag{65.3}
+$$
+
+在其他坐标取恒等。64.1 保证 $Y=UZ$ 的两个自伴部分 $A=\operatorname{Re}Y,B=\operatorname{Im}Y$ 都是原标签，并且 $\mathfrak F(Y)=\mathfrak F(Z)$。式 (65.3) 给 $B_j\xi=0$。对这一实际输入对应用 (63.3)，得
+
+$$
+\langle\xi,D(A,B)_j\xi\rangle=0,
+\qquad
+\langle\xi,\kappa(A,B)_j\xi\rangle=0.
+\tag{65.4}
+$$
+
+第二式直接由 $B_j\xi=0$ 和自伴性得出。于是任意原 $Z$ 在其第 $j$ 坐标的初始支撑 $s$ 上，残差的每个二次读取都为零。这一步只对齐至多两条向量，$L$ 至多四维；不要求 $Z_j$ 有闭值域或全局酉极因子。
+
+剩余的核方向由原反对称性消除。若 $Z_j=0$，则 $a_j=b_j=0$，(63.3) 直接给 $D(a,b)_j=0$，比较值亦零。若 $Z_j\ne0$，对任意非零 $\xi\in H_j$，取 $\zeta\in\overline{\operatorname{ran}Z_j}$ 且 $\|\zeta\|=\|\xi\|$。在 $\operatorname{span}\{\zeta,\xi\}$ 中延拓 $\zeta\mapsto\xi$ 为酉算子，再在正交补上取恒等，得到另一个允许的 $U_j$。令 $Y=UZ$，则
+
+$$
+\xi\in\overline{\operatorname{ran}Y_j}
+=(\ker Y_j^*)^\perp,
+\tag{65.5}
+$$
+
+即 $\xi$ 属于 $iY_j^*$ 的初始支撑。$iY^*\in E+iE$，故刚证的初始支撑结论用于这个新的实际复标签，给
+
+$$
+\langle\xi,\mathfrak F(iY^*)_j\xi\rangle=0.
+\tag{65.6}
+$$
+
+写 $Y=A+iB$，则 $iY^*=B+iA$；仅由原反对称性及已知 $\kappa$ 的反对称性，
+
+$$
+\mathfrak F(iY^*)=-\mathfrak F(Y)=-\mathfrak F(Z).
+\tag{65.7}
+$$
+
+这里没有偷用 $D(A,-B)=-D(A,B)$。由 (65.6) 得任意向量都读到 $\mathfrak F(Z)_j$ 为零；极化这个固定有界自伴算子，得 $\mathfrak F(Z)_j=0$。对所有坐标相同，坐标联合分离给 $\mathfrak F(Z)=0$。整个论证中其他坐标的输入没有删除，反对称交换的是整对实际输入。
+
+所以统一坐标中的 $D(a,b)=\kappa(a,b)$，特别这个比较值确实属于运输后的原域。还原 62.4 即得 (65.1)。一般不同符号下，结论只是定向比较 $\bigl(\eta_j i[a_j,b_j]/2\bigr)_j$ 属于原 $E$；不额外宣称未定向比较或符号元 $(\eta_jI_{H_j})_j$ 本身是原标签。∎
+

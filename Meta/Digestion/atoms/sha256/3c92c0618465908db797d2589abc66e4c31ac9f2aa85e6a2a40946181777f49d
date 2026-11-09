@@ -1,0 +1,75 @@
+## 11　项目衔接推论：混态序列的统一读出界代替实际纯锚
+
+本节是主候选之外的一个有明确前件的项目衔接推论， 不是第二个新公理候选，也不从主候选自动取得所列来源资料。[\[3\]](#ref-c128) 仓库 C128 新增第16–21节证明了指定自旋背景上一个数学纯锚的零空间下降定理。 以下说明，若原来源只供应趋向该方向的一列混态读出， 怎样以统一稳定性取得同一结论，而不增加一份可制备纯态。
+
+**既有背景 $\mathsf B$.**
+
+取实 Hilbert 空间 $H$ 及稠密实线性子空间 $V\subset H$， 原域 $E=\mathbb Ru\oplus V$，同一原 Jordan 乘法、锥和范数为
+
+$$
+S(su+x,tu+y)=(st+\langle x,y\rangle)u+sy+tx,
+\quad C=E\cap\{su+x:s\ge\|x\|\},
+\quad N(su+x)=|s|+\|x\|.
+$$
+
+旧 $D:E^2\to E$ 初始仅为反对称总映射。在全部原输入上支付
+
+$$
+\begin{aligned}
+\mathrm{PY}:\quad D(a,b)^2
+&=\tfrac12\bigl(U_a(b^2)+U_b(a^2)\bigr)-S(a,b)^2,\\
+\mathrm{NN}:\quad D(a,D(a,b))&=(L_a^2-L_{a^2})b,
+\end{aligned}
+$$
+
+其中 $L_ab=S(a,b)$、$U_a=2L_a^2-L_{a^2}$、$a^2=S(a,a)$。 完整 $\mathrm R$ 在这里准确指
+
+$$
+S(S(a,b),c)-D(D(a,b),c)=S(a,S(b,c))-D(a,D(b,c))\quad(\forall a,b,c).
+$$
+
+同一原评价族、质量、来源身份和全部操作合同保持；本节不新造这些来源。 不预设 $D$ 双线性、连续性、完整换括号 $\mathrm R$ 或有限维。 既有 W32.2 的仅用 PY+NN 的部分给
+
+$$
+D(su+x,tu+y)=\kappa(x,y)\in V,\quad
+\kappa(x,y)\perp x,y,
+$$
+
+$$
+\|\kappa(x,y)\|^2=\|x\|^2\|y\|^2-\langle x,y\rangle^2,
+\qquad
+\kappa(x,\kappa(x,y))=\langle x,y\rangle x-\|x\|^2y.
+\tag{B}
+$$
+
+**本推论另付的资料.**
+
+设 $V\ne0$。固定一个原单位方向 $n\in V$，并由原来源供应评价
+
+$$
+\alpha_j(su+v)=m_j\bigl(s+r_j\langle n,v\rangle\bigr),
+\quad m_j>0,\quad 0\le r_j<1,\quad r_j\longrightarrow1.
+\tag{M}
+$$
+
+每个有限 $j$ 都是混态边界以内的读出。质量可以变化，不要求其正下界。 在自由复标签空间 $\mathcal F=\mathbb C^{(E)}$ 上定义
+
+$$
+h_j([a],[b])=\alpha_j(S(a,b))-i\alpha_j(D(a,b)),
+\qquad
+\mathscr A_t[a]=[S(t,a)]-i[D(t,a)].
+$$
+
+第一式按第一槽共轭线性、第二槽线性延拓；第二式自由复线性延拓。 另要求以下两项，而不是从混态的名称推定它们：
+
+$$
+\begin{aligned}
+\mathrm G &: \quad h_j(f,f)\ge0\quad(\forall j,\forall f\in\mathcal F),\\
+\mathrm{UB} &: \quad
+\forall t\in E\;\exists C_t<\infty\;\forall j,\forall f\in\mathcal F,\quad
+h_j(\mathscr A_t f,\mathscr A_t f)\le C_t^2h_j(f,f).
+\end{aligned}
+$$
+
+各 $C_t$ 可以不同；统一性只针对同一原 $t$ 的评价序列。 G检查这条序列的全部有限原标签 Gram 表，不要求全部原评价的 Gram 表。
+

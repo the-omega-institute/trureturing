@@ -1,0 +1,30 @@
+**引理 46.4（高次数统一正性）。** 对每个 $\ell\ge24$、每个单位向量 $v\in\mathcal H_\ell$，有
+
+$$
+\max_{h\in\mathcal H}\|R(\pi_\ell(A))\pi_\ell(h)v\|\ge
+\left(\frac\kappa{785}\right)^{24}.
+\tag{46.15}
+$$
+
+**证明。** 设左端为 $\delta$。若 $\delta\ge1$，结论由 $\kappa\le1$ 直接成立。若 $0<\delta<1$，引理 46.2 给出秩 $r\in[1,24]$ 的投影 $E$，满足
+$D(E)\le785\delta^{1/24}$。在 $\operatorname{End}(\mathcal H_\ell)$ 上令
+$\tau(g)X=\pi_\ell(g)X\pi_\ell(g)^*$，并写 $X=E-(r/d_\ell)I$。谱隙给出
+
+$$
+\langle E,(I-\tau(\nu))E\rangle
+ =\langle X,(I-\tau(\nu))X\rangle
+ \ge(1-\rho)\left(r-\frac{r^2}{d_\ell}\right).
+\tag{46.16}
+$$
+
+由于 $d_\ell\ge49$、$r\le24$，有
+$r-r^2/d_\ell\ge r/2\ge1/2$。对称五点平均和 (46.11) 的迹展开给出
+
+$$
+\frac45D(E)^2=2\langle E,(I-\tau(\nu))E\rangle.
+\tag{46.17}
+$$
+
+故 $D(E)\ge\kappa$，于是
+$\kappa\le785\delta^{1/24}$，即 (46.15)。当 $\delta=0$ 时引理 46.2 给出与 $A,C$ 同时交换的非零有限秩投影，这与 (46.16)--(46.17) 矛盾；因此高次数中也不可能有零值。∎
+

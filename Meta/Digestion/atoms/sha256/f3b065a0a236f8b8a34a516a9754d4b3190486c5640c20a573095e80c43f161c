@@ -1,0 +1,20 @@
+**定义 388.1（每对自己的一个共同根）。** 固定 358.1–358.2 的完整原签名。分别取完整 $B$ 与完整 $\mathsf B_{\rm cl}$，任一记为 $B_*$；前者保持每个所需原对象及实际联合的实际准备精确有限正生成，后者保持各自的闭正生成，不互换两者，也不将数学极限准备增加为实际准备。置
+
+$$
+\begin{gathered}
+P_X(a):=q_X(a,D^X(a,a)),\qquad p_*=\operatorname{rank}E_P\ge2,\\
+\mathsf T_{\exists\mathrm{ratio}}^{>}:\quad
+\forall X,\quad\operatorname{rank}E_X>p_*\ \Longrightarrow\\
+\forall\{e,p\}\subset\operatorname{Prim}(E_X),\quad e\perp p\ \Longrightarrow
+\exists\lambda=\lambda_{X,\{e,p\},D}\in(0,1):\\
+\boxed{P_X(e+\lambda p)=P_X(p+\lambda e)=0.}
+\end{gathered}
+\tag{388.1}
+$$
+
+这里每个无序对由两颗不同 primitive 组成，同一对的两个换位效果必须共用该 $\lambda$。不同对象、不同对可取不同值，允许依赖原 $D$；不先选共同值，不要求统一端点余量、连续性、可测性或其他正则性。不另查 $P_X(e)$、$P_X(u_X)$，也不加入 primitive 或单位的向量自测试。两个混合输入都是原数学效果 $0\le e+\lambda p,p+\lambda e\le u_X$；它们不是由此新增的实际准备、混合程序、控制或仪器。$\lambda$ 是正交谱方向的权重比，不是 $\mathsf G_{0h}$ 的重叠半值。
+
+整个原 $\Omega$ 及字面 $D,q,L,\circ$ 保持；完整 $\mathsf G_{0h}$ 仍逐字取 (319.1)：在原选中对象整个空间的全部有序 primitive 对上，零／半重叠时的整个输出均留在 $E_1(\operatorname{supp}(e+p))$，两个输入次序都保留，包括跨中心和实际联合中的纠缠 primitive。全部经典中心、不等量子块及原不等正权、实际有序联合、全部实际准备及其零／次归一质量、全部乘积和相关输入均沿 358.2 保留。整个 AC、精确 $N_u$、X/Xs、全事件 R、实 Jordan F、每个旧设备／端口／细记录／失败身份及完整失败输出、实际细化／分组／遗忘、具名原同数两侧支持返回和同数反向资料，以及每条原合法有限顺序、自适应和并行历史保持原量词。原菜单、$\mathcal K$、预选 $t_0$ 与字面 $\sigma_{t_0}$ 均不变。
+
+LU、SC、交替、导子、斜伴随、naturality、原理想保持、模身份和反向交叉零均不作为新增前提；不添 primitive／等距嵌入、实际 $M_2$、直接 $AP$、共同参考指数、物理时钟／作用量或共同仪器与控制供应。原有的标量两侧有序接口仍完整保留。以下仅是固定半权主表述 358.1 的精确稳健性引理。
+

@@ -1,0 +1,202 @@
+## 70. 一般串联的偏置、完整递推与同形反例
+
+**定义 C-70.1（边界矩阵的对数坐标）。** 对 $H=\left(\begin{smallmatrix}a&b\\c&d\end{smallmatrix}\right)>0$，取 $s_0=1,s_1=-1$，定义
+
+$$
+\begin{aligned}
+c_0(H)&=\tfrac14\log(abcd),&
+h_L(H)&=\tfrac14\log\frac{ab}{cd},\\
+h_R(H)&=\tfrac14\log\frac{ac}{bd},&
+j(H)&=\tfrac14\log\frac{ad}{bc}=2\eta(H).
+\end{aligned}
+\tag{C70.1}
+$$
+
+这些是经典二元对数线性坐标，亦与 C-7.7–C-7.8 的四角项一致；在以下一般串联中保留它们作为输入。它们满足唯一展开
+
+$$
+\log H_{ab}=c_0+h_Ls_a+h_Rs_b+j s_as_b.
+\tag{C70.2}
+$$
+
+此式中矩阵索引 $a,b$ 取 $0,1$；式 (C70.1) 的 $a,b,c,d$ 则是四个格值。为核对唯一性，将四个对数格值依次按符号模式 $(1,1,1,1)$、$(1,1,-1,-1)$、$(1,-1,1,-1)$、$(1,-1,-1,1)$ 求和并除以四，正好得到式 (C70.1)。四个符号模式两两正交、平方长度四，所以逆变换必为式 (C70.2)。这同时证明存在与唯一。
+
+乘整个矩阵以正数只平移 $c_0$。因此 $(\eta,h_L,h_R)$ 完整决定归一化的端点律及对端点概率比的响应；完整未归一化权还需 $c_0$。单独的 $\eta$ 只决定正行列轨道，不能恢复所有局部概率。
+
+**命题 C-70.2（保留接缝偏置的完整串联公式）。** 设两块具有式 (C70.2) 的坐标，写作 $c_k,h_L^{(k)},h_R^{(k)},j_k$，$k=1,2$。设正接缝权为 $W=\operatorname{diag}(w_0,w_1)$，定义
+
+$$
+\ell_w=\tfrac12\log(w_0w_1),\qquad
+h_w=\tfrac12\log(w_0/w_1),\qquad
+\beta=h_R^{(1)}+h_L^{(2)}+h_w.
+\tag{C70.3}
+$$
+
+对外端符号 $s,t\in\{1,-1\}$，置
+
+$$
+L_{st}=\log\cosh(\beta+j_1s+j_2t),\qquad
+C=c_1+c_2+\ell_w+\log2.
+$$
+
+则合成响应的每个格值及全部对数坐标为
+
+$$
+H_{\rm series}(s,t)
+=2e^{c_1+c_2+\ell_w+h_L^{(1)}s+h_R^{(2)}t}
+\cosh(\beta+j_1s+j_2t),
+\tag{C70.4}
+$$
+
+$$
+\begin{aligned}
+c_{\rm series}&=C+\tfrac14(L_{++}+L_{+-}+L_{-+}+L_{--}),\\
+h_{L,\rm series}&=h_L^{(1)}+\tfrac14(L_{++}+L_{+-}-L_{-+}-L_{--}),\\
+h_{R,\rm series}&=h_R^{(2)}+\tfrac14(L_{++}-L_{+-}+L_{-+}-L_{--}),\\
+j_{\rm series}&=\tfrac14(L_{++}-L_{+-}-L_{-+}+L_{--}),\qquad
+\eta_{\rm series}=j_{\rm series}/2.
+\end{aligned}
+\tag{C70.5}
+$$
+
+特别地，令
+
+$$
+P_\beta=\frac{\cosh(2\beta)+\cosh(2(j_1+j_2))}{2},\qquad
+R_\beta=\frac{\cosh(2\beta)+\cosh(2(j_1-j_2))}{2},
+\tag{C70.6}
+$$
+
+则
+
+$$
+\Omega_{\rm series}=\frac{P_\beta}{R_\beta},\qquad
+\rho_{*,\rm series}=\frac{\sqrt{P_\beta}-\sqrt{R_\beta}}
+{\sqrt{P_\beta}+\sqrt{R_\beta}}.
+\tag{C70.7}
+$$
+
+因此一般串联的椭圆还依赖 $\beta$，下一次串联则仍需式 (C70.5) 的两个输出偏置。
+
+证明。接缝符号记作 $u\in\{1,-1\}$。由于 $w_u=e^{\ell_w+h_wu}$，式 (C69.2) 的逐格和成为
+
+$$
+\begin{aligned}
+H_{\rm series}(s,t)
+&=\sum_{u=\pm1}
+\exp\bigl(c_1+c_2+\ell_w+h_L^{(1)}s+h_R^{(2)}t
++u(\beta+j_1s+j_2t)\bigr)\\
+&=2e^{c_1+c_2+\ell_w+h_L^{(1)}s+h_R^{(2)}t}
+\cosh(\beta+j_1s+j_2t).
+\end{aligned}
+$$
+
+这证明式 (C70.4)，且没有删除任何偏置或质量因子。对其对数应用式 (C70.1) 的四个正交投影即得式 (C70.5)。计算四角比时，公共倍数与外端线性偏置消去，剩下
+
+$$
+\frac{\cosh(\beta+j_1+j_2)\cosh(\beta-j_1-j_2)}
+{\cosh(\beta+j_1-j_2)\cosh(\beta-j_1+j_2)}.
+$$
+
+使用 $\cosh(x+y)\cosh(x-y)=[\cosh(2x)+\cosh(2y)]/2$ 得式 (C70.6)–(C70.7)。两项始终正。这个推导所用的二元消元是 C-64.2 的已知拼接，新增的椭圆读法保留了其中无法由 $\eta_1,\eta_2$ 独自确定的接缝信息。证毕。
+
+**命题 C-70.3（平衡接缝的精确乘法与退化范围）。** 在命题 C-70.2 的条件下，
+
+$$
+\beta=0\quad\Longrightarrow\quad
+\rho_{*,\rm series}=\rho_{*,1}\rho_{*,2}.
+\tag{C70.8}
+$$
+
+若 $j_1j_2\ne0$，该等式成立当且仅当 $\beta=0$；若 $j_1=0$ 或 $j_2=0$，两边对任何 $\beta$ 都等于零。对所有有限偏置都有
+
+$$
+|\rho_{*,\rm series}|\le|\rho_{*,1}|\,|\rho_{*,2}|,
+\tag{C70.9}
+$$
+
+在非退化且不平衡时严格小于。
+
+证明。先取 $\beta=0$。式 (C70.6) 给 $P_0=\cosh^2(j_1+j_2)$、$R_0=\cosh^2(j_1-j_2)$。双曲余弦正，故
+
+$$
+\begin{aligned}
+\rho_{*,\rm series}
+&=\frac{\cosh(j_1+j_2)-\cosh(j_1-j_2)}
+{\cosh(j_1+j_2)+\cosh(j_1-j_2)}\\
+&=\frac{2\sinh j_1\sinh j_2}{2\cosh j_1\cosh j_2}
+=\tanh j_1\tanh j_2
+=\rho_{*,1}\rho_{*,2}.
+\end{aligned}
+$$
+
+平衡条件在原坐标中恰为
+
+$$
+h_R^{(1)}+h_L^{(2)}+\tfrac12\log(w_0/w_1)=0;
+\tag{C70.10}
+$$
+
+它消掉实际接缝的总偏好，并不要求两个块的所有外端边缘都平衡。
+
+一般 $\beta$ 下，$P_\beta$ 和 $R_\beta$ 比 $P_0,R_0$ 都增加同一个非负数 $(\cosh2\beta-1)/2$，此数为零当且仅当 $\beta=0$。它们的差与 $\beta$ 无关：
+
+$$
+P_\beta-R_\beta=\sinh(2j_1)\sinh(2j_2).
+$$
+
+有理化式 (C70.7) 得
+
+$$
+\rho_{*,\rm series}
+=\frac{P_\beta-R_\beta}
+{(\sqrt{P_\beta}+\sqrt{R_\beta})^2}.
+\tag{C70.11}
+$$
+
+若 $j_1j_2\ne0$，分子非零且符号不变；$\beta\ne0$ 时分母严格增大，故绝对值严格减小。这证明上界、等号的必要性及带符号乘法的范围。若某个 $j_k=0$，它对应正秩一矩阵，$P_\beta=R_\beta$，合成也秩一，所以等式对任意偏置成立，不能在这个退化情形反推接缝平衡。证毕。
+
+作为平衡表示的同一中间计算，令
+
+$$
+K_\rho=\frac12\begin{pmatrix}1+\rho&1-\rho\\1-\rho&1+\rho\end{pmatrix},
+\qquad-1<\rho<1.
+$$
+
+它是平衡行随机矩阵，并等于 $2Q_*$。直接相乘时，对角格为 $[(1+\rho_1)(1+\rho_2)+(1-\rho_1)(1-\rho_2)]/4=(1+\rho_1\rho_2)/2$，非对角格为 $(1-\rho_1\rho_2)/2$，所以
+
+$$
+K_{\rho_1}K_{\rho_2}=K_{\rho_1\rho_2}.
+\tag{C70.12}
+$$
+
+这与式 (C70.8) 相符。它只给已指定平衡接缝的精确乘法，不把一般式 (C70.9) 的上界改为等式。
+
+**命题 C-70.4（同一椭圆不能独立预测串联）。** 取
+
+$$
+H=\begin{pmatrix}3&1\\1&3\end{pmatrix},\qquad
+D=\begin{pmatrix}3&0\\0&1\end{pmatrix},\qquad
+\widetilde H=HD=\begin{pmatrix}9&1\\3&3\end{pmatrix}.
+$$
+
+$H$ 与 $\widetilde H$ 具有同一个带标记规范椭圆，但 $H^2$ 与 $\widetilde HH$ 的规范椭圆不同。
+
+证明。正列重加权保持四角比，两表均为 $\Omega=9$、$\rho_*=1/2$。实际乘法却给
+
+$$
+H^2=\begin{pmatrix}10&6\\6&10\end{pmatrix},\qquad
+\widetilde HH=\begin{pmatrix}28&12\\12&12\end{pmatrix}.
+$$
+
+前者 $\Omega=25/9$、$\rho_*=(10-6)/(10+6)=1/4$；后者 $\Omega=7/3$，所以
+
+$$
+\rho_*(\widetilde HH)
+=\frac{\sqrt{21}-3}{\sqrt{21}+3}
+\approx0.208712153\ne\frac14.
+\tag{C70.13}
+$$
+
+若等于 $1/4$，交叉相乘会给 $3\sqrt{21}=15$，平方后 $21=25$，矛盾，故差别是精确的。$H$ 的左右偏置为零；$\widetilde H$ 的 $h_L=0$、$h_R=(\log3)/2$，两者 $j$ 相同。于是第二个乘积恰把原来可从单块等价类中消去的右权重 $D$ 放到了实际接缝，$\beta=(\log3)/2\ne0$。这也从式 (C70.9) 解释了严格缩小。正行列等价只回答孤立块的比较问题，没有允许在拼接后删除实际接缝活动。证毕。
+

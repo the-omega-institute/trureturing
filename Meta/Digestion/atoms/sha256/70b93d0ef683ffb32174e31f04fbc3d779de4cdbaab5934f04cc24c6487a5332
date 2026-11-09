@@ -1,0 +1,29 @@
+**定义 319.1（同一原签名与单一新候选）。** 本卷续接[共同框架与半角关系续卷](AURIC_C128_FRAME_CORNER_RELATIONS_CONTINUATION.md) §§180–318；下文简称前卷。母卷指 [C123 原生互易比较母卷](AURIC_NATIVE_RECIPROCAL_COMPARISON_AND_FINITE_ENDPOINT_QUANTUM_C123.md)。分别固定前卷定义 264.1、272.1–272.2、311.1 的完整 $B$ 与完整 $\mathsf B_{\rm cl}$，任一记为 $B_*$。整个原 $\Omega$、同一实双线性 $d_A(a,b)=D^A_ab$、原 $q_A,L_A,\circ_A$ 及规范 Jordan 谱迹 $\tau_A$ 均保持。静态坐标由前卷定理 246.1 给出，$\tau_A=\sum_s\operatorname{Tr}_{n_s}$，与原不等正块权的 Frobenius 型 $q_A$ 分开。
+
+原选中域仍是 $\operatorname{rank}E_A>p_*$，其中 $p_*=\operatorname{rank}E_P\ge2$。对该域中全部有序 primitive 对，定义
+
+$$
+\begin{aligned}
+\mathsf G_{0h}:\quad&D^A_ep=Q_cD^A_ep,\qquad
+c=\operatorname{supp}(e+p),\quad Q_c=2L_c^2-L_c,\\
+&\tau_A(e\circ_Ap)\in\{0,\tfrac12\};\\
+\mathsf Z_0:\quad&\tau_A(D^A_ep)=0\qquad(e\perp p).
+\end{aligned}
+\tag{319.1}
+$$
+
+第一式管整个输出：包括所有其他中心和连接角内外的非对角分量。它不能换成角外压缩条件或 $P_c=4(L_c-L_c^2)$。第二式只在零重叠处要求，不在半重叠处另加迹约束。两个次序、跨中心正交对和原实际联合中的纠缠 primitive 都在量词内。
+
+沿用前卷定义 272.1 的同一原菜单、原 $\mathcal K$、实际 $J_0=P^{\otimes2}$ 及先于 $D$ 固定的同一 $t_0=(e_0,p_0,r_0)\in\mathcal K_{J_0}$，定义
+
+$$
+\begin{aligned}
+\sigma_{t_0}:\quad&W_{e_0}(p_0)
+=2q_{J_0}(D_{p_0}e_0,r_0)+W_{e_0}(2D_{e_0}p_0),\\
+\mathsf C_Z(B_*):={}&B_*+\mathsf G_{0h}+\mathsf Z_0+\sigma_{t_0}.
+\end{aligned}
+\tag{319.2}
+$$
+
+相对前卷 $\mathsf C_T$，这里只删除全部半重叠迹前件。未添加 LU、SC、原 $D$ 的交替性、导子律、斜伴随、模身份、primitive 保持或等距前件。
+

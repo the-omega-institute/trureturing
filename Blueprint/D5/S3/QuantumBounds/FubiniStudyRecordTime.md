@@ -18,6 +18,12 @@ For unit vectors in any complex inner product space, the Fubini–Study angle is
 
 This adapts QuAIR's finite-dimensional pure-vector proof. On vectors the angle is insensitive to phase; separation of points belongs to the space of rays. No quotient-space metric instance is constructed here.
 
+The local speed formula is an application of the pinned inner-product and one-variable calculus library. Let f be real differentiable at zero, f(0)=psi, f'(0)=v, and assume norm(f(t))=norm(psi)=1 near zero. Put g(t)=f(t)-inner(psi,f(t)) psi, with the inner product linear in its second slot and complex scalars acting on the left. Orthogonal decomposition gives norm(g(t)) squared = 1-abs(inner(psi,f(t))) squared, so fsAngle(psi,f(t))=arcsin(norm(g(t))). The slope limit and the derivative of arcsin at zero give fsAngle(psi,f(t))/abs(t) tending to sqrt(norm(v) squared-abs(inner(psi,v)) squared). This uses HasDerivAt.inner, HasDerivAt.sub, HasDerivAt.smul_const, HasDerivAt.tendsto_slope, Real.hasDerivAt_arcsin and HasDerivAt.continuousAt_div.
+
+In finite complex dimension, differentiating the actual rank-one map P(t)=rankOne(f(t),f(t)) gives D=rankOne(psi,v)+rankOne(v,psi). Differentiating unit norm gives Re inner(psi,v)=0. The identities InnerProductSpace.comp_rankOne, InnerProductSpace.trace_rankOne and LinearMap.trace_comp_comm' then give Re Tr(P(0) D D) = norm(v) squared-abs(inner(psi,v)) squared. Thus the same speed is sqrt(Re Tr(P(0) D D)), by those identities and calculus results.
+
+This amplitude calculation does not supply the original real algebra's complex Hilbert structure H_J, J=L_e, or the identification of rankOne with (I-L_e R_n)/2 on its oriented unit sphere. The sphere differential, the tensor on all tangent pairs with its quarter metric and oriented area normalization, the Berry connection i inner(psi,dpsi), its curvature -2 Im Q, and the phase -Omega/2 modulo 2 pi for every smooth or piecewise smooth closed loop require their own proofs, including patchwise Stokes, transition winding and the 4 pi ambiguity of solid angle.
+
 **Theorem 1.2 (Orthogonal final records require contact time).**
 
 $$\frac{\pi hbar}{4 E}\le\tau$$

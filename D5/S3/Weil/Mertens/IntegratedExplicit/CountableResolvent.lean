@@ -32,7 +32,7 @@ open scoped BigOperators Topology
 
 namespace D5.S3.Weil.Mertens.IntegratedExplicit.CountableResolvent
 
-private def R (y : ℝ) : ℝ := (y + 1) / y ^ 2
+def R (y : ℝ) : ℝ := (y + 1) / y ^ 2
 
 def W (y : ℝ) : ℝ := (y + 2) / y ^ 3
 
@@ -78,7 +78,7 @@ private lemma R_hasDerivAt {y : ℝ} (hy : 0 < y) : HasDerivAt R (-W y) y := by
 lemma laplacePolynomial_nonneg {s : ℝ} (hs : 0 ≤ s) :
     0 ≤ laplacePolynomial s := by unfold laplacePolynomial; positivity
 
-private lemma W_nonneg {y : ℝ} (hy : 0 ≤ y) : 0 ≤ W y := by unfold W; positivity
+lemma W_nonneg {y : ℝ} (hy : 0 ≤ y) : 0 ≤ W y := by unfold W; positivity
 
 private lemma R_inverse (y : ℝ) : R y = y⁻¹ + (y⁻¹) ^ 2 := by
   by_cases hy : y = 0
@@ -103,7 +103,7 @@ lemma W_antitone {x y : ℝ} (hx : 0 < x) (hxy : x ≤ y) : W y ≤ W x := by
   exact add_le_add (pow_le_pow_left₀ (inv_nonneg.mpr hy.le) hi 2)
     (mul_le_mul_of_nonneg_left (pow_le_pow_left₀ (inv_nonneg.mpr hy.le) hi 3) (by norm_num))
 
-private lemma W_tail_integrable {y : ℝ} (hy : 0 < y) : IntegrableOn W (Ioi y) := by
+lemma W_tail_integrable {y : ℝ} (hy : 0 < y) : IntegrableOn W (Ioi y) := by
   have h := integrableOn_Ioi_deriv_of_nonpos'
     (fun v (hv : v ∈ Ici y) => R_hasDerivAt (hy.trans_le hv))
     (fun v (hv : v ∈ Ioi y) => neg_nonpos.mpr (W_nonneg (hy.trans hv).le))
@@ -142,7 +142,7 @@ structure CountableSpectrum where
 
 def denominator (z : ℂ) (s : ℝ) : ℂ := (s : ℂ) + 1 - z
 
-private def spectralExp (z : ℂ) (v : ℝ) : ℂ := Complex.exp ((z - 1) * v)
+def spectralExp (z : ℂ) (v : ℝ) : ℂ := Complex.exp ((z - 1) * v)
 
 private def modeProduct (z : ℂ) (s v : ℝ) : ℂ :=
   (laplacePolynomial s : ℂ) * (exp (-s * v) : ℂ) * spectralExp z v
@@ -153,7 +153,7 @@ def resolventKernel (z : ℂ) (s y : ℝ) : ℂ :=
 def resolventMode (z : ℂ) (y : ℝ) : ℂ :=
   ∫ s : ℝ in Ioi 0, resolventKernel z s y
 
-private def spectralSeries (S : CountableSpectrum) (v : ℝ) : ℂ :=
+def spectralSeries (S : CountableSpectrum) (v : ℝ) : ℂ :=
   ∑' k : ℕ, S.coeff k * spectralExp (S.zero k) v
 
 def spectralTail (S : CountableSpectrum) (y : ℝ) : ℂ :=
@@ -334,5 +334,47 @@ theorem countable_resolvent_identity (S : CountableSpectrum) {y : ℝ} (hy : 0 <
   funext k
   dsimp [f]
   rw [integral_const_mul, mode_resolvent_identity (S.strip k).2 hy]
+
+lemma W_tail {y : ℝ} (hy : 0 < y) : (∫ v : ℝ in Ioi y, W v) = R y := by
+  have h := integral_Ioi_of_hasDerivAt_of_nonpos'
+    (fun v (hv : v ∈ Ici y) => R_hasDerivAt (hy.trans_le hv))
+    (fun v (hv : v ∈ Ioi y) => neg_nonpos.mpr (W_nonneg (hy.trans hv).le))
+    R_tendsto_zero
+  rw [integral_neg, zero_sub] at h
+  exact neg_injective h
+
+private lemma spectralSeries_continuousOn (S : CountableSpectrum) :
+    ContinuousOn (spectralSeries S) (Ici 0) := by
+  apply continuousOn_tsum (fun k =>
+    (show Continuous (fun v : ℝ => S.coeff k * spectralExp (S.zero k) v) by
+      unfold spectralExp; fun_prop).continuousOn) S.summable_norm
+  intro k v hv
+  rw [norm_mul]
+  exact mul_le_of_le_one_right (norm_nonneg _) (spectralExp_norm_le (S.strip k).2.le hv)
+
+private lemma spectralSeries_norm_le (S : CountableSpectrum) {v : ℝ} (hv : 0 ≤ v) :
+    ‖spectralSeries S v‖ ≤ ∑' k : ℕ, ‖S.coeff k‖ := by
+  refine (norm_tsum_le_tsum_norm (spectralSeries_summable S hv).norm).trans ?_
+  apply ((spectralSeries_summable S hv).norm).tsum_le_tsum _ S.summable_norm
+  intro k
+  rw [norm_mul]
+  exact mul_le_of_le_one_right (norm_nonneg _) (spectralExp_norm_le (S.strip k).2.le hv)
+
+lemma spectral_weighted_integrable (S : CountableSpectrum) {y : ℝ} (hy : 0 < y) :
+    IntegrableOn (fun v : ℝ => (W v : ℂ) * spectralSeries S v) (Ioi y) := by
+  refine ((W_tail_integrable hy).const_mul (∑' k : ℕ, ‖S.coeff k‖)).mono' ?_ ?_
+  · exact (show ContinuousOn (fun v : ℝ => (W v : ℂ) * spectralSeries S v)
+        (Ioi y) by
+      apply ContinuousOn.mul
+      · intro v hv
+        have hv0 := hy.trans hv
+        dsimp [W]; fun_prop (disch := positivity)
+      · exact (spectralSeries_continuousOn S).mono (by intro v hv; exact (hy.trans hv).le)
+      ).aestronglyMeasurable measurableSet_Ioi
+  · filter_upwards [ae_restrict_mem measurableSet_Ioi] with v hv
+    rw [norm_mul, Complex.norm_real, Real.norm_eq_abs,
+      abs_of_nonneg (W_nonneg (hy.trans hv).le)]
+    exact (mul_le_mul_of_nonneg_left (spectralSeries_norm_le S (hy.trans hv).le)
+      (W_nonneg (hy.trans hv).le)).trans_eq (mul_comm _ _)
 
 end D5.S3.Weil.Mertens.IntegratedExplicit.CountableResolvent

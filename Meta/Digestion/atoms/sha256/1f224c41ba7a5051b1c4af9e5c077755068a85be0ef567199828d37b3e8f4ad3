@@ -1,0 +1,10 @@
+**推论 43.2（有限分块的完整复平面公式）。** 在 42.1 下，若有限个两两正交的原投影 $p_i$ 和为 $u$，并普通交换 $h,b$，则对任意实 $\alpha_i,\beta_i$，
+
+$$
+J\left(\sum_i p_i(\alpha_i b+\beta_iJb)\right)
+=\sum_i p_i(\alpha_iJb-\beta_i b).
+\tag{43.2}
+$$
+
+证明。42.1 先使每个 $p_i$ 交换 $j=Jb$。左侧输入 $B$ 的平方为 $\sum_i(\alpha_i^2+\beta_i^2)p_iR$，仍有有限谱，且每个 $p_i$ 交换 $h,B$。42.1 给 $p_iJB=J(p_iB)$；而 $J(p_ib)=p_ij$，所以各自圆与径向给 $J(p_iB)=p_i(\alpha_i j-\beta_i b)$。求和即得结论。系数为零、同一谱值跨块重复及原线性关系退化都已包含。∎
+

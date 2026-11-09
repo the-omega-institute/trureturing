@@ -1,0 +1,28 @@
+**Theorem 22.1 (actual zero-response energy and the entire complex form).** Fix one admitted original datum of Definitions 1.1–2.2, including its signed nonzero $\kappa$, jointly realized rational fields, interval, interior pole, $a,\varepsilon$, raw unit source and density $j_0$, before taking $s\downarrow0$. Retain the analytic antecedents of those definitions, P §§104 and 106–107, R §§4–5, 8 and 16–20, and the mode and derivative bounds of [Entire-height response escape](FIB_NATIVE_ENTIRE_HEIGHT_RESPONSE_ESCAPE.md), Theorem 3.1. Let $\Psi$ be the particular real odd response of (3.5), with its canonical $\mathcal Q_E\cap L^2$ representative supplied by R Theorem 16.2. Suppose that this fixed datum satisfies
+
+$$
+C_{\rm resp}=\nu^2(K_{\rm base}-D_{\rm resp})
+              -\lambda D_{\rm clock}=0.
+\tag{22.1}
+$$
+
+There exist $C,c,s_0>0$, depending only on this datum and its antecedent constants, such that for every $0<s<s_0$ and every complex $F\in\mathcal Q_s=\mathcal U_s\mathcal Q$,
+
+$$
+q_s^c[F]\ge-Cs^4\|F\|_2^2.
+\tag{22.2}
+$$
+
+Consequently, along exactly $\tau=s^2$, $g_s=\chi_cs^3$,
+
+$$
+-Cs^2\le E_s\le-cs^6,\qquad
+cs^8\le-\epsilon_c(s)\le Cs^4,\qquad
+c\le r_s\le Cs^{-4}.
+\tag{22.3}
+$$
+
+The upper energy direction in (22.3) is P (100.3), applied at $g_s$; it is not a new identification of the minimizing branch. Constants are independent of every actual normalized complex ground-state choice. The operator remains $aS-g_sW_{s^2}$ on $D(S)$ and the field heat clock remains $B$, independently of $a$. No reality, parity or separate phase $H^1$ restriction is imposed on $F$.
+
+Proof. Write $\chi=\chi_c$, $\beta=\beta_s=\nu s$, $\nabla_H=(X,Y)$, and $\mathfrak d=d_E(0,\cdot)$ for the same homogeneous control metric as R §16. We establish the estimates consumed by the actual-energy argument before passing to arbitrary form vectors.
+

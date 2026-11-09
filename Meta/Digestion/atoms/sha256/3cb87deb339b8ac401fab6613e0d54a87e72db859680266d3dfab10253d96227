@@ -1,0 +1,30 @@
+**定义 199.1（指定原域上的符号选择响应）。** 本条的边界例子固定原域 $E=X=H_2(\mathbb C)$、$u=I_2$、通常正锥、算子范数及 $a\circ b=(ab+ba)/2$，评价族 $\mathcal P$ 取全部数学正实线性泛函，不赋予它们实际准备含义。这只指定一个例子的完整原域，不缩小 128.1 的一般目标。取
+
+$$
+X_1=\begin{pmatrix}0&1\\1&0\end{pmatrix},\qquad
+X_2=\begin{pmatrix}0&-i\\i&0\end{pmatrix},\qquad
+X_3=\begin{pmatrix}1&0\\0&-1\end{pmatrix},\qquad \sigma=(X_1,X_2,X_3).
+$$
+
+每个原输入唯一写成 $a=\alpha u+x\cdot\sigma$、$b=\gamma u+y\cdot\sigma$，其中 $\alpha,\gamma\in\mathbb R$、$x,y\in\mathbb R^3$。定义全域总映射
+
+$$
+\begin{aligned}
+K(a,b)&=\frac{ab-ba}{2i}=(x\times y)\cdot\sigma,\\
+L(a,b)&=\alpha^2+\gamma^2-|x|^2-|y|^2,\\
+\varepsilon(a,b)&=\begin{cases}1,&L(a,b)\le0,\\-1,&L(a,b)>0,\end{cases}
+\qquad D_{\rm s}(a,b)=\varepsilon(a,b)K(a,b).
+\end{aligned}
+\tag{199.1}
+$$
+
+对任何正实线性读取 $\beta:E\to\mathbb R$ 及有限原标签，记
+
+$$
+G^D_\beta(a_1,\ldots,a_n)_{jk}
+=\beta(a_j\circ a_k)-i\beta D(a_j,a_k).
+\tag{199.2}
+$$
+
+此记号只定义标量表，不断言其正性，也不把 $D$ 延到复输入。
+

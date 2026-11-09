@@ -1,0 +1,111 @@
+**Theorem 41.1 (common centering for the full native form).**
+For every fixed $N\ge1$, all the original fixed parameters in
+Definition 38.1, and both signs of $\kappa\to0$,
+
+$$
+\Lambda_{\sigma,N}(\kappa,\tau)
+ =\xi_\kappa+(2N-1)\omega_\sigma h_{\sigma,\kappa}
+                          +o(h_{\sigma,\kappa}),
+\qquad
+\tau=\tau_s\ \hbox{or}\ \tau_b.
+\tag{41.1}
+$$
+
+This is the full ordered spectrum with multiplicity of (35.1).
+In particular, for every fixed $N\ge2$,
+
+$$
+\begin{aligned}
+\Lambda_{{\rm raw},N}(\kappa,\tau_s)
+       -\Lambda_{{\rm raw},1}(\kappa,\tau_s)
+ &=\frac{2(N-1)\omega_{\rm raw}}{\sqrt{\tau_s}}
+                       +o(\tau_s^{-1/2}),\\
+\Lambda_{{\rm unit},N}(\kappa,\tau_b)
+       -\Lambda_{{\rm unit},1}(\kappa,\tau_b)
+ &=2(N-1)\omega_{\rm unit}\,a+o(a).
+\end{aligned}
+\tag{41.2}
+$$
+
+The actual lowest full gaps, rather than height or sector gaps, are
+
+$$
+\Delta_{\rm raw}(\kappa,\tau_s)
+ \sim2\omega_{\rm raw}\tau_s^{-1/2},
+\qquad
+\Delta_{\rm unit}(\kappa,\tau_b)
+ \sim2\omega_{\rm unit}|\kappa|.
+\tag{41.3}
+$$
+
+Every fixed consecutive full spacing has the corresponding leading
+coefficient $2\omega_\sigma$. Each fixed finite initial list is
+therefore simple for all sufficiently small nonzero parameters.
+The assertion is pointwise in the fixed original data, not uniform
+as $g\downarrow0$ or $b\to\infty$.
+
+Proof. Let
+$\widehat{\mathscr H}_\kappa=L_\kappa-gM_{U_\kappa}$ on exactly
+$\mathcal F_\kappa$. This bounded multiplier preserves the completed
+form domain and compact resolvent. Lemma 39.1 and min-max give, for
+every ordered index,
+
+$$
+|\Lambda_{\sigma,N}-\widehat\Lambda_{\kappa,N}|
+ \le g\|W_\kappa-U_\kappa\|_\infty=o(h).
+\tag{41.4}
+$$
+
+This is a comparison between full forms on the same exact domain.
+No restriction of the original attractive operator is presumed
+invariant.
+
+The auxiliary averaged operator does preserve each visible Fourier
+pair $(n,m)$. Its free square in hidden Fourier mode $j$ is still
+
+$$
+(nA_\kappa+mB_\kappa+\kappa j b_\kappa)^2.
+\tag{41.5}
+$$
+
+By (39.2), $gU_\kappa(k,0)\to c_\sigma\phi(k)$ uniformly, and
+by (39.1), $U_\kappa(k,D)\le U_\kappa(k,0)$.
+The complete-domain separation (33.12) consequently gives, on the
+sum of every nonzero visible pair,
+
+$$
+\widehat{\mathscr H}_\kappa
+ \ge e(c_\sigma)+d_{c_\sigma}-o(1).
+\tag{41.6}
+$$
+
+To spell out its use when the potential couples hidden frequencies,
+first replace $gU_\kappa(k,D)$ by the upper bound
+$c_\sigma\phi(k)+o(1)$. The resulting lower comparison is diagonal
+in all three phase indices. Apply (33.12) to each of its scalar
+summands with $q=\kappa j$, and sum the form inequalities on
+[G, (26.13)]. This proves (41.6) for the entire nonzero visible
+subspace, uniformly over all integers and every compensating hidden
+frequency. The nonnegative square (41.5) has not been expanded into
+separately bounded or discarded cross terms.
+
+The zero visible block is exactly (40.1). Its first $N$ eigenvalues
+are $\xi_\kappa+O(h)=e(c_\sigma)+o(1)$ by Theorem 40.3.
+For each fixed $N$ they lie strictly below (41.6) for small $a$.
+The direct-sum characterization of the completed Fourier domain
+then implies
+
+$$
+\widehat\Lambda_{\kappa,i}=\nu_{\kappa,i}
+ \qquad(1\le i\le N)
+\tag{41.7}
+$$
+
+with their full multiplicities. Equations (40.10), (41.4) and
+(41.7) prove (41.1). Subtracting the common first eigenvalue gives
+(41.2); $\omega_\sigma>0$ gives (41.3) and the consecutive-spacing
+assertion. Applying this at the successive fixed indices proves
+simplicity of each fixed initial list for small parameters, even
+though no simplicity of the complete unperturbed Fourier multiset
+was assumed. $\square$
+

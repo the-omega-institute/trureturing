@@ -1,0 +1,106 @@
+## 一、把算术目标写成可比较的对数收益
+
+定义
+
+$$
+Z(n)=\frac{\sigma(n)}n,
+\qquad
+R(n)=\frac{Z(n)}{e^\gamma\log\log n},
+\qquad n>5040.
+$$
+
+令
+
+$$
+T=\log n,
+\qquad
+f(T)=\gamma+\log\log T.
+$$
+
+于是
+
+$$
+\boxed{\log R(n)=\log Z(n)-f(T).}
+$$
+
+这里所有对数都是自然对数。注意，取 $T=\log n$ 后，$f(T)$ 是 Robin 分母的**对数**。
+
+直接求导：
+
+$$
+f'(T)=\frac1{T\log T},
+$$
+
+$$
+f''(T)
+=
+-\frac{\log T+1}{T^2(\log T)^2}<0.
+$$
+
+记
+
+$$
+\eta(T)=f'(T)=\frac1{T\log T},
+\qquad
+\kappa(T)=-f''(T)>0.
+$$
+
+$\eta(T)$ 就是与当前整数尺度匹配的价格。
+
+本轮还使用 Axler 的两个已证输入：
+
+<a id="eq-1"></a>
+
+$$
+\boxed{
+R(n)<1+\frac{A_0}{(\log\log n)^3},
+\qquad A_0=0.0094243,
+}
+\tag{1}
+$$
+
+以及
+
+<a id="eq-2"></a>
+
+$$
+\boxed{
+v_2(n)\le20,\ n>5040
+\Longrightarrow R(n)<1.
+}
+\tag{2}
+$$
+
+它们分别来自该文定理 1.3、1.4。Robin 判据则把“所有 $n>5040$ 都满足 $R(n)<1$”与 RH 等价起来。[arxiv.org](https://arxiv.org/pdf/2110.13478?utm_source=chatgpt.com)
+
+因此，任何弱反例 $R(n)\ge1$ 都必须满足
+
+<a id="eq-3"></a>
+
+$$
+\boxed{2^{21}\mid n.}
+\tag{3}
+$$
+
+这给出一个直接可用的分类起点。
+
+<!-- editorial-note:start axler-domain-and-curvature -->
+**【编者局部说明：钉版输入及曲率】** 这里具体使用 Christian Axler, *On Robin’s Inequality*, [arXiv:2110.13478v3](https://arxiv.org/pdf/2110.13478v3)，第 1 页 Proposition 1.1 与第 2 页 Theorems 1.3、1.4。Theorem 1.3 的原范围是正整数 $n\notin A$，其中
+
+$$
+A=\{1,2,4,5,6,8,9,10,12,16,18,20,24,30,36,48,60,72,84,120,180,240,360,840,2520,5040\}.
+$$
+
+因此本文每个 $n>5040$ 均在其范围内，除以正的 $e^\gamma\log\log n$ 即得 (1)。Theorem 1.4 在 $n\ge5041$ 下的第一项确为 $v_2(n)\le20$，从其逆否命题得到 (3)；这里没有把“21-free”与单独的 $2$-进指数条件混同。原稿无版本 URL 保留为原引文，实际编号与常数以本处 v3 为准。另有
+
+$$
+\kappa'(T)=-\frac{2(\log T)^2+3\log T+2}{T^3(\log T)^3}<0\qquad(T>1),
+$$
+
+这给出后文使用的严格下降性，而不仅是 $f''<0$。
+<!-- editorial-note:end axler-domain-and-curvature -->
+
+---
+
+<a id="sec-2"></a>
+

@@ -1,0 +1,67 @@
+**定理 230.1（一个非负算子承载全部径向偏差）。** 在 229.1 下，置
+
+$$
+q=k\circ j,\qquad a=tR,\qquad
+W=k-tj,
+\tag{230.1}
+$$
+
+并仅用已知环境乘法定义第二原对的 Gram 行列式和平方缺陷
+
+$$
+\mathcal A_-=x_-^2y_-^2-(x_-\circ y_-)^2,
+\qquad \mathcal E=\mathcal A_--K^2.
+\tag{230.2}
+$$
+
+则 $R,q$ 交换，$-tR\le q\le tR$，且
+
+$$
+\boxed{\mathcal E=
+\frac{4r^2}{L}(a-q)(a+r^2q)\ge0,\qquad
+W^2=2t(a-q).}
+\tag{230.3}
+$$
+
+准确等价为
+
+$$
+\mathcal E=0
+\quad\Longleftrightarrow\quad q=tR
+\quad\Longleftrightarrow\quad k=tj.
+\tag{230.4}
+$$
+
+不要求 $R$ 可逆，也不删除其零支撑。
+
+证明。$[R,k]=[R,j]=0$ 已由已付平方和反交换给出。由于 $k^2=t^2R$、$j^2=R$，正元 $(k\pm tj)^2$ 给 $-tR\le q\le tR$ 及 $W^2=2t(a-q)$。$R$ 与 $q$ 因而交换；不需要断言 $q$ 与 $K$ 交换。
+
+两份外层的平方均为
+
+$$
+x_\pm^2=Lt^2R,\qquad y_\pm^2=LR,
+\tag{230.5}
+$$
+
+其交叠准确为
+
+$$
+x_+\circ y_+=t\sqrt L R,\qquad
+x_-\circ y_-=
+\frac{(1-r^2)tR+2r^2q}{\sqrt L}.
+\tag{230.6}
+$$
+
+消费 (229.4) 的已知平方，得到
+
+$$
+\begin{aligned}
+\mathcal E
+&=La^2-\frac{((1-r^2)a+2r^2q)^2}{L}\\
+&=\frac{4r^2}{L}(a-q)(a+r^2q).
+\end{aligned}
+\tag{230.7}
+$$
+
+两因子是交换正元，因为 $a-q\ge0$ 且 $a+r^2q\ge(1-r^2)a\ge0$。令 $\delta=a-q$，则 $0\le\delta\le2a$。若 $\mathcal E=0$，上述序界使 $a\delta=0$；再由 $0\le\delta^2\le2a\delta$ 得 $\delta=0$。其余等价由 $W^2=2t\delta$ 和自伴平方零给出。反向代入即得。∎
+

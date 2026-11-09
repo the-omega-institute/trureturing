@@ -121,7 +121,7 @@ instance windowMeasure_isFiniteMeasure (H : ℝ) : IsFiniteMeasure (windowMeasur
   dsimp [windowMeasure]
   infer_instance
 
-private lemma windowMeasure_mass (H : ℝ) : (windowMeasure H).real univ ≤ 1 := by
+lemma windowMeasure_mass (H : ℝ) : (windowMeasure H).real univ ≤ 1 := by
   simpa only [windowMeasure, measureReal_def, Measure.restrict_apply_univ] using
     (measureReal_le_one (μ := gaussian (H + 20)) (s := window H))
 

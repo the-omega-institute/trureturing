@@ -87,14 +87,14 @@ private def plusSlabs (k : ℤ) : ℤ :=
 private def minusSlabs (k : ℤ) : ℤ :=
   if 0 ≤ k then (k + 1) / 4 else (-k) / 4
 
-private def residual (i j p q : ℤ) : ℤ :=
+def residual (i j p q : ℤ) : ℤ :=
   max 0 (max (i - p) (max (j - p) (max (i + j - p)
     (max (-q - i) (max (-q - j) (-q - i - j))))))
 
 private def potential (v : ℤ × ℤ × ℤ) : ℕ :=
   v.2.2.natAbs + (residual v.1 v.2.1 (plusSlabs v.2.2) (minusSlabs v.2.2)).toNat
 
-private lemma residual_le_iff (i j p q d : ℤ) :
+lemma residual_le_iff (i j p q d : ℤ) :
     residual i j p q ≤ d ↔
       0 ≤ d ∧ i ≤ p + d ∧ j ≤ p + d ∧ i + j ≤ p + d ∧
         -q - d ≤ i ∧ -q - d ≤ j ∧ -q - d ≤ i + j := by
@@ -392,11 +392,11 @@ private lemma region_shell_mem (p q i j : ℤ) (_hp : 0 ≤ p) (_hq : 0 ≤ q) (
       ⟨Finset.mem_Icc.mpr ⟨by omega, by omega⟩,
        Finset.mem_Icc.mpr ⟨by omega, by omega⟩⟩, h⟩
 
-private def hexagon (p q : ℤ) : Finset (ℤ × ℤ) :=
+def hexagon (p q : ℤ) : Finset (ℤ × ℤ) :=
   ((Finset.Icc (-q) p).product (Finset.Icc (-q) p)).filter
     (fun z => -q ≤ z.1 + z.2 ∧ z.1 + z.2 ≤ p)
 
-private lemma hexagon_mem (p q i j : ℤ) :
+lemma hexagon_mem (p q i j : ℤ) :
     (i, j) ∈ hexagon p q ↔
       -q ≤ i ∧ i ≤ p ∧ -q ≤ j ∧ j ≤ p ∧ -q ≤ i + j ∧ i + j ≤ p := by
   constructor
@@ -430,7 +430,7 @@ private lemma twice_sum_interval (a b : ℤ) :
   · rw [Finset.Icc_eq_empty_of_lt (by omega)]
     simp only [Finset.sum_empty, Finset.card_empty, Nat.cast_zero, mul_zero]
 
-private lemma hexagon_card (p q : ℤ) (hp : 0 ≤ p) (hq : 0 ≤ q) :
+lemma hexagon_card (p q : ℤ) (hp : 0 ≤ p) (hq : 0 ≤ q) :
     2 * ((hexagon p q).card : ℤ) = p^2 + 4*p*q + q^2 + 3*p + 3*q + 2 := by
   let r := fun i : ℤ => Finset.Icc (max (-q) (-q - i)) (min p (p - i))
   have hc : (hexagon p q).card = ((Finset.Icc (-q) p).sigma r).card := by

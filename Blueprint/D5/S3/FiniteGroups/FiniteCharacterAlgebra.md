@@ -582,6 +582,30 @@ $$\forall k \in Type*,\; \forall G \in Type*,\; [\operatorname{Field}\left(k\rig
 
 The displayed conclusion holds under the stated hypotheses.
 
+**Theorem 1.49 (Simultaneous trace separation in every characteristic).**
+
+$$\forall k \in Type*,\; \forall R \in Type*,\; \forall S \in Type*,\; \forall T \in Type*,\; [\operatorname{Field}\left(k\right)], [\operatorname{IsAlgClosed}\left(k\right)], [\operatorname{Ring}\left(R\right)], [\operatorname{Algebra}\left(k, R\right)], [\operatorname{AddCommGroup}\left(S\right)], [\operatorname{Module}\left(k, S\right)], [\operatorname{Module}\left(R, S\right)], [\operatorname{IsScalarTower}\left(k, R, S\right)], [\operatorname{AddCommGroup}\left(T\right)], [\operatorname{Module}\left(k, T\right)], [\operatorname{Module}\left(R, T\right)], [\operatorname{IsScalarTower}\left(k, R, T\right)], [\operatorname{FiniteDimensional}\left(k, S\right)], [\operatorname{FiniteDimensional}\left(k, T\right)], [\operatorname{IsSimpleModule}\left(R, S\right)], [\operatorname{IsSimpleModule}\left(R, T\right)], \forall hST \in \left(\neg \operatorname{Nonempty}\left(\operatorname{LinearEquiv}\left(R, S, T\right)\right)\right),\; \exists r \in R,\; (\operatorname{LinearMap}.\operatorname{trace}\left(k, S, \left(\operatorname{Module}.\operatorname{toModuleEnd}_{k,R,S}\right)\left(r\right)\right) = 1) \land (\operatorname{LinearMap}.\operatorname{trace}\left(k, T, \left(\operatorname{Module}.\operatorname{toModuleEnd}_{k,R,T}\right)\left(r\right)\right) = 0)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/FiniteGroups/FiniteCharacterAlgebra.exists_trace_one_zero_of_not_nonempty_linearEquiv` (`✓ std3`). ∎
+
+*Citation.* The Tau Ceti contributors; Claude (2026). *TauCeti finite representation and character theory*. URL: <https://github.com/TauCetiProject/TauCeti/tree/a780c7ad6beb23f60a17351a492d177878020ad5>.
+
+*Commentary.*
+
+Here k is algebraically closed, R is a k-algebra, and S and T are finite-dimensional simple R-modules with the displayed compatible k-actions. There is no finite-dimensionality assumption on R and no characteristic restriction. Write theta_S(r) = Module.toModuleEnd k (S := R) S r, an element of Module.End k S, and likewise for T. Schur scalarity makes the commutant on S times T block diagonal when S and T are not isomorphic. The operator that is a rank-one map of trace one on S and zero on T commutes with this commutant. The semisimple density theorem realizes both blocks by the same r in R, giving traces exactly one and zero. Unlike the trace of the identity, a rank-one trace of one cannot vanish in positive characteristic. This is the two-module consequence of the simultaneous density theorem in Etingof et al., Introduction to Representation Theory, Theorem 2.5(ii); the Lean argument is the repository's construction from its Schur and density APIs, not a claim of literature novelty.
+
+**Theorem 1.50 (Ordinary characters separate simple representations).**
+
+$$\forall k \in Type*,\; \forall G \in Type*,\; \forall V \in Type*,\; \forall W \in Type*,\; [\operatorname{Field}\left(k\right)], [\operatorname{IsAlgClosed}\left(k\right)], [\operatorname{Monoid}\left(G\right)], [\operatorname{AddCommGroup}\left(V\right)], [\operatorname{Module}\left(k, V\right)], [\operatorname{AddCommGroup}\left(W\right)], [\operatorname{Module}\left(k, W\right)], [\operatorname{FiniteDimensional}\left(k, V\right)], [\operatorname{FiniteDimensional}\left(k, W\right)], \forall rho \in \operatorname{Representation}\left(k, G, V\right),\; \forall sigma \in \operatorname{Representation}\left(k, G, W\right),\; \forall hRho \in \operatorname{Representation}.\operatorname{IsIrreducible}\left(rho\right),\; \forall hSigma \in \operatorname{Representation}.\operatorname{IsIrreducible}\left(sigma\right),\; \forall hChi \in \operatorname{Representation}.\operatorname{character}\left(rho\right) = \operatorname{Representation}.\operatorname{character}\left(sigma\right),\; \operatorname{Nonempty}\left(\operatorname{Representation}.\operatorname{Equiv}\left(rho, sigma\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/FiniteGroups/FiniteCharacterAlgebra.nonempty_equiv_of_character_eq_of_isIrreducible` (`✓ std3`). ∎
+
+*Citation.* The Tau Ceti contributors; Claude (2026). *TauCeti finite representation and character theory*. URL: <https://github.com/TauCetiProject/TauCeti/tree/a780c7ad6beb23f60a17351a492d177878020ad5>.
+
+*Commentary.*
+
+G is only a monoid; finiteness of G, division by its order and semisimplicity of its monoid algebra are not assumed. Both representations are finite-dimensional and irreducible. Equality of their ordinary k-valued characters extends by linearity from monoid elements to every element of k[G]. If their associated simple k[G]-modules were not isomorphic, simultaneous trace separation would give an element with traces one and zero, contradicting that equality. A module equivalence then gives the stated representation equivalence. This is the simple-character separation mechanism of Etingof et al., Theorem 2.17(i), applied to the monoid algebra; it does not assert that ordinary traces recover arbitrary integer composition multiplicities in positive characteristic.
+
 ## References
 
 - Truth anchor: `D5/S3/FiniteGroups/FiniteCharacterAlgebra.ClassFunction`
@@ -605,6 +629,7 @@ The displayed conclusion holds under the stated hypotheses.
 - Truth anchor: `D5/S3/FiniteGroups/FiniteCharacterAlgebra.endAlgEquivSelfOfIsSimpleModule`
 - Truth anchor: `D5/S3/FiniteGroups/FiniteCharacterAlgebra.endAlgEquivSelfOfIsSimpleModule_smul`
 - Truth anchor: `D5/S3/FiniteGroups/FiniteCharacterAlgebra.exists_isAtom`
+- Truth anchor: `D5/S3/FiniteGroups/FiniteCharacterAlgebra.exists_trace_one_zero_of_not_nonempty_linearEquiv`
 - Truth anchor: `D5/S3/FiniteGroups/FiniteCharacterAlgebra.finiteDimensional_linearMap_of_isSimpleModule`
 - Truth anchor: `D5/S3/FiniteGroups/FiniteCharacterAlgebra.finrankForgetObject`
 - Truth anchor: `D5/S3/FiniteGroups/FiniteCharacterAlgebra.finrank_hom_res_mulEquiv`
@@ -620,6 +645,7 @@ The displayed conclusion holds under the stated hypotheses.
 - Truth anchor: `D5/S3/FiniteGroups/FiniteCharacterAlgebra.isSimpleModule_asSubmodule_iff`
 - Truth anchor: `D5/S3/FiniteGroups/FiniteCharacterAlgebra.mem_iff`
 - Truth anchor: `D5/S3/FiniteGroups/FiniteCharacterAlgebra.moduleFiniteForgetObject`
+- Truth anchor: `D5/S3/FiniteGroups/FiniteCharacterAlgebra.nonempty_equiv_of_character_eq_of_isIrreducible`
 - Truth anchor: `D5/S3/FiniteGroups/FiniteCharacterAlgebra.nontrivial`
 - Truth anchor: `D5/S3/FiniteGroups/FiniteCharacterAlgebra.ofCharacter`
 - Truth anchor: `D5/S3/FiniteGroups/FiniteCharacterAlgebra.ofCharacter_apply`

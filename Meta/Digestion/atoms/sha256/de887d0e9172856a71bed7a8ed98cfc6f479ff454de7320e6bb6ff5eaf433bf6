@@ -1,0 +1,23 @@
+## 24. The second homogeneous response and the quartic scalar
+
+Let $\dot{\mathcal H}$ be the completion of the complex compact smooth core in $\sqrt b$ and $\dot{\mathcal H}_0=\{z:b(p,z)=0\}$. The Sobolev inequality (22.7) realizes this completion in $L^{14/5}$. The form $h$ extends continuously, is nonnegative and has $h(p,z)=0$ there. Indeed $\int V|z|^2\le C_*b[z]$ extends by density, and its polarized version gives continuity. R Theorem 5.1 and projection along $p$ extend the complement gap to $\dot{\mathcal H}_0$.
+
+All forms are conjugate linear in the first slot; write $\mathfrak a_j[f]=\mathfrak a_j(f,f)$. On pairs for which the integrals are finite define
+
+$$
+\begin{aligned}
+\mathfrak a_1(f,z)&=-2a\nu\int r\,\overline{Yf}Yz
+                   -\chi\int\mathcal V_1\bar fz,\\
+\mathfrak a_2(f,z)&=3a\nu^2\int r^2\overline{Yf}Yz
+                   -\chi\int\mathcal V_2\bar fz-a\lambda\langle f,z\rangle,\\
+\mathfrak a_3(f,z)&=-4a\nu^3\int r^3\overline{Yf}Yz
+                   -\chi\int\mathcal V_3\bar fz,\\
+\mathfrak a_4(f,z)&=5a\nu^4\int r^4\overline{Yf}Yz
+                   -\chi\int\mathcal V_4\bar fz,\\
+\mathcal F_2(z)&=\mathfrak a_2(p,z)+\mathfrak a_1(v,z).
+\end{aligned}
+\tag{24.1}
+$$
+
+These are not bounded forms on arbitrary pairs of canonical or actual states. Only their indicated fixed-vector pairings are used.
+

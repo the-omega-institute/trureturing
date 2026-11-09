@@ -10,10 +10,24 @@ internal sealed class CompleteMertensPeakDocument : IScribeDocumentDefinition
         "Complete cumulative and literal arithmetic-kernel peaks locate strict finite Robin violations.",
         H("Complete Mertens peaks and finite Robin witnesses"),
         Blocks(
+            Describe.Lean(
+            DescribeId.Create("unconditional-complete-mertens-ledger"),
+            DeclarationHandle.Create("D5/S3/Arith/Robin/CompleteMertensPeak.complete_mertens_ledger"),
+            H("The unconditional full weighted ledger"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text("For every real t>=2, the actual complete Chebyshev error kernel and its existing WeightedTailTransport logarithmic weight are integrable on (t,infinity), and E2Lambda(t)=(psi(t)-t)/(t*log(t))-WeightedTailTransport.weightedTail(psiErrorKernel,t). WeightedPrimeLimit supplies absolute integrability and CompleteChebyshevTailIdentity supplies the complete normalized identity internally. There is no public hLay, normalization or integrability hypothesis, and no new integral owner. The existing calculus and both existing internal consumers are retained."))), DescribeRole.Theorem),
+
             Paragraph(Text("Conditional fixed-B0 application of the positive-U composite. Assume an actual nontrivial rho0 with beta=Re(rho0)>1/2 and gamma=Im(rho0)>0. Use delta, D, m0, m1 and A from the complete positive-U derivation in the WholeFormula, ActualZeroLaplace, ActualReciprocalSquareBounds, ZeroPowerSum and CountableGaussianQuadraticFourthMoment expositions. Separately assume hJY: for EVERY REAL u>=2, |Chebyshev.psi(u)-u|<=(939/100)*u*(log(u))^(303/200)*exp(-(4137/5000)*sqrt(log(u))), where the real exponent is Real.rpow. This is the exact additional quantitative Johnston-Yang premise used by complete_mertens_peak. No instance of it and no implication to it from the zero premises is asserted.")),
             Paragraph(Text("The height and strip bounds give D>20 and 0<delta<1/2, hence m0>160000. Since exp(x)>=1+x, exp(4*m0)>10000 and therefore A>=10000. Write L=log(A)>=0. The bound L^2/(1+L)<=L converts U(A)>sqrt(A)*(4*L+9) into the exact weaker peak premise U(A)>sqrt(A)*(4*L^2/(1+L)+9) of complete_mertens_peak. WeightedPrimeLimit.chebyshev_error_kernel_integrable supplies absolute integrability of the actual complete Chebyshev-error kernel on (1,infinity) unconditionally. Applying CompleteChebyshevTailIdentity.complete_chebyshev_tail_identity at EVERY real endpoint t>=2 supplies hLay with Q the literal complete tail integral. Thus hLay and integrability are discharged by existing results; hJY remains explicit.")),
             Paragraph(Text("Applying complete_mertens_peak with hJY and this derived hLay produces a real t in [A,B(A)], B(A)=exp(4*(log(A)+20)^2), and the ACTUAL integer N=Nat.lcmUpto(floorNat(t)). It gives 5040<N, divisorRatio(N)>exp(gammaE)*log(log(N)), and (N:real)<=exp(B(A)*log(B(A))). Here divisorRatio(N)=(ArithmeticFunction.sigma 1 N:real)/N and gammaE=Real.eulerMascheroniConstant. Since A<=exp(28*m1), we have 0<=L<=28*m1. Consequently 1<=B(A)<=B0=exp(4*(28*m1+20)^2) and 0<=log(B(A))<=log(B0). Nonnegative product comparison gives B(A)*log(B(A))<=B0*log(B0), hence the ORIGINAL fixed bound (N:real)<=exp(B0*log(B0)).")),
-            Paragraph(Text("This arithmetic composition introduces no named application theorem and does not close the unqualified integer conclusion from a zero premise alone. In particular the all-real JY bound is an additional analytic supplier, not a registration, a numerical sample, or a consequence of the full explicit formula. The separate existing literal-kernel theorem below has its own premise and qualitative finite-time conclusion; it does not supply this specified B0 bound. Neither RH nor existence of an off-critical zero nor an unconditional Robin counterexample is claimed.")),
+            Paragraph(Text("The preceding paragraph describes the older hJY-dependent route. The new OriginalLocalA module separately closes the unchanged original implication without hJY via a proved signed endpoint. In particular the all-real JY bound is an additional analytic supplier, not a registration, a numerical sample, or a consequence of the full explicit formula. The separate existing literal-kernel theorem below has its own premise and qualitative finite-time conclusion; it does not supply this specified B0 bound. Neither RH nor existence of an off-critical zero nor an unconditional Robin counterexample is claimed.")),
+
+            Describe.Lean(
+                DescribeId.Create("completemertenspeak-finite-signed-endpoint"),
+                DeclarationHandle.Create(Prefix + "finite_mertens_peak_of_signed_endpoint"),
+                H("A finite signed endpoint forces a strict Mertens peak"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For A>=10000 and B>=A, the signed lower bound Q(B)-I(B)/r(B)>-1/(2*sqrt(A)), together with the complete Lay identity and the displayed positive U(A) peak, forces a real t in [A,B] whose actual prefix lcm is strictly greater than 5040 and strictly violates Robin. The finite no-peak contradiction retains the sign of the far endpoint. It uses no JY majorant and proves N<=exp(B*log(B)). OriginalLocalA supplies that signed endpoint at B=exp(y) and pays the original local and global bounds. This is a new alternative to the earlier absolute-tail route; its existing quantitative theorem still retains hJY."))),
+                DescribeRole.Theorem),
 
             Describe.Lean(
                 DescribeId.Create("complete-mertens-peak"),
@@ -105,7 +119,8 @@ internal sealed class CompleteMertensPeakDocument : IScribeDocumentDefinition
                         + "explicit real and integer upper bounds. Its Johnston–Yang majorant and "
                         + "far_tail_small still pay the specified B=exp(4*(log(A)+20)^2). "
                         + "The new conclusion is conditional on the displayed literal arithmetic "
-                        + "peak. Existence of that peak, any implication from failure of RH to such "
-                        + "a peak, and an unconditional Robin counterexample remain open."))),
+                        + "peak. The separate OriginalLocalA theorem supplies the actual off-critical-zero "
+                        + "implication via the new signed endpoint. Existence of such a zero and an "
+                        + "unconditional Robin counterexample remain open."))),
                 DescribeRole.Theorem))));
 }

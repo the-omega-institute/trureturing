@@ -1,0 +1,6 @@
+令 $\pi:F(X)\twoheadrightarrow G$，并取有限字 $t_1,\ldots,t_s\in F(X)$，其像生成指定的 $H$。用一个锚符号 $\star$ 形成项 $\star w$，其中 $w$ 是 $X\cup X^{-1}$ 中的有限字。取以下等价关系的反身、对称、传递闭包：
+
+* 自由消去 $\star uxx^{-1}v\sim\star uv$、$\star ux^{-1}xv\sim\star uv$；
+* 对 $r\in R$ 及任意内部上下文，$\star urv\sim\star uv$，并允许 $r^{-1}$；
+* 只在锚的左端使用稳定子关系 $\star t_jv\sim\star v$。
+

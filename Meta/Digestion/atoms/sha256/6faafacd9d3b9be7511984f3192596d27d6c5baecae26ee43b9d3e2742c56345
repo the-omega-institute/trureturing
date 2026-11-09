@@ -1,0 +1,59 @@
+**定理 334.2（全部来源的匹配角供应）。** 两份完整背景分别供应定义 334.1 的资料。对每个 $A,T$，可以在 $U$ 内选一颗 primitive $e=e_{A,T}$ 和一个实线性数学映射 $\beta_{A,T}:E_A\to E_{R_A}$，使
+
+$$
+z_{A,T}(a):=h_A(a)-l\beta_{A,T}(a)\in W_{A,T}:=\ker L_e
+\qquad(a\in E_A).
+\tag{334.3}
+$$
+
+核取在整个 $E_{K_A}$ 上，所有其他中心的分量保留。更强地，该构造给出 $k(E_{J_A})\subseteq W_{A,T}+l(E_{R_A})$。
+
+证明。前卷 202.1 给 (334.1)。母卷假设 2.5 的全事件 R 明确允许参考矩阵块达到稍后选出的任意有限输入块大小；经定义 10.2，参考取整个原 $P$ 的实际幂。将其用于 $J_A$ 的身份事件，并取有限最大值 $\max_Tn_T$，即得同一份 (334.2)。母卷 30.1 的证明已消费这项充分大实际身份参考；闭背景的 67.1–67.3 保留它。这一步使用完整 R，不把仅有某个参考的 $R_0$ 扩强，也不要求每个指定指数都获许可。
+
+前卷 246.1 在尚未识别原 $D$ 时给全部实际中心对及静态普通／相反表示。对固定 $U$，置 $m=n_T,n=n_{V_A}\ge m$；允许目标相关的转置 $\rho_U,\delta_U$，有
+
+$$
+\pi_Uk(x)=\rho_U(x_T)\otimes I_n,
+\qquad \pi_Ul(y)=I_m\otimes\delta_U(y_{V_A}).
+\tag{334.4}
+$$
+
+在所选正交坐标中取
+
+$$
+\xi_U=\frac1{\sqrt m}\sum_{r=1}^m v_r\otimes w_r,
+\qquad e=j_U|\xi_U\rangle\langle\xi_U|.
+\tag{334.5}
+$$
+
+$e$ 是整个 $E_{K_A}$ 的 primitive。对每个完整 $x\in E_{J_A}$，令 $y_U(x)$ 仅支撑 $V_A$，且
+
+$$
+\delta_U\bigl((y_U(x))_{V_A}\bigr)
+=\rho_U(x_T)^{\mathsf T}\oplus0_{n-m}.
+\tag{334.6}
+$$
+
+转置及上述角包含保持 Hermitian，故 $y_U$ 实线性。最大纠缠向量化的成熟恒等式逐指标给
+
+$$
+(\rho_U(x_T)\otimes I_n)\xi_U
+=\{I_m\otimes(\rho_U(x_T)^{\mathsf T}\oplus0)}\xi_U.
+\tag{334.7}
+$$
+
+因此 $k(x)-l(y_U(x))$ 的 $U$ 分量消去 $\xi_U$；它 Hermitian，左右乘 $e$ 均为零，其他中心又与 $e$ 正交，故整个差属于 $\ker L_e$。取 $\beta_{A,T}=y_Ui_A$ 即得 (334.3)。这是原 Jordan 结构和嵌入的匹配关系，没有消费原 $D$ 的交替、导子或左单位。
+
+这里的全 Hermitian 两侧匹配不能仅由满 Schmidt 秩推出。取 $0<\lambda<1$、$\lambda\ne1/2$ 和 $\xi=\sqrt\lambda\,|00\rangle+\sqrt{1-\lambda}\,|11\rangle$。令第一侧输入为 $\sigma_x$。写 $C=\operatorname{diag}(\sqrt\lambda,\sqrt{1-\lambda})$；若存在 Hermitian $b$ 使 $(\sigma_x\otimes I)\xi=(I\otimes b)\xi$，则向量化给
+
+$$
+b^{\mathsf T}=C^{-1}\sigma_x C
+=\begin{pmatrix}
+0&\sqrt{(1-\lambda)/\lambda}\\
+\sqrt{\lambda/(1-\lambda)}&0
+\end{pmatrix}.
+\tag{334.8}
+$$
+
+此矩阵不 Hermitian，矛盾。该成熟有限矩阵计算只说明选择匹配锚点的必要区别：上述等 Schmidt 系数构造由原充分参考直接供应，不把一般可逆向量化或通道忠实性改称本题的 Hermitian 正交补偿。∎
+

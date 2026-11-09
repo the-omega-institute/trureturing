@@ -1,0 +1,30 @@
+**Proposition 204.3 (exact envelope characterizations).** The parameter bodies of Section 203 satisfy
+
+$$
+\mathscr Z_c=\mathscr Z_c^{\mathrm{env}},
+\tag{204.6}
+$$
+
+and
+
+$$
+\mathscr V_w=\mathscr V_w^{\mathrm{env}}.
+\tag{204.7}
+$$
+
+Consequently, a fixed-column ruling is feasible exactly when its two-dimensional coefficient vector $z$ satisfies the envelope inequalities (204.3), and a fixed-row ruling is feasible exactly when the interval box (204.5) intersects the zero-sum hyperplane $\mathsf H$.
+
+*Proof.* For the fixed-column ruling, the inequality in (203.2) is
+
+$$
+ s_y(x)+c_yh_z(x)\ge0.
+$$
+
+If $c_y>0$, division by $c_y$ gives $h_z(x)\ge-s_y(x)/c_y$; if $c_y<0$, it gives $h_z(x)\le-s_y(x)/c_y$; and if $c_y=0$, it gives $s_y(x)\ge0$. Taking the maximum over the positive labels and the minimum over the negative labels gives exactly (204.3). For the fixed-row ruling, the same inequality is
+
+$$
+ s_y(x)+v_yh(x)\ge0.
+$$
+
+On the set where $h>0$ it gives $v_y\ge-s_y/h$, on the set where $h<0$ it gives $v_y\le-s_y/h$, and on the zero set it gives $s_y\ge0$. Taking the supremum and infimum over the corresponding point sets gives (204.4)--(204.5), with the stated empty-set conventions. \(\square\)
+

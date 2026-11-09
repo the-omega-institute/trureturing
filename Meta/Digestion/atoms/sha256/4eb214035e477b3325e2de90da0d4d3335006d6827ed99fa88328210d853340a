@@ -1,0 +1,10 @@
+**Corollary 13.3 (reference amplitude on every fixed microscopic compact set).** For every compact Lebesgue measurable $K\subset\mathbb R^4$, there is $s_K>0$ such that for $0<s<s_K$, $g_s=\chi_cs^3$, and every nonnegative normalized actual reference choice,
+
+$$
+v_{g_s}(\Xi_s\xi)\ge c_*g_s^{3/2}\phi(k_0+\varepsilon sr)
+\quad\text{for almost every }\xi\in K.
+\tag{13.10}
+$$
+
+Proof. The phase component of $\Xi_s\xi$ is exactly $\mathbf q_s(\xi)$ in (11.2). For a fixed compact $K$, its coordinates are bounded, so $\sup_Kd(\mathbf q_s(\xi))\le L_Ks$ for $0<s\le1$, with $L_K<\infty$ from the fixed jets and $M^{-1}$. Hence $\sup_K\varrho g_sd(\mathbf q_s(\xi))\le\varrho\chi_cL_Ks^4\to0$. Also $K\subset\Omega_s$ for small $s$ because $k_0$ is interior. Apply Theorem 13.2 once $g_s<g_0$ and these two inclusions hold. The nonzero Jacobian $j_0s^7$ in (2.1) preserves almost everywhere assertions under $\Xi_s$. $\square$
+

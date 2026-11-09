@@ -1,0 +1,56 @@
+**Definition 50.1 (the supplied limiting realization and its two measures).**
+Retain all fixed data of Definitions 31.1, 36.1 and 44.1. In particular,
+$s\in\mathbb R$, $b>0$ and $g>0$ are fixed, the clock is unchanged,
+and $\mathscr H_B$ includes both visible circles and both absorbing
+height faces. Write
+
+$$
+\begin{aligned}
+K&=\mathcal K_0,& M&=M_\phi,& P&=\|\phi\|_\infty,\\
+c_b(D)&=gc_0G_{\beta b}(D),& C_s&=gc_s,&
+c_s^{\rm line}(x)&=C_s e^{-x^2/(4\beta)},\\
+\alpha_b&=gc_0G_{\beta b}(\pi),&
+C_b&=gc_0G_{\beta b}(0).
+\end{aligned}
+\tag{50.1}
+$$
+
+The new symbol $C_s$ is a coupling, not the small parameter
+$a=|\kappa|$. The complete native fibre generator remains
+$\mathcal K_c=K-cM$, with operator domain $D(K)$ and form domain
+$\overline{\mathcal F}_0$. On the original raw-circle space
+$\mathscr H=L^2(\mathbb T,dD;\mathscr H_B)$ define
+
+$$
+\begin{aligned}
+H_\infty&=\int_{\mathbb T}^{\oplus}(K-c_b(D)M)\,dD,\\
+D(H_\infty)&=\left\{f:f(D)\in D(K)\text{ a.e.},\quad
+                    \int_{\mathbb T}\|Kf(D)\|^2dD<\infty\right\},\\
+(Q_tf)&=J^*e^{-tH_\infty}f
+       =\frac1{\sqrt{2\pi}}\int_{\mathbb T}
+                         T_{c_b(D)}(t)f(D)\,dD.
+\end{aligned}
+\tag{50.2}
+$$
+
+Here $J$ is exactly (44.1), and $Q_t:\mathscr H\to\mathscr H_B$.
+The bounded multiplier in (50.2) leaves the displayed completed
+operator domain unchanged; $H_\infty\ge\lambda-C_bP$. Its form
+domain is the corresponding square-integrable direct integral of
+$\overline{\mathcal F}_0$, with the free form integrable. Thus
+$e^{-tH_\infty}$ is the direct integral of the complete $T_c(t)$,
+and $Q_tJ=B_b(t)$. This is the supplied limit in (47.2).
+
+Let $\mu_b$ be the pushforward of $dD/(2\pi)$ by $c_b$, and let
+$\nu_s$ be the pushforward of $dx/(2\pi)$ by $c_s^{\rm line}$.
+The second measure is defined on $(0,C_s]$, has infinite total mass,
+and is used only with compensation or an integrable positive power
+of $c$. Define the finite measure $\eta_s$ by
+$d\eta_s(c)=c\,d\nu_s(c)$. The original responses are exactly
+
+$$
+B_b(t)=\int T_c(t)\,d\mu_b(c),\qquad
+A_s(t)=\int [T_c(t)-S_t]\,d\nu_s(c).
+\tag{50.3}
+$$
+
