@@ -1,6 +1,6 @@
 import Mathlib.Algebra.Field.ZMod
 import Mathlib.Algebra.Group.Subgroup.Finite
-import Mathlib.Data.Matrix.Notation
+import Mathlib.LinearAlgebra.Matrix.Notation
 import Mathlib.GroupTheory.GroupAction.ConjAct
 import Mathlib.GroupTheory.SpecificGroups.Dihedral
 import Mathlib.LinearAlgebra.FiniteDimensional.Defs
@@ -11,7 +11,7 @@ import Mathlib.Tactic
 /-!
 # Concrete modular data for original-D projectivity sharpness
 
-UNCOMPILED SOURCE CANDIDATE. This file supplies the concrete representation,
+This file supplies the concrete representation,
 the full fixed-point-free conjugation condition on the rotation subgroup,
 irreducibility, and a subgroup of order seven acting trivially. It does not
 state or claim the final nonprojectivity theorem.
@@ -217,16 +217,16 @@ private theorem rho_irreducible : rho.IsIrreducible := by
 private theorem rotation_restriction_nontrivial :
     ¬ Representation.IsTrivial (rho.comp N.subtype) := by
   intro ht
-  letI : Representation.IsTrivial (rho.comp N.subtype) := ht
+  let : Representation.IsTrivial (rho.comp N.subtype) := ht
   let n : N := ⟨DihedralGroup.r 1, ⟨1, rfl⟩⟩
   have he := Representation.isTrivial_apply (rho.comp N.subtype) n e₀
   change rho (DihedralGroup.r 1) e₀ = e₀ at he
   rw [rho_rotation] at he
-  have he0 := congrFun he 0
-  norm_num [e₀] at he0
+  have he0 : (2 : k) = 1 := by simpa [e₀] using congrFun he 0
+  exact (by decide : (2 : k) ≠ 1) he0
 
 private theorem card_H : Nat.card H = 7 := by
-  letI : DecidablePred (fun g : G => g ∈ H) := fun g =>
+  let : DecidablePred (fun g : G => g ∈ H) := fun g =>
     inferInstanceAs (Decidable (projection g = 1))
   rw [Nat.card_eq_fintype_card]
   decide
@@ -238,8 +238,8 @@ private theorem H_acts_trivially : Representation.IsTrivial (rho.comp H.subtype)
 
 /-- Concrete full original-D data over F7, together with an actual finite
 trivially acting subgroup of order seven. The nonprojectivity conclusion is
-deliberately absent: it requires the separately implemented generic obstruction
-to be consumed after its real API and this source have been kernel-checked. -/
+absent: these data provide the input for a separate projectivity obstruction
+over the group algebra. -/
 theorem originalD_example_data :
     Finite G ∧ Nat.card G = 42 ∧ FiniteDimensional k V ∧ rho.IsIrreducible ∧
     N.Normal ∧
