@@ -2083,7 +2083,7 @@ $$
 $$
 \boxed{\quad
 \mathsf H_A(D)
-\ \Longleftrightarrow\ 
+\ \Longleftrightarrow
 \exists!Q\in Z(M(I)):\quad
 Q=Q^*,\ Q^2=1_{M(I)},\quad
 D(a,b)=Q\,\frac i2[a,b]\quad(a,b\in E).
