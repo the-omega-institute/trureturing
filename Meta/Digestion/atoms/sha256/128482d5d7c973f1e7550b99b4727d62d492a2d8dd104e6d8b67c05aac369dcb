@@ -1,0 +1,8 @@
+**命题 38.4（距离不能恢复复相位）。** 若 $D(x,y)=\|\psi_x-\psi_y\|^2$ 且各 $\psi_x$ 为单位向量，则
+
+$$
+D(x,y)=2-2\operatorname{Re}\langle\psi_x,\psi_y\rangle.
+$$
+
+所以 $D$ 只记录比较振幅的实部，忘掉三点 Bargmann 闭环的虚部和 $U(1)$ holonomy。即使所有 $D$ 已知，也可能存在不同的复 Gram 核具有相同实部而闭环相位互为共轭。负型距离因而只能恢复实 Hilbert 几何；复量子需要在其上再加相位纤维。
+
