@@ -76,6 +76,14 @@ internal sealed class GramUnitaryExtensionDocument : IScribeDocumentDefinition
                     "sphere copy and is not open; its distinct points also prevent the whole duplicate " +
                     "from being zero dimensional.")),
                 Paragraph(Text(
+                    "The points with a local basis of clopen neighborhoods are exactly the top. " +
+                    "A top singleton is itself clopen. If a clopen set contains a bottom point p, " +
+                    "its trace on the connected bottom sphere is nonempty and clopen, hence is the " +
+                    "entire bottom. Choose a different sphere point q. The inverse image under pi " +
+                    "of the complement of q is an open neighborhood of bottom p that excludes bottom q. " +
+                    "No clopen neighborhood of bottom p can lie in it. This proves L(X)=T, so its " +
+                    "closure is the whole duplicate, without giving a clopen basis at a bottom point.")),
+                Paragraph(Text(
                     "On this compact duplicate, define the same Z=(zeta composed with pi) I and " +
                     "W=(norm(zeta) composed with pi) I as continuous matrix fields. Their norm is " +
                     "the supremum over the entire duplicate of the matrix operator norm. For every " +
@@ -104,7 +112,28 @@ internal sealed class GramUnitaryExtensionDocument : IScribeDocumentDefinition
                     "the other. This conclusion requires the universal obstruction for every global " +
                     "unitary; pointwise Gram equality and the dense-top solution alone do not give it. The " +
                     "local phase conj(zeta)/abs(zeta) is used only where zeta is nonzero; the two poles " +
-                    "and their four duplicate points are never divided by their modulus."))),
+                    "and their four duplicate points are never divided by their modulus.")),
+                Paragraph(Text(
+                    "The modulus identity is the positive square root identity in the same continuous " +
+                    "matrix algebra. At x, functional calculus gives abs(Z(x))=norm(zeta(pi(x))) I=W(x), " +
+                    "and W(x) is positive. Thus W is positive as a field, and W squared equals star(Z) Z " +
+                    "by the scalar Gram computation. CFC.sqrt_eq_iff identifies W with the positive " +
+                    "square root of star(Z) Z, hence W=abs(Z) in the whole field algebra. The zero " +
+                    "values at both copies of both poles satisfy this identity as well.")),
+                Paragraph(Text(
+                    "On the open set where zeta composed with pi is nonzero, the phase " +
+                    "conj(zeta)/norm(zeta) gives a continuous unitary scalar matrix taking Z to W. " +
+                    "On the dense discrete top, pointwise equal-Gram choices give a continuous exact " +
+                    "unitary solution, including its two pole points. If any such top solution had a " +
+                    "continuous global unitary extension, the continuous error would vanish on the " +
+                    "dense top and therefore everywhere. This contradicts the global error two. " +
+                    "For an arbitrary global U, the continuous error norm is bounded by two and takes " +
+                    "the value two at a bottom equatorial point. Its top-layer values have supremum " +
+                    "two by density: every neighborhood on which the error exceeds two minus a positive " +
+                    "epsilon meets the top. Both unitary orbits and their closures are nonempty, as " +
+                    "witnessed by the identity field; every pair from the opposite closures has " +
+                    "distance two by the relative-unitary and closure arguments above. In particular, " +
+                    "the distance from W to the orbit of Z is two, and W lies outside its closure."))),
             DescribeRole.Theorem))));
 
     private static Formula Statement()
