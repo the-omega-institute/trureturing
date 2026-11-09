@@ -4225,3 +4225,349 @@ $$
 用白话说，每个整数仍是一把同时应付两条实轨迹和所有指定有限地方的钥匙。把整组目标连同实端一起平移一个允许步长，较晚钥匙能打开的门一定能回退到较早阶段；共同中心在完整目标空间里任意晚都稠密，因而无限命中的目标比例只能是零或一。可是稠密不等于占有正比例：超临界时，每把钥匙能打开的目标总量加起来有限，无限命中的目标虽然在每个精度窗里都存在，仍只占零测；同一窗里也始终有固定的有限命中目标。因此有限窗口信息不足以对窗内每个精确目标统一判别。要在发散区域证明比例为一，还得控制同一整数差在所有端共同造成的真实重叠；一阶总量与正测度是两个不同的证明义务。这里的边界不涉及完整 $\mathbb Z/\mathbb Q$ 丢番图定义、量子起源、最优性或无条件的计算不可判定性。$\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 21. 原临界好阶段的一阶发散、准确联合能量与三维非退化接口
+
+**定义 21.1（原临界阶段及其固定半径子事件）。** 保持定义 20.1 的全部实际 CM 点、同一个整数、原有限地方过滤、$M,a_0,Y,\nu,E_n,R$ 与原 $h,\rho,L_X$，只限定参数
+
+$$
+c_0^2+2\beta=1.
+\tag{21.1}
+$$
+
+令 $\vartheta(t)=\sum_{p\le t}\log p$，并定义
+
+$$
+\begin{gathered}
+\mathcal H_- =\{H\in\mathbb Z:H\ge7,\ \vartheta(H)<H\},\qquad
+T_H=\frac{(H+1/2)^2}{c_0^2},\qquad X_H=\lfloor e^{T_H}\rfloor,\\
+r_H=\rho(2X_H),\qquad q_H=q(H,H;M),\qquad d_H=q_H/M,\\
+J_H=\#\{X_H<n\le2X_H:n\equiv a_0\pmod M\},\qquad
+K_H=\frac{J_H}{d_H}=\frac{MJ_H}{q_H},\\
+a_H=\lfloor K_H\rfloor,\qquad \tau_H=K_H-a_H.
+\end{gathered}
+\tag{21.2}
+$$
+
+以下阶段均取 $H\in\mathcal H_-$ 的充分大尾部；定理 21.2 将证明该集合无界，整块的 $h(n)=H$，且 $0<r_H<1/4$、$K_H\ge1$。对块内的 $n\in A$ 置
+
+$$
+\begin{gathered}
+F_{n,H}=(n+q_H\widehat{\mathbb Z})\times
+ \{z\in\mathbb T^2:\|n\alpha_j-z_j\|_{\mathbb T}<r_H\ (j=1,2)\},\\
+V_H=\sum_{\substack{X_H<n\le2X_H\\n\in A}}\mathbf1_{F_{n,H}},\qquad
+B_H=\{V_H>0\},\qquad
+m_H=\int_Y V_H\,d\nu,\qquad \mathcal E_H=\int_Y V_H^2\,d\nu.
+\end{gathered}
+\tag{21.3}
+$$
+
+有限端仍是全部原地方条件的准确编码；只将同块的两个实半径统一缩小到 $r_H$。符号 $K_H$ 是对目标平均的允许项数，不是固定 $u$ 的整数项数，也不是 $\lfloor X_H/q_H\rfloor$。
+
+**定理 21.2（临界一阶义务与准确有限纤维分配）。** 存在只依赖固定数据的 $C_0>0$，使所有充分大的 $H\in\mathcal H_-$ 满足
+
+$$
+\begin{gathered}
+h(n)=H\quad(X_H<n\le2X_H),\qquad F_{n,H}\subseteq E_n,\\
+\frac{X_Hr_H^2}{q_H}\ge C_0e^{2H}H^{-4\gamma}\longrightarrow\infty,\\
+L_{X_H}\ge\frac{4X_Hr_H^2}{q_H},\qquad
+m_H=4r_H^2K_H\ge\frac{2X_Hr_H^2}{q_H}\longrightarrow\infty.
+\end{gathered}
+\tag{21.4}
+$$
+
+特别地，原临界问题无条件满足
+
+$$
+\sum_{n\ge1}\nu(E_n)=\infty,\qquad
+\limsup_{X\to\infty}L_X=\infty.
+\tag{21.5}
+$$
+
+对固定 $u\in C_M$，记块内满足有限条件的准确项数为
+
+$$
+N_H(u)=\#\{X_H<n\le2X_H:n\in A,\ u\equiv n\pmod{q_H}\}.
+$$
+
+它在 $u$ 的归一化 Haar 分布下满足
+
+$$
+\lambda_{C_M}(N_H=a_H)=1-\tau_H,\qquad
+\lambda_{C_M}(N_H=a_H+1)=\tau_H.
+\tag{21.6}
+$$
+
+当 $\tau_H=0$ 时第二种情况的概率为零。结论 (21.5) 不加强为全序列 $L_X\to\infty$，也不裁定 $\nu(R)$。
+
+**证明（负振荡与原取整）。** 经典输入是 Littlewood 的
+$\psi(x)-x=\Omega_-(\sqrt{x}\log\log\log x)$：存在 $c>0$ 及 $x_j\to\infty$，使 $\psi(x_j)\le x_j-c\sqrt{x_j}\log\log\log x_j$。此版本见 Platt–Trudgian，*On the first sign change of $\theta(x)-x$*，[arXiv:1407.1914v1 原文](https://arxiv.org/pdf/1407.1914v1)，第 1 页式 (2)；第 2 页首段亦明确指出 $\theta(x)-x$ 无限变号。这是 literature-attested 的输入，不在这里重证振荡定理。
+
+取 $H_j=\lfloor x_j\rfloor$。负振荡的绝对幅度最终大于 $1$，而每个 $p\le H_j$ 也在 $\psi(x_j)$ 中出现，故
+
+$$
+\vartheta(H_j)\le\psi(x_j)<x_j-1\le H_j.
+$$
+
+因此 $\mathcal H_-$ 无界。这里不估计 $\psi-\vartheta$，也不用素数定理把其误差降至线性以下的某个指定尺度。
+
+固定充分大的 $H$。对 $X_H<n\le2X_H$ 有
+
+$$
+e^{T_H}<n+2\le2X_H+2\le3e^{T_H},\qquad
+(H+1/2)^2\le c_0^2\log(n+2)
+ \le(H+1/2)^2+c_0^2\log3<(H+1)^2.
+$$
+
+故原取整给出整块 $h(n)=H$。由 $\rho$ 单调，$r_H\le\rho_n$，于是 $F_{n,H}\subseteq E_n$；同时 $r_H\to0$。
+
+由 $X_H\ge e^{T_H}/2$、$2X_H+2\le3e^{T_H}$、$\log(2X_H+2)\ll H^2$ 及 (21.1)，有某个 $C_1>0$ 使
+
+$$
+X_Hr_H^2\ge C_1e^{(1-2\beta)T_H}H^{-4\gamma}
+ =C_1e^{(H+1/2)^2}H^{-4\gamma}.
+$$
+
+原整除上界 (16.26) 保留 $(H-1)$，准确给出
+
+$$
+q_H\le5M\exp((H-1)\vartheta(H))
+ \le5M\exp(H(H-1))\qquad(H\in\mathcal H_-).
+$$
+
+两式相除，指数差为 $(H+1/2)^2-H(H-1)=2H+1/4$，得 (21.4) 的指数下界。这里只需原实际周期的上界，没有把消去数作为实际周期的下界。
+
+**证明（$M$ 与两个相邻的整数长度）。** 写 $u=a_0+Mv$，则 $v$ 在 $\widehat{\mathbb Z}$ 中 Haar 均匀。块内所有 $n\in A$ 可准确写成 $a_0+Mt$，其中 $t$ 遍历连续的 $J_H$ 个整数；条件 $u\equiv n\pmod{q_H}$ 等价于 $v\equiv t\pmod{d_H}$。对 $J_H=a_Hd_H+s_H$ 作欧几里得分解，$0\le s_H<d_H$，这段连续整数在 $s_H$ 个模 $d_H$ 的类中各有 $a_H+1$ 项，在其余类中各有 $a_H$ 项。各类的目标概率均为 $1/d_H$，且 $s_H/d_H=\tau_H$，故得 (21.6)。
+
+每个有限端合格的整数在实端占面积 $4r_H^2$，因此 $m_H=4r_H^2K_H$。准确端点计数亦给出
+
+$$
+J_H=\left\lfloor\frac{2X_H-a_0}{M}\right\rfloor-
+     \left\lfloor\frac{X_H-a_0}{M}\right\rfloor,\qquad
+|MJ_H-X_H|<M.
+$$
+
+当 $X_H\ge2M$ 时，$MJ_H\ge X_H/2$，得 $m_H$ 的下界。原 $L_{X_H}$ 对块内全部 $X_H$ 个整数求和，每项的模数恰为 $q_H$、半径至少为 $r_H$，得其下界。又
+
+$$
+\sum_{X_H<n\le2X_H}\nu(E_n)\ge m_H\longrightarrow\infty,
+$$
+
+故非负的一阶级数发散，并有 (21.5)。最后 $4r_H^2\le1$ 最终成立，故 $K_H=m_H/(4r_H^2)\to\infty$，特别地可统一删去有限个阶段以保证 $K_H\ge1$。$\square$
+
+**定理 21.3（原好阶段的准确联合能量）。** 对定义 21.1 的阶段，令 $e(t)=e^{2\pi it}$，并置
+
+$$
+\begin{gathered}
+f_r(z)=\mathbf1_{\{\|z_1\|_{\mathbb T}<r,\ \|z_2\|_{\mathbb T}<r\}},\qquad
+\widehat f_r(k)=\prod_{j=1}^2
+\begin{cases}\dfrac{\sin(2\pi k_jr)}{\pi k_j},&k_j\ne0,\\2r,&k_j=0,\end{cases}\\
+D_b(t)=\sum_{\ell=0}^{b-1}e(\ell t)\quad(b\in\mathbb Z_{\ge0}),\qquad D_0=0.
+\end{gathered}
+$$
+
+则保留真实 $M$ 与 floor 分配的能量恰为
+
+$$
+\mathcal E_H=\sum_{k\in\mathbb Z^2}|\widehat f_{r_H}(k)|^2
+\left[(1-\tau_H)|D_{a_H}(q_Hk\cdot\alpha)|^2
+ +\tau_H|D_{a_H+1}(q_Hk\cdot\alpha)|^2\right].
+\tag{21.7}
+$$
+
+特别地，若 $\mathcal E_H^{\ne0}$ 表示此和的非零频率部分，则
+
+$$
+\frac{\mathcal E_H}{m_H^2}
+ =1+\frac{\tau_H(1-\tau_H)}{K_H^2}
+    +\frac{\mathcal E_H^{\ne0}}{m_H^2},\qquad
+0\le\frac{\tau_H(1-\tau_H)}{K_H^2}\le\frac1{4K_H^2}.
+\tag{21.8}
+$$
+
+同一能量也有准确的有限差形式。令
+
+$$
+w_{H,j}=(1-\tau_H)(a_H-j)_++\tau_H(a_H+1-j)_+,
+\qquad x_+=\max(x,0).
+$$
+
+则
+
+$$
+\mathcal E_H=m_H+2\sum_{j=1}^{\lceil K_H\rceil-1}w_{H,j}
+ \prod_{i=1}^2(2r_H-\|jq_H\alpha_i\|_{\mathbb T})_+.
+\tag{21.9}
+$$
+
+空和取零；有限端和两个实端始终共用 $jq_H$，不拆成两条分别最优的轨道。
+
+**证明。** 固定 $u$ 后，有限端合格的整数恰为
+$n_0(u)+q_H\ell$，$0\le\ell<N_H(u)$。最小项 $n_0(u)$ 只依赖 $u\bmod q_H$，因而可测。对 $z$ 的 Fourier 系数为
+
+$$
+\widehat f_{r_H}(k)e(-n_0(u)k\cdot\alpha)
+ D_{N_H(u)}(-q_Hk\cdot\alpha).
+$$
+
+对这个有限和使用经典 $L^2(\mathbb T^2)$ Parseval，取模平方后起始项的相位才消失；$|D_b(-t)|=|D_b(t)|$。再对 $u$ 积分，以 (21.6) 分配 $N_H$，并用非负项的 Tonelli 换序，即得 (21.7)。零频率给出
+
+$$
+(4r_H^2)^2\bigl((1-\tau_H)a_H^2+\tau_H(a_H+1)^2\bigr)
+ =(4r_H^2)^2\bigl(K_H^2+\tau_H(1-\tau_H)\bigr),
+$$
+
+故得 (21.8)。准确实空间展开中对角项的积分是 $m_H$；给定正差指标 $j$，一条长度 $N$ 的纤维有 $(N-j)_+$ 对正向项。两半径相同且 $r_H<1/4$，故 (20.7) 的交长为 $(2r_H-\|jq_H\alpha_i\|_{\mathbb T})_+$。对 $N_H$ 按 (21.6) 平均，再计入反向项，便得 (21.9)。Parseval 和弧长交公式在此只是原联合能量推导的中间输入。$\square$
+
+**定理 21.4（原单阶段能量、覆盖与对偶格的定量对应）。** 固定 $\alpha$ 的一个实提升，定义欧氏满秩格
+
+$$
+\begin{gathered}
+\Lambda_H=\left\{\left(\frac\ell{K_H},
+ \frac{\ell q_H\alpha-b}{r_H}\right):\ell\in\mathbb Z,\ b\in\mathbb Z^2\right\},\qquad
+\det\Lambda_H=\frac1{K_Hr_H^2},\\
+\Lambda_H^*=\{(K_H(a-q_Hk\cdot\alpha),r_Hk):a\in\mathbb Z,\ k\in\mathbb Z^2\},\\
+\sigma_H=\lambda_1(\Lambda_H^*)
+ =\min\left\{K_H,\ \min_{k\in\mathbb Z^2\setminus\{0\}}
+ \sqrt{K_H^2\|q_Hk\cdot\alpha\|_{\mathbb T}^2+r_H^2\|k\|_2^2}\right\}.
+\end{gathered}
+\tag{21.10}
+$$
+
+该格就是 (19.7) 在尺度 $X'=q_HK_H=MJ_H$ 下的格；这是计数坐标尺度，不改变原整数、事件或地方精度。令
+
+$$
+C(\delta)=\frac{(1+3/\delta)(2+3/\delta)^2}{4},\qquad
+D=2(1+\sqrt2).
+$$
+
+每个阶段均满足下列定量界：
+
+$$
+\begin{gathered}
+\sigma_H\ge\delta>0\quad\Longrightarrow\quad
+ V_H(u,z)\le C(\delta)m_H\ \text{对全部 }(u,z)\in Y,\\
+\sigma_H\ge\delta>0\quad\Longrightarrow\quad
+ \frac{\mathcal E_H}{m_H^2}\le C(\delta),\qquad
+ \nu(B_H)\ge\frac1{C(\delta)},\\
+\frac{m_H^2}{\mathcal E_H}\le\nu(B_H)
+ \le\min\{1,D\sigma_H\}.
+\end{gathered}
+\tag{21.11}
+$$
+
+因而对任意无界的所选阶段族 $\mathcal H\subseteq\mathcal H_-$，有准确的统一界等价
+
+$$
+\inf_{H\in\mathcal H}\sigma_H>0
+\quad\Longleftrightarrow\quad
+\sup_{H\in\mathcal H}\frac{\mathcal E_H}{m_H^2}<\infty
+\quad\Longleftrightarrow\quad
+\inf_{H\in\mathcal H}\nu(B_H)>0.
+\tag{21.12}
+$$
+
+这里均在定义 21.1 的充分大尾部取上下确界。若能量比统一不超过 $C$，则 $\sigma_H\ge1/(DC)$；若覆盖统一至少为 $b>0$，则 $\sigma_H\ge b/D$。
+
+**证明（对偶非退化给出逐点计数上界）。** 由格的三条基向量计算行列式，再解与每条基的整数配对条件，得到 (21.10) 的对偶。$k=0$ 的最短非零向量长为 $K_H$；$k\ne0$ 时选最邻近的整数 $a$，即得所列最短长度。对偶格离散且满秩，所以最小值取得。
+
+复用 Banaszczyk，*New bounds in some transference theorems in the geometry of numbers*，Math. Ann. 296，625–635，[DOI:10.1007/BF01445125](https://doi.org/10.1007/BF01445125)，[原文](https://gdz.sub.uni-goettingen.de/download/pdf/PPN235181684_0296/LOG_0038.pdf)，印刷页 632 的 Theorem (2.2)：$\lambda_1(L)\mu_{\mathrm{cov}}(L^*)\le n/2$。原文页 625–626 的对偶是整数内积对偶，长度及覆盖半径均取欧氏约定，不要求协体积为 $1$。应用于 $L=\Lambda_H^*$、$n=3$，若 $\sigma_H\ge\delta$，则
+
+$$
+\mu_{\mathrm{cov}}(\Lambda_H)\le R_\delta:=\frac3{2\delta}.
+$$
+
+固定 $u,z$，由上一证明把合格整数自最小项 $n_0(u)$ 起编号。每个命中对应于平移格
+
+$$
+\left(0,\frac{n_0(u)\alpha-z}{r_H}\right)+\Lambda_H
+$$
+
+中第一坐标为 $\ell/K_H$、后两坐标在 $(-1,1)^2$ 的唯一格点；唯一性来自 $2r_H<1$。又
+
+$$
+N_H(u)-1\le\lceil K_H\rceil-1\le K_H,
+$$
+
+故所有这些点都在闭棱柱 $Q=[0,1]\times[-1,1]^2$ 内。这里只作上包，允许 $Q$ 包含额外格点。
+
+取这些命中格点周围的闭 Voronoi 胞。每胞体积为 $\det\Lambda_H$，胞间交叠只在可数个平分超平面上，体积为零；这些胞的体积等于基本域体积的积分论证见 (19.13)。每胞距中心至多 $R_\delta$，所以选中胞的并包含于
+$[-R_\delta,1+R_\delta]\times[-1-R_\delta,1+R_\delta]^2$。因此
+
+$$
+\frac{V_H(u,z)}{K_Hr_H^2}
+ \le(1+2R_\delta)(2+2R_\delta)^2,
+$$
+
+即为逐点上界。这个上包论证对任意 $R_\delta>0$ 成立，不用 §19 为双边误差所加的 $R\le1$。严格盒边、闭胞边及真实 floor 初项均已包含其中。乘以非负 $V_H$ 并积分，得 $\mathcal E_H\le C(\delta)m_H^2$。
+
+**证明（短对偶向量给出联合覆盖的窄带上界）。** 任取非零 $k\in\mathbb Z^2$，置
+
+$$
+\varepsilon=\|q_Hk\cdot\alpha\|_{\mathbb T},\qquad
+W_H(k)=r_H\|k\|_1+(\lceil K_H\rceil-1)\varepsilon.
+$$
+
+在每个固定 $u$ 的纤维中，若 $z$ 属于某个中心 $n_0(u)\alpha+\ell q_H\alpha$ 的半径 $r_H$ 盒，则圆 character $\chi_k(z)=k\cdot z\pmod1$ 与该中心的 character 距离小于 $r_H\|k\|_1$。选 $q_Hk\cdot\alpha$ 的最短带符号实提升，其绝对值为 $\varepsilon$；所有 $0\le\ell<N_H(u)$ 的投影中心与首中心的圆距离均不超过 $(\lceil K_H\rceil-1)\varepsilon$。故该纤维的 $B_H$ 包含于一条圆弧的逆像，弧的半径为 $W_H(k)$，弧长至多 $\min(1,2W_H(k))$。
+
+非零整数 character 将 $\mathbb T^2$ 的 Haar 推为圆 Haar：其为满射紧群同态，因为至少一个非零坐标的整数乘法在圆上满射；Haar 推前仍是归一化平移不变测度。这不要求 $k$ 原始。对 $u$ 再积分，得到
+
+$$
+\nu(B_H)\le\min\{1,2W_H(k)\}\qquad(k\ne0).
+\tag{21.13}
+$$
+
+若 $\sigma_H<K_H$，取得最短向量的 $k$ 必非零，并满足
+
+$$
+r_H\|k\|_2\le\sigma_H,\qquad
+K_H\varepsilon\le\sigma_H,\qquad
+W_H(k)\le(\sqrt2+1)\sigma_H.
+$$
+
+于是 (21.13) 给出 (21.11) 的覆盖上界。若 $\sigma_H=K_H\ge1$，该上界由 $\nu(B_H)\le1$ 平凡成立，所以两种情况均已包括。
+
+最后，经典 Cauchy–Schwarz 只在 $V_H$ 的支集上使用：
+
+$$
+m_H^2=\left(\int_{B_H}V_H\,d\nu\right)^2
+ \le\nu(B_H)\mathcal E_H.
+$$
+
+结合已经得到的两个几何方向，即得全部 (21.11)–(21.12) 及所列常数。Voronoi 铺砌、覆盖转移与支集二阶矩均是经典中间方法；新增的综合关系是它们在原临界真实周期、准确纤维分配及联合轨道上的定量闭合（repo-derived），不是新的一般转移或二阶矩定理。$\square$
+
+**定理 21.5（原好阶段的满测充分条件及未证估计的准确位置）。** 若存在 $\delta>0$ 及无界的 $\mathcal H\subseteq\mathcal H_-$，使 $\sigma_H\ge\delta$ 对所有 $H\in\mathcal H$ 成立，则 $\nu(R)=1$。等价地，可用 (21.12) 中任一统一界作为这一所选阶段族的假设。这里的非退化假设准确等于
+
+$$
+K_H\ge\delta,\qquad
+K_H^2\|q_Hk\cdot\alpha\|_{\mathbb T}^2+r_H^2\|k\|_2^2\ge\delta^2
+\quad\text{对每个 }k\in\mathbb Z^2\setminus\{0\},\ H\in\mathcal H.
+\tag{21.14}
+$$
+
+因 $K_H\to\infty$，尾部只需检查非零 $\|k\|_2<\delta/r_H$ 的频率。条件 (21.14) 对原实际 CM 数据在无穷多个这些好阶段上是否成立，仍是未证估计；(21.7) 的实际能量比统一上界亦未证。
+
+若沿某个无界阶段子族有更强的 $\mathcal E_H^{\ne0}=o(m_H^2)$，则 $\nu(B_H)\to1$。反之，若沿某子族 $\sigma_H\to0$，则 $\nu(B_H)\to0$ 且 $\mathcal E_H/m_H^2\to\infty$。这里没有证明实际非塌缩子族或实际共振子族的存在；(21.12) 只刻画所选阶段族的统一界，不把它作为 $\nu(R)=1$ 的必要条件，也不把阶段覆盖趋零作为 limsup 零测的充分条件。
+
+**证明（只需正测子集包含于原 $R$）。** 由定理 21.4，每个 $H\in\mathcal H$ 都有 $\nu(B_H)\ge b:=1/C(\delta)>0$。对每个整数 $K$，无界性保证尾并集 $\bigcup_{H\in\mathcal H,H\ge K}B_H$ 含至少一个这样的事件，故其测度至少为 $b$。这些尾并集递减，由概率测度的上连续性，
+
+$$
+\nu\!\left(\limsup_{\substack{H\to\infty\\H\in\mathcal H}}B_H\right)\ge b.
+$$
+
+若目标属于该 limsup，则它在无穷多个 $X_H\to\infty$ 的块中各有原成功整数；这些整数无界，因 $F_{n,H}\subseteq E_n$，所以
+
+$$
+\limsup_{\substack{H\to\infty\\H\in\mathcal H}}B_H\subseteq R.
+\tag{21.15}
+$$
+
+于是 $\nu(R)>0$，只对原 $R$ 使用定理 20.2 的零一律，得到 $\nu(R)=1$。这不要求 $B_H$ 的 limsup 本身平移不变，不使用跨阶段独立或跨阶段二阶矩。
+
+若非零能量为 $o(m_H^2)$，由 (21.8) 及 $K_H\to\infty$ 得 $\mathcal E_H/m_H^2\to1$，再由 (21.11) 得覆盖趋于 $1$。若 $\sigma_H\to0$，同式给出覆盖趋零和能量比发散。这些单阶段极限本身不估计尾并集的上界，因而此处不从中推出任一 limsup 零测结论。
+
+相邻文献 Beresnevich–Datta–Ghosh–Ward，*Rectangular shrinking targets for $\mathbb Z^m$ actions on tori: well and badly approximable systems*，[DOI:10.4064/aa231108-27-8](https://doi.org/10.4064/aa231108-27-8)，[accepted 原文](https://eprints.whiterose.ac.uk/id/eprint/216540/1/RECTANGULAR_SHRINKING_TARGETS.pdf)，Theorem 1.3（印刷页 2–3）与 Theorem 2.4（印刷页 4）均以相应加权非奇异性为前提；§2 的 $S$ 是一个固定有限地方集。本题要求随 $H$ 增加全部 $p\le H$，其共同整数周期也随阶段改变，通向该文固定 $S$ 定理的适用桥并未建立。这里不直接套用该文结论，也不假定原实际 $\alpha$ badly approximable。
+
+用白话说，临界时原钥匙能打开的目标总量确实发散，并在一列原实际阶段中具有很大的平均命中数。但同一批钥匙可能在某个联合方向上重复覆盖窄带；准确能量、正比例覆盖与三维对偶不出现短向量，恰好是这批钥匙上的三个定量接口。只要无穷多这样的原好阶段覆盖固定正比例，已有零一律便将原无限命中集合提升到满测；仍缺的是实际数据在这些阶段上的统一估计。上述结论不主张临界满测、全序列移动质量发散、最优性、完整 $\mathbb Z/\mathbb Q$ 定义或物理起源。$\square$
+
+## 追加锚（本行以下为增补区）
