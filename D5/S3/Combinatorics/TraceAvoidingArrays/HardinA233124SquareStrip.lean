@@ -60,18 +60,17 @@ open HardinA233175PairStrip
 open HardinA233251TriangleStrip
   (Row rowLegal widthLegal widthV widthStep widthTotal width_counting_bridge colour_bond_iff)
 
-attribute [local reducible] rowLegal
+attribute [local instance 2000] HardinA233251TriangleStrip.widthInstDecidableGood
 open D5.S3.Observer.Separation.BooleanRankThreeK4 (beta)
 
 def bonds (c d : Row) : Prop :=
   ∀ j : Fin 3, c j ≠ d j ∧ (c j).val + (d j).val ≠ 5
 
-def Legal {n : ℕ} (A : Fin n × Fin 3 → Fin 6) : Prop :=
+abbrev Legal {n : ℕ} (A : Fin n × Fin 3 → Fin 6) : Prop :=
   widthLegal rowLegal bonds A
 
 private instance instDecidableBonds (c d : Row) : Decidable (bonds c d) :=
   inferInstanceAs (Decidable (∀ _, _ ∧ _))
-attribute [local reducible] Legal
 
 /-- The literal filtered finite count; the first-cell condition gives the convention `a 0 = 0`. -/
 def a (n : ℕ) : ℕ :=
