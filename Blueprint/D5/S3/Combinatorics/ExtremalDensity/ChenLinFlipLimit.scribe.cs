@@ -26,6 +26,151 @@ internal sealed class ChenLinFlipLimitDocument : IScribeDocumentDefinition
                 + "The motivating question is Question 6.1 in Hao Chen and Yupeng Lin, "
                 + "Oriented Paths with Few Direction Flips Are Tournament Anti-Sidorenko, "
                 + "https://arxiv.org/abs/2609.14655v1.")),
+            Node("tournament", "IsTournament", "Loopless tournaments",
+                TypeFamily(All("R", Relation, Iff(Call("IsTournament", V("R")),
+                    And(All("i", V("V"), Not(Call("R", V("i"), V("i")))),
+                        All("i", V("V"), All("j", V("V"),
+                            Imp(Ne(V("i"), V("j")), Or(
+                                And(Call("R", V("i"), V("j")), Not(Call("R", V("j"), V("i")))),
+                                And(Call("R", V("j"), V("i")), Not(Call("R", V("i"), V("j")))))))))))),
+                "This is the existing repository tournament predicate: no loops and exactly one "
+                + "directed arc on every distinct pair.", DescribeRole.Definition),
+            Node("word-flips", "flips", "Adjacent unequal signs",
+                And(Eq(Call("flips", Call("nil")), N(0)), And(
+                    All("a", V("Bool"), Eq(Call("flips", Call("singleton", V("a"))), N(0))),
+                    All("a", V("Bool"), All("b", V("Bool"), All("w", Words,
+                        Eq(Call("flips", Cons(V("a"), Cons(V("b"), V("w")))),
+                            Add(Call("if", Eq(V("a"), V("b")), N(0), N(1)),
+                                Call("flips", Cons(V("b"), V("w"))))))))))),
+                "The empty word and a singleton have no flips. Every unequal adjacent pair adds "
+                + "one. This agrees with counting internal sources and sinks.", DescribeRole.Definition),
+            Node("arc-preserving", "ArcPreserving", "All arc-preserving vertex assignments",
+                TypeFamily(All("R", Relation, All("w", Words,
+                    All("p", Arrow(Call("Fin", Add(Call("length", V("w")), N(1))), V("V")),
+                        Iff(Call("ArcPreserving", V("R"), V("w"), V("p")),
+                            All("i", Call("Fin", Call("length", V("w"))),
+                                ArcCondition(Call("get", V("w"), V("i")), V("p")))))))),
+                "ArcCondition uses the forward arc from p(castSucc i) to p(succ i) for true, "
+                + "and the reverse arc for false. Assignments are unrestricted functions; "
+                + "distinct source vertices may have the same image.", DescribeRole.Definition),
+            Node("hom-count", "homCount", "The exact number of all path homomorphisms",
+                TypeFamily(All("R", Relation, All("w", Words,
+                    Eq(Call("homCount", V("R"), V("w")),
+                        Call("Natcard", Call("Hom", V("R"), V("w"))))))),
+                "Hom(R,w) is the subtype of all functions Fin(length(w)+1) → V satisfying "
+                + "ArcPreserving. Nat.card is the natural cardinality of this subtype.",
+                DescribeRole.Definition),
+            Node("hom-density", "homDensity", "Homomorphism density",
+                FiniteFamily(All("R", Relation, All("w", Words,
+                    Eq(Call("homDensity", V("R"), V("w")),
+                        Div(Call("homCount", V("R"), V("w")),
+                            Pow(Call("card", V("V")), Add(Call("length", V("w")), N(1)))))))),
+                "The numerator and host order are coerced to real numbers before division.",
+                DescribeRole.Definition),
+            Node("tas", "TAS", "Tournament anti-Sidorenko words",
+                All("w", Words, Iff(Call("TAS", V("w")), All("N", Nat,
+                    Imp(Lt(N(0), V("N")), All("R", FinRelation(V("N")),
+                        Imp(Call("IsTournament", V("R")),
+                            Le(Call("homDensity", V("R"), V("w")),
+                                Pow(Div(N(1), N(2)), Call("length", V("w"))))))))))),
+                "The bound holds for every positive host order and every tournament relation on "
+                + "that carrier. The arbitrary-host theorem proves that enumeration imposes no "
+                + "restriction.", DescribeRole.Definition),
+            Node("thresholds", "thresholds", "Admissible strict thresholds",
+                All("k", Nat, All("m", Nat, Iff(Member(V("m"), Call("thresholds", V("k"))),
+                    And(Le(V("m"), V("k")), All("w", Words,
+                        Imp(Eq(Call("length", V("w")), V("k")),
+                            Imp(Lt(Call("flips", V("w")), V("m")), Call("TAS", V("w"))))))))),
+                "The threshold ranges from zero through k. The comparison on flips is strict.",
+                DescribeRole.Definition),
+            Node("maximum", "f", "The exact saturated maximum",
+                All("k", Nat, Eq(Call("f", V("k")), Call("max", Call("thresholds", V("k"))))),
+                "Zero is an admissible threshold, so this finite maximum exists. The maximum "
+                + "may equal k, and this saturated case is included in the convergence proof.",
+                DescribeRole.Definition),
+            Node("repeat-word", "repeatWord", "Repeated concatenation",
+                All("w", Words, All("m", Nat, Eq(Call("repeatWord", V("w"), V("m")),
+                    Call("flatten", Call("replicate", V("m"), V("w")))))),
+                "Flatten m copies of w, giving the empty word when m=0. Its length is m length(w). "
+                + "The proved bounds give at most m(flips(w)+1) flips and transfer equal to "
+                + "transfer(A,w)^m.", DescribeRole.Definition),
+            Node("one-step", "step", "Forward and reverse transfer factors",
+                TypeFamily(All("A", Mat, All("b", V("Bool"),
+                    Eq(Call("step", V("A"), V("b")),
+                        Call("if", Eq(V("b"), V("true")), V("A"), Call("transpose", V("A"))))))),
+                "A true sign uses A; a false sign uses its transpose.", DescribeRole.Definition),
+            Node("transfer", "transfer", "The ordered transfer product",
+                MatrixFamily(All("A", Mat, All("w", Words,
+                    Eq(Call("transfer", V("A"), V("w")),
+                        Call("prod", Call("map", Call("step", V("A")), V("w"))))))),
+                "Take the matrix product in list order. The empty word has identity transfer.",
+                DescribeRole.Definition),
+            Node("mass", "mass", "Average transfer mass",
+                FiniteFamily(All("M", Mat, Eq(Call("mass", V("M")),
+                    Div(Call("entrysum", V("M")), Call("card", V("V")))))),
+                "Entrysum(M) is the sum over all ordered pairs of indices. Divide by the "
+                + "number of indices, not its square.", DescribeRole.Definition),
+            Node("reflect", "reflect", "Reverse order and complement every sign",
+                All("w", Words, Eq(Call("reflect", V("w")),
+                    Call("map", V("Boolnot"), Call("reverse", V("w"))))),
+                "The reflected word has the same length and the same number of flips, as proved "
+                + "by the reversal and complement identities.", DescribeRole.Definition),
+            Node("arc-matrix", "normalizedArcMatrix", "The normalized tournament arc matrix",
+                FiniteFamily(All("R", Relation, All("i", V("V"), All("j", V("V"),
+                    Eq(ArcEntry(V("i"), V("j")), Call("if", Call("R", V("i"), V("j")),
+                        Div(N(2), Call("card", V("V"))), N(0))))))),
+                "A present arc has weight 2/card(V); an absent arc has weight zero.",
+                DescribeRole.Definition),
+            Node("moment", "moment", "Normalized matrix moments",
+                MatrixFamily(All("C", Mat, All("x", Arrow(V("V"), Real), All("n", Nat,
+                    Eq(Call("moment", V("C"), V("x"), V("n")),
+                        Div(Call("dot", V("x"), Call("mulVec", Pow(V("C"), V("n")), V("x"))),
+                            Call("dot", V("x"), V("x")))))))),
+                "The growth theorem assumes positive squared norm and positive first moment; "
+                + "the definition itself uses real division.", DescribeRole.Definition),
+            Node("defect-spectrum", "defectSpectrum", "The spectrum of realizable defects",
+                All("Bad", Arrow(Nat, Arrow(Nat, V("Prop"))), All("x", Real,
+                    Iff(Member(V("x"), Call("defectSpectrum", V("Bad"))),
+                        Or(Eq(V("x"), N(1)), Some("k", Nat, Some("r", Nat,
+                            And(Lt(N(0), V("k")), And(Call("Bad", V("k"), V("r")),
+                                Eq(V("x"), Div(Add(V("r"), N(1)), V("k"))))))))))),
+                "A defect contributes (r+1)/k, including the cost of a join. The extra element 1 "
+                + "handles saturation. Every element is nonnegative.", DescribeRole.Definition),
+            Node("defect-limit", "defectLimit", "The infimum of the defect spectrum",
+                All("Bad", Arrow(Nat, Arrow(Nat, V("Prop"))),
+                    Eq(Call("defectLimit", V("Bad")), Call("sInf", Call("defectSpectrum", V("Bad")))))),
+                "The spectrum is nonempty and bounded below by zero. Its infimum is at most one.",
+                DescribeRole.Definition),
+            Node("integer-sign", "Sign", "The source sign type",
+                Eq(V("Sign"), new Formula.SetLiteral([new Formula.Negate(N(1)), N(1)])),
+                "Sign is the subtype of integers z with z=-1 or z=1; the displayed finite set "
+                + "denotes this subtype.", DescribeRole.Definition),
+            Node("source-arcs", "SourceArcPreserving", "Source arcs indexed by integer signs",
+                TypeFamily(All("k", Nat, All("R", Relation,
+                    All("x", Arrow(Call("Fin", V("k")), V("Sign")),
+                        All("p", Arrow(Call("Fin", Add(V("k"), N(1))), V("V")),
+                            Iff(Call("SourceArcPreserving", V("R"), V("x"), V("p")),
+                                All("i", Call("Fin", V("k")),
+                                    ArcCondition(Eq(Call("x", V("i")), N(1)), V("p"))))))))),
+                "The condition is the forward arc exactly when x(i)=1, and the reverse arc "
+                + "otherwise. Since the only other sign is -1, this is the literal source orientation.",
+                DescribeRole.Definition),
+            Node("source-tas", "SourceTAS", "Source TAS over every finite host",
+                All("k", Nat, All("x", Arrow(Call("Fin", V("k")), V("Sign")),
+                    Iff(Call("SourceTAS", V("x")), FiniteFamily(Seq(Instance("Nonempty", V("V")),
+                        All("R", Relation, Imp(Call("IsTournament", V("R")),
+                            Le(Call("sourceDensity", V("R"), V("x")),
+                                Pow(Div(N(1), N(2)), V("k")))))))))),
+                "Finite hosts are arbitrary types with a finite enumeration and at least one "
+                + "vertex. Enumeration equivalence proves equality with the Fin-labelled condition.",
+                DescribeRole.Definition),
+            Node("source-thresholds", "sourceThresholds", "The source set of admissible thresholds",
+                All("k", Nat, All("m", Nat, Iff(Member(V("m"), Call("sourceThresholds", V("k"))),
+                    And(Le(V("m"), V("k")), All("x", Arrow(Call("Fin", V("k")), V("Sign")),
+                        Imp(Lt(Call("sourceFlips", V("x")), V("m")), Call("SourceTAS", V("x")))))))),
+                "This uses the independently defined source flip count and source TAS property. "
+                + "The sign and host correspondences prove that it equals thresholds(k).",
+                DescribeRole.Definition),
             Node("flips-below-threshold", "tas_of_flips_lt", "Every word below the maximum is TAS",
                 All("k", Nat, All("w", Words, Imp(Eq(Call("length", V("w")), V("k")),
                     Imp(Lt(Call("flips", V("w")), Call("f", V("k"))), Call("TAS", V("w")))))),
@@ -318,6 +463,18 @@ internal sealed class ChenLinFlipLimitDocument : IScribeDocumentDefinition
     private static Formula PaddingFactor => Div(Sub(Call("card", V("V")), N(1)), Call("card", V("V")));
     private static Formula TransferMass(Formula word) => Call("mass", Call("transfer",
         Call("normalizedArcMatrix", V("R")), word));
+    private static Formula TypeFamily(Formula body) => All("V", V("Type"), body);
+    private static Formula FinRelation(Formula n) => Arrow(Call("Fin", n), Arrow(Call("Fin", n), V("Prop")));
+    private static Formula Cons(Formula a, Formula w) => Call("cons", a, w);
+    private static Formula ArcCondition(Formula forward, Formula assignment) =>
+        Call("if", forward,
+            Call("R", Call("apply", assignment, Call("castSucc", V("i"))),
+                Call("apply", assignment, Call("succ", V("i")))),
+            Call("R", Call("apply", assignment, Call("succ", V("i"))),
+                Call("apply", assignment, Call("castSucc", V("i")))));
+    private static Formula Ne(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.NotEqual, b);
+    private static Formula Member(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.MemberOf, b);
+    private static Formula Or(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.Or, b);
     private static Formula MassOf(Formula matrix, Formula word) => Call("mass", Call("transfer", matrix, word));
     private static Formula ArcEntry(Formula i, Formula j) => Call("entry", Call("normalizedArcMatrix", V("R")), i, j);
     private static Formula AddMatrix(Formula a, Formula b) => Add(a, b);
