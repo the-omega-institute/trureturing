@@ -22,26 +22,31 @@ D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.pairs
 statement_id: sha256:fd8e139e79cc87792af23c7f3cc02fca4178e9d6a1835610fc0d3741c72c1530
 D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.widthNormal
 statement_id: sha256:544f7677e789967b28078e2cb7f71e075b79492f79f4741e37f835329362022b
+D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.widthLegal
+statement_id: sha256:989eff70ea57c1a27e750e36536ea11ddb8f9aa5a27d74dce459fc2432ec52e8
+D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.widthInstDecidableLegal
+statement_id: sha256:6c1f0ba304e14673a1966eca92d67e12ccf8925c940c5ba2391b4b478ac39547
+D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.widthInstDecidableGood
+statement_id: sha256:1b18af22481f3b703bd96b1eff1d82cd4f06b1e61f3b79669043a61a31d15152
 D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.widthStep
-statement_id: sha256:8c9c3150fd3c1de8690f85618bf432c3a53bb7dd26b0d6ce7d37853305810660
+statement_id: sha256:bd12c5c5928f8822063ec100e0e6e92c5300f5907da4aa64e85595a1ee4c7cb5
 D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.widthV
 statement_id: sha256:4f3953ec5d8902b74486197a6f4d782f3fb58c6627a5740a5242632a7560f9ed
 D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.widthTotal
-statement_id: sha256:1599dea1e937fc19cabeaa107a371a30c86b0526bfd9a251a1fcb71ebcab5ee3
+statement_id: sha256:c4c082551693765b0f6c344f5f6ff825120f019a96ec4d79015c10c10bf774d0
 D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.width_counting_bridge
-statement_id: sha256:b0ee269255efb9d46abe0df07b64609eafbc4ff070b1edfd59fae14859fc955d
+statement_id: sha256:a6ad861eda2ca48bc91989542e4b7cc27d81aec8df9a91b8db40c9398c577c72
 D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.Valid
 statement_id: sha256:214fcd95916dbdaa9b9ace506c545eeb309580e42df33d25224d324be358ccb9
 D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.colour_bond_iff
 statement_id: sha256:b9273762bbccc68fc56c48c38b8aba02a46a50a53bfbbe70a660fd21867d6be8
 D5.S3.Observer.Separation.BooleanRankThreeK4.beta
 statement_id: sha256:1abdc5f3db71567fe05de5aabbe80dddeb5ec5179e4ec7fd49fe71e500518481
-rowLegal: proof_shape=bind-only; consumers=Legal, classCount, firstCount, v2, total2
-bonds: proof_shape=bind-only; consumers=Legal, bonds_iff, counting_bridge
-Legal: proof_shape=bind-only; consumers=a, counting_bridge, zero_count
-instDecidableColLegal: proof_shape=bind-only; consumers=instDecidableLegal, v2, total2
-instDecidableBonds: proof_shape=bind-only; consumers=instDecidableLegal, counting_bridge
-instDecidableLegal: proof_shape=bind-only; consumers=a
+rowLegal: proof_shape=bind-only; consumers=Legal, instDecidableRowLegal, a, classCount, firstCount, v2, total2, valid_next, initial_valid, row_counts, initial_counts
+bonds: proof_shape=bind-only; consumers=Legal, instDecidableBonds, a, bonds_iff, counting_bridge, zero_count
+Legal: proof_shape=bind-only; consumers=none (owner alias mirrored by Scribe)
+instDecidableRowLegal: proof_shape=bind-only; consumers=a, firstCount, v2, total2, valid_next, classCount, counting_bridge, initial_valid, row_counts, initial_counts, zero_count
+instDecidableBonds: proof_shape=bind-only; consumers=a, counting_bridge, zero_count
 a: proof_shape=bind-only; consumers=counting_bridge, a_eq_w, zero_count, result
 compatible: proof_shape=bind-only; consumers=bonds_iff, v2, classCount
 instDecidableCompatible: proof_shape=bind-only; consumers=v2, classCount
@@ -55,13 +60,13 @@ firstCount: proof_shape=bind-only; consumers=finite_certificate
 row_counts: proof_shape=bind-only; consumers=finite_certificate
 initial_valid: proof_shape=bind-only; consumers=a_eq_w
 initial_counts: proof_shape=bind-only; consumers=finite_certificate
-finite_certificate: proof_shape=bind-only; consumers=v_eq_w, a_eq_w
+finite_certificate: proof_shape=bind-only; consumers=v_eq_w, a_eq_w; direct_frozen_dependencies=PairStrip.Col, PairStrip.Seen, PairStrip.finish, PairStrip.good, TriangleStrip.Valid, TriangleStrip.widthInstDecidableGood, BooleanRankThreeK4.beta
 w: proof_shape=bind-only; consumers=v_eq_w, a_eq_w, recurrence, result
 v_eq_w: proof_shape=bind-only; consumers=a_eq_w
 a_eq_w: proof_shape=bind-only; consumers=recurrence, result
 recurrence: proof_shape=bind-only; consumers=result
 zero_count: proof_shape=bind-only; consumers=result
-result: proof_shape=bind-only; consumers=terminal result (#28348)
+result: proof_shape=bind-only; consumers=terminal result (#28348); direct_frozen_dependencies=PairStrip.Col, PairStrip.Seen, PairStrip.finish, PairStrip.good, PairStrip.pairs, TriangleStrip.Valid, TriangleStrip.widthInstDecidableGood, TriangleStrip.widthInstDecidableLegal, TriangleStrip.widthLegal, TriangleStrip.widthNormal, TriangleStrip.widthStep, TriangleStrip.widthTotal, TriangleStrip.widthV, TriangleStrip.width_counting_bridge, BooleanRankThreeK4.beta
 -/
 
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip
