@@ -71,12 +71,14 @@ private lemma D_ratio {α : Type*} {l : Filter α} {x y : α → ℝ}
     (hr : Tendsto (fun v => y v / x v) l (𝓝 1)) :
     Tendsto (fun v => D (y v) / D (x v)) l (𝓝 1) := by
   have hlog : Tendsto (fun v => Real.log (y v / x v)) l (𝓝 0) := by
-    simpa using (Real.continuousAt_log (by norm_num : (1 : ℝ) ≠ 0)).tendsto.comp hr
+    simpa [Function.comp_def] using
+      (Real.continuousAt_log (by norm_num : (1 : ℝ) ≠ 0)).tendsto.comp hr
   have hlratio : Tendsto (fun v => Real.log (y v) / Real.log (x v)) l (𝓝 1) := by
     have hh := (hlog.div_atTop (Real.tendsto_log_atTop.comp hx)).add_const 1
     simp only [zero_add] at hh
     apply hh.congr'
     filter_upwards [hx.eventually_gt_atTop 1, hy.eventually_gt_atTop 1] with v hvx hvy
+    dsimp only [Function.comp_def]
     rw [Real.log_div (by linarith : y v ≠ 0) (by linarith : x v ≠ 0)]
     field_simp [(Real.log_pos hvx).ne']
     <;> ring
@@ -122,7 +124,6 @@ private lemma leading_of_second_order_bound {α : Type*} {l : Filter α}
     have hh := (div_lt_iff₀ hε).mp hsmall
     nlinarith
   rw [Real.dist_eq]
-  apply (mul_lt_mul_left hL).mp
   nlinarith [htriangle.trans hZ]
 
 private lemma record_clocks {α : Type*} {l : Filter α}
@@ -207,6 +208,7 @@ private lemma contact_exists : ∃ A : ℝ, ∀ a : ℝ, A ≤ a → ∃ x : Con
     by_contra! h
     have he : m = 1 := by omega
     simp [he] at hb
+    norm_num at hb
   have hr : ∀ k : ℕ, 0 < k → k < m →
       goldenResourceObjective (price a) k < goldenResourceObjective (price a) m := by
     intro k hk hkm
@@ -238,10 +240,11 @@ private lemma contact_limits :
       intro B
       filter_upwards [ha.eventually_ge_atTop (max B 0),
         (Real.tendsto_log_atTop.comp ha).eventually_ge_atTop 1] with x hx hl
+      dsimp only [Function.comp_def] at hl
       have h0 : 0 ≤ x.a := (le_max_right _ _).trans hx
       have hh := mul_le_mul_of_nonneg_left hl h0
       linarith [(le_max_left B 0).trans hx]
-    simpa only [one_div] using tendsto_inv_atTop_zero.comp hprod
+    simpa only [one_div, Function.comp_def] using tendsto_inv_atTop_zero.comp hprod
   have hP : Tendsto (fun x : Contact => (largestPrime x.m : ℝ)) l atTop := by
     rw [tendsto_atTop]
     intro Y
@@ -276,6 +279,8 @@ private lemma contact_limits :
     simp only [div_self (by norm_num : (1 : ℝ) ≠ 0)] at hh
     apply hh.congr'
     filter_upwards [hP.eventually_gt_atTop 1] with x hx
+    change (D (Real.log (x.m : ℝ)) / D (largestPrime x.m : ℝ)) /
+      (D (Real.log (x.m : ℝ)) / D x.a) = D x.a / D (largestPrime x.m : ℝ)
     field_simp [(D_pos x.ha).ne', (D_pos x.hb).ne', (D_pos hx).ne']
     <;> ring
   exact ⟨hP, haP⟩
@@ -374,7 +379,7 @@ private lemma log_attainment (hRH : RiemannHypothesis) (ε : ℝ) (hε : 0 < ε)
   let z := D (largestPrime m : ℝ) * robinLogMargin m
   let r := D (Real.log (m : ℝ)) / D (largestPrime m : ℝ)
   have hz1 : |z| < |K| + 1 := by
-    have hh := abs_add (z - K) K
+    have hh := abs_add_le (z - K) K
     rw [sub_add_cancel] at hh
     have hzη : |z - K| < η := hz
     linarith [min_le_left (1 : ℝ) (ε / 2)]
@@ -396,7 +401,7 @@ private lemma log_attainment (hRH : RiemannHypothesis) (ε : ℝ) (hε : 0 < ε)
     <;> ring
   refine ⟨m, lambda, hNm, hl, hm, hr, ?_⟩
   rw [hFm]
-  exact (abs_add _ _).trans_lt (by
+  exact (abs_add_le _ _).trans_lt (by
     have hzε : |z - K| < ε / 2 := hz.trans_le (min_le_right _ _)
     linarith)
 
@@ -424,7 +429,7 @@ private lemma linear_le_log {n : ℕ} (hn : 0 < n) (ha : 1 < Real.log (n : ℝ))
   have h := Real.add_one_le_exp (-robinLogMargin n)
   have hh : 1 - Real.exp (-robinLogMargin n) ≤ robinLogMargin n := by linarith
   have hmul := mul_le_mul_of_nonneg_left hh
-    (mul_pos (Real.exp_pos _) (D_pos ha)).le
+    (mul_pos (Real.exp_pos Real.eulerMascheroniConstant) (D_pos ha)).le
   simpa only [F, mul_assoc] using hmul
 
 private lemma exponential_proxy (q : ℝ) (hq : 0 < q) :
@@ -443,6 +448,8 @@ private lemma exponential_proxy (q : ℝ) (hq : 0 < q) :
   simp only [mul_one] at hh
   apply hh.congr'
   filter_upwards [eventually_gt_atTop (0 : ℝ)] with t ht
+  change q * ((Real.exp (-q / t) - 1) / (-q / t)) =
+    t * (1 - Real.exp (-q / t))
   field_simp [ht.ne', hq.ne']
   <;> ring
 
