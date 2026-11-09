@@ -34,13 +34,15 @@ internal sealed class SlowSurvivalWindowsDocument : IScribeDocumentDefinition
         items.Add(Close);
         return Seq([.. items]);
     }
+    private static Formula LambdaFormula(string name, Formula type, Formula body) =>
+        Seq(LambdaLower, Sp, Par(Seq(V(name), Colon, Sp, type)), Sp, Mapsto, Sp, Par(body));
     private static Formula All(string name, Formula type, Formula body) =>
         Seq(Forall, Sp, Par(Seq(V(name), Colon, Sp, type)), Comma, Sp, body);
     private static Formula Some(string name, Formula type, Formula body) =>
         Seq(Exists, Sp, Par(Seq(V(name), Colon, Sp, type)), Comma, Sp, body);
     private static Formula Eqn(Formula left, Formula right) => Seq(left, Sp, Eq, Sp, right);
-    private static Formula Lt(Formula left, Formula right) => Rel(left, FormulaRelationOperator.LessThan, right);
-    private static Formula Le(Formula left, Formula right) => Rel(left, FormulaRelationOperator.LessThanOrEqual, right);
+    private static Formula Lt(Formula left, Formula right) => new Formula.Relation(left, FormulaRelationOperator.LessThan, right);
+    private static Formula Le(Formula left, Formula right) => new Formula.Relation(left, FormulaRelationOperator.LessThanOrEqual, right);
     private static Formula Imp(Formula premise, Formula result) => Seq(Par(premise), Sp, Rightarrow, Sp, result);
     private static Formula Both(params Formula[] clauses)
     {

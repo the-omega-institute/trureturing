@@ -42,13 +42,15 @@ internal sealed class CylinderWaitingWindowsDocument : IScribeDocumentDefinition
         items.Add(Close);
         return Seq([.. items]);
     }
+    private static Formula LambdaFormula(string name, Formula type, Formula body) =>
+        Seq(LambdaLower, Sp, Par(Seq(V(name), Colon, Sp, type)), Sp, Mapsto, Sp, Par(body));
     private static Formula All(string name, Formula type, Formula body) =>
         Seq(Forall, Sp, Par(Seq(V(name), Colon, Sp, type)), Comma, Sp, body);
     private static Formula Some(string name, Formula type, Formula body) =>
         Seq(Exists, Sp, Par(Seq(V(name), Colon, Sp, type)), Comma, Sp, body);
     private static Formula Eqn(Formula x, Formula y) => Seq(x, Sp, Eq, Sp, y);
-    private static Formula Lt(Formula x, Formula y) => Rel(x, FormulaRelationOperator.LessThan, y);
-    private static Formula Le(Formula x, Formula y) => Rel(x, FormulaRelationOperator.LessThanOrEqual, y);
+    private static Formula Lt(Formula x, Formula y) => new Formula.Relation(x, FormulaRelationOperator.LessThan, y);
+    private static Formula Le(Formula x, Formula y) => new Formula.Relation(x, FormulaRelationOperator.LessThanOrEqual, y);
     private static Formula Imp(Formula x, Formula y) => Seq(Par(x), Sp, Rightarrow, Sp, y);
     private static Formula Both(params Formula[] clauses)
     {
@@ -62,7 +64,7 @@ internal sealed class CylinderWaitingWindowsDocument : IScribeDocumentDefinition
     private static Formula SumIn(string index, Formula set, Formula body) =>
         Seq(new Formula.Subscript(Sum, Seq(V(index), Sp, InMacro, Sp, set)), Sp, Par(body));
     private static Formula Fin(Formula n) => Call("Fin", n);
-    private static Formula Word(Formula n, int alphabet) => new Formula.TypeArrow(Fin(n), Fin(D(alphabet)));
+    private static Formula Word(Formula n, byte alphabet) => new Formula.TypeArrow(Fin(n), Fin(D(alphabet)));
     private static Formula List => Call("List", Fin(D(4)));
     private static Formula NM(Formula w) => Call("noMarkerWord", w);
     private static Formula Future => Call("ofFn", V("v"));
