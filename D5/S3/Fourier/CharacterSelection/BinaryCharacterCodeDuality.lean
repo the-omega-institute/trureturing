@@ -12,15 +12,11 @@
    * The power-character and quartic-completion modules use multiplicative roots, not this F2 code.
 -/
 
-module
-
-public import Mathlib.LinearAlgebra.BilinearForm.Orthogonal
-public import Mathlib.LinearAlgebra.Dual.Lemmas
-public import Mathlib.LinearAlgebra.Finsupp.LinearCombination
-public import Mathlib.LinearAlgebra.Matrix.DotProduct
-public import Mathlib.LinearAlgebra.Matrix.Dual
-
-@[expose] public section
+import Mathlib.LinearAlgebra.BilinearForm.Orthogonal
+import Mathlib.LinearAlgebra.Dual.Lemmas
+import Mathlib.LinearAlgebra.Finsupp.LinearCombination
+import Mathlib.LinearAlgebra.Matrix.DotProduct
+import Mathlib.LinearAlgebra.Matrix.Dual
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

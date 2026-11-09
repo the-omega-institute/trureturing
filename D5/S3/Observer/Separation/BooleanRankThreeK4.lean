@@ -6,14 +6,10 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Observer/Separation/BooleanRankThreeK4.claim; result=D5/S3/Observer/Separation/BooleanRankThreeK4.result; claim=D5/S3/Observer/Separation/BooleanRankThreeK4.claim
    digest: An actual Boolean rank-three K4 subdivision refutes the four-path reduction. -/
 
-module
-
-public import D5.S3.Observer.Separation.BooleanRankFour
-public import D5.S3.Observer.Separation.BooleanRankThreeFiber
-public import D5.S3.Observer.Separation.ThreeLeafCausalPeak
-public import Mathlib.Combinatorics.SimpleGraph.Paths
-
-@[expose] public section
+import D5.S3.Observer.Separation.BooleanRankFour
+import D5.S3.Observer.Separation.BooleanRankThreeFiber
+import D5.S3.Observer.Separation.ThreeLeafCausalPeak
+import Mathlib.Combinatorics.SimpleGraph.Paths
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

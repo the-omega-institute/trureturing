@@ -6,18 +6,14 @@
    utility: none
    digest: Whole original bit-class deletion forces the complete rank-three odd cycle fiber. -/
 
-module
-
-public import D5.S3.Fourier.CharacterSelection.SimpleGraphCycleSpace
-public import Mathlib.Combinatorics.SimpleGraph.Coloring.Vertex
-public import Mathlib.LinearAlgebra.Dual.Lemmas
-public import Mathlib.LinearAlgebra.Quotient.Basic
-public import Mathlib.GroupTheory.Coset.Basic
-public import Mathlib.FieldTheory.Finiteness
-public import Mathlib.Tactic.FinCases
-public import Mathlib.Tactic.NormNum
-
-@[expose] public section
+import D5.S3.Fourier.CharacterSelection.SimpleGraphCycleSpace
+import Mathlib.Combinatorics.SimpleGraph.Coloring.Vertex
+import Mathlib.LinearAlgebra.Dual.Lemmas
+import Mathlib.LinearAlgebra.Quotient.Basic
+import Mathlib.GroupTheory.Coset.Basic
+import Mathlib.FieldTheory.Finiteness
+import Mathlib.Tactic.FinCases
+import Mathlib.Tactic.NormNum
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

@@ -122,7 +122,6 @@ error_vanish: proof_shape=bind-only; consumers=recurrence
 recurrence: proof_shape=bind-only; consumers=result
 result: proof_shape=bind-only; consumers=terminal result
 -/
-module
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip
 import D5.S3.Observer.Separation.BooleanRankThreeK4
 import Mathlib.Tactic.FinCases
@@ -131,9 +130,8 @@ import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.Ring
 import Mathlib.Tactic.Tauto
-public import Mathlib.RingTheory.PowerSeries.Basic
+import Mathlib.RingTheory.PowerSeries.Basic
 /-! Three rows with horizontal and diagonal complementary-pair exclusion. -/
-public section
 set_option Elab.async false
 open scoped BigOperators
 namespace D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233176Ladder

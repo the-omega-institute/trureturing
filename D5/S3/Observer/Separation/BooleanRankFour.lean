@@ -6,15 +6,10 @@
    utility: none
    digest: A six-by-five Boolean task of cycle rank four forces the exact uniform ordered budget region. -/
 
-module
-
-public import Mathlib.Combinatorics.SimpleGraph.Coloring.Vertex
-public import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
-public import Mathlib.Data.Fintype.EquivFin
-public import Mathlib.Data.Fin.VecNotation
+import Mathlib.Combinatorics.SimpleGraph.Coloring.Vertex
+import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
+import Mathlib.Data.Fintype.EquivFin
 import Mathlib.Tactic
-
-@[expose] public section
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
