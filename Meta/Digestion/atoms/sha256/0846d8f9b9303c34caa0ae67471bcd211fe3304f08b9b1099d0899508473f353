@@ -1,0 +1,9 @@
+**Brownian 型联合四阶接口。** 设 $C:[0,1]^2\to\mathbb R$ 有界可测，称 $E$ 满足以 $C$ 为交叉核的 $(\mathrm W_{2,2})$，若 $(\mathrm J_{1,1})$(b) 以 $M_{1,1}=c_{1,1}C$ 成立，且 $(\mathrm J_{2,2})$(b) 以
+
+$$
+M_{2,2}(s_1,s_2,t_1,t_2)=c_{2,2}\Bigl[\kappa_1\kappa_2\min(s_1,s_2)\min(t_1,t_2)+C(s_1,t_1)C(s_2,t_2)+C(s_1,t_2)C(s_2,t_1)\Bigr]
+\tag{495.4}
+$$
+
+成立（变量顺序 $(s_1,s_2)$ 对应 $\theta_1$，$(t_1,t_2)$ 对应 $\theta_2$）。这是二维 Gauss 过程 $(\sqrt{\kappa_1}B^{(1)},\sqrt{\kappa_2}B^{(2)})$ 在交叉协方差为 $C$ 时的四阶 Isserlis 公式乘以宏观因子 $c_{2,2}$。
+
