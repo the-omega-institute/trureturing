@@ -121,7 +121,7 @@ internal sealed class FiniteTypeMooreDocument : IScribeDocumentDefinition
         )));
 
     private static Formula MooreStatement => St(Setup, DiscreteAlphabet,
-        Seq(Call("MeasurableSpace", I("G")), Colon, Eq, Call("discrete"), Comma),
+        Seq(Call("MeasurableSpace", I("G")), Colon, Eq, Top, Comma),
         Seq(Call("NeBot", Call("maxFoelner", Pow(I("G"), Seq(Mathrm, Grp(I("op")))),
             Call("Measure.count", I("G")))), Sp, Rightarrow),
         XSetup, Seq(Call("Set.Nonempty", Call("carrier", I("X"))), Sp, Rightarrow),
