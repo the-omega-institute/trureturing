@@ -10,6 +10,8 @@ import D5.S3.Combinatorics.SpectralGraph.SixSupportLaplacianLowRoot
 import D5.S3.Combinatorics.SpectralGraph.IdealIntersectionObstructions
 import Mathlib.Tactic
 
+/-! Exact six-cell operator transport, including derived weighted cancellation. -/
+
 set_option autoImplicit false
 noncomputable section
 
@@ -29,9 +31,11 @@ def cell (i : Fin 6) : Finset (Fin 3) :=
 
 /-- Extend a quotient vector by zero at empty and full support. -/
 def value (z : Fin 6 → ℝ) (S : Finset (Fin 3)) : ℝ :=
-  if S = {0} then z 0 else if S = {1} then z 1 else
-  if S = {2} then z 2 else if S = {0,1} then z 3 else
-  if S = {0,2} then z 4 else if S = {1,2} then z 5 else 0
+  if 0 ∈ S then
+    if 1 ∈ S then if 2 ∈ S then 0 else z 3
+    else if 2 ∈ S then z 4 else z 0
+  else if 1 ∈ S then if 2 ∈ S then z 5 else z 1
+  else if 2 ∈ S then z 2 else 0
 
 private theorem positive (a b c : ℕ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c) :
     ∀ i, 0 < exponents a b c i := by
@@ -72,7 +76,7 @@ private theorem support_action (a b c : ℕ) (z : Fin 6 → ℝ)
   all_goals
     simp only [supportComplementOp, sum_support]
     norm_num [supportWeight, exponents, value, quotient, Matrix.mulVec,
-      dotProduct, Fin.sum_univ_succ, Finset.univ_fin3] <;> ring
+      dotProduct, Fin.sum_univ_succ, Finset.ext_iff, Fin.forall_fin_succ] <;> ring
 
 private theorem lift_nonzero (a b c : ℕ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
     (z : Fin 6 → ℝ) (hz : z ≠ 0) :
@@ -101,10 +105,11 @@ private theorem lift_sum_zero (a b c : ℕ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < 
       supportLift (exponents a b c) (value z) x) =
       ∑ S, supportWeight (exponents a b c) S * value z S from
     support_lift_sum _ (positive a b c ha hb hc) _
-      (by simp [value]) (by norm_num [value, Finset.univ_fin3])]
+      (by simp [value]) (by norm_num [value, Finset.ext_iff, Fin.forall_fin_succ])]
   rw [sum_support]
-  simpa [supportWeight, exponents, value, weights, dotProduct,
-    Fin.sum_univ_succ] using hw
+  simp [supportWeight, exponents, value, weights, dotProduct,
+    Fin.sum_univ_succ] at hw ⊢
+  linarith only [hw]
 
 /-- Every nonzero six-cell eigenvalue gives the reflected actual eigenvalue.
 The eigenvector is nonzero and its zero sum is derived from the weighted
@@ -116,6 +121,7 @@ theorem actual_eigenvalue (p : Fin 3 → ℕ) (hp : ∀ i, Nat.Prime (p i))
     (he : quotient (a : ℝ) (b : ℝ) (c : ℝ) *ᵥ z = e • z) :
     HasActualEigenvalue (modulus p (exponents a b c))
       (((((a+1)*(b+1)*(c+1))-2 : ℕ) : ℝ)-e) := by
+  classical
   have hk := positive a b c ha hb hc
   have heigen : (supportGraph (exponents a b c))ᶜ.lapMatrix ℝ *ᵥ
       supportLift (exponents a b c) (value z) =
@@ -137,14 +143,14 @@ theorem result (p : Fin 3 → ℕ) (hp : ∀ i, Nat.Prime (p i))
     (hinj : Function.Injective p) (a b c : ℕ) (ha : 0 < a)
     (hab : a ≤ b) (hbc : b ≤ c) :
     ∃ e : ℝ,
-      (((((a+1)*(b+1)*(c+1))-2 : ℕ) : ℝ)-3 < e ∧
-      e < (((((a+1)*(b+1)*(c+1))-2 : ℕ) : ℝ) ∧
+      (((a+1)*(b+1)*(c+1)-2 : ℕ) : ℝ) - 3 < e ∧
+      e < (((a+1)*(b+1)*(c+1)-2 : ℕ) : ℝ) ∧
       HasActualEigenvalue (modulus p (exponents a b c)) e := by
   have hb : 0 < b := ha.trans_le hab
   have hc : 0 < c := hb.trans_le hbc
   obtain ⟨μ, hμ0, hμ3, z, hz, he⟩ := positive_real_low_eigenvalue a b c
     (by exact_mod_cast ha) (by exact_mod_cast hab) (by exact_mod_cast hbc)
-  refine ⟨(((((a+1)*(b+1)*(c+1))-2 : ℕ) : ℝ)-μ), by linarith, by linarith, ?_⟩
+  refine ⟨(((a+1)*(b+1)*(c+1)-2 : ℕ) : ℝ)-μ, by linarith, by linarith, ?_⟩
   exact actual_eigenvalue p hp hinj a b c ha hb hc μ hμ0.ne' z hz he
 
 #print axioms actual_eigenvalue

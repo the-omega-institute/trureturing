@@ -63,7 +63,7 @@ private theorem charpoly_coeff_zero (a b c : R) :
   rw [Polynomial.coeff_zero_eq_eval_zero, Matrix.eval_charpoly]
   simp [Matrix.det_neg, det_quotientOver]
 
-private theorem charpoly_zero_factor (a b c : R) :
+theorem charpoly_zero_factor (a b c : R) :
     (quotientOver a b c).charpoly = Polynomial.X * reducedCharpoly a b c := by
   have h := Polynomial.X_mul_divX_add (quotientOver a b c).charpoly
   rw [charpoly_coeff_zero, Polynomial.C_0, add_zero] at h
@@ -88,9 +88,9 @@ private theorem map_reducedCharpoly {S : Type v} [CommRing S] (f : R →+* S)
   ext n
   simp only [Polynomial.coeff_map, Polynomial.coeff_divX]
 
-private def d₁ (a b c x : R) : R := (x-a)*(x-b-c-b*c)-a*b*c
-private def d₂ (a b c x : R) : R := (x-b)*(x-a-c-a*c)-a*b*c
-private def d₃ (a b c x : R) : R := (x-c)*(x-a-b-a*b)-a*b*c
+def d₁ (a b c x : R) : R := (x-a)*(x-b-c-b*c)-a*b*c
+def d₂ (a b c x : R) : R := (x-b)*(x-a-c-a*c)-a*b*c
+def d₃ (a b c x : R) : R := (x-c)*(x-a-b-a*b)-a*b*c
 
 private def sparse_minor_3_rhs (a b c x : R) : R := (0)*(0)*(x-a)-(0)*(0)*(0)-(a*c)*(a*b)*(x-a)+(a*c)*(0)*(0)+(0)*(a*b)*(0)-(0)*(0)*(0)
 private theorem sparse_minor_3 (a b c x : R) : (!![0, a*c, 0;
@@ -365,7 +365,7 @@ private theorem sparse_minor_0 (a b c x : R) : (!![x-(b+c+b*c), b, c, 0, 0, b*c;
   rw [h2, h3]
   norm_num [sparse_minor_0_rhs, (sparse_minor_1 a b c x), (sparse_minor_8 a b c x)]
 
-private theorem determinant_formula (a b c x : R) :
+theorem determinant_formula (a b c x : R) :
     (Matrix.scalar (Fin 6) x - quotientOver a b c).det =
       d₁ a b c x * d₂ a b c x * d₃ a b c x
       - b*c*(x-b)*(x-c)*d₁ a b c x
