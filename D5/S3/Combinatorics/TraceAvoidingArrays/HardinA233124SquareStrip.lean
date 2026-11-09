@@ -10,6 +10,58 @@
 admission_basis: open-problem-resolution (#28306; Proved)
 escape_witness: none
 Single-row numerical premises are consumed by the unbounded class induction.
+Direct frozen dependency:
+D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233175PairStrip.Seen
+(statement_id sha256:db13d94501d24f27e6e69604bb633af95ff3309c5698815c44e12d2e52739fce).
+Direct frozen dependency:
+D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233175PairStrip.finish
+(statement_id sha256:ebae2e26fe8811cb0e473a0168c27f49fa151fa2bcecda8ad3ba0c9fabc41a7f).
+Direct frozen dependency:
+D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233175PairStrip.good
+(statement_id sha256:f68e874b0a22676cb3053202c645a8ce30010dcd695d55f3e7fce272d4ce5989).
+Direct frozen dependency:
+D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233251TriangleStrip.Row
+(statement_id sha256:b7c502e020b34fb16b6f45eb8f4662622d3137215aa86d5133861c790e91cd34).
+Direct frozen dependency:
+D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233251TriangleStrip.colour_bond_iff
+(statement_id sha256:b9273762bbccc68fc56c48c38b8aba02a46a50a53bfbbe70a660fd21867d6be8).
+Direct frozen dependency:
+D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233251TriangleStrip.rowLegal
+(statement_id sha256:be28ba8e38a531250b809a95236ffb2f5f4e876106346cd44ea2ed1046ba3cc5).
+Direct frozen dependency:
+D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233251TriangleStrip.widthInstDecidableGood
+(statement_id sha256:1b18af22481f3b703bd96b1eff1d82cd4f06b1e61f3b79669043a61a31d15152).
+Direct frozen dependency:
+D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233251TriangleStrip.widthInstDecidableLegal
+(statement_id sha256:6c1f0ba304e14673a1966eca92d67e12ccf8925c940c5ba2391b4b478ac39547).
+Direct frozen dependency:
+D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233251TriangleStrip.widthLegal
+(statement_id sha256:989eff70ea57c1a27e750e36536ea11ddb8f9aa5a27d74dce459fc2432ec52e8).
+Direct frozen dependency:
+D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233251TriangleStrip.widthNormal
+(statement_id sha256:544f7677e789967b28078e2cb7f71e075b79492f79f4741e37f835329362022b).
+Direct frozen dependency:
+D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233251TriangleStrip.widthStep
+(statement_id sha256:bd12c5c5928f8822063ec100e0e6e92c5300f5907da4aa64e85595a1ee4c7cb5).
+Direct frozen dependency:
+D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233251TriangleStrip.widthTotal
+(statement_id sha256:c4c082551693765b0f6c344f5f6ff825120f019a96ec4d79015c10c10bf774d0).
+Direct frozen dependency:
+D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233251TriangleStrip.widthV
+(statement_id sha256:4f3953ec5d8902b74486197a6f4d782f3fb58c6627a5740a5242632a7560f9ed).
+Direct frozen dependency:
+D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233251TriangleStrip.width_counting_bridge
+(statement_id sha256:a6ad861eda2ca48bc91989542e4b7cc27d81aec8df9a91b8db40c9398c577c72).
+Direct frozen dependency:
+D5/S3/Observer/Separation/BooleanRankThreeK4.beta
+(statement_id sha256:1abdc5f3db71567fe05de5aabbe80dddeb5ec5179e4ec7fd49fe71e500518481).
+Direct frozen dependency:
+D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233251TriangleStrip.WidthRow
+(statement_id sha256:63d18919d9321000a9a3541c82cd4a7aa88a0da2c26ce61e51d7cede756ff789).
+Direct frozen dependency:
+D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233251TriangleStrip.instDecidableRowLegal
+(statement_id sha256:8b3f54e6d8ac00ffc4bce4bacb2fa6e6c06ace120e7d2011fb7a8bb54ef78207).
+
 bonds: proof_shape=bind-only; consumers=Legal, bonds_iff, counting_bridge
 Legal: proof_shape=bind-only; consumers=a, counting_bridge, zero_count
 instDecidableBonds: proof_shape=bind-only; consumers=a, counting_bridge
