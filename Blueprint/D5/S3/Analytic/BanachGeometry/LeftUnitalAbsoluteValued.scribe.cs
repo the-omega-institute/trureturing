@@ -99,14 +99,44 @@ internal sealed class LeftUnitalAbsoluteValuedDocument : IScribeDocumentDefiniti
                         + "is a mathematical proof tool; original faithfulness F is neither "
                         + "used nor extended, and no new physical states are inferred.")),
                     Paragraph(Text(
-                        "The remaining Euclidean-plane argument requires a complex Banach "
-                        + "auxiliary norm preserving all real surjective similarity factors, "
-                        + "the spectrum facts, and one spectral lambda for each x and nonzero y "
-                        + "working for all real alpha,beta, including combinations equal to zero. "
-                        + "The original p squared parallelogram law, its y=0 case and its pullback "
-                        + "are not conclusions of this theorem. The full original Hopf, "
-                        + "orientation, metric, connection and closed-loop clauses remain open. "
-                        + "The auxiliary complex space is not the original physical J.")),
+                        "A compatible real inner product on the same quotient Q is available "
+                        + "from Mathlib InnerProductSpace.ofNorm only after the parallelogram "
+                        + "identity has been proved for its existing norm. If that identity holds "
+                        + "on the actual completion B, restriction along i gives it on Q. "
+                        + "Installing ofNorm on Q changes neither Q nor its norm. Its real "
+                        + "polarization formula is exactly "
+                        + "inner(pi(x),pi(y))=(p(x+y)^2-p(x-y)^2)/4, and "
+                        + "inner(pi(x),pi(x))=p(x)^2=q(x). Thus the pulled-back form has radical "
+                        + "exactly N. These are conditional consequences; invertible left "
+                        + "multipliers alone are not a supplied Lean proof of the parallelogram "
+                        + "premise.")),
+                    Paragraph(Text(
+                        "The first missing supplier in the original analytic route is Lemma 3.4: "
+                        + "a complex Banach norm on B plus iB, defined by the supremum of "
+                        + "norm(u cos(theta)-v sin(theta)), with complexification preserving "
+                        + "every real surjective similarity factor. Lemma 3.5 then requires the "
+                        + "complex operator spectrum facts. For Theorem 3.6 the same one spectral "
+                        + "lambda for Lx composed with inverse Ly must work simultaneously for "
+                        + "all real alpha,beta, including combinations equal to zero; y=0 is a "
+                        + "separate case. That complexification supplier and the exact original "
+                        + "spectral-pencil application remain unproved here. An external "
+                        + "complexification implementation is not an imported or compiled "
+                        + "project dependency. No unconditional real inner product, "
+                        + "parallelogram identity or original Corollary 3.8 is claimed.")),
+                    Paragraph(Text(
+                        "Beyond that analytic gap, the original quaternion route still needs "
+                        + "Theorem 4.3 on the same quotient: the same noncommuting pair must "
+                        + "produce a four-dimensional quaternion subalgebra H and its orthogonal "
+                        + "projection P with T=2 Lk P and kernel T equal to the orthogonal "
+                        + "complement of H. Original faithfulness concerns this quotient only; "
+                        + "it can force P=I through that kernel identity. The resulting isometric "
+                        + "quaternion classification and global associativity in 4.5 remain "
+                        + "unproved. The source equality T/(2 sqrt(q(k)))=Le, complex dimension "
+                        + "two, completeness of the original quotient, and the Hopf realization "
+                        + "each remain separate obligations. The full original 7.3 tensor, "
+                        + "Fubini-Study normalization, quarter-area factor, connection and global "
+                        + "holonomy are not conclusions of this theorem. The auxiliary complex "
+                        + "space is not the original physical J.")),
                     Paragraph(Text(
                         "The mathematical source attributes the absolute-valued algebra "
                         + "background to Rodriguez Palacios, One-sided division absolute valued "
