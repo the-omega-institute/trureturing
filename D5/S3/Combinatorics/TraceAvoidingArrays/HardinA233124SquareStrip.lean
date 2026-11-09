@@ -10,6 +10,42 @@
 admission_basis: open-problem-resolution (#28306; Proved)
 escape_witness: none
 Single-row numerical premises are consumed by the unbounded class induction.
+Direct frozen dependency:
+D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.Seen
+(statement_id sha256:db13d94501d24f27e6e69604bb633af95ff3309c5698815c44e12d2e52739fce).
+Direct frozen dependency:
+D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.allowed
+(statement_id sha256:4ee019eb42606605da41b2b090212be244d3bf48d64a2c10dc2d9c6c6f7e6468).
+Direct frozen dependency:
+D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.advance
+(statement_id sha256:63e23e390cbc7ee42155ce307351f149d901cd9013daee3d6d2eac775e24af71).
+Direct frozen dependency:
+D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.good
+(statement_id sha256:f68e874b0a22676cb3053202c645a8ce30010dcd695d55f3e7fce272d4ce5989).
+Direct frozen dependency:
+D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.finish
+(statement_id sha256:ebae2e26fe8811cb0e473a0168c27f49fa151fa2bcecda8ad3ba0c9fabc41a7f).
+Direct frozen dependency:
+D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.finish_fst
+(statement_id sha256:5859cc0f84f4e6a91313521f32ea6d187c4822bb52d4e438939da5e000940bd5).
+Direct frozen dependency:
+D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.finish_snd
+(statement_id sha256:1ada14ea452d6f35f959dbbd5a034265c8c6921cd041422cad27ec166a94d24c).
+Direct frozen dependency:
+D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.good_iff
+(statement_id sha256:59d0ffb034f7f2361718e6d2566eb24417785b9a178f6fcb44f336c1199d3d62).
+Direct frozen dependency:
+D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.edge_iff
+(statement_id sha256:eb164ba2a30a036eb9157c90341cc0d7664c1e26513ba1fedc8a4964a09ae84a).
+Direct frozen dependency:
+D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.Row
+(statement_id sha256:b7c502e020b34fb16b6f45eb8f4662622d3137215aa86d5133861c790e91cd34).
+Direct frozen dependency:
+D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.rowLegal
+(statement_id sha256:be28ba8e38a531250b809a95236ffb2f5f4e876106346cd44ea2ed1046ba3cc5).
+Direct frozen dependency:
+D5.S3.Observer.Separation.BooleanRankThreeK4.beta
+(statement_id sha256:1abdc5f3db71567fe05de5aabbe80dddeb5ec5179e4ec7fd49fe71e500518481).
 
 prior: proof_shape=bind-only; consumers=prior_zero, prior_succ, normal
 instDecidablePrior: proof_shape=bind-only; consumers=instDecidableNormal
@@ -45,6 +81,7 @@ transfer: proof_shape=bind-only; consumers=row_counts, finite_certificate, v_eq_
 valid_next: proof_shape=bind-only; consumers=v_eq_w
 classCount: proof_shape=bind-only; consumers=finite_certificate, v_eq_w
 firstCount: proof_shape=bind-only; consumers=finite_certificate, a_eq_w
+row_sum: proof_shape=bind-only; consumers=row_counts_zero, row_counts_one, row_counts_two
 row_counts_zero: proof_shape=bind-only; consumers=row_counts
 row_counts_one: proof_shape=bind-only; consumers=row_counts
 row_counts_two: proof_shape=bind-only; consumers=row_counts
@@ -307,16 +344,31 @@ def firstCount (k : Fin 3) : ℤ :=
   ∑ c : Row, if c 0 = 0 ∧ rowLegal c ∧ good (false, false) c ∧
     boundaryClass (finish (false, false) c) (pairs c) = k then 1 else 0
 
+private theorem row_sum (g : Row → ℤ) :
+    (∑ c : Row, g c) =
+      ∑ x : Fin 6, ∑ y : Fin 6, ∑ z : Fin 6, g ![x, y, z] := by
+  let e : Row ≃ Fin 6 × Fin 6 × Fin 6 :=
+    { toFun := fun c => (c 0, c 1, c 2)
+      invFun := fun t => ![t.1, t.2.1, t.2.2]
+      left_inv := by intro c; ext j; fin_cases j <;> rfl
+      right_inv := by rintro ⟨x, y, z⟩; rfl }
+  rw [← e.symm.sum_comp, Fintype.sum_prod_type]
+  simp only [Fintype.sum_prod_type]
+  rfl
+
 private theorem row_counts_zero : ∀ s p, Valid s p →
     classCount s p 0 = transfer (boundaryClass s p) 0 := by
+  simp only [classCount, row_sum]
   decide +kernel
 
 private theorem row_counts_one : ∀ s p, Valid s p →
     classCount s p 1 = transfer (boundaryClass s p) 1 := by
+  simp only [classCount, row_sum]
   decide +kernel
 
 private theorem row_counts_two : ∀ s p, Valid s p →
     classCount s p 2 = transfer (boundaryClass s p) 2 := by
+  simp only [classCount, row_sum]
   decide +kernel
 
 private theorem row_counts : ∀ s p, Valid s p → ∀ k,
@@ -448,7 +500,7 @@ theorem result :
     change (a 2 : ℤ) = 80 at h2
     change (a 3 : ℤ) = 2688 at h3
     interval_cases n <;> norm_num only [zero_count, h1, h2, h3,
-      Nat.reduceLeDiff, Nat.reduceSubDiff, Nat.reduceEqDiff, if_true, if_false,
+      Nat.reduceLeDiff, Nat.reduceSubDiff, Nat.reduceEqDiff, ite_true, ite_false,
       Nat.cast_zero, mul_zero, sub_self, add_zero]
 
 end D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233124SquareStrip

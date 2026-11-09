@@ -55,7 +55,7 @@ def family : Registration arena (type_of% @result) where
       simpa [PowerSeries.coeff_mul] using h0
     have hn : a 0 = 0 := by exact_mod_cast hz
     have ho : (a 1 : ℤ) = 3 := by
-      simpa [PowerSeries.coeff_mul, Finset.sum_range_succ, hn] using h1
+      simpa [PowerSeries.coeff_mul, Finset.Nat.antidiagonal_succ, hn, map_ofNat] using h1
     rw [hn] at h
     exact (by norm_num : (0 : ℤ) ≠ 3) ((congrArg (fun n : ℕ => (n : ℤ)) h).trans ho)
 
@@ -91,7 +91,6 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   familyRecord := none
   options := #[]
 
-#print axioms audit
 
 namespace FiniteCertificate
 
@@ -167,7 +166,6 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   familyRecord := none
   options := #[]
 
-#print axioms audit
 
 end FiniteCertificate
 end
