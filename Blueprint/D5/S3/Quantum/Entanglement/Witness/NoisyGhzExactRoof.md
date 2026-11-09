@@ -102,7 +102,7 @@ Write alpha=(sqrt(23/33)+sqrt(20/33))/sqrt(3) and beta=(sqrt(23/33)-sqrt(20/33)/
 
 The next 81 constituents are indexed by (s,theta), where s is one of {1}, {2}, {1,2} in SourceCut 3 and theta is any of the 27 functions Fin 3 -> ZMod 3. Put a=complement(s), u_i=stdAddChar(theta_i)/sqrt(3). On the word equal to i throughout a and j throughout s, the amplitude is beta*delta_ij+(alpha-beta)*u_i*conjugate(u_j); it is zero outside this cut embedding. This is the actual cutState in lowNoiseStates, with independent cubic phase coordinates, not a scalar-difference phase prescription. The last six constituents are computational unit vectors indexed by QIndex 3 3: precisely the six permutations of the word 012. Thus the complete indexed family contains 3+3*27+6=90 unit states, retaining all phase indices even when rays coincide.
 
-Each of the first three weights is 11/360, each cut-phase weight is 11/1080, and each Q weight is 1/72. The block totals are respectively 11/120, 33/40 and 1/12; all weights are nonnegative and their sum is one. Every constituent is normalized. The generic suppliers are CutStates.sourceCut_card, NoisyEnsembles.qIndex_card and NoisyEnsembles.low_noise_attainment, with the explicit lowNoiseWeights/lowNoiseStates definitions, ObservableOptimum.chi_attainment, CutStates.cutState_attainment and phaseVector_unit. Module-qualified supplier names here refer to the owning NoisyGhzExactRoof source modules.
+Each of the first three weights is 11/360, each cut-phase weight is 11/1080, and each Q weight is 1/72. The block totals are respectively 11/120, 33/40 and 1/12; all weights are nonnegative and their sum is one. Every constituent is normalized. The generic suppliers are Foundations.sourceCut_card, NoisyEnsembles.qIndex_card and NoisyEnsembles.low_noise_attainment, with the explicit lowNoiseWeights/lowNoiseStates definitions, ObservableOptimum.chi_attainment, CutStates.cutState_attainment and phaseVector_unit. Module-qualified supplier names here refer to the owning NoisyGhzExactRoof source modules.
 
 The weighted sum of all 90 rank-one complex density matrices is the entire matrix rho=I/72+5*G/8, where G=rankOneDensity(ghz 3 3). In every pair of computational words x,z, rho(x,z)=delta_xz/72+5/24 when both words are constant, with the second term zero otherwise. This entrywise identity follows from Foundations.pair_cross_phase_sum, MatrixAverages.phase_average_matrix and basis_average_matrix, and NoisyEnsembles.source_average_matrix and low_noise_reconstruction. Matching only the two observable means would not establish this matrix identity.
 
@@ -124,23 +124,10 @@ Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof.support_ra
 
 The trace of the actual two-symbol supportProjector is d+choose(d,2)*(2^n-2). The proof uses support_trace and its disjoint supportIndexEquiv enumeration, then converts d+K*d*(d-1) to the binomial form by exact natural-number arithmetic.
 
-**Theorem 1.8 (Attainment at the left spectral endpoint).**
-
-Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof.ghz_left_endpoint`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof.ghz_left_endpoint` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* Xin-Yu Xu; Qing Zhou; Shuai Zhao; Shu-Ming Hu; Li Li; Nai-Le Liu; Kai Chen (2023). *General framework for genuine multipartite entanglement detection*. DOI: [10.1103/PhysRevA.107.052405](https://doi.org/10.1103/PhysRevA.107.052405). URL: <https://arxiv.org/abs/2211.05563v1>.
-
-*Commentary.*
-
-The actual normalized GHZ vector has all-cut pure measure (d-1)/d, witness expectation -(d-1)/d, and the original conjugate has the same endpoint value.
+For every n,d>=3 the actual normalized GHZ vector satisfies all three endpoint equalities: geometricMeasurePure(ghz n d)=(d-1)/d; readout(witnessOp n d,ghz n d)=-(d-1)/d; epsilonWitness n d (-(d-1)/d)=(d-1)/d. To derive them, use ObservableOptimum.chi_attainment at F=1 and any j in Fin d. Both optimal amplitudes equal 1/sqrt(d), so the actual chiVector equals ghz on every constant word and vanishes on every other word. Its support mean is 1 and its GHZ mean is 1; twoMeanOptimum d 1 1=(d-1)/d gives its pure measure and witness readout. ObservableOptimum.witness_optimum at the left spectral endpoint gives the third equality against the original defining conjugate. All three statements hold for every n,d>=3, without a fixed-dimensional restriction.
 
 ## References
 
-- Truth anchor: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof.ghz_left_endpoint`
 - Truth anchor: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof.noisy_exact_roof`
 - Truth anchor: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof.noisy_gap_endpoints`
 - Truth anchor: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof.noisy_strict_gap`

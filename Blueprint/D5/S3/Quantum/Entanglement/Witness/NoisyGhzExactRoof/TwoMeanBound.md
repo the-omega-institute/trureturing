@@ -12,7 +12,21 @@ Source uncertainty retained: the released scalar-difference wording modulo three
 
 The all-parameter roof uses explicit finite matrix ensembles in two closed regimes: the source basis/cut-phase/Q ensemble below p_W and an actual biseparable threshold/computational ensemble above p_W. Equality is derived from full matrix reconstruction, finite-ensemble upper bounds and the universal two-mean lower bound. The d=2 statement is only the preserved operator boundary. Graph-witness improvement, broad noise robustness, general unfaithfulness and singlet-witness conjectures are outside this result.
 
-**Theorem 1.1 (Finite positive-metric supporting family).**
+**Theorem 1.1 (Full disjoint support enumeration).**
+
+Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/TwoMeanBound.support_rank_card`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/TwoMeanBound.support_rank_card` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Xin-Yu Xu; Qing Zhou; Shuai Zhao; Shu-Ming Hu; Li Li; Nai-Le Liu; Kai Chen (2023). *General framework for genuine multipartite entanglement detection*. DOI: [10.1103/PhysRevA.107.052405](https://doi.org/10.1103/PhysRevA.107.052405). URL: <https://arxiv.org/abs/2211.05563v1>.
+
+*Commentary.*
+
+A proved bijection enumerates words using at most two symbols by constants plus anchored cuts times distinct ordered symbol pairs. Its cardinal is d+K*d*(d-1).
+
+**Theorem 1.2 (Finite positive-metric supporting family).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/TwoMeanBound.metric_roof_bound`
 
@@ -26,7 +40,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/TwoMeanBou
 
 For positive metric coefficients satisfying the displayed inverse constraint, the actual finite-ensemble roof bounds the corresponding affine combination of the G and P means. No scalar roof is assumed.
 
-**Theorem 1.2 (Nonsingular finite supporting lines).**
+**Theorem 1.3 (Nonsingular finite supporting lines).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/TwoMeanBound.supporting_line`
 
@@ -40,7 +54,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/TwoMeanBou
 
 Every parameter t at least one supplies a finite affine lower bound. The coincident-means endpoint is derived from these finite lines, without substituting an infinite metric coefficient.
 
-**Theorem 1.3 (The universal analytic certificate).**
+**Theorem 1.4 (The universal analytic certificate).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/TwoMeanBound.affine_certificate`
 
@@ -54,7 +68,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/TwoMeanBou
 
 For every density state with n,d at least three, E is at least minus (d-1)/(d(d-2)) times the W mean, plus 1/(d^2(d-2)) times the Q mean, minus the same constant.
 
-**Theorem 1.4 (The feasible two-mean triangle).**
+**Theorem 1.5 (The feasible two-mean triangle).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/TwoMeanBound.means_triangle`
 
@@ -68,7 +82,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/TwoMeanBou
 
 The actual density-state means f=Tr(sigma G) and y=Tr(sigma P) satisfy zero at most f at most y at most one.
 
-**Theorem 1.5 (The universal two-mean lower bound).**
+**Theorem 1.6 (The universal two-mean lower bound).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/TwoMeanBound.two_mean_lower`
 
@@ -82,7 +96,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/TwoMeanBou
 
 Every actual density state obeys E(sigma) at least twoMeanOptimum d f y. The definition retains the zero branch when d*f is at most y and the source radical branch otherwise.
 
-**Theorem 1.6 (The all-cut pure two-mean bound).**
+**Theorem 1.7 (The all-cut pure two-mean bound).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/TwoMeanBound.pure_two_mean_lower`
 
@@ -96,7 +110,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/TwoMeanBou
 
 The same two-mean lower bound applies to each normalized pure vector and its actual supremum over all biseparable cuts.
 
-**Theorem 1.7 (Actual finite roof competitors).**
+**Theorem 1.8 (Actual finite roof competitors).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/TwoMeanBound.finite_ensemble_upper`
 
@@ -110,7 +124,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/TwoMeanBou
 
 Any finite normalized family of unit amplitudes is explicitly reindexed to Fin k and enters the original roof set, giving its weighted entanglement as an upper bound.
 
-**Theorem 1.8 (Zero roof of finite biseparable ensembles).**
+**Theorem 1.9 (Zero roof of finite biseparable ensembles).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/TwoMeanBound.biseparable_ensemble_zero`
 
@@ -124,7 +138,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/TwoMeanBou
 
 A concrete normalized finite family of genuinely biseparable vectors has zero actual convex roof.
 
-**Theorem 1.9 (expectation add).**
+**Theorem 1.10 (expectation add).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/TwoMeanBound.expectation_add`
 
@@ -138,7 +152,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/TwoMeanBou
 
 Consumed proof helper for the full actual-object noisy-GHZ result. The statement and its hypotheses are taken from the checked Lean declaration; this helper is exported to support the source module split.
 
-**Theorem 1.10 (expectation sub).**
+**Theorem 1.11 (expectation sub).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/TwoMeanBound.expectation_sub`
 
@@ -152,7 +166,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/TwoMeanBou
 
 Consumed proof helper for the full actual-object noisy-GHZ result. The statement and its hypotheses are taken from the checked Lean declaration; this helper is exported to support the source module split.
 
-**Theorem 1.11 (expectation smul).**
+**Theorem 1.12 (expectation smul).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/TwoMeanBound.expectation_smul`
 
@@ -166,7 +180,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/TwoMeanBou
 
 Consumed proof helper for the full actual-object noisy-GHZ result. The statement and its hypotheses are taken from the checked Lean declaration; this helper is exported to support the source module split.
 
-**Theorem 1.12 (expectation one).**
+**Theorem 1.13 (expectation one).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/TwoMeanBound.expectation_one`
 
@@ -180,7 +194,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/TwoMeanBou
 
 Consumed proof helper for the full actual-object noisy-GHZ result. The statement and its hypotheses are taken from the checked Lean declaration; this helper is exported to support the source module split.
 
-**Theorem 1.13 (pure metric lower).**
+**Theorem 1.14 (pure metric lower).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/TwoMeanBound.pure_metric_lower`
 
@@ -194,7 +208,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/TwoMeanBou
 
 Consumed proof helper for the full actual-object noisy-GHZ result. The statement and its hypotheses are taken from the checked Lean declaration; this helper is exported to support the source module split.
 
-**Theorem 1.14 (trace average).**
+**Theorem 1.15 (trace average).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/TwoMeanBound.trace_average`
 
@@ -208,7 +222,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/TwoMeanBou
 
 Consumed proof helper for the full actual-object noisy-GHZ result. The statement and its hypotheses are taken from the checked Lean declaration; this helper is exported to support the source module split.
 
-**Theorem 1.15 (metric parameters).**
+**Theorem 1.16 (metric parameters).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/TwoMeanBound.metric_parameters`
 
@@ -222,7 +236,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/TwoMeanBou
 
 Consumed proof helper for the full actual-object noisy-GHZ result. The statement and its hypotheses are taken from the checked Lean declaration; this helper is exported to support the source module split.
 
-**Theorem 1.16 (mean sub).**
+**Theorem 1.17 (mean sub).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/TwoMeanBound.mean_sub`
 
@@ -236,7 +250,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/TwoMeanBou
 
 Consumed proof helper for the full actual-object noisy-GHZ result. The statement and its hypotheses are taken from the checked Lean declaration; this helper is exported to support the source module split.
 
-**Theorem 1.17 (mean smul).**
+**Theorem 1.18 (mean smul).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/TwoMeanBound.mean_smul`
 
@@ -250,7 +264,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/TwoMeanBou
 
 Consumed proof helper for the full actual-object noisy-GHZ result. The statement and its hypotheses are taken from the checked Lean declaration; this helper is exported to support the source module split.
 
-**Theorem 1.18 (mean one).**
+**Theorem 1.19 (mean one).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/TwoMeanBound.mean_one`
 
@@ -264,7 +278,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/TwoMeanBou
 
 Consumed proof helper for the full actual-object noisy-GHZ result. The statement and its hypotheses are taken from the checked Lean declaration; this helper is exported to support the source module split.
 
-**Theorem 1.19 (supporting envelope).**
+**Theorem 1.20 (supporting envelope).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/TwoMeanBound.supporting_envelope`
 
@@ -278,7 +292,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/TwoMeanBou
 
 Consumed proof helper for the full actual-object noisy-GHZ result. The statement and its hypotheses are taken from the checked Lean declaration; this helper is exported to support the source module split.
 
-**Theorem 1.20 (pure means triangle).**
+**Theorem 1.21 (pure means triangle).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/TwoMeanBound.pure_means_triangle`
 
@@ -292,7 +306,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/TwoMeanBou
 
 Consumed proof helper for the full actual-object noisy-GHZ result. The statement and its hypotheses are taken from the checked Lean declaration; this helper is exported to support the source module split.
 
-**Theorem 1.21 (biseparable measure zero).**
+**Theorem 1.22 (biseparable measure zero).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/TwoMeanBound.biseparable_measure_zero`
 
@@ -306,7 +320,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/TwoMeanBou
 
 Consumed proof helper for the full actual-object noisy-GHZ result. The statement and its hypotheses are taken from the checked Lean declaration; this helper is exported to support the source module split.
 
-**Theorem 1.22 (trace rank one).**
+**Theorem 1.23 (trace rank one).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/TwoMeanBound.trace_rank_one`
 
@@ -339,6 +353,7 @@ Consumed proof helper for the full actual-object noisy-GHZ result. The statement
 - Truth anchor: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/TwoMeanBound.pure_means_triangle`
 - Truth anchor: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/TwoMeanBound.pure_metric_lower`
 - Truth anchor: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/TwoMeanBound.pure_two_mean_lower`
+- Truth anchor: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/TwoMeanBound.support_rank_card`
 - Truth anchor: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/TwoMeanBound.supporting_envelope`
 - Truth anchor: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/TwoMeanBound.supporting_line`
 - Truth anchor: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/TwoMeanBound.trace_average`

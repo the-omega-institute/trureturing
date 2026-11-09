@@ -54,35 +54,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/CutStates.
 
 For the source optimal amplitudes and every unit u, the actual cutState has means (F,1), norm one and genuine all-cut pure entanglement twoMeanOptimum d F 1. A product across the specified cut attains overlap alpha; the universal all-cut bound gives the reverse inequality.
 
-**Theorem 1.4 (Number of anchored bipartitions).**
-
-Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/CutStates.sourceCut_card`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/CutStates.sourceCut_card` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* Xin-Yu Xu; Qing Zhou; Shuai Zhao; Shu-Ming Hu; Li Li; Nai-Le Liu; Kai Chen (2023). *General framework for genuine multipartite entanglement detection*. DOI: [10.1103/PhysRevA.107.052405](https://doi.org/10.1103/PhysRevA.107.052405). URL: <https://arxiv.org/abs/2211.05563v1>.
-
-*Commentary.*
-
-The nonempty subsets excluding the first party have exactly K=2^(n-1)-1 elements; their complements are the anchored representatives used by the finite phase ensemble.
-
-**Theorem 1.5 (Full disjoint support enumeration).**
-
-Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/CutStates.support_rank_card`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/CutStates.support_rank_card` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* Xin-Yu Xu; Qing Zhou; Shuai Zhao; Shu-Ming Hu; Li Li; Nai-Le Liu; Kai Chen (2023). *General framework for genuine multipartite entanglement detection*. DOI: [10.1103/PhysRevA.107.052405](https://doi.org/10.1103/PhysRevA.107.052405). URL: <https://arxiv.org/abs/2211.05563v1>.
-
-*Commentary.*
-
-A proved bijection enumerates words using at most two symbols by constants plus anchored cuts times distinct ordered symbol pairs. Its cardinal is d+K*d*(d-1).
-
-**Theorem 1.6 (Actual support-projector trace).**
+**Theorem 1.4 (Actual support-projector trace).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/CutStates.support_trace`
 
@@ -96,21 +68,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/CutStates.
 
 The real rank formula is the trace of the original complex-matrix supportProjector, for arbitrary positive party count.
 
-**Theorem 1.7 (Strict support-rank inequalities).**
-
-Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/CutStates.support_rank_bounds`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/CutStates.support_rank_bounds` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* Xin-Yu Xu; Qing Zhou; Shuai Zhao; Shu-Ming Hu; Li Li; Nai-Le Liu; Kai Chen (2023). *General framework for genuine multipartite entanglement detection*. DOI: [10.1103/PhysRevA.107.052405](https://doi.org/10.1103/PhysRevA.107.052405). URL: <https://arxiv.org/abs/2211.05563v1>.
-
-*Commentary.*
-
-For n,d at least three, d<R<M. The strict upper bound uses the actual computational word qWord outside P.
-
-**Theorem 1.8 (sum on embedding).**
+**Theorem 1.5 (sum on embedding).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/CutStates.sum_on_embedding`
 
@@ -124,7 +82,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/CutStates.
 
 Consumed proof helper for the full actual-object noisy-GHZ result. The statement and its hypotheses are taken from the checked Lean declaration; this helper is exported to support the source module split.
 
-**Theorem 1.9 (pushVector apply).**
+**Theorem 1.6 (pushVector apply).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/CutStates.pushVector_apply`
 
@@ -138,7 +96,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/CutStates.
 
 Consumed proof helper for the full actual-object noisy-GHZ result. The statement and its hypotheses are taken from the checked Lean declaration; this helper is exported to support the source module split.
 
-**Theorem 1.10 (pushVector off).**
+**Theorem 1.7 (pushVector off).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/CutStates.pushVector_off`
 
@@ -152,7 +110,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/CutStates.
 
 Consumed proof helper for the full actual-object noisy-GHZ result. The statement and its hypotheses are taken from the checked Lean declaration; this helper is exported to support the source module split.
 
-**Theorem 1.11 (phaseVector unit).**
+**Theorem 1.8 (phaseVector unit).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/CutStates.phaseVector_unit`
 
@@ -166,7 +124,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/CutStates.
 
 Consumed proof helper for the full actual-object noisy-GHZ result. The statement and its hypotheses are taken from the checked Lean declaration; this helper is exported to support the source module split.
 
-**Theorem 1.12 (phaseVector pair).**
+**Theorem 1.9 (phaseVector pair).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/CutStates.phaseVector_pair`
 
@@ -180,77 +138,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/CutStates.
 
 Consumed proof helper for the full actual-object noisy-GHZ result. The statement and its hypotheses are taken from the checked Lean declaration; this helper is exported to support the source module split.
 
-**Theorem 1.13 (sourceCut nonempty).**
-
-Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/CutStates.sourceCut_nonempty`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/CutStates.sourceCut_nonempty` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* Xin-Yu Xu; Qing Zhou; Shuai Zhao; Shu-Ming Hu; Li Li; Nai-Le Liu; Kai Chen (2023). *General framework for genuine multipartite entanglement detection*. DOI: [10.1103/PhysRevA.107.052405](https://doi.org/10.1103/PhysRevA.107.052405). URL: <https://arxiv.org/abs/2211.05563v1>.
-
-*Commentary.*
-
-Consumed proof helper for the full actual-object noisy-GHZ result. The statement and its hypotheses are taken from the checked Lean declaration; this helper is exported to support the source module split.
-
-**Theorem 1.14 (sourceCut complement).**
-
-Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/CutStates.sourceCut_complement`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/CutStates.sourceCut_complement` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* Xin-Yu Xu; Qing Zhou; Shuai Zhao; Shu-Ming Hu; Li Li; Nai-Le Liu; Kai Chen (2023). *General framework for genuine multipartite entanglement detection*. DOI: [10.1103/PhysRevA.107.052405](https://doi.org/10.1103/PhysRevA.107.052405). URL: <https://arxiv.org/abs/2211.05563v1>.
-
-*Commentary.*
-
-Consumed proof helper for the full actual-object noisy-GHZ result. The statement and its hypotheses are taken from the checked Lean declaration; this helper is exported to support the source module split.
-
-**Theorem 1.15 (supportIndexWord injective).**
-
-Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/CutStates.supportIndexWord_injective`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/CutStates.supportIndexWord_injective` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* Xin-Yu Xu; Qing Zhou; Shuai Zhao; Shu-Ming Hu; Li Li; Nai-Le Liu; Kai Chen (2023). *General framework for genuine multipartite entanglement detection*. DOI: [10.1103/PhysRevA.107.052405](https://doi.org/10.1103/PhysRevA.107.052405). URL: <https://arxiv.org/abs/2211.05563v1>.
-
-*Commentary.*
-
-Consumed proof helper for the full actual-object noisy-GHZ result. The statement and its hypotheses are taken from the checked Lean declaration; this helper is exported to support the source module split.
-
-**Theorem 1.16 (supportIndexWord supported).**
-
-Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/CutStates.supportIndexWord_supported`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/CutStates.supportIndexWord_supported` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* Xin-Yu Xu; Qing Zhou; Shuai Zhao; Shu-Ming Hu; Li Li; Nai-Le Liu; Kai Chen (2023). *General framework for genuine multipartite entanglement detection*. DOI: [10.1103/PhysRevA.107.052405](https://doi.org/10.1103/PhysRevA.107.052405). URL: <https://arxiv.org/abs/2211.05563v1>.
-
-*Commentary.*
-
-Consumed proof helper for the full actual-object noisy-GHZ result. The statement and its hypotheses are taken from the checked Lean declaration; this helper is exported to support the source module split.
-
-**Theorem 1.17 (supportIndexWord surjective).**
-
-Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/CutStates.supportIndexWord_surjective`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/CutStates.supportIndexWord_surjective` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* Xin-Yu Xu; Qing Zhou; Shuai Zhao; Shu-Ming Hu; Li Li; Nai-Le Liu; Kai Chen (2023). *General framework for genuine multipartite entanglement detection*. DOI: [10.1103/PhysRevA.107.052405](https://doi.org/10.1103/PhysRevA.107.052405). URL: <https://arxiv.org/abs/2211.05563v1>.
-
-*Commentary.*
-
-Consumed proof helper for the full actual-object noisy-GHZ result. The statement and its hypotheses are taken from the checked Lean declaration; this helper is exported to support the source module split.
-
-**Theorem 1.18 (basis projector sum).**
+**Theorem 1.10 (basis projector sum).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/CutStates.basis_projector_sum`
 
@@ -274,15 +162,7 @@ Consumed proof helper for the full actual-object noisy-GHZ result. The statement
 - Truth anchor: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/CutStates.phaseVector_unit`
 - Truth anchor: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/CutStates.pushVector_apply`
 - Truth anchor: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/CutStates.pushVector_off`
-- Truth anchor: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/CutStates.sourceCut_card`
-- Truth anchor: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/CutStates.sourceCut_complement`
-- Truth anchor: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/CutStates.sourceCut_nonempty`
 - Truth anchor: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/CutStates.sum_on_embedding`
-- Truth anchor: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/CutStates.supportIndexWord_injective`
-- Truth anchor: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/CutStates.supportIndexWord_supported`
-- Truth anchor: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/CutStates.supportIndexWord_surjective`
-- Truth anchor: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/CutStates.support_rank_bounds`
-- Truth anchor: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/CutStates.support_rank_card`
 - Truth anchor: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/CutStates.support_trace`
 - Dependency: [D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/Foundations](Foundations.md)
 - Dependency: [D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/ObservableOptimum](ObservableOptimum.md)

@@ -12,7 +12,91 @@ Source uncertainty retained: the released scalar-difference wording modulo three
 
 The all-parameter roof uses explicit finite matrix ensembles in two closed regimes: the source basis/cut-phase/Q ensemble below p_W and an actual biseparable threshold/computational ensemble above p_W. Equality is derived from full matrix reconstruction, finite-ensemble upper bounds and the universal two-mean lower bound. The d=2 statement is only the preserved operator boundary. Graph-witness improvement, broad noise robustness, general unfaithfulness and singlet-witness conjectures are outside this result.
 
-**Theorem 1.1 (Independent-coordinate character orthogonality).**
+**Theorem 1.1 (Number of anchored bipartitions).**
+
+Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/Foundations.sourceCut_card`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/Foundations.sourceCut_card` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Xin-Yu Xu; Qing Zhou; Shuai Zhao; Shu-Ming Hu; Li Li; Nai-Le Liu; Kai Chen (2023). *General framework for genuine multipartite entanglement detection*. DOI: [10.1103/PhysRevA.107.052405](https://doi.org/10.1103/PhysRevA.107.052405). URL: <https://arxiv.org/abs/2211.05563v1>.
+
+*Commentary.*
+
+The nonempty subsets excluding the first party have exactly K=2^(n-1)-1 elements; their complements are the anchored representatives used by the finite phase ensemble.
+
+**Theorem 1.2 (sourceCut nonempty).**
+
+Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/Foundations.sourceCut_nonempty`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/Foundations.sourceCut_nonempty` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Xin-Yu Xu; Qing Zhou; Shuai Zhao; Shu-Ming Hu; Li Li; Nai-Le Liu; Kai Chen (2023). *General framework for genuine multipartite entanglement detection*. DOI: [10.1103/PhysRevA.107.052405](https://doi.org/10.1103/PhysRevA.107.052405). URL: <https://arxiv.org/abs/2211.05563v1>.
+
+*Commentary.*
+
+Each anchored source cut contains a party, so its complementary bipartition is nontrivial.
+
+**Theorem 1.3 (sourceCut complement).**
+
+Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/Foundations.sourceCut_complement`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/Foundations.sourceCut_complement` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Xin-Yu Xu; Qing Zhou; Shuai Zhao; Shu-Ming Hu; Li Li; Nai-Le Liu; Kai Chen (2023). *General framework for genuine multipartite entanglement detection*. DOI: [10.1103/PhysRevA.107.052405](https://doi.org/10.1103/PhysRevA.107.052405). URL: <https://arxiv.org/abs/2211.05563v1>.
+
+*Commentary.*
+
+The complement of each source cut contains the distinguished first party and is nonempty.
+
+**Theorem 1.4 (supportIndexWord injective).**
+
+Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/Foundations.supportIndexWord_injective`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/Foundations.supportIndexWord_injective` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Xin-Yu Xu; Qing Zhou; Shuai Zhao; Shu-Ming Hu; Li Li; Nai-Le Liu; Kai Chen (2023). *General framework for genuine multipartite entanglement detection*. DOI: [10.1103/PhysRevA.107.052405](https://doi.org/10.1103/PhysRevA.107.052405). URL: <https://arxiv.org/abs/2211.05563v1>.
+
+*Commentary.*
+
+The first symbol, the set of positions carrying a different symbol, and that second symbol recover the unique nonconstant support index; constant words form a disjoint sector.
+
+**Theorem 1.5 (supportIndexWord supported).**
+
+Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/Foundations.supportIndexWord_supported`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/Foundations.supportIndexWord_supported` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Xin-Yu Xu; Qing Zhou; Shuai Zhao; Shu-Ming Hu; Li Li; Nai-Le Liu; Kai Chen (2023). *General framework for genuine multipartite entanglement detection*. DOI: [10.1103/PhysRevA.107.052405](https://doi.org/10.1103/PhysRevA.107.052405). URL: <https://arxiv.org/abs/2211.05563v1>.
+
+*Commentary.*
+
+Every word represented by a support index uses at most two local symbols.
+
+**Theorem 1.6 (supportIndexWord surjective).**
+
+Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/Foundations.supportIndexWord_surjective`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/Foundations.supportIndexWord_surjective` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Xin-Yu Xu; Qing Zhou; Shuai Zhao; Shu-Ming Hu; Li Li; Nai-Le Liu; Kai Chen (2023). *General framework for genuine multipartite entanglement detection*. DOI: [10.1103/PhysRevA.107.052405](https://doi.org/10.1103/PhysRevA.107.052405). URL: <https://arxiv.org/abs/2211.05563v1>.
+
+*Commentary.*
+
+For any word using at most two symbols, take its first symbol and, in the nonconstant case, the positions with the other symbol. This constructs an anchored source cut and reconstructs the entire word.
+
+**Theorem 1.7 (Independent-coordinate character orthogonality).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/Foundations.phaseCharacter_sum`
 
@@ -26,7 +110,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/Foundation
 
 For every natural d and every coefficient vector on Fin d, the full finite sum over independent ZMod 3 coordinates is 3^d for the zero vector and zero otherwise.
 
-**Theorem 1.2 (The zero ordered-pair mode).**
+**Theorem 1.8 (The zero ordered-pair mode).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/Foundations.pairCoefficient_eq_zero_iff`
 
@@ -40,7 +124,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/Foundation
 
 The coefficient vector of an ordered pair vanishes precisely on diagonal pairs.
 
-**Theorem 1.3 (Ordered-pair character average).**
+**Theorem 1.9 (Ordered-pair character average).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/Foundations.pair_phase_sum`
 
@@ -54,7 +138,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/Foundation
 
 The finite average keeps precisely the diagonal ordered pairs.
 
-**Theorem 1.4 (Distinct nonzero coordinate characters).**
+**Theorem 1.10 (Distinct nonzero coordinate characters).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/Foundations.pairCoefficient_eq_iff`
 
@@ -68,7 +152,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/Foundation
 
 Two pair coefficient vectors agree precisely when both pairs are diagonal or when the ordered pairs themselves agree. This uses independent coordinate vectors, not scalar index differences.
 
-**Theorem 1.5 (The full character Gram identity).**
+**Theorem 1.11 (The full character Gram identity).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/Foundations.pair_cross_phase_sum`
 
@@ -82,7 +166,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/Foundation
 
 The cross-character average vanishes except for identical nonzero modes or two zero modes. The identity is symbolic in arbitrary d.
 
-**Theorem 1.6 (Normalization of the GHZ vector).**
+**Theorem 1.12 (Normalization of the GHZ vector).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/Foundations.ghz_unit`
 
@@ -98,7 +182,7 @@ For positive party count and positive local dimension, the original ghz vector h
 
 Qubit operator boundary (direct application of the existing definitions, not a new standalone theorem): for any n and computational word x : Fin n -> Fin 2, card(univ.image x) <= card(Fin 2)=2. Thus every diagonal entry of supportProjector n 2 is one and P=I. Substitution into the original witnessOp definition gives W=(1/2)I-rankOneDensity(ghz n 2). For unit states and density operators the readouts satisfy w=1/2-f. Thus fixing a witness readout is equivalent to fixing fidelity through this affine change of variable; the operators themselves are not equal. In the defining conjugate, substituting w=1/2-f reparametrizes the real slope with the corresponding constant shift. This uses no higher-dimensional roof theorem and asserts no qubit roof formula.
 
-**Theorem 1.7 (The universal all-cut overlap inequality).**
+**Theorem 1.13 (The universal all-cut overlap inequality).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/Foundations.biseparable_overlap`
 
@@ -112,7 +196,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/Foundation
 
 For every actual IsBiseparable vector, d times its GHZ expectation is at most its support-projector expectation. The proof keeps the source factorization across an arbitrary nonempty proper cut.
 
-**Theorem 1.8 (Computational product states).**
+**Theorem 1.14 (Computational product states).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/Foundations.computational_biseparable`
 
@@ -126,7 +210,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/Foundation
 
 Every computational basis vector factors across a nonempty proper cut when n is at least two.
 
-**Theorem 1.9 (Well-defined pure geometric measure).**
+**Theorem 1.15 (Well-defined pure geometric measure).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/Foundations.pure_measure_bounds`
 
@@ -140,7 +224,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/Foundation
 
 The actual biseparable-overlap supremum is nonempty and bounded for unit vectors, and the pure measure lies between zero and one.
 
-**Theorem 1.10 (Well-defined finite convex roof).**
+**Theorem 1.16 (Well-defined finite convex roof).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/Foundations.density_measure_nonneg`
 
@@ -154,7 +238,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/Foundation
 
 Every actual density state has a finite normalized ensemble supplied by the existing density_ensemble theorem. The ensemble-value set is bounded below, and its infimum is nonnegative.
 
-**Theorem 1.11 (constant word injective).**
+**Theorem 1.17 (constant word injective).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/Foundations.constant_word_injective`
 
@@ -168,7 +252,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/Foundation
 
 Consumed proof helper for the full actual-object noisy-GHZ result. The statement and its hypotheses are taken from the checked Lean declaration; this helper is exported to support the source module split.
 
-**Theorem 1.12 (sum supported constants).**
+**Theorem 1.18 (sum supported constants).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/Foundations.sum_supported_constants`
 
@@ -182,7 +266,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/Foundation
 
 Consumed proof helper for the full actual-object noisy-GHZ result. The statement and its hypotheses are taken from the checked Lean declaration; this helper is exported to support the source module split.
 
-**Theorem 1.13 (cs).**
+**Theorem 1.19 (cs).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/Foundations.cs`
 
@@ -196,7 +280,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/Foundation
 
 Consumed proof helper for the full actual-object noisy-GHZ result. The statement and its hypotheses are taken from the checked Lean declaration; this helper is exported to support the source module split.
 
-**Theorem 1.14 (expectation rank one).**
+**Theorem 1.20 (expectation rank one).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/Foundations.expectation_rank_one`
 
@@ -210,7 +294,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/Foundation
 
 Consumed proof helper for the full actual-object noisy-GHZ result. The statement and its hypotheses are taken from the checked Lean declaration; this helper is exported to support the source module split.
 
-**Theorem 1.15 (support expectation).**
+**Theorem 1.21 (support expectation).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/Foundations.support_expectation`
 
@@ -224,7 +308,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/Foundation
 
 Consumed proof helper for the full actual-object noisy-GHZ result. The statement and its hypotheses are taken from the checked Lean declaration; this helper is exported to support the source module split.
 
-**Theorem 1.16 (ghz expectation).**
+**Theorem 1.22 (ghz expectation).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/Foundations.ghz_expectation`
 
@@ -238,7 +322,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/Foundation
 
 Consumed proof helper for the full actual-object noisy-GHZ result. The statement and its hypotheses are taken from the checked Lean declaration; this helper is exported to support the source module split.
 
-**Theorem 1.17 (join support).**
+**Theorem 1.23 (join support).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/Foundations.join_support`
 
@@ -252,7 +336,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/Foundation
 
 Consumed proof helper for the full actual-object noisy-GHZ result. The statement and its hypotheses are taken from the checked Lean declaration; this helper is exported to support the source module split.
 
-**Theorem 1.18 (join injective).**
+**Theorem 1.24 (join injective).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/Foundations.join_injective`
 
@@ -266,7 +350,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/Foundation
 
 Consumed proof helper for the full actual-object noisy-GHZ result. The statement and its hypotheses are taken from the checked Lean declaration; this helper is exported to support the source module split.
 
-**Theorem 1.19 (basis unit).**
+**Theorem 1.25 (basis unit).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/Foundations.basis_unit`
 
@@ -280,7 +364,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/Foundation
 
 Consumed proof helper for the full actual-object noisy-GHZ result. The statement and its hypotheses are taken from the checked Lean declaration; this helper is exported to support the source module split.
 
-**Theorem 1.20 (overlap values nonempty).**
+**Theorem 1.26 (overlap values nonempty).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/Foundations.overlap_values_nonempty`
 
@@ -294,7 +378,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/Foundation
 
 Consumed proof helper for the full actual-object noisy-GHZ result. The statement and its hypotheses are taken from the checked Lean declaration; this helper is exported to support the source module split.
 
-**Theorem 1.21 (overlap values bdd).**
+**Theorem 1.27 (overlap values bdd).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/Foundations.overlap_values_bdd`
 
@@ -308,7 +392,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/Foundation
 
 Consumed proof helper for the full actual-object noisy-GHZ result. The statement and its hypotheses are taken from the checked Lean declaration; this helper is exported to support the source module split.
 
-**Theorem 1.22 (ensemble values nonempty).**
+**Theorem 1.28 (ensemble values nonempty).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/Foundations.ensemble_values_nonempty`
 
@@ -322,7 +406,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/Foundation
 
 Consumed proof helper for the full actual-object noisy-GHZ result. The statement and its hypotheses are taken from the checked Lean declaration; this helper is exported to support the source module split.
 
-**Theorem 1.23 (ensemble values bdd).**
+**Theorem 1.29 (ensemble values bdd).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/Foundations.ensemble_values_bdd`
 
@@ -336,7 +420,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/Foundation
 
 Consumed proof helper for the full actual-object noisy-GHZ result. The statement and its hypotheses are taken from the checked Lean declaration; this helper is exported to support the source module split.
 
-**Theorem 1.24 (projector data).**
+**Theorem 1.30 (projector data).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/Foundations.projector_data`
 
@@ -350,7 +434,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/Foundation
 
 Consumed proof helper for the full actual-object noisy-GHZ result. The statement and its hypotheses are taken from the checked Lean declaration; this helper is exported to support the source module split.
 
-**Theorem 1.25 (orthogonal positive).**
+**Theorem 1.31 (orthogonal positive).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/Foundations.orthogonal_positive`
 
@@ -389,6 +473,12 @@ Consumed proof helper for the full actual-object noisy-GHZ result. The statement
 - Truth anchor: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/Foundations.phaseCharacter_sum`
 - Truth anchor: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/Foundations.projector_data`
 - Truth anchor: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/Foundations.pure_measure_bounds`
+- Truth anchor: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/Foundations.sourceCut_card`
+- Truth anchor: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/Foundations.sourceCut_complement`
+- Truth anchor: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/Foundations.sourceCut_nonempty`
 - Truth anchor: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/Foundations.sum_supported_constants`
+- Truth anchor: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/Foundations.supportIndexWord_injective`
+- Truth anchor: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/Foundations.supportIndexWord_supported`
+- Truth anchor: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/Foundations.supportIndexWord_surjective`
 - Truth anchor: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/Foundations.support_expectation`
 - Dependency: [D5/S3/Quantum/Entanglement/Witness/NoisyGhzWitnessBoundGap](../NoisyGhzWitnessBoundGap.md)

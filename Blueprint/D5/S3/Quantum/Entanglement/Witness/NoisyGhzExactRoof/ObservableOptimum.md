@@ -12,7 +12,21 @@ Source uncertainty retained: the released scalar-difference wording modulo three
 
 The all-parameter roof uses explicit finite matrix ensembles in two closed regimes: the source basis/cut-phase/Q ensemble below p_W and an actual biseparable threshold/computational ensemble above p_W. Equality is derived from full matrix reconstruction, finite-ensemble upper bounds and the universal two-mean lower bound. The d=2 statement is only the preserved operator boundary. Graph-witness improvement, broad noise robustness, general unfaithfulness and singlet-witness conjectures are outside this result.
 
-**Theorem 1.1 (The source constant-sector pure optimizer).**
+**Theorem 1.1 (Strict support-rank inequalities).**
+
+Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/ObservableOptimum.support_rank_bounds`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/ObservableOptimum.support_rank_bounds` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Xin-Yu Xu; Qing Zhou; Shuai Zhao; Shu-Ming Hu; Li Li; Nai-Le Liu; Kai Chen (2023). *General framework for genuine multipartite entanglement detection*. DOI: [10.1103/PhysRevA.107.052405](https://doi.org/10.1103/PhysRevA.107.052405). URL: <https://arxiv.org/abs/2211.05563v1>.
+
+*Commentary.*
+
+For n,d at least three, d<R<M. The strict upper bound uses the actual computational word qWord outside P.
+
+**Theorem 1.2 (The source constant-sector pure optimizer).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/ObservableOptimum.chi_attainment`
 
@@ -26,7 +40,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/Observable
 
 The actual chi vector has one optimalAlpha amplitude and d-1 optimalBeta amplitudes. Its norm is one, its P and G means are one and F, and its all-cut pure measure equals the complete optimum, including F=1/d and F=1.
 
-**Theorem 1.2 (The measured means W,Q).**
+**Theorem 1.3 (The measured means W,Q).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/ObservableOptimum.observable_correspondence`
 
@@ -40,19 +54,9 @@ Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/Observable
 
 For every density state, y=1-q and f=(1-q)/d-w. Thus the two G,P means encode exactly the two W,Q measurements.
 
-**Theorem 1.3 (Attained all-state two-mean minimum).**
+For every n,d>=3 and every pair 0<=f<=y<=1, including y=0 and f=y, twoMeanWeights and twoMeanStates give an actual attained all-state minimum. All three weights are nonnegative, their sum is one, and every state is unit. Let sigma be TwoMeanBound.ensembleDensity of these weights and states. Its entire complex matrix is the weighted sum of their rank-one densities; its G mean is exactly f, its P mean is exactly y, its original finite-ensemble geometricMeasure is twoMeanOptimum d f y, and the weighted average of the actual pure measures is that same value. These are eight assertions: full matrix equality, G mean, P mean, roof equality, weight nonnegativity, weight sum, unit states, and average cost. The optimizer is an actual DensityState and need not be noisy GHZ.
 
-Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/ObservableOptimum.two_mean_attainment`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/ObservableOptimum.two_mean_attainment` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* Xin-Yu Xu; Qing Zhou; Shuai Zhao; Shu-Ming Hu; Li Li; Nai-Le Liu; Kai Chen (2023). *General framework for genuine multipartite entanglement detection*. DOI: [10.1103/PhysRevA.107.052405](https://doi.org/10.1103/PhysRevA.107.052405). URL: <https://arxiv.org/abs/2211.05563v1>.
-
-*Commentary.*
-
-Every feasible pair has an actual density operator and the explicit three-component normalized ensemble twoMeanWeights/twoMeanStates. Their matrix sum, both means, average entanglement and exact roof are proved. The zero branch uses computational products, including qWord=|0,1,2,0,...>; the positive branch mixes chi with qWord. This optimizer is not asserted to be the noisy matrix.
+The construction has both closed branches. If d*f<=y, use weights (d*f,y-d*f,1-y) on a constant computational vector, the twoSymbolWord vector and the qWord vector. Otherwise y>0 and F=f/y lies in [1/d,1]; use weights (y,1-y,0) on chiVector with optimalAlpha/optimalBeta at F and two copies of qWord. The private two_mean_ensemble_data proves normalization, means and pure cost in both branches. The density matrix identity follows from ensembleDensity; trace_average supplies both means; finite_ensemble_upper gives the roof upper bound and two_mean_lower gives the reverse inequality. Thus the construction covers the whole feasible triangle, including its degenerate edges, using the original objects and roof.
 
 **Theorem 1.4 (The complete original single-witness optimum).**
 
@@ -161,8 +165,8 @@ Consumed proof helper for the full actual-object noisy-GHZ result. The statement
 - Truth anchor: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/ObservableOptimum.observable_correspondence`
 - Truth anchor: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/ObservableOptimum.optimal_amplitudes`
 - Truth anchor: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/ObservableOptimum.qWord_outside`
+- Truth anchor: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/ObservableOptimum.support_rank_bounds`
 - Truth anchor: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/ObservableOptimum.twoMean_scaling`
-- Truth anchor: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/ObservableOptimum.two_mean_attainment`
 - Truth anchor: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/ObservableOptimum.witness_optimum`
 - Dependency: [D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/Foundations](Foundations.md)
 - Dependency: [D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/TwoMeanBound](TwoMeanBound.md)
