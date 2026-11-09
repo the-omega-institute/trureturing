@@ -65,7 +65,7 @@ internal sealed class StronglyIrreducibleMyhillDocument : IScribeDocumentDefinit
         Imp(Call("Set.Finite", Disagreement), Imp(Rel(Call("tau", I("x")), Eq, Call("tau", I("y"))),
             Rel(I("x"), Eq, I("y"))))));
     private static Formula Memory => Call("HasMemory", I("X"), I("tau"), I("M"));
-    private static Formula St(params Formula[] rows) => Disp(new Formula.Aligned([.. rows]));
+    private static Formula St(params Formula[] rows) => Disp(new Formula.Aligned([.. rows.Select(row => Grp(row))]));
     private static DocumentBlock.Describe Desc(string id, string name, string title, Formula statement,
         string text, DescribeRole role = DescribeRole.Theorem) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Owner + name), H(title),
@@ -101,7 +101,7 @@ internal sealed class StronglyIrreducibleMyhillDocument : IScribeDocumentDefinit
             Setup, DiscreteAlphabet, XSetup, Fin("Delta"), Fin("F"), Imp(SI, Seq(All("x", Cfg), All("x0", Cfg),
                 Ex("z", Cfg), And(Agree("z", "x", "F"), Seq(All("g", I("G")),
                     Imp(Seq(Neg, Par(Rel(I("g"), InMacro, Collar("F")))),
-                        Rel(Value("z", I("g")), Eq, Value("x0", I("g")))))))),
+                        Rel(Value("z", I("g")), Eq, Value("x0", I("g"))))))))),
             "For every occurring F-pattern and every background x0 in X, a configuration z in X realizes that pattern and agrees with x0 at every point outside F*Delta⁻¹. There is no symmetry or identity-membership premise on Delta. Every finite exterior constraint is supplied by SI; compactness of the closed finite-alphabet product realizes all exterior constraints together."),
         Desc("translated-window", "tile", "A left-translated finite window", St(Setup, All("t", I("G")), Fin("E"),
             Rel(Call("tile", I("t"), I("E")), Eq, Seq(OpenBrace, Mul(I("t"), I("e")), Sp, Mid, Sp,
