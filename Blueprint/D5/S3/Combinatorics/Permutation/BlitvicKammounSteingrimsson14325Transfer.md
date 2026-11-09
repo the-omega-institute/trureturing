@@ -30,11 +30,24 @@ $$\forall n, k: \mathbb{N}, \left(b_{n + 2}\right)\left(2 \cdot k + 1\right) = -
 
 In ZMod 4 the exact formula is bₙ₊₂(2k+1)=−∑₁≤r≤k bₙ₊₁(2r+1)+(2k+1)bₙ₊₁(2k+3). For every row the values at 2h+2 and 2h+1 become equal after multiplication by two. In the constant row this is immediate; in a later row their difference is the even new summand. Pairing successive terms and using 2=−2 proves the reduced recurrence by induction on k. No division in ZMod 4 is used, and k=0 is retained.
 
-The source target counts actual permutations of [3j+2], j≥1, whose prescribed length-five windows at starts 1+3t, 0≤t<j, have pattern 14325. Extra occurrences are allowed. Applying this invariant requires a proved insertion/deletion bijection identifying this count with row ℕ (j−1) 3 and a coefficient-reduction bridge. Those are separate obligations; no equality to the actual count is claimed here.
+**Theorem 1.3 (Positive transfer rows are shifted Catalan numbers modulo four).**
+
+$$\forall n: \mathbb{N}, \left(b_{n + 2}\right)\left(3\right) = 3 \cdot C_{n + 2}$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Permutation/BlitvicKammounSteingrimsson14325Transfer.row_catalan_mod_four` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Here Cₙ is the ordinary nth Catalan number. For every n≥0 the formula is (row ℕ (n+1) 3 : ZMod 4)=3Cₙ₊₂; the omitted initial row is row (ZMod 4) 0 3=1. Let C be the Catalan generating series over ZMod 4, V=3C²−2 and U=1+XV. The imported Catalan equation gives V+2XV+X²V²=1, hence U=(1+2X)V+XUV and V=UV−XV². The series attached to odd argument 4m+1 is UVᵐ, and that attached to 4m+3 is Vᵐ⁺¹. Their adjacent identities imply the full sum recurrence; all constant coefficients are one. Induction on row degree using odd_row_recurrence identifies every coefficient. At argument three the series is V, whose positive coefficients are three times the next Catalan numbers. This is a universal formal-series argument, with no finite-range inference and no division by a nonunit in ZMod 4.
+
+The source target counts actual permutations of [3j+2], j≥1, whose prescribed length-five windows at starts 1+3t, 0≤t<j, have pattern 14325. Extra occurrences are allowed. Applying this invariant requires a proved insertion/deletion bijection identifying this count with row ℕ (j−1) 3. Natural-to-residue reduction is proved inside the Catalan formula; the actual-count bridge is a separate obligations; no equality to the actual count is claimed here.
 
 The full target also requires residue one modulo ten when j+1=2ᵏ with k≥1, residue six otherwise, and nondivisibility by four if and only if j+1=2ⁱ+2ᵖ with 0≤p≤i. The equal-exponent and p=0 boundaries are included. The printed continuation says four divides all but these indices; the exact-exception converse is the stronger registered interpretation. This contribution does not settle it or the full target. The narrower issue 21304 remains unchanged.
 
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/Permutation/BlitvicKammounSteingrimsson14325Transfer.odd_row_recurrence`
+- Truth anchor: `D5/S3/Combinatorics/Permutation/BlitvicKammounSteingrimsson14325Transfer.row_catalan_mod_four`
 - Truth anchor: `D5/S3/Combinatorics/Permutation/BlitvicKammounSteingrimsson14325Transfer.row_mod_five`

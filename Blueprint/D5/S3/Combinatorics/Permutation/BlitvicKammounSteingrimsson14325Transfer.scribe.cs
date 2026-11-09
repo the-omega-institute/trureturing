@@ -66,6 +66,23 @@ internal sealed class BlitvicKammounSteingrimsson14325TransferDocument : IScribe
                     + "are three times the next Catalan numbers. This is a universal "
                     + "formal-series argument, with no finite-range inference and no "
                     + "division by a nonunit in ZMod 4."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("bks14325-transfer-mod-ten"),
+                DeclarationHandle.Create(Prefix + "row_mod_ten"),
+                H("The exact dyadic modulo-ten rule for all transfer rows"),
+                StatementSource.FromAuthor(Disp(Seq(Forall, Sp, F.Id("n"), Colon, Sp,
+                    Mathbb, Grp(F.Id("N")), Comma, Sp,
+                    new Formula.Apply(F.Id("mod"), [new Formula.Apply(F.Id("rowNat"), [F.Id("n"), D(3)]), D(10)]), Sp, Eq, Sp, F.Id("dyadicResidue"), Grp(Add(F.Id("n"), D(2)))))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The source row index is j=n+1, so the exception "
+                    + "is precisely j+1=2ᵏ with k≥1. For a positive row index, reduce "
+                    + "the Catalan formula from ZMod 4 to ZMod 2 through the canonical "
+                    + "ring homomorphism. The existing binary_catalan theorem then "
+                    + "gives oddness exactly at dyadic indices. The constant initial "
+                    + "row supplies the n=0 boundary. Reduction of natural rows to "
+                    + "ZMod 5 and row_mod_five give residue one modulo five. Elementary "
+                    + "arithmetic combines the two residues to obtain one or six "
+                    + "modulo ten. This theorem concerns natural transfer rows only; "
+                    + "it assumes no recurrence for the actual packing count."))), DescribeRole.Theorem),
             Paragraph(Text("The source target counts actual permutations of [3j+2], j≥1, "
                 + "whose prescribed length-five windows at starts 1+3t, 0≤t<j, have "
                 + "pattern 14325. Extra occurrences are allowed. Applying this invariant "

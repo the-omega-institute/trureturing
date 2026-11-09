@@ -6,6 +6,7 @@
    utility: none
    digest: Universal modular invariants of the overlap-two grid transfer. -/
 
+import D5.S1.Recurrence.Invariants.CatalanCompositionSquareParity
 import Mathlib.RingTheory.PowerSeries.Catalan
 import Mathlib.Tactic.LinearCombination
 import Mathlib.Data.ZMod.Basic
@@ -27,7 +28,7 @@ set_option autoImplicit false
 
 namespace D5.S3.Combinatorics.Permutation.BlitvicKammounSteingrimsson14325Transfer
 
-open scoped BigOperators
+open scoped BigOperators Classical
 
 /-- The sum from r=1 to k, with summation variable shifted down by one. -/
 def transfer {R : Type*} [Semiring R] (f : ℕ → R) (k : ℕ) : R :=
@@ -258,7 +259,7 @@ private theorem row_eq_oddSeries (n k : ℕ) :
     simp only [map_add, coeff_one, Nat.succ_ne_zero, ↓reduceIte, zero_add,
       coeff_succ_X_mul, map_neg, map_sum, coeff_natCast_mul] at h
     have hi (r : ℕ) : row (ZMod 4) n (2 * r + 3) = coeff n (oddSeries (r + 1)) := by
-      convert ih (r + 1) using 1 <;> congr 1 <;> omega
+      simpa only [show 2 * (r + 1) + 1 = 2 * r + 3 by omega] using ih (r + 1)
     rw [odd_row_recurrence, h]
     simp only [hi]
 
@@ -281,5 +282,52 @@ theorem row_catalan_mod_four (n : ℕ) :
   rw [hcat] at hc
   simpa [oddSeries, V, map_sub, coeff_natCast_mul, ← hc,
     ← map_ofNat (C (R := ZMod 4)), coeff_C] using hr
+
+private theorem row_parity (n : ℕ) :
+    Odd (row ℕ n 3) ↔ ∃ k : ℕ, 1 ≤ k ∧ n + 2 = 2 ^ k := by
+  cases n with
+  | zero => simp [row]; exact ⟨1, by omega, by decide⟩
+  | succ n =>
+    have h := congrArg (ZMod.castHom (by decide : 2 ∣ 4) (ZMod 2))
+      (row_catalan_mod_four n)
+    simp only [map_mul, map_ofNat, map_natCast] at h
+    rw [show (3 : ZMod 2) = 1 by decide, one_mul] at h
+    have hc := D5.S1.Recurrence.Invariants.CatalanCompositionSquareParity.binary_catalan (n + 3)
+    have hb : (catalan (n + 2) : ZMod 2) = 1 ↔ ∃ k : ℕ, n + 3 = 2 ^ k := by
+      simp only [D5.S1.Recurrence.Invariants.CatalanCompositionSquareParity.catalanSeries,
+        D5.S1.Recurrence.Invariants.CatalanCompositionSquareParity.catalanUnit,
+        PowerSeries.coeff_map, PowerSeries.coeff_succ_X_mul,
+        PowerSeries.catalanSeries_coeff] at hc
+      change ((catalan (n + 2) : ℤ) : ZMod 2) = 1 ↔ ∃ k : ℕ, n + 3 = 2 ^ k at hc
+      simpa only [Int.cast_natCast] using hc
+    rw [← ZMod.natCast_eq_one_iff_odd, h, hb]
+    change (∃ k : ℕ, n + 3 = 2 ^ k) ↔ ∃ k : ℕ, 1 ≤ k ∧ n + 3 = 2 ^ k
+    constructor
+    · rintro ⟨k, hk⟩
+      refine ⟨k, ?_, hk⟩
+      by_contra hn
+      have hz : k = 0 := by omega
+      simp [hz] at hk
+    · rintro ⟨k, hk, he⟩
+      exact ⟨k, he⟩
+
+/-- The full dyadic modulo-ten rule for the algebraic natural transfer rows.
+    Applying it to the source count still requires the grid-to-row bijection. -/
+theorem row_mod_ten (n : ℕ) :
+    row ℕ n 3 % 10 =
+      if ∃ k : ℕ, 1 ≤ k ∧ n + 2 = 2 ^ k then 1 else 6 := by
+  have h5 : row ℕ n 3 % 5 = 1 := by
+    have h := (row_natCast n 3 (R := ZMod 5)).trans (row_mod_five n)
+    exact (ZMod.natCast_eq_natCast_iff' _ 1 5).mp h
+  have h2 : row ℕ n 3 % 2 = 1 ↔ ∃ k : ℕ, 1 ≤ k ∧ n + 2 = 2 ^ k := by
+    rw [← row_parity, Nat.odd_iff]
+  have h10 := Nat.mod_lt (row ℕ n 3) (by decide : 0 < 10)
+  have hr5 : (row ℕ n 3 % 10) % 5 = 1 := by omega
+  have hr2 : (row ℕ n 3 % 10) % 2 = row ℕ n 3 % 2 := by omega
+  split_ifs with h
+  · have := h2.mpr h
+    omega
+  · have hn : row ℕ n 3 % 2 ≠ 1 := mt h2.mp h
+    omega
 
 end D5.S3.Combinatorics.Permutation.BlitvicKammounSteingrimsson14325Transfer
