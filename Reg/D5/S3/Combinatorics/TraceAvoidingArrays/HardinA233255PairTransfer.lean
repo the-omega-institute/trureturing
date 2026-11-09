@@ -69,8 +69,12 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     owner := `D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255PairTransfer
     definition := none
     coordinates := #[1, 2]
-    readouts := #[{ path := #["body", "body", "body", "arg"], stateBinder := 0,
-      functionOperand := false, stateOperand := none, booleanPredicate := false }] }
+    readouts := #[{
+      path := #["body", "body", "body", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -91,6 +95,7 @@ abbrev arena : Arena := by
       ∑ q : Boundary, if rowProper (Fin.cons 0 q) then
         R.readout () n q * pairV n (rowFinish (false, false) q) q else 0 }
 
+set_option maxRecDepth 10000 in
 private theorem rejected_law : ¬ arena.Law rejected := by
   classical
   intro h
@@ -130,8 +135,10 @@ def family : Registration arena (type_of% @literal_pair_bridge) where
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     (@literal_pair_bridge) (Realization signature) Type Unit where
-  unitName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255PairTransfer.Literal.auditUnit
-  realizationName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255PairTransfer.Literal.family
+  unitName :=
+    `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255PairTransfer.Literal.auditUnit
+  realizationName :=
+    `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255PairTransfer.Literal.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩

@@ -59,8 +59,12 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     owner := `D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255ShapeSymmetry
     definition := none
     coordinates := #[0]
-    readouts := #[{ path := #["body", "body", "body", "arg"], stateBinder := 1,
-      functionOperand := false, stateOperand := none, booleanPredicate := false }] }
+    readouts := #[{
+      path := #["body", "body", "body", "arg"]
+      stateBinder := 1
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
