@@ -79,9 +79,7 @@ internal sealed class HardinA233125SquareStripDocument : IScribeDocumentDefiniti
                     + "height. The first sector has factor 1-16X; the remaining three "
                     + "classes have factor 1-144X+3840X²-24576X³. This proves the "
                     + "displayed identity for the literal count, with no empirical "
-                    + "recurrence assumed."))), DescribeRole.Theorem,
-                new OpenProblemResolutionClaim(ProblemSlugRef.Create("hardin233125"),
-                    ResolutionKind.Proved)))));
+                    + "recurrence assumed."))), DescribeRole.Theorem))));
 
     private static DocumentBlock Entry(string id, string declaration, string title,
         Formula formula, string prose, bool literature = false) => Describe.Lean(
