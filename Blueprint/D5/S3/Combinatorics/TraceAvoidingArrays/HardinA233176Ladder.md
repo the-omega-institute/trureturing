@@ -66,6 +66,10 @@ $$((((1) - ((8) \cdot (\operatorname{PowerSeries}.\operatorname{X}))) \cdot ((((
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233176Ladder.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/hardin233176` (proved) by `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233176Ladder.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hardin233176","declaration_gid":"D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233176Ladder.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233176: six-colour complementary-pair exclusion on a three-row ladder*. URL: <https://oeis.org/A233176>.

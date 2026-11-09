@@ -48,7 +48,7 @@ internal sealed class HardinA233176LadderDocument : IScribeDocumentDefinition
                 + "record starts the bottom row. Five ordered records and the preceding "
                 + "three pair labels give 168 states in 21 classes. Finite continuation "
                 + "vectors determine the displayed coefficients."),
-            Thm("result", "result", "Barker's generating function", ResultFormula(),
+            Resolution("result", "result", "Barker's generating function", ResultFormula(),
                 "The column transfer has 159 different nonzero state transitions. "
                 + "Its continuation vectors satisfy an order-eleven relation. Dividing "
                 + "the corresponding annihilating polynomial by "
@@ -72,6 +72,14 @@ internal sealed class HardinA233176LadderDocument : IScribeDocumentDefinition
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(Source),
             Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
+
+    private static DocumentBlock Resolution(string id, string name, string title,
+        Formula formula, string prose) =>
+        Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + name), H(title),
+            StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(Source),
+            Blocks(Paragraph(Text(prose))), DescribeRole.Theorem,
+            new OpenProblemResolutionClaim(ProblemSlugRef.Create("hardin233176"),
+                ResolutionKind.Proved));
 
     private static Formula NormalFormula()
     {
