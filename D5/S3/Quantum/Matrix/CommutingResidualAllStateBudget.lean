@@ -9,7 +9,7 @@
 import D5.S3.Quantum.Matrix.NonsingularPencilStateBudget
 
 set_option maxHeartbeats 2000000
-set_option maxRecDepth 2048
+set_option maxRecDepth 16384
 
 noncomputable section
 open Matrix
@@ -51,16 +51,20 @@ private theorem table_equations :
   all_goals field_simp
   all_goals ring_nf
   all_goals simp_all [hs]
+  all_goals norm_num
 
 private theorem det_x : x.det = 3 := by
   have hs : (Real.sqrt 2 : ℂ)^2 = 2 := by exact_mod_cast sqrt_two_sq
   have hn : (Real.sqrt 2 : ℂ) ≠ 0 := by exact_mod_cast sqrt_two_ne
   simp [Matrix.det_succ_row_zero, Matrix.det_fin_three, Matrix.det_fin_two,
-    Fin.sum_univ_succ, x, eta, Matrix.submatrix_apply, Complex.conj_ofReal,
+    Fin.sum_univ_succ, Fin.succAbove, x, eta, Matrix.submatrix_apply, Complex.conj_ofReal,
     Complex.conj_I, map_div₀, map_sub, map_one]
   field_simp
   ring_nf
-  simp_all [hs]
+  have hs4 : (Real.sqrt 2 : ℂ)^4 = 4 := by calc
+    _ = ((Real.sqrt 2 : ℂ)^2)^2 := by ring
+    _ = 4 := by rw [hs]; norm_num
+  norm_num [hs4]
 
 private def f (w : ℂ) : ℂ := w^4+2*w^2+3
 
@@ -72,13 +76,15 @@ private theorem determinant_certificate (p q : ℝ) :
   have hn : (Real.sqrt 2 : ℂ) ≠ 0 := by exact_mod_cast sqrt_two_ne
   simp [pencil,NonsingularPencilStateBudget.pencil,Matrix.det_succ_row_zero,
     Matrix.det_fin_three,Matrix.det_fin_two,Matrix.submatrix_apply,
-    h,x,r,c,k,t,z,g,eta,Matrix.mul_apply,Fin.sum_univ_succ,Matrix.one_apply,
+    h,x,r,c,k,t,z,g,eta,Matrix.mul_apply,Fin.sum_univ_succ,Fin.succAbove,Matrix.one_apply,
     f,Complex.normSq_apply,Complex.conj_ofReal,Complex.conj_I,map_div₀,map_sub,map_one]
   apply Complex.ext <;> simp [Complex.mul_re,Complex.mul_im,Complex.div_re,
-    Complex.div_im,Complex.normSq_apply,Complex.I_re,Complex.I_im]
+    Complex.div_im,Complex.normSq_apply,Complex.I_re,Complex.I_im,←Complex.ofReal_pow]
+  all_goals simp only [←Complex.ofReal_pow,Complex.ofReal_re,Complex.ofReal_im]
   all_goals field_simp
   all_goals ring_nf
-  all_goals simp_all [sqrt_two_sq]
+  all_goals norm_num [show (4:ℕ)=2*2 from rfl, show (6:ℕ)=2*3 from rfl, show (8:ℕ)=2*4 from rfl, pow_mul, sqrt_two_sq]
+  all_goals ring
 
 private theorem determinant_positive (p q : ℝ) : 0 < (pencil p q).det.re := by
   rw [determinant_certificate]
@@ -98,14 +104,18 @@ private theorem determinant_positive (p q : ℝ) : 0 < (pencil p q).det.re := by
     by_cases hq0 : q=0
     · subst q
       have hf : 0 < Complex.normSq (f ((p:ℂ)-0*Complex.I)) := by
-        simp [f,Complex.normSq_apply]
-        positivity
+        have hp : (0:ℝ) < p^4+2*p^2+3 := by positivity
+        have he : f ((p:ℂ)-0*Complex.I) = (p^4+2*p^2+3 : ℝ) := by simp [f]
+        rw [he,Complex.normSq_ofReal]
+        exact mul_pos hp hp
       simpa [w] using hf
     · have hqpos := sq_pos_of_ne_zero hq0
       nlinarith
   · have hs6 : 6 ≤ s := le_of_lt (lt_of_not_ge hs)
     have hn : ‖w‖^2=s := by
-      simp [w,Complex.sq_norm,Complex.normSq_apply,s]
+      rw [←Complex.normSq_eq_norm_sq]
+      simp [w,Complex.normSq_apply,s]
+      ring
     have hn4 : ‖w^4‖=s^2 := by rw [norm_pow,show 4=2*2 from rfl,pow_mul,hn]
     have hnorm : s^2 ≤ ‖f w‖+2*s+3 := by
       calc
@@ -128,7 +138,7 @@ private theorem determinant_positive (p q : ℝ) : 0 < (pencil p q).det.re := by
     nlinarith
 
 private theorem x_squared_posDef : (x*x).PosDef := by
-  have hxi : IsUnit x := Matrix.isUnit_iff_isUnit_det.mpr (by rw [det_x]; norm_num)
+  have hxi : IsUnit x := (Matrix.isUnit_iff_isUnit_det x).mpr (by rw [det_x]; norm_num)
   have hxinj : Function.Injective x.mulVec := Matrix.mulVec_injective_iff_isUnit.mpr hxi
   simpa only [show xᴴ=x from table_equations.2.1] using
     Matrix.PosDef.conjTranspose_mul_self x hxinj
@@ -181,8 +191,8 @@ def claim : Prop :=
 theorem result : ¬ claim := by
   intro hc
   rcases witness with ⟨hh,hx,hr,hh2,hcE,hk,ht,hhr,hcr,hrr,hzr,hread⟩
-  have hz : r=0 := hc h x r hh hx hr hh2 (by simpa [← hcE] using hhr)
-    (by simpa [← hcE] using hcr) (fun φ hφ => by
+  have hz : r=0 := hc h x r hh hx hr hh2 hhr
+    (by change ((1/2:ℝ) • (x+h*x*h))*r=r*((1/2:ℝ) • (x+h*x*h)); rw [← hcE]; exact hcr) (fun φ hφ => by
       have h := (hread φ).2.2.2.1 (by simp [hφ])
       simpa [← hk,← ht,g,hφ] using h)
   have hh := congrArg (fun M : A => M 0 0) hrr
