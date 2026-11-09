@@ -8,24 +8,27 @@
 
 import D5.S3.Quantum.Matrix.NonsingularPencilStateBudget
 
+set_option maxHeartbeats 2000000
+set_option maxRecDepth 2048
+
 noncomputable section
 open Matrix
 open scoped ComplexOrder MatrixOrder Matrix.Norms.L2Operator
 
 namespace D5.S3.Quantum.Matrix.CommutingResidualAllStateBudget
 
-abbrev A := Matrix (Fin 4) (Fin 4) ℂ
-def eta : ℂ := (1 - Complex.I) / (Real.sqrt 2 : ℂ)
-def h : A := !![1,0,0,0; 0,1,0,0; 0,0,-1,0; 0,0,0,-1]
-def c : A := !![1,0,0,0; 0,-1,0,0; 0,0,-1,0; 0,0,0,1]
-def x : A := !![1,0,1,eta; 0,-1,eta,1; 1,star eta,-1,0; star eta,1,0,1]
-def r : A := (1/16 : ℝ) • c
-def z : A := (1/2 : ℝ) • (x - h*x*h)
-def k : A := h*c
-def t : A := Complex.I • (h*z)
-def g : A := t+r
-def jordan (a b : A) : A := (1/2 : ℝ) • (a*b+b*a)
-def pencil (p q : ℝ) : A :=
+private abbrev A := Matrix (Fin 4) (Fin 4) ℂ
+private def eta : ℂ := (1 - Complex.I) / (Real.sqrt 2 : ℂ)
+private def h : A := !![1,0,0,0; 0,1,0,0; 0,0,-1,0; 0,0,0,-1]
+private def c : A := !![1,0,0,0; 0,-1,0,0; 0,0,-1,0; 0,0,0,1]
+private def x : A := !![1,0,1,eta; 0,-1,eta,1; 1,star eta,-1,0; star eta,1,0,1]
+private def r : A := (1/16 : ℝ) • c
+private def z : A := (1/2 : ℝ) • (x - h*x*h)
+private def k : A := h*c
+private def t : A := Complex.I • (h*z)
+private def g : A := t+r
+private def jordan (a b : A) : A := (1/2 : ℝ) • (a*b+b*a)
+private def pencil (p q : ℝ) : A :=
   NonsingularPencilStateBudget.pencil (x*x) k g p q
 
 private theorem sqrt_two_sq : (Real.sqrt 2)^2 = 2 := Real.sq_sqrt (by norm_num)
@@ -181,7 +184,7 @@ theorem result : ¬ claim := by
   have hz : r=0 := hc h x r hh hx hr hh2 (by simpa [← hcE] using hhr)
     (by simpa [← hcE] using hcr) (fun φ hφ => by
       have h := (hread φ).2.2.2.1 (by simp [hφ])
-      simpa [← hk,← ht,← g,hφ] using h)
+      simpa [← hk,← ht,g,hφ] using h)
   have hh := congrArg (fun M : A => M 0 0) hrr
   norm_num [hz,Matrix.one_apply] at hh
 

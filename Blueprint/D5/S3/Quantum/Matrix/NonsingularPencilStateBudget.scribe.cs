@@ -53,7 +53,7 @@ internal sealed class NonsingularPencilStateBudgetDocument : IScribeDocumentDefi
     private static Formula Add(Formula a, Formula b) => new Formula.Binary(a,FormulaBinaryOperator.Add,b);
     private static Formula Mul(Formula a, Formula b) => new Formula.Binary(a,FormulaBinaryOperator.Multiply,b);
     private static Formula Sub(Formula a, Formula b) => Subtract(a,b);
-    private static Formula Square(Formula a) => Sup(a,D(2));
+    private static Formula Square(Formula a) => new Formula.Power(a,D(2));
     private static Formula Real => Call("Real");
     private static Formula Mat => Call("Matrix",V("n"),V("n"),Call("Complex"));
     private static Formula One => Call("one",Mat);

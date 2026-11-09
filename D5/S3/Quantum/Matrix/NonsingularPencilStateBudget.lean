@@ -133,9 +133,12 @@ theorem strict_budget (E K G : Matrix n n ℂ) (hE : E.PosDef)
       (φ G).re ^ 2 + (φ K).re ^ 2 < (φ 1).re * (φ E).re) ∧
     ((φ 1).re = 0 → φ = 0 ∧
       (φ G).re ^ 2 + (φ K).re ^ 2 = (φ 1).re * (φ E).re) := by
-  refine ⟨Complex.im_eq_zero_iff_isSelfAdjoint.mpr (hE.isHermitian.map' φ),
-    Complex.im_eq_zero_iff_isSelfAdjoint.mpr (hK.map' φ),
-    Complex.im_eq_zero_iff_isSelfAdjoint.mpr (hG.map' φ),
+  refine ⟨(Complex.im_eq_zero_iff_isSelfAdjoint (φ E)).mpr
+      ((Matrix.isHermitian_iff_isSelfAdjoint.mp hE.isHermitian).map' φ),
+    (Complex.im_eq_zero_iff_isSelfAdjoint (φ K)).mpr
+      ((Matrix.isHermitian_iff_isSelfAdjoint.mp hK).map' φ),
+    (Complex.im_eq_zero_iff_isSelfAdjoint (φ G)).mpr
+      ((Matrix.isHermitian_iff_isSelfAdjoint.mp hG).map' φ),
     positive_mass_budget E K G hE hK hG hdet φ, ?_⟩
   intro hm
   let f : Matrix n n ℂ →P[ℂ] ℂ := PositiveContinuousLinearMap.ofClass φ
@@ -145,11 +148,15 @@ theorem strict_budget (E K G : Matrix n n ℂ) (hE : E.PosDef)
   have hnorm : ‖f.toContinuousLinearMap‖ = 0 := by
     have hh := f.ofReal_opNorm_eq_map_one
     have h := congrArg Complex.re hh
-    simpa [f, hunit] using h
-  have hf : f.toContinuousLinearMap = 0 := norm_eq_zero.mp hnorm
+    change ‖f.toContinuousLinearMap‖ = (φ 1).re at h
+    exact h.trans hm
   have hφ : φ = 0 := by
     ext a
-    exact congrArg (fun L : Matrix n n ℂ →L[ℂ] ℂ => L a) hf
+    have hb := f.toContinuousLinearMap.le_opNorm a
+    rw [hnorm, zero_mul] at hb
+    exact norm_eq_zero.mp (le_antisymm hb (norm_nonneg _))
   exact ⟨hφ, by simp [hφ]⟩
+
+#print axioms strict_budget
 
 end D5.S3.Quantum.Matrix.NonsingularPencilStateBudget
