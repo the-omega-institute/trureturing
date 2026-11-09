@@ -11,6 +11,7 @@ import Mathlib.Analysis.InnerProductSpace.PiL2
 import Mathlib.Topology.Algebra.StarSubalgebra
 import Mathlib.Analysis.CStarAlgebra.Spectrum
 import D5.S3.Quantum.Algebra.TopologicalSchur
+import D5.S3.Quantum.Algebra.PBActualOuterBudget
 
 /-! Actual two-vector planes for bounded anticommuting involutions. -/
 
@@ -38,20 +39,10 @@ private theorem exists_closed_plane (A B : H →L[ℂ] H)
     simpa using congrArg (fun T : H →L[ℂ] H => T x) hBB
   have hAB' (x : H) : A (B x) = -B (A x) := by
     simpa using congrArg (fun T : H →L[ℂ] H => T x) hAB
-  obtain ⟨x, hx⟩ := exists_ne (0 : H)
-  have heig : ∃ q : H, q ≠ 0 ∧ A q = q := by
-    by_cases hq : x + A x = 0
-    · have hAx : A x = -x := eq_neg_of_add_eq_zero_right hq
-      refine ⟨B x, ?_, ?_⟩
-      · intro hz
-        exact hx (by simpa [hz] using (hBB' x).symm)
-      · rw [hAB', hAx, map_neg, neg_neg]
-    · exact ⟨x + A x, hq, by simp only [map_add, hAA']; abel⟩
-  obtain ⟨q, hq, hAq⟩ := heig
-  let v : H := (‖q‖⁻¹ : ℝ) • q
-  have hv : ‖v‖ = 1 := by
-    simp [v, norm_smul, hq]
-  have hAv : A v = v := by simp [v, hAq]
+  letI : InnerProductSpace ℝ H := InnerProductSpace.complexToReal
+  obtain ⟨v, hv, hAv⟩ := PBActualOuterBudget.supporting_vector
+    (A.toLinearMap.restrictScalars ℝ) (B.toLinearMap.restrictScalars ℝ)
+    hAA' hBB' hAB'
   let w : H := B v
   have hBw : B w = v := hBB' v
   have hAw : A w = -w := by simp [w, hAB', hAv]
