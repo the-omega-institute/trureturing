@@ -1,5 +1,5 @@
 /- GID: D5/S3/FiniteGroups/DicyclicSubsetParityRefutation
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/FiniteGroups/DicyclicSubsetParityRefutation
    mirror-E: none(waiver:exact-parity-obstruction)
    anchors: []
@@ -13,7 +13,9 @@ import Mathlib.Tactic.NormNum
 import Lean.Elab.Tactic.Omega
 import Mathlib.Algebra.Ring.Parity
 
-/-! Mandal--Neetu, arXiv:2602.09073v1, Question 6.3, Main.tex line 792.
+/-! Sagar Mandal and Neetu, Exact and Asymptotic Counts of MSTD, MDTS,
+and Balanced Sets in Dicyclic Groups, arXiv:2602.09073v1, Question 6.3.
+https://arxiv.org/abs/2602.09073v1; Main.tex line 792.
 The source asks about ALL distinct subsets and literal right quotients.
 Source SHA-256: 7ed61ecf73935d71b750c85a2f03f635b3669ae370d87e41f16c653c0e48f959.
 `QuaternionGroup n` is the actual order-4n dicyclic group. The refutation
@@ -114,9 +116,5 @@ theorem result : Not claim := by
   rw [hnum] at hev
   obtain ⟨k, hk⟩ := hev
   omega
-
-#print axioms result
-#print claim
-#check result
 
 end D5.S3.FiniteGroups.DicyclicSubsetParityRefutation
