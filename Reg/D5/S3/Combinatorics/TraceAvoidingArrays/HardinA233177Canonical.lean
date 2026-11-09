@@ -9,6 +9,7 @@ open _root_.D5.S3.Observer.Separation.BooleanRankThreeK4 (beta)
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
 open scoped BigOperators
+open scoped Classical
 noncomputable section
 universe u
 
@@ -87,8 +88,8 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     definition := none
     coordinates := #[0, 1, 2, 3]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "arg", "body", "fn", "arg", "fn", "arg"]
-      stateBinder := 0
+      path := #["body", "body", "body", "body", "body", "arg", "body", "fn", "arg"]
+      stateBinder := 5
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }
@@ -114,7 +115,7 @@ def rejected : Realization signature.{u} :=
 abbrev arena : Arena where
   signature := signature.{u}
   Law R := ∀ {C : Type u} [ft : Fintype C] [lo : LinearOrder C]
-    (z : C) (hz : ∀ i, z ≤ i) (f : C → Fin 6) (hf : f z = 0),
+    (z : C) (_ : ∀ i, z ≤ i) (f : C → Fin 6) (_ : f z = 0),
     R.readout () ⟨C, ft, lo⟩ f ↔ Canonical (beta ∘ f) ∧ FirstSides f
 private theorem normal_zero : Normal (fun _ : ULift.{u} Unit => (0 : Fin 6)) := by
   intro i
@@ -174,7 +175,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     coordinates := #[0, 1, 2]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "fn", "arg"]
-      stateBinder := 0
+      stateBinder := 5
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }
@@ -214,9 +215,7 @@ private theorem dependence : ObservationalDependence signature.{u} actual := by
   let P : ULift.{u} (Fin 2) → Fin 3 := fun i => ⟨i.down.val, by omega⟩
   have hi : Function.Injective P := by
     intro i j h
-    apply ULift.ext
-    apply Fin.ext
-    exact congrArg Fin.val h
+    exact ULift.ext (Fin.ext (congrArg (fun x : Fin 3 => x.val) h))
   have hr : Nat.card (Set.range P) = 2 := by
     have hh := Nat.card_congr (Equiv.ofInjective P hi)
     simpa using hh.symm
@@ -263,7 +262,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     coordinates := #[0, 1, 2]
     readouts := #[{
       path := #["body", "body", "body", "body", "fn", "arg"]
-      stateBinder := 0
+      stateBinder := 3
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }
@@ -348,7 +347,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     coordinates := #[0, 1, 2]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "fn", "arg"]
-      stateBinder := 0
+      stateBinder := 3
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }
@@ -378,7 +377,7 @@ def rejected : Realization signature.{u} :=
 abbrev arena : Arena where
   signature := signature.{u}
   Law R := ∀ {C : Type u} [ft : Fintype C] [lo : LinearOrder C]
-    (z : C) (hz : ∀ i, z ≤ i) (S : (C → Fin 3) → Prop),
+    (z : C) (_ : ∀ i, z ≤ i) (S : (C → Fin 3) → Prop),
     R.readout () ⟨C, ft, lo, z⟩ S =
       ∑ P : {P : C → Fin 3 // S P ∧ Canonical P},
         2 ^ (Fintype.card C - Nat.card (Set.range P.val))
@@ -398,12 +397,15 @@ private theorem dependence : ObservationalDependence signature.{u} actual := by
     (fun _ => False), (fun _ => True), ?_⟩
   change Nat.card {f : ULift.{u} Unit → Fin 6 // False ∧ f z = 0 ∧ Normal f} ≠
     Nat.card {f : ULift.{u} Unit → Fin 6 // True ∧ f z = 0 ∧ Normal f}
-  letI : Unique {f : ULift.{u} Unit → Fin 6 // True ∧ f z = 0 ∧ Normal f} := {
+  let : Unique {f : ULift.{u} Unit → Fin 6 // True ∧ f z = 0 ∧ Normal f} := {
     default := ⟨fun _ => 0, trivial, rfl, Normalization.normal_zero⟩
     uniq := fun f => Subtype.ext (funext fun x => by
       change f.val x = 0
       rw [Subsingleton.elim x z]
       exact f.property.2.1) }
+  have hc : Nat.card {f : ULift.{u} Unit → Fin 6 // True ∧ f z = 0 ∧ Normal f} = 1 := by
+    simp only [Nat.card_eq_fintype_card, Fintype.card_unique]
+  rw [hc]
   simp [Nat.card_eq_fintype_card]
 
 def family : Registration arena.{u} (type_of% (@normalized_card.{u})) where
@@ -444,7 +446,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     coordinates := #[0, 1, 2, 3]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "fn", "arg"]
-      stateBinder := 0
+      stateBinder := 5
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }
