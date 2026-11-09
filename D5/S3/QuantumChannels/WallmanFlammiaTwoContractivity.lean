@@ -309,8 +309,8 @@ private theorem scalarProjector_eq (d : ℕ) : D5.S3.QuantumBounds.PeritoTsirels
   by_cases hr : r.1 = r.2 <;> by_cases hc : c.1 = c.2 <;>
     simp [hr, hc, eq_comm, Complex.conj_ofReal, hs]
 private theorem scalarProjector_eq_Q (d : ℕ) : D5.S3.QuantumBounds.PeritoTsirelson.maxEntangled (Fin d) = D5.S3.Quantum.Entanglement.ConicalDesignConcurrenceComparability.Q d := by
-  rw [scalarProjector_eq, D5.S3.Quantum.Entanglement.ConicalDesignConcurrenceComparability.Q]
-  ext r c; simp [Matrix.smul_apply, Matrix.vecMulVec_apply, Matrix.vec, Matrix.one_apply, eq_comm]
+  rw [scalarProjector_eq, D5.S3.Quantum.Entanglement.ConicalDesignConcurrenceComparability.Q,
+    Matrix.star_vec, Matrix.map_one star (by simp) (by simp)]
 private def tracelessProjector (d : ℕ) : Matrix (Fin d × Fin d) (Fin d × Fin d) ℂ := 1 - D5.S3.QuantumBounds.PeritoTsirelson.maxEntangled (Fin d)
 private theorem traceVector_dot (d : ℕ) : (Matrix.vec (1 : Matrix (Fin d) (Fin d) ℂ)) ⬝ᵥ (Matrix.vec (1 : Matrix (Fin d) (Fin d) ℂ)) = (d : ℂ) := by
   simpa [Matrix.star_vec, Matrix.map_one, Matrix.trace_one] using Matrix.star_vec_dotProduct_vec (1 : Matrix (Fin d) (Fin d) ℂ) 1
@@ -345,7 +345,7 @@ private theorem trace_product_cauchy_generic {n : Type*} [Fintype n] [DecidableE
   let R := Matrix.reindexRingEquiv ℂ e
   have hm (A C : Matrix n n ℂ) : R (A * C) = R A * R C := R.map_mul A C
   have ht (A : Matrix n n ℂ) : (R A).trace = A.trace := e.symm.sum_comp (fun i => A i i)
-  have hs (A : Matrix n n ℂ) : (R A)ᴴ = R Aᴴ := rfl
+  have hs (A : Matrix n n ℂ) : (R A)ᴴ = R Aᴴ := Matrix.conjTranspose_reindex e e A
   have hc := D5.S3.Quantum.Matrix.CartesianVariance.trace_product_cauchy (R Q) (R B)
   simpa only [RHLinalg.frobSq, hs, ← hm, ht, RCLike.re_eq_complex_re] using hc
 private theorem strict_projected_one_copy_bound {n : Type*} [Fintype n] [DecidableEq n] (P B : Matrix n n ℂ) (hP : IsStarProjection P) (hPB : P * B = B) (m u : ℝ) (hm : 0 < m) (hu : u < 1) (htrace : P.trace.re = m) (hmass : (Bᴴ * B).trace.re = m * u) : ‖B.trace / (m : ℂ)‖ < 1 := by
