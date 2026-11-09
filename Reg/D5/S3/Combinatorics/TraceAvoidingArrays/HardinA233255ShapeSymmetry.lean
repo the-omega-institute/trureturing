@@ -6,7 +6,8 @@ import LeanInformationAuditInterface.Contract.Registration
 
 namespace Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255ShapeSymmetry
 open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255ShapeSymmetry
-open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255LiteralBridge (rowFinish rowWeight)
+open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255LiteralBridge
+  (labelAdvance labelWeight rowFinish rowWeight)
 open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255PairTransfer (Boundary pairV)
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
@@ -262,6 +263,65 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   familyRecord := none
   options := #[]
 end FullRow
+
+namespace FullCell
+abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature (Fin 3) (fun _ => Bool × Bool) (fun _ => ℤ)
+def actual : Realization signature :=
+  realize signature (fun _ q s => labelWeight s q) (fun e => nomatch e)
+def rejected : Realization signature :=
+  realize signature (fun _ q s => labelWeight s q + 1) (fun e => nomatch e)
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ q : Fin 3,
+    labelAdvance (true, true) q = (true, true) ∧
+      R.readout () q (true, true) = 2
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have h0 := (h 0).2
+  norm_num [rejected, realize, labelWeight] at h0
+def family : Registration arena (type_of% @full_cell) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨full_cell, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law actual rejected rejected_law
+  dependence := by
+    intro i
+    refine ⟨1, (true, true), (false, false), ?_⟩
+    norm_num [actual, realize, labelWeight]
+def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+    (@full_cell) (Realization signature) Type Unit where
+  unitName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255ShapeSymmetry.FullCell.auditUnit
+  realizationName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255ShapeSymmetry.FullCell.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ q s => labelWeight s q) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255ShapeSymmetry
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "arg", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["fn", "arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end FullCell
 
 end
 end Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255ShapeSymmetry
