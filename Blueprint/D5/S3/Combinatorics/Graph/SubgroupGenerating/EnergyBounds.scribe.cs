@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.SubgroupGenerati
 internal sealed class EnergyBoundsDocument : IScribeDocumentDefinition
 {
     private const string Owner = "D5/S3/Combinatorics/Graph/SubgroupGenerating/EnergyBounds.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/GraphInvariants/das2026sgb");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/FiniteGroups/das2026sgb");
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The full finite-nonabelian ten-clause conclusion.", H("EnergyBounds"), Blocks(
             Describe.Lean(DescribeId.Create("sgb-energybounds-sgb-energy"),

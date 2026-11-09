@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.SubgroupGenerati
 internal sealed class GeneratingFibersDocument : IScribeDocumentDefinition
 {
     private const string Owner = "D5/S3/Combinatorics/Graph/SubgroupGenerating/GeneratingFibers.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/GraphInvariants/das2026sgb");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/FiniteGroups/das2026sgb");
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The nonabelian square-root deficit.", H("GeneratingFibers"), Blocks(
             Describe.Lean(DescribeId.Create("sgb-generatingfibers-generatingpairs"),

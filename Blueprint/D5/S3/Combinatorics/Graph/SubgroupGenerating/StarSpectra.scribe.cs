@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.SubgroupGenerati
 internal sealed class StarSpectraDocument : IScribeDocumentDefinition
 {
     private const string Owner = "D5/S3/Combinatorics/Graph/SubgroupGenerating/StarSpectra.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/GraphInvariants/das2026sgb");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/FiniteGroups/das2026sgb");
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Actual star spectra with multiplicity.", H("StarSpectra"), Blocks(
             Describe.Lean(DescribeId.Create("sgb-starspectra-arrowmatrix"),
