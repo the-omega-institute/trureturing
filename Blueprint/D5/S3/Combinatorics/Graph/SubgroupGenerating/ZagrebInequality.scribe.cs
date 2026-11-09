@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.SubgroupGenerati
 internal sealed class ZagrebInequalityDocument : IScribeDocumentDefinition
 {
     private const string Owner = "D5/S3/Combinatorics/Graph/SubgroupGenerating/ZagrebInequality.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/GraphInvariants/das2025sgbzagreb");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/FiniteGroups/das2025sgbzagreb");
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The Zagreb inequality for the complete subgroup-generating graph.", H("ZagrebInequality"), Blocks(
             Describe.Lean(DescribeId.Create("zagreb-first"),
