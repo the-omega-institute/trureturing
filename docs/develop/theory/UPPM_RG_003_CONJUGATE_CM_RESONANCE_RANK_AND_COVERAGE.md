@@ -3763,6 +3763,610 @@ $$
 
 ## 追加锚（本行以下为增补区）
 
+## 47. 固定人工谱的整数 log n 原子、单值 Euler 双实现与相反谐和占用
+
+**定义 47.1（一次固定的谱、核与参考变换）。** 固定 $1/2<b<1$ 及整数 $m>4$。对 $n=1,2,\ldots$，依次确定
+
+$$
+\begin{gathered}
+Y_n=2^n,\qquad \theta_n=0,\qquad
+\beta_n=b-\frac{b-1/2}{n+1},\qquad L_n=e^{nY_n},\\
+j_n=\left\lceil\frac{Y_nL_n}{\pi}\right\rceil+1,\qquad
+\gamma_nY_n+\arctan\frac{\beta_n}{\gamma_n}=j_n\pi,\\
+\frac{(j_n-1/2)\pi}{Y_n}<\gamma_n<\frac{j_n\pi}{Y_n},\qquad
+\rho_n=\beta_n+i\gamma_n,\qquad A_n=\frac{4\gamma_n}{\sqrt{Y_n}}.
+\end{gathered}
+\tag{47.1}
+$$
+
+方程的唯一性及存在性在下面证明。记 $\Gamma=\{\rho_n,\bar\rho_n:n\ge1\}$。对实 $y$ 定义
+
+$$
+\begin{aligned}
+f_n(y)&=-\frac{e^{\rho_n y}}{\rho_n}
+         -\frac{e^{\bar\rho_n y}}{\bar\rho_n},\\
+K_n(y)&=\sum_{k\in\mathbb Z}e^{-k^2/y^m}e^{ikA_ny^{3/2}}
+                       &&(y>0),\\
+f(y)&=\sum_{Y_n\le y}f_n(y),\qquad
+h(y)=\sum_{Y_n\le y}f_n(y)K_n(y) &&(y\ge0).
+\end{aligned}
+\tag{47.2}
+$$
+
+激活和为空时取零，故无需定义 $K_n(0)$。$g_n(z)$ 表示 $f_n$ 的全纯延伸，即在第一式中把 $y$ 换成 $z$；共轭只作用于参数 $\rho_n$，不作用于变量 $z$。固定参考为
+
+$$
+F(s)=\sum_{n\ge1}\left\{
+-\frac{e^{-(s-\rho_n)Y_n}}{\rho_n(s-\rho_n)}
+-\frac{e^{-(s-\bar\rho_n)Y_n}}{\bar\rho_n(s-\bar\rho_n)}
+\right\}.
+\tag{47.3}
+$$
+
+这里的谱是人工选定的非实谱，整数支撑也不预指普通素数。
+
+**定理 47.2（同谱、整数原子与 Euler 除子的确定性双实现）。** 对定义 47.1 的每一组固定参数，存在按以下证明唯一指定的两个整数集合 $\mathcal A_+,\mathcal A_-\subseteq\{8,9,\ldots\}$，使每个整数在各集合中至多出现一次。置
+
+$$
+\begin{gathered}
+\Theta_\eta(x)=\sum_{a\in\mathcal A_\eta,\ a\le x}\log a,
+\qquad B_\eta(x)=\Theta_\eta(x)-\lfloor x\rfloor,
+\qquad \eta\in\{+,-\},\\
+G_\eta(s)=\int_1^\infty(\Theta_\eta(x)-x)x^{-s-1}\,dx,
+\qquad
+Z_\eta(s)=\prod_{a\in\mathcal A_\eta}(1-a^{-s})^{-1}.
+\end{gathered}
+\tag{47.4}
+$$
+
+这些变换和乘积起初均取 $\operatorname{Re}s>1$。结论如下。
+
+（一）存在非负连续、局部绝对连续的中间计数 $S_\eta$，满足 $S_\eta(1)=0$、全域几乎处处 $1/2\le S_\eta'\le3/2$，且
+
+$$
+\begin{gathered}
+S_\eta(x)=x+O\!\left(x^b(\log x)^{m/2}\right),\qquad
+\Theta_\eta(x)-S_\eta(x)=O(\log x),\\
+\sum_{H\ge1:\,\Theta_+(H)<H}\frac1H<\infty,
+\qquad
+\sum_{H\ge1:\,\Theta_-(H)\ge H}\frac1H<\infty.
+\end{gathered}
+\tag{47.5}
+$$
+
+因此负整数占用对 $+$ 有限谐和质量，对 $-$ 的补集有有限谐和质量；后者称调和意义的余有限，不声称通常意义的有限补集。相应地
+
+$$
+\int_{\{x\ge1:B_+(x)<0\}}\frac{dx}{x}<\infty,
+\qquad
+\int_{\{x\ge1:B_-(x)\ge0\}}\frac{dx}{x}<\infty.
+\tag{47.6}
+$$
+
+（二）$F$ 是全平面亚纯函数，仅在 $\Gamma$ 有简单极点，主部分别为 $-1/[\rho_n(s-\rho_n)]$ 及其参数共轭式。两个连续普通 Mellin 误差与 $F$ 之差各自整；两个 $G_\eta-F$ 则各自在 $\operatorname{Re}s>0$ 全纯。以 $B_\eta$ 取代普通误差仍只增加该半平面全纯函数。因此这些离散误差的全部主部仍准确为
+
+$$
+-\frac1{\rho_n(s-\rho_n)},\qquad
+-\frac1{\bar\rho_n(s-\bar\rho_n)}.
+\tag{47.7}
+$$
+
+其谱实部上确界为未取得的 $b$，误差变换在正实轴正则；这里的正则性不包括 Euler 函数在 $1$ 的极点。
+
+（三）$Z_\eta$ 均有到 $D=\{\operatorname{Re}s>1/2\}$ 的单值亚纯延拓。各自仅在 $1$ 有一个简单极点，仅在 $\Gamma$ 有简单零点，无其他零极点。两者的负对数导数具有同一完整主部：$1$ 处留数 $+1$，$\Gamma$ 各处留数 $-1$。共享的是零极点及其重数和负对数导数的主部，不要求两个 Euler 函数相等、完整芽相等，亦不要求它们在 $1$ 的函数留数相等。
+
+**证明。** 全部参数首先由 (47.1) 固定，以下不按紧集、模态或实变量重新选择它们。
+
+（甲）根、激活接点与局部绝对连续性。令 $Y=Y_n$、$\beta=\beta_n$、$j=j_n$。指定根区间的左端大于 $L_n$；函数
+$\gamma Y+\arctan(\beta/\gamma)$ 的导数为 $Y-\beta/(\gamma^2+\beta^2)>0$。其左端值小于 $j\pi$，右端值大于 $j\pi$，故唯一根存在，且 $\gamma_n>L_n$。由根方程
+
+$$
+\beta_n\cos(\gamma_nY_n)+\gamma_n\sin(\gamma_nY_n)=0,
+\qquad
+f_n(y)=-\frac{2e^{\beta_n y}
+[\beta_n\cos(\gamma_n y)+\gamma_n\sin(\gamma_n y)]}
+{\beta_n^2+\gamma_n^2},
+\tag{47.8}
+$$
+
+得到 $f_n(Y_n)=0$。$K_n$ 及其任意固定阶导数的级数在 $y>0$ 的实紧区间由高斯尾正常控制。在每个有界实区间内仅有有限项激活，且各项在接点的函数值为零。逐项零延伸后分段光滑、连续且局部绝对连续，故 $f,h$ 亦如此；接点允许导数跳跃，没有函数跳跃或分布 $\delta$ 项。记
+
+$$
+\mathcal G=\sum_n\gamma_n^{-1}<\sum_ne^{-n2^n}<\infty,
+\qquad
+\mathcal J=\sum_nY_n^{-1/2}=\sqrt2+1,
+\qquad
+N(y)=\#\{n:Y_n\le y\}\le\log_2y.
+\tag{47.9}
+$$
+
+高斯和估计给出，对 $y\ge2$，
+
+$$
+|f(y)|\le2\mathcal G e^{by},\qquad
+|h(y)|\le C_m\mathcal G e^{by}y^{m/2}.
+\tag{47.10}
+$$
+
+当 $\operatorname{Re}s>b$ 时，可绝对交换激活和与 Laplace 积分，直接积分得到 $\mathcal Lf=F$。在 $|s|\le R$ 上，充分大的 $n$ 满足 $|s-\rho_n|,|s-\bar\rho_n|\ge\gamma_n/2$，相应一对项至多
+
+$$
+\frac{4e^{(b+R)Y_n}}{\gamma_n^2}.
+\tag{47.11}
+$$
+
+故在避开极点的紧集上正常收敛。$\beta_n$ 严格递增、$\gamma_n\to\infty$，所以 $\Gamma$ 无有限聚点且各点互异。展开激活因子得到
+
+$$
+-\frac{e^{-(s-\rho_n)Y_n}}{\rho_n(s-\rho_n)}
+=-\frac1{\rho_n(s-\rho_n)}+\text{在 }\rho_n\text{ 附近全纯的函数}.
+\tag{47.12}
+$$
+
+其余项在该点附近正常收敛且全纯；这证明 (47.3) 的全部准确主部。
+
+（乙）逐谱正负模态及内弧角积分。先在 $\operatorname{Re}s>b$ 定义
+
+$$
+E_n(s)=\int_{Y_n}^\infty f_n(y)(K_n(y)-1)e^{-sy}\,dy.
+\tag{47.13}
+$$
+
+固定 $n$，暂记 $Y=Y_n$、$\gamma=\gamma_n$、$A=A_n$、$g=g_n$。令
+
+$$
+\alpha=\frac{\pi}{4m},\quad a=\cos(m\alpha)=\frac1{\sqrt2},\quad
+q=\frac{\sin\alpha}{\alpha},\quad d=\sin\alpha.
+$$
+
+对 $k\ne0$ 写 $j=|k|$、$\epsilon=\operatorname{sign}k$。只在扇区 $0\le\epsilon\arg z\le\alpha$、$|z|\ge Y$ 中使用主支 $z^{3/2}$，并置
+
+$$
+Q_k(z,s)=g(z)e^{-sz-k^2z^{-m}+ikAz^{3/2}}.
+$$
+
+正模态向上转，负模态向下转。若 $z=re^{i\epsilon u}$、$0\le u\le\alpha$、$|s|\le R$，置 $D_R=b+R$，则
+
+$$
+\begin{aligned}
+|Q_k(z,s)|
+&\le\frac2\gamma e^{D_Rr-a j^2/r^m}
+ \exp\{\gamma r\sin u-jAr^{3/2}\sin(3u/2)\}\\
+&\le\frac2\gamma e^{D_Rr-a j^2/r^m}
+ \exp\{-(4j\sqrt{r/Y}-1)\gamma r\sin u\}.
+\end{aligned}
+\tag{47.14}
+$$
+
+这里 $\sin(3u/2)\ge\sin u\ge qu$，两种转向所得估计相同。$g$ 中两个指数的最坏增长 $e^{\gamma r\sin u}$ 始终与衰减相位一起估计。
+
+令 $I_k$ 为从 $Y$ 到 $Ye^{i\epsilon\alpha}$ 的有向内弧积分。保留角积分，得到
+
+$$
+\begin{aligned}
+\sup_{|s|\le R}|I_k(s)|
+&\le\frac{2Y}{\gamma}e^{D_RY-a j^2/Y^m}
+ \int_0^\alpha e^{-3j\gamma Yqu}\,du\\
+&\le\frac{2}{3qj\gamma^2}e^{D_RY-a j^2/Y^m}.
+\end{aligned}
+\tag{47.15}
+$$
+
+将和在 $j=Y^{m/2}$ 附近分开，前段用调和和、后段用单调高斯积分，给出
+
+$$
+S_m(Y):=\sum_{j\ge1}\frac{e^{-a j^2/Y^m}}j
+\le C_m(1+\log Y),\qquad
+\sum_{k\ne0}\sup_{|s|\le R}|I_k(s)|
+\le\frac{C_m e^{D_RY}(1+\log Y)}{\gamma^2}.
+\tag{47.16}
+$$
+
+角积分带来的 $1/(j\gamma Y)$ 因子是全谱可和估计的一部分，不能先对 $g$ 单独取内弧最大值。
+
+（丙）射线的全紧集界。令 $R_k$ 为从 $Ye^{i\epsilon\alpha}$ 沿同一射线到无穷的积分。写 $t=r/Y\ge1$，则
+
+$$
+4j\sqrt t-1\ge2j\sqrt t+j,\qquad
+\sup_{t\ge0}(D_Rt-2dt^{3/2})=\frac{D_R^3}{27d^2}=:B_R.
+$$
+
+由于 $j\gamma\ge1$，(47.14) 的射线指数至多 $B_RY-j\gamma dr$。因此
+
+$$
+\begin{aligned}
+\sup_{|s|\le R}|R_k(s)|
+&\le\frac{2e^{B_RY}}\gamma\int_Y^\infty e^{-j\gamma dr}\,dr
+ =\frac{2e^{B_RY-j\gamma dY}}{dj\gamma^2},\\
+\sum_{k\ne0}\sup_{|s|\le R}|R_k(s)|
+&\le\frac{4[-\log(1-e^{-2d})]}{d\gamma^2}e^{B_RY}.
+\end{aligned}
+\tag{47.17}
+$$
+
+被舍去的高斯因子不超过 $1$。各射线积分在 $s$ 紧集上有统一可积尾界，故为整函数；内弧积分亦整，两者的模态和正常收敛。这些界对每个 $n$ 有效，没有令 $\gamma_n$ 依赖 $R$。
+
+（丁）全部模态的外弧回接。写 $s=\sigma+i\tau$、$\delta=\sigma-b>0$。在半径 $T$ 的外弧上，当 $A\sqrt T\ge2(\gamma+|\tau|)$ 时，结合两指数的增长与模态相位至少留下
+
+$$
+|Q_k(Te^{i\epsilon u},s)|
+\le\frac2\gamma
+ e^{-\delta T\cos\alpha-a j^2/T^m}
+ e^{-(j/2)AT^{3/2}\sin u}.
+$$
+
+乘弧长并积分角变量，外弧积分 $O_{k,T}$ 满足
+
+$$
+|O_{k,T}(s)|\le
+\frac4{qj\gamma A\sqrt T}
+ e^{-\delta T\cos\alpha-a j^2/T^m},\qquad
+\sum_{k\ne0}|O_{k,T}(s)|\le
+\frac{8S_m(T)}{q\gamma A\sqrt T}e^{-\delta T\cos\alpha}\longrightarrow0.
+\tag{47.18}
+$$
+
+在初始半平面的紧集上也一致趋零。因此不是仅对每个固定模态回接。有限环扇形的边界取实轴向外、外弧、射线向内、内弧向内，Cauchy 定理给出
+
+$$
+\int_Y^\infty Q_k(y,s)\,dy=I_k(s)+R_k(s).
+\tag{47.19}
+$$
+
+下扇区虽有相反几何定向，零积分及上述等式仍相同。原实轴上也可绝对交换 $n,k$ 与积分，因为
+
+$$
+\sum_n\int_{Y_n}^\infty |f_n(y)|e^{-\sigma y}
+ \sum_k e^{-k^2/y^m}\,dy
+\le C_m\mathcal G\int_2^\infty e^{-(\sigma-b)y}y^{m/2}\,dy<\infty.
+\tag{47.20}
+$$
+
+所以 $E_n=\sum_{k\ne0}(I_k+R_k)$ 确实延拓 (47.13)。综合 (47.16)、(47.17)，取 $C_R=1+D_R+B_R$，有
+
+$$
+\sup_{|s|\le R}|E_n(s)|
+\le\frac{C_m e^{C_RY_n}(1+\log Y_n)}{\gamma_n^2}.
+\tag{47.21}
+$$
+
+常数 $C_m$ 仅依赖 $m$；$b,R$ 的依赖已纳入 $C_R$。由 $\gamma_n>e^{nY_n}$，充分大的 $n$ 的右端受常数倍 $e^{-nY_n/2}$ 控制，故
+
+$$
+E(s):=\sum_nE_n(s)\quad\text{整},\qquad
+\mathcal Lh(s)=F(s)+E(s)\quad(\operatorname{Re}s>b).
+\tag{47.22}
+$$
+
+这里的 $n$ 和在每个复紧集绝对一致；稍大圆盘上的 Cauchy 导数估计还允许任意固定阶 $s$ 导数逐项相加。全部非零模态的总修正是整函数，(47.12) 的每一个简单主部原样保留。
+
+（戊）一次固定构造的导数成本。在实轴上
+$f_n'(y)=-2e^{\beta_n y}\cos(\gamma_n y)$。由 (46.15) 的高斯矩界，直接微分 $K_n$ 给出
+
+$$
+|K_n'(y)|\le C_m\left[y^{m/2-1}+A_n y^{m+1/2}\right]\quad(y\ge2).
+$$
+
+使用 $\sum_n A_n/\gamma_n=4\mathcal J$，在几乎所有非接点及相应单侧导数上得到
+
+$$
+\begin{aligned}
+|h'(y)|
+&\le C_m e^{by}\left[y^{m/2}N(y)
+ +\mathcal G y^{m/2-1}+4\mathcal J y^{m+1/2}\right]\\
+&\le C_m e^{by}\left[y^{m/2}\log(2+y)+y^{m+1/2}\right]
+=o(e^y).
+\end{aligned}
+\tag{47.23}
+$$
+
+接点不要求经典导数存在；（甲）的局部绝对连续性保证几乎处处估计可积分。因 $b<1$，(47.10) 同样给出 $h=o(e^y)$。
+
+（己）确定槽的总长度与槽外底色。置
+
+$$
+U_n=\{y\ge Y_n:\operatorname{dist}(A_ny^{3/2},2\pi\mathbb Z)
+             <4y^{1-m/2}\},\qquad U=\bigcup_{n\ge1}U_n.
+\tag{47.24}
+$$
+
+$m\ge5$、$y\ge2$ 保证阈值 $4y^{1-m/2}\le\sqrt2<\pi$。在每个二进区间 $[L,2L]$、$L\ge Y_n$ 中，相位导数为 $(3/2)A_n\sqrt y\asymp A_n\sqrt L$。可能相交的中心数至多 $C(A_nL^{3/2}+1)$；每个槽包含在 $|A_ny^{3/2}-2\pi\ell|<4L^{1-m/2}$ 的原像内，其长度至多 $CA_n^{-1}L^{(1-m)/2}$。即使中心在区间边界外，该计数仍包括与区间相交的槽。因此
+
+$$
+\begin{aligned}
+|U_n\cap[L,2L]|&\le C_m\left[L^{2-m/2}
+                         +A_n^{-1}L^{(1-m)/2}\right],\\
+|U_n|&\le C_m\left[Y_n^{2-m/2}
+                         +A_n^{-1}Y_n^{(1-m)/2}\right],\qquad
+|U|\le\sum_n|U_n|<\infty.
+\end{aligned}
+\tag{47.25}
+$$
+
+第二行沿 $L=2^jY_n$ 求几何和；第一项对 $n$ 可和正是因为 $m>4$，第二项使用 $A_n^{-1}=\sqrt{Y_n}/(4\gamma_n)$ 亦可和。
+
+Poisson 恒等式给出确定的正核
+
+$$
+K_n(y)=\sqrt\pi\,y^{m/2}\sum_{\ell\in\mathbb Z}
+ \exp\!\left[-\frac{y^m(A_ny^{3/2}-2\pi\ell)^2}{4}\right]>0.
+\tag{47.26}
+$$
+
+直接复用 (46.18) 的周期一致估计，若 $y\ge Y_n$ 且 $y\notin U_n$，则 $K_n(y)\le Cy^{m/2}e^{-2y^2}$。故所有激活项在 $U$ 外同时满足
+
+$$
+|h(y)|\le C_m\mathcal G e^{by}y^{m/2}e^{-2y^2}
+=o(e^{-y^2}).
+\tag{47.27}
+$$
+
+令 $w(y)=e^{-y^2}$、$u_\pm(y)=h(y)\pm w(y)$。由 (47.23)、(47.27)，$u_\pm,u_\pm'=o(e^y)$，且最终在 $U$ 外 $u_+\ge w/2>0$、$u_-\le-w/2<0$。核没有被当作紧支撑核，槽内也没有预设符号或质量。
+
+（庚）线性补接及全局计数斜率。取满足以下全部条件的最小整数 $y_0\ge2$：对 $y\ge y_0$，两种符号都有 $|u_\eta(y)|\le e^y/4$、几乎处处 $|u_\eta'(y)|\le e^y/2$，且 $U$ 外 $|h(y)|\le w(y)/2$。前述极限保证该整数存在。令 $X=e^{y_0}$，定义
+
+$$
+q_\eta=\frac{X+u_\eta(y_0)}{X-1},\qquad
+S_\eta(x)=
+\begin{cases}
+q_\eta(x-1),&1\le x\le X,\\
+x+u_\eta(\log x),&x\ge X.
+\end{cases}
+\tag{47.28}
+$$
+
+$X\ge e^2>6$，所以
+
+$$
+q_\eta>0,\qquad
+|q_\eta-1|\le\frac{1+X/4}{X-1}\le\frac12.
+$$
+
+两段的函数值在 $X$ 相同，且在每个紧区间拼成绝对连续函数。前段斜率为 $q_\eta$，后段几乎处处斜率为 $1+x^{-1}u_\eta'(\log x)$，均在 $[1/2,3/2]$ 内。这证明全域斜率、$S_\eta(1)=0$、非负性及 (47.5) 的连续增长式。还得到
+
+$$
+\begin{gathered}
+E_+=\{x\ge1:S_+(x)<x\},\qquad
+E_-=\{x\ge1:S_-(x)\ge x\},\\
+L_\pm:=\int_{E_\pm}\frac{dx}{x}\le y_0+|U|<\infty.
+\end{gathered}
+\tag{47.29}
+$$
+
+这是 $dx/x=dy$ 及尾部严格符号的直接结果。
+
+令 $v_\eta(y)=S_\eta(e^y)-e^y$。$v_\eta-u_\eta$ 支撑于 $[0,y_0]$，故
+
+$$
+\begin{gathered}
+W(s)=\int_0^\infty e^{-y^2-sy}\,dy,\qquad
+C_\eta(s)=\int_0^{y_0}(v_\eta(y)-u_\eta(y))e^{-sy}\,dy,\\
+F_{S_\pm}(s):=\int_1^\infty(S_\pm(x)-x)x^{-s-1}\,dx
+=F(s)+E(s)\pm W(s)+C_\pm(s).
+\end{gathered}
+\tag{47.30}
+$$
+
+等式起初在 $\operatorname{Re}s>b$ 成立。$W$ 在每个 $s$ 紧集由高斯尾支配，$C_\eta$ 是固定有限段积分，二者均整。因此两个连续误差分别与同一个 $F$ 相差整函数，不是仅证明两误差之差整。
+
+（辛）固定 $\pm1$ 缓冲的确定贪心及有限追赶。取固定整数 $N=8$，令
+
+$$
+U(n)=S_+(n)+1,\qquad V(n)=S_-(n)-1,\qquad
+Q_+(N-1)=Q_-(N-1)=0.
+$$
+
+由全域斜率，$S_-(7)\ge3$，且 $\log N>3/2$。对每个整数 $n\ge N$，按下式一次决定是否将它收入相应集合：
+
+$$
+\begin{aligned}
+Q_+(n)&=Q_+(n-1)+(\log n)\,\mathbf1_{\{Q_+(n-1)<U(n)\}},\\
+Q_-(n)&=Q_-(n-1)+(\log n)\,\mathbf1_{\{Q_-(n-1)+\log n\le V(n)\}}.
+\end{aligned}
+\tag{47.31}
+$$
+
+触发的整数分别组成 $\mathcal A_\pm$，所以 $Q_\eta(n)=\Theta_\eta(n)$，每整数只有一个 $\log n$ 跳跃机会。未引入随机相位、重复原子或预先给定的种子集合。置
+
+$$
+\begin{gathered}
+c=\log N-\frac32>0,\quad u_0=U(N-1)>0,\quad v_0=V(N-1)\ge0,\\
+C_0=\max(u_0,v_0),\qquad K=N+\lceil C_0/c\rceil.
+\end{gathered}
+\tag{47.32}
+$$
+
+局部绝对连续性及斜率给 $\Delta U(n),\Delta V(n)\in[1/2,3/2]$。对 up 递推设 $d_n=Q_+(n)-U(n)$，初值 $d_{N-1}=-u_0$。首次到达非负值前每步都触发，若尚未追上，则
+
+$$
+d_n=-u_0+\sum_{k=N}^n(\log k-\Delta U(k))
+\ge-u_0+(n-N+1)c.
+$$
+
+$(K-N+1)c>C_0$ 保证至迟在 $K$ 追上。首次追上时由触发条件有 $0\le d_n<\log n$。此带随后不变：不触发时 $d_n\ge0$ 且 $d_n=d_{n-1}-\Delta U(n)<\log n$；触发时下界为 $\log n-3/2>0$，触发条件又给上界 $d_n<\log n$。
+
+对 down 递推设 $e_n=V(n)-Q_-(n)$，初值 $e_{N-1}=v_0\ge0$，仅在整跳可容纳时加入，故始终 $e_n\ge0$。任何不触发的一步立即满足 $e_n<\log n$；若至 $K$ 仍未入带，则每步均触发，导致
+
+$$
+e_K=v_0+\sum_{k=N}^K(\Delta V(k)-\log k)
+\le v_0-(K-N+1)c<0,
+$$
+
+矛盾。入带后，不触发仍由条件得 $e_n<\log n$；触发则
+$0\le e_n<\log(n-1)+3/2-\log n\le3/2<\log n$。因此对所有 $n\ge K$，
+
+$$
+U(n)\le Q_+(n)<U(n)+\log n,\qquad
+V(n)-\log n<Q_-(n)\le V(n).
+\tag{47.33}
+$$
+
+追赶及不变带完全由递推支付，没有使用待证的占用结论。对实数 $x\in[n,n+1)$、$n\ge K$，$\Theta_\eta(x)=Q_\eta(n)$，而
+$0\le S_\eta(x)-S_\eta(n)\le(3/2)(x-n)$，故
+
+$$
+|\Theta_\eta(x)-S_\eta(x)|\le\log x+\frac52.
+\tag{47.34}
+$$
+
+（壬）整胞厚化、谐和计费与 floor 基准。$g_\eta(x)=S_\eta(x)-x$ 为 $1/2$-Lipschitz。若 $n\ge K$ 且 $Q_+(n)<n$，由 (47.33) 得 $g_+(n)<-1$，从而对整胞 $[n,n+1)$ 有 $g_+(x)<-1/2$，整胞属于 $E_+$。若 $Q_-(n)\ge n$，则 $g_-(n)\ge1$，整胞上 $g_-(x)>1/2$，属于 $E_-$。令
+
+$$
+I_+=\{n\ge K:Q_+(n)<n\},\qquad
+I_-=\{n\ge K:Q_-(n)\ge n\}.
+$$
+
+同号的整胞互不相交，于是
+
+$$
+\sum_{n\in I_\pm}\log(1+1/n)
+=\int_{\bigcup_{n\in I_\pm}[n,n+1)}\frac{dx}{x}\le L_\pm,
+\qquad
+\sum_{n\in I_\pm}\frac1n\le2L_\pm,
+\tag{47.35}
+$$
+
+其中 $\log(1+1/n)\ge1/(n+1)\ge1/(2n)$。加回有限初段得到 (47.5)。特别地 $-$ 的负整数集合的调和和发散，因为其补集的调和和有限。
+
+在每个整数胞 $[n,n+1)$ 上，$B_\eta(x)=Q_\eta(n)-n$ 恰为常数，故错误符号集就是上述整数集的整胞并；(47.35) 同时证明 (47.6)。相对于实基准则
+
+$$
+\Theta_\eta(x)-x=B_\eta(x)-(x-\lfloor x\rfloor).
+\tag{47.36}
+$$
+
+二者不能冒称同号，例如 $0\le B_\eta(x)<1$ 时小数部分能改变符号。固定缓冲所做的是把错误整数提升为连续错误集内的整个胞，不是对有限测度集合作裸整数采样。
+
+（癸）Mellin 舍入与完整主部转移。记 $R_\eta=\Theta_\eta-S_\eta$，由 (47.34) 及有限初段有 $R_\eta=O(1+\log x)$。因此
+
+$$
+H_\eta(s)=\int_1^\infty R_\eta(x)x^{-s-1}\,dx
+\quad\text{在 }\operatorname{Re}s>0\text{ 全纯},\qquad
+G_\eta=F_{S_\eta}+H_\eta.
+\tag{47.37}
+$$
+
+对任一紧集 $\operatorname{Re}s\ge\varepsilon>0$，每个固定阶导数的被积函数由
+$C(1+\log x)^{r+1}x^{-1-\varepsilon}$ 支配，故上述全纯性和逐阶求导严格成立。由 (47.30)，$G_\eta-F$ 在这个半平面全纯。若改用 $B_\eta$ 的普通 Mellin 变换，还要加
+
+$$
+J(s)=\int_1^\infty(x-\lfloor x\rfloor)x^{-s-1}\,dx,
+\tag{47.38}
+$$
+
+它同样只需在 $\operatorname{Re}s>0$ 全纯。舍入修正与 floor 修正没有被称为全平面整函数；例如常数尾的 Mellin 变换含 $X^{-s}/s$，仅凭这种界不能排除非正半平面的奇性。
+
+所有 $\rho_n$ 均在 $\operatorname{Re}s>0$，故 (47.7) 原样保留，且 $G_\eta$ 及加上 $J$ 的变换在正实轴无极点。$\beta_n\uparrow b$ 而无一项等于 $b$。增长式还给出任意 $\varepsilon>0$ 的 $\Theta_\eta(x)-x=O_\varepsilon(x^{b+\varepsilon})$；不存在任何固定 $d<b$ 使其为 $O(x^d)$。否则原积分在 $\operatorname{Re}s>d$ 全纯，与某个 $\beta_n>d$ 的非零主部矛盾。这里没有把未取得上确界改成一个实轴奇点。
+
+（子）Stieltjes 输入、Euler 高次尾及常数下端项。在 $\operatorname{Re}s>1$，$\Theta_\eta(1)=0$、$\Theta_\eta(x)=O(x)$ 保证分部积分两端均已确定，得到
+
+$$
+D_\eta(s):=\sum_{a\in\mathcal A_\eta}(\log a)a^{-s}
+=\int_1^\infty x^{-s}\,d\Theta_\eta(x)
+=\frac{s}{s-1}+sG_\eta(s).
+\tag{47.39}
+$$
+
+连续 $S_\eta(1)=0$ 也给相同下端约定；两 Stieltjes 输入之差为 $sH_\eta$。在 $\rho_n$ 的完整普通主部恰是简单主部 $-1/[\rho_n(s-\rho_n)]$，乘 $s$ 后的完整奇部为 $-1/(s-\rho_n)$。此处简单性已证，未把只知留数的高阶极点误用为同一规则。
+
+Euler 乘积在 $\operatorname{Re}s>1$ 由绝对正常收敛的
+$\sum_{a\in\mathcal A_\eta}\sum_{k\ge1}a^{-ks}/k$ 定义，是非零全纯函数。逐项求导给
+
+$$
+-\frac{Z_\eta'}{Z_\eta}=D_\eta+T_\eta,
+\qquad
+T_\eta(s)=\sum_{a\in\mathcal A_\eta}\sum_{k\ge2}(\log a)a^{-ks}.
+\tag{47.40}
+$$
+
+在 $\operatorname{Re}s\ge1/2+\varepsilon$ 上，绝对和至多
+
+$$
+\frac1{1-N^{-1/2-\varepsilon}}
+\sum_{a\ge N}(\log a)a^{-1-2\varepsilon}<\infty.
+\tag{47.41}
+$$
+
+因此 $T_\eta$ 在 $D$ 全纯，不改变人工谱的任何主部。设 $\mathcal H_\eta=G_\eta-F$，定义其延拓
+
+$$
+\begin{aligned}
+\mathcal L_\eta(s)
+&=\frac{s}{s-1}+sF(s)+s\mathcal H_\eta(s)+T_\eta(s)\\
+&=\frac1{s-1}+sF(s)
+  +\bigl[1+s\mathcal H_\eta(s)+T_\eta(s)\bigr].
+\end{aligned}
+\tag{47.42}
+$$
+
+括号在 $D$ 全纯；其中常数 $1$ 来自 $s/(s-1)$，不能漏掉。$F$ 在 $1$ 正则，故 $\mathcal L_\eta$ 仅在 $1$ 留数 $+1$、在 $\rho_n,\bar\rho_n$ 留数 $-1$，且全为简单极点。
+
+（丑）整数留数所保证的严格单值延拓。令 $D^*=D\setminus(\{1\}\cup\Gamma)$。该域道路连通。取基点 $s_*=2$，以原 Euler 乘积的非零值 $Z_\eta(2)$ 归一化，定义
+
+$$
+\widetilde Z_\eta(s)=Z_\eta(2)
+ \exp\!\left(-\int_{2}^{s}\mathcal L_\eta(w)\,dw\right),\qquad s\in D^*.
+\tag{47.43}
+$$
+
+任意闭合分段光滑路 $\gamma\subset D^*$ 的凸包紧含于半平面 $D$；离散极点在其中只有有限个。留数定理及绕数给
+
+$$
+\frac1{2\pi i}\int_\gamma\mathcal L_\eta(w)\,dw
+=\operatorname{Ind}(\gamma,1)
+ -\sum_{a\in\Gamma}\operatorname{Ind}(\gamma,a)\in\mathbb Z.
+\tag{47.44}
+$$
+
+式中仅有限项非零。故 (47.43) 的指数与道路无关，定义单值非零全纯函数。它在 $\operatorname{Re}s>1$ 与原乘积具有相同负对数导数及相同基点值，因而相等。
+
+在每个被删点 $a$ 的小圆盘内写
+$\mathcal L_\eta(s)=r_a/(s-a)+\ell_a(s)$，其中 $\ell_a$ 全纯，$r_1=1$、$r_a=-1$ 对 $a\in\Gamma$。取 $\ell_a$ 的局部原函数 $P_a$，则穿孔圆盘上
+
+$$
+\widetilde Z_\eta(s)=c_a(s-a)^{-r_a}e^{-P_a(s)},\qquad c_a\ne0.
+\tag{47.45}
+$$
+
+整数 $r_a$ 使该式单值，并在中心给出相应简单极点或简单零点。所有别处由指数表示保证非零全纯，故无额外零极点。这证明（三）。两套 $\mathcal L$ 的主部相消，$Z_+/Z_-$ 还可消去共同零极点而成为 $D$ 上处处非零的全纯函数；这不要求该比值恒为 $1$。特别地，(47.45) 的非零局部因子未被共同除子固定，不能进一步断言两个 $Z$ 在 $1$ 的函数主部系数相同。$\square$
+
+**注记 47.3（成熟输入、综合范围与未付算术桥）。** (47.26) 使用经典 theta／Poisson 恒等式，可从 NIST DLMF [20.2.E3](https://dlmf.nist.gov/20.2.E3) 的 Fourier 展开及 [20.7.E32](https://dlmf.nist.gov/20.7.E32) 的模变换取得；参数对应为 $z=A_ny^{3/2}/2$、$\tau=i/(\pi y^m)$，所以 $q=e^{-1/y^m}$。高斯矩估计、Cauchy 轮廓变形、正常收敛、带缓冲的贪心追踪及整数留数的指数积分是共同构造中的成熟工具，不另列为独立新定理。
+
+§46 所引 Broucke–Debruyne–Vindas，*On the absence of remainders in the Wiener–Ikehara and Ingham–Karamata theorems: a constructive approach*（2021），及 Callewaert–Neyt–Vindas，*On a space of functions with entire Laplace transforms and its connection with the optimality of the Ingham–Karamata theorem*（2025），提供整 Laplace 变换及单调余项的背景。它们不直接给出本条逐谱的 $\gamma_n^{-2}(1+\log Y_n)$ 估计、整数 $\log n$ 原子、缓冲整胞桥或跨全部人工零点的单值 Euler 实现；这些在 (47.14)–(47.45) 中承担各自推导。
+
+Broucke–Vindas，*A new generalized prime random approximation procedure and some of its applications*，[arXiv:2102.08478v2](https://arxiv.org/abs/2102.08478v2)，Theorem 1.2 的输入计数须非减、右连续、趋于无穷，在 $1$ 为零并满足 Chebyshev 上界 $O(x/\log x)$；结论允许选择自由实支撑，连续输入时还可选严格递增序列，但不指定整数支撑。Corollary 2.2 对指定支撑 $v_k$ 除了间距界，还要求尾和条件
+
+$$
+\sum_{v_k\ge h(t)}\frac{(v_k-v_{k-1})^2}{v_k\log v_k}
+\ll\frac{\log(t+1)}t,
+\qquad h(t)=\log(t+1)\log\log(t+e),\quad t>0.
+\tag{47.46}
+$$
+
+对整数格，该左端包含发散的 $\sum_{k\ge k_0}1/(k\log k)$，故不能套用。该推论的脚注还明确允许支撑点重复，并不保证每点至多一次。本条只用 (47.31)–(47.35) 支付所需确定整数化，没有从自由支撑或该推论借取未满足的条件。
+
+Hilberdink–Lapidus，*Beurling zeta functions, generalised primes, and fractal membranes*，[arXiv:math/0410270v1](https://arxiv.org/abs/math/0410270v1)，§1.1 的广义整数按生成元的分解重数计数；其 Theorem 2.1 在 $0\le\alpha<1$ 及 $\psi(x)=x+O_\varepsilon(x^{\alpha+\varepsilon})$ 下给 $\operatorname{Re}s>\alpha$ 的零自由延拓，$1$ 处为简单极点，逆向还要求负对数导数的增长控制。这不直接支付跨本条人工 $\rho_n$ 的延拓，后者由 (47.42)–(47.45) 单独建立。
+
+这里的普通整数 Euler 乘积可以在 $\operatorname{Re}s>1$ 展开为
+
+$$
+Z_\eta(s)=\sum_{r\ge1}c_\eta(r)r^{-s},\qquad
+c_\eta(r)=\#\left\{(\nu_a)_{a\in\mathcal A_\eta}:
+ \nu_a\in\mathbb Z_{\ge0},\ (\nu_a)\text{ 有限支撑},
+ \prod_a a^{\nu_a}=r\right\}.
+\tag{47.47}
+$$
+
+对固定 $r$ 只有有限个分解，但 $c_\eta(r)$ 不保证为 $0$ 或 $1$；不同所选整数之间可有乘法关系，且只选一次生成元不意味着唯一因式分解。故这些集合是整数生成元集合，可以按上述重数约定解释，不能称为普通素数集合，$Z_\eta$ 也不是实际 Riemann $\zeta$。
+
+本条成果定位为 repo-derived 的受限综合，不主张全球文献原创：对同一固定人工谱，同时保留每个简单普通误差主部 $-1/[\rho(s-\rho)]$、整数单次 $\log n$ 原子、单值 Euler 零极点除子，并实现相反的负整数谐和占用。形式 $-1/\rho$ 与简单零点显式公式的形式一致，不把人工 $\rho$ 识别为实际零点。保留主部与除子允许正则部分改变，未保留任意给定实际完整芽、实际 $\zeta$、功能方程或 Riemann–von Mangoldt 计数。
+
+关键未付算术桥是把这些可自由选择的整数生成元及其分解重数，接回实际普通素数的指定原子、唯一因式分解和同一个实际 $\vartheta$；还缺给定实际谱及完整芽的共同实现。单调导数预算用了固定 $b<1$，没有支付 $b=1$。§41 的实际 CM 点、全部原有限地方、原 $q_H$、同一 $Y=C_M\times\mathbb T^2$ 上跨块联合条件与同一成功整数仍保持原义；本条没有建立实际 $\vartheta(H)<H$ 的谐和占用发散或原 CM 满测桥。整数原子与单值 Euler 结构缩小了人工反例的自由度，没有完成这些实际目标。
+
+用白话说，即使把同一套人工非实谱的全部误差主部固定下来，把跳跃放回整数且每个整数只许跳一次 $\log n$，再要求对应 Euler 乘积在右半平面单值亚纯并具有同一套简单零点和同一个简单极点，仍能让一套误差只在谐和总量有限的整数上为负，另一套则除谐和总量有限的整数外都为负：窄脉冲让谱留在总时长有限的槽中，槽外由正负微小底色决定符号，固定缓冲的追踪又把这种连续符号差异传到完整整数胞，而实际普通素数及 CM 的联合桥仍未建立。
+
+## 追加锚（本行以下为增补区）
+
 ## 48. 有限素因子 Hall 类的单位 Abel 容量与真实素数识别
 
 **定义 48.1（有限素因子 Hall 条件、独立性与容量）。** 本节局部记号 $A\subset\{2,3,\ldots\}$ 是整数生成元集，不替换定义 24.1 的同余类集合。记 $\mathcal P$ 为真实素数集，$S(a)=\{p\in\mathcal P:p\mid a\}$。称 $A$ 满足有限素因子 Hall 条件 $H(A)$，若对每个有限 $B\subset A$ 都有
