@@ -2107,3 +2107,191 @@ $1\le(1+2\pi\sqrt\ell)/(\ell+1)<1$。该通道直接拆分并处理 $R$ 的自�
 本批真正留下的原始数学缺口是：在保留所有原始 raw-sign 总自旋槽、终端交换和同一完整 $K$ 的条件下，能否证明更强的 $1/\sqrt j$ 返回必要性，或给出合法的较小系数约化 CP 控制器并保持同一个均匀解码器。定理 14.3 的 $1/j$ 级下界与定理 13.1 的 $2M/D+2\zeta$ 上界相容但不匹配；它没有给出共同优化器、完整可达区域或最优系数。
 
 ## 追加锚（本行以下为增补区）
+## 16. 固定终端输出约化与同一协议的实际返回增益
+
+**定义 16.1（协议、实际端口与终端节点）。** 固定定义 13.1 的任一原始元组，保留完整半径 $r$ 的场域及导数承诺、独立纯场重置服务、唯一初始方向资源 $\tau_h$ 和全部原始访问限制。写
+$$
+m=2j=D-1,\qquad t=d\tau_0=\frac1{64},\qquad
+e=e_{\rm CP}=\min\{1,M\kappa_D\},\qquad
+\kappa_D=\frac{2D-1}{2D^2},\qquad \zeta=\frac{t}{\sqrt m}.
+\tag{16.1}
+$$
+这里 $N\ge N_*$、$M=L=10N$、$Q=18N+1$、$D\ge8{,}000{,}000N^2$，均与 (13.4) 相同。记定理 13.1、命题 13.2 的原协议为 $\mathsf P_{\rm raw}$；其十设置获取日程、通道 $\mathcal C$、全部资源和 (13.24) 的有限解码器均固定不变。
+
+令 $K_0$ 为额外终端重置之前、获取与解码结束时的全部实际非参考寄存器，包括所有先前探针和场输出、原生 $H,E$、原始 $b,Y$、标量 qubit、指针与实际复制/读出环境、已保留的噪声系统、全部记录、二十个计数器、路由/程序/步进/解码工作区及旁观者。含解码工作区的实际获取结束态记为 $\eta_{n,h}$。额外重置仍供应独立的纯态
+$$
+P_v=\frac{I+v\cdot\sigma}{2},\qquad v=n(+d e_x),
+$$
+并在同一标记 $R$ 上实际执行原定交换 $U_{\rm term}=\exp(-itJ\cdot\sigma/m)$。其后只在同一个输出 qubit $S_t$ 上追加固定确定性节点
+$$
+\mathcal E(X)=\operatorname{Tr}(X)\frac{I_2}{2},\qquad
+K_{ab}=\frac{|a\rangle\langle b|}{\sqrt2}\quad(a,b=0,1).
+\tag{16.2}
+$$
+所得协议记为 $\mathsf P_{\rm dep}$。四个 Kraus 项全部求和，不产生新读数或选择分支。两协议的实际最终口均为 $K=K_0\otimes S_t$，用各自的实际边缘 $\omega_{\rm raw},\omega_{\rm dep}$ 按 (13.10) 定义 $\Delta_{\rm raw},\Delta_{\rm dep}$，并记 $\bar\delta_\bullet=\sup_{n,h}\Delta_\bullet(n,h)$。
+
+本节的端口假设是上述指定约化实现：终端交换为 $R S_t$ 上的幺正原语，$\mathcal E:S_t\to S_t$ 没有另行声明的实际输出；获取阶段的完整口满足 (13.19)。若 $\mathcal C$ 或 $\mathcal E$ 的另一实现产生额外实际噪声、随机记录或工作寄存器 $F$，则必须把 $F$ 纳入实际 $K$ 并重新估计；下述定理不覆盖未经该完整口估计的实现。形式 Kraus 指标和证明用扩张空间不自动成为实际输出，实际存在的输出也不得由此删去。
+
+置
+$$
+x_D=\frac{Dt}{2m},\qquad
+b_D=\frac{2\sqrt m}{D}\sin x_D,\qquad
+g_D=\frac{b_D}{2\sqrt{1-b_D^2}},\qquad
+D_{\rm tr}(\rho,\sigma)=\frac12\|\rho-\sigma\|_1.
+\tag{16.3}
+$$
+
+**定理 16.2（原任务保持与完整实际边缘证书；repo-derived）。** 在定义 16.1 的实际约化口假设下，$\mathsf P_{\rm dep}$ 属于原始允许类，精确保留整个 $K_0$ 可观测代数及原解码器的分布。特别是对每个允许的 $n,h$，
+$$
+\Pr_{\rm dep}\!\left[\|\widehat D-D_h(n)\|_\infty\le\epsilon\right]
+=\Pr_{\rm raw}\!\left[\|\widehat D-D_h(n)\|_\infty\le\epsilon\right]
+\ge1-\beta,
+\tag{16.4}
+$$
+其中目标仍为初始方向的
+$$
+D_h(n)=\left(
+\frac{h\cdot[n(0)\times n_x(0)]}{2},
+\frac{h\cdot[n(0)\times n_y(0)]}{4},0,
+\frac{h\cdot n_y(0)}2\right).
+$$
+定义参考通道
+$$
+\mathcal T_v(X)=\operatorname{Tr}_{S_t}
+\!\left[U_{\rm term}(X\otimes P_v)U_{\rm term}^\dagger\right].
+$$
+则对实际的、允许相关的 $\eta=\eta_{n,h}$，完整输出及其实际边缘恰为
+$$
+\begin{aligned}
+\Omega_{\rm dep}
+&=[(\mathcal T_v\otimes\operatorname{id}_{K_0})(\eta)]
+ \otimes I_2/2,\\
+\omega_{\rm dep}&=\eta_{K_0}\otimes I_2/2,\\
+\Delta_{\rm dep}(n,h)
+&=D_{\rm tr}\!\left((\mathcal T_v\otimes\operatorname{id}_{K_0})(\eta),
+                   \tau_h\otimes\eta_{K_0}\right).
+\end{aligned}
+\tag{16.5}
+$$
+它满足
+$$
+\bar\delta_{\rm dep}\le\min\{1,2e+g_D\}
+<\min\{1,2(e+\zeta)\}.
+\tag{16.6}
+$$
+式 (16.6) 的严格号比较两个统一充分证书；另有逐点实际不等式 $\Delta_{\rm dep}(n,h)\le\Delta_{\rm raw}(n,h)$，其严格最坏情形比较见命题 16.3。
+
+**证明。** $\sum_{a,b}K_{ab}^\dagger K_{ab}=I_2$，故 (16.2) 是一个与 $n,h,v$ 无关的非参考 CPTP 节点。假设 12.2 和定义 13.1 允许因果处理先前量子输出；本节点位于规定纯输入和交换之后，不增加 $R$ 接触、场调用或方向资源，也不改动原始标签。其伴随满足 $\mathcal E^\dagger(C)=\operatorname{Tr}(C)I_2/2$，从而对每个 $A\in\mathcal B(K_0)$，
+$$
+(\operatorname{id}_{K_0}\otimes\mathcal E)^\dagger
+(A\otimes I_{S_t})=A\otimes I_{S_t}.
+\tag{16.7}
+$$
+此等式对相关输入仍成立，故全部早期边缘、原始记录效果及 (13.24) 的同一个成功事件精确保留。定理 13.1 的成功保证遂给 (16.4)。它没有把目标改成终态的导数；$\mathcal E^\dagger$ 对终端无迹可观测量为零，因此也没有声称终端完整矩阵代数被固定。同一输出 qubit 保留在 $K$，其态被实际改变为 $I_2/2$。
+
+对交换后的任意联合态应用 (16.2)，恒有 $\operatorname{Tr}_{S_t}(\,\cdot\,)\otimes I_2/2$ 的代数表达。$\mathcal T_v$ 保迹，所以其非参考边缘仍为 $\eta_{K_0}$。再用 $\|X\otimes I_2/2\|_1=\|X\|_1$，得到 (16.5)；这里的偏迹表达指定约化节点，未从实际口删去 $S_t$ 或任何 $K_0$ 因子。
+
+计算 $\rho_{h,v}=\mathcal T_v(\tau_h)$。仅在证明中选 $h=z$，令 $e_h=|j,j\rangle$、$f_h=|j,j-1\rangle$，并写 $|v,+\rangle=\alpha|\uparrow\rangle+\beta_0|\downarrow\rangle$、
+$p=|\beta_0|^2=(1-h\cdot v)/2$。由 (13.5)、(13.14)，$J\cdot\sigma$ 的两个本征值为 $j,-(j+1)$，所以略去公共相位后，
+$$
+\begin{aligned}
+U_{\rm term}&=\Pi_++z_t\Pi_-,\qquad z_t=e^{iDt/m},\\
+U_{\rm term}(e_h\uparrow)&=e_h\uparrow,\\
+U_{\rm term}(e_h\downarrow)&=A_t e_h\downarrow+B_t f_h\uparrow,\\
+A_t&=\frac{1+m z_t}{D},\qquad B_t=\frac{\sqrt m(1-z_t)}{D},\\
+|B_t|&=b_D,\qquad |A_t|^2=1-b_D^2.
+\end{aligned}
+\tag{16.8}
+$$
+于是交换向量为 $w=\alpha e_h\uparrow+\beta_0 A_t e_h\downarrow+\beta_0 B_t f_h\uparrow$，参考边缘仅支撑于 $e_h,f_h$，其矩阵为
+$$
+\rho_{h,v}=
+\begin{pmatrix}
+1-pb_D^2&\alpha\overline{\beta_0}\,\overline{B_t}\\
+\overline\alpha\beta_0 B_t&pb_D^2
+\end{pmatrix}.
+\tag{16.9}
+$$
+差 $\rho_{h,v}-\tau_h$ 的特征值为 $\pm q(p)$，其中
+$$
+q(p)=b_D\sqrt{p-(1-b_D^2)p^2}.
+\tag{16.10}
+$$
+$m\ge1$ 给 $0<x_D\le t$、$0<b_D\le t/\sqrt m\le1/64$。对 (16.10) 的二次式配方，其最大点 $p=[2(1-b_D^2)]^{-1}$ 位于 $[0,1]$，故
+$$
+\max_{0\le p\le1}q(p)=g_D<\zeta.
+\tag{16.11}
+$$
+同时旋转协变性给出任意 $h,v$ 的相同公式；这些坐标及最大化只用于证明，不进入程序。
+
+复用 (13.19)，并把相同非参考解码处理包括在内，有某理想完整 $K_0$ 态 $\Xi^i=\Xi^i_{n,h}$ 使
+$$
+D_{\rm tr}(\eta,\tau_h\otimes\Xi^i)\le e,\qquad
+D_{\rm tr}(\eta_{K_0},\Xi^i)\le e.
+$$
+对第一对态施行同一个 $\mathcal T_v\otimes\operatorname{id}_{K_0}$。由收缩性及经过 $\rho_{h,v}\otimes\Xi^i$、$\tau_h\otimes\Xi^i$ 的三角不等式，
+$$
+\Delta_{\rm dep}(n,h)\le e+q(p)+e\le2e+g_D.
+\tag{16.12}
+$$
+两项 $e$ 分别控制完整态与其实际边缘，不能以理想边缘替代后略去后一项。原元组满足 $e<1/(800000N)$、$\zeta<1/(128000N)$，故 $2(e+\zeta)<1$；结合 (16.11) 得 (16.6)。最后，把同一局部节点分别施于 $\Omega_{\rm raw}$ 和 $\tau_h\otimes\omega_{\rm raw}$，第二态成为 $\tau_h\otimes\omega_{\rm dep}$，收缩性给出所述逐点实际不等式。$\square$
+
+**命题 16.3（非空原始子族上的严格实际最坏情形比较；repo-derived）。** 对仍满足全部原始条件且另有
+$$
+\sqrt m\ge\frac{40M}{t}
+\tag{16.13}
+$$
+的元组，同一固定元组、同一全体原始 $n,h$ 上的两个实际上确界满足
+$$
+\bar\delta_{\rm dep}<\frac{61}{100}b_D
+<\frac{13}{20}b_D<\bar\delta_{\rm raw}.
+\tag{16.14}
+$$
+这个原始子族非空：对每个允许的整数 $N$，可取
+$$
+m=(2560M)^2=655{,}360{,}000N^2,\qquad D=m+1,\qquad j=m/2.
+\tag{16.15}
+$$
+
+**证明。** 取 (14.12) 在半径 $1/3$ 开圆盘内的场。它属于 $C^2$，前两个坐标保证秩二，原点两轴导数范数均为一，轴上二阶导数范数为 $(1-s^2)^{-3/2}<2$（$|s|\le1/4$），故满足完整原始场承诺。选一个 $h\perp v=n(+d e_x)$，于是 $p=1/2$；这是上确界中的见证，两个程序均不以它为输入。
+
+对实际获取态和上述理想乘积态施行同一交换，得到
+$$
+D_{\rm tr}(\Omega_{\rm raw},\Gamma)\le e,\qquad
+\Gamma=|w\rangle\langle w|\otimes\Xi^i.
+$$
+在完整 $R K_0 S_t$ 上令 $\mathsf P=\tau_h\otimes I$。任意 Hermitian $X$ 满足
+$$
+\|\mathsf P X(I-\mathsf P)\|_1\le\frac12\|X\|_1,
+\tag{16.16}
+$$
+因为 $Z=2\mathsf P-I$ 是幺正，且
+$\|X-ZXZ\|_1=4\|\mathsf P X(I-\mathsf P)\|_1\le2\|X\|_1$。
+实际乘积 $\tau_h\otimes\omega_{\rm raw}$ 的该交叉块为零，故 (16.16) 先用于返回差、再用于 $\Omega_{\rm raw}-\Gamma$，给出
+$$
+\begin{aligned}
+\Delta_{\rm raw}(n,h)
+&\ge\|\mathsf P\Omega_{\rm raw}(I-\mathsf P)\|_1\\
+&\ge\|\mathsf P\Gamma(I-\mathsf P)\|_1-e\\
+&=b_D\sqrt{\frac12\left(1-\frac{b_D^2}{2}\right)}-e
+>\frac7{10}b_D-e.
+\end{aligned}
+\tag{16.17}
+$$
+最后一步用 $b_D\le1/64$。这里保留了实际 $\omega_{\rm raw}$ 和全部输出，直接估计原协议的交叉块，未把任何原始口下界经收缩移植到处理后的输出。
+
+同一范围内 $\sqrt{1-b_D^2}>63/64$，故
+$g_D<32b_D/63<51b_D/100$。又 $\sin x_D\ge x_D/2$，所以
+$$
+b_D\ge\frac{t}{2\sqrt m},\qquad
+\frac{e}{b_D}<\frac{2M}{t\sqrt m}\le\frac1{20}.
+$$
+将此代入 (16.12) 和 (16.17)，分别得到 (16.14) 两端的严格界。这一步用原协议的实际下见证与新协议的统一上界分离上确界，并非仅由两个充分证书的大小推出严格实际改善。式 (16.15) 是整数 $m$、允许的半整数 $j$，满足 (16.13) 和 $D\ge8{,}000{,}000N^2$，其余 $L,Q$ 及承诺保持原值，故确为非空原始子族。$\square$
+
+**资源与来源范围。** 命题 13.2 的日程、有限解码和完整资源逐项复用：仍为 $M$ 次获取槽、$M$ 次 $\mathcal C$、包含终端交换的 $M+1$ 次实际 $R$ 接触以及 $18N+1$ 次场重置；唯一增加是一项固定非参考 qubit 到 qubit 的约化 CPTP 节点。全部原始记录与实际保留输出仍在 $K$，没有额外 $R$ 操作、不可见初始纯化、未知方向程序或后选择。
+
+局部保迹、伴随保单位、迹距离收缩及二阶 Hermitian 矩阵和交叉块范数均为成熟输入；局部边缘保持亦见本卷定理 4.3，收缩论证见定理 12.3 的证明。Kretschmann–Schlingemann–Werner 的[原文第 II.1 节、式 (4)](https://arxiv.org/html/quant-ph/0605009v1)给出这里使用的通道对偶语义，不调用其信息—扰动或扩张连续性定理。总自旋投影及角动量系数沿用 (13.5)、(13.14)，对应 Bartlett–Rudolph–Spekkens–Turner 的[原文第 III 节及附录 B、式 (39)–(40)](https://arxiv.org/html/quant-ph/0602069v2)，不移用其丢弃探针后的寿命指标。本节 repo-derived 的范围限于原任务下固定终端节点的完整对应、(16.5) 的实际边缘表达及分开证明的两个有限比较，不主张历史新颖性或文献穷尽。
+
+本节没有消去终端作用后的参考边缘项 $q(p)$。§15 的原始完整输出、原生访问类中的共同可达与必要界缺口仍未解决；这里没有给出均匀 $O(M/D)$ 控制器、更强的全类必要尺度、最优系数或完整可达区域。场源、指定门、校准、实际噪声汇和物理时钟仍是条件模型前提；额外实际输出的资格限制属于定理的适用域。
+
+## 追加锚（本行以下为增补区）
