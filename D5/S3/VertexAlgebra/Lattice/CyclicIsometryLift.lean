@@ -274,6 +274,63 @@ private theorem corrected_single (D : LatticeData) (g : Charge D ≃+ Charge D)
     IsometryLift.lift_single, phase_sign D g hg, smul_smul, complexSign_add]
   rw [mul_comm]
 
+/-- The corrected lift acts on a zero-oscillator charged ground state with the
+literal one-step cocycle phase.  This public wrapper keeps the phase visible
+to later finite-cycle trace calculations without exposing the private defect
+normalization. -/
+theorem corrected_ground_single (D : LatticeData) (g : Charge D ≃+ Charge D)
+    (hg : ∀ a b, bilinear D (g a) (g b) = bilinear D a b)
+    (chi : Charge D →+ F₂) (a : Charge D) :
+    corrected D g chi (Finsupp.single a (1 : Oscillator D)) =
+      ((IsometryLift.phase D g a : ℂ) * complexSign (chi a)) •
+        Finsupp.single (g a) (1 : Oscillator D) := by
+  rw [phase_sign D g hg, ← complexSign_add]
+  simpa only [map_one] using corrected_single D g hg chi a 1
+
+abbrev corrected_ground_single_statement : Prop :=
+  type_of% (@corrected_ground_single)
+
+theorem corrected_ground_single_observed (s : Bool) :
+    (s = true) ↔
+      (if s then corrected_ground_single_statement else False) := by
+  cases s
+  · simp
+  · have h : corrected_ground_single_statement := corrected_ground_single
+    simpa using h
+
+/-- The actual phase accumulated by a power on a charged ground state. -/
+def correctedGroundPhase (D : LatticeData) (g : Charge D ≃+ Charge D)
+    (chi : Charge D →+ F₂) (n : ℕ) (a : Charge D) : ℂ :=
+  ∏ j ∈ Finset.range n,
+    ((IsometryLift.phase D g (g^[j] a) : ℂ) *
+      complexSign (chi (g^[j] a)))
+
+/-- Exact ground-state action of every power, including the phase. -/
+theorem corrected_ground_pow_single (D : LatticeData) (g : Charge D ≃+ Charge D)
+    (hg : ∀ a b, bilinear D (g a) (g b) = bilinear D a b)
+    (chi : Charge D →+ F₂) (n : ℕ) (a : Charge D) :
+    (corrected D g chi ^ n) (Finsupp.single a (1 : Oscillator D)) =
+      correctedGroundPhase D g chi n a •
+        Finsupp.single (g^[n] a) (1 : Oscillator D) := by
+  induction n with
+  | zero => simp [correctedGroundPhase]
+  | succ n ih =>
+    rw [pow_succ', LinearEquiv.mul_apply, ih, map_smul,
+      corrected_ground_single D g hg]
+    simp only [correctedGroundPhase, Finset.prod_range_succ,
+      Function.iterate_succ_apply', smul_smul]
+
+abbrev corrected_ground_pow_single_statement : Prop :=
+  type_of% (@corrected_ground_pow_single)
+
+theorem corrected_ground_pow_single_observed (s : Bool) :
+    (s = true) ↔
+      (if s then corrected_ground_pow_single_statement else False) := by
+  cases s
+  · simp
+  · have h : corrected_ground_pow_single_statement := corrected_ground_pow_single
+    simpa using h
+
 private theorem corrected_compatible (D : LatticeData) (g : Charge D ≃+ Charge D)
     (hg : ∀ a b, bilinear D (g a) (g b) = bilinear D a b)
     (chi : Charge D →+ F₂) :
