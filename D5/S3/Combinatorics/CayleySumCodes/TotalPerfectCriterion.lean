@@ -132,10 +132,10 @@ theorem result [Finite G] (H : Subgroup G) (Y : Set G) (hY : NormalSubset Y) :
           change (S.erase (g * g)).card = 1 at h
           have hs : g * g ∈ S := by
             by_contra hn
-            rw [Finset.card_erase_of_notMem hn, hS] at h
+            rw [Finset.erase_eq_of_notMem hn, hS] at h
             omega
           exact (smem _).mp hs
-      · have hS : S.card = 1 := by rwa [Finset.card_erase_of_notMem hi] at h1
+      · have hS : S.card = 1 := by rwa [Finset.erase_eq_of_notMem hi] at h1
         obtain ⟨z, hz⟩ := Finset.card_eq_one.mp hS
         have hzS : z ∈ S := by rw [hz]; simp
         refine Or.inl ⟨z, ((smem z).mp hzS).2, ?_, ?_⟩

@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Combinatorics/Orthogonality/SixBitCatalogue
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   utility: none
+   utility: kind=checker; basis=consumer=D5/S3/Combinatorics/Orthogonality/SixBitCatalogueVerification.chromatic_number_six; instance=D5/S3/Combinatorics/Orthogonality/SixBitCatalogueVerification.catalogue_proper
    digest: Supplied exact six-bit orthogonality catalogue and complete proof transfer. -/
 
 import Mathlib.Combinatorics.SimpleGraph.Coloring.Vertex

@@ -11,6 +11,10 @@ strata_touched:
   - D5/S3/Combinatorics/Orthogonality/SixBitCatalogueData
   - D5/S3/Combinatorics/Orthogonality/SixBitCatalogueVerification
   - D5/S3/Combinatorics/Orthogonality/SixBitSubmoduleBridge
+  - D5/S3/Combinatorics/Orthogonality/WeightedIndependentBound
+  - D5/S3/Combinatorics/Orthogonality/SixBitLineChromatic
+  - D5/S3/Combinatorics/Orthogonality/BinaryLineGraph
+  - D5/S3/Combinatorics/Orthogonality/SixBitLineTransfer
 license: research-material rights unresolved; original supplied source attribution preserved
 triage: anchor
 ---
@@ -69,3 +73,23 @@ return follows the supplied source authorization, preserves the authors and
 version distinctions, and makes no academic publication, submission, rights,
 priority or author-order decision. The older primary Nikandish paper and the
 separately licensed clique proof retain their own original attribution.
+
+The distinct O2 line theorem uses the original PR1 `lines.tex` (Git blob
+35a78b9854f2e79f91197d2dc3e248f35a863571, SHA256
+8d132812bcdf5ead47c9a942cfae40d55f6f6ad0a0d6c7c2b98449bfa1344580)
+and literal twelve-color partition (Git blob
+54f901d0f02b66abeb09186f184d938f1971eaa5). The manuscript proves the weighted
+bound by the Gram matrix J+I on even vectors and, after choosing an odd a,
+the orthonormal vectors e+a together with the totally isotropic span of u+a
+in a-perp. These original arguments and credit are preserved. The current
+formal representation is a universal include-or-omit weighted-subset checker,
+with both recursion branches proved sound for arbitrary finite candidate lists.
+Its input is all63 nonzero masks, with weights3/4 and a complete bound19;
+a second all-even input supplies the extremal profile condition. The numerical
+checks, total weight221, every color fiber, and the unchanged literal upper
+witness are all required by the actual chromatic proof. A development-time
+Python evaluation observed bound19 with35439 recursion nodes (4347 distinct
+states); that observation is not Lean or normal acceptance evidence. The
+current candidate still requires its successful native build, target-object
+transport and current report before any accepted claim. It never runs or
+reopens paused n7 case exclusions.

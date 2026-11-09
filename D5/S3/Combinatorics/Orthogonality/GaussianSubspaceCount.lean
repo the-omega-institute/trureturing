@@ -28,7 +28,7 @@ private theorem frame_span {n d : ℕ}
     (s : Fin d → U) (hs : LinearIndependent (ZMod 2) s) :
     Submodule.span (ZMod 2) (Set.range (fun i => (s i : Fin n → ZMod 2))) = U := by
   apply (Submodule.span_range_subtype_eq_top_iff U (fun i => (s i).2)).mp
-  exact hs.span_eq_top_of_card_eq_finrank (by simpa using hd.symm)
+  exact hs.span_eq_top_of_card_eq_finrank' (by simpa using hd.symm)
 
 /-- Count all ordered independent d-frames by their actual span. This is the
 missing fiber decomposition behind the Gaussian coefficient, rather than a
@@ -43,7 +43,7 @@ private theorem frame_count (n d : ℕ) (hd : d ≤ n) :
   let F (U : S) := {s : Fin d → U.1 // LinearIndependent (ZMod 2) s}
   letI : Fintype S := Fintype.ofFinite S
   let f : (Σ U : S, F U) → {s : Fin d → V // LinearIndependent (ZMod 2) s} :=
-    fun z => ⟨fun i => (z.2.1 i : V), z.2.2.map' z.1.1.subtype Subtype.val_injective⟩
+    fun z => ⟨fun i => (z.2.1 i : V), z.2.2.map' z.1.1.subtype (LinearMap.ker_eq_bot.mpr Subtype.val_injective)⟩
   have hf : Function.Bijective f := by
     constructor
     · rintro ⟨U, s⟩ ⟨W, t⟩ h
@@ -57,8 +57,7 @@ private theorem frame_count (n d : ℕ) (hd : d ≤ n) :
           _ = Submodule.span (ZMod 2) (Set.range (fun i => (t.1 i : V))) := by rw [he]
           _ = W.1 := frame_span W.1 W.2 t.1 t.2
       subst W
-      apply Sigma.ext rfl
-      apply heq_of_eq
+      apply congrArg (Sigma.mk U)
       apply Subtype.ext
       funext i
       exact Subtype.ext (congrFun he i)
@@ -80,7 +79,7 @@ private theorem frame_count (n d : ℕ) (hd : d ≤ n) :
     (by simpa [V] using hd)
   simpa only [Finset.sum_const, smul_eq_mul, Finset.card_univ,
     ← Nat.card_eq_fintype_card, ZMod.card, Module.finrank_fintype_fun_eq_card,
-    Fintype.card_fin, V] using hc.trans ha
+    Fintype.card_fin, V, S, Nat.card_fin, Nat.card_zmod] using hc.trans ha
 
 private theorem basis_count_pos (d : ℕ) :
     0 < ∏ i : Fin d, (2 ^ d - 2 ^ i.val) := by
@@ -124,7 +123,8 @@ theorem result (n : ℕ) :
   have hc := Nat.card_congr (Equiv.ofBijective f hf)
   rw [Nat.card_sigma] at hc
   simp_rw [S, dimension_card n _ (Finset.mem_Icc.mp (Subtype.property _)).2] at hc
-  simpa only [nonzeroSubspaceCount, Finset.sum_attach] using hc.symm
+  change (∑ d : ↥(Finset.Icc 1 n), gaussian n d.1) = nonzeroSubspaceCount n at hc
+  simpa only [Finset.sum_coe_sort] using hc.symm
 
 #print axioms dimension_card
 #print axioms result

@@ -55,6 +55,7 @@ private theorem below_card (n : ℕ) (X : Submodule (ZMod 2) (Fin n → ZMod 2))
       Nat.card_congr (Equiv.ofBijective f ⟨fi, fs⟩)
     _ = _ := Nat.card_congr (e.toEquiv.subtypeEquiv (fun P => by simp))
 
+open Classical in
 /-- The actual neighbor cardinality, including the exact self-loop subtraction.
 The lattice count is the existing cardinal invariant, not an assumed enumeration. -/
 theorem degree_card (n : ℕ) (U : Vertex n) :
@@ -90,15 +91,16 @@ theorem degree_card (n : ℕ) (U : Vertex n) :
   by_cases h : U.1 ≤ X
   · rw [Finset.card_erase_of_mem (by simp [S, h]), count]
     exact (if_pos h).symm
-  · rw [Finset.card_erase_of_notMem (by simp [S, h]), count]
+  · rw [Finset.erase_eq_of_notMem (by simp [S, h]), count]
     exact (if_neg h).symm
 
-private theorem extend_one {V : Type*} [Fintype V] (G : SimpleGraph V)
+private theorem extend_one {V : Type*} [Fintype V] [DecidableEq V] (G : SimpleGraph V)
     (D : Finset V) (v : V) (hv : v ∉ D) (k : ℕ)
     (hd : Nat.card (G.neighborSet v) < k)
     (c : (G.induce {w | w ∉ insert v D}).Coloring (Fin k)) :
     ∃ c' : (G.induce {w | w ∉ D}).Coloring (Fin k),
-      ∀ w (hw : w ∉ insert v D), c' ⟨w, (Finset.notMem_insert.mp hw).2⟩ = c ⟨w, hw⟩ := by
+      ∀ w (hw : w ∉ insert v D),
+        c' ⟨w, fun h => hw (Finset.mem_insert_of_mem h)⟩ = c ⟨w, hw⟩ := by
   classical
   let T := {w : G.neighborSet v // w.1 ∉ insert v D}
   let used := Finset.univ.image (fun w : T => c ⟨w.1.1, w.2⟩)
@@ -130,7 +132,9 @@ private theorem extend_one {V : Type*} [Fintype V] (G : SimpleGraph V)
           ⟨x.1, by simp [hx, x.2]⟩ ⟨y.1, by simp [hy, y.2]⟩ from hxy)
   refine ⟨SimpleGraph.Coloring.mk color proper, ?_⟩
   intro w hw
-  simp [color, (Finset.notMem_insert.mp hw).1]
+  have hne : w ≠ v := fun h => hw (by simp [h])
+  change color ⟨w, _⟩ = c ⟨w, hw⟩
+  simp [color, hne]
 
 private theorem extend_deleted {V : Type*} [Fintype V] (G : SimpleGraph V)
     (D : Finset V) (k : ℕ) (hd : ∀ v ∈ D, Nat.card (G.neighborSet v) < k)
@@ -147,7 +151,7 @@ private theorem extend_deleted {V : Type*} [Fintype V] (G : SimpleGraph V)
     obtain ⟨c', hc'⟩ := extend_one G D v hv k (hd v (by simp)) c
     obtain ⟨C, hC⟩ := ih (fun w hw => hd w (Finset.mem_insert_of_mem hw)) c'
     refine ⟨C, fun w hw => ?_⟩
-    exact (hC w (Finset.notMem_insert.mp hw).2).trans (hc' w hw)
+    exact (hC w (fun h => hw (Finset.mem_insert_of_mem h))).trans (hc' w hw)
 
 /-- Reversing any finite collection of safe deletions extends every coloring
 without changing any retained vertex, in every dimension and for every palette.

@@ -22,10 +22,10 @@ abbrev Coordinates := Fin 6 → ZMod 2
 def bits (v : Mask) : Coordinates := fun i => (v.val / 2 ^ i.val % 2 : ℕ)
 
 private theorem bits_bijective : Function.Bijective bits := by decide +kernel
-private theorem bits_zero : bits 0 = 0 := by decide +kernel
+theorem bits_zero : bits 0 = 0 := by decide +kernel
 private theorem bits_add : ∀ x y : Mask,
     bits (BinaryOrthogonality.add x y) = bits x + bits y := by decide +kernel
-private theorem bits_dot : ∀ x y : Mask,
+theorem bits_dot : ∀ x y : Mask,
     dotProduct (bits x) (bits y) = 0 ↔ BinaryOrthogonality.dot x y = 0 := by
   decide +kernel
 
@@ -58,10 +58,11 @@ def toSubmodule (U : Finset Mask) (hU : BinaryOrthogonality.IsSpace U) :
     exact ⟨BinaryOrthogonality.add x y, hU.2 x hx y hy, bits_add x y⟩
   smul_mem' := by
     intro c x hx
-    fin_cases c
-    · simpa using (show (0 : Coordinates) ∈ bits '' (U : Set Mask) from
+    have hc : c = 0 ∨ c = 1 := by fin_cases c <;> simp
+    rcases hc with rfl | rfl
+    · simpa only [zero_smul] using (show (0 : Coordinates) ∈ bits '' (U : Set Mask) from
         ⟨0, hU.1, bits_zero⟩)
-    · simpa using hx
+    · simpa only [one_smul] using hx
 
 private theorem mem_toSubmodule (U : Finset Mask) (hU : BinaryOrthogonality.IsSpace U)
     (v : Mask) : bits v ∈ toSubmodule U hU ↔ v ∈ U := by
@@ -109,7 +110,10 @@ private theorem zero_space_iff (U : Finset Mask) (hU : BinaryOrthogonality.IsSpa
     intro v
     constructor
     · intro hv
-      have hz : bits v = 0 := he ▸ (mem_toSubmodule U hU v).mpr hv
+      have hz : bits v = 0 := by
+        have hm := (mem_toSubmodule U hU v).mpr hv
+        rw [he] at hm
+        exact hm
       have hv0 := bits_bijective.1 (hz.trans bits_zero.symm)
       exact Finset.mem_singleton.mpr hv0
     · intro hv
@@ -121,7 +125,8 @@ private theorem zero_space_iff (U : Finset Mask) (hU : BinaryOrthogonality.IsSpa
       rw [he] at hv
       simpa only [Finset.mem_singleton.mp hv, bits_zero, Submodule.mem_bot]
     · intro hx
-      exact ⟨0, hU.1, bits_zero.trans (Submodule.mem_bot.mp hx).symm⟩
+      have hx0 : x = 0 := hx
+      exact ⟨0, hU.1, bits_zero.trans hx0.symm⟩
 
 /-- All nonzero source spaces, including the whole space, correspond to all
 nonzero actual Submodules. Source zero is precisely the singleton mask {0}. -/
@@ -132,7 +137,10 @@ noncomputable def vertexEquiv : BinaryOrthogonality.Vertex ≃ NikandishClique.V
   constructor
   · intro U W h
     apply Subtype.ext
-    exact congrArg Subtype.val (spaceEquiv.injective (congrArg Subtype.val h))
+    have he : toSubmodule U.1 U.2.1 = toSubmodule W.1 W.2.1 :=
+      congrArg Subtype.val h
+    exact congrArg Subtype.val (spaceEquiv.injective
+      (show spaceEquiv ⟨U.1, U.2.1⟩ = spaceEquiv ⟨W.1, W.2.1⟩ from he))
   · intro P
     obtain ⟨U, hU⟩ := spaceEquiv.surjective P.1
     have hn : U.1 ≠ {0} := by
