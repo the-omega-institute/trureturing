@@ -58,7 +58,7 @@ For a disagreement core D, retain D together with all points a−s+t for a in D 
 
 A maximal disjoint family of translates with centers in a finite F covers the possible centers by translated pairs of collar sites. If the collar has b sites, the family has at least card(F)/b² members. For any padded input shape U containing these translates and all local windows needed for F, actual image patterns inject into a product with (card(A)^b−1) choices on each translate and card(A) choices on the remaining sites. The resulting count is at most (card(A)^b−1)^k card(A)^(card(U)−kb). This product counts restrictions of the same normalized full configuration.
 
-The supplied lattice-box geometry makes every fixed finite padding have volume ratio tending to one. The positive deficit [b log(card(A))−log(card(A)^b−1)]/b² therefore yields a uniform eventual strict upper bound. The box-through-boundary lemmas retain Tom Ole Diem's physlib proofs at immutable revision 80ca0ab9dccc5ad8a0f904a6572a728e3abfa125; their complete Apache-2.0 license and retirement condition are in Library/Entropy/diem2026folner.md. This geometry supplies no Garden-of-Eden inference by itself.
+The supplied lattice-box geometry makes every fixed finite padding have volume ratio tending to one. The positive deficit [b log(card(A))−log(card(A)^b−1)]/b² therefore yields a uniform eventual strict upper bound. The box-through-boundary estimates are due to Tom Ole Diem. They control the padding volume; the collision and packing arguments supply the strict image-count deficit.
 
 **Theorem 1.5 (Surjectivity is equivalent to preinjectivity in every finite rank).**
 
@@ -72,11 +72,11 @@ $$\begin{aligned}\forall u: \operatorname{Universe}(),\forall A: \operatorname{T
 
 All natural ranks are included, including zero. All finite alphabet universes are included, including empty and singleton alphabets. A subsingleton alphabet makes both assertions immediate. At rank zero the configuration space is finite, finite-disagreement preinjectivity is ordinary injectivity, and the finite endomap theorem applies.
 
-At rank one, the coordinate equivalence with Z, a finite enclosing integer window and an output translation transport both assertions to the existing native GardenOfEden.garden_of_eden theorem, which is applied directly. In higher rank and for at least two letters, surjectivity realizes every pattern on every box. Its logarithmic count per site is exactly log(card(A)), contradicting the strict collision loss if preinjectivity fails. This direction uses the strict-box-loss theorem on its live proof path.
+At rank one, the coordinate equivalence with Z, a finite enclosing integer window and an output translation transport both assertions to the existing native GardenOfEden.garden_of_eden theorem, which is applied directly. In higher rank and for at least two letters, surjectivity realizes every pattern on every box. Its logarithmic count per site is exactly log(card(A)), contradicting the strict collision loss if preinjectivity fails.
 
 For the reverse implication, the full finite-alphabet shift is compact and the local map is continuous. A configuration outside the closed image has a finite cylinder missing the image. Translation gives one finite output pattern absent at every site. The same disjoint-packing count then gives a strict upper deficit. Preinjectivity gives the opposing lower comparison: arbitrary source patterns on a finite F, inserted in one fixed constant context, inject into actual output patterns on the finite set obtained by padding F by the negative neighborhood. Equal observations there give equal complete images because every output that can be affected lies in that padded set. No assumption on the cardinality of a complete-output fiber is used. The fixed padding has asymptotically unit volume ratio, so the two bounds contradict.
 
-This is the classical Moore–Myhill equivalence specialized to finite-dimensional integer lattices. The coupled higher-rank scope is a library extension of the native integer result, not a claim of literature novelty.
+This is the classical Moore–Myhill equivalence specialized to finite-dimensional integer lattices.
 
 ## References
 

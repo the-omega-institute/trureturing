@@ -106,9 +106,8 @@ internal sealed class LatticeGardenOfEdenDocument : IScribeDocumentDefinition
                     + "(card(A)^b−1)^k card(A)^(card(U)−kb). This product counts restrictions of the same normalized full configuration.")),
                 Paragraph(Text("The supplied lattice-box geometry makes every fixed finite padding have volume ratio tending to one. "
                     + "The positive deficit [b log(card(A))−log(card(A)^b−1)]/b² therefore yields a uniform eventual strict upper bound. "
-                    + "The box-through-boundary lemmas retain Tom Ole Diem's physlib proofs at immutable revision "
-                    + "80ca0ab9dccc5ad8a0f904a6572a728e3abfa125; their complete Apache-2.0 license and retirement condition are in "
-                    + "Library/Entropy/diem2026folner.md. This geometry supplies no Garden-of-Eden inference by itself."))), DescribeRole.Theorem),
+                    + "The box-through-boundary estimates are due to Tom Ole Diem. They control the padding volume; "
+                    + "the collision and packing arguments supply the strict image-count deficit."))), DescribeRole.Theorem),
         Describe.Lean(DescribeId.Create("lattice-equivalence"), DeclarationHandle.Create(Owner + "garden_of_eden"),
             H("Surjectivity is equivalent to preinjectivity in every finite rank"), StatementSource.FromAuthor(St(
                 Alphabet, Finite, Setup,
@@ -120,8 +119,7 @@ internal sealed class LatticeGardenOfEdenDocument : IScribeDocumentDefinition
                 Paragraph(Text("At rank one, the coordinate equivalence with Z, a finite enclosing integer window and an output translation "
                     + "transport both assertions to the existing native GardenOfEden.garden_of_eden theorem, which is applied directly. "
                     + "In higher rank and for at least two letters, surjectivity realizes every pattern on every box. "
-                    + "Its logarithmic count per site is exactly log(card(A)), contradicting the strict collision loss if preinjectivity fails. "
-                    + "This direction uses the strict-box-loss theorem on its live proof path.")),
+                    + "Its logarithmic count per site is exactly log(card(A)), contradicting the strict collision loss if preinjectivity fails.")),
                 Paragraph(Text("For the reverse implication, the full finite-alphabet shift is compact and the local map is continuous. "
                     + "A configuration outside the closed image has a finite cylinder missing the image. Translation gives one finite output "
                     + "pattern absent at every site. The same disjoint-packing count then gives a strict upper deficit. Preinjectivity gives the "
@@ -129,7 +127,6 @@ internal sealed class LatticeGardenOfEdenDocument : IScribeDocumentDefinition
                     + "actual output patterns on the finite set obtained by padding F by the negative neighborhood. Equal observations there "
                     + "give equal complete images because every output that can be affected lies in that padded set. No assumption on the "
                     + "cardinality of a complete-output fiber is used. The fixed padding has asymptotically unit volume ratio, so the two bounds contradict.")),
-                Paragraph(Text("This is the classical Moore–Myhill equivalence specialized to finite-dimensional integer lattices. "
-                    + "The coupled higher-rank scope is a library extension of the native integer result, not a claim of literature novelty."))), DescribeRole.Theorem)),
+                Paragraph(Text("This is the classical Moore–Myhill equivalence specialized to finite-dimensional integer lattices."))), DescribeRole.Theorem)),
         [DocumentEdge.Dependency.Create(GidRef.Create("D5/S1/Dynamics/Symbolic/GardenOfEden"))]));
 }
