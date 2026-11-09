@@ -12,8 +12,11 @@ public sealed class InspectorNativeInvalidationTests(InspectorCompilerFixture co
     [InlineData("test_native.NativeSemanticTests.test_private_transitive_definition_invalidates_utility")]
     [InlineData("test_native.NativeSemanticTests.test_reported_module_proof_axioms_invalidate_public_trace")]
     [InlineData("test_native.NativeCompilerTests.test_native_config_options_rebuild_and_fail_closed")]
-    [InlineData("test_native.NativeCompilerTests.test_collection_drains_projection_and_preparation_roots")]
     [InlineData("test_native.NativeCompilerTests.test_native_facet_supplies_toolchain_environment")]
     [InlineData("test_native.NativeCompilerTests.test_public_module_report_and_private_job_is_not_a_target")]
     public void InspectorArtifactBehavior(string suite) => InspectorNativeTestRunner.Run(compiler, suite);
+
+    [Fact]
+    public void CollectionDrainsProjectionAndPreparationRoots() => InspectorNativeTestRunner.Run(compiler,
+        "test_native.NativeCompilerTests.test_collection_drains_projection_and_preparation_roots");
 }
