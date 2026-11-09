@@ -127,9 +127,6 @@ theorem normCore (L : SquareLaws R) : NormedSpace.Core ℝ (Complexification R) 
 instance complexNormedAddCommGroup [L : SquareLaws R] :
     NormedAddCommGroup (Complexification R) := NormedAddCommGroup.ofCore (normCore L)
 
-instance complexNormedSpaceReal [L : SquareLaws R] :
-    NormedSpace ℝ (Complexification R) := NormedSpace.ofCore (normCore L)
-
 omit [NormedAlgebra ℝ R] in
 theorem squareNorm_mul_le (z w : Complexification R) :
     squareNorm (z * w) ≤ squareNorm z * squareNorm w := by
