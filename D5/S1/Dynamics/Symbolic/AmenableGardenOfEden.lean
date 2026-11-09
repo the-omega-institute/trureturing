@@ -45,16 +45,16 @@ def writePattern (C : Finset G) (p : C → A) (t : G) (x : G → A) : G → A :=
   classical
   exact fun g => if h : t⁻¹ * g ∈ C then p ⟨t⁻¹ * g, h⟩ else x g
 
-private def collar (D S : Finset G) : Finset G := by
+def collar (D S : Finset G) : Finset G := by
   classical
   exact D ∪ D.biUnion (fun a => S.biUnion (fun s => S.image (fun r => a * s⁻¹ * r)))
 
-private theorem mem_collar_core (D S : Finset G) {a : G} (ha : a ∈ D) :
+theorem mem_collar_core (D S : Finset G) {a : G} (ha : a ∈ D) :
     a ∈ collar D S := by
   classical
   exact Finset.mem_union_left _ ha
 
-private theorem mem_collar_window (D S : Finset G) {a s r : G}
+theorem mem_collar_window (D S : Finset G) {a s r : G}
     (ha : a ∈ D) (hs : s ∈ S) (hr : r ∈ S) : a * s⁻¹ * r ∈ collar D S := by
   classical
   exact Finset.mem_union_right _ (Finset.mem_biUnion.mpr
