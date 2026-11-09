@@ -435,9 +435,11 @@ private theorem transfer_scalar_mass {d : ℕ} (hd : 0 < d) (F : MatrixMap (Fin 
   classical
   let v : Fin d × Fin d → ℂ := fun r => F 1 r.1 r.2
   have hstar : star ((Matrix.vec (1 : Matrix (Fin d) (Fin d) ℂ))) = (Matrix.vec (1 : Matrix (Fin d) (Fin d) ℂ)) := by
-    ext r; simp [Matrix.vec, Matrix.one_apply, eq_comm]
+    rw [Matrix.star_vec, Matrix.map_one star (by simp) (by simp)]
   have hv : star v ⬝ᵥ v = ((F 1)ᴴ * F 1).trace := by
-    simp only [dotProduct, Fintype.sum_prod_type, Pi.star_apply, v, Matrix.trace, Matrix.diag_apply, Matrix.mul_apply, Matrix.conjTranspose_apply]; rw [Finset.sum_comm]
+    calc
+      _ = star (Matrix.vec (F 1)) ⬝ᵥ Matrix.vec (F 1) := by simp only [v, dotProduct, Fintype.sum_prod_type, Pi.star_apply, Matrix.vec]; rw [Finset.sum_comm]
+      _ = _ := Matrix.star_vec_dotProduct_vec (F 1) (F 1)
   have hd0 : (d : ℂ) ≠ 0 := by exact_mod_cast Nat.ne_zero_of_lt hd
   rw [transfer_scalar_image, Matrix.conjTranspose_inv_natCast_smul, Matrix.conjTranspose_vecMulVec, hstar, Matrix.smul_mul, Matrix.mul_smul, Matrix.vecMulVec_mul_vecMulVec, Matrix.vecMulVec_smul, Matrix.trace_smul, Matrix.trace_smul, Matrix.trace_smul, Matrix.trace_vecMulVec, traceVector_dot, hv]
   simp only [star_inv, star_natCast, smul_eq_mul]; field_simp [hd0] <;> simp [star_natCast, Complex.star_def, hd0] <;> ring
@@ -855,7 +857,9 @@ private theorem transfer_conjugation {d : ℕ} (U : Matrix.unitaryGroup (Fin d) 
   ext r c; rw [transfer_entry]; change (U.val * Matrix.single c.1 c.2 (1 : ℂ) * U.valᴴ) r.1 r.2 = _
   simp [conjugationRep, Matrix.single_eq_single_vecMulVec_single, Matrix.mul_vecMulVec, Matrix.vecMulVec_mul, Matrix.vecMulVec_apply, Matrix.conjTranspose_apply, Matrix.kroneckerMap_apply, Matrix.map_apply]
 private theorem conjugationRep_star {d : ℕ} (U : Matrix.unitaryGroup (Fin d) ℂ) : conjugationRep (star U) = (conjugationRep U)ᴴ := by
-  ext r c; simp [conjugationRep, Matrix.kroneckerMap_apply, Matrix.conjTranspose_apply, Matrix.map_apply, star_mul, mul_comm]
+  change U.valᴴ ⊗ₖ U.valᴴ.map star = (U.val ⊗ₖ U.val.map star)ᴴ
+  rw [Matrix.conjTranspose_kronecker]
+  congr 1
 private theorem scalar_rep_right {d : ℕ} (U : Matrix.unitaryGroup (Fin d) ℂ) : conjugationRep U * D5.S3.QuantumBounds.PeritoTsirelson.maxEntangled (Fin d) = D5.S3.QuantumBounds.PeritoTsirelson.maxEntangled (Fin d) := by
   have hv : conjugationRep U *ᵥ (Matrix.vec (1 : Matrix (Fin d) (Fin d) ℂ)) = (Matrix.vec (1 : Matrix (Fin d) (Fin d) ℂ)) := by
     ext r
