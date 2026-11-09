@@ -38,7 +38,9 @@ private theorem fixed_shift_ratio (S : ℕ → ℝ) (hpos : ∀ n, 0 < S n)
         simpa only [one_mul] using hr.mul ih
       apply hp.congr'
       exact Eventually.of_forall fun n => by
-        rw [Nat.add_succ]
+        change S (n + L + 1) / S (n + L) * (S (n + L) / S n) =
+          S (n + (L + 1)) / S n
+        rw [← Nat.add_assoc]
         field_simp [(hpos (n + L)).ne', (hpos n).ne'] <;> ring
 
 private theorem next_window (S : ℕ → ℝ) (hpos : ∀ n, 0 < S n)
@@ -52,7 +54,7 @@ private theorem next_window (S : ℕ → ℝ) (hpos : ∀ n, 0 < S n)
       (eventually_gt_nhds (by linarith : 1 - θ < (1 : ℝ)))
   obtain ⟨n, hn, hnL⟩ := ((eventually_gt_atTop N).and hearly).exists
   have htail : Tendsto (fun U => S (n + U) / S n) atTop (𝓝 0) := by
-    simpa only [Nat.add_comm, zero_div] using
+    simpa only [Function.comp_def, Nat.add_comm, zero_div] using
       (hzero.comp (tendsto_add_atTop_nat n)).div_const (S n)
   obtain ⟨U, hUL, hU⟩ := ((eventually_gt_atTop L).and
     (htail.eventually (eventually_lt_nhds hθ))).exists
@@ -101,9 +103,7 @@ theorem finite_waiting_windows (S : ℕ → ℝ) (hpos : ∀ n, 0 < S n)
   · intro i j hij
     exact hb (show i.val < j.val from hij)
   · intro i j hij
-    apply ha
-    have h : i.val < j.val := hij
-    omega
+    exact ha (Nat.add_lt_add_right (show i.val < j.val from hij) 1)
   · intro i
     have hi := hstep i.val
     refine ⟨lt_of_le_of_lt (Nat.zero_le _) hi.1, hi.2.1, ?_, ?_⟩
