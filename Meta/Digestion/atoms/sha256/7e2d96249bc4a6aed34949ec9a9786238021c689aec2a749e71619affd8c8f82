@@ -1,0 +1,26 @@
+**定理 41.3（反对称关系就是相位和 holonomy）。** 令
+
+$$
+R_\theta=\cos\theta\,I+\sin\theta\,J.
+$$
+
+则 $R_\theta$ 同时保持 $g$、$\omega$ 和 $h$。对单位准备向量定义
+
+$$
+K_\omega(x,y)=h(\psi_x,\psi_y).
+$$
+
+局部变换 $\psi_x\mapsto R_{\theta_x}\psi_x$ 给出
+
+$$
+K_\omega(x,y)\mapsto e^{i(\theta_y-\theta_x)}K_\omega(x,y),
+$$
+
+所以三点乘积
+
+$$
+K_\omega(x,y)K_\omega(y,z)K_\omega(z,x)
+$$
+
+是规范不变量。它的模长由对称比较决定，辐角由反对称二元关系的闭环和决定。因而 $\omega$ 正是第 36 节 $U(1)$ holonomy 的局部关系表达。
+
