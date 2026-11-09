@@ -1,0 +1,16 @@
+**定理 50.4（从 $\mathsf Q_0$ 到现有量子公理的分层桥）。** $\mathsf Q_0$ 严格推出实 Hilbert 关系几何，但后续结构按下列独立前件获得：
+
+1. 若存在 $J^2=-I$ 且 $J^*=-J$，则 $J$ 是等距复结构，
+   $$h(u,v)=\langle u,v\rangle-i\langle Ju,v\rangle$$
+   给出复 Hermitian 空间。$J$ 不是 $\mathsf Q_0$ 的推论；同一实 Hilbert 空间可有多个兼容的 $J$。
+2. 在复空间上加入算子、伴随和正序，得到 $\operatorname{Herm}(H)$ 的正锥。对 $\rho\succeq0$, $\operatorname{Tr}\rho=1$ 与 $0\preceq E\preceq I$，谱分解给出
+   $$0\le\operatorname{Tr}(\rho E)\le1.$$
+   将该数指定为测量概率，还需概率赋值条件；维数至少三时可用 Gleason 型定理，二维投影情形需额外条件。
+3. 加入复张量积 $H_{AB}=H_A\otimes_{\mathbb C}H_B$ 和局部完备效果，产品效果张成整体 Hermitian 空间，因为
+   $$\dim_{\mathbb R}\operatorname{Herm}(H_A\otimes H_B)=d_A^2d_B^2.$$
+   这给出局部层析和纠缠的标准复 Hilbert 表示；它不是端点交换对称性的结论。
+4. 对过程加入所有辅助系统扩张保持正性，得到完全正性；有限维 Choi–Kraus 定理给出
+   $$\Phi\text{ CP}\iff C_\Phi\succeq0\iff\Phi(X)=\sum_\alpha K_\alpha X K_\alpha^*.$$
+   普通正性不够，转置映射是反例。
+5. 对可逆动力学另加保迹、群律和强连续的酉实现；Stone 定理给出 $U_t=e^{-itH}$。可逆保迹本身不能直接替代酉实现条件。
+

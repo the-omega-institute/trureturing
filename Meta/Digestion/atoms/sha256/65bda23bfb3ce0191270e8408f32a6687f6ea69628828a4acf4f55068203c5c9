@@ -1,0 +1,46 @@
+**定理 50.3（有限 Gram 条件的严格压缩）。** 对称核满足 $\mathsf Q_0$ 的非负性，当且仅当它的每个有限 Gram 矩阵半正定。并且存在实 Hilbert 空间 $H_{\mathbb R}$ 与映射 $\phi:X\to H_{\mathbb R}$，使
+
+$$
+\kappa(x,y)=\langle\phi(x),\phi(y)\rangle,
+\qquad
+H_{\mathbb R}=\overline{\operatorname{span}\phi(X)}.
+$$
+
+这个最小表示在保内积同构下唯一。
+
+**证明。** 对有限 $x_1,\ldots,x_n$ 和系数 $a_i$，令 $u=\sum_i a_i[x_i]$，则
+
+$$
+Q(u)=\sum_{i,j}a_i a_j\kappa(x_i,x_j)=a^{\mathsf T}K a.
+$$
+
+所以 $Q(u)\ge0$ 对所有有限组合成立，当且仅当每个 $K$ 半正定。再由 $Q$ 的非负性，对任意 $u,v$ 考虑 $Q(u+tv)\ge0$ 的二次多项式，其判别式非正，得到
+
+$$
+|B(u,v)|^2\le Q(u)Q(v).
+$$
+
+于是 $N=\{u:Q(u)=0\}$ 满足 $B(u,v)=0$ 对所有 $v$，故 $B$ 在商空间 $V_X/N$ 上良定义且正定。令 $H_{\mathbb R}$ 为该商空间的完备化，并定义 $\phi(x)=[x]$，即得所需内积公式和生成性。
+
+若 $\widetilde\phi$ 是另一个生成同一核的 Hilbert 表示，则在生成子空间上定义
+
+$$
+\sum_i a_i\phi(x_i)\longmapsto\sum_i a_i\widetilde\phi(x_i).
+$$
+
+相同的核保证零向量恰好对应零向量，并保证该映射保持内积；它因此唯一延拓为实 Hilbert 空间之间的保内积同构。证毕。
+
+这是真正的等价压缩，而不是较弱的充分条件。平行四边形恒等式和二次齐次性在 $Q(u)=B(u,u)$ 的定义下自动成立；单独的平行四边形律不够，例如 $Q(x,y)=x^2-y^2$ 满足该律却取负值。条件负定距离也可以等价重写：固定基点 $o$，由
+
+$$
+d^2(x,y)=\kappa(x,x)+\kappa(y,y)-2\kappa(x,y)
+$$
+
+得到的负型条件与基点化核
+
+$$
+\kappa_o(x,y)=\frac12\bigl(d^2(x,o)+d^2(y,o)-d^2(x,y)\bigr)
+$$
+
+互相转换，但它改变了原始数据的基点规范；$\mathsf Q_0$ 是最直接的关系内生形式。
+
