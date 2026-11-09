@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Native finite matroid exchange inequalities imply integral global base optimality. -/
+   digest: Native finite matroids with a common base admit an integral optimal weight splitting. -/
 
 import D5.S3.Combinatorics.Matroids.NativeWeightedBaseRankSaturation
 import D5.S3.Combinatorics.Graph.LayeredCirculation.SupplierDual
