@@ -1,0 +1,33 @@
+**引理 43.1（数学读取与原像接口的准确实例）。** 在41.1–41.3下，任意数学正实线性泛函 $\varphi:E\to\mathbb R$ 可读取同一个原二表，并有
+
+$$
+|\varphi D(a,b)|^2
+\le\varphi(a^2)\varphi(b^2)-\varphi(a\circ b)^2.
+\tag{43.1}
+$$
+
+在固定 Jordan 图中，每个点的全部实际二阶角代表满足 OP80.2，全部这些角共用 OP82.1 的一个符号。
+
+证明。Hermitian 性和原评价分离性给 $D(b,a)=-D(a,b)$。对固定 $a,b,z_1,z_2$，元素
+
+$$
+|z_1|^2a^2+|z_2|^2b^2
++2\operatorname{Re}(\bar z_1z_2)a\circ b
++2\operatorname{Im}(\bar z_1z_2)D(a,b)
+\tag{43.2}
+$$
+
+由全部原评价读为非负，准确锥使它正，故可用 $\varphi$ 读取。二阶行列式给(43.1)。取 $\varphi(a)=v^*\theta_{\alpha,x}(a(x))v$，得到全部数学向量读取；不改变 $\mathcal P$。
+
+OP80.1 的环境取 $X_{\rm JB}=E$、恒等稠密包含，满 Jordan 商取 $\pi=\theta_{\alpha,x}\operatorname{ev}_x:E\to H_n(\mathbb C)$、块数一。完整 JB、锥、范数和满性已由41.4支付，忠实 JC 环境由42.5支付，数学正读取由(43.2)支付。原 A1–A3/P2/PB 就是41.3，质量没有变化。因此 OP80.2 对所有实际 $a,b$ 且 $\pi a,\pi b$ 落在任意同一秩二角时给
+
+$$
+\pi D(a,b)=s_\alpha(x)\kappa(\pi a,\pi b),
+\qquad s_\alpha(x)\in\{\pm1\};
+\tag{43.3}
+$$
+
+OP82.1 使该简单块的所有秩二角共用此符号。这里没有定义未知商映射 $D_x$，所有同像的实际代表已经包含在既有结果的全称量词中。∎
+
+特别地，若实际 $b(x)=0$，(43.1)的全部向量读取给 $D(a,b)(x)=0$；首槽同理。零质量评价由序单位夹界恒为零，论证没有质量除法。
+
