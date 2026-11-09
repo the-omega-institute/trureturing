@@ -1,0 +1,33 @@
+**定理 40.3（相位与三点 holonomy 内生出现）。** 对单位准备向量定义
+
+$$
+K_J(x,y):=h(\psi_x,\psi_y),qquad
+r(x,y):=|K_J(x,y)|^2.
+$$
+
+令
+
+$$
+R_\theta=\cos\theta\,I+\sin\theta\,J.
+$$
+
+则 $R_\theta$ 保持 $g$、$h$ 和 $D$，并且对局部相位变换 $\psi_x\mapsto R_{\theta_x}\psi_x$ 有
+
+$$
+K_J(x,y)\mapsto e^{i(\theta_y-\theta_x)}K_J(x,y).
+$$
+
+所以三点乘积
+
+$$
+K_J(x,y)K_J(y,z)K_J(z,x)
+$$
+
+不变；它正是第 36 节的 Bargmann 闭环。若各态在单位球面上，则
+
+$$
+D(x,y)=2-2\operatorname{Re}K_J(x,y).
+$$
+
+因此 $J$ 把第 38 节距离中被遗忘的虚部补回，而 $U(1)$ 相位群由同一个内部转动生成。
+
