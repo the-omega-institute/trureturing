@@ -1,3 +1,11 @@
+/- GID: D5/S3/Geometry/PowerCone/PrimalDikin
+   generality: I
+   mirror-B: D5/B/S3/Geometry/PowerCone/PrimalDikin
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Formalized power-cone geometry and analytic support module. -/
+
 import D5.S3.Analytic.ConvexBarrier.PrimalDikin
 import D5.S3.Analytic.ConvexBarrier.HomogeneousHessian
 import D5.S3.Geometry.PowerCone.Topology

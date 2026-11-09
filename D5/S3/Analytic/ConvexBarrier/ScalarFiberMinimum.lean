@@ -1,3 +1,11 @@
+/- GID: D5/S3/Analytic/ConvexBarrier/ScalarFiberMinimum
+   generality: I
+   mirror-B: D5/B/S3/Analytic/ConvexBarrier/ScalarFiberMinimum
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Formalized power-cone geometry and analytic support module. -/
+
 import D5.S3.Geometry.PowerCone.PartialProjection
 import D5.S3.Analytic.ConvexBarrier.IntervalMinimum
 import Mathlib.Analysis.Calculus.Deriv.Prod

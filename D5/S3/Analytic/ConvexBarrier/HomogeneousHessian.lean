@@ -1,3 +1,11 @@
+/- GID: D5/S3/Analytic/ConvexBarrier/HomogeneousHessian
+   generality: I
+   mirror-B: D5/B/S3/Analytic/ConvexBarrier/HomogeneousHessian
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Formalized power-cone geometry and analytic support module. -/
+
 import D5.S3.Analytic.ConvexBarrier.PrimalDikin
 import D5.S3.Analytic.ConvexBarrier.ScalarAlgebra
 import Mathlib.Analysis.Calculus.ContDiff.Comp

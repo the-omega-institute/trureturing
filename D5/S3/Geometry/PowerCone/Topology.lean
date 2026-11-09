@@ -1,3 +1,11 @@
+/- GID: D5/S3/Geometry/PowerCone/Topology
+   generality: I
+   mirror-B: D5/B/S3/Geometry/PowerCone/Topology
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Formalized power-cone geometry and analytic support module. -/
+
 import D5.S3.Geometry.PowerCone.ScalarSection
 import Mathlib.Topology.MetricSpace.Pseudo.Constructions
 

@@ -1,3 +1,11 @@
+/- GID: D5/S3/Geometry/PowerCone/ConvexGeometry
+   generality: I
+   mirror-B: D5/B/S3/Geometry/PowerCone/ConvexGeometry
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Formalized power-cone geometry and analytic support module. -/
+
 import D5.S3.Geometry.PowerCone.PrimalDikin
 import D5.S3.Analytic.ConvexBarrier.OriginalConeRecession
 import Mathlib.Analysis.MeanInequalities

@@ -1,3 +1,11 @@
+/- GID: D5/S3/Analytic/ConvexBarrier/RecessionOneDimensional
+   generality: I
+   mirror-B: D5/B/S3/Analytic/ConvexBarrier/RecessionOneDimensional
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Formalized power-cone geometry and analytic support module. -/
+
 import D5.S3.Analytic.ConvexBarrier.DikinOneDimensional
 import Mathlib.Analysis.Calculus.Deriv.MeanValue
 import Mathlib.Analysis.SpecificLimits.Basic
