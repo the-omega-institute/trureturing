@@ -56,6 +56,8 @@ open private left_minus_one_mem higher_product_mem
   from D5.S3.VertexAlgebra.Lattice.ActualC2
 open private creation_derivation
   from D5.S3.VertexAlgebra.LatticeSugawaraConformal
+open private bilinear_unit bilinear_sub_right
+  from D5.S3.VertexAlgebra.LatticeFiniteNegativeGeneration
 
 def sectorIdeal (D : LatticeData) (δ : Charge D) : Ideal (Oscillator D) where
   carrier := {p | Finsupp.single δ p ∈ ActualC2.C2 D}
@@ -143,26 +145,13 @@ private theorem creation_zero (D : LatticeData) (α : Charge D) :
     creationCoeff D α 0 = 1 := by
   simp [creationCoeff, exponential_constant]
 
-private theorem bilinear_sub_right_local (D : LatticeData) (α β γ : Charge D) :
-    bilinear D α (β - γ) = bilinear D α β - bilinear D α γ := by
-  simp [bilinear, mul_sub, Finset.sum_sub_distrib]
-
-private theorem bilinear_neg_left_local (D : LatticeData) (α β : Charge D) :
-    bilinear D (-α) β = -bilinear D α β := by
-  simp [bilinear, Finset.sum_neg_distrib]
-
-private theorem bilinear_unit_local (D : LatticeData) (i : Fin D.rank)
-    (α : Charge D) :
-    bilinear D (unitCharge D i) α = ∑ j, D.G i j * α j := by
-  simp [bilinear, unitCharge]
-
 private theorem ground_coeff_mem (D : LatticeData) (δ α : Charge D) (d : ℕ)
     (hd : 1 + bilinear D α α - bilinear D α δ ≤ (d : ℤ)) :
     creationCoeff D α d ∈ sectorIdeal D δ := by
   let n : ℤ := -(d : ℤ) - 1 - bilinear D α (δ - α)
   have hn : n ≤ -2 := by
     dsimp [n]
-    rw [bilinear_sub_right_local]
+    rw [bilinear_sub_right]
     omega
   have h := higher_product_mem D ((-n - 2).toNat)
     (ground D α) (ground D (δ - α))
@@ -341,13 +330,13 @@ private theorem shortCharges_finite (D : LatticeData)
     have hpos := norm_positive D hD (α - β) (sub_ne_zero.mpr hne)
     have hz : ∀ i, bilinear D (unitCharge D i) (α - β) = 0 := by
       intro i
-      rw [bilinear_sub_right_local]
+      rw [bilinear_sub_right]
       exact sub_eq_zero.mpr (congrFun h i)
     have hq : bilinear D (α - β) (α - β) = 0 := by
       simp only [bilinear, Pi.sub_apply]
       simp_rw [mul_assoc, ← Finset.mul_sum]
       have hz' : ∀ i, ∑ j, D.G i j * (α j - β j) = 0 := by
-        simpa only [bilinear_unit_local, Pi.sub_apply] using hz
+        simpa only [bilinear_unit, Pi.sub_apply] using hz
       simp [hz']
     omega
   let B : Set (Fin D.rank → ℤ) :=
@@ -378,9 +367,9 @@ private theorem sector_top_of_not_short (D : LatticeData)
         simp [bilinear, bilinear_neg_left, bilinear_neg_right, unitCharge]
       have hi' : D.G i i < -bilinear D (unitCharge D i) δ := by
         simpa [abs_of_nonpos (le_of_not_gt hpos)] using hi
-      rw [hnorm, bilinear_neg_left_local]
+      rw [hnorm, bilinear_neg_left]
       omega)
-    simpa [creation_zero, bilinear_neg_left_local] using hpow
+    simpa [creation_zero, bilinear_neg_left] using hpow
 
 theorem positive_definite_c2_cofinite (D : LatticeData)
     (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ))) :
