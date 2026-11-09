@@ -1,0 +1,14 @@
+**定义 21.1（有限效应赋值）。** 在有限维 Hilbert 空间 $H$ 上令
+
+$$
+\mathcal E(H)=\{E\in\operatorname{Herm}(H):0\le E\le I\}.
+$$
+
+一个归一化效应赋值是函数 $\nu:\mathcal E(H)\to[0,1]$，满足：
+
+1. $\nu(I)=1$；
+2. 若 $E,F,E+F\in\mathcal E(H)$，则 $\nu(E+F)=\nu(E)+\nu(F)$；
+3. 对每个效应 $E$，标量函数 $t\mapsto\nu(tE)$ 在 $[0,1]$ 上连续。
+
+第 3 条是有限维证明所需的最小显式正则性；Busch 型效应 Gleason 定理把它替换为对整个效应区间的有界有限可加条件。若一组效应 $\{E_a\}$ 满足 $\sum_aE_a=I$，则称它为一个 POVM 菜单，$\nu$ 的输出概率为 $\nu(E_a)$。
+
