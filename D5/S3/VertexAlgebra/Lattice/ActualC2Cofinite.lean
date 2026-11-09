@@ -50,7 +50,7 @@ open scoped BigOperators VertexOperator
 
 noncomputable section
 
-open private ground ground_product
+open private ground ground_product creation_zero
   from D5.S3.VertexAlgebra.Lattice.NormFourFixedPeirce
 open private left_minus_one_mem higher_product_mem
   from D5.S3.VertexAlgebra.Lattice.ActualC2
@@ -140,10 +140,6 @@ private theorem derivation_mem (D : LatticeData) (δ : Charge D)
           (Submodule.smul_of_tower_mem (sectorIdeal D δ) (k + 1 : ℂ) hx)
       · simpa [oscillatorDerivation, mul_comm] using (sectorIdeal D δ).mul_mem_left
           (X (i, k)) hp
-
-private theorem creation_zero (D : LatticeData) (α : Charge D) :
-    creationCoeff D α 0 = 1 := by
-  simp [creationCoeff, exponential_constant]
 
 private theorem ground_coeff_mem (D : LatticeData) (δ α : Charge D) (d : ℕ)
     (hd : 1 + bilinear D α α - bilinear D α δ ≤ (d : ℤ)) :
