@@ -70,7 +70,7 @@ internal sealed class PrescribedExchangeDocument : IScribeDocumentDefinition
         Formula e = F.Id("E"), m = F.Id("M"), a = F.Id("A"), b = F.Id("B");
         Formula x = F.Id("X"), y = F.Id("Y"), u = F.Id("U"), v = F.Id("V");
         Formula set = Call("Set", e);
-        Formula diff(Formula s, Formula t) => Qualified("Set", "diff", s, t);
+        Formula diff(Formula s, Formula t) => Parenthesized(Seq(s, Sp, Setminus, Sp, t));
         Formula union(Formula s, Formula t) => Qualified("Set", "union", s, t);
         Formula card(Formula s) => Qualified("Set", "ncard", s);
         Formula basis(Formula s) => Qualified("Matroid", "IsBase", m, s);
