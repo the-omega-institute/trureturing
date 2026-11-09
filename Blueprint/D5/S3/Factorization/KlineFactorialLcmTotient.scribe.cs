@@ -42,7 +42,10 @@ internal sealed class KlineFactorialLcmTotientDocument : IScribeDocumentDefiniti
                     + "multiplicative factor; the positive denominators permit cancellation. "
                     + "This mechanism does not use primality of p, although the stated domain "
                     + "is precisely Kline's prime-minus-one sequence."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("oeis-a025527-kline-prime-minus-one-totient-quotient"),
+                    ResolutionKind.Proved)))));
 
     private static Formula QuotientFormula()
     {
