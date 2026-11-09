@@ -1,0 +1,44 @@
+**定义 16.1（图模式与末端菜单）。** 令 $G=(V_G,E_G)$ 为有限无向简单图，允许空顶点集。置
+
+$$
+\Sigma_G=\{S\subseteq V_G:S\text{ 不包含任何边}\},\quad
+N_G=|\Sigma_G|,\quad x_A(S)=\mathbf1_{\{A\subseteq S\}}.
+$$
+
+只对合法 $A\in\Sigma_G$ 保留非零占位函数，$x_\varnothing=1$。全部实读出构成逐点函数代数 $\mathbb R^{\Sigma_G}$。固定整数 $k\ge0$，令
+
+$$
+W_k=\operatorname{span}_{\mathbb R}\{x_A:A\in\Sigma_G,\ |A|\le k\},\quad
+r_k=\#\{A\in\Sigma_G:|A|\le k\},\quad
+M_kp=(\mu_A)_{|A|\le k},\quad \mu_A=\sum_{S\supseteq A}p_S.
+$$
+
+来源域暂取全部 $\Delta(\Sigma_G)$。末端菜单是上述占位二元效果及常数效果；在不同独立重复制备上选择不同末端实验。数学上可定义的任意函数或其乘积，并不自动加入实际菜单。
+
+以下坐标计算是动态接口的准备。§11 的反演只用合法族向下封闭，故对 $\Sigma_G$ 同样适用。按大小排列的评价矩阵 $Z_{S,A}=\mathbf1_{A\subseteq S}$ 为对角全一的整数三角矩阵，因而
+
+$$
+\begin{aligned}
+f&=\sum_{A\in\Sigma_G}c_A(f)x_A,
+&c_A(f)&=\sum_{B\subseteq A}(-1)^{|A|-|B|}f(B),\\
+p_S&=\sum_{\substack{A\supseteq S\\A\in\Sigma_G}}
+ (-1)^{|A|-|S|}\mu_A,
+&\mathbb E_pf&=\sum_Ac_A(f)\mu_A.
+\end{aligned}
+$$
+
+两方向的验证均在合法区间 $[B,S]$ 上求和：中间子集全合法，交替和是 $(1-1)^{|S\setminus B|}$。因此候选完整矩来自概率的充要条件为 $\mu_\varnothing=1$ 且每个显示的逆坐标非负。合法集合偏序不必是 Boolean 格；这里仅使用它的每个包含区间是 Boolean 区间。
+
+这些函数满足
+
+$$
+x_Ax_B=\begin{cases}x_{A\cup B},&A\cup B\in\Sigma_G,\\0,&\text{否则},\end{cases}
+\qquad
+\mathbb R^{\Sigma_G}\simeq
+\mathbb R[X_v:v\in V_G]/(X_v^2-X_v,\ X_uX_v:\{u,v\}\in E_G).
+$$
+
+商代数中先去掉重复幂，再消去含边的支撑，剩余合法单项式张成；评价矩阵的可逆性证明没有更多关系。这一代数表示在这里用来判定同一来源上的乘积任务。记 $\alpha(G)$ 为最大独立集大小，则 $W_k$ 对乘法封闭恰在 $k=0$ 或 $k\ge\alpha(G)$ 时成立：常数或全代数时成立；若 $1\le k<\alpha(G)$，取合法 $C=A\sqcup\{v\}$、$|A|=k$，则 $x_A,x_v\in W_k$ 而 $x_C\notin W_k$。
+
+特别地，已知 $\mu_A,\mu_B$ 能计算数值 $\mu_A\mu_B$，却未必能识别 $\mathbb E_p(x_Ax_B)$。前者是独立副本的乘积期望，后者是同一模式中的联合任务。期望泛函对全部函数保持乘法只会发生于单点来源：对精确模式指示 $e_S$ 应用 $e_S^2=e_S$ 得 $p_S^2=p_S$，归一化迫使恰有一个质量为一。这里既未改变组合算术，也未授予无损联合测量。
+
