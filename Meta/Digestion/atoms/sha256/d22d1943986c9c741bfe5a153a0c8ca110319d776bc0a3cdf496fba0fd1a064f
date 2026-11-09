@@ -1,0 +1,42 @@
+**定理 351.1（效果自比较消去完整径向场）。** 在 $B_*+\mathsf G_{0h}$ 中，若原选中对象 $X$ 满足 (350.1)，则 343.1 在该对象上的每个全源泛函 $F_s:E_X\to\mathbb R$ 都为零。因此其整个原二元关系是逐块交换子，包括原经典块、二阶块与所有跨中心来源。
+
+证明。直接复用不带迹前件的 343.1，不重新假设它的结论。写
+
+$$
+E_X=\bigoplus_sH_{n_s}(\mathbb C),\qquad
+q_X(a,b)=\sum_sw_s\operatorname{Tr}(a_sb_s),\qquad w_s>0.
+\tag{351.1}
+$$
+
+这里每个 $w_s$ 都是该原对象自己的正块权，不作归一化，也不要求联合间因子化。因为 $[a_s,a_s]=0$，正常形立即给
+
+$$
+P_X(a):=q_X(a,D^X(a,a))
+=\sum_sw_s\operatorname{Tr}(a_s^2)F_s(a).
+\tag{351.2}
+$$
+
+固定中心 $s$，取任意非零块效果 $0\le x\le I_{n_s}$，令 $a=j_sx$。这是整个 $E_X$ 的效果，其余中心为零。(350.1) 给
+
+$$
+0=w_s\operatorname{Tr}(x^2)F_s(j_sx).
+\tag{351.3}
+$$
+
+前两因子严格为正，故 $F_s(j_sx)=0$；零效果由线性性同样成立。块效果实线性张成整个 Hermitian 块，例如谱分解把任意 Hermitian 矩阵写成实数乘 primitive 效果的和。因此 $F_s\circ j_s=0$，含 $n_s=1,2$，不需要在这些源上另做高秩分类。
+
+再取不同中心 $s,r$，非零效果 $x\in H_{n_s}$、$y\in H_{n_r}$，记 $\widetilde x=j_sx$、$\widetilde y=j_ry$。对 $t=1,1/2$，$\widetilde x+t\widetilde y$ 都是原数学效果，因为两个支持在不同中心。已证的同源限制为零，故
+
+$$
+\begin{aligned}
+P_X(\widetilde x+t\widetilde y)&=tA+t^2B,\\
+A&=w_s\operatorname{Tr}(x^2)F_s(j_ry),\\
+B&=w_r\operatorname{Tr}(y^2)F_r(j_sx).
+\end{aligned}
+\tag{351.4}
+$$
+
+两次中性分别给 $A+B=0$、$2A+B=0$，从而 $A=B=0$。消去正因子，变动 $x,y$ 并再用效果张成性，得到所有 $F_s\circ j_r=0$。全部来源的有限直和遂给 $F_s=0$。只有一个中心时 (351.3) 已完成证明。
+
+整个消去只使用原效果及两个正比例，没有假设负输入也被实际实现，没有用不同中心间总和为零直接断言各项为零，也没有借用概率、实际混合程序或 $q$ 的联合运输。∎
+

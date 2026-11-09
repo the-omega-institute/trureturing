@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Magic;
 
@@ -72,6 +74,13 @@ internal sealed class SubspaceStabilizerEntropyDocument : IScribeDocumentDefinit
                 "Symmetric four-tensor Schur twirl", "symTwirl4",
                 "For a nonzero dimension d and a four-tensor operator X on (C^d)^{otimes 4}, symTwirl4(d, X) = tr(symProjector4(Z / dZ) X) A4(Z / dZ) projects X onto the scalar multiple of A4(Z / dZ) matching its trace on Sym^4(C^d).",
                 DescribeRole.Definition, Repo()),
+            Describe.Lean(DescribeId.Create("subspacestabilizerentropy-displacement-unitary-pair"),
+                DeclarationHandle.Create(Prefix + "displacement_unitary_pair"),
+                H("Two-sided unitarity of a displacement"),
+                StatementSource.FromAuthor(Disp(DisplacementUnitaryPairFormula())),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("For every nonzero k and p q in ZMod k, the displacement has identity products with its conjugate transpose on both sides."))),
+                DescribeRole.Theorem),
             Node("subspacestabilizerentropy-fourth-moment-cycle-and-hermitian-formula-theorem",
                 "Odd-dimension Weyl periodicity, phase cancellation, and Hermitian fourth-moment polynomial",
                 "fourth_moment_cycle_and_hermitian_formula",
@@ -91,6 +100,45 @@ internal sealed class SubspaceStabilizerEntropyDocument : IScribeDocumentDefinit
 
     private static AssessedProvenance Lit() => AssessedProvenance.FromLiterature(Source);
     private static AssessedProvenance Repo() => AssessedProvenance.FromRepo(Source);
+
+    private static Formula DisplacementUnitaryPairFormula()
+    {
+        Formula k = F.Id("k"), p = F.Id("p"), q = F.Id("q");
+        Formula displacement = Call("displacement", k, p, q);
+        Formula adjoint = App(Qualified("Matrix", "conjTranspose"), displacement);
+        Formula left = Equal(Multiply(adjoint, displacement), D(1));
+        Formula right = Equal(Multiply(displacement, adjoint), D(1));
+        return All("k", N(), Instance(Call("NeZero", k),
+            All("p", Call("ZMod", k), All("q", Call("ZMod", k), And(left, right)))));
+    }
+
+    private static Formula V(string name) => F.Id(name);
+    private static Formula N() => Seq(Mathbb, Grp(V("N")));
+    private static Formula Call(string name, params Formula[] args) =>
+        new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. args]);
+    private static Formula Qualified(params string[] parts)
+    {
+        var items = new System.Collections.Generic.List<Formula>();
+        foreach (var part in parts)
+        {
+            if (items.Count > 0) items.Add(Dot);
+            items.Add(F.Id(part));
+        }
+        return Seq(Operatorname, Grp(Seq([.. items])));
+    }
+    private static Formula App(Formula head, params Formula[] args) =>
+        new Formula.Apply(head, [.. args]);
+    private static Formula All(string name, Formula type, Formula body) =>
+        Seq(Forall, Sp, V(name), Colon, Sp, type, Comma, Sp, body);
+    private static Formula Instance(Formula instance, Formula body) =>
+        Seq(OpenBracket, instance, CloseBracket, Comma, Sp, body);
+    private static Formula Equal(Formula left, Formula right) =>
+        new Formula.Relation(left, FormulaRelationOperator.Equal, right);
+    private static Formula Multiply(Formula left, Formula right) =>
+        new Formula.Binary(left, FormulaBinaryOperator.Multiply, right);
+    private static Formula And(Formula left, Formula right) =>
+        new Formula.Logic(Parenthesized(left), FormulaLogicOperator.And, Parenthesized(right));
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
 
     private static DocumentBlock Node(string id, string title, string declaration, string prose,
         DescribeRole role, AssessedProvenance provenance,

@@ -104,7 +104,175 @@ $$\forall N \in \mathbb{N},\; \forall t \in \mathbb{N},\; \forall v \in \operato
 
 A primitive vector is homogeneous and is annihilated by the actual lowering map.
 
-**Definition 1.8 (The finite strings).**
+**Definition 1.8 (The zero-bit subset).**
+
+$$\forall N \in \mathbb{N},\; \forall x \in \operatorname{Fin}\left(N\right) \to \operatorname{Fin}\left(2\right),\; \operatorname{occupiedSet}\left(x\right) = \left\{i \mid i \in \operatorname{Fin}\left(N\right) \land x\left(i\right) = 0\right\}$$
+
+*Formalization.* `D5/S3/Quantum/SpinChains/BooleanCollectiveLadders.occupiedSet` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Philip Feinsilver (2011). *Representations of sl(2) in the Boolean lattice, and the Hamming and Johnson schemes*. URL: <https://arxiv.org/abs/1102.0368v2>.
+
+*Commentary.*
+
+This is the finset of exactly the coordinates whose bit is zero, for arbitrary N.
+
+**Theorem 1.9 (Counting occupancy).**
+
+$$\forall N \in \mathbb{N},\; \forall x \in \operatorname{Fin}\left(N\right) \to \operatorname{Fin}\left(2\right),\; \operatorname{card}\left(\operatorname{occupiedSet}\left(x\right)\right) = \operatorname{occupancy}\left(x\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/SpinChains/BooleanCollectiveLadders.occupiedSet_card` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Philip Feinsilver (2011). *Representations of sl(2) in the Boolean lattice, and the Hamming and Johnson schemes*. URL: <https://arxiv.org/abs/1102.0368v2>.
+
+*Commentary.*
+
+The cardinality of that original zero-bit finset equals occupancy, without a parity hypothesis.
+
+**Definition 1.10 (All configurations as subsets).**
+
+$$\forall N \in \mathbb{N},\; ((\forall x \in \operatorname{Fin}\left(N\right) \to \operatorname{Fin}\left(2\right),\; \operatorname{configurationEquiv}\left(N\right)\left(x\right) = \operatorname{occupiedSet}\left(x\right)) \land (\forall A \in \operatorname{Finset}\left(\operatorname{Fin}\left(N\right)\right),\; \forall i \in \operatorname{Fin}\left(N\right),\; \operatorname{inverse}\left(\operatorname{configurationEquiv}\left(N\right)\right)\left(A\right)\left(i\right) = \operatorname{ite}\left(i \in A, 0, 1\right)))$$
+
+*Formalization.* `D5/S3/Quantum/SpinChains/BooleanCollectiveLadders.configurationEquiv` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Philip Feinsilver (2011). *Representations of sl(2) in the Boolean lattice, and the Hamming and Johnson schemes*. URL: <https://arxiv.org/abs/1102.0368v2>.
+
+*Commentary.*
+
+The original equivalence sends x to its zero-bit subset; its inverse puts zero at members and one elsewhere.
+
+**Definition 1.11 (Fixed-rank configurations as subsets).**
+
+$$\forall N \in \mathbb{N},\; \forall t \in \mathbb{N},\; ((\forall x \in \operatorname{rankConfigurations}\left(N, t\right),\; \operatorname{rankConfigurationEquiv}\left(N, t\right)\left(x\right) = \operatorname{occupiedSet}\left(x\right)) \land (\forall A \in \operatorname{rankSubsets}\left(N, t\right),\; \forall i \in \operatorname{Fin}\left(N\right),\; \operatorname{inverse}\left(\operatorname{rankConfigurationEquiv}\left(N, t\right)\right)\left(A\right)\left(i\right) = \operatorname{ite}\left(i \in A, 0, 1\right)))$$
+
+*Formalization.* `D5/S3/Quantum/SpinChains/BooleanCollectiveLadders.rankConfigurationEquiv` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Philip Feinsilver (2011). *Representations of sl(2) in the Boolean lattice, and the Hamming and Johnson schemes*. URL: <https://arxiv.org/abs/1102.0368v2>.
+
+*Commentary.*
+
+The original equivalence restricts to occupancy-t configurations and cardinality-t finsets, including empty fibers. Its subtype maps are the same configurationEquiv and inverse; it is an equivalence of counting indices, not a claim that an arbitrary linear equivalence preserves the norm.
+
+**Theorem 1.12 (The original site matrix entries).**
+
+$$\forall N \in \mathbb{N},\; \forall i \in \operatorname{Fin}\left(N\right),\; \forall A \in \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right),\; \forall x \in \operatorname{Fin}\left(N\right) \to \operatorname{Fin}\left(2\right),\; \forall y \in \operatorname{Fin}\left(N\right) \to \operatorname{Fin}\left(2\right),\; \operatorname{site}\left(N, i, A\right)\left(x\right)\left(y\right) = A\left(x\left(i\right)\right)\left(y\left(i\right)\right) \cdot \prod_{j \in \operatorname{erase}\left(\operatorname{univ}\left(\operatorname{Fin}\left(N\right)\right), i\right)} \operatorname{ite}\left(x\left(j\right) = y\left(j\right), 1, 0\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/SpinChains/BooleanCollectiveLadders.site_entry` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Philip Feinsilver (2011). *Representations of sl(2) in the Boolean lattice, and the Hamming and Johnson schemes*. URL: <https://arxiv.org/abs/1102.0368v2>.
+
+*Commentary.*
+
+Each site entry is the chosen local matrix entry times the Kronecker equality factors at every other coordinate.
+
+**Theorem 1.13 (The original complex adjoint).**
+
+$$\forall N \in \mathbb{N},\; \operatorname{adjoint}\left(\operatorname{U}\left(N\right)\right) = \operatorname{L}\left(N\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/SpinChains/BooleanCollectiveLadders.adjoint_U` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Philip Feinsilver (2011). *Representations of sl(2) in the Boolean lattice, and the Hamming and Johnson schemes*. URL: <https://arxiv.org/abs/1102.0368v2>.
+
+*Commentary.*
+
+The original collective raising and lowering maps are adjoints for the full complex counting inner product.
+
+**Theorem 1.14 (Rank-zero primitive space).**
+
+$$\forall N \in \mathbb{N},\; \operatorname{primitive}\left(N, 0\right) = \operatorname{rankSpace}\left(N, 0\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/SpinChains/BooleanCollectiveLadders.primitive_zero_eq` (`✓ std3`). ∎
+
+*Citation.* Philip Feinsilver (2011). *Representations of sl(2) in the Boolean lattice, and the Hamming and Johnson schemes*. URL: <https://arxiv.org/abs/1102.0368v2>.
+
+*Commentary.*
+
+At rank zero, the original lowering map vanishes, so every rank-zero vector is primitive.
+
+**Theorem 1.15 (Adjacent-rank primitive splitting).**
+
+$$\forall N \in \mathbb{N},\; \forall t \in \mathbb{N},\; \operatorname{sup}\left(\operatorname{map}\left(\operatorname{rankSpace}\left(N, t\right), \operatorname{U}\left(N\right)\right), \operatorname{primitive}\left(N, t + 1\right)\right) = \operatorname{rankSpace}\left(N, t + 1\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/SpinChains/BooleanCollectiveLadders.rank_split` (`✓ std3`). ∎
+
+*Citation.* Philip Feinsilver (2011). *Representations of sl(2) in the Boolean lattice, and the Hamming and Johnson schemes*. URL: <https://arxiv.org/abs/1102.0368v2>.
+
+*Commentary.*
+
+Every rank t+1 vector is the sum of a raised rank t vector and a primitive rank t+1 vector, for every site count N.
+
+**Theorem 1.16 (Arbitrary-size primitive cutoff).**
+
+$$\forall N \in \mathbb{N},\; \forall t \in \mathbb{N},\; \forall v \in \operatorname{V}\left(N\right),\; (v \in \operatorname{primitive}\left(N, t\right) \Rightarrow (v \neq 0 \Rightarrow 2 \cdot t \leq N))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/SpinChains/BooleanCollectiveLadders.primitive_degree` (`✓ std3`). ∎
+
+*Citation.* Philip Feinsilver (2011). *Representations of sl(2) in the Boolean lattice, and the Hamming and Johnson schemes*. URL: <https://arxiv.org/abs/1102.0368v2>.
+
+*Commentary.*
+
+A nonzero primitive vector has twice its rank at most the site count; no parity assumption is used.
+
+**Theorem 1.17 (Arbitrary-size string endpoint).**
+
+$$\forall N \in \mathbb{N},\; \forall t \in \mathbb{N},\; (2 \cdot t \leq N \Rightarrow \forall v \in \operatorname{V}\left(N\right),\; (v \in \operatorname{primitive}\left(N, t\right) \Rightarrow \left(\operatorname{U}\left(N\right)^{N - 2 \cdot t + 1}\right)\left(v\right) = 0))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/SpinChains/BooleanCollectiveLadders.primitive_endpoint` (`✓ std3`). ∎
+
+*Citation.* Philip Feinsilver (2011). *Representations of sl(2) in the Boolean lattice, and the Hamming and Johnson schemes*. URL: <https://arxiv.org/abs/1102.0368v2>.
+
+*Commentary.*
+
+Raising beyond N−2t annihilates a primitive vector of rank t.
+
+**Theorem 1.18 (Arbitrary-size lowering recurrence).**
+
+$$\forall N \in \mathbb{N},\; \forall t \in \mathbb{N},\; \forall v \in \operatorname{V}\left(N\right),\; (v \in \operatorname{primitive}\left(N, t\right) \Rightarrow \forall q \in \mathbb{N},\; \operatorname{L}\left(N\right)\left(\left(\operatorname{U}\left(N\right)^{q + 1}\right)\left(v\right)\right) = (\left(q + 1\right) \cdot \left(N - 2 \cdot t - q\right)) \cdot \left(\operatorname{U}\left(N\right)^{q}\right)\left(v\right))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/SpinChains/BooleanCollectiveLadders.primitive_recurrence` (`✓ std3`). ∎
+
+*Citation.* Philip Feinsilver (2011). *Representations of sl(2) in the Boolean lattice, and the Hamming and Johnson schemes*. URL: <https://arxiv.org/abs/1102.0368v2>.
+
+*Commentary.*
+
+The original coefficient-one lowering acts on every unnormalized primitive string with its exact scalar coefficient.
+
+**Theorem 1.19 (Different primitive ranks are orthogonal).**
+
+$$\forall N \in \mathbb{N},\; \forall t \in \mathbb{N},\; \forall u \in \mathbb{N},\; \forall v \in \operatorname{V}\left(N\right),\; \forall w \in \operatorname{V}\left(N\right),\; (v \in \operatorname{primitive}\left(N, t\right) \Rightarrow (w \in \operatorname{primitive}\left(N, u\right) \Rightarrow (t \neq u \Rightarrow \operatorname{innerC}\left(v, w\right) = 0)))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/SpinChains/BooleanCollectiveLadders.primitive_orthogonal` (`✓ std3`). ∎
+
+*Citation.* Philip Feinsilver (2011). *Representations of sl(2) in the Boolean lattice, and the Hamming and Johnson schemes*. URL: <https://arxiv.org/abs/1102.0368v2>.
+
+*Commentary.*
+
+Primitive vectors with different ranks are orthogonal in the actual complex counting inner product.
+
+**Theorem 1.20 (Orthogonality along primitive strings).**
+
+$$\forall N \in \mathbb{N},\; \forall t \in \mathbb{N},\; \forall u \in \mathbb{N},\; \forall v \in \operatorname{V}\left(N\right),\; \forall w \in \operatorname{V}\left(N\right),\; (v \in \operatorname{primitive}\left(N, t\right) \Rightarrow (w \in \operatorname{primitive}\left(N, u\right) \Rightarrow (\operatorname{innerC}\left(v, w\right) = 0 \Rightarrow \forall q \in \mathbb{N},\; \forall r \in \mathbb{N},\; \operatorname{innerC}\left(\left(\operatorname{U}\left(N\right)^{q}\right)\left(v\right), \left(\operatorname{U}\left(N\right)^{r}\right)\left(w\right)\right) = 0)))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/SpinChains/BooleanCollectiveLadders.inner_power_orthogonal` (`✓ std3`). ∎
+
+*Citation.* Philip Feinsilver (2011). *Representations of sl(2) in the Boolean lattice, and the Hamming and Johnson schemes*. URL: <https://arxiv.org/abs/1102.0368v2>.
+
+*Commentary.*
+
+Orthogonal primitive vectors remain orthogonal after arbitrary raising powers, even when the two powers differ.
+
+**Definition 1.21 (The finite strings).**
 
 $$\forall S \in \mathbb{N},\; \forall w \in \operatorname{V}\left(2 \cdot S\right),\; w \in \operatorname{finitePrimitiveStrings}\left(S\right) \Leftrightarrow \left(\exists t \in \mathbb{N},\; ((t \leq S) \land (\exists v \in \operatorname{V}\left(2 \cdot S\right),\; ((v \in \operatorname{primitive}\left(2 \cdot S, t\right)) \land (\exists q \in \mathbb{N},\; ((q \leq 2 \cdot S - 2 \cdot t) \land (w = \left(\operatorname{U}\left(2 \cdot S\right)^{q}\right)\left(v\right)))))))\right)$$
 
@@ -116,7 +284,7 @@ $$\forall S \in \mathbb{N},\; \forall w \in \operatorname{V}\left(2 \cdot S\righ
 
 All primitive vacua are included, including the spin-zero sector t=S; q=0 is retained.
 
-**Theorem 1.9 (Span and exact primitive-string identities).**
+**Theorem 1.22 (Span and exact primitive-string identities).**
 
 $$\forall S \in \mathbb{N},\; ((\operatorname{span}\left(\mathbb{C}, \operatorname{finitePrimitiveStrings}\left(S\right)\right) = \operatorname{top}\left(\operatorname{V}\left(2 \cdot S\right)\right)) \land (((\forall t \in \mathbb{N},\; \forall v \in \operatorname{V}\left(2 \cdot S\right),\; (v \in \operatorname{primitive}\left(2 \cdot S, t\right) \Rightarrow (v \neq 0 \Rightarrow t \leq S))) \land (((\forall t \in \mathbb{N},\; (t \leq S \Rightarrow \forall v \in \operatorname{V}\left(2 \cdot S\right),\; (v \in \operatorname{primitive}\left(2 \cdot S, t\right) \Rightarrow ((\left(\operatorname{U}\left(2 \cdot S\right)^{2 \cdot S - 2 \cdot t + 1}\right)\left(v\right) = 0) \land (\forall q \in \mathbb{N},\; ((\operatorname{L}\left(2 \cdot S\right)\left(\left(\operatorname{U}\left(2 \cdot S\right)^{q + 1}\right)\left(v\right)\right) = (\left(q + 1\right) \cdot \left(2 \cdot S - 2 \cdot t - q\right)) \cdot \left(\operatorname{U}\left(2 \cdot S\right)^{q}\right)\left(v\right)) \land (((\operatorname{Z}\left(2 \cdot S\right)\left(\left(\operatorname{U}\left(2 \cdot S\right)^{q}\right)\left(v\right)\right) = (q - \left(S - t\right)) \cdot \left(\operatorname{U}\left(2 \cdot S\right)^{q}\right)\left(v\right)) \land ((q \leq 2 \cdot S - 2 \cdot t \Rightarrow \operatorname{innerC}\left(\left(\operatorname{U}\left(2 \cdot S\right)^{q}\right)\left(v\right), \left(\operatorname{U}\left(2 \cdot S\right)^{q}\right)\left(v\right)\right) = \operatorname{factorial}\left(q\right) \cdot \operatorname{descFactorial}\left(2 \cdot S - 2 \cdot t, q\right) \cdot \operatorname{innerC}\left(v, v\right))))))))))) \land (\forall t \in \mathbb{N},\; \forall tprime \in \mathbb{N},\; \forall v \in \operatorname{V}\left(2 \cdot S\right),\; \forall w \in \operatorname{V}\left(2 \cdot S\right),\; (v \in \operatorname{primitive}\left(2 \cdot S, t\right) \Rightarrow (w \in \operatorname{primitive}\left(2 \cdot S, tprime\right) \Rightarrow (((t \neq tprime \Rightarrow \operatorname{innerC}\left(v, w\right) = 0)) \land ((\operatorname{innerC}\left(v, w\right) = 0 \Rightarrow \forall q \in \mathbb{N},\; \forall r \in \mathbb{N},\; \operatorname{innerC}\left(\left(\operatorname{U}\left(2 \cdot S\right)^{q}\right)\left(v\right), \left(\operatorname{U}\left(2 \cdot S\right)^{r}\right)\left(w\right)\right) = 0)))))))))))$$
 
@@ -128,7 +296,7 @@ $$\forall S \in \mathbb{N},\; ((\operatorname{span}\left(\mathbb{C}, \operatorna
 
 The finite span, cutoff, endpoint, lowering coefficient, weight, norm and orthogonality clauses all hold jointly on the same full complex carrier.
 
-**Definition 1.10 (Previous binomial coefficient).**
+**Definition 1.23 (Previous binomial coefficient).**
 
 $$\forall N \in \mathbb{N},\; \forall t \in \mathbb{N},\; \operatorname{previousChoose}\left(N, t\right) = \operatorname{ite}\left(t = 0, 0, \operatorname{choose}\left(N, t - 1\right)\right)$$
 
@@ -142,7 +310,7 @@ $$\forall N \in \mathbb{N},\; \forall t \in \mathbb{N},\; \operatorname{previous
 
 Rank zero has previousChoose(N,0)=0; successor ranks use the preceding binomial coefficient.
 
-**Theorem 1.11 (Every primitive multiplicity).**
+**Theorem 1.24 (Every primitive multiplicity).**
 
 $$\forall S \in \mathbb{N},\; \forall t \in \mathbb{N},\; (t \leq S \Rightarrow \operatorname{dimC}\left(\operatorname{primitive}\left(2 \cdot S, t\right)\right) = \operatorname{choose}\left(2 \cdot S, t\right) - \operatorname{previousChoose}\left(2 \cdot S, t\right))$$
 
@@ -154,7 +322,7 @@ $$\forall S \in \mathbb{N},\; \forall t \in \mathbb{N},\; (t \leq S \Rightarrow 
 
 The dimension formula is proved for every natural S and t≤S, using actual subspaces and operators.
 
-**Definition 1.12 (Primitive orthonormal bases).**
+**Definition 1.25 (Primitive orthonormal bases).**
 
 $$\forall N \in \mathbb{N},\; \forall t \in \mathbb{N},\; \operatorname{primitiveBasis}\left(N, t\right) = \operatorname{stdOrthonormalBasis}\left(\mathbb{C}, \operatorname{primitive}\left(N, t\right)\right)$$
 
@@ -170,7 +338,7 @@ $$\forall N \in \mathbb{N},\; \forall t \in \mathbb{N},\; \operatorname{primitiv
 
 The pinned standard orthonormal basis is chosen inside each actual primitive subspace.
 
-**Definition 1.13 (Normalized full strings).**
+**Definition 1.26 (Normalized full strings).**
 
 $$\forall S \in \mathbb{N},\; \forall a \in \operatorname{StringIndex}\left(S\right),\; \operatorname{normalizedString}\left(S, a\right) = (\frac{1}{\operatorname{norm}\left(\left(\operatorname{U}\left(2 \cdot S\right)^{\operatorname{position}\left(a\right)}\right)\left(\operatorname{primitiveBasis}\left(2 \cdot S, \operatorname{rank}\left(a\right)\right)\left(\operatorname{copy}\left(a\right)\right)\right)\right)}) \cdot \left(\operatorname{U}\left(2 \cdot S\right)^{\operatorname{position}\left(a\right)}\right)\left(\operatorname{primitiveBasis}\left(2 \cdot S, \operatorname{rank}\left(a\right)\right)\left(\operatorname{copy}\left(a\right)\right)\right)$$
 
@@ -182,7 +350,7 @@ $$\forall S \in \mathbb{N},\; \forall a \in \operatorname{StringIndex}\left(S\ri
 
 Every selected raising vector is divided by its actual positive norm.
 
-**Definition 1.14 (Complete string basis).**
+**Definition 1.27 (Complete string basis).**
 
 $$\forall S \in \mathbb{N},\; \forall a \in \operatorname{StringIndex}\left(S\right),\; \operatorname{stringBasis}\left(S\right)\left(a\right) = \operatorname{normalizedString}\left(S, a\right)$$
 
@@ -194,7 +362,7 @@ $$\forall S \in \mathbb{N},\; \forall a \in \operatorname{StringIndex}\left(S\ri
 
 The selected normalized family is orthonormal and spans the full carrier.
 
-**Definition 1.15 (String coordinate unitary).**
+**Definition 1.28 (String coordinate unitary).**
 
 $$\forall S \in \mathbb{N},\; \operatorname{stringUnitary}\left(S\right) = \operatorname{repr}\left(\operatorname{stringBasis}\left(S\right)\right)$$
 
@@ -206,7 +374,7 @@ $$\forall S \in \mathbb{N},\; \operatorname{stringUnitary}\left(S\right) = \oper
 
 Coordinates in the proved complete string basis form a complex linear isometric equivalence.
 
-**Definition 1.16 (Reversed native spin basis).**
+**Definition 1.29 (Reversed native spin basis).**
 
 $$\forall S \in \mathbb{N},\; \forall a \in \operatorname{NativeIndex}\left(S\right),\; \operatorname{nativeBasis}\left(S\right)\left(a\right) = \operatorname{normalizedString}\left(S, \operatorname{stringLabel}\left(\operatorname{rank}\left(a\right), \operatorname{copy}\left(a\right), \operatorname{finRev}\left(\operatorname{position}\left(a\right)\right)\right)\right)$$
 
@@ -222,7 +390,7 @@ $$\forall S \in \mathbb{N},\; \forall a \in \operatorname{NativeIndex}\left(S\ri
 
 Native coordinate r reverses the ascending string coordinate k by Fin.rev.
 
-**Definition 1.17 (Full native spin unitary).**
+**Definition 1.30 (Full native spin unitary).**
 
 $$\forall S \in \mathbb{N},\; \operatorname{nativeUnitary}\left(S\right) = \operatorname{repr}\left(\operatorname{nativeBasis}\left(S\right)\right)$$
 
@@ -238,7 +406,7 @@ $$\forall S \in \mathbb{N},\; \operatorname{nativeUnitary}\left(S\right) = \oper
 
 The isometric equivalence includes every primitive copy and the native spin-zero space.
 
-**Definition 1.18 (All native matrix blocks).**
+**Definition 1.31 (All native matrix blocks).**
 
 $$\forall S \in \mathbb{N},\; \forall A \in \operatorname{SpinMatrixFamily}\left(\right),\; \operatorname{nativeMatrix}\left(S, A\right) = \operatorname{blockDiagonalNativeCopies}\left(S, A\right)$$
 
@@ -254,7 +422,7 @@ $$\forall S \in \mathbb{N},\; \forall A \in \operatorname{SpinMatrixFamily}\left
 
 Each primitive copy receives the corresponding repository-native spin matrix.
 
-**Definition 1.19 (Native raising on all blocks).**
+**Definition 1.32 (Native raising on all blocks).**
 
 $$\forall S \in \mathbb{N},\; \operatorname{nativeU}\left(S\right) = \operatorname{toEuclideanLin}\left(\operatorname{nativeMatrix}\left(S, \operatorname{Jplus}\left(\right)\right)\right)$$
 
@@ -270,7 +438,7 @@ $$\forall S \in \mathbb{N},\; \operatorname{nativeU}\left(S\right) = \operatorna
 
 The block operator uses the original Jplus matrices.
 
-**Definition 1.20 (Native lowering on all blocks).**
+**Definition 1.33 (Native lowering on all blocks).**
 
 $$\forall S \in \mathbb{N},\; \operatorname{nativeL}\left(S\right) = \operatorname{toEuclideanLin}\left(\operatorname{nativeMatrix}\left(S, \operatorname{conjugateTransposeJplus}\left(\right)\right)\right)$$
 
@@ -286,7 +454,7 @@ $$\forall S \in \mathbb{N},\; \operatorname{nativeL}\left(S\right) = \operatorna
 
 The block operator uses the conjugate transposes of the original Jplus matrices.
 
-**Definition 1.21 (Native weights on all blocks).**
+**Definition 1.34 (Native weights on all blocks).**
 
 $$\forall S \in \mathbb{N},\; \operatorname{nativeZ}\left(S\right) = \operatorname{toEuclideanLin}\left(\operatorname{nativeMatrix}\left(S, \operatorname{Jz}\left(\right)\right)\right)$$
 
@@ -302,7 +470,7 @@ $$\forall S \in \mathbb{N},\; \operatorname{nativeZ}\left(S\right) = \operatorna
 
 The block operator uses the original Jz matrices.
 
-**Theorem 1.22 (Multiplicity, complete basis and native intertwiners).**
+**Theorem 1.35 (Multiplicity, complete basis and native intertwiners).**
 
 $$\forall S \in \mathbb{N},\; ((\forall t \in \operatorname{Fin}\left(S + 1\right),\; \operatorname{dimC}\left(\operatorname{primitive}\left(2 \cdot S, t\right)\right) = \operatorname{choose}\left(2 \cdot S, t\right) - \operatorname{previousChoose}\left(2 \cdot S, t\right)) \land (((\forall a \in \operatorname{NativeIndex}\left(S\right),\; \operatorname{nativeBasis}\left(S\right)\left(a\right) = \operatorname{normalizedString}\left(S, \operatorname{stringLabel}\left(\operatorname{rank}\left(a\right), \operatorname{copy}\left(a\right), \operatorname{finRev}\left(\operatorname{position}\left(a\right)\right)\right)\right)) \land (\forall v \in \operatorname{V}\left(2 \cdot S\right),\; ((\operatorname{nativeUnitary}\left(S\right)\left(\operatorname{U}\left(2 \cdot S\right)\left(v\right)\right) = \operatorname{nativeU}\left(S\right)\left(\operatorname{nativeUnitary}\left(S\right)\left(v\right)\right)) \land (((\operatorname{nativeUnitary}\left(S\right)\left(\operatorname{L}\left(2 \cdot S\right)\left(v\right)\right) = \operatorname{nativeL}\left(S\right)\left(\operatorname{nativeUnitary}\left(S\right)\left(v\right)\right)) \land (\operatorname{nativeUnitary}\left(S\right)\left(\operatorname{Z}\left(2 \cdot S\right)\left(v\right)\right) = \operatorname{nativeZ}\left(S\right)\left(\operatorname{nativeUnitary}\left(S\right)\left(v\right)\right)))))))))$$
 
@@ -322,6 +490,20 @@ The raising and lowering maps are Matrix.toEuclideanLin of the existing PronkoFr
 
 In the formulas, powers act by composition, ⟪v,w⟫ is complex Hermitian inner product, and scalars act on the left. Subtraction in the natural quantities d = 2S−2t and S−t is truncated; the lowering coefficient and weight are interpreted in ℂ after casting their natural operands. The notation scalar·vector denotes complex scalar multiplication. descFactorial(d,q) is the natural descending product ∏_{a=0}^{q−1}(d−a), equal to d!/(d−q)! when q≤d. The zero-power and zero-deficit cases are included. The result permits any primitive vector, without a reality restriction or a restriction to the permutation-invariant sector.
 
+For arbitrary natural N and t, occupiedSet and configurationEquiv identify bit-zero configurations with finsets of Fin(N). rankConfigurationEquiv restricts this bijection to rankConfigurations(N,t) = {x : Configuration(N) | occupancy(x)=t} and rankSubsets(N,t) = {A : Finset(Fin(N)) | card(A)=t}. The displayed maps suppress only subtype proof fields. The native fixed-cardinality application uses N=s directly, including odd s, with no enlargement of the Boolean carrier.
+
+Let C(s,r) = {A : Finset(Fin(s)) | card(A)=r}, and let H(s,r) = EuclideanSpace(ℂ,C(s,r)) carry counting inner product. Write e_r = rankConfigurationEquiv(s,r). For arbitrary complex f in H(s,r), define E_r f(x)=f(e_r(x)) when occupancy(x)=r and zero otherwise. Reindexing the finite counting sum proves ⟪E_r f,E_r g⟫=⟪f,g⟫ and ‖E_r f‖=‖f‖. For an arbitrary Boolean vector v, restriction is R_r v(A)=v(e_r⁻¹(A)), and E_r R_r v is exactly the mask equal to v at occupancy r and zero elsewhere. The mask fixes every vector in rankSpace(s,r). Thus the Hilbert-space identification uses the counting identity and zero extension; the linear rankEquiv alone is not an isometry assertion.
+
+The lowering target is C⁻(s,r) = {T : Finset(Fin(s)) | card(T)+1=r}. Define W_r f(T)=∑_{u∈Fin(s),u∉T} f(insert(u,T)), with every coefficient equal to one. Zero extension E⁻_r from this target uses the condition occupancy(x)+1=r and occupiedSet(x); it also preserves complex counting inner products and norms. The original site_entry formula gives L(s)v(x)=∑_{i∈Fin(s)} if x(i)=1 then v(update(x,i,0)) else 0. Since occupiedSet(update(x,i,0))=insert(i,occupiedSet(x)), this yields the exact correspondence L(s)E_r f=E⁻_r W_r f. At r=0 the target C⁻(s,0) is empty and this lowering is zero; it is not replaced by a second rank-zero layer through truncated subtraction.
+
+For r≤s, the counting cardinality of C(s,r) is choose(s,r)>0. Define P_r f to be the constant function with value choose(s,r)⁻¹∑_{A∈C(s,r)}f(A). The sum of f−P_r f is zero, so P_r is the orthogonal projection onto the complex line of constant functions. With W_r viewed as its actual complex linear map and W_r* its adjoint, put D_r=r(s−r+1)I−W_r*W_r. The adjoint identity and the counting norms give Re⟪f,D_r f⟫=r(s−r+1)‖f‖²−‖W_r f‖². These interface identities apply also at r=0 and r=s, and at s=1.
+
+For arbitrary site count s and rank r≤s, the original rank_split and primitive_zero_eq assemble a finite decomposition of every rank-r vector into z_t=U(s)^(r−t)v_t, with v_t in primitive(s,t) and 0≤t≤r. At the induction step write f=U(s)w+b with w of rank r−1 and b primitive of rank r, apply the preceding decomposition to w, and append b. Different t components are orthogonal by primitive_orthogonal and inner_power_orthogonal. If t>s−r, primitive_degree and primitive_endpoint give z_t=0, so only 0≤t≤min(r,s−r) remain. This uses the actual s-site carrier and imposes no parity condition.
+
+On z_t the original primitive_recurrence gives U(s)L(s)z_t=(r−t)(s−r−t+1)z_t. Thus the Boolean rank-r defect r(s−r+1)I−U(s)L(s) has eigenvalue t(s+1−t). Orthogonality reduces its quadratic form to the sum of t(s+1−t)‖z_t‖². Removing z_0 leaves the sum of the positive-t components, whose squared norm is the sum of their squared norms. The identity t(s+1−t)−s=(t−1)(s−t)≥0 gives the bound relative to this rank-zero string component. The vanishing components include all t>0 when r=s; r=0 has only z_0. These algebraic reductions also include s=1.
+
+NativeJohnsonCoercivity.result proves Re⟪f,D_r f⟫≥s‖f−P_r f‖² for every natural s and r≤s. Its proof identifies z_0 with the zero extension of the actual counting average P_r f, and establishes the coefficient-one lowering correspondence L(s)E_r=E⁻_r W_r with its counting-norm identity. These bridges combine with the primitive decomposition to give the native estimate, including s=0 and both rank endpoints. The graph defect identity, spectator or tensor estimates, energy, density and confinement conclusions require their separate correspondences.
+
 For each rank t≤S, the dimension is derived as choose(2S,t)−previousChoose(2S,t), where previousChoose(N,0)=0 and previousChoose(N,t+1)=choose(N,t). Fixed-occupancy configurations are identified with t-element subsets, and the actual rank space is identified with the complex function space on these subsets. The commutator and adjoint identity prove injectivity of U below the middle rank. Orthogonal splitting of rank t+1 into U(rank t) and its primitive subspace then gives the dimension formula; no rank multiplicity is assumed.
 
 Write d=2S−2t=2(S−t), and let b(t,a) be the selected orthonormal primitive basis. StringIndex(S) consists of (t,(a,k)) with t in Fin(S+1), a in Fin(dim P(2S,t)), and k in Fin(d+1). The normalized vector is U^k b(t,a) divided by its positive real norm, as a complex scalar. Its squared unnormalized norm is k!·descFactorial(d,k), so every position in every selected string is nonzero. Orthogonality and the primitive spanning theorem prove that these normalized vectors form a complete orthonormal basis, rather than assuming a complete family or a unitary.
@@ -335,7 +517,10 @@ The native U/L/Z intertwiners are proved through the constructed basis and its f
 - Truth anchor: `D5/S3/Quantum/SpinChains/BooleanCollectiveLadders.L`
 - Truth anchor: `D5/S3/Quantum/SpinChains/BooleanCollectiveLadders.U`
 - Truth anchor: `D5/S3/Quantum/SpinChains/BooleanCollectiveLadders.Z`
+- Truth anchor: `D5/S3/Quantum/SpinChains/BooleanCollectiveLadders.adjoint_U`
+- Truth anchor: `D5/S3/Quantum/SpinChains/BooleanCollectiveLadders.configurationEquiv`
 - Truth anchor: `D5/S3/Quantum/SpinChains/BooleanCollectiveLadders.finitePrimitiveStrings`
+- Truth anchor: `D5/S3/Quantum/SpinChains/BooleanCollectiveLadders.inner_power_orthogonal`
 - Truth anchor: `D5/S3/Quantum/SpinChains/BooleanCollectiveLadders.nativeBasis`
 - Truth anchor: `D5/S3/Quantum/SpinChains/BooleanCollectiveLadders.nativeL`
 - Truth anchor: `D5/S3/Quantum/SpinChains/BooleanCollectiveLadders.nativeMatrix`
@@ -346,12 +531,22 @@ The native U/L/Z intertwiners are proved through the constructed basis and its f
 - Truth anchor: `D5/S3/Quantum/SpinChains/BooleanCollectiveLadders.normalizedString`
 - Truth anchor: `D5/S3/Quantum/SpinChains/BooleanCollectiveLadders.number`
 - Truth anchor: `D5/S3/Quantum/SpinChains/BooleanCollectiveLadders.occupancy`
+- Truth anchor: `D5/S3/Quantum/SpinChains/BooleanCollectiveLadders.occupiedSet`
+- Truth anchor: `D5/S3/Quantum/SpinChains/BooleanCollectiveLadders.occupiedSet_card`
 - Truth anchor: `D5/S3/Quantum/SpinChains/BooleanCollectiveLadders.previousChoose`
 - Truth anchor: `D5/S3/Quantum/SpinChains/BooleanCollectiveLadders.primitive`
 - Truth anchor: `D5/S3/Quantum/SpinChains/BooleanCollectiveLadders.primitiveBasis`
+- Truth anchor: `D5/S3/Quantum/SpinChains/BooleanCollectiveLadders.primitive_degree`
+- Truth anchor: `D5/S3/Quantum/SpinChains/BooleanCollectiveLadders.primitive_endpoint`
 - Truth anchor: `D5/S3/Quantum/SpinChains/BooleanCollectiveLadders.primitive_multiplicity`
+- Truth anchor: `D5/S3/Quantum/SpinChains/BooleanCollectiveLadders.primitive_orthogonal`
+- Truth anchor: `D5/S3/Quantum/SpinChains/BooleanCollectiveLadders.primitive_recurrence`
+- Truth anchor: `D5/S3/Quantum/SpinChains/BooleanCollectiveLadders.primitive_zero_eq`
+- Truth anchor: `D5/S3/Quantum/SpinChains/BooleanCollectiveLadders.rankConfigurationEquiv`
 - Truth anchor: `D5/S3/Quantum/SpinChains/BooleanCollectiveLadders.rankSpace`
+- Truth anchor: `D5/S3/Quantum/SpinChains/BooleanCollectiveLadders.rank_split`
 - Truth anchor: `D5/S3/Quantum/SpinChains/BooleanCollectiveLadders.result`
+- Truth anchor: `D5/S3/Quantum/SpinChains/BooleanCollectiveLadders.site_entry`
 - Truth anchor: `D5/S3/Quantum/SpinChains/BooleanCollectiveLadders.stringBasis`
 - Truth anchor: `D5/S3/Quantum/SpinChains/BooleanCollectiveLadders.stringUnitary`
 - Dependency: [D5/S3/Quantum/Contextuality/TemporalHardySpinAttainment](../Contextuality/TemporalHardySpinAttainment.md)

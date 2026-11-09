@@ -1,0 +1,26 @@
+### 定义 37.1（原响应、受限制备与不受限接续）
+
+固定[相干重建续卷 II](AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_II.md) 定义 77.1、假设 78.1 的同一个来源。具体为原十站点 $b_{-1},b_0,\ldots,b_8$、全部十三维 $H=V_8^{\mathbf1}$、$e_\beta=|10\beta010\rangle$、唯一 ready $v_0=e_{00100}$、全部七个地址 $0,\ldots,6$ 和全部原标签 $\Omega_{10}=\{0,1\}^{10}$。不以四维码或两分量来源替换 $H$。参数和门始终是
+
+$$
+x=\varphi^{-1}=\frac{\sqrt5-1}{2},\quad x+x^2=1,\quad \zeta=e^{3\pi i/5},\qquad
+K_j=\zeta[I+(\zeta-1)\mathcal P_j],\quad
+\mathcal P_j=n_{j-1}n_{j+1}+(1-n_{j-1})(1-n_{j+1})Q_j,\quad
+Q=\begin{pmatrix}x&x\sqrt x\\x\sqrt x&x^2\end{pmatrix}.
+\tag{37.1}
+$$
+
+这里 $Q_j$ 作用于中心 $b_j$，所有门限制于原 $H$。令 $\mathsf A=\{4,5\}^{<\infty}$、$\mathsf W=\{0,\ldots,6\}^{<\infty}$，两者含空字；仍按先后调用书写字，因此 $K_{af}=K_fK_a$。同一个未知响应 $P:S(H)\to\Delta(\Omega_{10})$ 的每个坐标连续、全局相位不变、非负，全部 $1024$ 坐标之和为一。条件于保留的原制备／控制记录，终端核仍是 $H_P(p;(f,w))=P_w(K_fK_pv_0)$：同一射线对这个终端接口充分。没有另换探测器、复制响应或给数学射线增加可执行制备。
+
+只要求以下准确关系对每个实际 $a\in\mathsf A$、$f\in\mathsf W$、$w\in\Omega_{10}$ 成立：
+
+$$
+\begin{aligned}
+&P_w(K_fK_4^3K_av_0)+x^2P_w(K_fK_4K_av_0)\\
+&\hspace{1cm}=P_w(K_fK_av_0)+x^2P_w(K_fK_4^2K_av_0).
+\end{aligned}
+\tag{37.2}
+$$
+
+四项分别来自原程序 $a\,4^t\,f$，$t=3,1,0,2$；$t=0$ 不插门。它们是同一条件概率核中四个指定程序的关系，不是一次运行的四次中间读出。时间指标仅为原地址调用次数。
+

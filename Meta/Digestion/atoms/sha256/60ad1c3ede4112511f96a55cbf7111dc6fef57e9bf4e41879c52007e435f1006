@@ -1,0 +1,13 @@
+**Corollary 177.2 (closure of the symmetric family).** For every sequence of legal tuples of the form (175.2) with $t_n\ne0$ and $\|\Delta(u^{(n)})\|_{\max}\to0$,
+
+$$
+t_n^2q_{003}(v_n)\longrightarrow0.
+\tag{177.3}
+$$
+
+Thus the non-kernel leakage tuning suggested by (176.4) cannot produce an exact full-law zero. For any fixed nonzero direction and nonzero amplitude, (177.2) supplies a positive residual bound. Any remaining escape must leave the symmetric first-label family itself; the bound says nothing about arbitrary partitions, independently normalized first labels, $F_{64}$, $H43$, SRS$\text{-}20$, physical succession or Lean/kernel formalization.
+
+*Proof.* Apply (177.2) to each tuple. $\square$
+
+The new conclusion is a paired-channel consequence for the original source family. It uses the existing affine readout, positivity identity and joint-law multilinearity; it adds no native AURIC realization or physical transport and makes no Lean/kernel certification claim.
+

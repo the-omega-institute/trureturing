@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:5ac725e0476643c7b7dbfd4f58c881087af0e95f63e778e1e2d951c8cd4b2da4
+  normalized_sha256: sha256:5ac725e0476643c7b7dbfd4f58c881087af0e95f63e778e1e2d951c8cd4b2da4
+cas_ref: sha256:5ac725e0476643c7b7dbfd4f58c881087af0e95f63e778e1e2d951c8cd4b2da4
+coverage_gids:
+  - gid: D5/S3/ContinuousObservables/C0Multipliers.source_multiplier_certificate
+    target_statement_id: sha256:76261bd474adf514d0afe95f804128cc437381a0b7836c5b5a7a59ae6beca825
+receipts:
+  unresolved_subitems: []

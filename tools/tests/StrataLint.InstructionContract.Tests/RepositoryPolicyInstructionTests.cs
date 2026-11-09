@@ -52,12 +52,14 @@ public sealed class RepositoryPolicyInstructionTests
     [InlineData("CLAUDE.md")]
     [InlineData("skills/formal-thinking-and-answer/SKILL.md")]
     [InlineData("docs/develop/spec/golden-ledger-repo-spec.md")]
-    public void WorktreeDeliveryReturnsToBoundedPool(string path)
+    public void WorktreeReleaseUsesNativeStaleMarkerWithoutDeliveryGates(string path)
     {
         var text = File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), path), Encoding.UTF8);
-        Assert.Contains("make worktree-return PR=", text, StringComparison.Ordinal);
-        Assert.Contains("WRITERS_JOINED=1", text, StringComparison.Ordinal);
-        Assert.Contains("MERGED", text, StringComparison.Ordinal);
+        Assert.Contains("make worktree-stale", text, StringComparison.Ordinal);
+        Assert.Contains("make worktree-return", text, StringComparison.Ordinal);
+        Assert.Contains("worktreeStaleHead", text, StringComparison.Ordinal);
+        Assert.DoesNotContain("make worktree-return PR=", text, StringComparison.Ordinal);
+        Assert.Contains("WORKTREE_PATH=DIR", text, StringComparison.Ordinal);
         Assert.Contains("make worktree-remove", text, StringComparison.Ordinal);
         Assert.DoesNotContain("the task removes the worktrees it created", text, StringComparison.Ordinal);
         Assert.DoesNotContain("remove a worktree this run created", text, StringComparison.Ordinal);

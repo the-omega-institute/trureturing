@@ -11,6 +11,14 @@ internal sealed class PairedLaplaceDocument : IScribeDocumentDefinition
         H("The paired Laplace representation"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("forward-regular-part-gaussian-growth"),
+                DeclarationHandle.Create(Prefix + "forwardRegularPart_gaussian_growth"),
+                H("Quadratic growth on the Gaussian strip"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("A quadratic bound for the Mellin remainder on closed substrips gives quadratic growth of the regular part between real parts minus one sixth and three quarters."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("laplace-forwardlog-eq-forwardmellin"),
                 DeclarationHandle.Create(Prefix + "laplace_forwardLog_eq_forwardMellin"),
                 H("Logarithmic coordinates recover the forward Mellin transform"),

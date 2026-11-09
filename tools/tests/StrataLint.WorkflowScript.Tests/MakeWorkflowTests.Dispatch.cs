@@ -8,6 +8,28 @@ namespace StrataLint.WorkflowScript.Tests;
 
 public sealed partial class MakeWorkflowTests
 {
+    [Theory]
+    [InlineData("\t", false, 2)]
+    [InlineData("\t\t", false, 2)]
+    [InlineData("\t", true, 1)]
+    [InlineData("\t\t", true, 1)]
+    public void ThinDispatchCountsCommandsByContinuation(string indentation, bool continued, int expected)
+    {
+        var makefile = "help:\n\t@printf '%s\\n' 'first'" + (continued ? " \\" : string.Empty)
+            + "\n" + indentation + "'second'\n\nnext:\n\t@true\n";
+
+        Assert.Equal(expected, RecipeCount(makefile, "help"));
+    }
+
+    [Fact]
+    public void ThinDispatchCountsAnIndependentCommandAfterTheCurrentHelpContinuation()
+    {
+        var makefile = File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), "Makefile"));
+        Assert.Equal(1, RecipeCount(makefile, "help"));
+        Assert.Contains("\\\n\t\t", makefile, StringComparison.Ordinal);
+
+        Assert.Equal(2, RecipeCount(makefile.Replace("\\\n\t\t", "\n\t\t", StringComparison.Ordinal), "help"));
+    }
 
     [Fact(DisplayName = "Makefile remains a thin complete dispatch table")]
     public void MakefileIsAThinCompleteDispatchTable()

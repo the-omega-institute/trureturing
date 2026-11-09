@@ -1,7 +1,7 @@
 #!/bin/bash
-# clean-runlocal: qualify manifest-listed temporary trees through the worktree protocol.
+# clean-runlocal: inspect manifest-listed temporary trees through the worktree protocol.
 # usage: clean-runlocal.sh --manifest FILE [--root /tmp/ie0904] [--source REPO] [--base REV] [--min-age-min 15] [--delete]
-# Default is preview. Registered trees use lock/time removal; other artifacts retain their policy.
+# Default is preview. Registered trees use native removal; other artifacts retain their policy.
 set -u
 protocol_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd -P)"
 manifest=""; root=/tmp/ie0904; delete=0; minage=15; source="$protocol_root"; base=origin/dev
@@ -27,21 +27,12 @@ try:
     source=Path(inventory(source)[0]["worktree"]).resolve()
     os.chdir(source)
 except Exception as e: anchor_error=str(e)
-def newest(p):
-    m=os.lstat(p).st_mtime
-    if os.path.isdir(p) and not os.path.islink(p):
-        for d,ds,fs in os.walk(p):
-            for n in ds+fs:
-                try: m=max(m,os.lstat(os.path.join(d,n)).st_mtime)
-                except FileNotFoundError: pass
-    return m
 for p,rp,linked in paths:
     rec={"path":p,"eligible":False,"reason":None,"state":"kept"}
     if linked or os.path.islink(rp): rec["reason"]="symlink"
     elif rp==root: rec["reason"]="is_root"
     elif not rp.startswith(root+os.sep): rec["reason"]="outside_root"
     elif not os.path.lexists(rp): rec["reason"]="missing"
-    elif (now-newest(rp))<minage*60: rec["reason"]="too_recent"
     else:
         try:
             if anchor_error is not None: raise OSError(anchor_error)
@@ -49,6 +40,9 @@ for p,rp,linked in paths:
             if any(Path(rp) in tree.parents for tree in trees): raise Refused("nested_worktree")
             registered=Path(rp) in trees
             if registered:
+                # Registered trees use the canonical native removal entrance;
+                # HEAD age and stale eligibility are handled by allocation and
+                # clean-lanes, never by filesystem mtimes here.
                 result=remove(argparse.Namespace(source=source,names="",path=[Path(rp)],force=False,
                     preview=not delete,expected=[]))
                 outcome=result["items"][0]["outcome"]
@@ -56,6 +50,10 @@ for p,rp,linked in paths:
                 if result["status"]=="failed": raise OSError(str(result))
                 if result["status"]!="succeeded" or outcome!=("removed" if delete else "would_remove"):
                     raise ValueError("unexpected removal receipt:"+str(result))
+            elif (now-os.lstat(rp).st_mtime)<minage*60:
+                rec["reason"]="too_recent"
+                out.append(rec)
+                continue
             elif delete:
                 shutil.rmtree(rp) if os.path.isdir(rp) else os.remove(rp)
             rec["eligible"]=True

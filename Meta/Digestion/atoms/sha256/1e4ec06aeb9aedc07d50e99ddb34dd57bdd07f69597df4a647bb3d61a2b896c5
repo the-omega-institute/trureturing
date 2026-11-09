@@ -1,0 +1,46 @@
+#### 引理 3.5：仅用到的谱事实及证明
+
+设 $X\ne0$ 为复 Banach 空间，$S\in\mathcal L(X)$。 定义
+
+$$
+\sigma(S):=\{\lambda\in\mathbb C:\lambda I-S\text{ 无有界双侧逆}\}.
+$$
+
+则 $\sigma(S)\ne\varnothing$。 若 $S$ 是倍率为 $r>0$ 的满射相似，则
+
+$$
+\sigma(S)\subset\{\lambda:|\lambda|=r\}.
+$$
+
+若 $\lambda\in\sigma(S)$、$\alpha,\beta\in\mathbb R$，则 $\alpha\lambda+\beta\in\sigma(\alpha S+\beta I)$。
+
+**证明。**
+
+先证非空。若处处可逆，则 $R(z):=(zI-S)^{-1}$ 为处处解析的算子值函数； 这一解析性来自每一点附近的 Neumann 级数。 当 $|z|>\|S\|$，
+
+$$
+R(z)=z^{-1}\sum_{n\ge0}(S/z)^n,
+\qquad \|R(z)\|\le\frac1{|z|-\|S\|}.
+$$
+
+对任意 $v\in X$ 和连续复线性泛函 $\ell$， $z\mapsto\ell(R(z)v)$ 为在无穷远趋零的有界整函数， 由 Liouville 定理恒为零。连续线性泛函分离点，故 $R(z)=0$， 与 $(zI-S)R(z)=I\ne0$ 矛盾。
+
+对满射相似，$\|S\|=r$、$\|S^{-1}\|=r^{-1}$。 若 $|\lambda|>r$，则对 $\lambda I-S$ 使用外圈 Neumann 级数； 若 $|\lambda|<r$，则
+
+$$
+S-\lambda I=S(I-\lambda S^{-1})
+$$
+
+可由内圈 Neumann 级数求逆。 所以谱只能在 $|\lambda|=r$ 上。
+
+最后若 $\alpha\ne0$，
+
+$$
+(\alpha\lambda+\beta)I-(\alpha S+\beta I)
+=\alpha(\lambda I-S)
+$$
+
+给出所需非可逆性；若 $\alpha=0$，则 $\sigma(\beta I)=\{\beta\}$。
+
+$\square$
+

@@ -15,12 +15,6 @@ internal sealed class StabilizerPairLocalUnitaryInequivalenceDocument : IScribeD
         "Neither the two [[5,2]] codespaces of S_A and S_B nor the two [[6,3]] codespaces of S+ and S- of Theorem 5.3 of arXiv:2607.26214 are related by a product unitary composed with a qubit permutation, which answers the first part of Question 5.4 of A. A. Mahmoud in the negative.",
         H("Local-unitary inequivalence of two weight-isometric pairs of stabilizer codes"),
         Blocks(
-            Node("pauli", "Pauli labels", PauliFormula(),
-                "The four single-qubit Pauli labels.",
-                "Pauli", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
-            Node("pauli-matrix", "Pauli matrices", PauliMatrixFormula(),
-                "The label I gives the identity, X and Z give the frozen Pauli matrices qubitX and qubitZ, and Y gives i X Z, where i is the imaginary unit, so that Y has rows (0, -i) and (i, 0).",
-                "pauliMatrix", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("tensor", "Product operators", TensorFormula(),
                 "The tensor product of n two-by-two matrices, acting on functions of n bits: its entry at the pair of bit strings x and y is the product over the qubits i of the entries of M_i at x_i and y_i.",
                 "tensorOp", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
@@ -74,8 +68,6 @@ internal sealed class StabilizerPairLocalUnitaryInequivalenceDocument : IScribeD
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula Equal(Formula left, Formula right) =>
         new Formula.Relation(left, FormulaRelationOperator.Equal, right);
-    private static Formula And(Formula left, Formula right) =>
-        new Formula.Logic(left, FormulaLogicOperator.And, right);
     private static Formula Or(Formula left, Formula right) =>
         new Formula.Logic(Parenthesized(left), FormulaLogicOperator.Or, Parenthesized(right));
     private static Formula Iff(Formula left, Formula right) =>
@@ -87,18 +79,6 @@ internal sealed class StabilizerPairLocalUnitaryInequivalenceDocument : IScribeD
     private static Formula Sub(Formula value, Formula index) => new Formula.Subscript(value, index);
     private static Formula Complexes() => Seq(Mathbb, Grp(F.Id("C")));
     private static Formula Bits(Formula n) => new Formula.TypeArrow(Call("Fin", n), Call("Fin", D(2)));
-
-    private static Formula PauliFormula() => Disp(Equal(Named("Pauli"),
-        new Formula.SetLiteral([Named("I"), Named("X"), Named("Y"), Named("Z")])));
-
-    private static Formula PauliMatrixFormula()
-    {
-        Formula Image(string label) => Call("pauliMatrix", Named(label));
-        return Disp(And(And(Equal(Image("I"), D(1)), Equal(Image("X"), Named("qubitX"))),
-            And(Equal(Image("Y"), Seq(F.Id("i"), Sp, Cdot, Sp, Parenthesized(
-                Seq(Named("qubitX"), Sp, Cdot, Sp, Named("qubitZ"))))),
-                Equal(Image("Z"), Named("qubitZ")))));
-    }
 
     private static Formula TensorFormula()
     {
