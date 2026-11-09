@@ -96,7 +96,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof/Foundation
 
 For positive party count and positive local dimension, the original ghz vector has sum of squared complex amplitudes one.
 
-Qubit operator boundary (direct application of the existing definitions, not a new standalone theorem): for any n and computational word x : Fin n -> Fin 2, card(univ.image x) <= card(Fin 2)=2. Thus every diagonal entry of supportProjector n 2 is one and P=I. Substitution into the original witnessOp definition gives W=(1/2)I-rankOneDensity(ghz n 2). The witness and fidelity operators, hence their defining optimizations, coincide. This uses no higher-dimensional roof theorem and asserts no qubit roof formula. Both operator equalities are checked as transient exact Lean applications; their derivation is retained here rather than as unused bind-only declarations.
+Qubit operator boundary (direct application of the existing definitions, not a new standalone theorem): for any n and computational word x : Fin n -> Fin 2, card(univ.image x) <= card(Fin 2)=2. Thus every diagonal entry of supportProjector n 2 is one and P=I. Substitution into the original witnessOp definition gives W=(1/2)I-rankOneDensity(ghz n 2). The witness and fidelity operators, hence their defining optimizations, coincide. This uses no higher-dimensional roof theorem and asserts no qubit roof formula.
 
 **Theorem 1.7 (The universal all-cut overlap inequality).**
 
