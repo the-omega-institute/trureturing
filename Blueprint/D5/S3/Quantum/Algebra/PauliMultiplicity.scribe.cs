@@ -50,10 +50,10 @@ internal sealed class PauliMultiplicityDocument : IScribeDocumentDefinition
             And(Eq(C("Multiply",X,X),Sm(Re(C("pow",r,N(2))),C("One",op))),
             And(Eq(C("Multiply",Y,Y),Sm(Re(C("pow",s,N(2))),C("One",op))),
                 Eq(C("Multiply",X,Y),C("Negate",C("Multiply",Y,X)))))));
-        return All("H",C("Type"),Inst(C("NormedAddCommGroup",Hh),
-            Inst(C("InnerProductSpace",complex,Hh),Inst(C("CompleteSpace",Hh),
-            Inst(C("Nontrivial",Hh),All("X",op,All("Y",op,
-            Imp(C("IsSelfAdjoint",X),Imp(C("IsSelfAdjoint",Y),All("r",real,All("s",real,
-                Imp(assumptions,result)))))))))));
+        var axes=All("X",op,All("Y",op,Imp(C("IsSelfAdjoint",X),
+            Imp(C("IsSelfAdjoint",Y),All("r",real,All("s",real,Imp(assumptions,result)))))));
+        var instances=Inst(C("NormedAddCommGroup",Hh),Inst(C("InnerProductSpace",complex,Hh),
+            Inst(C("CompleteSpace",Hh),Inst(C("Nontrivial",Hh),axes))));
+        return All("H",C("Type"),instances);
     }
 }
