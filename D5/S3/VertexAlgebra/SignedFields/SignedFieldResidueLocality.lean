@@ -157,7 +157,7 @@ private theorem positiveModes (s : ℂ) (A B : VertexOperator ℂ V) (r : ℕ) (
         _ = _ := by rw [signs]
     rw [signedWeight]; push_cast [Int.natCast_sub within]; rw [show (r : ℤ) + n - ((r : ℤ) - offset) = n + offset by omega]
 
-private theorem negativeResidue (s : ℂ) (A B : VertexOperator ℂ V) (degree : ℕ) : (residueField s (-(degree : ℤ) - 1) A B).operator = (signedNormalMinusOne s (dividedDerivative degree A) B).1 := by
+theorem negativeResidue (s : ℂ) (A B : VertexOperator ℂ V) (degree : ℕ) : (residueField s (-(degree : ℤ) - 1) A B).operator = (signedNormalMinusOne s (dividedDerivative degree A) B).1 := by
   have derivativeModes (index : ℤ) (vector : V) : ((dividedDerivative degree A) [[index]]) vector = ((Ring.choose (-index - 1 + degree) degree : ℤ) : ℂ) • (A
     [[index - degree]]) vector := by
     change Ring.choose (-index - 1 + degree) degree • HVertexOperator.coeff A (-index - 1 + degree) vector = _

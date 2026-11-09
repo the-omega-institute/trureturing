@@ -50,6 +50,23 @@ internal sealed class LatticeGardenOfEdenDocument : IScribeDocumentDefinition
         Call("Real.log", Cast(Call("imagePatternCount", Box(Id("n")), Id("S"), Id("φ")))),
         Slash, Call("pow", Cast(Add(Id("n"), D(1))), Id("d")));
 
+    private static Formula ScalarLog(Formula x) => Call("Real.log", Cast(x));
+    private static Formula Pow(Formula x, Formula y) => Seq(Grp(x), Caret, Grp(y));
+    private static Formula ScalarDeficit => Seq(Open, Cast(Id("b")), Sp, Star, Sp, ScalarLog(Id("a")),
+        Sp, Minus, Sp, ScalarLog(Seq(Pow(Id("a"), Id("b")), Sp, Minus, Sp, D(1))), Close,
+        Slash, Pow(Cast(Id("b")), D(2)));
+    private static Formula ScalarPackingStatement => St(
+        Seq(All("a", Nat), All("b", Nat), All("k", Nat), All("u", Nat), All("v", Nat), All("f", Nat)),
+        Seq(D(2), Sp, Le, Sp, Id("a"), Sp, Land, Sp, D(0), Sp, Lt, Sp, Id("b"), Sp, Land,
+            Sp, D(0), Sp, Lt, Sp, Id("v"), Sp, Land, Sp, D(0), Sp, Lt, Sp, Id("f"), Sp, Land),
+        Seq(Id("v"), Sp, Le, Sp, Id("k"), Sp, Star, Sp, Pow(Id("b"), D(2)), Sp, Land,
+            Sp, Id("k"), Sp, Star, Sp, Id("b"), Sp, Le, Sp, Id("u"), Sp, Land),
+        Seq(Id("f"), Sp, Le, Sp, Pow(Seq(Pow(Id("a"), Id("b")), Sp, Minus, Sp, D(1)), Id("k")),
+            Sp, Star, Sp, Pow(Id("a"), Seq(Id("u"), Sp, Minus, Sp, Id("k"), Sp, Star, Sp, Id("b"))), Sp, Rightarrow),
+        Seq(D(0), Sp, Lt, Sp, ScalarDeficit, Sp, Land),
+        Seq(ScalarLog(Id("f")), Slash, Cast(Id("v")), Sp, Le, Sp, Open, Cast(Id("u")), Slash,
+            Cast(Id("v")), Close, Sp, Star, Sp, ScalarLog(Id("a")), Sp, Minus, Sp, ScalarDeficit));
+
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Surjectivity and finite-disagreement preinjectivity coincide for every finite-alphabet local rule on every finite-dimensional integer lattice.",
         H("The lattice Garden-of-Eden theorem"), Blocks(
@@ -82,6 +99,14 @@ internal sealed class LatticeGardenOfEdenDocument : IScribeDocumentDefinition
             AssessedProvenance.FromLiterature(Source), Blocks(
                 Paragraph(Text("One complete configuration x must realize the entire pattern p simultaneously. The count imagePatternCount(F,S,φ) "
                     + "is Nat.card of this actual image-pattern type. It does not count independent local witnesses or arbitrary compatible patches."))), DescribeRole.Definition),
+        Describe.Lean(DescribeId.Create("logarithmic-packing-bound"), DeclarationHandle.Create(Owner + "logarithmic_packing_bound"),
+            H("A packing count gives a uniform logarithmic deficit"), StatementSource.FromAuthor(ScalarPackingStatement),
+            AssessedProvenance.FromLiterature(Source), Blocks(
+                Paragraph(Text("For natural a,b,k,u,v,f with a≥2, b,v,f positive, v≤k*b², k*b≤u and "
+                    + "f≤(a^b−1)^k*a^(u−k*b), put δ=(b*log(a)−log(a^b−1))/b². "
+                    + "Then δ>0 and log(f)/v≤(u/v)*log(a)−δ. "
+                    + "This scalar estimate has no group hypothesis and applies to both lattice boxes and arbitrary-group finite-pattern counts."))),
+            DescribeRole.Theorem),
         Describe.Lean(DescribeId.Create("strict-box-loss"), DeclarationHandle.Create(Owner + "strict_image_box_loss"),
             H("A finite collision forces strict logarithmic image loss"), StatementSource.FromAuthor(St(
                 Alphabet, Finite, All("d", Nat), Seq(D(1), Sp, Le, Sp, Id("d"), Sp, Rightarrow),

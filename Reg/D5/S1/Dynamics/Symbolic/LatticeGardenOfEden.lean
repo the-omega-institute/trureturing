@@ -245,5 +245,88 @@ def registration_count : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   familyRecord := none
   options := #[]
 
+abbrev logSignature : Signature where
+  Params := Unit
+  State _ := ℝ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def logActual : Realization logSignature :=
+  realize logSignature (fun _ _ => Real.log) (fun e => nomatch e)
+
+def logRejected : Realization logSignature :=
+  realize logSignature (fun _ _ _ => 1) (fun e => nomatch e)
+
+def logArena : Arena where
+  signature := logSignature
+  Law R := ∀ {a b k u v f : ℕ},
+    2 ≤ a → 0 < b → 0 < v → 0 < f → v ≤ k * b ^ 2 → k * b ≤ u →
+    f ≤ (a ^ b - 1) ^ k * a ^ (u - k * b) →
+    0 < ((b : ℝ) * Real.log (a : ℝ) - Real.log (a ^ b - 1 : ℕ)) / (b : ℝ) ^ 2 ∧
+    R.readout () () (f : ℝ) / v ≤ (u : ℝ) / v * Real.log (a : ℝ) -
+      ((b : ℝ) * Real.log (a : ℝ) - Real.log (a ^ b - 1 : ℕ)) / (b : ℝ) ^ 2
+
+private theorem logRejected_law : ¬ logArena.Law logRejected := by
+  intro h
+  have hh := (@h 2 1 1 1 1 1 (by omega) (by omega) (by omega) (by omega)
+    (by norm_num) (by norm_num) (by norm_num)).2
+  norm_num [logRejected, realize] at hh
+
+def logFamily : Registration logArena
+    (type_of% (@_root_.D5.S1.Dynamics.Symbolic.LatticeGardenOfEden.logarithmic_packing_bound)) where
+  actual := logActual
+  bridge := Iff.rfl
+  variation := ⟨@logarithmic_packing_bound, logRejected, logRejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨logRejected, ?_, rfl, logRejected_law⟩
+      intro j hj
+      exact (hj (@Subsingleton.elim Unit _ j i)).elim
+    · intro e; exact nomatch e
+  dependence := by
+    intro i
+    refine ⟨(), (1 : ℝ), (2 : ℝ), ?_⟩
+    change Real.log (1 : ℝ) ≠ Real.log (2 : ℝ)
+    rw [Real.log_one]
+    exact (ne_of_gt (Real.log_pos (by norm_num : (1 : ℝ) < 2))).symm
+
+def registration_log : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@_root_.D5.S1.Dynamics.Symbolic.LatticeGardenOfEden.logarithmic_packing_bound)
+    (Realization logSignature) Unit Unit where
+  unitName := `Reg.D5.S1.Dynamics.Symbolic.LatticeGardenOfEden.log
+  realizationName := `Reg.D5.S1.Dynamics.Symbolic.LatticeGardenOfEden.logFamily
+  realizationSource := none
+  generated := false
+  arena := .source ⟨logArena⟩
+  objectArena := .source ⟨logArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source logArena ⟨logFamily⟩
+  correspondence := {stage := .evidence, objectStage := .evidence}
+  bundleNonempty := .absent
+  readout := some (realize logSignature (fun _ _ => Real.log) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S1.Dynamics.Symbolic.LatticeGardenOfEden
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "fn", "arg", "fn", "arg", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
 end
 end Reg.D5.S1.Dynamics.Symbolic.LatticeGardenOfEden

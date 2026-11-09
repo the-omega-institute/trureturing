@@ -1,0 +1,42 @@
+**定理 183.2（任意 JB 完成、不完备原域的全单位行）。** 在 183.1 的背景中，对全部 $\mu\in\mathbb R$、$b\in E$，同一个旧响应满足
+
+$$
+\boxed{D(\mu u,b)=0.}
+\tag{183.2}
+$$
+
+证明。$\mu=0$ 由 P2 处理。以下固定 $\mu\ne0$、$b\in E$，记 $h=D(\mu u,b)$。只需证明 $h=0$。证明的前半部在本节完成，后半部在 §184 完成；期间对 $D$ 的每次调用都只输入原 $E$ 中的元素。
+
+先消费母卷 99.2 的支撑态结论，得到半定第二输入的单位行。若 $c\in C\cup(-C)$ 且 $k=D(\mu u,c)\ne0$，取范数支撑态 $\rho$，使 $|\rho(k)|=\|k\|>0$。99.2 给 $\rho(c)=0$；由
+
+$$
+0\le c^2\le\|c\|(\pm c)
+$$
+
+得 $\rho(c^2)=0$，而 P2 又使 $\rho(k)=0$，矛盾。因此
+
+$$
+D(\mu u,c)=0\qquad(c\in C\cup(-C)).
+\tag{183.3}
+$$
+
+以下成熟 JB 工具只用作证明中的数学读取结构。Hanche-Olsen–Størmer，[*Jordan Operator Algebras*](https://hanche.folk.ntnu.no/joa/joa-m.pdf)，4.4.3 给 $M=X^{**}$ 的 JBW 结构和原泛函的正常延伸；4.1.9 给有界集上 Jordan 乘法的联合强连续性；4.5.12 给单位球的强稠密性。这里强拓扑由正常正泛函的半范数 $x\mapsto\rho(x^2)^{1/2}$ 确定。$X$ 在 $M$ 中弱星稠密，弱与强拓扑在凸集上的闭包相同，故上述密度可用于 $X\subset M$。再由 $E$ 在 $X$ 中范数稠密，可将有界逼近网的元素选在 $E$。
+
+Hamhalter，[*Pure states on Jordan algebras*](https://dml.cz/handle/10338.dmlcz/133911)，Mathematica Bohemica 126 (2001)，81–91，DOI 10.21136/MB.2001.133911，§1 第 83 页，给任意 JB 代数纯态 $\beta$ 的唯一最小非零支撑投影 $p\in M$，满足
+
+$$
+U_p(x)=\beta(x)p,\qquad U_p=2L_p^2-L_p,
+\quad L_p x=p\circ x.
+\tag{183.4}
+$$
+
+原文先对 $x\in X$ 陈述此式，正常性和弱星密度将其延至 $x\in M$。代入 $x=p$ 得 $\beta(p)=1$，且 $\beta=\beta\circ U_p$。这个双对偶投影不要求属于原域，不会成为 $D$ 的输入。
+
+先取满足 $\beta(h)\ne0$ 的纯态，置
+
+$$
+k=\frac{\mu}{1+\mu^2}h,\qquad
+r=\beta(k)\ne0,\qquad c=\frac{U_k(p)}r\in M.
+\tag{183.5}
+$$
+
