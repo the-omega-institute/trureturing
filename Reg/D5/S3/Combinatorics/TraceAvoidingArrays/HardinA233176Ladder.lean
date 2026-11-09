@@ -183,7 +183,7 @@ end InitialCoefficients
 namespace AdvanceSeen
 
 abbrev signature : Signature :=
-  _root_.Reg.Support.SingleDependentReadout.signature Fin 3
+  _root_.Reg.Support.SingleDependentReadout.signature (Fin 3)
     (fun _ => Fin 6) (fun _ => Seen)
 
 def actual : Realization signature :=
@@ -255,7 +255,7 @@ end AdvanceSeen
 namespace NextMono
 
 abbrev signature : Signature :=
-  _root_.Reg.Support.SingleDependentReadout.signature Fin 3
+  _root_.Reg.Support.SingleDependentReadout.signature (Fin 3)
     (fun _ => Fin 6) (fun _ => Fin 3)
 
 def actual : Realization signature :=
@@ -326,7 +326,7 @@ end NextMono
 namespace LabelNext
 
 abbrev signature : Signature :=
-  _root_.Reg.Support.SingleDependentReadout.signature Fin 3
+  _root_.Reg.Support.SingleDependentReadout.signature (Fin 3)
     (fun _ => Fin 6) (fun _ => Fin 3)
 
 def actual : Realization signature :=
