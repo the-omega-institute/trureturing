@@ -14,7 +14,7 @@ $$\forall a, b: \operatorname{Zsqrtd}\left(2\right), \operatorname{IdealSpanPair
 
 *Commentary.*
 
-Let O be the explicit quadratic order Z[sqrt(2)], s = sqrt(2), and delta = 3 - s. For a and b in O define F = (a^2 + delta^2 b^2)^2, G = 4ab(a^2 - delta^2 b^2), and I = (F,G). The hypothesis (a,b) = O is ideal-theoretic primitivity. Zero coordinates are allowed, including the representatives of infinity and the two-torsion x-coordinates.
+Let O be the explicit quadratic order Z[sqrt(2)], s = sqrt(2), and delta = 3 - s. For a and b in O define F = (a^2 + delta^2 b^2)^2, G = 4ab(a^2 - delta^2 b^2), and I = (F,G). The hypothesis (a,b) = O is ideal-theoretic primitivity. No nonvanishing hypothesis is imposed on either coordinate or either duplication form.
 
 The numerator alone is not divisible by s^7 or delta^5. For the dyadic bound, divisibility by s^7 would make the real coordinate of F divisible by sixteen. Twice applying the parity obstruction for X^2 + 2Y^2 modulo four makes both coordinates of a^2 + (delta b)^2 divisible by four. The real and imaginary coordinate congruences then force both a and b to be divisible by s, contrary to primitivity.
 
