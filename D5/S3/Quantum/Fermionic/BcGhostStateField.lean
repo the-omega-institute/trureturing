@@ -63,10 +63,11 @@ private theorem signedNormal_translation (sign : ℂ) (translation : Module.End 
     apply LinearMap.ext
     intro vector
     simp [dividedDerivative, LaurentSeries.hasseDeriv_zero]
-  have normal : (D5.S3.VertexAlgebra.SignedFieldResidueLocality.residueField sign (-1) left right).operator =
+  have normal : (D5.S3.VertexAlgebra.SignedFieldResidueLocality.residueField
+      sign (-1) left right).operator =
       (signedNormalMinusOne sign left right).1 := by
     have result :=
-  D5.S3.VertexAlgebra.SignedFieldResidueLocality.negativeResidue
+      D5.S3.VertexAlgebra.SignedFieldResidueLocality.negativeResidue
       sign left right 0
     change (D5.S3.VertexAlgebra.SignedFieldResidueLocality.residueField
       sign (-1) left right).operator =

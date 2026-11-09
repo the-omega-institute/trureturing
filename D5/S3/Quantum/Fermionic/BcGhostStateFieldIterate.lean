@@ -150,11 +150,13 @@ private theorem signed_uniqueness (operator : VertexOperator ℂ Fock)
       rw [Finset.sum_eq_single 0]
       · simp only [pow_zero, Nat.choose_zero_right, Nat.cast_one, mul_one, one_smul, Nat.cast_zero, sub_zero, add_zero, show index - (order : ℤ) + order = index by omega,
         signedComm,
-      D5.S3.VertexAlgebra.SignedFieldNormalProductLocality.signedComm, LinearMap.sub_apply, LinearMap.smul_apply, Module.End.mul_apply, vacuumZero, map_zero, smul_zero, sub_zero, stateField_creation.2.1 (ket state)]
+        D5.S3.VertexAlgebra.SignedFieldNormalProductLocality.signedComm,
+        LinearMap.sub_apply, LinearMap.smul_apply, Module.End.mul_apply, vacuumZero, map_zero, smul_zero, sub_zero, stateField_creation.2.1 (ket state)]
       · intro offset member distinct
         have vanish : ((Y (ket state)) [[-1 + (offset : ℤ)]]) vacuum = 0 := stateField_creation.2.2.1 (ket state) _ (by omega)
         simp only [signedComm,
-      D5.S3.VertexAlgebra.SignedFieldNormalProductLocality.signedComm, LinearMap.sub_apply, LinearMap.smul_apply, Module.End.mul_apply, vanish, vacuumZero, map_zero, smul_zero, sub_self]
+          D5.S3.VertexAlgebra.SignedFieldNormalProductLocality.signedComm,
+          LinearMap.sub_apply, LinearMap.smul_apply, Module.End.mul_apply, vanish, vacuumZero, map_zero, smul_zero, sub_self]
       · simp
     rw [simplify] at coefficient; exact coefficient
   have endZero (index : ℤ) : (operator [[index]]) = 0 := by
@@ -237,7 +239,8 @@ private theorem residueClosure (a b : Fock) (p q : ℕ)
           signedComm ((-1 : ℂ) ^ ((p + q) * S.card)) (Y product) (Y (ket S)) := by
       funext i j
       simp only [signedComm,
-      D5.S3.VertexAlgebra.SignedFieldNormalProductLocality.signedComm, difference, map_sub, Pi.sub_apply, mul_sub, sub_mul,
+        D5.S3.VertexAlgebra.SignedFieldNormalProductLocality.signedComm,
+        difference, map_sub, Pi.sub_apply, mul_sub, sub_mul,
         smul_sub]
       abel
     refine ⟨degree, ?_⟩

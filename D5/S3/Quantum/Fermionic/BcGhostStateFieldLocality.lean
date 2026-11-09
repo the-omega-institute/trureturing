@@ -74,7 +74,7 @@ private theorem local_symm (s : ℂ) (hs : s * s = 1) (A B : VertexOperator ℂ 
         D5.S3.VertexAlgebra.BinomialKernelDelta.flip, flipDistribution]
       congr 1 <;> omega
     have original :=
-  D5.S3.VertexAlgebra.BinomialKernelDelta.normalized_iterate
+      D5.S3.VertexAlgebra.BinomialKernelDelta.normalized_iterate
       (D5.S3.VertexAlgebra.BinomialKernelDelta.normalized D) k
     rw [involution] at original
     calc
@@ -96,7 +96,8 @@ private theorem local_symm (s : ℂ) (hs : s * s = 1) (A B : VertexOperator ℂ 
   have reversed : signedComm s B A = (-s) • flipDistribution (signedComm s A B) := by
     funext l r
     simp only [signedComm,
-      D5.S3.VertexAlgebra.SignedFieldNormalProductLocality.signedComm, flipDistribution, LinearMap.coe_mk, AddHom.coe_mk,
+      D5.S3.VertexAlgebra.SignedFieldNormalProductLocality.signedComm,
+      flipDistribution, LinearMap.coe_mk, AddHom.coe_mk,
       LinearMap.smul_apply, Pi.smul_apply,
       smul_sub, smul_smul, neg_mul, hs, neg_one_smul]
     module
@@ -131,14 +132,16 @@ private theorem generating_local (a b : Bool) : Local (-1) (generatingField a) (
   have mixed (l r : ℤ) : signedComm (-1) (generatingField false) (generatingField true) l r =
       if l + r + 1 = 0 then (1 : Module.End ℂ Fock) else 0 := by
     simp only [signedComm,
-      D5.S3.VertexAlgebra.SignedFieldNormalProductLocality.signedComm, generating_modes, generatingMode, Bool.false_eq_true, ite_false,
+      D5.S3.VertexAlgebra.SignedFieldNormalProductLocality.signedComm,
+      generating_modes, generatingMode, Bool.false_eq_true, ite_false,
       ite_true, neg_one_smul, sub_neg_eq_add]
     rw [ghost_mixed_car, show (l - 1) + (r + 2) = l + r + 1 by omega]
   cases a <;> cases b
   · refine ⟨0, ?_⟩
     funext l r
     simpa only [Function.iterate_zero_apply, signedComm,
-      D5.S3.VertexAlgebra.SignedFieldNormalProductLocality.signedComm, generating_modes, generatingMode,
+      D5.S3.VertexAlgebra.SignedFieldNormalProductLocality.signedComm,
+      generating_modes, generatingMode,
       Bool.false_eq_true, ite_false, neg_one_smul, sub_neg_eq_add, Pi.zero_apply] using
       ghost_b_car (l - 1) (r - 1)
   · refine ⟨1, ?_⟩
@@ -155,7 +158,8 @@ private theorem generating_local (a b : Bool) : Local (-1) (generatingField a) (
   · refine ⟨0, ?_⟩
     funext l r
     simpa only [Function.iterate_zero_apply, signedComm,
-      D5.S3.VertexAlgebra.SignedFieldNormalProductLocality.signedComm, generating_modes, generatingMode,
+      D5.S3.VertexAlgebra.SignedFieldNormalProductLocality.signedComm,
+      generating_modes, generatingMode,
       ite_true, neg_one_smul, sub_neg_eq_add, Pi.zero_apply] using
       ghost_c_car (l + 2) (r + 2)
 
@@ -244,7 +248,8 @@ private theorem localAdd (s : ℂ) (first second third : VertexOperator ℂ Fock
     second third := by
     funext left right
     simp only [signedComm,
-      D5.S3.VertexAlgebra.SignedFieldNormalProductLocality.signedComm, map_add, Pi.add_apply, mul_add, add_mul, smul_add]
+      D5.S3.VertexAlgebra.SignedFieldNormalProductLocality.signedComm,
+      map_add, Pi.add_apply, mul_add, add_mul, smul_add]
     module
   rw [split]
   change (deltaEnd : Module.End ℂ (ℤ → ℤ → Module.End ℂ Fock))^[order] _ = 0
