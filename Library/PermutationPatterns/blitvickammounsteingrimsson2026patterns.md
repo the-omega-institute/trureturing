@@ -5,9 +5,11 @@ year: 2026
 title: "Permutations, Pattern Covers, Posets and Positivity: Part I: Patterns and Posets"
 doi: 10.48550/arXiv.2610.29846
 url: https://arxiv.org/abs/2610.29846v1
-claim: "Conjecture 7.1: prescribed interleaved minimal prefix and suffix attain the maximum packing count for m≤K/2."
+claim: "Conjecture 7.1 concerns the maximum packing count; Section 7 item 10 proposes polynomial product factors for 135289467 with overlap 3."
 strata_touched:
   - D5/S3/Combinatorics/Permutation/PackingMaximumRefutation
+  - D5/S3/Combinatorics/Permutation/BlitvicKammounSteingrimsson135289467Core
+  - D5/S3/Combinatorics/Permutation/BlitvicKammounSteingrimsson135289467Product
 license: citation-only
 triage: anchor
 ---
@@ -63,7 +65,7 @@ web queries establish no absence. Worldwide priority, exhaustive
 literature absence, and provider memory are unverified; no such claim
 is made. Ordinary counting ingredients receive no separate novelty claim.
 
-## Locator
+## Verified locator
 
 - DOI: `10.48550/arXiv.2610.29846`.
 - https://arxiv.org/abs/2610.29846v1
@@ -74,3 +76,38 @@ is made. Ordinary counting ingredients receive no separate novelty claim.
 
 The retained primary HTML has SHA-256
 `ccfe47a85e19f9deb414583e52f1e627c4291eb4aaef1d8af3da683132202b97`.
+
+## Pattern 135289467 with overlap three
+
+Section 7, item 10, page 49:
+
+> The enumeration for 135289467 with overlap 3, for example, has a
+> product formula according to our data, but the successive factors are
+> not single binomial coefficients. However, the factors are polynomial
+> starting from $j=3$, namely
+> $121\binom{j-3}{0}+168\binom{j-3}{1}+72\binom{j-3}{2}$, in the
+> binomial basis.
+
+Definitions 2.1–2.3 and 2.5–2.6 use actual permutations on the one-based
+alphabet, pairwise strict comparisons, and prescribed consecutive windows.
+The window starts are $1+6t$, with $0\le t<j$, and the permutation length
+is $9+6(j-1)$. Remark 2.7 permits additional occurrences. Lemma 5.1
+uses the inverse pattern to express each window as an increasing chain;
+Theorem 5.3 identifies the resulting linear extensions with packings.
+
+The zero-based pattern is `![0,2,4,1,7,8,3,5,6]`. The claimed recurrence
+uses the literal binomial expression for every natural $j\ge3$; the
+separate initial values are $A_1=1$ and $A_2=30$. The last sentence of
+item 10 concerning all product formulas is a separate question.
+
+The symbolic derivation removes six labels and shifts the surviving
+relations by six. Its two disjoint shuffle cases contribute
+$\binom{s+3}{2}+\binom{s+4}{2}=(s+3)^2$. Together with the initial
+count, this gives $A_j=30\prod_{t=3}^j(6t-7)^2$ for $j\ge2$.
+The repository theorem retains the binomial form of the source.
+
+The bounded literature screen on issue #21331 located no settlement of
+this fixed-pattern assertion. Completeness of that screen is
+ASSUMED-UNVERIFIED; unpublished work and the authors' cited manuscript
+in preparation were not read. The packing correspondence and the
+binomial shuffle count are prior results, without a novelty claim.
