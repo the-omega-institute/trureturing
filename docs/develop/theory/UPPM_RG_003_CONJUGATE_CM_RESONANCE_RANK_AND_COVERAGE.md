@@ -1965,8 +1965,8 @@ $$
 $$
 E_\pi(x)=\frac{\log x}{x^{b_\zeta}}
        \bigl(\pi(x)-\operatorname{Li}(x)\bigr),\qquad
-E_\psi(x)=\frac{b_\zeta}{x^{b_\zeta}}\bigl(\psi(x)-x\bigr),\qquad
-E_\theta(x)=\frac{b_\zeta}{x^{b_\zeta}}\bigl(\vartheta(x)-x\bigr).
+E_\psi(x)=\frac{\psi(x)-x}{x^{b_\zeta}},\qquad
+E_\theta(x)=\frac{\vartheta(x)-x}{x^{b_\zeta}}.
 \tag{42.2}
 $$
 
@@ -2026,14 +2026,13 @@ $\vartheta(x)=\psi(x)-\sqrt{x}+o(\sqrt{x})$；式 (10) 给出同一实际过程�
 $$
 E_\pi(x)=E_\psi(x)-x^{1/2-b}+o(1),
 \qquad
-E_\theta(x)=E_\psi(x)-b\,x^{1/2-b}+o\!\left(x^{1/2-b}\right).
+E_\theta(x)=E_\psi(x)-x^{1/2-b}+o\!\left(x^{1/2-b}\right).
 \tag{42.7}
 $$
 
-因此 $b>1/2$ 时 $E_\theta(x)-E_\pi(x)\to0$。对任意有界 Lipschitz 函数，时间平均的差也趋于零，所以 $E_\theta$ 具有同一个对数极限分布 $\mu_\zeta$。再令
-$F_\theta=E_\theta/b=(\vartheta(x)-x)/x^b$；其极限分布是 $\mu_\zeta$ 在缩放 $x\mapsto x/b$ 下的推前，仍有均值 $0$ 和严格正的方差。
+因此 $b>1/2$ 时 $E_\theta(x)-E_\pi(x)\to0$。对任意有界 Lipschitz 函数，时间平均的差也趋于零，所以 $E_\theta$ 具有同一个对数极限分布 $\mu_\zeta$，均值为 $0$ 且方差严格为正。
 
-取随机变量 $Z$ 服从这个推前分布。因 $Z$ 可积、$\mathbb EZ=0$ 而
+取随机变量 $Z$ 服从 $\mu_\zeta$。因 $Z$ 可积、$\mathbb EZ=0$ 而
 $\operatorname{Var}Z>0$，必有
 $\Pr(Z<0)>0$：否则 $Z\ge0$ 几乎处处，零均值会迫使 $Z=0$ 几乎处处，与正方差矛盾。于是可先取 $d_0>0$ 使
 $\Pr(Z<-d_0)>0$，再在 $(0,d_0)$ 中避开分布的至多可数个原子，得到
