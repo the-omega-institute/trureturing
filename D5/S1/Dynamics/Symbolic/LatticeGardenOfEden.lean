@@ -525,7 +525,7 @@ private theorem pad_box_ratio (d : ℕ) (E : Finset (Fin d → ℤ)) (hE : 0 ∈
   have hzero := squeeze_zero hl hu hb
   convert hzero.add_const 1 using 1 <;> simp
 
-private theorem logarithmic_packing_bound {a b k u v f : ℕ}
+theorem logarithmic_packing_bound {a b k u v f : ℕ}
     (ha : 2 ≤ a) (hb : 0 < b) (hv : 0 < v) (hf : 0 < f)
     (hdense : v ≤ k * b ^ 2) (hinside : k * b ≤ u)
     (hcount : f ≤ (a ^ b - 1) ^ k * a ^ (u - k * b)) :
