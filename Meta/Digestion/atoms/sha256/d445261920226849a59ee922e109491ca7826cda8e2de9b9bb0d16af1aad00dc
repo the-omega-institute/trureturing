@@ -1,0 +1,32 @@
+**定理 38.2（Schoenberg 全局化）。** 定义 38.1 当且仅当存在一个实 Hilbert 空间 $H_D$ 和映射 $\Phi:P\to H_D$，使
+
+$$
+D(x,y)=\|\Phi(x)-\Phi(y)\|^2.
+$$
+
+该嵌入在闭仿射包上唯一到 Euclidean 等距变换。
+
+**证明。** 固定基点 $o\in P$，定义
+
+$$
+G_o(x,y)=\frac12\bigl(D(x,o)+D(y,o)-D(x,y)\bigr).
+$$
+
+对有限系数 $a_i$，令 $a_o=-\sum_i a_i$，并把 $o$ 加入有限族。由条件负定性，
+
+$$
+\sum_{i,j}a_i a_jG_o(x_i,x_j)
+=-\frac12\sum_{u,v}\widetilde a_u\widetilde a_vD(u,v)\ge0.
+$$
+
+所以 $G_o$ 是正半定核。按第 37 节的 GNS/Gram 构造得到向量 $\Phi(x)$，且 $\Phi(o)=0$、$\langle\Phi(x),\Phi(y)\rangle=G_o(x,y)$。展开平方即得 $D(x,y)=\|\Phi(x)-\Phi(y)\|^2$。反向地，任意 Hilbert 距离满足
+
+$$
+\sum_{i,j}c_ic_jD(x_i,x_j)
+=-2\left\|\sum_i c_i\Phi(x_i)\right\|^2\le0
+$$
+
+（因为 $\sum_i c_i=0$）。唯一性来自距离保持映射在仿射包上的唯一延拓。证毕。
+
+因此，第 37 节的全有限正定 Gram 表与第 38 节的全有限负型距离是同一实几何的两种坐标：前者直接给内积，后者只给点之间的平方差。第 38 节更接近“任何两点都可比较”的直觉，也不预设复数。
+
