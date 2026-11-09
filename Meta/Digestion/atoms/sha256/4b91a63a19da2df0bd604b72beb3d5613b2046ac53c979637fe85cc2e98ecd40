@@ -1,0 +1,25 @@
+**定义 50.2（自由关系组合与自比较）。** 令 $X$ 为任意集合，定义有限支撑形式组合空间
+
+$$
+V_X=\mathbb R^{(X)},
+\qquad
+u=\sum_{x\in X}a_x[x].
+$$
+
+给定交换不变的实比较核 $\kappa:X\times X\to\mathbb R$，定义
+
+$$
+B(u,v)=\sum_{x,y}a_xb_y\kappa(x,y),
+\qquad
+Q(u)=B(u,u).
+$$
+
+有限支撑保证求和有定义。新的候选公理是
+
+$$
+\boxed{\mathsf Q_0:\quad \kappa(x,y)=\kappa(y,x),
+\qquad Q(u)\ge0\quad\text{对所有 }u\in V_X.}
+$$
+
+它不先假设向量、距离、坐标或 Hilbert 空间；$B$ 和 $Q$ 都只是由二元关系的有限组合定义出的内部约束。
+
