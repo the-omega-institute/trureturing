@@ -2,12 +2,9 @@
    generality: G
    mirror-B: D5/B/S3/FiniteGroups/GroupAlgebra/ProjectiveKernelOrder
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.RepresentationTheory.Coinduced,
-     mathlib/module/Mathlib.RepresentationTheory.Rep.Iso,
-     mathlib/module/Mathlib.LinearAlgebra.Dual.Lemmas]
+   anchors: [mathlib/module/Mathlib.RepresentationTheory.Coinduced, mathlib/module/Mathlib.RepresentationTheory.Rep.Iso, mathlib/module/Mathlib.LinearAlgebra.Dual.Lemmas]
    utility: none
-   digest: A finite subgroup acting trivially on a nonzero projective representation has unit cardinal.
--/
+   digest: A finite subgroup acting trivially on a nonzero projective representation has unit cardinal. -/
 
 import Mathlib.LinearAlgebra.Dual.Lemmas
 import Mathlib.RepresentationTheory.Coinduced
