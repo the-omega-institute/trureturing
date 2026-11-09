@@ -1,0 +1,31 @@
+**定义 123.1（完整前件、原输入与有限投影）。** 保持100.1与106.1的同一原候选：原 $(E,C,u,N,\mathcal P,S,D)$、完整A1–A3、准确锥、全部原P2和完整原PB；原 $E$ 可以不完备，旧 $D:E^2\to E$ 是同一总映射。只沿16.1–16.2已付的忠实、含单位、等距且准确保锥JC包含记原元素，令 $\mathcal A=C^*(X)$。不要求 $X=\mathcal A_{\rm sa}$，不预付旧关系的可加、连续、可测、商下降或完成延拓。固定实际原 $h,e$，$h^2=e^2=u$、$h\circ e=0$，以及同一旧值 $j=D(h,e)$。局部循环表取100.1，记
+
+$$
+\begin{gathered}
+V_a=\{z\in E:a\circ z=0\},\qquad Gz=D(h,z)\quad(z\in V_h),\\
+L_a z=a\circ z,\quad U_a=2L_a^2-I,\quad T=[L_j,L_e],\\
+\Pi=\tfrac12(I-U_eU_j)=P_{+,-}+P_{-,+}\quad\hbox{在 }V_h\hbox{ 上},\\
+z_B=\Pi z\in A_1\oplus A_2,\qquad
+z_A=(I-\Pi)z\in A_0\oplus C_{+,+}.
+\end{gathered}
+\tag{123.1}
+$$
+
+$X=0$ 时以下关系全为零。$U_a z=aza$ 是原有限Jordan表达式；三份 $U_h,U_e,U_j$ 对易，均保持 $E$。$\Pi$ 保持原 $V_h$，保留100.1的全部四份分量。这里的 $C_{+,+}$ 仍位于 $V_h$，不是三轴全部交换的分量。32–36及81.5已付，对每个原 $z\in V_h$ 和实 $t$，
+
+$$
+G(tz)=tGz,\qquad Gz\in V_h,\qquad
+(Gz)^2=z^2,\quad z\circ Gz=0,\quad G^2z=-z.
+\tag{123.2}
+$$
+
+这些单输入与自身圆的关系不预付跨输入可加性。77.1–77.2在原标量平方片 $\operatorname{span}_{\mathbb R}\{h,e,j\}$ 的仿射窗给出，令 $n=u+h$，
+
+$$
+D(h,p+\alpha n)=q\quad(\alpha\in\mathbb R),
+\qquad (p,q)=(e,j)\ \hbox{或}\ (j,-e).
+\tag{123.3}
+$$
+
+这只调用已经识别的局部四维窗，不是一般单位平移。辅助环境乘法、Hilbert向量、投影与指数只用于证明；不把它们作为旧 $D$ 的输入或实际准备。
+
