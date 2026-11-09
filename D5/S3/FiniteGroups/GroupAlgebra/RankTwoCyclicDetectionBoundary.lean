@@ -46,7 +46,7 @@ abbrev W := F × F
 /-- Three ordered two-dimensional blocks, with coordinates v0, v1, v2. -/
 abbrev V := W × (W × W)
 
-local instance : Fact (Nat.Prime 3) := ⟨by decide⟩
+private local instance : Fact (Nat.Prime 3) := ⟨by decide⟩
 
 -- mix r s is r I + s J. All these coordinate helpers are consumed below.
 private def mix (r s : F) (w : W) : W :=
