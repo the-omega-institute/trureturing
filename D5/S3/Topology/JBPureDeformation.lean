@@ -17,10 +17,11 @@ public import Mathlib.Analysis.Convex.Extreme
 noncomputable section
 set_option autoImplicit false
 
+open scoped Topology
+
 namespace D5.S3.Topology.JBPureDeformation
 open JBAlgebra JBPositiveShift JBComplexification
 open Filter
-open scoped Topology
 
 private theorem projective_extreme {V : Type*} [AddCommGroup V] [Module ℝ V]
     (C : Set V) (m : V →ₗ[ℝ] ℝ)
@@ -165,12 +166,13 @@ private theorem quadratic_pure (A : Data X S u) (a : X)
 def perturbation (A : Data X S u) (h : X) (t : ℝ) : X →L[ℝ] X :=
   1 + (2 * t) • lmul A h + t ^ 2 • quadOp A h
 
+omit [CompleteSpace X] in
 private theorem perturbation_apply (A : Data X S u) (h : X) (t : ℝ) (v : X) :
     perturbation A h t v = quadratic S (u + t • h) v := by
   have hr (x : X) : S x u = x := (A.symm x u).trans (A.unit_mul x)
-  simp only [perturbation, quadOp, lmul, quadratic, ContinuousLinearMap.add_apply,
-    ContinuousLinearMap.smul_apply, ContinuousLinearMap.one_apply,
-    ContinuousLinearMap.sub_apply, ContinuousLinearMap.comp_apply,
+  simp only [perturbation, quadOp, lmul, quadratic, add_apply,
+    smul_apply, one_apply_eq_self,
+    sub_apply, ContinuousLinearMap.comp_apply,
     LinearMap.mkContinuous_apply, map_add, map_smul, LinearMap.add_apply,
     LinearMap.smul_apply, A.unit_mul, hr]
   module
@@ -197,10 +199,10 @@ theorem pure_deformation (A : Data X S u) (β : X →L[ℝ] ℝ)
     Tendsto (deformation A β h) (𝓝 0) (𝓝 β) := by
   have hr (x : X) : S x u = x := (A.symm x u).trans (A.unit_mul x)
   have hunit (t : ℝ) : β (perturbation A h t u) = 1 + t ^ 2 * β (S h h) := by
-    simp only [perturbation, quadOp, ContinuousLinearMap.add_apply,
-      ContinuousLinearMap.smul_apply, ContinuousLinearMap.one_apply,
-      ContinuousLinearMap.sub_apply, ContinuousLinearMap.comp_apply,
-      lmul, LinearMap.mkContinuous_apply, A.unit_mul, hr,
+    simp only [perturbation, quadOp, add_apply,
+      smul_apply, one_apply_eq_self,
+      sub_apply, ContinuousLinearMap.comp_apply,
+      lmul, LinearMap.mkContinuous_apply, hr,
       map_add, map_smul, map_sub, smul_eq_mul, hβ.1.2, hz]
     ring
   have hmass (t : ℝ) : 0 < β (perturbation A h t u) := by
@@ -211,13 +213,13 @@ theorem pure_deformation (A : Data X S u) (β : X →L[ℝ] ℝ)
         (1 + t ^ 2 * β (S h h)) := by
     have hn : β (perturbation A h t h) =
         2 * t * β (S h h) + t ^ 2 * β (S h (S h h)) := by
-      simp only [perturbation, quadOp, ContinuousLinearMap.add_apply,
-        ContinuousLinearMap.smul_apply, ContinuousLinearMap.one_apply,
-        ContinuousLinearMap.sub_apply, ContinuousLinearMap.comp_apply,
+      simp only [perturbation, quadOp, add_apply,
+        smul_apply, one_apply_eq_self,
+        sub_apply, ContinuousLinearMap.comp_apply,
         lmul, LinearMap.mkContinuous_apply, A.symm (S h h) h,
         map_add, map_smul, map_sub, smul_eq_mul, hz]
       ring
-    simp only [deformation, ContinuousLinearMap.smul_apply,
+    simp only [deformation, smul_apply,
       ContinuousLinearMap.comp_apply, smul_eq_mul, hn, hunit, div_eq_mul_inv]
     ring
   have hc : Continuous (perturbation A h) := by
@@ -226,11 +228,14 @@ theorem pure_deformation (A : Data X S u) (β : X →L[ℝ] ℝ)
   have hp0 : perturbation A h 0 = 1 := by simp [perturbation]
   have hbij : ∀ᶠ t : ℝ in 𝓝 0, Function.Bijective (quadratic S (u + t • h)) := by
     have hi : ∀ᶠ t : ℝ in 𝓝 0, IsUnit (perturbation A h t) :=
-      hc.continuousAt (by simpa only [hp0] using
+      (hc.continuousAt (x := 0)) (by simpa only [hp0] using
         (Units.isOpen.mem_nhds (isUnit_one : IsUnit (1 : X →L[ℝ] X))))
     filter_upwards [hi] with t ht
     have hbi := ContinuousLinearMap.isUnit_iff_bijective.mp ht
-    simpa only [Function.Bijective, perturbation_apply] using hbi
+    have hf : (perturbation A h t : X → X) = quadratic S (u + t • h) :=
+      funext (perturbation_apply A h t)
+    rw [← hf]
+    exact hbi
   have hsquare : ∀ᶠ t : ℝ in 𝓝 0, ∃ a : X, S a a = u + t • h := by
     have hsmall : ∀ᶠ t : ℝ in 𝓝 0, ‖t • h‖ < 1 := by
       have hcont : Continuous (fun t : ℝ => ‖t • h‖) := by fun_prop
@@ -242,8 +247,9 @@ theorem pure_deformation (A : Data X S u) (β : X →L[ℝ] ℝ)
       0 < 2 * β (S h h) + t * β (S h (S h h)) := by
     have hcont : Continuous (fun t : ℝ =>
         2 * β (S h h) + t * β (S h (S h h))) := by fun_prop
-    exact hcont.continuousAt.eventually (lt_mem_nhds (by simpa using mul_pos
-      (by norm_num : (0 : ℝ) < 2) hq))
+    exact (hcont.continuousAt (x := 0)).eventually
+      (lt_mem_nhds (by simpa only [zero_mul, add_zero] using
+        (show 0 < 2 * β (S h h) by positivity)))
   constructor
   · filter_upwards [hbij.filter_mono nhdsWithin_le_nhds,
       hsquare.filter_mono nhdsWithin_le_nhds,
@@ -265,16 +271,18 @@ theorem pure_deformation (A : Data X S u) (β : X →L[ℝ] ℝ)
       · positivity
   · have hcont : ContinuousAt (deformation A β h) 0 := by
       unfold deformation
-      apply ContinuousAt.smul
-      · apply ContinuousAt.inv₀
-        · exact β.continuous.continuousAt.comp
-            ((hc.continuousAt).clm_apply continuousAt_const)
-        · simpa only [hp0, ContinuousLinearMap.one_apply, hβ.1.2] using
-            (one_ne_zero : (1 : ℝ) ≠ 0)
-      · exact (ContinuousLinearMap.compL ℝ X X ℝ β).continuous.continuousAt.comp
+      have hm : ContinuousAt (fun t : ℝ => β (perturbation A h t u)) 0 :=
+        β.continuous.continuousAt.comp
+          ((hc.continuousAt (x := 0)).clm_apply continuousAt_const)
+      have hi := hm.inv₀ (by simpa only [hp0, one_apply_eq_self, hβ.1.2] using
+        (one_ne_zero : (1 : ℝ) ≠ 0))
+      have ho : ContinuousAt (fun t : ℝ => β.comp (perturbation A h t)) 0 :=
+        (ContinuousLinearMap.compL ℝ X X ℝ β).continuous.continuousAt.comp
           hc.continuousAt
+      exact hi.smul ho
     have hd0 : deformation A β h 0 = β := by
-      simp [deformation, hp0, hβ.1.2]
+      ext x
+      simp [deformation, hp0, hβ.1.2, one_apply_eq_self]
     simpa only [hd0] using hcont.tendsto
 
 #print axioms pure_deformation
