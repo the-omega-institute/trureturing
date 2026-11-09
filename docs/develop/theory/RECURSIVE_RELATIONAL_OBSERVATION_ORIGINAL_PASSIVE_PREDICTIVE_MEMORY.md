@@ -4008,3 +4008,409 @@ implemented physical executor or finite-completion claim.
 [CRD]: https://arxiv.org/abs/1412.2859
 
 ## 追加锚（本行以下为增补区）
+
+## 14. Original-law risk at every sufficiently late deterministic cut
+
+**Definition 14.1 (the original risk and the complete bounded handoff).**
+Fix one source of Assumption 1.1 and Definition 13.1, including its
+permitted Borel repair, before choosing any capacity. Retain its finite
+positive $a,\eta,d$, original $G=H^1\times\mathbb R$, unit-source
+normalization, full complex non-Friedrichs endpoint, maximal operator
+domain, full form and source trace. The running process starts at $e$,
+first reads at $2d$, and subsequently reads at gaps $d$, with all
+original $0,1,3,B$ emissions and conditionally fresh noise. Write
+$g=g_{2d}$, $P=T_d$ and $\mathscr F_t=\sigma(Y_0,\ldots,Y_{t-1})$.
+The next label at cut $t$ remains $Y_t$ at physical time $(t+2)d$.
+
+Use exactly Definition 13.1's normalized $M$-row banks and arbitrary
+randomized encoders, with its entire configuration accounting. Thus
+source, common clock and horizon may determine the bank; no online
+update rule, cross-time or cross-horizon consistency, effective bank
+construction or numerical representation bound is imposed. All
+history-bearing pointers, bank selectors, program phases, references,
+precision data, handles and side registers used by decoding count
+toward the one complete bound $M$. Define the marginalized-law risk
+
+$$
+\begin{aligned}
+\mathcal E_{t,H}(\nu,\lambda)
+ &=\mathbb E_e\operatorname{TV}
+       (R_{Y_{<t}}^H,\mu_{Y_{<t}}^{t,H})\\
+ &=\sum_{u\in\mathcal L^t}p(u)
+       \operatorname{TV}(R_u^H,\mu_u^{t,H}),\qquad
+\mu_u^{t,H}=\sum_{s=1}^M\lambda_u(s)\nu_{t,H,s}.
+\end{aligned}
+\tag{14.1}
+$$
+
+The target conditions on every label in the authentic prefix $u$,
+and the weights are its original $e$-start probabilities. Encoder
+randomness is averaged inside the second argument of TV. This is
+more favorable than averaging the loss of the realized decoded row.
+
+The independently shared seed extension is exactly that of Theorem
+13.3: a common seed $Z$ has law $\zeta$ independent of the original
+source/read record, and may select banks $\nu_{t,H,s,z}$ and encoding
+probabilities $\lambda_{u,z}(s)$. Its fully marginalized law is
+
+$$
+\mu_u^{t,H}
+ =\int\sum_{s=1}^M\lambda_{u,z}(s)\nu_{t,H,s,z}\,\zeta(dz).
+\tag{14.2}
+$$
+
+All kernels are measurable; the finite output alphabet makes the
+integral coordinatewise. The independence and material charges of
+Theorem 13.3 remain in force. A history-dependent selector is counted
+as history-bearing configuration or additional decoder input, rather
+than included in this independent seed. No additional history-bearing
+decoder input is allowed in the bounded comparison.
+
+**Theorem 14.2 (positive original-law risk at every late deterministic
+cut).** For each fixed source of Definition 14.1 and every finite
+integer $M\ge1$, there exist a finite horizon $H\ge1$, a number
+$\varepsilon>0$ and a finite deterministic integer $t_0$ such that
+
+$$
+\inf_{\substack{\nu_{t,H,s}\text{ normalized}\\
+                 \lambda_u\text{ arbitrary probability vectors}}}
+ \mathbb E_e\operatorname{TV}
+       (R_{Y_{<t}}^H,\mu_{Y_{<t}}^{t,H})
+ \ge\varepsilon
+ \qquad\text{for every deterministic }t\ge t_0.
+\tag{14.3}
+$$
+
+The same $H,\varepsilon,t_0$ work for the independently shared seed
+extension (14.2), even with the seed averaged before TV. The bank may
+be redesigned separately at every $t,H$ for this particular source.
+None of these three constants depends on that bank or its encoders.
+
+*Proof.* Apply the existing Theorem 13.2 with $N=2M$ and packing
+accuracy $1/8$. It supplies finite integers $r,H\ge1$, distinct
+$u_1,\ldots,u_N\in\mathcal L^r$, and disjoint first-3 windows
+$E_i\subseteq\mathcal L^H$ with
+
+$$
+p(u_i)>0,\qquad R_{u_i}^H(E_i)>7/8\quad(1\le i\le N).
+\tag{14.4}
+$$
+
+Keep this one finite packing fixed. Reuse the exact marked-word
+identity (13.17), supplied by [DPCR, Theorem 8.2, (8.6)–(8.8), and
+Proposition 8.6, (8.20)]. Put
+
+$$
+w_i=3u_i,\qquad n=r+1,\qquad
+b_i=q(w_i)=c\,p(u_i)>0,\qquad b_* =\min_{1\le i\le N}b_i>0.
+\tag{14.5}
+$$
+
+Then $Q_{w_i}^H=R_{u_i}^H$. This is a stationary comparison-cylinder
+identity. It does not assert an actual reset after a marker.
+
+For every deterministic $t\ge n$ define, under the original law,
+
+$$
+\begin{gathered}
+A_i(t)=\{Y_{t-n}\cdots Y_{t-1}=w_i\},\qquad
+ a_i(t)=\mathbb P_e(A_i(t))>0,\\
+ C_i(t)=\mathop{\rm Law}_e
+       (Y_t\cdots Y_{t+H-1}\mid A_i(t)).
+\end{gathered}
+\tag{14.6}
+$$
+
+The events $A_i(t)$ are disjoint because the $w_i$ are distinct and
+have the same length. Only this intermediate law $C_i(t)$ conditions
+on a suffix alone. The prediction target in (14.1) still conditions
+on the entire history.
+
+For a finite word $w$ and $E\subseteq\mathcal L^H$ write
+$F_{w,E}=\sum_{v\in E}F_{wv}$. The original future kernel gives
+$0\le F_{w,E}\le F_w\le1$ as $m$-classes. At the first read in
+$A_i(t)$, namely physical time $(t-n+2)d$, the unconditional original
+hidden density is $P^{t-n}g$. The unchanged Markov/read contract and
+word recursion therefore give the exact marginal identities
+
+$$
+\begin{aligned}
+a_i(t)&=\langle P^{t-n}g,F_{w_i}\rangle_m,\\
+a_i(t)C_i(t)(E_i)&=\langle P^{t-n}g,F_{w_i,E_i}\rangle_m,\\
+b_iR_{u_i}^H(E_i)&=q(w_iE_i)
+                  =\langle1,F_{w_i,E_i}\rangle_m.
+\end{aligned}
+\tag{14.7}
+$$
+
+Here $q(w_iE_i)$ denotes the finite sum $\sum_{v\in E_i}q(w_iv)$.
+The earlier authentic prefix has been integrated out in these
+marginals, using its original distribution; it has not been deleted
+from any target conditional law or supplied by a new preparation.
+
+Use the qualitative strong $L^2$ convergence to the constant
+projection already proved in [DPCR, Theorem 8.2, proof (8.9)]. With
+$\int g\,dm=1$, it gives
+
+$$
+\delta_k:=\|P^kg-1\|_2\longrightarrow0.
+\tag{14.8}
+$$
+
+Its hypotheses are precisely the retained nonnegative self-adjoint
+$K$ and $\ker K=\mathbb C1$. There is no spectral-gap or rate premise.
+Since $m(G)=1$, the bounded functions in (14.7) have $L^2$ norm at
+most one. Cauchy–Schwarz yields
+
+$$
+\begin{aligned}
+|a_i(t)-b_i|&\le\delta_{t-n},\\
+|a_i(t)C_i(t)(E_i)-b_iR_{u_i}^H(E_i)|
+ &\le\delta_{t-n}.
+\end{aligned}
+\tag{14.9}
+$$
+
+Choose one finite deterministic $t_0\ge n$ such that
+$\delta_{t-n}<b_*/32$ for every $t\ge t_0$. For all these $t$,
+finite conditioning in (14.9) gives
+
+$$
+\begin{aligned}
+a_i(t)&>b_i/2\ge b_*/2,\\
+|C_i(t)(E_i)-R_{u_i}^H(E_i)|
+ &\le\frac{2\delta_{t-n}}{a_i(t)}<1/8,\\
+C_i(t)(E_i)&>3/4.
+\end{aligned}
+\tag{14.10}
+$$
+
+Indeed the numerator of the conditional difference is the second
+error in (14.9) plus $(b_i-a_i(t))R_{u_i}^H(E_i)$, whose absolute
+value is at most the first error. All denominators are positive.
+The threshold $t_0$ was chosen before comparing any bank.
+
+Fix any such $t$ and any bank and encoder in Definition 13.1. Let
+$\mathcal U_i(t)$ be the full length-$t$ histories ending in $w_i$.
+Define the conditional averages
+
+$$
+\begin{aligned}
+\overline\lambda_i(s)
+ &=\frac1{a_i(t)}\sum_{u\in\mathcal U_i(t)}p(u)\lambda_u(s),\\
+\overline\mu_i
+ &=\frac1{a_i(t)}\sum_{u\in\mathcal U_i(t)}p(u)\mu_u^{t,H}
+   =\sum_{s=1}^M\overline\lambda_i(s)\nu_{t,H,s},\\
+C_i(t)
+ &=\frac1{a_i(t)}\sum_{u\in\mathcal U_i(t)}p(u)R_u^H.
+\end{aligned}
+\tag{14.11}
+$$
+
+The last equality is the full-history tower identity, coordinate by
+coordinate. Each $\overline\lambda_i$ is a probability vector.
+The existing joint convexity of TV, equivalently the triangle
+inequality for this finite weighted half-$\ell^1$ sum, now gives
+
+$$
+\begin{aligned}
+\mathcal E_{t,H}(\nu,\lambda)
+ &\ge\sum_{i=1}^N a_i(t)
+        \operatorname{TV}(C_i(t),\overline\mu_i)\\
+ &\ge\frac{b_*}{2}\sum_{i=1}^N
+        \operatorname{TV}(C_i(t),\overline\mu_i).
+\end{aligned}
+\tag{14.12}
+$$
+
+The first inequality discards only nonnegative loss outside the
+disjoint events $A_i(t)$. Thus it retains the authentic conditional
+rows and the original history weights rather than assigning equal
+probabilities to the packing witnesses.
+
+Apply exactly the counting estimate (13.13) to the averaged encoding
+vectors in (14.11): normalization and disjointness imply
+$\sum_i\overline\mu_i(E_i)\le M$. Consequently
+
+$$
+\begin{aligned}
+\mathcal E_{t,H}(\nu,\lambda)
+ &\ge\frac{b_*}{2}\sum_{i=1}^N
+       [C_i(t)(E_i)-\overline\mu_i(E_i)]\\
+ &>\frac{b_*}{2}\left(\frac{3N}{4}-M\right)
+   =\frac{Mb_*}{4}.
+\end{aligned}
+\tag{14.13}
+$$
+
+Set $\varepsilon=Mb_*/4>0$. Since the $w_i$ are distinct words of
+one length, $\sum_i b_i\le1$, so $\varepsilon\le1/8$. Everything
+used to choose $H,\varepsilon,t_0$ depends only on the fixed source,
+$M$ and the fixed witnesses from Theorem 13.2. Taking the infimum
+proves (14.3).
+
+For the extension (14.2), independence of $Z$ from the original
+record leaves the conditional weights $p(u)/a_i(t)$ in (14.11)
+unchanged for each seed value. Define $\overline\lambda_{i,z}$ by
+that same finite average of $\lambda_{u,z}$. The averaged report is
+$\overline\mu_i=\int\sum_s\overline\lambda_{i,z}(s)
+\nu_{t,H,s,z}\,\zeta(dz)$. The seedwise counting argument gives
+
+$$
+\sum_{i=1}^N\overline\mu_i(E_i)
+ =\int\sum_{i=1}^N\sum_{s=1}^M
+     \overline\lambda_{i,z}(s)\nu_{t,H,s,z}(E_i)\,\zeta(dz)
+ \le M.
+\tag{14.14}
+$$
+
+Joint convexity still gives (14.12) for these fully marginalized
+reports. Equations (14.10), (14.13) therefore apply unchanged.
+This proves the claimed extension without interchanging infima
+with limits or requiring a common bank across cuts. $\square$
+
+**Corollary 14.3 (larger horizons, realized loss and the consumer
+constraint).** Fix $M$ and $H,\varepsilon,t_0$ from Theorem 14.2.
+At every deterministic $t\ge t_0$, every comparison of Definition
+14.1 at any finite horizon $H'\ge H$ has marginalized-law risk at
+least $\varepsilon$. Its expected realized-row loss is also at least
+$\varepsilon$. For either loss random variable $L_t\in[0,1]$ and
+every $0\le\gamma<\varepsilon$,
+
+$$
+\mathbb P\{L_t>\gamma\}
+ \ge\frac{\varepsilon-\gamma}{1-\gamma}>0.
+\tag{14.15}
+$$
+
+For marginalized-law loss this probability is under the original
+record law; for realized-row loss it includes the encoder and any
+independently shared seed. In particular a guarantee of loss at most
+$\gamma$ with probability at least $1-\alpha$ requires
+$\alpha\ge(\varepsilon-\gamma)/(1-\gamma)$ at these cuts. A complete
+$b$-bit handoff is included by taking $M=2^b$.
+
+*Proof.* Project any normalized horizon-$H'$ bank onto its first $H$
+coordinates. It is still an $M$-row bank, using the same encoder;
+(14.2) commutes with this finite marginalization. The target projects
+to $R_u^H$, and TV contracts. Theorem 14.2 gives the larger-horizon
+claim even when the original bank was independently redesigned for
+$H'$. For realized output $S$, conditional convexity gives
+
+$$
+\operatorname{TV}(R_u^{H'},\mu_u^{t,H'})
+ \le\int\sum_{s=1}^M\lambda_{u,z}(s)
+       \operatorname{TV}(R_u^{H'},\nu_{t,H',s,z})\,\zeta(dz),
+\tag{14.16}
+$$
+
+with a singleton seed in the unseeded case. Average under $p(u)$.
+These are two different loss criteria, ordered as displayed rather
+than identified. Finally any $[0,1]$-valued loss satisfies
+$\mathbb E L_t\le\gamma+(1-\gamma)\mathbb P(L_t>\gamma)$.
+Its expectation lower bound proves (14.15) and the confidence
+constraint. The bit statement uses Definition 13.1's complete
+configuration count. $\square$
+
+**Definition 14.4 (scope of the risk obstruction and retained
+operations).** Theorem 14.2 supplies the source-law, fixed-horizon,
+every-late-deterministic-cut obstruction not supplied by Proposition
+13.6. It is a constraint on the bounded handoff route to prediction
+of this same original source. It does not exclude arbitrary executors.
+The entire original archive, every acquired row, menu and permission,
+and all paid reaccess routes remain legal. Consulting additional
+history-bearing backing or a controller is additional decoder input
+outside this comparison. It is not a globally forbidden operation.
+
+The statement is a risk lower bound separately at each deterministic
+cut. It gives neither one pathwise failure event at all late cuts nor
+a bound for arbitrary selected stopping cuts. The horizon depends on
+the source and $M$; there is no horizon asserted to work for all
+capacities. At a prescribed finite $H$, the $4^H$ point-mass rows
+on $\mathcal L^H$, with mathematical weights $\lambda_u(v)=R_u^H(v)$,
+give an exact marginalized law. This observation concerns only the
+generous comparison class: it does not supply those exact weights to
+an observer or equate marginalized law with realized-row accuracy.
+
+The stationary comparison is used only in the marked identity and
+finite-block limits (14.7)–(14.10). The actual source is never
+stationarily prepared, reset, delayed, controlled or supplemented
+with a point sensor. No exact posterior, hidden point, original
+parameter, physical clock name, effective mixing or recurrence rate,
+observed witness frequency, affordable positive lower constant,
+current-row output or finite physical execution is furnished by the
+existence of $H,\varepsilon,t_0$. Their displayed mathematical
+specification is not an acquired numerical certificate. No new
+acquisition or certificate result is asserted here.
+
+All retention, reference, computation, precision, rescan, buffering,
+capture/write, output and completion costs remain those of
+Definitions 8.3, 9.5, 11.7 and 13.5 and [SRO, Definition 21.1 and
+Theorem 22.1]. Every label arriving during any paid work remains in
+the authentic record through its actual completion. The source has
+its original fixed $d$ and first-read offset; no processor rate,
+affordable representation, accepted pointer output, atomic output,
+finite completion or installed storage service follows from a risk
+inequality. The conditional consumers in §§9–11 retain their own
+source, timing, acquired-row, readiness and common-event premises.
+
+The original native source remains the nonempty finite ordered
+$\alpha/\beta$ trees without a uniform depth or size bound, with
+actual $\rho$ replacements and literal root/address operations.
+Its already acquired rows and service contracts are preserved.
+Any AURIC use retains the same original $E$, positive evaluations,
+accurate cone, A1–A3, every P2/PB and the original domains; neither
+a standard matrix example nor a preselected bottom space identifies
+that source. No native/diffusion/AURIC source or operation
+correspondence is proved by (14.3). Exact spatial or endpoint
+reconstruction, lawful current execution and full mutual recovery
+of space, continuation, boundary and memory remain separate
+obligations.
+
+**Definition 14.5 (suppliers and mathematical attribution).** The
+packing and its source-specific survival construction are reused
+from Theorem 13.2 and Theorem 12.2. The exact original filter and
+full-history conditional meaning are Theorem 2.1. The marked identity
+is (13.17) and [DPCR, Theorem 8.2, (8.6)–(8.8), Proposition 8.6,
+(8.20)]; the strong $L^2$ convergence in (14.8) is the supplied
+proof equation [DPCR, (8.9)], not an additional convergence theorem.
+Its spectral-calculus antecedent is Teschl, [*Mathematical Methods
+in Quantum Mechanics*, §3.1, Theorem 3.1, (3.18)–(3.21)][SPCALC].
+The full domain, form and source trace retain [DPCR, Definition 1.1]
+and [CONTACT, Theorem 115.3 and Theorem 116.2].
+
+Finite conditional averaging, joint convexity of TV and disjoint-event
+counting are established intermediates. The binary finite-mixture
+convexity statement is already
+[TotalVariation.Convexity.total_variation_joint_convex](../../../D5/S3/TotalVariation/Convexity.lean);
+its finite weighted version follows by iteration, or the same
+half-$\ell^1$ triangle inequality. The required counting is exactly
+(13.13), also used seedwise in Theorem 13.3. The exact word-Hankel
+realization and predictive quotient suppliers [WORD, MIN] do not
+alone control approximation risk. The separate finite five-mode
+source [FSM, §§1–3], finite binary edge-emission presentations in
+MarkedPredictiveQuotient, and the perfect quantum discrimination
+bound in FiniteMemoryHistoryCapacity retain their distinct source
+and loss domains; none is identified with this diffusion.
+
+Marzen–Crutchfield, [*Circumventing the Curse of Dimensionality in
+Prediction: Causal Rate-Distortion for Infinite-Order Markov
+Processes*, arXiv:1412.2859v1, §§II.4 and IV](https://arxiv.org/html/1412.2859v1),
+provides the primary source-weighted lossy prediction and stochastic
+encoding context. Its predictive rate-distortion objectives and
+conditional-law reductions are not the original diffusion theorem
+(14.3); in particular (14.1) averages encoder randomness before TV,
+whereas a distortion assigned to a realized predictive feature is
+averaged afterwards. No value of a rate-distortion function, renewal
+assumption or theorem about this original source is imported.
+
+The additional source-specific deduction is the transfer of one
+existing actual packing to fixed-length marked blocks with positive
+limiting original probabilities at every late deterministic cut,
+followed by full-history averaging in (14.11)–(14.14). That
+composition, (14.3) and its consumer constraint are `repo-derived`
+ordinary mathematical deductions under the owning source assumptions.
+No new abstract packing, spectral, conditioning or counting result,
+or worldwide literature-priority claim, is attached to them.
+
+## 追加锚（本行以下为增补区）
