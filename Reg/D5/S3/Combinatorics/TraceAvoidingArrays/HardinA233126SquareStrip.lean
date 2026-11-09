@@ -15,6 +15,9 @@ open LeanInformationAudit
 
 noncomputable section
 
+attribute [local instance 2000] Pi.instFintype
+attribute [local instance 2000]
+  _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.widthInstDecidableGood
 attribute [local irreducible] a classCount firstCount
 
 abbrev signature : Signature :=
