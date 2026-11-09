@@ -4826,3 +4826,139 @@ $$
 用白话说，保留同一批有限端钥匙、同一把钥匙必须同时满足全部条件，只比较它们在两个实圆上前进的方向。坏方向是某个整数联合方向上的窄带，单条窄带的 Haar 宽度与原模数无关，而可能窄带的条数由实窗尺度控制；原好阶段的大质量使这些坏方向的总预算可求和。因此几乎所有比较方向最终在每个好阶段都对所有目标准确均匀计数。但稠密的零测方向仍可在任意晚的某些阶段发生共振，这并不排除它们另有无穷多非塌缩阶段。原 CM 向量是一根指定方向；全测比较和退化的保证下界都没有决定它是否满足 (22.16)，原临界 $R$ 的结论仍未解决。$\square$
 
 ## 追加锚（本行以下为增补区）
+## 23. 原临界过滤下有限型实方向的完整零测反模型
+
+**定理 23.1（有限型仍容许完整缩靶塌缩）。** 任取 $0<\beta<1/2$、$\gamma\ge0$，令 $c_0^2=1-2\beta$。在定义 22.1 对应的比较族中，保留全部原有限地方、过滤、共同模数、目标空间及原 $h,\rho$。对每个
+
+$$
+\mu>\beta^{-1}(\beta^{-1}-1)
+\tag{23.1}
+$$
+
+都存在实方向 $\omega\in\mathbb T^2$ 及常数 $c_\omega>0$，使 $1,\omega_1,\omega_2$ 有理线性无关（坐标取任一实提升），且
+
+$$
+\begin{gathered}
+\|k\cdot\omega\|_{\mathbb T}\ge c_\omega\|k\|_\infty^{-\mu}
+\quad(0\ne k\in\mathbb Z^2),\\
+\nu(R(\omega))=0,\qquad R(\omega)\text{ 是 }Y\text{ 中的稠密 }G_\delta,\\
+\sum_{n\ge1}\nu(E_n(\omega))=\infty,\qquad \limsup_{X\to\infty}L_X=\infty.
+\end{gathered}
+\tag{23.2}
+$$
+
+此外，沿全部充分大的真实好阶段 $H\in\mathcal H_-$，有 $\sigma_H(\omega)\to0$。零测结论针对完整的原比较事件序列 $E_n(\omega)$，不是只针对阶段子事件的 limsup。
+
+**证明（严格指数与有限型下界）。** 由 (23.1)，可以依次选取
+
+$$
+\beta^{-1}<w<\frac{1+\sqrt{1+4\mu}}2,\qquad
+v=w(w-1)<\mu,\qquad
+\beta^{-1}<\nu_0<w,\qquad \nu_0^{-1}<a<\beta.
+\tag{23.3}
+$$
+
+使用 Laurent，*Exponents of Diophantine approximation in dimension two*，[arXiv:math/0611352v1](https://arxiv.org/pdf/math/0611352v1)，Corollary 1（印刷页 3–4）的逆向存在结论：因 $w>2$ 且 $v=w(w-1)$，存在 $\Theta\in\mathbb R^2$，使 $1,\Theta_1,\Theta_2$ 有理线性无关，其行向量 ordinary 指标恰为 $v$，uniform 指标恰为 $w$。取 $\omega=\Theta\pmod{\mathbb Z^2}$。这里用的是线性形式指标，非同时逼近指标。
+
+该文页 1–2 的定义采用整数三元组 $(k_1,k_2,b)\ne0$，条件为
+
+$$
+|k\cdot\Theta+b|\le H^{-t},\qquad
+\max(|k_1|,|k_2|,|b|)\le H.
+\tag{23.4}
+$$
+
+ordinary 取此系统在无穷多个整数 $H$ 可解的指数上确界，uniform 则要求每个充分大整数 $H$ 均可解。以下只用严格的 $\nu_0<w$ 和 $\mu>v$，不假定任一上确界端点被达到。
+
+为转换到圆距离与二维范数，置 $D=\max(1,|\Theta_1|+|\Theta_2|+1)$。给定 $s=\|k\|_\infty\ge1$，取最邻近 $-k\cdot\Theta$ 的整数 $b$，则三元组高度至多 $Ds$。令 $H=\lceil Ds\rceil\le(D+1)s$。因 $\mu>v$，(23.4) 在 $t=\mu$ 时对充分大的 $H$ 无非零解，故对充分大的 $s$，
+
+$$
+\|k\cdot\omega\|_{\mathbb T}>H^{-\mu}
+\ge(D+1)^{-\mu}s^{-\mu}.
+$$
+
+剩余有限多个非零小频率的圆距离全为正，否则违背有理独立性。取这些距离乘 $s^\mu$ 的正最小值，再与 $(D+1)^{-\mu}$ 取最小，即得对全部非零频率成立的 $c_\omega>0$。这既处理有限初段，也没有把三元组高度直接等同于 $\|k\|_\infty$。
+
+由 uniform 定义，对每个充分大的实数 $X$，以 $H=\lfloor X^a\rfloor$ 代入 (23.4)，可选一个 $k_X\in\mathbb Z^2$ 满足
+
+$$
+0<\|k_X\|_\infty\le X^a,\qquad
+\|k_X\cdot\omega\|_{\mathbb T}\le C X^{-a\nu_0},\qquad C=2^{\nu_0}.
+\tag{23.5}
+$$
+
+确实 $H\ge X^a/2$ 最终成立；而 $k_X=0$ 会使 $|b|<1$，迫使整个三元组为零。整数平移 $\Theta\mapsto\omega$ 不改圆距离，故此处不需假设换提升后仍保留同一个高度界。
+
+**证明（覆盖每个完整 dyadic 块）。** 固定 $X=2^j$，在整个 $(X,2X]$ 只用同一个 $k_X$。若 $(u,z)\in E_n(\omega)$ 且 $X<n\le2X$，则圆距离的三角不等式和原半径的单调性给出
+
+$$
+\begin{aligned}
+\|k_X\cdot z\|_{\mathbb T}
+&\le n\|k_X\cdot\omega\|_{\mathbb T}
+ +( |k_{X,1}|+|k_{X,2}|)\rho_n\\
+&\le 2C X^{1-a\nu_0}+2X^a\rho(X)=:\delta_X.
+\end{aligned}
+\tag{23.6}
+$$
+
+于是全部有限条件仍由原事件承担，同时有上包
+
+$$
+\bigcup_{X<n\le2X}E_n(\omega)
+\subseteq S_j:=C_M\times
+ \{z\in\mathbb T^2:\|k_{2^j}\cdot z\|_{\mathbb T}\le\delta_{2^j}\}.
+\tag{23.7}
+$$
+
+上包允许放宽有限端，却没有删掉任何原指标，包括阶段跳点两侧和不属于 $\mathcal H_-$ 的阶段。非零整数 character $z\mapsto k_{2^j}\cdot z$ 将两圆 Haar 推为圆 Haar，即使频率不原始亦然，故 $\nu(S_j)=\min(1,2\delta_{2^j})$。由原 $\rho(X)=(X+2)^{-\beta}(\log(X+2))^{-\gamma}$，有
+
+$$
+\delta_X\le 2C X^{-(a\nu_0-1)}+2X^{-(\beta-a)}(\log X)^{-\gamma},
+\qquad \sum_{j\text{ 充分大}}\nu(S_j)<\infty.
+\tag{23.8}
+$$
+
+两项指数均严格为正。完整整数尾被这些相邻 dyadic 块覆盖，因此
+
+$$
+\nu(R(\omega))\le
+\nu\!\left(\bigcup_{n>2^J}E_n(\omega)\right)
+\le\sum_{j\ge J}\nu(S_j)\longrightarrow0.
+\tag{23.9}
+$$
+
+这是收敛 Borel–Cantelli 的尾并集估计，不需块间独立；尤其没有从 $\limsup B_H(\omega)\subseteq R(\omega)$ 反推 $R(\omega)$ 零测。
+
+**证明（原质量与真实阶段）。** 对充分大的 $n$，
+$\nu(E_n(\omega))=4M\mathbf1_A(n)\rho_n^2/q_n$，与方向无关。由 (22.2) 及 $F_{n,H}(\omega)\subseteq E_n(\omega)$，
+
+$$
+\sum_{X_H<n\le2X_H}\nu(E_n(\omega))\ge m_H\longrightarrow\infty.
+$$
+
+故完整一阶和仍发散；$L_X$ 没有方向参数，其无穷上极限直接沿用定理 21.2。若考察 (22.1) 的最短对偶长度，在每个真实 $X_H$ 使用 (23.5)，利用准确恒等式 $K_Hq_H=MJ_H$ 及 $|MJ_H-X_H|<M$，得到
+
+$$
+\begin{aligned}
+\sigma_H(\omega)
+&\le K_H\|q_Hk_{X_H}\cdot\omega\|_{\mathbb T}
+       +r_H\|k_{X_H}\|_2\\
+&\le C(X_H+M)X_H^{-a\nu_0}+\sqrt2\,r_H X_H^a
+\longrightarrow0.
+\end{aligned}
+\tag{23.10}
+$$
+
+末项使用真实 $r_H=\rho(2X_H)$、$a<\beta$，首项使用 $a\nu_0>1$。这里没有将真实 $K_H$ 偷换成 $X_H/q_H$，也没有从另选尺度推断原阶段。
+
+**证明（新方向的联合尾稠密）。** 任取 $Y$ 的非空基本开窗 $V=((b+d\widehat{\mathbb Z})\cap C_M)\times W$，其中 $d\ge1$，$W\subseteq\mathbb T^2$ 非空开。CRT 将其有限端整数条件写成一个共同类 $t\pmod\ell$，$\ell=\operatorname{lcm}(M,d)$。因 $1,\omega_1,\omega_2$ 有理线性无关，对每个 $k\ne0$ 都有 $\ell k\cdot\omega\notin\mathbb Z$；经典 Kronecker 定理遂给出 $(t+\ell m)\omega$ 的每条正尾在两圆中稠密。因此对每个 $N$ 存在同一个 $n>N$，满足 $n\equiv t\pmod\ell$ 且 $n\omega\in W$。
+
+中心 $(n,n\omega)$ 同时属于 $V$ 和 $E_n(\omega)$：其有限端自身满足 $n\equiv n\pmod{q_n}$，且原半径逐项严格为正。所以每个 $\bigcup_{n>N}E_n(\omega)$ 都开且稠密；$Y$ 紧 Hausdorff，Baire 定理给出它们的交 $R(\omega)$ 稠密且为 $G_\delta$。这段论证核对了新方向和同一整数的联合尾，不调用只针对原 CM 点的定理 11.3。
+
+本条是 Laurent 谱与本项目原半径、全部原有限过滤、临界一阶预算及全块窄带上包的新增综合（repo-derived）。谱定理、Kronecker、Haar 推前、收敛 Borel–Cantelli 和 Baire 均为经典中间输入（literature-attested），不另立一般新定理。相邻先例 Fayad，*Two remarks on the Shrinking Target Property*，[arXiv:math/0501205v1](https://arxiv.org/pdf/math/0501205v1)，Theorem 2.3（印刷页 4）第一项证明环面平移具有 MSTP 当且仅当方向为 constant type，其量词遍历所有递减半径；它不指定本项目的 $\rho_n$、增长模数和临界质量。该定理的非 MSTP 方向不能直接提供这里固定半径的反例，第二项与页 4–5 的构造还允许非单调或零半径。本条不主张一般有限型旋转的缩靶失败现象首次发现。
+
+用白话说，有限型保证每个整数方向的共振不会小于某个统一幂，但仍允许足够强的多项式共振。在每一整块时间里，它把所有实目标窗压进同一条很窄的带；各块窄带的面积总和有限，逐时刻窗的质量却因重复覆盖仍然发散。稠密零测意味着每个开窗都有无限命中目标，而几乎每个目标只命中有限次，两者并不矛盾。
+
+这些方向只替换实端，不是原曲线的新 CM 来源；本条没有认证原指定 $\alpha$ 的具体有限型常数或更小指数，也不主张 (23.1) 的门槛必要或其补范围不可构造。对原 CM 点，$\nu(R(\alpha))$ 仍未解决；若走 §21 的充分路线，其 CM 结构仍需支付原 $q_H$ 与 $\alpha$ 的联合非共振，例如在无界原好阶段证明 (22.16)。这仍是充分接口，不称必要条件。$\square$
+
+## 追加锚（本行以下为增补区）
