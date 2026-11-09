@@ -68,7 +68,7 @@ For every n≥0, four fails to divide row ℕ n 3 exactly when n+2 is a sum of t
 
 The source target counts actual permutations of [3j+2], j≥1, whose prescribed length-five windows at starts 1+3t, 0≤t<j, have pattern 14325. Extra occurrences are allowed. The Core module proves an insertion/deletion bijection identifying this count with row ℕ (j−1) 3. Natural-to-residue reduction is proved inside the Catalan formula, and the Core module applies both row laws to the actual count.
 
-The full target also requires residue one modulo ten when j+1=2ᵏ with k≥1, residue six otherwise, and nondivisibility by four if and only if j+1=2ⁱ+2ᵖ with 0≤p≤i. The equal-exponent and p=0 boundaries are included. The printed continuation says four divides all but these indices; the exact-exception converse is the stronger registered interpretation. The Core module proves both exact actual-count conclusions using these transfer results. The narrower issue 21304 remains unchanged.
+The full target also requires residue one modulo ten when j+1=2ᵏ with k≥1, residue six otherwise, and nondivisibility by four if and only if j+1=2ⁱ+2ᵖ with 0≤p≤i. The equal-exponent and p=0 boundaries are included. The printed continuation says four divides all but these indices; the exact-exception converse is the stronger registered interpretation. The Core module proves both exact actual-count conclusions using these transfer results.
 
 ## References
 

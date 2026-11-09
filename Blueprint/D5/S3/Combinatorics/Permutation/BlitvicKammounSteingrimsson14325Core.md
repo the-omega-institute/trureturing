@@ -70,6 +70,12 @@ $$\forall j: \mathbb{N}, (1 \leq j) \implies mod\left(count\left(pattern, 2, j\r
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Permutation/BlitvicKammounSteingrimsson14325Core.count_mod_ten` (`✓ std3`). ∎
 
+*Resolves.* `Problems/bks11-14325-whole-event` (proved) by `D5/S3/Combinatorics/Permutation/BlitvicKammounSteingrimsson14325Core.count_mod_ten` and `D5/S3/Combinatorics/Permutation/BlitvicKammounSteingrimsson14325Core.count_mod_four_iff`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"bks11-14325-whole-event","declaration_gid":"D5/S3/Combinatorics/Permutation/BlitvicKammounSteingrimsson14325Core.count_mod_ten","resolution_kind":"proved"} -->
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"bks11-14325-whole-event","declaration_gid":"D5/S3/Combinatorics/Permutation/BlitvicKammounSteingrimsson14325Core.count_mod_four_iff","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Natasha Blitvić, Mohammed Slim Kammoun, and Einar Steingrímsson (2026). *Permutations, Pattern Covers, Posets and Positivity: Part I: Patterns and Posets*. DOI: [10.48550/arXiv.2610.29846](https://doi.org/10.48550/arXiv.2610.29846). URL: <https://arxiv.org/abs/2610.29846v1>.
@@ -90,7 +96,7 @@ $$\forall j: \mathbb{N}, (1 \leq j) \implies fourNondivides\left(count\left(patt
 
 *Commentary.*
 
-For every j≥1, four does not divide the actual count if and only if j+1=2ⁱ+2ᵖ for natural exponents p≤i. The proof uses the same actual-count correspondence and row_mod_four_iff. Both implications, p=0 and p=i are retained. There is no assertion for j=0. The printed item says four divides all but these indices and does not explicitly assert the converse; this iff proves the stronger registered exact interpretation. The original narrower modulo-ten issue 21304, its unresolved status and resource boundaries remain unchanged.
+For every j≥1, four does not divide the actual count if and only if j+1=2ⁱ+2ᵖ for natural exponents p≤i. The proof uses the same actual-count correspondence and row_mod_four_iff. Both implications, p=0 and p=i are retained. There is no assertion for j=0. The printed item says four divides all but these indices and does not explicitly assert the converse; this iff proves the stronger registered exact interpretation.
 
 ## References
 
