@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.SubgroupGenerati
 internal sealed class FiberSpectraDocument : IScribeDocumentDefinition
 {
     private const string Owner = "D5/S3/Combinatorics/Graph/SubgroupGenerating/FiberSpectra.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/GraphInvariants/das2026sgb");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/FiniteGroups/das2026sgb");
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "One actual edge per ordered pair.", H("FiberSpectra"), Blocks(
             Describe.Lean(DescribeId.Create("sgb-fiberspectra-component"),
