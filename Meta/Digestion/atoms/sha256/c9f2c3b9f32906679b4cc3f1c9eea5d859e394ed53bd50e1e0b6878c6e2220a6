@@ -1,0 +1,49 @@
+**定理 54.6（四对象一致性）。** 假设 CE 对每个可复合三元组成立。对四个对象 $x,y,z,w$，算子复合的结合律给出
+
+$$
+\boxed{
+\omega(x,y,z)\omega(x,z,w)
+=\omega(y,z,w)\omega(x,y,w).
+}
+\tag{C4}
+$$
+
+反过来，给定满足 (C4) 的中心因子，可以在提升箭头 $(\lambda,R_{xy})$ 上定义
+
+$$
+(\mu,R_{yz})\circ(\lambda,R_{xy})
+=\bigl(\mu\lambda\omega(x,y,z),R_{xz}\bigr),
+$$
+
+并得到结合的中心扩张群胚。
+
+**证明。** 两种括号化分别给出
+
+$$
+R_{zw}(R_{yz}R_{xy})
+=\omega(x,y,z)\omega(x,z,w)R_{xw},
+$$
+
+$$
+(R_{zw}R_{yz})R_{xy}
+=\omega(y,z,w)\omega(x,y,w)R_{xw}.
+$$
+
+它们相等当且仅当 (C4) 成立；同一计算也证明提升复合的结合律。证毕。
+
+在一般比较群胚中，若以可复合箭头对 $(g,h)$ 记因子 $\alpha(g,h)$，则 (C4) 正是
+
+$$
+\alpha(g,h)\alpha(gh,k)
+=\alpha(h,k)\alpha(g,hk),
+$$
+
+即 $U(1)$ 值二元 2-cocycle。重新选提升 $\widetilde R_{xy}'=\beta(x,y)\widetilde R_{xy}$ 时，因子变为
+
+$$
+\omega'(x,y,z)
+=\frac{\beta(y,z)\beta(x,y)}{\beta(x,z)}\omega(x,y,z).
+$$
+
+所以相位因子只有在不能被这样的 coboundary 消掉时才是结构性数据。
+
