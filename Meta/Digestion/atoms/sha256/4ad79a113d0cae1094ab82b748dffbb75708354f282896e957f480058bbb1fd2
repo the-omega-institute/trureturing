@@ -1,0 +1,20 @@
+**定义 98.1（固定纸面前件与同一原模型）。** SM 指[前谱混合卷](AURIC_SPECTRAL_MIXED_RESPONSES_AND_DIRECT_WINDOW_BOUNDARIES.md)，SF 指[本半有限原始响应卷](AURIC_SEMIFINITE_ORIGINAL_RESPONSE_AND_CENTRAL_POLAR_GEOMETRY.md)，A 指[任意维静态卷](AURIC_C128_ARBITRARY_DIMENSIONAL_STATIC_QUANTUM_RECONSTRUCTION.md)，C 指[中央续卷](AURIC_CENTRAL_RESPONSE_SQUARE_AND_RADIAL_CONSISTENCY_CONTINUATION.md)，PT 指[原 PB 运输续卷](AURIC_ORIGINAL_POLYNOMIAL_PB_TRANSPORT_AND_FIBER_BOUNDARIES_CONTINUATION.md)，W 指[单位桥](AURIC_ARBITRARY_DIMENSIONAL_SMALL_WINDOW_UNIT_BRIDGE.md)，R3 指[三标签刚性卷](AURIC_C128_THREE_LABEL_POSITIVITY_AND_ORIGINAL_RELATION_RIGIDITY.md)。有限分类的准确前件是 [dev23dae 的 SM79.1–84.1，尤其 SM79.3](https://github.com/the-omega-institute/trureturing/blob/23dae741512cdf450fc5b2d76b63ed51780f9915/docs/develop/theory/AURIC_SPECTRAL_MIXED_RESPONSES_AND_DIRECT_WINDOW_BOUNDARIES.md#79-完整有限-continuous-原域与中央取向候选)。半有限证明的复用接口是[公开固定源 SF88–97](https://github.com/the-omega-institute/trureturing/blob/efef304808f06caec5026b013ca9707c8495aa23/docs/develop/theory/AURIC_SEMIFINITE_ORIGINAL_RESPONSE_AND_CENTRAL_POLAR_GEOMETRY.md#88-完整半有限-ii∞-原域与唯一共同响应)。其余仓内源固定取 [dev23dae 理论树](https://github.com/the-omega-institute/trureturing/tree/23dae741512cdf450fc5b2d76b63ed51780f9915/docs/develop/theory)。这些是纸面前件和消费者，不是 kernel 或独立验证证据。
+
+保持唯一原 $\Omega/\mathrm{native}$ 及同一 $(E,C,u,N,\mathcal P,S,D)$。本组明确模型类 $\Gamma_{\rm sf,cont}$ 是任意半有限 continuous 复 von Neumann 代数 $M$，即没有非零 type I 中央直和项，允许有限 type $\mathrm{II}_1$、无限 type $\mathrm{II}_\infty$ 及任意中央混合；给定忠实正规半有限标量迹 $\tau$。取
+
+$$
+E=M_{\rm sa},\qquad C=M_+,\qquad u=1,\qquad
+N(a)=\|a\|,\qquad S(a,b)=a\circ b=\frac{ab+ba}{2}.
+\tag{98.1}
+$$
+
+不要求因子、Hilbert 空间或预对偶可分、可数可分解或全局忠实正规状态。结合乘法、伴随、极分解、Borel 函数演算和 $\tau$ 是给定模型结构。$\mathcal P$ 保持全部原索引，是分离 $E$ 且准确决定 $C$ 的正实线性评价族：
+
+$$
+a\in C\ \Longleftrightarrow\ (\forall\gamma\in\mathcal P)\ \gamma(a)\ge0,
+\qquad m_\gamma=\gamma(1)\ge0.
+\tag{98.2}
+$$
+
+相同限制但不同来源的评价不合并；全部零、不等、次归一质量、中心权和静默部分保留。$\tau$、角迹及下文的数学正规正泛函都不加入物理准备族。模型类的选择不从裸 $\Omega$ 自动产生。
+
