@@ -1,0 +1,24 @@
+**定理50.2的证明：共同方程。** 同一次PB的原右端为 $2R\circ d+2R\circ(AF)-2F\circ C_0$。代入51.3，只展开已知 $K$，用 $[AF,F]=0$，得到
+
+$$
+R\circ d+K(d,F)=K(R,C_0)-R\circ(AF)+F\circ C_0.
+\tag{51.4}
+$$
+
+一般 $R,A$ 下最后两项不能删去。令 $d_0=K(R,A)$。由 $C_0=R\circ A$ 和 $[A,F]=0$，有限矩阵恒等式准确给
+
+$$
+R\circ d_0=K(R,C_0),\qquad
+K(d_0,F)=-R\circ(AF)+F\circ C_0.
+\tag{51.5}
+$$
+
+第二式可直接将 $K(K(R,A),F)=-[[R,A],F]/4$ 展开得到；它只使用辅助交换子，不给旧 $D$ 添加恒等式。因此同一个Hermitian余量 $e_0=d-d_0$ 满足
+
+$$
+R\circ e_0+K(e_0,F)=0,\qquad qe_0q=0.
+\tag{51.6}
+$$
+
+后式由51.1及 $qRq=Rq=qR=0$ 给出。
+

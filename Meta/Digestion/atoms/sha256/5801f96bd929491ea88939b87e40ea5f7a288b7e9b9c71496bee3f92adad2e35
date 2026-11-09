@@ -1,0 +1,24 @@
+**定义 45.1（完整原候选与单块有限商）。** 完整保留39.1及[原多项式零响应卷80.1、89.1](AURIC_ORIGINAL_POLYNOMIAL_ZERO_RESPONSES_AND_CAYLEY_DOMAIN_BOUNDARIES.md)的同一原 $\Omega/\mathrm{native}$、$E,C,u,N,\mathcal P,S,D$，包括全部原来源和七项消费者。A1是全部有向Hermitian二表正性；A2是相加三表及其排列的实部正性和指定相加零向量；A3是同一单位平方和固定有理小效果窗。保留准确锥、全部原正评价及零／不等／次归一质量。既有无R接口是
+
+$$
+E\subset X,\qquad \overline E=X,\qquad C=E\cap X_+,\qquad
+S=\circ,\qquad N=\|\cdot\|_X|_E,
+$$
+
+其中 $X$ 为含单位实JB代数，原 $E$ 可以不完备。同一个 $D:E^2\to E$ 满足全部原P2及完整原PB；不增添输入可加、齐次、连续、可测、商下降、完成延拓或实际投影提升。取任意满Jordan商
+
+$$
+\pi:X\longrightarrow H_n(\mathbb C),\qquad n\ge3.
+$$
+
+这里的 $n$ 是商的数学阶数；不要求原世界有限维，也不把商矩阵认作实际制备。固定两个数学正交单位向量 $e,f$，置
+
+$$
+p=ee^*,\quad q=I-p,\quad T=fe^*+ef^*,\quad P=ee^*+ff^*,
+\qquad A=LT+q,\quad L\ge2.
+\tag{45.1}
+$$
+
+对 $z\perp e$ 记 $H(z)=ze^*+ez^*$，并令
+$K(x,y)=\sigma i[x,y]/2$。符号 $\sigma\in\{1,-1\}$ 是原多项式零响应卷80.2、82.1已经识别的这个简单块全部二阶角的共同符号；不预设一般旧值等于 $K$。
+
