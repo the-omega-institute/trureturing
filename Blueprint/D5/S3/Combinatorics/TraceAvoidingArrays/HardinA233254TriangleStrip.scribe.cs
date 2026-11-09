@@ -57,8 +57,10 @@ internal sealed class HardinA233254TriangleStripDocument : IScribeDocumentDefini
                 + "ABABA, ABABC, ABACA, ABACB, ABCAB, ABCAC, ABCBA and ABCBC."),
             Def("moment", "moment", "Boundary transfer moments", MomentFormula(),
                 "The four entries are the constant one and the first three moments of "
-                + "the label transfer. With both scanner flags true, a label row has "
-                + "64 colour lifts. More generally each column has a factor of zero, "
+                + "the label transfer. The published HardinA233255ShapeSymmetry.full_row, "
+                + "used with HardinA233255LiteralBridge.scanner_fibres, gives 64 colour "
+                + "lifts at width six when both scanner flags are true. More generally "
+                + "each column has a factor of zero, "
                 + "one or two: pair zero has two choices; pair one has one choice before "
                 + "the first one, then two; pair two is forbidden before one, has one "
                 + "choice before the first two, then two. Multiplying these factors "

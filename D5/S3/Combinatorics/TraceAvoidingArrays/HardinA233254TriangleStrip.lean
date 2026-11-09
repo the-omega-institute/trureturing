@@ -7,7 +7,9 @@
    digest: Barker's generating function for the literal normalized six-column strip. -/
 /-
 admission_basis: open-problem-resolution (#28319; Proved)
-escape_witness: D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233254TriangleStrip.v_eq_w (reduction of the boundary-state continuation counts to the class vector at every height, by induction)
+escape_witness: none; every declaration is bind-only. The all-height reduction v_eq_w instantiates
+Function.Semiconj.iterate_right at the boundary-class map after the finite one-step premises are
+normalized.
 Direct frozen dependencies (declaration statement_ids):
 D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.Seen
 statement_id: sha256:db13d94501d24f27e6e69604bb633af95ff3309c5698815c44e12d2e52739fce
@@ -171,12 +173,12 @@ finite_certificate: proof_shape=bind-only; consumers=v_eq_w, a_eq_w, one_count
 initial_valid: proof_shape=bind-only; consumers=a_eq_w
 w: proof_shape=bind-only; consumers=eval
 eval: proof_shape=bind-only; consumers=v_eq_w
-v_eq_w: proof_shape=content; consumers=a_eq_w
-a_eq_w: proof_shape=content; consumers=recurrence
-recurrence: proof_shape=content; consumers=result
+v_eq_w: proof_shape=bind-only; consumers=a_eq_w
+a_eq_w: proof_shape=bind-only; consumers=recurrence
+recurrence: proof_shape=bind-only; consumers=result
 zero_count: proof_shape=bind-only; consumers=result
 one_count: proof_shape=bind-only; consumers=result
-result: proof_shape=content; consumers=terminal result
+result: proof_shape=bind-only; consumers=terminal result
 -/
 
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip
@@ -198,7 +200,7 @@ namespace D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233254TriangleStrip
 open HardinA233175PairStrip (Seen allowed advance good finish finish_fst finish_snd good_iff)
 open D5.S3.Observer.Separation.BooleanRankThreeK4 (beta)
 open HardinA233251TriangleStrip
-open HardinA233255LiteralBridge (labelAdvance labelWeight rowFinish rowWeight scanner_fibres)
+open HardinA233255LiteralBridge (rowFinish rowWeight scanner_fibres)
 open HardinA233255ShapeSymmetry (full_row)
 abbrev Row := Fin 6 → Fin 6
 abbrev Boundary := Fin 5 → Fin 3
