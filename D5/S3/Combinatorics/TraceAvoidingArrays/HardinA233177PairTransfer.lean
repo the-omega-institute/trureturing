@@ -8,6 +8,9 @@
 /-
 admission_basis: open-problem-resolution (#28449; Proved)
 escape_witness: none
+direct_frozen_dependencies (raw compiled type/value edges, union over this module): []
+The transfer and power iteration instantiate existing TransferMatrix results;
+the finite column tables and product/subtype transports add only normalization.
 Proper: proof_shape=bind-only; consumers=L, grid_good
 instDecidableProper: proof_shape=bind-only; consumers=L
 L: proof_shape=bind-only; consumers=count_transfer

@@ -7,11 +7,17 @@
    digest: First-appearance representatives and exact complementary-pair colour fibres. -/
 /-
 admission_basis: open-problem-resolution (#28449; Proved)
-escape_witness: none
+escape_witness: canonical_unique (well-founded prefix rigidity),
+  canonical_exists_unique (lex-minimal relabelling gives a canonical representative).
+direct_frozen_dependencies (raw compiled type/value edges, union over this module):
+  D5/S3/Observer/Separation/BooleanRankThreeK4.beta
+    statement_id: sha256:1abdc5f3db71567fe05de5aabbe80dddeb5ec5179e4ec7fd49fe71e500518481
 Canonical: proof_shape=bind-only; consumers=canonical_exists_unique, normalized_card
 first_occurrence: proof_shape=bind-only; consumers=canonical_exists_unique, firstEquiv
 canonical_unique: proof_shape=content; consumers=canonical_exists_unique, canonical_pattern_card
+  reason: Well-founded induction proves rigidity from equality of label fibres.
 canonical_exists_unique: proof_shape=content; consumers=canonical_pattern_card
+  reason: A label swap proves the lex-minimal orbit member canonical; rigidity gives uniqueness.
 colourEquiv: proof_shape=bind-only; consumers=fibreEquiv
 Normal: proof_shape=bind-only; consumers=normalization_iff, normalized_card
 FirstSides: proof_shape=bind-only; consumers=normalization_iff, Fibre
@@ -23,7 +29,8 @@ side_false: proof_shape=bind-only; consumers=fibreEquiv
 fibreEquiv: proof_shape=bind-only; consumers=fibre_card
 fibre_card: proof_shape=bind-only; consumers=normalized_card
 perm_ext_two: proof_shape=bind-only; consumers=canonical_pattern_card
-canonical_pattern_card: proof_shape=bind-only; consumers=HardinA233177Ladder.counting_bridge
+canonical_pattern_card: proof_shape=content; consumers=HardinA233177Ladder.counting_bridge
+  reason: The counting bijection uses the new canonical representative and its rigidity.
 normalized_card: proof_shape=bind-only; consumers=HardinA233177Ladder.counting_bridge
 -/
 import Mathlib.Order.PiLex
@@ -199,7 +206,7 @@ theorem normalization_iff {C : Type*} [Fintype C] [LinearOrder C]
       obtain ⟨j, hj, he⟩ := lift i 2 hlabel
       exact ⟨j, hj, Fin.ext he⟩
 
-abbrev First {C : Type*} [LT C] {K : Type*} (P : C → K) (i : C) : Prop :=
+private abbrev First {C : Type*} [LT C] {K : Type*} (P : C → K) (i : C) : Prop :=
   ∀ j, j < i → P j ≠ P i
 
 private noncomputable def firstEquiv {C : Type*} [Fintype C] [LinearOrder C]

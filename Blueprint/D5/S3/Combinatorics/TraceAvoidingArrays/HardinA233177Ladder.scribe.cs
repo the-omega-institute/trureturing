@@ -58,7 +58,7 @@ internal sealed class HardinA233177LadderDocument : IScribeDocumentDefinition
             DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.FromAuthor(Disp(formula)),
             literature ? AssessedProvenance.FromLiterature(Source)
-                : AssessedProvenance.FromRepo(),
+                : AssessedProvenance.FromRepo(Source),
             Blocks(Paragraph(Text(title + "."))),
             theorem ? DescribeRole.Theorem : DescribeRole.Definition);
 

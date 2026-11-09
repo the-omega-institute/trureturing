@@ -27,7 +27,6 @@ internal sealed class HardinA233177CanonicalDocument : IScribeDocumentDefinition
             Node("FirstSides", "Fixed side at each first occurrence", FirstSidesFormula(), false),
             Node("normalization_iff", "Normalization is canonical form with fixed first sides",
                 NormalizationFormula(), true),
-            Node("First", "First occurrence of a label", FirstFormula(), false),
             Node("Fibre", "Individual-colour lifts of a fixed pair pattern",
                 FibreFormula(), false),
             Node("fibre_card", "Exact number of lifts", FibreCardFormula(), true),
@@ -98,14 +97,6 @@ internal sealed class HardinA233177CanonicalDocument : IScribeDocumentDefinition
             All("f", Arrow(c, Fin(D(6))), Imp(Eq(App(f, z), Colour(0)),
                 Iff(Own("Normal", f), And(Own("Canonical", Compose(BetaFunction(), f)),
                     Own("FirstSides", f))))))));
-    }
-
-    private static Formula FirstFormula()
-    {
-        var c = V("C"); var k = V("K"); var p = V("P"); var i = V("i");
-        return Ordered(All("K", Q("Type"), All("P", Arrow(c, k), All("i", c,
-            Eq(Own("First", p, i), Parenthesized(All("j", c,
-                Imp(Lt(V("j"), i), Ne(App(p, V("j")), App(p, i))))))))));
     }
 
     private static Formula FibreFormula()
