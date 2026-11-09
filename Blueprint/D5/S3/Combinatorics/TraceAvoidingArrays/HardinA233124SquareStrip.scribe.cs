@@ -65,7 +65,8 @@ internal sealed class HardinA233124SquareStripDocument : IScribeDocumentDefiniti
             Thm("certificate", "finite_certificate", "The class counts", CertificateFormula(),
                 "For each valid boundary the three counts are the corresponding row "
                 + "of the transfer matrix. The first-row distribution is [2,0,1]."),
-            Thm("result", "result", "Barker's generating-function identity", ResultFormula(),
+            Resolution("result", "result", "Barker's generating-function identity",
+                ResultFormula(),
                 "Let B(k), E(k), D(k) be the continuation counts for the three classes. "
                 + "All equal one at k=0. The matrix gives B(k+1)=8B(k)+8E(k)+8D(k), "
                 + "E(k+1)=24E(k)+16D(k), D(k+1)=16E(k)+16D(k). Decomposing "
@@ -88,6 +89,14 @@ internal sealed class HardinA233124SquareStripDocument : IScribeDocumentDefiniti
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(Source),
             Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
+
+    private static DocumentBlock Resolution(string id, string name, string title,
+        Formula formula, string prose) =>
+        Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + name), H(title),
+            StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(Source),
+            Blocks(Paragraph(Text(prose))), DescribeRole.Theorem,
+            new OpenProblemResolutionClaim(ProblemSlugRef.Create("hardin233124"),
+                ResolutionKind.Proved));
 
     private static Formula PriorFormula()
     {
