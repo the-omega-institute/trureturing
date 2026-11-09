@@ -52,8 +52,14 @@ theorem source_bridge : sourceScope.{u} ↔ arena.{u}.Law actual.{u} := by
   · intro h P z
     exact h P.model P.operator P.face P.second
   · intro h E normed space A T hface hsecond
-    exact h { E := E, normed := normed, space := space, model := A,
-      operator := T, face := hface, second := hsecond } ()
+    exact h
+      { E := E
+        normed := normed
+        space := space
+        model := A
+        operator := T
+        face := hface
+        second := hsecond } ()
 
 theorem actual_positive : arena.{u}.Law actual.{u} :=
   source_bridge.mp (@OrderUnitZeroFace.unit_eq_zero.{u})
