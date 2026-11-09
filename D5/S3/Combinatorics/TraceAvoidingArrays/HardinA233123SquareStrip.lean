@@ -8,7 +8,9 @@
 
 /-
 admission_basis: open-problem-resolution (#28348; Proved)
-escape_witness: D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233123SquareStrip.v_eq_w (reduction of the boundary-state continuation counts to the class vector at every height, by induction)
+escape_witness: none; every declaration is bind-only. The all-height reduction v_eq_w
+instantiates Function.Semiconj.iterate_right at the boundary-class map after the
+finite one-step premises are normalized.
 Direct frozen dependencies (declaration statement_ids):
 D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.Seen
 statement_id: sha256:db13d94501d24f27e6e69604bb633af95ff3309c5698815c44e12d2e52739fce
@@ -61,11 +63,11 @@ initial_valid: proof_shape=bind-only; consumers=a_eq_w
 initial_counts: proof_shape=bind-only; consumers=finite_certificate
 finite_certificate: proof_shape=bind-only; consumers=v_eq_w, a_eq_w; direct_frozen_dependencies=PairStrip.Col, PairStrip.Seen, PairStrip.finish, PairStrip.good, TriangleStrip.Valid, TriangleStrip.widthInstDecidableGood, BooleanRankThreeK4.beta
 w: proof_shape=bind-only; consumers=v_eq_w, a_eq_w, recurrence, result
-v_eq_w: proof_shape=content; consumers=a_eq_w
-a_eq_w: proof_shape=content; consumers=recurrence, result
-recurrence: proof_shape=content; consumers=result
+v_eq_w: proof_shape=bind-only; consumers=a_eq_w
+a_eq_w: proof_shape=bind-only; consumers=recurrence, result
+recurrence: proof_shape=bind-only; consumers=result
 zero_count: proof_shape=bind-only; consumers=result
-result: proof_shape=content; consumers=terminal result (#28348); direct_frozen_dependencies=PairStrip.Col, PairStrip.Seen, PairStrip.finish, PairStrip.good, PairStrip.pairs, TriangleStrip.Valid, TriangleStrip.widthInstDecidableGood, TriangleStrip.widthInstDecidableLegal, TriangleStrip.widthLegal, TriangleStrip.widthNormal, TriangleStrip.widthStep, TriangleStrip.widthTotal, TriangleStrip.widthV, TriangleStrip.width_counting_bridge, TriangleStrip.colour_bond_iff, BooleanRankThreeK4.beta
+result: proof_shape=bind-only; consumers=terminal result (#28348); direct_frozen_dependencies=PairStrip.Col, PairStrip.Seen, PairStrip.finish, PairStrip.good, PairStrip.pairs, TriangleStrip.Valid, TriangleStrip.widthInstDecidableGood, TriangleStrip.widthInstDecidableLegal, TriangleStrip.widthLegal, TriangleStrip.widthNormal, TriangleStrip.widthStep, TriangleStrip.widthTotal, TriangleStrip.widthV, TriangleStrip.width_counting_bridge, TriangleStrip.colour_bond_iff, BooleanRankThreeK4.beta
 -/
 
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip

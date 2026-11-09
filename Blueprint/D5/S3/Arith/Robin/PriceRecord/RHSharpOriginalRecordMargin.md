@@ -4,7 +4,91 @@
 
 Sharp lower Robin-margin endpoint for original positive-price strict records
 
-**Definition 1.1 (The complete lower endpoint constant).**
+**Theorem 1.1 (The unconditional full correction at original records).**
+
+$$\forall epsilon \in \mathbb{R},\; 0 < epsilon \Rightarrow \left(\exists T \in \mathbb{R},\; 2 \le T \land \left(\forall m \in \mathbb{N},\; 2 \le m \Rightarrow \left(\forall lambda \in \mathbb{R},\; 0 < lambda \Rightarrow \left(\left(\forall n \in \mathbb{N},\; 0 < n \Rightarrow \left(n < m \Rightarrow \operatorname{goldenResourceObjective}\left(lambda, n\right) < \operatorname{goldenResourceObjective}\left(lambda, m\right)\right)\right) \Rightarrow \left(T \le \operatorname{largestPrime}\left(m\right) \Rightarrow \left(1 < \operatorname{theta}\left(\operatorname{largestPrime}\left(m\right)\right) \land \left(1 < \operatorname{log}\left(m\right) \land \left|\operatorname{D}\left(\operatorname{largestPrime}\left(m\right)\right) \cdot \operatorname{C}\left(m\right) - 2 \cdot \operatorname{sqrt}\left(2\right)\right| < epsilon\right)\right)\right)\right)\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/PriceRecord/RHSharpOriginalRecordMargin.fullC_leading` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+C(m) denotes FullArithmeticCorrectionSecondOrder.correction(m). For every epsilon>0 one T>=2 works for all original positive-price strict records after the largest-prime cutoff, retaining both logarithmic domains.
+
+**Definition 1.2 (The exact last prime of a real cutoff).**
+
+$$\forall x \in \mathbb{R},\; \operatorname{Pn}\left(x\right) = \operatorname{FinsetSup}\left(\operatorname{primesLE}\left(\operatorname{floorNat}\left(x\right)\right), id\right)$$
+
+*Formalization.* `D5/S3/Arith/Robin/PriceRecord/RHSharpOriginalRecordMargin.Pn` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Pn(x) is the natural Finset supremum, with the natural empty-set convention, of all primes at most floorNat(x).
+
+**Theorem 1.3 (B depends only on this prime prefix).**
+
+$$\forall x \in \mathbb{R},\; \operatorname{B}\left(\operatorname{Pn}\left(x\right)\right) = \operatorname{B}\left(x\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/PriceRecord/RHSharpOriginalRecordMargin.B_prefix` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The exact identity holds for every real x, with the existing totalized logarithms; no asymptotic replacement of Pn is made.
+
+**Theorem 1.4 (Every real prime prefix has a genuine original record).**
+
+$$\forall x \in \mathbb{R},\; 2 \le x \Rightarrow \left(\exists m \in \mathbb{N},\; \exists lambda \in \mathbb{R},\; 2 \le m \land \left(0 < lambda \land \left(\left(\forall n \in \mathbb{N},\; 0 < n \Rightarrow \left(n < m \Rightarrow \operatorname{goldenResourceObjective}\left(lambda, n\right) < \operatorname{goldenResourceObjective}\left(lambda, m\right)\right)\right) \land \left(\operatorname{primeFactors}\left(m\right) = \operatorname{primesLE}\left(\operatorname{floorNat}\left(x\right)\right) \land \operatorname{largestPrime}\left(m\right) = \operatorname{Pn}\left(x\right)\right)\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/PriceRecord/RHSharpOriginalRecordMargin.cutoff_record` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The least positive global optimizer pays strict dominance over every positive predecessor. Its primeFactors are exactly primesLE(floorNat(x)), and its largest prime is exactly Pn(x).
+
+**Theorem 1.5 (The exact cutoff prime tends to infinity).**
+
+$$\operatorname{Tendsto}\left(Pn, atTop, atTop\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/PriceRecord/RHSharpOriginalRecordMargin.Pn_atTop` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The natural Pn is cast to Real for this limit.
+
+**Theorem 1.6 (The true cutoff has asymptotically identical normalization).**
+
+$$\lim_{x\to\infty}\frac{\operatorname{D}\left(\operatorname{Pn}\left(x\right)\right)}{\operatorname{D}\left(x\right)}=1$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/PriceRecord/RHSharpOriginalRecordMargin.normalization` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+D(x)=sqrt(x)*log(x); the limit is on the real atTop filter.
+
+**Theorem 1.7 (The complete original margin splits exactly).**
+
+$$\forall m \in \mathbb{N},\; 2 \le m \Rightarrow \left(\forall lambda \in \mathbb{R},\; 0 < lambda \Rightarrow \left(\left(\forall n \in \mathbb{N},\; 0 < n \Rightarrow \left(n < m \Rightarrow \operatorname{goldenResourceObjective}\left(lambda, n\right) < \operatorname{goldenResourceObjective}\left(lambda, m\right)\right)\right) \Rightarrow \operatorname{robinLogMargin}\left(m\right) = \operatorname{B}\left(\operatorname{largestPrime}\left(m\right)\right) + \operatorname{C}\left(m\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/PriceRecord/RHSharpOriginalRecordMargin.margin_identity` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The correction C is full; the original positive-price and all positive strict-predecessor hypotheses remain in the public identity.
+
+**Definition 1.8 (The complete lower endpoint constant).**
 
 $$K = 2 \cdot \operatorname{sqrt}\left(2\right) - 2 - firstLiMass$$
 
@@ -16,7 +100,7 @@ $$K = 2 \cdot \operatorname{sqrt}\left(2\right) - 2 - firstLiMass$$
 
 The complete arithmetic correction contributes 2*sqrt(2), while the real B lower endpoint contributes -2-firstLiMass.
 
-**Theorem 1.2 (Both sharp-endpoint quantifiers on genuine original records).**
+**Theorem 1.9 (Both sharp-endpoint quantifiers on genuine original records).**
 
 $$\operatorname{RiemannHypothesis} \Rightarrow \left(\left(\forall epsilon \in \mathbb{R},\; 0 < epsilon \Rightarrow \left(\exists T \in \mathbb{R},\; 2 \le T \land \left(\forall m \in \mathbb{N},\; 2 \le m \Rightarrow \left(\forall lambda \in \mathbb{R},\; 0 < lambda \Rightarrow \left(\left(\forall n \in \mathbb{N},\; 0 < n \Rightarrow \left(n < m \Rightarrow \operatorname{goldenResourceObjective}\left(lambda, n\right) < \operatorname{goldenResourceObjective}\left(lambda, m\right)\right)\right) \Rightarrow \left(T \le \operatorname{largestPrime}\left(m\right) \Rightarrow K - epsilon < \operatorname{D}\left(\operatorname{largestPrime}\left(m\right)\right) \cdot \operatorname{robinLogMargin}\left(m\right)\right)\right)\right)\right)\right)\right) \land \left(\forall epsilon \in \mathbb{R},\; 0 < epsilon \Rightarrow \left(\forall Y \in \mathbb{R},\; \exists m \in \mathbb{N},\; \exists lambda \in \mathbb{R},\; 2 \le m \land \left(0 < lambda \land \left(\left(\forall n \in \mathbb{N},\; 0 < n \Rightarrow \left(n < m \Rightarrow \operatorname{goldenResourceObjective}\left(lambda, n\right) < \operatorname{goldenResourceObjective}\left(lambda, m\right)\right)\right) \land \left(Y < \operatorname{largestPrime}\left(m\right) \land \left(1 < \operatorname{theta}\left(\operatorname{largestPrime}\left(m\right)\right) \land \left(1 < \operatorname{log}\left(m\right) \land \left|\operatorname{D}\left(\operatorname{largestPrime}\left(m\right)\right) \cdot \operatorname{robinLogMargin}\left(m\right) - K\right| < epsilon\right)\right)\right)\right)\right)\right)\right)\right)$$
 
@@ -44,7 +128,14 @@ For the universal lower bound take eta=epsilon/2 for both the real B envelope an
 
 ## References
 
+- Truth anchor: `D5/S3/Arith/Robin/PriceRecord/RHSharpOriginalRecordMargin.B_prefix`
 - Truth anchor: `D5/S3/Arith/Robin/PriceRecord/RHSharpOriginalRecordMargin.K`
+- Truth anchor: `D5/S3/Arith/Robin/PriceRecord/RHSharpOriginalRecordMargin.Pn`
+- Truth anchor: `D5/S3/Arith/Robin/PriceRecord/RHSharpOriginalRecordMargin.Pn_atTop`
+- Truth anchor: `D5/S3/Arith/Robin/PriceRecord/RHSharpOriginalRecordMargin.cutoff_record`
+- Truth anchor: `D5/S3/Arith/Robin/PriceRecord/RHSharpOriginalRecordMargin.fullC_leading`
+- Truth anchor: `D5/S3/Arith/Robin/PriceRecord/RHSharpOriginalRecordMargin.margin_identity`
+- Truth anchor: `D5/S3/Arith/Robin/PriceRecord/RHSharpOriginalRecordMargin.normalization`
 - Truth anchor: `D5/S3/Arith/Robin/PriceRecord/RHSharpOriginalRecordMargin.original_record_sharp_lower_endpoint`
 - Dependency: [D5/S3/Arith/GoldenResource/GoldenResourceOptimalLayerCount](../../GoldenResource/GoldenResourceOptimalLayerCount.md)
 - Dependency: [D5/S3/Arith/Robin/ActualPriceRecordPrimeStructure](../ActualPriceRecordPrimeStructure.md)

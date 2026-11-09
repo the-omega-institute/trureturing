@@ -37,7 +37,7 @@ namespace D5.S3.Arith.Robin.PriceRecord.RHSharpOriginalRecordMargin
 private abbrev C := FullArithmeticCorrectionSecondOrder.correction
 def K : ℝ := 2 * Real.sqrt 2 - 2 - firstLiMass
 
-private theorem fullC_leading (epsilon : ℝ) (he : 0 < epsilon) :
+theorem fullC_leading (epsilon : ℝ) (he : 0 < epsilon) :
     ∃ T : ℝ, 2 ≤ T ∧ ∀ m : ℕ, 2 ≤ m → ∀ lambda : ℝ, 0 < lambda →
       (∀ n : ℕ, 0 < n → n < m →
         goldenResourceObjective lambda n < goldenResourceObjective lambda m) →
@@ -76,7 +76,7 @@ private theorem fullC_leading (epsilon : ℝ) (he : 0 < epsilon) :
     nlinarith
   nlinarith [htriangle.trans hZ]
 
-private def Pn (x : ℝ) : ℕ := (Nat.primesLE ⌊x⌋₊).sup id
+def Pn (x : ℝ) : ℕ := (Nat.primesLE ⌊x⌋₊).sup id
 
 private lemma prime_prefix (x : ℝ) : Nat.primesLE (Pn x) = Nat.primesLE ⌊x⌋₊ := by
   have hPN : Pn x ≤ ⌊x⌋₊ := by
@@ -97,7 +97,7 @@ private lemma Pn_two {x : ℝ} (hx : 2 ≤ x) : 2 ≤ Pn x := by
 private lemma theta_prefix (x : ℝ) : Chebyshev.theta (Pn x : ℝ) = Chebyshev.theta x := by
   rw [Chebyshev.theta_eq_sum_primesLE_log, Chebyshev.theta_eq_sum_primesLE, prime_prefix]
 
-private lemma B_prefix (x : ℝ) : B (Pn x : ℝ) = B x := by
+lemma B_prefix (x : ℝ) : B (Pn x : ℝ) = B x := by
   have he : Mertens.E₃ (Pn x : ℝ) - Real.log (Real.log (Pn x : ℝ)) =
       Mertens.E₃ x - Real.log (Real.log x) := by
     unfold Mertens.E₃
@@ -108,7 +108,7 @@ private lemma B_prefix (x : ℝ) : B (Pn x : ℝ) = B x := by
   rw [theta_prefix]
   linarith
 
-private lemma cutoff_record (x : ℝ) (hx : 2 ≤ x) :
+lemma cutoff_record (x : ℝ) (hx : 2 ≤ x) :
     ∃ m : ℕ, ∃ lambda : ℝ, 2 ≤ m ∧ 0 < lambda ∧
       (∀ n : ℕ, 0 < n → n < m →
         goldenResourceObjective lambda n < goldenResourceObjective lambda m) ∧
@@ -176,7 +176,7 @@ private lemma cutoff_record (x : ℝ) (hx : 2 ≤ x) :
   refine ⟨m, lambda, hm2, hlambda, hrecord, hsupport, ?_⟩
   simp only [largestPrime, hsupport, Pn, N]
 
-private lemma Pn_atTop : Tendsto (fun x : ℝ => (Pn x : ℝ)) atTop atTop := by
+lemma Pn_atTop : Tendsto (fun x : ℝ => (Pn x : ℝ)) atTop atTop := by
   rw [tendsto_atTop]
   intro Y
   obtain ⟨p, hpY, hp⟩ := Nat.exists_infinite_primes ⌈Y⌉₊
@@ -186,7 +186,7 @@ private lemma Pn_atTop : Tendsto (fun x : ℝ => (Pn x : ℝ)) atTop atTop := by
   exact (Nat.le_ceil Y).trans ((by exact_mod_cast hpY : (⌈Y⌉₊ : ℝ) ≤ p).trans
     (by exact_mod_cast hP))
 
-private lemma normalization :
+lemma normalization :
     Tendsto (fun x : ℝ => D (Pn x : ℝ) / D x) atTop (𝓝 1) := by
   have htheta := D5.S3.Arith.Robin.EulerLayerRootCorrection.prime_number_limits.2
   have hratio : Tendsto (fun x : ℝ => (Pn x : ℝ) / x) atTop (𝓝 1) := by
@@ -250,7 +250,7 @@ private lemma B_transfer (hRH : RiemannHypothesis) :
     (Real.sqrt_pos.mpr (by linarith : 0 < x)).ne' (Real.log_pos hx).ne'
   field_simp [hD]
 
-private lemma margin_identity {m : ℕ} (hm : 2 ≤ m) {lambda : ℝ}
+lemma margin_identity {m : ℕ} (hm : 2 ≤ m) {lambda : ℝ}
     (hlambda : 0 < lambda)
     (hrecord : ∀ n : ℕ, 0 < n → n < m →
       goldenResourceObjective lambda n < goldenResourceObjective lambda m) :
