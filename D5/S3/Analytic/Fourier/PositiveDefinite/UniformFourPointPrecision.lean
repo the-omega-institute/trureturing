@@ -23,7 +23,6 @@ set_option backward.isDefEq.respectTransparency.types false
 noncomputable section
 open Set Filter MeasureTheory Matrix intervalIntegral
 open scoped Topology BigOperators ComplexOrder Interval
-
 namespace D5.S3.Analytic.Fourier.PositiveDefinite.UniformFourPointPrecision
 
 /-- The logarithmic cusp envelope. -/
@@ -69,7 +68,9 @@ private lemma log_one_add_half {z : ℝ} (hz : 1 ≤ z) : (1 + Real.log z) / 2 �
     have hpos : 0 < 1 + x := by linarith
     convert (((hasDerivAt_id x).const_add 1).log hpos.ne').sub (((Real.hasDerivAt_log hx0.ne').const_add 1).div_const 2) using 1
     · rfl
-    · simp only [id_eq] field_simp [hx0.ne', hpos.ne'] ring_nf
+    · simp only [id_eq]
+      field_simp [hx0.ne', hpos.ne']
+      ring_nf
   have hm : MonotoneOn f (Ici 1) := by
     apply monotoneOn_of_deriv_nonneg (convex_Ici 1) (fun x hx => (hd x hx).continuousAt.continuousWithinAt) (fun x hx => (hd x (interior_subset hx)).differentiableAt.differentiableWithinAt)
     intro x hx
@@ -118,19 +119,19 @@ private lemma h_integrable {v h g : ℝ → ℝ} {δ t : ℝ} (H : CuspControl v
   · exact (show ContinuousOn h (Ioc 0 t) from fun u hu =>
       (H.deriv_h u ⟨hu.1, hu.2.trans htδ⟩).continuousAt.continuousWithinAt
       ).aestronglyMeasurable measurableSet_Ioc
-  · filter_upwards [ae_restrict_mem measurableSet_Ioc] with u hu rw [Real.norm_eq_abs, abs_of_pos (H.h_pos u ⟨hu.1, hu.2.trans htδ⟩)]
+  · filter_upwards [ae_restrict_mem measurableSet_Ioc] with u hu
+    rw [Real.norm_eq_abs, abs_of_pos (H.h_pos u ⟨hu.1, hu.2.trans htδ⟩)]
     simpa [one_div, Real.log_inv] using H.h_upper u ⟨hu.1, hu.2.trans htδ⟩
 private lemma v_integral {v h g : ℝ → ℝ} {δ t : ℝ} (H : CuspControl v h g δ) (ht : 0 < t) (htδ : t ≤ δ) : (∫ u in (0 : ℝ)..t, h u) = v t := by
-  have hi := intervalIntegral.integral_eq_sub_of_hasDerivAt_of_tendsto ht (fun u hu => H.deriv_v u ⟨hu.1, hu.2.le.trans htδ⟩) (h_integrable H ht htδ)
-    (H.continuous.continuousAt.tendsto.mono_left nhdsWithin_le_nhds)
-    (H.continuous.continuousAt.tendsto.mono_left nhdsWithin_le_nhds)
+  have hi := intervalIntegral.integral_eq_sub_of_hasDerivAt_of_tendsto ht (fun u hu => H.deriv_v u ⟨hu.1, hu.2.le.trans htδ⟩) (h_integrable H ht htδ) (H.continuous.continuousAt.tendsto.mono_left nhdsWithin_le_nhds) (H.continuous.continuousAt.tendsto.mono_left nhdsWithin_le_nhds)
   simpa [H.zero] using hi
 private lemma v_upper {v h g : ℝ → ℝ} {δ t : ℝ} (H : CuspControl v h g δ) (ht : 0 < t) (htδ : t ≤ δ) : v t ≤ t * L t := by
-  have hm := intervalIntegral.integral_mono_on_of_le_Ioo ht.le (h_integrable H ht htδ) (intervalIntegrable_log'.neg) (fun u hu => by
-      simpa [one_div, Real.log_inv] using H.h_upper u ⟨hu.1, hu.2.le.trans htδ⟩)
+  have hm := intervalIntegral.integral_mono_on_of_le_Ioo ht.le (h_integrable H ht htδ) (intervalIntegrable_log'.neg) (fun u hu => by simpa [one_div, Real.log_inv] using H.h_upper u ⟨hu.1, hu.2.le.trans htδ⟩)
   rw [v_integral H ht htδ] at hm
   have hm' : v t ≤ -(∫ u in (0 : ℝ)..t, Real.log u) := by
-    calc v t ≤ (∫ u in (0 : ℝ)..t, (-Real.log) u) := hm _ = -(∫ u in (0 : ℝ)..t, Real.log u) := by exact intervalIntegral.integral_neg
+    calc
+      v t ≤ (∫ u in (0 : ℝ)..t, (-Real.log) u) := hm
+      _ = -(∫ u in (0 : ℝ)..t, Real.log u) := by exact intervalIntegral.integral_neg
   rw [integral_log_from_zero_of_pos ht] at hm'
   have hm := hm'
   rw [L_eq ht, one_div, Real.log_inv]
@@ -165,12 +166,19 @@ private lemma psi_lower {v h g : ℝ → ℝ} {δ a b : ℝ} (H : CuspControl v 
     have h₁ := H.deriv_v u ⟨hu.1, hu.2.le.trans (by linarith [hab, hb.le])⟩
     have h₂ := (H.deriv_v (u+b) ⟨by linarith [hu.1, hb], by linarith [hu.2, hab]⟩).comp u ((hasDerivAt_id u).add_const b)
     convert ((h₁.add_const (v b)).sub h₂).sub ((hasDerivAt_id u).mul_const c) using 1
-    · ext z simp [f, psi, Function.comp_def, id_eq]
+    · ext z
+      simp [f, psi, Function.comp_def, id_eq]
     · simp [f, psi, Function.comp_def, id_eq]
   have hm : MonotoneOn f (Icc 0 a) := by
     apply monotoneOn_of_deriv_nonneg (convex_Icc 0 a) hc.continuousOn
-    · intro u hu rw [interior_Icc] at hu exact (hd u hu).differentiableAt.differentiableWithinAt
-    · intro u hu rw [interior_Icc] at hu rw [(hd u hu).deriv] have hr : b/a ≤ b/u := div_le_div_of_nonneg_left hb.le hu.1 hu.2.le have harg : 1 + b/a ≤ 1 + b/u := by linarith
+    · intro u hu
+      rw [interior_Icc] at hu
+      exact (hd u hu).differentiableAt.differentiableWithinAt
+    · intro u hu
+      rw [interior_Icc] at hu
+      rw [(hd u hu).deriv]
+      have hr : b/a ≤ b/u := div_le_div_of_nonneg_left hb.le hu.1 hu.2.le
+      have harg : 1 + b/a ≤ 1 + b/u := by linarith
       have hl := Real.log_le_log (by positivity : 0 < 1+b/a) harg
       have hh := h_diff_lower H hu.1 hb (by linarith [hu.2, hab] : u+b ≤ δ)
       dsimp [c]
@@ -191,7 +199,8 @@ private lemma interaction_lower {v h g : ℝ → ℝ} {δ p q r : ℝ} (H : Cusp
     have h₁ := (H.deriv_v (q+u) ⟨by linarith [hu.1, hq], by linarith [hu.2, hs]⟩).comp u ((hasDerivAt_id u).const_add q)
     have h₂ := (H.deriv_v (q+u+r) ⟨by linarith [hu.1, hq, hr], by linarith [hu.2, hs]⟩).comp u (((hasDerivAt_id u).const_add q).add_const r)
     convert (h₁.sub h₂).sub ((hasDerivAt_id u).mul_const c) using 1
-    · ext z simp [f, Function.comp_def, id_eq]
+    · ext z
+      simp [f, Function.comp_def, id_eq]
     · simp [f, Function.comp_def, id_eq]
   have hm : MonotoneOn f (Icc 0 p) := by
     apply monotoneOn_of_deriv_nonneg (convex_Icc 0 p) (fun u hu => (hd u hu).continuousAt.continuousWithinAt) (fun u hu => (hd u (interior_subset hu)).differentiableAt.differentiableWithinAt)
@@ -221,8 +230,7 @@ private lemma interaction_crude {v h g : ℝ → ℝ} {δ p q r : ℝ} (H : Cusp
   have hm := mul_le_mul_of_nonneg_left hl (show 0 ≤ p/4 by positivity)
   have hh := interaction_lower H hp hq hr hs
   convert hm.trans hh using 1 <;> field_simp <;> ring
-private lemma interaction_long {v h g : ℝ → ℝ} {δ p q r : ℝ} (H : CuspControl v h g δ) (hp : 0 < p) (hq : 0 < q) (hr : 0 < r) (hs : p+q+r ≤ δ) (hmax : p ≤ max p q) (hqr : max p q ≤ r) :
-    p/12 * (1 + Real.log (r / max p q)) ≤ interaction v p q r := by
+private lemma interaction_long {v h g : ℝ → ℝ} {δ p q r : ℝ} (H : CuspControl v h g δ) (hp : 0 < p) (hq : 0 < q) (hr : 0 < r) (hs : p+q+r ≤ δ) (hmax : p ≤ max p q) (hqr : max p q ≤ r) : p/12 * (1 + Real.log (r / max p q)) ≤ interaction v p q r := by
   have hm : 0 < max p q := hp.trans_le (le_max_left _ _)
   have hsum : p+q ≤ 2 * max p q := by
     have h₁ := le_max_left p q
@@ -261,8 +269,7 @@ private lemma weight_pos {v h g : ℝ → ℝ} {δ p q r : ℝ} (H : CuspControl
 private lemma two_term_lower {a b A B Q T : ℝ} (ha : 0 ≤ a) (hb : 0 ≤ b) (hA : a ≤ A) (hB : b ≤ B) (hQ : 0 < Q) (hT : Q ≤ T) : a*b/T ≤ A*B/Q := by
   have hT0 : 0 < T := hQ.trans_le hT
   exact (div_le_div_of_nonneg_left (mul_nonneg ha hb) hQ hT).trans (div_le_div_of_nonneg_right (mul_le_mul hA hB hb (ha.trans hA)) hQ.le)
-private lemma regime_one {v h g : ℝ → ℝ} {δ p q r : ℝ} (H : CuspControl v h g δ) (hp : 0 < p) (hq : 0 < q) (hr : 0 < r) (hs : p+q+r ≤ δ) (hpr : p ≤ r) (hrq : r ≤ q) :
-    v p * v r ≤ 64*q*(L q)^2 * weight v p q r := by
+private lemma regime_one {v h g : ℝ → ℝ} {δ p q r : ℝ} (H : CuspControl v h g δ) (hp : 0 < p) (hq : 0 < q) (hr : 0 < r) (hs : p+q+r ≤ δ) (hpr : p ≤ r) (hrq : r ≤ q) : v p * v r ≤ 64*q*(L q)^2 * weight v p q r := by
   let x := Real.log (q/p)
   let y := Real.log (q/r)
   let l := L q
@@ -284,7 +291,8 @@ private lemma regime_one {v h g : ℝ → ℝ} {δ p q r : ℝ} (H : CuspControl
   have hW : p*r/(64*q)*(1+U/l) ≤ weight v p q r := by
     have he : p*r/(64*q)*(U/l) = (p/8*(1+x))*(r/8*(1+y))/(q*l) := by dsimp [U]; ring
     rw [weight]
-    calc p*r/(64*q)*(1+U/l) = p*r/(64*q) + p*r/(64*q)*(U/l) := by ring
+    calc
+      p*r/(64*q)*(1+U/l) = p*r/(64*q) + p*r/(64*q)*(U/l) := by ring
       _ ≤ interaction v p q r + psi v p q * psi v q r / v q := by
         rw [he]
         exact add_le_add hI' hprod
@@ -307,11 +315,12 @@ private lemma regime_one {v h g : ℝ → ℝ} {δ p q r : ℝ} (H : CuspControl
     field_simp
   rw [he] at hm
   change v p * v r ≤ 64*q*l^2 * weight v p q r
-  calc v p * v r ≤ p*r*(l+x)*(l+y) := hPR _ = p*r*((l+x)*(l+y)) := by ring
+  calc
+    v p * v r ≤ p*r*(l+x)*(l+y) := hPR
+    _ = p*r*((l+x)*(l+y)) := by ring
     _ ≤ p*r*(l^2+l*U) := mul_le_mul_of_nonneg_left hpoly (mul_nonneg hp.le hr.le)
     _ ≤ 64*q*l^2 * weight v p q r := hm
-private lemma regime_two {v h g : ℝ → ℝ} {δ p q r : ℝ} (H : CuspControl v h g δ) (hp : 0 < p) (hq : 0 < q) (hr : 0 < r) (hs : p+q+r ≤ δ) (hqp : q ≤ p) (hpr : p ≤ r) :
-    v p * v r ≤ 64*r*(L r)^2 * weight v p q r := by
+private lemma regime_two {v h g : ℝ → ℝ} {δ p q r : ℝ} (H : CuspControl v h g δ) (hp : 0 < p) (hq : 0 < q) (hr : 0 < r) (hs : p+q+r ≤ δ) (hqp : q ≤ p) (hpr : p ≤ r) : v p * v r ≤ 64*r*(L r)^2 * weight v p q r := by
   let y := Real.log (r/p)
   let l := L r
   have hy : 0 ≤ y := Real.log_nonneg ((one_le_div hp).mpr hpr)
@@ -337,8 +346,7 @@ private lemma regime_two {v h g : ℝ → ℝ} {δ p q r : ℝ} (H : CuspControl
   rw [he] at hm
   have h12 : v p * v r ≤ 12*r*l^2 * weight v p q r := (hPR.trans (mul_le_mul_of_nonneg_left hpoly (by positivity))).trans hm
   exact h12.trans (mul_le_mul_of_nonneg_right (by nlinarith [sq_nonneg l]) (weight_pos H hp hq hr hs).le)
-private lemma regime_three {v h g : ℝ → ℝ} {δ p q r : ℝ} (H : CuspControl v h g δ) (hp : 0 < p) (hq : 0 < q) (hr : 0 < r) (hs : p+q+r ≤ δ) (hpq : p ≤ q) (hqr : q ≤ r) :
-    v p * v r ≤ 64*r*(L r)^2 * weight v p q r := by
+private lemma regime_three {v h g : ℝ → ℝ} {δ p q r : ℝ} (H : CuspControl v h g δ) (hp : 0 < p) (hq : 0 < q) (hr : 0 < r) (hs : p+q+r ≤ δ) (hpq : p ≤ q) (hqr : q ≤ r) : v p * v r ≤ 64*r*(L r)^2 * weight v p q r := by
   let x := Real.log (q/p)
   let y := Real.log (r/q)
   let l := L r
@@ -359,7 +367,8 @@ private lemma regime_three {v h g : ℝ → ℝ} {δ p q r : ℝ} (H : CuspContr
   have hW : p/64*(1+y)*(1+(1+x)/Z) ≤ weight v p q r := by
     have hi' : p/64*(1+y) ≤ interaction v p q r := by exact (by nlinarith : p/64*(1+y) ≤ p/12*(1+y)).trans hi
     have he : p/64*(1+y)*((1+x)/Z) = (p/8*(1+x))*(q/8*(1+y))/(q*Z) := by field_simp; ring
-    calc p/64*(1+y)*(1+(1+x)/Z) = p/64*(1+y) + p/64*(1+y)*((1+x)/Z) := by ring
+    calc
+      p/64*(1+y)*(1+(1+x)/Z) = p/64*(1+y) + p/64*(1+y)*((1+x)/Z) := by ring
       _ ≤ weight v p q r := by
         rw [he, weight]
         exact add_le_add hi' hprod
@@ -394,12 +403,14 @@ private lemma max_scale {m s : ℝ} (hm : 0 < m) (hs : 0 < s) (hms : m ≤ s) (h
     have hh := Real.log_nonneg ((one_le_div hm).mpr hms)
     linarith
   have hsquare : (L m)^2 ≤ ((1+Real.log 3)*L s)^2 := by nlinarith
-  calc m*(L m)^2 ≤ s*(L m)^2 := mul_le_mul_of_nonneg_right hms (sq_nonneg _) _ ≤ s*((1+Real.log 3)*L s)^2 := mul_le_mul_of_nonneg_left hsquare hs.le _ = (1+Real.log 3)^2*s*(L s)^2 := by ring
+  calc
+    m*(L m)^2 ≤ s*(L m)^2 := mul_le_mul_of_nonneg_right hms (sq_nonneg _)
+    _ ≤ s*((1+Real.log 3)*L s)^2 := mul_le_mul_of_nonneg_left hsquare hs.le
+    _ = (1+Real.log 3)^2*s*(L s)^2 := by ring
 
 /-- The uniform endpoint error bound, with no restriction on any ratio of the three gaps.
 This is the analytic lemma (11), not yet the four-point precision criterion. -/
-theorem uniform_outer_deficit_bound {v h g : ℝ → ℝ} {δ : ℝ} (H : CuspControl v h g δ) {p q r : ℝ} (hp : 0 < p) (hq : 0 < q) (hr : 0 < r) (hs : p+q+r ≤ δ) :
-    v p * v r ≤ (64*(1+Real.log 3)^2) * (p+q+r) * (L (p+q+r))^2 * weight v p q r := by
+theorem uniform_outer_deficit_bound {v h g : ℝ → ℝ} {δ : ℝ} (H : CuspControl v h g δ) {p q r : ℝ} (hp : 0 < p) (hq : 0 < q) (hr : 0 < r) (hs : p+q+r ≤ δ) : v p * v r ≤ (64*(1+Real.log 3)^2) * (p+q+r) * (L (p+q+r))^2 * weight v p q r := by
   have hs0 : 0 < p+q+r := by positivity
   have hLs : 1 ≤ L (p+q+r) := L_ge_one hs0 hs H.delta_small
   have ordered (p q r : ℝ) (hp : 0 < p) (hq : 0 < q) (hr : 0 < r) (hs : p+q+r ≤ δ) (hpr : p ≤ r) : v p * v r ≤ (64*(1+Real.log 3)^2)*(p+q+r)*(L (p+q+r))^2*weight v p q r := by
@@ -413,12 +424,15 @@ theorem uniform_outer_deficit_bound {v h g : ℝ → ℝ} {δ : ℝ} (H : CuspCo
       convert hh using 1 <;> ring
     by_cases hrq : r ≤ q
     · exact lift q hq (by linarith) (by linarith) (regime_one H hp hq hr hs hpr hrq)
-    · have hqr : q ≤ r := le_of_not_ge hrq by_cases hqp : q ≤ p
+    · have hqr : q ≤ r := le_of_not_ge hrq
+      by_cases hqp : q ≤ p
       · exact lift r hr (by linarith) (by linarith) (regime_two H hp hq hr hs hqp hpr)
-      · have hpq : p ≤ q := le_of_not_ge hqp exact lift r hr (by linarith) (by linarith) (regime_three H hp hq hr hs hpq hqr)
+      · have hpq : p ≤ q := le_of_not_ge hqp
+        exact lift r hr (by linarith) (by linarith) (regime_three H hp hq hr hs hpq hqr)
   by_cases hpr : p ≤ r
   · exact ordered p q r hp hq hr hs hpr
-  · have h := ordered r q p hr hq hp (by linarith) (le_of_not_ge hpr) simpa only [weight_symm v r q p, show r+q+p = p+q+r by ring, mul_comm (v r) (v p)] using h
+  · have h := ordered r q p hr hq hp (by linarith) (le_of_not_ge hpr)
+    simpa only [weight_symm v r q p, show r+q+p = p+q+r by ring, mul_comm (v r) (v p)] using h
 private lemma shifted_h_integrable {v h g : ℝ → ℝ} {δ a b : ℝ} (H : CuspControl v h g δ) (ha : 0 < a) (hb : 0 < b) (hab : a+b ≤ δ) : IntervalIntegrable (fun u => h (a+u)) volume 0 b := by
   apply ContinuousOn.intervalIntegrable_of_Icc hb.le
   intro u hu
@@ -429,8 +443,7 @@ private lemma shifted_v_integral {v h g : ℝ → ℝ} {δ a b : ℝ} (H : CuspC
       convert! (H.deriv_v (a+u) ⟨by linarith [hu.1, ha], by linarith [hu.2, hab]⟩).comp u ((hasDerivAt_id u).const_add a) using 1 <;> simp [Function.comp_def])
     (shifted_h_integrable H ha hb hab)
   simpa only [add_zero] using hh
-private lemma shifted_g_integral {v h g : ℝ → ℝ} {δ a b : ℝ} (H : CuspControl v h g δ) (ha : 0 < a) (hb : 0 < b) (hab : a+b ≤ δ) : IntervalIntegrable (fun u => g (a+u)) volume 0 b ∧
-      (∫ u in (0 : ℝ)..b, g (a+u)) = h a - h (a+b) := by
+private lemma shifted_g_integral {v h g : ℝ → ℝ} {δ a b : ℝ} (H : CuspControl v h g δ) (ha : 0 < a) (hb : 0 < b) (hab : a+b ≤ δ) : IntervalIntegrable (fun u => g (a+u)) volume 0 b ∧ (∫ u in (0 : ℝ)..b, g (a+u)) = h a - h (a+b) := by
   have hc : ContinuousOn (fun u => g (a+u)) (Icc 0 b) := by
     apply H.continuous_g.comp (by fun_prop)
     intro u hu
@@ -444,8 +457,7 @@ private lemma shifted_g_integral {v h g : ℝ → ℝ} {δ a b : ℝ} (H : CuspC
 
 /-- The exact two iterated integrals, with the singular corner paid by integrability.
 The inner integral at the single point u=0 is immaterial for the outer integral. -/
-theorem deficit_integrals {v h g : ℝ → ℝ} {δ p q r : ℝ} (H : CuspControl v h g δ) (hp : 0 < p) (hq : 0 < q) (hr : 0 < r) (hs : p+q+r ≤ δ) :
-    (IntervalIntegrable (fun u => ∫ w in (0 : ℝ)..q, g (u+w)) volume 0 p ∧ psi v p q = ∫ u in (0 : ℝ)..p, ∫ w in (0 : ℝ)..q, g (u+w)) ∧
+theorem deficit_integrals {v h g : ℝ → ℝ} {δ p q r : ℝ} (H : CuspControl v h g δ) (hp : 0 < p) (hq : 0 < q) (hr : 0 < r) (hs : p+q+r ≤ δ) : (IntervalIntegrable (fun u => ∫ w in (0 : ℝ)..q, g (u+w)) volume 0 p ∧ psi v p q = ∫ u in (0 : ℝ)..p, ∫ w in (0 : ℝ)..q, g (u+w)) ∧
     (IntervalIntegrable (fun u => ∫ w in (0 : ℝ)..r, g (q+u+w)) volume 0 p ∧ interaction v p q r = ∫ u in (0 : ℝ)..p, ∫ w in (0 : ℝ)..r, g (q+u+w)) := by
   have hhi := h_integrable H hp (by linarith : p ≤ δ)
   have hsi := shifted_h_integrable H hq hp (by linarith : q+p ≤ δ)
@@ -465,11 +477,15 @@ theorem deficit_integrals {v h g : ℝ → ℝ} {δ p q r : ℝ} (H : CuspContro
     filter_upwards [ae_restrict_mem measurableSet_Ioc] with u hu
     exact (shifted_g_integral H (by linarith [hu.1] : 0 < q+u) hr (by linarith [hu.2] : q+u+r ≤ δ)).2.symm
   refine ⟨⟨hpsi.congr_ae hinner, ?_⟩, ⟨hmix.congr_ae hinner', ?_⟩⟩
-  · rw [← intervalIntegral.integral_congr_ae_restrict hinner, intervalIntegral.integral_sub hhi (by rw [hshift]; exact hsi), v_integral H hp (by linarith)]
+  · rw [← intervalIntegral.integral_congr_ae_restrict hinner,
+      intervalIntegral.integral_sub hhi (by rw [hshift]; exact hsi),
+      v_integral H hp (by linarith)]
     have he := shifted_v_integral H hq hp (by linarith : q+p ≤ δ)
     rw [hshift, he]
     dsimp [psi]; rw [add_comm q p]; ring
-  · rw [← intervalIntegral.integral_congr_ae_restrict hinner', intervalIntegral.integral_sub hmix1 (by convert hmix2 using 1; funext u; congr 1; ring), shifted_v_integral H hq hp (by linarith)]
+  · rw [← intervalIntegral.integral_congr_ae_restrict hinner',
+      intervalIntegral.integral_sub hmix1 (by convert hmix2 using 1; funext u; congr 1; ring),
+      shifted_v_integral H hq hp (by linarith)]
     have he : (∫ u in (0 : ℝ)..p, h (q+u+r)) = v (q+r+p)-v (q+r) := by
       convert shifted_v_integral H (by positivity : 0 < q+r) hp (by linarith : q+r+p ≤ δ) using 1
       congr 1; funext u; congr 1; ring
@@ -481,8 +497,13 @@ theorem deficit_integrals {v h g : ℝ → ℝ} {δ p q r : ℝ} (H : CuspContro
 /-- Transfer a complex positive quadratic form to the real coefficient subspace. -/
 theorem real_posDef_of_complex {n : ℕ} {A : Matrix (Fin n) (Fin n) ℝ} (hA : Matrix.PosDef (fun i j => (A i j : ℂ))) : A.PosDef := by
   apply Matrix.PosDef.of_dotProduct_mulVec_pos
-  · ext i j have hh := congrArg Complex.re (congrFun (congrFun hA.isHermitian i) j) change (star (A j i : ℂ)).re = A i j at hh simpa using hh
-  · intro c hc let z : Fin n → ℂ := fun i => (c i : ℂ) have hz : z ≠ 0 := by
+  · ext i j
+    have hh := congrArg Complex.re (congrFun (congrFun hA.isHermitian i) j)
+    change (star (A j i : ℂ)).re = A i j at hh
+    simpa using hh
+  · intro c hc
+    let z : Fin n → ℂ := fun i => (c i : ℂ)
+    have hz : z ≠ 0 := by
       intro he
       apply hc
       funext i
@@ -499,8 +520,7 @@ def schurCross (k d a b c e f : ℝ) : ℝ := f - (k*(a*c+b*e)-d*(a*e+b*c))/(k^2
 theorem schurCross_eq_matrix (k d a b c e f : ℝ) : schurCross k d a b c e f = f - ( (!![a,b] : Matrix (Fin 1) (Fin 2) ℝ) * (!![k,d;d,k])⁻¹ * (!![c;e] : Matrix (Fin 2) (Fin 1) ℝ)) 0 0 := by
   simp [schurCross, Matrix.inv_def, Ring.inverse_eq_inv, Matrix.adjugate_fin_two, Matrix.det_fin_two, Matrix.mul_apply, Fin.sum_univ_two]
   ring
-private lemma distance_two_identity (k P Q V alpha beta U : ℝ) (hV : V ≠ 0) (hden : 2*k-V ≠ 0) : schurCross k (k-V) (k-P) (k-(P+V-U)) (k-Q) (k-(V-Q+beta)) (k-(P+Q-alpha)) =
-      alpha - Q/V*U + (k*U/V-P)*beta/(2*k-V) := by
+private lemma distance_two_identity (k P Q V alpha beta U : ℝ) (hV : V ≠ 0) (hden : 2*k-V ≠ 0) : schurCross k (k-V) (k-P) (k-(P+V-U)) (k-Q) (k-(V-Q+beta)) (k-(P+Q-alpha)) = alpha - Q/V*U + (k*U/V-P)*beta/(2*k-V) := by
   have hd : k^2-(k-V)^2 ≠ 0 := by
     rw [show k^2-(k-V)^2 = V*(2*k-V) by ring]
     exact mul_ne_zero hV hden
@@ -511,8 +531,7 @@ private lemma distance_two_identity (k P Q V alpha beta U : ℝ) (hV : V ≠ 0) 
 
 /-- A symmetric four-point covariance, in the order of three positive consecutive gaps. -/
 def gapGram (v : ℝ → ℝ) (k p q r : ℝ) : Matrix (Fin 4) (Fin 4) ℝ := !![k, k-v p, k-v (p+q), k-v (p+q+r); k-v p, k, k-v q, k-v (q+r); k-v (p+q), k-v q, k, k-v r; k-v (p+q+r), k-v (q+r), k-v r, k]
-private lemma four_adjugate_crosses (k a b c d e f : ℝ) (ha : k^2-a^2 ≠ 0) (hb : k^2-b^2 ≠ 0) (hc : k^2-c^2 ≠ 0) (hd : k^2-d^2 ≠ 0) (he : k^2-e^2 ≠ 0) (hf : k^2-f^2 ≠ 0) :
-    let A : Matrix (Fin 4) (Fin 4) ℝ := !![k,a,b,f; a,k,c,d; b,c,k,e; f,d,e,k]
+private lemma four_adjugate_crosses (k a b c d e f : ℝ) (ha : k^2-a^2 ≠ 0) (hb : k^2-b^2 ≠ 0) (hc : k^2-c^2 ≠ 0) (hd : k^2-d^2 ≠ 0) (he : k^2-e^2 ≠ 0) (hf : k^2-f^2 ≠ 0) : let A : Matrix (Fin 4) (Fin 4) ℝ := !![k,a,b,f; a,k,c,d; b,c,k,e; f,d,e,k]
     A.adjugate 0 1 = -(k^2-e^2)*schurCross k e b f c d a ∧
     A.adjugate 0 2 = -(k^2-d^2)*schurCross k d a f c e b ∧
     A.adjugate 0 3 = -(k^2-c^2)*schurCross k c a b d e f ∧
@@ -527,8 +546,7 @@ private lemma four_adjugate_crosses (k a b c d e f : ℝ) (ha : k^2-a^2 ≠ 0) (
   all_goals field_simp
   all_goals ring
 set_option maxHeartbeats 2000000 in
-private lemma four_inverse_neg (k a b c d e f : ℝ) (hA : Matrix.PosDef (!![k,a,b,f; a,k,c,d; b,c,k,e; f,d,e,k] : Matrix (Fin 4) (Fin 4) ℝ)) (ha : 0 < k^2-a^2) (hb : 0 < k^2-b^2) (hc : 0 < k^2-c^2)
-    (hd : 0 < k^2-d^2) (he : 0 < k^2-e^2) (hf : 0 < k^2-f^2)
+private lemma four_inverse_neg (k a b c d e f : ℝ) (hA : Matrix.PosDef (!![k,a,b,f; a,k,c,d; b,c,k,e; f,d,e,k] : Matrix (Fin 4) (Fin 4) ℝ)) (ha : 0 < k^2-a^2) (hb : 0 < k^2-b^2) (hc : 0 < k^2-c^2) (hd : 0 < k^2-d^2) (he : 0 < k^2-e^2) (hf : 0 < k^2-f^2)
     (h01 : 0 < schurCross k e b f c d a)
     (h02 : 0 < schurCross k d a f c e b)
     (h03 : 0 < schurCross k c a b d e f)
@@ -557,9 +575,9 @@ private lemma four_inverse_neg (k a b c d e f : ℝ) (hA : Matrix.PosDef (!![k,a
   intro i j hij
   rcases lt_or_gt_of_ne hij with hlt | hgt
   · exact hu i j hlt
-  · rw [show ( (!![k,a,b,f; a,k,c,d; b,c,k,e; f,d,e,k] : Matrix (Fin 4) (Fin 4) ℝ)⁻¹) i j = A⁻¹ j i from hsym i j] exact hu j i hgt
-private lemma gapGram_nodes {v : ℝ → ℝ} {k p q r : ℝ} (hv : v 0 = 0) (hp : 0 < p) (hq : 0 < q) (hr : 0 < r) : gapGram v k p q r =
-      (fun i j => k-v |(![0,p,p+q,p+q+r] : Fin 4 → ℝ) i - (![0,p,p+q,p+q+r] : Fin 4 → ℝ) j|) := by
+  · rw [show ( (!![k,a,b,f; a,k,c,d; b,c,k,e; f,d,e,k] : Matrix (Fin 4) (Fin 4) ℝ)⁻¹) i j = A⁻¹ j i from hsym i j]
+    exact hu j i hgt
+private lemma gapGram_nodes {v : ℝ → ℝ} {k p q r : ℝ} (hv : v 0 = 0) (hp : 0 < p) (hq : 0 < q) (hr : 0 < r) : gapGram v k p q r = (fun i j => k-v |(![0,p,p+q,p+q+r] : Fin 4 → ℝ) i - (![0,p,p+q,p+q+r] : Fin 4 → ℝ) j|) := by
   ext i j
   fin_cases i <;> fin_cases j <;> simp [gapGram, hv]
   all_goals congr 1
@@ -576,8 +594,7 @@ private lemma sorted_gapGram {v : ℝ → ℝ} {k : ℝ} {x : Fin 4 → ℝ} (hv
   all_goals congr 1
   all_goals first | rw [abs_of_nonneg (by linarith)] | rw [abs_of_nonpos (by linarith)]
   all_goals ring
-private lemma endpoint_identity (k P Q R alpha beta I : ℝ) (hQ : Q ≠ 0) (hden : 2*k-Q ≠ 0) : (2*k-Q)*schurCross k (k-Q) (k-P) (k-(P+Q-alpha)) (k-(Q+R-beta)) (k-R) (k-(P+Q+R-alpha-beta-I)) =
-      (2*k-Q)*I + k*alpha*beta/Q - (P*R+(P-alpha)*(R-beta)) := by
+private lemma endpoint_identity (k P Q R alpha beta I : ℝ) (hQ : Q ≠ 0) (hden : 2*k-Q ≠ 0) : (2*k-Q)*schurCross k (k-Q) (k-P) (k-(P+Q-alpha)) (k-(Q+R-beta)) (k-R) (k-(P+Q+R-alpha-beta-I)) = (2*k-Q)*I + k*alpha*beta/Q - (P*R+(P-alpha)*(R-beta)) := by
   have hd : k^2-(k-Q)^2 ≠ 0 := by
     rw [show k^2-(k-Q)^2 = Q*(2*k-Q) by ring]
     exact mul_ne_zero hQ hden
@@ -599,8 +616,7 @@ private lemma scale_limit : Tendsto (fun t : ℝ => t*(L t)^2) (𝓝[>] 0) (𝓝
 
 /-- The uniform endpoint Schur sign follows from the cusp estimates in every gap regime.
 This supplies the endpoint sign consumed by the six-sign criterion below. -/
-theorem exists_uniform_endpoint_cross_pos {v h g : ℝ → ℝ} {δ₀ k : ℝ} (H : CuspControl v h g δ₀) (hk : 0 < k) : ∃ δ : ℝ, 0 < δ ∧ δ ≤ δ₀ ∧ ∀ p q r : ℝ, 0 < p → 0 < q → 0 < r → p+q+r ≤ δ →
-        0 < schurCross k (k-v q) (k-v p) (k-v (p+q)) (k-v (q+r)) (k-v r) (k-v (p+q+r)) := by
+theorem exists_uniform_endpoint_cross_pos {v h g : ℝ → ℝ} {δ₀ k : ℝ} (H : CuspControl v h g δ₀) (hk : 0 < k) : ∃ δ : ℝ, 0 < δ ∧ δ ≤ δ₀ ∧ ∀ p q r : ℝ, 0 < p → 0 < q → 0 < r → p+q+r ≤ δ → 0 < schurCross k (k-v q) (k-v p) (k-v (p+q)) (k-v (q+r)) (k-v r) (k-v (p+q+r)) := by
   let B := 64*(1+Real.log 3)^2
   have hsmall : ∀ᶠ t : ℝ in 𝓝[>] 0, 2*B*t*(L t)^2 < k := by
     have hlim : Tendsto (fun t : ℝ => (2*B)*(t*(L t)^2)) (𝓝[>] 0) (𝓝 0) := by simpa using scale_limit.const_mul (2*B)
@@ -656,14 +672,13 @@ theorem exists_uniform_endpoint_cross_pos {v h g : ℝ → ℝ} {δ₀ k : ℝ} 
     dsimp [psi] at hgood
     nlinarith
   exact (mul_pos_iff_of_pos_left hden).mp hpositive
-private lemma h_ratio_strictMono {v h g : ℝ → ℝ} {δ p : ℝ} (H : CuspControl v h g δ) (hlog : StrictConvexOn ℝ (Ioo 0 δ) (fun u => Real.log (h u))) (hp : 0 < p) :
-    StrictMonoOn (fun u => h (p+u)/h u) (Ioc 0 (δ-p)) := by
+private lemma h_ratio_strictMono {v h g : ℝ → ℝ} {δ p : ℝ} (H : CuspControl v h g δ) (hlog : StrictConvexOn ℝ (Ioo 0 δ) (fun u => Real.log (h u))) (hp : 0 < p) : StrictMonoOn (fun u => h (p+u)/h u) (Ioc 0 (δ-p)) := by
   have hdlog (u : ℝ) (hu : u ∈ Ioo 0 δ) : HasDerivAt (fun t => Real.log (h t)) (-g u/h u) u := (H.deriv_h u ⟨hu.1, hu.2.le⟩).log (H.h_pos u ⟨hu.1, hu.2.le⟩).ne'
   have hmono := hlog.strictMonoOn_deriv (fun u hu => (hdlog u hu).differentiableAt)
   have hd (u : ℝ) (hu : u ∈ Ioc 0 (δ-p)) : HasDerivAt (fun u => h (p+u)/h u) ((-g (p+u)*h u-h (p+u)*(-g u))/(h u)^2) u := by
-    convert ((H.deriv_h (p+u) ⟨by linarith [hu.1], by linarith [hu.2]⟩).comp u ((hasDerivAt_id u).const_add p)).div (H.deriv_h u ⟨hu.1, by linarith [hu.2]⟩)
-      (H.h_pos u ⟨hu.1, by linarith [hu.2]⟩).ne' using 1
-    · ext t simp [Function.comp_def]
+    convert ((H.deriv_h (p+u) ⟨by linarith [hu.1], by linarith [hu.2]⟩).comp u ((hasDerivAt_id u).const_add p)).div (H.deriv_h u ⟨hu.1, by linarith [hu.2]⟩) (H.h_pos u ⟨hu.1, by linarith [hu.2]⟩).ne' using 1
+    · ext t
+      simp [Function.comp_def]
     · simp
   apply strictMonoOn_of_deriv_pos (convex_Ioc 0 (δ-p)) (fun u hu => (hd u hu).continuousAt.continuousWithinAt)
   intro u hu
@@ -676,9 +691,7 @@ private lemma h_ratio_strictMono {v h g : ℝ → ℝ} {δ p : ℝ} (H : CuspCon
   have hh' := (div_lt_div_iff₀ (H.h_pos u ⟨huδ.1, huδ.2.le⟩) (H.h_pos (p+u) ⟨hpuδ.1, hpuδ.2.le⟩)).mp hh
   apply div_pos _ (sq_pos_of_pos (H.h_pos u ⟨huδ.1, huδ.2.le⟩))
   nlinarith
-private lemma weighted_ratio_integral_pos {v h g : ℝ → ℝ} {δ p t : ℝ} (H : CuspControl v h g δ) (hlog : StrictConvexOn ℝ (Ioo 0 δ) (fun u => Real.log (h u)))
-    (hp : 0 < p) (ht : 0 < t) (hpt : p+t ≤ δ) :
-    0 < h (p+t)*v t-h t*(v (p+t)-v p) := by
+private lemma weighted_ratio_integral_pos {v h g : ℝ → ℝ} {δ p t : ℝ} (H : CuspControl v h g δ) (hlog : StrictConvexOn ℝ (Ioo 0 δ) (fun u => Real.log (h u))) (hp : 0 < p) (ht : 0 < t) (hpt : p+t ≤ δ) : 0 < h (p+t)*v t-h t*(v (p+t)-v p) := by
   let f : ℝ → ℝ := fun u => h (p+t)*h u - h t*h (p+u)
   have hi : IntervalIntegrable f volume 0 t := ((h_integrable H ht (by linarith)).const_mul (h (p+t))).sub ((shifted_h_integrable H hp ht hpt).const_mul (h t))
   have hm := h_ratio_strictMono H hlog hp
@@ -701,15 +714,13 @@ private lemma weighted_ratio_integral_pos {v h g : ℝ → ℝ} {δ p t : ℝ} (
     rw [Real.volume_Ioo]
     exact ENNReal.ofReal_pos.mpr (by simpa using ht)
   have hh := (intervalIntegral.integral_pos_iff_support_of_nonneg_ae' hae hi).mpr ⟨ht, hmeasure⟩
-  rw [intervalIntegral.integral_sub ((h_integrable H ht (by linarith)).const_mul (h (p+t))) ((shifted_h_integrable H hp ht hpt).const_mul (h t)),
-    intervalIntegral.integral_const_mul, intervalIntegral.integral_const_mul,
+  rw [intervalIntegral.integral_sub ((h_integrable H ht (by linarith)).const_mul (h (p+t))) ((shifted_h_integrable H hp ht hpt).const_mul (h t)), intervalIntegral.integral_const_mul, intervalIntegral.integral_const_mul,
     v_integral H ht (by linarith), shifted_v_integral H hp ht hpt] at hh
   exact hh
 
 /-- Strict log convexity of h implies the weighted deficit ratio is strictly decreasing.
 Its denominator and improper integral are proved positive and integrable. -/
-theorem strictAntiOn_deficit_ratio {v h g : ℝ → ℝ} {δ p : ℝ} (H : CuspControl v h g δ) (hlog : StrictConvexOn ℝ (Ioo 0 δ) (fun u => Real.log (h u))) (hp : 0 < p) :
-    StrictAntiOn (fun t => psi v p t/v t) (Ioc 0 (δ-p)) := by
+theorem strictAntiOn_deficit_ratio {v h g : ℝ → ℝ} {δ p : ℝ} (H : CuspControl v h g δ) (hlog : StrictConvexOn ℝ (Ioo 0 δ) (fun u => Real.log (h u))) (hp : 0 < p) : StrictAntiOn (fun t => psi v p t/v t) (Ioc 0 (δ-p)) := by
   have hd (t : ℝ) (ht : t ∈ Ioc 0 (δ-p)) : HasDerivAt (fun t => psi v p t/v t) (((h t-h (p+t))*v t-psi v p t*h t)/(v t)^2) t := by
     have h₁ := H.deriv_v t ⟨ht.1, by linarith [ht.2]⟩
     have h₂ := (H.deriv_v (p+t) ⟨by linarith [ht.1], by linarith [ht.2]⟩).comp t ((hasDerivAt_id t).const_add p)
@@ -724,9 +735,7 @@ theorem strictAntiOn_deficit_ratio {v h g : ℝ → ℝ} {δ p : ℝ} (H : CuspC
   apply div_neg_of_neg_of_pos _ (sq_pos_of_pos (v_pos H ht.1 (by linarith [ht.2])))
   dsimp [psi]
   nlinarith
-private lemma three_point {v h g : ℝ → ℝ} {δ k a b : ℝ} (H : CuspControl v h g δ) (hk : 0 < k) (hpositive : ∀ t ∈ Icc 0 δ, 0 < k-v t) (hlog : StrictConvexOn ℝ (Icc 0 δ) (fun t => Real.log (k-v t)))
-    (ha : 0 < a) (hb : 0 < b) (hab : a+b ≤ δ) :
-    v a * v b < k*psi v a b := by
+private lemma three_point {v h g : ℝ → ℝ} {δ k a b : ℝ} (H : CuspControl v h g δ) (hk : 0 < k) (hpositive : ∀ t ∈ Icc 0 δ, 0 < k-v t) (hlog : StrictConvexOn ℝ (Icc 0 δ) (fun t => Real.log (k-v t))) (ha : 0 < a) (hb : 0 < b) (hab : a+b ≤ δ) : v a * v b < k*psi v a b := by
   let s := a+b
   have hs : 0 < s := by dsimp [s]; positivity
   have ha0 : 0 < a/s := div_pos ha hs
@@ -742,16 +751,15 @@ private lemma three_point {v h g : ℝ → ℝ} {δ k a b : ℝ} (H : CuspContro
   simp only [smul_eq_mul, he₁, he₂, H.zero, sub_zero] at h₁ h₂
   have hh : Real.log (k-v a)+Real.log (k-v b) < Real.log k+Real.log (k-v s) := by
     have he : b/s*Real.log k+a/s*Real.log (k-v s) + (a/s*Real.log k+b/s*Real.log (k-v s)) = Real.log k+Real.log (k-v s) := by
-      calc _ = (b/s+a/s)*Real.log k+(b/s+a/s)*Real.log (k-v s) := by ring
+      calc
+        _ = (b/s+a/s)*Real.log k+(b/s+a/s)*Real.log (k-v s) := by ring
         _ = _ := by rw [hsum]; ring
     linarith
   rw [← Real.log_mul (hpositive a ⟨ha.le, by linarith⟩).ne' (hpositive b ⟨hb.le, by linarith⟩).ne', ← Real.log_mul hk.ne' (hpositive s hₛ).ne'] at hh
   have hh' := (Real.log_lt_log_iff (mul_pos (hpositive a ⟨ha.le, by linarith⟩) (hpositive b ⟨hb.le, by linarith⟩)) (mul_pos hk (hpositive s hₛ))).mp hh
   dsimp [s, psi] at hh' ⊢
   nlinarith
-private lemma distance_two_cross_pos {v h g : ℝ → ℝ} {δ k p q r : ℝ} (H : CuspControl v h g δ) (hk : 0 < k) (hpositive : ∀ t ∈ Icc 0 δ, 0 < k-v t)
-    (hlogK : StrictConvexOn ℝ (Icc 0 δ) (fun t => Real.log (k-v t)))
-    (hlogh : StrictConvexOn ℝ (Ioo 0 δ) (fun t => Real.log (h t)))
+private lemma distance_two_cross_pos {v h g : ℝ → ℝ} {δ k p q r : ℝ} (H : CuspControl v h g δ) (hk : 0 < k) (hpositive : ∀ t ∈ Icc 0 δ, 0 < k-v t) (hlogK : StrictConvexOn ℝ (Icc 0 δ) (fun t => Real.log (k-v t))) (hlogh : StrictConvexOn ℝ (Ioo 0 δ) (fun t => Real.log (h t)))
     (hp : 0 < p) (hq : 0 < q) (hr : 0 < r) (hs : p+q+r ≤ δ) :
     0 < schurCross k (k-v (q+r)) (k-v p) (k-v (p+q+r)) (k-v q) (k-v r) (k-v (p+q)) := by
   have hQ := v_pos H hq (by linarith)
@@ -801,8 +809,7 @@ private lemma G_pos {v h g : ℝ → ℝ} {δ k x y : ℝ} (H : CuspControl v h 
     nlinarith [mul_pos hxv hky]
   dsimp [G]
   linarith
-private lemma G_first {v h g : ℝ → ℝ} {δ k x y z : ℝ} (H : CuspControl v h g δ) (hk : 0 < k) (hpositive : ∀ t ∈ Icc 0 δ, 0 < k-v t) (hx : 0 < x) (hxy : x < y) (hyz : y ≤ z) (hzδ : z ≤ δ) :
-    G v k x z < G v k y z := by
+private lemma G_first {v h g : ℝ → ℝ} {δ k x y z : ℝ} (H : CuspControl v h g δ) (hk : 0 < k) (hpositive : ∀ t ∈ Icc 0 δ, 0 < k-v t) (hx : 0 < x) (hxy : x < y) (hyz : y ≤ z) (hzδ : z ≤ δ) : G v k x z < G v k y z := by
   have hvcont := H.continuous
   have hc : Continuous (fun u => G v k u z) := by dsimp [G]; fun_prop
   have hd (u : ℝ) (hu : u ∈ Ioo x z) : HasDerivAt (fun u => G v k u z) (h (z-u)+h u*(k-v z)/k) u := by
@@ -810,7 +817,8 @@ private lemma G_first {v h g : ℝ → ℝ} {δ k x y z : ℝ} (H : CuspControl 
     have h₂ := H.deriv_v u ⟨by linarith [hu.1], by linarith [hu.2]⟩
     convert ((hasDerivAt_const u k).sub h₁).sub ((((hasDerivAt_const u k).sub h₂).mul_const (k-v z)).div_const k) using 1
     · rfl
-    · simp [Function.comp_def] ring
+    · simp [Function.comp_def]
+      ring
   have hm : StrictMonoOn (fun u => G v k u z) (Icc x z) := by
     apply strictMonoOn_of_deriv_pos (convex_Icc x z) hc.continuousOn
     intro u hu
@@ -821,8 +829,7 @@ private lemma G_first {v h g : ℝ → ℝ} {δ k x y z : ℝ} (H : CuspControl 
     have h₃ := hpositive z ⟨by linarith, hzδ⟩
     positivity
   exact hm ⟨le_rfl, hxy.le.trans hyz⟩ ⟨hxy.le, hyz⟩ hxy
-private lemma G_second {v h g : ℝ → ℝ} {δ k x y z : ℝ} (H : CuspControl v h g δ) (hk : 0 < k) (hpositive : ∀ t ∈ Icc 0 δ, 0 < k-v t) (hx : 0 < x) (hxy : x ≤ y) (hyz : y < z) (hzδ : z ≤ δ) :
-    G v k x z < G v k x y := by
+private lemma G_second {v h g : ℝ → ℝ} {δ k x y z : ℝ} (H : CuspControl v h g δ) (hk : 0 < k) (hpositive : ∀ t ∈ Icc 0 δ, 0 < k-v t) (hx : 0 < x) (hxy : x ≤ y) (hyz : y < z) (hzδ : z ≤ δ) : G v k x z < G v k x y := by
   have hvcont := H.continuous
   have hc : Continuous (fun u => G v k x u) := by dsimp [G]; fun_prop
   have hd (u : ℝ) (hu : u ∈ Ioo x z) : HasDerivAt (fun u => G v k x u) (-h (u-x)+(k-v x)*h u/k) u := by
@@ -830,7 +837,8 @@ private lemma G_second {v h g : ℝ → ℝ} {δ k x y z : ℝ} (H : CuspControl
     have h₂ := H.deriv_v u ⟨by linarith [hu.1], by linarith [hu.2]⟩
     convert ((hasDerivAt_const u k).sub h₁).sub ((((hasDerivAt_const u k).sub h₂).const_mul (k-v x)).div_const k) using 1
     · rfl
-    · simp [Function.comp_def] ring
+    · simp [Function.comp_def]
+      ring
   have hm : StrictAntiOn (fun u => G v k x u) (Icc x z) := by
     apply strictAntiOn_of_deriv_neg (convex_Icc x z) hc.continuousOn
     intro u hu
@@ -858,9 +866,8 @@ private lemma G_diag_det {v h g : ℝ → ℝ} {δ k x : ℝ} (H : CuspControl v
   have hkx := hpositive x ⟨hx.le, hxδ⟩
   have hh := mul_pos hv (show 0 < k+(k-v x) by linarith)
   nlinarith
-private lemma adjacent_right_cross_pos {v h g : ℝ → ℝ} {δ k p q r : ℝ} (H : CuspControl v h g δ) (hk : 0 < k) (hpositive : ∀ t ∈ Icc 0 δ, 0 < k-v t)
-    (hp : 0 < p) (hq : 0 < q) (hr : 0 < r) (hs : p+q+r ≤ δ) :
-    0 < schurCross k (k-v p) (k-v (p+q)) (k-v q) (k-v (p+q+r)) (k-v (q+r)) (k-v r) := by
+private lemma adjacent_right_cross_pos {v h g : ℝ → ℝ} {δ k p q r : ℝ} (H : CuspControl v h g δ) (hk : 0 < k) (hpositive : ∀ t ∈ Icc 0 δ, 0 < k-v t) (hp : 0 < p) (hq : 0 < q) (hr : 0 < r) (hs : p+q+r ≤ δ) : 0 < schurCross k (k-v p) (k-v (p+q)) (k-v q)
+      (k-v (p+q+r)) (k-v (q+r)) (k-v r) := by
   have hxx := G_pos H hk hpositive hp le_rfl (by linarith : p ≤ δ)
   have hxz := G_pos H hk hpositive hp (by linarith : p ≤ p+q+r) hs
   have hyz := G_pos H hk hpositive (by positivity : 0 < p+q) (by linarith : p+q ≤ p+q+r) hs
@@ -878,9 +885,8 @@ private lemma adjacent_right_cross_pos {v h g : ℝ → ℝ} {δ k p q r : ℝ} 
   rw [hid]
   convert hcross using 1 <;> dsimp [G] <;> simp only [sub_self, H.zero, sub_zero, show p+q-p = q by ring, show p+q+r-p = q+r by ring, show p+q+r-(p+q) = r by ring]
   <;> ring
-private lemma adjacent_middle_cross_pos {v h g : ℝ → ℝ} {δ k p q r : ℝ} (H : CuspControl v h g δ) (hk : 0 < k) (hpositive : ∀ t ∈ Icc 0 δ, 0 < k-v t)
-    (hp : 0 < p) (hq : 0 < q) (hr : 0 < r) (hs : p+q+r ≤ δ) :
-    0 < schurCross k (k-v (p+q+r)) (k-v p) (k-v (q+r)) (k-v (p+q)) (k-v r) (k-v q) := by
+private lemma adjacent_middle_cross_pos {v h g : ℝ → ℝ} {δ k p q r : ℝ} (H : CuspControl v h g δ) (hk : 0 < k) (hpositive : ∀ t ∈ Icc 0 δ, 0 < k-v t) (hp : 0 < p) (hq : 0 < q) (hr : 0 < r) (hs : p+q+r ≤ δ) : 0 < schurCross k (k-v (p+q+r)) (k-v p) (k-v (q+r))
+      (k-v (p+q)) (k-v r) (k-v q) := by
   have hzz := G_pos H hk hpositive (by positivity : 0 < p+q+r) le_rfl hs
   have hxz := G_pos H hk hpositive hp (by linarith : p ≤ p+q+r) hs
   have hyz := G_pos H hk hpositive (by positivity : 0 < p+q) (by linarith : p+q ≤ p+q+r) hs
@@ -908,8 +914,11 @@ private lemma sorted_permutation (x : Fin 4 → ℝ) (hx : Function.Injective x)
   let f : Fin 4 → s := fun i => ⟨x i, Finset.mem_image.mpr ⟨i, Finset.mem_univ _, rfl⟩⟩
   have hf : Function.Bijective f := by
     constructor
-    · intro i j hij exact hx (congrArg Subtype.val hij)
-    · intro y obtain ⟨i, _, hi⟩ := Finset.mem_image.mp y.property exact ⟨i, Subtype.ext hi⟩
+    · intro i j hij
+      exact hx (congrArg Subtype.val hij)
+    · intro y
+      obtain ⟨i, _, hi⟩ := Finset.mem_image.mp y.property
+      exact ⟨i, Subtype.ext hi⟩
   let ex : Fin 4 ≃ s := Equiv.ofBijective f hf
   let e : Equiv.Perm (Fin 4) := (s.orderIsoOfFin hs).toEquiv.trans ex.symm
   refine ⟨e, ?_⟩
@@ -922,9 +931,7 @@ set_option maxHeartbeats 2000000 in
 /-- One window for all six real precision signs and all four distinct real nodes.
 The hypotheses are scalar local differential controls, both logarithmic convexities,
 and an ordinary real positive-definite Gram window. No gap ratio is constrained. -/
-theorem exists_uniform_four_point_precision {v h g : ℝ → ℝ} {δ₀ k : ℝ} (H : CuspControl v h g δ₀) (hk : 0 < k) (hpositive : ∀ t ∈ Icc 0 δ₀, 0 < k-v t)
-    (hlogK : StrictConvexOn ℝ (Icc 0 δ₀) (fun t => Real.log (k-v t)))
-    (hlogh : StrictConvexOn ℝ (Ioo 0 δ₀) (fun t => Real.log (h t)))
+theorem exists_uniform_four_point_precision {v h g : ℝ → ℝ} {δ₀ k : ℝ} (H : CuspControl v h g δ₀) (hk : 0 < k) (hpositive : ∀ t ∈ Icc 0 δ₀, 0 < k-v t) (hlogK : StrictConvexOn ℝ (Icc 0 δ₀) (fun t => Real.log (k-v t))) (hlogh : StrictConvexOn ℝ (Ioo 0 δ₀) (fun t => Real.log (h t)))
     (hspd : ∀ x : Fin 4 → ℝ, Function.Injective x → (∀ i j, |x i-x j| ≤ δ₀) → Matrix.PosDef (fun i j => k-v |x i-x j|)) :
     ∃ δ : ℝ, 0 < δ ∧ δ ≤ δ₀ ∧ ∀ x : Fin 4 → ℝ, Function.Injective x → (∀ i j, |x i-x j| ≤ δ) → ∀ i j : Fin 4, i ≠ j → ((fun i j => k-v |x i-x j|)⁻¹ : Matrix (Fin 4) (Fin 4) ℝ) i j < 0 := by
   obtain ⟨δ, hδ, hδ₀, hend⟩ := exists_uniform_endpoint_cross_pos H hk
@@ -962,9 +969,7 @@ theorem exists_uniform_four_point_precision {v h g : ℝ → ℝ} {δ₀ k : ℝ
       rw [he]
       exact h13'
     have h23 := adjacent_right_cross_pos H hk hpositive hp hq hr hs₀
-    exact four_inverse_neg k (k-v p) (k-v (p+q)) (k-v q) (k-v (q+r)) (k-v r) (k-v (p+q+r)) hA (G_diag_det H hk hpositive hp (by linarith))
-      (G_diag_det H hk hpositive (by positivity : 0 < p+q) (by linarith))
-      (G_diag_det H hk hpositive hq (by linarith))
+    exact four_inverse_neg k (k-v p) (k-v (p+q)) (k-v q) (k-v (q+r)) (k-v r) (k-v (p+q+r)) hA (G_diag_det H hk hpositive hp (by linarith)) (G_diag_det H hk hpositive (by positivity : 0 < p+q) (by linarith)) (G_diag_det H hk hpositive hq (by linarith))
       (G_diag_det H hk hpositive (by positivity : 0 < q+r) (by linarith))
       (G_diag_det H hk hpositive hr (by linarith))
       (G_diag_det H hk hpositive (by positivity : 0 < p+q+r) hs₀)
@@ -990,5 +995,4 @@ theorem exists_uniform_four_point_precision {v h g : ℝ → ℝ} {δ₀ k : ℝ
     exact Matrix.inv_submatrix_equiv M e e
   rw [hperm] at hsign
   simpa [Matrix.submatrix_apply] using hsign
-
 end D5.S3.Analytic.Fourier.PositiveDefinite.UniformFourPointPrecision
