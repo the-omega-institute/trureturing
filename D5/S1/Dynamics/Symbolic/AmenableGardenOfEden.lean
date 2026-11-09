@@ -588,7 +588,7 @@ private theorem preinjective_of_surjective [Finite A] [Nonempty A]
   obtain ⟨c, _⟩ := Function.ne_iff.mp hpq
   have hb : 0 < C.card := Finset.card_pos.mpr ⟨c, c.property⟩
   choose T _hsub _hdis hdense hinside hcount using fun i => hpack (F i)
-  apply packing_limit_contradiction ha hb (fun i => (F i).card)
+  apply packing_limit_contradiction (l := l) ha hb (fun i => (F i).card)
     (fun i => (F i * insert 1 (S ∪ C)).card)
     (fun i => Nat.card (ImagePatterns S φ (F i))) (fun i => (T i).card)
   · filter_upwards [hpos] with i hi
@@ -621,7 +621,7 @@ private theorem surjective_of_preinjective [Finite A] [Nonempty A]
   have hpack (i : ι) := missing_image_bound S φ C hC p hmissing
     (B i * E0) (B i) (B i * E) (hsub i) (hin i)
   choose T hdense hcount hinside using hpack
-  apply packing_limit_contradiction ha hC.card_pos (fun i => (B i).card)
+  apply packing_limit_contradiction (l := l) ha hC.card_pos (fun i => (B i).card)
     (fun i => (B i * E).card)
     (fun i => Nat.card (ImagePatterns S φ (B i * E0))) (fun i => (T i).card)
   · filter_upwards [hpos] with i hi
@@ -642,7 +642,11 @@ theorem garden_of_eden [Finite A]
     exact ⟨fun _ _ _ _ _ => Subsingleton.elim _ _,
       fun _ y => ⟨y, Subsingleton.elim _ _⟩⟩
   letI : Nontrivial A := not_subsingleton_iff_nontrivial.mp hA
-  have ha : 2 ≤ Nat.card A := Nat.one_lt_card
+  have ha : 2 ≤ Nat.card A := by
+    letI : Fintype A := Fintype.ofFinite A
+    have hh := Fintype.one_lt_card_iff_nontrivial.mpr (inferInstance : Nontrivial A)
+    rw [Nat.card_eq_fintype_card]
+    omega
   letI : MeasurableSpace G := ⊤
   letI : NeBot (maxFoelner Gᵐᵒᵖ (Measure.count : Measure G)) := ham
   obtain ⟨hpos, hboundary⟩ := maximal_shapes (G := G)

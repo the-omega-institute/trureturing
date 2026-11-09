@@ -82,6 +82,14 @@ internal sealed class LatticeGardenOfEdenDocument : IScribeDocumentDefinition
             AssessedProvenance.FromLiterature(Source), Blocks(
                 Paragraph(Text("One complete configuration x must realize the entire pattern p simultaneously. The count imagePatternCount(F,S,φ) "
                     + "is Nat.card of this actual image-pattern type. It does not count independent local witnesses or arbitrary compatible patches."))), DescribeRole.Definition),
+        Describe.Lean(DescribeId.Create("logarithmic-packing-bound"), DeclarationHandle.Create(Owner + "logarithmic_packing_bound"),
+            H("A packing count gives a uniform logarithmic deficit"), StatementSource.FromLean(),
+            AssessedProvenance.FromLiterature(Source), Blocks(
+                Paragraph(Text("For natural a,b,k,u,v,f with a≥2, b,v,f positive, v≤k*b², k*b≤u and "
+                    + "f≤(a^b−1)^k*a^(u−k*b), put δ=(b*log(a)−log(a^b−1))/b². "
+                    + "Then δ>0 and log(f)/v≤(u/v)*log(a)−δ. "
+                    + "This scalar estimate has no group hypothesis and applies to both lattice boxes and arbitrary-group finite-pattern counts."))),
+            DescribeRole.Theorem),
         Describe.Lean(DescribeId.Create("strict-box-loss"), DeclarationHandle.Create(Owner + "strict_image_box_loss"),
             H("A finite collision forces strict logarithmic image loss"), StatementSource.FromAuthor(St(
                 Alphabet, Finite, All("d", Nat), Seq(D(1), Sp, Le, Sp, Id("d"), Sp, Rightarrow),
