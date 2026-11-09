@@ -1,0 +1,231 @@
+/- GID: D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233123SquareStrip
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/TraceAvoidingArrays/HardinA233123SquareStrip
+   mirror-E: none(waiver:external-open-problem-resolution)
+   anchors: []
+   utility: kind=numeric-reduction; basis=consumer=D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233123SquareStrip.result; premises=D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233123SquareStrip.finite_certificate
+   digest: Barker's generating function for literal normalized two-column square strips. -/
+
+/-
+admission_basis: open-problem-resolution (#28348; Proved)
+escape_witness: none
+-/
+
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip
+import D5.S3.Observer.Separation.BooleanRankThreeK4
+import Mathlib.Tactic.IntervalCases
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.Ring
+import Mathlib.RingTheory.PowerSeries.Basic
+
+/-! Literal array counting and a two-class continuation transfer. -/
+
+open scoped BigOperators
+namespace D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233123SquareStrip
+
+open HardinA233175PairStrip (Seen Col good finish pairs)
+open HardinA233251TriangleStrip
+  (widthNormal widthStep widthV widthTotal width_counting_bridge colour_bond_iff)
+open D5.S3.Observer.Separation.BooleanRankThreeK4 (beta)
+
+private abbrev normal2 := @widthNormal 2
+
+def rowLegal (c : Col) : Prop :=
+  c 0 ≠ c 1 ∧ (c 0).val + (c 1).val ≠ 5
+
+def bonds (c d : Col) : Prop :=
+  ∀ j : Fin 2, c j ≠ d j ∧ (c j).val + (d j).val ≠ 5
+
+def Legal {n : ℕ} (A : Fin n × Fin 2 → Fin 6) : Prop :=
+  (∃ i : Fin n, i.val = 0 ∧ A (i, 0) = 0) ∧
+    (∀ i, rowLegal (fun j => A (i, j))) ∧
+    (∀ (i : Fin n) (h : i.val + 1 < n), bonds (fun j => A (i, j))
+      (fun j => A (⟨i.val + 1, h⟩, j))) ∧
+    normal2 (false, false) (fun i j => A (i, j))
+
+private instance instDecidableNormal {n : ℕ} (s : Seen) (f : Fin n → Col) :
+    Decidable (normal2 s f) :=
+  inferInstanceAs (Decidable (∀ _ _, (_ → _) ∧ (_ → _)))
+private instance instDecidableColLegal (c : Col) : Decidable (rowLegal c) :=
+  inferInstanceAs (Decidable (_ ∧ _))
+private instance instDecidableBonds (c d : Col) : Decidable (bonds c d) :=
+  inferInstanceAs (Decidable (∀ _, _ ∧ _))
+private instance instDecidableLegal {n : ℕ} (A : Fin n × Fin 2 → Fin 6) : Decidable (Legal A) :=
+  inferInstanceAs (Decidable (_ ∧ _ ∧ _ ∧ _))
+
+/-- The literal filtered finite count; the first-cell condition gives the convention `a 0 = 0`. -/
+def a (n : ℕ) : ℕ :=
+  (Finset.univ.filter (fun A : Fin n × Fin 2 → Fin 6 => Legal A)).card
+
+def compatible (p : Fin 3 × Fin 3) (c : Col) : Prop :=
+  p.1 ≠ beta (c 0) ∧ p.2 ≠ beta (c 1)
+
+private instance instDecidableCompatible (p : Fin 3 × Fin 3) (c : Col) :
+    Decidable (compatible p c) :=
+  inferInstanceAs (Decidable (_ ∧ _))
+
+private theorem bonds_iff (c d : Col) : bonds c d ↔ compatible (pairs c) d := by
+  simp only [bonds, colour_bond_iff, compatible, pairs, Fin.forall_fin_two]
+
+private instance instDecidableGood (s : Seen) (c : Col) : Decidable (good s c) := by
+  unfold good
+  infer_instance
+
+private abbrev v2 := widthV rowLegal pairs compatible
+private abbrev total2 := widthTotal rowLegal pairs
+
+private theorem counting_bridge (n : ℕ) : (a (n + 1) : ℤ) = total2 (v2 n) := by
+  exact width_counting_bridge rowLegal pairs compatible bonds bonds_iff n
+
+def Valid (s : Seen) (p : Fin 3 × Fin 3) : Prop :=
+  s.1 = true ∧ p.1 ≠ p.2 ∧ (s.2 = false → p.1 ≠ 2 ∧ p.2 ≠ 2)
+
+private instance instDecidableValid (s : Seen) (p : Fin 3 × Fin 3) : Decidable (Valid s p) :=
+  inferInstanceAs (Decidable (_ ∧ _ ∧ (_ → _ ∧ _)))
+
+private theorem valid_next : ∀ s p, Valid s p → ∀ c : Col,
+    rowLegal c ∧ compatible p c ∧ good s c → Valid (finish s c) (pairs c) := by
+  decide +kernel
+
+/-- One-row continuations ending in the specified second seen flag. -/
+def classCount (s : Seen) (p : Fin 3 × Fin 3) (b : Bool) : ℤ :=
+  ∑ c : Col, if rowLegal c ∧ compatible p c ∧ good s c ∧
+    (finish s c).2 = b then 1 else 0
+
+/-- First rows ending in the specified second seen flag. -/
+def firstCount (b : Bool) : ℤ :=
+  ∑ c : Col, if c 0 = 0 ∧ rowLegal c ∧ good (false, false) c ∧
+    (finish (false, false) c).2 = b then 1 else 0
+
+private theorem row_counts : ∀ s p, Valid s p →
+    (∑ c : Col, if rowLegal c ∧ compatible p c ∧ good s c ∧
+        (finish s c).2 = true then (1 : ℤ) else 0) = (if s.2 then 12 else 4) ∧
+    (∑ c : Col, if rowLegal c ∧ compatible p c ∧ good s c ∧
+        (finish s c).2 = false then (1 : ℤ) else 0) = (if s.2 then 0 else 4) := by
+  decide +kernel
+
+private theorem initial_valid : ∀ c : Col,
+    c 0 = 0 ∧ rowLegal c ∧ good (false, false) c →
+      Valid (finish (false, false) c) (pairs c) := by
+  decide +kernel
+
+private theorem initial_counts :
+    (∑ c : Col, if c 0 = 0 ∧ rowLegal c ∧ good (false, false) c ∧
+        (finish (false, false) c).2 = true then (1 : ℤ) else 0) = 0 ∧
+    (∑ c : Col, if c 0 = 0 ∧ rowLegal c ∧ good (false, false) c ∧
+        (finish (false, false) c).2 = false then (1 : ℤ) else 0) = 1 := by
+  decide +kernel
+
+/-- The single-row class counts and the two first-row class counts. -/
+theorem finite_certificate :
+    (∀ s p, Valid s p →
+      classCount s p true = (if s.2 then 12 else 4) ∧
+      classCount s p false = (if s.2 then 0 else 4)) ∧
+    firstCount true = 0 ∧ firstCount false = 1 :=
+  ⟨row_counts, initial_counts⟩
+
+private def w : ℕ → Bool → ℤ
+  | 0, _ => 1
+  | n + 1, true => 12 * w n true
+  | n + 1, false => 4 * w n false + 4 * w n true
+
+private theorem v_eq_w (n : ℕ) (s : Seen) (p : Fin 3 × Fin 3) (h : Valid s p) :
+    v2 n s p = w n s.2 := by
+  induction n generalizing s p with
+  | zero => rfl
+  | succ n ih =>
+    rw [v2, widthV, widthStep]
+    change (∑ c : Col, if rowLegal c ∧ compatible p c ∧ good s c then
+      v2 n (finish s c) (pairs c) else 0) = _
+    have hs : ∀ c : Col, (if rowLegal c ∧ compatible p c ∧ good s c then
+        v2 n (finish s c) (pairs c) else 0) =
+        (if rowLegal c ∧ compatible p c ∧ good s c ∧ (finish s c).2 = true
+          then (1 : ℤ) else 0) * w n true +
+        (if rowLegal c ∧ compatible p c ∧ good s c ∧ (finish s c).2 = false
+          then (1 : ℤ) else 0) * w n false := by
+      intro c
+      by_cases hc : rowLegal c ∧ compatible p c ∧ good s c
+      · rw [ite_eq_left hc, ih _ _ (valid_next s p h c hc)]
+        cases hb : (finish s c).2 <;> simp [hc, hb]
+      · simp only [← and_assoc] at hc ⊢
+        simp [hc]
+    simp_rw [hs]
+    rw [Finset.sum_add_distrib, ← Finset.sum_mul, ← Finset.sum_mul,
+      show (∑ c : Col, if rowLegal c ∧ compatible p c ∧ good s c ∧
+        (finish s c).2 = true then (1 : ℤ) else 0) = (if s.2 then 12 else 4) from
+        (finite_certificate.1 s p h).1,
+      show (∑ c : Col, if rowLegal c ∧ compatible p c ∧ good s c ∧
+        (finish s c).2 = false then (1 : ℤ) else 0) = (if s.2 then 0 else 4) from
+        (finite_certificate.1 s p h).2]
+    cases hb : s.2 <;> simp [hb, w] <;> ring
+
+private theorem a_eq_w (n : ℕ) : (a (n + 1) : ℤ) = w n false := by
+  rw [counting_bridge, total2, widthTotal]
+  change (∑ c : Col, if c 0 = 0 ∧ rowLegal c ∧ good (false, false) c then
+    v2 n (finish (false, false) c) (pairs c) else 0) = _
+  have hs : ∀ c : Col, (if c 0 = 0 ∧ rowLegal c ∧ good (false, false) c then
+      v2 n (finish (false, false) c) (pairs c) else 0) =
+      (if c 0 = 0 ∧ rowLegal c ∧ good (false, false) c ∧
+        (finish (false, false) c).2 = true then (1 : ℤ) else 0) * w n true +
+      (if c 0 = 0 ∧ rowLegal c ∧ good (false, false) c ∧
+        (finish (false, false) c).2 = false then (1 : ℤ) else 0) * w n false := by
+    intro c
+    by_cases hc : c 0 = 0 ∧ rowLegal c ∧ good (false, false) c
+    · rw [ite_eq_left hc, v_eq_w n _ _ (initial_valid c hc)]
+      cases hb : (finish (false, false) c).2 <;> simp [hc, hb]
+    · simp only [← and_assoc] at hc ⊢
+      simp [hc]
+  simp_rw [hs]
+  rw [Finset.sum_add_distrib, ← Finset.sum_mul, ← Finset.sum_mul,
+    show (∑ c : Col, if c 0 = 0 ∧ rowLegal c ∧ good (false, false) c ∧
+        (finish (false, false) c).2 = true then (1 : ℤ) else 0) = 0 from
+      finite_certificate.2.1,
+    show (∑ c : Col, if c 0 = 0 ∧ rowLegal c ∧ good (false, false) c ∧
+        (finish (false, false) c).2 = false then (1 : ℤ) else 0) = 1 from
+      finite_certificate.2.2]
+  ring
+
+private theorem recurrence (n : ℕ) :
+    (a (n + 3) : ℤ) = 16 * a (n + 2) - 48 * a (n + 1) := by
+  rw [show n + 3 = (n + 1) + 1 + 1 by omega, a_eq_w, a_eq_w, a_eq_w]
+  simp only [w]
+  ring
+
+private theorem zero_count : a 0 = 0 := by
+  simp [a, Legal]
+
+open PowerSeries in
+/-- Barker's generating-function identity, with the empty coefficient set to zero. -/
+theorem result :
+    (1 - 4 * X) * (1 - 12 * X) * (PowerSeries.mk fun n => (a n : ℤ)) =
+      X * (1 - 8 * X) := by
+  let F : PowerSeries ℤ := PowerSeries.mk fun n => (a n : ℤ)
+  have hp : (1 - 4 * X) * (1 - 12 * X) * F =
+      F - 16 * (F * X ^ 1) + 48 * (F * X ^ 2) := by ring
+  have hr : (X * (1 - 8 * X) : PowerSeries ℤ) = X - 8 * X ^ 2 := by ring
+  change (1 - 4 * X) * (1 - 12 * X) * F = _
+  rw [hp, hr]
+  ext n
+  simp only [map_add, map_sub, coeff_ofNat_mul, coeff_mul_X_pow',
+    coeff_X, coeff_X_pow, F, coeff_mk]
+  by_cases hn : 3 ≤ n
+  · simp only [ite_eq_left (show 1 ≤ n by omega), ite_eq_left (show 2 ≤ n by omega),
+      ite_eq_right (show n ≠ 1 by omega), ite_eq_right (show n ≠ 2 by omega)]
+    have hh := recurrence (n - 3)
+    have h3 : n - 3 + 3 = n := by omega
+    have h2 : n - 3 + 2 = n - 1 := by omega
+    have h1 : n - 3 + 1 = n - 2 := by omega
+    rw [h3, h2, h1] at hh
+    linarith
+  · have h1 := a_eq_w 0
+    have h2 := a_eq_w 1
+    change (a 1 : ℤ) = 1 at h1
+    change (a 2 : ℤ) = 4 * 1 + 4 * 1 at h2
+    norm_num only at h1 h2
+    interval_cases n <;> norm_num only [zero_count, h1, h2,
+      Nat.reduceLeDiff, Nat.reduceSubDiff, Nat.reduceEqDiff, if_true, if_false,
+      Nat.cast_zero, mul_zero, sub_self, add_zero]
+
+end D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233123SquareStrip
