@@ -150,6 +150,10 @@ $$\forall (n: \operatorname{Nat}), ((\operatorname{D5}.\operatorname{S3}.\operat
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233126SquareStrip.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/hardin233126` (proved) by `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233126SquareStrip.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hardin233126","declaration_gid":"D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233126SquareStrip.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* R. H. Hardin; OEIS Foundation Inc. (2013). *OEIS A233126: six-colour complementary-pair exclusion on a five-column square strip*. URL: <https://oeis.org/A233126>.
