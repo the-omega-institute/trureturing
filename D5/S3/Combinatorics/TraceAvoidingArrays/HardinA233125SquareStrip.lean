@@ -3,13 +3,70 @@
    mirror-B: D5/B/S3/Combinatorics/TraceAvoidingArrays/HardinA233125SquareStrip
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
-   utility: none
+   utility: kind=numeric-reduction; basis=consumer=D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233125SquareStrip.result; premises=D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233125SquareStrip.finite_certificate
    digest: The generating function for literal normalized four-column square strips. -/
 
 /-
 admission_basis: open-problem-resolution (#28505; Proved)
 escape_witness: v_eq_w, the all-height boundary-class reduction by induction.
 The single-row scanner fibres supply the numerical premises of that induction.
+Direct frozen dependencies (declaration statement_ids):
+D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.Seen
+statement_id: sha256:db13d94501d24f27e6e69604bb633af95ff3309c5698815c44e12d2e52739fce
+D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.good
+statement_id: sha256:f68e874b0a22676cb3053202c645a8ce30010dcd695d55f3e7fce272d4ce5989
+D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.finish
+statement_id: sha256:ebae2e26fe8811cb0e473a0168c27f49fa151fa2bcecda8ad3ba0c9fabc41a7f
+D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.widthLegal
+statement_id: sha256:989eff70ea57c1a27e750e36536ea11ddb8f9aa5a27d74dce459fc2432ec52e8
+D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.widthTotal
+statement_id: sha256:c4c082551693765b0f6c344f5f6ff825120f019a96ec4d79015c10c10bf774d0
+D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.colour_bond_iff
+statement_id: sha256:b9273762bbccc68fc56c48c38b8aba02a46a50a53bfbbe70a660fd21867d6be8
+D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.width_counting_bridge
+statement_id: sha256:a6ad861eda2ca48bc91989542e4b7cc27d81aec8df9a91b8db40c9398c577c72
+D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.widthInstDecidableGood
+statement_id: sha256:1b18af22481f3b703bd96b1eff1d82cd4f06b1e61f3b79669043a61a31d15152
+D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.widthInstDecidableLegal
+statement_id: sha256:6c1f0ba304e14673a1966eca92d67e12ccf8925c940c5ba2391b4b478ac39547
+D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.widthV
+statement_id: sha256:4f3953ec5d8902b74486197a6f4d782f3fb58c6627a5740a5242632a7560f9ed
+D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.widthStep
+statement_id: sha256:bd12c5c5928f8822063ec100e0e6e92c5300f5907da4aa64e85595a1ee4c7cb5
+D5.S3.Observer.Separation.BooleanRankThreeK4.beta
+statement_id: sha256:1abdc5f3db71567fe05de5aabbe80dddeb5ec5179e4ec7fd49fe71e500518481
+Row: proof_shape=bind-only; consumers=rowLegal, bonds, a
+rowLegal: proof_shape=bind-only; consumers=a, counting_bridge, row_counts
+bonds: proof_shape=bind-only; consumers=a, bonds_iff
+decidableRowLegal: proof_shape=bind-only; consumers=a, counting_bridge
+decidableBonds: proof_shape=bind-only; consumers=a, counting_bridge
+a: proof_shape=bind-only; consumers=a_eq_w, result
+labels: proof_shape=bind-only; consumers=v, classCount
+compatible: proof_shape=bind-only; consumers=v, classCount
+decidableCompatible: proof_shape=bind-only; consumers=v, classCount
+bonds_iff: proof_shape=bind-only; consumers=counting_bridge
+v: proof_shape=bind-only; consumers=counting_bridge, v_eq_w
+total: proof_shape=bind-only; consumers=counting_bridge
+counting_bridge: proof_shape=bind-only; consumers=a_eq_w
+Valid: proof_shape=bind-only; consumers=valid_next, row_counts, initial_valid
+decidableValid: proof_shape=bind-only; consumers=valid_next, row_counts, initial_valid
+boundaryClass: proof_shape=bind-only; consumers=row_counts, v_eq_w
+transfer: proof_shape=bind-only; consumers=row_counts, v_eq_w
+valid_next: proof_shape=bind-only; consumers=v_eq_w
+classCount: proof_shape=bind-only; consumers=row_counts, v_eq_w
+firstCount: proof_shape=bind-only; consumers=initial_counts, a_eq_w
+class_fibres: proof_shape=bind-only; consumers=row_counts
+label_sum: proof_shape=bind-only; consumers=row_counts
+row_counts: proof_shape=bind-only; consumers=finite_certificate
+initial_valid: proof_shape=bind-only; consumers=a_eq_w
+initial_counts: proof_shape=bind-only; consumers=finite_certificate
+finite_certificate: proof_shape=bind-only; consumers=v_eq_w, a_eq_w
+w: proof_shape=bind-only; consumers=v_eq_w, a_eq_w, recurrence, result
+v_eq_w: proof_shape=content; consumers=a_eq_w
+a_eq_w: proof_shape=content; consumers=recurrence, result
+recurrence: proof_shape=content; consumers=result
+zero_count: proof_shape=bind-only; consumers=result
+result: proof_shape=content; consumers=terminal result (#28505)
 -/
 
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip
@@ -52,8 +109,8 @@ private instance decidableBonds (c d : Row) : Decidable (bonds c d) :=
 def a (n : ℕ) : ℕ :=
   (Finset.univ.filter (fun A : Fin n × Fin 4 → Fin 6 => widthLegal rowLegal bonds A)).card
 
-private def labels (c : Row) : Fin 4 → Fin 3 := fun j => beta (c j)
-private def compatible (p : Fin 4 → Fin 3) (c : Row) : Prop := ∀ j, p j ≠ beta (c j)
+def labels (c : Row) : Fin 4 → Fin 3 := fun j => beta (c j)
+def compatible (p : Fin 4 → Fin 3) (c : Row) : Prop := ∀ j, p j ≠ beta (c j)
 private instance decidableCompatible (p : Fin 4 → Fin 3) (c : Row) :
     Decidable (compatible p c) := inferInstanceAs (Decidable (∀ _, _))
 
@@ -66,16 +123,16 @@ private abbrev total := widthTotal rowLegal labels
 private theorem counting_bridge (n : ℕ) : (a (n + 1) : ℤ) = total (v n) :=
   width_counting_bridge rowLegal labels compatible bonds bonds_iff n
 
-private def Valid (s : Seen) (p : Fin 4 → Fin 3) : Prop :=
+def Valid (s : Seen) (p : Fin 4 → Fin 3) : Prop :=
   s.1 = true ∧ (∀ j : Fin 3, p j.castSucc ≠ p j.succ) ∧
     (s.2 = false → ∀ j, p j ≠ 2)
 private instance decidableValid (s : Seen) (p : Fin 4 → Fin 3) : Decidable (Valid s p) :=
   inferInstanceAs (Decidable (_ ∧ (∀ _, _) ∧ (_ → ∀ _, _)))
 
-private def boundaryClass (s : Seen) (p : Fin 4 → Fin 3) : Fin 4 :=
+def boundaryClass (s : Seen) (p : Fin 4 → Fin 3) : Fin 4 :=
   if s.2 then if p 0 = p 2 ∧ p 1 = p 3 then 1 else if p 0 = p 3 then 3 else 2 else 0
 
-private def transfer (i k : Fin 4) : ℤ :=
+def transfer (i k : Fin 4) : ℤ :=
   ![![16, 16, 32, 8], ![0, 48, 64, 16], ![0, 32, 64, 16], ![0, 16, 32, 32]] i k
 
 private theorem valid_next : ∀ s p, Valid s p → ∀ c : Row,
@@ -85,11 +142,11 @@ private theorem valid_next : ∀ s p, Valid s p → ∀ c : Row,
   intro s p hp c hc
   exact hv s c hp.1 hc.1 hc.2.2
 
-private def classCount (s : Seen) (p : Fin 4 → Fin 3) (k : Fin 4) : ℤ :=
+def classCount (s : Seen) (p : Fin 4 → Fin 3) (k : Fin 4) : ℤ :=
   ∑ c : Row, if rowLegal c ∧ compatible p c ∧ good s c ∧
     boundaryClass (finish s c) (labels c) = k then 1 else 0
 
-private def firstCount (k : Fin 4) : ℤ :=
+def firstCount (k : Fin 4) : ℤ :=
   ∑ c : Row, if c 0 = 0 ∧ rowLegal c ∧ good (false, false) c ∧
     boundaryClass (finish (false, false) c) (labels c) = k then 1 else 0
 
@@ -130,6 +187,12 @@ private theorem initial_valid : ∀ c : Row,
 private theorem initial_counts : ∀ k, firstCount k = ![4, 0, 4, 2] k := by
   decide +kernel
 
+/-- The exact single-row transitions and first-row distribution. -/
+theorem finite_certificate :
+    (∀ s p, Valid s p → ∀ k, classCount s p k = transfer (boundaryClass s p) k) ∧
+    (∀ k, firstCount k = ![4, 0, 4, 2] k) :=
+  ⟨row_counts, initial_counts⟩
+
 private def w : ℕ → Fin 4 → ℤ
   | 0, _ => 1
   | n + 1, k => if k = 0 then 16 * w n 0 + 16 * w n 1 + 32 * w n 2 + 8 * w n 3
@@ -157,7 +220,7 @@ private theorem v_eq_w (n : ℕ) (s : Seen) (p : Fin 4 → Fin 3) (h : Valid s p
     rw [Finset.sum_comm]
     simp_rw [← Finset.sum_mul]
     change (∑ k : Fin 4, classCount s p k * w n k) = _
-    simp_rw [row_counts s p h]
+    simp_rw [finite_certificate.1 s p h]
     generalize boundaryClass s p = k
     fin_cases k <;> simp [transfer, w, Fin.sum_univ_succ]
 
@@ -178,7 +241,7 @@ private theorem a_eq_w (n : ℕ) : (a (n + 1) : ℤ) = 4 * w n 0 + 4 * w n 2 + 2
   rw [Finset.sum_comm]
   simp_rw [← Finset.sum_mul]
   change (∑ k : Fin 4, firstCount k * w n k) = _
-  simp_rw [initial_counts]
+  simp_rw [finite_certificate.2]
   simp [Fin.sum_univ_succ]
 
 private theorem recurrence (n : ℕ) :

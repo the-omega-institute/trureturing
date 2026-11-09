@@ -10,6 +10,8 @@ internal sealed class HardinA233125SquareStripDocument : IScribeDocumentDefiniti
         "D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233125SquareStrip.";
     private const string Owner =
         "D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.";
+    private const string Scanner =
+        "D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.";
     private const string Gid =
         "D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233125SquareStrip.";
     private static LibraryNoteRef Source =>
@@ -38,6 +40,30 @@ internal sealed class HardinA233125SquareStripDocument : IScribeDocumentDefiniti
                 + "(false,false). Thus every 2, 3 or 4 has an earlier 1, and every 3 has an "
                 + "earlier 2, in row-major order. The first-cell existential is false at "
                 + "height zero, so a 0 = 0.", true),
+            Entry("labels", "labels", "Complementary-pair labels", Labels(),
+                "The label map is the published beta, applied separately to each cell."),
+            Entry("compatible", "compatible", "Vertical label compatibility", Compatible(),
+                "Every preceding label excludes the same label in the following row."),
+            Entry("valid", "Valid", "Reachable boundaries", Valid(),
+                "Colour 1 has occurred. Adjacent labels differ. Before colour 2 occurs, "
+                + "neither member of its complementary pair occurs."),
+            Entry("class", "boundaryClass", "Boundary classes", BoundaryClass(),
+                "Class 0 is the unseen sector. Classes 1, 2, 3 are alternating, "
+                + "unequal endpoints without alternation, and equal endpoints."),
+            Entry("transfer", "transfer", "Class transition matrix", Transfer(),
+                "Rows are source classes and columns are destination classes."),
+            Entry("classcount", "classCount", "Single-row continuation counts", ClassCount(),
+                "The sum is over all 6^4 individual colour rows with the original scanner."),
+            Entry("firstcount", "firstCount", "First-row class distribution", FirstCount(),
+                "The first colour is fixed to zero and both initial scanner flags are false."),
+            Describe.Lean(DescribeId.Create("certificate"),
+                DeclarationHandle.Create(Gid + "finite_certificate"), H("Single-row certificate"),
+                StatementSource.FromAuthor(Disp(Certificate())),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text(
+                    "Exact scanner fibres reduce the transition counts to 3^4 label rows. "
+                    + "The single-row certificate supplies the numerical premises of the "
+                    + "all-height induction."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("result"), DeclarationHandle.Create(Gid + "result"),
                 H("The power-series identity"), StatementSource.FromAuthor(Disp(Result())),
                 AssessedProvenance.FromRepo(Source),
@@ -92,6 +118,92 @@ internal sealed class HardinA233125SquareStripDocument : IScribeDocumentDefiniti
             Call("Finset.card", Call("Finset.filter", predicate, universe))));
     }
 
+    private static Formula Seen() => Name(Scanner + "Seen");
+    private static Formula PairRow() => Arrow(Fin(4), Fin(3));
+    private static Formula Proj(Formula a, bool first) =>
+        Call(first ? "Prod.fst" : "Prod.snd", a);
+    private static Formula Flags() => Pair(Name("Bool.false"), Name("Bool.false"));
+    private static Formula Labels()
+    {
+        var c = V("c"); var j = V("j");
+        return All("c", Name(Root + "Row"), Eq(Call(Root + "labels", c),
+            Fn("j", Fin(4), Call("D5.S3.Observer.Separation.BooleanRankThreeK4.beta", At(c, j)))));
+    }
+
+    private static Formula Compatible()
+    {
+        var p = V("p"); var c = V("c"); var j = V("j");
+        return All("p", PairRow(), All("c", Name(Root + "Row"),
+            Eq(Call(Root + "compatible", p, c), All("j", Fin(4),
+                Ne(At(p, j), Call("D5.S3.Observer.Separation.BooleanRankThreeK4.beta",
+                    At(c, j)))))));
+    }
+
+    private static Formula Valid()
+    {
+        var s = V("s"); var p = V("p"); var j = V("j");
+        var proper = All("j", Fin(3),
+            Ne(At(p, Call("Fin.castSucc", j)), At(p, Call("Fin.succ", j))));
+        var unseen = Imp(Eq(Proj(s, false), Name("Bool.false")),
+            All("j", Fin(4), Ne(At(p, j), Typed(D(2), Fin(3)))));
+        return All("s", Seen(), All("p", PairRow(), Eq(Call(Root + "Valid", s, p),
+            And(Eq(Proj(s, true), Name("Bool.true")), And(proper, unseen)))));
+    }
+
+    private static Formula BoundaryClass()
+    {
+        var s = V("s"); var p = V("p");
+        Formula P(byte j) => At(p, Typed(D(j), Fin(4)));
+        return All("s", Seen(), All("p", PairRow(),
+            Eq(Call(Root + "boundaryClass", s, p), Conditional(Proj(s, false),
+                Conditional(And(Eq(P(0), P(2)), Eq(P(1), P(3))), D(1),
+                    Conditional(Eq(P(0), P(3)), D(3), D(2))), D(0)))));
+    }
+
+    private static Formula Transfer()
+    {
+        var table = Vector(Vector(D(1,6), D(1,6), D(3,2), D(8)),
+            Vector(D(0), D(4,8), D(6,4), D(1,6)),
+            Vector(D(0), D(3,2), D(6,4), D(1,6)),
+            Vector(D(0), D(1,6), D(3,2), D(3,2)));
+        return All("i", Fin(4), All("k", Fin(4),
+            Eq(Call(Root + "transfer", V("i"), V("k")), At(table, V("i"), V("k")))));
+    }
+
+    private static Formula ClassCount()
+    {
+        var s = V("s"); var p = V("p"); var k = V("k"); var c = V("c");
+        var condition = And(Call(Root + "rowLegal", c),
+            And(Call(Root + "compatible", p, c), And(Call(Scanner + "good", s, c),
+                Eq(Call(Root + "boundaryClass", Call(Scanner + "finish", s, c),
+                    Call(Root + "labels", c)), k))));
+        return All("s", Seen(), All("p", PairRow(), All("k", Fin(4),
+            Eq(Call(Root + "classCount", s, p, k), SumOver("c", Name(Root + "Row"),
+                Typed(Conditional(condition, D(1), D(0)), Name("Int")))))));
+    }
+
+    private static Formula FirstCount()
+    {
+        var k = V("k"); var c = V("c");
+        var condition = And(Eq(At(c, Typed(D(0), Fin(4))), Typed(D(0), Fin(6))),
+            And(Call(Root + "rowLegal", c), And(Call(Scanner + "good", Flags(), c),
+                Eq(Call(Root + "boundaryClass", Call(Scanner + "finish", Flags(), c),
+                    Call(Root + "labels", c)), k))));
+        return All("k", Fin(4), Eq(Call(Root + "firstCount", k),
+            SumOver("c", Name(Root + "Row"),
+                Typed(Conditional(condition, D(1), D(0)), Name("Int")))));
+    }
+
+    private static Formula Certificate()
+    {
+        var s = V("s"); var p = V("p"); var k = V("k");
+        return And(All("s", Seen(), All("p", PairRow(), Imp(Call(Root + "Valid", s, p),
+            All("k", Fin(4), Eq(Call(Root + "classCount", s, p, k),
+                Call(Root + "transfer", Call(Root + "boundaryClass", s, p), k)))))),
+            All("k", Fin(4), Eq(Call(Root + "firstCount", k),
+                At(Vector(D(4), D(0), D(4), D(2)), k))));
+    }
+
     private static Formula Result()
     {
         var x = Typed(Name("PowerSeries.X"), Call("PowerSeries", Name("Int")));
@@ -107,9 +219,8 @@ internal sealed class HardinA233125SquareStripDocument : IScribeDocumentDefiniti
     private static Formula V(string name) => F.Id(name);
     private static Formula Name(string name) => Seq(name.Split('.').SelectMany((p, i) =>
         (i == 0 ? Array.Empty<Formula>() : new Formula[] { Dot }).Append(
-            Seq(Operatorname, Grp(System.Text.RegularExpressions.Regex.Matches(
-                p, "[A-Za-z]+|[0-9]").Select(m => char.IsDigit(m.Value[0])
-                    ? D((byte)(m.Value[0] - '0')) : V(m.Value)).ToArray())))).ToArray());
+            Seq(Operatorname, Grp(p.Select((c, j) => c >= '0' && c <= '9'
+                ? D((byte)(c - '0')) : V(p.Substring(j, 1))).ToArray())))).ToArray());
     private static Formula Call(string name, params Formula[] args) => At(Name(name), args);
     private static Formula At(Formula f, params Formula[] args) => new Formula.Apply(f, [.. args]);
     private static Formula Parenthesized(Formula f) => Seq(Open, f, Close);
@@ -120,6 +231,19 @@ internal sealed class HardinA233125SquareStripDocument : IScribeDocumentDefiniti
     private static Formula Arrow(Formula a, Formula b) => new Formula.TypeArrow(a, b);
     private static Formula Product(Formula a, Formula b) =>
         Seq(Parenthesized(a), Sp, Times, Sp, Parenthesized(b));
+    private static Formula Pair(Formula a, Formula b) =>
+        Parenthesized(Seq(a, Comma, Sp, b));
+    private static Formula Vector(params Formula[] entries) => Seq(
+        new Formula[] { Bang, OpenBracket }.Concat(entries.SelectMany((f, i) =>
+            i == 0 ? new[] { f } : new[] { Comma, Sp, f }))
+            .Append(CloseBracket).ToArray());
+    private static Formula Conditional(Formula test, Formula yes, Formula no) =>
+        Parenthesized(Seq(Name("if"), Sp, Parenthesized(test), Sp, Name("then"), Sp,
+            Parenthesized(yes), Sp, Name("else"), Sp, Parenthesized(no)));
+    private static Formula SumOver(string n, Formula type, Formula body) =>
+        Seq(Sum, Underscore, Grp(V(n), Colon, Sp, type), Sp, Parenthesized(body));
+    private static Formula Imp(Formula a, Formula b) =>
+        Seq(Parenthesized(a), Sp, Implies, Sp, Parenthesized(b));
     private static Formula Eq(Formula a, Formula b) =>
         new Formula.Relation(a, FormulaRelationOperator.Equal, b);
     private static Formula Ne(Formula a, Formula b) =>
