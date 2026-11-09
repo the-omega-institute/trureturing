@@ -22,6 +22,9 @@ proof_shape: zeroFree_twos_le_ones: bind-only; escape_witness: none; consumer: C
 proof_shape: zeroContaining_inventory_bounds: content; escape_witness: lineOK_ofFn
 proof_shape: zeroContaining_parameter_equations: content; escape_witness: lineOK_ofFn
 proof_shape: zeroContaining_all_exceptional: content; escape_witness: lineOK_ofFn
+proof_shape: fixedZeroGap_reconstruction: bind-only; escape_witness: none; consumer: R.fixedZeroGap_count_nonzero
+proof_shape: fixedZeroGap_count_zero: content; escape_witness: O.splitOn_no_separator
+proof_shape: fixedZeroGap_count_nonzero: bind-only; escape_witness: none; consumer: R.rootCycleToGaps
 -/
 
 import D5.S3.Combinatorics.Graph.ItalianDomination.OrdinaryWords

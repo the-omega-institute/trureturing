@@ -31,6 +31,8 @@ proof_shape: ordinaryFamily_card: content; escape_witness: splitOn_no_separator
 proof_shape: ternary_count_length: bind-only; escape_witness: none; consumer: O.ordinary_length
 proof_shape: ordinary_length: bind-only; escape_witness: none; consumer: R.rootedZeroFreeCountEquiv
 proof_shape: ordinaryWord_card: content; escape_witness: splitOn_no_separator
+proof_shape: bitsAt_dataWord: bind-only; escape_witness: none; consumer: O.familyEncode_decode
+proof_shape: familyEncode_decode: bind-only; escape_witness: none; consumer: O.ordinaryFamilyEquiv
 -/
 
 import D5.S3.Combinatorics.Graph.CycleItalianDominationRecurrence
