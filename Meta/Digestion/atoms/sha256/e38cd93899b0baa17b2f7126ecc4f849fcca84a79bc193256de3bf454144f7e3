@@ -1,0 +1,11 @@
+**推论 12.2（有限右梳上的势增长）。**定义实际算子 $(K_ah)(u)=\frac13\sum_{k=0}^2h(a\cdot U^ku)$。则 $K_af=f+q(a)$、$K_ag=g+r(a)$，从而对全部 $n\ge0$，
+
+$$
+3^{-n}\sum_{\sigma\in\Sigma_n}f(H_n^\sigma(a;u))=f(u)+nq(a),
+\quad
+3^{-n}\sum_{\sigma\in\Sigma_n}g(H_n^\sigma(a;u))=g(u)+nr(a).
+\tag{12.3}
+$$
+
+**证明。**反复使用 (12.2)；每次只作有限三分支平均，常数函数被 $K_a$ 保持。右梳递推给其实际括号。
+

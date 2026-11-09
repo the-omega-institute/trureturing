@@ -56,5 +56,13 @@ internal sealed class PrimeMinCorrectionLowerDocument : IScribeDocumentDefinitio
                         + "inventory equality, record existence, RH hypothesis or signed pure-prime "
                         + "bound is introduced. Control of that signed quantity and the full "
                         + "RH/Robin/5040 goal remain separate obligations."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("consumed-prime-weight-lower"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/PrimeMinCorrectionLower.prime_weight_lower"),
+                H("The consumed finite head comparison"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The original head-weight proof is exposed unchanged. PrimeMinCorrectionSecondOrderLower applies it at the exact real root, with D=X*log(X), to the finite head p<=rho. This exposure is reuse, not additional mathematical content."))),
                 DescribeRole.Theorem))));
 }

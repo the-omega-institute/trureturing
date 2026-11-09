@@ -1,0 +1,12 @@
+**定义 13.3（锚字项）。** 给定有限呈示
+$$
+G=\langle X\mid R\rangle,
+$$
+令 $\pi:F(X)\twoheadrightarrow G$，并取有限字 $t_1,\ldots,t_s\in F(X)$，其像生成指定的 $H$。用一个锚符号 $\star$ 形成项 $\star w$，其中 $w$ 是 $X\cup X^{-1}$ 中的有限字。取以下等价关系的反身、对称、传递闭包：
+
+* 自由消去 $\star uxx^{-1}v\sim\star uv$、$\star ux^{-1}xv\sim\star uv$；
+* 对 $r\in R$ 及任意内部上下文，$\star urv\sim\star uv$，并允许 $r^{-1}$；
+* 只在锚的左端使用稳定子关系 $\star t_jv\sim\star v$。
+
+群关系可以出现在任意内部上下文；稳定子关系只从锚处开始，再向右延伸。把稳定子关系放在任意内部位置会把 $H$ 的正规闭包也压成恒等，通常得到的不是 $H\backslash G$。
+

@@ -1,0 +1,28 @@
+**命题 195.5（二元截面、完整轨道与量子消费者范围）。** 固定 (195.4) 的两条单位方向，$\xi=ae_0+be_1$、$|a|^2+|b|^2=1$ 的三实坐标为
+
+$$
+(X,Y,Z)=(2\operatorname{Re}(\overline a b),\,2\operatorname{Im}(\overline a b),\,|a|^2-|b|^2),\qquad
+X^2+Y^2+Z^2=1,\qquad t=(1+Z)/2.
+\tag{195.9}
+$$
+
+这是整个 $\mathbb P(\mathcal K)=\mathbb {CP}^{88}$ 中的一个数学 Bloch 球面截面。定理 195.2 的前件下，此截面上的记录质量为 $(1+Z)/2$；完整空间中固定 $0<t<1$ 的共同块轨道为
+
+$$
+\mathcal O_t\simeq
+\bigl(S(\mathcal K_0)\times S(\mathcal K_1)\bigr)/U(1),
+\qquad
+\mathcal O_0=\mathbb P(\mathcal K_1),\quad
+\mathcal O_1=\mathbb P(\mathcal K_0).
+\tag{195.10}
+$$
+
+证明。展开平方给 (195.9)。共同块作用逐向量传递，同一整体相位才在射影化时商去，得到 (195.10)；内部轨道仍包含相对相位，不是只取两个射影空间的乘积。因而本源的商坐标是区间 $t\in[0,1]$，并非把 $89$ 维载体降成二维或把球面升格为物理三维空间。由 195.2 径向形式，地址 $10$ 也自动保持记录边缘；它不必另加到 C 中。
+
+用完整白话表述这些条件：同一个装置始终从原来的 ready 出发，保留每一次调用、读出的记录、终端和档案。先在原代码里校准好记录的平方权重，再要求同一读数规则只依赖当前射线并在整个合法载体上连续。无论此前做过什么，只要接着做的是零到八号中一个不翻记录位的原操作，稍后读到零的总概率就保持。已有的共同块作用能在记录为零与为一的两边同时转动方向，把相同两边长度的输入接到同一个码内校准值；连续性只连接这些数学极限，不增加实际门。于是代码外也只能用相同平方权重。反过来，删去七号这条关系，原解析模型就能按代码外质量暗中改变记录概率：先做两次九号，再加一次七号，便出现 (195.5) 的严格差额。
+
+这只给当前 $\mathsf T(a),\mathsf R(a,f)$ 的记录 Born、已给纯后继及终端下的完整一次记录律。若两个完整律同样满足 195.2 的全部前件，并另有同一实际档案核，(195.3) 才给它们相同的完整律；一般不能据此等同不同档案。混态仿射、全部效果菜单、CP 仪器、独立复合、物理时钟及 C123 原 D 的 M/SJ 来源均不在所证量词内。[续卷 V](AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_V.md) §§10–12 的当前配置恢复与指定仪器结论保留其共同未来核、平方等变及 Born/CP 前件，不由这里的数学轨道获得这些供应。复结构、内积、相干执行、全码校准、连续同射线规则、C 的物理成立性、终端充分性、纯更新和可靠性仍各须独立来源；精确闭包门、任意输入、抽样及有限认证权限均未取得。∎
+
+[II195]: https://github.com/the-omega-institute/trureturing/blob/ba97bbfd0aab3adfa5f6a3d6621495ef96c06597/docs/develop/theory/AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_II.md
+[III195]: https://github.com/the-omega-institute/trureturing/blob/ba97bbfd0aab3adfa5f6a3d6621495ef96c06597/docs/develop/theory/AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_III.md
+

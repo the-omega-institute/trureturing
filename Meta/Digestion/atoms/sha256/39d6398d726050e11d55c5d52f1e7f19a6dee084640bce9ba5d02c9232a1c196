@@ -1,0 +1,16 @@
+**命题 25.2（每个原失败仍有自己的完整输出）。** 在定理 25.1 的选中词中，令 $a=\sqrt e$、$b=\sqrt{I-e}$；沿用定理 12.1 在配对块选的数学 $p_1$。每个原失败映射 $\Psi_\ell=\Phi_{r_\ell}$ 始终保留为原映射，且该词实际占用的失败方向给
+
+$$
+\omega_\ell=\Psi_\ell(p_1),\qquad
+\rho\longmapsto b\rho b\otimes\omega_\ell
+\quad\text{在原 }AB_\ell,
+\qquad
+\rho\longmapsto\tau_{B_\ell}(\omega_\ell)b\rho b
+\quad\text{仅在实际丢弃后}.
+\tag{25.2}
+$$
+
+**证明。** 这是 (12.5)–(12.7) 在定理 25.1 的恒等运输下的同一公式。失败只被迫消去成功方向；在 $I_P-p$ 的其他方向及其他中心上的 $\Psi_\ell$ 仍是原 CP 映射，不全局变成标量测量后制备。对原相关参考 $X$，未丢弃输出仍为 $(b\otimes I_R)X(b\otimes I_R)\otimes\omega_\ell$，按原交换接口排列端口。
+
+若阶段细口的原接续合法，命题 12.2 给输入中心 $s$ 上的成功叶 $\beta_jc_{\gamma,s t_0}z_\delta\operatorname{Ad}_{a_s}$，失败叶保留 $\beta_jc_{\gamma,s t_0}b_s\rho_sb_s\otimes\omega_{\ell a}$；实际丢弃细口才取原系数 $z_{\ell a k}(\omega_{\ell a})$。不同中心不要求相同细权，任何零叶均不删除、不除以系数。若阶段细口没有原合法连接，则只调用整个同一词的原 F，不从数学乘积伪造细接续。原支持返回仍带各自 $q_a$，不因 $J$ 或条件化改为一。∎
+

@@ -1,0 +1,10 @@
+**Corollary 5.4 (The three lines for three parties).** For $\mathtt q=3$ the subgroups $X_{\{1\}}=\{j_2=0\}$, $X_{\{2\}}=\{j_1=0\}$ and $X_{\{1,2\}}=\{j_1=j_2\}$ carry the bipartitions $A|BC$, $B|CA$ and $AB|C$ with weights $x_A$, $x_B$, $x_A+x_B=1-x_C$, and
+
+$$
+D_3(\varepsilon)=D_2^{(x_A)}(\varepsilon)\,D_2^{(x_B)}(\varepsilon)\,D_2^{(x_C)}(\varepsilon)\,\Omega_3(\varepsilon),
+$$
+
+with $\mathcal O=\{(j_1,j_2):0,j_1,j_2\text{ pairwise distinct}\}$ of size $(n-1)(n-2)$. Stance: suspected-novel.
+
+**Proof.** Theorem 5.3 with $\mathtt q=3$, using that $D_2^{(p)}$ depends on $p$ only through $p(1-p)$, so $D_2^{(1-x_C)}=D_2^{(x_C)}$. ∎
+

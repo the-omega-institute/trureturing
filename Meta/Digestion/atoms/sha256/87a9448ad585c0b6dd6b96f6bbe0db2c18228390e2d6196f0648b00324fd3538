@@ -1,0 +1,6 @@
+$$
+r_s(t)=\binom st-\binom s{t-1},\qquad 0\leq t\leq S,
+\quad\binom s{-1}=0.
+\tag{6.8}
+$$
+

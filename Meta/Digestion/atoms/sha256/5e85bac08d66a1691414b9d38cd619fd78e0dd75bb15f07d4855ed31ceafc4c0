@@ -1,0 +1,43 @@
+**定义 152.1（四载体真空 ready 与完整六百一十维空间）。** 固定 138.1 的整个 $\mathcal K=V_{12}^{\mathbf1}$、路径集 $E$、唯一源 $e_0=R_0v$、原十一地址前缀、原七地址后续及全部旧终端。另付四个 $\tau$、其总荷真空的指定路径初始化，取
+
+$$
+\widehat{\mathcal K}=V_{16}^{\mathbf1},\qquad
+b_{-1}b_0=10,\quad b_{14}b_{15}b_{16}=010,
+\qquad\dim\widehat{\mathcal K}=610.
+\tag{152.1}
+$$
+
+内部 $b_1\cdots b_{13}$ 无相邻占据。其局部门 $\widehat K_j$ 采用 (138.2a) 的同一个 $Q,x,y,\zeta$ 和融合规范。原前缀只用 $j=0,\ldots,10$，原后续只用 $j=0,\ldots,6$；仅下述固定读器内部允许中心 $10,\ldots,14$，其中 $11,\ldots,14$ 为新增地址。
+
+为明确整个载体而非一个代码，令 $E_i=\{q\in E:b_9(q)=i\}$、$\mathcal K_i=\mathbb C^{E_i}$，并令
+
+$$
+\begin{aligned}
+S_i&=\{z=(z_{10},\ldots,z_{14}):
+          (i,z_{10},\ldots,z_{14},1)\text{ 无相邻 }11\},\\
+L_i&=\mathbb C^{S_i},\qquad z^{(r)}=010r0\quad(r=0,1).
+\end{aligned}
+\tag{152.2}
+$$
+
+给 $\widehat{\mathcal K}$ 的每条路径保留 $b_{-1},\ldots,b_9$，再将其尾部换回原 $b_{10}b_{11}b_{12}=010$，便得到唯一 $q\in E$；余下真实尾部为 $z\in S_{b_9(q)}$。因此有逐基、无丢弃的对应
+
+$$
+\widehat{\mathcal K}
+=\bigoplus_{i=0}^1(\mathcal K_i\otimes L_i),
+\quad |E_0|=55, |E_1|=34, |S_0|=8, |S_1|=5,
+\quad55\cdot8+34\cdot5=610.
+\tag{152.3}
+$$
+
+这些计数使用 139.4 的同一无相邻占据递推：$z_{14}=0$，$i=0$ 时余四位自由合法，$i=1$ 时另迫使 $z_{10}=0$，余三位自由合法。定义真空接口
+
+$$
+\Xi:\mathcal K\otimes\mathbb C^2\longrightarrow\widehat{\mathcal K},
+\qquad \Xi(|q\rangle\otimes|r\rangle)
+       =|q\rangle\otimes|z^{(r)}\rangle.
+\tag{152.4}
+$$
+
+它在字面位上保留旧路径并附接 $b_{13}b_{14}b_{15}b_{16}=r010$，其像维数 $178$，正交补维数 $432$。指定新 ready 为 $r=0$，记 $\Xi_0\xi=\Xi(\xi\otimes|0\rangle)$；实际唯一初态及配置分别为 $\Xi_0e_0$ 及其同一基路径。两个 $r$ 都用于说明完整接口，不授予第二个实际 ready。$q$ 是恢复原尾部后的逻辑标签，不能将它误称为读器后的完整物理尾部。
+

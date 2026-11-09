@@ -1,0 +1,21 @@
+**定义 137.2（统一取向坐标与已知比较映射）。** 若第 $j$ 块 $\varepsilon_j=+1$，在这一块使用转置坐标；若 $\varepsilon_j=-1$ 或 $n_j=1$，使用原坐标。记这个实线性、保单位 Jordan 同构为 $T$。它保持正锥与范数；按
+
+$$
+\widetilde D(x,y)=T D(T^{-1}x,T^{-1}y),\qquad
+\widetilde\alpha(x)=\alpha(T^{-1}x)
+\tag{137.2}
+$$
+
+运输同一原关系和原评价，保留全部原标签和质量。因为 $[x^{\mathsf T},y^{\mathsf T}]^{\mathsf T}=-[x,y]$，所有非经典角在新坐标中取向均为 $-1$。这是对整个模型的坐标运输，不要求原 $D$ 转置协变。P2 和 PB 仅使用原实线性运算、Jordan 乘法和同一旧输出，因此逐值随这个同构运输。
+
+在这个统一坐标中暂省略波浪，定义已知矩阵比较对象及未知缺陷
+
+$$
+K(x,y)=\frac i2[x,y],\qquad
+F(x,y)=D(x,y)-K(x,y),\qquad
+\mathfrak F(Z)=F(\operatorname{Re}Z,\operatorname{Im}Z),
+\tag{137.3}
+$$
+
+其中 $Z\in\mathcal A=\bigoplus_jM_{n_j}(\mathbb C)$，$\operatorname{Re}Z=(Z+Z^*)/2$、$\operatorname{Im}Z=(Z-Z^*)/(2i)$。$K$ 是已知双线性比较映射，并非将旧 $D$ 改定义为 $K$；$F,\mathfrak F$ 不预付任何正则性。标准 $K$ 的 PB 是母卷 114.2 的结合矩阵见证，以下只把它用于相减。
+

@@ -1,0 +1,145 @@
+**定理 81.1（独立于旧响应的结构实现）。** 在 80.1 的全部背景下，存在唯一含单位实 Jordan 同态
+
+$$
+\rho:X\longrightarrow M(A)_{\rm sa},\qquad \rho|_I=j,
+\tag{81.1}
+$$
+
+并且对全部 $x\in X,r\in I$，
+
+$$
+\begin{gathered}
+\rho(x)\circ j(r)=j(x\circ r),\\
+\ker\rho=\operatorname{Ann}_X(I),\qquad
+\|\rho(x)\|=\nu_I(x)\le\|x\|.
+\tag{81.2}
+\end{gathered}
+$$
+
+该映射总是正的。下列条件等价：
+
+1. 完成本质性 $\operatorname{Ann}_X(I)=0$；
+2. 全部原标签满足 (80.4)；
+3. $\rho$ 忠实；
+4. $\rho$ 等距；
+5. $\rho$ 反映正锥，即 $\rho(x)\ge0\Rightarrow x\ge0$。
+
+因此它们也等价于“$\rho$ 忠实、等距、正且反映正锥”这一坐标包；单独正性不在这个等价表中。在这些等价条件下，另有
+
+$$
+\rho^{-1}(A_{\rm sa})=I,\qquad A_{\rm sa}\subset\rho(E).
+\tag{81.3}
+$$
+
+证明。先构造映射，再分别核对它的值域、范数和忠实性。所用成熟结构仅为 JB 双对偶及 Peirce 规则；不调用一个未展开的“JB 理想乘子延拓定理”。
+
+第一步，在 $X^{**}$ 中分离理想。JB 双对偶的 JBW 结构及分别弱星连续乘法取自 Hanche-Olsen–Størmer，[*Jordan operator algebras*](https://hanche.folk.ntnu.no/joa/joa-m.pdf)，Theorem 4.4.3，印刷页 104–105。由 Hahn–Banach，$I^{**}$ 通过包含映射的双对偶等距识别为 $W=I^{\perp\perp}\subset X^{**}$；其乘法与 $X^{**}$ 的乘法一致。固定 $r\in I$，用 $X$ 中有界网弱星逼近任意 $x^{**}$，由 $X\circ I\subset I$ 得 $x^{**}\circ r\in W$；再用 $I$ 中有界网逼近任意 $r^{**}\in W$，得到 $X^{**}\circ W\subset W$。故 $W$ 确为弱星闭 Jordan 理想。
+
+$j^{**}$ 把 $W$ 等距 Jordan 识别为 $(A^{**})_{\rm sa}$。这里实自伴双对偶与 C* 双对偶自伴部作标准对应；乘法相容可先固定一个原因子、再固定另一个因子，依分别弱星连续性两次延拓原等式。令
+
+$$
+p=(j^{**})^{-1}(1_{A^{**}})\in W.
+$$
+
+$p^2=p$，且 $p$ 是 $W$ 的单位。对任意 $y\in X^{**}$，$p\circ y\in W$，所以
+
+$$
+L_p^2y=p\circ(p\circ y)=p\circ y=L_py.
+\tag{81.4}
+$$
+
+Peirce 分解及乘法规则取自同书 2.6.2、Lemma 2.6.3，印刷页 47–48。$L_p$ 的可能特征值是 $0,\frac12,1$；(81.4) 消去整个半特征空间。又因 $p$ 是 $W$ 的单位，有
+
+$$
+W=X^{**}_1(p),\qquad
+X^{**}=X^{**}_1(p)\oplus X^{**}_0(p),\qquad
+X^{**}_1(p)\circ X^{**}_0(p)=0.
+\tag{81.5}
+$$
+
+其中第一式的反向包含来自 $y=p\circ y\in W$。两个整特征空间各自乘法封闭，因此 $P=L_p$ 是 Jordan 同态；$P(u)=p$。它是收缩映射，因为 $\|p\|=1$ 且 JB 乘法满足范数乘积界。于是
+
+$$
+h_x:=j^{**}(P x)\in(A^{**})_{\rm sa},\qquad
+\|h_x\|\le\|x\|,
+\tag{81.6}
+$$
+
+给出含单位收缩 Jordan 同态。对 $r\in I$，Peirce 零部与 $r$ 的乘积为零，故
+
+$$
+h_x\circ j(r)=j^{**}(P(x)\circ r)=j(x\circ r)\in A_{\rm sa}.
+\tag{81.7}
+$$
+
+第二步，证明这个 Jordan 作用确实是复 C* 乘子。使用乘子代数的标准具体模型
+
+$$
+M(A)=\{m\in A^{**}:mA\subset A,\ Am\subset A\}.
+\tag{81.8}
+$$
+
+这个模型中的乘法是 $A^{**}$ 的乘法。其与有界双中心化子模型的对应也可直接核对：$m$ 给出 $L_m(a)=ma,R_m(a)=am$，满足 $R_m(a)b=aL_m(b)$。反过来，若有界双中心化子 $(L,R)$ 满足 $L(ab)=L(a)b$、$R(ab)=aR(b)$ 及 $R(a)b=aL(b)$，取正收缩近似单位 $e_\lambda$，并在有界网 $L(e_\lambda)$ 中取弱星收敛子网，极限记为 $m\in A^{**}$。对全部 $a,b\in A$，分别弱星连续性及近似单位的范数收敛给
+
+$$
+mb=\lim_\lambda L(e_\lambda)b
+=\lim_\lambda L(e_\lambda b)=L(b),\qquad
+am=\lim_\lambda aL(e_\lambda)
+=\lim_\lambda R(a)e_\lambda=R(a).
+$$
+
+前两处极限沿所选子网在弱星意义读取，右端的范数极限决定同一个值。因 $e_\lambda\to1$ 弱星，若一个 $m$ 消去全部 $A$，则 $m=\lim_\lambda me_\lambda=0$；所以这个对应与所选子网无关，且每个乘子由其作用唯一决定。现在若 $h=h^*\in A^{**}$ 满足 $h\circ A_{\rm sa}\subset A_{\rm sa}$，对任意 $c\in A_+$ 取 $s=c^{1/2}\in A_{\rm sa}$，直接在已知结合代数内计算
+
+$$
+\begin{aligned}
+hc&=h\circ c+(h\circ s)s-s(h\circ s)\in A,\\
+ch&=h\circ c-(h\circ s)s+s(h\circ s)\in A.
+\end{aligned}
+\tag{81.9}
+$$
+
+每个自伴元是两个正元之差，每个复元是两个自伴元的复线性组合，故 $hA,Ah\subset A$。反向包含由乘子定义立即成立。因此
+
+$$
+\{h\in(A^{**})_{\rm sa}:h\circ A_{\rm sa}\subset A_{\rm sa}\}
+=M(A)_{\rm sa}.
+\tag{81.10}
+$$
+
+式 (81.9) 是从 Jordan 正规化到左右乘子作用的实际桥梁，不预设 $X$ 已是 JC 代数。(81.7) 因而使 $\rho(x):=h_x$ 具有 (81.1) 的值域。它延续 $j$，保单位及 Jordan 乘法。
+
+第三步，计算作用范数与核。对任意 $h\in M(A)_{\rm sa}$，取 $A$ 的正收缩近似单位 $e_\lambda$。在 $A^{**}$ 中 $e_\lambda\to1$ 弱星，故 $h\circ e_\lambda\to h$ 弱星。范数的弱星下半连续性和乘法界给
+
+$$
+\|h\|=
+\sup_{\substack{c\in A_{\rm sa}\\\|c\|\le1}}\|h\circ c\|.
+\tag{81.11}
+$$
+
+具体地，右侧至多 $\|h\|$，而其对所有 $e_\lambda$ 的共同上界也界住弱星极限 $h$ 的范数。将 $c=j(r)$ 代入 (81.7)，利用 $j$ 等距且满射，正好得到 $\|\rho(x)\|=\nu_I(x)$。这同时给 (81.2) 的核等式。若另有含单位 Jordan 同态 $\psi$ 延续 $j$，则 $x\circ r\in I$ 给
+
+$$
+(\psi(x)-\rho(x))\circ j(r)
+=\psi(x\circ r)-j(x\circ r)=0.
+$$
+
+由 (81.11)，$\psi(x)-\rho(x)=0$，故唯一性也已证明。
+
+第四步，核对五项等价与锥。任意 $x\ge0$ 都有 $x=y^2$，所以 $\rho(x)=\rho(y)^2\ge0$；这不要求忠实。(81.2) 已使第 1、3 项等价。若 $\rho$ 忠实，它是等距的，以下给出所需理由而不将其藏在表示定理中。对固定 $x$，Jordan 同态保持实多项式；在 $[-\|x\|,\|x\|]$ 上一致逼近连续函数，并使用已知收缩性，便保持单元素连续函数演算。若 $\|\rho(x)\|<\|x\|$，在这个闭区间上选连续函数 $f$，使它在 $[-\|\rho(x)\|,\|\rho(x)\|]$ 上为零，却在 $x$ 的一个模长为 $\|x\|$ 的谱点非零。则 $f(x)\ne0$，但
+
+$$
+\rho(f(x))=f(\rho(x))=0,
+$$
+
+与忠实矛盾。故第 3 项推出第 4 项，反向显然。若忠实且 $\rho(x)\ge0$，取负部函数 $f(t)=\max(-t,0)$；相同函数演算给 $\rho(x_-)=0$，故 $x_-=0$、$x\ge0$。这给第 5 项。反之若反映正锥，$\rho(x)=0$ 同时使 $x,-x\ge0$；JB 正锥尖，故 $x=0$。
+
+第 4 项由 (81.2) 蕴涵全部原标签上的第 2 项。若第 2 项成立，对任意 $x\in X$ 取 $a_n\in E$ 范数趋近 $x$，利用 $\rho$ 收缩，得到
+
+$$
+\|\rho(x)\|=\lim_n\|\rho(a_n)\|
+=\lim_n\|a_n\|=\|x\|.
+\tag{81.12}
+$$
+
+这里仅对已知连续的结构映射取极限，与未知 $D$ 无关。五项等价完成。最后，$\rho(x)\in A_{\rm sa}$ 时存在唯一 $r\in I$ 使 $j(r)=\rho(x)$；忠实性给 $x=r$，即 (81.3) 的第一式。第二式直接来自 $j(I)=A_{\rm sa}$ 和 $I\subset E$。整个证明没有对旧响应、原准备、原参考或任何实际控制作假设或构造。∎
+

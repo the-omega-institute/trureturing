@@ -1,0 +1,27 @@
+#### 定理 7.1：有限 Gram 完成
+
+设旧日志的关系表 $G\succeq0$，一个新历史与旧日志的关系列为 $b$，自质量为 $s$。 则
+
+$$
+\begin{pmatrix}G&b\\b^*&s\end{pmatrix}\succeq0
+\quad\Longleftrightarrow\quad
+b\in\operatorname{Ran}G,\quad \delta=s-b^*G^+b\ge0,
+$$
+
+其中 $G^+$ 为 Moore–Penrose 逆。若 $\delta>0$，新向量在旧张成空间之外增加一个方向； 若 $\delta=0$，它已在旧空间内。
+
+**证明。**
+
+对任意 $z\in\ker G$，考虑向量 $(tz,1)$ 的二次型；其非负性对所有复数 $t$ 成立，迫使 $z^*b=0$，即 $b\in\operatorname{Ran}G$。在此前提下，配平方得到
+
+$$
+x^*Gx+2\Re(t\,x^*b)+s|t|^2
+=(x+tG^+b)^*G(x+tG^+b)+\delta|t|^2.
+$$
+
+这给充要条件。几何上 $G^+b$ 指定旧空间投影，$\delta$ 为正交余量的平方长度，故得秩结论。
+
+$\square$
+
+该结构已有于 C129 [\[3\]](#ref-c129)。它最适合将 $F[2]$ 解释为受限完成： 若已有两个方向，其 $2\times2$ 版本是 $\delta=\beta-|\gamma|^2/\alpha\ge0$；当 $\alpha=0$ 时必须先有 $\gamma=0$，不能直接做除法。
+

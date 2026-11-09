@@ -1,0 +1,33 @@
+**定理 13.4（有限锚定轨道呈示）。** 在定义 13.3 的前件下，映射
+$$
+\Theta:\{\star w\}/\!\sim\ \longrightarrow H\backslash G,
+\qquad
+\Theta([\star w])=H\pi(w),
+$$
+是双射，并且满足右作用相容性
+$$
+\Theta([\star w x])=\Theta([\star w])\cdot\pi(x).
+$$
+它只需要 $H$ 的有限生成元 $t_j$，不需要另列 $H$ 的全部内部关系。
+
+**证明。** 自由消去和群关系保持 $\pi(w)$，故保持左商。稳定子关系满足
+$$
+H\pi(t_j)\pi(v)=H\pi(v),
+$$
+所以 $\Theta$ 良定义。它显然满射。若 $H\pi(u)=H\pi(v)$，则存在 $h\in H$ 使 $\pi(v)=h\pi(u)$。把 $h$ 写成 $\pi(t_{i_1})^{\epsilon _1}\cdots\pi(t_{i_m})^{\epsilon _m}$，并令 $t=t_{i_1}^{\epsilon _1}\cdots t_{i_m}^{\epsilon _m}$。有限群呈示的完备性把 $v$ 与 $tu$ 由有限次内部群关系和自由消去连接，故 $\star v\sim\star tu$。
+
+逆稳定子关系也由锚关系导出：从 $\star t_j\sim\star$ 向右接 $t_j^{-1}$ 并自由消去，得到 $\star\sim\star t_j^{-1}$。逐项剥去 $t$ 的左端因子即得 $\star tu\sim\star u$，所以 $\star u\sim\star v$。于是 $\Theta$ 单射。最后，给项右接一个生成字正是左商的右作用，故作用相容。$\square$
+
+这个证明还说明两种传播不能混用。例如 $\star uar a^{-1}v\sim\star uv$ 是内部群关系的共轭传播；而 $\star t_{i_1}^{\epsilon _1}\cdots t_{i_m}^{\epsilon _m}v\sim\star v$ 只来自锚关系的连续右延伸。定理给出有限关系模式；上面的 Borel--Serre 与母卷定理共同关闭了本具体 $G=U_{27}(D)$ 在精确 $X_{27}^D$ 上的有限呈示**存在性**，却没有给出 $R$ 的具体字表、关系数、收敛重写系统、推导成本或实际实验次数。相应地，取一份存在的
+$$
+G=\langle X_{27}^D\mid R_{27}^D\rangle
+$$
+和上段的有限稳定子字 $t_j$，定义 13.3--定理 13.4 就给出同一矩阵层
+$H\backslash G$ 的有限一锚字呈示。这里的“给出”是存在性应用：本卷没有伪造
+$R_{27}^D$ 的显式列表，也没有把它们当作已实现的程序关系。
+
+母卷定理 22.5 所用的外部综合结果 Glaudell--Ross--van de Wetering--Yeh
+只承担 $A=\mathbb Z[\zeta,1/3]$ 的部分；$D=A[1/2]$ 的扩展和精确
+$R_2$ 字母由母卷自身的二分母下降证明承担。矩阵字母的生成因此已经确定，
+但每个原具名门、参考、记录、控制和失败分支的实际实现仍须另行见证。
+

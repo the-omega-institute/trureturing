@@ -1,0 +1,15 @@
+#### 命题 6.4：由原乘法导出的各向同性与半角
+
+单位集合 $\mathcal U=\{u\in A:q(u)=1\}$ 是群。 共轭 $\operatorname{Ad}_u(x)=ux\bar u$ 在 $W$ 上保持 $B$ 与 $\times$， 其像恰为 $\operatorname{SO}(W,B)$，核为 $\{\pm\mathbf 1\}$。 若 $n\in W$ 为单位，$u=\cos(\theta/2)\mathbf 1+n\sin(\theta/2)$，则
+
+$$
+\operatorname{Ad}_u(x)=\cos\theta\,x
++(1-\cos\theta)B(n,x)n+\sin\theta\,(n\times x).
+$$
+
+**证明。**
+
+原乘性和 $u^{-1}=\bar u$ 给群律。 共轭保持乘法、单位、共轭与 $q$，所以保持 $W,B,\times$。 把 $x$ 分成 $B(n,x)n$ 与垂直分量，使用纯部反交换式展开 $ux\bar u$，即得显示公式。每个单位四元数均可写成所示半角形式， 故所得作用是定向正交变换。 反之，三维实定向正交变换必有本征值 $1$：非实本征值成共轭对， 实本征值为 $\pm1$，行列式为一。其固定轴的正交平面上是二维旋转， 因而由显示公式实现。若共轭固定全部纯部，则 $u$ 与三个纯基元交换； 原乘法表迫使 $u$ 为实标量，单位范数再给 $u=\pm\mathbf 1$。
+
+$\square$
+

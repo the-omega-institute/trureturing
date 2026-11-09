@@ -1,0 +1,24 @@
+**Theorem 11.1 (macroscopic orbit implies microscopic weak zero).** Fix the same datum and a prescribed sequence as in Theorem 10.2. If its actual normalized complex choices satisfy the macroscopic orbit convergence in (10.3), then $F_s=\mathcal U_s\psi_s\rightharpoonup0$ globally in $L^2(\mathbb R^4)$. In fact $F_s\to0$ in $L^2(K)$ for every compact $K$. Consequently, for these actual choices, microscopic weak zero and the stated unit-mass macroscopic orbit convergence are equivalent, and either implies both energy limits in (10.3).
+
+Proof. Choose phases $\theta_s$ realizing the orbit limit to an error tending to zero, and put
+
+$$
+w_s(k,q)=\phi(k)g_s^{3/2}h_C(g_sq),\qquad\|w_s\|_2=1.
+\tag{11.1}
+$$
+
+Macroscopic unitarity gives $\|\psi_s-e^{i\theta_s}w_s\|_2\to0$. Both $\phi$ and $h_C$ are bounded. At every $\xi\in\Omega_s$, the exact microscopic Jacobian gives
+
+$$
+\begin{aligned}
+|(\mathcal U_sw_s)(\xi)|
+ &=(j_0s^7)^{1/2}g_s^{3/2}
+  |\phi(k_0+\varepsilon sr)h_C(g_s\mathbf q_s(\xi))|
+ \le Cs^8,\\
+\mathbf q_s(\xi)&=s c_0y+\varepsilon s^2c_1z+\varepsilon^2s^3c_2w.
+\end{aligned}
+\tag{11.2}
+$$
+
+Here $\mathbf q_s(\xi)$ is exactly the phase component of $\Xi_s\xi$. The same bound holds for the zero extension. Therefore $\|\mathcal U_sw_s\|_{L^2(K)}\le Cs^8|K|^{1/2}\to0$ for every compact $K$. Its global norm is one, so approximation of any $L^2$ test by compactly supported tests proves global weak convergence to zero, also after the varying constant phases. Microscopic unitarity transfers the vanishing norm error from $\psi_s-e^{i\theta_s}w_s$, proving both conclusions for $F_s$. The equivalence and energy consequences now follow from Theorem 10.2. No form or operator convergence is inferred from this norm comparison. $\square$
+

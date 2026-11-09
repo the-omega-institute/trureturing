@@ -1,0 +1,12 @@
+### 4.4 非紧二维：一阶互定通过，三维仍不会出现
+
+令 $W=\mathfrak{aff}(1)=\operatorname{span}(h,e)$、$[h,e]=e$，采用忠实伴随作用。取 $x=h,A=\operatorname{ad}_h$，并写商代表
+
+$$
+K=k\,\operatorname{ad}_e,\qquad y=t e.
+$$
+
+则 $Kx+Ay=(t-k)e$，关系就是 $t=k$，却只有二维。该作用非紧；它不能来自上节完整有界可逆概率前端。这个反模型准确标出紧性的工作位置。
+
+<a id="section-5"></a>
+

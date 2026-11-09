@@ -1,0 +1,12 @@
+**问题 8.1（撤平均与回拉）。**沿用问题 4.2，目标仍为全部 $a,u,z$ 上 $B(D(a,u),e_z)=B(e_z,D(a,u))=0$。定理 5.3 保留原配对，推论 5.4 消去平均缺陷对平均探针的配对，二者不等于以下尚未取得的回拉：
+
+$$
+\begin{aligned}
+B(D(a,u),e_z)-B(\overline D_L(a,u),\mathcal A_Le_z)&\longrightarrow0,\\
+B(e_z,D(a,u))-B(\mathcal A_Le_z,\overline D_L(a,u))&\longrightarrow0.
+\end{aligned}
+\tag{8.1}
+$$
+
+标量序列 $\cos(2\pi n/3)$ 的平均为零极限而第零项非零，故单有平均消失不能恢复原值；该序列不是完整 (R) 模型的反例。命题 6.1 的未来测试域也尚未回拉到任意原始探针。这些是原目标的未证步骤，不作为新增公理。
+

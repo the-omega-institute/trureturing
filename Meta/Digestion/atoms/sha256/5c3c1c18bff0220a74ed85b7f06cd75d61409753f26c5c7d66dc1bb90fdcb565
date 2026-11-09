@@ -1,0 +1,18 @@
+**Definition 26.1 (trace triangle and its increment).** Keep the original
+record, ordinary transpose, producer quantities and reduced data of
+Sections 21–25. In particular, $\kappa$ is exactly the smaller root in
+Theorem 21.3, $\gamma=1/25$ as in (25.1), and
+$A_0=2+\sqrt{8/3}$ as in (24.1). Define
+
+$$
+\begin{aligned}
+\mathcal T&=\{w\in\mathcal W:A(w)+B(w)\le4\},\\
+\mathcal T_{\rm new}
+&=\{w\in\mathcal T:A(w)<A_0,\ B(w)<23/6\}.
+\end{aligned}
+\tag{26.1}
+$$
+
+These sets retain the realizability condition (23.1) and are invariant
+under the one common scalar phase of Definition 23.1.
+

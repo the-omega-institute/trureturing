@@ -21,7 +21,7 @@ def twoDenseBlockLengths (l : List ℕ) : List ℕ :=
 def row (n : ℕ) : List ℕ :=
   twoDenseBlockLengths (n.divisorsAntidiagonalList.map Prod.fst)
 
-private theorem divisor_list_finset (n : ℕ) :
+theorem divisor_list_finset (n : ℕ) :
     (n.divisorsAntidiagonalList.map Prod.fst).toFinset = n.divisors := by
   rw [← Nat.image_fst_divisorsAntidiagonal, ← Nat.toFinset_divisorsAntidiagonalList]
   ext d

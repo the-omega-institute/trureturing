@@ -1,0 +1,23 @@
+### 推论 3.3（此前的规范滤波关系成为后果）
+
+若相应效果与接续实际供应，则 C113 推出共同调暗、框架无关、迹互易、半程拼接及补偿返回：
+
+$$
+\mathcal L_{aE}=a\mathcal L_E,\qquad
+\operatorname{Tr}[B\mathcal L_E(C)]=\operatorname{Tr}[C\mathcal L_E(B)],
+\tag{11}
+$$
+
+$$
+\mathcal L_E=\mathcal L_{\sqrt E}^{\,2},\qquad
+\mathcal L_{E^\vee}\mathcal L_E(X)=q_E X\quad(X\in P_E M_dP_E),
+\tag{12}
+$$
+
+其中 $P_E=\operatorname{supp} E$，$q_E$ 为最小正本征值，$E^\vee=q_E E^\dagger$。后一公式不自动供应实际补偿装置。
+
+**证明。**
+依次使用正平方根的标量齐次性、迹循环性、$\sqrt{\sqrt E}=E^{1/4}$ 及 $\sqrt{E^\vee}\sqrt E=\sqrt{q_E}P_E$。
+
+<a id="section-4"></a>
+

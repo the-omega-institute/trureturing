@@ -1,0 +1,71 @@
+**引理 89.1（正交陪集的全部仿射配对）。** 在88.1下，若另有 $z\circ K=0$，则 $H_z:K\to V_h$ 实线性，且对全部 $k,\ell\in K$，
+
+$$
+H_z(k)\circ H_z(\ell)=g(k,\ell)u,
+\qquad H_z(k)\circ G(z)=0.
+\tag{89.1}
+$$
+
+证明。记原 $y_k=z+k$。所有实际平方差及交叠为
+
+$$
+y_k^2-y_\ell^2=(g(k,k)-g(\ell,\ell))u,
+\qquad y_k\circ y_\ell=z^2+g(k,\ell)u.
+\tag{89.2}
+$$
+
+与 $y_0=z$ 的交叠总为正元 $z^2$。81.10及旧平方保持给
+
+$$
+G(y_k)\circ G(z)=z^2,
+\quad H_z(k)^2=g(k,k)u,
+\quad H_z(k)\circ G(z)=0.
+\tag{89.3}
+$$
+
+当 $g(k,\ell)\ge0$，式(89.2)的交叠为正，故同一接口准确给
+
+$$
+H_z(k)\circ H_z(\ell)=g(k,\ell)u.
+\tag{89.4}
+$$
+
+取 $\ell=tk$、$t\ge0$，以上实际配对使
+
+$$
+(H_z(tk)-tH_z(k))^2=0.
+\tag{89.5}
+$$
+
+忠实JC包含中的自伴平方零给 $H_z(tk)=tH_z(k)$。这一步证明的是差分映射的正齐次，并未展开未知 $G$ 的输入。
+
+若 $k\ne0$，选择一个有限实数 $L>0$，使 $Lg(k,k)\ge N(z)^2$。原JB序界 $0\le z^2\le N(z)^2u$ 给
+
+$$
+y_k\circ y_{-Lk}=z^2-Lg(k,k)u\le0.
+\tag{89.6}
+$$
+
+对这份实际原对应用81.10，再用已证的正齐次 $H_z(-Lk)=LH_z(-k)$，得到
+
+$$
+H_z(k)\circ H_z(-k)=-g(k,k)u,
+\qquad (H_z(k)+H_z(-k))^2=0.
+\tag{89.7}
+$$
+
+因此 $H_z(-k)=-H_z(k)$。$k=0$ 时由定义直接成立。对 $g(k,\ell)<0$，将(89.4)用于 $(k,-\ell)$，再用已证奇性，便取得全部原对的(89.1)，不再限制交叠符号。
+
+最后对任意 $k,\ell$，由完整两点Gram有
+
+$$
+\begin{aligned}
+(H_z(k+\ell)-H_z(k)-H_z(\ell))^2
+&=g(k+\ell,k+\ell)u+g(k+\ell,k+\ell)u\\
+&\quad-2g(k+\ell,k+\ell)u=0.
+\end{aligned}
+\tag{89.8}
+$$
+
+故得到可加性；正齐次和奇性给全部实齐次。所有调用只用了有限实数 $L$ 和原线性组合，未取未知响应的极限。$K=0$、$z=0$、相关输入和零交叠均包含。∎
+

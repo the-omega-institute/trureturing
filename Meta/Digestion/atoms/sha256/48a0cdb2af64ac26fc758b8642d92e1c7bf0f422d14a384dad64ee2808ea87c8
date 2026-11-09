@@ -1,0 +1,13 @@
+**定理 88.3（有限正交作用恢复全 SC）。** 在完整 $B$ 上，$\mathrm O_{\mathrm{fin}}$ 单独推出全域 $D_aa=0$；取得 $\mathrm Z_{\mathrm{fin}}$ 后，逆向也成立。因此
+
+$$
+\boxed{
+B+\mathrm Z_{\mathrm{fin}}+\mathrm O_{\mathrm{fin}}+\mathrm{SJ}
+\quad\Longleftrightarrow\quad
+B+\mathrm Z_\pi+\mathrm O_\pi+\mathrm{SJ}.
+}
+\tag{88.6}
+$$
+
+证明。对任一选定 frame，$D_{p_i}u=0$ 与全部非对角 $D_{p_i}p_j=0$ 给 $D_{p_i}p_i=0$。于是 $Q(x):=D_xx$ 在该 frame 的整个对角子代数上为零。全部 $b_i+b_j$ 的谱框架使 $Q(2b_i)=Q(b_i+b_j)=0$；二次极化给 $D_{b_i}b_j+D_{b_j}b_i=0$，基展开即给全 SC。这一方向不借导子律。逆向在定理 88.2 已恢复导子律后，调用定理 83.2 的 Peirce 论证，SC 给全部 $\mathrm O_\pi$，当然也给有限子表。删除零接触后不能沿用这个逆向。由此证明完整候选等价，并说明有限表的不同合法选择给同一完整理论。∎
+

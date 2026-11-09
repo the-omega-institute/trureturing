@@ -7,6 +7,8 @@ internal static class LeanProgram
 {
     public static int Main(string[] arguments)
     {
+        MaintenanceLogAdapter.Start();
+        var exitCode = 2;
         try
         {
             if (arguments.FirstOrDefault() == "lean-utility-input")
@@ -15,32 +17,26 @@ internal static class LeanProgram
                     Directory.GetCurrentDirectory(), arguments.Skip(1).ToArray());
                 Console.Out.Write(result.Output);
                 Console.Error.Write(result.Error);
-                return result.ExitCode;
+                exitCode = result.ExitCode;
             }
-            if (arguments.FirstOrDefault() is "ensure-cache" or "with-cache-reader" or "with-cache-writer")
+            else if (arguments.FirstOrDefault() is "ensure-cache" or "with-cache-reader" or "with-cache-writer")
             {
                 var root = Directory.GetCurrentDirectory();
                 var rest = arguments.Skip(1).ToArray();
-                if (arguments[0] is "with-cache-reader" or "with-cache-writer") return RunReader(root, rest);
-                var runner = new ProductionWorktreeProcessRunner();
-                // This leaf prepares subsequent Lean work. Optional binary-cache
-                // transfer failures leave the normal build responsible for success.
-                var result = LeanCacheEnsureCommand.Run(root, rest, runner, new ApfsDirectoryCloner(),
-                    continueOnCacheGetFailure: true);
-                Console.Out.Write(result.Output);
-                Console.Error.Write(result.Error);
-                return result.ExitCode ?? (result.Success ? 0 : 2);
+                exitCode = RunCache(root, rest, arguments[0] != "ensure-cache");
             }
-            throw new ArgumentException("expected lean-utility-input, ensure-cache, with-cache-reader or with-cache-writer");
+            else throw new ArgumentException("expected lean-utility-input, ensure-cache, with-cache-reader or with-cache-writer");
         }
         catch (Exception exception)
         {
             Console.Error.WriteLine($"LEAN_PRODUCER_FAILED {exception.Message}");
-            return 2;
+            exitCode = 2;
         }
+        MaintenanceLogAdapter.Finish(exitCode);
+        return exitCode;
     }
 
-    private static int RunReader(string root, string[] arguments)
+    private static int RunCache(string root, string[] arguments, bool wrapped)
     {
         using var cancellation = new CancellationTokenSource();
         var signalExit = 0;
@@ -55,22 +51,38 @@ internal static class LeanProgram
         using var stdout = Console.OpenStandardOutput();
         using var stderr = Console.OpenStandardError();
         var observation = LeanCacheCommandObservation.FromEnvironment();
-        observation?.Boundary("cache-reader", "start");
+        var phase = wrapped ? "cache-reader" : "cache-ensure";
+        var exit = 2;
+        observation?.Boundary(phase, "start");
         try
         {
-            var result = LeanCacheEnsureCommand.RunWithWriter(root, arguments,
-                new ProductionWorktreeProcessRunner(cancellation.Token, observation), new ApfsDirectoryCloner(),
-                standardOutput: observation?.Output(stdout) ?? stdout,
-                standardError: observation?.Error(stderr) ?? stderr);
+            var runner = new ProductionWorktreeProcessRunner(cancellation.Token, observation);
+            var result = wrapped
+                ? LeanCacheEnsureCommand.RunWithWriter(root, arguments, runner, new ApfsDirectoryCloner(),
+                    standardOutput: observation?.Output(stdout) ?? stdout,
+                    standardError: observation?.Error(stderr) ?? stderr)
+                : LeanCacheEnsureCommand.Run(root, arguments, runner, new ApfsDirectoryCloner(),
+                    continueOnCacheGetFailure: true);
             Console.Out.Write(result.Output);
             Console.Error.Write(result.Error);
-            var exit = signalExit != 0 ? signalExit : result.ExitCode ?? (result.Success ? 0 : 2);
-            observation?.Boundary("cache-reader", "finish", rawExit: exit);
+            exit = signalExit != 0 ? signalExit : result.ExitCode ?? (result.Success ? 0 : 2);
             return exit;
         }
         catch (OperationCanceledException) when (cancellation.IsCancellationRequested)
         {
-            return signalExit != 0 ? signalExit : 2;
+            exit = signalExit != 0 ? signalExit : 2;
+            return exit;
+        }
+        finally
+        {
+            if (signalExit != 0)
+            {
+                exit = signalExit;
+                Console.Error.WriteLine($"LEAN_CACHE_INTERRUPTED exit={exit}");
+                MaintenanceLogAdapter.Record(wrapped ? "cache-reader" : "ensure-cache",
+                    "interrupted", phase, "signal", null);
+            }
+            observation?.Boundary(phase, "finish", rawExit: exit);
         }
     }
 }

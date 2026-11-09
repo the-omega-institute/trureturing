@@ -1,0 +1,26 @@
+### 6.2　事件效果与 Born 规则
+
+若原事件 $e$ 由细分支集合给出，原事件强度须确实绑定为
+
+$$
+w_e(x)=\sum_{j\in e}Q_{\rm out}(L_jx).
+$$
+
+定义 $E_e=\sum_{j\in e}K_j^\dagger K_j$，立即有
+
+$$
+0\le E_e\le I,\quad\sum_eE_e=I,\quad
+w_e(x)=h(Fx,E_eFx).
+$$
+
+对于 $Q(x)>0$，若原概率就是完整事件强度的归一分账，令 $\psi=Fx/\sqrt{Q(x)}$，则
+
+$$
+p(e\mid x)=\frac{w_e(x)}{Q(x)}=\langle\psi,E_e\psi\rangle.
+\tag{17}
+$$
+
+若 $E_e=P_\phi$ 是单位向量对应的秩一投影，便得到 $|\langle\phi,\psi\rangle|^2$。概率与强度的绑定是原操作接口，不能只因同一符号就宣布另一终端读口也服从此式。
+
+所有数学 POVM 均有这类实现：给定 $E_e\ge0$、$\sum E_e=I$，取 $K_e=\sqrt{E_e}$，并用内部记录的数学直和保存 $e$。这证明数学表示的完备性；全部相应装置在指定 $\Omega$ 内是否可取得，是另一个来源问题。
+

@@ -1,0 +1,83 @@
+**Lemma 10.5 (A sufficient quadratic Taylor cutoff).** Put
+
+$$
+T_s=3(6s+5)^2.
+\tag{10.8}
+$$
+
+Two germs (8.4) are identical if and only if their coefficients through
+order $T_s$ agree. This assertion already holds for fixed admissible
+parameters without the extra frequency separation in Proposition 10.4.
+It handles repeated radicals and zero summands.
+
+**Proof.** Use (8.7)--(8.8), with $K\le6s+4$. The case $K=0$ is
+zero. Otherwise write each nonzero summand of $Z$ as $A\sqrt p$,
+including its rational summand by taking $p=1$; here
+$\deg A\le K+1$, $\deg p\le2$, and $p(0)>0$. Choose a maximal
+constant-linearly-independent subset of these analytic summands,
+of size $\ell\le K+1$. Their Wronskian $\mathcal W$ is nonzero.
+The criterion being used is Bostan--Dumas, *Wronskians and linear
+independence*, Theorem 2, American Mathematical Monthly 117 (2010),
+722--727, DOI [10.4169/000298910X515785](https://doi.org/10.4169/000298910X515785),
+[arXiv:1301.6598v1](https://arxiv.org/html/1301.6598v1): over
+characteristic zero, linearly independent formal series have nonzero
+Wronskian. Taking a basis first avoids any independence assumption on
+repeated or cancelling original terms.
+
+For each selected column let $B_0=A$. Differentiation gives
+
+$$
+(A\sqrt p)^{(v)}=p^{1/2-v}B_v,\qquad
+B_{v+1}=pB_v'+(1/2-v)p'B_v,\qquad
+\deg B_v\le K+1+v.
+\tag{10.9}
+$$
+
+For $p=1$ the same formula just differentiates $A$. Factor
+$p^{1/2-(\ell-1)}$ out of its Wronskian column. The entry in row
+$v=0,\ldots,\ell-1$ that remains is
+$p^{\ell-1-v}B_v$, of degree at most
+$K+1+2(\ell-1)-v$. Thus the remaining determinant is a nonzero
+polynomial of degree at most
+
+$$
+\ell(K+1)+\frac32\ell(\ell-1).
+\tag{10.10}
+$$
+
+All the factored functions are units at zero, so this degree bounds
+$\operatorname{ord}_0\mathcal W$. This low-degree determinant
+factorization is the mature method also used by Koiran--Portier--Tavenas,
+*A Wronskian Approach to the Real $\tau$-Conjecture*, §3 and the
+proof of Theorem 13, [arXiv:1205.1015v3](https://arxiv.org/html/1205.1015v3),
+DOI [10.1016/j.jsc.2014.09.036](https://doi.org/10.1016/j.jsc.2014.09.036).
+Their distinct-real-zero bound is not being substituted for a local
+multiplicity bound; (10.9)--(10.10) establish the needed degree here.
+
+Suppose $Z\ne0$. Express $Z$ in the chosen basis and replace a column
+with nonzero coefficient by $Z$. The new determinant is a nonzero
+constant times $\mathcal W$. Expanding on that column, whose $v$th
+entry has order at least $\operatorname{ord}_0Z-v$, gives
+
+$$
+\operatorname{ord}_0Z\le\operatorname{ord}_0\mathcal W+\ell-1.
+\tag{10.11}
+$$
+
+If $\operatorname{ord}_0Z<\ell-1$ this is immediate; otherwise all
+these lower orders are nonnegative and the determinant expansion proves
+it directly. Since $\prod a_l$ is a unit,
+$\operatorname{ord}_0D=\operatorname{ord}_0Z-2$. Equations
+(10.10)--(10.11), with $\ell\le K+1$, imply
+
+$$
+\operatorname{ord}_0D
+\le\ell(K+1)+\tfrac32\ell(\ell-1)+\ell-3
+<3(K+1)^2\le T_s.
+\tag{10.12}
+$$
+
+This proves the sufficient cutoff. The basis argument also covers a
+zero rational part, constant affine denominators, and $\ell=1$.
+No nonvanishing claim was made for an unreduced Wronskian. ∎
+

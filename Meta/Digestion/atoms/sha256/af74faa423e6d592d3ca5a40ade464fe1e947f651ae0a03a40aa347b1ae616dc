@@ -1,0 +1,79 @@
+**Theorem 43.7 (exact full and strict-interior fibres at one fixed seed).**
+Define $B_0(x)=x$, $B_{k+1}(x)=\langle B_k(x),\beta\rangle$.
+For $r\ge0$, $0\le a\le r$, put
+
+$$
+W_a=G^aFG^{r-a},\quad j_a=r-a+2,\quad
+u_a=\operatorname{Run}(W_a,C),\quad y_r=B_{r+2}(C).
+\tag{43.12}
+$$
+
+Then $L(u_a)=r+3$, $0<j_a<L(u_a)$,
+$F_{j_a}(u_a)=y_r$, and $n(y_r)=2r+6$. The active-$F$ fibre conditional
+on this fixed $C$ and $n_0=2$ has EXACTLY the following $r+3$ members:
+
+$$
+\begin{array}{c|c|c}
+\text{completed }W&\text{entry }u&\text{progress }j\\\hline
+G^{r+1}F&y_r&0\\
+W_a\ (0\le a\le r)&u_a&r-a+2\\
+G^{r+1}&G^{r+1}(C)&r+3
+\end{array}
+\tag{43.13}
+$$
+
+Consequently its strictly internal between-row fibre has exactly $r+1$
+members. No selected-family lower bound is substituted for this equality.
+
+Proof. Write $A_0=\beta$, $A_{k+1}=\langle A_k,\alpha\rangle$,
+so $C=A_1$ and $G(A_k)=A_{k+1}$. Applying $F$ to $A_{a+1}$ replaces
+its terminal beta by $C$ and all its $a+1$ right alphas by beta.
+Subsequent $G$ calls split only the terminal leftmost beta. Thus
+
+$$
+u_a=B_{a+1}(A_{r-a+1}).
+\tag{43.14}
+$$
+
+This has $r+3$ old leaves. Its first $r-a+2$ rows are precisely all
+leaves of the inner $A_{r-a+1}$. Full replacement of that inner tree
+is $B_{r-a+1}(C)$; none of the outer $a+1$ beta leaves has been edited.
+The endpoint is $B_{a+1}(B_{r-a+1}(C))=B_{r+2}(C)$. These are literal
+old-address effects because each outer branch persists and the untouched
+outer leaves follow the inner leaves in left-first order. Each $B$
+adds one beta, increasing $n$ by two; $n(C)=2$ gives $2r+6$.
+The progresses range distinctly from $2$ through $r+2$, and all are
+strictly below $r+3$.
+
+For completeness, put $s=r+2\ge2$. The whole-image inverse gives
+$\delta(B_s(C))=A_s$. Theorem 43.2 therefore gives $K(y_r)=s+1$.
+Its recursion, collapsing the innermost $C$ first and then undoing
+successive right beta promotions, yields
+
+$$
+U_0(y_r)=y_r,\qquad
+U_j(y_r)=B_{s-j+1}(A_{j-1})\quad(1\le j\le s+1).
+\tag{43.15}
+$$
+
+This can also be checked without an inverse formula: the inner
+$A_{j-1}$ has $j$ leaves and its full replacement is $B_{j-1}(C)$,
+leaving the $s-j+1$ outer betas untouched; at $j=1$, $A_0$ has just
+one leaf. Their endpoints are all $B_s(C)$, so uniqueness in Theorem
+43.2 establishes the displayed candidates and excludes all other $j$.
+
+At $j=1$ the entry is $B_s(\beta)$, whose deepest right subtree is
+beta. It is outside $\mathcal O$ of Lemma 42.3. Its index is $2s+1>2$,
+so it is neither an empty-word entry at $n_0=2$ nor a nonempty completed
+macro output. Its completed-history summand is empty. At $j=0$ the
+word $G^{s-1}F$ reaches $y_r$ from $C$. At $j=s+1$ the entry is $A_s$,
+reached by $G^{s-1}$ from $C$. At each $2\le j\le s$, put $a=s-j$;
+(43.14) is exactly $U_j(y_r)$ and its word is $W_a$. Theorem 42.4
+excludes every other completed pair at each of these candidates. In
+particular $n_0=2$ already forces $t_0=C$: its counts must be $(1,1)$,
+and (43.1) permits only this two-leaf ordering. This proves the entire
+exhaustion (43.13), not only attainability of its middle rows. All
+$j\ge1$ entries there have $s+1$ leaves, so its last row is exhausted,
+its first row is unstarted, and exactly its $s-1=r+1$ middle rows are
+strictly internal. $\square$
+

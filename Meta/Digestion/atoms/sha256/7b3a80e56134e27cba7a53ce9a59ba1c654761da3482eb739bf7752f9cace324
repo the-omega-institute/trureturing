@@ -1,0 +1,63 @@
+### 命题 32.3（保留原成功质量的条件预测迁移）
+
+在定义 32.1–32.2 的全部前件下，令 $E$ 的本征值为 $\lambda_+\ge\lambda_-\ge0$。若 $\lambda_+>0$，取单位最大本征向量 $v$，并对每个保留的实际 $q$ 定义同一参考律
+
+$$
+s_n=1-\langle v,\rho_nv\rangle,\qquad
+\nu_q(w)=\frac{\langle v,A_{q,w}v\rangle}{\lambda_+},\qquad
+\nu_q(w)\ge0,\quad\sum_w\nu_q(w)=1.
+\tag{32.10}
+$$
+
+$\nu_q$ 与兼容常数 $c_i$ 不同。对每个**实际** $m(n)>0$，有 $M(n)\ge tm(n)>0$，且
+
+$$
+\begin{aligned}
+\operatorname{TV}\!\left(\frac{P_j(n;q,\cdot)}{m(n)},\nu_q\right)
+&\le\min\!\left\{1,
+ \sqrt{\frac{\lambda_-s_n}{M(n)}}+\frac{M(n)-tm(n)}{M(n)}\right\}\\
+&\le\min\!\left\{1,
+ \sqrt{\frac{(1+\theta)\lambda_-s_n}{m(n)}}
+       +\frac{\theta}{m(n)+\theta}\right\}=:b_n.
+\end{aligned}
+\tag{32.11}
+$$
+
+特别地，原质量加权的完整事件行满足
+
+$$
+\frac12\sum_w|P_j(n;q,w)-m(n)\nu_q(w)|
+\le m(n)\min\!\left\{1,
+ \sqrt{\frac{\lambda_-s_n}{M(n)}}+\frac{M(n)-tm(n)}{M(n)}\right\}
+\le m(n)b_n.
+\tag{32.12}
+$$
+
+证明。先按定义 32.2 的参数对应复用命题 30.4 的 (30.10) 与 (30.12)，只将其原质量参数替换为修复质量 $M$，即得
+
+$$
+\operatorname{TV}\!\left(\frac{Q_j}{M},\nu_q\right)
+\le\sqrt{\frac{\lambda_-s_n}{M}}.
+$$
+
+此处消费已有的二维正效果计算，不把它施加于可能非仿射的实际 $P_j$。若 $r>0$，(32.7) 给出概率行的正归一分解
+
+$$
+\frac{Q_j}{M}=\frac{tm}{M}\frac{P_j}{m}
+          +\frac{\gamma r}{M}\frac{R_j}{r},\qquad
+\operatorname{TV}\!\left(\frac{P_j}{m},\frac{Q_j}{M}\right)
+=\frac{\gamma r}{M}\operatorname{TV}\!\left(\frac{P_j}{m},\frac{R_j}{r}\right)
+\le\frac{M-tm}{M}.
+$$
+
+若 $r=0$，非负性给 $R_j=0$，$Q_j=tP_j$、$M=tm$，同一界两边均为零，无须定义 $R_j/r$。三角不等式和条件总变差至多一给 (32.11) 第一界。最后 $M\ge tm$ 且 $0\le r\le1$，故
+
+$$
+\sqrt{\frac{\lambda_-s_n}{M}}
+\le\sqrt{\frac{(1+\theta)\lambda_-s_n}{m}},\qquad
+\frac{\gamma r}{tm+\gamma r}
+\le\frac{\gamma}{tm+\gamma}=\frac{\theta}{m+\theta}.
+$$
+
+这给第二界；乘回实际原质量 $m$ 得 (32.12)。证毕。
+

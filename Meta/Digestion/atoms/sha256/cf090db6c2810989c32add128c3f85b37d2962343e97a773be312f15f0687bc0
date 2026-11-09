@@ -1,0 +1,45 @@
+#### 定理 3.6：二元平面欧氏化
+
+设 $B$ 满足引理 3.3 的条件。 任给 $x,y\in B$、$y\ne0$，存在一个复数 $\lambda$，使所有 $\alpha,\beta\in\mathbb R$ 同时满足
+
+$$
+\boxed{\quad
+\|\alpha x+\beta y\|^2
+=\|y\|^2\,|\alpha\lambda+\beta|^2.
+\quad}
+\tag{P}
+$$
+
+因此原范数满足平行四边形恒等式。
+
+**证明。**
+
+令 $S:=L_xL_y^{-1}$，并按引理 3.4 将其复化。 选取一个 $\lambda\in\sigma(S_{\mathbb C})$。 对实数 $\alpha,\beta$，双线性给原实算子等式
+
+$$
+\alpha S+\beta I=L_{\alpha x+\beta y}L_y^{-1}.
+$$
+
+若 $\alpha x+\beta y\ne0$，引理 3.3 使右式成为 倍率
+
+$$
+r_{\alpha,\beta}=\frac{\|\alpha x+\beta y\|}{\|y\|}
+$$
+
+的满射相似。复化保留此倍率，而 $\alpha\lambda+\beta$ 属于其谱，因此谱圆结论给 $|\alpha\lambda+\beta|=r_{\alpha,\beta}$。 若 $\alpha x+\beta y=0$，对应算子为零，其谱仅为 $\{0\}$， 所以 $\alpha\lambda+\beta=0$；同一公式仍成立。 这证明 (P)。
+
+由 (P) 对 $(\alpha,\beta)=(1,1),(1,-1),(1,0)$ 使用同一个 $\lambda$，得
+
+$$
+\begin{aligned}
+\|x+y\|^2+\|x-y\|^2
+&=\|y\|^2\bigl(|\lambda+1|^2+|\lambda-1|^2\bigr)\\
+&=2\|y\|^2(|\lambda|^2+1)
+=2\|x\|^2+2\|y\|^2.
+\end{aligned}
+$$
+
+$y=0$ 时该式直接成立。 若 $x,y$ 独立，$\operatorname{Im}\lambda\ne0$，否则 $(\alpha,\beta)=(1,-\lambda)$ 会使一个非零实线性组合的范数为零。 故独立二元张成的平面等距于通常的欧氏平面。
+
+$\square$
+

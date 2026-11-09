@@ -1,0 +1,64 @@
+**Theorem 3.1 (uniform G1 certificate).** For every full shared relabeling
+$g=(1,\lambda,\varrho)$ with $\theta>0$, there is a positive complete-label
+certificate of exactly $324$ distinct pairs, sound against every supported
+full shared relabeling of both sources.
+
+Proof. G1 has nine literal components $K_{8,27}$, retaining the free
+$w_3$ and $z$ coordinates, by UJB Theorem 15.2. Choose one component.
+In it choose three distinct left endpoints and ten distinct right endpoints
+and include all $30$ pairs between them. Attach each of its other five
+left endpoints to one of these right endpoints, and each of its other
+seventeen right endpoints to one of these left endpoints. This is one
+connected spanning positive graph on its eight and $27$ literal endpoints,
+with $30+5+17=52$ pairs.
+
+In each of the other eight components choose one left and one right
+anchor and include the double star: all $27$ pairs at the left anchor,
+and the seven additional pairs at the right anchor. Each is connected,
+spans its entire component, and has $34$ pairs. Their disjoint union $D_1$
+therefore has
+
+$$
+|D_1|=52+8\cdot34=324.
+\tag{PCR.5}
+$$
+
+Transport by the actual full maps. Any compatible G0 would contain an
+injective $K_{3,10}$, impossible by UJB Theorem 18.1: three distinct
+literal left endpoints of G0 have at most nine common right neighbors.
+This reuses the actual capacity obstruction; an uncapacitated quotient
+would not justify it. Thus every compatible source is G1.
+
+A connected evidence component lies wholly within one candidate G1
+component. It already has eight left and $27$ right labels, so it fills
+that component's two capacities. Distinct evidence components cannot
+share a candidate component. There are nine, so all are filled and every
+missing cross-pair within each is forced, while all pairs between them
+are absent. The recovered relation is precisely the union of those nine
+complete bicliques, of size $9\cdot8\cdot27=1944$. The actual generator
+supplies a positive member of the version set. $\square$
+
+For this witness a sufficient label-only test is to find exactly nine
+connected evidence components, each with $8$ left and $27$ right labels,
+and a $K_{3,10}$ in at least one. The test uses no hidden component names.
+The complete-label observations determine each connected component;
+checking its finite subgraphs is internal computation. The source-zero
+obstruction and the source-one capacities then justify the returned
+union of bicliques on the actual positive domain.
+
+The $K_{3,10}$ obstruction is needed for this sufficient argument when
+source zero is supported. Nine bare double stars have only $306$ pairs,
+but can also occur in G0: take its nine parallel $F(0,0,1)$ lines and
+the plane $w_1+w_3=0$. This plane meets each line of every direction in
+(PCR.3) exactly once, since its normal is nonzero on each direction.
+For each parallel line use one left representative as the left center,
+all its $27$ right neighbors, and one right endpoint at its intersection
+with the plane as the right center. The eight left endpoints incident
+there supply its star. These nine sets of eight left endpoints are
+disjoint and cover $A$, since every allowed line meets the plane once;
+the nine right sets partition $T$. This gives the same abstract double-star
+evidence as in G1, with all endpoint supports exposed. A suitable pair of
+full injections realizes identical label evidence in the two sources,
+while their full relations differ (G0 is connected; G1 is not).
+When only G1 is supported, these $306$ pairs already certify its relation.
+

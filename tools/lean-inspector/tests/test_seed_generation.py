@@ -10,6 +10,7 @@ import signal
 import subprocess
 import sys
 import tarfile
+import traceback
 import zipfile
 
 import test_reuse
@@ -110,6 +111,11 @@ if os.environ.get('FIXTURE_FAIL_AFTER_GUARD') == '1':
             self.assertEqual(downloads, archive_downloads(),
                              '[FAIL] next_entry_never_restores_older_release')
             self.assertEqual(head, self.api.read_seed_base(self.root))
+        except Exception:
+            # This group has an enclosing hang guard. Emit the original
+            # failure before later cases or process cleanup can exhaust it.
+            traceback.print_exc()
+            raise
         finally:
             os.close(read_notice)
             if first.poll() is None:
@@ -424,6 +430,44 @@ if os.environ.get('FIXTURE_DELAY_FAILURE') == '1':
         self.assertFalse((self.root / '.lake/build').exists())
 
     def canonical_release_fixture(self, *, damage=None):
+        # These cases consume a tiny sealed release history, not compiler or
+        # project build outputs. Share only its immutable construction bytes;
+        # every case still owns all Git, archive and report files independently.
+        if damage is not None:
+            return self.create_canonical_release_fixture(damage=damage)
+
+        def files():
+            return {path.relative_to(self.root): (path.read_bytes(), path.stat().st_mode & 0o777)
+                    for path in self.root.rglob('*') if path.is_file()}
+
+        before = files()
+        key = tuple(sorted((str(path), mode, hashlib.sha256(data).digest())
+                           for path, (data, mode) in before.items()))
+        publisher = (ROOT / 'tools/scripts/worktree/lean-cache-publish.sh').read_bytes()
+        key = key, hashlib.sha256(publisher).digest()
+        cached = getattr(type(self), '_canonical_release_material', None)
+        if cached is None or cached[0] != key:
+            result = self.create_canonical_release_fixture()
+            after = files()
+            changes = tuple((path, data, mode) for path, (data, mode) in after.items()
+                            if before.get(path) != (data, mode))
+            removed = tuple(before.keys() - after.keys())
+            type(self)._canonical_release_material = key, changes, removed, result
+            return result
+        _, changes, removed, result = cached
+        for path in removed:
+            (self.root / path).unlink()
+        for relative, data, mode in changes:
+            path = self.root / relative
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_bytes(data)
+            path.chmod(mode)
+        self.environment.update(FAKE_RELEASE_ROOT=str(self.root / 'releases'), GITHUB_ACTIONS='false',
+            PATH=str(self.root / 'bin') + os.pathsep + self.environment['PATH'],
+            STRATALINT_LEAN_REPORT_REUSE=str(self.output))
+        return result
+
+    def create_canonical_release_fixture(self, *, damage=None):
         """History A < B < C < HEAD, with real archives and the production fetch."""
         sys.path.insert(0, str(ROOT / 'tools/scripts/worktree'))
         import lean_cache_release as transport

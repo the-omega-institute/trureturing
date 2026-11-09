@@ -1,0 +1,11 @@
+## 494. 固定二倍区间归一化下的矩传递与正超额峰度
+
+沿用 §490 的 $E,D_u,\rho_x,\mathcal T_{\theta,g},Q(g),S_X$ 与 §493 的概率测度 $d\mu_X=dx/(x\log2)$（$[X,2X]$ 上）及 $Z_X=\mathcal T_{\theta,g}/\sqrt{S_X}$。固定 $0<\theta<1$，令
+
+$$
+\kappa=1-\theta,\qquad r=\frac\kappa2,\qquad U_X(x)=\frac xX,\qquad
+B_X(s,x)=\frac{D_{sx^\theta}(x)}{\sqrt{x^\theta\log x}}\quad(0\le s\le1,\ X\le x\le2X).
+$$
+
+由 $E$ 的 Borel 可测性，$(s,x)\mapsto B_X(s,x)$ 联合 Borel 可测。对整数 $k\ge1$，记 $c_k=\int_1^2u^{kr}\frac{du}{u\log2}=\dfrac{2^{kr}-1}{kr\log2}$。
+

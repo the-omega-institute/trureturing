@@ -1,0 +1,28 @@
+**Proposition 144.2 (zero residual infimum and the unchanged exact target).** For every original $\theta\in\Theta$,
+
+$$
+\inf_{\substack{D\in\mathscr D_{12}(\theta)\\\operatorname{rank}A^D=2}}
+\|\nu_D^{(3)}-\nu_f^{(3)}\|_{\rm TV}=0.
+\tag{144.3}
+$$
+
+The exact target remains
+
+$$
+\begin{aligned}
+F_{64}(\theta):\quad&\exists\text{ one whole-}G\text{ Borel partition }D,\\
+&\mathcal C(\mathbf1_{D_y},\mathbf1_{D_z},\mathbf1_{D_w})
+=\mathcal C(f_y,f_z,f_w)
+\quad\text{for every }(y,z,w)\in\mathcal L^3.
+\end{aligned}
+\tag{144.4}
+$$
+
+Neither attainment of (144.3), equality $A^D=A^f$ for an exact-rank-two partition, nor the universal statement $\forall\theta\in\Theta\ F_{64}(\theta)$ is established here.
+
+*Proof.* The same sequence in (143.4) proves (144.3), since each of its members lies in the displayed exact-marginal, exact-rank-two class and the residual is nonnegative. This in particular precludes a strictly positive residual lower bound on that class for any fixed original $\theta$. It does not turn an infimum into a minimum.
+
+The weak-star compact stochastic class of Proposition 123.2 contains the limit $f$; its deterministic partition subset need not contain that limit. Proposition 144.1 exhibits this distinction for the constructed sequence and supplies no $L^1$ compactness from which to extract an attaining partition. Nor does noncompactness prove nonattainment: a different partition could attain (144.4). Proposition 135.3 gives the forward implication from (144.4) to the twelve marginals and $A^D=A^f$ of rank two; the converse is still absent. Theorem 143.2 gives $A^{D_n}\to A^f$ and full-law convergence, not equality at any finite index. The missing inference for exact attainment is existence of an indicator tuple in the exact fiber $\Phi_3^{-1}(\Phi_3(f))$, or another argument producing all $64$ equalities for one partition; the limits above do not supply it.
+
+All these statements are conditional on the complete original endpoint and source suppliers retained in Definition 143.1. Every deterministic function is defined on the original $G$ and used at every original observation epoch, with the actual terminal $P\mathbf1_{D_w}$. The sequence is a mathematical family of common readouts. No additional randomness, controller, memory, stationary initial law, killed endpoint, time change, separate slot partition or postselection is introduced. A native source/evolution/readout correspondence remains the separate unresolved bridge specified in §§115–117. $\square$
+

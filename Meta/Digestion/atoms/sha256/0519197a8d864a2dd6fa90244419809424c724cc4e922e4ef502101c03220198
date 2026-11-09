@@ -1,0 +1,52 @@
+### 命题 4.3（有限换架平均）
+
+<a id="prop-c123-finite-twirl"></a>
+
+$\mathcal E_G$ 是到交换子代数 $\{U_g:g\in G\}'$ 的迹保持条件期望。
+若这个交换子代数仅为 $\mathbb C I$，则
+
+$$
+\mathcal E_G(A)=\operatorname{Tr}(A)I/d,
+$$
+
+且 $I/d$ 是唯一同时保持全部已供应换架的密度矩阵。
+
+**证明。**
+有限平均显然完全正、保迹、含幺。用左乘群元重排求和，输出与全部 $U_g$ 对易；
+反之与全部 $U_g$ 对易的算子在平均下不变，故平均幂等且范围就是该交换子代数。
+若 $B,C$ 属于此代数，则
+$\mathcal E_G(BAC)=B\mathcal E_G(A)C$，给出条件期望性质。
+范围为 $\mathbb C I$ 时，由保迹性确定输出只能是 $\operatorname{Tr}(A)I/d$。
+
+把这份参照代入本轮主定理，模流变为恒等，因而
+
+$$
+\mathfrak F_{\pi_d}=\mathfrak A_N,\qquad
+ \mathcal C_{\pi_d}=\{\rho\in\mathfrak A_N:\rho>0,\ \operatorname{Tr}\rho=1\}.
+$$
+
+这给出有限换架与参照等价候选的准确接点：无偏参照保留整个已供应噪声可恢复代数，
+但那个代数本身可能只是标量或一个真子代数。
+
+qubit 只需四个共轭操作 $I,X,Z,XZ$：$Z$ 不变性先消去 $x,y$，
+$X$ 不变性再消去 $z$。更一般地，已供应的位移门
+$U\lvert j\rangle=\lvert j+1\pmod d\rangle$ 与相位门
+$V\lvert j\rangle=e^{2\pi ij/d}\lvert j\rangle$，通过 $d^2$ 个 $U^aV^b$ 给出同一有限构造：
+先平均相位消去非对角元，再平均位移等化对角元。
+均匀权重也有有限内部表述：若一个有限标签分布在群的左平移下不变，
+则任意两个标签的概率相等。但*标签寄存器、均匀混合和条件控制仍须实际供应*；
+一个平均公式不会自动制造这些操作，也没有使用外部 Haar 积分。
+
+保留标签还可以精确说明原信息去了哪里。定义
+
+$$
+\mathcal J(\rho)=\frac1{|G|}\sum_g\lvert g\rangle\langle g\rvert\otimes U_g\rho U_g^*,
+ \qquad
+ \mathcal D(A)=\sum_gU_g^*\langle g\rvert A\lvert g\rangle U_g.
+$$
+
+直接代入得 $\mathcal D\mathcal J=\operatorname{id}$。不可约情形下，系统边缘恒为 $I/d$，
+标签边缘恒为均匀分布，输入内容仍保存在二者的联合关系中。
+这是已知的有限随机幺正加密机制 [7](#ref-amtw2000)，在这里用来解释内部参照供给：
+“任何输入都给出同一个局部参照”可以成立；不能据此把整个可逆结构说成已经抹掉任意输入。
+

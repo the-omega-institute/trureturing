@@ -39,7 +39,7 @@ section Normed
 variable {k : Type u} [RCLike k]
 variable {H : Type v} [NormedAddCommGroup H] [NormedSpace k H]
 
-private theorem tendsto_pow_of_regular (T : H →L[k] H) (hT : ‖T‖ ≤ 1) (x p : H)
+theorem tendsto_pow_of_regular (T : H →L[k] H) (hT : ‖T‖ ≤ 1) (x p : H)
     (hp : T p = p)
     (hreg : Tendsto (fun n : ℕ => (T ^ (n + 1)) x - (T ^ n) x) atTop (𝓝 0))
     (havg : Tendsto (fun m : ℕ => birkhoffAverage k (T : H → H) id m x) atTop (𝓝 p)) :

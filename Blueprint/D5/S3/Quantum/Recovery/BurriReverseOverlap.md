@@ -47,5 +47,11 @@ For the fixed radical rotation, the source-row recovery has strictly smaller can
 - Truth anchor: `D5/S3/Quantum/Recovery/BurriReverseOverlap.canonical_overlap_gap`
 - Truth anchor: `D5/S3/Quantum/Recovery/BurriReverseOverlap.purification_overlap`
 - Truth anchor: `D5/S3/Quantum/Recovery/BurriReverseOverlap.recovery_channels`
+- Dependency: [D5/S3/Quantum/Foundation/FiniteKrausChannel](../Foundation/FiniteKrausChannel.md)
+- Dependency: [D5/S3/Quantum/Foundation/FiniteStateChannel](../Foundation/FiniteStateChannel.md)
+- Dependency: [D5/S3/Quantum/PureState/PureStateHandshake](../PureState/PureStateHandshake.md)
+- Dependency: [D5/S3/Quantum/QuantumChannels/MayerKnillInfidelityScalingCore](../QuantumChannels/MayerKnillInfidelityScalingCore.md)
 - Dependency: [D5/S3/Quantum/QuantumChannels/MayerZeroFidelityTightness](../QuantumChannels/MayerZeroFidelityTightness.md)
+- Dependency: [D5/S3/Quantum/Recovery/BurriReverseDecoder](BurriReverseDecoder.md)
 - Dependency: [D5/S3/Quantum/Recovery/BurriReversePolar](BurriReversePolar.md)
+- Dependency: [D5/S3/QuantumBounds/PeritoTsirelson](../../QuantumBounds/PeritoTsirelson.md)

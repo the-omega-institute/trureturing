@@ -1,0 +1,19 @@
+### 5.3　三份二元关系的共存余量仍须保正
+
+若三个实单位向量的配对为 $\alpha,\beta,\gamma$， 它们的共同 Gram 正性要求
+
+$$
+|\alpha|,|\beta|,|\gamma|\le1,\qquad
+\Delta=1+2\alpha\beta\gamma-\alpha^2-\beta^2-\gamma^2\ge0.
+$$
+
+当 $|\alpha|<1$ 时可以在 $\mathbb R^3$ 取
+
+$$
+u=e_1,\quad v=(\alpha,\sqrt{1-\alpha^2},0),\quad
+w=\left(\beta,\frac{\gamma-\alpha\beta}{\sqrt{1-\alpha^2}},
+\pm\sqrt{\frac{\Delta}{1-\alpha^2}}\right).
+$$
+
+边界 $|\alpha|=1$ 迫使 $\gamma=\alpha\beta$，二维足够。 两种符号保持全部二元内积，定向体积则满足 $\tau^2=\Delta$。 这说明平方关系决定三维余量的大小，方向还要由原有向操作或定向记录提供。
+

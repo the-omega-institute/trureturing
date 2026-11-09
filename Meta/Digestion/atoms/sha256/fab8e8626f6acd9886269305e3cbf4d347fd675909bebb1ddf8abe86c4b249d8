@@ -1,0 +1,7 @@
+**【编者局部说明：经典 CA/GA 的准确对应】** 参见 G. Caveney、J.-L. Nicolas、J. Sondow, *On SA, CA, and GA numbers*, [arXiv:1112.6010v1](https://arxiv.org/pdf/1112.6010v1)：第 7–9 页 §2 的 $F(p,j)$ 正是本文 $\rho_{p,j}$；CA 的定义是对某个 $\varepsilon>0$ 最大化 $\sigma(m)/m^{1+\varepsilon}$，即本文指数化的价格目标，参数对应为 $\varepsilon=\eta$。因此定理 1 属于经典 CA 层阈值优化，定理 5 的终点是匹配价格的 CA 最大点，不把改换记号称作新理论。第 4 页定义 GA1 为复合 $N$ 对所有素因子满足 $G(N)\ge G(N/p)$，GA2 为对所有正整数倍满足 $G(N)\ge G(aN)$，其中 $G=e^\gamma R$。本文反例终点确满足 GA1 及单素数加入的局部条件；后者未推出 GA2。该文第 5 页 Theorem 4(ii) 已给出“若存在 Robin 反例，则最大 $G$ 及一个同时为 GA1、GA2 的极值整数存在”的更强存在性背景；本文从任意反例的特定有限上升路径须按自身证明理解，不宣称首次发现极值归约。本文涉及的历史关系以此文及其所引 Ramanujan、Alaoglu–Erdős、Robin 结果为归属，无另行原创性主张。
+<!-- editorial-note:end classical-ca-ga-attribution -->
+
+---
+
+<a id="sec-7"></a>
+

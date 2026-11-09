@@ -1,0 +1,29 @@
+**定理 9.3（完整关系模型中的核保持复制）。**对 $N\ge1$，令 $M_N=M^{\Sigma_N}$，逐坐标定义乘法和 $U_N$，真实双侧单位为常数组 $\mathbf1$。置
+
+$$
+c_N(f,g)=\frac1{N3^N}\sum_{\sigma\in\Sigma_N}c(f(\sigma),g(\sigma)),
+\qquad
+\Gamma_N(a)(\sigma)=H_N^\sigma(a;1).
+\tag{9.4}
+$$
+
+则 $c_N$ 有限、非负、零对角，且在 $M_N$ 的全部四个数组上满足同一 (R)。对全部 $a,b$，
+
+$$
+c_N(\Gamma_N(a),\Gamma_N(b))=c(a,b).
+\tag{9.5}
+$$
+
+若 $\mathbf p_j$ 表示值为 $p_j$ 的常数组，则
+
+$$
+\begin{aligned}
+c_N(\Gamma_N(1),\mathbf1)+c_N(\mathbf1,\Gamma_N(1))&\le\frac{\Omega(1)}N,\\
+c_N(\mathbf p_j,\mathbf1)+c_N(\mathbf1,\mathbf p_j)&\le\frac{\Omega(1)}N
+\qquad(j\ge0).
+\end{aligned}
+\tag{9.6}
+$$
+
+**证明。**逐坐标的实际 (R) 求有限和并除以 $N3^N$，给复制模型的完整关系。乘法单位与比较的其余性质逐坐标成立。(9.5) 为 (9.2) 的终端 $z=w=1$；(9.6) 分别由 (9.3) 和 $q(p_j)+r(p_j)\le\Omega(1)$ 得到。这里没有断言 $\Gamma_N$ 保持乘法、标记或真实单位，也未把它当作原始配方的同态。
+

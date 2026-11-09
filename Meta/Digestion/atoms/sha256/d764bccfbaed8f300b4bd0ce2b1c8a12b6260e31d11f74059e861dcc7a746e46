@@ -1,0 +1,33 @@
+**Proposition 27.5 (an actual nondiagonal increment with $A<3$).** Set
+
+$$
+\begin{aligned}
+R&=\frac15\begin{pmatrix}
+4&3&0&0\\-3&4&0&0\\0&0&4&3\\0&0&-3&4
+\end{pmatrix},\qquad
+D_0=\operatorname{diag}(1,i,e^{-i\pi/4},e^{i\pi/4}),\\
+U&=D_0 R U_+,\qquad
+w=\frac45(1,i,e^{-i\pi/4},e^{i\pi/4}).
+\end{aligned}
+\tag{27.12}
+$$
+
+This $U$ is an actual nondiagonal shared unitary with
+$\operatorname{diag}(UU_+^\dagger)=w\in\mathcal O_{\rm rad}$,
+$m(w)=4/5$ and $A(w)=B(w)<3$. For this one fixed feedback,
+every normalized effect satisfies $g(E,U)-\kappa\rho(E,U)>31/25$.
+
+Proof. Each rotation block in $R$ is orthogonal, $D_0$ is unitary,
+and $U_+$ is the diagonal unitary (6.3). Thus $U$ is unitary and
+has nonzero off-diagonal entries; its indicated diagonal is exact.
+All four moduli of $w$ are $4/5$, so (27.1) gives $m=4/5$.
+The two complex trace sums are $\frac45(1+\sqrt2+i)$ and
+$\frac45(1+\sqrt2-i)$, respectively. Hence
+$A=B=\frac45\sqrt{4+2\sqrt2}$. The inequalities
+$\sqrt2>9/8$ and $\sqrt2<3/2$ give $2<A=B<3$.
+Thus $A<A_0$, $B<23/6$, and $A+B>4$. Finally
+$m^2=16/25<19/20<1-5\kappa/e^2$, so (27.9) and the constant
+margin in Theorem 27.4 apply. This realizes the increment by an original
+feedback, rather than by independent amplitude or sign optimizers.
+$\square$
+

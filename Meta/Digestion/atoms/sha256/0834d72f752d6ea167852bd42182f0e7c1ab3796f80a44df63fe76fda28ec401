@@ -1,0 +1,84 @@
+**定理 161.1（秩至少三的局部恢复）。** 设 $E$ 为有限 EJA，$q$ 为任意正 Frobenius 型，$D$ 为任意实双线性映射，且 $D_au=0$ 对全部 $a\in E$ 成立。若 $\operatorname{rank}E\ge3$，则
+
+$$
+\mathsf F_{0,h}\Longleftrightarrow\mathsf F_3
+\Longleftrightarrow\mathsf F_{\rm cut}.
+\tag{161.1}
+$$
+
+秩零和秩一也有同一结论。此处不对裸的秩二 EJA 宣称该局部等价。
+
+证明。只需正向。秩零唯一 $D=0$；秩一时 $E=\mathbb Ru$，右单位条件使 $D=0$。以下设 $m=\operatorname{rank}E\ge3$。
+
+先补齐中央 primitive $e$ 的缺失输入。此时 $E=\mathbb Re\oplus E_0(e)$、$P_e=0$，以任意 primitive $p\perp e$ 作输入，所有 primitive $r$ 都是法向读回，(160.2) 直接给 $D_pe=0$。谱张成给 $D_ae=0$ 对 $a\in E_0(e)$ 成立。对任意 primitive $s\perp e$，改用切口 $s$、输入 $e$；由于 $D_se=0$，有
+
+$$
+q(D_es,r)=0\quad(r\text{ 为 }s\text{ 的法向 primitive}),
+\qquad D_es\in E_{1/2}(s)\subset E_0(e).
+\tag{161.2}
+$$
+
+取补空间的任一完整 frame。右单位给 $x:=D_ee=-\sum_sD_es$，所以 $x\in E_0(e)$，且 $x$ 与整个中心 $Z(E)$ 正交：每个切空间 $E_{1/2}(s)$ 都与中心正交。秩二测试 $c=e+s$、$p=r=e$ 的线性项为零，$D_ce=x$，又 $P_{e+s}=P_s$，故 $P_sx=0$。它对补空间的每颗 primitive $s$ 成立，对 $e$ 也成立。Peirce 规则给 $x\in N_s\Rightarrow[L_x,L_s]=0$；primitive 张成使 $[L_x,L_a]=0$ 对全部 $a$ 成立，即 $x\in Z(E)$。正定性和 $x\perp Z(E)$ 遂给 $x=0$。于是
+
+$$
+D_ae=0\qquad(a\in E,\ e\text{ 中央 primitive}).
+\tag{161.3}
+$$
+
+非中央 primitive $e$ 则有 $T_e:=E_{1/2}(e)\ne0$。复用 (156.2) 的原角构造：对任意非零切向量，存在 $s\perp e$ 与 $y^2=e+s$，使 $p_\pm=(e+s\pm y)/2$ 为整个 $E$ 的 primitive。它们均有半重叠，且
+
+$$
+p_+-p_-=y,\qquad p_++p_--s=e.
+\tag{161.4}
+$$
+
+正交输入已包含全部 $E_0(e)$ 的 primitive；(161.4) 又补齐 $e$ 与全部切向。因此 $\operatorname{span}\mathcal A_e^{0,h}=E$，但只在这个非中央情形使用这份张成。
+
+沿 (156.3) 取 $q(\zeta,x)=\tau(x)$、$\beta(a,b)=q(D_ab,u)/m$、$\Delta_ab=D_ab-\beta(a,b)\zeta$。仍有 $P_c\zeta=0$ 及 $q(\zeta,r)=1$ 对每颗 primitive $r$ 成立；在 $q|_{J_t}=w_t\tau_t(\,\cdot\circ\cdot\,)$ 下，准确的 $\zeta$ 仍为 $\sum_tu_t/w_t$。
+
+固定非中央 $e$ 与允许的 $p$，全部法向读回的相等值及含 $e$ 的完整 frame 给 $\Delta_pe\in T_e$；只延拓线性法向读数，(161.4) 给全部 $\Delta_ae\in T_e$。中央情形由 (161.3) 给同一结论。于是 (156.4) 的谱二次、三次极化原样适用：每个 $\Delta_a$ 都是原 $q$-斜伴随 Jordan 导子，$\Delta_au=0$，且在允许对上有
+
+$$
+W_e(p)-W_e(2\Delta_ep)=2\beta(p,e).
+\tag{161.5}
+$$
+
+下面不使用已经删除的 $p=e$ 测试。固定任一完整 frame $(r_i)_{i=1}^m$，记 $b_{ij}=\beta(r_i,r_j)$。正交输入和原右单位分别给
+
+$$
+b_{ij}=-\|P_{r_j}\Delta_{r_j}r_i\|_q^2\le0\quad(i\ne j),
+\qquad \sum_jb_{ij}=\beta(r_i,u)=0.
+\tag{161.6}
+$$
+
+对 $i\ne j$，秩二内部测试 $c=r_i+r_j$、$p=r=r_i$ 的原导子线性项只剩 $2\beta(r_i,c)$，因而
+
+$$
+b_{ii}+b_{ij}
+=-\|P_c(\Delta_{r_i}r_i+\Delta_{r_j}r_i)\|_q^2\le0.
+\tag{161.7}
+$$
+
+另一方面，零行和及非对角符号给
+
+$$
+b_{ii}+b_{ij}=-\sum_{k\notin\{i,j\}}b_{ik}\ge0.
+\tag{161.8}
+$$
+
+故每个剩余 $b_{ik}$ 为零。$m\ge3$ 使每个 $k\ne i$ 都可选另一个 $j\notin\{i,k\}$，于是全部非对角项及 $b_{ii}$ 均为零。再将导子单位式投影到 $T_{r_j}$，得到
+
+$$
+\Delta_{r_j}r_j
+=-\sum_{i\ne j}P_{r_j}\Delta_{r_j}r_i=0.
+\tag{161.9}
+$$
+
+这里每一项为零由 (161.6) 与正定性给出，不把零行和本身误作原缺失的负对角式。任意 primitive 均可扩成 frame，所以 $\Delta_pp=0$ 对全部 primitive 成立。
+
+对任意 $p\perp s$，frame 结论给 $\beta(p,p+s)=0$。令 $v=\Delta_sp$。导子律及 $\Delta_ss=0$ 给 $v\in E_{1/2}(p)\cap E_0(s)$；因此 $P_{p+s}v=v$。秩二内部测试便给 $0=2\|v\|_q^2$，故 $\Delta_sp=0$。对任意 $a=\sum_i a_ir_i$ 作自身谱展开，现在 $\Delta_aa=0$、$\beta(a,a)=0$；双线性极化给二者交替。
+
+允许的零或半重叠关系在交换 $p,e$ 后不变。交替 $\Delta$ 的值切于两颗 primitive，原 Frobenius 型给 $W_e(p)=W_p(e)$；交换 (161.5) 遂给 $\beta(p,e)=\beta(e,p)$，再由交替性得零。非中央 $e$ 用 (161.4) 的第一槽张成，中央 $e$ 用 (161.3)，然后对第二槽用 primitive 张成，得到 $\beta=0$、$D=\Delta$。
+
+最后，定理 156.1 的每条 Peirce 边校准只用 $p_v=(r_i+r_j)/2+v/(2\sqrt\gamma)$，$v^2=\gamma(r_i+r_j)$；这些输入与 $r_i$ 恰为半重叠，全部仍在新域。故同一推导给每条边 $4\|D_{r_i}v\|_q^2=\|v\|_q^2$。原 $q$-正交边求和恢复 (156.10)，即任意幂等元 $c$ 上 $P_cD_c=D_cP_c=D_c$、$D_c^2=-P_c/4$。沿定理 156.1 末尾的原平方展开恢复全部 $\mathsf F_{\rm cut}$，从而恢复 $\mathsf F_3$。∎
+

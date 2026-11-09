@@ -1,0 +1,81 @@
+**Theorem 43.5 (attained separated contact at a positive-determinant
+first boundary).** At either original first boundary
+$b\in\{\alpha,\beta\}$,
+
+$$
+                         D_{\mathrm{sel}}(b)\ge0.
+\tag{43.19}
+$$
+
+If $D_{\mathrm{sel}}(b)>0$, there is an actual phase pair
+$X_b=(E_b,U_b)$ such that
+
+$$
+ X_b\in\mathcal A_{\mathrm{ph},b}\setminus\mathcal G_b
+          \subseteq\mathcal A_b\setminus\mathcal G_b,
+                   \qquad d_U(U_b,b)\ge r>0,
+\tag{43.20}
+$$
+
+for a sufficiently small isolation radius from Theorem 43.3.
+In fact every nongeometric phase global minimizer at every sufficiently
+nearby level is outside that radius of the selected feedbacks.
+Consequently
+
+$$
+\begin{aligned}
+ \mathcal A_b=\mathcal G_b
+    &\ \Longrightarrow\ D_{\mathrm{sel}}(b)=0,\\
+ D_{\mathrm{sel}}(\alpha)>0
+    &\ \Longrightarrow
+          \text{the exhaustive-equality prefix is }(0,\alpha).
+\end{aligned}
+\tag{43.21}
+$$
+
+If $\alpha<\beta$, any additional contact at $\alpha$ in
+(43.20) is pure. No identity between a determinant-zero level and
+either first boundary is asserted.
+
+*Proof.* Theorem 42.2 puts $0<\alpha\le\beta<R<4$.
+Theorem 39.5 gives $m(b)=N(b)$ and actual selected global minimizers
+at both endpoints. Their positive sign is strict by (37.23).
+A negative determinant would therefore give the actual same-distance
+strict competitor of Theorem 36.5, contradicting global minimality.
+This proves (43.19), using both original distances in that theorem.
+
+Suppose the determinant is positive. Choose the interval $I$ and
+radius $r$ in Theorem 43.3 with $\overline I\subset(0,R)$.
+For any $\xi\in I$, (42.24) gives
+$m_{\mathrm{ph}}(\xi)=m(\xi)\le N(\xi)$.
+If a phase global minimizer has $d_U<r$, (43.6) and its exact
+equality statement force its value to be $N(\xi)$ and the pair
+to lie in $\mathcal G_\xi$. Thus every nongeometric phase global
+minimizer in this interval has $d_U\ge r$.
+
+For $b=\alpha$, (42.29) supplies levels of
+$\mathcal B_{\mathrm{ph}}$ tending to $\alpha$ from at or above
+$\alpha$. An isolated bad endpoint is included by taking that level
+itself. At each such level there is a nongeometric phase global
+minimizer: if $m_{\mathrm{ph}}<N$, any phase global minimizer is
+nongeometric; if the values coincide, the bad-set witness is an
+additional global minimizer. For $b=\beta$, choose levels tending
+down to $\beta$ in the strict-loss right interval (39.29).
+Equation (42.24) supplies phase global minimizers on these levels,
+and their strictly lower values make them nongeometric.
+All chosen feedbacks satisfy $d_U\ge r$.
+
+The phase domain, with all effects, is compact. A subsequential
+limit is an actual phase pair at level $b$. Endpoint value continuity
+(39.27) makes its value $m(b)=N(b)$, so (42.24) puts it in both
+minimizing sets. Hausdorff continuity of $\mathscr U_\xi$ preserves
+$d_U\ge r$ at the limit. This proves (43.20) as an attained pair,
+without identifying an explicit globally minimizing branch.
+The first implication in (43.21) now follows from (43.19)--(43.20).
+The contact at $\alpha$ belongs to the original bad set, so the
+endpoint alternative in Theorem 39.5 proves the prefix assertion.
+If $\alpha<\beta$, Theorem 41.4 forces purity at level $\alpha$.
+That existing prefix result is used only for this final rank conclusion;
+it is not used to locate $\beta$ or to exclude a mixed strict competitor.
+$\square$
+

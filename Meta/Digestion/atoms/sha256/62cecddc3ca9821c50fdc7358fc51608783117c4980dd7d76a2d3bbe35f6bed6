@@ -1,0 +1,31 @@
+**定义 20.1（比较域、普通迹与完全有界误差）。** 固定 $d\ge1$、$M=M_d(\mathbb C)$、忠实密度 $\rho>0$、$\operatorname{Tr}\rho=1$，以及共享单位元的 $*$-子代数 $A\subseteq M$。本节的 $\operatorname{Tr}$ 是普通矩阵迹。$E=E_{\rho,A}:M\to A$ 始终是定义 6.2 的实际左 GNS 正交投影：
+
+$$
+\operatorname{Tr}(\rho a^\dagger E(x))
+=\operatorname{Tr}(\rho a^\dagger x)
+\qquad(a\in A,\ x\in M).
+$$
+
+不对 $E$ 加正性前件。给定的右序比较缺陷是完整复收缩球上的标量：
+
+$$
+\epsilon=\sup_{\substack{x\in M,\ \|x\|_{\rm op}\le1\\
+a\in A,\ \|a\|_{\rm op}\le1}}
+\left|\operatorname{Tr}\bigl(\rho(E(x)a-xa)\bigr)\right|.
+\tag{20.1}
+$$
+
+记 $P=P_A:M\to A$ 为普通迹保持的条件期望，$h=P(\rho)$、$\lambda=\lambda_{\min}(h)>0$。沿用[读出闭合稿定义 351.1](ContextualSpacetimeQuantum/351_354_READOUT_CLOSURE_AND_REALIZATION.md) 的既有数学背景：$P$ 是 $U(A')$ 上的酉共轭平均，$Q=P_{A'}$ 是 $U(A)$ 上的酉共轭平均，二者交换。特别地，$P,Q$ 都 UCP、保持普通迹并在 Hilbert–Schmidt 内积下自伴。紧酉平均的存在不作为新增命题。
+
+对任意复线性 $T:M\to M$，约定
+
+$$
+T^{(k)}=\operatorname{id}_{M_k}\otimes T,\qquad
+\|T\|_{\rm cb}=\sup_{k\ge1}
+\sup_{0\ne X\in M_k\otimes M}
+\frac{\|T^{(k)}(X)\|_{\rm op}}{\|X\|_{\rm op}}.
+\tag{20.2}
+$$
+
+值域为 $A$ 的映射经自然包含视为 $M$ 值映射。$\|s\|_1=\operatorname{Tr}|s|$，不含因子 $1/2$；$T_*$ 表示普通迹对偶 $\operatorname{Tr}(T_*(s)x)=\operatorname{Tr}(sT(x))$。式 (20.1) 不含任何辅助矩阵输入。
+

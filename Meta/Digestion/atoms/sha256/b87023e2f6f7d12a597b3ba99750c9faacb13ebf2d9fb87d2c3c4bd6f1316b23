@@ -1,0 +1,16 @@
+**命题 68.3（稠密实际零接触及保单位的各自边界）。** 闭正生成与仅实际 Z 的零接触不能在一般有限有序单位空间中替代统一估计；统一估计本身也不推出保单位。
+
+证明。第一项取 $E=\mathbb R^2$、坐标正锥、$u=(1,1)$，令实际准备集合为 $\alpha_t(s,v)=ts+(1-t)v$，$t\in\mathbb Q\cap(0,1)$，每个质量一。其正锥包闭包为全部正对偶。令 $H(s,v)=(v-s,0)$，则 $Hu=0$。对非零正元，每个 $\alpha_t$ 的值都严格正，所以这些实际准备上的零接触对该 $H$ 成立；但端点正态 $\beta(s,v)=s$ 在 $y=(0,1)$ 上满足 $\beta(y)=0$、$\beta(Hy)=1$。更定量地，效果 $y$ 给
+
+$$
+\alpha_t(y)=1-t,\qquad
+\alpha_t(Hy)=t,\qquad
+\frac{|\alpha_t(Hy)|^2}{\alpha_t(y)\alpha_t(u)}
+=\frac{t^2}{1-t}\longrightarrow\infty\quad(t\uparrow1).
+\tag{68.7}
+$$
+
+因而不存在所需统一 $K$。这只是有限有序空间的局部反例，不宣称它满足完整 $\mathsf B_{\rm cl}$ 的所有原联合接口或 SC。
+
+第二项取 $E=\mathbb R$、$u=1$、$H=\operatorname{Id}$。任意正泛函满足 $\alpha(x)=mx$、$\alpha(u)=m\ge0$，$0\le x\le1$ 时 $m^2x^2\le m^2x$，所以 $K=1$ 有效而 $Hu=u\ne0$。因此引理 67.3 的独立单位论证不可省略。∎
+

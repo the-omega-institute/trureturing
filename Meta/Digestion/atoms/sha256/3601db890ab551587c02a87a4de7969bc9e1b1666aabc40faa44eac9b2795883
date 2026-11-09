@@ -1,0 +1,45 @@
+**Proposition 15.3 (Increasing velocity ratios in the original two-coordinate system).** Fix any $\alpha\in(0,1)$ and take
+
+$$
+m=2,\qquad (v_1,v_2,v_3)=(1,1,c),\qquad 0<c\leq1,
+\qquad \theta=\frac{2\alpha}{1+\alpha},\qquad q=2\theta-1.
+\tag{15.5}
+$$
+
+Then $R=1/c$ and the literal original transfer is
+
+$$
+T_c=\begin{pmatrix}
+-q&\theta\\
+-\dfrac{2cq}{1+c}&\dfrac{2c\theta}{1+c}-1
+\end{pmatrix}.
+\tag{15.6}
+$$
+
+Its complex spectral gap obeys
+
+$$
+0<1-\rho(T_c)\leq\sqrt{\frac{2c\theta}{1+c}}
+\longrightarrow0\qquad(c\downarrow0).
+\tag{15.7}
+$$
+
+Consequently fixed dimension and fixed interior damping alone give no positive gap uniform over all positive velocity vectors. This includes $\alpha=1/3$, when all maps in this family are singular.
+
+*Proof.* Solving the original first row gives $z'_1=-qz_1+\theta z_2$. The original second row gives $z'_2=-z_2+[2c/(1+c)]z'_1$. These are exactly (15.6), with both original centered endpoints zero. Direct evaluation gives
+
+$$
+\det T_c=q,\qquad
+\operatorname{tr}T_c=-q-1+\frac{2c\theta}{1+c},\qquad
+\det(-I-T_c)=1+\operatorname{tr}T_c+\det T_c
+=\frac{2c\theta}{1+c}>0.
+$$
+
+If $\mu_1,\mu_2$ are its two complex eigenvalues with multiplicity, then
+
+$$
+|1+\mu_1|\,|1+\mu_2|=\frac{2c\theta}{1+c}.
+$$
+
+At least one factor is at most the square root of this positive number. The corresponding eigenvalue satisfies $|\mu_j|\geq1-|1+\mu_j|$, proving the upper bound in (15.7). Strict positivity of the gap follows from Theorem 13.2 for every $c>0$; the right side tends to zero with $c$. The argument neither divides by $q$ nor assumes distinct or real eigenvalues. At $\alpha=1/3$, $q=0$ and $\theta=1/2$, so it includes that entire singular family explicitly. $\square$
+

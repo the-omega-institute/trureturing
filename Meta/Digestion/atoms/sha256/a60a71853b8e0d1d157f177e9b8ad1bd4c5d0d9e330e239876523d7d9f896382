@@ -1,0 +1,14 @@
+**联合正锥。** 两个基本块各自不变，联合只允许可分离态锥
+
+$$
+C_{\rm sep}=\operatorname{cone}\{A\otimes B:A\succeq0,\ B\succeq0\}.
+$$
+
+原局部旋转、乘积准备及局部读数都一致，却没有 singlet 等纠缠纯态。具体地，对任意 Bloch 向量 $a,b$ 的归一乘积态，
+
+$$
+\operatorname{Tr}(P_{\rm singlet}\rho_a\otimes\rho_b)=\frac{1-a\cdot b}{4}\le\frac12.
+$$
+
+凸混合仍不超过 $1/2$，而 singlet 对自身的评价为一，故不属于此锥的归一截面。联合矩阵的乘积张成不能独自选出全部标准正锥。这是从局部几何到实际复合所缺的关系。
+

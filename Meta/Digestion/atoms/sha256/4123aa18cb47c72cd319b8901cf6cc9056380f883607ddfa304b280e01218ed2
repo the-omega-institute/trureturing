@@ -1,0 +1,13 @@
+### 153.F. Complement recovery and the full-joint boundary
+
+For this same $D$, (152.45)–(152.46) recover every pair coordinate involving $B$ from the fixed $I\times I$ coordinates and the fixed source marginals. Likewise
+$L_j(\mathbf1_{D_B})=1-\sum_{a\in I}L_j(\mathbf1_{D_a})$
+gives all twelve original marginals. The last three coordinates of (153.35) are exactly the three equations in (153.4). Restoring the originally prescribed representative $b$ changes no target integral: its difference from $b^0$ is $m$-null, and all three positive-time source marginals are absolutely continuous with respect to $m$. The same observation makes all earlier null repairs harmless.
+
+Finally define
+$\Delta_{yzw}=\mathcal C(\mathbf1_{D_y},\mathbf1_{D_z},\mathbf1_{D_w})
+                  -\mathcal C(f_y,f_z,f_w)$.
+Summing over the third, middle or first label gives respectively the already vanishing $Q_{12}$, $Q_{13}$ or $Q_{23}$ residual, by conservation and original source propagation. Proposition 150.3 therefore gives $\Delta\in H_0^{\otimes3}$ with its twenty-seven ambient $I^3$ coordinates. Precisely $013,103,031$ have been imposed here, leaving the other twenty-four as equations for this same partition. This count asserts neither nonlinear independence nor feasibility of those remaining equations. In all these residuals the last factor remains $P\mathbf1_{D_w}$. Equation (153.3) retains its full quantifiers and all sixty-four ordered coordinates.
+
+The source-specific coattainment above is the composition of the original evaluation and graph-domain suppliers (120.7)–(120.11), the invariant slack and exact ordered corrections of 152.A–C, the protected matrix (153.16)–(153.22), and the actual-density partition construction (153.30)–(153.35). The classical local-dependence intermediate used in 152.B is R. Meshulam and P. Šemrl, *Locally linearly dependent operators*, [doi:10.2140/pjm.2002.203.441](https://doi.org/10.2140/pjm.2002.203.441), Theorem 2.2: its real $n=6,c=1$ contrapositive applies to the six operators into the algebraic dual because no nonzero combination has finite rank. The analytic uniqueness intermediate in (153.26) and 152.A is B. S. Mityagin, *The zero set of a real analytic function*, [arXiv:1512.07276v1](https://arxiv.org/abs/1512.07276v1), Proposition 0, on the connected quotient with its positive smooth density. The fixed-point intermediate is L. E. J. Brouwer, *Über Abbildung von Mannigfaltigkeiten*, [doi:10.1007/BF01456931](https://doi.org/10.1007/BF01456931), in the finite-dimensional closed-ball form already used in §§148 and 152.F. These are consumed intermediates in the original-source coattainment proof. $\square$
+

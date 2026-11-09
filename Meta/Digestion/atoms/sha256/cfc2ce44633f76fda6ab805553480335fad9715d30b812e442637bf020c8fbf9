@@ -1,0 +1,40 @@
+**定理 83.2（普通实际效果证书的速率充分条件）。** 在定义 83.1 的全部条件下，若 (83.2) 对每一对 $x\in[0,u]$、$\beta\in C^*$、$\beta(x)=0$ 成立，则
+
+$$
+\beta(y)=0\ \Longrightarrow\ \beta(Hy)=0
+\qquad(\beta\in C^*,\ y\in C).
+\tag{83.3}
+$$
+
+因此同一个 $H$ 是保单位序导子，$e^{tH}$ 对每个实 $t$ 保正且保持 $u$。还可复用定理 68.1 得到整个数学效果域的证书，系数可取 $\|H^2\|_{u\to u}$；这个恢复的系数不宣称等于原 (83.1) 的 $K$。接触速率是充分条件，不主张必要性或最小性。
+
+证明。先在一个固定 $e\in\mathcal A$ 上运输估计。对任意数学正和 $\gamma=\sum_jc_j\alpha_j$、$c_j\ge0$，与 (68.3) 同一加权 Cauchy–Schwarz 给
+
+$$
+\begin{aligned}
+|\gamma(He)|
+&\le\sqrt K\sum_jc_j\sqrt{\alpha_j(e)\alpha_j(u)}\\
+&\le\sqrt{K\gamma(e)\gamma(u)}.
+\end{aligned}
+\tag{83.4}
+$$
+
+对固定 $He,e,u$ 取 $\gamma\to\beta\in C^*$，有限维连续性得到 (83.1) 对每个 $\beta$ 仍以同一个 $K$ 成立。无需正和系数或准备质量的下界；$\beta(u)=0$ 时正泛函本身为零。这是先固定每个实际效果的准备域闭包，不先把效果域扩大。
+
+现固定 $x,\beta$ 的零接触对，取 (83.2) 的序列。线性性及准确的原衰减恒等式给
+
+$$
+\begin{aligned}
+p_n^2|\beta(Hx_n)|^2
+ &=|\beta(He_n)|^2\\
+ &\le Kp_n\beta(x_n)\beta(u),\\
+|\beta(Hx_n)|^2
+ &\le K\beta(u)\frac{\beta(x_n)}{p_n}.
+\end{aligned}
+\tag{83.5}
+$$
+
+因为 $p_n>0$ 才能消去两次幂；右侧仍有一个衰减分母。接触速率使它趋零，$H$ 的有限维连续性和 $x_n\to x$ 给 $\beta(Hx)=0$。
+
+任意 $y\in C$ 都有某个 $r>0$ 使 $y\le ru$。若 $\beta(y)=0$，对 $x=y/r$ 应用刚得结论，再由线性性得 (83.3)。于是对每个归一正态、每个正元素都满足零接触。现在准确复用定理 68.1 所用的 Niestegge [arXiv:1402.0158v2，§4 Lemma 3](https://arxiv.org/html/1402.0158v2#S4)：有限维使算子有界，有序单位空间完备，完整态域的零接触给全部实参数的指数保正。独立的 $Hu=0$ 再给 $e^{tH}u=u$。定理 68.1 的反向二阶估计随后给所述全区间系数；不重建量子代数或改变原 $H$。∎
+

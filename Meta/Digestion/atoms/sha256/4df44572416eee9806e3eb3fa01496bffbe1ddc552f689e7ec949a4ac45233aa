@@ -1,0 +1,45 @@
+**推论 44.5（局部全效果的单位衰减接触及同一算子的条件消费）。** 保留推论 44.3 的完整条件。对每个 $x\in[0,I_L]$，可选一列实际未来 $f_n$，令
+
+$$
+\begin{gathered}
+x_n=e_{f_n,\{0\}},\qquad p_n=1,\qquad e_n=p_nx_n=x_n\in\mathcal E_L,\\
+\|x_n-x\|_{\rm op}\longrightarrow0,\qquad
+\frac{\|x_n-x\|_{\rm op}}{p_n}\longrightarrow0.
+\end{gathered}
+\tag{44.10}
+$$
+
+对每个 $\beta\in C^*$、$\beta(x)=0$，同一列满足 $\beta(x_n)/p_n\to0$，即 [C123 定义 83.1](AURIC_NATIVE_RECIPROCAL_COMPARISON_AND_FINITE_ENDPOINT_QUANTUM_C123.md) 的接触速率。这里 $p_n$ 是整个效果对应的衰减因子，恒等于一；它不是事件概率 $\alpha_a(e_n)$，后者仍可随 $a,n$ 变化并取零。
+
+若另行独立供应同一个正确类型的实线性算子 $T:\operatorname{Herm}(L)\to\operatorname{Herm}(L)$、$T(I_L)=0$，以及它在上述实际程序／准备上的合法有符号评价，并有一个统一有限 $K\ge0$ 使
+
+$$
+|\alpha_a(T e)|^2\le K\alpha_a(e)\alpha_a(I_L)
+\quad(a\in\mathsf A,\ e\in\mathcal E_L),
+\tag{44.11}
+$$
+
+则 C123 定理 83.2 适用于这个同一个 $T$：它满足全部正泛函、全部正元的零接触，$\exp(tT)$ 对每个实 $t$ 保正且保 $I_L$，并可恢复该定理所述的全数学效果区间证书。(44.11) 的 $K$ 不随 $a,f,S,n$ 改变；它是另给的实际统一有符号估计，不是 (44.4)、校准或纯准备闭生成的结论。
+
+证明。对三元组 $(E_0,E_1,E_2)=(x,I_L-x,0)$ 用定理 44.2，取 $\varepsilon_n\downarrow0$。一个共同 $f_n$ 同时给
+
+$$
+\|e_{f_n,\{0\}}-x\|\le2\varepsilon_n,\quad
+\|e_{f_n,\{1\}}-(I_L-x)\|\le2\varepsilon_n,\quad
+\|e_{f_n,\{2\}}\|\le2\varepsilon_n.
+\tag{44.12}
+$$
+
+每次仍读全部标签；近零的第三组没有被删去或用于成功条件化。精确余补 $I_L-x_n=e_{f_n,\{1,2\}}$ 同时逼近 $I_L-x$；其它并组也保留定理 44.2 的界。原终端归一化及 $e_n=x_n$ 给未经衰减的准确对应 $p_n=1$，没有从某个事件概率除去质量。包括 $x=0,I_L$ 在内，此构造均成立。
+
+在 $\operatorname{Herm}(L)$ 中有序单位范数正是算符范数。正泛函满足 $|\beta(z)|\le\beta(I_L)\|z\|_{\rm op}$，故
+
+$$
+0\le\frac{\beta(x_n)}{p_n}
+=\beta(x_n-x)
+\le\beta(I_L)\|x_n-x\|_{\rm op}\longrightarrow0.
+\tag{44.13}
+$$
+
+此列甚至不依赖于零接触泛函 $\beta$。该空间有限维、锥闭尖生成、$I_L$ 为内点，所以是 C12383.1 所需的 Archimedean 有序单位空间；44.4 给完整正对偶的闭生成，(44.11) 给其普通实际效果证书，独立 $T(I_L)=0$ 给保单位，(44.10)–(44.13) 给每个接触对的速率。逐项代入 C12383.2 的 $E=\mathsf E,C=C,u=I_L,\mathcal P=\mathcal P_L,H=T,\mathcal A=\mathcal E_L$，得到所述结论；没有更换算子。∎
+

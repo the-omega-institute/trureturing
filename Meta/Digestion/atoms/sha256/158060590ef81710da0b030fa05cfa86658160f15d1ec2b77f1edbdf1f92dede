@@ -1,0 +1,73 @@
+**命题 30.2（真 steering 子空间隐藏非标量细效果及原历史差别）。** 存在同一固定相关来源及同一完整原仪器，使任意阶设计乃至全部秩一标签上的零泄漏与标量细成功率同时成立，但细效果非标量、下一次原记录率仍有记忆，并且联合因子化不推出所有相关输入上的标量系统边缘作用。
+
+**证明。** 取 $H=M=\mathbb C^2$，在标签选择前固定
+
+$$
+\rho=\tfrac12(|00\rangle\langle00|+|11\rangle\langle11|),
+\qquad M_0=M,\quad \rho_M=I_M/2,
+\quad X=|0\rangle\langle1|+|1\rangle\langle0|.
+\tag{30.7}
+$$
+
+本模型的原准备仪器同样完整取为 $\{\operatorname{Ad}_p\otimes\operatorname{id}_M,\operatorname{Ad}_{I_H-p}\otimes\operatorname{id}_M\}$，保留两个原记录及其完整输出。对 $z=(z_0,z_1)$，原准备满足
+
+$$
+\sigma_p=\tfrac12\operatorname{diag}(|z_0|^2,|z_1|^2),
+\quad \eta_p=1/2,
+\quad \mathcal W_\rho=\operatorname{span}_{\mathbb R}\{I_M,Z\},
+\quad X\in\mathcal W_\rho^\perp.
+\tag{30.8}
+$$
+
+固定 $0<a<1$、$0<b<1$，原细记录为 $+, -, f$，前两个成功，$f$ 为失败。一次性固定记忆算子及原联合支
+
+$$
+\begin{aligned}
+B_\pm&=\sqrt{a/2}\sqrt{I_M\pm bX},
+& G_\pm&=\tfrac a2(I_M\pm bX),\\
+B_f&=\sqrt{1-a}\,I_M,
+& G_f&=(1-a)I_M,\\
+V_j(Y)&=(I_H\otimes B_j)Y(I_H\otimes B_j^{\dagger})
+&& (j\in\{+,-,f\}).
+\end{aligned}
+\tag{30.9}
+$$
+
+$G_++G_-+G_f=I_M$，所以所有成功与失败动作已给出且总和保迹；重复调用始终使用这一份仪器。每支精确因子化，故每个 $p$ 的所选泄漏均为零，而
+
+$$
+q_{\pm,p}=\tfrac a2\eta_p=a/4,\qquad
+q_{f,p}=(1-a)\eta_p=(1-a)/2.
+\tag{30.10}
+$$
+
+非标量 $G_\pm$ 的偏差 $\pm abX/2$ 完全不可见。用相同来源和准备，把 $b$ 取零所得的另一份完整仪器具有相同全部单次率；它只是用于比较的另一模型，每份模型内部的原装置均不切换。
+
+现取该反模型中已合法的两次直接原调用，中间不复位、不再准备。以同一个原 $X_p=p\otimes\sigma_p$ 为未归一化起点；全部算子都是 $X$ 的函数，相互对易，且 $\operatorname{Tr}(X\sigma_p)=0$。故九个原两次词的联合质量精确为
+
+$$
+\begin{aligned}
+Q_{++,p}=Q_{--,p}&=\eta_p\frac{a^2}{4}(1+b^2),\\
+Q_{+-,p}=Q_{-+,p}&=\eta_p\frac{a^2}{4}(1-b^2),\\
+Q_{\pm f,p}=Q_{f\pm,p}&=\eta_p\frac{a(1-a)}2,\\
+Q_{ff,p}&=\eta_p(1-a)^2.
+\end{aligned}
+\tag{30.11}
+$$
+
+例如 $Q_{++,p}=\operatorname{Tr}(G_+^2\sigma_p)$，由
+$G_+^2=\frac{a^2}{4}((1+b^2)I_M+2bX)$ 得第一式，其余同理。九项之和为 $\eta_p$，再加原准备失败质量 $1-\eta_p$ 得一。所有双成功词总质量为 $a^2\eta_p>0$，相同标签与不同标签的分配却随 $b$ 改变。特别地，已发生原准备及一次 $+$ 后，第二次 $+$ 的实际条件概率为 $a(1+b^2)/2$，而单次率为 $a/2$。没有将准备因子、任何失败或实际正条件分母消掉。本卷命题 26.1 已给粗／细历史区别；这里另以固定相关来源的 $\mathcal W_\rho^\perp$ 明确给出对全部标签都不可见的方向，并把它接到同一原历史的不同率。
+
+联合因子化的另一边界直接在其已认证输入域上可见。取数学输入 $\Omega=|\Phi_2\rangle\langle\Phi_2|$，则
+
+$$
+\operatorname{Tr}_M V_+(\Omega)=\tfrac12G_+^{\mathsf T}
+=\tfrac a4(I_H+bX),\quad
+\operatorname{Tr}V_+(\Omega)=a/2>0,
+\quad
+\frac{\operatorname{Tr}_M V_+(\Omega)}{a/2}=\tfrac12(I_H+bX).
+\tag{30.12}
+$$
+
+这不同于输入系统边缘 $I_H/2$。它不宣称原菜单实际能从 (30.7) 准备 $\Omega$；它反驳的是对 (28.6) 的全部相关输入量词所作的无条件标量边缘解释。原校准输入 $p\otimes\sigma_p$ 仍按定理 28.3 保持方向 $p$。$\square$
+

@@ -1,0 +1,19 @@
+**定义 89.1（原子读数的一阶关系）。** 在每个原 EJA 的原子流形 $M=\operatorname{Prim}(E)$ 上，取原读数函数 $f_a(p)=q(a,p)$。经典或不同简单块分别作为连通分支，不要求相同维数。其原切空间为 $T_pM=E_{1/2}(p)$，且
+
+$$
+df_a(p)(v)=q(a,v),\qquad
+\ker(a\mapsto df_a(p))=E_1(p)\oplus E_0(p).
+\tag{89.1}
+$$
+
+称原关系满足余切下降，如果对每个数学原子存在实线性映射
+
+$$
+\mathcal R_p:T_p^*M\longrightarrow T_pM,
+\qquad \mathcal R_p(df_a(p))=D_ap
+\quad(a\in E).
+\tag{89.2}
+$$
+
+所有一阶读数相同的输入必须产生同一原子运动，且该运动留在原子流形内；$\mathcal R_p$ 不是重新指定 $D$ 的自由参数。这里的原子流形及半 Peirce 切空间是成熟几何：Nomura, *Manifold of primitive idempotents in a Jordan-Hilbert algebra*, J. Math. Soc. Japan 45 (1993), 37–58，[原文](https://projecteuclid.org/journals/journal-of-the-mathematical-society-of-japan/volume-45/issue-1/Manifold-of-primitive-idempotents-in-a-Jordan-Hilbert-algebra/10.2969/jmsj/04510037.pdf)，§3。本文逐简单有限块使用其切空间识别，不把其中的无限维简单性前件当成原系统的新假设。
+

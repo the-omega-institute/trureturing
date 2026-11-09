@@ -1,0 +1,28 @@
+### 引理 2.2（规范滤片及其导数）
+
+令 $\delta=\sqrt{s^2-\|r\|^2}>0$。唯一的规范滤片是
+
+$$
+P_x=\begin{pmatrix}
+ s&r^{\mathsf T}\\
+ r&\delta I+rr^{\mathsf T}/(s+\delta)
+ \end{pmatrix}.
+$$
+
+其一阶响应定义对称乘法
+
+$$
+(\alpha,a)\circ(\beta,b)
+ =\left.\frac{d}{dt}P_{e+t(\alpha,a)}(\beta,b)\right|_{0}
+ =(\alpha\beta+a\cdot b,\alpha b+\beta a).
+$$
+
+特别地，$L_a(\beta,b)=(a\cdot b,\beta a)$。
+
+**证明。**
+写 $\eta=\operatorname{diag}(1,-I)$。保锥可逆变换 $T$ 保持锥边界，所以对所有单位 $n$，$Q(T(1,n))=0$。将 $T^{\mathsf T}\eta T$ 分块，比较 $n,-n$ 消去非对角块，再比较正交基与它们的二元和，得 $T^{\mathsf T}\eta T=c\eta$；$Te$ 在锥内部给 $c>0$。
+
+若 $T=T^{\mathsf T}\succ0$ 且 $Te=x$，写其右下块为 $B$，便有 $c=\delta^2$、$B^2=\delta^2 I+rr^{\mathsf T}$。正定 $B$ 是右侧唯一正平方根，在 $r^\perp$ 上为 $\delta I$、在 $r$ 方向为 $s$，即显示公式。反过来，该公式的特征值为 $s\pm\|r\|$ 及 $\delta$，全为正；直接相乘验证 $P_x\eta P_x=\delta^2\eta$，且 $P_xe=x$，从而双向保锥。对 $s=1+t\alpha,r=ta$ 求导即得乘法。该乘法满足 Jordan 恒等式，因为 $L_{z^2}$ 是 $L_z$ 的线性组合；其平方锥恰为 $C$，可用互补幂等元 $p_\pm=(1,\pm n)/2$ 对正元分解并开平方验证。
+
+这一构造仍承担球形正锥、欧氏标尺和规范滤片的定义。若赋予它物理实现，还要保留成功权重；双向保正滤片不等于确定性的可逆通道。
+

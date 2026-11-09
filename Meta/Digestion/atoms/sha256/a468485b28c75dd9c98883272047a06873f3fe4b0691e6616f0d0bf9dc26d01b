@@ -1,0 +1,86 @@
+### 定理 10.4（三维选择）
+
+<a id="thm-c122-local-three"></a>
+
+上述条件强制 $\dim W=3$，且存在 $\kappa>0$，使
+
+<a id="eq-c122-local-loop"></a>
+
+$$
+\begin{aligned}
+[D_a,D_b]&=-\kappa[L_a,L_b],
+\end{aligned}
+\tag{44}
+$$
+
+<a id="eq-c122-local-square"></a>
+
+$$
+\begin{aligned}
+D_a^2x&=\kappa\bigl((a\cdot x)a-\|a\|^2x\bigr),
+\end{aligned}
+\tag{45}
+$$
+
+<a id="eq-c122-local-triple"></a>
+
+$$
+\begin{aligned}
+D_aD_bx&=\kappa\bigl((a\cdot x)b-(a\cdot b)x\bigr),
+\end{aligned}
+\tag{46}
+$$
+
+<a id="eq-c122-local-bracket"></a>
+
+$$
+\begin{aligned}
+D_{D_a b}&=[D_a,D_b].
+\end{aligned}
+\tag{47}
+$$
+
+按 $D$ 选择取向后，$D_ab=\sqrt\kappa\,a\times b$。
+
+**证明。**
+标签线性及 $D_aa=0$ 给 $D_ab=-D_ba$，故 $x\cdot D_ab$ 是交替三形式。令
+
+$$
+B(a,b)x=(b\cdot x)a-(a\cdot x)b=[L_a,L_b]x.
+$$
+
+交换子 $[D_a,D_b]$ 反对称。式 [(43)](#eq-c122-local-spectator) 使它在 $\operatorname{span}(a,b)^\perp$ 上为零，并保持 $\operatorname{span}(a,b)$；二维反对称算子只有一个方向，所以它是 $B(a,b)$ 的实倍数。
+
+这个倍数不能逐对自由选。取正交基 $e_i$，写 $[D_{e_i},D_{e_j}]=\lambda_{ij}B(e_i,e_j)$。在二元合成标签
+
+$$
+a=\sum_i e_i,\qquad b=\sum_i\left(i-\frac{n+1}{2}\right)e_i
+$$
+
+上展开，其每个基对系数都是非零的 $j-i$。合成对也必须有一个共同平面比例，比较基系数便得全部 $\lambda_{ij}=\lambda$。双线性将它扩到任意 $a,b$。
+
+将交换子等式作用于 $a$ 并使用反对称性，得
+
+$$
+\|D_ab\|^2=-\lambda\bigl(\|a\|^2\|b\|^2-(a\cdot b)^2\bigr).
+$$
+
+非平凡性排除 $\lambda=0$，故 $\lambda=-\kappa<0$，并得 [(45)](#eq-c122-local-square)。极化该平方式，加上交换子式，给 [(46)](#eq-c122-local-triple)；再由 $D_{D_ab}x=-D_xD_ab$ 得 [(47)](#eq-c122-local-bracket)。
+
+取正交单位 $u,v$，令 $w=D_uv/\sqrt\kappa$。上式说明 $u,v,w$ 正交归一，且
+
+$$
+D_w=\sqrt\kappa(vu^{\mathsf T}-uv^{\mathsf T}),\qquad
+ D_w^2=-\kappa(P_u+P_v).
+$$
+
+另一方面，式 [(45)](#eq-c122-local-square) 给 $D_w^2=\kappa(P_w-I)$。因此
+
+$$
+\boxed{I=P_u+P_v+P_w,}
+$$
+
+恰好三个方向覆盖整个 $W$。三维交替三形式只有一个尺度，范数式将其大小固定为 $\sqrt\kappa$；取向由其符号决定。
+
+若去掉 $D\ne0$，任意维度都容许 $D=0$。若只查坐标对，模型 $W=\mathbb R^3\oplus\mathbb R$、$D_ab=(a'\times b',0)$ 会通过；但对 $a=e_1+e_4,b=e_2,z=e_1-e_4$，有 $z\perp a,b$ 而 $[D_a,D_b]z=e_2$。这说明必须检验合成标签。此规则只作用于二元球块，不能把它逐字施加到一般高维系统的全部自伴元。
+

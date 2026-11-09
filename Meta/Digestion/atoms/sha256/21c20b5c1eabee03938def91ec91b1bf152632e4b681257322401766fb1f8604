@@ -1,0 +1,41 @@
+**定理 346.1（源像匹配与中心读数的精确对应）。** 对 343.1 的两次实际参考，可将第二参考选到 $d_1\ge\max_sn_s$。每个原中心 $s$ 都能在 $U_s$ 中选 primitive $e_s$ 及实线性数学补偿 $\beta_s:E_A\to E_{R^{(1)}}$，使在整个 $E_K$ 上
+
+$$
+z_s^{\rm match}(a):=h(a)-l\beta_s(a)\in\ker L_{e_s},\qquad
+\tau_KD^K(e_s,z_s^{\rm match}(b))
+=\frac{\tau_AD^A(z_s,b)}{n_s}.
+\tag{346.1}
+$$
+
+这里 $e_s$ 对第二参考的 Schmidt 秩仅为 $n_s$；原经典源可用乘积原子。对这样的 Hermitian 全源像匹配，$n_s$ 是该方法的最小 Schmidt 秩，不是公理数、原实际测试或全网认证的下界。
+
+证明。在允许转置的目标坐标中吸收 (343.5) 的坐标变换，源像为 $a_s\otimes I_{d_0}\otimes I_{d_1}$。取放大因子中的单位向量 $\chi$、原源的正交基 $v_r$、第二参考中 $n_s$ 个正交向量 $w_r$，置
+
+$$
+\xi_s=\frac1{\sqrt{n_s}}\sum_{r=1}^{n_s}v_r\otimes\chi\otimes w_r,
+\qquad e_s=|\xi_s\rangle\langle\xi_s|.
+\tag{346.2}
+$$
+
+在第二参考所选角中取与原 $a_s$ 相应的转置矩阵，在其余坐标取零，并补偿静态坐标中的转置，得到 Hermitian 线性 $\beta_s(a)$。两侧在 $\xi_s$ 上作用相同，故 Hermitian 差消去 $\xi_s$；这等价于其在目标 $U_s$ 中属于 $\ker L_{e_s}$。其他中心与 $e_s$ Jordan 正交，故整个差均在同一核，不删除其他中心。
+
+320.1 证明的非经典首源整输出局部性及 (343.4) 给
+
+$$
+\tau_KD^K(e_s,y)=F_{U_s}(y).
+\tag{346.3}
+$$
+
+这里不调用含额外迹前件的 312.1 陈述。由 $F_{U_s}\circ l=0$，左边在匹配差上等于 $F_{U_s}(h(b))=F_s(b)$；343.2 遂给 (346.1)。因此旧式来源配平的值可直接用原中心读数表达，不需把所选原子和补偿提升为新候选的资料。
+
+本证明内部的最小秩判据是成熟 Hermitian twin-observable 工具的有限矩阵形式。将任意归一匹配向量写成系数矩阵 $C$，源矩阵 $M$ 有 Hermitian 补偿 $N$ 当且仅当 $MC=CN^{\mathsf T}$ 可解；必要性由该式及其伴随给 $[M,CC^*]=0$。反向令 $R=CC^*$，在其支持上写 $C=\sqrt R\,W$，其中 $WW^*=\operatorname{supp}R$。若 $[M,R]=0$，取 $N^{\mathsf T}=W^*MW$ 并在核中取零，则 $N$ Hermitian 且 $CN^{\mathsf T}=MC$。对所有源矩阵 $M=a_s\otimes I_{d_0}$ 同时成立的条件恰为
+
+$$
+R\in(M_{n_s}\otimes I_{d_0})',\qquad
+R=\frac{I_{n_s}}{n_s}\otimes Q,\quad
+Q\ge0,\quad\operatorname{Tr}Q=1.
+\tag{346.4}
+$$
+
+所以 $\operatorname{rank}R=n_s\operatorname{rank}Q\ge n_s$；(346.2) 以 $Q=|\chi\rangle\langle\chi|$ 取等号。若要求匹配整个 $H_{n_sd_0}$ 而非原源像，则才迫使 $R=I_{n_sd_0}/(n_sd_0)$。这些已知矩阵工具仅是本条原参考—原中心对应的中间步骤，不单独作为新增分类。∎
+

@@ -1,0 +1,48 @@
+**Definition 2.3 (The two stationary renewal laws).** For $i\in\{0,1\}$ and $q\in(0,1)$, put
+
+$$
+\begin{aligned}
+Z_i(q)&=\sum_{k\ge1}F_i(k)q^k,
+&f_{i,q}(k)&=\frac{F_i(k)q^k}{Z_i(q)}\quad(k\ge1),
+&f_{i,q}(0)&=0,\\
+S_{i,q}(u)&=\sum_{k\ge u}f_{i,q}(k)\quad(u\ge0),
+&\mu_i(q)&=\sum_{k\ge1}(k+1)f_{i,q}(k),\\
+\beta_i(q)&=\frac{\sum_{k\ge1}k(k+1)f_{i,q}(k)}{2\mu_i(q)}.
+\end{aligned}
+\tag{2.4}
+$$
+
+All indices in these sums are integers. Positivity and the polynomial-geometric envelope give positive finite $Z_i$, full support $f_{i,q}(k)>0$ on the positive integers, and finite moments at every interior $q$.
+
+The one-sided source law $\mathsf P_{i,q}$ first draws the first tick time $\tau$ with
+
+$$
+\mathsf P_{i,q}(\tau=u)=\frac{S_{i,q}(u)}{\mu_i(q)}
+\quad(u=0,1,\ldots).
+\tag{2.5}
+$$
+
+It places zeros before $\tau$ and a one at $\tau$. Independently of $\tau$, draw iid zero counts $K_1,K_2,\ldots$ with law $f_{i,q}$ and put all subsequent ones at
+
+$$
+\tau_0=\tau,
+\qquad \tau_n=\tau+\sum_{r=1}^n(K_r+1)\quad(n\ge1).
+\tag{2.6}
+$$
+
+All other bits of $X_0,X_1,\ldots$ are zero. Thus $K_r$ is a zero count and $K_r+1$ is a complete post-tick interval. The first stationary wait has law (2.5), not law $f_{i,q}$.
+
+To verify its normalization and mean within the specified law, note $S_i(0)=S_i(1)=1$. Nonnegative summation counts each $k$ for $u=0,\ldots,k$ and gives
+
+$$
+\begin{aligned}
+\sum_{u\ge0}S_i(u)&=\sum_{k\ge1}(k+1)f_i(k)=\mu_i,\\
+\mathbb E_i\tau&=\frac1{\mu_i}\sum_{k\ge1}
+\left(\sum_{u=0}^ku\right)f_i(k)
+=\frac1{2\mu_i}\sum_{k\ge1}k(k+1)f_i(k)=\beta_i.
+\end{aligned}
+\tag{2.7}
+$$
+
+These formulas specify the experiment without giving the observer an initial age. The stationary interpretation and conventions are supplied by the continuation's Definition 23.2; its references to earlier renewal results remain supplier attributions.
+

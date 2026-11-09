@@ -1,0 +1,41 @@
+**Definition 3.1 (Positive triples, angle and complete periods).** Specialize Definitions 1.1 and 1.2 to $m=2$ and write
+
+$$
+a=v_1>0,\qquad b=v_2>0,\qquad c=v_3>0,\qquad
+u=(x,y)^T\in\mathbb R^2.
+$$
+
+The coordinates are the original centered coordinates, with both exterior coordinates zero. For each fixed $\alpha\in(0,1)$ the source matrices are exactly
+
+$$
+A=\begin{pmatrix}1&0\\-2c&b+c\end{pmatrix},\qquad
+B=\begin{pmatrix}-1&\dfrac{2a}{a+b}\\0&-(b+c)\end{pmatrix},\qquad
+B_\alpha=\begin{pmatrix}
+\dfrac{b(1-2\alpha)-\alpha a}{b+\alpha a}&\dfrac{2\alpha a}{b+\alpha a}\\
+0&-(b+c)
+\end{pmatrix},
+\qquad M=A^{-1}B,\quad N_\alpha=A^{-1}B_\alpha.
+$$
+
+Define the dimensionless coefficients and angle
+
+$$
+\xi=\frac{a}{a+b},\qquad \eta=\frac{c}{b+c},\qquad
+\tau_\alpha=\frac{\alpha(a+b)}{b+\alpha a},\qquad
+C=2\xi\eta-1,\qquad
+\theta=\arccos C
+=\arccos\left(\frac{2ac}{(a+b)(b+c)}-1\right).
+$$
+
+Since $0<\xi,\eta<1$, one has $-1<C<1$ and $0<\theta<\pi$. Also $0<\tau_\alpha<1$: the denominator is positive, and its difference from the numerator is $b(1-\alpha)>0$. The symbol $\theta$ denotes the undamped angle; $\tau_\alpha$ denotes the first-event damping weight. Put
+
+$$
+Q(x,y)=\frac{x^2}{a}+\frac{(y-x)^2}{b}+\frac{y^2}{c},\qquad
+H=\{(x,y)^T:x=\xi y\},\qquad
+h=\begin{pmatrix}a\\a+b\end{pmatrix}.
+$$
+
+A complete periodic orbit means that there is an integer $q\geq1$ for which $u_{t+q}=u_t\ne0$ for every $t\geq0$. The binary schedule itself has a period $p\geq1$ when $\varepsilon_{t+p}=\varepsilon_t$ for every $t\geq0$; $p$ and $q$ need not coincide.
+
+These matrices specialize the odd/even equations and Token-1 equation of [Wallner, Krupke, Schmidt and Fekete, arXiv:2608.27085v1, Sections IV.A and IV.B.1](https://arxiv.org/html/2608.27085v1#S4). In the definitions `A`, `B`, `Balpha`, `Malpha` of [TokenDampedSweepContraction](../../../D5/S3/Quantum/Dynamics/TridiagonalSweeps/TokenDampedSweepContraction.lean), the velocity indices $0,1,2$ mean $a,b,c$, the pair indices $0,1$ mean $x,y$, and `Malpha` means $N_\alpha$. The local weight named `theta` there is $\tau_\alpha$ here. The corresponding [Scribe definitions](../../../Blueprint/D5/S3/Quantum/Dynamics/TridiagonalSweeps/TokenDampedSweepContraction.scribe.cs) use the same index correspondence.
+

@@ -1,0 +1,93 @@
+**Theorem 2.1 (An original-matrix three-phase family).** There exist one dimension $m\geq1$, one strictly positive velocity vector $v$, one nonzero real vector $u_0$, one binary periodic schedule containing both transfer types, and positive integers $p,L$, all independent of $\alpha$, such that for every fixed $\alpha\in(0,1)$ the recurrence of Definition 1.2 satisfies
+
+$$
+u_{t+p}=u_t\neq0\qquad(t\geq0),
+$$
+
+has the same complete phase sequence for every such $\alpha$, and has an occurrence of $N_\alpha$ in every block of $L$ transfers. Explicitly, one can take
+
+$$
+m=2,\qquad v=(1,1,1),\qquad
+u_0=\begin{pmatrix}1\\2\end{pmatrix},\qquad
+p=L=3,\qquad
+\varepsilon_t=
+\begin{cases}
+1,&t\equiv0\pmod3,\\
+0,&t\equiv1,2\pmod3,
+\end{cases}
+$$
+
+The chronological word is $(N_\alpha,M,M)$, and all its phases are
+
+$$
+u_{3k}=\begin{pmatrix}1\\2\end{pmatrix},\qquad
+u_{3k+1}=\begin{pmatrix}1\\-1\end{pmatrix},\qquad
+u_{3k+2}=\begin{pmatrix}-2\\-1\end{pmatrix}
+\qquad(k\geq0),
+$$
+
+In particular $\|u_t\|_2^2\in\{2,5\}$ for every $t\geq0$.
+
+*Proof.* Substitute $m=2$ and $v_1=v_2=v_3=1$ into the original rows of Definition 1.1, with both centered endpoints still zero. This gives exactly
+
+$$
+A=\begin{pmatrix}1&0\\-2&2\end{pmatrix},\qquad
+B=\begin{pmatrix}-1&1\\0&-2\end{pmatrix},\qquad
+B_\alpha=
+\begin{pmatrix}
+\dfrac{1-3\alpha}{1+\alpha}&\dfrac{2\alpha}{1+\alpha}\\
+0&-2
+\end{pmatrix}.
+$$
+
+Multiplication in both orders verifies
+
+$$
+A^{-1}=\begin{pmatrix}1&0\\1&\tfrac12\end{pmatrix}.
+$$
+
+Consequently the actual source transfers, without any conjugation or substitution of another pair of matrices, are
+
+$$
+M=\begin{pmatrix}-1&1\\-1&0\end{pmatrix},\qquad
+N_\alpha=\frac1{1+\alpha}
+\begin{pmatrix}
+1-3\alpha&2\alpha\\
+1-3\alpha&\alpha-1
+\end{pmatrix}.
+$$
+
+For every $(x,y)^T\in\mathbb R^2$ their difference is
+
+$$
+(N_\alpha-M)\begin{pmatrix}x\\y\end{pmatrix}
+=\frac{1-\alpha}{1+\alpha}(2x-y)\begin{pmatrix}1\\1\end{pmatrix}.
+$$
+
+Thus they agree on the line $y=2x$. This is the specialization of the source first-event equality mechanism: the first undamped reflection is $E_1(x,y)^T=(-x+y,y)^T$, so that $E_1z=z$ precisely on that line. The existing identities `dampedEvent_eq_of_fixed`, `sweepTheta_of_fixed` and `source_factorization` in [TokenDampedSweepContraction](../../../D5/S3/Quantum/Dynamics/TridiagonalSweeps/TokenDampedSweepContraction.lean) identify the same agreement for the original matrices; the displayed difference also proves it directly here. The damping parameter remains fixed, and the chosen line does not depend on it.
+
+Write
+
+$$
+a=\begin{pmatrix}1\\2\end{pmatrix},\qquad
+b=\begin{pmatrix}1\\-1\end{pmatrix},\qquad
+c=\begin{pmatrix}-2\\-1\end{pmatrix}.
+$$
+
+Every transition in the proposed word is verified by the following exact products:
+
+$$
+\begin{aligned}
+N_\alpha a
+&=\frac1{1+\alpha}
+  \begin{pmatrix}(1-3\alpha)+4\alpha\\(1-3\alpha)+2(\alpha-1)\end{pmatrix}
+ =\frac1{1+\alpha}\begin{pmatrix}1+\alpha\\-1-\alpha\end{pmatrix}=b,\\
+Mb&=\begin{pmatrix}-1-1\\-1\end{pmatrix}=c,\\
+Mc&=\begin{pmatrix}2-1\\2\end{pmatrix}=a.
+\end{aligned}
+$$
+
+These equalities hold for every $0<\alpha<1$ since $1+\alpha>0$. They establish the chronological order $a\xrightarrow{N_\alpha}b\xrightarrow{M}c\xrightarrow{M}a$ and the period product $M^2N_\alpha a=a$. Starting at $u_0=a$, induction on $k$ now proves all three displayed phase identities: the first product gives time $3k+1$, the second gives time $3k+2$, and the third gives time $3(k+1)$. The induction uses the same $\alpha$, velocities, matrices and initial vector at every step. It also proves that the entire sequence is common to all $\alpha\in(0,1)$.
+
+The three vectors are nonzero and have squared Euclidean norms $5,2,5$, respectively. Hence $u_{t+3}=u_t\neq0$ at every time, including both intermediate phases, and $\|u_t\|_2\geq\sqrt2$. The indices of $N_\alpha$ are exactly $0,3,6,\ldots$. Three consecutive integers have the three distinct residues modulo $3$, so every block of three transfers contains exactly one damped occurrence. Thus $p=L=3$ meets all assertions. $\square$
+

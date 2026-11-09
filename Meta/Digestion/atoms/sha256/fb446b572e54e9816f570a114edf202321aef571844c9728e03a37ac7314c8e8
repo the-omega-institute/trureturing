@@ -1,0 +1,19 @@
+**推论 6.3（有限状态的完整二元递归）。**
+
+任意有限维 $D$ 的状态都可等距嵌入 $m=\lceil\log_2D\rceil$ 个二元因子， 再递归使用定理 [6.2](#thm:operatoraxes)，完整表示为二元关系网络。 完整 $m$ 比特载体的一般态有 $4^m-1$ 个独立实系数； 固定 $D$ 维编码族则有 $D^2-1$ 个自由度。 递归不会把这些信息压成单个单元的三个实数。
+
+**证明。**
+
+将任意 $D$ 个正交基送入 $2^m$ 个计算基中的前 $D$ 个。 逐因子应用可逆分块，得到
+
+$$
+\rho=2^{-m}\!\!\sum_{\alpha\in\{0,x,y,z\}^{m}}
+r_\alpha\,\sigma_{\alpha_1}\otimes\cdots\otimes\sigma_{\alpha_m},
+\quad
+r_\alpha=\operatorname{Tr}\!\left(\rho\,\sigma_{\alpha_1}\otimes\cdots\otimes\sigma_{\alpha_m}\right),
+$$
+
+其中 $\sigma_0=I$、$r_{0\cdots0}=1$。Pauli 张量基的迹正交性给完整性和唯一性。
+
+∎
+

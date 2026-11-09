@@ -170,7 +170,7 @@ open D5.S3.Quantum.Entanglement.ConicalDesignConcurrenceComparability (traceNorm
 namespace Toolkit
 variable {a b c d : Type} [Fintype a] [Fintype b] [Fintype c] [Fintype d]
   [DecidableEq a] [DecidableEq b] [DecidableEq c] [DecidableEq d]
-private theorem traceNorm_kronecker (A : Matrix a b ℂ) (B : Matrix c d ℂ) : traceNorm (A ⊗ₖ B) = traceNorm A * traceNorm B := by
+theorem traceNorm_kronecker (A : Matrix a b ℂ) (B : Matrix c d ℂ) : traceNorm (A ⊗ₖ B) = traceNorm A * traceNorm B := by
   let P := CFC.sqrt (Aᴴ * A)
   let Q := CFC.sqrt (Bᴴ * B)
   have hP : P.PosSemidef := (CFC.sqrt_nonneg _).posSemidef
@@ -536,7 +536,7 @@ private def moveRegister : ((Fin 2 × E) × Fin 2) ≃ ((Fin 2 × Fin 2) × E) :
       (Equiv.prodAssoc _ _ _).symm)
 private theorem chi_swap (v : Fin 2 → ℂ) (a b : Fin 2) : chi v (a,b) = chi v (b,a) := by
   fin_cases a <;> fin_cases b <;> rfl
-private theorem traceNorm_sum_le {J : Type} [Fintype J] {X : Type} [Fintype X] [DecidableEq X] (f : J → Matrix X X ℂ) : traceNorm (∑ j, f j) ≤ ∑ j, traceNorm (f j) := by
+theorem traceNorm_sum_le {J : Type} [Fintype J] {X : Type} [Fintype X] [DecidableEq X] (f : J → Matrix X X ℂ) : traceNorm (∑ j, f j) ≤ ∑ j, traceNorm (f j) := by
   exact Finset.le_sum_of_subadditive traceNorm (by simp [traceNorm]) traceNorm_add_le _ _
 private theorem refined_output_norm_bound (n : ι → ℕ) (v : (i : ι) → Fin (n i) → Fin 2 → ℂ) (τ : ι → Matrix E E ℂ) (hτ : ∀ i, IsDensity (τ i)) (hv : ∀ c, ∑ i, ∑ t, ‖v i t c‖ ^ 2 = 1) : traceNorm (∑ i, ∑ t, partialTranspose (rankOneDensity (chi (v i t))) ⊗ₖ τ i) ≤ 5 := by
   have ht (i : ι) : traceNorm (τ i) = 1 := by

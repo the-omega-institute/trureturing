@@ -1,0 +1,79 @@
+**命题 23.1（保留全部有限输出反映的原反例）。** 定义 8.1、实际共轭、R 及 FR 不能单独推出 O、原复二表正性或有界性；即使把 FR 加强为任意有限真正输出组合的精确行零反映，结论仍然如此。
+
+证明。用标准 Pauli 矩阵 $\sigma_1,\sigma_2,\sigma_3$，满足 $(v\cdot\sigma)(w\cdot\sigma)=(v\cdot w)I+i(v\times w)\cdot\sigma$。令参数 $r\in[0,1]$，取同一原域
+
+$$
+E=\{f(r)I+v(r)\cdot\sigma:
+f\in\mathbb R[r],\ v\in r\mathbb R[r]^3\},\qquad u=I.
+\tag{23.1}
+$$
+
+原锥为逐点矩阵正锥，$N$ 为一致算子范数，$S(a,b)=(ab+ba)/2$。完成为 $X=\{a\in C([0,1],M_2(\mathbb C))_{\rm sa}:a(0)\in\mathbb RI\}$；连续坐标多项式逼近后调整在零点的值即给稠密性。原评价取全部 $X^*_+$ 的限制，包含零及任意正倍数，点—向量评价使它准确决定原锥并分离原域。它满足全部实 Gram 正性、相加零方向、单位平方固定及每个指定小效果窗。
+
+写 $a=f_aI+v_a\cdot\sigma$，在同一个原域定义
+
+$$
+D_0(a,b)=\frac i2(ab-ba)=-(v_a\times v_b)\cdot\sigma,
+\qquad
+\omega(a,b)=(v_a'(0)\times v_b'(0))_3,
+\qquad D(a,b)=D_0(a,b)+\omega(a,b)u.
+\tag{23.2}
+$$
+
+这里的导数仅是原多项式一次系数，$D$ 确为原总映射、反对称实双线性且单位行零。每个实际输出 $p=D(a,b)$ 的向量部分至少二阶消失，所以 $\omega(p,c)=0$；中央项又不参与通常交换子。因此对全部原 $a,b,c$ 有
+
+$$
+D(D(a,b),c)=D_0(D_0(a,b),c)=[L_b,L_a]c.
+\tag{23.3}
+$$
+
+通常矩阵换括号式给 R；同一计算也给 Jacobi、$\delta_a^2=H_a$ 及 $D(a,a^2)=0$。
+
+还须核对反映的全部量词。任取有限真正输出和 $p=\sum_jc_jD(a_j,b_j)=\kappa u+w\cdot\sigma$，则 $w$ 至少二阶消失，且 $\kappa$ 等于 $w_3$ 的 $r^2$ 系数的相反数。固定两个真正原输出
+
+$$
+q_1=D(r\sigma_2,r\sigma_3)=-r^2\sigma_1,
+\qquad q_2=D(r\sigma_3,r\sigma_1)=-r^2\sigma_2.
+\tag{23.4}
+$$
+
+若 $\sum_jc_jD(D(a_j,b_j),q)=0$ 对全部真正 $q$ 成立，本例的双线性把前件写成 $D(p,q)=0$。在 $q_1,q_2$ 上测试给 $r^2w(r)\times e_1=r^2w(r)\times e_2=0$，故每个 $r>0$ 上 $w(r)=0$，在零点也为零。比较 $r^2$ 系数再得 $\kappa=0$。因此更强的全部有限输出反映成立，FR 也成立。
+
+固定 $x=r\sigma_1,y=r\sigma_2$，则
+
+$$
+p=D(x,y)=u-r^2\sigma_3.
+\tag{23.5}
+$$
+
+完成中 $H_x(fI+w\cdot\sigma)=-r^2(w_2\sigma_2+w_3\sigma_3)$。按 (15.6) 定义同一个数学 Abel 算子，准确有
+
+$$
+R_\lambda^xp=u-\frac{\lambda r^2}{\lambda+r^2}\sigma_3,
+\qquad \|R_\lambda^xp-u\|=\frac\lambda{1+\lambda}\longrightarrow0.
+\tag{23.6}
+$$
+
+原正评价 $\alpha_0(a)=\operatorname{Tr}(a(0))/2$ 质量为一，对全部 $\lambda>0$ 读出 $\alpha_0(R_\lambda^xp)=1$。同一第一输入纤维中还有
+
+$$
+b_n=r(1-r)^n\sigma_2\longrightarrow0,
+\qquad D(x,b_n)=u-r^2(1-r)^n\sigma_3\longrightarrow u
+\tag{23.7}
+$$
+
+的原范数收敛：$\max r(1-r)^n=n^n/(n+1)^{n+1}\le1/(n+1)$。所以旧关系不连续，且 $u\in\overline{D(x,E)}$；它却不是该精确纤维的输出，因为其行零会与 FR 矛盾。精确反映没有控制这个极限。
+
+O 的失败只需一个有限原输入对：取 $\widetilde b=2(y-u)/3$，则
+
+$$
+N(\widetilde b)=\frac43>1,
+\qquad
+N(\widetilde b+D(x,\widetilde b))=\frac{2\sqrt2}{3}<1.
+\tag{23.8}
+$$
+
+复正性和乘法也给出直接后果：在原 $\alpha_0$ 上，标签 $(x,y)$ 的原复表为 $\begin{pmatrix}0&-i\\i&0\end{pmatrix}$，特征值为 $1,-1$；$D(x,y^2)-D(x,y)\circ y-y\circ D(x,y)=-2y$。将同一 $S-iD$ 复双线性延拓为 $\star$，有 $(x\star y)\star y-x\star(y\star y)=-iy$。这些均为有限原表达式。
+
+本例反驳的是静态底座的蕴涵；它没有声称满足完整正核 $K/J$ 的词实现。若共同半正定 $K$ 及三标签卷 (8.2) 的全部词关系已作为实现前件，取循环词向量便直接给原复 Gram 正性，因而上面的负特征值正好见证该实现义务失败。不能一面保留这个更强实现前件，一面将此例称为其模型。∎
+

@@ -1,0 +1,41 @@
+**定义 327.1（先于推动关系固定的有限测试）。** 续接定义 319.1–319.2，分别保留完整 $B$ 与完整 $\mathsf B_{\rm cl}$，任一记为 $B_*$。原 $\Omega,q,D,L,\circ$、规范谱迹 $\tau$、整个原选中域 $\operatorname{rank}E_A>p_*$、全部实际来源及同一预选 $t_0,\sigma_{t_0}$ 均不变。只替换 $\mathsf Z_0$；整个 $\mathsf G_{0h}$ 的量词不缩小。
+
+由前卷 246.1 的静态表示，对每个选中原对象写
+
+$$
+E_A=\bigoplus_{s\in S_A}H_{n_s}(\mathbb C),\qquad
+ m_A=\dim_{\mathbb R}E_A=\sum_s n_s^2.
+\tag{327.1}
+$$
+
+在考察原 $D$ 之前，为每块任取一次正交归一坐标 $v_{s,1},\ldots,v_{s,n_s}$。以 $[v]=vv^*$ 表示单位向量的 rank-one 投影，第二输入只取数学集合
+
+$$
+\mathcal P_A=\bigcup_s j_s\left\{
+[v_{s,j}],\quad
+[(v_{s,j}+v_{s,k})/\sqrt2],\quad
+[(v_{s,j}+\mathrm i v_{s,k})/\sqrt2]:j<k
+\right\}.
+\tag{327.2}
+$$
+
+花括号中的第一类遍历全部 $j$，后两类遍历 $j<k$；经典块贡献其一个单位。对每个 $n_t\ge3$，只用三颗第一输入
+
+$$
+e_{t,1}=j_t[v_{t,1}],\quad e_{t,2}=j_t[v_{t,2}],\quad e_{t,3}=j_t[v_{t,3}].
+$$
+
+为每个 $p\in\mathcal P_A$ 固定 $a_t(p)$：若 $p$ 在其他块，取 $e_{t,1}$；若在 $t$，取 $e_{t,1},e_{t,2},e_{t,3}$ 中下标不在其一个或两个坐标支撑下标中的最小者。因此 $a_t(p)\perp p$。全部选择只依赖静态坐标，不读取 $D$ 或其输出。定义
+
+$$
+\begin{aligned}
+\mathsf Z_{\rm fin}:\quad&
+\tau_A\bigl(D^A(a_t(p),p)\bigr)=0
+\quad(n_t\ge3,\ p\in\mathcal P_A),\\
+\mathsf C_{\rm fin}(B_*):={}&B_*+\mathsf G_{0h}+\mathsf Z_{\rm fin}+\sigma_{t_0}.
+\end{aligned}
+\tag{327.3}
+$$
+
+每个选中对象上，每个高秩目标只有 $m_A$ 个标量迹要求；没有高秩目标时该对象的迹要求为空。对象域本身无需有限。维数符号 $m_A$ 与原双线性数据 $d_A(a,b)=D^A_ab$ 分开。这些投影是数学测试标签，不宣称原来有对应仪器、准备或压缩事件；静态坐标也不是先验固定原 $D$ 的复取向。
+

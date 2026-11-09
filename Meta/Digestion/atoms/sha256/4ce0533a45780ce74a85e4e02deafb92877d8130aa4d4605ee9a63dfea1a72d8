@@ -1,0 +1,8 @@
+**定义 6.1（四面体比较与其 Lüders 读）。** 在定理 4.1 的精确三维端点，令 $n_1,\ldots,n_4$ 是单位向量，满足 $\sum_jn_j=0$、$n_j\cdot n_k=-1/3$（$j\ne k$）。置
+
+$$
+P_j=\tfrac12(I+n_j\cdot\sigma),\qquad E_j=P_j/2.
+$$
+
+其 Lüders 总过程为 $\mathcal L(\rho)=\sum_j\sqrt{E_j}\rho\sqrt{E_j}$。此定义沿用 SIC 的标准四面体模型；不以其存在性反向假设 C95。
+

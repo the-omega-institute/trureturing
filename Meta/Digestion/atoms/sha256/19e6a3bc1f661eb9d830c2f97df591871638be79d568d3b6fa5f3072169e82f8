@@ -1,0 +1,28 @@
+**Corollary 52.3 (strict attained joint-gain comparison).** For the full
+nonsingular domain of Theorem 52.2 define
+
+$$
+\begin{aligned}
+\Gamma_0&=\sqrt p(sx+h)+\sqrt q\,c\sqrt{1-x^2},\\
+G_{\mathrm{can}}&=e^2p+d^2q-4\Gamma_0^2,\qquad
+I_- =\max_{(X,Y)\in\mathcal T_x}(\Gamma-\Gamma_0).
+\end{aligned}
+\tag{52.36}
+$$
+
+Then, including every slice with $\mathfrak D_-<0$,
+
+$$
+G_{\mathrm{can}}-V(\xi)-8\Gamma_0I_- -4I_-^2
+                         >H(\xi)-V(\xi)>0.
+\tag{52.37}
+$$
+
+*Proof.* By (47.1) the actual triangle is compact and
+$XY\ge x^2>0$ makes $\Gamma$ continuous there. The maximum in (52.36)
+is therefore attained. At a maximizing point
+$\Gamma=\Gamma_0+I_-$. Apply (52.5) at this point and expand its square
+to obtain (52.37). Strictness is retained because this is an attained
+maximum, not an unattained supremum. No uniform positive margin as
+$\xi\downarrow0$ is asserted. $\square$
+

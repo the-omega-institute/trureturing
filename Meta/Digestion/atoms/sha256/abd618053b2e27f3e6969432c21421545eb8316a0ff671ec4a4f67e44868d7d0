@@ -1,0 +1,32 @@
+### 定义 5：折叠谱与一条矩链
+
+令
+
+$$
+f(w)=iF(-iw)
+=\sum_{n\ge0}\alpha_nw^n.
+$$
+
+由于 $f$ 为奇函数，记
+
+$$
+c_j=\alpha_{2j+1}.
+$$
+
+定义
+
+$$
+\kappa_\rho=i\left(\rho-\frac12\right),
+\qquad
+\lambda_\rho=\kappa_\rho^{-2}
+=-\frac1{(\rho-\frac12)^2}.
+
+$$
+
+<a id="eq-5-1"></a>
+
+(5.1)
+
+<!-- editorial-note: n23 begin -->
+<a id="n23"></a>
+

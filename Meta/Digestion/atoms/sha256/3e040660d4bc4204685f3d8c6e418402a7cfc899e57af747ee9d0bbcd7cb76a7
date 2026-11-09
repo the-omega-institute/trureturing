@@ -1,0 +1,35 @@
+**定理 135.2（单原子读回恢复完整法向槽）。** 在任意有限 EJA、任意原正 Frobenius 型 $q$ 与任意原实双线性 $D$ 上，
+
+$$
+\mathsf F_{211}\Longleftrightarrow\mathsf F_2
+\Longleftrightarrow\mathsf F_{\rm zero}\Longleftrightarrow\mathsf F_{\rm cut}.
+\tag{135.2}
+$$
+
+同一原 SC、双单位、全部 $D_a$ 的 Jordan 导子律和原 $q$-斜伴随、全部 $D_c^2=-P_c/4$ 因而恢复。裸结论不消费复分类、准备覆盖或实际二阶对象。
+
+证明。$E=0$ 时测试域为空，唯一双线性 $D=0$，两边平凡。以下设 $E\ne0$。先说明所用的成熟角谱事实在整个原 $E$ 中的资格。
+
+固定幂等元 $c$。$N_c=E_1(c)\oplus E_0(c)$ 的两角乘积为零，单位分别为 $c$ 与 $u-c$。若幂等元 $r\in N_c$ 写成 $r=r_++r_-$，则 $r_+^2=r_+$、$r_-^2=r_-$ 且 $r_+\circ r_-=0$。所以整个 $E$ 的 primitive $r\in N_c$ 必全在一个角内。
+
+反过来，任一角的 primitive 也是整个 $E$ 的 primitive。令该角的单位为 $d\in\{c,u-c\}$，$e\in E_1(d)$ 为其 primitive；若整个 $E$ 有正交幂等分解 $e=f+g$，则 Frobenius 性与 Peirce 特征值 $0,1/2,1$ 给
+
+$$
+0=q(u-d,e)=q(f,L_{u-d}f)+q(g,L_{u-d}g).
+\tag{135.3}
+$$
+
+$L_{u-d}$ 对原 $q$ 自伴且半正定，两项分别非负，故 $L_{u-d}f=L_{u-d}g=0$。于是 $f,g\in E_1(d)$，角内 primitive 性迫使其中一个为零。由此，两角的谱分解说明它们的 primitive 都是 (135.1) 允许的整个 $E$ 的读回，而且实线性张成完整 $N_c$。零角不提供原子，不影响此结论。这里没有把仅在较小角内最细、却在原对象可分解的幂等元误作原子。
+
+现在假设 $\mathsf F_{211}$。固定 $\operatorname{rank}c\le2$ 及 primitive $p$，先取 $r=0$，再与每个允许的非零读回式相减，得
+
+$$
+W_c(p)=W_c(2D_cp),\qquad
+q(D_pc,r)=0\quad(r\in\operatorname{Prim}(E)\cap N_c).
+\tag{135.4}
+$$
+
+由刚才的张成，只对线性读数延拓，得 $q(D_pc,n)=0$ 对全部 $n\in N_c$ 成立。因此每个任意秩幂等读回 $r\in N_c$ 都满足原等式，恢复完整 $\mathsf F_2$。没有对二次的 $W_c(p)-W_c(2D_cp)$ 作原子线性延拓。
+
+反向是量词限制；其余等价与局部结论直接消费定理 130.2。该定理先从 primitive 主切口的法向零比较恢复原 $q$ 下的二次、三次谱恒等式和导子，再用两原子主切口恢复正交原子互不推动与 SC，最后在包含任意主切口的谱框架中逐关系空间相加。因而这里并未预先使用尚未恢复的高秩校准。∎
+

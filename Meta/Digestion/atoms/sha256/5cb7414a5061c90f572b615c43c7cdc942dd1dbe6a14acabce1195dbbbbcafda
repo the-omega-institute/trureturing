@@ -1,0 +1,26 @@
+**定义 95.2（原余量预算 $\mathsf R_{\rm fin}$ 与非平凡等值 $\mathsf E_d$）。** 对每个 $p\in\mathcal P_A$，只在原基上的两份普通整数配方 $a=\sum_i f_i b_i$、$b=\sum_i g_i b_i$ 上要求
+
+$$
+\boxed{2q(D_ap,b)\le V_p(a)+V_p(b)
+\quad(f,g\in\mathbb Z^N).}
+\tag{95.2}
+$$
+
+整数系数没有统一上界。第二个条件只在原 AC 原子 $d$ 处要求原实输入满足
+
+$$
+\boxed{\exists a,b\in E_P\quad
+V_d(a)+V_d(b)>0,\qquad G_d(a,b)=0.}
+\tag{95.3}
+$$
+
+称为 $\mathsf E_d$。见证不要求整数坐标。删去预算后，此条件仍有定义，但不再称为正型边界或单位尺度。完整候选分别为
+
+$$
+\mathsf C_{\mathbb R}(B_*)=B_*+\mathsf R_{\rm fin}+\mathsf E_d,
+\qquad B_*=B\ \text{或分别命名的 }\mathsf B_{\rm cl}.
+\tag{95.4}
+$$
+
+有限的是每对象的基矩阵与谱原子集，非配方幅度、物理实验次数或整个无界对象网络。零对象用空表，原非经典指针另有非零原子 $d$。
+

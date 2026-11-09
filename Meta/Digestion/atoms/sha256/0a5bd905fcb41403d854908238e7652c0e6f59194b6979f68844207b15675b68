@@ -1,0 +1,29 @@
+**定义 14.1（原生来源和无条件比较律）。** 使用 §8 的同一个十站点、十三维 $\mathcal H$、七地址 $0,\ldots,6$、唯一 ready 种子 $v=e_{00100}$，以及 $V=LJ$。完整终端字母表仍为 $\Omega=\{0,1\}^{10}$，保留全部 $1024$ 个标签。五个理想支撑标签按原顺序为
+
+$$
+\begin{array}{c|ccccc}
+t&0&2&3&5&25\\ \hline
+\ell_t&1000000010&1010000010&1001000010&1000100010&1010100010.
+\end{array}
+\tag{14.1}
+$$
+
+以 $\mathsf I:\mathbb R^5\to\mathbb R^\Omega$ 表示将质量放到这五个标签、其它坐标置零的列随机嵌入。置 $p_j=p(\rho_j)$、$q_j=p(U_\star\rho_jU_\star^*)$。理想完整终端律分别为 $\mathsf I p_j,\mathsf I q_j$。不把其它标签删除后重新归一化。
+
+对每个目标选单位向量 $\psi_j$ 使 $\rho_j=|\psi_j\rangle\langle\psi_j|$，并选数学 $B_j\in U(2)$ 使 $B_j|0\rangle=\psi_j$。定理 8.2 对任意 $\alpha>0$ 给原七地址有限正向制备字 $a_j$，满足
+
+$$
+\|K_{a_j}v-V\psi_j\|<\alpha.
+\tag{14.2}
+$$
+
+定理 8.3 对 $\mathcal G_{U_\star}\in SU(13)$ 和任意 $\beta>0$ 给一个共同的有限正向门字 $g$，满足
+
+$$
+\|K_g-\mathcal G_{U_\star}\|_{\mathcal H}<\beta,\qquad
+\|K_gK_{a_j}v-VU_\star\psi_j\|<\alpha+\beta.
+\tag{14.3}
+$$
+
+第二界是酉性和三角不等式；实际中间态不必精确落在 $V$ 码。这里 $B_j,\mathcal G_{U_\star}$ 是编译目标，不是新增可调用控制；实际字仍只使用原地址。比较输入、输出律分别对应同一 ready 源上执行 $a_j$ 后终端读取、执行 $a_j$ 再接 $g$ 后终端读取的两种完整程序，不插入一次中途测量再继续演化。
+

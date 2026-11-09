@@ -1,0 +1,28 @@
+### 应用 35.2（有限字的代数谱与黄金相位）
+
+<a id="c117-c132-exact-spectral-obstruction"></a>
+
+令 $\mathbb E=\mathbb Q(x,y,\zeta)$。这是代数数域；(35.1) 的全部矩阵元属于 $\mathbb E$，因而每个有限实际字 $K_w|_H$ 的矩阵元仍在其中。其特征多项式系数代数，所以全部特征值及任意两个非零特征值之比都是代数数。这个结论对原有限字成立，不依赖未知概率函数的形状。
+
+消费成熟的 **Gelfond–Schneider 定理**，其条件及“任一值”的表述见 MathWorld，[Gelfond's Theorem](https://mathworld.wolfram.com/GelfondsTheorem.html)：若 $a$ 为代数数且 $a\ne0,1$，$b$ 为无理代数数，则 $a^b$ 的任一值超越。对每个 $m\in\mathbb Z\setminus\{0\}$，取
+
+$$
+ a=-1,\qquad b=\frac{2m}{\phi}=m(\sqrt5-1),\qquad
+ \log(-1)=i\pi,\qquad
+ \exp(b\log(-1))=\exp(2\pi i m/\phi)=z^m.
+ \tag{35.2}
+$$
+
+$a$ 满足排除条件，$b$ 为无理代数数；故每个非零整数次幂 $z^m$ 都超越。这是对所引定理的准确代入，不另给超越性证明，也不以该二级来源冒称核读原始论文。
+
+因此，对每个实际有限 $w$ 及非零整数 $m$，
+
+$$
+ z^m\notin\operatorname{Spec}(K_w|_H),\qquad
+ z^m\notin\{\lambda/\mu:
+       \lambda,\mu\in\operatorname{Spec}(K_w|_H),\ \mu\ne0\}.
+ \tag{35.3}
+$$
+
+特别地，没有非零不变扇区上的限制等于字面的 $z^mI$；否则该扇区任一非零向量就是相应特征向量。也不存在经任意基变换及整体重定相后，在一个二维不变扇区上具有相对特征值比 $z^m$ 的两模算子，因为共轭与整体标量都不改变这个比值。这里排除的是**指定原矩阵实现的有限字谱供应路线**，不是所有对 C132 形式二元比较的编码方式。
+

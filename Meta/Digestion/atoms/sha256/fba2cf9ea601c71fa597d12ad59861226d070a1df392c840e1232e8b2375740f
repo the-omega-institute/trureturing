@@ -1,0 +1,164 @@
+## 81. 完整 Cauchy 边界、球面拓扑与曲率缺角
+
+**定理 C-81.1（完备化恰加两个点）。** 赋予开圆柱
+$M=(\kappa_-,\kappa_+)\times S^1$ 以内在长度距离。
+式 (C79.2) 的 Cauchy 完备化在每一端恰加一点，没有其他度量边界；
+两端点不同。完备化紧致，拓扑同胚于 $S^2$。
+
+证明。置
+
+$$
+s(\kappa)=\int_{\kappa_-}^{\kappa}\frac{du}{\sqrt{f(u)}},
+\qquad
+T=\int_{\kappa_-}^{\kappa_+}\frac{du}{\sqrt{f(u)}}.
+\tag{C81.1}
+$$
+
+两端由命题 C-80.1 可积，内部连续正，故 $0<T<\infty$。
+在 $0<s<T$ 上写 $g=ds^2+h(s)^2d\chi^2$，
+其中 $h>0$，且 $h(s)\to0$ 于 $s\to0,T$。
+任意分段光滑曲线的长度至少为其 $s$ 坐标总变差，因此
+
+$$
+|s(p)-s(q)|\le d(p,q).
+\tag{C81.2}
+$$
+
+即 $s$ 是 $1$-Lipschitz。固定角的径向线段长度恰为 $|s(p)-s(q)|$。
+所以沿固定角趋向下端或上端的点列为 Cauchy 列，分别定义完备化点 $E_-,E_+$。
+
+在下端，将两个点 $(s,\chi)$、$(t,\chi')$ 先沿径向移到
+$0<u<\min(s,t)$，再沿该圆的较短弧相连，得到
+
+$$
+d((s,\chi),(t,\chi'))
+\le s+t-2u+\pi h(u).
+$$
+
+令 $u\downarrow0$，右侧趋于 $s+t$。
+特别地，任意 $s_n\to0$ 的点列都是 Cauchy，
+且所有这样的列彼此距离趋零，代表同一点 $E_-$。
+结合式 (C81.2) 及固定角径向列，准确地有
+$d((s,\chi),E_-)=s$。
+同理 $d((s,\chi),E_+)=T-s$。这是有限径向尾长和消失端圆周长共同给出的统一结论，
+没有要求角度序列收敛。
+
+现排除其他 Cauchy 边界。若 $(s_n,\chi_n)$ 为任意 Cauchy 列，
+式 (C81.2) 使 $s_n$ 收敛到某个 $s_*\in[0,T]$。
+若极限为两端之一，上段已处理。若 $0<s_*<T$，
+该列最终留在某个紧条带 $[\epsilon,T-\epsilon]\times S^1$。
+此条带上 $h$ 的最大值有限、最小值严格正，
+局部度量与普通圆柱度量互相有界比较，给相同局部拓扑。
+条带的产品紧致性给收敛子列；在小坐标邻域内用路径长度上界，
+该子列也按 $d$ 收敛到同一内部点。原列 Cauchy，故整列收敛到该点。
+若担心内在距离路径越过条带，式 (C81.2) 保证足够短路径不能穿越一个固定正宽度的径向间隔；
+所以此局部比较不会遗漏来自端部的捷径。
+
+两端间由延伸的 $1$-Lipschitz 坐标得 $d(E_-,E_+)\ge T$，
+固定角经线给反向不等式，故距离恰为 $T>0$，不能合并。
+每个 $\epsilon$ 端尾距相应端点不超过 $\epsilon$，中间条带紧致；
+因此完备化全有界且完备，故紧致。
+
+更具体地，连续映射 $[0,T]\times S^1\to\overline M$ 在内部取恒等，
+将两个端圆分别送到 $E_-,E_+$。端部连续性由刚证明的统一距离公式保证；
+除了同一端圆内的点，没有其他识别。
+它诱导紧 Hausdorff 空间间的连续双射
+
+$$
+([0,T]\times S^1)/(\{0\}\times S^1,\ \{T\}\times S^1)
+\ \longrightarrow\ \overline M,
+$$
+
+故为同胚。左边是圆周的悬挂，可由
+$(s,\chi)\mapsto(\sin(\pi s/T)\cos\chi,\sin(\pi s/T)\sin\chi,\cos(\pi s/T))$
+显式识别为球面。此证明补足原卷 C-13.3、C-14.3 在当前尺度下的全部内在度量边界论证。证毕。
+
+**定理 C-81.2（总面积、直接端斜率积分及全部缺角类型）。** 令
+$w=\kappa_+-\kappa_-=\min\{X,Y,r-X,r-Y\}>0$，则
+
+$$
+\operatorname{Area}(\overline M)=2\pi w,\qquad
+\int_M\mathcal K\,dA
+=2\pi\left(\frac1{m_-}+\frac1{m_+}\right).
+\tag{C81.3}
+$$
+
+两端总角为 $\alpha_\pm=2\pi/m_\pm$，缺角
+$D_\pm=2\pi-\alpha_\pm$，满足
+
+$$
+\int_M\mathcal K\,dA+D_-+D_+=4\pi.
+\tag{C81.4}
+$$
+
+证明。在 $(\kappa,\chi)$ 坐标中 $\det g=1$，故无向面积密度为
+$dA=d\kappa\,d\chi$，等于 $|\omega_{\rm red}|$；
+这里未把坐标次序的有向二形式 $d\kappa\wedge d\chi$ 与
+$d\chi\wedge d\kappa$ 误认同号。积分相位周期和区间宽度即得总面积。
+每个端尾面积随 $\delta$ 线性趋零，新增的两个点为零面积。
+宽度公式可直接分 $X+Y\le r$、$X+Y\ge r$：
+前者 $w=\min(X,Y)$，后者 $w=\min(r-X,r-Y)$，合并即四项最小值。
+
+式 (C80.4) 是解析展开，故可对端点求导，而非对不受控的渐近余项求导。
+下端向内坐标为 $\delta=\kappa-\kappa_-$，上端为 $\delta=\kappa_+-\kappa$，从而
+
+$$
+f'(\kappa_-)=\frac2{m_-},\qquad
+f'(\kappa_+)=-\frac2{m_+}.
+\tag{C81.5}
+$$
+
+$f''$ 在整个闭区间连续有界，故微积分基本定理和式 (C79.3) 给
+
+$$
+\begin{aligned}
+\int_M\mathcal K\,dA
+&=-\pi\int_{\kappa_-}^{\kappa_+}f''(\kappa)\,d\kappa\\
+&=-\pi\bigl(f'(\kappa_+)-f'(\kappa_-)\bigr)
+=2\pi\left(\frac1{m_-}+\frac1{m_+}\right).
+\end{aligned}
+$$
+
+加两个缺角得到式 (C81.4)。完整类型如下，其中一双零行包括两种端点次序：
+
+| 两端类型及条件 | 总面积 | 内部曲率积分 | 端点缺角总和 | 曲率加缺角 |
+| --- | ---: | ---: | ---: | ---: |
+| 单零、单零：$X+Y\ne r$ 且 $X\ne Y$ | $2\pi w$ | $4\pi$ | $0$ | $4\pi$ |
+| 一单零、一双零：$X+Y=r$ 与 $X=Y$ 恰一成立 | $2\pi w$ | $3\pi$ | $\pi$ | $4\pi$ |
+| 双零、双零：$X=Y=r/2$ | $\pi r$，此时 $w=r/2$ | $2\pi$ | $2\pi$ | $4\pi$ |
+
+这也核对锥度量 Gauss–Bonnet 公式，但拓扑和积分已分别直接证明。为精确应用
+Fang、Xu、Yang，*The Gauss-Bonnet formula of a conical metric on a compact Riemann surface*，
+[arXiv:1912.01187v3](https://arxiv.org/abs/1912.01187v3)，文首定义及 Theorem，
+还须核对其共形锥形和可积性条件。
+
+在每端取穿孔邻域的等温径向变量 $q>0$ 满足
+$dq/q=d\rho/h(\rho)$，并以 $z=q e^{i\chi}$ 作局部复坐标。
+式 (C80.3) 给
+
+$$
+\frac1{h(\rho)}=\frac m\rho+\rho A(\rho^2),\qquad
+q=c\,\rho^m e^{B(\rho^2)},\quad c>0,
+$$
+
+其中 $A,B$ 解析，可把 $B(0)$ 吸入 $c$。
+度量为
+
+$$
+g=\frac{h(\rho)^2}{q^2}|dz|^2
+=e^{2u(z)}|z|^{2\beta_{\rm cone}}|dz|^2,\qquad
+\beta_{\rm cone}=\frac1m-1.
+\tag{C81.6}
+$$
+
+确切地，
+$e^{2u}=h(\rho)^2/q^{2/m}$ 在 $\rho\to0$ 时趋于
+$1/(m^2c^{2/m})>0$，所以 $u$ 在端点连续，在穿孔处光滑。
+内部取相容等温图，两端分别取与定向相容的 $\chi$ 或 $-\chi$，
+获得紧球面上的 Riemann 曲面结构；符号选择不改变式 (C81.6)。
+锥指数为 $0$ 或 $-1/2$，都严格大于 $-1$。
+又因面积有限且 $\mathcal K$ 有界，$\int_M|\mathcal K|\,dA<\infty$。
+这满足所引定理的 $L^1$ 曲率条件，其
+$\int\mathcal K\,dA=2\pi(\chi_{\rm Euler}(S^2)+\sum\beta_{\rm cone})$
+正给式 (C81.4)。该文没有替本文证明四角概率的锐界、等号条件或完备化拓扑。证毕。
+

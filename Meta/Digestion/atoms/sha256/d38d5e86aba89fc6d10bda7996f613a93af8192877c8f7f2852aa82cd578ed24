@@ -1,0 +1,43 @@
+### 12.2　原来源挑出相位子代数，得到复二维 Hilbert 空间
+
+取与原总质量泛函 $u$ 不同的纯转向单位
+
+$$
+\iota =R_e=C,\qquad \iota ^2=-1.
+$$
+
+这里把 $C$ 嵌为 $(0,C)\in\mathcal Q$；$\iota^2=-1$ 使用振幅乘法，而原算子平方仍为 $C^2=-(I-P_e)$。定义原来源的相位子代数
+
+$$
+\mathbb C_\iota =\{a+b\iota :a,b\in\mathbb R\}.
+$$
+
+它在 $\mathcal Q$ 内已经存在。为固定通常复符号的取向，取
+
+$$
+j:\mathbb C\to\mathbb C_\iota ,\qquad j(a+ib)=a-b\iota .
+$$
+
+将同一个四实维空间 $\mathcal Q$ 看成右复向量空间
+
+$$
+q\cdot z=q\,j(z).
+$$
+
+定义
+
+$$
+\pi_\iota (q)=\tfrac12(q-\iota q\iota ),\qquad
+\langle q,r\rangle=j^{-1}\!\left(\pi_\iota (q^*r)\right).
+\tag{12.2}
+$$
+
+对 $q=a+K$，还有直接连接原作用的等式
+
+$$
+\boxed{\pi_\iota (a+K)=a+\kappa(\iota ,K)\iota
+=a-(\iota K\iota )_{\operatorname{End}(W)}.}
+$$
+
+最后一项用的是原算子夹持，中间和左侧在 $\mathcal Q$ 中。相位平面正是“原夹持留下的那根轴，加上单位方向”；两种乘法的类型保持明确。
+

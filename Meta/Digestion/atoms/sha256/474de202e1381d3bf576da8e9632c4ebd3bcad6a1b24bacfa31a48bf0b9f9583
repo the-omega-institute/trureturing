@@ -1,0 +1,58 @@
+**引理 168.1（本质理想的保坐标表示）。** 定义 167.1 的前件给出 (167.2)，这一构造不使用 $D$。
+
+证明。记 $L_xy=x\circ y$、$U_e=2L_e^2-L_e$，其中 $e^2=e$。使用 JB 的 Peirce 分解和乘法规则、$U_e$ 保正、单元生成的连续谱演算及准确序单位范数；原典范围见 176.1。闭理想 $I$ 继承 JB 结构，其正锥是 $I\cap X_+$：正元素的平方根由零点取零的连续谱演算仍落在闭理想中。$j$ 及其逆保持平方，故保正；JB 同态等距结论使 $j$ 等距。
+
+对每个有限维复 $L\subset H$，令 $P_L$ 为正交投影、$e_L=j^{-1}(P_L)\in I$。理想性质给 $U_{e_L}X\subset I$，Peirce 规则使其像落入 $I_2(e_L)$。定义
+
+$$
+A_L(x)=j(U_{e_L}x)\in P_LB(H)_{\rm sa}P_L.
+\tag{168.1}
+$$
+
+由 $-\|x\|u\le x\le\|x\|u$、$U_{e_L}u=e_L$ 和保正性，$\|A_L(x)\|\le\|x\|$。若 $L\subset M$，则 $e_L\circ e_M=e_L$，嵌套 Peirce 投影给 $U_{e_L}U_{e_M}=U_{e_L}$，从而
+
+$$
+P_LA_M(x)P_L=A_L(x).
+\tag{168.2}
+$$
+
+对任意 $\xi,\zeta\in H$，在含二者的有限 $L$ 中定义 $h_x(\xi,\zeta)=\langle\xi,A_L(x)\zeta\rangle$。式 (168.2) 使定义相容；为检验相加或复齐次，只须把涉及的有限多个向量放进共同的有限空间。因此 $h_x$ 是有界 Hermitian 半双线性型，界为 $\|x\|\|\xi\|\|\zeta\|$。有界型表示给唯一自伴算子 $\rho(x)$，满足
+
+$$
+P_L\rho(x)P_L=A_L(x)\quad\text{对全部有限 }L\subset H.
+\tag{168.3}
+$$
+
+于是 $\rho$ 实线性、保单位、正、收缩。对 $y\in I$，$j(U_{e_L}y)=P_Lj(y)P_L$，故 $\rho(y)=j(y)$。这些 $e_L$ 只用于完成 $X$ 的已知 Jordan 运算，不声称它们全在原 $E$，也不向 $D$ 输入它们。
+
+还须验证乘法。若 $y\in I$ 的坐标 $Y=j(y)$ 有限秩，支撑在 $M$，对每个有限 $L\supset M$，Peirce 乘法规则给
+
+$$
+U_{e_L}(x\circ y)=(U_{e_L}x)\circ y.
+$$
+
+比较这些压缩便得 $j(x\circ y)=\rho(x)\circ Y$。有限秩自伴元在 $K(H)_{\rm sa}$ 范数稠密；只对已知有界 $L_x$、$j$ 和算子乘法取极限，得
+
+$$
+j(x\circ y)=\rho(x)\circ j(y)\qquad(x\in X,\ y\in I).
+\tag{168.4}
+$$
+
+固定有限 $P=P_L$、$e=e_L$，写 $x=x_2+x_1+x_0$ 为 Peirce 分解，其中 $x_2=U_ex$、$x_1=2(e\circ x-U_ex)$。$x_2,x_1\in I$。置 $A=\rho(x)$，由 (168.3)–(168.4)，
+
+$$
+j(x_2)=PAP,\qquad
+j(x_1)=PA(1-P)+(1-P)AP.
+$$
+
+Peirce 平方规则给 $U_e(x^2)=x_2^2+U_e(x_1^2)$。右侧全在 $I$，可用已给 $j$ 计算，故
+
+$$
+P\rho(x^2)P=(PAP)^2+PA(1-P)AP=PA^2P.
+\tag{168.5}
+$$
+
+任意有限压缩相等使 $\rho(x^2)=\rho(x)^2$，实极化遂给 Jordan 乘法保持。若 $\rho(x)=0$，(168.4) 与 $j$ 单射给 $x\circ I=0$，本质性使 $x=0$。
+
+若 $\rho(x)\ge0$，在 $X$ 的单生成谱演算中取 $f(t)=\max\{-t,0\}$。保单位 Jordan 映射保持多项式，收缩性使它保持其一致极限，故 $\rho(f(x))=f(\rho(x))=0$。单射使 $f(x)=0$，即 $x\ge0$。所以正性被反映。将 $-\|\rho(x)\|1\le\rho(x)\le\|\rho(x)\|1$ 拉回，用 $X$ 的序单位范数得 $\|x\|\le\|\rho(x)\|$，结合收缩性即得等距。∎
+

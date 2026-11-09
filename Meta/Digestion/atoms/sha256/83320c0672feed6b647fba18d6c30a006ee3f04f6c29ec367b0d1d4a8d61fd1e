@@ -1,0 +1,10 @@
+**本轮唯一核心候选。** 在实线性比较载体 $V$ 上，给定同一来源的有限非负读数 $q:V\to[0,\infty)$。 对任意两份比较配方 $x,y$，要求下面两个正向极限存在、有限且相同：
+
+$$
+\boxed{\quad
+ \lim_{t\downarrow0}\frac{q(x+ty)-q(x)}{t}
+ =\lim_{t\downarrow0}\frac{q(y+tx)-q(y)}{t}
+ \quad(x,y\in V).\quad}
+ \tag{C139}
+$$
+

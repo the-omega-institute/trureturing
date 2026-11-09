@@ -1,0 +1,77 @@
+**Lemma 4.2 (Every large integer budget realizes the minimum
+price).** Fix $a,h$, a winning $j$, and any core--tail partition.
+For every sufficiently large integer $N$ there is
+$G_{j,N}\in\mathfrak G_N(a,h)$ with the source types in Theorem
+1.3 and
+
+$$
+W(G_{j,N})=M+\frac{nb_j+d_{j,N}c_j}{N}
+                         +O_{a,h}(N^{-2}).
+\tag{4.8}
+$$
+
+No congruence condition on $N$ is needed.
+
+**Proof.** Write $d=d_{j,N}$ and take $n$ degree-two connectors,
+one from each tail to any core label. Take $d$ missing-one-core
+sources, omitting arbitrary core labels. Set the full-core and
+tail-singleton counts to be
+
+$$
+F=\frac{(a-1)N-n-(r-1)d}{r},\qquad
+T=N-F-n-d.
+\tag{4.9}
+$$
+
+The residue defining $d$ makes both counts integers. Since
+$0\le d<r$ and $a,h$ are fixed,
+
+$$
+F=\alpha N+O_{a,h}(1)>0,\qquad
+T=n\beta N+O_{a,h}(1)>0
+\tag{4.10}
+$$
+
+for all sufficiently large $N$. Give $F$ sources the full-core
+neighborhood and distribute the $T$ singleton sources among the
+$n$ tails with counts differing by at most one. The source count
+is exactly $N$, and the edge count is exactly
+
+$$
+mF+rd+2n+T
+=N+rF+(r-1)d+n=aN.
+\tag{4.11}
+$$
+
+Repeated neighborhoods belong to different source vertices, so
+the graph is simple. A full-core source joins all core sinks,
+and each tail has a connector to the core, so the graph is
+connected. Its actual sink degrees satisfy
+
+$$
+d_i=\alpha N+O_{a,h}(1)\ (i\in C),\qquad
+d_k=\beta N+O_{a,h}(1)\ (k\in D).
+\tag{4.12}
+$$
+
+For example, if $o_i$ missing-one sources omit $i$ and $e_i$
+connectors use it, then $d_i=F+d-o_i+e_i$; at a tail its degree
+is its singleton count plus one. All these degrees eventually
+exceed $s$, whereas every source degree is at most $s$. Thus
+the strict orientation (1.3) holds for the same actual graph.
+All the budgets and the cyclomatic number are consequently the
+ones in Definition 1.1.
+
+Its law has $x_C=F/N$, $x_{\{k\}}=\beta+O_{a,h}(N^{-1})$,
+and at most $n+d$ exceptional sources. Hence
+$\|x_G-x^*\|=O_{a,h}(N^{-1})$. Lemma 2.3 and (3.3) give
+
+$$
+H(x_G)=M+\frac{nb_j+dc_j}{N}+O_{a,h}(N^{-2}).
+$$
+
+The actual degrees (4.12), or Lemma 3.2, replace $H$ by $W$
+with an $O_{a,h}(N^{-2})$ error. This proves (4.8). Finitely
+many $j$, partitions and residues allow one threshold and error
+constant for all of them. ∎
+

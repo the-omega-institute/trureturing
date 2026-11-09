@@ -1,0 +1,22 @@
+**定义 194.1（参考上层候选）。** 完整背景 $B_*$ 分别取定义 41.1 的 $B$ 或定义 67.1 的另名 $\mathsf B_{\rm cl}$。令
+
+$$
+p_*=\operatorname{rank}E_P,\qquad
+\mathfrak O_{>P}=\{A:\operatorname{rank}E_A>p_*\}.
+\tag{194.1}
+$$
+
+$P$ 是同一原完整指针；原 AC 的非中央 primitive 使 $p_*\ge2$。$\mathfrak O_{>P}$ 按原对象身份选取，包含满足秩条件的全部原对象、实际联合、输出和参考。唯一新候选为 $\mathsf C_{>P}(B_*)=B_*+\mathsf F_{>P}$，其中只对 $A\in\mathfrak O_{>P}$ 要求定义 187.1 的同一关系
+
+$$
+\boxed{W_c(p)=2q_A(D_pc,r)+W_c(2D_cp).}
+\tag{194.2}
+$$
+
+它在每个被选对象上的域仍准确为：
+
+| 层 | 原切口及输入 | 原读回 |
+| --- | --- | --- |
+| 正交 | $c=e\perp p$，$e,p$ 为整个 $E_A$ 的 primitive | $r=p$ 或 $r\perp e,p$ |
+| 二原子内部 | $c^2=c$，$\operatorname{rank}_{E_A}c=2$，primitive $p\le c$ | $r=p$ |
+| 半重叠 | $c=e$，primitive $e,p$ 满足 $\tau_A(e\circ p)=1/2$ | $r=e$ 或 $r\perp e,p$ |

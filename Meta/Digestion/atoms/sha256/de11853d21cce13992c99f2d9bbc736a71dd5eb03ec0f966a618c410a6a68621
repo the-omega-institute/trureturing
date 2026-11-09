@@ -1,0 +1,33 @@
+#### 定理 7.4（零 Schur 余量与纯态延续）
+
+对以上有限维 Hermitian 块矩阵，$M\succeq0$ 当且仅当
+
+$$
+A\succeq0,\quad \operatorname{Ran} C\subseteq\operatorname{Ran} A,\quad
+R=B-C^\dagger A^+C\succeq0.
+$$
+
+成立时 $\operatorname{rank} M=\operatorname{rank} A+\operatorname{rank} R$。
+若 $A\ne0$，则整体秩一等价于 $A$ 秩一且 $R=0$，并满足该像空间条件。
+
+**证明。**
+
+正性先使 $C^\dagger$ 消去 $\ker A$。
+令 $Y=A^+C$，则 $AY=C$，并有
+
+$$
+\begin{pmatrix}x\\y\end{pmatrix}^{\!\dagger}
+M\begin{pmatrix}x\\y\end{pmatrix}
+=(x+Yy)^\dagger A(x+Yy)+y^\dagger Ry.
+$$
+
+故得到充要性与可逆合同分解 $A\oplus R$，从而得到秩式。
+$A=0$ 时正性先强制 $C=0$，应单独由 $B$ 判断秩。
+
+□
+
+也可以选 $\rho=AA^\dagger$，把 $A$ 的矩阵元组成内部纯化
+$\Psi=\sum_{i,a}A_{ia}\lvert i\rangle\lvert a\rangle$，再对该纯向量使用树图册。
+部分迹回原系统给出 $\rho$。纯化态与原约化态是不同对象，
+增加的因子仍属整体内部；它保存了原混态所需的相关结构。
+

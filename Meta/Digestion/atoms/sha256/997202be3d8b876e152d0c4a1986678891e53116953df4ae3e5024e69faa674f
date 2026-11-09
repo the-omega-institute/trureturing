@@ -1,0 +1,14 @@
+**推论 22.10（同一未归一质量）。**把同一原历史的总质量记为 $w\ge0$，并以 $\mu(S)=w$、每份完整测试总质量均为同一 $w$ 代替概率一条件。相同证明给
+
+$$
+\begin{gathered}
+\mu(P_h)+\mu(P_r)=\mu(P_q),\\
+\sum\mu(P_q)=4w,\qquad\sum\mu(P_h)=3w,\qquad\sum\mu(P_r)=w,\\
+A_\tau^{\mu}=w+\sum_{\sigma,\rho}\mu(P_{r_{\sigma\rho\tau}}),\qquad
+w\le A_\tau^{\mu}\le2w,\qquad\sum_\tau A_\tau^{\mu}=4w.
+\end{gathered}
+\tag{22.23}
+$$
+
+这里从不除以 $w$；$w=0$ 时非负完整测试的全部分支为零，不定义零质量条件准备。不等中心权重或原混合分支只按其原质量使用这些等式，不替换成等权准备。
+

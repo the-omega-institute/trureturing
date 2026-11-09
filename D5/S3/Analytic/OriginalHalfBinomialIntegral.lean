@@ -24,7 +24,7 @@ open MeasureTheory Set
 open scoped BigOperators Topology
 open D5.S3.VertexAlgebra.LatticeHalfFockFiniteCorrection
 
-private def b (n : ℕ) : ℝ := (Nat.centralBinom n : ℝ) / 4 ^ n
+def b (n : ℕ) : ℝ := (Nat.centralBinom n : ℝ) / 4 ^ n
 
 private theorem b_nonneg (n : ℕ) : 0 ≤ b n := by unfold b; positivity
 
@@ -57,7 +57,7 @@ private theorem half_eq (n : ℕ) :
     field_simp
     ring
 
-private theorem b_multichoose (n : ℕ) :
+theorem b_multichoose (n : ℕ) :
     Ring.multichoose (1 / 2 : ℝ) n = b n := by
   have hpoch (n : ℕ) : (ascPochhammer ℝ n).eval (1 / 2) =
       (n.factorial : ℝ) * b n := by

@@ -1,0 +1,42 @@
+## 73. 两份横向原配平无需定号便消去标量部
+
+先取实际点像 $a(\xi)=(\lambda,v)$、$b(\xi)=(0,w)$，其中 $v\perp w$，并写 $d=(\delta,z)$。若 $v=0$ 或 $w=0$，242.1 或零像预算已经给零。否则令 $q=\|v\|^2>0$，取实际第三标签
+
+$$
+t=\delta/q,\qquad c_1=t(a-\lambda u).
+\tag{73.1}
+$$
+
+实际仿射同轴零值给 $D(a,c_1)=0$。记 $H=z-t\lambda v$。当前点的位移及两对外层像为
+
+$$
+\nu=H,\quad\omega=\lambda w,\qquad
+(R_\pm,S_\pm)=(w\pm H,\ tv\pm\lambda w).
+\tag{73.2}
+$$
+
+全部外层像都纯，不要求 $|\lambda|>\|v\|$。对两份实际旧输出用 62.2，PB 遂成为
+
+$$
+2tK(H,v)=-2(w\cdot z)I_2.
+\tag{73.3}
+$$
+
+左侧纯、右侧标量，故 $w\cdot z=0$ 且 $tK(H,v)=0$。反设 $\delta\ne0$，则 $t\ne0$，面积零值使 $H$ 与 $v$ 共线，进而 $z=\zeta v$ 对某个实数 $\zeta$ 成立。
+
+第二个实际第三标签只取 $c_2=\zeta u$，全单位行给 $D(a,c_2)=0$。此时 $\nu=(\delta-\zeta\lambda)I_2$、$\omega=\lambda w$；两对外层的向量像分别都是 $w$ 与 $\pm\lambda w$，各自旧输出像由 242.1 归零。PB 却要求
+
+$$
+0=-2(\delta-\zeta\lambda)w-2\zeta\lambda w=-2\delta w,
+\tag{73.4}
+$$
+
+矛盾。因此已对全部横向实际代表证明
+
+$$
+\boxed{\delta=0,\qquad w\cdot z=0.}
+\tag{73.5}
+$$
+
+这里尚未单独取得 $v\cdot z=0$。与 66 的入口不同，两次标签不使用矩阵逆式或定号假设；只需纯像识别及实际单位倍数。
+

@@ -1,0 +1,74 @@
+## 固定来源、归属与阅读范围
+
+<a id="ref-head"></a>
+
+**[1]**
+the-omega-institute/trureturing，固定提交
+[e42edf53c936<wbr>8a5d53e7e780<wbr>da2d2244493f<wbr>dfcc](https://github.com/the-omega-institute/trureturing/commit/e42edf53c9368a5d53e7e780da2d2244493fdfcc)，
+2026-10-31 21:49:06 SGT，合并 PR #24798。
+
+<a id="ref-compare"></a>
+
+**[2]**
+[v51 至 v52 的固定比较](https://github.com/the-omega-institute/trureturing/compare/d2950bd36448c5d4f6c4a3e5671ef734185145c9...e42edf53c9368a5d53e7e780da2d2244493fdfcc)。
+完整差异包含 933 个路径；API 比较列表仅前 300 项，故另用未截断的 1109 项 theory 树核对。
+理论正文仅 K-bonacci 与 Lyndon 两篇修改。没有 Quantum Blueprint 新变更。
+
+<a id="ref-v24"></a>
+
+**[3]**
+[AURIC Two Basis States, Three Channels, Phase Chirality and Recursive Square Law V24](https://github.com/the-omega-institute/trureturing/blob/e42edf53c9368a5d53e7e780da2d2244493fdfcc/docs/develop/theory/AURIC_TWO_BASIS_STATES_THREE_CHANNELS_PHASE_CHIRALITY_AND_RECURSIVE_SQUARE_LAW_V24.md)。
+本轮亲读 176–294 行，含 Hopf 商、相位圆纤维、两读出正负分支与半球稳定性。
+标准公式为既有结果；未归一保尺度形式为其直接齐次扩展。
+
+<a id="ref-v37"></a>
+
+**[4]**
+[AURIC Binary Relations and Unitary Representation V37](https://github.com/the-omega-institute/trureturing/blob/e42edf53c9368a5d53e7e780da2d2244493fdfcc/docs/develop/theory/AURIC_BINARY_RELATIONS_UNITARY_REPRESENTATION_AND_GOLDEN_GATE_UNIVERSALITY_V37.md)。
+固定原生 $J$、三均值球、同尺度关系与统计读数／相干编码的区别；
+本轮来源审计核对 50–88、150–348 行，算子递归沿用既有已读段。
+
+<a id="ref-v44"></a>
+
+**[5]**
+[AURIC Boundary Extension and Higher Dimensional Relational Atlas V44](https://github.com/the-omega-institute/trureturing/blob/e42edf53c9368a5d53e7e780da2d2244493fdfcc/docs/develop/theory/AURIC_BOUNDARY_EXTENSION_AND_HIGHER_DIMENSIONAL_RELATIONAL_ATLAS_V44.md)。
+本轮亲读 45–100、521–619、996–1035 行，含逆立体投影、纯态图册、$2d-2$、循环条件与稳定维数下界。
+全体主块、$W_d$ 与 Schur 条件沿用前轮已核对且本轮未变的第 8–11 节。
+
+<a id="ref-omega"></a>
+
+**[6]**
+[AURIC Ω Static Compatibility Fiber Theory](https://github.com/the-omega-institute/trureturing/blob/e42edf53c9368a5d53e7e780da2d2244493fdfcc/docs/develop/theory/AURIC_OMEGA_STATIC_COMPATIBILITY_FIBER_THEORY.md)。
+本轮亲读 125–154 行的响应商；效果表示、内生记录及恢复范围沿用前轮已读段及本轮来源复核。
+本文不从静态性单独推导复 Hilbert、正效果或 CP 操作等输入。
+
+<a id="ref-kbonacci"></a>
+
+**[7]**
+[KBonacci Endpoint Tomography and Rank-One Relation Boundaries](https://github.com/the-omega-institute/trureturing/blob/e42edf53c9368a5d53e7e780da2d2244493fdfcc/docs/develop/theory/KBONACCI_ENDPOINT_TOMOGRAPHY_AND_RANK_ONE_RELATION_BOUNDARIES.md)。
+本轮完整亲读 1–438 行；真正追加的是 250–437 行第 7 节，净增 190 行。
+精确同源制备与收费合同、恢复公式、资源下界及正秩一非对称类型均保留。
+本文对角相似桥与幂等纯态判据为本轮纸面推导，不声称已入库或给出物理类型桥。
+
+<a id="ref-watrous2"></a>
+
+**[8]**
+John Watrous，*The Theory of Quantum Information*，
+[第 2 章：Basic Notions of Quantum Information](https://jhwatrous.github.io/TQI.2.pdf)，作者公开章节。
+亲读纯态与整体相位、统计混合假设及基本状态定义；用于标准密度态、信道与扩张语言。
+
+<a id="ref-watrous3"></a>
+
+**[9]**
+John Watrous，*The Theory of Quantum Information*，
+[第 3 章：Similarity and Distance among States and Channels](https://jhwatrous.github.io/TQI.3.pdf)，作者公开章节。
+标准迹距离与效果可区分性；本文所用距离、近似与压缩界另给证明。
+
+<a id="ref-hatcher"></a>
+
+**[10]**
+Allen Hatcher，*Algebraic Topology*，
+[第 2 章，第 2.B 节，定理 2B.3 与推论 2B.4](https://pi.math.cornell.edu/~hatcher/AT/ATch2.pdf)，印刷页 172。
+亲读域不变定理及紧流形嵌入推论，用于球面不存在单张连续单射平面坐标的标准拓扑前提。
+
+<!-- 原稿文档结束 -->

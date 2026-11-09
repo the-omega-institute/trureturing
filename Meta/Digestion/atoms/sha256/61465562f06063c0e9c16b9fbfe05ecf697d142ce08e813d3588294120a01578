@@ -1,0 +1,33 @@
+**定理 380.1（不放大原子输入的框架推论）。** 设
+
+$$
+E=\bigoplus_sH_{n_s}(\mathbb C),\qquad
+q(a,b)=\sum_sw_s\operatorname{Tr}(a_sb_s),\quad w_s>0,
+\tag{380.1}
+$$
+
+实双线性 $D:E\times E\to E$ 满足右单位及全部原子对的 (379.1)。则每个 primitive 有 $D(e,e)=0$，每个完整 $E$ 中的有序正交 primitive 对有整个输出 $D(e,p)=0$；全部半重叠 primitive 对满足整支持。因此前卷 274.1 的全部 $\mathsf O,\mathsf H$ 成立。
+
+证明。$e=p$ 时，支持空间是 $\mathbb Re$，故 $D(e,e)=\lambda_e e$。相切给 $0=q(2e,\lambda_e e)=2\lambda_eq(e,e)$，原正权使 $\lambda_e=0$。这一步只在原子输入上取值，没有将 $te$ 当成另一颗原子。
+
+固定完整谱框架 $e_1,\ldots,e_N$，任取 $i\ne j$。记 $w_i=q(e_i,e_i)>0$。原子对的整个支持使
+
+$$
+D(e_i,e_j)=\alpha_{ij}e_i+\beta_{ij}e_j+v_{ij},\qquad
+v_{ij}\in V_{ij},\qquad
+w_i\alpha_{ij}+w_j\beta_{ij}=0.
+\tag{380.2}
+$$
+
+同块时 $V_{ij}$ 是只占矩阵位置 $(i,j),(j,i)$ 的 Peirce 空间；跨中心时 $V_{ij}=\{0\}$。各块的原 Frobenius 权可不同，相切仍恰给最后一个加权式。原右单位及已证的自对零给
+
+$$
+0=D(e_i,u)=\sum_{j\ne i}
+\bigl(\alpha_{ij}e_i+\beta_{ij}e_j+v_{ij}\bigr).
+\tag{380.3}
+$$
+
+对固定 $j\ne i$，沿 $e_j$ 的对角系数在和式中只出现一次，故 $\beta_{ij}=0$。不同 $j$ 的 $V_{ij}$ 也是独立直和，故各 $v_{ij}=0$。再由 (380.2) 的原加权关系得每个 $\alpha_{ij}=0$；没有把共有的 $e_i$ 系数之和为零误作逐项为零。
+
+任意正交 primitive 对可补入这样的完整框架，所以整个 $\mathsf O$ 成立。全部半重叠对本来包含在 (379.1) 的支持量词中，故整个 $\mathsf H$ 成立。此时才可使用 274.1；不先假定一般输入的 SC、交替或 $q$ 斜伴随。∎
+

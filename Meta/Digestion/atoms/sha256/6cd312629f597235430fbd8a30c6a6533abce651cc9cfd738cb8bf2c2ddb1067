@@ -1,0 +1,44 @@
+### 证明第五步：负频 Hankel 算子的秩也是同一维数
+
+对 $h\in H^2$，
+
+$$
+\boxed{
+H_gh=\bar J\,P_{K_J}(Ih).
+}
+
+$$
+
+<a id="eq-4-9"></a>
+
+(4.9)
+
+如果 $u\in K_J$ 垂直于全部 $P_{K_J}(Ih)$，则它垂直于 $IH^2$，所以
+
+$$
+u\in K_I\cap K_J=\{0\}.
+$$
+
+故 $P_{K_J}(IH^2)$ 在 $K_J$ 中稠密。乘以 $\bar J$ 保持范数，因此
+
+$$
+\overline{\operatorname{ran}H_g}
+=
+\bar J K_J,
+$$
+
+得到
+
+$$
+\operatorname{rank}H_g=\dim K_J.
+$$
+
+所有等式合并，定理成立。证毕。
+
+<!-- editorial-note: n21 begin -->
+<a id="n21"></a>
+
+**编者注 n21（Hankel 像的闭包与秩）。** 式（4.9）的投影公式应用于每个 $Ih\in H^2$。原文的正交补论证证明的是像稠密及所列闭包等式；有限维时稠密子空间就是全空间，故通常代数秩等于 $\dim K_J$。无限维时它只保证秩不是任何有限整数；按本篇统一写 $\infty$ 的约定足以得到（4.2）。不由此断言像闭、满射，或将无限代数维数与 Hilbert 基数精确等同。
+
+<!-- editorial-note: n21 end -->
+

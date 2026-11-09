@@ -1,0 +1,10 @@
+**定义 1.2（五点负型）。**条件 $\mathrm{N}_5$ 指 $c$ 对称，且对任意 $m\le5$、标签 $x_1,\ldots,x_m\in M$ 和实系数 $\alpha_i$，都有
+
+$$
+\sum_i\alpha_i=0\quad\Longrightarrow\quad
+\sum_{i,j}\alpha_i\alpha_jc(x_i,x_j)\le0.
+\tag{1.1}
+$$
+
+标签可重复；这是所有至多五点配置的普遍条件，不是选定有限样本上的检查。条件 $\mathrm{N}_{\rm fin}$ 指同一条件对每个有限 $m$ 成立。
+

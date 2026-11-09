@@ -8,6 +8,7 @@ url: https://arxiv.org/abs/2412.21126v2
 claim: "Conjecture 6.3: There exist values of ρ and q for which the following specialization (which we call the alternative q-Charlier) is Fibonacci positive."
 strata_touched:
   - D5/S3/Combinatorics/YoungFibonacci/PetrovScottAltQCharlierPositivity
+  - D5/S3/Combinatorics/YoungFibonacci/PetrovScottMultiplicityDominance
 license: citation-only
 triage: anchor
 ---

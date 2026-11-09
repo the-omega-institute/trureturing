@@ -1,0 +1,46 @@
+**定义 147.1（完整原前件与固定行）。** 本节及以下各节完整保持130.1、137.1的同一原 $(E,C,u,N,\mathcal P,S,D)$、A1–A3、准确锥、全部原P2及完整原PB。仍有同一忠实含单位JC包含
+
+$$
+E\subset X\subset\mathcal A_{\rm sa},\qquad
+\overline E=X,\qquad\mathcal A=C^*(X).
+\tag{147.1}
+$$
+
+原 $E$ 可以不完备，不要求 $X=\mathcal A_{\rm sa}$；旧 $D:E^2\to E$ 不预付一般齐次、可加、连续、商下降、输入函数演算或完成延拓。固定同一实际原 $h,e,j=D(h,e)$，消费133.1–134.1的全部原横向行、三轴循环及辅助中央取向
+
+$$
+\begin{gathered}
+h^2=e^2=j^2=u,\qquad h\circ e=h\circ j=e\circ j=0,\\
+Q=i h e j\in Z(\mathcal A),\qquad Q^*=Q,\quad Q^2=u,\\
+T=[L_j,L_e],\qquad D(h,v)=Tv=iQhv\quad(v\in V_h),
+\qquad T^2v=-v.
+\end{gathered}
+\tag{147.2}
+$$
+
+这里 $L_a z=a\circ z$、$V_h=\{v\in E:h\circ v=0\}$。$Q$ 不要求属于 $E$ 或 $X$。令
+
+$$
+\begin{gathered}
+U_h=2L_h^2-I,\qquad
+P_{\rm tr}=\tfrac12(I-U_h),\qquad
+P_{\rm com}=\tfrac12(I+U_h),\\
+\operatorname{Com}_h=\{c\in E:hc=ch\}=P_{\rm com}E.
+\end{gathered}
+\tag{147.3}
+$$
+
+这些都是保持原域的有限Jordan表达式。对每个任意原 $x\in E$，以下始终固定
+
+$$
+\begin{gathered}
+c=P_{\rm com}x,\qquad v=P_{\rm tr}x,\qquad
+x=c+v,\quad hc=ch,\quad hv=-vh,\\
+k=h\circ x=h\circ c=hc\in E,\qquad
+g=D(h,x)\in E,\qquad n=u+h.
+\end{gathered}
+\tag{147.4}
+$$
+
+特别没有假定 $g\in V_h$；$g$ 的两个 $h$-交换对角块全程保留。环境乘法、Hilbert向量和谱压缩只供证明，不增加旧 $D$ 的可调用输入。零原域的全部等式为零，以下非零向量读取仅用于非零表示空间。
+

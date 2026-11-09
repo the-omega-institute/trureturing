@@ -1,0 +1,24 @@
+**引理 257.1（复块的共同谱正常形）。** 在 $T=H_n(\mathbb C)$、$n\ge3$、$q=w\operatorname{Tr}$、$w>0$ 上，设 $D$ 有右单位，满足正交输入自身、二原子内部及半重叠角外层，不要求任何正交第三点。则存在实函数 $\sigma,k$ 及每个 primitive $e$ 上的线性泛函 $\varphi_e:H(e^\perp)\to\mathbb R$，使
+
+$$
+D_pp=-\sigma(p)(I-p),\qquad
+D_ep=k(e)p+\varphi_e(p)(I-e)\quad(e\perp p).
+\tag{257.1}
+$$
+
+特别地，$Q(a)=D_aa$ 与 $a$ 对易。
+
+证明。由 (256.1)，$U=D_pp\in E_0(p)$。取 $e\perp p$。同一式还给 $D_ep\in E_0(e)$。内部式
+$P_{p+e}(U+D_ep)=0$ 中，第一项位于 $T_e\cap E_0(p)$，第二项位于 $T_p\cap E_0(e)$；两者正交，故分别为零。于是 $U$ 与 $p^\perp$ 中每颗 primitive 对易，其下块只能为标量，得到第一式；$D_ep$ 则同时与 $e,p$ 对易。
+
+固定 $e\perp s$ 和正规 $y\in V_{es}$、$y^2=e+s$，令 $p_\pm=(e+s\pm y)/2$。因为 $P_eD_e(e+s)=0$，两份半角右能量相同。相减给
+
+$$
+q(D_ye,r)=0\qquad(r\perp e,s).
+\tag{257.2}
+$$
+
+对固定 $p_+$ 比较全部角外 primitive 读回，线性项相同；再对 $p_-$ 作同样比较并相加，得到 $D_ee+D_se$ 的角外压缩为标量。第一式的 $D_ee$ 已是标量法向项，故 $D_se$ 在 $(e+s)^\perp$ 上也为标量。结合它同时与 $e,s$ 对易、且 $D_se\in E_0(s)$，便得 $D_se\in\operatorname{span}\{e,I-s\}$。
+
+因此 $D_e|_{H(e^\perp)}$ 把每颗 primitive $p$ 送入 $\operatorname{span}\{p,I-e\}$，且 $D_e(I-e)=\sigma(e)(I-e)$。在商去 $\mathbb R(I-e)$ 的空间上，每个非零 primitive 商类是本征向量。其连续的本征值在连通的 $\mathbb{CP}^{n-2}$ 上只能取线性算子的同一个有限谱值，记为 $k(e)$；线性余量给 $\varphi_e$。自身谱展开中各项现均与同一谱元对易，故 $[Q(a),a]=0$。∎
+

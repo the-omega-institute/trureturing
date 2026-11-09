@@ -1,0 +1,69 @@
+**Theorem 6.4 (Full-domain exact value and exhaustive
+reconstruction).** Under exactly Definition 1.1, for every fixed
+admissible $a,h$ and every sufficiently large integer $N$,
+
+$$
+V_N=\min_{j\in\mathcal J_N}\
+          \min_{z\in\mathcal Z_{m,n,d_{j,N}}}
+                                      \mathcal A_{j,N}(z).
+\tag{6.12}
+$$
+
+This is a finite relation with explicit radical summands (6.3)--(6.5).
+For fixed parameters and a residue determining $d$, its allocation
+set does not grow with $N$. It contains no residual optimization
+over graphs.
+
+Every minimizer, with arbitrary source labels, is obtained by the
+following reconstruction, and every graph so obtained is a minimizer:
+choose a pair $(j,z)$ attaining (6.12), a core--tail partition of
+sizes $m,n$, and a choice (6.9); assign the $n$ labelled tails to
+core endpoints with histogram $e$; take $d$ missing-one sources
+with omission histogram $o$ and $F$ full-core sources; choose any
+$t$ tails to have $b$ singleton sources each, and give each other
+tail $b-1$ singleton sources. Permute the source labels arbitrarily.
+All assignments with these data are included. Repeated descriptions
+of one graph are allowed; uniqueness of the description is not
+asserted.
+
+**Proof.** The number of choices of $j$ and partitions is finite.
+For each $j$, $0\le d<r$ and $-d\le z_i\le n$, so the sets in
+(6.12) are finite uniformly in $N$. Equations (6.1) give
+$F=\alpha N+O_{a,h}(1)$ and
+$b=\beta N+O_{a,h}(1)$. Thus every proposed reconstruction is
+legal for one common sufficiently large threshold. Its source
+count and edge count are, respectively,
+
+$$
+F+d+n+(Q-n)=N,\qquad
+mF+rd+2n+(Q-n)=N+rF+(r-1)d+n=aN.
+\tag{6.13}
+$$
+
+It is simple and connected, and all sink degrees eventually
+exceed $s$, by the proofs of Lemmas 6.2--6.3. Hence it belongs
+to the full original class, with the prescribed orientation and
+cyclomatic number. Formulas (6.6) and (6.9) show that its value
+is exactly $\mathcal A_{j,N}(z)$. This gives the upper bound in
+(6.12), with every proposed equality graph genuinely realized.
+
+For the reverse bound, the finite nonempty original graph class
+has a minimizer. Theorem 1.3, whose lower bound was over that
+whole class, places this minimizer at some $j\in\mathcal J_N$
+with precisely its source types. Lemma 6.2 forces the displayed
+tail allocation. Lemma 6.3 forces (6.9), since otherwise a legal
+strict improvement would contradict global minimality. The
+minimizer's value is therefore one of the entries of (6.12),
+which proves the reverse inequality. In particular this reasoning
+is a lower bound for the full class, not an assumption that other
+graphs were excluded from the domain.
+
+The same argument sends every original minimizer into the
+reconstruction. Conversely, each minimizing entry is realized
+by every assignment specified above, and (6.6) shows that its
+value is independent of the particular endpoint map with that
+histogram, the ordering of omissions, the choice of high-degree
+tails, and the source labels. This proves the exhaustive preimage
+assertion, including all price ties, law ties, zero counts and
+quotient--remainder endpoints. ∎
+

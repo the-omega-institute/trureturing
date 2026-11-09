@@ -1,0 +1,67 @@
+### 平方层还能继续加强
+
+当 $T\ge64$ 时，可以证明
+
+<a id="eq-29"></a>
+
+$$
+\boxed{
+p\le\sqrt{\frac{3T}{2}}
+\Longrightarrow v_p(N)\ge2.
+}
+\tag{29}
+$$
+
+事实上，此时
+
+$$
+p^2+p+1<\frac{107}{64}T,
+\qquad
+\log p<\frac9{16}\log T.
+$$
+
+所以
+
+$$
+(p^2+p+1)\log p
+<
+\frac{963}{1024}T\log T
+<
+T\log T.
+$$
+
+由此
+
+$$
+\lambda_{p,2}>
+\frac1{p^2+p+1}
+>
+\eta\log p,
+$$
+
+第二层必须出现。
+
+记
+
+$$
+\vartheta(x)=\sum_{p\le x}\log p.
+$$
+
+将最小公倍数中的层，与额外的平方层合并，得到
+
+<a id="eq-30"></a>
+
+$$
+\boxed{
+\psi(T)
++
+\vartheta\!\left(\sqrt{3T/2}\right)
+-
+\vartheta(\sqrt T)
+\le T,
+\qquad T\ge64.
+}
+\tag{30}
+$$
+
+<!-- editorial-note:start square-constants-and-mass -->

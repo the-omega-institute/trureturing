@@ -8,7 +8,8 @@ internal sealed class KBonacciActualEndpointOperatorsDocument : IScribeDocumentD
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Classify actual Boolean-word endpoint transfers, complete-window products, "
-            + "and their faithful transfers with absorbing rejection over every field.",
+            + "and their faithful transfers with absorbing rejection over every field; "
+            + "apply them to the complete fixed paid-record classification over the reals.",
         H("Actual endpoint operators and complete windows"),
         Blocks(
             Paragraph(Text(
@@ -114,7 +115,176 @@ internal sealed class KBonacciActualEndpointOperatorsDocument : IScribeDocumentD
                             + "n+1 coordinates, and ends the actual run at zero. "
                             + "Zero resets the tail while remaining an actual position; "
                             + "endpoint parameters never remove internal positions."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem),
+            FixedPaidRecordApplication())));
+
+    private static DocumentBlock FixedPaidRecordApplication()
+    {
+        var k = F.Id("k"); var A = F.Id("A"); var w = F.Id("w");
+        var i = F.Id("i"); var j = F.Id("j"); var t = F.Id("t");
+        var c = F.Id("c"); var ell = F.Id("l");
+        var real = Seq(Mathbb, Grp(F.Id("R")));
+        var fin = Call("Fin", k);
+        var vec = Par(Seq(fin, Sp, To, Sp, real));
+        var relation = Call("Matrix", fin, fin, real);
+        var Cj = Seq(F.Id("C"), Underscore, Grp(j));
+        var ci = Seq(c, Underscore, Grp(i));
+        var li = Seq(ell, Underscore, Grp(i));
+        var lt = Seq(ell, Underscore, Grp(t));
+        var record = Fn("record", A, w);
+        var decoder = F.Id("d");
+        var recovery = Ex(decoder, Seq(Call("Record", A), Sp, To, Sp, relation),
+            All(w, Call("World", k), Equal(App(decoder, record), Fn("target", w))));
+        var S0 = Seq(F.Id("S"), Underscore, D(0));
+        return new DocumentBlock.Section(H("Application: complete fixed paid-record classification"), Blocks(
+            Paragraph(Text(
+                "This application combines actual_endpoint_operators with finite-dimensional "
+                    + "linear algebra, finite-order rigidity and the arbitrary-factorization theorem. "
+                    + "It gives source Theorem 12.2 of KBonacci endpoint tomography and rank-one "
+                    + "relation boundaries as a consequence of those suppliers. The application "
+                    + "uses the real field and every integer k at least three. A world consists of "
+                    + "an unknown strictly positive object c and an unknown nonzero nonnegative "
+                    + "reader l, both indexed by Fin k. Zero reader coordinates and arbitrary "
+                    + "unknown nonempty support remain allowed. Every preparation supplies the "
+                    + "same c and uses the same l. The target is the initial relation with entries "
+                    + "c_i l_t, without selecting absolute scales for the factors.")),
+            new DocumentBlock.DisplayFormula(Rows(
+                Equal(Call("World", k), Seq(OpenBrace, Par(Seq(c, Comma, ell)), Colon, vec,
+                    Sp, Times, Sp, vec, Sp, Vert, Sp,
+                    And(All(i, fin, Rel(D(0), Lt, ci)), All(i, fin, Rel(D(0), Leq, li)),
+                        NotEqual(ell, D(0))), CloseBrace)),
+                Equal(Cj, Seq(Sum, Underscore, Grp(Seq(i, Colon, fin, Comma, i, Lt, j)), ci)),
+                Equal(Fn("target", w, i, t), Multiply(ci, lt)))),
+            Paragraph(Text(
+                "An arrangement A is any finite ordered list of finite window lists. "
+                    + "Each inner list starts a fresh preparation and ends by abandoning that "
+                    + "object. Empty lists, repeated preparations and repeated windows are retained. "
+                    + "A window is a literal Boolean word of length k+1 whose run from tail zero "
+                    + "accepts, equivalently one with no internal run of k ones. Legality does "
+                    + "not require acceptance from the current tail: a legal window can kill an "
+                    + "object at a seam. All lists and their stopping positions are fixed before "
+                    + "any values are read. The preparation count P is A.length and is any finite "
+                    + "nonnegative integer; the window count W is the sum of the inner lengths. "
+                    + "There are no resets, copies, returns, extra observations or reads inside "
+                    + "a window. The classification assumes exactly W=k(k-1).")),
+            Paragraph(Text(
+                "The complete record contains A itself and, for every run in its original "
+                    + "position, the compulsory initial value D=sum_i c_i l_i followed by the "
+                    + "compulsory terminal value after each sequential matrix action. Thus it "
+                    + "contains P+W paid values, with repeated values, empty preparations, the "
+                    + "killing-window read and every subsequent zero all present. It assumes "
+                    + "neither a decoder nor a supplied observation certificate.")),
+            Paragraph(Text(
+                "For a run with windows u_1,...,u_n, the state at position h is the actual "
+                    + "transfer of the cumulative word u_1...u_h applied to c. This follows "
+                    + "by unfolding sequential evolution and using L_(uv)=L_v L_u and matrix-vector "
+                    + "associativity. Every such word has length at least k+1. The endpoint "
+                    + "theorem makes its transfer either zero or one unique nonzero E(p,t). "
+                    + "In the second case direct matrix multiplication gives C_j e_t with "
+                    + "j=k-p between one and k. Strict positivity of c makes C_j positive. "
+                    + "Consequently zero transfer means a dead object, whereas a zero terminal "
+                    + "reading C_j l_t can still come from a live object when l_t=0.")),
+            Paragraph(Text(
+                "Extract each nonzero endpoint label (j,t) from these actual cumulative "
+                    + "operators and let S(A) be their set, removing repetitions only for this "
+                    + "set. The chronological record is never shortened. The labels depend "
+                    + "only on A, independently of the world. Every terminal value is the "
+                    + "corresponding C_j l_t or a constant zero. Since W is positive, A contains "
+                    + "a run and an actually paid D. Equality of two complete records is "
+                    + "therefore equivalent to equality of D and every selected C_j l_t: one "
+                    + "direction projects their actual positions, and the other reconstructs "
+                    + "every position, including repeated and zero entries. There is at most "
+                    + "one label per window, so the sum of the column cardinalities is |S|<=W.")),
+            Paragraph(Text(
+                "Use the source prefix convention j=1,...,k in the following classification. "
+                    + "Equivalently, with the zero-based row r=j-1, the required pattern omits "
+                    + "exactly r=t. The notation Record(A) denotes the complete record codomain "
+                    + "just defined, and B_k denotes all arrangements satisfying the exact budget.")),
+            new DocumentBlock.DisplayFormula(Rows(
+                Equal(S0, Seq(OpenBrace, Par(Seq(j, Comma, t)), Sp, Vert, Sp,
+                    And(Rel(D(1), Leq, j), Rel(j, Leq, k), Rel(D(0), Leq, t),
+                        Rel(t, Lt, k), NotEqual(j, Add(t, D(1)))), CloseBrace)),
+                All(k, Seq(Mathbb, Grp(F.Id("N"))), Imp(Rel(D(3), Leq, k),
+                    All(A, Seq(F.Id("B"), Underscore, Grp(k)),
+                        Rel(recovery, Iff, Equal(Fn("S", A), S0))))))),
+            Paragraph(Text(
+                "For necessity, fix a column t and restrict to the lawful reader e_t. "
+                    + "If fewer than k-1 distinct prefixes occur there, the linear map with "
+                    + "rows selecting coordinate t and the selected prefix sums has a nonzero kernel: an "
+                    + "injective map from the k-dimensional object space into a space of "
+                    + "dimension |J_t|+1 would contradict LinearMap.finrank_le_finrank_of_injective. "
+                    + "For such a nonzero kernel vector h, the objects with coordinates "
+                    + "abs(h_i)+1 and abs(h_i)+1+h_i are both strictly positive. With the same "
+                    + "reader they have equal D and all selected products but different "
+                    + "initial relations. The actual record correspondence makes this a full "
+                    + "record collision. Therefore each column has at least k-1 labels, for "
+                    + "any finite number of preparations. The budget forces equality in every "
+                    + "column and exactly one omitted zero-based row m(t).")),
+            Paragraph(Text(
+                "A direction h=e_r-e_(r+1) changes only prefix r+1. At r=k-1 take h=e_r "
+                    + "instead. If row r is missing from column t and neither r=t nor r+1=t, "
+                    + "the reader e_t annihilates h, so D and every selected product agree "
+                    + "for the same two positive objects, contradicting identifiability. "
+                    + "Thus m(t)=t or m(t)+1=t, with the first column and last-prefix boundary "
+                    + "included. If t=r+1, a simultaneous omission of (r,r) and (r,t) is "
+                    + "also impossible: choose reader e_r+e_t and direction e_r-e_t. Its "
+                    + "initial dot product vanishes and its only altered prefix is omitted "
+                    + "in both active columns. It again preserves the entire paid record "
+                    + "while changing the target.")),
+            Paragraph(Text(
+                "These two collision restrictions make m a strictly increasing self-map "
+                    + "of Fin k. Indeed, for a<b, the alternatives m(a)=a or m(a)+1=a and "
+                    + "m(b)=b or m(b)+1=b imply m(a)<m(b), except potentially when "
+                    + "b=a+1 and m(a)=m(b)=a. That exception would omit both (a,a) and "
+                    + "(a,b), which the adjacent-support collision excludes. Pinned mathlib's "
+                    + "StrictMono.apply_eq applies to this finite linear order and gives "
+                    + "m(t)=t at every t. Translating back to source prefix indices proves "
+                    + "that S is exactly S0. The finite-order theorem supplies this rigidity; "
+                    + "no separate induction principle or new rigidity theorem is needed.")),
+            Paragraph(Text(
+                "For sufficiency, the actual positions of the S0 entries and one paid D "
+                    + "are already known from A. Positive prefixes make a selected product "
+                    + "zero exactly when its reader coordinate is zero, so equal data reveal "
+                    + "the same support in both worlds. If that support is a singleton t, D "
+                    + "supplies c_t l_t. Adding this increment to the observed preceding "
+                    + "prefix recovers the omitted C_(t+1) l_t; at t=0 the preceding value "
+                    + "is C_0=0, and at t=k-1 the observed C_(k-1) handles the final boundary. "
+                    + "All prefix differences then give every entry of the sole nonzero column.")),
+            Paragraph(Text(
+                "If the support contains distinct a and b, choose a row r different "
+                    + "from both, which exists because k>=3. The two observed positive-prefix "
+                    + "products at that row determine the relative reader scale. Column b "
+                    + "then fills column a's omitted row, and column a supplies all its "
+                    + "prefix products. Comparing any other column at a row where it is "
+                    + "observed yields its reader scale relative to a, including scale zero. "
+                    + "Subtracting consecutive prefix products gives every c_i l_t. These "
+                    + "are scalar cancellations and finite-sum identities; no strictly "
+                    + "positive-reader restriction is imposed and no new observation is taken.")),
+            Paragraph(Text(
+                "Finally, apply "),
+                Ref("D5/S3/ConceptDynamics/Sufficiency/UniversalSufficiencyFactorization.universal_sufficiency_factorization"),
+                Text(" with X equal to this full world type, q_C equal to the complete "
+                    + "record map and T equal to the initial relation. The all-one object "
+                    + "and reader witness Nonempty X for every k in scope. Constancy on "
+                    + "record fibers is exactly the just established identifiability. "
+                    + "The theorem extends the target-image factor to unattained record "
+                    + "values by choice; projecting its value gives an arbitrary total "
+                    + "decoder. Conversely, any correct decoder forces target equality on "
+                    + "equal-record pairs. No continuity, measurability or computability "
+                    + "assumption is involved.")),
+            Paragraph(Text(
+                "The result classifies all legal fixed arrangements at this exact window "
+                    + "budget, not just an optimal construction, and puts no upper bound on "
+                    + "their finite preparation counts. Its required ingredients from source "
+                    + "11.2 are the actual-record correspondence, per-column bound and full "
+                    + "nonempty-support completion given here; the unrelated complete "
+                    + "three-resource theorem is not a premise. This application derives "
+                    + "the original initial-relation claim from the cited suppliers. It "
+                    + "determines neither the absolute factors nor a unique action order, "
+                    + "grouping or preparation count. It asserts no "
+                    + "dimension-two, adaptive, noisy, finite-precision or physical-realization "
+                    + "extension."))));
+    }
 
     private static Formula MainFormula()
     {

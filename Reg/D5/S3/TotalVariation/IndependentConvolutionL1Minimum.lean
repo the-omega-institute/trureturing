@@ -1,5 +1,6 @@
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.TotalVariation.IndependentConvolutionL1Minimum
+import Reg.Support.SingleDependentReadout
 import Reg.Support.DependentFamily
 
 open _root_.D5.S3.TotalVariation.IndependentConvolutionL1Minimum
@@ -89,3 +90,92 @@ noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_
 
 #print axioms registration
 end Reg.D5.S3.TotalVariation.IndependentConvolutionL1Minimum
+
+namespace Reg.D5.S3.TotalVariation.IndependentConvolutionL1Minimum.PoissonDenominator
+
+open _root_.D5.S3.TotalVariation.IndependentConvolutionL1Minimum
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+open LeanInformationAudit
+
+noncomputable section
+attribute [local instance] Classical.propDecidable
+
+abbrev signature : Signature :=
+  Reg.Support.SingleDependentReadout.signature ℝ (fun _ => ℝ) (fun _ => ℝ)
+
+def actual : Realization signature :=
+  realize signature (fun _ r θ => 1 - 2 * r * Real.cos θ + r ^ 2) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => -1) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {r θ : ℝ}, 0 < Real.sin θ → 0 < R.readout () r θ
+
+theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hh := h (r := 0) (θ := Real.pi / 2) (by rw [Real.sin_pi_div_two]; norm_num)
+  norm_num [rejected, realize] at hh
+
+theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨1, 0, Real.pi / 2, ?_⟩
+  have hi : i = () := Subsingleton.elim _ _
+  subst i
+  change 1 - 2 * (1 : ℝ) * Real.cos 0 + 1 ^ 2 ≠
+    1 - 2 * (1 : ℝ) * Real.cos (Real.pi / 2) + 1 ^ 2
+  rw [Real.cos_zero, Real.cos_pi_div_two]
+  norm_num
+
+def source_registration : Registration arena
+    (type_of% @poisson_denominator_pos_of_sin_pos) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨poisson_denominator_pos_of_sin_pos,
+    rejected, rejected_law⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected
+    rejected_law
+  dependence := dependence
+
+def registration : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@poisson_denominator_pos_of_sin_pos)
+    (Realization signature) Unit Unit := {
+  unitName := Lean.Name.str
+    `Reg.D5.S3.TotalVariation.IndependentConvolutionL1Minimum.PoissonDenominator "unit"
+  realizationName := Lean.Name.str
+    `Reg.D5.S3.TotalVariation.IndependentConvolutionL1Minimum.PoissonDenominator
+    "source_registration"
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨source_registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ r θ => 1 - 2 * r * Real.cos θ + r ^ 2)
+    (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.TotalVariation.IndependentConvolutionL1Minimum
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "body", "arg"]
+      stateBinder := 1
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+#print axioms registration
+
+end
+end Reg.D5.S3.TotalVariation.IndependentConvolutionL1Minimum.PoissonDenominator

@@ -26,9 +26,13 @@ public sealed class InspectorNativeTests(InspectorCompilerFixture compiler) : IC
     public void LocalRestoredSeedKeepsNativeIncrementalExtraction() => InspectorNativeTestRunner.Run(compiler,
         "test_native.NativeLocalReportTests");
 
-    [Fact]
-    public void ReportConsumersStartWithPrivateColdProjects() => InspectorNativeTestRunner.Run(compiler,
-        "test_native.NativeReportTests");
+    // Each cold report scenario retains its own ordinary supervisor guard.
+    [Theory]
+    [InlineData("test_native.NativeReportTests.test_impl_resource_preserves_production_reg_on_warm_report")]
+    [InlineData("test_native.NativeReportTests.test_reg_dependency_closure_reassessment")]
+    [InlineData("test_native.NativeReportTests.test_report_entry_reuses_complete_receipt_and_rechecks_current_inputs")]
+    public void ReportConsumersStartWithPrivateColdProjects(string suite) =>
+        InspectorNativeTestRunner.Run(compiler, suite);
 }
 
 internal static class InspectorNativeTestRunner

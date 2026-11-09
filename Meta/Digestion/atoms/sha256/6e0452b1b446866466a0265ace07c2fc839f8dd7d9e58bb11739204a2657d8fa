@@ -1,0 +1,32 @@
+**命题 108.2（同纤维域是法丛关联）。** 固定原幂等元 $c$，令 $\pi_c:E\to E/N_c$ 为原零余量商，则候选的成对测试域为
+
+$$
+\mathcal R_c=\{(a,b):W_c(a-b)=0\}
+ =E\times_{E/N_c}E.
+\tag{108.3}
+$$
+
+这是等价关系及其成对群胚。固定 $c$ 时，若 $N=\dim_{\mathbb R}E$、$r_c=\dim\operatorname{im}P_c$，其维数是 $2N-r_c$。在完整 $\mathsf C_{\rm fib}(B_*)$ 下，固定每个中心块的切口秩 $k_s$，令
+
+$$
+M=\prod_s\operatorname{Gr}_{\mathbb C}(k_s,n_s),\qquad
+r=\dim_{\mathbb R}M=2\sum_sk_s(n_s-k_s).
+\tag{108.4}
+$$
+
+则所有候选三元组的流形自然同构于 $E\times\nu M$，其中 $\nu M$ 是原 $q$ 下嵌入 $M\subset E$ 的法丛总空间。因此它的维数是 $2N$，全双输入域 $M\times E^2$ 的维数是 $2N+r$。
+
+证明。由 (107.3)，同纤维当且仅当 $\pi_c(a)=\pi_c(b)$。反身、对称、传递性由商类相等给出；群胚单位是 $(a,a)$，逆是 $(b,a)$，合成是 $(a,b)(b,d)=(a,d)$。这是成熟纤维积等价关系的应用，不是额外动力公理。映射 $(a,n)\mapsto(a,a+n)$ 给 $\mathcal R_c\cong E\times N_c$，从而维数为 $2N-r_c$。
+
+在 (108.2) 的同一原复表示中，微分 $c^2=c$ 得切向量 $v=cv+vc$，即 $v\in\operatorname{im}P_c$；反之每个这样的 $v$ 都是曲线 $e^{t[v,c]}ce^{-t[v,c]}$ 在零处的导数，因为 $[v,c]$ 反自伴随且 $[[v,c],c]=v$。因此
+
+$$
+T_cM=\operatorname{im}P_c,\qquad
+\nu_cM=(T_cM)^{\perp_q}=N_c.
+\tag{108.5}
+$$
+
+各块正 Frobenius 权不改变对角与非对角子空间的正交性。映射 $(a,(c,n))\mapsto(c,a,a+n)$ 及其逆 $(c,a,b)\mapsto(a,(c,b-a))$ 均光滑，给所称 $E\times\nu M$。法丛总维数是 $r+(N-r)=N$，故乘积总维 $2N$。式 (108.4) 是成熟复 Grassmann 几何；primitive 情形及 Peirce 切空间来源见 Nomura, *Manifold of primitive idempotents in a Jordan-Hilbert algebra*, J. Math. Soc. Japan 45 (1993), 37–58，[原文](https://projecteuclid.org/journals/journal-of-the-mathematical-society-of-japan/volume-45/issue-1/Manifold-of-primitive-idempotents-in-a-Jordan-Hilbert-algebra/10.2969/jmsj/04510037.pdf)，§3。这里的任意秩识别使用 (108.2) 的矩阵重建及上述显式曲线，未将 primitive 的文献条件外推成独立全秩重建定理。
+
+由 (107.2)，$J_c=2D_c$ 在 $E/N_c\cong T_cM$ 上良定义、正交且 $J_c^2=-I$。原单位律给 $J_{u-c}=-J_c$；互补切口共享同一法空间，只反向转动。其 Grassmann 复结构与 Kähler 性在完整重建后接入；成熟射影量子几何来源沿本卷定理 89.2 所引 Ashtekar–Schilling，[arXiv:gr-qc/9706069v1](https://arxiv.org/abs/gr-qc/9706069v1)，§II.B–C，未由逐点平方为负恒等式单独推断可积性。若 $r=0$，则域维数没有严格减少；中央、零与单位切口均如此。以上维数只描述数学参数域，不计算独立公理信息、最少测试数、物理操作或认证成本。∎
+

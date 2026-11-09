@@ -1,0 +1,33 @@
+## 9. 两个移动窗口怎样趋于同一套关系
+
+<a id="sec-c117-windows"></a>
+
+令观察者 $o$ 的读口代数递增：
+
+$$
+\mathcal A_{o,0}\subseteq\mathcal A_{o,1}\subseteq\cdots
+ \subseteq\mathcal A,\qquad I\in\mathcal A_{o,n}.
+$$
+
+它们读取同一 $\omega$ 的限制，而非每步另选一个条件后态。
+在共同比较空间内定义
+
+$$
+H_{o,n}
+ =\overline{\operatorname{span}\{\pi(a)\xi:a\in\mathcal A_{o,n}\}},
+ \qquad P_{o,n}:\mathcal H_\omega\to H_{o,n}.
+$$
+
+这里 $P_{o,n}$ 是正交比较投影。
+因为单位元已在每个读口中，
+
+<a id="eq-c117-unit-already-present"></a>
+
+$$
+\boxed{P_{o,n}\xi=\xi\quad\text{对每个 }n.}
+\tag{17}
+$$
+
+所以不能把 $P_{o,n}\xi$ 描述成逐步逼近整体态的向量。
+真正需要逼近的是固定历史或问题的向量 $v_h=\pi(h)\xi$。
+

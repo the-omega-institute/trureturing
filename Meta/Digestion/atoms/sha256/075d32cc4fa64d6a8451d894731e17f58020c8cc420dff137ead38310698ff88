@@ -1,0 +1,18 @@
+**定义 1.2（原矩阵与原分量）。** 全部十一地址严格采用 III (157.2)：
+
+$$
+\begin{gathered}
+\varphi=(1+\sqrt5)/2,\quad x=\varphi^{-1},\quad y=\sqrt x,\quad
+x+x^2=1,\quad \alpha=3\pi/5,\quad\zeta=e^{i\alpha},\\
+Q_* =\begin{pmatrix}x&xy\\xy&x^2\end{pmatrix},\qquad
+\mathcal P_j=n_{j-1}n_{j+1}
+ +(1-n_{j-1})(1-n_{j+1})(Q_*)_{b_j},\\
+H_j=-\alpha(I+\mathcal P_j),\qquad
+U_j(t)=e^{-itH_j},\qquad
+K_j=U_j(1)=\zeta[I+(\zeta-1)\mathcal P_j].
+\end{gathered}
+\tag{1.2}
+$$
+
+这里 $n_k$ 是位占据投影，固定外位按字面代入。$\mathscr B_j$ 始终是原 $H_j$ 支撑图的全部连通分量。III157.2 的支撑描述为：$1\le j\le9$ 且两邻位均为零时，固定其它位、翻转中心位所得两点为一分量；至少一个邻位占据时，中心只能为零，是阻塞单点。两邻位都占据或恰一占据时，单点上的 $\mathcal P_j$ 分别为 $1$ 或 $0$。两个边界地址有 $\mathcal P_0=n_1$、$\mathcal P_{10}=n_9$，各有全部 $89$ 个单点分量。这些分量不由 $K_j$ 的偶然谱重数重新划分。
+

@@ -1,0 +1,4 @@
+## 199. The radical fibre has a finite coefficient feasibility body
+
+The affine description in Section 198 can be made finite-dimensional after choosing a basis of the radical. The residual equations disappear, while legality becomes an intersection of pointwise affine half-spaces in the coefficient matrix.
+

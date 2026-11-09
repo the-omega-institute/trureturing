@@ -1,0 +1,77 @@
+**Theorem 27.1 (complete conditional actual fourth-order law).** At each fixed admitted original datum satisfying the antecedents of Theorem 22.1 and $C_{\rm resp}=0$, the scalar (24.5) satisfies
+
+$$
+\lim_{s\downarrow0}\frac{\epsilon_c(s)}{s^4}
+ =\lim_{s\downarrow0}\frac{E_s}{s^2}=\min\{0,C_4\}.
+\tag{27.1}
+$$
+
+If $C_4<0$, then $E_s=C_4s^2+o(s^2)$, $r_s\sim(-C_4)s^{-4}$, and for every prescribed sequence and every actual normalized complex ground-state choice,
+
+$$
+\operatorname{dist}_{L^2}(\mathcal U_s\psi_s,\mathbb T p)\longrightarrow0.
+\tag{27.2}
+$$
+
+Here $\mathbb T p=\{e^{i\theta}p:\theta\in\mathbb R\}$. If $C_4\ge0$, then $E_s=o(s^2)$ and $r_s=o(s^{-4})$. No finer scale or profile selection is asserted in this case.
+
+Proof. First construct a native recovery upper bound. For each fixed real $z\in C_c^\infty$, put $k_s=\vartheta_st_s+s^2z$. For all small $s$ this has height support strictly between both native faces. The supported-strip closure makes $\mathcal T_s^{-1}k_s\in\mathcal Q_s$, with no separate phase regularity imposed, and $\|k_s\|_2\to1$. Lemma 26.1 gives $\widehat q_s[\vartheta_st_s]=s^4D_4+o_\delta(s^4)$. For fixed $z$, (24.3), rational Taylor expansion on its fixed support and (23.2) give $\widehat q_s(t_s,z)=s^2\mathcal F_2(z)+o(s^2)$ and $\widehat q_s[z]\to h[z]$. Since $\vartheta_s=1$ on the support of $z$ and its derivatives for small $s$, $\widehat q_s(e_s,z)=0$ exactly. Exact supported agreement therefore yields
+
+$$
+q_s^c[\mathcal T_s^{-1}k_s]
+ =s^4\{D_4+h[z]+2\mathcal F_2(z)\}+o_\delta(s^4).
+\tag{27.3}
+$$
+
+Normalization adds no fourth-order contribution: the numerator is $O(s^4)$ and the norm tends to one. Take $s\downarrow0$ for each fixed $z$, then the real energy-core infimum (24.6), to get
+
+$$
+\limsup_{s\downarrow0}\epsilon_c(s)/s^4\le C_4.
+\tag{27.4}
+$$
+
+Only compact approximants of $\Upsilon$ have been used. This step by itself is a trial upper bound.
+
+Now let an arbitrary sequence satisfy $\epsilon_c(s)/s^4\to L<0$, and choose any actual normalized complex ground states. Then $r_s\to\infty$, so P Theorem 105.1 gives distance to $\mathbb T p$ tending to zero. Multiplying each actual state by a single constant phase gives $F_s\to p$ in $L^2$. Since $\mathcal T_s$ is unitary and strongly continuous at the identity, $f_s=\mathcal T_sF_s\to p$ as well. Hence $u_s\to p$, and $c_s\to1$ by the fixed $Vp\in L^2$ coordinate. No actual state is assumed real or even.
+
+By (25.9), $w_s/s^2$ is bounded in $\dot{\mathcal H}_0$. Let $W$ be a weak energy cluster point. Test the native eigen-equation with any fixed complex compact smooth $z$. For small $s$, $\eta_R=1$ on its support and derivative support, so $\widehat q_s(z,u_s)=\epsilon_c(s)\langle z,f_s\rangle$. Insert $u_s=c_st_s+w_s$ and divide by $s^2$ to obtain
+
+$$
+h(z,w_s/s^2)+c_s\overline{\mathcal F_2(z)}\longrightarrow0.
+\tag{27.5}
+$$
+
+For clarity, the fixed-support rational perturbation paired with $w_s$ is $O_z(s)\sqrt{b[w_s]}=O_z(s^3)$. The first two field perturbations have the same or smaller bound by (3.4); the bounded higher fields and threshold are $O_z(s^2)\|w_s\|_2=O_z(s^3)$. The eigenvalue side is $O_z(s^4)$. The fixed-test expansion on $t_s$ has remainder $o_z(s^2)$ by (24.3) and (23.2). These are all the discarded terms in (27.5). After passage to the weak limit and conjugation, density gives $h(W,z)=-\mathcal F_2(z)$ and $b(p,W)=0$. Lemma 24.1 gives $W=\Upsilon$. Uniqueness of the cluster point yields
+
+$$
+w_s/s^2\rightharpoonup\Upsilon\quad\text{in }\dot{\mathcal H}_0.
+\tag{27.6}
+$$
+
+This asserts only homogeneous energy weak convergence.
+
+Use the native-admissible $\vartheta_st_s$ itself as test in the actual equation. Its support is inside the region where $\eta_R=1$, including derivative supports. The exact identity, with conjugate-linear first slots, is
+
+$$
+\begin{aligned}
+\epsilon_c(s)\langle\vartheta_st_s,f_s\rangle
+ &=\widehat q_s(\vartheta_st_s,u_s)\\
+ &=c_s\widehat q_s(t_s-e_s,t_s)+\widehat q_s(t_s-e_s,w_s).
+\end{aligned}
+\tag{27.7}
+$$
+
+Every cutoff error needed here has been proved in Lemma 26.1. Substitution gives
+
+$$
+\epsilon_c(s)\langle\vartheta_st_s,f_s\rangle
+ =c_ss^4D_4+s^2\mathcal F_2(w_s)+o_\delta(s^4).
+\tag{27.8}
+$$
+
+The left inner product tends to one, $c_s\to1$, and continuity of $\mathcal F_2$ on energy space with (27.6) gives
+$\mathcal F_2(w_s/s^2)\to\mathcal F_2(\Upsilon)=-h[\Upsilon]$.
+Divide (27.8) by $s^4$. Every strictly negative actual fourth-order cluster point is therefore $L=C_4$. The IMS error was used with its actual sign in (25.7) to bound the remainder; it has not been discarded at order $s^4$ in (27.8). No norm-to-energy inference has been used.
+
+Theorem 22.1 gives the compact interval $-C\le\epsilon_c(s)/s^4<0$. If $C_4<0$, (27.4) excludes zero cluster points; all cluster points then equal $C_4$. If $C_4\ge0$, the preceding identification excludes every negative cluster point, leaving only zero. This proves the whole limit (27.1). The scale consequences follow from (1.7): $r_s=-E_s/s^6$. In the negative case $r_s\to\infty$, so P Theorem 105.1 supplies (27.2) for every prescribed sequence and every actual choice. In the nonnegative case the dictionary gives only the two stated little-o consequences. $\square$
+
