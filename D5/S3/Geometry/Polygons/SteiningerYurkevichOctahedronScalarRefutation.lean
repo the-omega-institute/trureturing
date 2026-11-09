@@ -148,13 +148,12 @@ private theorem coord_hull_bound (M : Matrix (Fin 2) (Fin 3) ℝ) (l : ℝ)
   intro p hp
   rw [shadow_hull] at hp
   have hc : Convex ℝ {p : (EuclideanSpace ℝ (Fin 2)) | ∀ i, |p i| ≤ l/2} := by
-    intro x hx y hy a b ha hb hab i
-    simp only [PiLp.add_apply, PiLp.smul_apply, smul_eq_mul]
-    calc
-      |a * x i + b * y i| ≤ |a * x i| + |b * y i| := abs_add_le _ _
-      _ = a * |x i| + b * |y i| := by rw [abs_mul, abs_mul, abs_of_nonneg ha, abs_of_nonneg hb]
-      _ ≤ a * (l/2) + b * (l/2) := add_le_add (mul_le_mul_of_nonneg_left (hx i) ha) (mul_le_mul_of_nonneg_left (hy i) hb)
-      _ = l/2 := by rw [← add_mul, hab, one_mul]
+    have hb : Convex ℝ {v : Fin 2 → ℝ | ∀ i, |v i| ≤ l/2} := by
+      simpa only [Set.pi, Set.mem_univ, Set.mem_Icc, forall_true_left, ← abs_le] using
+        (convex_pi (𝕜 := ℝ) (s := Set.univ)
+          (t := fun _ : Fin 2 => Set.Icc (-(l/2)) (l/2))
+          (fun _ _ => convex_Icc _ _))
+    exact hb.linear_preimage (EuclideanSpace.equiv (Fin 2) ℝ).toLinearMap
   apply convexHull_min _ hc hp
   rintro x ⟨j, rfl | rfl⟩ i <;> simpa [Matrix.col] using h i j
 
@@ -362,13 +361,12 @@ private theorem enclosure_of_vertex_bounds (M : Matrix (Fin 2) (Fin 3) ℝ) (l :
   let f : (EuclideanSpace ℝ (Fin 2)) →ₗ[ℝ] (Fin 2 → ℝ) :=
     (R : Matrix (Fin 2) (Fin 2) ℝ).mulVecLin.comp (EuclideanSpace.equiv (Fin 2) ℝ).toLinearMap
   have hc : Convex ℝ {p : (EuclideanSpace ℝ (Fin 2)) | ∀ i, |f p i| ≤ l/2} := by
-    intro x hx y hy a b ha hb hab i
-    simp only [map_add, map_smul, Pi.add_apply, Pi.smul_apply, smul_eq_mul]
-    calc
-      |a * f x i + b * f y i| ≤ |a * f x i| + |b * f y i| := abs_add_le _ _
-      _ = a * |f x i| + b * |f y i| := by rw [abs_mul, abs_mul, abs_of_nonneg ha, abs_of_nonneg hb]
-      _ ≤ a * (l/2) + b * (l/2) := add_le_add (mul_le_mul_of_nonneg_left (hx i) ha) (mul_le_mul_of_nonneg_left (hy i) hb)
-      _ = l/2 := by rw [← add_mul, hab, one_mul]
+    have hb : Convex ℝ {v : Fin 2 → ℝ | ∀ i, |v i| ≤ l/2} := by
+      simpa only [Set.pi, Set.mem_univ, Set.mem_Icc, forall_true_left, ← abs_le] using
+        (convex_pi (𝕜 := ℝ) (s := Set.univ)
+          (t := fun _ : Fin 2 => Set.Icc (-(l/2)) (l/2))
+          (fun _ _ => convex_Icc _ _))
+    exact hb.linear_preimage f
   refine ⟨hl,R,0,?_⟩
   intro p hp i
   simp only [sub_zero]
