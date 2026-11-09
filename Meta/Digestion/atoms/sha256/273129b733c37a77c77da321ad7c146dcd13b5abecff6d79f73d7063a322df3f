@@ -1,0 +1,15 @@
+**定理 36.2（相位群与复线）。** 满足定义 36.1 第 4 条的群 $G$ 同构于 $U(1)$。因此每条比较边可局部写成
+
+$$
+\kappa(a,b)=\sqrt{r(a,b)}\,e^{i\vartheta_{ab}},
+$$
+
+而三点 holonomy 的相位
+
+$$
+\arg\phi(a,b,c)
+ =\vartheta_{ab}+\vartheta_{bc}+\vartheta_{ca}pmod{2\pi}
+$$
+
+在局部规范下不变。四点 cocycle 正是这些局部相位可以拼成一个 $U(1)$ 主线丛连接的条件；若再加入第 26 节的全有限正半定性，GNS 构造得到复 Hilbert 比较空间。证毕。
+
