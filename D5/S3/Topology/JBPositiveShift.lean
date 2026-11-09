@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Topology/JBPositiveShift
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/Topology/JBAlgebra, mathlib/module/Mathlib.Analysis.Normed.Ring.Units]
+   anchors: [mathlib/module/Mathlib.Analysis.Normed.Ring.Units]
    utility: none
    digest: Positive shifts of squares have original-norm generated inverses and ambient quadratic inverses. -/
 
