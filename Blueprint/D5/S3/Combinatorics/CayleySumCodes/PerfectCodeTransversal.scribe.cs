@@ -49,6 +49,16 @@ internal sealed class PerfectCodeTransversalDocument : IScribeDocumentDefinition
                     + "set if and only if it has an identity-containing normal left "
                     + "transversal. The existential witnesses may change; this is not a "
                     + "fixed-connection-set equivalence or a quotient code-inheritance claim."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("normal-subgroup-nlt-perfect-code"),
+                DeclarationHandle.Create(Prefix + "normal_exists_iff"), H("Normal subgroups admit normalization"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromLiterature(Source),
+                Blocks(Paragraph(Text(
+                    "For normal H, NLT is equivalent to existence of a perfect-code sum "
+                    + "graph. The representative of H in a normal transversal is central "
+                    + "in G. Translating the whole transversal by its inverse preserves "
+                    + "conjugation invariance and gives a representative equal to 1. "
+                    + "The proof does not extend this normalization to nonnormal H or "
+                    + "claim equality of the original and constructed graphs."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("abelian-perfect-code-existence"),
                 DeclarationHandle.Create(Prefix + "abelian_exists"), H("Every abelian subgroup has a witness"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromLiterature(Source),

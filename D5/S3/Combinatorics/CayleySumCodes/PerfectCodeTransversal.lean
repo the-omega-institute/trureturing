@@ -7,6 +7,7 @@
    digest: Perfect subgroup codes and normalized normal transversals, with abelian existence. -/
 
 import D5.S3.Combinatorics.CayleySumCodes.NormalTransversal
+import Mathlib.GroupTheory.Subgroup.Center
 
 set_option autoImplicit false
 
@@ -143,6 +144,59 @@ theorem exists_iff (H : Subgroup G) :
   · rintro ⟨T, hn, h1, hc⟩
     exact ⟨T \ {1}, normal_erase T hn, of_transversal H T hn hc h1⟩
 
+private theorem normalize_central (H : Subgroup G) (T : Set G)
+    (hn : NormalSubset T) (hc : Subgroup.IsComplement T (H : Set G))
+    (t : G) (ht : t ∈ T) (hz : t ∈ Subgroup.center G) :
+    ∃ S : Set G, NormalSubset S ∧ (1 : G) ∈ S ∧
+      Subgroup.IsComplement S (H : Set G) := by
+  let S : Set G := {x | t * x ∈ T}
+  refine ⟨S, ?_, by simpa [S] using ht, ?_⟩
+  · intro a x hx
+    have he : t * (a * x * a⁻¹) = a * (t * x) * a⁻¹ := by
+      calc
+        t * (a * x * a⁻¹) = (t * a) * x * a⁻¹ := by simp [mul_assoc]
+        _ = (a * t) * x * a⁻¹ := by rw [Subgroup.mem_center_iff.mp hz a]
+        _ = a * (t * x) * a⁻¹ := by simp [mul_assoc]
+    change t * (a * x * a⁻¹) ∈ T
+    rw [he]
+    exact hn a (t * x) hx
+  · apply Subgroup.isComplement_iff_existsUnique_inv_mul_mem.mpr
+    intro g
+    obtain ⟨u, hu, huniq⟩ := Subgroup.isComplement_iff_existsUnique_inv_mul_mem.mp hc (t * g)
+    refine ⟨⟨t⁻¹ * u.1, by simpa [S] using u.2⟩, ?_, ?_⟩
+    · simpa [mul_inv_rev, mul_assoc] using hu
+    · intro z hz
+      have hm : (t * z.1)⁻¹ * (t * g) ∈ H := by
+        simpa [mul_inv_rev, mul_assoc] using hz
+      have he := congrArg Subtype.val (huniq ⟨t * z.1, z.2⟩ hm)
+      apply Subtype.ext
+      have hh := congrArg (fun v : G => t⁻¹ * v) he
+      simpa [mul_assoc] using hh
+
+/-- For a normal subgroup, an arbitrary normal transversal can be normalized
+by its central representative of H. Consequently NLT and existential perfect
+coding are equivalent for normal H. No such normalization is asserted for
+an arbitrary nonnormal subgroup. -/
+theorem normal_exists_iff (H : Subgroup G) [H.Normal] :
+    (∃ (Y : Set G) (hn : NormalSubset Y), IsPerfectCode (sumGraph Y hn) H) ↔ NLT H := by
+  constructor
+  · intro h
+    obtain ⟨T, hn, _, hc⟩ := (exists_iff H).mp h
+    exact ⟨T, hn, hc⟩
+  · rintro ⟨T, hn, hc⟩
+    obtain ⟨t, ht, hu⟩ := Subgroup.isComplement_iff_existsUnique_inv_mul_mem.mp hc 1
+    have htH : t.1 ∈ H := by simpa using H.inv_mem ht
+    have hcentral : t.1 ∈ Subgroup.center G := by
+      apply Subgroup.mem_center_iff.mpr
+      intro a
+      have hm : a * t.1 * a⁻¹ ∈ H :=
+        Subgroup.Normal.conj_mem (inferInstance : H.Normal) t.1 htH a
+      have he : a * t.1 * a⁻¹ = t.1 := congrArg Subtype.val
+        (hu ⟨a * t.1 * a⁻¹, hn a t.1 t.2⟩ (by simpa using H.inv_mem hm))
+      have hh := congrArg (fun v : G => v * a) he
+      simpa [mul_assoc] using hh
+    exact (exists_iff H).mpr (normalize_central H T hn hc t.1 t.2 hcentral)
+
 /-- Every subgroup of an abelian group has a perfect-code sum-graph witness.
 The chosen transversal contains 1; its complement of {1} is the connection
 set. No finite-group classification or total-code criterion is assumed. -/
@@ -157,6 +211,7 @@ theorem abelian_exists [IsMulCommutative G] (H : Subgroup G) :
 #print axioms of_transversal
 #print axioms normalized_transversal
 #print axioms exists_iff
+#print axioms normal_exists_iff
 #print axioms abelian_exists
 
 end D5.S3.Combinatorics.CayleySumCodes.PerfectCodeTransversal
