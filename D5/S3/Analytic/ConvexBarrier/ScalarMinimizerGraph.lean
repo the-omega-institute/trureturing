@@ -33,19 +33,22 @@ theorem fiberGradient_vertical_invertible {c ν : ℝ} {F : ScalarPoint → ℝ}
     dsimp [B,k]
     rw [(fiberGradient_hasFDerivAt
       (hF.smooth.contDiffAt (hF.domain_open.mem_nhds hp))).fderiv]
+    simp [hessian, vertical]
   have hBx : ∀ x : ℝ, B x = x*k := by
     intro x
     have h := B.map_smul x (1:ℝ)
     simpa only [smul_eq_mul,mul_one,hB1] using h
   let C : ℝ →L[ℝ] ℝ := k⁻¹ • ContinuousLinearMap.id ℝ ℝ
   apply ContinuousLinearMap.IsInvertible.of_inverse (g := C)
-  · ext x
+  · apply ContinuousLinearMap.ext
+    intro x
     change B (C x) = x
     rw [hBx]
     simp only [C,ContinuousLinearMap.smul_apply,ContinuousLinearMap.id_apply,smul_eq_mul]
     field_simp [hk.ne']
     <;> ring
-  · ext x
+  · apply ContinuousLinearMap.ext
+    intro x
     change C (B x) = x
     rw [hBx]
     simp only [C,ContinuousLinearMap.smul_apply,ContinuousLinearMap.id_apply,smul_eq_mul]
@@ -65,7 +68,7 @@ theorem fiberMinimizer_contDiffAt {c ν : ℝ} {F : ScalarPoint → ℝ}
   have hψ : ContDiffAt ℝ 2 ψ u := hg.contDiffAt_implicitFunction (by norm_num) hi
   have hψu : ψ u = fiberMinimizer hF u := hg.implicitFunction_apply_self (by norm_num) hi
   have hlift : Tendsto (fun v => (v,ψ v)) (𝓝 u) (𝓝 p) := by
-    simpa only [p,hψu] using (continuousAt_id.prodMk hψ.continuousAt).tendsto
+    simpa only [p,hψu,id_eq] using (continuousAt_id.prodMk hψ.continuousAt).tendsto
   have hd : ∀ᶠ v in 𝓝 u, (v,ψ v) ∈ coneInterior c :=
     hlift.eventually (hF.domain_open.mem_nhds hp)
   have heq : ψ =ᶠ[𝓝 u] fiberMinimizer hF := by
@@ -99,6 +102,8 @@ theorem fiberMinimizer_homogeneous {c ν t : ℝ} {F : ScalarPoint → ℝ}
   have h2 := hF.homogeneous (u,w/t) hwt t ht
   have hmin := hm (w/t) hwt
   simp only [Prod.smul_def,smul_eq_mul,mul_div_cancel₀ w ht.ne'] at h1 h2
+  change F ((t * u.1, t * u.2), t * fiberMinimizer hF u) ≤
+    F ((t * u.1, t * u.2), w)
   linarith
 
 theorem partialMinimum_homogeneous {c ν t : ℝ} {F : ScalarPoint → ℝ}
