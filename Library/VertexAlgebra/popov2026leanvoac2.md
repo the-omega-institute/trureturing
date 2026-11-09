@@ -46,3 +46,20 @@ diagonal. It uses the closed charge box
 No determinant-unit or unimodularity premise is used. The result is an
 algebraic C2-cofiniteness theorem; analytic CFT, anomaly, fusion, string
 theory, and AdS/CFT remain separate mathematical obligations.
+
+Under SPEC A17.2, retire this local proof port when the mathlib revision
+pinned by this repository supplies an equivalent lattice C2-cofiniteness
+theorem and an existing verified actual-field/carrier equivalence makes the
+exact local statement a compiled direct application. At that point replace
+the port with direct supplier usage. This condition is presently unmet;
+retirement depends on the repository pin and compiled exact bridge, not on
+upstream acceptance by mathlib.
+
+Four-slot registration for `positive_definite_c2_cofinite` remains
+unfinished: no faithful enrolled readout or compiled evidence for
+whole-family variation, sensitivity, observational dependence, and source
+selection/realization was produced.
+[#28628](https://github.com/the-omega-institute/trureturing/issues/28628)
+tracks these missing obligations; #25088 concerns a different theorem.
+The linked-issue route under CLAUDE §3.9 permits mathematical delivery with
+this audit unfinished; it does not establish `declared_validated` status.
