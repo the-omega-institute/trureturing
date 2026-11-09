@@ -8,6 +8,8 @@
 
 import D5.S1.Dynamics.Symbolic.StronglyIrreducibleMyhill
 
+/-! Finite forbidden-pattern splicing and the relative Moore counting argument. -/
+
 set_option autoImplicit false
 noncomputable section
 attribute [local instance] Classical.propDecidable
@@ -41,27 +43,57 @@ theorem collision_replacement [Finite A] [DiscreteTopology A]
           (∀ g, g ∉ tile t C → z'.val g = z.val g) ∧ tau z' = tau z := by
   classical
   obtain ⟨a, hft⟩ := hft
-  letI : Inhabited A := ⟨a⟩
+  let : Inhabited A := ⟨a⟩
   obtain ⟨B, hB⟩ := hft
   obtain ⟨M, hM⟩ := finite_memory X tau htau
   let D := hf.toFinset
   let S := M ∪ B.biUnion Pattern.support
   let C := AmenableGardenOfEden.collar D S
-  have hcore : ∀ g ∈ D, g ∈ C := AmenableGardenOfEden.mem_collar_core D S
-  have hwindow (g s r : G) (hs : s ∈ S) (hr : r ∈ S) (hg : g * s ∈ D) :
-      g * r ∈ C := by
-    simpa only [mul_inv_cancel_right] using
-      AmenableGardenOfEden.mem_collar_window D S hg hs hr
+  have hcore : ∀ g ∈ D, g ∈ C := fun _ hg => AmenableGardenOfEden.mem_collar_core D S hg
   have hout (g : G) (hg : g ∉ D) : x.val g = y.val g := by
-    simpa only [D, Set.Finite.mem_toFinset, Set.mem_setOf_eq, not_not] using hg
+    simpa only [D, Set.Finite.mem_toFinset, Set.mem_ofPred_eq, not_not] using hg
   have hvals : x.val ≠ y.val := fun h => hne (Subtype.ext h)
   obtain ⟨d, hd⟩ := Function.ne_iff.mp hvals
-  have hdD : d ∈ D := by simpa only [D, Set.Finite.mem_toFinset, Set.mem_setOf_eq] using hd
+  have hdD : d ∈ D := by simpa only [D, Set.Finite.mem_toFinset, Set.mem_ofPred_eq] using hd
   have hdC := hcore d hdD
   let p : C → A := fun c => x.val c
   let q : C → A := fun c => y.val c
   refine ⟨C, ⟨d, hdC⟩, p, q, (fun h => hd (congrFun h ⟨d, hdC⟩)),
     ⟨x, rfl⟩, ⟨y, rfl⟩, ?_⟩
+  have hMS : ∀ m ∈ M, m ∈ S := fun m hm => Finset.mem_union_left _ hm
+  have hBS (b : Pattern A G) (hb : b ∈ B) : ∀ r ∈ b.support, r ∈ S := by
+    intro r hr
+    exact Finset.mem_union_right _ (Finset.mem_biUnion.mpr ⟨b, hb, hr⟩)
+  let f (w : S → A) : A :=
+    if h : ∃ z : Cfg X, ∀ s : S, z.val s = w s then (tau (Classical.choose h)).val 1 else a
+  have hfval (z : Cfg X) : f (fun s : S => z.val s) = (tau z).val 1 := by
+    have hh : ∃ z' : Cfg X, ∀ s : S, z'.val s = z.val s := ⟨z, fun _ => rfl⟩
+    dsimp only [f]
+    rw [dif_pos hh]
+    exact hM _ z (fun m hm => Classical.choose_spec hh ⟨m, hMS m hm⟩)
+  let good (w : S → A) : Prop :=
+    ∀ (b : Pattern A G) (hb : b ∈ B),
+      ¬ ∀ r : b.support, w ⟨r, hBS b hb r r.property⟩ = b.config r
+  have hgood (z : Cfg X) (g : G) : good (fun s : S => z.val (g * s)) := by
+    intro b hb hocc
+    have hzB : z.val ∈ mulForbidden (B : Set (Pattern A G)) := hB ▸ z.property
+    exact hzB b hb g (fun r hr => hocc ⟨r, hr⟩)
+  let φ (w : S → A × Bool) : A × Bool :=
+    (f (fun s => (w s).1), decide (good (fun s => (w s).1)))
+  let encode (z : G → A) : G → A × Bool := fun g => (z g, false)
+  have hcode (z : Cfg X) (g : G) :
+      AmenableGardenOfEden.localMap S φ (encode z.val) g = ((tau z).val g, true) := by
+    apply Prod.ext
+    · change f (fun s : S => z.val (g * s)) = (tau z).val g
+      have hh := hfval (paperShift X g⁻¹ z)
+      rw [hequiv] at hh
+      simpa [paperShift, mulShift] using hh
+    · change decide (good (fun s : S => z.val (g * s))) = true
+      exact decide_eq_true (hgood z g)
+  have hcodeeq : AmenableGardenOfEden.localMap S φ (encode x.val) =
+      AmenableGardenOfEden.localMap S φ (encode y.val) := by
+    funext g
+    rw [hcode, hcode, hi]
   have hidentity (z : Cfg X) (hz : ∀ c ∈ C, z.val c = x.val c) :
       ∃ z' : Cfg X, (∀ c ∈ C, z'.val c = y.val c) ∧
         (∀ g, g ∉ C → z'.val g = z.val g) ∧ tau z' = tau z := by
@@ -70,43 +102,29 @@ theorem collision_replacement [Finite A] [DiscreteTopology A]
       Set.piecewise_eq_of_mem _ _ _ hg
     have hwout (g : G) (hg : g ∉ C) : w g = z.val g :=
       Set.piecewise_eq_of_notMem _ _ _ hg
-    have hweq (g : G) (hg : g ∉ D) : w g = z.val g := by
-      by_cases hc : g ∈ C
-      · exact (hwC g hc).trans ((hout g hg).symm.trans (hz g hc).symm)
-      · exact hwout g hc
+    have henc : encode w = (C : Set G).piecewise (encode y.val) (encode z.val) := by
+      funext g
+      by_cases hg : g ∈ C <;> simp [encode, w, hg]
+    have hsplice := AmenableGardenOfEden.localMap_piecewise_of_collar D S φ
+      (x := encode x.val) (y := encode y.val) (z := encode z.val)
+      (fun g hg => by simp only [encode, hout g hg]) hcodeeq
+      (fun g hg => by simp only [encode, hz g hg])
+    rw [← henc] at hsplice
+    have hwgood (g : G) : good (fun s : S => w (g * s)) := by
+      have hh := congrArg Prod.snd (congrFun hsplice g)
+      rw [hcode] at hh
+      exact of_decide_eq_true hh
     have hwX : w ∈ X.carrier := by
       rw [hB]
       intro b hb g hocc
-      have hbS : ∀ r ∈ b.support, r ∈ S := by
-        intro r hr
-        exact Finset.mem_union_right _ (Finset.mem_biUnion.mpr ⟨b, hb, hr⟩)
-      by_cases htouch : ∃ s ∈ b.support, g * s ∈ D
-      · obtain ⟨s, hs, hgs⟩ := htouch
-        have hyB : y.val ∈ mulForbidden (B : Set (Pattern A G)) := hB ▸ y.property
-        apply hyB b hb g
-        intro r hr
-        exact (hwC _ (hwindow g s r (hbS s hs) (hbS r hr) hgs)).symm.trans (hocc r hr)
-      · have hzB : z.val ∈ mulForbidden (B : Set (Pattern A G)) := hB ▸ z.property
-        apply hzB b hb g
-        intro r hr
-        exact (hweq _ (fun hg => htouch ⟨r, hr, hg⟩)).symm.trans (hocc r hr)
+      exact hwgood g b hb (fun r => hocc r r.property)
     let z' : Cfg X := ⟨w, hwX⟩
     refine ⟨z', hwC, hwout, ?_⟩
     apply Subtype.ext
     funext g
-    have hMS : ∀ m ∈ M, m ∈ S := fun m hm => Finset.mem_union_left _ hm
-    by_cases htouch : ∃ m ∈ M, g * m ∈ D
-    · obtain ⟨s, hs, hgs⟩ := htouch
-      have hmC (m : G) (hm : m ∈ M) : g * m ∈ C :=
-        hwindow g s m (hMS s hs) (hMS m hm) hgs
-      calc
-        (tau z').val g = (tau y).val g :=
-          memory_at X tau M hM hequiv g z' y (fun m hm => hwC _ (hmC m hm))
-        _ = (tau x).val g := congrArg (fun z : Cfg X => z.val g) hi.symm
-        _ = (tau z).val g :=
-          memory_at X tau M hM hequiv g x z (fun m hm => (hz _ (hmC m hm)).symm)
-    · exact memory_at X tau M hM hequiv g z' z
-        (fun m hm => hweq _ (fun hg => htouch ⟨m, hm, hg⟩))
+    have hh := congrArg Prod.fst (congrFun hsplice g)
+    rw [show encode w = encode z'.val from rfl, hcode, hcode] at hh
+    exact hh
   intro t z hz
   let z0 := paperShift X t⁻¹ z
   have hz0 : ∀ c ∈ C, z0.val c = x.val c := by
@@ -125,7 +143,7 @@ theorem collision_replacement [Finite A] [DiscreteTopology A]
     congr 1
     apply Subtype.ext
     funext g
-    simp [z0, paperShift, mulShift]
+    simp [paperShift, mulShift]
 
 private theorem erase_disjoint (X : MulSubshift A G) (tau : Cfg X → Cfg X)
     (C : Finset G) (p q : C → A) (hpq : p ≠ q)
@@ -250,7 +268,7 @@ theorem moore [Finite A] [DiscreteTopology A]
   obtain ⟨M, hmem⟩ := finite_memory X tau htau
   obtain ⟨x0, hx0⟩ := hX
   let xbase : Cfg X := ⟨x0, hx0⟩
-  letI : Nonempty A := ⟨x0 1⟩
+  let : Nonempty A := ⟨x0 1⟩
   let E := C * Delta⁻¹
   have hE : E.Nonempty := by
     obtain ⟨c, hc⟩ := hC
@@ -261,8 +279,8 @@ theorem moore [Finite A] [DiscreteTopology A]
     simpa only [E, Finset.coe_mul, Finset.coe_inv] using hg
   let K := insert 1 (E ∪ M)
   have hK : 1 ∈ K := Finset.mem_insert_self _ _
-  letI : MeasurableSpace G := ⊤
-  letI : NeBot (maxFoelner Gᵐᵒᵖ (Measure.count : Measure G)) := ham
+  let : MeasurableSpace G := ⊤
+  let : NeBot (maxFoelner Gᵐᵒᵖ (Measure.count : Measure G)) := ham
   let l := maxFoelner Gᵐᵒᵖ (Measure.count : Measure G)
   let B : Set G → Finset G := AmenableGardenOfEden.finiteShape
   obtain ⟨hpos, hboundary⟩ := AmenableGardenOfEden.maximal_shapes (G := G)
@@ -288,7 +306,7 @@ theorem moore [Finite A] [DiscreteTopology A]
     rintro g ⟨e, he, rfl⟩ ⟨d, hd, hed⟩
     exact hdisjoint i t ht s hs hne ⟨e, he⟩ ⟨d, hd⟩ hed.symm
   have hcardpos (F : Finset G) : 0 < Nat.card (PatX X F) := by
-    letI : Nonempty (PatX X F) := ⟨⟨_, ⟨xbase, rfl⟩⟩⟩
+    let : Nonempty (PatX X F) := ⟨⟨_, ⟨xbase, rfl⟩⟩⟩
     exact Nat.card_pos
   have hfull (F : Finset G) : ImagePat X tau F = PatX X F := by
     ext w

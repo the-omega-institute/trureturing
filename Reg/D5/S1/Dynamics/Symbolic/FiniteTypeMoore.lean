@@ -3,6 +3,8 @@ import Reg.Support.DependentFamily
 import Reg.D5.S1.Dynamics.Symbolic.StronglyIrreducibleMyhill
 import D5.S1.Dynamics.Symbolic.FiniteTypeMoore
 
+/-! Source-bound replacement and Moore families on the original configuration carrier. -/
+
 set_option autoImplicit false
 noncomputable section
 attribute [local instance] Classical.propDecidable
@@ -119,11 +121,11 @@ abbrev replacementSignature : Signature where
   finiteAnchor := inferInstance
 
 def replacementActual : Realization replacementSignature.{u,v} :=
-  realize replacementSignature (fun _ P z =>
+  realize replacementSignature (fun _ P z => letI : Group P.1 := P.2.1
     z.val (P.2.2.2.2.2.2.1 * P.2.2.2.2.2.2.2.2.val)) (fun e => nomatch e)
 
 def replacementBackground : Realization replacementSignature.{u,v} :=
-  realize replacementSignature (fun _ P _ =>
+  realize replacementSignature (fun _ P _ => letI : Group P.1 := P.2.1
     P.2.2.2.2.2.2.2.1.val (P.2.2.2.2.2.2.1 * P.2.2.2.2.2.2.2.2.val))
     (fun e => nomatch e)
 
@@ -196,7 +198,8 @@ def registration_collision_replacement : Contract.Registration.{_,_,_,0,0,0,_,_,
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize replacementSignature.{u,v}
-    (fun _ P z => z.val (P.2.2.2.2.2.2.1 * P.2.2.2.2.2.2.2.2.val)) (fun e => nomatch e))
+    (fun _ P z => letI : Group P.1 := P.2.1
+      z.val (P.2.2.2.2.2.2.1 * P.2.2.2.2.2.2.2.2.val)) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none

@@ -54,13 +54,13 @@ theorem mem_collar_core (D S : Finset G) {a : G} (ha : a ∈ D) :
   classical
   exact Finset.mem_union_left _ ha
 
-theorem mem_collar_window (D S : Finset G) {a s r : G}
+private theorem mem_collar_window (D S : Finset G) {a s r : G}
     (ha : a ∈ D) (hs : s ∈ S) (hr : r ∈ S) : a * s⁻¹ * r ∈ collar D S := by
   classical
   exact Finset.mem_union_right _ (Finset.mem_biUnion.mpr
     ⟨a, ha, Finset.mem_biUnion.mpr ⟨s, hs, Finset.mem_image.mpr ⟨r, hr, rfl⟩⟩⟩)
 
-private theorem localMap_piecewise_of_collar (D S : Finset G) (φ : (S → A) → A)
+theorem localMap_piecewise_of_collar (D S : Finset G) (φ : (S → A) → A)
     {x y z : G → A} (hout : ∀ a, a ∉ D → x a = y a)
     (himage : localMap S φ x = localMap S φ y)
     (hz : ∀ a ∈ collar D S, z a = x a) :
