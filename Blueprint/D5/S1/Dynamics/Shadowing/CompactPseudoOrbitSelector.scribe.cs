@@ -63,7 +63,7 @@ internal sealed class CompactPseudoOrbitSelectorDocument : IScribeDocumentDefini
                 Hyp(Seq(AllIn("i", Z), Call("natAbs", V("i")), Le, Sp, V("T"), Rightarrow, Sp,
                     E(V("i")), Le, Sp, V("eta"))),
                 Seq(Call("dist", Call("Q", V("x")), Call("x", Num(0))), Lt, Sp, V("eps"))])),
-            AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Dynamics/artigue2025shadowing")), Blocks(
+            AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Topology/artigue2025shadowing")), Blocks(
                 Paragraph(Text("The tolerance eta and natural window radius T depend on eps and the fixed selector, not on the sequence. "
                     + "Assuming failure, choose x(n) with all errors in radius n at most 1/(n+1) and discrepancy at least eps. "
                     + "CompactSpace.tendsto_subseq applies to the closed subtype: a countable product of metric spaces is first countable. "
