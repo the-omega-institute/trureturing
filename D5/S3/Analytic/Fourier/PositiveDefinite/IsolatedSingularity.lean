@@ -97,9 +97,8 @@ theorem posDef_of_isolated_non_lipschitz {V : Type*} [NormedAddCommGroup V]
       exact hsum h
     have hrest : (fun h => ∑ i ∈ (Finset.univ : Finset (Fin n)).erase j, E h i)
         =O[𝓝 0] (fun h : V => h) := by
-      simpa only [Finset.sum_apply] using
-        (Asymptotics.IsBigO.sum (s := (Finset.univ : Finset (Fin n)).erase j)
-          (A := fun i h => E h i) (fun i hi => ?_))
+      apply Asymptotics.IsBigO.fun_sum
+      intro i hi
       have hij : i ≠ j := (Finset.mem_erase.mp hi).1
       have hr : x i - x j ≠ 0 := sub_ne_zero.mpr (fun he => hij (hx he))
       exact (hregular (x i - x j) hr).const_mul_left (c i)

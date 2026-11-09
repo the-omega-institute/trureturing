@@ -60,12 +60,12 @@ private lemma actual_cosine_hasSum (hRH : RiemannHypothesis) (t : ℝ) :
       simp only [K, Complex.ofReal_mul]
   have hs : HasSum
       (fun k : ℕ => (Real.exp (-|t| / 2) : ℂ) *
-        (actualCoeff k * Complex.exp ((|t| : ℂ) * actualZero k)))
+        (actualCoeff k * Complex.exp (((|t| : ℝ) : ℂ) * actualZero k)))
       ((Real.exp (-|t| / 2) : ℂ) * actualH |t|) :=
     (actualH_summable |t|).hasSum.mul_left _
   have hterm (k : ℕ) :
       ((Real.exp (-|t| / 2) : ℂ) *
-        (actualCoeff k * Complex.exp ((|t| : ℂ) * actualZero k))).re =
+        (actualCoeff k * Complex.exp (((|t| : ℝ) : ℂ) * actualZero k))).re =
       weight k * Real.cos ((actualZero k).im * t) := by
     have hcos : Real.cos (|t| * (actualZero k).im) =
         Real.cos ((actualZero k).im * t) := by
@@ -153,8 +153,8 @@ private lemma K_increment_bigO {r : ℝ} (hr : r ≠ 0) :
     simpa only [mangoldtRamp, mul_sub] using
       hm.const_mul_left (ArithmeticFunction.vonMangoldt n)
   have hS : (fun t => S t - S r) =O[𝓝 r] (fun t : ℝ => t - r) := by
-    simpa only [S, Finset.sum_sub_distrib, Finset.sum_apply] using
-      (Asymptotics.IsBigO.sum (s := Finset.range N) (fun n _ => hramps n))
+    simpa only [S, Finset.sum_sub_distrib] using
+      (Asymptotics.IsBigO.fun_sum (s := Finset.range N) (fun n _ => hramps n))
   have hES : (fun t => E t * S t - E r * S r) =O[𝓝 r] (fun t : ℝ => t - r) := by
     have hfirst := (hE.continuousAt.tendsto.isBigO_one ℝ).mul hS
     simp only [one_mul] at hfirst
@@ -177,7 +177,7 @@ private lemma K_increment_bigO {r : ℝ} (hr : r ≠ 0) :
   have hshift : Tendsto (fun h : ℝ => r + h) (𝓝 0) (𝓝 r) := by
     have hc : Continuous (fun h : ℝ => r + h) := continuous_const.add continuous_id
     simpa using hc.tendsto (0 : ℝ)
-  simpa only [add_sub_cancel_left] using hbase.comp_tendsto hshift
+  simpa only [Function.comp_def, add_sub_cancel_left] using hbase.comp_tendsto hshift
 
 /-- Full endpoint continuity and the public derivative limit exclude every
 linear increment bound at zero. -/
@@ -189,8 +189,9 @@ private lemma K_origin_not_bigO :
     D1_atBot.eventually (eventually_lt_atBot (-(C + 1)))
   obtain ⟨δ, hδ, hDδ⟩ := mem_nhdsGT_iff_exists_Ioo_subset.mp hD
   have hlog : (0 : ℝ) < Real.log 2 := Real.log_pos (by norm_num)
-  have hsmall : ∀ᶠ t : ℝ in 𝓝[>] 0, t < min δ (Real.log 2) :=
-    (Iio_mem_nhds (lt_min hδ hlog)).filter_mono nhdsWithin_le_nhds
+  have hsmall : ∀ᶠ t : ℝ in 𝓝[>] 0, t < min δ (Real.log 2) := by
+    apply Filter.Eventually.filter_mono nhdsWithin_le_nhds
+    exact Iio_mem_nhds (lt_min hδ hlog)
   have hb : ∀ᶠ t : ℝ in 𝓝[>] 0, ‖K t - K 0‖ ≤ C * ‖t‖ :=
     hbound.filter_mono nhdsWithin_le_nhds
   obtain ⟨t, htbound, htsmall, htpos⟩ :=
@@ -214,6 +215,7 @@ theorem actual_kernel_strict_gram_of_rh (hRH : RiemannHypothesis)
     (n : ℕ) (x : Fin n → ℝ) (hx : Function.Injective x) :
     Matrix.PosDef (fun i j => (K (x j - x i) : ℂ)) := by
   apply D5.S3.Analytic.Fourier.PositiveDefinite.IsolatedSingularity.posDef_of_isolated_non_lipschitz
+    (V := ℝ) (k := fun t => (K t : ℂ))
     (actual_positiveDefinite hRH) ?_ ?_ n x hx
   · intro r hr
     obtain ⟨C, hC⟩ := (K_increment_bigO hr).bound
