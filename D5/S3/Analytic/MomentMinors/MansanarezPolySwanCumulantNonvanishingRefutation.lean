@@ -271,17 +271,15 @@ private theorem law_symmetry (p : ℝ) :
     Measure.map_dirac, neg_neg, neg_zero]
   ac_rfl
 
-private theorem law_moment_two {p : ℝ} (hp : 0 ≤ p) (hp1 : p ≤ 1) :
-    moment id 2 (law p) = p := by
-  unfold moment
-  rw [law_integral hp hp1]
-  norm_num [smul_eq_mul]
-
 private theorem law_even_moment {p : ℝ} (hp : 0 ≤ p) (hp1 : p ≤ 1) (n : ℕ)
     (hn : n ≠ 0) : moment id (2*n) (law p) = p := by
   unfold moment
   rw [law_integral hp hp1]
   simp [smul_eq_mul, pow_mul, zero_pow (by omega : 2*n ≠ 0)]
+
+private theorem law_moment_two {p : ℝ} (hp : 0 ≤ p) (hp1 : p ≤ 1) :
+    moment id 2 (law p) = p := by
+  simpa using law_even_moment hp hp1 1 (by norm_num)
 
 private theorem law_moment_one {p : ℝ} (hp : 0 ≤ p) (hp1 : p ≤ 1) :
     moment id 1 (law p) = 0 := by
@@ -521,9 +519,9 @@ private def r11 : MvPolynomial ℕ ℝ :=
 
 private theorem step3 : sourceA 3 + sourceL r3 + sourceH r3 = r4 := by
   have htwo : (2:MvPolynomial ℕ ℝ) ≠ 0 := by
-    intro h
-    have he := congrArg (MvPolynomial.eval (fun _ : ℕ => (0:ℝ))) h
-    norm_num only [map_ofNat, map_zero] at he
+    simpa only [map_ofNat] using
+      (MvPolynomial.C_ne_zero.mpr (by norm_num : (2 : ℝ) ≠ 0) :
+        (MvPolynomial.C (2 : ℝ) : MvPolynomial ℕ ℝ) ≠ 0)
   apply (mul_right_injective₀ htwo)
   dsimp only
   rw [double_step]
@@ -535,9 +533,9 @@ private theorem step3 : sourceA 3 + sourceL r3 + sourceH r3 = r4 := by
 
 private theorem step4 : sourceA 4 + sourceL r4 + sourceH r4 = r5 := by
   have htwo : (2:MvPolynomial ℕ ℝ) ≠ 0 := by
-    intro h
-    have he := congrArg (MvPolynomial.eval (fun _ : ℕ => (0:ℝ))) h
-    norm_num only [map_ofNat, map_zero] at he
+    simpa only [map_ofNat] using
+      (MvPolynomial.C_ne_zero.mpr (by norm_num : (2 : ℝ) ≠ 0) :
+        (MvPolynomial.C (2 : ℝ) : MvPolynomial ℕ ℝ) ≠ 0)
   apply (mul_right_injective₀ htwo)
   dsimp only
   rw [double_step]
@@ -549,9 +547,9 @@ private theorem step4 : sourceA 4 + sourceL r4 + sourceH r4 = r5 := by
 
 private theorem step5 : sourceA 5 + sourceL r5 + sourceH r5 = r6 := by
   have htwo : (2:MvPolynomial ℕ ℝ) ≠ 0 := by
-    intro h
-    have he := congrArg (MvPolynomial.eval (fun _ : ℕ => (0:ℝ))) h
-    norm_num only [map_ofNat, map_zero] at he
+    simpa only [map_ofNat] using
+      (MvPolynomial.C_ne_zero.mpr (by norm_num : (2 : ℝ) ≠ 0) :
+        (MvPolynomial.C (2 : ℝ) : MvPolynomial ℕ ℝ) ≠ 0)
   apply (mul_right_injective₀ htwo)
   dsimp only
   rw [double_step]
@@ -563,9 +561,9 @@ private theorem step5 : sourceA 5 + sourceL r5 + sourceH r5 = r6 := by
 
 private theorem step6 : sourceA 6 + sourceL r6 + sourceH r6 = r7 := by
   have htwo : (2:MvPolynomial ℕ ℝ) ≠ 0 := by
-    intro h
-    have he := congrArg (MvPolynomial.eval (fun _ : ℕ => (0:ℝ))) h
-    norm_num only [map_ofNat, map_zero] at he
+    simpa only [map_ofNat] using
+      (MvPolynomial.C_ne_zero.mpr (by norm_num : (2 : ℝ) ≠ 0) :
+        (MvPolynomial.C (2 : ℝ) : MvPolynomial ℕ ℝ) ≠ 0)
   apply (mul_right_injective₀ htwo)
   dsimp only
   rw [double_step]
@@ -577,9 +575,9 @@ private theorem step6 : sourceA 6 + sourceL r6 + sourceH r6 = r7 := by
 
 private theorem step7 : sourceA 7 + sourceL r7 + sourceH r7 = r8 := by
   have htwo : (2:MvPolynomial ℕ ℝ) ≠ 0 := by
-    intro h
-    have he := congrArg (MvPolynomial.eval (fun _ : ℕ => (0:ℝ))) h
-    norm_num only [map_ofNat, map_zero] at he
+    simpa only [map_ofNat] using
+      (MvPolynomial.C_ne_zero.mpr (by norm_num : (2 : ℝ) ≠ 0) :
+        (MvPolynomial.C (2 : ℝ) : MvPolynomial ℕ ℝ) ≠ 0)
   apply (mul_right_injective₀ htwo)
   dsimp only
   rw [double_step]
@@ -591,9 +589,9 @@ private theorem step7 : sourceA 7 + sourceL r7 + sourceH r7 = r8 := by
 
 private theorem step8 : sourceA 8 + sourceL r8 + sourceH r8 = r9 := by
   have htwo : (2:MvPolynomial ℕ ℝ) ≠ 0 := by
-    intro h
-    have he := congrArg (MvPolynomial.eval (fun _ : ℕ => (0:ℝ))) h
-    norm_num only [map_ofNat, map_zero] at he
+    simpa only [map_ofNat] using
+      (MvPolynomial.C_ne_zero.mpr (by norm_num : (2 : ℝ) ≠ 0) :
+        (MvPolynomial.C (2 : ℝ) : MvPolynomial ℕ ℝ) ≠ 0)
   apply (mul_right_injective₀ htwo)
   dsimp only
   rw [double_step]
@@ -605,9 +603,9 @@ private theorem step8 : sourceA 8 + sourceL r8 + sourceH r8 = r9 := by
 
 private theorem step9 : sourceA 9 + sourceL r9 + sourceH r9 = r10 := by
   have htwo : (2:MvPolynomial ℕ ℝ) ≠ 0 := by
-    intro h
-    have he := congrArg (MvPolynomial.eval (fun _ : ℕ => (0:ℝ))) h
-    norm_num only [map_ofNat, map_zero] at he
+    simpa only [map_ofNat] using
+      (MvPolynomial.C_ne_zero.mpr (by norm_num : (2 : ℝ) ≠ 0) :
+        (MvPolynomial.C (2 : ℝ) : MvPolynomial ℕ ℝ) ≠ 0)
   apply (mul_right_injective₀ htwo)
   dsimp only
   rw [double_step]
@@ -619,9 +617,9 @@ private theorem step9 : sourceA 9 + sourceL r9 + sourceH r9 = r10 := by
 
 private theorem step10 : sourceA 10 + sourceL r10 + sourceH r10 = r11 := by
   have htwo : (2:MvPolynomial ℕ ℝ) ≠ 0 := by
-    intro h
-    have he := congrArg (MvPolynomial.eval (fun _ : ℕ => (0:ℝ))) h
-    norm_num only [map_ofNat, map_zero] at he
+    simpa only [map_ofNat] using
+      (MvPolynomial.C_ne_zero.mpr (by norm_num : (2 : ℝ) ≠ 0) :
+        (MvPolynomial.C (2 : ℝ) : MvPolynomial ℕ ℝ) ≠ 0)
   apply (mul_right_injective₀ htwo)
   dsimp only
   rw [double_step]
