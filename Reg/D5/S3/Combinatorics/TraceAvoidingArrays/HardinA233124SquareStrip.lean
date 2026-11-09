@@ -48,8 +48,16 @@ def family : Registration arena (type_of% @result) where
     intro i
     refine ⟨(), 0, 1, ?_⟩
     change a 0 ≠ a 1
-    unfold a
-    decide +kernel
+    intro h
+    have h0 := congrArg (PowerSeries.coeff 0) result
+    have h1 := congrArg (PowerSeries.coeff 1) result
+    have hz : (a 0 : ℤ) = 0 := by
+      simpa [PowerSeries.coeff_mul] using h0
+    have hn : a 0 = 0 := by exact_mod_cast hz
+    have ho : (a 1 : ℤ) = 3 := by
+      simpa [PowerSeries.coeff_mul, Finset.sum_range_succ, hn] using h1
+    rw [hn] at h
+    exact (by norm_num : (0 : ℤ) ≠ 3) ((congrArg (fun n : ℕ => (n : ℤ)) h).trans ho)
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     (@result) (Realization signature) Type Unit where
