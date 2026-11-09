@@ -4,10 +4,13 @@
    mirror-E: none(waiver:registration-template-not-established)
    anchors: [mathlib/module/Mathlib.Analysis.Matrix.Spectrum]
    utility: none
-   digest: Original PB and positive tables absorb scalar first images against semidefinite finite matrix second images. -/
+   digest: Finite matrix scalar-image absorption and Jordan orthogonality. -/
 
 import D5.S3.Quantum.Algebra.PBOriginalReadoutRealization
 import Mathlib.Analysis.Matrix.Spectrum
+import Mathlib.Analysis.Matrix.Order
+import Mathlib.Analysis.SpecialFunctions.ContinuousFunctionalCalculus.Rpow.Basic
+import Mathlib.Topology.Algebra.Module.FiniteDimension
 
 /-! Scalar-first-image rigidity on literal original labels in finite matrix evaluations. -/
 
@@ -15,6 +18,8 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
 open scoped InnerProductSpace Matrix ComplexOrder
+
+/- Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/28642 -/
 
 namespace D5.S3.Quantum.Algebra.PBFiniteScalarAbsorption
 open PBActualOuterBudget PBOriginalReadoutRealization
@@ -98,13 +103,83 @@ private theorem scalar_eigen_pb (R : Readout (H := H) J u D ⊤) (hPB : PB J D)
   change Z * ⟪v, R.op b v⟫ = 0
   rw [real_inner_comm v (R.op b v)] at hpb
   nlinarith
+private theorem correction_pb (R : Readout (H := H) J u D ⊤) (hPB : PB J D)
+    (a b c : E) (μ : ℝ) (ha : R.op a = μ • LinearMap.id)
+    (hdc : R.op (D a c) = 0) (v : H)
+    (hcv : (1 + μ ^ 2) • R.op c v = μ • R.op (D a b) v) :
+    inner ℝ (R.op b v) (R.op (D a b) v) = 0 := by
+  let ν := D a b - J a c
+  let ω := J a b + D a c
+  have hν : R.op ν v = R.op (D a b) v - μ • R.op c v := by
+    simp [ν, scalar_jordan R a μ ha]
+  have hω : R.op ω = μ • R.op b := by
+    simp [ω, scalar_jordan R a μ ha, hdc]
+  have hcv' : R.op c v = μ • R.op (D a b) v - μ ^ 2 • R.op c v := by
+    calc
+      _ = (1 + μ ^ 2) • R.op c v - μ ^ 2 • R.op c v := by module
+      _ = _ := by rw [hcv]
+  have hp := collinear_read_zero R (b + ν) (c + ω) v μ (by
+    simp only [map_add, LinearMap.add_apply, hν, hω, LinearMap.smul_apply]
+    conv_lhs => rw [hcv']
+    module)
+  have hm := collinear_read_zero R (b - ν) (c - ω) v (-μ) (by
+    simp only [map_sub, LinearMap.sub_apply, hν, hω, LinearMap.smul_apply]
+    conv_lhs => rw [hcv']
+    module)
+  have he := congrArg (reading R v) (hPB a b c)
+  change reading R v (D (b + ν) (c + ω) - D (b - ν) (c - ω)) =
+    reading R v ((-2 : ℝ) • (J b ν + J c ω)) at he
+  simp only [map_sub, map_smul, map_add, smul_eq_mul, hp, hm, sub_self] at he
+  rw [reading_jordan R (by trivial) (by trivial),
+    reading_jordan R (by trivial) (by trivial)] at he
+  simp only [hν, hω, LinearMap.smul_apply, inner_sub_right,
+    real_inner_smul_right] at he
+  rw [real_inner_comm (R.op b v) (R.op c v)] at he
+  nlinarith
+
+private theorem quadratic_read_zero (S T : H →ₗ[ℝ] H)
+    (w : H) (hw : inner ℝ w (S w) ≠ 0)
+    (h : ∀ v, inner ℝ v (S v) ≠ 0 → inner ℝ v (T v) = 0) :
+    ∀ v, inner ℝ v (T v) = 0 := by
+  intro v
+  let f : Polynomial ℝ := Polynomial.C (inner ℝ v (S v)) +
+    Polynomial.C (inner ℝ v (S w) + inner ℝ w (S v)) * Polynomial.X +
+    Polynomial.C (inner ℝ w (S w)) * Polynomial.X ^ 2
+  let g : Polynomial ℝ := Polynomial.C (inner ℝ v (T v)) +
+    Polynomial.C (inner ℝ v (T w) + inner ℝ w (T v)) * Polynomial.X +
+    Polynomial.C (inner ℝ w (T w)) * Polynomial.X ^ 2
+  have hf (t : ℝ) : f.eval t = inner ℝ (v + t • w) (S (v + t • w)) := by
+    simp [f, map_add, map_smul, inner_add_left, inner_add_right,
+      real_inner_smul_left, real_inner_smul_right]
+    ring
+  have hg (t : ℝ) : g.eval t = inner ℝ (v + t • w) (T (v + t • w)) := by
+    simp [g, map_add, map_smul, inner_add_left, inner_add_right,
+      real_inner_smul_left, real_inner_smul_right]
+    ring
+  have hfg : f * g = 0 := by
+    apply Polynomial.funext
+    intro t
+    simp only [Polynomial.eval_mul, Polynomial.eval_zero]
+    by_cases ht : f.eval t = 0
+    · simp [ht]
+    · rw [hg, h (v + t • w) (by rwa [← hf]), mul_zero]
+  have hfne : f ≠ 0 := by
+    intro hfz
+    have he := congrArg (fun p : Polynomial ℝ => p.coeff 2) hfz
+    have he' : inner ℝ w (S w) = 0 := by simpa [f] using he
+    exact hw he'
+  have hgz : g = 0 := (mul_eq_zero.mp hfg).resolve_left hfne
+  have he := congrArg (fun p : Polynomial ℝ => p.coeff 0) hgz
+  simpa [g] using he
+
 end Readout
 
 section Matrix
 variable {A E P n : Type*}
-variable [CStarAlgebra A] [PartialOrder A] [StarOrderedRing A]
+variable [CStarAlgebra A] [PartialOrder A]
 variable [NormedAddCommGroup E] [NormedSpace ℝ E]
 variable [Fintype n] [DecidableEq n]
+open scoped Matrix.Norms.L2Operator MatrixOrder
 local instance : InnerProductSpace ℝ (EuclideanSpace ℂ n) :=
   InnerProductSpace.complexToReal
 
@@ -151,6 +226,20 @@ private def evalReadout (O : OriginalData (A := A) (E := E) P)
         (hpositive c hc)).re_inner_nonneg_right v
     exact (positive_table_transfer O.J O.D {c | 0 ≤ O.i c} O.preparation
       O.exact_cone O.raw_p2 f hf a b).2
+
+private theorem positive_square_lift (O : OriginalData (A := A) (E := E) P)
+    (q : E →ₗ[ℝ] selfAdjoint (Matrix n n ℂ)) (hq : Function.Surjective q)
+    (hJ : ∀ a b, (q (O.J a b) : Matrix n n ℂ) =
+      (1 / 2 : ℝ) • ((q a : Matrix n n ℂ) * q b + (q b : Matrix n n ℂ) * q a))
+    (M : Matrix n n ℂ) (hM : M.PosSemidef) :
+    ∃ e : E, (q (O.J e e) : Matrix n n ℂ) = M := by
+  obtain ⟨e, he⟩ := hq ⟨CFC.sqrt M, IsSelfAdjoint.of_nonneg (CFC.sqrt_nonneg M)⟩
+  refine ⟨e, ?_⟩
+  have he' : (q e : Matrix n n ℂ) = CFC.sqrt M := congrArg Subtype.val he
+  rw [hJ, he']
+  have ht : (1 / 2 : ℝ) • (CFC.sqrt M * CFC.sqrt M +
+      CFC.sqrt M * CFC.sqrt M) = CFC.sqrt M * CFC.sqrt M := by module
+  rw [ht, CFC.sqrt_mul_sqrt_self M hM.nonneg]
 
 /-- A real-linear unital Jordan evaluation into all finite selfadjoint complex
 matrices absorbs the original scalar first image when the actual second image
@@ -207,6 +296,152 @@ theorem semidefinite_second_image (O : OriginalData (A := A) (E := E) P)
   have hvne : v ≠ 0 := (WithLp.toLp_eq_zero 2).ne.mpr hw
   exact (mul_ne_zero hZ (ne_of_gt (real_inner_self_pos.mpr hvne))) hzero
 
+/-- A dense linear finite-matrix evaluation forces the second image to be
+Jordan orthogonal to the same actual scalar-first-image response. -/
+theorem scalar_second_jordan_zero (O : OriginalData (A := A) (E := E) P)
+    (q : E →ₗ[ℝ] selfAdjoint (Matrix n n ℂ))
+    (hu : (q O.u : Matrix n n ℂ) = 1)
+    (hJ : ∀ a b, (q (O.J a b) : Matrix n n ℂ) =
+      (1 / 2 : ℝ) • ((q a : Matrix n n ℂ) * q b + (q b : Matrix n n ℂ) * q a))
+    (hpositive : ∀ a, 0 ≤ O.i a → (q a : Matrix n n ℂ).PosSemidef)
+    (hPB : PB O.J O.D) (hdense : DenseRange q) (a b : E) (μ : ℝ)
+    (ha : (q a : Matrix n n ℂ) = μ • (1 : Matrix n n ℂ)) :
+    q (O.J b (O.D a b)) = 0 := by
+  let R := evalReadout O q hu hJ hpositive
+  let H := O.D a b
+  let incl : selfAdjoint (Matrix n n ℂ) →ₗ[ℝ] Matrix n n ℂ := {
+    toFun := Subtype.val
+    map_add' _ _ := rfl
+    map_smul' _ _ := rfl }
+  have : FiniteDimensional ℝ (selfAdjoint (Matrix n n ℂ)) :=
+    FiniteDimensional.of_injective incl Subtype.coe_injective
+  have hsurj : Function.Surjective q := by
+    have hc : IsClosed (Set.range q) := (LinearMap.range q).closed_of_finiteDimensional
+    intro M
+    simpa only [hc.closure_eq, Set.mem_range] using hdense M
+  have hs : R.op a = μ • LinearMap.id := by
+    apply LinearMap.ext
+    intro v
+    change (Matrix.toEuclideanCLM (n := n) (𝕜 := ℂ)) (↑(q a)) v = μ • v
+    rw [ha]
+    change ((Matrix.toEuclideanCLM (n := n) (𝕜 := ℂ)).toAlgEquiv.toAlgHom.restrictScalars
+      ℝ).toLinearMap (μ • (1 : Matrix n n ℂ)) v = _
+    rw [map_smul]
+    simp
+  have hinj (x : E) (hx : R.op x = 0) : q x = 0 := by
+    apply Subtype.ext
+    change (q x : Matrix n n ℂ) = 0
+    apply (Matrix.toEuclideanCLM (n := n) (𝕜 := ℂ)).injective
+    rw [map_zero]
+    apply ContinuousLinearMap.ext
+    intro v
+    exact congrArg (fun T : EuclideanSpace ℂ n →ₗ[ℝ] EuclideanSpace ℂ n => T v) hx
+  have hzero : q H = 0 → q (O.J b H) = 0 := by
+    intro hz
+    apply Subtype.ext
+    simpa [hz] using hJ b H
+  by_cases hH : q H = 0
+  · exact hzero hH
+  by_cases hμ : μ = 0
+  · have hz : R.op H = 0 := by
+      apply (R.symmetric H).inner_map_self_eq_zero.mp
+      intro v
+      rw [real_inner_comm]
+      have hp := R.p2 v a b
+      change reading R v H ^ 2 ≤
+        reading R v (O.J a a) * reading R v (O.J b b) - reading R v (O.J a b) ^ 2 at hp
+      rw [reading_jordan R (by trivial) (by trivial),
+        reading_jordan R (by trivial) (by trivial),
+        reading_jordan R (by trivial) (by trivial)] at hp
+      simp only [hs, hμ, zero_smul, LinearMap.zero_apply, inner_zero_left,
+        inner_zero_right, zero_mul] at hp
+      change reading R v H = 0
+      nlinarith [sq_nonneg (reading R v H)]
+    exact (hH (hinj H hz)).elim
+  have hnonzero : ∃ w : EuclideanSpace ℂ n, inner ℝ w (R.op H w) ≠ 0 := by
+    by_contra hh
+    push Not at hh
+    have hz : R.op H = 0 := (R.symmetric H).inner_map_self_eq_zero.mp
+      (fun w => by rw [real_inner_comm]; exact hh w)
+    exact hH (hinj H hz)
+  obtain ⟨w, hw⟩ := hnonzero
+  have hread : ∀ v : EuclideanSpace ℂ n, inner ℝ v (R.op H v) ≠ 0 →
+      inner ℝ v (R.op (O.J b H) v) = 0 := by
+    intro v hv
+    let τ : ℝ := μ / (1 + μ ^ 2)
+    let W : EuclideanSpace ℂ n := τ • R.op H v
+    let r : ℝ := inner ℝ v W
+    have hτ : τ ≠ 0 := div_ne_zero hμ (by positivity)
+    have hr : r ≠ 0 := by simpa [r, W, real_inner_smul_right] using mul_ne_zero hτ hv
+    let M : Matrix n n ℂ := (Matrix.toEuclideanCLM (n := n) (𝕜 := ℂ)).symm
+      (InnerProductSpace.rankOne ℂ W W)
+    have hM : M.PosSemidef := by
+      apply Matrix.isPositive_toEuclideanLin_iff.mp
+      simpa only [M, ← Matrix.coe_toEuclideanCLM_eq_toEuclideanLin,
+        StarAlgEquiv.apply_symm_apply] using
+        (InnerProductSpace.isPositive_rankOne_self W).toLinearMap
+    let C : Matrix n n ℂ := r⁻¹ • M
+    have hsemi : C.PosSemidef ∨ (-C).PosSemidef := by
+      by_cases hrp : 0 ≤ r⁻¹
+      · exact Or.inl (hM.smul hrp)
+      · right
+        have hp := hM.smul (le_of_lt (neg_pos.mpr (lt_of_not_ge hrp)))
+        simpa only [C, neg_smul] using hp
+    obtain ⟨c, hc⟩ : ∃ c : E, (q c : Matrix n n ℂ) = C := by
+      rcases hsemi with hp | hp
+      · obtain ⟨e, he⟩ := positive_square_lift O q hsurj hJ C hp
+        exact ⟨O.J e e, he⟩
+      · obtain ⟨e, he⟩ := positive_square_lift O q hsurj hJ (-C) hp
+        exact ⟨-O.J e e, by simpa using congrArg Neg.neg he⟩
+    have hdc : R.op (O.D a c) = 0 := by
+      have hd := semidefinite_second_image O q hu hJ hpositive hPB a c μ ha
+        (by simpa only [hc] using hsemi)
+      change evalOp q (O.D a c) = 0
+      apply LinearMap.ext
+      intro z
+      simp [evalOp, hd]
+    have hrC : inner ℂ W v = (r : ℂ) := by
+      have hsym := ((q H).property.map (Matrix.toEuclideanCLM (n := n) (𝕜 := ℂ))).isSymmetric
+      apply Complex.ext
+      · change (inner ℂ W v).re = r
+        exact inner_re_symm (𝕜 := ℂ) W v
+      · change (inner ℂ W v).im = 0
+        change (inner ℂ (τ • (Matrix.toEuclideanCLM (n := n) (𝕜 := ℂ))
+          (q H : Matrix n n ℂ) v) v).im = 0
+        have him : (inner ℂ ((Matrix.toEuclideanCLM (n := n) (𝕜 := ℂ))
+            (q H : Matrix n n ℂ) v) v).im = 0 := hsym.im_inner_apply_self v
+        rw [inner_smul_left_eq_smul (𝕝 := ℝ)]
+        simpa only [← RCLike.im_eq_complex_im, RCLike.smul_im, mul_zero] using
+          congrArg (fun t : ℝ => τ * t) him
+    have hact : R.op c v = W := by
+      change (Matrix.toEuclideanCLM (n := n) (𝕜 := ℂ)) (q c : Matrix n n ℂ) v = W
+      rw [hc]
+      have ht : (Matrix.toEuclideanCLM (n := n) (𝕜 := ℂ)) C =
+          r⁻¹ • InnerProductSpace.rankOne ℂ W W := by
+        change ((Matrix.toEuclideanCLM (n := n) (𝕜 := ℂ)).toAlgEquiv.toAlgHom.restrictScalars
+          ℝ).toLinearMap (r⁻¹ • M) = _
+        rw [map_smul]
+        change r⁻¹ • ((Matrix.toEuclideanCLM (n := n) (𝕜 := ℂ)) M) = _
+        change r⁻¹ • ((Matrix.toEuclideanCLM (n := n) (𝕜 := ℂ))
+          ((Matrix.toEuclideanCLM (n := n) (𝕜 := ℂ)).symm _)) = _
+        rw [StarAlgEquiv.apply_symm_apply]
+      rw [ht]
+      simp only [smul_apply, InnerProductSpace.rankOne_apply, hrC]
+      simp [hr]
+    have hcv : (1 + μ ^ 2) • R.op c v = μ • R.op H v := by
+      rw [hact]
+      simp only [W, smul_smul]
+      congr 1
+      dsimp [τ]
+      field_simp
+    have ht := correction_pb R hPB a b c μ hs hdc v hcv
+    exact (reading_jordan R (by trivial) (by trivial) v).trans ht
+  have hall := quadratic_read_zero (R.op H) (R.op (O.J b H)) w hw hread
+  apply hinj
+  exact (R.symmetric _).inner_map_self_eq_zero.mp
+    (fun v => by rw [real_inner_comm]; exact hall v)
+
+#print axioms scalar_second_jordan_zero
 #print axioms semidefinite_second_image
 end Matrix
 
