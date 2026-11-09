@@ -43,7 +43,7 @@ def codeArena : Arena where
     (S : Finset G) (φ : (S → A) → A),
     Surjective (R.readout () ⟨A, G, inst, S, φ⟩) ↔ Preinjective S φ
 
-private theorem finite_amenable (G : Type v) [Group G] [Finite G] :
+theorem finite_amenable (G : Type v) [Group G] [Finite G] :
     letI : MeasurableSpace G := ⊤
     NeBot (maxFoelner Gᵐᵒᵖ (Measure.count : Measure G)) := by
   letI : MeasurableSpace G := ⊤
