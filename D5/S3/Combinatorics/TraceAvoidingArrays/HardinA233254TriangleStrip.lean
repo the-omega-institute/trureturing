@@ -591,7 +591,8 @@ private theorem reduce_first (i : Fin 5) : allFirst i = reducedFirst i := by
       norm_num [allowed]
     have hf : finish (false, false) (Fin.cons (0 : Fin 6) c) =
         finish (false, false) c := rfl
-    have hm := Fin.comp_cons beta (0 : Fin 6) c
+    have hm : (fun j => beta ((Fin.cons (0 : Fin 6) c : Row) j)) =
+        Fin.cons (beta 0) (fun j => beta (c j)) := Fin.comp_cons beta 0 c
     have hp : rowLegal (Fin.cons (0 : Fin 6) c) ↔
         (∀ j : Fin 5, (Fin.cons 0 (fun k => beta (c k)) : Fin 6 → Fin 3) j.castSucc ≠
           (Fin.cons 0 (fun k => beta (c k)) : Fin 6 → Fin 3) j.succ) := by
