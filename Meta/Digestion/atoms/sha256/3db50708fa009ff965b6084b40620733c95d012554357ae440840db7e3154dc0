@@ -1,0 +1,25 @@
+**定义 39.1（顺序无关比较差公理）。** 令
+
+$$
+\operatorname{Diff}_0(P)
+ =\left\{\mu=\sum_{x\in P}a_x\delta_x:\nobreak\text{支撑有限且 }\sum_xa_x=0\right\}.
+$$
+
+要求存在一个只依赖形式差本身的函数
+
+$$
+V:\operatorname{Diff}_0(P)\longrightarrow[0,\infty)
+$$
+
+满足：
+
+1. **比较差归一：** $V(\delta_x-\delta_y)=D(x,y)$；
+2. **齐次：** $V(t\mu)=t^2V(\mu)$ 对所有 $t\in\mathbb R$；
+3. **重排无关的合成：**
+   $$
+   V(\mu+\nu)+V(\mu-\nu)=2V(\mu)+2V(\nu);
+   $$
+4. **正性：** $V(\mu)\ge0$。
+
+形式差的有限展开、支撑枚举和括号分组都只表示同一个 $\mu$，不得改变 $V$。第三条是“比较结果与合成顺序无关”的单一代数表达；第四条是全局而非逐边的正性。
+
