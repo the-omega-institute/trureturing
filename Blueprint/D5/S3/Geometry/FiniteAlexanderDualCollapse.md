@@ -436,19 +436,7 @@ Lean statement: `D5/S3/Geometry/FiniteAlexanderDualCollapse.dualData`
 
 The four returned finite tables give the exact augmented faces of D dual, E dual, Q dual and the dual after the critical deletion. The critical primal table is computed by erasing sigma from the exact Q table. All four properness proofs follow from the prescribed primal sequences and D properness.
 
-**Definition 1.37 (Ordering only the complementary simplex).**
-
-Lean statement: `D5/S3/Geometry/FiniteAlexanderDualCollapse.lambdaCoordinates`
-
-*Formalization.* `D5/S3/Geometry/FiniteAlexanderDualCollapse.lambdaCoordinates` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The existing Finset equivalence orders the labels in lambda by Fin of its cardinality. This is a coordinate ordering for a later disk model and never changes W in any dual computation.
-
-**Definition 1.38 (The first dual reduction).**
+**Definition 1.37 (The first dual reduction).**
 
 Lean statement: `D5/S3/Geometry/FiniteAlexanderDualCollapse.firstDual`
 
@@ -460,7 +448,7 @@ Lean statement: `D5/S3/Geometry/FiniteAlexanderDualCollapse.firstDual`
 
 Reversing the second primal sequence produces an actual owner Sequence from E dual to the dual of Q minus sigma. Since D dual is retained, its literal coordinate inclusion is fixed by the realized relative deformation.
 
-**Definition 1.39 (The independent second dual sequence).**
+**Definition 1.38 (The independent second dual sequence).**
 
 Lean statement: `D5/S3/Geometry/FiniteAlexanderDualCollapse.secondDual`
 
@@ -472,7 +460,7 @@ Lean statement: `D5/S3/Geometry/FiniteAlexanderDualCollapse.secondDual`
 
 Reversing the first primal sequence produces an actual owner Sequence from Q dual to D dual. It supplies a collapse only on its stated ambient complex.
 
-**Definition 1.40 (The actual cone-relative reduction).**
+**Definition 1.39 (The actual cone-relative reduction).**
 
 Lean statement: `D5/S3/Geometry/FiniteAlexanderDualCollapse.reduction`
 
@@ -484,7 +472,7 @@ Lean statement: `D5/S3/Geometry/FiniteAlexanderDualCollapse.reduction`
 
 Put C equal to cone(a,D dual), K equal to E dual union C, and X equal to the dual of Q minus sigma union C. Extending the first dual sequence over this retained cone computes K collapsing to X.
 
-**Definition 1.41 (The separate collapse of P).**
+**Definition 1.40 (The separate collapse of P).**
 
 Lean statement: `D5/S3/Geometry/FiniteAlexanderDualCollapse.collapseP`
 
@@ -496,7 +484,7 @@ Lean statement: `D5/S3/Geometry/FiniteAlexanderDualCollapse.collapseP`
 
 Put P equal to Q dual union C. The existing owner extension computes P collapsing to C, fixing all of C. This collapse is on P alone; adjoining the complementary disk may create new cofaces that obstruct its pairs in X.
 
-**Definition 1.42 (The unchanged attaching inclusion).**
+**Definition 1.41 (The unchanged attaching inclusion).**
 
 Lean statement: `D5/S3/Geometry/FiniteAlexanderDualCollapse.j`
 
@@ -508,7 +496,7 @@ Lean statement: `D5/S3/Geometry/FiniteAlexanderDualCollapse.j`
 
 The map j from the actual realization of D dual to the actual realization of E dual is the existing subcomplex inclusion, with every coordinate unchanged. It is never replaced by a zero or null map.
 
-**Definition 1.43 (Actual relative retraction onto X).**
+**Definition 1.42 (Actual relative retraction onto X).**
 
 Lean statement: `D5/S3/Geometry/FiniteAlexanderDualCollapse.reductionSDR`
 
@@ -520,7 +508,7 @@ Lean statement: `D5/S3/Geometry/FiniteAlexanderDualCollapse.reductionSDR`
 
 Sequence.realize produces the coordinate retraction from K to X, its retraction-inclusion identity, and a homotopy relative to the entire realization of X. The maps are computed from the finite sequence.
 
-**Definition 1.44 (Actual retraction from P to C).**
+**Definition 1.43 (Actual retraction from P to C).**
 
 Lean statement: `D5/S3/Geometry/FiniteAlexanderDualCollapse.pSDR`
 
@@ -532,7 +520,7 @@ Lean statement: `D5/S3/Geometry/FiniteAlexanderDualCollapse.pSDR`
 
 Sequence.realize applied to the separate P collapse produces the coordinate retraction to C and the homotopy fixing every point of C.
 
-**Definition 1.45 (The computed contraction of P relative to the apex).**
+**Definition 1.44 (The computed contraction of P relative to the apex).**
 
 Lean statement: `D5/S3/Geometry/FiniteAlexanderDualCollapse.pContraction`
 
@@ -544,7 +532,7 @@ Lean statement: `D5/S3/Geometry/FiniteAlexanderDualCollapse.pContraction`
 
 The existing owner concatenates the finite relative retraction to C with its actual linear cone contraction to the coordinate apex a. The result is a HomotopyRel from the identity on P to the constant actual apex map, fixed on the singleton containing the actual included apex. No extension of this contraction across the attached disk is asserted.
 
-**Theorem 1.46 (The pointwise fixed-apex law).**
+**Theorem 1.45 (The pointwise fixed-apex law).**
 
 Lean statement: `D5/S3/Geometry/FiniteAlexanderDualCollapse.pContraction_fixed_apex`
 
@@ -556,7 +544,7 @@ Lean statement: `D5/S3/Geometry/FiniteAlexanderDualCollapse.pContraction_fixed_a
 
 For every unit-interval time, the actual pContraction sends the included cone apex to itself. The proof is the singleton relative property of the same composed SDR and cone contraction; it does not introduce a desired contraction field or a second homotopy.
 
-**Theorem 1.47 (The exact one-cell union).**
+**Theorem 1.46 (The exact one-cell union).**
 
 Lean statement: `D5/S3/Geometry/FiniteAlexanderDualCollapse.cell_decomposition`
 
@@ -568,7 +556,7 @@ Lean statement: `D5/S3/Geometry/FiniteAlexanderDualCollapse.cell_decomposition`
 
 For every certificate the actual reduced complex X is exactly P union the full lambda simplex on the original labels. This follows from the critical dual identity and the union with the same actual cone.
 
-**Theorem 1.48 (The full boundary and the small case).**
+**Theorem 1.47 (The full boundary and the small case).**
 
 Lean statement: `D5/S3/Geometry/FiniteAlexanderDualCollapse.cell_intersection`
 
@@ -580,7 +568,7 @@ Lean statement: `D5/S3/Geometry/FiniteAlexanderDualCollapse.cell_intersection`
 
 For every certificate, P intersected with the full lambda simplex is exactly the lambda boundary. For every finite s, an augmented face of that boundary is exactly a proper subset of lambda. If lambda has cardinality one, the native boundary is bottom; augmenting this bottom gives the empty face, not a void face family. The cone creates no extra overlap because its apex is outside W and D dual is contained in Q dual.
 
-**Theorem 1.49 (An actual face of E dual).**
+**Theorem 1.48 (An actual face of E dual).**
 
 Lean statement: `D5/S3/Geometry/FiniteAlexanderDualCollapse.complementary_face`
 
@@ -628,7 +616,6 @@ The complementary lambda is a nonempty E-dual face. Its complement is the origin
 - Truth anchor: `D5/S3/Geometry/FiniteAlexanderDualCollapse.firstDual`
 - Truth anchor: `D5/S3/Geometry/FiniteAlexanderDualCollapse.j`
 - Truth anchor: `D5/S3/Geometry/FiniteAlexanderDualCollapse.lambda`
-- Truth anchor: `D5/S3/Geometry/FiniteAlexanderDualCollapse.lambdaCoordinates`
 - Truth anchor: `D5/S3/Geometry/FiniteAlexanderDualCollapse.pContraction`
 - Truth anchor: `D5/S3/Geometry/FiniteAlexanderDualCollapse.pContraction_fixed_apex`
 - Truth anchor: `D5/S3/Geometry/FiniteAlexanderDualCollapse.pSDR`

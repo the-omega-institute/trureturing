@@ -88,7 +88,7 @@ Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.cast`
 
 *Commentary.*
 
-cast transports a sequence along definitional equalities of its source and target complexes and changes no original label, pair, or frame.
+cast transports a sequence along proved equalities of its source and target complexes by substitution. The pairs_cast and frames_cast theorems prove equality of the resulting pair and frame lists.
 
 **Definition 1.8 (All intermediate complexes).**
 
@@ -102,31 +102,7 @@ Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.frames`
 
 frames S is [K] for refl and P.ambient :: frames tail for step. It is the actual frame carrier list, one entry for each pair plus the terminal complex.
 
-**Theorem 1.9 (Reflexive frame list).**
-
-Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.frames_refl`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.frames_refl` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-For refl K, the actual frame list is [K]. This is the zero-pair endpoint of the n+1 indexing convention.
-
-**Theorem 1.10 (Step frame list).**
-
-Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.frames_step`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.frames_step` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-For step P T, the actual frame list is P.ambient :: frames T, preserving construction order.
-
-**Theorem 1.11 (Every frame is below the source).**
+**Theorem 1.9 (Every frame is below the source).**
 
 Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.frames_le_source`
 
@@ -138,7 +114,7 @@ Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.frames_le_sourc
 
 Every M in frames S satisfies M ≤ K, preserving the original complex inclusion at every intermediate.
 
-**Theorem 1.12 (n+1 frame count).**
+**Theorem 1.10 (n+1 frame count).**
 
 Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.frames_length`
 
@@ -150,19 +126,7 @@ Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.frames_length`
 
 For every S, (frames S).length = S.pairs.length + 1. The terminal frame is included explicitly.
 
-**Theorem 1.13 (In-range frame lookup).**
-
-Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.getD_mem_of_lt`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.getD_mem_of_lt` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-If i < xs.length, xs.getD i d belongs to xs. This is the exact lookup lemma used to state frame identities over every i < pairs.length+1.
-
-**Theorem 1.14 (Pair-list cast invariance).**
+**Theorem 1.11 (Pair-list cast invariance).**
 
 Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.pairs_cast`
 
@@ -172,9 +136,9 @@ Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.pairs_cast`
 
 *Commentary.*
 
-Casting S along source and target equality leaves S.pairs definitionally unchanged.
+For arbitrary proved source and target equalities hK and hL, (S.cast hK hL).pairs = S.pairs. The equality is proved by substitution.
 
-**Theorem 1.15 (Frame-list cast invariance).**
+**Theorem 1.12 (Frame-list cast invariance).**
 
 Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.frames_cast`
 
@@ -184,9 +148,9 @@ Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.frames_cast`
 
 *Commentary.*
 
-Casting S along source and target equality leaves frames S definitionally unchanged.
+For arbitrary proved source and target equalities hK and hL, frames (S.cast hK hL) = frames S. The equality is proved by substitution.
 
-**Theorem 1.16 (Pair count under append).**
+**Theorem 1.13 (Pair count under append).**
 
 Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.pairs_append_length`
 
@@ -198,7 +162,7 @@ Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.pairs_append_le
 
 For S : Sequence K L and T : Sequence L M, (S.append T).pairs.length = S.pairs.length + T.pairs.length.
 
-**Definition 1.17 (Relative coordinate deformation package).**
+**Definition 1.14 (Relative coordinate deformation package).**
 
 Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.RelativeSDR`
 
@@ -210,7 +174,7 @@ Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.RelativeSDR`
 
 RelativeSDR K L h stores an actual retraction C(Space K,Space L), its equality on the literal realizationInclusion h, and a HomotopyRel from id to inclusion.comp retraction relative to every point in realization L. The fixed set is the entire final realization.
 
-**Definition 1.18 (Composed relative deformation).**
+**Definition 1.15 (Composed relative deformation).**
 
 Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.realize`
 
@@ -222,7 +186,7 @@ Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.realize`
 
 realize S composes elementary coordinate retractions in sequence order. The second homotopy segment is the tail homotopy evaluated after the first retraction, and the relative proof is on all of |L|, not just selected vertices.
 
-**Definition 1.19 (Final coordinate inclusion).**
+**Definition 1.16 (Final coordinate inclusion).**
 
 Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.inclusion`
 
@@ -234,7 +198,7 @@ Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.inclusion`
 
 inclusion S is realizationInclusion S.monotone from Space L into Space K.
 
-**Definition 1.20 (Composed retraction).**
+**Definition 1.17 (Composed retraction).**
 
 Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.sequenceRetraction`
 
@@ -246,7 +210,7 @@ Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.sequenceRetract
 
 sequenceRetraction S is the retraction field of S.realize and remains in the original coordinate realization.
 
-**Theorem 1.21 (Composed retraction fixes final points).**
+**Theorem 1.18 (Composed retraction fixes final points).**
 
 Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.sequenceRetraction_inclusion`
 
@@ -258,7 +222,7 @@ Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.sequenceRetract
 
 For y : Space L, sequenceRetraction S (inclusion S y) = y.
 
-**Definition 1.22 (Composed homotopy).**
+**Definition 1.19 (Composed homotopy).**
 
 Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.collapseHomotopy`
 
@@ -270,7 +234,7 @@ Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.collapseHomotop
 
 collapseHomotopy S is a HomotopyRel from id on Space K to inclusion S.comp sequenceRetraction S, relative to {x | x.val ∈ realization L}.
 
-**Theorem 1.23 (Whole final realization is fixed).**
+**Theorem 1.20 (Whole final realization is fixed).**
 
 Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.collapseHomotopy_fixed`
 
@@ -282,7 +246,7 @@ Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.collapseHomotop
 
 For all t : I, x : Space K, and hx : x.val ∈ realization L, collapseHomotopy S (t,x) = x. This is the exact relative fixed-set theorem.
 
-**Definition 1.24 (Sequence homotopy equivalence).**
+**Definition 1.21 (Sequence homotopy equivalence).**
 
 Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.collapseEquiv`
 
@@ -294,7 +258,7 @@ Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.collapseEquiv`
 
 collapseEquiv S is the actual homotopy equivalence Space K ≃ₕ Space L with the composed retraction and literal coordinate inclusion.
 
-**Definition 1.25 (Empty-aware combinatorial face predicate).**
+**Definition 1.22 (Empty-aware combinatorial face predicate).**
 
 Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.AugmentedFace`
 
@@ -306,7 +270,7 @@ Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.AugmentedFace`
 
 AugmentedFace K s means s=∅ or s∈K. The empty branch is combinatorial only; realization still contains no point for the empty face.
 
-**Theorem 1.26 (Augmented downward closure).**
+**Theorem 1.23 (Augmented downward closure).**
 
 Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.augmented_downward`
 
@@ -318,7 +282,7 @@ Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.augmented_downw
 
 If AugmentedFace K s, t⊆s, and t is empty or nonempty as appropriate, then AugmentedFace K t. The empty face is retained only in this predicate.
 
-**Theorem 1.27 (Retained pair and augmented face).**
+**Theorem 1.24 (Retained pair and augmented face).**
 
 Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.augmented_retained`
 
@@ -330,7 +294,7 @@ Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.augmented_retai
 
 For P and s, AugmentedFace P.retained s iff AugmentedFace P.ambient s and P.lower is not a subset of s. This is the empty-aware analogue of retained membership.
 
-**Definition 1.28 (Fresh vertex predicate).**
+**Definition 1.25 (Fresh vertex predicate).**
 
 Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.Fresh`
 
@@ -342,7 +306,7 @@ Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.Fresh`
 
 Fresh v K means v is absent from every face of K. This is a face-level condition, so ghost labels are not materialized as singleton faces.
 
-**Definition 1.29 (Whole original deletion).**
+**Definition 1.26 (Whole original deletion).**
 
 Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.deletion`
 
@@ -354,7 +318,7 @@ Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.deletion`
 
 deletion K v keeps exactly the original nonempty faces s∈K with v∉s.
 
-**Definition 1.30 (Original-label link).**
+**Definition 1.27 (Original-label link).**
 
 Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.link`
 
@@ -366,7 +330,7 @@ Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.link`
 
 link K v has nonempty faces s with v∉s and insert v s∈K, all on the original V type.
 
-**Theorem 1.31 (Deletion inclusion).**
+**Theorem 1.28 (Deletion inclusion).**
 
 Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.deletion_le`
 
@@ -378,7 +342,7 @@ Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.deletion_le`
 
 deletion K v ≤ K.
 
-**Theorem 1.32 (Deleted vertex is fresh).**
+**Theorem 1.29 (Deleted vertex is fresh).**
 
 Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.deletion_fresh`
 
@@ -390,7 +354,7 @@ Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.deletion_fresh`
 
 Fresh v (deletion K v).
 
-**Theorem 1.33 (Link lies in deletion).**
+**Theorem 1.30 (Link lies in deletion).**
 
 Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.link_le_deletion`
 
@@ -402,7 +366,7 @@ Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.link_le_deletio
 
 link K v ≤ deletion K v.
 
-**Definition 1.34 (Finite cone complex).**
+**Definition 1.31 (Finite cone complex).**
 
 Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.cone`
 
@@ -414,7 +378,7 @@ Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.cone`
 
 cone v L contains the original faces of L and the faces insert v s for s∈L, retaining original labels and allowing L to have no faces.
 
-**Theorem 1.35 (The original apex singleton is a cone face).**
+**Theorem 1.32 (The original apex singleton is a cone face).**
 
 Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.apex_mem_cone`
 
@@ -426,7 +390,7 @@ Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.apex_mem_cone`
 
 For every original label v and native complex L, the nonempty singleton {v} belongs to cone v L, including when L is bottom. This is face membership, not an assumed geometric point or contraction.
 
-**Theorem 1.36 (Cone closure).**
+**Theorem 1.33 (Cone closure).**
 
 Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.cone_face`
 
@@ -438,7 +402,7 @@ Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.cone_face`
 
 Every face of cone v L remains a face after adjoining v.
 
-**Theorem 1.37 (Base inclusion in cone).**
+**Theorem 1.34 (Base inclusion in cone).**
 
 Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.base_le_cone`
 
@@ -450,7 +414,7 @@ Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.base_le_cone`
 
 L ≤ cone v L.
 
-**Theorem 1.38 (Cone monotonicity).**
+**Theorem 1.35 (Cone monotonicity).**
 
 Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.cone_mono`
 
@@ -462,7 +426,7 @@ Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.cone_mono`
 
 L≤M implies cone v L≤cone v M.
 
-**Theorem 1.39 (Link of a union with a fresh cone).**
+**Theorem 1.36 (Link of a union with a fresh cone).**
 
 Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.link_union_cone`
 
@@ -474,7 +438,7 @@ Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.link_union_cone
 
 Under M≤D and Fresh v D, link (D ⊔ cone v M) v = M.
 
-**Theorem 1.40 (Deletion of a union with a fresh cone).**
+**Theorem 1.37 (Deletion of a union with a fresh cone).**
 
 Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.deletion_union_cone`
 
@@ -486,7 +450,7 @@ Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.deletion_union_
 
 Under M≤D and Fresh v D, deletion (D ⊔ cone v M) v = D.
 
-**Theorem 1.41 (Whole complex decomposes at an actual vertex).**
+**Theorem 1.38 (Whole complex decomposes at an actual vertex).**
 
 Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.deletion_union_link_cone`
 
@@ -498,7 +462,7 @@ Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.deletion_union_
 
 If {v}∈K, deletion K v ⊔ cone v (link K v) = K. The singleton hypothesis prevents ghost vertices from being introduced.
 
-**Definition 1.42 (Lift a free pair over a fixed deletion).**
+**Definition 1.39 (Lift a free pair over a fixed deletion).**
 
 Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.liftPairOver`
 
@@ -510,7 +474,7 @@ Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.liftPairOver`
 
 Pair.liftPairOver P D v hPD hvD has ambient D ⊔ cone v P.ambient, lower insert v P.lower, the same apex P.apex, and exact free-pair proof. It stays on original labels.
 
-**Theorem 1.43 (Lifted retained complex).**
+**Theorem 1.40 (Lifted retained complex).**
 
 Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.liftOver_retained`
 
@@ -522,7 +486,7 @@ Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.liftOver_retain
 
 The retained complex of Pair.liftPairOver is D ⊔ cone v P.retained.
 
-**Theorem 1.44 (Deletion survives a lifted pair).**
+**Theorem 1.41 (Deletion survives a lifted pair).**
 
 Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.le_liftOver_retained`
 
@@ -534,7 +498,7 @@ Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.le_liftOver_ret
 
 D ≤ (Pair.liftPairOver P D v hPD hvD).retained.
 
-**Theorem 1.45 (Lifted link recovers retained source).**
+**Theorem 1.42 (Lifted link recovers retained source).**
 
 Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.link_liftOver_retained`
 
@@ -546,7 +510,7 @@ Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.link_liftOver_r
 
 link (Pair.liftPairOver P D v hPD hvD).retained v = P.retained.
 
-**Definition 1.46 (Lift an ordered sequence).**
+**Definition 1.43 (Lift an ordered sequence).**
 
 Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.liftOver`
 
@@ -558,7 +522,7 @@ Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.liftOver`
 
 liftOver S D v hMD hvD adjoins v to every lower face and to every intermediate frame, yielding Sequence (D ⊔ cone v M) (D ⊔ cone v N).
 
-**Theorem 1.47 (Lift preserves pair count).**
+**Theorem 1.44 (Lift preserves pair count).**
 
 Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.pairs_liftOver_length`
 
@@ -570,7 +534,7 @@ Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.pairs_liftOver_
 
 The lifted sequence has exactly S.pairs.length pairs.
 
-**Theorem 1.48 (Lifted ordered-pair correspondence).**
+**Theorem 1.45 (Lifted ordered-pair correspondence).**
 
 Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.pairs_liftOver_forall2`
 
@@ -582,7 +546,7 @@ Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.pairs_liftOver_
 
 List.Forall₂ relates each output pair, in output order, to the source pair by the exact Pair.liftPairOver constructor and its ambient/fresh witnesses.
 
-**Theorem 1.49 (Lifted frame list).**
+**Theorem 1.46 (Lifted frame list).**
 
 Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.frames_liftOver`
 
@@ -594,19 +558,7 @@ Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.frames_liftOver
 
 frames (S.liftOver D v hMD hvD) = (frames S).map (fun L => D ⊔ cone v L).
 
-**Theorem 1.50 (Mapped frame lookup).**
-
-Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.list_getD_map`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.list_getD_map` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-getD commutes with the map used by lifted frames, with the same default image.
-
-**Theorem 1.51 (Exact lifted frame at every index).**
+**Theorem 1.47 (Exact lifted frame at every index).**
 
 Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.frames_liftOver_getD`
 
@@ -618,7 +570,7 @@ Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.frames_liftOver
 
 For every i, the lifted frame getD equals D ⊔ cone v (S.frames.getD i M), preserving the n+1 frame indexing.
 
-**Theorem 1.52 (Prefix frames under append).**
+**Theorem 1.48 (Prefix frames under append).**
 
 Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.frames_append_getD_lt`
 
@@ -630,7 +582,7 @@ Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.frames_append_g
 
 For i < S.pairs.length+1, frames (S.append T).getD i K = frames S.getD i K.
 
-**Definition 1.53 (Terminal singleton free pair).**
+**Definition 1.49 (Terminal singleton free pair).**
 
 Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.terminalPair`
 
@@ -642,7 +594,7 @@ Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.terminalPair`
 
 Given Fresh v D, v≠w, and {w}∈D, terminalPair D v w has ambient D ⊔ cone v (vertexComplex w), lower {v}, apex w, and exact freeness.
 
-**Theorem 1.54 (Terminal pair retains D).**
+**Theorem 1.50 (Terminal pair retains D).**
 
 Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.terminalPair_retained`
 
@@ -654,7 +606,7 @@ Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.terminalPair_re
 
 The retained complex of terminalPair D v w is exactly D.
 
-**Definition 1.55 (Link sequence collapses to whole deletion).**
+**Definition 1.51 (Link sequence collapses to whole deletion).**
 
 Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.linkCollapseDeletion`
 
@@ -666,7 +618,7 @@ Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.linkCollapseDel
 
 Given S : Sequence (link K v) (vertexComplex w), linkCollapseDeletion lifts S over deletion K v, appends the actual terminal pair, and casts through deletion_union_link_cone to produce Sequence K (deletion K v).
 
-**Definition 1.56 (Relative link-to-deletion SDR).**
+**Definition 1.52 (Relative link-to-deletion SDR).**
 
 Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.linkDeletionSDR`
 
@@ -678,7 +630,7 @@ Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.linkDeletionSDR
 
 linkDeletionSDR is the RelativeSDR obtained from linkCollapseDeletion. Its inclusion is the actual coordinate inclusion and its homotopy fixes the entire deletion realization, including disconnected components and ghost labels.
 
-**Theorem 1.57 (No new coface inside retained cone).**
+**Theorem 1.53 (No new coface inside retained cone).**
 
 Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.lower_not_subset_cone`
 
@@ -690,7 +642,7 @@ Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.lower_not_subse
 
 If L≤P.retained, v is fresh in P.ambient, and s∈cone v L, then P.lower is not a subset of s. This is the obstruction used to preserve the same free pair.
 
-**Definition 1.58 (Extend a free pair across a retained cone).**
+**Definition 1.54 (Extend a free pair across a retained cone).**
 
 Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.extendCone`
 
@@ -702,7 +654,7 @@ Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.extendCone`
 
 Pair.extendCone preserves P.lower and P.apex, adds cone v L to the ambient, and proves freeness from lower_not_subset_cone.
 
-**Theorem 1.59 (Extended retained complex).**
+**Theorem 1.55 (Extended retained complex).**
 
 Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.extendCone_retained`
 
@@ -714,7 +666,7 @@ Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.extendCone_reta
 
 The retained complex of Pair.extendCone P L v is P.retained ⊔ cone v L.
 
-**Definition 1.60 (Extend a sequence across a cone).**
+**Definition 1.56 (Extend a sequence across a cone).**
 
 Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.extendAcrossCone`
 
@@ -726,7 +678,7 @@ Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.extendAcrossCon
 
 extendAcrossCone S v hv yields Sequence (K ⊔ cone v L) (cone v L), preserving every original pair and adjoining the entire cone to the final complex.
 
-**Definition 1.61 (Relative SDR onto the full cone).**
+**Definition 1.57 (Relative SDR onto the full cone).**
 
 Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.coneExtensionSDR`
 
@@ -738,7 +690,7 @@ Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.coneExtensionSD
 
 coneExtensionSDR is the realized extension and fixes every point of the entire cone realization throughout the first collapse segment.
 
-**Definition 1.62 (Actual cone owner adapter).**
+**Definition 1.58 (Actual cone owner adapter).**
 
 Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.selfConePair`
 
@@ -750,7 +702,7 @@ Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.selfConePair`
 
 selfConePair v L supplies ConePair for cone v L using the existing cone apex face and cone closure.
 
-**Definition 1.63 (Actual apex coordinate point).**
+**Definition 1.59 (Actual apex coordinate point).**
 
 Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.conePoint`
 
@@ -762,7 +714,7 @@ Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.conePoint`
 
 conePoint v L is the existing ConePair.apexPoint in Space (cone v L).
 
-**Definition 1.64 (Contraction to the actual apex).**
+**Definition 1.60 (Contraction to the actual apex).**
 
 Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.coneContraction`
 
@@ -774,7 +726,7 @@ Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.coneContraction
 
 coneContraction is the straight homotopy in the original coordinate realization from the identity to the constant conePoint, relative to the singleton apex. The segment proof is reused from the existing FiniteConeCollapse owner.
 
-**Definition 1.65 (Two-stage contraction of the original union).**
+**Definition 1.61 (Two-stage contraction of the original union).**
 
 Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.coneExtensionContraction`
 
@@ -786,7 +738,7 @@ Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.coneExtensionCo
 
 The first segment realizes extendAcrossCone and fixes the full cone; the second applies coneContraction through the composed retraction. The resulting HomotopyRel is relative to the singleton containing the actual included apex, so both segments fix that point. It contracts Space (K ⊔ cone v L) to the actual apex without a null-map or abstract contractibility premise.
 
-**Theorem 1.66 (Exact concatenation of ordered pairs).**
+**Theorem 1.62 (Exact concatenation of ordered pairs).**
 
 Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.pairs_append`
 
@@ -798,7 +750,7 @@ Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.pairs_append`
 
 For S:Sequence K L and T:Sequence L M, (S.append T).pairs = S.pairs ++ T.pairs. This records terminal append without changing pair order.
 
-**Theorem 1.67 (Actual initial frame).**
+**Theorem 1.63 (Actual initial frame).**
 
 Lean statement: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.frames_source_zero`
 
@@ -849,10 +801,7 @@ For S:Sequence K L and any fallback complex D, S.frames.getD 0 D = K. The append
 - Truth anchor: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.frames_length`
 - Truth anchor: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.frames_liftOver`
 - Truth anchor: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.frames_liftOver_getD`
-- Truth anchor: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.frames_refl`
 - Truth anchor: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.frames_source_zero`
-- Truth anchor: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.frames_step`
-- Truth anchor: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.getD_mem_of_lt`
 - Truth anchor: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.inclusion`
 - Truth anchor: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.le_liftOver_retained`
 - Truth anchor: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.liftOver`
@@ -864,7 +813,6 @@ For S:Sequence K L and any fallback complex D, S.frames.getD 0 D = K. The append
 - Truth anchor: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.link_le_deletion`
 - Truth anchor: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.link_liftOver_retained`
 - Truth anchor: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.link_union_cone`
-- Truth anchor: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.list_getD_map`
 - Truth anchor: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.lower_not_subset_cone`
 - Truth anchor: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.monotone`
 - Truth anchor: `D5/S3/Geometry/FiniteRelativeSimplicialCollapse.pairs`
