@@ -1950,3 +1950,170 @@ $$
 对实际 CM 方向 $\omega=\alpha$，原 (17.5) 已提供定理 29.2–31.1 的有限型前提。若实际原好阶段权重在 (31.1) 的某个几何分箱中有发散的最大值和，则定理 31.1 已将它接到同一 $Y$ 上的满测；其证明所需的分隔子族和加权二阶步骤均复用 §§30–31。准确未决桥是能否验证实际权重的 (31.2)，或取得在同一 $Y$ 上足以支撑原加权二阶论证的跨块交能量估计。完整标量预算发散尚未提供其中任一项。不要求每对块都统一渐近独立，也不把既有凝聚充分条件称为必要条件。因此实际 $\nu(R_\gamma(\alpha))$ 仍未裁定。所有事件仍使用原全部有限地方、原 $q_H,h,\rho,M,a_0,Y$ 与同一个成功整数。
 
 ## 追加锚（本行以下为增补区）
+
+## 42. 取得谱右边界支付原负阶段的半端点占用
+
+**定义 42.1（取得边界下的同一路径误差与原过滤）。** 保持定义 35.1、24.1 的全部数据：实际 CM 点对、全部有限地方条件、真实共同周期 $q_H$、原 $h,\rho,M,a_0,Y,\nu$ 及同一个成功整数。固定原过滤参数 $\beta=0,c_0=1,\gamma=1/2$，不替换实际 $q_H$ 或实际方向 $\alpha$。令
+
+$$
+ b_\zeta:=\sup\{\operatorname{Re}\rho:\rho\text{ 是 }\zeta(s)\text{ 的非平凡零点}\}.
+\tag{42.1}
+$$
+
+在 Devin 的归一化下写
+
+$$
+E_\pi(x)=\frac{\log x}{x^{b_\zeta}}
+       \bigl(\pi(x)-\operatorname{Li}(x)\bigr),\qquad
+E_\psi(x)=\frac{b_\zeta}{x^{b_\zeta}}\bigl(\psi(x)-x\bigr),\qquad
+E_\theta(x)=\frac{b_\zeta}{x^{b_\zeta}}\bigl(\vartheta(x)-x\bigr).
+\tag{42.2}
+$$
+
+若 $b_\zeta>1/2$ 且上确界被某个零点取得，则必有
+$1/2<b_\zeta<1$。记 $b=b_\zeta$，并令 $m_\tau$ 是零点
+$b+i\tau$ 的重数，$\tau>0$ 取互异的正虚部。
+
+**定理 42.2（取得谱边界的全方向半端点发散）。** 在定义 42.1 的原过滤中，以下两条路线分别成立：
+
+1. RH 路线直接复用定理 35.2：对每个 $\omega\in\mathbb T^2$，
+   $\sum_{j\ge j_0}g_j^{(1/2)}(\omega)=\infty$。
+2. 若 $b_\zeta>1/2$ 且存在 $\rho_0$ 使
+   $\zeta(\rho_0)=0$、$\operatorname{Re}\rho_0=b_\zeta$，则存在
+   $\delta>0$、$p>0$ 及整数 $H_1$，使集合
+
+   $$
+   \mathcal H_{\delta}:=
+   \left\{H\ge H_1:\vartheta(H)-H<-\frac{\delta}{2}H^{b}\right\}
+   \subseteq\mathcal H_-
+   \tag{42.3}
+   $$
+
+   满足
+
+   $$
+   \liminf_{N\to\infty}\frac1{\log N}
+   \sum_{\substack{H\in\mathcal H_{\delta}\\H\le N}}\frac1H
+   \ge p>0,
+   \tag{42.4}
+   $$
+
+   并且对每个方向 $\omega\in\mathbb T^2$，
+
+   $$
+   \boxed{\qquad
+   \sum_{j\ge j_0}g_j^{(1/2)}(\omega)=\infty.
+   \qquad}
+   \tag{42.5}
+   $$
+
+**证明。** Devin 的 Theorem 2.1 与其对 $\zeta$ 的 Theorem 3.1 给出
+$E_\pi$ 的对数极限分布 $\mu_\zeta$。当 $b>1/2$ 时，Theorem 3.1 的均值为
+
+$$
+\mathbb E_{\mu_\zeta}X=0,
+\qquad
+\operatorname{Var}_{\mu_\zeta}X
+ =2\sum_{\tau>0}\frac{m_\tau^2}{b^2+\tau^2}>0.
+\tag{42.6}
+$$
+
+求和按互异的正虚部进行并保留零点重数。正方差严格为正，是因为取得边界的零点不可能位于实轴：$\zeta$ 在 $(0,1)$ 没有实零点，所以某个取得边界的零点给出一个 $\tau>0$。这里没有使用 LI、简单零点、统一谱隙或任何额外的零点独立性假设。
+
+同一篇文献的 Lemma 4.7，式 (9)，在 zeta 情形给出
+$\vartheta(x)=\psi(x)-\sqrt{x}+o(\sqrt{x})$；式 (10) 给出同一实际过程的
+
+$$
+E_\pi(x)=E_\psi(x)-x^{1/2-b}+o(1),
+\qquad
+E_\theta(x)=E_\psi(x)-b\,x^{1/2-b}+o\!\left(x^{1/2-b}\right).
+\tag{42.7}
+$$
+
+因此 $b>1/2$ 时 $E_\theta(x)-E_\pi(x)\to0$。对任意有界 Lipschitz 函数，时间平均的差也趋于零，所以 $E_\theta$ 具有同一个对数极限分布 $\mu_\zeta$。再令
+$F_\theta=E_\theta/b=(\vartheta(x)-x)/x^b$；其极限分布是 $\mu_\zeta$ 在缩放 $x\mapsto x/b$ 下的推前，仍有均值 $0$ 和严格正的方差。
+
+取随机变量 $Z$ 服从这个推前分布。因 $Z$ 可积、$\mathbb EZ=0$ 而
+$\operatorname{Var}Z>0$，必有
+$\Pr(Z<0)>0$：否则 $Z\ge0$ 几乎处处，零均值会迫使 $Z=0$ 几乎处处，与正方差矛盾。于是可先取 $d_0>0$ 使
+$\Pr(Z<-d_0)>0$，再在 $(0,d_0)$ 中避开分布的至多可数个原子，得到
+
+$$
+\delta\in(0,d_0),\qquad
+p:=\Pr(Z<-\delta)>0,\qquad
+\Pr(Z=-\delta)=0.
+\tag{42.8}
+$$
+
+由有界 Lipschitz 函数从上下两侧逼近区间指标，并用 Devin 的对数极限分布定义，集合
+
+$$
+\mathcal A_\delta:=
+\{x\ge2:\vartheta(x)-x<-\delta x^b\}
+\tag{42.9}
+$$
+
+满足
+
+$$
+\lim_{N\to\infty}\frac1{\log N}
+\int_2^N\mathbf1_{\mathcal A_\delta}(x)\,\frac{dx}{x}=p.
+\tag{42.10}
+$$
+
+这一步只取得严格负阈值的正对数密度，不把它改写成 $1/2$ 或自然密度。
+
+现在把同一实变量 $x$ 送到唯一的整数 $H=\lfloor x\rfloor$。对充分大的 $x\in\mathcal A_\delta$，有 $\vartheta(H)=\vartheta(x)$，且
+
+$$
+\vartheta(H)-H
+ =\vartheta(x)-x+(x-H)
+ <-\delta x^b+1
+ \le-\delta H^b+1
+ <-\frac\delta2H^b<0.
+\tag{42.11}
+$$
+
+故 $H\in\mathcal H_-$。由于每个整数只接收区间 $[H,H+1)$，且
+$\log(1+1/H)\le1/H$，由 (42.10) 得
+
+$$
+\int_2^N\mathbf1_{\mathcal A_\delta}(x)\,\frac{dx}{x}
+\le O(1)+
+\sum_{\substack{H\in\mathcal H_\delta\\H\le N}}
+\log\left(1+\frac1H\right)
+\le O(1)+
+\sum_{\substack{H\in\mathcal H_\delta\\H\le N}}\frac1H.
+\tag{42.12}
+$$
+
+除以 $\log N$ 并取下极限，得到 (42.4)。这一步保留同一个实际整数；连续集合中的不同 $x$ 没有被误当成不同整数。
+
+最后直接消费定理 34.1 的严格窗口。取其在 $\gamma=1/2$ 下的充分大阈值与常数 $c_{1/2}>0$。窗口 $\mathcal D_H$ 对不同 $H$ 两两不交，并且对所有 $\omega$ 同时有
+
+$$
+\sum_{j\in\mathcal D_H}g_j^{(1/2)}(\omega)
+\ge c_{1/2}H^{-1}
+\qquad(H\in\mathcal H_-,\ H\text{ 充分大}).
+\tag{42.13}
+$$
+
+用 $\mathcal H_\delta\subseteq\mathcal H_-$、非负性及 (42.4)，逐方向得到
+
+$$
+\sum_{j\ge j_0}g_j^{(1/2)}(\omega)
+\ge c_{1/2}
+\sum_{H\in\mathcal H_\delta}\frac1H
+=\infty.
+\tag{42.14}
+$$
+
+这也可准确看作定理 40.1 的 (40.9) 对这些负阶段的应用：端点相位在充分大负阶段已有 $\eta_H=1$。这里只使用已付的端点判据，不另立等价的通用定理。RH 分支则仅引用定理 35.2 的 (35.3)，不重复其证明。$\square$
+
+用白话说，取得的最右零点把真实的 $\pi$、$\psi$、$\vartheta$ 误差放在同一条路径上。Devin 的分布结果说这条路径平均为零却有非零波动，所以它在某个严格负阈值以下占有正的对数时间。因为 $\vartheta$ 是阶梯函数，把每个负的实区间压到 $H=\lfloor x\rfloor$ 后，仍得到具有正下谐和质量的原负整数阶段。每个这样的阶段都由 §34.1 支付至少 $c/H$ 的严格窗口预算，于是原完整几何权重在半端点对每个方向发散。
+
+**来源与边界。** Devin，*Chebyshev’s bias for analytic L-functions*，arXiv v4，[原始 PDF](https://arxiv.org/pdf/1706.06394v4)，DOI [10.1017/S0305004119000100](https://doi.org/10.1017/S0305004119000100)，Theorem 2.1、Theorem 3.1、Lemma 4.7 的 (9)–(10) 及 Remark 7(1) 是本条的 literature-attested 中间输入；不在这里重证成熟的极限分布或 Abel/部分求和步骤。zeta 在 $\operatorname{Re}s=1$ 无零点、在 $(0,1)$ 无实零点只用于说明边界范围与正虚部存在。把该分布接到同一实际 $\vartheta$、原负阶段及 §34.1 窗口，是本卷的 repo-derived 消费者。
+
+本条不主张右边界实际取得，不主张 RH，也不声称取得条件在逻辑上严格弱于 RH。若 $b_\zeta>1/2$ 的上确界未被零点取得（包括 $b_\zeta=1$ 或 $1/2<b_\zeta<1$ 仅从左侧逼近的情形），本条不覆盖它；Devin 的 Remark 7(1) 允许边界零点集合为空且分布退化为 $\delta_0$，固定负阈值因而没有由该输入得到。半端点的无条件结论仍未由本条取得。即使 (42.5) 成立，它只给每个方向的完整几何权重和发散；§41 所列实际 $\alpha$ 的跨块联合桥仍未付，不能推出 $\nu(R_{1/2}(\alpha))$ 的满测结论。
+
+## 追加锚（本行以下为增补区）
