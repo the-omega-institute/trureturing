@@ -8,6 +8,7 @@
 
 import D5.S3.Combinatorics.Graph.SubgroupGenerating.StarSpectra
 import D5.S3.Combinatorics.Graph.SubgroupGenerating.GeneratingFibers
+import Mathlib.Combinatorics.SimpleGraph.DegreeSum
 
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
@@ -64,7 +65,10 @@ private theorem degree_pair (p : G × G)
         rintro ⟨v,h⟩
         cases v with
         | inl q => exact False.elim h
-        | inr H => apply Subtype.ext; exact congrArg Sum.inr h.symm
+        | inr H =>
+          apply Subtype.ext
+          change Subgroup.closure ({p.1,p.2} : Set G) = H at h
+          exact congrArg Sum.inr h
       right_inv := by intro u; cases u; rfl }
   exact (Fintype.card_congr e).trans (by simp)
 
@@ -99,16 +103,19 @@ private theorem common_pair_pair (p q : G × G) :
       ext k
       cases k with
       | inl a => simp [sgbGraph]
-      | inr H => simp [sgbGraph, component] at hc ⊢; tauto
+      | inr H => simp only [component, Sum.elim_inl] at hc
+                 simp [sgbGraph, component, ← hc, eq_comm]
     · rw [if_neg hc]
       norm_cast
       apply Finset.card_eq_zero.mpr
       apply Finset.eq_empty_iff_forall_notMem.mpr
       intro k hk
-      obtain ⟨_,hk⟩ := Finset.mem_filter.mp hk
+      simp only [Finset.mem_filter] at hk
+      obtain ⟨_,hk⟩ := hk
       cases k with
       | inl a => exact hk.2.2.1
-      | inr H => exact hc (hk.2.2.1.trans hk.2.2.2.symm)
+      | inr H => exact hc ((show component (.inl p) = H from hk.2.2.1).trans
+          (show component (.inl q) = H from hk.2.2.2).symm)
 
 private theorem common_pair_subgroup (p : G × G) (H : Subgroup G) :
     commonNeighbourMatrix (sgbGraph G) (.inl p) (.inr H) = 0 := by
@@ -117,7 +124,8 @@ private theorem common_pair_subgroup (p : G × G) (H : Subgroup G) :
   apply Finset.card_eq_zero.mpr
   apply Finset.eq_empty_iff_forall_notMem.mpr
   intro k hk
-  obtain ⟨_,hk⟩ := Finset.mem_filter.mp hk
+  simp only [Finset.mem_filter] at hk
+  obtain ⟨_,hk⟩ := hk
   cases k with
   | inl q => exact hk.2.2.1
   | inr K => exact hk.2.2.2
@@ -131,7 +139,8 @@ private theorem common_subgroup_subgroup (H K : Subgroup G) :
     apply Finset.card_eq_zero.mpr
     apply Finset.eq_empty_iff_forall_notMem.mpr
     intro k hk
-    obtain ⟨_,hk⟩ := Finset.mem_filter.mp hk
+    simp only [Finset.mem_filter] at hk
+    obtain ⟨_,hk⟩ := hk
     cases k with
     | inl p => exact h ((show Subgroup.closure ({p.1,p.2} : Set G) = H from hk.2.2.1).symm.trans hk.2.2.2)
     | inr J => exact hk.2.2.1
@@ -143,7 +152,8 @@ private theorem common_subgroup_pair (H : Subgroup G) (p : G × G) :
   apply Finset.card_eq_zero.mpr
   apply Finset.eq_empty_iff_forall_notMem.mpr
   intro k hk
-  obtain ⟨_,hk⟩ := Finset.mem_filter.mp hk
+  simp only [Finset.mem_filter] at hk
+  obtain ⟨_,hk⟩ := hk
   cases k with
   | inl q => exact hk.2.2.2
   | inr K => exact hk.2.2.1
@@ -159,24 +169,24 @@ private theorem source_zero_of_component_ne (kind : MatrixKind) (v w : Vertex G)
       have hpq : p ≠ q := by intro he; exact hvw (congrArg Sum.inl he)
       cases kind <;>
         simp [sourceMatrix, SimpleGraph.lapMatrix, SimpleGraph.degMatrix,
-          SimpleGraph.adjMatrix, common_pair_pair, hpq, hc, Matrix.diagonal_apply, sgbGraph]
+          SimpleGraph.adjMatrix, common_pair_pair, hpq, hc, Matrix.diagonal_apply] <;> simp [sgbGraph]
     | inr H =>
       have h : Subgroup.closure ({p.1,p.2} : Set G) ≠ H := hc
       cases kind <;>
         simp [sourceMatrix, SimpleGraph.lapMatrix, SimpleGraph.degMatrix,
-          SimpleGraph.adjMatrix, common_pair_subgroup, h, sgbGraph]
+          SimpleGraph.adjMatrix, common_pair_subgroup] <;> simp [sgbGraph, h]
   | inr H =>
     cases w with
     | inl p =>
       have h : Subgroup.closure ({p.1,p.2} : Set G) ≠ H := Ne.symm hc
       cases kind <;>
         simp [sourceMatrix, SimpleGraph.lapMatrix, SimpleGraph.degMatrix,
-          SimpleGraph.adjMatrix, common_subgroup_pair, h, sgbGraph]
+          SimpleGraph.adjMatrix, common_subgroup_pair] <;> simp [sgbGraph, h]
     | inr K =>
       have h : H ≠ K := hc
       cases kind <;>
         simp [sourceMatrix, SimpleGraph.lapMatrix, SimpleGraph.degMatrix,
-          SimpleGraph.adjMatrix, common_subgroup_subgroup, h, Matrix.diagonal_apply, sgbGraph]
+          SimpleGraph.adjMatrix, common_subgroup_subgroup, h, Matrix.diagonal_apply] <;> simp [sgbGraph]
 
 private theorem source_block (H : Subgroup G) (kind : MatrixKind) :
     Matrix.reindex (blockEquiv H) (blockEquiv H)
@@ -187,22 +197,24 @@ private theorem source_block (H : Subgroup G) (kind : MatrixKind) :
   ext (i | i) (j | j)
   · cases i; cases j; cases kind <;>
       simp [Matrix.reindex_apply, Matrix.toSquareBlock_def, blockEquiv, sourceMatrix,
-        SimpleGraph.lapMatrix, SimpleGraph.degMatrix, SimpleGraph.adjMatrix, sgbGraph,
-        degree_subgroup, common_subgroup_subgroup, arrowMatrix, fiber_card]
+        SimpleGraph.lapMatrix, SimpleGraph.degMatrix, SimpleGraph.adjMatrix,
+        degree_subgroup, common_subgroup_subgroup, arrowMatrix, fiber_card] <;>
+        simpa only [← SimpleGraph.ncard_neighborSet] using (degree_subgroup H)
   · cases i; cases kind <;>
       simp [Matrix.reindex_apply, Matrix.toSquareBlock_def, blockEquiv, sourceMatrix,
-        SimpleGraph.lapMatrix, SimpleGraph.degMatrix, SimpleGraph.adjMatrix, sgbGraph,
-        common_subgroup_pair, arrowMatrix, j.property]
+        SimpleGraph.lapMatrix, SimpleGraph.degMatrix, SimpleGraph.adjMatrix,
+        common_subgroup_pair, arrowMatrix, j.property] <;> simp [sgbGraph, j.property]
   · cases j; cases kind <;>
       simp [Matrix.reindex_apply, Matrix.toSquareBlock_def, blockEquiv, sourceMatrix,
-        SimpleGraph.lapMatrix, SimpleGraph.degMatrix, SimpleGraph.adjMatrix, sgbGraph,
-        common_pair_subgroup, arrowMatrix, i.property]
+        SimpleGraph.lapMatrix, SimpleGraph.degMatrix, SimpleGraph.adjMatrix,
+        common_pair_subgroup, arrowMatrix, i.property] <;> simp [sgbGraph, i.property]
   · have hij : i.1 = j.1 ↔ i = j := Subtype.val_inj
     cases kind <;>
       simp [Matrix.reindex_apply, Matrix.toSquareBlock_def, blockEquiv, sourceMatrix,
-        SimpleGraph.lapMatrix, SimpleGraph.degMatrix, SimpleGraph.adjMatrix, sgbGraph,
+        SimpleGraph.lapMatrix, SimpleGraph.degMatrix, SimpleGraph.adjMatrix,
         degree_pair, common_pair_pair, arrowMatrix, Matrix.diagonal_apply, Matrix.one_apply,
-        component, i.property, j.property, hij, Matrix.vecMulVec, Matrix.scalar]
+        component, i.property, j.property, hij, Matrix.vecMulVec, Matrix.scalar] <;>
+        (try simp [sgbGraph]) <;> (split_ifs <;> norm_num)
 
 /-- All four source spectra are the sum of their complete subgroup star spectra. -/
 theorem sgb_spectrum (kind : MatrixKind) :
@@ -213,7 +225,10 @@ theorem sgb_spectrum (kind : MatrixKind) :
   letI : LT (Subgroup G) := (inferInstance : LinearOrder (Subgroup G)).toLT
   have hb : (sourceMatrix (sgbGraph G) kind).BlockTriangular component := by
     intro v w hvw
-    exact source_zero_of_component_ne kind v w (ne_of_gt hvw)
+    exact source_zero_of_component_ne kind v w (by
+      intro he
+      rw [he] at hvw
+      exact (show ¬ (component w < component w) from @lt_irrefl _ (inferInstance : LinearOrder (Subgroup G)).toPreorder _) hvw)
   have himage : Finset.univ.image (component (G := G)) = Finset.univ := by
     apply Finset.eq_univ_of_forall
     intro H
@@ -236,6 +251,15 @@ theorem sgb_spectrum (kind : MatrixKind) :
       graphSpectrum (SimpleGraph.starGraph (Sum.inl () : Unit ⊕ PairFiber H)) kind :=
     (source_matrix_isHermitian _ kind).roots_charpoly_eq_eigenvalues
   rw [hrH,star_spectrum,fiber_card]
+
+/-- Every ordered pair contributes precisely its one actual graph edge. -/
+theorem edge_count : (sgbGraph G).edgeFinset.card = Fintype.card G ^ 2 := by
+  classical
+  have h := (sgbGraph G).sum_degrees_eq_twice_card_edges
+  rw [Fintype.sum_sum_type] at h
+  simp only [degree_pair, degree_subgroup, Finset.sum_const, Finset.card_univ,
+    smul_eq_mul, mul_one, Fintype.card_prod, sum_pairCount] at h
+  nlinarith
 
 end
 end D5.S3.Combinatorics.Graph.SubgroupGenerating.FiberSpectra
