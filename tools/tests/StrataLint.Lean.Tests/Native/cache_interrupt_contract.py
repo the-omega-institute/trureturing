@@ -1,5 +1,6 @@
 """Owned disposable children exercise the real ensure/Release interruption boundary."""
 import contextlib
+from concurrent.futures import ThreadPoolExecutor
 import fcntl
 import hashlib
 import json
@@ -13,8 +14,16 @@ import subprocess
 import sys
 import tarfile
 import tempfile
+import threading
 import time
 import unittest
+from unittest.mock import patch
+
+
+def publish_ready(root):
+    staged = root / "ready.tmp"
+    staged.write_text(str(os.getpid()))
+    staged.replace(root / "ready")
 
 
 def wait_for(path, process):
@@ -59,7 +68,7 @@ def archive_child(repository, root, mode):
         release.report_reuse.record_seed_base = lambda *args: False
 
         def pause():
-            (root / "ready").write_text(str(os.getpid()))
+            publish_ready(root)
             signal.pause()
 
         original_rename = Path.rename
@@ -87,6 +96,38 @@ def archive_child(repository, root, mode):
     code = release.main()
     (root / "archive-exit").write_text(str(code))
     raise SystemExit(code)
+
+
+class ReadyPublicationTests(unittest.TestCase):
+    def test_ready_is_hidden_until_pid_is_complete(self):
+        created = threading.Event()
+        finish_write = threading.Event()
+        original_open = Path.open
+        opened_paths = []
+
+        def pause_open(path, mode="r", *args, **kwargs):
+            stream = original_open(path, mode, *args, **kwargs)
+            if mode == "w":
+                opened_paths.append(path)
+                created.set()
+                if not finish_write.wait(5):
+                    stream.close()
+                    raise AssertionError("PID write was not released")
+            return stream
+
+        with tempfile.TemporaryDirectory(prefix="cache-ready-") as directory:
+            root = Path(directory)
+            with patch.object(Path, "open", pause_open), ThreadPoolExecutor(max_workers=1) as pool:
+                writer = pool.submit(publish_ready, root)
+                try:
+                    self.assertTrue(created.wait(5), "PID file was not created")
+                    self.assertEqual("", opened_paths[0].read_text())
+                    self.assertEqual(root, opened_paths[0].parent)
+                    self.assertFalse((root / "ready").exists())
+                finally:
+                    finish_write.set()
+                writer.result(timeout=5)
+            self.assertEqual(str(os.getpid()), (root / "ready").read_text())
 
 
 class InterruptionTests(unittest.TestCase):
@@ -238,7 +279,7 @@ class InterruptionTests(unittest.TestCase):
 
 if __name__ == "__main__":
     if sys.argv[1] == "transport":
-        Path(sys.argv[2], "ready").write_text(str(os.getpid()))
+        publish_ready(Path(sys.argv[2]))
         signal.pause()
     elif sys.argv[1] == "archive":
         archive_child(Path(sys.argv[2]), Path(sys.argv[3]), sys.argv[4])

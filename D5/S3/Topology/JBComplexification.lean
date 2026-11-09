@@ -604,7 +604,7 @@ private theorem square_iff_center (A : Data X S u) (p : X) :
       ‖p‖ (norm_nonneg _) hp
     exact ⟨r.val, congrArg Subtype.val hr⟩
 
-private theorem square_of_ambient_center (A : Data X S u) (p : X) (t : ℝ) (ht : 0 ≤ t)
+theorem square_of_ambient_center (A : Data X S u) (p : X) (t : ℝ) (ht : 0 ≤ t)
     (hp : ‖p - t • u‖ ≤ t) : ∃ x : X, S x x = p := by
   have hmem : p ∈ generated S u p := by
     have h : npow S u p 1 ∈ generated S u p :=
