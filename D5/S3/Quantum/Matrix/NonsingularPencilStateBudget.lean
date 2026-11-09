@@ -9,6 +9,7 @@
 import Mathlib.Analysis.Matrix.Order
 import Mathlib.Analysis.CStarAlgebra.PositiveLinearMap
 import Mathlib.Analysis.CStarAlgebra.PositiveLinearFunctional
+import Mathlib.Analysis.Complex.Basic
 import Mathlib.Topology.Connected.Clopen
 import Mathlib.Tactic
 
@@ -48,7 +49,9 @@ private theorem quadratic_positive_open :
   have hx0 : 0 < ‖x‖ := norm_pos_iff.2 hx
   have h := hN (‖x‖⁻¹ • x) (by simp [norm_smul, hx0.ne'])
   simp only [star_smul, star_trivial, Matrix.mulVec_smul, smul_dotProduct,
-    dotProduct_smul, RCLike.smul_re] at h
+    dotProduct_smul] at h
+  simp only [Complex.real_smul, Complex.mul_re, Complex.ofReal_re,
+    Complex.ofReal_im, zero_mul, sub_zero] at h
   exact (mul_pos_iff_of_pos_left (inv_pos.mpr hx0)).mp
     ((mul_pos_iff_of_pos_left (inv_pos.mpr hx0)).mp h)
 
@@ -90,6 +93,7 @@ private theorem positive_reading {A : Matrix n n ℂ} (hA : A.PosDef)
     (fun x hx => hA.isStrictlyPositive.spectrum_pos hx)
   have hh := φ.monotone hle
   have hre := Complex.le_def.mp hh |>.1
+  change (φ (algebraMap ℝ (Matrix n n ℂ) r)).re ≤ (φ A).re at hre
   simp only [Algebra.algebraMap_eq_smul_one, ← Complex.coe_smul,
     map_smul, smul_eq_mul, Complex.mul_re, Complex.ofReal_re,
     Complex.ofReal_im, zero_mul, sub_zero] at hre
@@ -97,7 +101,7 @@ private theorem positive_reading {A : Matrix n n ℂ} (hA : A.PosDef)
 
 /-- Nonsingularity on the whole real plane, together with positivity at the origin,
 forces a strict homogeneous budget for every positive complex-linear functional. -/
-theorem strict_budget (E K G : Matrix n n ℂ) (hE : E.PosDef)
+private theorem positive_mass_budget (E K G : Matrix n n ℂ) (hE : E.PosDef)
     (hK : K.IsHermitian) (hG : G.IsHermitian)
     (hdet : ∀ p q : ℝ, (pencil E K G p q).det ≠ 0)
     (φ : Matrix n n ℂ →ₚ[ℂ] ℂ) (hm : 0 < (φ 1).re) :
@@ -117,5 +121,35 @@ theorem strict_budget (E K G : Matrix n n ℂ) (hE : E.PosDef)
   have hm0 := ne_of_gt hm
   field_simp at hh
   nlinarith [sq_nonneg ((φ G).re), sq_nonneg ((φ K).re)]
+
+/-- All positive complex-linear functionals retain their mass, including the zero
+functional. Hermitian readings are real; every positive mass gives strictness. -/
+theorem strict_budget (E K G : Matrix n n ℂ) (hE : E.PosDef)
+    (hK : K.IsHermitian) (hG : G.IsHermitian)
+    (hdet : ∀ p q : ℝ, (pencil E K G p q).det ≠ 0)
+    (φ : Matrix n n ℂ →ₚ[ℂ] ℂ) :
+    (φ E).im = 0 ∧ (φ K).im = 0 ∧ (φ G).im = 0 ∧
+    (0 < (φ 1).re →
+      (φ G).re ^ 2 + (φ K).re ^ 2 < (φ 1).re * (φ E).re) ∧
+    ((φ 1).re = 0 → φ = 0 ∧
+      (φ G).re ^ 2 + (φ K).re ^ 2 = (φ 1).re * (φ E).re) := by
+  refine ⟨Complex.im_eq_zero_iff_isSelfAdjoint.mpr (hE.isHermitian.map' φ),
+    Complex.im_eq_zero_iff_isSelfAdjoint.mpr (hK.map' φ),
+    Complex.im_eq_zero_iff_isSelfAdjoint.mpr (hG.map' φ),
+    positive_mass_budget E K G hE hK hG hdet φ, ?_⟩
+  intro hm
+  let f : Matrix n n ℂ →P[ℂ] ℂ := PositiveContinuousLinearMap.ofClass φ
+  have hunit : φ 1 = 0 := by
+    apply Complex.ext hm
+    exact (Complex.le_def.mp (φ.map_nonneg (show (0 : Matrix n n ℂ) ≤ 1 from zero_le_one))).2.symm
+  have hnorm : ‖f.toContinuousLinearMap‖ = 0 := by
+    have hh := f.ofReal_opNorm_eq_map_one
+    have h := congrArg Complex.re hh
+    simpa [f, hunit] using h
+  have hf : f.toContinuousLinearMap = 0 := norm_eq_zero.mp hnorm
+  have hφ : φ = 0 := by
+    ext a
+    exact congrArg (fun L : Matrix n n ℂ →L[ℂ] ℂ => L a) hf
+  exact ⟨hφ, by simp [hφ]⟩
 
 end D5.S3.Quantum.Matrix.NonsingularPencilStateBudget
