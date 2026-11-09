@@ -1,0 +1,20 @@
+**定义 46.1（有限关系闭包）。** 令 $\mathscr R$ 为有限关系记录的集合，$S\subseteq\mathscr R$ 为种子。每一条生成规则给出单调算子
+
+$$
+\Phi_i:\mathcal P(\mathscr R)\longrightarrow\mathcal P(\mathscr R),
+\qquad
+S\subseteq S'\Longrightarrow\Phi_i(S)\subseteq\Phi_i(S').
+$$
+
+把规则合并为保持膨胀性的算子
+
+$$
+\Phi(T)=T\cup\bigcup_i\Phi_i(T).
+$$
+
+称 $T$ 为闭集，若 $\Phi(T)=T$；种子上的最小闭包定义为
+
+$$
+\operatorname{Cl}_\Phi(S)=\bigcap\{T\subseteq\mathscr R:S\subseteq T\land\Phi(T)=T\}.
+$$
+
