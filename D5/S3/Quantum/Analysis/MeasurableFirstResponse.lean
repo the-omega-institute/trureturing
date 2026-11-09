@@ -152,44 +152,6 @@ private theorem response_regular (S : Contraction E) {B H : ℝ → E →L[ℂ] 
     (fun s hs => cH.bound s ⟨hr.1.trans hs.1, hs.2⟩) hv
   exact forced_regular S B hT hr cB.measurable g cB.integrable cB.nonneg cB.bound hf
 
-private theorem response_bound (S : Contraction E) {B H : ℝ → E →L[ℂ] E}
-    {g h : ℝ → ℝ} {T t r : ℝ} (hT : 0 ≤ T) (hp : (t, r) ∈ triangle T)
-    (cB : Control B g T) (cH : Control H h T) (x : E) :
-    ‖response S B H t r x‖ ≤
-      Real.exp (∫ s in r..t, g s) * (∫ s in r..t, h s) * ‖x‖ := by
-  have hi := (response_regular S hT ⟨hp.1, hp.2.1.trans hp.2.2⟩ cB cH x).2 t
-    ⟨hp.2.1, hp.2.2⟩
-  have hgt := cB.integrable.mono_set (Set.Icc_subset_Icc hp.1 hp.2.2)
-  have hht := (intervalIntegrable_iff_integrableOn_Icc_of_le hp.2.1).mpr
-    (cH.integrable.mono_set (Set.Icc_subset_Icc hp.1 hp.2.2))
-  calc
-    _ ≤ ∫ s in r..t, ‖measurableEvolution S B t s
-        (H s (measurableEvolution S B s r x))‖ :=
-      intervalIntegral.norm_integral_le_integral_norm hp.2.1
-    _ ≤ ∫ s in r..t, Real.exp (∫ z in r..t, g z) * (h s * ‖x‖) := by
-      apply intervalIntegral.integral_mono_on hp.2.1 hi.norm
-        ((hht.mul_const ‖x‖).const_mul _)
-      intro s hs
-      have hsT : s ∈ Set.Icc 0 T := ⟨hp.1.trans hs.1, hs.2.trans hp.2.2⟩
-      have hx := native_bound S B hT cB.measurable g cB.integrable cB.nonneg cB.bound
-        (t := s) (r := r) ⟨hp.1, hs.1, hsT.2⟩ x
-      have hy := native_bound S B hT cB.measurable g cB.integrable cB.nonneg cB.bound
-        (t := t) (r := s) ⟨hsT.1, hs.2, hp.2.2⟩ (H s (measurableEvolution S B s r x))
-      have he : Real.exp (∫ z in s..t, g z) * Real.exp (∫ z in r..s, g z) =
-          Real.exp (∫ z in r..t, g z) := by
-        rw [← Real.exp_add, add_comm, clock_split hs.1 hs.2 hgt]
-      calc
-        _ ≤ Real.exp (∫ z in s..t, g z) * ‖H s (measurableEvolution S B s r x)‖ := hy
-        _ ≤ Real.exp (∫ z in s..t, g z) *
-            (h s * (Real.exp (∫ z in r..s, g z) * ‖x‖)) :=
-          mul_le_mul_of_nonneg_left
-            (((H s).le_opNorm _).trans (mul_le_mul (cH.bound s hsT) hx
-              (norm_nonneg _) (cH.nonneg s hsT))) (Real.exp_pos _).le
-        _ = (Real.exp (∫ z in s..t, g z) * Real.exp (∫ z in r..s, g z)) *
-            (h s * ‖x‖) := by ring
-        _ = _ := by rw [he]
-    _ = _ := by rw [intervalIntegral.integral_const_mul, intervalIntegral.integral_mul_const]; ring
-
 private theorem increment_bound (S : Contraction E) {B H : ℝ → E →L[ℂ] E}
     {g h : ℝ → ℝ} {T t r : ℝ} (hT : 0 ≤ T) (hp : (t, r) ∈ triangle T)
     (cB : Control B g T) (cH : Control H h T) (x : E) :
@@ -442,9 +404,41 @@ theorem uniform_signed_response (S : Contraction E) (B H : ℝ → E →L[ℂ] E
   · intro r t hr hrt htT x
     have hp : (t, r) ∈ triangle T := ⟨hr, hrt, htT⟩
     refine ⟨(response_regular S hT ⟨hr, hrt.trans htT⟩ cB cH x).2 t ⟨hrt, htT⟩,
-      response_bound S hT hp cB cH x, sharp_second_order_defect S hT hp cB cH x, ?_⟩
-    exact remainder_comparison (clock_nonneg hrt
-      (fun s hs => hhn s ⟨hr.trans hs.1, hs.2.trans htT⟩)) x
+      ?_, sharp_second_order_defect S hT hp cB cH x,
+      remainder_comparison (clock_nonneg hrt
+        (fun s hs => hhn s ⟨hr.trans hs.1, hs.2.trans htT⟩)) x⟩
+    have hi := (response_regular S hT ⟨hp.1, hp.2.1.trans hp.2.2⟩ cB cH x).2 t
+      ⟨hp.2.1, hp.2.2⟩
+    have hgt := cB.integrable.mono_set (Set.Icc_subset_Icc hp.1 hp.2.2)
+    have hht := (intervalIntegrable_iff_integrableOn_Icc_of_le hp.2.1).mpr
+      (cH.integrable.mono_set (Set.Icc_subset_Icc hp.1 hp.2.2))
+    calc
+      _ ≤ ∫ s in r..t, ‖measurableEvolution S B t s
+          (H s (measurableEvolution S B s r x))‖ :=
+        intervalIntegral.norm_integral_le_integral_norm hp.2.1
+      _ ≤ ∫ s in r..t, Real.exp (∫ z in r..t, g z) * (h s * ‖x‖) := by
+        apply intervalIntegral.integral_mono_on hp.2.1 hi.norm
+          ((hht.mul_const ‖x‖).const_mul _)
+        intro s hs
+        have hsT : s ∈ Set.Icc 0 T := ⟨hp.1.trans hs.1, hs.2.trans hp.2.2⟩
+        have hx := native_bound S B hT cB.measurable g cB.integrable cB.nonneg cB.bound
+          (t := s) (r := r) ⟨hp.1, hs.1, hsT.2⟩ x
+        have hy := native_bound S B hT cB.measurable g cB.integrable cB.nonneg cB.bound
+          (t := t) (r := s) ⟨hsT.1, hs.2, hp.2.2⟩ (H s (measurableEvolution S B s r x))
+        have he : Real.exp (∫ z in s..t, g z) * Real.exp (∫ z in r..s, g z) =
+            Real.exp (∫ z in r..t, g z) := by
+          rw [← Real.exp_add, add_comm, clock_split hs.1 hs.2 hgt]
+        calc
+          _ ≤ Real.exp (∫ z in s..t, g z) * ‖H s (measurableEvolution S B s r x)‖ := hy
+          _ ≤ Real.exp (∫ z in s..t, g z) *
+              (h s * (Real.exp (∫ z in r..s, g z) * ‖x‖)) :=
+            mul_le_mul_of_nonneg_left
+              (((H s).le_opNorm _).trans (mul_le_mul (cH.bound s hsT) hx
+                (norm_nonneg _) (cH.nonneg s hsT))) (Real.exp_pos _).le
+          _ = (Real.exp (∫ z in s..t, g z) * Real.exp (∫ z in r..s, g z)) *
+              (h s * ‖x‖) := by ring
+          _ = _ := by rw [he]
+      _ = _ := by rw [intervalIntegral.integral_const_mul, intervalIntegral.integral_mul_const]; ring
   · intro x η hη
     let C : ℝ := (1 / 2 : ℝ) * Real.exp ((∫ s in 0..T, g s) + ∫ s in 0..T, h s) *
       (∫ s in 0..T, h s)^2 * ‖x‖
