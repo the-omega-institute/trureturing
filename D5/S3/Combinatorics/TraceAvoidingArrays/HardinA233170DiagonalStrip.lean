@@ -6,7 +6,7 @@
    utility: kind=numeric-reduction; basis=consumer=D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233170DiagonalStrip.result; premises=D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233170DiagonalStrip.finite_certificate
    digest: The full generating series for literal normalized four-column six-colour arrays. -/
 
-/-!
+/-
 Horizontal and both diagonal bonds exclude equal and complementary colours.
 The count includes every literal array satisfying row-major normalization;
 there is no orbit quotient, vertical constraint or wraparound constraint.
