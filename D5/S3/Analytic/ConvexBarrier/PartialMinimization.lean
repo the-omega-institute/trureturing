@@ -22,8 +22,10 @@ theorem minimizer_fiber_hessian_pos {c ν : ℝ} {F : ScalarPoint → ℝ}
     (hF : IsLHSCB ν (coneInterior c) (coneBoundary c) F)
     {u : Base} (hu : u ∈ quadrant) :
     0 < hessian F (minimizerLift hF u) vertical vertical := by
-  rw [← diagonal_two_eq_hessian hF.domain_open (fiberMinimizer_spec hF hu).1 vertical]
-  exact hF.hessian_pos _ (fiberMinimizer_spec hF hu).1 vertical (by simp [vertical])
+  have hp : minimizerLift hF u ∈ coneInterior c := by
+    simpa [minimizerLift] using (fiberMinimizer_spec hF hu).1
+  rw [← diagonal_two_eq_hessian hF.domain_open hp vertical]
+  exact hF.hessian_pos _ hp vertical (by simp [vertical])
 
 /-- The derivative of the minimizer is the actual scalar inverse Hessian
 block formula, not a hypothesis about the graph. -/
@@ -53,8 +55,10 @@ theorem partialMinimum_schur {c ν : ℝ} {F : ScalarPoint → ℝ}
       hessian F (minimizerLift hF u) (h,0) (h,0) -
         (hessian F (minimizerLift hF u) (h,0) vertical)^2 /
           hessian F (minimizerLift hF u) vertical vertical := by
+  have hp : minimizerLift hF u ∈ coneInterior c := by
+    simpa [minimizerLift] using (fiberMinimizer_spec hF hu).1
   rw [partialMinimum_second hF hu,
-    diagonal_two_eq_hessian hF.domain_open (fiberMinimizer_spec hF hu).1]
+    diagonal_two_eq_hessian hF.domain_open hp]
   have hv : minimizerTangent hF u h = (h,(0:ℝ)) +
       (fderiv ℝ (fiberMinimizer hF) u h) • vertical := by simp [vertical]
   have hs := (hF.smooth.contDiffAt
@@ -87,8 +91,10 @@ theorem partialMinimum_self_concordant {c ν : ℝ} {F : ScalarPoint → ℝ}
     |diagonal 3 quadrant (partialMinimum hF) u h| ≤
       2 * diagonal 2 quadrant (partialMinimum hF) u h *
         Real.sqrt (diagonal 2 quadrant (partialMinimum hF) u h) := by
+  have hp : minimizerLift hF u ∈ coneInterior c := by
+    simpa [minimizerLift] using (fiberMinimizer_spec hF hu).1
   simpa only [partialMinimum_third hF hu,partialMinimum_second hF hu] using
-    hF.self_concordant _ (fiberMinimizer_spec hF hu).1 (minimizerTangent hF u h)
+    hF.self_concordant _ hp (minimizerTangent hF u h)
 
 /-- The actual arbitrary-barrier partial minimum is an LHSCB on the full
 projected domain, with the original logarithmic homogeneity parameter. -/
