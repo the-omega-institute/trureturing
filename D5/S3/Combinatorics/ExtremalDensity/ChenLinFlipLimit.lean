@@ -161,11 +161,7 @@ def repeatWord (w : List Bool) (m : ℕ) : List Bool := (List.replicate m w).fla
 
 private theorem repeatWord_length (w : List Bool) (m : ℕ) :
     (repeatWord w m).length = m * w.length := by
-  induction m with
-  | zero => simp [repeatWord]
-  | succ m ih =>
-    change (w ++ repeatWord w m).length = _
-    simp [ih, Nat.succ_mul, Nat.add_comm]
+  simp [repeatWord, List.length_flatten, List.sum_replicate]
 
 private theorem repeatWord_flips (w : List Bool) (m : ℕ) :
     flips (repeatWord w m) ≤ m * (flips w + 1) := by
@@ -202,14 +198,8 @@ private theorem step_not (A : Matrix V V ℝ) (b : Bool) :
 
 theorem transfer_reflect (A : Matrix V V ℝ) (w : List Bool) :
     transfer A (reflect w) = (transfer A w)ᵀ := by
-  induction w with
-  | nil => simp [reflect, transfer]
-  | cons b w ih =>
-    simp only [reflect, List.reverse_cons, List.map_append, List.map_singleton]
-    rw [transfer_append]
-    rw [show transfer A [!b] = step A (!b) by simp [transfer]]
-    change transfer A (reflect w) * step A (!b) = (step A b * transfer A w)ᵀ
-    rw [ih, step_not, Matrix.transpose_mul]
+  simpa only [transfer, reflect, List.map_map, List.map_reverse, Function.comp_def,
+    step_not] using (Matrix.transpose_list_prod (w.map (step A))).symm
 
 theorem reflected_pair_transfer (A : Matrix V V ℝ) (w : List Bool) :
     transfer A (w ++ reflect w) = transfer A w * (transfer A w)ᵀ := by
@@ -355,11 +345,7 @@ private theorem flips_reflect (w : List Bool) : flips (reflect w) = flips w := b
 
 private theorem transfer_repeatWord (A : Matrix V V ℝ) (w : List Bool) (m : ℕ) :
     transfer A (repeatWord w m) = (transfer A w) ^ m := by
-  induction m with
-  | zero => simp [repeatWord, transfer]
-  | succ m ih =>
-    change transfer A (w ++ repeatWord w m) = _
-    rw [transfer_append, ih, pow_succ']
+  simp [transfer, repeatWord, List.map_flatten, List.prod_flatten]
 
 omit [Fintype V] [DecidableEq V] in
 private theorem arcPreserving_cons (R : V → V → Prop) (b : Bool) (w : List Bool)
