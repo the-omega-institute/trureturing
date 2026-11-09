@@ -8,7 +8,7 @@ Incoming and outgoing edges are pairs of a Fin 4862 target and a Fin 8192 source
 
 **Definition 1.1 (incoming).**
 
-$$\forall (i: \operatorname{Fin}\left(8192\right)), (\operatorname{incoming}\left(i\right) = \operatorname{get}\left(\operatorname{rows}, \operatorname{Fin}.\operatorname{val}\left(i\right)\right))$$
+$$\forall (i: \operatorname{Fin}\left(8192\right)), (\operatorname{incoming}\left(i\right) = \operatorname{D5}.\operatorname{S3}.\operatorname{StatisticalMechanics}.\operatorname{PonciniRasmussenCertificateTree}.\operatorname{get}\left(\operatorname{D5}.\operatorname{S3}.\operatorname{StatisticalMechanics}.\operatorname{PonciniRasmussenNineHorner}.\operatorname{rows}, \operatorname{Fin}.\operatorname{val}\left(i\right)\right))$$
 
 *Formalization.* `D5/S3/StatisticalMechanics/VertexModels/PonciniRasmussenNineEdges.incoming` (`✓ std3`).
 
@@ -16,7 +16,7 @@ $$\forall (i: \operatorname{Fin}\left(8192\right)), (\operatorname{incoming}\lef
 
 *Commentary.*
 
-The private get and rows are the binary lookup and literal incoming lists in this module.
+The lookup uses the shared D5.S3.StatisticalMechanics.PonciniRasmussenCertificateTree.get and the single D5.S3.StatisticalMechanics.PonciniRasmussenNineHorner.rows table. The index i has type Fin 8192 and the returned list has type List Nat.
 
 **Theorem 1.2 (sparseHamiltonian_eq).**
 
@@ -86,5 +86,6 @@ Finset.sum binds t, s and g at their stated finite types. Both Fin embeddings an
 - Truth anchor: `D5/S3/StatisticalMechanics/VertexModels/PonciniRasmussenNineEdges.outgoingEdges`
 - Truth anchor: `D5/S3/StatisticalMechanics/VertexModels/PonciniRasmussenNineEdges.sparseHamiltonian_eq`
 - Truth anchor: `D5/S3/StatisticalMechanics/VertexModels/PonciniRasmussenNineEdges.sparse_sum`
+- Dependency: [D5/S3/StatisticalMechanics/VertexModels/PonciniRasmussenCertificateTree](PonciniRasmussenCertificateTree.md)
 - Dependency: [D5/S3/StatisticalMechanics/VertexModels/PonciniRasmussenNineDiagrams](PonciniRasmussenNineDiagrams.md)
 - Dependency: [D5/S3/StatisticalMechanics/VertexModels/PonciniRasmussenNineHornerData](PonciniRasmussenNineHornerData.md)

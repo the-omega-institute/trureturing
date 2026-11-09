@@ -4,7 +4,7 @@
 
 Nine-strand matching coordinates
 
-There are 4862 indexed noncrossing matchings. The actual private matching, get and transitions constants supply the decoded involution and literal transition tree. Circular order lists top ports left to right and bottom ports right to left. Transition value 4862 denotes a loop.
+There are 4862 indexed noncrossing matchings. The actual private matching and transitions constants supply the decoded involution and literal transition tree. Both tables use D5.S3.StatisticalMechanics.PonciniRasmussenCertificateTree.Tree and its shared get function. Circular order lists top ports left to right and bottom ports right to left. Transition value 4862 denotes a loop.
 
 **Definition 1.1 (diagram).**
 
@@ -63,5 +63,6 @@ Coordinate 4861 has the mate function of the identity matching.
 - Dependency: [D5/S3/Combinatorics/PerfectMatchings/OrderedMatchingCore](../../Combinatorics/PerfectMatchings/OrderedMatchingCore.md)
 - Dependency: [D5/S3/Combinatorics/PerfectMatchings/PlanarDiagramAlgebra](../../Combinatorics/PerfectMatchings/PlanarDiagramAlgebra.md)
 - Dependency: [D5/S3/Combinatorics/PerfectMatchings/PlanarSewing](../../Combinatorics/PerfectMatchings/PlanarSewing.md)
+- Dependency: [D5/S3/StatisticalMechanics/VertexModels/PonciniRasmussenCertificateTree](PonciniRasmussenCertificateTree.md)
 - Dependency: [D5/S3/Topology/CupCapComposition](../../Topology/CupCapComposition.md)
 - Dependency: [D5/S3/Topology/FiniteMatchingClosure](../../Topology/FiniteMatchingClosure.md)
