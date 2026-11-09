@@ -1,0 +1,21 @@
+**定理 26.2（比较几何与顺序无关读出）。** 定义 26.1 等价于归一化正定核。于是存在 Hilbert 空间 $H$ 和向量 $\psi_a$，使
+
+$$
+\kappa(a,b)=\langle\psi_a,\psi_b\rangle,
+\qquad \|\psi_a\|=1,
+$$
+
+且由有限张成空间的 GNS/Kolmogorov 构造得到的实现，在循环子空间上酉等价。可观测的两两比较
+
+$$
+r(a,b):=|\kappa(a,b)|^2
+$$
+
+满足 $r(a,b)=r(b,a)$。三点闭环
+
+$$
+\Phi(a,b,c):=\kappa(a,b)\kappa(b,c)\kappa(c,a)
+$$
+
+在局部相位变换 $\kappa(a,b)\mapsto\overline{\theta_a}\kappa(a,b)\theta_b$ 下不变；反向闭环给出 $\overline{\Phi}$。因此顺序无关的是概率读出，方向信息保存在可观测的 Bargmann holonomy 中。若强行令 $\kappa(a,b)=\kappa(b,a)$，则所有比较值为实数，候选退化为实 Hilbert 型几何，不能表达一般复量子相位。证毕。
+
