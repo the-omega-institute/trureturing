@@ -65,6 +65,7 @@ theorem diagonal_three {D : Set E} (hD : IsOpen D) {F : E → ℝ}
     {x : E} (hx : x ∈ D) (v : E) : diagonal 3 D F x v = D3 F x v v v := by
   rw [diagonal, iteratedFDerivWithin_of_isOpen 3 hD hx,
     iteratedFDeriv_succ_apply_right, iteratedFDeriv_two_apply]
+  rfl
 
 variable {ν : ℝ} {D B : Set E} {F : E → ℝ}
 
@@ -76,11 +77,14 @@ theorem euler (hF : IsLHSCB ν D B F) {x : E} (hx : x ∈ D) :
   have hf := (hF.smooth.contDiffAt (hF.domain_open.mem_nhds hx)).differentiableAt
     (by norm_num)
   have hl : HasDerivAt (fun t : ℝ => F (t • x)) (D1 F x x) 1 := by
-    simpa using hf.hasFDerivAt.comp_hasDerivAt_of_eq 1
+    simpa [Function.comp_def, id_eq] using hf.hasFDerivAt.comp_hasDerivAt_of_eq 1
       ((hasDerivAt_id (1 : ℝ)).smul_const x) (by simp)
   have hr : HasDerivAt (fun t : ℝ => F x - ν * Real.log t) (-ν) 1 := by
     convert (hasDerivAt_const (1 : ℝ) (F x)).sub
-      (((hasDerivAt_id (1 : ℝ)).log one_ne_zero).const_mul ν) using 1 <;> ring
+      (((hasDerivAt_id (1 : ℝ)).log one_ne_zero).const_mul ν) using 1
+    · funext t
+      simp
+    · norm_num
   have he : (fun t : ℝ => F (t • x)) =ᶠ[𝓝 (1 : ℝ)]
       (fun t => F x - ν * Real.log t) := by
     filter_upwards [isOpen_Ioi.mem_nhds (show (1 : ℝ) ∈ Ioi 0 by norm_num)] with t ht
@@ -120,7 +124,11 @@ theorem cubic_euler (hF : IsLHSCB ν D B F) {x : E} (hx : x ∈ D) (u v : E) :
     exact hessian_euler hF hy u
   have hh := congrArg (fun L : E →L[ℝ] ℝ => L v)
     (hl.unique ((d1_hasFDerivAt hf u).neg.congr_of_eventuallyEq he))
-  change D2 F x u v + D3 F x v u x = -D2 F x v u at hh
+  have hh' : D2 F x u v + D3 F x v u x = -D2 F x v u := by
+    simpa [D1, D2, D3, ContinuousLinearMap.comp_apply,
+      ContinuousLinearMap.add_apply, ContinuousLinearMap.flip_apply,
+      ContinuousLinearMap.zero_apply, ContinuousLinearMap.id_apply, map_zero] using hh
+  have hh := hh'
   rw [d2_symm hf v u] at hh
   linarith
 
@@ -235,7 +243,7 @@ theorem normalized_sc (hF : IsLHSCB ν D B F) {x : E} (hx : x ∈ D) (h : E)
       _ = ν^2*q^2*v^2*(-2*u^3-6*u+P ν F x h/(q*v))^2 := by ring
       _ = _ := by rw [hv2]; ring
   rw [hL] at hs2
-  apply (mul_le_mul_left hc).mp
+  apply (le_of_mul_le_mul_left ?_ hc)
   convert hs2 using 1 <;> ring
 
 /-- A nonradial positive projective direction already forces nu >= 2.
@@ -259,11 +267,11 @@ theorem projective_cubic_bound (hF : IsLHSCB ν D B F) {x : E} (hx : x ∈ D)
 /-- Actual primal endpoint polynomial, adapted from the completed primal
 calculus under fresh names to avoid F1's `hessian` declaration collision. -/
 theorem primal_polynomial (hF : IsLHSCB ν D B F) {x : E} (hx : x ∈ D)
-    (h : E) (δ λ : ℝ) :
-    diagonal 2 D F x (λ • (x+δ • h)-x) =
-      primalQuadratic ν (1-a ν F x h*δ) (Q ν F x h*δ^2) λ := by
+    (h : E) (δ lam : ℝ) :
+    diagonal 2 D F x (lam • (x+δ • h)-x) =
+      primalQuadratic ν (1-a ν F x h*δ) (Q ν F x h*δ^2) lam := by
   obtain ⟨hxx,hxh,hhx⟩ := radial_hessian hF hx h
-  have hv : λ • (x+δ • h)-x = (λ-1) • x+(λ*δ) • h := by
+  have hv : lam • (x+δ • h)-x = (lam-1) • x+(lam*δ) • h := by
     rw [smul_add,smul_smul,sub_smul,one_smul]
     abel
   rw [diagonal_two hF.domain_open hx, hv]
