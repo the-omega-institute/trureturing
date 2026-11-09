@@ -1,0 +1,23 @@
+**定理 50.4（从 $\mathsf Q_0$ 到现有量子公理的分层桥）。** $\mathsf Q_0$ 严格推出实 Hilbert 关系几何，但后续结构按下列独立前件获得：
+
+1. 若存在 $J^2=-I$ 且 $J^*=-J$，则 $J$ 是等距复结构，
+   $$h(u,v)=\langle u,v\rangle-i\langle Ju,v\rangle$$
+   给出复 Hermitian 空间。$J$ 不是 $\mathsf Q_0$ 的推论；同一实 Hilbert 空间可有多个兼容的 $J$。
+2. 在复空间上加入算子、伴随和正序，得到 $\operatorname{Herm}(H)$ 的正锥。对 $\rho\succeq0$, $\operatorname{Tr}\rho=1$ 与 $0\preceq E\preceq I$，谱分解给出
+   $$0\le\operatorname{Tr}(\rho E)\le1.$$
+   将该数指定为测量概率，还需概率赋值条件；维数至少三时可用 Gleason 型定理，二维投影情形需额外条件。
+3. 加入复张量积 $H_{AB}=H_A\otimes_{\mathbb C}H_B$ 和局部完备效果，产品效果张成整体 Hermitian 空间，因为
+   $$\dim_{\mathbb R}\operatorname{Herm}(H_A\otimes H_B)=d_A^2d_B^2.$$
+   这给出局部层析和纠缠的标准复 Hilbert 表示；它不是端点交换对称性的结论。
+4. 对过程加入所有辅助系统扩张保持正性，得到完全正性；有限维 Choi–Kraus 定理给出
+   $$\Phi\text{ CP}\iff C_\Phi\succeq0\iff\Phi(X)=\sum_\alpha K_\alpha X K_\alpha^*.$$
+   普通正性不够，转置映射是反例。
+5. 对可逆动力学另加保迹、群律和强连续的酉实现；Stone 定理给出 $U_t=e^{-itH}$。可逆保迹本身不能直接替代酉实现条件。
+
+因此，当前更短且不失真的候选是
+
+$$
+\boxed{\text{Q0：端点交换不变，且任意有限关系组合的自比较非负。}}
+$$
+
+白话说：先只承认一张无向比较网；把网中任意有限条边按实数加权后和自己比较，结果永远不能为负。所有坐标和空间都从这个约束的零空间商中长出来，实 Hilbert 几何是它的最小实现。四点反例说明，不能只看每个三角形；复相位、概率、纠缠、CP 和时间流仍是后续必须逐层验证的内部结构，而不是被最初的顺序无关偷偷带入的结论。
