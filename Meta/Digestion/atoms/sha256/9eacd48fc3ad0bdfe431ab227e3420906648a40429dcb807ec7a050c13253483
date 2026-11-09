@@ -1,0 +1,20 @@
+**定义 51.2（相位饱和关系）。** 令 $H_{\mathbb R}$ 是 Q0 的零空间商完备化，内积记为 $g$。增加一个在 $H_{\mathbb R}$ 上连续的实双线性形式
+
+$$
+\omega(u,v)=-\omega(v,u).
+$$
+
+由 Riesz 表示定理存在唯一有界实线性算子 $A_\omega$，满足
+
+$$
+\omega(u,v)=g(A_\omega u,v).
+$$
+
+反对称性等价于 $A_\omega^*=-A_\omega$。相位饱和公理为
+
+$$
+\boxed{\mathsf Q_{\mathrm{phase}}:\qquad A_\omega^2=-I.}
+$$
+
+这就是 Q0 的最小复扩展：不分别加入非退化性、辛闭合性或 Hermitian 正性，因为它们都由该算子恒等式自动给出。
+

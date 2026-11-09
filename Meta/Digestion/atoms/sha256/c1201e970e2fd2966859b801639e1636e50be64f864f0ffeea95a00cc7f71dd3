@@ -1,0 +1,11 @@
+**命题 51.5（Q1 与 Q0 的边界）。** Q1 限制到实系数组合时推出 Q0，但 Q0 不推出 Q1；并且 Q1 的自然复结构未必限制在 Q0 的原实生成空间上。
+
+**证明。** 对 Q1 取实部得实对称正核，故 Q1 $\Rightarrow$ Q0。反向缺少 $h$ 的虚部信息。更细地，取 $X=\{1,2,3\}$、$h(i,j)=\delta_{ij}$，Q1 的最小表示是 $\mathbb C^3$，但 Q0 的实系数生成空间是 $\mathbb R^3$，其中不存在 $J^2=-I$。若增加
+
+$$
+\overline{\operatorname{span}_{\mathbb R}\{\phi(x):x\in X\}}=K_{\mathbb R},
+\tag{RT}
+$$
+
+则 Q1 的自然复结构 $z\mapsto iz$ 才确实限制为 Q0 空间上的 $J$。在 (RT) 下，Q1 与 Q0 加相位饱和结构等价；没有 (RT)，Q1 只保证存在某个复 Hilbert 表示。证毕。
+
