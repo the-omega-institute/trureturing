@@ -58,7 +58,9 @@ def source_registration : Registration arena (arena.Law actual) where
     simp only [show (1 : ℤ).toNat - 1 = 0 from rfl,
       show (3 : ℤ).toNat - 1 = 2 from rfl,
       Nat.nth_prime_zero_eq_two, Nat.nth_prime_two_eq_five]
-    decide
+    norm_num [a, Nat.lcmUpto,
+      show Finset.Icc 1 1 = {1} from by decide,
+      show Finset.Icc 1 4 = {1, 2, 3, 4} from by decide]
 
 def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
