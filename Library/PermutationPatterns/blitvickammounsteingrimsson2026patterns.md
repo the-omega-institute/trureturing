@@ -210,8 +210,29 @@ $$
 \exists i,p\in\mathbb N,\ p\le i\ \land\ j+1=2^i+2^p.
 $$
 
-Identifying $A_j$ with $b_j(3)$ still requires the universal
-insertion/deletion bijection on the grid, including its rank state and
-exact insertion multiplicities. Neither modular assertion for the
-actual count is claimed as a result here. These contributions carry no
-claim of worldwide priority or an exhaustive literature screen.
+The Core module proves `grid_card_eq_row`, identifying $A_j$ with
+$b_j(3)$ universally. For an actual grid of $N=3j$ ranks, let $d$ be the
+rank of its last $x$ and put $k=N-d$. A new column is specified uniquely
+by $0\le r<k$ and $0\le s\le r$. Insert its $z$ as the greatest rank,
+then $y$ at rank $b=N-r+s$, then $x$ at rank $a=N-r$. Ordered rank
+insertion preserves the old grid. Its new comparisons hold exactly
+when $d<a\le b\le N$, and its new state is $r+3$. Conversely, the last
+$z$ of every grid has the greatest rank; deleting the three new entries
+recovers the unique parent and the parameters $r=N-a$, $s=b-a$.
+Thus there are exactly $r+1$ children with state $r+3$ for each
+$0\le r<k$. This is a bijection of actual rank assignments.
+
+For any natural $n$, sum `row Nat n` over the states of the actual
+$j$-column grids. The bijection turns this sum into the corresponding
+sum of `row Nat (n+1)` over the parent grids. The unique one-column grid
+has state three. Induction therefore gives
+`Nat.card (GridPacking j) = row Nat (j-1) 3` for every $j\ge1$.
+No recurrence is assumed for the actual count.
+
+The theorems `count_mod_ten` and `count_mod_four_iff` apply the two
+transfer laws through this common equality and `count_eq_grid`.
+They prove the two displayed modular conclusions for the actual
+permutations at every $j\ge1$, including both exact-exception directions
+for modulo four. The printed wording's interpretive limit and the old
+narrower proposal remain as stated above. These results carry no claim
+of worldwide priority or an exhaustive literature screen.

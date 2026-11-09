@@ -9,6 +9,7 @@
 import D5.S3.Combinatorics.Permutation.PackingMaximumRefutation
 import Mathlib.Tactic.IntervalCases
 import Mathlib.GroupTheory.Perm.Fin
+import Mathlib.Data.Fintype.Perm
 import D5.S3.Combinatorics.Permutation.BlitvicKammounSteingrimsson14325Transfer
 
 /-! All permutations and all window comparisons retain the literal source meaning.
@@ -437,6 +438,12 @@ private theorem appendRank_bijective (N : ℕ) :
       Fintype.card_fin, Nat.factorial_succ]
     simp
 
+private theorem appendRank_inj {N : ℕ} {a b : Fin (N + 1)}
+    {q r : Equiv.Perm (Fin N)} (h : appendRank a q = appendRank b r) :
+    a = b ∧ q = r := by
+  have hp := (appendRank_bijective N).injective (a₁ := (a,q)) (a₂ := (b,r)) h
+  exact ⟨congrArg Prod.fst hp, congrArg Prod.snd hp⟩
+
 private noncomputable def appendEquiv (N : ℕ) :
     (Fin (N + 1) × Equiv.Perm (Fin N)) ≃ Equiv.Perm (Fin (N + 1)) :=
   Equiv.ofBijective _ (appendRank_bijective N)
@@ -640,31 +647,30 @@ private theorem child_state (j : ℕ) (hj : 1 ≤ j) (v : Children j hj) :
   simp only [Fin.val_mk]
   omega
 
-set_option maxHeartbeats 1500000 in
 private theorem child_bijective (j : ℕ) (hj : 1 ≤ j) : Function.Bijective (child j hj) := by
   constructor
   · rintro ⟨q,r,s⟩ ⟨q',r',s'⟩ h
     have hh := congrArg Subtype.val h
     change appendRank _ (appendRank _ (appendRank _ q.val)) =
       appendRank _ (appendRank _ (appendRank _ q'.val)) at hh
-    have hx := (appendRank_bijective (3 * j + 2)).injective hh
-    have ha := congrArg (fun p => p.1.val) hx
-    have hy := (appendRank_bijective (3 * j + 1)).injective (congrArg Prod.snd hx)
-    have hb := congrArg (fun p => p.1.val) hy
-    have hz := (appendRank_bijective (3 * j)).injective (congrArg Prod.snd hy)
-    have hq : q = q' := Subtype.ext (congrArg Prod.snd hz)
+    obtain ⟨ha, hx⟩ := appendRank_inj hh
+    obtain ⟨hb, hy⟩ := appendRank_inj hx
+    obtain ⟨_, hz⟩ := appendRank_inj hy
+    have hq : q = q' := Subtype.ext hz
     subst q'
     have hr : r = r' := by
       apply Fin.ext
       have hr := r.isLt
       have hr' := r'.isLt
       simp only [state] at hr hr'
-      change 3 * j - r.val = 3 * j - r'.val at ha
+      have hav := congrArg Fin.val ha
+      change 3 * j - r.val = 3 * j - r'.val at hav
       omega
     subst r'
     have hs : s = s' := by
       apply Fin.ext
-      change 3 * j - r.val + s.val = 3 * j - r.val + s'.val at hb
+      have hbv := congrArg Fin.val hb
+      change 3 * j - r.val + s.val = 3 * j - r.val + s'.val at hbv
       omega
     subst s'
     rfl
@@ -725,8 +731,14 @@ private theorem grid_one_unique (q : GridPacking 1) : q = singleGrid := by
 open scoped BigOperators Classical
 open BlitvicKammounSteingrimsson14325Transfer
 
-private noncomputable instance gridFintype (j : ℕ) : Fintype (GridPacking j) :=
-  Fintype.ofFinite _
+private noncomputable instance gridFintype (j : ℕ) : Fintype (GridPacking j) := by
+  classical
+  unfold GridPacking
+  infer_instance
+
+private noncomputable instance childrenFintype (j : ℕ) (hj : 1 ≤ j) :
+    Fintype (Children j hj) :=
+  inferInstanceAs (Fintype (Σ q : GridPacking j, Σ r : Fin (state j hj q), Fin (r.val + 1)))
 
 private noncomputable def weighted (n j : ℕ) (hj : 1 ≤ j) : ℕ :=
   ∑ q : GridPacking j, row ℕ n (state j hj q)
@@ -735,13 +747,17 @@ private theorem weighted_step (n j : ℕ) (hj : 1 ≤ j) :
     weighted n (j + 1) (by omega) = weighted (n + 1) j hj := by
   classical
   rw [weighted, ← (childrenEquiv j hj).sum_comp]
-  simp only [childrenEquiv, Equiv.ofBijective_apply, child_state,
-    Fintype.sum_sigma, Finset.sum_const, Finset.card_univ, Fintype.card_fin,
-    nsmul_eq_mul]
+  change (∑ v : Children j hj, row ℕ n (state (j + 1) _ (child j hj v))) = _
+  simp only [child_state]
+  change (∑ v : (Σ q : GridPacking j, Σ r : Fin (state j hj q), Fin (r.val + 1)),
+    row ℕ n (v.2.1.val + 3)) = _
+  simp only [Fintype.sum_sigma, Finset.sum_const, Finset.card_univ,
+    Fintype.card_fin, nsmul_eq_mul]
   unfold weighted
   apply Finset.sum_congr rfl
   intro q hq
-  simp only [row, transfer, Fin.sum_univ_eq_sum_range]
+  simp only [row, transfer, Nat.cast_id]
+  exact Fin.sum_univ_eq_sum_range (fun r => (r + 1) * row ℕ n (r + 3)) (state j hj q)
 
 private theorem weighted_one (n : ℕ) : weighted n 1 (by decide) = row ℕ n 3 := by
   classical
@@ -764,11 +780,11 @@ private theorem weighted_eval (n j : ℕ) :
 /-- Universal actual-grid cardinality: the transfer is derived by rank insertion. -/
 theorem grid_card_eq_row (j : ℕ) (hj : 1 ≤ j) :
     Nat.card (GridPacking j) = row ℕ (j - 1) 3 := by
-  have he := weighted_eval 0 (j - 1)
-  have hj' : j - 1 + 1 = j := by omega
-  rw [hj'] at he
+  obtain ⟨n, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (by omega : j ≠ 0)
+  have he := weighted_eval 0 n
   simpa only [weighted, row, Finset.sum_const, Finset.card_univ,
-    nsmul_eq_mul, mul_one, Nat.card_eq_fintype_card, Nat.zero_add] using he
+    nsmul_eq_mul, mul_one, Nat.card_eq_fintype_card, Nat.zero_add,
+    Nat.succ_sub_one, Nat.cast_id, Nat.succ_eq_add_one] using he
 
 private theorem count_eq_row (j : ℕ) (hj : 1 ≤ j) :
     count pattern 2 j = row ℕ (j - 1) 3 := by

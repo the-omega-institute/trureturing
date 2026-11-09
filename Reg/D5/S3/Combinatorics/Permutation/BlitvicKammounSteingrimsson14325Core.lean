@@ -186,38 +186,9 @@ private theorem count_zero : count pattern 2 0 = 120 := by
   rw [Nat.card_congr he, Nat.card_eq_fintype_card, Fintype.card_perm]
   norm_num [Nat.factorial]
 
-private def singleGrid : GridPacking 1 := by
-  refine ⟨Equiv.swap 0 2, ?_⟩
-  constructor
-  · intro t ht
-    have he : t = 0 := by omega
-    subst t
-    change (Equiv.swap 0 2 : Equiv.Perm (Fin 3)) 2 < Equiv.swap 0 2 1 ∧
-      (Equiv.swap 0 2 : Equiv.Perm (Fin 3)) 1 < Equiv.swap 0 2 0
-    decide +kernel
-  · intro t ht
-    omega
-
-private theorem grid_one_unique (q : GridPacking 1) : q = singleGrid := by
-  apply Subtype.ext
-  ext i
-  have he := q.property.1 0 (by decide)
-  change (q.val 2).val < (q.val 1).val ∧ (q.val 1).val < (q.val 0).val at he
-  have h0 := (q.val 0).isLt
-  have h1 := (q.val 1).isLt
-  have h2 := (q.val 2).isLt
-  have hi := i.isLt
-  fin_cases i
-  · change (q.val 0).val = 2
-    omega
-  · change (q.val 1).val = 1
-    omega
-  · change (q.val 2).val = 0
-    omega
-
 private theorem count_one : count pattern 2 1 = 1 := by
-  rw [count_eq_grid 1 (by decide)]
-  exact Nat.card_eq_one_iff_exists.mpr ⟨singleGrid, grid_one_unique⟩
+  rw [count_eq_grid 1 (by decide), grid_card_eq_row 1 (by decide)]
+  rfl
 
 abbrev signature : Signature :=
   _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℕ) (fun _ => ℕ)
@@ -286,4 +257,222 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 
 end
 end CountGrid
+
+open _root_.D5.S3.Combinatorics.Permutation.BlitvicKammounSteingrimsson14325Transfer
+
+namespace GridRow
+
+noncomputable section
+open Classical
+
+abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℕ) (fun _ => ℕ)
+
+def actual : Realization signature :=
+  realize signature (fun _ _ j => Nat.card (GridPacking j)) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ j => Nat.card (GridPacking j) + 1) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law r := ∀ j : ℕ, 1 ≤ j → r.readout () () j = row ℕ (j - 1) 3
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hh := h 1 (by decide)
+  change Nat.card (GridPacking 1) + 1 = row ℕ 0 3 at hh
+  rw [grid_card_eq_row 1 (by decide)] at hh
+  norm_num [row] at hh
+
+def family : Registration arena (type_of% @grid_card_eq_row) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨grid_card_eq_row, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law actual rejected rejected_law
+  dependence := by
+    intro i
+    refine ⟨(), 1, 2, ?_⟩
+    change Nat.card (GridPacking 1) ≠ Nat.card (GridPacking 2)
+    rw [grid_card_eq_row 1 (by decide), grid_card_eq_row 2 (by decide)]
+    norm_num [row, transfer, Finset.sum_range_succ]
+
+def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+    (@grid_card_eq_row) (Realization signature) Type Unit where
+  unitName := `Reg.D5.S3.Combinatorics.Permutation.BlitvicKammounSteingrimsson14325Core.GridRow.unit
+  realizationName := `Reg.D5.S3.Combinatorics.Permutation.BlitvicKammounSteingrimsson14325Core.GridRow.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ j => Nat.card (GridPacking j)) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.Permutation.BlitvicKammounSteingrimsson14325Core
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg", "arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end
+end GridRow
+namespace ActualTen
+
+noncomputable section
+open Classical
+
+abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℕ) (fun _ => ℕ)
+
+def actual : Realization signature :=
+  realize signature (fun _ _ j => count pattern 2 j) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ j => 0) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law r := ∀ j : ℕ, 1 ≤ j → r.readout () () j % 10 = if ∃ k : ℕ, 1 ≤ k ∧ j + 1 = 2 ^ k then 1 else 6
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hh := h 1 (by decide)
+  change 0 % 10 = (if ∃ k : ℕ, 1 ≤ k ∧ 1 + 1 = 2 ^ k then 1 else 6) at hh
+  have he : ∃ k : ℕ, 1 ≤ k ∧ 1 + 1 = 2 ^ k := ⟨1, by omega, by decide⟩
+  simp [he] at hh
+
+def family : Registration arena (type_of% @count_mod_ten) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨count_mod_ten, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law actual rejected rejected_law
+  dependence := by
+    intro i
+    refine ⟨(), 0, 1, ?_⟩
+    change count pattern 2 0 ≠ count pattern 2 1
+    rw [CountGrid.count_zero, CountGrid.count_one]
+    decide
+
+def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+    (@count_mod_ten) (Realization signature) Type Unit where
+  unitName := `Reg.D5.S3.Combinatorics.Permutation.BlitvicKammounSteingrimsson14325Core.ActualTen.unit
+  realizationName := `Reg.D5.S3.Combinatorics.Permutation.BlitvicKammounSteingrimsson14325Core.ActualTen.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ j => count pattern 2 j) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.Permutation.BlitvicKammounSteingrimsson14325Core
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "fn", "arg", "fn", "arg", "fn"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end
+end ActualTen
+namespace ActualFour
+
+noncomputable section
+open Classical
+
+abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℕ) (fun _ => ℕ)
+
+def actual : Realization signature :=
+  realize signature (fun _ _ j => count pattern 2 j) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ j => 0) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law r := ∀ j : ℕ, 1 ≤ j → ((¬ 4 ∣ r.readout () () j) ↔ ∃ i p : ℕ, p ≤ i ∧ j + 1 = 2 ^ i + 2 ^ p)
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hh := h 1 (by decide)
+  change (¬ 4 ∣ 0) ↔ ∃ i p : ℕ, p ≤ i ∧ 1 + 1 = 2 ^ i + 2 ^ p at hh
+  exact (hh.mpr ⟨0,0,by omega,by decide⟩) (dvd_zero 4)
+
+def family : Registration arena (type_of% @count_mod_four_iff) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨count_mod_four_iff, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law actual rejected rejected_law
+  dependence := by
+    intro i
+    refine ⟨(), 0, 1, ?_⟩
+    change count pattern 2 0 ≠ count pattern 2 1
+    rw [CountGrid.count_zero, CountGrid.count_one]
+    decide
+
+def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+    (@count_mod_four_iff) (Realization signature) Type Unit where
+  unitName := `Reg.D5.S3.Combinatorics.Permutation.BlitvicKammounSteingrimsson14325Core.ActualFour.unit
+  realizationName := `Reg.D5.S3.Combinatorics.Permutation.BlitvicKammounSteingrimsson14325Core.ActualFour.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ j => count pattern 2 j) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.Permutation.BlitvicKammounSteingrimsson14325Core
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "fn", "arg", "arg", "arg", "fn"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end
+end ActualFour
 end Reg.D5.S3.Combinatorics.Permutation.BlitvicKammounSteingrimsson14325Core

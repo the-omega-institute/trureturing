@@ -20,8 +20,8 @@ import Mathlib.Tactic.Ring
 /-!
 The row index is zero-based: `row R n k` denotes b_(n+1)(k).
 These are algebraically defined transfer rows, not the actual packing count.
-The missing insertion/deletion correspondence must identify A(j) with
-`row ℕ (j-1) 3` before their residues apply to the source permutations.
+The Core module derives the insertion/deletion correspondence identifying A(j)
+with `row ℕ (j-1) 3` and applies these residues to the source permutations.
 Escape audits: https://github.com/the-omega-institute/trureturing/issues/28504.
 -/
 

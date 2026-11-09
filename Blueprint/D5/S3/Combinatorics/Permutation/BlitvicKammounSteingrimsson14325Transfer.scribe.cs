@@ -108,21 +108,20 @@ internal sealed class BlitvicKammounSteingrimsson14325TransferDocument : IScribe
                     + "two-power set. The Catalan row formula and the unit three "
                     + "transfer this characterization to every positive row; the "
                     + "initial row supplies the equal-exponent pair i=p=0. "
-                    + "Both implications hold universally. The relation to actual "
-                    + "permutations still awaits the grid-to-row bijection."))), DescribeRole.Theorem),
+                    + "Both implications hold universally. The Core module proves "
+                    + "the actual grid-to-row bijection and applies this law to actual permutations."))), DescribeRole.Theorem),
             Paragraph(Text("The source target counts actual permutations of [3j+2], j≥1, "
                 + "whose prescribed length-five windows at starts 1+3t, 0≤t<j, have "
-                + "pattern 14325. Extra occurrences are allowed. Applying this invariant "
-                + "requires a proved insertion/deletion bijection identifying this count "
+                + "pattern 14325. Extra occurrences are allowed. The Core module proves an insertion/deletion bijection identifying this count "
                 + "with row ℕ (j−1) 3. Natural-to-residue reduction is proved inside "
-                + "the Catalan formula; the actual-count bridge is a separate obligation; no equality to the actual count is claimed here.")),
+                + "the Catalan formula, and the Core module applies both row laws to the actual count.")),
             Paragraph(Text("The full target also requires residue one modulo ten when "
                 + "j+1=2ᵏ with k≥1, residue six otherwise, and nondivisibility by four "
                 + "if and only if j+1=2ⁱ+2ᵖ with 0≤p≤i. The equal-exponent and p=0 "
                 + "boundaries are included. The printed continuation says four divides "
                 + "all but these indices; the exact-exception converse is the stronger "
-                + "registered interpretation. The transfer-row results do not settle it for actual counts or "
-                + "the full target. The narrower issue 21304 remains unchanged.")))));
+                + "registered interpretation. The Core module proves both exact actual-count conclusions using these "
+                + "transfer results. The narrower issue 21304 remains unchanged.")))));
 
     private static Formula Add(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Add, b);
     private static Formula Mul(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Multiply, b);
