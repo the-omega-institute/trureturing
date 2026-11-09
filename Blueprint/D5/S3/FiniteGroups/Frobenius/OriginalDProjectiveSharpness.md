@@ -35,3 +35,4 @@ The full rotation order is 21, whose image in F7 is zero and hence not a unit. T
 ## References
 
 - Truth anchor: `D5/S3/FiniteGroups/Frobenius/OriginalDProjectiveSharpness.originalD_counterexample`
+- Dependency: [D5/S3/FiniteGroups/GroupAlgebra/ProjectiveKernelOrder](../GroupAlgebra/ProjectiveKernelOrder.md)
