@@ -210,7 +210,7 @@ Lean statement: `D5/S3/Geometry/FiniteElementaryCollapse.retained`
 
 *Commentary.*
 
-The retained faces are exactly those s in ambient for which lower is not a subset of s. This family is closed under nonempty subfaces because any lower subset of a smaller face would also be a subset of the larger face. It retains all other faces and components on the same original labels.
+The retained faces are exactly those s in ambient for which lower is not a subset of s. This family is closed under nonempty subfaces because any lower subset of a smaller face would also be a subset of the larger face. It retains all other faces and components on the same original labels. For every s t : Finset V, if hs : s ∈ P.retained, hts : t ⊆ s and ht : t.Nonempty, then t ∈ P.retained directly by (P.retained.isRelLowerSet_faces hs).2 hts ht. The nonempty hypothesis is essential: the empty face is never inserted into the geometric complex.
 
 Lean name: D5.S3.Geometry.FiniteElementaryCollapse.CollapsePair.retained
 
@@ -268,27 +268,7 @@ Lean name: D5.S3.Geometry.FiniteElementaryCollapse.CollapsePair.retained_nonempt
 
 Exact authored Lean header: theorem retained_nonempty {s : Finset V} (hs : s ∈ P.retained) : s.Nonempty
 
-**Theorem 1.15 (Nonempty downward closure).**
-
-Lean statement: `D5/S3/Geometry/FiniteElementaryCollapse.retained_downward`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Geometry/FiniteElementaryCollapse.retained_downward` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-If s is retained, t ⊆ s and t.Nonempty, then t is retained. The explicit nonempty hypothesis is essential to this face convention: the empty face is never inserted into the geometric complex.
-
-Lean name: D5.S3.Geometry.FiniteElementaryCollapse.CollapsePair.retained_downward
-
-### Source text
-
-Exact authored Lean header: theorem retained_downward {s t : Finset V} (hs : s ∈ P.retained)
-
-    (hts : t ⊆ s) (ht : t.Nonempty) : t ∈ P.retained
-
-**Theorem 1.16 (No geometric empty face).**
+**Theorem 1.15 (No geometric empty face).**
 
 Lean statement: `D5/S3/Geometry/FiniteElementaryCollapse.empty_not_mem_retained`
 
@@ -304,7 +284,7 @@ Lean name: D5.S3.Geometry.FiniteElementaryCollapse.CollapsePair.empty_not_mem_re
 
 Exact authored Lean header: @[simp] theorem empty_not_mem_retained : (∅ : Finset V) ∉ P.retained
 
-**Definition 1.17 (The attained lower-face minimum).**
+**Definition 1.16 (The attained lower-face minimum).**
 
 Lean statement: `D5/S3/Geometry/FiniteElementaryCollapse.minimum`
 
@@ -320,7 +300,7 @@ Lean name: D5.S3.Geometry.FiniteElementaryCollapse.CollapsePair.minimum
 
 Exact authored Lean header: def minimum (x : V → ℝ) : ℝ
 
-**Definition 1.18 (Mass transfer to the original apex).**
+**Definition 1.17 (Mass transfer to the original apex).**
 
 Lean statement: `D5/S3/Geometry/FiniteElementaryCollapse.endpoint`
 
@@ -336,7 +316,7 @@ Lean name: D5.S3.Geometry.FiniteElementaryCollapse.CollapsePair.endpoint
 
 Exact authored Lean header: def endpoint (x : V → ℝ) (v : V) : ℝ
 
-**Theorem 1.19 (An endpoint in the exact retained realization).**
+**Theorem 1.18 (An endpoint in the exact retained realization).**
 
 Lean statement: `D5/S3/Geometry/FiniteElementaryCollapse.endpoint_mem_retained`
 
@@ -356,7 +336,7 @@ Exact authored Lean header: theorem endpoint_mem_retained (x : Space P.ambient) 
 
     P.endpoint x.val ∈ realization P.retained
 
-**Definition 1.20 (Unchanged coordinate inclusion).**
+**Definition 1.19 (Unchanged coordinate inclusion).**
 
 Lean statement: `D5/S3/Geometry/FiniteElementaryCollapse.inclusion`
 
@@ -372,7 +352,7 @@ Lean name: D5.S3.Geometry.FiniteElementaryCollapse.CollapsePair.inclusion
 
 Exact authored Lean header: abbrev inclusion : C(Space P.retained, Space P.ambient)
 
-**Definition 1.21 (The continuous coordinate retraction).**
+**Definition 1.20 (The continuous coordinate retraction).**
 
 Lean statement: `D5/S3/Geometry/FiniteElementaryCollapse.retraction`
 
@@ -388,7 +368,7 @@ Lean name: D5.S3.Geometry.FiniteElementaryCollapse.CollapsePair.retraction
 
 Exact authored Lean header: def retraction : C(Space P.ambient, Space P.retained)
 
-**Theorem 1.22 (All retained points are fixed).**
+**Theorem 1.21 (All retained points are fixed).**
 
 Lean statement: `D5/S3/Geometry/FiniteElementaryCollapse.retraction_inclusion`
 
@@ -408,7 +388,7 @@ Exact authored Lean header: theorem retraction_inclusion (y : Space P.retained) 
 
     P.retraction (P.inclusion y) = y
 
-**Definition 1.23 (Strong deformation relative to the whole retained space).**
+**Definition 1.22 (Strong deformation relative to the whole retained space).**
 
 Lean statement: `D5/S3/Geometry/FiniteElementaryCollapse.collapseHomotopy`
 
@@ -418,7 +398,7 @@ Lean statement: `D5/S3/Geometry/FiniteElementaryCollapse.collapseHomotopy`
 
 *Commentary.*
 
-The straight homotopy runs from identity to inclusion.comp retraction. If a witnessing face contains lower, its vertices lie in upper by the free-pair cases; both endpoints and their convex segment lie in the upper simplex. If it misses a lower label, minimum(x)=0 and the segment is constant. The relative condition uses this second argument for every ambient point already in the retained realization, at every time.
+The straight homotopy runs from identity to inclusion.comp retraction. If a witnessing face contains lower, its vertices lie in upper by the free-pair cases; both endpoints and their convex segment lie in the upper simplex. If it misses a lower label, minimum(x)=0 and the segment is constant. The relative condition uses this second argument for every ambient point already in the retained realization, at every time. For every t : I, x : Space P.ambient and v : V, (P.collapseHomotopy (t, x)).val v = x.val v + (if v = P.apex then (t : ℝ) * (P.lower.card : ℝ) * P.minimum x.val else 0) - (if v ∈ P.lower then (t : ℝ) * P.minimum x.val else 0). Both conditionals use the fixed original labels, independently of any chosen face witness. This equality follows directly by changing the left side to mix t x.val (P.endpoint x.val) v, unfolding mix and endpoint, and ring normalization in every conditional case; it holds globally, including t=0 and t=1.
 
 Lean name: D5.S3.Geometry.FiniteElementaryCollapse.CollapsePair.collapseHomotopy
 
@@ -432,33 +412,7 @@ Exact authored Lean header: def collapseHomotopy :
 
       {x | x.val ∈ realization P.retained}
 
-**Theorem 1.24 (The global coordinate formula at every time).**
-
-Lean statement: `D5/S3/Geometry/FiniteElementaryCollapse.collapseHomotopy_coordinate`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Geometry/FiniteElementaryCollapse.collapseHomotopy_coordinate` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-For every t in I, ambient x and original label v, the homotopy coordinate is x(v) plus t * lower.card * minimum(x) when v=apex, minus t * minimum(x) when v belongs to lower. Both conditionals are on the fixed original labels, independent of a chosen face witness. Expanding the straight mix and endpoint gives the equation by ring arithmetic in each conditional case, including t=0 and t=1.
-
-Lean name: D5.S3.Geometry.FiniteElementaryCollapse.CollapsePair.collapseHomotopy_coordinate
-
-### Source text
-
-Exact authored Lean header: theorem collapseHomotopy_coordinate (t : I) (x : Space P.ambient) (v : V) :
-
-    (P.collapseHomotopy (t, x)).val v =
-
-      x.val v + (if v = P.apex then
-
-        (t : ℝ) * (P.lower.card : ℝ) * P.minimum x.val else 0) -
-
-      (if v ∈ P.lower then (t : ℝ) * P.minimum x.val else 0)
-
-**Definition 1.25 (The actual inclusion is the inverse).**
+**Definition 1.23 (The actual inclusion is the inverse).**
 
 Lean statement: `D5/S3/Geometry/FiniteElementaryCollapse.collapseEquiv`
 
@@ -482,7 +436,6 @@ Exact authored Lean header: def collapseEquiv : Space P.ambient ≃ₕ Space P.r
 - Truth anchor: `D5/S3/Geometry/FiniteElementaryCollapse.apex_notMem`
 - Truth anchor: `D5/S3/Geometry/FiniteElementaryCollapse.collapseEquiv`
 - Truth anchor: `D5/S3/Geometry/FiniteElementaryCollapse.collapseHomotopy`
-- Truth anchor: `D5/S3/Geometry/FiniteElementaryCollapse.collapseHomotopy_coordinate`
 - Truth anchor: `D5/S3/Geometry/FiniteElementaryCollapse.empty_not_mem_retained`
 - Truth anchor: `D5/S3/Geometry/FiniteElementaryCollapse.endpoint`
 - Truth anchor: `D5/S3/Geometry/FiniteElementaryCollapse.endpoint_mem_retained`
@@ -494,7 +447,6 @@ Exact authored Lean header: def collapseEquiv : Space P.ambient ≃ₕ Space P.r
 - Truth anchor: `D5/S3/Geometry/FiniteElementaryCollapse.mem_retained_iff`
 - Truth anchor: `D5/S3/Geometry/FiniteElementaryCollapse.minimum`
 - Truth anchor: `D5/S3/Geometry/FiniteElementaryCollapse.retained`
-- Truth anchor: `D5/S3/Geometry/FiniteElementaryCollapse.retained_downward`
 - Truth anchor: `D5/S3/Geometry/FiniteElementaryCollapse.retained_le`
 - Truth anchor: `D5/S3/Geometry/FiniteElementaryCollapse.retained_nonempty`
 - Truth anchor: `D5/S3/Geometry/FiniteElementaryCollapse.retraction`
