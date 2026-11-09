@@ -34,10 +34,13 @@ internal sealed class HardinA233178RecurrenceDocument : IScribeDocumentDefinitio
                 + "source width exceeds eleven. Integer cancellation then gives exactly the "
                 + "ten coefficients in FullE. The theorem has no source-bridge assumption, "
                 + "finite upper cutoff, changed onset, generating-function condition, "
-                + "minimal-order assertion or colour-surjectivity hypothesis.", DescribeRole.Theorem))));
+                + "minimal-order assertion or colour-surjectivity hypothesis.", DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("hardin233178"),
+                    ResolutionKind.Proved)))));
 
-    private static DocumentBlock Node(string name, string title, string prose, DescribeRole role) =>
+    private static DocumentBlock Node(string name, string title, string prose, DescribeRole role,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create(name.Replace("_", "-").ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.WithoutFormula(),
-            AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), role);
+            AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), role, resolution);
 }
