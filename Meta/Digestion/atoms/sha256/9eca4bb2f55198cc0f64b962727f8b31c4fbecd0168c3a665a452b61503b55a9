@@ -1,0 +1,24 @@
+**定义 23.1（内生正比较状态公理）。** 设 $\mathcal A$ 是带单位 $1$ 的复 $C^*$-代数。一个内生正比较是二元函数
+
+$$
+C:\mathcal A\times\mathcal A\longrightarrow\mathbb C
+$$
+
+满足：
+
+1. $C$ 对第一变量共轭线性、对第二变量线性，并且
+   $$
+   C(a,b)=\overline{C(b,a)};
+   $$
+2. $C(1,1)=1$；
+3. 对任意有限族 $a_1,\ldots,a_n$ 和 $z_1,\ldots,z_n\in\mathbb C$，
+   $$
+   \sum_{i,j}\overline{z_i}C(a_i,a_j)z_j\ge0;
+   $$
+4. 比较与代数乘法相容：
+   $$
+   C(ab,c)=C(b,a^*c).
+   $$
+
+第 4 条只要求同一乘积的括号和比较方式相容，不要求 $ab=ba$。因此它保留了物理操作的非交换性；“顺序无关”仍然只指有限比较表的重排与限制。
+
