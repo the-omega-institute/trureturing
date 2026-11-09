@@ -2845,6 +2845,482 @@ $\sum_nQ_n^2/U_n=\infty$，也足以消费 (44.15)。这是可能很强的绝对
 
 ## 追加锚（本行以下为增补区）
 
+## 45. 精确主计数与固定右侧能量界仍容许指定窗口列的全宽度集中
+
+**定义 45.1（抽象位置谱、完整原系数与实际截窗矩）。** 固定 $1/2<b<1$、$0<\kappa<1$，记
+
+$$
+ c=b-\frac12,\qquad r=\kappa^{-1},\qquad
+ q=\frac{1+r}{2},\qquad d=\frac{r-1}{2},\qquad
+ C(U)=\frac{U}{2\pi}\log\frac{U}{2\pi}-\frac{U}{2\pi}.
+ \tag{45.1}
+$$
+
+以下 $\mathcal Z_*$ 是另立的抽象复位置集合，不表示实际 $\zeta$ 零点。位置简单指每个复位置的重数为 $1$；允许两个不同实部的位置具有相同虚部。要求 $\mathcal Z_*$ 局部有限、位于 $0<\operatorname{Re}\rho<1$、$\operatorname{Im}\rho\ne0$，并在共轭及 $\rho\mapsto1-\rho$ 下封闭。以正虚部的全部复位置计数，定义
+
+$$
+ N_*(U)=\#\{\rho\in\mathcal Z_*:0<\operatorname{Im}\rho\le U\}.
+ \tag{45.2}
+$$
+
+对固定 $\sigma>1/2$，令 $W_\sigma(U)$ 为 $\operatorname{Re}\rho\ge\sigma$、$|\operatorname{Im}\rho|\le U$ 的位置虚部多重集，按位置保留虚部的重复次数，并定义有序四元组能量
+
+$$
+ E_1(W)=\#\{(u_1,u_2,u_3,u_4)\in W^4:
+                  |u_1+u_2-u_3-u_4|\le1\}.
+ \tag{45.3}
+$$
+
+对每个截断 $T$，完整函数始终取为
+
+$$
+ F_T(y)=-\sum_{\substack{\rho\in\mathcal Z_*\\
+                         |\operatorname{Im}\rho|\le T}}
+                 \frac{e^{(\rho-b)y}}{\rho}\in\mathbb R.
+ \tag{45.4}
+$$
+
+系数准确是 $-1/\rho$，共轭、反射、旧块和临界线背景全部进入同一个截断；求和集合、实部与相位均不依观察宽度重新选取。给定 $T_n=e^{t_n}$，在同一个区间 $I_n=[t_n,rt_n]$ 上，对每个实宽度 $1\le s\le t_n$ 定义截窗概率
+
+$$
+ \begin{aligned}
+ y_n&=qt_n,&
+ Z_{n,s}&=\int_{t_n}^{rt_n}
+                    e^{-(y-y_n)^2/(2s^2)}\,dy,\\
+ d\mu_{n,s}(y)&=\frac{\mathbf1_{I_n}(y)}{Z_{n,s}}
+                     e^{-(y-y_n)^2/(2s^2)}\,dy,&
+ M_{n,s}&=\mathbb E_{\mu_{n,s}}F_{T_n},\\
+ V_{n,s}&=\mathbb E_{\mu_{n,s}}(F_{T_n}-M_{n,s})^2,&
+ K_{n,s}&=\frac{\mathbb E_{\mu_{n,s}}(F_{T_n}-M_{n,s})^4}
+                       {V_{n,s}^2}\quad(V_{n,s}>0).
+ \end{aligned}
+ \tag{45.5}
+$$
+
+**定理 45.2（一个固定谱上的计数、能量与全宽度反模型）。** 对定义 45.1 的每个固定 $b,\kappa$，存在一次构造的 $\mathcal Z_*$ 及同一列 $T_n\to\infty$，使
+
+$$
+ \sup_{\rho\in\mathcal Z_*}\operatorname{Re}\rho=b,
+ \qquad \operatorname{Re}\rho<b\quad(\rho\in\mathcal Z_*),
+ \tag{45.6}
+$$
+
+$$
+ N_*(U)=C(U)+O(1),\qquad
+ N_*(U+1)-N_*(U)\ll\log(U+2),
+ \tag{45.7}
+$$
+
+且每个固定 $\sigma>1/2$、每个 $\varepsilon>0$ 均有
+
+$$
+ E_1(W_\sigma(U))\ll_{\varepsilon,\sigma,b,\kappa}U^\varepsilon
+ \qquad(U\ge2).
+ \tag{45.8}
+$$
+
+与此同时，充分大 $n$ 的全部 $1\le s\le t_n$ 都有 $V_{n,s}>0$，并且
+
+$$
+ \begin{gathered}
+ \sup_{1\le s\le t_n}V_{n,s}\longrightarrow0,
+ \qquad
+ \sup_{1\le s\le t_n}\frac{|\log V_{n,s}|}{t_n}\longrightarrow0,\\
+ \sup_{1\le s\le t_n}\frac{|M_{n,s}|}{\sqrt{V_{n,s}}}\longrightarrow0,
+ \qquad
+ \inf_{1\le s\le t_n}\frac{K_{n,s}}{t_n}\longrightarrow\infty.
+ \end{gathered}
+ \tag{45.9}
+$$
+
+这里 (45.7) 保留 Riemann--von Mangoldt 的指定主计数 $C$；它是构造谱的计数结论，没有断言实际 $\zeta$ 具有 $O(1)$ 计数余项。(45.9) 在同一指定窗口列上同时量化所有宽度，因而任何选择 $s_n\in[1,t_n]$ 都不能在这列上使 $K_{n,s_n}=O(t_n)$，更不能使 $K_{n,s_n}=o(s_n)$。结论不排除另选 $T$ 子列。
+
+证明。所有渐近均在下述同一构造中令 $n\to\infty$；涉及宽度的 $o(1)$ 一致于整个 $[1,t_n]$。常数可以依赖固定 $b,\kappa$ 和有限低段，不能依赖 $n,s$。
+
+先固定临界线基准。取足够大的整数 $\ell_0$，在 $C$ 严格递增的高处分支定义
+
+$$
+ \lambda_\ell=C^{-1}(\ell)\quad(\ell\ge\ell_0),
+ \qquad
+ \mathcal Z_0=\{\tfrac12\pm i\lambda_\ell:\ell\ge\ell_0\}.
+ \tag{45.10}
+$$
+
+其正位置计数为 $C(U)+O(1)$。由
+
+$$
+ C'(U)=\frac1{2\pi}\log\frac U{2\pi},\qquad
+ C''(U)=\frac1{2\pi U},
+ \tag{45.11}
+$$
+
+均值定理给单位计数 $O(\log(U+2))$，求和分部给
+
+$$
+ \sum_{\lambda_\ell\le T}\frac1{|1/2+i\lambda_\ell|}
+ \ll\log^2(T+2).
+ \tag{45.12}
+$$
+
+这只是给定函数 $C$ 的反函数计数，不调用真实零点的任何解析性质。
+
+共同参数按 $a_n\to h_n\to\delta_n$ 的顺序选取。置 $\delta_0=c/4$。第 $n$ 步，先取正整数 $D_n$ 足够大，使
+
+$$
+ a_n=\frac{2q}{D_n}\le
+ \min\left\{\frac18,\frac1{n+10},
+             \frac{\delta_{n-1}}{n+10},\frac c{n+10}\right\}.
+ \tag{45.13}
+$$
+
+此后固定 $a_n$，再取正整数 $k_n$ 足够大，由
+
+$$
+ h_ne^{h_n}=\frac{2k_n}{D_n}
+ \tag{45.14}
+$$
+
+唯一确定 $h_n>0$，并置
+
+$$
+ G_n=2\pi e^{h_n},\qquad t_n=\frac{h_n}{a_n},\qquad
+ T_n=e^{t_n},\qquad m_n=\lfloor e^{\sqrt{h_n}}\rfloor.
+ \tag{45.15}
+$$
+
+选取时同时要求
+
+$$
+ \begin{gathered}
+ h_n\ge n^2+H_0,\qquad
+ \log(1/a_n)\le\frac{\sqrt{h_n}}n,\qquad
+ \log t_n\le\frac{h_n}{4},\\
+ \frac{a_n^3m_n}{h_n^2}\ge n^2,\qquad
+ \frac{m_nt_n}{G_n^2}\le\frac1n,\qquad
+ \frac{m_n}{G_n}\le2^{-n},\qquad
+ \frac{m_n^2}{G_nh_n^2}\le\frac1{100},\\
+ 2G_n+10<T_n,\qquad
+ h_n>h_{n-1}+1,\qquad G_n>2T_{n-1}+10\quad(n>1).
+ \end{gathered}
+ \tag{45.16}
+$$
+
+其中 $H_0$ 是只依赖固定数据的足够大常数；首步不使用带 $n-1$ 的条件。最后才定义
+
+$$
+ \delta_n=\min\left\{\frac{\delta_{n-1}}2,
+                         \frac{a_ne^{-4h_n}}{h_n}\right\},
+ \qquad \beta_n=b-\delta_n.
+ \tag{45.17}
+$$
+
+这些条件能共同实现。对于已固定的 $a_n,D_n,\delta_{n-1},T_{n-1}$，(45.14) 的正解随整数 $k_n$ 无界；(45.16) 每一条件都在该解的一个尾部成立。具体地，$e^{\sqrt h}$ 胜过 $h$ 的任意固定幂，而 $e^h$ 胜过 $e^{A\sqrt h}$ 的任意固定倍；固定 $a_n$ 的大小只决定此次尾部从何处开始。$\delta_n$ 后置，不对 $h_n$ 加任何上界。因此
+
+$$
+ a_n\to0,\quad \delta_n\downarrow0,\quad
+ \frac{\delta_{n-1}}{a_n}\ge n+10,\quad
+ \frac c{a_n}\ge n+10,\quad
+ \delta_nt_n\le e^{-4h_n},\quad
+ \log t_n=o(h_n).
+ \tag{45.18}
+$$
+
+新位置和基准的替换采用同一 $h_n$。令
+
+$$
+ \Delta_n=\frac{4\pi}{h_n},\qquad
+ \gamma_{n,j}=G_n+\Delta_nj\quad(0\le j<m_n),\qquad
+ \ell_n=\lfloor C(G_n)\rfloor.
+ \tag{45.19}
+$$
+
+对每个 $j$，从 $\mathcal Z_0$ 移除 $\lambda_{\ell_n+2j}$、$\lambda_{\ell_n+2j+1}$ 上的两个临界线位置及其共轭，放入四个不同位置
+
+$$
+ \beta_n\pm i\gamma_{n,j},\qquad
+ 1-\beta_n\pm i\gamma_{n,j}.
+ \tag{45.20}
+$$
+
+$\mathcal Z_*$ 定义为全部这些替换与全部未移除基准位置的并。以下证明替换支撑彼此不交，故此定义一次完成，此后不随 $T$ 或 $s$ 改写。
+
+计数须逐位置配对。Taylor 公式和 (45.11) 给
+
+$$
+ C(\gamma_{n,j})=C(G_n)+2j+
+             O\left(\frac{m_n^2}{G_nh_n^2}\right),
+ \tag{45.21}
+$$
+
+误差一致于整个块，且趋零。这里的线性项准确是 $2j$，因为 $h_n=\log(G_n/(2\pi))$。$\ell_n$ 的取整误差小于 $1$，故对 $v=0,1$ 有
+
+$$
+ |C(\gamma_{n,j})-(\ell_n+2j+v)|\le2
+ \tag{45.22}
+$$
+
+对足够大的 $H_0$ 成立。反函数的均值定理于是给一个固定常数 $C_0$，使
+
+$$
+ |\lambda_{\ell_n+2j+v}-\gamma_{n,j}|\le\frac{C_0}{h_n}.
+ \tag{45.23}
+$$
+
+确实，在 $[G_n-1,2G_n]$ 上 $C'\asymp h_n$；从 (45.22) 先把反函数值夹在该区间，再应用均值定理即可。增大 $H_0$ 后，每个块全部新旧配对支撑都在
+
+$$
+ J_n=\left[G_n-\frac{C_0}{h_n},
+        G_n+\Delta_n(m_n-1)+\frac{C_0}{h_n}\right]
+       \subset(G_n-1,2G_n).
+ \tag{45.24}
+$$
+
+由 (45.16)，各 $J_n$ 两两不交且依次升高；移除的索引没有重复。把每个新正位置分别配给一个旧正位置，完整通过一个块时正位置净增为零。任意截断 $U$ 上未完成的配对，必须有旧高度落在 $[U-C_0/h_n,U+C_0/h_n]$。该区间由 $C'\asymp h_n$ 只含 $O(1)$ 个基准高度；并且至多一个 $J_n$ 能含此类未完成配对。因此任意 $U$ 都有 $N_*(U)-N_0(U)=O(1)$，统一常数不随块数增长。这证明 (45.7)，包括其单位计数。
+
+每个四元组 (45.20) 共轭及反射闭合。由 $0<\delta_n<c/4$ 可知 $1/2<\beta_n<b<1$，而 $0<1-\beta_n<1/2$；位置重数均为 $1$。支撑升高使谱局部有限，$\beta_n\uparrow b$ 证明 (45.6)。固定 $\sigma>1/2$ 后，基准与左反射均不进入 $W_\sigma$。若 $G_n\le U<G_{n+1}$，则
+
+$$
+ |W_\sigma(U)|\le2\sum_{j\le n}m_j\le2nm_n,
+ \qquad
+ \frac{\log(2nm_n)}{\log U}
+ \le\frac{\log(2n)+\sqrt{h_n}}{h_n+\log(2\pi)}\longrightarrow0.
+ \tag{45.25}
+$$
+
+部分块及块间长空隙也满足此界。于是平凡计数 $E_1(W)\le|W|^4$ 就给 (45.8)，无需任何频差或独立性假设。$\sigma\ge b$ 时集合为空；(45.8) 只声称上界。
+
+接着核算同一完整函数的矩。固定 $n$，简记 $h,a,t,G,m,\delta,\beta,\Delta$，置 $y_0=qt$、$x=y-y_0$。当前右块及其共轭的准确贡献为
+
+$$
+ B_n(y)=2\operatorname{Re}\sum_{j<m}
+          \frac{-1}{\beta+i\gamma_{n,j}}
+                    e^{-\delta y+i\gamma_{n,j}y},
+ \qquad R_n(y)=F_{T_n}(y)-B_n(y).
+ \tag{45.26}
+$$
+
+$R_n$ 包括全部旧右块、全部已入截断的左反射、全部未移除临界线背景；没有删去其中任何位置。(45.16)、(45.24) 保证当前块全部进入 $T_n$，未来块全部在 $T_n$ 之外。因为 $\sum_jm_j/G_j\le1$，旧右块在 $I_n$ 上的绝对和至多 $C e^{-\delta_{n-1}t}$；首步旧块为空。每个反射位置的衰减缺口准确是
+
+$$
+ b-(1-\beta_j)=2c-\delta_j\ge\frac{7c}{4}>c.
+ \tag{45.27}
+$$
+
+其全部绝对和至多 $C e^{-ct}$；临界线部分由 (45.12) 至多 $C t^2e^{-ct}$。因此
+
+$$
+ \|R_n\|_{L^\infty(I_n)}
+ \le C\left[e^{-\delta_{n-1}t}+(1+t^2)e^{-ct}\right]
+ \le e^{-3h}.
+ \tag{45.28}
+$$
+
+最后一个不等式同时使用 (45.18)、$\log t\le h/4$，并由足够大的固定 $H_0$ 吸收常数。这里的 $C$ 可先由 (45.12) 及 $\sum m_j/G_j\le1$ 固定，不依赖尚未选取的未来块。
+
+原系数在证明内的近似也须相对矩支付。均匀于 $j<m$，有
+
+$$
+ \frac{-1}{\beta+i\gamma_{n,j}}
+       =\frac{i}{G}+O\left(\frac{1+m/h}{G^2}\right).
+ \tag{45.29}
+$$
+
+令 $P_n^0(y)=2\operatorname{Re}\{(i/G)\sum_{j<m}e^{i\gamma_{n,j}y}\}$。由 (45.18)，在整个实际 $I_n$ 上
+
+$$
+ \|B_n-P_n^0\|_\infty\le\eta_n,
+ \qquad
+ \eta_n=C_\kappa\left[
+          \frac{m(1+m/h)}{G^2}+\frac{m}{G}e^{-4h}\right].
+ \tag{45.30}
+$$
+
+这只用于估计，(45.4)、(45.26) 的系数仍准确保留。为预先固定相对尺度，记 $p=2,4$ 时
+
+$$
+ A_p(s)=\left(\frac{m^{p-1}h}{G^ps}\right)^{1/p},
+ \quad
+ A_2(t)=\frac{\sqrt{ma}}G,\quad
+ A_4(t)=\frac{m^{3/4}a^{1/4}}G.
+ \tag{45.31}
+$$
+
+(45.15)、(45.16) 直接给
+
+$$
+ \frac{e^{-3h}+\eta_n}{A_p(t)}\longrightarrow0
+ \qquad(p=2,4).
+ \tag{45.32}
+$$
+
+例如系数误差除以 $A_2(t)$ 至多
+$C\sqrt m(1+m/h)/(G\sqrt a)$，其对数为 $-h+O(\sqrt h+\log(1/a))\to-\infty$；除以 $A_4(t)$ 同样成立。其余两项更小。因为 $A_p(s)\ge A_p(t)$，这是全部宽度共同的相对误差预算，未以峰高 $m/G$ 代替实际范数。
+
+在实际截窗上，直接换元得到
+
+$$
+ Z_{n,s}=s\int_{-dt/s}^{dt/s}e^{-u^2/2}\,du,
+ \qquad c_\kappa s\le Z_{n,s}\le C s
+ \quad(1\le s\le t).
+ \tag{45.33}
+$$
+
+故密度处处至多 $C_\kappa/s$。取足够小的固定 $\epsilon>0$，令 $w=\epsilon h/m$。则 $w\to0$，$[-w,w]\subset[-dt,dt]$，且峰区 $|x|\le w$ 上密度至少 $c_\kappa/s$，一致于全部宽度。
+
+(45.13)--(45.15) 的校准准确给
+
+$$
+ Gqt=2\pi k_n,\qquad \Delta qt=2\pi D_n,\qquad
+ \gamma_{n,j}=\frac{2\pi(k_n+D_nj)}{qt}.
+ \tag{45.34}
+$$
+
+因此令 $\Omega=G+(m-1)\Delta/2$，有有限几何和恒等式
+
+$$
+ \begin{aligned}
+ \sum_{j<m}e^{i\gamma_{n,j}(y_0+x)}
+   &=e^{i\Omega x}\mathcal D_m(x),\\
+ \mathcal D_m(x)&=\frac{\sin(m\Delta x/2)}{\sin(\Delta x/2)},
+ \qquad \mathcal D_m(0)=m,\\
+ P_n^0(y_0+x)&=-\frac2G\mathcal D_m(x)\sin(\Omega x).
+ \end{aligned}
+ \tag{45.35}
+$$
+
+商式 $\mathcal D_m$ 在全部可去奇点按连续延拓解释。在 $|x|\le w$ 上 $\mathcal D_m(x)\ge m/2$，但实函数还含快速振荡的 $\sin(\Omega x)$，中心本身为零，并非处处同号峰。由于 $\Omega w\to\infty$，直接积分 $\sin^2$、$\sin^4$ 的三角恒等式给
+
+$$
+ \int_{-w}^{w}|\sin(\Omega x)|^p\,dx
+       \ge c_p w\qquad(p=2,4),
+ \tag{45.36}
+$$
+
+边界余项为 $O(1/\Omega)$。结合实际密度下界，得到
+
+$$
+ \|P_n^0\|_{L^p(\mu_{n,s})}\ge c_\kappa A_p(s)
+ \qquad(p=2,4).
+ \tag{45.37}
+$$
+
+(45.30)--(45.32) 和范数三角不等式遂给准确 $B_n$ 同样的下界。
+
+二阶上界直接用实际复系数的周期正交。写 $d_j=-1/(\beta+i\gamma_{n,j})$，令
+
+$$
+ P_n(y)=2\operatorname{Re}\sum_{j<m}d_je^{i\gamma_{n,j}y},
+ \qquad B_n(y)=e^{-\delta y}P_n(y).
+ \tag{45.38}
+$$
+
+由 (45.34)，$qt$ 是一个周期，正、负整数频率均互异且不为零，故任意完整周期准确有
+
+$$
+ \int_v^{v+qt}P_n(y)^2\,dy=2qt\sum_{j<m}|d_j|^2.
+ \tag{45.39}
+$$
+
+$I_n$ 的长度 $(r-1)t<2qt$；非负周期函数在该区间的积分至多两个完整周期之和。在 $I_n$ 上 $e^{-\delta y}\le1$，且 $|d_j|\ll1/G$，故
+
+$$
+ \mathbb E_{\mu_{n,s}}B_n^2
+ \le\frac{C_\kappa}{s}\int_{I_n}B_n^2\,dy
+ \le\frac{C_\kappa mt}{G^2s}.
+ \tag{45.40}
+$$
+
+这一步不需要大筛接口，也没有用全轴高斯代替截窗概率。
+
+设 $Q_p(H)=\mathbb E_{\mu_{n,s}}|H|^p$。由 (45.28)、(45.32)、(45.37)，$R_n$ 相对准确 $B_n$ 的二、四阶范数均为 $o(1)$，所以
+
+$$
+ Q_p(F_{T_n})=(1+o(1))Q_p(B_n)\quad(p=2,4),
+ \tag{45.41}
+$$
+
+$$
+ \frac{c_\kappa mh}{G^2s}\le Q_2(F_{T_n})
+           \le\frac{C_\kappa mt}{G^2s},\qquad
+ Q_4(F_{T_n})\ge\frac{c_\kappa m^3h}{G^4s}.
+ \tag{45.42}
+$$
+
+这控制的是完整函数在实际概率空间上的矩；(45.42) 二阶两端的比值允许为 $t/h=1/a$，没有声称它们固定倍数等价。
+
+均值单独支付截窗端点。把
+
+$$
+ f_\delta(y)=\frac{\mathbf1_{I_n}(y)}{Z_{n,s}}
+         e^{-(y-y_0)^2/(2s^2)-\delta y}
+ \tag{45.43}
+$$
+
+在 $I_n$ 外延零。区间内它是单峰函数，$\sup f_\delta\le C_\kappa/s$；计入两端跳跃后的全变差至多 $2\sup f_\delta$。Stieltjes 分部积分因而给
+
+$$
+ \left|\int_{\mathbb R}e^{i\gamma y}f_\delta(y)\,dy\right|
+ \le\frac{\operatorname{Var}(f_\delta)}{|\gamma|}
+ \le\frac{C_\kappa}{|\gamma|s}.
+ \tag{45.44}
+$$
+
+用 $\gamma_{n,j}\ge G$、$|d_j|\ll1/G$ 和 (45.28)，得到
+
+$$
+ |M_{n,s}|\le\frac{C_\kappa m}{G^2s}+e^{-3h},
+ \qquad
+ \sup_{1\le s\le t}\frac{|M_{n,s}|}{\sqrt{Q_2(F_{T_n})}}
+ \le\frac{C_\kappa\sqrt m}{G\sqrt h}
+             +\frac{C_\kappa e^{-3h}}{A_2(t)}\longrightarrow0.
+ \tag{45.45}
+$$
+
+这里包括 $s=t$ 时不可删去的端点质量。由 $V=Q_2-M^2$，有
+$V_{n,s}=(1+o(1))Q_2(F_{T_n})>0$。又在概率空间上 $\|F\|_4\ge\|F\|_2$，所以 (45.45) 亦给 $|M|/\|F\|_4\to0$。再次用范数三角不等式，得
+
+$$
+ \mathbb E_{\mu_{n,s}}(F_{T_n}-M_{n,s})^4
+       =(1+o(1))Q_4(F_{T_n}).
+ \tag{45.46}
+$$
+
+因此中心化没有损失 (45.42) 的相对二阶及四阶尺度。
+
+最后由 (45.42)、(45.45) 得
+
+$$
+ \frac{c_\kappa mh}{G^2s}\le V_{n,s}
+       \le\frac{C_\kappa mt}{G^2s},
+ \qquad
+ \log V_{n,s}=-2h+o(h)
+ \quad(1\le s\le t),
+ \tag{45.47}
+$$
+
+其中 $\log m=\sqrt h+o(1)$、$\log G=h+\log(2\pi)$、$\log t=o(h)$。由 $a_n\to0$ 及 $t=h/a$，对数结论给 $\sup_s|\log V|/t\to0$；由 (45.16) 的 $mt/G^2\le1/n$ 得 $\sup_sV\to0$。均值结论已在 (45.45) 支付。中心化四阶下界除以方差上界的平方，准确给
+
+$$
+ K_{n,s}\ge c_\kappa\frac{mhs}{t^2},\qquad
+ \inf_{1\le s\le t}\frac{K_{n,s}}t
+       \ge c_\kappa\frac{mh}{t^3}
+       =c_\kappa\frac{a^3m}{h^2}
+       \ge c_\kappa n^2\longrightarrow\infty.
+ \tag{45.48}
+$$
+
+同一共同递归同时支付了块分离、中心相位、计数曲率、原系数近似、完整背景和全部宽度；不存在把不同实现上分别可达的界拼接的问题。这完成 (45.9)。$\square$
+
+附于定理 45.2 的来源与适用边界如下。有限几何和的 Dirichlet 核、Taylor 公式、反函数均值定理、求和分部、周期正交、截窗归一化、变差积分及范数三角不等式均是成熟中间工具，不作为本条新增结论。$E_1$ 的虚部多重集、容差 $1$ 定义与 Tao--Trudgian--Yang，*New exponent pairs, zero density estimates, and zero additive energy estimates: a systematic approach*，[arXiv:2501.16779v1](https://arxiv.org/html/2501.16779v1)，Definition 7 一致；其 Definition 56、Remark 57 讨论实际 $\zeta$、固定 $\sigma$ 及虚部重数。本条只借用这一术语，(45.8) 由 (45.25) 的平凡计数独立给出，不调用该文的零密度或能量指数定理，也不把固定尺度比较换成随窗缩小的频差估计。本条的 repo-derived 数学内容是 (45.10)--(45.20) 定义的同一个固定谱同时满足 (45.6)--(45.9) 的共同构造；不主张这些经典输入或该构造的文献优先性。
+
+用白话说，先在临界线上铺出具有准确主计数的密集背景，再在极稀疏的高度上把成对背景位置移成一右一左。每次只移动很短的高度距离，所以任意截断处的计数误差始终有界。右侧块的总人数在高度的幂指数上极少，足以满足每个固定实部阈值的能量上界；但一个右块内部仍能在预先固定的窗中心附近同相叠加，形成包络很窄、内部快速正负振荡的波包。块高选定后再取足够小的实部缺口，使当前波包尚未衰减；先前的缺口则让所有旧块在新窗口内衰减。即使允许高斯宽度从 $1$ 一直选到整个对数窗尺度，四阶集中都无法在指定窗口列上被宽度选择消除。该结论处理的是一个固定谱的共同实现，不是逐窗换谱，也不是仅找到一个坏宽度。
+
+这个反模型只否定由 (45.6)--(45.8) 这些抽象数据直接保证指定窗口列存在有利宽度的推断；它不证明所有 $T$ 都失败，也不排除模型自身另有有利 $T$ 子列。尤其 $\mathcal Z_*$ 未被赋予 Euler 乘积、实际 $\zeta$ 的解析函数或算术显式公式，不能把 (45.4) 代入 §44 的同一实际 $\psi$ 关系。真实 $\zeta$ 仍需另证：在同一实际窗口上，把实部缺口、原 $-m_\rho/\rho$ 系数、四频近共振、真实相位与正侧能量归一化联合控制，从而取得可供 §44 消费的不重复计时的参与长度发散；或者找到另一个保留全部实际条件的充分路线。固定 $\sigma$ 的无权能量幂界与主计数本身没有给出这条联合关系。
+
+因此 §§42--44 的实际条件结论保持原范围：取得边界的消费者没有被反驳，未取得边界下真实原负阶段的半端点谐和占用仍未支付，$\sum_H\eta_H/H$ 的无条件发散仍未由此得到。即便以后取得完整全方向几何预算发散，§41 在同一 $Y$ 上实际 CM 方向的分箱凝聚或足够的跨块联合能量桥仍须另证，实际 $\nu(R_{1/2}(\alpha))$ 满测仍未裁定。原 $q_H$、CM 实际点对、全部有限地方及每个事件中的同一个成功整数均保持原义，未被抽象谱替代。
+
+## 追加锚（本行以下为增补区）
+
 ## 46. 人工参考谱的同主部单调双实现与有限／余有限负占用
 
 本节固定一个人工参考谱，给出两个连续非负计数的共同构造。这里的“同主部”指各自的误差变换与同一个参考变换之差均为整函数；它不表示完整变换相等，也不表示保留普通素数、实际零点残差或任意指定的实际芽。负占用的有限与余有限均按对数时间的 Lebesgue 测度理解。
