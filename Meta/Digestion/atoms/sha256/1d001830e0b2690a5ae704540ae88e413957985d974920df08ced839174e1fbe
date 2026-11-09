@@ -1,0 +1,6 @@
+一个归一化效应赋值是函数 $\nu:\mathcal E(H)\to[0,1]$，满足：
+
+1. $\nu(I)=1$；
+2. 若 $E,F,E+F\in\mathcal E(H)$，则 $\nu(E+F)=\nu(E)+\nu(F)$；
+3. 对每个效应 $E$，标量函数 $t\mapsto\nu(tE)$ 在 $[0,1]$ 上连续。
+
