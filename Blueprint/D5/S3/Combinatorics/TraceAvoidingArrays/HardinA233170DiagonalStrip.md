@@ -24,6 +24,10 @@ $$\operatorname{PowerSeries}.\operatorname{mk}\left(\lambda n: Nat \mapsto (\ope
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233170DiagonalStrip.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/hardin233170` (proved) by `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233170DiagonalStrip.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hardin233170","declaration_gid":"D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233170DiagonalStrip.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233170: normalized six-colour four-column arrays with horizontal and diagonal exclusion*. URL: <https://oeis.org/A233170>.
