@@ -27,14 +27,17 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   have ha := counting_bridge (n := 2) (by decide)
   have hb := h 2 (by decide)
   change 48 * ((a 2 : ℤ) + 1) = (16 : ℤ)^2 * ((L 2 : ℤ) + 6) at hb
-  linarith
+  linarith only [ha, hb]
 private theorem actual_dependence :
     actual.readout () () 2 ≠ actual.readout () () 3 := by
   have h2 := counting_bridge (n := 2) (by decide)
   have h3 := counting_bridge (n := 3) (by decide)
-  have hL2 := initial_values 0
-  have hL3 := initial_values 1
-  norm_num at h2 h3 hL2 hL3
+  have hL2 : (L 2 : ℤ) = 162 := initial_values 0
+  have hL3 : (L 3 : ℤ) = 1122 := initial_values 1
+  rw [hL2] at h2
+  rw [hL3] at h3
+  change 48 * (a 2 : ℤ) = 43008 at h2
+  change 48 * (a 3 : ℤ) = 4620288 at h3
   change (a 2 : ℤ) ≠ (a 3 : ℤ)
   omega
 def family : Registration arena (type_of% @counting_bridge) where
@@ -102,14 +105,17 @@ private theorem rejected_law : ¬ arena.Law rejected := by
         28311552 * (fun n => (a n : ℤ) + 1) (0+4) + 33554432 * (fun n => (a n : ℤ) + 1) (0+3) -
         1073741824 * (fun n => (a n : ℤ) + 1) (0+2) at h
   norm_num only [Nat.reduceAdd] at h
-  linarith
+  linarith only [ha, h]
 private theorem actual_dependence :
     actual.readout () () 2 ≠ actual.readout () () 3 := by
   have h2 := counting_bridge (n := 2) (by decide)
   have h3 := counting_bridge (n := 3) (by decide)
-  have hL2 := initial_values 0
-  have hL3 := initial_values 1
-  norm_num at h2 h3 hL2 hL3
+  have hL2 : (L 2 : ℤ) = 162 := initial_values 0
+  have hL3 : (L 3 : ℤ) = 1122 := initial_values 1
+  rw [hL2] at h2
+  rw [hL3] at h3
+  change 48 * (a 2 : ℤ) = 43008 at h2
+  change 48 * (a 3 : ℤ) = 4620288 at h3
   change (a 2 : ℤ) ≠ (a 3 : ℤ)
   omega
 def family : Registration arena (type_of% @finite_certificate) where
@@ -178,14 +184,17 @@ private theorem rejected_law : ¬ arena.Law rejected := by
         28311552 * (fun n => (a n : ℤ) + 1) (0+4) + 33554432 * (fun n => (a n : ℤ) + 1) (0+3) -
         1073741824 * (fun n => (a n : ℤ) + 1) (0+2) at hb
   norm_num only [Nat.reduceAdd] at hb
-  linarith
+  linarith only [ha, hb]
 private theorem actual_dependence :
     actual.readout () () 2 ≠ actual.readout () () 3 := by
   have h2 := counting_bridge (n := 2) (by decide)
   have h3 := counting_bridge (n := 3) (by decide)
-  have hL2 := initial_values 0
-  have hL3 := initial_values 1
-  norm_num at h2 h3 hL2 hL3
+  have hL2 : (L 2 : ℤ) = 162 := initial_values 0
+  have hL3 : (L 3 : ℤ) = 1122 := initial_values 1
+  rw [hL2] at h2
+  rw [hL3] at h3
+  change 48 * (a 2 : ℤ) = 43008 at h2
+  change 48 * (a 3 : ℤ) = 4620288 at h3
   change (a 2 : ℤ) ≠ (a 3 : ℤ)
   omega
 def family : Registration arena (type_of% @result) where
