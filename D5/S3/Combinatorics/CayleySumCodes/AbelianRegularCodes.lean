@@ -11,6 +11,12 @@ import D5.S3.Combinatorics.CayleySumCodes.PerfectCodeTransversal
 import D5.S3.Combinatorics.CayleySumCodes.NormalSubgroupCriterion
 import Mathlib.Algebra.Group.Subgroup.Ker
 import Mathlib.GroupTheory.Perm.Cycle.Type
+import Mathlib.GroupTheory.Frattini
+import Mathlib.GroupTheory.SchurZassenhaus
+import Mathlib.Algebra.Module.ZMod
+import Mathlib.Algebra.Field.ZMod
+import Mathlib.LinearAlgebra.Basis.VectorSpace
+
 
 set_option autoImplicit false
 
@@ -386,5 +392,142 @@ theorem even_total_exists [Finite G] (H : Subgroup G) (heven : 2 ∣ Nat.card H)
 #print axioms squares_eq
 #print axioms square_free_normalized
 #print axioms perfect_iff
+
+/- The Frattini and vector-complement proof below adapts
+Qiuzhen-CFSG/CFSG at immutable revision
+0c6635528a02dd46f2e93e2ade0c4ac647ad1eb7,
+Theory/Frattini/PGroup.lean and Theory/ElementaryAbelian/VectorSpace.lean.
+Apache-2.0; original license retained in
+  docs/reports/licenses/cfsg-frattini-kernel-LICENSE.txt.
+Only the used commutative exponent-two specialization is ported; current
+Mathlib supplies complement, maximal-index, quotient and Schur-Zassenhaus facts.
+Replace this scoped port by direct Mathlib import when that pin supplies the
+same Frattini statement. The final Hall decomposition is the C7 consumer. -/
+
+private theorem exponent_two_frattini {R : Type*} [CommGroup R] [Finite R]
+    (hpow : ∀ x : R, x ^ 2 = 1) : frattini R = ⊥ := by
+  apply eq_bot_iff.mpr
+  intro x hx
+  by_cases hx1 : x = 1
+  · simp [hx1]
+  · let B : Subgroup R := Subgroup.zpowers x
+    have hB_card : Nat.card B = 2 :=
+      (Nat.card_zpowers x).trans (by
+        rcases (Nat.dvd_prime Nat.prime_two).1
+          (orderOf_dvd_of_pow_eq_one (hpow x)) with h1 | hp
+        · exact False.elim (hx1 (orderOf_eq_one_iff.mp h1))
+        · exact hp)
+    letI : Fact (Nat.Prime 2) := ⟨Nat.prime_two⟩
+    letI : Module (ZMod 2) (Additive R) :=
+      AddCommGroup.zmodModule (fun x => toMul_eq_one.mp (hpow x))
+    let φ : AddSubgroup (Additive R) ≃o Submodule (ZMod 2) (Additive R) :=
+      AddSubgroup.toZModSubmodule (n := 2)
+    let ψ : AddSubgroup (Additive R) ≃o Subgroup R := AddSubgroup.toSubgroup'
+    let S : AddSubgroup (Additive R) := Subgroup.toAddSubgroup B
+    obtain ⟨C', hC'⟩ := Submodule.exists_isCompl (K := ZMod 2) (φ S)
+    let T := φ.symm C'
+    let C : Subgroup R := ψ T
+    have hcompl_add : IsCompl S T := (φ.isCompl_iff).mpr hC'
+    have hcompl : IsCompl B C :=
+      IsCompl.of_orderEmbedding (RelIso.toRelEmbedding Subgroup.toAddSubgroup) hcompl_add
+    have hx_not_C : x ∉ C := by
+      intro hxC
+      exact hx1 (by
+        have hx_bot : x ∈ (⊥ : Subgroup R) := by
+          rw [← hcompl.inf_eq_bot]
+          exact ⟨(Subgroup.mem_zpowers x : x ∈ B), hxC⟩
+        simpa using hx_bot)
+    have hC_coatom : IsCoatom C := by
+      refine ⟨?_, ?_⟩
+      · intro hCtop
+        exact hx_not_C (by simp [hCtop])
+      · intro D hCD
+        rcases SetLike.exists_of_lt hCD with ⟨d, hdD, hdnotC⟩
+        rcases (Subgroup.mem_sup (s := B) (t := C) (x := d)).1 (by
+          simp [(by simpa [sup_comm] using hcompl.sup_eq_top : B ⊔ C = ⊤)]) with
+          ⟨b, hbB, c, hcC, hbc_eq⟩
+        have hbD : b ∈ D := by
+          simpa [mul_assoc, ← hbc_eq]
+            using (D.mul_mem hdD (D.inv_mem ((le_of_lt hCD) hcC)))
+        have hb_ne_one : b ≠ 1 := by
+          intro hb1
+          exact hdnotC (by simpa [← hbc_eq, hb1] using hcC)
+        let E : Subgroup B := (B ⊓ D).subgroupOf B
+        have hbE : (⟨b, hbB⟩ : B) ∈ E := by
+          change b ∈ B ⊓ D
+          exact ⟨hbB, hbD⟩
+        have hE_ne_bot : E ≠ ⊥ := by
+          intro hEbot
+          have hbE_bot : (⟨b, hbB⟩ : B) ∈ (⊥ : Subgroup B) := by simpa [hEbot] using hbE
+          have hb_eq_one : (⟨b, hbB⟩ : B) = 1 := by simpa using hbE_bot
+          exact hb_ne_one (Subtype.ext_iff.mp hb_eq_one)
+        have : Fact (Nat.card B).Prime := ⟨by simpa [hB_card] using Nat.prime_two⟩
+        have hB_le_D : B ≤ D :=
+          fun y hy => ((Subgroup.subgroupOf_eq_top).1
+            ((Subgroup.eq_bot_or_eq_top_of_prime_card (G := B) E).resolve_left hE_ne_bot) hy).2
+        exact top_le_iff.mp
+          (by
+            rw [← hcompl.sup_eq_top]
+            exact sup_le hB_le_D (le_of_lt hCD))
+    exact False.elim (hx_not_C ((frattini_le_coatom hC_coatom) hx))
+
+private theorem square_frattini {R : Type*} [CommGroup R] [Finite R]
+    (hR : IsPGroup 2 R) : squareSubgroup (G := R) = frattini R := by
+  apply le_antisymm
+  · rintro x ⟨y, rfl⟩
+    unfold frattini Order.radical
+    simp only [Subgroup.mem_iInf]
+    intro M hM
+    have hidx : M.index = 2 := hR.isCoatom_iff_index_eq_prime.mp hM
+    change y ^ 2 ∈ M
+    apply (QuotientGroup.eq_one_iff (N := M) (x := y ^ 2)).mp
+    have hh := pow_card_eq_one' (x := (QuotientGroup.mk' M y : R ⧸ M))
+    rw [← Subgroup.index_eq_card, hidx] at hh
+    simpa only [QuotientGroup.mk'_apply, QuotientGroup.mk_pow] using hh
+  · let S := squareSubgroup (G := R)
+    have hpow : ∀ x : R ⧸ S, x ^ 2 = 1 := by
+      intro x
+      induction x using QuotientGroup.induction_on with
+      | H x =>
+        exact (QuotientGroup.eq_one_iff (N := S) (x := x ^ 2)).mpr ⟨x, rfl⟩
+    have hphi := exponent_two_frattini hpow
+    have hle := frattini_le_comap_frattini_of_surjective
+      (φ := QuotientGroup.mk' S) (QuotientGroup.mk'_surjective S)
+    rw [hphi] at hle
+    intro x hx
+    have hx' := hle hx
+    exact (QuotientGroup.eq_one_iff (N := S) (x := x)).mp (by simpa using hx')
+
+/-- Every actual Sylow-2 subgroup has an actual odd Hall complement, and
+its Frattini subgroup times that complement is exactly the ambient square subgroup. -/
+theorem square_frattini_hall {R : Type*} [CommGroup R] [Finite R] (Q : Sylow 2 R) :
+    ∃ K : Subgroup R, Subgroup.IsComplement' (Q : Subgroup R) K ∧
+      Odd (Nat.card K) ∧
+      squareSubgroup (G := R) = (frattini Q).map (Q : Subgroup R).subtype ⊔ K := by
+  obtain ⟨K, hK⟩ := Subgroup.exists_right_complement'_of_coprime Q.card_coprime_index
+  have hcard : Nat.card K = Q.index := hK.symm.index_eq_card.symm
+  have hodd : Odd (Nat.card K) := by
+    rw [hcard, ← Nat.not_even_iff_odd, even_iff_two_dvd]
+    exact Q.not_dvd_index
+  refine ⟨K, hK, hodd, ?_⟩
+  rw [← square_frattini Q.isPGroup']
+  apply le_antisymm
+  · rintro x ⟨y, rfl⟩
+    obtain ⟨q, hq, k, hk, rfl⟩ := Subgroup.mem_sup.mp
+      (show y ∈ (Q : Subgroup R) ⊔ K by rw [hK.sup_eq_top]; trivial)
+    change (q*k)^2 ∈ _
+    rw [mul_pow]
+    apply Subgroup.mul_mem_sup
+    · exact ⟨(⟨q, hq⟩ : Q)^2, ⟨⟨q, hq⟩, rfl⟩, rfl⟩
+    · exact K.pow_mem hk 2
+  · apply sup_le
+    · rintro x ⟨q, ⟨u, rfl⟩, rfl⟩
+      exact ⟨(u : R), rfl⟩
+    · intro k hk
+      have hc : (Nat.card K).Coprime 2 := Nat.coprime_two_right.mpr hodd
+      obtain ⟨u, hu⟩ := (powCoprime hc).surjective (⟨k, hk⟩ : K)
+      exact ⟨(u : R), congrArg Subtype.val hu⟩
+
+#print axioms square_frattini_hall
 
 end D5.S3.Combinatorics.CayleySumCodes.AbelianRegularCodes

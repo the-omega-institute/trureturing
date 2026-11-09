@@ -23,8 +23,8 @@ internal sealed class AbelianRegularCodesDocument : IScribeDocumentDefinition
                 + "imposed on a witness subgroup.", DescribeRole.Definition),
             Item("square-subgroup-carrier", "squares_eq", "The exact square-set carrier",
                 "The carrier of the squaring image equals the elementwise square set. "
-                + "The separate finite Sylow/Frattini identity Sq(G)=Phi(Q)K remains "
-                + "an additional correspondence obligation.", DescribeRole.Theorem),
+                + "The finite Sylow/Frattini identity Sq(G)=Phi(Q)K below gives "
+                + "the source correspondence with an actual odd Hall complement.", DescribeRole.Theorem),
             Item("square-free-transversal", "square_free_normalized",
                 "A normalized transversal avoiding all nonidentity squares",
                 "If H contains an ambient nonsquare z, modify each nonidentity "
@@ -47,6 +47,16 @@ internal sealed class AbelianRegularCodesDocument : IScribeDocumentDefinition
                 + "or inserts the two ambient squares into a normalized transversal. "
                 + "This is the universal Proposition 3.2 argument; reported finite "
                 + "tables do not prove this criterion.", DescribeRole.Theorem),
+            Item("sylow-frattini-hall", "square_frattini_hall",
+                "The exact square subgroup in Sylow and Hall coordinates",
+                "For every finite abelian group and every actual Sylow-2 subgroup Q, "
+                + "construct an actual complementary subgroup K of odd order and prove "
+                + "Sq(G)=Phi(Q)K inside G. This discharges the separate identity in "
+                + "Zhang 5.3 without assuming a decomposition or the desired square "
+                + "identity. The scoped Frattini proof adapts Qiuzhen-CFSG/CFSG at "
+                + "0c6635528a02dd46f2e93e2ade0c4ac647ad1eb7, retaining its Apache-2.0 "
+                + "source and license; actual Schur-Zassenhaus and finite-group "
+                + "primitives are directly imported from the pinned Mathlib.", DescribeRole.Theorem),
             Item("even-abelian-nonsquare", "even_nonsquare", "An actual nonsquare",
                 "Cauchy's theorem gives a nontrivial kernel element of the finite "
                 + "squaring map; noninjectivity implies nonsurjectivity and hence a "

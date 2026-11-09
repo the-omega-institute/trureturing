@@ -13,7 +13,8 @@ import D5.S3.Combinatorics.CayleySumCodes.PerfectCodeTransversal
 Jun-Yang Zhang, arXiv:2210.03336v1, Example 5.8. These are the retained
 constructions, with arbitrary inverse-closed transversals; no exhaustive
 classification is asserted. The half-turn and parity hypotheses are proved
-for the source's entire n = 4k+2 domain at the end.
+for the source's entire n = 4k+2, k>=1 domain by the current
+transient exact application checks.
 -/
 
 set_option autoImplicit false

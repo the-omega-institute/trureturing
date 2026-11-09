@@ -26,7 +26,7 @@ Lean statement: `D5/S3/Combinatorics/CayleySumCodes/AbelianRegularCodes.squares_
 
 *Commentary.*
 
-The carrier of the squaring image equals the elementwise square set. The separate finite Sylow/Frattini identity Sq(G)=Phi(Q)K remains an additional correspondence obligation.
+The carrier of the squaring image equals the elementwise square set. The finite Sylow/Frattini identity Sq(G)=Phi(Q)K below gives the source correspondence with an actual odd Hall complement.
 
 **Theorem 1.3 (A normalized transversal avoiding all nonidentity squares).**
 
@@ -64,7 +64,19 @@ Lean statement: `D5/S3/Combinatorics/CayleySumCodes/AbelianRegularCodes.total_if
 
 A subgroup H of a finite abelian G has a regular total-code witness exactly when H contains an ambient nonsquare or Sq(G) has two elements and lies in H. In the latter necessity branch H=Sq(G) and |H|=2. Sufficiency constructs an actual square-free transversal or inserts the two ambient squares into a normalized transversal. This is the universal Proposition 3.2 argument; reported finite tables do not prove this criterion.
 
-**Theorem 1.6 (An actual nonsquare).**
+**Theorem 1.6 (The exact square subgroup in Sylow and Hall coordinates).**
+
+Lean statement: `D5/S3/Combinatorics/CayleySumCodes/AbelianRegularCodes.square_frattini_hall`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/CayleySumCodes/AbelianRegularCodes.square_frattini_hall` (`✓ std3`). ∎
+
+*Citation.* Haobo Ma; Reza Nikandish; Wenlin Zhang (2026). *Subgroup total perfect codes in Cayley sum graphs: a missing case and its consequences*. DOI: [10.5281/zenodo.23375144](https://doi.org/10.5281/zenodo.23375144). URL: <https://doi.org/10.5281/zenodo.23375144>.
+
+*Commentary.*
+
+For every finite abelian group and every actual Sylow-2 subgroup Q, construct an actual complementary subgroup K of odd order and prove Sq(G)=Phi(Q)K inside G. This discharges the separate identity in Zhang 5.3 without assuming a decomposition or the desired square identity. The scoped Frattini proof adapts Qiuzhen-CFSG/CFSG at 0c6635528a02dd46f2e93e2ade0c4ac647ad1eb7, retaining its Apache-2.0 source and license; actual Schur-Zassenhaus and finite-group primitives are directly imported from the pinned Mathlib.
+
+**Theorem 1.7 (An actual nonsquare).**
 
 Lean statement: `D5/S3/Combinatorics/CayleySumCodes/AbelianRegularCodes.even_nonsquare`
 
@@ -76,7 +88,7 @@ Lean statement: `D5/S3/Combinatorics/CayleySumCodes/AbelianRegularCodes.even_non
 
 Cauchy's theorem gives a nontrivial kernel element of the finite squaring map; noninjectivity implies nonsurjectivity and hence a nonsquare. The consumer is the total-code construction for even H.
 
-**Theorem 1.7 (Every even abelian subgroup has a total-code witness).**
+**Theorem 1.8 (Every even abelian subgroup has a total-code witness).**
 
 Lean statement: `D5/S3/Combinatorics/CayleySumCodes/AbelianRegularCodes.even_total_exists`
 
@@ -94,6 +106,7 @@ For every even-order H in a finite abelian G, an actual H-nonsquare and an abeli
 - Truth anchor: `D5/S3/Combinatorics/CayleySumCodes/AbelianRegularCodes.even_total_exists`
 - Truth anchor: `D5/S3/Combinatorics/CayleySumCodes/AbelianRegularCodes.perfect_iff`
 - Truth anchor: `D5/S3/Combinatorics/CayleySumCodes/AbelianRegularCodes.squareSubgroup`
+- Truth anchor: `D5/S3/Combinatorics/CayleySumCodes/AbelianRegularCodes.square_frattini_hall`
 - Truth anchor: `D5/S3/Combinatorics/CayleySumCodes/AbelianRegularCodes.square_free_normalized`
 - Truth anchor: `D5/S3/Combinatorics/CayleySumCodes/AbelianRegularCodes.squares_eq`
 - Truth anchor: `D5/S3/Combinatorics/CayleySumCodes/AbelianRegularCodes.total_iff`

@@ -4,7 +4,19 @@
 
 Exact degrees and reversible deletion in the complete nonzero binary subspace graph.
 
-**Theorem 1.1 (Exact degrees).**
+**Theorem 1.1 (Every contained nonzero subspace).**
+
+Lean statement: `D5/S3/Combinatorics/Orthogonality/OrthogonalityDegreeDeletion.below_card`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Orthogonality/OrthogonalityDegreeDeletion.below_card` (`✓ std3`). ∎
+
+*Citation.* Public binary-subspace-orthogonality research workspace; individual derivation attribution unspecified (2026). *Degree and list-color deletion for binary subspace orthogonality*. URL: <https://github.com/the-omega-institute/binary-subspace-orthogonality/blob/9f065627944f30fe7b56e6ec0fb1025d3bb5a7ce/manuscript/sections/higher-dimensions.tex>.
+
+*Commentary.*
+
+The original proved subtype map/comap count is exposed for the live six-dimensional label-list consumer. Every nonzero submodule contained in X is counted by N(finrank X); its existing proof body is reused without a second lattice count.
+
+**Theorem 1.2 (Exact degrees).**
 
 Lean statement: `D5/S3/Combinatorics/Orthogonality/OrthogonalityDegreeDeletion.degree_card`
 
@@ -18,7 +30,7 @@ For every natural n and every actual nonzero submodule U of Fin n -> ZMod 2, wri
 
 Nonzero submodules contained in U-perp correspond bijectively to nonzero submodules of U-perp itself, by subtype map and comap. A basis identifies that space with the binary coordinate space of dimension n-d. Finally erase U itself exactly when it is in this lattice. The graph is loopless. No catalogue completeness, Gaussian-binomial formula or finite computation is assumed.
 
-**Theorem 1.2 (Preserve every retained color).**
+**Theorem 1.3 (Preserve every retained color).**
 
 Lean statement: `D5/S3/Combinatorics/Orthogonality/OrthogonalityDegreeDeletion.result`
 
@@ -36,6 +48,7 @@ The quantifiers include empty D, dimension zero and an empty palette. If a nonem
 
 ## References
 
+- Truth anchor: `D5/S3/Combinatorics/Orthogonality/OrthogonalityDegreeDeletion.below_card`
 - Truth anchor: `D5/S3/Combinatorics/Orthogonality/OrthogonalityDegreeDeletion.degree_card`
 - Truth anchor: `D5/S3/Combinatorics/Orthogonality/OrthogonalityDegreeDeletion.result`
 - Dependency: [D5/S3/Combinatorics/Orthogonality/NikandishClique](NikandishClique.md)
