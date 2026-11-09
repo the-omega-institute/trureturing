@@ -11,6 +11,10 @@ internal sealed class HardinA233255PairTransferDocument : IScribeDocumentDefinit
         "Literal seven-column arrays and the exact transfer on labelled six-cell boundaries.",
         H("Positive-height arrays with horizontal and antidiagonal bonds"),
         Blocks(
+            Paragraph(Text("Source problem: R. H. Hardin, OEIS A233255, "
+                + "https://oeis.org/A233255 (OEIS licence: https://oeis.org/LICENSE). "
+                + "The all-height labelled count correspondence below is one part of the "
+                + "literal count to canonical-shape transfer argument.")),
             Paragraph(Text("An array is an individual function on a positive number of rows and "
                 + "seven columns with values in six colours. Its upper-left colour is zero. "
                 + "Only horizontal and upper-right/lower-left antidiagonal bonds exclude equal "

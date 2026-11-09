@@ -49,8 +49,10 @@ def family : Registration arena (type_of% @continuation_pair_bridge) where
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     (@continuation_pair_bridge) (Realization signature) Type Unit where
-  unitName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255PairTransfer.Continuation.auditUnit
-  realizationName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255PairTransfer.Continuation.family
+  unitName :=
+    `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255PairTransfer.Continuation.auditUnit
+  realizationName :=
+    `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255PairTransfer.Continuation.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -113,7 +115,6 @@ private theorem rejected_law : ¬ arena.Law rejected := by
     simp_rw [hx]
     rw [Finset.sum_add_distrib]
     congr 1
-    decide +kernel
   change (a ⟨1, by omega⟩ : ℤ) = _ at hb ha
   simp only [rejected, realize, pairV, mul_one] at hb
   simp only [pairV, mul_one] at ha
