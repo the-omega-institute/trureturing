@@ -1,0 +1,11 @@
+### 15.6. 转移谱的来源与适用边界
+
+命题 15.2 的离散矩阵、负或零隐藏根及新增 lag 证书为 `repo-derived` 的具体观察反例。
+其正交谱分解是经典中间工具，参见 Levin–Peres–Wilmer，
+[*Markov Chains and Mixing Times*, 第二版](https://pages.uoregon.edu/dlevin/MARKOV/mcmt2e.pdf)，第 12 章的可逆链谱方法；
+行随机约定在这里转置为列随机约定。
+[静态 seam 卷命题 30.12](AURIC_FIB_ATOM_STATIC_SEAMS_TRANSITION_CIRCULATION_AND_FIBONACCI_TOGGLE_CYCLES.md)已有连续时间隐藏谱及随机率锥，
+这里不重列那些结论；$K_\eta$ 的负根也不主张是该连续半群的指数。
+本节 $K_\eta$ 的转移谱、$\operatorname{diag}(f)$ 的读出谱、相干态的约化谱及定理 13.2 的替换矩阵谱是不同对象。
+本反例没有提供原生 FIB 转移实现、物理实现、一般 HMM 的识别分类或普适复杂度界。
+
