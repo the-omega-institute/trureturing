@@ -1,0 +1,38 @@
+**定理 23.2（比较状态与正泛函等价）。** 定义 23.1 等价于存在唯一归一化正线性泛函 $\omega:\mathcal A\to\mathbb C$，使
+
+$$
+C(a,b)=\omega(a^*b).
+$$
+
+进一步，存在 Hilbert 空间 $H_\omega$、表示 $\pi_\omega:\mathcal A\to\mathcal B(H_\omega)$ 和循环单位向量 $\Omega_\omega$，满足
+
+$$
+\omega(a)=\langle\Omega_\omega,\pi_\omega(a)\Omega_\omega\rangle,
+\qquad
+C(a,b)=
+\langle\pi_\omega(a)\Omega_\omega,\pi_\omega(b)\Omega_\omega\rangle.
+$$
+
+**证明。** 定义 $\omega(a):=C(1,a)$。取第 4 条中的 $a$ 为原来的 $a$、$b=1$、$c=b$，得到
+
+$$
+C(a,b)=C(1,a^*b)=\omega(a^*b).
+$$
+
+于是
+
+$$
+\omega(1)=1,\qquad
+\omega(a^*a)=C(a,a)\ge0.
+$$
+
+所以 $\omega$ 是归一化正泛函；在 $C^*$-代数上它自动连续且范数为 $1$。反向地，任意这样的 $\omega$ 定义 $C(a,b)=\omega(a^*b)$，立即满足四条公理。对 $\omega$ 的零范数左理想作商并完备，令 $\pi_\omega(a)[b]=[ab]$，$\Omega_\omega=[1]$，即得所述 GNS 表示。唯一性是循环表示在酉等价意义下的唯一性。证毕。
+
+这一定理说明：第 22 章的正定核不是被删除，而是变成
+
+$$
+K(a,b)=C(a,b)=\omega(a^*b)
+$$
+
+的特殊情形。比较关系、Hilbert 几何和代数作用由同一个二元对象承载。
+
