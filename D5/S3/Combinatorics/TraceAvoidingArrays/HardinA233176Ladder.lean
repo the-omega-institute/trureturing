@@ -32,7 +32,6 @@ Direct frozen dependency: D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175P
 statement_id: sha256:9e135f0d9ab09759e51e42b0ac88f4af874ef89f0e507400af6cd5a57f0dee70
 Direct frozen dependency: D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.instDecidableGood
 statement_id: sha256:ba47f943ce15475e2c20ac49cf6e7b679d6663cf54500416777fdee7cf97da32
-Col: proof_shape=bind-only; consumers=instFintypeCol
 Labels: proof_shape=bind-only; consumers=pairs
 colEquiv: proof_shape=bind-only; consumers=instFintypeCol
 instFintypeCol: proof_shape=bind-only; consumers=step
@@ -125,6 +124,7 @@ recurrence: proof_shape=bind-only; consumers=result
 result: proof_shape=bind-only; consumers=terminal result
 -/
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip
 import D5.S3.Observer.Separation.BooleanRankThreeK4
 import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.IntervalCases
@@ -138,16 +138,16 @@ set_option Elab.async false
 open scoped BigOperators
 namespace D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233176Ladder
 open HardinA233175PairStrip
-  (Seen allowed advance good finish finish_fst finish_snd good_iff edge_iff)
+  (Seen allowed advance good finish finish_fst finish_snd good_iff)
+open HardinA233251TriangleStrip (Row colour_bond_iff)
 open D5.S3.Observer.Separation.BooleanRankThreeK4 (beta)
-private abbrev Col := Fin 3 → Fin 6
 private abbrev Labels := Fin 3 → Fin 3
-private def colEquiv : (Fin 6 × Fin 6 × Fin 6) ≃ Col where
+private def colEquiv : (Fin 6 × Fin 6 × Fin 6) ≃ Row where
   toFun p := ![p.1, p.2.1, p.2.2]
   invFun d := (d 0, d 1, d 2)
   left_inv _ := rfl
   right_inv d := by ext i; fin_cases i <;> rfl
-private instance instFintypeCol : Fintype Col :=
+private instance instFintypeCol : Fintype Row :=
   Fintype.ofEquiv (Fin 6 × Fin 6 × Fin 6) colEquiv
 private def seen (s : Fin 3) : Seen := (decide (0 < s.val), decide (1 < s.val))
 private def next (s : Fin 3) (x : Fin 6) : Fin 3 :=
@@ -249,24 +249,19 @@ private instance instDecidableLegal {n : ℕ} (A : Fin 3 × Fin n → Fin 6) :
 def a (n : ℕ) : ℕ :=
   (Finset.univ.filter (fun A : Fin 3 × Fin n → Fin 6 => Legal A)).card
 attribute [local irreducible] a
-private def pairs (c : Col) : Labels := fun i => beta (c i)
-private def compatible (p : Labels) (c : Col) : Prop :=
+private def pairs (c : Row) : Labels := fun i => beta (c i)
+private def compatible (p : Labels) (c : Row) : Prop :=
   ∀ r s : Fin 3, (r.val ≤ s.val + 1 ∧ s.val ≤ r.val + 1) → beta (c s) ≠ p r
-private instance instDecidableCompatible (p : Labels) (c : Col) :
+private instance instDecidableCompatible (p : Labels) (c : Row) :
     Decidable (compatible p c) := inferInstanceAs (Decidable (∀ _ _, _ → _))
-private theorem bonds_iff (c d : Col) :
+private theorem bonds_iff (c d : Row) :
     (∀ r s : Fin 3, (r.val ≤ s.val + 1 ∧ s.val ≤ r.val + 1) →
       c r ≠ d s ∧ (c r).val + (d s).val ≠ 5) ↔ compatible (pairs c) d := by
-  have he (x y : Fin 6) : (x ≠ y ∧ x.val + y.val ≠ 5) ↔ beta y ≠ beta x := by
-    have hh := edge_iff (fun _ => x) (fun _ => y)
-    change (∀ _r _s : Fin 2, x ≠ y ∧ x.val + y.val ≠ 5) ↔
-      (∀ _r : Fin 2, beta y ≠ beta x ∧ beta y ≠ beta x) at hh
-    simpa only [Fin.forall_fin_two, and_self] using hh
-  simp only [he, compatible, pairs]
-private def chain : {n : ℕ} → Labels → (Fin n → Col) → Prop
+  simp only [colour_bond_iff, compatible, pairs, ne_comm]
+private def chain : {n : ℕ} → Labels → (Fin n → Row) → Prop
   | 0, _, _ => True
   | _ + 1, p, f => compatible p (f 0) ∧ chain (pairs (f 0)) (Fin.tail f)
-private theorem chain_tail {n : ℕ} (f : Fin (n + 1) → Col) :
+private theorem chain_tail {n : ℕ} (f : Fin (n + 1) → Row) :
     chain (pairs (f 0)) (Fin.tail f) ↔
       ∀ i : Fin n, compatible (pairs (f i.castSucc)) (f i.succ) := by
   induction n with
@@ -274,7 +269,7 @@ private theorem chain_tail {n : ℕ} (f : Fin (n + 1) → Col) :
   | succ n ih =>
     simpa [chain, Fin.tail, Fin.forall_fin_succ] using
       (and_congr_right (fun _ => ih (Fin.tail f)))
-private theorem legal_iff {n : ℕ} (f : Fin (n + 1) → Col) :
+private theorem legal_iff {n : ℕ} (f : Fin (n + 1) → Row) :
     Legal (fun p => f p.2 p.1) ↔ f 0 0 = 0 ∧
       good (false, false) (fun j => f j 0) ∧
       good (finish (false, false) (fun j => f j 0)) (fun j => f j 1) ∧
@@ -300,26 +295,26 @@ private theorem legal_iff {n : ℕ} (f : Fin (n + 1) → Col) :
   rw [Legal, hf, he, normal_iff, ← chain_tail]
   tauto
 private def TailGood {n : ℕ} (q r t b c : Fin 3) (p : Labels)
-    (f : Fin n → Col) : Prop :=
+    (f : Fin n → Row) : Prop :=
   chain p f ∧ good (seen t) (fun i => f i 0) ∧ good (seen b) (fun i => f i 1) ∧
     good (seen c) (fun i => f i 2) ∧
     endLevel t (fun i => f i 0) = q ∧ endLevel b (fun i => f i 1) = r
-private instance instDecidableChain {n : ℕ} (p : Labels) (f : Fin n → Col) :
+private instance instDecidableChain {n : ℕ} (p : Labels) (f : Fin n → Row) :
     Decidable (chain p f) := by
   induction n generalizing p with
   | zero => exact isTrue trivial
   | succ n ih => exact @instDecidableAnd _ _ inferInstance (ih _ _)
 private instance instDecidableTailGood {n : ℕ} (q r t b c : Fin 3) (p : Labels)
-    (f : Fin n → Col) : Decidable (TailGood q r t b c p f) :=
+    (f : Fin n → Row) : Decidable (TailGood q r t b c p f) :=
   inferInstanceAs (Decidable (_ ∧ _ ∧ _ ∧ _ ∧ _ ∧ _))
-private def admissible (q r t b c : Fin 3) (p : Labels) (d : Col) : Prop :=
+private def admissible (q r t b c : Fin 3) (p : Labels) (d : Row) : Prop :=
   compatible p d ∧ allowed (seen t) (d 0) ∧ allowed (seen b) (d 1) ∧
     allowed (seen c) (d 2) ∧ next t (d 0) ≤ q ∧ next b (d 1) ≤ r
-private instance instDecidableAdmissible (q r t b c : Fin 3) (p : Labels) (d : Col) :
+private instance instDecidableAdmissible (q r t b c : Fin 3) (p : Labels) (d : Row) :
     Decidable (admissible q r t b c p d) :=
   inferInstanceAs (Decidable (_ ∧ _ ∧ _ ∧ _ ∧ _ ∧ _))
 private theorem tailGood_cons {n : ℕ} (q r t b c : Fin 3) (p : Labels)
-    (d : Col) (f : Fin n → Col) :
+    (d : Row) (f : Fin n → Row) :
     TailGood q r t b c p (Fin.cons d f) ↔
       admissible q r t b c p d ∧
         TailGood q r (next t (d 0)) (next b (d 1)) (next c (d 2)) (pairs d) f := by
@@ -342,21 +337,21 @@ private theorem tailGood_cons {n : ℕ} (q r t b c : Fin 3) (p : Labels)
   · simp [admissible, ht]
 private def step (w : Fin 3 → Fin 3 → Fin 3 → Fin 3 → Fin 3 → Labels → ℤ)
     (q r t b c : Fin 3) (p : Labels) : ℤ :=
-  ∑ d : Col, if admissible q r t b c p d then
+  ∑ d : Row, if admissible q r t b c p d then
     w q r (next t (d 0)) (next b (d 1)) (next c (d 2)) (pairs d) else 0
 private def v : ℕ → Fin 3 → Fin 3 → Fin 3 → Fin 3 → Fin 3 → Labels → ℤ
   | 0, q, r, t, b, _, _ => if t = q ∧ b = r then 1 else 0
   | k + 1, q, r, t, b, c, p => step (v k) q r t b c p
 private def count (n : ℕ) (q r t b c : Fin 3) (p : Labels) : ℤ :=
-  ∑ f : Fin n → Col, if TailGood q r t b c p f then 1 else 0
+  ∑ f : Fin n → Row, if TailGood q r t b c p f then 1 else 0
 private theorem count_eq_v (n : ℕ) : count n = v n := by
   induction n with
   | zero => funext q r t b c p; simp [count, TailGood, v, good, endLevel, chain]
   | succ n ih =>
     funext q r t b c p
-    rw [count, ← (Fin.consEquiv (fun _ : Fin (n + 1) => Col)).sum_comp]
+    rw [count, ← (Fin.consEquiv (fun _ : Fin (n + 1) => Row)).sum_comp]
     rw [Fintype.sum_prod_type]
-    change (∑ d : Col, ∑ f : Fin n → Col,
+    change (∑ d : Row, ∑ f : Fin n → Row,
       if TailGood q r t b c p (Fin.cons d f) then (1 : ℤ) else 0) = _
     change _ = step (v n) q r t b c p
     rw [← ih]
@@ -365,30 +360,30 @@ private theorem count_eq_v (n : ℕ) : count n = v n := by
     intro d _
     by_cases h : admissible q r t b c p d <;> simp [tailGood_cons, h]
 private def total (w : Fin 3 → Fin 3 → Fin 3 → Fin 3 → Fin 3 → Labels → ℤ) : ℤ :=
-  ∑ d : Col, ∑ q : Fin 3, ∑ r : Fin 3,
+  ∑ d : Row, ∑ q : Fin 3, ∑ r : Fin 3,
     if d 0 = 0 ∧ allowed (seen q) (d 1) ∧ allowed (seen r) (d 2) ∧
         next q (d 1) ≤ r then
       w q r 0 (next q (d 1)) (next r (d 2)) (pairs d) else 0
 private theorem counting_bridge (n : ℕ) : (a (n + 1) : ℤ) = total (v n) := by
   rw [a, Finset.natCast_card_filter]
-  let e : (Fin 3 × Fin (n + 1) → Fin 6) ≃ (Fin (n + 1) → Col) :=
+  let e : (Fin 3 × Fin (n + 1) → Fin 6) ≃ (Fin (n + 1) → Row) :=
     { toFun := fun A j r => A (r, j)
       invFun := fun f p => f p.2 p.1
       left_inv := fun _ => rfl
       right_inv := fun _ => rfl }
   rw [← e.symm.sum_comp,
-    ← (Fin.consEquiv (fun _ : Fin (n + 1) => Col)).sum_comp, Fintype.sum_prod_type]
+    ← (Fin.consEquiv (fun _ : Fin (n + 1) => Row)).sum_comp, Fintype.sum_prod_type]
   unfold total
   apply Finset.sum_congr rfl
   intro d _
   rw [← count_eq_v]
   unfold count
-  trans ∑ f : Fin n → Col, ∑ q : Fin 3, ∑ r : Fin 3,
+  trans ∑ f : Fin n → Row, ∑ q : Fin 3, ∑ r : Fin 3,
     if (d 0 = 0 ∧ allowed (seen q) (d 1) ∧ allowed (seen r) (d 2)) ∧
       TailGood q r 0 (next q (d 1)) (next r (d 2)) (pairs d) f then (1 : ℤ) else 0
   · apply Finset.sum_congr rfl
     intro f _
-    change (if Legal (fun p => (Fin.cons d f : Fin (n + 1) → Col) p.2 p.1)
+    change (if Legal (fun p => (Fin.cons d f : Fin (n + 1) → Row) p.2 p.1)
       then (1 : ℤ) else 0) = _
     simp_rw [show ∀ q r : Fin 3,
       ((d 0 = 0 ∧ allowed (seen q) (d 1) ∧ allowed (seen r) (d 2)) ∧
@@ -403,7 +398,7 @@ private theorem counting_bridge (n : ℕ) : (a (n + 1) : ℤ) = total (v n) := b
       Finset.mem_univ, ite_true]
     simp only [legal_iff]
     have htail (i : Fin 3) :
-        Fin.tail (fun j => (Fin.cons d f : Fin (n + 1) → Col) j i) =
+        Fin.tail (fun j => (Fin.cons d f : Fin (n + 1) → Row) j i) =
           (fun j => f j i) := by
       funext j
       simp [Fin.tail]
@@ -442,12 +437,12 @@ private theorem counting_bridge (n : ℕ) : (a (n + 1) : ℤ) = total (v n) := b
     by_cases h : d 0 = 0 ∧ allowed (seen q) (d 1) ∧ allowed (seen r) (d 2)
     · by_cases hr : next q (d 1) ≤ r
       · simp [h.1, h.2.1, h.2.2, hr]
-      · have hn : ∀ f : Fin n → Col,
+      · have hn : ∀ f : Fin n → Row,
             ¬ TailGood q r 0 (next q (d 1)) (next r (d 2)) (pairs d) f := by
           intro f hf
           exact hr (hf.2.2.2.2.2 ▸ endLevel_mono _ _)
         simp [hr, hn]
-    · have hn : ∀ f : Fin n → Col,
+    · have hn : ∀ f : Fin n → Row,
           ¬ ((d 0 = 0 ∧ allowed (seen q) (d 1) ∧ allowed (seen r) (d 2)) ∧
             TailGood q r 0 (next q (d 1)) (next r (d 2)) (pairs d) f) :=
         fun _ hf => h hf.1
@@ -459,7 +454,7 @@ private def Valid (q r t b c : Fin 3) (p : Labels) : Prop :=
 private instance instDecidableValid (q r t b c : Fin 3) (p : Labels) :
     Decidable (Valid q r t b c p) :=
   inferInstanceAs (Decidable (_ ∧ _ ∧ _ ∧ _ ∧ _ ∧ _ ∧ _))
-private theorem valid_next (q r t b c : Fin 3) (p : Labels) (d : Col)
+private theorem valid_next (q r t b c : Fin 3) (p : Labels) (d : Row)
     (h : Valid q r t b c p) (hd : admissible q r t b c p d) :
     Valid q r (next t (d 0)) (next b (d 1)) (next c (d 2)) (pairs d) := by
   rcases h with ⟨_, hqb, _, hrc, _, _, _⟩
@@ -467,7 +462,7 @@ private theorem valid_next (q r t b c : Fin 3) (p : Labels) (d : Col)
   exact ⟨hq, le_trans hqb (next_mono b (d 1)), hr,
     le_trans hrc (next_mono c (d 2)), label_next t (d 0) ht,
     label_next b (d 1) hb, label_next c (d 2) hc⟩
-private theorem initial_valid : ∀ d : Col, ∀ q r : Fin 3,
+private theorem initial_valid : ∀ d : Row, ∀ q r : Fin 3,
     d 0 = 0 ∧ allowed (seen q) (d 1) ∧ allowed (seen r) (d 2) ∧
       next q (d 1) ≤ r → Valid q r 0 (next q (d 1)) (next r (d 2)) (pairs d) := by
   intro d q r ⟨hd, hq, hr, hqr⟩
@@ -573,7 +568,7 @@ private theorem step_fast (w : Fin 3 → Fin 3 → Fin 3 → Fin 3 → Fin 3 →
   calc
     step w q r t b c p = ((moves q r t b c p).map g).sum := by
       simp only [moves, Multiset.map_map, Function.comp_def]
-      change (∑ d : Col, if admissible q r t b c p d then
+      change (∑ d : Row, if admissible q r t b c p d then
         w q r (next t (d 0)) (next b (d 1)) (next c (d 2)) (pairs d) else 0) =
         ∑ d ∈ Finset.univ.filter (admissible q r t b c p),
           g (key (next t (d 0)) (next b (d 1)) (next c (d 2)) (pairs d))
