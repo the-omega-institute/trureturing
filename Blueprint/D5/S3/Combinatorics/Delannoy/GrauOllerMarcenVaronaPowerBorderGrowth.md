@@ -8,7 +8,7 @@ The power-border Delannoy diagonal ratio differs from exp(1) times the half-shif
 
 $$claimPower \Leftrightarrow \operatorname{Filter}.\operatorname{Tendsto}\left((\operatorname{fun} (n:\mathbb{N}) \mapsto \frac{(\operatorname{GrauOllerMarcenVaronaFactorialBorderGrowth}.\operatorname{f}\left((\operatorname{fun} (k:\mathbb{N}) \mapsto k^{k}), n + 1, n + 1\right) : \mathbb{R})}{(\operatorname{GrauOllerMarcenVaronaFactorialBorderGrowth}.\operatorname{f}\left((\operatorname{fun} (k:\mathbb{N}) \mapsto k^{k}), n, n\right) : \mathbb{R})} - \operatorname{Real}.\operatorname{exp}\left(1\right) \cdot ((n : \mathbb{R}) + \frac{1}{2})), \operatorname{Filter}.\operatorname{atTop}, (\mathcal{N}(0))\right)$$
 
-*Formalization.* `D5/S1/Recurrence/GrauOllerMarcenVaronaPowerBorderGrowth.claimPower` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/Delannoy/GrauOllerMarcenVaronaPowerBorderGrowth.claimPower` (`✓ std3`).
 
 *Citation.* J. M. Grau, A. M. Oller-Marcén and J. L. Varona (2022). *A class of weighted Delannoy numbers*. DOI: [10.48550/arXiv.2501.09726](https://doi.org/10.48550/arXiv.2501.09726). URL: <https://arxiv.org/abs/2501.09726v2>.
 
@@ -20,7 +20,7 @@ Section 6, arXiv page 18: "The same phenomenon happens if f_{n,0} = f_{0,n} = n^
 
 $$\operatorname{Filter}.\operatorname{Tendsto}\left((\operatorname{fun} (n:\mathbb{N}) \mapsto \frac{(\operatorname{GrauOllerMarcenVaronaFactorialBorderGrowth}.\operatorname{f}\left((\operatorname{fun} (k:\mathbb{N}) \mapsto k^{k}), n + 1, n + 1\right) : \mathbb{R})}{(\operatorname{GrauOllerMarcenVaronaFactorialBorderGrowth}.\operatorname{f}\left((\operatorname{fun} (k:\mathbb{N}) \mapsto k^{k}), n, n\right) : \mathbb{R})} - \operatorname{Real}.\operatorname{exp}\left(1\right) \cdot ((n : \mathbb{R}) + \frac{1}{2})), \operatorname{Filter}.\operatorname{atTop}, (\mathcal{N}(0))\right)$$
 
-*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/GrauOllerMarcenVaronaPowerBorderGrowth.result` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Delannoy/GrauOllerMarcenVaronaPowerBorderGrowth.result` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -32,6 +32,6 @@ The scaled border ratio n b(n−1)/b(n) lies between zero and one. The logarithm
 
 ## References
 
-- Truth anchor: `D5/S1/Recurrence/GrauOllerMarcenVaronaPowerBorderGrowth.claimPower`
-- Truth anchor: `D5/S1/Recurrence/GrauOllerMarcenVaronaPowerBorderGrowth.result`
-- Dependency: [D5/S1/Recurrence/GrauOllerMarcenVaronaFactorialBorderGrowth](GrauOllerMarcenVaronaFactorialBorderGrowth.md)
+- Truth anchor: `D5/S3/Combinatorics/Delannoy/GrauOllerMarcenVaronaPowerBorderGrowth.claimPower`
+- Truth anchor: `D5/S3/Combinatorics/Delannoy/GrauOllerMarcenVaronaPowerBorderGrowth.result`
+- Dependency: [D5/S3/Combinatorics/Delannoy/GrauOllerMarcenVaronaFactorialBorderGrowth](GrauOllerMarcenVaronaFactorialBorderGrowth.md)
