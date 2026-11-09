@@ -252,7 +252,7 @@ theorem star_certificate_gap {n d : ℕ} (hn : 3 ≤ n) (hd : 3 ≤ d) :
         (starProbability n d) hp.le hp1)).1
     rw [noisyDensity_matrix,(noisy_means (by omega) (by omega) _).2] at h
     unfold noisyY at h
-    linarith
+    linear_combination h
   change -(d-1 : ℝ)/(d*(d-2 : ℝ))*witnessValue n d (starProbability n d)+
     1/((d : ℝ)^2*(d-2 : ℝ))*observableMean (noisyGhz n d (starProbability n d)) (complementProjector n d)-
     1/((d : ℝ)^2*(d-2 : ℝ)) ≤ _ at hc
