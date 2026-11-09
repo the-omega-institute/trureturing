@@ -55,7 +55,7 @@ private def blockEquiv (H : Subgroup G) :
     | inr K => simp only [component, Sum.elim_inr, id_eq] at h; subst K; rfl
   right_inv v := by cases v with | inl u => cases u; rfl | inr p => rfl
 
-private theorem degree_pair (p : G × G)
+theorem degree_pair (p : G × G)
     [Fintype ((sgbGraph G).neighborSet (.inl p))] :
     (sgbGraph G).degree (.inl p) = 1 := by
   classical
@@ -74,7 +74,7 @@ private theorem degree_pair (p : G × G)
       right_inv := by intro u; cases u; rfl }
   exact (Fintype.card_congr e).trans (by simp)
 
-private theorem degree_subgroup (H : Subgroup G)
+theorem degree_subgroup (H : Subgroup G)
     [Fintype ((sgbGraph G).neighborSet (.inr H))] :
     (sgbGraph G).degree (.inr H) = pairCount H := by
   classical
