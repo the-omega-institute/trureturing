@@ -62,23 +62,23 @@ def codeArena : Arena where
     (_hpre : ∀ x y : Cfg X, {g | x.val g ≠ y.val g}.Finite → tau x = tau y → x = y),
     Surjective (R.readout () ⟨G, group, A, topology, X, tau⟩)
 
-private abbrev SmallGroup := ULift.{u} Unit
-private abbrev SmallAlphabet := ULift.{v} Bool
+abbrev SmallGroup := ULift.{u} Unit
+abbrev SmallAlphabet := ULift.{v} Bool
 private instance : TopologicalSpace SmallAlphabet.{v} := ⊥
 private instance : DiscreteTopology SmallAlphabet.{v} := ⟨rfl⟩
 
-private def full : MulSubshift SmallAlphabet.{v} SmallGroup.{u} :=
+def full : MulSubshift SmallAlphabet.{v} SmallGroup.{u} :=
   mulFullShift _ _
 
-private def zero : Cfg full.{u,v} := ⟨fun _ => ⟨false⟩, trivial⟩
-private def one : Cfg full.{u,v} := ⟨fun _ => ⟨true⟩, trivial⟩
+def zero : Cfg full.{u,v} := ⟨fun _ => ⟨false⟩, trivial⟩
+def one : Cfg full.{u,v} := ⟨fun _ => ⟨true⟩, trivial⟩
 
-private theorem zero_ne_one : zero.{u,v} ≠ one := by
+theorem zero_ne_one : zero.{u,v} ≠ one := by
   intro h
   have hh := congrArg ULift.down (congrArg (fun x : Cfg full.{u,v} => x.val 1) h)
   cases hh
 
-private theorem full_si : SI full.{u,v} {1} := by
+theorem full_si : SI full.{u,v} {1} := by
   classical
   intro F K hsep x y
   let z : SmallGroup.{u} → SmallAlphabet.{v} := fun g => if g ∈ F then x.val g else y.val g
