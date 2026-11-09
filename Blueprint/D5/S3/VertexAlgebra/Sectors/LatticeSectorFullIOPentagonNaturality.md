@@ -2,34 +2,48 @@
 
 ## Abstract
 
-Naturality of the explicit finite-target FullIO pentagon paths.
+Naturality of the finite FullIO pentagon
 
 **Theorem 1.1 (Short-path naturality).**
 
 Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeSectorFullIOPentagonNaturality.pentagonShortPath_natural`
 
-**Theorem 1.2 (Long-path naturality).**
-
-Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeSectorFullIOPentagonNaturality.pentagonLongPath_natural`
-
-**Theorem 1.3 (Pentagon naturality).**
-
-Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeSectorFullIOPentagonNaturality.fullIO_pentagon_natural`
-
-*Proof.* Machine-checked in Lean as the three declarations above (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Sectors/LatticeSectorFullIOPentagonNaturality.pentagonShortPath_natural` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
 *Commentary.*
 
-Postcomposition by every finite-target module morphism commutes with both
-explicit sides of the finite FullIO pentagon. The short side is obtained by
-composing the two concrete channel naturality squares. The long side and the
-combined statement follow by the finite-target pentagon equality at its two
-endpoints. These are finite algebraic identities and do not assert analytic
-sewing, convergence, braiding or a physical realization.
+Postcomposition by every finite-target module morphism commutes with the short side of the explicit finite FullIO pentagon; the proof composes the two concrete channel naturality squares.
+
+**Theorem 1.2 (Long-path naturality).**
+
+Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeSectorFullIOPentagonNaturality.pentagonLongPath_natural`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Sectors/LatticeSectorFullIOPentagonNaturality.pentagonLongPath_natural` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The long side is natural in the finite target by transport across the concrete pentagon equality at both endpoints.
+
+**Theorem 1.3 (Pentagon naturality).**
+
+Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeSectorFullIOPentagonNaturality.fullIO_pentagon_natural`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Sectors/LatticeSectorFullIOPentagonNaturality.fullIO_pentagon_natural` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The finite-target pentagon identity is natural under every lawful target-module morphism.
 
 ## References
 
-- Truth anchors: `D5/S3/VertexAlgebra/Sectors/LatticeSectorFullIOPentagonNaturality.pentagonShortPath_natural`, `D5/S3/VertexAlgebra/Sectors/LatticeSectorFullIOPentagonNaturality.pentagonLongPath_natural`, `D5/S3/VertexAlgebra/Sectors/LatticeSectorFullIOPentagonNaturality.fullIO_pentagon_natural`
-- Dependencies: [LatticeSectorFullIOPentagon](LatticeSectorFullIOPentagon.md), [LatticeSectorFullChannelNaturality](LatticeSectorFullChannelNaturality.md)
+- Truth anchor: `D5/S3/VertexAlgebra/Sectors/LatticeSectorFullIOPentagonNaturality.fullIO_pentagon_natural`
+- Truth anchor: `D5/S3/VertexAlgebra/Sectors/LatticeSectorFullIOPentagonNaturality.pentagonLongPath_natural`
+- Truth anchor: `D5/S3/VertexAlgebra/Sectors/LatticeSectorFullIOPentagonNaturality.pentagonShortPath_natural`
+- Dependency: [D5/S3/VertexAlgebra/Sectors/LatticeSectorFullChannelNaturality](LatticeSectorFullChannelNaturality.md)
+- Dependency: [D5/S3/VertexAlgebra/Sectors/LatticeSectorFullIOPentagon](LatticeSectorFullIOPentagon.md)

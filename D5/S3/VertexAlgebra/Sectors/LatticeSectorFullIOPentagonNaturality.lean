@@ -4,8 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: The finite-target FullIO pentagon paths are natural in the target module.
--/
+   digest: The finite-target FullIO pentagon paths are natural in the target module. -/
 
 import D5.S3.VertexAlgebra.Sectors.LatticeSectorFullIOPentagon
 import D5.S3.VertexAlgebra.Sectors.LatticeSectorFullChannelNaturality
