@@ -1,0 +1,19 @@
+**定理 53.2（反对称读数的 Riesz 延拓判据）。** 以下两项等价：
+
+1. 存在唯一有界实线性算子 $A:H\to H$，满足
+   $$
+   \omega(u,v)=g(A[u],[v])
+   \qquad(u,v\in V);
+   $$
+2. 同时满足：
+   $$
+   \omega(n,v)=0\quad(n\in N,v\in V),
+   \tag{Z}
+   $$
+   $$
+   |\omega(u,v)|\le C\sqrt{\kappa(u,u)}\sqrt{\kappa(v,v)}
+   \quad(u,v\in V)
+   \tag{B}
+   $$
+   对某个有限常数 $C$ 成立。
+

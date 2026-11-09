@@ -1,0 +1,16 @@
+**定理 53.4（有限读数闭环全局化）。** 在定理 53.2 的条件下，以下三项等价：
+
+1. $A^2=-I$；
+2. 对所有 $u\in V$，
+   $$
+   D_\omega(u)^2=\kappa(u,u);
+   \tag{S}
+   $$
+3. 对所有 $u\in V$，
+   $$
+   \sup_{\substack{v\in V\\\kappa(v,v)>0}}
+   \frac{\omega(u,v)^2}{\kappa(v,v)}
+   =\kappa(u,u).
+   \tag{S'}
+   $$
+
