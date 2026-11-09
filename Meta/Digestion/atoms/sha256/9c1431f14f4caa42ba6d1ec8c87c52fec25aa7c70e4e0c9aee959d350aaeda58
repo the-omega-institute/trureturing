@@ -1,0 +1,10 @@
+**定义 32.1（锐事件压缩公理）。** 令 $P=P^2=P^\dagger$ 为事件投影。一个分支变换 $\Phi_P$ 满足：
+
+1. $\Phi_P$ 完全正且迹不增；
+2. **投影效应：** $\Phi_P^*(I)=P$，等价于
+   $$
+   \operatorname{tr}\Phi_P(\rho)=\operatorname{tr}(P\rho);
+   $$
+3. **输出支撑：** $\Phi_P(\rho)=P\Phi_P(\rho)P$；
+4. **接受子空间不扰动：** 若 $\sigma=P\sigma P$，则 $\Phi_P(\sigma)=\sigma$。
+
