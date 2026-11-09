@@ -14,8 +14,6 @@ D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip.Seen
 statement_id: sha256:81b88997a2c3d2f53ff882dacf64140ab25fdfa46060ae927c1c63ee630736fd
 D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip.WidthRow
 statement_id: sha256:ae15c3e642a6c1515543b2ddf359b409d2043f62636f436a563813f6dfe69872
-D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip.allowed._proof_1
-statement_id: sha256:2e96afc6083f3f5ff2c0d41bd86fbc5db45d2b998a685826e63d55ca74060906
 D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip.beta
 statement_id: sha256:f2505b223dba09056766886dde8961967e3030e856c18d65de2734fae3a38dee
 D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip.colour_bond_iff
@@ -26,58 +24,65 @@ D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip.good
 statement_id: sha256:417a6ea98050fbf77c7289c3ffbdebbaee51eb553d11bf873bb6b2a76938f6f6
 D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip.widthInstDecidableGood
 statement_id: sha256:ba6f67f310ba830404c486a59fabfe407663a527a36a27ef60d2fb48d44e43b7
-D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip.widthInstDecidableNormal
-statement_id: sha256:70f9807aaee4f1357af8f65b53ae7e8c36cb9a7e03d71f58cd1973d1fe343f06
+D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip.widthInstDecidableLegal
+statement_id: sha256:7a2f2772a17ec13ac856e41a4d2303e53c23af078293aa52bef20c84fc42c315
+D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip.widthLegal
+statement_id: sha256:2b02b5cd250ec66f51ecff4b5862dde43d02334522762d1502ef1672f512bc41
 D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip.widthNormal
 statement_id: sha256:e95e90b3d2e434d2f3689955d5c1a43f761b459878d8d005ae29d69cdb6dde66
 D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip.widthStep
 statement_id: sha256:b7e892dff9721f779553cc5b9c84fc752961a64b6ee12de6deca09a57acd7e3d
-D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip.widthStep.eq_1
-statement_id: sha256:d2dcfe5907345ebab6e712d8977529311389ec5e41ad5bb926ac4d10f5ce5206
 D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip.widthTotal
 statement_id: sha256:8d08772c073cb671fe0c90dc55e2ac53a82d23e2d9db0450d416622b7b3fa7fa
-D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip.widthTotal.eq_1
-statement_id: sha256:1a7da251e7485965ff9889cb993634650f45a9393e7b09edabe3f0e292e86622
 D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip.widthV
 statement_id: sha256:36f617fb195a7cafd2772fde4192f8f89537893f5a88b725d0cf6c632d0acb86
-D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip.widthV.eq_2
-statement_id: sha256:01b4e052e81856c7b5fe6d8595e667de6a59176a1e943a332d62fdd7a124e302
 D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip.width_counting_bridge
 statement_id: sha256:cdf4ecd31fa9f5461d1e5406bc32cd51c7e4ad71dd7c890ccdc676bea7c5943e
+Compiler-generated direct constants of the frozen owner (not inventory members):
+D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip.allowed._proof_1
+statement_id: sha256:2e96afc6083f3f5ff2c0d41bd86fbc5db45d2b998a685826e63d55ca74060906
+D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip.widthStep.eq_1
+statement_id: sha256:d2dcfe5907345ebab6e712d8977529311389ec5e41ad5bb926ac4d10f5ce5206
+D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip.widthTotal.eq_1
+statement_id: sha256:1a7da251e7485965ff9889cb993634650f45a9393e7b09edabe3f0e292e86622
+D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip.widthV.eq_2
+statement_id: sha256:01b4e052e81856c7b5fe6d8595e667de6a59176a1e943a332d62fdd7a124e302
 Closed, unfrozen dependency: TransferMatrix.scalarRelationShift.
 Every declaration has proof_shape=bind-only. The all-height class reduction is
 Function.Semiconj.iterate_right after normalization of the finite one-step premises.
-Row: proof_shape=bind-only; consumers=rowLegal, bonds, classCount
-rowLegal: proof_shape=bind-only; consumers=a, classCount, firstCount, v3, total3
-bonds: proof_shape=bind-only; consumers=a, bonds_iff, counting_bridge
-instDecidableRowLegal: proof_shape=bind-only; consumers=a, classCount, firstCount, v3, total3
-instDecidableBonds: proof_shape=bind-only; consumers=a, counting_bridge
-a: proof_shape=bind-only; consumers=counting_bridge, zero_count, result
-pairs: proof_shape=bind-only; consumers=bonds_iff, classCount
-compatible: proof_shape=bind-only; consumers=classCount, bonds_iff
-instDecidableCompatible: proof_shape=bind-only; consumers=classCount, v3
+Consumers list named local users, contracting generated type/value intermediates;
+the terminal result also names its compiled Reg audit consumer.
+Row: proof_shape=bind-only; consumers=a_eq_w, bonds, bonds_iff, classCount, compatible, firstCount, initial_valid, instDecidableBonds, instDecidableCompatible, instDecidableRowLegal, pairs, rowLegal, v_eq_w, valid_next
+rowLegal: proof_shape=bind-only; consumers=a, a_eq_w, classCount, counting_bridge, firstCount, initial_valid, instDecidableRowLegal, total3, v3, v_eq_w, valid_next, zero_count
+bonds: proof_shape=bind-only; consumers=a, bonds_iff, counting_bridge, instDecidableBonds, zero_count
+instDecidableRowLegal: proof_shape=bind-only; consumers=a, a_eq_w, classCount, counting_bridge, firstCount, initial_valid, total3, v3, v_eq_w, valid_next, zero_count
+instDecidableBonds: proof_shape=bind-only; consumers=a, counting_bridge, zero_count
+a: proof_shape=bind-only; consumers=a_eq_w, counting_bridge, recurrence, result, zero_count
+pairs: proof_shape=bind-only; consumers=a_eq_w, bonds_iff, classCount, counting_bridge, firstCount, initial_valid, total3, v3, v_eq_w, valid_next
+compatible: proof_shape=bind-only; consumers=bonds_iff, classCount, counting_bridge, instDecidableCompatible, v3, v_eq_w, valid_next
+instDecidableCompatible: proof_shape=bind-only; consumers=classCount, counting_bridge, v3, v_eq_w, valid_next
 bonds_iff: proof_shape=bind-only; consumers=counting_bridge
-v3: proof_shape=bind-only; consumers=v_eq_w
-total3: proof_shape=bind-only; consumers=a_eq_w
+v3: proof_shape=bind-only; consumers=a_eq_w, counting_bridge, v_eq_w
+total3: proof_shape=bind-only; consumers=a_eq_w, counting_bridge
 counting_bridge: proof_shape=bind-only; consumers=a_eq_w
-Valid: proof_shape=bind-only; consumers=valid_next, row_counts
-instDecidableValid: proof_shape=bind-only; consumers=valid_next, row_counts
-seenClass: proof_shape=bind-only; consumers=classCount, v_eq_w
-T: proof_shape=bind-only; consumers=finite_certificate, w
-classCount: proof_shape=bind-only; consumers=finite_certificate
-firstCount: proof_shape=bind-only; consumers=finite_certificate
+Valid: proof_shape=bind-only; consumers=a_eq_w, finite_certificate, initial_valid, instDecidableValid, recurrence, row_counts, v_eq_w, valid_next
+instDecidableValid: proof_shape=bind-only; consumers=initial_valid, row_counts, valid_next
+seenClass: proof_shape=bind-only; consumers=a_eq_w, classCount, finite_certificate, firstCount, recurrence, row_counts, v_eq_w
+T: proof_shape=bind-only; consumers=a_eq_w, finite_certificate, recurrence, row_counts, v_eq_w, vector_relation, w
+classCount: proof_shape=bind-only; consumers=a_eq_w, finite_certificate, recurrence, row_counts, v_eq_w
+firstCount: proof_shape=bind-only; consumers=a_eq_w, finite_certificate, initial_counts, recurrence, v_eq_w
 valid_next: proof_shape=bind-only; consumers=v_eq_w
 initial_valid: proof_shape=bind-only; consumers=a_eq_w
 row_counts: proof_shape=bind-only; consumers=finite_certificate
 initial_counts: proof_shape=bind-only; consumers=finite_certificate
 vector_relation: proof_shape=bind-only; consumers=finite_certificate
-finite_certificate: proof_shape=bind-only; consumers=v_eq_w, a_eq_w, recurrence
-w: proof_shape=bind-only; consumers=v_eq_w, a_eq_w, recurrence
+finite_certificate: proof_shape=bind-only; consumers=a_eq_w, recurrence, v_eq_w
+w: proof_shape=bind-only; consumers=a_eq_w, recurrence, result, v_eq_w
 v_eq_w: proof_shape=bind-only; consumers=a_eq_w
 a_eq_w: proof_shape=bind-only; consumers=recurrence, result
 recurrence: proof_shape=bind-only; consumers=result
 zero_count: proof_shape=bind-only; consumers=result
-result: proof_shape=bind-only; consumers=terminal result
+result: proof_shape=bind-only; consumers=Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233197Strip.audit
 -/
 
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233196Strip
