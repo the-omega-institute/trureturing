@@ -171,7 +171,7 @@ private theorem erase_disjoint_patterns (S : Finset G) (φ : (S → A) → A)
         · exact hc
         · exact hay u hu⟩
 
-private theorem exists_dense_packing (C F : Finset G) (hC : C.Nonempty) :
+theorem exists_dense_packing (C F : Finset G) (hC : C.Nonempty) :
     ∃ T : Finset G, T ⊆ F ∧
       (∀ t ∈ T, ∀ u ∈ T, t ≠ u → ∀ c : C, ∀ e : C, t * c ≠ u * e) ∧
       F.card ≤ T.card * C.card ^ 2 := by
@@ -362,7 +362,7 @@ private theorem mul_card_le_boundary (F E : Finset G) :
       exact Nat.add_le_add_left (Finset.sum_le_sum (fun e _ =>
         Finset.card_le_card Finset.symmDiff_subset_sdiff)) _
 
-private theorem mul_ratio_tendsto {ι : Type*} {l : Filter ι} (F : ι → Finset G)
+theorem mul_ratio_tendsto {ι : Type*} {l : Filter ι} (F : ι → Finset G)
     (hpos : ∀ᶠ i in l, (F i).Nonempty)
     (hboundary : ∀ e : G, Tendsto
       (fun i => (((F i).image (fun f => f * e) ∆ F i).card : ℝ) / (F i).card) l (𝓝 0))
@@ -397,10 +397,10 @@ private theorem mul_ratio_tendsto {ι : Type*} {l : Filter ι} (F : ι → Finse
   have hzero := squeeze_zero' hl hu hb
   convert hzero.add_const 1 using 1 <;> simp
 
-private def finiteShape (s : Set G) : Finset G :=
+def finiteShape (s : Set G) : Finset G :=
   if h : s.Finite then h.toFinset else ∅
 
-private theorem maximal_shapes [MeasurableSpace G] [MeasurableSingletonClass G] :
+theorem maximal_shapes [MeasurableSpace G] [MeasurableSingletonClass G] :
     (∀ᶠ s in maxFoelner Gᵐᵒᵖ (Measure.count : Measure G), (finiteShape s).Nonempty) ∧
     ∀ e : G, Tendsto (fun s : Set G =>
       (((finiteShape s).image (fun f => f * e) ∆ finiteShape s).card : ℝ) /

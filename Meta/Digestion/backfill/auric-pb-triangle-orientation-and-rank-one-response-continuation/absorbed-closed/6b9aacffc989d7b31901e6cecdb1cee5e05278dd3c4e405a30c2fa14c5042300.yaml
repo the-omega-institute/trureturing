@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:6b9aacffc989d7b31901e6cecdb1cee5e05278dd3c4e405a30c2fa14c5042300
+  normalized_sha256: sha256:6b9aacffc989d7b31901e6cecdb1cee5e05278dd3c4e405a30c2fa14c5042300
+cas_ref: sha256:6b9aacffc989d7b31901e6cecdb1cee5e05278dd3c4e405a30c2fa14c5042300
+coverage_gids:
+  - gid: D5/S3/Topology/JBComplexification.quadratic_preserves_squares
+    target_statement_id: sha256:871dbb7574e4f7a1c9aa55df4f616b7a5dcadd3c0392edcd168fedde1415a0f2
+receipts:
+  unresolved_subitems: []
