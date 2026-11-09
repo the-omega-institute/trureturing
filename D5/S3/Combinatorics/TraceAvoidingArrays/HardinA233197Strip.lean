@@ -3,9 +3,7 @@
    mirror-B: D5/B/S3/Combinatorics/TraceAvoidingArrays/HardinA233197Strip
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
-   utility: kind=numeric-reduction;
-     basis=consumer=D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233197Strip.result;
-     premises=D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233197Strip.finite_certificate
+   utility: kind=numeric-reduction; basis=consumer=D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233197Strip.result; premises=D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233197Strip.finite_certificate
    digest: Barker's generating function for the literal eight-colour three-column strip. -/
 
 /-
@@ -13,6 +11,39 @@ admission_basis: open-problem-resolution (#28599; Proved)
 escape_witness: none
 Every declaration has proof_shape=bind-only. The all-height class reduction is
 Function.Semiconj.iterate_right after normalization of the finite one-step premises.
+Row: proof_shape=bind-only; consumers=rowLegal, bonds, classCount
+rowLegal: proof_shape=bind-only; consumers=Legal, classCount
+bonds: proof_shape=bind-only; consumers=Legal, bonds_iff
+instDecidableRowLegal: proof_shape=bind-only; consumers=instDecidableLegal, classCount
+instDecidableBonds: proof_shape=bind-only; consumers=instDecidableLegal
+Legal: proof_shape=bind-only; consumers=a, counting_bridge
+instDecidableLegal: proof_shape=bind-only; consumers=a
+a: proof_shape=bind-only; consumers=counting_bridge, zero_count, result
+pairs: proof_shape=bind-only; consumers=bonds_iff, classCount
+compatible: proof_shape=bind-only; consumers=classCount, bonds_iff
+instDecidableCompatible: proof_shape=bind-only; consumers=classCount, v3
+bonds_iff: proof_shape=bind-only; consumers=counting_bridge
+v3: proof_shape=bind-only; consumers=v_eq_w
+total3: proof_shape=bind-only; consumers=a_eq_w
+counting_bridge: proof_shape=bind-only; consumers=a_eq_w
+Valid: proof_shape=bind-only; consumers=valid_next, row_counts
+instDecidableValid: proof_shape=bind-only; consumers=valid_next, row_counts
+seenClass: proof_shape=bind-only; consumers=classCount, v_eq_w
+T: proof_shape=bind-only; consumers=finite_certificate, w
+classCount: proof_shape=bind-only; consumers=finite_certificate
+firstCount: proof_shape=bind-only; consumers=finite_certificate
+valid_next: proof_shape=bind-only; consumers=v_eq_w
+initial_valid: proof_shape=bind-only; consumers=a_eq_w
+row_counts: proof_shape=bind-only; consumers=finite_certificate
+initial_counts: proof_shape=bind-only; consumers=finite_certificate
+vector_relation: proof_shape=bind-only; consumers=finite_certificate
+finite_certificate: proof_shape=bind-only; consumers=v_eq_w, a_eq_w, recurrence
+w: proof_shape=bind-only; consumers=v_eq_w, a_eq_w, recurrence
+v_eq_w: proof_shape=bind-only; consumers=a_eq_w
+a_eq_w: proof_shape=bind-only; consumers=recurrence, result
+recurrence: proof_shape=bind-only; consumers=result
+zero_count: proof_shape=bind-only; consumers=result
+result: proof_shape=bind-only; consumers=terminal result
 -/
 
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233196Strip
@@ -182,13 +213,13 @@ private theorem a_eq_w (n : ℕ) : (a (n + 1) : ℤ) = 2 * w n 0 + w n 2 := by
   rw [Finset.sum_comm]
   simp_rw [← Finset.sum_mul]
   change (∑ b : Fin 5, firstCount b * w n b) = _
-  simp [finite_certificate.2.1]
+  simp [finite_certificate.2.1, Fin.sum_univ_succ]
 
 private theorem recurrence (n : ℕ) :
     (a (n + 5) : ℤ) = 64 * a (n + 4) - 960 * a (n + 3) + 4096 * a (n + 2) := by
   have hh := TransferMatrix.scalarRelationShift T ![2, 0, 1, 0, 0] 3 1
     ![4096, -960, 64] finite_certificate.2.2 n
-  norm_num [Fin.sum_univ_succ, Nat.add_assoc] at hh
+  norm_num [dotProduct, Fin.sum_univ_succ, Nat.add_assoc] at hh
   rw [show n + 5 = (n + 1 + 3) + 1 by omega,
     show n + 4 = (n + 1 + 2) + 1 by omega,
     show n + 3 = (n + 1 + 1) + 1 by omega,
@@ -230,8 +261,15 @@ theorem result :
     have h2 := a_eq_w 1
     have h3 := a_eq_w 2
     have h4 := a_eq_w 3
-    norm_num [w, T, Matrix.mulVec, dotProduct, Fin.sum_univ_succ,
-      pow_succ, Matrix.mul_apply] at h1 h2 h3 h4
+    have hw0 : 2 * w 0 0 + w 0 2 = 3 := by decide +kernel
+    have hw1 : 2 * w 1 0 + w 1 2 = 36 := by decide +kernel
+    have hw2 : 2 * w 2 0 + w 2 2 = 1440 := by decide +kernel
+    have hw3 : 2 * w 3 0 + w 3 2 = 62720 := by decide +kernel
+    rw [hw0] at h1
+    rw [hw1] at h2
+    rw [hw2] at h3
+    rw [hw3] at h4
+    norm_num only at h1 h2 h3 h4
     interval_cases n <;> norm_num only [zero_count, h1, h2, h3, h4,
       Nat.reduceLeDiff, Nat.reduceSubDiff, Nat.reduceEqDiff, ite_true, ite_false,
       Nat.cast_zero, mul_zero, sub_self, add_zero]
