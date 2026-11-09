@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Combinatorics/EdgeLabeling/WildNumber/ComponentMirror
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   utility: none
+   utility: kind=checker; basis=consumer=D5/S3/Combinatorics/EdgeLabeling/WildNumber/WheelCertificate.all_outputs_six; instance=D5/S3/Combinatorics/EdgeLabeling/WildNumber/WheelCertificate.count_eq
    digest: Component counting by recursively merging vertex labels. -/
 
 /-

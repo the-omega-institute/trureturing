@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Combinatorics/EdgeLabeling/WildNumber/WheelCertificate
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   utility: none
+   utility: kind=checker; basis=consumer=D5/S3/Combinatorics/EdgeLabeling/WildNumber/Result.result; instance=D5/S3/Combinatorics/EdgeLabeling/WildNumber/WheelCertificate.all_outputs_six
    digest: Every greedy output on the four-colored wheel has six edges. -/
 /-
 admission_basis: escape-witness (FiniteState.run_states)
@@ -16,6 +16,7 @@ O_color_connecting: proof_shape: bind-only; escape_witness: none; Direct frozen 
 color_connecting_card_ge_five: proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none.
 all_outputs_six: proof_shape: content; escape_witness: none; Direct frozen dependencies: none.
 FiniteState.run_states: proof_shape: content; escape_witness: FiniteState.run_states; Direct frozen dependencies: none.
+count_eq: proof_shape: content; escape_witness: ComponentMirror.labels_valid; Direct frozen dependencies: none.
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/21209
 -/
 import D5.S3.Combinatorics.EdgeLabeling.WildNumber.Greedy
@@ -292,7 +293,7 @@ private theorem graph_eq (W : (Finset (Fin 14))) (c : (Fin 4)) : SimpleGraph.fro
     rcases Sym2.eq_iff.mp heq with ⟨hu,hv⟩ | ⟨hu,hv⟩
     · exact Or.inl ((localEdges_mem W c u v).mpr ⟨i,hi,hu,hv⟩)
     · exact Or.inr ((localEdges_mem W c v u).mpr ⟨i,hi,hu,hv⟩)
-private theorem count_eq (W : (Finset (Fin 14))) (c : (Fin 4)) : count W c =
+theorem count_eq (W : (Finset (Fin 14))) (c : (Fin 4)) : count W c =
     Nat.card (wildColorGraph D5.S3.Combinatorics.EdgeLabeling.WildNumber.WheelCertificate.Wheel.H D5.S3.Combinatorics.EdgeLabeling.WildNumber.WheelCertificate.Wheel.gamma (realize W) c).ConnectedComponent := by
   unfold count
   rw [D5.S3.Combinatorics.EdgeLabeling.WildNumber.ComponentMirror.componentCount_eq_kappa,graph_eq]
