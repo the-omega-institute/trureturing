@@ -3781,16 +3781,172 @@ $$
 
 证明是对145.5和145.2用三角不等式及146.5。右侧既保留所有实际外预算，也保留 $H$；这里没有取得它们由原框架误差平方控制或趋零的结论。
 
-**定义 146.3（同一原夹平方标签的合法实例化）。** 保持138.2的同一个原平方网，将其中 $q_i=e_i^2$ 记为 $P_i$，并保持一个原 $h\in E$，使 $\nu=\beta(h^2)>0$。取
+**定义 146.3（保留同一检测器的非退化原实框架）。** 在 $w\ne0$ 的分支，保持138.2及146.1的同一个 $\beta$、任一正的数学态延拓 $\phi$ 的GNS向量 $\xi$ 和同一个原平方网。此延拓不要求von Neumann正常性；其双对偶延伸取正常延伸。写 $\operatorname{Var}_\beta(z)=\beta(z^2)-\beta(z)^2$，按下列确定规则选择原标签：
 
 $$
-P_i=e_i^2,\qquad Q_i=\frac{U_h(P_i)}{\nu}\in E,\qquad
-0\le Q_i\le\frac{h^2}{\nu},\qquad
-\|Q_i\|\le\frac{\|h\|^2}{\nu}.
+h=\begin{cases}
+w-\beta(w)u,&\operatorname{Var}_\beta(w)>0,\\
+y-\beta(y)u,&\operatorname{Var}_\beta(w)=0,
+\end{cases}
+\qquad \nu=\beta(h^2),\qquad
+\eta=\frac{h\xi}{\sqrt\nu},\qquad
+\mathcal K=\operatorname{span}_{\mathbb C}\{\xi,\eta\}.
+$$
+
+这确实给 $\nu>0$。第一分支的 $\nu$ 就是 $\operatorname{Var}_\beta(w)>0$。第二分支若还有 $\operatorname{Var}_\beta(y)=0$，令 $\mu=\beta(y)$，便有 $y\xi=\mu\xi$。只计算已知固定Jordan元素的向量读取，得到
+
+$$
+\beta(\delta\circ y^2)=\mu^2\beta(\delta),\qquad
+\beta(y\circ(\delta\circ y))
+=\mu\beta(\delta\circ y)=\mu^2\beta(\delta).
+$$
+
+于是 $\beta(w)=0$，再由 $\operatorname{Var}_\beta(w)=0$ 得 $\beta(w^2)=0$，与所选检测态矛盾。因此第二分支的 $\nu=\operatorname{Var}_\beta(y)$ 也严格正。两分支均有 $\beta(h)=0$，所以 $\xi,\eta$ 正交且均为单位向量。第一分支有 $w\xi=\beta(w)\xi+\sqrt\nu\eta$；第二分支由零方差有 $w\xi=\beta(w)\xi$。故同一个固定 $\mathcal K$ 在两分支中都包含 $\operatorname{span}_{\mathbb C}\{\xi,w\xi\}$，没有换掉 $w$ 或检测态。
+
+将138.2的 $q_i=e_i^2$ 记为 $P_i$，定义全部原框架标签
+
+$$
+\begin{gathered}
+P_i=e_i^2,\qquad Q_i=\frac{U_h(P_i)}{\nu},\qquad
+X_i=\frac{2P_i\circ h}{\sqrt\nu},\\
+Z_i=P_i-Q_i,\qquad R_i=P_i+Q_i.
+\end{gathered}
 \tag{146.7}
 $$
 
-合法性只用原平方、原二次表示、实标量除法及 $0\le P_i\le u$，不把完成中的投影、根、逆或极限送入 $D$。特别，145.2在这里取的仍是同一个原 $q=Q_i$，两行均读取 $f_t=D(t,Q_i)$；146.4的同检测器返回在每个有限 $i$ 已经准确，不需对未知 $D$ 取极限。$\nu$ 只用于这个既定原标签的定义；146.2的每个正分量仍以原 $m,n$ 读取，不因此归一化、删去零质量或获得实际准备。上面的已知输入界没有给146.5的实际外预算衰减。
+每个标签均是原元素的有限Jordan多项式及实线性组合，因而属于原 $E$。$\sqrt\nu$ 只是一个固定正实数，不是对原元素取平方根。由原二次表示保正及 $0\le P_i\le u$，有 $0\le Q_i\le h^2/\nu$、$R_i\ge0$。令 $M=\|h\|$，全部网指标上一致有
+
+$$
+\begin{gathered}
+\|P_i\|\le1,\qquad \|Q_i\|\le\frac{M^2}{\nu},\qquad
+\|X_i\|\le\frac{2M}{\sqrt\nu},\\
+\|Z_i\|\le1+\frac{M^2}{\nu},\qquad
+\|R_i\|\le1+\frac{M^2}{\nu}.
+\end{gathered}
+\tag{146.8}
+$$
+
+这些界只用已知Jordan运算的范数界；未要求 $Z_i,X_i$ 正。$p$ 仍是138.2的最小Jordan支撑，$P$ 仍是138.3中它的表示投影，均不当作原标签。特别，$P$ 不必是环境秩一投影，环境态延拓不要求纯性，GNS表示不要求不可约性。
+
+**定理 146.4（同一两向量空间上的完整作用与三误差）。** 对146.3的固定选择，定义三个准确的作用误差
+
+$$
+e_{0i}=\|P_i\xi-\xi\|,\qquad
+e_{1i}=\|P_i h\xi\|,\qquad
+e_{2i}=\|P_i h^2\xi-\nu\xi\|.
+\tag{146.9}
+$$
+
+三者均趋于零。在正交基 $(\xi,\eta)$ 下，146.7的五个标签在同一个 $\mathcal K$ 上趋向以下实自伴矩阵的完整作用：
+
+$$
+\begin{aligned}
+P^{(0)}&=\begin{pmatrix}1&0\\0&0\end{pmatrix},&
+Q^{(0)}&=\begin{pmatrix}0&0\\0&1\end{pmatrix},&
+X^{(0)}&=\begin{pmatrix}0&1\\1&0\end{pmatrix},\\
+Z^{(0)}&=\begin{pmatrix}1&0\\0&-1\end{pmatrix},&
+R^{(0)}&=\begin{pmatrix}1&0\\0&1\end{pmatrix}.
+\end{aligned}
+\tag{146.10}
+$$
+
+这些矩阵只描述极限作用，不宣称是原 $E$ 中的准确矩阵单位。准确的逐列误差界为
+
+$$
+\begin{aligned}
+\|P_i\xi-\xi\|&=e_{0i},&
+\|P_i\eta\|&=\frac{e_{1i}}{\sqrt\nu},\\
+\|Q_i\xi\|&\le\frac{M e_{1i}}{\nu},&
+\|Q_i\eta-\eta\|&\le\frac{M e_{2i}}{\nu\sqrt\nu},\\
+\|X_i\xi-\eta\|&\le\frac{e_{1i}+M e_{0i}}{\sqrt\nu},&
+\|X_i\eta-\xi\|&\le\frac{e_{2i}+M e_{1i}}{\nu},\\
+\|Z_i\xi-\xi\|&\le e_{0i}+\frac{M e_{1i}}{\nu},&
+\|Z_i\eta+\eta\|&\le\frac{e_{1i}}{\sqrt\nu}
++\frac{M e_{2i}}{\nu\sqrt\nu},\\
+\|R_i\xi-\xi\|&\le e_{0i}+\frac{M e_{1i}}{\nu},&
+\|R_i\eta-\eta\|&\le\frac{e_{1i}}{\sqrt\nu}
++\frac{M e_{2i}}{\nu\sqrt\nu}.
+\end{aligned}
+\tag{146.11}
+$$
+
+证明。138.3对固定原 $h,h^2$ 给
+
+$$
+PhP=0,\qquad Ph^2P=\nu P,\qquad P\xi=\xi,
+\qquad Ph\xi=0,\qquad Ph^2\xi=\nu\xi.
+$$
+
+只需固定有限向量表 $\{\xi,h\xi,h^2\xi\}$。138.2的同一有界强网及相应正强半范数给
+
+$$
+\begin{aligned}
+e_{0i}^2&=\beta^{**}((P_i-p)^2)\longrightarrow0,\\
+e_{1i}^2&=\beta^{**}\bigl(U_h((P_i-p)^2)\bigr)\longrightarrow0,\\
+e_{2i}^2&=\beta^{**}\bigl(U_{h^2}((P_i-p)^2)\bigr)\longrightarrow0.
+\end{aligned}
+\tag{146.12}
+$$
+
+这些双对偶式子仅用于证明强收敛。在环境表示中，原标签的已知Jordan定义给 $Q_i=hP_i h/\nu$、$X_i=(P_i h+hP_i)/\sqrt\nu$。于是
+
+$$
+\begin{aligned}
+Q_i\xi&=\frac{hP_i h\xi}{\nu},&
+Q_i\eta-\eta&=\frac{h(P_i h^2\xi-\nu\xi)}{\nu\sqrt\nu},\\
+X_i\xi-\eta
+&=\frac{P_i h\xi+h(P_i\xi-\xi)}{\sqrt\nu},&
+X_i\eta-\xi
+&=\frac{P_i h^2\xi-\nu\xi+hP_i h\xi}{\nu}.
+\end{aligned}
+$$
+
+范数不等式逐项给146.11；$P_i$ 的两列直接由定义，$Z_i,R_i$ 的两列由加减得到。令 $\iota:\mathcal K\hookrightarrow\mathcal H_\phi$ 为包含映射，对每个 $A_i\in\{P_i,Q_i,X_i,Z_i,R_i\}$，取146.11中相应两列的右侧为 $b_{\xi i},b_{\eta i}$，则Cauchy–Schwarz给
+
+$$
+\|A_i|_{\mathcal K}-\iota A^{(0)}\|_{B(\mathcal K,\mathcal H_\phi)}
+\le\sqrt{b_{\xi i}^2+b_{\eta i}^2}\longrightarrow0.
+\tag{146.13}
+$$
+
+因此结论对 $\mathcal K$ 的整个单位球一致，包括泄漏到 $\mathcal K^\perp$ 的分量：若 $\Pi_{\mathcal K}$ 是仅供数学估计的Hilbert投影，便有 $\|(1-\Pi_{\mathcal K})A_i|_{\mathcal K}\|\le\sqrt{b_{\xi i}^2+b_{\eta i}^2}\to0$。不是仅压缩后的两个乘两个矩阵元收敛。常数依赖所固定的 $h,\nu$，不依赖 $i$；没有对全部检测器选择供应统一的正方差下界。全程用网保留不可分情形。∎
+
+**定义 146.5（三误差与已知原平方读取的准确对应）。** 写 $\omega_z=\beta\circ U_z$，这是138.2已许可的原数学正读取，质量准确为 $\omega_z(u)=\beta(z^2)$。146.9还可以完全用原标签和已知原平方读取表示为
+
+$$
+\begin{aligned}
+e_{0i}^2&=\beta((P_i-u)^2),\\
+e_{1i}^2&=\omega_h(P_i^2),\\
+e_{2i}^2&=\omega_{h^2}(P_i^2)
+-\frac{\nu}{2}\{\omega_{u+h^2}(e_i^2)-\omega_{u-h^2}(e_i^2)\}
++\nu^2\beta(u^2).
+\end{aligned}
+\tag{146.14}
+$$
+
+证明。前两式是自伴作用的范数平方。第三式展开同一向量误差给
+
+$$
+e_{2i}^2=\beta(U_{h^2}(P_i^2))-2\nu\beta(P_i\circ h^2)+\nu^2.
+$$
+
+再用 $U_{u+h^2}-U_{u-h^2}=4L_{h^2}$ 和 $P_i=e_i^2$ 即得146.14。这里的每个被读取元素 $(P_i-u)^2,P_i^2,e_i^2,u^2$ 都是已知原平方；最后一行整体非负，是有符号组合，不将其中每个正项另判为趋零。所用读取的全部实际质量是
+
+$$
+\begin{gathered}
+\beta(u)=1,\qquad \omega_h(u)=\nu,\qquad
+\omega_{h^2}(u)=\beta(h^4),\\
+\omega_{u\pm h^2}(u)=\beta((u\pm h^2)^2)
+=1\pm2\nu+\beta(h^4)\ge0.
+\end{gathered}
+\tag{146.15}
+$$
+
+不除以这些质量，零质量的出现也保留；这与146.2各份 $m,n$ 的正分量是不同的读取表，不能用此表替换它们。146.12证明三误差趋零，146.14给相同误差的纯原平方表达，均没有读取未知响应的极限。∎
+
+145.2在这里取的仍是同一个原 $q=Q_i$，两行均读取 $f_t=D(t,Q_i)$；式(146.4)的同检测器返回在每个有限 $i$ 已经准确。$\nu$ 只用于146.7这些既定原标签，式(146.2)的每个正分量仍以原 $m,n$ 读取，不因此归一化、删去零质量或获得实际准备。$w=0$ 时无须这份检测框架，145的全部恒等式及146.2的正分量预算仍保持原量词。
+
+这只供应近似的实自伴两向量框架：$X^{(0)},Z^{(0)}$ 是实轴，没有供应原虚Pauli轴或原域中的准确矩阵单位。即使已知完整作用及泄漏误差趋零，也不识别 $D(P_i,t)$、$D(Z_i,X_i)$ 或任何变动外回复，不把相同或渐近相同的输入作用替换成相同输出。没有给旧 $D$ 增加连续性、可加性、协变、局部闭合或响应运输。尤其146.11–146.15没有使式(146.5)的十二个实际外预算或 $H$ 趋零。
 
 ## 147. 原域预算缺口、成熟交叉配平工具与全部来源合同
 
@@ -3800,7 +3956,7 @@ $$
 W_{a+u}(q)=-2\{T(q)-2(a+u)\circ H\}=-4\delta,
 $$
 
-并在146的同一正分量及实际质量下，给它与已知原框架误差平方的目标相关界。仅有输出相关平方 $\mathcal S_{a+u}\ge0$、统一有界性、单列PB配平，或另一列和的守恒，均未支付这个界。145.5是恒等式，不是新的充分性生产者；把它另命名也不增加来源信息。
+并在146的同一正分量及实际质量下，给它与146.9、146.14中已知原框架误差平方的目标相关界。146.11–146.13已控制同一两向量空间上的完整原标签作用，仍未给这份检测预算的支配。仅有输出相关平方 $\mathcal S_{a+u}\ge0$、统一有界性、单列PB配平，或另一列和的守恒，均未支付这个界。145.5是恒等式，不是新的充分性生产者；把它另命名也不增加来源信息。
 
 一个目标相关的联合通量估计仍未被144否定，但它必须在全部外 $\chi$ 求和后到达同一 $W_{a+u}$ 或 $T-2(a+u)\circ H$。同样，可以尝试精确运输固定元素 $T(q)-2(a+u)\circ H=2\delta$ 再配原平方衰减预算；只运输与它无返回关系的能量不足。任何中间调用的两端及全部内外回复均须来自同一总 $D$。没有取得这份一般原域的实际运输字或衰减预算，也没有证明其不存在。
 
@@ -3818,7 +3974,7 @@ $$
 
 Lemma 1用这些联立系数条件消去准确双线性增量中的交叉阶段项；自治情形不需要横坐标条件。它保持的是所给双线性跨块不变量，不能改读成任意分块算法的全部二次不变量都保持。此处只将其作为成熟的交叉更新相容机制引用；没有给原 $D$ 供应可微ODE、PRK实现、伴随动力或未知响应的双线性，也不从该定理推导144。143–145的关系直接由实际原调用和已知平方证明。
 
-142.3的普通Gram展开、Pauli乘法、C*正性和正泛函分离均是成熟中间工具，不单独计算为新内容。新增的 $\texttt{repo-derived}$ 应用是：把演员差的活动支撑判据接到同一总表生成的完整三参数实际配对循环，保留两个循环符号后计算其非零漂移，再将两行实际源表接回保留 $H$ 的同一原检测器。它不同于141.1的逐输出零误差诊断，也不重复SF98的标准模型分类。145.5单独不计为检测目标生产；这里不作历史优先权、文献穷尽、Lean核验或物理实现的声称。
+142.3的普通Gram展开、Pauli乘法、C*正性和正泛函分离均是成熟中间工具，不单独计算为新内容。146.3–146.5的支撑及有界强网直接消费138.2–138.3和141.2所引Hamhalter及Hanche-Olsen–Størmer的准确接口；正的数学态延拓和GNS仍按137.2、141.2的同一来源使用，不加强为纯延拓或不可约表示。新增的 $\texttt{repo-derived}$ 应用是：把演员差的活动支撑判据接到同一总表生成的完整三参数实际配对循环，保留两个循环符号后计算其非零漂移，再将两行实际源表接回保留 $H$ 的同一原检测器，并给保留该检测器的原实框架、完整作用及已知平方误差对应。它不同于141.1的逐输出零误差诊断，也不重复SF98的标准模型分类。145.5及近似框架均不单独计为检测目标生产；这里不作历史优先权、文献穷尽、Lean核验或物理实现的声称。
 
 **定义 147.3（全部七项原合同的无删减合取）。** 本组将[本卷141.3](#141-全数学pb下的零误差pauli诊断与原目标边界)、137.3、122.1，及[SF105.1第1–7项全文](AURIC_SEMIFINITE_ORIGINAL_RESPONSE_AND_CENTRAL_POLAR_GEOMETRY.md#105-七项真实同源物理来源的完整合同)无删减地合取为完整来源义务。这包括SF105.1明确完整合取的SF96.1，SM86.1、SM78.2、SM43.2、SM49.1、SM61.1、SM69.1，C199.2、C194.2、C186.1–186.7、C181.3、C171.1–171.7、C160.3、C155.1、C145.1–145.7，A8.3–8.4、A14.2、A25.1、A53.1，R3 8.1–8.5、R3 80.1，W95.2、W116.1，以及这些各项逐一纳入的全部上游对象、条件、实现、原域、质量和量词；固定源身份仍按各原文给定。字母缩写取SF98.1的原文地址。这里是完整子句的共同合取，不是只引标题、消费者索引或下述说明来代替原文。
 
