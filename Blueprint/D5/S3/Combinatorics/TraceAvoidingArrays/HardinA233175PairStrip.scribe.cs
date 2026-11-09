@@ -47,7 +47,16 @@ internal sealed class HardinA233175PairStripDocument : IScribeDocumentDefinition
             Thm("finite-certificate", "finite_certificate", "A finite continuation identity", CertificateFormula(),
                 "The seven-step identity holds on all 576 states. The listed scalar values concern continuation lengths zero through six. Linearity propagates the identity to every continuation length."),
             Resolution("result", "result", "Barker's generating function", ResultFormula(),
-                "The literal filtered count equals total(v(n-1)) at every positive width, by decomposition into the first column and its tail. The seven-step identity has polynomial z^2*(z^3-12*z^2+128)*(z^2-4*z-16). The listed initial values eliminate the extra factor for the scalar count and yield a(n)=12*a(n-1)-128*a(n-3) for n at least five. Comparing every power-series coefficient gives the identity. The cast from natural counts to integers is taken before forming the series."))));
+                "The literal filtered count equals total(v(n-1)) at every positive width, by decomposition into the first column and its tail. The seven-step identity has polynomial z^2*(z^3-12*z^2+128)*(z^2-4*z-16). The listed initial values eliminate the extra factor for the scalar count and yield a(n)=12*a(n-1)-128*a(n-3) for n at least five. Comparing every power-series coefficient gives the identity. The cast from natural counts to integers is taken before forming the series."),
+            Def("decidableallowed", "instDecidableAllowed", "Deciding the next-colour condition",
+                DecidableAllowedFormula(),
+                "The defining expression is inferInstanceAs for the two displayed "
+                + "implications. The colour numerals have type Fin 6."),
+            Def("decidablegood", "instDecidableGood", "Deciding a word scan",
+                DecidableGoodFormula(),
+                "These are the zero and successor equations of the defining induction on n. "
+                + "The empty word uses isTrue trivial. The successor combines the allowed "
+                + "decision with the recursive decision on Fin.tail and the advanced flags."))));
 
     private static DocumentBlock Def(string id, string name, string title, Formula formula, string prose,
         bool literature = false) =>
@@ -66,6 +75,43 @@ internal sealed class HardinA233175PairStripDocument : IScribeDocumentDefinition
             StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
             Blocks(Paragraph(Text(prose))), DescribeRole.Theorem,
             new OpenProblemResolutionClaim(ProblemSlugRef.Create("hardin233175"), ResolutionKind.Proved));
+
+    private const string ScannerRoot =
+        "D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.";
+    private static Formula Qualified(string name) => Seq(name.Split('.').SelectMany((part, i) =>
+        i == 0 ? new[] { Seq(Operatorname, Grp(V(part))) }
+            : new[] { Dot, Seq(Operatorname, Grp(V(part))) }).ToArray());
+    private static Formula Named(string name, params Formula[] args) => App(Qualified(name), args);
+    private static Formula Scanner(string name, params Formula[] args) => Named(ScannerRoot + name, args);
+    private static Formula Decides(Formula proposition) => Named("Decidable", Parenthesized(proposition));
+    private static Formula TypedDecision(Formula value, Formula proposition) =>
+        Parenthesized(Seq(value, Colon, Sp, Decides(proposition)));
+    private static Formula DecidableAllowedFormula()
+    {
+        var s = V("s"); var c = V("c");
+        Formula Is(byte d) => Eq(c, Parenthesized(Seq(D(d), Colon, Sp, Named("Fin", D(6)))));
+        var body = And(Imp(Or(Is(2), Or(Is(3), Is(4))),
+                Eq(Named("Prod.fst", s), Qualified("Bool.true"))),
+            Imp(Is(3), Eq(Named("Prod.snd", s), Qualified("Bool.true"))));
+        return All("s", Qualified(ScannerRoot + "Seen"), All("c", Named("Fin", D(6)),
+            Eq(TypedDecision(Scanner("instDecidableAllowed", s, c), Scanner("allowed", s, c)),
+                Named("inferInstanceAs", Parenthesized(Decides(body))))));
+    }
+    private static Formula DecidableGoodFormula()
+    {
+        var s = V("s"); var f = V("f"); var n = V("n");
+        var seen = Qualified(ScannerRoot + "Seen");
+        Formula Word(Formula length) => Arrow(Named("Fin", length), Named("Fin", D(6)));
+        Formula Decision() => TypedDecision(Scanner("instDecidableGood", s, f), Scanner("good", s, f));
+        var zero = Parenthesized(Seq(D(0), Colon, Sp, Named("Fin", Add(n, D(1)))));
+        var head = App(f, zero); var advanced = Scanner("advance", s, head);
+        var baseCase = All("s", seen, All("f", Word(D(0)),
+            Eq(Decision(), Named("Decidable.isTrue", Qualified("True.intro")))));
+        var successor = All("n", Qualified("Nat"), All("s", seen, All("f", Word(Add(n, D(1))),
+            Eq(Decision(), Named("instDecidableAnd", Scanner("instDecidableAllowed", s, head),
+                Scanner("instDecidableGood", advanced, Named("Fin.tail", f)))))));
+        return new Formula.Aligned([baseCase, successor]);
+    }
 
     private static Formula AllowedFormula()
     {
