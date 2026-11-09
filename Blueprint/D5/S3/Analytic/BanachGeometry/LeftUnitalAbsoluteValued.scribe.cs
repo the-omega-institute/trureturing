@@ -39,14 +39,65 @@ internal sealed class LeftUnitalAbsoluteValuedDocument : IScribeDocumentDefiniti
                         + "to every nonzero vector. Mathlib homothety identities give both "
                         + "exact operator norms.")),
                     Paragraph(Text(
-                        "This is precisely the Banach-space inference in OmegaQ020 Lemma 3.3. "
-                        + "The source starts with the real vector space mathcal A and seminorm p; "
-                        + "its null space is p inverse of zero and its quotient norm must be "
-                        + "norm([a])=p(a). Constructing that exact quotient, descending the "
-                        + "same multiplication and readable unit, and extending them to its "
-                        + "completion remain separate obligations. This theorem applies to "
-                        + "that completion only after those bridges have been proved. "
-                        + "Original faithfulness is not extended to the completion.")),
+                        "For OmegaQ020 Lemmas 3.1 and 3.2, start with the actual real vector "
+                        + "space mathcal A, a real bilinear map m, and a seminorm p satisfying "
+                        + "p(m(x,y))=p(x)p(y) for all original vectors. Put q(x)=p(x)^2 and "
+                        + "N={x:p(x)=0}. The seminorm induces the topology used for this "
+                        + "construction; no norm or topology on the original space is an extra "
+                        + "premise. N is a real submodule, p(x+n)=p(x) for n in N, and "
+                        + "multiplicativity gives m(x,n),m(n,x) in N. These are two-sided "
+                        + "stability statements for the original bilinear operation; they do "
+                        + "not presuppose a ring or associativity.")),
+                    Paragraph(Text(
+                        "Take the literal submodule quotient Q=mathcal A/N and its projection "
+                        + "pi(x)=[x]. Postcompose m with N.mkQ and apply LinearMap.liftQ₂ to "
+                        + "the two copies of N. Its kernel obligations are exactly the two "
+                        + "stability statements. The resulting real bilinear M satisfies "
+                        + "M(pi(x),pi(y))=pi(m(x,y)). The canonical quotient norm equals p(x) "
+                        + "on pi(x): its upper bound is Submodule.Quotient.norm_mk_le; for "
+                        + "the reverse bound, norm_mk_lt supplies an arbitrarily close "
+                        + "representative, whose p value agrees with p(x). Thus every pair "
+                        + "u,v in Q satisfies norm(M(u,v))=norm(u)norm(v), including zeros.")),
+                    Paragraph(Text(
+                        "A readable unit e means that p(m(e,x)-x)+p(m(x,e)-x)=0 for every "
+                        + "original x. Each summand is nonnegative, so each difference belongs "
+                        + "to N, and pi(e) is an exact left and right unit of M. If some p(x)>0, "
+                        + "then pi(x) is nonzero; multiplying its norm by the unit shows "
+                        + "norm(pi(e))=1. This norm-one conclusion requires the nonzero "
+                        + "readout assumption. If p is identically zero, Q is the zero space; "
+                        + "the quotient and extension constructions still apply, without "
+                        + "a norm-one unit conclusion.")),
+                    Paragraph(Text(
+                        "More generally, let E be any real normed vector space, possibly zero "
+                        + "or incomplete, with any norm-multiplicative real bilinear m. Set "
+                        + "B=UniformSpace.Completion E and let i=Completion.toComplₗᵢ be the "
+                        + "canonical real linear isometry. LinearMap.mkContinuous₂ with bound "
+                        + "one and ContinuousLinearMap.continuous₂ make m jointly continuous. "
+                        + "Compose it with i and regard it as "
+                        + "a double additive homomorphism into B. IsDenseInducing.extend_Z_bilin "
+                        + "along the two actual completion inclusions gives a jointly "
+                        + "continuous extension f, and extend_eq gives f(i(x),i(y))=i(m(x,y)). "
+                        + "Completion.induction_on₃ transports both addition laws on their "
+                        + "closed equality sets; induction_on₂ transports each real scalar "
+                        + "law. LinearMap.mk₂ therefore packages f as a real bilinear map. "
+                        + "The same two-variable closed-set argument transports exact norm "
+                        + "multiplicativity and proves uniqueness among jointly continuous "
+                        + "real bilinear extensions agreeing with m.")),
+                    Paragraph(Text(
+                        "The closed equality f(i(e),z)=z transports an original left unit "
+                        + "using Completion.induction_on. Independently, f(z,i(e))=z transports "
+                        + "an original right unit. No unit or nontriviality is needed to "
+                        + "construct the extension. For the original seminorm theory take E "
+                        + "to be precisely Q above, with M as its multiplication. Then "
+                        + "f(i(pi(x)),i(pi(y)))=i(pi(m(x,y))) and "
+                        + "norm(i(pi(x)))^2=p(x)^2=q(x) for every original x,y. The same i is "
+                        + "isometric and injective, so equalities between included quotient "
+                        + "vectors pull back to Q, and squared-norm identities pull back to "
+                        + "the original q through i composed with pi. Under nonzero readout "
+                        + "and the readable unit, this completion supplies the nonzero Banach "
+                        + "space and left unit for the theorem described here. Completion "
+                        + "is a mathematical proof tool; original faithfulness F is neither "
+                        + "used nor extended, and no new physical states are inferred.")),
                     Paragraph(Text(
                         "The remaining Euclidean-plane argument requires a complex Banach "
                         + "auxiliary norm preserving all real surjective similarity factors, "
