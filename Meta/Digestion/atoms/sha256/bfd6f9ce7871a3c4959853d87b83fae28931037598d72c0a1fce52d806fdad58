@@ -1,0 +1,32 @@
+## 49. 二元交换比较：把起源问题压成一个关系及其有限提升
+
+“任意两者可比较，而且交换比较顺序不改变结果”首先应当严格写在有序对空间上。令 $X$ 是有限配置的集合，令
+
+$$
+\kappa:X\times X\longrightarrow W
+$$
+
+是比较读数，$\tau(x,y)=(y,x)$ 是交换两个端点的作用。最小的交换比较公理是
+
+$$
+\tag{PC}
+\kappa\text{ 对所有有限对有定义，}\qquad
+\kappa\circ\tau=\kappa.
+$$
+
+它只说同一对端点的读数不依赖书写顺序。若把读数取为实数，量子候选所需的最小正性再写成一个作用在同一二元关系上的有限条件：对任意 $x_1,\ldots,x_n$ 和实数 $a_1,\ldots,a_n$，
+
+$$
+\tag{PSD}
+\sum_{i,j}a_i a_j\kappa(x_i,x_j)\geq0.
+$$
+
+于是本轮最短候选可压成
+
+$$
+\boxed{\mathfrak Q_{\mathrm{pair}}=(\kappa,\operatorname{Cl}),
+\qquad (\mathrm{PC})+(\mathrm{PSD})+\operatorname{Cl}^2=\operatorname{Cl}.}
+$$
+
+这里 $\operatorname{Cl}$ 是有限关系的最小闭包；它把可由有限比较推出的关系一次性收齐。$\mathrm{PC}$ 作用在二元关系的两个端点，$\mathrm{PSD}$ 则要求所有有限端点集合的比较矩阵同时相容。因而公理仍然是内生的：没有外加坐标，只有关系在交换和有限拼接下必须满足的约束。
+
