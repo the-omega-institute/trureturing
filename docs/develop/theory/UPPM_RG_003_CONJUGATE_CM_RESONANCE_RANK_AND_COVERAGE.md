@@ -680,3 +680,323 @@ $$
 对原 $\omega=\alpha$，有理独立性由原定理 11.3 的联合实方向结论提供，所以 (28.4)–(28.5) 是原临界问题的充分或必要接口。然而本卷未判定实际 $g_j(\alpha)$ 的可求和性、上极限或中间区域的行为，仍不裁定 $\nu(R(\alpha))$。比较方向的精确实例、全测结论或反模型均不替代这项原 CM 算术义务。$\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 29. 原嵌套有限端的跨片交能量与晚参数消去
+
+**定义 29.1（同源双片与早半径预算）。** 保持定义 24.1–24.2 的原有限过滤、实际周期、完整目标空间与测度。固定一个方向 $\omega\in\mathbb T^2$，假设存在 $A_*>0,\mu>0$，使
+
+$$
+\|k\cdot\omega\|_{\mathbb T}\ge A_*\|k\|_\infty^{-\mu}
+\qquad(0\ne k\in\mathbb Z^2).
+\tag{29.1}
+$$
+
+可缩小常数使 $A_*\le1/2$。对 $\omega=\alpha$，原定理 17.2 的 (17.5) 已供应这项假设。取两个定义 24.1 的真实连续同阶段片，记
+
+$$
+\begin{gathered}
+I_\ell=(A_\ell,B_\ell]\cap\mathbb Z,\qquad
+h|_{I_\ell}=H_\ell,\qquad Q_\ell=q_{H_\ell},\qquad
+J_\ell=\#(I_\ell\cap A)>0,\\
+0<r_\ell<1/4,\qquad
+V_\ell=V(I_\ell,r_\ell;\omega),\qquad
+m_\ell=\int_YV_\ell\,d\nu=4r_\ell^2\frac{MJ_\ell}{Q_\ell}
+\quad(\ell=i,j),\\
+Q_i\mid Q_j,\qquad T_j=B_j-A_j\ge2M,\\
+\mathfrak t(T,r)=\max\left\{\frac1T,(A_*Tr^\mu)^{-1/(\mu+1)}\right\},
+\qquad \Theta_{ij}=Q_i\mathfrak t(T_j,r_i),\\
+\mathcal C_{ij}=\int_YV_iV_j\,d\nu.
+\end{gathered}
+\tag{29.2}
+$$
+
+这里 $V(I,r;\omega)$ 是 (24.3) 的计数。称 $i$ 为早片、$j$ 为晚片；估计本身只要求所列模数整除，不另要求两片不交、$r_j\le r_i$、$J_i$ 增长或 $K_i\ge1$。临界阶段消费者中的两片则按原时间先后排列。$T_j$ 是晚片的真实整数长度，不是其模 $Q_j$ 允许项数。
+
+**定理 29.2（准确交核及归一交能量的单侧几何误差）。** 在定义 29.1 下，令 $f_r=\mathbf1_{\mathcal B_r(0)}$，并定义同一个差变量上的交核
+
+$$
+\begin{aligned}
+\mathsf h_{ij}(t)
+&=\int_{\mathbb T^2}f_{r_i}(z)f_{r_j}(z-t)\,dm_{\mathbb T^2}(z)\\
+&=\prod_{a=1}^2
+\min\left\{2\min(r_i,r_j),
+  \bigl(r_i+r_j-\|t_a\|_{\mathbb T}\bigr)_+\right\}.
+\end{aligned}
+\tag{29.3}
+$$
+
+对每个 $m\in I_i\cap A,n\in I_j\cap A$，有
+
+$$
+\begin{gathered}
+\nu(F_{m,I_i,r_i}(\omega)\cap F_{n,I_j,r_j}(\omega))
+=\mathbf1_{\{Q_i\mid n-m\}}\frac M{Q_j}
+   \mathsf h_{ij}((n-m)\omega),\\
+\mathcal C_{ij}
+=\frac M{Q_j}\sum_{m\in I_i\cap A}
+  \sum_{\substack{n\in I_j\\n\equiv m\pmod{Q_i}}}
+       \mathsf h_{ij}((n-m)\omega).
+\end{gathered}
+\tag{29.4}
+$$
+
+若 $\Theta_{ij}\le1/3$，则保留真实 $J_j$ 的误差为
+
+$$
+\boxed{
+\begin{aligned}
+\left|\frac{\mathcal C_{ij}}{m_im_j}-\frac{T_j}{MJ_j}\right|
+&\le48\frac{T_j}{MJ_j}\Theta_{ij},\\
+\left|\frac{\mathcal C_{ij}}{m_im_j}-1\right|
+&\le\frac{|T_j-MJ_j|+48T_j\Theta_{ij}}{MJ_j}
+\le98\Theta_{ij}.
+\end{aligned}}
+\tag{29.5}
+$$
+
+故归一误差只涉及早片的实际 $Q_i,r_i$ 和晚片的长度 $T_j$，不含 $Q_j,r_j,J_i$；没有将晚片的有限条件改成较早过滤，也没有以较大消去数替换实际周期。
+
+**证明（有限交核、严格窗与真实整数）。** 两个有限柱集相交恰当且仅当 $Q_i\mid n-m$，此时交集就是 $n+Q_j\widehat{\mathbb Z}$，在 $C_M$ 中的质量为 $M/Q_j$。这是原 (20.6) 在当前两片中的准确应用。空间部分平移 $-m\omega$ 后为 (29.3) 的积分。因 $r_i+r_j<1/2$，原 (20.7) 的一维弧交计算可对较大、较小半径分别代入，给出该乘积式；无需预先规定哪一片半径更大。严格端点只影响零弧长的边界，不改变积分。
+
+展开有限和即得 (29.4)；其中 $n\equiv m\pmod{Q_i}$ 已蕴含 $n\in A$，因为 $m\in A$ 且 $M\mid Q_i$。晚片中这个较早剩余类的真实项数以及原 $M$ 剩余类的真实项数仍分别为
+
+$$
+\begin{gathered}
+N_j(m)=\left\lfloor\frac{B_j-m}{Q_i}\right\rfloor
+       -\left\lfloor\frac{A_j-m}{Q_i}\right\rfloor,
+\qquad \left|N_j(m)-\frac{T_j}{Q_i}\right|<1,\\
+J_j=\left\lfloor\frac{B_j-a_0}{M}\right\rfloor
+    -\left\lfloor\frac{A_j-a_0}{M}\right\rfloor,
+\qquad |MJ_j-T_j|<M.
+\end{gathered}
+\tag{29.6}
+$$
+
+这些是准确 floor 差；不把 $N_j(m)$ 或 $J_j$ 定义为相应的实数长度。
+
+**证明（复用等体积胞误差并对晚窗平均）。** 原 (19.9)–(19.16) 对任意整数模数、剩余类、起点与中心给出固定半径计数。其关于方向的算术输入仅为 $\|qk\cdot\omega\|_{\mathbb T}\ge A_*(q\|k\|_\infty)^{-\mu}$，由 (29.1) 对整数向量 $qk$ 应用即得。因此直接复用 (19.16)，取其尺度 $X=T_j$、模数 $q=Q_i$、半径 $r=r_i$，不重证一般 Voronoi 或覆盖转移定理。前件正是 $Q_i\mathfrak t(T_j,r_i)\le1/3$。对每个 $m\in I_i\cap A$ 和每个 $y\in\mathbb T^2$，令
+
+$$
+\begin{aligned}
+\mathcal N_{j,m}(y)
+&=\#\{n\in I_j:n\equiv m\pmod{Q_i},
+        n\omega\in\mathcal B_{r_i}(m\omega-y)\},\\
+\left|\mathcal N_{j,m}(y)-\frac{4T_jr_i^2}{Q_i}\right|
+&\le192T_jr_i^2\mathfrak t(T_j,r_i).
+\end{aligned}
+\tag{29.7}
+$$
+
+此处主项是体积 $4T_jr_i^2/Q_i$；$N_j(m)$ 的整数误差和所有时间半开、空间严格端点均已由 (19.16) 支付。对晚窗的 Haar 平移平均有准确恒等式
+
+$$
+\begin{aligned}
+\sum_{\substack{n\in I_j\\n\equiv m\pmod{Q_i}}}
+\mathsf h_{ij}((n-m)\omega)
+&=\int_{\mathcal B_{r_j}(0)}\mathcal N_{j,m}(y)\,dm_{\mathbb T^2}(y),\\
+\left|\sum_{\substack{n\in I_j\\n\equiv m\pmod{Q_i}}}
+\mathsf h_{ij}((n-m)\omega)
+ -\frac{(4r_j^2)(4r_i^2)T_j}{Q_i}\right|
+&\le(4r_j^2)192T_jr_i^2\mathfrak t(T_j,r_i).
+\end{aligned}
+\tag{29.8}
+$$
+
+第一式只用 $\mathsf h_{ij}(t)=\int_{\mathcal B_{r_j}(0)}f_{r_i}(t+y)\,dm(y)$；因此每个空间参数仍对应原同一差 $n-m$。第二式由 (29.7) 的全中心一致性积分得到，不要求两半径之比有界。
+
+再对准确的 $J_i$ 项求和并乘 $M/Q_j$，得到
+
+$$
+\left|\mathcal C_{ij}
+ -\frac M{Q_j}J_i(4r_j^2)(4r_i^2)\frac{T_j}{Q_i}\right|
+\le\frac M{Q_j}J_i(4r_j^2)192T_jr_i^2\mathfrak t(T_j,r_i).
+\tag{29.9}
+$$
+
+除以 (29.2) 的准确 $m_im_j$，即得 (29.5) 第一式，晚模数、晚半径和早项数均为同一个乘法因子而准确相消。最后由 (29.6)、$T_j\ge2M$ 得 $MJ_j>T_j/2$，所以归一 floor 成本小于 $2M/T_j\le2\Theta_{ij}$，其余误差不超过 $96\Theta_{ij}$，给出第二式。
+
+一般卷积与经典胞计数在这里均只是中间方法；新增综合是原嵌套有限端交核在同一目标实现上与原 (19.16) 的相接，以及 (29.5) 的晚参数消去。用白话说，固定早片的一把允许钥匙，晚片中与它相容的整数只按早模数排列；把晚实窗写成早实窗的平移平均，计数误差就只需支付早半径。晚过滤的稀少比例和晚窗的面积在交能量与两个单块质量中相同，归一后同时消去。$\square$
+
+## 30. 原临界尺度的跨块间隙与趋零覆盖的加权满测
+
+**定理 30.1（两个增长原阶段的统一交能量区域）。** 假设 (29.1)，沿用原定义 21.1 和定理 26.1 的充分大好阶段，令 $Q_H=q_H$、$I_H=(X_H,2X_H]\cap\mathbb Z$、$r=r_H$，并保持所有 $V_H,B_H,m_H,p_H$ 的原定义。置
+
+$$
+\chi_{\mathrm{geom}}=(\mu+1)c_0^2+\mu\beta
+=\mu+1-(\mu+2)\beta.
+\tag{30.1}
+$$
+
+任取 $\kappa>\max(1,\chi_{\mathrm{geom}})$ 和
+$0<\eta<(\kappa-\chi_{\mathrm{geom}})/(\mu+1)$。存在 $H_0$，使全部 $H_i,H_j\in\mathcal H_-$、$H_0\le H_i<H_j$ 且 $X_{H_j}\ge X_{H_i}^{\kappa}$ 同时满足
+
+$$
+\Theta_{ij}\le X_{H_i}^{-\eta}\le\frac13,\qquad
+\left|\int_Y\frac{V_{H_i}}{m_{H_i}}\frac{V_{H_j}}{m_{H_j}}\,d\nu-1\right|
+\le98X_{H_i}^{-\eta}.
+\tag{30.2}
+$$
+
+这里 $\Theta_{ij}$ 取 (29.2) 的 $T_j=X_{H_j}$；$H_0$ 对全部这样的晚阶段统一，而非先固定 $H_i$ 再分别取晚端极限。
+
+**证明。** 原定理 16.7、(22.15) 的参数桥和原定义 21.1 给出实际尺度
+
+$$
+Q_H=X_H^{c_0^2+o(1)},\qquad r_H=X_H^{-\beta+o(1)},\qquad
+\log X_H\sim\frac{H^2}{c_0^2}.
+$$
+
+特别地，这里使用实际共同周期的渐近式，不将 (21.4) 中的上界充当等式。将 (29.2) 写成
+
+$$
+\Theta_{ij}
+=\max\left\{\frac{Q_{H_i}}{X_{H_j}},
+ A_*^{-1/(\mu+1)}
+ \left(\frac{Q_{H_i}^{\mu+1}r_{H_i}^{-\mu}}{X_{H_j}}\right)^{1/(\mu+1)}\right\},
+$$
+
+则在 $X_{H_j}\ge X_{H_i}^{\kappa}$ 的整个区域，两个候选项分别至多为
+
+$$
+X_{H_i}^{c_0^2-\kappa+o(1)},\qquad
+X_{H_i}^{-(\kappa-\chi_{\mathrm{geom}})/(\mu+1)+o(1)}.
+$$
+
+两个 $o(1)$ 只依赖早阶段；固定 $A_*$ 也可吸收入其中。因为
+
+$$
+\kappa-c_0^2-\frac{\kappa-\chi_{\mathrm{geom}}}{\mu+1}
+=\frac{\mu(\kappa+\beta)}{\mu+1}>0,
+$$
+
+所选 $\eta$ 使这两项最终都不超过 $X_{H_i}^{-\eta}$，且该界对晚阶段统一。原模数嵌套给 $Q_{H_i}\mid Q_{H_j}$；原好阶段是真实恒 $h$ 整块，长度 $T_j=X_{H_j}\ge2M$ 最终成立。定理 29.2 因而给出 (30.2)。临界等式 $c_0^2+2\beta=1$ 给出 (30.1) 的第二种写法。$\square$
+
+**定理 30.2（允许 $p_H$ 趋零的原子事件直接满测）。** 在定理 30.1 的同一固定方向下，若存在严格递增的原好阶段序列 $H_\ell\in\mathcal H_-$ 和某个 $\kappa>\max(1,\chi_{\mathrm{geom}})$，使
+
+$$
+X_{H_{\ell+1}}\ge X_{H_\ell}^{\kappa}\quad\text{最终成立},\qquad
+\sum_{\ell=1}^{\infty}p_{H_\ell}(\omega)=\infty,
+\tag{30.3}
+$$
+
+则所选原子事件的 limsup 本身满测，从而完整原事件也满测：
+
+$$
+\nu\left(\limsup_{\ell\to\infty}B_{H_\ell}(\omega)\right)=1,
+\qquad \nu(R(\omega))=1.
+\tag{30.4}
+$$
+
+不要求 $p_{H_\ell}$ 有正下界；特别地，若 (30.3) 的发散与 $p_{H_\ell}\to0$ 同时成立，则 (26.2) 给出 $\nu(B_{H_\ell})\to0$，而 (30.4) 仍成立。本结论不假定子事件的 limsup 平移不变，也不借完整 $R$ 的零一律将正测升级。
+
+**证明。** 删去有限初段，使原大质量结论、相邻间隙及 (30.2) 同时适用。简记
+
+$$
+W_\ell=V_{H_\ell}/m_{H_\ell},\qquad w_\ell=p_{H_\ell},\qquad
+\varepsilon_\ell=98X_{H_\ell}^{-\eta},\qquad
+\delta_L=\sup_{\ell\ge L}\varepsilon_\ell\longrightarrow0.
+$$
+
+对每个 $j>i$，有 $X_{H_j}\ge X_{H_{i+1}}\ge X_{H_i}^{\kappa}$。定理 26.1 与 (30.2) 共同给出原目标空间上的实际矩关系
+
+$$
+\int_YW_\ell\,d\nu=1,\qquad
+\int_YW_\ell^2\,d\nu\le\frac{108}{w_\ell},\qquad
+\int_YW_iW_j\,d\nu\le1+\varepsilon_i\quad(i<j).
+\tag{30.5}
+$$
+
+其中 $0<w_\ell\le1$，且 $\{W_\ell>0\}=B_{H_\ell}$。对固定尾部 $L$ 和 $N\ge L$，在这些原计数上应用加权二阶法，置
+
+$$
+F_{L,N}=\sum_{\ell=L}^Nw_\ell W_\ell,\qquad
+a_{L,N}=\sum_{\ell=L}^Nw_\ell.
+$$
+
+于是 $\int F_{L,N}\,d\nu=a_{L,N}\to\infty$，且
+
+$$
+\begin{aligned}
+\int_YF_{L,N}^2\,d\nu
+&\le108a_{L,N}
+ +2(1+\delta_L)\sum_{L\le i<j\le N}w_iw_j\\
+&\le108a_{L,N}+(1+\delta_L)a_{L,N}^2.
+\end{aligned}
+\tag{30.6}
+$$
+
+这里每个对角项的成本为 $w_\ell^2(108/w_\ell)=108w_\ell$；因此只需 $\sum w_\ell$ 发散，无须 $\sum w_\ell^2$ 发散。Cauchy–Schwarz 在 $F_{L,N}>0$ 的支集上给出
+
+$$
+\begin{aligned}
+\nu\left(\bigcup_{\ell\ge L}B_{H_\ell}\right)
+&\ge\nu(F_{L,N}>0)\\
+&\ge\frac{a_{L,N}^2}{\int_YF_{L,N}^2\,d\nu}
+\ge\frac1{1+\delta_L+108/a_{L,N}}.
+\end{aligned}
+\tag{30.7}
+$$
+
+先让 $N\to\infty$，再让 $L\to\infty$，尾并集的测度上连续性及 $\delta_L\to0$ 得到第一项 (30.4)。所用二阶支集不等式是原定理 20.2 的经典中间方法；趋近 $1$ 的下界由原跨块误差在早指标尾部的一致趋零提供。
+
+最后，原 $r_H=\rho(2X_H)\le\rho(n)$ 对 $X_H<n\le2X_H$ 成立，所以每个 $B_H$ 都是该原块事件并集的子集。$X_{H_\ell}\to\infty$，属于无穷多个这些 $B_H$ 就产生无界的原成功整数，且每次仍由同一个整数满足全部有限端和两个实端。因此 $\limsup_\ell B_{H_\ell}(\omega)\subseteq R(\omega)$，得到第二项 (30.4)。它是目标空间的几乎处处无限命中结论，不是每个目标逐点命中结论。
+
+用白话说，单块覆盖虽可缩小，单块计数的重复成本却至多与 $1/p_H$ 同阶。给每块乘 $p_H$ 权重，累积对角成本便只是权重和；足够隔开的原块又在同一目标空间中渐近不相关，使每条足够晚的尾并集覆盖比例趋于一。$\square$
+
+## 31. 原好阶段几何分箱的凝聚满测判据
+
+**定理 31.1（按 $H$ 凝聚的原临界满测充分条件）。** 保持定理 30.1 的方向与原参数。任取 $s>1$，对原好阶段充分大尾部以前的有限初段约定 $p_H=0$，定义
+
+$$
+b_k(s;\omega)=\max\{p_H(\omega):H\in\mathcal H_-\cap[s^k,s^{k+1})\},
+\qquad k=0,1,2,\ldots,
+\tag{31.1}
+$$
+
+空最大值为 $0$。每个非空箱只含有限个整数，故最大值取得；初段的任何有界有限赋值均不影响以下级数的敛散性。若对某个 $s>1$ 有
+
+$$
+\sum_{k=0}^{\infty}b_k(s;\omega)=\infty,
+\tag{31.2}
+$$
+
+则可从每个所选非空箱中取一个原好阶段，得到定理 30.2 的发散间隙子族，且该子族 $B_H(\omega)$ 的 limsup 满测。因而
+
+$$
+\begin{gathered}
+\left(\exists s>1:\sum_kb_k(s;\omega)=\infty\right)
+\ \Longrightarrow\ \nu(R(\omega))=1,\\
+\nu(R(\omega))=0
+\ \Longrightarrow\ \left(\forall s>1:\sum_kb_k(s;\omega)<\infty\right).
+\end{gathered}
+\tag{31.3}
+$$
+
+在本节的有限型方向范围内，存在无界子族满足 $p_H\ge\epsilon>0$ 的旧充分条件蕴含 (31.2)，故也包含于此判据。条件 (31.2) 同样容许全部 $p_H\to0$；这里不从凝聚和收敛推出完整 $R$ 零测。
+
+**证明。** 固定 $\kappa>\max(1,\chi_{\mathrm{geom}})$，取整数 $D\ge2$ 使
+
+$$
+s^{2(D-1)}>\kappa.
+\tag{31.4}
+$$
+
+将箱指标 $k$ 按模 $D$ 作有限分色。由 (31.2)，至少一色的 $b_k$ 和发散。仅在该色的 $b_k>0$ 箱中取达到最大值的 $H_k$，则 $p_{H_k}=b_k$，所选权重和发散。若 $k'>k$ 是其中相邻的箱指标，$k'-k\ge D$，所以
+
+$$
+\frac{H_{k'}}{H_k}>s^{D-1},\qquad
+\frac{\log X_{H_{k'}}}{\log X_{H_k}}
+\ge(1-o(1))s^{2(D-1)}>\kappa
+\quad(k\to\infty).
+\tag{31.5}
+$$
+
+最后一个 $o(1)$ 对全部 $H_{k'}\ge s^{D-1}H_k$ 统一：原准确 $X_H=\lfloor\exp((H+1/2)^2/c_0^2)\rfloor$ 给出 $\log X_H=(H+1/2)^2/c_0^2+o(1)$，分子与分母的相对误差均可由早阶段的趋零界控制。由 (31.4) 的严格余量，(31.5) 最终给 $X_{H_{k'}}\ge X_{H_k}^{\kappa}$。去掉有限箱便符合 (30.3) 的全部条件，定理 30.2 直接给出所选子事件的满测，继而得到 (31.3)。有限分色只用于取得满足原时间间隙的共同实现子族，不另作一般分色或 Borel–Cantelli 定理。
+
+若 $p_H\ge\epsilon>0$ 在无界子族成立，则对每个固定 $s>1$，无穷多个不同箱满足 $b_k\ge\epsilon$，所以 (31.2) 成立。由 (26.6)，无穷多个 $\lambda_{1,H}\ge\delta>0$ 的旧非塌缩条件也蕴含这一情形。另一方面，证明只使用权重和发散，完全没有使用权重的正下界；$b_k\to0$ 与级数发散在标量条件上相容。这不声称某个给定的趋零标量序列已由原格 $L_H(\omega)$ 实现。
+
+本条的新增综合是将 (29.5) 的原共同实现误差、(30.1) 的临界时间指数和定理 26.1 的原 $p_H$ 对角成本接成凝聚判据（repo-derived）；一般卷积、二阶法与有限分色均是经典中间方法。局部计数、有限交核、原阶段和单块输入分别复用原 (19.16)、(20.6)、原定义 21.1–定理 21.2 以及本卷定理 25.1、26.1，临界参数桥复用原定理 16.7 与 (22.15)。
+
+对指定 $\omega=\alpha$，原 (17.5) 已支付有限型前提，因此 (29.5)、(30.2) 及以上条件性消费者均适用；仍未证明实际 $p_H(\alpha)$ 满足 (31.2)，也未证明存在满足 (30.3) 的发散子族。因此没有据此裁定实际 $\nu(R(\alpha))$。新的算术充分接口是实际前两条截断极小乘积在这些原 $H$ 箱中的最大值是否具有发散总和，而非要求每块覆盖保持正比例。原定理 23.1 的有限型完整零测比较方向必使 (31.3) 中的全部凝聚和收敛；这与其一阶质量发散相容，也不把该必要条件倒置为零测充分条件。$\square$
+
+## 追加锚（本行以下为增补区）
