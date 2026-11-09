@@ -16,6 +16,10 @@ absent_swap: proof_shape=bind-only; consumer=result
 weight_one_seen: proof_shape=content; consumer=result
 result: proof_shape=content; induction using weight_one_seen and the exchanged word
 The private auxiliaries are consumed on the result's live proof path.
+Direct frozen dependency: HardinA233255LiteralBridge (rowWeight, labelWeight, labelAdvance),
+statement_id: sha256:c3e47763a90b55bac6411eb8466c2c6012b56d12223aa67492b98cf0eae92fe3.
+HardinA233255ShapeSymmetry.full_row supplies the completed-scanner word weight;
+its module statement_id is sha256:1f16e42743d7e7eb40a1e81bd001307758a7555f003094ca2380ab67ff4f29a5.
 -/
 
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255ShapeSymmetry

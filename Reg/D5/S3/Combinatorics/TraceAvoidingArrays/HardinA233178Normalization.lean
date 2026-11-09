@@ -35,7 +35,7 @@ def family : Registration arena (type_of% @result) where
     refine ⟨1, (fun _ => 0), (fun _ => 1), ?_⟩
     norm_num [actual, realize, rowWeight,
       _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255LiteralBridge.labelWeight,
-      _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255LiteralBridge.labelAdvance, swap]
+      _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255LiteralBridge.labelAdvance, swap, Equiv.swap_apply_def]
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     (@result) (Realization signature) Type Unit where
   unitName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233178Normalization.auditUnit
