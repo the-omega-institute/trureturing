@@ -24,7 +24,7 @@ variable {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℝ H]
 local notation "⟪" x ", " y "⟫" => inner ℝ x y
 
 /-- Construct a supporting vector, including the case where the first candidate vanishes. -/
-private theorem supporting_vector [Nontrivial H] (n m : H →ₗ[ℝ] H)
+theorem supporting_vector [Nontrivial H] (n m : H →ₗ[ℝ] H)
     (hn : ∀ v, n (n v) = v) (hm : ∀ v, m (m v) = v)
     (hnm : ∀ v, n (m v) = -m (n v)) :
     ∃ v : H, ‖v‖ = 1 ∧ n v = v := by
