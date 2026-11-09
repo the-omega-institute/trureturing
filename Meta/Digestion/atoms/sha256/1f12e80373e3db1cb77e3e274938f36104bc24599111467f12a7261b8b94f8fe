@@ -1,0 +1,13 @@
+**定理 45.4（通道、instrument 与 Lüders 边界）。**
+
+- 保迹完全正映射是确定性量子通道；
+- 保完全正且不增迹的映射是后选择分支；
+- 一族 $\{\mathcal I_k\}$ 若每个分支完全正不增迹且 $\sum_k\mathcal I_k$ 保迹，则构成 quantum instrument；其效应为
+  $$
+  E_k=\mathcal I_k^*(I);
+  $$
+- 对锐投影 $P_k$，若再要求重复测量保持同一锐事件并满足最小扰动，才得到 Lüders 形式
+  $$
+  \mathcal I_k(\rho)=P_k\rho P_k.
+  $$
+
