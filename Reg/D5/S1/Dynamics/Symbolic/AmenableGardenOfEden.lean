@@ -158,6 +158,7 @@ private theorem countRejected_law : ¬ countArena.{u,v}.Law countRejected := by
   classical
   intro hlaw
   let G := ULift.{v} Unit
+  letI : DecidableEq G := fun a b => Classical.propDecidable (a = b)
   let φ : ((∅ : Finset G) → ULift.{u} Bool) → ULift.{u} Bool := fun _ => ⟨false⟩
   let x : G → ULift.{u} Bool := fun _ => ⟨false⟩
   let y : G → ULift.{u} Bool := fun _ => ⟨true⟩
@@ -182,8 +183,12 @@ private theorem countRejected_law : ¬ countArena.{u,v}.Law countRejected := by
     simpa only [one_mul] using Finset.mul_mem_mul
       (Finset.mem_singleton_self (1 : G)) (Finset.mem_insert_self 1 (∅ ∪ C))
   have hU : (({1} : Finset G) * insert 1 (∅ ∪ C)).card = 1 := by omega
-  have hins : (insert 1 C).card = 1 := by simpa using hU
-  norm_num [countRejected, realize, hC, hT, hins] at hcount
+  change Nat.card (ULift.{u} Bool) ^ ({1} : Finset G).card ≤
+    (Nat.card (ULift.{u} Bool) ^ C.card - 1) ^ T.card *
+      Nat.card (ULift.{u} Bool) ^
+        ((({1} : Finset G) * insert 1 (∅ ∪ C)).card - T.card * C.card) at hcount
+  rw [hC, hT, hU] at hcount
+  norm_num at hcount
 
 private theorem count_constant :
     Nat.card (ImagePatterns ({1} : Finset (ULift.{v} Unit))

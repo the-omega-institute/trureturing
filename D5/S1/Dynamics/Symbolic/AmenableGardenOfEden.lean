@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Finite collars and actual image patterns for group cellular maps. -/
+   digest: Moore-Myhill for full cellular maps on discrete amenable groups. -/
 
 import D5.S1.Dynamics.Symbolic.LatticeGardenOfEden
 import Mathlib.MeasureTheory.Group.FoelnerFilter
