@@ -106,25 +106,6 @@ def witnessZeroProbability (n d : ℕ) : ℝ :=
 def twoMeanValue (d : ℕ) (f y : ℝ) : ℝ :=
   (y + (d - 2 : ℝ) * f - 2 * Real.sqrt ((d - 1 : ℝ) * f * (y - f))) / d
 
-theorem qutrit_source_arithmetic :
-    wordCount 3 3 = 27 ∧ cutCount 3 = 3 ∧ supportRank 3 3 = 21 ∧
-      witnessSlope 3 3 = 8 / 9 ∧ witnessZeroProbability 3 3 = 3 / 4 := by
-  norm_num [wordCount, cutCount, supportRank, witnessSlope, witnessZeroProbability]
-
-theorem qutrit_two_mean_value :
-    twoMeanValue 3 (23 / 36) (11 / 12) = (14 - Real.sqrt 115) / 27 := by
-  unfold twoMeanValue
-  have hs : Real.sqrt ((2 : ℝ) * (23 / 36) * (11 / 12 - 23 / 36)) =
-      Real.sqrt 115 / 18 := by
-    have h : (2 : ℝ) * (23 / 36) * (11 / 12 - 23 / 36) = 115 / 324 := by norm_num
-    rw [h, Real.sqrt_div (by norm_num : (0 : ℝ) ≤ 115)]
-    norm_num
-  have hs' : Real.sqrt (((3 : ℝ) - 1) * (23 / 36) * (11 / 12 - 23 / 36)) =
-      Real.sqrt 115 / 18 := by
-    convert hs using 1 <;> norm_num
-  norm_num [hs']
-  ring
-
 theorem pairCoefficient_eq_zero_iff {d : ℕ} (i j : Fin d) :
     pairCoefficient i j = 0 ↔ i = j := by
   constructor

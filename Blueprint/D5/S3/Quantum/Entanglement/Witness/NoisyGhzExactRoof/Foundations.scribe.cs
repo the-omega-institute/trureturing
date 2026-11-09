@@ -98,22 +98,6 @@ internal sealed class NoisyGhzExactRoofFoundationsDocument : IScribeDocumentDefi
                 Blocks(Paragraph(Text("Every actual density state has a finite normalized ensemble supplied by the existing density_ensemble theorem. The ensemble-value set is bounded below, and its infimum is nonnegative."))),
                 DescribeRole.Theorem),
             Describe.Lean(
-                DescribeId.Create("noisy-ghz-qutrit-arithmetic"),
-                DeclarationHandle.Create(Prefix + "qutrit_source_arithmetic"),
-                H("Exact qutrit parameter checkpoint"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(Antecedent),
-                Blocks(Paragraph(Text("At n=d=3, M=27, K=3, R=21, k=8/9 and p_W=3/4. This arithmetic checkpoint alone does not prove a matrix decomposition."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("noisy-ghz-qutrit-two-mean-value"),
-                DeclarationHandle.Create(Prefix + "qutrit_two_mean_value"),
-                H("Exact qutrit radical value"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(Antecedent),
-                Blocks(Paragraph(Text("The radical branch at f=23/36 and y=11/12 equals (14-sqrt(115))/27. Identifying it with the noisy-state roof additionally requires the full actual matrix ensemble."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
                 DescribeId.Create("noisy-ghz-helper-foundations-constant-word-injective"),
                 DeclarationHandle.Create(Prefix + "constant_word_injective"),
                 H("constant word injective"),
