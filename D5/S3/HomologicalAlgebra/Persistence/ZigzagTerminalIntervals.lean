@@ -10,15 +10,19 @@ import D5.S3.HomologicalAlgebra.Persistence.ZigzagNaturalLift
 import D5.S3.HomologicalAlgebra.FilteredVectorSpaceComplement
 import Mathlib.Algebra.Category.ModuleCat.Ulift
 import Mathlib.Algebra.Category.ModuleCat.Biproducts
+import Mathlib.Algebra.Category.ModuleCat.Products
 import Mathlib.CategoryTheory.Limits.FunctorCategory.Finite
+import Mathlib.CategoryTheory.Limits.FunctorCategory.Shapes.Products
 import Mathlib.CategoryTheory.Preadditive.FunctorCategory
 import Mathlib.LinearAlgebra.FiniteDimensional.Basic
+import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
 import Mathlib.Data.List.Pairwise
 
 namespace D5.S3.HomologicalAlgebra.Persistence.ZigzagTerminalIntervals
 
 open CategoryTheory CategoryTheory.Limits
 open ZigzagNaturalLift
+
 
 universe u v
 
@@ -35,15 +39,20 @@ def intervalSpace (b i : ℕ) : ModuleCat.{max u v} K :=
   if b ≤ i then ModuleCat.of K (ULift.{v} K)
   else ModuleCat.of K PUnit.{max u v + 1}
 
+private def supportedEquiv (b i : ℕ) (h : b ≤ i) :
+    ULift.{v} K ≃ₗ[K] intervalSpace.{u, v} (K := K) b i :=
+  (eqToIso (show ModuleCat.of K (ULift.{v} K) = intervalSpace b i by
+    simp [intervalSpace, h])).toLinearEquiv
+
 /-- Identity between two supported vertices; zero whenever an endpoint is absent. -/
 def intervalMap (b s t : ℕ) :
-    intervalSpace (K := K) b s ⟶ intervalSpace (K := K) b t := by
-  unfold intervalSpace
-  split <;> split
-  · exact 𝟙 _
-  · exact 0
-  · exact 0
-  · exact 0
+    intervalSpace (K := K) b s ⟶ intervalSpace (K := K) b t :=
+  if hs : b ≤ s then
+    if ht : b ≤ t then
+      ModuleCat.ofHom ((supportedEquiv b t ht).toLinearMap.comp
+        (supportedEquiv b s hs).symm.toLinearMap)
+    else 0
+  else 0
 
 /-- Terminal intervals use the native path category of `D`, including its actual arrows. -/
 def terminalInterval (D : Zigzag.{u, v} K) (n : ℕ) (b : Fin (n + 1)) :
@@ -404,5 +413,449 @@ private theorem exists_coordinates (D : Zigzag.{u, v} K) (n : ℕ)
     obtain ⟨S⟩ := exists_step_split D n (hs n (Nat.lt_succ_self n))
     letI : FiniteDimensional K (D.space (n + 1)) := hf (Fin.last (n + 1))
     exact ⟨extendSystem D n A S⟩
+
+private noncomputable def subspaceDim {V : Type*} [AddCommGroup V] [Module K V]
+    (P : Submodule K V) : ℕ := Module.finrank K P
+
+private def dimensionGaps : List ℕ → List ℕ
+  | a :: b :: l => (b - a) :: dimensionGaps (b :: l)
+  | _ => []
+
+private theorem gaps_append (l : List ℕ) (a b : ℕ) :
+    dimensionGaps (l ++ [a, b]) = dimensionGaps (l ++ [a]) ++ [b - a] := by
+  induction l with
+  | nil => rfl
+  | cons c l ih =>
+    cases l with
+    | nil => rfl
+    | cons d l => simpa [dimensionGaps] using congrArg (List.cons (d - c)) ih
+
+private theorem gaps_add (l : List ℕ) (c : ℕ) :
+    dimensionGaps (l.map (· + c)) = dimensionGaps l := by
+  induction l with
+  | nil => rfl
+  | cons a l ih =>
+    cases l with
+    | nil => rfl
+    | cons b l =>
+      simpa [dimensionGaps, Nat.add_sub_add_right] using congrArg (List.cons (b - a)) ih
+
+private theorem filtration_endpoints (D : Zigzag.{u, v} K) (n : ℕ) :
+    ∃ l, rightFiltration D n = ⊥ :: (l ++ [⊤]) := by
+  induction n with
+  | zero => exact ⟨[], rfl⟩
+  | succ n ih =>
+    obtain ⟨l, hl⟩ := ih
+    cases h : D.arrow n with
+    | inl f =>
+      refine ⟨l.map (Submodule.map f) ++ [(⊤ : Submodule K (D.space n)).map f], ?_⟩
+      simp [rightFiltration, h, hl, List.map_append, List.append_assoc]
+    | inr g =>
+      refine ⟨(⊥ : Submodule K (D.space n)).comap g :: l.map (Submodule.comap g), ?_⟩
+      simp [rightFiltration, h, hl, List.map_append]
+
+private theorem finrank_comap_of_surjective
+    {V W : Type*} [AddCommGroup V] [Module K V] [AddCommGroup W] [Module K W]
+    [FiniteDimensional K V] (g : V →ₗ[K] W) (hg : Function.Surjective g)
+    (P : Submodule K W) :
+    Module.finrank K (P.comap g) = Module.finrank K P + Module.finrank K (LinearMap.ker g) := by
+  let f : P.comap g →ₗ[K] P :=
+    (g.comp (P.comap g).subtype).codRestrict P (fun x => x.property)
+  have hf : Function.Surjective f := by
+    intro y
+    obtain ⟨x, hx⟩ := hg y.val
+    exact ⟨⟨x, by change g x ∈ P; rw [hx]; exact y.property⟩, Subtype.ext hx⟩
+  have hk : LinearMap.ker f = (LinearMap.ker g).comap (P.comap g).subtype := by
+    ext x
+    change (f x = 0) ↔ g x.val = 0
+    constructor
+    · intro h; exact congrArg Subtype.val h
+    · intro h; exact Subtype.ext h
+  have hle : LinearMap.ker g ≤ P.comap g := by
+    intro x hx
+    change g x ∈ P
+    rw [LinearMap.mem_ker.mp hx]
+    exact P.zero_mem
+  have hd := f.finrank_range_add_finrank_ker
+  rw [LinearMap.range_eq_top.mpr hf, finrank_top, hk,
+    (Submodule.comapSubtypeEquivOfLe hle).finrank_eq] at hd
+  exact hd.symm
+
+/-- The dimension gained at an actual birth vertex. -/
+private noncomputable def birthDimension (D : Zigzag.{u, v} K) : ℕ → ℕ
+  | 0 => Module.finrank K (D.space 0)
+  | b + 1 => Module.finrank K (D.space (b + 1)) - Module.finrank K (D.space b)
+
+private theorem filtration_dimension_gaps (D : Zigzag.{u, v} K) (n : ℕ)
+    (hs : RightStreamlined D n)
+    (hf : ∀ i : Fin (n + 1), FiniteDimensional K (D.space i.val)) :
+    dimensionGaps ((rightFiltration D n).map (subspaceDim (K := K))) =
+      (birthList D n).map (birthDimension D) := by
+  classical
+  induction n with
+  | zero =>
+    letI : FiniteDimensional K (D.space 0) := hf 0
+    simp [rightFiltration, dimensionGaps, birthList, birthDimension, subspaceDim]
+  | succ n ih =>
+    have hp : RightStreamlined D n := fun i hi => hs i (Nat.lt_succ_of_lt hi)
+    have hfp : ∀ i : Fin (n + 1), FiniteDimensional K (D.space i.val) :=
+      fun i => hf i.castSucc
+    have hind := ih hp hfp
+    letI : FiniteDimensional K (D.space n) := hf (Fin.last n).castSucc
+    letI : FiniteDimensional K (D.space (n + 1)) := hf (Fin.last (n + 1))
+    obtain ⟨l, hl⟩ := filtration_endpoints D n
+    cases h : D.arrow n with
+    | inl f =>
+      have hinj : Function.Injective f := by simpa [h] using hs n (Nat.lt_succ_self n)
+      have hdim : ∀ P : Submodule K (D.space n),
+          Module.finrank K (P.map f) = Module.finrank K P :=
+        fun P => (Submodule.equivMapOfInjective f hinj P).finrank_eq.symm
+      have heq : ((rightFiltration D (n + 1)).map (subspaceDim (K := K))) =
+          ((rightFiltration D n).map (subspaceDim (K := K))) ++
+            [Module.finrank K (D.space (n + 1))] := by
+        simp [rightFiltration, h, List.map_map, Function.comp_def, subspaceDim, hdim]
+      rw [heq]
+      have hend : ((rightFiltration D n).map (subspaceDim (K := K))) =
+          (0 :: l.map (subspaceDim (K := K))) ++ [Module.finrank K (D.space n)] := by
+        simp [hl, subspaceDim]
+      rw [hend, List.append_assoc]
+      change dimensionGaps ((0 :: l.map (subspaceDim (K := K))) ++
+        [Module.finrank K (D.space n), Module.finrank K (D.space (n + 1))]) = _
+      rw [gaps_append, ← hend, hind]
+      simp [birthList, h, birthDimension]
+    | inr g =>
+      have hsurj : Function.Surjective g := by simpa [h] using hs n (Nat.lt_succ_self n)
+      let c := Module.finrank K (LinearMap.ker g)
+      have hdim : ∀ P : Submodule K (D.space n),
+          Module.finrank K (P.comap g) = Module.finrank K P + c :=
+        finrank_comap_of_surjective g hsurj
+      have htotal := g.finrank_range_add_finrank_ker
+      rw [LinearMap.range_eq_top.mpr hsurj, finrank_top] at htotal
+      have hc : c = birthDimension D (n + 1) := by dsimp [c, birthDimension]; omega
+      have heq : ((rightFiltration D (n + 1)).map (subspaceDim (K := K))) =
+          0 :: (((rightFiltration D n).map (subspaceDim (K := K))).map (· + c)) := by
+        simp [rightFiltration, h, List.map_map, Function.comp_def, subspaceDim, hdim]
+      have hstart : ((rightFiltration D n).map (subspaceDim (K := K))) =
+          0 :: (l ++ [⊤]).map (subspaceDim (K := K)) := by
+        simp [hl, subspaceDim]
+      rw [heq, hstart]
+      simp only [List.map_cons, zero_add, dimensionGaps, Nat.sub_zero]
+      have hg := gaps_add (0 :: (l ++ [⊤]).map (subspaceDim (K := K))) c
+      simp only [List.map_cons, zero_add] at hg
+      rw [hg, ← hstart, hind]
+      simp [birthList, h, hc]
+
+private theorem gaps_length (l : List ℕ) : (dimensionGaps l).length = l.length - 1 := by
+  induction l with
+  | nil => rfl
+  | cons a l ih =>
+    cases l with
+    | nil => rfl
+    | cons b l => simp only [dimensionGaps, List.length_cons] at *; omega
+
+private theorem gaps_get (l : List ℕ) (i : ℕ) (hi : i + 1 < l.length) :
+    (dimensionGaps l)[i]'(by rw [gaps_length]; omega) =
+      l[i + 1] - l[i] := by
+  induction l generalizing i with
+  | nil => simp at hi
+  | cons a l ih =>
+    cases l with
+    | nil => simp at hi
+    | cons b l =>
+      cases i with
+      | zero => rfl
+      | succ i => exact ih i (by simpa using hi)
+
+private theorem factor_dimension (D : Zigzag.{u, v} K) (n : ℕ)
+    [FiniteDimensional K (D.space n)] (i : Fin (n + 1)) :
+    Module.finrank K (successiveFactor D n i) =
+      subspaceDim (terminalFiltrationLayer D n i.succ) -
+        subspaceDim (terminalFiltrationLayer D n i.castSucc) := by
+  rw [Submodule.finrank_quotient,
+    (Submodule.comapSubtypeEquivOfLe (layer_monotone D n (Fin.castSucc_le_succ i))).finrank_eq]
+  rfl
+
+private theorem factor_birth_dimension (D : Zigzag.{u, v} K) (n : ℕ)
+    (hs : RightStreamlined D n)
+    (hf : ∀ i : Fin (n + 1), FiniteDimensional K (D.space i.val))
+    (i : Fin (n + 1)) :
+    Module.finrank K (successiveFactor D n i) = birthDimension D (birthOrder D n i).val := by
+  letI : FiniteDimensional K (D.space n) := hf (Fin.last n)
+  have hi : i.val + 1 < ((rightFiltration D n).map (subspaceDim (K := K))).length := by
+    rw [List.length_map, filtration_length]
+    omega
+  have hg := gaps_get ((rightFiltration D n).map (subspaceDim (K := K))) i.val hi
+  have heq := congrArg (fun l : List ℕ => l[i.val]!) (filtration_dimension_gaps D n hs hf)
+  rw [getElem!_pos _ _ (by rw [gaps_length, List.length_map, filtration_length]; omega),
+    getElem!_pos _ _ (by rw [List.length_map, birth_length]; exact i.isLt)] at heq
+  rw [hg] at heq
+  rw [factor_dimension]
+  simpa only [List.getElem_map, terminalFiltrationLayer, List.get_eq_getElem,
+    birthOrder, Fin.val_mk, Fin.val_succ, Fin.val_castSucc] using heq
+
+private theorem coordinate_count (D : Zigzag.{u, v} K) (n : ℕ)
+    (A : CoordinateSystem D n) (b : Fin (n + 1)) :
+    letI := A.finite
+    Fintype.card {j : A.index // A.birth j = b.val} = birthDimension D b.val := by
+  classical
+  letI := A.finite
+  have hd : ∀ i : Fin (n + 1), Module.finrank K (D.space i.val) =
+      Fintype.card {j : A.index // A.birth j ≤ i.val} := by
+    intro i
+    exact (A.equiv i).finrank_eq.trans (Module.finrank_pi K)
+  cases h : b.val with
+  | zero =>
+    have hdim := hd ⟨0, by omega⟩
+    simpa only [h, birthDimension, Nat.le_zero_eq] using hdim.symm
+  | succ k =>
+    have hk : k < n + 1 := by omega
+    have hcard : Fintype.card {j : A.index // A.birth j ≤ k + 1} =
+        Fintype.card {j : A.index // A.birth j ≤ k} +
+          Fintype.card {j : A.index // A.birth j = k + 1} := by
+      have hp : (fun j : A.index => A.birth j ≤ k + 1) =
+          (fun j => A.birth j ≤ k ∨ A.birth j = k + 1) := by
+        funext j; apply propext; omega
+      calc
+        _ = Fintype.card {j : A.index // A.birth j ≤ k ∨ A.birth j = k + 1} :=
+          Fintype.card_congr (Equiv.subtypeEquivRight (fun j => by omega))
+        _ = _ := Fintype.card_subtype_or_disjoint _ _ (by
+          intro j hle heq x hx
+          have h1 := hle x hx
+          have h2 := heq x hx
+          omega)
+    have hnew := hd ⟨k + 1, by omega⟩
+    have hold := hd ⟨k, hk⟩
+    simp only [h] at hnew ⊢
+    simp only [Fin.val_mk] at hnew hold
+    rw [birthDimension, hnew, hold, hcard]
+    omega
+
+private def valueProjection {J : Type} (birth : J → ℕ) (j : J) (i : ℕ) :
+    Coordinates (K := K) birth i →ₗ[K] intervalSpace.{u, v} (K := K) (birth j) i := by
+  classical
+  exact if h : birth j ≤ i then
+    (supportedEquiv (birth j) i h).toLinearMap.comp
+      (ULift.moduleEquiv.symm.toLinearMap.comp (LinearMap.proj ⟨j, h⟩))
+    else 0
+
+private def scalarExtract (b i : ℕ) (h : b ≤ i) :
+    intervalSpace.{u, v} (K := K) b i →ₗ[K] K :=
+  ULift.moduleEquiv.toLinearMap.comp (supportedEquiv b i h).symm.toLinearMap
+
+private noncomputable def coordinateProductEquiv {J : Type} (birth : J → ℕ) (i : ℕ) :
+    Coordinates (K := K) birth i ≃ₗ[K] ∀ j, intervalSpace.{u, v} (K := K) (birth j) i := by
+  classical
+  let f := LinearMap.pi (fun j => valueProjection (K := K) birth j i)
+  apply LinearEquiv.ofBijective f
+  constructor
+  · intro x y hxy
+    funext j
+    have heq := congrArg (fun z => scalarExtract (K := K) (birth j.val) i j.property (z j.val)) hxy
+    simpa [f, valueProjection, scalarExtract, j.property] using heq
+  · intro y
+    refine ⟨fun j => scalarExtract (K := K) (birth j.val) i j.property (y j.val), ?_⟩
+    funext j
+    by_cases h : birth j ≤ i
+    · simp only [f, LinearMap.pi_apply, valueProjection, dif_pos h,
+        LinearMap.comp_apply, LinearEquiv.coe_coe, scalarExtract]
+      change (supportedEquiv (birth j) i h) ((supportedEquiv (K := K) (birth j) i h).symm (y j)) = y j
+      exact (supportedEquiv (birth j) i h).apply_symm_apply _
+    · haveI : Subsingleton (intervalSpace.{u, v} (K := K) (birth j) i) := by
+        simp only [intervalSpace, if_neg h]
+        infer_instance
+      exact Subsingleton.elim _ _
+
+private theorem value_forward {J : Type} (birth : J → ℕ) (j : J) (i : ℕ)
+    (x : Coordinates (K := K) birth i) :
+    valueProjection birth j (i + 1) (coordinateInclusion birth i x) =
+      (intervalMap.{u, v} (K := K) (birth j) i (i + 1)).hom (valueProjection birth j i x) := by
+  classical
+  by_cases h0 : birth j ≤ i <;> by_cases h1 : birth j ≤ i + 1
+  · simp only [valueProjection, intervalMap, dif_pos h0, dif_pos h1, LinearMap.comp_apply,
+      LinearEquiv.coe_coe, ModuleCat.hom_ofHom, LinearMap.proj_apply,
+      coordinateInclusion, dif_pos h0]
+    exact congrArg (supportedEquiv (K := K) (birth j) (i + 1) h1)
+      ((supportedEquiv (K := K) (birth j) i h0).symm_apply_apply _).symm
+  · omega
+  · simp only [valueProjection, intervalMap, dif_neg h0, dif_pos h1, LinearMap.comp_apply,
+      LinearEquiv.coe_coe, LinearMap.proj_apply, coordinateInclusion, dif_neg h0,
+      LinearMap.zero_apply]
+    change (supportedEquiv (K := K) (birth j) (i + 1) h1)
+      (ULift.up (if h : birth j ≤ i then x ⟨j, h⟩ else 0)) = 0
+    simp [h0]
+  · simp [valueProjection, intervalMap, intervalSpace, coordinateInclusion, h0, h1]
+    rfl
+
+private theorem value_backward {J : Type} (birth : J → ℕ) (j : J) (i : ℕ)
+    (x : Coordinates (K := K) birth (i + 1)) :
+    valueProjection birth j i (coordinateProjection birth i x) =
+      (intervalMap.{u, v} (K := K) (birth j) (i + 1) i).hom (valueProjection birth j (i + 1) x) := by
+  classical
+  by_cases h0 : birth j ≤ i <;> by_cases h1 : birth j ≤ i + 1
+  · simp only [valueProjection, intervalMap, dif_pos h0, dif_pos h1, LinearMap.comp_apply,
+      LinearEquiv.coe_coe, ModuleCat.hom_ofHom, LinearMap.proj_apply, coordinateProjection]
+    exact congrArg (supportedEquiv (K := K) (birth j) i h0)
+      ((supportedEquiv (K := K) (birth j) (i + 1) h1).symm_apply_apply _).symm
+  · omega
+  · simp [valueProjection, intervalMap, intervalSpace, h0, h1]
+    rfl
+  · simp [valueProjection, intervalMap, intervalSpace, h0, h1]
+    rfl
+
+private theorem path_naturality {V : Type*} [Quiver V] {C : Type*} [Category* C]
+    (F G : Paths V ⥤ C) (a : ∀ i, F.obj i ⟶ G.obj i)
+    (he : ∀ (i j : V) (e : i ⟶ j),
+      F.map ((Paths.of V).map e) ≫ a ((Paths.of V).obj j) =
+        a ((Paths.of V).obj i) ≫ G.map ((Paths.of V).map e)) :
+    ∀ (i j : Paths V) (p : i ⟶ j), F.map p ≫ a j = a i ≫ G.map p := by
+  intro i j p
+  refine Paths.induction (P := fun {i j} p => F.map p ≫ a j = a i ≫ G.map p) ?_ ?_ p
+  · intro i; rw [F.map_id, G.map_id]; exact (Category.id_comp _).trans (Category.comp_id _).symm
+  · intro i j k q e ih
+    calc
+      F.map (q ≫ (Paths.of V).map e) ≫ a ((Paths.of V).obj k) =
+          F.map q ≫ (F.map ((Paths.of V).map e) ≫ a ((Paths.of V).obj k)) := by
+            rw [F.map_comp]; exact Category.assoc _ _ _
+      _ = F.map q ≫ (a ((Paths.of V).obj j) ≫ G.map ((Paths.of V).map e)) := by rw [he]
+      _ = (F.map q ≫ a ((Paths.of V).obj j)) ≫ G.map ((Paths.of V).map e) :=
+        (Category.assoc _ _ _).symm
+      _ = (a ((Paths.of V).obj i) ≫ G.map q) ≫ G.map ((Paths.of V).map e) := by rw [ih]
+      _ = a ((Paths.of V).obj i) ≫ G.map (q ≫ (Paths.of V).map e) := by
+        rw [G.map_comp]; exact Category.assoc _ _ _
+
+private def coefficientComponent (D : Zigzag.{u, v} K) (n : ℕ)
+    (A : CoordinateSystem D n) (j : A.index) (i : Paths (Vertex D n)) :
+    (liftedDiagram D n).obj i ⟶ intervalSpace.{u, v} (K := K) (A.birth j) (pathVertexVal i) := by
+  change ModuleCat.of K (ULift.{u} (D.space (pathVertexVal i))) ⟶ _
+  exact ModuleCat.ofHom ((valueProjection A.birth j (pathVertexVal i)).comp
+    ((A.equiv (pathVertex i)).toLinearMap.comp
+      (ULift.moduleEquiv : ULift.{u} (D.space (pathVertexVal i)) ≃ₗ[K]
+        D.space (pathVertexVal i)).toLinearMap))
+
+private def coefficient (D : Zigzag.{u, v} K) (n : ℕ)
+    (A : CoordinateSystem D n) (j : A.index) :
+    liftedDiagram D n ⟶ terminalInterval D n ⟨A.birth j, Nat.lt_succ_of_le (A.bound j)⟩ where
+  app := coefficientComponent D n A j
+  naturality := by
+    intro i k p
+    refine path_naturality (liftedDiagram D n)
+      (terminalInterval D n ⟨A.birth j, Nat.lt_succ_of_le (A.bound j)⟩)
+      (coefficientComponent D n A j) ?_ i k p
+    intro i k e
+    cases e with
+    | forward i f actual =>
+      apply ModuleCat.hom_ext
+      ext x
+      change valueProjection A.birth j (i.val + 1) (A.equiv i.succ (f x.down)) =
+        (intervalMap.{u, v} (A.birth j) i.val (i.val + 1)).hom
+          (valueProjection A.birth j i.val (A.equiv i.castSucc x.down))
+      exact (congrArg (valueProjection A.birth j (i.val + 1))
+        (A.forward i f actual x.down)).trans (value_forward A.birth j i.val _)
+    | backward i g actual =>
+      apply ModuleCat.hom_ext
+      ext x
+      change valueProjection A.birth j i.val (A.equiv i.castSucc (g x.down)) =
+        (intervalMap.{u, v} (A.birth j) (i.val + 1) i.val).hom
+          (valueProjection A.birth j (i.val + 1) (A.equiv i.succ x.down))
+      exact (congrArg (valueProjection A.birth j i.val)
+        (A.backward i g actual x.down)).trans (value_backward A.birth j i.val _)
+
+private theorem positive_decomposition (D : Zigzag.{u, v} K) (n : ℕ)
+    (hs : RightStreamlined D n)
+    (hf : ∀ i : Fin (n + 1), FiniteDimensional K (D.space i.val)) :
+    TerminalIntervalDecomposition D n := by
+  classical
+  obtain ⟨A⟩ := exists_coordinates D n hs hf
+  letI := A.finite
+  let r := Fintype.card A.index
+  let E : Fin r ≃ A.index := (Fintype.equivFin A.index).symm
+  let birth : Fin r → Fin (n + 1) :=
+    fun k => ⟨A.birth (E k), Nat.lt_succ_of_le (A.bound (E k))⟩
+  refine ⟨r, birth, ?_, ?_⟩
+  · letI : HasFiniteBiproducts (Paths (Vertex D n) ⥤ ModuleCat.{max u v} K) :=
+      HasFiniteBiproducts.of_hasFiniteProducts
+    let F := fun k : Fin r => terminalInterval D n (birth k)
+    let η : liftedDiagram D n ⟶ ∏ᶜ F := Pi.lift (fun k => coefficient D n A (E k))
+    haveI : ∀ i, IsIso (η.app i) := by
+      intro i
+      let q := piObjIso F i ≪≫ ModuleCat.piIsoPi (fun k => (F k).obj i)
+      let l : ULift.{u} (D.space (pathVertexVal i)) ≃ₗ[K]
+          ∀ k : Fin r, intervalSpace.{u, v} (K := K) (A.birth (E k)) (pathVertexVal i) :=
+        ULift.moduleEquiv ≪≫ₗ A.equiv (pathVertex i) ≪≫ₗ
+          coordinateProductEquiv A.birth (pathVertexVal i) ≪≫ₗ
+            (LinearEquiv.piCongrLeft K
+              (fun j => intervalSpace.{u, v} (K := K) (A.birth j) (pathVertexVal i)) E).symm
+      let li : (liftedDiagram D n).obj i ≅ ModuleCat.of K (∀ k : Fin r, (F k).obj i) :=
+        l.toModuleIso
+      have he : η.app i ≫ q.hom = li.hom := by
+        apply ModuleCat.hom_ext
+        ext x k
+        have hq : q.hom ≫ ModuleCat.ofHom (LinearMap.proj k) = (Pi.π F k).app i := by
+          dsimp [q]
+          rw [Category.assoc, ModuleCat.piIsoPi_hom_ker_subtype, piObjIso_hom_comp_π]
+        have hc : η.app i ≫ q.hom ≫ ModuleCat.ofHom (LinearMap.proj k) =
+            (coefficient D n A (E k)).app i := by
+          rw [hq, ← NatTrans.comp_app]
+          simp [η]
+        change ((η.app i ≫ q.hom).hom x) k = ((coefficient D n A (E k)).app i).hom x
+        exact congrArg (fun f => f.hom x) hc
+      let ei : (liftedDiagram D n).obj i ≅ (∏ᶜ F).obj i := li ≪≫ q.symm
+      have hei : η.app i = ei.hom := by
+        apply (cancel_mono q.hom).mp
+        change η.app i ≫ q.hom = (li.hom ≫ q.inv) ≫ q.hom
+        rw [Category.assoc, q.inv_hom_id, Category.comp_id]
+        exact he
+      rw [hei]
+      infer_instance
+    haveI : IsIso η := NatIso.isIso_of_isIso_app η
+    exact ⟨asIso η ≪≫ (biproduct.isoProduct F).symm⟩
+  · intro i
+    let e : {k : Fin r // birth k = birthOrder D n i} ≃
+        {j : A.index // A.birth j = (birthOrder D n i).val} := {
+      toFun := fun k => ⟨E k.val, congrArg Fin.val k.property⟩
+      invFun := fun j => ⟨E.symm j.val, Fin.ext (by simpa [birth] using j.property)⟩
+      left_inv := by intro k; apply Subtype.ext; exact E.symm_apply_apply k.val
+      right_inv := by intro j; apply Subtype.ext; exact E.apply_symm_apply j.val }
+    exact (Fintype.card_congr e).trans ((coordinate_count D n A (birthOrder D n i)).trans
+      (factor_birth_dimension D n hs hf i).symm)
+
+/-- The zero-vertex source is empty; it is distinct from the native one-vertex prefix. -/
+inductive EmptyVertex : Type
+
+instance : Quiver.{0} EmptyVertex := ⟨fun _ _ => Empty⟩
+
+/-- The unique diagram on the genuinely empty path category. -/
+def emptyDiagram : Paths EmptyVertex ⥤ ModuleCat.{max u v} K :=
+  Paths.lift {
+    obj := fun i => nomatch i
+    map := fun {i} _ => nomatch i }
+
+/-- The empty occurrence family has an actual empty categorical biproduct. -/
+noncomputable def emptyIntervalSum : Paths EmptyVertex ⥤ ModuleCat.{max u v} K := by
+  letI : HasFiniteBiproducts (Paths EmptyVertex ⥤ ModuleCat.{max u v} K) :=
+    HasFiniteBiproducts.of_hasFiniteProducts
+  exact ⨁ (fun j : Fin 0 => Fin.elim0 j)
+
+/-- Zero length uses the empty source and empty sum. Positive length uses the
+native actual-arrow source and all terminal-filtration quotient multiplicities. -/
+def FullTerminalIntervalDecomposition (D : Zigzag.{u, v} K) : ℕ → Prop
+  | 0 => Nonempty (emptyDiagram.{u, v} (K := K) ≅ emptyIntervalSum.{u, v} (K := K))
+  | n + 1 => TerminalIntervalDecomposition D n
+
+/-- A finite-dimensional right-streamlined zigzag is naturally isomorphic to a
+finite sum of terminal intervals, with the multiplicities of its actual terminal
+right filtration in the actual birth order. No basis or splitting is assumed. -/
+theorem exists_terminal_interval_decomposition (D : Zigzag.{u, v} K) (m : ℕ)
+    (finite : ∀ i, i < m → FiniteDimensional K (D.space i))
+    (streamlined : ∀ i, i + 1 < m → match D.arrow i with
+      | Sum.inl f => Function.Injective f
+      | Sum.inr g => Function.Surjective g) :
+    FullTerminalIntervalDecomposition D m := by
+  cases m with
+  | zero =>
+    exact ⟨NatIso.ofComponents (fun i => nomatch i) (fun {i} => nomatch i)⟩
+  | succ n =>
+    exact positive_decomposition D n (fun i hi => streamlined i (by omega))
+      (fun i => finite i.val i.isLt)
 
 end D5.S3.HomologicalAlgebra.Persistence.ZigzagTerminalIntervals
