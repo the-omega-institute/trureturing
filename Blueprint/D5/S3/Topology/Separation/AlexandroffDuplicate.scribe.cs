@@ -49,7 +49,7 @@ internal sealed class AlexandroffDuplicateDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/Topology/Separation/AlexandroffDuplicate.topological_frontier"),
                 H("Compact Hausdorff duplicate with exactly the upper clopen locus"),
                 StatementSource.FromAuthor(Statement()),
-                AssessedProvenance.FromAuthor(),
+                AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text("The duplicate is compact and Hausdorff. Projection is continuous and is a left inverse "
                         + "of Lower. Lower is a closed embedding of the original K. The range of Upper is dense. A point has "

@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: The Alexandroff duplicate of a connected compact Hausdorff space has exactly its dense upper layer as its clopen-basis locus. -/
+   digest: Compact Hausdorff duplicates have an exact dense upper clopen locus. -/
 
 import Mathlib.Topology.Connected.Clopen
 import Mathlib.Topology.Perfect
@@ -138,7 +138,8 @@ private instance duplicate_compact [CompactSpace K] : CompactSpace (Duplicate K)
         (hVs p x hxp).1⟩
     · by_cases h : x = p
       · subst x
-        exact mem_iUnion₂.mpr ⟨k p, Finset.mem_union_right _ (Finset.mem_image.mpr ⟨p, hp, rfl⟩), hk p⟩
+        exact mem_iUnion₂.mpr ⟨k p,
+          Finset.mem_union_right _ (Finset.mem_image.mpr ⟨p, hp, rfl⟩), hk p⟩
       · exact mem_iUnion₂.mpr ⟨j p, Finset.mem_union_left _ (Finset.mem_image.mpr ⟨p, hp, rfl⟩),
           (hVs p x hxp).2 h⟩
 
@@ -188,8 +189,8 @@ theorem topological_frontier [CompactSpace K] [T2Space K] [ConnectedSpace K] [No
     lower_continuous.isClosedEmbedding (fun x y h => congrArg Duplicate.base h),
     upper_dense, hlocus, ?_⟩
   intro hz
-  letI := hz
-  obtain ⟨x⟩ := ‹Nonempty K›
+  haveI := hz
+  obtain ⟨x⟩ := (inferInstance : Nonempty K)
   apply lower_not_clopen_based x
   intro U hU hxU
   obtain ⟨C, hC, hxC, hCU⟩ := isTopologicalBasis_isClopen.exists_subset_of_mem_open hxU hU
