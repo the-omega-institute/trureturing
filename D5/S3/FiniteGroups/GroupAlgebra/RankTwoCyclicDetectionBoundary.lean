@@ -74,7 +74,7 @@ private def actionMap (a b : F) : V →ₗ[F] V where
       dsimp [act, mix] <;> ring
   map_smul' r v := by
     refine Prod.ext (Prod.ext ?_ ?_) (Prod.ext (Prod.ext ?_ ?_) (Prod.ext ?_ ?_)) <;>
-      dsimp [act, mix] <;> simp only [smul_eq_mul] <;> ring
+      dsimp [act, mix] <;> ring
 
 /-- The explicit polynomial representation of the actual group E on F3^6.
 For g = (a,b), this is I + Lbar N + Qbar N² with the displayed L and Q. -/
@@ -87,12 +87,13 @@ def rho : Representation F E V where
     refine Prod.ext (Prod.ext ?_ ?_) (Prod.ext (Prod.ext ?_ ?_) (Prod.ext ?_ ?_)) <;>
       simp [act, mix, c]
   map_mul' g h := by
+    have : CharP F 3 := inferInstance
     apply LinearMap.ext
     intro v
     change act (g.toAdd.1 + h.toAdd.1) (g.toAdd.2 + h.toAdd.2) v =
       act g.toAdd.1 g.toAdd.2 (act h.toAdd.1 h.toAdd.2 v)
     refine Prod.ext (Prod.ext ?_ ?_) (Prod.ext (Prod.ext ?_ ?_) (Prod.ext ?_ ?_)) <;>
-      dsimp [act, mix, c] <;> ring_nf <;> reduce_mod_char <;> ring
+      dsimp [act, mix, c] <;> ring_nf <;> reduce_mod_char!
 
 -- Nine actual group elements, each killed by the third power. This is a
 -- kernel decision proof over a finite type, not native_decide.
@@ -151,27 +152,36 @@ private theorem fixed_tail_zero (a b : F) (hab : a ≠ 0 ∨ b ≠ 0)
     calc
       v.2.2 = mix ((a * a + b * b) * a) (-((a * a + b * b) * b))
           (mix a b v.2.2) := (direction_inverse a b hab v.2.2).symm
-      _ = 0 := by simp [hL2, mix]
+      _ = 0 := by
+        rw [hL2]
+        apply Prod.ext <;> simp [mix]
   have hL1 : mix a b v.2.1 = 0 := by
     have he := congrArg (fun z : V => z.1) hv
     change v.1 + mix a b v.2.1 + mix (c a - c b) (a * b) v.2.2 = v.1 at he
-    have he' : v.1 + mix a b v.2.1 = v.1 := by simpa [hv2, mix] using he
+    have he' : v.1 + mix a b v.2.1 = v.1 := by
+      rw [hv2] at he
+      have hz : mix (c a - c b) (a * b) (0 : W) = 0 := by
+        apply Prod.ext <;> simp [mix]
+      simpa only [hz, add_zero] using he
     exact add_left_cancel (he'.trans (add_zero _).symm)
   have hv1 : v.2.1 = 0 := by
     calc
       v.2.1 = mix ((a * a + b * b) * a) (-((a * a + b * b) * b))
           (mix a b v.2.1) := (direction_inverse a b hab v.2.1).symm
-      _ = 0 := by simp [hL1, mix]
+      _ = 0 := by
+        rw [hL1]
+        apply Prod.ext <;> simp [mix]
   exact ⟨hv1, hv2⟩
 
 -- This is the sum over the actual subtype H, reindexed by a bijection
 -- i ↦ h^i from Fin 3. No separate abstract cyclic action is substituted.
 private theorem cyclic_norm (H : Subgroup E) [Fintype H] (h : H)
     (hgen : ∀ x : H, x ∈ Subgroup.zpowers h) (hh : h ≠ 1) (v : V) :
-    (rho.comp H.subtype).norm v =
+    Representation.norm (rho.comp H.subtype : Representation F H V) v =
       (mix (h.val.toAdd.1 * h.val.toAdd.1 - h.val.toAdd.2 * h.val.toAdd.2)
         (-(h.val.toAdd.1 * h.val.toAdd.2)) v.2.2, (0, 0)) := by
   classical
+  have : CharP F 3 := inferInstance
   have hc : h ^ 3 = 1 := by
     apply Subtype.ext
     exact exponent_three h.val
@@ -179,8 +189,8 @@ private theorem cyclic_norm (H : Subgroup E) [Fintype H] (h : H)
   have hinj : Function.Injective (fun i : Fin 3 => h ^ i.val) := by
     intro i j hij
     apply Fin.ext
-    exact (pow_injOn_Iio_orderOf (x := h)) (by simpa [ho] using i.isLt)
-      (by simpa [ho] using j.isLt) hij
+    exact (pow_injOn_Iio_orderOf (x := h)) (by simp [ho])
+      (by simp [ho]) hij
   have hsurj : Function.Surjective (fun i : Fin 3 => h ^ i.val) := by
     intro x
     have hx := (mem_zpowers_iff_mem_range_orderOf (x := h) (y := x)).mp (hgen x)
@@ -191,7 +201,7 @@ private theorem cyclic_norm (H : Subgroup E) [Fintype H] (h : H)
     (fun i : Fin 3 => rho ((h ^ i.val : H) : E) v)
     (fun x : H => rho (x : E) v) (fun _ => rfl)
   calc
-    (rho.comp H.subtype).norm v = ∑ x : H, rho (x : E) v := by
+    Representation.norm (rho.comp H.subtype : Representation F H V) v = ∑ x : H, rho (x : E) v := by
       simp only [Representation.norm, LinearMap.sum_apply, MonoidHom.comp_apply,
         Subgroup.subtype_apply]
     _ = v + rho (h : E) v + rho ((h : E) ^ 2) v := by
@@ -202,10 +212,11 @@ private theorem cyclic_norm (H : Subgroup E) [Fintype H] (h : H)
       change v + act h.val.toAdd.1 h.val.toAdd.2 v +
           act (h.val.toAdd.1 + h.val.toAdd.1) (h.val.toAdd.2 + h.val.toAdd.2) v = _
       refine Prod.ext (Prod.ext ?_ ?_) (Prod.ext (Prod.ext ?_ ?_) (Prod.ext ?_ ?_)) <;>
-        dsimp [act, mix, c] <;> ring_nf <;> reduce_mod_char <;> ring
+        dsimp [act, mix, c] <;> ring_nf <;> reduce_mod_char! <;> ring_nf <;> reduce_mod_char!
 
 private theorem cyclic_projective (H : Subgroup E) [IsCyclic H] :
-    Module.Projective F[H] (rho.comp H.subtype : Representation F H V).asModule := by
+    Module.Projective F[H]
+      (Representation.asModule (rho.comp H.subtype : Representation F H V)) := by
   classical
   apply (PGroupProjectiveNormRing.projective_iff_projective_invariants_and_norm_surjective
     3 1 (by decide) (by decide) (elementary_three.to_subgroup H)
@@ -225,7 +236,7 @@ private theorem cyclic_projective (H : Subgroup E) [IsCyclic H] :
     simp [Representation.norm, huniv]
   · have hab : h.val.toAdd.1 ≠ 0 ∨ h.val.toAdd.2 ≠ 0 := by
       by_contra hn
-      push_neg at hn
+      push Not at hn
       apply hh
       apply Subtype.ext
       apply Multiplicative.toAdd.injective
@@ -247,6 +258,7 @@ private theorem field_sum (f : F → V) : (∑ a : F, f a) = f 0 + f 1 + f 2 := 
 
 private theorem ambient_norm_zero (v : V) : rho.norm v = 0 := by
   classical
+  have : CharP F 3 := inferInstance
   calc
     rho.norm v = ∑ g : E, rho g v := by
       simp only [Representation.norm, LinearMap.sum_apply]
@@ -258,7 +270,7 @@ private theorem ambient_norm_zero (v : V) : rho.norm v = 0 := by
     _ = 0 := by
       simp only [field_sum]
       refine Prod.ext (Prod.ext ?_ ?_) (Prod.ext (Prod.ext ?_ ?_) (Prod.ext ?_ ?_)) <;>
-        dsimp [act, mix, c] <;> ring_nf <;> reduce_mod_char <;> ring
+        dsimp [act, mix, c] <;> ring_nf <;> reduce_mod_char!
 
 /-- The closed universal assertion that projectivity on every actual cyclic
 subgroup detects ambient projectivity for representations on the fixed F, E and V. -/
@@ -276,7 +288,7 @@ theorem cyclic_projectivity_detection_fails : Not cyclic_projectivity_detection_
   have hproj : Module.Projective F[E] rho.asModule :=
     hdetect rho (by
       intro H hH
-      letI : IsCyclic H := hH
+      let : IsCyclic H := hH
       exact cyclic_projective H)
   let w : rho.invariants :=
     ⟨((1, 0), (0, 0)), by
