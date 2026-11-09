@@ -170,7 +170,10 @@ private theorem V_equation : V + 2 * X * V + X ^ 2 * V ^ 2 = 1 := by
       cat ^ 2 = (1 + X * cat ^ 2) ^ 2 := congrArg (fun f => f ^ 2) cat_equation
       _ = _ := by ring
   dsimp [V]
-  linear_combination 3 * h
+  have h4 : (4 : PowerSeries (ZMod 4)) = 0 := by
+    simpa only [map_ofNat, map_zero] using congrArg (C (R := ZMod 4)) (by decide : (4 : ZMod 4) = 0)
+  have h12 : (12 : PowerSeries (ZMod 4)) = 0 := by linear_combination 3 * h4
+  linear_combination (norm := (ring_nf; simp [h4, h12])) 3 * h
 
 private theorem U_V_equations :
     U = (1 + 2 * X) * V + X * U * V ∧ V = U * V - X * V ^ 2 := by
@@ -190,37 +193,43 @@ private theorem oddSeries_odd (k : ℕ) : oddSeries (2 * k + 1) = V ^ (k + 1) :=
   simp [oddSeries, hd, Nat.add_mod]
 
 private theorem oddSeries_adjacent (k : ℕ) :
-    oddSeries k = (1 + (2 * k + 2 : ℕ) * X) * oddSeries (k + 1) -
-      (2 * k + 3 : ℕ) * X * oddSeries (k + 2) := by
+    oddSeries k = (1 + ((2 * k + 2 : ℕ) : PowerSeries (ZMod 4)) * X) * oddSeries (k + 1) -
+      ((2 * k + 3 : ℕ) : PowerSeries (ZMod 4)) * X * oddSeries (k + 2) := by
   have he : k = 2 * (k / 2) ∨ k = 2 * (k / 2) + 1 := by omega
   obtain ⟨hU, hV⟩ := U_V_equations
+  have h4 : (4 : PowerSeries (ZMod 4)) = 0 := by
+    simpa only [map_ofNat, map_zero] using congrArg (C (R := ZMod 4)) (by decide : (4 : ZMod 4) = 0)
   rcases he with he | he
   · generalize k / 2 = m at he
     subst k
     rw [oddSeries_even, oddSeries_odd, show 2 * m + 2 = 2 * (m + 1) by omega,
       oddSeries_even, pow_succ]
     have h2 : ((2 * (2 * m) + 2 : ℕ) : PowerSeries (ZMod 4)) = 2 := by
-      push_cast; ring
+      push_cast
+      linear_combination (norm := (ring_nf; simp [h4])) h4
     have h3 : ((2 * (2 * m) + 3 : ℕ) : PowerSeries (ZMod 4)) = -1 := by
-      push_cast; ring
-    rw [h2, h3, hU]
-    ring
+      push_cast
+      linear_combination (norm := (ring_nf; simp [h4])) h4
+    rw [h2, h3]
+    linear_combination V ^ m * hU
   · generalize k / 2 = m at he
     subst k
     rw [oddSeries_odd, show 2 * m + 1 + 1 = 2 * (m + 1) by omega,
       oddSeries_even, show 2 * m + 1 + 2 = 2 * (m + 1) + 1 by omega,
       oddSeries_odd]
     have h2 : ((2 * (2 * m + 1) + 2 : ℕ) : PowerSeries (ZMod 4)) = 0 := by
-      push_cast; ring
+      push_cast
+      linear_combination (norm := (ring_nf; simp [h4])) h4
     have h3 : ((2 * (2 * m + 1) + 3 : ℕ) : PowerSeries (ZMod 4)) = 1 := by
-      push_cast; ring
-    rw [h2, h3, hV, pow_succ]
-    ring
+      push_cast
+      linear_combination (norm := (ring_nf; simp [h4])) h4
+    rw [h2, h3, pow_succ, pow_succ]
+    linear_combination V ^ m * hV
 
 private theorem oddSeries_recurrence (k : ℕ) :
     oddSeries k = 1 + X *
       (-(∑ r ∈ Finset.range k, oddSeries (r + 1)) +
-        (2 * k + 1 : ℕ) * oddSeries (k + 1)) := by
+        ((2 * k + 1 : ℕ) : PowerSeries (ZMod 4)) * oddSeries (k + 1)) := by
   induction k with
   | zero => simp [oddSeries, U]
   | succ k ih =>
@@ -228,13 +237,17 @@ private theorem oddSeries_recurrence (k : ℕ) :
     rw [ih] at ha
     rw [Finset.sum_range_succ]
     push_cast at ha ⊢
-    linear_combination ha
+    linear_combination -ha
 
 private theorem oddSeries_constant (k : ℕ) : constantCoeff (oddSeries k) = 1 := by
-  have hc : constantCoeff cat = 1 := by simp [cat]
-  have hv : constantCoeff V = 1 := by norm_num [V, hc]
+  have hc : constantCoeff cat = 1 := by
+    rw [← coeff_zero_eq_constantCoeff]; simp [cat]
+  have hv : constantCoeff V = 1 := by
+    simp only [V, map_sub, map_mul, map_pow, map_ofNat, hc, one_pow, mul_one]
+    decide
   have hu : constantCoeff U = 1 := by simp [U]
-  simp [oddSeries, hv, hu]
+  unfold oddSeries
+  split_ifs <;> simp [map_pow, hv, hu]
 
 private theorem row_eq_oddSeries (n k : ℕ) :
     row (ZMod 4) n (2 * k + 1) = coeff n (oddSeries k) := by
@@ -244,19 +257,29 @@ private theorem row_eq_oddSeries (n k : ℕ) :
     have h := congrArg (coeff (n + 1)) (oddSeries_recurrence k)
     simp only [map_add, coeff_one, Nat.succ_ne_zero, ↓reduceIte, zero_add,
       coeff_succ_X_mul, map_neg, map_sum, coeff_natCast_mul] at h
+    have hi (r : ℕ) : row (ZMod 4) n (2 * r + 3) = coeff n (oddSeries (r + 1)) := by
+      convert ih (r + 1) using 1 <;> congr 1 <;> omega
     rw [odd_row_recurrence, h]
-    simp only [ih]
+    simp only [hi]
+
+private theorem row_natCast {R : Type*} [Semiring R] (n k : ℕ) :
+    (row ℕ n k : R) = row R n k := by
+  induction n generalizing k with
+  | zero => simp [row]
+  | succ n ih => simp [row, transfer, Nat.cast_sum, Nat.cast_mul, ih]
 
 /-- At every positive row index the source argument three is three times
     the next Catalan number modulo four. The initial row is separately one. -/
 theorem row_catalan_mod_four (n : ℕ) :
-    row (ZMod 4) (n + 1) 3 = 3 * (catalan (n + 2) : ZMod 4) := by
+    (row ℕ (n + 1) 3 : ZMod 4) = 3 * (catalan (n + 2) : ZMod 4) := by
+  rw [row_natCast]
   have hr := row_eq_oddSeries (n + 1) 1
   have hc := congrArg (coeff (n + 2)) cat_equation
   simp only [map_add, coeff_one, show n + 2 ≠ 0 by omega, ↓reduceIte,
     zero_add, show n + 2 = (n + 1) + 1 by omega, coeff_succ_X_mul] at hc
   have hcat : coeff (n + 2) cat = (catalan (n + 2) : ZMod 4) := by simp [cat]
   rw [hcat] at hc
-  simpa [oddSeries, V, map_sub, coeff_natCast_mul, ← hc] using hr
+  simpa [oddSeries, V, map_sub, coeff_natCast_mul, ← hc,
+    ← map_ofNat (C (R := ZMod 4)), coeff_C] using hr
 
 end D5.S3.Combinatorics.Permutation.BlitvicKammounSteingrimsson14325Transfer
