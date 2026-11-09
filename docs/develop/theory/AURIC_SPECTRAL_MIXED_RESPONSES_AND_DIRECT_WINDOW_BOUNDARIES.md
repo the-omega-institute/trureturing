@@ -1250,3 +1250,167 @@ $$
 这里的三方向来自二阶矩阵的无迹系数，两块也不是两套已实现的物理系统。比较换序的反号、共同旋转不变、所有正交值正确，以及三标签嵌套路径接回同一结果，是不同关系。这个结论严格区分了它们，未把未知混合值写成定义后宣布已经解决，也未减少完整候选的独立来源条件。实际准备、完整菜单、所有质量、整台仪器及全部输出、真实联合和递归参考、全部历史未来及真实遗忘返回、完整计数、物理钟、能量和共同作用量继续按原合同保留。
 
 ## 追加锚（本行以下为增补区）
+
+## 24. 固定二表正性与两个交换关系不足以消除余量
+
+**定理 24.1（四阶全态预算的非零余量）。** 在 $M_4(\mathbb C)$ 中存在自伴 $h,x,r$，$h^2=I$，取中央自伴对合 $Q=I$ 并按原式定义
+
+$$
+c=(x+hxh)/2,\quad z=(x-hxh)/2,\quad
+k=h\circ x=hc,\quad t=i[h,x]/2=ihz,\quad g=t+r,
+\tag{24.1}
+$$
+
+使 $[h,r]=[c,r]=0$，且每个归一数学态 $\varphi$ 均满足
+
+$$
+\varphi(g)^2+\varphi(k)^2<\varphi(x^2),\qquad
+r^2=(z\circ r)^2=I/256.
+\tag{24.2}
+$$
+
+因此，删去 [中央续卷197.1](AURIC_CENTRAL_RESPONSE_SQUARE_AND_RADIAL_CONSISTENCY_CONTINUATION.md) 的 $z\circ r=0$ 后，仅由上述两个交换关系及全态定表预算，既不能推出零误差下 $r=0$，也不能推出 $\|r\|^2\le\varepsilon$。这是固定表子系统的反例，不是定义在全部原域上的 $D$，不声称满足完整原PB。
+
+证明。取 $\eta=(1-i)/\sqrt2$，明确令
+
+$$
+\begin{gathered}
+h=\operatorname{diag}(1,1,-1,-1),\qquad
+c=\operatorname{diag}(1,-1,-1,1),\qquad r=c/16,\\
+x=\begin{pmatrix}
+1&0&1&\eta\\
+0&-1&\eta&1\\
+1&\bar\eta&-1&0\\
+\bar\eta&1&0&1
+\end{pmatrix}.
+\end{gathered}
+\tag{24.3}
+$$
+
+这里的 $c$ 确为24.1的偶部分，$h,x,r$ 自伴且所需两个交换关系成立。为完整证明全部态预算，以下保留所有非交换项，给出整个实参数平面的解析正性证书。
+
+写标准Pauli矩阵为 $X,Y,Z$，置 $U=Y$、$V=(Y-X)/\sqrt2$、$C=Z\otimes Z$。则
+
+$$
+\begin{gathered}
+UV=(I+iZ)/\sqrt2,\qquad VU=(I-iZ)/\sqrt2,\qquad U^2=V^2=I,\\
+h=Z\otimes I,\quad c=C,\quad k=I\otimes Z,\\
+z=X\otimes I+(X+Y)\otimes X/\sqrt2,\qquad
+t=-U\otimes I-V\otimes X,\quad r=\rho C,
+\end{gathered}
+\tag{24.4}
+$$
+
+最终取 $\rho=1/16$。先置 $A=hx=k-it$；准确乘法给
+
+$$
+\begin{aligned}
+A^*A=x^2&=3I+\sqrt2\,I\otimes X-2V\otimes Y,\\
+A^2&=-I-\sqrt2\,I\otimes X+2iU\otimes Z.
+\end{aligned}
+\tag{24.5}
+$$
+
+$x^2$ 的两个非标量项反交换，平方之和为 $6I$，所以 $x^2\ge(3-\sqrt6)I>0$。$A^2+I$ 的平方为 $-2I$，且 $\operatorname{Tr}A=\operatorname{Tr}A^3=0$、$\operatorname{Tr}A^2=\operatorname{Tr}A^4=-4$。Newton恒等式遂给
+
+$$
+f(\zeta):=\det(A-\zeta I)=\zeta^4+2\zeta^2+3.
+\tag{24.6}
+$$
+
+任取实 $p,q$，记 $s=p^2+q^2$、$d=s+3$ 及
+
+$$
+\begin{gathered}
+H=(A-(p-iq)I)^*(A-(p-iq)I)=dI+N,\\
+N=\sqrt2 F-2G-2pK_0+2qL+2qM,\\
+F=I\otimes X,\quad G=V\otimes Y,\quad K_0=I\otimes Z,\quad
+L=U\otimes I,\quad M=V\otimes X,\\
+P_\rho(p,q)=H-2q\rho C
+=x^2+(p^2+q^2)I-2pk-2qg.
+\end{gathered}
+\tag{24.7}
+$$
+
+下面的行列式等式包含全部参数和全部交叉项：
+
+$$
+\begin{aligned}
+\det P_\rho(p,q)
+={}&|f(p-iq)|^2+64\rho q^2\\
+&-8\rho^2q^2\bigl[(s+3)^2+4p^2+2\bigr]+16\rho^4q^4.
+\end{aligned}
+\tag{24.8}
+$$
+
+为逐项核对该等式，$C$ 共轭 $F,G,K_0,L,M$ 的符号依次为 $(-,+,+,-,+)$。Pauli迹正交性给
+
+$$
+\operatorname{Tr}(CH)=0,\quad
+\operatorname{Tr}((CH)^2)=4(d^2+4p^2+2),\quad
+\operatorname{Tr}(CN^2)=0.
+\tag{24.9}
+$$
+
+$\operatorname{Tr}(CN^3)$ 中只有 $F,G,L$ 的六个排列有贡献。它们的未带系数乘积之和为 $i(UV-VU)\otimes Z=-\sqrt2 C$，乘共同系数 $\sqrt2(-2)(2q)$ 后为 $8qC$。故
+
+$$
+\operatorname{Tr}(CH^2)=0,\quad
+\operatorname{Tr}(CH^3)=32q,\quad
+\operatorname{Tr}(C\operatorname{adj}H)=-32q.
+\tag{24.10}
+$$
+
+最后一式用四阶伴随矩阵的特征多项式表达，其他含 $C$ 的低次迹均为零。由 $C^2=I,\det C=1$，四次行列式的常数、一次、二次、三次及四次系数分别确定为
+
+$$
+\det(H-\delta C)
+=\det H+32q\delta-2(d^2+4p^2+2)\delta^2+\delta^4.
+\tag{24.11}
+$$
+
+其中二次系数是 $\bigl[(\operatorname{Tr}CH)^2-\operatorname{Tr}((CH)^2)\bigr]/2$，三次系数为 $-\operatorname{Tr}(CH)=0$。代入 $\delta=2q\rho$ 及 $\det H=|f(p-iq)|^2$，得到24.8。
+
+现固定 $\rho=1/16$。当 $0\le s\le6$，有 $(s+3)^2+4p^2+2\le s^2+10s+11\le107$。在24.8只丢掉非负的四次项，得
+
+$$
+\det P_{1/16}(p,q)
+\ge |f(p-iq)|^2+\frac{21}{32}q^2>0.
+\tag{24.12}
+$$
+
+$q=0$ 时严格性来自 $f(p)=p^4+2p^2+3>0$。当 $s\ge6$，有 $|f(p-iq)|\ge s^2-2s-3\ge s^2/2$、$(s+3)^2+4p^2+2\le3s^2$ 和 $q^2\le s$，故
+
+$$
+\det P_{1/16}(p,q)
+\ge\frac{s^4}{4}-\frac{3s^3}{32}>0.
+\tag{24.13}
+$$
+
+整个实参数平面上的 $P_{1/16}$ 均为连续Hermitian非奇异矩阵，而 $P_{1/16}(0,0)=x^2>0$。沿原点到任意参数点的线段，惯性若改变便须出现零特征值；24.12–24.13排除了这一点。因此 $P_{1/16}(p,q)>0$ 对全部实 $p,q$ 成立。对任意归一数学态取 $p=\varphi(k)$、$q=\varphi(g)$，读取同一个正铅笔便得24.2的严格预算。最后24.4直接给
+
+$$
+z\circ r=-\frac1{16}V\otimes Y,\qquad
+r^2=(z\circ r)^2=I/256,
+\tag{24.14}
+$$
+
+从而全部反例条件均在同一张固定表中成立。若原正泛函 $\alpha$ 的质量为 $m=\alpha(I)>0$，取 $\varphi=\alpha/m$，24.2乘以 $m^2$ 给 $\alpha(g)^2+\alpha(k)^2<m\alpha(x^2)$；质量为零时 $\alpha=0$，相应非严格P2为等号。∎
+
+## 25. 原配平生产与定表反例的不同范围
+
+**定义 25.1（来源与准确排除项）。** 24.1归为 $\texttt{repo-derived}$。新增承重是同一四阶复表、24.8的完整行列式证书及整个参数平面的正性。Pauli乘法与迹正交性、Newton和伴随矩阵恒等式、Hermitian惯性连续性、全部态分离正锥以及实均值平方配方是成熟中间工具，不各立为新结果；没有文献穷尽或历史优先权声称。
+
+Magajna，[*Variance of operators and derivations*](https://arxiv.org/html/1302.1958v2)，Theorem3.5及Corollary3.6要求主算子正规，并要求全部向量态或全部态上的算子方差支配，再取得Lipschitz函数演算。此处 $A=hx$ 满足 $A^*A-AA^*=-4V\otimes Y\ne0$，且 $|\varphi(A-ir)|^2\le\varphi(A^*A)$ 并非该方差支配；不能直接套用该文结论消去余量。24.1更直接证明这个指定定表结论为假，而不否定文献定理。
+
+[中央续卷178.1](AURIC_CENTRAL_RESPONSE_SQUARE_AND_RADIAL_CONSISTENCY_CONTINUATION.md) 已有全态P2容许非零余量的孤立表，但其背景与余量不交换。24.1同时保留 $[h,r]=[c,r]=0$，排除的是这两个交换关系加全态定表P2仍足以取代197.1交叉反交换前件的更强断言；不将既有局部预算反例另计为新内容。
+
+中央续卷197.1在另外支付 $z\circ r=0$ 后给锐界，其前提没有被24.1满足。完整原候选仍为中央续卷196.1的A1–A3、准确原锥与全部原正读取、全部P2和完整PB；24.1没有定义总 $D$，也没有验证任何完整PB族，不是该候选的反模型。原域、原输出、同一读取和实际共享关系不能被这张孤立表替换。一般原值识别、旧双线性、有限复Gram、原R、结合乘法及完成运输各守已付原范围和未付接口，独立公理数未由本反例减少。
+
+中央续卷199.2的七项原来源合同及全部上游量词原样保留：实际Hilbert与相干准备；原态效果、零及非归一质量和完整Born菜单；真正相关联合与张量；typed CP、Kraus与递归同源参考；整台仪器、环境全部输出与更新；全部历史未来、泄漏、真实双向返回和CountRead；保持原域的动力、正常性与前对偶、物理钟、能量和共同正 $\hbar$。所有原 $\Omega/\mathrm{native}$、全词、共同根、真实支持与完整接线不变。固定数学态、矩阵相位与复参数均不供应这些物理来源。
+
+## 26. 四条交叉连线为何容许定表余量
+
+**定义 26.1（完整白话）。** 同一原候选的两两有向正比较、相加三角、单位小窗和完整正反配平仍全部保留。这里单独取出一张二元表，严格检查它究竟能排除多少可能：余量与原轴、交换背景都交换，所有数学读取也都还有正的比较预算，余量却确实非零。四阶表的交叉连线绕一圈带有相位 $i$；完整行列式把这一取向、全部读数和全部参数一起保留，证明这份余量没有破坏孤立二表的正性。因此“所有读取都正”不能直接代替不同原比较之间的共同配平。这个例子没有造出一张满足完整原公理的总响应表；它排除的是删掉交叉关系后仅凭定表正性的证明路线。比较的等价重组仍需真实共享关系，实际测量先后也仍可有影响，全部七项真实量子来源并未由四阶图画取得。
+
+## 追加锚（本行以下为增补区）
