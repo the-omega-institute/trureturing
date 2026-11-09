@@ -166,7 +166,7 @@ If the image were proper, compactness would give a nonempty occurring C-pattern 
 
 The finite packing, finite-shape and right-padding estimates come from AmenableGardenOfEden. The relative language and the gluing argument extend their use from full shifts to closed strongly irreducible subshifts with constraints. Common-exterior realization and the relative counting bound can be reused for other equivariant maps on such a subshift: the lower injection compares its occurring source patterns with actual image patterns, while the exclusion bound controls a proper invariant image. Each application must retain the same subshift and verify the stated collar, memory and disjoint-tile conditions.
 
-The conclusion is the Myhill direction, from preinjectivity to surjectivity. The reverse direction and an equivalence for strongly irreducible subshifts of finite type are separate questions. The amenability premise is the native right-counting Foelner filter condition; no equivalence with an invariant-mean formulation is asserted.
+The conclusion is the Myhill direction, from preinjectivity to surjectivity, without a finite-type assumption. Under the additional hypothesis IsFiniteType(X), FiniteTypeMoore.moore gives the reverse implication, from surjectivity to preinjectivity, for the same X and continuous equivariant endomorphism tau : Cfg(X) → Cfg(X). Combining it directly with myhill yields the equivalence of preinjectivity and surjectivity for this same X and tau under all the stated hypotheses and the additional finite-type hypothesis. The amenability premise is the native right-counting Foelner filter condition; no equivalence with an invariant-mean formulation is asserted.
 
 ## References
 
