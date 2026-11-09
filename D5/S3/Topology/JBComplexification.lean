@@ -9,6 +9,9 @@
 module
 
 public import D5.S3.Topology.JBAlgebra
+public import D5.S3.Topology.JBPositiveShift
+public import Mathlib.Analysis.CStarAlgebra.GelfandDuality
+public import Mathlib.Analysis.Normed.Operator.Banach
 public import Mathlib.Algebra.QuadraticAlgebra.Basic
 public import Mathlib.Analysis.CStarAlgebra.Classes
 public import Mathlib.Analysis.CStarAlgebra.Basic
@@ -352,5 +355,112 @@ instance generatedCompleteSpace (A : Data X S u) (a : X) [CompleteSpace X] :
 abbrev GeneratedComplex (A : Data X S u) (a : X) := Complexification (Generated A a)
 
 end Original
+
+open JBAlgebra JBPositiveShift
+
+private theorem inverse_of_lower {R : Type*} [NormedCommRing R] [NormedAlgebra ℝ R]
+    [SquareLaws R] [CompleteSpace R] (a : R) (M : ℝ) (hM : 0 ≤ M)
+    (hlower : ∀ r : R, ‖r‖ ≤ M * ‖a * r‖) : ∃ b : R, a * b = 1 := by
+  let Z := Complexification R
+  let g := gelfandStarTransform Z
+  let c : Z := QuadraticAlgebra.C a
+  have hc : IsUnit c := by
+    by_contra hn
+    obtain ⟨φ, hφ⟩ := WeakDual.CharacterSpace.exists_apply_eq_zero hn
+    let ε : ℝ := (M + 1)⁻¹
+    have hε : 0 < ε := inv_pos.mpr (by linarith)
+    let f : C(WeakDual.characterSpace ℂ Z, ℂ) :=
+      ⟨fun ψ => (((‖g c ψ‖ + ε)⁻¹ : ℝ) : ℂ), by
+        exact Complex.continuous_ofReal.comp
+          (((map_continuous (g c)).norm.add continuous_const).inv₀
+            (fun ψ => ne_of_gt (add_pos_of_nonneg_of_pos (norm_nonneg _) hε)))⟩
+    let z : Z := g.symm f
+    have hz : star z = z := by
+      apply g.injective
+      change g (star z) = g z
+      rw [map_star]
+      rw [show g z = f from g.apply_symm_apply f]
+      change star f = f
+      ext ψ
+      simp [f]
+    let r : R := (realEquiv (R := R)).symm ⟨z, hz⟩
+    have hr : (QuadraticAlgebra.C r : Z) = z :=
+      congrArg Subtype.val ((realEquiv (R := R)).apply_symm_apply ⟨z, hz⟩)
+    have hnorm (b : R) : ‖g (QuadraticAlgebra.C b)‖ = ‖b‖ := by
+      calc
+        ‖g (QuadraticAlgebra.C b)‖ = ‖(QuadraticAlgebra.C b : Z)‖ :=
+          (gelfandTransform_isometry Z).norm_map_of_map_zero (map_zero _) _
+        _ = ‖b‖ := (realIsometry (R := R)).norm_map b
+    have hprod : ‖a * r‖ ≤ 1 := by
+      rw [← hnorm (a * r), QuadraticAlgebra.C_mul, map_mul, hr]
+      rw [show g z = f from g.apply_symm_apply f]
+      change ‖g c * f‖ ≤ 1
+      apply (ContinuousMap.norm_le _ zero_le_one).mpr
+      intro ψ
+      change ‖g c ψ * f ψ‖ ≤ 1
+      rw [norm_mul]
+      change ‖g c ψ‖ * ‖(((‖g c ψ‖ + ε)⁻¹ : ℝ) : ℂ)‖ ≤ 1
+      rw [Complex.norm_real, Real.norm_eq_abs, abs_of_pos (inv_pos.mpr (by positivity))]
+      exact (mul_inv_le_iff₀ (by positivity)).mpr (by linarith)
+    have hrM : ‖r‖ ≤ M := (hlower r).trans (by nlinarith)
+    have hpoint := f.norm_coe_le_norm φ
+    have hgc : g c φ = 0 := hφ
+    have hf : ‖f φ‖ = M + 1 := by
+      change ‖(((‖g c φ‖ + ε)⁻¹ : ℝ) : ℂ)‖ = _
+      rw [hgc, norm_zero, zero_add, Complex.norm_real, Real.norm_eq_abs]
+      simp only [ε, inv_inv]
+      exact abs_of_pos (by linarith)
+    rw [hf] at hpoint
+    have hfr : ‖f‖ = ‖r‖ := by
+      rw [← hnorm r, hr]
+      congr 1
+      exact (g.apply_symm_apply f).symm
+    rw [hfr] at hpoint
+    linarith
+  obtain ⟨v, hv⟩ := hc
+  refine ⟨(↑v⁻¹ : Z).re, ?_⟩
+  have he : c * (↑v⁻¹ : Z) = 1 := by rw [← hv]; exact v.val_inv
+  have h := congrArg QuadraticAlgebra.re he
+  change a * (↑v⁻¹ : Z).re + (-1) * 0 * (↑v⁻¹ : Z).im = 1 at h
+  simpa using h
+
+variable {X : Type*} [NormedAddCommGroup X] [NormedSpace ℝ X]
+  {S : X →ₗ[ℝ] X →ₗ[ℝ] X} {u : X} [CompleteSpace X]
+
+/-- An ambient quadratic inverse cannot hide a zero in the original single-generator spectrum.
+The inverse returned here lies in the actual closed generated subspace of the same carrier. -/
+theorem generated_inverse_of_quadratic_bijective (A : Data X S u) (a : X)
+    (hQ : Function.Bijective (quadratic S a)) :
+    ∃ b : X, b ∈ generated S u a ∧ S a b = u := by
+  let Q : X →L[ℝ] X := (2 : ℝ) • ((lmul A a).comp (lmul A a)) - lmul A (S a a)
+  have hq : ∀ v : X, Q v = quadratic S a v := fun _ => rfl
+  let e : X ≃L[ℝ] X := ContinuousLinearEquiv.ofBijective Q
+    (LinearMap.ker_eq_bot.mpr hQ.1) (LinearMap.range_eq_top.mpr hQ.2)
+  let M : ℝ := ‖e.symm.toContinuousLinearMap‖
+  have hlow (v : X) : ‖v‖ ≤ M * ‖quadratic S a v‖ := by
+    calc
+      ‖v‖ = ‖e.symm (e v)‖ := by rw [e.symm_apply_apply]
+      _ ≤ M * ‖e v‖ := e.symm.toContinuousLinearMap.le_opNorm (e v)
+      _ = M * ‖quadratic S a v‖ := rfl
+  let R := Generated A a
+  have ha : a ∈ generated S u a := by
+    have h : npow S u a 1 ∈ generated S u a :=
+      Submodule.le_topologicalClosure _ (Submodule.subset_span ⟨1, rfl⟩)
+    simpa only [npow, A.symm a u, A.unit_mul] using h
+  let ar : R := ⟨a, ha⟩
+  have hrestricted (r : R) : ‖r‖ ≤ M * ‖(ar * ar) * r‖ := by
+    have hassoc := (generated_algebra A a).2.1 a ha a ha r.val r.property
+    have hquad : quadratic S a r.val = S (S a a) r.val := by
+      rw [quadratic, ← hassoc, two_smul, add_sub_cancel_right]
+    have h := hlow r.val
+    rw [hquad] at h
+    exact h
+  obtain ⟨b, hb⟩ := inverse_of_lower (ar * ar) M (norm_nonneg _) hrestricted
+  refine ⟨(ar * b).val, (ar * b).property, ?_⟩
+  have h : ar * (ar * b) = 1 := by rw [← mul_assoc, hb]
+  exact congrArg Subtype.val h
+
+
+#print axioms generated_inverse_of_quadratic_bijective
 
 end D5.S3.Topology.JBComplexification
