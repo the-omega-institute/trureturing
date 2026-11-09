@@ -491,5 +491,179 @@ theorem exchange_dissociation (color : V → Bool)
   · subst a
     exact outside_exchange_unique G S color hcolor hS c b v w hb hca hv hw hav haw
 
+private noncomputable def activeSet (hS : IsMinimalStarForming G 2 S) : Finset V := by
+  classical
+  exact S.filter (Active G S hS)
+private noncomputable def passiveSet (hS : IsMinimalStarForming G 2 S) : Finset V := by
+  classical
+  exact S.filter (Passive G S hS)
+private noncomputable def isolateSet : Finset V := by
+  classical
+  exact S.filter (Isolate G S)
+private noncomputable def witnessSet (hS : IsMinimalStarForming G 2 S) : Finset V :=
+  (activeSet G S hS).image (activeWitness G S hS)
+
+private theorem role_disjoint (hS : IsMinimalStarForming G 2 S) :
+    Disjoint (passiveSet G S hS) (activeSet G S hS) ∧
+    Disjoint (passiveSet G S hS ∪ activeSet G S hS) (isolateSet G S) ∧
+    Disjoint S (witnessSet G S hS) := by
+  classical
+  refine ⟨?_,?_,?_⟩
+  · apply Finset.disjoint_left.mpr
+    intro v hv hw
+    exact (Finset.mem_filter.mp hv).2.2.2 (Finset.mem_filter.mp hw).2
+  · apply Finset.disjoint_left.mpr
+    intro v hv hw
+    have hi := (Finset.mem_filter.mp hw).2
+    rcases Finset.mem_union.mp hv with hv | hv
+    · exact (Finset.mem_filter.mp hv).2.2.1 hi
+    · exact active_not_isolate G S hS v (Finset.mem_filter.mp hv).2 hi
+  · apply Finset.disjoint_left.mpr
+    intro v hv hw
+    obtain ⟨a,ha,rfl⟩ := Finset.mem_image.mp hw
+    exact (active_failure G S hS a (Finset.mem_filter.mp ha).2).1 hv
+
+private theorem roles_partition (hS : IsMinimalStarForming G 2 S) :
+    passiveSet G S hS ∪ activeSet G S hS ∪ isolateSet G S = S := by
+  classical
+  ext v
+  simp only [passiveSet,activeSet,isolateSet,Finset.mem_union,Finset.mem_filter]
+  constructor
+  · rintro ((h | h) | h) <;> exact h.1
+  · intro hv
+    by_cases hi : Isolate G S v
+    · exact Or.inr ⟨hv,hi⟩
+    · by_cases ha : Active G S hS v
+      · exact Or.inl (Or.inr ⟨hv,ha⟩)
+      · exact Or.inl (Or.inl ⟨hv,hv,hi,ha⟩)
+
+private theorem card_exchange (hS : IsMinimalStarForming G 2 S)
+    (color : V → Bool) (c : Bool) :
+    (exchange G S hS color c).card = (passiveSet G S hS).card +
+      ((activeSet G S hS).filter (fun v => color v = c)).card +
+      ((isolateSet G S).filter (fun v => color v ≠ c)).card +
+      ((witnessSet G S hS).filter (fun v => color v ≠ c)).card := by
+  classical
+  let P := passiveSet G S hS
+  let A := (activeSet G S hS).filter (fun v => color v = c)
+  let I := (isolateSet G S).filter (fun v => color v ≠ c)
+  let F := (witnessSet G S hS).filter (fun v => color v ≠ c)
+  have he : exchange G S hS color c = P ∪ A ∪ I ∪ F := by
+    ext v
+    simp only [mem_exchange,P,A,I,F,passiveSet,activeSet,isolateSet,witnessSet,
+      Finset.mem_union,Finset.mem_filter,Finset.mem_image]
+    constructor
+    · rintro (hp | ⟨ha,hc⟩ | ⟨hi,hc⟩ | ⟨a,ha,he,hc⟩)
+      · exact Or.inl (Or.inl (Or.inl ⟨hp.1,hp⟩))
+      · exact Or.inl (Or.inl (Or.inr ⟨⟨active_selected G S hS v ha,ha⟩,hc⟩))
+      · exact Or.inl (Or.inr ⟨⟨hi.1,hi⟩,hc⟩)
+      · exact Or.inr ⟨⟨a,⟨active_selected G S hS a ha,ha⟩,he⟩,hc⟩
+    · rintro (((hp | ha) | hi) | hf)
+      · exact Or.inl hp.2
+      · exact Or.inr (Or.inl ⟨ha.1.2,ha.2⟩)
+      · exact Or.inr (Or.inr (Or.inl ⟨hi.1.2,hi.2⟩))
+      · obtain ⟨⟨a,ha,he⟩,hc⟩ := hf
+        exact Or.inr (Or.inr (Or.inr ⟨a,ha.2,he,hc⟩))
+  have hd := role_disjoint G S hS
+  have hdPA : Disjoint P A := hd.1.mono_right (Finset.filter_subset _ _)
+  have hdPI : Disjoint (P ∪ A) I := hd.2.1.mono
+    (Finset.union_subset_union (Finset.Subset.refl _) (Finset.filter_subset _ _))
+    (Finset.filter_subset _ _)
+  have hsub : P ∪ A ∪ I ⊆ S := by
+    rw [← roles_partition G S hS]
+    exact Finset.union_subset_union
+      (Finset.union_subset_union (Finset.Subset.refl _) (Finset.filter_subset _ _))
+      (Finset.filter_subset _ _)
+  have hdF : Disjoint (P ∪ A ∪ I) F := hd.2.2.mono hsub (Finset.filter_subset _ _)
+  rw [he,Finset.card_union_of_disjoint hdF,Finset.card_union_of_disjoint hdPI,
+    Finset.card_union_of_disjoint hdPA]
+
+private theorem filter_bool_sum (X : Finset V) (color : V → Bool) :
+    (X.filter (fun v => color v = false)).card +
+      (X.filter (fun v => color v = true)).card = X.card := by
+  have he : X.filter (fun v => color v = true) =
+      X.filter (fun v => ¬ color v = false) := by
+    ext v
+    cases color v <;> simp
+  rw [he]
+  exact Finset.card_filter_add_card_filter_not _
+
+/-- The two actual exchanges count every selected nonisolate twice and each
+selected isolate once, after including the injective outside witness image. -/
+theorem exchange_card_sum (color : V → Bool)
+    (hcolor : ∀ v w, G.Adj v w → color v ≠ color w)
+    (hS : IsMinimalStarForming G 2 S) :
+    (exchange G S hS color false).card + (exchange G S hS color true).card +
+      (DegreeCapacity.isolates G S).card = 2 * S.card := by
+  classical
+  have hW : (witnessSet G S hS).card = (activeSet G S hS).card := by
+    apply Finset.card_image_iff.mpr
+    intro a ha b hb he
+    exact activeWitness_injective G S color hcolor hS a b
+      (Finset.mem_filter.mp ha).2 (Finset.mem_filter.mp hb).2 he
+  have hroles := roles_partition G S hS
+  have hd := role_disjoint G S hS
+  have hcards : (passiveSet G S hS).card + (activeSet G S hS).card +
+      (isolateSet G S).card = S.card := by
+    calc
+      _ = (passiveSet G S hS ∪ activeSet G S hS ∪ isolateSet G S).card := by
+        rw [Finset.card_union_of_disjoint hd.2.1,Finset.card_union_of_disjoint hd.1]
+      _ = S.card := congrArg Finset.card hroles
+  have hI : isolateSet G S = DegreeCapacity.isolates G S := by
+    ext v
+    change v ∈ S.filter (Isolate G S) ↔
+      v ∈ S.filter (fun v => (S.filter (G.Adj v)).card = 0)
+    rw [Finset.mem_filter,Finset.mem_filter]
+    constructor
+    · rintro ⟨hv,_,hi⟩
+      refine ⟨hv,Finset.card_eq_zero.mpr ?_⟩
+      apply Finset.eq_empty_iff_forall_notMem.mpr
+      intro w hw
+      exact hi w (Finset.mem_filter.mp hw).1 (Finset.mem_filter.mp hw).2
+    · rintro ⟨hv,hzero⟩
+      refine ⟨hv,hv,?_⟩
+      intro w hw hav
+      have he := Finset.card_eq_zero.mp hzero
+      have hm : w ∈ S.filter (G.Adj v) := Finset.mem_filter.mpr ⟨hw,hav⟩
+      rw [he] at hm
+      exact Finset.notMem_empty _ hm
+  have hA := filter_bool_sum (activeSet G S hS) color
+  have hIs := filter_bool_sum (isolateSet G S) color
+  have hFs := filter_bool_sum (witnessSet G S hS) color
+  have hnfalse (v : V) : (color v ≠ false) ↔ color v = true := by cases color v <;> simp
+  have hntrue (v : V) : (color v ≠ true) ↔ color v = false := by cases color v <;> simp
+  rw [card_exchange,card_exchange]
+  simp_rw [hnfalse,hntrue]
+  rw [← hI]
+  omega
+
+/-- Isolate compensation holds for every finite bipartite graph, without a
+regularity, connectivity or nonempty-selection hypothesis. -/
+theorem selection_compensation (hG : G.Colorable 2)
+    (S : Finset V) (hS : IsMinimalStarForming G 2 S) :
+    2 * S.card ≤ 2 * beta G 2 + (DegreeCapacity.isolates G S).card := by
+  classical
+  obtain ⟨C⟩ := hG
+  let color : V → Bool := fun v => decide (C v = 1)
+  have hc : ∀ v w, G.Adj v w → color v ≠ color w := by
+    intro v w hvw he
+    have hn := C.valid hvw
+    have hcv := (C v).isLt
+    have hcw := (C w).isLt
+    have hvals : C v = C w := by
+      apply Fin.ext
+      by_cases hv : (C v).val = 1 <;> by_cases hw : (C w).val = 1 <;>
+        simp [color,Fin.ext_iff,hv,hw] at he <;> omega
+    exact hn hvals
+  have hsum := exchange_card_sum G S color hc hS
+  have h0 : (exchange G S hS color false).card ≤ beta G 2 :=
+    Finset.le_sup (Finset.mem_filter.mpr ⟨by simp,
+      exchange_dissociation G S color hc hS false⟩)
+  have h1 : (exchange G S hS color true).card ≤ beta G 2 :=
+    Finset.le_sup (Finset.mem_filter.mpr ⟨by simp,
+      exchange_dissociation G S color hc hS true⟩)
+  omega
+
 end D5.S3.Combinatorics.Graph.StarForming.BipartiteExchange
+
 

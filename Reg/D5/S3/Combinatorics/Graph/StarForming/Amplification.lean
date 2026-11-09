@@ -22,11 +22,17 @@ abbrev signature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
+def observation : ∀ (_ : Unit) (I : Type u), Finset (I × Fin 10) → ℕ :=
+  fun _ _ S => S.card
+
+def noAnchor : ∀ (_ : Empty) (I : Type u), Finset (I × Fin 10) :=
+  fun e => nomatch e
+
 def actual : Realization signature.{u} :=
-  realize signature (fun _ _ S => S.card) (fun e => nomatch e)
+  realize signature observation noAnchor
 
 def bad : Realization signature.{u} :=
-  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+  realize signature (fun _ _ _ => 0) noAnchor
 
 abbrev arena : Arena where
   signature := signature.{u}
@@ -44,7 +50,7 @@ abbrev SourceClaim : Prop :=
     ((Finset.univ : Finset I).product selected).card = 6 * Fintype.card I
 
 def family : Registration arena.{u} SourceClaim.{u} where
-  actual := actual
+  actual := realize signature observation noAnchor
   bridge := Iff.rfl
   variation := by
     refine ⟨?_,bad,bad_law⟩
@@ -80,7 +86,7 @@ noncomputable def chosenCardRegistration :
   realization := .source arena.{u} ⟨family.{u}⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some actual.{u}
+  readout := some (realize signature.{u} observation noAnchor)
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
