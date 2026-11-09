@@ -1,0 +1,26 @@
+**定理 32.2（Lüders 规则的唯一性）。** 定义 32.1 唯一给出
+
+$$
+\Phi_P(\rho)=P\rho P.
+$$
+
+因此非归一化的条件态是 $P\rho P$，事件概率为 $\operatorname{tr}(P\rho)$；概率非零时归一化态为
+
+$$
+\rho_P=\frac{P\rho P}{\operatorname{tr}(P\rho)}.
+$$
+
+**证明。** 取 Kraus 表示 $\Phi_P(X)=\sum_\alpha K_\alpha X K_\alpha^\dagger$。输出支撑对每个向量态都成立，故 $K_\alpha=PK_\alpha$。投影效应给出
+
+$$
+\sum_\alpha K_\alpha^\dagger K_\alpha=P,
+$$
+
+从而 $K_\alpha(I-P)=0$，即 $K_\alpha=K_\alpha P$。于是
+
+$$
+\Phi_P(X)=\Phi_P(PXP).
+$$
+
+第四条再给 $\Phi_P(PXP)=PXP$，合并即得 $\Phi_P(X)=PXP$。证毕。
+
