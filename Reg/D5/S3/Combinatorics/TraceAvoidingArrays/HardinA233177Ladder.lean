@@ -20,12 +20,12 @@ def rejected : Realization signature :=
   realize signature (fun _ _ n => (a n : ℤ) + 1) (fun e => nomatch e)
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ n : ℕ, 2 ≤ n → 48 * R.readout () () n =
+  Law R := ∀ {n : ℕ}, 2 ≤ n → 48 * R.readout () () n =
       (16 : ℤ)^n * ((L n : ℤ) + 6)
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have ha := counting_bridge (n := 2) (by decide)
-  have hb := h 2 (by decide)
+  have hb := h (n := 2) (by decide)
   change 48 * ((a 2 : ℤ) + 1) = (16 : ℤ)^2 * ((L 2 : ℤ) + 6) at hb
   linarith only [ha, hb]
 private theorem actual_dependence :
