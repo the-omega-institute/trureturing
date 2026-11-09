@@ -18,6 +18,13 @@ instDecidableCompatible: proof_shape=bind-only; consumers=quotient_rows
 cls: proof_shape=bind-only; consumers=quotient_rows
 Q: proof_shape=bind-only; consumers=count_transfer, powers_table
 weights: proof_shape=bind-only; consumers=count_transfer
+representatives: proof_shape=bind-only; consumers=class_rep, representative_rows
+relabel: proof_shape=bind-only; consumers=column_relabel, class_rep
+column_relabel: proof_shape=bind-only; consumers=compatible_relabel
+compatible_relabel: proof_shape=bind-only; consumers=quotient_rows
+class_relabel: proof_shape=bind-only; consumers=quotient_rows
+class_rep: proof_shape=bind-only; consumers=quotient_rows
+representative_rows: proof_shape=bind-only; consumers=quotient_rows
 quotient_rows: proof_shape=bind-only; consumers=count_transfer
 initial_weights: proof_shape=bind-only; consumers=count_transfer
 gridEquiv: proof_shape=bind-only; consumers=grid_good, count_transfer
@@ -87,14 +94,55 @@ private def Q : Matrix (Fin 14) (Fin 14) ℤ :=
     ![0,0,0,0,0,0,0,0,0,0,0,0,0,0]]
 private def weights : Fin 14 → ℤ := ![48,24,12,24,0,12,6,0,6,24,6,0,0,0]
 
+private def representatives : Fin 14 → Col :=
+  ![(0,0,0,0), (0,0,0,1), (0,0,1,0), (0,0,1,1), (0,0,1,2), (0,1,0,0),
+    (0,1,0,1), (0,1,0,2), (0,1,1,0), (0,1,1,1), (0,1,1,2), (0,1,2,0),
+    (0,1,2,1), (0,1,2,2)]
+private def relabel (e : Equiv.Perm (Fin 3)) : Col ≃ Col :=
+  Equiv.prodCongr e (Equiv.prodCongr e (Equiv.prodCongr e e))
+private theorem column_relabel (e : Equiv.Perm (Fin 3)) (c : Col) (r : Fin 4) :
+    column (relabel e c) r = e (column c r) := by
+  fin_cases r <;> rfl
+private theorem compatible_relabel (e : Equiv.Perm (Fin 3)) (a b : Col) :
+    compatible (relabel e a) (relabel e b) ↔ compatible a b := by
+  simp only [compatible, column_relabel, e.injective.ne_iff]
+set_option maxRecDepth 100000 in
+private theorem class_relabel : ∀ e : Equiv.Perm (Fin 3), ∀ c : Col,
+    cls (relabel e c) = cls c := by
+  decide +kernel
+set_option maxRecDepth 100000 in
+private theorem class_rep : ∀ c : Col, ∃ e : Equiv.Perm (Fin 3),
+    relabel e c = representatives (cls c) := by
+  decide +kernel
 set_option maxRecDepth 100000 in
 set_option maxHeartbeats 10000000 in
-private theorem quotient_rows : ∀ b : Col, ∀ s : Fin 14,
+-- Exhaustively check the fourteen representative rows with the Lean kernel.
+private theorem representative_rows : ∀ i s : Fin 14,
+    (∑ c : Col, if compatible (representatives i) c ∧ cls c = s then (1 : ℤ) else 0) =
+      Q i s := by
+  have h : List.ofFn (fun i : Fin 14 => List.ofFn (fun s : Fin 14 =>
+      ∑ c : Col, if compatible (representatives i) c ∧ cls c = s then (1 : ℤ) else 0)) =
+      List.ofFn (fun i : Fin 14 => List.ofFn (fun s : Fin 14 => Q i s)) := by
+    decide +kernel
+  intro i s
+  exact congrFun (List.ofFn_inj.mp (congrFun (List.ofFn_inj.mp h) i)) s
+private theorem quotient_rows (b : Col) (s : Fin 14) :
     (∑ c : Col, if compatible b c ∧ cls c = s then (1 : ℤ) else 0) = Q (cls b) s := by
-  decide +kernel
+  obtain ⟨e, he⟩ := class_rep b
+  calc
+    _ = ∑ c : Col, if compatible (relabel e b) (relabel e c) ∧
+        cls (relabel e c) = s then (1 : ℤ) else 0 := by
+      simp only [compatible_relabel, class_relabel]
+    _ = ∑ c : Col, if compatible (representatives (cls b)) c ∧
+        cls c = s then (1 : ℤ) else 0 := by
+      rw [he]
+      exact (relabel e).sum_comp (fun c =>
+        if compatible (representatives (cls b)) c ∧ cls c = s then (1 : ℤ) else 0)
+    _ = _ := representative_rows _ _
 
 set_option maxRecDepth 100000 in
 set_option maxHeartbeats 10000000 in
+-- Exhaustively check finite column compatibility with the Lean kernel.
 private theorem initial_weights : ∀ s : Fin 14,
     (∑ a : Col, ∑ b : Col,
       if compatible a b ∧ cls b = s then (1 : ℤ) else 0) = weights s := by
@@ -135,6 +183,7 @@ private theorem grid_good (n : ℕ) (P : Fin 4 × Fin n → Fin 3) :
   · intro h j hj
     exact h j.val hj
 
+section CountBridge
 attribute [local irreducible] compatible cls Q weights
 
 private theorem count_transfer (n : ℕ) :
@@ -162,9 +211,9 @@ private theorem count_transfer (n : ℕ) :
     intro a _
     apply Finset.sum_congr rfl
     intro b _
-    by_cases h : compatible a b ∧ cls b = s <;> simp only [if_pos, if_neg, h]
+    by_cases h : compatible a b ∧ cls b = s <;> simp [h]
 
-attribute [local reducible] Q weights
+end CountBridge
 
 private def W : Fin 8 → Fin 14 → ℤ :=
   ![![1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],

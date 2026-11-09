@@ -104,7 +104,8 @@ internal sealed class HardinA233177PairTransferDocument : IScribeDocumentDefinit
     private static Formula Own(string name, params Formula[] args) =>
         Call(LeanPrefix + name, args);
     private static Formula Call(string name, params Formula[] args) => App(Q(name), args);
-    private static Formula App(Formula f, params Formula[] args) => new Formula.Apply(f, [.. args]);
+    private static Formula App(Formula f, params Formula[] args) =>
+        new Formula.Apply(f, [.. args]);
     private static Formula Parenthesized(Formula f) => Seq(Open, f, Close);
     private static Formula Typed(Formula x, Formula type) =>
         Parenthesized(Seq(x, Colon, Sp, type));

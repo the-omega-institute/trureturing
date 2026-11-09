@@ -64,8 +64,10 @@ def family : Registration arena.{u} (type_of% (@canonical_exists_unique.{u})) wh
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@canonical_exists_unique.{u}) (Realization signature.{u}) Unit Unit where
-  unitName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical.CanonicalOrbit.auditUnit
-  realizationName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical.CanonicalOrbit.family
+  unitName :=
+    `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical.CanonicalOrbit.auditUnit
+  realizationName :=
+    `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical.CanonicalOrbit.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -148,8 +150,10 @@ def family : Registration arena.{u} (type_of% (@normalization_iff.{u})) where
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@normalization_iff.{u}) (Realization signature.{u}) Unit Unit where
-  unitName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical.Normalization.auditUnit
-  realizationName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical.Normalization.family
+  unitName :=
+    `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical.Normalization.auditUnit
+  realizationName :=
+    `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical.Normalization.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -237,7 +241,8 @@ def family : Registration arena.{u} (type_of% (@fibre_card.{u})) where
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@fibre_card.{u}) (Realization signature.{u}) Unit Unit where
   unitName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical.Fibres.auditUnit
-  realizationName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical.Fibres.family
+  realizationName :=
+    `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical.Fibres.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -319,8 +324,10 @@ def family : Registration arena.{u} (type_of% (@canonical_pattern_card.{u})) whe
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@canonical_pattern_card.{u}) (Realization signature.{u}) Unit Unit where
-  unitName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical.PatternCount.auditUnit
-  realizationName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical.PatternCount.family
+  unitName :=
+    `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical.PatternCount.auditUnit
+  realizationName :=
+    `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical.PatternCount.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -413,8 +420,10 @@ def family : Registration arena.{u} (type_of% (@normalized_card.{u})) where
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@normalized_card.{u}) (Realization signature.{u}) Unit Unit where
-  unitName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical.NormalizedCount.auditUnit
-  realizationName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical.NormalizedCount.family
+  unitName :=
+    `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical.NormalizedCount.auditUnit
+  realizationName :=
+    `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical.NormalizedCount.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩

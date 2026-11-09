@@ -28,7 +28,8 @@ internal sealed class HardinA233177CanonicalDocument : IScribeDocumentDefinition
             Node("normalization_iff", "Normalization is canonical form with fixed first sides",
                 NormalizationFormula(), true),
             Node("First", "First occurrence of a label", FirstFormula(), false),
-            Node("Fibre", "Individual-colour lifts of a fixed pair pattern", FibreFormula(), false),
+            Node("Fibre", "Individual-colour lifts of a fixed pair pattern",
+                FibreFormula(), false),
             Node("fibre_card", "Exact number of lifts", FibreCardFormula(), true),
             Node("canonical_pattern_card", "Six patterns per canonical representative",
                 PatternCardFormula(), true),
@@ -175,7 +176,8 @@ internal sealed class HardinA233177CanonicalDocument : IScribeDocumentDefinition
     private static Formula Own(string name, params Formula[] args) =>
         Call(LeanPrefix + name, args);
     private static Formula Call(string name, params Formula[] args) => App(Q(name), args);
-    private static Formula App(Formula f, params Formula[] args) => new Formula.Apply(f, [.. args]);
+    private static Formula App(Formula f, params Formula[] args) =>
+        new Formula.Apply(f, [.. args]);
     private static Formula Parenthesized(Formula f) => Seq(Open, f, Close);
     private static Formula Typed(Formula x, Formula type) =>
         Parenthesized(Seq(x, Colon, Sp, type));

@@ -77,7 +77,7 @@ private instance instDecidableLegal {n : ℕ} (A : Fin 4 × Fin n → Fin 6) :
 def a (n : ℕ) : ℕ :=
   (Finset.univ.filter (fun A : Fin 4 × Fin n → Fin 6 => Legal A)).card
 
-open HardinA233177PairTransfer (Proper L)
+open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177PairTransfer (Proper L)
 attribute [local irreducible] a L
 
 private abbrev cellOrder (n : ℕ) : LinearOrder (Fin 4 × Fin n) :=
@@ -414,7 +414,7 @@ private theorem scale_recurrence (m : ℕ) (hm : 2 ≤ m)
   have h5 := hb 5
   have h6 := hb 6
   have h7 := hb 7
-  norm_num only [Nat.add_zero, pow_zero, pow_one, reducePow, mul_one] at h0 h1 h2 h3 h4 h5 h6 h7
+  norm_num only [Nat.add_zero, pow_zero, pow_one, mul_one] at h0 h1 h2 h3 h4 h5 h6 h7
   apply (mul_left_cancel₀ (show (48 : ℤ) ≠ 0 by norm_num))
   linear_combination h7 - 64 * h6 - 3328 * h5 + 77824 * h4 +
     1441792 * h3 - 28311552 * h2 - 33554432 * h1 + 1073741824 * h0 +

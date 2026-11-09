@@ -47,8 +47,10 @@ def family : Registration arena (type_of% @initial_values) where
     exact ⟨(), 2, 3, actual_dependence⟩
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     (@initial_values) (Realization signature) Type Unit where
-  unitName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177PairTransfer.Initial.auditUnit
-  realizationName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177PairTransfer.Initial.family
+  unitName :=
+    `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177PairTransfer.Initial.auditUnit
+  realizationName :=
+    `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177PairTransfer.Initial.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -120,8 +122,10 @@ def family : Registration arena (type_of% @recurrence) where
     exact ⟨(), 2, 3, actual_dependence⟩
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     (@recurrence) (Realization signature) Type Unit where
-  unitName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177PairTransfer.Recurrence.auditUnit
-  realizationName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177PairTransfer.Recurrence.family
+  unitName :=
+    `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177PairTransfer.Recurrence.auditUnit
+  realizationName :=
+    `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177PairTransfer.Recurrence.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
