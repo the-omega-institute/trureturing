@@ -1,0 +1,27 @@
+**定义 36.1（$U(1)$ 型 holonomy 比较公理）。** 对非零比较边 $\kappa(a,b)$，定义可观测模平方
+
+$$
+r(a,b)=|\kappa(a,b)|^2
+$$
+
+和三点闭环相位
+
+$$
+\phi(a,b,c)=
+\frac{\kappa(a,b)\kappa(b,c)\kappa(c,a)}
+{|\kappa(a,b)\kappa(b,c)\kappa(c,a)|}.
+$$
+
+要求：
+
+1. 局部相位规范 $\kappa(a,b)\mapsto\overline{\theta_a}\kappa(a,b)\theta_b$ 不改变 $\phi$；
+2. 反向闭环满足 $\phi(a,c,b)=\phi(a,b,c)^{-1}$；
+3. 对所有四点（相关边非零）满足闭环 cocycle
+   $$
+   \phi(a,b,c)\phi(a,c,d)
+   =\phi(a,b,d)\phi(b,c,d);
+   $$
+4. 所有相位值属于连续、紧、连通、交换的一维 Lie 群 $G$，并且至少有一个非平凡闭环。
+
+第四条是“相位为何不是离散符号”的最小选择；它不预设复向量空间，只规定闭环的内部群。
+
