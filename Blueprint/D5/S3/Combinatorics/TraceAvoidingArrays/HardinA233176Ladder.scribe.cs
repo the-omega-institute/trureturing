@@ -177,7 +177,7 @@ internal sealed class HardinA233176LadderDocument : IScribeDocumentDefinition
     private static Formula DigitFormula()
     {
         var k = V("k"); var d = V("d"); var quotient = Call("Nat.div", k, d);
-        var bound = Typed(Seq(TextFormula("by"), Sp, TextFormula("omega")), Lt(D(0), D(3)));
+        var bound = Typed(Seq(Q("by"), Sp, Q("omega")), Lt(D(0), D(3)));
         return All("k", Q("Nat"), All("d", Q("Nat"), Eq(Own("digit", k, d),
             Typed(Call("Fin.mk", Call("Nat.mod", quotient, D(3)),
                 Call("Nat.mod_lt", quotient, bound)), Fin(D(3))))));
@@ -196,8 +196,8 @@ internal sealed class HardinA233176LadderDocument : IScribeDocumentDefinition
     }
 
     private static Formula If(Formula condition, Formula yes, Formula no) =>
-        Parenthesized(Seq(TextFormula("if"), Sp, Parenthesized(condition), Sp,
-            TextFormula("then"), Sp, Parenthesized(yes), Sp, TextFormula("else"), Sp, Parenthesized(no)));
+        Parenthesized(Seq(Q("if"), Sp, Parenthesized(condition), Sp,
+            Q("then"), Sp, Parenthesized(yes), Sp, Q("else"), Sp, Parenthesized(no)));
 
     private static Formula NormalFormula()
     {
