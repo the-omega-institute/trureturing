@@ -41,6 +41,14 @@ internal sealed class FiniteSieveDefsDocument : IScribeDocumentDefinition
                 Blocks(Paragraph(Text("For a positive modulus Q, normalized summation over ZMod Q defines a real linear functional."))),
                 DescribeRole.Definition),
             Describe.Lean(
+                DescribeId.Create("sieve-interval-sum"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/FiniteSieve/FiniteSieveDefs.sieveIntervalSum"),
+                H("sieve interval sum"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For a positive modulus Q, the interval sieve sum is the sum of the centered coprimality variables over the natural shifts in (aH,bH]."))),
+                DescribeRole.Definition),
+            Describe.Lean(
                 DescribeId.Create("sieve-interval-moment"),
                 DeclarationHandle.Create("D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/FiniteSieve/FiniteSieveDefs.sieveIntervalMoment"),
                 H("sieve interval moment"),
@@ -118,7 +126,7 @@ internal sealed class FiniteSieveDefsDocument : IScribeDocumentDefinition
                 H("finite sieve intervals"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The finite-sieve interval hypothesis is the conclusion of Lemma 498.3(c): the third interval moment is uniformly negligible relative to (H log H)^(3/2), and the fourth interval Wick defect is uniformly negligible relative to (H log H)^2. For every M at least one and every positive epsilon, these estimates hold for all sufficiently large real H and all ordered interval endpoints in [0,M], for the primorial moduli Q = primorial(floor(((M+5)H)^10)). This conclusion is assumed here; its derivation from Montgomery–Soundararajan Theorem 1 and Kuperberg Theorem 1.3 is not part of this delivery."))),
+                Blocks(Paragraph(Text("The finite-sieve interval hypothesis is the conclusion of Lemma 498.3(c): the third interval moment is uniformly negligible relative to (H log H)^(3/2), and the fourth interval Wick defect is uniformly negligible relative to (H log H)^2. For every M at least one and every positive epsilon, these estimates hold for all sufficiently large real H and all ordered interval endpoints in [0,M], for the primorial moduli Q = primorial(floor(((M+5)H)^10)). This conclusion is assumed here; its derivation from Montgomery–Soundararajan Theorem 1 and Kuperberg Theorem 1.3 is not proved here."))),
                 DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("finite-distinct-correlation"),
