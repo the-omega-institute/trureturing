@@ -74,8 +74,9 @@ finite_certificate: proof_shape=bind-only; consumers=v_eq_w, a_eq_w
 w: proof_shape=bind-only; consumers=v_eq_w, a_eq_w, shifted_count, result
 v_eq_w: proof_shape=bind-only; consumers=a_eq_w
 a_eq_w: proof_shape=bind-only; consumers=shifted_count
-distribution: proof_shape=bind-only; consumers=distribution_step, shifted_count, result
+distribution: proof_shape=bind-only; consumers=distribution_step, distribution_relation
 distribution_step: proof_shape=bind-only; consumers=shifted_count
+distribution_relation: proof_shape=bind-only; consumers=result
 shifted_count: proof_shape=bind-only; consumers=result
 result: proof_shape=bind-only; consumers=terminal result (#28572)
 -/
@@ -85,8 +86,7 @@ import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255LiteralBridge
 import D5.S3.Observer.Separation.BooleanRankThreeK4
 import Mathlib.Tactic.FinCases
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Ring
+import Lean.Elab.Tactic.Omega
 
 /-! Literal five-column square-strip counts and their all-height class reduction. -/
 
@@ -306,6 +306,12 @@ private theorem shifted_count (r : Fin 7) (n : ℕ) :
     rw [Finset.sum_comm]
     simp_rw [← mul_assoc, ← Finset.sum_mul, ← distribution_step]
 
+private theorem distribution_relation : ∀ k : Fin 7,
+    distribution 6 k = 544 * distribution 5 k - 82944 * distribution 4 k +
+      5144576 * distribution 3 k - 146800640 * distribution 2 k +
+      1879048192 * distribution 1 k - 8589934592 * distribution 0 k := by
+  decide +kernel
+
 /-- Hardin's recurrence for every height at least seven, with the index shift explicit. -/
 theorem result (n : ℕ) :
     (a (n + 7) : ℤ) = 544 * a (n + 6) - 82944 * a (n + 5) +
@@ -326,8 +332,8 @@ theorem result (n : ℕ) :
   change (a (n + 6) : ℤ) = _ at h5
   change (a (n + 7) : ℤ) = _ at h6
   rw [h6, h5, h4, h3, h2, h1, h0]
-  simp only [distribution, Fin.sum_univ_succ, Matrix.cons_val_zero, Matrix.cons_val_succ,
-    Matrix.cons_val_fin_one, Fin.isValue]
-  ring
+  simp_rw [distribution_relation, sub_mul, add_mul]
+  simp only [sub_mul, add_mul, Finset.sum_add_distrib, Finset.sum_sub_distrib,
+    mul_assoc, Finset.mul_sum]
 
 end D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233126SquareStrip
