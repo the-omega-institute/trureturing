@@ -25,6 +25,7 @@ admission_basis: escape-witness
 
 import D5.S3.Quantum.Fermionic.BcGhostStateFieldLocality
 import D5.S3.VertexAlgebra.StateFieldResidueReconstruction
+import D5.S3.VertexAlgebra.BinomialKernelDelta
 
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
@@ -127,38 +128,7 @@ private def residueField (s : ℂ) (r : ℤ) (a b : Fock) : ResidueField s r a b
 
 private theorem binomial (value : ℤ → ℤ → Module.End ℂ Fock) (order : ℕ) (first second : ℤ) : ((deltaEnd ^ order) value) first second = ∑ offset ∈ Finset.range (order + 1), (((-1 : ℂ) ^
     offset) * (order.choose offset : ℂ)) • value (first + (order : ℤ) - offset) (second + offset) := by
-  let shiftLeft : Module.End ℂ (ℤ → ℤ → Module.End ℂ Fock) := {
-    toFun value := fun first second => value (first + 1) second
-    map_add' _ _ := rfl
-    map_smul' _ _ := rfl }
-  let shiftRight : Module.End ℂ (ℤ → ℤ → Module.End ℂ Fock) := {
-    toFun value := fun first second => value first (second + 1)
-    map_add' _ _ := rfl
-    map_smul' _ _ := rfl }
-  have commute : Commute (-shiftRight) shiftLeft := by apply LinearMap.ext; intro distribution; funext left right; simp [shiftLeft, shiftRight]
-  have leftPower (degree : ℕ) (distribution : ℤ → ℤ → Module.End ℂ Fock) : (shiftLeft ^ degree) distribution = fun left right => distribution (left + degree) right := by
-    induction degree with
-    | zero => simp
-    | succ degree inductionHypothesis =>
-      rw [pow_succ', Module.End.mul_apply, inductionHypothesis]; funext left right
-      change distribution (left + 1 + degree) right = distribution (left + (degree + 1 : ℕ)) right; congr 1; push_cast; omega
-  have rightPower (degree : ℕ) (distribution : ℤ → ℤ → Module.End ℂ Fock) : ((-shiftRight) ^ degree) distribution = fun left right => ((-1 : ℂ) ^ degree) • distribution left
-    (right + degree) := by
-    induction degree with
-    | zero => simp
-    | succ degree inductionHypothesis =>
-      rw [pow_succ', Module.End.mul_apply, inductionHypothesis]; funext left right
-      change -(((-1 : ℂ) ^ degree) • distribution left (right + 1 + degree)) = ((-1 : ℂ) ^ (degree + 1)) • distribution left (right + (degree + 1 : ℕ))
-      rw [pow_succ', mul_smul, neg_one_smul]
-      have indices : right + 1 + (degree : ℤ) = right + (degree + 1 : ℕ) := by push_cast; omega
-      rw [indices]
-  have equation : (deltaEnd : Module.End ℂ (ℤ → ℤ → Module.End ℂ Fock)) = -shiftRight + shiftLeft := by
-    apply LinearMap.ext; intro distribution; funext left right; simp [deltaEnd, delta, shiftLeft, shiftRight]
-    abel
-  rw [equation, commute.add_pow, LinearMap.sum_apply]; simp only [Finset.sum_apply]; apply Finset.sum_congr rfl; intro offset member
-  have within : offset ≤ order := by simpa using Finset.mem_range.mp member
-  simp only [Module.End.mul_apply, Module.End.natCast_apply, map_nsmul, rightPower, leftPower, Pi.smul_apply]
-  rw [← Nat.cast_smul_eq_nsmul ℂ, smul_smul, mul_comm]; congr 2; push_cast [Int.natCast_sub within]; omega
+  exact D5.S3.VertexAlgebra.FieldDeltaBinomial.delta_binomial value order first second
 
 private theorem positiveModes (s : ℂ) (a b : Fock) (r : ℕ) (n : ℤ) (vector : Fock) : (((residueField s r a b).operator) [[n]]) vector = ((deltaEnd ^ r) (signedComm s (Y a) (Y b))) 0 n vector :=
     by

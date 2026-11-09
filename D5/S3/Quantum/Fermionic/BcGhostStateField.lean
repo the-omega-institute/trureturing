@@ -27,6 +27,7 @@ admission_basis: escape-witness
 
 import D5.S3.Quantum.Fermionic.BcGhostVirasoro
 import D5.S3.VertexAlgebra.FieldNormalProduct
+import D5.S3.VertexAlgebra.SignedFields.SignedFieldNormalProductLocality
 import Mathlib.Data.Finset.Sort
 
 /-! Actual ghost fields, signed normal ordering and the occupation basis. -/
@@ -758,25 +759,11 @@ theorem stateField_translation :
 
 private theorem forward_finite (A B : VertexOperator ℂ Fock) (start finish : ℤ) (v : Fock) :
     Function.HasFiniteSupport (fun i : ℕ => (A [[start - i]]) ((B [[finish + i]]) v)) := by
-  refine BddAbove.finite (bddAbove_def.mpr ?_)
-  refine ⟨(-((HahnModule.of ℂ).symm (B v)).order - finish).toNat, ?_⟩
-  intro i hi
-  contrapose! hi
-  have hz : (B [[finish + i]]) v = 0 := by
-    apply VertexOperator.ncoeff_eq_zero_of_lt_order
-    omega
-  simp [hz]
+  exact D5.S3.VertexAlgebra.SignedFieldNormalProductLocality.forward_finite A B start finish v
 
 private theorem reverse_finite (A B : VertexOperator ℂ Fock) (start : ℤ) (v : Fock) :
     Function.HasFiniteSupport (fun i : ℕ => (A [[start - i]]) ((B [[i]]) v)) := by
-  refine BddAbove.finite (bddAbove_def.mpr ?_)
-  refine ⟨(-((HahnModule.of ℂ).symm (B v)).order - 1).toNat, ?_⟩
-  intro i hi
-  contrapose! hi
-  have hz : (B [[i]]) v = 0 := by
-    apply VertexOperator.ncoeff_eq_zero_of_lt_order
-    omega
-  simp [hz]
+  exact D5.S3.VertexAlgebra.SignedFieldNormalProductLocality.reverse_finite A B start v
 
 private theorem signedNormal_parity (sign x y : ℂ) (A B : VertexOperator ℂ Fock)
     (hA : ∀ n : ℤ, parity * (A [[n]]) = x • ((A [[n]]) * parity))
