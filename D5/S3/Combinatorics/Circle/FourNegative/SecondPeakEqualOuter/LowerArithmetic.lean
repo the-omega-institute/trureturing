@@ -2,7 +2,7 @@
    generality: I
    mirror-B: none(waiver:private-consumed-polynomial-certificates)
    mirror-E: none(waiver:private-consumed-polynomial-certificates)
-   anchors: [mathlib/module/Mathlib.Tactic.Ring]
+   anchors: [mathlib/module/Mathlib.Tactic.Ring.RingNF]
    utility: none
    digest: Twenty-two universal lower-sector polynomial certificates. -/
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakEqualOuter.Source

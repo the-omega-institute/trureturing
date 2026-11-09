@@ -2,7 +2,7 @@
    generality: I
    mirror-B: none(waiver:private-consumed-corrected-window-arithmetic)
    mirror-E: none(waiver:private-consumed-corrected-window-arithmetic)
-   anchors: [mathlib/module/Mathlib.Tactic.Ring]
+   anchors: [mathlib/module/Mathlib.Tactic.Ring.RingNF]
    utility: none
    digest: Corrected palindromic W identities and the paid X window. -/
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakEqualOuter.Source
