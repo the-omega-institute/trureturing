@@ -1,0 +1,2 @@
+**定理 44.4（有限维局部比较完备）。** 在 $H_A\otimes H_B$ 中，产品 Hermitian 算子 $A\otimes B$ 的线性张成包含整个 Hermitian 算子空间。因为每个正算子乘以足够小的正标量就是效应，所有产品效应的线性张成也相同。于是若 $\rho-\sigma$ 对所有 $E\otimes F$ 的迹配对为零，则对所有整体 Hermitian 算子配对为零，故 $\rho=\sigma$。
+
