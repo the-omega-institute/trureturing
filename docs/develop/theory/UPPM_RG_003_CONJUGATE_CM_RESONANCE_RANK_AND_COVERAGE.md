@@ -999,4 +999,182 @@ $$
 
 对指定 $\omega=\alpha$，原 (17.5) 已支付有限型前提，因此 (29.5)、(30.2) 及以上条件性消费者均适用；仍未证明实际 $p_H(\alpha)$ 满足 (31.2)，也未证明存在满足 (30.3) 的发散子族。因此没有据此裁定实际 $\nu(R(\alpha))$。新的算术充分接口是实际前两条截断极小乘积在这些原 $H$ 箱中的最大值是否具有发散总和，而非要求每块覆盖保持正比例。原定理 23.1 的有限型完整零测比较方向必使 (31.3) 中的全部凝聚和收敛；这与其一阶质量发散相容，也不把该必要条件倒置为零测充分条件。$\square$
 
+## 32. 原周期的交替坐标与统一有限型比较方向
+
+**定义 32.1（受控原周期子序列）。** 保持定义 20.1、21.1 的原 $q_H$、$h$、$\rho$、$M$、$a_0$ 和同一整数集合。固定一个足够大的整数 $H_0$，令
+
+$$
+H_s=2^sH_0,\qquad Q_s=q_{H_s}\quad(s\ge0),\qquad
+\iota(s)=\begin{cases}1,&s\ {\rm 偶},\\2,&s\ {\rm 奇}.\end{cases}
+\tag{32.1}
+$$
+
+这里 $H_s,Q_s$ 只用于定义比较方向，不替换任何原过滤中的 $q_{h(n)}$。由原周期的整除嵌套，$Q_s\mid Q_{s+1}$。由 (16.27) 的实际主阶，增大 $H_0$ 后可统一取
+
+$$
+Q_s^3\le Q_{s+1}\le Q_s^5,\qquad
+Q_{s+2}\ge Q_s^{9}\qquad(s\ge0).
+\tag{32.2}
+$$
+
+定义两坐标的交替级数
+
+$$
+\omega_i=\sum_{\substack{s\ge0\\\iota(s)=i}}\frac1{Q_s}\pmod 1,\qquad
+\omega=(\omega_1,\omega_2)\in\mathbb T^2.
+\tag{32.3}
+$$
+
+级数按通常实数意义收敛；改变有限个首项只改变一个固定有理平移，不影响下面的性质。
+
+**定理 32.2（统一有限型与有理独立）。** 对定义 32.1 的方向，存在常数 $c_\omega>0$，使
+
+$$
+\left\|k_1\omega_1+k_2\omega_2\right\|_{\mathbb T}\ge
+c_\omega\|k\|_\infty^{-125}\qquad(0\ne k=(k_1,k_2)\in\mathbb Z^2).
+\tag{32.4}
+$$
+
+特别地，$1,\omega_1,\omega_2$ 在 $\mathbb Q$ 上线性无关。指数 $125$ 只是统一的有限型上界，并非最优指数。
+
+**证明。** 由 (32.2)，$Q_s/Q_{s-1}\ge Q_{s-1}^2$。固定 $k\ne0$，令 $N=\|k\|_\infty$，选一个坐标 $i$ 使 $k_i\ne0$，再选同奇偶的最小 $s$ 使 $Q_s/Q_{s-1}>2N$。对前一个同奇偶指标，$Q_{s-2}/Q_{s-3}\le2N$；结合 (32.2) 得 $Q_{s-3}\le(2N)^{1/2}$、$Q_{s-2}\le(2N)^{5/2}$，从而 $Q_s\le C N^{125/2}$。有限个未达到此范围的 $N$ 最后并入常数。
+
+取任意 $d\in\mathbb Z$，把级数截断到 $s$ 并乘以 $Q_s$。由于所有前项分母整除 $Q_{s-1}$，截断量乘以 $Q_s$ 所得的整数在模 $Q_s/Q_{s-1}$ 下同余于 $k_i$；因 $0<|k_i|\le N<Q_s/Q_{s-1}$，它不被 $Q_s/Q_{s-1}$ 整除，因而也不被 $Q_s$ 整除。尾项满足
+
+$$
+Q_s\left|\sum_{t>s}\sum_{r=1}^2\frac{k_r\mathbf 1_{\{\iota(t)=r\}}}{Q_t}\right|\le
+4N\frac{Q_s}{Q_{s+1}}<\frac12.
+\tag{32.5}
+$$
+
+故
+
+$$
+\|d+k_1\omega_1+k_2\omega_2\|_{\mathbb T}\ge\frac1{2Q_s}\ge C^{-1}N^{-125/2}.
+\tag{32.6}
+$$
+
+对有限初段降低常数并把指数 $125/2$ 放宽为 $125$，即得 (32.4)。若存在非平凡有理关系，清除分母即得到某个 $d,k$ 使左端为零，与 (32.4) 矛盾。$\square$
+
+这里的白话含义是：每个坐标只在交替的原周期层写入一个新数字；下一层相对上一层至少是受控幂次增长，所以任何有限大小的整数线性组合都能在某一层被当前数字与更小的尾项分离。该分离同时给出有理独立与统一有限型；它没有改变原事件使用的周期。
+
+## 33. 全部阶段跳点上的完整零测上包
+
+**定义 33.1（辅助阶段与有限实 character）。** 对 $s\ge0$ 置
+
+$$
+\mathcal I_s=\{n\ge1:H_s\le h(n)<H_{s+1}\},\qquad
+N_s=\left\lceil\exp\bigl((H_{s+1}+1)^2\bigr)\right\rceil+Q_s.
+\tag{33.1}
+$$
+
+删去有限初段后，$\{\mathcal I_s\}$ 是全部正整数的无交分割；定义中不要求 $h$ 在 $\mathcal I_s$ 内恒定，因此包含每一个阶段跳点。对 $u\in C_M$，令 $b_s(u)$ 为 $[0,Q_s)$ 中满足 $b_s(u)\equiv u\pmod{Q_s}$ 的整数。取活动坐标 $i=\iota(s)$，并令
+
+$$
+\delta_s(\gamma)=H_s^{-2\gamma}+\frac{2(N_s+Q_s)}{Q_{s+2}}.
+\tag{33.2}
+$$
+
+**定理 33.2（任意正 $\gamma$ 的完整原事件零测）。** 对定义 32.1 的同一个固定 $\omega$，对每个 $\gamma>0$，保持 $\beta=0,c_0=1$ 的原
+
+$$
+\rho(n)=(\log(n+2))^{-\gamma},\qquad
+E_n(\omega)=
+\begin{cases}
+(n+q_{h(n)}\widehat{\mathbb Z})\times
+\mathcal B_{\rho(n)}(n\omega),&n\in A,\\
+\varnothing,&n\notin A,
+\end{cases}
+\qquad R(\omega)=\limsup_nE_n(\omega),
+\tag{33.3}
+$$
+
+则
+
+$$
+\nu(R(\omega))=0.
+\tag{33.4}
+$$
+
+这里的 $E_n$ 仍是原全部有限端和同一个整数的事件；(33.4) 不涉及实际 CM 方向 $\alpha$。
+
+**证明。** 取 $n\in\mathcal I_s\cap A$，并令 $q=q_{h(n)}$。因 $H_s\le h(n)$，整除嵌套给出 $Q_s\mid q$。活动坐标在 $Q_s$ 之前的全部分母都整除 $Q_s$，而其下一项分母为 $Q_{s+2}$，故
+
+$$
+\|Q_s\omega_{\iota(s)}\|_{\mathbb T}\le\frac{2Q_s}{Q_{s+2}}.
+\tag{33.5}
+$$
+
+若 $(u,z)\in E_n(\omega)$，则 $n-b_s(u)$ 是 $Q_s$ 的整数倍；因此由 (33.5) 及 $n\le N_s$，
+
+$$
+\|n\omega_{\iota(s)}-b_s(u)\omega_{\iota(s)}\|_{\mathbb T}\le
+\frac{2(N_s+Q_s)}{Q_{s+2}}.
+\tag{33.6}
+$$
+
+另一方面，$h(n)\ge H_s$ 且 $c_0=1$ 给出 $\rho(n)\le H_s^{-2\gamma}$。所以对每个固定 $u$，$\mathcal I_s$ 内的全部原事件（包括不同 $h$ 值的片段和两侧跳点）都被同一个有限实 character 窄带上包：
+
+$$
+\bigcup_{n\in\mathcal I_s}E_n(\omega)_u
+\subseteq\left\{z\in\mathbb T^2:
+\|z_{\iota(s)}-b_s(u)\omega_{\iota(s)}\|_{\mathbb T}<\delta_s(\gamma)\right\}.
+\tag{33.7}
+$$
+
+这里下标 $u$ 表示固定有限端纤维；未删去 $N_H(u)=0$ 的纤维，也未把任何真实片段改成统一的虚拟周期。该窄带的二维 Haar 测度为至多 $2\delta_s(\gamma)$。
+
+由 (16.27) 和 $H_{s+2}=4H_s$，有
+
+$$
+\frac{N_s+Q_s}{Q_{s+2}}\le \exp(-5H_s^2)\qquad(s\ {\rm 充分大}),
+\tag{33.8}
+$$
+
+而 $\sum_s H_s^{-2\gamma}<\infty$。因此对每个 $S$，
+
+$$
+\nu\left(\bigcup_{s\ge S}\ \bigcup_{n\in\mathcal I_s}E_n(\omega)\right)\le
+2\sum_{s\ge S}\delta_s(\gamma)\longrightarrow0.
+\tag{33.9}
+$$
+
+每个无穷命中目标属于左侧每个充分晚的尾并，故 (33.4) 随 (33.9) 成立。整个论证按 $\mathcal I_s$ 分段，因而涵盖原 $h$ 的全部跳点、有限初段之后的每个整数以及每个有限端纤维。$\square$
+
+由定理 32.2，原定理 20.2 的共同移位零一律和 Baire 尾稠密论证可直接用于这里的 $\omega$；所以 $R(\omega)$ 仍为 $Y$ 中稠密的 $G_\delta$，同时具有 (33.4) 的 Haar 零测。这一结论只复用原共同移位输入，不把比较方向解释为 CM 来源。
+
+## 34. 全部 dyadic 几何权重发散所需的反共振桥
+
+**命题 34.1（反共振阶段给出的完整权重发散）。** 保持定义 28.1 的完整 dyadic 权重 $g_j$。设存在常数 $c_*>0$ 和无界的原好阶段集合 $\mathcal K\subseteq\mathcal H_-$，使对每个 $H\in\mathcal K$ 的真实整块 $I_H=(X_H,2X_H]\cap\mathbb Z$，任一包含于该整块的 dyadic 片 $I$ 都满足
+
+$$
+\lambda_2\bigl(L(I,\rho(2X_H),\omega)\bigr)\ge c_*.
+\tag{34.1}
+$$
+
+则对 $0<\gamma\le3/8$，有
+
+$$
+\sum_{j\ge j_0}g_j=\infty.
+\tag{34.2}
+$$
+
+**证明。** 在 $\mathcal H_-$ 的尾部，原定理 21.2 给出 $K_H\rho(2X_H)^2\to\infty$，故第三个逐次极小最终不小于 $1$。任意非零空间频率的空间分量至少为 $\rho(2X_H)$，所以 (34.1) 与三因子定义给出
+
+$$
+p_{3,jt}^-\ge c_*\rho(2X_H)\asymp c_*H^{-2\gamma}
+\tag{34.3}
+$$
+
+对所有落入该整块的 dyadic 片成立。区间 $(X_H,2X_H]$ 含有 $\asymp H$ 个二倍块，因为 $\log(2X_H)-\log X_H\asymp H$。故这些块对 $\sum_jg_j$ 的贡献至少为常数倍
+
+$$
+H\cdot H^{-2\gamma}=H^{1-2\gamma}.
+\tag{34.4}
+$$
+
+当 $\gamma\le3/8$ 时该量沿无界 $H\in\mathcal K$ 不趋于零，因而级数发散。$\square$
+
+对定理 32.1 所构造的交替级数，定理 33.2 已无条件给出 $g_j\to0$（复用定理 28.1 的零测必要方向）。但是 (34.1) 尚未由原 Littlewood 负阶段输入推出：交替级数保证某一坐标在每个辅助区间内形成共同窄带，却没有证明在同一无界好阶段集合上另一独立频率统一远离所有短整数 character。原文献的 $\psi(x)-x=\Omega_-(\sqrt{x}\log\log\log x)$ 只供应 $\mathcal H_-$ 无界及其单阶段周期上界，不能补出 (34.1) 的反共振量词。因此由现有构造可确定 $g_j\to0$ 与完整零测；要得到 $\sum_jg_j=\infty$，仍须独立证明同一固定 $\omega$ 满足 (34.1)，这不涉及实际 $\alpha$ 的 CM 来源桥。
+
 ## 追加锚（本行以下为增补区）
