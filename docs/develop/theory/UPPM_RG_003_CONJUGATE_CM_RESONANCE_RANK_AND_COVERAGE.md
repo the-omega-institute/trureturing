@@ -1319,3 +1319,198 @@ $R(\omega)$ 仍是稠密 $G_\delta$，而原逐整数一阶质量仍满足 $\sum
 这些结论表明，在声明的 $\gamma$ 范围内，即使有统一有限型及完整几何权重和发散，完整原比较事件仍可零测；跨段重复覆盖所需的联合信息不能由这些条件替代。整个构造保留原有限地方、原 $q_H,h,\rho,M,a_0,Y$ 与同一整数，辅助 $H_s,N_s$ 只服务固定比较方向及其上包。该 $\omega$ 没有被认作实际 CM 方向 $\alpha$；原 (17.5) 的 CM 来源桥和实际 $q_H$ 与 $\alpha$ 的联合算术问题仍保留，以上反模型不裁定 $g_j(\alpha)$ 或 $\nu(R(\alpha))$。$\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 35. 原负阶段整数计数与严格 dyadic 阶段的几何权重
+
+**定义 35.1（原对数过滤及其负阶段）。** 保持定义 24.1 的全部有限地方过滤、实际共同周期 $q_H$、整数 $M,a_0$、完整目标空间 $Y$、测度 $\nu$ 与同一成功整数，只取 $\beta=0,c_0=1,\gamma>0$。因此仍用原来的
+
+$$
+h(n)=\max\left(2,\left\lfloor\sqrt{\log(n+2)}\right\rfloor\right),
+\qquad \rho_\gamma(n)=(\log(n+2))^{-\gamma}.
+$$
+
+将 (28.1)–(28.2) 中的原量显式记为 $R_\gamma(\omega)$、$g_j^{(\gamma)}(\omega)$ 与 $r_{j,\gamma}^{\pm}$；每片仍使用真实整数个数 $J_{jt}=\#(I_{jt}\cap A)$ 及 $K_{jt}=MJ_{jt}/q_{H_{jt}}$。这只是显示参数，不改变事件、切片、半径或几何权重的定义。对每个 $\gamma>0$，$j_0$ 按定理 28.1 选择，且不依赖方向。沿用原定义 21.1 的全部整数负阶段，并记
+
+$$
+\begin{gathered}
+\vartheta(x)=\sum_{p\le x}\log p,
+\qquad \psi(x)=\sum_{\substack{p\text{ 素数},\ k\ge1\\p^k\le x}}\log p,\\
+\mathcal H_- =\{H\in\mathbb Z:H\ge7,\ \vartheta(H)<H\},
+\qquad A_-(T)=\#\{H\in\mathcal H_-:H\le T\}.
+\end{gathered}
+\tag{35.1}
+$$
+
+严格窗口 $\mathcal D_H$ 始终取定理 34.1 的 (34.1)，其不交性与窗口下界直接使用 (34.2)。以整数 $H_0(\gamma)\ge7$、$c_\gamma>0$ 表示该定理的充分大阈值与常数，二者均不依赖方向。这里只将原负阶段的整数计数接到该严格窗口的原权重上。
+
+**定理 35.2（原完整几何权重的全方向发散）。** 对定义 35.1 的原过滤，无条件有
+
+$$
+\forall\gamma\in(0,1/2)\ \forall\omega\in\mathbb T^2,
+\qquad \sum_{j\ge j_0}g_j^{(\gamma)}(\omega)=\infty.
+\tag{35.2}
+$$
+
+若假设 Riemann 假设（RH），还在端点有
+
+$$
+\forall\omega\in\mathbb T^2,
+\qquad \sum_{j\ge j_0}g_j^{(1/2)}(\omega)=\infty.
+\tag{35.3}
+$$
+
+RH 端点不另假设零点的线性独立性或简单性。
+
+证明。所用整数计数来自 Jerzy Kaczorowski，*Results on the distribution of primes*，J. reine angew. Math. **446** (1994)，89–113，[DOI:10.1515/crll.1994.446.89](https://doi.org/10.1515/crll.1994.446.89)，[原始扫描](https://gdz.sub.uni-goettingen.de/download/pdf/PPN243919689_0446/LOG_0007.pdf)。该文 §3，印刷页 94，Theorem 8 的负向 $\psi$ 计数是：对每个 $0<\varepsilon<1$ 和每个实数 $u\ge0$，无条件有
+
+$$
+\#\{m\in\mathbb N:m\le T,\ \psi(m)<m-u\sqrt m\}
+=\Omega(T^{1-\varepsilon}).
+\tag{35.4}
+$$
+
+这是 literature-attested 的中间输入。这里只取 $u=0$，并只使用其下述含义：存在 $a_\varepsilon>0$ 和一个无界序列 $T_\ell\to\infty$，使该计数至少为 $a_\varepsilon T_\ell^{1-\varepsilon}$。因 $\vartheta(H)\le\psi(H)$，每个整数 $H\ge7$ 若满足 $\psi(H)<H$，就是同一个原负阶段 $H\in\mathcal H_-$。丢弃 $H<7$ 的至多六项并缩小常数，得到
+
+$$
+A_-(T_\ell)\ge a'_\varepsilon T_\ell^{1-\varepsilon}
+\qquad(\ell\text{ 充分大}),\qquad a'_\varepsilon>0.
+\tag{35.5}
+$$
+
+不把 (35.5) 加强为对全部充分大 $T$ 的同一幂次下界。
+
+对 $0<\gamma\le3/8$，全方向发散已由定理 34.2 给出，直接复用该结论。现取 $3/8<\gamma<1/2$，置 $s=4\gamma-1\in(1/2,1)$，并选 $0<\varepsilon<1-s$。由于 $H^{-s}\ge T_\ell^{-s}$ 对 $H\le T_\ell$ 成立，(35.5) 给出
+
+$$
+\begin{aligned}
+\sum_{\substack{H\in\mathcal H_-\\H_0(\gamma)\le H\le T_\ell}}
+ H^{1-4\gamma}
+&\ge T_\ell^{-s}
+ \bigl(A_-(T_\ell)-A_-(H_0(\gamma)-1)\bigr)\\
+&\ge \frac{a'_\varepsilon}{2}
+ T_\ell^{1-s-\varepsilon}\longrightarrow\infty.
+\end{aligned}
+\tag{35.6}
+$$
+
+此处只在 $s>0$ 的范围使用 $H^{-s}\ge T_\ell^{-s}$，不将这一不等式套用到 $s\le0$。
+
+由非负性、定理 34.1 的窗口互不重叠及 (34.2)，对每个方向同时有
+
+$$
+\sum_{j\ge j_0}g_j^{(\gamma)}(\omega)
+\ge\sum_{\substack{H\in\mathcal H_-\\H\ge H_0(\gamma)}}
+ \sum_{j\in\mathcal D_H}g_j^{(\gamma)}(\omega)
+\ge c_\gamma
+ \sum_{\substack{H\in\mathcal H_-\\H\ge H_0(\gamma)}}H^{1-4\gamma}
+=\infty.
+\tag{35.7}
+$$
+
+这证明 (35.2)。用白话说，无条件计数只需在越来越远的位置积累足够多的负阶段整数；每项所付的负幂还不到谐和幂，因此这些位置上的累积下界已迫使总和发散。窗口不重叠使每份贡献只记一次，且同一估计对所有实方向有效。
+
+端点另用同文 §2，印刷页 90，Theorem 1。其负向 $\psi$ 陈述仅以 RH 为假设：对每个实数 $u\ge0$，存在 $C_{\mathrm K}(u)>1$、$b_{\mathrm K}(u)>0$，使每个 $T\ge1$ 都有
+
+$$
+\#\{m\in\mathbb N:T\le m\le C_{\mathrm K}(u)T,
+ \ \psi(m)<m-u\sqrt m\}
+\ge b_{\mathrm K}(u)T.
+\tag{35.8}
+$$
+
+这里 $C_{\mathrm K}(u)$ 是原文的区间伸缩常数，与原过滤中固定为 $1$ 的 $c_0$ 无关。(35.8) 同样仅作 literature-attested 中间输入；取 $u=0$，简记 $C=C_{\mathrm K}(0)$、$b=b_{\mathrm K}(0)$，再取 $T=N/C$，便在 $N\ge C$ 时得到
+
+$$
+A_-(N)\ge\frac bC N-6.
+\tag{35.9}
+$$
+
+因此存在 $a>0$、$N_0\ge7$，使全部 $N\ge N_0$ 满足 $A_-(N)\ge aN$。对这个原整数计数作普通部分求和，得
+
+$$
+\sum_{\substack{H\in\mathcal H_-\\H\le N}}\frac1H
+=\frac{A_-(N)}N+\int_1^N\frac{A_-(t)}{t^2}\,dt
+\ge a\log\frac N{N_0}\longrightarrow\infty.
+\tag{35.10}
+$$
+
+删去有限初段不改变发散。将 $\gamma=1/2$ 的 $H^{1-4\gamma}=1/H$ 及 (35.10) 代入 (35.7) 的窗口求和不等式，便得 (35.3)。普通正项求和及部分求和均为经典中间方法（literature-attested）；这里的 repo-derived 综合是将上述原文整数计数转接到指定原过滤的严格 dyadic 窗口与完整 $g_j$，不另立一般振荡或求和定理。
+
+用白话说，RH 给出的每个伸缩区间内线性个数下界，使负阶段整数集具有正下密度，因而能承担恰好一阶的谐和权重。无条件的 (35.5) 在 $s=1$ 时不能给出 (35.6) 中的正指数；本证明留下 $\gamma=1/2$ 的无条件发散未决，也不由此断言 RH 必要。$\square$
+
+## 36. 零方向的完整收敛界与全方向命题的上界
+
+**定理 36.1（原完整几何权重在零方向的可求和范围）。** 保持定义 35.1 的原过滤。对每个 $\gamma>1/2$，零方向 $0=(0,0)$ 满足
+
+$$
+\begin{gathered}
+0\le g_j^{(\gamma)}(0)
+\le(r_{j,\gamma}^-)^2
+=\bigl(\log(2^{j+1}+2)\bigr)^{-2\gamma},\\
+\sum_{j\ge J}g_j^{(\gamma)}(0)
+\le\frac{(\log2)^{-2\gamma}}{2\gamma-1}\,J^{1-2\gamma}
+\qquad(J\ge\max(j_0,1)),\\
+\sum_{j\ge j_0}g_j^{(\gamma)}(0)<\infty,
+\qquad \nu(R_\gamma(0))=0.
+\end{gathered}
+\tag{36.1}
+$$
+
+因此任何 $\gamma>1/2$ 都不满足“对所有方向 $\omega$，原 $\sum_jg_j^{(\gamma)}(\omega)$ 发散”。
+
+证明。每个真实保留片在零方向的准确公式由定理 27.1 给出：
+
+$$
+p_{3,jt}^-(0)=\min(1,K_{jt})(r_{j,\gamma}^-)^2.
+$$
+
+同一 dyadic 块的各片使用同一个 $r_{j,\gamma}^-$，所以按 (28.2) 取最大值，即有 $g_j^{(\gamma)}(0)\le(r_{j,\gamma}^-)^2$；没有保留片时，空最大值为零，估计仍成立。原半径在 $\beta=0$ 下准确等于 (36.1) 第一行，并且该平方与 $j^{-2\gamma}$ 同阶。由 $\log(2^{j+1}+2)\ge(j+1)\log2$，普通正项积分比较给出
+
+$$
+\begin{aligned}
+\sum_{j\ge J}g_j^{(\gamma)}(0)
+&\le(\log2)^{-2\gamma}\sum_{j\ge J}(j+1)^{-2\gamma}\\
+&\le(\log2)^{-2\gamma}\int_J^\infty x^{-2\gamma}\,dx
+=\frac{(\log2)^{-2\gamma}}{2\gamma-1}J^{1-2\gamma}.
+\end{aligned}
+\tag{36.2}
+$$
+
+加回有限初段即得完整级数收敛，(28.4) 随即给出完整 $R_\gamma(0)$ 零测。这里的原过滤上界比较为 repo-derived，格的准确公式直接复用定理 27.1；一般格论及正项积分比较均为 literature-attested 中间方法。
+
+用白话说，零方向的全部实中心重合，允许整数再多也只贡献同一半径的方块；三因子乘积因而至多是这个半径的平方。平方半径在 dyadic 指标上成为 $j^{-2\gamma}$，超过半端点就可求和。
+
+零方向不满足 (29.1) 的有限型条件，且 $1,0,0$ 在 $\mathbb Q$ 上线性相关。本条给出的是全方向发散命题不能越过 $1/2$ 的上界，不给有限型方向类或实际 CM 方向 $\alpha$ 的锐界。结合定理 35.2，在 RH 下全方向几何权重发散的参数范围恰为 $0<\gamma\le1/2$；无条件端点仍未由这些输入判定。$\square$
+
+## 37. 同一固定有限型方向上的发散与完整零测
+
+**定理 37.1（固定有限型零测方向的几何发散消费者）。** 令 $\omega_*$ 为定义 32.1 中 (32.5) 给出的同一个固定方向。定理 32.2 的 (32.6) 保证它满足 (29.1)，且方向、有限型常数与指数均不依赖 $\gamma$。在定义 35.1 的同一原过滤中，定理 33.2 已给出
+
+$$
+\forall\gamma>0,\qquad \nu(R_\gamma(\omega_*))=0.
+\tag{37.1}
+$$
+
+这个方向无条件同时满足
+
+$$
+\forall\gamma\in(0,1/2),\qquad
+\left\{
+\begin{aligned}
+g_j^{(\gamma)}(\omega_*)&\longrightarrow0,\\
+\sum_{j\ge j_0}g_j^{(\gamma)}(\omega_*)&=\infty,\\
+\nu(R_\gamma(\omega_*))&=0.
+\end{aligned}
+\right.
+\tag{37.2}
+$$
+
+在 RH 下，同一个 $\omega_*$ 还使 (37.2) 在 $\gamma=1/2$ 成立。方向、有限型性及对全部 $\gamma>0$ 的完整零测性分别直接复用定义 32.1、定理 32.2 与定理 33.2，没有额外的方向存在性假设。
+
+证明。固定任意 $\gamma>0$，定理 33.2 直接给出 (37.1) 与 $g_j^{(\gamma)}(\omega_*)\to0$。对 $0<\gamma<1/2$，定理 35.2 的全方向结论直接给同一个 $\omega_*$ 上的级数发散；RH 下再用其端点结论。此处每个 $\gamma$ 都在同一原目标空间及同一固定方向上取值，不随 $\gamma$ 另选方向。于是 (37.2) 完整成立。$\square$
+
+用白话说，原几何权重的总量可以无穷，每块的权重又可以趋零，而同一个有限型方向的完整无限命中集合仍是零测。故即使保留有限型与共同成功整数，也不能只从 $\sum_jg_j=\infty$ 推出满测。本条是定理 32.2、33.2 与 35.2 的原过滤消费者（repo-derived），不新增一般格论或 Borel–Cantelli 定理。
+
+对实际 $\omega=\alpha$，定理 35.2 同样提供无条件严格区间内的级数发散及 RH 下的半端点发散；本条的 $\omega_*$ 不被认作 $\alpha$。实际 $\alpha$ 是否具有足以裁定 $\nu(R_\gamma(\alpha))$ 的跨块联合控制或相应凝聚发散条件，仍是未决桥。
+
+## 追加锚（本行以下为增补区）
