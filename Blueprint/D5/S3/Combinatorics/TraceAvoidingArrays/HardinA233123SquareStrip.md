@@ -74,21 +74,7 @@ $$\forall p: (\operatorname{Fin}\left(3\right)) \times (\operatorname{Fin}\left(
 
 BooleanRankThreeK4.beta has fibres {0,5}, {1,4}, {2,3}. Its value for each preceding colour must differ from the next colour's value in that column. HardinA233175PairStrip.pairs c is literally (beta (c 0), beta (c 1)).
 
-**Definition 1.6 (The reachable boundary invariant).**
-
-$$\forall s: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233175PairStrip}.\operatorname{Seen}, (\forall p: (\operatorname{Fin}\left(3\right)) \times (\operatorname{Fin}\left(3\right)), (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233123SquareStrip}.\operatorname{Valid}\left(s, p\right) = (\operatorname{Prod}.\operatorname{fst}\left(s\right) = \operatorname{Bool}.\operatorname{true}) \land ((\operatorname{Prod}.\operatorname{fst}\left(p\right) \neq \operatorname{Prod}.\operatorname{snd}\left(p\right)) \land ((\operatorname{Prod}.\operatorname{snd}\left(s\right) = \operatorname{Bool}.\operatorname{false}) \implies ((\operatorname{Prod}.\operatorname{fst}\left(p\right) \neq (2: \operatorname{Fin}\left(3\right))) \land (\operatorname{Prod}.\operatorname{snd}\left(p\right) \neq (2: \operatorname{Fin}\left(3\right))))))))$$
-
-*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233123SquareStrip.Valid` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233123: six-colour complementary-pair exclusion on a two-column square strip*. URL: <https://oeis.org/A233123>.
-
-*Commentary.*
-
-Seen is Bool times Bool, recording whether colours 1 and 2 have occurred. After the first row, 1 has occurred and the two boundary pair labels differ. Before 2 has occurred neither label is 2. Every allowed next row preserves this invariant.
-
-**Definition 1.7 (One-row class counts).**
+**Definition 1.6 (One-row class counts).**
 
 $$\forall s: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233175PairStrip}.\operatorname{Seen}, (\forall p: (\operatorname{Fin}\left(3\right)) \times (\operatorname{Fin}\left(3\right)), (\forall b: \operatorname{Bool}, (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233123SquareStrip}.\operatorname{classCount}\left(s, p, b\right) = \sum_{c: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233175PairStrip}.\operatorname{Col}} ((\operatorname{if} ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233123SquareStrip}.\operatorname{rowLegal}\left(c\right)) \land ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233123SquareStrip}.\operatorname{compatible}\left(p, c\right)) \land ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233175PairStrip}.\operatorname{good}\left(s, c\right)) \land (\operatorname{Prod}.\operatorname{snd}\left(\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233175PairStrip}.\operatorname{finish}\left(s, c\right)\right) = b)))) \operatorname{then} (1: \operatorname{Int}) \operatorname{else} (0: \operatorname{Int}))))))$$
 
@@ -100,9 +86,9 @@ $$\forall s: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\o
 
 *Commentary.*
 
-The shared good predicate checks the row in column order using allowed and advance. The shared finish function returns its final seen flags.
+HardinA233251TriangleStrip.Valid s p says that 1 has been seen, the boundary labels differ, and before 2 is seen neither label is 2. Seen is Bool times Bool, tracking occurrences of colours 1 and 2. The shared good predicate checks the row in column order using allowed and advance. The shared finish function returns its final seen flags.
 
-**Definition 1.8 (First-row class counts).**
+**Definition 1.7 (First-row class counts).**
 
 $$\forall b: \operatorname{Bool}, (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233123SquareStrip}.\operatorname{firstCount}\left(b\right) = \sum_{c: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233175PairStrip}.\operatorname{Col}} ((\operatorname{if} ((c\left((0: \operatorname{Fin}\left(2\right))\right) = (0: \operatorname{Fin}\left(6\right))) \land ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233123SquareStrip}.\operatorname{rowLegal}\left(c\right)) \land ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233175PairStrip}.\operatorname{good}\left((\operatorname{Bool}.\operatorname{false}, \operatorname{Bool}.\operatorname{false}), c\right)) \land (\operatorname{Prod}.\operatorname{snd}\left(\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233175PairStrip}.\operatorname{finish}\left((\operatorname{Bool}.\operatorname{false}, \operatorname{Bool}.\operatorname{false}), c\right)\right) = b)))) \operatorname{then} (1: \operatorname{Int}) \operatorname{else} (0: \operatorname{Int}))))$$
 
@@ -116,9 +102,9 @@ $$\forall b: \operatorname{Bool}, (\operatorname{D5}.\operatorname{S3}.\operator
 
 The first colour is zero and both initial seen flags are false.
 
-**Theorem 1.9 (The finite transfer certificate).**
+**Theorem 1.8 (The finite transfer certificate).**
 
-$$(\forall s: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233175PairStrip}.\operatorname{Seen}, (\forall p: (\operatorname{Fin}\left(3\right)) \times (\operatorname{Fin}\left(3\right)), ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233123SquareStrip}.\operatorname{Valid}\left(s, p\right)) \implies ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233123SquareStrip}.\operatorname{classCount}\left(s, p, \operatorname{Bool}.\operatorname{true}\right) = (\operatorname{if} (\operatorname{Prod}.\operatorname{snd}\left(s\right)) \operatorname{then} (12: \operatorname{Int}) \operatorname{else} (4: \operatorname{Int}))) \land (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233123SquareStrip}.\operatorname{classCount}\left(s, p, \operatorname{Bool}.\operatorname{false}\right) = (\operatorname{if} (\operatorname{Prod}.\operatorname{snd}\left(s\right)) \operatorname{then} (0: \operatorname{Int}) \operatorname{else} (4: \operatorname{Int}))))))) \land ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233123SquareStrip}.\operatorname{firstCount}\left(\operatorname{Bool}.\operatorname{true}\right) = (0: \operatorname{Int})) \land (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233123SquareStrip}.\operatorname{firstCount}\left(\operatorname{Bool}.\operatorname{false}\right) = (1: \operatorname{Int})))$$
+$$(\forall s: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233175PairStrip}.\operatorname{Seen}, (\forall p: (\operatorname{Fin}\left(3\right)) \times (\operatorname{Fin}\left(3\right)), ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233251TriangleStrip}.\operatorname{Valid}\left(s, p\right)) \implies ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233123SquareStrip}.\operatorname{classCount}\left(s, p, \operatorname{Bool}.\operatorname{true}\right) = (\operatorname{if} (\operatorname{Prod}.\operatorname{snd}\left(s\right)) \operatorname{then} (12: \operatorname{Int}) \operatorname{else} (4: \operatorname{Int}))) \land (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233123SquareStrip}.\operatorname{classCount}\left(s, p, \operatorname{Bool}.\operatorname{false}\right) = (\operatorname{if} (\operatorname{Prod}.\operatorname{snd}\left(s\right)) \operatorname{then} (0: \operatorname{Int}) \operatorname{else} (4: \operatorname{Int}))))))) \land ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233123SquareStrip}.\operatorname{firstCount}\left(\operatorname{Bool}.\operatorname{true}\right) = (0: \operatorname{Int})) \land (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233123SquareStrip}.\operatorname{firstCount}\left(\operatorname{Bool}.\operatorname{false}\right) = (1: \operatorname{Int})))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233123SquareStrip.finite_certificate` (`✓ std3`). ∎
 
@@ -130,7 +116,7 @@ $$(\forall s: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\
 
 From a boundary with 2 unseen, four rows keep 2 unseen and four see it. From a boundary with 2 seen, twelve rows keep it seen and none forget it. The unique first row is (0,1); it leaves 2 unseen. These are counts of single rows, each drawn from the 36 functions Fin 2 to Fin 6.
 
-**Theorem 1.10 (Barker's generating-function identity).**
+**Theorem 1.9 (Barker's generating-function identity).**
 
 $$(\left(1 - 4 \cdot \operatorname{PowerSeries}.\operatorname{X}\right) \cdot \left(1 - 12 \cdot \operatorname{PowerSeries}.\operatorname{X}\right) \cdot \operatorname{PowerSeries}.\operatorname{mk}\left(\lambda n: \operatorname{Nat} \mapsto ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233123SquareStrip}.\operatorname{a}\left(n\right): \operatorname{Int}))\right): \operatorname{PowerSeries}\left(\operatorname{Int}\right)) = \operatorname{PowerSeries}.\operatorname{X} \cdot \left(1 - 8 \cdot \operatorname{PowerSeries}.\operatorname{X}\right)$$
 
@@ -147,7 +133,6 @@ Let U(k) count continuations after 2 has been seen, and V(k) those before 2 has 
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233123SquareStrip.Legal`
-- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233123SquareStrip.Valid`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233123SquareStrip.a`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233123SquareStrip.bonds`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233123SquareStrip.classCount`

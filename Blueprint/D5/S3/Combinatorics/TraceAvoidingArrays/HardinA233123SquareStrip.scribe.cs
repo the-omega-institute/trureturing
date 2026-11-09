@@ -222,7 +222,8 @@ internal sealed class HardinA233123SquareStripDocument : IScribeDocumentDefiniti
         Seq(Exists, Sp, V(name), Colon, Sp, type, Comma, Sp, Parenthesized(body));
     private static Formula SumOver(string name, Formula type, Formula body) =>
         Seq(Sum, Underscore, Grp(V(name), Colon, Sp, type), Sp, Parenthesized(body));
-    private static Formula Eq(Formula a, Formula b) => Seq(a, Sp, F.Eq, Sp, b);
+    private static Formula Eq(Formula a, Formula b) =>
+        Seq(Parenthesized(a), Sp, F.Eq, Sp, Parenthesized(b));
     private static Formula Ne(Formula a, Formula b) => Seq(a, Sp, Neq, Sp, b);
     private static Formula Lt(Formula a, Formula b) => Seq(a, Sp, F.Lt, Sp, b);
     private static Formula And(Formula a, Formula b) =>
