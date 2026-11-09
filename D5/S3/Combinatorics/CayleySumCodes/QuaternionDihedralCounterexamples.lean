@@ -10,7 +10,7 @@ import D5.S3.Combinatorics.CayleySumCodes.TotalPerfectCriterion
 import Mathlib.GroupTheory.SpecificGroups.Quaternion
 import Mathlib.GroupTheory.SpecificGroups.Dihedral
 import Mathlib.GroupTheory.Subgroup.Center
-import Mathlib.Algebra.Group.Subgroup.Prod
+import Mathlib.Algebra.Group.Subgroup.Basic
 
 set_option autoImplicit false
 
@@ -22,14 +22,31 @@ open D5.S3.Combinatorics.CayleySumCodes.TotalPerfectCriterion
 abbrev Q8 := QuaternionGroup 2
 def q8Central : Q8 := QuaternionGroup.a 2
 def q8Connection : Set Q8 := {1, q8Central}
-private theorem q8_normal : NormalSubset q8Connection := by decide
+private theorem q8_normal : NormalSubset q8Connection := by
+  unfold NormalSubset q8Connection q8Central
+  decide
 
 private theorem quaternion_result :
     squares (⊤ : Subgroup Q8) = q8Connection ∧
     (Subgroup.center Q8 : Set Q8) = q8Connection ∧
     IsTotalPerfectCode (sumGraph q8Connection q8_normal) (⊤ : Subgroup Q8) := by
-  refine ⟨Set.ext (by decide), Set.ext (by decide), ?_⟩
-  decide
+  refine ⟨?_, ?_, ?_⟩
+  · ext x
+    simp only [squares, Set.mem_setOf_eq, SetLike.mem_coe, Subgroup.mem_top, true_and]
+    revert x
+    unfold q8Connection q8Central
+    decide +kernel
+  · ext x
+    change x ∈ Subgroup.center Q8 ↔ x ∈ q8Connection
+    rw [Subgroup.mem_center_iff]
+    revert x
+    unfold q8Connection q8Central
+    decide +kernel
+  · change ∀ g : Q8, ∃! h : Q8, h ∈ (⊤ : Subgroup Q8) ∧
+      g ≠ h ∧ g * h ∈ q8Connection
+    simp only [Subgroup.mem_top, true_and, q8Connection, q8Central,
+      Set.mem_insert_iff, Set.mem_singleton_iff, ExistsUnique]
+    decide +kernel
 
 theorem whole_transversal_squares {G : Type*} [Group G]
     (hz : (Subgroup.center G : Set G) ⊆ squares (⊤ : Subgroup G))

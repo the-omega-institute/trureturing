@@ -62,7 +62,7 @@ theorem central_transversal (H : Subgroup G) [H.Normal]
   have ht' : (⟨t, ht⟩ : T) = s := hu ⟨t, ht⟩ (by simp)
   have heq : (QuotientGroup.mk' H) (a * t * a⁻¹) = (QuotientGroup.mk' H) t := by
     simp only [map_mul, map_inv]
-    rw [mul_comm ((QuotientGroup.mk' H) a) ((QuotientGroup.mk' H) t)]
+    rw [mul_comm' ((QuotientGroup.mk' H) a) ((QuotientGroup.mk' H) t)]
     simp [mul_assoc]
   have hm : (a * t * a⁻¹)⁻¹ * t ∈ H := by
     apply (QuotientGroup.eq_one_iff _).mp

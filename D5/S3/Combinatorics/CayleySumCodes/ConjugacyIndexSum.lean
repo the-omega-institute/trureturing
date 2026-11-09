@@ -42,8 +42,9 @@ private theorem partition_card [Finite G] {ι : Type*} [Fintype ι]
       exact ⟨⟨i, ⟨z.1, hi⟩⟩, Subtype.ext rfl⟩
   have hc := Nat.card_congr (Equiv.ofBijective f hf)
   rw [Nat.card_eq_fintype_card, Fintype.card_sigma] at hc
-  simpa only [← Nat.card_eq_fintype_card, Set.ncard] using hc.symm
+  simpa only [← Nat.card_eq_fintype_card, Nat.card_coe_set_eq] using hc.symm
 
+open scoped Classical in
 /-- For an arbitrary complete disjoint decomposition of the actual normal
 connection set into conjugacy classes, the centralizer indices are legitimate
 because normal H centralizes every connection element. Their reciprocal sum

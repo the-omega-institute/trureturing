@@ -78,7 +78,7 @@ theorem of_transversal (H : Subgroup G) (T : Set G) (hn : NormalSubset T)
     · rintro h ⟨hh, he | he⟩
       · exact (hg (he.symm ▸ hh)).elim
       · have ht' : (g * h)⁻¹ * g ∈ H := by simpa [mul_assoc] using H.inv_mem hh
-        have eqt := congrArg Subtype.val (hu ⟨g * h, he.2.1⟩ ht')
+        have eqt : g * h = t.1 := congrArg (fun z : T => z.1) (hu ⟨g * h, he.2.1⟩ ht')
         calc
           h = g⁻¹ * (g * h) := by simp
           _ = g⁻¹ * t.1 := by rw [eqt]
@@ -205,7 +205,7 @@ theorem abelian_exists [IsMulCommutative G] (H : Subgroup G) :
   obtain ⟨T, hc, h1⟩ := H.exists_isComplement_left 1
   have hn : NormalSubset T := by
     intro a x hx
-    simpa [mul_comm a x, mul_assoc] using hx
+    simpa [mul_comm' a x, mul_assoc] using hx
   exact (exists_iff H).mpr ⟨T, hn, h1, hc⟩
 
 #print axioms of_transversal

@@ -10,18 +10,19 @@ import D5.S3.Combinatorics.CayleySumCodes.TotalPerfectCriterion
 import Mathlib.GroupTheory.SpecificGroups.Quaternion
 import Mathlib.GroupTheory.SpecificGroups.Dihedral
 import Mathlib.GroupTheory.Subgroup.Center
-import Mathlib.Algebra.Group.Subgroup.Prod
-
-set_option autoImplicit false
+import Mathlib.Algebra.Group.Subgroup.Basic
 
 import D5.S3.Combinatorics.CayleySumCodes.QuaternionDihedralCounterexamples
+
+set_option autoImplicit false
 
 namespace D5.S3.Combinatorics.CayleySumCodes.ProperQuaternionOldNecessityCounterexample
 
 open D5.S3.Combinatorics.CayleySumCodes.TotalPerfectCriterion
 
 abbrev C3 := Multiplicative (ZMod 3)
-abbrev ProductGroup := QuaternionDihedralCounterexamples.Q8 × C3
+open QuaternionDihedralCounterexamples
+abbrev ProductGroup := Q8 × C3
 
 /-- The genuine proper normal subgroup Q8 times the identity in C3. -/
 def productSubgroup : Subgroup ProductGroup := (⊤ : Subgroup Q8).prod (⊥ : Subgroup C3)
@@ -29,19 +30,30 @@ def productSubgroup : Subgroup ProductGroup := (⊤ : Subgroup Q8).prod (⊥ : S
 def productConnection : Set ProductGroup :=
   {(1, 1), (QuaternionDihedralCounterexamples.q8Central, 1), (1, Multiplicative.ofAdd 1), (1, Multiplicative.ofAdd 2)}
 
-private theorem product_normal : NormalSubset productConnection := by decide
+private theorem product_normal : NormalSubset productConnection := by
+  unfold NormalSubset productConnection
+  decide
 
 /-- The third source counterexample is a proper normal subgroup, not only
 the degenerate H=G case: it has the required total perfect-code graph. -/
 private theorem product_result : productSubgroup.Normal ∧ productSubgroup ≠ ⊤ ∧
     IsTotalPerfectCode (sumGraph productConnection product_normal) productSubgroup := by
-  refine ⟨by infer_instance, ?_, ?_⟩
+  refine ⟨?_, ?_, ?_⟩
+  · change ((⊤ : Subgroup Q8).prod (⊥ : Subgroup C3)).Normal
+    infer_instance
   · intro he
-    have hn : ((1, Multiplicative.ofAdd 1) : ProductGroup) ∉ productSubgroup := by decide
+    have hn : ((1, Multiplicative.ofAdd 1) : ProductGroup) ∉ productSubgroup := by
+      simp only [productSubgroup, Subgroup.mem_prod, Subgroup.mem_top,
+        Subgroup.mem_bot, true_and]
+      decide
     apply hn
     rw [he]
     trivial
-  · decide
+  · change ∀ g : ProductGroup, ∃! h : ProductGroup, h ∈ productSubgroup ∧
+      g ≠ h ∧ g * h ∈ productConnection
+    simp only [ExistsUnique, productSubgroup, Subgroup.mem_prod, Subgroup.mem_top,
+      Subgroup.mem_bot, true_and, productConnection, Set.mem_insert_iff, Set.mem_singleton_iff]
+    decide +kernel
 
 /-- The old necessity, even when restricted to proper normal subgroups
 of the complete actual product group. -/
@@ -54,7 +66,11 @@ def claim : Prop :=
 
 private theorem central_internal_square : ∀ z : ProductGroup,
     z ∈ Subgroup.center ProductGroup → z ∈ productSubgroup →
-      z ∈ squares productSubgroup := by decide
+      z ∈ squares productSubgroup := by
+  simp only [Subgroup.mem_center_iff, squares, Set.mem_setOf_eq]
+  simp only [productSubgroup, Subgroup.mem_prod, Subgroup.mem_top,
+    Subgroup.mem_bot, true_and]
+  decide +kernel
 
 /-- The proper-normal source example refutes the old necessity as well. -/
 theorem result : Not claim := by

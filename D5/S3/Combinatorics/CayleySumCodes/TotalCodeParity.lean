@@ -31,8 +31,10 @@ theorem result [Finite G] (graph : SimpleGraph G) (C : Set G)
     intro z hz
     exact Subtype.ext (hu z.1 ⟨z.2, hz⟩)
   have degree (v : C) : (graph.induce C).degree v = 1 := by
-    have hu := (Fintype.existsUnique_iff_card_one).mp (unique v)
-    simpa only [SimpleGraph.card_neighborSet_eq_degree] using hu
+    obtain ⟨w, hw, hu⟩ := unique v
+    have hcard : Fintype.card ((graph.induce C).neighborSet v) = 1 :=
+      Fintype.card_eq_one_iff.mpr ⟨⟨w, hw⟩, fun z => Subtype.ext (hu z.1 z.2)⟩
+    simpa only [SimpleGraph.card_neighborSet_eq_degree] using hcard
   refine ⟨?_, ?_⟩
   · intro v
     simpa only [Nat.card_eq_fintype_card, SimpleGraph.card_neighborSet_eq_degree] using degree v

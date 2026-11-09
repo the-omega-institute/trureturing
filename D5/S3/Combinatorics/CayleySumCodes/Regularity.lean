@@ -14,6 +14,8 @@ set_option autoImplicit false
 
 namespace D5.S3.Combinatorics.CayleySumCodes.Regularity
 
+open scoped Classical
+
 open D5.S3.Combinatorics.CayleySumCodes.TotalPerfectCriterion
 
 variable {G : Type*} [Group G]
@@ -89,12 +91,10 @@ theorem result [Finite G] (Y : Set G) (hn : NormalSubset Y) :
         rw [hfree] at hm
         exact hm
       rw [degree_card, degree_card]
-      have h1 : (1 : G) ∉ Y := by simpa using hsq 1
-      simp only [if_neg (hsq g), one_mul, if_neg h1]
+      simp only [ite_eq_right (hsq g), ite_eq_right (hsq 1)]
     · have hsq (x : G) : x * x ∈ Y := hall ⟨x, by trivial, rfl⟩
       rw [degree_card, degree_card]
-      simp only [if_pos (hsq g), one_mul,
-        if_pos (show (1 : G) ∈ Y from by simpa using hsq 1)]
+      simp only [ite_eq_left (hsq g), ite_eq_left (hsq 1)]
 
 #print axioms degree_card
 #print axioms result

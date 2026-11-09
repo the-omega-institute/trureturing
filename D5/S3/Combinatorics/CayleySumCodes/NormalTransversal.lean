@@ -42,7 +42,7 @@ theorem restrict (H M : Subgroup G) (hHM : H ≤ M) (hH : NLT H) :
     intro z hz
     apply Subtype.ext
     apply Subtype.ext
-    exact congrArg Subtype.val (hu ⟨z.1.1, z.2⟩ hz)
+    exact congrArg (fun x : T => x.1) (hu ⟨z.1.1, z.2⟩ hz)
 
 /-- A surjective group homomorphism carries a normal transversal to a normal
 transversal whenever its kernel lies in H. In particular this applies to
@@ -64,9 +64,11 @@ theorem map {K : Type*} [Group K] (f : G →* K) (hf : Function.Surjective f)
       change x ∈ (H.map f).comap f ↔ x ∈ H
       rw [Subgroup.comap_map_eq_self hk]
     refine ⟨⟨f t.1, ⟨t.1, t.2, rfl⟩⟩, ?_, ?_⟩
-    · simpa only [map_mul, map_inv] using (mem_map (t.1⁻¹ * g)).mpr hh
+    · change (f t.1)⁻¹ * f g ∈ H.map f
+      simpa only [map_mul, map_inv] using (mem_map (t.1⁻¹ * g)).mpr hh
     · rintro z hz
       obtain ⟨u, huT, huZ⟩ := z.2
+      change z.1⁻¹ * f g ∈ H.map f at hz
       have hmem : u⁻¹ * g ∈ H := by
         apply (mem_map _).mp
         simpa only [map_mul, map_inv, huZ] using hz
@@ -93,8 +95,8 @@ private theorem complement_of_card_one [Finite G] (H : Subgroup G) (T : Set G)
   apply Subgroup.isComplement_iff_existsUnique_inv_mul_mem.mpr
   intro g
   have hu : ∃! y : G, y ∈ T ∧ g⁻¹ * y ∈ H := by
-    apply Fintype.existsUnique_iff_card_one.mpr
-    simpa only [Nat.card_eq_fintype_card] using ht g
+    apply (Fintype.existsUnique_iff_card_one (fun y : G => y ∈ T ∧ g⁻¹ * y ∈ H)).mpr
+    simpa only [Nat.card_eq_fintype_card, Fintype.card_subtype] using ht g
   obtain ⟨y, ⟨hy, hh⟩, hu⟩ := hu
   have inverse_mem (z : G) : z⁻¹ * g ∈ H ↔ g⁻¹ * z ∈ H := by
     simpa only [mul_inv_rev, inv_inv] using
@@ -173,6 +175,7 @@ theorem result [Finite G] (H : Subgroup G) (Y : Set G) (hY : NormalSubset Y)
   · exact ⟨Y, hY, ha.2⟩
   · exact ⟨Y \ {1}, normal_without_one Y hY, hb.2⟩
 
+open scoped Classical in
 /-- The total connection-set size is the subgroup index in case (a) and
 one more than that index in case (b). The extra identity is counted, even
 though self-neighbors are excluded by the graph. -/

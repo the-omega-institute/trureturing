@@ -26,10 +26,11 @@ def squareSubgroup : Subgroup G := (powMonoidHom 2 : G →* G).range
 
 /-- The subgroup carrier agrees with the elementwise square set, without a
 finite-group or exponent-two assumption. -/
-theorem squares_eq : squares (⊤ : Subgroup G) = (squareSubgroup : Set G) := by
+theorem squares_eq : squares (⊤ : Subgroup G) = (squareSubgroup (G := G) : Set G) := by
   ext x
-  simp only [squares, Set.mem_setOf_eq, Subgroup.mem_top, true_and,
-    squareSubgroup, MonoidHom.mem_range, pow_two]
+  change (∃ h : G, h ∈ (⊤ : Subgroup G) ∧ h * h = x) ↔
+    ∃ h : G, (powMonoidHom 2 : G →* G) h = x
+  simp [pow_two]
 
 private theorem normal (Y : Set G) : NormalSubset Y := by
   intro a x hx
@@ -100,7 +101,7 @@ private theorem regular_of_square_free [Finite G] (Y : Set G)
       Nat.card ((sumGraph Y (normal Y)).neighborSet 1) := by
   apply (Regularity.result Y (normal Y)).mpr
   left
-  rw [squares_eq]
+  rw [squares_eq (G := G)]
   exact Set.eq_empty_iff_forall_notMem.mpr (fun y hy => hfree y hy.1 hy.2)
 
 private theorem normalized_regular [Finite G] (H : Subgroup G) (T : Set G)
@@ -134,7 +135,10 @@ theorem perfect_iff [Finite G] (H : Subgroup G) :
       intro h hh
       by_contra hs
       exact hn ⟨h, hh, hs⟩
-    obtain ⟨h, hh, hne⟩ := Subgroup.ne_bot_iff.mp hb
+    obtain ⟨h', hne'⟩ := Subgroup.ne_bot_iff_exists_ne_one.mp hb
+    have hh : (h' : G) ∈ H := h'.2
+    have hne : (h' : G) ≠ 1 := fun he => hne' (Subtype.ext he)
+    let h : G := h'
     rcases (Regularity.result Y (normal Y)).mp hr with hfree | hfull
     · apply le_antisymm hHS
       intro x hx
@@ -143,13 +147,13 @@ theorem perfect_iff [Finite G] (H : Subgroup G) :
       have edge := he.resolve_left (fun he => hxH (he.symm ▸ hyH))
       have hs : x * y ∈ squareSubgroup (G := G) :=
         (squareSubgroup (G := G)).mul_mem hx (hHS hyH)
-      have hem : x * y ∈ Y ∩ squares (⊤ : Subgroup G) := ⟨edge.2, squares_eq.symm ▸ hs⟩
+      have hem : x * y ∈ Y ∩ squares (⊤ : Subgroup G) := ⟨edge.2, (squares_eq (G := G)).symm ▸ hs⟩
       rw [hfree] at hem
       exact hem
     · obtain ⟨v, _, hu⟩ := hc 1
       have e1 : (1 : G) = v := hu 1 ⟨H.one_mem, Or.inl rfl⟩
       have eh : h = v := hu h ⟨hh, Or.inr ⟨Ne.symm hne, by
-        simpa using hfull (squares_eq.symm ▸ hHS hh)⟩⟩
+        simpa using hfull ((squares_eq (G := G)).symm ▸ hHS hh)⟩⟩
       exact (hne (eh.trans e1.symm)).elim
   · rintro (hb | hn | hs)
     · subst H
@@ -224,7 +228,9 @@ private theorem total_square_free [Finite G] (H : Subgroup G) (z : G)
   refine ⟨fun g _ => coset_card H Y ht g, Or.inl ⟨z, hzH, ?_, ?_⟩⟩
   · rintro ⟨h, hh, he⟩
     apply hz
-    exact squares_eq ▸ (show z ∈ squares (⊤ : Subgroup G) from ⟨h, by trivial, he⟩)
+    change z ∈ (squareSubgroup (G := G) : Set G)
+    rw [← squares_eq (G := G)]
+    exact ⟨h, by trivial, he⟩
   · exact internal_singleton H Y ht z hzY hzH
 
 private theorem total_two_squares [Finite G] (H : Subgroup G)
@@ -272,8 +278,10 @@ private theorem total_two_squares [Finite G] (H : Subgroup G)
       exact hs
     · rintro z ⟨h, hh, rfl⟩
       rw [he]
-      exact squares_eq ▸ (show h * h ∈ squares (⊤ : Subgroup G) from ⟨h, by trivial, rfl⟩)
-  · rw [squares_eq]
+      change h * h ∈ (squareSubgroup (G := G) : Set G)
+      rw [← squares_eq (G := G)]
+      exact ⟨h, by trivial, rfl⟩
+  · rw [squares_eq (G := G)]
     exact Set.subset_union_right
 
 /-- The corrected universal regular total-code criterion for finite abelian
@@ -298,7 +306,7 @@ theorem total_iff [Finite G] (H : Subgroup G) :
     rcases (Regularity.result Y (normal Y)).mp hr with hfree | hfull
     · obtain ⟨h, ⟨hh, he⟩, _⟩ := hc 1
       have hm : h ∈ Y ∩ squares (⊤ : Subgroup G) :=
-        ⟨by simpa using he.2, squares_eq.symm ▸ hHS hh⟩
+        ⟨by simpa using he.2, (squares_eq (G := G)).symm ▸ hHS hh⟩
       rw [hfree] at hm
       exact hm.elim
     · have h1Y : (1 : G) ∈ Y := hfull ⟨1, by trivial, by simp⟩
@@ -306,12 +314,15 @@ theorem total_iff [Finite G] (H : Subgroup G) :
       · obtain ⟨z, hzH, hzs, he⟩ := ha
         have eqz : (1 : G) = z := Set.mem_singleton_iff.mp (he ▸ ⟨h1Y, H.one_mem⟩)
         exact (hzs ⟨1, H.one_mem, by simpa using eqz⟩).elim
-      · have hHY : (H : Set G) ⊆ Y := fun h hh => hfull (squares_eq.symm ▸ hHS hh)
+      · have hHY : (H : Set G) ⊆ Y := fun h hh => hfull ((squares_eq (G := G)).symm ▸ hHS hh)
         have hi : Y ∩ (H : Set G) = H := Set.inter_eq_right.mpr hHY
         have cardH : Nat.card H = 2 := by
           have hbcard : Nat.card ↥(Y ∩ (H : Set G)) = 2 := hb.1
-          simpa only [hi] using hbcard
-        have nontr : Nontrivial H := (Nat.one_lt_card_iff_nontrivial _).mp (by omega)
+          rw [hi] at hbcard
+          exact hbcard
+        letI : Fintype H := Fintype.ofFinite H
+        have nontr : Nontrivial H := Fintype.one_lt_card_iff_nontrivial.mp (by
+          simpa only [← Nat.card_eq_fintype_card] using (show 1 < Nat.card H by omega))
         letI : Nontrivial H := nontr
         obtain ⟨h, hne⟩ := exists_ne (1 : H)
         have hSH : squareSubgroup (G := G) ≤ H := by
@@ -321,7 +332,7 @@ theorem total_iff [Finite G] (H : Subgroup G) :
           have adj (k : H) : (sumGraph Y (normal Y)).Adj x k := by
             refine ⟨fun he => hxH (he.symm ▸ k.2), ?_⟩
             apply hfull
-            rw [squares_eq]
+            rw [squares_eq (G := G)]
             exact (squareSubgroup (G := G)).mul_mem hx (hHS k.2)
           have e1 : (1 : G) = v := hu 1 ⟨H.one_mem, adj 1⟩
           have eh : (h : G) = v := hu h ⟨h.2, adj h⟩

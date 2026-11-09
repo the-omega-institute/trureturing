@@ -52,8 +52,10 @@ def H : Subgroup CentralProduct where
   one_mem' := rfl
   mul_mem' := by
     intro a b ha hb
+    change a.k = 0 at ha
+    change b.k = 0 at hb
     change a.k + b.k = 0
-    simp [ha, hb]
+    rw [ha, hb]; rfl
   inv_mem' := by intro a ha; exact ha
 
 instance : DecidablePred (fun a => a ∈ H) := fun _ => inferInstanceAs (Decidable (_ = _))
@@ -65,7 +67,9 @@ def t : CentralProduct := ⟨0, 0, 1⟩
 def z : CentralProduct := x ^ 2 * y ^ 2
 
 def connection : Set CentralProduct := {z, t}
-private theorem connection_normal : NormalSubset connection := by decide +kernel
+private theorem connection_normal : NormalSubset connection := by
+  unfold NormalSubset connection
+  decide +kernel
 
 /-- The source involution and the specific vertex with the deleted self-loop. -/
 def b : CentralProduct := x⁻¹ * t
@@ -99,7 +103,7 @@ private theorem kernel_eq : quotientMap.ker = Subgroup.zpowers centralGenerator 
     have he : m = 1 := by omega
     subst m
     decide +kernel
-  rw [Subgroup.mem_zpowers_iff_mem_range_orderOf, ht]
+  rw [mem_zpowers_iff_mem_range_orderOf, ht]
   revert a
   decide +kernel
 
@@ -113,17 +117,27 @@ instance : centralRelation.Normal := by
 /-- An explicit isomorphism with the source's quotient by <(x^2,u^2)>. -/
 noncomputable def centralQuotientEquiv :
     (H × C4) ⧸ centralRelation ≃* CentralProduct :=
-  (QuotientGroup.quotientMulEquivOfEq kernel_eq.symm).trans
+  (QuotientGroup.quotientMulEquivOfEq
+    (show centralRelation = quotientMap.ker from kernel_eq.symm)).trans
     (QuotientGroup.quotientKerEquivOfSurjective quotientMap quotientMap_surjective)
 
 private theorem code : IsTotalPerfectCode (sumGraph connection connection_normal) H := by
+  change ∀ g : CentralProduct, ∃! h : CentralProduct, h.k = 0 ∧
+    g ≠ h ∧ g * h ∈ connection
+  simp only [SetLike.mem_coe, H, Subgroup.mem_mk, Set.mem_setOf_eq,
+    connection, Set.mem_insert_iff, Set.mem_singleton_iff, ExistsUnique]
   decide +kernel
 
-private theorem involution_normalizes : b * b = 1 ∧ b ∈ H.normalizer := by
+private theorem involution_normalizes : b * b = 1 ∧ b ∈ Subgroup.normalizer (H : Set CentralProduct) := by
+  simp only [Subgroup.mem_normalizer_iff]
   decide +kernel
 
 private theorem no_translated_neighbor :
     ∀ w : CentralProduct, w ∈ translated → ¬(sumGraph connection connection_normal).Adj v w := by
+  change ∀ w : CentralProduct, (∃ h : CentralProduct, h.k = 0 ∧ h * b = w) →
+    ¬ (v ≠ w ∧ v * w ∈ connection)
+  simp only [SetLike.mem_coe, H, Subgroup.mem_mk, Set.mem_setOf_eq,
+    connection, Set.mem_insert_iff, Set.mem_singleton_iff, ExistsUnique]
   decide +kernel
 
 /-- The original normalizer-only assertion, with the graph held fixed.
@@ -131,7 +145,7 @@ The sufficient centralizer repair is a separate general theorem. -/
 def claim : Prop :=
   ∀ (G : Type) [Group G] [Finite G] (K : Subgroup G) (Y : Set G)
     (hn : NormalSubset Y) (a : G),
-    a * a = 1 → a ∈ K.normalizer →
+    a * a = 1 → a ∈ Subgroup.normalizer (K : Set G) →
     IsTotalPerfectCode (sumGraph Y hn) K →
     IsTotalPerfectCode (sumGraph Y hn) ((fun h => h * a) '' (K : Set G))
 

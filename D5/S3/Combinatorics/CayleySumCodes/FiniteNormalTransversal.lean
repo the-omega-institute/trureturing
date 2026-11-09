@@ -67,9 +67,10 @@ private theorem orbit_card (M : Subgroup G)
   rw [← ha]
   exact (Nat.card_congr (Subgroup.equivSMul a M).toEquiv).symm
 
-private theorem orbit_mass (M : Subgroup G) (hn : M.normalizer = M) :
+private theorem orbit_mass (M : Subgroup G) (hn : Subgroup.normalizer (M : Set G) = M) :
     Nat.card (MulAction.orbit (ConjAct G) M) * Nat.card M = Nat.card G := by
   classical
+  letI : Finite (ConjAct G) := Finite.of_equiv G ConjAct.toConjAct.toEquiv
   let S := MulAction.stabilizer (ConjAct G) M
   let e : S ≃ M :=
     { toFun := fun a => ⟨ConjAct.ofConjAct a.1, by
@@ -84,8 +85,12 @@ private theorem orbit_mass (M : Subgroup G) (hn : M.normalizer = M) :
   letI := Fintype.ofFinite (MulAction.orbit (ConjAct G) M)
   letI := Fintype.ofFinite S
   have h := MulAction.card_orbit_mul_card_stabilizer_eq_card_group (G := ConjAct G) M
-  simpa only [← Nat.card_eq_fintype_card, Nat.card_congr e,
-    Nat.card_congr (ConjAct.ofConjAct : ConjAct G ≃* G).toEquiv] using h
+  have hcS : Nat.card S = Nat.card M := Nat.card_congr e
+  have h' : Nat.card (MulAction.orbit (ConjAct G) M) * Nat.card S =
+      Nat.card (ConjAct G) := by
+    simpa only [← Nat.card_eq_fintype_card] using h
+  rw [hcS] at h'
+  exact h'.trans (Nat.card_congr (ConjAct.ofConjAct : ConjAct G ≃* G).toEquiv)
 
 private theorem simple_all_proper_abelian [IsSimpleGroup G]
     (hn : ¬IsMulCommutative G)
@@ -119,7 +124,7 @@ private theorem simple_all_proper_abelian [IsSimpleGroup G]
       exact hx ht
     have hlt : M < Subgroup.centralizer {x} := he ▸ bot_lt_iff_ne_bot.mpr hxb
     exact cp x hx (hm.2 _ hlt)
-  have norm (M : Subgroup G) (hm : IsCoatom M) : M.normalizer = M := by
+  have norm (M : Subgroup G) (hm : IsCoatom M) : Subgroup.normalizer (M : Set G) = M := by
     rcases hm.le_iff.mp M.le_normalizer with he | he
     · haveI : M.Normal := Subgroup.normalizer_eq_top_iff.mp he
       rcases IsSimpleGroup.eq_bot_or_eq_top_of_normal M with hb | ht
@@ -149,7 +154,7 @@ private theorem simple_all_proper_abelian [IsSimpleGroup G]
   have half (N : Subgroup G) (hN : IsCoatom N) :
       Nat.card G ≤ 2 * (Nat.card (O N) * (Nat.card N - 1)) := by
     have hmass := orbit_mass N (norm N hN)
-    have hc : 2 ≤ Nat.card N := Subgroup.one_lt_card_iff_ne_bot.mpr (nb N hN)
+    have hc : 2 ≤ Nat.card N := (Subgroup.one_lt_card_iff_ne_bot N).mpr (nb N hN)
     have hp : Nat.card N - 1 + 1 = Nat.card N := Nat.sub_add_cancel (by omega)
     have hh : Nat.card N ≤ 2 * (Nat.card N - 1) := by omega
     have hh' := Nat.mul_le_mul_left (Nat.card (O N)) hh
@@ -170,13 +175,19 @@ private theorem simple_all_proper_abelian [IsSimpleGroup G]
           | inr j =>
             apply ho
             exact MulAction.mem_orbit_trans
-              (MulAction.mem_orbit_symm.mp j.2) (he ▸ i.2)
+              (MulAction.mem_orbit_symm.mp j.2) (by
+                have hij : i.1 = j.1 := he
+                rw [← hij]
+                exact i.2)
         | inr i =>
           cases j with
           | inl j =>
             apply ho
             exact MulAction.mem_orbit_trans
-              (MulAction.mem_orbit_symm.mp i.2) (he.symm ▸ j.2)
+              (MulAction.mem_orbit_symm.mp i.2) (by
+                have hij : j.1 = i.1 := he.symm
+                rw [← hij]
+                exact j.2)
           | inr j => exact hij (congrArg Sum.inr (Subtype.ext he))
       have hi : IsCoatom (J i) := by
         cases i with
@@ -191,6 +202,7 @@ private theorem simple_all_proper_abelian [IsSimpleGroup G]
     simp only [Fintype.sum_sum_type, J, Sum.elim_inl, Sum.elim_inr,
       orbit_card, Finset.sum_const, Finset.card_univ, smul_eq_mul,
       ← Nat.card_eq_fintype_card] at hb
+    have hpos : 0 < Nat.card G := Nat.card_pos
     have hM := half M hm
     have hN' := half N hN
     omega
@@ -244,7 +256,7 @@ private theorem induction (n : ℕ) :
     letI : Nontrivial G := not_subsingleton_iff_nontrivial.mp ht
     by_cases hn : IsMulCommutative G
     · letI := hn
-      exact fun x y => mul_comm x y
+      exact fun x y => mul_comm' x y
     have proper (M : Subgroup G) (hm : M ≠ ⊤) : ∀ x y : M, x * y = y * x := by
       have hc : Nat.card M < n := by
         rw [← hcard]
@@ -255,7 +267,7 @@ private theorem induction (n : ℕ) :
       letI : N.Normal := hN
       letI : IsMulCommutative N := ⟨⟨proper N htop⟩⟩
       have hq : Nat.card (G ⧸ N) < n := by
-        have hn2 : 1 < Nat.card N := Subgroup.one_lt_card_iff_ne_bot.mpr hb
+        have hn2 : 1 < Nat.card N := (Subgroup.one_lt_card_iff_ne_bot N).mpr hb
         have hpos : 0 < Nat.card (G ⧸ N) := Nat.card_pos
         have he := Subgroup.card_eq_card_quotient_mul_card_subgroup N
         rw [hcard] at he

@@ -59,6 +59,7 @@ private theorem square_notMem_slice [Fintype G] (H : Subgroup G) (Y : Set G)
   have hm := (mem_slice H Y g (g * g)).mp h
   exact hg (by simpa [mul_assoc] using hm.2)
 
+open scoped Classical in
 private theorem neighbors_card [Fintype G] (H : Subgroup G) (Y : Set G) (g : G) :
     (Finset.univ.filter (fun h : G => h ∈ H ∧ g ≠ h ∧ g * h ∈ Y)).card =
       ((slice H Y g).erase (g * g)).card := by
@@ -83,13 +84,40 @@ private theorem neighbors_card [Fintype G] (H : Subgroup G) (Y : Set G) (g : G) 
     · simpa [mul_assoc] using hY
     · simp
 
+open scoped Classical in
 private theorem code_iff_slices [Fintype G] (H : Subgroup G) (Y : Set G)
     (hY : NormalSubset Y) :
     IsTotalPerfectCode (sumGraph Y hY) H ↔
       ∀ g : G, ((slice H Y g).erase (g * g)).card = 1 := by
   classical
-  simp only [IsTotalPerfectCode, sumGraph, Fintype.existsUnique_iff_card_one]
-  exact forall_congr' (fun g => by rw [neighbors_card])
+  constructor
+  · intro hc g
+    rw [← neighbors_card H Y g]
+    obtain ⟨x, hx, hu⟩ := hc g
+    apply Finset.card_eq_one.mpr
+    refine ⟨x, ?_⟩
+    ext y
+    simp only [Finset.mem_filter, Finset.mem_univ, true_and, Finset.mem_singleton]
+    constructor
+    · intro hy
+      exact hu y hy
+    · rintro rfl
+      exact hx
+  · intro hc g
+    have he := neighbors_card H Y g
+    rw [hc g] at he
+    obtain ⟨x, hx⟩ := Finset.card_eq_one.mp he
+    have hm : x ∈ H ∧ g ≠ x ∧ g * x ∈ Y := by
+      have hmem : x ∈ Finset.univ.filter
+          (fun h : G => h ∈ H ∧ g ≠ h ∧ g * h ∈ Y) := by rw [hx]; simp
+      exact (Finset.mem_filter.mp hmem).2
+    refine ⟨x, hm, ?_⟩
+    intro y hy
+    have hmem : y ∈ Finset.univ.filter
+        (fun h : G => h ∈ H ∧ g ≠ h ∧ g * h ∈ Y) :=
+      Finset.mem_filter.mpr ⟨Finset.mem_univ _, hy⟩
+    rw [hx] at hmem
+    exact Finset.mem_singleton.mp hmem
 
 private theorem slice_card [Fintype G] (H : Subgroup G) (Y : Set G) (g : G) :
     (slice H Y g).card = Nat.card {y : G // y ∈ Y ∧ g⁻¹ * y ∈ H} := by
@@ -165,7 +193,10 @@ theorem result [Finite G] (H : Subgroup G) (Y : Set G) (hY : NormalSubset Y) :
         exact ho g hg
     · by_cases hg : g ∈ H
       · have hs : g * g ∈ S := (smem _).mpr (hb.2 ⟨g, hg, rfl⟩)
-        have hS : S.card = 2 := by rw [S, slice_one_card]; exact hb.1
+        have hS : S.card = 2 := by
+          change (slice H Y 1).card = 2
+          rw [slice_one_card]
+          exact hb.1
         rw [slice_at_member H Y g hg]
         change (S.erase (g * g)).card = 1
         rw [Finset.card_erase_of_mem hs, hS]
