@@ -3320,3 +3320,445 @@ $$
 因此 §§42--44 的实际条件结论保持原范围：取得边界的消费者没有被反驳，未取得边界下真实原负阶段的半端点谐和占用仍未支付，$\sum_H\eta_H/H$ 的无条件发散仍未由此得到。即便以后取得完整全方向几何预算发散，§41 在同一 $Y$ 上实际 CM 方向的分箱凝聚或足够的跨块联合能量桥仍须另证，实际 $\nu(R_{1/2}(\alpha))$ 满测仍未裁定。原 $q_H$、CM 实际点对、全部有限地方及每个事件中的同一个成功整数均保持原义，未被抽象谱替代。
 
 ## 追加锚（本行以下为增补区）
+
+## 46. 人工参考谱的同主部单调双实现与有限／余有限负占用
+
+本节固定一个人工参考谱，给出两个连续非负计数的共同构造。这里的“同主部”指各自的误差变换与同一个参考变换之差均为整函数；它不表示完整变换相等，也不表示保留普通素数、实际零点残差或任意指定的实际芽。负占用的有限与余有限均按对数时间的 Lebesgue 测度理解。
+
+**定义 46.1（参考函数、可变正核与两种尾部）。** 固定实数 $1/2<b<1$ 和整数 $m>4$，置
+
+$$
+\begin{gathered}
+c=b-\frac12,\qquad
+\beta_n=b-\frac{c}{n+1},\qquad
+a_n=e^{-n^4},\qquad
+\rho_{n,\pm}=\beta_n\pm in\quad(n\ge1),\\
+f_0(z)=\sum_{n\ge1}a_ne^{\beta_nz}\cos(nz),\qquad
+F_0(s)=\int_0^\infty f_0(y)e^{-sy}\,dy
+\quad(\operatorname{Re}s>b).
+\end{gathered}
+\tag{46.1}
+$$
+
+以下 $\beta_n$ 只属于这个人工谱，与 §§43–44 的实际零点序列及原过滤参数无关。对实数 $y\ge1$ 定义
+
+$$
+\begin{gathered}
+\phi(y)=y^{3/2},\qquad w(y)=e^{-y^2},\\
+K_y(\theta)=\sum_{k\in\mathbb Z}e^{-k^2/y^m}e^{ik\theta},
+\qquad K(y)=K_y(\phi(y)),\\
+u_+(y)=w(y)+(f_0(y)-w(y))K(y),\\
+u_-(y)=-w(y)+(f_0(y)+w(y))K(y),\\
+d(\theta)=\operatorname{dist}(\theta,2\pi\mathbb Z),\qquad
+U_* =\{y\ge1:d(\phi(y))<4y^{1-m/2}\}.
+\end{gathered}
+\tag{46.2}
+$$
+
+**定理 46.2（同一参考谱的有限／余有限双实现）。** 存在整数 $Y_0\ge8$，使所有 $y\ge Y_0$ 同时满足
+
+$$
+\begin{gathered}
+\max_{j\in\{+,-\}}|u_j(y)|\le\frac{e^y}{4},\qquad
+\max_{j\in\{+,-\}}|u_j'(y)|\le\frac{e^y}{2},\qquad
+4y^{1-m/2}\le1,\\
+\max\{|(f_0(y)-w(y))K(y)|,|(f_0(y)+w(y))K(y)|\}
+\le\frac{w(y)}2\quad(y\notin U_*).
+\end{gathered}
+\tag{46.3}
+$$
+
+为使两个计数完全确定，取满足 (46.3) 的最小整数 $Y_0\ge8$，令 $X=e^{Y_0}$，并对 $j\in\{+,-\}$ 置
+
+$$
+\begin{gathered}
+q_j=\frac{X+u_j(Y_0)}{X-1},\\
+S_j(x)=
+\begin{cases}
+0,&0\le x\le1,\\
+q_j(x-1),&1\le x\le X,\\
+x+u_j(\log x),&x\ge X,
+\end{cases}
+\qquad
+g_j(y)=S_j(e^y)-e^y\quad(y\ge0).
+\end{gathered}
+\tag{46.4}
+$$
+
+这两个实际定义的函数具有下列共同性质与相反的负占用：
+
+1. $S_j$ 非负、连续、局部绝对连续且非减；其 Stieltjes 测度非负且相对于 $dx$ 绝对连续，并且
+
+   $$
+   dS_j(x)=S_j'(x)\,dx,\qquad
+   \frac12\le S_j'(x)\le\frac32
+   \quad\text{对几乎所有 }x\ge1.
+   \tag{46.5}
+   $$
+
+   不要求密度在补接点连续。
+
+2. 当 $x\to\infty$ 时，
+
+   $$
+   S_j(x)-x=O\!\left(x^b(\log x)^{m/2}\right)
+   =O_\varepsilon(x^{b+\varepsilon})
+   \quad(\text{每个 }\varepsilon>0).
+   \tag{46.6}
+   $$
+
+3. 误差的 Laplace 变换及其等价的普通 Mellin 变换
+
+   $$
+   G_j(s)=\int_0^\infty g_j(y)e^{-sy}\,dy
+   =\int_1^\infty(S_j(x)-x)x^{-s-1}\,dx
+   \quad(\operatorname{Re}s>b)
+   \tag{46.7}
+   $$
+
+   初始绝对收敛，且 $G_+-F_0$、$G_--F_0$ 分别延拓为单值整函数。$F_0,G_+,G_-$ 的全部极点恰为 $\rho_{n,\pm}$，均为简单非实极点，在每一点的完整主部都是
+
+   $$
+   \frac{a_n/2}{s-\rho_{n,\pm}}.
+   \tag{46.8}
+   $$
+
+   留数非零；三个变换在全部实点正则。非实极点实部的上确界为 $b$，没有极点取得它，实点 $b$ 本身也正则。
+
+4. Mellin–Stieltjes 变换
+
+   $$
+   M_j(s)=\int_1^\infty x^{-s}\,dS_j(x)
+   \quad(\operatorname{Re}s>1)
+   \tag{46.9}
+   $$
+
+   初始绝对收敛，且 $M_j(s)-1/(s-1)-sF_0(s)$ 整。$M_j$ 的全部主部为
+
+   $$
+   \frac1{s-1}\quad(s=1),\qquad
+   \frac{\rho_{n,\pm}a_n/2}{s-\rho_{n,\pm}}
+   \quad(s=\rho_{n,\pm}).
+   \tag{46.10}
+   $$
+
+   这些留数也全部非零，没有其他极点；$M_j-1/(s-1)$ 在全部实点正则。两个变换 $M_+,M_-$ 之差整。
+
+5. 令
+
+   $$
+   D_j=\{y\ge0:g_j(y)<0\}.
+   $$
+
+   则
+
+   $$
+   |D_+|<\infty,\qquad
+   |[0,\infty)\setminus D_-|<\infty.
+   \tag{46.11}
+   $$
+
+   等价地，$S_+(x)<x$ 的对数占用 $\int_1^\infty\mathbf1_{\{S_+(x)<x\}}\,dx/x$ 有限，而 $S_-(x)\ge x$ 的对数占用有限。特别地 $|D_-|=\infty$；这里得到的是测度余有限，强于仅有无穷多次负值，并不声称某一有限时刻后处处为负。
+
+**证明。** 以下所有常数允许依赖固定的 $b,m$，不依赖正在求和的 $n,k$。
+
+（甲）参考函数的解析增长与全部主部。在 $|z|\le R$ 上，第 $r$ 阶导数级数由
+$C_r\sum_na_n(1+n)^re^{bR+nR}$ 控制，因此 $f_0$ 是整函数。写 $z=t+iv$、$t\ge0$，由
+$n|v|\le n^4/2+C|v|^{4/3}$ 得
+
+$$
+|f_0(t+iv)|\le A\exp\{bt+C|v|^{4/3}\},\qquad
+|f_0(y)|+|f_0'(y)|\le Ae^{by}\quad(y\ge0).
+\tag{46.12}
+$$
+
+这里实轴上界使用 $\beta_n\le b$；$\beta_1$ 不能作为全级数的指数上界，因为 $\beta_n\uparrow b$。
+
+对 $\sigma=\operatorname{Re}s>b$，逐项 Laplace 积分的绝对总量至多
+$\sum_na_n/(\sigma-\beta_n)<\infty$。故
+
+$$
+F_0(s)=\frac12\sum_{n\ge1}a_n
+\left(\frac1{s-\rho_{n,+}}+\frac1{s-\rho_{n,-}}\right)
+=\sum_{n\ge1}\frac{a_n(s-\beta_n)}{(s-\beta_n)^2+n^2}.
+\tag{46.13}
+$$
+
+在避开所列极点的任意紧集 $|s|\le R$ 上，充分大的 $n$ 的成对项为 $O_R(a_n/n^2)$，故该级数正常收敛。所列极点无有限聚点；每一点只有其自身的一项有极点，留数恰为 $a_n/2\ne0$。这证明参考变换的全部主部、实轴正则与未取得上确界，不在实轴另添 $b$ 极点。
+
+（乙）正核、可变参数的导数成本及槽外符号。令 $a=y^{m/2}$。周期高斯的第 $k$ 个 Fourier 系数由普通高斯积分给出：
+
+$$
+\frac{\sqrt\pi a}{2\pi}\int_{\mathbb R}
+ e^{-a^2t^2/4}e^{-ikt}\,dt=e^{-k^2/a^2}.
+$$
+
+两个周期级数均绝对收敛，因而
+
+$$
+K_y(\theta)=\sqrt\pi y^{m/2}
+\sum_{\ell\in\mathbb Z}
+\exp\!\left(-\frac{y^m(\theta-2\pi\ell)^2}{4}\right)>0.
+\tag{46.14}
+$$
+
+这只是共同构造中使用的经典高斯 Fourier 恒等式。由高斯和与积分的比较，对 $q=0,1,2$ 有
+
+$$
+\sum_{k\in\mathbb Z}|k|^qe^{-k^2/y^m}
+\le C_qy^{m(q+1)/2}\quad(y\ge1),
+\tag{46.15}
+$$
+
+其中 $q=0$ 时 $k=0$ 项取 $1$。在每个实紧区间上可逐项求导，得到
+
+$$
+\begin{aligned}
+K'(y)&=\sum_{k\in\mathbb Z}e^{-k^2/y^m+ik\phi(y)}
+ \left(mk^2y^{-m-1}+\frac32iky^{1/2}\right),\\
+|K(y)|&\le Cy^{m/2},\\
+|K'(y)|&\le C\left(y^{m/2-1}+y^{m+1/2}\right)
+\le Cy^{m+1/2}.
+\end{aligned}
+\tag{46.16}
+$$
+
+因此可变宽度与可变相位的代价均已计入；结合 (46.12) 和 $w'=-2yw$，两种尾部同时满足
+
+$$
+|u_j(y)|\le Ce^{by}y^{m/2},\qquad
+|u_j'(y)|\le Ce^{by}y^{m+1/2}.
+\tag{46.17}
+$$
+
+因 $b<1$，这两个量均为 $o(e^y)$。
+
+将 (46.14) 的每个指数分成两半，一半提出最近距离，另一半的高斯格点和在 $a\ge1$ 及一个周期内一致有界，得
+
+$$
+0<K_y(\theta)\le Cy^{m/2}
+ \exp\!\left(-\frac{y^m d(\theta)^2}{8}\right).
+\tag{46.18}
+$$
+
+当 $y\notin U_*$ 时，右端至多 $Cy^{m/2}e^{-2y^2}$。从而
+
+$$
+|(f_0(y)\pm w(y))K(y)|
+\le Cy^{m/2}e^{by-2y^2}=o(w(y))
+\quad(y\to\infty,\ y\notin U_*).
+$$
+
+这与 (46.17) 一起证明 (46.3) 确有解，最小整数 $Y_0$ 因而有定义；固定此 $Y_0$ 后，在 $[Y_0,\infty)\setminus U_*$ 上有严格符号
+
+$$
+u_+(y)\ge\frac{w(y)}2>0,\qquad
+u_-(y)\le-\frac{w(y)}2<0.
+\tag{46.19}
+$$
+
+（丙）全部槽的总长度。置 $U=U_*\cap[Y_0,\infty)$。按距离最近的 $2\pi\ell$ 分槽；由 (46.3)，每个相关槽内
+$|y^{3/2}-2\pi\ell|<1$。除有限个低槽外，$\ell\ge1$ 且 $y$ 与
+$y_\ell=(2\pi\ell)^{2/3}$ 一致可比，该槽包含在
+
+$$
+|\phi(y)-2\pi\ell|\le C y_\ell^{1-m/2}
+$$
+
+所定义的区间内。因 $\phi'(y)=3y^{1/2}/2$，中值定理给该槽的长度上界
+
+$$
+C y_\ell^{(1-m)/2}=C'\ell^{(1-m)/3}.
+\tag{46.20}
+$$
+
+$m>4$ 使其对 $\ell$ 可和，故 $|U|<\infty$。由 (46.19)，
+$D_+\subseteq[0,Y_0]\cup U$，且 $[0,\infty)\setminus D_-\subseteq[0,Y_0]\cup U$。有限补接只占有限对数时间，得到 (46.11)。核在槽外仍严格正，本证明没有将它当作紧支撑核。
+
+（丁）分别转动模态所用的支与扇区。需要证明的核心修正是
+
+$$
+E_K(s)=\int_{Y_0}^\infty f_0(y)(K(y)-1)e^{-sy}\,dy
+\quad(\operatorname{Re}s>b)
+\tag{46.21}
+$$
+
+具有整延拓。固定 $\alpha_0=\pi/(4m)$；在 $|\arg z|\le\alpha_0$、$|z|\ge Y_0$ 上使用右半平面主支 $\operatorname{Log}z$，以此定义 $z^{3/2}$。$z^{-m}$ 是普通整数幂，所有路径均避开 $0$。对 $\epsilon\in\{1,-1\}$、$k\ge1$ 置
+
+$$
+B_{\epsilon,k}(z,s)
+=f_0(z)\exp\{-sz-k^2z^{-m}+i\epsilon k z^{3/2}\}.
+\tag{46.22}
+$$
+
+正模态只转入上扇区，负模态只转入下扇区。在
+$z=re^{i\epsilon u}$、$0\le u\le\alpha_0$ 上，
+
+$$
+\begin{gathered}
+\operatorname{Re}z^{-m}=r^{-m}\cos(mu)\ge \kappa_0r^{-m},
+\qquad \kappa_0=\cos(\pi/4)>0,\\
+\left|e^{i\epsilon kz^{3/2}}\right|
+=e^{-kr^{3/2}\sin(3u/2)}.
+\end{gathered}
+\tag{46.23}
+$$
+
+两类模态因此分别衰减；不能把两类模态一并转入同一个上扇区。
+
+（戊）有限内弧、无穷射线及紧一致性。令 $A_\epsilon$ 是从 $Y_0$ 到 $Y_0e^{i\epsilon\alpha_0}$ 的圆弧，$L_\epsilon$ 是从 $Y_0e^{i\epsilon\alpha_0}$ 沿辐角 $\epsilon\alpha_0$ 指向无穷的射线。定义
+
+$$
+\widetilde E_K(s)=\sum_{\epsilon=\pm1}\sum_{k\ge1}
+\left(\int_{A_\epsilon}B_{\epsilon,k}(z,s)\,dz
+     +\int_{L_\epsilon}B_{\epsilon,k}(z,s)\,dz\right).
+\tag{46.24}
+$$
+
+在任意 $|s|\le R$ 上，有限内弧的 $f_0(z)e^{-sz}$ 有统一界，模态因子至多
+$e^{-\kappa_0k^2/Y_0^m}$。故内弧积分的模态级数绝对且紧一致收敛。
+
+射线上置 $\kappa_1=\sin(3\alpha_0/2)>0$；由几何级数估计，$r\ge Y_0$ 时
+
+$$
+\sum_{k\ge1}e^{-\kappa_0k^2/r^m-\kappa_1kr^{3/2}}
+\le\frac{e^{-\kappa_1r^{3/2}}}{1-e^{-\kappa_1Y_0^{3/2}}}.
+$$
+
+再由 (46.12)，所有射线模态的积分绝对总量在 $|s|\le R$ 上统一受控于
+
+$$
+A_R\int_{Y_0}^\infty
+\exp\{-\kappa_1r^{3/2}+Cr^{4/3}+(b+R)r\}\,dr<\infty.
+\tag{46.25}
+$$
+
+这里 $4/3<3/2$。各个有限弧积分和射线积分均是 $s$ 的整函数；上述可积控制和内弧高斯控制允许积分、模态求和换序，并保证所得级数在每个 $s$ 紧集上一致收敛。因此 (46.24) 是单值整函数。此论证只对单个模态作 $z$ 的解析延拓，没有假设可变参数的整个 Fourier 和在全部复 $z$ 平面整。
+
+（己）外弧归零与初始半平面的回接。写 $s=\sigma+it$、$\sigma>b$，$\delta=\sigma-b>0$。取 $\kappa_2>0$ 使
+$\sin(3u/2)\ge \kappa_2u$ 对 $0\le u\le\alpha_0$ 成立。在半径 $L$ 的外弧 $z=Le^{i\epsilon u}$ 上，(46.12)、(46.23) 给出
+
+$$
+|B_{\epsilon,k}(z,s)|\le A\exp\left\{
+-\delta L\cos u+CL^{4/3}u^{4/3}+|t|Lu
+-\kappa_0k^2/L^m-\kappa_2kL^{3/2}u\right\}.
+\tag{46.26}
+$$
+
+对整个 $u\in[0,\alpha_0]$，当 $L$ 足够大时
+
+$$
+CL^{4/3}u^{4/3}+|t|Lu
+\le\frac{\kappa_2}{2}L^{3/2}u,
+$$
+
+因为在 $u>0$ 除以 $L^{3/2}u$ 后，上界为
+$CL^{-1/6}\alpha_0^{1/3}+|t|L^{-1/2}\to0$，而 $u=0$ 时两边均为零。使用 $k\ge1$ 吸收此项，再对模态求和并乘弧长，全部外弧积分绝对总量至多
+
+$$
+CL^{m/2+1}e^{-\delta L\cos\alpha_0}\longrightarrow0.
+\tag{46.27}
+$$
+
+在初始半平面的任意紧集上，$\delta$ 有统一正下界、$|t|$ 有统一上界，故这里也紧一致。
+
+每个 $B_{\epsilon,k}$ 在相应环扇形内关于 $z$ 全纯。对有限环扇形应用 Cauchy 定理，令 $L\to\infty$ 并使用 (46.27)，得到
+
+$$
+\int_{Y_0}^\infty B_{\epsilon,k}(y,s)\,dy
+=\int_{A_\epsilon}B_{\epsilon,k}(z,s)\,dz
+ +\int_{L_\epsilon}B_{\epsilon,k}(z,s)\,dz.
+$$
+
+原实射线上的模态求和也绝对可积：由 (46.12)、(46.15)，
+
+$$
+\sum_{\epsilon=\pm1}\sum_{k\ge1}
+\int_{Y_0}^\infty|f_0(y)|e^{-\sigma y-k^2/y^m}\,dy
+\le C\int_{Y_0}^\infty e^{-(\sigma-b)y}y^{m/2}\,dy<\infty.
+\tag{46.28}
+$$
+
+所以可将上述等式求和；$K-1$ 正是这些非零模态之和，得到
+$\widetilde E_K=E_K$ 于 $\operatorname{Re}s>b$。至此既证明整性，也证明它确为原修正积分的延拓，而非只构造一个无回接的整函数。
+
+（庚）两个误差分别回到同一个参考。背景项
+
+$$
+V(s)=\int_{Y_0}^\infty w(y)(1-K(y))e^{-sy}\,dy
+$$
+
+直接定义整函数：在 $|s|\le R$ 上被积函数的绝对值至多
+$e^{-y^2+Ry}(1+Cy^{m/2})$。有限段修正
+
+$$
+C_j(s)=\int_0^{Y_0}(g_j(y)-f_0(y))e^{-sy}\,dy
+$$
+
+也整，因为它只在固定紧区间积分。由 (46.2)、(46.4)，在初始半平面有
+
+$$
+G_+=F_0+\widetilde E_K+V+C_+,\qquad
+G_-=F_0+\widetilde E_K-V+C_-.
+\tag{46.29}
+$$
+
+故两个差 $G_j-F_0$ 各自整，而非仅仅 $G_+-G_-$ 整。结合（甲），全部非实极点、非零留数和完整主部均逐一保留，实轴没有新奇点。
+
+（辛）有限补接的正性与全域斜率。由 (46.3)，$|u_j(Y_0)|\le X/4$，从而
+
+$$
+q_j>0,\qquad
+|q_j-1|=\frac{|1+u_j(Y_0)|}{X-1}
+\le\frac{1+X/4}{X-1}\le\frac12
+\quad(X\ge6).
+\tag{46.30}
+$$
+
+这里 $Y_0\ge8$ 保证 $X\ge6$。在 $1<x<X$ 上 $S_j'=q_j\in[1/2,3/2]$；在 $x>X$ 上由链式法则，
+
+$$
+S_j'(x)=1+x^{-1}u_j'(\log x)\in[1/2,3/2].
+\tag{46.31}
+$$
+
+两个定义在 $x=1,X$ 分别取共同值 $0,X+u_j(Y_0)$，故没有跳跃原子；有限段与光滑尾部在每个紧区间连续拼接成绝对连续函数。由正斜率与 $S_j(1)=0$，计数非负、非减，且 (46.5) 在全部 $x\ge1$ 几乎处处成立。增长式 (46.6) 则由 (46.17) 得到。
+
+（壬）Mellin–Stieltjes 的下端项。由 (46.5) 可知 (46.9) 在 $\operatorname{Re}s>1$ 绝对收敛；由 (46.17) 可知 (46.7) 在 $\operatorname{Re}s>b$ 绝对收敛。在 $\operatorname{Re}s>1$ 分部积分，因 $S_j(1)=0$、$S_j(x)=O(x)$，两端边界项均已确定，得到
+
+$$
+\begin{aligned}
+M_j(s)&=s\int_1^\infty S_j(x)x^{-s-1}\,dx
+       =\frac{s}{s-1}+sG_j(s)\\
+&=\frac1{s-1}+sF_0(s)+H_j(s),\qquad
+H_j(s)=1+s(G_j-F_0)(s).
+\end{aligned}
+\tag{46.32}
+$$
+
+$H_j$ 整；其中常数 $1$ 来自 $s/(s-1)=1+1/(s-1)$，不能因主项写作 $x$ 就漏掉。故 (46.10) 列出了全部完整主部；$\rho_{n,\pm}\ne0$，其留数全部非零。普通误差变换 $G_j$ 的留数是 $a_n/2$，Stieltjes 变换的留数是 $\rho_{n,\pm}a_n/2$，两种约定不同。
+
+保留的极点还说明：不存在任何固定 $d<b$ 使 $g_j(y)=O(e^{dy})$。否则其 Laplace 积分在 $\operatorname{Re}s>d$ 全纯，却必须与具有某个 $\beta_n>d$ 极点的上述延拓相同，矛盾。因此也不存在以某个更小的 $d<b$ 为中心的全部 $O_\varepsilon(e^{(d+\varepsilon)y})$ 上界族。这一结论与 (46.6) 相容，不要求边界 $b$ 由某个极点取得。$\square$
+
+来源与新增范围。上述共同构造只把经典高斯 Fourier 积分、Cauchy 轮廓变形及正常收敛作为中间工具，不另主张它们或一般 Tauberian 定理的新证明。Broucke–Debruyne–Vindas，*On the absence of remainders in the Wiener–Ikehara and Ingham–Karamata theorems: a constructive approach*，*Proc. Amer. Math. Soc.* **149** (2021), 1053–1060，[arXiv:2001.01635v2](https://arxiv.org/abs/2001.01635v2)，Theorem 1、Lemma 3 及 Example 1，提供高频相位整延拓与正主项保持单调的成熟背景；其固定振幅余弦结论不直接承担 (46.21) 的可变核、双向模态求和或外弧估计。Callewaert–Neyt–Vindas，*On a space of functions with entire Laplace transforms and its connection with the optimality of the Ingham–Karamata theorem*，*Complex Analysis and Operator Theory* **19** (2025), Article 85，[arXiv:2407.15547v2](https://arxiv.org/abs/2407.15547v2)，Theorem 1.2、Corollary 1.3 及 Theorem 2.1，给出整 Laplace 空间的余项最优性和稠密逼近；紧矩形上的近似本身不给指定参考的精确模整函数保留及全尾符号时长。这里的成果定位为本卷推导的受限综合（repo-derived）：把明确的未取得非实参考谱、可变窄正核、完整主部、全域单调斜率和有限／余有限负占用同时实现；不将成熟输入重新列为独立成果，不主张全球文献优先性。
+
+**注记 46.3（观察纤维与实际 θ／CM 的未决桥）。** 定理 46.2 说明：在这个人工参考的模整函数类中，全部非实主部、实轴正则、未取得谱上确界、任意 $\varepsilon$ 的增长上界和连续非负计数仍不能决定负对数占用。它保留的是变换模整函数的等价类；整修正可以改变正则部分的值及延拓域的定量增长，没有断言两个完整 Laplace 函数、完整局部芽或 Euler–Dirichlet 恒等式相同。
+
+实际普通素数的测度固定为
+
+$$
+d\vartheta(x)=\sum_{p\ \mathrm{prime}}(\log p)\,\delta_p,
+\qquad
+d[\vartheta(e^y)]=\sum_{p\ \mathrm{prime}}(\log p)\,\delta_{\log p}.
+\tag{46.33}
+$$
+
+这里的两个 $dS_j$ 则相对于 $dx$ 绝对连续，既没有这些固定原子，也没有整数胞内的真实阶梯结构。参考误差留数 $a_n/2$ 与真实显式公式零点项的残差 $-m_\rho/\rho$ 不同，参考位置 $\rho_{n,\pm}$ 也不是被指定的实际 ζ 零点；$m_\rho$ 在此指实际零点重数，与窄核参数 $m$ 无关。因此本定理没有给任意实际芽造出同主部实现。
+
+就本条轮廓路线而言，回接一个给定实际芽还缺解析代表的桥：需在该芽模整函数的类中找到代表 $h$，证明其右侧固定扇区增长能被所用相位衰减压住，并在实轴上支付保持计数单调的导数成本。对 $f_0$，这分别由 $e^{-n^4}$ 的系数给出 (46.12)，再由 $b<1$ 给出 (46.17) 的 $o(e^y)$。实际 $\vartheta(e^y)-e^y$ 有跳跃，不能直接作为这些轮廓上的全纯函数；实际零点级数的代数级系数也没有给出本条的扇区正常收敛。这里只指出尚缺的输入，不推出其他解析化方法不存在。
+
+此外，§43 的实际未取得分支允许 $b=1$；本条的单调性证明使用固定的 $b<1$，没有支付该端点。连续参考的对数占用也不能替代 §44 所需的同一个实际 $\vartheta(H)<H$ 整数谐和。§41 的实际 CM 点、全部原有限地方、原 $q_H$、同一 $Y=C_M\times\mathbb T^2$ 上的跨块联合条件和同一个成功整数均保持原义；本条补接参数 $Y_0$ 只是一个实对数阈值，不是该 CM 空间。实际 θ 的占用发散、给定实际芽的共同实现及原 CM 满测桥仍未解决。
+
+用白话说，极点和它们的全部主部记录了变换中不能由整函数消掉的谱成分，却没有记录误差在正负两侧分别停留多久。这里先固定那套人工谱，再用越来越窄、越来越高的正脉冲把误差集中到总长度有限的槽里；槽外残留小到能被 $e^{-y^2}$ 这一层底色压过，给底色取正号或负号便得到有限或余有限的负占用。分别转动正负模态证明这种集中对参考变换只增加整函数，所以原极点逐个留下；脉冲高度和斜率只付多项式成本，仍小于 $x$ 主项的斜率预算，有限补接也付了同样的斜率界，故两个计数始终单调。真实素数没有被搬动：其固定的 $\log p$ 原子和实际残差并不是这些连续参考函数的对象，实际 θ 与 CM 所缺的同一对象、同一整数联合桥仍需另行证明。
+
+## 追加锚（本行以下为增补区）
