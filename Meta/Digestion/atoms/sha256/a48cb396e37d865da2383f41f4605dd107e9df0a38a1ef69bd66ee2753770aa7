@@ -1,0 +1,8 @@
+**定理 52.6（相位公理之后的量子桥）。** Q0 加 $\mathsf Q_{\mathrm R}$ 严格给出复 Hilbert 几何，但还需要以下独立条件才能得到通常的量子力学结构：
+
+1. 加入算子、伴随和正序得到 Hermitian 正锥及效应区间；谱分解在 $\rho\succeq0$、$\operatorname{Tr}\rho=1$、$0\preceq E\preceq I$ 下证明 $0\le\operatorname{Tr}(\rho E)\le1$。
+2. 加入概率归一、正交可加和非情境性，才能用 Gleason 型定理把读数识别为 Born 规则；Q0 或 $\mathsf Q_{\mathrm R}$ 本身不指定概率解释，二维投影情形还需专门条件。
+3. 加入复张量积、产品效果可实施和局部完备性，才得到纠缠与局部层析；单系统相位关系不决定复合规则。
+4. 加入所有辅助系统扩张保持正性，有限维 Choi–Kraus 定理才给出 CP 与 Kraus 表示；普通正性和转置映射仍是反例。
+5. 加入保迹、可逆、强连续的一参数酉群，Stone 定理才产生 Hamiltonian；相位闭环不产生时间参数。
+
