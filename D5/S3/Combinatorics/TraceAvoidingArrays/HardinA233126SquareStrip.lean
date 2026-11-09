@@ -11,7 +11,7 @@ admission_basis: open-problem-resolution (#28572; Proved)
 escape_witness: none; every declaration is bind-only. The all-height reduction v_eq_w
 instantiates Function.Semiconj.iterate_right at the boundary-class map after the
 finite one-step premises (scanner fibres, row_counts, valid_next) are normalized.
-Direct frozen dependencies (GIDs; statement_ids; wrapped names concatenate):
+Direct frozen dependencies (GIDs; declaration statement_ids):
 D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233175PairStrip.Seen
 statement_id: sha256:db13d94501d24f27e6e69604bb633af95ff3309c5698815c44e12d2e52739fce
 D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233175PairStrip.finish
@@ -38,6 +38,10 @@ D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233253TriangleStrip.Row
 statement_id: sha256:cdfd197c400e6222542ce91f2d60621c3eb91bd4c2a89ebfa42fbc3718b65137
 D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233253TriangleStrip.rowLegal
 statement_id: sha256:f4978433c6a91eb921c79c73d18f12e5683fd118dd8b63c58e6bd66628f0bb26
+D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233254TriangleStrip.Boundary
+statement_id: sha256:2eb7a0e869a12351e76dc609c17ac484decd1c609134fc8018a412c812ec79e0
+D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233254TriangleStrip.Valid
+statement_id: sha256:7b17676ccb0b59229dd4183861ee61990bdc4a56f970a690d77b4a09f59b42ac
 D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255LiteralBridge.rowFinish
 statement_id: sha256:ded50bd8c5de69b5b2324e575fee135f275ae05b5bb30b328b0e5c0313d86b07
 D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255LiteralBridge.rowWeight
@@ -47,16 +51,13 @@ statement_id: sha256:63a356389be3d9bf756c53fb12271299a7668c1123562d84a2e34e78a34
 D5/S3/Observer/Separation/BooleanRankThreeK4.beta
 statement_id: sha256:1abdc5f3db71567fe05de5aabbe80dddeb5ec5179e4ec7fd49fe71e500518481
 D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233251TriangleStrip.WidthRow
-declaration: _private.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.0.D5.S3.C
-ombinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.WidthRow
+declaration: _private.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.0.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.WidthRow
 statement_id: sha256:63d18919d9321000a9a3541c82cd4a7aa88a0da2c26ce61e51d7cede756ff789
 D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233253TriangleStrip.instDecidableRowLegal
-declaration: _private.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233253TriangleStrip.0.D5.S3.C
-ombinatorics.TraceAvoidingArrays.HardinA233253TriangleStrip.instDecidableRowLegal
+declaration: _private.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233253TriangleStrip.0.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233253TriangleStrip.instDecidableRowLegal
 statement_id: sha256:06003b71685e240b964cc5680cf2d67244edb663d89a4f33ede416decb6bc11c
 D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233253TriangleStrip.sum_rows
-declaration: _private.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233253TriangleStrip.0.D5.S3.C
-ombinatorics.TraceAvoidingArrays.HardinA233253TriangleStrip.sum_rows
+declaration: _private.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233253TriangleStrip.0.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233253TriangleStrip.sum_rows
 statement_id: sha256:12c732cf9f9bcfa51709ea8ca66905d6cabc6e3562fa45a4c692c43dba899bd6
 Generated helpers of frozen owners (not separately listed frozen declarations):
 D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233251TriangleStrip.widthNormal._proof_1
@@ -67,35 +68,45 @@ D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233251TriangleStrip.widthTotal.eq
 statement_id: sha256:98c91caccabbd60e8a6fae4d99818e8a614dfba06487712acc8167120f8e9727
 D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233251TriangleStrip.widthV.eq_2
 statement_id: sha256:02a910fcd311188b871be135dbe86f61c98a47ead76d48f62a22196f30991d60
-bonds: proof_shape=bind-only; consumers=a, bonds_iff, counting_bridge
+D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233254TriangleStrip.Valid._proof_1
+statement_id: sha256:1232df3bf7109d02d50180dbc9e2e4d5770c4656eeda812e5bf59ff4c7faab61
+Consumers are authored declarations reached through generated value helpers.
+bonds: proof_shape=bind-only; consumers=a, bonds_iff, counting_bridge, decidableBonds
 decidableBonds: proof_shape=bind-only; consumers=a, counting_bridge
-a: proof_shape=bind-only; consumers=a_eq_w, shifted_count, result
-labels: proof_shape=bind-only; consumers=bonds_iff, v, total, classCount, firstCount, initial_valid
-compatible: proof_shape=bind-only; consumers=bonds_iff, v, classCount, valid_next
-decidableCompatible: proof_shape=bind-only; consumers=v, classCount
+a: proof_shape=bind-only; consumers=a_eq_w, result, shifted_count
+labels: proof_shape=bind-only; consumers=a_eq_w, classCount, class_fibres, counting_bridge,
+  firstCount, initial_counts, initial_valid, total, v, v_eq_w, valid_next
+compatible: proof_shape=bind-only; consumers=classCount, class_fibres, counting_bridge,
+  decidableCompatible, v, v_eq_w, valid_next
+decidableCompatible: proof_shape=bind-only; consumers=classCount, class_fibres, counting_bridge, v,
+  v_eq_w
 bonds_iff: proof_shape=bind-only; consumers=counting_bridge
-v: proof_shape=bind-only; consumers=counting_bridge, v_eq_w, a_eq_w
-total: proof_shape=bind-only; consumers=counting_bridge, a_eq_w
+v: proof_shape=bind-only; consumers=a_eq_w, v_eq_w
+total: proof_shape=bind-only; consumers=a_eq_w
 counting_bridge: proof_shape=bind-only; consumers=a_eq_w
-decidableValid: proof_shape=bind-only; consumers=valid_next, row_counts, initial_valid
-boundaryClass: proof_shape=bind-only; consumers=classCount, firstCount, row_counts, v_eq_w
-transfer: proof_shape=bind-only; consumers=row_counts, finite_certificate, w, distribution_step
+decidableValid: proof_shape=bind-only; consumers=initial_valid, row_counts, valid_next
+boundaryClass: proof_shape=bind-only; consumers=a_eq_w, classCount, class_fibres,
+  finite_certificate, firstCount, initial_counts, row_counts, v_eq_w
+transfer: proof_shape=bind-only; consumers=a_eq_w, distribution_step, finite_certificate,
+  row_counts, shifted_count, v_eq_w, w
 valid_next: proof_shape=bind-only; consumers=v_eq_w
-classCount: proof_shape=bind-only; consumers=class_fibres, row_counts, finite_certificate, v_eq_w
-firstCount: proof_shape=bind-only; consumers=initial_counts, finite_certificate, a_eq_w
+classCount: proof_shape=bind-only; consumers=a_eq_w, class_fibres, finite_certificate, row_counts,
+  v_eq_w
+firstCount: proof_shape=bind-only; consumers=a_eq_w, finite_certificate, initial_counts, v_eq_w
 class_fibres: proof_shape=bind-only; consumers=row_counts
 label_sum: proof_shape=bind-only; consumers=row_counts
 row_counts: proof_shape=bind-only; consumers=finite_certificate
 initial_valid: proof_shape=bind-only; consumers=a_eq_w
 initial_counts: proof_shape=bind-only; consumers=finite_certificate
-finite_certificate: proof_shape=bind-only; consumers=v_eq_w, a_eq_w
-w: proof_shape=bind-only; consumers=v_eq_w, a_eq_w, shifted_count, result
+finite_certificate: proof_shape=bind-only; consumers=a_eq_w, v_eq_w
+w: proof_shape=bind-only; consumers=a_eq_w, result, shifted_count, v_eq_w
 v_eq_w: proof_shape=bind-only; consumers=a_eq_w
 a_eq_w: proof_shape=bind-only; consumers=shifted_count
-distribution: proof_shape=bind-only; consumers=distribution_step, distribution_relation
+distribution: proof_shape=bind-only; consumers=distribution_relation, distribution_step, result,
+  shifted_count
 distribution_step: proof_shape=bind-only; consumers=shifted_count
-distribution_relation: proof_shape=bind-only; consumers=result
 shifted_count: proof_shape=bind-only; consumers=result
+distribution_relation: proof_shape=bind-only; consumers=result
 result: proof_shape=bind-only; consumers=terminal result (#28572)
 -/
 
@@ -200,10 +211,10 @@ private theorem class_fibres (s : Seen) (p : Boundary) (k : Fin 7) :
       boundaryClass (finish s c) (labels c) = k then 1 else 0) else 0
   by_cases hg : good s c <;> simp [hg]
 
-private theorem label_sum (g : (Boundary) → ℤ) :
+private theorem label_sum (g : Boundary → ℤ) :
     (∑ q, g q) = ∑ a : Fin 3, ∑ b : Fin 3, ∑ c : Fin 3, ∑ d : Fin 3, ∑ e : Fin 3,
       g ![a, b, c, d, e] := by
-  let e : (Boundary) ≃ Fin 3 × Fin 3 × Fin 3 × Fin 3 × Fin 3 :=
+  let e : Boundary ≃ Fin 3 × Fin 3 × Fin 3 × Fin 3 × Fin 3 :=
     { toFun := fun q => (q 0, q 1, q 2, q 3, q 4)
       invFun := fun t => ![t.1, t.2.1, t.2.2.1, t.2.2.2.1, t.2.2.2.2]
       left_inv := by intro q; ext j; fin_cases j <;> rfl
