@@ -2626,3 +2626,408 @@ $$
 ---
 
 ## 追加锚（本行以下为增补区）
+
+## 67. 全部超奇异反射支持的同字符半点与线性平均预算
+
+**定义 67.1（原反射支持与两对固定辅助点）。** 保持定义 51.1、53.1、64.1 的全部原数据：八次全实域 $F=\mathbb Q(a,b,c)$，$a^2=2$、$b^2=3-a$、$c^2=3+a$、$bc=\sqrt7$，原整方程 $E_0:y^2=x^3-x$、指定正根与实嵌入、原独立点 $P_1,P_2$、全部原地方和过滤 $U_v(j)$、原整 $x$ 分母及权重 $f_v/8$。实际半点始终是
+
+$$
+Q_1=\left(\frac{1+a}{b^2},\frac{2a}{b^3}\right),\qquad
+Q_2=\left(\frac{1-a}{c^2},\frac{-2a}{c^3}\right),\qquad
+[2]Q_\ell=P_\ell\quad(\ell=1,2).
+\tag{67.1}
+$$
+
+对所有整数 $M\ge1,H\ge7$，只取原 $q=q_H=q(H,H;M)$。定义互不相交的两个反射支持及其并
+
+$$
+\begin{aligned}
+\mathcal T_{\mathrm{ss},D}
+ &=\{p>7:p\equiv3\pmod4,\ (\chi_2(p),\chi_7(p))=(1,-1)\},\\
+\mathcal T_{\mathrm{ss},S}
+ &=\{p>7:p\equiv3\pmod4,\ (\chi_2(p),\chi_7(p))=(-1,1)\},\\
+\mathcal T_{\mathrm{ss,refl}}
+ &=\mathcal T_{\mathrm{ss},D}\sqcup\mathcal T_{\mathrm{ss},S}.
+\end{aligned}
+\tag{67.2}
+$$
+
+这里只在辅助点上使用真实扩域 $K=F(i)$、$[K:\mathbb Q]=16$ 和原作用 $[i](x,y)=(-x,iy)$。对 $\nu\in\{D,S\}$ 固定全局点对及其实际半点对
+
+$$
+\begin{array}{c|c|c}
+\nu &(A_\nu,B_\nu)&(H_{\nu,1},H_{\nu,2})\\ \hline
+D &(P_1,[i]P_2)&(Q_1,[i]Q_2)\\
+S &(P_1+P_2,[i](P_1-P_2))
+  &(Q_1+Q_2,[i](Q_1-Q_2))
+\end{array}
+\qquad
+[2]H_{\nu,1}=A_\nu,\quad [2]H_{\nu,2}=B_\nu.
+\tag{67.3}
+$$
+
+对 $w\mid v\mid p>7$，$U_w(j)$ 仍只表示原好整方程在 $K_w$ 上的第 $j$ 形式层，参数为 $t=-x/y$，故 $U_w(j)\cap E_0(F_v)=U_v(j)$。辅助点的 $b_w^K$、$B_K$ 和归一化范数完全沿用 (51.2)，不替换原 $F$ 分母。
+
+记 $\mathcal T=\mathcal T_{\mathrm{ss,refl}}$。本节的 $r_{vj}$ 始终是原 (64.1) 的精确指数
+
+$$
+\Gamma_{vj}(q)=\langle[q]P_1+U_v(j),[q]P_2+U_v(j)\rangle,
+\qquad r_{vj}=\exp\Gamma_{vj}(q),
+\tag{67.4}
+$$
+
+并把 $\mathcal T$ 代入 (64.4)–(64.6)：
+
+$$
+\begin{aligned}
+W_{\mathcal T,H}(R)
+ &=\sum_{\substack{p>H,\ p\in\mathcal T\\v\mid p,\ j\ge1:\ r_{vj}\le R}}
+       \frac{f_v\log p}{8},\\
+a_{\mathcal T,H}(r)&=W_{\mathcal T,H}(r)-W_{\mathcal T,H}(r-1),\\
+F_{\mathcal T,H}(t)
+ &=\frac18\sum_{\substack{p>H\\p\in\mathcal T}}\log p
+      \sum_{v\mid p}f_v\min\{b_v([qt]P_1),b_v([qt]P_2)\},\\
+\mathcal M_{\mathcal T,H}(N)&=\frac1N\sum_{t=1}^NF_{\mathcal T,H}(t).
+\end{aligned}
+\tag{67.5}
+$$
+
+约定 $W(R)=0$ 对 $0\le R<1$ 成立；$r,t,N$ 为正整数。由 (62.5)–(62.6) 的逐地方行格关系，$F_{\mathcal T,H}(t)=G_{\mathcal T}(H;qt,1)$，且这是同一个 $t$ 上全部非零整数 $k$ 的共同质量最小值；全部地方同时由 $k=1$ 取得。
+
+**定理 67.2（原两类超奇异反射的全部地方、全部深度消费者）。** 对所有整数 $M\ge1,H\ge7,N\ge1$ 和所有实数 $R\ge1$，统一有
+
+$$
+\begin{aligned}
+W_{\mathcal T_{\mathrm{ss,refl}},H}(R)
+ &\le36h_0q_H^2R^2+16(\log2)R,\\
+\mathcal M_{\mathcal T_{\mathrm{ss,refl}},H}(N)
+ &\le72h_0q_H^2N+16(\log2)(1+\log N).
+\end{aligned}
+\tag{67.6}
+$$
+
+精确平均仍为
+
+$$
+\mathcal M_{\mathcal T,H}(N)
+ =\frac1N\sum_{r=1}^Na_{\mathcal T,H}(r)
+                         \left\lfloor\frac Nr\right\rfloor.
+\tag{67.7}
+$$
+
+以上每个和均保留支持内全部 $p>H$、每个原 $v\mid p$ 和全部正深度，没有 $p\le R$、$p\le N$ 或深度截止。两个实际反射符号均在量词内。
+
+**证明（同一个原地方上的精确半点字符）。** 固定 $p\in\mathcal T$ 及原 $v\mid p$。原 (53.8)–(53.9) 给出 $g_v$ 的阶为 $2$，故 $F_v/\mathbb Q_p$ 是不分歧二次扩张，$e_v=1,f_v=2$。由于 $p\equiv3\pmod4$，$\mathbb Q_p(i)/\mathbb Q_p$ 也是不分歧二次扩张。因此对每个 $w\mid v$，$K_w=F_v$；$K/F$ 在 $v$ 分裂成两个地方。当前 $i$ 的像由当前 $w$ 指定，$K_w/\mathbb Q_p$ 的算术 Frobenius $\sigma_w$ 限制为原 $g_v$，并准确满足
+
+$$
+\sigma_w(i)=-i.
+\tag{67.8}
+$$
+
+这里的 $[i]$ 只作为 $K_w$ 上定义的曲线自同态使用，不视为 $\mathbb Q_p$ 上定义的自同态；(67.8) 给出它在 Frobenius 下的共轭。
+
+现将原实际坐标 (67.1) 代入 Frobenius。D 型有 $g_v(a)=a$、$g_v(b)=\epsilon b$、$g_v(c)=-\epsilon c$，其中 $\epsilon\in\{1,-1\}$ 取当前地方的实际符号。于是
+
+$$
+\sigma_wQ_1=[\epsilon]Q_1,\qquad
+\sigma_wQ_2=[-\epsilon]Q_2,\qquad
+\sigma_w([i]Q_2)=[-i][-\epsilon]Q_2=[\epsilon][i]Q_2.
+\tag{67.9}
+$$
+
+S 型有 $g_v(a)=-a$、$g_v(b)=\epsilon c$、$g_v(c)=\epsilon b$，因此实际半点的两个纵坐标给出
+
+$$
+\sigma_wQ_1=[\epsilon]Q_2,\qquad
+\sigma_wQ_2=[\epsilon]Q_1,
+\tag{67.10}
+$$
+
+进而
+
+$$
+\begin{aligned}
+\sigma_w(Q_1+Q_2)&=[\epsilon](Q_1+Q_2),\\
+\sigma_w([i](Q_1-Q_2))
+ &=[-i]([\epsilon]Q_2-[\epsilon]Q_1)
+  =[\epsilon][i](Q_1-Q_2).
+\end{aligned}
+\tag{67.11}
+$$
+
+这些是特征零完备域中的等式，不是仅约化后的特征关系。它们使用原半点而没有二挠平移；原 $P_1,P_2$ 自身不被宣称同属一个字符。
+
+固定相应的 $\nu\in\{D,S\}$ 和实际 $\epsilon$，在当前地方定义
+
+$$
+T_w=\{Z\in E_0(K_w):\sigma_wZ=[\epsilon]Z\},\qquad
+\mathcal K_w(j)=T_w\cap U_w(j).
+\tag{67.12}
+$$
+
+由 (67.9)–(67.11)，$H_{\nu,1},H_{\nu,2}\in T_w$，所以
+
+$$
+A_\nu,B_\nu\in[2]T_w.
+\tag{67.13}
+$$
+
+原半点及其倍二来源为 Brox，[固定源码 “The quadratic-field elliptic curve” 及 `lem:independent`](https://github.com/JoseBrox/diophantine-z-q_improvements/blob/61b82ccacfbefdff3d6e7cf986d6e6279afa1372/papers/trace_heights/aggregate_trace_height_20261108_v9.tex)：该处的 $R_0=(1+a,2a)$ 经 $(x,y)\mapsto(x/b^2,y/b^3)$ 正好给出 $Q_1$，同时共轭给出所写负纵坐标的 $Q_2$。这里复用其模挠独立性；原四方向高度取 002 (16.21)。
+
+**证明（单位扭曲、倍二像与交过滤）。** 在 (67.12) 的精确字符条件已经落实后，使用 §63 的同地方单位扭曲构造。$\epsilon=1$ 时取 $d=s=1$；$\epsilon=-1$ 时取剩余类非平方的单位 $d\in\mathbb Z_p^\times$，并在当前 $K_w$ 取 $s^2=d$，故 $\sigma_w(s)=-s$。群同构
+
+$$
+\begin{gathered}
+E^{(d)}:Y^2=X^3-d^2X,\qquad
+\phi_d:E^{(d)}(\mathbb Q_p)\longrightarrow T_w,\\
+\phi_d(X,Y)=(X/d,Y/(ds))
+\end{gathered}
+\tag{67.14}
+$$
+
+的逆向坐标为 $X=dx,Y=ds\,y$。负号时，$\sigma_wx=x$、$\sigma_wy=-y$ 恰使这两个逆向坐标属于 $\mathbb Q_p$；正号时就是固定域的点。$O$ 和二挠点也包括在内。由于 $d,s$ 为单位，对非零形式点 $Z$，$t_d=-X/Y$ 满足
+
+$$
+t(\phi_dZ)=s\,t_d(Z),\qquad
+\operatorname{ord}_w x(\phi_dZ)=v_p(X(Z)).
+\tag{67.15}
+$$
+
+因此扭曲的第 $j$ 形式层准确映到 $\mathcal K_w(j)$，保留原 $x$ 深度。两条方程在 $p>7$ 都好约化。Silverman，*The Arithmetic of Elliptic Curves* 第二版，[VII.2.1–2.2，印刷页 188–191](https://www.math.ens.psl.eu/~obenoist/refs/Silverman.pdf)，给出约化正合列及形式群对约化核的识别；[IV.6.3–6.4，印刷页 131–132](https://www.math.ens.psl.eu/~obenoist/refs/Silverman.pdf) 的严格阈值在这里是 $1>1/(p-1)$。故形式对数给出
+
+$$
+\mathcal K_w(1)/\mathcal K_w(j)\simeq\mathbb Z/p^{j-1}\mathbb Z,
+\qquad [2]:\mathcal K_w(j)\longrightarrow\mathcal K_w(j)
+\text{ 为自同构}.
+\tag{67.16}
+$$
+
+特别地，$\mathcal K_w(j)\subseteq[2]T_w$。这里包含的是交过滤；整个 $U_w(j)$ 的形式对数是秩二的 $\mathbb Z_p$ 模，交过滤是秩一，不能把整个 $U_w(j)$ 放进 $T_w$ 或其倍二像。作者[勘误](https://www.math.brown.edu/johsilve/AEC/AECErrata.pdf)对印刷页 122–124 的形式逆元、理想幂和参数对应的说明，以及页 131 对 IV.6.3(a) 分式域收敛的修正，均按此严格阈值使用；页 188–191 的约化记号按其更正理解。
+
+扭曲的约化群在 (67.14) 下准确成为 $G_\epsilon=\ker(\pi_p-[\epsilon])$，且 $T_w\to G_\epsilon$ 满射、核为 $\mathcal K_w(1)$。负号的反向识别与 (67.14) 的逆坐标相同，使用 $k_w=\mathbb F_{p^2}$。§58 超奇异有限群计算 (58.10)、(58.14) 所需的条件在此全都成立：$a_p=0$ 由 §51 的 $x,-x$ 字符相消给出，$\#G_\epsilon=p+1$、$p\nmid p+1$，且全二挠在 $G_\epsilon$ 中。具体地，完整素于 $p$ 挠点结构使其不变因子为 $d_1\mid d_2$、$d_1d_2=p+1$，全二挠使 $2\mid d_1$；完整 $d_1$ 挠上的 Weil 配对及 $\pi_p=[\epsilon]$ 使 $d_1\mid p-1$，故 $d_1=2$。这正是该计算的同纤维应用，得到
+
+$$
+G_\epsilon\simeq\mathbb Z/2\mathbb Z\oplus
+                      \mathbb Z/((p+1)/2)\mathbb Z,
+\qquad [2]G_\epsilon\simeq\mathbb Z/D_p\mathbb Z,
+\qquad D_p=(p+1)/4.
+\tag{67.17}
+$$
+
+所用成熟输入为 Silverman [III.6.4、III.8.1、V.2.3–2.3.1](https://www.math.ens.psl.eu/~obenoist/refs/Silverman.pdf)。挠点指阶整除 $m$ 的点，配对值域为标准 $\mu_m$，按作者页 69、93–98 的勘误；没有使用更强的一般同源配对值域断言。此计算只需超奇异的原曲线与两种 $\epsilon$，不要求原 $g_v$ 为中央作用。
+
+现在才取商
+
+$$
+C_w(j)=[2]T_w/\mathcal K_w(j).
+\tag{67.18}
+$$
+
+由约化、(67.16) 以及 $\mathcal K_w(1)\subseteq[2]T_w$，有正合列
+
+$$
+0\longrightarrow\mathcal K_w(1)/\mathcal K_w(j)
+\longrightarrow C_w(j)\longrightarrow[2]G_\epsilon\longrightarrow0.
+\tag{67.19}
+$$
+
+两端分别为阶 $p^{j-1}$ 和 $D_p$ 的循环群，两阶互素；有限交换群的主部分解遂给出
+
+$$
+C_w(j)\simeq\mathbb Z/(D_pp^{j-1})\mathbb Z.
+\tag{67.20}
+$$
+
+这将 §63 的单位扭曲和形式核论证接到 (67.9)–(67.13) 的反射辅助半点，而没有将 §63 原来的中央支持直接扩大。
+
+**证明（原周期只消去变换后的实际子群）。** 对满足 $r_{vj}\le R$ 的原三元组 $(p,v,j)$，写 $r=r_{vj}$。由原精确指数的定义，
+
+$$
+[qr]P_1,[qr]P_2\in U_v(j)\subseteq U_w(j).
+\tag{67.21}
+$$
+
+原 $[i]$ 在 $K_w$ 上满足 $t([i]Z)=it(Z)$；$i$ 是单位，所以 $[i]$ 保每个 $U_w(j)$。对 S 型还用其子群性，故两种类型都满足
+
+$$
+[qr]A_\nu,[qr]B_\nu\in U_w(j)\cap T_w=\mathcal K_w(j).
+\tag{67.22}
+$$
+
+因此实际子群
+
+$$
+\Lambda_{wj}(q)
+=\langle[q]A_\nu+\mathcal K_w(j),
+          [q]B_\nu+\mathcal K_w(j)\rangle\subseteq C_w(j)
+\tag{67.23}
+$$
+
+循环，且被整数 $r$ 消去。若 $r'_{wj}=|\Lambda_{wj}(q)|$，则
+
+$$
+r'_{wj}\mid r_{vj},\qquad r'_{wj}\le r_{vj}\le R.
+\tag{67.24}
+$$
+
+这里只用了原周期的消去性质。没有把 $r'_{wj}$、原 $r_{vj}$ 或环境阶 $D_pp^{j-1}$ 相等；也没有要求原 $\Gamma_{vj}(q)$ 自身循环。
+
+置 $L=\lfloor\sqrt R\rfloor\ge1$。将 $(L+1)^2>R$ 个向量 $(u_1,u_2)\in\{0,\ldots,L\}^2$ 映到 $[qu_1]A_\nu+[qu_2]B_\nu+\mathcal K_w(j)$。由 (67.24)，必有两向量同像；其差给出
+
+$$
+m\ne0,\quad |m_1|,|m_2|\le L,\qquad
+Z_{\nu,m}=[q]([m_1]A_\nu+[m_2]B_\nu)\in\mathcal K_w(j).
+\tag{67.25}
+$$
+
+这是在原深度 $j$ 的短关系，不只是在第一约化层。点对、$q$ 及全局系数范围先固定；$m$ 可以随实际地方和深度改变。
+
+**证明（同一完整点族支付全部扩域地方）。** 在所有局部选择之前，取带索引的全局有限族
+
+$$
+\mathcal P_L(q)=
+ \bigl(Z_{\nu,m}\bigr)_{
+ \substack{\nu\in\{D,S\},\ m\in\mathbb Z^2\setminus\{0\}\\
+                     |m_1|,|m_2|\le L}}.
+\tag{67.26}
+$$
+
+即使不同索引给出相同点也逐份支付。由原四方向正交高度 (16.21)，直接有
+
+$$
+\begin{aligned}
+\widehat h(Z_{D,m})&=h_0q^2(m_1^2+m_2^2),\\
+\widehat h(Z_{S,m})&=2h_0q^2(m_1^2+m_2^2).
+\end{aligned}
+\tag{67.27}
+$$
+
+第二式中的四方向系数依次为 $qm_1,qm_2,qm_1,-qm_2$。因此族中全部点都非挠、非零，原整 $x$ 分母合法，包括一个系数为零的情形；这里从未把原两点视为一个点的 CM 倍数。
+
+对每个满足 $r_{vj}\le R$ 的原三元组，将其权重分配到全部 $w\mid v$。这里每个 $w$ 都有 $e_w=1,f_w=f_v=2$，且恰有两个 $w\mid v$，故准确有
+
+$$
+\sum_{w\mid v}\frac{f_w}{16}=\frac{f_v}{8}.
+\tag{67.28}
+$$
+
+在每个提升后的 $(p,w,j)$，选择 (67.25) 的一个索引 $(\nu,m)$。固定该索引和 $w$ 后，分配给它的不同正整数 $j$ 都满足 $j\le b_w^K(Z_{\nu,m})$，所以其层数至多为这个分母指数。于是
+
+$$
+\begin{aligned}
+W_{\mathcal T,H}(R)
+&=\sum_{\substack{p>H,\ p\in\mathcal T\\v\mid p,\ j\ge1:\ r_{vj}\le R}}
+       \sum_{w\mid v}\frac{f_w\log p}{16}\\
+&\le\sum_{\substack{\nu\in\{D,S\},\ m\ne0\\|m_1|,|m_2|\le L}}
+                       \log\|B_K(Z_{\nu,m})\|_K.
+\end{aligned}
+\tag{67.29}
+$$
+
+这里对每个合格 $p$ 上的全部八个 $K$ 地方都求和，既没有只选一个 $w\mid v$，也没有把同一 $v$ 的两个 $i$ 嵌入当作免费重合。每个点用自己的完整 $K$ 分母支付其所有分配项；各地方的不同选择由同一个完整有限族承担。
+
+对族中每个 $Z$，直接使用 (51.18)–(51.19) 的绝对高度分解，
+
+$$
+h(x(Z))=2\log\|B_K(Z)\|_K+
+ \frac1{16}\sum_{\tau:K\hookrightarrow\mathbb C}
+                         \log\max(1,|x(\tau Z)|),
+\qquad
+\log\|B_K(Z)\|_K\le\widehat h(Z)+\log2.
+\tag{67.30}
+$$
+
+此式包括全部 $16$ 个嵌入和全部有限地方；右端常数来自原 002 (12.7) 对所有代数点的高度比较。故没有把只对 $F$ 点写出的 003 (49.8) 直接套给复辅助点，也没有漏付扩域费用。
+
+非零系数的个数为 $(2L+1)^2-1=4L(L+1)$，并且
+
+$$
+\sum_{\substack{m\ne0\\|m_1|,|m_2|\le L}}(m_1^2+m_2^2)
+=\frac23L(L+1)(2L+1)^2.
+\tag{67.31}
+$$
+
+将 (67.27)、(67.30) 对两族全部索引求和，(67.29) 给出
+
+$$
+\begin{aligned}
+W_{\mathcal T,H}(R)
+&\le2h_0q^2L(L+1)(2L+1)^2
+                    +8(\log2)L(L+1)\\
+&\le36h_0q^2L^4+16(\log2)L^2\\
+&\le36h_0q^2R^2+16(\log2)R.
+\end{aligned}
+\tag{67.32}
+$$
+
+末两步只用 $L+1\le2L$、$2L+1\le3L$ 和 $L^2\le R$。有限系数总和是纸面恒等式；短关系—完整点族高度的步骤沿用定理 64.2 的消费者方法，不另立一般群论或局部曲线定理。
+
+**证明（精确 floor 平均及其上界）。** 定理 64.2 的有限性和 (64.10)–(64.11) 对任意支持成立：共同深度是条件 $r_{vj}\mid t$ 在 $j\ge1$ 上的指示函数之和。这直接给出 (67.7)。令 $W=W_{\mathcal T,H}$、$a=a_{\mathcal T,H}$、$A=36h_0q^2$、$B=16\log2$，以及 $\mathfrak h_N=\sum_{r=1}^N1/r$。非负性与有限分部求和给出
+
+$$
+\begin{aligned}
+\mathcal M_{\mathcal T,H}(N)
+&=\frac1N\sum_{r=1}^Na(r)\left\lfloor\frac Nr\right\rfloor
+ \le\sum_{r=1}^N\frac{a(r)}r\\
+&=\frac{W(N)}N+\sum_{r=1}^{N-1}\frac{W(r)}{r(r+1)}\\
+&\le A(2N-\mathfrak h_N)+B\mathfrak h_N\\
+&\le2AN+B(1+\log N).
+\end{aligned}
+\tag{67.33}
+$$
+
+这里第一行的不等式没有改成等式；原平均与 $\sum a(r)/r$ 不必相等。$N=1$ 包括在内。代回 $A,B$ 即得 (67.6) 的第二式，常数对 $H,M,R,N$ 统一。
+
+用白话说，反射先把两个方向分成相反符号，而同一地方的 Frobenius 又把 $i$ 变成 $-i$。给其中一个方向乘 $i$，两个负号就抵消；交换反射先取和与差，再做同样的操作。原实际半点保证辅助点确在这个同字符群的倍二像里。该像在每个深度的商都循环，原周期只需消去里面的两个辅助点，就足以找到平方根长度的关系。每个地方选到的关系可以不同，所以两种类型的全部候选组合及全部扩域地方都一起支付；这才给出二次周期质量和线性平均预算。
+
+本定理只控制同一个 $k=1$ 的最小共同质量的平均上界，不给出任意移动 $k$ 的上界或逐个 $t$ 的线性界。实际半点和高度输入来自上述固定原文与原 002；局部曲线、形式群、完整挠点、Weil 配对和有限交换群仅作为此原支持消费者内部的成熟输入。文献对应限于所列原始来源及本卷 §§51、53、58、63–66，不据此主张文献优先性。$\square$
+
+**定理 67.3（从原完整支持剩余条件中剥离反射支持）。** 沿用 (65.1) 的 $\Sigma_{\mathrm{all}}=\{p>7\}$ 和 (66.1) 的 $\mathcal T_{\mathrm{ord,ns}}$，置
+
+$$
+\begin{aligned}
+\Sigma_\dagger
+&=\Sigma_{\mathrm{all}}\setminus
+ (S_0\sqcup\mathcal T_{\mathrm{ord,ns}}\sqcup
+                      \mathcal T_{\mathrm{ss,refl}})\\
+&=\{p>7:p\equiv3\pmod4,\ (\chi_2(p),\chi_7(p))=(-1,-1)\}\\
+&\quad\sqcup
+ \{p>7:p\equiv1\pmod4,\ (\chi_2(p),\chi_7(p))=(1,1)\}.
+\end{aligned}
+\tag{67.34}
+$$
+
+记已支付支持为 $\Sigma_{\mathrm{paid}}=S_0\sqcup\mathcal T_{\mathrm{ord,ns}}\sqcup\mathcal T_{\mathrm{ss,refl}}$。对全部原参数统一有
+
+$$
+\begin{aligned}
+W_{\Sigma_{\mathrm{paid}},H}(R)
+ &\le368h_0q_H^2R^2+124(\log2)R,\\
+\mathcal M_{\Sigma_{\mathrm{paid}},H}(N)
+ &\le736h_0q_H^2N+124(\log2)(1+\log N).
+\end{aligned}
+\tag{67.35}
+$$
+
+因而对每个固定的 $H,M$，在相应极限中保持同一个 $q=q_H$ 不变，有
+
+$$
+\begin{aligned}
+\mathcal M_{\mathrm{all},H}(N)=o(q^2N^2)
+&\quad\Longleftrightarrow\quad
+W_{\Sigma_\dagger,H}(R)=o(q^2R^3)\\
+&\quad\Longleftrightarrow\quad
+\mathcal M_{\Sigma_\dagger,H}(N)=o(q^2N^2).
+\end{aligned}
+\tag{67.36}
+$$
+
+**证明。** (66.27) 已识别 $S_0$ 为超奇异标量支持；从该处的 $\Sigma_*$ 再删去 (67.2) 的两类反射，恰剩超奇异旋转型和普通标量型，即 (67.34)。这些支持互不相交，故原 $W$、$a$、$F$ 和 $\mathcal M$ 都准确相加。将 (66.28) 与 (67.6) 相加即得 (67.35)。对固定 $H,M$，右侧分别为 $o(q^2R^3)$ 和 $o(q^2N^2)$。从完整支持的非负精确分解中剥离这两项，再用定理 65.1 已证明的完整 floor 平均与次三次周期质量的等价，便得 (67.36)。没有对随 $N$ 移动的 $H$ 或 $M$ 断言统一小量。
+
+式 (67.36) 的剩余小量条件仍待证明；(67.35) 不能代替它。超奇异旋转的实际作用平方为取负，原两个半点没有从 (67.9)–(67.11) 得到这里所需的共同 $\pm1$ 字符；普通标量也没有由本定理获得同样的循环倍二环境。这里既不判定其实际子群必然不循环，也不把这两项接口缺失当作原命题的反例。
+
+用白话说，全支持里可以再准确拿掉两种超奇异反射，尚需控制的素数类型缩为超奇异旋转和普通标量。完整共同分母的次二次平均仍要求这些剩余地方及全部深度的周期质量严格小于三次量级；本条只证明这个剩余条件的准确等价，并未证明条件本身。$\square$
+
+---
+
+## 追加锚（本行以下为增补区）
