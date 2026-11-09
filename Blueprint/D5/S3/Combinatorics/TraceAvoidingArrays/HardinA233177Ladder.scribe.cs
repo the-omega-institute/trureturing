@@ -42,8 +42,8 @@ internal sealed class HardinA233177LadderDocument : IScribeDocumentDefinition
                 + "This gives the displayed bridge for every width at least two.")),
             Node("finite_certificate", "The first permitted recurrence instance",
                 RecurrenceFormula(null), true),
-            Node("result", "Hardin's shifted integer recurrence",
-                RecurrenceFormula(V("n")), true),
+            Resolution("result", "Hardin's shifted integer recurrence",
+                RecurrenceFormula(V("n"))),
             Paragraph(Text("The pair-pattern transfer has fourteen column classes. "
                 + "Its sextic tail polynomial, multiplied by x-1, gives the recurrence "
                 + "for L+6. Multiplication by 16^n scales the coefficient at lag j by "
@@ -51,6 +51,14 @@ internal sealed class HardinA233177LadderDocument : IScribeDocumentDefinition
                 + "tail relation covers all larger indices. Writing the index as n+9 "
                 + "makes the condition index>8 explicit. Counts are cast to Int "
                 + "before subtraction. Width one is exceptional for the counting bridge.")))));
+
+    private static DocumentBlock Resolution(string name, string title, Formula formula) =>
+        Describe.Lean(DescribeId.Create(name.Replace("_", "-").ToLowerInvariant()),
+            DeclarationHandle.Create(Prefix + name), H(title),
+            StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(Source),
+            Blocks(Paragraph(Text(title + "."))), DescribeRole.Theorem,
+            new OpenProblemResolutionClaim(ProblemSlugRef.Create("hardin233177"),
+                ResolutionKind.Proved));
 
     private static DocumentBlock Node(string name, string title, Formula formula, bool theorem,
         bool literature = false) =>
