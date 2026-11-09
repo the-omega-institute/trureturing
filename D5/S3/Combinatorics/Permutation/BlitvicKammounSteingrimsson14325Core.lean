@@ -8,6 +8,8 @@
 
 import D5.S3.Combinatorics.Permutation.PackingMaximumRefutation
 import Mathlib.Tactic.IntervalCases
+import Mathlib.GroupTheory.Perm.Fin
+import D5.S3.Combinatorics.Permutation.BlitvicKammounSteingrimsson14325Transfer
 
 /-! All permutations and all window comparisons retain the literal source meaning.
 The source length is 5+(j-1)*3, equal to 3j+2 when j≥1.
@@ -397,5 +399,395 @@ noncomputable def packingGridEquiv (j : ℕ) (hj : 1 ≤ j) :
 theorem count_eq_grid (j : ℕ) (hj : 1 ≤ j) :
     count pattern 2 j = Nat.card (GridPacking j) := by
   exact Nat.card_congr (packingGridEquiv j hj)
+
+
+/-! Appending a column uses ordinary ordered rank insertion. -/
+
+private noncomputable def appendRank {N : ℕ} (a : Fin (N + 1))
+    (q : Equiv.Perm (Fin N)) : Equiv.Perm (Fin (N + 1)) :=
+  Equiv.ofBijective (Fin.lastCases a (fun i => a.succAbove (q i))) (by
+    apply (Finite.injective_iff_bijective).mp
+    intro i k h
+    induction i using Fin.lastCases <;> induction k using Fin.lastCases <;>
+      simp_all only [Fin.lastCases_last, Fin.lastCases_castSucc,
+        Fin.succAbove_ne, Fin.succAbove_right_inj, EmbeddingLike.apply_eq_iff_eq]
+    exact (Fin.succAbove_ne a (q _) h.symm).elim)
+
+private theorem appendRank_last {N : ℕ} (a : Fin (N + 1)) (q : Equiv.Perm (Fin N)) :
+    appendRank a q (Fin.last N) = a := by simp [appendRank]
+
+private theorem appendRank_old {N : ℕ} (a : Fin (N + 1)) (q : Equiv.Perm (Fin N))
+    (i : Fin N) : appendRank a q i.castSucc = a.succAbove (q i) := by
+  simp [appendRank]
+
+private theorem appendRank_bijective (N : ℕ) :
+    Function.Bijective (fun p : Fin (N + 1) × Equiv.Perm (Fin N) => appendRank p.1 p.2) := by
+  rw [Nat.bijective_iff_injective_and_card]
+  constructor
+  · rintro ⟨a,q⟩ ⟨b,r⟩ h
+    have hab : a = b := by simpa only [appendRank_last] using congrArg (fun w => w (Fin.last N)) h
+    subst b
+    have hqr : q = r := by
+      ext i
+      have hh := congrArg (fun w => w i.castSucc) h
+      exact congrArg Fin.val ((Fin.succAbove_right_inj).mp (by simpa only [appendRank_old] using hh))
+    subst r
+    rfl
+  · rw [Nat.card_prod, Nat.card_perm, Nat.card_perm, Nat.card_eq_fintype_card,
+      Fintype.card_fin, Nat.factorial_succ]
+    simp
+
+private noncomputable def appendEquiv (N : ℕ) :
+    (Fin (N + 1) × Equiv.Perm (Fin N)) ≃ Equiv.Perm (Fin (N + 1)) :=
+  Equiv.ofBijective _ (appendRank_bijective N)
+
+private noncomputable def appendColumn {N : ℕ} (q : Equiv.Perm (Fin N))
+    (a : Fin (N + 3)) (b : Fin (N + 2)) : Equiv.Perm (Fin (N + 3)) :=
+  appendRank a (appendRank b (appendRank (Fin.last N) q))
+
+private theorem appendColumn_old {N : ℕ} (q : Equiv.Perm (Fin N))
+    (a : Fin (N + 3)) (b : Fin (N + 2)) (i : Fin N) :
+    appendColumn q a b i.castSucc.castSucc.castSucc =
+      a.succAbove (b.succAbove (q i).castSucc) := by
+  simp [appendColumn, appendRank_old, Fin.succAbove_last]
+
+private theorem appendColumn_z {N : ℕ} (q : Equiv.Perm (Fin N))
+    (a : Fin (N + 3)) (b : Fin (N + 2)) :
+    appendColumn q a b (Fin.last N).castSucc.castSucc =
+      a.succAbove (b.succAbove (Fin.last N)) := by
+  simp [appendColumn, appendRank_old, appendRank_last]
+
+private theorem appendColumn_y {N : ℕ} (q : Equiv.Perm (Fin N))
+    (a : Fin (N + 3)) (b : Fin (N + 2)) :
+    appendColumn q a b (Fin.last (N + 1)).castSucc = a.succAbove b := by
+  simp [appendColumn, appendRank_old, appendRank_last]
+
+private theorem appendColumn_x {N : ℕ} (q : Equiv.Perm (Fin N))
+    (a : Fin (N + 3)) (b : Fin (N + 2)) :
+    appendColumn q a b (Fin.last (N + 2)) = a := by
+  simp [appendColumn, appendRank_last]
+
+
+private theorem appendColumn_grid_iff (j : ℕ) (hj : 1 ≤ j)
+    (q : Equiv.Perm (Fin (3 * j))) (a : Fin (3 * j + 3)) (b : Fin (3 * j + 2)) :
+    Grid (j + 1) (appendColumn q a b) ↔
+      Grid j q ∧ (q ⟨3 * (j - 1) + 2, by omega⟩).val < a.val ∧
+        a.val ≤ b.val ∧ b.val ≤ 3 * j := by
+  let lift : Fin (3 * j) → Fin (3 * j + 3) :=
+    fun v => a.succAbove (b.succAbove v.castSucc)
+  have old (i : ℕ) (hi : i < 3 * j) :
+      appendColumn q a b ⟨i, by omega⟩ = lift (q ⟨i, hi⟩) := by
+    exact appendColumn_old q a b ⟨i, hi⟩
+  have mono (u v : Fin (3 * j)) : lift u < lift v ↔ u < v := by
+    simp only [lift, Fin.succAbove_lt_succAbove_iff, Fin.castSucc_lt_castSucc_iff]
+  have ex : appendColumn q a b ⟨3 * j + 2, by omega⟩ = a := appendColumn_x q a b
+  have ey : appendColumn q a b ⟨3 * j + 1, by omega⟩ = a.succAbove b := appendColumn_y q a b
+  have ez : appendColumn q a b ⟨3 * j, by omega⟩ =
+      a.succAbove (b.succAbove (Fin.last (3 * j))) := appendColumn_z q a b
+  constructor
+  · intro h
+    have hc := h.1 j (by omega)
+    rw [ex, ey, ez] at hc
+    have hab : a.val ≤ b.val := by
+      have := (Fin.lt_succAbove_iff_le_castSucc a b).mp hc.1
+      exact this
+    have hb : b.val ≤ 3 * j := by
+      have hh := (Fin.succAbove_lt_succAbove_iff (p := a)).mp hc.2
+      have := (Fin.lt_succAbove_iff_le_castSucc b (Fin.last (3 * j))).mp hh
+      exact this
+    refine ⟨⟨?_, ?_⟩, ?_, hab, hb⟩
+    · intro t ht
+      have hh := h.1 t (by omega)
+      rw [old _ (by omega), old _ (by omega), old _ (by omega)] at hh
+      exact ⟨(mono _ _).mp hh.1, (mono _ _).mp hh.2⟩
+    · intro t ht
+      have hh := h.2 t (by omega)
+      rw [old _ (by omega), old _ (by omega), old _ (by omega), old _ (by omega)] at hh
+      exact ⟨(mono _ _).mp hh.1, (mono _ _).mp hh.2⟩
+    · have hh := (h.2 (j - 1) (by omega)).1
+      have he : 3 * (j - 1) + 5 = 3 * j + 2 := by omega
+      simp only [he] at hh
+      rw [old _ (by omega), ex] at hh
+      have hh' := (Fin.succAbove_lt_iff_castSucc_lt a _).mp hh
+      simp only [lift, Fin.succAbove, Fin.lt_def, Fin.val_castSucc] at hh'
+      split_ifs at hh' <;> simp only [Fin.val_castSucc, Fin.val_succ] at hh' <;> omega
+  · rintro ⟨hq, hqa, hab, hb⟩
+    constructor
+    · intro t ht
+      by_cases he : t = j
+      · subst t
+        rw [ex, ey, ez]
+        refine ⟨(Fin.lt_succAbove_iff_le_castSucc a b).mpr hab, ?_⟩
+        apply (Fin.succAbove_lt_succAbove_iff (p := a)).mpr
+        exact (Fin.lt_succAbove_iff_le_castSucc b (Fin.last (3 * j))).mpr hb
+      · have ht' : t < j := by omega
+        rw [old _ (by omega), old _ (by omega), old _ (by omega)]
+        exact ⟨(mono _ _).mpr (hq.1 t ht').1, (mono _ _).mpr (hq.1 t ht').2⟩
+    · intro t ht
+      by_cases he : t + 1 = j
+      · have ht' : t = j - 1 := by omega
+        subst t
+        have hi : 3 * (j - 1) + 5 = 3 * j + 2 := by omega
+        have hz : 3 * (j - 1) + 3 = 3 * j := by omega
+        simp only [hi, hz]
+        rw [old _ (by omega), ex, old _ (by omega), ez]
+        constructor
+        · apply (Fin.succAbove_lt_iff_castSucc_lt a _).mpr
+          have hqb : (q ⟨3 * (j - 1) + 2, by omega⟩).val < b.val := by omega
+          change (b.succAbove (q ⟨3 * (j - 1) + 2, by omega⟩).castSucc).val < a.val
+          rw [Fin.succAbove_of_castSucc_lt b _ (show
+            (q ⟨3 * (j - 1) + 2, by omega⟩).castSucc.castSucc < b from hqb)]
+          exact hqa
+        · exact (Fin.succAbove_lt_succAbove_iff (p := a)).mpr
+            ((Fin.succAbove_lt_succAbove_iff (p := b)).mpr (Fin.castSucc_lt_last _))
+      · have ht' : t + 1 < j := by omega
+        rw [old _ (by omega), old _ (by omega), old _ (by omega), old _ (by omega)]
+        exact ⟨(mono _ _).mpr (hq.2 t ht').1, (mono _ _).mpr (hq.2 t ht').2⟩
+
+
+private theorem grid_last_z (j : ℕ) (w : GridPacking (j + 1)) :
+    w.val ⟨3 * j, by omega⟩ = Fin.last (3 * j + 2) := by
+  have zm (a b : ℕ) (hab : a ≤ b) (hb : b < j + 1) :
+      (w.val ⟨3 * a, by omega⟩).val ≤ (w.val ⟨3 * b, by omega⟩).val := by
+    induction hab with
+    | refl => rfl
+    | @step b hab ih =>
+      exact le_trans (ih (by omega)) (le_of_lt (w.property.2 b (by omega)).2)
+  have upper (i : Fin (3 * (j + 1))) :
+      (w.val i).val ≤ (w.val ⟨3 * j, by omega⟩).val := by
+    let t := i.val / 3
+    have hit : i.val = 3 * t + i.val % 3 := by omega
+    have hrem := Nat.mod_lt i.val (by decide : 0 < 3)
+    have ht : t < j + 1 := by have := i.isLt; omega
+    have hc := w.property.1 t ht
+    have hh := zm t j (by omega) (by omega)
+    have he : i.val = 3 * t ∨ i.val = 3 * t + 1 ∨ i.val = 3 * t + 2 := by omega
+    rcases he with he | he | he
+    · have hi : i = ⟨3 * t, by omega⟩ := Fin.ext he
+      simpa only [hi] using hh
+    · have hi : i = ⟨3 * t + 1, by omega⟩ := Fin.ext he
+      rw [hi]
+      exact le_trans (le_of_lt hc.2) hh
+    · have hi : i = ⟨3 * t + 2, by omega⟩ := Fin.ext he
+      rw [hi]
+      exact le_trans (le_of_lt (lt_trans hc.1 hc.2)) hh
+  obtain ⟨i, hi⟩ := w.val.surjective (Fin.last (3 * j + 2))
+  apply Fin.ext
+  have hh := upper i
+  rw [hi] at hh
+  have hb := (w.val ⟨3 * j, by omega⟩).isLt
+  simp only [Fin.val_last] at hh ⊢
+  omega
+
+private theorem grid_decompose (j : ℕ) (hj : 1 ≤ j) (w : GridPacking (j + 1)) :
+    ∃ (q : Equiv.Perm (Fin (3 * j))) (a : Fin (3 * j + 3)) (b : Fin (3 * j + 2)),
+      w.val = appendColumn q a b ∧ Grid j q ∧
+        (q ⟨3 * (j - 1) + 2, by omega⟩).val < a.val ∧
+        a.val ≤ b.val ∧ b.val ≤ 3 * j := by
+  obtain ⟨⟨a,u⟩, hu⟩ := (appendEquiv (3 * j + 2)).surjective w.val
+  obtain ⟨⟨b,v⟩, hv⟩ := (appendEquiv (3 * j + 1)).surjective u
+  obtain ⟨⟨c,q⟩, hq⟩ := (appendEquiv (3 * j)).surjective v
+  change appendRank a u = w.val at hu
+  change appendRank b v = u at hv
+  change appendRank c q = v at hq
+  have htop := grid_last_z j w
+  rw [← hu, ← hv, ← hq] at htop
+  change appendRank a (appendRank b (appendRank c q))
+    (Fin.last (3 * j)).castSucc.castSucc = Fin.last (3 * j + 2) at htop
+  rw [appendRank_old, appendRank_old, appendRank_last] at htop
+  have hc : c = Fin.last (3 * j) := by
+    apply Fin.ext
+    have hcv := c.isLt
+    have hval := congrArg Fin.val htop
+    simp only [Fin.succAbove, Fin.lt_def, Fin.val_castSucc, Fin.val_succ,
+      Fin.val_last] at hval
+    split_ifs at hval <;>
+      simp only [Fin.val_castSucc, Fin.val_succ, Fin.val_last] at * <;> omega
+  subst c
+  have he : w.val = appendColumn q a b := by
+    rw [← hu, ← hv, ← hq]
+    rfl
+  refine ⟨q, a, b, he, ?_⟩
+  exact (appendColumn_grid_iff j hj q a b).mp (he ▸ w.property)
+
+
+private def state (j : ℕ) (hj : 1 ≤ j) (q : GridPacking j) : ℕ :=
+  3 * j - (q.val ⟨3 * (j - 1) + 2, by omega⟩).val
+
+private def Children (j : ℕ) (hj : 1 ≤ j) :=
+  Σ q : GridPacking j, Σ r : Fin (state j hj q), Fin (r.val + 1)
+
+private noncomputable def child (j : ℕ) (hj : 1 ≤ j) (v : Children j hj) :
+    GridPacking (j + 1) := by
+  obtain ⟨q,r,s⟩ := v
+  have hr := r.isLt
+  simp only [state] at hr
+  let a : Fin (3 * j + 3) := ⟨3 * j - r.val, by omega⟩
+  let b : Fin (3 * j + 2) := ⟨3 * j - r.val + s.val, by have := s.isLt; omega⟩
+  refine ⟨appendColumn q.val a b, (appendColumn_grid_iff j hj q.val a b).mpr ?_⟩
+  have hs := s.isLt
+  exact ⟨q.property, by dsimp [a]; omega, by dsimp [a,b]; omega, by dsimp [b]; omega⟩
+
+private theorem child_state (j : ℕ) (hj : 1 ≤ j) (v : Children j hj) :
+    state (j + 1) (by omega) (child j hj v) = v.2.1.val + 3 := by
+  rcases v with ⟨q,r,s⟩
+  change 3 * (j + 1) -
+    (appendColumn q.val ⟨3 * j - r.val, _⟩
+      ⟨3 * j - r.val + s.val, _⟩ (Fin.last (3 * j + 2))).val = r.val + 3
+  rw [appendColumn_x]
+  have hr := r.isLt
+  simp only [state] at hr
+  simp only [Fin.val_mk]
+  omega
+
+set_option maxHeartbeats 1500000 in
+private theorem child_bijective (j : ℕ) (hj : 1 ≤ j) : Function.Bijective (child j hj) := by
+  constructor
+  · rintro ⟨q,r,s⟩ ⟨q',r',s'⟩ h
+    have hh := congrArg Subtype.val h
+    change appendRank _ (appendRank _ (appendRank _ q.val)) =
+      appendRank _ (appendRank _ (appendRank _ q'.val)) at hh
+    have hx := (appendRank_bijective (3 * j + 2)).injective hh
+    have ha := congrArg (fun p => p.1.val) hx
+    have hy := (appendRank_bijective (3 * j + 1)).injective (congrArg Prod.snd hx)
+    have hb := congrArg (fun p => p.1.val) hy
+    have hz := (appendRank_bijective (3 * j)).injective (congrArg Prod.snd hy)
+    have hq : q = q' := Subtype.ext (congrArg Prod.snd hz)
+    subst q'
+    have hr : r = r' := by
+      apply Fin.ext
+      have hr := r.isLt
+      have hr' := r'.isLt
+      simp only [state] at hr hr'
+      change 3 * j - r.val = 3 * j - r'.val at ha
+      omega
+    subst r'
+    have hs : s = s' := by
+      apply Fin.ext
+      change 3 * j - r.val + s.val = 3 * j - r.val + s'.val at hb
+      omega
+    subst s'
+    rfl
+  · intro w
+    obtain ⟨q,a,b,he,hg,hqa,hab,hb⟩ := grid_decompose j hj w
+    let qq : GridPacking j := ⟨q,hg⟩
+    let r : Fin (state j hj qq) := ⟨3 * j - a.val, by
+      simp only [state, qq]
+      have hq := (q ⟨3 * (j - 1) + 2, by omega⟩).isLt
+      omega⟩
+    let s : Fin (r.val + 1) := ⟨b.val - a.val, by dsimp [r]; omega⟩
+    refine ⟨⟨qq,r,s⟩, ?_⟩
+    apply Subtype.ext
+    change appendColumn q _ _ = w.val
+    rw [he]
+    congr 1
+    · apply Fin.ext
+      change 3 * j - (3 * j - a.val) = a.val
+      omega
+    · apply Fin.ext
+      change 3 * j - (3 * j - a.val) + (b.val - a.val) = b.val
+      omega
+
+private noncomputable def childrenEquiv (j : ℕ) (hj : 1 ≤ j) :
+    Children j hj ≃ GridPacking (j + 1) := Equiv.ofBijective _ (child_bijective j hj)
+
+
+private def singleGrid : GridPacking 1 := by
+  refine ⟨Equiv.swap 0 2, ?_⟩
+  constructor
+  · intro t ht
+    have he : t = 0 := by omega
+    subst t
+    change (Equiv.swap 0 2 : Equiv.Perm (Fin 3)) 2 < Equiv.swap 0 2 1 ∧
+      (Equiv.swap 0 2 : Equiv.Perm (Fin 3)) 1 < Equiv.swap 0 2 0
+    decide +kernel
+  · intro t ht
+    omega
+
+private theorem grid_one_unique (q : GridPacking 1) : q = singleGrid := by
+  apply Subtype.ext
+  ext i
+  have he := q.property.1 0 (by decide)
+  change (q.val 2).val < (q.val 1).val ∧ (q.val 1).val < (q.val 0).val at he
+  have h0 := (q.val 0).isLt
+  have h1 := (q.val 1).isLt
+  have h2 := (q.val 2).isLt
+  have hi := i.isLt
+  fin_cases i
+  · change (q.val 0).val = 2
+    omega
+  · change (q.val 1).val = 1
+    omega
+  · change (q.val 2).val = 0
+    omega
+
+
+open scoped BigOperators Classical
+open BlitvicKammounSteingrimsson14325Transfer
+
+private noncomputable instance gridFintype (j : ℕ) : Fintype (GridPacking j) :=
+  Fintype.ofFinite _
+
+private noncomputable def weighted (n j : ℕ) (hj : 1 ≤ j) : ℕ :=
+  ∑ q : GridPacking j, row ℕ n (state j hj q)
+
+private theorem weighted_step (n j : ℕ) (hj : 1 ≤ j) :
+    weighted n (j + 1) (by omega) = weighted (n + 1) j hj := by
+  classical
+  rw [weighted, ← (childrenEquiv j hj).sum_comp]
+  simp only [childrenEquiv, Equiv.ofBijective_apply, child_state,
+    Fintype.sum_sigma, Finset.sum_const, Finset.card_univ, Fintype.card_fin,
+    nsmul_eq_mul]
+  unfold weighted
+  apply Finset.sum_congr rfl
+  intro q hq
+  simp only [row, transfer, Fin.sum_univ_eq_sum_range]
+
+private theorem weighted_one (n : ℕ) : weighted n 1 (by decide) = row ℕ n 3 := by
+  classical
+  have hall : (Finset.univ : Finset (GridPacking 1)) = {singleGrid} := by
+    ext q
+    simp only [Finset.mem_univ, Finset.mem_singleton, true_iff]
+    exact grid_one_unique q
+  unfold weighted
+  rw [hall, Finset.sum_singleton]
+  congr 1
+
+private theorem weighted_eval (n j : ℕ) :
+    weighted n (j + 1) (by omega) = row ℕ (n + j) 3 := by
+  induction j generalizing n with
+  | zero => simpa using weighted_one n
+  | succ j ih =>
+    rw [weighted_step n (j + 1) (by omega), ih]
+    congr 1 <;> omega
+
+/-- Universal actual-grid cardinality: the transfer is derived by rank insertion. -/
+theorem grid_card_eq_row (j : ℕ) (hj : 1 ≤ j) :
+    Nat.card (GridPacking j) = row ℕ (j - 1) 3 := by
+  have he := weighted_eval 0 (j - 1)
+  have hj' : j - 1 + 1 = j := by omega
+  rw [hj'] at he
+  simpa only [weighted, row, Finset.sum_const, Finset.card_univ,
+    nsmul_eq_mul, mul_one, Nat.card_eq_fintype_card, Nat.zero_add] using he
+
+private theorem count_eq_row (j : ℕ) (hj : 1 ≤ j) :
+    count pattern 2 j = row ℕ (j - 1) 3 := by
+  rw [count_eq_grid j hj, grid_card_eq_row j hj]
+
+/-- The full modulo-ten source conclusion, with precisely the dyadic exceptions. -/
+theorem count_mod_ten (j : ℕ) (hj : 1 ≤ j) :
+    count pattern 2 j % 10 =
+      if (∃ k : ℕ, 1 ≤ k ∧ j + 1 = 2 ^ k) then 1 else 6 := by
+  rw [count_eq_row j hj, row_mod_ten]
+  have he : j - 1 + 2 = j + 1 := by omega
+  rw [he]
+
+/-- Exact exceptions for four-divisibility, including zero and equal exponents. -/
+theorem count_mod_four_iff (j : ℕ) (hj : 1 ≤ j) :
+    (¬ 4 ∣ count pattern 2 j) ↔
+      ∃ i p : ℕ, p ≤ i ∧ j + 1 = 2 ^ i + 2 ^ p := by
+  rw [count_eq_row j hj, row_mod_four_iff]
+  have he : j - 1 + 2 = j + 1 := by omega
+  rw [he]
 
 end D5.S3.Combinatorics.Permutation.BlitvicKammounSteingrimsson14325Core
