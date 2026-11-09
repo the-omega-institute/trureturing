@@ -46,7 +46,35 @@ Lean statement: `D5/S3/Combinatorics/Graph/SubgroupGenerating/FiberSpectra.sgb_s
 
 For every finite group and each of the four matrix kinds, the literal graphSpectrum of sgbGraph G equals the multiset sum over every subgroup H of starValues(r_H,kind). An explicit equivalence takes each complete component fiber to Unit disjoint-union PairFiber H. Entries of the actual matrices vanish between different components and equal the star entries inside a component. Block-triangular characteristic-polynomial factorization and characteristic-root transport establish all multiplicities. The index includes zero fibers, whose isolated centers contribute zero eigenvalues.
 
-**Theorem 1.4 (One actual edge per ordered pair).**
+**Theorem 1.4 (The degree of every ordered pair).**
+
+$$\forall G \in \operatorname{Type},\; \forall groupG \in \operatorname{Group}\left(G\right),\; \forall finiteG \in \operatorname{Fintype}\left(G\right),\; \forall p \in G \times G,\; \forall finiteNeighbors \in \operatorname{Fintype}\left(\operatorname{SimpleGraph}.\operatorname{neighborSet}\left(\operatorname{sgbGraph}\left(G\right), \operatorname{Sum}.\operatorname{inl}\left(p\right)\right)\right),\; \operatorname{SimpleGraph}.\operatorname{degree}\left(\operatorname{sgbGraph}\left(G\right), \operatorname{Sum}.\operatorname{inl}\left(p\right)\right) = 1$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/SubgroupGenerating/FiberSpectra.degree_pair` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Shrabani Das; Ahmad Erfanian; Rajat Kanti Nath (2026). *Various spectra and energies of subgroup generating bipartite graph*. DOI: [10.48550/arXiv.2601.04004](https://doi.org/10.48550/arXiv.2601.04004). URL: <https://arxiv.org/abs/2601.04004v1>.
+
+*Commentary.*
+
+For every finite group and every ordered pair p, with the original Fintype instance for its neighbor-set subtype, the degree of Sum.inl p in the literal sgbGraph is one. Repeated entries are allowed.
+
+**Theorem 1.5 (The degree of every subgroup).**
+
+$$\forall G \in \operatorname{Type},\; \forall groupG \in \operatorname{Group}\left(G\right),\; \forall finiteG \in \operatorname{Fintype}\left(G\right),\; \forall H \in \operatorname{Subgroup}\left(G\right),\; \forall finiteNeighbors \in \operatorname{Fintype}\left(\operatorname{SimpleGraph}.\operatorname{neighborSet}\left(\operatorname{sgbGraph}\left(G\right), \operatorname{Sum}.\operatorname{inr}\left(H\right)\right)\right),\; \operatorname{SimpleGraph}.\operatorname{degree}\left(\operatorname{sgbGraph}\left(G\right), \operatorname{Sum}.\operatorname{inr}\left(H\right)\right) = \operatorname{pairCount}\left(H\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/SubgroupGenerating/FiberSpectra.degree_subgroup` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Shrabani Das; Ahmad Erfanian; Rajat Kanti Nath (2026). *Various spectra and energies of subgroup generating bipartite graph*. DOI: [10.48550/arXiv.2601.04004](https://doi.org/10.48550/arXiv.2601.04004). URL: <https://arxiv.org/abs/2601.04004v1>.
+
+*Commentary.*
+
+For every finite group and every subgroup H, with the original Fintype instance for its neighbor-set subtype, the degree of Sum.inr H in the literal sgbGraph is pairCount H. Every subgroup is included, also when its generating-pair fiber is empty.
+
+**Theorem 1.6 (One actual edge per ordered pair).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/SubgroupGenerating/FiberSpectra.edge_count`
 
@@ -64,6 +92,8 @@ The literal graph has exactly card(G)^2 unordered edges. Every pair vertex has d
 
 - Truth anchor: `D5/S3/Combinatorics/Graph/SubgroupGenerating/FiberSpectra.PairFiber`
 - Truth anchor: `D5/S3/Combinatorics/Graph/SubgroupGenerating/FiberSpectra.component`
+- Truth anchor: `D5/S3/Combinatorics/Graph/SubgroupGenerating/FiberSpectra.degree_pair`
+- Truth anchor: `D5/S3/Combinatorics/Graph/SubgroupGenerating/FiberSpectra.degree_subgroup`
 - Truth anchor: `D5/S3/Combinatorics/Graph/SubgroupGenerating/FiberSpectra.edge_count`
 - Truth anchor: `D5/S3/Combinatorics/Graph/SubgroupGenerating/FiberSpectra.sgb_spectrum`
 - Dependency: [D5/S3/Combinatorics/Graph/SubgroupGenerating/GeneratingFibers](GeneratingFibers.md)
