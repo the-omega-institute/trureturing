@@ -57,13 +57,14 @@ theorem hasDerivAt_logit {r : ℝ} (hr : r ∈ J) :
     (((hasDerivAt_const r (1:ℝ)).sub (hasDerivAt_id r)).log hr1)
   convert h using 1
   · rfl
-  · field_simp [hr0, hr1]
-    <;> ring
+  · dsimp
+    field_simp [hr0, hr1]
+    ring
 
 private theorem antitone_from_derivatives {f d : ℝ → ℝ}
     (hd : ∀ r ∈ J, HasDerivAt f (d r) r) (hn : ∀ r ∈ J, d r ≤ 0) :
     AntitoneOn f J := by
-  apply antitoneOn_of_deriv_nonpos convex_Ioo
+  apply antitoneOn_of_deriv_nonpos (convex_Ioo (0 : ℝ) 1)
   · exact fun r hr => (hd r hr).continuousAt.continuousWithinAt
   · intro r hr
     have hr' : r ∈ J := by simpa [J] using hr
@@ -154,7 +155,9 @@ theorem Curve.logKappa_deriv {c s r : ℝ} (C : Curve c s) (hr : r ∈ J) :
   have hx := ((hasDerivAt_id r).log hr.1.ne').const_mul (2*c)
   have hy := (((hasDerivAt_const r (1:ℝ)).sub (hasDerivAt_id r)).log
     (sub_pos.2 hr.2).ne').const_mul (2*(1-c))
-  convert (hk.add hx).add hy using 1 <;> simp only [logKappa] <;> ring
+  convert (hk.add hx).add hy using 1 <;>
+    (try simp only [logKappa, Function.comp_apply]) <;>
+    (try funext y) <;> simp [logKappa, id_eq, Function.comp_apply] <;> ring
 
 theorem normalized_logKappa_identity (p q k kp c r : ℝ) :
     (kp/k + 2*c/r - 2*(1-c)/(1-r))/q =

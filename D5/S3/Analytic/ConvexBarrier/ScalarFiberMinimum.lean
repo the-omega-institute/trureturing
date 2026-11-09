@@ -31,6 +31,7 @@ theorem diagonal_two_eq_hessian {D : Set ScalarPoint} (hD : IsOpen D)
     {F : ScalarPoint → ℝ} {p : ScalarPoint} (hp : p ∈ D) (v : ScalarPoint) :
     diagonal 2 D F p v = hessian F p v v := by
   rw [diagonal,iteratedFDerivWithin_of_isOpen 2 hD hp,iteratedFDeriv_two_apply]
+  rfl
 
 theorem fiber_hasDerivAt {F : ScalarPoint → ℝ} {u : Base} {z : ℝ}
     (hf : DifferentiableAt ℝ F (u,z)) :
@@ -40,8 +41,23 @@ theorem fiber_hasDerivAt {F : ScalarPoint → ℝ} {u : Base} {z : ℝ}
 
 theorem fiberGradient_hasFDerivAt {F : ScalarPoint → ℝ} {p : ScalarPoint}
     (hf : ContDiffAt ℝ 3 F p) :
-    HasFDerivAt (fiberGradient F)
-      ((fderiv ℝ (fderiv ℝ F) p).flip vertical) p := by
+    @HasFDerivAt ℝ _ ScalarPoint
+      (Prod.normedAddCommGroup (E := ℝ × ℝ) (F := ℝ)).toAddCommGroup
+      (Prod.normedSpace (𝕜 := ℝ) (E := ℝ × ℝ) (F := ℝ)).toModule
+      (Prod.normedAddCommGroup (E := ℝ × ℝ) (F := ℝ)).toPseudoMetricSpace.toUniformSpace.toTopologicalSpace
+      ℝ Real.normedAddCommGroup.toAddCommGroup
+      RCLike.toInnerProductSpaceReal.toModule
+      PseudoMetricSpace.toUniformSpace.toTopologicalSpace
+      (fiberGradient F) ((fderiv ℝ (fderiv ℝ F) p).flip vertical) p := by
+  change @HasFDerivAt ℝ _ ScalarPoint
+      (Prod.normedAddCommGroup (E := ℝ × ℝ) (F := ℝ)).toAddCommGroup
+      (Prod.normedSpace (𝕜 := ℝ) (E := ℝ × ℝ) (F := ℝ)).toModule
+      (Prod.normedAddCommGroup (E := ℝ × ℝ) (F := ℝ)).toPseudoMetricSpace.toUniformSpace.toTopologicalSpace
+      ℝ Real.normedAddCommGroup.toAddCommGroup
+      RCLike.toInnerProductSpaceReal.toModule
+      PseudoMetricSpace.toUniformSpace.toTopologicalSpace
+      (fun y => (fderiv ℝ F y) vertical)
+      ((fderiv ℝ (fderiv ℝ F) p).flip vertical) p
   have hdf : DifferentiableAt ℝ (fderiv ℝ F) p :=
     (hf.fderiv_right (m := 2) (by norm_num)).differentiableAt (by norm_num)
   simpa [fiberGradient] using
@@ -166,7 +182,7 @@ theorem stationary_eq_fiberMinimizer {c ν : ℝ} {F : ScalarPoint → ℝ}
     have h' := h.clm_apply (g := fun _ => (1:ℝ)) contDiffOn_const
     simpa only [fderiv_apply_one_eq_deriv] using h'.continuousOn
   have hmono : StrictMonoOn (deriv (fiber F u)) I :=
-    strictMonoOn_of_deriv_pos convex_Ioo hd (by
+    strictMonoOn_of_deriv_pos (convex_Ioo (-weight c u.1 u.2) (weight c u.1 u.2)) hd (by
       intro y hy
       have hy' : y ∈ I := by simpa [I] using hy
       simpa only [Function.iterate_succ_apply,Function.iterate_zero_apply,
