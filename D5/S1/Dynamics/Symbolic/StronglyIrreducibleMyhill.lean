@@ -6,6 +6,7 @@
    utility: none
    digest: Relative finite-pattern estimates and Myhill for strongly irreducible subshifts. -/
 
+import D5.S1.Dynamics.Symbolic.AmenableGardenOfEden
 import Mathlib.Dynamics.SymbolicDynamics.Basic
 import Mathlib.Topology.Compactness.Compact
 import Mathlib.MeasureTheory.Group.FoelnerFilter
@@ -17,6 +18,7 @@ import Mathlib.Algebra.Order.BigOperators.Group.Finset
 
 set_option autoImplicit false
 noncomputable section
+attribute [local instance] Classical.propDecidable
 open Set Function
 open scoped Pointwise
 open SymbolicDynamics.FullShift
@@ -284,5 +286,245 @@ theorem relative_pattern_bound [Finite A] (X : MulSubshift A G)
     · rintro ⟨⟨x, hx⟩, rfl⟩
       exact ⟨⟨x, fun i _ => hx i⟩, rfl⟩
   simpa only [he, Finset.card_univ, Fintype.card_coe] using hbound Finset.univ
+
+/-- A finite input window determines the output at the identity on the actual subshift. -/
+def HasMemory (X : MulSubshift A G) (tau : Cfg X → Cfg X) (M : Finset G) : Prop :=
+  ∀ x y : Cfg X, (∀ m ∈ M, x.val m = y.val m) → (tau x).val 1 = (tau y).val 1
+
+/-- Continuity on a closed finite-alphabet subshift supplies a finite memory window. -/
+theorem finite_memory [Finite A] [DiscreteTopology A]
+    (X : MulSubshift A G) (tau : Cfg X → Cfg X) (htau : Continuous tau) :
+    ∃ M : Finset G, HasMemory X tau M := by
+  classical
+  letI : CompactSpace (Cfg X) := isCompact_iff_compactSpace.mp X.isClosed.isCompact
+  let f : Cfg X → A := fun x => (tau x).val 1
+  have hf : Continuous f :=
+    (continuous_apply 1).comp (continuous_subtype_val.comp htau)
+  let K : Set (Cfg X × Cfg X) := {p | f p.1 ≠ f p.2}
+  have hK : IsCompact K := by
+    apply IsClosed.isCompact
+    exact (isClosed_discrete {q : A × A | q.1 ≠ q.2}).preimage
+      ((hf.comp continuous_fst).prodMk (hf.comp continuous_snd))
+  let U : G → Set (Cfg X × Cfg X) := fun g => {p | p.1.val g ≠ p.2.val g}
+  have hU : ∀ g, IsOpen (U g) := by
+    intro g
+    have heval : Continuous (fun x : Cfg X => x.val g) :=
+      (continuous_apply g).comp continuous_subtype_val
+    have hc : Continuous (fun p : Cfg X × Cfg X => (p.1.val g, p.2.val g)) :=
+      (heval.comp continuous_fst).prodMk (heval.comp continuous_snd)
+    exact (isOpen_discrete {q : A × A | q.1 ≠ q.2}).preimage hc
+  have hcover : K ⊆ ⋃ g, U g := by
+    intro p hp
+    apply Set.mem_iUnion.mpr
+    by_contra hn
+    have heq : p.1 = p.2 := by
+      apply Subtype.ext
+      funext g
+      by_contra hg
+      exact hn ⟨g, hg⟩
+    exact hp (congrArg f heq)
+  obtain ⟨M, hM⟩ := hK.elim_finite_subcover U hU hcover
+  refine ⟨M, ?_⟩
+  intro x y hxy
+  by_contra hout
+  have h := hM (show (x, y) ∈ K from hout)
+  obtain ⟨g, hg, hne⟩ := Set.mem_iUnion₂.mp h
+  exact hne (hxy g hg)
+
+private theorem memory_at (X : MulSubshift A G) (tau : Cfg X → Cfg X)
+    (M : Finset G) (hmem : HasMemory X tau M)
+    (hequiv : ∀ g x, tau (paperShift X g x) = paperShift X g (tau x))
+    (g : G) (x y : Cfg X) (hxy : ∀ m ∈ M, x.val (g * m) = y.val (g * m)) :
+    (tau x).val g = (tau y).val g := by
+  have hh := hmem (paperShift X g⁻¹ x) (paperShift X g⁻¹ y) (by
+    intro m hm
+    simpa [paperShift, mulShift] using hxy m hm)
+  rw [hequiv, hequiv] at hh
+  simpa [paperShift, mulShift] using hh
+
+/-- Finite restrictions of complete images under the given endomorphism of X. -/
+def ImagePat (X : MulSubshift A G) (tau : Cfg X → Cfg X) (F : Finset G) : Set (F → A) :=
+  Set.range (fun x : Cfg X => fun f : F => (tau x).val f)
+
+/-- Preinjectivity compares occurring source patterns with actual image patterns. -/
+theorem preinjective_pattern_lower [Finite A] [DiscreteTopology A]
+    (X : MulSubshift A G) (Delta F M U : Finset G) (hSI : SI X Delta)
+    (x0 : Cfg X) (tau : Cfg X → Cfg X) (hmem : HasMemory X tau M)
+    (hequiv : ∀ g x, tau (paperShift X g x) = paperShift X g (tau x))
+    (hpre : ∀ x y : Cfg X, {g | x.val g ≠ y.val g}.Finite → tau x = tau y → x = y)
+    (hU : (F * Delta⁻¹) * M⁻¹ ⊆ U) :
+    Nat.card (PatX X F) ≤ Nat.card (ImagePat X tau U) := by
+  classical
+  have hreal (p : PatX X F) : ∃ z : Cfg X,
+      (∀ f : F, z.val f = p.val f) ∧
+      (∀ g ∉ (F : Set G) * (Delta : Set G)⁻¹, z.val g = x0.val g) := by
+    obtain ⟨x, hx⟩ := p.property
+    obtain ⟨z, hzF, hzout⟩ := common_exterior X Delta F hSI x x0
+    exact ⟨z, fun f => (hzF f f.property).trans (congrFun hx f), hzout⟩
+  choose z hzF hzout using hreal
+  let key : PatX X F → ImagePat X tau U := fun p => ⟨_, ⟨z p, rfl⟩⟩
+  have hkey : Injective key := by
+    intro p q heq
+    have hout : tau (z p) = tau (z q) := by
+      apply Subtype.ext
+      funext g
+      by_cases hg : g ∈ U
+      · exact congrFun (congrArg Subtype.val heq) ⟨g, hg⟩
+      · apply memory_at X tau M hmem hequiv g (z p) (z q)
+        intro m hm
+        have hnot : g * m ∉ (F : Set G) * (Delta : Set G)⁻¹ := by
+          intro hgm
+          have hgm' : g * m ∈ F * Delta⁻¹ := by
+            change g * m ∈ (↑(F * Delta⁻¹) : Set G)
+            simpa only [Finset.coe_mul, Finset.coe_inv] using hgm
+          have hg' : g ∈ (F * Delta⁻¹) * M⁻¹ := by
+            simpa only [mul_inv_cancel_right] using
+              Finset.mul_mem_mul hgm' (show m⁻¹ ∈ M⁻¹ from Finset.inv_mem_inv hm)
+          exact hg (hU hg')
+        exact (hzout p _ hnot).trans (hzout q _ hnot).symm
+    have hfinite : {g | (z p).val g ≠ (z q).val g}.Finite := by
+      apply ((F * Delta⁻¹).finite_toSet).subset
+      intro g hg
+      by_contra hn
+      have hn' : g ∉ (F : Set G) * (Delta : Set G)⁻¹ := by
+        simpa only [Finset.coe_mul, Finset.coe_inv] using hn
+      exact hg ((hzout p g hn').trans (hzout q g hn').symm)
+    have hz := hpre (z p) (z q) hfinite hout
+    apply Subtype.ext
+    funext f
+    exact (hzF p f).symm.trans ((congrArg (fun x : Cfg X => x.val f) hz).trans (hzF q f))
+  exact Nat.card_le_card_of_injective key hkey
+
+private theorem pattern_padding [Finite A] (X : MulSubshift A G)
+    (F U : Finset G) (hFU : F ⊆ U) :
+    Nat.card (PatX X U) ≤ Nat.card (PatX X F) * Nat.card A ^ (U \ F).card := by
+  classical
+  let key : PatX X U → PatX X F × ((U \ F : Finset G) → A) := fun p =>
+    (⟨fun f : F => p.val ⟨f, hFU f.property⟩, by
+        obtain ⟨x, hx⟩ := p.property
+        refine ⟨x, ?_⟩
+        funext f
+        exact congrFun hx ⟨f, hFU f.property⟩⟩,
+      fun g => p.val ⟨g, (Finset.mem_sdiff.mp g.property).1⟩)
+  have hk : Injective key := by
+    intro p q heq
+    apply Subtype.ext
+    funext g
+    by_cases hg : g.val ∈ F
+    · exact congrFun (congrArg (fun r : PatX X F × ((U \ F : Finset G) → A) => r.1.val) heq) ⟨g.val, hg⟩
+    · exact congrFun (congrArg Prod.snd heq) ⟨g.val, Finset.mem_sdiff.mpr ⟨g.property, hg⟩⟩
+  have hh := Nat.card_le_card_of_injective key hk
+  simpa only [Nat.card_prod, Nat.card_fun, Nat.card_eq_fintype_card, Fintype.card_coe] using hh
+
+private theorem missing_pattern [Finite A] [DiscreteTopology A]
+    (X : MulSubshift A G) (tau : Cfg X → Cfg X) (htau : Continuous tau)
+    (hequiv : ∀ g x, tau (paperShift X g x) = paperShift X g (tau x))
+    (hns : ¬ Surjective tau) :
+    ∃ C : Finset G, C.Nonempty ∧ ∃ p : PatX X C,
+      ∀ (x : Cfg X) (t : G), (fun c : C => (tau x).val (t * c.val)) ≠ p.val := by
+  classical
+  letI : CompactSpace (Cfg X) := isCompact_iff_compactSpace.mp X.isClosed.isCompact
+  let f : Cfg X → (G → A) := fun x => (tau x).val
+  have hf : Continuous f := continuous_subtype_val.comp htau
+  have hclosed : IsClosed (range f) := (isCompact_range hf).isClosed
+  obtain ⟨y, hy⟩ : ∃ y : Cfg X, y ∉ range tau := by
+    simpa only [Surjective, mem_range, not_forall] using hns
+  have hy' : y.val ∉ range f := by
+    rintro ⟨x, hx⟩
+    exact hy ⟨x, Subtype.ext hx⟩
+  obtain ⟨C, U, hU, hsub⟩ := isOpen_pi_iff.mp hclosed.isOpen_compl y.val hy'
+  have hC : C.Nonempty := by
+    by_contra hn
+    have he : C = ∅ := Finset.not_nonempty_iff_eq_empty.mp hn
+    have hm : f y ∈ (C : Set G).pi U := by simp [he]
+    exact hsub hm ⟨y, rfl⟩
+  refine ⟨C, hC, ⟨_, ⟨y, rfl⟩⟩, ?_⟩
+  intro x t heq
+  let x' := paperShift X t⁻¹ x
+  have hm : f x' ∈ (C : Set G).pi U := by
+    intro c hc
+    have he := congrFun heq ⟨c, hc⟩
+    have hh : f x' c = (tau x).val (t * c) := by
+      change (tau (paperShift X t⁻¹ x)).val c = (tau x).val (t * c)
+      rw [hequiv]
+      simp [paperShift, mulShift]
+    rw [hh, he]
+    exact (hU c hc).2
+  exact hsub hm ⟨x', rfl⟩
+
+private theorem image_avoidance_bound [Finite A]
+    (X : MulSubshift A G) (Delta C E U T : Finset G) (p : PatX X C)
+    (tau : Cfg X → Cfg X) (hX : X.carrier.Nonempty) (h1 : 1 ∈ Delta) (hSI : SI X Delta)
+    (hCE : (C : Set G) * (Delta : Set G)⁻¹ ⊆ (E : Set G))
+    (hin : ∀ t ∈ T, tile t E ⊆ (U : Set G))
+    (hdis : ∀ t ∈ T, ∀ s ∈ T, t ≠ s → Disjoint (tile t E) (tile s E))
+    (hmissing : ∀ (x : Cfg X) (t : G), (fun c : C => (tau x).val (t * c.val)) ≠ p.val) :
+    Nat.card (ImagePat X tau U) * Nat.card (PatX X E) ^ T.card ≤
+      Nat.card (PatX X U) * (Nat.card (PatX X E) - 1) ^ T.card := by
+  classical
+  let w : T → C → A := fun _ => p.val
+  have hw (t : T) : ∃ x : Cfg X, ∀ c : C, x.val (t.val * c.val) = w t c := by
+    obtain ⟨x, hx⟩ := p.property
+    refine ⟨paperShift X t.val x, ?_⟩
+    intro c
+    simpa [paperShift, mulShift, w] using congrFun hx c
+  have hsub : ImagePat X tau U ⊆ AvoidPatX X C U T w := by
+    rintro q ⟨x, rfl⟩
+    refine ⟨⟨tau x, ?_⟩, rfl⟩
+    intro t
+    have hh := hmissing x t.val
+    obtain ⟨c, hc⟩ := Function.ne_iff.mp hh
+    exact ⟨c, hc⟩
+  have hcard := Nat.card_le_card_of_injective (Set.inclusion hsub) (Set.inclusion_injective hsub)
+  exact (Nat.mul_le_mul_right _ hcard).trans
+    (relative_pattern_bound X Delta C E U T w hX h1 hSI hCE hin hdis hw)
+
+private theorem relative_limit_contradiction {ι : Type*} {l : Filter ι} [Filter.NeBot l]
+    {a rho b : ℕ} (ha : 0 < a) (hrho : 0 < rho) (hb : 0 < b)
+    (vol extra tiles : ι → ℕ)
+    (hdata : ∀ᶠ i in l, 0 < vol i ∧ vol i ≤ tiles i * b ^ 2 ∧
+      rho ^ tiles i ≤ a ^ extra i * (rho - 1) ^ tiles i)
+    (hboundary : Filter.Tendsto (fun i => (extra i : ℝ) / vol i) l (nhds 0)) : False := by
+  by_cases hr : rho = 1
+  · obtain ⟨i, hv, hd, hc⟩ := hdata.exists
+    have hk : tiles i ≠ 0 := by intro hk; simp [hk] at hd; omega
+    simp [hr, zero_pow hk] at hc
+  have hr2 : 2 ≤ rho := by omega
+  have hr0 : (0 : ℝ) < rho := by exact_mod_cast hrho
+  have hrm : (0 : ℝ) < (rho - 1 : ℕ) := by exact_mod_cast (show 0 < rho - 1 by omega)
+  have ha0 : (0 : ℝ) < a := by exact_mod_cast ha
+  have hb0 : (0 : ℝ) < b := by exact_mod_cast hb
+  let d := Real.log (rho : ℝ) - Real.log (rho - 1 : ℕ)
+  have hd : 0 < d := by
+    have hlt : ((rho - 1 : ℕ) : ℝ) < rho := by exact_mod_cast (show rho - 1 < rho by omega)
+    exact sub_pos.mpr (Real.log_lt_log hrm hlt)
+  let delta := d / (b : ℝ) ^ 2
+  have hdelta : 0 < delta := div_pos hd (sq_pos_of_pos hb0)
+  have hbound : ∀ᶠ i in l, delta ≤ (extra i : ℝ) / vol i * Real.log (a : ℝ) := by
+    filter_upwards [hdata] with i hi
+    obtain ⟨hv, hdense, hcount⟩ := hi
+    have hv0 : (0 : ℝ) < vol i := by exact_mod_cast hv
+    have hlog := Real.log_le_log (pow_pos hr0 (tiles i))
+      (show (rho : ℝ) ^ tiles i ≤ (a : ℝ) ^ extra i * ((rho - 1 : ℕ) : ℝ) ^ tiles i by
+        exact_mod_cast hcount)
+    rw [Real.log_mul (pow_ne_zero _ ha0.ne') (pow_ne_zero _ hrm.ne'),
+      Real.log_pow, Real.log_pow, Real.log_pow] at hlog
+    have hlog' : (tiles i : ℝ) * d ≤ (extra i : ℝ) * Real.log (a : ℝ) := by
+      dsimp [d]
+      nlinarith only [hlog]
+    have hdense' : (vol i : ℝ) ≤ (tiles i : ℝ) * (b : ℝ) ^ 2 := by exact_mod_cast hdense
+    have hcharge : (vol i : ℝ) * delta ≤ (tiles i : ℝ) * d := by
+      dsimp [delta]
+      rw [← mul_div_assoc, div_le_iff₀ (sq_pos_of_pos hb0)]
+      nlinarith only [mul_le_mul_of_nonneg_right hdense' hd.le]
+    calc
+      delta ≤ ((extra i : ℝ) * Real.log (a : ℝ)) / vol i :=
+        (le_div_iff₀ hv0).mpr (by nlinarith only [hcharge, hlog'])
+      _ = (extra i : ℝ) / vol i * Real.log (a : ℝ) := by ring
+  have hlim : Filter.Tendsto (fun i => (extra i : ℝ) / vol i * Real.log (a : ℝ)) l (nhds 0) := by
+    simpa using hboundary.mul_const (Real.log (a : ℝ))
+  have hle : delta ≤ (0 : ℝ) :=
+    le_of_tendsto_of_tendsto tendsto_const_nhds hlim hbound
+  exact (not_le_of_gt hdelta) hle
 
 end D5.S1.Dynamics.Symbolic.StronglyIrreducibleMyhill
