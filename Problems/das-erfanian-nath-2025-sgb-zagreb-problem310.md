@@ -33,8 +33,12 @@ over each actual unordered edge once. The edge and vertex denominators are
 $|G|^2>0$ and $|G|^2+|L(G)|>0$. Trivial, abelian and non-two-generated groups
 are included, without additional assumptions.
 
-The candidate answer to the original existential question is **NO**.
-Independent evaluation is pending; this dossier records no official settlement.
+The formal answer to the original existential question is **NO**.
+Final publication review and required CI remain pending; this dossier records
+no official settlement or solved-problem KPI.
+
+The source locator, attribution and rights boundary are in the
+[citation note](../Library/FiniteGroups/das2025sgbzagreb.md).
 
 ## Motivation
 
@@ -44,12 +48,12 @@ the full graph, especially its isolated subgroup vertices and ordered pairs.
 
 ## Gap
 
-The source's unrestricted index identities leave the criterion
-$|L(G)|\sum_H\Pr_H(G)^2\ge1$. The candidate supplies the standard square-sum
-bound for the complete generating-pair partition. Its mathematical inference
-is compiled; independent source-fidelity, proof-shape and admission evaluation,
-accepted audit binding, verified parent integration and required CI remain
-outstanding. None of those obligations is replaced by compilation.
+The source's unrestricted index identities reduce the question to
+$|L(G)|\sum_H\Pr_H(G)^2\ge1$. The theorem supplies the standard square-sum
+bound for the complete generating-pair partition and closes the full
+mathematical statement. Accepted audit binding remains unresolved under the
+linked exception below. Final publication review, required CI and delivery
+remain separate obligations.
 
 ## Route
 
@@ -80,7 +84,7 @@ would invalidate source correspondence and must fail independent evaluation.
 
 ## Evidence
 
-The producer-compiled endpoint is
+The compiled endpoint is
 `D5.S3.Combinatorics.Graph.SubgroupGenerating.ZagrebInequality.hansen_vukicevic`.
 Its retained D5 source defines both Zagreb indices on the inherited finite
 simple graph; its compiled axiom closure contains only `propext`,
@@ -102,33 +106,41 @@ reconstruction and accepted binding evidence are missing. The concrete
 [unfinished-audit disclosure](https://github.com/the-omega-institute/trureturing/issues/28349#issuecomment-6731659148)
 is the linked-issue exception under CLAUDE §3.9.
 
-The inherited SGB modules are separate, unfrozen parent work at the fixed
-supplier base. Their proofs, source attribution, dossier and resolution claim
-retain their own ownership. This consumer supplies no parent settlement or KPI.
+The inherited SGB modules are separately owned frozen parent work integrated
+from published commit `4419f6eab133becbd680239fc623f3da27826038` in
+[PR #28357](https://github.com/the-omega-institute/trureturing/pull/28357).
+That draft is an explicit unmerged dependency. The original `degree_pair` and
+`degree_subgroup` declarations are public with unchanged statements and proof
+bodies; their owning frozen module is canonically repinned. The parent's
+proofs, source attribution, dossier, registration exception and resolution
+claim retain their own ownership. This consumer supplies no parent settlement
+or KPI.
 
 ## Triage
 
-Theorem candidate for the entire published question. The decisive mechanism is
+Theorem for the entire published question. The decisive mechanism is
 the complete pair partition and its square-sum bound, transported to the literal
 unordered edges. The compiled scope already includes all finite groups; no
 nonabelian or nontrivial restriction is needed. The source's family-specific
-Zagreb inequalities would be subsumed by the universal conclusion if independent
-evaluation accepts it. This does not settle the source's other topological-index
+Zagreb inequalities are subsumed by the universal conclusion. This does not
+settle the source's other topological-index
 questions or the separate SGB energy problem.
 
-The producer provisionally assesses the endpoint and its consumed proof helpers
-as bind-only and anticipates `admission_basis: open-problem-resolution`.
-Per-declaration classification remains for independent review; no helper or
-inherited unfrozen module is claimed as an old frozen escape witness.
+All five theorems have `proof_shape: bind-only`. The private
+`pairEdge_injective` and `actual_edges` are consumed by `second_formula`;
+`first_formula` and `second_formula` are consumed by `hansen_vukicevic`.
+The endpoint has `admission_basis: open-problem-resolution`. The helpers are
+consumed proof organization, and no new escape witness or new parent
+mathematics is claimed.
 Equality classification, sharp refinements and extensions beyond this literal
 graph are unassessed neighboring boundaries, with no new solved claim here.
 
 ## ASSUMED-UNVERIFIED
 
-Independent exact-event evaluation, final per-declaration proof shape and
-admission, accepted Reg binding, parent integration, freezing and required CI
-are pending. No cleared-for-StageB status, official mathematical terminal,
-delivery or solved-problem KPI is asserted. Model diversity and independence of
-the forecasts are unverified. The journal body and rights, uninspected literature
+Accepted Reg binding remains unresolved. Final independent publication review,
+required CI, the parent dependency's merge, this PR's merge and first-dev
+verification are pending. No official mathematical terminal, complete delivery
+or solved-problem KPI is asserted. Model diversity and independence of the
+forecasts are unverified. The journal body and rights, uninspected literature
 and worldwide priority remain unverified; bounded searches do not establish
 absence of an earlier answer.
