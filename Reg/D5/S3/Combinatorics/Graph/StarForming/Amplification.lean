@@ -80,7 +80,7 @@ noncomputable def chosenCardRegistration :
   realization := .source arena.{u} ⟨family.{u}⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature.{u} (fun _ _ S => S.card) (fun e => nomatch e))
+  readout := some actual.{u}
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none

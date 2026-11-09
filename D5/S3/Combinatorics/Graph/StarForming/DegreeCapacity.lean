@@ -215,4 +215,76 @@ theorem sf_regular_bound (d : ℕ) (hd : 1 ≤ d) (hregular : ∀ v, degree G v 
   rw [Nat.mul_comm]
   omega
 
+/-- The irregular endpoint retains both degree bounds and selected isolates. -/
+theorem min_max_selection_bound (S : Finset V) (hS : IsMinimalStarForming G 2 S)
+    (delta D : ℕ) (hpositive : 2 ≤ delta + D)
+    (hmin : ∀ v, delta ≤ degree G v) (hmax : ∀ v, degree G v ≤ D) :
+    (delta + D - 1) * S.card + (isolates G S).card ≤ D * Fintype.card V := by
+  have hc := degree_capacity G S hS D hmax
+  have hl : delta * S.card ≤ ∑ v ∈ S, degree G v := by
+    calc
+      _ = ∑ _v ∈ S, delta := by simp [Nat.mul_comm]
+      _ ≤ _ := Finset.sum_le_sum (fun v _ => hmin v)
+  have ht : (Finset.univ \ S).card + S.card = Fintype.card V := by
+    simpa using Finset.card_sdiff_add_card_eq_card (Finset.subset_univ S)
+  have hm : (delta + D - 1) + 1 = delta + D := by omega
+  nlinarith
+
+/-- The finite upper maximum inherits the irregular minimum/maximum endpoint. -/
+theorem sf_min_max_bound (delta D : ℕ) (hpositive : 2 ≤ delta + D)
+    (hmin : ∀ v, delta ≤ degree G v) (hmax : ∀ v, degree G v ≤ D) :
+    SF G 2 ≤ D * Fintype.card V / (delta + D - 1) := by
+  classical
+  apply Finset.sup_le
+  intro S hS
+  have hb := min_max_selection_bound G S (Finset.mem_filter.mp hS).2
+    delta D hpositive hmin hmax
+  apply (Nat.le_div_iff_mul_le (by omega : 0 < delta + D - 1)).mpr
+  rw [Nat.mul_comm]
+  omega
+
+/-- The deficiency-free form of the dissociation cut bound counts the actual
+degrees on both sides, so it applies directly to broken regular blocks. -/
+theorem dissociation_cut_bound (S : Finset V) (hS : IsKIndependent G 2 S) :
+    2 * (∑ v ∈ S, degree G v) ≤
+      S.card + ∑ v : V, degree G v := by
+  classical
+  have hcut := degree_sum_cut G S
+  have hsel : (∑ v ∈ S, selectedDegree G S v) ≤ S.card := by
+    calc
+      _ ≤ ∑ _v ∈ S, 1 := by
+        apply Finset.sum_le_sum
+        intro v hv
+        have hh := hS v hv
+        change selectedDegree G S v < 2 at hh
+        omega
+      _ = _ := by simp
+  have hout : (∑ v ∈ Finset.univ \ S, selectedDegree G S v) ≤
+      ∑ v ∈ Finset.univ \ S, degree G v :=
+    Finset.sum_le_sum (fun v _ => selected_le_degree G S v)
+  have hall : (∑ v ∈ S, degree G v) +
+      (∑ v ∈ Finset.univ \ S, degree G v) = ∑ v : V, degree G v := by
+    simpa only [Finset.compl_eq_univ_sdiff] using
+      Finset.sum_add_sum_compl S (fun v => degree G v)
+  omega
+
+/-- Actual regular deficiency on selected vertices supplies twice its credit. -/
+theorem dissociation_deficiency_bound (S : Finset V) (hS : IsKIndependent G 2 S)
+    (d : ℕ) (hd : 1 ≤ d) (hmax : ∀ v, degree G v ≤ d) :
+    (2 * d - 1) * S.card + (∑ v : V, (d - degree G v)) ≤
+      d * Fintype.card V + 2 * (∑ v ∈ S, (d - degree G v)) := by
+  classical
+  have hc := dissociation_cut_bound G S hS
+  have hs : (∑ v ∈ S, degree G v) + (∑ v ∈ S, (d - degree G v)) = d * S.card := by
+    rw [← Finset.sum_add_distrib]
+    simp_rw [Nat.add_sub_of_le (hmax _)]
+    simp [Nat.mul_comm]
+  have ht : (∑ v : V, degree G v) + (∑ v : V, (d - degree G v)) =
+      d * Fintype.card V := by
+    rw [← Finset.sum_add_distrib]
+    simp_rw [Nat.add_sub_of_le (hmax _)]
+    simp [Nat.mul_comm]
+  have hm : (2 * d - 1) + 1 = 2 * d := by omega
+  nlinarith
+
 end D5.S3.Combinatorics.Graph.StarForming.DegreeCapacity

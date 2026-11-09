@@ -7,7 +7,7 @@ internal sealed class DissociationCoverDocument : IScribeDocumentDefinition
     private const string Prefix = "D5/S3/Combinatorics/Graph/StarForming/DissociationCover.";
     private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Combinatorics/omega2026starformingfamily");
     private static DocumentBlock Node(string name, string title, string text, DescribeRole role) =>
-        Describe.Lean(DescribeId.Create(name.Replace('_', '-').ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
+        Describe.Lean(DescribeId.Create(name.Replace('_', '-').Replace('.', '-').ToLowerInvariant()), DeclarationHandle.Create(Prefix + name[(name.LastIndexOf('.') + 1)..]),
             H(title), StatementSource.WithoutFormula(), AssessedProvenance.FromLiterature(Source),
             Blocks(Paragraph(Text(text))), role);
 

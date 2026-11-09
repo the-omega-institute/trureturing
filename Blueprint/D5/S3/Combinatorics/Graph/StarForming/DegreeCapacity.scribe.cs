@@ -6,7 +6,7 @@ internal sealed class DegreeCapacityDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/Graph/StarForming/DegreeCapacity.";
     private static DocumentBlock Node(string name, string title, string text, DescribeRole role) =>
-        Describe.Lean(DescribeId.Create(name.Replace('_', '-').ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
+        Describe.Lean(DescribeId.Create(name.Replace('_', '-').Replace('.', '-').ToLowerInvariant()), DeclarationHandle.Create(Prefix + name[(name.LastIndexOf('.') + 1)..]),
             H(title), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(text))), role);
 
@@ -22,5 +22,9 @@ internal sealed class DegreeCapacityDocument : IScribeDocumentDefinition
             Node("selected_degree_identity", "selected degree identity", "Exact declaration: theorem selected_degree_identity (S : Finset V) : (∑ v ∈ S, selectedDegree G S v) + (isolates G S).card = S.card + ∑ v ∈ CertificateBound.high G S, (selectedDegree G S v - 1).", DescribeRole.Theorem),
             Node("degree_capacity", "degree capacity", "Exact declaration: theorem degree_capacity (S : Finset V) (hS : IsMinimalStarForming G 2 S) (D : ℕ) (hD : ∀ v, degree G v ≤ D) : (∑ v ∈ S, degree G v) + (isolates G S).card ≤ S.card + D * (Finset.univ \\ S).card.", DescribeRole.Theorem),
             Node("regular_selection_bound", "regular selection bound", "Exact declaration: theorem regular_selection_bound (S : Finset V) (hS : IsMinimalStarForming G 2 S) (d : ℕ) (hd : 1 ≤ d) (hregular : ∀ v, degree G v = d) : (2 * d - 1) * S.card + (isolates G S).card ≤ d * Fintype.card V.", DescribeRole.Theorem),
-            Node("sf_regular_bound", "sf regular bound", "Exact declaration: theorem sf_regular_bound (d : ℕ) (hd : 1 ≤ d) (hregular : ∀ v, degree G v = d) : SF G 2 ≤ d * Fintype.card V / (2 * d - 1).", DescribeRole.Theorem)), []));
+            Node("sf_regular_bound", "sf regular bound", "Exact declaration: theorem sf_regular_bound (d : ℕ) (hd : 1 ≤ d) (hregular : ∀ v, degree G v = d) : SF G 2 ≤ d * Fintype.card V / (2 * d - 1).", DescribeRole.Theorem),
+            Node("min_max_selection_bound", "min max selection bound", "Exact declaration: theorem min_max_selection_bound (S : Finset V) (hS : IsMinimalStarForming G 2 S) (delta D : ℕ) (hpositive : 2 ≤ delta + D) (hmin : ∀ v, delta ≤ degree G v) (hmax : ∀ v, degree G v ≤ D) : (delta + D - 1) * S.card + (isolates G S).card ≤ D * Fintype.card V.", DescribeRole.Theorem),
+            Node("sf_min_max_bound", "sf min max bound", "Exact declaration: theorem sf_min_max_bound (delta D : ℕ) (hpositive : 2 ≤ delta + D) (hmin : ∀ v, delta ≤ degree G v) (hmax : ∀ v, degree G v ≤ D) : SF G 2 ≤ D * Fintype.card V / (delta + D - 1).", DescribeRole.Theorem),
+            Node("dissociation_cut_bound", "dissociation cut bound", "Exact declaration: theorem dissociation_cut_bound (S : Finset V) (hS : IsKIndependent G 2 S) : 2 * (∑ v ∈ S, degree G v) ≤ S.card + ∑ v : V, degree G v.", DescribeRole.Theorem),
+            Node("dissociation_deficiency_bound", "dissociation deficiency bound", "Exact declaration: theorem dissociation_deficiency_bound (S : Finset V) (hS : IsKIndependent G 2 S) (d : ℕ) (hd : 1 ≤ d) (hmax : ∀ v, degree G v ≤ d) : (2 * d - 1) * S.card + (∑ v : V, (d - degree G v)) ≤ d * Fintype.card V + 2 * (∑ v ∈ S, (d - degree G v)).", DescribeRole.Theorem)), []));
 }

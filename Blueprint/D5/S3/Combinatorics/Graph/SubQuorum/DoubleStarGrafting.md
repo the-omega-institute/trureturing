@@ -88,7 +88,19 @@ Lean statement: `D5/S3/Combinatorics/Graph/SubQuorum/DoubleStarGrafting.psiSq`
 
 For every finite graph, maximize the cardinality of the actual palette of an admissible Option Nat coloring, bounded by the number of vertices. Every finite palette can be relabeled by natural numbers, so the label carrier does not limit the parameter. The empty coloring attains zero. For a nonempty graph a one-vertex coloring attains one; on the nonempty grafted graphs the explicit construction attains five times the base size.
 
-**Theorem 1.8 (Exact induced degree-at-most-one maximum).**
+**Theorem 1.8 (The exact selected-neighbor condition).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/SubQuorum/DoubleStarGrafting.independent_iff`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/SubQuorum/DoubleStarGrafting.independent_iff` (`✓ std3`). ∎
+
+*Citation.* Wenlin Zhang (2026). *From hypercubes to grids: sub-quorum colorings and structural bounds*. URL: <https://github.com/the-omega-institute/subquorum-colorings/blob/8e42baefc9f4ea674c44023fee6385502839fb17/manuscript/paper.tex>.
+
+*Commentary.*
+
+For every finite simple graph with decidable equality and adjacency, a finite set is two-independent exactly when any two selected neighbors of a selected vertex are equal. This is the original local grafting proof's characterization, also used by canonical composition and cover arguments. No grafting or nonempty hypothesis is needed.
+
+**Theorem 1.9 (Exact induced degree-at-most-one maximum).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/SubQuorum/DoubleStarGrafting.beta_graftGraph`
 
@@ -100,7 +112,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/SubQuorum/DoubleStarGrafting.beta_gra
 
 For every finite nonempty V with decidable equality and every simple graph F with decidable adjacency, beta(graftGraph F,2)=4|V|+beta(F,2). The existing beta parameter maximizes cardinality over actual finsets whose selected vertices have fewer than two selected neighbors. Restrict any such set to the base and each gadget. A gadget contains at most four selected vertices: both centers exclude all leaves; one center permits at most one of its own leaves and both opposite leaves; with neither center only the four leaves remain. Conversely extend an optimal base set by u,b,c,d in every gadget. The selected local edges are ub and the attachment leaves a are absent, so the original induced degrees are preserved.
 
-**Theorem 1.9 (Exact sub-quorum color maximum).**
+**Theorem 1.10 (Exact sub-quorum color maximum).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/SubQuorum/DoubleStarGrafting.psiSq_graftGraph`
 
@@ -119,6 +131,7 @@ For every finite nonempty V with decidable equality and every simple graph F, ps
 - Truth anchor: `D5/S3/Combinatorics/Graph/SubQuorum/DoubleStarGrafting.coloredSupport`
 - Truth anchor: `D5/S3/Combinatorics/Graph/SubQuorum/DoubleStarGrafting.goodAt`
 - Truth anchor: `D5/S3/Combinatorics/Graph/SubQuorum/DoubleStarGrafting.graftGraph`
+- Truth anchor: `D5/S3/Combinatorics/Graph/SubQuorum/DoubleStarGrafting.independent_iff`
 - Truth anchor: `D5/S3/Combinatorics/Graph/SubQuorum/DoubleStarGrafting.localAdj`
 - Truth anchor: `D5/S3/Combinatorics/Graph/SubQuorum/DoubleStarGrafting.palette`
 - Truth anchor: `D5/S3/Combinatorics/Graph/SubQuorum/DoubleStarGrafting.psiSq`

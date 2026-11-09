@@ -90,7 +90,19 @@ $$\forall V \in Type,\; \forall G \in \operatorname{SimpleGraph}\left(V\right),\
 
 In a two-leaf star, the outside vertex is either the centre, giving two neighbours in S, or a leaf, giving a centre and another leaf in S. Conversely, two selected neighbours give a star centred at the outside vertex; a selected neighbour with its own selected neighbour gives a star centred at that selected neighbour. The argument works on any vertex type with decidable equality and adjacency.
 
-**Definition 1.8 (Equality on all bipartite finite graphs).**
+**Theorem 1.8 (The original H0 certificate).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/StarFormingDissociationRefutation.h0_properties`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/StarFormingDissociationRefutation.h0_properties` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The original ten-vertex graph is two-colorable, its selected six-set is inclusion-minimal two-star-forming, and beta two is at most five. These are the same proof bodies consumed by result, exposed for arbitrary port compositions. The public edges, counterGraph and selected definitions retain the original vertex labels, neighborhoods and selected set.
+
+**Definition 1.9 (Equality on all bipartite finite graphs).**
 
 $$claim \Leftrightarrow \left(\forall n \in Nat,\; \forall G \in \operatorname{SimpleGraph}\left(\operatorname{Fin}\left(n\right)\right),\; \operatorname{Colorable}\left(G, 2\right) \Rightarrow \operatorname{beta}\left(G, 2\right) = \operatorname{SF}\left(G, 2\right)\right)$$
 
@@ -102,7 +114,7 @@ $$claim \Leftrightarrow \left(\forall n \in Nat,\; \forall G \in \operatorname{S
 
 Conjecture 4.2 asserts equality for every bipartite finite graph. Graphs on Fin n cover every finite simple graph up to isomorphism. Bipartiteness is expressed by a proper colouring with two colours.
 
-**Theorem 1.9 (The equality is false).**
+**Theorem 1.10 (The equality is false).**
 
 $$\neg claim$$
 
@@ -127,5 +139,6 @@ Use vertices 0 through 9, with sides 0 through 4 and 5 through 9. The neighbourh
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarFormingDissociationRefutation.SF`
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarFormingDissociationRefutation.beta`
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarFormingDissociationRefutation.claim`
+- Truth anchor: `D5/S3/Combinatorics/Graph/StarFormingDissociationRefutation.h0_properties`
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarFormingDissociationRefutation.result`
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarFormingDissociationRefutation.starForming_two_iff`

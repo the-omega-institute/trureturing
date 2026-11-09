@@ -95,7 +95,7 @@ theorem palette_le_psiSq (G : SimpleGraph V) (c : V → Option ℕ)
 theorem beta_le_psiSq (G : SimpleGraph V) [DecidableRel G.Adj] :
     beta G 2 ≤ psiSq G := by
   classical
-  obtain ⟨S,hS,hc⟩ := StarForming.DisjointUnion.beta_attained G 2
+  obtain ⟨S,hS,hc⟩ := StarForming.beta_attained G 2
   have hi : IsSubQuorum G (distinctColoring S) :=
     (injective_support_iff G (distinctColoring S) (distinct_injective S)).mpr
       (by simpa only [distinct_support] using hS)
