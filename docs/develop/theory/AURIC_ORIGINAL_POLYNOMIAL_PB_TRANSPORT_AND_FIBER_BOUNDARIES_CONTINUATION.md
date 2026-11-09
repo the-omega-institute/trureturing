@@ -3995,3 +3995,487 @@ Lemma 1用这些联立系数条件消去准确双线性增量中的交叉阶段�
 七项必须在唯一原世界内共同实现，不能每项各换来源。142–144只给一种完整数学测试类中的方法障碍，145–146只给一般原域的同检测器接口；它们都没有同时供应这七项的物理实现。原量子起源目标、所有原输入的 $K_y\delta_a(b,c)=0$、原全域旧乘法、全部合法历史／未来／真实返回和物理尺度未因这些局部结果而缩减。数学兼容性、纸面证明与物理本体真实性仍分别评价。
 
 ## 追加锚（本行以下为增补区）
+
+## 148. 行列式着色的全部重复演员族与同检测器混合障碍
+
+**定义 148.1（同一个原多项式域上的总响应）。** 复用原多项式卷8.1的标量端点域，取两个乘两个矩阵，改以 $x\in[0,1]$ 记多项式变量：
+
+$$
+\begin{aligned}
+E&=\left\{\alpha I+\sum_{k=1}^d x^kA_k:
+\alpha\in\mathbb R,\ d<\infty,\ A_k=A_k^*\in M_2(\mathbb C)\right\},\\
+\mathcal A&=\{A\in C([0,1],M_2(\mathbb C)):A(0)\in\mathbb CI\},
+\qquad \mathcal X=\mathcal A_{\rm sa},\\
+C&=E\cap\mathcal X_+,\qquad u=I,\qquad
+N(A)=\sup_{0\le x\le1}\|A(x)\|_{\rm op},\qquad
+S(A,B)=A\circ B=(AB+BA)/2.
+\end{aligned}
+\tag{148.1}
+$$
+
+次数有限但没有共同上界。$E$ 含单位，在 $\mathcal X$ 中稠密且不完备；这里 $E+iE$ 本身是结合星多项式代数，这是此例的性质，不是一般原Jordan域的前件。原评价族取 $E$ 上全部数学正实线性泛函，保留全部非负质量。原锥准确，点评价的正向量读取分离 $E$ 并决定此锥。
+
+对所有原 $A,B\in E$，定义同一总函数
+
+$$
+\begin{gathered}
+C_0(A,B)=\frac i2[A,B],\qquad
+\varepsilon(A,B)=
+\begin{cases}
++1,&\det(A+iB)\equiv0\text{ 于 }\mathbb C[x],\\
+-1,&\det(A+iB)\not\equiv0\text{ 于 }\mathbb C[x],
+\end{cases}\\
+D(A,B)=\varepsilon(A,B)C_0(A,B).
+\end{gathered}
+\tag{148.2}
+$$
+
+判别的是整个复多项式恒零，不是某一点的行列式，也不是整个输入矩阵恒零。$C_0(A,B)$ 是原自伴多项式，且在零点为零，所以 $D:E^2\to E$ 确实是总响应；每份内回复、外回复及重合输入都由148.2唯一确定。
+
+为固定系数取向，记标准Pauli系数矩阵
+
+$$
+X=\begin{pmatrix}0&1\\1&0\end{pmatrix},\qquad
+Y=\begin{pmatrix}0&-i\\i&0\end{pmatrix},\qquad
+Z=\begin{pmatrix}1&0\\0&-1\end{pmatrix}.
+\tag{148.3}
+$$
+
+$X,Y,Z$ 只作系数，均不作为非标量常数输入交给 $D$。本组所有PB均指103.4的实际有限差分及配平三角续卷128.4的同一个原 $Q$ 平衡。
+
+**定理 148.2（重复演员不能排除的总表及全实共同标签的排除）。** 148.2的同一份 $D$ 有以下联合性质。
+
+1. 原A1–A3、全部原P2、准确锥、单位及范数保持；量化全部正读取和全部非负质量。反对称、每槽奇性、全部 $SO(2)$ 槽旋转、交换零集、同生成元多项式零行、全单位零行、交换子范数界及Jordan正交对的平方／面积关系均成立，准确形式见149.3–149.4。
+2. 对每个原 $r,t\in E$，两类实际调用
+   $$
+   \operatorname{PB}_D(r;r,t),\qquad
+   \operatorname{PB}_D(r;t,r)
+   \tag{148.4}
+   $$
+   同时成立，包括退化、零和重合标签。这恰是所断言的两个重复演员族，不扩大为其它重复标签、多项式自作用或所有标量第三标签族。
+3. 在同一原表中取 $a=F=2xX$、$G=xZ$、$(s,b,c)=(3G,G,2G)$、$y=x(X+Y)/\sqrt2$，使用145.1和146.1的原定义，准确有
+   $$
+   \delta=-8x^2Y,\qquad H=8x^2Y=-\delta,\qquad
+   w=K_y\delta=4x^4(X-Y)\ne0.
+   \tag{148.5}
+   $$
+   150给出同一质量一检测态、全部十二份正分量及实际质量，以及原平方框架的三个准确零误差。在 $q=0$ 上，145.2的六张实际调用均成立，十二个外出现全部保留。
+4. 对每个实数 $j,\mu$，置 $t_j=jG$、$r_\lambda=F+\lambda I$、$q_\mu=\mu G$，其中 $\lambda=0,1$。以151.1的残差 $\mathcal R_{\lambda,j}(\mu)$ 记实际 $\operatorname{PB}_D(t_j;r_\lambda,q_\mu)$ 左侧减所需右侧，并置
+   $$
+   \sigma_j=\begin{cases}+1,&j=2\text{ 或 }j=-2,\\-1,&\text{其它实 }j.\end{cases}
+   $$
+   则全实参数上准确有
+   $$
+   \mathcal R_{0,j}(\mu)=4j\mu(\sigma_j\sigma_\mu-1)x^3X,
+   \qquad \mathcal R_{1,j}(\mu)=0.
+   \tag{148.6}
+   $$
+   在同一个出现表 $j=(3,1,2)$、原权重 $\kappa=(1,-1,-1)$ 和 $\rho_{\lambda,j}=(2\lambda-1)\kappa_j$ 下，使用同一个 $g=F+I$、$T$ 和 $\ell$，有
+   $$
+   \begin{aligned}
+   \sum_{\lambda,j}\rho_{\lambda,j}\mathcal R_{\lambda,j}(\mu)
+   &=T(q_\mu)-2g\circ H-2\delta
+   =T(q_\mu)=2\sigma_\mu C_0(\delta,q_\mu),\\
+   \ell\bigl(T(q_\mu)-2g\circ H-2\delta\bigr)
+   &=64\mu\sigma_\mu.
+   \end{aligned}
+   \tag{148.7}
+   $$
+   每个非零共同实 $\mu$ 都在同一检测器下检出至少一张实际混合调用失败；$\mu=0$ 返回第3项的有效包。
+5. 更一般地，在此原域上，按 $\det(A+iB)$ 恒零／非恒零两类各指定一个固定颜色 $s_0,t_0\in\{1,-1\}$，令响应为相应颜色乘 $C_0$。若它满足152的全部非零多项式轮廓混合调用，则 $s_0=t_0$。因此排除的是这个明定的不同两色行列式类，未分类任意总响应。
+
+证明分为149–152。第3、4项应用145–146的既有定义和恒等式，不将其重新计作一般域运输定理；第5项的常色终点直接复用普通／相反乘法模型。
+
+## 149. 全部正读取及左右因子的重复演员证明
+
+**定理148.2第1、2项的证明。** 若 $\phi:E\to\mathbb R$ 正，原序单位界立即给
+
+$$
+|\phi(A)|\le\phi(I)N(A).
+\tag{149.1}
+$$
+
+所以每个这样的读取都连续；零质量时它恒零。它唯一延拓为 $\mathcal X$ 上正实线性泛函，再复线性延拓到 $\mathcal A$ 上的正泛函：若正 $A\in\mathcal X$ 由 $A_n\in E$ 一致逼近，取 $\epsilon_n\ge N(A_n-A)$ 趋零，则 $A_n+\epsilon_nI\in C$，极限给正性。于是没有只检查点评价或一部分质量。
+
+在148.2的每一个固定输入对上，$D$ 的P2表恰为
+
+$$
+\begin{pmatrix}
+\phi(A^2)&\phi(A\circ B)-i\phi(D(A,B))\\
+\phi(A\circ B)+i\phi(D(A,B))&\phi(B^2)
+\end{pmatrix}=\begin{cases}
+\begin{pmatrix}\phi(A^2)&\phi(AB)\\\phi(BA)&\phi(B^2)\end{pmatrix},&\varepsilon=+1,\\
+\overline{\begin{pmatrix}\phi(A^2)&\phi(AB)\\\phi(BA)&\phi(B^2)\end{pmatrix}},&\varepsilon=-1.
+\end{cases}
+\tag{149.2}
+$$
+
+普通正Gram表及其逐项共轭均半正定，故全部原P2成立。A2只读已知Jordan实Gram表，$(A+B,A,B)$ 的指定关系向量给零；A3由 $I^2=I$ 和 $0\le e\le\theta I\Rightarrow e^2\le e$ 给出，其中原固定有理 $0<\theta\le1$ 任取。每个质量及其任意非负缩放均保留。
+
+令 $Z_0=A+iB$。实槽旋转对应乘单位复相位，交换两槽或单槽变号对应乘相位后的 $Z_0^*$。行列式恒零与否在这些操作下不变，所以颜色也不变。对 $C_0$ 用同一操作，得到
+
+$$
+\begin{gathered}
+D(B,A)=-D(A,B),\qquad
+D(-A,B)=D(A,-B)=-D(A,B),\\
+D(cA-sB,sA+cB)=D(A,B)\quad(c^2+s^2=1),\\
+D(A,B)=0\Longleftrightarrow[A,B]=0,\qquad
+D(p(A),q(A))=0,\qquad D(\alpha I,A)=0,\\
+N(D(A,B))\le N(A)N(B).
+\end{gathered}
+\tag{149.3}
+$$
+
+这里 $p,q$ 是任意实多项式，$\alpha$ 是任意实数。又若 $A\circ B=0$，已知结合乘法给 $AB=-BA$，所以
+
+$$
+A\circ D(A,B)=B\circ D(A,B)=0,\qquad
+D(A,B)^2=A^2B^2.
+\tag{149.4}
+$$
+
+这些平方和正交关系不受正负号影响。这里只证明每个二表的正性；没有断言同一个多输入有限复Gram表正。
+
+现在固定任意原 $r,t$，记 $\sigma=\varepsilon(r,t)$、$Z_r=r+it$。在 $\operatorname{PB}_D(r;r,t)$ 中，实际内值给
+
+$$
+v=-r\circ t,\qquad z=r^2+\sigma C_0(r,t).
+$$
+
+两份实际外复坐标准确为
+
+$$
+(r\pm v)+i(t\pm z)=
+\begin{cases}
+(I\pm ir)Z_r,&\sigma=+1,\\
+Z_r(I\pm ir),&\sigma=-1.
+\end{cases}
+\tag{149.5}
+$$
+
+因为 $r(0)=\rho I$、$\rho\in\mathbb R$，
+
+$$
+\det(I\pm ir)(0)=(1\pm i\rho)^2\ne0.
+\tag{149.6}
+$$
+
+$\mathbb C[x]$ 是整环；由行列式乘法性，149.5两端外对的行列式恒零当且仅当 $\det Z_r\equiv0$。故两份实际外颜色都等于内颜色 $\sigma$。两份内回复及两份外回复因此都与固定响应 $\sigma C_0$ 相同。该固定响应的完整PB由普通或相反结合乘法的既有平方恒等式供应，直接应用即得当前实际调用的元素式及全部读取的 $Q$ 平衡。
+
+对另一族 $\operatorname{PB}_D(r;t,r)$，实际内值是
+
+$$
+v=\sigma C_0(r,t)-r^2,\qquad z=r\circ t.
+$$
+
+此时种子 $W_r=t+ir=iZ_r^*$ 与 $Z_r$ 同属一个行列式类，且
+
+$$
+(t\pm v)+i(r\pm z)=
+\begin{cases}
+(I\pm ir)W_r,&\sigma=+1,\\
+W_r(I\pm ir),&\sigma=-1.
+\end{cases}
+\tag{149.7}
+$$
+
+用149.6重复同一个整环论证，两个实际外颜色仍等于 $\sigma$，故此族也完整配平。若交换子为零或标签退化，因子公式及颜色判别仍逐字成立。没有使用 $I\pm ir$ 的逆元，没有向完成添加输入，也没有对 $D$ 取极限。第1、2项得证。∎
+
+## 150. 原两行缺陷、非零检测与准确零框架误差
+
+**定理148.2第3项的证明及固定数据。** 取148.2第3项的 $F,G$、出现表及权重，记 $r_\lambda=F+\lambda I$。对任意实 $j$，
+
+$$
+\det(F+ijG)=(j^2-4)x^2,\qquad
+\det(r_1+ijG)=1+(j^2-4)x^2.
+\tag{150.1}
+$$
+
+故 $D(F,jG)=2j\sigma_jx^2Y$，而 $D(r_1,jG)=-2jx^2Y$。按出现次序 $j=(3,1,2)$ 写出全部内值，得到
+
+$$
+(d_{0,j})=(-6,-2,4)x^2Y,\qquad
+(d_{1,j})=(-6,-2,-4)x^2Y.
+\tag{150.2}
+$$
+
+直接应用145.1给148.5；尤其 $H$ 不为零。令
+
+$$
+U=\frac{X-Y}{\sqrt2},\qquad V=\frac{X+Y}{\sqrt2},\qquad
+\beta(A)=\frac12\operatorname{Tr}((I+U)A(1)),\qquad y=xV.
+\tag{150.3}
+$$
+
+这是数学正读取，质量为一。$w=4\sqrt2x^4U$，所以
+
+$$
+\beta(w^2)=32,\qquad \beta(w)=4\sqrt2,\qquad
+\operatorname{Var}_\beta(w)=0,\qquad \beta(y)=0,\qquad\beta(y^2)=1.
+\tag{150.4}
+$$
+
+146.3的指定选择因此恰为 $h=y$、$\nu=1$，不是另换检测框架。同一有符号泛函仍是
+
+$$
+\ell(v)=\beta(w\circ K_y(v)),\qquad
+\ell(\delta)=32,\qquad \ell(x^3X)=4.
+\tag{150.5}
+$$
+
+在 $q=0$ 下，对每个 $j\in(3,1,2)$ 和每个 $e\in\{1,-1\}$，145.2的实际外出现为
+
+$$
+\begin{aligned}
+A_{0,j}^e&=F-e d_{0,j},& B_{0,j}^e&=0,& O_{0,j}^e&=0,\\
+A_{1,j}^e&=r_1+e\,2jx^2Y,& B_{1,j}^e&=e jxZ,&
+O_{1,j}^e&=2j^2x^3X-e\,2jx^2Y.
+\end{aligned}
+\tag{150.6}
+$$
+
+第二行外复坐标的常数项是 $I$，故两个颜色都是 $-1$；第一行输出由全零第二槽确定。这十二份值均来自148.2，不是逐端另赋值。两行外差分别为 $0$ 和 $-4jx^2Y$，恰等于各自PB右侧。已知普通平方差分别为 $0$ 和 $8jx^2Y$，所以全部六张 $Q$ 平衡成立。按原权重相加给
+
+$$
+T(0)=0,\qquad g=F+I,\qquad g\circ H=H=-\delta,
+\qquad W_g=32x^2Y=-4\delta,
+\tag{150.7}
+$$
+
+以及 $\ell(W_g)=-128$、$\ell(T(0)-2g\circ H)=64$。这是145–146的同一返回的代入，没有将 $\delta$ 换为 $H$ 或 $w$。
+
+保留146.2的精确复合次序及每个独立符号 $\eta,\sigma,\theta\in\{1,-1\}$，全部正读取和质量为
+
+$$
+\begin{aligned}
+\psi_{\eta\sigma}&=\beta\circ U_{I+\eta w}\circ U_{I+\sigma y^2},&
+m_{\eta\sigma}&=(1+\sigma)^2(1+4\sqrt2\eta)^2,\\
+\varphi_{\eta\sigma\theta}
+&=\beta\circ U_{I+\eta w}\circ U_{I+\sigma y}\circ U_{I+\theta y},&
+n_{\eta\sigma\theta}
+&=\begin{cases}8(1+4\sqrt2\eta)^2,&\sigma=\theta,\\0,&\sigma\ne\theta.
+\end{cases}
+\end{aligned}
+\tag{150.8}
+$$
+
+这里 $U_z(A)=zAz$ 是148.1中已知Jordan二次表示。证明这些质量只需在 $x=1$ 使用 $y^2=I$、$w=4\sqrt2U$，以及 $\beta$ 支撑于 $U$ 的正特征射线且 $\beta(V)=0$。于是 $I+\eta w$ 在该射线上给因子 $1+4\sqrt2\eta$；两个同号 $I\pm V$ 的四次方读取为八，异号乘积为零。四个 $m$ 和八个 $n$ 全部保留，包括零与不等质量，不除法、不合并出现。
+
+同一泛函的正分量分解仍逐字采用146.3。更明确地，对151中的每个实际外出现和每个 $\omega\in\{\psi_{\eta\sigma},\varphi_{\eta\sigma\theta}\}$，全部P2给
+
+$$
+|\omega(O_{\lambda,j}^e)|\le
+\sqrt{\omega((A_{\lambda,j}^e)^2)\omega((B_{\lambda,j}^e)^2)
+-\omega(A_{\lambda,j}^e\circ B_{\lambda,j}^e)^2}.
+\tag{150.9}
+$$
+
+这逐份保持全部十二个外出现、每份正读取和原质量；没有从单表预算推导残差为零。
+
+最后令系数 $p_+=(I+U)/2$，仅将下列多项式当作原输入：
+
+$$
+e_n=x^np_+\in E,\qquad 0\le e_n\le I,\qquad
+P_n=e_n^2=x^{2n}p_+\in E\quad(n\ge1).
+\tag{150.10}
+$$
+
+在 $\beta$ 的点评价GNS表示中，$p_+\xi=\xi$、$p_+V\xi=0$、$V^2\xi=\xi$。所以同一个 $h=y$ 满足
+
+$$
+P_n\xi=\xi,\qquad P_nh\xi=0,\qquad P_nh^2\xi=\xi,
+\qquad e_{0n}=e_{1n}=e_{2n}=0.
+\tag{150.11}
+$$
+
+误差恰是146.9的三个误差。$P_n=(xp_+)^{2n}$ 在双对偶中单调强降到点评价正射线的最小支撑，故与原平方支撑构造相容。这里没有对 $p_+$、极限支撑或完成标签调用 $D$；也没有识别任何框架标签上的未知回复。第3项得证。∎
+
+## 151. 全实共同第三标签的两行实际残差与原检测器返回
+
+**定理148.2第4项的证明。** 保留150全部固定数据、正读取和实际质量。对任意实 $j,\mu$，取同一个原 $q_\mu=\mu xZ$，仍按145.2逐次生成 $v,z,A,B,O$。只为度量是否满足PB，定义残差
+
+$$
+\mathcal R_{\lambda,j}(\mu)
+=O_{\lambda,j}^+-O_{\lambda,j}^-
++2r_\lambda\circ v_{\lambda,j}+2q_\mu\circ z_{\lambda,j}.
+\tag{151.1}
+$$
+
+残差为零等价于该实际调用的元素PB；没有预先假定这些混合PB成立。两行共享同一份 $f_j=D(t_j,q_\mu)=0$，实际内值准确是
+
+$$
+\begin{aligned}
+v_{0,j}&=-2j\sigma_jx^2Y-j\mu x^2I,& z_{0,j}&=0,\\
+v_{1,j}&=2jx^2Y-j\mu x^2I,& z_{1,j}&=jxZ.
+\end{aligned}
+\tag{151.2}
+$$
+
+因此对两个实际端点符号 $e=1,-1$，
+
+$$
+\begin{aligned}
+A_{0,j}^e&=F-e(2j\sigma_jx^2Y+j\mu x^2I),&
+B_{0,j}^e&=\mu xZ,\\
+A_{1,j}^e&=r_1+e(2jx^2Y-j\mu x^2I),&
+B_{1,j}^e&=(\mu+ej)xZ.
+\end{aligned}
+\tag{151.3}
+$$
+
+普通Pauli行列式给出
+
+$$
+\det(A_{0,j}^e+iB_{0,j}^e)
+=(\mu^2-4)x^2(1+j^2x^2).
+\tag{151.4}
+$$
+
+因为 $1+j^2x^2$ 不是零多项式，两份实际外颜色都恰为 $\sigma_\mu$，包含 $j=0$、$\mu=0$ 和 $\mu=\pm2$。第二行复行列式的常数项为一，两份实际外颜色都为 $-1$。逐个应用148.2，而不拆开 $D$ 的输入和，得到
+
+$$
+\begin{aligned}
+O_{0,j}^e&=\sigma_\mu
+\bigl(2\mu x^2Y+e\,2j\mu\sigma_jx^3X\bigr),\\
+O_{1,j}^e&=-2(\mu+ej)x^2Y+e\,2j(\mu+ej)x^3X.
+\end{aligned}
+\tag{151.5}
+$$
+
+故实际外差与PB所需右侧的逐行对照为
+
+$$
+\begin{aligned}
+O_{0,j}^+-O_{0,j}^-&=4j\mu\sigma_j\sigma_\mu x^3X,&
+-2r_0\circ v_{0,j}-2q_\mu\circ z_{0,j}&=4j\mu x^3X,\\
+O_{1,j}^+-O_{1,j}^-&=-4jx^2Y+4j\mu x^3X,&
+-2r_1\circ v_{1,j}-2q_\mu\circ z_{1,j}&=-4jx^2Y+4j\mu x^3X.
+\end{aligned}
+\tag{151.6}
+$$
+
+相减即148.6。对 $j\mu\ne0$，第一行成立当且仅当 $\sigma_j=\sigma_\mu$；第二行在全部实参数上成立。$j\mu=0$ 时第一行也成立，没有从非零参数外推其值。
+
+返回原出现表 $j=(3,1,2)$、原 $\kappa,\rho,\chi$，不删除任何一个外出现。由
+
+$$
+\sum_j\kappa_jj=0,\qquad
+M:=\sum_j\kappa_jj\sigma_j
+=3\sigma_3-\sigma_1-2\sigma_2=-4,
+$$
+
+和151.5逐项相加，得到
+
+$$
+\begin{aligned}
+T(q_\mu)
+&=\sum_{\lambda,j,e}\rho_{\lambda,j}eO_{\lambda,j}^e
+=-4\mu\sigma_\mu Mx^3X
+=16\mu\sigma_\mu x^3X,\\
+H&=-\delta,\qquad g\circ H=H,\qquad
+C_0(\delta,q_\mu)=8\mu x^3X.
+\end{aligned}
+\tag{151.7}
+$$
+
+145.6中只展开已知平方的部分，以及 $z_{1,j}-z_{0,j}=t_j$，仍在当前总表中准确成立。保留PB残差后，该既有锚定计算的形式是
+
+$$
+\sum_{\lambda,j}\rho_{\lambda,j}\mathcal R_{\lambda,j}(\mu)
+=T(q_\mu)-2g\circ H-2\delta.
+\tag{151.8}
+$$
+
+这里没有在不满足PB的表中套用145.5的零残差结论。由于当前 $g\circ H=-\delta$，151.8等于151.7的 $T(q_\mu)$，给148.7第一行。再用同一个150.5的 $\ell$，得到 $64\mu\sigma_\mu$。
+
+全部正分量也逐份保留：对150.8的每个 $\omega$，都有
+
+$$
+\sum_{\lambda,j}\rho_{\lambda,j}\omega(\mathcal R_{\lambda,j}(\mu))
+=\omega(T(q_\mu)-2g\circ H-2\delta)
+=16\mu\sigma_\mu\omega(x^3X).
+\tag{151.9}
+$$
+
+按146.3的原有符号和系数合回同一个 $\ell$，才得到148.7的检测值；不是把每个正分量的右侧都换成该检测值。正分量仍有150.8的原质量，且150.9逐个控制全部外出现。任何零质量或数值重合都不删去。
+
+因此 $\mu=0$ 准确返回150.6，而每个非零实 $\mu$ 都检出混合失败。例如 $j=2,\mu=1$ 时 $\mathcal R_{0,2}(1)=-16x^3X$、$\ell(\mathcal R_{0,2}(1))=-64$。这是全实公式的一个代入，不是只靠该有限样本断言统一结论。第4项得证。∎
+
+## 152. 非零多项式轮廓中的不同两色行列式机制被排除
+
+**定理148.2第5项的证明。** 固定两个颜色 $s_0,t_0\in\{1,-1\}$，在148.1的全部原输入上定义
+
+$$
+\varepsilon_{s_0,t_0}(A,B)=
+\begin{cases}s_0,&\det(A+iB)\equiv0,\\t_0,&\det(A+iB)\not\equiv0,
+\end{cases}
+\qquad D_{s_0,t_0}=\varepsilon_{s_0,t_0}C_0.
+\tag{152.1}
+$$
+
+这限定的是固定两色总表类，不允许颜色另依赖输入、读者、次数或端点。取任意非零实多项式 $p_0,h_0$，满足 $p_0(0)=h_0(0)=0$，并令
+
+$$
+F_0=p_0X,\qquad G_0=h_0Z,\qquad
+\sigma_j=\varepsilon_{s_0,t_0}(F_0,jG_0).
+\tag{152.2}
+$$
+
+此处 $h_0$ 是多项式轮廓，不是150固定检测器的 $h$。对任意实 $j,\mu$，考虑同一总表实际生成的 $\operatorname{PB}_{D_{s_0,t_0}}(jG_0;F_0,\mu G_0)$。其共享同轴回复为零，实际位移为
+
+$$
+v=-j\sigma_jp_0h_0Y-j\mu h_0^2I,\qquad z=0.
+$$
+
+对每个端点 $e=\pm1$，直接计算
+
+$$
+\begin{aligned}
+\det\bigl(F_0+ev+i\mu G_0\bigr)
+&=(\mu^2h_0^2-p_0^2)(1+j^2h_0^2),\\
+D_{s_0,t_0}(F_0+ev,\mu G_0)
+&=\sigma_\mu\bigl(\mu p_0h_0Y
++e j\mu\sigma_jp_0h_0^2X\bigr).
+\end{aligned}
+\tag{152.3}
+$$
+
+因 $1+j^2h_0^2$ 的常数项为一，外颜色恰等于 $\sigma_\mu$，并不需要除以 $p_0$ 或 $h_0$。所需PB右侧为 $2j\mu p_0h_0^2X$，故实际残差准确为
+
+$$
+2j\mu(\sigma_j\sigma_\mu-1)p_0h_0^2X.
+\tag{152.4}
+$$
+
+非零多项式之积非零。因此若这个轮廓上所有非零 $j,\mu$ 的混合行都成立，则所有非零 $j$ 上的 $\sigma_j$ 必相同。若再要求对全部152.2的轮廓成立，可取任意实 $c\ne0$ 及 $p_0=ch_0$。种子行列式为 $(j^2-c^2)h_0^2$；$j=\pm c$ 取色 $s_0$，而任何其它非零 $j$ 取色 $t_0$。152.4迫使 $s_0t_0=1$，即 $s_0=t_0$。
+
+反之常色表是已知的 $+C_0$ 或 $-C_0$ 普通／相反乘法模型，完整PB直接复用原多项式卷8.1所引的模型接口。不另作标准模型分类。上述计算还包括零参数的零残差，但排除不同颜色只用两个非零参数。没有取点评价、使用逆元、加入原投影或假定响应正则性。第5项得证，定理148.2全部证明完成。∎
+
+## 153. 共同插值、完整原域与七项来源的准确适用边界
+
+**定义 153.1（新增关系与复用结果的分界）。** 148–152的承重增量是同一个行列式着色总表上两个全原重复演员族的共同保持，以及在全部实共同第三标签下保留两行、$H$、十二个外出现和全部正分量质量的同检测器混合残差；152将它用于明定的多项式轮廓两色类。行列式乘法性、Pauli恒等式、正C*二表、正读取延拓与GNS均为成熟中间工具，145的锚定平方、146的正分量和原框架、普通／相反乘法、既有核恢复和完整域分类均只作复用，不另计为新的定理。
+
+103–108及123–125的轨道反号总表与148.2不是同一映射。前者已付的标量第三标签、乘积铅笔及多项式自作用族不转给当前表；其107.6和125.2的重复演员失败也不转给当前表。148.4只断言准确写出的两个全原族。反过来，151已经证明当前表不满足完整PB，因此它不是FULLPB模型，不反驳完整PB充分性，也不是一般重构。
+
+共同插值的准确成熟参照是Ayupov、Arzikulov、Umrzaqov、Nuriddinov，[*2-Local and local derivations on Jordan matrix rings over commutative involutive rings*](https://arxiv.org/html/2108.03993v4)，arXiv:2108.03993v4，§2的定义和Theorem 4。该定理在其含单位、交换、对合且二可逆系数环上的完整自伴矩阵Jordan环中，要求每两个输入共用同一个内导子；该内导子本身加性。这里不能以Banach范数不完备解释其不适用，因为该环定理没有Banach完备前提。对当前同一行 $T_F(B)=D(F,B)$，150.1直接给
+
+$$
+T_F(G)=-2x^2Y,\qquad T_F(2G)=4x^2Y\ne2T_F(G).
+\tag{153.1}
+$$
+
+所以甚至这两个输入都没有共同加性插值器；该两点算术复用108.4所用的共同插值判据，不另立为新定理。并且标量端点的 $E$ 不直接等于该文要求的完整矩阵环。文献只辨认缺失前件，不参与149–152的证明。此处归为 $\texttt{repo-derived}$ 的有界范围综合，不声称历史优先权、文献穷尽、形式核验或物理实现。
+
+完整域中已付的中央抽取及运输，继续按[混合响应续卷126–130](AURIC_SPECTRAL_MIXED_RESPONSES_AND_DIRECT_WINDOW_BOUNDARIES_CONTINUATION.md#126-已分类中央角的背景独立性不需要有限性)与147.2使用；它们要求同一个完整原 $E=M_{\rm sa}$ 及其合法坐标、酉元或谱构造。148的域不是该完整域，且一般原域甚至未必使 $E+iE$ 结合闭合。行列式坐标和152的符号表示没有推广为任意原 $D$ 的表示。
+
+**定义 153.2（一般原检测预算及全部同源义务保持）。** 一般原域中未解决的仍是147.1的同一任务：从全部实际原P2及完整PB，在不预设 $D$ 线性、连续、协变、符号交换子表示或原谱标签的条件下，控制同一个 $T(q)-2(a+u)\circ H=2\delta$，在146的同一个 $\ell$ 及全部实际正分量质量下给出目标相关联合预算或实际运输。151的残差计算只排除一个类，既没有给该一般预算，也没有证明该预算不存在。原域可不完备、无原子、不可分；不能以此多项式例或已分类完整域替换它。全部重复演员抽样已无法排除148.2，因为149证明了这两个完整族；真正增加区分信息的是151的实际混合调用。
+
+本组完整合取[147.3](#147-原域预算缺口成熟交叉配平工具与全部来源合同)及[SF105.1第1–7项全文、式105.1–105.7](AURIC_SEMIFINITE_ORIGINAL_RESPONSE_AND_CENTRAL_POLAR_GEOMETRY.md#105-七项真实同源物理来源的完整合同)，连同其中SF96.1及全部逐项引用的上游定义、源身份、条件和量词；该合取不由下面的范围说明替代。唯一原 $\Omega/\mathrm{native}$、原 $E,C,u,N,\mathcal P,S,D$、全原标签全向量的共同全词 $K/J/q$、零及任意有限词长、跨评价配对、parent/ready、实际控制和相干准备均保持原要求。150的数学 $\beta$、GNS、$x,j,\mu$ 不改认作这些物理来源。
+
+全部原准备、事件、效果、完整Born菜单及接受端、共同根、抽签、mark、C12/A12/BI12/P9及独立 $W_e$、中间切口、零／不等／次归一质量、中央／经典／不等维／静默块继续保留。真正相关的非零原联合、共同实现、忠实同向交换局部腿、生成分离、重数和每层实际同源参考不由相同边缘或数学张量代替。每条typed未归一CP回溯、Kraus适用域、每个有限参考深度与每个正精度、精确累计支持、全系统环境及全部成功／失败／细记录／port／post-port输出、每份输出的每个仍合法未来仍按原合同供应。
+
+整台仪器、完整typed单位分区、TP、原平方根可执行词、Lüders的全输出逐射线校准、真正分组遗忘、AC、$N_u$、X/Xs保持各自全部前件。全部合法顺序／自适应／并行历史与未来、环境记录泄漏、停止拒绝销毁、同数两侧及逆向真实双向返回、完整活动输入读后CountRead、两条负提升活路及相干聚合、精确 $B$ 与闭 $B_{\rm cl}$、原独立彩票和全部拒绝叶，均不截成有限角。无限或非离散记录、可数可加、正常性、指定前对偶与收敛仍须原扩展来源；未定义请求保持未定义。
+
+保持原域的动力、实际门和相位及逆、可逆一参数群、物理钟与单位、强酉实现、生成元域、Hamiltonian能量、共同仪器和同一个正 $\hbar$ 继续保持同源。原 $\sigma,t_0,d$、固定域、resolvent和 $3s+r\le1$ 不与本组着色或多项式参数混同。七项须在同一原世界共同实现，不能分别另选来源。即使以后在一般原域证明 $w=0$，后续全域旧乘法、概率、仪器、相关联合、全部合法历史／未来／真实返回及物理尺度的原桥仍须逐项连接；本组没有完成、否定或缩减完整量子起源目标。
+
+## 追加锚（本行以下为增补区）
