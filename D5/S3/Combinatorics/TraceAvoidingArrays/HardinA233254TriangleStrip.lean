@@ -101,9 +101,6 @@ firstCount: proof_shape=bind-only; consumers=initial_counts
 firstMoment: proof_shape=bind-only; consumers=initial_counts
 sum_rows: proof_shape=bind-only; consumers=unseen01010_counts
 scan_sum: proof_shape=bind-only; consumers=sum_beta_rows, reduce_counts, reduce_first
-full_factor: proof_shape=bind-only; consumers=full_weight
-full_advance: proof_shape=bind-only; consumers=full_weight
-full_weight: proof_shape=bind-only; consumers=sum_beta_rows
 sum_beta_rows: proof_shape=bind-only; consumers=full_moments
 labelCount: proof_shape=bind-only; consumers=full_moments
 full_flags: proof_shape=bind-only; consumers=full_moments
@@ -184,6 +181,7 @@ result: proof_shape=content; consumers=terminal result
 
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255LiteralBridge
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255ShapeSymmetry
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip
 import D5.S3.Observer.Separation.BooleanRankThreeK4
 import Mathlib.Tactic.FinCases
@@ -201,6 +199,7 @@ open HardinA233175PairStrip (Seen allowed advance good finish finish_fst finish_
 open D5.S3.Observer.Separation.BooleanRankThreeK4 (beta)
 open HardinA233251TriangleStrip
 open HardinA233255LiteralBridge (labelAdvance labelWeight rowFinish rowWeight scanner_fibres)
+open HardinA233255ShapeSymmetry (full_row)
 abbrev Row := Fin 6 → Fin 6
 abbrev Boundary := Fin 5 → Fin 3
 def rowLegal (c : Row) : Prop :=
@@ -296,17 +295,6 @@ private theorem scan_sum (n : ℕ) (s : Seen) (f : (Fin n → Fin 3) → Seen �
       f (fun j => beta (c j)) (finish s c) else 0) =
       ∑ b : Fin n → Fin 3, rowWeight s b * f b (rowFinish s b) := by
   exact scanner_fibres n s (fun st b => f b st)
-private theorem full_factor (b : Fin 3) : labelWeight (true, true) b = 2 := by
-  fin_cases b <;> decide +kernel
-private theorem full_advance (b : Fin 3) : labelAdvance (true, true) b = (true, true) := by
-  fin_cases b <;> rfl
-private theorem full_weight (n : ℕ) (b : Fin n → Fin 3) :
-    rowWeight (true, true) b = 2 ^ n := by
-  induction n with
-  | zero => rfl
-  | succ n ih =>
-    rw [rowWeight, full_factor, full_advance, ih, pow_succ]
-    ring
 private theorem sum_beta_rows (n : ℕ) (f : (Fin n → Fin 3) → ℤ) :
     (∑ c : Fin n → Fin 6, f (fun j => beta (c j))) =
       2 ^ n * ∑ b : Fin n → Fin 3, f b := by
@@ -315,7 +303,7 @@ private theorem sum_beta_rows (n : ℕ) (f : (Fin n → Fin 3) → ℤ) :
     intro i
     exact ⟨fun _ => Or.inl rfl, fun _ => Or.inl rfl⟩
   have hh := scan_sum n (true, true) (fun b _ => f b)
-  simpa only [ite_eq_left (hg _), full_weight, ← Finset.mul_sum] using hh
+  simpa only [ite_eq_left (hg _), fun b => (full_row n b).2, ← Finset.mul_sum] using hh
 private def labelCount (p : Boundary) (i : Fin 4) : ℤ :=
   ∑ c : Fin 6 → Fin 3,
     if (∀ j : Fin 5, c j.castSucc ≠ c j.succ) ∧
