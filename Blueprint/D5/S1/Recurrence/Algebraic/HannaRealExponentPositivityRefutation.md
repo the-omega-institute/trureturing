@@ -36,6 +36,10 @@ $$\neg (\forall t: \mathbb{R}, ((\exists G: \operatorname{PowerSeries}\left(\mat
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Algebraic/HannaRealExponentPositivityRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/hanna-a281186-real-exponent-refutation` (refuted) by `D5/S1/Recurrence/Algebraic/HannaRealExponentPositivityRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hanna-a281186-real-exponent-refutation","declaration_gid":"D5/S1/Recurrence/Algebraic/HannaRealExponentPositivityRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Paul D. Hanna (2017). *OEIS A281186: real-exponent positivity conjecture*. URL: <https://oeis.org/A281186/internal>.

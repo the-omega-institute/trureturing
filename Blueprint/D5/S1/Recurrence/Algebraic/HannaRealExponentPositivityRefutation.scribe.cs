@@ -32,13 +32,15 @@ internal sealed class HannaRealExponentPositivityRefutationDocument : IScribeDoc
             Node("result", "Refutation at the boundary parameter",
                 Disp(Seq(Neg, Sp, Parenthesized(ClaimBody()))),
                 "At t=8/3, write y=PowerSeries.logOf G. Differentiation of the integral equation gives (1+y)y′=exp((5/3)y). An integer polynomial sequence begins with Q₀=1 and satisfies Qₙ=((5n+3)X+6−n)Qₙ₋₁+3(1+X)Q′ₙ₋₁ for n≥1. Induction on the derivative order gives (n+1)! · coeff(n+1,G)=(1/3)^n · coeff(0,Qₙ). Exact integer reduction proves coeff(0,Q₇₁₉)<0. The asserted existence supplies G, and the asserted nonnegativity at 8/3 contradicts its degree-720 coefficient. This argument does not separately establish existence, uniqueness, the least negative degree, or a corrected threshold.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("hanna-a281186-real-exponent-refutation"), ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula,
-        string prose, DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        string prose, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
         DescribeId.Create("hanna-real-exponent-" + name.ToLowerInvariant()),
         DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
-        provenance, Blocks(Paragraph(Text(prose))), role);
+        provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula V(string name) => F.Id(name);
     private static Formula Named(string name) => Seq(Operatorname, Grp(V(name)));
