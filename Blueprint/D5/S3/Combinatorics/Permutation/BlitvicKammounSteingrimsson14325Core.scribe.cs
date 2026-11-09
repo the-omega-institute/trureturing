@@ -11,7 +11,7 @@ internal sealed class BlitvicKammounSteingrimsson14325CoreDocument : IScribeDocu
         LibraryNoteRef.Create("D5/L/PermutationPatterns/blitvickammounsteingrimsson2026patterns");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The prescribed 14325 permutations correspond exactly to rank assignments on the endpoint-deleted grid.",
+        "The prescribed 14325 permutations have the exact transfer count and both universal modular laws.",
         H("Exact source structure of 14325 packings"),
         Blocks(
             Paragraph(Text("The zero-based pattern is (0,3,2,1,4), overlap is two, "
@@ -48,10 +48,40 @@ internal sealed class BlitvicKammounSteingrimsson14325CoreDocument : IScribeDocu
                 + "comparisons of every window, including the first and last windows. "
                 + "The two maps are inverse on actual permutations, so no labeling "
                 + "or symmetry factor occurs."),
-            Paragraph(Text("A first-z insertion/deletion bijection is still required "
-                + "to identify this grid cardinality with the transfer rows. Neither "
-                + "modular conclusion for the actual count follows from the "
-                + "endpoint-deletion equality alone.")))));
+            Node("grid_card_eq_row", "The actual grid cardinality is the transfer row", GridRowFormula(),
+                "For every natural j≥1, the grid cardinality equals row ℕ (j−1) 3. "
+                + "For a grid q of N=3j ranks let d be the rank of its last x, and "
+                + "k=N−d. Appending a column inserts its z as the new greatest rank. "
+                + "Choose 0≤r<k and 0≤s≤r, insert y at rank b=N−r+s, then x at "
+                + "rank a=N−r. The old ranks are embedded by the two ordered "
+                + "succAbove maps. Exactly the conditions d<a≤b≤N preserve every "
+                + "old and new column and horizontal comparison. The new state is "
+                + "r+3. Conversely, every grid has its last z at the greatest rank; "
+                + "deleting the last x, y and z recovers a unique old grid and the "
+                + "unique choices r=N−a and s=b−a. Thus childrenEquiv is a bijection "
+                + "from the actual grids with their finite insertion choices, with "
+                + "no quotient or labeling factor. Summing row ℕ n over the actual "
+                + "grid states changes, under this bijection, into row ℕ (n+1) over "
+                + "the parent states. The unique one-column grid has state three; "
+                + "induction on the number of columns proves the claimed cardinality. "
+                + "The recurrence is derived from actual permutations, never assumed."),
+            Node("count_mod_ten", "Exact modulo-ten law for actual permutations", ActualTenFormula(),
+                "For every j≥1 the actual count is one modulo ten precisely on "
+                + "j+1=2ᵏ with k≥1, and six otherwise. Here dyadicResidue(m) means "
+                + "one on that existential condition and six off it. Compose "
+                + "count_eq_grid with grid_card_eq_row and apply row_mod_ten, using "
+                + "(j−1)+2=j+1. All prescribed windows and all comparisons retain "
+                + "their literal source interpretation; extra occurrences are allowed."),
+            Node("count_mod_four_iff", "Exact four-divisibility exceptions for actual permutations", ActualFourFormula(),
+                "For every j≥1, four does not divide the actual count if and only "
+                + "if j+1=2ⁱ+2ᵖ for natural exponents p≤i. The proof uses the same "
+                + "actual-count correspondence and row_mod_four_iff. Both implications, "
+                + "p=0 and p=i are retained. There is no assertion for j=0. The printed "
+                + "item says four divides all but these indices and does not explicitly "
+                + "assert the converse; this iff proves the stronger registered exact "
+                + "interpretation. The original narrower modulo-ten issue 21304, its "
+                + "unresolved status and resource boundaries remain unchanged."))));
+
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose) =>
         Describe.Lean(DescribeId.Create("bks14325-" + name.Replace('_', '-')),
@@ -81,6 +111,22 @@ internal sealed class BlitvicKammounSteingrimsson14325CoreDocument : IScribeDocu
             Seq(W(F.Id("x")), Sp, Leq, Sp, W(Last))))));
     private static Formula ExtremaFormula() => Disp(Guarded(Call("Perm", Finite),
         Both(Equal(W(D(0)), D(0)), Equal(W(Last), Last))));
+    private static Formula ActualCount => Call("count", F.Id("pattern"), D(2), F.Id("j"));
+    private static Formula GridRowFormula() => Disp(All("j", Natural,
+        Imply(Seq(D(1), Sp, Leq, Sp, F.Id("j")),
+            Equal(Call("card", Call("GridPacking", F.Id("j"))),
+                Call("rowNat", Sub(F.Id("j"), D(1)), D(3))))));
+    private static Formula ActualTenFormula() => Disp(All("j", Natural,
+        Imply(Seq(D(1), Sp, Leq, Sp, F.Id("j")),
+            Equal(Call("mod", ActualCount, D(1, 0)),
+                Call("dyadicResidue", Add(F.Id("j"), D(1)))))));
+    private static Formula ActualFourFormula() => Disp(All("j", Natural,
+        Imply(Seq(D(1), Sp, Leq, Sp, F.Id("j")), Seq(
+            Call("fourNondivides", ActualCount), Sp, Iff, Sp,
+            Exists, Sp, F.Id("i"), Comma, F.Id("p"), Colon, Sp, Natural, Comma, Sp,
+            F.Id("p"), Sp, Leq, Sp, F.Id("i"), Sp, Land, Sp,
+            Add(F.Id("j"), D(1)), Sp, Eq, Sp,
+            Add(new Formula.Power(D(2), F.Id("i")), new Formula.Power(D(2), F.Id("p")))))));
     private static Formula CountFormula() => Disp(All("j", Natural,
         Imply(Seq(D(1), Sp, Leq, Sp, F.Id("j")),
             Equal(Call("count", F.Id("pattern"), D(2), F.Id("j")),
