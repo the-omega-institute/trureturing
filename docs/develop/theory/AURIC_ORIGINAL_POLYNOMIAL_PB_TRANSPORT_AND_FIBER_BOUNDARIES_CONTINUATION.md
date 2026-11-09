@@ -523,3 +523,465 @@ Winter–Zacharias结论按100.1的原文前件使用，不作新独立定理。
 有限窗口、标准响应例子或数学相容性。
 
 ## 追加锚（本行以下为增补区）
+
+## 103. 同一原总响应中联合检验族仍不足以识别原纤维
+
+**定义 103.1（原域、固定读取与唯一修改轨道）。** 本续卷103–109的编号只指本续卷；引用外卷时均另列卷名。原多项式卷96–108与本续卷同号条目分别按所属卷引用。完整量子候选仍取[《AURIC：原多项式零响应与 Cayley 原域边界》80.1、89.1](AURIC_ORIGINAL_POLYNOMIAL_ZERO_RESPONSES_AND_CAYLEY_DOMAIN_BOUNDARIES.md)的同一原A1–A3、准确锥、全部原P2和完整PB，以及该卷87.1、95.1的全部实际来源合同。以下构造检验其中一个明确子系统的充分性，不把它改称完整PB候选。
+
+对每个整数 $m\ge2$，令 $n=2m$。直接复用[《AURIC：原多项式零响应与 Cayley 原域边界》8.1](AURIC_ORIGINAL_POLYNOMIAL_ZERO_RESPONSES_AND_CAYLEY_DOMAIN_BOUNDARIES.md)的原域：
+
+$$
+\begin{aligned}
+E_n&=\left\{\lambda I_n+\sum_{j=1}^d t^jA_j:
+ \lambda\in\mathbb R,\ d<\infty,\ A_j=A_j^*\in M_n(\mathbb C)\right\},\\
+\mathcal A_n&=\{a\in C([0,1],M_n(\mathbb C)):a(0)\in\mathbb C I_n\},
+\qquad X_n=(\mathcal A_n)_{\rm sa},\\
+u&=I_n,\qquad S(a,b)=a\circ b=(ab+ba)/2,\\
+C_n&=E_n\cap(X_n)_+,\qquad
+N(a)=\sup_{0\le t\le1}\|a(t)\|_{\rm op},\qquad
+\pi=\operatorname{ev}_1:X_n\longrightarrow H_n(\mathbb C).
+\end{aligned}
+\tag{103.1}
+$$
+
+所有多项式都作为 $[0,1]$ 上的函数；区间上相等即系数相等。原评价取 $\mathcal A_n$ 上全部正泛函在 $E_n$ 的限制，保留每个非负质量，包括零、不等和次归一质量。这个 $E_n$ 含单位、无限维、在 $X_n$ 中稠密而不完备，不截断次数，也不将 $X_n$ 上的输入加入响应定义域。
+
+固定标准Pauli矩阵的放大系数
+
+$$
+H=\sigma_z\otimes I_m,\qquad V=\sigma_x\otimes I_m,\qquad
+W=\sigma_y\otimes I_m,\qquad
+F=2tH,\qquad G=tV.
+\tag{103.2}
+$$
+
+$H,V,W$ 是系数矩阵，不是原 $E_n$ 输入；$F,G$ 是原标签。已知比较映射为 $D_*(a,b)=i[a,b]/2$，于是 $D_*(F,G)=-2t^2W$。令
+
+$$
+\begin{aligned}
+\mathcal S&=\{(o_{11}F+o_{12}G,\ o_{21}F+o_{22}G):O\in O(2)\},\\
+\mathcal L&=\{\alpha F+\beta G:\alpha,\beta\in\mathbb R,\
+                       \alpha^2+\beta^2=1\},\\
+\widetilde D(a,b)&=
+ \begin{cases}
+ -D_*(a,b),&(a,b)\in\mathcal S,\\
+ D_*(a,b),&(a,b)\notin\mathcal S.
+ \end{cases}
+\end{aligned}
+\tag{103.3}
+$$
+
+这是全部 $E_n^2$ 上的一份总函数，$\mathcal L$ 准确为 $\mathcal S$ 的首槽投影。只在整条实际轨道上反号的机制直接复用[《AURIC：原多项式零响应与 Cayley 原域边界》32.1–32.2](AURIC_ORIGINAL_POLYNOMIAL_ZERO_RESPONSES_AND_CAYLEY_DOMAIN_BOUNDARIES.md)，不另计为新的逐对正性机制。
+
+对实际原 $r,x,y$，本节的 $\operatorname{PB}_{\widetilde D}(r;x,y)$ 始终指
+
+$$
+\begin{gathered}
+v=\widetilde D(r,x)-r\circ y,\qquad
+w=r\circ x+\widetilde D(r,y),\\
+\widetilde D(x+v,y+w)-\widetilde D(x-v,y-w)
+       =-2x\circ v-2y\circ w.
+\end{gathered}
+\tag{103.4}
+$$
+
+这是[《AURIC：配平三角的共同取向与秩一响应续卷》128.4、128.6](AURIC_PB_TRIANGLE_ORIENTATION_AND_RANK_ONE_RESPONSE_CONTINUATION.md)的原平方读取式及其元素形式；所有内外标签均为同一 $\widetilde D$ 真正生成的原标签，不换成同像代表。
+
+**定理 103.2（全部联合族的一份原总映射反模型）。** 对每个偶数 $n=2m\ge4$，103.3的同一份 $\widetilde D$ 同时满足下列整个联合系统：
+
+1. 原A1–A3与全部P2，原锥、单位、范数及全部评价质量不变；反对称、每槽奇性及全部普通 $SO(2)$ 槽旋转不变性成立。完整交换零集、同生成元多项式零行及范数界均保留：
+   $$
+   \widetilde D(a,b)=0\Longleftrightarrow[a,b]=0,\qquad
+   \widetilde D(f(a),g(a))=0,\qquad
+   N(\widetilde D(a,b))\le N(a)N(b).
+   \tag{103.5}
+   $$
+   若 $a\circ b=0$，还有 $a\circ\widetilde D(a,b)=b\circ\widetilde D(a,b)=0$ 与 $\widetilde D(a,b)^2=a^2b^2$。
+2. 对全部原演员 $r$、全部原 $x$ 及每个实数 $\tau$，包括 $\tau=0$，实际 $\operatorname{PB}_{\widetilde D}(r;x,\tau u)$ 成立；演员不要求中央或与 $x$ 交换。
+3. 对每个原 $r\notin\mathcal L$，实际 $\operatorname{PB}_{\widetilde D}(r;x,y)$ 对全部原 $x,y$ 成立，不限制它们的核部分。更一般地，只要两份实际内值均等于对应 $D_*$ 值，该次PB便成立。
+4. 在固定 $\pi=\operatorname{ev}_1$ 下，任一槽的像秩至多二时，原元素值本身满足 $\widetilde D(a,b)=D_*(a,b)$；像为标量的任一槽也如此。因此全部共同秩至多二Peirce角、全部秩一行和全部双支线星形行使用同一个固定取向 $+1$，包含全部实际代表、幅度及允许的背景。所有像为核、标量或秩至多二的演员都在第3项中。[《AURIC：原多项式零响应与 Cayley 原域边界》80–84、89–95](AURIC_ORIGINAL_POLYNOMIAL_ZERO_RESPONSES_AND_CAYLEY_DOMAIN_BOUNDARIES.md)的相应固定 $\pi$ 接口逐项保留，准确读法见106。
+
+尽管这些条件在同一原域、同一总映射、同一固定 $\pi$ 下联合成立，原纤维不变性仍失败。确切地，取 $k=t(t-1)u$、$a_j=F+jk$，则对全部整数 $j$，
+
+$$
+\pi k=0,\qquad \pi a_j=2H,\qquad
+f_j:=\pi\widetilde D(a_j,G)=
+\begin{cases}
+ 2W,&j=0,\\
+ -2W,&j\ne0,
+\end{cases}
+\quad
+\|f_j\|=2,\qquad f_2-2f_1+f_0=4W\ne0.
+\tag{103.6}
+$$
+
+而且全原域误差及加性缺陷有与 $m$ 和全部输入无关的统一界：
+
+$$
+\sup_{a,b\in E_n}N(\widetilde D(a,b)-D_*(a,b))=4,\qquad
+N(\delta_a(b,c))\le12,\qquad
+\delta_F(G,G)=-8t^2W\ne0,
+\tag{103.7}
+$$
+
+其中 $\delta_a(b,c)=\widetilde D(a,b+c)-\widetilde D(a,b)-\widetilde D(a,c)$。完整PB确实失败：实际 $\operatorname{PB}_{\widetilde D}(F;G,F)$ 的元素两边为 $-8t^3V$ 和 $+8t^3V$，同一质量一正读取对原平方两边给出 $9$ 和 $41$。
+
+证明分为104–107。这里结论是否定上述明确联合子系统的充分性，不是否定完整PB或完整量子起源。
+
+## 104. 任意演员的相邻边都保持同一缺陷分支
+
+**定理103.2的证明：全部相邻边。** 只在已知环境多项式乘法中记
+
+$$
+Z_0=F+iG=t(2H+iV),\qquad Z=x+iy,\qquad
+Z_\pm=(u\pm ir)Z.
+\tag{104.1}
+$$
+
+$(2H+iV)^2=3u$，并且
+
+$$
+\det Z_0=\det Z_0^*=(-3)^m t^n.
+\tag{104.2}
+$$
+
+轨道 $\mathcal S$ 的复记录准确分成两个不相交的相位分支：
+
+$$
+\mathscr S_+=\{\eta Z_0:|\eta|=1\},\qquad
+\mathscr S_-=\{\eta Z_0^*:|\eta|=1\}.
+\tag{104.3}
+$$
+
+相交会给 $\eta(F+iG)=\zeta(F-iG)$；比较独立的 $F,G$ 系数便要求同时 $\eta=\zeta$、$\eta=-\zeta$，不可能。这两个分支分别对应 $\det O=+1,-1$。
+
+现在令原 $r,x,y$ 完全任意，不作任何通勤假设。若 $Z_+$ 或 $Z_-$ 属于104.3，行列式乘法给
+
+$$
+P_\pm(t):=\det(u\pm ir(t))
+        \ \mid\ c\,t^n\quad\text{于 }\mathbb C[t],
+\qquad c\ne0.
+\tag{104.4}
+$$
+
+因原演员 $r(0)=\rho u$、$\rho\in\mathbb R$，有 $P_\pm(0)=(1\pm i\rho)^n\ne0$。一个除 $t$ 外没有可能根的多项式若常数项非零，只能为常数；等价地，$\mathbb C[t]$ 中 $ct^n$ 的因子均为单项式。因此这份 $P_\pm$ 为非零常数。对系数取共轭并用 $r(s)^*=r(s)$，另一份 $P_\mp$ 也为常数。由此得到整条实轴上的系数恒等式
+
+$$
+\det(u+r(s)^2)=(1+\rho^2)^n=:K>0
+\qquad(s\in\mathbb R).
+\tag{104.5}
+$$
+
+每个实 $s$ 上 $r(s)$ 都Hermitian。若其特征值为 $\lambda_j(s)$，则
+
+$$
+\prod_{j=1}^n(1+\lambda_j(s)^2)=K,\qquad
+\|r(s)\|_{\rm op}\le\sqrt{K-1}.
+\tag{104.6}
+$$
+
+所以每个矩阵元的实部与虚部都是整条实轴上的有界实多项式，均为常数。$r$ 因而是常矩阵，标量端点再迫使 $r=\rho u$。这直接复用成熟的行列式因子、有界多项式和有限Hermitian谱工具；[《AURIC：原多项式零响应与 Cayley 原域边界》9.1](AURIC_ORIGINAL_POLYNOMIAL_ZERO_RESPONSES_AND_CAYLEY_DOMAIN_BOUNDARIES.md)已有通勤运输中的这些工具，此处内部论证覆盖所有104.1演员。
+
+此时两端只差一个单位复相位：
+
+$$
+Z_-=\frac{1-i\rho}{1+i\rho}Z_+.
+\tag{104.7}
+$$
+
+因此只要任一端入轨道，另一端就在同一分支，而不能跳到反射分支。若没有端点入轨道，两端都在轨道外。没有用矩阵逆元产生原标签；104.7只除非零复标量。104.5–104.6的区间外值只证明多项式系数恒等式，响应和正读取仍只定义在原区间 $[0,1]$。
+
+对任意复记录 $Z=a+ib$，在原域上定义缺陷
+
+$$
+\Delta(Z)=\widetilde D(a,b)-D_*(a,b)=
+\begin{cases}
+ 4t^2W,&Z\in\mathscr S_+,\\
+ -4t^2W,&Z\in\mathscr S_-,\\
+ 0,&Z\notin\mathscr S_+\cup\mathscr S_-.
+\end{cases}
+\tag{104.8}
+$$
+
+104.7给全部标准相邻边的同分支零余差关系
+
+$$
+\Delta((u+ir)Z)-\Delta((u-ir)Z)=0
+\qquad(r,x,y\in E_n,\ Z=x+iy).
+\tag{104.9}
+$$
+
+沿任意有限边链求和也为零；不取路径极限。这是标准PB边上的缺陷关系，不把未知响应预先下降为商函数。
+
+若某次实际两内值为标准值，103.4的位移就是
+
+$$
+v_*=D_*(r,x)-r\circ y,\qquad
+w_*=r\circ x+D_*(r,y),
+\qquad
+Z_\pm=(x\pm v_*)+i(y\pm w_*).
+\tag{104.10}
+$$
+
+$D_*$ 满足完整PB；104.9说明把两份标准外值换成同一 $\widetilde D$ 时，差值不变，右端也未变，故实际103.4成立。这个“减去已知标准PB”的步骤直接使用[《AURIC：配平三角的共同取向与秩一响应续卷》139.1](AURIC_PB_TRIANGLE_ORIENTATION_AND_RANK_ONE_RESPONSE_CONTINUATION.md)的对应方式；没有在一般 $\widetilde D$ 内分配展开输入和。
+
+特别是 $r\notin\mathcal L$ 时，两份 $(r,x),(r,y)$ 都不在 $\mathcal S$，全部实际内值标准。于是对这个演员及任意 $x,y$，包括任意不可见核部分，实际PB成立。没有把演员限制到交换类，也没有假定其两份内值为零。
+
+## 105. 原正性与全部单位第三标签共同保留
+
+**定理103.2的证明：静态条件及修改内值的PB。** 标准 $D_*$ 的原静态条件和完整PB直接取[《AURIC C128：任意维原对象保持的静态量子重构》35.1–35.2](AURIC_C128_ARBITRARY_DIMENSIONAL_STATIC_QUANTUM_RECONSTRUCTION.md)，准确参数为 $\mathcal A=\mathcal A_n$、$\mathcal A_0=E_n+iE_n$、$\kappa=1$。对每份固定实际对 $(a,b)$ 及每个正实读取 $\phi$，其P2表
+
+$$
+\begin{pmatrix}
+\phi(a^2)&\phi(a\circ b)-i\phi\widetilde D(a,b)\\
+\phi(a\circ b)+i\phi\widetilde D(a,b)&\phi(b^2)
+\end{pmatrix}
+\tag{105.1}
+$$
+
+准确等于标准正表或该表的逐项复共轭，故仍正。未归一向量读取、一般正泛函及其全部非负质量均包括；若 $\phi(u)=0$，序单位界 $|\phi(a)|\le\phi(u)N(a)$ 使 $\phi=0$，不进行零质量除法。
+
+$S$ 不变，所以A2的所有原实相加三表保持半正定；指定相加向量 $(1,-1,-1)$ 的实二次值为零，虚部则由反对称性成对抵消，排列同理。A3的 $u^2=u$ 和同一固定有理 $0<\theta\le1$ 上的小效果平方收缩完全不变。这并不证明任意三标签复表或全有限复Gram正性。
+
+整条 $O(2)$ 轨道对换槽、任一槽反号及 $O(2)$ 换基封闭。已知 $D_*$ 在实槽换基下乘 $\det O$；103.3因而在全域保留反对称、每槽奇性及 $SO(2)$ 不变性。逐对乘 $\pm1$ 还保留完整零集和范数界，给103.5，包括全部单位行、中央多项式行与同生成元多项式零行。若 $a\circ b=0$，已知乘法给 $ab=-ba$、$D_*(a,b)=iab$；它与两输入反交换且平方为 $a^2b^2$，反号后这些等式仍成立。
+
+现在固定任意原 $r,x$ 及任意实 $\tau$。总有 $\widetilde D(r,\tau u)=0$。若 $(r,x)\notin\mathcal S$，两内值标准，104已经支付这份实际PB。
+
+若 $(r,x)\in\mathcal S$，Clifford系数给
+
+$$
+F^2=4t^2u,\qquad G^2=t^2u,\qquad F\circ G=0,\qquad
+q:=r\circ x=\gamma t^2u,\qquad
+e:=\widetilde D(r,x)=\pm2t^2W,
+\tag{105.2}
+$$
+
+其中 $\gamma$ 是某个实数。$W$ 与 $H,V$ 反交换，所以 $x\circ e=0$。此时实际位移为 $v=e-\tau r$、$w=q$；两份真实外层的第二标签 $\tau u\pm q$ 都是原中央多项式，因此两份外值都为零。右端准确为
+
+$$
+-2x\circ(e-\tau r)-2\tau q
+=-2x\circ e+2\tau q-2\tau q=0.
+\tag{105.3}
+$$
+
+这覆盖修改内值的整个轨道、全部 $\tau$ 和 $\tau=0$，没有删除非中央演员或将实际外层换成辅助标签。故全部单位第三标签族与104的全部圈外演员族在同一个总映射中同时成立。
+
+## 106. 固定读取的全部小角、秩一行与侧面接口
+
+**定理103.2的证明：秩排除及实际代表。** 轨道中任一槽 $a=\alpha F+\beta G$ 满足
+
+$$
+\pi a=2\alpha H+\beta V,\qquad
+(\pi a)^2=(4\alpha^2+\beta^2)u,\qquad
+\alpha^2+\beta^2=1.
+\tag{106.1}
+$$
+
+所以 $\pi a$ 可逆、秩准确为 $n\ge4$，且非标量；例如其迹为零而平方严格正。相同结论适用于第二槽。因此只要任一槽的 $\pi$ 像秩至多二，或像为标量，两槽就不可能组成异常对，响应在 $E_n$ 中本身等于 $D_*$。核扰动不改变这项秩排除；没有先删去原标签的核部分。
+
+对固定 $Y=H_n(\mathbb C)$ 的任意秩至多二投影 $p$，两像共同位于Peirce角 $Y_2(p)=pYp$ 时，全部实际代表因此有
+
+$$
+\pi\widetilde D(a,b)=\frac i2[\pi a,\pi b].
+\tag{106.2}
+$$
+
+它给[《AURIC：原多项式零响应与 Cayley 原域边界》80.2、82.1、84.1](AURIC_ORIGINAL_POLYNOMIAL_ZERO_RESPONSES_AND_CAYLEY_DOMAIN_BOUNDARIES.md)所写固定 $\pi$ 角内全部混合值、共同取向及其角内消费者。[《AURIC：配平三角的共同取向与秩一响应续卷》240.1、243.1、244.1](AURIC_PB_TRIANGLE_ORIENTATION_AND_RANK_ONE_RESPONSE_CONTINUATION.md)中的自旋对象是这样一个Peirce角；在本固定满矩阵 $Y$ 中，非经典自旋Peirce角是秩二角。这里不将任意同构于自旋因子的嵌入子代数改称Peirce角。
+
+更明确地，取任意数学单位向量 $e$，令 $p=ee^*$、$q=u-p$、$H_e(z)=ze^*+ez^*$，$z\perp e$。这些只是商矩阵坐标，不因此成为原标签。若实际 $r,a\in E_n$ 满足
+
+$$
+\pi r=\mu p,\qquad \pi a=\beta p+H_e(z)+B,\qquad B=qBq,
+\tag{106.3}
+$$
+
+则任意实 $\mu,\beta$、任意 $z,B$ 及全部实际代表均有
+
+$$
+d:=\pi\widetilde D(r,a)
+=\mu H_e(-iz/2).
+\tag{106.4}
+$$
+
+幅度不设小窗。特别 $\pi r=0$ 时输出像为零。每个这样的 $r$ 都不在 $\mathcal L$，故其任意第二、第三原标签的实际PB也已支付。对任意演员 $a$，实际 $\operatorname{PB}_{\widetilde D}(a;r,0)$ 的两内值仍标准，故104同样支付它，即使 $a\in\mathcal L$。
+
+对于双支线实际对
+
+$$
+A=\pi a=\alpha p+H_e(v),\qquad
+B=\pi b=\beta p+H_e(w),
+\tag{106.5}
+$$
+
+每个单独输入像秩至多二，尽管共同支撑 $\operatorname{span}_{\mathbb C}\{e,v,w\}$ 可以三维。因此全部幅度和实际代表均有
+
+$$
+\begin{aligned}
+\pi\widetilde D(a,b)&=\frac i2[A,B]
+ =-\operatorname{Im}(v^*w)p
+   +H_e\!\left(\frac i2(\beta v-\alpha w)\right)+J(v,w),\\
+J(v,w)&=\frac i2(vw^*-wv^*).
+\end{aligned}
+\tag{106.6}
+$$
+
+当 $v,w$ 复线性无关时，[《AURIC：原多项式零响应与 Cayley 原域边界》89–91](AURIC_ORIGINAL_POLYNOMIAL_ZERO_RESPONSES_AND_CAYLEY_DOMAIN_BOUNDARIES.md)的唯一侧面系数准确为 $\chi=1$。
+
+再逐项核对同一次秩一PB的两份实际外值，避免只检查其孤立像。按106.3–106.4，写 $d=\delta p+H_e(w)$，则
+
+$$
+\delta=0,\qquad w=-i\mu z/2,\qquad C_0=p\circ\pi a=\beta p+H_e(z)/2.
+\tag{106.7}
+$$
+
+实际 $\operatorname{PB}_{\widetilde D}(a;r,0)$ 的两份外值是
+
+$$
+\ell_+=\pi\widetilde D(r-\widetilde D(r,a),r\circ a),\qquad
+\ell_-=\pi\widetilde D(r+\widetilde D(r,a),-r\circ a).
+\tag{106.8}
+$$
+
+两对实际外层的像准确为 $(\mu p-d,\mu C_0)$、$(\mu p+d,-\mu C_0)$，共同支撑于 $\operatorname{span}_{\mathbb C}\{e,z\}$。由已证原值等于 $D_*$，直接得到
+
+$$
+\ell_+-\ell_-=2\mu p\circ d,\qquad
+q\ell_+q=q\ell_-q=J_0,\qquad
+J_0=-\frac{\mu i}{4}(wz^*-zw^*).
+\tag{106.9}
+$$
+
+这正支付[《AURIC：原多项式零响应与 Cayley 原域边界》92.1](AURIC_ORIGINAL_POLYNOMIAL_ZERO_RESPONSES_AND_CAYLEY_DOMAIN_BOUNDARIES.md)的实际外层接线，且可取共同系数 $1$；$J_0=0$ 时不宣称系数唯一。[《AURIC：原多项式零响应与 Cayley 原域边界》93.1](AURIC_ORIGINAL_POLYNOMIAL_ZERO_RESPONSES_AND_CAYLEY_DOMAIN_BOUNDARIES.md)的非退化前提 $w\notin\mathbb Cz$ 在本模型中从不出现，故其条件预算在这里是真空满足，不是由本模型生产了一项新的饱和定理。[《AURIC：原多项式零响应与 Cayley 原域边界》94–95](AURIC_ORIGINAL_POLYNOMIAL_ZERO_RESPONSES_AND_CAYLEY_DOMAIN_BOUNDARIES.md)保留的一般来源及待解生产者也不因此完成。
+
+这些都是固定 $\pi$ 下明确列出的接口。没有宣称保留完整PB的全部已发表后果，或其他任意商表示、任意自旋子域上的全部识别。
+
+## 107. 全整数原核曲率、统一有限缺陷与实际PB失败
+
+**定理103.2的证明：同一总映射的残差。** 取 $k=t(t-1)u$ 与全部整数 $j$ 的 $a_j=F+jk$。它们始终是原标签，$\pi k=0$，$\pi a_j=2H$。若 $(a_j,G)\in\mathcal S$，在 $t=1$ 比较 $H,V$ 系数会迫使其正交系数矩阵为恒等矩阵。再比较实际多项式便得 $jk=0$，故 $j=0$。由于 $k$ 中央，
+
+$$
+\widetilde D(a_0,G)=2t^2W,\qquad
+\widetilde D(a_j,G)=D_*(a_j,G)=-2t^2W\quad(j\ne0).
+\tag{107.1}
+$$
+
+这给103.6，包含全部正、负整数及零。每份读取达到同一预算 $\|2H\|\|V\|=2$；同像原首标签的响应像却不相同，前向二阶差为范数四的 $4W$。特别是核标签本身的零响应与核平移不变性是不同命题。
+
+104.8中非零偏差的原范数均准确为四，所以全局上确界为四且由 $(F,G)$ 取得。已知 $D_*$ 双线性，故
+
+$$
+\begin{aligned}
+\delta_a(b,c)
+ &=\Delta(a+i(b+c))-\Delta(a+ib)-\Delta(a+ic),\\
+N(\delta_a(b,c))&\le4+4+4=12.
+\end{aligned}
+\tag{107.2}
+$$
+
+轨道保持已知平方和 $F^2+G^2=5t^2u$，而 $F^2+(2G)^2=8t^2u$，故 $(F,2G)$ 不在轨道。因此
+
+$$
+\widetilde D(F,2G)=-4t^2W,\qquad
+\delta_F(G,G)=-8t^2W,\qquad N(\delta_F(G,G))=8.
+\tag{107.3}
+$$
+
+这个缺陷也不在 $X_n$ 的Jordan中心：若 $\delta=-8t^2W$，则 $\delta\circ F=0$ 而
+
+$$
+[L_\delta,L_F]F=\delta\circ F^2=-32t^4W\ne0.
+\tag{107.4}
+$$
+
+至此仍须直接核对完整PB，不能用非加性代替实际调用。取演员 $F$、第二标签 $G$、第三标签 $F$。实际内值为 $\widetilde D(F,G)=2t^2W$、$\widetilde D(F,F)=0$、$F\circ G=0$，所以
+
+$$
+v=2t^2W-4t^2u,\qquad w=0.
+\tag{107.5}
+$$
+
+两份真实外层 $(G+v,F)$、$(G-v,F)$ 的首标签各有非零二次项，均不在 $\mathcal S$，故此时才使用标准双线性计算：
+
+$$
+\begin{aligned}
+\widetilde D(G+v,F)&=2t^2W-4t^3V,\\
+\widetilde D(G-v,F)&=2t^2W+4t^3V,\\
+\text{103.4左端}&=-8t^3V,\qquad
+\text{103.4右端}=+8t^3V.
+\end{aligned}
+\tag{107.6}
+$$
+
+同一原平方PB的两份元素更准确为
+
+$$
+\begin{aligned}
+Q_+&=(G+v)^2+F^2+2\widetilde D(G+v,F)\\
+   &=(5t^2+20t^4)u+(4t^2-16t^4)W-16t^3V,\\
+Q_-&=(G-v)^2+F^2+2\widetilde D(G-v,F)\\
+   &=(5t^2+20t^4)u+(4t^2-16t^4)W+16t^3V.
+\end{aligned}
+\tag{107.7}
+$$
+
+令 $\xi=(1,1)^T/\sqrt2\otimes e_1$，$e_1\in\mathbb C^m$ 为单位向量。正泛函 $\phi(a)=\xi^*a(1)\xi$ 的质量为一；系数矩阵的向量值为 $\xi^*V\xi=1$、$\xi^*W\xi=0$，这里不把 $V,W$ 送入原泛函的定义域。它读取107.6的两边为 $-8,+8$，读取107.7为 $9,41$。因此同一实际响应、实际嵌套标签与同一原正读取已给完整PB的非零失败。定理103.2证毕。∎
+
+## 108. 原条件、完整商纤维与共同插值的准确边界
+
+**定义 108.1（联合定理的来源和适用范围）。** 定理103.2的承重综合归为 $\texttt{repo-derived}$：同一放大总映射联合保留全部单位第三标签、精确圈外的全部演员PB、固定 $\pi$ 的全部小角／秩一／星形行和实际侧面接口，同时保留有界非零原核曲率。标准原域、反号轨道、Pauli／Clifford乘法、行列式因子和有界多项式均是复用的工具，不各立为新发现；不主张历史优先权或文献穷尽。
+
+[《AURIC：原多项式零响应与 Cayley 原域边界》96–101](AURIC_ORIGINAL_POLYNOMIAL_ZERO_RESPONSES_AND_CAYLEY_DOMAIN_BOUNDARIES.md)是在一个 $H_3(\mathbb C)$ 总映射中保全部P2、共同秩二角和两份指定演员次序的零第三标签PB，并实现[《AURIC：原多项式零响应与 Cayley 原域边界》93.1](AURIC_ORIGINAL_POLYNOMIAL_ZERO_RESPONSES_AND_CAYLEY_DOMAIN_BOUNDARIES.md)的侧面预算等号；[《AURIC：原多项式零响应与 Cayley 原域边界》100.1](AURIC_ORIGINAL_POLYNOMIAL_ZERO_RESPONSES_AND_CAYLEY_DOMAIN_BOUNDARIES.md)还给出该总映射的实际重复第三标签失败。那个结果没有断言本节的全部单位第三标签、所有精确圈外演员和固定 $\pi$ 联合族。本节则将全部秩一行认成标准值，根本没有该结果的非共线连接泄漏，不能代替它的尖锐预算结论。
+
+[《AURIC：原多项式零响应与 Cayley 原域边界》102–108](AURIC_ORIGINAL_POLYNOMIAL_ZERO_RESPONSES_AND_CAYLEY_DOMAIN_BOUNDARIES.md)的另一结论保留完整PB。其载体是任意秩三Euclidean丛的全部连续自旋截面，原稠密域的每点评价都满到整个 $H_2(\mathbb C)$，这些完整商共同分离截面。[《AURIC：原多项式零响应与 Cayley 原域边界》80.2](AURIC_ORIGINAL_POLYNOMIAL_ZERO_RESPONSES_AND_CAYLEY_DOMAIN_BOUNDARIES.md)于是对每点的所有原输入共用一个符号；固定实际输出的连续性才将符号拼成连续取向，之后才推出同一旧表的线性与完成。
+
+本节的给定载体并不满足这个对应：在 $t>0$，$X_n$ 的实际点评价满到 $H_n(\mathbb C)$，$n\ge4$，完整纤维不是 $H_2(\mathbb C)$；在 $t=0$，实际点评价像只有 $\mathbb Ru$。秩二Peirce压缩不是整个 $X_n$ 的Jordan满商，不能把106.2改说成每点所有输入都被同一二阶商识别。每份输出仍连续，甚至是多项式，但这不补完整PB和该共同符号前件。
+
+还须明确保留一个实质排除项。原子域
+
+$$
+\mathcal R=\{a\otimes I_m:a\in E_2\}\subset E_n
+\tag{108.1}
+$$
+
+对Jordan乘法与 $\widetilde D$ 都闭合，因为 $D_*$ 及其反号均保留此形式。它的 $\pi$ 像 $H_2(\mathbb C)\otimes I_m$ 是一个自旋子代数，却不是固定 $H_n(\mathbb C)$ 中的秩二Peirce角：其单位为秩 $n$ 的 $u$，而 $Y_2(u)=Y$；其中103.2的非标量轴像也有秩 $n$。在这个响应闭合子域上，$(F,G)$ 取反向值而 $(F,2G)$ 取标准值，违反[《AURIC：原多项式零响应与 Cayley 原域边界》36.2、51.2](AURIC_ORIGINAL_POLYNOMIAL_ZERO_RESPONSES_AND_CAYLEY_DOMAIN_BOUNDARIES.md)的共同取向结论。它们的完整PB前提也准确由107.6失败，故不存在矛盾，但绝不能宣称本节保留任意复制 $E_2$ 子域或完整PB的全部已付后果。
+
+即使只看这个复制子域，其完成也是零点必须标量的 $X_2$，而非整条区间上常秩的 $C([0,1],H_2)$。零点向量部必须消失，原域在后一个空间中并不稠密，零点也没有满 $H_2$ 评价。因此不能将它直接送入[《AURIC：原多项式零响应与 Cayley 原域边界》102.1–102.3](AURIC_ORIGINAL_POLYNOMIAL_ZERO_RESPONSES_AND_CAYLEY_DOMAIN_BOUNDARIES.md)的秩三截面域假设。[《AURIC：原多项式零响应与 Cayley 原域边界》51.2](AURIC_ORIGINAL_POLYNOMIAL_ZERO_RESPONSES_AND_CAYLEY_DOMAIN_BOUNDARIES.md)已在它自己的标量端点域中以完整PB支付识别；本节没有重新打开那项已付结论。
+
+**命题 108.2（系数轴不成为实际单位平方框架）。** 原 $h\in E_n$ 若 $h^2=u$，则 $h=\pm u$，故此原域没有非平凡的实际单位平方三轴框架。
+
+证明。$h^2=u$ 从区间成为多项式恒等式。每个实 $s$ 上 $h(s)$ 自伴且平方为单位，故 $\|h(s)\|=1$；有界多项式矩阵元均为常数。标量端点使常矩阵只能为 $\pm u$。∎
+
+因此[《AURIC：中央响应平方与径向一致续卷》173.1、182.1–184.1](AURIC_CENTRAL_RESPONSE_SQUARE_AND_RADIAL_CONSISTENCY_CONTINUATION.md)所需实际 $h,e,j$、实际反射系数及其扇区条件在这里没有实例。$H,V,W$ 只在系数计算中出现；不对它们或域外平方根、逆元、谱投影、谱符号及完成标签调用 $\widetilde D$，也不把 $F/(2t)$ 当作合法输入。
+
+[《AURIC：中央响应平方与径向一致续卷》188–195](AURIC_CENTRAL_RESPONSE_SQUARE_AND_RADIAL_CONSISTENCY_CONTINUATION.md)中的189.1在实际 $h,e,j$ 框架下给出全部实 $\alpha,\beta$ 的仿射交换零行 $[h,y]=0\Rightarrow D(\alpha u+\beta h,y)=0$；192.1–192.2再取182.1的同一实际交换反射 $s$，把双偶余量及纯跨反射扇区的同一旧值识别扩至任意实首强度 $R$。它们均保留完整原P2/PB；一般混合扇区不能由两条纯分支直接相加，无实际框架的分支也仍未付。本节的108.2排除了其非平凡实际 $h,e,j$ 前件，且107.6明确不满足完整PB，故这些条件结果不把103.3的旧总表变成线性，也不消去103.6的原核曲率。
+
+**定义 108.3（有界缺陷与原生产者）。** 107.2直接给全原域 $\mathsf{BD}$，并使球内缺陷函数 $A(R)\le12$，所以还满足 $\mathsf{SL}$；107.4则直接否定本映射的 $\mathsf C_{\rm add}$。[《AURIC C128：任意维原对象保持的静态量子重构》89.2、91.1、95.1](AURIC_C128_ARBITRARY_DIMENSIONAL_STATIC_QUANTUM_RECONSTRUCTION.md)的中心缺陷桥、有界误差刚性和次线性刚性都在完整PB背景中陈述。本模型缺该共同前提，故不反驳其中任一结果，更不构成完整PB加有界缺陷的反模型。一般完整原P2/PB是否自动生产零曲率、一般纤维一致性或 $\mathsf C_{\rm add}$，以及所有重复第三标签PB是否足够，均仍是原目标中的未解生产者问题。107.6只证明一份重复第三标签确实能够检出当前缺陷。
+
+**定义 108.4（共同插值文献的未付前件）。** 成熟文献 [Cabello–Peralta，*Weak-2-local symmetric maps on C*-algebras*，arXiv:1510.00915v1，Theorem 2.5](https://arxiv.org/html/1510.00915v1)要求在完整复C*代数上，对每两个输入和每个对偶泛函存在同一个复线性保星插值器；[ *2-Local and local derivations on Jordan matrix rings over commutative involutive rings*，arXiv:2108.03993v4，Theorem 4](https://arxiv.org/html/2108.03993v4)要求其完整自伴矩阵Jordan环上每一对输入共用一个内导子，系数环保持文内的含单位、交换、对合及二可逆条件。这些是共同插值前提，不是逐对另选正负交换子。
+
+本例甚至有一个固定读取直接排除相应共同线性插值。取 $W$ 的单位正特征向量 $\eta$ 并用质量一泛函 $\psi(a)=\eta^*a(1)\eta$，则同一行 $T(b)=\widetilde D(F,b)$ 满足
+
+$$
+\psi(T(G))=2,\qquad \psi(T(2G))=-4.
+\tag{108.2}
+$$
+
+若一个加性映射或实／复线性插值器同时匹配这两份读取，第二个数必须等于第一个数的两倍，即四，矛盾。共同内导子也至少加性，故同样不能匹配。没有一个与该行相容的延拓能够修复这两点矛盾；也未给未知原响应以完整复C*域或完整矩阵环为定义域的合法延拓。文献在此仅用于精确辨认缺少的前件，不参与103.2的证明，亦不以未命中文献宣称原创。
+
+## 109. 原量子起源的完整消费者与联合边界的含义
+
+**定义 109.1（数学结论与七项实际来源合同）。** 完整原候选仍要求同一原 $\Omega/\mathrm{native}$、原 $E/S/D$、全部A1–A3/P2和完整PB，不以103.2的子系统替换。一般原域可以不完备、无限维、不可分或没有原最小投影；不能先完成、添轴或挑选有限商后冒认原问题已经解决。以下逐项与[《AURIC：原多项式零响应与 Cayley 原域边界》87.1、95.1、107.1](AURIC_ORIGINAL_POLYNOMIAL_ZERO_RESPONSES_AND_CAYLEY_DOMAIN_BOUNDARIES.md)及其原合同合取，保留所有实际对象和原量词。
+
+1. **Hilbert、可观察量与相干准备。** 同一唯一 $\Omega$ 中的全词同一 $K/J/q$、任意词及零词、parent/ready类型、可取得原标签、合法控制和实际相干准备仍须同源供应。数学矩阵表示、连续函数和原标签的线性空间不制造准备，也不给全 $B(H)$ 的实际可取得像；一般无轴、无原子和不完备域仍在完整目标内。
+2. **态、效果、质量与Born。** 原评价必须绑定同源原事件、准确效果及实际完整菜单，保留全部零、不等、次归一质量、中心经典权、不等维与静默块。共同根、抽签、mark、$\mathrm C_{12},\mathrm A_{12},\mathrm{BI}_{12}$、预定强度、P9、独立 $W_e$、全部中间切口和固定支持全质量仍须原来源。Born只归一实际完整菜单的严格正总质量；零质量不除。向量正读取不证明实际菜单齐备、正规态或实际准备。
+3. **相关联合、张量与递归参考。** 仍需同一个真实非零相关联合、忠实同向且交换的局部腿、交叉关系、共同实现、联合生成与分离、所需重数、所有相关输入及每层递归同源参考；中心对、经典和不等维块保留。103.2中的 $I_m$ 仅为代数重数，既不供应实际联合也不供应参考。相同边缘、分别可达或同一取向不能替代共同实现。
+4. **typed CP、Kraus接线与全部输出。** 原未归一回溯、合法typed前接后接、反变复合、typed分区、全未来自然性及箭头／支持下降仍须真实来源。参考覆盖系统、整个环境、全部成功、失败、细记录、port和post-port输出，以及每份输出每个仍合法未来；共同真实支持的三投影、支持内补、准确运输、所有相关正输入的intertwining与夹界、每个所需有限递归深度和累计支持完整链均保留。这里没有将商矩阵投影提升为原实际投影，也没有构造这些箭头或参考。
+5. **完整仪器、TP、更新与Lüders。** 完整typed菜单、原接受端、整台环境及上述全部输出和未来、真正分组遗忘、AC、精确 $N_u$、X/Xs、原平方根词及其接受条件仍须原合同。TP另需完整单位分区；Lüders另需同一完整输出的像内射线校准。更新只归一严格正输出质量，零分支及其未来保留。密度、迹类和算子Kraus公式限于合格有限全矩阵物理域，或另已供应正常物理表示、指定前对偶及所需收敛的适用域。
+6. **全部历史、未来、真实返回与CountRead。** 全部合法顺序、自适应和并行历史，每份输出的全部合法未来，环境及细记录泄漏、停止、拒绝、销毁、真正分组遗忘、同数两侧以及同数逆向／双向实际返回均保留。读后同一原完整活动输入、负提升两条活路的分别控制与相干聚合、具名分析词接回原完整菜单及接受端仍须实际构造。精确正生成 $B$ 与闭正生成 $B_{\rm cl}$ 不混同；无限历史、无限或非离散记录、可数可加、normality和指定前对偶不被有限矩阵计算代付。相同商像或相同读数不等同程序、实际读取次序、原 $q$ 零集或AC方向。
+7. **原域动力、物理钟、能量与共同尺度。** 同一旧全域乘法、保持可能不完备原域的流、实际门序列与相位、可逆一参数群、物理钟、所需强连续酉实现、生成元定义域、Hamiltonian能量解释、共同作用量、共同正 $\hbar$ 和共同仪器仍须同源供应。原 $\sigma,t_0,d$、固定域、resolvent与 $3s+r\le1$ 的预算不改含义。多项式坐标 $t$、槽相位、重数 $m$、整数平移 $j$ 及辅助行列式界都不是物理时间、控制、能量或作用量尺度。
+
+**定义 109.2（联合检验与同一来源的几何含义）。** 单独的两两比较可以保持正性、反向符号和共同旋转；现在还把所有单位第三标签、圈外每个演员的所有三元接法，以及固定读取下每个真正二维小角和每条秩一连接同时接上。103.2表明，这些要求即使由同一张总表全部履行，也仍有一整圈满秩输入对可以反向而不被它们检出：触到这圈的标准配平边只能用标量演员，只在同一分支上转动；单位第三标签触到修改内值时，Clifford关系又使两张真实外表和电荷同时归零；真正的小角则因秩不够根本碰不到它。于是两份原输入即使在固定读取中完全同像，整圈内外的旧输出仍可不同，并留下有界非零曲率。让第一对象真实地再次进入第三槽，原配平立即读出矛盾。
+
+这里减少的是一条联合子系统足够性的候选路线，没有减少完整原公理数。二元归一化和有限三方向的几何直观仍可用于寻找更紧的真实接线，但每条接线必须来自同一原世界、同一门序列及其真实读出；不能把同像代表、辅助标准乘法、数学完成或重数当作这个来源。一般完整PB的零曲率／纤维／可加性生产者与上述七项物理合同，保持各自完整未解范围。
+
+## 追加锚（本行以下为增补区）
