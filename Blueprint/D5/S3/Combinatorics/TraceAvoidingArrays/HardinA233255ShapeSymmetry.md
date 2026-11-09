@@ -100,7 +100,7 @@ Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255ShapeSymme
 
 *Commentary.*
 
-Normalize by first and second labels, then take the unique index in the complete enumeration.
+For any six-cell boundary, normalize its labels, then test representatives zero through fourteen in order, returning the first matching index or fifteen if none matches. For a proper boundary, the normalized word has a unique matching representative among all sixteen, and this lookup returns its index. For a nonproper boundary, the fallback need not identify a matching representative.
 
 **Definition 1.9 (Actual compatible-row matrix).**
 
