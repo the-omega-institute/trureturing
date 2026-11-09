@@ -98,7 +98,7 @@ theorem kappa_connected {G : SimpleGraph V} (h : G.Connected) : Nat.card G.Conne
     Nonempty.map G.connectedComponentMk h.nonempty⟩
 theorem dip_zero_of_connected (G : SimpleGraph V) (γ : G.edgeSet → C)
     (W : Finset (Sym2 V)) (h : IsColorConnecting G γ W) (e : Sym2 V) : dip G γ W e = 0 := by
-  unfold dip
+  unfold dip kappa
   apply Finset.sum_eq_zero
   intro c hc
   rw [kappa_connected (h.2 c),kappa_connected (SimpleGraph.Connected.mono

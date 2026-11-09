@@ -300,10 +300,12 @@ theorem count_eq (W : (Finset (Fin 14))) (c : (Fin 4)) : count W c =
 private theorem dip_eq (W : (Finset (Fin 14))) (e : (Fin 14)) : dip W e =
     D5.S3.Combinatorics.EdgeLabeling.WildNumber.Greedy.dip D5.S3.Combinatorics.EdgeLabeling.WildNumber.WheelCertificate.Wheel.H D5.S3.Combinatorics.EdgeLabeling.WildNumber.WheelCertificate.Wheel.gamma (realize W) (edge e) := by
   unfold dip D5.S3.Combinatorics.EdgeLabeling.WildNumber.Greedy.dip
+    D5.S3.Combinatorics.EdgeLabeling.WildNumber.Greedy.kappa
   simp only [count_eq,realize_insert]
 private theorem potential_eq (W : (Finset (Fin 14))) (e : (Fin 14)) : potential W e =
     D5.S3.Combinatorics.EdgeLabeling.WildNumber.Greedy.potential D5.S3.Combinatorics.EdgeLabeling.WildNumber.WheelCertificate.Wheel.H D5.S3.Combinatorics.EdgeLabeling.WildNumber.WheelCertificate.Wheel.gamma (realize W) (edge e) := by
   unfold potential D5.S3.Combinatorics.EdgeLabeling.WildNumber.Greedy.potential
+    D5.S3.Combinatorics.EdgeLabeling.WildNumber.Greedy.edges
   rw [edges_realize]
   unfold realize
   rw [Finset.image_val_of_injOn edge_injective.injOn,Multiset.map_map]
@@ -984,7 +986,8 @@ private theorem run_states {W : Finset (Sym2 (Fin 8))}
   | @step W e hr hs ih =>
     obtain ⟨S,hS,rfl⟩ := ih
     have he : e ∈ D5.S3.Combinatorics.EdgeLabeling.WildNumber.WheelCertificate.Wheel.H.edgeSet := by
-      simpa [] using (Finset.mem_sdiff.mp hs.2.1).1
+      simpa [D5.S3.Combinatorics.EdgeLabeling.WildNumber.Greedy.edges] using
+        (Finset.mem_sdiff.mp hs.2.1).1
     obtain ⟨i,rfl⟩ := edge_exhaust he
     exact ⟨insert i S,states_step S hS i (step_reflect S i hs),realize_insert S i⟩
 end D5.S3.Combinatorics.EdgeLabeling.WildNumber.WheelCertificate.FiniteState
