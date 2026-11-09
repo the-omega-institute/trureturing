@@ -32,16 +32,16 @@ def flips : List Bool → ℕ
   | a :: b :: w => (if a = b then 0 else 1) + flips (b :: w)
 
 /-- All vertex maps are allowed; only the arc conditions constrain a map. -/
-def ArcPreserving {N : ℕ} (R : Fin N → Fin N → Prop) (w : List Bool)
-    (φ : Fin (w.length + 1) → Fin N) : Prop :=
+def ArcPreserving {V : Type*} (R : V → V → Prop) (w : List Bool)
+    (φ : Fin (w.length + 1) → V) : Prop :=
   ∀ i : Fin w.length,
     if w[i] then R (φ i.castSucc) (φ i.succ) else R (φ i.succ) (φ i.castSucc)
 
-noncomputable def homCount {N : ℕ} (R : Fin N → Fin N → Prop) (w : List Bool) : ℕ :=
-  Nat.card {φ : Fin (w.length + 1) → Fin N // ArcPreserving R w φ}
+noncomputable def homCount {V : Type*} (R : V → V → Prop) (w : List Bool) : ℕ :=
+  Nat.card {φ : Fin (w.length + 1) → V // ArcPreserving R w φ}
 
-noncomputable def homDensity {N : ℕ} (R : Fin N → Fin N → Prop) (w : List Bool) : ℝ :=
-  (homCount R w : ℝ) / (N : ℝ) ^ (w.length + 1)
+noncomputable def homDensity {V : Type*} [Fintype V] (R : V → V → Prop) (w : List Bool) : ℝ :=
+  (homCount R w : ℝ) / (Fintype.card V : ℝ) ^ (w.length + 1)
 
 def TAS (w : List Bool) : Prop :=
   ∀ N : ℕ, 0 < N → ∀ R : Fin N → Fin N → Prop,
@@ -101,6 +101,80 @@ theorem exists_bad_at_f {k : ℕ} (hlt : f k < k) :
 def FullConvergence : Prop :=
   ∃ L : ℝ, ∀ ε : ℝ, 0 < ε → ∃ K : ℕ, 1 ≤ K ∧
     ∀ k : ℕ, K ≤ k → |(f k : ℝ) / (k : ℝ) - L| < ε
+
+private theorem flips_snoc (w : List Bool) (b : Bool) :
+    flips (w ++ [b]) = flips w +
+      (match w.getLast? with | none => 0 | some a => if a = b then 0 else 1) := by
+  induction w with
+  | nil => simp [flips]
+  | cons a w ih =>
+    cases w with
+    | nil => simp [flips]
+    | cons c w => simp_all [flips, Nat.add_assoc]
+
+private theorem flips_reverse (w : List Bool) : flips w.reverse = flips w := by
+  induction w with
+  | nil => rfl
+  | cons a w ih =>
+    rw [List.reverse_cons, flips_snoc, ih, List.getLast?_reverse]
+    cases w with
+    | nil => simp [flips]
+    | cons b w => simp [flips, eq_comm, Nat.add_comm]
+
+private theorem flips_not (w : List Bool) : flips (w.map Bool.not) = flips w := by
+  induction w with
+  | nil => rfl
+  | cons a w ih =>
+    cases w with
+    | nil => simp [flips]
+    | cons b w => simpa [flips] using ih
+
+private theorem flips_append_le (u v : List Bool) :
+    flips (u ++ v) ≤ flips u + flips v + 1 := by
+  induction u with
+  | nil => simp [flips]
+  | cons a u ih =>
+    cases u with
+    | nil =>
+      cases v with
+      | nil => simp [flips]
+      | cons b v => simp only [List.cons_append, List.nil_append, flips]; split_ifs <;> omega
+    | cons b u =>
+      simp only [List.cons_append, flips] at *
+      omega
+
+private theorem flips_append_cost (u v : List Bool) :
+    flips (u ++ v) ≤ flips u + v.length := by
+  induction v using List.reverseRecOn with
+  | nil => simp
+  | append_singleton v b ih =>
+    rw [← List.append_assoc, flips_snoc]
+    have h : (match (u ++ v).getLast? with
+      | none => 0 | some a => if a = b then 0 else 1) ≤ 1 := by
+      split <;> (try split_ifs) <;> omega
+    simp only [List.length_append, List.length_singleton]
+    omega
+
+/-- Concatenation of the indicated number of identical words. -/
+def repeatWord (w : List Bool) (m : ℕ) : List Bool := (List.replicate m w).flatten
+
+private theorem repeatWord_length (w : List Bool) (m : ℕ) :
+    (repeatWord w m).length = m * w.length := by
+  induction m with
+  | zero => simp [repeatWord]
+  | succ m ih =>
+    change (w ++ repeatWord w m).length = _
+    simp [ih, Nat.succ_mul, Nat.add_comm]
+
+private theorem repeatWord_flips (w : List Bool) (m : ℕ) :
+    flips (repeatWord w m) ≤ m * (flips w + 1) := by
+  induction m with
+  | zero => simp [repeatWord, flips]
+  | succ m ih =>
+    have h := flips_append_le w (repeatWord w m)
+    change flips (w ++ repeatWord w m) ≤ _
+    rw [Nat.succ_mul]
+    omega
 
 section Transfer
 
@@ -281,6 +355,81 @@ theorem tournament_padding (R : V → V → Prop) (hT : IsTournament R) [Nonempt
   rw [transfer_append]
   simpa only [transfer, List.map_cons, List.map_nil,
     List.prod_cons, List.prod_nil, mul_one] using hb
+
+
+private theorem flips_reflect (w : List Bool) : flips (reflect w) = flips w := by
+  rw [reflect, flips_not, flips_reverse]
+
+private theorem transfer_repeatWord (A : Matrix V V ℝ) (w : List Bool) (m : ℕ) :
+    transfer A (repeatWord w m) = (transfer A w) ^ m := by
+  induction m with
+  | zero => simp [repeatWord, transfer]
+  | succ m ih =>
+    change transfer A (w ++ repeatWord w m) = _
+    rw [transfer_append, ih, pow_succ']
+
+private theorem arcPreserving_cons (R : V → V → Prop) (b : Bool) (w : List Bool)
+    (φ : Fin ((b :: w).length + 1) → V) :
+    ArcPreserving R (b :: w) φ ↔
+      (if b then R (φ 0) (φ 1) else R (φ 1) (φ 0)) ∧
+      ArcPreserving R w (fun i => φ i.succ) := by
+  simp [ArcPreserving, Fin.forall_fin_succ]
+  tauto
+
+open scoped Classical in
+private theorem row_transfer_count (R : V → V → Prop) (w : List Bool) (i : V) :
+    (∑ j, transfer (normalizedArcMatrix R) w i j) =
+      (2 / (Fintype.card V : ℝ)) ^ w.length *
+        ∑ φ : Fin w.length → V, if ArcPreserving R w (Fin.cons i φ) then 1 else 0 := by
+  classical
+  induction w generalizing i with
+  | nil => simp [transfer, Matrix.one_apply, ArcPreserving]
+  | cons b w ih =>
+    change (∑ j, (step (normalizedArcMatrix R) b *
+      transfer (normalizedArcMatrix R) w) i j) =
+        (2 / (Fintype.card V : ℝ)) ^ (w.length + 1) *
+          ∑ φ : Fin (w.length + 1) → V,
+            if ArcPreserving R (b :: w) (Fin.cons i φ) then 1 else 0
+    simp only [Matrix.mul_apply]
+    rw [Finset.sum_comm]
+    simp_rw [← Finset.mul_sum, ih]
+    rw [← (Fin.consEquiv fun _ : Fin (w.length + 1) => V).sum_comp]
+    simp only [Fintype.sum_prod_type, Fin.consEquiv, Equiv.coe_fn_mk]
+    simp_rw [arcPreserving_cons]
+    simp only [Fin.cons_zero, Fin.cons_succ]
+    rw [pow_succ']
+    rw [Finset.mul_sum]
+    apply Finset.sum_congr rfl
+    intro j _
+    have hs : step (normalizedArcMatrix R) b i j =
+        if (if b then R i j else R j i) then 2 / (Fintype.card V : ℝ) else 0 := by
+      cases b <;> simp [step, normalizedArcMatrix, Matrix.transpose_apply]
+    rw [hs]
+    by_cases h : if b then R i j else R j i
+    · simp [h, ← Finset.mul_sum, mul_assoc]
+    · simp [h]
+
+/-- Matrix multiplication sums over every map, retaining vertex collisions. -/
+theorem mass_transfer_eq_density (R : V → V → Prop) [Nonempty V] (w : List Bool) :
+    mass (transfer (normalizedArcMatrix R) w) =
+      (2 : ℝ) ^ w.length * homDensity R w := by
+  classical
+  have hN : (Fintype.card V : ℝ) ≠ 0 := by positivity
+  have hc : (homCount R w : ℝ) =
+      ∑ φ : Fin (w.length + 1) → V, if ArcPreserving R w φ then 1 else 0 := by
+    rw [homCount, Nat.card_eq_fintype_card, Fintype.card_subtype, Finset.card_filter]
+    push_cast
+    rfl
+  have hsum : (∑ i, ∑ j, transfer (normalizedArcMatrix R) w i j) =
+      (2 / (Fintype.card V : ℝ)) ^ w.length * (homCount R w : ℝ) := by
+    simp_rw [row_transfer_count]
+    rw [← Finset.mul_sum, hc,
+      ← (Fin.consEquiv fun _ : Fin (w.length + 1) => V).sum_comp]
+    simp only [Fintype.sum_prod_type, Fin.consEquiv, Equiv.coe_fn_mk]
+    rfl
+  unfold mass homDensity
+  rw [hsum, div_pow, pow_succ]
+  field_simp
 
 end Transfer
 
