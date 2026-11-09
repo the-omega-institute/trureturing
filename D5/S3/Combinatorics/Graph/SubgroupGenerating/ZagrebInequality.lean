@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/Combinatorics/Graph/SubgroupGenerating/ZagrebInequality
    mirror-E: none(waiver:external-open-problem-resolution)
-   anchors: ["mathlib/module/Mathlib.Algebra.Order.Chebyshev"]
+   anchors: [mathlib/module/Mathlib.Algebra.Order.Chebyshev]
    utility: none
    digest: Every finite group's literal generating graph satisfies the Zagreb inequality. -/
 
