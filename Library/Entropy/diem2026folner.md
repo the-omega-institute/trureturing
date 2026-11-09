@@ -3,6 +3,7 @@ bibkey: diem2026folner
 authors: Tom Ole Diem
 year: 2026
 title: Boxes of a lattice are asymptotically translation invariant
+doi: null
 url: https://github.com/leanprover-community/physlib/blob/80ca0ab9dccc5ad8a0f904a6572a728e3abfa125/PhyslibAlpha/CondensedMatter/Crystal/Folner.lean
 claim: Finite integer lattice boxes have cardinality m^d and asymptotically negligible translation boundary.
 strata_touched:

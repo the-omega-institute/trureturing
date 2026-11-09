@@ -188,7 +188,8 @@ def registration_code : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source codeArena.{u} ⟨codeFamily.{u}⟩
   correspondence := {stage := .evidence, objectStage := .evidence}
   bundleNonempty := .absent
-  readout := some codeActual.{u}
+  readout := some (realize codeSignature.{u}
+    (fun _ P => localMap P.2.2.1 P.2.2.2) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -221,7 +222,9 @@ def registration_count : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source countArena.{u} ⟨countFamily.{u}⟩
   correspondence := {stage := .evidence, objectStage := .evidence}
   bundleNonempty := .absent
-  readout := some countActual.{u}
+  readout := some (realize countSignature.{u}
+    (fun _ P => imagePatternCount (box P.2.1 (P.2.2.2 + 1)) P.2.2.1)
+    (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none

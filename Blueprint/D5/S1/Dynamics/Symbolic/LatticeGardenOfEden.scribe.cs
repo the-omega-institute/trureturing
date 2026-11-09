@@ -8,7 +8,7 @@ internal sealed class LatticeGardenOfEdenDocument : IScribeDocumentDefinition
 {
     private const string Owner = "D5/S1/Dynamics/Symbolic/LatticeGardenOfEden.";
     private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Entropy/wacker2016gardeneden");
-    private static Formula Id(string s) => F.Id(s);
+    private static Formula Id(string s) => s == "φ" ? Varphi : F.Id(s);
     private static Formula Nat => Seq(Mathbb, Grp(Id("N")));
     private static Formula Int => Seq(Mathbb, Grp(Id("Z")));
     private static Formula Real => Seq(Mathbb, Grp(Id("R")));
@@ -21,7 +21,7 @@ internal sealed class LatticeGardenOfEdenDocument : IScribeDocumentDefinition
             if (name.Count > 0) name.Add(Dot);
             name.Add(Id(part));
         }
-        var items = new List<Formula> { Seq(Operatorname, Grp(Seq([.. name]))), Open };
+        var items = new List<Formula> { s == "φ" ? Varphi : Seq(Operatorname, Grp(Seq([.. name]))), Open };
         for (var i = 0; i < args.Length; i++)
         {
             if (i > 0) items.AddRange([Comma, Sp]);
@@ -69,8 +69,8 @@ internal sealed class LatticeGardenOfEdenDocument : IScribeDocumentDefinition
         Describe.Lean(DescribeId.Create("finite-disagreement-preinjectivity"), DeclarationHandle.Create(Owner + "Preinjective"),
             H("Preinjectivity on finite disagreements"), StatementSource.FromAuthor(St(
                 Alphabet, Setup, Seq(Pre, Sp, Iff), All("x", Config), All("y", Config),
-                Seq(Call("Set.Finite", Call("disagreement", Id("x"), Id("y"))), Sp, Rightarrow,
-                    Code(Id("x")), Sp, Eq, Sp, Code(Id("y")), Sp, Rightarrow, Id("x"), Sp, Eq, Sp, Id("y")))),
+                Seq(Call("Set.Finite", Call("disagreement", Id("x"), Id("y"))), Sp, Rightarrow, Sp,
+                    Code(Id("x")), Sp, Eq, Sp, Code(Id("y")), Sp, Rightarrow, Sp, Id("x"), Sp, Eq, Sp, Id("y")))),
             AssessedProvenance.FromLiterature(Source), Blocks(
                 Paragraph(Text("The disagreement set is exactly the set of sites z at which x(z) and y(z) differ. "
                     + "Equality of images means equality at every lattice site, not just on a finite observation window."))), DescribeRole.Definition),
@@ -87,8 +87,8 @@ internal sealed class LatticeGardenOfEdenDocument : IScribeDocumentDefinition
                 Alphabet, Finite, All("d", Nat), Seq(D(1), Sp, Le, Sp, Id("d"), Sp, Rightarrow),
                 All("S", Call("Finset", G)), All("φ", Rule), Seq(D(2), Sp, Le, Sp, Card, Sp, Rightarrow),
                 All("x", Config), All("y", Config),
-                Seq(Call("Set.Finite", Call("disagreement", Id("x"), Id("y"))), Sp, Rightarrow,
-                    Code(Id("x")), Sp, Eq, Sp, Code(Id("y")), Sp, Rightarrow, Id("x"), Sp, Neq, Sp, Id("y"), Sp, Rightarrow),
+                Seq(Call("Set.Finite", Call("disagreement", Id("x"), Id("y"))), Sp, Rightarrow, Sp,
+                    Code(Id("x")), Sp, Eq, Sp, Code(Id("y")), Sp, Rightarrow, Sp, Id("x"), Sp, Neq, Sp, Id("y"), Sp, Rightarrow),
                 Ex("c", Real), Seq(Id("c"), Sp, Lt, Sp, LogCard, Sp, Land),
                 Ex("N", Nat), All("n", Nat), Seq(Id("N"), Sp, Le, Sp, Id("n"), Sp, Rightarrow, Rate, Sp, Le, Sp, Id("c")))),
             AssessedProvenance.FromLiterature(Source), Blocks(
