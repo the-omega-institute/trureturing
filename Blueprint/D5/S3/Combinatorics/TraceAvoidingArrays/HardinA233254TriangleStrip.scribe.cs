@@ -43,9 +43,10 @@ internal sealed class HardinA233254TriangleStripDocument : IScribeDocumentDefini
             Def("count", "a", "The literal finite count", CountFormula(),
                 "The filter ranges over every array function and directly uses "
                 + "HardinA233251TriangleStrip.widthLegal at width six, with rowLegal and "
-                + "the displayed antidiagonal row relation. The equality below expands "
+                + "the displayed antidiagonal row relation. The displayed equality expands "
                 + "that owner predicate. Its published decidability instances and the "
-                + "published pair-strip scanner instances supply the decisions. The existential first-cell "
+                + "published pair-strip allowed-colour instance supply the decisions. "
+                + "The existential first-cell "
                 + "condition is false when n is zero. The final predicate is the original "
                 + "row-major scanner predicate at both false flags.", true),
             Def("valid", "Valid", "Reachable boundaries", ValidFormula(),
@@ -152,8 +153,7 @@ internal sealed class HardinA233254TriangleStripDocument : IScribeDocumentDefini
             And(Ne(oldCell, newCell), Ne(Add(Val(oldCell), Val(newCell)), Num(5))))));
         var owner = Call(Transfer + "widthLegal", N("rowLegal"), bonds, a);
         var literal = And(first, And(horizontal, And(anti, normal)));
-        var filter = Call("Finset.filter", Fn("A", arrays,
-            owner), Q("Finset.univ"));
+        var filter = Call("Finset.filter", Fn("A", arrays, owner), Q("Finset.univ"));
         return All("n", Q("Nat"), And(All("A", arrays, Eq(owner, literal)),
             Eq(CallLocal("a", n), Call("Finset.card", filter))));
     }
