@@ -53,23 +53,27 @@ internal sealed class SlowSurvivalWindowsDocument : IScribeDocumentDefinition
     private static Formula Upper => Call("b", Call("succ", V("i")));
     private static Formula Age => Call("n", V("i"));
     private static Formula Bound => Subtract(D(1), Multiply(D(2), V("theta")));
-    private static Formula Conclusion() =>
-        Some("H", Nat, Some("n", new Formula.TypeArrow(Call("Fin", V("K")), Nat),
-            Some("b", new Formula.TypeArrow(Call("Fin", Add(V("K"), D(1))), Nat),
-                Both(Eqn(Call("b", D(0)), D(0)), Eqn(Call("b", Call("last", V("K"))), V("H")),
-                    Seq(Par(Eqn(V("K"), D(0))), Sp, Iff, Sp, Par(Eqn(V("H"), D(0)))),
-                    Call("StrictMono", V("b")), Call("StrictMono", V("n")),
-                    All("i", Call("Fin", V("K")),
-                        Both(Lt(D(0), Age), Lt(Lower, Upper), Le(Upper, V("H")),
-                            Lt(Bound, new Formula.Fraction(
-                                Subtract(Call("S", Add(Age, Lower)), Call("S", Add(Age, Upper))),
-                                Call("S", Age)))))))));
-    private static Formula Statement() =>
-        All("S", new Formula.TypeArrow(Nat, Real),
-            Imp(All("j", Nat, Lt(D(0), Call("S", V("j")))),
-                Imp(Call("Tendsto", V("S"), V("atTop"), Call("nhds", D(0))),
-                    Imp(Call("Tendsto", LambdaFormula("j", Nat,
-                            new Formula.Fraction(Call("S", Add(V("j"), D(1))), Call("S", V("j")))),
-                            V("atTop"), Call("nhds", D(1))),
-                        All("K", Nat, All("theta", Real, Imp(Lt(D(0), V("theta")), Conclusion())))))));
+    private static Formula Conclusion()
+    {
+        var mass = new Formula.Fraction(
+            Subtract(Call("S", Add(Age, Lower)), Call("S", Add(Age, Upper))), Call("S", Age));
+        var rows = All("i", Call("Fin", V("K")),
+            Both(Lt(D(0), Age), Lt(Lower, Upper), Le(Upper, V("H")), Lt(Bound, mass)));
+        var result = Both(Eqn(Call("b", D(0)), D(0)), Eqn(Call("b", Call("last", V("K"))), V("H")),
+            Seq(Par(Eqn(V("K"), D(0))), Sp, Iff, Sp, Par(Eqn(V("H"), D(0)))),
+            Call("StrictMono", V("b")), Call("StrictMono", V("n")), rows);
+        result = Some("b", new Formula.TypeArrow(Call("Fin", Add(V("K"), D(1))), Nat), result);
+        result = Some("n", new Formula.TypeArrow(Call("Fin", V("K")), Nat), result);
+        return Some("H", Nat, result);
+    }
+    private static Formula Statement()
+    {
+        var result = All("K", Nat, All("theta", Real, Imp(Lt(D(0), V("theta")), Conclusion())));
+        var ratio = LambdaFormula("j", Nat,
+            new Formula.Fraction(Call("S", Add(V("j"), D(1))), Call("S", V("j"))));
+        result = Imp(Call("Tendsto", ratio, V("atTop"), Call("nhds", D(1))), result);
+        result = Imp(Call("Tendsto", V("S"), V("atTop"), Call("nhds", D(0))), result);
+        result = Imp(All("j", Nat, Lt(D(0), Call("S", V("j")))), result);
+        return All("S", new Formula.TypeArrow(Nat, Real), result);
+    }
 }

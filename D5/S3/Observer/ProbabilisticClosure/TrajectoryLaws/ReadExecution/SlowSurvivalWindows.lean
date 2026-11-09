@@ -11,6 +11,7 @@ import Mathlib.Topology.Algebra.Field
 import Mathlib.Tactic.FieldSimp
 import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.Omega
+import Mathlib.Tactic.Ring
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -37,7 +38,7 @@ private theorem fixed_shift_ratio (S : ℕ → ℝ) (hpos : ∀ n, 0 < S n)
       apply hp.congr'
       exact Eventually.of_forall fun n => by
         rw [Nat.add_succ]
-        field_simp [(hpos (n + L)).ne', (hpos n).ne']
+        field_simp [(hpos (n + L)).ne', (hpos n).ne'] <;> ring
 
 private theorem next_window (S : ℕ → ℝ) (hpos : ∀ n, 0 < S n)
     (hzero : Tendsto S atTop (𝓝 0))
