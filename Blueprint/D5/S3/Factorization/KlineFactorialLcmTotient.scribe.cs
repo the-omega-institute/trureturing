@@ -62,7 +62,8 @@ internal sealed class KlineFactorialLcmTotientDocument : IScribeDocumentDefiniti
     }
 
     private static Formula Factorial(Formula value) => Seq(Open, value, Close, Bang);
-    private static Formula Ratio(Formula numerator, Formula denominator) => Frac(numerator, denominator);
+    private static Formula Ratio(Formula numerator, Formula denominator) =>
+        Seq(Frac, Grp(numerator), Grp(denominator));
     private static Formula Eq(Formula left, Formula right) =>
         new Formula.Relation(left, FormulaRelationOperator.Equal, right);
     private static Formula Call(string name, params Formula[] arguments) =>

@@ -10,7 +10,7 @@ noncomputable section
 
 abbrev signature : Signature where
   Params := Unit
-  State _ := ℕ
+  State _ := ℤ
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
@@ -19,14 +19,15 @@ abbrev signature : Signature where
   finiteAnchor := inferInstance
 
 def actual : Realization signature :=
-  realize signature (fun _ _ m => a m) (fun e => nomatch e)
+  realize signature (fun _ _ j => a (Nat.nth Nat.Prime (j.toNat - 1) - 1))
+    (fun e => nomatch e)
 
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ j : ℤ, 1 ≤ j →
     let p := Nat.nth Nat.Prime (j.toNat - 1)
     let m := p - 1
-    R.readout () () m =
+    R.readout () () j =
       (Nat.totient m.factorial : ℚ) / (Nat.totient (Nat.lcmUpto m) : ℚ)
 
 def rejected : Realization signature :=
@@ -51,8 +52,12 @@ def source_registration : Registration arena (arena.Law actual) where
       exact nomatch e
   dependence := by
     intro i
-    refine ⟨(), 1, 4, ?_⟩
-    change a 1 ≠ a 4
+    refine ⟨(), 1, 3, ?_⟩
+    change a (Nat.nth Nat.Prime ((1 : ℤ).toNat - 1) - 1) ≠
+      a (Nat.nth Nat.Prime ((3 : ℤ).toNat - 1) - 1)
+    simp only [show (1 : ℤ).toNat - 1 = 0 from rfl,
+      show (3 : ℤ).toNat - 1 = 2 from rfl,
+      Nat.nth_prime_zero_eq_two, Nat.nth_prime_two_eq_five]
     decide
 
 def registration :
@@ -70,7 +75,8 @@ def registration :
   realization := .source arena ⟨source_registration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ m => a m) (fun e => nomatch e))
+  readout := some (realize signature
+    (fun _ _ j => a (Nat.nth Nat.Prime (j.toNat - 1) - 1)) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -81,7 +87,7 @@ def registration :
     coordinates := #[]
     readouts := #[{
       path := #["body", "body", "body", "body", "fn", "arg"]
-      stateBinder := 3
+      stateBinder := 0
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }
