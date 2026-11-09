@@ -108,7 +108,7 @@ theorem canonical_exists_unique {C : Type*} [Fintype C] [LinearOrder C]
 
 open D5.S3.Observer.Separation.BooleanRankThreeK4 (beta)
 
-def colourEquiv : Fin 6 ≃ Fin 3 × Bool where
+private def colourEquiv : Fin 6 ≃ Fin 3 × Bool where
   toFun x := (beta x, decide (3 ≤ x.val))
   invFun p := if p.2 then ⟨5 - p.1.val, by have := p.1.isLt; omega⟩
     else ⟨p.1.val, by have := p.1.isLt; omega⟩
