@@ -9,6 +9,7 @@
 import D5.S3.Combinatorics.Graph.StarForming.CubicExact
 import D5.S3.Combinatorics.Graph.StarForming.HeawoodParameters
 import D5.S3.Combinatorics.Graph.StarForming.HeawoodPorts
+import D5.S3.Combinatorics.Graph.StarForming.DominationComparison
 
 /-! Graph assembly of the written arbitrary-interface theorem in
 subquorum-colorings 48728b42d39ab3de5de251c61da5a404ec418a69,
@@ -340,5 +341,99 @@ theorem beta_graph (P : SimpleGraph (I × Fin 2)) :
     have hl : (attaining A).card ≤ beta (graph P) 2 :=
       Finset.le_sup (Finset.mem_filter.mpr ⟨by simp,attaining_dissociation P A hA⟩)
     rwa [attaining_card,he] at hl
+
+/-- A cover of the collapsed interaction relation must also contain the
+endpoint of every restored-incidence loop. -/
+def VertexCoverBlocks (P : SimpleGraph (I × Fin 2)) (C : Finset I) : Prop :=
+  ∀ i j, interaction P i j → i ∈ C ∨ j ∈ C
+
+/-- The actual finite minimum vertex-cover cardinality, with loops retained. -/
+noncomputable def tau0 (P : SimpleGraph (I × Fin 2)) : ℕ :=
+  sInf {n | ∃ C : Finset I, VertexCoverBlocks P C ∧ C.card = n}
+
+private theorem cover_complement_iff (P : SimpleGraph (I × Fin 2)) (C : Finset I) :
+    VertexCoverBlocks P C ↔ IndependentBlocks P (Finset.univ \ C) := by
+  classical
+  simp only [VertexCoverBlocks,IndependentBlocks,Finset.mem_sdiff,Finset.mem_univ,
+    true_and]
+  constructor
+  · intro h i hi j hj hij
+    exact (h i j hij).elim hi hj
+  · intro h i j hij
+    by_contra hn
+    exact h i (not_or.mp hn).1 j (not_or.mp hn).2 hij
+
+/-- Complementation gives the exact loop-aware independent/cover duality. -/
+theorem alpha0_add_tau0 (P : SimpleGraph (I × Fin 2)) :
+    alpha0 P + tau0 P = Fintype.card I := by
+  classical
+  have hall : VertexCoverBlocks P (Finset.univ : Finset I) := by
+    intro i j _; exact Or.inl (Finset.mem_univ i)
+  obtain ⟨C,hC,hc⟩ := Nat.sInf_mem
+    (show {n | ∃ C : Finset I, VertexCoverBlocks P C ∧ C.card = n}.Nonempty from
+      ⟨_,Finset.univ,hall,rfl⟩)
+  obtain ⟨A,hA,ha⟩ := alpha0_attained P
+  have hcover : VertexCoverBlocks P (Finset.univ \ A) := by
+    apply (cover_complement_iff P _).mpr
+    simpa using hA
+  have ht : tau0 P ≤ (Finset.univ \ A).card := Nat.sInf_le ⟨_,hcover,rfl⟩
+  have hi : (Finset.univ \ C).card ≤ alpha0 P :=
+    Finset.le_sup (Finset.mem_filter.mpr ⟨by simp,(cover_complement_iff P C).mp hC⟩)
+  have hca := Finset.card_sdiff_add_card_eq_card (Finset.subset_univ A)
+  have hcc := Finset.card_sdiff_add_card_eq_card (Finset.subset_univ C)
+  simp only [Finset.card_univ] at hca hcc
+  change C.card = tau0 P at hc
+  omega
+
+/-- The actual star-forming gap is exactly the loop-aware vertex-cover number. -/
+theorem gap_eq_tau0 (P : SimpleGraph (I × Fin 2)) :
+    SF (graph P) 2 - beta (graph P) 2 = tau0 P := by
+  have h := alpha0_add_tau0 P
+  rw [sf_graph,beta_graph]
+  omega
+
+/-- Equality holds precisely for an interface having no edges, including no
+restored incidence. The statement is valid for the empty block type. -/
+theorem sf_eq_beta_iff (P : SimpleGraph (I × Fin 2)) :
+    SF (graph P) 2 = beta (graph P) 2 ↔ P = ⊥ := by
+  classical
+  constructor
+  · intro he
+    have ha : alpha0 P = Fintype.card I := by
+      rw [sf_graph,beta_graph] at he; omega
+    obtain ⟨A,hA,hc⟩ := alpha0_attained P
+    have hfull : A = Finset.univ := Finset.eq_univ_of_card A (hc.trans ha)
+    ext x y
+    simp only [SimpleGraph.bot_adj,iff_false]
+    intro hxy
+    exact hA x.1 (by simp [hfull]) y.1 (by simp [hfull]) ⟨x.2,y.2,hxy⟩
+  · rintro rfl
+    have hi : IndependentBlocks (⊥ : SimpleGraph (I × Fin 2)) Finset.univ := by
+      simp [IndependentBlocks,interaction]
+    have hl : Fintype.card I ≤ alpha0 (⊥ : SimpleGraph (I × Fin 2)) := by
+      unfold alpha0
+      simpa only [Finset.card_univ] using
+        Finset.le_sup (f := Finset.card) (Finset.mem_filter.mpr ⟨by simp,hi⟩)
+    have ht := alpha0_add_tau0 (⊥ : SimpleGraph (I × Fin 2))
+    rw [sf_graph,beta_graph]
+    omega
+
+/-- Interfaces joining opposite port types preserve the displayed Fano
+bipartition. Arbitrary same-part interfaces require no such assertion. -/
+theorem bipartite (P : SimpleGraph (I × Fin 2))
+    (hP : ∀ i j p q, P.Adj (i,p) (j,q) → p ≠ q) :
+    (graph P).Colorable 2 := by
+  let c : I × Fin 14 → Fin 2 := fun x => if x.2.val < 7 then 0 else 1
+  refine ⟨SimpleGraph.Coloring.mk c ?_⟩
+  intro x y h
+  rcases h with ⟨_,hb⟩ | ⟨p,q,hp,hq,hpq⟩
+  · have hl : ∀ a b : Fin 14, BrokenAdj a b →
+        (if a.val < 7 then (0 : Fin 2) else 1) ≠
+        (if b.val < 7 then (0 : Fin 2) else 1) := by
+      unfold BrokenAdj brokenNeighbors
+      decide +kernel
+    exact hl _ _ hb
+  · have hn := hP _ _ _ _ hpq
+    fin_cases p <;> fin_cases q <;> simp_all [c,port]
 
 end D5.S3.Combinatorics.Graph.StarForming.HeawoodInterfaces

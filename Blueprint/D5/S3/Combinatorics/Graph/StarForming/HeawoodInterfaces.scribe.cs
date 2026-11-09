@@ -21,5 +21,10 @@ internal sealed class HeawoodInterfacesDocument : IScribeDocumentDefinition
             Node("sf_graph", "sf graph", "Exact declaration: theorem sf_graph (P : SimpleGraph (I × Fin 2)) : SF (graph P) 2 = 8 * Fintype.card I.", DescribeRole.Theorem),
             Node("interaction", "interaction", "Exact declaration: def interaction (P : SimpleGraph (I × Fin 2)) (i j : I) : Prop.", DescribeRole.Definition),
             Node("IndependentBlocks", "IndependentBlocks", "Exact declaration: def IndependentBlocks (P : SimpleGraph (I × Fin 2)) (A : Finset I) : Prop.", DescribeRole.Definition),
-            Node("beta_graph", "beta graph", "Exact declaration: theorem beta_graph (P : SimpleGraph (I × Fin 2)) : beta (graph P) 2 = 7 * Fintype.card I + alpha0 P.", DescribeRole.Theorem)), []));
+            Node("beta_graph", "beta graph", "Exact declaration: theorem beta_graph (P : SimpleGraph (I × Fin 2)) : beta (graph P) 2 = 7 * Fintype.card I + alpha0 P.", DescribeRole.Theorem),
+            Node("VertexCoverBlocks", "VertexCoverBlocks", "Exact declaration: def VertexCoverBlocks (P : SimpleGraph (I × Fin 2)) (C : Finset I) : Prop.", DescribeRole.Definition),
+            Node("alpha0_add_tau0", "alpha0 add tau0", "Exact declaration: theorem alpha0_add_tau0 (P : SimpleGraph (I × Fin 2)) : alpha0 P + tau0 P = Fintype.card I.", DescribeRole.Theorem),
+            Node("gap_eq_tau0", "gap eq tau0", "Exact declaration: theorem gap_eq_tau0 (P : SimpleGraph (I × Fin 2)) : SF (graph P) 2 - beta (graph P) 2 = tau0 P.", DescribeRole.Theorem),
+            Node("sf_eq_beta_iff", "sf eq beta iff", "Exact declaration: theorem sf_eq_beta_iff (P : SimpleGraph (I × Fin 2)) : SF (graph P) 2 = beta (graph P) 2 ↔ P = ⊥.", DescribeRole.Theorem),
+            Node("bipartite", "bipartite", "Exact declaration: theorem bipartite (P : SimpleGraph (I × Fin 2)) (hP : ∀ i j p q, P.Adj (i,p) (j,q) → p ≠ q) : (graph P).Colorable 2.", DescribeRole.Theorem)), []));
 }

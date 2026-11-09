@@ -102,16 +102,82 @@ Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodInterfaces.beta_gr
 
 Exact declaration: theorem beta_graph (P : SimpleGraph (I × Fin 2)) : beta (graph P) 2 = 7 * Fintype.card I + alpha0 P.
 
+**Definition 1.9 (VertexCoverBlocks).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodInterfaces.VertexCoverBlocks`
+
+*Formalization.* `D5/S3/Combinatorics/Graph/StarForming/HeawoodInterfaces.VertexCoverBlocks` (`✓ std3`).
+
+*Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
+
+*Commentary.*
+
+Exact declaration: def VertexCoverBlocks (P : SimpleGraph (I × Fin 2)) (C : Finset I) : Prop.
+
+**Theorem 1.10 (alpha0 add tau0).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodInterfaces.alpha0_add_tau0`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/StarForming/HeawoodInterfaces.alpha0_add_tau0` (`✓ std3`). ∎
+
+*Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
+
+*Commentary.*
+
+Exact declaration: theorem alpha0_add_tau0 (P : SimpleGraph (I × Fin 2)) : alpha0 P + tau0 P = Fintype.card I.
+
+**Theorem 1.11 (gap eq tau0).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodInterfaces.gap_eq_tau0`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/StarForming/HeawoodInterfaces.gap_eq_tau0` (`✓ std3`). ∎
+
+*Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
+
+*Commentary.*
+
+Exact declaration: theorem gap_eq_tau0 (P : SimpleGraph (I × Fin 2)) : SF (graph P) 2 - beta (graph P) 2 = tau0 P.
+
+**Theorem 1.12 (sf eq beta iff).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodInterfaces.sf_eq_beta_iff`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/StarForming/HeawoodInterfaces.sf_eq_beta_iff` (`✓ std3`). ∎
+
+*Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
+
+*Commentary.*
+
+Exact declaration: theorem sf_eq_beta_iff (P : SimpleGraph (I × Fin 2)) : SF (graph P) 2 = beta (graph P) 2 ↔ P = ⊥.
+
+**Theorem 1.13 (bipartite).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodInterfaces.bipartite`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/StarForming/HeawoodInterfaces.bipartite` (`✓ std3`). ∎
+
+*Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
+
+*Commentary.*
+
+Exact declaration: theorem bipartite (P : SimpleGraph (I × Fin 2)) (hP : ∀ i j p q, P.Adj (i,p) (j,q) → p ≠ q) : (graph P).Colorable 2.
+
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodInterfaces.IndependentBlocks`
+- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodInterfaces.VertexCoverBlocks`
+- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodInterfaces.alpha0_add_tau0`
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodInterfaces.beta_graph`
+- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodInterfaces.bipartite`
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodInterfaces.chosen_minimal`
+- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodInterfaces.gap_eq_tau0`
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodInterfaces.graph`
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodInterfaces.interaction`
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodInterfaces.port`
+- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodInterfaces.sf_eq_beta_iff`
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodInterfaces.sf_graph`
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodInterfaces.slice_cap`
 - Dependency: [D5/S3/Combinatorics/Graph/StarForming/CubicExact](CubicExact.md)
+- Dependency: [D5/S3/Combinatorics/Graph/StarForming/DominationComparison](DominationComparison.md)
 - Dependency: [D5/S3/Combinatorics/Graph/StarForming/HeawoodParameters](HeawoodParameters.md)
 - Dependency: [D5/S3/Combinatorics/Graph/StarForming/HeawoodPorts](HeawoodPorts.md)
