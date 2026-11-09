@@ -7,7 +7,7 @@
    digest: Barker's generating function for the literal normalized six-column strip. -/
 /-
 admission_basis: open-problem-resolution (#28319; Proved)
-escape_witness: none
+escape_witness: D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233254TriangleStrip.v_eq_w (reduction of the boundary-state continuation counts to the class vector at every height, by induction)
 Direct frozen dependencies (declaration statement_ids):
 D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.Seen
 statement_id: sha256:db13d94501d24f27e6e69604bb633af95ff3309c5698815c44e12d2e52739fce
@@ -168,12 +168,12 @@ finite_certificate: proof_shape=bind-only; consumers=v_eq_w, a_eq_w, one_count
 initial_valid: proof_shape=bind-only; consumers=a_eq_w
 w: proof_shape=bind-only; consumers=eval
 eval: proof_shape=bind-only; consumers=v_eq_w
-v_eq_w: proof_shape=bind-only; consumers=a_eq_w
-a_eq_w: proof_shape=bind-only; consumers=recurrence
-recurrence: proof_shape=bind-only; consumers=result
+v_eq_w: proof_shape=content; consumers=a_eq_w
+a_eq_w: proof_shape=content; consumers=recurrence
+recurrence: proof_shape=content; consumers=result
 zero_count: proof_shape=bind-only; consumers=result
 one_count: proof_shape=bind-only; consumers=result
-result: proof_shape=bind-only; consumers=terminal result
+result: proof_shape=content; consumers=terminal result
 -/
 
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip
