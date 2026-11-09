@@ -1,0 +1,8 @@
+**定义 25.1（正 Dagger 比较包）。** 取一个带单位对象 $I$ 的 Dagger 范畴 $\mathcal C$，并要求：
+
+1. 每个 $\operatorname{Hom}(I,A)$ 是有限维复向量空间，复标量由 $\operatorname{End}(I)=\mathbb C$ 给出；
+2. 伴随满足 $(g\circ f)^\dagger=f^\dagger\circ g^\dagger$，且 $x^\dagger y\in\mathbb C$ 对所有态射 $x,y:I\to A$；
+3. 有限 Dagger 双积和双线性复合存在；
+4. 效应是端omorphism $0\le E\le1_A$，准备箭头 $x:I\to A$ 归一化为 $x^\dagger x=1$；
+5. 正性按 $x^\dagger E x\ge0$ 和 $x^\dagger(1_A-E)x\ge0$ 定义。
+
