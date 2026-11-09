@@ -1,0 +1,10 @@
+**候选公理 52.2（Riesz 三段闭环）。** 在 Q0 的基础上要求
+
+$$
+\boxed{\mathsf Q_{\mathrm{R}}:\qquad
+\omega(u,r_v)=g(u,v)
+\quad\text{对所有 }u,v.}
+$$
+
+它的关系图景是：先用 $\omega$ 从 $v$ 生成一个代表元 $r_v$，再用 $\omega$ 与 $r_v$ 比较，结果精确返回原来的 $g$ 读数。这个闭环没有把 $J$ 或 $A$ 当作原始量。
+

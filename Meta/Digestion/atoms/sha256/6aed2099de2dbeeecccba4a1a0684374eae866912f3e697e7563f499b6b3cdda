@@ -1,0 +1,13 @@
+**定理 52.5（与直接复正核路线的精确比较）。** 设 $\kappa$ 是 Q0 的实核，$H_{\mathbb R}$ 是其 GNS 空间。以下两种数据在加入实全生成条件后等价：
+
+* **关系相位路线：** 连续反对称 $\omega$，满足 $\mathsf Q_{\mathrm R}$；
+* **复核路线：** 复 Hermitian 正半定核 $h$，满足
+  $$
+  \operatorname{Re}h(x,y)=\kappa(x,y),
+  $$
+  且其最小复 GNS 表示的原始向量实线性张成在底层实 Hilbert 空间中稠密：
+  $$
+  \overline{\operatorname{span}_{\mathbb R}\{\phi(x)\}}=K_{\mathbb R}.
+  \tag{RT}
+  $$
+
