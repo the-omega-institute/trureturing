@@ -18,7 +18,9 @@ open Module
 open D5.S3.Combinatorics.Orthogonality.NikandishClique
 open D5.S3.Fourier.CharacterSelection.BinaryCharacterCodeDuality
 
-private theorem below_card (n : ℕ) (X : Submodule (ZMod 2) (Fin n → ZMod 2)) :
+/-- Count every nonzero subspace contained in an arbitrary coordinate subspace.
+This is the lattice count consumed by degree and fixed-clique list formulas. -/
+theorem below_card (n : ℕ) (X : Submodule (ZMod 2) (Fin n → ZMod 2)) :
     Nat.card {W : Vertex n // W.1 ≤ X} =
       nonzeroSubspaceCount (finrank (ZMod 2) X) := by
   classical

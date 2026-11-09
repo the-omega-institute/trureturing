@@ -12,6 +12,14 @@ internal sealed class OrthogonalityDegreeDeletionDocument : IScribeDocumentDefin
         "Exact degrees and reversible deletion in the complete nonzero binary subspace graph.",
         H("Subspace degrees and extension of every retained coloring"),
         Blocks(
+            Describe.Lean(DescribeId.Create("contained-subspace-cardinality"),
+                DeclarationHandle.Create(Prefix + "below_card"), H("Every contained nonzero subspace"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromLiterature(Source),
+                Blocks(Paragraph(Text(
+                    "The original proved subtype map/comap count is exposed for the live six-dimensional "
+                    + "label-list consumer. Every nonzero submodule contained in X is counted by "
+                    + "N(finrank X); its existing proof body is reused without a second lattice count."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("exact-neighbor-cardinality"),
                 DeclarationHandle.Create(Prefix + "degree_card"), H("Exact degrees"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromLiterature(Source),
