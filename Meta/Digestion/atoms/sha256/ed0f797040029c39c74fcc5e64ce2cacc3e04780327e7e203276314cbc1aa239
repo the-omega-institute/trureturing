@@ -1,0 +1,23 @@
+**定理 52.5（与直接复正核路线的精确比较）。** 设 $\kappa$ 是 Q0 的实核，$H_{\mathbb R}$ 是其 GNS 空间。以下两种数据在加入实全生成条件后等价：
+
+* **关系相位路线：** 连续反对称 $\omega$，满足 $\mathsf Q_{\mathrm R}$；
+* **复核路线：** 复 Hermitian 正半定核 $h$，满足
+  $$
+  \operatorname{Re}h(x,y)=\kappa(x,y),
+  $$
+  且其最小复 GNS 表示的原始向量实线性张成在底层实 Hilbert 空间中稠密：
+  $$
+  \overline{\operatorname{span}_{\mathbb R}\{\phi(x)\}}=K_{\mathbb R}.
+  \tag{RT}
+  $$
+
+**证明。** 由关系相位路线，定理 52.3 给出 $J$，定义
+
+$$
+h(u,v)=g(u,v)-i\,g(Ju,v).
+$$
+
+这给出复 Hermitian 正核，且原实空间本身就是底层实空间，故满足 (RT)。反向地，复正核的 GNS 表示给出复 Hilbert 空间 $K$；(RT) 使 Q0 的实 GNS 空间等于 $K$ 的底层实空间。令 $Jz=iz$，再令 $\omega(u,v)=g(Ju,v)$，即满足 $\mathsf Q_{\mathrm R}$。证毕。
+
+关系相位路线保留了“复结构从哪条新增关系产生”的问题，复核路线则把复标量、Hermitian 对称和正定性一次打包。故本理论采用前者作为原始候选，把后者保留为表示定理，而不把两者误称为 Q0 的同一结论。
+

@@ -1,0 +1,10 @@
+**定理 52.3（Riesz 闭环与正交复结构等价）。** 设 $\omega$ 连续且反对称。以下条件等价：
+
+1. $\mathsf Q_{\mathrm R}$ 成立；
+2. $H_{\mathbb R}$ 上存在正交复结构 $J$，满足 $J^2=-I$、$J^*=-J$，且 $\omega(u,v)=g(Ju,v)$；
+3. $H_{\mathbb R}$ 的关系映射满足无坐标恒等式
+   $$
+   \omega^\flat g^\sharp\omega^\flat=-g^\flat,
+   $$
+   其中 $g^\flat(u)=g(u,\cdot)$，$g^\sharp$ 是 Riesz 逆映射，$\omega^\flat(u)=\omega(u,\cdot)$。
+
