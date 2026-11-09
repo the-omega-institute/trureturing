@@ -1,0 +1,4 @@
+**定义 86.1（同一候选的关系几何与来源）。** 在整个原原子集上记 $p\perp r\Longleftrightarrow p\circ r=0$。$\mathrm O_\pi$ 要求原有向二元关系在这些正交对上为零；$\mathrm Z_\pi$ 要求任意原子生成的一阶变化不在正交读口产生零接触的一阶破坏。二者共享这份关联几何，却约束 $F$ 的不同槽，分别负责全域自守恒和保正导子；定理 84.2、命题 84.1 分别说明不能互相删除。
+
+对有限 EJA，Peirce 分解与谱定理是成熟结构；在零接触到导子的环节也可直接消费 Tao–Gowda 原文 Proposition 3（Lyapunov-like 加 $T(u)=0$ 等价导子），不需把全实参数保正指数当作额外前提。关联矩阵上另一成熟路线见 Alaminos–Brešar–Extremera–Villena, *On bilinear maps determined by rank one idempotents*, [作者原文](https://users.fmf.uni-lj.si/bresar/documents/bilmapsid.pdf), Theorem 2.2：其域特征非二，且要求全部关联矩阵的正交 rank-one idempotents，不限自伴随投影；因此它不能不经桥梁替代 (83.5) 的 EJA 论证。以上都是中间工具或比较边界。本单元的新增综合是同一完整原签名上的原子入口等价、保全记录与返回的输出扭转删除模型，以及满足全部联合原子自守恒却违约的 (85.1)–(85.6) 异常族；没有以这些工具的改写取得新内容或优先权名义。
+

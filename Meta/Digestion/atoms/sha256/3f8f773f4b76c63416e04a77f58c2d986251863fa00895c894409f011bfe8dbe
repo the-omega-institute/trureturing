@@ -1,0 +1,27 @@
+**定义 160.1（零与半重叠候选）。** 完整 $B$ 和另名完整 $\mathsf B_{\rm cl}$ 仍分别取定义 155.1 的原背景，任一记为 $B_*$。同一原有限 EJA、原正 Frobenius 型 $q$、原实双线性 $D$ 及 $P_c,N_c,W_c,\tau$ 不变。对整个原对象的 primitive $e$ 定义
+
+$$
+\mathcal A_e^{0,h}
+=\{p\in\operatorname{Prim}(E):\tau(p\circ e)\in\{0,\tfrac12\}\}.
+\tag{160.1}
+$$
+
+要求同一二元推动满足下列三元读回关系：
+
+$$
+\boxed{\mathsf F_{0,h}:\quad
+\begin{gathered}
+c^2=c,\quad\operatorname{rank}_Ec\in\{1,2\},\qquad
+p,r\in\operatorname{Prim}(E),\quad P_cr=0,\\
+\operatorname{rank}_Ec=1\ \Longrightarrow\ p\in\mathcal A_c^{0,h},\qquad
+\operatorname{rank}_Ec=2\ \Longrightarrow\ (p\le c\ \text{且}\ r=p)
+\end{gathered}
+\quad\Longrightarrow\quad
+W_c(p)=2q(D_pc,r)+W_c(2D_cp).}
+\tag{160.2}
+$$
+
+记 $\mathsf C_{0,h}(B_*)=B_*+\mathsf F_{0,h}$，要求逐一作用于所有原对象与实际联合。它从 $\mathsf F_3$ 中只删除秩一的同一输入 $p=c$，保留全部法向 primitive 读回及全部秩二内部自问。规范谱迹只选数学测试域，不替换不等块权的原 $q$，也不新增实际概率读口。
+
+原 $\Omega,q,D,L$、全部原相关准备、零与次归一质量、不等正块权、设备身份、整个 AC、精确 $N_u$、完整 X/Xs、全事件 R、F、失败、细记录、遗忘、具名同数支持双返回、原反向资料及所有合法有限顺序、自适应和并行历史均保留。X 的含幺 Jordan 嵌入、同一 $D$ 保持、单向交叉零、乘积张成及每对实际准备的实际乘积准备也不加强。特别不先加入第一槽单位 $D_u=0$。
+

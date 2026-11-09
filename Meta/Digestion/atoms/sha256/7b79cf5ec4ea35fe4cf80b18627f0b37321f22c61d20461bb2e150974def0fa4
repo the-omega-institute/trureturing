@@ -1,0 +1,21 @@
+**定义 120.1（原菜单、支撑角与返回细支）。** 保留 C101 的对象、实际对象边及其重构乘法，并保留定义 113.1 的正菜单和所选滤波供应；不继承 C102 的过程伙伴合同或以它为前件的 C103 结论。对象代数为有限复矩阵直和，使用通常迹之和。每条原状态方向成功箭头 $T:\mathcal A\to\mathcal B$ 正复线性且迹不增，即 $T^\dagger(I_{\mathcal B})\le I_{\mathcal A}$。菜单对已有箭头的有限接续闭合，并供应下面实际使用的有限经典标签、标签遗忘及其接续。全体数学态和效果仍不自动成为全部可取得的准备和读出。
+
+对于一条非零正成功箭头 $S$，记
+
+$$
+E_S=S^\dagger(I_{\mathcal B}),\quad
+P=\operatorname{supp}E_S,\quad
+G=S(I_{\mathcal A}),\quad Q=\operatorname{supp}G.
+\tag{120.1}
+$$
+
+一份返回细支资料由原 $S$、原实际正成功补偿 $U:\mathcal B\to\mathcal A$ 和 $q>0$ 组成。要求 $P$ 位于一个原输入简单块内，$Q$ 位于一个原输出简单块内，$U(Y)=PU(QYQ)P$，并有
+
+$$
+US(X)=qX\quad(X\in P\mathcal AP),\qquad
+SU(Y)=qY\quad(Y\in Q\mathcal BQ).
+\tag{120.2}
+$$
+
+这些角只是原代数的数学支撑角，不据此另供一个物理压缩对象。正性已经给 $S(X)=S(PXP)=QS(X)Q$：输入使用定理 114.1 的正伴随支撑论证；输出对正 $X\le cI$ 有 $0\le S(X)\le cG$，再线性延拓。允许标记零细支；它不需要补偿、支撑逆或方向检验。
+

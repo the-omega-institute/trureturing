@@ -20,5 +20,11 @@ def initializedWindow : Application.{0,0,0,0,0,0}
     NativeContinuation.NullReplyFiber.native_execution where
   evidence := .native source bridge
     (.absent "complete initialized native Window source") [] [.seam, .guard, .reply, .atom]
+  prediction := some {
+    source := source
+    contract := {
+      summary := .memory
+      actions := LeanInformationAudit.AuricFib.NativePrediction.allActions
+      evidence := .closed (LeanInformationAudit.AuricFib.NativePrediction.memory_closed _) } }
 
 end Reg.D5.S3.Arith.FibonacciAtomic.NativeContinuation.NullReplyFiber

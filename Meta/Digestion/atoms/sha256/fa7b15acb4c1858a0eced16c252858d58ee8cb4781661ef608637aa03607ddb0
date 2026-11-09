@@ -1,0 +1,18 @@
+**定义 71.2（仅用于比较充分性的有限列表条件）。** 仍记原实际值集合 $A_D=\operatorname{ran}D$，定义每个原输出的关系行
+
+$$
+\mathcal R(p)_{t,\beta}=\beta(D(p,t)),
+\qquad t\in A_D,\quad\beta\in P.
+\tag{71.3}
+$$
+
+这里是一个标量数组，不假设 $p\mapsto\mathcal R(p)$ 线性。补充考察如下有限列表条件：对任意指定有限列表 $F=(p_1,\ldots,p_n)$、$p_k\in A_D$，每个 $\alpha\in P$ 和每个 $\varepsilon>0$，有一组有限 $t_j\in A_D,\beta_j\in P,c_j\in\mathbb R$，使
+
+$$
+\left|\alpha(p_k)-\sum_jc_j\beta_j(D(p_k,t_j))\right|
+\le\varepsilon N(p_k)\qquad(1\le k\le n).
+\tag{71.4}
+$$
+
+同一组选择适用于这份列表的全部条目；选择可依赖整份列表。允许空列表、空和、重复输出和零输出。这是辨清本证明用量的辅助条件，不是新一般公理，也不替换或削弱主入口 (49.1)；后者的全输出统一误差及 §§63–70 在指定因子上的正常性后果均原样保留。数学公式不被解释为可执行的共同仪器。
+

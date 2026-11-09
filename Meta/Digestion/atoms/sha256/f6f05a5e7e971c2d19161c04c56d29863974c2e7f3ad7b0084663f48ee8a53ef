@@ -1,0 +1,97 @@
+### 定理 9.1（窗口残余与共同关系极限）
+
+<a id="thm-c117-window"></a>
+
+省略观察者下标，设 $H_n$ 递增，$P_n$ 为其正交投影，并令
+
+$$
+H_\infty=\overline{\bigcup_nH_n},\qquad
+ E_n(v)=\|(I-P_n)v\|^2.
+$$
+
+则 $P_n$ 强收敛到 $P_\infty$，并且
+
+$$
+E_n(v)\downarrow\|(I-P_\infty)v\|^2.
+$$
+
+令 $\Delta_n=P_{n+1}-P_n$，则 $\Delta_n$ 为两两正交的投影，
+且
+
+<a id="eq-c117-residual-budget"></a>
+
+$$
+E_n(v)-E_{n+1}(v)=\|\Delta_nv\|^2,\qquad
+ E_0(v)=\|(I-P_\infty)v\|^2+
+             \sum_{n\ge0}\|\Delta_nv\|^2.
+\tag{18}
+$$
+
+若 $H_\infty=\mathcal H_\omega$，每个固定问题的残余趋于零。
+
+**证明。**
+嵌套性给 $P_nP_m=P_mP_n=P_{\min(n,m)}$。
+由此直接相乘可知 $\Delta_n^2=\Delta_n=\Delta_n^*$，
+不同增量乘积为零。正交分解
+
+$$
+(I-P_n)v=\Delta_nv+(I-P_{n+1})v
+$$
+
+给出第一项残余恒等式。
+若 $v\in H_\infty$，对任意 $\epsilon>0$，
+可取 $u\in H_N$ 使 $\|v-u\|<\epsilon$。
+当 $n\ge N$，最佳近似性给
+$\|(I-P_n)v\|\le\|v-u\|<\epsilon$。
+若 $v\perp H_\infty$，则所有 $P_nv=0$。
+把一般 $v$ 分解到这两个正交部分，得到强收敛。
+将残余差从 $0$ 到 $N-1$ 求和，再令 $N\to\infty$，
+得到 [(18)](#eq-c117-residual-budget)。
+
+对历史写 $E_n(h)=E_n(v_h)$，定义可读关系核
+
+$$
+K_n(h,k)=\langle P_nv_h,P_nv_k\rangle.
+$$
+
+正交分解给出
+
+<a id="eq-c117-residual-kernel"></a>
+
+$$
+K(h,k)=K_n(h,k)+
+ \langle (I-P_n)v_h,(I-P_n)v_k\rangle.
+\tag{19}
+$$
+
+所以 $K_n$ 与残余核 $K-K_n$ 都半正定；
+相邻增量也是 Gram 核
+
+$$
+K_{n+1}(h,k)-K_n(h,k)
+ =\langle \Delta_nv_h,\Delta_nv_k\rangle.
+$$
+
+特别有可核算的误差界
+
+<a id="eq-c117-kernel-error"></a>
+
+$$
+|K(h,k)-K_n(h,k)|
+ \le\sqrt{E_n(h)E_n(k)}.
+\tag{20}
+$$
+
+两个观察者的窗口投影 $P_n,Q_m$ 满足
+
+$$
+\|P_nv-Q_mv\|
+ \le\sqrt{E_n(v)}+\sqrt{F_m(v)}.
+$$
+
+若两窗口并集都稠密于共同比较空间，右侧在 $n,m$ 独立增长时趋于零；
+由 [(20)](#eq-c117-kernel-error)，固定历史对的核读数也趋于相同。
+若两读口链互相共尾，即每一方的任一阶段都包含于另一方的某个后续阶段，
+则它们具有同一可达闭包。但共尾本身不保证这个闭包就是全部
+$\mathcal H_\omega$：若覆盖不足，极限应为共同的 $P_\infty$，而不是 $I$。
+

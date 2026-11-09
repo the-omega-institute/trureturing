@@ -1,0 +1,46 @@
+Proof. We first express the full Boolean space as an orthogonal sum of
+finite spin chains. This is the classical Boolean representation used as an
+intermediate here: Srinivasan,
+[Theorem 1.2 and the representation derivation on pp. 3–5](https://arxiv.org/pdf/1001.0280v2),
+and Feinsilver,
+[§§3–4, particularly (8), (10), (16), Proposition 4.3 and §4.2.2](https://arxiv.org/pdf/1102.0368v2).
+Their parameters are respectively $n=s$, starting rank $t$, and principal
+number $s-2t$; their raising operator is our $L_i^*$ and their lowering
+operator is our $L_i$. The construction and normalization needed on every
+multiplicity space are as follows.
+
+On one block write $U=L_i^*$, $L=L_i$ and $n=n_i$. Directly on Boolean
+basis vectors,
+
+$$
+[L,U]=sI-2n,\qquad [n,U]=U,\qquad [n,L]=-L.
+\tag{6.6}
+$$
+
+Choose an orthonormal basis of the space $\ker L$ at each rank $t$.
+There are no nonzero such vectors with $t>S$, since (6.6) gives
+$\|Uv\|^2=(s-2t)\|v\|^2$. For a unit vector $v$ in that space, put
+$d=s-2t\geq0$. Induction in (6.6) gives
+
+$$
+\begin{aligned}
+LU^qv&=q(s-2t-q+1)U^{q-1}v &&(1\leq q\leq s-2t+1),\\
+\|U^qv\|^2&=q!\frac{(s-2t)!}{(s-2t-q)!} &&(0\leq q\leq s-2t).
+\end{aligned}
+\tag{6.7}
+$$
+
+$U^{d+1}v=0$: its squared norm is obtained by applying the first identity
+with $q=d+1$ and is zero. Normalize the vectors in (6.7).
+Vectors at different ranks are orthogonal. For two chains starting at
+different ranks $t<t'$, at a common rank $n$ move $U^{n-t}$ across the
+inner product; the resulting $L^{n-t}U^{n-t'}v'$ is zero. For two vacua at
+the same rank, (6.7) makes the inner product at every common rank a positive
+scalar times their original inner product. Thus these chains are mutually
+orthogonal and invariant under $L,U,n$.
+
+They exhaust the block space: their orthogonal complement is invariant
+under all three operators; a nonzero vector of its smallest occupied rank
+would be in $\ker L$ and hence in the already included chains. The number
+of chains starting at $t$ is therefore
+

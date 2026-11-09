@@ -1,0 +1,31 @@
+**定义 4.1（原网络、同切口态及运输记号）。**本节使用定义 2.1 的同一个原 $\Omega$、全部原准备、实际参考和合法条件历史，不另建一个同矩阵系统。固定一份原切口 $\xi$，简记 $\mu=\widehat\mu_\xi$。定理 1.5、1.6 已给
+
+$$
+\Sigma=J\tau J^*,\qquad \tau\succeq0,\qquad
+\operatorname{Tr}\tau=w=\mu(I_{27})=\mu(S),\qquad S=JJ^*.
+\tag{4.1}
+$$
+
+$\tau$ 是此同切口、同质量标尺的三维压缩；与旧原态的识别使用定理 1.6 的共有层析及原读口绑定，不能仅由相同迹推出。写 $u_s=\eta^{-1}(1,s,1)^{\mathsf T}$、$Q_s=u_su_s^*$、$Q_s^\uparrow=JQ_sJ^*$。在原 C139 命题 21.4 的固定实际网络中，定义
+
+$$
+\begin{array}{lll}
+v_{M,j}=U^*e_j,& E_{M,j}=M_j=v_{M,j}v_{M,j}^*,& b_{M,j}=u_{s_j},\\
+v_{N,j}=U^*D_{\rm network}^*e_j,& E_{N,j}=N_j=v_{N,j}v_{N,j}^*,& b_{N,j}=u_{q_j},
+\end{array}
+\qquad 0\le j\le7.
+\tag{4.2}
+$$
+
+$U,D_{\rm network},J,C$、叶号及其记录均不更换。由原成功行 $r_s=u_s^*/3$，两套单位列均有更精确的相位固定关系
+
+$$
+J^*v_{\alpha,j}=b_{\alpha,j}/3,\qquad
+b_{\alpha,j}^*b_{\alpha,j}=1,\qquad
+J^*E_{\alpha,j}J=Q_{\alpha,j}/9,
+\quad Q_{\alpha,j}=b_{\alpha,j}b_{\alpha,j}^*,\quad\alpha\in\{M,N\}.
+\tag{4.3}
+$$
+
+只在本节同时讨论一条叶时，简记其 $v,b,E,Q,Q^\uparrow$。对一份已实际供应、取向合法的 $g\in U_{27}(D)$，写 $\mu_g(X)=\mu(gXg^*)$。这是同一原输入上换读口的响应，不是断言 $\mu_g=\mu$。原前向准备过程为 $g$ 时，读口回拉为 $g^*Xg$；使用此处 $gXg^*$ 必须有原合法逆字或相应读口取向。母卷 (26.17)、(27.24) 及本卷 (2.1) 都按这一方向理解。全框架矩阵菜单中的任意 $g$ 不被自动认作旧原准备的合法前缀。
+

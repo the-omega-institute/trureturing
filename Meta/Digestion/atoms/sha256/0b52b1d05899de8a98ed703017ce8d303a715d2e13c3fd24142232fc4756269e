@@ -1,0 +1,102 @@
+**定理 151.1（内侧自问的裸等价）。** 对任意有限 EJA、任意原正 Frobenius 型 $q$ 和任意原实双线性 $D$，
+
+$$
+\mathsf F_{\rm in}\Longleftrightarrow\mathsf F_{\rm diag}
+\Longleftrightarrow\mathsf F_{211}^{+}\Longleftrightarrow\mathsf F_{211}
+\Longleftrightarrow\mathsf F_2\Longleftrightarrow\mathsf F_{\rm zero}
+\Longleftrightarrow\mathsf F_{\rm cut}.
+\tag{151.1}
+$$
+
+更精确地，只用 (150.1) 的秩一层，原 $D_a$ 就已是原 $q$-斜 Jordan 导子，且每颗 primitive $e$ 满足 $D_ee=0$、$[D_e,P_e]=0$，$2D_e$ 在 $E_{1/2}(e)$ 上等距。秩二内部自问再给同框架原子互不推动、全域 SC、双单位和所有任意秩切口的 $D_c^2=-P_c/4$。这一裸结论不消费实际参考或保单位供应。
+
+证明。反向是量词限制及定理 146.1。$E=0$ 时原子域为空且唯一 $D=0$，各关系成立。以下设 $m=\operatorname{rank}E\ge1$。定理 146.1 中从谱迹到 (146.4) 的部分只使用秩一切口，故直接复用其推导：以 $\tau(e)=1$ 的规范 Jordan 谱迹及 $q(\zeta,x)=\tau(x)$ 定义
+
+$$
+\beta(a,b)=q(D_ab,u)/m,\qquad \Delta_ab=D_ab-\beta(a,b)\zeta.
+$$
+
+同一原 $q$ 下 $P_c\zeta=0$，每颗 primitive $r$ 有 $q(\zeta,r)=1$；秩一法向原子读回的共同值是 $\beta(p,e)$。角谱张成与二次、三次极化给每个 $\Delta_a$ 为原 $q$-斜 Jordan 导子，且
+
+$$
+W_e(p)-W_e(2\Delta_ep)=2\beta(p,e)
+\qquad(e,p\in\operatorname{Prim}(E)).
+\tag{151.2}
+$$
+
+此处并未将原 $D$ 当成导子。现在固定 primitive $e$，写 $P=P_e$、$T=E_{1/2}(e)$、$A=2\Delta_e$，并令
+
+$$
+K=PA|_T:T\to T,\qquad v=Ae\in T,\qquad
+Q(z)=\|PAz\|_q^2-\|Pz\|_q^2.
+$$
+
+式 (151.2) 等价于 $Q(p)=-4\beta(p,e)$ 对全部 primitive $p$ 成立。右边对输入线性；下面只在互补原子对上使用这一点。
+
+对任意 $0\ne x\in T$，成熟 Peirce 角构造给正数 $\lambda$、与 $e$ 正交的整个原 primitive $s$ 和 $y=x/\sqrt\lambda$，使
+
+$$
+y^2=e+s,\qquad e\circ y=s\circ y=y/2.
+\tag{151.3}
+$$
+
+为明确其原载体资格，按 Peirce 规则写 $x^2=\lambda e+z$、$z\in E_0(e)$。谱迹 Frobenius 性给 $\lambda=\tau(x^2)/2>0$。Jordan 恒等式 $[L_{x^2},L_x]e=0$ 给 $x^3=\lambda x$；幂结合性继而给 $z^2=\lambda z$、$\tau(z)=\lambda$。故 $s=z/\lambda$ 是迹一幂等元，因而为整个 $E$ 的 primitive。再由 $x^3=\lambda x$ 得 $s\circ y=y/2$。这是定义 154.1 所引成熟角构造的同载体计算，并未更换原长度型。
+
+令 $g=e+s$、$h=e-s$。有 $h^2=y^2=g$、$h\circ y=0$，所以
+
+$$
+p_\theta=\tfrac12(g+\cos\theta\,h+\sin\theta\,y),\qquad
+p_\theta+p_{\theta+\pi}=g
+\tag{151.4}
+$$
+
+均为整个原 primitive。将它们的 $Q$ 等式相加，右边固定为 $-4\beta(g,e)$；二次型的平行四边形展开使 $Q(\cos\theta\,h+\sin\theta\,y)$ 与 $\theta$ 无关。比较 $0,\pi/2,\pi/4$，用 $Ph=0$、$Py=y$，得到
+
+$$
+\|Ky\|_q^2-\|y\|_q^2=\|PAh\|_q^2,\qquad
+q(Ky,PAh)=0.
+\tag{151.5}
+$$
+
+主切口始终为 $e$；$g,h$ 只是二次型的代数变量，不是新增切口测试。第一式经齐性给 $\|Kx\|_q\ge\|x\|_q$ 对全部 $x\in T$ 成立，故有限维 $K$ 可逆。
+
+导子 $A$ 作用于 $e\circ s=0$ 给 $L_eAs=-L_sv$。正交幂等元的 $L_e,L_s$ 对易，$L_sv\in T$，于是
+
+$$
+PAs=-2L_sv,\qquad PAh=v+2L_sv.
+\tag{151.6}
+$$
+
+若 $v\ne0$，将 $x=K^{-1}v$ 代入 (151.3)，所得 $Ky=v/\sqrt\lambda$。式 (151.5) 的第二式却要求
+
+$$
+0=q(v,v+2L_sv)=\|v\|_q^2+2q(v,L_sv)>0,
+$$
+
+矛盾；最后一步因为 $L_s$ 对原 $q$ 半正定，其特征值为 $0,1/2,1$。所以 $Ae=0$。若 $T=0$，同一结论由 $v\in T$ 直接成立。导子恒等式 $[A,L_e]=L_{Ae}=0$ 给 $AP=PA$；(151.5)–(151.6) 再给 $K$ 在 $T$ 上等距。因此对每个实 $z$ 有 $PAz=KPz$ 和 $Q(z)=0$。回到原子等式，$\beta(p,e)=0$ 对全部 primitive 对成立，两槽双线性张成给 $\beta=0$。现在才有原 $D=\Delta$，并取得所述秩一层结论，包括 $D_au=0$。
+
+取正交 primitive $p,s$。已得 $D_ss=0$，故 $[D_s,L_s]=0$，从而
+
+$$
+D_sp\in E_{1/2}(p)\cap E_0(s)\subset E_{1/2}(p+s).
+$$
+
+在 $c=p+s$、输入和读回均为 $p$ 使用 (150.1)，这是切口内部的合法自问。$D_pc$ 切于 $c$，故读数为零；$W_c(p)=0$，且 $D_cp=D_sp$，所以此测试恰为
+
+$$
+0=2\|D_sp\|_q^2.
+\tag{151.7}
+$$
+
+任意完整 frame 内遂有 $D_{r_i}r_j=0$ 对所有 $i,j$ 成立。谱展开给 $D_aa=0$，极化给 $D_ab=-D_ba$，继而 $D_u=0$。这一步涵盖跨中央块的正交原子；没有借用被删的外侧输入。
+
+最后复用定理 146.1 的逐 Peirce 边恢复，明确如下。$D_i=D_{r_i}$ 消灭 frame，故保持各 $V_{jk}$；若 $i\notin\{j,k\}$，交替性给 $D_iV_{jk}\subset E_0(r_i)\cap E_{1/2}(r_i)=0$。在 $V_{ij}$ 上 $D_j=-D_i$，且本证明的秩一结论已使 $2D_i$ 等距。任意切口 $c=\sum_i\varepsilon_ir_i$ 在每条边上有 $D_c=(\varepsilon_i-\varepsilon_j)D_i$、$P_c=(\varepsilon_i-\varepsilon_j)^2I$，在 frame 对角元上均为零。原 $q$-正交相加与斜伴随性给
+
+$$
+P_cD_c=D_cP_c=D_c,\qquad
+4\|D_cx\|_q^2=\|P_cx\|_q^2,\qquad D_c^2=-P_c/4.
+\tag{151.8}
+$$
+
+导子切向性使任意法向读回的 $q(D_ac,r)=0$，故恢复 $\mathsf F_{\rm diag}$。定理 146.1 给其余等价。所有长度自始至终使用原 $q$，没有对二次能量作原子线性延拓。∎
+

@@ -1,0 +1,35 @@
+**定义 177.1（不缩减的数学域）。** 本节组只在 (157.1)–(157.2) 的同一个 $E$、$\mathcal K=\mathbb C^E$、十一组 $H_j,U_j$ 上讨论未知配置密度。因而
+
+$$
+\begin{gathered}
+E=\{q\subseteq\{1,\ldots,9\}:q\text{ 不含相邻整数}\},\quad |E|=89,\\
+Q=\begin{pmatrix}x&c\\c&x^2\end{pmatrix},\quad c=xy>0,\quad
+x+x^2=1,\quad y^2=x,\quad \alpha=3\pi/5,\\
+H_j=-\alpha(I+\mathcal P_j),\qquad
+U_j(t)=e^{i\alpha t}[I+(e^{i\alpha t}-1)\mathcal P_j].
+\end{gathered}
+\tag{177.1}
+$$
+
+固定边界仍为 $b_{-1}b_0=10$、$b_{10}b_{11}b_{12}=010$。对 $1\le j\le9$，每个可翻转分量是 $B=\{q_0,q_1\}$，下标为中心位 $b_j=0,1$，块矩阵为同一个 $Q$；阻塞分量为单点。地址零、十分别有 $\mathcal P_0=n_1$、$\mathcal P_{10}=n_9$，全部分量都是单点。各地址的边之并仍为原全部合法单比特翻转图 $G$。不增加代码投影、物理张量因子或辅助源。
+
+未知量是连续映射
+
+$$
+\Pi:\mathbb P(\mathcal K)\longrightarrow\Delta(E),\qquad
+\Pi_q(z)=0\ \Longleftrightarrow\ z_q=0.
+\tag{177.2}
+$$
+
+同名向量提升对全部非零复缩放不变。除这些条件外，不规定它的径向性、可分性、多项式次数、指数或逐边赔率。这里的全射线域是数学分类域；唯一实际 ready、十一／七地址程序、所有原终端和失败仍为 §§138、145 的对象，不声称所有数学输入均可实际制备。
+
+置
+
+$$
+D=\{[a:b]\in\mathbb P(\mathbb C^2):ab\ne0\},\qquad
+\ell_{j,B}(t,z)=[(U_j(t)z)_{q_0}:(U_j(t)z)_{q_1}].
+\tag{177.3}
+$$
+
+$[1:0]$、$[0:1]$ 称为两个局部坐标节点；零质量块没有局部射线。
+

@@ -1,0 +1,72 @@
+**定理 122.2（同一作用的比较无关恢复）。** 给定任意有限 EJA $E$ 和任意实双线性 $D$。对任意一个正 Frobenius 型 $q$，
+
+$$
+\mathsf F_{\rm vec}
+\Longleftrightarrow\mathsf F_{\rm cut}(q)
+\Longleftrightarrow\mathsf F_{\rm idem}(q).
+\tag{122.2}
+$$
+
+因此固定同一 $E,\circ,D$ 后，存在一个正 Frobenius 型使原配平成立，等价于每一个正 Frobenius 型都使原配平成立。对每一个这样的原型，定理 107.2 的全部同一原结构结论均成立；没有在证明中用规范迹替换原 $q$。
+
+证明。反向由定理 107.2 的切向性与平方恒等式直接给 (122.1)。正向固定任意原正 Frobenius 型 $q$，以下先恢复原作用，再恢复该 $q$ 的完整配平。
+
+固定 $c$，全部幂等元 $p$ 的谱张成把第一式延拓为
+
+$$
+D_ac=2c\circ D_ac\in E_{1/2}(c)
+\quad(a\in E, c^2=c).
+\tag{122.3}
+$$
+
+固定任意 $a$，记 $T=D_a$。在同一谱框架的正交幂等元 $r_i,r_j$ 及其和上应用 (122.3)，相减给
+
+$$
+r_i\circ Tr_j+r_j\circ Tr_i=0\quad(i\ne j).
+\tag{122.4}
+$$
+
+对任意 $x=\sum_i\lambda_i r_i$，对角项用 $Tr_i=2r_i\circ Tr_i$，交叉项用 (122.4)，得 $T(x^2)=2x\circ Tx$；二次极化恢复全部 Jordan 导子律。另因 $Tr_i\in E_{1/2}(r_i)$ 而全部 $r_j\in E_1(r_i)\oplus E_0(r_i)$，原 Peirce 正交性给 $q(Tr_i,r_j)=0$。谱展开给 $q(Tx,x)=0$，实极化遂给
+
+$$
+q(D_ax,y)=-q(x,D_ay).
+\tag{122.5}
+$$
+
+这些 frame 与 Lyapunov-like 中间工具已由定理 107.2 引用 Tao–Gowda 的 *A Representation Theorem for Lyapunov-like Transformations on Euclidean Jordan Algebras*，§2、Proposition 3，[作者原文](https://userpages.umbc.edu/~gowda/papers/trGOW12-01.pdf)。该文后续使用规范内积；这里逐式使用任意给定原正 Frobenius 型，所需对应不依赖其块权相等，也不把成熟导子结论单列为新成果。
+
+第二式对 $p$ 线性，同样由谱张成得到算子等式。置 $H=D_c$、$v=Hc$，则
+
+$$
+H^2=-P_c/4,\qquad P_cv=v,\qquad H^2c=0,\qquad Hv=0.
+\tag{122.6}
+$$
+
+将算子等式再用于 $v$，得 $0=H^2v=-v/4$，所以 $D_cc=0$。这一步只用同一作用的平方与切向性，不从待恢复的配平或斜伴随倒取自守恒。对正交幂等元 $r_i,r_j$ 再取 $c=r_i+r_j$，得到 $D_{r_i}r_j+D_{r_j}r_i=0$。任意 $x$ 的同框谱展开给 $D_xx=0$，双线性极化给
+
+$$
+D_ab=-D_ba.
+\tag{122.7}
+$$
+
+(122.3) 在 $c=u$ 给 $D_au=0$，再由 (122.7) 得 $D_ua=0$。结合 (122.3)、(122.7)，$Ha=-D_ac$ 已切向，故 $P_cH=H$。若 $n\in\ker P_c$，由 (122.5) 有 $q(Hn,a)=-q(n,Ha)=0$ 对任意 $a$ 成立，正定性给 $Hn=0$，所以 $HP_c=H$。于是
+
+$$
+4\|Ha\|_q^2=-4q(a,H^2a)
+=q(a,P_ca)=\|P_ca\|_q^2.
+\tag{122.8}
+$$
+
+现在才使用原余量 $W_c(x)=\|P_cx\|_q^2/2$。对全部原 $a,b$，
+
+$$
+\begin{aligned}
+W_c(b+2D_ca)
+ &=W_c(b)+2q(b,D_ca)+2\|D_ca\|_q^2\\
+ &=W_c(b)-2q(D_ac,b)+W_c(a),
+\end{aligned}
+\tag{122.9}
+$$
+
+这正是 $\mathsf F_{\rm cut}(q)$。定理 118.2 给与双切口标量关系的等价。整个正向证明没有假定定理 107.2 的结论；恢复配平后才可统一消费其余结论。零对象平凡。有限 EJA 至少有一个正 Frobenius 型；对上述证明中任意选择的 $q$ 重复同一论证，即得存在与全称的比较无关性。∎
+

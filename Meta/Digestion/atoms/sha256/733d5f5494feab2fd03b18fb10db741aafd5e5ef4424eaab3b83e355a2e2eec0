@@ -1,0 +1,16 @@
+**定义 165.1（平坦截断标量）。** 保留 (164.2)–(164.7) 的同一原载体数据，定义
+
+$$
+\begin{gathered}
+u_s(z)=\frac{\kappa_s^2|a_s(z)|^2-\|v_s(z)\|^2}{N},\\
+\eta(u)=
+\begin{cases}
+\exp(-1/u^2),&u>0,\\
+0,&u\le0,
+\end{cases}
+\qquad
+h_{\rm sm}(z)=\frac12\prod_{s\in S}\eta(u_s(z)).
+\end{gathered}
+\tag{165.1}
+$$
+

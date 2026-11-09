@@ -1,0 +1,50 @@
+**定理 11.1（在自由空间中的缺陷角色）。**在 $E$ 上定义实际左乘的线性延拓
+
+$$
+L_ae_u=e_{a\cdot u}-e_a,\qquad T_a=L_a-I,\qquad
+Se_u=e_{Uu}-e_{p_1}.
+\tag{11.1}
+$$
+
+$e_1=0$ 与左乘定义相容，且 $T_ae_u=D(a,u)$。对全部 $a,b$ 和 $x,y\in E$，
+
+$$
+\sum_{k=0}^2 B(L_aS^kx,L_bS^ky)=3B(x,y),
+\tag{11.2}
+$$
+
+$$
+\begin{aligned}
+\sum_{k=0}^2B(T_aS^kx,S^ky)&=0,\\
+\sum_{k=0}^2B(S^kx,T_aS^ky)&=0,\\
+\sum_{k=0}^2B(T_aS^kx,T_bS^ky)&=0.
+\end{aligned}
+\tag{11.3}
+$$
+
+若对双线性形式置 $(\mathscr C F)(x,y)=F(Sx,Sy)$，则下列三个形式各满足 $(I+\mathscr C+\mathscr C^2)F=0$ 及 $\mathscr C^3F=F$：
+
+$$
+F_a^{\rm L}(x,y)=B(T_ax,y),\quad
+F_a^{\rm R}(x,y)=B(x,T_ay),\quad
+G_{a,b}(x,y)=B(T_ax,T_by).
+\tag{11.4}
+$$
+
+在这些形式生成的复化循环空间上，令
+
+$$
+P_rF=\frac13\sum_{k=0}^2\omega^{-rk}\mathscr C^kF,
+\qquad r=0,1,2,
+$$
+
+则 $P_0F=0$、$F=P_1F+P_2F$，且 $\mathscr C P_rF=\omega^rP_rF$。
+
+**证明。**对 (R) 关于右输入 $u,v$ 分别在单位取交替差，左边成为
+
+$$
+-2\sum_k B(e_{aU^ku}-e_{ap_k},e_{bU^kv}-e_{bp_k}),
+$$
+
+右边为 $-6B(e_u,e_v)$。由 $S^ke_u=e_{U^ku}-e_{p_k}$，得到 (11.2)，再双线性延拓。取 $b=1$ 或 $a=1$ 并减去 $\sum_kB(S^kx,S^ky)=3B(x,y)$，得前两个零和式；四项相减给第三式。由多项式恒等式 $(\mathscr C-I)(I+\mathscr C+\mathscr C^2)=\mathscr C^3-I$，得到三次周期。有限三角色投影的公式随即给最后结论。没有预先使 $S$ 下降到双侧根商；这里的复化只是形式空间上的代数运算。
+

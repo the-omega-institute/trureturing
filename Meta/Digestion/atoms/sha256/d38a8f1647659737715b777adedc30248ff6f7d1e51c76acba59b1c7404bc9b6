@@ -1,0 +1,38 @@
+#### 定理 6.2（正可加概率的迹表示）
+
+在有限维效果域 $\mathcal E=\{E:0\preceq E\preceq I\}$ 上，
+设 $F:\mathcal E\to[0,1]$ 满足 $F(I)=1$，以及
+
+$$
+A,B,A+B\in\mathcal E\Longrightarrow F(A+B)=F(A)+F(B).
+$$
+
+则存在唯一密度矩阵 $\rho$，使 $F(E)=\operatorname{Tr}(\rho E)$。
+若某个单位秩投影 $P_\psi$ 的读出为一，则 $\rho=P_\psi$，
+从而所有效果的读出为 $\psi^\dagger E\psi$。
+
+**证明。**
+
+对正矩阵 $A$，选足够大的正整数 $m$ 使 $A/m\in\mathcal E$，定义
+$\widetilde F(A)=mF(A/m)$。
+使用共同倍数 $mn$，有限可加性保证定义不依赖 $m$；
+取共同大分母又得到正锥上的可加性。
+定义 Hermitian 差上的 $L(A-B)=\widetilde F(A)-\widetilde F(B)$。
+若有另一分解，由 $A+B'=A'+B$ 可知定义一致。
+
+正性给序保持；对有理数 $q>\|X\|$，
+$-qI\preceq X\preceq qI$ 给 $|L(X)|\le q$。
+令有理 $q$ 下降到 $\|X\|$，得 $|L(X)|\le\|X\|$。
+所以可加泛函连续并实线性，有限维迹配对给唯一 Hermitian $\rho$。
+对所有秩一投影的正性给 $\rho\succeq0$，$L(I)=1$ 给迹一。
+若 $F(P_\psi)=1$，则 $\operatorname{Tr}(\rho(I-P_\psi))=0$。
+正性迫使 $\rho$ 支持在这条射线上，故 $\rho=P_\psi$。
+
+□
+
+这是对完整效果菜单及同一效果不同分解的一致性要求。
+项目 Ω 第 6 节已有相同类型的有限量子表示输入；
+标准量子理论也将统计混合与密度矩阵凸组合的相容性明确列作假设。[6](#ref-omega)、[8](#ref-watrous2)
+
+<a id="prop:cubic"></a>
+

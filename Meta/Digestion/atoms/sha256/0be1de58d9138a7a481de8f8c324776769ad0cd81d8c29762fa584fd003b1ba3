@@ -1,0 +1,55 @@
+**Theorem 48.1 (vanishing residue for every normalized actual ground).**
+In either original critical family, through both signs and for every
+fixed original datum and $g>0$, every normalized actual full ground
+$f_{\sigma,\kappa}$ satisfies
+
+$$
+\|J^*f_{\sigma,\kappa}\|_{\mathscr H_B}^2\longrightarrow0.
+\tag{48.1}
+$$
+
+In particular the residue of the actual full ground spectral pole in
+the boundary compression vanishes. This is compatible with all the
+energies, collapsing gaps and ground probability laws of §§33,41--42.
+
+Proof. For $0<\delta<\pi$ let
+$E_\delta=\{D:\rho(D)<\delta\}$. Cauchy--Schwarz in the raw hidden
+coordinate, whose measure on this set is $2\delta$, gives
+
+$$
+\begin{aligned}
+\|J^*(1_{E_\delta}f_{\sigma,\kappa})\|_2
+ &\le\sqrt{\delta/\pi}\,\|1_{E_\delta}f_{\sigma,\kappa}\|_2,\\
+\|J^*f_{\sigma,\kappa}\|_2
+ &\le\sqrt{\delta/\pi}
+       +\|1_{E_\delta^c}f_{\sigma,\kappa}\|_2.
+\end{aligned}
+\tag{48.2}
+$$
+
+The second term tends to zero for each fixed $\delta$ by the
+actual-ground concentration of Theorem 33.2. Letting
+$\delta\downarrow0$ proves (48.1), including arbitrary ground phases.
+This uses unscaled probability concentration and the $L^2$ norm;
+it does not assume amplitude $L^1$ convergence on an expanding
+rescaled chart, and claims no sharp residue rate.
+
+For small parameters the actual ground is simple by (41.2).
+Its rank-one spectral projection compresses to
+$|J^*f_{\sigma,\kappa}\rangle\langle J^*f_{\sigma,\kappa}|$,
+whose norm is exactly (48.1). Its fixed-time contribution is that
+operator times $e^{-t\Lambda_{\sigma,1}}$. The ground energies have
+finite limits (33.1), so this contribution also tends to zero in
+norm. A normalized probability concentrated in a shrinking hidden
+set can have unit mass while its amplitude integral tends to zero;
+(48.2) proves precisely this distinction for the actual grounds.
+
+The fixed-index eigenvalue laws specify pole locations and spacings,
+whereas (48.1) specifies an overlap with the fixed boundary isometry.
+Those are different data. Equations (46.4) and (47.2) determine the
+fixed-time boundary limits without summing fixed-index eigenvalue
+asymptotics. Hence neither the raw free leading response nor the
+unit fibre average contradicts the published nonfree full spectral
+bottom or its shrinking ground law. No interchange with an
+uncontrolled spectral tail is required. $\square$
+

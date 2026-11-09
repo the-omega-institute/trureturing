@@ -1,0 +1,20 @@
+### 4.1 五维：唯一停住对仍有补偿不到的内容方向
+
+取 $W=\operatorname{Sym}_0(3,\mathbb R)$，让 $\mathfrak g=\operatorname{ad}\mathfrak{so}(3)$ 以 $K(z)=[\Omega,z]$ 作用。令
+
+$$
+x=\operatorname{diag}(1,1,-2),\quad
+\Omega_z=\begin{pmatrix}0&-1&0\\1&0&0\\0&0&0\end{pmatrix},\quad
+A=[\Omega_z,\cdot].
+$$
+
+有 $\ker A=\mathbb R x$、$\mathfrak g_x=\mathbb R A$。证明只需写出一般对称无迹矩阵：与 $\Omega_z$ 交换迫使其前两维为相同标量、交叉块为零；与 $x$ 交换的斜对称矩阵则只能在前两维旋转。
+
+因此“一个互相唯一的停住对”本身还不够。取
+
+$$
+y=\operatorname{diag}(1,-1,0),\qquad Ay=2(E_{12}+E_{21}).
+$$
+
+任意原 $Kx$ 却只含 $13,23$ 对称分量，故 $Kx+Ay=0$ 无解。内容商空间四维，转向商空间只有二维。只留下可补偿的二维内容方向，会把这个反模型伪装成通过。
+

@@ -1,0 +1,24 @@
+**定理 4.2（单窗口已经分开严格正秩一类）。** 限制到 $\mathscr R_k^+$ 时，$\Phi_k$ 是单射：
+
+$$
+\Phi_k(c\ell^{\mathsf T})=\Phi_k(c'\ell'^{\mathsf T})
+\quad\Longrightarrow\quad
+c\ell^{\mathsf T}=c'\ell'^{\mathsf T}.
+$$
+
+**证明。** 因为 $t=0$ 时所有 $p<k$ 都合法，读数给出第一列的全部前缀和，因而给出
+
+$$
+ c\ell_0=c'\ell'_0.
+$$
+
+严格正性使 $a:=\ell_0/\ell'_0>0$，所以 $c'=ac$。对每个 $t$，端点 $(0,t)$ 合法，读数给出第 $t$ 列总和：
+
+$$
+\ell_t\sum_s c_s
+=\ell'_t\sum_s c'_s
+=a\ell'_t\sum_s c_s.
+$$
+
+因为 $c$ 严格正，$\sum_s c_s>0$，故 $\ell'_t=\ell_t/a$。代回得到两个外积相等。∎
+

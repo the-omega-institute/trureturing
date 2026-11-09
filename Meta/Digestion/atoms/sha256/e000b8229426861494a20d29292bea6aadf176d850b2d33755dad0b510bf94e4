@@ -1,0 +1,40 @@
+**Lemma 26.2 (linear amplitude bounds for one datum).** For every
+$w\in\mathcal W$, its original amplitudes satisfy
+
+$$
+u(w)\le hA(w)+2(c-h),\qquad
+v(w)\le sB(w)+2(h-s).
+\tag{26.2}
+$$
+
+Consequently, for $w\in\mathcal T$, either trace can be used as a
+parameter in the following bounds:
+
+$$
+\begin{array}{lll}
+t=A(w):&u(w)\le a_+(t):=2(c-h)+ht,
+       &v(w)\le b_+(t):=e-st,\\
+t=B(w):&u(w)\le a_-(t):=d-ht,
+       &v(w)\le b_-(t):=2(h-s)+st.
+\end{array}
+\tag{26.3}
+$$
+
+Proof. For the same fixed $w$, put
+$S=w_1+w_2+w_3+w_4$ and
+$Z=w_1-w_2+i(w_3-w_4)$. The exact identities (23.2) give
+
+$$
+P=hS+(c-h)(w_3+w_4),\qquad
+Q=sZ+(h-s)(w_1-w_2).
+\tag{26.4}
+$$
+
+Since $c>h>s>0$ and $|w_j|\le1$, the triangle inequality proves
+(26.2), without choosing any coordinate phase. If $t=A$, then
+$B\le4-t$ and
+$2(h-s)+s(4-t)=e-st$. If $t=B$, then $A\le4-t$ and
+$2(c-h)+h(4-t)=d-ht$. This proves (26.3). These are upper bounds
+for two amplitudes of the same $w$; simultaneous attainment is not
+asserted or needed. $\square$
+

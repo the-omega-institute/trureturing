@@ -12,6 +12,11 @@ local_exp_of_log_difference, integral_exp_of_dold); bind-only (all other lemmas)
 escape_witness: IsRIntegralPS.dieudonneDwork_mpr.
 admission_basis: escape-witness.
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/19891
+Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/25663;
+IsRIntegralRat.zero, IsRIntegralRat.one_coprime, IsRIntegralRat.add,
+IsRIntegralRat.neg, IsRIntegralRat.mul_coprime and expSeries_derivative.
+The five rational closure lemmas are used by BalaQuarticEGFEventualDivisibility.localRing;
+expSeries_derivative is used by BalaQuarticEGFEventualDivisibility.source_system.
 Direct frozen dependencies: LinearExponentDyadicSupport.pow_change;
 ParametricExponentialSquareCongruence.linear_ode_unique;
 CubicFifteenSubstitutionParity.prime_power_subst;
@@ -31,13 +36,13 @@ and exponential-integrality theorems; use those declarations directly then.
 
 Declaration classification (names relative to this module):
 declaration | proof_shape | escape_witness | direct consumers
-IsRIntegralRat | bind-only | none | IsRIntegralPS, IsRIntegralPS.dieudonneDwork_mpr, IsRIntegralPS.dieudonneDwork_mpr._simp_1_1, IsRIntegralPS.mul, IsRIntegralPS.one, IsRIntegralPS.one._simp_1_1, IsRIntegralPS.one._simp_1_2, IsRIntegralPS.pow_r_sub_subst_X_pow_r_in_r_smul, IsRIntegralPS.sub, IsRIntegralPS.subst_X_pow, IsRIntegralPS.subst_X_pow._simp_1_1, IsRIntegralPS.toZModPS_mul, IsRIntegralPS.toZModPS_one, IsRIntegralPS.toZModPS_sub, IsRIntegralRat.add, IsRIntegralRat.den_mul_toZMod, IsRIntegralRat.eq_1, IsRIntegralRat.exists_eq_natCast_mul_of_toZMod_eq_zero, IsRIntegralRat.isUnit_den_zmod, IsRIntegralRat.mul, IsRIntegralRat.neg, IsRIntegralRat.sub, IsRIntegralRat.sum, IsRIntegralRat.toZMod, IsRIntegralRat.toZMod.congr_simp, IsRIntegralRat.toZMod.eq_1, IsRIntegralRat.toZMod_add, IsRIntegralRat.toZMod_eq_of_den_mul_eq, IsRIntegralRat.toZMod_finset_sum, IsRIntegralRat.toZMod_mul, IsRIntegralRat.toZMod_neg, IsRIntegralRat.toZMod_sub, IsRMultipleIntegralPS, IsRMultipleIntegralPS.coeff_mul_left_multiple_pos_right_integral_lt, exp_multiple, integral_exp_of_dold, localRat_iff_val_nonneg, local_exp_of_log_difference, local_int_div_nat
+IsRIntegralRat | bind-only | none | IsRIntegralPS, IsRIntegralPS.dieudonneDwork_mpr, IsRIntegralPS.dieudonneDwork_mpr._simp_1_1, IsRIntegralPS.mul, IsRIntegralPS.one, IsRIntegralPS.one._simp_1_1, IsRIntegralPS.one._simp_1_2, IsRIntegralPS.pow_r_sub_subst_X_pow_r_in_r_smul, IsRIntegralPS.sub, IsRIntegralPS.subst_X_pow, IsRIntegralPS.subst_X_pow._simp_1_1, IsRIntegralPS.toZModPS_mul, IsRIntegralPS.toZModPS_one, IsRIntegralPS.toZModPS_sub, IsRIntegralRat.add, IsRIntegralRat.den_mul_toZMod, IsRIntegralRat.eq_1, IsRIntegralRat.exists_eq_natCast_mul_of_toZMod_eq_zero, IsRIntegralRat.isUnit_den_zmod, IsRIntegralRat.mul_coprime, IsRIntegralRat.neg, IsRIntegralRat.sub, IsRIntegralRat.sum, IsRIntegralRat.toZMod, IsRIntegralRat.toZMod.congr_simp, IsRIntegralRat.toZMod.eq_1, IsRIntegralRat.toZMod_add, IsRIntegralRat.toZMod_eq_of_den_mul_eq, IsRIntegralRat.toZMod_finset_sum, IsRIntegralRat.toZMod_mul, IsRIntegralRat.toZMod_neg, IsRIntegralRat.toZMod_sub, IsRMultipleIntegralPS, IsRMultipleIntegralPS.coeff_mul_left_multiple_pos_right_integral_lt, exp_multiple, integral_exp_of_dold, localRat_iff_val_nonneg, local_exp_of_log_difference, local_int_div_nat
 IsRIntegralRat.zero | bind-only | none | IsRIntegralPS.dieudonneDwork_mpr._simp_1_1, IsRIntegralPS.one._simp_1_2, IsRIntegralPS.subst_X_pow._simp_1_1, IsRIntegralRat.sum, IsRIntegralRat.toZMod_zero, IsRMultipleIntegralPS.coeff_mul_left_multiple_pos_right_integral_lt, exp_multiple, integral_exp_of_dold, local_int_div_nat
-IsRIntegralRat.one | bind-only | none | IsRIntegralPS.dieudonneDwork_mpr, IsRIntegralPS.one._simp_1_1, IsRIntegralRat.toZMod_one
+IsRIntegralRat.one_coprime | bind-only | none | IsRIntegralPS.dieudonneDwork_mpr, IsRIntegralPS.one._simp_1_1, IsRIntegralRat.toZMod_one
 IsRIntegralRat.add | bind-only | none | IsRIntegralRat.sub, IsRIntegralRat.sum, IsRIntegralRat.toZMod_add, IsRIntegralRat.toZMod_finset_sum, IsRIntegralRat.toZMod_sub
 IsRIntegralRat.neg | bind-only | none | IsRIntegralRat.sub, IsRIntegralRat.toZMod_neg, IsRIntegralRat.toZMod_sub
 IsRIntegralRat.sub | bind-only | none | IsRIntegralPS.dieudonneDwork_mpr, IsRIntegralPS.sub, IsRIntegralRat.toZMod_sub
-IsRIntegralRat.mul | bind-only | none | IsRIntegralPS.mul, IsRIntegralPS.toZModPS_mul, IsRIntegralRat.toZMod_mul, IsRMultipleIntegralPS.coeff_mul_left_multiple_pos_right_integral_lt, exp_multiple
+IsRIntegralRat.mul_coprime | bind-only | none | IsRIntegralPS.mul, IsRIntegralPS.toZModPS_mul, IsRIntegralRat.toZMod_mul, IsRMultipleIntegralPS.coeff_mul_left_multiple_pos_right_integral_lt, exp_multiple
 IsRIntegralRat.sum | bind-only | none | IsRIntegralPS.mul, IsRIntegralRat.toZMod_finset_sum, IsRMultipleIntegralPS.coeff_mul_left_multiple_pos_right_integral_lt, exp_multiple
 IsRIntegralRat.toZMod | bind-only | none | IsRIntegralPS.coeff_toZModPS, IsRIntegralPS.pow_r_sub_subst_X_pow_r_in_r_smul, IsRIntegralPS.toZModPS, IsRIntegralPS.toZModPS_mul, IsRIntegralPS.toZModPS_one, IsRIntegralPS.toZModPS_sub, IsRIntegralPS.toZModPS_subst_X_pow, IsRIntegralRat.den_mul_toZMod, IsRIntegralRat.exists_eq_natCast_mul_of_toZMod_eq_zero, IsRIntegralRat.toZMod.congr_simp, IsRIntegralRat.toZMod.eq_1, IsRIntegralRat.toZMod_add, IsRIntegralRat.toZMod_eq_of_den_mul_eq, IsRIntegralRat.toZMod_finset_sum, IsRIntegralRat.toZMod_mul, IsRIntegralRat.toZMod_neg, IsRIntegralRat.toZMod_one, IsRIntegralRat.toZMod_sub, IsRIntegralRat.toZMod_zero
 IsRIntegralRat.toZMod_zero | bind-only | none | IsRIntegralPS.toZModPS_one
@@ -100,21 +105,21 @@ noncomputable section
 
 namespace D5.S1.Recurrence.Algebraic.DoldExponentialIntegrality
 
-private def IsRIntegralRat (r : ℕ) (q : ℚ) : Prop := (q.den : ℕ).Coprime r
+def IsRIntegralRat (r : ℕ) (q : ℚ) : Prop := (q.den : ℕ).Coprime r
 
-private theorem IsRIntegralRat.zero (r : ℕ) : IsRIntegralRat r 0 := by
+theorem IsRIntegralRat.zero (r : ℕ) : IsRIntegralRat r 0 := by
   simp [IsRIntegralRat]
 
-private theorem IsRIntegralRat.one (r : ℕ) : IsRIntegralRat r 1 := by
+theorem IsRIntegralRat.one_coprime (r : ℕ) : IsRIntegralRat r 1 := by
   simp [IsRIntegralRat]
 
-private theorem IsRIntegralRat.add {r : ℕ} {q₁ q₂ : ℚ}
+theorem IsRIntegralRat.add {r : ℕ} {q₁ q₂ : ℚ}
     (h₁ : IsRIntegralRat r q₁) (h₂ : IsRIntegralRat r q₂) :
     IsRIntegralRat r (q₁ + q₂) := by
   simp only [IsRIntegralRat] at h₁ h₂ ⊢
   exact (h₁.mul_left h₂).coprime_dvd_left (Rat.add_den_dvd q₁ q₂)
 
-private theorem IsRIntegralRat.neg {r : ℕ} {q : ℚ} (h : IsRIntegralRat r q) :
+theorem IsRIntegralRat.neg {r : ℕ} {q : ℚ} (h : IsRIntegralRat r q) :
     IsRIntegralRat r (-q) := by
   simp only [IsRIntegralRat] at h ⊢
   rwa [Rat.neg_den]
@@ -125,7 +130,7 @@ private theorem IsRIntegralRat.sub {r : ℕ} {q₁ q₂ : ℚ}
   rw [sub_eq_add_neg]
   exact h₁.add h₂.neg
 
-private theorem IsRIntegralRat.mul {r : ℕ} {q₁ q₂ : ℚ}
+theorem IsRIntegralRat.mul_coprime {r : ℕ} {q₁ q₂ : ℚ}
     (h₁ : IsRIntegralRat r q₁) (h₂ : IsRIntegralRat r q₂) :
     IsRIntegralRat r (q₁ * q₂) := by
   simp only [IsRIntegralRat] at h₁ h₂ ⊢
@@ -145,7 +150,7 @@ private theorem toZMod_zero (r : ℕ) : toZMod (r := r) 0 (IsRIntegralRat.zero r
   simp [toZMod]
 
 @[simp]
-private theorem toZMod_one (r : ℕ) : toZMod (r := r) 1 (IsRIntegralRat.one r) = 1 := by
+private theorem toZMod_one (r : ℕ) : toZMod (r := r) 1 (IsRIntegralRat.one_coprime r) = 1 := by
   simp [toZMod]
 
 private theorem isUnit_den_zmod {r : ℕ} (q : ℚ) (h : IsRIntegralRat r q) :
@@ -207,7 +212,7 @@ private theorem toZMod_sub {r : ℕ} {q₁ q₂ : ℚ}
 
 private theorem toZMod_mul {r : ℕ} {q₁ q₂ : ℚ}
     (h₁ : IsRIntegralRat r q₁) (h₂ : IsRIntegralRat r q₂) :
-    toZMod (q₁ * q₂) (h₁.mul h₂) = toZMod q₁ h₁ * toZMod q₂ h₂ := by
+    toZMod (q₁ * q₂) (h₁.mul_coprime h₂) = toZMod q₁ h₁ * toZMod q₂ h₂ := by
   let d₁ : ZMod r := q₁.den
   let d₂ : ZMod r := q₂.den
   let D : ZMod r := (q₁ * q₂).den
@@ -224,7 +229,7 @@ private theorem toZMod_mul {r : ℕ} {q₁ q₂ : ℚ}
     simpa [N, d₁, d₂, n₁, n₂, D, mul_assoc] using
       (congrArg (fun z : ℤ => (z : ZMod r)) (Rat.mul_num_den' q₁ q₂))
   symm
-  refine toZMod_eq_of_den_mul_eq (h₁.mul h₂) ?_
+  refine toZMod_eq_of_den_mul_eq (h₁.mul_coprime h₂) ?_
   change D * (x₁ * x₂) = N
   have hunit : IsUnit (d₁ * d₂) := by
     simpa [d₁, d₂] using IsUnit.mul (isUnit_den_zmod q₁ h₁) (isUnit_den_zmod q₂ h₂)
@@ -297,7 +302,7 @@ private def IsRIntegralPS (r : ℕ) (F : PowerSeries ℚ) : Prop :=
 private theorem IsRIntegralPS.one (r : ℕ) : IsRIntegralPS r 1 := fun n => by
   rw [PowerSeries.coeff_one]
   by_cases h : n = 0
-  · simp [h, IsRIntegralRat.one]
+  · simp [h, IsRIntegralRat.one_coprime]
   · simp [h, IsRIntegralRat.zero]
 
 private theorem IsRIntegralPS.sub {r : ℕ} {F G : PowerSeries ℚ}
@@ -312,7 +317,7 @@ private theorem IsRIntegralPS.mul {r : ℕ} {F G : PowerSeries ℚ}
   rw [PowerSeries.coeff_mul]
 
 
-  exact IsRIntegralRat.sum fun ⟨i, j⟩ _ => (hF i).mul (hG j)
+  exact IsRIntegralRat.sum fun ⟨i, j⟩ _ => (hF i).mul_coprime (hG j)
 
 private theorem IsRIntegralPS.pow {r : ℕ} {F : PowerSeries ℚ} (hF : IsRIntegralPS r F)
     (k : ℕ) : IsRIntegralPS r (F ^ k) := by
@@ -361,7 +366,7 @@ private theorem coeff_mul_left_multiple_pos_right_integral_lt {r n : ℕ} {F G :
         rw [← hsum]
         exact Nat.lt_add_of_pos_left hp1pos
       rw [dif_neg hp0]
-      exact ((hFpos p.1 (Nat.succ_le_of_lt hp1pos)).choose_spec.1).mul
+      exact ((hFpos p.1 (Nat.succ_le_of_lt hp1pos)).choose_spec.1).mul_coprime
         (hGlt p.2 hp2lt)
   · calc
       (PowerSeries.coeff (R := ℚ) n) (F * G)
@@ -457,7 +462,7 @@ private theorem toZModPS_mul {r : ℕ} {F G : PowerSeries ℚ}
           simp [toZModPS, IsRIntegralRat.toZMod, s, f, PowerSeries.coeff_mul]
     _ = Finset.sum s (fun p => ((f p).num : ZMod r) * ((f p).den : ZMod r)⁻¹) :=
           IsRIntegralRat.toZMod_finset_sum s f
-            (fun p _ => (hF p.1).mul (hG p.2)) hsum
+            (fun p _ => (hF p.1).mul_coprime (hG p.2)) hsum
     _ = Finset.sum s (fun p =>
           IsRIntegralRat.toZMod ((PowerSeries.coeff (R := ℚ) p.1) F) (hF p.1) *
             IsRIntegralRat.toZMod ((PowerSeries.coeff (R := ℚ) p.2) G) (hG p.2)) := by
@@ -561,7 +566,7 @@ private theorem dieudonneDwork_mpr
   | h n ih =>
       by_cases hn0 : n = 0
       · simpa [hn0, PowerSeries.coeff_zero_eq_constantCoeff, hF1] using
-          IsRIntegralRat.one r
+          IsRIntegralRat.one_coprime r
       · have hn : 0 < n := Nat.pos_of_ne_zero hn0
         let hr : r ≠ 0 := (Fact.out : Nat.Prime r).ne_zero
         let SF : PowerSeries ℚ := PowerSeries.subst (PowerSeries.X ^ r) F
@@ -721,7 +726,7 @@ private theorem expSeries_constant {h : PowerSeries ℚ} (hh : constantCoeff h =
   rw [constantCoeff_subst_of_constantCoeff_zero hh]
   simp
 
-private theorem expSeries_derivative {h : PowerSeries ℚ} (hh : constantCoeff h = 0) :
+theorem expSeries_derivative {h : PowerSeries ℚ} (hh : constantCoeff h = 0) :
     derivative ((PowerSeries.subst h (exp ℚ))) = (PowerSeries.subst h (exp ℚ)) * derivative h := by
   rw [derivative_subst (.of_constantCoeff_zero hh), derivative_exp]
 
@@ -790,7 +795,7 @@ private theorem exp_multiple (p : ℕ) (hp : p.Prime) (g : PowerSeries ℚ)
       · subst j
         simp only [pow_zero, coeff_one, if_neg hn, mul_zero]
         exact IsRIntegralRat.zero p
-      · refine IsRIntegralRat.mul ?_ (hl.pow j n)
+      · refine IsRIntegralRat.mul_coprime ?_ (hl.pow j n)
         apply (localRat_iff_val_nonneg p hp _).mpr
         rw [padicValRat.div (div_ne_zero (pow_ne_zero _ hpQ)
           (by exact_mod_cast Nat.factorial_ne_zero j)) hpQ,

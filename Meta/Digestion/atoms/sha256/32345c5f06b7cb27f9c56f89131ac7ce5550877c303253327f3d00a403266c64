@@ -1,0 +1,8 @@
+**定义 96.1（来源与贡献范围）。** PB的定义及任意维P3加PB到原R的接口直接取[静态重构卷22–26](AURIC_C128_ARBITRARY_DIMENSIONAL_STATIC_QUANTUM_RECONSTRUCTION.md)，不将其极化或重构重列为新增结果。本增补的 $\texttt{repo-derived}$ 纸面组合是：在完整H2原域上，不预付旧D的任何正则性，由单位行的两阶段零面、幅度饱和、全局符号以及两条残差轴的有限旋转组合取得93.1；并在一般原JB背景上取得94.1。有限差分、Pauli代数、SO(3)及普通逆函数定理本身是成熟工具，不宣称为新发明。
+
+Hanche-Olsen–Størmer，[*Jordan operator algebras*](https://hanche.folk.ntnu.no/joa/joa-m.pdf)，1.2.3–1.2.5给序单位态的紧性、延拓与范数支撑，3.3.10给JB的准确序单位范数，3.6.2–3.6.3给Jordan Cauchy–Schwarz与正元零面；94.1的X恰是含单位JB，已支付全部这些前件。支撑态只作数学证明工具，不替换原评价来源。
+
+Cabello–Peralta，[*Weak-2-local symmetric maps on C*-algebras*，arXiv:1510.00915v1](https://arxiv.org/abs/1510.00915v1)，定义中的双输入双读数见证、定理2.5及推论2.10，以已给复C*代数上的weak-2-local symmetric／星导子见证推出线性。这里没有从P2和PB获得该存在量词，也不先复线性延拓未知D以套用它。本增补用上述有限代入证明完整H2结论；所列文献只作成熟接口和真实前件比较，不宣称检索穷尽或历史原创优先权。全部数学为纸面推导，未作Lean kernel核验。
+
+一般任意维、不完备原背景的 $\mathsf H_{\rm orig}+\mathsf{PB}\Rightarrow R$ 仍未证明，亦未给满足其全部前件而R失败的全域反例。94.2只支付同角输入的闭合，不支付任意输入的压缩相容；94.3阻止从单个输出的特征零面冒领整个支撑零面。下一真实缺口是同一旧D在不定输入、不同原角及一般原对象之间的有限传播，不能以增加“缺陷为零”、换一张正确新D或完成中的可定义对象代付。
+

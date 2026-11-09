@@ -1,0 +1,12 @@
+**Corollary 141.3 (the original quantified rank alternative).** Under precisely the inherited original endpoint and source telescope, the original marginal classes satisfy
+
+$$
+\forall\theta\in\Theta\ \exists D\in\mathscr D_{12}(\theta),
+\qquad \operatorname{rank}A^D\le2.
+\tag{141.16}
+$$
+
+Thus this source-conditional statement is $\neg\mathcal R$ in (140.10). It supplies neither $A^D=A^f$ nor full $64$-coordinate attainment.
+
+*Proof.* Fix an arbitrary original $\theta$, including its arbitrary original representative $b$. Proposition 141.1 gives a reflection-even admissible terminal perturbation $k$ with $\Delta_k>0$, and Theorem 141.2 gives precisely (140.4). Theorem 140.2 therefore gives an admissible invariant stochastic tuple (140.5) with strictly negative actual determinant (140.6). Theorem 140.1 supplies an actual invariant coarse partition with zero determinant, using Theorem 139.1 for a negative actual determinant and the deterministic path of Theorem 139.2 for exact attainment. Theorem 138.2 then supplies an original whole-$G$ four-cell Borel partition with all twelve original source marginals and rank at most two. In particular each deterministic matrix in these bridges uses its own actual $P\mathbf1_C$ or $P\mathbf1_{D_3}$; $Pk$ belongs only to the stochastic precursor. The representative changes in Proposition 141.1 preserve the original targets by Proposition 135.3. Since the original $\theta$ was arbitrary, (141.16) follows. The only extra symmetry required of the construction is imposed on its freely chosen $k$, not on the original representative $b$ or on arbitrary members of $\mathscr D_{12}(\theta)$. The forward implication concerning full $64$-coordinate attainment in Proposition 135.3 still has no converse here. $\square$
+

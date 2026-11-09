@@ -1,0 +1,170 @@
+**Corollary 41.5 (actual mixed contact and the two first boundaries).**
+Suppose $0<b<4$ and an actual mixed pair satisfies
+$\rho(E,U)=b$ and $g(E,U)\le V(b)$.
+The continuous family of Theorem 41.3 satisfies, for every
+$0<\theta\le\min\{\epsilon(E),4-b\}$,
+
+$$
+\begin{aligned}
+ \rho(E_\theta,U)&=b+\theta,\\
+ f(E_\theta,U)-N_{\mathrm{geo}}(b+\theta)
+    &=g(E,U)-V(b+\theta)\\
+    &\le V(b)-V(b+\theta)<0.
+\end{aligned}
+\tag{41.18}
+$$
+
+At an equality contact $g(E,U)=V(b)$, the inequality before the last
+strict sign is an equality. Every displayed competitor is an attained
+original pair, and $E_\theta\to E$ as $\theta\downarrow0$.
+The comparison includes level four when reached, and includes the pure
+endpoint when $b+\epsilon(E)\le4$. It implies $\beta\le b$.
+
+In particular a mixed pair in $\mathcal A_\alpha$ forces
+$\alpha=\beta$. It is an additional endpoint minimizer and the
+exhaustive-geometric-equality prefix excludes its endpoint.
+If $\alpha<\beta$, every extra minimizer at $\alpha$, and every
+minimizer at any level in $[\alpha,\beta)$, is pure.
+A mixed pair in $\mathcal A_\beta$ also supplies (41.18), but does
+not rule out an earlier pure equality tie at $\alpha<\beta$.
+The produced strict right competitors need not be globally minimizing.
+
+*Proof.* Constant $g$ and the exact original distance in (41.10)
+give the equality in (41.18). Theorem 41.2 makes its final comparison
+strict for every indicated positive parameter. For arbitrarily small
+such parameters with $b+\theta<4$, the attained competitor implies
+$m(b+\theta)<N_{\mathrm{geo}}(b+\theta)$, so
+$b+\theta\in\mathcal S$. Taking their infimum gives $\beta\le b$.
+This conclusion uses actual pairs, with no core-infimum attainment
+assumption and no continuation of a globally minimizing branch.
+
+At either $b=\alpha$ or $b=\beta$, Theorem 39.5 gives
+$g(E,U)=V(b)$ for every pair in $\mathcal A_b$.
+If a mixed one occurs at $\alpha$, the preceding result and
+$\alpha\le\beta$ imply equality of the boundaries.
+The sets $\mathcal G_b$ consist of pure effects, so this mixed pair
+belongs to $\mathcal A_\alpha\setminus\mathcal G_\alpha$.
+The endpoint alternative in Theorem 39.5 then excludes $\alpha$
+from the initial exhaustive-equality prefix.
+If $\alpha<\beta$, Theorem 41.4 instead forces purity throughout
+$[\alpha,\beta)$. No assertion that such extra pure pairs exist at
+$\alpha$ is needed; the endpoint may also have only geometric minimizers.
+
+For a mixed minimizer at $\beta$, (41.18) establishes strict loss
+immediately to its right. It supplies no restriction on an earlier
+pure extra minimizer, so it supplies no general coincidence conclusion.
+Theorem 40.4 does retain its separation consequence: with
+$\mathscr U_\beta=\{U:(E,U)\in\mathcal G_\beta\}$ there is
+$r_\beta>0$ such that every mixed pair in $\mathcal A_\beta$ satisfies
+
+$$
+ \operatorname{dist}_{\mathrm F}(U,\mathscr U_\beta)\ge r_\beta.
+\tag{41.19}
+$$
+
+Indeed (40.24) with $K=\{\beta\}$ would otherwise put its feedback
+in the neighborhood where (40.23) gives a strictly better same-level
+effect. This uses the full actual common-scalar feedback orbits.
+It neither identifies nor excludes those separated mixed endpoints.
+The bounds above compare the constructed pairs with the selected value;
+they do not compare them with all other original competitors at their
+new levels. Thus global minimality of the right competitors is not
+implied. $\square$
+
+**Mathematical source correspondence 41.6.** The identities (41.2)--(41.3)
+are the original normalized-effect, joint-distance and linear-defect
+identities (23.9)--(23.12). Theorem 41.3 uses the affine sections of
+their complex coherence disk while retaining its original starting
+point and its actual coherence contribution to $g$.
+The scalar value in Theorem 41.2 is precisely the selected attained
+value of Theorem 37.5 and (38.2); selector continuity is Theorem 39.2.
+The difference-quotient argument (41.7) is the elementary sensitivity
+argument for an interior unique minimum. It adds no replacement scalar
+selection. The local impurity comparison (34.20)--(34.22), the cap and
+fixed-feedback profiles of Sections 36--37, the phase-instability
+comparisons of Sections 36 and 38--39, and the geometric ordering and
+selected-feedback margins of Section 40 retain their stated domains.
+Theorem 41.4 consumes Theorem 39.5's already defined value-preserving
+prefix; (41.19) consumes the existing local exclusion in Theorem 40.4.
+The fixed-feedback, fixed-level diagnostic of Proposition 40.5 is
+consistent with (41.10), whose level increases by its impurity reduction.
+
+For the primary-literature correspondence,
+Gregoratti--Werner, [*Quantum Lost and Found*, quant-ph/0209025v1,
+Proposition 8 and (16)--(21)](https://arxiv.org/html/quant-ph/0209025v1#ThmThe8),
+fix a Kraus decomposition while optimizing correction fidelity.
+Their operators here are $t_j=\operatorname{diag}(R_0b_j)$ in input
+dimension four. The correction bound and its polar equality form do
+not impose the present joint distance or give its prescribed-level
+ordering. In particular the columns of one original effect retain
+one shared $U$ in (41.3).
+Buscemi--Chiribella--D'Ariano,
+[*Inverting Quantum Decoherence by Classical Feedback from the Environment*,
+quant-ph/0504195v5, (6) and (9)](https://arxiv.org/html/quant-ph/0504195v5),
+supply the four-dimensional rank-two correlation example. Their
+Heisenberg matrix is $\overline{R_0R_0^\dagger}$; the Schrödinger
+transpose in their (6) gives the source's Schur record. The ordinary
+transpose on the effects remains exactly the one in source (1.4)--(1.5).
+
+Thompson's prescribed complex-diagonal and singular-value theorem,
+as stated by Jasper--Loreaux--Weiss,
+[*Thompson's theorem for compact operators and diagonals of unitary operators*,
+arXiv:1602.08435v1, Theorem 1.3](https://arxiv.org/html/1602.08435v1#S1.Thmtheorem3),
+with four singular values equal to one, gives exactly $\mathcal W$
+in source Theorem 23.2. It supplies the existing feedback-realization
+input. The motion (41.12) keeps an already actual $U$ and requires
+no new lifting theorem. These cited theorem statements provide record,
+correction and realization correspondences; they do not assert
+(41.4), (41.10), the prefix increment (41.15), or the first-boundary
+consequences (41.18). No exhaustive literature-absence or priority
+claim is attached to these fixed-record deductions.
+
+**Unresolved mathematical obligations 41.7.** The complete preceding-level
+comparison still requires
+
+$$
+ M_\sigma(w,\xi)\ge V(\xi)
+\tag{41.20}
+$$
+
+for every realizable $w\in\mathcal W$ and every admissible original
+sign on the required preceding levels, with the full attained equality
+preimage in actual $\operatorname{Dens}_2\times U(4)$.
+Equivalently, using the exact fixed-feedback profile, every
+$r\in[t_\sigma,\min\{\sqrt{t_\sigma},J_\sigma\}]$ must satisfy
+
+$$
+ \Delta_\sigma+b_\sigma r-2uv\sqrt{t_\sigma-r^2}
+                       \ge V(\xi),
+\tag{41.21}
+$$
+
+with the original zero-amplitude, zero-coherence, singular-endpoint,
+sign-tie and actual-lift cases retained. Theorem 41.4 uses
+$m=N_{\mathrm{geo}}$ on the existing prefix $(0,\beta]$; it does not
+certify that a proposed value is $\beta$. Using its purity conclusion
+to discard mixed strict competitors in a proof locating that prefix
+would be circular. The full all-effect comparison remains required.
+
+The exact evaluations of $\alpha$ and $\beta$, their general
+coincidence or separation, every actual boundary equality preimage,
+and inclusion or exclusion of the exhaustive-equality endpoint remain
+undetermined. If $\alpha<\beta$, the equality-only alternatives
+involve pure effects. Their actual separated ties, their coalescence
+with the selected graph, and the identities and exhaustion of the
+first competing global minimizing branches still require analysis.
+Mixed equality at $\beta$ remains possible on a separated feedback
+branch; its existence or exclusion and full endpoint preimage remain
+unresolved. Neither existence of such a mixed endpoint nor the absence
+of an earlier pure tie follows from the explicit right competitors.
+Those competitors need not minimize globally, so they do not exhaust
+the first competing minimizing branches.
+
+The determinant-zero phase-variation case still requires higher-order
+and global comparison. The geometric ordering beyond level four,
+any missing core-infimum attainment, and all previously conditional
+right-side branch-identification obligations retain their existing
+boundaries. No local curvature condition, unattained tie, or prefix
+purity theorem evaluates the first loss. The full original first-loss
+and equality problem remains unresolved.
+

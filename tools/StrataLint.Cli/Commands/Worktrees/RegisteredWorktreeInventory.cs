@@ -1,4 +1,5 @@
 using static StrataLint.Cli.CleanLanesCommand;
+using StrataLint.Runtime;
 
 namespace StrataLint.Cli;
 
@@ -7,12 +8,12 @@ internal sealed record RegisteredWorktree(
     string Head,
     string? Branch,
     string? GitDirectory,
-    bool Locked,
-    string? LockReason,
     string? IdentityFailure = null);
 
 internal static class RegisteredWorktreeInventory
 {
+    private sealed record GitDirectoryObservation(string? GitDirectory, string? Failure);
+
     internal static IReadOnlyList<RegisteredWorktree> ReadWorktrees(
         string repositoryRoot,
         IWorktreeProcessRunner runner,
@@ -27,8 +28,6 @@ internal static class RegisteredWorktreeInventory
         string? path = null;
         string? head = null;
         string? branch = null;
-        var locked = false;
-        string? lockReason = null;
         foreach (var field in Decode(result.StandardOutput).Split('\0'))
         {
             if (field.StartsWith("worktree ", StringComparison.Ordinal))
@@ -43,13 +42,6 @@ internal static class RegisteredWorktreeInventory
             {
                 branch = field["branch refs/heads/".Length..];
             }
-            else if (field == "locked" || field.StartsWith("locked ", StringComparison.Ordinal))
-            {
-                locked = true;
-                lockReason = field.Length == "locked".Length
-                    ? string.Empty
-                    : field["locked ".Length..];
-            }
             else if (field.Length == 0 && path is not null)
             {
                 if (head is null)
@@ -57,23 +49,28 @@ internal static class RegisteredWorktreeInventory
                     throw new InvalidOperationException($"worktree inventory omitted HEAD: {path}");
                 }
 
-                var observation = resolveGitDirectories ? ObserveRegisteredGitDirectory(path, runner) : default;
+                var observation = resolveGitDirectories ? ObserveRegisteredGitDirectory(path, runner) : new GitDirectoryObservation(null, null);
                 entries.Add(new RegisteredWorktree(
                     path,
                     head,
                     branch,
                     observation.GitDirectory,
-                    locked,
-                    lockReason,
                     observation.Failure));
                 path = null;
                 head = null;
                 branch = null;
-                locked = false;
-                lockReason = null;
             }
         }
 
         return entries;
+    }
+
+    private static GitDirectoryObservation ObserveRegisteredGitDirectory(string path, IWorktreeProcessRunner runner)
+    {
+        var result = runner.Run("git", ["rev-parse", "--absolute-git-dir"], path,
+            BoundedProcessRunner.HangDetectionBudget);
+        if (result.ExitCode != 0)
+            return new(null, CleanLanesCommand.Decode(result.StandardError));
+        return new(Path.GetFullPath(CleanLanesCommand.Decode(result.StandardOutput).Trim()), null);
     }
 }

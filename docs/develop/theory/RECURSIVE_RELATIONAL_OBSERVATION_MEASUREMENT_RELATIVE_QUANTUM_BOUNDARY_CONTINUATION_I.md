@@ -1805,3 +1805,239 @@ bounds. The original fixed-model and common-realization obligations retain
 their exact scopes.
 
 ## 追加锚（本行以下为增补区）
+
+
+## 8. A uniform native separation for the fixed same-history recorded recovery
+
+**Definition 8.1 (the sixteen-bit source and its actual reference history).**
+Use exactly [V88, Definitions 23.1–23.2 and 28.1](AURIC_RECURSIVE_SPHERES_RELATIVE_RESOLUTION_RELATION_FIELD_V88.md).
+The source for this section is its fixed sixteen-bit chain, with positions
+$-1,0,\ldots,14$, full space $\mathcal H_{\mathcal N}=(\mathbb C^2)^{\otimes16}$,
+legal subspace $\mathcal L=\operatorname{span}\{|b\rangle:b_i b_{i+1}=0\}$,
+and unique root
+
+$$
+\Omega_0=|1,0,0,0,1,0,0,0,1,0\rangle_{-1,\ldots,8}
+ \otimes|000\rangle_{9,10,11}\otimes|000\rangle_{12,13,14}.
+\tag{WR1.8.1}
+$$
+
+The native menu consists of the same full matrices $K_\ell$ of V88 (23.2),
+all addresses $0\le\ell\le13$, complete computational-basis diagonal
+zero-one projection decompositions, and finite deterministic feedback on
+acquired results. Every complete finite tree retains all calls, reports,
+controls, zero-mass labels, failures, refusals and stops. Inverse notation
+means nine forward calls. Each tree has finite $L,m,b,\mathcal C$ as in
+V88 (23.3), with no common upper bound imposed across trees. No rotation,
+rewiring, reset, source replacement, external random weight or extra
+coherent control is added. These assumptions concern this source; they do
+not identify it with the five-mode preparation of the preceding sections.
+
+Put $\varphi=(1+\sqrt5)/2$, $t=\varphi^{-1}$, $s=t$, $r=t^2$,
+$\beta=\sqrt t$ and
+$\zeta=e^{3\pi i/5}$. Thus $r+s=1$ and $s^2=r$.
+The actual prefix $\mathcal P_\chi$ calls, in time order,
+$K_3,K_2,K_1,K_{10},K_{13}$, then reads the original setting cells
+$X=b_{10},Y=b_{13}$, with empty result-routing words. Its complete
+pre-read archive is $a_{xy}$ on setting outcome $(x,y)$. Its unnormalized
+branch density $D_{xy}$ is exactly V88 (26.8), including the fixed
+spectator bits and original control $c_*$. In particular its setting
+weight is $p_xp_y$, where $p_0=r,p_1=s$, and its source vector is the
+actual $\psi_{\rm alt}$ of V88 (26.5); write $\psi_{123}$ for its
+$b_1b_2b_3$ factor there. No new preparation is made.
+Take $R=H_{\{1\}}$ and $Z=H_{\{1\}^c}$ in the full native tensor space.
+The reference and the fixed mathematical reverse are
+
+$$
+\begin{gathered}
+\chi=\begin{pmatrix}s&\gamma\\\overline\gamma&r\end{pmatrix},
+\qquad \gamma=r\beta\zeta^{-4},\qquad
+h=\operatorname{diag}(s,r),\qquad \det\chi=r^2>0,\\
+\mathcal R_\chi(Y)=\chi^{1/2}\Delta(h^{-1/2}Yh^{-1/2})\chi^{1/2},
+\qquad \Delta(Y)=\sum_{j=0}^1P_jYP_j,\qquad
+P_j=|j\rangle\langle j|_R,\\
+Q_j=\mathcal R_\chi(P_j)=
+ \frac{\chi^{1/2}P_j\chi^{1/2}}{\chi_{jj}}.
+\end{gathered}
+\tag{WR1.8.2}
+$$
+
+Here $\chi$ is the actual unconditional $b_1$ marginal, also the
+calibration conditional on the original positive setting event $X=Y=0$.
+It is not a freely supplied input or an extra reference register.
+
+**Definition 8.2 (the original-output laws being compared).** Perform the
+original $b_1$ computational read, retaining its actual result $j$.
+For this same input, let $P_\chi$ be the complete ideal terminal law of
+V88 (28.4), whose blocks are
+
+$$
+\Theta_{xy,j}=(\mathcal R_\chi\otimes\operatorname{id}_Z)
+ \bigl[(P_j\otimes I)D_{xy}(P_j\otimes I)\bigr].
+\tag{WR1.8.3}
+$$
+
+Every original program label $\pi=\pi(\mathcal P_\chi)$, archive $a_{xy}$,
+read $j$, sixteen-bit terminal word $z$ and original stop label remains
+separate, including every zero coordinate. The setting cells in $Z$
+are the original physical records; the archive notation does not attach
+new quantum copies. This input's original failure and early-stop labels
+have zero mass and remain present.
+
+A competitor $C$ is any permitted complete finite native continuation
+after that same read, allowed to depend on all acquired reports and on
+the known original program. Let $P_C$ be its full law, including its own
+program identity and all added continuation records $k$. Write $\bar P_C$
+for the mathematical sum over only those added records. Every original
+$\pi,a,j,z$ and stop coordinate remains unchanged. Include additional
+failure, refusal and early-stop positions in the comparison space with
+ideal mass zero; do not condition on success. All terminal bits in this
+law are the actual computational readouts. This is exactly the
+original-output comparison of V88 Definition 28.1. Summing added records
+is a probability marginal, not physical erasure or a permission to
+continue an absorbed stop. On other legal input prefixes the original
+absorbed branches retain their densities, archives and masses, with no
+new $j$ or later call, as required there.
+
+**Theorem 8.3 (a positive floor independent of every finite budget).**
+Define the event in the complete original-output space by
+
+$$
+\mathcal F=\{\pi=\pi(\mathcal P_\chi),\ j=0,\ z_1=z_2=1\}.
+\tag{WR1.8.4}
+$$
+
+It includes all original setting archives and all other terminal bits;
+it does not identify their separate coordinates. For every competitor
+$C$ of Definition 8.2,
+
+$$
+\bar P_C(\mathcal F)=0,\qquad
+P_\chi(\mathcal F)=\delta=
+\frac{r^3}{1+2r}=\frac{16-7\sqrt5}{11}>0,
+\qquad
+\operatorname{TV}(\bar P_C,P_\chi)\ge\delta.
+\tag{WR1.8.5}
+$$
+
+For any law $\widetilde P_\chi$ on $C$'s full added-record space with
+original-output marginal $P_\chi$, one also has
+$\operatorname{TV}(P_C,\widetilde P_\chi)\ge\delta$.
+
+Proof. Write $n_i=|1\rangle\langle1|$ on native bit $i$, with identity
+on the other bits, and let $F_{12}=n_1n_2$. This is a mathematical
+support test for two bits of the existing complete terminal read.
+[V15, Theorem 7.1](AURIC_GOLDEN_GATE_NAND_UNIVERSALITY_AND_ARITHMETIC_LIMITS_V15.md#thm-defect)
+gives $[K_\ell,F_{12}]=0$ at every original address. Every permitted
+projection is diagonal, so also commutes with $F_{12}$.
+Since $F_{12}\Omega_0=0$, induction along each branch of any complete
+finite tree gives $F_{12}v_h=0$ for its unnormalized branch vector.
+This applies before and after the actual $j$ read, to every feedback
+choice, repeated or inverse-expanded call, identity alignment slot and
+terminal stop. Failure and refusal branches obey the same induction;
+zero vectors need no normalization. Consequently every actual terminal
+word with $z_1=z_2=1$ has mass zero on every branch. Summing any added
+records preserves zero. This proves the first equality on the full
+native family, without bounding its resources or restricting its menu.
+
+For the target mass, use the actual vector in V88 (26.5). With
+$B=-\beta\zeta^4$ its active-block off-diagonal coefficient, the part
+with $b_2=1$ is precisely
+
+$$
+ (I\otimes n_2\otimes I)\psi_{123}
+       =\zeta B^2|010\rangle_{b_1b_2b_3},
+\qquad |B|^2=s,\qquad |B|^4=s^2=r.
+\tag{WR1.8.6}
+$$
+
+All omitted source bits retain their fixed original values. This
+component already has $b_1=0$. Define the positive unnormalized
+complement operator $\tau_{xy}=\langle0|_R D_{xy}|0\rangle_R$.
+The original settings are independent factors in this very same
+$D_{xy}$, by V88 (26.8), hence
+
+$$
+ (P_0\otimes I)D_{xy}(P_0\otimes I)=P_0\otimes\tau_{xy},
+ \qquad \operatorname{Tr}(n_2\tau_{xy})=p_xp_y r.
+\tag{WR1.8.7}
+$$
+
+The fixed square root in V88 (28.5) and its coefficient (28.6) give
+
+$$
+ \chi^{1/2}=\frac1{\sqrt{1+2r}}
+       \begin{pmatrix}1&\gamma\\\overline\gamma&2r\end{pmatrix},
+ \qquad q:=\operatorname{Tr}(P_1Q_0)
+       =\frac{|\gamma|^2}{s(1+2r)}=\frac{r^2}{1+2r}.
+\tag{WR1.8.8}
+$$
+
+Equation (WR1.8.3) therefore has $j=0$ block
+$Q_0\otimes\tau_{xy}$. Summing its terminal diagonal entries with
+$z_1=z_2=1$ gives, separately for every original archive,
+
+$$
+ P_\chi\{\pi(\mathcal P_\chi),a_{xy},j=0,z_1=z_2=1\}
+   =q\operatorname{Tr}(n_2\tau_{xy})=p_xp_y r q.
+\tag{WR1.8.9}
+$$
+
+This equality uses the source's actual joint $j=0,b_2=1$ mass $r$;
+there is no division by the probability of $j=0$ or of $X=Y=0$.
+The sum over all four original settings is $rq$, since
+$\sum_{xy}p_xp_y=1$. With $r=(3-\sqrt5)/2$, one has
+$r^3=9-4\sqrt5$ and $1+2r=4-\sqrt5$, which yield the displayed
+$\delta$. Its positivity follows from $16^2>5\cdot7^2$.
+
+Both compared laws have total mass one with all failure and stop
+coordinates included. The standard finite-law identity
+$\operatorname{TV}(P,Q)=\frac12\sum_\omega|P(\omega)-Q(\omega)|
+=\sup_A|P(A)-Q(A)|$ now gives (WR1.8.5) from $\mathcal F$.
+Its inverse image under the projection forgetting added records has
+probabilities zero and $\delta$ for $P_C$ and every
+$\widetilde P_\chi$, proving the last assertion. $\square$
+
+**Corollary 8.4 (no total-variation convergence on the original input domain).**
+For any sequence of permitted complete finite continuations $C_n$,
+even with unbounded gate counts, measurement counts, branching and
+finite control/archive sizes,
+
+$$
+ \inf_n\operatorname{TV}(\bar P_{C_n},P_\chi)\ge\delta>0.
+\tag{WR1.8.10}
+$$
+
+In particular no sequence of native compiler families on all legal
+prefixes of V88 Definition 28.1 converges in TV even pointwise at
+$\mathcal P_\chi$ to that strong target. Its worst-case input error
+is at least $\delta$ for each family, including when a different
+finite continuation is selected for each known original program.
+Proof. Apply Theorem 8.3 at this one retained legal input for every
+index. The supremum over the original input domain includes that
+input. No other input or original absorbed branch is removed. $\square$
+
+**Boundary 8.5 (attribution and exact scope).** The source-specific
+`repo-derived` deduction is the positive forbidden-event mass
+(WR1.8.9) and its uniform consequence for V88 (28.4). V88 (26.5),
+(26.8)–(26.9), (28.3) and (28.5)–(28.6) supply the actual vector,
+complete recorded source and fixed local Petz map; V15 supplies the
+conserved adjacent defect. The event characterization of TV is a
+standard probability bound. Neither Petz theory nor conserved-sector
+theory is a new result here. The recovery-theory attribution is
+[Petz, *Sufficient subalgebras and the relative entropy of states of a von Neumann algebra*](https://doi.org/10.1007/BF01212345),
+as in V88. V88 Proposition 28.2 and Corollary 28.3 use arithmetic to
+separate exact masses and obtain a gate-count-dependent error; the
+support event above gives a strictly positive bound independent of
+that count.
+
+The conclusion is only for this fixed strong local Petz map with its
+specified identity action on the native complement and retained original
+records. Its forbidden mass lies outside $\mathcal L$ in the full
+Hilbert space where V88 defines the ideal target. This does not rule
+out every recovery map or refute a process returning only the single
+unconditional marginal $h$ to $\chi$. It supplies no arbitrary-input
+or ancilla diamond bound, sharp optimum, new native operation, quantum
+origin, or common physical realization.
+
+## 追加锚（本行以下为增补区）

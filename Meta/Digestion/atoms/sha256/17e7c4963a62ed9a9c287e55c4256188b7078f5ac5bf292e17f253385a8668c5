@@ -1,0 +1,84 @@
+**Corollary 42.6 (actual phase branches and mixed boundary contact).**
+For $b=\alpha$ or $b=\beta$, there is a sufficiently short interval
+$(b,b+\varepsilon)\subset(0,R)$ with a real analytic semialgebraic
+branch of actual phase global minimizers
+
+$$
+       \xi\longmapsto (E(\xi),U(\xi))
+                              \in\mathcal A_{\mathrm{ph},\xi},
+\tag{42.32}
+$$
+
+having an actual phase limit in $\mathcal A_{\mathrm{ph},b}$.
+At $\beta$ it is strictly below $N$ throughout that interval.
+Whenever every level in a right interval at $b$ has a nongeometric
+original global minimizer, (42.32) can be chosen nongeometric
+throughout a shorter interval. This applies at $\alpha$ when
+$\mathcal A_\alpha=\mathcal G_\alpha$, in which case the endpoint
+limit lies in $\mathcal G_\alpha$.
+
+A mixed original global minimizer at either boundary has a mixed
+phase global replacement with the identical effect. At such a phase
+contact $(E,U_{\mathrm{ph}})$, the family of Theorem 41.3 keeps
+that same actual phase feedback and, for
+$0<\theta\le\min\{\epsilon(E),4-b\}$, satisfies
+
+$$
+\begin{aligned}
+ \rho(E_\theta,U_{\mathrm{ph}})&=b+\theta,\\
+ f(E_\theta,U_{\mathrm{ph}})-N(b+\theta)
+                       &=V(b)-V(b+\theta)<0.
+\end{aligned}
+\tag{42.33}
+$$
+
+These are actual strict competitors, with no assertion of global
+minimality at their new levels. A mixed minimizer at $\alpha$
+still forces $\alpha=\beta$; one at $\beta$ does not exclude an
+earlier pure equality tie.
+
+*Proof.* The actual phase condition is semialgebraic and closed:
+in real and imaginary coordinates it is the condition that
+$UU_+^\dagger$ be diagonal unitary. Intersect the original
+semialgebraic minimizing graph of Theorem 39.4 with this condition.
+By (42.24) every level fiber on $(0,R)$ is nonempty and compact.
+Use the selection argument of Theorem 39.6 on this graph.
+Hardt triviality, in the form of
+[Drusvyatskiy--Lewis, arXiv:1004.0368v1, Theorem 2.25 and
+Corollary 2.27](https://arxiv.org/html/1004.0368v1), applies to its
+continuous semialgebraic coordinate projection, compatibly with
+the geometric subgraph. On a sufficiently short right interval,
+fixing one point of the trivialized fiber gives a continuous
+semialgebraic section. Theorem 3.4 of
+[Drusvyatskiy--Ioffe--Lewis, arXiv:1504.07694v1](https://arxiv.org/html/1504.07694v1)
+applied to this already selected single-valued map makes it
+analytic after shortening the interval. No finite-fiber or
+generic-minimizer assumption is required.
+Its bounded semialgebraic real coordinates have finite one-sided
+limits, by the monotonicity argument used in Theorem 39.6.
+Closedness of the phase condition and value continuity at $b$
+in Theorem 39.5 place the actual limit in
+$\mathcal A_{\mathrm{ph},b}$.
+
+If every original fiber has a nongeometric minimizer, Theorem 42.4
+gives such a phase minimizer in every fiber. Compatible
+trivialization then permits choosing the section outside the
+geometric subgraph. Theorem 39.5 supplies the asserted nongeometric
+right interval at $\alpha$ under its stated endpoint condition,
+and the strict-loss interval at $\beta$.
+If the endpoint has only geometric minimizers, the endpoint limit
+must be geometric. No nongeometric right interval at $\alpha$
+is inferred solely from an extra endpoint minimizer.
+
+For a mixed endpoint minimizer, use (42.25) and unchanged $E$ to
+obtain a mixed phase endpoint minimizer, whose $g$ equals $V(b)$.
+Theorem 41.3 changes only its effect and keeps both original
+distance branches, with their common increment $\theta$.
+Theorem 41.2 supplies the strict increase of $V$, giving (42.33)
+exactly as in Corollary 41.5.
+The coincidence statement at $\alpha$ and its stated limitation at
+$\beta$ are therefore the existing conclusions of that corollary,
+now realized with actual phase feedback. The separated mixed
+feedback alternative of (41.19) remains in force; the transport
+does not exclude it. $\square$
+

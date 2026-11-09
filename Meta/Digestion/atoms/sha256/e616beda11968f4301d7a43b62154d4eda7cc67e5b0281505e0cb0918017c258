@@ -1,0 +1,45 @@
+**引理 164.2（全部偶地址的精确不变数据）。** 对每个 $s\in S$ 和 $j\in J_{\rm ev}$，$R_s$ 与 $H_j$ 对易，并且
+
+$$
+\begin{gathered}
+\mathcal P_jw_s=e_j(s)w_s,\\
+e_0(s)=\mathbf1_{1\in s},\qquad
+e_{10}(s)=\mathbf1_{9\in s},\qquad
+e_j(s)=\mathbf1_{\{j-1,j+1\}\subseteq s}
+\quad(j=2,4,6,8).
+\end{gathered}
+\tag{164.6}
+$$
+
+对任意非零复向量 $z$，定义
+
+$$
+a_s(z)=\langle w_s,z\rangle,\qquad
+v_s(z)=R_sz-a_s(z)w_s,
+\qquad \langle w_s,v_s(z)\rangle=0,
+\tag{164.7}
+$$
+
+内积对第二变量线性。则 $N$、$|a_s|$ 和 $\|v_s\|$ 在每个 $U_j(t)$、$j\in J_{\rm ev}$ 下不变；此处甚至对全部实数 $t$ 成立。
+
+证明。偶地址不改变任何奇位，故保持每个 $R_s$ 扇区。对内部偶地址，若两奇邻位均未占据，$j\in A_s$，固定其余位后的两项系数是同一非零因子乘以列向量 $(x,-y)^{\mathsf T}$。原矩阵满足
+
+$$
+\begin{pmatrix}x&xy\\xy&x^2\end{pmatrix}
+\begin{pmatrix}x\\-y\end{pmatrix}=0,
+\tag{164.8}
+$$
+
+其中只用了 $y^2=x$。若至少一个奇邻位占据，中心偶位被迫为零；原 (157.2) 在两邻位都占据时为标量一，在恰有一个占据时为标量零。这给内部的 (164.6)。固定外部位按原字面值代入，(157.12) 为 $\mathcal P_0=n_1$、$\mathcal P_{10}=n_9$，故两个端点也满足 (164.6)，没有删去它们的单点条件。
+
+由原 $H_j=-\alpha(I+\mathcal P_j)$，
+
+$$
+U_j(t)w_s=e^{i\alpha t(1+e_j(s))}w_s,\qquad
+a_s(U_j(t)z)=e^{i\alpha t(1+e_j(s))}a_s(z),\qquad
+v_s(U_j(t)z)=U_j(t)v_s(z).
+\tag{164.9}
+$$
+
+酉性给所述范数不变性。这里只使用数学轨道，未把内部 $t$ 变成实际可中断或可选择的控制。∎
+

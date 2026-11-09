@@ -1,0 +1,44 @@
+**Lemma 25.1 (simultaneous opposite-cap envelopes).** For every
+$w\in\mathcal C_-$, set $\delta=4-B(w)\in[0,1/6]$. Then
+
+$$
+\begin{aligned}
+u(w)^2&\le c^2(4\delta-\delta^2),&
+v(w)&\le e-s\delta,\\
+A(w)^2&\le8\delta,&
+r(w,p)&=r_-(w,p)=2(p+\delta)\quad(0\le p\le1).
+\end{aligned}
+\tag{25.2}
+$$
+
+For each fixed $\delta\in[0,1/6]$, both amplitude bounds in (25.2)
+are attained simultaneously by one actual shared-unitary datum.
+
+Proof. Since $B>0$, use one common scalar phase and the fixed
+coordinate transformation
+
+$$
+z=(w_1,-w_2,iw_3,-iw_4)
+\tag{25.3}
+$$
+
+to arrange $\sum_jz_j=B$ real and positive. Multiplying the original
+$w$ by this scalar preserves all quantities in the statement. The
+coordinate transformation in (25.3) expresses displacement from the
+negative optimizer; it imposes no additional phase quotient. In these
+coordinates, the original amplitudes are exactly
+
+$$
+P=h(z_1-z_2)-ic(z_3-z_4),\qquad
+Q=h(z_1+z_2)+s(z_3+z_4).
+\tag{25.4}
+$$
+
+Consequently,
+
+$$
+v=|sB+(h-s)(z_1+z_2)|
+\le sB+2(h-s)=e-s\delta.
+\tag{25.5}
+$$
+

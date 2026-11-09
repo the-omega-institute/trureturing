@@ -1,0 +1,64 @@
+**定理 5.1（近似原 R 不产生统一 Born 恢复模）。** 对 $0<\varepsilon<1$，令 D、U 为 (4.1)、(3.11) 的完整响应，并置
+
+$$
+\Pi^\varepsilon=(1-\varepsilon)D+\varepsilon U.
+\tag{5.1}
+$$
+
+则每个 $\Pi^\varepsilon\in\mathscr C_{\mathrm L}$，全部原端点精确成立。对全部非零 $z$、$i=0,1$、$q\in E_i$，将 R 乘积在零投影处依原约定置零，其残差满足
+
+$$
+\left|\Pi_q^\varepsilon(z)
+-m_i^\varepsilon(z)\Pi_q^\varepsilon(M_i z)\right|
+\le3\varepsilon.
+\tag{5.2}
+$$
+
+然而这些响应在同一固定输入、同一固定坐标上与 Born 的差趋于一。因此即使只对原全部实际 R 的残差作统一趋零控制，也不存在仅由精确 L、精确原端点和该残差推出的统一趋零 Born 误差模。
+
+准确地，按原零投影约定定义
+
+$$
+\begin{aligned}
+\rho_{\mathrm R}(\Pi)
+&=\sup_{\substack{a\in\mathsf W_{11},\ i=0,1\\q\in E_i}}
+\left|\Pi_q(\chi_a)-m_i(\chi_a)\Pi_q(M_i\chi_a)\right|,\\
+d_\infty(\Pi,\Pi^{\rm B})
+&=\sup_{\substack{z\ne0\\q\in E}}
+\left|\Pi_q(z)-\Pi_q^{\rm B}(z)\right|.
+\end{aligned}
+\tag{5.3}
+$$
+
+不存在 $\omega:(0,\infty)\to[0,\infty)$ 满足 $\lim_{\delta\downarrow0}\omega(\delta)=0$，且对所有 $\Pi\in\mathscr C_{\mathrm L}$、所有 $\delta>0$，都有
+$\rho_{\mathrm R}(\Pi)\le\delta\Rightarrow d_\infty(\Pi,\Pi^{\rm B})\le\omega(\delta)$。
+
+**证明。** $\mathscr C_{\rm end}$ 的连续、非负归一和分量端点条件在凸组合下保持。有限基态核的每个元素至少为 $\varepsilon/89>0$，所以所有原切口双向开放，L 精确成立。
+
+每个坐标的 $|\Pi_q^\varepsilon-D_q|\le\varepsilon$；任一记录块的质量差也不超过 $\varepsilon$，因为两份归一响应的该块质量都在 $[0,1]$。若 $M_i z\ne0$，D 已满足全域 R，用 $m_i^D=t_i$ 得
+
+$$
+\begin{aligned}
+&|\Pi_q^\varepsilon(z)-m_i^\varepsilon(z)\Pi_q^\varepsilon(M_i z)|\\
+&\quad\le |\Pi_q^\varepsilon(z)-D_q(z)|
+ +|m_i^\varepsilon(z)-t_i(z)|\Pi_q^\varepsilon(M_i z)
+ +t_i(z)|\Pi_q^\varepsilon(M_i z)-D_q(M_i z)|\\
+&\quad\le3\varepsilon.
+\end{aligned}
+\tag{5.4}
+$$
+
+若 $M_i z=0$，$D_q(z)=0$，残差是左端的 $\varepsilon/89\le\varepsilon$，没有评价 $\Pi(0)$。此估计覆盖全域，因而覆盖所有原实际前字，而非一个有限抽样。
+
+在 $z=e_{\{1\}},q=\varnothing$ 上，Born 权重为零，而
+
+$$
+\Pi_\varnothing^\varepsilon(e_{\{1\}})
+=1-\varepsilon+\varepsilon/89\longrightarrow1.
+\tag{5.5}
+$$
+
+若存在所述恢复模，取 $\delta=3\varepsilon$，由 (5.2) 得 $\rho_{\mathrm R}(\Pi^\varepsilon)\le\delta$，继而使 (5.5) 的同一坐标差趋零，矛盾。与此同时 $\Pi^\varepsilon$ 在全域一致趋于不满足 L 的 D，故 $\mathscr C_{\mathrm L}$ 本身不是一致拓扑下的闭类。∎
+
+这一定理不否定精确选择：任意正 $\varepsilon$ 的 (5.1) 都在原实际空前字的零投影分支上留下 $\varepsilon/89$ 的 R 失败。它排除的是从精确支持逻辑直接推得近似稳定性、有限噪声认证或费用下降。若另加正支持间隙或定量双向关系，那是额外条件，不能算作 L 已经提供的资源。原取得误差合同也不是 (5.2) 这种未知响应残差的稳定性合同。
+

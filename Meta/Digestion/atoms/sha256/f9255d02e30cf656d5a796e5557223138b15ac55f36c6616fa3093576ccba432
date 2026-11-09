@@ -1,0 +1,10 @@
+and, for every $L,D\ge0$,
+
+$$
+P(L,D)=
+\sum_{t=1}^{L}2^{L-t}
+\left(\sum_{d=1}^{\min(2D,t)}2^d
++\sum_{\substack{1\le i,j\le t\\i+j\le2D}}2^{i+j-2}\right).
+\tag{IV.113}
+$$
+

@@ -1,0 +1,4 @@
+**定义 36.2（准确的强弱关系与受影响二元关系）。** 记 $\mathsf{PB}_0$ 为对全部原 $\alpha,a,b$ 的 $\mathsf{PB}(a;b,0)$。在相同 $\mathsf H_{\rm orig}+\mathsf P_3$ 背景、相同原域与量词下，完整 PB 蕴涵 $\mathsf{PB}_0$；命题 36.1 的 $\kappa=0$ 模型使反向蕴涵失败，且原 R 真正失败。这是一个弱化的严格反向失败见证，不是完整 $\mathsf H_{\rm orig}+\mathsf{PB}$ 的反例，也不是 P3 冗余或独立性的判定。
+
+被弱条件漏掉的是原有向二元响应的尺度：$S(X,Y)=0$ 始终不变，而 $D_\kappa(X,Y)=-\kappa Z$。例如另一原评价 $\alpha_z(v)=\operatorname{Tr}((I+Z)v)/2$ 给 $g_{\alpha_z}^\kappa(X,Y)=\mathrm i\kappa$、反向为 $-\mathrm i\kappa$。全部 Gram 表仍正，却不固定这个有向数值的大小。$\mathsf{PB}_0$ 只看单实方向的相位平方，(35.5) 的重复外输入使它自动看不到这一失配；混合原方向 $b=X,c=Y$ 才以 $4(1-\kappa^2)$ 读出原嵌套关系不相容。这里没有删除旧标签或限制评价；整个原正评价族、全部原输入与全部质量始终保留。
+

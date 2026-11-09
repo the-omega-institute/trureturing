@@ -1,0 +1,37 @@
+**定理 236.1（同一共享响应的四个等价条件）。** 固定 229.1–230.1 的全部实际原标签，仍记
+
+$$
+x=x_-=tb-rk,\qquad
+y=y_-=\frac{(1-r^2)b-2rj}{\sqrt L},\qquad
+K=D(x,y),\quad S=j\circ K.
+\tag{236.1}
+$$
+
+则在原完整 P2、PB 下
+
+$$
+\boxed{S=0
+\ \Longleftrightarrow\ y\circ K=0
+\ \Longleftrightarrow\ \mathcal E=0
+\ \Longleftrightarrow\ k=tj.}
+\tag{236.2}
+$$
+
+这是一条条件之间的准确等价，不单独断言它们成立。
+
+证明。229.2 已给 $b\circ K=k\circ K=0$，所以
+
+$$
+x\circ K=0,\qquad y\circ K=-\frac{2r}{\sqrt L}S.
+\tag{236.3}
+$$
+
+又由 230.5 得 $x^2=Lt^2R$、$y^2=LR$，$R$ 与 $x,y$ 交换。若 $S=0$，原对 $(x,y)$ 及其同一旧值 $K$ 满足 (235.1)，故 235.2 给
+
+$$
+K^2=x^2y^2-(x\circ y)^2=\mathcal A_-.
+\tag{236.4}
+$$
+
+因而 $\mathcal E=0$。230.4 给 $\mathcal E=0\Longleftrightarrow k=tj$；若 $k=tj$，再由 $t>0$、$k\circ K=0$ 得 $S=0$。这也包含 $b=0$ 与 $R$ 的全部零支撑，没有逆元或谱隙条件。证明未使用 $j\circ k=0$：该乘积是原未知 $q$。∎
+

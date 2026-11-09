@@ -1,0 +1,92 @@
+**定理 102.1（全部有限矩阵及更大原域的单位行）。** 在99.1背景中，若每个原 $x\in E$ 在X中分别具有有限谱，则
+
+$$
+\boxed{D(\mu u,b)=0\quad(\mu\in\mathbb R,\ b\in E).}
+\tag{102.1}
+$$
+
+证明。以下所有辅助标签都是原有限谱元素的有限插值多项式及实线性组合。
+
+第一步，称 $b=\sum_i\lambda_ip_i$ 满足谱和条件，若 $\lambda_i+\lambda_j\ne0$ 对全部i,j成立，包含 $i=j$。当前范围保证 $h=D(\mu u,b)$ 有限谱；101.1给 $b\circ h=0$。在b的有限Peirce分解上，$L_b$ 在单角与双角的系数分别为 $\lambda_i$、$(\lambda_i+\lambda_j)/2$，均非零，所以h为零。对任意固定b，仿射标签 $b+tu$ 不满足此条件的t只有有限多个。
+
+第二步，在每个固定交换平面 $V_b=\operatorname{span}\{u,b\}$ 内先证明全部标签旋转。约定
+
+$$
+R_\phi(x,y)=(\cos\phi\,x-\sin\phi\,y,\ \sin\phi\,x+\cos\phi\,y).
+\tag{102.2}
+$$
+
+若x,y相关，比例P2给所有旋转输出为零。否则它们张成 $V_b$。对b的每对谱值，旋转后任一分量的谱和是不恒为零的正弦余弦组合：若恒零，两个独立坐标都会被同一个非零线性泛函 $(s,t)\mapsto2s+(\lambda_i+\lambda_j)t$ 消去，矛盾。因此仅有限个角使任一分量不满足谱和条件。存在非空开区间I，两分量均满足该条件。
+
+记 $f(\theta)=D(R_\theta(x,y))$。固定 $\theta\in I$ 和 $\cos\phi\ne0$，PB取 $a=(\tan\phi)u,(b_0,c_0)=\cos\phi R_\theta(x,y)$。第一步支付两个内层单位输出为零，99.4给
+
+$$
+f(\theta+\phi)=f(\theta-\phi).
+\tag{102.3}
+$$
+
+对任意足够小的h，$I\cap(I-h)$ 含开区间。给定任意ξ，从该区间选θ，避开两次反射的离散半转异常值；先关于θ再关于 $\theta+h$ 反射，得 $f(\xi)=f(\xi+2h)$。任意角增量分成有限个这样的小增量，f即恒定。没有用D连续性。
+
+第三步，固定 $\mu\ne0,b=\sum_k\lambda_kp_k,h=D(\mu u,b)$。101.1给 $b\circ h=0$，P2以全部单角正泛函读取，又给 $U_{p_k}h=0$。故h唯一可能剩下的是 $\lambda_i+\lambda_j=0,i\ne j$ 的交叉分量。谱值互异，所以此处写 $\lambda_i=\lambda,\lambda_j=-\lambda$ 时 $\lambda\ne0$。
+
+对每个充分小的 $\tau>0$，构造
+
+$$
+b=\tau(a_\tau^2+u)+\mu a_\tau.
+\tag{102.4}
+$$
+
+标量方程 $\tau(x^2+1)+\mu x=\lambda_k$ 有两条实根
+
+$$
+\begin{aligned}
+x_k^s(\tau)&=\frac{-\mu+\operatorname{sgn}(\mu)\sqrt{\mu^2+4\tau(\lambda_k-\tau)}}{2\tau},\\
+x_k^\ell(\tau)&=-\frac\mu\tau-x_k^s(\tau),\qquad x_k^s(\tau)\longrightarrow\frac{\lambda_k}{\mu}.
+\end{aligned}
+\tag{102.5}
+$$
+
+在目标i块选小根、j块选大根，其他谱块固定任择一支，令 $a_\tau=\sum_kx_k(\tau)p_k$。这就是原b的有限插值多项式。置 $k_\tau=\mu\tau/(1+\tau^2)$。可以选任意小的正τ，使 $a_\tau$ 与 $a_\tau+k_\tau u$ 同时满足谱和条件，理由如下。
+
+含大根的根和发散；两个小根对应非相反谱值时，根和趋非零值。若两个小根对应 $\pm\nu$ 而原根和为零，相加两份标量方程给 $0=2\tau(1+x^2)$，矛盾。对移位后的相反根，若根和为零，写 $x_r=-k_\tau+v,x_s=-k_\tau-v$；相加、相减原方程给
+
+$$
+v^2=\frac{\mu^2}{(1+\tau^2)^2}-1,\qquad
+\nu=v\mu\frac{1-\tau^2}{1+\tau^2}.
+$$
+
+于是异常τ必须满足
+
+$$
+\nu^2(1+\tau^2)^4=
+\mu^2(1-\tau^2)^2\bigl(\mu^2-(1+\tau^2)^2\bigr).
+\tag{102.6}
+$$
+
+移项多项式的 $\tau^8$ 系数为 $\nu^2+\mu^2>0$，所以只有有限个实根。包括重复指标和零谱值在内，谱点对有限，避开这些有限异常即可。
+
+第一步因此给 $D(a_\tau,\tau u)=0$。第二步在 $\operatorname{span}\{u,a_\tau\}$ 内取 $\cos\phi=\tau/\sqrt{1+\tau^2},\sin\phi=1/\sqrt{1+\tau^2}$，把 $(a_\tau,\mu u+\tau a_\tau)$ 旋转成
+
+$$
+\left(-\frac\mu{\sqrt{1+\tau^2}}u,\ \sqrt{1+\tau^2}(a_\tau+k_\tau u)\right).
+$$
+
+第一步又给 $D(a_\tau,\mu u+\tau a_\tau)=0$。现在PB取 $a=a_\tau,b_0=\mu u+\tau a_\tau,c_0=\tau u$。两内层D确已归零，正外层准确为 $(\mu u,b)$，负外层为 $(\mu u+2\tau a_\tau,2\tau u-b)$；99.4右端为零。因此同一固定输出满足
+
+$$
+h=D(\mu u+2\tau a_\tau,\ 2\tau u-b).
+\tag{102.7}
+$$
+
+令 $e=p_i+p_j,v=p_i-p_j$。这些显式标签在整个e角中有
+
+$$
+U_e(\mu u+2\tau a_\tau)\longrightarrow\mu v,\qquad
+U_e(2\tau u-b)\longrightarrow-\lambda v.
+\tag{102.8}
+$$
+
+标签与其平方均在b的同一有限交换代数中，故对每个数学正 $\beta_e=\beta\circ U_e$，102.7的P2右端实Gram行列式趋零。左端始终为固定数 $|\beta_e(h)|^2$，所以 $\beta_e(h)=0$；等价地，若其非零，选一个足够小且避开有限异常集的有限τ，已得到直接矛盾。全部β分离给 $U_{p_i+p_j}h=0$。全部可能的交叉块均被消去，有限Peirce分解给h为零。μ为零由P2处理。∎
+
+102.8只对标量根与已知Jordan表达式取极限，没有对未知D取极限；102.7中的旧输出固定。PB的时间参数始终只有 $t=\pm1$。τ是辅助原标签系数。若一般原域仅当前b有限谱，不能直接用102.1：其证明还要求h及第一、二步中辅助单位输出有限谱。
+

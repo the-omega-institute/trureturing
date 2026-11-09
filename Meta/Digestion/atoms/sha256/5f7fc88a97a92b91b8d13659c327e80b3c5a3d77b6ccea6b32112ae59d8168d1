@@ -1,0 +1,30 @@
+**定义 9.1（同一局部有限表的作用谱）。** 保留定义 5.1–5.2 的全部对象、实际 $M,\Gamma$、完整报告 $E$ 和未平均的 $\epsilon$。对任一方 $J$，在其完整正交单位基 $(e_i)_{i=1}^n$ 上定义
+
+$$
+\begin{aligned}
+\mathcal T_Jx&=(D^J_{e_i}x)_{i=1}^n\in J^{\oplus n},\\
+G_J&=\mathcal T_J^\dagger\mathcal T_J
+       =\sum_i(D^J_{e_i})^\dagger D^J_{e_i}
+       =-\sum_i(D^J_{e_i})^2,\\
+Z_J&=\bigcap_i\ker D^J_{e_i},\qquad
+W_J=\operatorname{span}\{D^J_{e_i}e_r:1\le i,r\le n\}.
+\end{aligned}
+\tag{9.1}
+$$
+
+最后一个 $G_J$ 等式使用 V95 定理 2.1 第一项的局部斜伴随性。伴随与直和内积始终取原实际 $g_J$。若 $G_J$ 有正特征值，定义
+
+$$
+\sigma_J=\sqrt{\min(\operatorname{spec}(G_J)\setminus\{0\})}>0.
+\tag{9.2}
+$$
+
+空正谱时不定义 (9.2) 的最小值。所需有限数据就是原局部输出表 $D^J_{e_i}e_r$ 及内积；具体矩阵为
+
+$$
+(G_J)_{rs}=\sum_i g_J(D^J_{e_i}e_r,D^J_{e_i}e_s).
+\tag{9.3}
+$$
+
+允许用已认证的正下界 $s_J\le\sigma_J$ 代替精确 $\sigma_J$；其支撑与零空间须一并确定。仅把近似矩阵的小特征值删去，不提供这样的认证。这里不从 $\epsilon$ 推断正谱下界，也不对所有实现预设统一活动下界。
+

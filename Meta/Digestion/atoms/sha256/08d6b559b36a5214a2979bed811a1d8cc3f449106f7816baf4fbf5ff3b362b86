@@ -1,0 +1,53 @@
+**Theorem 53.4 (unique global maximizing ordered length pair on the entire triangle).**
+For every tuple in Definition 53.1 with $D_\sigma(x,q)<0$, there
+exists exactly one ordered pair $(X_*,Y_*)\in\mathcal T_x$ such that
+
+$$
+ \Gamma_\sigma(x,q;X,Y)\le\Gamma_\sigma(x,q;X_*,Y_*)
+ \qquad\text{for every }(X,Y)\in\mathcal T_x.
+\tag{53.26}
+$$
+
+This pair satisfies all the strict inequalities (53.7). The assertion
+holds for both original signs, including $\xi=13/4$, with arbitrary
+sign of $\nu$.
+
+**Proof.** Compact attainment gives at least one global maximizer
+on the entire $\mathcal T_x$. Lemma 53.2 puts every global maximizer
+in $\mathcal D_A$, where $A=L^2$. Lemma 53.3 applies there to the
+original $F$. The squared main recovery is the positive affine function
+
+$$
+ R^2=abA-akX+bkY.
+\tag{53.27}
+$$
+
+The squared crossed recovery
+$Q_C=C^2=\ell^2(1-X)+m^2(1-Y)+2\ell mF$ is positive and has
+Hessian $2\ell m\nabla^2F$. The square-root derivative identities give
+
+$$
+\begin{aligned}
+ \nabla^2C&=\frac{\ell m}{C}\nabla^2F
+       -\frac{\nabla Q_C(\nabla Q_C)^{\mathsf T}}{4C^3},\\
+ \nabla^2R&=-\frac{\nabla(R^2)\nabla(R^2)^{\mathsf T}}{4R^3}.
+\end{aligned}
+\tag{53.28}
+$$
+
+The first Hessian is negative definite and the second is negative
+semidefinite. Since $p,q>0$, the Hessian of the original
+$\Gamma=\sqrt pR+\sqrt qC$ is negative definite on $\mathcal D_A$;
+thus $\Gamma$ is strictly concave on that convex set.
+
+If there were two distinct global maximizing pairs on
+$\mathcal T_x$, both would belong to $\mathcal D_A$. Their midpoint
+would lie in the same convex set and hence in $\mathcal T_x$.
+Strict concavity would make its value strictly larger than the common
+global maximum, a contradiction. This proves uniqueness against
+every competitor in the original compact domain; existence was already
+established. Lemma 53.2 gives (53.7). No concavity outside
+$\mathcal D_A$ is needed: all boundary points, both endpoint fibres
+and every point outside the localization set remain in the original
+compact comparison. $\square$
+

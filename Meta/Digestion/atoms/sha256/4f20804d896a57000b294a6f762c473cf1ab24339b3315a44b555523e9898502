@@ -1,0 +1,27 @@
+### 16.7　复合的实质后果：纠缠与 Bell 相关
+
+在两个基本块的标准联合完成中，定义
+
+$$
+\lvert\Psi^-\rangle=\frac{\lvert 01\rangle-\lvert 10\rangle}{\sqrt2}.
+$$
+
+它的两个约化态都是 $I/2$，而联合态是秩一投影，不能是乘积态；也不能是乘积态的凸组合，因为秩一正和中的每项必须支撑在同一条射线上。
+
+Pauli 矩阵直接给
+
+$$
+\langle\Psi^-|(a\cdot\sigma)\otimes(b\cdot\sigma)|\Psi^-\rangle=-B(a,b).
+$$
+
+取 $A_0=\sigma_z,A_1=\sigma_x$， $B_0=(\sigma_z+\sigma_x)/\sqrt2$、 $B_1=(\sigma_z-\sigma_x)/\sqrt2$，得到
+
+$$
+\langle A_0B_0\rangle+\langle A_0B_1\rangle+
+\langle A_1B_0\rangle-\langle A_1B_1\rangle=-2\sqrt2.
+$$
+
+对共同概率空间中预先给定的 $a_0,a_1,b_0,b_1\in\{\pm1\}$，相同组合 $a_0(b_0+b_1)+a_1(b_0-b_1)$ 的绝对值恒为二，平均后仍不超过二。因此标准联合完成包含超过该共同赋值模型的相关；同时上节已证明完整局部操作不发信号。
+
+这是复合接口与联合正锥的结果，不是单个三维球或 $Q17$ 单独保证原环境中已经存在 Bell 实验。
+

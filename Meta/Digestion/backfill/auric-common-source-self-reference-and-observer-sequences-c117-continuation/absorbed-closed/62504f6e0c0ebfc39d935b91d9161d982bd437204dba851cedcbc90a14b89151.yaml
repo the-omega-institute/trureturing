@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:62504f6e0c0ebfc39d935b91d9161d982bd437204dba851cedcbc90a14b89151
+  normalized_sha256: sha256:62504f6e0c0ebfc39d935b91d9161d982bd437204dba851cedcbc90a14b89151
+cas_ref: sha256:62504f6e0c0ebfc39d935b91d9161d982bd437204dba851cedcbc90a14b89151
+coverage_gids:
+  - gid: D5/S3/Observer/Hilbert/C117FixedFourteenProjection.condition_free_projection
+    target_statement_id: sha256:6cc943d6de11aa1c7305935a05f0f69c1f410610efd3b41bbc7d4ba841cdce47
+receipts:
+  unresolved_subitems: []

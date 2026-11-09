@@ -1,0 +1,25 @@
+**Route condition 156.3 (SRS-20 finite repeated-label completion).** Fix one $\rho_\ast\in\mathcal R_{\mathrm{rep}}$ and put
+
+$$
+\mathcal R_\ast=\mathcal R_{\mathrm{rep}}\setminus\{\rho_\ast\}.
+\tag{156.5}
+$$
+
+A source-specific finite completion certificate for an original $\theta$ consists of a bounded invariant slack set $E$, a positive Section 155 ray $X$, a number $t_\theta>0$, a bounded ball $B_{20}\subset\mathbb R^{20}$ and pointwise simplex tuples $u^{(t,z)}$ on the original $G$, for $0<t<t_\theta$ and $z\in B_{20}$, such that
+
+$$
+\begin{aligned}
+&u^{(t,0)}=f^0+tX,\qquad
+  \mathcal H_{43}(u^{(t,z)})=\mathcal H_{43}(f^0),\\
+&t^{-2}\bigl(\Delta_{\mathcal R_\ast}(u^{(t,z)})\bigr)
+   =r_{\theta,\ast}+S_\theta z+\varepsilon_\theta(t,z),\\
+&\sup_{z\in B_{20}}\|\varepsilon_\theta(t,z)\| \longrightarrow0,
+ \qquad \det S_\theta\ne0.
+\end{aligned}
+\tag{156.6}
+$$
+
+Here $\Delta_{\mathcal R_\ast}$ is evaluated with the original trilinear form and the common tuple in all three slots. The certificate must also supply a closed-ball degree or boundary estimate that places a zero of the finite map in $B_{20}$; invertibility of $S_\theta$ by itself is not such a degree estimate. Its legal perturbations must preserve the original source marginals, the pointwise simplex inequalities and the actual terminal convention throughout the ball. The constants and the choice of the omitted row may depend on $\theta$, but the original $G$, $m$, $P$, $g$, epochs, source law, readout and permitted representative $b$ may not change.
+
+The intended algebraic mechanism is finite-dimensional. A zero of the twenty rows in (156.6), together with the exact $\mathcal H_{43}$ equations, gives sixty-three exact coordinates. Proposition 156.2 then recovers the omitted $\rho_\ast$ coordinate. The complement identities of Section 154.F recover the coordinates containing $B$, so all sixty-four ordered equations follow for the same whole-$G$ tuple.
+

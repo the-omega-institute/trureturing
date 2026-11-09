@@ -1,0 +1,56 @@
+**Proposition 43.9 (finite paid descriptions and protocol boundaries).**
+With the acquisition/ownership premises of Definition 43.1 and
+Proposition 43.5, the inverse and fibre recognizers are finite descriptive
+computations. Their availability does not supply physical inverse edits,
+a reset, elapsed-time recovery or a fixed storage bound for all histories.
+Their source-space interpretation is AA Definition 17.3's oriented
+material support or terminal boundary, with auxiliary tape edges excluded.
+
+Proof. Acquire logical syntax by stationary traversal from the authentic
+root, testing actual child arity, current grants and reached references;
+beta's unary material marker is not another scheduled leaf. AA17.3's
+arity representation uniquely distinguishes logical alpha, beta and
+binary branch. Finite support determines its terminal antichain and the
+antichain determines support by prefix closure. Thus an ACQUIRED complete
+source support/boundary determines exactly the $y$ used above. A bare
+untyped logical skeleton, a residue pair or a few frontier summaries need
+not determine it and are not substituted as inputs.
+
+For a parsed syntax with $V$ logical nodes, each $\delta$, sort test,
+count or prefix reconstruction is a finite traversal on at most $V$
+nodes. Theorem 43.2 has $K(y)\le n(y)-1$ on $\mathcal D_+$; moreover
+$n(y)\le2L(y)-1\le V$. Thus there are at most $V$ candidates. A simple
+implementation may retest syntax and counts on every step of Theorem
+42.4's at most $n(y)-n_0$ predecessor descents. It then uses at most
+$O(V^3)$ logical-node visits to list the full fibre, including at most
+two histories per candidate. This is a conservative descriptive bound,
+not an optimal algorithm or the runtime of native macro actuation.
+On accepted inputs, counters and loop indices are $O(\log(V+1))$-bit
+integers; reading supplied integers, binary
+arithmetic, address strings and output copying must also be charged.
+Explicit old-leaf paths may total $O(V^2)$ symbols for a single tree.
+No word, parsed tree, recursive stack or complete answer is costless.
+
+A physical implementation additionally pays actual reference width,
+allocation/grants, field reads/writes, root navigation, frontier traversal,
+link scans, all ancestor tape appends, exact counter backing/maintenance,
+scratch clearing/reuse, and literal input/reply/acknowledgement/return.
+These physical costs are not bounded by counting logical nodes alone;
+the existing LAB13 and AA20–22 accounts remain applicable. Stationary
+acquisition must use the same live source/epoch as the subsequent
+projection. For each finite run all required reference, integer,
+workspace and output backing is finite and supplied; no fixed finite
+arena is asserted for their unbounded union. The inverse operates on
+descriptions and never edits the old source back into existence.
+
+Finally, $y$ or its acquired support/boundary together with a separating
+coordinate recovers the logical macro chronology, active progress and
+remaining logical old-leaf schedule. The same quantities compute the
+corresponding descriptive views, giving the stated conditional
+space/boundary/history/memory correspondence. Actual callable continuation
+still passes through Proposition 43.5's authentic controller and rights.
+For original indexed primitive recall, AA19.2 supplies the full-order
+tape inverse and AA20 supplies its Ready-only service; macro histories
+do not replace those tapes for arbitrary ancestral primitive shuffles.
+None of these coordinates is a physical clock. $\square$
+

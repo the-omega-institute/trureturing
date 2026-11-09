@@ -1,0 +1,15 @@
+**定义 9.2（数学条件、实际条件与开放范围）。** 完整数学条件是原复载体及内积、精确矩阵、全域连续非负归一响应、全部原端点、L 和原全部实际 R。它们共同蕴涵定理 3.2；并不断言任意同名 $\Omega$、同一标签集或任意连续响应自动满足它们。D 和 U 已分别证明 L、R 不能从剩余这些响应条件中全删。
+
+实际解释还需假设 6.1 与定义 6.3 的原过程、报告、纯更新、档案、共同实现、可靠性和误差供应。密度选择不决定内部最小率、跳时路径、物理时钟或具体动力学，不供应任意 POVM、任意 CP 仪器、混态仿射、独立张量复合、任意控制或外部相位参考。不同边缘可分别表示不等于同一个实际联合已经存在；数学可定义、存在、可取得与可认证仍为不同命题。
+
+逐切口条款的最小子族、任意语言信息最小性、支持间隙下的定量恢复、统一检测字长、有限样本认证及实际成本下降未由本卷证明；定理 5.1 已否定不加额外定量条件的一种统一近似恢复主张。复结构和这些兼容关系的物理来源继续是开放桥梁。数学建模与条件统一按上述前提评价，不以无前提推出全部宇宙规律作为这里条件定理的要求，也不把条件定理当作经验本体证明。
+
+[II]: https://github.com/the-omega-institute/trureturing/blob/46927cc328c58a872092e1d1c3bf102e48fa0426/docs/develop/theory/AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_II.md
+[III]: https://github.com/the-omega-institute/trureturing/blob/46927cc328c58a872092e1d1c3bf102e48fa0426/docs/develop/theory/AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_III.md
+[V]: https://github.com/the-omega-institute/trureturing/blob/46927cc328c58a872092e1d1c3bf102e48fa0426/docs/develop/theory/AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_V.md
+[IX]: https://github.com/the-omega-institute/trureturing/blob/25318cfe8b6293b3d631371c8882923b69310893/docs/develop/theory/AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_IX.md
+[X]: https://github.com/the-omega-institute/trureturing/blob/23685bdfb56448e5ef165613a4353b4157cd076b/docs/develop/theory/AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_X.md
+[PR]: https://arxiv.org/html/1007.4282v2
+[C128]: https://github.com/the-omega-institute/trureturing/blob/63de013345d108ba980cd5ab2035efd0a6c61d25/docs/develop/theory/AURIC_C128_NATIVE_CUT_BALANCE_CONTINUATION.md
+[C139]: https://github.com/the-omega-institute/trureturing/blob/a5cbaf43cd86940f1613eb09b4e365cc0981e4c0/docs/develop/theory/AURIC_C139_MUTUAL_PROBES_AND_INTRINSIC_RECOVERY_OF_SQUARE_GEOMETRY.md
+

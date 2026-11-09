@@ -4,7 +4,19 @@
 
 Original-word certificates for total two-state output automata have linear worst-case width.
 
-**Theorem 1.1 (Finite attained width and the linear sandwich).**
+**Theorem 1.1 (Cyclic rotation has no fixed point).**
+
+$$\forall (m : \mathbb{N}), (2 \le m) \Rightarrow (\forall (i : \operatorname{Fin}\left(m\right)), \operatorname{finRotate}\left(m, i\right) \ne i)$$
+
+*Proof.* Machine-checked in Lean as `D5/S0/Automata/TwoStateCertificateWidth.rotate_ne` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Cyclic successor moves every index when the cycle has at least two vertices.
+
+**Theorem 1.2 (Finite attained width and the linear sandwich).**
 
 Lean statement: `D5/S0/Automata/TwoStateCertificateWidth.two_state_certificate_width`
 
@@ -30,5 +42,6 @@ An injective alphabet map induces an injective map of words. Extend each transit
 
 ## References
 
+- Truth anchor: `D5/S0/Automata/TwoStateCertificateWidth.rotate_ne`
 - Truth anchor: `D5/S0/Automata/TwoStateCertificateWidth.two_state_certificate_width`
 - Dependency: [D5/S0/Automata/TwoStateShortWordSampleBound](TwoStateShortWordSampleBound.md)

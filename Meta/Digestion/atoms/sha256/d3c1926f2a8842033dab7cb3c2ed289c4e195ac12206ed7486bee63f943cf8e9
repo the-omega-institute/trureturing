@@ -1,0 +1,6 @@
+**定义 326.1（准确复用和新增综合）。** 本卷的仓内中间来源固定为 [`9115948806b49420359b355f130c52cdcda8c9d8`](https://github.com/the-omega-institute/trureturing/tree/9115948806b49420359b355f130c52cdcda8c9d8) 的前卷与母卷：右单位及静态供应分别为母卷 30.1／67.3、前卷 246.1；全部来源的比较基准为前卷 303、312–314；单载体 O/H 分类为 273–274；整个源分离为 202.1；共同尺度及同一 sigma 为 275–276、315；全部消费者、双 Riesz 区别、完整满足族为 316–317。使用这些结论前各自的入口均在 320–324 证明，不以已有无迹分类替代新的无迹删除分类。
+
+Brešar–Špenko [arXiv:1307.2260v1，Lemma 3.2](https://arxiv.org/html/1307.2260v1#S3.Thmtheorem2) 是特征零全矩阵代数上交换多线性迹标准形的成熟中间工具；320.6 的实多项式复化桥与前卷 258.2 的用法相同，未借其原来更强的前件。Haagerup–Laustsen 的 *Weak amenability of C*-algebras and a theorem of Goldstein*，Theorem 3.1(1)、Lemma 3.4（DOI `10.1515/9783110802009.223`），及 Tao–Gowda 的 *A Representation Theorem for Lyapunov-like Transformations on Euclidean Jordan Algebras*，§2、Proposition 3，仍只按前卷 280.1 的准确前件供给既有 274.1 及有限 EJA 内导子。成熟中间工具记为 $\texttt{literature-attested}$，不作为新增定理交付。
+
+本卷新增综合为：仅右单位和整支持下含全部经典自输入及全部源对的 (320.1)，实际交叉零后的精确径向残余 (321.1)，以及只以零角迹取代全部半角迹前件的 322–324 完整桥。其地位为 $\texttt{repo-derived}$，不由检索未命中推出文献原创或优先权。向量值 range-compatible 映射、双向固定角射影双射和一般保投影线性映射的相邻分类不直接满足本题矩阵值有序双线性的前件，未用作此桥的替代证明。
+

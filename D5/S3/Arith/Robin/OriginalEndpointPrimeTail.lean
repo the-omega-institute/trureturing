@@ -185,7 +185,7 @@ def largestPrime (N : ℕ) : ℕ := N.primeFactors.sup id
 
 /-! The general finite Euler/log-sigma calculation is shared by both the
 optimizer endpoint and the support-conditioned finite correction below. -/
-private theorem log_sigma_div_eq_eulerMass_sub_tail {N : ℕ} (hN : 0 < N) :
+theorem log_sigma_div_eq_eulerMass_sub_tail {N : ℕ} (hN : 0 < N) :
     Real.log ((ArithmeticFunction.sigma 1 N : ℝ) / N) = eulerMass N - tail N := by
   have hf := golden_resource_objective_factorization 0 (show 1 ≤ N by omega)
   rw [golden_resource_sigma_identity 0 (show 1 ≤ N by omega)] at hf

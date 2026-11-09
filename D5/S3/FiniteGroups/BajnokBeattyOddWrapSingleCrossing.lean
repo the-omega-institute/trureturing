@@ -63,7 +63,7 @@ private theorem normalized_step (a q x y : ℚ) (ha : 0 < a) (hq : 10 * a < q)
 
 /-- Increasing step slopes and cofinal positive values imply that a
 nonnegative value is followed only by strictly positive values. -/
-private theorem finite_sign_persistence (d w s : ℕ → ℚ)
+theorem finite_sign_persistence (d w s : ℕ → ℚ)
     (hw : ∀ n, 0 < w n) (hs : StrictMono s)
     (hstep : ∀ n, d (n + 1) - d n = w n * (2 - s n))
     (hcofinal : ∀ n, ∃ c, n < c ∧ 0 < d c)
@@ -180,19 +180,19 @@ private theorem first_threshold_of_persistence (a b : ℕ → ℕ)
 
 private def P (u : ℕ) : ℕ := 2 * u + 1
 private def row (u r : ℕ) : ℕ := 9 * u + 4 + r
-private def K (m j : ℕ) : ℚ := Nat.choose (2 * m + 1) (m - j)
-private def S (m : ℕ) : ℚ := ((m : ℚ) + 1) * ((m : ℚ) + 2)
-private def lam (j : ℕ) : ℚ := (j : ℚ) * ((j : ℚ) + 1)
+def K (m j : ℕ) : ℚ := Nat.choose (2 * m + 1) (m - j)
+def S (m : ℕ) : ℚ := ((m : ℚ) + 1) * ((m : ℚ) + 2)
+def lam (j : ℕ) : ℚ := (j : ℚ) * ((j : ℚ) + 1)
 private def alpha (u : ℕ) : ℚ := 2 * (P u : ℚ)^2
 private def Q (u r : ℕ) : ℚ := S (row u r) - lam u
 private def X (u r : ℕ) : ℚ := K (row u r) (3 * u + 1) / K (row u r) u
 private def Y (u r : ℕ) : ℚ := K (row u r) (9 * u + 4) / K (row u r) u
 
-private theorem K_pos (m j : ℕ) : 0 < K m j := by
+theorem K_pos (m j : ℕ) : 0 < K m j := by
   dsimp [K]
   exact_mod_cast (Nat.choose_pos (show m - j ≤ 2 * m + 1 by omega))
 
-private theorem denom_pos (m j : ℕ) (hj : j ≤ m) : 0 < S m - lam j := by
+theorem denom_pos (m j : ℕ) (hj : j ≤ m) : 0 < S m - lam j := by
   have hjQ : (j : ℚ) ≤ (m : ℚ) := by exact_mod_cast hj
   have he : S m - lam j = ((m : ℚ) + 1 - j) * ((m : ℚ) + j + 2) := by
     dsimp [S, lam]
@@ -214,7 +214,7 @@ private theorem K_step (m j : ℕ) (hj : j ≤ m) :
     K (m + 1) j = K m j * ((2 * (m : ℚ) + 2) * (2 * (m : ℚ) + 3)) / (S m - lam j) := by
   exact (eq_div_iff (ne_of_gt (denom_pos m j hj))).mpr (K_cross m j hj)
 
-private theorem ratio_step (m j1 j2 : ℕ) (hj1 : j1 ≤ m) (hj2 : j2 ≤ m) :
+theorem ratio_step (m j1 j2 : ℕ) (hj1 : j1 ≤ m) (hj2 : j2 ≤ m) :
     K (m + 1) j2 / K (m + 1) j1 =
       (K m j2 / K m j1) * ((S m - lam j1) / (S m - lam j2)) := by
   rw [K_step m j1 hj1, K_step m j2 hj2]

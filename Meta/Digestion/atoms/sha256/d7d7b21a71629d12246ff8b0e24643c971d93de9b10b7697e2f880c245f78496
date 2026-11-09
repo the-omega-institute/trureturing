@@ -1,0 +1,114 @@
+**Proposition 53.5 (original realization, slice value and distance correspondence).**
+For every tuple in Definition 53.1 with $D_\sigma<0$, let
+$G_*:=\Gamma_\sigma(x,q;X_*,Y_*)$. In the original
+$\operatorname{Dens}_2\times U(4)$ problem, the fixed-sign,
+fixed-population, fixed-trace phase-slice minimum is exactly
+
+$$
+ \mathsf E_\sigma(q)-4G_*^2,\qquad
+ \mathsf E_\sigma(q)=K_\sigma^2p+K_{-\sigma}^2q,\qquad
+ K_+=2(h+c),\quad K_-=2(h+s).
+\tag{53.29}
+$$
+
+Every triangle competitor has a simultaneous realization of its main
+and maximal crossed recoveries on one whole feedback and an aligning
+normalized pure effect, at the true original distance $\xi$.
+The scalar identification is the single common scalar of the whole
+feedback.
+
+**Proof.** The source correspondence is Definition 23.1 and
+(23.9)--(23.13) in the
+[original volume](QUANTUM_REALITY_FOUR_PATH_FULL_RECORD_RECOVERY_BOUND.md),
+and (42.17)--(42.20), Definition 46.1 and Lemma 46.2 in
+[Continuation II](QUANTUM_REALITY_FOUR_PATH_FULL_RECORD_RECOVERY_BOUND_CONTINUATION_II.md).
+In the original coordinate order the recoveries remain
+
+$$
+\begin{aligned}
+ M_+(v)&=h(v_1+v_2)+c(v_3+v_4),&
+ N_+(v)&=h(v_1-v_2)+is(v_3-v_4),\\
+ M_-(v)&=h(v_1+v_2)+s(v_3+v_4),&
+ N_-(v)&=h(v_1-v_2)-ic(v_3-v_4).
+\end{aligned}
+\tag{53.30}
+$$
+
+For every $(X,Y)\in\mathcal T_x$, Lemma 46.2 gives
+$U=\operatorname{diag}(v)U_\sigma$ with
+
+$$
+\begin{aligned}
+ (v_j)_{j\in J}&=e^{i\alpha_0}
+   \bigl(\sqrt X+i\varepsilon_J\sqrt{1-X},
+         \sqrt X-i\varepsilon_J\sqrt{1-X}\bigr),\\
+ (v_j)_{j\in K}&=e^{i\beta_0}
+   \bigl(\sqrt Y+i\varepsilon_K\sqrt{1-Y},
+         \sqrt Y-i\varepsilon_K\sqrt{1-Y}\bigr),\\
+ \cos(\alpha_0-\beta_0)&=Z,\qquad
+ \left|\operatorname{Tr}(UU_\sigma^\dagger)\right|=2L.
+\end{aligned}
+\tag{53.31}
+$$
+
+The signs $\varepsilon_J,\varepsilon_K$ take values in $\{\pm1\}$.
+Choose their product with the sign of $\sin(\alpha_0-\beta_0)$;
+when that sine vanishes either product is allowed. This yields,
+simultaneously on the same whole feedback,
+$|M_\sigma|=2R$ and $|N_\sigma|=2C$, the latter being the largest
+crossed modulus compatible with these lengths and trace.
+There remains one arbitrary common unit scalar multiplying all four
+entries. The ordered pairs $J,K$ are precisely (53.3), without
+interchanging their labels. The reconstruction includes all triangle
+boundaries and does not discard their phase representatives.
+
+The normalized effects retain the ordinary transpose:
+
+$$
+\begin{aligned}
+ \psi_+^\phi&=(\sqrt p,e^{i\phi}\sqrt q)^{\mathsf T},&
+ \psi_-^\phi&=(e^{i\phi}\sqrt q,\sqrt p)^{\mathsf T},\\
+ E&=(T\psi_\sigma^\phi(\psi_\sigma^\phi)^\dagger
+                                  T^\dagger)^{\mathsf T},&
+ T&=(b_+\ b_-).
+\end{aligned}
+\tag{53.32}
+$$
+
+Thus $p$ is the population on $b_+$ in the positive row and on $b_-$
+in the negative row; $q$ is the population away from that active
+optimizer. The free coherence phase aligns the two actual recoveries
+in the same-feedback identity
+
+$$
+ g(E,U)=\mathsf E_\sigma(q)-|\chi|^2,\qquad
+ |\chi|=\sqrt p\,|M_\sigma|+\sqrt q\,|N_\sigma|=2\Gamma_\sigma.
+\tag{53.33}
+$$
+
+If a weighted recovery vanishes its alignment condition is void.
+The original joint squared Frobenius distance is
+
+$$
+ \rho(E,U)=\min_{\tau\in\{+,-\}}\ \min_{|\zeta|=1}
+ \left(\|E-E_\tau\|_{\mathrm F}^2
+                    +\|U-\zeta U_\tau\|_{\mathrm F}^2\right).
+\tag{53.34}
+$$
+
+For the active branch, (53.31)--(53.32) give
+
+$$
+ 2q+8-4L=4(1-x)+2q=\xi.
+\tag{53.35}
+$$
+
+The two-sign budget (42.17)--(42.20) makes the other branch strictly
+larger throughout $0<\xi\le13/4$. Hence this is the true original
+distance, including at its upper endpoint. The sign choice in
+(53.34) is joint and $\zeta$ multiplies the entire feedback.
+For arbitrary phases the same-source recovery estimate is
+$|\chi|\le2\Gamma_\sigma$; the construction above attains equality
+for every triangle point. Maximizing over the whole triangle and
+using Theorem 53.4 proves (53.29). $\square$
+

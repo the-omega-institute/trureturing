@@ -1,0 +1,6 @@
+## 1　最新进展：三读预算的一段证明刚进入形式源码
+
+本轮固定默认分支 `dev` 在核查时的 [`b1d673668c6d`](https://github.com/the-omega-institute/trureturing/commit/b1d673668c6d1bc06a152e4607048833d830ca53)， 其提交时间为 2026 年 11 月 4 日 22:29:05 UTC，即新加坡时间 11 月 5 日 06:29:05。 GitHub 的 [固定比较页](https://github.com/the-omega-institute/trureturing/compare/66c49bfe9a1295ceea872b6e6a1d8146fb351237...b1d673668c6d1bc06a152e4607048833d830ca53) 显示，相对上一轮 `66c49bfe9a12` 有 16 个新增可达提交、297 个变更文件。 本轮按当前问题核读相关新增文件，没有把这次定向核查表述成全仓库审计， 也未据此断言整个理论文档树没有变化。
+
+其中直接相关的是 PR \#26631 合并的 [`ThreeReadBudget.lean`](https://github.com/the-omega-institute/trureturing/blob/b1d673668c6d1bc06a152e4607048833d830ca53/D5/S0/Observation/ThreeReadBudget.lean)。 文件共 99 行，本轮核读全文；其 [配套 Blueprint](https://github.com/the-omega-institute/trureturing/blob/b1d673668c6d1bc06a152e4607048833d830ca53/Blueprint/D5/S0/Observation/ThreeReadBudget.md) 共 25 行，也核读全文。项目把它明确标为 C133 定理 2.2 的初始必要性子结论。 本轮没有重新运行 Lean，因此这里报告的是已见源码及其准确声明范围， 没有为整个 C133 或本轮新增理论授予新的机器认证。
+

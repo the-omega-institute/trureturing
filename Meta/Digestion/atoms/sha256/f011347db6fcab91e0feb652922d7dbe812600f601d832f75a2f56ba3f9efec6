@@ -1,0 +1,25 @@
+**推论 8.4（旧终端的三轴读出与泄漏预算）。**
+
+在已声明的 Born/CP 读出接口下，定理 [8.2](#thm:nativeJ) 的实际有限字与理想输出 $LJU$ 在任意内部参考上的半 diamond 距离至多 $\varepsilon$。 对全部旧终端标签保留无条件概率时，终端总变差至多 $\varepsilon$，且
+
+$$
+\Pr(\text{所选五模式外})\le\varepsilon^2.
+$$
+
+取旧终端中 $\beta_1,\beta_3,\beta_2$ 三个位的占据事件，它们各自的概率误差至多
+$\varepsilon$，其理想压缩效果恰为
+
+$$
+U^*(a_\nu I+\nu\sigma_x)U,\quad
+U^*(a_\nu I+\nu\sigma_y)U,\quad
+U^*\nu(I+\sigma_z)U.
+$$
+
+**证明。**
+
+$L^*n_{\beta_1}L=N_x$、$L^*n_{\beta_3}L=N_y$、
+$L^*n_{\beta_2}L=N_z$，所以理想效果由定理 [3.2](#thm:encoding) 给出。
+两等距通道之差的迹范数拆分界为 $2\varepsilon$， 测量的收缩性给总变差与各事件界。 理想像在 $\operatorname{ran}L$ 内，正交补上的实际向量范数至多 $\varepsilon$。
+
+∎
+

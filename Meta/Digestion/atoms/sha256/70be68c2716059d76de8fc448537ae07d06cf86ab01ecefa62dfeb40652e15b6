@@ -1,0 +1,2 @@
+**记号。** $\sigma(n)=\sum_{d\mid n,\ d>0}d$，$\gamma$ 是 Euler–Mascheroni 常数，$v_p(n)$ 是正整数 $n$ 的素数 $p$ 指数；$p^a\Vert n$ 表示 $v_p(n)=a$，$\mathbb N_0=\{0,1,2,\ldots\}$。$Z(n)$ 对所有正整数定义，特别是 $Z(1)=1$；本文 Robin 比值 $R(n)$ 的算术目标域是整数 $n>5040$。所有对数自然，$f(T)$ 的实函数域为 $T>1$；$T=\log n$ 时，$f(T)=\log(e^\gamma\log\log n)$。乘除边的附加定义域见第五节。
+

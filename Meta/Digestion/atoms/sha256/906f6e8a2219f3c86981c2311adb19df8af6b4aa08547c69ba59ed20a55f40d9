@@ -1,0 +1,23 @@
+**推论 5.4（平均缺陷的双向消去）。**置
+
+$$
+D_n(a,u)=e_{a\cdot U^nu}-e_{a\cdot p_n}-e_{U^nu}+e_{p_n},\qquad
+\overline D_L(a,u)=\frac1L\sum_{n=0}^{L-1}D_n(a,u).
+$$
+
+则 $D_0(a,u)=D(a,u)$、$\overline D_L(a,u)=(\mathcal T_L^u-\mathcal A_L)e_a$，且
+
+$$
+\left|B(\overline D_L(a,u),\mathcal A_Le_z)\right|
+\le\frac{6[c(a,z)+q(a)+r(z)]+27\Omega(u)+81\Omega(1)}L,
+\tag{5.6}
+$$
+
+$$
+\left|B(\mathcal A_Le_z,\overline D_L(a,u))\right|
+\le\frac{6[c(z,a)+q(z)+r(a)]+27\Omega(u)+81\Omega(1)}L.
+\tag{5.7}
+$$
+
+**证明。**第一方向对 $(u,1)$ 与 $(1,1)$ 两次使用 (5.5) 并相减；第二方向对 $(1,u)$ 与 $(1,1)$ 使用同式。主配对均精确抵消，不借对称性对调 $B$。固定 $v$ 时，测试向量也可换为 $\mathcal T_L^ve_z$，相同计算给有限固定预算除以 $L$ 的界。
+

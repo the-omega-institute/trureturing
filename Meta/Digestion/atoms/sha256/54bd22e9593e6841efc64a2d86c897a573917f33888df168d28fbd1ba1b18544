@@ -1,0 +1,64 @@
+**Theorem 27.4 (an unconditional original-effect margin).** For every
+normalized effect $E\in\operatorname{Dens}_2$ and every actual shared
+$U\in U(4)$, write $w=\operatorname{diag}(UU_+^\dagger)$. Then
+
+$$
+\boxed{\quad g(E,U)-\kappa\rho(E,U)
+\ge e^2(1-m(w)^2)-\kappa(9-A(w)-B(w))
+ +\kappa\bigl(1-\operatorname{Tr}(E^2)\bigr).\quad}
+\tag{27.7}
+$$
+
+Consequently the sufficient safe domain inside (26.27) is
+
+$$
+\mathcal O_{\rm rad}
+=\{w\in\mathcal O:
+ e^2(1-m(w)^2)\ge\kappa(9-A(w)-B(w))\}.
+\tag{27.8}
+$$
+
+Every actual lift of any $w$ in this domain satisfies the endpoint for
+all normalized effects. It is strict if the inequality defining this
+domain is strict or if $1-\operatorname{Tr}(E^2)>0$.
+In particular, throughout the nonempty interior domain
+
+$$
+w\in\mathcal O,\qquad m(w)\le\sqrt{1-5\kappa/e^2},
+\tag{27.9}
+$$
+
+all normalized effects satisfy the strict uniform-in-effect estimate
+
+$$
+g(E,U)-\kappa\rho(E,U)
+\ge\kappa(A(w)+B(w)-4)
+ +\kappa\bigl(1-\operatorname{Tr}(E^2)\bigr)>0.
+\tag{27.10}
+$$
+
+The smaller domain $w\in\mathcal O$, $m(w)\le4/5$ even has the
+constant margin $g(E,U)-\kappa\rho(E,U)>31/25$.
+
+Proof. If $w\ne0$, use Lemma 27.2 with $t=m(w)$ and $z=w/t$.
+The already proved $G(z,p)\ge0$ of Theorem 23.2 and (27.4) imply
+$G(w,p)\ge e^2(1-m(w)^2)$ for every $p$. At $w=0$, the same
+conclusion follows from $G(0,p)=d^2p+e^2(1-p)\ge e^2$.
+The two original joint-sign branches satisfy
+
+$$
+r(w,p)\le\frac{r_+(w,p)+r_-(w,p)}2=9-A(w)-B(w).
+\tag{27.11}
+$$
+
+Apply (23.14) at precisely $p=b_+^\dagger E^{\mathsf T}b_+$ and
+$\epsilon(E)=1-\operatorname{Tr}(E^2)\ge0$ to obtain (27.7).
+This uses only the established $G\ge0$, not a boundary endpoint
+hypothesis. On $\mathcal O$, $1\le9-A-B<5$, since $A,B\le4$ and
+$A+B>4$. Thus (27.8) has the stated consequences. Section 22 gives
+$0<\kappa<1/25$ and (22.13) gives $d^2>e^2>4$; hence
+$0<5\kappa/e^2<1/20$, so the radius in (27.9) is real and below one.
+Substitution in (27.7) proves (27.10). If $m\le4/5$, its right side
+is greater than $9\cdot4/25-5/25=31/25$, uniformly over all effects.
+The next proposition proves nonemptiness. $\square$
+

@@ -127,7 +127,7 @@ private theorem firstLiMass_pos : 0 < firstLiMass := by
   unfold firstLiMass
   linarith
 
-private theorem firstLiMass_lt_one : firstLiMass < 1 := by
+theorem firstLiMass_lt_one : firstLiMass < 1 := by
   have hg : Real.eulerMascheroniConstant < 1 :=
     Real.eulerMascheroniConstant_lt_two_thirds.trans (by norm_num)
   have hroot : 3 < 2 * Real.sqrt Real.pi := by
@@ -286,7 +286,7 @@ def actualOccurrenceEquiv : ℕ ≃ ActualZeroOccurrence :=
 def actualZero (k : ℕ) : ℂ := actualData.zero (actualOccurrenceEquiv k).1
 
 
-private theorem actual_sigma_inverse_square_summable :
+theorem actual_sigma_inverse_square_summable :
     Summable (fun p : ActualZeroOccurrence => ((actualData.zero p.1).im)⁻¹ ^ 2) := by
   apply (summable_sigma_of_nonneg (fun _ => sq_nonneg _)).2
   constructor

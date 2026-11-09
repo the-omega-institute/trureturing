@@ -1,0 +1,41 @@
+#### 定理 4.3（降秩近似的最小操作误差）
+
+设 $\rho$ 的特征值为 $\lambda_1\ge\cdots\ge\lambda_d\ge0$。
+对 $1\le m\le d$，
+
+$$
+\boxed{\min_{\operatorname{rank}\sigma\le m}D(\rho,\sigma)
+=\sum_{j>m}\lambda_j,\qquad \sigma\in\mathcal{D}(\mathbb{C}^d).}
+$$
+
+特别地，最近纯态距离为 $1-\lambda_1$。
+
+**证明。**
+
+任意候选 $\sigma$ 支持在秩不超过 $m$ 的投影 $Q$ 中。
+迹距离控制任何效果的期望差，因此
+
+$$
+D(\rho,\sigma)\ge\operatorname{Tr}((I-Q)\rho)
+\ge1-\sum_{j\le m}\lambda_j.
+$$
+
+最后一个不等式可在 $\rho$ 的特征基中用
+$0\le Q_{jj}\le1$、$\sum_jQ_{jj}\le m$ 和特征值排序直接得到。
+取前 $m$ 个特征向量上的投影 $P_m$，并令
+$\sigma=P_m\rho P_m/s$，其中 $s=\sum_{j\le m}\lambda_j>0$。
+共同对角基中，前 $m$ 项差值之绝对值和为 $1-s$，尾部也为 $1-s$，故达到下界。
+
+□
+
+若 $\operatorname{Tr}\rho^2\ge1-\varepsilon$，由 $\operatorname{Tr}\rho^2\le\lambda_1$ 得最近纯态距离不超过
+$\varepsilon$。二元时的精确式是
+
+$$
+\min_{P\text{ 纯}}D(\rho_r,P)=\frac{1-\|r\|}{2}.
+$$
+
+这描述给定态的最优近似；不自动构成对未知态族的同一个可恢复物理压缩。
+
+<a id="section-5"></a>
+

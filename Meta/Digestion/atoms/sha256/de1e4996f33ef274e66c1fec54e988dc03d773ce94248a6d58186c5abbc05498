@@ -1,0 +1,39 @@
+**Definition 18.1 (Actual field and original-row polynomial).** Fix any integer $m\geq1$ and any strictly positive real chain $v=(v_1,\ldots,v_{m+1})$. Set
+
+$$
+F_v=\mathbb Q(v_1,\ldots,v_{m+1})\subseteq\mathbb R,
+\qquad s_i=v_i+v_{i+1}.
+\tag{18.1}
+$$
+
+Use the literal $A,B,B_\alpha$ of Definition 1.1, the zero endpoints $z_0=z_{m+1}=0$, and their endpoint extensions from Definition 16.1. Define $\mathcal B_v(q)$ to have the same rows as $B$ except for its first row
+
+$$
+(\mathcal B_v(q)z)_1=-qz_1+(1+q)\frac{v_1}{s_1}z_2,
+\qquad z_2=0\quad(m=1).
+\tag{18.2}
+$$
+
+Keep exactly the original parameter correspondence
+
+$$
+q=q_v(\alpha)=\frac{\alpha(v_1+2v_2)-v_2}{v_2+\alpha v_1},
+\qquad
+\alpha=\alpha_v(q)=\frac{v_2(1+q)}{v_1+2v_2-v_1q}.
+\tag{18.3}
+$$
+
+The full characteristic polynomial in this notation is
+
+$$
+\boxed{\quad
+p_v(Z,q)=\frac{\det(Z A-\mathcal B_v(q))}
+                  {\displaystyle\prod_{\substack{1\leq i\leq m\\i\ {\rm even}}}s_i}.
+\quad}
+\tag{18.4}
+$$
+
+All determinants in (18.4) are finite determinants in the original coordinates. For each fixed actual $v$, apply (17.3), (17.6) and (17.7) to this $p_v$ over $F_v$; denote the resulting polynomials by $\mathcal R_v,V_v,\Delta_v$. The factorization and the derivatives are taken after fixing the actual chain, not by specializing a squarefree factorization chosen for algebraically independent velocities.
+
+The source rows are [Wallner, Krupke, Schmidt and Fekete, arXiv:2608.27085v1, §IV.A and §IV.B.1](https://arxiv.org/html/2608.27085v1#S4). Their centered $u$ is $z$, their $M$ is $U=A^{-1}B$, their $M_\alpha$ is $T=A^{-1}B_\alpha$, and their pair count is $m=n-1$. In the repository definitions `A`, `B`, `Balpha`, `Malpha` of [TokenDampedSweepContraction](../../../D5/S3/Quantum/Dynamics/TridiagonalSweeps/TokenDampedSweepContraction.lean), pair $i$ and velocity $v_j$ have indices $i-1,j-1$; `Malpha` is this literal $T$. Its local weight `theta` is $(1+q)/2$. The complete [damped-sweep Scribe](../../../Blueprint/D5/S3/Quantum/Dynamics/TridiagonalSweeps/TokenDampedSweepContraction.scribe.cs) has the same correspondence. The weighted form is the $Q$ in Definition 12.1 and [FinitePathDynamics](../../../D5/S3/Quantum/Dynamics/TridiagonalSweeps/FinitePathDynamics.lean), with its [Scribe](../../../Blueprint/D5/S3/Quantum/Dynamics/TridiagonalSweeps/FinitePathDynamics.scribe.cs). These are the original-row and contraction premises used below.
+

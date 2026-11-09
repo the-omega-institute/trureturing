@@ -1,0 +1,46 @@
+### A.2　不提前假设对称或正定
+
+置 $q(a)=c(a,e)$、$r(a)=c(e,a)$。 在由 $e_a=\delta_a-\delta_e$ 生成的自由实空间上定义
+
+$$
+B(e_a,e_b)=\tfrac12(q(a)+r(b)-c(a,b)).
+$$
+
+它目前可以非对称、非正定，但有
+
+$$
+B(e_a-e_b,e_a-e_b)=\tfrac12(c(a,b)+c(b,a))\ge0.
+\tag{11}
+$$
+
+取双侧共同根 $\mathcal R=\{z:B(z,E)=B(E,z)=0\}$，令 $V=E/\mathcal R,\ \beta(a)=[e_a]$。 因此一个向量与全部标签在两个次序上都配对为零时，该向量为零。
+
+原标记 $S:e_a\mapsto e_{Ua}$ 保持 $B$，且 $S^3e_a-e_a\in\mathcal R$。 对 $z\in\mathcal R$，
+
+$$
+B(Sz,e_b)=B(Sz,S^3e_b)=B(z,S^2e_b)=0;
+$$
+
+反向配对同理。故 $S$ 保根并下降为 $R$，满足
+
+$$
+\beta(Ua)=R\beta(a),\qquad B(Rx,Ry)=B(x,y),\qquad R^3=I.
+$$
+
+将 $B$ 代入完整三相式，分别取另一端为单位消去 $q,r$ 项，得到
+
+$$
+\sum_kB(\beta(a\odot U^ku),\beta(b\odot U^kv))
+=3B(\beta a,\beta b)+3B(\beta u,\beta v).
+\tag{12}
+$$
+
+取 $v=e$，对两种配对次序使用共同非退化性；再取 $b=e$，得到
+
+$$
+\sum_k\beta(a\odot U^ku)=3\beta(a),\qquad
+I+R+R^2=0,\qquad
+\sum_kR^{-k}\beta(a\odot U^ku)=3\beta(u).
+\tag{13}
+$$
+

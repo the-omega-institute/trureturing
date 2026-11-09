@@ -1,0 +1,40 @@
+### 23.5　四框有限概率的局部传递式
+
+下面的质量记号只属于一个四维局部角 $T=S+P_{e_3}$，不复用完整原历史的 $w_{\rm hist}$。在任意实际正交四框架中，沿用第 22.5 节定义 22.7 中的 $q_{\sigma\rho\tau},h_{\sigma\rho\tau},r_{\sigma\rho\tau}$，令
+
+$$
+ \omega_T=\mu(T),\qquad b=\mu(P_{e_3}),\qquad
+ A_\tau=\sum_{\sigma,\rho}\mu(P_{q_{\sigma\rho\tau}}),\qquad
+ C_\tau=\sum_{\sigma,\rho}\mu(P_{r_{\sigma\rho\tau}}).
+\tag{23.14}
+$$
+
+假定所用四个 $B$ 三角框架、三个 $H_4$ 四框架、十二个二模框架和共享补列都在同一实际历史中供应，并且粗粒化可加。则
+
+$$
+ A_\tau=\omega_T-4b+C_\tau,
+ \qquad \sum_\tau C_\tau=\omega_T+8b,
+\tag{23.15}
+$$
+
+以及
+
+$$
+ A_\tau-\frac43(\omega_T-b)
+ =C_\tau-\frac13(\omega_T+8b).
+\tag{23.16}
+$$
+
+**证明。**固定 $(\sigma,\rho)$ 的 $B$ 三角给
+$\sum_\tau\mu(P_q)=\mu(S)=\omega_T-b$；四个三角合计为 $4(\omega_T-b)$。固定 $\tau$ 的 $H_4$ 四框架给
+$\sum_{\sigma,\rho}\mu(P_h)=\omega_T$；三种 $\tau$ 合计为 $3\omega_T$。每个共享补列的二模关系是
+
+$$
+ \mu(P_h)+\mu(P_r)=\mu(P_q)+b,
+\tag{23.17}
+$$
+
+因为两边都是同一完整框架中的正交粗事件，右边多出的是 $P_{e_3}$。固定 $\tau$ 求和即得第一式；再对 $\tau$ 求和，或用上述三个总和，得第二式和 (23.16)。这里 $C_\tau$ 的系数是 $1$，没有把几何分解误报成概率收缩。
+
+当局部归一质量为 $\omega_T=1$ 且 $b=0$ 时，(23.15) 退化为既有的 $A_\tau=1+C_\tau$、$\sum C_\tau=1$，从非负性得到 $1\le A_\tau\le2$。当 $\omega_T=0$ 时不做除法；非负性使所有实际四框事件质量为零。该局部式仍与不等中心权重和未归一历史兼容，因为它只使用本角的共同质量 $\omega_T$。
+

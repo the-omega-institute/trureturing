@@ -1,0 +1,84 @@
+**Theorem 56.3 (sharp residues of actual full low eigenstates).**
+Let $P_{\sigma,\kappa,N}$ be the actual full spectral projection of
+the $N$th eigenvalue, numbered from $N=1$. For each fixed $N$, through
+both signs, in operator norm on the entire base,
+
+$$
+\frac{J^*P_{\sigma,\kappa,N}J}{w_{\sigma,\kappa}}
+ \longrightarrow b_{N-1}\Pi_\sigma,
+\qquad
+b_{2m}=\frac1{\sqrt\pi}\frac{(2m)!}{4^m(m!)^2},\quad b_{2m+1}=0.
+\tag{56.11}
+$$
+
+In particular the actual full ground, with no phase convention imposed
+on its projection, satisfies
+
+$$
+\frac{J^*P_{\sigma,\kappa,1}J}{w_{\sigma,\kappa}}
+ \longrightarrow\frac{\Pi_\sigma}{\sqrt\pi},\qquad
+\frac{\operatorname{tr}(J^*P_{\sigma,\kappa,1}J)}{w_{\sigma,\kappa}}
+ \longrightarrow\frac1{\sqrt\pi},\qquad
+\frac{\|J^*P_{\sigma,\kappa,1}J\|}{w_{\sigma,\kappa}}
+ \longrightarrow\frac1{\sqrt\pi}.
+\tag{56.12}
+$$
+
+Proof. The compactness and min-max proof of Theorem 40.3 gives the
+rescaled eigenfunction limit at every fixed index, not just its ground.
+For completeness, take the first $N$ orthonormal block eigenfunctions.
+Lemma 40.2 gives simultaneous strong limits. Inductively the $N$th
+limit is orthogonal to the first $N-1$ oscillator eigenfunctions, while
+its limiting Rayleigh quotient is at most $(2N-1)\omega_\sigma$.
+The simple oscillator spectrum forces it to be the $N$th normalized
+Hermite function up to phase. This starts with (40.11).
+
+This conclusion transfers to the actual full eigenfunction without a
+boundary-normalized perturbation estimate. The first $N$ averaged
+full eigenvalues are the zero-visible block eigenvalues by (41.6),
+and their neighboring gaps are bounded below by a positive constant
+times $h$. If $f_N$ is an actual eigenfunction, then
+$\|(\widehat{\mathcal H}-\Lambda_{\sigma,N})f_N\|\le\delta_\kappa$ on the
+common operator domain. Expansion in the averaged eigenbasis bounds
+its component outside the corresponding rank-one eigenspace by
+$C_N\delta_\kappa/h=o(1)$. Equation (41.1) also supplies simplicity
+of the actual fixed-index eigenvalue. After constant phases and the
+fixed change from $\ell$ to $w$, this gives
+
+$$
+\sqrt w f_N(q,wx)\longrightarrow\eta_\sigma(q)\psi_{N-1}(x)
+ \quad\hbox{strongly in }L^2(d\nu_B\,dx),\qquad
+\psi_n(x)=\frac{H_n(x)e^{-x^2/2}}{\pi^{1/4}\sqrt{2^n n!}}.
+\tag{56.13}
+$$
+
+Zero extension is used only for this $L^2$ comparison. Lemma 56.2,
+applied to the actual eigenfunction itself, gives uniform amplitude
+tails for each fixed index. On bounded $x$ intervals, integration is
+a bounded $L^2$ functional; outside them use (56.4). Therefore
+
+$$
+\frac{J^*f_N}{\sqrt w}
+ \longrightarrow\frac{\eta_\sigma}{\sqrt{2\pi}}
+                         \int_{\mathbb R}\psi_{N-1}(x)dx
+ \quad\hbox{in }\mathscr H_B.
+\tag{56.14}
+$$
+
+The classical oscillator normalization is that of Teschl, §8.3,
+(8.35)--(8.41), already matched in Theorem 40.3. Its Gaussian
+integration, or the generating function
+$\sum H_n(x)t^n/n!=e^{2xt-t^2}$ integrated against $e^{-x^2/2}$,
+gives
+
+$$
+\frac1{2\pi}\left|\int\psi_{2m}\right|^2=b_{2m},\qquad
+\int\psi_{2m+1}=0.
+\tag{56.15}
+$$
+
+Taking outer products in (56.14) proves (56.11). For the ground,
+$w^{-1/2}J^*f_1\to\pi^{-1/4}\eta_\sigma$ after phase choice.
+The trace and norm of its rank-one outer product both equal
+$\|J^*f_1\|^2$, proving all of (56.12). $\square$
+

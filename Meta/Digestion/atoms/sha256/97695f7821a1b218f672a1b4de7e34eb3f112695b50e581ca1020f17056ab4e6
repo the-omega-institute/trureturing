@@ -1,0 +1,31 @@
+**定理 10.2（同一原响应的有限复载体）。** A–D 对每个非零原对象给出
+
+$$
+\mathcal A_o=\bigoplus_{s\in S_o}M_{d_s}(\mathbb C),\qquad
+\kappa_o:E_o\longrightarrow(\mathcal A_o)_{\rm sa},\qquad
+\sigma_o=\kappa_o\phi_o^{-1}:V_o\longrightarrow(\mathcal A_o)_{\rm sa}.
+\tag{10.3}
+$$
+
+$\kappa_o$ 保单位与锥，$\sigma_o$ 保准备锥，$\tau_o=\sum_s\operatorname{Tr}_{d_s}$ 满足
+
+$$
+\begin{gathered}
+\kappa_o(u_o)=I_o,\quad \sigma_o(C_o)=(\mathcal A_o)_+,\quad
+\kappa_o([0,u_o])=[0,I_o],\\
+u_o(v)=\tau_o(\sigma_o v),\qquad
+\langle a,v\rangle=\tau_o\bigl(\kappa_o(a)\sigma_o(v)\bigr).
+\end{gathered}
+\tag{10.4}
+$$
+
+任意有限个不等阶非经典块均被允许。固定 $E_o,\circ_o,u_o,D^o$ 后载体唯一到其保资料 $*$-同构；表示同构不认同任何两个原实现。
+
+证明。把定理 10.1 的 $(E_o,u_o,g_o,\circ_o)$ 和原 $D^o$ 逐项代入本卷定义 1.1：非零、有限维、含幺、正定、Frobenius、线性导子指派全部已满足。定义 9.6 正是 C95，故直接消费本卷定理 2.1，得到
+
+$$
+a\cdot b=a\circ b-iD_ab,\qquad D_ab=-D_ba,
+$$
+
+以及忠实有限维正 $*$ 表示。有限维复 $C^*$ 结构定理给 (10.3)。其自伴随平方就是 Jordan 平方，故同一个 $C_o^*$ 成为矩阵正锥。原始 Jordan 幂等元在每个矩阵块中为秩一投影，所以定理 10.1 的规范迹正是未加扇区权重的 $\sum_s\operatorname{Tr}_{d_s}$；(10.4) 从 (10.2) 运输而来。没有用一个任意 Frobenius 配对来猜原单位或 Born 评价。本卷定理 2.1 的乘法与表示结论在这里直接应用，不重新证明其曲率论证。∎
+

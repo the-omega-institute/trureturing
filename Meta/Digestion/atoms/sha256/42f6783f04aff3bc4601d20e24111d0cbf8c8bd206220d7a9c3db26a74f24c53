@@ -1,0 +1,66 @@
+### 定理 3.6（模核的有限判定）
+
+<a id="thm-c123-finite-modular-algorithm"></a>
+
+令 $d=\dim H$。首先有有限交换子证书
+
+<a id="eq-c123-noise-derivative-certificate"></a>
+
+$$
+\mathfrak F_\sigma
+ =\left\{\delta_\sigma^k(E_i^*E_j):
+       i,j,\ 0\le k\le d^2-1\right\}'.
+\tag{27}
+$$
+
+也可从内禀代数执行下降迭代
+
+<a id="eq-c123-finite-descent"></a>
+
+$$
+V_0=\mathfrak A_{\mathcal N},\qquad
+ V_{k+1}=\{X\in V_k:\delta_\sigma(X)\in V_k\}.
+\tag{28}
+$$
+
+每个 $V_k$ 均为含幺 $*$-子代数；一旦 $V_{k+1}=V_k$，就有
+$V_k=\mathfrak F_\sigma$。至多发生
+$\dim_\mathbb C\mathfrak A_{\mathcal N}-1$ 次严格维数下降。
+
+**证明。**
+由模核公式与酉共轭保持交换子，
+
+$$
+\mathfrak F_\sigma
+ =\{\alpha_t^\sigma(E_i^*E_j):i,j,t\in\mathbb R\}'.
+$$
+
+若某个 $A$ 与每条轨道交换，则对 $t=0$ 逐次求导，得到它与所有
+$\delta_\sigma^k(E_i^*E_j)$ 交换。
+反过来，$\delta_\sigma$ 作用在 $d^2$ 维复算子空间上；
+Cayley–Hamilton 定理将其所有高次幂化为前 $d^2$ 次的线性组合。
+因此与式~[(27)](#eq-c123-noise-derivative-certificate) 中的有限集合交换，就与指数轨道交换，证明该式。
+
+对下降算法，$\delta_\sigma$ 是保持伴随的导子：
+
+$$
+\delta_\sigma(XY)=\delta_\sigma(X)Y+X\delta_\sigma(Y),\quad
+ \delta_\sigma(X^*)=\delta_\sigma(X)^*,\quad
+ \delta_\sigma(I)=0.
+$$
+
+所以若 $V_k$ 为含幺 $*$-代数，满足下一步条件的元素也对乘法与伴随封闭。
+归纳还给
+$V_k=\{X:\delta_\sigma^j(X)\in\mathfrak A_{\mathcal N},\ 0\le j\le k\}$，
+故 $\mathfrak F_\sigma\subseteq V_k$。
+若相邻两步相等，则 $\delta_\sigma(V_k)\subseteq V_k$，其指数保持 $V_k$。
+该代数位于 $\mathfrak A_{\mathcal N}$ 内且模不变，最大性遂给反向包含。
+最后 $I$ 始终保留，每次严格包含至少降一维，故得到次数界。
+
+实际计算每一步只需选取 $V_k$ 的矩阵基，求
+$(I-\Pi_k)\delta_\sigma(X)=0$ 在 $V_k$ 内的线性解空间；
+$\Pi_k$ 是 Hilbert–Schmidt 正交投影。
+这里只认证*所声明有限矩阵模型*的精确代数。
+有限数据不能把极小但非零的交换子自动替换成零；相应的统计与扰动边界另章处理。
+算法也不要求模作用作为一条实际量子门已被供应。
+

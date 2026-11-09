@@ -1,0 +1,11 @@
+**定义 34.2（同一乘法及物理边界）。** 令 $a*b=a\circ b-iD(a,b)$ 并复双线性延拓。维数零、一分别显式得到 $\mathbb C$、$\mathbb C\oplus\mathbb C$。三维取 Pauli 矩阵并令 $\Phi_\varepsilon(\alpha u+x)=\alpha I-\varepsilon x\cdot\sigma$；标准 Pauli 乘法直接给 $\Phi_\varepsilon(a*b)=\Phi_\varepsilon(a)\Phi_\varepsilon(b)$，故是同一原复代数到 $M_2(\mathbb C)$ 的 $*$ 同构，原范数 $N(\alpha u+x)=|\alpha|+\|x\|$、锥、单位与评价全部保持，有限原复正表成为结论。通常代数态与投影满足
+
+$$
+\varphi_r(\alpha u+x)=\alpha+\langle r,x\rangle,\quad
+p_n=(u+n)/2,\quad
+\varphi_r(p_n)=(1+\langle r,n\rangle)/2,
+\quad \|r\|\le1,\ \|n\|=1.
+$$
+
+原正评价的正质量归一化、零质量、已经实际给定的效果菜单、GNS 的数学用途和内动力 $e^{tD_a}$ 均按 29.1 的准确对应；不因此供应实际准备、仪器、复合系统张量积、物理钟或共同 $\hbar$。自旋前件只描述指定响应块，三维不解释为物理空间维数。
+

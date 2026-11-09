@@ -1,0 +1,24 @@
+**定义 7.1（Locally bipartite graphs and the unrestricted half-filled gap）。**
+Let $H$ be a finite simple unit-weight graph on $[m]$, $m\geq2$, with
+no isolated vertices. Assume that the induced graph $H[N_H(p)]$ is
+bipartite for every vertex $p$. Neighborhoods and $H$ may be disconnected;
+an edgeless neighborhood is bipartite. For every integer $S\geq1$, put
+$s=2S$, $k=mS$, and use exactly the complete complex Boolean space
+$\mathcal H_{mS}$, ordinary positive adjacency $K=K_{mS}$, and original
+block-permutation projection $P_{\mathrm{sym}}$ of Definitions 1.1–1.2.
+Set, independently of Definition 6.1,
+
+$$
+\begin{aligned}
+E_H(2S)&=\lambda_{\min}(K),\\
+g(H,2S)&=\lambda_{\min}\bigl(K|_{\ker P_{\mathrm{sym}}}\bigr)-E_H(2S).
+\end{aligned}
+\tag{7.1}
+$$
+
+Both subspaces reduce $K$. The nonsymmetric subspace is nonzero: take
+a nonconstant one-particle vector in one block, occupancy $2S-1$ in a
+second block, and occupancy $S$ in each remaining block. Their total
+occupancy is $mS$. This construction also applies to $S=1$.
+No flat least mode, regularity, or connectedness is assumed.
+

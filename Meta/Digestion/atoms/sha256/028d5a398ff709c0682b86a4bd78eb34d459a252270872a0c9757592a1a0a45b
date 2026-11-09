@@ -1,0 +1,135 @@
+**定理 150.3（本源的 ready 回返判据及固定未来障碍）。** 在定义 150.1 和假设 150.2 下，下列两件事等价。
+
+(a) 对每一列实际有限字 $(a_n)_{n\ge1}$，
+
+$$
+d_{\mathbb P}([\chi_{a_n}],[e_0])\longrightarrow0
+\quad\Longrightarrow\quad
+\|x_{a_n}-x_\epsilon\|_\infty\longrightarrow0.
+\tag{150.5}
+$$
+
+(b) 存在唯一连续函数 $q:\mathbb P(\mathcal K)\to[0,1]$，使
+
+$$
+p(a)=q([\chi_a])\qquad(a\in\mathsf W_{11}).
+\tag{150.6}
+$$
+
+此外，存在由这一个实际律决定、与待比较前缀及序列无关的有限未来集 $\mathcal F=\{f_1,\ldots,f_m\}\subset\mathsf W_{11}$，$m=r-1$，以及 $C\ge1$，使
+
+$$
+\|x_a-x_b\|_\infty
+\le C\max_{1\le l\le m}|p(af_l)-p(bf_l)|
+\qquad(a,b\in\mathsf W_{11}).
+\tag{150.7}
+$$
+
+若 $m=0$，右端按零读取，全部预测行相同。因此 (a) 等价于：对每列源射线回返字，只需这些固定有限未来上的概率分别回返。若 (a) 失败，则存在一个固定有限合法未来 $f_*\in\mathcal F$、一个数 $\delta>0$ 和一列实际有限字 $(a_n)_{n\ge1}$，使
+
+$$
+\forall n\ge1:\qquad
+d_{\mathbb P}([\chi_{a_n}],[e_0])<1/n,\qquad
+|p(a_nf_*)-p(f_*)|\ge\delta.
+\tag{150.8}
+$$
+
+反之，任何 (150.8) 都否定 (a)。$f_*$ 和 $\delta$ 可以依赖实际律；结论不提供它们的清单、字长、数值下界或有限统计认证。
+
+证明。先在实际行上建立转移，不把同一矩阵的不同历史先行等同。对每个原地址 $j$，置
+
+$$
+(T_jz)(\star)=z(\star),\qquad (T_jz)(f)=z(jf).
+\tag{150.9}
+$$
+
+这是整个有界行空间上的线性收缩；$T_jx_a=x_{aj}$ 使它保持 $V$，亦说明任一行间线性关系在接续后仍成立。$\mathrm R_{10}$ 对全部 $a,f$ 恰给 $T_j^{10}x_a=x_a$；因这些行张成 $V$，有 $T_j^{10}=I_V$。因此
+
+$$
+\|T_jz\|_\infty\le\|z\|_\infty
+=\|T_j^{10}z\|_\infty\le\|T_jz\|_\infty,
+\qquad T_j^{-1}=T_j^9.
+\tag{150.10}
+$$
+
+每个 $T_j$ 是满射线性等距。对 $a=j_1\cdots j_s$ 置 $T_a=T_{j_s}\cdots T_{j_1}$，则 $T_ax_\epsilon=x_a$、$T_{ab}=T_bT_a$。这些只是概率行的数学转移；未添加实际概率查询或线性混合操作。
+
+有限维范数空间的线性等距群在算子范数下紧：其矩阵集合有界，矩阵极限仍保持范数，因而单射；同维有限维性使极限仍满射。由有限维闭有界集的紧性得结论。令
+
+$$
+\mathsf H_p=\overline{\{T_a:a\in\mathsf W_{11}\}},\qquad
+L=\overline{\{([K_a],T_a):a\in\mathsf W_{11}\}}
+\ \subset PU(\mathcal K)\times\mathsf H_p.
+\tag{150.11}
+$$
+
+原矩阵的 $K_j^{10}=I$ 与统计上的 $T_j^{10}=I_V$ 分别使每个配对生成元的逆由九次同地址调用表示；字的乘法虽然按 (150.1) 反序表示，全部配对字的集合仍是子群。因此 $L$ 是紧度量群。消费 II (121.7) 和 III (144.12) 的全 $89$ 维矩阵密度，有
+
+$$
+\pi(L)=PU(\mathcal K),\qquad
+\overline{\{[\chi_a]:a\in\mathsf W_{11}\}}=\mathbb P(\mathcal K),
+\tag{150.12}
+$$
+
+其中 $\pi(g,T)=g$。第一式因 $\pi(L)$ 紧闭且包含原生稠密子群成立。这一步只用已核对的矩阵供应，不用未知实际概率的极限律。
+
+令 $J=\{(g,T)\in L:g[e_0]=[e_0]\}$。条件 (a) 恰等价于
+
+$$
+\forall(g,T)\in J:\qquad Tx_\epsilon=x_\epsilon.
+\tag{150.13}
+$$
+
+事实上，给定 $(g,T)\in J$，由 (150.11) 可取实际有限字 $a_n$，使配对收敛到 $(g,T)$。其源射线回返；(a) 给 $T_{a_n}x_\epsilon=x_{a_n}\to x_\epsilon$，而算子收敛给同一列趋于 $Tx_\epsilon$，故得 (150.13)。反之，若 (150.13) 成立而一列源回返字的行不回返，可选一个子列，其行距 $x_\epsilon$ 始终至少为某个 $\eta>0$。紧性再选配对子列趋于 $(g,T)\in L$；源回返保证 $(g,T)\in J$，行则趋于 $Tx_\epsilon=x_\epsilon$，矛盾。这也精确定位障碍：联合闭包中某个固定 ready 射线的元素仍改变实际预测行；不只是矩阵闭包中缺少一个门。
+
+现在假设 (a)。定义两个连续映射
+
+$$
+\alpha:L\to\mathbb P(\mathcal K),\quad\alpha(g,T)=g[e_0],
+\qquad F:L\to V,\quad F(g,T)=Tx_\epsilon.
+\tag{150.14}
+$$
+
+$\alpha$ 满射。若 $g_1[e_0]=g_2[e_0]$，则 $(g_2^{-1}g_1,T_2^{-1}T_1)\in J$，由 (150.13) 得 $T_1x_\epsilon=T_2x_\epsilon$。因此 $F$ 在 $\alpha$ 的每个纤维上常值，唯一诱导 $\mathfrak X:\mathbb P(\mathcal K)\to V$。紧空间到 Hausdorff 空间的连续满射是闭商映射，故 $F=\mathfrak X\circ\alpha$ 使 $\mathfrak X$ 连续。这里仅使用通常的紧商下降，不提出另一条一般实现定理。
+
+对实际字，$\mathfrak X([\chi_a])=x_a$。每个 $Tx_\epsilon$ 都是实际行的范数极限，故其 $\star$ 坐标为一，其余各坐标在 $[0,1]$。取空未来坐标
+
+$$
+q(y)=\mathfrak X(y)(\epsilon)
+\tag{150.15}
+$$
+
+就得到 (b) 的连续 $[0,1]$ 值函数。两连续函数若在 (150.12) 的稠密实际射线集上表示同一 $p$，必处处相同，故唯一。还可由实际字上的等式及连续性得到 $\mathfrak X(y)(f)=q(K_fy)$，对每个 $y$ 和每个有限 $f$ 成立；这是下降后的结论。
+
+反向，假设 (b)，令
+
+$$
+\omega(t)=\sup\{|q(y)-q(z)|:d_{\mathbb P}(y,z)\le t\}.
+\tag{150.16}
+$$
+
+紧射线域上的一致连续性给 $\omega(t)\to0$ 当 $t\downarrow0$。每个 $K_f$ 的射线作用等距；由 $p(af)=q(K_f[\chi_a])$，有
+
+$$
+\|x_a-x_\epsilon\|_\infty
+=\sup_{f\in\mathsf W_{11}}|q(K_f[\chi_a])-q(K_f[e_0])|
+\le\omega\bigl(d_{\mathbb P}([\chi_a],[e_0])\bigr).
+\tag{150.17}
+$$
+
+这给 (a)，且没有将某个连续控制当作实际操作。此反向本身不需要有限秩；有限秩和 $\mathrm R_{10}$ 是上述正向构造所用的独立来源条件。
+
+最后证明有限未来断言。令 $W_0=\operatorname{span}_{\mathbb R}\{x_a-x_\epsilon:a\in\mathsf W_{11}\}$。由 $\star$ 坐标，$V=\mathbb Rx_\epsilon\oplus W_0$，所以 $\dim W_0=r-1=m$。若 $m>0$，有限未来评价 $z\mapsto z(f)$ 在 $W_0$ 上共同分离点：它们全零且 $z(\star)=0$ 就表示 $z=0$。因 $W_0$ 有限维，这些评价张成 $W_0^*$，可选其中 $m$ 个为基，所选字组成 $\mathcal F$。相应评价映射
+
+$$
+E_{\mathcal F}:W_0\longrightarrow\mathbb R^m,\qquad
+z\longmapsto(z(f_l))_{l=1}^m
+\tag{150.18}
+$$
+
+是线性同构。其逆有界，故可取 $C\ge1$，使 $\|z\|_\infty\le C\|E_{\mathcal F}z\|_\infty$。代入 $z=x_a-x_b$ 得 (150.7)，也得有限未来版本的 (a)。$m=0$ 时 $W_0=0$，所有断言按空集约定成立。
+
+若 (a) 失败，存在源回返序列及 $\eta>0$，在一个子列上 $\|x_a-x_\epsilon\|_\infty\ge\eta$。由 (150.7)，每项有某个 $l$ 使 $|p(af_l)-p(f_l)|\ge\eta/C$。有限鸽巢原理选一个固定 $l_*$ 和无限子列，再逐项选取源射线距离小于 $1/n$ 的字，即得 (150.8)，取 $f_*=f_{l_*}$、$\delta=\eta/C$。反向由单坐标差不超过行范数立即得到。∎
+
+有限基的存在不等于已经取得它。更具体地，可选实际前缀 $a_1,\ldots,a_m$，使 $w_i=x_{a_i}-x_\epsilon$ 为 $W_0$ 的基；矩阵 $B_{li}=p(a_if_l)-p(f_l)$ 非奇异。由于 $\|w_i\|_\infty\le1$，对 $z=\sum_i c_iw_i$ 有 $E_{\mathcal F}z=Bc$，从而可取 $C=\max\{1,\|B^{-1}\|_{\ell^\infty\to\ell^1}\}$。这些是定理内有限基的代数说明，所需真概率并非免费可查询数据。若另供 $\dim W_0\le m$ 的正确容量上界及带共同误差界的实际概率取得，足够严格的行列式分离才能证明所给 $B$ 非奇异，并据此证明它已张成；单个有限非奇异子矩阵本身只证明容量下界。没有独立上界，未见新方向不能认证不再有方向。即使已给完整有限基，(150.5) 仍量化无界有限前缀和任意回返序列；有限个未来坐标不把它变成有限程序套件的认证，也没有供应回返模、字长界、重复抽样或样本费用。
+

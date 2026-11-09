@@ -1,0 +1,53 @@
+**Theorem 19.1 (Specialization and the zero-radius branch of the complete answer).** The description in Theorem 18.2 holds separately for each positive chain, including every coefficient specialization, and has the following precise boundary properties.
+
+At either original endpoint the complete multiset is still given by (18.4) and every root has modulus one. No endpoint is an optimizer. The only singular original parameter is
+
+$$
+\alpha_* =\frac{v_2}{v_1+2v_2},\qquad q_v(\alpha_*)=0.
+\tag{19.1}
+$$
+
+It belongs to the permitted interior domain, and none of the finite constructions excludes it. The actual minimum is zero exactly on the already evaluated finite-annihilation branch:
+
+$$
+\boxed{\quad
+\gamma_v=0\quad\Longleftrightarrow\quad\mathcal D(v)=1.
+\quad}
+\tag{19.2}
+$$
+
+In that branch
+
+$$
+Q_v=\{0\},\qquad \mathcal A_v=\{\alpha_*\},\qquad
+p_v(Z,0)=Z^m,
+\tag{19.3}
+$$
+
+and the original map at $\alpha_*$ has least all-state annihilation time $m$. For $m=1$ this gives $\gamma_v=0$ and the unique original optimizer $\alpha_*$ for every positive pair. Outside the zero-radius branch the comparison in (18.8) retains every minimizer, without an assertion that there is only one.
+
+Repeated eigenvalues, collisions of distinct product roots, nonreal conjugate pairs, and either parity of $m$ require no additional hypotheses in these assertions. The full-data answer does not make $Q_v$ or $\gamma_v$ a function of the observation $\mathsf O(v)$ in (16.5), even when that observation includes the entire original map $\alpha\mapsto q_v(\alpha)$.
+
+*Proof.* Endpoint preservation and the endpoint radii follow from the exact factorization (18.14), as used in Theorems 15.1, 16.2 and 18.2. A finite nonempty complex spectrum of a positive definite $Q$-isometry has all eigenvalue moduli one, including repeated eigenvalues; an eigenvector gives the equality directly. A fixed interior parameter has radius strictly below one. This proves exclusion of both endpoints without deleting their characteristic polynomials from the spectral specification.
+
+Equation (18.13) proves that singularity is equivalent to $q=0$. The inverse correspondence (18.3) then gives (19.1), with $0<\alpha_*<1$ by positivity. The determinant formula (18.4), the product formula (17.12), factorization into actual monic factors, differentiation and the real-root comparisons involve no inverse of $T_{v,q}$, no reciprocal of $q$, and no reciprocal of an eigenvalue. Formula (17.12) explicitly treats a zero eigenvalue. Hence the singular map is present with all its zero-root multiplicities.
+
+If $\gamma_v=0$, take any minimizing parameter, whose existence is already proved. Every root of its monic characteristic polynomial must have modulus zero, so that polynomial is $Z^m$. Its constant term is $q$ by (18.13), forcing $q=0$. The Cayley–Hamilton theorem then gives $T_{v,0}^m=0$. The exact nilpotence criterion of Theorem 13.2 says that this occurs if and only if $q=0$ and $\mathcal D(v)=1$, with least all-state annihilation time $m$. Conversely $\mathcal D(v)=1$ gives $T_{v,0}^m=0$ by that same supporting theorem, so the spectral radius at zero is zero and is necessarily the minimum. If $q\ne0$, the determinant is nonzero, so its spectral radius cannot be zero. Thus zero is the only normalized optimizer in this branch, and bijectivity of (18.3) proves (19.3). This uses the already published criterion and evaluated product (12.3), not a new restriction on the velocity chain.
+
+In the scalar case, reuse the exact identity $p_v(Z,q)=Z+q$ in (16.12). Definitions (17.3), (17.6) and (17.7) give directly
+
+$$
+\mathcal R_v(X,q)=V_v(X,q)=X-q^2,\qquad
+\Delta_v(q)=-2q,\qquad
+\Xi_v(\alpha)=-2\bigl(\alpha(v_1+2v_2)-v_2\bigr).
+\tag{19.4}
+$$
+
+Thus the finite comparison indeed has the sole original candidate $\alpha_*$ and gives the actual minimum zero, agreeing with the existing scalar and nilpotent conclusions. These identities also include both scalar endpoints. In every dimension the parity sign in $\det T=(-1)^m q$ is canceled by the sign in the constant coefficient $\det(-T)$, so $p_v(0,q)=q$ for both parities. No odd or even factor of the original characteristic polynomial has been removed in forming (18.4).
+
+For the remaining specializations, fix the actual velocities first. The real field $F_v$ still has characteristic zero, and the polynomial (18.4) is still monic, affine in $q$, with unit-circle endpoints and strict interior roots. The nonvanishing argument (17.16)–(17.17) is therefore valid for that actual polynomial, regardless of any extra coefficient equalities. If an irreducible factor occurs to higher multiplicity for this chain, its multiplicity is retained in $\mathcal R_v$ and it occurs once in $V_v$. If distinct factors or roots collide at a particular parameter, their product may have $V_{v,X}=0$ there; that is the first resultant alternative in (17.7). If $V_{v,X}\ne0$ at a minimizing squared radius, (17.20)–(17.21) give the second alternative using only the actual continuous squared radius. The argument does not assume that the original eigenvalues are differentiable, simple, or diagonalizable. It applies as well at a zero squared radius. The product formula uses conjugation of the entire real-coefficient root multiset to supply an actual $|\mu|^2$, and bounds every other real nonnegative product by the same actual maximum. Nonreal eigenvalues therefore enter with their full multiplicities rather than being omitted from the objective.
+
+It follows that no exceptional positive chain invalidates the candidate polynomial by forcing it identically to zero: the squarefree factorization and the proof of its two nonzero resultants are performed anew for the specified actual coefficients. There is no assertion that taking squarefree parts or resultants for an indeterminate velocity family and subsequently specializing would preserve their nonvanishing. It is precisely the definition in the actual field that gives the stated all-chain result.
+
+Finally, the two actual chains (16.6) have identical observations, even augmented as in Corollary 16.3, but their entire optimizer sets and minimum values are different. The polynomial (18.4) uses their distinct full first-row-to-tail couplings and so is not required to coincide on that observational fiber. Equations (18.8)–(18.10) consequently preserve both answers in (16.9) and the insufficiency conclusion of Corollary 16.3. All statements here concern a fixed original map at each spectrum or power. The mixed histories and physical collision conditions retain their separate domains. $\square$
+

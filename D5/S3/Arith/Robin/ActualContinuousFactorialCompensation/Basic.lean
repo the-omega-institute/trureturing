@@ -95,7 +95,7 @@ private lemma sum_Ioc_eq_range (c : ℕ → ℝ) (N : ℕ) :
   · intro i _
     rfl
 
-private lemma H_harmonic (x : ℝ) : H x = (harmonic ⌊x⌋₊ : ℝ) := by
+lemma H_harmonic (x : ℝ) : H x = (harmonic ⌊x⌋₊ : ℝ) := by
   rw [H, prefixSum_eq_Ioc (fun n => (n : ℝ)⁻¹) (by simp), sum_Ioc_eq_range]
   simp [harmonic, Rat.cast_sum]
 
@@ -294,7 +294,7 @@ theorem finite_smoothing {x : ℝ} (hx : 1 ≤ x) :
   rw [hbase, hramp]
   ring
 
-private lemma G_formula {x : ℝ} (hx : 1 ≤ x) :
+lemma G_formula {x : ℝ} (hx : 1 ≤ x) :
     G x = x * ((1 + gamma - Real.log x) * H x + 2 * J x) -
       Real.log (⌊x⌋₊.factorial : ℝ) - (1 + gamma) * ⌊x⌋₊ - alpha * (x - 1) := by
   rw [G, finite_smoothing hx, h1]
@@ -522,13 +522,13 @@ private lemma eta_density_integrable :
   rw [Real.norm_eq_abs, abs_div, abs_of_nonneg (sq_nonneg y)]
   exact div_le_div_of_nonneg_right (eta_bound hy.le) (sq_nonneg y)
 
-private lemma inv_sq_integrable {a : ℝ} (ha : 0 < a) :
+lemma inv_sq_integrable {a : ℝ} (ha : 0 < a) :
     IntegrableOn (fun t : ℝ => 1 / t ^ 2) (Ioi a) := by
   convert integrableOn_Ioi_rpow_of_lt (a := (-2 : ℝ)) (by norm_num) ha using 1
   ext t
   simp [Real.rpow_neg_eq_inv_rpow, Real.rpow_natCast, inv_pow]
 
-private lemma inv_sq_integral {a : ℝ} (ha : 0 < a) :
+lemma inv_sq_integral {a : ℝ} (ha : 0 < a) :
     (∫ t in Ioi a, (1 : ℝ) / t ^ 2) = 1 / a := by
   have he : (fun t : ℝ => 1 / t ^ 2) = fun t : ℝ => t ^ (-2 : ℝ) := by
     ext t
@@ -547,7 +547,7 @@ private lemma epsilonDensity_bound {x : ℝ} (hx : 1 ≤ x) :
     _ ≤ (1 / x) / x := div_le_div_of_nonneg_right (epsilon_bound hx) hx0.le
     _ = _ := by ring
 
-private lemma epsilonDensity_integrable : IntegrableOn epsilonDensity (Ioi (1 : ℝ)) := by
+lemma epsilonDensity_integrable : IntegrableOn epsilonDensity (Ioi (1 : ℝ)) := by
   apply (inv_sq_integrable (by norm_num : (0 : ℝ) < 1)).mono'
     epsilonDensity_measurable.aestronglyMeasurable
   filter_upwards [ae_restrict_mem measurableSet_Ioi] with x hx

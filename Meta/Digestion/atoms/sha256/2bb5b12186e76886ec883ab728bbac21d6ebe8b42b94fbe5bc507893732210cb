@@ -1,0 +1,59 @@
+**定理 196.1（全部原对象的自守恒恢复）。** 在完整 $\mathsf C_{>P}(B_*)$ 中，每个原对象及实际联合均有
+
+$$
+D^A_a a=0\qquad(a\in E_A).
+\tag{196.1}
+$$
+
+因而所有原 $D$ 交替；此结论覆盖未直接承担 (194.2) 的对象。
+
+证明。原右单位 $D_a u=0$ 仍由母卷定理 30.1 或引理 67.3 独立供应。固定非零 $A$，先用定理 195.1 取 $\operatorname{rank}E_{A^\sharp}\ge p_*+1$。再对这个原对象消费定理 189.1：固定同一个实际
+
+$$
+J=(A^\sharp P^{\otimes k})P^{\otimes l},
+\qquad i:A^\sharp\to J,\quad j_1,j_2:P\to J,
+\tag{196.2}
+$$
+
+其中 $k,l\ge1$，且原交叉零给 $D^J_{i(x)}j_1(b)=0$。定理 189.1 不消费任何配平，分别用两个背景的数学三边缘延拓，给出分离整个 $E_{A^\sharp}$ 的简单块族
+
+$$
+\mathcal V=\{T:\operatorname{rank}T\ge3,\
+\pi_Tj_1|_{P_0}\ne0\},
+\qquad
+\bigcap_{T\in\mathcal V}\ker(\pi_Ti)=\{0\}.
+\tag{196.3}
+$$
+
+这里 $P_0$ 为原非经典简单指针块。总秩不降使 $\operatorname{rank}E_J>p_*$；因此候选在整个 $J$ 上提供全部 $\mathsf F_{-\rm self}$，可以应用定理 188.1。没有要求每个联合简单块都高秩。
+
+固定 $T\in\mathcal V$，写 $E_J=T\oplus T'$。在非零单射 $\pi_Tj_1|_{P_0}$ 的像中选 $y=\pi_Tj_1(b)\ne0$ 且 $q_T(y,u_T)=0$。定理 188.1 的同一弱正常形和原交叉零给
+
+$$
+0=\delta_T((i(x))_T,y)
++\ell_T(i(x))y
++G_T((i(x))_{T'},(j_1(b))_{T'})u_T.
+\tag{196.4}
+$$
+
+与 $y$ 作原 $q_T$ 配对，$\delta_T$ 的斜伴随性及 $y$ 的无迹性分别消去首末项，得到 $\ell_Ti=0$。再用该正常形的交替部分和对角式，得到
+
+$$
+\begin{aligned}
+\pi_Ti(D^{A^\sharp}_x x)
+&=G_T((i(x))_{T'},(i(x))_{T'})u_T\\
+&=-\ell_T((i(x))_{T'}^2)u_T\\
+&=-\ell_T(i(x^2))u_T=0 .
+\end{aligned}
+\tag{196.5}
+$$
+
+最后一行只用原 Jordan 保持、$\ell_T|_T=0$ 和 $\ell_Ti=0$。由 (196.3) 得 $D^{A^\sharp}_x x=0$。原 $\eta$ 保持 $D$ 且单射，所以
+
+$$
+\eta(D^A_a a)=D^{A^\sharp}_{\eta(a)}\eta(a)=0.
+\tag{196.6}
+$$
+
+$A$ 任意；对 $a+b$ 极化即得所有原对象的交替性。∎
+

@@ -1,0 +1,62 @@
+**定义 157.1（原载体上的密度类与原生分量方程）。** 取定义 138.1、145.1 的同一个路径空间。将内部路径写成独立集，记
+
+$$
+E=\{q\subseteq\{1,\ldots,9\}:\{k,k+1\}\nsubseteq q\ (1\le k\le8)\},
+\qquad \mathcal K=\mathbb C^E,
+\qquad |E|=89.
+\tag{157.1}
+$$
+
+其中每个相邻二元集都不包含于 $q$，内部位记为 $q_k=b_k(q)=\mathbf1_{k\in q}$；固定外部位仍为 $b_{-1}b_0=10$、$b_{10}b_{11}b_{12}=010$。坐标记为 $z_q=\langle q|z\rangle$，置 $p_q=|z_q|^2$、$N=\sum_{q\in E}p_q=\|z\|^2$。地址 $j=0,\ldots,10$ 的矩阵严格取
+
+$$
+\begin{gathered}
+\varphi=(1+\sqrt5)/2,\qquad x=\varphi^{-1},\qquad y=\sqrt{x},\qquad
+x+x^2=1,\qquad \alpha=\frac{3\pi}{5},\\
+\mathcal P_j=n_{j-1}n_{j+1}
+ +(1-n_{j-1})(1-n_{j+1})
+ \begin{pmatrix}x&xy\\xy&x^2\end{pmatrix}_{b_j},\\
+H_j=-\alpha(I+\mathcal P_j),\qquad U_j(t)=e^{-itH_j}.
+\end{gathered}
+\tag{157.2}
+$$
+
+这里 $n_j|q\rangle=b_j(q)|q\rangle$，固定边界位也按其字面值使用；二维矩阵按中心位 $0,1$ 排列，整体在同一个 $E$ 上限制。令 $\mathscr B_j$ 为支撑图的全部连通分量：顶点为 $E$，不同顶点 $q,r$ 在 $(H_j)_{qr}\ne0$ 时相邻。单点分量也计入。对密度 $\Pi=(\Pi_q)_{q\in E}$，原生分量方程是
+
+$$
+\sum_{q\in B}\Pi_q(U_j(t)z)
+ =\sum_{q\in B}\Pi_q(z)
+\quad\left(
+\begin{array}{l}
+j=0,\ldots,10,\quad B\in\mathscr B_j,\\
+z\in\mathcal K\setminus\{0\},\quad t\in[0,1]
+\end{array}\right).
+\tag{157.3}
+$$
+
+记 $\Delta(E)=\{(u_q)_{q\in E}:u_q\ge0,\ \sum_qu_q=1\}$。原始连续射线密度类 $\mathscr C_{\rm nat}$ 由连续映射 $\Pi:\mathbb P(\mathcal K)\to\Delta(E)$ 组成，要求其在非零向量上的同名提升满足 (157.3) 及节点条件 $z_q=0\Rightarrow\Pi_q(z)=0$。射线域明确保留所有非零复缩放的不变性：
+
+$$
+\Pi_q(\lambda z)=\Pi_q(z)
+\quad(q\in E,\ z\in\mathcal K\setminus\{0\},\ \lambda\in\mathbb C\setminus\{0\}).
+$$
+
+另记 $\mathscr C_{\rm nat}^{\rm vec}$ 为 $\mathcal K\setminus\{0\}$ 上满足同一非负性、归一化、连续性、节点条件和 (157.3)，但不要求射线不变性的向量域扩展。两类通过上述提升识别后有 $\mathscr C_{\rm nat}\subseteq\mathscr C_{\rm nat}^{\rm vec}$；此记号不宣称包含严格。
+
+完整归一相干四次类 $\mathscr Q_2$ 定义如下。只作为多项式坐标空间，取 $W=\operatorname{Sym}^2\mathcal K$ 及其诱导内积。为每个 $q\in E$ 取 Hermitian 矩阵 $A_q\in\operatorname{End}(W)$，要求
+
+$$
+\begin{gathered}
+\sum_{q\in E}A_q=I_W,\qquad
+F_q(z)=\langle z\otimes z,A_q(z\otimes z)\rangle,\\
+F_q(z)\ge0\quad(z\in\mathcal K),\qquad
+z_q=0\ \Longrightarrow\ F_q(z)=0,\qquad
+\Pi_q(z)=\frac{F_q(z)}{N^2}\quad(z\ne0).
+\end{gathered}
+\tag{157.4}
+$$
+
+不要求 $A_q$ 是正算子，不要求逐坐标可分、径向形式、边比率局域性或全支撑上的严格正性。式 (157.4) 只在相干平方 $z\otimes z$ 上要求非负；该式自动给连续密度及 $\Pi_q(\lambda z)=\Pi_q(z)$（每个非零复数 $\lambda$）。相干四次形式自动满足原始射线域的要求，不需为本定理另加齐次性假设。$W$ 既不是另一个物理载体，也不供应双份准备、复制、辅助来源或张量仪器。所有非零 $z$ 与内部 $t$ 的量词是 (157.3) 的数学量词；内部时间仍按定义 145.1 解释为一次固定脉冲的描述，不能作为可执行的连续旋钮。
+
+原程序仍只有唯一 ready $R_0v$、十一地址前读字、七地址后读字及原 $\mathsf T(a),\mathsf R(a,f)$。全部 $1024$ 标签、真实调用历史、细档案、失败结果、供应者合同与取得及认证成本均保留定义 138.1、假设 138.2、145.2 的原范围和原有费用；全射线量词不赋予新的来源、查询、复位或控制。
+

@@ -1,0 +1,50 @@
+**Unresolved mathematical obligations 43.8.** For any proposed
+preceding interval, the full value certificate remains
+
+$$
+ \Delta_\sigma(w)+b_\sigma(w)r
+            -2u(w)v(w)\sqrt{t_\sigma(w,\xi)-r^2}
+       \ge V(\xi)
+ \quad
+ \left\{\begin{array}{l}
+ w\in\mathbb T^4,\quad \sigma\text{ admissible},\\
+ r\in[t_\sigma,\min\{\sqrt{t_\sigma},J_\sigma\}].
+ \end{array}\right.
+\tag{43.26}
+$$
+
+This is (42.31), with the complete effect arc displayed. It requires
+all preceding levels, both original signs, every mixed and singular
+arc, and all zero-amplitude and active-endpoint cases. Theorem 43.3
+controls a neighborhood of the selected phase feedbacks when its
+selected determinant is positive. It supplies no comparison on the
+complement, where separated pure or mixed pairs can tie or win.
+Exact phase equality sets still require (36.7), and all original
+minimizing lifts still require the variance-zero conditions (42.25).
+Their complete evaluation is unresolved.
+
+The exact $\alpha,\beta$, their coincidence or separation, the
+identity and exhaustion of first competing globally minimizing
+branches, separated mixed contact at $\beta$, and any earlier pure
+equality ties remain undetermined. Endpoint exclusion at $\alpha$
+is established by (43.21) only under its positive-determinant
+hypothesis; endpoint inclusion or exclusion at determinant zero is
+unresolved. Nongeometric phase coalescence and original strict global
+minimizer coalescence in the stated scopes require determinant zero,
+but a zero determinant need not produce either coalescence or first
+loss and does not exclude simultaneous separated contact.
+The higher-order and global signs in the simple reduced null direction
+remain unresolved. An attained strict right competitor from a mixed
+contact is still not thereby a globally minimizing branch.
+
+The original mixed-minimizer exclusion near selected feedbacks in
+Theorem 40.4 remains valid without a determinant hypothesis. Purity
+on the already defined pre-$\beta$ prefix is not a certificate for
+locating that prefix, and cannot remove the mixed strict competitors
+in (43.26). Beyond $R$ the same-effect transport retains only its
+proved sufficient domain; all-effect transport outside it, beyond-four
+geometric ordering, and the remaining core-attainment obligations
+retain their unresolved boundaries. The full original first-loss
+ordering and actual equality/attainment problem is not settled by
+these local and endpoint alternatives.
+

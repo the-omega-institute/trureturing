@@ -1,0 +1,53 @@
+## 来源与参考
+
+<a id="ref-v41"></a>
+
+\[1\] 项目 V41，[归一化单位、观察者原点与二次不变量](https://github.com/the-omega-institute/trureturing/blob/046c7ac2521a8429a0aeaeaee08b7b23d0bf20ff/docs/develop/theory/AURIC_NORMALIZATION_UNITS_OBSERVER_ORIGINS_AND_QUADRATIC_INVARIANTS_V41.md)，命题 5.3、定理 6.1、定义 9.1、定理 9.2。固定版本同封面。
+
+<a id="ref-v42"></a>
+
+\[2\] 项目 V42，[F13 关系语义、量子三轴与递归相容](https://github.com/the-omega-institute/trureturing/blob/046c7ac2521a8429a0aeaeaee08b7b23d0bf20ff/docs/develop/theory/AURIC_F13_RELATIONAL_SEMANTICS_QUANTUM_THREE_AXES_AND_RECURSIVE_COMPATIBILITY_V42.md)，定义 3.1、命题 3.2、定理 3.3。
+
+<a id="ref-v48"></a>
+
+\[3\] 项目 V48，[各向同性、手性与条件量子重构](https://github.com/the-omega-institute/trureturing/blob/046c7ac2521a8429a0aeaeaee08b7b23d0bf20ff/docs/develop/theory/AURIC_ISOTROPY_CHIRALITY_AND_CONDITIONAL_QUANTUM_RECONSTRUCTION_V48.md)，定义 1.1、定理 7.3、命题 7.4、定理 7.5。
+
+<a id="ref-v51"></a>
+
+\[4\] 项目 V51，[约束递归、纯态对偶与内生静态历史](https://github.com/the-omega-institute/trureturing/blob/046c7ac2521a8429a0aeaeaee08b7b23d0bf20ff/docs/develop/theory/AURIC_CONSTRAINT_RECURSION_PURE_STATE_DUALITY_AND_ENDOGENOUS_STATIC_HISTORY_V51.md)，定理 2.2、2.3 及 §9。
+
+<a id="ref-c137"></a>
+
+\[5\] 项目 C137，[零读出极性、射影圆与相位纤维](https://github.com/the-omega-institute/trureturing/blob/046c7ac2521a8429a0aeaeaee08b7b23d0bf20ff/docs/develop/theory/AURIC_C137_ZERO_READOUT_POLARITY_PROJECTIVE_CIRCLE_AND_PHASE_FIBRES.md)，§5.3、命题 5.5 及 §6。
+
+<a id="ref-pyramid"></a>
+
+\[6\] 项目，[Fibonacci 原子金字塔的基础公式与关系](https://github.com/the-omega-institute/trureturing/blob/046c7ac2521a8429a0aeaeaee08b7b23d0bf20ff/docs/develop/theory/AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS.md)，原金字塔坐标、两种四面体提升与对称。
+
+<a id="ref-fivefiber"></a>
+
+\[7\] [FiveModeDensityFiber.lean](https://github.com/the-omega-institute/trureturing/blob/046c7ac2521a8429a0aeaeaee08b7b23d0bf20ff/D5/S3/Quantum/Fibers/FiveModeDensityFiber.lean)，`full_rank_local_fibre`。本轮核对声明，未重新编译。
+
+<a id="ref-purification"></a>
+
+\[8\] [FiniteDensityPurification.lean](https://github.com/the-omega-institute/trureturing/blob/046c7ac2521a8429a0aeaeaee08b7b23d0bf20ff/D5/S3/Quantum/Foundation/FiniteDensityPurification.lean)，`purification`。本轮核对声明和构造范围，未重新编译。
+
+<a id="ref-wss"></a>
+
+\[9\] 项目 [shi2026second.md](https://github.com/the-omega-institute/trureturing/blob/046c7ac2521a8429a0aeaeaee08b7b23d0bf20ff/Library/Arith/shi2026second.md)，CG.1–CG.3、SJC.2–SJC.4。当前固定版本与上一轮所查该文件一致。
+
+<a id="ref-c128"></a>
+
+\[10\] 项目 C128，[标架与角关系续卷](https://github.com/the-omega-institute/trureturing/blob/046c7ac2521a8429a0aeaeaee08b7b23d0bf20ff/docs/develop/theory/AURIC_C128_FRAME_CORNER_RELATIONS_CONTINUATION.md)，新增 §§255–263，特别是定义 255.1、定理 260.1、261.1、命题 262.2 和 §263。
+
+<a id="ref-protocol"></a>
+
+\[11\] [NativeProtocolBornNormalization.lean](https://github.com/the-omega-institute/trureturing/blob/046c7ac2521a8429a0aeaeaee08b7b23d0bf20ff/D5/S3/Quantum/Dynamics/NativeProtocolBornNormalization.lean)，`original_complete_born_law`。原质量已定义为复振幅模平方。
+
+<a id="ref-mosseri"></a>
+
+\[12\] R. Mosseri and R. Dandoloff, *Geometry of Entangled States, Bloch Spheres and Hopf Fibrations*, 2001, §2. [arXiv:quant-ph/0108137](https://arxiv.org/abs/quant-ph/0108137)。 本文使用的 $S^3$ 是 $\mathbb C^2$ 中的单位向量集，完整 Hilbert 空间是 $\mathbb C^2$。
+
+<a id="ref-watrous"></a>
+
+\[13\] J. Watrous, *The Theory of Quantum Information*, Cambridge University Press, 2018, Chapter 2, Theorem 2.22. [作者公开章节](https://cs.uwaterloo.ca/~watrous/TQI/TQI.2.pdf)。

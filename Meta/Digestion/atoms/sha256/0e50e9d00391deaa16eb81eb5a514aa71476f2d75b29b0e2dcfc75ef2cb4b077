@@ -1,0 +1,25 @@
+**定义 145.1（秩二自读回候选）。** 分别保留母卷定义 41.1 的完整 $B$ 与定义 67.1 的完整 $\mathsf B_{\rm cl}$，任一背景记为 $B_*$。在同一原有限 EJA、原正 Frobenius 型 $q$、原实双线性 $D$ 上，仍记
+
+$$
+P_c=4(L_c-L_c^2),\qquad N_c=E_1(c)\oplus E_0(c),\qquad
+W_c(x)=\tfrac12\|P_cx\|_q^2.
+$$
+
+唯一新增配平关系为
+
+$$
+\boxed{\mathsf F_{\rm diag}:\quad
+\begin{gathered}
+c^2=c,\quad\operatorname{rank}_Ec\in\{1,2\},\qquad
+p,r\in\operatorname{Prim}(E),\quad P_cr=0,\\
+\operatorname{rank}_Ec=2\ \Longrightarrow\ r=p
+\end{gathered}
+\quad\Longrightarrow\quad
+W_c(p)=2q(D_pc,r)+W_c(2D_cp).}
+\tag{145.1}
+$$
+
+记 $\mathsf C_{\rm diag}(B_*)=B_*+\mathsf F_{\rm diag}$。秩一主切口保留全部原 primitive 输入与非零法向 primitive 读回；秩二主切口只读回输入自身。后一层的 $P_cr=0$ 因 $r=p$ 同时要求 $P_cp=0$，输入整颗落在切口内或外。这里的 primitive 与秩仍属于整个原对象，二元主切口包括跨中央块之和。零主切口的删除只是附带，其原等式由双线性自动成立；实质删减是秩二层的独立读回槽和横向输入，不将零切口的删除计作新的结构发现。
+
+原 $q,D,L$、全部原对象和实际联合保持，包括旧输出、失败输出、经典标签及实际供应的 $AP^{\otimes k}$。完整原 X 的含幺嵌入、同一 $D$ 保持、交叉零、乘积张成与每对实际准备的实际乘积准备，连同 Xs、整个 AC、精确 $N_u$、全事件 R、F 和每条所消费合法连线均保持。全部原相关准备、零与次归一质量、不等正块权、设备身份、失败、细记录、遗忘、具名同数支持双返回、原反向数及全部合法有限顺序、自适应和并行历史均在原量词内。候选不预加 SC、单位条件、导子、斜伴随或复分类，也不新增实际准备、角对象或器件。
+

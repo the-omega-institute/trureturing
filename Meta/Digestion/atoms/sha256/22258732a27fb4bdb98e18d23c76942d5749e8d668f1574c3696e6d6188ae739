@@ -1,0 +1,26 @@
+**Definition 53.1 (original spectral tests).** For $d=b,b_{\rm ref}$
+fix that admitted datum and use the exact $\Xi_s,\mathcal U_s,
+\mathcal T_s$ of §2. Write $Y_s=\Xi_s\circ\mathscr L_s$ and, by
+restriction and zero extension on complex $L^2(\mathbb R^4)$, set
+
+$$
+\begin{aligned}
+C_d&=s^2(\mathcal T_s\mathcal U_s)S_d
+                  (\mathcal T_s\mathcal U_s)^{-1},&T&=s^{-2},\\
+Q_d(t)&=e^{-tC_d},&q_d(t;\eta,\xi)&=j_0s^7K_d(s^2t;Y_s\eta,Y_s\xi),\\
+H_d&=\int_0^TQ_d(t)dt,&F_d&=j_0^{-1}\int_1^Tq_d(t;0,\cdot)dt,\\
+J_d&=s^5W_{1,d}(Y_s\cdot),&U_d&=F_d+J_d,\\
+R_d(h)&=(C_d+h)^{-1},&
+\mathscr K_d(h)&=U_d^{1/2}R_d(h)U_d^{1/2},\\
+k_d(h)&=\|\mathscr K_d(h)\|_{2\to2},&
+A_p&=\int Vp,&\mathscr A&=(C_*+j_0A_p^2)/\mu>0.
+\end{aligned}
+\tag{53.1}
+$$
+
+Here $J_d$ denotes a multiplier only; it is not assumed in $L^2$.
+The untransported domains are exactly (1.5) on $I_d$, for every real
+phase frequency. The transported operator domain is
+$(\mathcal T_s\mathcal U_s)D(S_d)$ and the form domain is
+$(\mathcal T_s\mathcal U_s)\mathcal Q_d$. Both moving faces remain.
+

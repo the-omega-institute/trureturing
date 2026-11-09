@@ -1,0 +1,10 @@
+## 6. 文献范围与完整白话
+
+Bebe Prunaru，*A short proof of a Choquet–Deny theorem for abelian topological semigroups*，作者机构公开预印本，Theorem 1 及 pp.1–2 的证明：交换 Hausdorff 拓扑半群、正则 Borel 概率及有界 Borel 调和函数。引理 2.1 采用已核对原文的有限原子证明，故不把这些额外拓扑条件输入本模型。原文：<https://imar.ro/~dtimotin/idei/choquet-deny5.pdf>。
+
+Gabor Lippner、Dan Mangoubi，*Harmonic functions on the lattice: Absolute monotonicity and propagation of smallness*，arXiv:1312.4550v3，Theorem 2.1、Claim 2.2、Remark 2.3、Corollary 1.9；Duke Mathematical Journal 164(13), 2577–2595，DOI 10.1215/00127094-3164790。其交换 Cayley 图上的调和平方差分恒等式与格点多项式刚性是既有工具；引理 2.2 写出本题使用的常数 Poisson、次三次增长特例。原文：<https://arxiv.org/html/1312.4550v3>。
+
+另一条既有路线是 Hua–Jost–Li-Jost，*Polynomial Growth Harmonic Functions on Finitely Generated Abelian Groups*，arXiv:1112.6284v3，Theorem 1.2：有限生成阿贝尔群的对称 Cayley 图上，多项式增长调和函数在自由部分是多项式。减去常数 Poisson 方程的显式二次解后，可用于同一有限格拉回。本文没有把这些经典工具、Hilbert 完成或 Gram 延拓认领为新发现，也不提出同原语表示定理的文献优先权主张。
+
+**完整白话。**历史仍是一份份只能有限合并、完整保留来历的正配方；标记可以任意改动档案，连“标记合并后的结果等于分别标记再合并”都不先要求。只约束任意两对历史的比较：第二对分别不标记、标记一次、标记两次，与第一对合并，三个读数总和始终配平。这先使两边共同加的背景无法改变比较；再由全部有限重复的非负性排除更高次变化和不对称的一次偏置，只留下平方距离。此后标记在所有可见比较中保持距离，三方向相加又为零，所以它只能表现为共同的三分之一圈旋转，可见的线性随之成为结论。另两种正方向能合成相反贡献，三种正历史铺出六角格；新增档案仍留在原处。这里重建的是复振幅的比较几何；成为实际量子实验仍需完整结果、足够准备和测量、细记录、联合系统与时间过程的实际供应。
+

@@ -1,0 +1,53 @@
+**定理 13.1（全域幂族的原端点充要判据）。** 对 $k>0,\beta>0$，令 $\Pi^{k,\beta}$ 为 (12.2) 的同一个全域响应。对定义 1.2 的原矩阵及每一个原分量，
+
+$$
+\Pi^{k,\beta}\in\mathscr C_{\rm end}
+\quad\Longleftrightarrow\quad (k,\beta)=(1,2).
+\tag{13.1}
+$$
+
+必要性只消费 (1.4) 中 $j=1$、单独原分量 $B=\{\{2\}\}$ 的一个完整门端点恒等式，其输入量词仍是全部数学非零向量。
+
+证明。沿 III179.1 的同一原三坐标截面，取
+$u=\varnothing,v=\{1\},r=\{2\}$。$u,v$ 是地址一的活动对；固定 $b_0=0$ 下，$r$ 是 $\mathcal P_1=0$ 的阻塞单点。这个截面在原 $\mathbb C^{89}$ 内，不是新载体或独立旁观系统。对 $z=ae_u+be_v+he_r$，完整端点为
+
+$$
+\begin{aligned}
+K_1z&=(M(a,b))_u e_u+(M(a,b))_v e_v+\zeta h e_r,\\
+M&=\zeta\begin{pmatrix}
+1-x+x\zeta &(\zeta-1)xy\\
+(\zeta-1)xy&1-x^2+x^2\zeta
+\end{pmatrix}
+=\zeta[I_2+(\zeta-1)Q_*].
+\end{aligned}
+\tag{13.2}
+$$
+
+固定 $h\ne0$，允许 $a,b\in\mathbb C$ 任意。原单点端点等式 $\Pi_r(K_1z)=\Pi_r(z)$ 精确成为
+
+$$
+\frac{k|h|^\beta}
+ {|(M(a,b))_u|^\beta+k|(M(a,b))_v|^\beta+k|h|^\beta}
+=
+\frac{k|h|^\beta}{|a|^\beta+k|b|^\beta+k|h|^\beta}.
+\tag{13.3}
+$$
+
+同一严格正分子和正分母允许消去，给
+
+$$
+|(M(a,b))_u|^\beta+k|(M(a,b))_v|^\beta
+=|a|^\beta+k|b|^\beta\qquad(a,b\in\mathbb C).
+\tag{13.4}
+$$
+
+固定 $h=1$ 已覆盖 $(a,b)=(0,0)$、任一活动坐标为零及端点像碰节点的情形；没有在 $h=0$ 分支作消去，没有除活动概率或块质量。
+
+现在直接应用 [Lamperti][Lamperti13] Theorem 3.1 的不交支撑结论，亦即其 Corollary 2.1.1 的等号判据。精确的 $L^p$ 对应是：$p=\beta$，二原子空间 $\{u,v\}$ 带全幂集 $\sigma$-代数，正测度 $\mu(\{u\})=1,\mu(\{v\})=k$，复线性算子是作用于函数值 $(a,b)$ 的 $M$。(13.4) 恰为保持 $\|f\|_p^p$，从而保持 $\|f\|_p$。测度有限，故为 $\sigma$-有限，每个函数都属于这个 $L^p$。当 $0<p<1$，它是拟范数空间；原文同样明确覆盖该范围，此应用不使用三角不等式。等价地，$\operatorname{diag}(1,k^{1/\beta})M\operatorname{diag}(1,k^{-1/\beta})$ 是计数测度的等距算子。Theorem 3.1 不要求满射；本例 $M$ 的特征值为 $\zeta,\zeta^2$、行列式 $\zeta^3\ne0$，实际也可逆。
+
+若 $\beta\ne2$，该成熟定理迫使 $Me_u,Me_v$ 支撑不交。然而 $M$ 四个条目都非零：非对角项由 $x,y>0,\zeta\ne1$ 保证；去掉外因子 $\zeta$ 后，两个对角项的虚部分别为 $x\operatorname{Im}\zeta$、$x^2\operatorname{Im}\zeta$，均非零。两列故在两个正测度原子上都非零，矛盾。于是 $\beta=2$。
+
+再用原矩阵的欧氏酉性，而不是从概率归一化猜测它。$Q_*=\xi\xi^*$，$\xi=(y,x)^T$，且 $\xi^*\xi=y^2+x^2=x+x^2=1$，故 (13.2) 的 $M$ 酉。令 $A=M_{uu},B=M_{vu}\ne0$；(13.4) 在 $(a,b)=(1,0)$ 给 $|A|^2+k|B|^2=1$，原酉性给 $|A|^2+|B|^2=1$，所以 $(k-1)|B|^2=0$，即 $k=1$。
+
+反向，在 $(k,\beta)=(1,2)$，每个原 $B\in\mathscr B_j$ 都是 $K_j$ 的约化子空间，分量平方范数和总平方范数分别保持，因而得到全部 (1.4)。这逐个包括所有内部活动对、$\mathcal P_j=0,1$ 的阻塞单点以及 $j=0,10$ 的各 $89$ 个边界单点；不按谱简并合并。响应在全部非零向量上连续且复射线不变，所以属于原 $\mathscr C_{\rm end}$。剩余端点不再排除唯一幸存参数。∎
+

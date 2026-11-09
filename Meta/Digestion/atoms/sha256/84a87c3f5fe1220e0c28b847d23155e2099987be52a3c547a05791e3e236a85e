@@ -1,0 +1,61 @@
+### 命题 4.1（相位预算的三维圆锥）
+
+固定 $f,g$ 的自比较，全部相对相位的互读界恰好给
+
+<a id="eq-c130-phase-cone"></a>
+
+$$
+x\cos\theta-y\sin\theta\le T\quad(\theta\in\mathbb R)
+ \quad\Longleftrightarrow\quad
+ T\ge\sqrt{x^2+y^2}=|b|.
+\tag{6}
+$$
+
+**证明。**
+把 $g$ 换为 $e^{i\theta}g$，$q$ 不变，交叉项变为 $e^{i\theta}b$。
+其最大实部为 $\sqrt{x^2+y^2}$，所以全部半空间的交集就是所示圆锥。
+
+<a id="fig-c130-budget-cone"></a>
+
+```latex
+\begin{tikzpicture}[font=\small,>=Latex]
+ \path[use as bounding box] (-0.35,-0.70) rectangle (11.20,3.72);
+ \node at (1.75,3.46) {固定 $T=1$：旋转预算线};
+ \begin{scope}[xshift=1.75cm,yshift=1.50cm,x=1.05cm,y=1.05cm]
+  \fill[teal!8] (0,0) circle[radius=1.05cm];
+  \draw[black!38,dashed] (-1,-1) rectangle (1,1);
+  \draw[black!42,->] (-1.35,0)--(1.53,0) node[below right] {$x$};
+  \draw[black!42,->] (0,-1.35)--(0,1.45);
+  \node[left] at (-0.08,1.44) {$y$};
+  \draw[teal!75!black,very thick] (0,0) circle[radius=1.05cm];
+  \draw[orange!85!black,thick,domain=-0.10:1.50,samples=2,variable=\t]
+    plot ({\t},{sqrt(2)-\t});
+  \fill[red!70!black] (1,1) circle (1.8pt);
+  \node[above right,red!70!black] at (1.03,1.02) {$(1,1)$};
+  \node[below left] at (-1,0) {$-1$};
+  \node[below right] at (1,0) {$1$};
+ \end{scope}
+ \node[font=\footnotesize] at (1.75,-0.43) {四相位给方形；全部相位给圆盘};
+
+ \node at (8.45,3.46) {三维预算圆锥};
+ \begin{scope}[xshift=8.45cm,yshift=0.45cm,
+  x={(0.65cm,-0.22cm)},y={(0.45cm,0.30cm)},z={(0cm,0.80cm)}]
+  \fill[teal!7,domain=0:360,samples=121,variable=\ang]
+    plot ({2*cos(\ang)},{2*sin(\ang)},2)--cycle;
+  \foreach \ang in {0,45,90,135,180,225,270,315}{
+   \draw[teal!45!black,line width=0.35pt]
+    (0,0,0)--({2*cos(\ang)},{2*sin(\ang)},2);
+  }
+  \foreach \lev in {0.5,1,1.5,2}{
+   \draw[teal!65!black,line width=0.45pt,domain=0:360,samples=121,variable=\ang]
+    plot ({\lev*cos(\ang)},{\lev*sin(\ang)},\lev);
+  }
+  \draw[black!42,->] (-1.15,0,0)--(2.55,0,0) node[below right] {$x$};
+  \draw[black!42,->] (0,-1.15,0)--(0,2.55,0) node[above right] {$y$};
+  \draw[black!42,->] (0,0,0)--(0,0,3.10) node[right] {$T$};
+  \fill[teal!75!black] (0,0,0) circle (1.8pt);
+ \end{scope}
+ \node at (8.45,-0.43) {$T\ge\sqrt{x^2+y^2}$};
+\end{tikzpicture}
+```
+

@@ -1,0 +1,26 @@
+### 定义 22.1（共同合法仿射族及其距离）
+
+固定同一 $\mathcal I,\mathcal D$，令 $\mathcal K_{\mathcal D}$ 为所有系数族 $(a_i,b_i)_{i\in\mathcal I}$，其函数 $G_i(n)=a_i+\langle b_i,n\rangle$ 在整个球面非负、每个原请求全标签和一，并满足 $\mathcal D$ 的全部原边。逐坐标正且不超过一等价于
+
+$$
+0\le a_i\le1,\qquad
+\|b_i\|\le\min(a_i,1-a_i).
+\tag{22.1}
+$$
+
+控制边明确要求 $a_{bq,w}=a_{q,w}$、$b_{bq,w}=A_b^{-1}b_{q,w}$；记录边对 $a,b$ 分别作原来的求和。没有把两个原来不相容的请求变成一份共同抽样。这里的“共同”指同一个系数族在所有已有接口上相容；它不提供读后更新或合法完整历史过程。
+
+对定理 21.2 的 $f_i=\alpha_i+\langle\beta_i,n\rangle$，定义
+
+$$
+\begin{aligned}
+d_{\mathcal D}(F)&=\inf_{G\in\mathcal K_{\mathcal D}}
+\sup_i\|F_i-G_i\|_\infty,\\
+\tau_{\mathcal D}(f)&=\inf_{(a,b)\in\mathcal K_{\mathcal D}}
+\sup_i\bigl(|a_i-\alpha_i|+\|b_i-\beta_i\|\bigr).
+\end{aligned}
+\tag{22.2}
+$$
+
+这两个距离都是绝对逐标签一致距离。即使 $d_{\mathcal D}(F)$ 很小，也不能因此将原始准确容量改成四。
+

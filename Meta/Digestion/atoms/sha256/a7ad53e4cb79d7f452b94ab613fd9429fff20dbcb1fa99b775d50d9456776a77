@@ -1,0 +1,12 @@
+**Corollary 3.1 (Disposition of the literal four-site claim).** For every fixed $N\ge4$ and every $\psi\in U_N$,
+
+$$
+\mathcal F_{N,4}(\psi)=\mathcal F_{N,3}(\psi)=S^1\psi.
+$$
+
+Thus four adjacent sites suffice generically on the actual model, while four is not the generic minimum. In the same range, three adjacent sites already suffice on a nonempty relatively Zariski-open dense set of actual states. This disproves the literal “but no fewer” clause in Critch–Morton, [arXiv:1210.2812v4](https://arxiv.org/abs/1210.2812v4), Conjecture 10:
+
+> A generic $N$-qubit $(D=d=2)$ periodic translation invariant matrix product state $\Psi$ is determined up to phase by a reduced density operator which traces out all but a chain of four adjacent states, but no fewer.
+
+Proof. Equality of four-site raw marginals implies equality of their three-site partial traces. Theorem 2.1 gives the phase conclusion, and the converse follows from phase invariance. Cyclic symmetry makes the conclusion independent of the adjacent block's position. For $N=4$, the four-site operator is simply the full rank-one operator $|\psi\rangle\langle\psi|$, while the three-site conclusion still follows from Theorem 2.1. Four distinct adjacent sites are defined only for $N\ge4$; the quoted conjecture gives no separate lower-bound convention for $N<4$. The source describes generic fibres of its real-algebraic raw map without specifying a formal genericity convention; the explicit state locus $U_N$, and its determinant criterion in the observed marginal, supply the genericity used here. No conclusion about whether two adjacent sites suffice follows from this proof. $\square$
+

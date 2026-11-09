@@ -1,3 +1,4 @@
+using System.Text.Json;
 using StrataLint.Runtime;
 using StrataLint.Cli;
 using StrataLint.Engine;

@@ -1,0 +1,36 @@
+**定理 20.1（正幂三点分类）。**在全部原始前件及完整 (R) 下，若存在对全模型统一的 $\alpha>0$，使
+
+$$
+c(x,z)^\alpha\le c(x,y)^\alpha+c(y,z)^\alpha
+\qquad(x,y,z\in M),
+\tag{20.1}
+$$
+
+则具有定理 14.1 的完整仿射表示。因此在原始 (R) 类内，存在任一这样的正指数，与 $\mathrm{DT}$ 及完整仿射表示等价。
+
+**证明。**将指数降为 $\beta=\min\{\alpha,1/2\}$：非负实数的幂 $\beta/\alpha\le1$ 保三角。取第 9 节的原右梳数组模型，置 $D_N=c_N^\beta$。它是数组 $(c(X_\sigma,Y_\sigma)^\beta)_\sigma$ 的加权 $\ell^{1/\beta}$ 范数，故有限 Minkowski 保有向三角。记 $W=\Omega(1)$，核保持与单位预算给
+
+$$
+D_N(\Gamma_Na,\mathbf1)\le q(a)^\beta+(W/N)^\beta,\qquad
+D_N(\mathbf1,\Gamma_Na)\le r(a)^\beta+(W/N)^\beta.
+\tag{20.2}
+$$
+
+在第 14 节相同的单位约简正规形上，可取
+
+$$
+\begin{aligned}
+B(1)&=0,\\
+B(x_i)&=\max\{q(a_i)^\beta,r(a_i)^\beta\}+W^\beta,\\
+B(Us)&=B(s)+W^\beta,\\
+B(st)&=3^\beta
+\bigl(B(s)^{1/\beta}+B(t)^{1/\beta}\bigr)^\beta
+\quad(s,t\ne1).
+\end{aligned}
+\tag{20.3}
+$$
+
+一般乘积仍只用相应 $\le$ 界。同步等距、有向三角和 (R) 第零项给 $D_N(s_N,\mathbf1),D_N(\mathbf1,s_N)\le B(s)$，继而全部有序项对的 $c_N$ 有 $N$ 一致的有限界。
+
+取全部项对的共同极限，保留完整 (R)、$c_\infty^\beta$ 的有向三角及单位轨道到真单位的双向零费用。此时双向零费用才成为等价关系，且三角条件给全部 $c_\infty^\beta$ 行列不变；正幂单射性再给全部 $c_\infty$ 行列不变。原第零项界与同步等距分别给乘法与 $U$ 同余。因此合法商上标记严格固定单位，调用固定单位分类，再由初始有限矩阵保持调用任意标记的有限正性桥，得到原模型的完整仿射表示。
+

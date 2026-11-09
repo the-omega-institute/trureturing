@@ -1,0 +1,11 @@
+**定义 77.1（同一对象上的实际分支、支撑与有限迹）。** 保留 C103 及定义 50.1 的全部效果、所选谱框架和实际成功分支供应。每个已有对象仍表示为 $\mathcal A=\bigoplus_\alpha M_{d_\alpha}(\mathbb C)$；$\tau=\sum_\alpha\operatorname{Tr}_\alpha$ 为各简单块通常矩阵迹之和。状态方向的指定分支 $T_{E,F}:\mathcal A\to\mathcal A$ 完全正，成功效果满足 $`T_{E,F}^*(1)=E`$；星号始终是相对于 $\tau$ 的数学伴随。相应实际标签补全及允许的有限接续沿用原供应。暂不要求射线校准、共同谱对系数、共同调暗、框架无关性、连续性、协变性或 $T_{1,F}=\operatorname{id}$。
+
+对非零效果 $E$，在原代数内部定义
+
+$$
+P_E=\operatorname{supp}E,\qquad q_E=\min\bigl(\sigma(E)\setminus\{0\}\bigr),\qquad E^\vee=q_EE^\dagger,
+\tag{77.1}
+$$
+
+其中 $E^\dagger$ 在正谱上取倒数、在零谱上取零；$E^\vee$ 仍是效果，支撑同为 $P_E$。$\mathcal C_E=P_E\mathcal A P_E$ 只是数学角，不另外声明它是已有对象或可执行压缩。$E$、$E^\vee$、$\sqrt E$、$aE$ 均沿用同一所选细谱框架 $F$；重根不要求另择基。下文省略 $F$ 时仍固定这个框架。
+

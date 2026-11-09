@@ -1,0 +1,14 @@
+#### 命题 8.7：标准结构的若干直接后果
+
+在该数学完成中，局部保迹过程不改变另一方边缘态； 任意两个自伴量满足 Robertson 不等式；标准二体纯态可以纠缠。
+
+**证明。**
+
+局部无信号性由 $\operatorname{Tr}_B[(\operatorname{id}\otimes\Phi)(\rho_{AB})]=\operatorname{Tr}_B\rho_{AB}$， 将 Kraus 和与 $`\sum K^*K=I`$ 代入即可。 对 $`\langle X,Y\rangle_\rho=\operatorname{Tr}(\rho X^*Y)`$ 用 Cauchy–Schwarz， 取中心化自伴 $\Delta A,\Delta B$，便得 $(\Delta_\rho A)^2(\Delta_\rho B)^2\ge|\operatorname{Tr}(\rho[A,B])/(2i)|^2$。 最后 $|\Phi^+\rangle=(|00\rangle+|11\rangle)/\sqrt2$ 的约化态为 $I/2$， 不可能是纯乘积；其秩一投影也不能是乘积态的凸组合，因为正和的各项必须落在同一条射线上。
+
+$\square$
+
+这些结论均来自明确的有限完成。若只供应可分离联合锥，也能保留全部局域 qubit， 却不会自动得到纠缠准备。无限维位置、动量、场方程与引力仍未由本候选恢复； 例如有限矩阵不可能满足 $[X,P]=i\hbar I$、$\hbar\ne0$，因为取迹立即矛盾。
+
+<a id="section-9"></a>
+

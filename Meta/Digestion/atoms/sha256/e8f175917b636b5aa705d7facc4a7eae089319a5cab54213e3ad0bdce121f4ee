@@ -1,0 +1,25 @@
+**Proposition 141.1 (reflection of the entire original endpoint and an even terminal perturbation).** Retain the complete original telescope of Definitions 135.1 and 136.1. In symmetric coordinates define
+
+$$
+J(x,y,z,\xi)=(x,y,-z,\xi).
+\tag{141.1}
+$$
+
+Its pullback preserves $m$, the entire form domain $\mathscr V=\mathscr V_0\dotplus\mathbb C1$, its energy and its source trace, and commutes with the actual $K$ and every $T_s$. Every actual source density $g_s$ is $J$-even. The representative $\beta$ of Proposition 136.2 can be chosen both pointwise rotation invariant and $J$-even, without changing the original $b,M,c,f$ classes or any target. For every original $\theta$ there is a nonzero bounded invariant $J$-even real $w$, supported away from $N$ in a compact set, such that the construction (140.1)–(140.3) gives, for sufficiently small nonzero $\tau$,
+
+$$
+\begin{gathered}
+k=c\beta+\tau w,\qquad 0<k\le3/8\quad\hbox{everywhere},\qquad k\circ J=k,\\
+\int_Gg_{jd}k\,dm=t_j\quad(j=2,3,4),\qquad
+q=Pk,\qquad q/g\ \hbox{nonconstant almost everywhere},\qquad
+\Delta_k>0.
+\end{gathered}
+\tag{141.2}
+$$
+
+*Proof.* The map $J$ is a measure-preserving automorphism of the original $H^1\times\mathbb R$, fixes $e$ and commutes with the rotations. It changes the sign of $X_3=\partial_z$ and leaves $X_1,X_2,\partial_w$ unchanged. Thus the free realization of $L$ commutes with $J$. Its source heat law at $e$ is invariant, and the original identity $\Gamma=\int_0^\infty h_s\,ds$ makes $\Gamma$ invariant as well. Equivalently, the independent Gaussian $z$ factor in the original heat representation is even; (122.6) exhibits this symmetry through $z^2$ on $\Omega$. The Heisenberg heat factor is the attributed [Krötz–Thangavelu–Xu formula, §4.1, (4.1.2)](https://arxiv.org/html/math/0401243v2), with $n=1$ and the original Fourier and raw Haar conventions as in Appendix II §122. This argument concerns the original unit-source field, without changing its normalization.
+
+Consequently $J$ preserves $S$, $S^*$, the Friedrichs form $(\overline q_c,\mathcal Q_c)$ and its domain. The supplied identity $\ker S^*=\mathbb Ch$ makes $Jh$ a multiple of $h$. Positivity, reality and unit norm give $Jh=h$. Hence $J$ preserves the full domain $\mathcal Q_c\dotplus\mathbb Ch$ and the form $q_H[y+ch]=\overline q_c[y]$. Closed-form representation proves commutation with the actual $H_{\rm end}$, including its source summand and selector. Conjugation by this same $h$ gives invariance of $m$, $\mathscr V$ and $\mathscr E$, and commutation with $K,T_s$. Moreover $J$ preserves $\mathscr V_0$, fixes $1$ and therefore preserves $\operatorname{tr}(v_0+c)=c$. Applying the actual source identity (117.2) to $Jv$ and using Riesz uniqueness gives $Jg_s=g_s$ for each $s>0$. Thus neither the full domain nor the source-start law is inferred merely from a differential symmetry.
+
+Replace the pointwise invariant representative of Proposition 136.2 by $(\beta+\beta\circ J)/2$. This preserves its class $g_d$ and the everywhere bounds $0<\beta\le M$. Choose a positive analytic-$\beta$ quotient patch with compact closure in $\{r>0,z>0\}$, and a compact subpatch on which $\beta\ge b_*>0$. Such a patch exists by positivity almost everywhere and analytic continuity. Repair the representative to the analytic one there and on its reflected patch. Select four disjoint positive-measure Borel subsets of the subpatch, and pair each with its reflection. Their four invariant lifted indicators are even and linearly independent. The three source moment equations on their span have a nonzero solution $w$. Its support is compact and disjoint from $N$, and it may be assigned zero on $N$. Both reflected patches have the same lower bound $b_*$, so the smallness bound (140.7) applies to their union. The proof of Theorem 140.2 now applies to this particular $w$: that bound, polynomial continuity of $\Delta_k$, and the injectivity argument for $P(k-c\beta)$ give every assertion of (141.2). No new assumption about the desired negative vector enters this construction. $\square$
+

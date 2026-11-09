@@ -1,0 +1,19 @@
+**引理 22.2（三倍数右标记的单位比较）。**若 $3\mid L$，则对全部 $a,b,y$ 有
+
+$$
+\begin{aligned}
+c(a p_L,b p_L)&=c(a,b),\\
+q(y)&\le3c(y,p_L)+3\Omega,\\
+r(y)&\le3c(p_L,y)+3\Omega.
+\end{aligned}
+\tag{22.2}
+$$
+
+**证明。**令 $g_j=c(a p_j,b p_j)$。(R) 取右输入 $p_j,p_j$，给 $g_j+g_{j+1}+g_{j+2}=3c(a,b)$，故 $g_{j+3}=g_j$。又 $g_0=c(a,b)$，得到第一式。特别有 $q(y)=c(y p_L,p_L)$。对这一费用使用实际拆分 $(y\cdot p_L,p_L\cdot1)$ 与引理 1.2，得
+
+$$
+q(y)\le3\bigl(c(y,p_L)+q(p_L)\bigr).
+$$
+
+反向拆分 $(p_L\cdot1,y\cdot p_L)$ 给 $r(y)\le3(c(p_L,y)+r(p_L))$。用单位轨道预算结束证明。这是先作精确等距改写，再用实际乘法单项界；没有由小费用推出连续性或全行列识别。
+

@@ -1,0 +1,28 @@
+**定义 27.1（不预付 R 的同一 JB 背景）。** 固定定义 1.1 的同一实 Archimedean 序单位空间 $(E,C,u,N)$ 和分离且准确决定 $C$ 的原正实线性评价族 $\mathcal P$。另已供应忠实、等距、保单位且稠密的 Jordan 嵌入 $E\subset X$，其中 $X$ 为实含单位 JB 代数，同一原 $S$ 是其 Jordan 乘法的限制。此完成接口不使用 R。原域允许不完备、无限维、中心、经典支及不等块，原评价保留零、不等和次归一质量。由单位与序单位范数认回正锥，有 $C=E\cap X_+$；$X_+$ 是 $C$ 的完成闭包。以下不更换原乘法、原锥或原评价族。
+
+原 $D:E^2\to E$ 起初仅为总映射。置 $L_a b=S(a,b)$、$a^2=S(a,a)$，只保留
+
+$$
+D(a,D(a,b))=(L_a^2-L_{a^2})b\qquad(a,b\in E).
+\tag{27.1}
+$$
+
+在自由有限支撑复空间 $\mathcal F=\mathbb C^{(E)}$ 上，对原实标签定义
+
+$$
+h_\alpha([a],[b])=\alpha(S(a,b))-\mathrm i\alpha(D(a,b)),
+\qquad
+A_t[a]=[S(t,a)]-\mathrm i[D(t,a)].
+\tag{27.2}
+$$
+
+$h_\alpha$ 共轭线性于第一槽，自由延拓；$A_t$ 自由复线性延拓。要求 $h_\alpha(f,f)\ge0$ 对全部 $\alpha\in\mathcal P,f\in\mathcal F$ 成立，包括全部有限原标签的零、重复、相消、实缩放和平移。二次预测支配条件为
+
+$$
+\forall t\in E\ \exists C_t\in[0,\infty)\ \forall\alpha\in\mathcal P\ \forall f\in\mathcal F:
+\quad h_\alpha(A_tf,A_tf)\le C_t^2h_\alpha(f,f).
+\tag{27.3}
+$$
+
+$C_t$ 可依赖同一个原 $t$，但不得依赖评价或自由向量；不要求全体 $t$ 共用常数。不添加 PY、Jacobi、原投影或函数演算封闭、纯态准备、完成内实际作用者、作用者自伴性或乘法表示。$E=0$ 时全部陈述取零空间约定。
+

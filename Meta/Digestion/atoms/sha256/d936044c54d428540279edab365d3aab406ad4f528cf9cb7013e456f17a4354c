@@ -1,0 +1,6 @@
+**Theorem 5.3 (Bipartition factorization).** For each nonempty $S\subseteq\{1,\dots,\mathtt q-1\}$ let $X_S=\{j\in\mathbb Z_n^{\mathtt q-1}:j_k=j_l\text{ for }k,l\in S,\ j_k=0\text{ for }k\notin S\}$, a cyclic subgroup of order $n$. Then:
+
+1. For $j\in X_S$ with common value $c$ on $S$, $\nu_j=p_S(1-p_S)\sin^2(\pi c/n)$; thus the factors of Proposition 5.1 indexed by $X_S$ are exactly the factors of the bipartite determinant $\Delta_2$ with $p=p_S$.
+2. $X_S\cap X_{S'}=\{0\}$ for $S\ne S'$.
+3. With $\mathcal O=\mathbb Z_n^{\mathtt q-1}\setminus\bigcup_SX_S$, the set of $j$ for which $\{0,j_1,\dots,j_{\mathtt q-1}\}$ has at least three elements,
+

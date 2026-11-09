@@ -1,0 +1,17 @@
+**Definition 4.2 (Eight dual witnesses).** The rows of the second table
+are flattened in the same first-qubit-outer order as $p_i$.
+They are $(V,T,V_3,V_2,V_1,T_2,T_3,T_1)$ in that order.
+Their support values are the maxima of the sixty dot products with
+Definition 4.1, and their $d_k$ entries specify the polynomial identities
+used in Theorem 2.1.
+
+| $k$ | $S_k$ | Sixteen entries | $h_P(S_k)$ | $d_k$ |
+| --- | --- | --- | --- | --- |
+| 0 | $V$ | 1 -1 -1 -1 -1 -1 -1 -1 1 -1 -1 -1 1 -1 -1 -1 | 0 | $\alpha(1+\beta)/2$ |
+| 1 | $T$ | 1 1 1 1 -1 -1 -1 -1 1 -1 -1 -1 1 -1 -1 -1 | 1/2 | $\beta(1+2\alpha)/2$ |
+| 2 | $V_3$ | 1 -1 -1 -1 -1 -1 -1 1 1 -1 -1 -1 1 -1 -1 -1 | 0 | $\alpha(1+v)/2$ |
+| 3 | $V_2$ | 1 -1 -1 -1 -1 -1 1 -1 1 -1 -1 -1 1 -1 -1 -1 | 0 | $\alpha(1+u)/2$ |
+| 4 | $V_1$ | 1 -1 -1 -1 -1 1 -1 -1 1 -1 -1 -1 1 -1 -1 -1 | 0 | $\alpha(1+w)/2$ |
+| 5 | $T_2$ | 1 1 -1 1 -1 -1 1 -1 1 -1 -1 -1 1 -1 -1 -1 | 1/2 | $u(1+2\alpha)/2$ |
+| 6 | $T_3$ | 1 1 1 -1 -1 -1 -1 1 1 -1 -1 -1 1 -1 -1 -1 | 1/2 | $v(1+2\alpha)/2$ |
+| 7 | $T_1$ | 1 -1 1 1 -1 1 -1 -1 1 -1 -1 -1 1 -1 -1 -1 | 1/2 | $w(1+2\alpha)/2$ |

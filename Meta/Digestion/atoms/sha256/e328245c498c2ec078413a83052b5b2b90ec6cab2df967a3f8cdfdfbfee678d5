@@ -1,0 +1,16 @@
+### 定义 1.2（二元参照比较）
+
+记 $\Gamma_\sigma(A)=\sigma^{1/2}A\sigma^{1/2}$。
+前后两端的效果 $A,B$ 定义
+
+<a id="eq-c122-pair"></a>
+
+$$
+b_{\sigma,\mathcal N}(A,B)
+ =\operatorname{Tr}\!\left[B\,\mathcal N\!\left(\Gamma_\sigma(A)\right)\right].
+\tag{1}
+$$
+
+它对每一端分别线性、取非负值，且
+$b(I,I)=1$、$b(A,I)=\operatorname{Tr}(\sigma A)$、$b(I,B)=\operatorname{Tr}(\tau B)$。
+

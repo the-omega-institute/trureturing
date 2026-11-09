@@ -94,7 +94,7 @@ def Correct {k m : Nat} (S : System k m) (T : Presentation k m) : Prop :=
       Satisfies S p (mapValues p T.reconstruct w) ∧
       mapValues p T.project (mapValues p T.reconstruct w) = w)
 
-private theorem positive_period (a : Nat) (positive : 0 < a)
+theorem positive_period (a : Nat) (positive : 0 < a)
     (X : CompletionTree) (fixed : X = rho^[a] X) : X = Omega := by
   have periods : ∀ r, rho^[r * a] X = X := by
     intro r

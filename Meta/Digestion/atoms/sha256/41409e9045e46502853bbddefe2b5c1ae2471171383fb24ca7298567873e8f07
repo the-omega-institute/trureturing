@@ -1,0 +1,61 @@
+**Corollary 20.2 (exact two masses, common phase and complete accounting).** Under (17.1), the core-subtracted macroscopic state satisfies
+
+$$
+\|\mathcal D_{g_s}\psi_s-c\mathcal N_sp-c\iota\zeta_R\|_2\longrightarrow0.
+\tag{20.3}
+$$
+
+For $K_A=\{\xi:N(\xi)\le A\}$ and every fixed $A,\delta>0$,
+
+$$
+\begin{aligned}
+\int_{K_A}|F_s|^2d\xi&\longrightarrow |c|^2\int_{K_A}p^2d\xi,\\
+\int_{d(\mathbf z)>\delta}|\mathcal D_{g_s}\psi_s(k,\mathbf z)|^2dk\,d\mathbf z
+ &\longrightarrow |c|^2\int_{d(\mathbf z)>\delta}|\zeta_R(\mathbf z)|^2d\mathbf z.
+\end{aligned}
+\tag{20.4}
+$$
+
+Consequently the two actual mass fractions are
+
+$$
+\mathfrak m_{\rm micro}=|c|^2=\frac1{1+\|\zeta_R\|_2^2},
+\qquad
+\mathfrak m_{\rm macro}=|c|^2\|\zeta_R\|_2^2
+ =\frac{\|\zeta_R\|_2^2}{1+\|\zeta_R\|_2^2},
+\qquad \mathfrak m_{\rm micro}+\mathfrak m_{\rm macro}=1.
+\tag{20.5}
+$$
+
+The first mass is obtained by $s\to0$ followed by $A\to\infty$; the second by $s\to0$ followed by $\delta\downarrow0$. There is no remaining $L^2$ mass at an intermediate or third scale. More explicitly,
+
+$$
+\lim_{A\to\infty}\lim_{\delta\downarrow0}\limsup_{n\to\infty}
+ \int_{\substack{\xi\in\Omega_{s_n}\setminus K_A\\
+ d(g_{s_n}\mathbf q_{s_n}(\xi))\le\delta}}
+ |F_{s_n}(\xi)|^2d\xi=0.
+\tag{20.6}
+$$
+
+The same mass statements hold for the whole sequence in Theorem 20.1, with $|c|^2=\alpha_R^2$, without prescribing a weak limit or a limiting phase. Its two comparison components have a common phase as in (20.2).
+
+Proof. Apply $\mathcal D_{g_s}\mathcal U_s^{-1}$ to the restriction of (19.1) to $\Omega_s$, using the exact maps (17.4), to get (20.3). Formula (19.16)'s local strong conclusion and (19.1) give the first limit in (20.4). For the second, observe that for every fixed compactly supported $f\in L^2(\mathbb R^4)$ the support of $\mathcal N_sf$ has $\mathbf z=g_s\mathbf q_s(\xi)$ with $\xi$ in that fixed compact. This phase support lies in $d(\mathbf z)<\delta$ for small $s$, since $\sup_{\operatorname{supp}f}d(g_s\mathbf q_s)=O(s^4)$. Compact-support approximation and $\|\mathcal N_s\|\le1$ therefore give
+
+$$
+\|\mathbf1_{\{d(\mathbf z)>\delta\}}\mathcal N_sp\|_2\longrightarrow0
+\qquad(\delta>0\text{ fixed}).
+\tag{20.7}
+$$
+
+Combining (20.3) with (20.7) proves the second limit. Monotone convergence, $\|p\|_2=1$, $\zeta_R\in L^2$ and the exact law (19.1) give (20.5). Moreover (20.3) and the same compact-support argument show that the limsup mass outside $d(\mathbf z)\le L$ is $|c|^2\int_{d>L}|\zeta_R|^2$, tending to zero as $L\to\infty$; there is no additional mass beyond the macroscopic scale.
+
+For fixed $A,\delta$, $K_A\subset\Omega_s$ and $d(g_s\mathbf q_s)<\delta$ on $K_A$ for all sufficiently small $s$. The two regions in (20.4) are then disjoint under the exact coordinate dictionary, and their complement is exactly the integration region in (20.6). Its limiting mass is
+
+$$
+1-|c|^2\int_{K_A}p^2
+  -|c|^2\int_{d(\mathbf z)>\delta}|\zeta_R|^2.
+\tag{20.8}
+$$
+
+First let $\delta\downarrow0$ and then $A\to\infty$. Equation (19.1) makes the result zero, proving (20.6). This is full-mass accounting for the actual states, not merely for the comparison vectors. Under (20.1), the phase-orbit conclusion (20.2) gives (20.3) with varying unit phases and the same modulus $\alpha_R$; every norm and mass argument above is phase invariant, so all the asserted whole-sequence limits follow. $\square$
+

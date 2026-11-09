@@ -1,0 +1,1 @@
+Assume every matrix in $\mathscr P_u$ has rank at most one. Then $\mathscr P_u$ contains a rank-two lift obtained from a strict convex combination exactly when it contains a transverse pair. If it contains no transverse pair, Proposition 201.2 puts the whole body in one of the two fixed-factor rulings. 

@@ -1,0 +1,19 @@
+### A.5　平移不变、偶性和平行四边形律
+
+固定 $x,y\in A$，令 $h(t)=C(x+t,y+t)$。 共同增量的平衡式给 $\sum_kh(t+\rho^kw)=3h(t)$。 设 $m=\inf_Ah\ge0$，则 $h(t+w)-m\le3(h(t)-m)$。 任给 $z$，取 $w=z-t$，再令 $h(t)\downarrow m$，得 $h(z)=m$。 因此比较平移不变，可写为
+
+$$
+C(x,y)=f(x-y),\quad f\ge0,\ f(0)=0,\ f(\rho x)=f(x),\quad
+\sum_kf(x+\rho^ky)=3f(x)+3f(y).
+$$
+
+取 $x=y$，得 $f(2y)+2f(-y)=6f(y)$。 偶部 $f_{\rm e}$ 满足 $f_{\rm e}(2y)=4f_{\rm e}(y)$， 奇部 $f_{\rm o}$ 满足 $f_{\rm o}(2y)=8f_{\rm o}(y)$。 非负性给 $|f_{\rm o}|\le f_{\rm e}$，迭代迫使 $f_{\rm o}=0$。 故 $f$ 偶且 $f(2y)=4f(y)$。
+
+令 $L=\rho-\rho^2$。在平衡式取 $x=-y$，用偶性和相位不变性得 $f(Ly)=3f(y)$。 定义缺陷
+
+$$
+P(x,y)=f(x+y)+f(x-y)-2f(x)-2f(y).
+$$
+
+在平衡式代入 $(x+y,x-y)$，三个输入化为 $2x,-\rho^2(x-Ly),-\rho(x+Ly)$，从而 $P(x,Ly)=3P(x,y)$。 由对称性得到 $P(Lx,Ly)=9P(x,y)$， 但 $f(Lz)=3f(z)$ 又直接给 $P(Lx,Ly)=3P(x,y)$。 因此 $P=0$，即平行四边形律。
+

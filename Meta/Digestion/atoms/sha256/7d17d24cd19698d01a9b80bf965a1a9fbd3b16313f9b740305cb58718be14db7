@@ -1,0 +1,30 @@
+**定理 2.1（精确轨道余量）。**对全部 $a\in M$、整数 $n\ge0$，有
+
+$$
+\begin{aligned}
+&3\bigl(\Omega(a)-q(U^na)-r(U^na)\bigr)\\
+&\quad=\sum_{k=1}^2\sum_{j=1}^2
+c\bigl((U^na)\cdot p_{k+j},(U^{n+k}a)\cdot p_j\bigr)\ge0.
+\end{aligned}
+\tag{2.1}
+$$
+
+**证明。**固定 $x$，令 $h_k(x)=c(x\cdot p_k,U^kx)$。(R) 取 $(a,b,u,v)=(x,1,1,x)$，第零项为零，故
+
+$$
+h_1(x)+h_2(x)=3q(x)+3r(x).
+\tag{2.2}
+$$
+
+对 $k=1,2$，分别取 $(a,b,u,v)=(x,U^kx,p_k,1)$，得到
+
+$$
+\begin{aligned}
+&3c(x,U^kx)+3q(p_k)-h_k(x)\\
+&\qquad=\sum_{j=1}^2c\bigl(x\cdot p_{k+j},(U^kx)\cdot p_j\bigr).
+\end{aligned}
+\tag{2.3}
+$$
+
+这里仅用 $U^jp_k=p_{k+j}$ 与双侧单位，没有重括号。对 $k$ 求和并用 (2.2)，再令 $x=U^na$；同步等距给 $c(U^na,U^{n+k}a)=c(a,U^ka)$，即得 (2.1)。
+
