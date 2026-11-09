@@ -20,7 +20,7 @@ namespace D5.S3.Quantum.Analysis.MeasurableRelativeDuhamel
 
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℂ E] [CompleteSpace E]
 
-private theorem native_data (S : Contraction E) (B : ℝ → E →L[ℂ] E)
+theorem native_data (S : Contraction E) (B : ℝ → E →L[ℂ] E)
     {T : ℝ} (hT : 0 ≤ T)
     (hB : ∀ x : E, AEStronglyMeasurable (fun s => B s x) (volume.restrict (Set.Icc 0 T)))
     (g : ℝ → ℝ) (hg : IntegrableOn g (Set.Icc 0 T))
@@ -100,7 +100,7 @@ private theorem kernel_regular (S : Contraction E) (B : ℝ → E →L[ℂ] E)
   · intro t s
     exact hd.2.1 _ _ (hp t s)
 
-private theorem forced_regular (S : Contraction E) (B : ℝ → E →L[ℂ] E)
+theorem forced_regular (S : Contraction E) (B : ℝ → E →L[ℂ] E)
     {T r : ℝ} (hT : 0 ≤ T) (hr : r ∈ Set.Icc 0 T)
     (hB : ∀ x : E, AEStronglyMeasurable (fun s => B s x) (volume.restrict (Set.Icc 0 T)))
     (g : ℝ → ℝ) (hg : IntegrableOn g (Set.Icc 0 T))
