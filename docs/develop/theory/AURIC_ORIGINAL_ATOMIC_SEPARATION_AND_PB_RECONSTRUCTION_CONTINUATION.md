@@ -2715,7 +2715,7 @@ $$
 
 而且 $Q$ 唯一；$I=0$ 时只有 $D=0$，取向为空。这里的 $Q$ 只乘属于 $I$ 的交换子，不要求它把任意 $A$-元素送回 $A$。
 
-对闭理想 $J\triangleleft I$，写
+闭理想的闭理想仍是 $A$ 的闭理想：若 $(e_\nu)$ 是 $I$ 的近似单位，$a\in A,j\in J$，则 $aj=\lim_\nu(ae_\nu)j\in J$，右乘同理。对闭理想 $J\triangleleft I$，写
 
 $$
 \operatorname{FM}(J):\quad
@@ -2726,39 +2726,43 @@ $$
 \tag{42.3}
 $$
 
-其中 $\sigma_J$ 是当前已支付开谱上的连续二值函数。这里的量词始终是原来的 $a,b$ 和原来的 $D$；不把 $D$ 换成商上的新函数，也不把 (42.3) 当作输入连续性。证明将构造一个良序理想塔，使 ${\rm FM}(J)$ 在每个阶段都对同一原输入成立。
+其中 $\sigma_J$ 是开谱 $U_J=\operatorname{Prim}(J)\subset\operatorname{Prim}(A)$ 上的连续二值函数。对 $P_\pi\in U_J$，必有 $\dim\pi\ge2$；取实际自伴提升，使其像成为一对交换子非零的 Pauli 角标签，(42.3) 与 33.4 就迫使 $\sigma_J(P_\pi)$ 等于该不可约表示的输入无关共同角符号 $\sigma_\pi$。故已成立的 FM 符号唯一，并在开谱重叠处相同。这里的量词始终是原来的 $a,b$ 和原来的 $D$；不把 $D$ 换成商上的新函数，也不把 (42.3) 当作输入连续性。证明将构造一个良序理想塔，使 ${\rm FM}(J)$ 在每个阶段都对同一原输入成立。
 
 ### 42.2 FDI 结构引理：每个非零商都有有限齐次理想
 
 **引理 42.1（无可数性条件的有限齐次层）。** 若 $B$ 是 FDI 代数，即每个不可约表示有限维，则每个非零闭商 $B/K$ 含有非零有限齐次理想。更具体地，存在 $n<\infty$ 和非零理想 $H/K\triangleleft B/K$，使每个不可约表示在 $H/K$ 上的非零像为 $M_n(\mathbb C)$。
 
-**证明。** 不可约表示的有限维性在闭商下保持。有限维不可约表示是 type I 表示，因此 $B/K$ 是 type I。这里不使用可分性、第二可数性或局部维数界。
+**证明。** 令 $C=B/K\ne0$，$S=\operatorname{Prim}(C)$。闭商的不可约表示提升为 $B$ 的不可约表示，故 $C$ 仍是 FDI；有限维不可约像为全部 $M_n$，特别是紧算子代数，因此 $C$ 是 CCR，从而是 type I。Brown, *On Higher Real and Stable Ranks for CCR C*-algebras*, arXiv:0708.3072v1 §2.5 说明 type-I primitive 谱 almost Hausdorff；对非空闭集 $S$ 本身应用其定义，得到非空且在 $S$ 中开的 Hausdorff 子集 $O$。这里没有可分性假设。
 
-我们采用已亲读的 Brown, *On Higher Real and Stable Ranks for CCR C*-algebras*, arXiv:0708.3072v1, §2.4 所记录的 type-I continuous-trace composition theorem：对每个 type-I 代数存在超限理想列，其 successor quotient 是非零 continuous-trace 理想，极限步为前项并的闭包。该文定义
+$O$ 是局部紧 Hausdorff 空间。所用的 $C^*$ 谱局部准紧性可直接核对：若 $P\in U\subset S$ 且 $U$ 开，在对应理想 $C(U)$ 中选 $t\ge0$ 和 $\epsilon>0$，使 $\|t+P\|>\epsilon$。则
 
 $$
-J_0=0,\qquad J_\lambda=\overline{\bigcup_{\alpha<\lambda}J_\alpha},\qquad
-J_{\alpha+1}/J_\alpha=J((B/K)/J_\alpha)\ne0,
+P\in\{Q:\|t+Q\|>\epsilon\}
+\subset K_{t,\epsilon}:=\{Q:\|t+Q\|\ge\epsilon\}\subset U.
 \tag{42.4}
 $$
 
-并明确说明 type-I 代数具有这样的 continuous-trace quotient composition series。取这列的第一个非零 successor quotient，记其 continuous-trace 理想为 $C$。
+左侧严格超水平集开，因为它是 $(t-\epsilon)_+$ 所生成理想的开谱；$K_{t,\epsilon}$ 准紧。具体地，对它的一份由 $S$ 中开集组成的覆盖 $(U_j)$，记对应理想为 $L_j$，$L=\overline{\sum_jL_j}$。如果没有有限子覆盖，则每个有限 $F$ 都有一个 $Q\supset\sum_{j\in F}L_j$ 且 $\|t+Q\|\ge\epsilon$，所以 $\|t+\overline{\sum_{j\in F}L_j}\|\ge\epsilon$。对有限 $F$ 取下确界得 $\|t+L\|\ge\epsilon$。在 $C/L$ 中取达到该正元范数的纯态及其不可约 GNS 表示，便得到某个 $Q\supset L$ 且 $\|t+Q\|\ge\epsilon$；该点不在任何 $U_j$，矛盾。现在取 $U\subset O$，则 $K_{t,\epsilon}$ 是 Hausdorff 空间 $O$ 中的紧集，且包含 $P$ 的开邻域；故 $O$ 局部紧。标准局部紧 Hausdorff Baire 定理因而适用，无需第二可数、可度量或 $\sigma$-紧性。
 
-continuous-trace 代数在其 Hausdorff primitive 谱上局部是连续的紧算子丛截面代数。由于此处每个不可约表示有限维，选 $P\in{\rm Prim}(C)$ 后，$\pi_P(C)=M_n$ 对某有限 $n$；局部丛平凡化给出非空相对开集 $O$，其每个纤维都是 $M_n$。对应的截面理想
+令 $H_n=\{P\in S:C/P\cong M_n\}$，$F_0=\varnothing$，并置
 
 $$
-C_0(O,\mathcal K(\mathcal H)|_O)\triangleleft C
+F_N=\bigcup_{1\le n\le N}H_n,\qquad
+S=\bigcup_{N\ge1}F_N.
 \tag{42.5}
 $$
 
-是非零 $n$-齐次理想。把它的逆像取回 $B/K$，即得 $H/K$。这里的局部固定秩只来自 continuous-trace 的局部矩阵丛结构；没有使用全谱 Hausdorff、紧性、可数覆盖或统一的 $n$。Brown §3.2--§3.3 还亲读记录了
+Brown 定义 3.2(iv) 与命题 3.3 正是对任意 FDI 代数断言这些 $F_N$ 闭；命题陈述不附可分性条件。因此 $(F_N\cap O)_{N\ge1}$ 是非空 Baire 空间 $O$ 的可数闭覆盖，某个 $F_N\cap O$ 有非空内部。取非空开集 $V\subset O$ 且 $V\subset F_N$；由于 $O$ 在 $S$ 中开，$V$ 也在 $S$ 中开。令 $k$ 为 $V$ 中实际出现的最大矩阵阶数，存在性来自非空有限集合 $\{n\le N:V\cap H_n\ne\varnothing\}$。于是
 
 $$
-H_n={P:A/P\cong M_n}
+W=V\setminus F_{k-1}\ne\varnothing,
+\qquad W\text{ 在 }S\text{ 中开},\qquad W\subset H_k.
 \tag{42.6}
 $$
 
-形成 FD-like 分解（各 $H_n$ 局部闭且有限并闭），与上面的局部矩阵丛层一致。Vasil'ev 的有限上界定理只作旧有界结果的来源核对，不被误用来承担本引理。∎
+由 Brown §2.2 的开集--理想对应，$C(W)\triangleleft C$ 是非零理想，$\operatorname{Prim}(C(W))\cong W$。理想的非退化不可约表示唯一延拓至 $C$；反过来，$C$ 的不可约表示在理想上非零时，其限制仍非退化且不可约，Hilbert 空间不变。因此 $C(W)$ 的每个不可约表示都恰为 $k$ 维，故它是非零 $k$-齐次理想。将其在 $B$ 中的逆像记为 $H$，便有 $H/K=C(W)$。
+
+此证明只在已知 primitive 谱上使用 Baire 定理，不对未知 $D$ 输入任何正则性。可数的是有限矩阵阶数的指标，不是谱或随后理想塔的长度；未使用 continuous-trace 场的局部固定维数断言。∎
 
 **推论 42.2（超限齐次塔）。** 存在序数 $\kappa$ 及闭理想列
 
@@ -2769,7 +2773,7 @@ $$
 
 满足：极限 $\lambda$ 取 $J_\lambda=\overline{\bigcup_{\alpha<\lambda}J_\alpha}$；每个 successor $\beta=\alpha+1$ 的商 $J_\beta/J_\alpha$ 是非零有限齐次 $C^*$-代数；其阶数 $k_\beta$ 满足 $k_\beta\ge2$。
 
-**证明。** 对 $I/J_\alpha$ 应用引理 42.1。若 successor 层是 $M_1$，则对应的不可约表示是一维表示；所有一维表示都消去交换子理想 $I$，与层非零且位于 $I$ 矛盾，故 $k_\beta\ge2$。在极限处取闭并。若此递归永不终止，它给出把一个真序数单射到 $I$ 的理想集合中的严格链，违反理想集合是集合而非真类；因此某个序数终止且余商为零。∎
+**证明。** 闭理想的非退化不可约表示唯一延拓到包含它的 $C^*$-代数；因此 $I$ 的不可约表示延拓至 $A$，$I$ 及其闭商仍是 FDI。只要 $I/J_\alpha\ne0$，就应用引理 42.1 并取所得非零齐次理想的逆像为 $J_{\alpha+1}$。如果这一层是 $1$-齐次，其中的字符经理想延拓成为 $I/J_\alpha$ 的字符，提升为 $I$ 的字符，再延拓成 $A$ 的字符；这与 $A$ 的每个字符都消去 $I$ 矛盾，故 $k_\beta\ge2$。在极限处取闭并。若递归在 $I$ 的理想集合的 Hartogs 序数之前仍未终止，严格链便将该序数单射到这个理想集合，矛盾。因此某个序数终止且余商为零。∎
 
 这一步是本节去掉统一维数上界的关键。它只给出每个 successor 的有限 $k_\beta$，不把所有层的这些数取最大值，也不把有限层数列改成可数列。
 
@@ -2790,7 +2794,7 @@ $$
 
 使其在 ${\rm Prim}(J_\alpha)$ 上等于已知的 $\sigma_{J_\alpha}$，并在每个当前局部矩阵点给出一个由实际原输出确定的符号。
 
-**证明。** 在 $X$ 的一个矩阵图 $O$ 内取一个 bump 函数 $h$，在固定的 $2\times2$ 角中取 Pauli 对
+**证明。** 先由 33.4 对每个 $P_\pi\in\operatorname{Prim}(J_\beta)$ 固定其输入无关共同角符号 $\sigma_\pi$。这些表示的阶数至少为二，且 FDI 中同一 primitive 核只对应一个不可约等价类，故这确实是点上的符号。旧 FM 的符号等于它：在旧点选交换子非零的实际角标签，同时应用 FM 和 33.4 即可。现在任取当前点 $x\in X$，在覆盖 $x$ 的矩阵图 $O$ 内取实 bump $h\in C_c(O)$，使 $h$ 在 $x$ 附近等于一，并在固定的 $2\times2$ 角中取 Pauli 对
 
 $$
 \bar a=h(e_{11}-e_{22}),\qquad
@@ -2805,14 +2809,14 @@ $$
 \tag{42.10}
 $$
 
-由原 $P2$ 与字符零读数，$c_0,z_0\in J_\beta$. 对当前点，既有的二阶角输出引理（前文 33.4，亦即 OP80.2 的实际代表版本）只使用这一对实际提升、其真实外槽和原 PB，给出
+$c_0\in J_\beta$ 由理想的乘法封闭性给出；$z_0\in J_\beta$ 则由 33.2 的实际首槽理想吸收给出：对每个消去 $J_\beta$ 的不可约表示，$\pi a_0=0$，原 P2 对同一实际 $(a_0,b_0)$ 给 $\pi z_0=0$，再由商的不可约分离得归属。字符零读数本身不承担这个理想归属。在每个当前点，所选截面像共同支撑于上述二阶角，或同时为零；既有的二阶角输出引理（33.4，亦即 OP80.2 的实际代表版本）只使用实际提升、真实外槽和原 PB，给出
 
 $$
-\pi z_0=\varepsilon_\pi\pi c_0,\qquad\varepsilon_\pi\in\{+1,-1\},
+\pi z_0=\sigma_\pi\pi c_0,\qquad\sigma_\pi\in\{+1,-1\},
 \tag{42.11}
 $$
 
-不使用当前层任意 $a,b$ 的 FM。旧点则由 ${\rm FM}(J_\alpha)$ 给出同式，符号是 $\sigma_{J_\alpha}$。在
+不使用当前层任意 $a,b$ 的 FM。旧点则由 ${\rm FM}(J_\alpha)$ 给出同式，且 $\sigma_{J_\alpha}(P_\pi)=\sigma_\pi$。因此 (42.11) 对整个 $\operatorname{Prim}(J_\beta)$ 上这一对实际输入成立。在
 
 $$
 V=\operatorname{Prim}(J_\beta)\setminus\operatorname{hull}(c_0)
@@ -2827,7 +2831,7 @@ V\cap\operatorname{hull}(z_0+c_0)
 \tag{42.13}
 $$
 
-互斥、并集为 $V$，且相对闭，因而相对开。它们分别标记 $+1,-1$；在不同 Pauli 图的重叠处 $\pi c_0\ne0$，(42.11) 强制符号相同。旧谱上的既有符号与当前图的符号同样由 (42.11) 在重叠处强制相同；若 $c_0$ 在边界消失，边界点不承载方向，两个局部定义仍给出同一乘子。于是得到整个 ${\rm Prim}(J_\beta)$ 上连续二值函数 $\sigma_{J_\beta}$。Dauns--Hofmann 同构
+互斥、并集为 $V$，且相对闭，因而相对开；它们正是共同角符号 $\sigma_\pi$ 的正、负集合。由于 $h(x)=1$，$\pi_xc_0\ne0$，$V$ 是包含 $x$ 的真正 $\operatorname{Prim}(J_\beta)$ 开邻域。所有当前点的这类 $V$，连同旧开谱 $\operatorname{Prim}(J_\alpha)$，覆盖整个 $\operatorname{Prim}(J_\beta)$。任意两个窗口重叠时，各自非零交换子都读出 33.4 的同一个 $\sigma_\pi$，故符号相同；与旧开谱的重叠也因同一理由相合。它们于是连续拼成 $\sigma_{J_\beta}(P_\pi)=\sigma_\pi$。一个特定 $c_0$ 在某个边界点消失，只表示这个窗口不读取该点；该点仍由旧开谱或另一份非零 Pauli 窗口覆盖，可以有可见方向。只有一维交换表示才使所有交换子都不可见，而这些点不属于 $\operatorname{Prim}(J_\beta)$。Dauns--Hofmann 同构
 
 $$
 C_b({\rm Prim}(J_\beta))\cong Z(M(J_\beta)),\qquad
@@ -2835,7 +2839,7 @@ C_b({\rm Prim}(J_\beta))\cong Z(M(J_\beta)),\qquad
 \tag{42.14}
 $$
 
-给出 $Q_\beta$. 这一步只让 $Q_\beta$ 作用在理想中的交换子和演员上，不声称 $Q_\beta a\in A$。∎
+给出 $Q_\beta$。以下在当前点记 $\varepsilon_\pi=\sigma_\pi$。这一步只让 $Q_\beta$ 作用在理想中的交换子和演员上，不声称 $Q_\beta a\in A$。∎
 
 令 $L=J_\beta$，对 $r\in L_{\rm sa}$ 定义
 
@@ -2893,7 +2897,7 @@ $$
 |---|---|
 | $\pi(J_\alpha)\ne0$ | 旧 ${\rm FM}(J_\alpha)$，且 $Q_\beta$ 在旧开谱上等于旧符号；允许 $T$ 带任意旧尾部。 |
 | $\pi(J_\alpha)=0,\ \pi(J_\beta)\ne0$ | 当前 $k$-维矩阵层；先用两射线零对角行，再用侧箭头和全幅秩一行。 |
-| $\pi(J_\beta)=0$ | $\pi r=\pi R=\pi(H-u)=0$，所以所有演员和 $\Lambda$ 都是零。 |
+| $\pi(J_\beta)=0$ | $\pi r=\pi R=\pi(H-u)=0$；原 P2 对同一实际 $r,T$ 给 $\pi D(r,T)=0$，而交换子给 $\pi\Lambda(r,T)=0$，故两内行在该表示也相等。 |
 
 当前行的第一步是 36.1 的两射线引理：若当前像 $\pi r=\mu p$、$p$ 秩一且 $p(\pi a)p=0$，则
 
@@ -2955,7 +2959,7 @@ $$
 
 **定理 42.5（successor FM）。** ${\rm FM}(J_\alpha)$ 蕴含 ${\rm FM}(J_\beta)$。
 
-**证明。** 固定原 $(a,b)$ 和当前点 $x\in X$. 在 $Z_x=\pi_x(a)+i\varepsilon_x\pi_x(b)$ 上取有限 SVD，选酉 $V$ 使 $VZ_x\ge0$. 将 $V$ 分解成至多 $k$ 个秩一相位；每个相位用 (42.22) 的两次实际演员实现。因此得到不超过 $2k$ 个由 (42.17) 精确给出的实际原前缀，并且每个前缀的两内行都已由 (42.27) 付清。每次用的是原 PB，故 (42.20) 保持误差。终点的虚部为零，A1 的零槽给出其自身 $\pi_xD=0$，交换子也为零，故初始误差为零。
+**证明。** 固定原 $(a,b)$ 和当前点 $x\in X$. 在 $Z_x=\pi_x(a)+i\varepsilon_x\pi_x(b)$ 上取有限 SVD，选酉 $V$ 使 $VZ_x\ge0$. 将 $V$ 分解成至多 $k$ 个秩一相位；每个相位用 (42.22) 的两次实际演员实现。因此得到不超过 $2k$ 个由 (42.17) 精确给出的实际原前缀，并且每个前缀的两内行都已由 (42.27) 付清。每次用的是原 PB，故 (42.20) 保持误差。终点的虚部在该表示为零，原 P2 对这份实际终点对给出其自身 $\pi_xD=0$，交换子也为零，故初始误差为零。
 
 当前点和 $(a,b)$ 任意，故所有当前表示、所有原输入均满足 (42.3)。旧表示已经由 ${\rm FM}(J_\alpha)$ 支付；层外演员为零。三类表示合起来给 ${\rm FM}(J_\beta)$。依赖次序是
 
@@ -2976,14 +2980,26 @@ $$
 
 **引理 42.6（limit 不需要输入极限）。** 若 $\lambda$ 是极限序数且所有 $\alpha<\lambda$ 已满足 ${\rm FM}(J_\alpha)$，则 ${\rm FM}(J_\lambda)$ 成立。
 
-**证明。** 对不可约 $\pi$，若 $\pi(J_\lambda)\ne0$ 而所有 $\pi(J_\alpha)=0$，则连续性给
+**证明。** 一律用理想在 $\operatorname{Prim}(A)$ 中的标准开嵌入，记 $U_\alpha=\operatorname{Prim}(J_\alpha)$。由 $J_\lambda=\overline{\bigcup_{\alpha<\lambda}J_\alpha}$，有开集恒等式
 
 $$
-\pi(J_\lambda)=\pi\!\left(\overline{\bigcup_{\alpha<\lambda}J_\alpha}\right)=0,
+\operatorname{Prim}(J_\lambda)
+=\bigcup_{\alpha<\lambda}\operatorname{Prim}(J_\alpha).
 \tag{42.29}
 $$
 
-矛盾。因此存在某个 $\alpha<\lambda$ 使 $\pi(J_\alpha)\ne0$，直接应用同一实际 $a,b$ 的 ${\rm FM}(J_\alpha)$。没有对 $D(a,b)$ 取输入极限、没有改变旧标签，也没有把商响应拼接出来。∎
+具体地，一个 primitive 理想 $P$ 包含 $J_\lambda$ 当且仅当它包含所有 $J_\alpha$：正向由包含关系，反向由 $P$ 的范数闭性。等价地，若一个连续不可约表示消去全部早期理想，它就消去其闭并；所以每个 $P_\pi\in U_\lambda$ 已属于某个 $U_\alpha$。
+
+还须拼接符号而不仅是逐点覆盖。若 $P_\pi\in U_\alpha\cap U_\delta$，取实际自伴 $a,b$，使它们的像是一对交换子非零的 Pauli 角标签；这是满同态 $\pi:A\to M_n$ 的精确自伴提升，$n\ge2$。两份 FM 和 33.4 对这同一实际对分别给
+
+$$
+\sigma_{J_\alpha}(P_\pi)\frac i2[\pi a,\pi b]
+=\pi D(a,b)
+=\sigma_\pi\frac i2[\pi a,\pi b]
+=\sigma_{J_\delta}(P_\pi)\frac i2[\pi a,\pi b].
+$$
+
+交换子非零，故两个符号相同，且都等于输入无关的实际角符号 $\sigma_\pi$。已知连续函数 $\sigma_{J_\alpha}$ 因而在 (42.29) 这份开覆盖上拼成连续二值函数 $\sigma_{J_\lambda}$；任意开覆盖的连续拼接不要求可数性。对每个点选覆盖它的一项，该项 FM 对所有同一原 $a,b$ 已经给出 (42.3)，且符号正是拼成的函数。因此 ${\rm FM}(J_\lambda)$ 成立。这里只用表示和闭理想的连续性；没有对 $D$ 取输入极限，也没有定义商响应。∎
 
 由推论 42.2、定理 42.5 和引理 42.6，超限归纳得到
 
@@ -2994,7 +3010,7 @@ $$
 \tag{42.30}
 $$
 
-一维表示消去 $I$。因此 $D(a,b)$ 和 $i[a,b]/2$ 都属于 $I$；后者由定义，前者由原 $P2$ 在字符上的零输出和不可约分离。对每个 $P\in{\rm Prim}(I)$，选 $a,b$ 使 $\pi_P[a,b]\ne0$，并置 $c=i[a,b]/2,z=D(a,b)$. (42.30) 给出 $\pi_Pz=\sigma(P)\pi_Pc$. 与 (42.12)--(42.13) 相同的 hull 零集论证说明 $\sigma$ 在 ${\rm Prim}(I)$ 连续。Dauns--Hofmann 给唯一
+$A/I$ 交换，所以消去 $I$ 的不可约表示恰为一维字符。因此 $D(a,b)$ 和 $i[a,b]/2$ 都属于 $I$；后者由定义，前者由原 $P2$ 在字符上的零输出和不可约分离。对每个 $P\in{\rm Prim}(I)$，选 $a,b$ 使 $\pi_P[a,b]\ne0$，并置 $c=i[a,b]/2,z=D(a,b)$. (42.30) 给出 $\pi_Pz=\sigma(P)\pi_Pc$. 与 (42.12)--(42.13) 相同的 hull 零集论证说明 $\sigma$ 在 ${\rm Prim}(I)$ 连续。Dauns--Hofmann 给唯一
 
 $$
 Q\in Z(M(I)),\qquad Q=Q^*=Q^{-1},\qquad
@@ -3035,12 +3051,37 @@ A=\{(a_\infty,(a_m)_{m\ge1}):a_\infty\in M_2, a_m\in M_{2m},
 \tag{42.33}
 $$
 
-逐点运算和上确界范数使 $A$ 成为含单位 $C^*$-代数；坐标表示的维数为 $2m$，无穷端表示的维数为 $2$，故所有不可约表示有限而没有统一上界。此例只说明载体范围，不把坐标理想误认成 (42.1) 的交换子理想，也不作为新的分类信用。一个固定 Pauli 对在 $a_m$ 与 $a_\infty$ 两端的同一旧输出，说明可见非交换边界会迫使方向最终相容；若边界完全交换，前文 39.3 的左右独立取向仍合法。
+它是 $M_2\oplus\prod_{m\ge1}M_{2m}$ 中的闭星子代数，取包含无穷端坐标的上确界范数，单位为 $(I_2,(I_{2m}))$。投影 $q_\infty:A\to M_2$ 满射，其核是闭理想
 
-本节承重的结构来源是：Brown, arXiv:0708.3072v1 §2.4 的 type-I continuous-trace composition series 与 §3.2--§3.3 的 FDI-like 分层；Thiel--Vilalta, arXiv:2101.04522v2 §4.3 的局部齐次矩阵丛接口；Forger--Paulino, arXiv:1307.4458v1 Theorem 2 的 Dauns--Hofmann 乘子接口；以及前文已冻结的 OP80.2、AH33.4--38.2、AQ32.1--32.2、SQ47.1--47.13 和 PB153.2。Vasil'ev, DOI 10.1070/RM1966v021n01ABEH004148 只核对有界维数情形，不承担 (42.7) 的超限结构引理。所有引用均按实际亲读范围使用，不作文献穷尽或历史原创性宣称。
+$$
+K=\{(0,(a_m)):\|a_m\|\to0\}
+\cong\bigoplus_{m\ge1}^{c_0}M_{2m},\qquad A/K\cong M_2.
+$$
 
-本节的新桥是 42.1--42.7：在没有全局最大维数时，从 type-I composition series 得到每一步有限齐次理想；在 successor 中用同一实际 Pauli 角和 hull 零集先造 $Q_\beta$，再以旧 FM、当前两射线、侧箭头、全幅秩一行和有限点上 SVD 支付同一原 PB；在 limit 用表示连续性从某个已支付阶段直接回读。结论覆盖含单位、任意非可分、所有不可约有限但维数无界的 $A$；不覆盖含无限维不可约的任意 type I、一般 JB 代数、不完备 $E$、或未由原来源合同供应的物理 producer/完整菜单/返回系统。
+这也穷尽所有不可约表示。若不可约 $\pi$ 在 $K$ 上非零，其限制仍非退化且不可约；$K$ 的有限坐标单位之和构成近似单位，故至少一个坐标中央投影 $e_m$ 在该表示中非零。Schur 引理使 $\pi(e_m)=1$，所以该限制就是唯一一个 $M_{2m}$ 坐标的标准不可约表示；理想表示的唯一延拓使 $\pi$ 正是 $A$ 的该坐标表示。若 $\pi(K)=0$，它因子化为 $A/K=M_2$ 的标准不可约表示。因此所有不可约表示恰为这些坐标及无穷端，维数均有限而没有统一上界。
 
-**完整白话 42.7。** 把交换子理想想成所有真正能看见方向的街区。街区可以无穷多，且每一块的房屋大小各不相同；重要的是每次只进入一块有限大小的矩阵街区。Brown 的 composition series 给出一条可能超越可数长度的开工顺序：先前的街区在每个新窗口中留下任意旧尾部，不能铲平；旧 FM 正是支付尾部的收据。新街区里先选一对真正的 Pauli 方向，用它自己的旧输出把正负两种方向切成两个谱开集，再把这个方向写成该理想的中央乘子。随后实际逆 Cayley 标签保证 PB 的负端点仍是原来那一对物件；两条零射线、侧箭头和有限多个相位把任意当前房屋的读数搬到自己的正端点。正端点的虚槽为零，于是原 PB 把结论送回起点。走到极限时不对未知输出取极限，只看一个表示是否已经在某个早先街区被支付。最终所有非交换街区各自只有顺时针或逆时针两种方向；交换边界看不见方向，所以不强迫两边延伸。物理准备、真实复制、相干控制、完整菜单、CountRead、Return、历史和钟仍属于原世界的实际来源合同。
+令 $s_3=\operatorname{diag}(1,-1)$，$s_1=\left(\begin{smallmatrix}0&1\\1&0\end{smallmatrix}\right)$。实际常 Pauli 提升
+
+$$
+a=(s_3,(s_3\otimes I_m)),\quad
+b=(s_1,(s_1\otimes I_m))\in A_{\rm sa}
+$$
+
+准确满足 (42.33) 的范数条件。置 $c_\infty=i[s_3,s_1]/2$，则 $\|c_\infty\|=1$ 且 $c_\infty^2=I_2$。对任一已分类响应，$z=D(a,b)\in A$ 的各坐标为 $z_m=\sigma_m c_\infty\otimes I_m$，$z_\infty=\sigma_\infty c_\infty$。由 $z$ 自身的截面条件，
+
+$$
+0=\lim_m\|z_m-z_\infty\otimes I_m\|
+=\lim_m|\sigma_m-\sigma_\infty|.
+$$
+
+二值性于是迫使 $\sigma_m=\sigma_\infty$ 最终成立。反向，任意最终等于 $\sigma_\infty$ 的符号列给出 $Q=(\sigma_\infty I_2,(\sigma_mI_{2m}))\in Z(A)$ 的自伴酉，从而由本节逆向产生响应。这里 $i[a,b]/2$ 本身可逆，所以交换子理想 $I=A$；$K$ 是另一个坐标核理想。此例仅展示分类的应用及逆向实例，不增加分类内容。无穷端的非交换方向确实可见，故迫使取向相容；只有全部交换子的像均为零的完全交换边界才没有方向数据，前文 39.3 的独立取向属于后一情形。
+
+本节承重的结构来源是：Brown, arXiv:0708.3072v1 §2.2 的理想与 primitive 谱对应、§2.5 的 type-I almost-Hausdorff 性质、定义 3.2(iv) 与命题 3.3 的任意 FDI 闭维数层；标准局部紧 Hausdorff Baire 定理；Thiel--Vilalta, arXiv:2101.04522v2 §4.3 的有限齐次局部矩阵丛接口；Forger--Paulino, arXiv:1307.4458v1 Theorem 2 的 Dauns--Hofmann 乘子接口；以及既有纸面文本 OP80.2、AH33.4--38.2、AQ32.1--32.2、SQ47.1--47.13 和 PB153.2，连同各自原假设及固定上游。Brown §2.4 的 canonical $J(A)$ 列以 GCT 为耗尽条件，不承担本节引理；Vasil'ev, DOI 10.1070/RM1966v021n01ABEH004148 只核对有界维数情形。这里不声称 Lean、kernel 或冻结认证，也不作文献穷尽或历史原创性宣称。
+
+本节的结构及接线桥是：在每个非零 FDI 商的开 Hausdorff 谱片上，由局部紧性、Baire 和闭维数层选出某个非空有限齐次开理想，再递归取得可能超越可数长度的 (42.7)；successor 用同一实际 Pauli 角、输入无关共同角符号和 hull 零集在覆盖整个开谱的窗口上先造 $Q_\beta$，再以旧 FM、当前两射线、侧箭头、全幅秩一行和有限点上 SVD 支付同一原 PB；limit 则用 (42.29) 的开覆盖和重叠上相同的连续符号直接拼接。结论覆盖含单位、任意非可分、所有不可约有限但维数无界的 $A$；不覆盖含无限维不可约的任意 type I、一般 JB 代数、不完备 $E$、或未由原来源合同供应的物理 producer/完整菜单/返回系统。
+
+**完整白话 42.7。** 把交换子理想想成所有真正能看见方向的街区。街区可以无穷多，房屋大小也没有统一上限。先在每份剩余谱里找一片 Hausdorff 街区：这片街区局部紧，所以不会被可数多个没有内部的闭层铺满。“房屋大小至多为 $N$”给出一列覆盖它的闭集，因此其中至少一个有非空内部，找到一小片大小有界的街区，再取其中实际最大的大小，就找到一块大小完全相同的非空开放街区。把这一选择对剩余商不断重复，就给出可能超越可数长度的开工顺序。先前街区在每个新窗口中留下的任意旧尾部不能铲平，旧 FM 处理的正是这些实际尾部。新街区先用一对实际 Pauli 标签读方向：每个点的所有二维窗口早已共用一个由原响应确定的正负号，交换子非零的窗口把这个符号读成连续函数；窗口重叠时因为读的是同一个符号而相合。某个窗口在边界失效，不表示那里没有方向，须由旧街区或别的窗口继续读取。随后实际逆 Cayley 标签保证 PB 的负端点仍是原来那一对物件；两条零射线、侧箭头和有限多个相位把当前读数搬到自己的正端点，原 P2 认出终点，原 PB 再把结论送回起点。走到极限时，每个点已在某个早期开放街区内；早期连续方向在交叠处一致，所以直接拼起来，不对未知响应取输入极限。最终所有非交换街区的方向都由同一原表确定；只有完全交换的边界才看不见方向。物理准备、真实复制、相干控制、完整菜单、CountRead、Return、历史和钟仍属于原世界的实际来源合同。
 
 [SH-BR]: https://arxiv.org/pdf/0708.3072v1
+
+## 追加锚（本行以下为增补区）
