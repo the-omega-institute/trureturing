@@ -36,3 +36,12 @@ cyclic families; its order-one boundary is a different question.
 
 The original source displays CC BY-NC-SA 4.0. This citation note and the independently
 written mathematical exposition copy no paper proof text, program or figure.
+
+## Verified locator
+
+DOI: https://doi.org/10.48550/arXiv.2601.04004
+
+Source: https://arxiv.org/abs/2601.04004v1
+
+The cited scope is the original version’s graph and matrix definitions, Remark 4.1
+and Problem 4.9, at the source-archive locations identified above.
