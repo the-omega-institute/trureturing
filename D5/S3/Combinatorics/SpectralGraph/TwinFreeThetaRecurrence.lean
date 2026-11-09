@@ -471,7 +471,7 @@ private theorem bounded_singular_endpoints (k : ℕ) (y : ℕ → ℝ) :
     rw [←heq (6*k+4) le_rfl,←heq (6*k+3) (by omega)] at hp
     simpa [z] using hp
 
-private theorem bounded_continuant_endpoint (N : ℕ) (hN : 1 ≤ N)
+theorem bounded_continuant_endpoint (N : ℕ) (hN : 1 ≤ N)
     (t : ℝ) (y : ℕ → ℝ)
     (hy : ∀ j, j+2 ≤ N → y (j+2)=t*y (j+1)-y j) :
     y N=((Chebyshev.S ℝ ((N : ℤ)-1)).eval t)*y 1-((Chebyshev.S ℝ ((N : ℤ)-2)).eval t)*y 0 := by
