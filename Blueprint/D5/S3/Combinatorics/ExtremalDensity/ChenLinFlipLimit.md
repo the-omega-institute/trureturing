@@ -614,6 +614,10 @@ $$SourceFullConvergence$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/ExtremalDensity/ChenLinFlipLimit.source_fullConvergence` (`✓ std3`). ∎
 
+*Resolves.* `Problems/chen-lin-2026-question-6-1-flip-threshold-limit` (proved) by `D5/S3/Combinatorics/ExtremalDensity/ChenLinFlipLimit.source_fullConvergence`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"chen-lin-2026-question-6-1-flip-threshold-limit","declaration_gid":"D5/S3/Combinatorics/ExtremalDensity/ChenLinFlipLimit.source_fullConvergence","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Hao Chen and Yupeng Lin (2026). *Oriented Paths with Few Direction Flips Are Tournament Anti-Sidorenko*. DOI: [10.48550/arXiv.2609.14655](https://doi.org/10.48550/arXiv.2609.14655). URL: <https://arxiv.org/abs/2609.14655v1>.
