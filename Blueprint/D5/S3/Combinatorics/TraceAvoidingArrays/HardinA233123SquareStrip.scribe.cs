@@ -31,7 +31,8 @@ internal sealed class HardinA233123SquareStripDocument : IScribeDocumentDefiniti
                 + "namespaces. Fin.val maps a finite index or colour to its natural value. "
                 + "Typed numerals specify their Fin domains. Nat.div is natural quotient "
                 + "division and Nat.mod is the nonnegative remainder; neither enters these "
-                + "definitions. All sums range over the displayed finite type.")),
+                + "definitions. HardinA233175PairStrip.Col is literally Fin 2 to Fin 6. "
+                + "All sums range over the displayed finite type.")),
             Def("rowlegal", "rowLegal", "The horizontal bond", RowLegalFormula(),
                 "There is exactly one horizontal bond in a two-column row."),
             Def("bonds", "bonds", "The two vertical bonds", BondsFormula(),
@@ -115,7 +116,7 @@ internal sealed class HardinA233123SquareStripDocument : IScribeDocumentDefiniti
             Eq(Cell(i, Index(0)), Colour(0))));
         var horizontal = All("i", rows,
             Self("rowLegal", Fn("j", Fin(2), Cell(i, j))));
-        var next = Call("Fin.mk", Add(Val(i), D(1)), V("h"));
+        var next = Typed(Call("Fin.mk", Add(Val(i), D(1)), V("h")), rows);
         var vertical = All("i", rows, All("h", Lt(Add(Val(i), D(1)), n),
             Self("bonds", Fn("j", Fin(2), Cell(i, j)),
                 Fn("j", Fin(2), Cell(next, j)))));
