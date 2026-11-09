@@ -15,7 +15,8 @@ triage: anchor
 
 The box-through-tendsto_box_sdiff leaf slice in LatticeGardenOfEden retains
 the original statements and proof bodies. Packaging uses ordinary imports,
-retains the CondensedMatter.Crystal namespace, and omits the unrelated
+retains the CondensedMatter.Crystal namespace, makes support lemmas private,
+and omits the unrelated
 invariant-state import and subsequent declarations. The immutable source
 has SHA256 452431162cd7e05be0b6a17119c21526b7827f705852623a7ab93999f6ed93d9.
 The source repository contains no NOTICE files in its complete recursive tree.

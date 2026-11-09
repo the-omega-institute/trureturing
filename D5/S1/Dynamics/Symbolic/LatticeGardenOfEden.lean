@@ -24,7 +24,8 @@ at physlib revision 80ca0ab9dccc5ad8a0f904a6572a728e3abfa125.
 Source SHA256: 452431162cd7e05be0b6a17119c21526b7827f705852623a7ab93999f6ed93d9.
 Modified packaging: ordinary imports and an isolated namespace retain the
 original box-through-tendsto_box_sdiff statements and proof bodies;
-the unrelated invariant-state dependency and later declarations are omitted.
+support lemmas are private, and the unrelated invariant-state dependency
+and later declarations are omitted.
 Retirement: replace this slice with direct imports when the project's pinned
 mathlib supplies equivalent statements for these finite lattice boxes.
 -/
@@ -36,10 +37,10 @@ open Finset Filter Topology
 /-- The cube `{0, …, m-1}^d` of the lattice `ℤ^d`. -/
 def box (d m : ℕ) : Finset (Fin d → ℤ) := Fintype.piFinset fun _ => Finset.Ico (0 : ℤ) m
 
-lemma card_box (d m : ℕ) : (box d m).card = m ^ d := by
+private lemma card_box (d m : ℕ) : (box d m).card = m ^ d := by
   simp [box, Fintype.card_piFinset]
 
-lemma image_add_box (d m : ℕ) (h : Fin d → ℤ) :
+private lemma image_add_box (d m : ℕ) (h : Fin d → ℤ) :
     (box d m).image (· + h) = Fintype.piFinset fun j => Finset.Ico (h j) (m + h j) := by
   ext x
   simp only [box, mem_image, Fintype.mem_piFinset, mem_Ico]
@@ -54,25 +55,26 @@ lemma image_add_box (d m : ℕ) (h : Fin d → ℤ) :
     simp only [Pi.sub_apply]
     omega
 
-lemma card_image_add_box (d m : ℕ) (h : Fin d → ℤ) : ((box d m).image (· + h)).card = m ^ d := by
+private lemma card_image_add_box (d m : ℕ) (h : Fin d → ℤ) :
+    ((box d m).image (· + h)).card = m ^ d := by
   rw [card_image_of_injective _ (add_left_injective h), card_box]
 
 /-- The overlap of the cube with its translate. -/
-lemma card_inter_box (d m : ℕ) (h : Fin d → ℤ) :
+private lemma card_inter_box (d m : ℕ) (h : Fin d → ℤ) :
     ((box d m).image (· + h) ∩ box d m).card =
       ∏ j, (Finset.Ico (h j) (m + h j) ∩ Finset.Ico (0 : ℤ) m).card := by
   rw [image_add_box, box, ← Fintype.piFinset_inter, Fintype.card_piFinset]
 
 /-! ## B. The Følner property -/
 
-lemma card_Ico_inter (m : ℕ) (a : ℤ) (ha : |a| ≤ m) :
+private lemma card_Ico_inter (m : ℕ) (a : ℤ) (ha : |a| ≤ m) :
     (Finset.Ico a (m + a) ∩ Finset.Ico (0 : ℤ) m).card = m - a.natAbs := by
   rw [Finset.Ico_inter_Ico, Int.card_Ico]
   rw [abs_le] at ha
   omega
 
 /-- The number of points of the cube not shared with its translate. -/
-lemma card_sdiff_add_card_sdiff (d m : ℕ) (h : Fin d → ℤ) :
+private lemma card_sdiff_add_card_sdiff (d m : ℕ) (h : Fin d → ℤ) :
     (((box d m).image (· + h) \ box d m).card + (box d m \ (box d m).image (· + h)).card : ℝ) =
       2 * ((m : ℝ) ^ d - ∏ j, ((Finset.Ico (h j) (m + h j) ∩ Finset.Ico (0 : ℤ) m).card : ℝ)) := by
   have h1 := Finset.card_sdiff_add_card_inter ((box d m).image (· + h)) (box d m)
@@ -88,7 +90,7 @@ lemma card_sdiff_add_card_sdiff (d m : ℕ) (h : Fin d → ℤ) :
 
 /-- **The cubes are asymptotically invariant under translation**: the fraction of the points of
 `{0, …, n}^d` that are not shared with a fixed translate tends to zero. -/
-lemma tendsto_box_sdiff (d : ℕ) (h : Fin d → ℤ) :
+private lemma tendsto_box_sdiff (d : ℕ) (h : Fin d → ℤ) :
     Tendsto (fun n : ℕ => (((box d (n + 1)).image (· + h) \ box d (n + 1)).card +
       (box d (n + 1) \ (box d (n + 1)).image (· + h)).card : ℝ) / ((n + 1 : ℕ) : ℝ) ^ d)
       atTop (𝓝 0) := by
@@ -130,9 +132,7 @@ open Set Function
 
 universe u v
 
-variable {G : Type v} [AddCommGroup G] {A : Type u}
-
-attribute [local instance] Classical.propDecidable
+variable {G : Type v} [AddCommGroup G] [DecidableEq G] {A : Type u}
 
 /-- The full configuration map of a rule on a finite neighborhood. -/
 def localMap (S : Finset G) (φ : (S → A) → A) (x : G → A) : G → A :=
@@ -299,6 +299,7 @@ private theorem erase_disjoint_patterns (S : Finset G) (φ : (S → A) → A)
         · exact hc
         · exact hay u hu⟩
 
+omit [DecidableEq G] in
 private theorem exists_dense_packing (C F : Finset G) (hC : C.Nonempty) :
     ∃ T : Finset G, T ⊆ F ∧
       (∀ t ∈ T, ∀ u ∈ T, t ≠ u → ∀ c : C, ∀ e : C, t + c ≠ u + e) ∧
@@ -355,6 +356,7 @@ private theorem exists_dense_packing (C F : Finset G) (hC : C.Nonempty) :
   simpa only [Nat.card_eq_fintype_card, Fintype.card_coe, Fintype.card_prod, pow_two,
     Nat.mul_assoc] using hcard
 
+omit [DecidableEq G] in
 private theorem cardinal_bound_of_disjoint_avoidance [Finite A]
     {O : Type*} (U C T : Finset G) (p : C → A) (norm : O → G → A)
     (hdis : ∀ t ∈ T, ∀ u ∈ T, t ≠ u → ∀ c : C, ∀ e : C, t + c ≠ u + e)
@@ -425,6 +427,10 @@ private theorem mem_pad {F E : Finset G} {f e : G} (hf : f ∈ F) (he : e ∈ E)
 def ImagePatterns (S : Finset G) (φ : (S → A) → A) (F : Finset G) :=
   Set.range (fun x : G → A => fun f : F => localMap S φ x f)
 
+/-- Cardinality of the jointly realized full-image patterns on a finite shape. -/
+def imagePatternCount (F : Finset G) (S : Finset G) (φ : (S → A) → A) : ℕ :=
+  Nat.card (ImagePatterns S φ F)
+
 private theorem collision_image_bound [Finite A]
     (S : Finset G) (φ : (S → A) → A) (C : Finset G) (p q : C → A) (hpq : p ≠ q)
     (herase : ∀ (t : G) (z : G → A), (∀ c : C, z (t + c) = p c) →
@@ -439,7 +445,8 @@ private theorem collision_image_bound [Finite A]
   let source (o : ImagePatterns S φ F) : G → A := Classical.choose o.property
   have hs (o : ImagePatterns S φ F) (f : F) : localMap S φ (source o) f = o.val f :=
     congrFun (Classical.choose_spec o.property) f
-  have hn (o : ImagePatterns S φ F) := erase_disjoint_patterns S φ C p q hpq herase T hdis (source o)
+  have hn (o : ImagePatterns S φ F) :=
+    erase_disjoint_patterns S φ C p q hpq herase T hdis (source o)
   choose norm hnorm havoid using hn
   have hinside : ∀ t ∈ T, ∀ c ∈ C, t + c ∈ pad F (insert 0 (S ∪ C)) := by
     intro t ht c hc
@@ -458,5 +465,434 @@ private theorem collision_image_bound [Finite A]
       _ = o'.val f := (congrFun (hnorm o') f).trans (hs o' f)
   exact ⟨T, hdense, cardinal_bound_of_disjoint_avoidance
     (pad F (insert 0 (S ∪ C))) C T p norm hdis hinside havoid hdet⟩
+
+private theorem pad_card_le_boundary (F E : Finset G) :
+    (pad F E).card ≤ F.card + ∑ e ∈ E,
+      (((F.image (fun f => f + e)) \ F).card + (F \ (F.image (fun f => f + e))).card) := by
+  classical
+  have hd : pad F E \ F = E.biUnion (fun e => (F.image (fun f => f + e)) \ F) := by
+    ext a
+    simp only [pad, Finset.mem_sdiff, Finset.mem_biUnion]
+    aesop
+  calc
+    (pad F E).card ≤ (pad F E \ F).card + F.card := Finset.card_le_card_sdiff_add_card
+    _ = (E.biUnion (fun e => (F.image (fun f => f + e)) \ F)).card + F.card := by rw [hd]
+    _ ≤ (∑ e ∈ E, ((F.image (fun f => f + e)) \ F).card) + F.card :=
+      Nat.add_le_add_right Finset.card_biUnion_le _
+    _ ≤ F.card + ∑ e ∈ E,
+        (((F.image (fun f => f + e)) \ F).card + (F \ (F.image (fun f => f + e))).card) := by
+      rw [Nat.add_comm]
+      exact Nat.add_le_add_left (Finset.sum_le_sum (fun e _ => Nat.le_add_right _ _)) _
+
+open CondensedMatter.Crystal Filter Topology
+
+private theorem pad_box_ratio (d : ℕ) (E : Finset (Fin d → ℤ)) (hE : 0 ∈ E) :
+    Tendsto (fun n : ℕ => ((pad (box d (n + 1)) E).card : ℝ) / ((n + 1 : ℕ) : ℝ) ^ d)
+      atTop (𝓝 1) := by
+  classical
+  let boundary (n : ℕ) := ∑ e ∈ E,
+    ((((box d (n + 1)).image (fun f => f + e) \ box d (n + 1)).card +
+      (box d (n + 1) \ (box d (n + 1)).image (fun f => f + e)).card : ℝ) /
+        ((n + 1 : ℕ) : ℝ) ^ d)
+  have hb : Tendsto boundary atTop (𝓝 0) := by
+    simpa only [Finset.sum_const_zero, boundary] using
+      (tendsto_finsetSum E (fun e _ => tendsto_box_sdiff d e))
+  have hl (n : ℕ) : 0 ≤ ((pad (box d (n + 1)) E).card : ℝ) /
+      ((n + 1 : ℕ) : ℝ) ^ d - 1 := by
+    have hsub : box d (n + 1) ⊆ pad (box d (n + 1)) E := by
+      intro a ha
+      simpa only [add_zero] using mem_pad ha hE
+    have hc : (((n + 1) ^ d : ℕ) : ℝ) ≤ ((pad (box d (n + 1)) E).card : ℝ) := by
+      exact_mod_cast (show (n + 1) ^ d ≤ (pad (box d (n + 1)) E).card by
+        rw [← card_box]; exact Finset.card_le_card hsub)
+    have hp : (0 : ℝ) < ((n + 1 : ℕ) : ℝ) ^ d := by positivity
+    rw [sub_nonneg, le_div_iff₀ hp, one_mul]
+    simpa only [Nat.cast_pow] using hc
+  have hu (n : ℕ) : ((pad (box d (n + 1)) E).card : ℝ) /
+      ((n + 1 : ℕ) : ℝ) ^ d - 1 ≤ boundary n := by
+    have hc := pad_card_le_boundary (box d (n + 1)) E
+    rw [card_box] at hc
+    have hc' := (Nat.cast_le (α := ℝ)).mpr hc
+    simp only [Nat.cast_add, Nat.cast_pow, Nat.cast_sum] at hc'
+    have hp : (0 : ℝ) < ((n + 1 : ℕ) : ℝ) ^ d := by positivity
+    have hh := div_le_div_of_nonneg_right hc' hp.le
+    simp only [Nat.cast_add] at hp hh
+    rw [add_div, div_self hp.ne'] at hh
+    dsimp only [boundary]
+    rw [← Finset.sum_div]
+    simp only [Nat.cast_add] at hh ⊢
+    linarith
+  have hzero := squeeze_zero hl hu hb
+  convert hzero.add_const 1 using 1 <;> simp
+
+private theorem logarithmic_packing_bound {a b k u v f : ℕ}
+    (ha : 2 ≤ a) (hb : 0 < b) (hv : 0 < v) (hf : 0 < f)
+    (hdense : v ≤ k * b ^ 2) (hinside : k * b ≤ u)
+    (hcount : f ≤ (a ^ b - 1) ^ k * a ^ (u - k * b)) :
+    0 < ((b : ℝ) * Real.log (a : ℝ) - Real.log (a ^ b - 1 : ℕ)) / (b : ℝ) ^ 2 ∧
+    Real.log (f : ℝ) / v ≤ (u : ℝ) / v * Real.log (a : ℝ) -
+      ((b : ℝ) * Real.log (a : ℝ) - Real.log (a ^ b - 1 : ℕ)) / (b : ℝ) ^ 2 := by
+  have ha0 : (0 : ℝ) < a := by exact_mod_cast (show 0 < a by omega)
+  have hb0 : (0 : ℝ) < b := by exact_mod_cast hb
+  have hv0 : (0 : ℝ) < v := by exact_mod_cast hv
+  have hpow : 1 < a ^ b := one_lt_pow' (by omega) hb.ne'
+  have hB : (0 : ℝ) < (a ^ b - 1 : ℕ) := by exact_mod_cast (show 0 < a ^ b - 1 by omega)
+  have hlt : ((a ^ b - 1 : ℕ) : ℝ) < (a : ℝ) ^ b := by
+    exact_mod_cast (show a ^ b - 1 < a ^ b by omega)
+  have hL : 0 < (b : ℝ) * Real.log (a : ℝ) - Real.log (a ^ b - 1 : ℕ) := by
+    have hh := Real.log_lt_log hB hlt
+    rw [Real.log_pow] at hh
+    linarith
+  have hlog : Real.log (f : ℝ) ≤ (k : ℝ) * Real.log (a ^ b - 1 : ℕ) +
+      ((u : ℝ) - (k : ℝ) * b) * Real.log (a : ℝ) := by
+    calc
+      _ ≤ Real.log (((a ^ b - 1 : ℕ) : ℝ) ^ k * (a : ℝ) ^ (u - k * b)) :=
+        Real.log_le_log (by exact_mod_cast hf) (by exact_mod_cast hcount)
+      _ = _ := by
+        rw [Real.log_mul (by positivity) (by positivity), Real.log_pow, Real.log_pow,
+          Nat.cast_sub hinside, Nat.cast_mul]
+  have hd : (v : ℝ) / (b : ℝ) ^ 2 ≤ k := by
+    apply (div_le_iff₀ (sq_pos_of_pos hb0)).mpr
+    exact_mod_cast hdense
+  have hcharge := mul_le_mul_of_nonneg_right hd hL.le
+  have hcharge' : (v : ℝ) *
+      (((b : ℝ) * Real.log (a : ℝ) - Real.log (a ^ b - 1 : ℕ)) / (b : ℝ) ^ 2) ≤
+        (k : ℝ) * ((b : ℝ) * Real.log (a : ℝ) - Real.log (a ^ b - 1 : ℕ)) := by
+    convert hcharge using 1
+    ring
+  have hresult : Real.log (f : ℝ) ≤ (u : ℝ) * Real.log (a : ℝ) -
+      (v : ℝ) * (((b : ℝ) * Real.log (a : ℝ) - Real.log (a ^ b - 1 : ℕ)) /
+        (b : ℝ) ^ 2) := by
+    nlinarith only [hlog, hcharge']
+  refine ⟨div_pos hL (sq_pos_of_pos hb0), ?_⟩
+  apply (div_le_iff₀ hv0).mpr
+  calc
+    _ ≤ _ := hresult
+    _ = _ := by field_simp
+
+omit [DecidableEq G] in
+private theorem imagePatterns_card_pos [Finite A] (S : Finset G) (φ : (S → A) → A)
+    (x : G → A) (F : Finset G) : 0 < Nat.card (ImagePatterns S φ F) := by
+  have : Nonempty (ImagePatterns S φ F) := ⟨⟨fun f => localMap S φ x f, x, rfl⟩⟩
+  exact Nat.card_pos
+
+/-- A finite collision forces a strict eventual logarithmic deficit in the
+patterns jointly realized by complete image configurations on lattice boxes. -/
+theorem strict_image_box_loss [Finite A] (d : ℕ) (_hd : 1 ≤ d)
+    (S : Finset (Fin d → ℤ)) (φ : (S → A) → A) (ha : 2 ≤ Nat.card A)
+    (x y : (Fin d → ℤ) → A) (hf : Set.Finite {z | x z ≠ y z})
+    (hi : localMap S φ x = localMap S φ y) (hne : x ≠ y) :
+    ∃ c : ℝ, c < Real.log (Nat.card A : ℝ) ∧ ∃ N : ℕ, ∀ n ≥ N,
+      Real.log (imagePatternCount (box d (n + 1)) S φ : ℝ) /
+        ((n + 1 : ℕ) : ℝ) ^ d ≤ c := by
+  classical
+  obtain ⟨C, p, q, hpq, herase⟩ := exists_erasable_shape S φ hf hi hne
+  obtain ⟨e, _⟩ := Function.ne_iff.mp hpq
+  have hb : 0 < C.card := Finset.card_pos.mpr ⟨e, e.property⟩
+  let δ := ((C.card : ℝ) * Real.log (Nat.card A : ℝ) -
+    Real.log (Nat.card A ^ C.card - 1 : ℕ)) / (C.card : ℝ) ^ 2
+  let E := insert 0 (S ∪ C)
+  have hbound (n : ℕ) : 0 < δ ∧
+      Real.log (Nat.card (ImagePatterns S φ (box d (n + 1))) : ℝ) /
+        ((n + 1 : ℕ) : ℝ) ^ d ≤
+      ((pad (box d (n + 1)) E).card : ℝ) / ((n + 1 : ℕ) : ℝ) ^ d *
+        Real.log (Nat.card A : ℝ) - δ := by
+    obtain ⟨T, hdense, hcount, hinside⟩ := collision_image_bound S φ C p q hpq herase
+      (box d (n + 1))
+    have hh := logarithmic_packing_bound ha hb
+      (show 0 < (box d (n + 1)).card by rw [card_box]; positivity)
+      (imagePatterns_card_pos S φ x _) hdense hinside hcount
+    simpa only [card_box, Nat.cast_pow] using hh
+  have hδ : 0 < δ := (hbound 0).1
+  let c := Real.log (Nat.card A : ℝ) - δ / 2
+  have hc : Real.log (Nat.card A : ℝ) - δ < c := by dsimp [c]; linarith
+  have hlim : Tendsto
+      (fun n : ℕ => ((pad (box d (n + 1)) E).card : ℝ) / ((n + 1 : ℕ) : ℝ) ^ d *
+        Real.log (Nat.card A : ℝ) - δ) atTop (𝓝 (Real.log (Nat.card A : ℝ) - δ)) := by
+    simpa only [one_mul] using ((pad_box_ratio d E (Finset.mem_insert_self _ _)).mul_const
+      (Real.log (Nat.card A : ℝ))).sub_const δ
+  obtain ⟨N, hN⟩ := eventually_atTop.mp (hlim.eventually (gt_mem_nhds hc))
+  refine ⟨c, by dsimp [c]; linarith, N, ?_⟩
+  intro n hn
+  exact (hbound n).2.trans (hN n hn).le
+
+omit [DecidableEq G] in
+private theorem missing_pattern_of_not_surjective [Finite A]
+    (S : Finset G) (φ : (S → A) → A) (hns : ¬ Surjective (localMap S φ)) :
+    ∃ C : Finset G, C.Nonempty ∧ ∃ p : C → A,
+      ∀ (x : G → A) (t : G), (fun c : C => localMap S φ x (t + c)) ≠ p := by
+  classical
+  let : TopologicalSpace A := ⊥
+  have : DiscreteTopology A := ⟨rfl⟩
+  have hcont : Continuous (localMap S φ) := by
+    apply continuous_pi
+    intro z
+    exact continuous_of_discreteTopology.comp (continuous_pi (fun s : S =>
+      continuous_apply (z + s)))
+  have hclosed : IsClosed (range (localMap S φ)) := (isCompact_range hcont).isClosed
+  obtain ⟨y, hy⟩ : ∃ y : G → A, y ∉ range (localMap S φ) := by
+    simpa only [Surjective, mem_range, not_forall] using hns
+  obtain ⟨C, U, hU, hsub⟩ := isOpen_pi_iff.mp hclosed.isOpen_compl y hy
+  have hC : C.Nonempty := by
+    by_contra hn
+    have he : C = ∅ := Finset.not_nonempty_iff_eq_empty.mp hn
+    have hm : localMap S φ y ∈ (↑C : Set G).pi U := by simp [he]
+    exact hsub hm ⟨y, rfl⟩
+  refine ⟨C, hC, (fun c => y c), ?_⟩
+  intro x t he
+  let x' : G → A := fun a => x (t + a)
+  have hm : localMap S φ x' ∈ (↑C : Set G).pi U := by
+    intro c hc
+    have he' := congrFun he ⟨c, hc⟩
+    have hshift : localMap S φ x' c = localMap S φ x (t + c) := by
+      apply congrArg φ
+      funext s
+      dsimp [x']
+      congr 1
+      abel
+    rw [hshift, he']
+    exact (hU c hc).2
+  exact hsub hm ⟨x', rfl⟩
+
+omit [DecidableEq G] in
+private theorem missing_image_bound [Finite A]
+    (S : Finset G) (φ : (S → A) → A) (C : Finset G) (hC : C.Nonempty) (p : C → A)
+    (hmissing : ∀ (x : G → A) (t : G), (fun c : C => localMap S φ x (t + c)) ≠ p)
+    (F B U : Finset G) (hFU : F ⊆ U) (hin : ∀ t ∈ B, ∀ c ∈ C, t + c ∈ U) :
+    ∃ T : Finset G, B.card ≤ T.card * C.card ^ 2 ∧
+      Nat.card (ImagePatterns S φ F) ≤ (Nat.card A ^ C.card - 1) ^ T.card *
+        Nat.card A ^ (U.card - T.card * C.card) ∧ T.card * C.card ≤ U.card := by
+  classical
+  obtain ⟨T, hTB, hdis, hdense⟩ := exists_dense_packing C B hC
+  let source (o : ImagePatterns S φ F) : G → A := Classical.choose o.property
+  let norm (o : ImagePatterns S φ F) : G → A := localMap S φ (source o)
+  have hs (o : ImagePatterns S φ F) (f : F) : norm o f = o.val f :=
+    congrFun (Classical.choose_spec o.property) f
+  have hdet (o o' : ImagePatterns S φ F)
+      (he : ∀ a ∈ U, norm o a = norm o' a) : o = o' := by
+    apply Subtype.ext
+    funext f
+    exact (hs o f).symm.trans ((he f (hFU f.property)).trans (hs o' f))
+  exact ⟨T, hdense, cardinal_bound_of_disjoint_avoidance U C T p norm hdis
+    (fun t ht => hin t (hTB ht)) (fun o t _ => hmissing (source o) t) hdet⟩
+
+private theorem preinjective_pattern_lower [Finite A] [Nonempty A]
+    (S : Finset G) (φ : (S → A) → A) (hp : Preinjective S φ) (F : Finset G) :
+    Nat.card A ^ F.card ≤
+      Nat.card (ImagePatterns S φ (pad F (insert 0 (S.image (fun s => -s))))) := by
+  classical
+  let a : A := Classical.choice ‹Nonempty A›
+  let lift (w : F → A) : G → A := fun z => if hz : z ∈ F then w ⟨z, hz⟩ else a
+  let E := insert 0 (S.image (fun s => -s))
+  let key : (F → A) → ImagePatterns S φ (pad F E) := fun w =>
+    ⟨fun z => localMap S φ (lift w) z, lift w, rfl⟩
+  have hk : Injective key := by
+    intro w v he
+    have hf : Set.Finite {z | lift w z ≠ lift v z} := by
+      apply F.finite_toSet.subset
+      intro z hz
+      by_contra hn
+      exact hz (by
+        dsimp only [lift]
+        split_ifs with h
+        · exact (hn h).elim
+        · rfl)
+    have hi : localMap S φ (lift w) = localMap S φ (lift v) := by
+      funext z
+      by_cases hz : z ∈ pad F E
+      · exact congrFun (congrArg Subtype.val he) ⟨z, hz⟩
+      · apply congrArg φ
+        funext s
+        have hout : z + (s : G) ∉ F := by
+          intro hin
+          have hneg : -(s : G) ∈ E := Finset.mem_insert_of_mem
+            (Finset.mem_image.mpr ⟨(s : G), s.property, rfl⟩)
+          have hm := mem_pad hin hneg
+          exact hz (by simpa only [add_neg_cancel_right] using hm)
+        simp only [lift, dite_eq_right hout]
+    have hinput := hp (lift w) (lift v) hf hi
+    funext z
+    have hh := congrFun hinput z
+    simpa only [lift, dite_eq_left z.property] using hh
+  have hc := Nat.card_le_card_of_injective key hk
+  simpa only [Nat.card_fun, Nat.card_eq_fintype_card, Fintype.card_coe] using hc
+
+omit [DecidableEq G] in
+private theorem surjective_patterns_full [Finite A] [Nonempty A]
+    (S : Finset G) (φ : (S → A) → A) (hs : Surjective (localMap S φ)) (F : Finset G) :
+    Nat.card (ImagePatterns S φ F) = Nat.card A ^ F.card := by
+  classical
+  have hfull : ImagePatterns S φ F = Set.univ := by
+    apply Set.eq_univ_of_forall
+    intro w
+    let z : G → A := fun a => if ha : a ∈ F then w ⟨a, ha⟩ else Classical.choice ‹Nonempty A›
+    obtain ⟨x, hx⟩ := hs z
+    refine ⟨x, ?_⟩
+    funext f
+    exact (congrFun hx f).trans (by simp only [z, dite_eq_left f.property])
+  rw [hfull, Nat.card_univ, Nat.card_fun,
+    Nat.card_eq_fintype_card (α := ↥F), Fintype.card_coe]
+
+private theorem surjective_of_preinjective [Finite A] [Nonempty A]
+    (d : ℕ) (S : Finset (Fin d → ℤ)) (φ : (S → A) → A)
+    (ha : 2 ≤ Nat.card A) (hp : Preinjective S φ) : Surjective (localMap S φ) := by
+  classical
+  by_contra hns
+  obtain ⟨C, hC, p, hmissing⟩ := missing_pattern_of_not_surjective S φ hns
+  let negS := S.image (fun s => -s)
+  let E0 := insert 0 negS
+  let E := insert 0 (negS ∪ C)
+  let δ := ((C.card : ℝ) * Real.log (Nat.card A : ℝ) -
+    Real.log (Nat.card A ^ C.card - 1 : ℕ)) / (C.card : ℝ) ^ 2
+  have ha0 : (0 : ℝ) < Nat.card A := by exact_mod_cast (show 0 < Nat.card A by omega)
+  let x : (Fin d → ℤ) → A := fun _ => Classical.choice ‹Nonempty A›
+  have hbound (n : ℕ) : 0 < δ ∧ Real.log (Nat.card A : ℝ) ≤
+      ((pad (box d (n + 1)) E).card : ℝ) / ((n + 1 : ℕ) : ℝ) ^ d *
+        Real.log (Nat.card A : ℝ) - δ := by
+    let B := box d (n + 1)
+    let F := pad B E0
+    let U := pad B E
+    have hFU : F ⊆ U := by
+      intro a ha
+      obtain ⟨e, he, hm⟩ := Finset.mem_biUnion.mp ha
+      exact Finset.mem_biUnion.mpr ⟨e, (by
+        rcases Finset.mem_insert.mp he with rfl | he
+        · exact Finset.mem_insert_self _ _
+        · exact Finset.mem_insert_of_mem (Finset.mem_union_left _ he)), hm⟩
+    have hin : ∀ t ∈ B, ∀ c ∈ C, t + c ∈ U := by
+      intro t ht c hc
+      exact mem_pad ht (Finset.mem_insert_of_mem (Finset.mem_union_right _ hc))
+    obtain ⟨T, hdense, hcount, hinside⟩ := missing_image_bound S φ C hC p hmissing F B U hFU hin
+    have hv : 0 < B.card := by dsimp [B]; rw [card_box]; positivity
+    have hlog := logarithmic_packing_bound ha (Finset.card_pos.mpr hC) hv
+      (imagePatterns_card_pos S φ x F) hdense hinside hcount
+    have hlower := preinjective_pattern_lower S φ hp B
+    change Nat.card A ^ B.card ≤ Nat.card (ImagePatterns S φ F) at hlower
+    have hloglower : Real.log (Nat.card A : ℝ) ≤
+        Real.log (Nat.card (ImagePatterns S φ F) : ℝ) / B.card := by
+      have hc : (Nat.card A : ℝ) ^ B.card ≤ (Nat.card (ImagePatterns S φ F) : ℝ) := by
+        exact_mod_cast hlower
+      have hh := Real.log_le_log (pow_pos ha0 B.card) hc
+      rw [Real.log_pow] at hh
+      apply (le_div_iff₀ (by exact_mod_cast hv : (0 : ℝ) < B.card)).mpr
+      simpa only [mul_comm] using hh
+    refine ⟨hlog.1, ?_⟩
+    have hh := hloglower.trans hlog.2
+    simpa only [B, U, card_box, Nat.cast_pow] using hh
+  have hδ := (hbound 0).1
+  have hlim : Tendsto
+      (fun n : ℕ => ((pad (box d (n + 1)) E).card : ℝ) / ((n + 1 : ℕ) : ℝ) ^ d *
+        Real.log (Nat.card A : ℝ) - δ) atTop (𝓝 (Real.log (Nat.card A : ℝ) - δ)) := by
+    simpa only [one_mul] using ((pad_box_ratio d E (Finset.mem_insert_self _ _)).mul_const
+      (Real.log (Nat.card A : ℝ))).sub_const δ
+  have hh : Real.log (Nat.card A : ℝ) ≤ Real.log (Nat.card A : ℝ) - δ :=
+    le_of_tendsto_of_tendsto tendsto_const_nhds hlim (Eventually.of_forall (fun n => (hbound n).2))
+  linarith
+
+private theorem rank_one_from_native [Finite A]
+    (S : Finset (Fin 1 → ℤ)) (φ : (S → A) → A) :
+    Surjective (localMap S φ) ↔ Preinjective S φ := by
+  classical
+  let site : ℤ ≃ (Fin 1 → ℤ) := {
+    toFun := fun i _ => i
+    invFun := fun z => z 0
+    left_inv := fun _ => rfl
+    right_inv := by intro z; funext j; rw [Subsingleton.elim j 0] }
+  let e : (ℤ → A) ≃ ((Fin 1 → ℤ) → A) := Equiv.arrowCongr site (Equiv.refl A)
+  let R := S.sup (fun s => (s 0).natAbs)
+  have hR (s : S) : -(R : ℤ) ≤ (s : Fin 1 → ℤ) 0 ∧ (s : Fin 1 → ℤ) 0 ≤ R := by
+    apply abs_le.mp
+    rw [Int.abs_eq_natAbs]
+    exact_mod_cast (Finset.le_sup (f := fun z : Fin 1 → ℤ => (z 0).natAbs)
+      s.property : ((s : Fin 1 → ℤ) 0).natAbs ≤ R)
+  let idx (s : S) : Fin (2 * R + 2) := ⟨((s : Fin 1 → ℤ) 0 + R).toNat, by
+    have hh := hR s
+    omega⟩
+  let H : (Fin (2 * R + 2) → A) → A := fun w => φ (fun s => w (idx s))
+  let shift : (ℤ → A) ≃ (ℤ → A) := {
+    toFun := fun y i => y (i + R)
+    invFun := fun y i => y (i - R)
+    left_inv := by intro y; funext i; simp
+    right_inv := by intro y; funext i; simp }
+  let o := e.symm.trans shift
+  let N := PermutativeLifts.BipermutativeLift.code H
+  have hcomm (x : ℤ → A) : N x = o (localMap S φ (e x)) := by
+    funext i
+    apply congrArg φ
+    funext s
+    change x (i + (idx s : ℕ)) = x (i + (R : ℤ) + (s : Fin 1 → ℤ) 0)
+    apply congrArg x
+    have hh := hR s
+    dsimp only [idx]
+    omega
+  have hsurj : Surjective N ↔ Surjective (localMap S φ) := by
+    constructor
+    · intro hn y
+      obtain ⟨x, hx⟩ := hn (o y)
+      exact ⟨e x, o.injective ((hcomm x).symm.trans hx)⟩
+    · intro hp y
+      obtain ⟨z, hz⟩ := hp (o.symm y)
+      refine ⟨e.symm z, ?_⟩
+      rw [hcomm, e.apply_symm_apply, hz, o.apply_symm_apply]
+  have hfinite (x y : ℤ → A) : Set.Finite {z | e x z ≠ e y z} ↔
+      Set.Finite {i | x i ≠ y i} := by
+    constructor
+    · intro hf
+      exact Set.Finite.preimage site.injective.injOn hf
+    · intro hf
+      exact Set.Finite.preimage site.symm.injective.injOn hf
+  have hpre : PermutativeLifts.BipermutativePreinjectivity.Preinjective H ↔ Preinjective S φ := by
+    constructor
+    · intro hp x y hf hi
+      have hfi := (hfinite (e.symm x) (e.symm y)).mp (by simpa only [e.apply_symm_apply] using hf)
+      have hNi : N (e.symm x) = N (e.symm y) := by
+        rw [hcomm, hcomm, e.apply_symm_apply, e.apply_symm_apply, hi]
+      exact e.symm.injective (hp hfi hNi)
+    · intro hp x y hf hi
+      apply e.injective
+      apply hp (e x) (e y) ((hfinite x y).mpr hf)
+      exact o.injective ((hcomm x).symm.trans (hi.trans (hcomm y)))
+  exact hsurj.symm.trans ((GardenOfEden.garden_of_eden (2 * R) H).trans hpre)
+
+/-- The Moore–Myhill theorem on every finite-dimensional integer lattice,
+with arbitrary finite neighborhood and arbitrary finite alphabet. -/
+theorem garden_of_eden [Finite A] (d : ℕ) (S : Finset (Fin d → ℤ)) (φ : (S → A) → A) :
+    Surjective (localMap S φ) ↔ Preinjective S φ := by
+  classical
+  by_cases hA : Subsingleton A
+  · let : Subsingleton A := hA
+    exact ⟨fun _ _ _ _ _ => Subsingleton.elim _ _,
+      fun _ y => ⟨y, Subsingleton.elim _ _⟩⟩
+  let : Nontrivial A := not_subsingleton_iff_nontrivial.mp hA
+  have ha : 2 ≤ Nat.card A := by
+    let : Fintype A := Fintype.ofFinite A
+    have hh := Fintype.one_lt_card_iff_nontrivial.mpr (inferInstance : Nontrivial A)
+    rw [Nat.card_eq_fintype_card]
+    omega
+  by_cases hd : d = 0
+  · subst d
+    let : Fintype ((Fin 0 → ℤ) → A) := Fintype.ofFinite _
+    have he : Preinjective S φ ↔ Injective (localMap S φ) := by
+      constructor
+      · intro hp x y hi
+        exact hp x y (Set.toFinite _) hi
+      · intro hi x y _ heq
+        exact hi heq
+    exact (Finite.injective_iff_surjective (f := localMap S φ)).symm.trans he.symm
+  by_cases hd1 : d = 1
+  · subst d
+    exact rank_one_from_native S φ
+  constructor
+  · intro hs x y hf hi
+    by_contra hne
+    obtain ⟨c, hc, N, hN⟩ := strict_image_box_loss d (by omega) S φ ha x y hf hi hne
+    have hh := hN N le_rfl
+    dsimp only [imagePatternCount] at hh
+    rw [surjective_patterns_full S φ hs, card_box, Nat.cast_pow, Real.log_pow,
+      Nat.cast_pow] at hh
+    have hv : ((N + 1 : ℕ) : ℝ) ^ d ≠ 0 := by positivity
+    rw [mul_div_cancel_left₀ _ hv] at hh
+    exact (not_le_of_gt hc) hh
+  · exact surjective_of_preinjective d S φ ha
 
 end D5.S1.Dynamics.Symbolic.LatticeGardenOfEden
