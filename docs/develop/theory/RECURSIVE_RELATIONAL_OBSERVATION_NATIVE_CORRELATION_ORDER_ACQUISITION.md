@@ -775,3 +775,430 @@ that the wider programme is complete.
 [BUSH]: https://doi.org/10.1214/aoms/1177729387
 
 ## 追加锚（本行以下为增补区）
+
+## 6. Actual-source normalization on short targets
+
+**Definition 6.1 (prefix cells and conditional continuations).** Keep
+exactly Definition 1.1, including the whole family $\mathcal F_D$,
+stationarity, every finite original-root word as a legal competing
+Read, and correctness for every authentic later $k$. Write $n=|p|$.
+A nonterminal prefix history $H$ is a finite truthful history of Reads
+of $p_i$, $1\le i\le n$, containing only absent replies and branch
+replies at proper prefixes $i<n$. Let
+
+$$
+\begin{aligned}
+\mathcal C_H&=\{t\in\mathcal F_D:t\text{ gives every reply in }H\},\\
+a&=1+\max\bigl(\{i:(p_i,\mathsf b)\in H\}\cup\{0\}\bigr),\\
+b&=\min\bigl(\{i:(p_i,\bot)\in H\}\cup\{n+1\}\bigr)-1.
+\end{aligned}
+\tag{NCO.31}
+$$
+
+Only feasible histories, $\mathcal C_H\ne\varnothing$, are considered.
+Their unresolved leaf positions are exactly $[a,b]$. The outcome $B$
+is possible exactly when $b=n$, equivalently when $H$ has no absent
+reply. The cell includes every matching source, even a source with
+zero mass under the public law.
+
+A conditional continuation starts from one fixed effective local state
+on all of $\mathcal C_H$, terminates on every member, and, together with
+its passive decoder, meets (NCO.2) on this entire cell. Its additional
+Read count is denoted $R(t)$. In particular, an encoder's continuation
+after the complete acquired history $H$ has this form. A fixed state
+is not allowed to vary with an unobserved source. The definition also
+allows a fixed state obtained by computing an earlier encoder's
+response to a reply already forced throughout $\mathcal C_H$.
+
+A prefix continuation searches the remaining ordered keys $a,\ldots,b$.
+At key $i$ it actually Reads the full literal $p_i$ on the same $t$.
+Either leaf label terminates with $(i,e)$; absence selects the lower
+keys; branch selects the upper keys, with branch at $p_n$ terminating
+with $B$. Every remaining key occurs once in its ordered binary search
+tree. Such a continuation acquires the genuine descriptor. Its existing
+passive decoder is [AAR13.3, (AAR.76) and (AAR.59)][AAR], for arbitrary
+$R$-leading $p$, including left-ending words.
+
+**Lemma 6.2 (pointwise comparison on an acquired small residual).**
+For every $D\ge1$, $R$-leading $p$ with $1\le n\le D$, feasible
+nonterminal prefix history $H$ with $1\le b-a+1\le3$, and conditional
+continuation as in Definition 6.1, there is a deterministic effective
+prefix continuation $S_H$, fixed independently of $t\in\mathcal C_H$,
+such that
+
+$$
+ R_{S_H}(t)\le R(t)\qquad(t\in\mathcal C_H).
+\tag{NCO.32}
+$$
+
+The comparison counts actual further invocations only. It requires no
+law, no supplied off-path record and no restriction of correctness to
+a prior's support.
+
+Proof. First check the cell and the evidence obligation. A branch reply
+at $p_i$ says the first leaf lies strictly after $i$, or the outcome is
+$B$; absence says the first leaf lies strictly before $i$ and excludes
+$B$. Their intersection gives (NCO.31). Every indicated position and
+both labels are feasible: make its proper ancestors branches, put the
+chosen leaf there, and fill unused siblings with alpha. The outer left
+leaf stays alpha. The right subtree then has height at most $n-1$.
+When $b=n$, making $p$ branch with two alpha children instead gives a
+$B$ completion of right-subtree height $n\le D$. Thus $a\le b$, and
+no additional candidate is removed by the height promise or the labels.
+
+The actual-label and branch-certificate argument of AAR13.5 applies on
+this whole cell, with the following closure checks. Flip the first leaf
+at any unresolved $p_j$. The height, shape, outer alpha and every reply
+in $H$ are unchanged; the competitor lies in $\mathcal C_H$. Its replies
+at all words except exactly $p_j$ agree with those of the original
+source. The two labels have different future trajectories by AAR13.3:
+if $j=n$ they differ at count zero; otherwise, writing $p=p_jr$ and
+$s(r)=\#_L(r)+2\#_R(r)$, at the common authentic count $s(r)+1$
+one gives beta and the other branch.
+Consequently every correct continuation must actually Read $p_j$.
+Collisions between the predictive factors of different positions,
+including the left-ending collision in AAR13.3, do not remove this
+within-position necessity.
+
+For a $B$ source, prune its subtree at $p$ to alpha. All of $H$ consists
+of proper-prefix branch replies in this case, so pruning preserves $H$
+and decreases height. If no further Read returns branch at $p$ or a
+nonabsent reply at a strict descendant of $p$, every further reply is
+preserved by pruning as well. Determinism from the common fixed state
+would yield the same termination and complete decoder input, although
+the required replies at count zero are branch and alpha. This is
+impossible. Here evidence means the actual chronological calls, even
+if their records are subsequently cleared; no persistence of a separate
+transcript is assumed.
+
+Neither kind of evidence is in $H$. In particular $R(t)\ge1$ everywhere.
+If $w$ is the first further word, a one-call completion is possible
+only when $w=p_j$ is the actual unresolved leaf address, when $w=p_n$
+returns branch, or when $w$ strictly extends $p$ and returns nonabsent
+on a $B$ source. An absent descendant reply is never a branch
+certificate. This classification concerns every finite word: a word
+outside the target prefixes and strict descendants cannot be either
+required witness. Known or repeated prefixes, the root, the left-root
+cone, divergent siblings and arbitrarily long absent words are thereby
+included. It is not a bound on the competing word vocabulary.
+
+With one position, query it. Its label, or branch at $p_n$ if $B$ is
+possible, finishes in one call and meets $R(t)\ge1$.
+
+With two positions $a<c$, inspect $w$. If $w=p_a$, use the order $a,c$.
+The later leaf and any $B$ source cannot finish after that first proper
+prefix, and the chosen order costs two there. If $w\ne p_a$, use the
+order $c,a$. It costs one on the leaf at $c$ and on $B$ when possible,
+and two on the leaf at $a$. That last source lacks its required first
+call at $p_a$, so $R(t)\ge2$ there. These two orders prove (NCO.32),
+including strict-descendant first queries and $B$ sources where such
+a query returns absent.
+
+Now let the three positions be $a<c<z$. The middle-first tree queries
+$c$, then $a$ on absence and $z$ on branch. Its costs on the three leaf
+positions are $(2,1,2)$, and its $B$ cost, when present, is two. It
+therefore suffices if $w=p_c$. It also suffices if $w$ cannot give any
+one-call completion, since then $R(t)\ge2$ everywhere.
+
+Suppose $w=p_a$. On the sources with later leaves or $B$, this first
+reply is the common branch reply. The continuation cannot yet stop;
+let $u$ be its fixed next word after this reply and its intervening
+local computation. If $u=p_c$, use the order $a,c,z$. Its costs are
+$(1,2,3)$, with $B$ cost three. On the sources assigned cost three,
+neither $p_z$ nor a branch certificate has appeared in the first two
+competing calls, so $R(t)\ge3$. If $u\ne p_c$, use the tree rooted at
+$a$, followed by $z$, and then $c$ on absence at $z$. Its leaf costs
+are $(1,3,2)$ and its $B$ cost is two. The leaf at $c$, the sole
+cost-three outcome, has not been read in the first two competing
+calls. Every other noninitial outcome needs at least two. Both choices
+therefore dominate pointwise, regardless of what $u$ returns elsewhere.
+
+Suppose $w=p_z$. The sources with leaves at $a,c$ give the common absent
+reply. Let $u$ be the next word from that fixed continuation state. Query
+$z$ first in the replacement, then $a$ before $c$ if $u=p_a$, and $c$
+before $a$ otherwise. The earlier leaf assigned cost three is precisely
+one whose compulsory address is missing from the competing first two
+calls; the other earlier leaf needs at least two. The leaf at $z$, and
+$B$ when possible, cost one in the replacement. This proves the claim
+in this case.
+
+The remaining first word capable of one-call completion is a strict
+descendant of $p$, with $B$ possible and hence $z=n$. Query $p_z$ first
+in the replacement. It terminates in one call on $B$ and on the leaf
+at $z$, even on $B$ sources where the competing descendant reply was
+absent. On both earlier leaf positions the competing descendant reply
+is always absent. Inspect its fixed next word $u$ after that reply and
+use exactly the preceding $a$-versus-$c$ rule. The earlier leaf assigned
+cost three still lacks its actual address after the two competing
+calls. This completes all first-word cases.
+
+Every inspected continuation state occurs on a nonempty full cell or
+on the stated common-reply subcell. Totality makes its next Read
+computable in finite local time; the evidence obligation forbids an
+earlier stop on the subcell used for inspection. Only the resulting
+finite query choices are installed. Their selection depends on $H$
+and the continuation program, never on a sampled source or off-path
+value. Each comparison concerns the same $t$ throughout. Extraction,
+local computation, installation and memory are separate costs. $\square$
+
+**Theorem 6.3 (same-source pointwise and two-encoder normalization).**
+For every integer $D\ge1$, every $R$-leading $p$ with
+$1\le n=|p|\le\min(D,4)$, and every admissible arbitrary-word encoder
+$A$ of Definition 1.1, there are two deterministic effective prefix
+encoders $S_1,S_2$, admissible on that identical whole family for the
+same all-authentic-$k$ passive task, such that
+
+$$
+ T_{S_1}(t)+T_{S_2}(t)\le2T_A(t)
+ \qquad(t\in\mathcal F_D).
+\tag{NCO.33}
+$$
+
+They depend on $A,D,p$, not on the sampled $t$ or a sampled-source
+identifier. For $n\le3$ they can be identical, giving one deterministic
+pointwise dominator. At $n=4$ deterministic pointwise domination in
+general is false, as in AAR14.2; (NCO.33) preserves that counterexample.
+
+Proof. For $n\le3$, apply Lemma 6.2 with empty $H$ and the source-blind
+initial state of $A$. For $n=4$, $A$ cannot stop before its first Read:
+a source-independent zero-call state cannot distinguish the two labels
+at the first leaf. Inspect the fixed first word $w$.
+
+If $w=p_i$ is a target prefix, actually Read that same prefix. A leaf
+reply acquires its descriptor; branch at $p_4$ acquires $B$. Stop there,
+with at most $A$'s call count. Every nonterminal reply defines an actual
+prefix history $H$ of one call. Its leaf interval has at most three
+positions, and $A$'s continuation state is fixed on all of $\mathcal C_H$.
+Attach the prefix continuation of Lemma 6.2 at that reply. This gives
+one pointwise prefix dominator on every actual source, so use it twice.
+
+If $w$ strictly extends $p$, actually Read $p=p_4$ instead. Its leaf
+or branch reply is terminal evidence in one call. On its absent reply,
+the actual cell is
+
+$$
+ \mathcal C_{[(p,\bot)]}
+ =\{t:\partial_p(t)=(j,e),\ 1\le j\le3\}.
+\tag{NCO.34}
+$$
+
+The original $\operatorname{Read}_t(w)$ equals absent on every member
+of this entire cell. Compute $A$'s fixed continuation state after that
+forced reply; no source Read of $w$ is made by the replacement. This
+continuation is total and correct on the cell, since it is $A$'s
+actual post-first-call state on each of its members. Apply Lemma 6.2
+using the genuinely acquired prefix history $[(p,\bot)]$. The total
+replacement count is at most $1+(T_A(t)-1)=T_A(t)$ on the cell.
+This is a fixed-state reduction on the same actual sources; it does
+not apply the lemma to an off-path history or obtain a new receipt
+for an unperformed Read. Again take both encoders to be this one.
+
+Every other first word lacks a possible one-call certificate, by the
+classification in Lemma 6.2 with empty $H$. Hence $T_A(t)\ge2$ on every
+source of $\mathcal F_D$. Take the following two fixed prefix trees:
+
+- $S_1$ queries $p_2$, then $p_1$ on absence or $p_4$ on branch;
+  after absence at $p_4$ it queries $p_3$.
+- $S_2$ queries $p_3$, then $p_1$ on absence or $p_4$ on branch;
+  after branch at $p_1$ it queries $p_2$.
+
+Every leaf reply terminates, and branch at $p_4$ terminates with $B$.
+Their costs, independent of label and off-path shape, are
+
+$$
+\begin{array}{c|ccccc}
+\text{outcome}&j=1&j=2&j=3&j=4&B\\\hline
+T_{S_1}&2&1&3&2&2\\
+T_{S_2}&2&3&1&2&2\\
+(T_{S_1}+T_{S_2})/2&2&2&2&2&2.
+\end{array}
+\tag{NCO.35}
+$$
+
+Thus their average count is at most $T_A(t)$ for each same $t$.
+These are two deterministic programs; the average is an inequality,
+not an executing coin flip. The preceding cases complete the universal
+proof for all finite competing words and all $D\ge n$.
+
+Every replacement actually acquires a labelled first leaf or branch
+at $p$. It may retain its whole accessible acquisition record, with
+its retention cost, or retain the descriptor or its existing predictive
+factor after paying to clear all other accessible source dependence.
+AAR13.3 then supplies the one passive decoder for every authentic
+same-source, same-initial-version $k$. No $\rho$ action occurs during
+acquisition, and no later Read or inferred clock is used. $\square$
+
+## 7. The attained actual-law mean as a consumer
+
+**Theorem 7.1 (exact short-target mean and a sufficient law interface).**
+Fix $D\ge1$, $R$-leading $p$, and $1\le n=|p|\le\min(D,4)$ as in
+Theorem 6.3. Let $\mathcal S_n$ be the finite family of all ordered
+prefix search trees on keys $1,\ldots,n$, with leaf-label termination
+and the terminal $B$ outcome. For every probability law $\mu$ on the
+whole unchanged $\mathcal F_D$,
+
+$$
+ V_{D,p}(\mu)=\min_{S\in\mathcal S_n}\mathbb E_\mu T_S.
+\tag{NCO.36}
+$$
+
+The infimum in (NCO.4) is attained by an admissible deterministic
+encoder. In particular, this remains true for arbitrary zero-prior
+worlds, on which the attaining encoder must still be correct.
+
+For an exact expression, put
+
+$$
+\begin{aligned}
+q_0&=1,&q_i&=\mu\{t:\operatorname{Read}_t(p_i)=\mathsf b\},\\
+x_i&=q_{i-1}-q_i\quad(1\le i<n),&x_n&=q_{n-1}.
+\end{aligned}
+\tag{NCO.37}
+$$
+
+These are actual-law probabilities, not observations supplied to the
+encoder. Define the finite interval recurrence
+
+$$
+\begin{aligned}
+F(a,b)&=0&&\text{if }a>b,\\
+F(a,b)&=\sum_{j=a}^b x_j+
+ \min_{a\le i\le b}\bigl(F(a,i-1)+F(i+1,b)\bigr)
+ &&\text{if }a\le b.
+\end{aligned}
+\tag{NCO.38}
+$$
+
+Then the exact value is $V_{D,p}(\mu)=F(1,n)$. Thus the ancestor branch
+masses $q_1,\ldots,q_{n-1}$ suffice for the optimized mean; the complete
+source law, its leaf-label split and its off-path correlations are not
+needed for this value on the stated short tasks. No minimality of this
+law interface is asserted.
+
+Proof. Integrate (NCO.33) under the one actual law $\mu$. At least one
+of its two deterministic prefix encoders has mean at most that of the
+arbitrary admissible $A$. Therefore the finite prefix minimum is at
+most every competing mean and hence at most their infimum. Conversely
+every member of $\mathcal S_n$ is an admissible whole-family encoder,
+by actual descriptor acquisition and AAR13.3. Its finite minimum is
+therefore at least the unrestricted infimum. This proves (NCO.36) and
+attainment. The argument averages costs, without installing randomness.
+
+The branch events along the prefixes are nested. The first leaf is at
+$i$ exactly when $p_{i-1}$ is branch and $p_i$ is not branch; for $i=1$
+the root is the known branch. Its mass, summed over both labels, is
+$q_{i-1}-q_i$. The mass of $B$ is $q_n$. In every prefix search tree
+the last leaf position $n$ and $B$ follow exactly the same strict
+ancestor queries and both terminate at $p_n$. Their call costs agree,
+so their masses combine to
+$(q_{n-1}-q_n)+q_n=q_{n-1}=x_n$. All other keys have masses $x_i$.
+In particular $x_i\ge0$ and $\sum_i x_i=1$.
+
+At the root key $i$ of any subtree on $[a,b]$, every outcome in that
+interval pays one additional call. The lower and upper intervals
+then use disjoint subtrees. Minimizing those finite choices proves
+(NCO.38) by induction on interval length. This is the ordinary ordered
+search-tree cost calculation, used here only after Theorem 6.3 has
+justified its application to the original all-word mean problem.
+For example it gives the following short expressions:
+
+$$
+\begin{aligned}
+n=1:\quad V&=1,\\
+n=2:\quad V&=1+\min\{q_1,1-q_1\},\\
+n=3:\quad V&=\min\{1+q_1+q_2,\ 1+2q_1-q_2,\ 2-q_1+q_2,\\
+ &\hspace{46mm}2+q_1-2q_2,\ 3-q_1-q_2\}.
+\end{aligned}
+\tag{NCO.39}
+$$
+
+For $n=4$, (NCO.38) with
+$(x_1,x_2,x_3,x_4)=(1-q_1,q_1-q_2,q_2-q_3,q_3)$ is an exact
+four-key expression. These expressions and ancestor-mass sufficiency
+are consumers of the new same-source comparison, rather than separate
+novel search formulas. The case $n=1$ is also Proposition 4.4.
+
+A finite minimizer exists even for a noncomputable law. Each candidate
+is an effective finite installed program, but a uniform effective map
+from arbitrary real prior parameters to an optimal program is not
+provided. Exact rational input masses permit finite exact comparison;
+representation, comparison, extraction and installation costs remain
+separate. Sampling a source does not furnish those prior masses.
+$\square$
+
+**Corollary 7.2 (the necessary length boundary for a descriptor-law gap).**
+For the same $D,p$ and the unchanged correctness family of Definition
+1.1, two laws with the same descriptor distribution but different
+optimized means must have $|p|\ge5$. This applies in particular to the
+common-descriptor-law comparisons of Definition 1.2. It asserts no
+existence of a gap at length five and no mean normalization for any
+length at least five.
+
+Proof. Equal descriptor laws give equal ancestor masses in (NCO.37).
+If $|p|\le4$, Theorem 7.1 gives equal exact means, a contradiction.
+Equality only of the compressed future-trajectory law is a different
+hypothesis: AAR13.3 permits descriptor collisions, and no conclusion
+under that weaker hypothesis is used here. $\square$
+
+**Definition 7.3 (resource and recovery scope of the comparison).**
+Only actual initial Read invocation count is dominated in (NCO.32)–
+(NCO.36). Every submitted word is the full original-root literal on
+one stationary actual source. For each resulting prefix tree there
+are at most $n$ calls, peak literal length at most $n$, and total
+submitted letters at most $n(n+1)/2$; these are its own bounds, not
+pointwise domination of $A$'s letter or peak-address costs.
+
+Operand addresses and letters, reply storage, installed literals and
+controller extraction or selection, law representation and arithmetic,
+local computation, output and decoder computation remain charged.
+The stationarity promise supplies no validation service; any separately
+required stationarity validation and the authentication, representation
+and validation of the later $k$ retain their costs and hypotheses.
+Complete accessible memory includes surviving operands, reply latches,
+histories, selectors, control, capacities and allocation distinctions.
+Retain each such source dependence at its actual cost or pay to clear
+or retract it before a descriptor-only handoff in a fixed output
+region. Resident source storage and retained inaccessible or dead
+backing remain physical costs even when absent from the exported
+interface. No minimum-memory or simultaneous resource optimum follows.
+
+The theorems supply neither source projection nor fresh-source
+sampling, rerooting, free navigation, a new randomizer, a pre-acquired
+row, a source-identity port, an acquisition or invocation permission,
+or recovery of an unknown clock. The acquired descriptor and its
+existing native decoder serve the declared target at every authentic
+supplied count. Recovering the complete original response $Q$, an
+original $S$-to-$C$ or cross-source bridge, undeclared later targets,
+full-source structure and the full mutual recovery of structure,
+continuation, boundaries and memory remain additional obligations.
+Theorems 1.3, 3.3 and 4.3 retain their quantifiers, and AAR14.2 retains
+its deterministic pointwise obstruction at length four. Theorem 7.1
+resolves the exact-mean boundary in Definition 5.2 only on its stated
+short-target slice.
+
+**Mathematical citation 7.4 (source correspondence and evidence).**
+Lemma 6.2 and Theorem 6.3 are ordinary `repo-derived` deductions from
+the unchanged native family and evidence obligations. AAR13.3 supplies
+the existing passive decoder and within-position label separation;
+AAR13.5 supplies actual-leaf and branch-certificate necessity, with
+conditional-cell closure proved above. AAR13.4 supplies the admissible
+prefix-search form. AAR14.1 and AAR16.4 concern projected sources and
+worst resources; neither is used as an actual-law comparison.
+AAR14.2 is the retained counterexample to stronger pointwise domination.
+These owning sources are read at repository base
+`92ebb4bf99a02f9804996167f5f07a3fcabd7a2f`.
+
+The finite expected-cost decision-tree framework is mature; see
+[Cicalese–Laber–Saettler, §1][CLS]. Its variables are native reply
+functions of the same tree, its output class is the target future
+trajectory, and each invocation has unit cost here. The elementary
+ordered-tree recurrence is an intermediate calculation in the consumer
+Theorem 7.1; no approximation theorem of that paper supplies Lemma 6.2
+or the two-encoder inequality. No worldwide originality claim is made.
+Existing Lean source cited in Mathematical citation 5.3 supplies the
+native carrier, four-reply Read and substitution correspondence only.
+The new results are ordinary proofs, with no new Lean check or kernel
+verification claimed; a bounded finite calculation alone would not
+establish their arbitrary-word or arbitrary-$D$ quantifiers.
+
+## 追加锚（本行以下为增补区）
