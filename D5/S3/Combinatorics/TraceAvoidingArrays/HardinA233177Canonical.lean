@@ -7,18 +7,16 @@
    digest: First-appearance representatives and exact complementary-pair colour fibres. -/
 /-
 admission_basis: open-problem-resolution (#28449; Proved)
-escape_witness: none; every declaration is bind-only. Canonical rigidity is InitialSeg.eq on
-  first-occurrence cells; existence ranks them with Fintype.orderIsoFinOfCardEq and extends
-  the palette with Equiv.Perm.exists_extending_pair; the orbit count is Nat.card_congr and
-  Fintype.card_perm.
+escape_witness: canonical_unique (well-founded prefix rigidity),
+  canonical_exists_unique (lex-minimal relabelling gives a canonical representative).
 direct_frozen_dependencies (raw compiled type/value edges, union over this module):
   D5/S3/Observer/Separation/BooleanRankThreeK4.beta
     statement_id: sha256:1abdc5f3db71567fe05de5aabbe80dddeb5ec5179e4ec7fd49fe71e500518481
 Canonical: proof_shape=bind-only; consumers=canonical_exists_unique, normalized_card
 first_occurrence: proof_shape=bind-only; consumers=canonical_exists_unique, firstEquiv
-canonical_unique: proof_shape=bind-only; consumers=canonical_exists_unique, canonical_pattern_card
+canonical_unique: proof_shape=content; consumers=canonical_exists_unique, canonical_pattern_card
   reason: Well-founded induction proves rigidity from equality of label fibres.
-canonical_exists_unique: proof_shape=bind-only; consumers=canonical_pattern_card
+canonical_exists_unique: proof_shape=content; consumers=canonical_pattern_card
   reason: A label swap proves the lex-minimal orbit member canonical; rigidity gives uniqueness.
 colourEquiv: proof_shape=bind-only; consumers=fibreEquiv
 Normal: proof_shape=bind-only; consumers=normalization_iff, normalized_card
@@ -31,7 +29,7 @@ side_false: proof_shape=bind-only; consumers=fibreEquiv
 fibreEquiv: proof_shape=bind-only; consumers=fibre_card
 fibre_card: proof_shape=bind-only; consumers=normalized_card
 perm_ext_two: proof_shape=bind-only; consumers=canonical_pattern_card
-canonical_pattern_card: proof_shape=bind-only; consumers=HardinA233177Ladder.counting_bridge
+canonical_pattern_card: proof_shape=content; consumers=HardinA233177Ladder.counting_bridge
   reason: The counting bijection uses the new canonical representative and its rigidity.
 normalized_card: proof_shape=bind-only; consumers=HardinA233177Ladder.counting_bridge
 -/
@@ -39,7 +37,7 @@ import Mathlib.Order.PiLex
 import Mathlib.Data.Finset.Max
 import Mathlib.Data.Fintype.Perm
 import Mathlib.Tactic
-import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip
+import D5.S3.Observer.Separation.BooleanRankThreeK4
 
 namespace D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
 

@@ -127,4 +127,4 @@ The complementary pairs are the fibres {0,5}, {1,4}, {2,3} of D5.S3.Observer.Sep
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233177Canonical.fibre_card`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233177Canonical.normalization_iff`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233177Canonical.normalized_card`
-- Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233251TriangleStrip](HardinA233251TriangleStrip.md)
+- Dependency: [D5/S3/Observer/Separation/BooleanRankThreeK4](../../Observer/Separation/BooleanRankThreeK4.md)
