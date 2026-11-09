@@ -59,7 +59,25 @@ internal sealed class HardinA233251TriangleStripDocument : IScribeDocumentDefini
                 "The fibres of beta are the complementary pairs. Distinct fibres are exactly "
                 + "the pairs of colours that are unequal and do not sum to five."),
             Resolution("result", "result", "Barker's generating function", ResultFormula(),
-                "Let U(k) and V(k) be the continuation counts with and without colour two already seen. Then U(0)=V(0)=1, U(k+1)=48U(k), and V(k+1)=8V(k)+20U(k). Decomposing the literal arrays into their first row and tail gives a(k+1)=U(k)+2V(k). Consequently a(n+3)=56a(n+2)-384a(n+1), with a(1)=3 and a(2)=104. Coefficient comparison proves the displayed identity in integer power series; every natural count is cast to an integer before forming the series."))));
+                "Let U(k) and V(k) be the continuation counts with and without colour two already seen. Then U(0)=V(0)=1, U(k+1)=48U(k), and V(k+1)=8V(k)+20U(k). Decomposing the literal arrays into their first row and tail gives a(k+1)=U(k)+2V(k). Consequently a(n+3)=56a(n+2)-384a(n+1), with a(1)=3 and a(2)=104. Coefficient comparison proves the displayed identity in integer power series; every natural count is cast to an integer before forming the series."),
+            Def("widthlegal", "widthLegal", "The literal legality predicate at any width",
+                WidthLegalFormula(),
+                "The first cell is zero, each row satisfies R, consecutive rows satisfy E, "
+                + "and the shared scanner imposes row-major normalization. The Fin.val "
+                + "projections and typed finite zeroes are explicit."),
+            Def("widthdecidablenormal", "widthInstDecidableNormal", "Deciding row-major normalization",
+                WidthDecidableNormalFormula(),
+                "The defining expression is inferInstanceAs for the displayed finite "
+                + "universal quantification and its two implications."),
+            Def("widthdecidablegood", "widthInstDecidableGood", "Deciding a row scan at any width",
+                WidthDecidableGoodFormula(),
+                "These are the zero and successor equations of the defining induction on k. "
+                + "The successor uses the original allowed decision and the recursive tail "
+                + "decision with the advanced flags; no positive-width instance is required."),
+            Def("widthdecidablelegal", "widthInstDecidableLegal", "Deciding the literal legality predicate",
+                WidthDecidableLegalFormula(),
+                "The defining expression is inferInstanceAs for the four displayed "
+                + "conjuncts, using the deciding instances for R and E."))));
 
     private static DocumentBlock Def(string id, string name, string title, Formula formula, string prose,
         bool literature = false) =>
@@ -94,6 +112,77 @@ internal sealed class HardinA233251TriangleStripDocument : IScribeDocumentDefini
     private static Formula IntType() => Qualified("Int");
     private static Formula RowType() => Arrow(ApplyName("Fin", V("k")), Fin(6));
     private static Formula SeenType() => Qualified(ScannerRoot + "Seen");
+    private static Formula FinZero(Formula type) => Parenthesized(Seq(D(0), Colon, Sp, type));
+    private static Formula Decides(Formula proposition) =>
+        ApplyName("Decidable", Parenthesized(proposition));
+    private static Formula TypedDecision(Formula value, Formula proposition) =>
+        Parenthesized(Seq(value, Colon, Sp, Decides(proposition)));
+    private static Formula NormalBody()
+    {
+        var i = V("i"); var j = V("j"); var value = App(App(V("f"), i), j);
+        Formula Is(byte d) => Eq(value, Parenthesized(Seq(D(d), Colon, Sp, Fin(6))));
+        Formula Earlier(byte d) => Ex("r", ApplyName("Fin", V("n")),
+            Ex("t", ApplyName("Fin", V("k")),
+                And(Or(Lt(V("r"), i), And(Eq(V("r"), i), Lt(V("t"), j))),
+                    Eq(App(App(V("f"), V("r")), V("t")),
+                        Parenthesized(Seq(D(d), Colon, Sp, Fin(6)))))));
+        return All("i", ApplyName("Fin", V("n")), All("j", ApplyName("Fin", V("k")), And(
+            Imp(Or(Is(2), Or(Is(3), Is(4))),
+                Or(Eq(ApplyName("Prod.fst", V("s")), Qualified("Bool.true")), Earlier(1))),
+            Imp(Is(3), Or(Eq(ApplyName("Prod.snd", V("s")), Qualified("Bool.true")), Earlier(2))))));
+    }
+    private static Formula WidthLegalBody()
+    {
+        var rows = ApplyName("Fin", V("n")); var cols = ApplyName("Fin", V("k"));
+        var i = V("i"); var j = V("j"); var a = V("A");
+        Formula Cell(Formula r) => App(a, Pair(r, j));
+        var first = Ex("i", rows, And(Eq(ApplyName("Fin.val", i), D(0)),
+            Eq(App(a, Pair(i, FinZero(cols))), FinZero(Fin(6)))));
+        var horizontal = All("i", rows, App(V("R"), Fn("j", cols, Cell(i))));
+        var next = ApplyName("Fin.mk", Add(ApplyName("Fin.val", i), D(1)), V("h"));
+        var bonds = All("i", rows,
+            All("h", Lt(Add(ApplyName("Fin.val", i), D(1)), V("n")),
+                App(V("E"), Fn("j", cols, Cell(i)), Fn("j", cols, Cell(next)))));
+        var normal = TransferCall("widthNormal", Pair(Qualified("Bool.false"), Qualified("Bool.false")),
+            Fn("i", rows, Fn("j", cols, Cell(i))));
+        return And(first, And(horizontal, And(bonds, normal)));
+    }
+    private static Formula LegalParameters(Formula body, bool decisions = false)
+    {
+        var predicate = Arrow(RowType(), Qualified("Prop"));
+        var relation = Arrow(RowType(), predicate);
+        var array = Arrow(Product(ApplyName("Fin", V("n")), ApplyName("Fin", V("k"))), Fin(6));
+        var tail = All("n", NatType(), All("A", array, body));
+        if (decisions)
+            tail = Instance("DecidablePred", V("R"), Instance("DecidableRel", V("E"), tail));
+        return All("k", NatType(), PositiveWidth(All("R", predicate, All("E", relation, tail))));
+    }
+    private static Formula WidthLegalFormula() => LegalParameters(
+        Eq(TransferCall("widthLegal", V("R"), V("E"), V("A")), Parenthesized(WidthLegalBody())));
+    private static Formula WidthDecidableNormalFormula() => NormalParameters(
+        Eq(TypedDecision(TransferCall("widthInstDecidableNormal", V("s"), V("f")),
+                TransferCall("widthNormal", V("s"), V("f"))),
+            ApplyName("inferInstanceAs", Parenthesized(Decides(NormalBody())))));
+    private static Formula WidthDecidableLegalFormula() => LegalParameters(
+        Eq(TypedDecision(TransferCall("widthInstDecidableLegal", V("R"), V("E"), V("A")),
+                TransferCall("widthLegal", V("R"), V("E"), V("A"))),
+            ApplyName("inferInstanceAs", Parenthesized(Decides(WidthLegalBody())))), true);
+    private static Formula WidthDecidableGoodFormula()
+    {
+        var s = V("s"); var c = V("c");
+        Formula Decision() => TypedDecision(TransferCall("widthInstDecidableGood", s, c), Good(s, c));
+        var head = App(c, FinZero(ApplyName("Fin", Add(V("k"), D(1)))));
+        var advanced = ApplyName(ScannerRoot + "advance", s, head);
+        var tail = ApplyName("Fin.tail", c);
+        var baseCase = All("s", SeenType(), All("c", Arrow(ApplyName("Fin", D(0)), Fin(6)),
+            Eq(Decision(), ApplyName("Decidable.isTrue", Qualified("True.intro")))));
+        var successor = All("k", NatType(), All("s", SeenType(),
+            All("c", Arrow(ApplyName("Fin", Add(V("k"), D(1))), Fin(6)),
+                Eq(Decision(), ApplyName("instDecidableAnd",
+                    ApplyName(ScannerRoot + "instDecidableAllowed", s, head),
+                    TransferCall("widthInstDecidableGood", advanced, tail))))));
+        return new Formula.Aligned([baseCase, successor]);
+    }
     private static Formula Fn(string name, Formula type, Formula body) =>
         Seq(LambdaLower, Sp, V(name), Colon, Sp, type, Sp, Mapsto, Sp, Parenthesized(body));
     private static Formula Instance(string name, Formula argument, Formula body) =>
