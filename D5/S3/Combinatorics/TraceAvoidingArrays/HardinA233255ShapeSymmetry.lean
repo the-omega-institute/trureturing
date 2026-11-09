@@ -232,7 +232,8 @@ private theorem incomplete_step (n : ℕ) (p : Boundary)
   have hq (q : PairRow) :
       2 * (if rowProper q ∧ labelCompatible p q then
         rowWeight (true, false) q * pairV n (rowFinish (true, false) q) (labelBoundary q) else 0) =
-      (if rowProper q ∧ labelCompatible p q then 128 * pairV n (true, true) (labelBoundary q) else 0) +
+      (if rowProper q ∧ labelCompatible p q then
+        128 * pairV n (true, true) (labelBoundary q) else 0) +
       (if q = absentRow p then
         128 * (2 * pairV n (true, false) p - pairV n (true, true) p) else 0) := by
     by_cases hl : rowProper q ∧ labelCompatible p q
@@ -240,12 +241,12 @@ private theorem incomplete_step (n : ℕ) (p : Boundary)
       have hw := (unfinished_row q).2
       by_cases ht : hasTwo q
       · have hne : q ≠ absentRow p := fun h => hs.2.1 (h ▸ ht)
-        simp only [if_pos hl, hf, hw, if_pos ht, if_neg hne, add_zero]
+        simp only [ite_eq_left hl, hf, hw, ite_eq_left ht, ite_eq_right hne, add_zero]
         ring
       · have he := hs.2.2 q hl ht
         subst q
-        simp only [if_pos hs.1, (unfinished_row (absentRow p)).1,
-          (unfinished_row (absentRow p)).2, if_neg hs.2.1, if_pos rfl]
+        simp only [ite_eq_left hs.1, (unfinished_row (absentRow p)).1,
+          (unfinished_row (absentRow p)).2, ite_eq_right hs.2.1]
         change 2 * (128 * pairV n (true, false) p) = 128 * pairV n (true, true) p +
           128 * (2 * pairV n (true, false) p - pairV n (true, true) p)
         ring
@@ -289,6 +290,7 @@ private theorem initial_mass : ∀ i : Fin 16,
       if i = 0 then 16 else 32 := by
   decide +kernel
 
+set_option maxRecDepth 20000 in
 private theorem initial_aggregation (n : ℕ) :
     (a ⟨n + 1, Nat.succ_pos n⟩ : ℤ) =
       32 * pairV n (true, false) alternating' +
@@ -303,17 +305,16 @@ private theorem initial_aggregation (n : ℕ) :
     by_cases ha : q = alternating'
     · subst q
       have hh := h.1 rfl
-      simp only [if_pos hh.1, hh.2.1, hh.2.2, if_pos rfl, if_neg (h.2.2.2 rfl), add_zero]
+      simp only [ite_eq_left hh.1, hh.2.1, hh.2.2, ite_eq_right (h.2.2.2 rfl), add_zero, ite_true]
     · by_cases hf : initialFull q
       · have hh := h.2.1 hf
         have hl := hf.1
-        simp only [if_pos hl, hh.2.1, hh.2.2, completed_transfer_bridge n q hh.1,
-          if_neg ha, if_pos hf, zero_add]
+        simp only [ite_eq_left hl, hh.2.1, hh.2.2, completed_transfer_bridge n q hh.1,
+          ite_eq_right ha, ite_eq_left hf, zero_add]
       · by_cases hl : rowProper (Fin.cons 0 q)
         · simp [hl, h.2.2.1 hl ha hf, ha, hf]
         · simp [hl, ha, hf]
-  simp_rw [hq]
-  rw [Finset.sum_add_distrib]
+  rw [Finset.sum_congr rfl (fun q _ => hq q), Finset.sum_add_distrib]
   simp only [Finset.sum_ite_eq', Finset.mem_univ, ite_true]
   congr 1
   simp_rw [← initial_mass, Finset.sum_mul]
