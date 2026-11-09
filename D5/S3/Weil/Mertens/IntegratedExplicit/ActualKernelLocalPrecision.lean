@@ -68,14 +68,6 @@ private lemma exp_limit (c : ℝ) :
 private lemma K_limit : Tendsto K (𝓝[>] 0) (𝓝 (K 0)) :=
   K_continuous.continuousAt.tendsto.mono_left nhdsWithin_le_nhds
 
-private lemma exp_ratio :
-    Tendsto (fun t : ℝ => t / (Real.exp (2 * t) - 1)) (𝓝[>] 0) (𝓝 (1 / 2)) := by
-  have h := (((hasDerivAt_id (0 : ℝ)).const_mul 2).exp).tendsto_slope_zero_right
-  have hs : Tendsto (fun t : ℝ => (Real.exp (2 * t) - 1) / t)
-      (𝓝[>] 0) (𝓝 2) := by
-    simpa [smul_eq_mul, div_eq_mul_inv, mul_comm] using h
-  convert hs.inv₀ (by norm_num : (2 : ℝ) ≠ 0) using 1 <;> simp [one_div]
-
 private lemma log_recip_atTop :
     Tendsto (fun t : ℝ => Real.log (1 / t)) (𝓝[>] 0) atTop := by
   convert tendsto_neg_atBot_atTop.comp Real.tendsto_log_nhdsGT_zero using 1
@@ -152,39 +144,12 @@ private lemma weighted_D1_sq :
     field_simp [ht]
   simpa using Filter.Tendsto.congr' heq htmp
 
-private lemma weighted_D1 :
-    Tendsto (fun t : ℝ => t * D1 t) (𝓝[>] 0) (𝓝 0) := by
-  have hlog : Tendsto (fun t : ℝ => t * Real.log (1 / t)) (𝓝[>] 0) (𝓝 0) := by
-    have htmp := t_log_sq_limit.mul inv_log_limit
-    have heq :
-        (fun t : ℝ => t * Real.log (1 / t) ^ 2 * (Real.log (1 / t))⁻¹) =ᶠ[𝓝[>] 0]
-          (fun t => t * Real.log (1 / t)) := by
-      filter_upwards [log_recip_atTop.eventually (eventually_gt_atTop 0)] with t ht
-      have hne : Real.log (1 / t) ≠ 0 := ht.ne'
-      field_simp [hne]
-    simpa using Filter.Tendsto.congr' heq htmp
-  have htmp := hlog.mul D1_log_ratio
-  have heq :
-      (fun t : ℝ => -(t * Real.log (1 / t) * (-D1 t / Real.log (1 / t)))) =ᶠ[𝓝[>] 0]
-        (fun t => t * D1 t) := by
-    filter_upwards [log_recip_atTop.eventually (eventually_gt_atTop 0)] with t ht
-    have hne : Real.log (1 / t) ≠ 0 := ht.ne'
-    field_simp [hne]
-  simpa using Filter.Tendsto.congr' heq htmp.neg
-
-private lemma weighted_D2 :
-    Tendsto (fun t : ℝ => t * D2 t) (𝓝[>] 0) (𝓝 (1 / 2)) := by
-  convert ((t_limit.mul K_limit).div_const 4 |>.sub
-    (t_limit.mul (exp_limit (1/2)))).add ((exp_limit (-1/2)).mul exp_ratio) using 1
-  · ext t; dsimp [D2]; ring
-  · norm_num
-
 private lemma weighted_D3 :
     Tendsto (fun t : ℝ => t ^ 2 * D3 t) (𝓝[>] 0) (𝓝 (-1 / 2)) := by
-  have h1 := (t_limit.mul weighted_D1).div_const 4
+  have h1 := (t_limit.mul weighted_D1_limit).div_const 4
   have h2 := ((t_limit.pow 2).mul (exp_limit (1/2))).div_const 2
-  have h3 := ((t_limit.mul (exp_limit (-1/2))).mul exp_ratio).div_const 2
-  have h4 := ((exp_limit (3/2)).mul (exp_ratio.pow 2)).const_mul 2
+  have h3 := ((t_limit.mul (exp_limit (-1/2))).mul exp_ratio_limit).div_const 2
+  have h4 := ((exp_limit (3/2)).mul (exp_ratio_limit.pow 2)).const_mul 2
   convert h1.sub h2 |>.sub h3 |>.sub h4 using 1
   · ext t
     dsimp [D3]
@@ -216,7 +181,7 @@ private lemma weighted_D3 :
 private lemma logK_curvature_limit :
     Tendsto (fun t : ℝ => t * (K t * D2 t - D1 t ^ 2))
       (𝓝[>] 0) (𝓝 (K 0 / 2)) := by
-  convert (K_limit.mul weighted_D2).sub weighted_D1_sq using 1
+  convert (K_limit.mul weighted_D2_limit).sub weighted_D1_sq using 1
   · ext t; ring
   · ring
 
@@ -224,15 +189,10 @@ private lemma logh_curvature_limit :
     Tendsto (fun t : ℝ => t ^ 2 * ((-D1 t) * (-D3 t) - (-D2 t) ^ 2) /
       Real.log (1 / t)) (𝓝[>] 0) (𝓝 (1 / 4)) := by
   have h := (D1_log_ratio.mul weighted_D3.neg).sub
-    ((weighted_D2.pow 2).mul inv_log_limit)
+    ((weighted_D2_limit.pow 2).mul inv_log_limit)
   convert h using 1
   · ext t; ring
   · norm_num
-
-private lemma K0_pos : 0 < K 0 := by
-  rw [K_zero]
-  unfold D5.S3.Weil.ZeroData.ActualReciprocalSquareBounds.firstLiMass
-  linarith [D5.S3.Zeros.Endpoints.FirstLiCoefficientPositivity.first_li_coefficient_pos]
 
 private lemma log_strictConvex {f f' f'' : ℝ → ℝ} {δ : ℝ}
     (hd : ∀ t ∈ Ioo 0 δ, HasDerivAt f (f' t) t)
@@ -289,12 +249,12 @@ theorem exists_derivative_control_window : ∃ δ : ℝ,
     (∀ t ∈ Ioo 0 δ, HasDerivAt D2 (D3 t) t) ∧
     StrictConvexOn ℝ (Icc 0 δ) (fun t => Real.log (K t)) ∧
     StrictConvexOn ℝ (Ioo 0 δ) (fun t => Real.log (-D1 t)) := by
-  have hK := K_limit.eventually (Ioi_mem_nhds (show K 0 / 2 < K 0 by linarith [K0_pos]))
+  have hK := K_limit.eventually (Ioi_mem_nhds (show K 0 / 2 < K 0 by linarith [K_zero_pos]))
   have hD1 := D1_atBot.eventually (eventually_lt_atBot 0)
-  have hD2 := weighted_D2.eventually (Ioo_mem_nhds
+  have hD2 := weighted_D2_limit.eventually (Ioo_mem_nhds
     (by norm_num : (1/4 : ℝ) < 1/2) (by norm_num : (1/2 : ℝ) < 1))
   have hh := D1_log_ratio.eventually (Iio_mem_nhds (by norm_num : (1/2 : ℝ) < 1))
-  have hkc := logK_curvature_limit.eventually (Ioi_mem_nhds (by linarith [K0_pos] : 0 < K 0 / 2))
+  have hkc := logK_curvature_limit.eventually (Ioi_mem_nhds (by linarith [K_zero_pos] : 0 < K 0 / 2))
   have hhc := logh_curvature_limit.eventually (Ioi_mem_nhds (by norm_num : (0 : ℝ) < 1/4))
   have hlog : ∀ᶠ t : ℝ in 𝓝 0, t < Real.log 2 :=
     Iio_mem_nhds (Real.log_pos (by norm_num))
@@ -334,8 +294,8 @@ theorem exists_derivative_control_window : ∃ δ : ℝ,
   · apply logK_strictConvex_closed hδall.1
     · intro t ht
       rcases eq_or_lt_of_le ht.1 with hzero | hpos
-      · simpa [← hzero] using K0_pos
-      · exact (show 0 < K 0/2 by linarith [K0_pos]).trans_le (hbound t ⟨hpos, ht.2⟩).1
+      · simpa [← hzero] using K_zero_pos
+      · exact (show 0 < K 0/2 by linarith [K_zero_pos]).trans_le (hbound t ⟨hpos, ht.2⟩).1
     · exact fun t ht => (hbound t ⟨ht.1, ht.2.le⟩).2.2.2.2.2.1
   · exact log_strictConvex
       (fun t ht => (hasDerivAt_D1 ht.1 (ht.2.trans hδall.1)).neg)
