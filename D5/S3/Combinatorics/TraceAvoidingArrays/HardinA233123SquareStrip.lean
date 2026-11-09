@@ -92,9 +92,14 @@ def bonds (c d : Col) : Prop :=
 def Legal {n : ℕ} (A : Fin n × Fin 2 → Fin 6) : Prop :=
   widthLegal rowLegal bonds A
 
+private instance instDecidableRowLegal (c : Col) : Decidable (rowLegal c) :=
+  inferInstanceAs (Decidable (_ ∧ _))
+private instance instDecidableBonds (c d : Col) : Decidable (bonds c d) :=
+  inferInstanceAs (Decidable (∀ _, _ ∧ _))
+
 /-- The literal filtered finite count; the first-cell condition gives the convention `a 0 = 0`. -/
 def a (n : ℕ) : ℕ :=
-  (Finset.univ.filter (fun A : Fin n × Fin 2 → Fin 6 => Legal A)).card
+  (Finset.univ.filter (fun A : Fin n × Fin 2 → Fin 6 => widthLegal rowLegal bonds A)).card
 
 def compatible (p : Fin 3 × Fin 3) (c : Col) : Prop :=
   p.1 ≠ beta (c 0) ∧ p.2 ≠ beta (c 1)
@@ -222,7 +227,7 @@ private theorem recurrence (n : ℕ) :
   ring
 
 private theorem zero_count : a 0 = 0 := by
-  simp [a, Legal]
+  simp [a, widthLegal]
 
 open PowerSeries in
 /-- Barker's generating-function identity, with the empty coefficient set to zero. -/

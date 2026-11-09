@@ -38,12 +38,13 @@ internal sealed class HardinA233123SquareStripDocument : IScribeDocumentDefiniti
             Def("bonds", "bonds", "The two vertical bonds", BondsFormula(),
                 "The same column index is used in both consecutive rows."),
             Def("legal", "Legal", "The literal array predicate", LegalFormula(),
-                "The first-cell existential fails when n is zero. The shared widthNormal "
+                "Legal is the published widthLegal predicate specialized to rowLegal and bonds. "
+                + "The first-cell existential fails when n is zero. The shared widthNormal "
                 + "definition says that, at cell (i,j), each required predecessor is at "
                 + "(r,t) with r<i or r=i and t<j. The initial seen flags are both false."),
             Def("count", "a", "The literal filtered count", CountFormula(),
                 "Every function from Fin n times Fin 2 to Fin 6 occurs in Finset.univ. "
-                + "Filtering by Legal and taking its cardinality is the sequence definition. "
+                + "Filtering by the owner widthLegal predicate and taking its cardinality is the sequence definition. "
                 + "Thus a 0 = 0 by the first-cell condition.", true),
             Def("compatible", "compatible", "Boundary compatibility", CompatibleFormula(),
                 "BooleanRankThreeK4.beta has fibres {0,5}, {1,4}, {2,3}. Its value for each "
@@ -116,27 +117,16 @@ internal sealed class HardinA233123SquareStripDocument : IScribeDocumentDefiniti
 
     private static Formula LegalFormula()
     {
-        var n = V("n"); var a = V("A"); var i = V("i"); var j = V("j");
-        var rows = Call("Fin", n);
-        Formula Cell(Formula r, Formula t) => App(a, Pair(r, t));
-        var first = Ex("i", rows, And(Eq(Val(i), D(0)),
-            Eq(Cell(i, Index(0)), Colour(0))));
-        var horizontal = All("i", rows,
-            Self("rowLegal", Fn("j", Fin(2), Cell(i, j))));
-        var next = Typed(Call("Fin.mk", Add(Val(i), D(1)), V("h")), rows);
-        var vertical = All("i", rows, All("h", Lt(Add(Val(i), D(1)), n),
-            Self("bonds", Fn("j", Fin(2), Cell(i, j)),
-                Fn("j", Fin(2), Cell(next, j)))));
-        var normal = Call(Transfer + "widthNormal", Flags(),
-            Fn("i", rows, Fn("j", Fin(2), Cell(i, j))));
+        var n = V("n"); var a = V("A");
         return All("n", Nat(), All("A", ArrayType(n), Eq(Self("Legal", a),
-            And(first, And(horizontal, And(vertical, normal))))));
+            Call(Transfer + "widthLegal", Self("rowLegal"), Self("bonds"), a))));
     }
 
     private static Formula CountFormula()
     {
         var n = V("n");
-        var predicate = Fn("A", ArrayType(n), Self("Legal", V("A")));
+        var predicate = Fn("A", ArrayType(n),
+            Call(Transfer + "widthLegal", Self("rowLegal"), Self("bonds"), V("A")));
         var univ = Typed(Qualified("Finset.univ"), Call("Finset", ArrayType(n)));
         return All("n", Nat(), Eq(Self("a", n),
             Call("Finset.card", Call("Finset.filter", predicate, univ))));
