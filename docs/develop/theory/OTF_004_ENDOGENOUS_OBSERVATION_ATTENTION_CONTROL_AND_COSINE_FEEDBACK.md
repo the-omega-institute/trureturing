@@ -2672,3 +2672,188 @@ $$
 本定理的新增关系限于 (18.10)–(18.12) 在源 (17.8) 的实际分支及受扰前缀上的联合后果。原固定补偿器、获取和原返回定理分别由定义 17.1、定理 17.4 和定理 17.3 供应；标准仪器扩展、Choi 余量与有限实现、不变效果的标量性、SWAP 恒等式和收缩性只作中间工具。上述主来源对应不作历史优先权或文献穷尽断言。证书只适用于声明的 $BAF,T$ 约化节点和未改动的后续日程，不是全部环境的返回定理；进一步实际噪声、指针或工作输出必须加入实际口另估。相干参考、独立纯场重置、固定标架、原生耦合、非参考 CP 处理与替换、校准和物理钟仍是前提，不由此取得实验来源。它没有改进原任务的精度、置信度、资源或返回证书，不推得一般控制器或任意扩展的结论，也不改变定理 14.1 的实际完整等距假设、定理 14.3–14.4 的固定场必要界或定理 12.3 的最坏情形量词。
 
 ## 追加锚（本行以下为增补区）
+## 19. 均匀精度曲线上的实际联合返回必要关系
+
+**定义 19.1（原始合同内的精度曲线）。** 取正有理数 $0<e\le1/100$，请求精度为 $e$、失败率上限为 $b=e$；对数均为自然对数。固定
+
+$$
+\begin{aligned}
+u_e&=e/8,\qquad
+k_e=\left\lceil2048e^{-2}\log(18/e)\right\rceil,\qquad
+\ell_e=\left\lceil32768e^{-4}\log(90/e)\right\rceil,\\
+N_*&=8{,}388{,}608{,}000,\qquad
+N_e=\max\left\{N_*,
+ \left\lceil\frac{3k_e+2}{10}\right\rceil,
+ \left\lceil\frac{15\ell_e+1}{18}\right\rceil\right\},\\
+D_e&=\left\lceil\max\{8{,}000{,}000N_e^2,9k_e/e\}\right\rceil,\qquad
+m_e=D_e-1=2j_e,\qquad M_e=L_e=10N_e,\qquad Q_e=18N_e+1.
+\end{aligned}
+\tag{19.1}
+$$
+
+这只指定定义 13.1 合同中的一条曲线及更强的成功请求。公共参数仍为 $d=1/64$、$\tau_0=1$、$r=1/4$、$B_{\rm field}=2$、$G=1$；内部采样步长 $u_e$ 不替代 $d$。场仍遍历全部 $C^2$、秩二映射 $n:U\to S^2$，其中开集 $U$ 包含两条完整闭 $r$ 轴段，并有 $\|n_{aa}(t e_a)\|\le2$（$a=x,y$、$|t|\le r$）及 $\|n_x(0)\|,\|n_y(0)\|\le1$。独立重置供应 $\rho_n(z)=(I+n(z)\cdot\sigma)/2$。初始方向目标仍为
+
+$$
+D_h(n)=\left(
+ \frac{h\cdot[n(0)\times n_x(0)]}{2},
+ \frac{h\cdot[n(0)\times n_y(0)]}{4},0,
+ \frac{h\cdot n_y(0)}2\right).
+\tag{19.2}
+$$
+
+对每个请求及公共元组，比较所有与实际 $n,h$ 无关的有限因果控制器和有限解码器；每一对必须对全部上述 $n$ 及全部 $h\in S^2$ 满足
+$\Pr[\|\widehat D-D_h(n)\|_\infty\le e]\ge1-e$。参考 $R=\operatorname{Sym}^{m_e}(\mathbb C^2)$ 只准备一次，初态 $\tau_h=|j_e,h\rangle\langle j_e,h|$ 与其余输入独立，是唯一含未知 $h$ 的输入；除声明的场源外，辅助准备及设备参数均不依赖实际 $n,h$，场信息只经重置服务供给。固定 $n$ 后非参考来源的完整律对全部 $h$ 相同。保留原始混合辅助、量子及经典记忆、反馈和探针回用的允许范围。访问限于至多 $L_e$ 次 (13.6) 的原生 $V=\sum_{b=\pm}\Pi_b\otimes|bb\rangle_{HE}$、至多 $Q_e$ 次场重置，以及恰一次以 $+d e_x$ 的独立原场令牌执行的规定终端交换
+$U_{\rm term}=\exp[-id\tau_0J\cdot\sigma/m_e]$；其余操作在原始标记 $R$ 上为恒等，不提供直接读取、旋转、拆分、重置、替换或恢复 $R$ 的许可。
+
+每个控制器用其自己的完整实际口 $K$：全部实际探针、场令牌、原生 $H,E$ 和原始记录、实际读出及复制环境、记忆、程序、计数器、路由和解码工作区、补偿及终端输出均包括在内。约化 CP 节点采用其声明的实际端口；形式 Kraus 指标及证明扩张不充作实际输出，另行产生的实际系统则必须纳入 $K$。对同一运行的最终态定义
+
+$$
+\overline\delta=\sup_{n,h}\frac12
+ \left\|\Omega_{n,h}-\tau_h\otimes\operatorname{Tr}_R\Omega_{n,h}\right\|_1,
+\qquad
+R(e)=\inf_{\text{上述成功控制器及解码器}}\overline\delta .
+\tag{19.3}
+$$
+
+无分支后选择，比较态使用该控制器自身的实际 $K$ 边缘。
+
+此下确界非空。复用 (13.18)–(13.19) 的完整前缀比较、固定标架下的 Pauli 样本和中心差分，以及定义 17.1、定理 17.3–17.4 的同一补偿后缀，已有可达证书给出
+
+$$
+R(e)\le\min\left\{1,6k_e\kappa_{D_e}+\frac{80}{D_e}\right\}
+ \le\min\left\{1,\frac{6k_e+80}{D_e}\right\},
+\qquad \kappa_D=\frac{2D-1}{2D^2}.
+\tag{19.4}
+$$
+
+该见证实际消耗 $3k_e+2$ 次原生槽、含终端的 $3k_e+3$ 次 $R$ 接触、$15\ell_e+2$ 次场重置、$3k_e$ 次 $\mathcal C$ 及 $3k_e+15\ell_e$ 次 Pauli 观察，另有固定后缀及有限解码和记录空间；未用上限不计为消耗。式 (19.1) 保证两项调用上限和 $3k_e\kappa_{D_e}\le e/3$。该证书的参考、场均值好事件分别要求各坐标误差不超过 $e/16$、$eu_e/16$，理想失败率分别至多 $6\exp(-k_e e^2/2048)$、$30\exp(-\ell_e e^2u_e^2/512)$，均不超过 $e/3$。原 $C^2$ 承诺使中心差分偏差不超过 $u_e$，代入 (19.2) 的误差不超过 $e$；完整前缀比较产生至多 $3k_e\kappa_{D_e}\le e/3$ 的事件概率差，规定后缀保持该解码边缘。此处只复用这一充分证书；$\mathcal C,\widehat\Phi,\mathcal E$ 分别保持定义 13.2、17.1、16.1 的实际约化口语义。
+
+**推论 19.2（全局能量与均匀解码的返回下界；source-derived）。** 在定义 19.1 的精确曲线上，令 $a=1-2e$。每个成功控制器及其完整实际口均满足
+
+$$
+a\le\overline\delta+64e\sqrt{m_e\overline\delta},
+\qquad
+\overline\delta\ge
+ \left(\frac{2a}
+ {\sqrt{4096m_e e^2+4a}+64e\sqrt{m_e}}\right)^2 .
+\tag{19.5}
+$$
+
+特别地，
+
+$$
+R(e)\ge\frac1{16384(D_e-1)e^2}
+       \ge\frac1{16384D_e e^2}.
+\tag{19.6}
+$$
+
+证明。固定半径 $1/3$ 开圆盘上的原始允许场
+$n_*(x,y)=(x,y,\sqrt{1-x^2-y^2})$。前两个坐标保证秩二，原点两轴导数范数为一，完整闭 $r$ 轴段上二阶导数范数为 $(1-t^2)^{-3/2}<2$；其目标为
+$D_h(n_*)=(h_y/2,-h_x/4,0,h_y/2)$。
+对任一上述成功控制器，吸收这个固定场的全部来源、混合辅助、控制和规定终端，得到同一个 $h$ 无关有限 CPTP 通道
+$\Lambda:R\to R\otimes K$，仍保留该控制器自己的完整实际 $K$。记
+$\Omega_h=\Lambda(\tau_h)$、$\omega_h=\operatorname{Tr}_R\Omega_h$，并记 $D_{\rm tr}(\rho,\sigma)=\|\rho-\sigma\|_1/2$。这是必要条件的较大 CPTP 比较类。
+
+直接调用定理 14.3 的 (14.17)–(14.22)。对一个固定有限代数 Kraus 表示，令
+$f(h)=(f_{r,h})_r$，
+$f_{r,h}=(\langle j_e,h|\otimes I_K)A_r|j_e,h\rangle$。
+相位在此抵消，故 $f:S^2\to K\otimes\mathbb C^q$ 是全局光滑函数，且 $\|f(h)\|\le1$。令 $p_h=\operatorname{Tr}[((I_R-\tau_h)\otimes I_K)\Omega_h]$。在 (14.7) 的坐标 $z=x+iy$ 中，该定理给出
+
+$$
+p_h\le\overline\delta,\qquad
+\|\partial_{\bar z}f(z)\|
+ \le\frac{\sqrt{m_e\overline\delta}}{1+|z|^2},\qquad
+\omega_h=Q_h+Z_h,\quad
+Q_h=\sum_r|f_{r,h}\rangle\langle f_{r,h}|,\quad
+Z_h\ge0,\quad\operatorname{Tr}Z_h=p_h .
+\tag{19.7}
+$$
+
+这里 $q$ 只为代数指标数。对任意 $h,h'$，展开堆叠向量的外积之差并对该形式指标取偏迹，范数不超过一给
+$\frac12\|Q_h-Q_{h'}\|_1\le\|f(h)-f(h')\|$；
+正余项的半迹范数至多 $(p_h+p_{h'})/2$。因此
+
+$$
+D_{\rm tr}(\omega_h,\omega_{h'})
+ \le\|f(h)-f(h')\|+\overline\delta .
+\tag{19.8}
+$$
+
+上述代数比较没有给实际口添加环境或接入初始纯化。
+
+令 $\mu$ 为单位球面的归一面积，$\nabla$ 使用其标准圆度量。其球极投影坐标表达为
+$d\mu=dA(z)/[\pi(1+|z|^2)^2]$。全局光滑性及 Stokes 公式逐复分量给
+$\int_{S^2}d(\operatorname{Re}f_\nu\,d\operatorname{Im}f_\nu)=0$，所以复导数平方中的混合积分项为零，从而
+
+$$
+\begin{aligned}
+\mathcal E(f)
+ :=\int_{S^2}\|\nabla f\|^2\,d\mu
+ &=\frac1{4\pi}\int_{\mathbb C}
+       (\|f_x\|^2+\|f_y\|^2)\,dA\\
+ &=\frac1\pi\int_{\mathbb C}\|\partial_{\bar z}f\|^2\,dA
+ \le m_e\overline\delta .
+\end{aligned}
+\tag{19.9}
+$$
+
+末步用 (19.7) 及 $\int_{\mathbb C}(1+|z|^2)^{-2}dA=\pi$。该积分恒等式依赖全局函数 $f$；不要求一个全局连续的相干向量相位，也未作逐点的两种复导数能量等同。
+
+以 $\rho_s$ 表示证明参数绕 $z$ 轴的旋转，其生成向量场
+$X(h)=(-h_y,h_x,0)$ 满足 $|X|\le1$。微积分基本定理、Cauchy–Schwarz 及面积不变性给
+
+$$
+\int_{S^2}\|f(\rho_\alpha h)-f(h)\|^2\,d\mu(h)
+ \le\alpha\int_0^\alpha\int_{S^2}
+       \|Xf(\rho_s h)\|^2\,d\mu(h)\,ds
+ \le\alpha^2m_e\overline\delta .
+\tag{19.10}
+$$
+
+取 $\alpha=32e\le0.32<1/3$ 及球冠 $C=\{h:h_x\ge1/2\}$，有 $\mu(C)=1/4$。对每个 $h\in C$，
+
+$$
+(\rho_\alpha h)_y-h_y
+ \ge\frac12\sin\alpha-(1-\cos\alpha)
+ \ge\frac\alpha2-\frac{\alpha^3}{12}-\frac{\alpha^2}{2}
+ >\frac\alpha4 .
+$$
+
+故第一目标坐标之差大于 $\alpha/8=4e>2e$。固定解码器的两个闭 $e$ 成功球不交；其输出落入 $D_h(n_*)$ 的闭 $e$ 球这一实际效果，在 $h$ 上概率至少 $1-e$，在 $\rho_\alpha h$ 上至多 $e$。于是整个球冠上均有
+$D_{\rm tr}(\omega_h,\omega_{\rho_\alpha h})\ge a$。旋转只作用于证明中的自变量；比较效果可依赖所选的 $h$，控制器和解码器始终是同一对，未假定其协变或实施未知方向的物理旋转。
+
+由 (19.8)–(19.10)，
+
+$$
+\frac14(a-\overline\delta)_+^2
+ \le\int_C\|f(\rho_\alpha h)-f(h)\|^2\,d\mu
+ \le\alpha^2m_e\overline\delta .
+$$
+
+开方即得 (19.5) 第一式；令 $x=\sqrt{\overline\delta}$ 解二次不等式并有理化正根，得到第二式。又 $a\ge49/50$；若 $\overline\delta<1/4$，则 $a-\overline\delta>1/2$，上式给
+$\overline\delta\ge1/(16384m_e e^2)$。若 $\overline\delta\ge1/4$，同一结论由 $m_e e^2\ge1$ 得到；后者在整条曲线上由 $k_e\ge2048e^{-2}$、$D_e\ge9k_e/e$ 保证。最后对非空的成功类取下确界，证明 (19.6)。$\square$
+
+**注记 19.3（定量后果、来源与置信度缺口）。** 定理 14.3 的相干符号、全局泄漏和实际侧边缘是本推论的直接供应者；Stokes、Cauchy–Schwarz、外积范数及同一通道的二元测试是成熟工具。相对于推论 14.4 的逆维数必要证书，这里的正面积解码分离给出额外的 $e^{-2}$ 精度因子。与 (19.4) 合并，存在绝对常数 $c,C>0$，在这条正有理曲线上
+
+$$
+\frac{c}{D_e e^2}\le R(e)
+ \le\frac{C\log(1/e)}{D_e e^2}.
+\tag{19.11}
+$$
+
+原置信度问题仍是
+
+$$
+\liminf_{\substack{e\downarrow0\\e\in\mathbb Q_{>0}}}
+ \frac{D_e e^2R(e)}{\log(1/e)}
+ \ \mathop{>}^{?}\ 0 .
+\tag{19.12}
+$$
+
+证明只通过 $a=1-2e$ 使用失败率，未给出所缺的 $\log(1/e)$ 必要因子；将 (19.6) 归一化所得趋零下界也不能充作反例的上界。正解仍须对所有充分小正有理 $e$、所有成功原始控制器证明统一正倍数的对数下界；反解须给出正有理 $e_r\downarrow0$ 上成功的合法同一运行控制器，使其完整实际返回的上述归一化量趋零。这里均未建立。
+
+相干程序沿用 OTF002 定义 11.1，有限 CP 语义沿用 OTF001 假设 2.5–2.7、定理 7.2；实际菜单及记忆保持 OTF003 第 11 节和 OTF007 定理 9.1 的范围。原生总自旋模型的成熟来源为 Bartlett–Rudolph–Spekkens–Turner，[《Degradation of a quantum reference frame》第 III 节、附录 B 式 (39)–(41)](https://arxiv.org/html/quant-ph/0602069v2)，如定义 12.1 所用。Sacchi 的[《Information-disturbance tradeoff for spin coherent state estimation》式 (8)–(9)、第 IV 节](https://arxiv.org/html/quant-ph/0610246v2)研究 Haar 平均整自旋生存及相干估计保真度；其任意仪器比较可提供必要约束，直接作用于 $R$ 的优化仪器则不由此取得原生实现许可。本节是既有来源的条件推论，历史优先权未建立，不作成熟理论整体不适用或文献穷尽断言。
+
+定义 13.1 的固定精度任务及其逆维数存在性继续直接复用原结果。此处的 CPTP 放宽只用于必要性，不给原生上界见证、物理扩张返回定理、匹配最优性或任意资源曲线结论；相干参考、独立场源、指定耦合、约化 CP 端口、校准和时钟仍为模型前提。
+
+## 追加锚（本行以下为增补区）
