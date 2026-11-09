@@ -8,6 +8,8 @@
 
 import D5.S3.Combinatorics.Graph.SubgroupGenerating.FiberSpectra
 
+/-! All ten spectral and globally centered energy conclusions for finite nonabelian groups. -/
+
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 
@@ -227,7 +229,7 @@ private theorem numeric_bounds (M k t d S : ℝ)
     exact ⟨by nlinarith,by nlinarith,hCN.trans hCN'⟩
 
 /-- All ten literal conclusions hold together for every finite nonabelian group. -/
-theorem all_ten (hn : ∃ a b : G, a*b ≠ b*a) :
+theorem result (hn : ∃ a b : G, a*b ≠ b*a) :
     ¬ IntegralSpectrum (graphSpectrum (sgbGraph G) .adjacency) ∧
     IntegralSpectrum (graphSpectrum (sgbGraph G) .laplacian) ∧
     IntegralSpectrum (graphSpectrum (sgbGraph G) .signless) ∧

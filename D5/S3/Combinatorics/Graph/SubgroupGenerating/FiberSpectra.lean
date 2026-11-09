@@ -10,6 +10,8 @@ import D5.S3.Combinatorics.Graph.SubgroupGenerating.StarSpectra
 import D5.S3.Combinatorics.Graph.SubgroupGenerating.GeneratingFibers
 import Mathlib.Combinatorics.SimpleGraph.DegreeSum
 
+/-! The complete subgroup-block decomposition of the four actual source spectra. -/
+
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 

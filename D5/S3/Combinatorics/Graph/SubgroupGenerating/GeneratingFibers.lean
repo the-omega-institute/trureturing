@@ -11,6 +11,8 @@ import Mathlib.GroupTheory.SpecificGroups.Cyclic
 import Mathlib.GroupTheory.Perm.Cycle.Type
 import Mathlib.NumberTheory.Real.Irrational
 
+/-! Generating-pair partitions, prime-order fibers and the nonabelian deficit. -/
+
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 

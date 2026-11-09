@@ -11,6 +11,8 @@ import Mathlib.LinearAlgebra.Matrix.SchurComplement
 import Mathlib.LinearAlgebra.Matrix.Block
 import Mathlib.Combinatorics.SimpleGraph.Star
 
+/-! The four literal star matrices and their characteristic-root multisets. -/
+
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 
