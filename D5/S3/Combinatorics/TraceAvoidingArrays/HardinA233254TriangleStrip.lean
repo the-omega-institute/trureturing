@@ -178,21 +178,11 @@ def rowLegal (c : Row) : Prop :=
 private def bonds (c d : Row) : Prop :=
   ∀ j : Fin 5, c j.succ ≠ d j.castSucc ∧ (c j.succ).val + (d j.castSucc).val ≠ 5
 private def Legal {n : ℕ} (A : Fin n × Fin 6 → Fin 6) : Prop :=
-  (∃ i : Fin n, i.val = 0 ∧ A (i, 0) = 0) ∧
-    (∀ i, rowLegal (fun j => A (i, j))) ∧
-    (∀ (i : Fin n) (h : i.val + 1 < n), bonds (fun j => A (i, j))
-      (fun j => A (⟨i.val + 1, h⟩, j))) ∧
-    widthNormal (false, false) (fun i j => A (i, j))
-private instance instDecidableNormal {n : ℕ} (s : Seen) (f : Fin n → Row) :
-    Decidable (widthNormal s f) :=
-  inferInstanceAs (Decidable (∀ _ _, (_ → _) ∧ (_ → _)))
+  widthLegal rowLegal bonds A
 private instance instDecidableRowLegal (c : Row) : Decidable (rowLegal c) :=
   inferInstanceAs (Decidable (∀ _, _ ∧ _))
 private instance instDecidableBonds (c d : Row) : Decidable (bonds c d) :=
   inferInstanceAs (Decidable (∀ _, _ ∧ _))
-private instance instDecidableLegal {n : ℕ} (A : Fin n × Fin 6 → Fin 6) :
-    Decidable (Legal A) :=
-  inferInstanceAs (Decidable (_ ∧ _ ∧ _ ∧ _))
 /-- The literal filtered count. The first-cell existential sets `a 0 = 0`. -/
 def a (n : ℕ) : ℕ :=
   (Finset.univ.filter (fun A : Fin n × Fin 6 → Fin 6 => Legal A)).card
@@ -201,9 +191,6 @@ def compatible (p : Boundary) (c : Row) : Prop :=
   ∀ j : Fin 5, p j ≠ beta (c j.castSucc)
 private instance instDecidableCompatible (p : Boundary) (c : Row) :
     Decidable (compatible p c) := inferInstanceAs (Decidable (∀ _, _))
-private instance instDecidableGood (s : Seen) (c : Row) : Decidable (good s c) := by
-  unfold good
-  infer_instance
 private theorem bonds_iff (c d : Row) : bonds c d ↔ compatible (pairs c) d := by
   simp only [bonds, HardinA233251TriangleStrip.colour_bond_iff, compatible, pairs]
 private abbrev v := widthV rowLegal pairs compatible
