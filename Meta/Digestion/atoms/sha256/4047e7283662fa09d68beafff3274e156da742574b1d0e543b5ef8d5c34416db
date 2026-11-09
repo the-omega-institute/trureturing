@@ -1,0 +1,8 @@
+**定义 34.1（局部比较完备公理）。** 对复合系统 $A\boxtimes B$，若两个状态 $\rho,\sigma$ 满足
+
+$$
+\operatorname{tr}\!\left((\rho-\sigma)(E\otimes F)\right)=0
+$$
+
+对所有局部效应 $0\le E\le I_A$、$0\le F\le I_B$ 都成立，则要求 $\rho=\sigma$。等价地，所有产品事件读数必须分离整体正比较状态。
+
