@@ -8,7 +8,7 @@
 
 /-
 admission_basis: open-problem-resolution (#28399; Proved)
-escape_witness: none
+escape_witness: D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233196Strip.v_eq_w (reduction of the boundary-state continuation counts to the class vector at every height, by induction)
 Direct frozen dependencies: none.
 Closed, unfrozen dependency: TransferMatrix.scalarRelationShift.
 The six-colour scanner and width transfer fix Fin 6 and two flags; they cannot
@@ -75,11 +75,11 @@ initial_counts: proof_shape=bind-only; consumers=finite_certificate
 vector_relation: proof_shape=bind-only; consumers=finite_certificate
 finite_certificate: proof_shape=bind-only; consumers=result
 w: proof_shape=bind-only; consumers=a_eq_w
-v_eq_w: proof_shape=bind-only; consumers=a_eq_w
-a_eq_w: proof_shape=bind-only; consumers=recurrence
-recurrence: proof_shape=bind-only; consumers=result
+v_eq_w: proof_shape=content; consumers=a_eq_w
+a_eq_w: proof_shape=content; consumers=recurrence
+recurrence: proof_shape=content; consumers=result
 zero_count: proof_shape=bind-only; consumers=result
-result: proof_shape=bind-only; consumers=terminal result
+result: proof_shape=content; consumers=terminal result
 -/
 
 import D5.S3.Combinatorics.TraceAvoidingArrays.TransferMatrix
