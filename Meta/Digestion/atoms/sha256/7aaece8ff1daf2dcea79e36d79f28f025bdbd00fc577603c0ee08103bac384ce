@@ -1,0 +1,21 @@
+**定义 45.1（完全比较保持公理）。** 对有限维系统 $A,B$，令
+
+$$
+\Phi:M_A(\mathbb C)\longrightarrow M_B(\mathbb C)
+$$
+
+为线性映射。要求：
+
+1. **辅助稳定正性：** 对每个有限维辅助系统 $C$，
+   $$
+   \operatorname{id}_C\otimes\Phi
+   $$
+   把所有正半定算子送到正半定算子；
+2. **比较预算：** 对确定性变换，
+   $$
+   \operatorname{Tr}\Phi(\rho)=\operatorname{Tr}\rho,
+   $$
+   对后选择变换则只要求 $\operatorname{Tr}\Phi(\rho)\le\operatorname{Tr}\rho$。
+
+第一条把“保持正性”提升为对所有关系的联合保持，第二条把概率总量作为守恒或消耗预算。
+
