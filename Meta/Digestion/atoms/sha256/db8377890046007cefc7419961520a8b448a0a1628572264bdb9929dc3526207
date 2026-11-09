@@ -1,0 +1,20 @@
+**推论 167.3（实际两层原响应）。** 对166.1的每个实际原输入，任意实 $s,r,R$ 都有
+
+$$
+\begin{gathered}
+D(Rh,\mu u+\lambda h+v)=RTv\in E\cap V_h,\\
+D\bigl(su+rh,D(Rh,\mu u+\lambda h+v)\bigr)=-rR v.
+\end{gathered}
+\tag{167.4}
+$$
+
+特别
+
+$$
+\boxed{D(h,D(h,\mu u+\lambda h+v))=-v,\qquad
+D(Rh,D(Rh,\mu u+\lambda h+v))=-R^2v.}
+\tag{167.5}
+$$
+
+证明。内层由166.1识别为同一个原 $RTv$，外层对这份原横向元素用167.2，得到 $rT(RTv)=-rRv$。$T$ 的实线性来自其有限Jordan表达式，并非旧 $D$ 的全域线性前件。零值、负强度和全部偏移端点均包含在等式中。内外标签确实都在不完备原 $E$，但这些数学调用不供应物理准备、可控逆过程或实际双向返回。∎
+

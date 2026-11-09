@@ -1,0 +1,40 @@
+**引理 102.2（有限角补酉的准确非因子比较）。** 对任意全局等距 $w$，存在按全部 $e\in\mathcal F_\tau$ 排序的 $U_e\in\mathcal U_{\rm fs}$，使
+
+$$
+U_ee=we,\quad U_e\longrightarrow w\text{ 强收敛},\qquad
+\delta_e=U_e^*w-1,\quad
+\delta_ee=\delta_e^*e=0,\quad\|\delta_e\|\le2.
+\tag{102.4}
+$$
+
+证明。置 $r_e=wew^*$、$f_e=e\vee r_e$。$we$ 的初末投影为 $e,r_e$，$\tau(r_e)=\tau(e)$，99.2给 $\tau(f_e)\le2\tau(e)<\infty$。在实际有限角 $f_eMf_e$ 中，用其规范中心值迹 $T_{f_e}$ 计算：
+
+$$
+\begin{aligned}
+T_{f_e}(e)&=T_{f_e}(r_e),\\
+T_{f_e}(f_e-e)
+&=f_e-T_{f_e}(e)
+=f_e-T_{f_e}(r_e)=T_{f_e}(f_e-r_e).
+\end{aligned}
+\tag{102.5}
+$$
+
+有限中心值迹比较给 $f_e-e\sim f_e-r_e$；这不是从两个投影等标量迹推等价。取实现该等价的 $s_e$，则 $u_e=we+s_e$ 是 $f_eMf_e$ 的酉元，$U_e=u_e+(1-f_e)$ 为所需实际有限支撑酉元。只需这份中心迹相减，不使用对任意 $f$ 均不成立的补角等价公式。$e=0$ 时取 $U_0=1$。
+
+在任意忠实具体表示中，
+
+$$
+\|(U_e-w)\xi\|\le2\|(1-e)\xi\|\longrightarrow0.
+\tag{102.6}
+$$
+
+并且 $U_e^*we=e$、$w^*U_ee=e$，给102.4的两个零式；同样有
+
+$$
+\|(U_e^*w-1)\xi\|=\|(w-U_e)\xi\|,\qquad
+\|(w^*U_e-1)\xi\|\le\|(U_e-w)\xi\|.
+\tag{102.7}
+$$
+
+故 $U_e^*w\to1$ 强*收敛。SF92.2的支撑、强收敛和这两份估计均不使用因子性；本引理替换的是补酉中的比较前件，准确使用102.5。没有声称 $U_e^*\to w^*$ 强收敛。∎
+
