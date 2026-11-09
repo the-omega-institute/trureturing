@@ -1,0 +1,13 @@
+**候选公理 58.2（神经中心闭包，NCC）。** 要求
+
+$$
+\boxed{
+\alpha\in Z^2\!\left(N\mathcal G;Z_U(\mathcal A)\right),
+\qquad
+[\alpha]\ne0\in H^2\!\left(N\mathcal G;Z_U(\mathcal A)\right).
+}
+\tag{NCC}
+$$
+
+第一项的 cocycle 性由 IAC 和算子结合律给出，所以真正的局部约束仍只有“二步结合缺陷属于中心”；第二项不是外部相位，而是这张关系神经的不可分裂性质。若只研究无相位或经典分支，则取同一公理的退化值 \([\alpha]=0\)。
+
