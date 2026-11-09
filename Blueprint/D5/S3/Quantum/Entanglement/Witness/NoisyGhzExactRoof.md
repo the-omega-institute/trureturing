@@ -96,21 +96,21 @@ Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof.star_certi
 
 The actual affine certificate gives e_star+h*p_star*(1-R/M) as a roof lower bound, and this is strictly greater than e_star. Positivity uses the genuine support rank R<M.
 
-**Theorem 1.7 (The exact 90-component qutrit roof).**
+The complete qutrit application of the generic construction has n=d=3 and p=3/8. The parameter functions give M=wordCount(3,3)=27, K=cutCount(3)=3, R=supportRank(3,3)=21, k=witnessSlope(3,3)=8/9 and p_W=witnessZeroProbability(3,3)=3/4. The actual noisy-state means are f=noisyF(3,3,3/8)=23/36 and y=noisyY(3,3,3/8)=11/12, hence F=f/y=23/33. These parameters lie in the closed low-noise regime and the feasible two-mean triangle.
 
-Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof.qutrit_exact_ensemble`
+Write alpha=(sqrt(23/33)+sqrt(20/33))/sqrt(3) and beta=(sqrt(23/33)-sqrt(20/33)/2)/sqrt(3). These are exactly optimalAlpha(3,F) and optimalBeta(3,F), with alpha^2+2*beta^2=1. The first three constituents, indexed by j in Fin 3, are chiVector: amplitude alpha on the constant word jjj, beta on the other two constant words, and zero on every nonconstant word.
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof.qutrit_exact_ensemble` (`✓ std3`). ∎
+The next 81 constituents are indexed by (s,theta), where s is one of {1}, {2}, {1,2} in SourceCut 3 and theta is any of the 27 functions Fin 3 -> ZMod 3. Put a=complement(s), u_i=stdAddChar(theta_i)/sqrt(3). On the word equal to i throughout a and j throughout s, the amplitude is beta*delta_ij+(alpha-beta)*u_i*conjugate(u_j); it is zero outside this cut embedding. This is the actual cutState in lowNoiseStates, with independent cubic phase coordinates, not a scalar-difference phase prescription. The last six constituents are computational unit vectors indexed by QIndex 3 3: precisely the six permutations of the word 012. Thus the complete indexed family contains 3+3*27+6=90 unit states, retaining all phase indices even when rays coincide.
 
-*Source.* Repository-derived.
+Each of the first three weights is 11/360, each cut-phase weight is 11/1080, and each Q weight is 1/72. The block totals are respectively 11/120, 33/40 and 1/12; all weights are nonnegative and their sum is one. Every constituent is normalized. The generic suppliers are CutStates.sourceCut_card, NoisyEnsembles.qIndex_card and NoisyEnsembles.low_noise_attainment, with the explicit lowNoiseWeights/lowNoiseStates definitions, ObservableOptimum.chi_attainment, CutStates.cutState_attainment and phaseVector_unit. Module-qualified supplier names here refer to the owning NoisyGhzExactRoof source modules.
 
-*Acknowledgement.* Xin-Yu Xu; Qing Zhou; Shuai Zhao; Shu-Ming Hu; Li Li; Nai-Le Liu; Kai Chen (2023). *General framework for genuine multipartite entanglement detection*. DOI: [10.1103/PhysRevA.107.052405](https://doi.org/10.1103/PhysRevA.107.052405). URL: <https://arxiv.org/abs/2211.05563v1>.
+The weighted sum of all 90 rank-one complex density matrices is the entire matrix rho=I/72+5*G/8, where G=rankOneDensity(ghz 3 3). In every pair of computational words x,z, rho(x,z)=delta_xz/72+5/24 when both words are constant, with the second term zero otherwise. This entrywise identity follows from Foundations.pair_cross_phase_sum, MatrixAverages.phase_average_matrix and basis_average_matrix, and NoisyEnsembles.source_average_matrix and low_noise_reconstruction. Matching only the two observable means would not establish this matrix identity.
 
-*Commentary.*
+The first 84 pure-state measures are 1-alpha^2=4*(14-sqrt(115))/99; the six Q measures are zero. Their weighted average is (11/12)*(1-alpha^2)=(14-sqrt(115))/27. NoisyEnsembles.low_noise_attainment supplies both this actual ensemble average and its equality with the original finite-ensemble convex roof; the universal lower bound and the reconstructed finite upper competitor are both used. Equivalently NoisyGhzExactRoof.noisy_exact_roof specializes to the same value. The scalar evaluation uses sqrt(2*(23/36)*(11/12-23/36))=sqrt(115)/18, and does not infer a matrix roof from scalar arithmetic alone.
 
-At n=d=3 and p=3/8, the universal ensemble specializes to three basis components of weight 11/360, 81 cut-phase components of weight 11/1080 and six Q components of weight 1/72. Complete amplitudes are lowNoiseStates at F=23/33. Their full matrix is I/72+5*G/8, their average and actual roof equal (14-sqrt(115))/27, strictly greater than 13/108, which is greater than epsilonO=1/9.
+For the strict comparison, sqrt(115)>=0 and sqrt(115)^2=115<(43/4)^2 imply sqrt(115)<43/4. Consequently the exact roof is strictly greater than 13/108, which is strictly greater than 1/9 since 13>12. NoisyGhzExactRoof.star_single_witness at n=d=3 gives p_star=3/8 and the original epsilonO(3,3,3/8)=1/9. This epsilonO retains its original hatE supremum over unit states and optimization over every real slope, through ObservableOptimum.witness_optimum and epsilonO_bridge and NoisyEnsembles.noisy_witness_optimum. The strict radical bound, all 90 normalized constituents, and the full matrix reconstruction are parts of this application, in addition to the generic strict-gap conclusion.
 
-**Theorem 1.8 (The manuscript support-rank formula).**
+**Theorem 1.7 (The manuscript support-rank formula).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof.support_rank_binomial`
 
@@ -124,7 +124,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof.support_ra
 
 The trace of the actual two-symbol supportProjector is d+choose(d,2)*(2^n-2). The proof uses support_trace and its disjoint supportIndexEquiv enumeration, then converts d+K*d*(d-1) to the binomial form by exact natural-number arithmetic.
 
-**Theorem 1.9 (Attainment at the left spectral endpoint).**
+**Theorem 1.8 (Attainment at the left spectral endpoint).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof.ghz_left_endpoint`
 
@@ -144,7 +144,6 @@ The actual normalized GHZ vector has all-cut pure measure (d-1)/d, witness expec
 - Truth anchor: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof.noisy_exact_roof`
 - Truth anchor: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof.noisy_gap_endpoints`
 - Truth anchor: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof.noisy_strict_gap`
-- Truth anchor: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof.qutrit_exact_ensemble`
 - Truth anchor: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof.star_certificate_gap`
 - Truth anchor: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof.star_single_witness`
 - Truth anchor: `D5/S3/Quantum/Entanglement/Witness/NoisyGhzExactRoof.support_rank_binomial`
