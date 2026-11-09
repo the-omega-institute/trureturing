@@ -74,7 +74,7 @@ internal sealed class HardinA233123SquareStripDocument : IScribeDocumentDefiniti
                 + "a(n+3)=16a(n+2)-48a(n+1), with a(1)=1 and a(2)=8. Comparing every "
                 + "coefficient gives the identity in PowerSeries Int, including index zero. "
                 + "The first values are 1, 8, 80, 896, 10496 and 124928. The statement "
-                + "concerns formal power series and does not assume analytic convergence.")))));
+                + "concerns formal power series and does not assume analytic convergence."))));
 
     private static DocumentBlock Def(string id, string name, string title, Formula formula,
         string prose, bool literature = false) =>

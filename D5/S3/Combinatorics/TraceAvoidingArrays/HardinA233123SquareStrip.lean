@@ -9,6 +9,36 @@
 /-
 admission_basis: open-problem-resolution (#28348; Proved)
 escape_witness: none
+rowLegal: proof_shape=bind-only; consumers=Legal, classCount, firstCount, v2, total2
+bonds: proof_shape=bind-only; consumers=Legal, bonds_iff, counting_bridge
+Legal: proof_shape=bind-only; consumers=a, counting_bridge, zero_count
+instDecidableNormal: proof_shape=bind-only; consumers=instDecidableLegal
+instDecidableColLegal: proof_shape=bind-only; consumers=instDecidableLegal, v2, total2
+instDecidableBonds: proof_shape=bind-only; consumers=instDecidableLegal, counting_bridge
+instDecidableLegal: proof_shape=bind-only; consumers=a
+a: proof_shape=bind-only; consumers=counting_bridge, a_eq_w, zero_count, result
+compatible: proof_shape=bind-only; consumers=bonds_iff, v2, classCount
+instDecidableCompatible: proof_shape=bind-only; consumers=v2, classCount
+bonds_iff: proof_shape=bind-only; consumers=counting_bridge
+instDecidableGood: proof_shape=bind-only; consumers=classCount, firstCount
+v2: proof_shape=bind-only; consumers=counting_bridge, v_eq_w
+total2: proof_shape=bind-only; consumers=counting_bridge, a_eq_w
+counting_bridge: proof_shape=bind-only; consumers=a_eq_w
+Valid: proof_shape=bind-only; consumers=valid_next, row_counts, initial_valid
+instDecidableValid: proof_shape=bind-only; consumers=valid_next, row_counts
+valid_next: proof_shape=bind-only; consumers=v_eq_w
+classCount: proof_shape=bind-only; consumers=finite_certificate
+firstCount: proof_shape=bind-only; consumers=finite_certificate
+row_counts: proof_shape=bind-only; consumers=finite_certificate
+initial_valid: proof_shape=bind-only; consumers=a_eq_w
+initial_counts: proof_shape=bind-only; consumers=finite_certificate
+finite_certificate: proof_shape=bind-only; consumers=v_eq_w, a_eq_w
+w: proof_shape=bind-only; consumers=v_eq_w, a_eq_w, recurrence, result
+v_eq_w: proof_shape=bind-only; consumers=a_eq_w
+a_eq_w: proof_shape=bind-only; consumers=recurrence, result
+recurrence: proof_shape=bind-only; consumers=result
+zero_count: proof_shape=bind-only; consumers=result
+result: proof_shape=bind-only; consumers=terminal result (#28348)
 -/
 
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip
@@ -30,8 +60,6 @@ open HardinA233251TriangleStrip
   (widthNormal widthStep widthV widthTotal width_counting_bridge colour_bond_iff)
 open D5.S3.Observer.Separation.BooleanRankThreeK4 (beta)
 
-private abbrev normal2 := @widthNormal 2
-
 def rowLegal (c : Col) : Prop :=
   c 0 ≠ c 1 ∧ (c 0).val + (c 1).val ≠ 5
 
@@ -43,10 +71,10 @@ def Legal {n : ℕ} (A : Fin n × Fin 2 → Fin 6) : Prop :=
     (∀ i, rowLegal (fun j => A (i, j))) ∧
     (∀ (i : Fin n) (h : i.val + 1 < n), bonds (fun j => A (i, j))
       (fun j => A (⟨i.val + 1, h⟩, j))) ∧
-    normal2 (false, false) (fun i j => A (i, j))
+    widthNormal (false, false) (fun i j => A (i, j))
 
 private instance instDecidableNormal {n : ℕ} (s : Seen) (f : Fin n → Col) :
-    Decidable (normal2 s f) :=
+    Decidable (widthNormal s f) :=
   inferInstanceAs (Decidable (∀ _ _, (_ → _) ∧ (_ → _)))
 private instance instDecidableColLegal (c : Col) : Decidable (rowLegal c) :=
   inferInstanceAs (Decidable (_ ∧ _))
