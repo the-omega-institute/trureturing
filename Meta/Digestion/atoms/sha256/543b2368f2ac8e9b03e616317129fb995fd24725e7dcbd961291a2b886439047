@@ -1,0 +1,26 @@
+**定理 31.2（Choi–Kraus 重建）。** 定义 31.1 的正性条件等价于 $\Phi_A$ 完全正且迹保持。取一组基，定义 Choi 比较元
+
+$$
+C_\Phi=\sum_{i,j}|i\rangle\langle j|\otimes\Phi(|i\rangle\langle j|).
+$$
+
+对最大纠缠向量的联合自比较给出 $C_\Phi\succeq0$；反向地，$C_\Phi\succeq0$ 的谱分解
+
+$$
+C_\Phi=\sum_\alpha\lambda_\alpha|v_\alpha\rangle\langle v_\alpha|
+$$
+
+把 $v_\alpha$ 重排为矩阵并吸收 $\sqrt{\lambda_\alpha}$，得到
+
+$$
+\Phi(X)=\sum_\alpha K_\alpha X K_\alpha^\dagger.
+$$
+
+迹保持恰好等价于
+
+$$
+\sum_\alpha K_\alpha^\dagger K_\alpha=I.
+$$
+
+因此 Kraus 表示是联合比较正性的坐标表达，而不是新的原始公理。证毕。
+
