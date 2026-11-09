@@ -77,6 +77,51 @@ internal sealed class TeaCoordinationSequenceDocument : IScribeDocumentDefinitio
                         + "coordinate bounds are shifted by one."))),
                 DescribeRole.Definition),
             Describe.Lean(
+                DescribeId.Create("residualbound"),
+                DeclarationHandle.Create(Module + ".residual_le_iff"),
+                H("The six bounds for the horizontal excess"),
+                StatementSource.FromAuthor(Disp(ResidualBoundFormula())),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text(
+                    "For arbitrary integers i, j, p, q and d, the horizontal excess is at most d "
+                        + "exactly when d is nonnegative and each of i, j and i+j lies between "
+                        + "−q−d and p+d. No sign assumptions on p or q are needed."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("hexagon"),
+                DeclarationHandle.Create(Module + ".hexagon"),
+                H("The finite hexagonal lattice region"),
+                StatementSource.FromAuthor(Disp(All("p", Integers(), All("q", Integers(),
+                    Equal(LocalCall("hexagon", X("p"), X("q")), HexagonRegion()))))),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text(
+                    "For arbitrary integer endpoints p and q, filter the square interval "
+                        + "[−q,p] squared by −q≤i+j≤p. This finite region is also used for "
+                        + "the face-rooted simplex-inclusion graph of the triangular lattice."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("hexagonmem"),
+                DeclarationHandle.Create(Module + ".hexagon_mem"),
+                H("The six inequalities defining membership"),
+                StatementSource.FromAuthor(Disp(HexagonMembershipFormula())),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text(
+                    "For all integers p, q, i and j, membership means that i, j and i+j "
+                        + "each lie between −q and p. No sign conditions are required."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("hexagoncard"),
+                DeclarationHandle.Create(Module + ".hexagon_card"),
+                H("The exact hexagonal lattice count"),
+                StatementSource.FromAuthor(Disp(HexagonCountFormula())),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text(
+                    "For nonnegative integer p and q, twice the integer cast of the region's "
+                        + "cardinality is p²+4pq+q²+3p+3q+2. This is the shared counting "
+                        + "statement for the tea regions and the vertex and face slices of "
+                        + "the kisrhombille ball."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("result"),
                 DeclarationHandle.Create(Module + ".result"),
                 H("The coordination formulas hold at every positive radius"),
@@ -215,6 +260,25 @@ internal sealed class TeaCoordinationSequenceDocument : IScribeDocumentDefinitio
             Equal(Multiply(D(8), LocalCall("shell", X("n"))),
                 Add(Multiply(D(6, 3), new Formula.Power(X("n"), D(2))), constant)));
 
+    private static Formula ResidualBoundFormula()
+    {
+        var i = X("i");
+        var j = X("j");
+        var p = X("p");
+        var q = X("q");
+        var d = X("d");
+        var upper = Add(p, d);
+        var lower = Subtract(new Formula.Negate(q), d);
+        var lowerBounds = And(LessEqual(lower, i),
+            And(LessEqual(lower, j), LessEqual(lower, Add(i, j))));
+        var coordinateBounds = And(LessEqual(i, upper),
+            And(LessEqual(j, upper), And(LessEqual(Add(i, j), upper), lowerBounds)));
+        var statement = Equivalence(LessEqual(LocalCall("residual", i, j, p, q), d),
+            And(LessEqual(D(0), d), coordinateBounds));
+        return All("i", Integers(), All("j", Integers(), All("p", Integers(),
+            All("q", Integers(), All("d", Integers(), statement)))));
+    }
+
     private static Formula MetricFormula() =>
         All("i", Integers(), All("j", Integers(), All("k", Integers(),
             Equal(Distance(Triple(X("i"), X("j"), X("k"))),
@@ -238,7 +302,7 @@ internal sealed class TeaCoordinationSequenceDocument : IScribeDocumentDefinitio
                     At(Qualified("max"), Subtract(new Formula.Negate(q), j),
                         Subtract(Subtract(new Formula.Negate(q), i), j)))))));
 
-    private static Formula HexagonCountFormula()
+    private static Formula HexagonRegion()
     {
         var p = X("p");
         var q = X("q");
@@ -246,11 +310,31 @@ internal sealed class TeaCoordinationSequenceDocument : IScribeDocumentDefinitio
         var total = Add(Coordinate(z, 1), Seq(z, Dot, D(2)));
         var predicate = Seq(Parenthesized(Seq(z, Colon, Sp, Pairs())), Sp, Mapsto, Sp,
             Parenthesized(And(LessEqual(new Formula.Negate(q), total), LessEqual(total, p))));
-        var region = At(Qualified("Finset", "filter"), Parenthesized(predicate),
+        return At(Qualified("Finset", "filter"), Parenthesized(predicate),
             At(Qualified("Finset", "product"),
                 At(Qualified("Finset", "Icc"), new Formula.Negate(q), p),
                 At(Qualified("Finset", "Icc"), new Formula.Negate(q), p)));
-        var count = Typed(At(Qualified("Nat", "cast"), At(Qualified("Finset", "card"), region)), Integers());
+    }
+
+    private static Formula HexagonMembershipFormula()
+    {
+        var p = X("p"); var q = X("q"); var i = X("i"); var j = X("j");
+        var lower = new Formula.Negate(q);
+        var pair = Parenthesized(Seq(i, Comma, Sp, j));
+        var membership = Seq(pair, Sp, InMacro, Sp, LocalCall("hexagon", p, q));
+        var bounds = And(LessEqual(lower, i), And(LessEqual(i, p),
+            And(LessEqual(lower, j), And(LessEqual(j, p),
+            And(LessEqual(lower, Add(i, j)), LessEqual(Add(i, j), p))))));
+        return All("p", Integers(), All("q", Integers(), All("i", Integers(),
+            All("j", Integers(), Equivalence(membership, bounds)))));
+    }
+
+    private static Formula HexagonCountFormula()
+    {
+        var p = X("p");
+        var q = X("q");
+        var count = Typed(At(Qualified("Nat", "cast"),
+            At(Qualified("Finset", "card"), LocalCall("hexagon", p, q))), Integers());
         var polynomial = Add(Add(Add(Add(Add(new Formula.Power(p, D(2)),
             Multiply(Multiply(D(4), p), q)), new Formula.Power(q, D(2))),
             Multiply(D(3), p)), Multiply(D(3), q)), D(2));

@@ -1,0 +1,84 @@
+## 37. 小纯像接口与跨点共同取向
+
+证明 36.2。固定任意 $0<\xi\le1$，取真正的含单位满 Jordan 同态
+
+$$
+\pi_\xi:X\longrightarrow H_2(\mathbb C),\qquad
+\pi_\xi(a)=a(\xi).
+\tag{37.1}
+$$
+
+满射有实际原提升：对任意 $H\in H_2(\mathbb C)$，$xH/\xi\in E$ 的像就是 $H$。取配平主卷 240.1–240.3 的 $Y=J=H_2(\mathbb C)$、$p=u$、$T=E$，纯方向空间为
+
+$$
+H_0=\{v\in H_2(\mathbb C):\operatorname{tr}v=0\},
+\qquad \langle v,w\rangle=\tfrac12\operatorname{tr}(vw).
+\tag{37.2}
+$$
+
+这是实三维空间；纯元的该范数就是算子范数。单位和纯方向给准确自旋乘法、Lorentz 锥及 $\|su+v\|=|s|+\|v\|$。因此上述商接口的全部前件已由指定模型支付，不另假设每点存在一份下降后的旧响应。
+
+具体消费主卷 241.1 的零像预算、242.1 的相对单位和共线零值、243.1 的全部实际纯像面积，以及 244.1 的小首像正交行两槽纤维一致性。主卷 245.1–245.3 据此构造同一商的辅助映射 $B_\xi:H_0^2\to H_0$，它实交替双线性，且
+
+$$
+\begin{gathered}
+\langle B_\xi(v,w),z\rangle=-\langle w,B_\xi(v,z)\rangle,\\
+\|B_\xi(v,w)\|^2=\|v\|^2\|w\|^2-\langle v,w\rangle^2,\\
+(B_\xi)_v^2=-\|v\|^2I+v\otimes v.
+\end{gathered}
+\tag{37.3}
+$$
+
+主卷 245.4 对任意实际原标签仅在已付窗口识别旧值：
+
+$$
+\pi_\xi a=v,\quad\pi_\xi b=w,\quad
+0<\|v\|<1,\quad v\perp w
+\quad\Longrightarrow\quad
+\pi_\xi D(a,b)=B_\xi(v,w).
+\tag{37.4}
+$$
+
+$v=0$ 时另由零像预算给零。这里 $B_\xi$ 的双线性不属于未知 $D$ 的一般输入运算。
+
+三维面积乘法的成熟代数在此只作中间步骤。取正交基 $e_1,e_2,e_3$，(37.3) 及斜性给
+
+$$
+B_\xi(e_1,e_2)=s_3e_3,\qquad
+B_\xi(e_2,e_3)=s_1e_1,\qquad
+B_\xi(e_3,e_1)=s_2e_2,\qquad s_j\in\{1,-1\}.
+$$
+
+将 $(B_\xi)_{e_1}^2=-I+e_1\otimes e_1$ 作用于 $e_2$ 得 $s_2s_3=1$；循环置换得三个符号相同。双线性决定其余值。固定通常 Pauli 矩阵及
+
+$$
+C(v,w)=\tfrac{\mathrm i}{2}[v,w],
+\qquad C(\sigma_z,\sigma_x)=-\sigma_y,
+\tag{37.5}
+$$
+
+得到某个 $\varepsilon(\xi)\in\{1,-1\}$ 使 $B_\xi=\varepsilon(\xi)C$。在通常 $(\sigma_x,\sigma_y,\sigma_z)$ 向量坐标下 $C$ 是负的普通叉积，符号约定由 (37.5) 固定。
+
+尚须排除不同点各自翻向。取实际原锚
+
+$$
+F=x\sigma_z,\qquad G=x\sigma_x.
+\tag{37.6}
+$$
+
+对每个 $0<\xi<1$，两纯像正交、首像长度 $\xi<1$，故 (37.4) 给
+
+$$
+D(F,G)(\xi)=-\varepsilon(\xi)\xi^2\sigma_y.
+\tag{37.7}
+$$
+
+旧输出属于原 $E$，因而它在 $u,\sigma_x,\sigma_y,\sigma_z$ 上的实系数均为多项式。除了 $\sigma_y$ 系数 $r$，其余系数在 $(0,1)$ 上为零，故恒等为零；$r$ 则满足多项式恒等式
+
+$$
+r^2=x^4,\qquad (r-x^2)(r+x^2)=0.
+\tag{37.8}
+$$
+
+实多项式环是整环，所以 $r=x^2$ 或 $r=-x^2$。于是存在同一个 $\varepsilon_0\in\{1,-1\}$，使 $\varepsilon(\xi)=\varepsilon_0$ 对全部 $0<\xi<1$ 成立。没有假设符号函数连续；使用的是这一份实际锚输出属于原多项式域。也没有把 $D$ 对输入连续作为前件。
+

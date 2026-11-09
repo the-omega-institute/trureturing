@@ -80,7 +80,21 @@ $$\forall (m : \mathbb{N}), \forall (a : (\operatorname{Fin}\left(m\right)) \to 
 
 For every row i, the value in the middle column b, its vertical neighbours, and the two horizontal values a(i) and c(i) sum to at least 2. The path graph on Fin m supplies precisely the vertical neighbours, including the endpoint cases.
 
-**Theorem 1.7 (Domination as column inequalities).**
+**Theorem 1.7 (Weighted path neighbours).**
+
+$$\forall (n : \mathbb{N}), \forall (f : (\operatorname{Fin}\left(n\right)) \to \mathbb{N}), \forall (j : \operatorname{Fin}\left(n\right)), \sum_{k \in \operatorname{SimpleGraph}.\operatorname{neighborFinset}\left(\operatorname{SimpleGraph}.\operatorname{pathGraph}\left(n\right), j\right)} f\left(k\right) = (\operatorname{if} h : 0 < \operatorname{Fin}.\operatorname{val}\left(j\right) \operatorname{then} f\left((\langle \operatorname{Fin}.\operatorname{val}\left(j\right) - 1, \operatorname{by} \operatorname{omega} \rangle : \operatorname{Fin}\left(n\right))\right) \operatorname{else} 0) + (\operatorname{if} h : \operatorname{Fin}.\operatorname{val}\left(j\right) + 1 < n \operatorname{then} f\left((\langle \operatorname{Fin}.\operatorname{val}\left(j\right) + 1, h \rangle : \operatorname{Fin}\left(n\right))\right) \operatorname{else} 0)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Domination/LeeLiuThreeRowIntegerDomination.path_neighbor_sum` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Jia-Ying Lee; Chia-An Liu (2025). *The integer {2}-domination number of grids*. DOI: [10.48550/arXiv.2502.00134](https://doi.org/10.48550/arXiv.2502.00134). URL: <https://arxiv.org/abs/2502.00134>.
+
+*Commentary.*
+
+The sum of a natural-valued function over a path vertex's neighbours is the sum of its predecessor and successor values whenever those vertices exist.
+
+**Theorem 1.8 (Domination as column inequalities).**
 
 $$\forall (m : \mathbb{N}), \forall (n : \mathbb{N}), \forall (f : (\operatorname{Fin}\left(m\right) \times \operatorname{Fin}\left(n\right)) \to \mathbb{N}), (\forall (v : \operatorname{Fin}\left(m\right) \times \operatorname{Fin}\left(n\right)), f\left(v\right) \le 2) \Rightarrow ((\operatorname{IsTwoDominating}\left(m, n, f\right)) \Leftrightarrow (\forall (j : \operatorname{Fin}\left(n\right)), \operatorname{ColumnA}\left(m, \operatorname{pad}\left(f, \operatorname{Fin}.\operatorname{val}\left(j\right)\right), \operatorname{pad}\left(f, \operatorname{Fin}.\operatorname{val}\left(j\right) + 1\right), \operatorname{pad}\left(f, \operatorname{Fin}.\operatorname{val}\left(j\right) + 2\right)\right)))$$
 
@@ -94,7 +108,7 @@ $$\forall (m : \mathbb{N}), \forall (n : \mathbb{N}), \forall (f : (\operatornam
 
 For every row count m and width n, a function bounded by 2 is integer {2}-dominating exactly when each middle column satisfies ColumnA with its two zero-padded neighbours. Splitting the Cartesian-product neighbour set gives the equivalence. The three-row lower bound and the alternating upper construction both use this equivalence.
 
-**Theorem 1.8 (The exact value for every positive width).**
+**Theorem 1.9 (The exact value for every positive width).**
 
 $$\forall (n : \mathbb{N}), (1 \le n) \Rightarrow (\operatorname{gamma2}\left(3, n\right) = \operatorname{Nat}.\operatorname{div}\left(3 \cdot n, 2\right) + 1)$$
 
@@ -121,6 +135,7 @@ A column is encoded by a number in Fin 27. For columns a,b,c the domination cond
 - Truth anchor: `D5/S3/Combinatorics/Graph/Domination/LeeLiuThreeRowIntegerDomination.gamma2`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Domination/LeeLiuThreeRowIntegerDomination.grid`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Domination/LeeLiuThreeRowIntegerDomination.pad`
+- Truth anchor: `D5/S3/Combinatorics/Graph/Domination/LeeLiuThreeRowIntegerDomination.path_neighbor_sum`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Domination/LeeLiuThreeRowIntegerDomination.result`
 - Dependency: [D5/S1/Digit/MaxDigitSumBase](../../../../S1/Digit/MaxDigitSumBase.md)
 - Dependency: [D5/S3/StatisticalMechanics/Percolation/DirectProductCyclePathBootstrap](../../../StatisticalMechanics/Percolation/DirectProductCyclePathBootstrap.md)

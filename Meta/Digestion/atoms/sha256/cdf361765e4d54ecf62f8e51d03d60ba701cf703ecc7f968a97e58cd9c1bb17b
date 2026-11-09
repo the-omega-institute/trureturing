@@ -1,0 +1,4 @@
+## 197. The radical quotient is canonically the baseline tensor
+
+The rank bound in Section 196 can be sharpened from a dimension statement to a canonical quotient construction. Every full-zero candidate has a linear projection onto the two-dimensional baseline span, and the only directions lost by that projection are exactly the common radical directions.
+

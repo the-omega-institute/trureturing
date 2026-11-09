@@ -1,0 +1,24 @@
+#### 反例 9.6：qubit 维数限定不能直接删除
+
+取 $H_M=\mathbb C^3\oplus\mathbb C^2$，令 $n_1,n_2,n_3$ 为同一平面上 间隔 $120^\circ$ 的三个单位向量，$\sum_i n_i=0$。 在第二个直和块定义 $B_i=(I+n_i\cdot\sigma)/3$，并令
+
+$$
+E_i=\lvert i\rangle\langle i\rvert\oplus B_i\qquad(i=1,2,3).
+$$
+
+这些效果构成 POVM，且彼此不对易。 但是任意源的记录 $\tau_i$ 都由可分态 $\omega=\sum_i\tau_i\otimes\lvert i\rangle\langle i\rvert$ 复现， 因为 $\langle i\rvert E_j\lvert i\rangle=\delta_{ij}$。 所以高维中，仅从效果不对易不能照搬本节的等价分类。
+
+**操作闭合。**
+
+对实际内部仪器选 Kraus 算子 $K_{b\mu|c}$， $`\sum_{b\mu}K_{b\mu|c}^*K_{b\mu|c}=I`$，则
+
+$$
+V(\lvert c\rangle\otimes\psi)=
+ \sum_{b\mu}\lvert c\rangle\otimes K_{b\mu|c}\psi\otimes\lvert b,\mu\rangle
+ \quad\Longrightarrow\quad V^*V=I.
+$$
+
+因此每个被添加的控制或记录步骤保持整体二元 Gram 表； 有限复合也保持它，所有三元限制随之保持。 条件化和偏迹必须由这个整体过程计算，不能另行修改已确立的跨菜单关系。 内生“注意力”在这里完全是控制设置、可访问效果及条件记录的变量。
+
+<a id="section-10"></a>
+

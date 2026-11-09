@@ -52,7 +52,19 @@ $$\forall (b: \mathbb{R}), ((\operatorname{D5.S3.Quantum.Measurement.BiasedTrine
 
 The function is 1 + b below −1/3, is 2/3 throughout the closed interval [−1/3,1/3], and is 1 − b above 1/3. These are the three expressions in Supplemental Material TeX lines 151–158. The definition gives a real value for every real b; the compatibility theorem concerns the stated physical domain.
 
-**Lemma 1.5 (A sum over the eight Boolean strings).**
+**Lemma 1.5 (Unique scalar and Pauli coordinates).**
+
+$$\forall (t: \mathbb{R}), (\forall (u: \mathbb{R}), (\forall (a: \operatorname{EuclideanSpace}\left(\mathbb{R}, \operatorname{Fin}\left(3\right)\right)), (\forall (v: \operatorname{EuclideanSpace}\left(\mathbb{R}, \operatorname{Fin}\left(3\right)\right)), ((\operatorname{D5.S3.Quantum.Measurement.FourQubitParentConstruction.scalarB}\left(t, a\right) = \operatorname{D5.S3.Quantum.Measurement.FourQubitParentConstruction.scalarB}\left(u, v\right)) \to (t = u \land a = v)))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/BiasedTrineJointMeasurabilityThreshold.scalarB_injective` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The original coordinate comparison is available to other matrix applications. Equality of scalarB(t,a) and scalarB(u,v) forces t = u and a = v: the two real diagonal entries determine the scalar and third coordinate, and the real and imaginary upper-right entries determine the first two coordinates. The parent and marginal arguments below use this same declaration.
+
+**Lemma 1.6 (A sum over the eight Boolean strings).**
 
 $$\forall (A: \operatorname{Type}*), (\forall (inst: \operatorname{AddCommMonoid}\left(A\right)), (\forall (f: ((\operatorname{Fin}\left(3\right)) \to (\operatorname{Bool})) \to (A)), (\sum_{s: (\operatorname{Fin}\left(3\right)) \to (\operatorname{Bool})} f\left(s\right) = f\left(![\operatorname{false}, \operatorname{false}, \operatorname{false}]\right) + f\left(![\operatorname{false}, \operatorname{false}, \operatorname{true}]\right) + f\left(![\operatorname{false}, \operatorname{true}, \operatorname{false}]\right) + f\left(![\operatorname{false}, \operatorname{true}, \operatorname{true}]\right) + f\left(![\operatorname{true}, \operatorname{false}, \operatorname{false}]\right) + f\left(![\operatorname{true}, \operatorname{false}, \operatorname{true}]\right) + f\left(![\operatorname{true}, \operatorname{true}, \operatorname{false}]\right) + f\left(![\operatorname{true}, \operatorname{true}, \operatorname{true}]\right))))$$
 
@@ -64,7 +76,7 @@ $$\forall (A: \operatorname{Type}*), (\forall (inst: \operatorname{AddCommMonoid
 
 For any type A in any universe with an additive commutative monoid structure, the sum of f over all functions Fin 3 → Bool is the displayed eight-term sum. The coordinates are ordered 0, 1, 2, with false before true in each coordinate.
 
-**Theorem 1.6 (The exact triplewise joint-measurability criterion).**
+**Theorem 1.7 (The exact triplewise joint-measurability criterion).**
 
 $$\forall (b: \mathbb{R}), (\forall (\mathit{eta}: \mathbb{R}), ((-1 \le b) \to ((b \le 1) \to ((0 \le \mathit{eta}) \to ((\mathit{eta} \le 1) \to ((\left|b\right| \le 1 - \mathit{eta}) \to ((\operatorname{D5.S3.Quantum.Measurement.BiasedTrineJointMeasurabilityThreshold.TriplewiseJointlyMeasurable}\left(b, \mathit{eta}\right)) \Leftrightarrow (\mathit{eta} \le \operatorname{D5.S3.Quantum.Measurement.BiasedTrineJointMeasurabilityThreshold.trineThreshold}\left(b\right)))))))))$$
 
@@ -102,6 +114,7 @@ Finally, expand the definition of trineThreshold in the inequality η ≤ trineT
 
 - Truth anchor: `D5/S3/Quantum/Measurement/BiasedTrineJointMeasurabilityThreshold.TriplewiseJointlyMeasurable`
 - Truth anchor: `D5/S3/Quantum/Measurement/BiasedTrineJointMeasurabilityThreshold.result`
+- Truth anchor: `D5/S3/Quantum/Measurement/BiasedTrineJointMeasurabilityThreshold.scalarB_injective`
 - Truth anchor: `D5/S3/Quantum/Measurement/BiasedTrineJointMeasurabilityThreshold.sum_strings`
 - Truth anchor: `D5/S3/Quantum/Measurement/BiasedTrineJointMeasurabilityThreshold.trineDir`
 - Truth anchor: `D5/S3/Quantum/Measurement/BiasedTrineJointMeasurabilityThreshold.trineEffect`

@@ -1,0 +1,30 @@
+**定理 344.1（选中域中心迹的全域下降）。** 在两份完整 $B_*$ 中，$\mathsf Z_{\rm cen}^{>}$ 等价于对全部原对象要求的
+
+$$
+\mathsf Z_{\rm cen}:\qquad
+\tau_A(D^A(z,b))=0\quad(z\in Z(E_A),\ b\in E_A).
+\tag{344.1}
+$$
+
+本结论不消费 $\mathsf G_{0h}$、LU、SC 或 $q$ 的因子化。
+
+证明。全域蕴含选中域是限制。反向固定任意非零原 $A$，用其原身份事件的完整 R 选足够大的实际 $J=AR$，使 $\operatorname{rank}E_J>p_*$。写 $E_R=\bigoplus_tH_{m_t}(\mathbb C)$。全部静态中心对使
+
+$$
+i(z_s)=\sum_tz_{(s,t)}\in Z(E_J),\qquad
+\tau_J(i(x))=\sum_{s,t}m_t\operatorname{Tr}_{n_s}(x_s)
+=\tau_R(u_R)\tau_A(x).
+\tag{344.2}
+$$
+
+逐对转置及幺正坐标不改变该式，$\tau_R(u_R)=\sum_tm_t>0$。中心线性组合也被 $i$ 送入中心。原 $D$ 保持及选中域中性于是给
+
+$$
+0=\tau_J(D^J(i(z),i(b)))
+=\tau_J(i(D^A(z,b)))
+=\tau_R(u_R)\tau_A(D^A(z,b)).
+\tag{344.3}
+$$
+
+消去正因子即得全域中性。这里只计算规范矩阵谱迹，没有把它当作实际丢弃，也没有使用 $g^0$ 或 $q$ 的张量因子化。零对象结论平凡。∎
+

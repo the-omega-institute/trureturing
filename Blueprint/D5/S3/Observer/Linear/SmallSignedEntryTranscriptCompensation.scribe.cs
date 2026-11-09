@@ -30,7 +30,12 @@ internal sealed class SmallSignedEntryTranscriptCompensationDocument : IScribeDo
                 AssessedProvenance.FromRepo(), Blocks(
                     Paragraph(Text("A BitController additionally requests the next independent fair bit. A successful execution records its finite consumed bit prefix, finite command word, and export; arbitrary local computations between requests are allowed. The tape space is the infinite Bool product with its fair product measure. A tape belongs to finiteSuccess exactly when some successful finite execution uses a prefix of that tape. The event errorEvent additionally requires an incorrect export at the actual final field.")),
                     Paragraph(Text("FairAcquiresOnBall requires, separately on every fixed source and admitted entry, that the complement of finiteSuccess and the event errorEvent both have measure zero. Nontermination and unsuccessful runs are outside successful acquisition. Each fixed prefix cylinder has measure 2 to the negative prefix length, including mass one for the empty prefix.")),
-                    Paragraph(Text("Almost-sure reference success supplies one successful finite execution. Its positive-mass cylinder and zero error force that fixed export to be correct on the reference. Construct one compensating source from its command word and then fix this source. The same bit prefix and replies replay the execution on this source, where the export cannot be correct. Its whole positive-mass cylinder is an error event. The construction gives no uniform positive lower bound on error independent of the controller, radius, or transcript."))), DescribeRole.Theorem))));
+                    Paragraph(Text("Almost-sure reference success supplies one successful finite execution. Its positive-mass cylinder and zero error force that fixed export to be correct on the reference. Construct one compensating source from its command word and then fix this source. The same bit prefix and replies replay the execution on this source, where the export cannot be correct. Its whole positive-mass cylinder is an error event. The construction gives no uniform positive lower bound on error independent of the controller, radius, or transcript."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("small-signed-quadratic-row-bound"),
+                DeclarationHandle.Create("D5/S3/Observer/Linear/SmallSignedEntryTranscriptCompensation.quadratic_row_bound"),
+                H("Quadratic form bound from nonnegative symmetric rows"), StatementSource.FromAuthor(QuadraticRowBound()),
+                AssessedProvenance.FromRepo(), Blocks(
+                    Paragraph(Text("For a symmetric real matrix whose absolute row sums are bounded by q, the absolute value of every real quadratic form is at most q times the squared Euclidean norm."))), DescribeRole.Theorem))));
 
     private static Formula Compensation() => Disp(Seq(
         Forall, Sp, F.Id("rho"), InMacro, Sp, Mathbb, Grp(F.Id("Q")), Comma, Sp,
@@ -57,8 +62,39 @@ internal sealed class SmallSignedEntryTranscriptCompensationDocument : IScribeDo
         Neg, Sp, App(fair ? "FairAcquiresOnBall" : "AcquiresOnBall", F.Id("rho"), F.Id("p"),
             F.Id("initial"), F.Id("target"))));
 
+    private static Formula QuadraticRowBound()
+    {
+        Formula iota=V("I"), a=V("a"), q=V("q"), v=V("v");
+        Formula matrix=Call("Matrix",iota,iota,Real());
+        Formula symmetry=All("i",iota,All("j",iota,Eqn(App(a,V("i"),V("j")),App(a,V("j"),V("i")))));
+        Formula row=All("i",iota,Leq(SumOver("j",iota,Abs(App(a,V("i"),V("j")))),q));
+        Formula quadratic=Abs(SumOver("i",iota,SumOver("j",iota,
+            Mul(Mul(App(v,V("i")),App(a,V("i"),V("j"))),App(v,V("j"))))));
+        Formula bound=Leq(quadratic,Mul(q,SumOver("i",iota,Pow(App(v,V("i")),D(2)))));
+        Formula body=All("a",matrix,Imp(symmetry,All("q",Real(),Imp(row,All("v",Fn(iota,Real()),bound)))));
+        return All("I",C("Type"),Seq(OpenBracket,Call("Fintype",iota),CloseBracket,Sp,
+            OpenBracket,Call("DecidableEq",iota),CloseBracket,Sp,body));
+    }
+
     private static Formula App(string name, params Formula[] xs) => new Formula.Apply(F.Id(name), [.. xs]);
+    private static Formula App(Formula function, params Formula[] xs) => new Formula.Apply(function, [.. xs]);
+    private static Formula C(string name) => Seq(Operatorname,Grp(V(name)));
+    private static Formula Call(string name, params Formula[] xs) => xs.Length == 0 ? C(name) : App(C(name), xs);
+    private static Formula Qualified(string left, string right) => Seq(C(left),Dot,C(right));
+    private static Formula Real() => C("Real");
+    private static Formula Fn(Formula domain, Formula codomain) => new Formula.TypeArrow(domain,codomain);
+    private static Formula All(string name, Formula type, Formula body) => new Formula.Bind(FormulaQuantifier.ForAll,FormulaIdentifier.Create(name),type,body);
+    private static Formula Imp(Formula left, Formula right) => new Formula.Logic(Parenthesized(left),FormulaLogicOperator.Implies,Parenthesized(right));
+    private static Formula Eqn(Formula left, Formula right) => new Formula.Relation(left,FormulaRelationOperator.Equal,right);
+    private static Formula Leq(Formula left, Formula right) => new Formula.Relation(left,FormulaRelationOperator.LessThanOrEqual,right);
+    private static Formula Mul(Formula left, Formula right) => new Formula.Binary(left,FormulaBinaryOperator.Multiply,right);
+    private static Formula Parenthesized(Formula f) => Seq(Open,f,Close);
+    private static Formula SumOver(string name, Formula type, Formula body) =>
+        App(Qualified("Finset","sum"),Qualified("Finset","univ"),Lam(name,type,body));
+    private static Formula Lam(string name, Formula type, Formula body) =>
+        Parenthesized(Seq(LambdaLower,Sp,V(name),Colon,Sp,type,Sp,Mapsto,Sp,body));
     private static Formula Pow(Formula x, Formula n) => Seq(x, Caret, Grp(n));
     private static Formula Sub(Formula x, Formula n) => Seq(x, Underscore, Grp(n));
     private static Formula Abs(Formula x) => Seq(Bar, x, Bar);
+    private static Formula V(string name) => F.Id(name);
 }

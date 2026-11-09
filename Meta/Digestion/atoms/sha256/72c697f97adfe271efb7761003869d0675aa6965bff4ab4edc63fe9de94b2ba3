@@ -1,0 +1,83 @@
+**Proposition 191.2 (rank--radical trichotomy).** Suppose that $u$ is a bounded pointwise partition whose sixty-four residuals all vanish. Then
+
+$$
+\ker\Phi_u\subseteq\ker\Phi_f,
+\qquad
+\dim\ker\Phi_f=2,
+\qquad
+\mathcal R_u=\Phi_u(\ker\Phi_f),
+\tag{191.3}
+$$
+
+and therefore
+
+$$
+\dim\mathcal R_u
+=2-\dim\ker\Phi_u
+=r_u-2,
+\qquad
+r_u\in\{2,3,4\}.
+\tag{191.4}
+$$
+
+In particular,
+
+$$
+\begin{array}{c|c|c}
+ r_u & \dim\mathcal R_u & \text{equivalent condition}\\
+\hline
+ 2 & 0 & \ker\Phi_u=\ker\Phi_f\\
+ 3 & 1 & \dim\mathcal R_u=1\\
+ 4 & 2 & \dim\mathcal R_u=2
+\end{array}
+\tag{191.5}
+$$
+
+The rank-two case is exactly the radical-free case; hence it reduces to the common-first form of Corollary 179.3.
+
+*Proof.* The baseline identities are
+
+$$
+F_0=F_1=F,
+\qquad
+F_3=q,
+\qquad
+F_B=p,
+\qquad
+2F+q=3p.
+\tag{191.6}
+$$
+
+The source nonconstancy retained in Proposition 187.1 says that $q$ is nonconstant, while $p=1/4$ is constant and $F=(3/4-q)/2$. Hence
+
+$$
+\operatorname{im}\Phi_f=\operatorname{span}_{\mathbb R}\{1,q\}
+$$
+
+has dimension two. Since $\mathbb R^{\mathcal L}$ has dimension four,
+
+$$
+\dim\ker\Phi_f=2.
+\tag{191.7}
+$$
+
+The kernel inclusion in (191.3) is (190.4), and the radical identity in (191.3) is (190.5), with the ambient intersection in (191.2) made explicit. Rank--nullity gives
+
+$$
+\dim\ker\Phi_u=4-r_u.
+\tag{191.8}
+$$
+
+Because $\ker\Phi_u\subseteq\ker\Phi_f$ and the latter has dimension two, (191.8) gives $r_u\ge2$; the four labels give $r_u\le4$. Finally, restricting $\Phi_u$ to the two-dimensional space $\ker\Phi_f$ and using $\ker\Phi_u\subseteq\ker\Phi_f$ yields
+
+$$
+\dim\Phi_u(\ker\Phi_f)
+=\dim\ker\Phi_f-\dim\ker\Phi_u
+=2-(4-r_u)=r_u-2.
+\tag{191.9}
+$$
+
+This proves (191.4) and the table. If $r_u=2$, then $\dim\ker\Phi_u=2$ and the inclusion between two-dimensional kernels is equality, so $\mathcal R_u=0$. The converse follows from (191.4). Corollary 179.3 then supplies the common-first representation. $\square$
+
+Thus the radical alternative has no untracked intermediate size: rank three carries exactly one radical direction and rank four carries exactly two. The rank-two branch is the only branch on which the radical reduction is automatic, while rank-three and rank-four branches are the precise remaining arbitrary-partition cases. This classification does not rule out either of those branches, nor does it settle the out-of-span nonlinear equations, $F_{64}$, $H43$, SRS\text{-}20, physical succession or Lean/kernel formalization.
+

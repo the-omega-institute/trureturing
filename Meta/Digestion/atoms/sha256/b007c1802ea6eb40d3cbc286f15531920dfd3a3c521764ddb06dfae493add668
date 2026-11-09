@@ -1,0 +1,19 @@
+**推论 5.2（中心像模任意闭理想的零行）。** 在同一原完整候选下，对任意闭 Jordan 理想 $I\lhd X$，若原 $a\in E$ 满足 $q_I(a)\in Z(X/I)$，则
+
+$$
+D(a,b)\in I\qquad(b\in E).
+\tag{5.4}
+$$
+
+这里 $Z(Y)=\{z\in Y:[L_z,L_y]=0\text{ 对所有 }y\in Y\}$ 是 Jordan 算子中心。特别，$z\in E\cap Z(X)$ 给 $D(z,b)=0$；若原 $x\in E$ 的 $q_I(x)$ 中心，则任意实多项式 $p$ 和任意原 $b$ 满足 $D(p(x),b)\in I$。
+
+证明。先支付商的载体，而不假设旧响应下降。配平主卷定理 247.1 已排除 $X$ 的满 Albert 商。若 $Y=X/I\ne0$ 有满 Albert 商，复合 $q_I$ 就给 $X$ 的同一禁商，故 $Y$ 也没有满 Albert 商。同书 Lemma 7.2.2、Theorem 7.2.3、Theorem 7.2.5 的证明（页 155–156），连同 Corollary 4.5.8、Proposition 4.6.4（页 114、116），给成熟后果：非 JC 的 JB 代数有满 Albert 表示。具体地，非 JC 时存在非零纯例外闭理想；其非零因子表示满到 Albert，目标有限维因而为 JBW，理想表示遂延到整个代数且仍满射。因此 $Y$ 必有忠实、含单位、等距、锥准确的 JC 包含 $j_I:Y\to(A_I)_{\rm sa}$，其中 $A_I=C^*(j_I(Y))$；单位支撑压缩与锥反映按配平主卷 248.1 的已知表示论步骤处理。$I=0$ 时这正是该节已有的载体。
+
+van de Wetering Proposition 3.2 给 JC 子代数中 Jordan 算子通勤与环境算子通勤的等价。因此 $j_I(q_I(a))$ 与每个 $j_I(y)$ 通勤，属于 $Z(A_I)$。取 $A_I$ 的任意不可约复 C* 表示 $\pi$；Schur 引理使
+
+$$
+\pi j_Iq_I(a)=\mu_\pi 1,\qquad \mu_\pi\in\mathbb R.
+$$
+
+将复合 $q_\pi=\pi\circ j_I\circ q_I$ 的目标准确取为其闭含单位 Jordan 像 $Y_\pi\subseteq B(\mathcal H_\pi)_{\rm sa}$。这是 JB 代数，$q_\pi$ 保单位且有稠密像；实际上像闭性仍由 Proposition 3.4.3 给出。定理 4.2 直接作用于原调用 $(a,b)$，给 $q_\pi D(a,b)=0$。不可约 C* 表示分离 $A_I$，$j_I$ 又单射，故 $q_I D(a,b)=0$，得到 (5.4)。全理想及零代数情形无需选表示。中心对实多项式闭合，且 $p(x)\in E$，所以最后的多项式后果成立。这里没有在 $Y$ 上建立总响应，更没有用它套中心行定理。∎
+

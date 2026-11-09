@@ -1,0 +1,22 @@
+**推论 3.3（三轴的精确稳定标尺）。**
+
+对任意两个编码 qubit 态，
+
+$$
+\boxed{
+D(\rho,\widetilde\rho)
+=D(J\rho J^*,J\widetilde\rho J^*)
+=\frac{\|u(\rho)-u(\widetilde\rho)\|_2}{2\nu}.
+}
+$$
+
+**证明。**
+
+差矩阵为 $(\mathbf r-\widetilde{\mathbf r})\cdot\sigma/2$， 两个特征值是 $\pm|\mathbf r-\widetilde{\mathbf r}|/2$。 等距编码只附加零奇异值，因此保持迹范数。代入均值式即可。
+
+∎
+
+这里的三个压缩效果有偏且不尖锐。原读口仍来自同一个五结果测量， 没有变成三次同时进行的尖锐 Pauli 测量； 仿射恢复期望值也不等于获得一次同时尖锐结果。 这与来源 v28 §6.5 的联合可测性边界相容。 本构造提供一个明确可行的编码，未讨论 $\nu$ 的最优性。 第 8 节进一步给出同一原生菜单中的有限字逼近。
+
+<a id="thm:four"></a>
+

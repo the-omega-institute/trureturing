@@ -1,0 +1,15 @@
+**定义 57.1（纯实矩阵图表候选）。** 保持定义 8.1 的同一纯实入口、原准确锥、单位、范数、正评价及全部来源与消费者合同。指定原 $E=\bigcup_nJ_n$，每个 $J_n$ 作为含单位实 Jordan 代数同构于 $H_{d_n}(\mathbb C)$，$d_n\ge3$ 且无界；包含映射只要求忠实保单位 Jordan 同态。范数取相容的矩阵算子范数；忠实 Jordan 同态的等距性取 Hanche-Olsen–Størmer §3.4.3。不同图表可以混合通常及相反矩阵表示，不给 $E$ 一份全局复结合乘法。每个原元仍只有有限图表归属，未知输出可以逃到任意后层。
+
+旧 $D:E^2\to E$ 起初只为反对称总映射。沿用 $L_a,U_a,H_a,B$ 和原关系 PY、NN、$\mathrm J_{\mathrm{idem}}$：
+
+$$
+\begin{aligned}
+D(a,b)^2&=B(a,b)=\tfrac12\bigl(U_a(b^2)+U_b(a^2)\bigr)-(a\circ b)^2,\\
+D(a,D(a,b))&=H_ab,\qquad H_a=L_a^2-L_{a^2},\\
+D(p,D(a,b))+D(a,D(b,p))+D(b,D(p,a))&=0\quad(p^2=p).
+\end{aligned}
+\tag{57.1}
+$$
+
+所有量词和中间返回都在同一原 $E$；$U_a=2L_a^2-L_{a^2}$。不付 $D$ 的线性、导子律、图表保持或完成输入。记 $F_a=D(a,\cdot)$、$P_p=4(L_p-L_p^2)$、$V_p=P_pE$。
+
