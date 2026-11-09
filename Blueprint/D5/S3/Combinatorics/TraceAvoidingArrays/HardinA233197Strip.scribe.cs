@@ -35,10 +35,12 @@ internal sealed class HardinA233197StripDocument : IScribeDocumentDefinition
                 "The horizontal bonds are 0--1 and 1--2."),
             Def("bonds", "bonds", "Bonds between consecutive rows", BondsFormula(),
                 "There are three vertical and two antidiagonal bonds."),
-            Def("legal", "Legal", "The literal array predicate", LegalFormula(),
-                "The imported widthNormal checks the stated earlier-colour restrictions."),
             Def("count", "a", "The literal filtered finite count", CountFormula(),
-                "The first-cell existential fails at height zero, so a(0)=0.", true),
+                "The filter uses HardinA233196Strip.widthLegal rowLegal bonds directly, "
+                + "with the owner's widthInstDecidableLegal instance. The displayed "
+                + "predicate unfolds its row, bond and initial widthNormal conditions; "
+                + "the initial seen-colour flags are all false. The first-cell "
+                + "existential fails at height zero, so a(0)=0.", true),
             Def("pairs", "pairs", "The preceding row's pair labels", PairsFormula(),
                 "All three column labels are retained, with fibres {0,7},{1,6},{2,5},{3,4}."),
             Def("compatible", "compatible", "Pair-label bond constraints", CompatibleFormula(),
@@ -177,26 +179,38 @@ internal sealed class HardinA233197StripDocument : IScribeDocumentDefinition
         return Eq(left, right);
     }
 
-    private static Formula LegalFormula()
+    private static Formula ArrayConditions(Formula n, Formula a)
     {
-        var n = V("n"); var a = V("A"); var i = V("i"); var j = V("j");
-        var cells = Product(Fin(n), Fin(D(3)));
-        Formula Row(Formula r) => Fn("j", Fin(D(3)), At(a, Pair(r, j)));
+        var i = V("i"); var j = V("j"); var r = V("r"); var k = V("k");
+        Formula Cell(Formula row, Formula column) => At(a, Pair(row, column));
+        Formula Earlier(byte colour) => Ex("r", Fin(n), Ex("k", Fin(D(3)),
+            And(Or(Lt(r, i), And(Eq(r, i), Lt(k, j))),
+                Eq(Cell(r, k), Colour(colour)))));
         var first = Ex("i", Fin(n), And(Eq(Val(i), D(0)),
-            Eq(At(a, Pair(i, Index(0))), Colour(0))));
-        var rows = All("i", Fin(n), Call("rowLegal", Row(i)));
+            Eq(Cell(i, Index(0)), Colour(0))));
+        var rows = All("i", Fin(n),
+            And(Bond(Cell(i, Index(0)), Cell(i, Index(1))),
+                Bond(Cell(i, Index(1)), Cell(i, Index(2)))));
         var next = Typed(At(Q("Fin.mk"), Add(Val(i), D(1)), V("h")), Fin(n));
         var edges = All("i", Fin(n), All("h", Lt(Add(Val(i), D(1)), n),
-            Call("bonds", Row(i), Row(next))));
-        var norm = Call("widthNormal", Initial(), Fn("i", Fin(n), Row(i)));
-        return All("n", NatType(), All("A", Arrow(cells, Fin(D(8))),
-            Eq(Call("Legal", a), And(first, And(rows, And(edges, norm))))));
+            And(All("j", Fin(D(3)), Bond(Cell(i, j), Cell(next, j))),
+                And(Bond(Cell(i, Index(1)), Cell(next, Index(0))),
+                    Bond(Cell(i, Index(2)), Cell(next, Index(1)))))));
+        var cell = Cell(i, j);
+        var norm = All("i", Fin(n), All("j", Fin(D(3)),
+            And(Imp(Or(Eq(cell, Colour(2)), Or(Eq(cell, Colour(3)),
+                    Or(Eq(cell, Colour(4)), Or(Eq(cell, Colour(5)), Eq(cell, Colour(6)))))),
+                    Earlier(1)),
+                And(Imp(Or(Eq(cell, Colour(3)),
+                        Or(Eq(cell, Colour(4)), Eq(cell, Colour(5)))), Earlier(2)),
+                    Imp(Eq(cell, Colour(4)), Earlier(3))))));
+        return And(first, And(rows, And(edges, norm)));
     }
     private static Formula CountFormula()
     {
         var n = V("n"); var arrays = Arrow(Product(Fin(n), Fin(D(3))), Fin(D(8)));
         return All("n", NatType(), Eq(Call("a", n), At(Q("Finset.card"),
-            At(Q("Finset.filter"), Fn("A", arrays, Call("Legal", V("A"))),
+            At(Q("Finset.filter"), Fn("A", arrays, ArrayConditions(n, V("A"))),
                 Typed(Q("Finset.univ"), At(Q("Finset"), arrays))))));
     }
     private static Formula ClassCountFormula()
@@ -257,6 +271,8 @@ internal sealed class HardinA233197StripDocument : IScribeDocumentDefinition
         new Formula.Relation(a, FormulaRelationOperator.LessThan, b);
     private static Formula And(Formula a, Formula b) =>
         new Formula.Logic(Parenthesized(a), FormulaLogicOperator.And, Parenthesized(b));
+    private static Formula Or(Formula a, Formula b) =>
+        new Formula.Logic(Parenthesized(a), FormulaLogicOperator.Or, Parenthesized(b));
     private static Formula Imp(Formula a, Formula b) =>
         new Formula.Logic(Parenthesized(a), FormulaLogicOperator.Implies, Parenthesized(b));
     private static Formula Add(Formula a, Formula b) =>

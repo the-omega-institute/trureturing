@@ -48,12 +48,10 @@ Closed, unfrozen dependency: TransferMatrix.scalarRelationShift.
 Every declaration has proof_shape=bind-only. The all-height class reduction is
 Function.Semiconj.iterate_right after normalization of the finite one-step premises.
 Row: proof_shape=bind-only; consumers=rowLegal, bonds, classCount
-rowLegal: proof_shape=bind-only; consumers=Legal, classCount
-bonds: proof_shape=bind-only; consumers=Legal, bonds_iff
-instDecidableRowLegal: proof_shape=bind-only; consumers=instDecidableLegal, classCount
-instDecidableBonds: proof_shape=bind-only; consumers=instDecidableLegal
-Legal: proof_shape=bind-only; consumers=a, counting_bridge
-instDecidableLegal: proof_shape=bind-only; consumers=a
+rowLegal: proof_shape=bind-only; consumers=a, classCount, firstCount, v3, total3
+bonds: proof_shape=bind-only; consumers=a, bonds_iff, counting_bridge
+instDecidableRowLegal: proof_shape=bind-only; consumers=a, classCount, firstCount, v3, total3
+instDecidableBonds: proof_shape=bind-only; consumers=a, counting_bridge
 a: proof_shape=bind-only; consumers=counting_bridge, zero_count, result
 pairs: proof_shape=bind-only; consumers=bonds_iff, classCount
 compatible: proof_shape=bind-only; consumers=classCount, bonds_iff
@@ -94,10 +92,10 @@ import Mathlib.RingTheory.PowerSeries.Basic
 open scoped BigOperators
 namespace D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233197Strip
 
-open HardinA233196Strip (Seen beta good finish widthNormal widthV widthStep
+open HardinA233196Strip (Seen WidthRow beta good finish widthLegal widthV widthStep
   widthTotal width_counting_bridge colour_bond_iff)
 
-abbrev Row := Fin 3 → Fin 8
+abbrev Row := WidthRow 3
 
 def rowLegal (c : Row) : Prop :=
   (c 0 ≠ c 1 ∧ (c 0).val + (c 1).val ≠ 7) ∧
@@ -114,19 +112,10 @@ private instance instDecidableRowLegal (c : Row) : Decidable (rowLegal c) :=
 private instance instDecidableBonds (c d : Row) : Decidable (bonds c d) :=
   inferInstanceAs (Decidable ((∀ _, _ ∧ _) ∧ (_ ∧ _) ∧ (_ ∧ _)))
 
-def Legal {n : ℕ} (A : Fin n × Fin 3 → Fin 8) : Prop :=
-  (∃ i : Fin n, i.val = 0 ∧ A (i, 0) = 0) ∧
-    (∀ i, rowLegal (fun j => A (i, j))) ∧
-    (∀ (i : Fin n) (h : i.val + 1 < n), bonds (fun j => A (i, j))
-      (fun j => A (⟨i.val + 1, h⟩, j))) ∧
-    widthNormal (false, false, false) (fun i j => A (i, j))
-
-private instance instDecidableLegal {n : ℕ} (A : Fin n × Fin 3 → Fin 8) :
-    Decidable (Legal A) := inferInstanceAs (Decidable (_ ∧ _ ∧ _ ∧ _))
-
 /-- The literal filtered count. The first-cell existential fixes `a 0 = 0`. -/
 def a (n : ℕ) : ℕ :=
-  (Finset.univ.filter (fun A : Fin n × Fin 3 → Fin 8 => Legal A)).card
+  (Finset.univ.filter (fun A : Fin n × Fin 3 → Fin 8 =>
+    widthLegal rowLegal bonds A)).card
 
 def pairs (c : Row) : Fin 3 → Fin 4 := fun j => beta (c j)
 
@@ -263,7 +252,7 @@ private theorem recurrence (n : ℕ) :
   dsimp [w]
   linarith
 
-private theorem zero_count : a 0 = 0 := by simp [a, Legal]
+private theorem zero_count : a 0 = 0 := by simp [a, widthLegal]
 
 open PowerSeries in
 /-- Barker's identity for the literal count, with the convention `a 0 = 0`. -/
