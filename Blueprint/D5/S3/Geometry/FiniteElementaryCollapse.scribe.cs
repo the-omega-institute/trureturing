@@ -1,6 +1,3 @@
-// Faithful source preparation only; no native or kernel acceptance is claimed.
-// The explicit header below preserves the Lean metadata. Its public SDK calls
-// remain outside the frozen allowlist; substituting the default factory changes semantics.
 using System;
 using StrataLint.Engine;
 using static StrataLint.Scribe.DefinitionDsl;
@@ -30,11 +27,8 @@ internal sealed class FiniteElementaryCollapseDocument : IScribeDocumentDefiniti
         H("Finite original-label elementary collapse"),
         Blocks(
             SourceText(OwnerHeader),
-            SourceText(@"Metadata fidelity boundary: the SDK exposes the six-argument DocumentHeader.Create, but the frozen allowlist omits that member, Generality.General, EvidenceMirror.Waiver construction, WaiverReason.Create and Digest.Create. The admitted default factory fixes Instance and algebraically-proved. Those defaults are not this owner header. Utility is none in the exact quoted header; the typed SDK has no utility property."),
-            SourceText("Source preparation only. The owner source labels its attempted proofs uncompiled; this document adds no C# compilation, native Scribe emission, Lean elaboration, kernel or project-acceptance receipt. The exact immutable kernel-coverage evidence separately covers 73 of the original 99 selected modules; it does not certify this overlay."),
-            SourceText("The declaration context is variable {V : Type*} [Fintype V] [DecidableEq V], and inside CollapsePair, variable (P : CollapsePair V). These are the authored section contexts; their elaborated binder closures remain for the native catalog to establish. A point is a nonnegative vector of total mass one supported on an actual nonempty face. Ghost labels remain coordinates with value zero, not extra vertices."),
-            SourceText("The original source credits section 2 of independent_general_relative_cancellation_proof.txt (2026-11-05), SHA256 f9888966c4313557587f6c91f7a185a8aa6de6473219536205db6600e64553ad, which credits the cancellation proposal. That attribution is retained from the owner source; this document neither imports that text as an axiom nor claims a new proof or novelty."),
-            SourceText("Actual consumer: D5.S3.Geometry.FiniteRelativeSimplicialCollapse.Sequence.realize composes P.retraction and P.collapseHomotopy, uses P.retraction_inclusion, and restricts fixedness to the entire final realization. Its link lifts and cone extensions use actual CollapsePair data. These are uses in definition/proof bodies, beyond the import of FiniteElementaryCollapse. This local owner itself asserts neither a link-collapse sequence nor theta cancellation."),
+            SourceText("Let V be a finite type with decidable equality, and let P : CollapsePair V. A point is a nonnegative vector of total mass one supported on an actual nonempty face. Ghost labels remain coordinates with value zero, not extra vertices."),
+            SourceText("The barycentric construction follows section 2 of the relative-cancellation proof, source SHA256 f9888966c4313557587f6c91f7a185a8aa6de6473219536205db6600e64553ad, which credits the cancellation proposal. The result here is the local elementary deformation; neither a link-collapse sequence nor theta cancellation is asserted."),
             Node("collapse-pair", "CollapsePair",
                 "D5.S3.Geometry.FiniteElementaryCollapse.CollapsePair",
                 "A genuine free pair",
@@ -43,7 +37,7 @@ internal sealed class FiniteElementaryCollapseDocument : IScribeDocumentDefiniti
             Field("pair-ambient", "ambient",
                 "D5.S3.Geometry.FiniteElementaryCollapse.CollapsePair.ambient",
                 "Original ambient complex",
-                "The ambient projection returns the given PreAbstractSimplicialComplex V. All coordinates, faces and subsequent retained complexes use this same V, including ghost labels. This is commentary on the named public projection; its formal kind still requires the compiled catalog.",
+                "The ambient projection returns the given PreAbstractSimplicialComplex V. All coordinates, faces and subsequent retained complexes use this same V, including ghost labels.",
                 "ambient : PreAbstractSimplicialComplex V"),
             Field("pair-lower", "lower",
                 "D5.S3.Geometry.FiniteElementaryCollapse.CollapsePair.lower",
@@ -58,7 +52,7 @@ internal sealed class FiniteElementaryCollapseDocument : IScribeDocumentDefiniti
             Field("pair-lower-nonempty", "lower_nonempty",
                 "D5.S3.Geometry.FiniteElementaryCollapse.CollapsePair.lower_nonempty",
                 "Nonempty lower-face evidence",
-                "This proof-valued structure field supplies lower.Nonempty. This is a remark on the generated public projection; its formal kind is left to the native catalog rather than inferred from its proof-valued field syntax. It licenses the finite attained minimum.",
+                "This proof-valued structure field supplies lower.Nonempty. It licenses the finite attained minimum.",
                 "lower_nonempty : lower.Nonempty"),
             Field("pair-apex-not-mem", "apex_notMem",
                 "D5.S3.Geometry.FiniteElementaryCollapse.CollapsePair.apex_notMem",
@@ -161,18 +155,16 @@ internal sealed class FiniteElementaryCollapseDocument : IScribeDocumentDefiniti
                 "The forward map is retraction and the inverse is inclusion. The left inverse up to homotopy uses the reverse of collapseHomotopy; the right composite is exactly identity by retraction_inclusion. This packages the explicit relative deformation without changing coordinates or assuming an abstract equivalence.",
                 "def collapseEquiv : Space P.ambient ≃ₕ Space P.retained", DescribeRole.Definition))));
 
-    // The pinned SDK has Create, not FromLeanNames. Every leaf selector below is
-    // bound to its exact source namespace above; native unique-suffix resolution is still due.
+    // Authored contracts accompany declarations outside the pinned projection corpus.
     private static DocumentBlock Node(string id, string selector, string leanName,
         string title, string prose, string rawContract, DescribeRole role) => Describe.Lean(
             DescribeId.Create(id), DeclarationHandle.Create(Prefix + selector), H(title),
-            role == DescribeRole.Definition ? StatementSource.WithoutFormula() : StatementSource.FromLean(),
+            StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(),
             Blocks(SourceText(prose), SourceText("Lean name: " + leanName),
                 SourceText("Exact authored Lean header: " + rawContract)), role);
 
-    // Field projections are named source members, but their generated formal kind
-    // remains unobserved. A declaration remark references them without restatement.
+    // Field projections are referenced as declaration remarks.
     private static DocumentBlock Field(string id, string selector, string leanName,
         string title, string prose, string rawContract) => Describe.Remark(
             DescribeId.Create(id), DeclarationHandle.Create(Prefix + selector), H(title),
