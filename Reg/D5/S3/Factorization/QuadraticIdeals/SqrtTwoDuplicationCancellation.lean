@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Factorization.QuadraticIdeals.SqrtTwoDuplicationCancellation
 import Reg.Support.DependentFamily
 
+/-! The common duplication ideal as a varying ideal-valued family. -/
+
 namespace Reg.D5.S3.Factorization.QuadraticIdeals.SqrtTwoDuplicationCancellation
 
 open _root_.D5.S3.Factorization.QuadraticIdeals.SqrtTwoDuplicationCancellation
@@ -10,7 +12,7 @@ open LeanInformationAudit
 
 noncomputable section
 
-def signature : Signature where
+abbrev signature : Signature where
   Params := Order
   State := fun _ => Order
   Role := Unit
@@ -26,7 +28,7 @@ def actual : Realization signature :=
 def rejected : Realization signature :=
   realize signature (fun _ _ _ => (⊥ : Ideal Order)) (fun e => nomatch e)
 
-def arena : Arena where
+abbrev arena : Arena where
   signature := signature
   Law R := ∀ (a b : Order) (_hab : Ideal.span {a, b} = ⊤),
     ¬ R.readout () a b ≤ (Ideal.span {root}) ^ 7 ∧
@@ -60,7 +62,7 @@ def realization : Registration arena (type_of% (@primitive_duplication_local)) w
     · intro i
       refine ⟨rejected, ?_, rfl, rejected_negative⟩
       intro j hj
-      exact (hj (Subsingleton.elim j i)).elim
+      exact (hj (@Subsingleton.elim Unit _ j i)).elim
     · intro e
       exact nomatch e
   dependence := actual_dependence

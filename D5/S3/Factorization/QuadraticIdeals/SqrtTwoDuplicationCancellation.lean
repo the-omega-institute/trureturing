@@ -4,12 +4,15 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Primitive duplication forms over the square-root-two order have bounded local cancellation. -/
+   digest: Local cancellation bounds for primitive square-root-two duplication forms. -/
 
 import Mathlib.NumberTheory.Zsqrtd.Basic
+import Mathlib.Algebra.Field.ZMod
 import Mathlib.RingTheory.Ideal.Maps
 import Mathlib.RingTheory.Ideal.Operations
 import Mathlib.Tactic
+
+/-! Local prime-power cancellation for the duplication forms in the explicit quadratic order. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -39,6 +42,10 @@ private instance : Zsqrtd.Nonsquare 2 := ⟨by
   have hn' : n ≤ 1 := by nlinarith
   interval_cases n <;> norm_num at hn⟩
 
+private instance : IsDomain Order := inferInstanceAs (IsDomain (Zsqrtd (2 : ℕ)))
+
+private instance : Fact (Nat.Prime 7) := ⟨by decide⟩
+
 private theorem root_sq : root ^ 2 = (2 : Order) := by
   ext <;> norm_num [root, pow_two]
 
@@ -53,8 +60,8 @@ private theorem root_dvd_iff (z : Order) : root ∣ z ↔ (2 : ℤ) ∣ z.re := 
 private theorem even_of_four_dvd_norm (x y : ℤ) (h : 4 ∣ x ^ 2 + 2 * y ^ 2) :
     2 ∣ x ∧ 2 ∣ y := by
   have hm := Int.emod_eq_zero_of_dvd h
-  simp only [Int.add_emod, Int.mul_emod, Int.sq_emod_four] at hm
-  norm_num at hm
+  have hx := Int.sq_emod_four x
+  have hy := Int.sq_emod_four y
   constructor <;> apply Int.dvd_of_emod_eq_zero <;> omega
 
 private theorem four_dvd_of_sixteen_dvd_norm (x y : ℤ)
@@ -77,15 +84,17 @@ private theorem even_re_of_sum_squares (a c : Order)
   have hr' := Int.emod_eq_zero_of_dvd hr
   have hr4 : (a.re ^ 2 + 2 * a.im ^ 2 + c.re ^ 2 + 2 * c.im ^ 2) % 4 = 0 := by
     convert hr' using 1 <;> simp only [pow_two, Zsqrtd.re_add, Zsqrtd.re_mul] <;> congr 1 <;> ring
-  simp only [Int.add_emod, Int.mul_emod, Int.sq_emod_four] at hr4
-  norm_num at hr4
+  have har := Int.sq_emod_four a.re
+  have hai := Int.sq_emod_four a.im
+  have hcr := Int.sq_emod_four c.re
+  have hci := Int.sq_emod_four c.im
   have hi2 : (a.re * a.im + c.re * c.im) % 2 = 0 := by
     have : (4 : ℤ) ∣ 2 * (a.re * a.im + c.re * c.im) := by
       convert hi using 1 <;> simp only [pow_two, Zsqrtd.im_add, Zsqrtd.im_mul] <;> ring
     obtain ⟨k, hk⟩ := this
     apply Int.emod_eq_zero_of_dvd
     exact ⟨k, by omega⟩
-  simp only [Int.add_emod, Int.mul_emod] at hi2
+  rw [Int.add_emod, Int.mul_emod a.re a.im, Int.mul_emod c.re c.im] at hi2
   have ha : a.re % 2 = 0 := by
     by_contra h
     have ha1 : a.re % 2 = 1 := by omega
@@ -105,7 +114,7 @@ private theorem dyadic_numerator (a b : Order) (hab : IsCoprime a b) :
     rw [heq] at hw
     have hw' := congrArg Zsqrtd.re hw
     norm_num [root, pow_succ, Zsqrtd.re_mul, Zsqrtd.im_mul] at hw'
-    exact ⟨w.im, hw'⟩
+    exact ⟨w.im, by simpa [pow_two] using hw'⟩
   have hh : (16 : ℤ) ∣ h.re ^ 2 + 2 * h.im ^ 2 := by
     convert hre using 1 <;> simp only [pow_two, Zsqrtd.re_mul] <;> ring
   obtain ⟨hr, hi⟩ := four_dvd_of_sixteen_dvd_norm h.re h.im hh
@@ -134,7 +143,7 @@ private theorem delta_dvd_iff (z : Order) : delta ∣ z ↔ residueSeven z = 0 :
   · intro hz
     have hz' : (7 : ℤ) ∣ z.re + 3 * z.im := by
       apply (ZMod.intCast_zmod_eq_zero_iff_dvd _ _).mp
-      simpa [residueSeven, Zsqrtd.lift_apply_apply, Int.cast_add, Int.cast_mul] using hz
+      simpa [residueSeven, Zsqrtd.lift_apply_apply, Int.cast_add, Int.cast_mul, mul_comm] using hz
     obtain ⟨k, hk⟩ := hz'
     refine ⟨⟨3 * k - z.im, k⟩, ?_⟩
     ext <;> simp [delta, root] <;> omega
@@ -163,7 +172,7 @@ private theorem delta_numerator (a b : Order) (hab : IsCoprime a b) :
     have h := (delta_dvd_iff _).mp hH
     simp only [map_add, map_mul, map_pow, residue_delta, zero_pow (by decide : 2 ≠ 0),
       zero_mul, add_zero] at h
-    exact pow_eq_zero h
+    exact (pow_eq_zero_iff (by decide : 2 ≠ 0)).mp h
   obtain ⟨c, hc⟩ := (delta_dvd_iff a).mpr ha0
   have hb0 : residueSeven b ≠ 0 := by
     intro hb
@@ -256,29 +265,27 @@ theorem primitive_duplication_local (a b : Order) (hab : Ideal.span {a, b} = ⊤
   have hcop : IsCoprime a b := by
     apply Ideal.mem_span_pair.mp
     rw [hab]
-    exact Ideal.mem_top
+    trivial
   have hf : numerator a b ∈ commonIdeal a b := Ideal.subset_span (by simp)
   have hg : denominator a b ∈ commonIdeal a b := Ideal.subset_span (by simp)
   refine ⟨?_, ?_, ?_⟩
   · intro hi
     have hmem := hi hf
-    rw [← Ideal.span_singleton_pow, Ideal.mem_span_singleton] at hmem
+    rw [Ideal.span_singleton_pow, Ideal.mem_span_singleton] at hmem
     exact dyadic_numerator a b hcop hmem
   · intro hi
     have hmem := hi hf
-    rw [← Ideal.span_singleton_pow, Ideal.mem_span_singleton] at hmem
+    rw [Ideal.span_singleton_pow, Ideal.mem_span_singleton] at hmem
     exact delta_numerator a b hcop hmem
   · intro q hq hi
     rcases prime_support a b hcop q hq (hi hf) (hi hg) with h2 | hd
     · left
       have hr : root ∈ q := hq.mem_of_pow_mem 2 (root_sq ▸ h2)
-      exact (root_maximal.eq_of_le hq.ne_top (Ideal.span_singleton_le_iff_mem.mpr hr)).symm
+      exact (root_maximal.eq_of_le hq.ne_top ((Ideal.span_singleton_le_iff_mem q).2 hr)).symm
     · right
-      exact (delta_maximal.eq_of_le hq.ne_top (Ideal.span_singleton_le_iff_mem.mpr hd)).symm
+      exact (delta_maximal.eq_of_le hq.ne_top ((Ideal.span_singleton_le_iff_mem q).2 hd)).symm
 
 #print axioms primitive_duplication_local
 
 end D5.S3.Factorization.QuadraticIdeals.SqrtTwoDuplicationCancellation
-
-
 

@@ -46,7 +46,7 @@ internal sealed class SqrtTwoDuplicationCancellationDocument : IScribeDocumentDe
                     + "An identification with the full ring of integers, existence of primitive representatives for all projective points, "
                     + "the ideal norm estimate N(I) <= 2^6 7^4 = 392^2, "
                     + "and the all-point height inequalities remain additional obligations. "
-                    + "The intended height is the absolute projective logarithmic height divided by the field degree two, "
+                    + "The intended absolute height is the unnormalized number-field projective logarithmic height divided by the field degree two, "
                     + "with the point at infinity assigned height zero. In that normalization the intended inequalities are "
                     + "4 h_x(T) - log(392) <= h_x(2T) <= 4 h_x(T) + log(676). "
                     + "The real inequalities at the two embeddings are supplied separately by the source's ModelDuplication bounds; "
