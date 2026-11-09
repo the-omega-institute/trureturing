@@ -1319,3 +1319,634 @@ $R(\omega)$ 仍是稠密 $G_\delta$，而原逐整数一阶质量仍满足 $\sum
 这些结论表明，在声明的 $\gamma$ 范围内，即使有统一有限型及完整几何权重和发散，完整原比较事件仍可零测；跨段重复覆盖所需的联合信息不能由这些条件替代。整个构造保留原有限地方、原 $q_H,h,\rho,M,a_0,Y$ 与同一整数，辅助 $H_s,N_s$ 只服务固定比较方向及其上包。该 $\omega$ 没有被认作实际 CM 方向 $\alpha$；原 (17.5) 的 CM 来源桥和实际 $q_H$ 与 $\alpha$ 的联合算术问题仍保留，以上反模型不裁定 $g_j(\alpha)$ 或 $\nu(R(\alpha))$。$\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 35. 原负阶段整数计数与严格 dyadic 阶段的几何权重
+
+**定义 35.1（原对数过滤及其负阶段）。** 保持定义 24.1 的全部有限地方过滤、实际共同周期 $q_H$、整数 $M,a_0$、完整目标空间 $Y$、测度 $\nu$ 与同一成功整数，只取 $\beta=0,c_0=1,\gamma>0$。因此仍用原来的
+
+$$
+h(n)=\max\left(2,\left\lfloor\sqrt{\log(n+2)}\right\rfloor\right),
+\qquad \rho_\gamma(n)=(\log(n+2))^{-\gamma}.
+$$
+
+将 (28.1)–(28.2) 中的原量显式记为 $R_\gamma(\omega)$、$g_j^{(\gamma)}(\omega)$ 与 $r_{j,\gamma}^{\pm}$；每片仍使用真实整数个数 $J_{jt}=\#(I_{jt}\cap A)$ 及 $K_{jt}=MJ_{jt}/q_{H_{jt}}$。这只是显示参数，不改变事件、切片、半径或几何权重的定义。对每个 $\gamma>0$，$j_0$ 按定理 28.1 选择，且不依赖方向。沿用原定义 21.1 的全部整数负阶段，并记
+
+$$
+\begin{gathered}
+\vartheta(x)=\sum_{p\le x}\log p,
+\qquad \psi(x)=\sum_{\substack{p\text{ 素数},\ k\ge1\\p^k\le x}}\log p,\\
+\mathcal H_- =\{H\in\mathbb Z:H\ge7,\ \vartheta(H)<H\},
+\qquad A_-(T)=\#\{H\in\mathcal H_-:H\le T\}.
+\end{gathered}
+\tag{35.1}
+$$
+
+严格窗口 $\mathcal D_H$ 始终取定理 34.1 的 (34.1)，其不交性与窗口下界直接使用 (34.2)。以整数 $H_0(\gamma)\ge7$、$c_\gamma>0$ 表示该定理的充分大阈值与常数，二者均不依赖方向。这里只将原负阶段的整数计数接到该严格窗口的原权重上。
+
+**定理 35.2（原完整几何权重的全方向发散）。** 对定义 35.1 的原过滤，无条件有
+
+$$
+\forall\gamma\in(0,1/2)\ \forall\omega\in\mathbb T^2,
+\qquad \sum_{j\ge j_0}g_j^{(\gamma)}(\omega)=\infty.
+\tag{35.2}
+$$
+
+若假设 Riemann 假设（RH），还在端点有
+
+$$
+\forall\omega\in\mathbb T^2,
+\qquad \sum_{j\ge j_0}g_j^{(1/2)}(\omega)=\infty.
+\tag{35.3}
+$$
+
+RH 端点不另假设零点的线性独立性或简单性。
+
+证明。所用整数计数来自 Jerzy Kaczorowski，*Results on the distribution of primes*，J. reine angew. Math. **446** (1994)，89–113，[DOI:10.1515/crll.1994.446.89](https://doi.org/10.1515/crll.1994.446.89)，[原始扫描](https://gdz.sub.uni-goettingen.de/download/pdf/PPN243919689_0446/LOG_0007.pdf)。该文 §3，印刷页 94，Theorem 8 的负向 $\psi$ 计数是：对每个 $0<\varepsilon<1$ 和每个实数 $u\ge0$，无条件有
+
+$$
+\#\{m\in\mathbb N:m\le T,\ \psi(m)<m-u\sqrt m\}
+=\Omega(T^{1-\varepsilon}).
+\tag{35.4}
+$$
+
+这是 literature-attested 的中间输入。这里只取 $u=0$，并只使用其下述含义：存在 $a_\varepsilon>0$ 和一个无界序列 $T_\ell\to\infty$，使该计数至少为 $a_\varepsilon T_\ell^{1-\varepsilon}$。因 $\vartheta(H)\le\psi(H)$，每个整数 $H\ge7$ 若满足 $\psi(H)<H$，就是同一个原负阶段 $H\in\mathcal H_-$。丢弃 $H<7$ 的至多六项并缩小常数，得到
+
+$$
+A_-(T_\ell)\ge a'_\varepsilon T_\ell^{1-\varepsilon}
+\qquad(\ell\text{ 充分大}),\qquad a'_\varepsilon>0.
+\tag{35.5}
+$$
+
+不把 (35.5) 加强为对全部充分大 $T$ 的同一幂次下界。
+
+对 $0<\gamma\le3/8$，全方向发散已由定理 34.2 给出，直接复用该结论。现取 $3/8<\gamma<1/2$，置 $s=4\gamma-1\in(1/2,1)$，并选 $0<\varepsilon<1-s$。由于 $H^{-s}\ge T_\ell^{-s}$ 对 $H\le T_\ell$ 成立，(35.5) 给出
+
+$$
+\begin{aligned}
+\sum_{\substack{H\in\mathcal H_-\\H_0(\gamma)\le H\le T_\ell}}
+ H^{1-4\gamma}
+&\ge T_\ell^{-s}
+ \bigl(A_-(T_\ell)-A_-(H_0(\gamma)-1)\bigr)\\
+&\ge \frac{a'_\varepsilon}{2}
+ T_\ell^{1-s-\varepsilon}\longrightarrow\infty.
+\end{aligned}
+\tag{35.6}
+$$
+
+此处只在 $s>0$ 的范围使用 $H^{-s}\ge T_\ell^{-s}$，不将这一不等式套用到 $s\le0$。
+
+由非负性、定理 34.1 的窗口互不重叠及 (34.2)，对每个方向同时有
+
+$$
+\sum_{j\ge j_0}g_j^{(\gamma)}(\omega)
+\ge\sum_{\substack{H\in\mathcal H_-\\H\ge H_0(\gamma)}}
+ \sum_{j\in\mathcal D_H}g_j^{(\gamma)}(\omega)
+\ge c_\gamma
+ \sum_{\substack{H\in\mathcal H_-\\H\ge H_0(\gamma)}}H^{1-4\gamma}
+=\infty.
+\tag{35.7}
+$$
+
+这证明 (35.2)。用白话说，无条件计数只需在越来越远的位置积累足够多的负阶段整数；每项所付的负幂还不到谐和幂，因此这些位置上的累积下界已迫使总和发散。窗口不重叠使每份贡献只记一次，且同一估计对所有实方向有效。
+
+端点另用同文 §2，印刷页 90，Theorem 1。其负向 $\psi$ 陈述仅以 RH 为假设：对每个实数 $u\ge0$，存在 $C_{\mathrm K}(u)>1$、$b_{\mathrm K}(u)>0$，使每个 $T\ge1$ 都有
+
+$$
+\#\{m\in\mathbb N:T\le m\le C_{\mathrm K}(u)T,
+ \ \psi(m)<m-u\sqrt m\}
+\ge b_{\mathrm K}(u)T.
+\tag{35.8}
+$$
+
+这里 $C_{\mathrm K}(u)$ 是原文的区间伸缩常数，与原过滤中固定为 $1$ 的 $c_0$ 无关。(35.8) 同样仅作 literature-attested 中间输入；取 $u=0$，简记 $C=C_{\mathrm K}(0)$、$b=b_{\mathrm K}(0)$，再取 $T=N/C$，便在 $N\ge C$ 时得到
+
+$$
+A_-(N)\ge\frac bC N-6.
+\tag{35.9}
+$$
+
+因此存在 $a>0$、$N_0\ge7$，使全部 $N\ge N_0$ 满足 $A_-(N)\ge aN$。对这个原整数计数作普通部分求和，得
+
+$$
+\sum_{\substack{H\in\mathcal H_-\\H\le N}}\frac1H
+=\frac{A_-(N)}N+\int_1^N\frac{A_-(t)}{t^2}\,dt
+\ge a\log\frac N{N_0}\longrightarrow\infty.
+\tag{35.10}
+$$
+
+删去有限初段不改变发散。将 $\gamma=1/2$ 的 $H^{1-4\gamma}=1/H$ 及 (35.10) 代入 (35.7) 的窗口求和不等式，便得 (35.3)。普通正项求和及部分求和均为经典中间方法（literature-attested）；这里的 repo-derived 综合是将上述原文整数计数转接到指定原过滤的严格 dyadic 窗口与完整 $g_j$，不另立一般振荡或求和定理。
+
+用白话说，RH 给出的每个伸缩区间内线性个数下界，使负阶段整数集具有正下密度，因而能承担恰好一阶的谐和权重。无条件的 (35.5) 在 $s=1$ 时不能给出 (35.6) 中的正指数；本证明留下 $\gamma=1/2$ 的无条件发散未决，也不由此断言 RH 必要。$\square$
+
+## 36. 零方向的完整收敛界与全方向命题的上界
+
+**定理 36.1（原完整几何权重在零方向的可求和范围）。** 保持定义 35.1 的原过滤。对每个 $\gamma>1/2$，零方向 $0=(0,0)$ 满足
+
+$$
+\begin{gathered}
+0\le g_j^{(\gamma)}(0)
+\le(r_{j,\gamma}^-)^2
+=\bigl(\log(2^{j+1}+2)\bigr)^{-2\gamma},\\
+\sum_{j\ge J}g_j^{(\gamma)}(0)
+\le\frac{(\log2)^{-2\gamma}}{2\gamma-1}\,J^{1-2\gamma}
+\qquad(J\ge\max(j_0,1)),\\
+\sum_{j\ge j_0}g_j^{(\gamma)}(0)<\infty,
+\qquad \nu(R_\gamma(0))=0.
+\end{gathered}
+\tag{36.1}
+$$
+
+因此任何 $\gamma>1/2$ 都不满足“对所有方向 $\omega$，原 $\sum_jg_j^{(\gamma)}(\omega)$ 发散”。
+
+证明。每个真实保留片在零方向的准确公式由定理 27.1 给出：
+
+$$
+p_{3,jt}^-(0)=\min(1,K_{jt})(r_{j,\gamma}^-)^2.
+$$
+
+同一 dyadic 块的各片使用同一个 $r_{j,\gamma}^-$，所以按 (28.2) 取最大值，即有 $g_j^{(\gamma)}(0)\le(r_{j,\gamma}^-)^2$；没有保留片时，空最大值为零，估计仍成立。原半径在 $\beta=0$ 下准确等于 (36.1) 第一行，并且该平方与 $j^{-2\gamma}$ 同阶。由 $\log(2^{j+1}+2)\ge(j+1)\log2$，普通正项积分比较给出
+
+$$
+\begin{aligned}
+\sum_{j\ge J}g_j^{(\gamma)}(0)
+&\le(\log2)^{-2\gamma}\sum_{j\ge J}(j+1)^{-2\gamma}\\
+&\le(\log2)^{-2\gamma}\int_J^\infty x^{-2\gamma}\,dx
+=\frac{(\log2)^{-2\gamma}}{2\gamma-1}J^{1-2\gamma}.
+\end{aligned}
+\tag{36.2}
+$$
+
+加回有限初段即得完整级数收敛，(28.4) 随即给出完整 $R_\gamma(0)$ 零测。这里的原过滤上界比较为 repo-derived，格的准确公式直接复用定理 27.1；一般格论及正项积分比较均为 literature-attested 中间方法。
+
+用白话说，零方向的全部实中心重合，允许整数再多也只贡献同一半径的方块；三因子乘积因而至多是这个半径的平方。平方半径在 dyadic 指标上成为 $j^{-2\gamma}$，超过半端点就可求和。
+
+零方向不满足 (29.1) 的有限型条件，且 $1,0,0$ 在 $\mathbb Q$ 上线性相关。本条给出的是全方向发散命题不能越过 $1/2$ 的上界，不给有限型方向类或实际 CM 方向 $\alpha$ 的锐界。结合定理 35.2，在 RH 下全方向几何权重发散的参数范围恰为 $0<\gamma\le1/2$；无条件端点仍未由这些输入判定。$\square$
+
+## 37. 同一固定有限型方向上的发散与完整零测
+
+**定理 37.1（固定有限型零测方向的几何发散消费者）。** 令 $\omega_*$ 为定义 32.1 中 (32.5) 给出的同一个固定方向。定理 32.2 的 (32.6) 保证它满足 (29.1)，且方向、有限型常数与指数均不依赖 $\gamma$。在定义 35.1 的同一原过滤中，定理 33.2 已给出
+
+$$
+\forall\gamma>0,\qquad \nu(R_\gamma(\omega_*))=0.
+\tag{37.1}
+$$
+
+这个方向无条件同时满足
+
+$$
+\forall\gamma\in(0,1/2),\qquad
+\left\{
+\begin{aligned}
+g_j^{(\gamma)}(\omega_*)&\longrightarrow0,\\
+\sum_{j\ge j_0}g_j^{(\gamma)}(\omega_*)&=\infty,\\
+\nu(R_\gamma(\omega_*))&=0.
+\end{aligned}
+\right.
+\tag{37.2}
+$$
+
+在 RH 下，同一个 $\omega_*$ 还使 (37.2) 在 $\gamma=1/2$ 成立。方向、有限型性及对全部 $\gamma>0$ 的完整零测性分别直接复用定义 32.1、定理 32.2 与定理 33.2，没有额外的方向存在性假设。
+
+证明。固定任意 $\gamma>0$，定理 33.2 直接给出 (37.1) 与 $g_j^{(\gamma)}(\omega_*)\to0$。对 $0<\gamma<1/2$，定理 35.2 的全方向结论直接给同一个 $\omega_*$ 上的级数发散；RH 下再用其端点结论。此处每个 $\gamma$ 都在同一原目标空间及同一固定方向上取值，不随 $\gamma$ 另选方向。于是 (37.2) 完整成立。$\square$
+
+用白话说，原几何权重的总量可以无穷，每块的权重又可以趋零，而同一个有限型方向的完整无限命中集合仍是零测。故即使保留有限型与共同成功整数，也不能只从 $\sum_jg_j=\infty$ 推出满测。本条是定理 32.2、33.2 与 35.2 的原过滤消费者（repo-derived），不新增一般格论或 Borel–Cantelli 定理。
+
+对实际 $\omega=\alpha$，定理 35.2 同样提供无条件严格区间内的级数发散及 RH 下的半端点发散；本条的 $\omega_*$ 不被认作 $\alpha$。实际 $\alpha$ 是否具有足以裁定 $\nu(R_\gamma(\alpha))$ 的跨块联合控制或相应凝聚发散条件，仍是未决桥。
+
+## 追加锚（本行以下为增补区）
+
+## 38. 原完整比较族的共同最小预算与真实块测度
+
+**定义 38.1（全部真实片上的标量预算）。** 保持定义 24.1 的实际 CM 数据、全部原有限地方、实际周期 $q_H=q(H,H;M)$、原 $h,\rho,M,a_0,A,C_M,Y,\nu$，以及 (28.1) 的同一成功整数事件。比较方向 $\omega\in\mathbb T^2$ 只替换实中心，不替换有限过滤或指定的 CM 方向 $\alpha$。沿用定理 28.1 的完整分块、$U_j(\omega)$、$r_j^\pm$、$C_\rho=2^{\beta+\gamma}$ 及 $g_j(\omega)$。若真实同阶段片为 $I_{jt}=(A_{jt},B_{jt}]\cap\mathbb Z$，仍取
+
+$$
+J_{jt}=\left\lfloor\frac{B_{jt}-a_0}{M}\right\rfloor
+       -\left\lfloor\frac{A_{jt}-a_0}{M}\right\rfloor,
+\qquad Q_{jt}=q_{H_{jt}},\qquad K_{jt}=\frac{MJ_{jt}}{Q_{jt}}.
+\tag{38.1}
+$$
+
+$J_{jt}=0$ 的片贡献零；只在 $J_{jt}>0$ 时使用原格及其 $p_{3,jt}^-(\omega)$。置
+
+$$
+s_j=(r_j^-)^2\max_t\min\{1,K_{jt}\},
+\qquad \mathscr S=\sum_{j\ge j_0}s_j,
+\tag{38.2}
+$$
+
+空最大值为零。每个 $j\ge j_0$ 至多两片，且 $r_j^+<1/4$。所有 $J$ 均为真实整数，不以片的实数长度替代。
+
+**定理 38.2（同一个零方向逐片实现共同锐下包）。** 对任意 $K>0$、$0<r<1/4$、原整数周期 $Q$ 与任意 $\omega\in\mathbb T^2$，原形状的格
+
+$$
+L(\omega)=\{(K(a-Qk\cdot\omega),rk):a\in\mathbb Z,\ k\in\mathbb Z^2\}
+$$
+
+满足
+
+$$
+\boxed{\quad
+p_3(\omega)=\prod_{i=1}^3\min\{1,\lambda_i(L(\omega))\}
+\ge\min\{1,K\}r^2=p_3(0).
+\quad}
+\tag{38.3}
+$$
+
+因此对全部真实片、全部 $j\ge j_0$，同一个固定方向 $0=(0,0)$ 给出
+
+$$
+g_j(\omega)\ge g_j(0)=s_j,
+\qquad
+\boxed{\quad
+\left[\forall\omega\in\mathbb T^2:\sum_{j\ge j_0}g_j(\omega)=\infty\right]
+\iff \mathscr S=\infty.
+\quad}
+\tag{38.4}
+$$
+
+证明。只将本卷 (25.1)、(25.13)–(25.14) 的整数子式比较用作中间输入。任意非零格向量在 $k=0$ 时长度至少为 $K$，在 $k\ne0$ 时空间长度至少为 $r$，故
+
+$$\lambda_1\ge\min\{K,r\}.\tag{38.5}$$
+
+取达到前两条极小的独立向量 $v_i=(K(a_i-Qk_i\cdot\omega),rk_i)$。若 $k_1,k_2$ 独立，外积的纯空间分量是非零整数乘 $r^2$；若它们相关，包括其中一个为零的情形，(25.13) 的剪切抵消给出混合分量 $Kr(a_1k_2-a_2k_1)$。因 $v_1,v_2$ 独立，后一整数向量非零。因此
+
+$$
+\lambda_1\lambda_2\ge\|v_1\wedge v_2\|_2
+\ge\min\{r^2,Kr\},\qquad
+\lambda_1\lambda_2\lambda_3\ge\det L=Kr^2.
+\tag{38.6}
+$$
+
+最后一式直接复用 (25.1)。令 $m=\#\{i:\lambda_i<1\}$。截断乘积在 $m=0,1,2,3$ 时，分别不小于
+
+$$
+1,\qquad \min\{K,r\},\qquad \min\{r^2,Kr\},\qquad Kr^2.
+$$
+
+因为 $r<1$，这四个量都不小于 $\min\{1,K\}r^2$。长度恰为 $1$ 的因子归入未截短部分，故阈值边界也已包括。零方向的等号直接由定理 27.1 的正交直积公式取得；不要求 $K\ge1$ 或 $Kr^2\ge1$。
+
+逐片代入 $r=r_j^-$ 后取最大值，得 $g_j(\omega)\ge s_j=g_j(0)$，空片的零项不改变此式。若 $\mathscr S$ 发散，则逐项比较给出每个固定方向的发散；反向只需在全称量词中取同一个方向 $0$。没有逐块选择再拼接方向。$\square$
+
+用白话说，把所有实中心放在零点的同一个方向，同时使每片的三因子权重最小。全方向发散问题因此准确等价于这一个共同最坏方向的标量预算。
+
+**定理 38.3（原完整块真实测度的共同最小性）。** 对定义 38.1 的完整事件并，有
+
+$$
+\boxed{\quad
+\nu(U_j(\omega))\ge\nu(U_j(0)),\qquad
+4s_j\le\nu(U_j(0))\le8C_\rho^2s_j
+\quad(j\ge j_0).
+\quad}
+\tag{38.7}
+$$
+
+这是同一有限纤维上的测度比较，不是不同方向事件之间的集合包含。
+
+证明。固定 $u\in C_M$，在同一个完整块中定义准确允许集合
+
+$$
+\mathcal N_j(u)=\{n\in A:2^j<n\le2^{j+1},\ u\equiv n\pmod{q_{h(n)}}\}.
+\tag{38.8}
+$$
+
+它与 $\omega$ 无关。它只依赖 $u$ 在该块全部 $Q_{jt}$ 的最小公倍数下的剩余类，因而给出了可供所有方向共用的有限纤维分割。若它为空，则所有方向的该纤维均为空。否则令 $n_*(u)=\min\mathcal N_j(u)$。由于 $\rho$ 递减，零方向的该纤维准确等于最大窗，而任意方向的同一纤维至少含这个整数的一次平移窗：
+
+$$
+\begin{aligned}
+\{z:(u,z)\in U_j(0)\}&=\mathcal B_{\rho(n_*(u))}(0),\\
+\{z:(u,z)\in U_j(\omega)\}&\supseteq
+\mathcal B_{\rho(n_*(u))}(n_*(u)\omega).
+\end{aligned}
+\tag{38.9}
+$$
+
+两个所列窗的 Haar 面积均为 $4\rho(n_*(u))^2$。故逐同一纤维的面积不等式成立，积分得 (38.7) 的第一式；这里没有比较两个不同中心窗的包含关系。每次有限端和两个实端仍由同一个 $n_*(u)$ 承担。
+
+再令 $U_{jt}(\omega)=\bigcup_{n\in I_{jt}}E_n(\omega)$。在一个真实片内，$n\in I_{jt}\cap A$ 对应连续的 $J_{jt}$ 个整数 $(n-a_0)/M$，其模 $Q_{jt}/M$ 的不同剩余类准确有
+
+$$
+\min\{J_{jt},Q_{jt}/M\}
+$$
+
+个。每个有限柱在 $C_M$ 中的归一化测度为 $M/Q_{jt}$，故非空纤维的总比例准确为 $\min\{1,K_{jt}\}$。在每个这样的纤维上，零方向的最大窗半径仍位于 $[r_j^-,r_j^+]$，所以
+
+$$
+4(r_j^-)^2\min\{1,K_{jt}\}
+\le\nu(U_{jt}(0))
+\le4(r_j^+)^2\min\{1,K_{jt}\}.
+\tag{38.10}
+$$
+
+$J_{jt}=0$ 时两端及事件测度均为零，故空片已包括。对完整块，下界取任一片的测度再取最大值，上界用至多两片的并集界；由 $r_j^+\le C_\rho r_j^-$，即得 $4s_j$ 和 $8C_\rho^2s_j$。片之间可以重叠，不把下界相加。$\square$
+
+用白话说，固定一把有限端钥匙后，零方向把它允许的所有窗重叠在最大窗内，因而面积最小。移动中心至少还保留其中一个同样大的窗。真实块测度的共同最坏总量，与 (38.2) 的标量预算只差固定倍数。
+
+## 39. 保留 floor、空片及两端短片的完整阶段积分
+
+**定义 39.1（准确完整阶段及阶段截断预算）。** 取原对数半径 $\beta=0,c_0=1,\gamma>0$，其余数据保持定义 38.1。对整数 $H\ge3$ 置
+
+$$
+\begin{gathered}
+A_H=e^{H^2},\qquad B_H=e^{(H+1)^2},\qquad \ell_H=2H+1,\\
+u_H=\lceil A_H\rceil-3,\qquad v_H=\lceil B_H\rceil-3.
+\end{gathered}
+$$
+
+于是准确完整阶段是
+
+$$
+\{n\ge1:h(n)=H\}
+=(u_H,v_H]\cap\mathbb Z
+=\{n\in\mathbb Z:A_H\le n+2<B_H\}.
+\tag{39.1}
+$$
+
+令 $X_j=2^j$、$a_{Hj}=\max\{X_j,u_H\}$、$b_{Hj}=\min\{2X_j,v_H\}$，并令
+
+$$
+J_{Hj}=
+\begin{cases}
+\left\lfloor\dfrac{b_{Hj}-a_0}{M}\right\rfloor
+-\left\lfloor\dfrac{a_{Hj}-a_0}{M}\right\rfloor,&b_{Hj}>a_{Hj},\\
+0,&b_{Hj}\le a_{Hj}.
+\end{cases}
+\tag{39.2}
+$$
+
+对 $q>0$、$x\ge0$ 记 $f_q(x)=\min\{1,x/q\}$。阶段和、实际相位及积分为
+
+$$
+\begin{gathered}
+D_H=\sum_{j\ge j_0}f_{q_H}(MJ_{Hj}),\qquad
+\Xi_H=(H+1)^2-\log q_H,\\
+\Phi_\ell(x)=\int_0^\ell\min\{1,e^{x-s}\}\,ds\quad(\ell>0),\\
+\Phi_H=\int_{A_H}^{B_H}f_{q_H}(x)\,\frac{dx}{x}
+=\Phi_{\ell_H}(\Xi_H).
+\end{gathered}
+\tag{39.3}
+$$
+
+最后一个等式由 $s=\log(B_H/x)$ 得到。对完整阶段范围 $H_0\le H\le H_1$，定义原标量预算的阶段截断
+
+$$
+\mathscr S_{H_0,H_1}
+=\sum_{j\ge j_0}(\log(2^{j+1}+2))^{-2\gamma}
+\max_{H_0\le H\le H_1}f_{q_H}(MJ_{Hj}).
+\tag{39.4}
+$$
+
+跨阶段块中属于所选范围的真实片全部保留；每个最大值至多两个非零项。
+
+**定理 39.2（完整阶段截断的统一双边比较）。** 存在仅依赖原固定数据、$\gamma$ 及初始分块的整数 $H_0\ge3$，使任意 $H_1\ge H_0$ 都有
+
+$$
+\boxed{\quad
+c_\gamma\sum_{H=H_0}^{H_1}H^{-4\gamma}\Phi_{2H+1}(\Xi_H)
+\le\mathscr S_{H_0,H_1}
+\le C_\gamma\sum_{H=H_0}^{H_1}H^{-4\gamma}\Phi_{2H+1}(\Xi_H),
+\quad}
+\tag{39.5}
+$$
+
+例如可取
+
+$$
+c_\gamma=\frac{4^{-2\gamma}}{360\log2},\qquad
+C_\gamma=\frac{35}{\log2}.
+\tag{39.6}
+$$
+
+阶段和与积分的比较对任意 $q>0$ 一致，不借实际周期的增长渐近式。故 $\mathscr S$ 与 $\sum_{H\ge H_0}H^{-4\gamma}\Phi_{2H+1}(\Xi_H)$ 同敛散，完整截断的含义准确为 (39.4)–(39.5)。
+
+证明。先在整数区间 $(u,v]$ 上比较，取 $u\ge2M$、$v\ge16u$，并使所有相交块均处于 $j\ge j_0$。记 $\mathcal F$ 为完全包含于该区间的 dyadic 块指标，置
+
+$$
+F=\sum_{j\in\mathcal F}f_q(X_j).
+$$
+
+取满足 $2X_*\le v$ 的最大 dyadic 数 $X_*$，则 $v/4<X_*\le v/2$ 且 $X_*>4u$，故该整块属于 $\mathcal F$。每个完全块的准确允许项数满足 $|MJ-X_j|<M$，因而
+
+$$
+\tfrac12 f_q(X_j)\le f_q(MJ)\le\tfrac32 f_q(X_j).
+\tag{39.7}
+$$
+
+除完全块外，至多还有两个由区间端点切出的短片。每个相交短片的所在块满足 $X_j>u/2\ge M$、$X_j<v<4X_*$。若真实片长为 $T\le X_j$，则准确 floor 差给 $MJ<T+M\le2X_j$；利用 $f_q(cx)\le cf_q(x)$（$c\ge1$），得到
+
+$$
+f_q(MJ)\le2f_q(X_j)\le8f_q(X_*).
+\tag{39.8}
+$$
+
+$J=0$ 时该项为零。因此包括所有空片及两端短片的真实和 $D(u,v;q)$ 满足
+
+$$
+\tfrac12 F\le D(u,v;q)\le\tfrac{35}{2}F.
+\tag{39.9}
+$$
+
+每个完全块的积分满足
+
+$$
+(\log2)f_q(X_j)\le\int_{X_j}^{2X_j}f_q(x)\,\frac{dx}{x}
+\le2(\log2)f_q(X_j).
+$$
+
+每个短片的积分不超过 $2(\log2)f_q(X_j)\le8(\log2)f_q(X_*)$。故
+
+$$
+(\log2)F\le\int_u^v f_q(x)\,\frac{dx}{x}\le18(\log2)F,
+$$
+
+从而对全部 $q>0$ 统一有
+
+$$
+\frac1{36\log2}\int_u^v f_q(x)\,\frac{dx}{x}
+\le D(u,v;q)
+\le\frac{35}{2\log2}\int_u^v f_q(x)\,\frac{dx}{x}.
+\tag{39.10}
+$$
+
+取 $u=u_H,v=v_H$。充分大 $H$ 一致满足上述条件，并有 $A_H/2\le u_H\le A_H$、$B_H/2\le v_H\le B_H$、$B_H\ge4A_H$。下端增加的积分满足
+
+$$
+\int_{A_H/2}^{A_H}f_q(x)\,\frac{dx}{x}
+\le\int_{A_H}^{2A_H}f_q(x)\,\frac{dx}{x},
+$$
+
+所以 $\int_{u_H}^{v_H}f_q(x)\,dx/x\le2\int_{A_H}^{B_H}f_q(x)\,dx/x$。另一方面，$[A_H,B_H/2]\subset[u_H,v_H]$，且
+
+$$
+\int_{B_H/2}^{B_H}f_q(x)\,\frac{dx}{x}
+\le4\int_{B_H/4}^{B_H/2}f_q(x)\,\frac{dx}{x}.
+$$
+
+因此 $\int_{u_H}^{v_H}f_q(x)\,dx/x$ 至少为 $\int_{A_H}^{B_H}f_q(x)\,dx/x$ 的 $1/5$。在 (39.10) 中取实际 $q=q_H$，即得
+
+$$
+\frac1{180\log2}\Phi_H\le D_H\le\frac{35}{\log2}\Phi_H.
+\tag{39.11}
+$$
+
+此估计保留准确 floor 差；即使 $q\gg B_H$，两端短片仍由本阶段内的真实完整块支付，没有引入与 $B_H/q$ 无关的加性误差。
+
+若 $J_{Hj}>0$，从该真实片取任一允许整数 $n$。由 $X_j<n\le2X_j$ 及 (39.1)，有
+
+$$
+H^2\le\log(2X_j+2)<(H+1)^2+\log2\le4H^2
+\qquad(H\ge2).
+$$
+
+所以同一 dyadic 半径满足
+
+$$
+4^{-2\gamma}H^{-4\gamma}\le(r_j^-)^2\le H^{-4\gamma}.
+\tag{39.12}
+$$
+
+令 $\mathscr D_{H_0,H_1}$ 为将 (39.4) 中最大值换成片之和所得的量。定理 28.1 的至多两片给出
+
+$$
+\tfrac12\mathscr D_{H_0,H_1}\le\mathscr S_{H_0,H_1}
+\le\mathscr D_{H_0,H_1}.
+\tag{39.13}
+$$
+
+有限阶段范围只含有限个整数、只交有限个块，故可准确重排为逐阶段求和。用 (39.11)–(39.12) 即得 (39.5)–(39.6)。令 $H_1\to\infty$，非负项单调极限保留比较；删去 $H<H_0$ 或初始块只改变有限项。没有删去无限族跨阶段短片。$\square$
+
+用白话说，每个完整阶段中，低于周期的尺度按“长度除以周期”计费，超过周期的尺度每块封顶为一。阶段积分把这两段连起来，原半径平方再给出 $H^{-4\gamma}$。两端即使很短，也被同阶段内的大整块统一控制，不能为每条边界另记一个固定成本。
+
+## 40. 原实际周期相位的半端点敛散判据
+
+**定理 40.1（完整预算的截断相位及半端点判据）。** 对定义 39.1 的原实际 $q_H$，令
+
+$$
+\eta_H=\min\left\{1,\frac{(\Xi_H)_+}{2H+1}\right\},
+\qquad x_+=\max\{x,0\}.
+\tag{40.1}
+$$
+
+阶段积分的准确三段公式是
+
+$$
+\Phi_\ell(x)=
+\begin{cases}
+e^x(1-e^{-\ell}),&x\le0,\\
+x+1-e^{x-\ell},&0\le x\le\ell,\\
+\ell,&x\ge\ell.
+\end{cases}
+\qquad
+0\le\Phi_\ell(x)-\min\{\ell,x_+\}\le1.
+\tag{40.2}
+$$
+
+在原过滤中，对每个 $\gamma>1/4$ 有
+
+$$
+\mathscr S<\infty
+\iff\sum_{H\ge H_0}H^{1-4\gamma}\eta_H<\infty,
+\tag{40.3}
+$$
+
+以及
+
+$$
+\left[\forall\omega\in\mathbb T^2:\sum_jg_j^{(\gamma)}(\omega)=\infty\right]
+\iff\sum_{H\ge H_0}H^{1-4\gamma}\eta_H=\infty.
+\tag{40.4}
+$$
+
+特别地，在半端点 $\gamma=1/2$，
+
+$$
+\boxed{\quad
+\left[\forall\omega\in\mathbb T^2:\sum_jg_j^{(1/2)}(\omega)=\infty\right]
+\iff\sum_{H\ge H_0}\frac{\eta_H}{H}=\infty.
+\quad}
+\tag{40.5}
+$$
+
+证明。(40.2) 的三段分别把积分按 $s=x$ 处分开，或在整个 $[0,\ell]$ 上处于同一分支。$x=0,\ell$ 处两种公式相等。在 $x\le0$、$0\le x\le\ell$、$x\ge\ell$ 时，减去 $\min\{\ell,x_+\}$ 的余量依次为
+
+$$
+e^x(1-e^{-\ell}),\qquad 1-e^{x-\ell},\qquad 0,
+$$
+
+均在 $[0,1]$ 内。故
+
+$$
+0\le\sum_{H\ge H_0}H^{-4\gamma}
+\left(\Phi_{2H+1}(\Xi_H)-(2H+1)\eta_H\right)
+\le\sum_{H\ge H_0}H^{-4\gamma}<\infty
+\quad(\gamma>1/4).
+\tag{40.6}
+$$
+
+又 $2/H\le(2H+1)/H^2\le3/H$，等价地 $2H\le2H+1\le3H$。定理 39.2 因而给出 (40.3)，定理 38.2 再给出 (40.4)–(40.5)。这是共同零方向的敛散等价；(40.3) 不声称每个其他方向的级数同时收敛。
+
+$\gamma>1/4$ 是仅凭 (40.2) 的统一误差界删去可求和误差的精确条件。对于不限制相位的统一结论，取 $x_H=0,\ell_H=2H+1$，余量为 $1-e^{-(2H+1)}\ge1-e^{-1}$，故其加权和在 $0<\gamma\le1/4$ 发散。这个检验只说明统一误差论证的阈值；没有将原实际周期替换成此相位，也不声称实际 $q_H$ 在该范围内的余量必不可求和。$\square$
+
+用白话说，$\Xi_H$ 记录完整阶段右端相对实际周期的对数余量，$\eta_H$ 则是该阶段有多少比例已经超过周期。半端点恰好按 $1/H$ 给这个比例加权，在这个端点上，积分中尚未越过周期的指数尾部只留下一个可求和误差。
+
+**原算术身份在 (40.5) 中的参数对应。** 以下直接展开原卷 002 (16.33)，不另立一般算术定理。越过原 (16.32) 对固定 $M$ 的阈值 $H_M$ 后，实际周期准确满足
+
+$$
+\begin{aligned}
+\log q_H
+={}&(H-1)(\vartheta(H)-\log2-\log7)-W(H)\\
+&+\log5+b_2(H)\log2+b_7(H)\log7,\\
+W(H)&=\sum_{\substack{p\le H\\p\ne2,7}}(t_p-1)\log p\ge0,\\
+b_2(H)&=\max\left\{0,\left\lceil\frac{H-15}{8}\right\rceil\right\},
+\qquad b_7(H)=\left\lceil\frac{H-1}{2}\right\rceil.
+\end{aligned}
+\tag{40.7}
+$$
+
+这里 $\vartheta(H)=\sum_{p\le H}\log p$，$t_p$ 为原定义 16.1、(16.2) 中同一对 CM 点在原好地方的共同入口深度；二进指数同时引用原 (15.19)。代入 $\Xi_H=(H+1)^2-\log q_H$，得到供 (40.5) 消费的准确相位
+
+$$
+\begin{aligned}
+\Xi_H&=W(H)-(H-1)(\vartheta(H)-H)+C_H,\\
+C_H&=3H+1+(H-1-b_2(H))\log2
+ +(H-1-b_7(H))\log7-\log5,\\
+C_H&=\left(3+\frac78\log2+\frac12\log7\right)H+O(1).
+\end{aligned}
+\tag{40.8}
+$$
+
+等式中的 $3H+1$ 来自 $(H+1)^2-H(H-1)$，其余线性系数来自准确的 $b_2,b_7$。因此 (40.5) 中的 $\eta_H$ 必须按完整的 (40.8) 计算；线性项与阶段宽度 $2H+1$ 同阶，不能删去。$W$ 的符号是正号：入口余项增加使 $\log q_H$ 减小，使端点预算增大，是有利相位。
+
+作为该准确判据的充分路线，对原负阶段 $H\in\mathcal H_-$，有 $\vartheta(H)-H<0$，故 $\Xi_H\ge C_H$。由 (40.8) 的线性系数严格大于 $2$，充分大的这些 $H$ 全部满足 $\Xi_H>2H+1$，从而 $\eta_H=1$。因此
+
+$$
+\sum_{H\in\mathcal H_-}\frac1H=\infty
+\quad\Longrightarrow\quad
+\sum_H\frac{\eta_H}{H}=\infty.
+\tag{40.9}
+$$
+
+这里不反向推出负阶段的谐和级数发散。该准确判据也计入非负阶段，其贡献仍由 (40.8) 的实际 $W(H)$ 与素数误差共同决定；目前没有给出它们的总贡献估计。只知道 $W(H)\ge0$ 不能把它升级为任何正的平均下界。
+
+用白话说，素数误差的负相位一定有利，原共同入口余项也有利，但两者必须连同保留下来的线性修正一起进入同一个端点预算。只研究负阶段是一条充分路线，并不穷尽这个准确判据。
+
+## 41. 完整标量判据的来源与同一 CM 目标的未决桥
+
+定理 38.2 的经典整数子式与行列式步骤只消费本卷 (25.1)、(25.13)–(25.14)，零方向准确值消费定理 27.1；真实分块、半径比较与完整事件均消费定理 28.1。定理 38.3 将这些原片接到每个共同有限纤维的最大窗，给出完整真实块测度的共同最小性。定理 39.2 的积分比较只作为保留全部真实 floor、空片及跨阶段短片的完整预算推导之中间方法；(40.7)–(40.8) 则只是原 002 (16.33) 的准确展开，新增消费者是 (40.5) 的半端点判据。这些原过滤上的综合为 repo-derived，不主张经典格论、积分比较或一般求和方法的原创性。
+
+原 002 (16.27) 的 $\log q_H\sim H^2$ 只给出 $\Xi_H=2H+1+o(H^2)$，不控制误差与 $2H+1$ 的相对位置，也不给原 $K_{jt}=e^{O(H_{jt})}$ 的统一上界。上述阶段比较对任意 $q>0$ 已统一成立，因此不需要此类未经支付的次阶估计。原 002 (16.34) 给出的 $W(H)$ 上界不提供端点所需的平均下界；(40.5) 保留其实际值。
+
+定理 35.2 的无条件 $0<\gamma<1/2$ 全方向发散及 RH 下的 $\gamma=1/2$ 发散，连同定理 36.1 的 $\gamma>1/2$ 零方向收敛，均直接作为既有结论使用，不重证其文献输入。无条件半端点的 $\sum_H\eta_H/H$ 是否发散仍未判定，(40.5) 不把这一未决问题改写成已解结论。
+
+标量发散只判定全部比较方向的几何权重和发散，不判定无限命中集满测。事实上对所有 $\gamma>0$，零方向的 $\rho(n)\to0$ 且所有实中心为零，故
+
+$$
+R_\gamma(0)\subseteq C_M\times\{(0,0)\},\qquad
+\nu(R_\gamma(0))=0.
+\tag{41.1}
+$$
+
+证明只需固定 $z\ne(0,0)$ 的一个非零坐标圆距离；所有充分晚的实窗均排除该 $z$。这与共同标量预算可以发散相容。更强的同一个有限型零测比较方向已由定理 37.1 给出，直接引用即可，不将该方向认作原 $\alpha$。
+
+对实际 CM 方向 $\omega=\alpha$，原 (17.5) 已提供定理 29.2–31.1 的有限型前提。若实际原好阶段权重在 (31.1) 的某个几何分箱中有发散的最大值和，则定理 31.1 已将它接到同一 $Y$ 上的满测；其证明所需的分隔子族和加权二阶步骤均复用 §§30–31。准确未决桥是能否验证实际权重的 (31.2)，或取得在同一 $Y$ 上足以支撑原加权二阶论证的跨块交能量估计。完整标量预算发散尚未提供其中任一项。不要求每对块都统一渐近独立，也不把既有凝聚充分条件称为必要条件。因此实际 $\nu(R_\gamma(\alpha))$ 仍未裁定。所有事件仍使用原全部有限地方、原 $q_H,h,\rho,M,a_0,Y$ 与同一个成功整数。
+
+## 追加锚（本行以下为增补区）
