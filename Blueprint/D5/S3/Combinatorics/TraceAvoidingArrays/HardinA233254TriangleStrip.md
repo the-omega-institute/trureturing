@@ -128,7 +128,7 @@ $$\forall p: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\o
 
 *Commentary.*
 
-The four entries are the constant one and the first three moments of the label transfer. With both scanner flags true, a label row has 64 colour lifts. More generally each column has a factor of zero, one or two: pair zero has two choices; pair one has one choice before the first one, then two; pair two is forbidden before one, has one choice before the first two, then two. Multiplying these factors along the label row reproduces the original colour scanner.
+The four entries are the constant one and the first three moments of the label transfer. The published HardinA233255ShapeSymmetry.full_row, used with HardinA233255LiteralBridge.scanner_fibres, gives 64 colour lifts at width six when both scanner flags are true. More generally each column has a factor of zero, one or two: pair zero has two choices; pair one has one choice before the first one, then two; pair two is forbidden before one, has one choice before the first two, then two. Multiplying these factors along the label row reproduces the original colour scanner.
 
 **Definition 1.10 (Unweighted row counts).**
 
@@ -238,4 +238,5 @@ After one continuation row the fully seen count has form rU+tZ+uW. Initially (F,
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233175PairStrip](HardinA233175PairStrip.md)
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233251TriangleStrip](HardinA233251TriangleStrip.md)
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255LiteralBridge](HardinA233255LiteralBridge.md)
+- Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255ShapeSymmetry](HardinA233255ShapeSymmetry.md)
 - Dependency: [D5/S3/Observer/Separation/BooleanRankThreeK4](../../Observer/Separation/BooleanRankThreeK4.md)
