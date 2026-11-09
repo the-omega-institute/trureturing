@@ -48,6 +48,10 @@ internal sealed class HardinA233176LadderDocument : IScribeDocumentDefinition
             Thm("finish-seen", "finish_seen", "Encoding commutes with a complete scan",
                 FinishSeenFormula(),
                 "A good word gives the same final record in the Boolean and level encodings."),
+            Def("labels", "Labels", "Column pair labels", LabelsFormula(),
+                "A column of three cells carries one pair label per row."),
+            Def("pairs", "pairs", "Pair labels of a column", PairsFormula(),
+                "Each cell is sent to its complementary pair by BooleanRankThreeK4.beta."),
             Def("digit", "digit", "Ternary digit extraction", DigitFormula(),
                 "Natural quotient and remainder produce a value in Fin 3, including when the divisor is zero."),
             Thm("weighted-sum", "weighted_sum", "Repeated keys as integer weights",
@@ -114,6 +118,17 @@ internal sealed class HardinA233176LadderDocument : IScribeDocumentDefinition
 
     private static Formula Scanner(string name, params Formula[] args) =>
         Call(ScannerPrefix + name, args);
+
+    private static Formula LabelsFormula() =>
+        Eq(Own("Labels"), Arrow(Fin(D(3)), Fin(D(3))));
+
+    private static Formula PairsFormula()
+    {
+        var c = V("c"); var i = V("i");
+        return All("c", Q("D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.Row"),
+            Eq(Own("pairs", c), Fn("i", Fin(D(3)),
+                Call("D5.S3.Observer.Separation.BooleanRankThreeK4.beta", App(c, i)))));
+    }
 
     private static Formula SeenFormula()
     {

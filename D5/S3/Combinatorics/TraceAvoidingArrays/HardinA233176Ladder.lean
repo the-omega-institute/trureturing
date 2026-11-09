@@ -143,7 +143,7 @@ open HardinA233175PairStrip
   (Seen allowed advance good finish finish_fst finish_snd good_iff)
 open HardinA233251TriangleStrip (Row colour_bond_iff)
 open D5.S3.Observer.Separation.BooleanRankThreeK4 (beta)
-private abbrev Labels := Fin 3 → Fin 3
+abbrev Labels := Fin 3 → Fin 3
 private def colEquiv : (Fin 6 × Fin 6 × Fin 6) ≃ Row where
   toFun p := ![p.1, p.2.1, p.2.2]
   invFun d := (d 0, d 1, d 2)
@@ -251,7 +251,7 @@ private instance instDecidableLegal {n : ℕ} (A : Fin 3 × Fin n → Fin 6) :
 def a (n : ℕ) : ℕ :=
   (Finset.univ.filter (fun A : Fin 3 × Fin n → Fin 6 => Legal A)).card
 attribute [local irreducible] a
-private def pairs (c : Row) : Labels := fun i => beta (c i)
+def pairs (c : Row) : Labels := fun i => beta (c i)
 private def compatible (p : Labels) (c : Row) : Prop :=
   ∀ r s : Fin 3, (r.val ≤ s.val + 1 ∧ s.val ≤ r.val + 1) → beta (c s) ≠ p r
 private instance instDecidableCompatible (p : Labels) (c : Row) :
