@@ -6,23 +6,22 @@
    utility: kind=numeric-reduction; basis=consumer=D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233170DiagonalStrip.result; premises=D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233170DiagonalStrip.finite_certificate
    digest: The full generating series for literal normalized four-column six-colour arrays. -/
 
-/-
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip
+import Mathlib.RingTheory.PowerSeries.Inverse
+
+/-!
 Horizontal and both diagonal bonds exclude equal and complementary colours.
 The count includes every literal array satisfying row-major normalization;
 there is no orbit quotient, vertical constraint or wraparound constraint.
 The finite continuation certificate feeds induction for all continuation lengths.
 -/
 
-import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip
-import Mathlib.RingTheory.PowerSeries.Inverse
-
 open scoped BigOperators
 namespace D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233170DiagonalStrip
-open D5.S3.Combinatorics.TraceAvoidingArrays
-open HardinA233175PairStrip (Seen good finish)
-open HardinA233251TriangleStrip (widthNormal widthLegal widthStep widthV widthTotal
+open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip (Seen good finish)
+open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip (widthNormal widthLegal widthStep widthV widthTotal
   width_counting_bridge colour_bond_iff)
-open D5.S3.Observer.Separation.BooleanRankThreeK4 (beta)
+open _root_.D5.S3.Observer.Separation.BooleanRankThreeK4 (beta)
 
 private abbrev Row := Fin 4 → Fin 6
 private abbrev Boundary := Fin 4 → Fin 3
