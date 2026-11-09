@@ -80,12 +80,12 @@ private lemma floor_shift_cases {x A : ℝ} (hx : 0 ≤ x) (hx1 : x < 1) (hA : 0
     · have hAf : A < (⌊A⌋₊ : ℝ) + 1 := Nat.lt_floor_add_one A
       push_cast; linarith
 
-private lemma floor_shift_cases_add_nat {n : ℕ} {x A : ℝ} (hx : 0 ≤ x) (hx1 : x < 1) (hA : 0 ≤ A) :
+lemma floor_shift_cases_add_nat {n : ℕ} {x A : ℝ} (hx : 0 ≤ x) (hx1 : x < 1) (hA : 0 ≤ A) :
     ⌊(n : ℝ) + x + A⌋₊ = n + ⌊A⌋₊ ∨ ⌊(n : ℝ) + x + A⌋₊ = n + ⌊A⌋₊ + 1 := by
   rw [show (n : ℝ) + x + A = (x+A) + n by ring, Nat.floor_add_natCast (by positivity)]
   exact floor_shift_cases hx hx1 hA |>.imp (fun h => by rw [h]; omega) (fun h => by rw [h]; omega)
 
-private lemma psi_endpoint_discrepancy {m m' p q : ℕ} {L : ℝ}
+lemma psi_endpoint_discrepancy {m m' p q : ℕ} {L : ℝ}
     (hmm : m ≤ m') (hp : p = m ∨ p = m+1) (hq : q = m' ∨ q = m'+1)
     (hpL : (p : ℝ) ≤ 4*L) (hqL : (q : ℝ) ≤ 4*L) (hm1 : 1 ≤ m)
     (hmm1 : 1 ≤ m') (hL : 1 ≤ L) :
@@ -116,7 +116,7 @@ private lemma psi_endpoint_discrepancy {m m' p q : ℕ} {L : ℝ}
         0 (Chebyshev.psi p - Chebyshev.psi m))
     _ ≤ 2 * Real.log (4*L) := by linarith [hq', hp']
 
-private lemma S_eq_psi_shift (H a b : ℝ) (n : ℕ) (ha : 0 ≤ a) (hab : a ≤ b) (hH : 0 ≤ H) :
+lemma S_eq_psi_shift (H a b : ℝ) (n : ℕ) (ha : 0 ≤ a) (hab : a ≤ b) (hH : 0 ≤ H) :
     S H a b n =
       (Chebyshev.psi ((n + ⌊b*H⌋₊ : ℕ) : ℝ) - Chebyshev.psi ((n + ⌊a*H⌋₊ : ℕ) : ℝ)) -
         ((⌊b*H⌋₊ : ℝ) - ⌊a*H⌋₊) := by
