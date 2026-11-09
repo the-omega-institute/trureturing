@@ -92,8 +92,9 @@ def family : Registration arena (type_of% @completed_transfer_bridge) where
     arena.Law actual rejected rejected_law
   dependence := by
     intro i
-    refine ⟨1, (fun _ => 0), ![0, 1, 0, 1, 0, 1], ?_⟩
-    change pairV 1 (true, true) (fun _ => 0) ≠ pairV 1 (true, true) ![0, 1, 0, 1, 0, 1]
+    refine ⟨1, ![0, 1, 0, 1, 0, 1], ![0, 1, 0, 1, 0, 2], ?_⟩
+    change pairV 1 (true, true) ![0, 1, 0, 1, 0, 1] ≠
+      pairV 1 (true, true) ![0, 1, 0, 1, 0, 2]
     decide +kernel
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     (@completed_transfer_bridge) (Realization signature) Type Unit where

@@ -50,8 +50,8 @@ internal sealed class HardinA233255ShapeSymmetryDocument : IScribeDocumentDefini
                 + "completed continuation plus 128 to the power m. The anchored first-row fibres contribute "
                 + "32 unfinished lifts at the alternating shape, 16 completed lifts there, and 32 completed "
                 + "lifts at each other shape. These disjoint literal fibres yield the formula without an "
-                + "orbit quotient. The recurrence still requires its finite vector certificate and unbounded "
-                + "polynomial propagation.", DescribeRole.Theorem))));
+                + "orbit quotient. HardinA233255Recurrence proves the recurrence using an exact finite "
+                + "vector certificate and unbounded polynomial propagation.", DescribeRole.Theorem))));
 
     private static DocumentBlock Node(string name, string title, string prose, DescribeRole role) =>
         Describe.Lean(DescribeId.Create(name.Replace("_", "-").ToLowerInvariant()),

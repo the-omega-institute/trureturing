@@ -40,6 +40,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
     478351982592 * ((a ⟨2, by decide⟩ : ℤ) + 1) +
     27831388078080 * ((a ⟨1, by decide⟩ : ℤ) + 1) at hb
   linarith
+set_option maxRecDepth 20000 in
 private theorem actual_dependence :
     actual.readout () () ⟨1, by decide⟩ ≠ actual.readout () () ⟨2, by decide⟩ := by
   change (a ⟨1, by decide⟩ : ℤ) ≠ (a ⟨2, by decide⟩ : ℤ)
