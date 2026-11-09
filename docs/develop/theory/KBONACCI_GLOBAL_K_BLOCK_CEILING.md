@@ -134,7 +134,7 @@ At an eligible boundary cut $r=0$, [S1, Theorem 51.3 and its proof] already supp
 
 ## 3. The guarded GLOBAL ceiling
 
-**定理 3.1（Every finite GLOBAL-preset cost is at most k）。** For every integers $m\ge3$, $k\ge2m$ with $\gcd(m,k+1)=1$, every finite nonempty label set $Y$, every map $f:Q_{k,m}\to Y$, and each original alphabet $A\in\{A_{\rm all},A_{\rm loc}\}$, under the full INITIAL, endpoint, common-stream and fee contracts of Section 1,
+**定理 3.1（Every finite GLOBAL-preset cost is at most k）。** For all integers $m\ge3$, $k\ge2m$ with $\gcd(m,k+1)=1$, every finite nonempty label set $Y$, every map $f:Q_{k,m}\to Y$, and each original alphabet $A\in\{A_{\rm all},A_{\rm loc}\}$, under the full INITIAL, endpoint, common-stream and fee contracts of Section 1,
 
 $$
 C_{\rm pre}^{A}(f)<\infty
@@ -197,7 +197,7 @@ h\quad\hbox{and}\quad qm.
 \tag{3.7}
 $$
 
-Here $q\ge1$. The detached left interval has no chord endpoint; the right part contains $qm$, and the remaining chord chain connects the complement. If $h=m-1$, the detached left interval is the singleton $\{qm+1\}$, with complementary size $T-1$. The value $h=m$ would make $T=(q+1)m$ and is excluded by coprimality. These cases exhaust $h\ge3$.
+Here $q\ge1$. The detached left interval has no chord endpoint; the right part contains $qm$, and the remaining chord chain connects the complement. If $h=m-1$, the detached component is the singleton $\{qm+1\}$, with complementary size $T-1$. The value $h=m$ would make $T=(q+1)m$ and is excluded by coprimality. These cases exhaust $h\ge3$.
 
 Every complement just described has at least three vertices. In (3.7) the detached component also has at least three; the singleton case has the only isolated vertex. In (3.6) the detached size is positive and is two only when
 
@@ -286,7 +286,7 @@ The terms count, respectively, the all-one prefix, the parent, the remaining $E$
 
 **数学引文 3.2（Self-calibration and exact scope）。** The construction calibrates the unknown INITIAL phase from retained chronological responses of the same source, while preserving its INITIAL label and all original tail possibilities. The separating code remains injective after the stated coordinate deletion, although its graph need not stay connected; at the exceptional geometry the single actual word $R$ simultaneously resolves the residual equal-column pairs. The parent response is not needed as a phase-separating coordinate in this proof; its endpoint is acquired and used as a baseline, and its block remains paid.
 
-Equation (3.1) is an upper bound conditional on finite GLOBAL-preset cost. It does not assert that adaptive attainability implies GLOBAL attainability. The adaptive structural minimum of [S1, Theorem 62.2 and Scope 64.2] retains its distinct quantifiers. The bound does not give an exact fee for every table, does not establish that $k$ is optimal, and does not extend to widths $m=1,2$, to $k<2m$ or to noncoprime calendars. The sharp supremum of finite costs under the present guard remains unresolved. These statements are ordinary paper mathematics.
+Equation (3.1) is an upper bound conditional on finite GLOBAL-preset cost. It does not assert that adaptive attainability implies GLOBAL attainability. The adaptive structural minimum of [S1, Theorem 62.2 and Scope 64.2] retains its distinct quantifiers. The bound does not give an exact fee for every table or establish that $k$ is optimal. Widths $m=1,2$, the region $k<2m$ and noncoprime calendars lie outside its stated scope. The sharp supremum of finite costs under the present guard remains unresolved. These statements are ordinary paper mathematics.
 
 ## 4. Mathematical sources and reuse boundary
 
