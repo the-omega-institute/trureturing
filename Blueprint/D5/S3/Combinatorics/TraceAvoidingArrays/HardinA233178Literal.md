@@ -136,7 +136,7 @@ Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Literal.sc
 
 *Commentary.*
 
-Twice the literal source count is the sum of the existing scanner weights over the anchored proper three-label arrays. The factor two comes from exchanging colours zero and five, which leaves the pair labels, scanner permission and scanner state unchanged. The existing scanner_fibres theorem counts the exact individual-colour fibres after the row-major bijection. This statement includes every width.
+Twice the literal source count is the sum of the existing scanner weights over the anchored proper three-label arrays. The factor two comes from exchanging colours zero and five, which leaves the pair labels, scanner permission and scanner state unchanged. The existing scanner_fibres theorem counts the exact individual-colour fibres after the row-major bijection. The scanner starts in (false,false) and reads word(q) in that same row-major order. This statement includes every width.
 
 **Definition 1.12 (Anchored chromatic count).**
 

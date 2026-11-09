@@ -40,7 +40,7 @@ Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Normalizat
 
 *Commentary.*
 
-For every word length and every pair-label word, four times the sum of its normalized scanner weight and that of the exchanged word equals the displayed power of two times the absence correction. The product term retains the all-zero case. The induction first establishes the one-seen-label identity, then splits on the first label. No colour-occurrence or surjectivity assumption is imposed. This pointwise identity does not by itself identify a graph count or settle A233178.
+For every natural k and every word q from Fin k into Fin 3, write W(q)=rowWeight((false,false),q) and A(q,c)=absent(q,c). Then 4*(W(q)+W(swap composed with q))=2^k*(1+A(q,1)+A(q,2)+5*A(q,1)*A(q,2)). The product term retains the all-zero case. The induction first establishes 2*rowWeight((true,false),q)=2^k*(1+A(q,2)), then splits on the first label. No colour-occurrence or surjectivity assumption is imposed. This pointwise identity does not by itself identify a graph count or settle A233178.
 
 ## References
 

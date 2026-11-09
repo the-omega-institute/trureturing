@@ -45,7 +45,8 @@ internal sealed class HardinA233178LiteralDocument : IScribeDocumentDefinition
                 + "arrays. The factor two comes from exchanging colours zero and five, which leaves "
                 + "the pair labels, scanner permission and scanner state unchanged. The existing "
                 + "scanner_fibres theorem counts the exact individual-colour fibres after the "
-                + "row-major bijection. This statement includes every width.", DescribeRole.Theorem),
+                + "row-major bijection. The scanner starts in (false,false) and reads word(q) "
+                + "in that same row-major order. This statement includes every width.", DescribeRole.Theorem),
             Node("pairCount", "Anchored chromatic count", "This integer finite sum counts every "
                 + "proper three-label array with its initial label zero, including arrays missing "
                 + "one label.", DescribeRole.Definition),
