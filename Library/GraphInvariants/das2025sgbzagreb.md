@@ -14,7 +14,7 @@ triage: anchor
 
 The fixed source is arXiv:2501.06124v1. Problem 3.10 is on printed page 13:
 “Is there any finite group G such that B(G) does not satisfy Hansen-Vukičević
-conjecture?" Its native HTML anchor is `S3.Thmtheorem10`.
+conjecture?” Its native HTML anchor is `S3.Thmtheorem10`.
 
 The graph has disjoint vertex parts $G\times G$ and $L(G)$, the set of all
 subgroups. An ordered pair, with repeated entries allowed, is adjacent exactly
