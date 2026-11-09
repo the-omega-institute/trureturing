@@ -16,7 +16,7 @@ namespace D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255PairTransfer
 open HardinA233175PairStrip (Seen good finish)
 open D5.S3.Observer.Separation.BooleanRankThreeK4 (beta)
 open HardinA233251TriangleStrip
-  (widthNormal widthV widthStep widthTotal width_counting_bridge colour_bond_iff)
+  (widthLegal widthV widthStep widthTotal width_counting_bridge colour_bond_iff)
 open HardinA233255LiteralBridge (rowWeight rowFinish scanner_fibres)
 
 abbrev Row := Fin 7 → Fin 6
@@ -29,25 +29,13 @@ def rowLegal (c : Row) : Prop :=
 def bonds (c d : Row) : Prop :=
   ∀ j : Fin 6, c j.succ ≠ d j.castSucc ∧ (c j.succ).val + (d j.castSucc).val ≠ 5
 
-def Legal {h : ℕ} (A : Fin h × Fin 7 → Fin 6) : Prop :=
-  (∃ i : Fin h, i.val = 0 ∧ A (i, 0) = 0) ∧
-    (∀ i, rowLegal (fun j => A (i, j))) ∧
-    (∀ (i : Fin h) (hi : i.val + 1 < h),
-      bonds (fun j => A (i, j)) (fun j => A (⟨i.val + 1, hi⟩, j))) ∧
-    widthNormal (false, false) (fun i j => A (i, j))
+abbrev Legal {h : ℕ} (A : Fin h × Fin 7 → Fin 6) : Prop :=
+  widthLegal rowLegal bonds A
 
 private instance decidableRowLegal (c : Row) : Decidable (rowLegal c) :=
   inferInstanceAs (Decidable (∀ _, _ ∧ _))
 private instance decidableBonds (c d : Row) : Decidable (bonds c d) :=
   inferInstanceAs (Decidable (∀ _, _ ∧ _))
-private instance decidableNormal {h : ℕ} (s : Seen) (f : Fin h → Row) :
-    Decidable (widthNormal s f) :=
-  inferInstanceAs (Decidable (∀ _ _, (_ → _) ∧ (_ → _)))
-private instance decidableLegal {h : ℕ} (A : Fin h × Fin 7 → Fin 6) : Decidable (Legal A) :=
-  inferInstanceAs (Decidable (_ ∧ _ ∧ _ ∧ _))
-private instance decidableGood (s : Seen) (c : Row) : Decidable (good s c) := by
-  unfold good
-  infer_instance
 
 /-- The original individual-array count, on the positive source domain only. -/
 def a (h : ℕ+) : ℕ := (Finset.univ.filter (fun A : Fin h.val × Fin 7 → Fin 6 => Legal A)).card

@@ -95,7 +95,7 @@ abbrev Col := Fin 2 → Fin 6
 
 def allowed (s : Seen) (c : Fin 6) : Prop :=
   ((c = 2 ∨ c = 3 ∨ c = 4) → s.1 = true) ∧ (c = 3 → s.2 = true)
-private instance instDecidableAllowed (s : Seen) (c : Fin 6) : Decidable (allowed s c) :=
+instance instDecidableAllowed (s : Seen) (c : Fin 6) : Decidable (allowed s c) :=
   inferInstanceAs (Decidable ((_ → _) ∧ (_ → _)))
 
 def advance (s : Seen) (c : Fin 6) : Seen :=
@@ -262,7 +262,7 @@ private instance instDecidableChain {n : ℕ} (p : Fin 3 × Fin 3) (f : Fin n �
   | zero => exact isTrue trivial
   | succ n ih => exact @instDecidableAnd _ _ inferInstance (ih _ _)
 
-private instance instDecidableGood {n : ℕ} (s : Seen) (f : Fin n → Fin 6) :
+instance instDecidableGood {n : ℕ} (s : Seen) (f : Fin n → Fin 6) :
     Decidable (good s f) := by
   induction n generalizing s with
   | zero => exact isTrue trivial

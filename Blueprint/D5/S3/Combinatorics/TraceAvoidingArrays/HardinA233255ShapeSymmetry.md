@@ -66,7 +66,19 @@ Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255ShapeSymme
 
 The explicit list contains every proper six-cell boundary beginning zero, one, exactly once.
 
-**Definition 1.6 (Complete boundary enumeration).**
+**Definition 1.6 (Boundary label normalization).**
+
+Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255ShapeSymmetry.normalize`
+
+*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255ShapeSymmetry.normalize` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For any six-cell boundary p, a label equal to p(0) becomes zero; otherwise a label equal to p(1) becomes one; every remaining label becomes two. The first test takes precedence even when the first two labels coincide. Proper boundaries have distinct first two labels.
+
+**Definition 1.7 (Complete boundary enumeration).**
 
 Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255ShapeSymmetry.shapeEquiv`
 
@@ -78,7 +90,7 @@ Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255ShapeSymme
 
 A proved equivalence identifies the sixteen indices with the actual canonical-boundary subtype, including representatives missing the third label.
 
-**Definition 1.7 (Successor class).**
+**Definition 1.8 (Successor class).**
 
 Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255ShapeSymmetry.classOf`
 
@@ -90,7 +102,7 @@ Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255ShapeSymme
 
 Normalize by first and second labels, then take the unique index in the complete enumeration.
 
-**Definition 1.8 (Actual compatible-row matrix).**
+**Definition 1.9 (Actual compatible-row matrix).**
 
 Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255ShapeSymmetry.K`
 
@@ -102,7 +114,7 @@ Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255ShapeSymme
 
 Entry i,j counts proper seven-cell pair rows compatible with representative i whose six-cell suffix has canonical class j.
 
-**Definition 1.9 (Completed-scanner vector).**
+**Definition 1.10 (Completed-scanner vector).**
 
 Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255ShapeSymmetry.F`
 
@@ -114,7 +126,7 @@ Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255ShapeSymme
 
 At height m this is 128 to the power m times K to the power m applied to the all-ones vector.
 
-**Theorem 1.10 (Exact completed-state matrix powers).**
+**Theorem 1.11 (Exact completed-state matrix powers).**
 
 Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255ShapeSymmetry.completed_transfer_bridge`
 
@@ -126,7 +138,7 @@ Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255ShapeSymme
 
 For every natural continuation height and every proper labelled six-cell boundary, the original completed-scanner continuation equals F at its canonical class. The induction groups actual compatible pair rows by their successor class. It does not presume a scalar count identity or fit a recurrence. The unfinished scanner sector and anchored initial multiplicities are handled below.
 
-**Theorem 1.11 (Original literal count at every positive height).**
+**Theorem 1.12 (Original literal count at every positive height).**
 
 Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255ShapeSymmetry.literal_canonical_bridge`
 
@@ -148,6 +160,7 @@ For every natural m, the individual-array count at height m plus one equals 16 t
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255ShapeSymmetry.completed_canonical_bridge`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255ShapeSymmetry.completed_transfer_bridge`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255ShapeSymmetry.literal_canonical_bridge`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255ShapeSymmetry.normalize`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255ShapeSymmetry.proper`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255ShapeSymmetry.representatives`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255ShapeSymmetry.shapeEquiv`

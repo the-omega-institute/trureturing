@@ -32,16 +32,6 @@ def rowWeight : {k : ℕ} → Seen → (Fin k → Fin 3) → ℤ
   | 0, _, _ => 1
   | _ + 1, s, q => labelWeight s (q 0) * rowWeight (labelAdvance s (q 0)) (Fin.tail q)
 
-private instance decidableGood {k : ℕ} (s : Seen) (c : Fin k → Fin 6) :
-    Decidable (good s c) := by
-  induction k generalizing s with
-  | zero => exact isTrue trivial
-  | succ k ih =>
-    change Decidable (allowed s (c 0) ∧ good (advance s (c 0)) (Fin.tail c))
-    haveI := ih (advance s (c 0)) (Fin.tail c)
-    unfold allowed
-    infer_instance
-
 private theorem head_fibres (s : Seen) (H : Seen → Fin 3 → ℤ) :
     (∑ x : Fin 6, if allowed s x then H (advance s x) (beta x) else 0) =
       ∑ q : Fin 3, labelWeight s q * H (labelAdvance s q) q := by

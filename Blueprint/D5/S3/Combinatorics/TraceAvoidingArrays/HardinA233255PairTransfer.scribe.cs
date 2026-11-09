@@ -29,7 +29,8 @@ internal sealed class HardinA233255PairTransferDocument : IScribeDocumentDefinit
                 DescribeRole.Definition),
             Node("bonds", "Antidiagonal exclusions", "The preceding column j+1 is bonded to the next column j.",
                 DescribeRole.Definition),
-            Node("Legal", "The literal array predicate", "The scanner normalization uses strict earlier cells.",
+            Node("Legal", "The literal array predicate", "The existing HardinA233251TriangleStrip.widthLegal "
+                + "is applied at width seven with rowLegal and bonds. Its scanner normalization uses strict earlier cells.",
                 DescribeRole.Definition),
             Node("a", "The positive-height literal count", "The filter ranges over individual arrays without a quotient.",
                 DescribeRole.Definition),

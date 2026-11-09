@@ -78,7 +78,7 @@ Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255PairTransf
 
 *Commentary.*
 
-The scanner normalization uses strict earlier cells.
+The existing HardinA233251TriangleStrip.widthLegal is applied at width seven with rowLegal and bonds. Its scanner normalization uses strict earlier cells.
 
 **Definition 1.7 (The positive-height literal count).**
 

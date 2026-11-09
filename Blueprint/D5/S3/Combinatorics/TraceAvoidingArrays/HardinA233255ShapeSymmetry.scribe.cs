@@ -26,6 +26,10 @@ internal sealed class HardinA233255ShapeSymmetryDocument : IScribeDocumentDefini
                 + "scanner sectors still require their own weighted aggregation.", DescribeRole.Theorem),
             Node("representatives", "Sixteen actual canonical boundaries", "The explicit list contains every proper "
                 + "six-cell boundary beginning zero, one, exactly once.", DescribeRole.Definition),
+            Node("normalize", "Boundary label normalization", "For any six-cell boundary p, a label equal to p(0) "
+                + "becomes zero; otherwise a label equal to p(1) becomes one; every remaining label becomes two. "
+                + "The first test takes precedence even when the first two labels coincide. "
+                + "Proper boundaries have distinct first two labels.", DescribeRole.Definition),
             Node("shapeEquiv", "Complete boundary enumeration", "A proved equivalence identifies the sixteen indices "
                 + "with the actual canonical-boundary subtype, including representatives missing the third label.", DescribeRole.Definition),
             Node("classOf", "Successor class", "Normalize by first and second labels, then take the unique index "
