@@ -158,4 +158,205 @@ def registration_myhill : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   familyRecord := none
   options := #[]
 
+abbrev EvalInputs := Σ G : Type u, Σ group : Group G, Σ A : Type v,
+  Σ topology : TopologicalSpace A, Σ X : @MulSubshift A topology G group.toMonoid,
+    Σ _x0 : @Cfg G group A topology X, G
+
+abbrev evalBase (P : EvalInputs.{u,v}) : BaseInputs.{u,v} :=
+  ⟨P.1, P.2.1, P.2.2.1, P.2.2.2.1, P.2.2.2.2.1⟩
+
+abbrev evalSignature : Signature where
+  Params := EvalInputs.{u,v}
+  State P := Config (evalBase P)
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ P := P.2.2.1
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def evalActual : Realization evalSignature.{u,v} :=
+  realize evalSignature (fun _ P z => z.val P.2.2.2.2.2.2) (fun e => nomatch e)
+
+def evalBackground : Realization evalSignature.{u,v} :=
+  realize evalSignature
+    (fun _ P _ => P.2.2.2.2.2.1.val P.2.2.2.2.2.2) (fun e => nomatch e)
+
+def exteriorArena : Arena where
+  signature := evalSignature.{u,v}
+  Law R := ∀ {G : Type u} [group : Group G] {A : Type v} [topology : TopologicalSpace A]
+    [Finite A] [DiscreteTopology A]
+    (X : MulSubshift A G) (Delta F : Finset G) (_hSI : SI X Delta)
+    (x x0 : Cfg X), ∃ z : Cfg X,
+      (∀ g ∈ F, R.readout () ⟨G, group, A, topology, X, x0, g⟩ z = x.val g) ∧
+      (∀ g ∉ (F : Set G) * (Delta : Set G)⁻¹, z.val g = x0.val g)
+
+private theorem evalBackground_rejected : ¬ exteriorArena.{u,v}.Law evalBackground := by
+  intro hlaw
+  obtain ⟨z, hz, _⟩ := @hlaw SmallGroup.{u} inferInstance SmallAlphabet.{v} inferInstance
+    inferInstance inferInstance full {1} {1} full_si one zero
+  have hh := congrArg ULift.down (hz 1 (Finset.mem_singleton_self _))
+  cases hh
+
+def exteriorFamily : Registration exteriorArena.{u,v} (type_of% (@common_exterior.{u,v})) where
+  actual := evalActual
+  bridge := Iff.rfl
+  variation := ⟨@common_exterior.{u,v}, evalBackground, evalBackground_rejected⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨evalBackground, ?_, rfl, evalBackground_rejected⟩
+      intro j hj
+      exact (hj (@Subsingleton.elim Unit _ j i)).elim
+    · intro e; exact nomatch e
+  dependence := by
+    intro i
+    let P : EvalInputs.{u,v} := ⟨SmallGroup, inferInstance, SmallAlphabet, inferInstance, full, zero, 1⟩
+    refine ⟨P, zero, one, ?_⟩
+    intro h
+    have hh := congrArg ULift.down h
+    cases hh
+
+def registration_common_exterior : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@common_exterior.{u,v}) (Realization evalSignature.{u,v}) Unit Unit where
+  unitName := `Reg.D5.S1.Dynamics.Symbolic.StronglyIrreducibleMyhill.exterior
+  realizationName := `Reg.D5.S1.Dynamics.Symbolic.StronglyIrreducibleMyhill.exteriorFamily
+  realizationSource := none
+  generated := false
+  arena := .source ⟨exteriorArena.{u,v}⟩
+  objectArena := .source ⟨exteriorArena.{u,v}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source exteriorArena.{u,v} ⟨exteriorFamily.{u,v}⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize evalSignature.{u,v}
+    (fun _ P z => z.val P.2.2.2.2.2.2) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S1.Dynamics.Symbolic.StronglyIrreducibleMyhill
+    definition := none
+    coordinates := #[0, 1, 2, 3, 6, 11, 13]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "body", "arg", "body", "fn", "arg", "body", "body", "fn", "arg"]
+      stateBinder := 12
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+abbrev WindowInputs := Σ G : Type u, Σ group : Group G, Σ A : Type v,
+  Σ topology : TopologicalSpace A, Σ _X : @MulSubshift A topology G group.toMonoid, Finset G
+
+abbrev windowBase (P : WindowInputs.{u,v}) : BaseInputs.{u,v} :=
+  ⟨P.1, P.2.1, P.2.2.1, P.2.2.2.1, P.2.2.2.2.1⟩
+
+abbrev memorySignature : Signature where
+  Params := WindowInputs.{u,v}
+  State P := Config (windowBase P) → Config (windowBase P)
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := Bool
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def memoryActual : Realization memorySignature.{u,v} :=
+  realize memorySignature (fun _ P tau => decide
+    (@HasMemory P.1 P.2.1 P.2.2.1 P.2.2.2.1 P.2.2.2.2.1 tau P.2.2.2.2.2))
+    (fun e => nomatch e)
+
+def memoryNever : Realization memorySignature.{u,v} :=
+  realize memorySignature (fun _ _ _ => false) (fun e => nomatch e)
+
+def memoryArena : Arena where
+  signature := memorySignature.{u,v}
+  Law R := ∀ {G : Type u} [group : Group G] {A : Type v} [topology : TopologicalSpace A]
+    [Finite A] [DiscreteTopology A] (X : MulSubshift A G)
+    (tau : Cfg X → Cfg X), Continuous tau →
+      ∃ M : Finset G, R.readout () ⟨G, group, A, topology, X, M⟩ tau = true
+
+private theorem memory_actual_law : memoryArena.{u,v}.Law memoryActual := by
+  intro G group A topology finite discrete X tau htau
+  obtain ⟨M, hM⟩ := finite_memory X tau htau
+  exact ⟨M, by simpa [memoryActual, realize] using hM⟩
+
+private theorem memoryNever_rejected : ¬ memoryArena.{u,v}.Law memoryNever := by
+  intro hlaw
+  obtain ⟨M, hM⟩ := @hlaw SmallGroup.{u} inferInstance SmallAlphabet.{v} inferInstance
+    inferInstance inferInstance full id continuous_id
+  cases hM
+
+private theorem memory_dependence : ObservationalDependence memorySignature.{u,v} memoryActual := by
+  intro i
+  let P : WindowInputs.{u,v} := ⟨SmallGroup, inferInstance, SmallAlphabet, inferInstance, full, ∅⟩
+  have hc : HasMemory full.{u,v} (fun _ => zero) ∅ := by intro x y hxy; rfl
+  have hn : ¬ HasMemory full.{u,v} id ∅ := by
+    intro h
+    have hh := congrArg ULift.down (h zero one (by simp))
+    cases hh
+  refine ⟨P, (fun _ => zero), id, ?_⟩
+  change decide (HasMemory full (fun _ => zero) ∅) ≠ decide (HasMemory full id ∅)
+  simp only [hc, hn, decide_true, decide_false, ne_eq, Bool.true_eq_false, not_false_eq_true]
+
+def memoryFamily : Registration memoryArena.{u,v} (type_of% (@finite_memory.{u,v})) where
+  actual := memoryActual
+  bridge := by
+    constructor
+    · intro h G group A topology finite discrete X tau htau
+      obtain ⟨M, hM⟩ := @h G group A topology finite discrete X tau htau
+      exact ⟨M, by simpa [memoryActual, realize] using hM⟩
+    · intro h G group A topology finite discrete X tau htau
+      obtain ⟨M, hM⟩ := @h G group A topology finite discrete X tau htau
+      exact ⟨M, by simpa [memoryActual, realize] using hM⟩
+  variation := ⟨memory_actual_law, memoryNever, memoryNever_rejected⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨memoryNever, ?_, rfl, memoryNever_rejected⟩
+      intro j hj
+      exact (hj (@Subsingleton.elim Unit _ j i)).elim
+    · intro e; exact nomatch e
+  dependence := memory_dependence
+
+def registration_finite_memory : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@finite_memory.{u,v}) (Realization memorySignature.{u,v}) Unit Unit where
+  unitName := `Reg.D5.S1.Dynamics.Symbolic.StronglyIrreducibleMyhill.memory
+  realizationName := `Reg.D5.S1.Dynamics.Symbolic.StronglyIrreducibleMyhill.memoryFamily
+  realizationSource := none
+  generated := false
+  arena := .source ⟨memoryArena.{u,v}⟩
+  objectArena := .source ⟨memoryArena.{u,v}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source memoryArena.{u,v} ⟨memoryFamily.{u,v}⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize memorySignature.{u,v} (fun _ P tau => decide
+    (@HasMemory P.1 P.2.1 P.2.2.1 P.2.2.2.1 P.2.2.2.2.1 tau P.2.2.2.2.2))
+    (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S1.Dynamics.Symbolic.StronglyIrreducibleMyhill
+    definition := none
+    coordinates := #[0, 1, 2, 3, 6, 9]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "body"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["fn", "arg"]
+      booleanPredicate := true }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
 end Reg.D5.S1.Dynamics.Symbolic.StronglyIrreducibleMyhill
