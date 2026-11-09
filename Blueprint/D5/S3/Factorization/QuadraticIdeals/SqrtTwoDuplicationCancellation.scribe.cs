@@ -14,14 +14,15 @@ internal sealed class SqrtTwoDuplicationCancellationDocument : IScribeDocumentDe
             DeclarationHandle.Create("D5/S3/Factorization/QuadraticIdeals/SqrtTwoDuplicationCancellation.primitive_duplication_local"),
             H("Two exceptional prime ideals and their cancellation bounds"),
             StatementSource.FromAuthor(TheoremFormula()),
-            AssessedProvenance.FromLiterature("anonymous2026quarticvthirteen"),
+            AssessedProvenance.FromLiterature(
+                LibraryNoteRef.Create("D5/L/Factorization/anonymous2026quarticvthirteen")),
             Blocks(
                 Paragraph(Text(
                     "Let O be the explicit quadratic order Z[sqrt(2)], s = sqrt(2), and delta = 3 - s. "
                     + "For a and b in O define F = (a^2 + delta^2 b^2)^2, "
                     + "G = 4ab(a^2 - delta^2 b^2), and I = (F,G). "
                     + "The hypothesis (a,b) = O is ideal-theoretic primitivity. "
-                    + "Zero coordinates are allowed, including the representatives of infinity and the two-torsion x-coordinates.")),
+                    + "No nonvanishing hypothesis is imposed on either coordinate or either duplication form.")),
                 Paragraph(Text(
                     "The numerator alone is not divisible by s^7 or delta^5. "
                     + "For the dyadic bound, divisibility by s^7 would make the real coordinate of F divisible by sixteen. "
@@ -69,7 +70,7 @@ internal sealed class SqrtTwoDuplicationCancellationDocument : IScribeDocumentDe
             Call("IsPrime", q), Sp, Implies, Sp, ideal, Sp, Le, Sp, q, Sp, Implies, Sp,
             Open, q, Sp, Eq, Sp, sIdeal, Sp, Lor, Sp, q, Sp, Eq, Sp, dIdeal, Close);
         return Disp(Seq(Forall, Sp, a, Comma, Sp, b, Colon, Sp, order, Comma, Sp,
-            Call("IdealSpanPair", a, b), Sp, Eq, Sp, Top, Sp, Implies, Sp,
+            Call("IdealSpanPair", a, b), Sp, Eq, Sp, Call("UnitIdeal", order), Sp, Implies, Sp,
             first, Sp, Land, RowBreak, Grp(), second, Sp, Land, RowBreak, Grp(), third, Dot));
     }
 }

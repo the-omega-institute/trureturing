@@ -288,4 +288,3 @@ theorem primitive_duplication_local (a b : Order) (hab : Ideal.span {a, b} = ⊤
 #print axioms primitive_duplication_local
 
 end D5.S3.Factorization.QuadraticIdeals.SqrtTwoDuplicationCancellation
-

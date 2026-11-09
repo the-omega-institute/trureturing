@@ -97,16 +97,6 @@ def primitive_duplication_local_registration :
       stateBinder := 1
       functionOperand := false
       stateOperand := none
-      booleanPredicate := false }, {
-      path := #["body", "body", "body", "arg", "fn", "arg", "arg", "fn", "arg"]
-      stateBinder := 1
-      functionOperand := false
-      stateOperand := none
-      booleanPredicate := false }, {
-      path := #["body", "body", "body", "arg", "arg", "body", "body", "domain", "fn", "arg"]
-      stateBinder := 1
-      functionOperand := false
-      stateOperand := none
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
