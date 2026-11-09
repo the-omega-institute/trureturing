@@ -89,6 +89,7 @@ internal sealed class MansanarezPolySwanCumulantNonvanishingRefutationDocument :
     private static Formula Le(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
     private static Formula Ne(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.NotEqual, b);
     private static Formula And(Formula a, Formula b) => new Formula.Logic(Parenthesized(a), FormulaLogicOperator.And, Parenthesized(b));
+    private static Formula Iff(Formula a, Formula b) => new Formula.Logic(Parenthesized(a), FormulaLogicOperator.Iff, Parenthesized(b));
     private static Formula Imp(Formula a, Formula b) => new Formula.Logic(Parenthesized(a), FormulaLogicOperator.Implies, Parenthesized(b));
     private static Formula Add(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Add, b);
     private static Formula Sub(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Subtract, b);
@@ -109,7 +110,7 @@ internal sealed class MansanarezPolySwanCumulantNonvanishingRefutationDocument :
     private static Formula X(Formula i) => Call("MvPolynomial.X", i);
 
     private static Formula AllMomentsFormula() => Disp(All("mu", MeasureR,
-        All("n", N, Call("Integrable", Lambda("x", R, Pow(V("x"), V("n"))), V("mu")))));
+        Iff(Call("AllMoments", V("mu")), All("n", N, Call("Integrable", Lambda("x", R, Pow(V("x"), V("n"))), V("mu"))))));
 
     private static Formula SMDFormula()
     {
@@ -117,8 +118,8 @@ internal sealed class MansanarezPolySwanCumulantNonvanishingRefutationDocument :
         Formula moments = All("n", N, Imp(Le(D(1), n), Eqn(Call("moment", Call("id"), n, mu), Call("moment", Call("id"), n, nu))));
         Formula uniqueness = All("nu", MeasureR, Imp(Call("IsProbabilityMeasure", nu),
             Imp(Call("AllMoments", nu), Imp(moments, Eqn(mu, nu)))));
-        return Disp(All("mu", MeasureR, And(Eqn(Call("Measure.map", Lambda("x", R, Neg(V("x"))), mu), mu),
-            And(Call("AllMoments", mu), uniqueness))));
+        return Disp(All("mu", MeasureR, Iff(Call("SMD", mu), And(Eqn(Call("Measure.map", Lambda("x", R, Neg(V("x"))), mu), mu),
+            And(Call("AllMoments", mu), uniqueness)))));
     }
 
     private static Formula CumulantFormula() => Disp(All("mu", MeasureR, All("n", N,
@@ -145,7 +146,7 @@ internal sealed class MansanarezPolySwanCumulantNonvanishingRefutationDocument :
             Mul(Mul(Call("MvPolynomial.C", NatCast(Call("Nat.choose", i, l), R)),
                     X(Add(D(1), l))),
                 X(Sub(Add(D(1), i), l))));
-        Formula term = Mul(Mul(Call("MvPolynomial.C", RealConst("-1/2")), inner),
+        Formula term = Mul(Parenthesized(Mul(Call("MvPolynomial.C", RealConst("-1/2")), inner)),
             Call("MvPolynomial.pderiv", i, p));
         return Disp(All("P", Poly, Eqn(Call("sourceH", p),
             SumIn("i", Call("MvPolynomial.vars", p), term))));
@@ -162,18 +163,18 @@ internal sealed class MansanarezPolySwanCumulantNonvanishingRefutationDocument :
         Formula recurrence = All("n", N, Imp(Le(D(3), n),
             Eqn(App(Rv, Add(n, D(1))), Add(Call("sourceA", n),
                 Add(Call("sourceL", App(Rv, n)), Call("sourceH", App(Rv, n)))))));
-        return Disp(All("R", Call("Function", N, Poly),
-            And(Eqn(App(Rv, D(2)), Call("zero", Poly)),
-                And(Eqn(App(Rv, D(3)), Neg(Mul(Mul(Call("MvPolynomial.C", RealConst("2")), X(D(2))), Pow(X(D(2)), D(2))))), recurrence))));
+        return Disp(All("R", Parenthesized(new Formula.TypeArrow(N, Poly)),
+            Iff(Call("IsSourceSequence", Rv), And(Eqn(App(Rv, D(2)), D(0)),
+                And(Eqn(App(Rv, D(3)), Mul(Neg(Call("MvPolynomial.C", RealConst("2"))), Pow(X(D(2)), D(3)))), recurrence)))));
     }
 
     private static Formula LinearCoefficientFormula() => Disp(All("n", N, All("P", Poly,
         Eqn(Call("linearCoefficient", V("n"), V("P")),
-            SumIn("d", Call("MvPolynomial.support", V("P")), Let("c", Call("MvPolynomial.coeff", V("P"), V("d")),
+            SumIn("d", Call("MvPolynomial.support", V("P")), Let("c", App(Call("AddMonoidAlgebra.coeff", V("P")), V("d")),
                 Call("if", Eqn(App(V("d"), V("n")), D(1)),
-                    Call("MvPolynomial.monomial", Call("Finsupp.erase", V("d"), V("n")), V("c")), D(0))))))));
+                    Call("MvPolynomial.monomial", Call("Finsupp.erase", V("n"), V("d")), V("c")), D(0))))))));
 
-    private static Formula CoefficientFormFormula() => Disp(All("R", Call("Function", N, Poly), All("n", N,
+    private static Formula CoefficientFormFormula() => Disp(All("R", Parenthesized(new Formula.TypeArrow(N, Poly)), All("n", N,
         Eqn(Call("coefficientForm", V("R"), V("n")),
             Call("linearCoefficient", V("n"), App(V("R"), Add(V("n"), D(1))))))));
 
@@ -187,7 +188,7 @@ internal sealed class MansanarezPolySwanCumulantNonvanishingRefutationDocument :
             Call("coefficientForm", Rv, Mul(D(2), m))), D(0));
         Formula law = All("mu", MeasureR, Imp(Call("IsProbabilityMeasure", mu),
             Imp(Call("SMD", mu), All("m", N, Imp(Le(D(3), m), nonzero)))));
-        return And(Some("R", Call("Function", N, Poly), source),
-            All("R", Call("Function", N, Poly), Imp(source, law)));
+        return And(Some("R", Parenthesized(new Formula.TypeArrow(N, Poly)), source),
+            All("R", Parenthesized(new Formula.TypeArrow(N, Poly)), Imp(source, law)));
     }
 }
