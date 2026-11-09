@@ -12,6 +12,8 @@ public import D5.S3.Topology.JBAlgebra
 public import D5.S3.Topology.JBPositiveShift
 public import Mathlib.Analysis.CStarAlgebra.GelfandDuality
 public import Mathlib.Analysis.Normed.Operator.Banach
+public import Mathlib.Topology.Connected.Clopen
+public import Mathlib.Topology.Order.IntermediateValue
 public import Mathlib.Algebra.QuadraticAlgebra.Basic
 public import Mathlib.Analysis.CStarAlgebra.Classes
 public import Mathlib.Analysis.CStarAlgebra.Basic
@@ -72,6 +74,7 @@ private lemma dot_le (L : SquareLaws R) (z w : Complexification R) :
   have hn := mul_nonneg (squareNorm_nonneg z) (squareNorm_nonneg w)
   nlinarith [norm_nonneg (z.re * w.re + z.im * w.im)]
 
+omit [NormedAlgebra ℝ R] in
 private lemma triangle (L : SquareLaws R) (z w : Complexification R) :
     squareNorm (z + w) ≤ squareNorm z + squareNorm w := by
   let d := z.re * w.re + z.im * w.im
@@ -101,6 +104,7 @@ private lemma real_smul (t : ℝ) (z : Complexification R) :
   simp only [squareNorm, hid, norm_smul, norm_pow]
   rw [Real.sqrt_mul (sq_nonneg _), Real.sqrt_sq (norm_nonneg _)]
 
+omit [NormedAlgebra ℝ R] in
 private lemma definite (L : SquareLaws R) (z : Complexification R) :
     squareNorm z = 0 ↔ z = 0 := by
   constructor
@@ -357,6 +361,7 @@ abbrev GeneratedComplex (A : Data X S u) (a : X) := Complexification (Generated 
 end Original
 
 open JBAlgebra JBPositiveShift
+open scoped _root_.Topology
 
 private theorem inverse_of_lower {R : Type*} [NormedCommRing R] [NormedAlgebra ℝ R]
     [SquareLaws R] [CompleteSpace R] (a : R) (M : ℝ) (hM : 0 ≤ M)
@@ -462,5 +467,433 @@ theorem generated_inverse_of_quadratic_bijective (A : Data X S u) (a : X)
 
 
 #print axioms generated_inverse_of_quadratic_bijective
+
+private lemma real_character_value {R : Type*} [NormedCommRing R] [NormedAlgebra ℝ R]
+    [SquareLaws R] [CompleteSpace R] (r : R)
+    (φ : WeakDual.characterSpace ℂ (Complexification R)) :
+    (((φ (QuadraticAlgebra.C r)).re : ℝ) : ℂ) = φ (QuadraticAlgebra.C r) := by
+  have hs : IsSelfAdjoint (QuadraticAlgebra.C r : Complexification R) := by
+    apply QuadraticAlgebra.ext <;> simp
+  exact (Complex.ofReal_eq_re_of_isSelfAdjoint (hs.map φ)).mp rfl
+
+private lemma real_character_scalar {R : Type*} [NormedCommRing R] [NormedAlgebra ℝ R]
+    [SquareLaws R] [CompleteSpace R] (t : ℝ)
+    (φ : WeakDual.characterSpace ℂ (Complexification R)) :
+    φ (QuadraticAlgebra.C (t • (1 : R))) = (t : ℂ) := by
+  have h : (QuadraticAlgebra.C (t • (1 : R)) : Complexification R) =
+      algebraMap ℂ (Complexification R) (t : ℂ) := by
+    change (QuadraticAlgebra.C (t • (1 : R)) : Complexification R) = scalarHom (t : ℂ)
+    apply QuadraticAlgebra.ext <;> simp [scalarHom, Algebra.smul_def]
+  rw [h]
+  exact AlgHomClass.commutes φ _
+
+private lemma real_gelfand_norm {R : Type*} [NormedCommRing R] [NormedAlgebra ℝ R]
+    [SquareLaws R] [CompleteSpace R] (r : R) :
+    ‖gelfandStarTransform (Complexification R) (QuadraticAlgebra.C r)‖ = ‖r‖ := by
+  calc
+    _ = ‖(QuadraticAlgebra.C r : Complexification R)‖ :=
+      (gelfandTransform_isometry _).norm_map_of_map_zero (map_zero _) _
+    _ = ‖r‖ := (realIsometry (R := R)).norm_map r
+
+private theorem positive_root_of_char_nonneg {R : Type*} [NormedCommRing R] [NormedAlgebra ℝ R]
+    [SquareLaws R] [CompleteSpace R] (a : R)
+    (ha : ∀ φ : WeakDual.characterSpace ℂ (Complexification R),
+      0 ≤ (φ (QuadraticAlgebra.C a)).re) :
+    ∃ r : R, r * r = a ∧ ∀ φ : WeakDual.characterSpace ℂ (Complexification R),
+      0 ≤ (φ (QuadraticAlgebra.C r)).re := by
+  let Z := Complexification R
+  let g := gelfandStarTransform Z
+  let f : C(WeakDual.characterSpace ℂ Z, ℂ) :=
+    ⟨fun φ => (Real.sqrt ((g (QuadraticAlgebra.C a) φ).re) : ℂ),
+      Complex.continuous_ofReal.comp (Real.continuous_sqrt.comp
+        (Complex.continuous_re.comp (map_continuous _)))⟩
+  let z := g.symm f
+  have hz : star z = z := by
+    apply g.injective
+    change g (star z) = g z
+    rw [map_star, show g z = f from g.apply_symm_apply f]
+    ext φ
+    simp [f]
+  let r := (realEquiv (R := R)).symm ⟨z, hz⟩
+  have hr : (QuadraticAlgebra.C r : Z) = z :=
+    congrArg Subtype.val ((realEquiv (R := R)).apply_symm_apply ⟨z, hz⟩)
+  refine ⟨r, ?_⟩
+  have hsquare : r * r = a := by
+    have hh : (QuadraticAlgebra.C (r * r) : Z) = QuadraticAlgebra.C a := by
+      apply g.injective
+      change g (QuadraticAlgebra.C (r * r)) = g (QuadraticAlgebra.C a)
+      rw [QuadraticAlgebra.C_mul, map_mul, hr,
+        show g z = f from g.apply_symm_apply f]
+      ext φ
+      change (Real.sqrt ((φ (QuadraticAlgebra.C a)).re) : ℂ) *
+        (Real.sqrt ((φ (QuadraticAlgebra.C a)).re) : ℂ) = _
+      rw [← Complex.ofReal_mul, Real.mul_self_sqrt (ha φ), real_character_value a φ]
+      rfl
+    exact congrArg QuadraticAlgebra.re hh
+  refine ⟨hsquare, ?_⟩
+  intro φ
+  have he : g (QuadraticAlgebra.C r) = f := by
+    rw [hr]
+    exact g.apply_symm_apply f
+  have hh := congrArg (fun k : C(WeakDual.characterSpace ℂ Z, ℂ) => (k φ).re) he
+  change (φ (QuadraticAlgebra.C r)).re = Real.sqrt ((φ (QuadraticAlgebra.C a)).re) at hh
+  rw [hh]
+  exact Real.sqrt_nonneg _
+
+private theorem square_of_char_nonneg {R : Type*} [NormedCommRing R] [NormedAlgebra ℝ R]
+    [SquareLaws R] [CompleteSpace R] (a : R)
+    (ha : ∀ φ : WeakDual.characterSpace ℂ (Complexification R),
+      0 ≤ (φ (QuadraticAlgebra.C a)).re) : ∃ r : R, r * r = a := by
+  obtain ⟨r, hr, _⟩ := positive_root_of_char_nonneg a ha
+  exact ⟨r, hr⟩
+
+private theorem square_of_center_bound {R : Type*} [NormedCommRing R] [NormedAlgebra ℝ R]
+    [SquareLaws R] [CompleteSpace R] (a : R) (t : ℝ) (_ht : 0 ≤ t)
+    (h : ‖a - t • 1‖ ≤ t) : ∃ r : R, r * r = a := by
+  apply square_of_char_nonneg a
+  intro φ
+  let g := gelfandStarTransform (Complexification R)
+  have hn := (g (QuadraticAlgebra.C (a - t • 1))).norm_coe_le_norm φ
+  rw [real_gelfand_norm] at hn
+  have he : φ (QuadraticAlgebra.C (a - t • 1)) =
+      (((φ (QuadraticAlgebra.C a)).re - t : ℝ) : ℂ) := by
+    calc
+      _ = φ (QuadraticAlgebra.C a) - (t : ℂ) := by
+        rw [QuadraticAlgebra.C_sub, map_sub, real_character_scalar]
+      _ = (((φ (QuadraticAlgebra.C a)).re : ℝ) : ℂ) - (t : ℂ) :=
+        congrArg (fun v : ℂ => v - (t : ℂ)) (real_character_value a φ).symm
+      _ = _ := (Complex.ofReal_sub _ _).symm
+  change ‖φ (QuadraticAlgebra.C (a - t • 1))‖ ≤ _ at hn
+  rw [he, Complex.norm_real, Real.norm_eq_abs] at hn
+  have := (abs_le.mp (hn.trans h)).1
+  linarith
+
+private theorem center_bound_square {R : Type*} [NormedCommRing R] [NormedAlgebra ℝ R]
+    [SquareLaws R] [CompleteSpace R] (r : R) :
+    ‖r * r - ‖r * r‖ • 1‖ ≤ ‖r * r‖ := by
+  let Z := Complexification R
+  let g := gelfandStarTransform Z
+  rw [← real_gelfand_norm (r * r - ‖r * r‖ • 1)]
+  apply (ContinuousMap.norm_le _ (norm_nonneg _)).mpr
+  intro φ
+  let v : ℝ := (φ (QuadraticAlgebra.C r)).re
+  have hcr : φ (QuadraticAlgebra.C r) = (v : ℂ) := (real_character_value r φ).symm
+  have hv : φ (QuadraticAlgebra.C (r * r)) = ((v * v : ℝ) : ℂ) := by
+    rw [QuadraticAlgebra.C_mul, map_mul, hcr, Complex.ofReal_mul]
+  have hb := (g (QuadraticAlgebra.C (r * r))).norm_coe_le_norm φ
+  rw [real_gelfand_norm] at hb
+  change ‖φ (QuadraticAlgebra.C (r * r))‖ ≤ _ at hb
+  rw [hv, Complex.norm_real, Real.norm_eq_abs, abs_of_nonneg (mul_self_nonneg v)] at hb
+  change ‖φ (QuadraticAlgebra.C (r * r - ‖r * r‖ • 1))‖ ≤ _
+  rw [QuadraticAlgebra.C_sub, map_sub, hv, real_character_scalar,
+    ← Complex.ofReal_sub, Complex.norm_real, Real.norm_eq_abs]
+  exact abs_le.mpr ⟨by nlinarith [mul_self_nonneg v], by nlinarith [norm_nonneg (r * r)]⟩
+
+private theorem square_iff_center (A : Data X S u) (p : X) :
+    (∃ x : X, S x x = p) ↔ ‖p - ‖p‖ • u‖ ≤ ‖p‖ := by
+  constructor
+  · rintro ⟨x, rfl⟩
+    have hx : x ∈ generated S u x := by
+      have h : npow S u x 1 ∈ generated S u x :=
+        Submodule.le_topologicalClosure _ (Submodule.subset_span ⟨1, rfl⟩)
+      simpa only [npow, A.symm x u, A.unit_mul] using h
+    exact center_bound_square (R := Generated A x) ⟨x, hx⟩
+  · intro hp
+    have hmem : p ∈ generated S u p := by
+      have h : npow S u p 1 ∈ generated S u p :=
+        Submodule.le_topologicalClosure _ (Submodule.subset_span ⟨1, rfl⟩)
+      simpa only [npow, A.symm p u, A.unit_mul] using h
+    obtain ⟨r, hr⟩ := square_of_center_bound (R := Generated A p) ⟨p, hmem⟩
+      ‖p‖ (norm_nonneg _) hp
+    exact ⟨r.val, congrArg Subtype.val hr⟩
+
+private theorem square_of_ambient_center (A : Data X S u) (p : X) (t : ℝ) (ht : 0 ≤ t)
+    (hp : ‖p - t • u‖ ≤ t) : ∃ x : X, S x x = p := by
+  have hmem : p ∈ generated S u p := by
+    have h : npow S u p 1 ∈ generated S u p :=
+      Submodule.le_topologicalClosure _ (Submodule.subset_span ⟨1, rfl⟩)
+    simpa only [npow, A.symm p u, A.unit_mul] using h
+  obtain ⟨r, hr⟩ := square_of_center_bound (R := Generated A p) ⟨p, hmem⟩ t ht hp
+  exact ⟨r.val, congrArg Subtype.val hr⟩
+
+private theorem square_closed (A : Data X S u) :
+    IsClosed {p : X | ∃ x : X, S x x = p} := by
+  have he : {p : X | ∃ x : X, S x x = p} = {p : X | ‖p - ‖p‖ • u‖ ≤ ‖p‖} :=
+    Set.ext fun p => square_iff_center A p
+  rw [he]
+  exact isClosed_le (continuous_id.sub (continuous_id.norm.smul continuous_const)).norm
+    continuous_id.norm
+
+private theorem square_neighborhood (A : Data X S u) (p : X)
+    (hp : ∃ x : X, S x x = p) (hQ : Function.Bijective (quadratic S p)) :
+    ∃ ε > 0, ∀ y : X, ‖y - p‖ < ε → ∃ x : X, S x x = y := by
+  obtain ⟨b, hb, hpb⟩ := generated_inverse_of_quadratic_bijective A p hQ
+  let R := Generated A p
+  have hmem : p ∈ generated S u p := by
+    have h : npow S u p 1 ∈ generated S u p :=
+      Submodule.le_topologicalClosure _ (Submodule.subset_span ⟨1, rfl⟩)
+    simpa only [npow, A.symm p u, A.unit_mul] using h
+  let pr : R := ⟨p, hmem⟩
+  let br : R := ⟨b, hb⟩
+  have hmul : pr * br = 1 := Subtype.ext hpb
+  let t : ℝ := ‖p‖ + 1
+  have ht : 0 < t := by dsimp [t]; positivity
+  have hcenter : ‖p - t • u‖ < t := by
+    change ‖pr - t • (1 : R)‖ < t
+    rw [← real_gelfand_norm (R := R)]
+    apply (ContinuousMap.norm_lt_iff _ ht).mpr
+    intro φ
+    let v : ℝ := (φ (QuadraticAlgebra.C pr)).re
+    have hval : φ (QuadraticAlgebra.C pr) = (v : ℂ) :=
+      (real_character_value pr φ).symm
+    have hnonneg : 0 ≤ v := by
+      have hh := (square_iff_center A p).mp hp
+      have hn := (gelfandStarTransform (Complexification R)
+        (QuadraticAlgebra.C (pr - ‖p‖ • 1))).norm_coe_le_norm φ
+      rw [real_gelfand_norm] at hn
+      change ‖φ (QuadraticAlgebra.C (pr - ‖p‖ • 1))‖ ≤ ‖p - ‖p‖ • u‖ at hn
+      rw [QuadraticAlgebra.C_sub, map_sub, real_character_scalar, hval,
+        ← Complex.ofReal_sub, Complex.norm_real, Real.norm_eq_abs] at hn
+      have h := (abs_le.mp (hn.trans hh)).1
+      linarith
+    have hne : v ≠ 0 := by
+      intro hv
+      have he := congrArg (fun r : R => φ (QuadraticAlgebra.C r)) hmul
+      rw [QuadraticAlgebra.C_mul, map_mul, hval, hv, Complex.ofReal_zero,
+        zero_mul, QuadraticAlgebra.C_one, map_one] at he
+      exact zero_ne_one he
+    have hv : 0 < v := lt_of_le_of_ne hnonneg (Ne.symm hne)
+    have hn := (gelfandStarTransform (Complexification R)
+      (QuadraticAlgebra.C pr)).norm_coe_le_norm φ
+    rw [real_gelfand_norm] at hn
+    change ‖φ (QuadraticAlgebra.C pr)‖ ≤ ‖p‖ at hn
+    rw [hval, Complex.norm_real, Real.norm_eq_abs, abs_of_pos hv] at hn
+    change ‖φ (QuadraticAlgebra.C (pr - t • 1))‖ < t
+    rw [QuadraticAlgebra.C_sub, map_sub, real_character_scalar, hval,
+      ← Complex.ofReal_sub, Complex.norm_real, Real.norm_eq_abs]
+    exact abs_lt.mpr ⟨by linarith, by dsimp [t]; linarith [norm_nonneg p]⟩
+  refine ⟨t - ‖p - t • u‖, sub_pos.mpr hcenter, fun y hy => ?_⟩
+  apply square_of_ambient_center A y t ht.le
+  have he : y - t • u = (y - p) + (p - t • u) := by abel
+  rw [he]
+  exact (norm_add_le _ _).trans (by linarith)
+
+private theorem path_stays_square (A : Data X S u) (c : ℝ → X) (hc : Continuous c)
+    (hinv : ∀ t ∈ Set.Icc (0 : ℝ) 1, Function.Bijective (quadratic S (c t)))
+    (h1 : ∃ x : X, S x x = c 1) : ∃ x : X, S x x = c 0 := by
+  let I := Set.Icc (0 : ℝ) 1
+  have : PreconnectedSpace I := isPreconnected_iff_preconnectedSpace.mp isPreconnected_Icc
+  let K : Set I := {t | ∃ x : X, S x x = c t}
+  have hclosed : IsClosed K := (square_closed A).preimage (hc.comp continuous_subtype_val)
+  have hopen : IsOpen K := by
+    apply isOpen_iff_mem_nhds.mpr
+    intro t ht
+    obtain ⟨ε, hε, hnear⟩ := square_neighborhood A (c t) ht (hinv t t.property)
+    have hf := (hc.comp continuous_subtype_val).continuousAt (x := t)
+    filter_upwards [hf.eventually (Metric.ball_mem_nhds (c t) hε)] with s hs
+    exact hnear _ (by simpa only [Metric.mem_ball, dist_eq_norm, Function.comp_apply] using hs)
+  have hall : K = Set.univ := (show IsClopen K from ⟨hclosed, hopen⟩).eq_univ
+    ⟨⟨1, by constructor <;> norm_num⟩, h1⟩
+  have hzero : (⟨0, by constructor <;> norm_num⟩ : I) ∈ K := by rw [hall]; trivial
+  exact hzero
+
+omit [CompleteSpace X] in
+private def productContinuous (A : Data X S u) : X →L[ℝ] X →L[ℝ] X :=
+  S.mkContinuous₂ 1 (fun x y => by simpa using A.product_norm x y)
+
+omit [CompleteSpace X] in
+private theorem quadratic_continuous (A : Data X S u) {T : Type*} [TopologicalSpace T]
+    {f g : T → X} (hf : Continuous f) (hg : Continuous g) :
+    Continuous (fun t => quadratic S (f t) (g t)) := by
+  have hP {v w : T → X} (hv : Continuous v) (hw : Continuous w) :
+      Continuous (fun t => S (v t) (w t)) :=
+    (productContinuous A).continuous₂.comp (hv.prodMk hw)
+  exact ((hP hf (hP hf hg)).const_smul (2 : ℝ)).sub (hP (hP hf hf) hg)
+
+private theorem square_shift (A : Data X S u) (y : X) (δ : ℝ) (hδ : 0 ≤ δ) :
+    ∃ z : X, S z z = S y y + δ • u := by
+  apply square_of_ambient_center A _ (‖S y y‖ + δ) (by positivity)
+  have he : S y y + δ • u - (‖S y y‖ + δ) • u = S y y - ‖S y y‖ • u := by module
+  rw [he]
+  exact ((square_iff_center A (S y y)).mp ⟨y, rfl⟩).trans (by linarith)
+
+private theorem shifted_quadratic_square (A : Data X S u) (x y : X)
+    (ε δ : ℝ) (hε : 0 < ε) (hδ : 0 < δ) :
+    ∃ z : X, S z z = quadratic S (S x x + ε • u) (S y y + δ • u) := by
+  let c : ℝ → X := fun t => quadratic S
+    ((1 - t) • (S x x + ε • u) + t • u) (S y y + δ • u)
+  have hc : Continuous c := quadratic_continuous A
+    (((continuous_const.sub continuous_id).smul continuous_const).add
+      (continuous_id.smul continuous_const)) continuous_const
+  have hinv (t : ℝ) (ht : t ∈ Set.Icc (0 : ℝ) 1) :
+      Function.Bijective (quadratic S (c t)) := by
+    let a := (1 - t) • (S x x + ε • u) + t • u
+    let s := (1 - t) * ε + t
+    have hs : 0 < s := by
+      dsimp [s]
+      by_cases h : t = 1
+      · simp [h]
+      · have ht1 : t < 1 := lt_of_le_of_ne ht.2 h
+        nlinarith [ht.1]
+    have ha : S ((Real.sqrt (1 - t)) • x) ((Real.sqrt (1 - t)) • x) + s • u = a := by
+      simp only [map_smul, LinearMap.smul_apply, smul_smul,
+        Real.mul_self_sqrt (sub_nonneg.mpr ht.2)]
+      dsimp [a, s]
+      module
+    have hA : Function.Bijective (quadratic S a) := by
+      rw [← ha]
+      exact positive_shift_quadratic_bijective A _ s hs
+    have hB := positive_shift_quadratic_bijective A y δ hδ
+    have hh := hA.comp (hB.comp hA)
+    simpa only [Function.comp_def, ← fundamental_identity A] using hh
+  have h1 : ∃ z : X, S z z = c 1 := by
+    have he : c 1 = S y y + δ • u := by
+      simp only [c, sub_self, zero_smul, one_smul, zero_add,
+        quadratic, A.unit_mul, two_smul, add_sub_cancel_right]
+    rw [he]
+    exact square_shift A y δ hδ.le
+  simpa only [c, sub_zero, one_smul, zero_smul, add_zero] using path_stays_square A c hc hinv h1
+
+private theorem square_quadratic_square (A : Data X S u) (x y : X) :
+    ∃ z : X, S z z = quadratic S (S x x) (S y y) := by
+  have hc : Continuous (fun t : ℝ => quadratic S (S x x + t • u) (S y y + t • u)) :=
+    quadratic_continuous A (continuous_const.add (continuous_id.smul continuous_const))
+      (continuous_const.add (continuous_id.smul continuous_const))
+  have ht : Filter.Tendsto (fun t : ℝ => quadratic S (S x x + t • u) (S y y + t • u))
+      (𝓝[>] 0) (𝓝 (quadratic S (S x x) (S y y))) := by
+    simpa only [zero_smul, add_zero] using
+      (hc.continuousAt (x := 0)).tendsto.mono_left
+        (nhdsWithin_le_nhds (s := Set.Ioi (0 : ℝ)))
+  apply (square_closed A).mem_of_tendsto ht
+  filter_upwards [self_mem_nhdsWithin] with t ht
+  exact shifted_quadratic_square A x y t t ht ht
+
+private theorem positive_root_inverse {R : Type*} [NormedCommRing R] [NormedAlgebra ℝ R]
+    [SquareLaws R] [CompleteSpace R] (b : R)
+    (hb : ∀ φ : WeakDual.characterSpace ℂ (Complexification R),
+      0 < (φ (QuadraticAlgebra.C b)).re) :
+    ∃ c d t : R, c * c = b ∧ c * d = 1 ∧ t * t = d := by
+  obtain ⟨c, hc, hcp⟩ := positive_root_of_char_nonneg b (fun φ => (hb φ).le)
+  have hcpos (φ : WeakDual.characterSpace ℂ (Complexification R)) :
+      0 < (φ (QuadraticAlgebra.C c)).re := by
+    have hne : (φ (QuadraticAlgebra.C c)).re ≠ 0 := by
+      intro hzero
+      have he := congrArg (fun r : R => φ (QuadraticAlgebra.C r)) hc
+      have hv : φ (QuadraticAlgebra.C c) = 0 := by
+        rw [← real_character_value c φ, hzero, Complex.ofReal_zero]
+      rw [QuadraticAlgebra.C_mul, map_mul, hv, zero_mul] at he
+      have hr := congrArg Complex.re he
+      simp only [Complex.zero_re] at hr
+      linarith [hb φ]
+    exact lt_of_le_of_ne (hcp φ) (Ne.symm hne)
+  let Z := Complexification R
+  let g := gelfandStarTransform Z
+  have hgunit : IsUnit (g (QuadraticAlgebra.C c)) := by
+    apply (ContinuousMap.isUnit_iff_forall_ne_zero _).mpr
+    intro φ hzero
+    have h : (φ (QuadraticAlgebra.C c)).re = 0 := congrArg Complex.re hzero
+    linarith [hcpos φ]
+  have hu : IsUnit (QuadraticAlgebra.C c : Z) := by
+    have h := hgunit.map g.symm.toRingHom
+    simpa only [RingHom.coe_coe, StarAlgEquiv.symm_apply_apply] using h
+  obtain ⟨v, hv⟩ := hu
+  let d : R := (↑v⁻¹ : Z).re
+  have hcd : c * d = 1 := by
+    have he : (QuadraticAlgebra.C c : Z) * (↑v⁻¹ : Z) = 1 := by
+      rw [← hv]
+      exact v.val_inv
+    have h := congrArg QuadraticAlgebra.re he
+    change c * d + (-1) * 0 * (↑v⁻¹ : Z).im = 1 at h
+    simpa using h
+  have hdpos (φ : WeakDual.characterSpace ℂ Z) :
+      0 ≤ (φ (QuadraticAlgebra.C d)).re := by
+    let cv : ℝ := (φ (QuadraticAlgebra.C c)).re
+    let dv : ℝ := (φ (QuadraticAlgebra.C d)).re
+    have hcv : φ (QuadraticAlgebra.C c) = (cv : ℂ) := (real_character_value c φ).symm
+    have hdv : φ (QuadraticAlgebra.C d) = (dv : ℂ) := (real_character_value d φ).symm
+    have he := congrArg (fun r : R => φ (QuadraticAlgebra.C r)) hcd
+    rw [QuadraticAlgebra.C_mul, map_mul, hcv, hdv, QuadraticAlgebra.C_one, map_one] at he
+    have hr : cv * dv = 1 := by
+      have h := congrArg Complex.re he
+      simpa only [Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im,
+        zero_mul, sub_zero, Complex.one_re] using h
+    have hpos : 0 < cv := hcpos φ
+    change 0 ≤ dv
+    nlinarith
+  obtain ⟨t, ht⟩ := square_of_char_nonneg d hdpos
+  exact ⟨c, d, t, hc, hcd, ht⟩
+
+private theorem arbitrary_quadratic_shift_square (A : Data X S u) (a y : X)
+    (δ : ℝ) (hδ : 0 < δ) :
+    ∃ z : X, S z z = quadratic S a (S y y + δ • u) := by
+  let R := Generated A y
+  have hmem : y ∈ generated S u y := by
+    have h : npow S u y 1 ∈ generated S u y :=
+      Submodule.le_topologicalClosure _ (Submodule.subset_span ⟨1, rfl⟩)
+    simpa only [npow, A.symm y u, A.unit_mul] using h
+  let yr : R := ⟨y, hmem⟩
+  let b : R := yr * yr + δ • 1
+  have hbpos (φ : WeakDual.characterSpace ℂ (Complexification R)) :
+      0 < (φ (QuadraticAlgebra.C b)).re := by
+    let v : ℝ := (φ (QuadraticAlgebra.C yr)).re
+    have hv : φ (QuadraticAlgebra.C yr) = (v : ℂ) := (real_character_value yr φ).symm
+    change 0 < (φ (QuadraticAlgebra.C (yr * yr + δ • 1))).re
+    rw [QuadraticAlgebra.C_add, map_add, QuadraticAlgebra.C_mul, map_mul,
+      real_character_scalar, hv]
+    simp only [Complex.add_re, Complex.mul_re, Complex.ofReal_re,
+      Complex.ofReal_im, mul_zero, sub_zero]
+    nlinarith
+  obtain ⟨c, d, t, hcc, hcd, htt⟩ := positive_root_inverse b hbpos
+  have hccX : S c.val c.val = S y y + δ • u := congrArg Subtype.val hcc
+  have httX : S t.val t.val = d.val := congrArg Subtype.val htt
+  have hUu (v : X) : quadratic S u v = v := by
+    simp only [quadratic, A.unit_mul, two_smul, add_sub_cancel_right]
+  have hUc (v : X) : quadratic S v u = S v v := by
+    have hu (w : X) : S w u = w := (A.symm w u).trans (A.unit_mul w)
+    rw [quadratic, hu, hu, two_smul, add_sub_cancel_right]
+  have hQcc (v : X) : quadratic S (S y y + δ • u) v =
+      quadratic S c.val (quadratic S c.val v) := by
+    have h := fundamental_identity A c.val u v
+    simpa only [hUc, hUu, hccX] using h
+  have hB := positive_shift_quadratic_bijective A y δ hδ
+  have hcinj : Function.Injective (quadratic S c.val) := by
+    intro v w hvw
+    apply hB.1
+    rw [hQcc, hQcc, hvw]
+  have hccd : (c * c) * d = c := by rw [mul_assoc, hcd, mul_one]
+  have hqR : (2 : ℝ) • (c * (c * d)) - (c * c) * d = c := by
+    rw [hcd, mul_one, hccd, two_smul, add_sub_cancel_right]
+  have hqcd : quadratic S c.val d.val = c.val := congrArg Subtype.val hqR
+  have hinvc (v : X) : quadratic S d.val (quadratic S c.val v) = v := by
+    apply hcinj
+    rw [← fundamental_identity A, hqcd]
+  have hsquare : S (quadratic S c.val a) (quadratic S c.val a) =
+      quadratic S c.val (quadratic S a (S y y + δ • u)) := by
+    have h := fundamental_identity A c.val a u
+    simpa only [hUc, hccX] using h
+  obtain ⟨z, hz⟩ := square_quadratic_square A t.val (quadratic S c.val a)
+  rw [httX, hsquare, hinvc] at hz
+  exact ⟨z, hz⟩
+
+/-- Every quadratic representation preserves the actual original square cone of an arbitrary
+complete real six-law JB algebra. The square root belongs to the same original carrier. -/
+theorem quadratic_preserves_squares (A : Data X S u) (a x : X) :
+    ∃ y : X, quadratic S a (S x x) = S y y := by
+  have hc : Continuous (fun t : ℝ => quadratic S a (S x x + t • u)) :=
+    quadratic_continuous A continuous_const
+      (continuous_const.add (continuous_id.smul continuous_const))
+  have ht : Filter.Tendsto (fun t : ℝ => quadratic S a (S x x + t • u))
+      (𝓝[>] 0) (𝓝 (quadratic S a (S x x))) := by
+    simpa only [zero_smul, add_zero] using
+      (hc.continuousAt (x := 0)).tendsto.mono_left
+        (nhdsWithin_le_nhds (s := Set.Ioi (0 : ℝ)))
+  have hsq : ∃ y : X, S y y = quadratic S a (S x x) := by
+    apply (square_closed A).mem_of_tendsto ht
+    filter_upwards [self_mem_nhdsWithin] with t ht
+    exact arbitrary_quadratic_shift_square A a x t ht
+  obtain ⟨y, hy⟩ := hsq
+  exact ⟨y, hy.symm⟩
+
+#print axioms quadratic_preserves_squares
 
 end D5.S3.Topology.JBComplexification
