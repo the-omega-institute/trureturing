@@ -330,12 +330,335 @@ $$(((1) - ((4) \cdot ((\operatorname{PowerSeries}.\operatorname{X}: \operatornam
 
 Let w(n) be Matrix.mulVec (T^n) 1. Splitting a literal array into its first row and remaining rows gives a(n+1)=w(n)(0). The finite certificate and TransferMatrix.scalarRelationShift give a(n+4)=20*a(n+3)-64*a(n+2) for every natural n. The first three positive counts are 1,3,36. Comparing coefficients, including a(0)=0, proves the identity in PowerSeries Int. The counts are cast from Nat to Int before forming the series.
 
+**Definition 1.24 (Deciding colour precedence).**
+
+$$\forall (s: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{Seen}), (\forall (c: \operatorname{Fin}\left(8\right)), ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{instDecidableAllowed}\left(s, c\right): \operatorname{Decidable}\left((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{allowed}\left(s, c\right))\right)) = \operatorname{inferInstanceAs}\left((\operatorname{Decidable}\left(((((c = (2: \operatorname{Fin}\left(8\right))) \lor ((c = (3: \operatorname{Fin}\left(8\right))) \lor ((c = (4: \operatorname{Fin}\left(8\right))) \lor ((c = (5: \operatorname{Fin}\left(8\right))) \lor (c = (6: \operatorname{Fin}\left(8\right))))))) \Rightarrow (\operatorname{Prod}.\operatorname{fst}\left(s\right) = \operatorname{Bool}.\operatorname{true})) \land ((((c = (3: \operatorname{Fin}\left(8\right))) \lor ((c = (4: \operatorname{Fin}\left(8\right))) \lor (c = (5: \operatorname{Fin}\left(8\right))))) \Rightarrow (\operatorname{Prod}.\operatorname{fst}\left(\operatorname{Prod}.\operatorname{snd}\left(s\right)\right) = \operatorname{Bool}.\operatorname{true})) \land ((c = (4: \operatorname{Fin}\left(8\right))) \Rightarrow (\operatorname{Prod}.\operatorname{snd}\left(\operatorname{Prod}.\operatorname{snd}\left(s\right)\right) = \operatorname{Bool}.\operatorname{true}))))\right))\right)))$$
+
+*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip.instDecidableAllowed` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233196: eight-colour complementary-pair exclusion on a two-column strip*. URL: <https://oeis.org/A233196>.
+
+*Commentary.*
+
+The defining expression is inferInstanceAs for the three implications.
+
+**Theorem 1.25 (The first terminal flag).**
+
+$$\forall (n: \operatorname{Nat}), (\forall (s: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{Seen}), (\forall (f: (\operatorname{Fin}\left(n\right)) \to (\operatorname{Fin}\left(8\right))), ((\operatorname{Prod}.\operatorname{fst}\left(\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{finish}\left(s, f\right)\right) = \operatorname{Bool}.\operatorname{true}) \iff ((\operatorname{Prod}.\operatorname{fst}\left(s\right) = \operatorname{Bool}.\operatorname{true}) \lor (\exists (i: \operatorname{Fin}\left(n\right)), (f\left(i\right) = (1: \operatorname{Fin}\left(8\right))))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip.finish_fst` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233196: eight-colour complementary-pair exclusion on a two-column strip*. URL: <https://oeis.org/A233196>.
+
+*Commentary.*
+
+The first flag records an initial flag or an occurrence of colour one.
+
+**Theorem 1.26 (The second terminal flag).**
+
+$$\forall (n: \operatorname{Nat}), (\forall (s: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{Seen}), (\forall (f: (\operatorname{Fin}\left(n\right)) \to (\operatorname{Fin}\left(8\right))), ((\operatorname{Prod}.\operatorname{fst}\left(\operatorname{Prod}.\operatorname{snd}\left(\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{finish}\left(s, f\right)\right)\right) = \operatorname{Bool}.\operatorname{true}) \iff ((\operatorname{Prod}.\operatorname{fst}\left(\operatorname{Prod}.\operatorname{snd}\left(s\right)\right) = \operatorname{Bool}.\operatorname{true}) \lor (\exists (i: \operatorname{Fin}\left(n\right)), (f\left(i\right) = (2: \operatorname{Fin}\left(8\right))))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip.finish_snd` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233196: eight-colour complementary-pair exclusion on a two-column strip*. URL: <https://oeis.org/A233196>.
+
+*Commentary.*
+
+The second flag records an initial flag or an occurrence of colour two.
+
+**Theorem 1.27 (The third terminal flag).**
+
+$$\forall (n: \operatorname{Nat}), (\forall (s: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{Seen}), (\forall (f: (\operatorname{Fin}\left(n\right)) \to (\operatorname{Fin}\left(8\right))), ((\operatorname{Prod}.\operatorname{snd}\left(\operatorname{Prod}.\operatorname{snd}\left(\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{finish}\left(s, f\right)\right)\right) = \operatorname{Bool}.\operatorname{true}) \iff ((\operatorname{Prod}.\operatorname{snd}\left(\operatorname{Prod}.\operatorname{snd}\left(s\right)\right) = \operatorname{Bool}.\operatorname{true}) \lor (\exists (i: \operatorname{Fin}\left(n\right)), (f\left(i\right) = (3: \operatorname{Fin}\left(8\right))))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip.finish_third` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233196: eight-colour complementary-pair exclusion on a two-column strip*. URL: <https://oeis.org/A233196>.
+
+*Commentary.*
+
+The third flag records an initial flag or an occurrence of colour three.
+
+**Theorem 1.28 (The scanner is the earlier-colour condition).**
+
+$$\forall (n: \operatorname{Nat}), (\forall (s: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{Seen}), (\forall (f: (\operatorname{Fin}\left(n\right)) \to (\operatorname{Fin}\left(8\right))), ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{good}\left(s, f\right)) \iff (\forall (i: \operatorname{Fin}\left(n\right)), ((((f\left(i\right) = (2: \operatorname{Fin}\left(8\right))) \lor ((f\left(i\right) = (3: \operatorname{Fin}\left(8\right))) \lor ((f\left(i\right) = (4: \operatorname{Fin}\left(8\right))) \lor ((f\left(i\right) = (5: \operatorname{Fin}\left(8\right))) \lor (f\left(i\right) = (6: \operatorname{Fin}\left(8\right))))))) \Rightarrow ((\operatorname{Prod}.\operatorname{fst}\left(s\right) = \operatorname{Bool}.\operatorname{true}) \lor (\exists (j: \operatorname{Fin}\left(n\right)), ((j < i) \land (f\left(j\right) = (1: \operatorname{Fin}\left(8\right))))))) \land ((((f\left(i\right) = (3: \operatorname{Fin}\left(8\right))) \lor ((f\left(i\right) = (4: \operatorname{Fin}\left(8\right))) \lor (f\left(i\right) = (5: \operatorname{Fin}\left(8\right))))) \Rightarrow ((\operatorname{Prod}.\operatorname{fst}\left(\operatorname{Prod}.\operatorname{snd}\left(s\right)\right) = \operatorname{Bool}.\operatorname{true}) \lor (\exists (j: \operatorname{Fin}\left(n\right)), ((j < i) \land (f\left(j\right) = (2: \operatorname{Fin}\left(8\right))))))) \land ((f\left(i\right) = (4: \operatorname{Fin}\left(8\right))) \Rightarrow ((\operatorname{Prod}.\operatorname{snd}\left(\operatorname{Prod}.\operatorname{snd}\left(s\right)\right) = \operatorname{Bool}.\operatorname{true}) \lor (\exists (j: \operatorname{Fin}\left(n\right)), ((j < i) \land (f\left(j\right) = (3: \operatorname{Fin}\left(8\right)))))))))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip.good_iff` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233196: eight-colour complementary-pair exclusion on a two-column strip*. URL: <https://oeis.org/A233196>.
+
+*Commentary.*
+
+Each required colour occurs at a strictly earlier finite index or is already recorded by the initial flags.
+
+**Theorem 1.29 (A bond depends on complementary pairs).**
+
+$$\forall (x: \operatorname{Fin}\left(8\right)), (\forall (y: \operatorname{Fin}\left(8\right)), (((x \ne y) \land ((\operatorname{Fin}.\operatorname{val}\left(x\right)) + (\operatorname{Fin}.\operatorname{val}\left(y\right)) \ne 7)) \iff (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{beta}\left(x\right) \ne \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{beta}\left(y\right))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip.colour_bond_iff` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233196: eight-colour complementary-pair exclusion on a two-column strip*. URL: <https://oeis.org/A233196>.
+
+*Commentary.*
+
+Unequal colours that do not sum to seven have distinct pair labels.
+
+**Definition 1.30 (Deciding an earlier occurrence).**
+
+$$\forall (k: \operatorname{Nat}), (\forall (n: \operatorname{Nat}), (\forall (f: (\operatorname{Fin}\left(n\right)) \to (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{WidthRow}\left(k\right))), (\forall (i: \operatorname{Fin}\left(n\right)), (\forall (j: \operatorname{Fin}\left(k\right)), (\forall (d: \operatorname{Fin}\left(8\right)), ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{instDecidablePrior}\left(f, i, j, d\right): \operatorname{Decidable}\left((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{prior}\left(f, i, j, d\right))\right)) = \operatorname{inferInstanceAs}\left((\operatorname{Decidable}\left((\exists (r: \operatorname{Fin}\left(n\right)), (\exists (t: \operatorname{Fin}\left(k\right)), (((r < i) \lor ((r = i) \land (t < j))) \land (f\left(r\right)\left(t\right) = d))))\right))\right)))))))$$
+
+*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip.instDecidablePrior` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233196: eight-colour complementary-pair exclusion on a two-column strip*. URL: <https://oeis.org/A233196>.
+
+*Commentary.*
+
+The defining expression is inferInstanceAs for the finite existential.
+
+**Theorem 1.31 (Earlier occurrences in the first row).**
+
+$$\forall (k: \operatorname{Nat}), (\forall (n: \operatorname{Nat}), (\forall (c: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{WidthRow}\left(k\right)), (\forall (f: (\operatorname{Fin}\left(n\right)) \to (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{WidthRow}\left(k\right))), (\forall (j: \operatorname{Fin}\left(k\right)), (\forall (d: \operatorname{Fin}\left(8\right)), ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{prior}\left(\operatorname{Fin}.\operatorname{cons}\left(c, f\right), (0: \operatorname{Fin}\left((n) + (1)\right)), j, d\right)) \iff (\exists (t: \operatorname{Fin}\left(k\right)), ((t < j) \land (c\left(t\right) = d)))))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip.prior_zero` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233196: eight-colour complementary-pair exclusion on a two-column strip*. URL: <https://oeis.org/A233196>.
+
+*Commentary.*
+
+Only an earlier column in the first row can precede its current cell.
+
+**Theorem 1.32 (Earlier occurrences after the first row).**
+
+$$\forall (k: \operatorname{Nat}), (\forall (n: \operatorname{Nat}), (\forall (c: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{WidthRow}\left(k\right)), (\forall (f: (\operatorname{Fin}\left(n\right)) \to (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{WidthRow}\left(k\right))), (\forall (i: \operatorname{Fin}\left(n\right)), (\forall (j: \operatorname{Fin}\left(k\right)), (\forall (d: \operatorname{Fin}\left(8\right)), ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{prior}\left(\operatorname{Fin}.\operatorname{cons}\left(c, f\right), \operatorname{Fin}.\operatorname{succ}\left(i\right), j, d\right)) \iff ((\exists (t: \operatorname{Fin}\left(k\right)), (c\left(t\right) = d)) \lor (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{prior}\left(f, i, j, d\right))))))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip.prior_succ` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233196: eight-colour complementary-pair exclusion on a two-column strip*. URL: <https://oeis.org/A233196>.
+
+*Commentary.*
+
+An earlier occurrence is in the first row or earlier in the tail.
+
+**Theorem 1.33 (Splitting row-major normalization).**
+
+$$\forall (k: \operatorname{Nat}), (\forall (n: \operatorname{Nat}), (\forall (s: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{Seen}), (\forall (c: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{WidthRow}\left(k\right)), (\forall (f: (\operatorname{Fin}\left(n\right)) \to (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{WidthRow}\left(k\right))), ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{widthNormal}\left(s, \operatorname{Fin}.\operatorname{cons}\left(c, f\right)\right)) \iff ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{good}\left(s, c\right)) \land (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{widthNormal}\left(\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{finish}\left(s, c\right), f\right))))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip.normal_cons` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233196: eight-colour complementary-pair exclusion on a two-column strip*. URL: <https://oeis.org/A233196>.
+
+*Commentary.*
+
+The first row is scanned from s; its terminal flags initialize the tail.
+
+**Definition 1.34 (Literal legality at arbitrary positive width).**
+
+$$\forall (k: \operatorname{Nat}), ([\operatorname{NeZero}\left(k\right)] (\forall (R: (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{WidthRow}\left(k\right)) \to (\operatorname{Prop})), (\forall (E: (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{WidthRow}\left(k\right)) \to ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{WidthRow}\left(k\right)) \to (\operatorname{Prop}))), (\forall (n: \operatorname{Nat}), (\forall (A: ((\operatorname{Fin}\left(n\right)) \times (\operatorname{Fin}\left(k\right))) \to (\operatorname{Fin}\left(8\right))), (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{widthLegal}\left(R, E, A\right) = ((\exists (i: \operatorname{Fin}\left(n\right)), ((\operatorname{Fin}.\operatorname{val}\left(i\right) = 0) \land (A\left((i, (0: \operatorname{Fin}\left(k\right)))\right) = (0: \operatorname{Fin}\left(8\right))))) \land ((\forall (i: \operatorname{Fin}\left(n\right)), (R\left(((j: \operatorname{Fin}\left(k\right)) \mapsto A\left((i, j)\right))\right))) \land ((\forall (i: \operatorname{Fin}\left(n\right)), (\forall (h: (\operatorname{Fin}.\operatorname{val}\left(i\right)) + (1) < n), (E\left(((j: \operatorname{Fin}\left(k\right)) \mapsto A\left((i, j)\right)), ((j: \operatorname{Fin}\left(k\right)) \mapsto A\left(((\operatorname{Fin}.\operatorname{mk}\left((\operatorname{Fin}.\operatorname{val}\left(i\right)) + (1), h\right): \operatorname{Fin}\left(n\right)), j)\right))\right)))) \land (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{widthNormal}\left((\operatorname{Bool}.\operatorname{false}, (\operatorname{Bool}.\operatorname{false}, \operatorname{Bool}.\operatorname{false})), ((i: \operatorname{Fin}\left(n\right)) \mapsto ((j: \operatorname{Fin}\left(k\right)) \mapsto A\left((i, j)\right)))\right)))))))))))$$
+
+*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip.widthLegal` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233196: eight-colour complementary-pair exclusion on a two-column strip*. URL: <https://oeis.org/A233196>.
+
+*Commentary.*
+
+The first cell is zero, rows satisfy R, consecutive rows satisfy E, and all cells satisfy row-major normalization.
+
+**Definition 1.35 (Deciding normalization).**
+
+$$\forall (k: \operatorname{Nat}), (\forall (n: \operatorname{Nat}), (\forall (s: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{Seen}), (\forall (f: (\operatorname{Fin}\left(n\right)) \to (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{WidthRow}\left(k\right))), ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{widthInstDecidableNormal}\left(s, f\right): \operatorname{Decidable}\left((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{widthNormal}\left(s, f\right))\right)) = \operatorname{inferInstanceAs}\left((\operatorname{Decidable}\left((\forall (i: \operatorname{Fin}\left(n\right)), (\forall (j: \operatorname{Fin}\left(k\right)), ((((f\left(i\right)\left(j\right) = (2: \operatorname{Fin}\left(8\right))) \lor ((f\left(i\right)\left(j\right) = (3: \operatorname{Fin}\left(8\right))) \lor ((f\left(i\right)\left(j\right) = (4: \operatorname{Fin}\left(8\right))) \lor ((f\left(i\right)\left(j\right) = (5: \operatorname{Fin}\left(8\right))) \lor (f\left(i\right)\left(j\right) = (6: \operatorname{Fin}\left(8\right))))))) \Rightarrow ((\operatorname{Prod}.\operatorname{fst}\left(s\right) = \operatorname{Bool}.\operatorname{true}) \lor (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{prior}\left(f, i, j, (1: \operatorname{Fin}\left(8\right))\right)))) \land ((((f\left(i\right)\left(j\right) = (3: \operatorname{Fin}\left(8\right))) \lor ((f\left(i\right)\left(j\right) = (4: \operatorname{Fin}\left(8\right))) \lor (f\left(i\right)\left(j\right) = (5: \operatorname{Fin}\left(8\right))))) \Rightarrow ((\operatorname{Prod}.\operatorname{fst}\left(\operatorname{Prod}.\operatorname{snd}\left(s\right)\right) = \operatorname{Bool}.\operatorname{true}) \lor (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{prior}\left(f, i, j, (2: \operatorname{Fin}\left(8\right))\right)))) \land ((f\left(i\right)\left(j\right) = (4: \operatorname{Fin}\left(8\right))) \Rightarrow ((\operatorname{Prod}.\operatorname{snd}\left(\operatorname{Prod}.\operatorname{snd}\left(s\right)\right) = \operatorname{Bool}.\operatorname{true}) \lor (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{prior}\left(f, i, j, (3: \operatorname{Fin}\left(8\right))\right))))))))\right))\right)))))$$
+
+*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip.widthInstDecidableNormal` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233196: eight-colour complementary-pair exclusion on a two-column strip*. URL: <https://oeis.org/A233196>.
+
+*Commentary.*
+
+The defining expression is inferInstanceAs for the finite universal.
+
+**Definition 1.36 (Deciding a row scan).**
+
+$$\begin{aligned}\forall (s: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{Seen}), (\forall (c: (\operatorname{Fin}\left(0\right)) \to (\operatorname{Fin}\left(8\right))), ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{widthInstDecidableGood}\left(s, c\right): \operatorname{Decidable}\left((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{good}\left(s, c\right))\right)) = \operatorname{Decidable}.\operatorname{isTrue}\left(\operatorname{True}.\operatorname{intro}\right)))\\\forall (k: \operatorname{Nat}), (\forall (s: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{Seen}), (\forall (c: (\operatorname{Fin}\left((k) + (1)\right)) \to (\operatorname{Fin}\left(8\right))), ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{widthInstDecidableGood}\left(s, c\right): \operatorname{Decidable}\left((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{good}\left(s, c\right))\right)) = \operatorname{instDecidableAnd}\left(\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{instDecidableAllowed}\left(s, c\left((0: \operatorname{Fin}\left((k) + (1)\right))\right)\right), \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{widthInstDecidableGood}\left(\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{advance}\left(s, c\left((0: \operatorname{Fin}\left((k) + (1)\right))\right)\right), \operatorname{Fin}.\operatorname{tail}\left(c\right)\right)\right))))\end{aligned}$$
+
+*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip.widthInstDecidableGood` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233196: eight-colour complementary-pair exclusion on a two-column strip*. URL: <https://oeis.org/A233196>.
+
+*Commentary.*
+
+The defining induction combines the allowed decision with the tail decision.
+
+**Definition 1.37 (Deciding legality).**
+
+$$\forall (k: \operatorname{Nat}), ([\operatorname{NeZero}\left(k\right)] (\forall (R: (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{WidthRow}\left(k\right)) \to (\operatorname{Prop})), (\forall (E: (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{WidthRow}\left(k\right)) \to ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{WidthRow}\left(k\right)) \to (\operatorname{Prop}))), ([\operatorname{DecidablePred}\left(R\right)] ([\operatorname{DecidableRel}\left(E\right)] (\forall (n: \operatorname{Nat}), (\forall (A: ((\operatorname{Fin}\left(n\right)) \times (\operatorname{Fin}\left(k\right))) \to (\operatorname{Fin}\left(8\right))), ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{widthInstDecidableLegal}\left(R, E, A\right): \operatorname{Decidable}\left((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{widthLegal}\left(R, E, A\right))\right)) = \operatorname{inferInstanceAs}\left((\operatorname{Decidable}\left(((\exists (i: \operatorname{Fin}\left(n\right)), ((\operatorname{Fin}.\operatorname{val}\left(i\right) = 0) \land (A\left((i, (0: \operatorname{Fin}\left(k\right)))\right) = (0: \operatorname{Fin}\left(8\right))))) \land ((\forall (i: \operatorname{Fin}\left(n\right)), (R\left(((j: \operatorname{Fin}\left(k\right)) \mapsto A\left((i, j)\right))\right))) \land ((\forall (i: \operatorname{Fin}\left(n\right)), (\forall (h: (\operatorname{Fin}.\operatorname{val}\left(i\right)) + (1) < n), (E\left(((j: \operatorname{Fin}\left(k\right)) \mapsto A\left((i, j)\right)), ((j: \operatorname{Fin}\left(k\right)) \mapsto A\left(((\operatorname{Fin}.\operatorname{mk}\left((\operatorname{Fin}.\operatorname{val}\left(i\right)) + (1), h\right): \operatorname{Fin}\left(n\right)), j)\right))\right)))) \land (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{widthNormal}\left((\operatorname{Bool}.\operatorname{false}, (\operatorname{Bool}.\operatorname{false}, \operatorname{Bool}.\operatorname{false})), ((i: \operatorname{Fin}\left(n\right)) \mapsto ((j: \operatorname{Fin}\left(k\right)) \mapsto A\left((i, j)\right)))\right)))))\right))\right)))))))))$$
+
+*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip.widthInstDecidableLegal` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233196: eight-colour complementary-pair exclusion on a two-column strip*. URL: <https://oeis.org/A233196>.
+
+*Commentary.*
+
+The defining expression is inferInstanceAs for the four legality conjuncts.
+
+**Definition 1.38 (Legal normalized continuations).**
+
+$$\forall (k: \operatorname{Nat}), (\forall (B: \operatorname{Type}), (\forall (R: (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{WidthRow}\left(k\right)) \to (\operatorname{Prop})), (\forall (P: (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{WidthRow}\left(k\right)) \to (B)), (\forall (C: (B) \to ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{WidthRow}\left(k\right)) \to (\operatorname{Prop}))), ((\forall (s: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{Seen}), (\forall (p: B), (\forall (f: (\operatorname{Fin}\left(0\right)) \to (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{WidthRow}\left(k\right))), (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{TailGood}\left(R, P, C, s, p, f\right) = \operatorname{True})))) \land (\forall (n: \operatorname{Nat}), (\forall (s: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{Seen}), (\forall (p: B), (\forall (f: (\operatorname{Fin}\left((n) + (1)\right)) \to (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{WidthRow}\left(k\right))), (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{TailGood}\left(R, P, C, s, p, f\right) = ((R\left(f\left((0: \operatorname{Fin}\left((n) + (1)\right))\right)\right)) \land ((C\left(p, f\left((0: \operatorname{Fin}\left((n) + (1)\right))\right)\right)) \land ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{good}\left(s, f\left((0: \operatorname{Fin}\left((n) + (1)\right))\right)\right)) \land (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{TailGood}\left(R, P, C, \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{finish}\left(s, f\left((0: \operatorname{Fin}\left((n) + (1)\right))\right)\right), P\left(f\left((0: \operatorname{Fin}\left((n) + (1)\right))\right)\right), \operatorname{Fin}.\operatorname{tail}\left(f\right)\right)))))))))))))))$$
+
+*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip.TailGood` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233196: eight-colour complementary-pair exclusion on a two-column strip*. URL: <https://oeis.org/A233196>.
+
+*Commentary.*
+
+The empty continuation is true. A nonempty continuation checks R, C and good, then updates both the scanning flags and the boundary.
+
+**Definition 1.39 (Deciding a continuation).**
+
+$$\forall (k: \operatorname{Nat}), (\forall (B: \operatorname{Type}), (\forall (R: (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{WidthRow}\left(k\right)) \to (\operatorname{Prop})), (\forall (P: (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{WidthRow}\left(k\right)) \to (B)), (\forall (C: (B) \to ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{WidthRow}\left(k\right)) \to (\operatorname{Prop}))), ([instR: \operatorname{DecidablePred}\left(R\right)] ([instC: \operatorname{DecidableRel}\left(C\right)] (\begin{aligned}\forall (s: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{Seen}), (\forall (p: B), (\forall (f: (\operatorname{Fin}\left(0\right)) \to (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{WidthRow}\left(k\right))), ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{instDecidableTailGood}\left(R, P, C, s, p, f\right): \operatorname{Decidable}\left((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{TailGood}\left(R, P, C, s, p, f\right))\right)) = \operatorname{Decidable}.\operatorname{isTrue}\left(\operatorname{True}.\operatorname{intro}\right))))\\\forall (n: \operatorname{Nat}), (\forall (s: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{Seen}), (\forall (p: B), (\forall (f: (\operatorname{Fin}\left((n) + (1)\right)) \to (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{WidthRow}\left(k\right))), ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{instDecidableTailGood}\left(R, P, C, s, p, f\right): \operatorname{Decidable}\left((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{TailGood}\left(R, P, C, s, p, f\right))\right)) = \operatorname{instDecidableAnd}\left(instR\left(f\left((0: \operatorname{Fin}\left((n) + (1)\right))\right)\right), \operatorname{instDecidableAnd}\left(instC\left(p, f\left((0: \operatorname{Fin}\left((n) + (1)\right))\right)\right), \operatorname{instDecidableAnd}\left(\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{widthInstDecidableGood}\left(s, f\left((0: \operatorname{Fin}\left((n) + (1)\right))\right)\right), \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{instDecidableTailGood}\left(R, P, C, \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{finish}\left(s, f\left((0: \operatorname{Fin}\left((n) + (1)\right))\right)\right), P\left(f\left((0: \operatorname{Fin}\left((n) + (1)\right))\right)\right), \operatorname{Fin}.\operatorname{tail}\left(f\right)\right)\right)\right)\right)))))\end{aligned})))))))$$
+
+*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip.instDecidableTailGood` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233196: eight-colour complementary-pair exclusion on a two-column strip*. URL: <https://oeis.org/A233196>.
+
+*Commentary.*
+
+The defining induction decides the three current-row predicates and the recursive continuation with the updated flags and boundary.
+
+**Theorem 1.40 (Continuation legality in literal form).**
+
+$$\forall (k: \operatorname{Nat}), (\forall (B: \operatorname{Type}), (\forall (R: (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{WidthRow}\left(k\right)) \to (\operatorname{Prop})), (\forall (P: (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{WidthRow}\left(k\right)) \to (B)), (\forall (C: (B) \to ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{WidthRow}\left(k\right)) \to (\operatorname{Prop}))), (\forall (E: (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{WidthRow}\left(k\right)) \to ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{WidthRow}\left(k\right)) \to (\operatorname{Prop}))), (\forall (edge: \forall (c: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{WidthRow}\left(k\right)), (\forall (d: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{WidthRow}\left(k\right)), ((E\left(c, d\right)) \iff (C\left(P\left(c\right), d\right))))), (\forall (n: \operatorname{Nat}), (\forall (s: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{Seen}), (\forall (p: B), (\forall (f: (\operatorname{Fin}\left(n\right)) \to (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{WidthRow}\left(k\right))), ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{TailGood}\left(R, P, C, s, p, f\right)) \iff ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{widthNormal}\left(s, f\right)) \land ((\forall (i: \operatorname{Fin}\left(n\right)), (R\left(f\left(i\right)\right))) \land ((\forall (i: \operatorname{Fin}\left(n\right)), (\forall (h: (\operatorname{Fin}.\operatorname{val}\left(i\right)) + (1) < n), (E\left(f\left(i\right), f\left((\operatorname{Fin}.\operatorname{mk}\left((\operatorname{Fin}.\operatorname{val}\left(i\right)) + (1), h\right): \operatorname{Fin}\left(n\right))\right)\right)))) \land (\forall (h: 0 < n), (C\left(p, f\left((\operatorname{Fin}.\operatorname{mk}\left(0, h\right): \operatorname{Fin}\left(n\right))\right)\right)))))))))))))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip.tail_iff` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233196: eight-colour complementary-pair exclusion on a two-column strip*. URL: <https://oeis.org/A233196>.
+
+*Commentary.*
+
+Assume E c d is equivalent to C (P c) d. Normalization, row legality, consecutive-row bonds and the initial boundary condition are then equivalent to TailGood, including the empty continuation.
+
+**Definition 1.41 (One continuation transfer).**
+
+$$\forall (k: \operatorname{Nat}), (\forall (B: \operatorname{Type}), (\forall (R: (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{WidthRow}\left(k\right)) \to (\operatorname{Prop})), (\forall (P: (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{WidthRow}\left(k\right)) \to (B)), (\forall (C: (B) \to ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{WidthRow}\left(k\right)) \to (\operatorname{Prop}))), ([\operatorname{DecidablePred}\left(R\right)] ([\operatorname{DecidableRel}\left(C\right)] (\forall (w: (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{Seen}) \to ((B) \to (\operatorname{Int}))), (\forall (s: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{Seen}), (\forall (p: B), (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{widthStep}\left(R, P, C, w, s, p\right) = \sum_{(c: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{WidthRow}\left(k\right))} ((\operatorname{if} ((R\left(c\right)) \land ((C\left(p, c\right)) \land (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{good}\left(s, c\right)))) \operatorname{then} w\left(\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{finish}\left(s, c\right), P\left(c\right)\right) \operatorname{else} (0: \operatorname{Int})))))))))))))$$
+
+*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip.widthStep` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233196: eight-colour complementary-pair exclusion on a two-column strip*. URL: <https://oeis.org/A233196>.
+
+*Commentary.*
+
+The integer sum ranges over all rows, retaining exactly R, C and good.
+
+**Definition 1.42 (Continuation vectors at arbitrary width).**
+
+$$\forall (k: \operatorname{Nat}), (\forall (B: \operatorname{Type}), (\forall (R: (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{WidthRow}\left(k\right)) \to (\operatorname{Prop})), (\forall (P: (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{WidthRow}\left(k\right)) \to (B)), (\forall (C: (B) \to ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{WidthRow}\left(k\right)) \to (\operatorname{Prop}))), ([\operatorname{DecidablePred}\left(R\right)] ([\operatorname{DecidableRel}\left(C\right)] ((\forall (s: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{Seen}), (\forall (p: B), (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{widthV}\left(R, P, C, 0\right)\left(s, p\right) = (1: \operatorname{Int})))) \land (\forall (n: \operatorname{Nat}), (\forall (s: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{Seen}), (\forall (p: B), (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{widthV}\left(R, P, C, (n) + (1)\right)\left(s, p\right) = \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{widthStep}\left(R, P, C, \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{widthV}\left(R, P, C, n\right), s, p\right))))))))))))$$
+
+*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip.widthV` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233196: eight-colour complementary-pair exclusion on a two-column strip*. URL: <https://oeis.org/A233196>.
+
+*Commentary.*
+
+The empty continuation has weight one; each further row applies widthStep.
+
+**Definition 1.43 (The literal continuation count).**
+
+$$\forall (k: \operatorname{Nat}), (\forall (B: \operatorname{Type}), (\forall (R: (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{WidthRow}\left(k\right)) \to (\operatorname{Prop})), (\forall (P: (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{WidthRow}\left(k\right)) \to (B)), (\forall (C: (B) \to ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{WidthRow}\left(k\right)) \to (\operatorname{Prop}))), ([\operatorname{DecidablePred}\left(R\right)] ([\operatorname{DecidableRel}\left(C\right)] (\forall (n: \operatorname{Nat}), (\forall (s: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{Seen}), (\forall (p: B), (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{count}\left(R, P, C, n, s, p\right) = \sum_{(f: (\operatorname{Fin}\left(n\right)) \to (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{WidthRow}\left(k\right)))} ((\operatorname{if} (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{TailGood}\left(R, P, C, s, p, f\right)) \operatorname{then} (1: \operatorname{Int}) \operatorname{else} (0: \operatorname{Int})))))))))))))$$
+
+*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip.count` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233196: eight-colour complementary-pair exclusion on a two-column strip*. URL: <https://oeis.org/A233196>.
+
+*Commentary.*
+
+The integer sum ranges over every finite sequence of rows and tests TailGood.
+
+**Theorem 1.44 (Literal and recursive continuation counts).**
+
+$$\forall (k: \operatorname{Nat}), (\forall (B: \operatorname{Type}), (\forall (R: (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{WidthRow}\left(k\right)) \to (\operatorname{Prop})), (\forall (P: (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{WidthRow}\left(k\right)) \to (B)), (\forall (C: (B) \to ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{WidthRow}\left(k\right)) \to (\operatorname{Prop}))), ([\operatorname{DecidablePred}\left(R\right)] ([\operatorname{DecidableRel}\left(C\right)] (\forall (n: \operatorname{Nat}), (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{count}\left(R, P, C, n\right) = \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{widthV}\left(R, P, C, n\right)))))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip.count_eq_v` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233196: eight-colour complementary-pair exclusion on a two-column strip*. URL: <https://oeis.org/A233196>.
+
+*Commentary.*
+
+The equality is between functions of the scanning flags and boundary.
+
+**Definition 1.45 (First-row aggregation).**
+
+$$\forall (k: \operatorname{Nat}), ([\operatorname{NeZero}\left(k\right)] (\forall (B: \operatorname{Type}), (\forall (R: (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{WidthRow}\left(k\right)) \to (\operatorname{Prop})), (\forall (P: (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{WidthRow}\left(k\right)) \to (B)), ([\operatorname{DecidablePred}\left(R\right)] (\forall (w: (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{Seen}) \to ((B) \to (\operatorname{Int}))), (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{widthTotal}\left(R, P, w\right) = \sum_{(c: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{WidthRow}\left(k\right))} ((\operatorname{if} ((c\left((0: \operatorname{Fin}\left(k\right))\right) = (0: \operatorname{Fin}\left(8\right))) \land ((R\left(c\right)) \land (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{good}\left((\operatorname{Bool}.\operatorname{false}, (\operatorname{Bool}.\operatorname{false}, \operatorname{Bool}.\operatorname{false})), c\right)))) \operatorname{then} w\left(\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{finish}\left((\operatorname{Bool}.\operatorname{false}, (\operatorname{Bool}.\operatorname{false}, \operatorname{Bool}.\operatorname{false})), c\right), P\left(c\right)\right) \operatorname{else} (0: \operatorname{Int}))))))))))$$
+
+*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip.widthTotal` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233196: eight-colour complementary-pair exclusion on a two-column strip*. URL: <https://oeis.org/A233196>.
+
+*Commentary.*
+
+Positive width supplies column zero. The first row starts with all flags false.
+
+**Theorem 1.46 (Literal arrays equal transfer counts).**
+
+$$\forall (k: \operatorname{Nat}), ([\operatorname{NeZero}\left(k\right)] (\forall (B: \operatorname{Type}), (\forall (R: (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{WidthRow}\left(k\right)) \to (\operatorname{Prop})), (\forall (P: (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{WidthRow}\left(k\right)) \to (B)), (\forall (C: (B) \to ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{WidthRow}\left(k\right)) \to (\operatorname{Prop}))), ([\operatorname{DecidablePred}\left(R\right)] ([\operatorname{DecidableRel}\left(C\right)] (\forall (E: (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{WidthRow}\left(k\right)) \to ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{WidthRow}\left(k\right)) \to (\operatorname{Prop}))), ([\operatorname{DecidableRel}\left(E\right)] (\forall (edge: \forall (c: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{WidthRow}\left(k\right)), (\forall (d: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{WidthRow}\left(k\right)), ((E\left(c, d\right)) \iff (C\left(P\left(c\right), d\right))))), (\forall (n: \operatorname{Nat}), ((\operatorname{Nat}.\operatorname{cast}\left(\operatorname{Finset}.\operatorname{card}\left(\operatorname{Finset}.\operatorname{filter}\left(((A: ((\operatorname{Fin}\left((n) + (1)\right)) \times (\operatorname{Fin}\left(k\right))) \to (\operatorname{Fin}\left(8\right))) \mapsto (\exists (i: \operatorname{Fin}\left((n) + (1)\right)), ((\operatorname{Fin}.\operatorname{val}\left(i\right) = 0) \land (A\left((i, (0: \operatorname{Fin}\left(k\right)))\right) = (0: \operatorname{Fin}\left(8\right))))) \land ((\forall (i: \operatorname{Fin}\left((n) + (1)\right)), (R\left(((j: \operatorname{Fin}\left(k\right)) \mapsto A\left((i, j)\right))\right))) \land ((\forall (i: \operatorname{Fin}\left((n) + (1)\right)), (\forall (h: (\operatorname{Fin}.\operatorname{val}\left(i\right)) + (1) < (n) + (1)), (E\left(((j: \operatorname{Fin}\left(k\right)) \mapsto A\left((i, j)\right)), ((j: \operatorname{Fin}\left(k\right)) \mapsto A\left(((\operatorname{Fin}.\operatorname{mk}\left((\operatorname{Fin}.\operatorname{val}\left(i\right)) + (1), h\right): \operatorname{Fin}\left((n) + (1)\right)), j)\right))\right)))) \land (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{widthNormal}\left((\operatorname{Bool}.\operatorname{false}, (\operatorname{Bool}.\operatorname{false}, \operatorname{Bool}.\operatorname{false})), ((i: \operatorname{Fin}\left((n) + (1)\right)) \mapsto ((j: \operatorname{Fin}\left(k\right)) \mapsto A\left((i, j)\right)))\right))))), (\operatorname{Finset}.\operatorname{univ}: \operatorname{Finset}\left(((\operatorname{Fin}\left((n) + (1)\right)) \times (\operatorname{Fin}\left(k\right))) \to (\operatorname{Fin}\left(8\right))\right))\right)\right)\right): \operatorname{Int}) = \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{widthTotal}\left(R, P, \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233196Strip}.\operatorname{widthV}\left(R, P, C, n\right)\right)))))))))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip.width_counting_bridge` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233196: eight-colour complementary-pair exclusion on a two-column strip*. URL: <https://oeis.org/A233196>.
+
+*Commentary.*
+
+For every natural n and positive width k, the displayed literal filter on n+1 rows equals first-row aggregation of widthV n. Its cardinality is explicitly cast from Nat to Int.
+
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip.Legal`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip.Row`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip.Seen`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip.T`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip.TailGood`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip.Valid`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip.WidthRow`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip.a`
@@ -344,15 +667,37 @@ Let w(n) be Matrix.mulVec (T^n) 1. Splitting a literal array into its first row 
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip.beta`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip.bonds`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip.classCount`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip.colour_bond_iff`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip.compatible`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip.count`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip.count_eq_v`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip.finish`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip.finish_fst`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip.finish_snd`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip.finish_third`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip.finite_certificate`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip.firstCount`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip.good`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip.good_iff`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip.instDecidableAllowed`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip.instDecidablePrior`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip.instDecidableTailGood`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip.normal_cons`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip.pairs`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip.prior`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip.prior_succ`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip.prior_zero`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip.result`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip.rowLegal`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip.seenClass`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip.tail_iff`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip.widthInstDecidableGood`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip.widthInstDecidableLegal`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip.widthInstDecidableNormal`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip.widthLegal`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip.widthNormal`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip.widthStep`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip.widthTotal`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip.widthV`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip.width_counting_bridge`
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/TransferMatrix](TransferMatrix.md)
