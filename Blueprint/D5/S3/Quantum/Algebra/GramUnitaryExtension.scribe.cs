@@ -90,7 +90,10 @@ internal sealed class GramUnitaryExtensionDocument : IScribeDocumentDefinition
                     "finite n at least one, norm(zeta)<=1 and the point (1,0,0) give norm(Z)=norm(W)=1; " +
                     "conjugate transpose and scalar multiplication give equal column Gram fields. " +
                     "The equal-Gram theorem supplies a unitary at every point, including both copies " +
-                    "of each pole. Restrict these pointwise choices to the top: its induced topology " +
+                    "of each pole. Writing p+=(0,0,1) and p-=(0,0,-1), their common zero set " +
+                    "{x : Z(x)=0 and W(x)=0} is exactly {(p+,0),(p+,1),(p-,0),(p-,1)}: " +
+                    "for n at least one, Z(x)=0 if and only if zeta(pi(x))=0, which holds exactly " +
+                    "over these two sphere poles. Restrict these pointwise choices to the top: its induced topology " +
                     "is discrete, so they form a continuous exact solution there. Density also implies " +
                     "that two continuous matrix fields agreeing on the top agree everywhere; this " +
                     "uniqueness statement does not assert existence of an extension.")),
