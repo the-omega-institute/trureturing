@@ -1,0 +1,11 @@
+## 495. 不同指数的联合矩：交叉核的消失与平方的正相关
+
+沿用 §494 的 $\mu_X,U_X,c_k$ 与记号。固定 $0<\theta_1<\theta_2<1$、实值 $g_1,g_2\in L^1(0,1)$，令 $\kappa_i=1-\theta_i$、$r_i=\kappa_i/2$、$Q_i=Q(g_i)$，
+
+$$
+B_{i,X}(s,x)=\frac{D_{sx^{\theta_i}}(x)}{\sqrt{x^{\theta_i}\log x}},\qquad
+Z_{i,X}=\frac{\mathcal T_{\theta_i,g_i}}{\sqrt{X^{1-\theta_i}\log X}}\qquad(i=1,2).
+$$
+
+对整数 $p,q\ge0$、$k=p+q\ge1$，令 $i_\ell=1$（$\ell\le p$）、$i_\ell=2$（$\ell>p$），$\gamma_{p,q}=pr_1+qr_2$，$c_{p,q}=\int_1^2u^{\gamma_{p,q}}\frac{du}{u\log2}$。
+
