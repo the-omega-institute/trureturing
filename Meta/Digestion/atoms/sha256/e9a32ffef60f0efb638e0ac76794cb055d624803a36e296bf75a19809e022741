@@ -1,0 +1,8 @@
+**定理 34.2（复 Hilbert 中的局部层析）。** 在有限维复 Hilbert 张量积中，定义 34.1 由线性代数推出。取 $\mathrm{Herm}(H_A)$、$\mathrm{Herm}(H_B)$ 的基 $\{A_i\}$、$\{B_j\}$。每个 Hermitian 算子是两个正算子的差，而每个正算子乘一个足够小的标量就是效应；因此产品效应的线性张成包含所有 $A_i\otimes B_j$。若 $\Delta=\rho-\sigma$ 对所有产品效应的迹配对为零，则对全部 $A_i\otimes B_j$ 也为零，故
+
+$$
+\Delta=0.
+$$
+
+这证明复 Hilbert 的产品比较没有遗漏整体方向。证毕。
+
