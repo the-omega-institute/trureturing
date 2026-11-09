@@ -19,8 +19,8 @@ import Mathlib.Algebra.Order.BigOperators.Group.Finset
 set_option autoImplicit false
 noncomputable section
 attribute [local instance] Classical.propDecidable
-open Set Function
-open scoped Pointwise
+open Set Function MeasureTheory Filter
+open scoped Pointwise Topology
 open SymbolicDynamics.FullShift
 
 universe u v
@@ -526,5 +526,106 @@ private theorem relative_limit_contradiction {ι : Type*} {l : Filter ι} [Filte
   have hle : delta ≤ (0 : ℝ) :=
     le_of_tendsto_of_tendsto tendsto_const_nhds hlim hbound
   exact (not_le_of_gt hdelta) hle
+
+/-- Myhill's theorem on arbitrary nonempty strongly irreducible subshifts over a
+right-counting amenable group, with no countability or finite-type hypothesis. -/
+theorem myhill [Finite A] [DiscreteTopology A]
+    (ham : letI : MeasurableSpace G := ⊤
+      NeBot (maxFoelner Gᵐᵒᵖ (Measure.count : Measure G)))
+    (X : MulSubshift A G) (hX : X.carrier.Nonempty)
+    (hSI0 : ∃ Delta : Finset G, SI X Delta)
+    (tau : Cfg X → Cfg X) (htau : Continuous tau)
+    (hequiv : ∀ g x, tau (paperShift X g x) = paperShift X g (tau x))
+    (hpre : ∀ x y : Cfg X, {g | x.val g ≠ y.val g}.Finite → tau x = tau y → x = y) :
+    Surjective tau := by
+  classical
+  obtain ⟨Delta0, hSI0⟩ := hSI0
+  let Delta := insert 1 Delta0
+  have h1 : 1 ∈ Delta := Finset.mem_insert_self _ _
+  have hSI : SI X Delta := by
+    intro F K hsep x y
+    apply hSI0 F K (hsep.mono_left ?_) x y
+    rintro g ⟨f, hf, d, hd, rfl⟩
+    refine Set.mul_mem_mul hf ?_
+    change d⁻¹ ∈ Delta
+    exact Finset.mem_insert_of_mem hd
+  obtain ⟨M, hmem⟩ := finite_memory X tau htau
+  by_contra hns
+  obtain ⟨C, hC, p, hmissing⟩ := missing_pattern X tau htau hequiv hns
+  obtain ⟨x0, hx0⟩ := hX
+  let xbase : Cfg X := ⟨x0, hx0⟩
+  letI : Nonempty A := ⟨x0 1⟩
+  let E := C * Delta⁻¹
+  have hE : E.Nonempty := by
+    obtain ⟨c, hc⟩ := hC
+    refine ⟨c, ?_⟩
+    simpa using Finset.mul_mem_mul hc (Finset.inv_mem_inv h1)
+  have hCE : (C : Set G) * (Delta : Set G)⁻¹ ⊆ (E : Set G) := by
+    intro g hg
+    simpa only [E, Finset.coe_mul, Finset.coe_inv] using hg
+  let K := insert 1 (E ∪ (Delta⁻¹ * M⁻¹))
+  have hK : 1 ∈ K := Finset.mem_insert_self _ _
+  letI : MeasurableSpace G := ⊤
+  letI : NeBot (maxFoelner Gᵐᵒᵖ (Measure.count : Measure G)) := ham
+  let l := maxFoelner Gᵐᵒᵖ (Measure.count : Measure G)
+  let B : Set G → Finset G := AmenableGardenOfEden.finiteShape
+  obtain ⟨hpos, hboundary⟩ := AmenableGardenOfEden.maximal_shapes (G := G)
+  let U : Set G → Finset G := fun i => B i * K
+  have hBU (i : Set G) : B i ⊆ U i := by
+    intro g hg
+    simpa only [mul_one] using Finset.mul_mem_mul hg hK
+  have hMU (i : Set G) : (B i * Delta⁻¹) * M⁻¹ ⊆ U i := by
+    rw [mul_assoc]
+    apply Finset.mul_subset_mul_left
+    intro k hk
+    exact Finset.mem_insert_of_mem (Finset.mem_union_right _ hk)
+  have hpack (i : Set G) := AmenableGardenOfEden.exists_dense_packing E (B i) hE
+  choose T hTF hdisjoint hdense using hpack
+  have hin (i : Set G) : ∀ t ∈ T i, tile t E ⊆ (U i : Set G) := by
+    intro t ht g hg
+    obtain ⟨e, he, rfl⟩ := hg
+    exact Finset.mul_mem_mul (hTF i ht)
+      (Finset.mem_insert_of_mem (Finset.mem_union_left _ he))
+  have hdis (i : Set G) : ∀ t ∈ T i, ∀ s ∈ T i, t ≠ s →
+      Disjoint (tile t E) (tile s E) := by
+    intro t ht s hs hne
+    apply Set.disjoint_left.mpr
+    rintro g ⟨e, he, rfl⟩ ⟨d, hd, hed⟩
+    exact hdisjoint i t ht s hs hne ⟨e, he⟩ ⟨d, hd⟩ hed.symm
+  have hcardpos (F : Finset G) : 0 < Nat.card (PatX X F) := by
+    letI : Nonempty (PatX X F) := ⟨⟨_, ⟨xbase, rfl⟩⟩⟩
+    exact Nat.card_pos
+  have hcount (i : Set G) : Nat.card (PatX X E) ^ (T i).card ≤
+      Nat.card A ^ (U i \ B i).card * (Nat.card (PatX X E) - 1) ^ (T i).card := by
+    have hlower := preinjective_pattern_lower X Delta (B i) M (U i) hSI
+      xbase tau hmem hequiv hpre (hMU i)
+    have hupper := image_avoidance_bound X Delta C E (U i) (T i) p tau
+      ⟨x0, hx0⟩ h1 hSI hCE (hin i) (hdis i) hmissing
+    have hpad := pattern_padding X (B i) (U i) (hBU i)
+    have hh : Nat.card (PatX X (B i)) * Nat.card (PatX X E) ^ (T i).card ≤
+        Nat.card (PatX X (B i)) * (Nat.card A ^ (U i \ B i).card *
+          (Nat.card (PatX X E) - 1) ^ (T i).card) := by
+      calc
+        _ ≤ Nat.card (ImagePat X tau (U i)) * Nat.card (PatX X E) ^ (T i).card :=
+          Nat.mul_le_mul_right _ hlower
+        _ ≤ Nat.card (PatX X (U i)) * (Nat.card (PatX X E) - 1) ^ (T i).card := hupper
+        _ ≤ (Nat.card (PatX X (B i)) * Nat.card A ^ (U i \ B i).card) *
+            (Nat.card (PatX X E) - 1) ^ (T i).card := Nat.mul_le_mul_right _ hpad
+        _ = _ := by ring
+    nlinarith only [hh, hcardpos (B i)]
+  have hratio := AmenableGardenOfEden.mul_ratio_tendsto B hpos hboundary K hK
+  have hextra : Tendsto (fun i => ((U i \ B i).card : ℝ) / (B i).card) l (𝓝 0) := by
+    have hz : Tendsto (fun i => ((U i).card : ℝ) / (B i).card - 1) l (𝓝 0) := by
+      simpa only [sub_self, U] using hratio.sub_const 1
+    apply hz.congr'
+    filter_upwards [hpos] with i hi
+    have hv : (0 : ℝ) < (B i).card := by exact_mod_cast hi.card_pos
+    rw [Finset.card_sdiff_of_subset (hBU i), Nat.cast_sub (Finset.card_le_card (hBU i)),
+      sub_div, div_self hv.ne']
+  apply relative_limit_contradiction (l := l) (a := Nat.card A)
+    (rho := Nat.card (PatX X E)) (b := E.card) Nat.card_pos (hcardpos E) hE.card_pos
+    (fun i => (B i).card) (fun i => (U i \ B i).card) (fun i => (T i).card) ?_ hextra
+  filter_upwards [hpos] with i hi
+  exact ⟨hi.card_pos, hdense i, hcount i⟩
 
 end D5.S1.Dynamics.Symbolic.StronglyIrreducibleMyhill
