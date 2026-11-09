@@ -1,0 +1,36 @@
+### 15.5. 相干相位与共同无限律的既有接口
+
+相位结论使用命题 8.10 的额外编码 $\mathbb C^2\otimes\mathbb C^2$、$|++\rangle$ 制备及可调用门
+$U_f(\tau)|ab\rangle=e^{-i\tau f_{ab}}|ab\rangle$，取该命题的 $\theta=-\tau$。
+系数矩阵为 $\frac12\bigl(\begin{smallmatrix}e^{-i\tau f_0}&e^{-i\tau f_3}\\e^{-i\tau f_1}&e^{-i\tau f_{13}}\end{smallmatrix}\bigr)$；
+因而可分恰在 $\tau J_f\in2\pi\mathbb Z$。
+[相位续卷命题 C-77.2](AURIC_FIB_ATOM_HIDDEN_RELATIONS_STATISTICS_PHASE_AND_SEAMS_CONTINUATION.md)的归一化四角谱公式给约化特征值
+$(1\pm|\cos(\tau J_f/2)|)/2$，它与该处条件底面矩阵采用同一归一化。
+$q_+$ 不产生纠缠，$q_\times$ 在 $\tau=\pi/4$ 给两个特征值 $1/2$，
+同时五态占位概率始终是 $(1/4,1/4,0,1/4,1/4)$。
+这里需要张量结构、相干制备、相位控制和分辨相位的读口；经典五点标签不供应这些权限。
+相同的 $J_f$ 在两种明定模型中分别控制线性目标响应与四角相位，并不把两种操作合同等同。
+
+共同未来律的接口也须另给。固定滤过参考概率 $P$，若 $L_t\ge0$ 为 $\mathcal F_t$ 可测且 $\mathbb E_P L_t=1$，
+令 $V_t(A)=\mathbb E_P[\mathbf1_A L_t]$，则前缀相容的条件是
+$\mathbb E_P[L_t\mid\mathcal F_s]=L_s$ 对每个 $s\le t$ 几乎处处成立：
+两边对每个 $A\in\mathcal F_s$ 积分正是限制测度相等，条件期望的唯一性给反向。
+逐个归一化不足以保证这个条件；无限路径扩张还需相应可测空间与限制映射的扩张条件。
+[原生长时卷命题 66.1](FIB_NATIVE_LONG_TIME_PHASE_QUANTITATIVE_BOUNDS.md)已经在其连续路径空间内以真鞅及可数前缀扩张构造共同律。
+
+具体沿用该卷定义 65.1 的同一来源、确定初态、原坐标、时钟及 G/C/N/F 前提，
+取 $0<\alpha<1/2,r>0,\widehat m>0$，定理 68.1 给一个不随终止 horizon 改变的 $V_*$，满足
+
+$$
+D((V_*)_T\Vert\mathbb P_T)
+=\lambda T+\frac{\pi^2\widehat m}{4r^2(1-2\alpha)}T^{1-2\alpha}
+ +o(T^{1-2\alpha}),\qquad
+|X_t|<r(1+t)^\alpha\quad\hbox{对所有 }t\ge0.
+$$
+
+故对每个固定 $b>0$，$\sup_{0\le s\le b}|X_{Ts}|/\sqrt T\le r(1+Tb)^\alpha/\sqrt T\to0$，
+而同卷定义 41.1、定理 42.2 的 $\mathbb Q$ 投影极限是方差率 $2\widehat m$ 的非退化 Brownian 运动。
+结合定理 55.1 的 $\mathbb Q$ 熵率 $\lambda$，这正是同一主导熵率不能选择该扩散行为的已有应用。
+推论 68.2 保留齐次 height-only 控制类与移动管约束类的不同量词；
+此处不独立认证原生前提链，也不将上述连续路径过程从五态矩阵推出。
+

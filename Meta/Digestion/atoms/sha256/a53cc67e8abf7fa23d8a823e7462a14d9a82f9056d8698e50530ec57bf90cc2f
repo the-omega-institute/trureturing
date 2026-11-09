@@ -1,0 +1,29 @@
+### 16.3. 有序载体对应、条件更新与固定规则标签
+
+为明确经典图模型与 §8 量子模型共同消费什么，可把上述证明放在有限维有序载体上：取实空间 $V$、$D=\dim V$、闭尖生成凸锥 $C$，以及在 $C\setminus\{0\}$ 上严格正的线性质量 $u$。规范化状态为 $\Omega=C\cap\{u=1\}$。许可分支满足 $T_{a,o}C\subseteq C$、$u\sum_oT_{a,o}=u$，末端族 $\mathcal G\subseteq[0,u]$ 有限且含 $u$。
+
+§8 的词效果和维数增长证明只用线性对偶，故环境维数由 $d^2$ 换成 $D$，初维数换成 $\dim\operatorname{span}\mathcal G$。其仿射必要性仍成立，因为生成锥的内部非空，规范化内部点 $v_*$ 对每个 $x\in\ker u$ 都允许足够小的 $v_*\pm tx\in\Omega$。这供应了整个质量一超平面的相对内部，而不是只给一个受限状态子族。
+
+令 $N$ 为全部词效果的消去子。它是包含于初始效果消去子中的最大共同分支不变子空间：$g(T_bx)=(T_b^*g)(x)$ 给正向不变性；反过来，从任一初始盲且共同不变的子空间出发，任意词更新后仍被初始效果消去，故包含于 $N$。因此 $q:V\to V/N$ 上有良定义的 $\overline T_b$ 和 $\bar u$；当 $u(T_bv)>0$ 时，
+
+$$
+q\left(\frac{T_bv}{u(T_bv)}\right)
+=\frac{\overline T_bq(v)}{\bar u(\overline T_bq(v))}.
+$$
+
+分母为零时不定义条件状态。经典对应是 $C=\mathbb R_+^{\Sigma_G}$、$u=\mathbf1^{\mathsf T}$；量子对应是 Hermitian 实空间、半正定锥、迹，且分支额外要求完全正。这个统计商不供应一个实际可调用的压缩或恢复通道，§8.8 已给出这种差别。
+
+若规则本身未知，不能在某个已知规则的 $N_G$ 维空间内把它静默消去。有限候选标签集 $\Theta$ 的一种明确联合模型是
+
+$$
+V=\bigoplus_{\vartheta\in\Theta}V_\vartheta,\quad
+C=\bigoplus_\vartheta C_\vartheta,\quad
+T_b=\bigoplus_\vartheta T_b^{(\vartheta)},\quad
+v=(w_\vartheta v_\vartheta)_\vartheta,\quad
+\sum_\vartheta w_\vartheta=1.
+$$
+
+各分支保持标签，$u(v)=\sum_\vartheta u_\vartheta(v_\vartheta)$。权重是显式给定的先验，不是从记录自动产生的事实；观测后的改变只是条件化。各候选使用同一外部请求与输出标签，拒绝也须可见。于是可在维数 $\sum_\vartheta\dim V_\vartheta$ 上应用同一接口。无先验时保留兼容的联合来源集合；无限规则类也不能仅凭此有限直和公式获得同样的维数结论。
+
+§15.4 已有中位交换动作 $\tau_2$，只交换 $0$ 与 $2$。若该动作确实许可且已知，则 $Z'=p_0$，原三均值连同 $Z'$ 恢复 $\kappa=Z'+X+Y+Z-1$，五态总体律全部可识别。该结论只识别固定仪器下的来源概率。另配[变化优先卷 §11](AURIC_FIB_ATOM_CHANGE_FIRST_RELATIONAL_FIELD_AND_INTEGRABILITY.md)的整数固定解析族，并同时运输普通乘法，整数制备下的加乘结果仍相同：标定函数固定整数，普通整数加乘仍留在整数内。这个逐项事实已足以给共同整数协议同律，不必重做其算术表示证明。状态辨识不识别非整数上的规则延拓；普通相容算术若不固定整数，则不在这一特例的结论范围内。
+
