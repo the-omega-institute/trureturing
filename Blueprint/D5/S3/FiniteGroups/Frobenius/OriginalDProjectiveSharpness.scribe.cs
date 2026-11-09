@@ -12,7 +12,7 @@ internal sealed class OriginalDProjectiveSharpnessDocument : IScribeDocumentDefi
         Blocks(Describe.Lean(DescribeId.Create("original-d-modular-sharpness"),
             DeclarationHandle.Create("D5/S3/FiniteGroups/Frobenius/OriginalDProjectiveSharpness.originalD_counterexample"),
             H("Nonprojectivity with full original-D hypotheses over F7"),
-            StatementSource.FromAuthor(Disp(Not(F.Id("projectivity_claim")))),
+            StatementSource.FromAuthor(Disp(Not(Projectivity()))),
             AssessedProvenance.FromRepo(), Blocks(
             Paragraph(Text("The closed proposition projectivity_claim asserts that the actual group-algebra module rho.asModule is projective over k[G]. Here k is ZMod 7, G is DihedralGroup 21, and V is the two-dimensional coordinate space Fin 2 to k. The refutation consumes a single constructed countermodel carrying all thirteen facts displayed below; its final clause contradicts precisely that positive projectivity assertion.")),
             Paragraph(Math(Disp(Countermodel()))),
@@ -31,10 +31,8 @@ internal sealed class OriginalDProjectiveSharpnessDocument : IScribeDocumentDefi
         Formula rho = F.Id("rho"), z = F.Id("g"), x = F.Id("n");
         Formula Restriction(Formula subgroup) =>
             App(Q("MonoidHom", "comp"), rho, App(Q("Subgroup", "subtype"), subgroup));
-        Formula module = App(Q("Representation", "asModule"), rho);
-        Formula algebra = App(F.Id("MonoidAlgebra"), k, g);
         Formula cast = Seq(Open, App(Q("Nat", "card"), n), Sp, Colon, Sp, k, Close);
-        Formula result = Not(App(Q("Module", "Projective"), algebra, module));
+        Formula result = Not(Projectivity());
         result = And(Not(App(F.Id("IsUnit"), cast)), result);
         result = And(Eq(App(Q("Nat", "card"), n), D(2, 1)), result);
         result = And(App(Q("Representation", "IsTrivial"), Restriction(h)), result);
@@ -51,6 +49,9 @@ internal sealed class OriginalDProjectiveSharpnessDocument : IScribeDocumentDefi
         return And(App(F.Id("Finite"), g), result);
     }
 
+    private static Formula Projectivity() => App(Q("Module", "Projective"),
+        App(F.Id("MonoidAlgebra"), F.Id("k"), F.Id("G")),
+        App(Q("Representation", "asModule"), F.Id("rho")));
     private static Formula Q(string owner, string name) =>
         Seq(Operatorname, Grp(F.Id(owner)), Dot, Operatorname, Grp(F.Id(name)));
     private static Formula App(Formula f, params Formula[] args) => new Formula.Apply(f, [.. args]);
