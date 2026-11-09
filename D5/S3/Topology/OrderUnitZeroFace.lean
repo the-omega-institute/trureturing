@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Topology/OrderUnitZeroFace
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/Topology/OrderUnitNorm]
+   anchors: [mathlib/module/Mathlib.Topology.Connected.Clopen]
    utility: none
    digest: Zero-face preservation and second-order unit nilpotence force unit annihilation. -/
 
