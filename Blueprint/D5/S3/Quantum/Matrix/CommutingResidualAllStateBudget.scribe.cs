@@ -21,7 +21,13 @@ internal sealed class CommutingResidualAllStateBudgetDocument : IScribeDocumentD
                 + "For mass m=Re phi(I)>0 its original readings satisfy the homogeneous strict budget. "
                 + "In particular every normalized state satisfies Re phi(g)²+Re phi(k)²<Re phi(x²). "
                 + "At mass zero the functional is zero and the non-strict budget is equality. "
-                + "Direct multiplication also gives r²=J(z,r)²=I/256, so neither residual vanishes.",DescribeRole.Theorem),
+                + "Direct multiplication also gives r²=J(z,r)²=I/256, so neither residual vanishes. "
+                + "For P(p,q)=x²+(p²+q²)I−2pk−2qg and f(w)=w⁴+2w²+3, direct expansion gives "
+                + "det P=|f(p−iq)|²+4q²−(q²/32)((p²+q²+3)²+4p²+2)+q⁴/4096. "
+                + "Put s=p²+q². When s≤6 the parenthesized coefficient is at most 107; the q=0 branch uses f(p)>0. "
+                + "When s≥6, the reverse triangle inequality gives |f(p−iq)|≥s²/2, while (s+3)²+4p²+2≤3s². "
+                + "These estimates give det P>0 for every real p,q. The identity det x=3 gives positive definiteness of x², "
+                + "and the connected-family bridge turns this nonvanishing determinant into positive definiteness of every P(p,q).",DescribeRole.Theorem),
             Entry("claim","The zero-residual implication",Claim(),
                 "The assertion quantifies over all Hermitian H,X,R in the same four-dimensional algebra, with H²=I. "
                 + "Even(H,X)=(X+HXH)/2, J(H,X)=(HX+XH)/2 and Response(H,X,R)=(i/2)(HX−XH)+R. "
@@ -113,7 +119,7 @@ internal static class NonsingularPencilStateBudgetExposition
                     Paragraph(Text("The compact-sphere openness argument is adapted from TauCetiProject/TauCeti, "
                         + "commit 8c1eaed7cd02e6fee2db1f66783fb8f03025d76d, TauCeti/Analysis/Matrix/PosDef.lean. "
                         + "The spectral, connectedness, and positive-functional ingredients are classical. "
-                        + "This theorem supplies a conditional bridge: a concrete table still has to establish "
+                        + "This theorem supplies a conditional bridge. The fixed table establishes "
                         + "the nonvanishing determinant on the entire real plane and positivity of E. "
                         + "It does not establish a total response, a complete PB family, or physical source contracts."))),
                 DescribeRole.Theorem);
