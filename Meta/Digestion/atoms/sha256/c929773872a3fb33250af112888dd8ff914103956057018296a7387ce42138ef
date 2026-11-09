@@ -1,0 +1,28 @@
+**定理 23.3（Born 读出作为比较的对角值）。** 对任意效应 $0\le E\le1$，定义
+
+$$
+p(E):=\omega(E).
+$$
+
+则 $0\le p(E)\le1$。若 $E_1,\ldots,E_m$ 是有限 POVM，满足 $\sum_iE_i=1$，则
+
+$$
+\sum_i p(E_i)=1.
+$$
+
+若 $\mathcal A=M_d(\mathbb C)$，则存在唯一密度矩阵 $\rho$，使
+
+$$
+p(E)=\operatorname{Tr}(\rho E).
+$$
+
+**证明。** $E\ge0$ 且 $1-E\ge0$，正性给出
+
+$$
+0\le\omega(E)\le\omega(1)=1.
+$$
+
+线性给出 POVM 的归一化。有限维时，线性泛函在矩阵单位基下可唯一写成 $\omega(A)=\operatorname{Tr}(\rho A)$；对所有 $A^*A$ 的正性迫使 $\rho\succeq0$，而 $\omega(1)=1$ 迫使 $\operatorname{Tr}\rho=1$。反向由迹的正性成立。证毕。
+
+因此在这个候选中，Born 公式不是另加的数值规则，而是同一正比较状态对效应的对角读出。它绕开了 Gleason 的投影维数门槛，但代价是先假定了事件所在的 $C^*$-代数和乘法兼容性。
+
