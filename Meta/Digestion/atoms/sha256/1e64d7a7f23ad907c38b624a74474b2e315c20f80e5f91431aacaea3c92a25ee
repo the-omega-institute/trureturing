@@ -1,0 +1,96 @@
+**Proposition 174.1 (the invariant pair identity and one-sided no-go).** Let $v\in V_-$ be nonzero, let $w$ be a bounded real Borel function with $J^*w=w$ almost everywhere, and suppose the tuple $u^{(t;v,w)}$ of (158.1) is legal for a nonzero $t$. Put
+
+$$
+F=f_0=f_1,
+\qquad q=f_3,
+\qquad p=f_B=\frac14,
+\tag{174.1}
+$$
+
+and define
+
+$$
+A=\mathcal C(v,v,q)=q_{003}(v)>0,
+\qquad B_w=\mathcal C(F,F,w),
+\qquad C_w=\mathcal C(v,v,w).
+\tag{174.2}
+$$
+
+Then
+
+$$
+\begin{aligned}
+\Delta\bigl(u^{(t;v,w)}\bigr)_{003}
+ &=t^2(A+B_w)+t^4C_w,\\
+\Delta\bigl(u^{(t;v,w)}\bigr)_{013}
+ =\Delta\bigl(u^{(t;v,w)}\bigr)_{103}
+ &=-t^2A+t^2B_w-t^4C_w,\\
+\Delta\bigl(u^{(t;v,w)}\bigr)_{113}
+ &=\Delta\bigl(u^{(t;v,w)}\bigr)_{003},
+\end{aligned}
+\tag{174.3}
+$$
+
+and therefore
+
+$$
+\Delta\bigl(u^{(t;v,w)}\bigr)_{003}
++\Delta\bigl(u^{(t;v,w)}\bigr)_{013}
+=\Delta\bigl(u^{(t;v,w)}\bigr)_{003}
++\Delta\bigl(u^{(t;v,w)}\bigr)_{103}
+=2t^2B_w.
+\tag{174.4}
+$$
+
+If $w\le0$ almost everywhere and $w$ is nonzero as an $m$-class, then
+
+$$
+B_w=\int_Gw\,\psi_0\,dm<0,
+\qquad
+\psi_0=P\bigl(FP(gF)\bigr)>0\quad m\text{-a.e.},
+\tag{174.5}
+$$
+
+so the two mixed coordinates in (174.3) cannot both vanish. In the same one-sided case, with $h=-w\ge0$,
+
+$$
+\begin{aligned}
+\Delta\bigl(u^{(t;v,w)}\bigr)_{0BB}
+=\Delta\bigl(u^{(t;v,w)}\bigr)_{1BB}
+={}&t^2\bigl[\mathcal C(F,h,p)+\mathcal C(F,p,h)\bigr]\\
+&+t^4\mathcal C(F,h,h)>0.
+\end{aligned}
+\tag{174.6}
+$$
+
+Finally, if both $003$ and $013$ vanish (or both $003$ and $103$ vanish), then $B_w=0$. This forces $w$ to have nonzero positive and negative parts: $w$ cannot be zero by $A>0$, and a one-signed nonzero $w$ has a nonzero pairing in (174.5).
+
+*Proof.* The functions $g,F,q,p,w$ are $J$-even and $J^*v=-v$. Thus every trilinear term with exactly one occurrence of $v$ vanishes. Expanding the four first-label pairs in (158.1) leaves the even terms
+
+$$
+\Delta_{003}=t^2\bigl[\mathcal C(v,v,q)+\mathcal C(F,F,w)\bigr]+t^4\mathcal C(v,v,w),
+$$
+
+$$
+\Delta_{013}=\Delta_{103}
+=t^2\bigl[-\mathcal C(v,v,q)+\mathcal C(F,F,w)\bigr]-t^4\mathcal C(v,v,w),
+$$
+
+with the same-sign $(1,1)$ expression equal to the $(0,0)$ expression. This proves (174.3)--(174.4).
+
+Self-adjointness of $P$ moves the two occurrences of $P$ in $\mathcal C(F,F,w)$ onto $w$, giving $B_w=\langle w,\psi_0\rangle$. Proposition 158.3 supplies $\psi_0>0$ almost everywhere, so (174.5) follows for a nonzero one-sided $w$.
+
+For (174.6), the two $B$ coordinates equal $p+t^2h$. Expanding their two slots gives the two terms linear in $h$, the quadratic term $t^4\mathcal C(F,h,h)$, and terms with exactly one $v$, which vanish by parity. Positivity preservation, self-adjointness and $P1=1$ give
+
+$$
+\mathcal C(F,h,p)+\mathcal C(F,p,h)
+=p\int_GgF\bigl(Ph+P^2h\bigr)\,dm>0,
+\qquad
+\mathcal C(F,h,h)\ge0
+$$
+
+when $h\ge0$ is nonzero. Thus (174.6) is strict. The final sign-changing conclusion follows from (174.4)--(174.5). $\square$
+
+The result turns the next exact-cancellation route into a structural requirement: an invariant terminal correction that cancels both mixed coordinates must change sign. The one-sided families of Sections 171--173 are therefore exhausted by a sign obstruction, while sign-changing corrections, multiple first-order directions, full-law partition realization, $H43$, $SRS\text{-}20$, $F_{64}$, physical succession and Lean/kernel formalization remain open.
+
+

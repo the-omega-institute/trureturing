@@ -9,6 +9,7 @@ internal sealed class PositiveNewtonSumsDocument : IScribeDocumentDefinition
     private const string Prefix = "D5/S3/Combinatorics/PowerSeries/PositiveNewtonSums.";
     private static readonly LibraryNoteRef Source =
         LibraryNoteRef.Create("D5/L/RecurrenceComposition/wojnar2018a301420");
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula V(string s) => F.Id(s);
     private static Formula P(Formula x) => Seq(Open, x, Close);
     private static Formula Call(string s, params Formula[] xs) =>
@@ -60,7 +61,7 @@ internal sealed class PositiveNewtonSumsDocument : IScribeDocumentDefinition
     private static DocumentBlock Node(string name, string title, Formula body, string prose,
         bool literature = false, bool theorem = false,
         OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
-        DescribeId.Create("posnewton-" + name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
+        DescribeId.Create("posnewton-" + name.ToLowerInvariant().Replace('_', '-')), DeclarationHandle.Create(Prefix + name),
         H(title), StatementSource.FromAuthor(Disp(body)),
         literature ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
         Blocks(Paragraph(Text(prose))), theorem ? DescribeRole.Theorem : DescribeRole.Definition, resolution);
@@ -115,6 +116,12 @@ internal sealed class PositiveNewtonSumsDocument : IScribeDocumentDefinition
                 Seq(Call("recurrence", V("a")), Iff, P(RecurrenceBody()))),
                 "The displayed relation is the FORMULA-field recurrence of A301420, interpreted at every n at least one. "
                 + "It makes no asymptotic claim.", true),
+            Node("logarithmic_derivative", "The formal logarithmic derivative", All("p", Call("PowerSeries", Rat()),
+                new Formula.Logic(Eqn(Call("constantCoeff", V("p")), D(0)), FormulaLogicOperator.Implies,
+                    Eqn(Mul(Call("derivative", Call("subst", V("p"), Call("log", Rat()))),
+                        Parenthesized(Add(D(1), V("p")))), Call("derivative", V("p"))))),
+                "For any rational formal series p with constant coefficient zero, differentiation of log(1+p), followed by multiplication by 1+p, gives the derivative of p. Here subst(p,f) substitutes p into f.",
+                theorem: true),
             Node("result", "Generating function and recurrence", Seq(
                 Eqn(V("positiveSeries"), Div(Numerator(), Denominator())), Land,
                 Call("recurrence", V("positiveCoefficient"))),

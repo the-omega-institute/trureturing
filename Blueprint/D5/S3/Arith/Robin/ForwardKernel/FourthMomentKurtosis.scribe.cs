@@ -29,9 +29,13 @@ internal sealed class FourthMomentKurtosisDocument : IScribeDocumentDefinition
                     "For locally bounded Borel measurable E, a valid exponent band "
                     + "0<alpha<theta<beta<1 with the cumulative variance asymptotic, "
                     + "and a measurable integrable real profile g, E[Z_X^2] tends to "
-                    + "(2^(1-theta)-1)*Q(g)/log(2). The profile mean-square "
-                    + "asymptotic is divided by log(2), and the square of the "
-                    + "normalizing square root equals X^(1-theta)*log(X) for X>1."))),
+                    + "(2^(1-theta)-1)*Q(g)/log(2). Apply moment transfer at order two "
+                    + "to the variance-band interface with kernel "
+                    + "kappa*dyadicMacroMoment(kappa)*min(s,t). Its profile-weighted "
+                    + "integral is kappa*dyadicMacroMoment(kappa)*Q(g), since the "
+                    + "Brownian pair kernel integrates to Q(g). The formula "
+                    + "dyadicMacroMoment(kappa)=(2^kappa-1)/(kappa*log(2)) "
+                    + "gives the stated limit."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("fixed-dyadic-positive-excess-kurtosis"),

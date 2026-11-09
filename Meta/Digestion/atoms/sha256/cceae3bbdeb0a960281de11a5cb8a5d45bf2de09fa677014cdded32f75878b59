@@ -1,0 +1,17 @@
+#### 定理 8.2：密度、观测与平方律
+
+对 $\mathcal M=\bigoplus_jM_{d_j}(\mathbb C)$，每个归一正线性泛函唯一为
+
+$$
+\omega(X)=\sum_j\operatorname{Tr}(\rho_jX_j),\quad
+\rho_j\ge0,\quad\sum_j\operatorname{Tr}\rho_j=1.
+$$
+
+单块的纯态为秩一投影；一般纯态只占一个块且在该块秩一。 POVM $E_k\ge0,\sum_kE_k=I$ 给归一概率 $p_k=\omega(E_k)$。 对正交投影测量和纯态，$p_k=\|P_k\psi\|^2$。
+
+**证明。**
+
+每块的非退化迹配对给唯一自伴 $\rho_j$。在所有向量秩一投影上非负等价于各 $\rho_j\ge0$， 单位评价给总迹一。反向由正算子迹乘积非负成立。 若有两个正本征权重，可作一正一负的小扰动并保持归一，故不是极点； 若仅一个权重为一，其秩一支撑不能非平凡分解为正态凸组合，故为极点。 POVM 式的非负与归一直接求和得到；纯投影概率由 $\operatorname{Tr}(|\psi\rangle\langle\psi|P_k)=\langle\psi,P_k\psi\rangle=\|P_k\psi\|^2$ 得出。
+
+$\square$
+

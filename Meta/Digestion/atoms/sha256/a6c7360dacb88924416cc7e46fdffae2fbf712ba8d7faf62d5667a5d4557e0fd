@@ -1,0 +1,44 @@
+**定理 225.1（原纯对的共同相容性与加权面积）。** 在 223.1 下，任取原
+
+$$
+a=\alpha h+\beta b+\gamma j,\qquad
+c=\alpha'h+\beta'b+\gamma'j.
+$$
+
+写 $w=(\beta,\gamma)$、$w'=(\beta',\gamma')$。同一个实际旧输出 $d=D(a,c)$ 满足
+
+$$
+\boxed{
+\begin{gathered}
+a\circ d=c\circ d=0,\qquad [R,d]=0,\\
+d^2=\|\alpha w'-\alpha'w\|^2R
+       +\det(w,w')^2R^2.
+\end{gathered}}
+\tag{225.1}
+$$
+
+证明。已付三轴关系只展开已知 Jordan 乘法，给
+
+$$
+\begin{aligned}
+a^2&=\alpha^2u+\|w\|^2R,&
+c^2&=(\alpha')^2u+\|w'\|^2R,\\
+a\circ c&=\alpha\alpha'u+(w\cdot w')R.
+\end{aligned}
+\tag{225.2}
+$$
+
+这正是 224.1，其 $M_1$ 是 $w,w'$ 的实 Gram 矩阵。只要至少一个横向系数向量非零，$M_1\ne0$，224.1 同时支付正交、面积和 $[R,d]=0$。若两个横向系数都为零，两原输入均为 $h$ 的实倍数，185.1 的比例零值给 $d=0$。这也包含 $R=0$ 的退化情形，不要求三个实际生成元总是线性无关。
+
+将 (225.2) 代入已得面积式，系数 $u$ 项抵消，$R$ 项为
+
+$$
+\alpha^2\|w'\|^2+(\alpha')^2\|w\|^2
+-2\alpha\alpha'(w\cdot w')
+=\|\alpha w'-\alpha'w\|^2;
+$$
+
+$R^2$ 项为 $\|w\|^2\|w'\|^2-(w\cdot w')^2=\det(w,w')^2$。这两步是成熟实 Gram 恒等式在本条承重推导中的直接计算，不另列为新几何定理。∎
+
+例如实际原输入 $a=h+b$、$c=h+2b+j$ 有 $a\circ c=u+2R$、$a^2-c^2=-4R$；$R$ 非标量时，208.1 的两项直接准入条件都不成立。224–225 仍给同一个 $D(a,c)$ 与 $R$ 交换，且其平方为 $2R+R^2$。这是扩大原输入范围，不将已有面积恒等式换名计作独立新结果。
+

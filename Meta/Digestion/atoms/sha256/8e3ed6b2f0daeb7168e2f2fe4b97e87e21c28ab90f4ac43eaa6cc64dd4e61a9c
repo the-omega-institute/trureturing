@@ -1,0 +1,39 @@
+**Definition 208.1 (the original pair-calibrated hard fiber and its middle-cell laws).** Retain the entire original telescope of Definition 175.1 and [Appendix III Definition 155.1](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III_APPENDIX_III.md#155-positive-bb3-inputs-finite-coupled-improvement-and-source-ratio-selection). In particular, $\theta=(a,\eta,d,b)$ ranges over every original finite $a,\eta,d>0$ and every permitted representative $b$. The group $G=H^1\times\mathbb R$, its product and raw Haar measure $\mu$, source $e$, unit-source field $L\Gamma=\delta_e$, coefficient-one $w_*$, coefficient-positive normalized $h$, actual selector $A_{\rm src}=\rho C_{\rm src}$, full source-inclusive conservative self-adjoint $K$, measure $m=h^2\mu$, clock and epochs $2d,3d,4d$ remain unchanged. Keep $P=T_d$, $g=g_{2d}$, $q=f_3=cb$, $f_B=p=1/4$ and $f_0=f_1=(3/4-q)/2$. Let $D=(D_i)_{i\in\mathcal L}$ be one whole-$G$ deterministic Borel partition, with $u_i=\mathbf1_{D_i}$, satisfying
+
+$$
+\begin{gathered}
+\int_G(P^\ell g)u_i\,dm=\int_G(P^\ell g)f_i\,dm
+\quad(\ell=0,1,2;\ i\in\mathcal L),\\
+Q_r(u_i,u_k)=Q_r(f_i,f_k)
+\quad(r=12,13,23;\ i,k\in\mathcal L).
+\end{gathered}
+\tag{208.1}
+$$
+
+Here $Q_r$ are precisely the ordered pair forms of Appendix III (150.2). Thus (208.1) holds for every $D\in\mathscr F_{154}(\theta)$; no full-zero hypothesis is imposed. Write
+
+$$
+\begin{gathered}
+v=Pg=g_{3d},\qquad G_0=\|g\|_\infty<\infty,\\
+\pi_j=\int_{D_j}v\,dm=\int_Gvf_j\,dm>0,
+\qquad d\nu_j=\frac{u_jv}{\pi_j}\,dm
+\quad(j\in\mathcal L).
+\end{gathered}
+\tag{208.2}
+$$
+
+Positivity of $v$ and of each $f_j$ almost everywhere gives the strict inequality. The measure $\nu_j$ is the actual middle-time law conditioned on $Z_{3d}\in D_j$. All ratios and conditional expectations below are defined almost everywhere under the unchanged middle-time law $v\,m$; since $v>0$ almost everywhere, this has the same null sets as $m$. Put
+
+$$
+\begin{gathered}
+t=Pu_B,\qquad s=\frac{P(gu_B)}{v},\qquad
+\chi=\frac{P(g^2)}{v^2}-1,\\
+A_j=\mathbb E_{\nu_j}(t-p)^2,\qquad
+B_j=\mathbb E_{\nu_j}(s-p)^2,\qquad
+H_j=\mathbb E_{\nu_j}\bigl[\chi t(1-t)\bigr].
+\end{gathered}
+\tag{208.3}
+$$
+
+The functions $s$ and $t$ are, respectively, the conditional probabilities of the first and last $B$ labels given the original middle state. In particular, $t$ is this same partition's own propagated terminal indicator. For the conditional refinement only, write $k_j=\operatorname*{ess\,sup}_{D_j}\chi$ with respect to $v\,m$ and assume $k_j<\infty$.
+
