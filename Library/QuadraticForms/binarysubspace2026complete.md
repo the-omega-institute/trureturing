@@ -15,6 +15,12 @@ strata_touched:
   - D5/S3/Combinatorics/Orthogonality/SixBitLineChromatic
   - D5/S3/Combinatorics/Orthogonality/BinaryLineGraph
   - D5/S3/Combinatorics/Orthogonality/SixBitLineTransfer
+  - D5/S3/Combinatorics/Orthogonality/SplitSubmoduleLift
+  - D5/S3/Combinatorics/Orthogonality/SixDimensionalLiftGeometry
+  - D5/S3/Combinatorics/Orthogonality/SixDimensionalProfiles
+  - D5/S3/QuadraticForms/RadicalQuotientIsometry
+  - D5/S3/Combinatorics/Orthogonality/OrthogonalitySymmetryObstruction
+  - D5/S3/Combinatorics/Orthogonality/LiftFeatureObstruction
 license: research-material rights unresolved; original supplied source attribution preserved
 triage: anchor
 ---
@@ -47,11 +53,14 @@ obligations are catalogue_covers, catalogue_proper, clique_valid and
 clique_adjacent. Historical Lean 4.33.0 provenance includes propext,
 Classical.choice, Quot.sound and four native-evaluation axioms. Current
 compilation must print the actual current transitive closure; a successful
-source transfer does not erase this historical trust boundary. Current source
-requests `decide +kernel` for the same four predicates and unchanged supplied
-tables; this requests ordinary kernel reduction instead of adding a new native
-axiom. It establishes no current success until compilation and axiom reporting
-actually complete. Generic Catalogue.complete
+source transfer does not erase this historical trust boundary. The current Lean4.35.0 admission checks the unchanged tables and complete
+180800 extension witnesses through45 kernel-checked row blocks, with the
+original catalogue assembly and actual Submodule transfer. The current
+51-module report SHA256 is
+07ee39557e1ad3156849e79f9843d4c3d482267d73116189ea3cd8b50c3e67ca.
+It records source equality and only the standard three axioms. Native Scribe,
+deposit, all48 header checks and official freezing passed for that increment.
+These author checks do not certify whole-result review or final-head CI. Generic Catalogue.complete
 and Catalogue.colorable have the standard axiom boundary.
 
 PR1 has the separate exact line result twelve, including its weighted
@@ -89,7 +98,50 @@ a second all-even input supplies the extremal profile condition. The numerical
 checks, total weight221, every color fiber, and the unchanged literal upper
 witness are all required by the actual chromatic proof. A development-time
 Python evaluation observed bound19 with35439 recursion nodes (4347 distinct
-states); that observation is not Lean or normal acceptance evidence. The
-current candidate still requires its successful native build, target-object
-transport and current report before any accepted claim. It never runs or
+states); that observation is not Lean or normal acceptance evidence. The current line owner and all-line transport compiled with source-matched
+scoped reports and standard axiom closures. Its Scribe and native deposit
+checks passed; the later affected-consumer report SHA256 is
+b02f04fe93cddab4e1206c243f0d795c38b31bc2d18de8ab5fb86c5ee64a535e5.
+These are scoped author checkpoints, not whole-result acceptance. It never runs or
 reopens paused n7 case exclusions.
+
+The geometry uses precisely T=span(3,12,48), S=span(1,4,16). Every
+actual Submodule, including zero and the whole space, has the unique full
+quotient-valued K/P/f representation. Exact H/K source intersections, perfect
+annihilator/projection recovery, full fiber counts and the entire X/Y/Z
+criterion are retained. The fixed clique has all15 nonzero labels and the
+original15/14/11 availability sizes. The complete actual nonclique profile
+image has240 elements. The actual entire radical quotient and descended
+isometries supply the original line profile/quotient obstruction; the full
+orthogonal stabilizer and entire clique-label action supply both original
+full-group refutations. The exact original planes span(13,6) and span(9,14)
+have equal full K/P, quotient-map rank/image/kernel, and a label-fixing shear
+orbit. They refute those proposed coloring rules on the complete graph domain.
+No proper-subgroup or auxiliary-choice obstruction is inferred.
+
+The PR1 geometry and lift diagnostics remain distinct finite reports:
+240 exact profiles with139 multicolored; quotient-dimension enrichment gives
+263 profiles with160 multicolored and alternating status gives no further
+split; rank/image/kernel gives1662 groups with160 multicolored, resolving87
+of the original139 and leaving52; the requested dimension/value-list encoding
+gives836 groups,640 single-color and196 multicolored, with267 patterns crossing
+exact K/P domains; exact K/P and complete basis values reconstruct all2809
+nonclique vertices. These counts retain the original diagnostic/checker and
+report provenance, and are not inferred merely from the new reconstruction
+theorem. The omitted-domain line counterexample and the full placement
+reconstruction are mathematical statements distinct from these statistics.
+The original reports also preserve all earlier failed methods and versioned
+unknown search records. Current kernel acceptance of the universal geometry
+and exact plane witnesses does not itself reproduce every diagnostic report.
+
+The supplied written n7 proof uses the original basis(3,12,48,65,71,95),
+quadratic value counts36/28, all288 even heptads,135 Lagrangians and8505
+point/hyperplane incidences. Its universal eight-Lagrangian completion rests
+on the written31-point hyperplane argument; the nine explicit partial-spread
+controls are not an enumeration of all partial spreads. It yields the written
+lower bound19, including the deleted characteristic-line graph. Its capacity,
+saturation and characteristic-class deficit restrictions retain their exact
+original hypotheses; surviving profiles are necessary, not asserted realized.
+The current canonical n7 implementation remains unfinished. Exactn7 and a
+nineteen-color witness remain open; no paused exclusions or new coloring search have
+been run by this return.
