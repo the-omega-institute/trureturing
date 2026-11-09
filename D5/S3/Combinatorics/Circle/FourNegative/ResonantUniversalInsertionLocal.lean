@@ -156,4 +156,42 @@ theorem resonant_low_row_parity {w ell k m : ℕ}
       nlinarith
     · nlinarith [hma, hc0]
 
+theorem resonant_pair_midpoint (H C c w x y a p : ℤ) (b : Bool)
+    (hC : 0 ≤ C) (hc : 0 ≤ c) (hCc : C + c ≤ w)
+    (hp : 0 ≤ p) (hrel : y = 2 * x - C + w * (if b then 1 else 0))
+    (hx : 0 ≤ x ∧ x ≤ H ∧ 0 ≤ y ∧ y ≤ 2 * H + 1)
+    (hz : 0 ≤ x + a + p ∧ x + a + p ≤ H ∧
+      0 ≤ y + 2 * a - c + 2 * p ∧ y + 2 * a - c + 2 * p ≤ 2 * H + 1)
+    (hrow : (0 ≤ a ∧ 0 ≤ 2 * a - c) ∨
+      (a ≤ 0 ∧ p - a ≤ H - w)) :
+    if x + p ≤ corridorUpper H C w b then
+      0 ≤ x + p ∧ x + p ≤ H ∧ 0 ≤ y + 2 * p ∧ y + 2 * p ≤ 2 * H + 1
+    else
+      0 ≤ x + a ∧ x + a ≤ H ∧ 0 ≤ y + 2 * a - c ∧
+        y + 2 * a - c ≤ 2 * H + 1 := by
+  have hxcor := (corridor_iff H C w x b ⟨hC, by omega⟩).mp (by
+    exact ⟨hx.1, hx.2.1, by nlinarith [hrel], by nlinarith [hrel]⟩)
+  have hzcor := (corridor_iff H (C + c) w (x + a + p) b
+    ⟨by omega, hCc⟩).mp (by
+      exact ⟨hz.1, hz.2.1, by nlinarith [hrel], by nlinarith [hrel]⟩)
+  split_ifs with hfit
+  · have hm := (corridor_iff H C w (x + p) b ⟨hC, by omega⟩).mpr
+      ⟨by omega, hfit⟩
+    have heq : 2 * (x + p) - C + w * (if b then 1 else 0) = y + 2 * p := by
+      rw [hrel]
+      ring
+    simpa only [heq] using hm
+  · rcases hrow with hpos | hneg
+    · exact ⟨by omega, by omega, by omega, by omega⟩
+    · have hm := negative_pair_corridor H C w c x a p b hC hc hCc
+        hxcor hzcor hneg.1 hp hneg.2
+      rw [if_neg hfit] at hm
+      have hm' := (corridor_iff H (C + c) w (x + a) b
+        ⟨by omega, hCc⟩).mpr hm
+      have heq : 2 * (x + a) - (C + c) + w * (if b then 1 else 0) =
+          y + 2 * a - c := by
+        rw [hrel]
+        ring
+      simpa only [heq] using hm'
+
 end D5.S3.Combinatorics.Circle.FourNegative.ResonantUniversalInsertion
