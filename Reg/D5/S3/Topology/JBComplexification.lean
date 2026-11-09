@@ -2,7 +2,7 @@ import D5.S3.Topology.JBComplexification
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
 
-/-! Exact source applications and the full norm-core source family. Variation,
+/-! Exact source applications and the full norm-core and original quadratic source families. Variation,
 sensitivity, observational dependence and source-coordinate selection remain
 unsupplied; this partial audit asserts no four-slot registration. -/
 
@@ -83,7 +83,7 @@ abbrev inverseSignature : Signature where
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output P _ := P.X → P.X
+  Output _ P := P.X → P.X
   Anchor := Empty
   finiteAnchor := inferInstance
 
@@ -152,6 +152,7 @@ theorem original_product (z w : GeneratedComplex A a) :
     z * w = ⟨z.re * w.re - z.im * w.im, z.re * w.im + z.im * w.re⟩ := by
   apply QuadraticAlgebra.ext <;> simp [sub_eq_add_neg]
 
+include A in
 theorem original_U [CompleteSpace X] (x : X) :
     ∃ y : X, (2 : ℝ) • S a (S a (S x x)) - S (S a a) (S x x) = S y y :=
   quadratic_preserves_squares A a x

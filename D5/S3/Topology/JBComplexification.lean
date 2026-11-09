@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Algebra.QuadraticAlgebra.Basic]
    utility: none
-   digest: The square-sum norm on the complexification of an associative real JB algebra. -/
+   digest: Original-norm JB complexification and quadratic preservation of the original square cone. -/
 
 module
 
@@ -20,7 +20,7 @@ public import Mathlib.Analysis.CStarAlgebra.Basic
 public import Mathlib.Analysis.Real.Sqrt
 public import Mathlib.Topology.MetricSpace.Antilipschitz
 
-/-! Complexification with the original JB square-sum norm. -/
+/-! Original-norm complexification and quadratic positivity for complete raw JB algebras. -/
 
 @[expose] public section
 noncomputable section
@@ -795,7 +795,9 @@ private theorem positive_root_inverse {R : Type*} [NormedCommRing R] [NormedAlge
     linarith [hcpos φ]
   have hu : IsUnit (QuadraticAlgebra.C c : Z) := by
     have h := hgunit.map g.symm.toRingHom
-    simpa only [RingHom.coe_coe, StarAlgEquiv.symm_apply_apply] using h
+    change IsUnit (g.symm (g (QuadraticAlgebra.C c))) at h
+    rw [g.symm_apply_apply] at h
+    exact h
   obtain ⟨v, hv⟩ := hu
   let d : R := (↑v⁻¹ : Z).re
   have hcd : c * d = 1 := by
