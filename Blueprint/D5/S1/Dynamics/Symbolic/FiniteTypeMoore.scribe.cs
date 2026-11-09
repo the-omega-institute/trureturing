@@ -34,10 +34,7 @@ internal sealed class FiniteTypeMooreDocument : IScribeDocumentDefinition
     private static Formula Arr(Formula a, Formula b) => Rel(Par(a), To, b);
     private static Formula Mul(Formula a, Formula b) => Rel(a, Star, b);
     private static Formula Pow(Formula a, Formula b) => Seq(Par(a), Caret, Grp(b));
-    private static Formula Inv(Formula a) => Pow(a, Seq(Minus, D(1)));
-    private static Formula Card(Formula a) => Call("Nat.card", a);
     private static Formula Cfg => Call("Cfg", I("X"));
-    private static Formula Config => Arr(I("G"), I("A"));
     private static Formula Setup => Seq(All("u", Call("Universe")), All("v", Call("Universe")),
         All("G", Call("Type", I("u"))), All("A", Call("Type", I("v"))),
         OpenBracket, Call("Group", I("G")), CloseBracket, Comma,
@@ -83,9 +80,12 @@ internal sealed class FiniteTypeMooreDocument : IScribeDocumentDefinition
         Paragraph(Text("Let G be an arbitrary group and let A be a finite discrete alphabet, in independent universes. "
             + "X is a native closed invariant subshift, and tau is a continuous equivariant endomorphism of its actual carrier Cfg(X). "
             + "All products have the displayed order. There is no countability, finite generation or commutativity hypothesis.")),
+        Paragraph(Text("SI(X,Delta) says that any two occurring patterns on finite supports F and K have a common realization in X whenever F*Delta inverse is disjoint from K. "
+            + "The original finite Delta may be empty or asymmetric. The counting hypothesis gives G the top measurable space and assumes that maxFoelner(G opposite,Measure.count) is nontrivial. "
+            + "The action is (op e) acting on g by g*e. Finite nonempty shapes are taken from this filter over arbitrary subsets of G, without choosing a countable sequence.")),
         Desc("finite-type", "IsFiniteType", "A finite family of native forbidden patterns", St(Setup, XSetup,
             Rel(FiniteType, Iff, Seq(Ex("a", I("A")),
-                Seq(I("letI"), Sp, Call("Inhabited", I("A")), Colon, Eq, Call("default", I("a")), Comma),
+                Seq(I("letI"), Sp, Call("Inhabited", I("A")), Colon, Eq, Call("Inhabited.mk", I("a")), Comma),
                 Ex("B", Call("Finset", Call("Pattern", I("A"), I("G")))),
                 Rel(Call("carrier", I("X")), Eq, Call("mulForbidden", I("B")))))),
             "The padding value a is chosen existentially. Every member of B has its own arbitrary finite support and gives a forbidden word on that support. "
@@ -101,7 +101,10 @@ internal sealed class FiniteTypeMooreDocument : IScribeDocumentDefinition
             + "Take the finite collar C=D union D*S inverse*S, retaining the order d*s inverse*r. Put p=x restricted to C and q=y restricted to C; D is nonempty and contained in C, so p and q are distinct occurring words. "
             + "For a configuration agreeing with x on C, replace C by y. A translated forbidden support touching D lies wholly in C and therefore sees y; a support missing D sees the original configuration. Both avoid every forbidden word. "
             + "The same dichotomy for a translated memory window gives the entire equality of tau-images, using the actual collision tau(x)=tau(y). Equivariance transports the construction to each translate t*C. "
-            + "The result stays inside X, equals q on the translated support, and agrees with the original configuration at every point outside it."),
+            + "The result stays inside X, equals q on the translated support, and agrees with the original configuration at every point outside it. "
+            + "To combine the two local tests, extend the identity output of tau from occurring memory words and pair it with the Boolean test for avoiding all forbidden words. "
+            + "This defines a full-shift local rule on A times Bool. On a configuration encoded from X its complete output is (tau(z)(g),true) at every g. "
+            + "AmenableGardenOfEden.localMap_piecewise_of_collar preserves this paired output. The Boolean coordinate recovers membership in X before the first coordinate recovers equality of the native tau-images."),
         Paragraph(Text("For finitely many disjoint C-tiles, replace p by q wherever p occurs. Each replacement preserves membership and the complete image, and disjointness preserves exclusions already obtained. "
             + "Choose such a representative for each actual image pattern on F. Its restriction to U determines the image pattern whenever F*M is contained in U. "
             + "This injects the actual image patterns into the occurring U-patterns that avoid p on every selected tile; it is an input-avoidance comparison.")),

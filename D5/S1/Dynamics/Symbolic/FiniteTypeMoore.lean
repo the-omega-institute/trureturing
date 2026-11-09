@@ -69,7 +69,7 @@ theorem collision_replacement [Finite A] [DiscreteTopology A]
   have hfval (z : Cfg X) : f (fun s : S => z.val s) = (tau z).val 1 := by
     have hh : ∃ z' : Cfg X, ∀ s : S, z'.val s = z.val s := ⟨z, fun _ => rfl⟩
     dsimp only [f]
-    rw [dif_pos hh]
+    rw [dite_eq_left hh]
     exact hM _ z (fun m hm => Classical.choose_spec hh ⟨m, hMS m hm⟩)
   let good (w : S → A) : Prop :=
     ∀ (b : Pattern A G) (hb : b ∈ B),
@@ -140,7 +140,6 @@ theorem collision_replacement [Finite A] [DiscreteTopology A]
       exact hg ⟨t⁻¹ * g, hc, mul_inv_cancel_left t g⟩
     simpa [paperShift, mulShift, z0] using hwout (t⁻¹ * g) hgc
   · rw [hequiv, hwtau, hequiv]
-    congr 1
     apply Subtype.ext
     funext g
     simp [paperShift, mulShift]
