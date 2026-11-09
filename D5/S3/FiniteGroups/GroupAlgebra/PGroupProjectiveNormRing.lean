@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/FiniteGroups/GroupAlgebra/PGroupProjectiveNormRing
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.RepresentationTheory.Intertwining, mathlib/module/Mathlib.RepresentationTheory.Subrepresentation, mathlib/module/Mathlib.Algebra.Module.Projective, mathlib/module/Mathlib.LinearAlgebra.Finsupp.VectorSpace]
+   anchors: [mathlib/module/Mathlib.RepresentationTheory.Intertwining, mathlib/module/Mathlib.Algebra.Module.Projective, mathlib/module/Mathlib.LinearAlgebra.Finsupp.VectorSpace]
    utility: none
    digest: A split p-nilpotent group norm gives a coinduced equivalence; projectivity is exactly projective invariants and norm-surjectivity. -/
 
