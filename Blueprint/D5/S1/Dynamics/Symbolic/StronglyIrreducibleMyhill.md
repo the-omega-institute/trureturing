@@ -164,6 +164,10 @@ Give G the discrete measurable structure and assume its native maximal right-cou
 
 If the image were proper, compactness would give a nonempty occurring C-pattern missing from all its translates. Take E=C*Delta⁻¹ and K={1}∪E∪(Delta⁻¹*M⁻¹). For every finite F, disjoint E-tiles with centers in F have positive density relative to card(F). The lower injection uses the single outer window U=F*K. Relative exclusion bounds the image count using rho=card(PatX(X,E)); restriction to F and U minus F bounds card(PatX(X,U)) by card(PatX(X,F))*card(A)^card(U minus F). Cancel the positive relative source count. If rho=1, any tile contradicts the resulting inequality. If rho≥2, its logarithm forces a fixed positive loss per unit volume. The right-boundary ratios on maxFoelner(Gᵐᵒᵖ,Measure.count) tend to zero, so card(U minus F)/card(F) tends to zero. This contradicts that loss. Here (op e) • h=h*e. The filter is indexed by arbitrary subsets of G and is eventually supported on finite nonempty sets; no countable subsequence or divergent-volume premise is used.
 
+The finite packing, finite-shape and right-padding estimates come from AmenableGardenOfEden. The relative language and the gluing argument extend their use from full shifts to closed strongly irreducible subshifts with constraints. Common-exterior realization and the relative counting bound can be reused for other equivariant maps on such a subshift: the lower injection compares its occurring source patterns with actual image patterns, while the exclusion bound controls a proper invariant image. Each application must retain the same subshift and verify the stated collar, memory and disjoint-tile conditions.
+
+The conclusion is the Myhill direction, from preinjectivity to surjectivity. The reverse direction and an equivalence for strongly irreducible subshifts of finite type are separate questions. The amenability premise is the native right-counting Foelner filter condition; no equivalence with an invariant-mean formulation is asserted.
+
 ## References
 
 - Truth anchor: `D5/S1/Dynamics/Symbolic/StronglyIrreducibleMyhill.AvoidPatX`
