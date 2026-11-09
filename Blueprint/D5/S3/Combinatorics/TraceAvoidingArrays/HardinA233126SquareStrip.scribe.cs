@@ -12,6 +12,8 @@ internal sealed class HardinA233126SquareStripDocument : IScribeDocumentDefiniti
         "D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.";
     private const string RowOwner =
         "D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233253TriangleStrip.";
+    private const string BoundaryOwner =
+        "D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233254TriangleStrip.";
     private const string Scanner =
         "D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.";
     private const string Gid =
@@ -30,7 +32,10 @@ internal sealed class HardinA233126SquareStripDocument : IScribeDocumentDefiniti
                 + "to Nat. Nat.div denotes natural quotient and Nat.mod its nonnegative "
                 + "remainder; neither operation occurs in these definitions. The five-column "
                 + "Row type and horizontal predicate rowLegal are reused from "
-                + "HardinA233253TriangleStrip.")),
+                + "HardinA233253TriangleStrip. Boundary and Valid are reused from "
+                + "HardinA233254TriangleStrip. A valid boundary records that colour 1 "
+                + "has occurred, adjacent labels differ, and before colour 2 occurs "
+                + "neither member of its complementary pair occurs.")),
             Entry("vertical", "bonds", "Vertical bonds", Vertical(),
                 "Only equal columns in consecutive rows are joined. Diagonals are free."),
             Entry("count", "a", "The literal filtered finite count", Count(),
@@ -44,9 +49,6 @@ internal sealed class HardinA233126SquareStripDocument : IScribeDocumentDefiniti
                 "The label map is the published beta, applied separately to each cell."),
             Entry("compatible", "compatible", "Vertical label compatibility", Compatible(),
                 "Every preceding label excludes the same label in the following row."),
-            Entry("valid", "Valid", "Reachable boundaries", Valid(),
-                "Colour 1 has occurred. Adjacent labels differ. Before colour 2 occurs, "
-                + "neither member of its complementary pair occurs."),
             Entry("class", "boundaryClass", "Boundary classes", BoundaryClass(),
                 "Class 0 precedes colour 2. Classes 1 through 6 are the label-permutation "
                 + "and reversal orbits represented by 01010, 01012, 01020, 01021, "
@@ -115,7 +117,7 @@ internal sealed class HardinA233126SquareStripDocument : IScribeDocumentDefiniti
     }
 
     private static Formula Seen() => Name(Scanner + "Seen");
-    private static Formula PairRow() => Arrow(Fin(5), Fin(3));
+    private static Formula PairRow() => Name(BoundaryOwner + "Boundary");
     private static Formula Proj(Formula a, bool first) =>
         Call(first ? "Prod.fst" : "Prod.snd", a);
     private static Formula Flags() => Pair(Name("Bool.false"), Name("Bool.false"));
@@ -133,17 +135,6 @@ internal sealed class HardinA233126SquareStripDocument : IScribeDocumentDefiniti
             Eq(Call(Root + "compatible", p, c), All("j", Fin(5),
                 Ne(At(p, j), Call("D5.S3.Observer.Separation.BooleanRankThreeK4.beta",
                     At(c, j)))))));
-    }
-
-    private static Formula Valid()
-    {
-        var s = V("s"); var p = V("p"); var j = V("j");
-        var proper = All("j", Fin(4),
-            Ne(At(p, Call("Fin.castSucc", j)), At(p, Call("Fin.succ", j))));
-        var unseen = Imp(Eq(Proj(s, false), Name("Bool.false")),
-            All("j", Fin(5), Ne(At(p, j), Typed(D(2), Fin(3)))));
-        return All("s", Seen(), All("p", PairRow(), Eq(Call(Root + "Valid", s, p),
-            And(Eq(Proj(s, true), Name("Bool.true")), And(proper, unseen)))));
     }
 
     private static Formula BoundaryClass()
@@ -201,7 +192,7 @@ internal sealed class HardinA233126SquareStripDocument : IScribeDocumentDefiniti
     private static Formula Certificate()
     {
         var s = V("s"); var p = V("p"); var k = V("k");
-        return And(All("s", Seen(), All("p", PairRow(), Imp(Call(Root + "Valid", s, p),
+        return And(All("s", Seen(), All("p", PairRow(), Imp(Call(BoundaryOwner + "Valid", s, p),
             All("k", Fin(7), Eq(Call(Root + "classCount", s, p, k),
                 Call(Root + "transfer", Call(Root + "boundaryClass", s, p), k)))))),
             All("k", Fin(7), Eq(Call(Root + "firstCount", k),

@@ -10,6 +10,7 @@ import Lean.Elab.Tactic.Omega
 namespace Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233126SquareStrip
 
 open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233126SquareStrip
+open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233254TriangleStrip (Valid)
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
 

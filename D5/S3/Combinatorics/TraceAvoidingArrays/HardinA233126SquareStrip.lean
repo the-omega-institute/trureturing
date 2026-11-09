@@ -1,5 +1,5 @@
 /- GID: D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233126SquareStrip
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Combinatorics/TraceAvoidingArrays/HardinA233126SquareStrip
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
@@ -77,7 +77,6 @@ bonds_iff: proof_shape=bind-only; consumers=counting_bridge
 v: proof_shape=bind-only; consumers=counting_bridge, v_eq_w, a_eq_w
 total: proof_shape=bind-only; consumers=counting_bridge, a_eq_w
 counting_bridge: proof_shape=bind-only; consumers=a_eq_w
-Valid: proof_shape=bind-only; consumers=valid_next, row_counts, initial_valid, finite_certificate
 decidableValid: proof_shape=bind-only; consumers=valid_next, row_counts, initial_valid
 boundaryClass: proof_shape=bind-only; consumers=classCount, firstCount, row_counts, v_eq_w
 transfer: proof_shape=bind-only; consumers=row_counts, finite_certificate, w, distribution_step
@@ -103,6 +102,7 @@ result: proof_shape=bind-only; consumers=terminal result (#28572)
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233253TriangleStrip
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233254TriangleStrip
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255LiteralBridge
 import D5.S3.Observer.Separation.BooleanRankThreeK4
 import Mathlib.Tactic.FinCases
@@ -117,6 +117,7 @@ open HardinA233175PairStrip (Seen good finish)
 open HardinA233251TriangleStrip
   (widthLegal widthV widthStep widthTotal width_counting_bridge colour_bond_iff)
 open HardinA233253TriangleStrip (Row rowLegal)
+open HardinA233254TriangleStrip (Boundary Valid)
 open private instDecidableRowLegal sum_rows from
   D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233253TriangleStrip
 open HardinA233255LiteralBridge (rowFinish rowWeight scanner_fibres)
@@ -135,9 +136,9 @@ private instance decidableBonds (c d : Row) : Decidable (bonds c d) :=
 def a (n : ℕ) : ℕ :=
   (Finset.univ.filter (fun A : Fin n × Fin 5 → Fin 6 => widthLegal rowLegal bonds A)).card
 
-def labels (c : Row) : Fin 5 → Fin 3 := fun j => beta (c j)
-def compatible (p : Fin 5 → Fin 3) (c : Row) : Prop := ∀ j, p j ≠ beta (c j)
-private instance decidableCompatible (p : Fin 5 → Fin 3) (c : Row) :
+def labels (c : Row) : Boundary := fun j => beta (c j)
+def compatible (p : Boundary) (c : Row) : Prop := ∀ j, p j ≠ beta (c j)
+private instance decidableCompatible (p : Boundary) (c : Row) :
     Decidable (compatible p c) := inferInstanceAs (Decidable (∀ _, _))
 
 private theorem bonds_iff (c d : Row) : bonds c d ↔ compatible (labels c) d := by
@@ -149,13 +150,10 @@ private abbrev total := widthTotal rowLegal labels
 private theorem counting_bridge (n : ℕ) : (a (n + 1) : ℤ) = total (v n) :=
   width_counting_bridge rowLegal labels compatible bonds bonds_iff n
 
-def Valid (s : Seen) (p : Fin 5 → Fin 3) : Prop :=
-  s.1 = true ∧ (∀ j : Fin 4, p j.castSucc ≠ p j.succ) ∧
-    (s.2 = false → ∀ j, p j ≠ 2)
-private instance decidableValid (s : Seen) (p : Fin 5 → Fin 3) : Decidable (Valid s p) :=
+private instance decidableValid (s : Seen) (p : Boundary) : Decidable (Valid s p) :=
   inferInstanceAs (Decidable (_ ∧ (∀ _, _) ∧ (_ → ∀ _, _)))
 
-def boundaryClass (s : Seen) (p : Fin 5 → Fin 3) : Fin 7 :=
+def boundaryClass (s : Seen) (p : Boundary) : Fin 7 :=
   if s.2 then
     if p 0 = p 2 ∧ p 2 = p 4 then (if p 1 = p 3 then 1 else 3)
     else if p 1 = p 3 then (if p 0 = p 4 then 6 else 2)
@@ -177,7 +175,7 @@ private theorem valid_next : ∀ s p, Valid s p → ∀ c : Row,
   intro s p hp c hc
   exact hv s c hp.1 hc.1 hc.2.2
 
-def classCount (s : Seen) (p : Fin 5 → Fin 3) (k : Fin 7) : ℤ :=
+def classCount (s : Seen) (p : Boundary) (k : Fin 7) : ℤ :=
   ∑ c : Row, if rowLegal c ∧ compatible p c ∧ good s c ∧
     boundaryClass (finish s c) (labels c) = k then 1 else 0
 
@@ -185,8 +183,8 @@ def firstCount (k : Fin 7) : ℤ :=
   ∑ c : Row, if c 0 = 0 ∧ rowLegal c ∧ good (false, false) c ∧
     boundaryClass (finish (false, false) c) (labels c) = k then 1 else 0
 
-private theorem class_fibres (s : Seen) (p : Fin 5 → Fin 3) (k : Fin 7) :
-    classCount s p k = ∑ q : Fin 5 → Fin 3,
+private theorem class_fibres (s : Seen) (p : Boundary) (k : Fin 7) :
+    classCount s p k = ∑ q : Boundary,
       rowWeight s q * if (∀ j : Fin 4, q j.castSucc ≠ q j.succ) ∧
         (∀ j, p j ≠ q j) ∧ boundaryClass (rowFinish s q) q = k then 1 else 0 := by
   rw [← scanner_fibres 5 s (fun t q =>
@@ -202,10 +200,10 @@ private theorem class_fibres (s : Seen) (p : Fin 5 → Fin 3) (k : Fin 7) :
       boundaryClass (finish s c) (labels c) = k then 1 else 0) else 0
   by_cases hg : good s c <;> simp [hg]
 
-private theorem label_sum (g : (Fin 5 → Fin 3) → ℤ) :
+private theorem label_sum (g : (Boundary) → ℤ) :
     (∑ q, g q) = ∑ a : Fin 3, ∑ b : Fin 3, ∑ c : Fin 3, ∑ d : Fin 3, ∑ e : Fin 3,
       g ![a, b, c, d, e] := by
-  let e : (Fin 5 → Fin 3) ≃ Fin 3 × Fin 3 × Fin 3 × Fin 3 × Fin 3 :=
+  let e : (Boundary) ≃ Fin 3 × Fin 3 × Fin 3 × Fin 3 × Fin 3 :=
     { toFun := fun q => (q 0, q 1, q 2, q 3, q 4)
       invFun := fun t => ![t.1, t.2.1, t.2.2.1, t.2.2.2.1, t.2.2.2.2]
       left_inv := by intro q; ext j; fin_cases j <;> rfl
@@ -239,7 +237,7 @@ private def w : ℕ → Fin 7 → ℤ
   | 0, _ => 1
   | n + 1, i => ∑ k : Fin 7, transfer i k * w n k
 
-private theorem v_eq_w (n : ℕ) (s : Seen) (p : Fin 5 → Fin 3) (h : Valid s p) :
+private theorem v_eq_w (n : ℕ) (s : Seen) (p : Boundary) (h : Valid s p) :
     v n s p = w n (boundaryClass s p) := by
   induction n generalizing s p with
   | zero => rfl
