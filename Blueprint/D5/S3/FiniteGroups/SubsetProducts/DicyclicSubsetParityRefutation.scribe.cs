@@ -151,7 +151,10 @@ internal sealed class DicyclicSubsetParityRefutationDocument : IScribeDocumentDe
                         + "questions separate. An even total alone would not imply that all "
                         + "three counts are even. The source note fixes the cited version and "
                         + "interpretation; no first-resolution or worldwide priority claim is made."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("mandal-neetu-dicyclic-question-63-refutation"),
+                    ResolutionKind.Refuted)))));
 
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula Call(string name, params Formula[] arguments) =>
