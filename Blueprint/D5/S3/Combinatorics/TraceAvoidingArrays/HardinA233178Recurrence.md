@@ -36,6 +36,10 @@ Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Recurrence
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Recurrence.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/hardin233178` (proved) by `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Recurrence.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hardin233178","declaration_gid":"D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Recurrence.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Commentary.*
