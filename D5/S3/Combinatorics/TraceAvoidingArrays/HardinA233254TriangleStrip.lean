@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/Combinatorics/TraceAvoidingArrays/HardinA233254TriangleStrip
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
+   utility: kind=numeric-reduction; basis=consumer=D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233254TriangleStrip.result; premises=D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233254TriangleStrip.finite_certificate
    digest: Barker's generating function for the literal normalized six-column strip. -/
 /-
 admission_basis: open-problem-resolution (#28319; Proved)
