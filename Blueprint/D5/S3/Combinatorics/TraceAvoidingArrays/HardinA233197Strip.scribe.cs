@@ -63,7 +63,7 @@ internal sealed class HardinA233197StripDocument : IScribeDocumentDefinition
                 "The rows of T are [0,0,0,2,2], [0,0,0,8,8], [0,0,8,4,16], "
                 + "[0,0,0,16,16], [0,0,0,8,40]. The vector identity removes the "
                 + "transient zero eigenspace before applying the cubic relation."),
-            Thm("result", "result", "Barker's generating function", ResultFormula(),
+            Resolution("result", "result", "Barker's generating function", ResultFormula(),
                 "Let w(n)=Matrix.mulVec (T^n) 1. The imported width_counting_bridge "
                 + "and induction through the finite class counts give a(n+1)=2w(n)(0) "
                 + "+w(n)(2). This is iteration of the normalized one-step class map, "
@@ -86,6 +86,14 @@ internal sealed class HardinA233197StripDocument : IScribeDocumentDefinition
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(Source),
             Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
+
+    private static DocumentBlock Resolution(string id, string name, string title,
+        Formula formula, string prose) =>
+        Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + name), H(title),
+            StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(Source),
+            Blocks(Paragraph(Text(prose))), DescribeRole.Theorem,
+            new OpenProblemResolutionClaim(ProblemSlugRef.Create("hardin233197"),
+                ResolutionKind.Proved));
 
     private static Formula Boundary() => Arrow(Fin(D(3)), Fin(D(4)));
     private static Formula Bond(Formula x, Formula y) =>

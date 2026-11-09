@@ -192,6 +192,10 @@ $$((((1: \operatorname{PowerSeries}\left(\operatorname{Int}\right))) - (((8: \op
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233197Strip.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/hardin233197` (proved) by `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233197Strip.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hardin233197","declaration_gid":"D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233197Strip.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233197: eight-colour complementary-pair exclusion on a three-column strip*. URL: <https://oeis.org/A233197>.
