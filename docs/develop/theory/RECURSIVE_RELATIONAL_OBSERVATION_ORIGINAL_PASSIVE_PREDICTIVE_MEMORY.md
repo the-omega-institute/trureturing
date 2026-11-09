@@ -2502,3 +2502,1509 @@ or physical-dimension result, or a worldwide novelty claim.
 [ZC]: AURIC_ZERO_DIMENSIONAL_CENTER_SQUARE_ORBIT_RECONSTRUCTION.md
 
 ## 追加锚（本行以下为增补区）
+
+## 12. Original no-3 survival and full-label adaptive current-row separation
+
+**Definition 12.1 (the same source and the two prediction laws).**
+Fix any original finite $a,\eta,d>0$ and any permitted Borel repair
+in Assumption 1.1. Retain its entire complex non-Friedrichs endpoint
+$A=\rho C$, maximal operator domain, full form and source trace,
+$G=H^1\times\mathbb R$, Haar measure, unit-source Green field,
+normalized zero state $h$, $m=h^2\mu$, $K$, and $P=T_d=e^{-dK}$.
+The actual source still starts at $e$, first reads at $2d$, and
+thereafter reads at the fixed gap $d$, with all four original
+emissions (1.2) and their conditionally fresh noise. In particular
+$f_3=cb$, $[b]=g_d$, $q(3)=c>0$, and $0<f_3\le1/4$.
+
+Write $Q=Q_\emptyset^\infty$, $Q_w=Q_w^\infty$ and $R_u=R_u^\infty$
+for the complete laws of (9.1), and $W_j=Y_0\cdots Y_{j-1}$ on
+their common output sequence space. Under $R_u$ these coordinates
+are the continuation after the fixed original authentic history
+$u$, rather than a new $e$-start. Then
+
+$$
+Q_{W_j}^1(3)=\frac{q(W_j3)}{q(W_j)},\qquad
+R_{uW_j}^1(3)=\frac{p(uW_j3)}{p(uW_j)}.
+\tag{12.1}
+$$
+
+The first expression uses a stationary initial comparison density
+and the whole continuation prefix. The second uses the entire
+actual history $uW_j$. They are not identified. Define
+
+$$
+\begin{gathered}
+r=1-f_3,\quad s=\sqrt r,\quad
+\mathsf A=M_sPM_s,\qquad
+S_0=1,\quad
+S_n=Q\{Y_0,\ldots,Y_{n-1}\ne3\}\quad(n\ge1),
+\end{gathered}
+\tag{12.2}
+$$
+
+where $M_s$ is multiplication by $s$. Stationarity and any two-sided
+extension below are proof comparisons only, with no preparation,
+additional trajectory, exact $q$ query or change in the source.
+
+**Theorem 12.2 (source-specific survival edge and its three limits).**
+For every source and repair of Definition 12.1,
+
+$$
+S_n=\langle s,\mathsf A^{n-1}s\rangle_m>0\quad(n\ge1),\qquad
+S_n\longrightarrow0,\qquad
+S_n^{1/n}\longrightarrow1,\qquad
+\frac{S_{n+1}}{S_n}\longrightarrow1.
+\tag{12.3}
+$$
+
+In particular the conditional next-3 probability after observing
+only the event of $n$ consecutive non-3 labels tends to zero.
+This event-conditioned probability is not the posterior after any
+specified full word.
+
+*Proof.* The original read product, summed over $\{0,1,B\}$ at
+each position, gives
+$S_n=\langle1,M_r(PM_r)^{n-1}1\rangle_m$.
+Splitting the end multipliers into square roots gives (12.3)'s
+first identity. Positivity also follows from $r\ge3/4$, which gives
+$S_n\ge(3/4)^n$. The spectral theorem for the nonnegative $K$
+shows $0\le P\le I$ in quadratic-form order. Thus $\mathsf A$ is
+self-adjoint, $0\le\mathsf A\le I$, and positivity preserving.
+For a nonzero $v\in L^2(m)$,
+
+$$
+\langle v,\mathsf A v\rangle_m
+ \le\|sv\|_2^2
+ =\|v\|_2^2-\int f_3|v|^2\,dm<\|v\|_2^2.
+\tag{12.4}
+$$
+
+Strictness uses $f_3>0$ almost everywhere, not a positive uniform
+lower bound. Hence $1$ is not an eigenvalue of $\mathsf A$.
+If $\sigma_s$ is its scalar spectral measure at $s$, then
+
+$$
+S_n=\int_{[0,1]}\lambda^{n-1}\,d\sigma_s(\lambda),\qquad
+\sigma_s(\{1\})=0.
+\tag{12.5}
+$$
+
+Dominated convergence already proves $S_n\to0$.
+
+We prove that the upper support edge in (12.5) is exactly $1$
+from the original source inputs. Use the original group dilations
+$\delta_R(x,y,z,w)=(Rx,Ry,Rz,R^2w)$, whose Haar Jacobian is $R^5$.
+Choose nonnegative $\chi\in C_c^\infty(G\setminus\{e\})$, with
+$\|\chi\|_{L^2(\mu)}=1$, supported in a fixed annulus
+$1<\varrho<2$ for the gauge of [DPCR, Definition 14.1]. Set
+
+$$
+\phi_R(p)=R^{-5/2}\chi(\delta_{1/R}p),\qquad v_R=\phi_R/h.
+\tag{12.6}
+$$
+
+The positive smooth $h$ on punctured compact sets makes $v_R$ a
+nonnegative bounded smooth punctured test with $\|v_R\|_{L^2(m)}=1$.
+The exact full-domain correspondence [CONTACT, Theorem 115.3,
+(115.15)–(115.18)] puts it in the actual form domain and gives
+
+$$
+\begin{aligned}
+0\le\mathscr E[v_R]=q_H[\phi_R]
+ &=aR^{-2}\sum_{i=1}^3\|X_i\chi\|_{L^2(\mu)}^2
+   +\eta R^{-4}\|\partial_w\chi\|_{L^2(\mu)}^2\\
+ &\quad-16\sqrt{a\eta}\,R^{-3}
+                  \int\Gamma|\chi|^2\,d\mu
+ \le C_1R^{-2}+C_2R^{-4}.
+\end{aligned}
+\tag{12.7}
+$$
+
+Here $X_1=\partial_x$, $X_2=\partial_y+x\partial_w$,
+$X_3=\partial_z$, and $\Gamma$ has its original degree $-3$.
+All integrals in this calculation have compact support away from
+the source. The nonnegative lower bound is that of the actual
+$H$, not a replacement by its Friedrichs extension. The constants
+$C_1,C_2$ depend on the fixed source and $\chi$.
+
+[DPCR, Theorem 14.3] gives
+$\epsilon_R:=\operatorname{ess\,sup}_{\operatorname{supp}\phi_R}f_3
+\to0$ as $R\to\infty$. The spectral inequality
+$1-e^{-d\lambda}\le d\lambda$ and
+$0\le1-s=f_3/(1+s)\le f_3$ therefore give
+
+$$
+\begin{aligned}
+\langle v_R,Pv_R\rangle_m&\ge1-d\mathscr E[v_R],\\
+\langle v_R,\mathsf A v_R\rangle_m
+ &\ge\langle v_R,Pv_R\rangle_m-2\|(1-s)v_R\|_2\\
+ &\ge1-d(C_1R^{-2}+C_2R^{-4})-2\epsilon_R
+ \longrightarrow1.
+\end{aligned}
+\tag{12.8}
+$$
+
+The second line follows by replacing the two occurrences of $v_R$
+in the pairing with $sv_R$ one at a time, using the contraction
+bounds for $P,M_s$. This proves the source-specific spectral edge;
+no spectral hypothesis has been appended.
+
+For completeness the edge must also be visible to the survival
+vector $s$. For each fixed $R$, boundedness of $v_R$ and
+$s\ge\sqrt{3}/2$ give a finite $C_R$ with $0\le v_R\le C_Rs$.
+Positivity preservation of every integer power of $\mathsf A$
+and the spectral Jensen inequality for the unit vector $v_R$ give,
+for every integer $k\ge1$,
+
+$$
+C_R^2\langle s,\mathsf A^ks\rangle_m
+ \ge\langle v_R,\mathsf A^kv_R\rangle_m
+ \ge\langle v_R,\mathsf A v_R\rangle_m^k.
+\tag{12.9}
+$$
+
+The last inequality is the ordinary scalar Jensen inequality for
+$\lambda\mapsto\lambda^k$ on $[0,1]$. First taking $n$th roots
+with $k=n-1$, then using (12.8), proves
+$\liminf S_n^{1/n}\ge1$; the reverse bound is $S_n\le1$.
+This also verifies the support-edge assertion directly without an
+irreducibility assumption for a new killed continuous-time model.
+
+Cauchy–Schwarz in (12.5) gives
+$S_{n+1}^2\le S_nS_{n+2}$ for $n\ge1$. Thus
+$S_{n+1}/S_n$ is increasing and at most one. If its limit were
+less than one, the products of these ratios would force
+$\limsup S_n^{1/n}<1$, contrary to the preceding limit.
+Finally
+
+$$
+Q(Y_n=3\mid Y_0,\ldots,Y_{n-1}\ne3)
+ =1-S_{n+1}/S_n\longrightarrow0.
+\tag{12.10}
+$$
+
+The scalar spectral-measure argument is a mature intermediate:
+compare Keller–Lenz–Vogt–Wojciechowski,
+[*Note on basic features of large time behaviour of heat kernels*,
+arXiv:1101.0373v2, Theorem 1.1(b) and Theorem 2.1][EDGE].
+Their statements concern heat semigroups; the bounded-operator
+moment calculation needed here was given explicitly in
+(12.5), (12.9). Bounded spectral calculus and its dominated
+convergence are as in Teschl, [*Mathematical Methods in Quantum
+Mechanics*, §3.1, Theorem 3.1, (3.20)–(3.21)][SPCALC].
+The source-specific input to the edge is (12.6)–(12.8).
+All these integrals and exterior bounds are $m$-class statements.
+For each permitted repair its exceptional set is $m$-null. The
+stationary skeleton has marginal $m$, and the actual positive-time
+skeleton has marginals $g_{(j+2)d}m$; their countably many sampled
+states therefore avoid that set simultaneously almost surely.
+Conditioning on any positive finite history preserves this null
+statement. Thus the proof applies to every permitted repair,
+without an assertion about avoidance by the entire continuous path.
+$\square$
+
+**Theorem 12.3 (full-prefix low predictions and actual-posterior
+low predictions in their own laws).** The following hold:
+
+$$
+\begin{aligned}
+\liminf_{j\to\infty}Q_{W_j}^1(3)&=0
+ &&Q\text{-almost surely},\\
+\liminf_{j\to\infty}Q_{W_j}^1(3)&=0
+ &&R_u\text{-almost surely},\\
+\liminf_{j\to\infty}R_{uW_j}^1(3)&=0
+ &&R_u\text{-almost surely}
+ \quad\text{for every fixed finite original }u.
+\end{aligned}
+\tag{12.11}
+$$
+
+All finite authentic histories, including $\varepsilon$, are
+included. On one conull event in each of these laws every threshold
+$0<t<c$ is crossed at a finite label index, and is crossed
+infinitely often. In particular each of the respective rows has
+TV distance strictly greater than $c-t$ from $Q_\emptyset^H$ at
+its selected low-prediction indices, for every $H\ge1$.
+The same statements hold for the continuation conditional on any
+finite original label-stopped history. They do not condition away
+an infinite stopping branch.
+
+*Proof.* First work in a two-sided stationary extension of $Q$,
+with shift $\theta$. Its finite-block laws are the stationary
+original laws, so Kolmogorov consistency gives such an extension.
+[DPCR, Theorem 8.2, (8.9)–(8.10)] proves mixing for separated
+finite cylinders. Shifting two finite two-sided cylinders to
+nonnegative indices proves the same limit there. Approximation
+by finite cylinders, with shift-invariant approximation error,
+extends mixing to its entire sigma algebra. Thus this two-sided
+extension is ergodic. This construction changes no actual source.
+
+Put
+
+$$
+h_k=\mathbb E_Q[\mathbf1_{\{Y_0=3\}}
+                    \mid Y_{-k},\ldots,Y_{-1}],\qquad
+h_\infty=\mathbb E_Q[\mathbf1_{\{Y_0=3\}}
+                    \mid\sigma(Y_i:i<0)].
+\tag{12.12}
+$$
+
+The upward conditional-expectation theorem gives
+$h_k\to h_\infty$ almost surely and in $L^1$.
+This is the mature martingale result of Durrett,
+[*Probability: Theory and Examples*, Theorem 4.6.8][UPWARD],
+with the increasing finite-past sigma fields and bounded variable
+$\mathbf1_{\{Y_0=3\}}$. For
+$E_n=\{Y_{-n},\ldots,Y_{-1}\ne3\}$, the tower property,
+stationarity, and (12.10) give
+
+$$
+Q(E_n)=S_n>0,\qquad
+\frac{\mathbb E_Q[h_\infty\mathbf1_{E_n}]}{S_n}
+ =1-S_{n+1}/S_n\longrightarrow0.
+\tag{12.13}
+$$
+
+For every $b>0$ it follows that $Q(h_\infty<b)>0$:
+otherwise $h_\infty\ge b$ almost surely and every conditional
+mean in (12.13) would be at least $b$.
+
+One must still return from the infinite past to the full forward
+prefix. Choose the versions in (12.12) supplied by the positive
+finite-cylinder ratios. Stationarity then gives exactly
+$Q_{W_j}^1(3)=h_j\circ\theta^j$ for $j\ge1$.
+Set $G_k=\sup_{j\ge k}|h_j-h_\infty|$. These measurable bounded
+functions decrease to zero almost surely. For each fixed $k$,
+Birkhoff's theorem and ergodicity give
+
+$$
+\limsup_{N\to\infty}\frac1N\sum_{j=1}^N
+ |h_j-h_\infty|\circ\theta^j
+ \le\mathbb E_QG_k.
+\tag{12.14}
+$$
+
+Indeed the finitely many $j<k$ have vanishing average and each
+remaining summand is at most $G_k\circ\theta^j$. Taking the
+countable intersection of these ergodic events and letting
+$k\to\infty$ proves that the average in (12.14) tends to zero.
+For any $t>0$, the indices with
+$h_\infty\circ\theta^j<t/2$ have asymptotic frequency
+$Q(h_\infty<t/2)>0$. Among them, those with
+$h_j\circ\theta^j\ge t$ have density zero by (12.14), since each
+would contribute more than $t/2$ to that average. Consequently
+$Q_{W_j}^1(3)<t$ at a positive lower frequency. A countable
+intersection over positive rational $t$ proves the first line of
+(12.11), simultaneously for all real positive thresholds. This
+also explains why (12.10) alone is not a full-history proof.
+Birkhoff is used only in its ordinary integrable-observable form,
+with precisely the stationary ergodicity supplied above.
+
+For the actual law fix a finite original $u$. Theorem 2.1 gives
+$0\le\pi_u\le M_u<\infty$, where one can take
+$M_u=\|g_{2d}\|_\infty/p(u)$. The same complete future kernel
+in (9.1) yields, on the full product sigma algebra,
+
+$$
+A:=R_u\ll Q,\qquad A(D)\le M_uQ(D),\qquad
+\operatorname{TV}(A,Q)\le
+ e(u):=\operatorname{TV}(\pi_um,m).
+\tag{12.15}
+$$
+
+These follow by integrating $\mathcal K(x,D)$ against the two
+initial densities. Absolute continuity of entire future laws,
+not merely positivity of each finite cylinder, transfers the
+first conull assertion to $A$. This proves the second line.
+
+Here is the separate martingale argument for the third line.
+Let $L=dA/dQ$, $\mathscr F_j=\sigma(Y_0,\ldots,Y_{j-1})$ and
+$L_j=\mathbb E_Q[L\mid\mathscr F_j]$. These sigma fields generate
+the complete output sigma algebra. Durrett's same theorem gives
+$L_j\to L$ almost surely and in $L^1$. For $j\ge k$,
+conditional Jensen and the triangle inequality give
+
+$$
+\begin{aligned}
+V_j&:=\mathbb E_Q[|L-L_j|\mid\mathscr F_j]\\
+ &\le2\mathbb E_Q[|L-L_k|\mid\mathscr F_j].
+\end{aligned}
+\tag{12.16}
+$$
+
+For fixed $k$ the last conditional expectation tends almost surely
+to $|L-L_k|$. Taking a countable intersection in $k$, then letting
+$k\to\infty$, proves $V_j\to0$ almost surely. Also $L>0$
+$A$-almost surely, since $A\{L=0\}=0$, and $L_j\to L$ there.
+On a prefix $w$ the conditional likelihood ratio is $L/L_j$.
+For any remaining-future event $D$ this gives
+
+$$
+\begin{aligned}
+|A(D\mid\mathscr F_j)-Q(D\mid\mathscr F_j)|
+ &\le V_j/L_j,\\
+\operatorname{TV}(R_{uW_j}^\infty,Q_{W_j}^\infty)
+ &\le V_j/L_j\longrightarrow0\quad A\text{-almost surely}.
+\end{aligned}
+\tag{12.17}
+$$
+
+The second inequality follows either by the conditional variation
+measure or by the countable finite-cylinder TV representation
+used in §9. All finite prefix probabilities are positive, so the
+conditional laws there are exactly the displayed $R$ and $Q$
+kernels. Projecting to the next-3 event and combining with the
+second line of (12.11) proves the third. This is an application
+of mature conditional-expectation merging, with its needed proof
+included; it does not rename $Q$ as an actual posterior and gives
+no effective merging rate.
+
+Finally, for a finite label-stopping time $T$, on
+$\{T=|u|,Y_{<T}=u\}$ the original conditional future is exactly
+$R_u$. Countably many such stopped words transfer the assertions
+on $\{T<\infty\}$. A pre-gate service state can be included under
+Definition 11.3's complete joint source-information and seed
+conditions; in particular its conditional output future remains
+$R_u$. Arbitrary extra source information is not covered.
+For either row at its own threshold
+crossing, the event that the first future label is $3$ has
+probability less than $t$, while $Q_\emptyset^H$ assigns it $c$.
+The defining supremum of event-TV proves the separation.
+$\square$
+
+**Proposition 12.4 (finite prefix-free witnesses of high cylinder
+mass).** For every fixed original source, $0<t<c$ and $0<\delta<1$,
+there are a finite $N\ge1$ and a finite prefix-free family
+$\mathcal F\subset\bigcup_{j=1}^N\mathcal L^j$ such that
+
+$$
+Q_w^1(3)<t\quad(w\in\mathcal F),\qquad
+\sum_{w\in\mathcal F}q(w)>1-\delta.
+\tag{12.18}
+$$
+
+They may be chosen with strict margins in both inequalities.
+No common $N$ for different sources, effective decay rate, deadline
+or finite expected work is asserted.
+
+*Proof.* Choose $0<t_0<t$. Under $Q$ let
+$\tau_0=\inf\{j\ge1:Q_{W_j}^1(3)<t_0\}$.
+Theorem 12.3 gives $Q(\tau_0<\infty)=1$. The finite words at
+which this rule first hits by $N$ form a prefix-free family
+$\mathcal F_N$, and their disjoint cylinder union is
+$\{\tau_0\le N\}$. Its mass increases to one. Choose a finite
+$N$ with mass greater than $1-\delta/2$. Every row in this finite
+family is strictly below $t_0<t$ and its mass has positive slack
+above $1-\delta$. There is no requirement to test equality or
+non-strict exclusion at the earlier prefixes in the certificate
+construction below. $\square$
+
+**Theorem 12.5 (genuine finite acquisition certifies the witnesses
+on one event).** Fix rational $0<\alpha<1$. The witnesses in
+Proposition 12.4 admit the following finite rational certificate using exactly the original
+finite-word suppliers of §7 and the paid retained-record setting
+of §8. Declare one common validity event $\mathcal A$ with
+$\mathbb P_e(\mathcal A)\ge1-\alpha$ by budgeting startup and all
+predeclared acquisition/refinement packets. On that event a fair
+finite search returns a prefix-free $\mathcal F$, its maximum
+length $N$, the acquired normalized rows needed for it, and strict
+rational tests proving (12.18) and $t<c$ whenever the requested
+thresholds have the declared rational margins below. A sourcewise
+finite successful certificate is meant; readiness at a future
+actual gate is a separate condition.
+
+Specifically, for real thresholds choose declared rational margins
+
+$$
+0<t_-<t<t_+<c,\qquad 0<\delta_0<\delta.
+\tag{12.19}
+$$
+
+For rational $t,\delta$ one can instead test $t<c$ directly and
+use any rational $0<t_-<t$, $0<\delta_0<\delta$.
+The numerical procedure takes rational margins as inputs, not
+an unnamed real or an exact $c$ oracle. For a packet at length
+$r+1$ write its error radius as $e_s\downarrow0$ and form
+$\ell_x,u_x$ by (7.8), with $t$ there replaced by $e_s$.
+At this finite stage collect all nonempty $w$ of length at most
+$r$ passing
+
+$$
+\ell_w>0,\qquad \frac{u_{w3}}{\ell_w}<t_-.
+\tag{12.20}
+$$
+
+Keep only the words with no proper prefix also in this collected
+set, obtaining $\mathcal F$. Accept a packet only if
+
+$$
+\ell_3>t_+,\qquad
+\sum_{w\in\mathcal F}\ell_w>1-\delta_0.
+\tag{12.21}
+$$
+
+These are all strict rational comparisons, with no test of a
+stationary law unavailable to the original menu. For a rational
+$t$ the first comparison may be $\ell_3>t$.
+
+*Proof.* Use Lemma 7.2 at $H=1$, $r$ as above. Its TV event
+simultaneously encloses all masses at length at most $r+1$,
+including $q(3)=c$. For every accepted $w$ it gives
+$Q_w^1(3)=q(w3)/q(w)\le u_{w3}/\ell_w<t_-<t$.
+Pruning preserves the cylinder union: every deleted word extends
+a retained accepted prefix, and finitely descending through
+proper prefixes reaches one. The retained cylinders are disjoint,
+so (12.21) proves their total true mass greater than
+$1-\delta_0>1-\delta$. The same event gives $c\ge\ell_3>t_+>t$.
+No statistical independence between these tests is used.
+
+If full rational rows are wanted, require the finite positive
+normalization guards of Proposition 7.3 and return
+$\widehat Q_w^1(y)=a(wy)/a(w)$ with its generated error and
+entry enclosures (7.9)–(7.11). The consistent acquired marginals
+make these rows exactly normalized. Any prescribed positive
+row-error tolerance is attainable by the same finite refinement;
+these rows and tests are on $\mathcal A$, rather than separate
+confidence events chosen after observing success.
+
+Here is why the stated certificate search succeeds on that event.
+Use Proposition 12.4 at threshold $t_-/2$ and mass error
+$\delta_0/2$ to choose, for this existence argument, one finite
+family with maximum length $r_0$. Refine packets at this fixed
+$r_0$. All its finitely many words eventually pass (12.20), since
+their true probabilities are positive and their true row entries
+are less than $t_-/2$. Hence the pruned set covers a cylinder
+union of mass greater than $1-\delta_0/2$. There are at most
+$\sum_{j=1}^{r_0}4^j$ retained words, and on the packet event
+$0\le q(w)-\ell_w\le2e_s$. Thus the sum of its lower endpoints
+exceeds $1-\delta_0$ once $e_s$ is sufficiently small, even if
+the particular accepted set changes with the refinement.
+Also $\ell_3\to c>t_+$, and all finitely many normalization
+and row-error guards eventually pass by Proposition 7.3.
+
+To justify this after source/data selection, give the original
+startup allowance $\alpha/2$. Predeclare its countably many
+rational clock branches $l_i$, $i\ge1$, all positive integer
+$r$, and all packet precision indices $s\ge1$. Give the packet
+$(i,r,s)$ allowance $\beta_{i,r,s}=(\alpha/2)2^{-i-r-s}$.
+For each valid deterministic branch, §7 generates its finite
+packet lengths and enclosures at radius $e_s=2^{-s}$. With
+$\mathcal E_{i,r,s}$ its Lemma 7.2 event, declare explicitly
+
+$$
+\mathcal A=\mathcal A_{\rm startup}\cap
+ \bigcap_{i:\,l_i\le\tau}\ \bigcap_{r,s\ge1}\mathcal E_{i,r,s},
+\qquad \mathbb P_e(\mathcal A)\ge1-\alpha.
+$$
+
+This is the intersection before choosing any packet or family,
+exactly as in Theorem 8.2. Only the selected valid branch is executed.
+A fair enumeration of $(r,s)$ reaches the successful finite pair
+above. Each reached packet uses a finite retained original prefix
+and finite reference work; the last reached pair is finite on
+$\mathcal A$. The declared family of rational margins can also
+be countable, with the same budgeting, if margins are selected
+from acquired data. Existence for arbitrary real $t,\delta$
+means the rational sandwiches (12.19), not a claim that arbitrary
+real inputs have been supplied as finite names.
+
+All actual labels, overlapping-window counters, failed tests,
+reference calls, precisions, divisions, pruning comparisons,
+row tables and copies remain charged as in Definitions 8.3 and
+[OWGR, Definition 21.1 and Proposition 21.2]. In particular the
+labels arriving during those operations remain part of the
+same chronological record. The finite certificate can be
+retrospective. It supplies no capture/write bandwidth, catch-up,
+whole-growing-suffix assimilation, readiness deadline or lawful
+output service. $\square$
+
+**Definition 12.6 (the bounded selector and its non-hit branch).**
+For a fixed finite acquired family of (12.18) that is ready before
+the continuation starts, let $N=\max_{w\in\mathcal F}|w|$.
+Compare the full original prefix with $\mathcal F$ and define
+
+$$
+J=\begin{cases}
+j,&W_j\in\mathcal F\text{ for some }1\le j\le N,\\
+N,&\text{no such prefix occurs},
+\end{cases}
+\qquad
+I=\mathbf1_{\{\exists j\le N:W_j\in\mathcal F\}}.
+\tag{12.22}
+$$
+
+Prefix-freeness makes the hit unique. Thus $J$ is a bounded
+full-label stopping index; $I=0$ is an explicit non-hit result,
+not a low-prediction certificate. A hit at $N$ is distinguished
+from a non-hit at $N$ by $I$. Under $Q$,
+
+$$
+Q(I=1)=\sum_{w\in\mathcal F}q(w)>1-\delta,\qquad
+I=1\Longrightarrow Q_{W_J}^1(3)<t.
+\tag{12.23}
+$$
+
+This is a label-index rule only. Physical noncompletion of any
+operation implementing it is a separate possible outcome and
+produces no claimed completed row. In particular the bound $J\le N$
+is not a bound on real computation, serialization or arrivals
+during that work.
+
+**Theorem 12.7 (ready-row separation, actual-law transfer and all
+error terms).** Fix a deterministic original gate $T$ of
+Definition 9.1, with its generated bound
+$\mathbb E_e e(Y_{<T})\le\eta^+$, and use §9's one all-later-cut
+comparison event $\mathcal D$ with
+$\mathbb P_e(\mathcal D^c)\le\gamma$ and
+
+$$
+\operatorname{TV}(R_{T+j}^\infty,Q_{W_j}^\infty)\le\epsilon
+\quad\text{for every }j\ge0\text{ on }\mathcal D.
+\tag{12.24}
+$$
+
+Let $\mathcal A$, of failure at most $\alpha$, include the valid
+finite witness certificate and an actually acquired normalized
+ready row $\rho$ on some finite horizon $H\ge1$, with
+
+$$
+\operatorname{TV}(\rho,Q_\emptyset^H)\le\zeta.
+\tag{12.25}
+$$
+
+Let $\mathsf E$ be the event of eligibility at the gate: the
+finite table, $\rho$ and the selector's finite description are
+actually ready then. Selection can use the stopped original
+history $u$ and a pre-gate service state $V$ only when the complete
+joint future hidden trajectory and fresh emission noises,
+conditional on $u,V$, have their original conditional law given
+$u$. In particular the output future has law $R_u$. Conditional
+on $u,V=v$, any selector seed has a fixed law $\lambda_{u,v}$
+independent of that entire joint future. Use the same seed law
+and rule under the comparison kernel. These are exactly the
+source-information and seed conditions of Definition 11.3,
+without imposing its B-mask restriction on the present full-label
+rule. Thresholds,
+error bounds and mass allowances here are fixed; source/data
+selection among countably many descriptions is covered below.
+
+For any fixed ready valid family, (12.15) gives the more precise
+conditional transfer
+
+$$
+\begin{aligned}
+R_u(I=0)&\le\min\{1,\delta+e(u),M_u\delta\},\\
+\mathbb P_e(\mathsf E\cap\mathcal A\cap\{I=0\})
+ &\le\delta+\eta^+.
+\end{aligned}
+\tag{12.26}
+$$
+
+It also holds for a family chosen from the allowed pre-gate state
+and history, with its own finite $N$, when its certificate has the
+same $t,\delta$. Consequently
+
+$$
+\mathbb P_e(\mathsf E\cap\mathcal A\cap\mathcal D\cap\{I=1\})
+ \ge\mathbb P_e(\mathsf E)-\alpha-\gamma-\delta-\eta^+.
+\tag{12.27}
+$$
+
+On this common event, suppose an actual completed normalized output
+$\rho_{\rm out}$ targets precisely the cut $C=T+J$, has captured,
+retained and assimilated every original label through that cut,
+and has separately charged, genuinely generated output error
+$\operatorname{TV}(\rho_{\rm out},\rho)\le\xi_{\rm actual}$.
+Then the necessary lower bounds are
+
+$$
+\begin{aligned}
+\operatorname{TV}(Q_{W_J}^H,\rho_{\rm out})
+ &>c-t-\zeta-\xi_{\rm actual},\\
+\operatorname{TV}(R_C^H,\rho_{\rm out})
+ &>c-t-\epsilon-\zeta-\xi_{\rm actual}.
+\end{aligned}
+\tag{12.28}
+$$
+
+They are strictly positive whenever the corresponding displayed
+right side is nonnegative. In particular a current-row accuracy
+claim below these bounds fails on the indicated hit event.
+No assertion is made on a non-hit, on physical noncompletion, or
+for an output whose actual target has moved beyond $T+J$ without
+further analysis of that actual cut.
+
+*Proof.* For a fixed family its non-hit event is a measurable
+function of a finite prefix, with stationary probability less
+than $\delta$. Comparing the complete laws by (12.15) changes
+this probability by at most $e(u)$; domination by $M_u$ supplies
+the other bound. For allowed $u,V$ and any fixed selected valid
+family, the same calculation applies to its own prefix length.
+Integrating an independent allowed seed preserves the bound.
+In particular no assertion of independence of $J$ from the full
+label sequence is needed or true here.
+
+For clarity one cannot condition a confidence event on a successful
+acquisition and substitute its data into a new-law estimate.
+Instead, among possible pre-gate outputs call a family valid if
+its true stationary inequalities (12.18) hold. This is a property
+of that finite description for the fixed source. On $\mathcal A$
+every eligible selected family is valid. Conditional on $u,V$,
+restrict to eligible valid choices and apply the preceding bound
+before imposing $\mathcal A$. Integrating gives at most
+$\delta+\mathbb E_e e(Y_{<T})\le\delta+\eta^+$.
+Intersecting also with $\mathcal A$ can only decrease this
+non-hit probability. This proves the second line of (12.26).
+The union bound with $\mathcal A^c,\mathcal D^c$ proves (12.27).
+It does not assert a lower bound for $\mathbb P_e(\mathsf E)$.
+A certificate which is never ready has no eligibility guarantee.
+
+On a hit the first-future-label event $\{3\}$ has probability
+less than $t$ under $Q_{W_J}^H$ and probability $c$ under
+$Q_\emptyset^H$. Event-TV and the triangle inequality through
+(12.25) and the actual output error prove the first line of
+(12.28). The reverse triangle inequality through (12.24) proves
+the second. An actually generated certificate $c_-\le c$ gives
+the entirely certified weaker lower bound
+$c_--t-\epsilon-\zeta-\xi_{\rm actual}$; the strict rational test
+$c_->t+\epsilon+\zeta+\xi_{\rm actual}$ certifies its positivity.
+The acquisition event can include the corresponding lower
+endpoint for $c$ and all approximation certificates, so this
+introduces no exact probability query.
+
+For countably many predeclared descriptions $\kappa$, retain each
+fixed gate, horizons, rational margins, finite selector and allowed
+service-state rules. Give its acquisition, dynamic and non-hit
+terms the common budgets $\alpha$, $\gamma_\kappa$ and
+$\delta_\kappa+\eta_\kappa^+$, respectively. Intersect the
+acquisition event with the dynamic events and the complements
+of the valid-eligible non-hit events for every deterministic
+source-valid description. Its probability is at least
+
+$$
+1-\alpha-\sum_\kappa
+ (\gamma_\kappa+\delta_\kappa+\eta_\kappa^+).
+\tag{12.29}
+$$
+
+On that event any eligible selected description hits and has
+(12.28), subject to the actual output premises. Invalid branches
+are omitted before the union bound, as in §9. This is the required
+common-event way to select a gate or tolerance from acquired
+data; an individual bound for a deterministic gate cannot simply
+be asserted for an arbitrarily selected gate.
+
+The Q statement in Theorem 12.3 supplies the stationary finite
+witness table and its law-transfer calculation. Its separate R
+statement says that the actual current posterior itself has
+arbitrarily low next-3 values almost surely after every authentic
+history, even without the numerical contact event. The latter
+is qualitative: it supplies neither acquired exact R rows nor
+a certified actual-R stopping interface. Equations (12.24)–(12.28)
+are the finite acquired Q-table consumer for the actual target.
+Neither use erases any of the actual execution premises.
+$\square$
+
+**Theorem 12.8 (cofinal amplification against a universal one-gap
+multiple).** No finite constant $C\ge0$ can replace the timing
+conditions of §§10–11 by arbitrary full-label stopping while
+bounding the selected stationary row deviation by $C\beta_d$
+for every original source. This failure holds both for a
+pathwise uniform bound and for a uniform expectation bound over
+bounded label-stopping indices. It also holds in the actual
+original law for deviations of the actual current posterior from
+the stationary empty-history row. The comparison can use the
+arbitrarily small generated cofinal guards $b^+$ of Proposition
+10.3, rather than an unacquired numerical value of $\beta_d$.
+
+*Proof.* Use the coefficient-one original family $a=\eta=1$,
+with positive integer gaps $d=L\ge1$. Each choice is a separate
+original source. Once chosen, its gap, $g_L$, $c_L$ and emissions
+remain fixed throughout its entire run. Markov contraction and
+the source semigroup identity give
+
+$$
+\|g_L\|_\infty\le\|g_1\|_\infty<\infty,\qquad
+c_L=\frac1{4(1+\|g_L\|_\infty)}\ge
+c_*:=\frac1{4(1+\|g_1\|_\infty)}>0.
+\tag{12.30}
+$$
+
+Proposition 10.3, with exactly its fixed-coefficient reference
+services, gives a cofinal sequence of finite integers $L_n$ and
+rational passing guards $b_n^+\downarrow0$, with $l=L_n=\tau$
+and $\beta_{L_n}\le b_n^+$. To ensure cofinality explicitly,
+require $L_n\ge n$ in its fair search. At the first stage use
+guard target $1/2$; at stage $n>1$ use the rational target
+$\min(2^{-n},b_{n-1}^+/2)$. Formula (10.15) tends to zero on
+every such tail, so these restrictions still terminate and give
+the asserted decreasing guards.
+It is not an adjustment of a gap during any run, nor a claim
+that any one fixed source passes every tolerance.
+Here $l=L_n\le\tau$ is checked mathematically for the comparison
+family. The numerical guard uses only its fixed-reference calls.
+If used as an actual acquired guard, its original earned-clock
+premise must still be met; no claim that startup returns exactly
+$L_n$, and no exact actual coefficient or clock query, is made.
+
+Set $t=c_*/2$ and fix $\delta=1/4$. Proposition 12.4 gives for
+each source a finite prefix-free family and bounded selector
+$(J_n,I_n)$ of Definition 12.6. For every $H\ge1$,
+
+$$
+\begin{aligned}
+Q_n(I_n=1)&>3/4,\\
+I_n=1\quad&\Longrightarrow\quad
+D_{J_n,H}(W_{J_n})>c_{L_n}-t\ge c_*/2,\\
+\mathbb E_{Q_n}D_{J_n,H}(W_{J_n})&>3c_*/8.
+\end{aligned}
+\tag{12.31}
+$$
+
+At the non-hit branch $J_n=N_n$ the deviation is still
+nonnegative; that branch was retained in the expectation.
+For any proposed $C$ choose $n$ with
+$Cb_n^+<3c_*/8$. Then (12.31) is greater than
+$Cb_n^+\ge C\beta_{L_n}$. This contradicts a universal
+expectation bound; its positive-probability hit separation also
+contradicts a pathwise bound when $Cb_n^+<c_*/2$.
+Every finite family admits the genuine certificates of Theorem
+12.5 with rational margins, but (12.31) needs no physical claim
+that the selector has been executed.
+
+For the actual-law assertion, in each of these same sources
+start from the original $e$-start, and let
+
+$$
+K_n=\inf\{j\ge1:R_{W_j}^1(3)<c_*/2\}.
+\tag{12.32}
+$$
+
+The $u=\varepsilon$ case of Theorem 12.3 says that $K_n$ is
+finite almost surely in that actual law. Choose a finite $M_n$
+with actual probability $\mathbb P_e(K_n\le M_n)>3/4$ and
+use the bounded rule $\bar K_n=K_n\wedge M_n$, retaining the
+non-hit flag on $\{K_n>M_n\}$. On its hit event,
+
+$$
+\operatorname{TV}(R_{W_{\bar K_n}}^H,Q_{\emptyset,n}^H)>c_*/2,
+\qquad
+\mathbb E_e\operatorname{TV}
+ (R_{W_{\bar K_n}}^H,Q_{\emptyset,n}^H)>3c_*/8.
+\tag{12.33}
+$$
+
+This is an actual-source mathematical stopping rule defined by
+its true posterior, not an available exact-posterior query.
+It proves the asserted actual-law failure for arbitrary
+mathematical full-label stopping. The finite acquired substitute
+is (12.22) with the actual stopped-law transfer and error terms
+of Theorem 12.7, conditional on its genuine readiness and lawful
+output premises. In particular neither (12.32) nor the finite
+table invents an executor. The reference to $c_*$ is a
+mathematical lower bound for the comparison family; no exact
+$c_*$ or $\|g_1\|_\infty$ is added to an actual menu.
+
+The contradiction concerns a constant uniform over timing and
+over the cofinal original source family. It does not assert an
+unbounded ratio for every fixed source or every acquired guard.
+The deterministic-index expectation bound (10.16), its fully
+independent-completion consumer, and the B-mask-adapted bounds
+of §11 remain unchanged: none of their timing premises authorizes
+the selection in (12.22) or (12.32). $\square$
+
+**Definition 12.9 (source, resource and attribution boundaries).**
+The additional source-specific relation is the survival edge
+(12.6)–(12.9) together with its full-history and actual-posterior
+consequences (12.11), high-mass finite acquired witnesses
+(12.18)–(12.21), and ready-row obstruction (12.28), (12.31)–(12.33).
+These are ordinary `repo-derived` paper deductions. Spectral
+calculus, the positive-vector edge principle, log-convexity of
+moments, conditional-expectation convergence and merging,
+Birkhoff's theorem, total-variation contraction and triangle
+inequalities are mature intermediates, not separate new
+contributions. The primary spectral and martingale references
+are [EDGE], [SPCALC] and [UPWARD]; stationary ergodicity,
+complete-path transfer and the exact marked-source identity are
+[DPCR, Theorem 8.2]. The crucial qualitative exterior order
+bound is [DPCR, Theorem 14.3], used for this same $g_d$.
+The endpoint and form correspondence is [CONTACT, Definition 115.1,
+Theorems 115.2–115.3 and Definition 115.4],
+including the full source summand, rather than a Friedrichs
+substitution. Sections 7, 9, 10 and 11 supply respectively the
+finite acquired rows/common event, the complete-future contact
+comparison, the fixed-reference cofinal guard, and the retained
+allowed service-state conditioning.
+
+The reduced gap is a source-faithful obstruction to unrestricted
+content-dependent ready-row reuse, together with finite acquired
+certificates of substantial hit probability. It is not a
+classification of all neutral histories, B-mask inevitability,
+an impossibility theorem for all executors, or a negation of
+§§9–11. In particular bounded label stopping and sourcewise
+finite certificate search supply no actual capture/write
+bandwidth, storage service, whole-growing-suffix assimilation,
+catch-up, serialization, atomic output, accepted pointer
+interface or finite expected execution cost. Every actual
+record, failed gate, acquired row, original permission/menu,
+reference call, rational precision, arithmetic step, distinct
+storage/copy cost, and label arriving during work remains part
+of Definitions 8.3 and 11.7 and [OWGR, §21]. No stationary
+preparation, hidden-point sensor, reset, exact law query, source
+delay, enlarged live gap or installed throughput is included.
+
+The native nonempty finite ordered alpha/beta trees with no
+uniform height bound, their actual rho substitutions and
+literal-root operations retain the distinct source and service
+contracts of [NCO, §10]. The full original AURIC consumers and
+all their precise source, evaluation, cone, domain, menu and
+quantum-operation assumptions remain those retained in
+Definition 11.7; no native/diffusion/AURIC operational identity
+is supplied. The persistent space/continuation/boundary/memory
+mutual-recovery goal therefore retains its remaining actual
+execution and source-bridge obligations. No fresh Lean
+verification or worldwide novelty claim accompanies these
+ordinary proofs.
+
+[EDGE]: https://arxiv.org/pdf/1101.0373v2
+[SPCALC]: https://www.mat.univie.ac.at/~gerald/ftp/book-schroe/schroe.pdf
+[UPWARD]: https://services.math.duke.edu/~rtd/PTE/PTE5_011119.pdf
+[NCO]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CORRELATION_ORDER_ACQUISITION.md
+
+## 追加锚（本行以下为增补区）
+
+## 13. Same-source predictive packing and bounded classical handoff
+
+**Definition 13.1 (fixed source, waiting windows and the handoff domain).**
+Fix one source of Assumption 1.1 and Definition 12.1, including its
+permitted repaired emission, before choosing any packing size or
+accuracy. Its finite positive $a,\eta,d$, full complex non-Friedrichs
+endpoint, maximal domain, form and source trace, original
+$G=H^1\times\mathbb R$, $e$-start, first read at $2d$, subsequent
+gaps $d$, four labels and conditionally fresh read noises remain
+unchanged. Use exactly $p,R_u,Q_w,q$ of §§1–2 and 12. In particular
+$R_u^H$ conditions on the entire original history $u$, and the first
+coordinate of its future is $Y_{|u|}$ at time $(|u|+2)d$.
+
+For a word $v\in\mathcal L^H$, let
+
+$$
+\begin{gathered}
+T_3(v)=\min\{j\in\{1,\ldots,H\}:v_{j-1}=3\},
+\qquad \min\varnothing=\infty,\\
+E^H(L,U)=\{v\in\mathcal L^H:L<T_3(v)\le U\},
+\qquad 0\le L<U\le H.
+\end{gathered}
+\tag{13.1}
+$$
+
+Thus the waiting index counts future reads, not physical time since
+source initialization. These are finite unions of full length-$H$
+cylinders. For probability rows on $\mathcal L^H$, use event-TV,
+equivalently half the $\ell^1$ distance, with range $[0,1]$.
+
+At a common cut $t$ and requested horizon $H$, an $M$-value classical
+predictive handoff has a single bank of normalized rows
+$\nu_{t,H,s}$, $1\le s\le M$, and may have arbitrary conditional
+encoding probabilities $\lambda_u(s)$. Its marginalized reported law is
+
+$$
+\mu_u^{t,H}=\sum_{s=1}^M\lambda_u(s)\nu_{t,H,s},
+\qquad \lambda_u(s)\ge0,\qquad \sum_s\lambda_u(s)=1.
+\tag{13.2}
+$$
+
+The bank and encoding weights may depend on this fixed source, the
+common cut/clock and the requested horizon. No compatibility between
+different horizons, finite online updating rule, effective bank
+construction or affordable bank storage is required for this
+mathematical comparison. Decoder
+randomness after receiving $s$ is already included in its normalized
+row. The probabilities $\lambda_u(s)$ describe the distribution of
+the transmitted configuration; the decoder receives its realized
+value, not a numerical description of these probabilities.
+
+Here $M$ bounds complete distinguishable history-bearing handoff
+configurations. All such pointer values, selected banks, program and
+control phases, reference replies or handles, allocation/address
+choices, retained precision data and other side registers used by
+decoding belong to that configuration. Separate component bounds
+multiply when their combinations are distinguishable; they do not
+each receive the allowance $M$. A $b$-bit complete carrier has at most
+$2^b$ values. Unlimited-precision real registers have no finite value
+bound merely because they have a fixed number of coordinates.
+The supplied clock is common to the histories being compared.
+A history-dependent completion-time signal, output length or
+reference selection used by decoding is additional history-bearing
+state or input, not that common clock.
+
+The entire actual archive, all acquired rows, references, permissions
+and legal menus remain retained and paid. This handoff domain allows
+no additional history-bearing decoder input. Reaccess to that archive,
+to history-dependent backing through a pointer, or to an external
+history-dependent controller is an additional input. It remains a
+legal route with its original costs, outside the stated bounded
+handoff. Supplying the vector $\lambda_u$ to the decoder would also
+be an additional history-bearing message; it is not free in (13.2).
+
+**Theorem 13.2 (arbitrarily large near-disjoint actual rows at one cut).**
+For each source fixed in Definition 13.1, every integer $K\ge2$ and
+every positive rational $\epsilon$, there exist finite integers
+$t,H\ge1$, distinct words $u_1,\ldots,u_K\in\mathcal L^t$ with
+$p(u_i)>0$, and integer endpoints
+
+$$
+\begin{gathered}
+L_1=0,\qquad L_i<U_i\quad(1\le i\le K),\\
+U_i=L_{i+1}\quad(1\le i<K),\qquad U_K=H.
+\end{gathered}
+\tag{13.3}
+$$
+
+such that, with $E_i=E^H(L_i,U_i)$,
+
+$$
+R_{u_i}^H(E_i)>1-\epsilon\qquad(1\le i\le K).
+\tag{13.4}
+$$
+
+The $E_i$ are disjoint first-3 waiting-time windows. Every row is
+an actual full-history posterior of the original $e$-start source;
+no stationary preparation or event-only posterior replaces it.
+
+*Proof.* Choose a rational
+$0<\theta<\min\{\epsilon/4,1/16\}$. Reuse precisely Theorem 12.2:
+$S_n>0$, $S_n\to0$ and $S_{n+1}/S_n\to1$ for this fixed source.
+For every fixed integer $L\ge0$ these imply
+
+$$
+\frac{S_{n+L}}{S_n}\longrightarrow1\quad(n\longrightarrow\infty),
+\qquad
+\frac{S_{n+U}}{S_n}\longrightarrow0\quad(U\longrightarrow\infty)
+\quad\hbox{for each fixed }n.
+\tag{13.5}
+$$
+
+The first is the product of $L$ successive ratios, with empty product
+one. The second divides the supplied limit $S_{n+U}\to0$ by a fixed
+positive denominator. No rate or uniformity is used.
+
+Construct the endpoints and positive integers $n_i$ successively.
+Start with $L_1=0$. Having chosen $L_i$, choose $n_i$ larger than
+the preceding $n_j$ and so large that
+$S_{n_i+L_i}/S_{n_i}>1-\theta$. Then choose finite $U_i>L_i$ with
+$S_{n_i+U_i}/S_{n_i}<\theta$. If $i<K$, set $L_{i+1}=U_i$.
+This is possible by (13.5), and finally set $H=U_K$.
+
+For the proof only, condition the stationary comparison law $Q$ on
+its first $n$ labels all lying in $D=\{0,1,B\}$, an event of
+probability $S_n>0$. Denote its length-$H$ continuation law by
+$C_n^H$. Directly from the same no-3 events,
+
+$$
+\begin{aligned}
+C_n^H(T_3>j)&=\frac{S_{n+j}}{S_n}\quad(0\le j\le H),\\
+C_{n_i}^H(E_i)
+ &=\frac{S_{n_i+L_i}-S_{n_i+U_i}}{S_{n_i}}>1-2\theta.
+\end{aligned}
+\tag{13.6}
+$$
+
+This calculation neither asserts that the labels form a renewal
+process nor conditions on a complete word. The latter distinction
+is removed by the finite exact decomposition
+
+$$
+C_{n_i}^H
+ =\sum_{w\in D^{n_i}}\frac{q(w)}{S_{n_i}}Q_w^H,
+\qquad \sum_{w\in D^{n_i}}q(w)=S_{n_i}.
+\tag{13.7}
+$$
+
+All weights are positive and sum to one. Hence some full word
+$w_i\in D^{n_i}$ has $Q_{w_i}^H(E_i)>1-2\theta$; otherwise their
+weighted average could not exceed that number. Retain these finitely
+many words and the already chosen common windows and horizon.
+
+To obtain actual rows at one actual cut, take $t\ge\max_i n_i$ and
+the complete original words
+
+$$
+u_i(t)=B^{t-n_i}w_i.
+\tag{13.8}
+$$
+
+Equation (4.4), applied to $w_i$ and each $w_iv$, gives
+
+$$
+R_{u_i(t)}^H(v)
+ =\frac{\langle P^{t-n_i}g,F_{w_iv}\rangle_m}
+        {\langle P^{t-n_i}g,F_{w_i}\rangle_m}
+ \longrightarrow\frac{q(w_iv)}{q(w_i)}=Q_{w_i}^H(v).
+\tag{13.9}
+$$
+
+The limiting denominator is strictly positive. There are only
+$K4^H$ entries, so the convergence is also simultaneous in TV.
+Choose one finite $t$ large enough that all these TV errors are
+less than $\theta$. Then
+
+$$
+R_{u_i(t)}^H(E_i)>1-3\theta>1-\epsilon.
+\tag{13.10}
+$$
+
+These masses also exceed $1/2$. Two of the words $u_i(t)$ cannot
+coincide, since their one common probability row would then put
+more than $1/2$ on each of two disjoint events. Each has positive
+original probability by Definition 1.2. The prefix $B^{t-n_i}$ is
+part of the full actual word; it is not forgotten or provided by
+resetting the source. The stationary law and the event-conditioned
+laws were only intermediates in obtaining (13.9). $\square$
+
+**Theorem 13.3 (bounded-bank obstruction, including convex encoding).**
+Take the actual rows and windows of Theorem 13.2 with
+$0<\epsilon<1$. For every integer $M\ge1$, every common bank of
+$M$ normalized rows $\nu_s$ on $\mathcal L^H$, and every choice
+of probability vectors $\lambda_i$,
+
+$$
+\max_{1\le i\le K}
+ \operatorname{TV}\left(R_{u_i}^H,
+                 \sum_{s=1}^M\lambda_i(s)\nu_s\right)
+ >1-\epsilon-\frac MK.
+\tag{13.11}
+$$
+
+In particular, for every fixed source and every handoff family of
+Definition 13.1 with a uniform finite bound $M$,
+
+$$
+\sup_{t\ge1}\ \sup_{u\in\mathcal L^t}\ \sup_{H\ge1}
+ \operatorname{TV}(R_u^H,\mu_u^{t,H})=1.
+\tag{13.12}
+$$
+
+All these histories have positive source probability. This is a
+supremum over finite histories and finite requested horizons, not
+an assertion that some finite query attains error one.
+
+*Proof.* Put $b_{is}=\nu_s(E_i)$. Normalization and disjointness
+give $\sum_i b_{is}\le1$ for every $s$. For
+$\mu_i=\sum_s\lambda_i(s)\nu_s$, finite nonnegative summation yields
+
+$$
+\sum_{i=1}^K\mu_i(E_i)
+ =\sum_{s=1}^M\sum_{i=1}^K\lambda_i(s)b_{is}
+ \le\sum_{s=1}^M\sum_{i=1}^Kb_{is}\le M.
+\tag{13.13}
+$$
+
+Consequently some $i$ has $\mu_i(E_i)\le M/K$. Its event-TV
+distance is at least
+$R_{u_i}^H(E_i)-\mu_i(E_i)>1-\epsilon-M/K$, proving (13.11).
+This elementary stochastic-channel counting bound is an intermediate;
+the source-specific content is the common-cut packing that makes it
+applicable here. No restriction to deterministic encoders or bank
+rows drawn from the actual predictive family was used.
+
+For any $0<\delta<1$, choose a rational $0<\epsilon<\delta/2$
+and an integer $K>2M/\delta$. Theorem 13.2 supplies a common
+$t,H$ before the bank at that $t,H$ is compared. Equation (13.11)
+then gives an actual finite-history error greater than $1-\delta$.
+The universal upper bound on TV is one, proving (13.12) even when
+the bank changes arbitrarily with $t,H$. Also, if error at most
+$\delta$ is required on a given packing, necessarily
+
+$$
+M>K(1-\epsilon-\delta).
+\tag{13.14}
+$$
+
+For randomized retention the law error used here is the more
+favorable order of averaging: convexity gives
+$\sum_s\lambda_i(s)\operatorname{TV}(R_{u_i}^H,\nu_s)
+\ge\operatorname{TV}(R_{u_i}^H,\mu_i)$. Thus an expected
+per-configuration row-error guarantee cannot evade the bound.
+Even if a common source-independent random seed $Z$ is granted
+to both encoder and decoder, the same conclusion holds for the
+marginalized law: condition on $Z=z$, apply (13.13) to its bank
+and encoding weights, and integrate. The sum of the $K$ resulting
+event masses is still at most $M$, so one fixed $i$ has marginal
+mass at most $M/K$. This grants independent randomization, not a
+history-dependent bank selector disguised as an independent seed.
+Any actual retained seed or auxiliary storage keeps its material
+charge, and every history-bearing part remains within the
+configuration accounting of Definition 13.1. $\square$
+
+**Theorem 13.4 (one-event acquired retrospective packing certificates).**
+Fix rational $0<\alpha<1$. In the original paid retained-record and
+total fixed-reference setting of Definition 7.1 and [SRO, §§21–22],
+there is one predeclared original-law event $\mathcal A$ with
+$\mathbb P_e(\mathcal A)\ge1-\alpha$ on which the following holds
+for every finite request
+
+$$
+K\ge2,\qquad \epsilon,\zeta\in\mathbb Q,
+\qquad 0<\epsilon<1,\quad \zeta>0.
+\tag{13.15}
+$$
+
+A fair finite-packet search attains a finite retrospective certificate
+for some common $t,H$, distinct original histories $u_i$ of length
+$t$, disjoint windows $E_i$ as in (13.3), and genuinely acquired
+normalized rational rows $\widehat R_i$ and rational errors $z_i$.
+It certifies, with strict rational slack,
+
+$$
+\begin{gathered}
+p(u_i)>0,\qquad
+\operatorname{TV}(R_{u_i}^H,\widehat R_i)\le z_i
+ <\min\{\zeta,\epsilon/16\},\\
+\widehat R_i(E_i)-z_i>1-\epsilon/2.
+\end{gathered}
+\tag{13.16}
+$$
+
+Thus the actual rows, not only stationary comparison rows, satisfy
+(13.4) and the stronger bank lower bound
+$1-\epsilon/2-M/K$. A finite certificate need not be ready at its
+target cut $t$ or concern the actual current row when it is ready.
+The attainment is sourcewise, with no uniform deadline or expected
+work bound, under precisely these inherited acquisition interfaces.
+
+*Proof: the exact actual-row supplier.* Reuse the marked identity
+[DPCR, Theorem 8.2, (8.6)–(8.8), and Proposition 8.6, (8.20)].
+With the notation of this volume it says
+
+$$
+q(3u)=c\,p(u),\qquad q(3)=c>0,\qquad
+R_u^H(v)=\frac{q(3uv)}{q(3u)}=Q_{3u}^H(v).
+\tag{13.17}
+$$
+
+Its indexing is essential: the single original $d$-transition after
+the marked emission propagates $[f_3]=cg_d$ to $cPg_d=cg_{2d}$,
+the actual first-read density. This is the supplied cylinder identity,
+not a newly prepared stationary source or an actual reset at a
+naturally observed $3$. The marker in (13.17) is included in the
+acquisition word length and every count.
+
+*Proof: the confidence event before selection.* Give startup allowance
+$\alpha/2$, and let $l_j$, $j\ge1$, enumerate its possible positive
+rational lower-clock outputs. Predeclare packets for every triple
+$(j,N,s)$ of positive integers, using word length $N$, radius
+$e_s=2^{-s}$ and allowance
+
+$$
+\beta_{j,N,s}=\frac\alpha2\,2^{-j-N-s}.
+\tag{13.18}
+$$
+
+For each such deterministic input, generate the finite window count
+$n_{j,N,s}$ and reference enclosures by (7.3)–(7.4); only the packet
+length $N$ matters there. The termination argument of Theorem 8.2
+applies at every fixed $N,s,l_j>0$. Indeed $D_n(l_j)\to1$, its
+total paid reference name supplies refined lower enclosures, and
+both terms of $V_{n,N}^+$ can be made arbitrarily small. All packet
+sizes are determined without consulting their label values.
+
+Let $\mathcal E_{j,N,s}$ be the Lemma 7.2 TV event for this packet,
+viewed as a function of its finite initial original record. Declare
+
+$$
+\mathcal A=\mathcal A_{\rm startup}\cap
+ \bigcap_{j:\,l_j\le\tau}\ \bigcap_{N,s\ge1}
+                 \mathcal E_{j,N,s},
+\qquad \tau=a^2d/\eta.
+\tag{13.19}
+$$
+
+Here $\mathcal A_{\rm startup}$ includes finite startup termination
+and validity of its returned bound. The source is fixed for this
+probability statement; $\tau$ is not an exact input to the procedure.
+The sum of (13.18) is $\alpha/2$, so the union bound gives
+$\mathbb P_e(\mathcal A)\ge1-\alpha$. Only the selected startup
+branch is executed. Invalid deterministic branches are not used in
+the intersection. No independence of packets, startup, overlapping
+windows or data-selected certificates is asserted or needed.
+
+Every finite request (13.15), every finite candidate tuple and every
+rational row-error test below uses these same packet events. Thus
+the event is common to all of them without selecting a confidence
+statement after observing a successful certificate.
+
+*Proof: finite rational tests.* For a candidate $(t,H)$ use
+$N=t+H+1$. Its acquired length-$N$ empirical probability vector
+and prefix marginals $a(x)$ are exactly (7.5), on one retained
+initial record. At radius $e_s$ put
+$\ell_x=\max\{0,a(x)-e_s\}$ and
+$b_x=\min\{1,a(x)+e_s\}$. For each candidate original word
+$u_i\in\mathcal L^t$, require $\ell_{3u_i}>0$ and form
+
+$$
+\begin{gathered}
+\widehat R_i(v)=\frac{a(3u_iv)}{a(3u_i)}\quad(v\in\mathcal L^H),\\
+I_{i,v}=
+ \left[\frac{\ell_{3u_iv}}{b_{3u_i}},
+       \frac{b_{3u_iv}}{\ell_{3u_i}}\right],\\
+z_i=\frac12\sum_{v\in\mathcal L^H}
+ \max\left\{
+ \left|\widehat R_i(v)-\frac{\ell_{3u_iv}}{b_{3u_i}}\right|,
+ \left|\widehat R_i(v)-\frac{b_{3u_iv}}{\ell_{3u_i}}\right|
+ \right\}.
+\end{gathered}
+\tag{13.20}
+$$
+
+These are Proposition 7.3's per-row construction and generated error,
+restricted to the needed prefixes $3u_i$; no new estimator is used.
+Prefix consistency gives $\sum_v a(3u_iv)=a(3u_i)>0$, so each
+$\widehat R_i$ is exactly normalized and nonnegative. On
+$\mathcal A$, the true numerator and denominator lie in their
+respective intervals. Equation (13.17) therefore places every
+$R_{u_i}^H(v)$ in $I_{i,v}$, and summing the endpoint errors proves
+the TV bound in (13.16). The positive denominator guard also gives
+the entirely acquired positive lower bound
+
+$$
+p(u_i)=\frac{q(3u_i)}{q(3)}
+ \ge\frac{\ell_{3u_i}}{b_3}>0.
+\tag{13.21}
+$$
+
+One can require $\ell_3>0$ as a further strict guard; it eventually
+passes. The numerator is a prefix event of the same length-$N$
+packet, so its error bound is simultaneous with all other tests.
+The search verifies distinctness of the $u_i$, integer endpoint
+ordering (13.3), and the two strict rational inequalities in
+(13.16), using (13.20). An accepted certificate hence implies
+the stated actual-row bounds on $\mathcal A$. In particular its
+positive rational slack
+
+$$
+\sigma=\min_i\{
+ \widehat R_i(E_i)-z_i-(1-\epsilon/2)\}>0
+\tag{13.22}
+$$
+
+can be returned along with the rows, enclosures and packet indices.
+This implies the certified strict version of (13.11), or (13.14)
+with the certified mass lower bounds substituted. Bank probabilities
+and convex weights need not be numerically available to certify
+this universal lower bound.
+
+*Proof: attainment with no exact-law oracle.* On the selected valid
+branch, enumerate $(N,s)$ fairly, with $N\ge3$. For each packet,
+there are finitely many decompositions $N=t+H+1$ with $t,H\ge1$,
+finitely many distinct $K$-tuples of length-$t$ words, and finitely
+many ordered integer windows within $H$. Skip a decomposition
+with $K>4^t$. All its tests are finite rational arithmetic. A
+diagonal enumeration that tests all $N,s\le m$ by finite stage
+$m$ is one possible fair order; already computed packets may be
+reused from their paid retained records.
+
+For the termination proof only, invoke Theorem 13.2 with accuracy
+$\epsilon/4$. It supplies a finite candidate tuple with actual
+masses greater than $1-\epsilon/4$ and some finite
+$N_0=t+H+1$. For this fixed tuple, all $q(3u_i)>0$. As the
+packets at $N_0$ refine on $\mathcal A$, their prefix marginals
+converge to $q$, all denominator guards pass, and Proposition 7.3
+gives $z_i\to0$ and $\widehat R_i\to R_{u_i}^H$ in TV.
+Consequently both tests (13.16), including the stronger mass
+threshold $1-\epsilon/2$, pass with positive slack at some finite
+$s$. Fair enumeration reaches that finite pair after finitely many
+finite packets and comparisons. The theoretical tuple and its
+exact probabilities were used to prove termination, never as
+program inputs. Arbitrarily small positive $q(3u_i)$ can force
+arbitrarily fine precision and long records; they do not invalidate
+this fixed finite-tuple argument.
+
+This proves simultaneous sourcewise finite attainment for all
+finite requests on (13.19), in the inherited retained-record and
+paid-reference model. The acquired table describes $K$ possible
+full histories at the same original cut, not $K$ simultaneously
+realized initial histories on one trajectory. It is acquired from
+the one continuing original record through (13.17). No label is
+discarded, no later segment is renamed a fresh $e$-start, and no
+claim identifies its retrospective target with an unbounded
+arriving current suffix. $\square$
+
+**Definition 13.5 (retrospective acquisition and the full resource bill).**
+For a reached packet of length $N$ and $n$ overlapping windows,
+the indexed acquisition uses exactly $n+N-1$ original labels,
+$Y_0$ through $Y_{n+N-2}$, with final read at $(n+N)d$.
+Its literal full histogram has $4^N$ counters of
+$\lceil\log_2(n+1)\rceil$ bits each, a $2N$-bit word buffer,
+and its window, address and loop registers. Initializing that
+histogram pays $4^N$ field writes; processing its windows pays
+$n$ counter increments, plus buffer updates, index work and
+record accesses at their actual bit widths. These quantities
+are not bounded independently of the requested packing.
+
+For a returned tuple, the rational row arrays have $K4^H$ entries;
+the retained interval endpoints, generated errors and probability
+guards require their own backing. Each row entry and its interval
+in (13.20) pays its exact rational divisions, endpoint comparisons,
+sums and bit widths. Enumerating full histories and windows pays
+every reached candidate, comparison and failed test. The chosen
+words themselves cost $2Kt$ bits if copied literally; windows,
+cut/horizon integers, packet identifiers and refinements are also
+retained finite data. A reference or shared representation can
+replace a literal copy only with its actual accepted backing and
+access contract. Choosing the reference is not a memory-free
+operation.
+
+Startup, all reached packet-size searches, fixed-reference calls,
+precision queries and replies, rational lower defect names,
+refinements and unsuccessful tests keep their charges. In the
+bit model of [OWGR, Definition 21.1], reference work, reference
+peak space and retained names/replies remain separate
+$C_{\rm cap},M_{\rm cap},B_{\rm cap}$ coordinates. Ordinary
+arithmetic is charged at actual integer/rational widths, not as
+unit-cost operations on exact real source parameters. A fair
+enumeration stores its indices and control state explicitly.
+
+Nested packets may rescan one retained initial archive. Through
+any actual completed acquisition cut $C$, that archive has $C$
+labels and exactly $2C$ payload bits in the inherited coding,
+plus its lengths, addresses, handles, acquisition/control state,
+references, rows and scratch. Physical reads shared by several
+packets are counted once; each rescan and distinct retained copy
+is counted separately. Peak storage counts all simultaneously
+live backing once and adds every distinct buffer or copy.
+Total work adds all reached scans, counter work, numerical work
+and certificate arithmetic, as in [OWGR, §21] and Definition 8.3.
+
+If labels continue arriving during any reference computation,
+enumeration, refinement, copying or serialization, they remain
+original labels with their fixed $d$ gaps. Every such arrival,
+capture/write, queued label, index update, retained payload and
+subsequent rescan adds to the actual bill through $C$. An overrun
+of $J$ labels adds $J$ reads and $2J$ payload bits before its
+addresses, buffer/control and work costs. Previously acquired
+rows, source references and lawful menus remain available at
+their original costs. The certificate can use its declared
+earlier finite record even when $C$ is later.
+
+Sourcewise finite indexed attainment in Theorem 13.4 supplies
+neither a processor/capture rate relative to $d$ nor a bound on
+those additional arrivals. It installs no lossless capture
+service, bounded queue, completion/catch-up theorem, accepted
+pointer output or atomic serialization. Physical implementation
+must supply each such service in its original legal domain.
+Definitions 9.5 and 11.7 retain the obligations to assimilate
+the whole growing suffix, acquire a row for the actual target,
+generate its accumulated error and complete lawful output.
+
+**Proposition 13.6 (the changed predictive-memory route and its limits).**
+For the unchanged original source, uniformly bounded classical
+handoff without extra history-bearing decoder input cannot give
+any uniform error guarantee $\delta<1$ for all finite actual
+histories and all finite requested horizons, even with a supplied
+common clock and randomized encoding. This obstructs a lossy
+bounded-handoff route in addition to the exact finite-rank route.
+It does not obstruct all executors or supply a source-law
+failure-probability lower bound, a fixed-$H$ impossibility, a
+uniform witness/acquisition deadline or an execution rate.
+
+*Proof and correspondence.* Sections 3–4 exclude exact finite
+linear dimension and exact finite predictive cardinality by
+actual word rank. Infinite exact rank alone does not rule out
+arbitrarily accurate finite approximations. Theorem 13.2 adds
+arbitrarily large almost disjoint actual-row packings; (13.13)
+then controls the entire convex hull of every $M$-row bank, not
+just equalities or deterministic state collisions. Taking $K$
+large and $\epsilon$ small gives (13.12). This is the additional
+approximate, randomized obstruction.
+
+Theorem 12.2's survival limits are reused, not reproved. The
+one-gap/timing results of §12 compare selected low predictions
+with a specified ready comparison row, under their own eligibility
+and error terms. Here the bank is arbitrary, may be redesigned
+for the common source/cut/horizon, and can mix its rows using
+arbitrary history-dependent encoding probabilities. The new
+source-specific steps are (13.6)–(13.10), which move from the
+supplied survival limits to many full actual histories at one
+cut, followed by their same-row marked acquisition in
+(13.17)–(13.22). No one-gap multiple or source-and-timing-uniform
+estimate is restored.
+
+For each comparison the source was fixed before $K,\epsilon$.
+The finite cut and horizon may grow with them; no bound keeps
+$H$ fixed while $K$ tends to infinity. The finitely witnessed
+words can have arbitrarily small positive original probabilities.
+Neither their existence nor a high-confidence estimate of their
+conditional rows bounds how frequently a running source visits
+an offending history. In particular the artificial equal weight
+$1/K$ used in the counting argument is not the source distribution
+of the histories. The confidence level $1-\alpha$ in (13.19)
+concerns correctness and finite indexed acquisition of retrospective
+certificates, not a probability of prediction failure. These
+distinctions prove the stated limitations of the inference.
+
+Archive reaccess, growing history-bearing state, restricted query
+domains or a separately proved source-law risk criterion are
+different possible routes. All original lawful access rights
+remain. A decoder that consults the retained archive receives
+additional history information, and the full system retaining
+that archive has no asserted uniform finite configuration bound.
+The bounded-handoff obstruction therefore is not an all-executor
+impossibility or a completion theorem. It furnishes neither a
+current row for an unbounded suffix nor physical capture/output
+service. The native unbounded finite ordered $\alpha/\beta$ trees,
+their actual $\rho$ replacements and literal-root reads, and the
+original AURIC $E$, positive evaluations, accurate cone, A1–A3,
+all P2/PB and original domains keep their separate correspondence
+obligations. No native/diffusion/AURIC operational bridge or full
+space/time/boundary/memory mutual recovery follows. $\square$
+
+**Definition 13.7 (mathematical suppliers and attribution).**
+The unchanged original source, strict positivity and full-history
+meaning are §§1–2; the actual/stationary B-prefix bridge is
+(4.4); the survival limits are Theorem 12.2; the marked original
+conditional identity is [DPCR, §8]; and the generated finite rows,
+common-event acquisition and chronological resource interfaces
+are §§7–8, Theorem 12.5, [SRO, §§21–22] and [OWGR, §21].
+They are suppliers, not additional results of §13. The finite
+word-Hankel results [WORD] concern exact algebraic realization.
+The separate five-mode source in
+[Finite-start predictive memory, §§1–3][FSM] has its own actual
+posterior family and approximation geometry; its shared label
+alphabet gives no source correspondence to the present diffusion.
+The finite binary edge-emission presentations of the repository's
+`MarkedPredictiveQuotient` and the perfect quantum discrimination
+bound `FiniteMemoryHistoryCapacity.finite_memory_history_capacity`
+likewise do not instantiate this original source or its approximate
+classical-bank claim. Source inspection is not a Lean check.
+
+The residual-waiting viewpoint has a primary-literature antecedent
+in Marzen–Crutchfield, [*Informational and Causal Architecture of
+Discrete-Time Renewal Processes*, §III and Appendix A][REN].
+Their renewal-source assumption makes successive interevent counts
+iid, and their causal-state classification concerns that source.
+No such iid gap structure or age-only predictive sufficiency is
+assumed here; (13.7) keeps the full-word distinctions. Their result
+is background, not a substitute proof of (13.9).
+Marzen–Crutchfield's [*Circumventing the Curse of Dimensionality
+in Prediction: Causal Rate-Distortion for Infinite-Order Markov
+Processes*, §§II and IV][CRD] supplies the established lossy
+predictive-feature and stochastic-encoding context. Its
+source-weighted rate/distortion objectives are distinct from
+the worst-history finite-horizon supremum in (13.12). No numerical
+rate-distortion value or theorem about this diffusion is imported.
+
+Finite conditioning, convex decomposition, normalization,
+event-TV bounds, stochastic-channel counting and summable union
+bounds are mature intermediate arguments. The same-source
+common-cut packing, its arbitrary-bank consequence and its
+acquired actual-row certificate are `repo-derived` ordinary
+theory deductions with the hypotheses and limits above. They
+carry no worldwide originality claim, fresh Lean verification,
+implemented physical executor or finite-completion claim.
+
+[FSM]: RECURSIVE_RELATIONAL_OBSERVATION_FINITE_START_PREDICTIVE_MEMORY.md
+[REN]: https://doi.org/10.3390/e17074891
+[CRD]: https://arxiv.org/abs/1412.2859
+
+## 追加锚（本行以下为增补区）

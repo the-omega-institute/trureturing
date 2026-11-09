@@ -331,7 +331,7 @@ theorem finite_memory [Finite A] [DiscreteTopology A]
   obtain ⟨g, hg, hne⟩ := Set.mem_iUnion₂.mp h
   exact hne (hxy g hg)
 
-private theorem memory_at (X : MulSubshift A G) (tau : Cfg X → Cfg X)
+theorem memory_at (X : MulSubshift A G) (tau : Cfg X → Cfg X)
     (M : Finset G) (hmem : HasMemory X tau M)
     (hequiv : ∀ g x, tau (paperShift X g x) = paperShift X g (tau x))
     (g : G) (x y : Cfg X) (hxy : ∀ m ∈ M, x.val (g * m) = y.val (g * m)) :
@@ -395,7 +395,7 @@ theorem preinjective_pattern_lower [Finite A] [DiscreteTopology A]
     exact (hzF p f).symm.trans ((congrArg (fun x : Cfg X => x.val f) hz).trans (hzF q f))
   exact Nat.card_le_card_of_injective key hkey
 
-private theorem pattern_padding [Finite A] (X : MulSubshift A G)
+theorem pattern_padding [Finite A] (X : MulSubshift A G)
     (F U : Finset G) (hFU : F ⊆ U) :
     Nat.card (PatX X U) ≤ Nat.card (PatX X F) * Nat.card A ^ (U \ F).card := by
   classical
@@ -479,7 +479,7 @@ private theorem image_avoidance_bound [Finite A]
   exact (Nat.mul_le_mul_right _ hcard).trans
     (relative_pattern_bound X Delta C E U T w hX h1 hSI hCE hin hdis hw)
 
-private theorem relative_limit_contradiction {ι : Type*} {l : Filter ι} [Filter.NeBot l]
+theorem relative_limit_contradiction {ι : Type*} {l : Filter ι} [Filter.NeBot l]
     {a rho b : ℕ} (ha : 0 < a) (hrho : 0 < rho) (hb : 0 < b)
     (vol extra tiles : ι → ℕ)
     (hdata : ∀ᶠ i in l, 0 < vol i ∧ vol i ≤ tiles i * b ^ 2 ∧
