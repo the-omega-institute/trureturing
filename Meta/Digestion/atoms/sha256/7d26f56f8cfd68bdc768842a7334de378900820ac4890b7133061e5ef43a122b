@@ -1,0 +1,141 @@
+**定理 41.1（无需共同交换分割的有限谱混合行）。** 在40.1–40.2的完整条件下，对任意原 $h$-偶且环境有限谱的 $c$、任意原 $h$-奇 $z$ 及每个实 $R$，同一固定余量满足 $[c,r]=0$，因而
+
+$$
+\boxed{D(Rh,c+z)=R\,iQhz=R\,D(h,c+z).}
+\tag{41.1}
+$$
+
+不要求 $[c,e]=0$、$[c,z]=0$、$z\circ r=0$，也不要求存在33.1的共同 $h,e$ 交换有限分割。
+
+证明。零原对象上结论直接成立。$R=0$ 时，第一平方为零的原P2及评价分离给 $g=D(0,x)=0$，故 $r=0$。以下设原对象非零且 $R\ne0$。
+
+固定同一 $\epsilon$ 和两个不同谱值 $a,b\in\Lambda$，记 $q_a=q_{\epsilon,a}$、$q_b=q_{\epsilon,b}$；若任一投影为零，相应块已为零。用其中一格及其实际 $e$ 搬运定义
+
+$$
+p=q_a+e q_a e,\qquad s=u-2p,\qquad H=h\circ s=hs.
+\tag{41.2}
+$$
+
+$e q_a e=2e\circ(e\circ q_a)-q_a$ 是原Jordan表达式。因 $eh=-he$，$q_a$ 支撑于 $h$ 的 $\epsilon$ 角，而 $e q_a e$ 支撑于 $-\epsilon$ 角；两者是正交投影。于是
+
+$$
+\begin{gathered}
+p^2=p,\quad [p,h]=0,\quad epe=p,\quad [p,e]=0,\\
+s\in E,\quad s^*=s,\quad
+s^2=u-4p+4p^2=u,\quad [s,h]=[s,e]=0.
+\end{gathered}
+\tag{41.3}
+$$
+
+这里的平方是在原环境中真正等于 $u$，不是某个读取中的等式。中央续卷182.2因此直接给实际旧值与同一取向
+
+$$
+J_H:=D(H,e)=sj,\qquad H^2=J_H^2=u,\qquad
+H\circ e=H\circ J_H=e\circ J_H=0,\qquad iHeJ_H=Q.
+\tag{41.4}
+$$
+
+特别 $j=iQhe$、中央 $Q$ 和 (41.3) 给 $[s,j]=0$。该实际新框架的取得使用182.2，不把 $D(H,e)=sj$ 当成齐次性或换轴协变公理。中央163.1在此框架上给，对全部实 $A,B$ 和原 $y$，
+
+$$
+P_H^-D(Au+BH,y)=B iQH P_H^-y,
+\qquad P_H^-y=(y-HyH)/2.
+\tag{41.5}
+$$
+
+由投影正交性，$q_b$ 同时正交于 $q_a$ 和反向 $h$ 角中的 $e q_a e$，所以
+
+$$
+sq_a=-q_a,\qquad sq_b=q_b,\qquad
+Hq_a=-\epsilon q_a,\qquad Hq_b=\epsilon q_b.
+$$
+
+所有这些等式的右乘版本由自伴性同样成立。不要求 $[c,s]=0$。取实际原标签
+
+$$
+\begin{gathered}
+A=R\epsilon(a+b),\qquad B=R(b-a),\\
+T=Au+BH,\qquad V=T-2Rhc=T-2Rk.
+\end{gathered}
+\tag{41.6}
+$$
+
+此处 $T$ 是原标签；横向算子已在 (40.5) 的 $t$ 中消费。$T,k$ 都与 $h$ 交换，且 $Tq_a=2R\epsilon a q_a$、$Tq_b=2R\epsilon b q_b$，故
+
+$$
+Vq_a=q_aV=Vq_b=q_bV=0.
+$$
+
+现在只对同一实际三元组 $\operatorname{PB}(Rh,x,T-Rhc)$ 使用完整PB。(40.6)给内值 $D(Rh,T-Rk)=0$。其位移及两份完整外层为
+
+$$
+\begin{gathered}
+v=g-RhT+R^2c,\qquad w=Rk,\\
+A_+=x+g+R^2c-RhT,\qquad B_+=T,\\
+A_-=x-g-R^2c+RhT,\qquad B_-=V,\\
+D(A_+,T)-D(A_-,V)=\mathcal J,\\
+\mathcal J=-2x\circ g+2R x\circ(hT)-2R^2x\circ c
+             -2R T\circ k+2R^2k^2\\
+\hphantom{\mathcal J}=-2x\circ g-2R^2z\circ c+2Rz\circ(hT).
+\end{gathered}
+\tag{41.7}
+$$
+
+最后一次抵消只用 $[h,c]=[h,T]=0$ 和 $k^2=c^2$。准确的非交换恒等式是
+
+$$
+c\circ(hT)=\frac{hcT+hTc}{2}
+=\frac{hTc+hcT}{2}=T\circ(hc).
+\tag{41.8}
+$$
+
+这只移动已知与两者交换的 $h$，没有交换 $c$ 与 $T$，也没有使用 $[c,s]=0$ 或 $[c,T]=0$。
+
+令 $q=q_a+q_b$，固定这一次的同一外值 $W=D(V,A_-)$。对任意环境正泛函 $\omega$，数学读取 $\phi(y)=\omega(qyq)$ 在原表 $(V,A_-)$ 上满足 $\phi(V^2)=0$ 及 $\phi(V\circ A_-)=0$。P2给 $\phi(W)=0$；环境正泛函分离自伴元，故
+
+$$
+qWq=0,\qquad q_aWq_b=0.
+$$
+
+另一方面，$q_a,q_b$ 的 $H$ 符号相反，故对任意环境元 $y$ 有 $q_aP_H^-yq_b=q_ayq_b$。用 (41.5) 读取同一次PB的另一外值，得到
+
+$$
+q_aD(T,A_+)q_b=-\epsilon B iQ\,q_aA_+q_b
+=iQ\epsilon R(a-b)q_arq_b.
+\tag{41.9}
+$$
+
+此处 $q_aA_+q_b=q_arq_b$：$c$ 和 $hT$ 在这两个选定角上为对角，$z,t$ 为 $h$-奇，均不能连接同一 $h$ 符号的两角。这个局部块等式不要求 $hT$ 与整个 $c$ 交换。又由 $g=Rt+r$、$z\circ t=0$，(41.7)中只有 $-2c\circ r$ 对该块有贡献，故
+
+$$
+q_a\mathcal Jq_b=-(a+b)q_arq_b.
+$$
+
+原反对称性把 (41.7) 写成 $W-D(T,A_+)=\mathcal J$。这两个读法始终作用于同一份实际PB的固定外值，因此
+
+$$
+\bigl[iQ\epsilon R(a-b)-(a+b)u\bigr]q_arq_b=0.
+\tag{41.10}
+$$
+
+在左侧乘以共轭因子 $-iQ\epsilon R(a-b)-(a+b)u$，用 $Q^*=Q$、$Q^2=u$，得到
+
+$$
+\bigl((a+b)^2+R^2(a-b)^2\bigr)q_arq_b=0.
+\tag{41.11}
+$$
+
+由于 $R\ne0$ 且 $a\ne b$，这是严格正的实系数，所以 $q_arq_b=0$。包括 $a+b=0$ 或其中一个谱值为零的情况；没有除以谱值。
+
+对所有同符号的不同谱值如此处理。不同 $h$ 符号间的块早已由 $[h,r]=0$ 为零。有限正交分解遂给
+
+$$
+r=\sum_{\epsilon,a}q_{\epsilon,a}rq_{\epsilon,a},\qquad
+cr=\sum_{\epsilon,a}a q_{\epsilon,a}rq_{\epsilon,a}=rc.
+\tag{41.12}
+$$
+
+新增生产在此取得 $[c,r]=0$。随后直接应用[原PB运输续卷119.1](AURIC_ORIGINAL_POLYNOMIAL_PB_TRANSPORT_AND_FIBER_BOUNDARIES_CONTINUATION.md#119-一项原-jordan-二元关系的充要判据)，其变量逐项就是 (40.5) 的 $R,c,z,x,g,r$，故 $r=0$，得到 (41.1) 的第一等号。再对同一 $c,z$ 取 $R=1$，取得第二等号。这里不重证119.1的共同输出读取、$cr=0$ 或支撑PB排零。∎
+
+$\Lambda$ 只列互异谱值；同一谱值的全部谱重数由一个 $f_a(c)$ 处理，不同谱值才进入 (41.10)。同值块不必为零，因为它本就与 $c$ 交换。$c$ 为单值谱、$c=0$、某个 $h$ 角为空或所有可比较角对为空时，(41.12)直接成立。零谱角中的余量由119.1处理，而非在 (41.11) 中除去；零读取质量始终允许。$z$ 不受有限谱、大小、与 $c$ 交换或相对所造 $s$ 的奇偶限制。
+

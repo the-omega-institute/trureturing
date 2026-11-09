@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1d8de53cd5cda0dd0fc0ef6ad7a482f3124c30b6aca572d8212096000b3cfdb5
+  normalized_sha256: sha256:1d8de53cd5cda0dd0fc0ef6ad7a482f3124c30b6aca572d8212096000b3cfdb5
+cas_ref: sha256:1d8de53cd5cda0dd0fc0ef6ad7a482f3124c30b6aca572d8212096000b3cfdb5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Expository plain-language interpretation; no independent mathematical proposition is asserted beyond the referenced results.
+    previous_atom_id: 2be4719bf8d005a5fed33e39740fe126936b0858edfab7cf12b6b51522d33704
+    next_atom_id: 5421ffc0ad7ff0541567d448b061de32ebb85ec1f528ad0891404e23e95c5e0a

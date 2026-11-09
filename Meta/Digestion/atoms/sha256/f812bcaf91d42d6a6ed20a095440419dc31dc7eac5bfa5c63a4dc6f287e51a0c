@@ -1,0 +1,52 @@
+**推论 141.1（同一原域的有限可逆性与候选全表）。** 对任意有限原 $a_1,\ldots,a_n\in E$，原环境的正反词对称和属于原域：
+
+$$
+\tfrac12(a_1\cdots a_n+a_n\cdots a_1)\in E.
+\tag{141.1}
+$$
+
+候选 $B_\star$ 在全部原输入上满足
+
+$$
+\begin{aligned}
+(a\circ b)\circ c-B_\star(B_\star(a,b),c)
+&=a\circ(b\circ c)-B_\star(a,B_\star(b,c)),\\
+B_\star(a,b\circ c)
+&=B_\star(a,b)\circ c+b\circ B_\star(a,c),\\
+\sum_{\rm cyc}B_\star(a,B_\star(b,c))&=0.
+\end{aligned}
+\tag{141.2}
+$$
+
+对每个原正评价 $\alpha$ 和任意有限原族，候选表准确为
+
+$$
+g^\star_\alpha(a,b)=\alpha(a\circ b)-i\alpha(B_\star(a,b)),\qquad
+[g^\star_\alpha(a_r,a_s)]_{r,s=1}^n\succeq0.
+\tag{141.3}
+$$
+
+因而也给候选三标签正性；这里全部响应名都是 $B_\star$，没有把候选R或候选正表记作旧 $D$ 的新支付。
+
+证明。有限 $\star$-词 $w=a_1\star\cdots\star a_n$ 属于 $E_{\mathbb C}$，在证明环境中等于
+
+$$
+w=z_+a_1\cdots a_n+z_-a_n\cdots a_1.
+\tag{141.4}
+$$
+
+于是 $`(w+w^*)/2`$ 正好等于(141.1)，并属于 $E_{\mathbb C}$ 的自伴部 $E$。这也使完成 $X$ 成为给定环境中的可逆JC代数；原 $E$ 只称具有该有限词性质的Jordan域，不要求完备，也不借一般可逆JC的分类逆命题。
+
+对已构造的结合乘法取实部，得到(141.2)第一行；它就是将静态卷(23.1)中的响应全部换成 $B_\star$。结合代数交换子的导子律与Jacobi恒等式给另外两行。这些成熟后果的实际用途是：有限中间值已经由138.2返回同一原域，故这些身份确实是原域上的候选身份。
+
+正评价满足 $|\alpha(a)|\le\alpha(u)N(a)$，所以唯一连续延至 $X$。若 $x\in X_+$，用 $a_m\in E$ 逼近 $x$，再加趋零的正实倍单位即可取原正逼近，故该延拓保持正性。复线性延拓为 $\widehat\alpha:\mathcal C\to\mathbb C$ 后，(139.4)使它正且保持质量 $\widehat\alpha(u)=\alpha(u)$。对 $W=\sum_r\lambda_ra_r\in E_{\mathbb C}$，有
+
+$$
+\sum_{r,s}\overline{\lambda_r}\lambda_sg^\star_\alpha(a_r,a_s)
+=\widehat\alpha(W^*\star W)\ge0,
+\qquad W^*\star W\in C.
+\tag{141.5}
+$$
+
+零质量时原正评价为零，整表为零；没有归一。正泛函、有限Gram和交换子后果是成熟C*工具，这里的增量在于它们可消费整个原稠密域的内部有限闭合。它们不证明未知旧表 $[\alpha(a_r\circ a_s)-i\alpha(D(a_r,a_s))]$ 的三标签或更长正性。∎
+

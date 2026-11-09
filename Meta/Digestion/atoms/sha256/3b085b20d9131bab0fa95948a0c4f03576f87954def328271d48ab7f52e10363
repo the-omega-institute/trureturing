@@ -1,0 +1,20 @@
+**定义 123.2（同一正读取的二表预算）。** 对任意数学正实读取 $\phi$，置
+
+$$
+B_\phi(v,w)=\phi(v^2)\phi(w^2)-\phi(v\circ w)^2.
+\tag{123.4}
+$$
+
+16.2所用的原准确锥论证使环境数学态可以读取每张原P2，故 $|\phi D(v,w)|\le\sqrt{B_\phi(v,w)}$。每次比较始终使用同一个 $\phi$；不将 $|\phi D|^2$ 换成 $\phi(D^2)$。完整原PB在Jordan乘法已经识别后，准确写为
+
+$$
+\begin{gathered}
+\nu=D(a,b)-a\circ c,\qquad\omega=a\circ b+D(a,c),\\
+D(b+\nu,c+\omega)-D(b-\nu,c-\omega)
+=-2b\circ\nu-2c\circ\omega.
+\end{gathered}
+\tag{123.5}
+$$
+
+这是静态卷22.3的两份平方等式经原评价分离的元素式，未展开任何未知响应的和。
+

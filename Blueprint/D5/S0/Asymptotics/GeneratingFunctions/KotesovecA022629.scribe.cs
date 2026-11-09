@@ -16,6 +16,8 @@ internal sealed class KotesovecA022629Document : IScribeDocumentDefinition
         Blocks(
             Node("a", "The source coefficient", DefinitionBody(), true, true,
                 "OEIS A022629, NAME (unpaginated): \"Expansion of Product_{m>=1} (1 + m*q^m).\" The coefficient index n ranges over all natural numbers, including zero. Only factors with index at most n contribute to degree n; the empty product gives a(0) = 1."),
+            Node("partitions", "Distinct partitions of n", PartitionsBody(), true, false,
+                "For each natural n, partitions n is the finite family of subsets of the interval from 1 through n whose sum is n."),
             Node("claim", "The source asymptotic", Equal(V("claim"), Parenthesized(ClaimBody())), true, true,
                 "OEIS A022629, FORMULA (unpaginated): \"Conjecture: log(a(n)) ~ sqrt(n/2) * (log(2*n) - 2).\" The symbol ~ means that the real quotient tends to one along all natural indices. Real.log and real division are total at the finitely many indices where their usual positive-domain interpretation does not apply."),
             Node("all_exponents", "Every fixed positive natural exponent", FamilyBody(), false, false,
@@ -70,6 +72,20 @@ internal sealed class KotesovecA022629Document : IScribeDocumentDefinition
     }
     private static Formula DefinitionBody() => All("n", NatType(),
         Equal(Call("a", V("n")), Coefficient(D(1), V("n"))));
+    private static Formula PartitionsBody()
+    {
+        var n = V("n");
+        var s = V("s");
+        var k = V("k");
+        var sum = Seq(new Formula.Subscript(Sum,
+            Seq(k, Sp, InMacro, Sp, s)), Sp, k);
+        var predicate = Seq(s, Colon, Sp, Call("Finset", NatType()), Sp, Mapsto, Sp,
+            Equal(sum, n));
+        var interval = App(Qualified("Finset", "Icc"), D(1), n);
+        var powerset = App(Qualified("Finset", "powerset"), interval);
+        return All("n", NatType(), Equal(Call("partitions", n),
+            App(Qualified("Finset", "filter"), predicate, powerset)));
+    }
     private static Formula Denominator(Formula n)
     {
         var nr = Cast(n, RealType());

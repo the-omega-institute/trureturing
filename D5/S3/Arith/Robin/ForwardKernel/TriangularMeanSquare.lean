@@ -197,6 +197,20 @@ private theorem covariance_bound {E : ℝ → ℝ} {α θ β : ℝ}
           hi (t * fixedLength θ c X) (t * fixedLength θ c X) _ _)]
       linarith [hsquare _ hs', hsquare _ ht']
 
+/-- The min-kernel energy integrand of an integrable profile is integrable on the unit square. -/
+lemma min_kernel_integrable {g : ℝ → ℝ} (hg : ProfileIntegrable g) :
+    Integrable (fun p : ℝ × ℝ => g p.1 * g p.2 * min p.1 p.2)
+      (unitMeasure.prod unitMeasure) := by
+  apply (hg.2.mul_prod hg.2).mul_bdd (c := 1)
+    (measurable_fst.min measurable_snd).aestronglyMeasurable
+  have hmem : ∀ᵐ p : ℝ × ℝ ∂unitMeasure.prod unitMeasure,
+      p ∈ Ioc (0 : ℝ) 1 ×ˢ Ioc (0 : ℝ) 1 := by
+    rw [Measure.prod_restrict]
+    exact ae_restrict_mem (measurableSet_Ioc.prod measurableSet_Ioc)
+  filter_upwards [hmem] with p hp
+  rw [Real.norm_eq_abs, abs_of_nonneg (le_min hp.1.1.le hp.2.1.le)]
+  exact (min_le_left _ _).trans hp.1.2
+
 /-- Fixed-length profile averages have the min-kernel energy as their normalized mean-square limit. -/
 theorem fixed_length_profile_mean_square_tendsto
     {E : ℝ → ℝ} {α θ β : ℝ}
@@ -238,12 +252,7 @@ theorem fixed_length_profile_mean_square_tendsto
       ⟨hp.1.1.le, hp.1.2⟩ ⟨hp.2.1.le, hp.2.2⟩).const_mul _
   have hmajor : Integrable (fun p : ℝ × ℝ => C * |g p.1 * g p.2|) μ :=
     (hg.2.mul_prod hg.2).abs.const_mul C
-  have henergy : Integrable (fun p : ℝ × ℝ => g p.1 * g p.2 * min p.1 p.2) μ := by
-    apply (hg.2.mul_prod hg.2).mul_bdd (c := 1)
-      ((measurable_fst.min measurable_snd).aestronglyMeasurable)
-    filter_upwards [hmem] with p hp
-    rw [Real.norm_eq_abs, abs_of_nonneg (le_min hp.1.1.le hp.2.1.le)]
-    exact (min_le_left _ _).trans hp.1.2
+  have henergy := min_kernel_integrable hg
   have he : (∫ p : ℝ × ℝ, g p.1 * g p.2 * ((b - a) * min p.1 p.2) ∂μ) =
       (b - a) * Q g := by
     simp_rw [show ∀ p : ℝ × ℝ, g p.1 * g p.2 * ((b - a) * min p.1 p.2) =

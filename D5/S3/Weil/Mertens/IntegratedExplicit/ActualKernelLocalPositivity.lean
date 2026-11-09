@@ -116,7 +116,7 @@ private lemma log_series {t : ℝ} (ht : 0 < t) :
       ← Complex.ofReal_log (by linarith : 0 ≤ 1 - Real.exp (-(2 * t)))]
     simp
 
-private lemma trivialT_derivative {t : ℝ} (ht : 0 < t) :
+lemma trivialT_derivative {t : ℝ} (ht : 0 < t) :
     HasDerivAt trivialT (trivialT t + Real.log (1 - Real.exp (-(2 * t))) / 2) t := by
   have hw (k : ℕ) := (summable_weighted (t := 2 * t) zero_lt_one b_bound k
     (by simpa using (show 0 < 2 * t by linarith))).of_norm

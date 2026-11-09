@@ -1,0 +1,55 @@
+**Proposition 189.1 (three-mode source-orbit exclusion).** Retain Definition 175.1. Let
+
+$$
+u_0=u_1=F+v,
+\qquad
+u_3=q-2v,
+\qquad
+u_B=p
+$$
+
+be a pointwise legal common-first tuple with bounded real Borel representative $v$. If all sixty-four residuals vanish and
+
+$$
+[v]\in
+\operatorname{span}_{\mathbb R}
+\{Pq,P^2q,P^3q\}
+$$
+
+as an $m$-class, then $[v]=0$.
+
+*Proof.* The three residuals with two $B$ labels give
+
+$$
+\begin{aligned}
+0=\Delta(u)_{0BB}&=\mathcal C(v,p,p),\\
+0=\Delta(u)_{B0B}&=\mathcal C(p,v,p),\\
+0=\Delta(u)_{BB0}&=\mathcal C(p,p,v).
+\end{aligned}
+$$
+
+Because $p$ is constant and $Pp=p$, self-adjointness of $P$ rewrites these equations as
+
+$$
+\langle g,v\rangle_m=0,
+\qquad
+\langle Pg,v\rangle_m=0,
+\qquad
+\langle P^2g,v\rangle_m=0.
+\tag{189.1}
+$$
+
+The source propagation identity $Pq=cg$ changes (189.1) into
+
+$$
+\langle Pq,v\rangle_m
+=\langle P^2q,v\rangle_m
+=\langle P^3q,v\rangle_m
+=0.
+\tag{189.2}
+$$
+
+The three vectors in (189.2) are linearly independent. Indeed, a linear relation among them would, after substituting $Pq=cg$, give a nonzero polynomial relation $r(P)g=0$ of degree at most two, contradicting Lemma 169.1. Since $v$ lies in their span and is orthogonal to each of them, its Gram matrix is positive definite and $[v]=0$. $\square$
+
+This excludes every common-first displacement in the three-mode source orbit, including any such displacement outside $\operatorname{span}\{p,F\}$. The remaining out-of-span directions lie outside this finite source-mode plane and still require the full nonlinear common-first equations; the radical alternative without a source-span witness, arbitrary partitions, $F_{64}$, $H43$, SRS$\text{-}20$, physical succession and Lean/kernel formalization remain open.
+

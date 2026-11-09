@@ -1,0 +1,34 @@
+**定理 93.1（完整H2原域上P3成为结论）。** 在88.1的完整同一原域上，任意总映射D满足P2和88.2，当且仅当存在一个全域固定 $\varepsilon\in\{1,-1\}$，使
+
+$$
+\boxed{D((s,x),(t,y))=(0,\varepsilon x\times y)\quad(s,t\in\mathbb R,\ x,y\in\mathbb R^3).}
+\tag{93.1}
+$$
+
+同一旧D的单位平移中性、实双线性、连续性、全部有限原复Gram正性及原R均成为结论，特别不另输入P3。此结论不只在纯向量切片，也不以一张新D替换旧表。
+
+证明。正向为89.1–92.3的全部原输入推导。分类后才复双线性延拓 $\star=S-\mathrm iD$。Pauli图 $\Phi(s,x)=sI+x\cdot\sigma$ 把 $\varepsilon=-1$ 对应通常矩阵乘法，$\varepsilon=1$ 对应相反乘法；两者都结合、保星，原锥和范数准确仍是88.1。任意原评价对应
+
+$$
+\rho_{m,v}=\tfrac12(mI+v\cdot\sigma)\succeq0,\qquad
+\alpha_{m,v}(a)=\operatorname{Tr}(\rho_{m,v}\Phi(a)),\qquad
+\operatorname{Tr}\rho_{m,v}=m.
+$$
+
+令 $Z=\sum_jc_j\Phi(a_j)$，任意有限Gram二次型在通常／相反乘法下分别为 $\operatorname{Tr}(\rho Z^*Z)$／$\operatorname{Tr}(\rho ZZ^*)$，均非负；包含全部退化标签和复系数。原R也可直接核对：两边需要抵消的结合子均为
+
+$$
+(0,(x\cdot y)z-(y\cdot z)x)
+=(0,(x\times y)\times z-x\times(y\times z)),
+$$
+
+因为 $\varepsilon^2=1$。这就是原 $S(S(a,b),c)-D(D(a,b),c)=S(a,S(b,c))-D(a,D(b,c))$。
+
+反向对任一固定符号，用已知结合乘法，令 $z=b+\mathrm ic$。准确有 $Q_\alpha(b,c)=\alpha_{\mathbb C}(z^*\star z)$、$r_t+\mathrm is_t=z+\mathrm it(a\star z)$，所以
+
+$$
+Q_\alpha(r_t,s_t)=\alpha_{\mathbb C}\bigl(z^*\star(u+t^2a^2)\star z\bigr),
+$$
+
+对t为偶函数。因而两映射均满足P2及原PB。静态卷23.1在完整原背景上已有R的逆向接口；本条在限定88.1的模型内确实删去其额外P3，未把此域限制消掉。∎
+

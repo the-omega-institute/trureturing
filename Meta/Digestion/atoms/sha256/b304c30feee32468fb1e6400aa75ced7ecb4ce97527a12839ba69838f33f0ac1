@@ -1,0 +1,30 @@
+**Definition 204.1 (the fixed-column envelope).** Retain $s_y=S_u(f_y)$ and let $0\ne c\in\mathsf H$. Since $c$ is nonzero and has zero sum, both sign sets
+
+$$
+\mathcal L_c^+=\{y:c_y>0\},
+\qquad
+\mathcal L_c^- =\{y:c_y<0\}
+\tag{204.1}
+$$
+
+are nonempty. Define the pointwise envelopes
+
+$$
+ L_c(x)=\max_{y\in\mathcal L_c^+}\frac{-s_y(x)}{c_y},
+\qquad
+ U_c(x)=\min_{y\in\mathcal L_c^-}\frac{-s_y(x)}{c_y}.
+\tag{204.2}
+$$
+
+Put
+
+$$
+\mathscr Z_c^{\mathrm{env}}
+ =\left\{z\in\mathbb R^2:
+ \begin{array}{l}
+ s_y(x)\ge0\text{ for every }y\text{ with }c_y=0\text{ and every }x,\\[2pt]
+ L_c(x)\le h_z(x)\le U_c(x)\text{ for every }x
+ \end{array}\right\}.
+\tag{204.3}
+$$
+
