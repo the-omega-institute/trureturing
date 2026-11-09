@@ -17,11 +17,11 @@ namespace D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer
 noncomputable section
 set_option autoImplicit false
 
-private def iw (H : ℝ) (S : Finset ℕ) (a b : ℝ) (d : S) : ℝ :=
+def intervalWeight (H : ℝ) (S : Finset ℕ) (a b : ℝ) (d : S) : ℝ :=
   if d.val ∈ points H a b then 1 else 0
 
-private def IsIW (M H : ℝ) (S : Finset ℕ) (f : S → ℝ) : Prop :=
-  ∃ a b : ℝ, 0 ≤ a ∧ a ≤ b ∧ b ≤ M ∧ f = iw H S a b
+def IsIntervalWeight (M H : ℝ) (S : Finset ℕ) (f : S → ℝ) : Prop :=
+  ∃ a b : ℝ, 0 ≤ a ∧ a ≤ b ∧ b ≤ M ∧ f = intervalWeight H S a b
 
 private lemma geom_points_inter (H a b c d : ℝ) (hH : 0 ≤ H) :
     points H a b ∩ points H c d = points H (max a c) (max (max a c) (min b d)) := by
@@ -85,7 +85,7 @@ private lemma geom_overlap_count (H a b c d : ℝ) (S : Finset ℕ)
   exact geom_points_card H (max a c) (max (max a c) (min b d)) hH
     (ha.trans (le_max_left a c)) (le_max_left _ _)
 
-private lemma geom_product_error (x y A B D H L M : ℝ)
+lemma geom_product_error (x y A B D H L M : ℝ)
     (hH : 0 ≤ H) (hL : 1 ≤ L) (hD : 0 ≤ D) (hM : 0 ≤ M)
     (hx : |x-A| ≤ D*H) (hy : |y-B| ≤ D*H)
     (hA : |A| ≤ M*H*L) (hB : |B| ≤ M*H*L) :
@@ -103,14 +103,14 @@ private lemma geom_product_error (x y A B D H L M : ℝ)
       nlinarith [mul_nonneg (sq_nonneg (D*H)) (sub_nonneg.mpr hL)]
 
 
-private lemma iw_mul (H : ℝ) (hH : 0 ≤ H) (S : Finset ℕ) (a b c d : ℝ) :
-    iw H S a b * iw H S c d =
-      iw H S (max a c) (max (max a c) (min b d)) := by
+private lemma intervalWeight_mul (H : ℝ) (hH : 0 ≤ H) (S : Finset ℕ) (a b c d : ℝ) :
+    intervalWeight H S a b * intervalWeight H S c d =
+      intervalWeight H S (max a c) (max (max a c) (min b d)) := by
   funext e
   have hi := geom_points_inter H a b c d hH
   change (if e.val ∈ points H a b then (1:ℝ) else 0) *
     (if e.val ∈ points H c d then (1:ℝ) else 0) = _
-  dsimp only [iw]
+  dsimp only [intervalWeight]
   rw [← hi]
   simpa only [Set.indicator_apply, Set.mem_inter_iff, Set.mem_ofPred_eq,
     Finset.mem_inter, Pi.one_apply, Pi.mul_apply] using
@@ -118,27 +118,27 @@ private lemma iw_mul (H : ℝ) (hH : 0 ≤ H) (S : Finset ℕ) (a b c d : ℝ) :
       (s := {x : S | x.val ∈ points H a b})
       (t := {x : S | x.val ∈ points H c d}) (M₀ := ℝ)) e).symm
 
-private lemma IsIW.mul {M H : ℝ} {S : Finset ℕ} {f g : S → ℝ}
-    (hH : 0 ≤ H) (hf : IsIW M H S f) (hg : IsIW M H S g) : IsIW M H S (f*g) := by
+lemma IsIntervalWeight.mul {M H : ℝ} {S : Finset ℕ} {f g : S → ℝ}
+    (hH : 0 ≤ H) (hf : IsIntervalWeight M H S f) (hg : IsIntervalWeight M H S g) : IsIntervalWeight M H S (f*g) := by
   obtain ⟨a,b,ha,hab,hb,rfl⟩ := hf
   obtain ⟨c,d,hc,hcd,hd,rfl⟩ := hg
   exact ⟨max a c, max (max a c) (min b d), le_max_of_le_left ha,
     le_max_left _ _, max_le (max_le (hab.trans hb) (hcd.trans hd))
-      ((min_le_left _ _).trans hb), iw_mul H hH S a b c d⟩
+      ((min_le_left _ _).trans hb), intervalWeight_mul H hH S a b c d⟩
 
-private lemma iw_subset {M H a b : ℝ} (hH : 0 ≤ H) (hb : b ≤ M) :
+lemma interval_points_subset {M H a b : ℝ} (hH : 0 ≤ H) (hb : b ≤ M) :
     points H a b ⊆ Finset.Iic ⌊M*H⌋₊ := by
   intro d hd
   exact Finset.mem_Iic.mpr ((Finset.mem_Ioc.mp hd).2.trans
     (Nat.floor_mono (mul_le_mul_of_nonneg_right hb hH)))
 
-private lemma distinct_iw (SS : Finset ℕ → ℝ) (M H : ℝ) (hH : 0 ≤ H)
+lemma distinct_interval_weight_moment (SS : Finset ℕ → ℝ) (M H : ℝ) (hH : 0 ≤ H)
     {k : ℕ} (a b : Fin k → ℝ) (hab : admissible M a b) :
     formalDistinct (fun J : Finset (Finset.Iic ⌊M*H⌋₊) => SS (J.image Subtype.val))
-      (fun i => iw H (Finset.Iic ⌊M*H⌋₊) (a i) (b i)) = corr SS H a b := by
+      (fun i => intervalWeight H (Finset.Iic ⌊M*H⌋₊) (a i) (b i)) = corr SS H a b := by
   classical
   unfold formalDistinct corr
-  simp_rw [iw, Fintype.prod_boole, ite_mul, one_mul, zero_mul]
+  simp_rw [intervalWeight, Fintype.prod_boole, ite_mul, one_mul, zero_mul]
   rw [← Finset.sum_filter]
   apply Finset.sum_bij (fun d _ i => (d i).val)
   · intro d hd
@@ -152,7 +152,7 @@ private lemma distinct_iw (SS : Finset ℕ → ℝ) (M H : ℝ) (hH : 0 ≤ H)
     obtain ⟨hd,hinj⟩ := Finset.mem_filter.mp hd
     have hd := Fintype.mem_piFinset.mp hd
     let e : Fin k → Finset.Iic ⌊M*H⌋₊ :=
-      fun i => ⟨d i, iw_subset hH (hab i).2.2 (hd i)⟩
+      fun i => ⟨d i, interval_points_subset hH (hab i).2.2 (hd i)⟩
     refine ⟨e, ?_, rfl⟩
     simp only [Finset.mem_filter, Finset.mem_univ, true_and]
     exact ⟨fun i j hij => hinj (congrArg Subtype.val hij), hd⟩
@@ -161,15 +161,11 @@ private lemma distinct_iw (SS : Finset ℕ → ℝ) (M H : ℝ) (hH : 0 ≤ H)
     have hi : (Finset.univ.image d).image Subtype.val =
         Finset.univ.image (fun i => (d i).val) := Finset.image_image
     rw [← hi]
-    unfold center
-    unfold centerFinite
-    conv_rhs => rw [Finset.powerset_image,
-      Finset.sum_image (Finset.image_injective Subtype.val_injective).injOn]
-    simp only [Finset.card_image_of_injective _ Subtype.val_injective]
+    exact centerFinite_image SS Subtype.val Subtype.val_injective (Finset.univ.image d)
 
-private lemma iw_family {M H : ℝ} {k : ℕ} {S : Finset ℕ}
-    (f : Fin k → S → ℝ) (hf : ∀ i, IsIW M H S (f i)) :
-    ∃ a b : Fin k → ℝ, admissible M a b ∧ f = fun i => iw H S (a i) (b i) := by
+lemma interval_weight_family {M H : ℝ} {k : ℕ} {S : Finset ℕ}
+    (f : Fin k → S → ℝ) (hf : ∀ i, IsIntervalWeight M H S (f i)) :
+    ∃ a b : Fin k → ℝ, admissible M a b ∧ f = fun i => intervalWeight H S (a i) (b i) := by
   choose a b ha hab hb he using hf
   exact ⟨a,b,fun i => ⟨ha i,hab i,hb i⟩,funext he⟩
 
@@ -187,11 +183,11 @@ private lemma distinct_two_bound (SS : Finset ℕ → ℝ) (M H L C : ℝ)
     (hC : 0 ≤ C)
     (hc : ∀ a b : Fin 2 → ℝ, admissible M a b →
       |corr SS H a b + H*Real.log H*sigma (a 0) (b 0) (a 1) (b 1)| ≤ C*H)
-    (f g : Finset.Iic ⌊M*H⌋₊ → ℝ) (hf : IsIW M H (Finset.Iic ⌊M*H⌋₊) f)
-    (hg : IsIW M H (Finset.Iic ⌊M*H⌋₊) g) :
+    (f g : Finset.Iic ⌊M*H⌋₊ → ℝ) (hf : IsIntervalWeight M H (Finset.Iic ⌊M*H⌋₊) f)
+    (hg : IsIntervalWeight M H (Finset.Iic ⌊M*H⌋₊) g) :
     |formalDistinct (fun J => SS (J.image Subtype.val)) ![f,g]| ≤ (C+M)*H*L := by
-  obtain ⟨a,b,hab,he⟩ := iw_family ![f,g] (by intro i; fin_cases i <;> assumption)
-  rw [he, distinct_iw SS M H (by linarith) a b hab]
+  obtain ⟨a,b,hab,he⟩ := interval_weight_family ![f,g] (by intro i; fin_cases i <;> assumption)
+  rw [he, distinct_interval_weight_moment SS M H (by linarith) a b hab]
   have hs := sigma_bound (d := b 1) (by linarith : 0 ≤ M) (hab 0).1 (hab 0).2.2 (hab 1).1
   have hh : |H*Real.log H*sigma (a 0) (b 0) (a 1) (b 1)| ≤ H*L*M := by
     rw [abs_of_nonneg (mul_nonneg (mul_nonneg (by linarith) (Real.log_nonneg hH)) hs.1)]
@@ -208,12 +204,12 @@ private lemma distinct_three_bound (SS : Finset ℕ → ℝ) (M H L E : ℝ)
     (hc : ∀ a b : Fin 3 → ℝ, admissible M a b →
       |corr SS H a b| ≤ E*(H*Real.log H)^(3/2 : ℝ))
     (f g h : Finset.Iic ⌊M*H⌋₊ → ℝ)
-    (hf : IsIW M H (Finset.Iic ⌊M*H⌋₊) f)
-    (hg : IsIW M H (Finset.Iic ⌊M*H⌋₊) g)
-    (hh : IsIW M H (Finset.Iic ⌊M*H⌋₊) h) :
+    (hf : IsIntervalWeight M H (Finset.Iic ⌊M*H⌋₊) f)
+    (hg : IsIntervalWeight M H (Finset.Iic ⌊M*H⌋₊) g)
+    (hh : IsIntervalWeight M H (Finset.Iic ⌊M*H⌋₊) h) :
     |formalDistinct (fun J => SS (J.image Subtype.val)) ![f,g,h]| ≤ E*(H*L)^(3/2 : ℝ) := by
-  obtain ⟨a,b,hab,he⟩ := iw_family ![f,g,h] (by intro i; fin_cases i <;> assumption)
-  rw [he, distinct_iw SS M H (by linarith) a b hab]
+  obtain ⟨a,b,hab,he⟩ := interval_weight_family ![f,g,h] (by intro i; fin_cases i <;> assumption)
+  rw [he, distinct_interval_weight_moment SS M H (by linarith) a b hab]
   exact (hc a b hab).trans (mul_le_mul_of_nonneg_left
     (Real.rpow_le_rpow (mul_nonneg (by linarith) (Real.log_nonneg hH))
       (mul_le_mul_of_nonneg_left hlog (by linarith)) (by norm_num)) hE)
@@ -222,57 +218,57 @@ private lemma distinct_four_bound (SS : Finset ℕ → ℝ) (M H E : ℝ) (hH : 
     (hc : ∀ a b : Fin 4 → ℝ, admissible M a b →
       |corr SS H a b - pairCorr SS H a b| ≤ E)
     (f g h q : Finset.Iic ⌊M*H⌋₊ → ℝ)
-    (hf : IsIW M H (Finset.Iic ⌊M*H⌋₊) f)
-    (hg : IsIW M H (Finset.Iic ⌊M*H⌋₊) g)
-    (hh : IsIW M H (Finset.Iic ⌊M*H⌋₊) h)
-    (hq : IsIW M H (Finset.Iic ⌊M*H⌋₊) q) :
+    (hf : IsIntervalWeight M H (Finset.Iic ⌊M*H⌋₊) f)
+    (hg : IsIntervalWeight M H (Finset.Iic ⌊M*H⌋₊) g)
+    (hh : IsIntervalWeight M H (Finset.Iic ⌊M*H⌋₊) h)
+    (hq : IsIntervalWeight M H (Finset.Iic ⌊M*H⌋₊) q) :
     |formalDistinct (fun J => SS (J.image Subtype.val)) ![f,g,h,q] -
       perfectPairingSum (fun u v => formalDistinct (fun J => SS (J.image Subtype.val))
         ![u,v]) f g h q| ≤ E := by
-  obtain ⟨a,b,hab,he⟩ := iw_family ![f,g,h,q] (by intro i; fin_cases i <;> assumption)
-  have hv : ∀ i, (![f,g,h,q] : Fin 4 → _) i = iw H (Finset.Iic ⌊M*H⌋₊) (a i) (b i) :=
+  obtain ⟨a,b,hab,he⟩ := interval_weight_family ![f,g,h,q] (by intro i; fin_cases i <;> assumption)
+  have hv : ∀ i, (![f,g,h,q] : Fin 4 → _) i = intervalWeight H (Finset.Iic ⌊M*H⌋₊) (a i) (b i) :=
     fun i => congrFun he i
   have hp (i j : Fin 4) : admissible M ![a i,a j] ![b i,b j] := by
     intro t; fin_cases t <;> simpa using hab _
   have htwo (i j : Fin 4) :
       formalDistinct (fun J => SS (J.image Subtype.val))
-        ![iw H (Finset.Iic ⌊M*H⌋₊) (a i) (b i), iw H (Finset.Iic ⌊M*H⌋₊) (a j) (b j)] =
+        ![intervalWeight H (Finset.Iic ⌊M*H⌋₊) (a i) (b i), intervalWeight H (Finset.Iic ⌊M*H⌋₊) (a j) (b j)] =
       corr SS H ![a i,a j] ![b i,b j] := by
-    convert distinct_iw SS M H hH ![a i,a j] ![b i,b j] (hp i j) using 1
+    convert distinct_interval_weight_moment SS M H hH ![a i,a j] ![b i,b j] (hp i j) using 1
     congr 1
     funext t; fin_cases t <;> rfl
-  have hh4 := distinct_iw SS M H hH a b hab
+  have hh4 := distinct_interval_weight_moment SS M H hH a b hab
   rw [← he] at hh4
   rw [hh4]
-  have h0 : f = iw H (Finset.Iic ⌊M*H⌋₊) (a 0) (b 0) := hv 0
-  have h1 : g = iw H (Finset.Iic ⌊M*H⌋₊) (a 1) (b 1) := hv 1
-  have h2 : h = iw H (Finset.Iic ⌊M*H⌋₊) (a 2) (b 2) := hv 2
-  have h3 : q = iw H (Finset.Iic ⌊M*H⌋₊) (a 3) (b 3) := hv 3
+  have h0 : f = intervalWeight H (Finset.Iic ⌊M*H⌋₊) (a 0) (b 0) := hv 0
+  have h1 : g = intervalWeight H (Finset.Iic ⌊M*H⌋₊) (a 1) (b 1) := hv 1
+  have h2 : h = intervalWeight H (Finset.Iic ⌊M*H⌋₊) (a 2) (b 2) := hv 2
+  have h3 : q = intervalWeight H (Finset.Iic ⌊M*H⌋₊) (a 3) (b 3) := hv 3
   simpa only [perfectPairingSum, h0,h1,h2,h3, htwo, pairCorr] using hc a b hab
 
-private lemma index_iw_bound {M H : ℝ} (hH : 0 ≤ H)
-    (f : Finset.Iic ⌊M*H⌋₊ → ℝ) (hf : IsIW M H (Finset.Iic ⌊M*H⌋₊) f) :
+lemma index_interval_weight_bound {M H : ℝ} (hH : 0 ≤ H)
+    (f : Finset.Iic ⌊M*H⌋₊ → ℝ) (hf : IsIntervalWeight M H (Finset.Iic ⌊M*H⌋₊) f) :
     |indexSum f| ≤ M*H := by
   obtain ⟨a,b,ha,hab,hb,rfl⟩ := hf
   unfold indexSum
-  simp only [iw]
-  rw [geom_indicator_sum _ _ (iw_subset hH hb), abs_of_nonneg (by positivity)]
+  simp only [intervalWeight]
+  rw [geom_indicator_sum _ _ (interval_points_subset hH hb), abs_of_nonneg (by positivity)]
   exact geom_points_card_le M H a b hH ha hab hb
 
 private lemma cubic_bound (SS : Finset ℕ → ℝ) (M H L s K E : ℝ)
     (hs : s ≠ 0) (hSS : SS ∅ = 1) (hSS1 : ∀ d, SS {d} = 1)
     (hH : 0 ≤ H) (hL : 0 ≤ L) (_hK : 0 ≤ K) (_hE : 0 ≤ E)
     (ha : |s-2| ≤ 3*L) (hb : |s-1| ≤ 3*L)
-    (B : ∀ f g, IsIW M H (Finset.Iic ⌊M*H⌋₊) f →
-      IsIW M H (Finset.Iic ⌊M*H⌋₊) g →
+    (B : ∀ f g, IsIntervalWeight M H (Finset.Iic ⌊M*H⌋₊) f →
+      IsIntervalWeight M H (Finset.Iic ⌊M*H⌋₊) g →
       |formalDistinct (fun J => SS (J.image Subtype.val)) ![f,g]| ≤ K*H*L)
-    (T : ∀ f g h, IsIW M H (Finset.Iic ⌊M*H⌋₊) f →
-      IsIW M H (Finset.Iic ⌊M*H⌋₊) g → IsIW M H (Finset.Iic ⌊M*H⌋₊) h →
+    (T : ∀ f g h, IsIntervalWeight M H (Finset.Iic ⌊M*H⌋₊) f →
+      IsIntervalWeight M H (Finset.Iic ⌊M*H⌋₊) g → IsIntervalWeight M H (Finset.Iic ⌊M*H⌋₊) h →
       |formalDistinct (fun J => SS (J.image Subtype.val)) ![f,g,h]| ≤ E*(H*L)^(3/2:ℝ))
     (f g h : Finset.Iic ⌊M*H⌋₊ → ℝ)
-    (hf : IsIW M H (Finset.Iic ⌊M*H⌋₊) f)
-    (hg : IsIW M H (Finset.Iic ⌊M*H⌋₊) g)
-    (hh : IsIW M H (Finset.Iic ⌊M*H⌋₊) h) :
+    (hf : IsIntervalWeight M H (Finset.Iic ⌊M*H⌋₊) f)
+    (hg : IsIntervalWeight M H (Finset.Iic ⌊M*H⌋₊) g)
+    (hh : IsIntervalWeight M H (Finset.Iic ⌊M*H⌋₊) h) :
     |formalMoment (fun J => SS (J.image Subtype.val)) s ![f,g,h]| ≤
       E*(H*L)^(3/2:ℝ) + (9*K+9*M)*H*L^2 := by
   have hp : |formalDistinct (fun J => SS (J.image Subtype.val)) ![f*g,h] +
@@ -281,7 +277,7 @@ private lemma cubic_bound (SS : Finset ℕ → ℝ) (M H L s K E : ℝ)
     grw [abs_add_le, abs_add_le, B _ _ (hf.mul hH hg) hh,
       B _ _ (hf.mul hH hh) hg, B _ _ (hg.mul hH hh) hf]
     ring_nf; rfl
-  have hd := index_iw_bound hH (f*g*h) ((hf.mul hH hg).mul hH hh)
+  have hd := index_interval_weight_bound hH (f*g*h) ((hf.mul hH hg).mul hH hh)
   rw [formal_third_moment_eq _ s hs (by simpa using hSS) (by intro d; simpa using hSS1 d.val)]
   calc
     _ ≤ E*(H*L)^(3/2:ℝ) + (3*L)*(3*K*H*L) + (3*L)*(3*L)*(M*H) := by
@@ -401,23 +397,23 @@ private lemma fourth_bound (SS : Finset ℕ → ℝ) (M H L s K E : ℝ)
     (hs : s ≠ 0) (hSS : SS ∅ = 1) (hSS1 : ∀ d, SS {d} = 1)
     (hM : 0 ≤ M) (hH : 1 ≤ H) (hL : 1 ≤ L) (hK : 0 ≤ K) (hE : 0 ≤ E)
     (hsq : L^2 ≤ H) (ha : |s-2| ≤ 3*L) (hb : |s-1| ≤ 3*L)
-    (B : ∀ f g, IsIW M H (Finset.Iic ⌊M*H⌋₊) f →
-      IsIW M H (Finset.Iic ⌊M*H⌋₊) g →
+    (B : ∀ f g, IsIntervalWeight M H (Finset.Iic ⌊M*H⌋₊) f →
+      IsIntervalWeight M H (Finset.Iic ⌊M*H⌋₊) g →
       |formalDistinct (fun J => SS (J.image Subtype.val)) ![f,g]| ≤ K*H*L)
-    (T : ∀ f g h, IsIW M H (Finset.Iic ⌊M*H⌋₊) f →
-      IsIW M H (Finset.Iic ⌊M*H⌋₊) g → IsIW M H (Finset.Iic ⌊M*H⌋₊) h →
+    (T : ∀ f g h, IsIntervalWeight M H (Finset.Iic ⌊M*H⌋₊) f →
+      IsIntervalWeight M H (Finset.Iic ⌊M*H⌋₊) g → IsIntervalWeight M H (Finset.Iic ⌊M*H⌋₊) h →
       |formalDistinct (fun J => SS (J.image Subtype.val)) ![f,g,h]| ≤ E*(H*L)^(3/2:ℝ))
-    (F : ∀ f g h q, IsIW M H (Finset.Iic ⌊M*H⌋₊) f →
-      IsIW M H (Finset.Iic ⌊M*H⌋₊) g → IsIW M H (Finset.Iic ⌊M*H⌋₊) h →
-      IsIW M H (Finset.Iic ⌊M*H⌋₊) q →
+    (F : ∀ f g h q, IsIntervalWeight M H (Finset.Iic ⌊M*H⌋₊) f →
+      IsIntervalWeight M H (Finset.Iic ⌊M*H⌋₊) g → IsIntervalWeight M H (Finset.Iic ⌊M*H⌋₊) h →
+      IsIntervalWeight M H (Finset.Iic ⌊M*H⌋₊) q →
       |formalDistinct (fun J => SS (J.image Subtype.val)) ![f,g,h,q] -
         perfectPairingSum (fun u v => formalDistinct (fun J => SS (J.image Subtype.val))
           ![u,v]) f g h q| ≤ E*H^2*L^2)
     (f g h q : Finset.Iic ⌊M*H⌋₊ → ℝ)
-    (hf : IsIW M H (Finset.Iic ⌊M*H⌋₊) f)
-    (hg : IsIW M H (Finset.Iic ⌊M*H⌋₊) g)
-    (hh : IsIW M H (Finset.Iic ⌊M*H⌋₊) h)
-    (hq : IsIW M H (Finset.Iic ⌊M*H⌋₊) q) :
+    (hf : IsIntervalWeight M H (Finset.Iic ⌊M*H⌋₊) f)
+    (hg : IsIntervalWeight M H (Finset.Iic ⌊M*H⌋₊) g)
+    (hh : IsIntervalWeight M H (Finset.Iic ⌊M*H⌋₊) h)
+    (hq : IsIntervalWeight M H (Finset.Iic ⌊M*H⌋₊) q) :
     |formalMoment (fun J => SS (J.image Subtype.val)) s ![f,g,h,q] -
       perfectPairingSum (fun u v => formalMoment (fun J => SS (J.image Subtype.val))
         s ![u,v]) f g h q| ≤ 1000*(K+M+1)*(E*H^2*L^2 + H^2*L) := by
@@ -450,7 +446,7 @@ private lemma fourth_bound (SS : Finset ℕ → ℝ) (M H L s K E : ℝ)
   rw [formal_fourth_pairing_defect _ s hs (by simpa using hSS)
     (by intro d; simpa using hSS1 d.val)]
   exact fourth_scalar_bound hH hL hsq hE hK hM ha hb (F _ _ _ _ hf hg hh hq)
-    hr hp ht (index_iw_bound hH0 _ (((hf.mul hH0 hg).mul hH0 hh).mul hH0 hq))
+    hr hp ht (index_interval_weight_bound hH0 _ (((hf.mul hH0 hg).mul hH0 hh).mul hH0 hq))
 
 private lemma second_approx (SS : Finset ℕ → ℝ) (M H L s C : ℝ)
     (hs : s ≠ 0) (hSS : SS ∅ = 1) (hSS1 : ∀ d, SS {d} = 1)
@@ -461,31 +457,31 @@ private lemma second_approx (SS : Finset ℕ → ℝ) (M H L s C : ℝ)
     (a b c d : ℝ) (ha : 0 ≤ a) (hab : a ≤ b) (hbM : b ≤ M)
     (hc0 : 0 ≤ c) (hcd : c ≤ d) (hdM : d ≤ M) :
     |formalMoment (fun J : Finset (Finset.Iic ⌊M*H⌋₊) => SS (J.image Subtype.val)) s
-      ![iw H (Finset.Iic ⌊M*H⌋₊) a b, iw H (Finset.Iic ⌊M*H⌋₊) c d] -
+      ![intervalWeight H (Finset.Iic ⌊M*H⌋₊) a b, intervalWeight H (Finset.Iic ⌊M*H⌋₊) c d] -
       H*(s-Real.log H)*sigma a b c d| ≤ (C+M+6)*H := by
   have hH0 : 0 ≤ H := by linarith
   have had : admissible M ![a,c] ![b,d] := by
     intro i; fin_cases i
     · exact ⟨ha,hab,hbM⟩
     · exact ⟨hc0,hcd,hdM⟩
-  have hr := distinct_iw SS M H hH0 ![a,c] ![b,d] had
-  have he : (fun i => iw H (Finset.Iic ⌊M*H⌋₊) (![a,c] i) (![b,d] i)) =
-      ![iw H (Finset.Iic ⌊M*H⌋₊) a b, iw H (Finset.Iic ⌊M*H⌋₊) c d] := by
+  have hr := distinct_interval_weight_moment SS M H hH0 ![a,c] ![b,d] had
+  have he : (fun i => intervalWeight H (Finset.Iic ⌊M*H⌋₊) (![a,c] i) (![b,d] i)) =
+      ![intervalWeight H (Finset.Iic ⌊M*H⌋₊) a b, intervalWeight H (Finset.Iic ⌊M*H⌋₊) c d] := by
     funext i; fin_cases i <;> rfl
   rw [he] at hr
   have hcount := geom_overlap_count H a b c d (Finset.Iic ⌊M*H⌋₊) hH0 ha hc0
-    (fun n hn => iw_subset hH0 hbM (Finset.mem_inter.mp hn).1)
-  change |indexSum (iw H (Finset.Iic ⌊M*H⌋₊) a b *
-    iw H (Finset.Iic ⌊M*H⌋₊) c d) - H*sigma a b c d| ≤ 2 at hcount
+    (fun n hn => interval_points_subset hH0 hbM (Finset.mem_inter.mp hn).1)
+  change |indexSum (intervalWeight H (Finset.Iic ⌊M*H⌋₊) a b *
+    intervalWeight H (Finset.Iic ⌊M*H⌋₊) c d) - H*sigma a b c d| ≤ 2 at hcount
   have hsigma := sigma_bound (d := d) (by linarith : 0 ≤ M) ha hbM hc0
   rw [formal_second_moment_eq _ s hs (by simpa using hSS)
     (by intro e; simpa using hSS1 e.val), hr]
   have heq : corr SS H ![a,c] ![b,d] + (s-1)*indexSum
-      (iw H (Finset.Iic ⌊M*H⌋₊) a b * iw H (Finset.Iic ⌊M*H⌋₊) c d) -
+      (intervalWeight H (Finset.Iic ⌊M*H⌋₊) a b * intervalWeight H (Finset.Iic ⌊M*H⌋₊) c d) -
       H*(s-Real.log H)*sigma a b c d =
       (corr SS H ![a,c] ![b,d]+H*Real.log H*sigma a b c d) +
-      (s-1)*(indexSum (iw H (Finset.Iic ⌊M*H⌋₊) a b *
-        iw H (Finset.Iic ⌊M*H⌋₊) c d)-H*sigma a b c d) - H*sigma a b c d := by ring
+      (s-1)*(indexSum (intervalWeight H (Finset.Iic ⌊M*H⌋₊) a b *
+        intervalWeight H (Finset.Iic ⌊M*H⌋₊) c d)-H*sigma a b c d) - H*sigma a b c d := by ring
   rw [heq]
   have hc' : |corr SS H ![a,c] ![b,d]+H*Real.log H*sigma a b c d| ≤ C*H :=
     hc ![a,c] ![b,d] had
@@ -505,15 +501,15 @@ private lemma pairing_approx (SS : Finset ℕ → ℝ) (M H L s C : ℝ)
     (a b : Fin 4 → ℝ) (hab : admissible M a b) :
     |perfectPairingSum (fun u v => formalMoment
         (fun J : Finset (Finset.Iic ⌊M*H⌋₊) => SS (J.image Subtype.val)) s ![u,v])
-      (iw H (Finset.Iic ⌊M*H⌋₊) (a 0) (b 0))
-      (iw H (Finset.Iic ⌊M*H⌋₊) (a 1) (b 1))
-      (iw H (Finset.Iic ⌊M*H⌋₊) (a 2) (b 2))
-      (iw H (Finset.Iic ⌊M*H⌋₊) (a 3) (b 3)) -
+      (intervalWeight H (Finset.Iic ⌊M*H⌋₊) (a 0) (b 0))
+      (intervalWeight H (Finset.Iic ⌊M*H⌋₊) (a 1) (b 1))
+      (intervalWeight H (Finset.Iic ⌊M*H⌋₊) (a 2) (b 2))
+      (intervalWeight H (Finset.Iic ⌊M*H⌋₊) (a 3) (b 3)) -
       H^2*(s-Real.log H)^2*W4 a b| ≤
       3*(4*M*(C+M+6)+(C+M+6)^2)*H^2*L := by
   let V (i j : Fin 4) := formalMoment
     (fun J : Finset (Finset.Iic ⌊M*H⌋₊) => SS (J.image Subtype.val)) s
-    ![iw H (Finset.Iic ⌊M*H⌋₊) (a i) (b i),iw H (Finset.Iic ⌊M*H⌋₊) (a j) (b j)]
+    ![intervalWeight H (Finset.Iic ⌊M*H⌋₊) (a i) (b i),intervalWeight H (Finset.Iic ⌊M*H⌋₊) (a j) (b j)]
   let A (i j : Fin 4) := H*(s-Real.log H)*sigma (a i) (b i) (a j) (b j)
   have hv (i j : Fin 4) : |V i j-A i j| ≤ (C+M+6)*H :=
     second_approx SS M H L s C hs hSS hSS1 hM hH hL hLH hb hc
@@ -584,14 +580,14 @@ theorem formal_interval_moment_bounds (SS : Finset ℕ → ℝ) (α β : ℝ)
     exact (hc4 H hH2 a b hab).trans (by gcongr))
   constructor
   · intro a b hab
-    let f := fun i => iw H (Finset.Iic ⌊M*H⌋₊) (a i) (b i)
-    have hf (i) : IsIW M H (Finset.Iic ⌊M*H⌋₊) (f i) :=
+    let f := fun i => intervalWeight H (Finset.Iic ⌊M*H⌋₊) (a i) (b i)
+    have hf (i) : IsIntervalWeight M H (Finset.Iic ⌊M*H⌋₊) (f i) :=
       ⟨a i,b i,(hab i).1,(hab i).2.1,(hab i).2.2,rfl⟩
-    have he : (fun i => iw H (Finset.Iic ⌊M*H⌋₊) (a i) (b i)) = ![f 0,f 1,f 2] := by
+    have he : (fun i => intervalWeight H (Finset.Iic ⌊M*H⌋₊) (a i) (b i)) = ![f 0,f 1,f 2] := by
       funext i; fin_cases i <;> rfl
     change (fun i (d : Finset.Iic ⌊M*H⌋₊) =>
       if d.val ∈ points H (a i) (b i) then (1:ℝ) else 0) = _ at he
-    rw [Phi_eq_formalMoment SS H s a b _ (fun i => iw_subset hH0 (hab i).2.2),he]
+    rw [Phi_eq_formalMoment SS H s a b _ (fun i => interval_points_subset hH0 (hab i).2.2),he]
     have ht := cubic_bound SS M H (Real.log N) s K (η H) hs hSS hSS1
       hH0 hL0 hK (hη H) ha hb B T _ _ _ (hf 0) (hf 1) (hf 2)
     refine ht.trans ?_
@@ -601,14 +597,14 @@ theorem formal_interval_moment_bounds (SS : Finset ℕ → ℝ) (α β : ℝ)
     nlinarith [mul_nonneg hP hD, mul_nonneg hK hD, mul_nonneg hM0 hD,
       mul_nonneg hP hA, mul_nonneg hK hA, mul_nonneg hM0 hA]
   · intro a b hab
-    let f := fun i => iw H (Finset.Iic ⌊M*H⌋₊) (a i) (b i)
-    have hf (i) : IsIW M H (Finset.Iic ⌊M*H⌋₊) (f i) :=
+    let f := fun i => intervalWeight H (Finset.Iic ⌊M*H⌋₊) (a i) (b i)
+    have hf (i) : IsIntervalWeight M H (Finset.Iic ⌊M*H⌋₊) (f i) :=
       ⟨a i,b i,(hab i).1,(hab i).2.1,(hab i).2.2,rfl⟩
-    have he : (fun i => iw H (Finset.Iic ⌊M*H⌋₊) (a i) (b i)) = ![f 0,f 1,f 2,f 3] := by
+    have he : (fun i => intervalWeight H (Finset.Iic ⌊M*H⌋₊) (a i) (b i)) = ![f 0,f 1,f 2,f 3] := by
       funext i; fin_cases i <;> rfl
     change (fun i (d : Finset.Iic ⌊M*H⌋₊) =>
       if d.val ∈ points H (a i) (b i) then (1:ℝ) else 0) = _ at he
-    rw [Phi_eq_formalMoment SS H s a b _ (fun i => iw_subset hH0 (hab i).2.2),he]
+    rw [Phi_eq_formalMoment SS H s a b _ (fun i => interval_points_subset hH0 (hab i).2.2),he]
     have ht := fourth_bound SS M H (Real.log N) s K (η H) hs hSS hSS1 hM0
       hH hL hK (hη H) hsq ha hb B T F _ _ _ _ (hf 0) (hf 1) (hf 2) (hf 3)
     have hlog2 : Real.log 2 ≤ 1 := (Real.log_le_sub_one_of_pos (by norm_num)).trans (by norm_num)

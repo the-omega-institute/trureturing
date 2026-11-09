@@ -201,7 +201,7 @@ theorem formal_fourth_pairing_defect (C : Finset ι → ℝ) (s : ℝ) (hs : s �
     (cube_one C s hs hC) (cube_centred C s hs hC hCs) (cube_quadratic s) f g h q
 
 omit [Fintype ι] in
-private lemma centerFinite_image {κ : Type*} [DecidableEq κ]
+lemma centerFinite_image {κ : Type*} [DecidableEq κ]
     (C : Finset κ → ℝ) (e : ι → κ) (he : Function.Injective e) (D : Finset ι) :
     centerFinite (fun J => C (J.image e)) D = centerFinite C (D.image e) := by
   unfold centerFinite
