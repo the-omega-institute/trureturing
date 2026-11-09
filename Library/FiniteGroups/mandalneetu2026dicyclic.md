@@ -57,3 +57,8 @@ the cited v1 wording. Journal-version equivalence, later corrections and
 worldwide first-resolution priority are not established here. The question
 is literature-attested; this formal refutation is a repository derivation,
 not a result attributed to the source authors.
+
+## Verified locator
+
+DOI: [10.48550/arXiv.2602.09073](https://doi.org/10.48550/arXiv.2602.09073).
+Versioned URL: https://arxiv.org/abs/2602.09073v1.
