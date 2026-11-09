@@ -1202,3 +1202,1031 @@ verification claimed; a bounded finite calculation alone would not
 establish their arbitrary-word or arbitrary-$D$ quantifiers.
 
 ## 追加锚（本行以下为增补区）
+
+## 8. Exact classification of descriptor-law acquisition sufficiency
+
+**Definition 8.1 (five weighted positions on any longer target).**
+Retain precisely Definition 1.1. Fix any $D\ge n=|p|\ge5$, with $p$
+beginning with $R$, and let
+
+$$
+a=p_1\overline{p[2]},\qquad
+(w_1,w_2,w_3,w_4,w_5)=(5,3,2,3,5).
+\tag{NCO.40}
+$$
+
+Here $a$ is the length-two sibling of $p_2$, in the same original-root
+address system; the bar exchanges $L,R$. Use the canonical context
+$C_u[v]$ of AAR13.6: strict ancestors of $u$ are branches, $v$ is
+installed at $u$, and every unused sibling is alpha. For $1\le j\le5$
+and $e\in\{0,1\}$ define canonical sources
+$c_{j,e}=C_{p_j}[\lambda_e]$. Define guided sources $g_{j,e}$ by leaving
+$c_{1,e}$ unchanged and, for $j\ge2$, replacing just its existing
+subtree at $a$ according to
+
+$$
+\begin{array}{c|ccccc}
+j&1&2&3&4&5\\\hline
+\text{subtree at }a&\text{absent}&\alpha&\alpha&\beta&
+                                      \langle\alpha,\alpha\rangle\\
+\operatorname{Read}_{g_{j,e}}(a)&\bot&\alpha&\alpha&\beta&\mathsf b.
+\end{array}
+\tag{NCO.41}
+$$
+
+The first entry prescribes no replacement: $R$ is itself a leaf there.
+Let $P_{\rm c},P_{\rm g}$ be zero off their respective displayed
+ten-source sets, with
+
+$$
+P_{\rm c}(c_{j,e})=P_{\rm g}(g_{j,e})=\frac{w_j}{36}.
+\tag{NCO.42}
+$$
+
+These are rational probability laws on the identical full family
+$\mathcal F_D$. Within each set its ten sources are distinct, since
+their descriptors are distinct. The two sets may overlap. For every
+displayed pair,
+
+$$
+\partial_p(c_{j,e})=\partial_p(g_{j,e})=(j,e).
+\tag{NCO.43}
+$$
+
+Indeed no replacement lies on the target path. The canonical
+right-subtree height is $j-1$, and the only new branch subtree is at
+the sibling $a$ of depth two. Thus every displayed right-subtree
+height is at most $\max\{j-1,2\}\le4\le D$. This verifies the native
+realization for every orientation of $p$, including mixed and
+left-ending words, without padding or a change of source family.
+Both core descriptor laws give $(j,e)$ mass $w_j/36$ for $j\le5$
+and all other descriptors mass zero.
+
+**Lemma 8.2 (the weighted canonical lower bound against every word).**
+For every admissible encoder $A$ of Definition 1.1, with arbitrary
+finite original-root Read words,
+
+$$
+\mathbb E_{P_{\rm c}}T_A\ge\frac{20}{9}.
+\tag{NCO.44}
+$$
+
+The same lower bound holds for every prefix-only encoder under
+$P_{\rm g}$.
+
+Proof. AAR14.1 supplies a correct prefix encoder $S$ with
+$T_S(t)\le T_A(\pi_p(t))$. Each canonical $c_{j,e}$ is a fixed point
+of that projection. Consequently
+$T_S(c_{j,e})\le T_A(c_{j,e})$ on exactly the sources being averaged
+under $P_{\rm c}$. No such comparison with an unprojected guided
+source is asserted.
+
+Use AAR14.1's ordered pruning of prefix encoders. Each retained query
+is a key $i$; its two label replies terminate, absence goes to smaller
+keys and branch to larger keys, with $B$ terminating at key $n$.
+This pruning remains justified for zero-prior positions, because
+correctness is on all of $\mathcal F_D$. In particular the actual
+label at each first leaf is compulsory by AAR13.5. For arbitrary
+orientations, AAR13.3 distinguishes its two labels at a common
+authentic supplied count; collisions between different positions'
+predictive factors do not remove that necessity.
+
+For the lower calculation, delete keys $6,\ldots,n$ from the ordered
+tree. At a deleted key, every retained key in its subtree lies in
+its lower subtree. Splice that lower subtree upwards and discard the
+upper part, which has no retained key. This leaves an ordered tree on $1,\ldots,5$
+without increasing any of their depths. Write $d_j$ for its key
+depths, starting at one. Both labels at key $j$ have that same depth.
+
+The elementary weighted ordered-tree recurrence already used in
+Theorem 7.1 gives the following exact finite calculation. Let $F(a,b)$
+be the minimum unnormalized cost on keys $a,\ldots,b$ with weights
+$w_j$, and set $F(a,b)=0$ when $a>b$. Then
+
+$$
+F(a,b)=\sum_{j=a}^b w_j+
+       \min_{a\le i\le b}\{F(a,i-1)+F(i+1,b)\}.
+\tag{NCO.45}
+$$
+
+The interval values, listed from left to right at each length, are
+
+$$
+\begin{array}{c|l}
+\text{interval length}&F\text{ values}\\\hline
+1&5,\ 3,\ 2,\ 3,\ 5\\
+2&11,\ 7,\ 7,\ 11\\
+3&17,\ 14,\ 17\\
+4&25,\ 25\\
+5&40.
+\end{array}
+\tag{NCO.46}
+$$
+
+For example the final minimization is
+$18+\min\{25,5+17,11+11,17+5,25\}=40$.
+Thus $\sum_jw_jd_j\ge40$, and averaging the two labels gives
+$\mathbb E_{P_{\rm c}}T_A\ge40/18=20/9$.
+
+For the last assertion begin instead with any prefix-only encoder.
+Its pruned tree depends only on prefix replies, hence its cost on
+$c_{j,e}$ and $g_{j,e}$ is the same. The same calculation therefore
+gives its $P_{\rm g}$ mean at least $20/9$. This assertion uses
+descriptor equality for prefix programs, not pointwise domination of
+arbitrary-word programs on guided sources. $\square$
+
+**Proposition 8.3 (one globally correct guided acquisition).**
+For the same arbitrary $D,p$, there is a deterministic effective encoder
+$A_{\rm g}$, correct and terminating on every $t\in\mathcal F_D$, with
+
+$$
+\begin{aligned}
+(T_{A_{\rm g}}(g_{1,e}),\ldots,T_{A_{\rm g}}(g_{5,e}))
+   &=(2,2,3,2,2),\\
+\mathbb E_{P_{\rm g}}T_{A_{\rm g}}&=\frac{19}{9},\\
+T_{A_{\rm g}}(t)&\le h+3,\qquad
+h=\lceil\log_2(n+1)\rceil.
+\end{aligned}
+\tag{NCO.47}
+$$
+
+Proof. First actually Read the full literal $a$. Select candidate
+prefix queries from its actual reply as follows:
+
+| Acquired reply at $a$ | Candidate query sequence |
+| --- | --- |
+| $\bot$ | $p_1$ |
+| $\alpha$ | $p_2$; if its reply is branch, then $p_3$ |
+| $\beta$ | $p_4$ |
+| $\mathsf b$ | $p_5$ |
+
+At every candidate query $p_i$, return $(i,e)$ only on an actual
+labelled leaf reply $\lambda_e$. Return $B$ only on an actual branch
+reply at $p_i=p_n$. If these tests have not returned a descriptor
+after the stated sequence, run the balanced prefix encoder of
+AAR13.4 on this same stationary source. It uses at most $h$ further
+Read invocations and always acquires the genuine descriptor. The
+fallback may repeat an earlier query; that invocation still counts.
+
+Each direct return has real evidence independently of the guide's
+truthfulness: an actually labelled $p_i$ certifies all its strict
+ancestors as branches, and a branch reply at $p_n$ certifies $B$.
+A branch at any proper prefix, including a misleading $p_5$ when
+$n>5$, is not accepted as a terminal certificate. The reply at $a$
+only selects a literal; its label is never substituted for an
+unread target-path label. On arbitrary sources even a reply
+inconsistent with the core relation therefore either leads to
+genuine evidence or to the total full-family fallback.
+
+On $g_{1,e}$ the first reply is absent and the second query hits
+$p_1$. On $g_{2,e}$ it is alpha and $p_2$ hits. On $g_{3,e}$ it is
+alpha, $p_2$ returns branch and $p_3$ hits. On $g_{4,e}$ it is beta
+and $p_4$ hits; on $g_{5,e}$ it is branch and $p_5$ hits.
+These are the five costs in (NCO.47), with weighted numerator
+$5\cdot2+3\cdot2+2\cdot3+3\cdot2+5\cdot2=38$.
+There is one guide call, at most two candidate calls, and at most
+$h$ fallback calls on any source, proving the uniform bound.
+
+Retain the actual acquired descriptor together with the complete
+remaining accessible acquisition state, or pay separately to clear
+everything except a fixed descriptor encoding. AAR13.3 supplies the
+single passive decoder for every authentic same-source,
+same-initial-version $k$. Its suffix-dependent formula applies to the
+original $p$, including when the acquired leaf is a proper prefix
+and the initial reply at $p$ is absent. No substitution is performed
+during acquisition and no later source call is used. $\square$
+
+**Theorem 8.4 (rational full-support separation for every longer target).**
+For every integer $D\ge n\ge5$ and every length-$n$ word $p$ beginning
+with $R$, define $P_{\rm c},P_{\rm g}$ by (NCO.40)–(NCO.42). Let $U_D$
+be uniform on the entire original $\mathcal F_D$, and put
+
+$$
+\epsilon=\frac{1}{2(9h+19)},\qquad
+\mu_{\rm c}=(1-\epsilon)P_{\rm c}+\epsilon U_D,\qquad
+\mu_{\rm g}=(1-\epsilon)P_{\rm g}+\epsilon U_D.
+\tag{NCO.48}
+$$
+
+These two explicit rational laws are strictly positive at every source
+of that same family and have the same complete descriptor distribution.
+Their unrestricted optimized means satisfy
+
+$$
+\begin{aligned}
+V_{D,p}(\mu_{\rm c})
+   &\ge(1-\epsilon)\frac{20}{9}+\epsilon,\\
+V_{D,p}(\mu_{\rm g})
+   &\le\mathbb E_{\mu_{\rm g}}T_{A_{\rm g}}
+     \le(1-\epsilon)\frac{19}{9}+\epsilon(h+3),\\
+V_{D,p}(\mu_{\rm c})-V_{D,p}(\mu_{\rm g})
+   &\ge\frac1{18}>0.
+\end{aligned}
+\tag{NCO.49}
+$$
+
+Write $V^{\rm pref}_{D,p}(\mu)$ for the infimum over admissible
+prefix-only encoders, with precisely the same whole-family correctness
+requirement. The guided law also satisfies
+
+$$
+V^{\rm pref}_{D,p}(\mu_{\rm g})-V_{D,p}(\mu_{\rm g})
+ \ge\frac1{18}.
+\tag{NCO.50}
+$$
+
+These are separated quantitative bounds; no exact full-support optimum
+is asserted.
+
+Proof. The finite counting recurrence from Theorem 2.4 is
+$b_0=2$, $b_{d+1}=2+b_d^2$ and $|\mathcal F_D|=b_D$. In particular
+$U_D(t)=1/b_D$, and each law in (NCO.48) assigns every source mass
+at least $\epsilon/b_D>0$. All numbers are rational and
+$0<\epsilon<1$. Equation (NCO.43) gives identical core descriptor
+pushforwards; adding the same uniform law preserves exact equality,
+including every descriptor outside the five-position support and $B$.
+The mixture samples one entire original tree once. It does not mix
+or redraw replies during a run.
+
+Every admissible encoder makes at least one Read on every source.
+If it terminated before its first Read on any source, determinism and
+source-blind initialization would make that same zero-call termination
+occur on all sources. The two sources $c_{1,0},c_{1,1}$ require
+different trajectories at a common authentic count by AAR13.3, a
+contradiction. Thus Lemma 8.2 and the uniform component give, for
+every all-word $A$ before taking any infimum,
+
+$$
+\mathbb E_{\mu_{\rm c}}T_A
+ \ge(1-\epsilon)\frac{20}{9}+\epsilon.
+\tag{NCO.51}
+$$
+
+Proposition 8.3 gives the displayed upper bound using the one
+full-family-correct deterministic $A_{\rm g}$. Subtracting gives
+
+$$
+(1-\epsilon)\frac19-\epsilon(h+2)
+ =\frac19-\epsilon\frac{9h+19}{9}
+ =\frac1{18}.
+\tag{NCO.52}
+$$
+
+For every prefix-only $S$, the last assertion of Lemma 8.2 and the
+same universal one-call bound give
+$\mathbb E_{\mu_{\rm g}}T_S\ge(1-\epsilon)20/9+\epsilon$.
+Subtract the same upper bound and take the prefix infimum to prove
+(NCO.50). This last step never applies the projected-source
+comparison to the arbitrary unprojected guided law. $\square$
+
+**Theorem 8.5 (the three equivalent universal cutoff properties).**
+Fix any $D\ge1$ and $R$-leading $p$ with $1\le n=|p|\le D$.
+The following three properties hold exactly when $n\le4$:
+
+1. For every two probability laws $\mu,\nu$ on the same
+   $\mathcal F_D$, equality of their complete descriptor distributions
+   implies $V_{D,p}(\mu)=V_{D,p}(\nu)$.
+2. For every probability law $\mu$ on that family,
+   $V_{D,p}(\mu)=V^{\rm pref}_{D,p}(\mu)$.
+3. For every admissible deterministic all-word encoder $A$, there
+   exist finitely many admissible deterministic prefix encoders
+   $S_1,\ldots,S_m$ and fixed real coefficients
+   $\theta_i\ge0$, $\sum_i\theta_i=1$, independent of the sampled
+   source, with
+   $\sum_i\theta_i T_{S_i}(t)\le T_A(t)$ for every
+   $t\in\mathcal F_D$.
+
+The failures in the first two properties already occur for rational
+laws strictly positive on every source. In the third property, the
+coefficients and encoders may depend on $A,D,p$; even with that
+allowance, $n\ge5$ fails. The finite convex combination is a numerical
+sourcewise comparison, not an executing randomized encoder.
+
+Proof. For $n\le4$, Theorem 7.1 gives both the descriptor-law dependence
+and the exact prefix-only mean. Theorem 6.3 gives the third property
+with at most two encoders and coefficients $1/2,1/2$; when $n\le3$
+one encoder suffices.
+
+For every $n\ge5$ and every permitted orientation and $D$, Theorem
+8.4 supplies the pair refuting the first property and the guided law
+refuting the second. To refute the third, take $A=A_{\rm g}$.
+Every admissible prefix encoder has $\mu_{\rm g}$ mean at least
+$(1-\epsilon)20/9+\epsilon$, whereas $A_{\rm g}$ has mean at most
+$(1-\epsilon)19/9+\epsilon(h+3)$. Their difference is at least
+$1/18$. Every fixed finite convex combination of those prefix means
+obeys the same lower bound. If it dominated $T_{A_{\rm g}}$
+sourcewise, integration under this actual law would give the reverse
+inequality, a contradiction. Thus some actual source violates each
+proposed finite-combination domination. No runtime randomizer is
+introduced in either direction. $\square$
+
+## 9. Source correspondence and the classification's resource boundary
+
+**Definition 9.1 (charged acquisition and unresolved recovery).**
+The guide query in (NCO.41) is the original-root literal $a$, answered
+by the once-sampled original source, including when $a$ is absent.
+It costs one chronological invocation and is neither supplied advice
+nor a new port. Its acquired reply selects one of the
+literal evidence queries of Proposition 8.3, and every return is checked
+on that same source. The upper encoder has peak operand length at
+most $n$ and total submitted letters at most $7+nh$: its guide has
+length two, its candidate phase uses at most five further letters,
+and its fallback uses at most $nh$ letters. These are bounds for
+this encoder, not simultaneous resource domination of competitors.
+
+The only optimized coordinate is invocation count. Public law
+representation, arithmetic, selection and installation, every full
+operand and submitted letter, local computation, output construction,
+working and retained memory, clearing and validation remain charged.
+Complete accessible state includes surviving replies, operands,
+selectors, control, histories, capacity and allocation distinctions.
+Retain them at their actual cost, or clear or retract every such
+distinction before a descriptor-only export in a fixed output region.
+Physical resident source storage and inaccessible or dead backing
+remain physical costs. The stationarity promise is not a validation
+service, and representation, reference, authentication and validation
+of the authentic same-source, same-initial-version count $k$ retain
+their hypotheses and costs.
+
+The result supplies no source change, new invocation right, source
+identifier, fresh sampling, free guide, free clock, subtree operation,
+rerooting or cross-source map. Full $Q$, actual $S$-to-$C$ label
+assimilation, physical Return, whole-source or undeclared-menu
+recovery, and native/diffusion/AURIC correspondence remain unclosed.
+Theorem 8.5 completes the local class boundary left necessary-only
+by Corollary 7.2; it does not complete the wider mutual-recovery goal.
+Equality of complete descriptor laws remains distinct from equality
+of their compressed predictive-factor laws, which can collide as in
+AAR13.3.
+
+**Mathematical citation 9.2 (reused suppliers and new scope).**
+The class-level cutoff and the universal five-position witness are
+ordinary mathematical repo-derived results. The positive half is
+Theorems 6.3 and 7.1 of this volume, and is cited rather than reproved.
+The native realization uses AAR13.6's canonical contexts; AAR13.3
+supplies the passive all-authentic-count decoder; AAR13.5 supplies
+actual-label evidence, including label-flipped zero-prior worlds;
+AAR13.4 supplies the total balanced fallback. AAR16.2–16.4 retain
+their acquired-boundary and canonical-completion scope. In particular
+their projected-source comparisons are not actual-law domination.
+Lemma 8.2 uses AAR14.1 only at its canonical fixed points.
+
+[Prior Acquisition Boundary §§2–3][PAB] already supplies canonical-core
+all-competitor lower bounds, common rational full-support completion,
+and length-eight and growing examples. Its Definition 4.3 supplies
+the prefix-only optimum, and its Theorem 4.4 supplies the separate
+persistent independent-forest sufficient condition at arbitrary
+length. Those are reused methods and results, not renamed additions.
+Here the five weights, actual sibling realization, evidence strategy
+and quantitative bounds make the cutoff sharp for every $D,p$ with
+$|p|\ge5$. No independent-forest hypothesis is added to Definition 1.1.
+No equality of positive conditional observation orders is asserted for
+these paired laws; Theorem 1.3's different correlation-order
+quantifiers remain unchanged.
+
+The weighted ordered-search recurrence is a mature intermediate tool,
+already used in Theorem 7.1 and [PAB]. The decision-tree framework
+described in [Cicalese–Laber–Saettler, §1][CLS] has the correspondence
+given in Mathematical citation 7.4; no external approximation theorem
+or generic decision-tree result supplies the new native witnesses or
+their all-length separation. No worldwide originality claim is made.
+The existing Lean definitions cited in Mathematical citation 5.3
+identify the carrier, four replies, substitution and present-address
+transport. In particular the distinct-address cost and positive-image
+task in ActualTreeReadoutAcquisition are not the chronological cost
+or passive task used here. Reading those sources supplies no new kernel
+evidence. These additions contain no new Lean or kernel-verification
+claim; finite arithmetic or finite source checks do not replace the
+arbitrary-$D$, arbitrary-orientation proofs above.
+
+[PAB]: RECURSIVE_RELATIONAL_OBSERVATION_PRIOR_ACQUISITION_BOUNDARY.md
+
+## 追加锚（本行以下为增补区）
+
+## 10. Uniform finite-source mixtures and an attained Read deadline
+
+**Definition 10.1 (one finite source without a supplied height cap).**
+Let $\mathcal T_D$ be the finite nonempty ordered alpha/beta trees of
+height at most $D$, and retain the actual sources, four-reply original-root
+Read and substitution of Definition 1.1. Thus
+
+$$
+b_0=2,\qquad b_{D+1}=2+b_D^2,\qquad
+\mathcal F_D=\{\langle\alpha,v\rangle:v\in\mathcal T_D\},
+\qquad U_D(t)=\frac1{b_D}\quad(t\in\mathcal F_D).
+\tag{NCO.53}
+$$
+
+Fix a public $R$-leading word $p$ of length $n\ge1$ and a public integer
+Read budget $r\ge1$. The correctness domain is now
+
+$$
+\mathcal F_\infty=\bigcup_{D\ge n}\mathcal F_D
+ =\{\langle\alpha,v\rangle:v\text{ is a finite nonempty ordered
+ alpha/beta tree}\}.
+\tag{NCO.54}
+$$
+
+Every finite word, of any depth, remains a legal competing Read.
+Competitors are deterministic effective encoder/passive-decoder pairs
+with common source-blind initialization, terminating and correct on
+every member of $\mathcal F_\infty$, including zero-prior worlds.
+There is no supplied $D$, sampled-source identifier, unacquired
+descriptor, or extra source-correlated advice input. Only the same
+initial stationary register is read. The complete accessible handoff
+$E_A(t)$ must support
+
+$$
+\mathsf D_A(E_A(t),p,k)=\operatorname{Read}_{\rho^k t}(p)
+\quad(t\in\mathcal F_\infty,\ k\in\mathbb N),
+\tag{NCO.55}
+$$
+
+for every supplied authentic same-source, same-initial-version $k$.
+All inherited operation permissions, actual acquired records and
+service bindings retain their original meanings and costs. This
+experiment adds no permission to restart a stopped run, change the
+register, or access a later source.
+
+Let $\pi=(\pi_D)_{D\ge n}$ be any probability mass function, with no
+computability assumption. Sample one finite integer $D$ with this law,
+then one tree with law $U_D$, and keep that one actual tree throughout.
+The resulting actual-source law is
+
+$$
+\mu_\pi=\sum_{D\ge n}\pi_D U_D,\qquad
+\mu_\pi(\langle\alpha,v\rangle)
+ =\sum_{D\ge\max\{n,\operatorname{height}(v)\}}\frac{\pi_D}{b_D}.
+\tag{NCO.56}
+$$
+
+The latent $D$ need not be the actual minimal height. Overlapping
+$\mathcal F_D$ are combined by this source marginal; no source is
+resampled between queries. Each draw is finite even if the support of
+$\pi$ has no finite cap. There is no uniform law on all finite trees
+or on infinite trees in (NCO.56). Law membership and stationarity are
+hypotheses, not facts authenticated by the replies.
+
+For finite $D\ge n$, put
+
+$$
+s_h=1-\frac2{b_h}=\frac{b_{h-1}^2}{b_h}\quad(h\ge1),\qquad
+q^D_0=1,\qquad
+q^D_i=\prod_{h=D-i+1}^{D}s_h\quad(1\le i\le n).
+\tag{NCO.57}
+$$
+
+As before, $T_A$ counts chronological initial Read invocations,
+including absent, constant, off-path and repeated calls. Local work,
+installation, references, storage and count authentication are separate
+coordinates.
+
+**Proposition 10.2 (the actual uniform joint completion and its masses).**
+For each $D\ge n$, $U_D$ satisfies exactly the persistent joint-completion
+condition of [PAB, Definitions 4.1–4.2][PAB]. In its notation the one
+completion forest has law
+
+$$
+\nu_D=
+ \left(\bigotimes_{i=2}^{n}\operatorname{Unif}(\mathcal T_{D+1-i})\right)
+ \otimes
+ \left(\operatorname{Unif}(\mathcal T_{D-n})
+             \otimes\operatorname{Unif}(\mathcal T_{D-n})\right).
+\tag{NCO.58}
+$$
+
+The first product is empty when $n=1$. If $Q_D$ is the descriptor law,
+the actual realization map of PAB4.1 satisfies
+
+$$
+U_D=T_*(Q_D\otimes\nu_D),\qquad
+Q_D(j,e)=\frac{q^D_{j-1}}{b_{D-j+1}},\qquad Q_D(B)=q^D_n.
+\tag{NCO.59}
+$$
+
+In particular these are joint laws of complete trees and all their
+literal replies, not only single-query marginals. For ordered prefix
+search, combine the last leaf position with $B$ into key $n$ and set
+
+$$
+x^D_i=q^D_{i-1}-q^D_i\quad(1\le i<n),\qquad
+x^D_n=q^D_{n-1}.
+\tag{NCO.60}
+$$
+
+These weights sum to one and are strictly increasing when $n>1$.
+Consequently the largest mass of any at-most-$m$ keys, $1\le m\le n$,
+is the suffix mass $q^D_{n-m}$.
+
+Proof. A uniform tree of cap $h\ge1$ is each of the two labelled
+leaves with probability $1/b_h$, and is a branch with probability
+$s_h$. Conditional on branch, its two ordered children are independent
+uniform members of $\mathcal T_{h-1}$: each ordered pair has the same
+unconditional mass $1/b_h$, and there are $b_{h-1}^2$ pairs. This is
+a statement about the once-chosen actual tree, not a procedure for
+redrawing a child when queried.
+
+Follow the specified orientation of $p$ from $p_1=R$, whose subtree
+has cap $D$. Conditional on continuing through a branch, the selected
+child is uniform with its cap reduced by one, and its sibling is
+independent uniform with that same reduced cap. Induction gives
+$\Pr_{U_D}(p_i\text{ is branch})=q^D_i$. Stopping at $p_j$ with a
+specified label has probability $q^D_{j-1}/b_{D-j+1}$; continuing as
+branch through $p_n$ has probability $q^D_n$.
+
+More fully, conditional on descriptor $(j,e)$, the exposed siblings
+at $p_{i-1}\overline{p[i]}$, $2\le i\le j$, are jointly independent
+uniform trees of caps $D+1-i$. Conditional on $B$, all siblings through
+$i=n$ have this product law, and the two children below $p_n$ are
+independent uniform $\mathcal T_{D-n}$ trees, independent also of
+those siblings. Thus the exposed tuple under each $(j,e)$ is precisely
+the corresponding projection of the one conditional-$B$ forest law
+(NCO.58), as required by PAB4.2.
+
+One can also check the mass of each entire actual tree directly.
+For a fixed tree with descriptor $(j,e)$, its exposed sibling values
+are uniquely determined, while the unexposed forest coordinates are
+ignored. Its mass under the realization in (NCO.59) is
+
+$$
+\frac{q^D_{j-1}}{b_{D-j+1}}
+       \prod_{i=2}^{j}\frac1{b_{D+1-i}}
+ =\frac1{b_D}.
+\tag{NCO.61}
+$$
+
+For descriptor $B$ the corresponding mass is
+
+$$
+q^D_n\left(\prod_{i=2}^{n}\frac1{b_{D+1-i}}\right)
+               \frac1{b_{D-n}^2}
+ =\frac1{b_D}.
+\tag{NCO.62}
+$$
+
+Both equalities telescope using $s_h=b_{h-1}^2/b_h$, including the
+empty products at $n=1$. Every source in $\mathcal F_D$ has exactly
+one of these descriptions. Hence (NCO.59) holds on complete sources.
+Applying any tuple of literal reply functions, including repeated,
+nested, off-path and arbitrarily long words, preserves this joint
+identity. Adaptive histories likewise refer to that one fixed tree.
+
+Both labels at position $i<n$ have combined mass
+$2q^D_{i-1}/b_{D-i+1}=q^D_{i-1}-q^D_i$. The mass of position $n$
+together with $B$ is
+$(q^D_{n-1}-q^D_n)+q^D_n=q^D_{n-1}$. A prefix search reaches and
+terminates at $p_n$ on either of these last outcomes, so this
+combination preserves every prefix search's call count. For
+$1\le i\le n-2$, and then for the last two keys, the ratios are
+
+$$
+\frac{x^D_{i+1}}{x^D_i}=b_{D-i}>1,\qquad
+\frac{x^D_n}{x^D_{n-1}}=\frac{b_{D-n+1}^2}{2}>1.
+\tag{NCO.63}
+$$
+
+Here $D-n+1\ge1$ and $b_1=6$. For $n=1$ there is only weight one.
+Positivity, the telescoping sum in (NCO.60), and these ratios show
+that the greatest at-most-$m$ mass uses the last $m$ keys, with sum
+$q^D_{n-m}$. $\square$
+
+**Theorem 10.3 (one common attainer and the exact mixture deadline).**
+Under Definition 10.1, let $m=\min\{n,2^r-1\}$. Then
+
+$$
+\boxed{\displaystyle
+\sup_A\Pr_{\mu_\pi}(T_A\le r)
+   =\sum_{D\ge n}\pi_D\,q^D_{n-m}.}
+\tag{NCO.64}
+$$
+
+There is one effective attainer $A_{p,r}$, independent of $D$ and
+$\pi$, globally correct and terminating on all $\mathcal F_\infty$.
+It actually acquires a sufficient descriptor and uses the supplied
+AAR13.3 passive decoder. On its single event of completion by $r$
+Reads, the same completed handoff serves every authentic $k$
+simultaneously: the event is not chosen separately for each $k$.
+
+Proof. First fix $D\ge n$ and any globally admissible $A$. Its
+restriction is correct and terminating on the entire $\mathcal F_D$,
+regardless of its probabilities under $\pi$. Use the original
+fixed-forest prefix simulation in PAB4.4, with its pointwise
+inequality (4.9), on the actual realization (NCO.59). For each fixed
+finite forest $z$, it produces a correct prefix encoder $B_z$ with
+
+$$
+T_{B_z}(b)\le T_A(T(b,z))
+\quad\text{for every descriptor }b.
+\tag{NCO.65}
+$$
+
+Specifically, it answers a simulated prefix by a real prefix Read;
+a first-divergence query by a real Read of its path parent and a local
+reply in the fixed sibling $z_i$; and a strict extension of $p$ by a
+Read of $p$ and the fixed pair $z_*$. Fixed outer words have public
+replies. The same $z$ supplies all simulated replies throughout.
+This is precisely the supplier's single-source construction and
+cost inequality, rather than an inference from its optimized-mean
+conclusion. The hypothetical finite installation of $D,z$ is used
+only for this conditional bound; it is not given to $A_{p,r}$.
+
+Stop $B_z$ at any genuine acquired path leaf or branch reply at $p$.
+The ordered pruning of PAB4.3 and AAR14.1 then gives an ordered
+prefix search tree with no larger count on each descriptor. Prefix
+queries whose replies are already forced can be omitted. Before a
+hit, only absence or branch can continue, selecting the lower or
+upper interval. Every unresolved leaf key must eventually be queried:
+flipping just its actual label remains within $\mathcal F_D$ and
+changes the required future at a common authentic count, by AAR13.3
+and AAR13.5. A correct halt cannot skip that evidence even if different
+positions have colliding predictive factors or have prior mass zero.
+On the all-branch path, the pruned tree reaches $p_n$ and certifies $B$.
+Thus this pruning applies to the complete correctness family, not
+merely its positive-prior part. Replace $B_z$ by this pruned tree,
+keeping its name and inequality (NCO.65).
+
+There are at most $2^r-1$ internal query nodes in the first $r$ levels
+of such an ordered tree: their maximal counts satisfy
+$K_0=0$, $K_{\ell+1}=1+2K_\ell$. Each queried key contributes its
+whole weight $x^D_i$ to completion by $r$, with $B$ sharing exactly
+the completion time of key $n$. There are at most $m$ such keys.
+Proposition 10.2 therefore bounds the completion probability of every
+pruned tree by $q^D_{n-m}$. Taking the indicators of (NCO.65) and
+averaging over the actual independent descriptor and forest gives
+
+$$
+\begin{aligned}
+\Pr_{U_D}(T_A\le r)
+&=\sum_z\nu_D(z)\sum_b Q_D(b)
+             \mathbf1_{\{T_A(T(b,z))\le r\}}\\
+&\le\sum_z\nu_D(z)\sum_b Q_D(b)
+             \mathbf1_{\{T_{B_z}(b)\le r\}}\\
+&\le q^D_{n-m}.
+\end{aligned}
+\tag{NCO.66}
+$$
+
+This covers every competing finite word and all its chronological
+calls. It uses the actual $U_D$ completion law; the projected-source
+comparison alone in AAR14.1 or AAR16.4 would not justify (NCO.66).
+
+Construct the one attaining program as follows. If $m=n$, run the
+balanced prefix acquisition of AAR13.4 on all keys $[1,n]$. Its bound
+$h(n)=\lceil\log_2(n+1)\rceil\le r$ and its correctness proof do not
+use a height cap. It terminates by genuine leaf acquisition or branch
+at $p_n$ on every finite source.
+
+If $m<n$, necessarily $m=2^r-1$. First search only the last $m$ keys
+$[n-m+1,n]$ with the perfect ordered search tree of height $r$.
+At interval $[a,b]$ its next key is $\lfloor(a+b)/2\rfloor$; submit
+the entire literal $p_i$. A label reply acquires $(i,e)$ and stops;
+branch at $p_n$ acquires $B$ and stops. Otherwise absence selects
+the lower interval and branch the upper interval. All actual sources
+whose first leaf is in this suffix, and all $B$ sources, terminate
+within $r$ calls with this actual evidence.
+
+A source with first leaf at $j\le n-m$ instead gives absence at every
+query of the suffix tree's leftmost path. That path has exactly $r$
+calls. Its last query, $p_{n-m+1}$, certifies that the first leaf is
+earlier, but has not acquired its label. Continue on the same stationary
+register with balanced prefix search on $[1,n-m]$, until the actual
+leaf is read. This is a finite total fallback; it makes at least one
+further Read. On any actual source it preserves the unique first-leaf
+candidate and acquires its actual label. No $D$, law, off-path answer,
+or pre-acquired descriptor is used in either phase.
+
+Consequently, when $m<n$ the one completed-by-$r$ event is exactly
+
+$$
+G_{p,r}=
+ \{t:\partial_p(t)=B\text{ or }
+             \partial_p(t)=(j,e),\ j>n-m\}
+ =\{t:\operatorname{Read}_t(p_{n-m})=\mathsf b\}.
+\tag{NCO.67}
+$$
+
+When $m=n$, let $G_{p,r}=\mathcal F_\infty$. Equation (NCO.57) shows
+$\Pr_{U_D}(G_{p,r})=q^D_{n-m}$ for every $D\ge n$. The stopping
+decisions are made from actual acquired evidence; the rightmost event
+description in (NCO.67) is not an additional free observation.
+
+Every return includes the actual descriptor, and AAR13.3 gives one
+decoder satisfying (NCO.55) for every $k$. Its same-source leaf
+transport is at the originally present leaf, not at an absent target.
+The construction and decoder are independent of $D$, so their
+sourcewise correctness extends to the whole union (NCO.54).
+In particular,
+
+$$
+G_{p,r}\subseteq
+ \{t:\forall k\in\mathbb N,\quad
+   \mathsf D_{p,r}(E_{p,r}(t),p,k)
+                =\operatorname{Read}_{\rho^k t}(p)\}.
+\tag{NCO.68}
+$$
+
+This is correctness per authentic request using one retained handoff;
+it is not a finite execution producing infinitely many outputs.
+
+Finally, for any fixed competitor the countable law (NCO.56) gives
+
+$$
+\Pr_{\mu_\pi}(T_A\le r)
+ =\sum_{D\ge n}\pi_D\Pr_{U_D}(T_A\le r).
+$$
+
+This follows by summing the nonnegative source/latent-depth joint
+masses, even when the source supports overlap. Apply (NCO.66) before
+taking the supremum. The one constructed $A_{p,r}$ attains equality
+in each summand, hence in their sum, proving (NCO.64).
+No interchange of a supremum and an integral is assumed, and no
+descriptor-independent forest representation of $\mu_\pi$ is needed.
+$\square$
+
+**Corollary 10.4 (uniform error certificate without a law oracle).**
+For this same attainer and every $\pi$ of Definition 10.1,
+
+$$
+\Pr_{\mu_\pi}(T_{A_{p,r}}>r)=
+ \sum_{D\ge n}\pi_D(1-q^D_{n-m})
+ \le C_{n,r}:=
+ \begin{cases}
+ \displaystyle\frac2{b_{m+1}-1},&m<n,\\
+ 0,&m=n.
+ \end{cases}
+\tag{NCO.69}
+$$
+
+For a prescribed budget this rational certificate is finitely
+computable from $n,r$. Given any requested rational tolerance
+$\varepsilon\ge0$, there is a finite public procedure choosing a
+budget and supplying a checkable certificate $C_{n,r}\le\varepsilon$.
+Neither procedure uses $\pi$, a sampler, an actual depth, or exact
+evaluation of the sum in (NCO.64).
+
+Proof. For $m<n$ the elementary product inequality gives
+
+$$
+\begin{aligned}
+1-q^D_{n-m}
+&\le\sum_{h=D-n+m+1}^{D}\frac2{b_h}\\
+&\le2\sum_{h=m+1}^{\infty}\frac1{b_h}.
+\end{aligned}
+\tag{NCO.70}
+$$
+
+The second step uses $D\ge n$; it does not replace the actual tree
+by a cap-$n$ tree. Set $M=b_{m+1}$. The recurrence implies
+$b_{m+1+j}\ge M^{2^j}$ for every $j\ge0$. Since the powers $2^j$
+form a subset of the positive integers,
+
+$$
+\sum_{h=m+1}^{\infty}\frac1{b_h}
+ \le\sum_{j=0}^{\infty}M^{-2^j}
+ \le\sum_{\ell=1}^{\infty}M^{-\ell}
+ =\frac1{M-1}.
+\tag{NCO.71}
+$$
+
+This proves the bound for each actual conditional law, hence for
+every mixture. If $m=n$, $q^D_0=1$ and failure is exactly zero.
+
+Write the tolerance as $a/c$ with integers $a\ge0$, $c>0$. Enumerate
+$r=1,\ldots,h(n)$. Compute $m$ by saturating the recurrence
+$u_0=0$, $u_{i+1}=\min\{n,2u_i+1\}$, stopping at $i=r$ or $u_i=n$.
+When $m<n$, compute the finite integer list
+$b_0,\ldots,b_{m+1}$ and accept this budget if
+
+$$
+2c\le a(b_{m+1}-1).
+\tag{NCO.72}
+$$
+
+The list, its recurrence equations and this integer comparison form
+a finite rational error certificate. When $m=n$, use the exact
+zero-failure certificate instead; this always occurs by $r=h(n)$,
+including when $a=0$. Thus the procedure terminates without an
+oracle. For a fixed supplied $r$, the same calculation returns
+$C_{n,r}$ and checks the requested comparison; a failed comparison
+means only that this bound does not certify that tolerance at that
+budget. It is not a claim about an unknown $\pi$.
+
+All large-integer arithmetic, storage of the recurrence list and
+selection of the public budget are local paid work. For example, with
+$L=1+\lceil\log_2(b_{m+1}+1)\rceil$ and $K$ the input bit length of
+$a,c$, schoolbook arithmetic computes and checks such a list in
+$O((m+1)L^2+(K+L)^2)$ bit operations and
+$O((m+2)L+K)$ bits if the whole certificate is retained. Repeating
+this finite calculation for at most $h(n)$ budgets is still finite;
+no efficiency uniform in the numerical tolerance is asserted.
+This certificate is conditional on the declared law class, rather
+than an acquisition-based test of that class. $\square$
+
+**Proposition 10.5 (finite acquisition resources and a complete handoff).**
+Let $h(0)=0$ and $h(u)=\lceil\log_2(u+1)\rceil$ for $u\ge1$. The
+attainer can be implemented with sourcewise bounds
+
+$$
+H_{n,r}=
+ \begin{cases}
+ r+h(n-m),&m<n,\\
+ h(n),&m=n,
+ \end{cases}
+\qquad
+T\le H_{n,r},\quad
+A\le\min\{nH_{n,r},\,n(n+1)/2\},\quad Q\le n,
+\tag{NCO.73}
+$$
+
+where $A$ is the total number of submitted letters and $Q$ is peak
+literal length. These bounds are independent of $\pi,D$ and the
+actual source size. They concern the exhibited encoder; optimality
+in (NCO.64) concerns chronological Read count at this one public
+deadline only.
+
+Proof. In the nonsaturated case the first phase uses at most $r$
+calls, and only its all-absent path enters a fallback of at most
+$h(n-m)$ calls. In the saturated case AAR13.4 gives $h(n)$ calls.
+No key is repeated: each balanced search discards the queried key
+from its remaining interval, and the two phases use disjoint
+intervals. Every operand is an original-root prefix of $p$ of length
+at most $n$. This proves both letter bounds and the peak bound,
+without discounting any competitor's repeated or absent call.
+
+Here is a finite local representation sufficient for these bounds.
+Install the public literal $p$, the binary budget and a fixed
+controller for ordered interval search, together with the existing
+passive decoding rule. Store interval endpoints, current key, phase,
+reply and descriptor flags in binary. The saturated recurrence in
+Corollary 10.4 computes $m$ with at most $h(n)$ iterations and
+$O(\log(n+2))$-bit counters; it need not materialize $2^r$ when $r$
+has an arbitrarily large binary representation. Read the budget once
+and clamp it to $h(n)$ by a binary comparison before those iterations.
+Each midpoint is computed by integer addition and division by two. To query $p_i$,
+copy its first $i$ letters from the installed word into an actual
+literal buffer, then submit that whole word. A local slice or prefix
+index is not a source operation. There is no installed table indexed
+by the hidden tree, depth or prior.
+
+For example put $\ell=\lceil\log_2(n+2)\rceil$ and let $\ell_r$ be
+the binary input length of $r$. With binary schoolbook counters and
+explicit copying and recording of literals, the new controller can
+use
+
+$$
+O\bigl(\ell_r+(n+h(n)+H_{n,r}(n+1))\ell\bigr)
+\tag{NCO.74}
+$$
+
+local bit operations during installation of these public parameters
+and acquisition, excluding the original Read service, external
+authentication and reference installation. Scanning $p$ establishes
+$n$; interval arithmetic costs $O(\ell)$ per step. Charging
+$O(\ell)$ work per copied or scanned symbol is sufficient even for
+a direct sequential representation. This deliberately loose bound
+also pays for reply recording and final descriptor/factor formation.
+No finite expected running cost of the original source service is
+inferred from it.
+
+Retain a complete ordered record of every invocation, its full
+literal, reply, chronological position and inherited same-version
+binding. A common retained root/version reference can be shared by
+these entries, with its representation and installation charged.
+It is the inherited actual service binding, not an identifier that
+discriminates the unknown source. Keeping the whole record, all
+surviving operands and reply latches, final interval/control state,
+descriptors, length/capacity fields and allocation distinctions gives
+an additional accessible memory bound
+
+$$
+O\bigl(\ell_r+n+H_{n,r}(n+\ell)\bigr)
+\tag{NCO.75}
+$$
+
+bits, plus the actual reference/binding representation. Fixed-size
+regions sized by the public bound may be used, with their unused
+space also charged. Any previously acquired actual rows, chronological
+records, permission fields and original service state remain retained
+and separately charged in addition to this new allocation. They are
+not deleted or replaced by a descriptor. This full-state convention
+requires no erasure or retraction assumption: $E$ includes every
+surviving accessible source-dependent field. Any alternative
+descriptor-only export would have to pay to clear or retract all
+those other distinctions; it is not the interface asserted here.
+
+The output supplies the genuinely acquired descriptor and, if desired,
+its already supplied factor $\Gamma_p$ in AAR13.3. For $(j,e)$ the
+factor is obtained by scanning the suffix $p\setminus p_j$ with weight
+one per $L$ and two per $R$, using the endpoint case when $j=n$.
+Its branch threshold is at most $2n$, so it takes $O(\ell)$ bits.
+For $B$ it is $(0,0)$. The decoder is exactly AAR13.3's guarded
+(AAR.59) rule: for factor $(g,c)$, return branch at $k\ge g$, beta
+at $g\ge1,\ k=g-1$, alpha at $c=1,\ k=g-2$, and absent otherwise.
+The guards retain the left-ending/right-ending distinction. The
+same finite formula holds on every source in (NCO.54), since any
+such tree belongs to a finite $\mathcal F_D$ with $D\ge n$ and the
+formula does not use $D$.
+
+Formation of the descriptor, the optional factor, and the complete
+export is paid local output work covered by (NCO.74)–(NCO.75).
+For a later authentic binary count of length $\ell_k$, evaluation
+from the retained factor costs $O(\ell_k+\ell)$ local bit operations
+and $O(\ell_k+\ell)$ extra bits, including the count representation;
+forming the factor afresh instead costs an additional
+$O(n\ell)$ scan. Validation, count authentication and actual
+same-version binding still require their original suppliers and
+their separate costs. There is no later source Read, evaluation of
+$\rho^k t$, or recovery of an unknown $k$.
+
+Resident original-source storage and inaccessible or dead backing
+are still charged at their actual sizes, beyond (NCO.75). They have
+no common finite bound on $\mathcal F_\infty$, and arbitrary $\pi$
+does not supply a finite expected source size. These physical costs
+are not removed by the finite added-controller bounds. $\square$
+
+**Definition 10.6 (the recovered interface and its scope).**
+The consumer in (NCO.64) is acquisition, by a declared Read deadline,
+of one finite boundary memory sufficient for the original literal
+$p$ at every authentic supplied count. The information travels from
+actual spatial path evidence to the existing finite predictive factor
+and passive future-value decoder. It is not a supplied mathematical
+quotient, inverse or completion forest masquerading as an available
+port. Original rows, legal domains, references and operation rights
+retain their full contracts.
+
+In particular, (NCO.64) neither identifies an arbitrary law from Reads
+nor supplies an effective sampler for an arbitrary $\pi$. When $m<n$,
+the exact sum can be noncomputable for a noncomputable prior: already
+a mixture of two depths gives a nonconstant rational affine function
+of their mixing weight. When $m=n$ the value is one. Corollary 10.4
+certifies its uniform bound without evaluating the prior-dependent sum. The
+single program is common across depths and priors for fixed $p,r$;
+there is no claim of one program optimal for all budgets, mean costs,
+or other resource coordinates. No descriptor-independent completion
+of the mixture is asserted: the shared latent depth can correlate
+boundary and off-path data after mixing.
+
+The interface supplies no actual later source access, physical Return,
+actual $S$-to-$C$ label assimilation, full response $Q$, whole-source
+recovery, or undeclared menu. It supplies no identification of native,
+diffusion or AURIC sources. In particular, a frozen-prefix prediction
+or a reply for the original version is not a reply at an actual later
+Return. The wider mutual-recovery problem for spatial structure,
+legal continuation, boundaries and memory retains these missing
+interfaces.
+
+Mathematical citations for §10. The source-specific result is
+repo-derived: the actual joint uniform completion, its increasing
+native search weights, one common effective attainer and its
+depth-uniform certificate establish the stated original-source
+deadline consumer. Countable nonnegative averaging, uniform finite
+tree counting and ordered successful-search capacity are reused
+intermediate methods, not separate new content claims. NCO1.1 and
+NCO2.4 supply the native cost convention and $b_D$ count; NCO6–9
+retain their short-target mean comparisons and sharp universal
+all-law cutoff. This restricted uniform-mixture family does not
+alter that all-law classification.
+
+[PAB4.1–4.4][PAB] supplies the persistent completion map and the
+pointwise fixed-forest comparison used directly in (NCO.65), while
+[AAR13.3–13.5 and AAR14.1][AAR] supply the acquired factor/decoder,
+balanced acquisition, label evidence and ordered pruning.
+AAR16.2–16.4 retains its joint-menu and projected-source scope;
+it is not substituted for an actual-law comparison here.
+[SLH35–36][SLH] already supplies executable future-code acquisition
+and the separate source, entry, reference and full-record costs.
+Thus this is not the first native acquisition algorithm.
+
+The existing [Source and substitution][GFT] and
+[Reply, readout and flip][READ] identify the same actual carrier
+and operations: true labels alpha, false labels beta, false address
+letters mean $L$ and true mean $R$. The present-address transport in
+[original_present_transport][NDP] and the existing guarded semantics
+cited by AAR13.3 apply only with their original hypotheses. The
+positive-image task and distinct-address paid cost of [READ] are
+different from (NCO.55) and its chronological invocation count.
+These citations supply correspondence, not a new Lean verification
+of §10.
+
+For the mature ordered-search background, Bruno, De Prisco, De Santis
+and Vaccaro, [*Bounds and Algorithms for Alphabetic Codes and Binary
+Search Trees*, §§II–III and V, arXiv:2407.16443v1][BDDV], treats
+alphabetic codes, successful/unsuccessful ordered search and bounds
+on average search cost, with linear-time constructions. Its root-level
+convention agrees with counting a first query at depth one. Its
+average-cost bounds do not assert this native fixed-deadline optimum.
+[Cicalese–Laber–Saettler, *Diagnosis determination: decision trees
+optimizing simultaneously worst and expected testing cost*][CLS]
+treats finite adaptive function identification with test costs and
+simultaneous logarithmic approximation guarantees. Here sources
+are objects, native replies are tests, target futures are output
+classes and each chronological invocation has unit cost; those
+approximation guarantees do not supply (NCO.59) or (NCO.64).
+Neither paper identifies the original native operations with a
+generic comparison oracle. The native joint correspondence and
+evidence-preserving realization are proved above; no worldwide
+priority claim is made.
+
+[BDDV]: https://arxiv.org/html/2407.16443v1
+
+## 追加锚（本行以下为增补区）
