@@ -1534,3 +1534,133 @@ $$
 **定义 29.1（完整候选与实际简化）。** 同一个世界仍用两两有向正比较、相加三角、单位小窗及完整正反配平，没有增加线性或实际测量换序公理。给输入同时加入单位、原轴和一面实际反射的偏置，原先不知道余量会不会跨过反射两侧。现在同时移动第三标签的单位和原轴分量，让同一次配平的两端分别落在两根已经认识的实际轴上。第二根轴给出一份确定的投影值，第一根轴上的未知输出必须认回它；这一份投影值在两种偏移下不变，而两次读取各让一个角没有第一平方预算，于是它只能为零。跨反射的余量被排除后，四个联合角的读取才完整约束剩余余量与背景的乘积；同一原支撑配平再消去余量。因此三种偏置可以同时存在，横向两种反射成分也可以混合，不再额外要求余量与反射交换。减少的是这整个原分支的一项未付证明，独立公理数没有减少。这里的角是数学读取窗口，等价比较重组保持一致仍不要求实际仪器先后可交换；七项真实量子来源继续逐项守28.1的同一原合同。
 
 ## 追加锚（本行以下为增补区）
+
+## 30. 完整四角背景上的原横向响应
+
+**定理 30.1（任意四角背景的完整原行）。** 保持27.1的同一完整原候选、实际框架 $h,e,j,s,H=hs,Q$ 及28.1全部七项原来源合同。对任意原 $c\in\operatorname{span}_{\mathbb R}\{u,h,s,H\}$、任意原 $h$-奇 $z$ 及任意实 $R$，准确有
+
+$$
+\boxed{D(Rh,c+z)=R\,iQhz=R\,D(h,c+z).}
+\tag{30.1}
+$$
+
+四个背景系数均可任意；不排除任何零角、整角零背景、退化或负参数。不增加原响应的可加、齐次、连续、商下降或一般单位平移前提。
+
+证明。$R=0$ 由原零输入P2成立。以下 $R\ne0$，写
+
+$$
+\begin{gathered}
+c=\mu u+\lambda h+\nu s+\xi H,\quad x=c+z,\quad
+k=hc=\mu h+\lambda u+\nu H+\xi s,\\
+t=iQhz,\quad g=D(Rh,x)=Rt+r,\quad [h,r]=0,\quad
+r_{\rm o}=P_s^-r.
+\end{gathered}
+\tag{30.2}
+$$
+
+分解和 $[h,r]=0$ 只用中央续卷163.1，尚未假定 $[s,r]=0$。所有 $P_a^\pm$ 沿27.1的有限奇偶定义。
+
+在实际PB中取 $(Rh,x,Rk+\beta h+\gamma s+\zeta H+\alpha u)$。第三标签与 $h$ 交换，中央续卷189.1给内值零。完整位移和两份实际外层为
+
+$$
+\begin{gathered}
+v=g-R^2c-R\beta u-R\gamma H-R\zeta s-R\alpha h,\qquad w=Rk,\\
+A_+=(1-R^2)c+z+g-R\beta u-R\gamma H-R\zeta s-R\alpha h,\\
+A_-=(1+R^2)c+z-g+R\beta u+R\gamma H+R\zeta s+R\alpha h,\\
+B_+=2Rk+\beta h+\gamma s+\zeta H+\alpha u,\qquad
+B_-=\beta h+\gamma s+\zeta H+\alpha u.
+\end{gathered}
+\tag{30.3}
+$$
+
+由 $x\circ h=k$、$h\circ k=c$、$s\circ k=Hc$、$H\circ k=sc$ 和 $k^2=c^2$，只展开已知Jordan乘法，准确有
+
+$$
+\begin{gathered}
+D(A_+,B_+)-D(A_-,B_-)
+=K+2R\beta z+2R\gamma(z\circ H)+2R\zeta(z\circ s),\\
+K=-2x\circ g+2R^2z\circ c.
+\end{gathered}
+\tag{30.4}
+$$
+
+固定 $\beta=-2R\mu$、$\gamma=-2R\xi$，仍让 $\alpha,\zeta$ 为实数。于是 $B_+=(2R\lambda+\alpha)u+(2R\nu+\zeta)H$。置真正原输出 $W_{\alpha,\zeta}=D(B_-,A_-)$，保留30.4中的非零负外值。中央续卷163.1在同一实际 $H$ 框架上供应正外值的奇投影。$A_+$ 的 $h$-偶、$s$-奇部分为 $r_{\rm o}$，而30.4新增的三个偏移项均为 $h$-奇。又由 $z\circ t=0$ 得 $P_h^+K=-2c\circ r$；其 $s$-奇部分为 $-2(\mu u+\lambda h)r_{\rm o}$，因为 $s\circ r_{\rm o}=H\circ r_{\rm o}=0$。原反对称性遂给
+
+$$
+P_h^+P_s^-W_{\alpha,\zeta}
+=\bigl[(2R\nu+\zeta)iQH-2(\mu u+\lambda h)\bigr]r_{\rm o}
+=:L_\zeta.
+\tag{30.5}
+$$
+
+这里只说该投影与 $\alpha$ 无关，不说整个输出不变，也不说它与 $\zeta$ 无关。
+
+对每个 $\epsilon=\pm1$，取数学投影和实际实参数
+
+$$
+p_\epsilon=(u+\epsilon h)/2,\qquad
+\alpha_\epsilon=2R\mu\epsilon,\qquad
+\zeta_\epsilon=2R\xi\epsilon.
+\tag{30.6}
+$$
+
+由 $Hp_\epsilon=\epsilon sp_\epsilon$，30.3准确给 $B_-p_\epsilon=p_\epsilon B_-=0$。任意环境正泛函 $\omega$ 的合法原正读取 $\phi_\epsilon(a)=\omega(p_\epsilon a p_\epsilon)$，在实际 $(B_-,A_-,W_{\alpha_\epsilon,\zeta_\epsilon})$ 表的第一平方为零；P2及正泛函分离给该输出的 $p_\epsilon$ 压缩为零。$p_\epsilon$ 与 $s$ 交换，取 $s$-奇投影后，由30.5得到
+
+$$
+\bigl[R(\nu+\epsilon\xi)iQH-(\mu+\epsilon\lambda)u\bigr]
+p_\epsilon r_{\rm o}=0.
+\tag{30.7}
+$$
+
+左乘相应的共轭因子，使用 $(iQH)^2=-u$，得
+
+$$
+d_\epsilon p_\epsilon r_{\rm o}=0,\qquad
+d_\epsilon=(\mu+\epsilon\lambda)^2+R^2(\nu+\epsilon\xi)^2\ge0.
+\tag{30.8}
+$$
+
+若 $d_\epsilon>0$，直接得 $p_\epsilon r_{\rm o}=0$。若 $d_\epsilon=0$，由于 $R\ne0$，两个实平方分别为零，故
+
+$$
+cp_\epsilon=
+\bigl[(\mu+\epsilon\lambda)u+(\nu+\epsilon\xi)s\bigr]p_\epsilon=0,
+\qquad kp_\epsilon=0.
+\tag{30.9}
+$$
+
+此时不除以失效系数，而使用同一实际支撑PB $(x,Rh,0)$：
+
+$$
+D(Rh-g,Rk)-D(Rh+g,-Rk)=2Rhr.
+\tag{30.10}
+$$
+
+两张实际外表的第二输入都在 $p_\epsilon$ 上归零。同一个 $\phi_\epsilon$ 分别使用P2，使两个实际输出的 $p_\epsilon$ 压缩均为零；压缩30.10便给 $2R\epsilon p_\epsilon rp_\epsilon=0$。因此 $p_\epsilon r=0$，再取 $s$-奇投影得到 $p_\epsilon r_{\rm o}=0$。这里仅用了 $d_\epsilon=0\Rightarrow cp_\epsilon=0$；不要求反向成立，也不要求两种 $s$-角都非零。两个符号共同给 $r_{\rm o}=0$，故 $[s,r]=[H,r]=[c,r]=0$。
+
+现在在30.3取 $\beta=\gamma=\zeta=0$。中央续卷161.5消去负外层 $D(A_-,\alpha u)$，所有实 $\alpha$ 的同一个实际旧输出均为 $D(A_+,2Rk+\alpha u)=K$。定义
+
+$$
+q_{\epsilon,\delta}=\tfrac14(u+\epsilon h)(u+\delta s),\qquad
+\alpha_{\epsilon,\delta}
+=-2R(\mu\epsilon+\lambda+\nu\epsilon\delta+\xi\delta).
+\tag{30.11}
+$$
+
+第二输入在对应联合角上归零，故合法正读取和P2给 $q_{\epsilon,\delta}Kq_{\epsilon,\delta}=0$。$cr$ 已与 $h,s$ 交换，30.4的 $K$ 除 $-2cr$ 外均为 $h$-奇，因此四角压缩相加准确给 $cr=0$。没有由四个对角读取推出任意非对角元素为零；保留全乘积的依据是先已生产的共同交换关系。
+
+最后消费中央续卷176.1–176.3在27.10–27.11已经写明的同一强度支撑机制：30.10的两份P2给 $|\phi(hr)|^2\le\phi(c^2)[R^2\phi(u)+\phi(g^2)]$。取 $\phi(a)=\omega(rar)$，$cr=0$ 使右侧为零，所有环境归一数学态遂有 $\omega(hr^3)=0$。态分离固定自伴元素、$h^2=u$ 及自伴性给 $r=0$。整个证明未除以读取质量，未要求态正常，未限制横向平方、维数、可分性或原域完备性。取 $R=1$ 得30.1第二等号，所有分支共同完成证明。∎
+
+## 31. 四角背景的几何与准确来源
+
+**定义 31.1（有限背景与新增承重）。** 任意实函数 $f$ 在四个可能联合符号 $(\epsilon,\delta)$ 上给定的背景，均可写为 $c=\sum_{\epsilon,\delta}f(\epsilon,\delta)q_{\epsilon,\delta}\in\operatorname{span}_{\mathbb R}\{u,h,s,H\}$；相应背景值为 $f(\epsilon,\delta)=\mu+\epsilon\lambda+\delta\nu+\epsilon\delta\xi$。这是两根交换对合的成熟有限谱分解，不把四角当作四个物理系统，也不生成任意新原谱标签。30.1因此识别同一原轴在完整四角背景上的横向响应，允许四个角上的背景值独立；原角可能为零。
+
+本组归为 $\texttt{repo-derived}$。新承重是30.3–30.9中额外的原 $H$ 偏移，它保持正外层在已知第二轴上，又在选定的整个第一轴角内抵消另一反射项。系数失效时，30.9–30.10将同一角接回原支撑PB，消除非退化条件；不把“系数为零”解释成原响应不受约束。27.1、中央续卷163.1、161.5、189.1及176.1–176.3是已付前置。投影压缩保正、正泛函分离、有限奇偶与有限谱分解是成熟C*工具，准确沿28.1及中央续卷185.3、199.1的Blackadar来源复用，不各立为新发现；没有历史优先权或文献穷尽声称。
+
+完整原候选及独立公理数不变。一般 $h$-交换背景不必属于这份四角背景代数；任意首标签、全域旧双线性、全部有限旧复Gram、原R、同一结合乘法和原完成运输仍须各自原桥。28.1及中央续卷199.2全部七项同源合同和上游量词继续保持：原 $\Omega/\mathrm{native}$、全词、合法控制及实际相干准备；原事件、效果、全部质量和完整Born菜单；真实相关联合、张量及递归参考；typed CP、Kraus和全部有限递归深度的同源接线；整台仪器、环境全部成功失败细记录、所有输出未来及更新；全部合法历史未来、泄漏、停止销毁、真遗忘、同数真实双向返回、CountRead及所需可数可加、正常性和指定前对偶；保持可能不完备原域的动力、真实相位、物理钟、生成元域、能量和共同正 $\hbar$。有限角与数学读取不替代任何实际来源。
+
+## 32. 背景在一整角消失时仍没有额外自由度的白话
+
+**定义 32.1（同一候选的完整四角图景）。** 原来的两两有向正比较、相加三角、单位小窗及完整正反配平全部保留。两根交换的两面反射给出一个四角方形；现在四个角上的背景高低可以各自独立，横向连线也可以同时跨越不同反射方向。给第三个实际标签再加一份已有的两轴乘积偏移，便能让同一次配平的一端仍落在已知第二轴上，另一端在选定的整个第一轴半边没有平方预算。这排除通常会留下的跨反射余量。若消元系数恰好为零，背景就在那个完整半边消失；原支撑配平的两张外表也因此同时没有第二平方预算，直接排除该半边的整份余量。两种情形共同覆盖四角背景，不再需要非退化条件。余量与两根反射都交换后，共同旧输出的四角读取和已有支撑关系完成排零；没有把不同输入的响应相加。减少的是完整四角分支的一份未付证明，独立公理数没有减少。方形描述关系的有限几何，等价比较重组一致仍允许实际仪器的先后有影响；一般背景和七项真实量子来源继续守31.1的原合同。
+
+## 追加锚（本行以下为增补区）
