@@ -1,0 +1,94 @@
+**命题 6.2（完整接口、无最小投影模型中的尖锐预算底）。** 存在同一个不完备原域、无非零最小 Jordan 投影的总 P2/PB 模型，使对每个 $s\ne0$，一份固定正数学读取满足
+
+$$
+\delta=0,\qquad
+\inf_{c\in\mathbb R[a]}W_\beta(c)
+=\inf_{\substack{c\in E:\ D(a,c)=0\\ D(a+su,c)=0}}W_\beta(c)
+=2|s|>0.
+\tag{6.5}
+$$
+
+这反驳的是以这四份独立预算普遍趋零为中间证书的证明步骤，不是单位平移或完整量子起源的反例。
+
+证明。取 $t\in[0,1]$，定义
+
+$$
+\begin{aligned}
+E&=\left\{F(t)=\sum_{k=0}^n t^k A_k:
+                   A_k\in M_2(\mathbb C)_{\rm sa}\right\},\\
+X&=C([0,1],M_2(\mathbb C))_{\rm sa},\qquad u=I,\\
+F\circ G&=(FG+GF)/2,\qquad C=E\cap X_+,\qquad
+D(F,G)=\frac{\mathrm i}{2}(FG-GF).
+\end{aligned}
+\tag{6.6}
+$$
+
+范数取限制的上确界算子范数。逐项 Weierstrass 逼近给 $E$ 在 $X$ 中稠密；连续非多项式 $|t-1/2|I$ 不属于 $E$，故这个稠密真子空间不完备。原评价取所有正点向量评价及其任意非负质量倍数，它们分离 $E$ 并准确决定 $C$，包括零、不等及次归一质量。任意固定原 $0<\theta\le1$ 保持不变。
+
+逐点有 $F\circ G-\mathrm iD(F,G)=FG$，所以每张原 P2 就是两个向量 $F(t)\xi,G(t)\xi$ 的普通复 Gram 表。相加三表的实部是相同向量的实 Gram 表，相加指定向量给零，因此 A2 成立。$S(u,u)=u$，且 $0\le e\le\theta u$ 给 $e^2\le e$，故 A3 成立。由准确锥，所有数学正读取亦可读取这些 P2。
+
+再核对所有原三元组的完整 PB。令 $Z=B+\mathrm iC$ 只记录两个原自伴标签，$A,B,C\in E$。使用 (6.6) 的同一符号，实际外层满足
+
+$$
+r_\pm+\mathrm i s_\pm=(u\pm\mathrm iA)Z,\qquad
+r_\pm^2+s_\pm^2+2D(r_\pm,s_\pm)
+=Z^*(u+A^2)Z.
+\tag{6.7}
+$$
+
+两侧完全相同，故 PB 在 $E$ 中作为元素恒等式对全部原三元组成立，再由每份原评价读取。这里只在已知多项式复化中计算乘法，没有缩小 PB 的输入范围。
+
+若 $p$ 是 $E$ 或 $X$ 中非零 Jordan 投影，连续整数值 $\operatorname{rank}p(t)$ 在连通区间上常数且非零。$p$ 与 $tp$ 都属于 $U_p(E)$（或 $U_p(X)$），并且实线性独立：$(\lambda+\nu t)p(t)=0$ 对全部 $t$ 成立只能有 $\lambda=\nu=0$。所以 $U_p(E)\ne\mathbb Rp$，$U_p(X)\ne\mathbb Rp$；原域和完成都没有非零最小 Jordan 投影。点纤维的矩阵投影不是这种全局最小投影。
+
+取常值 Pauli 元
+
+$$
+a=\begin{pmatrix}0&1\\1&0\end{pmatrix},\quad
+b=\begin{pmatrix}0&-\mathrm i\\\mathrm i&0\end{pmatrix},\quad
+z_0=\begin{pmatrix}1&0\\0&-1\end{pmatrix},\qquad
+\beta(F)=\frac12\int_0^1\operatorname{Tr}(F(t))\,dt.
+\tag{6.8}
+$$
+
+$\beta$ 是固定忠实数学态，不认作新增实际准备。因为 $a\circ b=0$、$[a,b]=2\mathrm i z_0$，同一个总 $D$ 给 $d_\tau=-z_0$，所以 $\delta=0$。$a^2=u$，故每个 $c\in\mathbb R[a]$ 都形如 $ru+qa$，$r,q\in\mathbb R$。更一般，(6.6) 中 $D(a,c)=D(a+su,c)=0$ 恰好要求 $[a,c]=0$，因此每个这样的原标签准确写为
+
+$$
+c(t)=r(t)u+q(t)a,\qquad r,q\in\mathbb R[t].
+\tag{6.9}
+$$
+
+这是 $a$ 的点态自伴通勤子空间；系数由 $r(t)=\operatorname{Tr}(c(t))/2$、$q(t)=\operatorname{Tr}(ac(t))/2$ 给出，确为实多项式，反向亦直接成立。
+
+在实内积 $\langle F,G\rangle_\beta=\beta(F\circ G)$ 中，$z_0$ 是单位向量，并逐点正交于 $u,a,b$。对移位演员，
+
+$$
+S_{s,\pm}=c\pm sb,\qquad
+R_{s,\pm}=R'_{s,\pm}\pm d_s,\qquad
+R'_{s,\pm}=b\mp(a_s\circ c).
+$$
+
+因为 $a_s\circ c=(q+sr)u+(r+sq)a$，$d_s=-z_0$ 同时正交于 $S_{s,\pm}$ 和 $R'_{s,\pm}$，且 $\|d_s\|_\beta=1$。于是每个符号都准确给
+
+$$
+\begin{aligned}
+\Delta_{s,\pm}(c)
+&=\|S_{s,\pm}\|_\beta^2
+ +\left(\|R'_{s,\pm}\|_\beta^2\|S_{s,\pm}\|_\beta^2
+        -\langle R'_{s,\pm},S_{s,\pm}\rangle_\beta^2\right)\\
+&\ge\|S_{s,\pm}\|_\beta^2
+ =\int_0^1(r(t)^2+q(t)^2)\,dt+s^2
+ \ge s^2.
+\end{aligned}
+\tag{6.10}
+$$
+
+括号非负仅用实 Schwarz 不等式。其余两份行列式也非负，故对整个共同零行的每个 $c$，无论次数、系数或范数，均有 $W_\beta(c)\ge2|s|$。
+
+$c=0$ 是合法共同零辅助标签。此时 $S_{0,\pm}=0$，故 $\Delta_{0,\pm}=0$；而 $R_{s,\pm}=b\pm d_s$、$S_{s,\pm}=\pm sb$ 给
+
+$$
+\Delta_{s,\pm}(0)=2s^2-s^2=s^2.
+$$
+
+所以 $W_\beta(0)=2|s|$，两个下确界都达到这个值，得到 (6.5)。$s=0$ 时同一选择给零，尖锐正底仅针对 $s\ne0$。这个模型的 $D$ 已是显式双线性交换子，只用于检验一个普遍证明证书，未用来认回一般原候选的未知响应。∎
+
