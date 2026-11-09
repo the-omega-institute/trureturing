@@ -1,0 +1,36 @@
+**定理 27.2（极化重建定理）。** 定义 27.1 唯一决定一个半内积
+
+$$
+B(v,w)=\frac14\Bigl(Q(v+w)-Q(v-w)
+ +iQ(v+iw)-iQ(v-iw)\Bigr),
+$$
+
+使得 $B(v,v)=Q(v)$。它满足共轭对称、第一变量共轭线性、第二变量线性和 Cauchy–Schwarz 不等式。令
+
+$$
+N=\{v:Q(v)=0\},\qquad H=\overline{V_0/N},
+$$
+
+则 $H$ 是 Hilbert 空间，且
+
+$$
+\kappa(a,b):=B(e_a,e_b)
+$$
+
+是归一化正定核。
+
+**证明。** 平行四边形律和绝对齐次性是复 Jordan–von Neumann 极化恒等式的代数条件；将 $Q$ 代入上式，逐项相消得到加性、共轭对称性和复齐次性。对任意 $v,w$，多项式 $Q(v+\lambda w)=B(v+\lambda w,v+\lambda w)$ 对所有 $\lambda\in\mathbb C$ 非负，其判别式给出
+
+$$
+|B(v,w)|^2\le Q(v)Q(w).
+$$
+
+因此 $N$ 是子空间，商空间上的 $B$ 正定，完备化得到 $H$。反向地，任意归一化正定核在有限形式和上定义
+
+$$
+Q\!\left(\sum_i z_i e_{a_i}\right)
+ =\sum_{i,j}\overline{z_i}\,\kappa(a_i,a_j)z_j,
+$$
+
+立即满足定义 27.1。故二次自比较律与第 26 节的全有限正定核在数学内容上等价；它只是把核压缩成一个内生的二次律。证毕。
+
