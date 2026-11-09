@@ -123,16 +123,20 @@ theorem conjugate_iff (s : Fˣ) (hs : s ≠ 1) (a : Affine1 F) :
   · rintro ⟨u, hu⟩
     have h := congrArg Affine1.slope hu.eq
     change (u : Affine1 F).slope * s = a.slope * (u : Affine1 F).slope at h
-    exact (mul_right_cancel (by simpa [mul_comm] using h)).symm
+    have he : s = a.slope := mul_left_cancel (a := (u : Affine1 F).slope)
+      (by simpa [mul_comm] using h)
+    exact he.symm
   · intro ha
     have hsF : (s : F) ≠ 1 := fun h => hs (Units.ext h)
     apply isConj_iff.mpr
     refine ⟨⟨1, a.offset / (1 - (s : F))⟩, ?_⟩
     apply affine_ext
     · simpa [product, inverse] using ha.symm
-    · change a.offset / (1 - (s : F)) +
-        (s : F) * (-(a.offset / (1 - (s : F)))) = a.offset
-      field_simp
+    · change (product (product ⟨1, a.offset / (1 - (s : F))⟩ ⟨s, 0⟩)
+        (inverse ⟨1, a.offset / (1 - (s : F))⟩)).offset = a.offset
+      dsimp [product, inverse]
+      simp only [Units.val_one, one_mul, mul_zero, add_zero, inv_one]
+      field_simp [sub_ne_zero.mpr hsF.symm]
       <;> ring
 
 /-- The entire multiplicative complement C, fixing zero. -/
@@ -252,7 +256,7 @@ theorem connected_iff (hchar : (1 : F) ≠ -1) :
     have hgen := D5.S3.Combinatorics.CayleySumCodes.CodeCentralizers.connected_generates
       (connection (F := F)) connection_normal hc
     have hle : Subgroup.closure (connection (F := F)) ≤ signedSlope := by
-      apply Subgroup.closure_le.2
+      apply (Subgroup.closure_le _).2
       intro a ha
       rcases ha with rfl | ha
       · exact Or.inl rfl
@@ -290,7 +294,9 @@ def liftedSubgroup (H : Subgroup Fˣ) : Subgroup (Affine1 F) where
     exact ⟨H.mul_mem ha.1 hb.1, by simp [product, ha.2, hb.2]⟩
   inv_mem' := by
     intro a ha
-    exact ⟨H.inv_mem ha.1, by simp [inverse, ha.2]⟩
+    refine ⟨H.inv_mem ha.1, ?_⟩
+    change -((a.slope⁻¹ : Fˣ) : F) * a.offset = 0
+    rw [ha.2, mul_zero]
 
 /-- Full conjugacy classes of every chosen nonidentity multiplier. -/
 def transversalConnection (T : Set Fˣ) : Set (Affine1 F) := {a | a.slope ∈ T}
@@ -298,6 +304,7 @@ def transversalConnection (T : Set Fˣ) : Set (Affine1 F) := {a | a.slope ∈ T}
 theorem transversalConnection_normal (T : Set Fˣ) :
     NormalSubset (transversalConnection T) := by
   intro a x hx
+  change x.slope ∈ T at hx
   change a.slope * x.slope * a.slope⁻¹ ∈ T
   simpa [mul_comm, mul_left_comm, mul_assoc] using hx
 
@@ -406,7 +413,7 @@ theorem perfect_construction [Finite F] (H : Subgroup Fˣ) (T : Set Fˣ)
           · apply affine_ext _ hk.1.2
             change k.slope = g.slope⁻¹
             have hs : g.slope * k.slope = 1 := he.1
-            exact mul_left_cancel (by simpa using hs)
+            exact mul_left_cancel (a := g.slope) (by simpa using hs)
     · obtain ⟨t, htH, hu⟩ :=
         Subgroup.isComplement_iff_existsUnique_inv_mul_mem.mp ht g.slope
       let h : Affine1 F := ⟨g.slope⁻¹ * t, 0⟩
@@ -437,7 +444,8 @@ theorem perfect_construction [Finite F] (H : Subgroup Fˣ) (T : Set Fˣ)
             apply hgs
             have hs : g.slope * k.slope = 1 := he.1
             have hp := H.inv_mem hk.1.1
-            have hge : g.slope = k.slope⁻¹ := mul_right_cancel (by simpa using hs)
+            have hge : g.slope = k.slope⁻¹ :=
+              (mul_eq_one_iff_eq_inv).mp hs
             rwa [hge]
 
 end D5.S3.Combinatorics.CayleySumCodes.AffineExamples

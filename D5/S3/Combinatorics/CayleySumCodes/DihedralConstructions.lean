@@ -53,8 +53,8 @@ theorem reflections_adjacency (g h : DihedralGroup n) :
 /-- Every reflection subgroup is a total code in the full all-reflection
 graph. No parity or lower bound on n is required for this construction. -/
 theorem reflections_total (c : ZMod n) :
-    IsTotalPerfectCode (sumGraph reflections reflections_normal)
-      (reflectionSubgroup c) := by
+    IsTotalPerfectCode (sumGraph (reflections (n := n)) reflections_normal)
+      (reflectionSubgroup c : Set (DihedralGroup n)) := by
   intro g
   cases g with
   | r i =>
@@ -62,7 +62,9 @@ theorem reflections_total (c : ZMod n) :
     · rw [reflections_adjacency]; exact Or.inl ⟨i, c, rfl, rfl⟩
     · rintro h ⟨hh, he⟩
       rcases hh with rfl | rfl
-      · rw [reflections_adjacency] at he; simpa using he
+      · change r i ≠ 1 ∧ r i * 1 ∈ reflections at he
+        obtain ⟨j, hj⟩ := he.2
+        simpa using hj
       · rfl
   | sr i =>
     refine ⟨1, ⟨Or.inl rfl, ?_⟩, ?_⟩
@@ -79,27 +81,36 @@ def parityConnection (e : ZMod n →+ ZMod 2) (c : ZMod n) :
   | r i => e i = 1
   | sr i => e i = e c
 
-private theorem neg_two (x : ZMod 2) : -x = x := by
-  fin_cases x <;> decide
+@[simp] private theorem mem_parity_r (e : ZMod n →+ ZMod 2) (c i : ZMod n) :
+    r i ∈ parityConnection e c ↔ e i = 1 := Iff.rfl
+
+@[simp] private theorem mem_parity_sr (e : ZMod n →+ ZMod 2) (c i : ZMod n) :
+    sr i ∈ parityConnection e c ↔ e i = e c := Iff.rfl
+
+private theorem neg_two (x : ZMod 2) : -x = x := ZMod.neg_eq_self_mod_two x
 
 theorem parity_normal (e : ZMod n →+ ZMod 2) (c : ZMod n) :
     NormalSubset (parityConnection e c) := by
   rintro (i | i) (j | j) hj <;>
     simp only [inv_r, inv_sr, r_mul_r, r_mul_sr, sr_mul_r, sr_mul_sr,
-      parityConnection, map_add, map_sub, map_neg] at *
-  · simpa [neg_two] using hj
-  · convert hj using 1 <;> ring
-  · simpa [neg_two] using hj
-  · convert hj using 1 <;> simp only [neg_two]; ring
+      mem_parity_r, mem_parity_sr, map_add, map_sub, map_neg] at *
+  · simpa [add_right_comm, CharTwo.add_self_eq_zero] using hj
+  · simpa only [sub_eq_add_neg, neg_two, CharTwo.add_cancel_right] using hj
+  · simpa [neg_two, add_right_comm, CharTwo.add_self_eq_zero] using hj
+  · simp only [sub_eq_add_neg, neg_two]
+    rw [add_comm (e j) (e i), CharTwo.add_cancel_left]
+    exact hj
 
 /-- Both retained parity families, for every reflection c. This proves
 the full construction, including the source c=0 and c=-1 instances. -/
 theorem parity_total (e : ZMod n →+ ZMod 2) (c : ZMod n) :
     IsTotalPerfectCode (sumGraph (parityConnection e c) (parity_normal e c))
       (reflectionSubgroup c) := by
+  classical
   intro g
   have heq (x y : ZMod 2) : x - y = 1 ↔ x ≠ y := by
-    fin_cases x <;> fin_cases y <;> decide
+    revert x y
+    decide +kernel
   cases g with
   | r i =>
     by_cases hi : e i = 1
@@ -113,7 +124,8 @@ theorem parity_total (e : ZMod n →+ ZMod 2) (c : ZMod n) :
         · change e (c - i) = e c at hm
           simp only [map_sub] at hm
           have : e i = 0 := sub_eq_self.mp hm
-          exact (by simpa [this] using hi).elim
+          exact ((zero_ne_one : (0 : ZMod 2) ≠ 1)
+            (by simpa [this] using hi)).elim
     · have hi0 : e i = 0 := by
         have := (show ∀ x : ZMod 2, x = 0 ∨ x = 1 by decide) (e i)
         exact this.resolve_right hi

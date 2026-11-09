@@ -33,7 +33,7 @@ def halfAdd (h : ZMod n) (hh : h + h = 0) : AddSubgroup (ZMod n) where
     rintro i j (rfl | rfl) (rfl | rfl) <;> simp [hh]
   neg_mem' := by
     rintro i (rfl | rfl)
-    · exact Or.inl (neg_zero _)
+    · exact Or.inl neg_zero
     · right; exact neg_eq_iff_add_eq_zero.mpr hh
 
 /-- The same subgroup as actual dihedral group elements. -/
@@ -44,7 +44,7 @@ def halfGroup (h : ZMod n) (hh : h + h = 0) : Subgroup (DihedralGroup n) where
     rintro a b (rfl | rfl) (rfl | rfl) <;> simp [r_mul_r, hh]
   inv_mem' := by
     rintro a (rfl | rfl)
-    · exact Or.inl (inv_one _)
+    · exact Or.inl inv_one
     · right; rw [inv_r, neg_eq_iff_add_eq_zero.mpr hh]
 
 private theorem transversal_pair (h : ZMod n) (hh : h + h = 0) (hn : h ≠ 0)
@@ -58,7 +58,9 @@ private theorem transversal_pair (h : ZMod n) (hh : h + h = 0) (hn : h ≠ 0)
     have h1 : -i + i ∈ halfAdd h hh := Or.inl (neg_add_cancel i)
     have h2 : -(i + h) + i ∈ halfAdd h hh := Or.inr (by rw [neg_add]; simp [nh])
     have he := congrArg Subtype.val ((hu ⟨i, hi⟩ h1).trans (hu ⟨i+h, hih⟩ h2).symm)
-    exact hn (add_left_cancel (by simpa using he.symm))
+    apply hn
+    change i = i + h at he
+    linear_combination -he
   · intro hi
     obtain ⟨z, hzH, _⟩ := comp i
     rcases hzH with hzH | hzH
@@ -75,9 +77,9 @@ private theorem selected_pair (h : ZMod n) (hh : h + h = 0) (hn : h ≠ 0)
     (Z : Set (ZMod n)) (hz : AddSubgroup.IsComplement Z (halfAdd h hh))
     (i : ZMod n) : i ∈ selected h Z ↔ i+h ∉ selected h Z := by
   by_cases hi0 : i = 0
-  · subst i; simp [selected, hn]
+  · subst i; simp [selected, hn, Ne.symm hn]
   by_cases hih : i = h
-  · subst i; simp [selected, hh, hn]
+  · subst i; simp [selected, hh, hn, Ne.symm hn]
   have hs0 : i+h ≠ 0 := by intro he; apply hih; linear_combination he - hh
   have hsh : i+h ≠ h := by simpa using hi0
   simpa [selected, hi0, hih, hs0, hsh] using transversal_pair h hh hn Z hz i
@@ -89,8 +91,15 @@ def connection (h : ZMod n) (Z : Set (ZMod n)) (e : ZMod n →+ ZMod 2)
   | r i => i ∈ selected h Z
   | sr i => e i = c
 
-private theorem neg_two (x : ZMod 2) : -x = x := by
-  fin_cases x <;> decide
+@[simp] private theorem mem_connection_r (h : ZMod n) (Z : Set (ZMod n))
+    (e : ZMod n →+ ZMod 2) (c : ZMod 2) (i : ZMod n) :
+    r i ∈ connection h Z e c ↔ i ∈ selected h Z := Iff.rfl
+
+@[simp] private theorem mem_connection_sr (h : ZMod n) (Z : Set (ZMod n))
+    (e : ZMod n →+ ZMod 2) (c : ZMod 2) (i : ZMod n) :
+    sr i ∈ connection h Z e c ↔ e i = c := Iff.rfl
+
+private theorem neg_two (x : ZMod 2) : -x = x := ZMod.neg_eq_self_mod_two x
 
 theorem connection_normal (h : ZMod n) (hh : h+h = 0)
     (Z : Set (ZMod n)) (hz : ∀ i ∈ Z, -i ∈ Z)
@@ -107,11 +116,13 @@ theorem connection_normal (h : ZMod n) (hh : h+h = 0)
     · exact Or.inr nh
   rintro (i | i) (j | j) hj <;>
     simp only [inv_r, inv_sr, r_mul_r, r_mul_sr, sr_mul_r, sr_mul_sr,
-      connection, map_add, map_sub, map_neg] at *
+      mem_connection_r, mem_connection_sr, map_add, map_sub, map_neg] at *
   · simpa using hj
-  · convert hj using 1 <;> simp only [neg_two]; ring
+  · simpa only [sub_eq_add_neg, neg_two, CharTwo.add_cancel_right] using hj
   · simpa using negsel j hj
-  · convert hj using 1 <;> simp only [neg_two]; ring
+  · simp only [sub_eq_add_neg, neg_two]
+    rw [add_comm (e j) (e i), CharTwo.add_cancel_left]
+    exact hj
 
 /-- Every original inverse-closed transversal works, including either
 choice of its internal representative. Both reflection classes are allowed. -/
@@ -125,7 +136,7 @@ theorem total (h : ZMod n) (hh : h+h = 0) (hn : h ≠ 0)
   classical
   intro g
   have hsel : h ∈ selected h Z := Or.inr rfl
-  have hzero : (0 : ZMod n) ∉ selected h Z := by simp [selected, hn]
+  have hzero : (0 : ZMod n) ∉ selected h Z := by simp [selected, Ne.symm hn]
   cases g with
   | r i =>
     by_cases hi : i ∈ selected h Z
@@ -149,16 +160,20 @@ theorem total (h : ZMod n) (hh : h+h = 0) (hn : h ≠ 0)
         · exact (hi (by simpa [connection] using hm)).elim
         · rfl
   | sr i =>
-    have flip : e i + 1 = c ↔ e i ≠ c := by
-      generalize e i = x
-      fin_cases x <;> fin_cases c <;> decide
+    have flip_general : ∀ x y : ZMod 2, x + 1 = y ↔ x ≠ y := by decide +kernel
+    have flip : e i + 1 = c ↔ e i ≠ c := flip_general _ _
     by_cases hi : e i = c
-    · refine ⟨1, ⟨Or.inl rfl, by simpa [sumGraph, connection] using hi⟩, ?_⟩
-      rintro a ⟨ha, hne, hm⟩
-      rcases ha with rfl | rfl
-      · rfl
-      · change e (i+h) = c at hm
-        exact ((flip.mp (by simpa [map_add, he] using hm)) hi).elim
+    · refine ⟨1, ⟨Or.inl rfl, ?_⟩, ?_⟩
+      · refine ⟨?_, ?_⟩
+        · change sr i ≠ r 0
+          intro heq
+          cases heq
+        · simpa using hi
+      · rintro a ⟨ha, hne, hm⟩
+        rcases ha with rfl | rfl
+        · rfl
+        · change e (i+h) = c at hm
+          exact ((flip.mp (by simpa [map_add, he] using hm)) hi).elim
     · refine ⟨r h, ⟨Or.inr rfl, by
         refine ⟨by simp, ?_⟩
         change e (i+h) = c
@@ -177,7 +192,7 @@ instance half_normal (h : ZMod n) (hh : h+h = 0) : (halfGroup h hh).Normal where
       have nh : -h = h := neg_eq_iff_add_eq_zero.mpr hh
       cases a with
       | r i => simp only [inv_r, r_mul_r]; congr 1; abel
-      | sr i => simp only [inv_sr, sr_mul_r, sr_mul_sr]; congr 1; linear_combination hh
+      | sr i => simp only [inv_sr, sr_mul_r, sr_mul_sr]; congr 1; linear_combination -hh
 
 /-- The original perfect-code connection is obtained by removing all
 internal subgroup elements from the total-code connection. -/
