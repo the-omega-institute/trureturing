@@ -1,0 +1,49 @@
+**定理 39.2（极化恢复 Hilbert 几何）。** 定义 39.1 当且仅当存在一个实 Hilbert 空间 $H_V$ 和映射 $\Phi:P\to H_V$，使
+
+$$
+D(x,y)=\|\Phi(x)-\Phi(y)\|^2,
+$$
+
+并且
+
+$$
+V\!\left(\sum_xa_x\delta_x\right)
+ =\left\|\sum_xa_x\Phi(x)\right\|^2
+$$
+
+对所有总和为零的有限系数成立。
+
+**证明。** 在 $\operatorname{Diff}_0(P)$ 上定义极化
+
+$$
+B(\mu,\nu)
+ =\frac14\bigl(V(\mu+\nu)-V(\mu-\nu)\bigr).
+$$
+
+齐次性和平行四边形恒等式给出 $B$ 的对称双线性；正性给出 Cauchy–Schwarz 不等式。令 $N=\{\mu:V(\mu)=0\}$，则 $N$ 是 $B$ 的零空间。商空间 $\operatorname{Diff}_0(P)/N$ 带有内积 $B$，完备化得到 $H_V$。固定 $o\in P$，令
+
+$$
+\Phi(x)=[\delta_x-\delta_o].
+$$
+
+于是
+
+$$
+\|\Phi(x)-\Phi(y)\|^2
+ =V(\delta_x-\delta_y)=D(x,y).
+$$
+
+反向地，任意 Hilbert 嵌入定义
+
+$$
+V(\mu)=\left\|\sum_xa_x\Phi(x)\right\|^2
+$$
+
+立即满足四条公理。展开点差并使用 $\sum_xa_x=0$，还得到
+
+$$
+V(\mu)=-\frac12\sum_{x,y}a_xa_yD(x,y),
+$$
+
+所以定义 39.1 与第 38 节的全有限负型条件等价。证毕。
+
