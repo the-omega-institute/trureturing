@@ -13,6 +13,8 @@ import Mathlib.Analysis.SpecialFunctions.Complex.Arg
 import Mathlib.LinearAlgebra.Finsupp.LinearCombination
 import Mathlib.Tactic
 
+/-! Polynomial zero responses on the original real Jordan carrier. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -40,7 +42,7 @@ def eval (J : E →ₗ[ℝ] E →ₗ[ℝ] E) (u x : E) : ℝ[X] →ₗ[ℝ] E :=
 
 private theorem eval_mul (J : E →ₗ[ℝ] E →ₗ[ℝ] E) (u x : E)
     (A : D5.S3.Topology.JBAlgebra.Data E J u) (p q : ℝ[X]) :
-    eval J u x (p*q) = J (eval J u x p) (eval J u x q) := by
+    eval J u x (p * q) = J (eval J u x p) (eval J u x q) := by
   induction p using Polynomial.induction_on' with
   | add p r hp hr => simp [add_mul, hp, hr]
   | monomial n a =>
@@ -61,51 +63,65 @@ private def coeffLinear (f : ℂ →ₗ[ℝ] ℝ) : ℂ[X] →ₗ[ℝ] ℝ[X] :=
 private abbrev reP : ℂ[X] →ₗ[ℝ] ℝ[X] := coeffLinear Complex.reLm
 private abbrev imP : ℂ[X] →ₗ[ℝ] ℝ[X] := coeffLinear Complex.imLm
 
-@[simp] private theorem coeff_re (P : ℂ[X]) (k : ℕ) : (reP P).coeff k = (P.coeff k).re := rfl
-@[simp] private theorem coeff_im (P : ℂ[X]) (k : ℕ) : (imP P).coeff k = (P.coeff k).im := rfl
 
 @[simp] private theorem re_C (z : ℂ) : reP (C z) = C z.re := by
+  have realcoeff (P : ℂ[X]) (k : ℕ) : (reP P).coeff k = (P.coeff k).re := rfl
   ext n
-  by_cases hn : n = 0 <;> simp [coeff_C, coeff_X, hn]
+  by_cases hn : n = 0 <;> simp [realcoeff, coeff_C, hn]
 @[simp] private theorem im_C (z : ℂ) : imP (C z) = C z.im := by
+  have imagcoeff (P : ℂ[X]) (k : ℕ) : (imP P).coeff k = (P.coeff k).im := rfl
   ext n
-  by_cases hn : n = 0 <;> simp [coeff_C, coeff_X, hn]
+  by_cases hn : n = 0 <;> simp [imagcoeff, coeff_C, hn]
 
 
 private theorem re_C_mul (z : ℂ) (P : ℂ[X]) :
     reP (C z * P) = z.re • reP P - z.im • imP P := by
+  have realcoeff (P : ℂ[X]) (k : ℕ) : (reP P).coeff k = (P.coeff k).re := rfl
+  have imagcoeff (P : ℂ[X]) (k : ℕ) : (imP P).coeff k = (P.coeff k).im := rfl
   ext k
-  simp [Complex.mul_re]
+  simp [realcoeff, imagcoeff, Complex.mul_re]
 
 private theorem im_C_mul (z : ℂ) (P : ℂ[X]) :
     imP (C z * P) = z.re • imP P + z.im • reP P := by
+  have realcoeff (P : ℂ[X]) (k : ℕ) : (reP P).coeff k = (P.coeff k).re := rfl
+  have imagcoeff (P : ℂ[X]) (k : ℕ) : (imP P).coeff k = (P.coeff k).im := rfl
   ext k
-  simp [Complex.mul_im]
+  simp [realcoeff, imagcoeff, Complex.mul_im]
 
 
 private theorem re_mul (P Q : ℂ[X]) :
     reP (P*Q) = reP P * reP Q - imP P * imP Q := by
+  have realcoeff (P : ℂ[X]) (k : ℕ) : (reP P).coeff k = (P.coeff k).re := rfl
+  have imagcoeff (P : ℂ[X]) (k : ℕ) : (imP P).coeff k = (P.coeff k).im := rfl
   ext k
-  simp [coeff_mul, Complex.mul_re, Finset.sum_sub_distrib]
+  simp [realcoeff, imagcoeff, coeff_mul, Complex.mul_re, Finset.sum_sub_distrib]
 
 private theorem im_mul (P Q : ℂ[X]) :
     imP (P*Q) = reP P * imP Q + imP P * reP Q := by
+  have realcoeff (P : ℂ[X]) (k : ℕ) : (reP P).coeff k = (P.coeff k).re := rfl
+  have imagcoeff (P : ℂ[X]) (k : ℕ) : (imP P).coeff k = (P.coeff k).im := rfl
   ext k
-  simp [coeff_mul, Complex.mul_im, Finset.sum_add_distrib]
+  simp [realcoeff, imagcoeff, coeff_mul, Complex.mul_im, Finset.sum_add_distrib]
 
 private theorem part_degree (P : ℂ[X]) :
     (reP P).natDegree ≤ P.natDegree ∧ (imP P).natDegree ≤ P.natDegree := by
+  have realcoeff (P : ℂ[X]) (k : ℕ) : (reP P).coeff k = (P.coeff k).re := rfl
+  have imagcoeff (P : ℂ[X]) (k : ℕ) : (imP P).coeff k = (P.coeff k).im := rfl
   constructor <;> apply natDegree_le_iff_coeff_eq_zero.mpr <;> intro k hk <;>
-    simp [coeff_eq_zero_of_natDegree_lt hk]
+    simp [realcoeff, imagcoeff, coeff_eq_zero_of_natDegree_lt hk]
 
 @[simp] private theorem re_real (p : ℝ[X]) : reP (p.map Complex.ofRealHom) = p := by
-  ext n; simp
+  have realcoeff (P : ℂ[X]) (k : ℕ) : (reP P).coeff k = (P.coeff k).re := rfl
+  ext n; simp [realcoeff]
 @[simp] private theorem im_real (p : ℝ[X]) : imP (p.map Complex.ofRealHom) = 0 := by
-  ext n; simp
+  have imagcoeff (P : ℂ[X]) (k : ℕ) : (imP P).coeff k = (P.coeff k).im := rfl
+  ext n; simp [imagcoeff]
 @[simp] private theorem re_conj (P : ℂ[X]) : reP (P.map (starRingEnd ℂ)) = reP P := by
-  ext n; simp
+  have realcoeff (P : ℂ[X]) (k : ℕ) : (reP P).coeff k = (P.coeff k).re := rfl
+  ext n; simp [realcoeff]
 @[simp] private theorem im_conj (P : ℂ[X]) : imP (P.map (starRingEnd ℂ)) = -imP P := by
-  ext n; simp
+  have imagcoeff (P : ℂ[X]) (k : ℕ) : (imP P).coeff k = (P.coeff k).im := rfl
+  ext n; simp [imagcoeff]
 
 private def phi (ev : ℝ[X] →ₗ[ℝ] E) (D : E → E → E) (P : ℂ[X]) : E :=
   D (ev (reP P)) (ev (imP P))
@@ -157,7 +173,7 @@ private theorem pair_degree (p q : ℝ[X]) : (pair p q).natDegree ≤ max p.natD
     (hm.trans (natDegree_map_le.trans (le_max_right _ _)))
 
 private theorem pb_outer (ev : ℝ[X] →ₗ[ℝ] E) (J : E →ₗ[ℝ] E →ₗ[ℝ] E) (D : E → E → E)
-    (mul : ∀ p q, ev (p*q) = J (ev p) (ev q))
+    (mul : ∀ p q, ev (p * q) = J (ev p) (ev q))
     (pb : D5.S3.Quantum.Algebra.PBActualOuterBudget.PB J D)
     (a b c : ℝ[X]) (hab : D (ev a) (ev b) = 0) (hac : D (ev a) (ev c) = 0) :
     D (ev b - J (ev a) (ev c)) (ev c + J (ev a) (ev b)) =
@@ -175,16 +191,16 @@ private theorem pb_outer (ev : ℝ[X] →ₗ[ℝ] E) (J : E →ₗ[ℝ] E →ₗ
 @[simp] private theorem im_one : imP (1 : ℂ[X]) = 0 := by simpa using im_C 1
 
 private theorem plus_record (ev : ℝ[X] →ₗ[ℝ] E) (J : E →ₗ[ℝ] E →ₗ[ℝ] E)
-    (D : E → E → E) (mul : ∀ p q, ev (p*q) = J (ev p) (ev q)) (a : ℝ[X]) (W : ℂ[X]) :
+    (D : E → E → E) (mul : ∀ p q, ev (p * q) = J (ev p) (ev q)) (a : ℝ[X]) (W : ℂ[X]) :
     phi ev D ((1 + C Complex.I * a.map Complex.ofRealHom)*W) =
     D (ev (reP W) - J (ev a) (ev (imP W))) (ev (imP W) + J (ev a) (ev (reP W))) := by
-  simp [phi, re_mul, im_mul, re_C_mul, im_C_mul, mul, sub_eq_add_neg]
+  simp [phi, re_mul, im_mul, mul, sub_eq_add_neg]
 
 private theorem minus_record (ev : ℝ[X] →ₗ[ℝ] E) (J : E →ₗ[ℝ] E →ₗ[ℝ] E)
-    (D : E → E → E) (mul : ∀ p q, ev (p*q) = J (ev p) (ev q)) (a : ℝ[X]) (W : ℂ[X]) :
+    (D : E → E → E) (mul : ∀ p q, ev (p * q) = J (ev p) (ev q)) (a : ℝ[X]) (W : ℂ[X]) :
     phi ev D ((1 - C Complex.I * a.map Complex.ofRealHom)*W) =
     D (ev (reP W) + J (ev a) (ev (imP W))) (ev (imP W) - J (ev a) (ev (reP W))) := by
-  simp [phi, re_mul, im_mul, re_C_mul, im_C_mul, mul, sub_eq_add_neg]
+  simp [phi, re_mul, im_mul, mul, sub_eq_add_neg]
 
 private def actor (z : ℂ) : ℝ[X] := C z.im⁻¹ * (X - C z.re)
 
@@ -199,9 +215,9 @@ private theorem factor_twist (z : ℂ) (ht : z.im ≠ 0) :
       _ = -(Complex.I * Complex.I) * (((z.im⁻¹ : ℝ) : ℂ) * z.im) := by ring
       _ = 1 := by rw [Complex.I_mul_I, hti]; norm_num
   have hz : (-Complex.I * z.im - z.re : ℂ) = -z := by
-    apply Complex.ext <;> simp <;> ring
+    apply Complex.ext <;> simp
   have hzc : (-Complex.I * z.im + z.re : ℂ) = starRingEnd ℂ z := by
-    apply Complex.ext <;> simp <;> ring
+    apply Complex.ext <;> simp
   have ha : (actor z).map Complex.ofRealHom =
       C ((z.im⁻¹ : ℝ) : ℂ) * (X - C (z.re : ℂ)) := by
     simp only [actor, Polynomial.map_mul, Polynomial.map_sub, Polynomial.map_C, Polynomial.map_X]
@@ -211,12 +227,12 @@ private theorem factor_twist (z : ℂ) (ht : z.im ≠ 0) :
   · calc
       _ = C (Complex.I * ((z.im⁻¹ : ℝ) : ℂ) * (-Complex.I * z.im)) * X +
           C (-Complex.I * z.im - (Complex.I * ((z.im⁻¹ : ℝ) : ℂ) * (-Complex.I * z.im)) * z.re) := by
-            simp only [map_mul, map_sub, map_add]; ring
+            simp only [map_mul, map_sub]; ring
       _ = X - C z := by rw [hk, one_mul, hz]; simp [sub_eq_add_neg]
   · calc
       _ = -(C (Complex.I * ((z.im⁻¹ : ℝ) : ℂ) * (-Complex.I * z.im)) * X) +
           C (-Complex.I * z.im + (Complex.I * ((z.im⁻¹ : ℝ) : ℂ) * (-Complex.I * z.im)) * z.re) := by
-            simp only [map_mul, map_sub, map_add]; ring
+            simp only [map_mul, map_add]; ring
       _ = -(X - C (starRingEnd ℂ z)) := by rw [hk, one_mul, hzc]; simp [sub_eq_add_neg, add_comm]
 
 private theorem actor_degree (z : ℂ) : (actor z).natDegree ≤ 1 := by
@@ -224,7 +240,7 @@ private theorem actor_degree (z : ℂ) : (actor z).natDegree ≤ 1 := by
   simpa [actor] using h
 
 private theorem reflect_root (ev : ℝ[X] →ₗ[ℝ] E) (J : E →ₗ[ℝ] E →ₗ[ℝ] E) (D : E → E → E)
-    (mul : ∀ p q, ev (p*q) = J (ev p) (ev q))
+    (mul : ∀ p q, ev (p * q) = J (ev p) (ev q))
     (pb : D5.S3.Quantum.Algebra.PBActualOuterBudget.PB J D)
     (hl : ∀ a b, D (-a) b = -D a b) (hr : ∀ a b, D a (-b) = -D a b)
     (n : ℕ) (hn : 1 < n)
@@ -269,7 +285,7 @@ private theorem rootProduct_conj (l : List ℂ) :
     Polynomial.map_X, Polynomial.map_C]
 
 private theorem reflect_list (ev : ℝ[X] →ₗ[ℝ] E) (J : E →ₗ[ℝ] E →ₗ[ℝ] E) (D : E → E → E)
-    (mul : ∀ p q, ev (p*q) = J (ev p) (ev q))
+    (mul : ∀ p q, ev (p * q) = J (ev p) (ev q))
     (pb : D5.S3.Quantum.Algebra.PBActualOuterBudget.PB J D)
     (hl : ∀ a b, D (-a) b = -D a b) (hr : ∀ a b, D a (-b) = -D a b)
     (n : ℕ) (hn : 1 < n)
@@ -311,7 +327,7 @@ private theorem reflect_list (ev : ℝ[X] →ₗ[ℝ] E) (J : E →ₗ[ℝ] E �
 
 private theorem all_complex_zero (ev : ℝ[X] →ₗ[ℝ] E) (J : E →ₗ[ℝ] E →ₗ[ℝ] E)
     (u : E) (hu : ev 1 = u) (D : E → E → E)
-    (mul : ∀ p q, ev (p*q) = J (ev p) (ev q))
+    (mul : ∀ p q, ev (p * q) = J (ev p) (ev q))
     (pb : D5.S3.Quantum.Algebra.PBActualOuterBudget.PB J D)
     (rot : ∀ (a b : E) (θ : ℝ),
       D (Real.cos θ • a - Real.sin θ • b) (Real.sin θ • a + Real.cos θ • b) = D a b)
@@ -344,7 +360,7 @@ private theorem all_complex_zero (ev : ℝ[X] →ₗ[ℝ] E) (J : E →ₗ[ℝ] 
         rw [hfactor, Polynomial.map_mul, Polynomial.map_C, rootProduct_conj, ← mul_assoc, ← map_mul]
         have hkc : starRingEnd ℂ κ ≠ 0 := (map_ne_zero (starRingEnd ℂ)).mpr hk
         rw [div_mul_cancel₀ κ hkc]
-      have hnorm : ‖κ / starRingEnd ℂ κ‖ = 1 := by simp [norm_div, hk]
+      have hnorm : ‖κ / starRingEnd ℂ κ‖ = 1 := by simp [hk]
       have heq : phi ev D P = -phi ev D P := by
         calc
           _ = phi ev D (C κ * rootProduct l) := congrArg (phi ev D) hfactor

@@ -26,7 +26,7 @@ $$\forall E \in Type,\; [\operatorname{NormedAddCommGroup}\left(E\right)][\opera
 
 *Commentary.*
 
-JBAlgebra.Data(E,J,u) supplies symmetry, the unit law, the Jordan identity, product norm domination, the square norm identity and square norm monotonicity for this same J and norm. No completeness, nonzero-space, dimension, spectrum or representation condition is imposed. D is an arbitrary total map from E squared to E. The hypotheses are exactly the full PB identity and the SO(2) rotation, each-slot oddness and same-axis affine-zero rows of source 185.1. The square row and a separate unit row are unnecessary inputs. These rows are hypotheses here; their derivation from raw P2 and PB is not supplied by this theorem.
+JBAlgebra.Data(E,J,u) supplies symmetry, the unit law, the Jordan identity, product norm domination, the square norm identity and square norm monotonicity for this same J and norm. No completeness, nonzero-space, dimension, spectrum or representation condition is imposed. D is an arbitrary total map from E squared to E. The hypotheses on D are exactly the full PB identity and the SO(2) rotation, each-slot oddness and same-axis affine-zero rows of source 185.1. The square row and a separate unit row are unnecessary inputs. These rows are hypotheses here; their derivation from raw P2 and PB is not supplied by this theorem.
 
 For complex scalar polynomials P, take their coefficientwise real and imaginary parts h,k and put Phi(P)=D(eval(h),eval(k)). Complex coefficients record two real labels; D never receives a complex argument. The rotation hypothesis gives Phi(zP)=Phi(P) for every unit complex scalar z. Oddness gives Phi(-P)=Phi(P) and Phi(conjugate(P))=-Phi(P). Neither additivity nor arbitrary scalar homogeneity of D or Phi is inferred.
 
