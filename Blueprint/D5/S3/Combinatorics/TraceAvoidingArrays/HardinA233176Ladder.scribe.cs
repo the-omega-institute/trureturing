@@ -270,8 +270,16 @@ internal sealed class HardinA233176LadderDocument : IScribeDocumentDefinition
 
     private static Formula V(string name) => F.Id(name);
     private static Formula Q(string name) => Seq(name.Split('.').SelectMany((part, i) =>
-        i == 0 ? new[] { Seq(Operatorname, Grp(V(part))) }
-            : new[] { Dot, Seq(Operatorname, Grp(V(part))) }).ToArray());
+        i == 0 ? new[] { NamePart(part) }
+            : new[] { Dot, NamePart(part) }).ToArray());
+    private static Formula NamePart(string name)
+    {
+        var words = name.Split('_');
+        Formula result = V(words[^1]);
+        for (var i = words.Length - 2; i >= 0; --i)
+            result = Seq(V(words[i]), Underscore, Grp(result));
+        return Seq(Operatorname, Grp(result));
+    }
     private static Formula Own(string name, params Formula[] args) =>
         App(Q(LeanPrefix + name), args);
     private static Formula Call(string name, params Formula[] args) => App(Q(name), args);
