@@ -55,7 +55,7 @@ internal sealed class ActualCommonBidualRootDocument : IScribeDocumentDefinition
         var generated = Call("generated", Call("arensBilinear", S),
             Apply(Call("inclusionInDoubleDual", real, V), u), f);
         var common = All("psi", Call("PositiveLinearMap", complex, A, complex),
-            Equal(B(g), Call("cfc", Call("Real.sqrt"), B(f))));
+            Equal(B(g), Call("cfc", Seq(F.Id("Real"), Dot, F.Id("sqrt")), B(f))));
         var rootResult = Exists("G", M,
             And(square, And(Equal(Call("pow", Call("norm", g), Num(2)), Call("norm", f)),
                 And(Call("Positive", i, hi, g), And(Call("Member", g, generated), common)))));

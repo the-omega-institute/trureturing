@@ -764,7 +764,7 @@ namespace D5.S3.Quantum.Algebra.ActualCommonBidualRoot
 
 open ActualGNSFamilyNorming ActualGNSJordanProduct ActualBidualJordanLaws
 open D5.S3.Topology.JBAlgebra
-open Filter Topology
+open Filter _root_.Topology
 open scoped Polynomial
 
 variable {V : Type*} [NormedAddCommGroup V] [NormedSpace ℝ V]
