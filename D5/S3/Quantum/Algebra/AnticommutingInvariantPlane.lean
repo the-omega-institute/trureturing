@@ -43,6 +43,7 @@ private theorem exists_closed_plane (A B : H →L[ℂ] H)
   obtain ⟨v, hv, hAv⟩ := PBActualOuterBudget.supporting_vector
     (A.toLinearMap.restrictScalars ℝ) (B.toLinearMap.restrictScalars ℝ)
     hAA' hBB' hAB'
+  change A v = v at hAv
   let w : H := B v
   have hBw : B w = v := hBB' v
   have hAw : A w = -w := by simp [w, hAB', hAv]
