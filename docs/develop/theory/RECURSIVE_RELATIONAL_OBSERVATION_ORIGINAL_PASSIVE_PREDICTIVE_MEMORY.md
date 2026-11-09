@@ -1854,7 +1854,7 @@ They do not claim fresh Lean verification or worldwide novelty.
 
 ## 10. Conditional original-source current-row supply from a generated one-gap dependence guard
 
-**本批导航。** 本批在 §9 的全后续切面接触证书之上，增加一个由固定参考服务生成的原始源一间隔依赖上界，并把它用于独立于后门标签串的有限实际完成。§9 的动态事件、原始源、门、行域、资源与未偿服务全部保留；本批不改判既有条目。
+§9 的全后续切面接触证书与固定参考服务生成的原始源一间隔依赖上界共同用于独立于后门标签串的有限实际完成。§9 的动态事件、原始源、门、行域以及全部资源与服务要求均保持适用。
 
 **Definition 10.1 (one-gap coefficient and reference names).** Retain the source of Definition 9.1 and write
 
@@ -1865,7 +1865,7 @@ $$
 $$
 
 where event-TV is normalized as
-\(\operatorname{TV}(\nu,\nu')=\sup_A|\nu(A)-\nu'(A)|\), equivalently one half of the \(L^1\) distance when both measures have densities. This is a source property, not a new label query.
+$\operatorname{TV}(\nu,\nu')=\sup_A|\nu(A)-\nu'(A)|$, equivalently one half of the $L^1$ distance when both measures have densities. This is a source property, not a new label query.
 
 Use the full-domain scaling of [OWGR, Theorem 5.2, (5.2)--(5.3)], in the invariant-time form of [FEA, Theorem 2.1], to identify the actual source with the coefficient-one reference source at
 
@@ -1874,14 +1874,14 @@ $$
 \tag{10.2}
 $$
 
-Reference quantities carry a superscript \({\rm ref}\): \(m_{\rm ref}\), \(T^{\rm ref}_t\), \(P^{\rm ref}_t=T^{\rm ref}_t\), the contact defect \(d^{\rm ref}_r\) of [DPCR, Definition 9.1], the normalized zero state \(h_{\rm ref}\), and the raw source density
+Reference quantities carry a superscript ${\rm ref}$: $m_{\rm ref}$, $T^{\rm ref}_t$, $P^{\rm ref}_t=T^{\rm ref}_t$, the contact defect $d^{\rm ref}_r$ of [DPCR, Definition 9.1], the normalized zero state $h_{\rm ref}$, and the raw source density
 
 $$
 v^{\rm ref}_t=h_{\rm ref}g^{\rm ref}_t .
 \tag{10.3}
 $$
 
-The same scaling transports the complete endpoint, form, source trace, clock and invariant measure. In particular the row-TV integral (10.1) equals the reference row-TV integral at time \(\tau\). Let \(0<l\le\tau\) be an earned rational lower clock bound. A fixed-reference computation is allowed to return rational numbers \(A^-\) and \(s^+\) satisfying
+The same scaling transports the complete endpoint, form, source trace, clock and invariant measure. In particular the row-TV integral (10.1) equals the reference row-TV integral at time $\tau$. Let $0<l\le\tau$ be an earned rational lower clock bound. A fixed-reference computation is allowed to return rational numbers $A^-$ and $s^+$ satisfying
 
 $$
 0<A^-\le d^{\rm ref}_{2/l},
@@ -1890,21 +1890,21 @@ s^+\ge\bigl\|v^{\rm ref}_{l/2}-h_{\rm ref}\bigr\|_{L^2(\mu_{\rm ref})}.
 \tag{10.4}
 $$
 
-The calls producing (10.4) use only the known reference coefficients \((1,1)\), the global raw \(L^2\) names and the positive rational time \(l/2\) supplied by [DPCR, Theorems 11.4, 12.3 and 12.4]. They do not query the unknown actual \(a,\eta,d\). Define the generated guard
+The calls producing (10.4) use only the known reference coefficients $(1,1)$, the global raw $L^2$ names and the positive rational time $l/2$ supplied by [DPCR, Theorems 11.4, 12.3 and 12.4]. They do not query the unknown actual $a,\eta,d$. Define the generated guard
 
 $$
 b^+(A^-,s^+)=2(1-A^-)+\frac{s^+}{2}.
 \tag{10.5}
 $$
 
-**Theorem 10.2 (contact-to-one-gap dependence bound).** Under Definitions 9.1 and 10.1, every original source for which the earned inequalities \(0<l\le\tau\) and (10.4) hold satisfies
+**Theorem 10.2 (contact-to-one-gap dependence bound).** Under Definitions 9.1 and 10.1, every original source for which the earned inequalities $0<l\le\tau$ and (10.4) hold satisfies
 
 $$
 \beta_d\le b^+(A^-,s^+).
 \tag{10.6}
 $$
 
-*Proof.* Work first in the coefficient-one reference source. Let \(\sigma=\tau_e\) be the contact time with the original endpoint. The contact identity [CONTACT, (116.14)], used with the full non-Friedrichs process exactly as in (9.7), gives
+*Proof.* Work first in the coefficient-one reference source. Let $\sigma=\tau_e$ be the contact time with the original endpoint. The contact identity [CONTACT, (116.14)], used with the full non-Friedrichs process exactly as in (9.7), gives
 
 $$
 \int_G\mathbb E_x\!\left[1-\exp\!\left(-\frac{2\sigma}{l}\right)\right]m_{\rm ref}(dx)
@@ -1912,7 +1912,7 @@ $$
 \tag{10.7}
 $$
 
-On \(\{\sigma>l/2\}\), the integrand on the left is at least \(1-e^{-1}\). Hence
+On $\{\sigma>l/2\}$, the integrand on the left is at least $1-e^{-1}$. Hence
 
 $$
 \int_G\mathbb P_x(\sigma>l/2)m_{\rm ref}(dx)
@@ -1922,7 +1922,7 @@ $$
 \tag{10.8}
 $$
 
-Fix \(x\). Split the transition law at time \(\tau\) according to \(\{\sigma>l/2\}\) and \(\{\sigma\le l/2\}\). The first subprobability has mass \(r_x=\mathbb P_x(\sigma>l/2)\), and its distance from the subprobability \(r_xm_{\rm ref}\) is at most \(r_x\). On the second event, the strong Markov property gives a mixture, over contact times \(s\le l/2\), of the source-start laws
+Fix $x$. Split the transition law at time $\tau$ according to $\{\sigma>l/2\}$ and $\{\sigma\le l/2\}$. The first subprobability has mass $r_x=\mathbb P_x(\sigma>l/2)$, and its distance from the subprobability $r_xm_{\rm ref}$ is at most $r_x$. On the second event, the strong Markov property gives a mixture, over contact times $s\le l/2$, of the source-start laws
 
 $$
 g^{\rm ref}_{\tau-s}m_{\rm ref},
@@ -1930,7 +1930,7 @@ g^{\rm ref}_{\tau-s}m_{\rm ref},
 \tag{10.9}
 $$
 
-For every \(t\ge l/2\), the raw density relation (10.3), \(\|h_{\rm ref}\|_{L^2(\mu_{\rm ref})}=1\), and Cauchy--Schwarz give
+For every $t\ge l/2$, the raw density relation (10.3), $\|h_{\rm ref}\|_{L^2(\mu_{\rm ref})}=1$, and Cauchy--Schwarz give
 
 $$
 \begin{aligned}
@@ -1941,7 +1941,7 @@ $$
 \tag{10.10}
 $$
 
-The source semigroup identity \(g_{t+s}^{\rm ref}=T_s^{\rm ref}g_t^{\rm ref}\) and \(T_s^{\rm ref}1=1\) show, for \(t\ge l/2\),
+The source semigroup identity $g_{t+s}^{\rm ref}=T_s^{\rm ref}g_t^{\rm ref}$ and $T_s^{\rm ref}1=1$ show, for $t\ge l/2$,
 
 $$
 \|v^{\rm ref}_t-h_{\rm ref}\|_{L^2(\mu_{\rm ref})}
@@ -1950,7 +1950,7 @@ $$
 \tag{10.11}
 $$
 
-Thus the hit subprobability differs from its equal-mass copy of \(m_{\rm ref}\) by at most \(s^+/2\). Adding the two subprobability comparisons gives, for every \(x\),
+Thus the hit subprobability differs from its equal-mass copy of $m_{\rm ref}$ by at most $s^+/2$. Adding the two subprobability comparisons gives, for every $x$,
 
 $$
 \operatorname{TV}\bigl(P^{\rm ref}_\tau(x,\cdot),m_{\rm ref}\bigr)
@@ -1958,25 +1958,25 @@ $$
 \tag{10.12}
 $$
 
-Integrate (10.12), use (10.8), and then use (10.2) and the scaling correspondence. This is (10.6). The contact time is used only as a proof stopping time; no label, point sensor, reset, source delay or physical Return is introduced. \(\square\)
+Integrate (10.12), use (10.8), and then use (10.2) and the scaling correspondence. This is (10.6). The contact time is used only as a proof stopping time; no label, point sensor, reset, source delay or physical Return is introduced. $\square$
 
-**Proposition 10.3 (cofinal finite rational guards from the reference).** For every rational target \(\theta>0\), a finite search over positive integer reference times \(L\) and reference precisions can return rational \(A^-,s^+\) with \(l=L\) and
+**Proposition 10.3 (cofinal finite rational guards from the reference).** For every rational target $\theta>0$, a finite search over positive integer reference times $L$ and reference precisions can return rational $A^-,s^+$ with $l=L$ and
 
 $$
 b^+(A^-,s^+)<\theta.
 \tag{10.13}
 $$
 
-Consequently the passing sources form a nonempty cofinal class in the earned lower-clock coordinate: a source passes the guard whenever it earns \(L\le\tau\) and the strict inequalities in (10.4) and (10.13) are certified. This does not say that a fixed source passes every requested \(\theta\), and it never enlarges the actual read gap \(d\).
+Consequently the passing sources form a nonempty cofinal class in the earned lower-clock coordinate: a source passes the guard whenever it earns $L\le\tau$ and the strict inequalities in (10.4) and (10.13) are certified. This does not say that a fixed source passes every requested $\theta$, and it never enlarges the actual read gap $d$.
 
-*Proof.* The reference defect satisfies \(d^{\rm ref}_r\to1\) as \(r\downarrow0\) by [DPCR, Definition 9.1]. Also, by the exact source-vector representation in [DPCR, Theorem 12.3],
+*Proof.* The reference defect satisfies $d^{\rm ref}_r\to1$ as $r\downarrow0$ by [DPCR, Definition 9.1]. Also, by the exact source-vector representation in [DPCR, Theorem 12.3],
 
 $$
 v^{\rm ref}_t=(H_{\rm ref}+1)e^{-tH_{\rm ref}}z_{\rm ref}.
 \tag{10.14}
 $$
 
-The normalized source law has \(\langle h_{\rm ref},v^{\rm ref}_t\rangle=1\), while \(\ker H_{\rm ref}=\mathbb C h_{\rm ref}\). The spectral theorem therefore gives \(v^{\rm ref}_t\to h_{\rm ref}\) in global \(L^2(\mu_{\rm ref})\): on the zero eigenspace the projection is exactly \(h_{\rm ref}\), and on its orthogonal complement the multiplier \((\lambda+1)e^{-t\lambda}\) tends to zero and is uniformly bounded, so dominated convergence applies to the spectral measure of \(z_{\rm ref}\).
+The normalized source law has $\langle h_{\rm ref},v^{\rm ref}_t\rangle=1$, while $\ker H_{\rm ref}=\mathbb C h_{\rm ref}$. The spectral theorem therefore gives $v^{\rm ref}_t\to h_{\rm ref}$ in global $L^2(\mu_{\rm ref})$: on the zero eigenspace the projection is exactly $h_{\rm ref}$, and on its orthogonal complement the multiplier $(\lambda+1)e^{-t\lambda}$ tends to zero and is uniformly bounded, so dominated convergence applies to the spectral measure of $z_{\rm ref}$.
 
 It follows that
 
@@ -1987,16 +1987,16 @@ $$
 \tag{10.15}
 $$
 
-Choose a finite \(L\) for which (10.15) has strict margin below \(\theta\). The fixed-reference services produce certified intervals of arbitrarily small width for \(d^{\rm ref}_{2/L}\) and the global vectors in (10.14). Refine until a positive lower endpoint \(A^-\) and an upper norm bound \(s^+\) preserve the strict margin. A fair enumeration of \(L\) and precisions reaches this pair after finitely many calls. Every call, failed test, precision and rational operation is charged under the existing reference contract. \(\square\)
+Choose a finite $L$ for which (10.15) has strict margin below $\theta$. The fixed-reference services produce certified intervals of arbitrarily small width for $d^{\rm ref}_{2/L}$ and the global vectors in (10.14). Refine until a positive lower endpoint $A^-$ and an upper norm bound $s^+$ preserve the strict margin. A fair enumeration of $L$ and precisions reaches this pair after finitely many calls. Every call, failed test, precision and rational operation is charged under the existing reference contract. $\square$
 
-**Lemma 10.4 (stationary posterior transfer through one gap).** Let \(Q_\emptyset\) be the stationary complete future law of Definition 9.1 and let \(D_{j,H}(w)=\operatorname{TV}(Q_w^H,Q_\emptyset^H)\) for a word \(w\in\mathcal L^j\). For every deterministic \(j\ge0\) and \(H\ge1\),
+**Lemma 10.4 (stationary posterior transfer through one gap).** Let $Q_\emptyset$ be the stationary complete future law of Definition 9.1 and let $D_{j,H}(w)=\operatorname{TV}(Q_w^H,Q_\emptyset^H)$ for a word $w\in\mathcal L^j$. For every deterministic $j\ge0$ and $H\ge1$,
 
 $$
 \mathbb E_{Q_\emptyset}\bigl[D_{j,H}(W_j)\bigr]\le\beta_d.
 \tag{10.16}
 $$
 
-*Proof.* Let \(X\) be the hidden state at the cut before the one-gap transition, and let \(\nu_w\) be its stationary conditional law given \(W_j=w\). The next-read posterior is \(\pi_w=\nu_wP_d\). The future-label kernel \(\mathcal K_H\) of Definition 9.1 is a Markov kernel, so TV contraction gives
+*Proof.* Let $X$ be the hidden state at the cut before the one-gap transition, and let $\nu_w$ be its stationary conditional law given $W_j=w$. The next-read posterior is $\pi_w=\nu_wP_d$. The future-label kernel $\mathcal K_H$ of Definition 9.1 is a Markov kernel, so TV contraction gives
 
 $$
 D_{j,H}(w)
@@ -2004,7 +2004,7 @@ D_{j,H}(w)
 \tag{10.17}
 $$
 
-Convexity of TV under the mixture \(\pi_w=\int P_d(x,\cdot)\nu_w(dx)\) gives
+Convexity of TV under the mixture $\pi_w=\int P_d(x,\cdot)\nu_w(dx)$ gives
 
 $$
 \operatorname{TV}(\pi_w,m)
@@ -2012,16 +2012,16 @@ $$
 \tag{10.18}
 $$
 
-The posterior barycentre identity \(\int\nu_wQ_\emptyset^j(dw)=m\) now yields (10.16) after integration. This argument keeps the one-gap transition and the original emission kernel; it does not identify two sources merely because their labels have the same alphabet. \(\square\)
+The posterior barycentre identity $\int\nu_wQ_\emptyset^j(dw)=m$ now yields (10.16) after integration. This argument keeps the one-gap transition and the original emission kernel; it does not identify two sources merely because their labels have the same alphabet. $\square$
 
-**Theorem 10.5 (independent finite completion transfers the row).** Fix a deterministic gate description \(\kappa\), its stopped cut \(T_\kappa\), and a finite horizon \(H_\kappa\). Let \(J_\kappa\in\mathbb N_0\cup\{\infty\}\) be the actual serialization-completion index after that gate. Assume, as an explicit runtime premise, that conditional on \(\mathcal F_{T_\kappa}\) and on all pre-gate service randomness or state carrying no source information beyond the stopped label history, \(J_\kappa\) is independent of the entire post-gate label sequence. The independence includes the event \(J_\kappa=\infty\); ordinary causality, independence of one service component, or conditioning on a successful Return does not imply it. Suppose the earned guard gives \(\beta_d\le b^+_\kappa\), and OPPM9's gate estimate gives
+**Theorem 10.5 (independent finite completion transfers the row).** Fix a deterministic gate description $\kappa$, its stopped cut $T_\kappa$, and a finite horizon $H_\kappa$. Let $J_\kappa\in\mathbb N_0\cup\{\infty\}$ be the actual serialization-completion index after that gate. Assume, as an explicit runtime premise, that conditional on $\mathcal F_{T_\kappa}$ and on all pre-gate service randomness or state carrying no source information beyond the stopped label history, $J_\kappa$ is independent of the entire post-gate label sequence. The independence includes the event $J_\kappa=\infty$; ordinary causality, independence of one service component, or conditioning on a successful Return does not imply it. Suppose the earned guard gives $\beta_d\le b^+_\kappa$, and OPPM9's gate estimate gives
 
 $$
 \mathbb E_e\operatorname{TV}(\pi_{Y_{<T_\kappa}}m,m)\le\eta^+_\kappa.
 \tag{10.19}
 $$
 
-Then, for every \(\chi_\kappa>0\),
+Then, for every $\chi_\kappa>0$,
 
 $$
 \mathbb P_e\!\left\{
@@ -2031,9 +2031,9 @@ J_\kappa<\infty\ \text{and}\ D_{J_\kappa,H_\kappa}(W_{J_\kappa})>\chi_\kappa
 \tag{10.20}
 $$
 
-*Proof.* Condition on a stopped history and the allowed pre-gate service state. By the independence premise, the conditional law of \(J_\kappa\) is a fixed probability law on \(\mathbb N_0\cup\{\infty\}\), independent of the future labels. Set the summand at \(J_\kappa=\infty\) to zero. Under the stationary comparison, Lemma 10.4 bounds the expectation of each finite-index summand by \(\beta_d\), hence also their mixture by \(b^+_\kappa\).
+*Proof.* Condition on a stopped history and the allowed pre-gate service state. By the independence premise, the conditional law of $J_\kappa$ is a fixed probability law on $\mathbb N_0\cup\{\infty\}$, independent of the future labels. Set the summand at $J_\kappa=\infty$ to zero. Under the stationary comparison, Lemma 10.4 bounds the expectation of each finite-index summand by $\beta_d$, hence also their mixture by $b^+_\kappa$.
 
-For the actual future, Definition 9.1 and kernel contraction give, for the same stopped history \(u\),
+For the actual future, Definition 9.1 and kernel contraction give, for the same stopped history $u$,
 
 $$
 \operatorname{TV}(R_u^\infty,Q_\emptyset^\infty)
@@ -2041,7 +2041,7 @@ $$
 \tag{10.21}
 $$
 
-Any measurable function of the future labels bounded by one changes its conditional expectation by at most the right side of (10.21). Apply this to the mixture of the functions \(D_{j,H_\kappa}(W_j)\) with the fixed completion law. Average over stopped histories and use (10.19). Thus
+Any measurable function of the future labels bounded by one changes its conditional expectation by at most the right side of (10.21). Apply this to the mixture of the functions $D_{j,H_\kappa}(W_j)$ with the fixed completion law. Average over stopped histories and use (10.19). Thus
 
 $$
 \mathbb E_e\!\left[\mathbf1_{\{J_\kappa<\infty\}}
@@ -2050,16 +2050,16 @@ $$
 \tag{10.22}
 $$
 
-Markov's inequality proves (10.20). No probability of finite completion is inferred, and no completion index is selected after inspecting the post-gate suffix. \(\square\)
+Markov's inequality proves (10.20). No probability of finite completion is inferred, and no completion index is selected after inspecting the post-gate suffix. $\square$
 
-**Corollary 10.6 (one common event and the conditional current-row consumer).** Predeclare a countable family of deterministic descriptions \(\kappa\). Each description fixes \(H_\kappa\ge1\), rational \(\chi_\kappa,\epsilon_\kappa,\delta_{{\rm row},\kappa},\delta_{{\rm dyn},\kappa}>0\), rational \(c_{-,\kappa},l_\kappa>0\), an integer gate start \(S_\kappa\), and the complete execution rule, including the possible completion index. The inherited paid acquisition event \(\mathcal A_\tau\), with probability at least \(1-\alpha\), includes the genuinely acquired normalized row \(\rho_\kappa\) on its finite horizon and its readiness by the actual gate, with
+**Corollary 10.6 (one common event and the conditional current-row consumer).** Predeclare a countable family of deterministic descriptions $\kappa$. Each description fixes $H_\kappa\ge1$, rational $\chi_\kappa,\epsilon_\kappa,\delta_{{\rm row},\kappa},\delta_{{\rm dyn},\kappa}>0$, rational $c_{-,\kappa},l_\kappa>0$, an integer gate start $S_\kappa$, and the complete execution rule, including the possible completion index. The inherited paid acquisition event $\mathcal A_\tau$, with probability at least $1-\alpha$, includes the genuinely acquired normalized row $\rho_\kappa$ on its finite horizon and its readiness by the actual gate, with
 
 $$
 \operatorname{TV}(\rho_\kappa,Q_\emptyset^{H_\kappa})\le\zeta_\kappa.
 \tag{10.23}
 $$
 
-Choose the allowances with \(\sum_\kappa(\delta_{{\rm dyn},\kappa}+\delta_{{\rm row},\kappa})<\infty\). All row packets, records and readiness tests in (10.23) are existing lawful paid operations; their storage, precision and service costs are retained in \(\mathcal A_\tau\). On \(\mathcal A_\tau\), an eligible description has \(c_{-,\kappa}\le c\) and \(l_\kappa\le\tau\). Generate the OPPM9 rational guard \(\eta^+_\kappa\) and the present guard \(b^+_\kappa\), and retain only descriptions satisfying the strict tests
+Choose the allowances with $\sum_\kappa(\delta_{{\rm dyn},\kappa}+\delta_{{\rm row},\kappa})<\infty$. All row packets, records and readiness tests in (10.23) are existing lawful paid operations; their storage, precision and service costs are retained in $\mathcal A_\tau$. On $\mathcal A_\tau$, an eligible description has $c_{-,\kappa}\le c$ and $l_\kappa\le\tau$. Generate the OPPM9 rational guard $\eta^+_\kappa$ and the present guard $b^+_\kappa$, and retain only descriptions satisfying the strict tests
 
 $$
 b^+_\kappa+\eta^+_\kappa
@@ -2077,7 +2077,7 @@ $$
 \tag{10.25}
 $$
 
-On this event, suppose a selected executor actually completes at a finite causal cut \(C=T_\kappa+J_\kappa\), has captured, retained and assimilated every original label through \(C\), and emits a normalized row \(\rho_{\rm out}\) with a genuinely generated additional error certificate \(\operatorname{TV}(\rho_{\rm out},\rho_\kappa)\le\xi_{\rm actual}\). Then
+On this event, suppose a selected executor actually completes at a finite causal cut $C=T_\kappa+J_\kappa$, has captured, retained and assimilated every original label through $C$, and emits a normalized row $\rho_{\rm out}$ with a genuinely generated additional error certificate $\operatorname{TV}(\rho_{\rm out},\rho_\kappa)\le\xi_{\rm actual}$. Then
 
 $$
 \begin{aligned}
@@ -2089,13 +2089,13 @@ $$
 \tag{10.26}
 $$
 
-*Proof.* The OPPM9 all-cut event has failure below \(\delta_{{\rm dyn},\kappa}\) by the second inequality in (10.24). Theorem 10.5 and the first inequality give the row-event failure below \(\delta_{{\rm row},\kappa}\). Countable union over the deterministic descriptions, together with \(\mathcal A_\tau\), proves (10.25). The selected description was present before the suffix and therefore is covered by this intersection.
+*Proof.* The OPPM9 all-cut event has failure below $\delta_{{\rm dyn},\kappa}$ by the second inequality in (10.24). Theorem 10.5 and the first inequality give the row-event failure below $\delta_{{\rm row},\kappa}$. Countable union over the deterministic descriptions, together with $\mathcal A_\tau$, proves (10.25). The selected description was present before the suffix and therefore is covered by this intersection.
 
-At a finite actual completion, the first inequality in (10.26) is the triangle inequality through (10.23) and the row event. The second is the triangle inequality through the OPPM9 dynamic comparison at the actual index \(J_\kappa\). The hypotheses that every label through \(C\) was captured, retained and assimilated, and that \(\xi_{\rm actual}\) was generated, are conjunctive premises. An unprocessed archive, a retrospective row, or a service that never completes does not satisfy them. \(\square\)
+At a finite actual completion, the first inequality in (10.26) is the triangle inequality through (10.23) and the row event. The second is the triangle inequality through the OPPM9 dynamic comparison at the actual index $J_\kappa$. The hypotheses that every label through $C$ was captured, retained and assimilated, and that $\xi_{\rm actual}$ was generated, are conjunctive premises. An unprocessed archive, a retrospective row, or a service that never completes does not satisfy them. $\square$
 
-**Definition 10.7 (paid boundary and remaining source obligations).** The new guard removes the additional suffix-indexed numerical-row acquisition only for the nonempty guarded class certified by (10.4), (10.13) and (10.24), and only under the independent-completion premise of Theorem 10.5. The row event is a joint original-law statement for the selected completion index; it is not conditioned on completion and is not a pathwise guarantee for every index \(j\). It supplies no executor, throughput, buffer, write service, atomic output, accepted pointer interface, source delay, reset, clock, point sensor or completion probability. Every arriving label, the full growing suffix, all prior rows, permissions, menus, backing, copies, arithmetic, latency and output costs remain in force. Sources outside the guard, completion rules whose stopping law depends on later labels, and a finite row that is not ready at the actual gate remain unresolved. The native unbounded finite ordered \(\alpha/\beta\) trees, actual \(\rho\) replacements and literal root/address operations retain their own domains; no native/diffusion/AURIC identification is asserted. The full space/continuation/boundary/memory mutual-recovery objective therefore remains open beyond this conditional row-interface reduction.
+**Definition 10.7 (paid boundary and remaining source obligations).** The new guard removes the additional suffix-indexed numerical-row acquisition only for the nonempty guarded class certified by (10.4), (10.13) and (10.24), and only under the independent-completion premise of Theorem 10.5. The row event is a joint original-law statement for the selected completion index; it is not conditioned on completion and is not a pathwise guarantee for every index $j$. It supplies no executor, throughput, buffer, write service, atomic output, accepted pointer interface, source delay, reset, clock, point sensor or completion probability. Every arriving label, the full growing suffix, all prior rows, permissions, menus, backing, copies, arithmetic, latency and output costs remain in force. Sources outside the guard, completion rules whose stopping law depends on later labels, and a finite row that is not ready at the actual gate remain unresolved. The native unbounded finite ordered $\alpha/\beta$ trees, actual $\rho$ replacements and literal root/address operations retain their own domains; no native/diffusion/AURIC identification is asserted. The full space/continuation/boundary/memory mutual-recovery objective therefore remains open beyond this conditional row-interface reduction.
 
-**Definition 10.8 (source correspondence and attribution).** The contact identity and full-versus-killed distinction are [CONTACT, Theorems 116.3--116.4, (116.8)--(116.14), and Theorem 117.2]. The defect limit and exact rank-one resolvent are [DPCR, Definition 9.1 and Theorems 11.4, 12.3--12.4]. The source scaling, complete endpoint and original clock are [OWGR, Theorem 5.2, (5.2)--(5.3)]. OPPM9, Theorem 9.2 and Proposition 9.3 supply the stopped gate estimate and its rational \(\eta^+\) guard.
+**Definition 10.8 (source correspondence and attribution).** The contact identity and full-versus-killed distinction are [CONTACT, Theorems 116.3--116.4, (116.8)--(116.14), and Theorem 117.2]. The defect limit and exact rank-one resolvent are [DPCR, Definition 9.1 and Theorems 11.4, 12.3--12.4]. The source scaling, complete endpoint and original clock are [OWGR, Theorem 5.2, (5.2)--(5.3)]. OPPM9, Theorem 9.2 and Proposition 9.3 supply the stopped gate estimate and its rational $\eta^+$ guard.
 
 The event-TV normalization agrees with the joint-versus-product total-variation definition of absolute regularity in McDonald, Shalizi and Schervish, [*Estimating beta-mixing coefficients*](https://arxiv.org/html/1109.5998v3), §2.1; their stationary-sample estimator is not used. Ornee and Sun, [*Sampling and Remote Estimation for the Ornstein--Uhlenbeck Process through Queues*](https://arxiv.org/html/1902.03552v4), assumes an Ornstein--Uhlenbeck source and an installed FCFS channel with iid service times; neither source nor service is transferred. Strong Markov conditioning, TV contraction and convexity, Cauchy--Schwarz, spectral dominated convergence, Markov's inequality and countable union bounds are mature intermediates. The contact-to-one-gap composition (10.6), the generated guard (10.13), and the independent-completion row transfer (10.20)--(10.26) are source-specific ordinary deductions and have no fresh Lean verification or worldwide novelty claim.
 
