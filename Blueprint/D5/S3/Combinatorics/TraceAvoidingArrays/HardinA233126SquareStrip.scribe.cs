@@ -28,7 +28,9 @@ internal sealed class HardinA233126SquareStripDocument : IScribeDocumentDefiniti
                 + "recurrence. All declaration names below are fully "
                 + "qualified Lean names. Fin.val explicitly converts a finite index or colour "
                 + "to Nat. Nat.div denotes natural quotient and Nat.mod its nonnegative "
-                + "remainder; neither operation occurs in these definitions.")),
+                + "remainder; neither operation occurs in these definitions. The five-column "
+                + "Row type and horizontal predicate rowLegal are reused from "
+                + "HardinA233253TriangleStrip.")),
             Entry("vertical", "bonds", "Vertical bonds", Vertical(),
                 "Only equal columns in consecutive rows are joined. Diagonals are free."),
             Entry("count", "a", "The literal filtered finite count", Count(),
