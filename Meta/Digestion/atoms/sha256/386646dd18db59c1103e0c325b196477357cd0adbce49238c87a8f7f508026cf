@@ -1,0 +1,16 @@
+**定义 55.1（Q0 的关系空间）。** 令 $V=\mathbb R^{(X)}$ 是有限支撑实自由空间，给定半正定对称二次型 $q$。令
+
+$$
+B(u,v)=\frac14\bigl(q(u+v)-q(u-v)\bigr),
+\qquad
+N=\{u:q(u)=0\},
+$$
+
+并令 $W=V/N$，$H=\overline W$ 为由 $B$ 诱导的 Hilbert 完备化。记 $j:V\to H$ 为自然映射。半正定性给出
+
+$$
+q(n)=0\Longrightarrow B(n,v)=0\quad(n\in N,v\in V),
+$$
+
+所以 $B$ 在 $W$ 上是良定义的正定内积。
+
