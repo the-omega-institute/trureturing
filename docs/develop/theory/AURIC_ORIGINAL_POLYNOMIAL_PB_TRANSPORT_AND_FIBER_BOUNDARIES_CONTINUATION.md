@@ -3289,3 +3289,709 @@ $$
 一般原目标仍须在同一 $a,b,c,y,d_s,d_b,d_c,\delta,w$ 上，生产有检测力的实际PB返回和预算，而不是新增公理、局域化供应者或将等价目标换名。若进一步采用两向量或矩阵式标签，仍须同时支付所需标签确属原 $E$ 的供应，以及保留 $\eta_i$ 与全部六个实际输出后的相消和返回；环境中可插值不等于原Jordan域内可取得。139.3没有允许丢弃 $q_i\circ\eta_i$，140.2没有给检测平方的零预算，141.1也不排除依赖非零 $w$、非状态保持读取或其他相关相消的生产路线。
 
 ## 追加锚（本行以下为增补区）
+
+## 142. 固定实权重的实际演员差与共同运输条件
+
+**定义 142.1（完整测试域与原配平的约定）。** 本组的一般原目标仍取138.1及141.3的全部前件、来源和量词。只为检验一条普遍的块运输规则，另取一个给定含单位复C*代数 $\mathcal M$ 的完整自伴原域
+
+$$
+E_{\rm test}=\mathcal M_{\rm sa},\qquad u=1,\qquad
+x\circ z=(xz+zx)/2,\qquad D(x,z)=i[x,z]/2.
+\tag{142.1}
+$$
+
+这里和下文的每个嵌套 $D$ 都是这一份总映射的值。原评价可取全部正泛函限制及其全部非负质量倍数，不将数学正泛函认作物理准备。本卷135.2、141.1及[半有限卷SF98.3、SF103.1](AURIC_SEMIFINITE_ORIGINAL_RESPONSE_AND_CENTRAL_POLAR_GEOMETRY.md#103-每个中央取向的反向静态后果与可积域)已给标准模型的完整数学对应：$x\circ z-iD(x,z)=xz$，全部有限复Gram正性给原二表和P2，相加实Gram给A2及全部排列的指定零向量，效果平方给同一个有理小窗A3。对全部原三元组的FULLPB亦已成立。这些既有模型事实只作为下文应用的前件，不是新增分类。
+
+为不混淆元素与正读取，写
+
+$$
+\begin{aligned}
+\mathcal Q(x,z)&=x^2+z^2+2D(x,z)=(x+iz)^*(x+iz),\\
+\mathrm{PB}(a;x,z):\quad
+v&=D(a,x)-a\circ z,\qquad k=a\circ x+D(a,z),\\
+(x^\epsilon,z^\epsilon)&=(x+\epsilon v,z+\epsilon k),\qquad
+Z=x+iz,\quad Z^\epsilon=(1+\epsilon ia)Z,
+\quad\epsilon\in\{1,-1\}.
+\end{aligned}
+\tag{142.2}
+$$
+
+每个单调用满足 $\mathcal Q(x^+,z^+)=\mathcal Q(x^-,z^-)=Z^*(1+a^2)Z$。这是同一调用两端的相等，不是它们与 $\mathcal Q(x,z)$ 相等，也没有给不同调用的交叉项配平。$\mathcal Q$ 的正性是完整测试域中的结论；对一般原 $D$ 不由此加入输出平方正性或响应线性。
+
+**定理 142.2（实际块的固定标量权重判据，作为循环障碍的中间计算）。** 固定有限个自伴演员 $a_1,\ldots,a_n$ 和实数 $c_1,\ldots,c_n$。对于任意独立选择的原列 $Z_l=x_l+iz_l\in\mathcal M$，令
+
+$$
+U^\epsilon=\sum_{l=1}^n c_l(1+\epsilon ia_l)Z_l.
+$$
+
+则有准确元素恒等式
+
+$$
+\boxed{(U^+)^*U^+-(U^-)^*U^-
+=2i\sum_{l,m=1}^n c_lc_m Z_l^*(a_m-a_l)Z_m.}
+\tag{142.3}
+$$
+
+对每份独立原列选择都配平，当且仅当全部活动演员相同，即
+
+$$
+\bigl[(U^+)^*U^+=(U^-)^*U^-\text{ 对所有 }Z_1,\ldots,Z_n\bigr]
+\quad\Longleftrightarrow\quad
+\bigl[a_l=a_m\text{ 只要 }c_lc_m\ne0\bigr].
+\tag{142.4}
+$$
+
+证明。置 $S=\sum_lc_lZ_l$、$A=\sum_lc_la_lZ_l$，则 $U^\epsilon=S+\epsilon iA$，直接相乘给
+
+$$
+(U^+)^*U^+-(U^-)^*U^-
+=2i(S^*A-A^*S)
+=2i\sum_{l,m}c_lc_mZ_l^*(a_m-a_l)Z_m.
+$$
+
+对角项为零，活动演员相同时其余项也为零。反之，取两个活动指标 $l,j$，令 $h=a_j-a_l=h^*$，选择真正原列
+
+$$
+Z_l=c_l^{-1}1,\qquad Z_j=c_j^{-1}ih,\qquad Z_k=0\ (k\notin\{l,j\}).
+$$
+
+完整自伴原域保证这都是合法复坐标。两项交叉和为
+
+$$
+2i\{1^*h(ih)+(ih)^*(-h)1\}=-4h^2.
+$$
+
+若普遍配平，便有 $h^2=0$；C*范数恒等式给 $h=0$。空活动支撑及单点活动支撑的条件均为真，零权重的演员完全不受约束；负权重已由上面实数公式包含。未对未知函数作极化；极化只用于已知的结合平方。∎
+
+同一中间计算允许一个明确的中央约定：若 $J\in Z(\mathcal M)$、$J^*=-J$、$J^2=-1$，取 $D_J(x,z)=J[x,z]/2$、$Z=x+Jz$。每个 $Z\in\mathcal M$ 的唯一自伴坐标为 $x=(Z+Z^*)/2$、$z=-J(Z-Z^*)/2$，且 $\mathcal Q_J=Z^*Z$、$Z^\epsilon=(1+\epsilon Ja)Z$。式(142.3)中 $i$ 全部换成 $J$；必要性选择 $Z_j=Jh/c_j$，仍得 $-4h^2$。此处只断言完整域、中央 $J$ 及实标量权重下的这个恒等式和判据。
+
+142.4量化独立原列，并不把下文由同一旧表生成的六列当作独立。因此它本身还不足以判定实际循环；143–144保留循环的全部依赖后直接计算。
+
+## 143. 同一总响应生成的三循环与六张配对调用
+
+**定义 143.1（原三调用及其字面关联）。** 在142.1的测试类中，固定原 $A,B,y$，先读取同一份
+
+$$
+O=D(A,B),\qquad G=D(A,y),\qquad J_0=D(B,y).
+$$
+
+对每个 $\tau\in\{1,-1\}$，取三张实际原调用 $\mathrm{PB}(A;B,y)$、$\mathrm{PB}(B;y,A)$、$\mathrm{PB}(y;A,B)$ 的同一个 $\tau$ 端点：
+
+$$
+\begin{aligned}
+R_1&=B+\tau(O-A\circ y),& S_1&=y+\tau(A\circ B+G),\\
+R_2&=y+\tau(J_0-B\circ A),& S_2&=A+\tau(B\circ y-O),\\
+R_3&=A+\tau(-G-y\circ B),& S_3&=B+\tau(y\circ A-J_0).
+\end{aligned}
+\tag{143.1}
+$$
+
+$J_0$ 是实际旧回复，不是142的中央 $J$。下文所有指标模三，$R_4=R_1,S_4=S_1$；$\tau$ 暂省于下标。再读取
+
+$$
+M_j=D(R_j,S_j),\qquad K_j=D(R_j,S_{j+1})\qquad(j=1,2,3).
+\tag{143.2}
+$$
+
+接着的六张调用及两个符号的全部端点为
+
+$$
+\begin{aligned}
+\mathsf X_j&=\mathrm{PB}(R_j;S_j,S_{j+1}),\\
+X_j^\epsilon&=\bigl(S_j+\epsilon(M_j-R_j\circ S_{j+1}),
+S_{j+1}+\epsilon(R_j\circ S_j+K_j)\bigr),\\
+\mathsf Y_j&=\mathrm{PB}(S_{j+1};R_{j+1},R_j),\\
+Y_j^\epsilon&=\bigl(R_{j+1}+\epsilon(-M_{j+1}-R_j\circ S_{j+1}),
+R_j+\epsilon(S_{j+1}\circ R_{j+1}-K_j)\bigr),\\
+N_j^\epsilon&=D((X_j^\epsilon)_1,(X_j^\epsilon)_2),\qquad
+Z_j^\epsilon=D((Y_j^\epsilon)_1,(Y_j^\epsilon)_2).
+\end{aligned}
+\tag{143.3}
+$$
+
+第二调用的内回复正是 $D(S_{j+1},R_{j+1})=-M_{j+1}$ 与 $D(S_{j+1},R_j)=-K_j$，不是新选的自由量。相同的 $M_j,K_j$ 在相邻调用中保持字面同一；输入偶然相等时，同一总 $D$ 也必须给相同值。全部零标签、重复标签及其出现重数都保留。
+
+**定理 143.2（全部三参数、两个循环符号的实际回复）。** 取任意给定非零 $\mathrm{II}_1$ 因子 $\mathcal R$ 及其忠实正规归一有限迹 $\operatorname{tr}_{\mathcal R}$，令
+
+$$
+\mathcal M=M_2(\mathbb C)\,\overline\otimes\,\mathcal R,
+\qquad E_{\rm test}=\mathcal M_{\rm sa},\qquad
+(A,B,y)=(\alpha\sigma_x,\beta_0\sigma_y,\gamma\sigma_z),
+\quad\alpha,\beta_0,\gamma\in\mathbb R.
+\tag{143.4}
+$$
+
+横线张量积是von Neumann张量积；每个Pauli矩阵均指其与 $1_{\mathcal R}$ 的张量。$\mathcal M$ 仍是 $\mathrm{II}_1$ 因子，归一迹为 $\tfrac12\operatorname{Tr}_2\otimes\operatorname{tr}_{\mathcal R}$，故没有非零type I中央直和项。这是SF98、SF103的完整continuous类的 $Q=1$ 标准取向实例。$\beta_0$ 是本条的实参数，与145的检测态 $\beta$ 区分。
+
+实际旧回复及三个端点准确为
+
+$$
+\begin{gathered}
+O=-\alpha\beta_0\sigma_z,\qquad
+G=\alpha\gamma\sigma_y,\qquad J_0=-\beta_0\gamma\sigma_x,\\
+R_1=\beta_0\sigma_y-\tau\alpha\beta_0\sigma_z,\qquad
+S_1=\gamma\sigma_z+\tau\alpha\gamma\sigma_y,\\
+R_2=\gamma\sigma_z-\tau\beta_0\gamma\sigma_x,\qquad
+S_2=\alpha\sigma_x+\tau\alpha\beta_0\sigma_z,\\
+R_3=\alpha\sigma_x-\tau\alpha\gamma\sigma_y,\qquad
+S_3=\beta_0\sigma_y+\tau\beta_0\gamma\sigma_x.
+\end{gathered}
+\tag{143.5}
+$$
+
+为同时列出全部进一步回复，写 $a_1=\alpha,a_2=\beta_0,a_3=\gamma$，$\sigma_1=\sigma_x,\sigma_2=\sigma_y,\sigma_3=\sigma_z$。对任意循环指标 $j$，置
+
+$$
+p=a_j,\quad q=a_{j+1},\quad r=a_{j+2},\qquad
+d_j=p^2q^2,\quad F_j=1+q^2(1+p^2),\quad G_j=1+p^2(1+q^2).
+$$
+
+则无除法的全部公式是
+
+$$
+\begin{aligned}
+R_j&=q\sigma_{j+1}-\tau pq\sigma_{j+2},&
+S_j&=r\sigma_{j+2}+\tau pr\sigma_{j+1},\\
+R_j\circ S_j&=0,& R_j\circ S_{j+1}&=-d_j1,\\
+M_j&=-qr(1+p^2)\sigma_j,\\
+K_j&=-\tau pq^2\sigma_j+\tau p^2q\sigma_{j+1}+pq\sigma_{j+2},\\
+X_j^\epsilon&=(S_j+\epsilon(M_j+d_j1),\ S_{j+1}+\epsilon K_j),\\
+Y_j^\epsilon&=(R_{j+1}+\epsilon(-M_{j+1}+d_j1),\ R_j-\epsilon K_j),\\
+N_j^\epsilon
+&=-p^2qr\sigma_j-prF_j\sigma_{j+1}
+ +\tau p^2rF_j\sigma_{j+2}-\epsilon d_jS_j,\\
+Z_j^\epsilon
+&=qrG_j\sigma_j+pq^2r\sigma_{j+1}
+ +\tau q^2rG_j\sigma_{j+2}-\epsilon d_jR_{j+1}.
+\end{aligned}
+\tag{143.6}
+$$
+
+证明。对实向量 $v,w\in\mathbb R^3$，Pauli乘法给
+
+$$
+(v\cdot\sigma)\circ(w\cdot\sigma)=(v\cdot w)1,
+\qquad D(v\cdot\sigma,w\cdot\sigma)=-(v\times w)\cdot\sigma.
+\tag{143.7}
+$$
+
+原三元组的两两Jordan乘积为零；其三个叉积给143.5，再代入143.1。固定正循环顺序 $(j,j+1,j+2)$，$R_j,S_j$ 的向量是 $(0,q,-\tau pq)$、$(0,\tau pr,r)$，内积为零，负叉积为 $(-qr(1+p^2),0,0)$。$S_{j+1}$ 的向量是 $(p,0,\tau pq)$，故它与 $R_j$ 的内积为 $-p^2q^2$，负叉积为 $(-\tau pq^2,\tau p^2q,pq)$。这逐项给出内值和六张实际端点。
+
+端点中的实标量单位项与一切交换，不影响旧响应。$X_j^\epsilon$ 两个坐标的向量依次为
+
+$$
+\begin{aligned}
+v_X&=(-\epsilon qr(1+p^2),\ \tau pr,\ r),\\
+w_X&=(p(1-\epsilon\tau q^2),\ \epsilon\tau p^2q,\ pq(\tau+\epsilon)).
+\end{aligned}
+$$
+
+逐坐标计算负叉积得到
+
+$$
+-v_X\times w_X
+=(-p^2qr,\ -prF_j-\epsilon\tau p^3q^2r,
+\tau p^2rF_j-\epsilon p^2q^2r),
+$$
+
+正是 $N_j^\epsilon$。$Y_j^\epsilon$ 的向量依次为
+
+$$
+\begin{aligned}
+v_Y&=(-\tau qr,\ \epsilon pr(1+q^2),\ r),\\
+w_Y&=(\epsilon\tau pq^2,\ q(1-\epsilon\tau p^2),\ -pq(\tau+\epsilon)),\\
+-v_Y\times w_Y
+&=(qrG_j+\epsilon\tau p^2q^3r,\ pq^2r,
+\tau q^2rG_j-\epsilon p^2q^2r),
+\end{aligned}
+$$
+
+即所列 $Z_j^\epsilon$。因此所有十二个外回复都由同一个总 $D$ 实际算出，绝非先指定配平差再任意填表。作为符号和因子的另一核对，由这些式子直接有
+
+$$
+N_j^+-N_j^-=-2d_jS_j,\qquad
+Z_j^+-Z_j^-=-2d_jR_{j+1}.
+\tag{143.8}
+$$
+
+FULLPB右侧也分别给这两个值：第一张表的两项为 $-2S_j\circ(M_j+d_j1)-2S_{j+1}\circ K_j$，其中 $S_j\circ M_j=S_{j+1}\circ K_j=0$；第二张表用 $R_{j+1}\circ M_{j+1}=R_j\circ K_j=0$ 得同样结论。所有式子是对全部实参数和两个 $\tau$ 的多项式恒等式，不排除任何零值或重合。∎
+
+## 144. 实际六列的非零混合漂移及三种聚合
+
+**定理 144.1（整个实际三参数类的求和障碍）。** 对143.1–143.6的每个 $\tau$，写
+
+$$
+\begin{gathered}
+L=\sum_{j=1}^3(R_j+S_j)
+=2(\alpha\sigma_x+\beta_0\sigma_y+\gamma\sigma_z),\\
+c_0=\alpha^2\beta_0^2+\beta_0^2\gamma^2+\gamma^2\alpha^2,\\
+C_{\rm own}=\sum_j R_j\circ S_j=0,\qquad
+C_{\rm cross}=\sum_jR_j\circ S_{j+1}=-c_0 1,\\
+\mathcal B_\tau^\epsilon=\sum_{j=1}^3(X_j^\epsilon+Y_j^\epsilon).
+\end{gathered}
+$$
+
+有序对按坐标相加，且
+
+$$
+\mathcal B_\tau^\epsilon=(L-2\epsilon C_{\rm cross},\ L+2\epsilon C_{\rm own})
+=(L+2\epsilon c_0 1,L).
+\tag{144.1}
+$$
+
+定义混合部分时扣除六张单表能量，准确取
+
+$$
+C_{{\rm mix},\tau}^\epsilon
+=\mathcal Q(\mathcal B_\tau^\epsilon)
+-\sum_{j=1}^3\{\mathcal Q(X_j^\epsilon)+\mathcal Q(Y_j^\epsilon)\}.
+\tag{144.2}
+$$
+
+则
+
+$$
+\boxed{\ C_{{\rm mix},\tau}^+-C_{{\rm mix},\tau}^-
+=\mathcal Q(\mathcal B_\tau^+)-\mathcal Q(\mathcal B_\tau^-)
+=8c_0L.\ }
+\tag{144.3}
+$$
+
+证明。143.5中的 $\tau$ 项按循环相消，给 $L$；143.6的Jordan内积给两个 $C$。一般地，143.3的第一坐标增量之和为
+
+$$
+\sum_j\{M_j-R_j\circ S_{j+1}-M_{j+1}-R_j\circ S_{j+1}\}
+=-2C_{\rm cross},
+$$
+
+第二坐标为 $\sum_j\{R_j\circ S_j+K_j+S_{j+1}\circ R_{j+1}-K_j\}=2C_{\rm own}$。这里消掉的是同一实际 $M,K$ 的出现，不是把 $D$ 作用于一个和拆开。六张单表各由FULLPB给零漂移，所以144.2的差就是求和表能量之差。两坐标 $L+2\epsilon c_01,L$ 交换，实际回复 $D(L+2\epsilon c_01,L)=0$。故
+
+$$
+\mathcal Q(\mathcal B_\tau^\epsilon)
+=(L+2\epsilon c_01)^2+L^2
+=2L^2+4\epsilon c_0L+4c_0^21,
+$$
+
+取差得144.3。特别 $L^2=4(\alpha^2+\beta_0^2+\gamma^2)1$；$L=0$ 当且仅当三参数全零，而 $c_0=0$ 当且仅当至多一个参数非零。因此漂移非零恰在至少两个参数非零时。端点或回复之间的偶然相同不改变实际相加的重数，退化情形全部保留。∎
+
+**推论 144.2（两个循环符号与读取约定）。** 两个 $\tau$ 各自的漂移都是 $8c_0L$。若先分别取能量再相加，漂移为 $16c_0L$；若对这两个能量取半和，漂移为 $8c_0L$；若把两个符号共十二个端点对先全部相加，再取一次能量，则
+
+$$
+\sum_{\tau=\pm1}\mathcal B_\tau^\epsilon
+=(2L+4\epsilon c_01,2L),\qquad
+\Delta\mathcal Q=32c_0L.
+\tag{144.4}
+$$
+
+证明。前两项直接相加及除以二。最后的和等于 $2\mathcal B_\tau^\epsilon$；在当前已知标准响应中 $\mathcal Q(2x,2z)=4\mathcal Q(x,z)$，得到最后的因子。这里没有对一般未知 $D$ 使用齐次性。∎
+
+元素不等与每份正读取不等须分开。置 $r_0=(\alpha^2+\beta_0^2+\gamma^2)^{1/2}$。非零漂移时 $r_0>0$，取 $2\times2$ 矩阵中 $\alpha\sigma_x+\beta_0\sigma_y+\gamma\sigma_z$ 的 $+r_0$ 单位特征向量 $v_+$，令
+
+$$
+\phi_+(T)=(\langle v_+,\cdot\,v_+\rangle\otimes\operatorname{tr}_{\mathcal R})(T).
+$$
+
+这是质量一的数学正读取，$\phi_+(8c_0L)=16c_0r_0>0$。负特征向量读取给相反号，归一迹读取则因 $L$ 无迹而给零。对任意 $m\ge0$，$m\phi_+$ 保持实际质量 $m$，读取为 $16mc_0r_0$；$m=0$ 时仍保留该零分支。因而反例是否被某份读取看见，不等于其算子漂移是否非零；尤其不能只用有限迹的零读数宣告块恒等式成立。
+
+**定义 144.3（被否定规则的准确量词）。** 144.1否定的是所有实际三元组、全部参数与循环符号上，六张等权配对表的原始求和能量普遍零漂移。它在完整非零 $\mathrm{II}_1$ 测试类内已经失败；既有完整continuous分类并不修复这条规则。142.4则指出独立列普遍运输恰需要共同活动演员。二者不否定P2或FULLPB：此处它们对每个原输入和每个质量均成立。
+
+这份标准响应本来可加，故任何真实加性缺陷 $\delta$ 及 $K_y\delta$ 都为零。没有把它作为非零真缺陷模型，也未断言143的三元组能够成为一份 $w\ne0$ 检测网络中的实际外层出现。没有排除依赖非零 $w$ 的条件预算、非线性或算子权重、特定原列的额外相消，尤其没有排除145的十二个外层出现按其 $\chi$ 权重共同相消。边界只撤去“单表配平或完整块正性足够推出这个普遍求和等距”的推理步骤；一般原目标的充分性与完整量子起源均不由此裁决。
+
+## 145. 同一原检测器的两行锚定平方返回
+
+**定义 145.1（一般原域、固定缺陷及全部十二个外出现）。** 返回138.1的一般原候选，不采用142.1的标准响应或完整自伴域限制。整个JB完成的忠实、含单位、等距且锥准确JC包含由三角续卷240–248支付；原 $E$ 仍可不完备、无原子、不可分，并只在自己的完成中稠密。不预付旧 $D$ 的可加、齐次、连续、协变、单位平移、输出闭合、商下降或完成延拓。
+
+固定同一原 $a,b,c,y$。为保留重数，令 $\mathcal T=(s,b,c)$ 是一个出现表而非集合，其中 $s=b+c$，对应系数 $\kappa=(1,-1,-1)$。定义
+
+$$
+\begin{gathered}
+r_\lambda=a+\lambda u,\quad \lambda\in\{0,1\},\qquad
+d_{\lambda,t}=D(r_\lambda,t),\quad d_t=d_{0,t},\quad d'_t=d_{1,t},\\
+\delta=\sum_{t\in\mathcal T}\kappa_td_t,\qquad
+H=\sum_{t\in\mathcal T}\kappa_t(d'_t-d_t),\qquad
+w=K_y(\delta)=\delta\circ y^2-y\circ(\delta\circ y).
+\end{gathered}
+\tag{145.1}
+$$
+
+$H$ 是两个实际加性缺陷之差，不置零，不将 $d'_t$ 换成 $d_t$。对每个原 $q\in E$，同一内回复 $f_t=D(t,q)$ 被两行共同使用。逐次调用 $\mathrm{PB}(t;r_\lambda,q)$，得到
+
+$$
+\begin{aligned}
+v_{\lambda,t}&=-d_{\lambda,t}-t\circ q,&
+z_{\lambda,t}&=t\circ r_\lambda+f_t,\\
+A_{\lambda,t}^\epsilon&=r_\lambda+\epsilon v_{\lambda,t},&
+B_{\lambda,t}^\epsilon&=q+\epsilon z_{\lambda,t},\\
+O_{\lambda,t}^\epsilon&=D(A_{\lambda,t}^\epsilon,B_{\lambda,t}^\epsilon),&
+\rho_{\lambda,t}&=(2\lambda-1)\kappa_t,\\
+\chi_{\lambda,t,\epsilon}&=\rho_{\lambda,t}\epsilon,&
+T(q)&=\sum_{\lambda,t,\epsilon}\chi_{\lambda,t,\epsilon}O_{\lambda,t}^\epsilon.
+\end{aligned}
+\tag{145.2}
+$$
+
+两个符号的和均遍历 $\{1,-1\}$。$D(t,r_\lambda)=-d_{\lambda,t}$ 是原P2的反对称性，未对旧响应作单位平移。$f_t$、相同的实际端点及实际外回复保持字面同一；即使 $s,b,c$ 或两行中的某些值重合，十二个出现仍各带原 $\rho,\chi$。每个外出现若再使用143.1的三循环，其 $O,G,J_0$ 和全部进一步回复也须是这一份总 $D$ 的实际值；不得用144的测试类表替代它们。
+
+**定理 145.2（共同锚的平方功与保留 $H$ 的精确返回）。** 对同一个原锚 $g\in E$，只对已知Jordan平方定义
+
+$$
+\begin{aligned}
+\mathcal S_g(A,B)&=(A-g)^2+B^2,\\
+W_g(q)&=\sum_{\lambda,t}\rho_{\lambda,t}
+\{\mathcal S_g(A_{\lambda,t}^+,B_{\lambda,t}^+)
+-\mathcal S_g(A_{\lambda,t}^-,B_{\lambda,t}^-)\}.
+\end{aligned}
+\tag{145.3}
+$$
+
+所有 $\mathcal S_g$ 都是原正元素，$W_g$ 则是它们的有符号和。对全部原 $q,g$ 有
+
+$$
+W_g(q)=-2T(q)+4g\circ H.
+\tag{145.4}
+$$
+
+在同一个准确锚 $g=r_1=a+u$ 上，还独立有
+
+$$
+\boxed{W_{a+u}(q)=-4\delta,\qquad
+T(q)-2(a+u)\circ H=2\delta\quad(q\in E).}
+\tag{145.5}
+$$
+
+证明。对每张实际PB，令 $\Delta O=O^+-O^-$。原有限差分和已知Jordan平方给
+
+$$
+\begin{aligned}
+\Delta O&=-2r_\lambda\circ v_{\lambda,t}-2q\circ z_{\lambda,t},\\
+\Delta(A^2+B^2)&=4r_\lambda\circ v_{\lambda,t}+4q\circ z_{\lambda,t}=-2\Delta O,\\
+\Delta\mathcal S_g&=-2\Delta O-4g\circ v_{\lambda,t},\\
+\sum_{\lambda,t}\rho_{\lambda,t}v_{\lambda,t}
+&=\sum_t\kappa_t(v_{1,t}-v_{0,t})=-H.
+\end{aligned}
+\tag{145.6}
+$$
+
+按原出现重数相加便得145.4。另一路只展开已知平方以核对符号和因子：
+
+$$
+\begin{aligned}
+W_{r_1}(q)
+&=4\sum_{\lambda,t}\rho_{\lambda,t}
+\{(r_\lambda-r_1)\circ v_{\lambda,t}+q\circ z_{\lambda,t}\}\\
+&=4\sum_t\kappa_t\{v_{0,t}+q\circ(z_{1,t}-z_{0,t})\}.
+\end{aligned}
+$$
+
+这里 $r_\lambda-r_1=(\lambda-1)u$，而两行实际共享同一个 $f_t$，所以
+
+$$
+z_{1,t}-z_{0,t}=t\circ(r_1-r_0)=t,\qquad
+v_{0,t}+q\circ t=-d_t.
+$$
+
+逐项得到 $W_{r_1}=-4\sum_t\kappa_td_t=-4\delta$。与145.4比较得第二式。整个证明只对已知Jordan运算作双线性展开，没有拆开任何 $D$ 的输入和、没有丢掉一个实际回复，也没有通过未知 $D$ 运输近似误差。∎
+
+中心化原平方没有中心化原响应。式145.3既不声称
+
+$$
+D(A-r_1,B)=D(A,B)-D(r_1,B),
+$$
+
+也不把 $(A-r_1,B)$ 宣告为原PB在移基后的端点。原位移仍含 $D(t,r_\lambda)$，没有被改成 $D(t,r_\lambda-r_1)$。此种重基若用于下一条原关系，须另外支付实际标签、内回复和两端外回复的完整对应。
+
+## 146. 固定检测读取的正分量、全部质量与未付预算
+
+**定义 146.1（同一个 $w$ 的有符号读取）。** 若 $w\ne0$，保持138.2的同一数学态 $\beta$，满足 $\beta(u)=1$、$\beta(w^2)>0$；不预付von Neumann正常性。定义原实线性算子 $L_z(v)=z\circ v$、正二次表示 $U_z=2L_z^2-L_{z^2}$，以及
+
+$$
+\ell(v)=\beta(w\circ K_y(v))
+=\beta L_w(L_{y^2}-L_y^2)(v).
+\tag{146.1}
+$$
+
+$\ell$ 本身不被称作正泛函。其精确正分量全部保留如下：对各独立符号 $\eta,\sigma,\theta\in\{1,-1\}$，置
+
+$$
+\begin{aligned}
+\psi_{\eta\sigma}
+&=\beta\circ U_{u+\eta w}\circ U_{u+\sigma y^2},\\
+\varphi_{\eta\sigma\theta}
+&=\beta\circ U_{u+\eta w}\circ U_{u+\sigma y}\circ U_{u+\theta y},\\
+m_{\eta\sigma}
+&=\psi_{\eta\sigma}(u)
+=\beta\bigl(U_{u+\eta w}((u+\sigma y^2)^2)\bigr),\\
+n_{\eta\sigma\theta}
+&=\varphi_{\eta\sigma\theta}(u)
+=\beta\bigl(U_{u+\eta w}U_{u+\sigma y}((u+\theta y)^2)\bigr).
+\end{aligned}
+\tag{146.2}
+$$
+
+每个 $\psi,\varphi$ 都是同一原域上的数学正实线性泛函，质量分别是所列 $m,n\ge0$。质量可零、可不等，不归一，也不将相同限制但不同出现或来源的读取合并。这些原正二次表示由已知Jordan闭合给出；它们不是对未知响应的正性或物理制备声明。
+
+**定理 146.2（每份原正分量下的同检测器返回）。** 有精确泛函恒等式
+
+$$
+\boxed{\ell=
+\frac1{16}\sum_{\eta,\sigma}\eta\sigma\psi_{\eta\sigma}
+-\frac1{64}\sum_{\eta,\sigma,\theta}\eta\sigma\theta\varphi_{\eta\sigma\theta}.}
+\tag{146.3}
+$$
+
+因此对每个原 $q$，尤其对每个实际原 $Q_i$，有
+
+$$
+\ell(W_{a+u}(Q_i))=-4\beta(w^2),\qquad
+\ell(T(Q_i)-2(a+u)\circ H)=2\beta(w^2).
+\tag{146.4}
+$$
+
+证明。已知二次表示给
+
+$$
+U_{u+z}-U_{u-z}=4L_z.
+$$
+
+依照146.2所写的复合次序，两个差的乘积给 $16\beta L_wL_{y^2}$，三个差的乘积给 $64\beta L_wL_yL_y$；相减就是146.3。正性来自每个 $U$ 保正；质量由 $U_z(u)=z^2$ 直接得到，没有除以任何读数。零质量的正泛函由序单位界恒零，但相应出现仍保留。最后对145.5作用同一 $\ell$，用 $K_y\delta=w$，得到 $\ell(\delta)=\beta(w\circ w)=\beta(w^2)$ 及146.4。∎
+
+对每个单独的正分量 $\omega\in\{\psi_{\eta\sigma},\varphi_{\eta\sigma\theta}\}$，145.5给的是 $\omega(W_{a+u}(q))=-4\omega(\delta)$，不把右侧换成 $-4\beta(w^2)$；检测平方是在146.3全部有符号分量合回同一个 $\ell$ 后取得。对每个 $\lambda,t,\epsilon$，同一原P2的完整预算仍是
+
+$$
+\begin{aligned}
+\Gamma_{\lambda,t}^\epsilon(\omega)
+&=\omega((A_{\lambda,t}^\epsilon)^2)\,
+\omega((B_{\lambda,t}^\epsilon)^2)
+-\omega(A_{\lambda,t}^\epsilon\circ B_{\lambda,t}^\epsilon)^2\ge0,\\
+|\omega(O_{\lambda,t}^\epsilon)|
+&\le\sqrt{\Gamma_{\lambda,t}^\epsilon(\omega)}.
+\end{aligned}
+\tag{146.5}
+$$
+
+正质量缩放使 $\Gamma$ 按质量平方缩放，零质量则全部为零。将这些预算分别用于十二个实际外出现，只能直接得到
+
+$$
+2|\omega(\delta)|
+\le\sum_{\lambda,t,\epsilon}|\chi_{\lambda,t,\epsilon}|
+\sqrt{\Gamma_{\lambda,t}^\epsilon(\omega)}
++2|\omega((a+u)\circ H)|.
+\tag{146.6}
+$$
+
+证明是对145.5和145.2用三角不等式及146.5。右侧既保留所有实际外预算，也保留 $H$；这里没有取得它们由原框架误差平方控制或趋零的结论。
+
+**定义 146.3（保留同一检测器的非退化原实框架）。** 在 $w\ne0$ 的分支，保持138.2及146.1的同一个 $\beta$、任一正的数学态延拓 $\phi$ 的GNS向量 $\xi$ 和同一个原平方网。此延拓不要求von Neumann正常性；其双对偶延伸取正常延伸。写 $\operatorname{Var}_\beta(z)=\beta(z^2)-\beta(z)^2$，按下列确定规则选择原标签：
+
+$$
+h=\begin{cases}
+w-\beta(w)u,&\operatorname{Var}_\beta(w)>0,\\
+y-\beta(y)u,&\operatorname{Var}_\beta(w)=0,
+\end{cases}
+\qquad \nu=\beta(h^2),\qquad
+\eta=\frac{h\xi}{\sqrt\nu},\qquad
+\mathcal K=\operatorname{span}_{\mathbb C}\{\xi,\eta\}.
+$$
+
+这确实给 $\nu>0$。第一分支的 $\nu$ 就是 $\operatorname{Var}_\beta(w)>0$。第二分支若还有 $\operatorname{Var}_\beta(y)=0$，令 $\mu=\beta(y)$，便有 $y\xi=\mu\xi$。只计算已知固定Jordan元素的向量读取，得到
+
+$$
+\beta(\delta\circ y^2)=\mu^2\beta(\delta),\qquad
+\beta(y\circ(\delta\circ y))
+=\mu\beta(\delta\circ y)=\mu^2\beta(\delta).
+$$
+
+于是 $\beta(w)=0$，再由 $\operatorname{Var}_\beta(w)=0$ 得 $\beta(w^2)=0$，与所选检测态矛盾。因此第二分支的 $\nu=\operatorname{Var}_\beta(y)$ 也严格正。两分支均有 $\beta(h)=0$，所以 $\xi,\eta$ 正交且均为单位向量。第一分支有 $w\xi=\beta(w)\xi+\sqrt\nu\eta$；第二分支由零方差有 $w\xi=\beta(w)\xi$。故同一个固定 $\mathcal K$ 在两分支中都包含 $\operatorname{span}_{\mathbb C}\{\xi,w\xi\}$，没有换掉 $w$ 或检测态。
+
+将138.2的 $q_i=e_i^2$ 记为 $P_i$，定义全部原框架标签
+
+$$
+\begin{gathered}
+P_i=e_i^2,\qquad Q_i=\frac{U_h(P_i)}{\nu},\qquad
+X_i=\frac{2P_i\circ h}{\sqrt\nu},\\
+Z_i=P_i-Q_i,\qquad R_i=P_i+Q_i.
+\end{gathered}
+\tag{146.7}
+$$
+
+每个标签均是原元素的有限Jordan多项式及实线性组合，因而属于原 $E$。$\sqrt\nu$ 只是一个固定正实数，不是对原元素取平方根。由原二次表示保正及 $0\le P_i\le u$，有 $0\le Q_i\le h^2/\nu$、$R_i\ge0$。令 $M=\|h\|$，全部网指标上一致有
+
+$$
+\begin{gathered}
+\|P_i\|\le1,\qquad \|Q_i\|\le\frac{M^2}{\nu},\qquad
+\|X_i\|\le\frac{2M}{\sqrt\nu},\\
+\|Z_i\|\le1+\frac{M^2}{\nu},\qquad
+\|R_i\|\le1+\frac{M^2}{\nu}.
+\end{gathered}
+\tag{146.8}
+$$
+
+这些界只用已知Jordan运算的范数界；未要求 $Z_i,X_i$ 正。$p$ 仍是138.2的最小Jordan支撑，$P$ 仍是138.3中它的表示投影，均不当作原标签。特别，$P$ 不必是环境秩一投影，环境态延拓不要求纯性，GNS表示不要求不可约性。
+
+**定理 146.4（同一两向量空间上的完整作用与三误差）。** 对146.3的固定选择，定义三个准确的作用误差
+
+$$
+e_{0i}=\|P_i\xi-\xi\|,\qquad
+e_{1i}=\|P_i h\xi\|,\qquad
+e_{2i}=\|P_i h^2\xi-\nu\xi\|.
+\tag{146.9}
+$$
+
+三者均趋于零。在正交基 $(\xi,\eta)$ 下，146.7的五个标签在同一个 $\mathcal K$ 上趋向以下实自伴矩阵的完整作用：
+
+$$
+\begin{aligned}
+P^{(0)}&=\begin{pmatrix}1&0\\0&0\end{pmatrix},&
+Q^{(0)}&=\begin{pmatrix}0&0\\0&1\end{pmatrix},&
+X^{(0)}&=\begin{pmatrix}0&1\\1&0\end{pmatrix},\\
+Z^{(0)}&=\begin{pmatrix}1&0\\0&-1\end{pmatrix},&
+R^{(0)}&=\begin{pmatrix}1&0\\0&1\end{pmatrix}.
+\end{aligned}
+\tag{146.10}
+$$
+
+这些矩阵只描述极限作用，不宣称是原 $E$ 中的准确矩阵单位。准确的逐列误差界为
+
+$$
+\begin{aligned}
+\|P_i\xi-\xi\|&=e_{0i},&
+\|P_i\eta\|&=\frac{e_{1i}}{\sqrt\nu},\\
+\|Q_i\xi\|&\le\frac{M e_{1i}}{\nu},&
+\|Q_i\eta-\eta\|&\le\frac{M e_{2i}}{\nu\sqrt\nu},\\
+\|X_i\xi-\eta\|&\le\frac{e_{1i}+M e_{0i}}{\sqrt\nu},&
+\|X_i\eta-\xi\|&\le\frac{e_{2i}+M e_{1i}}{\nu},\\
+\|Z_i\xi-\xi\|&\le e_{0i}+\frac{M e_{1i}}{\nu},&
+\|Z_i\eta+\eta\|&\le\frac{e_{1i}}{\sqrt\nu}
++\frac{M e_{2i}}{\nu\sqrt\nu},\\
+\|R_i\xi-\xi\|&\le e_{0i}+\frac{M e_{1i}}{\nu},&
+\|R_i\eta-\eta\|&\le\frac{e_{1i}}{\sqrt\nu}
++\frac{M e_{2i}}{\nu\sqrt\nu}.
+\end{aligned}
+\tag{146.11}
+$$
+
+证明。138.3对固定原 $h,h^2$ 给
+
+$$
+PhP=0,\qquad Ph^2P=\nu P,\qquad P\xi=\xi,
+\qquad Ph\xi=0,\qquad Ph^2\xi=\nu\xi.
+$$
+
+只需固定有限向量表 $\{\xi,h\xi,h^2\xi\}$。138.2的同一有界强网及相应正强半范数给
+
+$$
+\begin{aligned}
+e_{0i}^2&=\beta^{**}((P_i-p)^2)\longrightarrow0,\\
+e_{1i}^2&=\beta^{**}\bigl(U_h((P_i-p)^2)\bigr)\longrightarrow0,\\
+e_{2i}^2&=\beta^{**}\bigl(U_{h^2}((P_i-p)^2)\bigr)\longrightarrow0.
+\end{aligned}
+\tag{146.12}
+$$
+
+这些双对偶式子仅用于证明强收敛。在环境表示中，原标签的已知Jordan定义给 $Q_i=hP_i h/\nu$、$X_i=(P_i h+hP_i)/\sqrt\nu$。于是
+
+$$
+\begin{aligned}
+Q_i\xi&=\frac{hP_i h\xi}{\nu},&
+Q_i\eta-\eta&=\frac{h(P_i h^2\xi-\nu\xi)}{\nu\sqrt\nu},\\
+X_i\xi-\eta
+&=\frac{P_i h\xi+h(P_i\xi-\xi)}{\sqrt\nu},&
+X_i\eta-\xi
+&=\frac{P_i h^2\xi-\nu\xi+hP_i h\xi}{\nu}.
+\end{aligned}
+$$
+
+范数不等式逐项给146.11；$P_i$ 的两列直接由定义，$Z_i,R_i$ 的两列由加减得到。令 $\iota:\mathcal K\hookrightarrow\mathcal H_\phi$ 为包含映射，对每个 $A_i\in\{P_i,Q_i,X_i,Z_i,R_i\}$，取146.11中相应两列的右侧为 $b_{\xi i},b_{\eta i}$，则Cauchy–Schwarz给
+
+$$
+\|A_i|_{\mathcal K}-\iota A^{(0)}\|_{B(\mathcal K,\mathcal H_\phi)}
+\le\sqrt{b_{\xi i}^2+b_{\eta i}^2}\longrightarrow0.
+\tag{146.13}
+$$
+
+因此结论对 $\mathcal K$ 的整个单位球一致，包括泄漏到 $\mathcal K^\perp$ 的分量：若 $\Pi_{\mathcal K}$ 是仅供数学估计的Hilbert投影，便有 $\|(1-\Pi_{\mathcal K})A_i|_{\mathcal K}\|\le\sqrt{b_{\xi i}^2+b_{\eta i}^2}\to0$。不是仅压缩后的两个乘两个矩阵元收敛。常数依赖所固定的 $h,\nu$，不依赖 $i$；没有对全部检测器选择供应统一的正方差下界。全程用网保留不可分情形。∎
+
+**定义 146.5（三误差与已知原平方读取的准确对应）。** 写 $\omega_z=\beta\circ U_z$，这是138.2已许可的原数学正读取，质量准确为 $\omega_z(u)=\beta(z^2)$。146.9还可以完全用原标签和已知原平方读取表示为
+
+$$
+\begin{aligned}
+e_{0i}^2&=\beta((P_i-u)^2),\\
+e_{1i}^2&=\omega_h(P_i^2),\\
+e_{2i}^2&=\omega_{h^2}(P_i^2)
+-\frac{\nu}{2}\{\omega_{u+h^2}(e_i^2)-\omega_{u-h^2}(e_i^2)\}
++\nu^2\beta(u^2).
+\end{aligned}
+\tag{146.14}
+$$
+
+证明。前两式是自伴作用的范数平方。第三式展开同一向量误差给
+
+$$
+e_{2i}^2=\beta(U_{h^2}(P_i^2))-2\nu\beta(P_i\circ h^2)+\nu^2.
+$$
+
+再用 $U_{u+h^2}-U_{u-h^2}=4L_{h^2}$ 和 $P_i=e_i^2$ 即得146.14。这里的每个被读取元素 $(P_i-u)^2,P_i^2,e_i^2,u^2$ 都是已知原平方；最后一行整体非负，是有符号组合，不将其中每个正项另判为趋零。所用读取的全部实际质量是
+
+$$
+\begin{gathered}
+\beta(u)=1,\qquad \omega_h(u)=\nu,\qquad
+\omega_{h^2}(u)=\beta(h^4),\\
+\omega_{u\pm h^2}(u)=\beta((u\pm h^2)^2)
+=1\pm2\nu+\beta(h^4)\ge0.
+\end{gathered}
+\tag{146.15}
+$$
+
+不除以这些质量，零质量的出现也保留；这与146.2各份 $m,n$ 的正分量是不同的读取表，不能用此表替换它们。146.12证明三误差趋零，146.14给相同误差的纯原平方表达，均没有读取未知响应的极限。∎
+
+145.2在这里取的仍是同一个原 $q=Q_i$，两行均读取 $f_t=D(t,Q_i)$；式(146.4)的同检测器返回在每个有限 $i$ 已经准确。$\nu$ 只用于146.7这些既定原标签，式(146.2)的每个正分量仍以原 $m,n$ 读取，不因此归一化、删去零质量或获得实际准备。$w=0$ 时无须这份检测框架，145的全部恒等式及146.2的正分量预算仍保持原量词。
+
+这只供应近似的实自伴两向量框架：$X^{(0)},Z^{(0)}$ 是实轴，没有供应原虚Pauli轴或原域中的准确矩阵单位。即使已知完整作用及泄漏误差趋零，也不识别 $D(P_i,t)$、$D(Z_i,X_i)$ 或任何变动外回复，不把相同或渐近相同的输入作用替换成相同输出。没有给旧 $D$ 增加连续性、可加性、协变、局部闭合或响应运输。尤其146.11–146.15没有使式(146.5)的十二个实际外预算或 $H$ 趋零。
+
+## 147. 原域预算缺口、成熟交叉配平工具与全部来源合同
+
+**定义 147.1（精确返回与仍缺的原预算供应）。** 145–146只生产同一检测器的准确返回接口，不生产其趋零预算。一般原 $E$ 中仍须用合法实际PB，把两行、全部 $d_t,d'_t$、共享 $f_t$ 及十二个外回复保持在一起，按原 $\rho,\chi$ 返回
+
+$$
+W_{a+u}(q)=-2\{T(q)-2(a+u)\circ H\}=-4\delta,
+$$
+
+并在146的同一正分量及实际质量下，给它与146.9、146.14中已知原框架误差平方的目标相关界。146.11–146.13已控制同一两向量空间上的完整原标签作用，仍未给这份检测预算的支配。仅有输出相关平方 $\mathcal S_{a+u}\ge0$、统一有界性、单列PB配平，或另一列和的守恒，均未支付这个界。145.5是恒等式，不是新的充分性生产者；把它另命名也不增加来源信息。
+
+一个目标相关的联合通量估计仍未被144否定，但它必须在全部外 $\chi$ 求和后到达同一 $W_{a+u}$ 或 $T-2(a+u)\circ H$。同样，可以尝试精确运输固定元素 $T(q)-2(a+u)\circ H=2\delta$ 再配原平方衰减预算；只运输与它无返回关系的能量不足。任何中间调用的两端及全部内外回复均须来自同一总 $D$。没有取得这份一般原域的实际运输字或衰减预算，也没有证明其不存在。
+
+**定义 147.2（已付完整域运输与不能移用的输入）。** [SF100.5、SF101.1–101.2、SF102.12–102.14](AURIC_SEMIFINITE_ORIGINAL_RESPONSE_AND_CENTRAL_POLAR_GEOMETRY.md#101-中央复坐标中的唯一精确运输接口)在其完整半有限continuous原域 $E=M_{\rm sa}$ 中，已经支付全部有限支撑首行、同一个 $\mathfrak F(Z)$ 的实际Cayley运输、有界四分之一辐角的有限两步酉运输，以及保持固定缺陷而使已知原平方预算衰减的中央局部读取。直接复用这些结论，不重新分类，也不将它们列为同类模型中的欠项。
+
+那里逆元重选的原坐标、有界Borel辐角、极分解和原投影均由其完整域供应。一般JC包含只给 $E\subset X\subset A_{\rm sa}$，不保证这些坐标属于原 $E$，也不保证 $E+iE$ 结合闭合。因此这些输入、原行识别和运输都不能仅凭忠实JC包含迁入一般不完备原域。142–144的完整 $\mathrm{II}_1$ 测试实例亦不替换145–146的一般原候选。
+
+成熟交叉配平的相邻背景是J. M. Sanz-Serna，[*Symplectic Runge–Kutta Schemes for Adjoint Equations, Automatic Differentiation, Optimal Control, and More*](https://arxiv.org/html/1503.04021v1#S2.SS2)，arXiv:1503.04021v1，§2.2，Theorem 3、Lemma 1及式(16)–(18)；正式版为 *SIAM Review* 58(1), 3–33，DOI [10.1137/151002769](https://doi.org/10.1137/151002769)。对已有实双线性不变量 $S(q,p)$ 的有限维分块ODE，配对PRK系数的条件是
+
+$$
+b_i=B_i,\qquad b_iA_{ij}+B_ja_{ji}-b_iB_j=0\quad\text{对所有阶段 }i,j,
+\qquad c_i=C_i\quad\text{在非自治情形}.
+\tag{147.1}
+$$
+
+Lemma 1用这些联立系数条件消去准确双线性增量中的交叉阶段项；自治情形不需要横坐标条件。它保持的是所给双线性跨块不变量，不能改读成任意分块算法的全部二次不变量都保持。此处只将其作为成熟的交叉更新相容机制引用；没有给原 $D$ 供应可微ODE、PRK实现、伴随动力或未知响应的双线性，也不从该定理推导144。143–145的关系直接由实际原调用和已知平方证明。
+
+142.3的普通Gram展开、Pauli乘法、C*正性和正泛函分离均是成熟中间工具，不单独计算为新内容。146.3–146.5的支撑及有界强网直接消费138.2–138.3和141.2所引Hamhalter及Hanche-Olsen–Størmer的准确接口；正的数学态延拓和GNS仍按137.2、141.2的同一来源使用，不加强为纯延拓或不可约表示。新增的 $\texttt{repo-derived}$ 应用是：把演员差的活动支撑判据接到同一总表生成的完整三参数实际配对循环，保留两个循环符号后计算其非零漂移，再将两行实际源表接回保留 $H$ 的同一原检测器，并给保留该检测器的原实框架、完整作用及已知平方误差对应。它不同于141.1的逐输出零误差诊断，也不重复SF98的标准模型分类。145.5及近似框架均不单独计为检测目标生产；这里不作历史优先权、文献穷尽、Lean核验或物理实现的声称。
+
+**定义 147.3（全部七项原合同的无删减合取）。** 本组将[本卷141.3](#141-全数学pb下的零误差pauli诊断与原目标边界)、137.3、122.1，及[SF105.1第1–7项全文](AURIC_SEMIFINITE_ORIGINAL_RESPONSE_AND_CENTRAL_POLAR_GEOMETRY.md#105-七项真实同源物理来源的完整合同)无删减地合取为完整来源义务。这包括SF105.1明确完整合取的SF96.1，SM86.1、SM78.2、SM43.2、SM49.1、SM61.1、SM69.1，C199.2、C194.2、C186.1–186.7、C181.3、C171.1–171.7、C160.3、C155.1、C145.1–145.7，A8.3–8.4、A14.2、A25.1、A53.1，R3 8.1–8.5、R3 80.1，W95.2、W116.1，以及这些各项逐一纳入的全部上游对象、条件、实现、原域、质量和量词；固定源身份仍按各原文给定。字母缩写取SF98.1的原文地址。这里是完整子句的共同合取，不是只引标题、消费者索引或下述说明来代替原文。
+
+第一项保持唯一原 $\Omega/\mathrm{native}$、同一原 $E,C,u,N,\mathcal P,S,D$、具名可取得标签、指定跨评价配对、共同全词 $q/K/J$、全部原 $\xi_\gamma$、parent/ready和合法控制。SF105.1的式(105.1)及其全部原标签、原评价、全部 $z,w\in V$、所有 $n\ge0$ 原词和正标签量词完整保留：同一个第一槽共轭线性的半正定Hermitian型 $K$ 及同一总集合映射 $J_a$，准确原词复合后的有限复线性包、零长度词和每份原程序自己的身份均不换。数学表示不预付 $J_a$ 线性、$J_0=0$、$J_1=I$、全部 $B(H)$ 的取得、任意向量准备或实际相干控制；原门序列及 $\sigma,t_0$ 保持自身来源。
+
+第二项保持原准备、事件、准确效果区间、每份实际完整菜单及接受归属，全部共同根、抽签、mark、$\mathrm C_{12},\mathrm A_{12},\mathrm{BI}_{12}$、预定有限强度、P9的每个分支和每份独立 $W_e$、全部中间切口及固定支持全质量。只有原事件已经绑定、菜单和为单位且实际质量严格正，才按SF105.2归一；条件角菜单另须原支持、条件化身份和正支持质量。所有零、不等、次归一质量、中心权、经典不等维和静默块均保留；原强度不等于概率质量。各块AS/EC、菜单外OB、忠实二维到三维适配器及互探的有限维／最小可见／实尺度范围不变。原 $g^*$、$d_s^*$、共同根的读取顺序和不同程序身份不因同矩阵而合并；数学态、正延拓、迹和GNS不新增物理准备或正常性。
+
+第三项保持同一个非零真正相关原联合、原全词网络、交叉零、旧局部乘法、忠实同向交换局部腿、共同实现、联合生成分离和重数、全部真正相关输入、中央对、经典和不等维块、实际复制及各层同源参考。要求局部全矩阵的消费者仍守其准确前件；数学type II张量测试域不直接供应这些物理腿。相同边缘、分别可达、共同数学取向、两个角或一个辅助张量表示都不替代这份共同实现。
+
+第四项保持每条实际原细分支 $r:A\to B$ 的全部typed前后接、每份完整输出的每个仍合法未来、每份评价的未归一回溯SF105.3、反变复合、typed分区、全未来自然性、质量运输和原箭头商下降。CP仍须完整同标签单位区间比较，或整台实际箭头可再应用的递归同源参考；整个系统和环境、全部成功／失败／细记录／port／post-port输出，以及真正遗忘、返回和合法复合均在原规则类中。SF105.4–105.6的两端共同真支持、忠实同向交换系统腿和 $M_2$ 腿、三颗实际参考投影与 $I_2$ 的实张成、支持内补、全部原相关正输入和决定锥评价上的intertwining与夹界，以及对每条根箭头、每个所需有限 $L$、每个 $k\le L$ 的实际长链和精确累计支持运输逐项保留。累计支持不换成新环境单位；每个正精度和精确根身份保持，固定正误差不代付精确结论。有限深度全称不暗中要求物理无限链；数学参考不制造原参考。Kraus另守有限全矩阵或已付正规表示、指定前对偶和收敛范围，不假定一般子代数等于全 $B(H)$、存在可数Kraus和或其指标就是原记录。
+
+第五项保持整台仪器的全输入运输、完整typed菜单和接受端、整个环境、全部成功失败细记录及port/post-port输出和每份输出的全部合法未来。真分组遗忘、AC、精确 $N_u$、X/Xs、每份原平方根词及各自接受条件不删；完成中有平方根不等于原词可执行。正次单位只给TNI，TP另需完整typed单位分区；Lüders另需同一完整输出的投影效果、像内每条射线保持与完整校准，同效果或同概率不代付。仅严格正输出质量归一，失败和零分支保留原类型、记录和未来；细输出可相加仍须真正粗事件和实际分组接头。密度、迹类和Kraus公式各守已付表示、指定前对偶及收敛域，不用给定迹抹去来源身份。
+
+第六项保持全部合法顺序、自适应和并行历史，每份完整输出的每个仍合法未来，整个环境、参考副本、全部细记录和泄漏，停止、拒绝、销毁，真遗忘，同数两侧和同数逆向的真实双向返回。未定义请求仍未定义；同数学算子不合并原程序、读取顺序、原 $q$ 零集或AC方向。CountRead绑定读后同一原完整活动输入和其全未来实际返回，活动ready接头、接受叶活动输出及第一合法消费者、具名分析词到原完整菜单和接受端的接线不删；负提升两条活路的分别控制及相干聚合都须实际取得。精确正生成 $B$ 与闭正生成 $B_{\rm cl}$ 保持区别；原两只独立九叶彩票及各自第九空程序、十六拒绝叶和相干 $I_3/3$ 返回仍保身份。初始取得、指定有限树、被动精确混合解码、已付CountRead精确表的支持事件和整支质量、已付有限返回数值校准各守原平稳、真实同源、同初始版本和实际域，既有成果不重新列为欠项；它们也不代付完整输出的全未来Return。无限历史、无限或非离散记录、可数可加、正常性、指定前对偶和所需收敛继续由原扩展来源供应，不截成有限角。
+
+第七项保持同一旧全域乘法、保持可能不完备原域的流、实际相位和原门序列、同一实际过程内可逆一参数群及实际逆、原物理钟和单位、所需强连续酉实现、生成元定义域、Hamiltonian能量解释、共同仪器、共同作用量及同一个正 $\hbar$。原 $\sigma,t_0,d$、固定域、resolvent及 $3s+r\le1$ 的预算保持各自原设备、参数、定义域与量纲；不与这里的矩阵参数或网指标混同。只有这些前件齐备，才在原适用域消费SF105.7的Schrödinger、密度和Heisenberg方程，伴随乘法也必须是识别后的同一个 $\star$。向量、密度和观测量微分各守原生成元、迹类可微及实际可微域；有界数学内导子、谱、辅助钟或形式CP均不生产物理时间、控制成本、一般无界域、能量意义或跨装置共同尺度。
+
+七项必须在唯一原世界内共同实现，不能每项各换来源。142–144只给一种完整数学测试类中的方法障碍，145–146只给一般原域的同检测器接口；它们都没有同时供应这七项的物理实现。原量子起源目标、所有原输入的 $K_y\delta_a(b,c)=0$、原全域旧乘法、全部合法历史／未来／真实返回和物理尺度未因这些局部结果而缩减。数学兼容性、纸面证明与物理本体真实性仍分别评价。
+
+## 追加锚（本行以下为增补区）
