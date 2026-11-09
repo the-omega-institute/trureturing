@@ -31,6 +31,22 @@ internal sealed class BlitvicKammounSteingrimsson14325TransferDocument : IScribe
                     + "Induction on k proves these identities for every argument; induction "
                     + "on n proves stabilization. The initial row and first nonconstant "
                     + "row both take value one at three."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("bks14325-odd-row-recurrence"),
+                DeclarationHandle.Create(Prefix + "odd_row_recurrence"),
+                H("Odd arguments over the ring of residues modulo four"),
+                StatementSource.FromAuthor(Disp(Seq(Forall, Sp, F.Id("n"), Comma, Sp, F.Id("k"),
+                    Colon, Sp, Mathbb, Grp(F.Id("N")), Comma, Sp,
+                    new Formula.Apply(F.Id("b"), [F.Id("n+2"), F.Id("2k+1")]), Sp, Eq, Sp,
+                    new Formula.Apply(F.Id("oddTransfer"), [F.Id("b(n+1)"), F.Id("k")])))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("In ZMod 4 the exact formula is "
+                    + "bₙ₊₂(2k+1)=−∑₁≤r≤k bₙ₊₁(2r+1)+(2k+1)bₙ₊₁(2k+3). "
+                    + "For every row the values at 2h+2 and 2h+1 become equal after "
+                    + "multiplication by two. In the constant row this is immediate; "
+                    + "in a later row their difference is the even new summand. "
+                    + "Pairing successive terms and using 2=−2 proves the reduced "
+                    + "recurrence by induction on k. No division in ZMod 4 is used, "
+                    + "and k=0 is retained."))), DescribeRole.Theorem),
             Paragraph(Text("The source target counts actual permutations of [3j+2], j≥1, "
                 + "whose prescribed length-five windows at starts 1+3t, 0≤t<j, have "
                 + "pattern 14325. Extra occurrences are allowed. Applying this invariant "
