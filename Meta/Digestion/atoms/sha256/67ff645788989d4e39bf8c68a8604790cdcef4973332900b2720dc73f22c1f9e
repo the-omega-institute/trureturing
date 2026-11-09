@@ -1,0 +1,20 @@
+**定义 30.1（比较保持流公理）。** 令 $\mathbb P(H)$ 为 Hilbert 空间的射影单位向量空间，定义转移比较
+
+$$
+r([\psi],[\phi])=|\langle\psi,\phi\rangle|^2.
+$$
+
+一个时间流是映射 $T:\mathbb R\times\mathbb P(H)\to\mathbb P(H)$，满足
+
+$$
+T_0=\mathrm{id},\qquad T_{t+s}=T_t\circ T_s,
+$$
+
+每个 $T_t$ 是双射，并且
+
+$$
+r(T_t[\psi],T_t[\phi])=r([\psi],[\phi]).
+$$
+
+另要求 $t\mapsto T_t[\psi]$ 对每个射影态连续；在无限维情形，选择代表向量时要求得到强连续的局部提升。公理只说时间保持比较，不预设 $U_t$ 或 Hamiltonian。
+
