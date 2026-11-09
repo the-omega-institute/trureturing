@@ -61,51 +61,75 @@ D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.widthV.eq_2
 statement_id: sha256:02a910fcd311188b871be135dbe86f61c98a47ead76d48f62a22196f30991d60
 D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.width_counting_bridge
 statement_id: sha256:a6ad861eda2ca48bc91989542e4b7cc27d81aec8df9a91b8db40c9398c577c72
-D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255LiteralBridge.labelAdvance
-statement_id: sha256:71b29148546bae84fb533c9ea526a00e92692140a0fe72cd0038258420b002ff
-D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255LiteralBridge.labelWeight
-statement_id: sha256:69c6717e7af37d93a4a4a76f42e090ee5eb4cd87b620a2a23701ac7877b1cbba
 D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255LiteralBridge.rowFinish
 statement_id: sha256:ded50bd8c5de69b5b2324e575fee135f275ae05b5bb30b328b0e5c0313d86b07
-D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255LiteralBridge.rowFinish._proof_1
-statement_id: sha256:0fdada01db9738d660bb704fd55c8515d8a154de4a32ecb2f2fdac5d87b292a1
 D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255LiteralBridge.rowWeight
 statement_id: sha256:076a03b0e19556ba67d0faed8d8d552fb3d55e6c40992d9c52c88faad85e373a
-D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255LiteralBridge.rowWeight.eq_2
-statement_id: sha256:8ab81025196bb3bf21703ca8e05179a22bbaca44d9e5ceec06caa031b9eb8feb
 D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255LiteralBridge.scanner_fibres
 statement_id: sha256:63a356389be3d9bf756c53fb12271299a7668c1123562d84a2e34e78a341fc90
+D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255ShapeSymmetry.full_row
+statement_id: sha256:f81e65c6e42bf750ca73737a7ace4b7b696a7b7a57684908ba1ce134acfcf88c
 D5.S3.Observer.Separation.BooleanRankThreeK4.beta
 statement_id: sha256:1abdc5f3db71567fe05de5aabbe80dddeb5ec5179e4ec7fd49fe71e500518481
 _private.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.0.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.WidthRow
 statement_id: sha256:63d18919d9321000a9a3541c82cd4a7aa88a0da2c26ce61e51d7cede756ff789
-Row: proof_shape=bind-only; consumers=rowLegal
-Boundary: proof_shape=bind-only; consumers=pairs
-rowLegal: proof_shape=bind-only; consumers=a, classCount, momentCount, firstCount, firstMoment
-bonds: proof_shape=bind-only; consumers=a, bonds_iff, counting_bridge
-instDecidableRowLegal: proof_shape=bind-only; consumers=a, classCount, momentCount, firstCount, firstMoment
-instDecidableBonds: proof_shape=bind-only; consumers=a, counting_bridge
-a: proof_shape=bind-only; consumers=counting_bridge
-pairs: proof_shape=bind-only; consumers=bonds_iff
-compatible: proof_shape=bind-only; consumers=instDecidableCompatible
-instDecidableCompatible: proof_shape=bind-only; consumers=classCount
+Consumers are direct authored uses in compiled types or values on the result path.
+Row: proof_shape=bind-only; consumers=rowLegal, bonds, instDecidableRowLegal, instDecidableBonds,
+  pairs, compatible, instDecidableCompatible, bonds_iff, valid_next, classCount, momentCount,
+  firstCount, firstMoment, full_flags, full_moments, allCounts, allFirst, reduce_counts,
+  reduce_first, row_counts, initial_valid, v_eq_w, a_eq_w, one_count
+Boundary: proof_shape=bind-only; consumers=pairs, compatible, instDecidableCompatible, v, total,
+  counting_bridge, Valid, shape, moment, classCount, momentCount, labelCount, full_moments,
+  label_counts, weight, allCounts, reducedCounts, reduce_counts, reduce_first, unseen_counts,
+  row_counts, finite_certificate, eval, v_eq_w, a_eq_w, one_count
+rowLegal: proof_shape=bind-only; consumers=instDecidableRowLegal, a, v, total, counting_bridge,
+  valid_next, classCount, momentCount, firstCount, firstMoment, full_moments, allCounts, allFirst,
+  reduce_counts, reduce_first, row_counts, initial_valid, v_eq_w, a_eq_w, zero_count, one_count
+bonds: proof_shape=bind-only; consumers=instDecidableBonds, a, bonds_iff, counting_bridge,
+  zero_count
+instDecidableRowLegal: proof_shape=bind-only; consumers=a, v, total, counting_bridge, classCount,
+  momentCount, firstCount, firstMoment, full_moments, allCounts, allFirst, reduce_counts,
+  reduce_first, row_counts, v_eq_w, a_eq_w, zero_count, one_count
+instDecidableBonds: proof_shape=bind-only; consumers=a, counting_bridge, zero_count
+a: proof_shape=bind-only; consumers=counting_bridge, a_eq_w, recurrence, zero_count, one_count,
+  result
+pairs: proof_shape=bind-only; consumers=bonds_iff, v, total, counting_bridge, valid_next,
+  momentCount, firstMoment, full_moments, allCounts, allFirst, reduce_counts, reduce_first,
+  initial_valid, v_eq_w, a_eq_w
+compatible: proof_shape=bind-only; consumers=instDecidableCompatible, bonds_iff, v, counting_bridge,
+  classCount, momentCount, full_moments, allCounts, reduce_counts, row_counts, v_eq_w
+instDecidableCompatible: proof_shape=bind-only; consumers=v, counting_bridge, classCount,
+  momentCount, full_moments, allCounts, reduce_counts, row_counts, v_eq_w
 bonds_iff: proof_shape=bind-only; consumers=counting_bridge
-v: proof_shape=bind-only; consumers=counting_bridge
-total: proof_shape=bind-only; consumers=counting_bridge
-counting_bridge: proof_shape=bind-only; consumers=a_eq_w
-Valid: proof_shape=bind-only; consumers=valid_next
+v: proof_shape=bind-only; consumers=counting_bridge, v_eq_w, a_eq_w, one_count
+total: proof_shape=bind-only; consumers=counting_bridge, a_eq_w, one_count
+counting_bridge: proof_shape=bind-only; consumers=a_eq_w, one_count
+Valid: proof_shape=bind-only; consumers=valid_next, row_counts, finite_certificate, initial_valid,
+  v_eq_w, a_eq_w, one_count
 shape: proof_shape=bind-only; consumers=moment
-moment: proof_shape=bind-only; consumers=momentCount
-valid_next: proof_shape=bind-only; consumers=initial_valid
-classCount: proof_shape=bind-only; consumers=row_counts
-momentCount: proof_shape=bind-only; consumers=full_moments
-firstCount: proof_shape=bind-only; consumers=initial_counts
-firstMoment: proof_shape=bind-only; consumers=initial_counts
-sum_rows: proof_shape=bind-only; consumers=unseen01010_counts
+moment: proof_shape=bind-only; consumers=momentCount, firstMoment, labelCount, full_moments,
+  label_counts, weight, row_counts, finite_certificate, eval, v_eq_w, a_eq_w, one_count
+valid_next: proof_shape=bind-only; consumers=initial_valid, v_eq_w
+classCount: proof_shape=bind-only; consumers=row_counts, finite_certificate, v_eq_w, a_eq_w,
+  one_count
+momentCount: proof_shape=bind-only; consumers=full_moments, row_counts, finite_certificate, v_eq_w,
+  a_eq_w, one_count
+firstCount: proof_shape=bind-only; consumers=initial_counts, finite_certificate, v_eq_w, a_eq_w,
+  one_count
+firstMoment: proof_shape=bind-only; consumers=initial_counts, finite_certificate, v_eq_w, a_eq_w,
+  one_count
+sum_rows: proof_shape=bind-only; consumers=unseen01010_counts, unseen10101_counts
 scan_sum: proof_shape=bind-only; consumers=sum_beta_rows, reduce_counts, reduce_first
 sum_beta_rows: proof_shape=bind-only; consumers=full_moments
-labelCount: proof_shape=bind-only; consumers=full_moments
-full_flags: proof_shape=bind-only; consumers=full_moments
+labelCount: proof_shape=bind-only; consumers=full_moments, label_01010, label_01012, label_01020,
+  label_01021, label_01201, label_01202, label_01210, label_01212, label_02010, label_02012,
+  label_02020, label_02021, label_02101, label_02102, label_02120, label_02121, label_10101,
+  label_10102, label_10120, label_10121, label_10201, label_10202, label_10210, label_10212,
+  label_12010, label_12012, label_12020, label_12021, label_12101, label_12102, label_12120,
+  label_12121, label_20101, label_20102, label_20120, label_20121, label_20201, label_20202,
+  label_20210, label_20212, label_21010, label_21012, label_21020, label_21021, label_21201,
+  label_21202, label_21210, label_21212, label_counts, row_counts
+full_flags: proof_shape=bind-only; consumers=full_moments, row_counts
 full_moments: proof_shape=bind-only; consumers=row_counts
 label_01010: proof_shape=bind-only; consumers=label_counts
 label_01012: proof_shape=bind-only; consumers=label_counts
@@ -156,12 +180,15 @@ label_21202: proof_shape=bind-only; consumers=label_counts
 label_21210: proof_shape=bind-only; consumers=label_counts
 label_21212: proof_shape=bind-only; consumers=label_counts
 label_counts: proof_shape=bind-only; consumers=row_counts
-weight: proof_shape=bind-only; consumers=allCounts
-allCounts: proof_shape=bind-only; consumers=reduce_counts
-allFirst: proof_shape=bind-only; consumers=reduce_first
-reducedCounts: proof_shape=bind-only; consumers=reduce_counts
-reduce_counts: proof_shape=bind-only; consumers=unseen01010_counts
-reducedFirst: proof_shape=bind-only; consumers=reduce_first
+weight: proof_shape=bind-only; consumers=allCounts, allFirst, reducedCounts, reduce_counts,
+  reducedFirst, reduce_first, unseen01010_counts, unseen10101_counts, initial_row_counts
+allCounts: proof_shape=bind-only; consumers=reduce_counts, unseen01010_counts, unseen10101_counts,
+  unseen_counts, row_counts
+allFirst: proof_shape=bind-only; consumers=reduce_first, initial_row_counts
+reducedCounts: proof_shape=bind-only; consumers=reduce_counts, unseen01010_counts,
+  unseen10101_counts
+reduce_counts: proof_shape=bind-only; consumers=unseen01010_counts, unseen10101_counts
+reducedFirst: proof_shape=bind-only; consumers=reduce_first, initial_row_counts
 reduce_first: proof_shape=bind-only; consumers=initial_row_counts
 unseen01010_counts: proof_shape=bind-only; consumers=unseen_counts
 unseen10101_counts: proof_shape=bind-only; consumers=unseen_counts
@@ -171,10 +198,10 @@ row_counts: proof_shape=bind-only; consumers=finite_certificate
 initial_counts: proof_shape=bind-only; consumers=finite_certificate
 finite_certificate: proof_shape=bind-only; consumers=v_eq_w, a_eq_w, one_count
 initial_valid: proof_shape=bind-only; consumers=a_eq_w
-w: proof_shape=bind-only; consumers=eval
-eval: proof_shape=bind-only; consumers=v_eq_w
+w: proof_shape=bind-only; consumers=eval, v_eq_w, a_eq_w, recurrence, result
+eval: proof_shape=bind-only; consumers=v_eq_w, a_eq_w
 v_eq_w: proof_shape=bind-only; consumers=a_eq_w
-a_eq_w: proof_shape=bind-only; consumers=recurrence
+a_eq_w: proof_shape=bind-only; consumers=recurrence, result
 recurrence: proof_shape=bind-only; consumers=result
 zero_count: proof_shape=bind-only; consumers=result
 one_count: proof_shape=bind-only; consumers=result
