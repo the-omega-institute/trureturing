@@ -41,7 +41,11 @@ internal sealed class HardinA233254TriangleStripDocument : IScribeDocumentDefini
             Def("compatible", "compatible", "Antidiagonal exclusions", CompatibleFormula(),
                 "Each old boundary label excludes the corresponding next-row label."),
             Def("count", "a", "The literal finite count", CountFormula(),
-                "The filter ranges over every array function. The existential first-cell "
+                "The filter ranges over every array function and directly uses "
+                + "HardinA233251TriangleStrip.widthLegal at width six, with rowLegal and "
+                + "the displayed antidiagonal row relation. The equality below expands "
+                + "that owner predicate. Its published decidability instances and the "
+                + "published pair-strip scanner instances supply the decisions. The existential first-cell "
                 + "condition is false when n is zero. The final predicate is the original "
                 + "row-major scanner predicate at both false flags.", true),
             Def("valid", "Valid", "Reachable boundaries", ValidFormula(),
@@ -141,9 +145,17 @@ internal sealed class HardinA233254TriangleStripDocument : IScribeDocumentDefini
         var normal = Call(Transfer + "widthNormal", Pair(V("false"), V("false")),
             Fn("i", Call("Fin", n), Fn("j", Fin(6), Cell(i, j))));
         var arrays = Arrow(Product(Call("Fin", n), Fin(6)), Fin(6));
+        var c = V("c"); var d = V("d");
+        var oldCell = App(c, Call("Fin.succ", j));
+        var newCell = App(d, Call("Fin.castSucc", j));
+        var bonds = Fn("c", N("Row"), Fn("d", N("Row"), All("j", Fin(5),
+            And(Ne(oldCell, newCell), Ne(Add(Val(oldCell), Val(newCell)), Num(5))))));
+        var owner = Call(Transfer + "widthLegal", N("rowLegal"), bonds, a);
+        var literal = And(first, And(horizontal, And(anti, normal)));
         var filter = Call("Finset.filter", Fn("A", arrays,
-            And(first, And(horizontal, And(anti, normal)))), Q("Finset.univ"));
-        return All("n", Q("Nat"), Eq(CallLocal("a", n), Call("Finset.card", filter)));
+            owner), Q("Finset.univ"));
+        return All("n", Q("Nat"), And(All("A", arrays, Eq(owner, literal)),
+            Eq(CallLocal("a", n), Call("Finset.card", filter))));
     }
     private static Formula ValidFormula()
     {

@@ -41,18 +41,14 @@ D5.S3.Observer.Separation.BooleanRankThreeK4.beta
 statement_id: sha256:1abdc5f3db71567fe05de5aabbe80dddeb5ec5179e4ec7fd49fe71e500518481
 Row: proof_shape=bind-only; consumers=rowLegal
 Boundary: proof_shape=bind-only; consumers=pairs
-rowLegal: proof_shape=bind-only; consumers=Legal
-bonds: proof_shape=bind-only; consumers=Legal
-Legal: proof_shape=bind-only; consumers=instDecidableLegal
-instDecidableNormal: proof_shape=bind-only; consumers=instDecidableLegal
-instDecidableRowLegal: proof_shape=bind-only; consumers=instDecidableLegal
-instDecidableBonds: proof_shape=bind-only; consumers=instDecidableLegal
-instDecidableLegal: proof_shape=bind-only; consumers=a
+rowLegal: proof_shape=bind-only; consumers=a, classCount, momentCount, firstCount, firstMoment
+bonds: proof_shape=bind-only; consumers=a, bonds_iff, counting_bridge
+instDecidableRowLegal: proof_shape=bind-only; consumers=a, classCount, momentCount, firstCount, firstMoment
+instDecidableBonds: proof_shape=bind-only; consumers=a, counting_bridge
 a: proof_shape=bind-only; consumers=counting_bridge
 pairs: proof_shape=bind-only; consumers=bonds_iff
 compatible: proof_shape=bind-only; consumers=instDecidableCompatible
 instDecidableCompatible: proof_shape=bind-only; consumers=classCount
-instDecidableGood: proof_shape=bind-only; consumers=classCount
 bonds_iff: proof_shape=bind-only; consumers=counting_bridge
 v: proof_shape=bind-only; consumers=counting_bridge
 total: proof_shape=bind-only; consumers=counting_bridge
@@ -142,7 +138,7 @@ initial_row_counts: proof_shape=bind-only; consumers=initial_counts
 unseen_counts: proof_shape=bind-only; consumers=row_counts
 row_counts: proof_shape=bind-only; consumers=finite_certificate
 initial_counts: proof_shape=bind-only; consumers=finite_certificate
-finite_certificate: proof_shape=bind-only; consumers=v_eq_w
+finite_certificate: proof_shape=bind-only; consumers=v_eq_w, a_eq_w, one_count
 initial_valid: proof_shape=bind-only; consumers=a_eq_w
 w: proof_shape=bind-only; consumers=eval
 eval: proof_shape=bind-only; consumers=v_eq_w
