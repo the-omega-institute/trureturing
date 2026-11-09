@@ -1,0 +1,20 @@
+**Proposition 207.1 (the ruling test belongs to the projected body).** For $d=1$, a feasible family of actual rank three exists exactly when $\mathscr Q_u\not\subseteq\{0\}$. For $d=2$, absence of a feasible family of actual rank four is equivalent to at least one of
+
+$$
+\mathscr Q_u\subseteq\{\alpha v^{\mathsf T}:v\in\mathbb R^2\}
+\quad\text{for some }0\ne\alpha\in\mathbb R^2,
+\tag{207.1}
+$$
+
+or
+
+$$
+\mathscr Q_u\subseteq\{v\beta^{\mathsf T}:v\in\mathbb R^2\}
+\quad\text{for some }0\ne\beta\in\mathbb R^2.
+\tag{207.2}
+$$
+
+In particular, actual rank four requires escape from both kinds of projected ruling, rather than only from the coefficient rulings (201.3)--(201.4).
+
+*Proof.* Proposition 205.2 proves the one-column assertion. In the two-column case the failure condition is $\det M=0$ for all $M\in\mathscr Q_u$. A nonempty convex set has a nonempty relative interior in its affine hull, so this polynomial then vanishes on the entire affine hull. Apply the classification of real affine spaces of rank at most one in de Seguins Pazzis, *Large spaces of bounded rank matrices revisited*, [Proposition 2.3](https://arxiv.org/html/1507.05375v2): all nonzero matrices have a common image or a common kernel. Over $\mathbb R$ its exceptional two-element-field alternative is excluded. In $2\times2$ dimensions these are precisely (207.1) and (207.2); for the zero space either containment holds. Conversely either containment forces rank at most one. $\square$
+

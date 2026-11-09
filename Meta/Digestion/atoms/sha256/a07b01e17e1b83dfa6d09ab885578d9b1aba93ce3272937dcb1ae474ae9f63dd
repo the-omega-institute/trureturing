@@ -1,0 +1,33 @@
+#### 推论 4.4：二元响应的精确正分解
+
+对所有 $c,d\in A$，
+
+$$
+q(Tc)=4q(k)q(Pc),\qquad
+q(\mathscr A_{a,b}c)=q(k)q(Qc),
+$$
+
+$$
+B(Tc,\mathscr A_{a,b}d)=0,
+$$
+
+$$
+\boxed{q(Tc)+4q(\mathscr A_{a,b}c)=4q(k)q(c).}
+$$
+
+两条被比较的响应 $X=L_k$、$Y=M$ 有同样预算：
+
+$$
+q(Xc)=q(Yc)=q(k)q(c).
+$$
+
+其中 $Yc=Xc$ 在 $H$ 上成立，而 $Yc=-Xc$ 在 $H^\perp$ 上成立。
+
+**证明。**
+
+使用 $T=2L_kP$、$\mathscr A=L_kQ$、$M=L_kK$，以及 $B(L_kx,L_ky)=q(k)B(x,y)$、$P\perp Q$ 即得。
+
+$\square$
+
+**图示（文字版）。** 从 $c=Pc+Qc$ 出发，上支经 $P$ 得到 $Pc\in H$，两份响应同向，合读为 $Tc=2L_kPc$；下支经 $Q=I-P$ 得到 $Qc\in H^\perp$，两份响应反向，由结合缺口读出 $\mathscr A c=L_kQc$。
+

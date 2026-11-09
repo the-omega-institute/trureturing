@@ -1,0 +1,68 @@
+**定理 104.1（整输出及取向的单侧局部化）。** 设原域为完整 $E=M_n(\mathbb C)_{\rm sa}$，p为秩二原投影，$q=I-p$，$T=qTq=T^*$。94.2和93.1在p角给固定Pauli坐标及固定 $\varepsilon_p\in\{1,-1\}$。若 $x\perp y$，则
+
+$$
+\boxed{D(\Phi_p(0,x),\Phi_p(0,y)+T)=\Phi_p(0,\varepsilon_p x\times y).}
+\tag{104.1}
+$$
+
+证明。写 $a=\Phi_p(0,x),b=\Phi_p(0,y)+T,d=D(a,b)$。$a\circ b=0$，99.4取c为零并交换a,b，给 $a\circ d=b\circ d=0$。若 $x\ne0$，a在p上可逆，第一等式使pdq与qdp为零；P2在q支撑向量态上给qdq为零，所以 $d=pdp$。写 $d=\Phi_p(\delta,z)$，两等式给 $\delta=0,z\perp x,y$。x,y均非零时，p支撑P2给 $d=\Phi_p(0,\kappa x\times y),|\kappa|\le1$。y为零时，p支撑P2也给pdp为零；x为零直接用零输入。
+
+先固定该原对、T及κ。取适配正向坐标 $x=Xe_1,y=Ye_2,X,Y>0$。对固定 $\eta>0$ 及任意有限 $\lambda>0$，置
+
+$$
+r=\sqrt{\lambda^2X^2+\eta^2},\qquad c=\Phi_p(r,\lambda Xe_1).
+$$
+
+角分类支付 $D(a,c)=0$。PB外层为
+
+$$
+r_\pm=\Phi_p(\mp\lambda X^2,Ye_2\pm\kappa XY e_3\mp rXe_1)+T,
+\qquad s_\pm=c.
+$$
+
+99.4右端为 $2\lambda X^2\Phi_p(0,Ye_2)$。取p支撑纯态方向 $n=(-\lambda X/r,\eta/r,0)$，用 $L_n(s,v)=v+sn$ 计算二表实Gram：$L_nc=\eta e_2$，两外层行列式平方根同为 $X\eta\sqrt{\eta^4/r^2+\kappa^2Y^2}$。T在这些数学评价中消失。因此
+
+$$
+(1-\kappa^2)\lambda^2X^2Y^2\le\eta^4+\kappa^2Y^2\eta^2.
+\tag{104.2}
+$$
+
+若 $|\kappa|<1$，选足够大的有限λ即矛盾，故 $|\kappa|=1$。
+
+须继续比较取向，不能从幅度饱和直接借用角内符号。记 $\varepsilon=\varepsilon_p$，假设 $\kappa=-\varepsilon$。先令 $X\ne1$，在PB另取 $c=\Phi_p(0,Ae_2+Be_3)$，其中 $A\ne0,B=(1-X^2)A/(2\varepsilon X)$。两内层Jordan积及 $b\circ d,c\circ D(a,c)$ 都为零，所以99.4要求两个外层D相等。其p内向量为
+
+$$
+\begin{aligned}
+R_\pm&=Y(e_2\mp\varepsilon Xe_3),\\
+S_\pm&=(A\mp\varepsilon XB)e_2+(B\pm\varepsilon XA)e_3.
+\end{aligned}
+\tag{104.3}
+$$
+
+$r_\pm$ 带同一T，$s_\pm$ 完全支持在p。直接计算给
+
+$$
+R_+\cdot S_+=0,\quad R_-\cdot S_-=2Y(1-X^2)A\ne0,\quad
+|R_\pm|\,|S_\pm|=L:=Y(1+X^2)\sqrt{A^2+B^2}.
+$$
+
+正外层由已证支撑与幅度饱和有整输出范数L，必要时交换输入。负外层只使用其实际输出p压缩的P2：若该压缩为 $\Phi_p(\delta,z)$，则
+
+$$
+|\delta|+|z|\le|R_-\times S_-|
+=\sqrt{L^2-[2Y(1-X^2)A]^2}<L.
+$$
+
+这里两个p内标签无标量，故二表在全部p纯态的右端为固定 $|R_-\times S_-|$；压缩范数正是 $|\delta|+|z|$。与两整输出相等矛盾。没有假设负外层整输出支持在p。
+
+若 $X=1$，取 $c=\Phi_p(0,kYe_2)$，$k>0,k\sqrt2Y\ne1$。两外层为
+
+$$
+\begin{aligned}
+r_+&=\Phi_p(0,Y(e_2-\varepsilon e_3))+T,&s_+&=\Phi_p(0,kY(e_2+\varepsilon e_3)),\\
+r_-&=\Phi_p(0,Y(e_2+\varepsilon e_3))+T,&s_-&=\Phi_p(0,kY(e_2-\varepsilon e_3)).
+\end{aligned}
+$$
+
+两对均正交。交换输入后，其纯p标签长度 $k\sqrt2Y\ne1$，刚证的取向比较适用。于是两输出分别为 $\Phi_p(0,2kY^2e_1)$、$\Phi_p(0,-2kY^2e_1)$，但99.4又要求二者相等，矛盾。故所有情况 $\kappa=\varepsilon_p$。∎
+

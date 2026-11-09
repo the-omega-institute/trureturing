@@ -1,0 +1,24 @@
+**定义 16.3（自由标签正性与原作用零空间稳定）。** 令 $\mathcal F=\mathbb C^{(E)}$ 为以原实标签为基的有限支撑自由复向量空间，基元写 $[a]$。对选定 (16.4)，定义第一槽共轭线性的 Hermitian 型
+
+$$
+h_n([a],[b])=\alpha_{m,n}(S(a,b))-\mathrm i\alpha_{m,n}(D(a,b)),
+\tag{16.5}
+$$
+
+再按自由系数延拓。此定义没有先把未知 $D$ 复双线性延拓。要求 $\mathsf P_n$：$h_n(f,f)\ge0$ 对全部 $f\in\mathcal F$ 成立；准确地，它检查该一个锚的全部有限原标签复 Gram 表，包括零、重复、相消、全部实缩放和平移。定义总是存在的自由复线性算子
+
+$$
+\mathscr A_t[a]=[S(t,a)]-\mathrm i[D(t,a)]\quad(t,a\in E),
+\qquad \mathcal N_n=\{f:h_n(f,f)=0\}.
+\tag{16.6}
+$$
+
+条件 $\mathsf Q_n$ 是 $\mathsf P_n$ 连同
+
+$$
+\mathscr A_t\mathcal N_n\subseteq\mathcal N_n\qquad\text{对全部原 }t\in E.
+\tag{16.7}
+$$
+
+不预设 $\mathscr A_t$ 有界、自伴，亦不要求其复合等于原乘积的作用。$\mathcal F$ 和其内积商均是数学工具，不是新实际标签、共同载体、原词或设备。
+

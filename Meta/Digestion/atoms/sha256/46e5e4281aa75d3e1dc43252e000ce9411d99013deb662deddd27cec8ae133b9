@@ -1,0 +1,31 @@
+具体地，原 norming 态连续延拓；若它们对 $x\in X$ 全非负，取 $N(a_n-x)\le\varepsilon_n\downarrow0$，则 $a_n+\varepsilon_nu\in C$，从而 $x\in C_X$。这也给锥的尖性和忠实限制。平方正性由连续性延拓；若 $0\le e\le\theta u$ 在 $X$ 内，同样的逼近给
+
+$$
+e_n=\frac{a_n+\varepsilon_nu}{1+2\varepsilon_n/\theta}
+\in[0,\theta u]\cap E,\qquad e_n\longrightarrow e.
+\tag{2.6}
+$$
+
+故同一小窗口收缩传到 $X$，正是正交迹续卷定理 454.1 证明内的小窗口完成步骤。对 $c\in C_X$ 取 $r>0$ 使 $c/r\le\theta u$，得 $0\le c^2\le rc$。任意连续正泛函 $\varphi$ 若 $\varphi(c)=0$，便有 $\varphi(c^2)=0$；再以全部 $(c+ta)^2$ 的正性得
+
+$$
+\varphi(S(a,c))=0
+\quad(c\in C_X,\ \varphi\ge0,\ \varphi(c)=0).
+\tag{2.7}
+$$
+
+只用实平方即可得到此零支撑面关系，不需要旧 $D$ 或复三表。成熟顺序导子判据取 Niestegge，[arXiv:1402.0158v2，§4 Lemma 3](https://arxiv.org/html/1402.0158v2#S4)：有界算子 $A$ 满足 (2.7) 的零面条件，当且仅当 $e^{tA}C_X=C_X$ 对所有实 $t$ 成立。这里用其序单位空间的算子判据，不借该文 §2(A) 已经假定的乘法单位。
+
+比较解还需同一判据的时间依赖形式。若 $A(t)$ 范数连续且逐时满足零面条件，解 $y'=A(t)y+\varepsilon u$，$y(0)=c+\varepsilon u$。有限首次触边时可取支撑态 $\varphi$，$\varphi(y)=0$，左导数非正，而方程使之等于 $\varepsilon>0$，矛盾。令 $\varepsilon\downarrow0$ 得正演化，反向时间同证其逆为正。此为正交迹续卷定理 446.1 的边界证明在连续系数下的直接应用。
+
+置 $L_ab=S(a,b)$、$T=L_u$、$K=T-I$、$U_t=e^{tK}$。(2.7) 使每个 $L_a$ 为顺序导子；这类算子由零面条件组成范数闭实线性空间，并由共轭后范数微分对交换子封闭。$I$ 也是顺序导子，故 $K$ 是顺序导子；$Tu=u$ 给 $Ku=0$。于是 $U_t$ 与 $U_{-t}$ 互为正逆且保 $u$，均为原序单位范数的等距算子。
+
+此时不能调用已使用单位律的正交迹续卷定理 448.1。仅对当前特定 $K=T-I$，定义
+
+$$
+B(a,b)=KS(a,b)-S(Ka,b)-S(a,Kb),\qquad
+B_a=[K,L_a]-L_{Ka},\qquad B_au=KTa-TKa=0.
+\tag{2.8}
+$$
+
+末式使用 $K$ 与 $T$ 通勤及 $Ku=0$，未使用 $T=I$。每个 $B_a$ 因而是零单位顺序导子，生成等距群。

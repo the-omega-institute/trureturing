@@ -16,7 +16,21 @@ $$\forall n: \mathbb{N}, \operatorname{a}\left(n\right) = \operatorname{Polynomi
 
 OEIS A022629, NAME (unpaginated): "Expansion of Product_{m>=1} (1 + m*q^m)." The coefficient index n ranges over all natural numbers, including zero. Only factors with index at most n contribute to degree n; the empty product gives a(0) = 1.
 
-**Definition 1.2 (The source asymptotic).**
+**Definition 1.2 (Distinct partitions of n).**
+
+$$\forall n: \mathbb{N}, \operatorname{partitions}\left(n\right) = \operatorname{Finset}.\operatorname{filter}\left(s: \operatorname{Finset}\left(\mathbb{N}\right) \mapsto \sum_{k \in s} k = n, \operatorname{Finset}.\operatorname{powerset}\left(\operatorname{Finset}.\operatorname{Icc}\left(1, n\right)\right)\right)$$
+
+*Formalization.* `D5/S0/Asymptotics/GeneratingFunctions/KotesovecA022629.partitions` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* OEIS Foundation Inc.; Vaclav Kotesovec (2018). *OEIS A022629 and the weighted distinct-partition logarithmic conjectures*. URL: <https://oeis.org/A022629>.
+
+*Commentary.*
+
+For each natural n, partitions n is the finite family of subsets of the interval from 1 through n whose sum is n.
+
+**Definition 1.3 (The source asymptotic).**
 
 $$claim = (\operatorname{Filter}.\operatorname{Tendsto}\left((n: \mathbb{N} \mapsto \frac{\operatorname{Real}.\operatorname{log}\left((\operatorname{a}\left(n\right): \mathbb{R})\right)}{\operatorname{Real}.\operatorname{sqrt}\left(\frac{(n: \mathbb{R})}{2}\right) \cdot \left(\operatorname{Real}.\operatorname{log}\left(2 \cdot (n: \mathbb{R})\right) - 2\right)}), \operatorname{Filter}.\operatorname{atTop}, \operatorname{nhds}\left((1: \mathbb{R})\right)\right))$$
 
@@ -28,7 +42,7 @@ $$claim = (\operatorname{Filter}.\operatorname{Tendsto}\left((n: \mathbb{N} \map
 
 OEIS A022629, FORMULA (unpaginated): "Conjecture: log(a(n)) ~ sqrt(n/2) * (log(2*n) - 2)." The symbol ~ means that the real quotient tends to one along all natural indices. Real.log and real division are total at the finitely many indices where their usual positive-domain interpretation does not apply.
 
-**Theorem 1.3 (Every fixed positive natural exponent).**
+**Theorem 1.4 (Every fixed positive natural exponent).**
 
 $$\forall r: \mathbb{N}, (1 \le r) \Rightarrow \operatorname{Filter}.\operatorname{Tendsto}\left((n: \mathbb{N} \mapsto \frac{\operatorname{Real}.\operatorname{log}\left((\operatorname{Polynomial}.\operatorname{coeff}\left((\prod_{k \in \operatorname{Finset}.\operatorname{Icc}\left(1, n\right)} (1 + \operatorname{Polynomial}.\operatorname{C}\left(k^{r}\right) \cdot \operatorname{Polynomial}.\operatorname{X}^{k}: \operatorname{Polynomial}\left(\mathbb{N}\right))), n\right): \mathbb{R})\right)}{(r: \mathbb{R}) \cdot \operatorname{Real}.\operatorname{sqrt}\left(\frac{(n: \mathbb{R})}{2}\right) \cdot \left(\operatorname{Real}.\operatorname{log}\left(2 \cdot (n: \mathbb{R})\right) - 2\right)}), \operatorname{Filter}.\operatorname{atTop}, \operatorname{nhds}\left((1: \mathbb{R})\right)\right)$$
 
@@ -42,7 +56,7 @@ $$\forall r: \mathbb{N}, (1 \le r) \Rightarrow \operatorname{Filter}.\operatorna
 
 For every fixed natural exponent r at least one, the degree-n coefficient of the displayed polynomial product has the same ratio limit, with an additional factor r in the denominator. This theorem also supplies the limits for exponents two, three, four and five.
 
-**Theorem 1.4 (The proved logarithmic limit).**
+**Theorem 1.5 (The proved logarithmic limit).**
 
 $$\operatorname{Filter}.\operatorname{Tendsto}\left((n: \mathbb{N} \mapsto \frac{\operatorname{Real}.\operatorname{log}\left((\operatorname{a}\left(n\right): \mathbb{R})\right)}{\operatorname{Real}.\operatorname{sqrt}\left(\frac{(n: \mathbb{R})}{2}\right) \cdot \left(\operatorname{Real}.\operatorname{log}\left(2 \cdot (n: \mathbb{R})\right) - 2\right)}), \operatorname{Filter}.\operatorname{atTop}, \operatorname{nhds}\left((1: \mathbb{R})\right)\right)$$
 
@@ -73,4 +87,5 @@ A distinct partition whose parts are almost the first M positive integers contri
 - Truth anchor: `D5/S0/Asymptotics/GeneratingFunctions/KotesovecA022629.a`
 - Truth anchor: `D5/S0/Asymptotics/GeneratingFunctions/KotesovecA022629.all_exponents`
 - Truth anchor: `D5/S0/Asymptotics/GeneratingFunctions/KotesovecA022629.claim`
+- Truth anchor: `D5/S0/Asymptotics/GeneratingFunctions/KotesovecA022629.partitions`
 - Truth anchor: `D5/S0/Asymptotics/GeneratingFunctions/KotesovecA022629.result`

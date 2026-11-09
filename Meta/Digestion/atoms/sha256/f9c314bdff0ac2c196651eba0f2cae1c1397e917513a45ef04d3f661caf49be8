@@ -1,0 +1,24 @@
+**Corollary 176.3 (the only scalar escape from the preserved channel).** Let $v$ be nonzero as an $m$-class. If a legal tuple of the family (175.2) has all sixty-four residuals equal to zero, then
+
+$$
+\ell_{003}(v)+tA_\theta(v)=0,
+\qquad
+t=-\frac{\ell_{003}(v)}{A_\theta(v)}.
+\tag{176.4}
+$$
+
+In particular, $\ell_{003}(v)\ne0$; every nonzero direction in the $003$ kernel, including every nonzero $v\in V$, is excluded by Proposition 176.2. The terminal compensator cannot alter either side of (176.4).
+
+For any sequence of legal tuples in this family with $t_n\ne0$ and $\|\Delta(u^{(n)})\|_{\max}\to0$,
+
+$$
+\ell_{003}(v_n)+t_nA_{\theta_n}(v_n)\longrightarrow0.
+\tag{176.5}
+$$
+
+Thus a prospective full-law escape outside $V$ must carry nonzero first-order leakage and tune its amplitude against the positive quadratic energy; changing only the terminal correction cannot supply that tuning.
+
+*Proof.* If every residual is zero, the left side of (176.2) is zero. For nonzero $v$, Proposition 134.2 gives $A_\theta(v)>0$, yielding (176.4). If $\ell_{003}(v)=0$, then (176.4) would give $tA_\theta(v)=0$, contradicting $t\ne0$. The sequence statement follows from (176.3). $\square$
+
+This result narrows the remaining multi-direction and non-kernel routes to a coupled first-order leakage problem. It does not prove that the tuned scalar relation is sufficient, that the resulting tuple is legal for any prescribed $\theta$, or that the other $63$ coordinates can vanish. Arbitrary partitions, $F_{64}$, $H43$, SRS$\text{-}20$, physical succession and Lean/kernel formalization remain open.
+

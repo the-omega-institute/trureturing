@@ -12,7 +12,7 @@ $$\forall n:\mathbb{N}, \operatorname{a}\left(n\right)=\sum_{k=0}^{n} 3^{k} \cdo
 
 *Formalization.* `D5/S3/ArithSums/MatharA386829.a` (`✓ std3`).
 
-*Citation.* R. J. Mathar; Seiichi Manyama (2026). *OEIS A386829: binomial sum recurrence and D-finiteness*. URL: <https://oeis.org/A386829>.
+*Citation.* R. J. Mathar; Seiichi Manyama; Borislav Crstici (2026). *Mathar recurrence and D-finiteness conjectures: OEIS A386829 and A001722*. URL: <https://oeis.org/A386829>.
 
 *Commentary.*
 
@@ -26,7 +26,7 @@ $$series=\sum_{n=0}^{\infty} \operatorname{a}\left(n\right) \cdot z^{n}$$
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* R. J. Mathar; Seiichi Manyama (2026). *OEIS A386829: binomial sum recurrence and D-finiteness*. URL: <https://oeis.org/A386829>.
+*Acknowledgement.* R. J. Mathar; Seiichi Manyama; Borislav Crstici (2026). *Mathar recurrence and D-finiteness conjectures: OEIS A386829 and A001722*. URL: <https://oeis.org/A386829>.
 
 *Commentary.*
 
@@ -44,7 +44,7 @@ $$(\forall n:\mathbb{N}, 2 \le n \implies 2 \cdot n \cdot \operatorname{a}\left(
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* R. J. Mathar; Seiichi Manyama (2026). *OEIS A386829: binomial sum recurrence and D-finiteness*. URL: <https://oeis.org/A386829>.
+*Acknowledgement.* R. J. Mathar; Seiichi Manyama; Borislav Crstici (2026). *Mathar recurrence and D-finiteness conjectures: OEIS A386829 and A001722*. URL: <https://oeis.org/A386829>.
 
 *Commentary.*
 

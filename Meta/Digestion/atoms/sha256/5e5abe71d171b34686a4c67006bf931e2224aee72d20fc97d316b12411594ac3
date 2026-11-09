@@ -1,0 +1,35 @@
+#### 定理 6.14：全部单比特酉门及其方向作用
+
+单位四元数右乘的集合恰为 $\operatorname{SU}(H_J)$；每个酉算子都可写成
+
+$$
+U=e^{\phi J}R_u,\qquad q(u)=1.
+$$
+
+对单位 $z\in W$，
+
+$$
+U_z(\theta)=e^{-i\theta\sigma_z/2}=R_{e^{-\theta z/2}},
+\qquad
+r_e(U_z(\theta)x)=e^{\theta z/2}r_e(x)e^{-\theta z/2}.
+$$
+
+整体相位 $e^{\phi J}$ 保持 $r_e(x)$ 不变。
+
+**证明。**
+
+在复基 $\{\mathbf 1,f\}$ 中写 $u=\alpha+\beta f$，$\alpha,\beta\in\mathbb C_e$。 由 $f\alpha=\bar\alpha f$、$f\beta f=-\bar\beta$，右乘矩阵为
+
+$$
+R_u\ \widehat{=}\quad
+\begin{pmatrix}\alpha&-\bar\beta\\ \beta&\bar\alpha\end{pmatrix}.
+$$
+
+$q(u)=|\alpha|^2+|\beta|^2=1$ 恰使该矩阵酉且行列式为一。 反过来，二维酉矩阵的列正交和行列式一迫使它具有这个形式。 给任意 $U\in U(2)$，选 $e^{2i\phi}=\det U$，则 $e^{-i\phi}U\in SU(2)$， 得到分解。这里 $u\mapsto R_u$ 是反表示；若需群同态，应取 $u\mapsto R_{u^{-1}}$。
+
+由于 $-i\sigma_z=-J(-JR_z)=-R_z$，指数幂级数给门公式。 直接代入 Hopf 映射得到 $r_e(xu)=\bar u r_e(x)u$； 代入 $u=e^{-\theta z/2}$ 给正角度的 Rodrigues 旋转。 左相位与 $e$ 交换，故在 $\bar x e x$ 中抵消。
+
+$\square$
+
+<a id="section-7"></a>
+
