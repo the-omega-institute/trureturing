@@ -157,34 +157,50 @@ private lemma walk_balance (M₁ M₂ : Matroid E) (B : Set E) {s t : E}
     (p.edges.map (fun a => arcPoint M₁ M₂ B true a x)).sum -
       (p.edges.map (fun a => arcPoint M₁ M₂ B false a x)).sum =
         point {t} x - point {s} x := by
-  induction p with
-  | nil => simp
-  | @concat t p a legal ih =>
+  let weight (a : ExchangeArc M₁ M₂ B) :=
+    arcPoint M₁ M₂ B true a x - arcPoint M₁ M₂ B false a x
+  let φ (v : E) := point {v} x
+  have hedge (a : ExchangeArc M₁ M₂ B) :
+      weight a = φ ((exchangeGraph M₁ M₂ B).target a) -
+        φ ((exchangeGraph M₁ M₂ B).source a) := by
     have hex := point_exchange a.property.1 a.property.2.1.2 x
-    simp only [Maths.EdgeGraph.Walk.edges_concat, List.map_append, List.map_singleton,
-      List.sum_append, List.sum_singleton]
-    cases ht : a.val.1
-    · have hs : a.val.2.2 = t := by simpa [exchangeGraph, ht] using legal
-      have htarget : (exchangeGraph M₁ M₂ B).target a = a.val.2.1 := by simp [exchangeGraph, ht]
-      rw [htarget]
-      simp only [arcPoint, ht, Bool.false_eq_true, ite_false, ite_true]
-      simp only [arcPoint, apply_ite] at ih ⊢
-      have hsP : point {t} x = point {a.val.2.2} x := congrArg (fun e => point {e} x) hs.symm
-      linear_combination ih - hex + hsP
-    · have hs : a.val.2.1 = t := by simpa [exchangeGraph, ht] using legal
-      have htarget : (exchangeGraph M₁ M₂ B).target a = a.val.2.2 := by simp [exchangeGraph, ht]
-      rw [htarget]
-      simp only [arcPoint, ht, Bool.true_eq_false, ite_false, ite_true]
-      simp only [arcPoint, apply_ite] at ih ⊢
-      have hsP : point {t} x = point {a.val.2.1} x := congrArg (fun e => point {e} x) hs.symm
-      linear_combination ih + hex + hsP
+    cases ht : a.val.1 <;>
+      simp only [weight, φ, exchangeGraph, arcPoint, ht, Bool.false_eq_true,
+        Bool.true_eq_false, ite_false, ite_true] <;> linarith
+  have hpos : Maths.MaxPlusPotential.IsPotential (exchangeGraph M₁ M₂ B) weight φ := by
+    intro a
+    rw [hedge]
+    linarith
+  have hneg : Maths.MaxPlusPotential.IsPotential (exchangeGraph M₁ M₂ B)
+      (fun a => -weight a) (fun v => -φ v) := by
+    intro a
+    change -φ ((exchangeGraph M₁ M₂ B).source a) + -weight a ≤
+      -φ ((exchangeGraph M₁ M₂ B).target a)
+    rw [hedge]
+    linarith
+  have hp := hpos.walkWeight_add_le p
+  have hn := hneg.walkWeight_add_le p
+  have hnegmap (f : ExchangeArc M₁ M₂ B → ℝ) :
+      (p.edges.map (fun a => -f a)).sum = -(p.edges.map f).sum := by
+    simpa only [List.map_map, Function.comp_def] using
+      (List.sum_neg (p.edges.map f)).symm
+  have hsum : Maths.MaxPlusPotential.walkWeight weight p =
+      (p.edges.map (fun a => arcPoint M₁ M₂ B true a x)).sum -
+        (p.edges.map (fun a => arcPoint M₁ M₂ B false a x)).sum := by
+    simp only [Maths.MaxPlusPotential.walkWeight, weight, sub_eq_add_neg,
+      List.sum_map_add, hnegmap]
+  have hnsum : Maths.MaxPlusPotential.walkWeight (fun a => -weight a) p =
+      -Maths.MaxPlusPotential.walkWeight weight p := by
+    exact hnegmap weight
+  rw [hsum] at hp
+  rw [hnsum, hsum] at hn
+  dsimp [φ] at hp hn
+  linarith
 
 private lemma sum_list_swap {A : Type*} (l : List A) (f : A → E → ℝ) (U : Finset E) :
     (∑ e ∈ U, (l.map (fun a => f a e)).sum) =
       (l.map (fun a => ∑ e ∈ U, f a e)).sum := by
-  induction l with
-  | nil => simp
-  | cons a l ih => simp [Finset.sum_add_distrib, ih]
+  simpa using (Multiset.sum_map_sum (m := (l : Multiset A)) (s := U) (f := f)).symm
 
 private lemma list_bound {A : Type*} (l : List A) (f : A → ℝ) (r : ℝ)
     (hf : ∀ a ∈ l, f a ≤ r) : (l.map f).sum ≤ l.length * r := by
