@@ -44,10 +44,10 @@ private abbrev kernelArena : Arena where
 
 private theorem sourceBridge :
     (type_of% @posDef_of_isolated_non_lipschitz.{u}) ↔
-      kernelArena.Law kernelActual := Iff.rfl
+      kernelArena.{u}.Law kernelActual.{u} := Iff.rfl
 
-private theorem actualLaw : kernelArena.Law kernelActual :=
-  sourceBridge.mp @posDef_of_isolated_non_lipschitz.{u}
+private theorem actualLaw : kernelArena.{u}.Law kernelActual.{u} :=
+  sourceBridge.{u}.mp @posDef_of_isolated_non_lipschitz.{u}
 
 end
 end Reg.D5.S3.Analytic.Fourier.PositiveDefinite.IsolatedSingularity
