@@ -1,0 +1,10 @@
+**定义 35.1（自对偶齐性比较锥公理）。** 对每个有限系统 $A$，取有限维实向量空间 $V_A$、尖闭生成锥 $C_A\subset V_A$、序单位 $u_A$ 和非退化比较配对 $\langle-,-\rangle_A$，满足：
+
+1. **自对偶：**
+   $$
+   C_A=\{x\in V_A:\langle x,y\rangle_A\ge0\ \text{对所有 }y\in C_A\};
+   $$
+2. **齐性：** 保持 $C_A$ 的线性自同构群在 $\operatorname{int}C_A$ 上传递；
+3. **读出：** 状态是 $x\in C_A$ 且 $\langle u_A,x\rangle_A=1$，效应是 $0\le e\le u_A$，概率为 $\langle e,x\rangle_A$；
+4. **复合：** 独立系统的锥包含 $C_A\otimes C_B$ 的正生成，并满足第 34 节的局部比较完备性。
+
