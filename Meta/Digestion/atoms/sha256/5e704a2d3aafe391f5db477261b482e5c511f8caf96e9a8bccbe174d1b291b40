@@ -1,0 +1,21 @@
+**定义 29.1（独立复合的乘法比较公理）。** 设 $A,B$ 是两个已经带有二次自比较和正定核的系统。独立复合的准备对象写成 $(a,b)$，并要求
+
+$$
+\kappa_{A\boxtimes B}\bigl((a,b),(a',b')\bigr)
+ =\kappa_A(a,a')\,\kappa_B(b,b').
+$$
+
+复合对象的有限形式和按双线性延拓；交换两个独立因子的映射
+
+$$
+\sigma(a,b)=(b,a)
+$$
+
+只改变标记，并满足
+
+$$
+\kappa_{B\boxtimes A}(\sigma x,\sigma y)=\kappa_{A\boxtimes B}(x,y).
+$$
+
+这是一条关于“比较如何组合”的公理，不先把张量积 Hilbert 空间写进定义。
+
