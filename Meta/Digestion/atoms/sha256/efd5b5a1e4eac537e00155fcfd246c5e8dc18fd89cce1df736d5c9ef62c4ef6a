@@ -1,0 +1,13 @@
+为线性映射。要求：
+
+1. **辅助稳定正性：** 对每个有限维辅助系统 $C$，
+   $$
+   \operatorname{id}_C\otimes\Phi
+   $$
+   把所有正半定算子送到正半定算子；
+2. **比较预算：** 对确定性变换，
+   $$
+   \operatorname{Tr}\Phi(\rho)=\operatorname{Tr}\rho,
+   $$
+   对后选择变换则只要求 $\operatorname{Tr}\Phi(\rho)\le\operatorname{Tr}\rho$。
+

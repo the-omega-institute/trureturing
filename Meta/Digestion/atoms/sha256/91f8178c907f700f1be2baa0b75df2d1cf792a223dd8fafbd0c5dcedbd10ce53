@@ -1,0 +1,26 @@
+**命题 45.3（单系统正性不足的转置反例）。** 转置映射
+
+$$
+\tau(\rho)=\rho^T
+$$
+
+在单系统上保持正性和迹，但它不是完全正。对 Bell 态
+
+$$
+|\Phi^+\rangle=\frac{|00\rangle+|11\rangle}{\sqrt2}
+$$
+
+有
+
+$$
+(\operatorname{id}\otimes\tau)\bigl(|\Phi^+\rangle\langle\Phi^+|\bigr)
+$$
+
+的特征值为
+
+$$
+\frac12,\frac12,\frac12,-\frac12.
+$$
+
+因此只检查单系统比较，会把一个在联合系统上产生负概率的映射误收为物理通道。辅助稳定性正是排除此反例的最小关系提升。
+
