@@ -1648,23 +1648,21 @@ Akkaoui–Fadli，*New results about quadratic functional equation on semigroups
 
 ## 追加锚（本行以下为增补区）
 
-## 31. 相对替换条件与有限复制的共同估计
+## 31. 只检验两种单位标记插入的一致次线性条件
 
-**定义 31.1（条件 H）。**保留定义 1.1 的原始签名：$M$ 是有真实双侧单位 $1$ 的任意 magma，$U:M\to M$ 任意，$c:M^2\to[0,\infty)$ 处处有限且 $c(s,s)=0$。所有乘积保留实际次序和括号；完整 (R) 始终指
+**定义 31.1（两族读数条件 S）。**保留定义 1.1 的全部原始对象：有真实双侧单位 $1$ 的任意 magma $M$，任意 $U:M\to M$，以及处处有限、非负、零对角的 $c$。完整 (R) 仍要求
 
 $$
 \forall a,b,u,v\in M:\qquad
 \sum_{k=0}^2c\bigl(a\cdot(U^ku),b\cdot(U^kv)\bigr)=3c(a,b)+3c(u,v).
 $$
 
-记
+置 $p_j=U^j1$、$q(a)=c(a,1)$、$r(a)=c(1,a)$，并对全部 $a,z\in M$、$j\in\{1,2\}$ 定义
 
 $$
 \begin{aligned}
-q(s)&=c(s,1),&r(s)&=c(1,s),\\
-Q(s,t,x)&=q(s)+r(s)+q(t)+r(t)+q(x)+r(x),\\
-\rho(s,t)&=c(s,t)+c(t,s),\\
-\Delta(s,t;x)&=|c(s,x)-c(t,x)|+|c(x,s)-c(x,t)|.
+B(a,z)&=q(a)+r(a)+q(z)+r(z),\\
+\Delta_j(a,z)&=|c(a\cdot p_j,z)-c(a,z)|+|c(z,a\cdot p_j)-c(z,a)|.
 \end{aligned}
 \tag{31.1}
 $$
@@ -1672,202 +1670,175 @@ $$
 额外条件为
 
 $$
-\forall\varepsilon>0\ \exists\delta>0\ \forall s,t,x\in M:\quad
-\rho(s,t)\le\delta Q(s,t,x)
-\ \Longrightarrow\ \Delta(s,t;x)\le\varepsilon Q(s,t,x).
-\tag{H}
+\forall\varepsilon>0\ \exists C_\varepsilon\in[0,\infty)\ \forall a,z\in M\ \forall j\in\{1,2\}:\qquad
+\Delta_j(a,z)\le\varepsilon B(a,z)+C_\varepsilon.
+\tag{S}
 $$
 
-同一个 $\delta$ 必须覆盖全部标签及其全部费用尺度；$Q=0$ 也在量词内。这里没有预设距离、对称性、拓扑、正指数或指定模函数。精确条件 $(Z)$ 指 $\rho(s,t)=0$ 时，对每个 $x$ 有 $\Delta(s,t;x)=0$。条件 (H) 是独立列出的尺度一致假设；本节没有从 (R) 或精确 (Z) 推出它，也不把“独立列出”当作已证的逻辑独立性。
+同一个有限 $C_\varepsilon$ 必须独立于 $a,z,j$；$B=0$ 也在量词内。只检验将盖一次或两次标记的空输入插在右端这两族比较，不要求任意零费用来源可替换，也不预设对称性、三角、拓扑、固定幂、结合律或 $U1=1$。(S) 是明确增列的一致次线性增长前件，尚未从 (R) 推出；这不声称已证明二者逻辑独立。
 
-**引理 31.2（复制与重标度共享的替换界）。**设原模型满足全部四变量 (R) 及 (H)。对任意 $\eta>0$，取 (H) 为 $\eta$ 提供的 $\delta(\eta)>0$。任意有限个原模型副本的正加权直积，连同其含真实单位、对乘法和 $U$ 封闭的限制，都满足同一个估计
+白话说，三次成对比较的总账精确配平；再要求两种局部空输入插入造成的双向读数变化，不能随着任意增大的全局比较预算保持正比例增长。它容许标记空输入的有限效应，每个比例容差有一笔共同有限余量，而非要求原模型的插入效应为零。事件完整性、过程接续、联合系统和时间仍分别保留各自的实际前件。
+
+**引理 31.2（真实单位复制中的余项缩放）。**若原模型满足 (S)，则定理 23.2 的实际数组模型，对全部数组 $A,Z\in M^{\Sigma_N}$、$j=1,2$ 和每个 $\varepsilon>0$ 满足
 
 $$
-\Delta(s,t;x)\le\eta Q(s,t,x)
-       +\frac6{\delta(\eta)}\rho(s,t)
-\qquad(s,t,x).
+\Delta_{N,j}(A,Z)\le\varepsilon B_N(A,Z)+\frac{C_\varepsilon}{N}.
 \tag{31.2}
 $$
 
-权重可任意为正，不要求和为一；故也包含任意正重标度。共同的 (H) 模可取 $\delta_{\rm prod}(\varepsilon)=\varepsilon\delta(\varepsilon/2)/12$，与副本数、权重及各坐标的大小无关。
-
-**证明。**(R) 的第零项给引理 1.2 的 $c(s,x)\le3(q(s)+r(x))$。四个探针费用相加，得
+这里所有下标量均按 (31.1) 在 $c_N$ 和真实数组单位 $\mathbf1$ 上定义，且
 
 $$
-\Delta(s,t;x)\le
-3\bigl(q(s)+r(s)+q(t)+r(t)+2q(x)+2r(x)\bigr)\le6Q(s,t,x).
+c_N(A,Z)=\frac1{N3^N}\sum_{\sigma\in\Sigma_N}c(A_\sigma,Z_\sigma),\qquad
+U_N^j\mathbf1=(p_j)_{\sigma\in\Sigma_N},\qquad \Sigma_N=\{0,1,2\}^N.
 \tag{31.3}
 $$
 
-特别，$Q=0$ 时 $\Delta=0$；$\rho=0$ 时 (H) 对所有 $\eta>0$ 给精确 (Z)，因为 $Q$ 有限。
-设有限指标集为 $I$，$w_i>0$，真实单位为 $(1)_{i\in I}$，直积费用为 $c_w(S,T)=\sum_iw_ic(S_i,T_i)$。对一个实际三元组，记坐标量为 $Q_i,\rho_i,\Delta_i$，则
+**证明。**乘法和标记逐坐标采用原运算，$\mathbf1$ 是常值原单位，故 $A\cdot(U_N^j\mathbf1)$ 的坐标确为 $A_\sigma\cdot p_j$。对两个绝对值分别用有限和的三角不等式，再用原 (S)，得
 
 $$
-Q_w=\sum_iw_iQ_i,\qquad \rho_w=\sum_iw_i\rho_i,
-\qquad \Delta_w\le\sum_iw_i\Delta_i.
+\begin{aligned}
+\Delta_{N,j}(A,Z)&\le\frac1{N3^N}\sum_\sigma\Delta_j(A_\sigma,Z_\sigma)\\
+&\le\frac\varepsilon{N3^N}\sum_\sigma B(A_\sigma,Z_\sigma)+\frac{C_\varepsilon}{N}
+=\varepsilon B_N(A,Z)+\frac{C_\varepsilon}{N}.
+\end{aligned}
 $$
 
-把坐标分为 $\rho_i\le\delta(\eta)Q_i$ 与 $\rho_i>\delta(\eta)Q_i$。前者用 (H)，后者用 (31.3) 及 $Q_i<\rho_i/\delta(\eta)$；两部分求和正是 (31.2)。$Q_i=0$ 的坐标由 (31.3) 贡献零，不发生除零。逐坐标 (R) 求和仍给全部 (R)，限制不改这些读数。最后在 (31.2) 取 $\eta=\varepsilon/2$，得到所述共同模，包括 $Q_w=0$。证毕。
+预算 $B_N$ 是四个真实单位费用的精确加权和；不要求任一未缩放坐标的费用有统一界，也未把复制来源 $\widetilde\Gamma_N1$ 当作真实单位。证毕。
 
-在满足 (R) 的原模型中，(H) 也等价于较适合取极限的表达：对每个 $\eta>0$，存在有限 $A_\eta\ge0$，使全部三元组满足 $\Delta\le\eta Q+A_\eta\rho$。正向为上述分割；反向取 $\eta=\varepsilon/2$、$\delta=\varepsilon/(2(A_\eta+1))$ 即可。它仍要求对全部尺度统一，不能用逐三元组选择的常数替代。
+## 32. 两族次线性读数与完整仿射复几何等价
 
-## 32. 相对替换经零漂移极限恢复完整仿射表示
-
-**定理 32.1（条件 H 的仿射分类）。**在定义 31.1 的原始签名下，完整 (R) 与 (H) 同时成立，当且仅当存在复 Hilbert 空间 $\mathcal H$ 和 $F:M\to\mathcal H$，使对全部 $a,b\in M$ 有
+**定理 32.1（条件 S 的完整分类）。**在定义 31.1 的原始签名及完整 (R) 下，(S) 当且仅当存在复 Hilbert 空间 $H$ 与映射 $F:M\to H$，对全部 $a,b\in M$ 满足
 
 $$
 F1=0,\qquad F(a\cdot b)=Fa+Fb,\qquad
-F(Ua)=\omega Fa+t_0,\quad t_0=F(U1),\qquad
-c(a,b)=\|Fa-Fb\|^2,
-\quad\omega=-\tfrac12+i\tfrac{\sqrt3}{2}.
+F(Ua)=\omega Fa+t,\quad t=F(U1),\qquad
+c(a,b)=\|Fa-Fb\|^2,\quad \omega=-\tfrac12+i\tfrac{\sqrt3}{2}.
 \tag{32.1}
 $$
 
-最小空间 $\mathcal H=\overline{\operatorname{span}_{\mathbb C}F(M)}$ 唯一到唯一的保标签酉同构。零模型、非忠实来源与任意仿射漂移均包含在内。并且定性的 (H) 在 (R) 下加强为全部三元组上的统一估计
+最小空间 $H=\overline{\operatorname{span}_{\mathbb C}F(M)}$ 唯一到唯一的保标签酉同构；零模型、非忠实来源和任意仿射漂移均包含在内。反向可显式选
 
 $$
-\Delta(s,t;x)\le\sqrt{6\rho(s,t)Q(s,t,x)}.
+C_\varepsilon=(4/\varepsilon+2)\|t\|^2.
 \tag{32.2}
 $$
 
-**证明。**固定任意三个原标签 $a,b,d$，允许重复。直接使用定理 23.2 的有限复制、相位补齐及自由含幺项构造，不另造复制。其第 $N\ge1$ 个模型是逐坐标原运算的 $M^{\Sigma_N}$，$\Sigma_N=\{0,1,2\}^N$，真实单位是常数组 $\mathbf1$，费用为
+**证明。**先设 (S)。固定任意原三标签 $a,b,d$，允许重复，使用定理 23.2 的实际复制模型、共同相位补齐和全部自由含幺 $U$-项 $\mathcal T$。只约简双侧单位恒等式，其余实际次序和括号均保留；$U1$ 不约简为 $1$。即使原三标签含 $1$，其来源变量也不与新模型的真实单位合并。
+
+记 $s_N$ 为项 $s$ 在第 $N$ 个数组模型的实际求值。式 (23.8)–(23.9) 给每个固定项有限的、与 $N$ 无关的预算，因而每个固定项对 $s,z$ 的 $B_N(s_N,z_N)$ 有界。取定理 23.2 对全部有序项对的同一个有限值点态收敛子列 $N_\ell\to\infty$，得到 $c_\infty$。非负性、零对角、完整 (R) 及原三标签全部有向比较矩阵同时保留。
+
+令 $p_{\infty,j}=U^j1_{\mathcal T}$。对任意固定 $s,z\in\mathcal T$ 及 $j=1,2$，引理 31.2 沿上述同一子列给
 
 $$
-c_N(X,Y)=\frac1{N3^N}\sum_{\sigma\in\Sigma_N}c(X_\sigma,Y_\sigma).
+\Delta_{\infty,j}(s,z)\le\varepsilon B_\infty(s,z)
+\qquad(\varepsilon>0).
 \tag{32.3}
 $$
 
-三个来源采用同一坐标相位补齐的 $\widetilde\Gamma_N$；全部有序来源费用精确保留。用 $x_a,x_b,x_d$（重复标签可共用变量）及真实单位生成自由含幺 $U$-项代数 $\mathcal T$，只约简双侧单位律，保留所有其余括号，尤其不把 $U1$ 约简为 $1$。即使原标签含 $1$，相应来源变量也不与新单位预先合并。各项按实际运算求值为 $s_N$。
-
-式 (23.8)–(23.9) 的、与 $N$ 无关的有限预算 $B(s)$ 给
+这是有限个费用、加减与绝对值的极限，$C_\varepsilon/N_\ell\to0$；每个 $\varepsilon$ 的不等式都沿原子列成立，无须另换极限模型。$B_\infty(s,z)$ 有限，令 $\varepsilon\downarrow0$，得到在这个同一模型内
 
 $$
-q_N(s_N)+r_N(s_N)\le B(s),\quad
-c_N(s_N,t_N)\le3(B(s)+B(t)),\quad
-\Omega_N(1)=\Omega(1)/N.
+s\cdot p_{\infty,j}\approx s\qquad(s\in\mathcal T,\ j=1,2),
 \tag{32.4}
 $$
 
-因此每个固定项三元组的 $Q_N$ 都有界。按定理 23.2 枚举全部有序项对，取同一个对角子列 $N_\ell\to\infty$；所有费用同时趋于有限的 $c_\infty(s,t)$。完整 (R)、非负性、零对角、原三标签矩阵及 $\Omega_\infty(1)=0$ 均保留。
+其中 $\approx$ 要求对全部 $z\in\mathcal T$ 的完整行与完整列同时相等。
 
-尚须证明替换也通过这个极限。引理 31.2 应用于 (32.3) 的实际权重 $1/(N3^N)$，对每个 $\eta>0$ 及全部实际项三元组给
+取 $s=1_{\mathcal T}$ 得 $p_{\infty,j}\approx1_{\mathcal T}$。在[有限正性桥引理 2.3、定理 8.2](AURIC_C133_UNANCHORED_MARKER_FINITE_POSITIVITY_BRIDGE.md)的自由实差空间与双侧根空间 $\mathcal N_\infty$ 中，(32.4) 因而给
 
 $$
-\Delta_N(s_N,t_N;x_N)\le
-\eta Q_N(s_N,t_N,x_N)+\frac6{\delta(\eta)}\rho_N(s_N,t_N).
+e_{p_{\infty,j}}\in\mathcal N_\infty,\qquad
+e_{s\cdot p_{\infty,j}}-e_s\in\mathcal N_\infty,\qquad
+D(s,p_{\infty,j})=e_{s\cdot p_{\infty,j}}-e_s-e_{p_{\infty,j}}\in\mathcal N_\infty.
 \tag{32.5}
 $$
 
-固定三元组后，式内只有有限个费用与绝对值，沿同一子列取极限得到 (31.2) 的极限版本。特别，若 $\rho_\infty(s,t)=0$，则 $\Delta_\infty(s,t;x)\le\eta Q_\infty(s,t,x)$ 对每个 $\eta>0$ 成立；有限性给精确 (Z)。同一估计甚至给极限核的 (H)。这里使用的是共同定量界，未假设条件式 (Z) 自身在逐点极限下封闭。
-
-在这个零漂移模型内令 $s\sim t$ 当且仅当 $\rho_\infty(s,t)=0$。零对角给自反性，定义给对称性；若 $s\sim t\sim u$，(Z) 给 $c_\infty(s,u)=c_\infty(t,u)=0$ 及 $c_\infty(u,s)=c_\infty(u,t)=0$，故传递。完整行列相等也使 $c_\infty$ 对两个变量均可下降。若 $s\sim s'$、$t\sim t'$，(R) 第零项给
-
-$$
-c_\infty(st,s't')\le3(c_\infty(s,s')+c_\infty(t,t'))=0,
-$$
-
-反向同理，所以乘法同余。对 $U$ 则明确使用 $\mathrm R(1,1,s,t)$：
-
-$$
-\sum_{k=0}^2c_\infty(U^ks,U^kt)=3c_\infty(s,t).
-$$
-
-$s\sim t$ 时非负性使 $c_\infty(Us,Ut)=0$，反向亦然，故 $U$ 同余。含真实单位的商 magma、有限核与诱导 $U$ 因而良定义，全部四变量 (R) 下降。$\Omega_\infty(1)=0$ 给 $U1\sim1$，所以商上的 $U$ 严格固定真实商单位。
-
-现在调用[《无结合律的双端三相比较》定理 1.3](AURIC_C133_THREE_READ_CLOSURE_VISIBLE_COMPLEX_GEOMETRY_CONTINUATION_V.md)：该定理允许任意 magma，商上已付清其固定单位前件。因此商核具有复 Hilbert 表示，平方根满足三角不等式。被保留的三标签矩阵给
+这正是全部 $s$、两个 $j$ 上的 $\mathrm{UC}$；直接调用所引定理 8.2，取得极限模型的完整仿射 Hilbert 表示。其平方根距离给被保留三标签的
 
 $$
 \sqrt{c(a,d)}\le\sqrt{c(a,b)}+\sqrt{c(b,d)}.
 $$
 
-原三标签任意，故原核有 $\mathrm{DT}$。直接调用定理 14.1 以及[有限正性桥定理 1.3](AURIC_C133_UNANCHORED_MARKER_FINITE_POSITIVITY_BRIDGE.md)，得到原模型的 (32.1) 及最小唯一性；没有把来源映射误当作保运算或保单位的嵌入。
+原三标签任意，原核遂有 $\mathrm{DT}$。定理 14.1 及有限正性桥定理 1.3 给原模型的全部 (32.1) 与最小唯一性。这里不回拉未经证明的运算嵌入，不需要精确零费用条件的极限封闭性，也未使用 $\Omega_\infty(1)=0$ 作为推理前件。定理 14.1 内调用的[续卷 V 定理 1.3](AURIC_C133_THREE_READ_CLOSURE_VISIBLE_COMPLEX_GEOMETRY_CONTINUATION_V.md)仍只在其真实固定单位商的适用域内复用，未将原始 $U$ 假定为保单位。
 
-反向，设已有 (32.1)。对全部 $a,b,u,v$ 及 $k\in\{0,1,2\}$，实际端点 $a\cdot(U^ku)$、$b\cdot(U^kv)$ 的像差为 $(Fa-Fb)+\omega^k(Fu-Fv)$，仿射漂移在差中抵消；$\sum_{k=0}^2\omega^k=0$ 给完整 (R)。对任意 $s,t,x$ 置 $S=Fs,T=Ft,X=Fx$，则
+反向设 (32.1)。置 $v_j=F(p_j)$，则 $v_1=t$、$v_2=(1+\omega)t$，故两个 $\|v_j\|$ 都等于 $T=\|t\|$。对任意 $a,z$，置 $x=Fa$、$y=Fz$；表示的对称性及 Cauchy–Schwarz 给
 
 $$
 \begin{aligned}
-Q&=2(\|S\|^2+\|T\|^2+\|X\|^2),&\rho&=2\|S-T\|^2,\\
-\Delta&=2\bigl|\|S-X\|^2-\|T-X\|^2\bigr|\\
-&\le2\|S-T\|\,\|S+T-2X\|\\
-&\le2\|S-T\|\sqrt{6(\|S\|^2+\|T\|^2+\|X\|^2)}
-=\sqrt{6\rho Q}.
+B(a,z)&=2(\|x\|^2+\|y\|^2),\\
+\Delta_j(a,z)&=2\bigl|\|x+v_j-y\|^2-\|x-y\|^2\bigr|\\
+&\le4T\|x-y\|+2T^2\le4T\sqrt{B(a,z)}+2T^2\\
+&\le\varepsilon B(a,z)+(4/\varepsilon+2)T^2.
 \end{aligned}
 \tag{32.6}
 $$
 
-两次 Cauchy–Schwarz 给中间两步。取 $\delta=\varepsilon^2/6$ 即得 (H)。$Q=0$ 时三个向量全零，$\rho=0$ 时 $S=T$，两种退化情形直接给 $\Delta=0$，无需除以任何费用或范数。证毕。
+最后一步是 $(\sqrt\varepsilon\sqrt B-2T/\sqrt\varepsilon)^2\ge0$。$B=0$ 时 $x=y=0$，直接有 $\Delta_j=2T^2$；$T=0$ 时两个缺陷都为零；全零模型也包含在内，均未除以费用或向量范数。若从表示出发核对 (R)，实际端点像差为 $(Fa-Fb)+\omega^k(Fu-Fv)$，漂移在差中抵消，三次求和即得完整 (R)。证毕。
 
-## 33. 与统一正幂三角输入的精确比较
+## 33. 两族入口的比较范围与未解条件
 
-**命题 33.1（独立输入严格变弱，完整关系类不变）。**在任意有指定基点、处处有限的非负零对角核上，若存在一个统一 $\alpha>0$，使全部 $s,t,x$ 满足 $c(s,x)^\alpha\le c(s,t)^\alpha+c(t,x)^\alpha$，则有 (H)，这里不需要 (R)。反向在这个原始核类中不成立。加上完整 (R) 后，(H)、存在这样的正指数、$\mathrm{DT}$ 与 (32.1) 则全部等价。
+**命题 33.1（已完成关系类相同，检验族减少）。**在原始完整 (R) 类内，(S)、定理 20.1 的某个统一正幂三角、$\mathrm{DT}$、$\mathrm{UC}$、五点及全有限负型与 (32.1) 等价。这里的简化是仅检验两种单位插入族、一个增长条件及直接的 $C_\varepsilon/N$ 证明，不是严格扩大已完成的 (R) 模型类，也不是减少独立物理前提的数量。
 
-**证明。**令 $K_\alpha=\max\{1,2^{1/\alpha-1}\}$。经基点的有向三角给四个探针费用 $c(s,x),c(t,x),c(x,s),c(x,t)\le K_\alpha Q$；$Q=0$ 时它们全零。对 $Q>0$，令 $u=c(s,x)/Q$、$v=c(t,x)/Q$，两个方向的三角给
+**证明。**定理 32.1、20.1、14.4 与有限正性桥定理 8.2 直接给等价。不能把定理 7.1 直接作用于 $\Delta_j$：该定理要求被消去函数自身满足完整四变量关系，此处未证明两种插入缺陷满足它。新的桥梁是引理 31.2 对真实单位、实际自由项和共同极限的缩放估计。亦未声称正幂三角单独在任意原始 magma 上给 (S)：它约束核，不控制任意单位插入动作。证毕。
 
-$$
-|u^\alpha-v^\alpha|\le(\rho/Q)^\alpha,\qquad 0\le u,v\le K_\alpha.
-$$
+**命题 33.2（有限原始核不区分该增长条件）。**任意有限 $M$ 上的有限值核均满足 (S)，但其中有核违反每个正幂三角。
 
-交换行、列位置得到相同估计。函数 $z\mapsto z^{1/\alpha}$ 在固定紧区间 $[0,K_\alpha^\alpha]$ 上一致连续，故对每个 $\varepsilon>0$ 可选统一 $\delta>0$，使 $\rho/Q\le\delta$ 时两个归一差分别不超过 $\varepsilon/2$。这正是 (H)，所有选择均与三元组和尺度无关。
-
-严格性取标签 $(1,a,b)$，以下矩阵的行是第一个变量：
+**证明。**有限多个 $\Delta_j$ 有共同上界，可取作每个 $C_\varepsilon$。例如标签 $(1,a,b)$ 上令 $U=I$，$1$ 为双侧单位，非单位间取 $x\cdot y=x$，并令核矩阵为
 
 $$
-\bigl(c(s,t)\bigr)_{s,t\in(1,a,b)}=
-\begin{pmatrix}0&0&1\\1&0&0\\1&1&0\end{pmatrix}.
-\tag{33.1}
+\begin{pmatrix}0&0&1\\1&0&0\\2&0&0\end{pmatrix}.
 $$
 
-每个不同标签对的 $\rho\ge1$，而全部三元组的 $Q\le6$。所以 $\delta=1/7$ 使 (H) 的前件只能在 $s=t$ 时发生，此时 $\Delta=0$；同一个 $\delta$ 对所有 $\varepsilon>0$ 有效。但每个 $\alpha>0$ 都有 $c(1,b)^\alpha=1>c(1,a)^\alpha+c(a,b)^\alpha=0$。这个核也不对称，故 (H) 单独不供应对称性或三角。它不是 (R) 模型：核非零且全域有界，与命题 2.4 矛盾，不论怎样选择三标签上的含幺运算与 $U$。
+此时 $p_j=1$，两个缺陷全零，但 $c(1,b)^\alpha=1>c(1,a)^\alpha+c(a,b)^\alpha=0$ 对每个 $\alpha>0$ 成立。它不满足完整 (R)：非零有限核违反命题 2.4 的全局有界结论；不是 (R) 的反模型，也不证明原目标的否定。证毕。
 
-在完整 (R) 类内，定理 32.1 给 (H) 的表示，平方距离给 $\alpha=1/2$；反向已由第一段成立，也可与定理 20.1 对照。故严格性只属于未加 (R) 的输入，不是两个完成后的 (R) 模型类的严格包含。两个入口都在 (R) 外显式增加一个全域条件；这里没有减少额外条件的数量，也未证明 (R) 与该条件逻辑独立。证毕。
+**问题 33.3（保留的充分性缺口）。**(R) 单独是否迫出 (S) 或完整表示，仍未解决。精确条件 $(Z)$，即 $c(s,t)+c(t,s)=0$ 蕴涵对每个 $z$ 有 $c(s,z)=c(t,z)$ 及 $c(z,s)=c(z,t)$，与 (R) 合用是否充分，也仍未解决。一般零漂移条件同样未由本定理取得充分性；(S) 并非从这些未决前件推出。
 
-## 34. 事件、复合与时间接口中的条件替换
+## 34. 同一候选的几何、事件与过程适用域
 
-**推论 34.1（保留来源前件的量子接口）。**设实际完整有限测试 $C$ 的总核 $c_*$ 与每个事件核 $c_e$ 均处处有限、非负且零对角，在同一原始 $M,\cdot,1,U$ 上分别满足完整 (R) 及各自的 (H)，并有对所有 $a,b$ 的实际完整和式 $\sum_{e\in C}c_e(a,b)=c_*(a,b)$。保留原事件与记录的身份，不从总核的 (H) 推断事件核的 (H)。在总核的最小表示上，复用[有限正性桥定理 6.2、对应 6.3](AURIC_C133_UNANCHORED_MARKER_FINITE_POSITIVITY_BRIDGE.md)，有唯一效果
+**推论 34.1（可见几何与来源接口）。**在定理 32.1 的前件下，可见零费用商的聚合为加法，交换次序和改变括号不改变可见比较；原始档案仍保留。实际纠偏配方
+
+$$
+V(a)=U\bigl(a\cdot p_2\bigr),\qquad F(Va)=\omega Fa
+\tag{34.1}
+$$
+
+给 $120^\circ$ 相位及全有限半正定 Gram。采用第二变量线性的内积约定，三条实际历史 $a\cdot(V^ku)$ 给
+
+$$
+\langle Fa,Fu\rangle=\frac13\sum_{k=0}^2\omega^{-k}q\bigl(a\cdot(V^ku)\bigr).
+\tag{34.2}
+$$
+
+它不限定物理空间三维。若三历史的全部八个子集事件实际对应同一组向量和，有限正性桥命题 6.1 才给其共同强正 Gram 与无三阶干涉。
+
+对每个实际完整有限测试 $C$，总核 $c_*$ 与每个事件核 $c_e$ 须在同一 $M,\cdot,1,U$ 上分别满足原始签名、完整 (R) 和各自的 (S)，并保持原来的完整和式 $\sum_{e\in C}c_e=c_*$。在最小总空间有唯一
 
 $$
 0\le E_e\le I,\qquad \sum_{e\in C}E_e=I,\qquad
 c_e(a,b)=\langle Fa-Fb,E_e(Fa-Fb)\rangle.
-\tag{34.1}
-$$
-
-采用第二变量线性的内积约定。若实际准备差 $x=Fa-Fb\ne0$ 的事件读数按该测试的总质量归一，则
-
-$$
-p(e\mid x)=\frac{\langle x,E_ex\rangle}{\|x\|^2}.
-\tag{34.2}
-$$
-
-总质量为零不定义 $0/0$，$F1=0$ 也不供应非零准备。实际共同纠偏仍是 $V(a)=U(a\cdot p_2)$，$p_2=U^21$；各表示均有 $F_e(Va)=\omega F_ea$。因此三次读数的极化与共同相位仍用同一实际配方，而非另选事件相位。
-
-若输入、输出各有上述几何，实际完整有限细分支 $T_{e,r}$ 保持单位，并对所有输入 $a,b$ 满足
-
-$$
-c_e(a,b)=\sum_r c_{\rm out}(T_{e,r}a,T_{e,r}b),\qquad
-\sum_ec_e(a,b)=c_{\rm in}(a,b),
-$$
-
-且每个细记录读数逐记录对应，并对所有 $a,e,r$ 有
-
-$$
-c_{\rm out}\bigl(T_{e,r}(V_{\rm in}a),V_{\rm out}(T_{e,r}a)\bigr)=0,
 \tag{34.3}
 $$
 
-则原最小输入、输出空间之间有唯一有界复线性 $K_{e,r}$，使 $K_{e,r}F_{\rm in}a=F_{\rm out}(T_{e,r}a)$、$\sum_{e,r}K_{e,r}^*K_{e,r}=I$，并有 $\mathcal I_e(\sigma)=\sum_rK_{e,r}\sigma K_{e,r}^*$。这是与实际细记录相容的 Kraus/完全正数学扩张；实际参考系统上的过程与此扩张相同，仍需原参考接口。
+实际准备差 $x=Fa-Fb\ne0$ 按同一测试总质量归一时，Born 权重为 $\langle x,E_ex\rangle/\|x\|^2$；总量为零不定义 $0/0$。不从总核的 (S) 推断事件核的 (S)，也不从 $F1=0$ 获得非零准备。
 
-**证明。**对总核及每个事件核分别应用定理 32.1，支付有限正性桥定理 6.2 的全部表示前件。共同 $V$ 的公式由 (32.1) 及 $1+\omega+\omega^2=0$ 得到。其余直接用所引完整测试与全成对细过程定理；仅到单位的范数校准不能替代全部成对和式，仅保距离不能替代 (34.3)。
+若输入、输出各有上述表示，实际完整有限细分支 $T_{e,r}$ 保持单位，全部输入对与原记录满足
 
-同样，三历史的全部八个子集事件只有在实际来源已对应同一组向量和时，才由有限正性桥命题 6.1 得到共同 Gram 强正性与无三阶干涉；任意事件强度不自动是同一测试的概率。实际联合的可见双可加性、复相位平衡及乘积质量才给复张量嵌入，乘积像稠密才给整个联合空间。全效果域上一致、非负、归一、可加的评价在有限维给密度态，无限维仍需正规性或相应可数可加。实际可逆、保单位、保全部成对比较且保共同纠偏相位的过程给酉表示；一参数群与强连续时间接口另行供应，才可谈自伴生成元。聚合加法不等于联合张量，三相编号不等于物理时间。这些都是原接口的条件结论，并非 (H) 新供应的操作或物理来源。证毕。
+$$
+c_e(a,b)=\sum_r c_{\rm out}(T_{e,r}a,T_{e,r}b),\qquad
+\sum_{e\in C}c_e(a,b)=c_{\rm in}(a,b),\qquad
+c_{\rm out}\bigl(T_{e,r}(V_{\rm in}a),V_{\rm out}(T_{e,r}a)\bigr)=0,
+\tag{34.4}
+$$
 
-**注记 34.2（完整候选的普通语言读法与未解处）。**候选从有真正空输入的任意二元配方开始，不改左右次序、括号或记录；每两份配方都有有限的非负比较，自比为零，标记可以移动空输入。第一条要求全部四个输入的三次比较精确配平。第二条 (H) 说：把两个来源的双向比较，与它们及任意探针到真正空输入的总费用相比；这个比例足够小时，把一个来源换成另一个，对该探针的双向读数改变也必须按同一比例标准一致变小。这个标准要跨越全部来源和费用尺度，不能只对眼前一组成立。有限复制不会破坏它，因此能先把空输入的漂移压到零，再合法识别所有不可区分的来源，恢复复振幅、加法和平方距离。结果使两两比较对调两端不变，聚合顺序与括号也不改变可见比较，原档案仍可不同。
+其中前两式对全部 $a,b$、末式对全部 $a,e,r$ 成立，细记录读数也须逐记录对应，则有唯一有界复线性 Kraus 延拓 $K_{e,r}F_{\rm in}a=F_{\rm out}(T_{e,r}a)$，且 $\sum_{e,r}K_{e,r}^*K_{e,r}=I$。仅到单位的范数校准不替代全成对校准，保距离不替代共同纠偏相位。
 
-同一套几何若分别适用于总测试与每个实际事件，再有完整和式和非零归一，才得到 Born 权重；全成对校准、细记录和共同相位才得到 Kraus 扩张。全效果、参考、联合系统、可执行过程和时间仍须各自的实际来源。新入口在一般原始核上严格弱于指定某个正幂满足三角，但与完整 (R) 合用后模型类相同，额外条件数量也相同。它简化的是替换关系的表述，不是已证的物理前提数量。精确 (Z) 单独与 (R) 是否足够、(R) 是否自动给 (H) 或完整几何，仍未解决；这不是完整量子起源结论。
+**证明。**几何及 (34.1) 由 (32.1) 和 $1+\omega+\omega^2=0$ 得到，(34.2) 复用式 (21.1)。对总核与每个事件核分别应用定理 32.1，随后直接消费[有限正性桥定理 6.2、对应 6.3](AURIC_C133_UNANCHORED_MARKER_FINITE_POSITIVITY_BRIDGE.md)的完整测试与细过程接口。
 
-## 35. 相对条件的文献对应与承重范围
+[续卷 V 第 6 节](AURIC_C133_THREE_READ_CLOSURE_VISIBLE_COMPLEX_GEOMETRY_CONTINUATION_V.md#6-标准量子接口的来源与结论)的原始分类要求标记固定单位；此处使用有限正性桥的仿射版本与共同 $V$，未将原 $U$ 填入固定单位前件。[续卷 II 第 6 节](AURIC_C133_THREE_READ_CLOSURE_VISIBLE_COMPLEX_GEOMETRY_CONTINUATION_II.md#6-完整事件过程复合与时间)的整数群接口也只在可见加法与共同相位已取得后消费：实际联合须有可见双可加性、复相位平衡和乘积质量，才给复张量嵌入，乘积像稠密才给整个联合空间。聚合加法本身不供应联合张量。
 
-**注记 35.1（来源及条件差别）。**Bessenyei–Páles，*A contraction principle in semimetric spaces*，J. Nonlinear Convex Anal. 18(3), 515–524，[作者稿 arXiv:1401.1709v1](https://arxiv.org/html/1401.1709v1)，§2 的基本三角函数与 Lemma 1，以对称且仅在对角为零的半度量为对象；其 regularity 是基本三角函数在原点连续，等价于小球直径对球心一致趋零。该已知框架不预设本节的有向退化核、真实单位预算 $Q$，也不直接给全部探针行列的相对替换条件。Lichman–Nowakowski–Turoboś，*On functions preserving products of certain classes of semimetric spaces*，[作者稿 arXiv:2012.15614v1](https://arxiv.org/html/2012.15614v1)，Theorem 3.1 对由非减二变量函数给定的半三角条件，用 amenable 合成函数及全部三角三元组的保持刻画有限积保持；其输入同样是对称分离的半度量，未供应本节 (R) 下的相对模或零漂移分类。
+Kraus 形式给数学上的完全正扩张；实际参考系统上的过程等于它仍需原参考接口。全效果域上一致、非负、归一、可加评价在有限维给密度态，无限维还需正规性或相应可数可加；全效果的实际供应仍为前件。实际可逆、保单位、保全部比较及共同纠偏相位的过程给酉表示，一参数群和强连续时间另行供应才给自伴生成元。Lüders 更新仍需结果子空间内的无扰动条件，效果和结果可重复性不单独决定它。非零准备、失败、停止、记录、返回及合法历史均保留原定义；静态几何不供应上述实际操作，也不完成量子起源目标。证毕。
 
-这些半度量工具为 literature-attested；紧区间一致连续、Cauchy–Schwarz、有限好坏坐标分割和逐点有限值极限也都是通用工具，不作为新发现。这里的承重增量是 repo-derived：将 (H) 的共同估计接到定理 23.2 已有复制及预算上，证明其有限值零漂移极限确有 (Z)，从而可用既有固定单位定理及定理 14.1。定理 20.1、23.2 的构造与分类、《有限正性桥》定理 1.3、6.2 及对应 6.3 均被复用，不重新归为新增成果。上述文献不直接提供本节完整签名下的结论；此对应不主张历史优先权，也不将条件几何等同于经验量子理论的来源。
+**对应 34.2（数学来源与新增范围）。**有限和的绝对值比较、Cauchy–Schwarz、Young 平方估计和可数有限值对角抽取均为经典工具。已有定理 20.1、23.2、14.1、有限正性桥定理 1.3、8.2 及所引量子接口各按原前件复用。这里的 repo-derived 增量是两种单位插入缺陷的统一次线性界，经真实单位复制产生 $C_\varepsilon/N$，在同一全项极限中取得完整 $\mathrm{UC}$，再由有限三点保持恢复原模型的表示。群上极化的文献条件仍沿用有限正性桥第 11 节所引 de Place Friis–Stetkær，*On the quadratic functional equation on groups*，DOI 10.5486/pmd.2006.3270，Theorem 1.2；只在已有交换群处使用。这里不主张历史新颖性、文献穷尽性或完整物理前提的减少。
 
-## 追加锚（本行以下为增补区）
+## 追加锚（两族单位插入次线性分类；本行以下为增补区）
